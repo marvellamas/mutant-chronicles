@@ -14,6 +14,7 @@ import { massimiSessione, inizializzaSessione } from './sessione.js';
 import { catalogo, risolvi, aggiungiDanno, regolaCapolavoro } from './equipaggiamento.js';
 import { calcolaLancio, versioniLancio } from './lancio.js';
 import { idDaNome } from './nemici.js';
+import { bonusDannoCaratteristica } from './calc.js';
 
 const TIPI_ARMA = ['arma_ravvicinata', 'arma_distanza'];
 // stati in cui l'arma è addosso (non nello zaino né nel deposito comune)
@@ -144,7 +145,12 @@ function incantesimiDa(scelte, scheda, sessione, dati) {
     const v = inc ? versioniLancio(inc, scheda).filter((x) => !x.motivo).at(-1) : null;
     if (!inc || !v || inc.meccanica?.procedura_rituale?.stato) return { nome, note: 'promemoria: si lancia al tavolo' };
     const r = calcolaLancio({ scheda, sessione }, inc, { versione: v.livello }, dati);
-    return { nome, livello: v.livello, va: r.va_potere_finale, costo_pm: r.pm_costo };
+    // A.84: il regime dall'Addestramento effettivo; A.85: bonus di SAG calcolato con il tetto del livello
+    const regime = scheda.incantesimi?.scalaPotere === 'altri_utilizzatori' ? 'altro_utilizzatore' : 'taumaturgo';
+    const sigla = dati.regole.danno_caratteristica?.magia;
+    const valore = sigla ? scheda.caratteristiche?.[sigla]?.valore : null;
+    const bonus = Number.isInteger(valore) ? bonusDannoCaratteristica(valore, scheda.livello ?? 1, dati.regole) : null;
+    return { nome, livello: v.livello, va: r.va_potere_finale, costo_pm: r.pm_costo, regime, ...(Number.isInteger(bonus) ? { bonus_danno_magico: bonus } : {}) };
   });
 }
 

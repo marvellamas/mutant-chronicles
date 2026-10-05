@@ -121,49 +121,65 @@
       "nome": "Agilità Mutata",
       "livello": 6,
       "va": 10,
-      "costo_pm": 6
+      "costo_pm": 6,
+      "regime": "taumaturgo",
+      "bonus_danno_magico": 1
     },
     {
       "nome": "Alterare Immagine",
       "livello": 6,
       "va": 10,
-      "costo_pm": 6
+      "costo_pm": 6,
+      "regime": "taumaturgo",
+      "bonus_danno_magico": 1
     },
     {
       "nome": "Ampliare Sensi",
       "livello": 6,
       "va": 10,
-      "costo_pm": 6
+      "costo_pm": 6,
+      "regime": "taumaturgo",
+      "bonus_danno_magico": 1
     },
     {
       "nome": "Arma Mistica",
       "livello": 6,
       "va": 10,
-      "costo_pm": 6
+      "costo_pm": 6,
+      "regime": "taumaturgo",
+      "bonus_danno_magico": 1
     },
     {
       "nome": "Armatura di Forza",
       "livello": 6,
       "va": 10,
-      "costo_pm": 6
+      "costo_pm": 6,
+      "regime": "taumaturgo",
+      "bonus_danno_magico": 1
     },
     {
       "nome": "Armatura Mistica",
       "livello": 6,
       "va": 10,
-      "costo_pm": 6
+      "costo_pm": 6,
+      "regime": "taumaturgo",
+      "bonus_danno_magico": 1
     },
     {
       "nome": "Barriera Mentale",
       "livello": 6,
       "va": 10,
-      "costo_pm": 6
+      "costo_pm": 6,
+      "regime": "taumaturgo",
+      "bonus_danno_magico": 1
     },
     {
       "nome": "Colpo Elementale",
       "livello": 8,
       "va": 8,
-      "costo_pm": 8
+      "costo_pm": 8,
+      "regime": "taumaturgo",
+      "bonus_danno_magico": 1
     }
   ],
   "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Inquisitore della Fratellanza Veterano, Fratellanza Taumaturgo, Custode 2, 5° livello. Talenti fra le capacità speciali: gli effetti generali sono già nei valori, quelli situazionali si applicano a mano."

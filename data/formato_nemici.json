@@ -11,142 +11,464 @@
   ],
   "formato": "mutant-nemico",
   "versione": 1,
-  "nature_danno": ["Naturale", "Magico", "Etereo"],
+  "nature_danno": [
+    "Naturale",
+    "Magico",
+    "Etereo"
+  ],
   "_nota_nature_danno": "Giocatore §5.24: Naturale e Magico sono assorbiti da qualsiasi protezione pertinente, Etereo solo dalla componente magica.",
-  "contromisure": ["Ignifugo", "Termico", "Isolante", "Dissipante", "Imbottita", "Anticorrosivo", "Riflettente"],
+  "contromisure": [
+    "Ignifugo",
+    "Termico",
+    "Isolante",
+    "Dissipante",
+    "Imbottita",
+    "Anticorrosivo",
+    "Riflettente"
+  ],
   "_nota_contromisure": "Contromisure del Giocatore §5.24: Ignifugo contro Fuoco, Termico contro Gelo, Isolante contro Elettricità, Dissipante contro Plasma, Imbottita contro Concussivo, Anticorrosivo contro Corrosivo; Riflettente (contro Laser) non è numerica.",
   "tavolo": {
-    "tiene": ["pv_attuali", "pv_massimi", "ferite", "menomazioni", "stati", "pm_attuali"],
+    "tiene": [
+      "pv_attuali",
+      "pv_massimi",
+      "ferite",
+      "menomazioni",
+      "stati",
+      "pm_attuali"
+    ],
     "affaticamento": false,
     "procedura_ferite": "pg",
-    "parita_iniziativa": ["DES", "INT"],
+    "parita_iniziativa": [
+      "DES",
+      "INT"
+    ],
     "spareggio": "1d10",
     "_nota": "Stato di un nemico nello scontro (Tavolo del Master): come i PG (Giocatore §5.14, §5.18), senza Affaticamento (A.73, decisione 7). Parità d’Iniziativa: le Caratteristiche nell’ordine; se ne manca una necessaria, il dado (decisione 6)."
   },
   "campi": {
-    "formato": { "tipo": "costante", "valore": "mutant-nemico", "obbligatorio": true },
-    "versione": { "tipo": "costante", "valore": 1, "obbligatorio": true },
-    "id": { "tipo": "testo", "modello": "^[a-z0-9-]{1,60}$", "obbligatorio": true, "descrizione": "Identificativo del tipo: minuscole, cifre e trattini; è anche il nome del file." },
-    "nome": { "tipo": "testo", "obbligatorio": true, "descrizione": "Nome del tipo; le copie nello scontro diventano «Nome 1», «Nome 2»…" },
-    "fonte": { "tipo": "testo", "obbligatorio": false, "descrizione": "Chi l'ha scritto o da dove viene (per esempio «master» o un paragrafo)." },
+    "formato": {
+      "tipo": "costante",
+      "valore": "mutant-nemico",
+      "obbligatorio": true
+    },
+    "versione": {
+      "tipo": "costante",
+      "valore": 1,
+      "obbligatorio": true
+    },
+    "id": {
+      "tipo": "testo",
+      "modello": "^[a-z0-9-]{1,60}$",
+      "obbligatorio": true,
+      "descrizione": "Identificativo del tipo: minuscole, cifre e trattini; è anche il nome del file."
+    },
+    "nome": {
+      "tipo": "testo",
+      "obbligatorio": true,
+      "descrizione": "Nome del tipo; le copie nello scontro diventano «Nome 1», «Nome 2»…"
+    },
+    "fonte": {
+      "tipo": "testo",
+      "obbligatorio": false,
+      "descrizione": "Chi l'ha scritto o da dove viene (per esempio «master» o un paragrafo)."
+    },
     "caratteristiche": {
-      "tipo": "mappa", "chiavi_da": "caratteristiche", "tutte": false, "obbligatorio": false,
-      "valore": { "tipo": "intero", "min": 0 },
+      "tipo": "mappa",
+      "chiavi_da": "caratteristiche",
+      "tutte": false,
+      "obbligatorio": false,
+      "valore": {
+        "tipo": "intero",
+        "min": 0
+      },
       "descrizione": "Le sei Caratteristiche: il bestiario le riporta tutte, nell’app sono facoltative (A.73). Mancante non vale 0 e non ricalcola nulla; DES e INT servono per la parità d’Iniziativa (§5.1)."
     },
-    "pv": { "tipo": "intero", "min": 1, "obbligatorio": true, "descrizione": "PV massimi; ogni copia nello scontro parte da qui. Al tavolo PV attuali, Ferite e Menomazioni come i PG (A.73)." },
-    "pm": { "tipo": "intero", "min": 0, "obbligatorio": false, "descrizione": "PM massimi, se ne ha: la riserva da cui «Lancia!» scala i PM." },
+    "pv": {
+      "tipo": "intero",
+      "min": 1,
+      "obbligatorio": true,
+      "descrizione": "PV massimi; ogni copia nello scontro parte da qui. Al tavolo PV attuali, Ferite e Menomazioni come i PG (A.73)."
+    },
+    "pm": {
+      "tipo": "intero",
+      "min": 0,
+      "obbligatorio": false,
+      "descrizione": "PM massimi, se ne ha: la riserva da cui «Lancia!» scala i PM."
+    },
     "ar": {
-      "tipo": "oggetto", "obbligatorio": true,
+      "tipo": "oggetto",
+      "obbligatorio": true,
       "descrizione": "Armatura come per i PG: «AR totale, di cui magica» (§5.24); contro il danno Etereo vale solo la magica.",
       "campi": {
-        "totale": { "tipo": "intero", "min": 0, "obbligatorio": true },
-        "magica": { "tipo": "intero", "min": 0, "non_oltre": "totale", "obbligatorio": true }
+        "totale": {
+          "tipo": "intero",
+          "min": 0,
+          "obbligatorio": true
+        },
+        "magica": {
+          "tipo": "intero",
+          "min": 0,
+          "non_oltre": "totale",
+          "obbligatorio": true
+        }
       }
     },
-    "difese": { "tipo": "intero", "min": 0, "obbligatorio": true, "descrizione": "VA delle Difese (§5.9)." },
-    "iniziativa": { "tipo": "intero", "obbligatorio": true, "descrizione": "Valore di Iniziativa senza il dado; in combattimento si aggiunge 1d10 (§2.14)." },
+    "difese": {
+      "tipo": "intero",
+      "min": 0,
+      "obbligatorio": true,
+      "descrizione": "VA delle Difese (§5.9)."
+    },
+    "iniziativa": {
+      "tipo": "intero",
+      "obbligatorio": true,
+      "descrizione": "Valore di Iniziativa senza il dado; in combattimento si aggiunge 1d10 (§2.14)."
+    },
     "movimento": {
-      "tipo": "oggetto", "obbligatorio": true,
+      "tipo": "oggetto",
+      "obbligatorio": true,
       "descrizione": "In Q (§2.14). Passo obbligatorio. Corsa e Scatto: se mancano, il doppio e il triplo del Passo; «non_consentito» se il nemico non ha quella modalità (A.73, decisione 9).",
-      "moltiplicatori": { "corsa": 2, "scatto": 3 },
+      "moltiplicatori": {
+        "corsa": 2,
+        "scatto": 3
+      },
       "campi": {
-        "passo": { "tipo": "intero", "min": 0, "obbligatorio": true },
-        "corsa": { "tipo": "intero", "min": 0, "oppure": ["non_consentito"], "obbligatorio": false },
-        "scatto": { "tipo": "intero", "min": 0, "oppure": ["non_consentito"], "obbligatorio": false },
-        "volo": { "tipo": "intero", "min": 1, "obbligatorio": false, "descrizione": "Passo in volo in Q, solo per chi vola (Giocatore §5.2.3; Bestiario §3.1.1): Corsa e Scatto in volo sono il doppio e il triplo. Chi lo attacca mentre vola subisce −2 VA (Bestiario §3.1.1, proposta da confermare)." }
+        "passo": {
+          "tipo": "intero",
+          "min": 0,
+          "obbligatorio": true
+        },
+        "corsa": {
+          "tipo": "intero",
+          "min": 0,
+          "oppure": [
+            "non_consentito"
+          ],
+          "obbligatorio": false
+        },
+        "scatto": {
+          "tipo": "intero",
+          "min": 0,
+          "oppure": [
+            "non_consentito"
+          ],
+          "obbligatorio": false
+        },
+        "volo": {
+          "tipo": "intero",
+          "min": 1,
+          "obbligatorio": false,
+          "descrizione": "Passo in volo in Q, solo per chi vola (Giocatore §5.2.3; Bestiario §3.1.1): Corsa e Scatto in volo sono il doppio e il triplo. Chi lo attacca mentre vola subisce −2 VA (Bestiario §3.1.1, proposta da confermare)."
+        }
       }
     },
-    "taglia": { "tipo": "scelta", "valori": ["normale", "grande"], "obbligatorio": false, "descrizione": "Normale se manca. Grande: occupa 2 × 2 Q o più, chi lo attacca ottiene +2 VA, Sbalzante non lo sposta (Bestiario §3.1.1, proposta da confermare)." },
+    "taglia": {
+      "tipo": "scelta",
+      "valori": [
+        "normale",
+        "grande"
+      ],
+      "obbligatorio": false,
+      "descrizione": "Normale se manca. Grande: occupa 2 × 2 Q o più, chi lo attacca ottiene +2 VA, Sbalzante non lo sposta (Bestiario §3.1.1, proposta da confermare)."
+    },
     "salvezze": {
-      "tipo": "mappa", "chiavi_da": "salvezze", "tutte": true, "obbligatorio": true,
-      "valore": { "tipo": "intero", "min": 0 },
+      "tipo": "mappa",
+      "chiavi_da": "salvezze",
+      "tutte": true,
+      "obbligatorio": true,
+      "valore": {
+        "tipo": "intero",
+        "min": 0
+      },
       "descrizione": "Valori delle quattro Prove Salvezza (§1.2.3)."
     },
     "azioni": {
-      "tipo": "oggetto", "obbligatorio": false,
+      "tipo": "oggetto",
+      "obbligatorio": false,
       "descrizione": "Azioni per turno (A.73): Azioni Principali e di Movimento, con le eventuali eccezioni. Se mancano, quelle ordinarie (§5.1).",
       "campi": {
-        "principali": { "tipo": "intero", "min": 0, "obbligatorio": true },
-        "movimento": { "tipo": "intero", "min": 0, "obbligatorio": true },
-        "eccezioni": { "tipo": "testo", "obbligatorio": false }
+        "principali": {
+          "tipo": "intero",
+          "min": 0,
+          "obbligatorio": true
+        },
+        "movimento": {
+          "tipo": "intero",
+          "min": 0,
+          "obbligatorio": true
+        },
+        "eccezioni": {
+          "tipo": "testo",
+          "obbligatorio": false
+        }
       }
     },
     "attacchi": {
-      "tipo": "lista", "min": 0, "obbligatorio": true,
+      "tipo": "lista",
+      "min": 0,
+      "obbligatorio": true,
       "descrizione": "Attacchi con i numeri già fatti.",
       "voce": {
         "tipo": "oggetto",
         "campi": {
-          "nome": { "tipo": "testo", "obbligatorio": true },
-          "tipo": { "tipo": "scelta", "valori": ["ravvicinato", "distanza"], "obbligatorio": true },
-          "va": { "tipo": "intero", "obbligatorio": true, "descrizione": "VA della Prova per colpire." },
-          "danno": { "tipo": "dadi", "obbligatorio": true, "descrizione": "Dadi e bonus, come nel catalogo (es. «1d8+2»)." },
-          "natura": { "tipo": "scelta", "valori_da": "nature_danno", "obbligatorio": true, "descrizione": "§5.24." },
-          "proprieta": { "tipo": "lista", "voce": { "tipo": "testo" }, "obbligatorio": false, "descrizione": "Proprietà del danno o dell'arma, come testo (es. «Fuoco», «Perforante 2»)." },
-          "portata_q": { "tipo": "intero", "min": 1, "obbligatorio": false, "richiesto_se": { "tipo": "ravvicinato" }, "ammesso_se": { "tipo": "ravvicinato" } },
-          "gittata_q": { "tipo": "intero", "min": 1, "obbligatorio": false, "richiesto_se": { "tipo": "distanza" }, "ammesso_se": { "tipo": "distanza" } },
-          "modalita": { "tipo": "lista", "min": 1, "voce": { "tipo": "scelta", "valori_da": "modalita_di_fuoco" }, "obbligatorio": false, "richiesto_se": { "tipo": "distanza" }, "ammesso_se": { "tipo": "distanza" }, "descrizione": "Modalità di fuoco (§5.10), sigle come nel catalogo." },
-          "ac": { "tipo": "intero", "min": 1, "obbligatorio": false, "descrizione": "Applicazioni del colpo, come nel catalogo delle armi a distanza." },
-          "rif": { "tipo": "testo", "modello": "^[a-z_]+:[a-z0-9-]+$", "obbligatorio": false, "descrizione": "Arma del catalogo a cui somiglia (es. «armi:spada-lunga»), solo come riferimento: i numeri restano quelli scritti qui." },
-          "note": { "tipo": "testo", "obbligatorio": false }
+          "nome": {
+            "tipo": "testo",
+            "obbligatorio": true
+          },
+          "tipo": {
+            "tipo": "scelta",
+            "valori": [
+              "ravvicinato",
+              "distanza"
+            ],
+            "obbligatorio": true
+          },
+          "va": {
+            "tipo": "intero",
+            "obbligatorio": true,
+            "descrizione": "VA della Prova per colpire."
+          },
+          "danno": {
+            "tipo": "dadi",
+            "obbligatorio": true,
+            "descrizione": "Dadi e bonus, come nel catalogo (es. «1d8+2»)."
+          },
+          "natura": {
+            "tipo": "scelta",
+            "valori_da": "nature_danno",
+            "obbligatorio": true,
+            "descrizione": "§5.24."
+          },
+          "proprieta": {
+            "tipo": "lista",
+            "voce": {
+              "tipo": "testo"
+            },
+            "obbligatorio": false,
+            "descrizione": "Proprietà del danno o dell'arma, come testo (es. «Fuoco», «Perforante 2»)."
+          },
+          "portata_q": {
+            "tipo": "intero",
+            "min": 1,
+            "obbligatorio": false,
+            "richiesto_se": {
+              "tipo": "ravvicinato"
+            },
+            "ammesso_se": {
+              "tipo": "ravvicinato"
+            }
+          },
+          "gittata_q": {
+            "tipo": "intero",
+            "min": 1,
+            "obbligatorio": false,
+            "richiesto_se": {
+              "tipo": "distanza"
+            },
+            "ammesso_se": {
+              "tipo": "distanza"
+            }
+          },
+          "modalita": {
+            "tipo": "lista",
+            "min": 1,
+            "voce": {
+              "tipo": "scelta",
+              "valori_da": "modalita_di_fuoco"
+            },
+            "obbligatorio": false,
+            "richiesto_se": {
+              "tipo": "distanza"
+            },
+            "ammesso_se": {
+              "tipo": "distanza"
+            },
+            "descrizione": "Modalità di fuoco (§5.10), sigle come nel catalogo."
+          },
+          "ac": {
+            "tipo": "intero",
+            "min": 1,
+            "obbligatorio": false,
+            "descrizione": "Applicazioni del colpo, come nel catalogo delle armi a distanza."
+          },
+          "rif": {
+            "tipo": "testo",
+            "modello": "^[a-z_]+:[a-z0-9-]+$",
+            "obbligatorio": false,
+            "descrizione": "Arma del catalogo a cui somiglia (es. «armi:spada-lunga»), solo come riferimento: i numeri restano quelli scritti qui."
+          },
+          "note": {
+            "tipo": "testo",
+            "obbligatorio": false
+          }
         }
       }
     },
     "contromisure": {
-      "tipo": "lista", "obbligatorio": false,
+      "tipo": "lista",
+      "obbligatorio": false,
       "descrizione": "Contromisure con nomi e valori (A.73; Giocatore §5.24), come le proprietà delle armature: soglie contro gli effetti aggiuntivi dopo l’Armatura.",
       "voce": {
         "tipo": "oggetto",
         "campi": {
-          "nome": { "tipo": "scelta", "valori_da": "contromisure", "obbligatorio": true },
-          "valore": { "tipo": "intero", "min": 1, "obbligatorio": false, "descrizione": "Soglia; manca solo per Riflettente." }
+          "nome": {
+            "tipo": "scelta",
+            "valori_da": "contromisure",
+            "obbligatorio": true
+          },
+          "valore": {
+            "tipo": "intero",
+            "min": 1,
+            "obbligatorio": false,
+            "descrizione": "Soglia; manca solo per Riflettente."
+          }
         }
       }
     },
     "abilita": {
-      "tipo": "lista", "obbligatorio": false,
+      "tipo": "lista",
+      "obbligatorio": false,
       "descrizione": "Abilità rilevanti con il VA già calcolato (A.73), usate dalle Prove del nemico al tavolo.",
       "voce": {
         "tipo": "oggetto",
         "campi": {
-          "nome": { "tipo": "scelta", "valori_da": "abilita", "obbligatorio": true },
-          "va": { "tipo": "intero", "obbligatorio": true }
+          "nome": {
+            "tipo": "scelta",
+            "valori_da": "abilita",
+            "obbligatorio": true
+          },
+          "va": {
+            "tipo": "intero",
+            "obbligatorio": true
+          }
         }
       }
     },
     "capacita": {
-      "tipo": "lista", "obbligatorio": false,
+      "tipo": "lista",
+      "obbligatorio": false,
       "descrizione": "Talenti e capacità speciali (A.73) con effetto, costo e limiti d’uso: promemoria al tavolo.",
       "voce": {
         "tipo": "oggetto",
         "campi": {
-          "nome": { "tipo": "testo", "obbligatorio": true },
-          "effetto": { "tipo": "testo", "obbligatorio": true },
-          "costo": { "tipo": "testo", "obbligatorio": false },
-          "limiti": { "tipo": "testo", "obbligatorio": false }
+          "nome": {
+            "tipo": "testo",
+            "obbligatorio": true
+          },
+          "effetto": {
+            "tipo": "testo",
+            "obbligatorio": true
+          },
+          "costo": {
+            "tipo": "testo",
+            "obbligatorio": false
+          },
+          "limiti": {
+            "tipo": "testo",
+            "obbligatorio": false
+          }
         }
       }
     },
-    "stati": { "tipo": "lista", "voce": { "tipo": "scelta", "valori_da": "stati" }, "obbligatorio": false, "descrizione": "Stati con cui entra in scena (§5.18)." },
-    "immunita": { "tipo": "lista", "voce": { "tipo": "scelta", "valori_da": "stati" }, "obbligatorio": false, "descrizione": "Stati che non subisce. Le altre immunità e resistenze vanno nelle note." },
+    "stati": {
+      "tipo": "lista",
+      "voce": {
+        "tipo": "scelta",
+        "valori_da": "stati"
+      },
+      "obbligatorio": false,
+      "descrizione": "Stati con cui entra in scena (§5.18)."
+    },
+    "immunita": {
+      "tipo": "lista",
+      "voce": {
+        "tipo": "scelta",
+        "valori_da": "stati"
+      },
+      "obbligatorio": false,
+      "descrizione": "Stati che non subisce. Le altre immunità e resistenze vanno nelle note."
+    },
     "incantesimi": {
-      "tipo": "lista", "obbligatorio": false,
-      "descrizione": "Incantesimi del nemico (A.73, decisione 8). Con nome della scheda, livello della versione, VA di lancio e costo in PM si lanciano con «Lancia!», scalando i PM del nemico; incompleti restano un promemoria.",
-      "completo_se": ["nome", "livello", "va", "costo_pm"],
+      "tipo": "lista",
+      "obbligatorio": false,
+      "descrizione": "Incantesimi del nemico (A.73, decisione 8). Con nome della scheda, livello della versione, VA di lancio e costo in PM si lanciano con «Lancia!», scalando i PM del nemico; incompleti restano un promemoria. Regime di lancio obbligatorio per lanciare (A.84); bonus di SAG al danno magico dichiarato (A.85).",
+      "completo_se": [
+        "nome",
+        "livello",
+        "va",
+        "costo_pm",
+        "regime"
+      ],
       "voce": {
         "tipo": "oggetto",
         "campi": {
-          "nome": { "tipo": "testo", "obbligatorio": true, "descrizione": "Nome della scheda in incantesimi.json." },
-          "livello": { "tipo": "intero", "min": 1, "obbligatorio": false, "descrizione": "Livello della versione utilizzabile." },
-          "va": { "tipo": "intero", "obbligatorio": false, "descrizione": "VA di lancio già calcolato per quella versione, prima dei modificatori temporanei." },
-          "costo_pm": { "tipo": "intero", "min": 0, "obbligatorio": false },
-          "azioni": { "tipo": "testo", "obbligatorio": false, "descrizione": "Azioni e durata del lancio, se diverse dalla scheda." },
-          "eccezioni": { "tipo": "testo", "obbligatorio": false, "descrizione": "Eccezioni specifiche del nemico." },
-          "note": { "tipo": "testo", "obbligatorio": false }
+          "nome": {
+            "tipo": "testo",
+            "obbligatorio": true,
+            "descrizione": "Nome della scheda in incantesimi.json."
+          },
+          "livello": {
+            "tipo": "intero",
+            "min": 1,
+            "obbligatorio": false,
+            "descrizione": "Livello della versione utilizzabile."
+          },
+          "va": {
+            "tipo": "intero",
+            "obbligatorio": false,
+            "descrizione": "VA di lancio già calcolato per quella versione, prima dei modificatori temporanei."
+          },
+          "costo_pm": {
+            "tipo": "intero",
+            "min": 0,
+            "obbligatorio": false
+          },
+          "regime": {
+            "tipo": "scelta",
+            "valori": [
+              "taumaturgo",
+              "altro_utilizzatore",
+              "capacita_specifica"
+            ],
+            "obbligatorio": false,
+            "descrizione": "A.84 (E&L del 05/10/2026): Taumaturgo (versioni 1–3 senza Prova, poi 0/−2/−4/−6/−8), altro utilizzatore autorizzato (Prova sempre, 0/−2/−4/−6/−8/−10), capacità specifica (segue il profilo). Per gli umani dall’Addestramento effettivo; una creatura capace di magia non è automaticamente un Taumaturgo. Senza regime la voce è incompleta."
+          },
+          "bonus_danno_magico": {
+            "tipo": "intero",
+            "min": 0,
+            "oppure": [
+              "incluso"
+            ],
+            "obbligatorio": false,
+            "descrizione": "A.85: bonus di SAG al danno magico. Umani costruiti come PG: calcolato (tetti +1/+2/+3 per livello); creature: dichiarato nel profilo, mai dedotto dalla fascia; «incluso» se la formula della scheda lo contiene già. Si aggiunge una sola volta."
+          },
+          "azioni": {
+            "tipo": "testo",
+            "obbligatorio": false,
+            "descrizione": "Azioni e durata del lancio, se diverse dalla scheda."
+          },
+          "eccezioni": {
+            "tipo": "testo",
+            "obbligatorio": false,
+            "descrizione": "Eccezioni specifiche del nemico."
+          },
+          "note": {
+            "tipo": "testo",
+            "obbligatorio": false
+          }
         }
       }
     },
-    "note": { "tipo": "testo", "obbligatorio": false, "descrizione": "Comportamento, immunità e resistenze non tabellate, tattica." }
+    "note": {
+      "tipo": "testo",
+      "obbligatorio": false,
+      "descrizione": "Comportamento, immunità e resistenze non tabellate, tattica."
+    }
+  },
+  "regimi_lancio": {
+    "taumaturgo": "taumaturgo",
+    "altro_utilizzatore": "altri",
+    "capacita_specifica": null,
+    "_nota": "A.84: colonna di regole.json → lancio.penalita_livello per ciascun regime; la capacità specifica segue il profilo e resta un promemoria."
   }
 }

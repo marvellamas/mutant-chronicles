@@ -811,6 +811,19 @@ le altre si registrano lotto per lotto.
     `richiede_penetrazione`, `iniziale_una_per_attacco`, `decisione`), `src/danno.js` → `applicaColpo` (il controllo
     dell'AR passa dall'interfaccia al motore). Periodicità e maggiore erano già in `src/periodici.js`.
 
+101. **Regime di lancio dei nemici** (A.84). Taumaturgo (versioni 1–3 senza Prova salvo le condizioni che la
+    impongono, poi 0/−2/−4/−6/−8), altro utilizzatore autorizzato (Prova sempre, 0/−2/−4/−6/−8/−10), capacità specifica
+    (segue il profilo: promemoria). Per gli umani dall'Addestramento effettivo; una creatura capace di magia non è
+    automaticamente un Taumaturgo; senza regime la voce è incompleta. → `formato_nemici.json` → `incantesimi.voce.regime`
+    (in `completo_se`), `regimi_lancio`; `src/nemico-lancio.js` (colonna giusta, via l'assunzione «tutti Taumaturghi»
+    e il suo promemoria); `src/nemico-da-pg.js` scrive il regime. Corretto l'errore della ricognizione: un PG non
+    Taumaturgo convertito in nemico aveva il VA di lancio ricalcolato con la penalità del Taumaturgo. Il Legionario
+    oscuro d'esempio resta senza regime (incompleto) finché il profilo non lo dichiara.
+102. **Bonus di SAG al danno magico dei nemici** (A.85). Non è nel danno del catalogo: per gli umani costruiti come PG
+    si calcola con i tetti +1/+2/+3 (`nemicoDaPg`), per le creature si dichiara nel profilo
+    (`bonus_danno_magico`, intero o «incluso» se la formula lo contiene già); si aggiunge una sola volta; se manca, il
+    danno lo segnala («bonus di SAG da dichiarare») e non lo assume 0. Bestiario umano rigenerato.
+
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 
 Il Manuale dei Veicoli 0.2 è completo di numeri e il lotto 2 (dati e motore) non ha dovuto inventare nulla. Restano

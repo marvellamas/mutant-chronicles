@@ -2,6 +2,7 @@
 // ad A.73 (E&L del 02/10, decisioni 5–9): Ferite e Menomazioni come i PG, «Lancia!» con i PM del nemico,
 // movimento «non consentito», parità d'Iniziativa con una Caratteristica mancante, A.78 negli attacchi.
 import { test } from 'node:test';
+import { aggiungiDanno } from '../src/equipaggiamento.js';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { nuovoScontro, aggiungiNemici, registraColpo, annullaUltimoColpo, registraTiro, ordineIniziativa, registraLancioNemico, variaPmNemico, validaScontro } from '../src/scontro.js';
@@ -53,7 +54,7 @@ test('A.73, decisione 7: Ferita e Menomazione su un nemico come per i PG (§5.14
 
 const inquisitore = (pm = 12) => ({
   ...copia(legionario), id: 'inquisitore-prova', nome: 'Inquisitore di prova', pm,
-  incantesimi: [{ nome: 'Dardo Psichico', livello: 8, va: 14, costo_pm: 8 }, { nome: 'Dardo Psichico', note: 'senza versione' }],
+  incantesimi: [{ nome: 'Dardo Psichico', livello: 8, va: 14, costo_pm: 8, regime: 'taumaturgo', bonus_danno_magico: 2 }, { nome: 'Dardo Psichico', note: 'senza versione' }],
 });
 
 test('A.73, decisione 8: «Lancia!» di un nemico con dati completi; PM scalati nello scontro', () => {
@@ -66,6 +67,8 @@ test('A.73, decisione 8: «Lancia!» di un nemico con dati completi; PM scalati 
   // livello 8: penalità −2 della sez. 1 già nel VA del nemico; il totale resta il suo VA
   assert.deepEqual([r.pm_costo, r.prova_richiesta, r.va_potere_finale, r.impossibile], [8, true, 14, null]);
   assert.equal(r.danno.voci[0].base, x.inc.versioni[0]['Danno psichico']);
+  // A.85: il bonus di SAG dichiarato si aggiunge una volta
+  assert.equal(r.danno.voci[0].testo, aggiungiDanno(r.danno.voci[0].base, 2));
   // le condizioni del pannello valgono come per i PG: Ingaggio −2 (sez. 2)
   assert.equal(calcolaLancioNemico(p, 0, { ingaggio: true }, dati).risultato.va_potere_finale, 14 + dati.regole.lancio.ingaggio.va);
   // Anticipazione: costo doppio, oltre i PM del nemico → non lanciabile
@@ -79,9 +82,17 @@ test('A.73, decisione 8: «Lancia!» di un nemico con dati completi; PM scalati 
   assert.equal(nemico(s).pm.attuali, 12);
   // incompleta: solo promemoria
   assert.equal(calcolaLancioNemico(p, 1, {}, dati), null);
-  assert.match(statoIncantesimoNemico(n.incantesimi[1], dati).motivo, /mancano livello, va, costo_pm/);
-  assert.match(statoIncantesimoNemico({ nome: 'Dardo Psichico', livello: 40, va: 10, costo_pm: 1 }, dati).motivo, /versione di livello 40/);
-  assert.match(statoIncantesimoNemico({ nome: 'Palla di Sabbia', livello: 1, va: 10, costo_pm: 1 }, dati).motivo, /non è fra le schede/);
+  assert.match(statoIncantesimoNemico(n.incantesimi[1], dati).motivo, /mancano livello, va, costo_pm, regime/);
+  assert.match(statoIncantesimoNemico({ nome: 'Dardo Psichico', livello: 40, va: 10, costo_pm: 1, regime: 'taumaturgo' }, dati).motivo, /versione di livello 40/);
+  assert.match(statoIncantesimoNemico({ nome: 'Palla di Sabbia', livello: 1, va: 10, costo_pm: 1, regime: 'taumaturgo' }, dati).motivo, /non è fra le schede/);
+});
+
+test('A.84: altro utilizzatore al livello 8 — VA del nemico invariato, colonna «altri» (non più quella del Taumaturgo)', () => {
+  const n = { ...inquisitore(), incantesimi: [{ nome: 'Dardo Psichico', livello: 8, va: 14, costo_pm: 8, regime: 'altro_utilizzatore', bonus_danno_magico: 'incluso' }] };
+  const x = calcolaLancioNemico(nemico(conNemico(n)), 0, {}, dati);
+  assert.deepEqual([x.risultato.va_potere_finale, x.risultato.prova_richiesta], [14, true]);
+  assert.ok(x.chi.scheda.abilita[0].scomposizione.some((v) => v.valore === 4 && /altri utilizzatori/.test(v.etichetta)));
+  assert.equal(x.risultato.danno.voci[0].testo, x.risultato.danno.voci[0].base, '«incluso»: niente da aggiungere');
 });
 
 test('A.73, decisione 9: movimento mancante dal Passo, «non consentito» senza calcolo', () => {
@@ -126,14 +137,19 @@ test('esempi aggiornati ad A.73: sei Caratteristiche, campi nuovi, incantesimo c
     assert.equal(Object.keys(n.caratteristiche).length, 6, f);
     assert.ok(n.azioni && n.abilita?.length && n.capacita?.length, f);
   }
-  const leg = leggi('legionario-oscuro.json');
-  assert.deepEqual(leg.incantesimi.map((i) => statoIncantesimoNemico(i, dati).completo), [true, false]);
+  const leg0 = leggi('legionario-oscuro.json');
+  // A.84: una creatura capace di magia non è automaticamente un Taumaturgo: senza regime la voce è incompleta
+  assert.deepEqual(leg0.incantesimi.map((i) => statoIncantesimoNemico(i, dati).completo), [false, false]);
+  assert.match(statoIncantesimoNemico(leg0.incantesimi[0], dati).motivo, /regime/);
+  const leg = { ...leg0, incantesimi: [{ ...leg0.incantesimi[0], regime: 'altro_utilizzatore' }, leg0.incantesimi[1]] };
   assert.equal(testoMovimento(leg, dati), 'Passo 6 Q · Corsa 10 Q · Scatto non consentito');
   const p = nemico(conNemico(leg));
   const r = calcolaLancioNemico(p, 0, {}, dati).risultato;
-  // livello 3 del Taumaturgo: niente Prova, con il promemoria per chi non lo è
-  assert.deepEqual([r.pm_costo, r.prova_richiesta, r.impossibile], [3, false, null]);
-  assert.match(r.promemoria[0], /se il nemico non è Taumaturgo/);
+  // altro utilizzatore autorizzato (A.84): Prova sempre, colonna «altri» (livello 3: 0); bonus di SAG non dichiarato (A.85)
+  assert.deepEqual([r.pm_costo, r.prova_richiesta, r.impossibile, r.va_potere_finale], [3, true, null, leg.incantesimi[0].va]);
+  assert.ok(r.promemoria.some((x) => /bonus non vale 0 \(A\.85\)/.test(x)));
+  // la capacità specifica segue il profilo: promemoria
+  assert.match(statoIncantesimoNemico({ ...leg.incantesimi[0], regime: 'capacita_specifica' }, dati).motivo, /capacità specifica/);
   // dopo il lancio, «Colpito» precompilata con il danno della versione (senza bonus di Caratteristica)
   const x = calcolaLancioNemico(p, 0, {}, dati);
   assert.deepEqual(propostaLancio(x.inc, x.risultato, dati), { formula: '1d4+2', moltiplicatore: 1, moltiplicatorePrimo: 1, tipo: 'distanza', ac: 1, proprieta: [] });
