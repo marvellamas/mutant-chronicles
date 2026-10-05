@@ -13,7 +13,8 @@ import {
 } from '../character.js';
 import { h, svuota, scaricaFile } from './dom.js';
 import * as archivio from './storage.js';
-import { elencoVeicoli } from './veicoli-registro.js';
+import { elencoVeicoli, migraNelRegistro } from './veicoli-registro.js';
+import { eRiferimento } from '../veicoli-registro.js';
 import { serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella } from './cartella.js';
 import { controllaRemoto, revisioneDaScrivere, differenzeSessione, testoScelta, indicatoreCollegamento, impronta } from '../collegamento.js';
 import { leggiScontroAperto, leggiScontro, salvaScontro } from './scontro.js';
@@ -1172,6 +1173,27 @@ function apriScheda(tab) {
   persisti();
   renderScheda();
   window.scrollTo(0, 0);
+  migraVeicoliAllApertura();
+}
+
+/**
+ * A.91 (difetto del collaudo del 05/10/2026): con il server i veicoli ancora nel file del PG passano nel registro
+ * appena si apre la scheda, non solo dalla tab Veicoli; nel PG resta il riferimento.
+ */
+function migraVeicoliAllApertura() {
+  if (!stato.cartella || !(stato.scelte?.veicoli ?? []).some((v) => v && typeof v === 'object' && !eRiferimento(v))) return;
+  const id = stato.id;
+  const prima = stato.scelte.veicoli;
+  const chi = { pg: archivio.carica(id)?.pg ?? null, chiave: chiavePersonaggio(stato.scelte?.nome ?? ''), nome: String(stato.scelte?.nome ?? '').trim() };
+  migraNelRegistro(prima, chi).then((m) => {
+    if (stato.id !== id || stato.scelte.veicoli !== prima) return; // cambiato nel frattempo: ci pensa la tab
+    if (!m.veicoli.some((v, i) => eRiferimento(v) && !eRiferimento(prima[i]))) return;
+    const { scelte } = applicaModifica(stato.scelte, { veicoli: m.veicoli }, stato.dati);
+    stato.scelte = scelte;
+    stato.messaggioScheda = { tipo: m.avvisi.length ? 'attenzione' : 'ok', testo: [`Veicoli nel registro unico del Tavolo (A.91): ${m.nuovi.map((x) => x.mezzo.nome).join(', ') || 'riferimenti aggiornati'}.`, ...m.avvisi].join(' ') };
+    persisti();
+    if (stato.passo === PASSO_SCHEDA) renderScheda({ mantieniScorrimento: true });
+  }).catch(() => { /* registro non raggiungibile: resta la copia locale */ });
 }
 
 /** Cambia tab senza aggiungere voci alla cronologia: il tasto Indietro non scorre le tab. */

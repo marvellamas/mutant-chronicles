@@ -8,7 +8,9 @@
 //     conducente: { pg?, chiave, nome } | null, mitragliere: { pg?, chiave, nome } | null,
 //     mezzo: { …il veicolo di src/veicoli.js: profilo o scheda, PI, rinforzi, energia, munizioni, andature… },
 //     movimento: { scontro, round, da } | null }        // movimento già eseguito nel Round (A.105)
-// Nel file del PG resta il riferimento { uid, rif: id, nome }. Senza server il veicolo resta nel file del PG.
+// Nel file del PG resta il riferimento { uid, rif: id, nome }. Senza server il veicolo resta nel file del PG. La
+// migrazione avviene all'avvio del server, quando la plancia legge o cambia il tavolo, alla lettura del file di un PG
+// (server.mjs → migraVeicoliCartella) e all'apertura della scheda con il server (src/ui/app.js).
 // TODO(Davide) A.113: permessi (oggi il master può cambiare tutto, i PG i veicoli che vedono) e nome della struttura
 // («Corpo principale» come nel Manuale dei Veicoli) sono provvisori.
 import { normalizzaVeicoli, andaturaResidua } from './veicoli.js';

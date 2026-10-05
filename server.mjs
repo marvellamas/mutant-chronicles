@@ -42,8 +42,9 @@ import { networkInterfaces } from 'node:os';
 import { indirizziRete, testoAvvio } from './src/rete.js';
 import { validaScontro } from './src/scontro.js';
 import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
-import { NOME_FILE, fileProvvisorio } from './src/cartella.js';
-import { validaRecord, ID_VEICOLO } from './src/veicoli-registro.js';
+import { NOME_FILE, fileProvvisorio, ultimiPerPersonaggio, chiaveDaFile, chiavePersonaggio } from './src/cartella.js';
+import { validaRecord, ID_VEICOLO, migraVeicoli, eRiferimento } from './src/veicoli-registro.js';
+import { normalizzaVeicoli } from './src/veicoli.js';
 import { caricaDati } from './src/rules.js';
 import { validaNemico, formattaErrore } from './src/validate.js';
 
@@ -213,6 +214,72 @@ async function apiVeicoli(req, res, percorso, veicoli) {
   return json(res, 200, nuovo);
 }
 
+/**
+ * Migrazione dei veicoli nel registro (A.91; difetto del collaudo del 05/10/2026: avveniva solo aprendo la tab
+ * Veicoli). Per l'ultimo file di ogni PG in personaggi/ (o dei soli `chiavi`): i veicoli ancora locali diventano
+ * record di veicoli/ e nel file resta il riferimento (src/veicoli-registro.js → migraVeicoli, la stessa della scheda).
+ * Una sola volta per veicolo: un id già nel registro dà solo il riferimento; lo stesso veicolo del gruppo in un altro
+ * file resta com'è, con un avviso. Il file del PG si riscrive solo se la sua data non è cambiata dalla lettura: la
+ * data è la revisione (X-Mutant-Mtime), quindi una scheda aperta che salva dopo riceve il 409 e rilegge.
+ * Un'esecuzione alla volta; i file già esaminati si saltano finché la loro data non cambia.
+ */
+const migrazioni = { coda: Promise.resolve(), visti: new Map() };
+export function migraVeicoliCartella({ cartella, veicoli, radice = RADICE, chiavi = null }) {
+  const lavoro = migrazioni.coda.then(() => migraOra({ cartella, veicoli, radice, chiavi }));
+  migrazioni.coda = lavoro.catch(() => {});
+  return lavoro;
+}
+async function migraOra({ cartella, veicoli, radice, chiavi }) {
+  const esito = { record: [], file: [], avvisi: [] };
+  if (!veicoli) return esito;
+  const { dati } = await datiDelServer(radice);
+  if (!dati?.veicoli) return esito;
+  let nomi = [];
+  try { nomi = (await readdir(cartella)).filter((f) => NOME_FILE.test(f)); } catch { return esito; }
+  const elenco = await Promise.all(nomi.map(async (file) => {
+    const m = NOME_FILE.exec(file);
+    return { file, nome: m[1], livello: Number(m[2]), data: m[3], mtime: (await stat(join(cartella, file))).mtimeMs };
+  }));
+  const voluti = chiavi ? new Set(chiavi.map((k) => formaFile(k))) : null;
+  for (const [k, r] of ultimiPerPersonaggio(elenco)) {
+    if (voluti && !voluti.has(formaFile(k))) continue;
+    const dove = join(cartella, r.file);
+    if (migrazioni.visti.get(dove) === r.mtime) continue;
+    let o;
+    try { o = JSON.parse(await readFile(dove, 'utf8')); } catch { migrazioni.visti.set(dove, r.mtime); continue; }
+    const locali = Array.isArray(o?.scelte?.veicoli) ? o.scelte.veicoli.filter((v) => v && typeof v === 'object' && !eRiferimento(v)) : [];
+    if (o?.formato !== 'mutant-personaggio' || !locali.length) { migrazioni.visti.set(dove, r.mtime); continue; }
+    await mkdir(veicoli, { recursive: true });
+    const registro = [];
+    for (const f of (await readdir(veicoli)).filter((x) => x.endsWith('.json') && ID_VEICOLO.test(x.slice(0, -5)))) {
+      try { registro.push(await leggiJson(join(veicoli, f))); } catch { /* rovinato: non conta */ }
+    }
+    const nome = String(o.scelte.nome ?? '').trim();
+    const chi = { pg: typeof o.pg === 'string' ? o.pg : null, chiave: nome ? chiavePersonaggio(nome) : chiaveDaFile(r.file), nome: nome || k };
+    const m = migraVeicoli(normalizzaVeicoli(o.scelte.veicoli, dati), chi, registro);
+    esito.avvisi.push(...m.avvisi.map((x) => `${r.file}: ${x}`));
+    for (const rec of m.nuovi) {
+      const dv = join(veicoli, `${rec.id}.json`);
+      if (await stat(dv).then(() => true, () => false)) continue; // creato nel frattempo: resta quello
+      await scriviJson(dv, { ...rec, revisione: 1, aggiornato: new Date().toISOString() });
+      esito.record.push(rec.id);
+    }
+    const cambiati = m.veicoli.some((v, i) => v !== o.scelte.veicoli[i]) && m.veicoli.some(eRiferimento);
+    // la revisione: si riscrive solo se il file è ancora quello letto
+    const ora = await stat(dove).then((s) => s.mtimeMs, () => null);
+    if (cambiati && ora === r.mtime) {
+      const nuovo = { ...o, scelte: { ...o.scelte, veicoli: m.veicoli.map((v) => (eRiferimento(v) ? v : o.scelte.veicoli.find((x) => x?.uid === v.uid) ?? v)) } };
+      const tmp = `${dove}.tmp-${process.pid}`;
+      await writeFile(tmp, JSON.stringify(nuovo, null, 2));
+      await rename(tmp, dove);
+      cacheFile.delete(dove);
+      esito.file.push(r.file);
+    }
+    migrazioni.visti.set(dove, await stat(dove).then((s) => s.mtimeMs, () => null));
+  }
+  return esito;
+}
+
 /** Dati delle regole letti dal disco una volta sola, per validare i nemici come fa l'app. */
 const datiPerRadice = new Map();
 function datiDelServer(radice) {
@@ -272,7 +339,7 @@ async function caricaEsempi(radice, cartella, nemici) {
   return { copiati, saltati };
 }
 
-async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice, soloLocale, veicoli) {
+async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice, soloLocale, veicoli, migraIn = null) {
   if (percorso === '/api/veicoli' || percorso.startsWith('/api/veicoli/')) return apiVeicoli(req, res, percorso, veicoli);
   if (percorso === '/api/ping') return json(res, 200, { ok: true, app: 'mutant', cartella: CARTELLA });
   if (percorso === '/api/rete') {
@@ -285,7 +352,11 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
   if (percorso === '/api/tavolo') {
     const dove = join(tavolo, 'sessione.json');
     if (req.method === 'GET') {
-      try { return json(res, 200, selezione(JSON.parse(await readFile(dove, 'utf8')))); } catch { return json(res, 200, { versione: 1, personaggi: [] }); }
+      let v;
+      try { v = selezione(JSON.parse(await readFile(dove, 'utf8'))); } catch { return json(res, 200, { versione: 1, personaggi: [] }); }
+      // A.91: i veicoli dei PG al tavolo nel registro, così la plancia li vede senza che nessuno apra la scheda
+      if (v.personaggi.length) await migraVeicoliCartella({ cartella, veicoli: migraIn, radice, chiavi: v.personaggi }).catch(() => null);
+      return json(res, 200, v);
     }
     if (req.method === 'PUT') {
       let v;
@@ -294,6 +365,7 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
       const tmp = `${dove}.tmp-${process.pid}`;
       await writeFile(tmp, `${JSON.stringify(v, null, 2)}\n`);
       await rename(tmp, dove);
+      if (v.personaggi.length) await migraVeicoliCartella({ cartella, veicoli: migraIn, radice, chiavi: v.personaggi }).catch(() => null);
       return json(res, 200, v);
     }
     return json(res, 405, { errore: 'metodo non ammesso' });
@@ -316,6 +388,8 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
   if (!NOME_FILE.test(file)) return json(res, 400, { errore: 'nome di file non ammesso: serve «Nome_livN_AAAA-MM-GG.json»' });
   const dove = join(cartella, file);
   if (req.method === 'GET') {
+    // A.91: la scheda che si apre dalla cartella (o la plancia) legge il file già con i riferimenti al registro
+    await migraVeicoliCartella({ cartella, veicoli: migraIn, radice, chiavi: [chiaveDaFile(file)] }).catch(() => null);
     try {
       const testo = await readFile(dove);
       const s = await stat(dove);
@@ -399,18 +473,26 @@ async function statico(req, res, percorso, radice) {
  * Crea il server. `radice`: cartella dell'app; `cartella`: dove stanno i personaggi (per i test, una
  * cartella temporanea).
  */
-export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA), tavolo = join(RADICE, TAVOLO), scontri = join(RADICE, SCONTRI), nemici = join(RADICE, NEMICI), veicoli = join(RADICE, VEICOLI), soloLocale = false } = {}) {
+export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA), tavolo = join(RADICE, TAVOLO), scontri = join(RADICE, SCONTRI), nemici = join(RADICE, NEMICI), veicoli: veicoliDati = null, soloLocale = false } = {}) {
+  const veicoli = veicoliDati ?? join(RADICE, VEICOLI);
+  // A.91: la migrazione dei veicoli scrive nel registro solo se la sua cartella è indicata o con le cartelle del
+  // progetto (un server di prova su un'altra cartella dei PG non tocca veicoli/ del progetto)
+  const migraIn = veicoliDati ?? (normalize(cartella) === normalize(join(RADICE, CARTELLA)) ? veicoli : null);
+  // all'avvio, i veicoli ancora nei file dei PG passano nel registro (una sola volta per veicolo)
+  const migrazione = migraVeicoliCartella({ cartella, veicoli: migraIn, radice }).catch((e) => ({ errore: e.message }));
   const base = normalize(radice.endsWith(sep) ? radice : radice + sep);
-  return createServer(async (req, res) => {
+  const server = createServer(async (req, res) => {
     try {
       const percorso = decodeURI(new URL(req.url, 'http://x').pathname);
-      if (percorso.startsWith('/api/')) return await api(req, res, percorso, cartella, tavolo, scontri, nemici, base, soloLocale, veicoli);
+      if (percorso.startsWith('/api/')) return await api(req, res, percorso, cartella, tavolo, scontri, nemici, base, soloLocale, veicoli, migraIn);
       return await statico(req, res, percorso, base);
     } catch (e) {
       if (!res.headersSent) json(res, 500, { errore: e.message });
       else res.end();
     }
   });
+  server.migrazione = migrazione; // per i test e per il messaggio di avvio
+  return server;
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
@@ -427,9 +509,14 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const scontri = arg('scontri') ? normalize(arg('scontri')) : join(RADICE, SCONTRI);
   const nemici = arg('nemici') ? normalize(arg('nemici')) : join(RADICE, NEMICI);
   const veicoli = arg('veicoli') ? normalize(arg('veicoli')) : join(RADICE, VEICOLI);
-  creaServer({ cartella, tavolo, scontri, nemici, veicoli, soloLocale }).listen(porta, host, () => {
+  const server = creaServer({ cartella, tavolo, scontri, nemici, veicoli, soloLocale });
+  server.listen(porta, host, () => {
     console.log(testoAvvio(indirizziRete(networkInterfaces(), porta), porta, { soloLocale }));
     console.log(`Personaggi salvati in ${cartella}`);
+    server.migrazione.then((e) => {
+      if (e?.record?.length) console.log(`Veicoli spostati nel registro (veicoli/): ${e.record.join(', ')}.`);
+      for (const a of e?.avvisi ?? []) console.log(`Attenzione: ${a}`);
+    });
   }).on('error', (e) => {
     console.error(e.code === 'EADDRINUSE' ? `La porta ${porta} è già in uso: Mutant è forse già acceso.` : e.message);
     process.exit(1);
