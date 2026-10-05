@@ -144,3 +144,23 @@ test('il riferimento del registro non entra nella stampa né nel calcolo come me
   const [r] = normalizzaVeicoli([riferimento(nuovoRecord(scoutDiPablo(), pablo))], dati);
   assert.deepEqual(r, { uid: 'veimuu14mqa0', rif: 'veimuu14mqa0', nome: 'Scout' });
 });
+
+test('stampa (seguito di A.91): il veicolo del registro si stampa dal record; senza record il foglio lo dice', async () => {
+  const { preparaStampa } = await import('../src/stampa.js');
+  const rec = { ...cambiaConducente(nuovoRecord(scoutDiPablo(), pablo), pablo), revisione: 4 };
+  const creazione = { ...copia(MISHIMA_AGENTE), nome: 'Pablo Zaion', veicoli: [riferimento(rec)] };
+  const foglio = (st) => st.fogli.find((f) => f.id === 'veicoli')?.dati.veicoli;
+  // con il server: il record unico, con PI, conducente e revisione
+  const [v] = foglio(preparaStampa({ creazione, livelli: [] }, dati, { registroVeicoli: { record: [rec], chi: pablo } }));
+  assert.equal(v.registro.revisione, 4);
+  assert.equal(v.registro.conducente, 'PABLO ZAION');
+  assert.equal(v.conducente, true);
+  assert.deepEqual(v.strutture.map((s) => s.pi), [60, 36, 24]);
+  // server che non risponde, o stampa senza server: la pagina c'è e lo dice
+  const [x] = foglio(preparaStampa({ creazione, livelli: [] }, dati, { registroVeicoli: { record: [], chi: pablo, errore: 'registro non leggibile' } }));
+  assert.equal(x.nonRaggiungibile, true);
+  assert.match(x.motivo, /non leggibile/);
+  assert.match(foglio(preparaStampa({ creazione, livelli: [] }, dati))[0].motivo, /server di Mutant/);
+  // copia locale senza server: come prima
+  assert.equal(foglio(preparaStampa({ creazione: { ...creazione, veicoli: [scoutDiPablo()] }, livelli: [] }, dati))[0].registro, undefined);
+});

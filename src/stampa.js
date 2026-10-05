@@ -19,6 +19,7 @@ import { testoProvenienza } from './provenienza.js';
 import { attivazioneInfusa } from './lancio.js';
 import { gruppoTecnica, ordineGruppo, tecnicaDi, sintesiTecnica } from './tecniche.js';
 import { vistaVeicoloPersonaggio, pilotareDelPersonaggio } from './veicoli.js';
+import { eRiferimento, vede, stessaChiave } from './veicoli-registro.js';
 
 /** Limiti di impaginazione (non regole di gioco): lunghezze massime dei testi stampati. */
 export const LIMITI_STAMPA = {
@@ -187,7 +188,7 @@ export function condizionaliAbilita(scheda, nome) {
  *   sessione: solo per le tab, valori effettivi con le condizioni; la stampa resta a riposo }
  * @returns {{ completa, errori, scheda, fogli: {id, titolo, numero, totale, dati}[], piede: {nome, livello, versioni} }}
  */
-export function preparaStampa(personaggio, dati, { versioniDati = '', completo = false, sessione = null } = {}) {
+export function preparaStampa(personaggio, dati, { versioniDati = '', completo = false, sessione = null, registroVeicoli = null } = {}) {
   const p = migraPersonaggio(personaggio);
   const c = p.creazione;
   const s = calcolaScheda(sessione ? { ...p, sessione } : p, dati);
@@ -499,7 +500,7 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
   const cib = ciberneticaStampa(s, c, dati);
   if (cib) fogli.push({ id: 'cibernetica', titolo: 'Cibernetica', dati: cib });
   // foglio Veicoli (Manuale dei Veicoli 0.2, lotto 3): una pagina per veicolo, solo se il personaggio ne ha
-  const veicoli = veicoliStampa(s, c, dati);
+  const veicoli = veicoliStampa(s, c, dati, registroVeicoli);
   if (veicoli) fogli.push({ id: 'veicoli', titolo: 'Veicoli', dati: veicoli });
 
   const ordinati = ordinaFogli(fogli, dati);
@@ -686,15 +687,32 @@ export function artefattiStampa(s, creazione, dati, { conPoteri = false } = {}) 
 }
 
 /**
- * Foglio Veicoli: i mezzi del personaggio (scelte.veicoli, A.91 provvisoria) con la vista di src/veicoli.js
- * (profilo, strutture con PI e soglie, andature, rinforzi, NEC). Pilotare a riposo, se è il conducente.
+ * Foglio Veicoli: i mezzi del personaggio con la vista di src/veicoli.js (profilo, strutture con PI e soglie,
+ * andature, rinforzi, NEC). Pilotare a riposo, se è il conducente. Senza server la copia locale (scelte.veicoli);
+ * con il server (A.91) il record unico del registro: `registro` = { record, chi, errore? } letto dall'app. Un
+ * riferimento senza record raggiungibile dà una pagina che lo dice (`nonRaggiungibile`), invece di sparire.
  * null se il personaggio non ha veicoli o i dati dei veicoli non ci sono.
  */
-export function veicoliStampa(s, creazione, dati) {
-  if (!dati.veicoli || !Array.isArray(creazione.veicoli) || !creazione.veicoli.length) return null;
+export function veicoliStampa(s, creazione, dati, registro = null) {
+  if (!dati.veicoli) return null;
+  const propri = Array.isArray(creazione.veicoli) ? creazione.veicoli : [];
   const pilotare = pilotareDelPersonaggio(s.abilita, dati, { scheda: s });
-  const veicoli = creazione.veicoli.map((v) => vistaVeicoloPersonaggio(v, dati, { pilotare })).filter(Boolean);
-  return veicoli.length ? { veicoli } : null;
+  const record = registro?.record ?? [];
+  const daRecord = (rec) => {
+    const v = vistaVeicoloPersonaggio({ ...rec.mezzo, conducente: stessaChiave(rec.conducente?.chiave, registro.chi?.chiave), gruppo: rec.proprietario?.tipo === 'gruppo' }, dati, { pilotare });
+    return v && { ...v, registro: { id: rec.id, revisione: rec.revisione, proprietario: rec.proprietario?.tipo === 'gruppo' ? 'il gruppo' : rec.proprietario?.nome ?? '—', conducente: rec.conducente?.nome ?? null } };
+  };
+  const visti = new Set();
+  const veicoli = propri.map((v) => {
+    if (!eRiferimento(v)) return vistaVeicoloPersonaggio(v, dati, { pilotare });
+    visti.add(v.rif);
+    const rec = record.find((x) => x.id === v.rif);
+    return rec ? daRecord(rec) : { nonRaggiungibile: true, nome: v.nome, rif: v.rif, motivo: registro?.errore ?? (registro ? 'non è nel registro di questo server' : 'serve il server di Mutant (avvia-server.bat)') };
+  });
+  // come la tab: anche i veicoli del gruppo e quello che guida, se non sono già nel file
+  for (const rec of record) if (!visti.has(rec.id) && vede(rec, registro.chi)) veicoli.push(daRecord(rec));
+  const fine = veicoli.filter(Boolean);
+  return fine.length ? { veicoli: fine } : null;
 }
 
 /**

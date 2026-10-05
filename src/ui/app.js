@@ -13,6 +13,7 @@ import {
 } from '../character.js';
 import { h, svuota, scaricaFile } from './dom.js';
 import * as archivio from './storage.js';
+import { elencoVeicoli } from './veicoli-registro.js';
 import { serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella } from './cartella.js';
 import { controllaRemoto, revisioneDaScrivere, differenzeSessione, testoScelta, indicatoreCollegamento, impronta } from '../collegamento.js';
 import { leggiScontroAperto, leggiScontro, salvaScontro } from './scontro.js';
@@ -1141,10 +1142,16 @@ function renderSaliPagina() {
 // ---------------------------------------------------------------------------
 // Vista di stampa: quattro fogli A4 orizzontali dai soli valori calcolati
 
-function apriStampa() {
+async function apriStampa() {
   nascondiTooltip();
   document.title = `${stato.scelte.nome.trim() || 'Personaggio'} — Stampa · Mutant`;
-  const stampa = preparaStampa(personaggio(), stato.dati, { versioniDati: stato.versioni });
+  // A.91: con il server i veicoli si stampano dal registro unico; se non risponde, il foglio lo dice
+  let registroVeicoli = null;
+  if (stato.cartella) {
+    const chi = { pg: archivio.carica(stato.id)?.pg ?? null, chiave: chiavePersonaggio(stato.scelte?.nome ?? ''), nome: String(stato.scelte?.nome ?? '').trim() };
+    try { registroVeicoli = { record: await elencoVeicoli(), chi }; } catch (e) { registroVeicoli = { record: [], chi, errore: e.message }; }
+  }
+  const stampa = preparaStampa(personaggio(), stato.dati, { versioniDati: stato.versioni, registroVeicoli });
   const opzioni = normalizzaOpzioniStampa(stato.opzioniStampa);
   // le preferenze di stampa si salvano con il personaggio: ogni giocatore le ritrova come le ha lasciate
   const cambiaOpzioni = (modifica) => {

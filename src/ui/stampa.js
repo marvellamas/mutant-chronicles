@@ -768,6 +768,12 @@ const numeroIt = (n) => (Number.isInteger(n) ? n.toLocaleString('it-IT') : '—'
 const daDefinireSS = () => h('em', {}, 'da definire');
 
 function foglioVeicolo(v) {
+  // A.91: veicolo nel registro del Tavolo non raggiungibile da questa stampa
+  if (v.nonRaggiungibile) {
+    return [box({ titolo: 'Veicolo nel registro del Tavolo', classe: 'vei-profilo' },
+      h('p', {}, h('strong', {}, v.nome), ` (veicoli/${v.rif}.json): scheda non disponibile, ${v.motivo}.`),
+      h('p', { class: 'piccolo' }, 'La scheda unica del veicolo sta nel registro del Tavolo del Master (A.91): stampa con il server di Mutant acceso per avere PI, energia e andature.'))];
+  }
   const p = v.profilo;
   const voce = (etichetta, ...valore) => h('p', {}, h('strong', {}, `${etichetta} `), ...valore);
   const profilo = box({ titolo: v.manuale ? 'Profilo (scritto a mano)' : `Profilo · ${p.nome}`, classe: 'vei-profilo' },
@@ -779,7 +785,9 @@ function foglioVeicolo(v) {
       p.carico_kg ? ` · Carico ${numeroIt(p.carico_kg)} kg` : null, p.qualita ? ` · Qualità ${p.qualita}` : null),
     voce('Prezzo:', v.daDefinire.prezzo ? [Number.isInteger(p.prezzo_cr) ? `${numeroIt(p.prezzo_cr)} cr, parziale · ` : null, daDefinireSS()] : `${numeroIt(p.prezzo_cr)} cr`,
       ' · ', h('strong', {}, 'REP '), v.daDefinire.reperibilita ? daDefinireSS() : p.reperibilita),
-    h('p', { class: 'piccolo' }, [v.gruppo ? 'Veicolo del gruppo (informativo, A.91). ' : null, v.conducente ? 'Conducente: questo personaggio.' : 'Conducente: ________________']));
+    h('p', { class: 'piccolo' }, v.registro
+      ? `Registro del Tavolo (A.91), revisione ${v.registro.revisione} · proprietario: ${v.registro.proprietario} · conducente: ${v.registro.conducente ?? '________________'}`
+      : [v.gruppo ? 'Veicolo del gruppo (copia locale, A.91). ' : null, v.conducente ? 'Conducente: questo personaggio.' : 'Conducente: ________________']));
   const pilotare = v.pilotare
     ? box({ titolo: 'Pilotare da conducente', classe: 'vei-pilotare' },
       h('p', {}, h('strong', { class: 'vei-va' }, v.pilotare.valore < 0 ? `−${-v.pilotare.valore}` : String(v.pilotare.valore)), h('span', { class: 'piccolo' }, ` ${testoProvenienza(v.pilotare.provenienza, { totale: null, separatore: ' · ', note: false })}`)),
