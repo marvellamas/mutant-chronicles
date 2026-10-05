@@ -884,6 +884,18 @@ le altre si registrano lotto per lotto.
     `umanita.riabilitazione`, `src/umanita.js` → `riabilitazione` (recuperi legati alla perdita, `uid` e `procedura`),
     tab Cibernetica («Riabilitazione» sulle perdite recuperabili; tolto il recupero libero). I recuperi registrati prima,
     senza rimozione, restano nel calcolo con un avviso, senza modifiche automatiche: `TODO(Davide)` A.111.
+111. **Scheda unica del veicolo** (A.91 e A.105). Un veicolo ha un solo record, condiviso fra le schede dei PG e il
+    Tavolo del Master: cartella `veicoli/` del server (fuori da git, `LEGGIMI.txt` tracciato), un file per veicolo con
+    revisione e conflitto 409 come gli scontri (`server.mjs` → `/api/veicoli`); proprietario (un PG o il gruppo)
+    distinto dal conducente, mitragliere a parte. Nel file del PG resta il riferimento `{ uid, rif, nome }`; un veicolo
+    salvato prima nel file diventa un record alla prima apertura con il server (PI, energia, munizioni, andature
+    conservati); lo stesso veicolo del gruppo in più file si segnala e non si unisce da solo. Le modifiche concorrenti
+    si riapplicano campo per campo sul record nuovo (`applicaPatch`). Senza server il veicolo resta nel file del PG,
+    con l'avviso. In scontro il mezzo non ha Iniziativa né Azioni: si muove all'Iniziativa del conducente, una volta
+    per Round, e il cambio di conducente non concede un secondo movimento; conducente a 0 PV o Svenuto → movimento
+    residuo del §5.6. Carta del veicolo nella plancia con «Muovi» e «Colpito». → `src/veicoli-registro.js`,
+    `src/ui/veicoli-registro.js`, tab Veicoli, `src/ui/tavolo.js`. Permessi e nome della struttura provvisori:
+    `TODO(Davide)` A.113 (`veicoli.json` → `personaggio`).
 
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 

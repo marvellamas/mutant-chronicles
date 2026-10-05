@@ -28,6 +28,9 @@ import { avviso, avvisoErrore } from './avvisi.js';
 import { apriCreaNemico, apriDaBestiario } from './crea-nemico.js';
 import { apriPreparazione } from './preparazione.js';
 import { riquadroCollega, leggiRete } from './collega.js';
+import { cartaVeicoloPlancia } from './veicoli.js';
+import { stessaChiave } from '../veicoli-registro.js';
+import { elencoVeicoli, aggiornaVeicolo } from './veicoli-registro.js';
 
 const INTERVALLO_MS = 3000;
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
@@ -78,6 +81,10 @@ export function renderTavolo(radice, ctx) {
     // «Collega i giocatori»: indirizzi della rete (server.mjs → /api/rete), riquadro aperto finché non lo si chiude
     rete: null,
     collegaAperto: true,
+    // A.105: registro unico dei veicoli (veicoli/ sul server), stato dei pannelli «Colpito» delle carte
+    veicoli: [],
+    firmaVeicoli: null,
+    uiVeicoli: {},
   };
 
   // salva una modifica dello scontro; con una revisione vecchia (altra finestra) ricarica quello attuale
@@ -313,6 +320,7 @@ export function renderTavolo(radice, ctx) {
         h('h2', { class: 'plancia-sezione' }, 'Nemici nello scontro'),
         h('div', { class: 'plancia-griglia' }, nemiciInCarta().map((p) => cartaNemico(ctx, p, { modifica, durate: durateNemico(p), diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p), onAttacca: attacchiDi(p).length ? () => attacca(p, alTavolo) : null, onLancia: (i) => lancia(p, i, alTavolo), onRiduci: (v) => modifica((x) => riduciNemico(x, p.id, v)), onRegime: (k, r) => modifica((x) => confermaRegimeNemico(x, p.id, k, r, new Date())) }))),
       ] : null,
+      sezioneVeicoli(),
       pannelloBestiario(ctx, stato.bestiario, {
         aperto: stato.bestiarioAperto,
         onToggle: (v) => { stato.bestiarioAperto = v; },
@@ -572,6 +580,38 @@ export function renderTavolo(radice, ctx) {
     const fonte = t && confirm(`La fonte è ${t.nome} (di turno)? La perdita si applicherà alla sua Iniziativa. Annulla per metterla alla fine del Round.`) ? t.id : null;
     await modifica((x) => registraPeriodico(x, { ...d, ...(valore ? { valore } : {}), ...(formula ? { formula } : {}), fonte, fonteNome: nomePartecipante(x, fonte) }, undefined, ctx.dati));
   };
+  // A.105: veicoli del registro; conducente e mitragliere fra i PG dello scontro e del tavolo
+  const sezioneVeicoli = () => {
+    if (!stato.veicoli.length) return null;
+    const persone = new Map();
+    for (const p of stato.scontro?.partecipanti ?? []) if (p.tipo === 'pg' && p.chiave) persone.set(p.chiave, { chiave: p.chiave, nome: p.nome });
+    for (const [file, v] of stato.viste) if (stato.selezione.includes(chiaveDaFile(file)) && v?.nome) persone.set(chiaveDaFile(file), { chiave: chiaveDaFile(file), nome: v.nome });
+    const vistaDi = (k) => [...stato.viste].find(([f]) => stessaChiave(chiaveDaFile(f), k))?.[1] ?? null;
+    // conducente incapace (§5.6): a 0 PV o Svenuto nella sua scheda
+    const incapace = (k) => { const v = vistaDi(k); return Boolean(v?.completa && (v.pv.attuali <= 0 || v.stati.some((x) => /svenut/i.test(x.nome)))); };
+    const ctxV = { dati: ctx.dati, ui: stato.uiVeicoli, azioni: { ridisegna: disegna } };
+    const scrivi = (prima) => async (dopo, messaggio) => {
+      try {
+        const { record, conflitti } = await aggiornaVeicolo(prima, dopo);
+        stato.veicoli = stato.veicoli.map((x) => (x.id === record.id ? record : x));
+        if (conflitti.length) avviso(`${record.mezzo.nome}: ${conflitti.join(', ')} cambiati anche altrove, resta il valore del registro.`);
+        else if (messaggio) avviso(messaggio);
+      } catch (e) { avvisoErrore(`Veicolo non salvato: ${e.message}`); }
+      disegna();
+    };
+    const t = stato.scontro ? diTurno(stato.scontro) : null;
+    return [h('h2', { class: 'plancia-sezione' }, 'Veicoli'),
+      h('p', { class: 'nota' }, 'Scheda unica dei veicoli (veicoli/, A.91 e A.105): le stesse modifiche le vedono le schede dei PG. Permessi e nomi provvisori (A.113).'),
+      h('div', { class: 'plancia-griglia' }, stato.veicoli.map((rec) => cartaVeicoloPlancia(ctxV, rec, { scontro: stato.scontro, diTurno: t, persone: [...persone.values()], incapace, scrivi: scrivi(rec) })))];
+  };
+  const aggiornaVeicoli = async () => {
+    const lista = await elencoVeicoli();
+    const firma = JSON.stringify(lista.map((x) => [x.id, x.revisione]));
+    if (firma === stato.firmaVeicoli) return false;
+    stato.firmaVeicoli = firma;
+    stato.veicoli = lista;
+    return true;
+  };
   const nemiciInScontro = () => (stato.scontro?.partecipanti ?? []).filter((p) => p.tipo === 'nemico');
   // nella plancia i nemici a 0 PV vanno in fondo, dopo tutti gli altri (l'ordine dei turni non cambia)
   const nemiciInCarta = () => [...nemiciInScontro().filter((p) => p.pv.attuali > 0), ...nemiciInScontro().filter((p) => p.pv.attuali === 0)];
@@ -618,6 +658,11 @@ export function renderTavolo(radice, ctx) {
     }
     try {
       if (await aggiornaBestiario()) cambiato = true;
+    } catch (e) {
+      stato.errore = e.message;
+    }
+    try {
+      if (await aggiornaVeicoli()) cambiato = true;
     } catch (e) {
       stato.errore = e.message;
     }

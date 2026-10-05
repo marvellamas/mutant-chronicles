@@ -1,0 +1,17 @@
+Registro dei veicoli di Mutant
+==============================
+
+Qui il server di Mutant (avvia-server.bat, cioe' node server.mjs) tiene un file per ogni veicolo
+della campagna: vei....json. E' la scheda unica del veicolo (E&L del 05/10/2026, A.91 e A.105):
+le schede dei personaggi e il Tavolo del Master leggono e scrivono lo stesso file, con una revisione
+che impedisce di sovrascrivere le modifiche fatte altrove.
+
+- Il proprietario e' un personaggio oppure il gruppo; il conducente attuale e' a parte.
+- Nel file del personaggio resta solo il riferimento al veicolo (rif).
+- Un veicolo salvato prima nel file di un personaggio diventa un file di questa cartella la prima
+  volta che il personaggio si apre con il server acceso.
+- Il server non cancella nulla: un veicolo che non serve piu' si toglie a mano.
+- I file di questa cartella non vanno su GitHub (.gitignore): sono dati di gioco.
+
+Senza il server (avvia.bat, npx serve, GitHub Pages) questa cartella non si usa: il veicolo resta
+nel file del personaggio, come copia locale.

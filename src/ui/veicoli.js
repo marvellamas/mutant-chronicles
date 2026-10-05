@@ -11,6 +11,8 @@ import {
   montaRicambio, struttureVeicolo, profiloDi, consumaRisorse, installaRicambioEnergia, munizioniArmaVeicolo,
   sollecitazioneFallita, eseguiCambioAndatura,
 } from '../veicoli.js';
+import { migraVeicoli, nuovoRecord, riferimento, vede, eRiferimento, statoMovimento, muoviVeicolo, cambiaConducente, movimentoResiduo, stessaChiave } from '../veicoli-registro.js';
+import { elencoVeicoli, scriviVeicolo, aggiornaVeicolo } from './veicoli-registro.js';
 
 const numero = (n) => (Number.isInteger(n) ? n.toLocaleString('it-IT') : '—');
 const daDefinire = () => h('em', { class: 'da-definire' }, 'da definire');
@@ -32,11 +34,16 @@ function salva(ctx, veicoli, messaggio = null) {
 const sostituisci = (ctx, mezzo) => (ctx.scelte.veicoli ?? []).map((v) => (v.uid === mezzo.uid ? mezzo : v));
 
 export function tabVeicoli(ctx) {
-  const veicoli = ctx.scelte.veicoli ?? [];
+  // A.91 (E&L del 05/10/2026): con il server il veicolo è un record unico del registro (veicoli/), condiviso con il
+  // Tavolo del Master; senza server resta nel file del PG come copia locale
+  if (ctx.server) return tabVeicoliRegistro(ctx);
+  const veicoli = (ctx.scelte.veicoli ?? []).filter((v) => !eRiferimento(v));
   const P = ctx.dati.veicoli.personaggio ?? {};
   const pilotare = pilotareDelPersonaggio(abilitaDellaTab(ctx), ctx.dati, { scheda: ctx.tab.scheda });
+  const riferimenti = (ctx.scelte.veicoli ?? []).filter(eRiferimento);
   return [
-    h('p', { class: 'nota' }, 'I veicoli stanno nella scheda di chi li possiede. «Veicolo del gruppo» lo segnala come condiviso, senza sincronizzare le schede: decisione provvisoria, in attesa della risposta di Davide (A.91).'),
+    h('p', { class: 'riquadro attenzione' }, 'Senza il server di Mutant (avvia-server.bat) il veicolo è una copia locale in questa scheda: la scheda unica condivisa con le altre schede e con il Tavolo del Master richiede il server (A.91).'),
+    riferimenti.length ? h('p', { class: 'nota' }, `Nel registro dei veicoli del Tavolo: ${riferimenti.map((x) => x.nome).join(', ')}. Si vedono e si modificano con il server acceso.`) : null,
     h('div', { class: 'riga-azioni' }, h('button', { type: 'button', class: 'btn primario', onclick: () => { statoUi(ctx).aggiungi = statoUi(ctx).aggiungi ? null : { origine: ctx.dati.veicoli.profili[0]?.id ?? 'mano', nome: '', scheda: {} }; ctx.azioni.ridisegna(); } }, 'Aggiungi veicolo')),
     statoUi(ctx).aggiungi ? pannelloAggiungi(ctx) : null,
     veicoli.length ? veicoli.map((v) => schedaVeicolo(ctx, v, pilotare))
@@ -45,9 +52,88 @@ export function tabVeicoli(ctx) {
   ];
 }
 
+// --- registro unico (A.91) ---------------------------------------------------------------------------
+
+/** Stato del registro nella tab (ctx.ui, non si salva): record letti, avvisi della migrazione. */
+const statoRegistro = (ctx) => (statoUi(ctx).registro ??= { stato: 'da-leggere', record: [], avvisi: [], letto: 0 });
+
+/** Legge il registro e migra i veicoli salvati nel file del PG (una volta): nel file resta il riferimento. */
+async function leggiRegistro(ctx) {
+  const R = statoRegistro(ctx);
+  R.stato = 'in-lettura';
+  try {
+    let lista = await elencoVeicoli();
+    const m = migraVeicoli(ctx.scelte.veicoli ?? [], ctx.chi, lista);
+    for (const rec of m.nuovi) {
+      const r = await scriviVeicolo(rec);
+      lista = [...lista.filter((x) => x.id !== rec.id), r.record ?? r.attuale];
+    }
+    R.record = lista;
+    R.avvisi = m.avvisi;
+    R.stato = 'pronto';
+    R.letto = Date.now();
+    R.errore = null;
+    if (m.nuovi.length) ctx.azioni.veicoli(m.veicoli, `Veicoli nel registro unico del Tavolo: ${m.nuovi.map((x) => x.mezzo.nome).join(', ')} (A.91). Nella scheda resta il riferimento.`);
+    else ctx.azioni.ridisegna();
+  } catch (e) {
+    R.stato = 'errore';
+    R.errore = e.message;
+    ctx.azioni.ridisegna();
+  }
+}
+
+function tabVeicoliRegistro(ctx) {
+  const R = statoRegistro(ctx);
+  if (R.stato === 'da-leggere' || (R.stato === 'pronto' && Date.now() - R.letto > 15000)) { R.stato = 'in-lettura'; void leggiRegistro(ctx); }
+  const P = ctx.dati.veicoli.personaggio ?? {};
+  const pilotare = pilotareDelPersonaggio(abilitaDellaTab(ctx), ctx.dati, { scheda: ctx.tab.scheda });
+  const rif = new Set((ctx.scelte.veicoli ?? []).filter(eRiferimento).map((x) => x.rif));
+  const visibili = R.record.filter((x) => rif.has(x.id) || vede(x, ctx.chi));
+  const locali = (ctx.scelte.veicoli ?? []).filter((v) => !eRiferimento(v));
+  const mancanti = [...rif].filter((id) => R.stato === 'pronto' && !R.record.some((x) => x.id === id));
+  const scrivi = async (prima, dopo, messaggio) => {
+    try {
+      const { record, conflitti } = await aggiornaVeicolo(prima, dopo);
+      R.record = R.record.map((x) => (x.id === record.id ? record : x));
+      const avviso = conflitti.length ? `${record.mezzo.nome}: ${conflitti.join(', ')} cambiati anche altrove nel frattempo, resta il valore del registro.` : null;
+      ctx.azioni.veicoli(ctx.scelte.veicoli ?? [], avviso ?? messaggio ?? null);
+    } catch (e) { R.errore = e.message; ctx.azioni.ridisegna(); }
+  };
+  const scheda = (rec) => {
+    const mio = stessaChiave(rec.conducente?.chiave, ctx.chi?.chiave);
+    const vista = { ...rec.mezzo, gruppo: rec.proprietario?.tipo === 'gruppo', conducente: mio };
+    const togli = ({ gruppo: _g, conducente: _c, ...m }) => m;
+    return schedaVeicolo(ctx, vista, pilotare, {
+      aggiorna: (nuovo, messaggio = null) => scrivi(rec, { ...rec, mezzo: togli(nuovo) }, messaggio),
+      gruppo: (si) => scrivi(rec, { ...rec, proprietario: si ? { tipo: 'gruppo' } : { tipo: 'pg', ...(ctx.chi?.pg ? { pg: ctx.chi.pg } : {}), chiave: ctx.chi?.chiave, nome: ctx.chi?.nome } }, si ? 'Veicolo del gruppo.' : 'Veicolo di questo personaggio.'),
+      guida: (si) => scrivi(rec, { ...rec, conducente: si ? { ...(ctx.chi?.pg ? { pg: ctx.chi.pg } : {}), chiave: ctx.chi?.chiave, nome: ctx.chi?.nome } : (mio ? null : rec.conducente) }, si ? 'Alla guida.' : null),
+      rimuovi: rif.has(rec.id) ? h('button', { type: 'button', class: 'btn', title: 'Toglie il riferimento da questa scheda; il record resta nel registro (veicoli/)', onclick: () => ctx.azioni.veicoli((ctx.scelte.veicoli ?? []).filter((x) => x.rif !== rec.id), `${rec.mezzo.nome}: riferimento tolto dalla scheda.`) }, 'Togli dalla scheda') : null,
+      righe: h('p', { class: 'nota' }, `Registro unico (veicoli/${rec.id}.json, revisione ${rec.revisione}) · proprietario: ${rec.proprietario?.tipo === 'gruppo' ? 'il gruppo' : rec.proprietario?.nome ?? '—'} · conducente: ${rec.conducente?.nome ?? 'nessuno'}${rec.mitragliere ? ` · mitragliere: ${rec.mitragliere.nome}` : ''}`),
+    });
+  };
+  return [
+    h('p', { class: 'nota' }, 'Scheda unica dei veicoli (A.91): le modifiche vanno al registro del Tavolo e le vedono le altre schede e il master. Qui compaiono i veicoli di questo personaggio, quelli del gruppo e quello che guida.'),
+    h('div', { class: 'riga-azioni' },
+      h('button', { type: 'button', class: 'btn primario', onclick: () => { statoUi(ctx).aggiungi = statoUi(ctx).aggiungi ? null : { origine: ctx.dati.veicoli.profili[0]?.id ?? 'mano', nome: '', scheda: {} }; ctx.azioni.ridisegna(); } }, 'Aggiungi veicolo'),
+      h('button', { type: 'button', class: 'btn', onclick: () => { R.stato = 'da-leggere'; ctx.azioni.ridisegna(); } }, 'Ricarica dal registro')),
+    R.stato === 'errore' ? h('p', { class: 'riquadro errore' }, `Registro dei veicoli non leggibile: ${R.errore}`) : R.errore ? h('p', { class: 'riquadro attenzione' }, R.errore) : null,
+    R.avvisi.map((x) => h('p', { class: 'riquadro attenzione' }, x)),
+    mancanti.map((id) => h('p', { class: 'riquadro attenzione' }, `Il veicolo ${id} non è nel registro di questo server.`)),
+    statoUi(ctx).aggiungi ? pannelloAggiungi(ctx, async (mezzo) => {
+      const r = await scriviVeicolo(nuovoRecord(mezzo, ctx.chi, { gruppo: false, guida: false }));
+      if (r.record) { R.record = [...R.record, r.record]; ctx.azioni.veicoli([...(ctx.scelte.veicoli ?? []), riferimento(r.record)], `Aggiunto il veicolo «${mezzo.nome}» al registro.`); }
+    }) : null,
+    R.stato === 'in-lettura' && !R.record.length ? h('p', { class: 'nota' }, 'Lettura del registro dei veicoli…') : null,
+    visibili.map(scheda),
+    // un veicolo rimasto nel file (doppione del gruppo): copia locale, con l'avviso
+    locali.map((v) => schedaVeicolo(ctx, v, pilotare)),
+    !visibili.length && !locali.length && R.stato === 'pronto' ? h('section', { class: 'riquadro nessun-potere' }, h('h2', {}, 'Nessun veicolo'), P.nessun_veicolo ? h('p', { class: 'nota' }, P.nessun_veicolo) : null) : null,
+  ];
+}
+
 // --- aggiungi --------------------------------------------------------------------------------------
 
-function pannelloAggiungi(ctx) {
+function pannelloAggiungi(ctx, inRegistro = null) {
   const a = statoUi(ctx).aggiungi;
   const profili = ctx.dati.veicoli.profili;
   const campo = (etichetta, chiave, { tipo = 'number', min = 0 } = {}) => h('label', { class: 'campo-veicolo' }, `${etichetta} `,
@@ -62,6 +148,7 @@ function pannelloAggiungi(ctx) {
     const mezzo = a.origine === 'mano' ? nuovoVeicolo({ ...a.scheda, nome: a.nome || a.scheda.nome }, ctx.dati, { nome: a.nome }) : nuovoVeicolo(a.origine, ctx.dati, { nome: a.nome });
     if (!mezzo) return;
     statoUi(ctx).aggiungi = null;
+    if (inRegistro) { void inRegistro(mezzo); return; }
     salva(ctx, [...(ctx.scelte.veicoli ?? []), mezzo], `Aggiunto il veicolo «${mezzo.nome}».`);
   };
   return h('section', { class: 'riquadro pannello-veicolo' },
@@ -79,7 +166,7 @@ function pannelloAggiungi(ctx) {
 
 // --- scheda di un veicolo ---------------------------------------------------------------------------
 
-function schedaVeicolo(ctx, mezzo, pilotare) {
+function schedaVeicolo(ctx, mezzo, pilotare, registro = null) {
   const d = ctx.dati;
   const v = vistaVeicoloPersonaggio(mezzo, d, { pilotare });
   if (!v) {
@@ -88,16 +175,18 @@ function schedaVeicolo(ctx, mezzo, pilotare) {
       pulsanteRimuovi(ctx, mezzo));
   }
   const p = v.profilo;
-  const aggiorna = (nuovo, messaggio = null) => salva(ctx, sostituisci(ctx, nuovo), messaggio);
+  // con il registro (A.91) le modifiche vanno al record unico; gruppo e conducente sono del record
+  const aggiorna = registro ? registro.aggiorna : (nuovo, messaggio = null) => salva(ctx, sostituisci(ctx, nuovo), messaggio);
   return h('section', { class: `sezione-tab scheda-veicolo${v.vista.fuoriUso ? ' fuori-uso' : ''}`, dataset: { uid: mezzo.uid } },
     h('header', { class: 'testa-veicolo' },
       h('h2', {}, h('input', { type: 'text', class: 'nome-veicolo', value: v.nome, 'aria-label': 'Nome del veicolo', onchange: (e) => aggiorna({ ...mezzo, nome: e.target.value.trim() || p.nome }) })),
       h('span', { class: 'sigla' }, v.manuale ? 'scritto a mano' : `${p.nome} · ${p.paragrafo}`),
-      h('label', { class: 'casella-veicolo' }, h('input', { type: 'checkbox', checked: v.gruppo, onchange: (e) => aggiorna({ ...mezzo, gruppo: e.target.checked }) }), ' Veicolo del gruppo'),
-      h('label', { class: 'casella-veicolo' }, h('input', { type: 'checkbox', checked: mezzo.conducente === true, onchange: (e) => aggiorna({ ...mezzo, conducente: e.target.checked }) }), ' Lo guido io'),
-      pulsanteRimuovi(ctx, mezzo)),
+      h('label', { class: 'casella-veicolo' }, h('input', { type: 'checkbox', checked: v.gruppo, onchange: (e) => (registro ? registro.gruppo(e.target.checked) : aggiorna({ ...mezzo, gruppo: e.target.checked })) }), ' Veicolo del gruppo'),
+      h('label', { class: 'casella-veicolo' }, h('input', { type: 'checkbox', checked: mezzo.conducente === true, onchange: (e) => (registro ? registro.guida(e.target.checked) : aggiorna({ ...mezzo, conducente: e.target.checked })) }), ' Lo guido io'),
+      registro ? registro.rimuovi : pulsanteRimuovi(ctx, mezzo)),
+    registro?.righe ?? null,
     v.vista.fuoriUso ? h('p', { class: 'riquadro errore' }, 'Fuori uso: Corpo principale o Motore a 0 PI. Il mezzo non funziona, non esplode e il movimento residuo prosegue (§5.5).') : null,
-    v.gruppo ? h('p', { class: 'nota' }, 'Veicolo del gruppo: le modifiche restano in questa scheda (nessuna sincronizzazione con le altre, A.91).') : null,
+    v.gruppo && !registro ? h('p', { class: 'nota' }, 'Veicolo del gruppo: senza il server le modifiche restano in questa scheda (A.91).') : null,
     h('div', { class: 'veicolo-colonne' },
       h('div', {}, profiloVeicolo(v, d), pilotareVeicolo(v, d), andatureVeicolo(ctx, mezzo, v, aggiorna)),
       h('div', {}, struttureVeicoloUi(ctx, mezzo, v, aggiorna), rinforziVeicolo(mezzo, v, aggiorna, ctx), necVeicolo(ctx, mezzo, v, aggiorna), munizioniVeicolo(ctx, mezzo, v, aggiorna))),
@@ -344,7 +433,9 @@ function pannelloRipara(ctx, mezzo, v, aggiorna) {
  * come promemoria. I VA a riposo della scheda non cambiano.
  */
 export function promemoriaConducente(ctx) {
-  const guidati = (ctx.scelte.veicoli ?? []).filter((x) => x.conducente === true && profiloDi(x, ctx.dati));
+  // con il server anche i veicoli del registro (A.91) che questo PG guida, se la tab li ha già letti
+  const dalRegistro = ctx.server ? (ctx.ui.veicoli?.registro?.record ?? []).filter((r) => stessaChiave(r.conducente?.chiave, ctx.chi?.chiave)).map((r) => ({ ...r.mezzo, conducente: true })) : [];
+  const guidati = [...(ctx.scelte.veicoli ?? []), ...dalRegistro].filter((x) => x.conducente === true && profiloDi(x, ctx.dati));
   if (!guidati.length) return null;
   const pilotare = pilotareDelPersonaggio(abilitaDellaTab(ctx), ctx.dati, { scheda: ctx.tab.scheda });
   return h('div', { class: 'riquadro nota promemoria-conducente' }, guidati.map((m) => {
@@ -360,3 +451,48 @@ export function promemoriaConducente(ctx) {
 }
 
 export { struttureVeicolo };
+
+// --- carta del veicolo nella plancia del master (A.105) -------------------------------------------------------------
+
+/**
+ * Carta di un veicolo del registro nel Tavolo del Master: PI e condizione delle tre strutture, AR, Corazzato, andatura,
+ * energia e autonomie, conducente e mitragliere, movimento del Round. Il mezzo non ha Iniziativa né Azioni: si muove
+ * all'Iniziativa del conducente, una volta per Round (il cambio di conducente non ne concede un secondo).
+ * @param ctx { dati, ui, azioni: { ridisegna } }
+ * @param o { scontro, diTurno, persone: [{ pg?, chiave, nome }], incapace(chiave) → bool, scrivi(nuovoRecord, messaggio) }
+ */
+export function cartaVeicoloPlancia(ctx, rec, o) {
+  const d = ctx.dati;
+  const mezzo = { ...rec.mezzo, conducente: false, gruppo: rec.proprietario?.tipo === 'gruppo' };
+  const v = vistaVeicoloPersonaggio(mezzo, d);
+  if (!v) return h('article', { class: 'carta-plancia' }, h('h2', {}, rec.mezzo?.nome ?? rec.id), h('p', { class: 'riquadro attenzione' }, 'Profilo non più nel catalogo dei veicoli.'));
+  const st = statoMovimento(rec, o.scontro, o.diTurno);
+  const persona = (k) => o.persone.find((x) => stessaChiave(x.chiave, k)) ?? null;
+  const scelta = (etichetta, attuale, cambia) => h('label', { class: 'campo-veicolo' }, `${etichetta} `,
+    h('select', { onchange: (e) => cambia(persona(e.target.value)) },
+      h('option', { value: '', selected: !attuale }, 'nessuno'),
+      [...o.persone, ...(attuale && !persona(attuale.chiave) ? [attuale] : [])].map((x) => h('option', { value: x.chiave, selected: stessaChiave(attuale?.chiave, x.chiave) }, x.nome))));
+  const incapace = rec.conducente && o.incapace(rec.conducente.chiave);
+  const residuo = incapace ? movimentoResiduo(rec, d) : null;
+  const scrivi = (nuovoMezzo, messaggio) => o.scrivi({ ...rec, mezzo: (({ conducente: _c, gruppo: _g, ...m }) => m)(nuovoMezzo) }, messaggio);
+  return h('article', { class: `carta-plancia carta-veicolo${v.vista.fuoriUso ? ' fuori-uso' : ''}${st.conducente && o.diTurno?.id === st.conducente.id ? ' di-turno' : ''}`, 'aria-label': v.nome },
+    h('header', { class: 'carta-plancia-testa' }, h('div', {},
+      h('h2', {}, v.nome),
+      h('p', { class: 'nota' }, `${v.profilo.nome} · ${rec.proprietario?.tipo === 'gruppo' ? 'del gruppo' : `di ${rec.proprietario?.nome ?? '—'}`} · revisione ${rec.revisione}`))),
+    v.vista.fuoriUso ? h('p', { class: 'riquadro errore' }, 'Fuori uso (§5.5): il movimento residuo prosegue.') : null,
+    h('ul', { class: 'plancia-strutture-veicolo' }, v.strutture.map((s) => h('li', {}, h('strong', {}, `${s.nome}: ${s.pi} / ${s.massimi} PI`), ' ', h('span', { class: `etichetta stato-struttura stato-${s.stato}` }, s.statoNome ?? '—')))),
+    h('p', { class: 'plancia-valori' }, `AR ${v.profilo.ar?.totale ?? '—'}${v.profilo.ar?.magica ? ` (magica ${v.profilo.ar.magica})` : ''} · Corazzato ${v.profilo.corazzato || 0} · andatura ${v.vista.andatura.nome}`),
+    v.risorse?.rosso ? h('p', { class: 'nota' }, `${v.risorse.rosso.nome}: ${numero(v.risorse.rosso.totale)} / ${numero(v.risorse.rosso.capacita)} Lx${v.risorse.rosso.autonomiaKm !== null ? ` · ${numero(v.risorse.rosso.autonomiaKm)} km` : ''}`) : null,
+    v.risorse?.verde ? h('p', { class: 'nota' }, `${v.risorse.verde.nome}: ${numero(v.risorse.verde.totale)} Lx · supporto vitale ${v.risorse.verde.ore} ore`) : null,
+    v.risorse?.aria ? h('p', { class: 'nota' }, `Aria: ${v.risorse.aria.ore} / ${v.risorse.aria.massimo} ore`) : null,
+    h('p', {},
+      scelta('Conducente', rec.conducente, (p) => o.scrivi(cambiaConducente(rec, p), p ? `${v.nome}: alla guida ${p.nome}${st.mosso ? ' (il mezzo si è già mosso in questo Round)' : ''}.` : `${v.nome}: nessun conducente.`)), ' ',
+      scelta('Mitragliere', rec.mitragliere, (p) => o.scrivi({ ...rec, mitragliere: p ? { ...(p.pg ? { pg: p.pg } : {}), chiave: p.chiave, nome: p.nome } : null }, null))),
+    o.scontro ? h('p', { class: 'movimento-veicolo' },
+      h('strong', {}, st.mosso ? `Movimento già eseguito nel Round ${o.scontro.round}` : 'Movimento del Round non ancora eseguito'), ' ',
+      h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !st.puo, title: st.motivo ?? 'Il mezzo si muove adesso, all’Iniziativa del conducente', onclick: () => o.scrivi(muoviVeicolo(rec, o.scontro, o.diTurno), `${v.nome} si muove all’Iniziativa di ${rec.conducente.nome}.`) }, 'Muovi'),
+      st.motivo && !st.mosso ? h('small', { class: 'nota' }, ` ${st.motivo}`) : null) : h('p', { class: 'nota' }, 'Nessuno scontro aperto: il mezzo si muove all’Iniziativa del conducente quando c’è uno scontro.'),
+    residuo ? h('p', { class: 'riquadro attenzione' }, `${rec.conducente.nome} non può guidare: il movimento residuo prosegue all’Iniziativa precedente finché un nuovo conducente interviene o il mezzo si arresta (§5.6); a terra l’andatura scende a ${residuo.andatura.nome}.${residuo.conseguenza ? ` ${residuo.conseguenza}` : ''}`) : null,
+    h('p', { class: 'riga-azioni' }, h('button', { type: 'button', class: 'btn', onclick: () => { const u = statoUi(ctx); u.colpo[mezzo.uid] = u.colpo[mezzo.uid] ? null : { modo: 'd20', d20: 10, struttura: 'corpo', danni: '', natura: 'Naturale', magistrale: false, piAggiuntivi: 0, ps: 'fallita', esposti: true }; ctx.azioni.ridisegna(); } }, 'Colpito')),
+    statoUi(ctx).colpo[mezzo.uid] ? pannelloColpo(ctx, mezzo, v, scrivi) : null);
+}

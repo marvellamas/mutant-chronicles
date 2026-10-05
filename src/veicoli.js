@@ -362,10 +362,11 @@ export function andaturaResidua(idAndatura, ambiente, dati) {
 }
 
 // ---------------------------------------------------------------------------
-// Veicoli nel file del personaggio (lotto 3 dei Veicoli; decisione provvisoria in attesa di A.91, dati in
+// Veicoli nel file del personaggio (lotto 3 dei Veicoli; A.91 decisa il 05/10/2026, decisione 111; dati in
 // veicoli.json → personaggio): il mezzo sta nelle scelte del PG che lo possiede (`scelte.veicoli`, scritto solo
 // se non vuoto) con la forma del modello in testa al file, più `uid`, `gruppo` (casella «Veicolo del gruppo»,
-// solo informativa) e `conducente` (true se lo guida il personaggio). Nessuna sincronizzazione fra schede.
+// solo informativa) e `conducente` (true se lo guida il personaggio). Senza server; con il server il veicolo è un
+// record del registro unico e qui resta il riferimento { uid, rif, nome } (A.91, src/veicoli-registro.js).
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const testo = (v) => (typeof v === 'string' ? v.trim() : '');
@@ -445,6 +446,8 @@ export function nuovoVeicolo(origine, dati, { uid = null, nome = null } = {}) {
 export function normalizzaVeicoli(veicoli, dati, avvisi = []) {
   const andature = dati.veicoli.andature.elenco.map((a) => a.id);
   return lista(veicoli).filter(isOggetto).map((v) => {
+    // A.91: riferimento al registro unico dei veicoli (src/veicoli-registro.js): resta com'è
+    if (typeof v.rif === 'string' && v.rif) return { uid: testo(v.uid) || v.rif, rif: v.rif, nome: testo(v.nome) || v.rif };
     const profilo = profiloDi(v, dati);
     if (!profilo) {
       avvisi.push(`Veicolo «${testo(v.nome) || v.profilo || 'senza nome'}»: profilo «${v.profilo ?? '—'}» non più nel catalogo dei veicoli; resta nel file, senza scheda.`);

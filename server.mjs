@@ -25,6 +25,9 @@
 //   PUT /api/scontri/<id>              lo salva se `revisione` è quella del file (altrimenti 409 con lo
 //                                      scontro attuale) e porta la revisione a +1; uno scontro «chiuso» o
 //                                      una bozza eliminata passa in scontri/archivio/ (non si cancella)
+//   GET /api/veicoli                   registro dei veicoli in veicoli/ (A.91): i record completi, con mtime
+//   GET /api/veicoli/<id>              un record (src/veicoli-registro.js)
+//   PUT /api/veicoli/<id>              lo salva se `revisione` è quella del file (altrimenti 409 con il record attuale)
 //   GET /api/nemici                    bestiario in nemici/: [{ file, mtime, nemico } | { file, mtime, errore }]
 //   POST /api/esempi                   copia esempi/ (PG) in personaggi/ ed esempi/nemici/ in nemici/, solo i
 //                                      file che lì non ci sono: { copiati: [...], saltati: [...] }
@@ -40,6 +43,7 @@ import { indirizziRete, testoAvvio } from './src/rete.js';
 import { validaScontro } from './src/scontro.js';
 import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
 import { NOME_FILE, fileProvvisorio } from './src/cartella.js';
+import { validaRecord, ID_VEICOLO } from './src/veicoli-registro.js';
 import { caricaDati } from './src/rules.js';
 import { validaNemico, formattaErrore } from './src/validate.js';
 
@@ -49,6 +53,7 @@ const TAVOLO = 'tavolo';
 const SCONTRI = 'scontri';
 const ID_SCONTRO = /^[a-z0-9-]{1,60}$/;
 const NEMICI = 'nemici';
+const VEICOLI = 'veicoli';
 const ID_NEMICO = /^[a-z0-9-]{1,60}$/;
 
 const TIPI = {
@@ -177,6 +182,37 @@ async function apiScontri(req, res, percorso, scontri) {
   return json(res, 200, nuovo);
 }
 
+/** Registro dei veicoli (A.91, A.105): un file per veicolo, revisione come gli scontri. */
+async function apiVeicoli(req, res, percorso, veicoli) {
+  await mkdir(veicoli, { recursive: true });
+  if (percorso === '/api/veicoli' && req.method === 'GET') {
+    const lista = [];
+    for (const f of (await readdir(veicoli)).filter((x) => x.endsWith('.json') && ID_VEICOLO.test(x.slice(0, -5)))) {
+      try { lista.push({ ...(await leggiJson(join(veicoli, f))), mtime: (await stat(join(veicoli, f))).mtimeMs }); } catch { /* file rovinato: non si elenca */ }
+    }
+    return json(res, 200, lista.sort((a, b) => String(a.mezzo?.nome ?? a.id).localeCompare(String(b.mezzo?.nome ?? b.id), 'it')));
+  }
+  const m = /^\/api\/veicoli\/([^/]+)$/.exec(percorso);
+  if (!m || !ID_VEICOLO.test(m[1])) return json(res, 400, { errore: 'id di veicolo non valido' });
+  const dove = join(veicoli, `${m[1]}.json`);
+  if (req.method === 'GET') {
+    try { return json(res, 200, await leggiJson(dove)); } catch { return json(res, 404, { errore: 'veicolo non trovato' }); }
+  }
+  if (req.method !== 'PUT') return json(res, 405, { errore: 'metodo non ammesso' });
+  let v;
+  try { v = JSON.parse((await leggiCorpo(req)).toString('utf8')); } catch (e) { return json(res, 400, { errore: `contenuto non valido: ${e.message}` }); }
+  const errore = validaRecord(v) ?? (v.id !== m[1] ? 'l’id non corrisponde al file' : null);
+  if (errore) return json(res, 400, { errore });
+  let attuale = null;
+  try { attuale = await leggiJson(dove); } catch { /* nuovo */ }
+  if ((attuale?.revisione ?? 0) !== v.revisione || (!attuale && v.revisione !== 0)) {
+    return json(res, 409, { errore: 'il veicolo è stato cambiato altrove: ricarica', attuale });
+  }
+  const nuovo = { ...v, revisione: v.revisione + 1, aggiornato: new Date().toISOString() };
+  await scriviJson(dove, nuovo);
+  return json(res, 200, nuovo);
+}
+
 /** Dati delle regole letti dal disco una volta sola, per validare i nemici come fa l'app. */
 const datiPerRadice = new Map();
 function datiDelServer(radice) {
@@ -236,7 +272,8 @@ async function caricaEsempi(radice, cartella, nemici) {
   return { copiati, saltati };
 }
 
-async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice, soloLocale) {
+async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice, soloLocale, veicoli) {
+  if (percorso === '/api/veicoli' || percorso.startsWith('/api/veicoli/')) return apiVeicoli(req, res, percorso, veicoli);
   if (percorso === '/api/ping') return json(res, 200, { ok: true, app: 'mutant', cartella: CARTELLA });
   if (percorso === '/api/rete') {
     const porta = req.socket.localPort;
@@ -362,12 +399,12 @@ async function statico(req, res, percorso, radice) {
  * Crea il server. `radice`: cartella dell'app; `cartella`: dove stanno i personaggi (per i test, una
  * cartella temporanea).
  */
-export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA), tavolo = join(RADICE, TAVOLO), scontri = join(RADICE, SCONTRI), nemici = join(RADICE, NEMICI), soloLocale = false } = {}) {
+export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA), tavolo = join(RADICE, TAVOLO), scontri = join(RADICE, SCONTRI), nemici = join(RADICE, NEMICI), veicoli = join(RADICE, VEICOLI), soloLocale = false } = {}) {
   const base = normalize(radice.endsWith(sep) ? radice : radice + sep);
   return createServer(async (req, res) => {
     try {
       const percorso = decodeURI(new URL(req.url, 'http://x').pathname);
-      if (percorso.startsWith('/api/')) return await api(req, res, percorso, cartella, tavolo, scontri, nemici, base, soloLocale);
+      if (percorso.startsWith('/api/')) return await api(req, res, percorso, cartella, tavolo, scontri, nemici, base, soloLocale, veicoli);
       return await statico(req, res, percorso, base);
     } catch (e) {
       if (!res.headersSent) json(res, 500, { errore: e.message });
@@ -389,7 +426,8 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const tavolo = arg('tavolo') ? normalize(arg('tavolo')) : join(RADICE, TAVOLO);
   const scontri = arg('scontri') ? normalize(arg('scontri')) : join(RADICE, SCONTRI);
   const nemici = arg('nemici') ? normalize(arg('nemici')) : join(RADICE, NEMICI);
-  creaServer({ cartella, tavolo, scontri, nemici, soloLocale }).listen(porta, host, () => {
+  const veicoli = arg('veicoli') ? normalize(arg('veicoli')) : join(RADICE, VEICOLI);
+  creaServer({ cartella, tavolo, scontri, nemici, veicoli, soloLocale }).listen(porta, host, () => {
     console.log(testoAvvio(indirizziRete(networkInterfaces(), porta), porta, { soloLocale }));
     console.log(`Personaggi salvati in ${cartella}`);
   }).on('error', (e) => {

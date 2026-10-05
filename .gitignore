@@ -45,3 +45,7 @@ scontri/*
 # Bestiario della campagna del Tavolo del Master (server.mjs): dati del master; si traccia solo il LEGGIMI
 nemici/*
 !nemici/LEGGIMI.txt
+
+# Registro dei veicoli del Tavolo del Master (server.mjs, A.91): dati di gioco; si traccia solo il LEGGIMI
+veicoli/*
+!veicoli/LEGGIMI.txt

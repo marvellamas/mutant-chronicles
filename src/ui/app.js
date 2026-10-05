@@ -17,7 +17,7 @@ import { serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevision
 import { controllaRemoto, revisioneDaScrivere, differenzeSessione, testoScelta, indicatoreCollegamento, impronta } from '../collegamento.js';
 import { leggiScontroAperto, leggiScontro, salvaScontro } from './scontro.js';
 import { registraRiga } from '../scontro.js';
-import { elencoUnito, confronta, chiaveDaFile, messaggioSalvataggio, attesaRitentativo, nomeFileLibero, haNome, fileProvvisorio } from '../cartella.js';
+import { elencoUnito, confronta, chiaveDaFile, chiavePersonaggio, messaggioSalvataggio, attesaRitentativo, nomeFileLibero, haNome, fileProvvisorio } from '../cartella.js';
 import { renderTavolo } from './tavolo.js';
 import { avviso, avvisoErrore } from './avvisi.js';
 import { controlloInUso } from './ridisegno.js';
@@ -1264,6 +1264,9 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
     // regole aggiornate (regole.json → regole_aggiornate): punti da completare e in eccesso
     avvisoRegole: dati.regole.regole_aggiornate?.punti_abilita ?? 'Regole aggiornate',
     avvisoMancanti: dati.regole.regole_aggiornate?.mancanti ?? null,
+    // A.91: registro unico dei veicoli solo con il server; il PG si riconosce dal suo identificativo e dalla chiave
+    server: Boolean(stato.cartella),
+    chi: { pg: archivio.carica(stato.id)?.pg ?? null, chiave: chiavePersonaggio(stato.scelte?.nome ?? ''), nome: String(stato.scelte?.nome ?? '').trim() },
     messaggio: messaggio ?? (stato.salvataggioOk ? null : { tipo: 'errore', testo: testoSalvataggioFallito() }),
     passi: { background: 0, equipaggiamento: PASSO_EQUIPAGGIAMENTO },
     ui: stato.ui,
@@ -1434,7 +1437,7 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
         renderScheda({ mantieniScorrimento: true });
       },
       ridisegna: () => renderScheda({ mantieniScorrimento: true }),
-      // tab Veicoli: i mezzi del personaggio (scelte.veicoli, decisione provvisoria A.91), con il messaggio dell'azione
+      // tab Veicoli: i mezzi del personaggio (scelte.veicoli: copie locali senza server, riferimenti al registro con il server, A.91)
       veicoli: (lista, messaggio = null) => {
         const { scelte, avvisi } = applicaModifica(stato.scelte, { veicoli: lista }, dati);
         stato.scelte = scelte;
