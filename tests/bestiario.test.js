@@ -71,12 +71,12 @@ test('basi per grado (cap. 3): PV, VA dell’attacco, Difese, AR e danno come il
       assert.equal(c.taglia ?? null, t.has('Taglia') ? t.get('Taglia')[i].toLowerCase() : null, `${id} ${g.nome}: taglia`);
     });
   }
-  // umani (§3.2): moltiplicatore, AzP e bonus al danno
+  // umani (§3.2, A.79): solo tipo e livello del convertitore, nessun moltiplicatore, AzP o bonus di grado
   const u = tabella('3.2 Umano');
   B.gradi.forEach((g, i) => {
     const r = u.righe[i];
     const q = B.basi.umano.per_grado[g.id];
-    assert.deepEqual([q.pv_molt, q.azp, q.bonus_danno], [numero(r[3]), numero(r[4]), numero(r[5])], g.nome);
+    assert.deepEqual([q.livello, q.pv_molt, q.azp, q.bonus_danno], [Number.parseInt(r[1], 10), undefined, undefined, undefined], g.nome);
   });
 });
 

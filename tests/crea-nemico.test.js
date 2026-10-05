@@ -119,13 +119,13 @@ test('Umano Corrotto di livello 2 (Posseduto): il Fante Capitol Veterano con le 
   const r = profiloNemico({ base: 'umano', tipoUmano: 'fante-capitol', grado: 'semplice', corrotto: { livello: 'posseduto', minori: ['sussurro-continuo'], maggiori: ['fiamma-nera'] } }, dati, { umani: { 'fante-capitol-veterano': u } });
   const n = r.nemico;
   assert.deepEqual([r.errori, r.avvisi, validaNemico(n, dati)], [[], [], []]);
-  // §3.2: PV × 1, 2 AzP, +2 al danno; §4.2.2: +1 AR magica, +2 Volontà, mischia Magico; Fiamma nera: Fuoco in mischia
-  assert.deepEqual([n.pv, n.azioni.principali, n.ar, n.salvezze.volonta], [u.pv, 2, { totale: u.ar.totale + 1, magica: 1 }, u.salvezze.volonta + 2]);
+  // A.79: PV, AzP e danni del convertitore; §4.2.2: +1 AR magica, +2 Volontà, mischia Magico; Fiamma nera: Fuoco in mischia
+  assert.deepEqual([n.pv, n.azioni.principali, n.ar, n.salvezze.volonta], [u.pv, u.azioni.principali, { totale: u.ar.totale + 1, magica: 1 }, u.salvezze.volonta + 2]);
   const mischia = n.attacchi.find((a) => a.tipo === 'ravvicinato');
   const distanza = n.attacchi.find((a) => a.tipo === 'distanza');
   assert.deepEqual([mischia.natura, mischia.proprieta], ['Magico', ['Fuoco']]);
   assert.equal(distanza.natura, 'Naturale');
-  assert.equal(distanza.danno, u.attacchi.find((a) => a.tipo === 'distanza').danno.replace(/^(\d+d\d+)(\+(\d+))?$/, (m, d, p, b) => `${d}+${Number(b ?? 0) + 2}`));
+  assert.equal(distanza.danno, u.attacchi.find((a) => a.tipo === 'distanza').danno, 'nessun bonus di grado (A.79)');
   assert.deepEqual(['Presenza terrificante', 'Sussurro continuo', 'Fiamma nera', 'Esposizione alla Corruzione'].map((c) => n.capacita.some((x) => x.nome === c)), [true, true, true, true]);
   assert.match(n.capacita.find((x) => x.nome === 'Esposizione alla Corruzione').effetto, /^Debole \(PS di Magia \+2/);
   assert.deepEqual([r.costo.totale, r.effettivo.nome], [1, 'Medio']);

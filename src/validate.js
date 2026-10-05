@@ -2317,7 +2317,8 @@ function validaBestiario(dati, err) {
       const kg = `${k}.per_grado.${g}`;
       if (!isOggetto(c)) { err(F, kg, 'colonna del grado mancante'); continue; }
       if (base.umano) {
-        for (const x of ['pv_molt', 'azp', 'bonus_danno']) if (!num(c[x])) err(F, `${kg}.${x}`, 'numero (§3.2)');
+        // A.79: per gli umani solo tipo e livello del convertitore
+        if (!isTesto(c.tipo) || !isIntero(c.livello)) err(F, kg, 'tipo e livello del bestiario umano (§3.2)');
         continue;
       }
       for (const s of S.caratteristiche) if (!isIntero(c.caratteristiche?.[s])) err(F, `${kg}.caratteristiche.${s}`, 'intero');

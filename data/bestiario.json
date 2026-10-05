@@ -278,52 +278,27 @@
         "minore": {
           "tipo": "Recluta",
           "da_preparare": false,
-          "livello": 2,
-          "pv_molt": 1,
-          "azp": 1,
-          "bonus_danno": 2,
-          "round_resistenza": 1.4,
-          "round_abbattere": 8
+          "livello": 2
         },
         "semplice": {
           "tipo": "Veterano",
           "da_preparare": false,
-          "livello": 5,
-          "pv_molt": 1,
-          "azp": 2,
-          "bonus_danno": 2,
-          "round_resistenza": 2.8,
-          "round_abbattere": 7.5
+          "livello": 5
         },
         "medio": {
           "tipo": "Élite",
           "da_preparare": false,
-          "livello": 8,
-          "pv_molt": 1.5,
-          "azp": 2,
-          "bonus_danno": 3,
-          "round_resistenza": 4.3,
-          "round_abbattere": 6
+          "livello": 8
         },
         "potente": {
           "tipo": "Comandante",
           "da_preparare": true,
-          "livello": 12,
-          "pv_molt": 5,
-          "azp": 2,
-          "bonus_danno": 5,
-          "round_resistenza": 7.2,
-          "round_abbattere": 5
+          "livello": 12
         },
         "molto-potente": {
           "tipo": "Campione",
           "da_preparare": true,
-          "livello": 16,
-          "pv_molt": 8.25,
-          "azp": 2,
-          "bonus_danno": 6,
-          "round_resistenza": 10.2,
-          "round_abbattere": 4.3
+          "livello": 16
         }
       },
       "nota": "Gli umani vengono dal bestiario umano del Tavolo del Master (esempi/nemici/umani/), portati al grado con PV × moltiplicatore, AzP del grado e bonus di grado al danno. Comandante (12°) e Campione (16°) sono da preparare.",
@@ -2715,7 +2690,8 @@
             "armi_distanza:pistola-semiautomatica",
             "armi_distanza:carabina",
             "armi:coltello"
-          ]
+          ],
+          "bonus_danno": 2
         },
         "semplice": {
           "protezione": "Armatura civile media",
@@ -2724,7 +2700,8 @@
             "armi_distanza:fucile-d-assalto",
             "armi_distanza:revolver",
             "armi:spada-leggera"
-          ]
+          ],
+          "bonus_danno": 2
         },
         "medio": {
           "protezione": "Armatura civile media e scudo piccolo",
@@ -2732,7 +2709,8 @@
           "armi": [
             "armi_distanza:fucile-d-assalto",
             "armi:spada-lunga"
-          ]
+          ],
+          "bonus_danno": 3
         },
         "potente": {
           "protezione": "Armatura civile pesante",
@@ -2740,7 +2718,8 @@
           "armi": [
             "armi_distanza:mitragliatore-leggero",
             "armi:spadone"
-          ]
+          ],
+          "bonus_danno": 5
         },
         "molto-potente": {
           "protezione": "Armatura civile pesante e scudo medio",
@@ -2748,7 +2727,8 @@
           "armi": [
             "armi_distanza:mitragliatore-pesante",
             "armi:ascia-bipenne"
-          ]
+          ],
+          "bonus_danno": 6
         }
       },
       "fasce": [

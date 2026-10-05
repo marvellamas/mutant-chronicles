@@ -334,39 +334,33 @@ Nella scheda di un nemico del Tavolo del Master il volo è il campo «Passo in v
 
 **Natura Comune.** Combattenti, guardie, criminali, mercenari ed eretici al servizio dell’Oscura Simmetria. Gli umani si costruiscono come personaggi (Giocatore, Capitoli 2 e 8) e si convertono in nemici con il convertitore del Tavolo del Master (§1.6). Il bestiario umano già preparato per il Tavolo del Master comprende dieci tipi in tre gradi e resta la base: non si ricostruisce.
 
-**Portare un umano al grado.** Un personaggio convertito ha i PV e l’attacco di un singolo personaggio: contro sette personaggi cadrebbe troppo in fretta. Per portarlo al grado si applicano tre modifiche, e soltanto queste:
+**Umani costruiti come personaggi (A.79, E&L del 05/10/2026).** Gli avversari umani si costruiscono con le regole aggiornate dei personaggi, rispettando categorie, limiti, requisiti, Talenti ed equipaggiamento: Recluta al 2° livello, Veterano al 5°, Élite all’8°; quando la procedura richiede un tiro per i PV si usa la media del dado arrotondata per eccesso; 7 Punti Abilità liberi per Grado. Il profilo del convertitore vale com’è: le etichette Recluta, Veterano, Élite o Boss e il numero dei personaggi non concedono PV, danni o Azioni aggiuntive.
 
-* **PV × moltiplicatore** del grado, arrotondati all’unità;
-* **AzP del grado:** dal Semplice due Azioni Principali, entrambe per attaccare;
-* **bonus di grado al danno** di ogni attacco, prima dell’Armatura.
+| Bestiario umano | Livello | Grado |
+| :---- | :---: | :---- |
+| Recluta | 2° | Minore |
+| Veterano | 5° | Semplice |
+| Élite | 8° | Medio |
+| Comandante (da preparare) | 12° | Potente |
+| Campione (da preparare) | 16° | Molto potente |
 
-VA, Difese, AR, PS, Iniziativa, Movimento, Abilità e capacità restano quelli del convertitore.
+Il grado indica soltanto il livello del personaggio da cui si parte: la stima di quanti umani servono per uno scontro è sperimentale e va verificata al tavolo (A.97).
 
-| Bestiario umano | Livello | Grado | PV × | AzP | Bonus al danno | Round di resistenza | Round per abbattere un PG |
-| :---- | :---: | :---- | :---: | :---: | :---: | :---: | :---: |
-| Recluta | 2° | Minore | 1 | 1 | +2 | 1,4 | 8 |
-| Veterano | 5° | Semplice | 1 | 2 | +2 | 2,8 | 7,5 |
-| Élite | 8° | Medio | 1,5 | 2 | +3 | 4,3 | 6 |
-| Comandante (da preparare) | 12° | Potente | 5 | 2 | +5 | 7,2 | 5 |
-| Campione (da preparare) | 16° | Molto potente | 8,25 | 2 | +6 | 10,2 | 4,3 |
+**Esempio.** L’Eretico Élite del bestiario umano ha PV 33, pugnale da combattimento VA 11 1d6+3 e pistola semiautomatica VA 11 1d6+1: al grado Medio resta così.
 
-Le ultime due colonne sono la media dei quattro archetipi dell’Appendice A portati al grado. Il moltiplicatore cresce molto agli ultimi gradi perché i personaggi di 12° e 16° livello hanno due Azioni Principali e armature poco più pesanti di quelle del 5°.
-
-**Esempio.** L’Eretico Élite del bestiario umano ha PV 33, pugnale da combattimento VA 13 1d6+3 e pistola semiautomatica VA 11 1d6+1. Al grado Medio: PV 50 (33 × 1,5), 2 AzP, pugnale 1d6+6 e pistola 1d6+4.
-
-I tipi sono: Fante Capitol, Soldato Bauhaus, Guerriero Mishima, Agente Cybertronic, Soldato Imperiale, Inquisitore della Fratellanza, Guardia di sicurezza, Criminale di strada, Mercenario, Eretico. Comandante e Campione si costruiscono con lo stesso procedimento ai livelli 12 e 16.
+I tipi sono: Fante Capitol, Soldato Bauhaus, Guerriero Mishima, Agente Cybertronic, Soldato Imperiale, Inquisitore della Fratellanza, Guardia di sicurezza, Criminale di strada, Mercenario, Eretico. Comandante e Campione si costruiscono con lo stesso procedimento ai livelli 12 e 16. L’Eretico è un umano Freelance Incursore con normali Talenti e armi, senza poteri dell’Oscura Simmetria a nessun grado («Eretico — profilo umano senza poteri oscuri»); il nome non assegna lo Stato di Corruzione Eretico né il suo −6: natura e Corruzione sono dati espliciti, come nell’Eretico corrotto del §5.5.1.
 
 | Valore | Minore | Semplice | Medio | Potente | Molto potente |
 | :---- | :---: | :---: | :---: | :---: | :---: |
 | Caratteristiche | Convertitore | Convertitore | Convertitore | Convertitore | Convertitore |
-| PV | Convertitore × 1 | × 1 | × 1,5 | × 5 | × 8,25 |
+| PV | Convertitore | Convertitore | Convertitore | Convertitore | Convertitore |
 | AR | Equipaggiamento (§4.4) | Equipaggiamento | Equipaggiamento | Equipaggiamento | Equipaggiamento |
 | VA | Convertitore | Convertitore | Convertitore | Convertitore | Convertitore |
-| Danno | Arma +2 | Arma +2 | Arma +3 | Arma +5 | Arma +6 |
+| Danno | Arma del convertitore | Arma | Arma | Arma | Arma |
 | Passo | 6 Q | 6 Q | 6 Q | 6 Q | 6 Q |
-| AzP | 1 | 2 | 2 | 2 | 2 |
+| AzP | Convertitore | Convertitore | Convertitore | Convertitore | Convertitore |
 
-**Sensi:** quelli umani. **Attacchi:** quelli delle armi (§4.4), con il bonus di grado. **Danno ricevuto:** normale.
+**Sensi:** quelli umani. **Attacchi:** quelli delle armi del convertitore (§4.4). **Danno ricevuto:** normale.
 
 ## **3.3 Insettoide**
 
@@ -840,15 +834,15 @@ L’esposizione non modifica i danni né gli Stati dell’attacco. Gli esiti e l
 
 **Basi:** Umano, Umanoide mostruoso. La creatura usa armi, armature e scudi dei cataloghi del Manuale degli Armamenti, con le regole degli oggetti. Il costo dipende dalla fascia dell’equipaggiamento rispetto al grado.
 
-| Grado | Equipaggiamento tipico | AR | Arma tipica | Danno |
-| :---- | :---- | :---: | :---- | :---: |
-| Minore | Armatura civile leggera | 1 | Pistola semiautomatica, Carabina, Coltello | 1d6, 1d6+1, 1d4 |
-| Semplice | Armatura civile media | 3 | Fucile d’assalto, Revolver, Spada leggera | 1d6+2, 1d6+1, 1d6+1 |
-| Medio | Armatura civile media e scudo piccolo | 3–4 | Fucile d’assalto, Spada lunga | 1d6+2, 1d8+1 |
-| Potente | Armatura civile pesante | 5 | Mitragliatore leggero, Spadone | 1d8+2, 2d6+1 |
-| Molto potente | Armatura civile pesante e scudo medio | 5–7 | Mitragliatore pesante, Ascia bipenne | 1d10+3, 2d6+1 |
+| Grado | Equipaggiamento tipico | AR | Arma tipica | Danno | Bonus al danno (Umanoide) |
+| :---- | :---- | :---: | :---- | :---: | :---: |
+| Minore | Armatura civile leggera | 1 | Pistola semiautomatica, Carabina, Coltello | 1d6, 1d6+1, 1d4 | +2 |
+| Semplice | Armatura civile media | 3 | Fucile d’assalto, Revolver, Spada leggera | 1d6+2, 1d6+1, 1d6+1 | +2 |
+| Medio | Armatura civile media e scudo piccolo | 3–4 | Fucile d’assalto, Spada lunga | 1d6+2, 1d8+1 | +3 |
+| Potente | Armatura civile pesante | 5 | Mitragliatore leggero, Spadone | 1d8+2, 2d6+1 | +5 |
+| Molto potente | Armatura civile pesante e scudo medio | 5–7 | Mitragliatore pesante, Ascia bipenne | 1d10+3, 2d6+1 | +6 |
 
-I danni indicati sono quelli del catalogo, prima del bonus di Caratteristica e del bonus di grado (§3.2): nelle schede entrambi sono già compresi negli attacchi (Giocatore §5.13). I requisiti di Forza delle armature e degli scudi valgono anche per le creature (Manuale degli Armamenti, §7.1.6).
+I danni indicati sono quelli del catalogo, prima del bonus di Caratteristica e, per l’Umanoide mostruoso, del bonus al danno dell’ultima colonna: nelle schede sono già compresi negli attacchi (Giocatore §5.13). Gli umani non ricevono un bonus di grado (A.79): usano le armi del convertitore. I requisiti di Forza delle armature e degli scudi valgono anche per le creature (Manuale degli Armamenti, §7.1.6).
 
 | Equipaggiamento | Costo |
 | :---- | :---: |
@@ -856,7 +850,7 @@ I danni indicati sono quelli del catalogo, prima del bonus di Caratteristica e d
 | Della fascia del grado successivo | +½ |
 | Di due fasce sopra, oppure un’arma con Fuoco, Plasma o Laser in un grado Minore o Semplice | +1 |
 
-**Umanoide mostruoso con equipaggiamento.** Usa le armi ravvicinate con il VA degli Artigli e conserva gli Artigli come seconda arma naturale; il danno dell’arma riceve il bonus di grado del §3.2. Con le armi a distanza subisce −2 VA. Un’armatura sostituisce l’AR naturale se è maggiore; altrimenti l’AR naturale aumenta di 1. Gli umani usano l’equipaggiamento dei personaggi senza limitazioni.
+**Umanoide mostruoso con equipaggiamento.** Usa le armi ravvicinate con il VA degli Artigli e conserva gli Artigli come seconda arma naturale; il danno dell’arma riceve il bonus dell’ultima colonna della tabella. Con le armi a distanza subisce −2 VA. Un’armatura sostituisce l’AR naturale se è maggiore; altrimenti l’AR naturale aumenta di 1. Gli umani usano l’equipaggiamento dei personaggi senza limitazioni.
 
 ## **4.5 Stati, nature e proprietà impiegati**
 
@@ -1212,32 +1206,32 @@ Artigli: natura Magico, portata 1 Q, AC 1; con la Carica, Sbalzante 1 (§3.5). C
 
 L’Eretico del bestiario umano (§3.2) è un uomo comune che ha scelto l’Oscura Simmetria; l’Eretico corrotto è quello che ne ha ricevuto i doni. Parla piano, e chi gli sta accanto sente un sussurro sotto le sue parole; quando guarda qualcuno negli occhi, quello resta fermo un istante di troppo. I più devoti portano una lama rituale che non trova ostacoli nell’acciaio.
 
-**Base:** Umano, l’Eretico del bestiario umano portato al grado (§3.2). **Moduli:** Corrotto, Toccato al Minore (+½); Posseduto al Semplice e al Medio (+1); Consacrato al Boss (+2). **Manifestazioni:** Sussurro continuo; dal Posseduto anche Sguardo del vuoto; al Boss anche Grido dell’Oscura Simmetria.
+**Base:** Umano, l’Eretico del bestiario umano del grado (§3.2), con i suoi valori. **Moduli:** Corrotto, Toccato al Minore (+½); Posseduto al Semplice e al Medio (+1); Consacrato al Boss (+2). **Manifestazioni:** Sussurro continuo; dal Posseduto anche Sguardo del vuoto; al Boss anche Grido dell’Oscura Simmetria.
 
-Le Manifestazioni del §4.2.4 sono i poteri dell’Eretico: sostituiscono i «Doni dell’Oscura Simmetria» lasciati in sospeso nel bestiario umano, senza poteri con un nome dell’ambientazione.
+Le Manifestazioni del §4.2.4 sono i poteri di questa variante, dichiarati con la natura Oscura Simmetria e il modulo Corrotto: l’Eretico del bestiario umano resta un profilo umano senza poteri oscuri (A.79).
 
 | Valore | Minore (Recluta) | Semplice (Veterano) | Medio (Élite) | Boss (Medio, Élite) |
 | :---- | :---: | :---: | :---: | :---: |
 | Natura | Oscura Simmetria | Oscura Simmetria | Oscura Simmetria | Oscura Simmetria |
 | FOR · COS · DES | 8 · 6 · 8 | 8 · 6 · 8 | 9 · 6 · 9 | 9 · 6 · 9 |
 | INT · SAG · CAR | 5 · 5 · 7 | 5 · 5 · 7 | 5 · 5 · 7 | 5 · 5 · 7 |
-| PV | 17 | 25 | 50 | 155 |
+| PV | 17 | 25 | 33 | 155 |
 | AR (di cui magica) | 1 (0) | 2 (1) | 2 (1) | 3 (2) |
-| Pugnale da combattimento: VA, danno | 7, 1d6+4 | 9, 1d6+4 Magico | 11, 1d6+6 Magico | 11, 1d6+6 Etereo |
-| Pistola semiautomatica: VA, danno, gittata | 7, 1d6+2, 30 Q | 9, 1d6+2, 30 Q | 11, 1d6+4, 30 Q | 11, 1d6+4, 30 Q |
+| Pugnale da combattimento: VA, danno | 7, 1d6+2 | 9, 1d6+2 Magico | 11, 1d6+3 Magico | 11, 1d6+3 Etereo |
+| Pistola semiautomatica: VA, danno, gittata | 7, 1d6, 30 Q | 9, 1d6, 30 Q | 11, 1d6+1, 30 Q | 11, 1d6+1, 30 Q |
 | VA Difese | 9 | 11 | 13 | 13 |
 | PS Tempra · Riflessi · Volontà · Magia | 11 · 12 · 11 · 8 | 12 · 13 · 12 · 9 | 12 · 13 · 12 · 9 | 12 · 13 · 12 · 9 |
 | Iniziativa | 3 | 3 | 6 | 6 |
 | Movimento | Passo 6 Q | Passo 6 Q | Passo 6 Q | Passo 6 Q |
 | Spazio | 1 Q | 1 Q | 1 Q | 1 Q |
-| Azioni | 1 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 3 AzP (2 d’attacco), 1 Movimento |
+| Azioni | 1 AzP, 1 Movimento | 1 AzP, 1 Movimento | 1 AzP, 1 Movimento | 3 AzP (2 d’attacco), 1 Movimento |
 | Abilità | Furtività 12, Percezione 9, Atletica 9, Tecnologia 8 | Furtività 14, Percezione 11, Atletica 11, Tecnologia 9 | Furtività 16, Percezione 13, Atletica 13, Tecnologia 10 | Furtività 16, Percezione 13, Atletica 13, Tecnologia 10 |
 | Contromisure | — | — | — | — |
 | Capacità | Sussurro continuo; Movimento Tattico | Presenza terrificante, Sussurro continuo, Sguardo del vuoto; Movimento Tattico, Attacco Silenzioso, Imboscata Migliorata, Resistenza alla Corruzione | Come il Semplice, più Rapidità Operativa e Affondo Migliorato | Come il Medio, più Grido dell’Oscura Simmetria |
 | Immunità | — | — | — | Terrorizzato |
-| Round di resistenza · Round per abbattere un PG | 1,2 · 11,6 | 1,7 · 11,2 | 2,6 · 8 | 12,1 · 8 |
+| Round di resistenza · Round per abbattere un PG | 1,2 · 17,6 | 1,7 · 57,5 | 1,7 · 50,2 | 12,1 · 18,1 |
 
-I valori umani vengono dal convertitore (Eretico Recluta, Veterano ed Élite del Tavolo del Master) con il moltiplicatore e il bonus di grado del §3.2; i Talenti restano capacità da applicare a mano. Chi è ferito dall’Eretico è esposto alla Corruzione Oscura: Flebile al Minore, Debole al Semplice e al Medio, Normale al Boss (§4.2.5).
+I valori umani vengono dal convertitore (Eretico Recluta, Veterano ed Élite del Tavolo del Master) senza moltiplicatori né bonus di grado (A.79); i Talenti restano capacità da applicare a mano. Chi è ferito dall’Eretico è esposto alla Corruzione Oscura: Flebile al Minore, Debole al Semplice e al Medio, Normale al Boss (§4.2.5).
 
 **Più fragile del grado.** Combatte da Incursore, con armi leggere e armatura leggera: i suoi Round di resistenza sono sotto quelli del grado. Il Direttore lo usa con l’Imboscata e la Furtività, dietro altre creature o con un gruppo di Eretici, oppure come Boss.
 

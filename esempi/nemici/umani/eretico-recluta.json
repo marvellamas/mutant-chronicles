@@ -2,7 +2,7 @@
   "formato": "mutant-nemico",
   "versione": 1,
   "id": "eretico-recluta",
-  "nome": "Eretico — Recluta",
+  "nome": "Eretico — profilo umano senza poteri oscuri — Recluta",
   "fonte": "costruito come PG (Freelance, Incursore 1, 2° livello)",
   "caratteristiche": {
     "FOR": 8,
@@ -95,5 +95,5 @@
     }
   ],
   "stati": [],
-  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Solo la parte umana. TODO(Davide): eventuali Doni dell’Oscura Simmetria o poteri dell’Oscura Legione, da aggiungere quando ci sono le regole. Costruito come PG: Eretico Recluta, Freelance Combattente, Incursore 1, 2° livello. Talenti fra le capacità speciali: gli effetti generali sono già nei valori, quelli situazionali si applicano a mano."
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Eretico — profilo umano senza poteri oscuri (A.79): umano Freelance Incursore con normali Talenti e armi; nessun Dono dell’Oscura Simmetria a nessuna fascia; il nome non assegna lo Stato di Corruzione Eretico né il suo −6. Le varianti con poteri sono creature del Bestiario (Eretico corrotto, §5.5.1). Costruito come PG: Eretico Recluta, Freelance Combattente, Incursore 1, 2° livello. Talenti fra le capacità speciali: gli effetti generali sono già nei valori, quelli situazionali si applicano a mano."
 }

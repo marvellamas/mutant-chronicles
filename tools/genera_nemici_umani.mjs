@@ -123,7 +123,9 @@ export const TIPI = [
     impugna: 'arma_distanza',
     talenti: ['imboscata-migliorata', 'resistenza-alla-corruzione', 'affondo-migliorato', 'schivata-migliorata'], talentiClasse: ['Attacco Silenzioso'],
     // solo la parte umana: nessun potere Oscuro inventato
-    note: 'Solo la parte umana. TODO(Davide): eventuali Doni dell’Oscura Simmetria o poteri dell’Oscura Legione, da aggiungere quando ci sono le regole.',
+    // A.79 (E&L del 05/10/2026): nessun potere dell'Oscura Simmetria; il nome non dà la Corruzione Eretico
+    nomeTipo: 'Eretico — profilo umano senza poteri oscuri',
+    note: 'Eretico — profilo umano senza poteri oscuri (A.79): umano Freelance Incursore con normali Talenti e armi; nessun Dono dell’Oscura Simmetria a nessuna fascia; il nome non assegna lo Stato di Corruzione Eretico né il suo −6. Le varianti con poteri sono creature del Bestiario (Eretico corrotto, §5.5.1).',
   },
 ];
 
@@ -161,7 +163,8 @@ function sceltaLivello(t, personaggio, livello, dati) {
     for (const id of [...t.talenti, ...tutti.filter((x) => !t.talenti.includes(x))]) tentativi.push({ livello, talentoLibero: { id } });
   } else if (ev.includes('grado_classe')) {
     const def = dati.classi.classi.find((c) => c.nome === t.base.classe);
-    const media = (d) => Math.floor(d / 2) + 1;
+    // A.79: media del dado arrotondata per eccesso (d8 → 5)
+    const media = (d) => Math.ceil((d + 1) / 2);
     const base = { livello, grado: { classe: def.nome }, tiroPV: tiro(media(def.pv_per_grado.dado)), ...(def.pm_per_grado.dado ? { tiroPM: tiro(media(def.pm_per_grado.dado)) } : {}) };
     // i punti Abilità uno alla volta, solo dove il motore li accetta
     const pa = {};
@@ -211,8 +214,10 @@ export function pgDelTipo(t0, grado, dati) {
 /** Il nemico del tipo al grado: { nemico, problemi }. */
 export function nemicoDelTipo(t, grado, dati) {
   const pg = pgDelTipo(t, grado, dati);
-  const nome = `${t.tipo} — ${grado.nome}`;
-  const r = nemicoDaPg(pg.testo, dati, { nome, id: idDaNome(nome), nota: [NOTA, t.note].filter(Boolean).join(' ') });
+  // il file resta «eretico-recluta.json»; il nome mostrato può essere più esplicito (A.79: Eretico senza poteri oscuri)
+  const id = idDaNome(`${t.tipo} — ${grado.nome}`);
+  const nome = `${t.nomeTipo ?? t.tipo} — ${grado.nome}`;
+  const r = nemicoDaPg(pg.testo, dati, { nome, id, nota: [NOTA, t.note].filter(Boolean).join(' ') });
   if (r.errore) return { nemico: null, problemi: [...pg.problemi, r.errore] };
   const problemi = [...pg.problemi, ...r.avvisi, ...validaNemico(r.nemico, dati, `${r.nemico.id}.json`).map(formattaErrore)];
   if (!r.nemico.attacchi.length) problemi.push('nessun attacco');

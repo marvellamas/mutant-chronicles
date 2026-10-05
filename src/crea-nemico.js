@@ -132,22 +132,16 @@ export function profiloNemico(scelte, dati, { umani = {} } = {}) {
     const u = chiave ? umani[chiave] : null;
     if (!chiave) { errori.push(`${base.nome} ${g.nome}: ${BE.basi.umano.per_grado[g.id].tipo} da preparare (§3.2), non c'è ancora nel bestiario umano.`); return { nemico: null, provenienza: {}, costo: costoModuli(scelte, dati), effettivo: null, round: null, avvisi, errori }; }
     if (!u) { errori.push(`bestiario umano: manca ${chiave}.json`); return { nemico: null, provenienza: {}, costo: costoModuli(scelte, dati), effettivo: null, round: null, avvisi, errori }; }
-    const q = base.per_grado[g.id];
+    // A.79 (E&L del 05/10/2026): il profilo del convertitore vale com'è; il grado non dà PV, AzP né danni
     n = clona(u);
     delete n.stati;
     const fonteU = `${u.nome} (bestiario umano)`;
     for (const k of ['pv', 'ar', 'difese', 'iniziativa', 'passo']) prov(k, fonteU, k === 'ar' ? n.ar.totale : k === 'passo' ? n.movimento.passo : n[k]);
     for (const k of Object.keys(n.salvezze)) prov(`salvezze.${k}`, fonteU, n.salvezze[k]);
-    const pv = Math.round(u.pv * q.pv_molt);
-    if (pv !== u.pv) prov('pv', `${g.nome}: PV × ${String(q.pv_molt).replace('.', ',')} (§3.2)`, pv - u.pv);
-    n.pv = pv;
-    prov('azioni', `${g.nome}: AzP del grado (§3.2)`, q.azp);
-    n.azioni = { ...(n.azioni ?? {}), principali: q.azp, movimento: n.azioni?.movimento ?? 1 };
+    prov('azioni', fonteU, n.azioni?.principali ?? 1);
     n.attacchi.forEach((a, i) => {
       prov(`attacchi.${i}.va`, fonteU, a.va);
       prov(`attacchi.${i}.danno`, fonteU, a.danno);
-      a.danno = aggiungiDanno(a.danno, q.bonus_danno);
-      prov(`attacchi.${i}.danno`, `${g.nome}: bonus di grado al danno (§3.2)`, q.bonus_danno);
     });
   } else {
     const c = base.per_grado[g.id];
@@ -196,7 +190,8 @@ export function profiloNemico(scelte, dati, { umani = {} } = {}) {
       const cat = catalogo(dati);
       const armi = (scelte.equipaggiamento.armi ?? predefiniteArmi(dot.armi, cat)).map((r) => cat.perRif.get(r)).filter(Boolean);
       const fonteE = `Equipaggiamento ${gE.nome} (§4.4)`;
-      const bonus = BE.basi.umano.per_grado[g.id].bonus_danno;
+      // A.79: gli umani non hanno bonus di grado; l'Umanoide sì (§4.4, ultima colonna)
+      const bonus = umano ? 0 : E.per_grado[g.id].bonus_danno ?? 0;
       // §4.4: l'Umanoide usa le armi ravvicinate con il VA degli Artigli, a distanza −2; danno + bonus di grado
       const vaDi = (tipo) => {
         if (!umano) return n.attacchi.find((a) => !a.rif)?.va ?? g.va;

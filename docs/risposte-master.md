@@ -851,6 +851,15 @@ le altre si registrano lotto per lotto.
 106. **Rune e Tatuaggi** (A.98). Ampliamento futuro dei Poteri Sciamanici: nessuna sezione vuota né bonus nell'app. →
     tolta la sezione chiusa della tab Poteri (`regole.json` → `poteri.in_arrivo` vuoto); voce 26 di `docs/backlog.md`.
 
+107. **Bestiario umano** (A.79). Avversari umani costruiti come PG: Recluta 2°, Veterano 5°, Élite 8°, PV con la media
+    del dado arrotondata per eccesso, 7 punti liberi per Grado. Le etichette Recluta/Veterano/Élite/Boss e il numero dei
+    PG non danno PV, danni o Azioni: «Crea nemico» usa il profilo del convertitore com'è (via moltiplicatore dei PV, AzP
+    del grado e bonus di grado al danno del §3.2); il bonus resta solo per l'equipaggiamento dell'Umanoide mostruoso
+    (§4.4, ultima colonna). Eretico: «Eretico — profilo umano senza poteri oscuri», nessun Dono dell'Oscura Simmetria,
+    nessuna Corruzione dal nome; tolto il TODO. → `tools/genera_nemici_umani.mjs`, `src/crea-nemico.js`,
+    `docs/bestiario/bestiario.md` (§3.2, §4.4, §5.5.1), `data/bestiario.json`; schede del cap. 5 riallineate con
+    `tools/aggiorna_creature_bestiario.mjs` (Eretico corrotto).
+
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 
 Il Manuale dei Veicoli 0.2 è completo di numeri e il lotto 2 (dati e motore) non ha dovuto inventare nulla. Restano

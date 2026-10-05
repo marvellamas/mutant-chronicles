@@ -70,7 +70,7 @@ const [t32] = tabelle('3.2 Umano');
 verifica(t32.testa[0] === 'Bestiario umano', 'tabella del bestiario umano');
 const umano = Object.fromEntries(t32.righe.map((r) => [idGrado(r[2]), {
   tipo: r[0].replace(/ \(da preparare\)$/, ''), da_preparare: /da preparare/.test(r[0]), livello: num(r[1]),
-  pv_molt: num(r[3]), azp: num(r[4]), bonus_danno: num(r[5]), round_resistenza: num(r[6]), round_abbattere: num(r[7]),
+  // A.79 (E&L del 05/10/2026): nessun moltiplicatore, AzP o bonus di grado per gli umani: il convertitore com'è
 }]));
 // i dieci tipi del bestiario umano, con il nome del §3.2 («I tipi sono: …»); l'id è quello dei file esempi/nemici/umani/
 const frase = md.find((r) => r.startsWith('I tipi sono: '));
@@ -282,7 +282,7 @@ const ARMI = {
 };
 const equipaggiamento = {
   paragrafo: '§4.4', basi: ['umano', 'umanoide-mostruoso'],
-  per_grado: Object.fromEntries(t44.righe.map((r) => [idGrado(r[0]), { protezione: r[1], ar: num(r[2].split('–')[0]), armi: r[3].split(', ').map((n) => ARMI[n]) }])),
+  per_grado: Object.fromEntries(t44.righe.map((r) => [idGrado(r[0]), { protezione: r[1], ar: num(r[2].split('–')[0]), armi: r[3].split(', ').map((n) => ARMI[n]), bonus_danno: num(r[5]) }])),
   fasce: t44c.righe.map((r, i) => ({ id: ['del-grado', 'grado-successivo', 'due-fasce-sopra'][i], nome: r[0], costo: num(r[1].replace('½', '.5')), salto: i })),
   distanza_va: -2,
 };

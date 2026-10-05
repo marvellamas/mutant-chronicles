@@ -93,16 +93,16 @@ test('bestiario umano: 10 tipi × 3 gradi, tutti validi, senza problemi di costr
     assert.deepEqual(validaNemico(x.nemico, dati, x.nemico.id).map(formattaErrore), []);
     // il file del repo è quello che il generatore scrive oggi (rigenerare con node tools/genera_nemici_umani.mjs)
     assert.equal(readFileSync(new URL(`${x.nemico.id}.json`, cartella), 'utf8'), `${JSON.stringify(x.nemico, null, 2)}\n`, x.nemico.id);
-    assert.equal(x.nemico.nome, `${x.tipo.tipo} — ${x.grado.nome}`);
+    assert.equal(x.nemico.nome, `${x.tipo.nomeTipo ?? x.tipo.tipo} — ${x.grado.nome}`);
     assert.match(x.nemico.fonte, /^costruito come PG \(/);
     assert.match(x.nemico.note, /^Proposta, da validare con Davide/);
     assert.ok(x.nemico.attacchi.length >= 1);
     assert.equal(x.pg.personaggio.livelli.length + 1, x.grado.livello);
   }
-  // Eretico: solo la parte umana, nessun potere inventato, il promemoria per Davide
+  // Eretico: profilo umano senza poteri oscuri (A.79, E&L del 05/10/2026), nessun potere inventato
   for (const x of tutti.filter((y) => y.tipo.tipo === 'Eretico')) {
     assert.equal(x.nemico.incantesimi, undefined);
-    assert.match(x.nemico.note, /TODO\(Davide\).*Oscura/);
+    assert.match(x.nemico.note, /senza poteri oscuri \(A\.79\)/);
   }
 });
 
@@ -116,3 +116,13 @@ test('bestiario umano: i tre gradi crescono in modo coerente (PV, VA dell’arma
     assert.ok(r.ar.totale <= e.ar.totale, `${t.tipo}: AR`);
   }
 });
+
+test('A.79: l’Eretico è un profilo umano senza poteri oscuri; PV con la media del dado per eccesso', () => {
+  const e = nemiciUmani(dati).filter((x) => x.tipo.tipo === 'Eretico');
+  for (const x of e) {
+    assert.match(x.nemico.nome, /^Eretico — profilo umano senza poteri oscuri — /);
+    assert.doesNotMatch(x.nemico.note, /TODO\(Davide\)/);
+    assert.ok(!(x.nemico.stati ?? []).length && !x.nemico.corruzione, 'nessuna Corruzione dal nome');
+  }
+});
+
