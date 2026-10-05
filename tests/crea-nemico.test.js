@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { datiReali } from './helpers.js';
 import { validaNemico } from '../src/validate.js';
-import { profiloNemico, scelteCreatura, fileUmano, aCaso, ritiraPasso, difficolta, frazioneScontro, costoModuli } from '../src/crea-nemico.js';
+import { profiloNemico, scelteCreatura, fileUmano, aCaso, ritiraPasso, difficolta, frazioneScontro } from '../src/crea-nemico.js';
 
 const { dati } = await datiReali();
 const md = readFileSync(new URL('../docs/bestiario/bestiario.md', import.meta.url), 'utf8').split(/\r?\n/);
@@ -93,7 +93,7 @@ test('Eretico corrotto: file del bestiario umano per grado; Comandante e Campion
 // --- casi della richiesta ----------------------------------------------------------------------------------
 const umano = (id) => JSON.parse(readFileSync(new URL(`../esempi/nemici/umani/${id}.json`, import.meta.url), 'utf8'));
 
-test('Insettoide Medio con 2 Mutazioni (Carapace, Veleno): valori, provenienza, costo e grado effettivo', () => {
+test('Insettoide Medio con 2 Mutazioni (Carapace, Veleno): valori e provenienza, senza costo né grado effettivo (A.97)', () => {
   const r = profiloNemico({ base: 'insettoide', grado: 'medio', mutazioni: ['carapace', 'veleno'] }, dati);
   const n = r.nemico;
   assert.deepEqual([r.errori, r.avvisi, validaNemico(n, dati)], [[], [], []]);
@@ -105,10 +105,9 @@ test('Insettoide Medio con 2 Mutazioni (Carapace, Veleno): valori, provenienza, 
   // provenienza: base + modulo
   assert.deepEqual(r.provenienza.ar.map((x) => [x.fonte, x.valore]), [['Insettoide Medio (§3.3)', 4], ['Carapace (§4.3)', 1]]);
   assert.deepEqual(r.provenienza.passo.map((x) => x.valore), [8, -2]);
-  // §2.4: +½ +½ = +1, grado effettivo Potente; Round di resistenza del grado e del grado effettivo
-  assert.deepEqual([r.costo.totale, r.effettivo.nome, r.round.grado, r.round.effettivo], [1, 'Potente', 4.5, 7]);
-  assert.equal(n._bestiario.grado_effettivo, 3);
-  assert.match(n.fonte, /^Bestiario, proposta: Insettoide Medio, Carapace \+½, Veleno \+½$/);
+  // A.97 (E&L del 05/10/2026): nessun costo dei moduli né grado effettivo; Round di resistenza del grado (stima)
+  assert.deepEqual([r.costo, r.effettivo, r.round.grado, n._bestiario.grado_effettivo], [undefined, undefined, 4.5, undefined]);
+  assert.match(n.fonte, /^Bestiario, proposta: Insettoide Medio, Carapace, Veleno$/);
   // una Mutazione non ammessa per la base si segnala e non si applica
   const x = profiloNemico({ base: 'aracnoide', grado: 'medio', mutazioni: ['ali-membranose'] }, dati);
   assert.match(x.avvisi[0], /Ali membranose: non ammessa per Aracnoide/);
@@ -128,7 +127,7 @@ test('Umano Corrotto di livello 2 (Posseduto): il Fante Capitol Veterano con le 
   assert.equal(distanza.danno, u.attacchi.find((a) => a.tipo === 'distanza').danno, 'nessun bonus di grado (A.79)');
   assert.deepEqual(['Presenza terrificante', 'Sussurro continuo', 'Fiamma nera', 'Esposizione alla Corruzione'].map((c) => n.capacita.some((x) => x.nome === c)), [true, true, true, true]);
   assert.match(n.capacita.find((x) => x.nome === 'Esposizione alla Corruzione').effetto, /^Debole \(PS di Magia \+2/);
-  assert.deepEqual([r.costo.totale, r.effettivo.nome], [1, 'Medio']);
+  assert.deepEqual([r.costo, r.effettivo], [undefined, undefined]); // A.97: nessun costo dei moduli
   assert.equal(n.nome, 'Fante Capitol posseduto Semplice');
   assert.match(n.note, /Natura: Oscura Simmetria\./);
   // il file del grado manca: errore chiaro
@@ -141,7 +140,7 @@ test('Equipaggiamento (§4.4): l’Umanoide Medio con la fascia successiva usa i
   assert.deepEqual([r.avvisi, validaNemico(n, dati)], [[], []]);
   const per = Object.fromEntries(n.attacchi.map((a) => [a.nome, [a.va, a.danno]]));
   assert.deepEqual(per, { Artigli: [15, '2d6+3'], Spadone: [15, '2d6+4'], 'Mitragliatore leggero': [13, '1d8+5'] });
-  assert.deepEqual([n.ar.totale, r.costo.totale], [5, 0.5]); // l'armatura pesante (5) sostituisce l'AR naturale (2)
+  assert.equal(n.ar.totale, 5); // l'armatura pesante (5) sostituisce l'AR naturale (2); A.97: nessun costo
   // non ammesso per le altre basi
   assert.match(profiloNemico({ base: 'insettoide', grado: 'medio', equipaggiamento: { fascia: 'del-grado' } }, dati).avvisi[0], /solo per Umano e Umanoide mostruoso/);
 });
@@ -156,30 +155,28 @@ test('«a caso» con un seme fisso: sempre lo stesso nemico; ritirare un modulo 
   assert.ok(a.passi[4].tiri.some((t) => t.ritirato));
   const r = profiloNemico(a.scelte, dati);
   assert.deepEqual([r.errori, validaNemico(r.nemico, dati)], [[], []]);
-  assert.ok(costoModuli(a.scelte, dati).totale <= B.costo_massimo);
   // «ritira la Mutazione» del modulo 1
   const b = ritiraPasso(a, 'modulo-1', dati);
   assert.deepEqual([b.scelte.base, b.scelte.grado, b.difficolta], [a.scelte.base, a.scelte.grado, a.difficolta]);
   assert.notEqual(b.scelte.mutazioni[0], a.scelte.mutazioni[0]);
   assert.deepEqual(ritiraPasso(a, 'modulo-1', dati), b); // anche il ritiro è ripetibile
-  // cento semi: profili sempre validi, costo entro +2, umani solo fino al Medio
+  // cento semi: profili sempre validi, umani solo fino al Medio
   for (let s = 1; s <= 100; s++) {
     const x = aCaso({ seme: s, livello: 12, contesto: 'tana' }, dati);
     const id = x.scelte.base === 'umano' ? fileUmano(x.scelte.tipoUmano, x.scelte.grado) : null;
     const p = profiloNemico(x.scelte, dati, { umani: id ? { [id]: umano(id) } : {} });
     assert.deepEqual([p.errori, validaNemico(p.nemico, dati)], [[], []], `seme ${s}`);
-    assert.ok(p.costo.totale <= B.costo_massimo, `seme ${s}`);
     assert.ok(x.numero >= 1 && (!x.scelte.boss || x.numero === 1), `seme ${s}`);
   }
 });
 
-test('difficoltà per 7 PG (§2.3, solo informativa): frazioni, mezzo grado, Boss, stima', () => {
-  const potente = profiloNemico({ base: 'insettoide', grado: 'medio', mutazioni: ['carapace', 'veleno'] }, dati).nemico;
-  assert.equal(frazioneScontro({ grado: 'medio', grado_effettivo: 3 }, 8, dati).frazione, 1 / 0.9);
-  assert.equal(frazioneScontro({ grado: 'medio', grado_effettivo: 2.5 }, 8, dati).frazione, (1 / 2.1 + 1 / 0.9) / 2);
-  assert.equal(frazioneScontro({ grado: 'medio', boss: true, grado_effettivo: 2 }, 8, dati).frazione, 1);
-  assert.equal(difficolta([{ nemico: potente, quanti: 1 }], 8, dati).id, 'normale');
-  assert.equal(difficolta([{ nemico: potente, quanti: 2 }], 8, dati).id, 'mortale');
+test('difficoltà per 7 PG (§2.3): stima sperimentale dal grado; i moduli non contano, il Boss è un’etichetta', () => {
+  const medio2 = profiloNemico({ base: 'insettoide', grado: 'medio', mutazioni: ['carapace', 'veleno'] }, dati).nemico;
+  assert.equal(frazioneScontro({ grado: 'medio' }, 8, dati).frazione, 1 / 2.1);
+  assert.equal(frazioneScontro({ grado: 'medio', boss: true }, 8, dati).frazione, 1 / 2.1, 'Boss: come il suo grado (A.96)');
+  assert.equal(difficolta([{ nemico: medio2, quanti: 1 }], 8, dati).id, 'facile');
+  assert.equal(difficolta([{ nemico: medio2, quanti: 2 }], 8, dati).id, 'normale');
+  assert.equal(difficolta([{ nemico: medio2, quanti: 2 }], 8, dati).etichetta, 'Stima sperimentale, da verificare al tavolo.');
   const medio = profiloNemico({ base: 'aracnoide', grado: 'medio' }, dati).nemico;
   assert.equal(difficolta([{ nemico: medio, quanti: 1 }], 8, dati).id, 'facile');
   // un nemico del bestiario senza _bestiario: grado stimato dai PV, segnalato

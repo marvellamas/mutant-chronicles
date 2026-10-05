@@ -309,9 +309,11 @@ export const MOD_BASI = {
   Aracnoide: { pv: 0.9, ar: 0, difese: 1, danni: ['1d6+2', '1d8+2', '2d6+2', '2d8+2', '2d8+3'] },
   'Umanoide mostruoso': { pv: 1.1, ar: -1, difese: -2, danni: ['1d8+3', '1d10+3', '2d6+3', '2d8+3', '2d8+4'] },
   Quadrupede: { pv: 1, ar: 0, difese: -1, danni: ['1d8+2', '1d8+3', '2d6+2', '2d8+2', '2d8+3'] },
-  Alato: { pv: 0.85, ar: 0, difese: 2, vaContro: -2, danni: ['1d6+2', '1d8+2', '2d6+2', '2d8+2', '2d8+3'] },
+  // A.95 (E&L del 05/10/2026): nessun −2 VA contro chi vola; i PV tornano al grado (stesso peso, A.4)
+  Alato: { pv: 1, ar: 0, difese: 2, danni: ['1d6+2', '1d8+2', '2d6+2', '2d8+2', '2d8+3'] },
   Strisciante: { pv: 1.2, ar: 0, difese: -2, danni: ['1d8+1', '1d8+2', '2d6+1', '2d8+1', '2d8+2'] },
-  Gigante: { pv: 1.25, ar: 0, difese: -4, vaContro: 2, danni: ['1d8+2', '1d8+3', '2d6+2', '2d8+2', '2d8+3'] },
+  // A.95: nessun +2 VA contro le creature grandi; PV × 1,1 (stesso peso, A.4)
+  Gigante: { pv: 1.1, ar: 0, difese: -4, danni: ['1d8+2', '1d8+3', '2d6+2', '2d8+2', '2d8+3'] },
 };
 export const BASI = {
   Umano: GRADI.map((g) => ({ ...g })),
@@ -434,10 +436,12 @@ export function creaturePronte(dati, pgDi, umani = {}) {
     const grado = GRADI.find((x) => x.nome === B.gradi.find((y) => y.id === g).nome);
     // l'attacco migliore della scheda (per l'Eretico il pugnale, non la pistola)
     const a = n.attacchi.filter((x) => x.danno).reduce((m, x) => (probabilita(x.va) * dannoDopoAR(x.danno, 0) > probabilita(m.va) * dannoDopoAR(m.danno, 0) ? x : m));
-    const m = misureScontro({ pv: n.pv, va: a.va, difese: n.difese, ar: n.ar.totale, danno: a.danno, azioni: boss ? n.azioni.principali - 1 : n.azioni.principali, vaContro: B.basi[c.base].va_contro ?? 0 }, pgDi[grado.livello], { bossPara: boss });
-    const intervallo = boss ? OBIETTIVI.Boss : [OBIETTIVI[grado.nome][0], alto(r.effettivo.valore)];
-    const centro = boss ? OBIETTIVI.Boss : OBIETTIVI[grado.nome];
-    return { id: c.id, nome: c.nome, colonna: boss ? `Boss ${grado.nome}` : grado.nome, effettivo: r.effettivo.nome, resistenza: m.resistenza, abbatte: m.abbatte, intervallo,
+    // A.96–A.97 (E&L del 05/10/2026): il Boss è un'etichetta (PV e Azioni del profilo) e i moduli non hanno costo:
+    // l'intervallo è quello del grado, la misura una stima sperimentale
+    const m = misureScontro({ pv: n.pv, va: a.va, difese: n.difese, ar: n.ar.totale, danno: a.danno, azioni: n.azioni.principali }, pgDi[grado.livello]);
+    const intervallo = [OBIETTIVI[grado.nome][0], alto(B.gradi.findIndex((y) => y.id === g))];
+    const centro = OBIETTIVI[grado.nome];
+    return { id: c.id, nome: c.nome, colonna: boss ? `Boss ${grado.nome}` : grado.nome, effettivo: grado.nome, resistenza: m.resistenza, abbatte: m.abbatte, intervallo,
       fuori: m.resistenza < intervallo[0] || m.resistenza > intervallo[1], eccezione: ECCEZIONI[c.id] ?? null, centro: m.resistenza >= centro[0] && m.resistenza <= centro[1] };
   }));
 }

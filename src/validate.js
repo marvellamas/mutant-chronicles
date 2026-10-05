@@ -2293,7 +2293,6 @@ function validaBestiario(dati, err) {
     if (!(typeof g?.danno === 'string' && DADI.test(g.danno))) err(F, `${k}.danno`, 'dadi come «2d6+2»');
     if (!num(g?.round_resistenza)) err(F, `${k}.round_resistenza`, 'numero');
     if (!/^\d+–\d+$/.test(g?.livelli ?? '')) err(F, `${k}.livelli`, 'intervallo «a–b»');
-    if (!isIntero(g?.boss?.pv) || !isIntero(g?.boss?.azp)) err(F, `${k}.boss`, 'PV e AzP del Boss (§2.5.1)');
     for (const c of ['facile', 'normale', 'duro']) if (!(num(g?.equilibrato?.[c]) && g.equilibrato[c] > 0)) err(F, `${k}.equilibrato.${c}`, 'numero positivo (A.3)');
   });
   (b.equilibrato?.gruppi_misti ?? []).forEach((r, i) => {
@@ -2302,15 +2301,16 @@ function validaBestiario(dati, err) {
   });
   if (!(b.equilibrato?.gruppi_misti ?? []).length) err(F, 'equilibrato.gruppi_misti', 'tabella dei gruppi misti (§2.3)');
   if (!Array.isArray(b.equilibrato?.soglie) || b.equilibrato.soglie.at(-1)?.fino_a !== null) err(F, 'equilibrato.soglie', 'soglie in ordine, l’ultima con fino_a null');
-  if (!num(b.costo_massimo)) err(F, 'costo_massimo', 'numero (§2.4: +2)');
-  if (!num(b.boss?.riduzione_pv_per_ar) || !isIntero(b.boss?.azp_in_piu)) err(F, 'boss', 'riduzione_pv_per_ar e azp_in_piu (§2.5.1)');
+  // A.96–A.97 (E&L del 05/10/2026): niente valori del Boss né costi dei moduli nei dati
+  for (const k of ['boss', 'costo_massimo']) if (b[k] !== undefined) err(F, k, 'non previsto: il Boss è un’etichetta e i moduli non hanno costo (A.96, A.97)');
   // basi
   const basi = Object.keys(b.basi ?? {});
   if (!basi.length) err(F, 'basi', 'mancanti (cap. 3)');
   for (const [id, base] of Object.entries(b.basi ?? {})) {
     const k = `basi.${id}`;
     if (!isTesto(base?.nome)) err(F, `${k}.nome`, 'testo');
-    if (!num(base?.pv_molt_boss)) err(F, `${k}.pv_molt_boss`, 'moltiplicatore dei PV del Boss (§3.1)');
+    if (!num(base?.pv_molt)) err(F, `${k}.pv_molt`, 'moltiplicatore dei PV della base rispetto al grado (§3.1)');
+    if (base?.va_contro !== undefined) err(F, `${k}.va_contro`, 'non previsto: nessun ±2 VA generico per volo o taglia (A.95)');
     for (const s of base?.immunita ?? []) if (!S.stati.includes(s)) err(F, `${k}.immunita`, `Stato sconosciuto: ${s}`);
     for (const g of gradi) {
       const c = base?.per_grado?.[g];
@@ -2339,13 +2339,13 @@ function validaBestiario(dati, err) {
   const mut = (M.mutazioni ?? []).map((m) => m?.id);
   (M.mutazioni ?? []).forEach((m, i) => {
     const k = `moduli.mutazioni[${i}]`;
-    if (!isTesto(m?.id) || !isTesto(m?.nome) || !num(m?.costo)) err(F, k, 'id, nome e costo');
+    if (!isTesto(m?.id) || !isTesto(m?.nome)) err(F, k, 'id e nome');
     for (const x of m?.basi ?? []) if (!basi.includes(x)) err(F, `${k}.basi`, `base sconosciuta: ${x}`);
   });
   const livelli = (M.corrotto?.livelli ?? []).map((l) => l?.id);
   (M.corrotto?.livelli ?? []).forEach((l, i) => {
     const k = `moduli.corrotto.livelli[${i}]`;
-    if (!num(l?.costo) || !isIntero(l?.manifestazioni?.minori) || !isIntero(l?.manifestazioni?.maggiori)) err(F, k, 'costo e numero di Manifestazioni');
+    if (!isIntero(l?.manifestazioni?.minori) || !isIntero(l?.manifestazioni?.maggiori)) err(F, k, 'numero di Manifestazioni');
     for (const s of l?.effetti?.immunita ?? []) if (!S.stati.includes(s)) err(F, `${k}.effetti.immunita`, `Stato sconosciuto: ${s}`);
     if (l?.effetti?.attacchi_naturali && !S.nature_danno.includes(l.effetti.attacchi_naturali)) err(F, `${k}.effetti.attacchi_naturali`, 'natura del danno');
   });

@@ -14,8 +14,8 @@ import { provenienza, riga } from '../provenienza.js';
 import { catalogo } from '../equipaggiamento.js';
 import { testoMovimento } from '../nemici.js';
 import {
-  profiloNemico, scelteCreatura, fileUmano, SUFFISSO_UMANO, aCaso, ritiraPasso, mutazioniAmmesse, costoMutazione,
-  costoModuli, gradoEffettivo, roundResistenza, testoCosto, proponiNome, proponiDescrizione, idDaNome,
+  profiloNemico, scelteCreatura, fileUmano, SUFFISSO_UMANO, aCaso, ritiraPasso, mutazioniAmmesse,
+  roundResistenza, proponiNome, proponiDescrizione, idDaNome,
 } from '../crea-nemico.js';
 
 const PASSI = ['Base', 'Grado', 'Moduli', 'Nome e descrizione', 'Riepilogo'];
@@ -120,7 +120,7 @@ export function apriCreaNemico(ctx, { voci = [], salvato = () => {}, destinazion
     return [
       rigaScelte('Grado (§2.1)', opzioni, s.grado, (v) => cambia((x) => { if (c) Object.assign(x, scelteCreatura(c.id, v, {}, dati)); else { x.grado = v; x.boss = false; } })),
       interruttore('Boss (§2.5)', !!s.boss, (v) => cambia((x) => { if (c) Object.assign(x, scelteCreatura(c.id, v ? c.boss.grado : c.gradi[0], { boss: v }, dati)); else x.boss = v; }),
-        { mod: `${BE.boss.round_resistenza} Round, PV del Boss, AzP +${BE.boss.azp_in_piu}`, motivo: bossPossibile ? null : 'questa creatura pronta non ha il Boss', info: { titolo: 'Boss', sottotitolo: '§2.5: un avversario unico che vale da solo uno scontro contro 7 PG del suo livello. PV dalla tabella del Boss × il moltiplicatore della base, × 0,7 per ogni punto di AR oltre il grado; un’AzP in più che non attacca; soglia di fase a metà PV.' } }),
+        { mod: 'solo etichetta', motivo: bossPossibile ? null : 'questa creatura pronta non ha il Boss', info: { titolo: 'Boss', sottotitolo: 'A.96 (E&L del 05/10/2026): Boss è una classificazione, non un moltiplicatore. PV e Azioni restano quelli del profilo; le creature pronte possono avere una capacità propria del Boss, dichiarata nella scheda.' } }),
       h('p', { class: 'nota' }, `Round di resistenza: quanti Round resiste contro 7 PG del livello del grado che concentrano gli attacchi (§2.1, Appendice A.3). ${c?.boss ? `Il Boss della creatura pronta è di grado ${BE.gradi.find((g) => g.id === c.boss.grado).nome}.` : ''}`),
       tabellaGrado(),
     ];
@@ -140,7 +140,7 @@ export function apriCreaNemico(ctx, { voci = [], salvato = () => {}, destinazion
     const togli = (lista, id) => lista.filter((x) => x !== id);
     const manif = (tipo, elenco, quante) => elenco.map((m) => interruttore(m.nome, (s.corrotto?.[tipo] ?? []).includes(m.id),
       (v) => cambia((x) => { x.corrotto[tipo] = v ? [...x.corrotto[tipo], m.id] : togli(x.corrotto[tipo], m.id); }),
-      { mod: m.effetti?.costo ? testoCosto(m.effetti.costo) : null, info: { titolo: m.nome, sottotitolo: m.effetto }, motivo: !(s.corrotto?.[tipo] ?? []).includes(m.id) && (s.corrotto?.[tipo] ?? []).length >= quante ? `già ${quante}` : null }));
+      { mod: null, info: { titolo: m.nome, sottotitolo: m.effetto }, motivo: !(s.corrotto?.[tipo] ?? []).includes(m.id) && (s.corrotto?.[tipo] ?? []).length >= quante ? `già ${quante}` : null }));
     const E = BE.moduli.equipaggiamento;
     const conEquip = E.basi.includes(s.base);
     const fascia = E.fasce.find((f) => f.id === s.equipaggiamento?.fascia);
@@ -148,15 +148,15 @@ export function apriCreaNemico(ctx, { voci = [], salvato = () => {}, destinazion
     const gE = fascia ? BE.gradi[Math.min(BE.gradi.length - 1, BE.gradi.findIndex((g) => g.id === s.grado) + fascia.salto)] : null;
     const armiFascia = gE ? E.per_grado[gE.id].armi.map((r) => cat.perRif.get(r)).filter(Boolean) : [];
     return [
-      rigaScelte('Corrotto dall’Oscura Simmetria (§4.2)', [{ valore: null, etichetta: 'No' }, ...K.livelli.map((l) => ({ valore: l.id, etichetta: l.nome, riga: `${testoCosto(l.costo)} · ${l.manifestazioni.minori} minore${l.manifestazioni.maggiori ? ` e ${l.manifestazioni.maggiori} maggior${l.manifestazioni.maggiori > 1 ? 'i' : 'e'}` : ''}`, titolo: l.effetto }))],
+      rigaScelte('Corrotto dall’Oscura Simmetria (§4.2)', [{ valore: null, etichetta: 'No' }, ...K.livelli.map((l) => ({ valore: l.id, etichetta: l.nome, riga: `${l.manifestazioni.minori} minore${l.manifestazioni.maggiori ? ` e ${l.manifestazioni.maggiori} maggior${l.manifestazioni.maggiori > 1 ? 'i' : 'e'}` : ''}`, titolo: l.effetto }))],
         s.corrotto?.livello ?? null, (v) => cambia((x) => { x.corrotto = v ? { livello: v, minori: (x.corrotto?.minori ?? []).slice(0, 1), maggiori: (x.corrotto?.maggiori ?? []).slice(0, K.livelli.find((l) => l.id === v).manifestazioni.maggiori) } : null; })),
       livelloC ? [h('p', { class: 'scelta-titolo' }, `Manifestazioni minori: ${livelloC.manifestazioni.minori}`), griglia(manif('minori', K.manifestazioni_minori, livelloC.manifestazioni.minori))] : null,
       livelloC?.manifestazioni.maggiori ? [h('p', { class: 'scelta-titolo' }, `Manifestazioni maggiori: ${livelloC.manifestazioni.maggiori}`), griglia(manif('maggiori', K.manifestazioni_maggiori, livelloC.manifestazioni.maggiori))] : null,
       h('p', { class: 'scelta-titolo' }, 'Mutazioni (§4.3)'),
       griglia(mutazioniAmmesse(s.base, dati).map((m) => interruttore(m.nome, s.mutazioni.includes(m.id),
         (v) => cambia((x) => { x.mutazioni = v ? [...x.mutazioni, m.id] : togli(x.mutazioni, m.id); }),
-        { mod: testoCosto(costoMutazione(m, s.base, s.grado, dati)), info: { titolo: m.nome, sottotitolo: m.effetto } }))),
-      conEquip ? rigaScelte('Equipaggiamento (§4.4)', [{ valore: null, etichetta: 'No' }, ...E.fasce.map((f) => ({ valore: f.id, etichetta: f.nome, riga: testoCosto(f.costo) }))], s.equipaggiamento?.fascia ?? null,
+        { mod: null, info: { titolo: m.nome, sottotitolo: m.effetto } }))),
+      conEquip ? rigaScelte('Equipaggiamento (§4.4)', [{ valore: null, etichetta: 'No' }, ...E.fasce.map((f) => ({ valore: f.id, etichetta: f.nome }))], s.equipaggiamento?.fascia ?? null,
         (v) => cambia((x) => { x.equipaggiamento = v ? { fascia: v } : null; })) : null,
       fascia ? [h('p', { class: 'scelta-titolo' }, `Armi della fascia ${gE.nome}: ${E.per_grado[gE.id].protezione}, AR ${E.per_grado[gE.id].ar}`),
         griglia(armiFascia.map((o) => interruttore(o.nome, (s.equipaggiamento.armi ?? predefinite(armiFascia)).includes(o.rif),
@@ -167,14 +167,11 @@ export function apriCreaNemico(ctx, { voci = [], salvato = () => {}, destinazion
   };
   const griglia = (celle) => h('div', { class: 'griglia-interruttori' }, celle);
   const predefinite = (armi) => [armi.find((o) => o.tipo === 'arma_ravvicinata'), armi.find((o) => o.tipo === 'arma_distanza')].filter(Boolean).map((o) => o.rif);
+  // A.97 (E&L del 05/10/2026): nessun costo dei moduli né grado effettivo; la durata è una stima sperimentale
   const riepilogoCosto = () => {
-    const c = costoModuli(st.scelte, dati);
     const g = BE.gradi.find((x) => x.id === st.scelte.grado);
-    const eff = st.scelte.boss ? null : gradoEffettivo(st.scelte.grado, c.totale, dati);
-    return h('p', { class: `riquadro ${c.totale > BE.costo_massimo ? 'attenzione' : 'ok'}`, role: 'status' },
-      `Costo dei moduli ${testoCosto(c.totale)}${c.voci.length ? ` (${c.voci.map((v) => `${v.fonte} ${testoCosto(v.valore)}`).join(', ')})` : ''}. `,
-      st.scelte.boss ? `Boss ${g.nome}: ${BE.boss.round_resistenza} Round di resistenza.` : `Grado effettivo ${eff.nome} (§2.4): circa ${virgola(roundResistenza(eff.valore, dati))} Round di resistenza contro 7 PG.`,
-      c.totale > BE.costo_massimo ? ` Oltre +${BE.costo_massimo}: meglio scegliere direttamente un grado più alto (§2.4).` : '');
+    return h('p', { class: 'riquadro ok', role: 'status' },
+      `${st.scelte.boss ? `Boss (etichetta), grado ${g.nome}` : `Grado ${g.nome}`}: circa ${virgola(roundResistenza(g.id, dati))} Round di resistenza contro 7 PG del suo livello. ${BE.equilibrato.etichetta ?? ''} I moduli non hanno un costo in grado: conta il profilo completo.`);
   };
 
   const passoNome = () => {
@@ -210,11 +207,11 @@ export function apriCreaNemico(ctx, { voci = [], salvato = () => {}, destinazion
     return [
       st.casuale ? pannelloCasuale() : null,
       h('p', {}, h('strong', {}, n.nome), h('small', { class: 'nota' }, ` · nemici/${n.id}.json`)),
-      h('p', { class: 'nota' }, n.fonte, ' · ', s.boss ? `Boss, ${BE.boss.round_resistenza} Round di resistenza` : `grado effettivo ${r.effettivo.nome}, circa ${virgola(r.round.effettivo)} Round di resistenza contro 7 PG`, '.'),
+      h('p', { class: 'nota' }, n.fonte, ' · ', `${s.boss ? 'Boss (etichetta), ' : ''}circa ${virgola(r.round.grado)} Round di resistenza contro 7 PG del grado: ${BE.equilibrato.etichetta ?? 'stima'}`),
       r.avvisi.length ? h('div', { class: 'riquadro attenzione' }, h('ul', {}, r.avvisi.map((x) => h('li', {}, x)))) : null,
       h('div', { class: 'griglia-ritocchi' }, CAMPI_RITOCCO.map(([p, e]) => cella(p, e))),
       h('p', { class: 'nota' }, `Caratteristiche: ${Object.entries(n.caratteristiche ?? {}).map(([k, v]) => `${k} ${v}`).join(' · ')}.`),
-      h('p', { class: 'nota' }, `Movimento: ${testoMovimento(n, dati)}${n.taglia === 'grande' ? ' · Taglia Grande (+2 VA a chi lo attacca)' : ''}${n.movimento?.volo ? ' · −2 VA a chi lo attacca in volo' : ''}.`),
+      h('p', { class: 'nota' }, `Movimento: ${testoMovimento(n, dati)}${n.taglia === 'grande' ? ' · Taglia Grande' : ''}${n.movimento?.volo ? ' · vola' : ''}.`),
       h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta attacchi-crea' },
         h('thead', {}, h('tr', {}, ['Attacco', 'Tipo', 'VA', 'Danno', 'Natura', 'Proprietà'].map((x) => h('th', {}, x)))),
         h('tbody', {}, n.attacchi.map((a, i) => h('tr', {},

@@ -860,6 +860,17 @@ le altre si registrano lotto per lotto.
     `docs/bestiario/bestiario.md` (§3.2, §4.4, §5.5.1), `data/bestiario.json`; schede del cap. 5 riallineate con
     `tools/aggiorna_creature_bestiario.mjs` (Eretico corrotto).
 
+108. **Bestiario: volo, taglia, Boss e moduli** (A.95, A.96, A.97). Tolti il −2 VA contro chi vola e il +2 VA contro le
+    creature grandi (dati, motore, carte, formato dei nemici, documento); restano le andature e le regole specifiche di
+    taglia (Sbalzante). Boss è un'etichetta: niente PV, AzP o resistenza agli Stati automatici, resta la capacità
+    propria della creatura pronta. Via il costo universale dei moduli e il grado effettivo; la difficoltà di «Prepara
+    scontro» e i Round di resistenza sono una «Stima sperimentale, da verificare al tavolo» (`bestiario.json` →
+    `equilibrato.etichetta`). Ritaratura con lo stesso peso del modello dell'Appendice A: Alato PV × 1 (prima 0,85),
+    Gigante × 1,1 (prima 1,25); le schede del cap. 5 ricalcolate dal motore (`tools/aggiorna_creature_bestiario.mjs`),
+    le colonne Boss con i valori del loro grado. → `tools/lotti/lotto_bestiario_dati.mjs`, `src/crea-nemico.js`,
+    `src/ui/crea-nemico.js`, `src/ui/preparazione.js`, `src/ui/nemici.js`, `tools/taratura_bestiario.mjs`,
+    `docs/bestiario/bestiario.md` e `.html` (§1.2, §1.7, §2.1, §2.3–§2.5, §3.1, §4.1–§4.4, cap. 5–6, nota in Appendice A).
+
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 
 Il Manuale dei Veicoli 0.2 è completo di numeri e il lotto 2 (dati e motore) non ha dovuto inventare nulla. Restano

@@ -319,8 +319,8 @@ export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false,
       h('span', {}, ' · Iniziativa ', h('strong', { class: 'pillola-plancia' }, numero(n.iniziativa)))),
     // Bestiario §3.1.1: volo e taglia Grande, con la regola nel suggerimento (data/formato_nemici.json)
     n.movimento?.volo || n.taglia === 'grande' ? h('p', { class: 'plancia-condizioni tratti-nemico' },
-      n.movimento?.volo ? h('span', { class: 'etichetta tratto-nemico', title: dati.formato_nemici.campi.movimento.campi.volo?.descrizione ?? null }, `Vola · Passo in volo ${n.movimento.volo} Q · −2 VA a chi lo attacca in volo`) : null,
-      n.taglia === 'grande' ? [' ', h('span', { class: 'etichetta tratto-nemico', title: dati.formato_nemici.campi.taglia?.descrizione ?? null }, 'Taglia Grande · +2 VA a chi lo attacca')] : null) : null,
+      n.movimento?.volo ? h('span', { class: 'etichetta tratto-nemico', title: dati.formato_nemici.campi.movimento.campi.volo?.descrizione ?? null }, `Vola · Passo in volo ${n.movimento.volo} Q`) : null,
+      n.taglia === 'grande' ? [' ', h('span', { class: 'etichetta tratto-nemico', title: dati.formato_nemici.campi.taglia?.descrizione ?? null }, 'Taglia Grande')] : null) : null,
     // incantesimi in corso del nemico e quelli che ha addosso (src/durate-incantesimi.js, src/ui/tavolo.js → rigaDurate)
     rigaDurate(durate, 'incantesimo', 'Incantesimi in corso'),
     rigaDurate(durate, 'subito', 'Su di lui'),

@@ -17,7 +17,7 @@ import { dadoIniziativa } from '../scontro.js';
 import {
   nuovaBozza, aggiungiVoce, cambiaVoce, togliVoce, cambiaBozza, duplicaBozza, eliminaBozza, iniziaBozza, pgDellaBozza, STATO_BOZZA,
 } from '../preparazione.js';
-import { profiloNemico, scelteCreatura, fileUmano, difficolta, infoBilancio, nomeEffettivo } from '../crea-nemico.js';
+import { profiloNemico, scelteCreatura, fileUmano, difficolta, infoBilancio } from '../crea-nemico.js';
 
 const virgola = (x) => String(x).replace('.', ',');
 
@@ -208,10 +208,10 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
     const vuota = !b.nemici.length;
     const soglie = BE.equilibrato.soglie.map((x) => (x.fino_a === null ? `oltre: ${x.nome}` : `fino a ${virgola(x.fino_a)}: ${x.nome}`)).join('; ');
     const dettagli = vuota ? 'Aggiungi almeno un nemico: la difficoltà si calcola dai loro gradi.'
-      : `Somma delle frazioni: ${virgola(d.somma)} (${soglie}). Ogni nemico vale 1 diviso il numero di creature di uno scontro normale per il suo grado effettivo, nella tabella dei gruppi misti del Bestiario (§2.3), riga dei PG ${delLivello(d.livello)} livello; un Boss vale 1 contro i PG del suo livello. Solo indicativa.`;
+      : `Somma delle frazioni: ${virgola(d.somma)} (${soglie}). Ogni nemico vale 1 diviso il numero di creature di uno scontro normale per il suo grado, nella tabella dei gruppi misti del Bestiario (§2.3), riga dei PG ${delLivello(d.livello)} livello; il Boss è un’etichetta e conta come il suo grado (A.96). I 7 PG sono il riferimento del playtest, non un modificatore (A.97).`;
     return h('div', { class: `riquadro difficolta-${vuota ? 'facile' : d.id}`, role: 'status', title: dettagli },
       h('p', {}, vuota ? h('strong', {}, 'Difficoltà: nessun nemico.')
-        : [h('strong', {}, `Difficoltà per ${d.pg} PG di ${liv.valore}° livello: ${d.nome}.`),
+        : [h('strong', {}, `Difficoltà per ${d.pg} PG di ${liv.valore}° livello: ${d.nome}.`), d.etichetta ? [' ', h('em', { class: 'stima-sperimentale' }, d.etichetta)] : null,
           d.livello !== liv.valore ? ` Calcolata sulla riga ${delLivello(d.livello)} livello, la più vicina nella tabella del Bestiario.` : ` Calcolata sulla riga ${delLivello(d.livello)} livello della tabella del Bestiario.`,
           d.stime ? ` Per ${d.stime} nemic${d.stime === 1 ? 'o' : 'i'} il grado è stimato dai PV.` : '']),
       h('p', { class: 'nota' }, 'Livello dei PG: ',
@@ -257,7 +257,7 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
     return h('li', { class: 'voce-bozza' },
       h('div', { class: 'riga-aggiungi' },
         h('strong', {}, n.nome),
-        h('small', { class: 'nota' }, ` · PV ${n.pv} · AR ${n.ar?.totale ?? 0}${n.ar?.magica ? ` (${n.ar.magica} magica)` : ''} · Difese ${n.difese} · Iniziativa ${n.iniziativa} · ${info.boss ? `Boss ${BE.gradi.find((g) => g.id === info.grado).nome}` : `grado ${info.stima ? 'stimato ' : 'effettivo '}${nomeEffettivo(info.grado_effettivo, dati).nome}`}`),
+        h('small', { class: 'nota' }, ` · PV ${n.pv} · AR ${n.ar?.totale ?? 0}${n.ar?.magica ? ` (${n.ar.magica} magica)` : ''} · Difese ${n.difese} · Iniziativa ${n.iniziativa} · ${info.boss ? 'Boss (etichetta), ' : ''}grado ${info.stima ? 'stimato ' : ''}${BE.gradi.find((g) => g.id === info.grado)?.nome ?? info.grado}`),
         h('label', {}, ' Quanti ', h('input', { type: 'number', min: 1, max: 30, step: 1, class: 'input-d10', value: v.quanti, 'aria-label': `Quanti ${n.nome}`, onchange: (e) => modifica((x) => cambiaVoce(x, v.uid, { quanti: Number(e.target.value) })) })),
         h('label', {}, ' Lato ', h('select', { 'aria-label': `Lato di ${n.nome}`, onchange: (e) => modifica((x) => cambiaVoce(x, v.uid, { lato: e.target.value })) }, ['avversario', 'alleato'].map((x) => h('option', { value: x, selected: v.lato === x }, x)))),
         h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-expanded': String(aperto), onclick: () => { if (aperto) st.aperti.delete(v.uid); else st.aperti.add(v.uid); disegna(); } }, aperto ? 'Chiudi' : 'Guarda'),

@@ -1,7 +1,7 @@
 {
   "versione_manuale": "Bestiario, proposta (bozza 0.2, docs/bestiario/bestiario.md, 02/10/2026)",
   "fonte": "Bestiario, proposta: docs/bestiario/bestiario.md, cap. 2–6 e Appendice A; lotto tools/lotti/lotto_bestiario_dati.mjs. Le tabelle si leggono dal documento; effetti dei moduli e ricette delle creature pronte dal testo dei paragrafi.",
-  "TODO(Davide)": "Bestiario proposto, in attesa di Davide: scala tarata su 7 PG, costi dei moduli, Boss, creature pronte e tabelle casuali; basi del §3.6–3.9 con le proposte su bersaglio in volo (−2 VA) e taglia Grande (+2 VA), che il Giocatore non ha (docs/bestiario/domande-per-davide.md).",
+  "TODO(Davide)": "Bestiario proposto, in attesa di Davide: creature pronte e tabelle casuali da confermare; la scala tarata su 7 PG è una stima sperimentale da verificare al tavolo (A.97). Applicate il 05/10/2026 A.95 (nessun −2/+2 VA per volo e taglia), A.96 (Boss solo etichetta) e A.97 (nessun costo dei moduli né grado effettivo).",
   "gruppo_pg": 7,
   "gradi": [
     {
@@ -26,11 +26,6 @@
       },
       "passo": 6,
       "spazio": "1 Q",
-      "boss": {
-        "pv": 160,
-        "azp": 2,
-        "round_resistenza": 12
-      },
       "equilibrato": {
         "facile": 3.3,
         "normale": 4.7,
@@ -59,11 +54,6 @@
       },
       "passo": 6,
       "spazio": "1 Q",
-      "boss": {
-        "pv": 160,
-        "azp": 3,
-        "round_resistenza": 12
-      },
       "equilibrato": {
         "facile": 1.9,
         "normale": 2.7,
@@ -92,11 +82,6 @@
       },
       "passo": 6,
       "spazio": "1 Q",
-      "boss": {
-        "pv": 155,
-        "azp": 3,
-        "round_resistenza": 12
-      },
       "equilibrato": {
         "facile": 1.5,
         "normale": 2.1,
@@ -125,11 +110,6 @@
       },
       "passo": 6,
       "spazio": "1 Q",
-      "boss": {
-        "pv": 290,
-        "azp": 3,
-        "round_resistenza": 12
-      },
       "equilibrato": {
         "facile": 1,
         "normale": 1.5,
@@ -158,11 +138,6 @@
       },
       "passo": 6,
       "spazio": "1 Q",
-      "boss": {
-        "pv": 295,
-        "azp": 3,
-        "round_resistenza": 12
-      },
       "equilibrato": {
         "facile": 0.8,
         "normale": 1.2,
@@ -170,14 +145,9 @@
       }
     }
   ],
-  "boss": {
-    "round_resistenza": 12,
-    "azp_in_piu": 1,
-    "riduzione_pv_per_ar": 0.7,
-    "paragrafo": "§2.5"
-  },
   "equilibrato": {
     "paragrafo": "§2.3",
+    "etichetta": "Stima sperimentale, da verificare al tavolo.",
     "gruppi_misti": [
       {
         "livello": 2,
@@ -243,7 +213,6 @@
       }
     ]
   },
-  "costo_massimo": 2,
   "basi": {
     "umano": {
       "nome": "Umano",
@@ -302,7 +271,7 @@
         }
       },
       "nota": "Gli umani vengono dal bestiario umano del Tavolo del Master (esempi/nemici/umani/), portati al grado con PV × moltiplicatore, AzP del grado e bonus di grado al danno. Comandante (12°) e Campione (16°) sono da preparare.",
-      "pv_molt_boss": 1
+      "pv_molt": 1
     },
     "insettoide": {
       "nome": "Insettoide",
@@ -563,7 +532,7 @@
       ],
       "immunita_nota": "salvo effetti magici",
       "comportamento": "Attacca in gruppo il bersaglio più vicino; ogni Insettoide oltre il primo ingaggiato con lo stesso bersaglio applica la Superiorità numerica. Fugge quando metà del gruppo è a 0 PV.",
-      "pv_molt_boss": 0.9
+      "pv_molt": 0.9
     },
     "aracnoide": {
       "nome": "Aracnoide",
@@ -847,7 +816,7 @@
       "immunita": [],
       "danno_ricevuto": "Il Fuoco gli applica sempre la PS per Incendiato anche quando il danno non supera l’Armatura, senza perdita di PV.",
       "comportamento": "Prepara la zona con i fili, attende in alto, usa la Ragnatela sul bersaglio più pericoloso e morde quello Immobilizzato. Si ritira sotto un quarto dei PV.",
-      "pv_molt_boss": 0.9
+      "pv_molt": 0.9
     },
     "umanoide-mostruoso": {
       "nome": "Umanoide mostruoso",
@@ -1103,7 +1072,7 @@
       ],
       "immunita": [],
       "comportamento": "Carica il bersaglio più vicino o quello che lo ha ferito per ultimo; non usa le Difese se può attaccare.",
-      "pv_molt_boss": 1.1
+      "pv_molt": 1.1
     },
     "quadrupede": {
       "nome": "Quadrupede",
@@ -1398,7 +1367,7 @@
       ],
       "immunita": [],
       "comportamento": "In branco circonda il gruppo, carica chi si stacca e applica la Superiorità numerica. Fugge quando il capobranco va a 0 PV.",
-      "pv_molt_boss": 1
+      "pv_molt": 1
     },
     "alato": {
       "nome": "Alato",
@@ -1444,7 +1413,7 @@
               "va": 9
             }
           ],
-          "pv": 18,
+          "pv": 21,
           "ar": 1,
           "difese": 11,
           "iniziativa": 6,
@@ -1492,7 +1461,7 @@
               "va": 11
             }
           ],
-          "pv": 36,
+          "pv": 42,
           "ar": 2,
           "difese": 13,
           "iniziativa": 6,
@@ -1540,7 +1509,7 @@
               "va": 13
             }
           ],
-          "pv": 55,
+          "pv": 65,
           "ar": 3,
           "difese": 15,
           "iniziativa": 8,
@@ -1588,7 +1557,7 @@
               "va": 15
             }
           ],
-          "pv": 153,
+          "pv": 180,
           "ar": 4,
           "difese": 17,
           "iniziativa": 10,
@@ -1636,7 +1605,7 @@
               "va": 17
             }
           ],
-          "pv": 225,
+          "pv": 265,
           "ar": 5,
           "difese": 19,
           "iniziativa": 12,
@@ -1646,11 +1615,10 @@
           "azp": 2
         }
       },
-      "va_contro": -2,
       "capacita": [
         {
           "nome": "Volo",
-          "effetto": "Volo del Giocatore §5.2.3–5.2.5 con il Passo in volo della scheda; Corsa e Scatto il doppio e il triplo. Non resta sospeso fermo. Chi lo attacca mentre vola subisce −2 VA (Bestiario §3.1.1, proposta)."
+          "effetto": "Volo del Giocatore §5.2.3–5.2.5 con il Passo in volo della scheda; Corsa e Scatto il doppio e il triplo. Non resta sospeso fermo. Nessuna penalità generica per chi lo attacca in volo (A.95)."
         },
         {
           "nome": "Picchiata",
@@ -1664,7 +1632,7 @@
       "immunita": [],
       "danno_ricevuto": "A 0 PV in volo precipita (Giocatore §5.22).",
       "comportamento": "Gira in alto fuori portata, sceglie chi non ha armi a distanza e piomba con la Picchiata; risale e ripete. Fugge a metà dei PV.",
-      "pv_molt_boss": 0.85
+      "pv_molt": 1
     },
     "strisciante": {
       "nome": "Strisciante",
@@ -1967,7 +1935,7 @@
       ],
       "immunita": [],
       "comportamento": "Aspetta sepolto sotto il passaggio, esce sul primo che passa, lo avvolge e lo trascina verso il cunicolo. Si rintana sotto un quarto dei PV.",
-      "pv_molt_boss": 1.2
+      "pv_molt": 1.2
     },
     "gigante": {
       "nome": "Gigante",
@@ -2013,7 +1981,7 @@
               "va": 7
             }
           ],
-          "pv": 26,
+          "pv": 23,
           "ar": 1,
           "difese": 5,
           "iniziativa": 2,
@@ -2061,7 +2029,7 @@
               "va": 9
             }
           ],
-          "pv": 53,
+          "pv": 46,
           "ar": 2,
           "difese": 7,
           "iniziativa": 2,
@@ -2109,7 +2077,7 @@
               "va": 11
             }
           ],
-          "pv": 81,
+          "pv": 72,
           "ar": 3,
           "difese": 9,
           "iniziativa": 4,
@@ -2157,7 +2125,7 @@
               "va": 13
             }
           ],
-          "pv": 225,
+          "pv": 198,
           "ar": 4,
           "difese": 11,
           "iniziativa": 6,
@@ -2205,7 +2173,7 @@
               "va": 15
             }
           ],
-          "pv": 331,
+          "pv": 292,
           "ar": 5,
           "difese": 13,
           "iniziativa": 8,
@@ -2215,7 +2183,6 @@
           "azp": 2
         }
       },
-      "va_contro": 2,
       "massimo_per_scontro": {
         "sotto": "potente",
         "numero": 1
@@ -2223,7 +2190,7 @@
       "capacita": [
         {
           "nome": "Taglia Grande",
-          "effetto": "Chi lo attacca ottiene +2 VA; Sbalzante non lo sposta (Bestiario §3.1.1, proposta)."
+          "effetto": "Occupa 2 × 2 Q (3 × 3 Q dal Potente); Sbalzante non lo sposta (Bestiario §3.1.1). Nessun bonus generico per chi lo attacca (A.95)."
         },
         {
           "nome": "Spazzata del gigante",
@@ -2236,7 +2203,7 @@
       ],
       "immunita": [],
       "comportamento": "Avanza verso il gruppo più folto per colpirne più d’uno con la Spazzata; abbatte le Coperture leggere. Non fugge.",
-      "pv_molt_boss": 1.25
+      "pv_molt": 1.1
     }
   },
   "moduli": {
@@ -2246,7 +2213,6 @@
         {
           "id": "toccato",
           "nome": "Toccato",
-          "costo": 0.5,
           "effetto": "+2 PS Volontà. Esposizione Flebile per chi ne è ferito (§4.2.5).",
           "manifestazioni": {
             "minori": 1,
@@ -2265,7 +2231,6 @@
         {
           "id": "posseduto",
           "nome": "Posseduto",
-          "costo": 1,
           "effetto": "+1 AR magica (AR totale +1, di cui 1 magica). Attacchi naturali di danno Magico. Presenza terrificante. Esposizione Debole.",
           "manifestazioni": {
             "minori": 1,
@@ -2289,7 +2254,6 @@
         {
           "id": "consacrato",
           "nome": "Consacrato",
-          "costo": 2,
           "effetto": "+2 AR magica in totale. Un attacco di danno Etereo. Immune a Terrorizzato. Esposizione Normale.",
           "manifestazioni": {
             "minori": 1,
@@ -2325,10 +2289,9 @@
         {
           "id": "pelle-di-cenere",
           "nome": "Pelle di cenere",
-          "effetto": "+1 AR magica, compresa nella AR totale; +½ al costo del modulo (§4.1). Non si somma con Pelle di cenere di altre fonti.",
+          "effetto": "+1 AR magica, compresa nella AR totale. Non si somma con Pelle di cenere di altre fonti.",
           "effetti": {
-            "ar_magica": 1,
-            "costo": 0.5
+            "ar_magica": 1
           }
         },
         {
@@ -2423,7 +2386,6 @@
       {
         "id": "carapace",
         "nome": "Carapace",
-        "costo": 0.5,
         "basi": [
           "umano",
           "insettoide",
@@ -2444,7 +2406,6 @@
       {
         "id": "arti-in-piu",
         "nome": "Arti in più",
-        "costo": 1,
         "basi": [
           "umano",
           "insettoide",
@@ -2462,7 +2423,6 @@
       {
         "id": "veleno",
         "nome": "Veleno",
-        "costo": 0.5,
         "basi": [
           "umano",
           "insettoide",
@@ -2488,7 +2448,6 @@
       {
         "id": "rigenerazione",
         "nome": "Rigenerazione",
-        "costo": 0.5,
         "basi": [
           "umano",
           "insettoide",
@@ -2508,14 +2467,12 @@
             "medio": 5,
             "potente": 10,
             "molto-potente": 15
-          },
-          "costo_dal_potente": 1
+          }
         }
       },
       {
         "id": "sangue-acido",
         "nome": "Sangue acido",
-        "costo": 0.5,
         "basi": [
           "umano",
           "insettoide",
@@ -2533,7 +2490,6 @@
       {
         "id": "sensi-oscuri",
         "nome": "Sensi oscuri",
-        "costo": 0,
         "basi": [
           "umano",
           "insettoide",
@@ -2551,7 +2507,6 @@
       {
         "id": "aculei",
         "nome": "Aculei",
-        "costo": 0.5,
         "basi": [
           "umano",
           "insettoide",
@@ -2573,7 +2528,6 @@
       {
         "id": "mole",
         "nome": "Mole",
-        "costo": 1,
         "basi": [
           "insettoide",
           "aracnoide",
@@ -2596,7 +2550,6 @@
               "potente",
               "molto-potente"
             ],
-            "costo": 0.5,
             "senza": [
               "difese",
               "spazio"
@@ -2607,7 +2560,6 @@
       {
         "id": "ali-membranose",
         "nome": "Ali membranose",
-        "costo": 0.5,
         "basi": [
           "insettoide",
           "umanoide-mostruoso",
@@ -2622,7 +2574,6 @@
       {
         "id": "scavatore",
         "nome": "Scavatore",
-        "costo": 0,
         "basi": [
           "insettoide",
           "aracnoide",
@@ -2638,7 +2589,6 @@
       {
         "id": "mimetismo",
         "nome": "Mimetismo",
-        "costo": 0.5,
         "basi": [
           "umano",
           "insettoide",
@@ -2660,7 +2610,6 @@
       {
         "id": "balzo",
         "nome": "Balzo",
-        "costo": 0.5,
         "basi": [
           "insettoide",
           "aracnoide",
@@ -2735,19 +2684,16 @@
         {
           "id": "del-grado",
           "nome": "Della fascia del grado o inferiore",
-          "costo": 0,
           "salto": 0
         },
         {
           "id": "grado-successivo",
           "nome": "Della fascia del grado successivo",
-          "costo": 0.5,
           "salto": 1
         },
         {
           "id": "due-fasce-sopra",
           "nome": "Di due fasce sopra, oppure un’arma con Fuoco, Plasma o Laser in un grado Minore o Semplice",
-          "costo": 1,
           "salto": 2
         }
       ],
@@ -3604,85 +3550,73 @@
           "da": 1,
           "a": 2,
           "id": "carapace",
-          "nome": "Carapace",
-          "costo": 0.5
+          "nome": "Carapace"
         },
         {
           "da": 3,
           "a": 4,
           "id": "arti-in-piu",
-          "nome": "Arti in più",
-          "costo": 1
+          "nome": "Arti in più"
         },
         {
           "da": 5,
           "a": 6,
           "id": "veleno",
-          "nome": "Veleno",
-          "costo": 0.5
+          "nome": "Veleno"
         },
         {
           "da": 7,
           "a": 8,
           "id": "rigenerazione",
-          "nome": "Rigenerazione",
-          "costo": 0.5
+          "nome": "Rigenerazione"
         },
         {
           "da": 9,
           "a": 10,
           "id": "sangue-acido",
-          "nome": "Sangue acido",
-          "costo": 0.5
+          "nome": "Sangue acido"
         },
         {
           "da": 11,
           "a": 11,
           "id": "sensi-oscuri",
-          "nome": "Sensi oscuri",
-          "costo": 0
+          "nome": "Sensi oscuri"
         },
         {
           "da": 12,
           "a": 13,
           "id": "aculei",
-          "nome": "Aculei",
-          "costo": 0.5
+          "nome": "Aculei"
         },
         {
           "da": 14,
           "a": 14,
           "id": "mole",
-          "nome": "Mole",
-          "costo": 1
+          "nome": "Mole"
         },
         {
           "da": 15,
           "a": 15,
           "id": "ali-membranose",
-          "nome": "Ali membranose",
-          "costo": 0.5
+          "nome": "Ali membranose"
         },
         {
           "da": 16,
           "a": 16,
           "id": "scavatore",
-          "nome": "Scavatore",
-          "costo": 0
+          "nome": "Scavatore"
         },
         {
           "da": 17,
           "a": 18,
           "id": "mimetismo",
-          "nome": "Mimetismo",
-          "costo": 0.5
+          "nome": "Mimetismo"
         },
         {
           "da": 19,
           "a": 20,
           "id": "balzo",
-          "nome": "Balzo",
-          "costo": 0.5
+          "nome": "Balzo"
         }
       ]
     },
@@ -3693,22 +3627,19 @@
           "da": 1,
           "a": 4,
           "id": "del-grado",
-          "nome": "Della fascia del grado",
-          "costo": 0
+          "nome": "Della fascia del grado"
         },
         {
           "da": 5,
           "a": 5,
           "id": "grado-successivo",
-          "nome": "Della fascia del grado successivo",
-          "costo": 0.5
+          "nome": "Della fascia del grado successivo"
         },
         {
           "da": 6,
           "a": 6,
           "id": "due-fasce-sopra",
-          "nome": "Di due fasce sopra",
-          "costo": 1
+          "nome": "Di due fasce sopra"
         }
       ]
     },
@@ -3719,22 +3650,19 @@
           "da": 1,
           "a": 6,
           "id": "toccato",
-          "nome": "Toccato",
-          "costo": 0.5
+          "nome": "Toccato"
         },
         {
           "da": 7,
           "a": 9,
           "id": "posseduto",
-          "nome": "Posseduto",
-          "costo": 1
+          "nome": "Posseduto"
         },
         {
           "da": 10,
           "a": 10,
           "id": "consacrato",
-          "nome": "Consacrato",
-          "costo": 2
+          "nome": "Consacrato"
         }
       ]
     },
@@ -3745,43 +3673,37 @@
           "da": 1,
           "a": 1,
           "id": "occhi-senza-luce",
-          "nome": "Occhi senza luce",
-          "costo": 0
+          "nome": "Occhi senza luce"
         },
         {
           "da": 2,
           "a": 2,
           "id": "pelle-di-cenere",
-          "nome": "Pelle di cenere",
-          "costo": 0.5
+          "nome": "Pelle di cenere"
         },
         {
           "da": 3,
           "a": 3,
           "id": "sangue-fermo",
-          "nome": "Sangue fermo",
-          "costo": 0
+          "nome": "Sangue fermo"
         },
         {
           "da": 4,
           "a": 4,
           "id": "sussurro-continuo",
-          "nome": "Sussurro continuo",
-          "costo": 0
+          "nome": "Sussurro continuo"
         },
         {
           "da": 5,
           "a": 5,
           "id": "gelo-dell-abisso",
-          "nome": "Gelo dell’abisso",
-          "costo": 0
+          "nome": "Gelo dell’abisso"
         },
         {
           "da": 6,
           "a": 6,
           "id": "passo-senza-peso",
-          "nome": "Passo senza peso",
-          "costo": 0
+          "nome": "Passo senza peso"
         }
       ]
     },
@@ -3792,43 +3714,37 @@
           "da": 1,
           "a": 1,
           "id": "ferite-che-non-si-chiudono",
-          "nome": "Ferite che non si chiudono",
-          "costo": 0
+          "nome": "Ferite che non si chiudono"
         },
         {
           "da": 2,
           "a": 2,
           "id": "fiamma-nera",
-          "nome": "Fiamma nera",
-          "costo": 0
+          "nome": "Fiamma nera"
         },
         {
           "da": 3,
           "a": 3,
           "id": "sguardo-del-vuoto",
-          "nome": "Sguardo del vuoto",
-          "costo": 0
+          "nome": "Sguardo del vuoto"
         },
         {
           "da": 4,
           "a": 4,
           "id": "carne-che-ricorda",
-          "nome": "Carne che ricorda",
-          "costo": 0
+          "nome": "Carne che ricorda"
         },
         {
           "da": 5,
           "a": 5,
           "id": "grido-dell-oscura-simmetria",
-          "nome": "Grido dell’Oscura Simmetria",
-          "costo": 0
+          "nome": "Grido dell’Oscura Simmetria"
         },
         {
           "da": 6,
           "a": 6,
           "id": "ritorno",
-          "nome": "Ritorno",
-          "costo": 0
+          "nome": "Ritorno"
         }
       ]
     }

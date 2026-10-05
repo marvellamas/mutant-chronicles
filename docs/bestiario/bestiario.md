@@ -36,7 +36,7 @@ Capitolo 1 — Come si usa il Bestiario
 
 Capitolo 2 — Scala di potenza
 
-2.1 I sei gradi · 2.2 Valori derivati per grado · 2.3 Bilancio dello scontro · 2.4 Costo dei moduli e grado effettivo · 2.5 Boss
+2.1 I sei gradi · 2.2 Valori derivati per grado · 2.3 Bilancio dello scontro · 2.4 Moduli e bilancio · 2.5 Boss
 
 Capitolo 3 — Basi
 
@@ -72,9 +72,9 @@ Una creatura si compone di tre parti, sempre nello stesso ordine.
 | :---- | :---- | :---: |
 | Grado | La potenza complessiva: PV, VA, Difese, AR, danno e Azioni di riferimento. | 2 |
 | Base | La forma del corpo: Caratteristiche, Movimento, sensi, attacchi naturali e protezione naturale, con i valori a ogni grado. | 3 |
-| Moduli | Le aggiunte: corruzione, mutazioni ed equipaggiamento. Ogni modulo ha un costo in grado. | 4 |
+| Moduli | Le aggiunte: corruzione, mutazioni ed equipaggiamento. | 4 |
 
-Il grado fissa i valori; la base li redistribuisce senza cambiare il peso complessivo; i moduli aggiungono capacità e aumentano il grado effettivo della creatura nel bilancio dello scontro (§2.4).
+Il grado fissa i valori; la base li redistribuisce senza cambiare il peso complessivo; i moduli aggiungono capacità. Nessun modulo ha un costo universale in grado: per il bilancio si valuta il profilo completo (§2.4, A.97).
 
 ## **1.3 Lettura della scheda di creatura**
 
@@ -101,7 +101,7 @@ La scheda presenta una colonna per grado, come le schede degli elementali (Manua
 | Capacità | Capacità speciali, Manifestazioni e Talenti, con effetto, costo e limiti. |
 | Incantesimi | Nome, livello della versione, VA di lancio e costo in PM, se la creatura ne usa. |
 | Danno ricevuto | Immunità, dimezzamenti e vulnerabilità, come nelle schede degli elementali. |
-| Comportamento | Tattica, condizioni di fuga, eventuali soglie di fase (§2.5.3). |
+| Comportamento | Tattica, condizioni di fuga, eventuali soglie di fase (§2.5). |
 
 **I valori della scheda sono già fatti:** il Direttore non li ricalcola dalle Caratteristiche. Le Caratteristiche restano per le Prove non coperte dalla scheda; i bonus al danno sono già compresi negli attacchi. Una riga vuota (nessuna Contromisura, nessun Incantesimo) si omette.
 
@@ -160,16 +160,16 @@ Gli **umani** si ottengono anche dal convertitore «PG → nemico» del Tavolo d
 | :---: | :---- |
 | 1 | Scegliere il grado in base al ruolo nello scontro (§2.1, §2.3). |
 | 2 | Scegliere la base e copiarne la colonna del grado (Capitolo 3). |
-| 3 | Aggiungere i moduli, applicandone gli effetti e annotandone il costo (Capitolo 4). |
-| 4 | Calcolare il grado effettivo (§2.4) e controllare il bilancio dello scontro (§2.3). |
+| 3 | Aggiungere i moduli, applicandone gli effetti (Capitolo 4). |
+| 4 | Stimare il bilancio dello scontro (§2.3): stima sperimentale, da verificare al tavolo. |
 
-**Esempio.** Il Direttore vuole insetti da guardia per un gruppo di sette personaggi di 8° livello. Sceglie la base Insettoide al grado Semplice: PV 38, AR 3, VA 13, Difese 11, 2 AzP con Mandibole 1d8+2. Aggiunge Veleno (+½) e Carapace (+½): AR 4, Avvelenato con le mandibole. Il grado effettivo è Medio (§2.4); per uno scontro normale contro sette personaggi di 8° livello servono 2 creature di grado Medio (§2.3): due insetti così.
+**Esempio.** Il Direttore vuole insetti da guardia per un gruppo di sette personaggi di 8° livello. Sceglie la base Insettoide al grado Semplice: PV 38, AR 3, VA 13, Difese 11, 2 AzP con Mandibole 1d8+2. Aggiunge Veleno e Carapace: AR 4, Avvelenato con le mandibole. Contro sette personaggi di 8° livello la tabella dei gruppi misti (§2.3) indica 3–4 Semplici per uno scontro normale; con i due moduli il Direttore ne usa meno, per esempio tre, e verifica al tavolo.
 
 # **Capitolo 2 — Scala di potenza**
 
 ## **2.1 I sei gradi**
 
-La scala comprende sei gradi. I primi cinque corrispondono ciascuno a una fascia di livelli dei personaggi; il sesto, il Boss, è un avversario unico che vale da solo un intero scontro (§2.5).
+La scala comprende sei gradi. I primi cinque corrispondono ciascuno a una fascia di livelli dei personaggi; il sesto, il Boss, è un’etichetta: usa i valori del proprio grado e del profilo, senza PV né Azioni aggiuntive (§2.5, A.96).
 
 I valori sono tarati su un **gruppo di sette personaggi** del livello di riferimento (Appendice A). Due colonne dicono che cosa aspettarsi:
 
@@ -183,9 +183,9 @@ I valori sono tarati su un **gruppo di sette personaggi** del livello di riferim
 | Medio | 8–11 | 8° | 65 | 15 | 13 | 3 | 9 | 2d6+2 | 2 | 4,5 | 6 |
 | Potente | 12–15 | 12° | 180 | 17 | 15 | 4 | 11 | 2d8+2 | 2 | 7 | 5 |
 | Molto potente | 16–20 | 16° | 265 | 19 | 17 | 5 | 12 | 2d8+3 | 2 | 10 | 4,5 |
-| Boss | Livello del gruppo | — | §2.5.1 | Del grado | Del grado | Del grado | Del grado | Del grado | Del grado + 1 | 12 | Del grado |
+| Boss | Livello del gruppo | — | Del grado | Del grado | Del grado | Del grado | Del grado | Del grado | Del grado | Del grado | Del grado |
 
-Gli obiettivi dei Round di resistenza sono: Minore 1–2, Semplice 2–4, Medio 3–6, Potente 5–10, Molto potente 6–15, Boss 10–20.
+Gli obiettivi dei Round di resistenza sono: Minore 1–2, Semplice 2–4, Medio 3–6, Potente 5–10, Molto potente 6–15. Sono una stima sperimentale, da verificare al tavolo (A.97).
 
 **AzP.** Dal grado Semplice le creature hanno due Azioni Principali: attaccano due volte per Round, con armi, artigli o due arti diversi. Il salto dei PV al grado Potente segue i personaggi: dal 12° livello hanno due Azioni Principali e un gruppo infligge il doppio del danno per Round (Giocatore §2.14, §8.1).
 
@@ -209,6 +209,8 @@ Una creatura ha una PS forte, due medie e una debole, scelte secondo la base. Le
 
 ## **2.3 Bilancio dello scontro**
 
+**Stima sperimentale, da verificare al tavolo (A.97, E&L del 05/10/2026).** Le tabelle di questo paragrafo sono orientative e non modificano i valori delle creature; il gruppo di sette personaggi è il riferimento del playtest, non un modificatore. Durante il playtest si registrano la durata dello scontro, le Ferite, le risorse consumate e le Azioni negate: 0 PV non è l’unico segno di sconfitta.
+
 **Contro sette personaggi del livello di riferimento, uno scontro normale con creature del grado corrispondente ne conta quante indica la colonna «Normale».** Uno scontro è normale quando il gruppo prevale consumando risorse: PV, Punti Eroe, munizioni, Azioni dedicate alle Difese.
 
 | Grado (contro PG della sua fascia) | Facile | Normale | Duro |
@@ -231,7 +233,7 @@ Facile, normale e duro corrispondono a creature con il 30%, il 60% e il 100% del
 | 12° | 16 | 6 | 3–4 | 1–2 | 1 |
 | 16° | 20 | 7–8 | 4–5 | 2 | 1 |
 
-Un trattino indica una creatura troppo forte per quel gruppo anche da sola: si usa come Boss di grado inferiore (§2.5) o si evita.
+Un trattino indica una creatura troppo forte per quel gruppo anche da sola: si evita.
 
 Ogni creatura vale una frazione dello scontro pari a 1 diviso il numero della tabella. Lo scontro è normale quando le frazioni sommano circa 1; con ½ è facile, con 1,5 è duro, con 2 o più è mortale.
 
@@ -239,64 +241,15 @@ Ogni creatura vale una frazione dello scontro pari a 1 diviso il numero della ta
 
 **Durata.** Se il gruppo concentra gli attacchi su una creatura alla volta, uno scontro normale dura circa i Round di resistenza del §2.1 moltiplicati per il numero di creature: da sette a dieci Round, più o meno a ogni livello. Il Direttore regola la difficoltà soprattutto con il numero delle creature, la Copertura, l’Iniziativa e il terreno.
 
-## **2.4 Costo dei moduli e grado effettivo**
+## **2.4 Moduli e bilancio**
 
-Ogni modulo del Capitolo 4 ha un **costo in grado**: +0, +½, +1 o +2. Sommando i costi si ottiene il **grado effettivo**, che conta soltanto per il bilancio dello scontro; i valori della scheda restano quelli della base, modificati dagli effetti dei moduli.
-
-| Somma dei costi | Grado effettivo |
-| :---: | :---- |
-| 0 | Il grado della base. |
-| ½ | A metà fra il grado della base e il successivo: si usa la media delle due frazioni del §2.3. |
-| 1 | Il grado successivo. |
-| 1½ | A metà fra il secondo e il terzo grado successivo. |
-| 2 | Due gradi sopra. |
-
-Una creatura non supera +2 gradi di moduli: oltre, si sceglie direttamente un grado più alto. Oltre il Molto potente, ogni grado effettivo in più vale come una creatura aggiuntiva nel bilancio.
+I moduli del Capitolo 4 cambiano i valori della scheda con i loro effetti e aggiungono capacità. **Non hanno un costo universale in grado** (A.97, E&L del 05/10/2026): per il bilancio dello scontro il Direttore valuta il profilo completo e le combinazioni di capacità, con la stima sperimentale del §2.3. Restano i limiti di ciascun modulo (basi ammesse, livelli, un solo modulo dello stesso tipo).
 
 ## **2.5 Boss**
 
-Il **Boss** è un avversario unico che vale da solo uno scontro contro sette personaggi del proprio livello. Si costruisce su un grado, di solito quello della fascia del gruppo, e ne cambia i valori con le regole seguenti. Le regole del Boss si aggiungono a quelle della base e dei moduli.
+**Boss è una classificazione, non un moltiplicatore** (A.96, E&L del 05/10/2026). Non aumenta i PV e non concede Azioni Principali aggiuntive: il nemico usa PV e Azioni del proprio profilo, comprese le capacità legittime che derivano da livello, Talenti o regole espresse nella scheda. Il numero dei personaggi non aumenta i valori del nemico.
 
-### **2.5.1 Valori del Boss**
-
-| Valore | Boss |
-| :---- | :---- |
-| PV | Quelli della tabella qui sotto, per il grado su cui è costruito, × il moltiplicatore dei PV della base (§3.1); × 0,7 per ogni punto di AR oltre quello del grado; la Mole non li aumenta |
-| Azioni Principali | AzP del grado + 1 |
-| VA, Difese, AR, danno, PS, Iniziativa | Quelli del grado |
-| Movimento | Quello della base; un’Azione di Movimento per Round |
-
-| Boss di grado | PV | AzP | Round di resistenza | Round per abbattere un PG | PG a terra, gruppo che para | PG a terra, gruppo che non para |
-| :---- | :---: | :---: | :---: | :---: | :---: | :---: |
-| Minore | 160 | 2 | 12 | 9 | 1–2 | 2 |
-| Semplice | 160 | 3 | 12 | 7 | 2 | 2–3 |
-| Medio | 155 | 3 | 12 | 6 | 2 | 3 |
-| Potente | 290 | 3 | 12 | 5 | 2–3 | 3–4 |
-| Molto potente | 295 | 3 | 12 | 4,5 | 2–3 | 3–4 |
-
-I PV portano il Boss a dodici Round di resistenza contro sette personaggi del suo livello, contando la sua Parata. Il moltiplicatore della base e la riduzione per l’AR in più lo tengono lì anche con le basi e i moduli; per esempio un Boss Insettoide Potente Posseduto ha AR 6, due punti sopra il grado: PV 290 × 0,9 × 0,7 × 0,7 = 128. Le ultime due colonne dicono quanti personaggi può portare a 0 PV in quei dodici Round concentrando gli attacchi: con un gruppo che para, si cura e si copre ne abbatte due o tre al massimo; con un gruppo che gioca male, tre o quattro.
-
-**L’AzP in più non attacca.** Il Boss attacca quante volte attacca il grado; l’AzP in più gli serve per la Parata, per terminare uno Stato (§2.5.2) o per una capacità della scheda.
-
-**Azioni fuori dall’Iniziativa.** Alla propria Iniziativa il Boss usa una sola AzP. Le altre le spende una alla volta, ciascuna al termine dell’Iniziativa di un personaggio diverso, fino all’Iniziativa successiva del Boss; la Parata si spende quando serve, come per i personaggi. Non può spendere due AzP di seguito contro lo stesso personaggio fuori dalla propria Iniziativa.
-
-### **2.5.2 Resistenza agli Stati**
-
-Il Boss riceve +2 a tutte le Prove Salvezza per evitare uno Stato. Gli Stati temporanei che subisce durano la metà, arrotondata per eccesso. All’inizio della propria Iniziativa può spendere l’AzP in più del Round per terminare uno Stato temporaneo, rinunciando alla Parata fino all’Iniziativa successiva; non può terminare in questo modo Immobilizzato da una presa né Sanguinamento, che seguono le proprie procedure (Giocatore §5.15, §5.18).
-
-### **2.5.3 Soglie di fase**
-
-La prima volta che i PV del Boss scendono alla metà o meno, il Boss **cambia fase**:
-
-* termina immediatamente tutti gli Stati temporanei;
-* cambia comportamento come indicato dalla scheda: per esempio passa dall’assedio a distanza alla carica, chiama rinforzi o prova a fuggire;
-* ottiene una capacità della seconda fase, se la scheda la prevede, oppure ripete subito l’Iniziativa con 1d10 nuovo.
-
-La soglia si verifica dopo il colpo che la supera: gli effetti di quel colpo si applicano normalmente. Un Boss di grado Potente o superiore può avere una seconda soglia a un quarto dei PV.
-
-### **2.5.4 Esempio**
-
-Un Boss Medio per sette personaggi di 8° livello ha PV 155, 3 AzP, VA 15, Difese 13, AR 3 e attacchi da 2d6+2. Alla propria Iniziativa usa 1 AzP; un secondo attacco lo porta al termine dell’Iniziativa di un personaggio, la terza AzP la tiene per la Parata. A 77 PV cambia fase. Con la base Umanoide mostruoso i PV diventano 171 (155 × 1,1, arrotondato), le Difese 11 e gli Artigli 2d6+3.
+Le creature pronte del Capitolo 5 indicano per il Boss il grado consigliato e, quando c’è, una capacità propria della scheda. Le capacità «alla soglia di fase» si attivano la prima volta che i PV della creatura scendono alla metà o meno, dopo il colpo che supera la soglia.
 
 # **Capitolo 3 — Basi**
 
@@ -306,14 +259,14 @@ Una base descrive la forma di una creatura a ogni grado: Caratteristiche tipiche
 
 | Base | PV | AR | VA Difese | Attacco principale |
 | :---- | :---: | :---: | :---: | :---- |
-| Umano | Convertitore × moltiplicatore (§3.2) | Equipaggiamento | Convertitore | Armi, con il bonus di grado |
+| Umano | Convertitore (§3.2) | Equipaggiamento | Convertitore | Armi del convertitore |
 | Insettoide | Grado × 0,9 | Grado + 1 | Grado | Mandibole |
 | Aracnoide | Grado × 0,9 | Grado | Grado + 1 | Morso, Ragnatela |
 | Umanoide mostruoso | Grado × 1,1 | Grado − 1 (minimo 1) | Grado − 2 | Artigli |
 | Quadrupede | Grado | Grado | Grado − 1 | Morso, Artigli; Carica del branco |
-| Alato | Grado × 0,85 | Grado | Grado + 2 | Artigli; vola, −2 VA a chi lo attacca in volo |
+| Alato | Grado | Grado | Grado + 2 | Artigli; vola |
 | Strisciante | Grado × 1,2 | Grado | Grado − 2 | Morso, Spire; scava e tende agguati |
-| Gigante | Grado × 1,25 | Grado | Grado − 4 | Schianto con Spazzata; +2 VA a chi lo attacca |
+| Gigante | Grado × 1,1 | Grado | Grado − 4 | Schianto con Spazzata; taglia Grande |
 
 Le Caratteristiche tipiche servono alle Prove di Caratteristica e all’uso di armi: i valori derivati della scheda non si ricalcolano da esse.
 
@@ -322,10 +275,10 @@ Le Caratteristiche tipiche servono alle Prove di Caratteristica e all’uso di a
 Le basi dal §3.6 al §3.9 si muovono e combattono in modi che i personaggi conoscono solo in parte. Dove il Manuale del Giocatore ha una regola, il Bestiario la usa; dove manca, propone la regola più semplice, da confermare con il Direttore.
 
 * **Volo.** Si applicano le regole del Giocatore §5.2.3–5.2.5: Volo con l’AzM, Corsa e Scatto con Atletica a −2 e −4, percorsi misti, Stati in volo; anche la Carica in volo segue il §5.2.4. La scheda indica il Passo in volo; Corsa e Scatto sono il doppio e il triplo. Una creatura che vola senza sostegno magico non resta sospesa ferma: se non percorre almeno 1 Q nella propria Iniziativa scende a terra a fine Round, senza danni (come le Ali membranose, §4.3).
-* **Bersaglio in volo (proposta).** Chi attacca una creatura che si trova in volo subisce −2 VA, a distanza e in mischia, perché il bersaglio cambia quota e direzione di continuo. TODO(Davide): il Giocatore non ha una penalità per i bersagli in volo; la proposta vale solo per le creature del Bestiario, non per i personaggi che volano con Incantesimi o dispositivi.
+* **Bersaglio in volo.** Nessuna penalità generica per attaccare una creatura in volo (A.95, E&L del 05/10/2026): valgono i modificatori ordinari delle andature e le capacità espresse del profilo.
 * **Scavo e strisciare.** Lo scavo usa la regola della Mutazione Scavatore (§4.3): terreno sciolto, sabbia e macerie, senza Corsa né Scatto, mai nella roccia o nel cemento. Strisciare A Terra segue il Giocatore §5.5.
 * **Agguato.** Una creatura nascosta che attacca per prima usa la Sorpresa (Giocatore §5.1: Furtività contrapposta a Percezione) e l’Imboscata (§5.4). Il Bestiario non aggiunge vantaggi nuovi: le basi che vivono di agguati hanno un bonus a Furtività scritto nella scheda.
-* **Taglia grande (proposta).** Una creatura di taglia Grande occupa 2 × 2 Q, o 3 × 3 Q quando la scheda lo indica, e chi la attacca ottiene +2 VA, a distanza e in mischia. Per le spinte e le prese conta come un veicolo leggero: Sbalzante non la sposta (Giocatore §5.24), come la Mole (§4.3). TODO(Davide): il Giocatore non ha regole sulla taglia; anche la Mole potrebbe dare taglia Grande, ma qui resta com’è per non cambiare le creature già tarate.
+* **Taglia grande.** Una creatura di taglia Grande occupa 2 × 2 Q, o 3 × 3 Q quando la scheda lo indica, senza bonus o penalità generici per chi la attacca (A.95, E&L del 05/10/2026). Per le spinte e le prese conta come un veicolo leggero: Sbalzante non la sposta (Giocatore §5.24), come la Mole (§4.3); restano le altre regole specifiche di taglia, massa e spazio.
 * **Attacchi ampi in mischia.** Si usa la Manovra Spazzata del Giocatore §5.12 (due o tre bersagli adiacenti fra loro ed entro portata, −4 o −6 VA, una Prova e un colpo per bersaglio). Il Gigante la esegue come con Spazzata Migliorata. Il Giocatore non ha attacchi ad Area in mischia e il Bestiario non ne aggiunge.
 
 Nella scheda di un nemico del Tavolo del Master il volo è il campo «Passo in volo» del Movimento e la taglia il campo «Taglia» (data/formato_nemici.json).
@@ -569,7 +522,7 @@ I tipi sono: Fante Capitol, Soldato Bauhaus, Guerriero Mishima, Agente Cybertron
 | INT | 3 | 3 | 3 | 4 | 4 |
 | SAG | 7 | 7 | 8 | 8 | 9 |
 | CAR | 2 | 2 | 2 | 3 | 3 |
-| PV | 18 | 36 | 55 | 153 | 225 |
+| PV | 21 | 42 | 65 | 180 | 265 |
 | AR | 1 | 2 | 3 | 4 | 5 |
 | Natura AR | Naturale | Naturale | Naturale | Naturale | Naturale |
 | VA Artigli | 11 | 13 | 15 | 17 | 19 |
@@ -595,7 +548,7 @@ I tipi sono: Fante Capitol, Soldato Bauhaus, Guerriero Mishima, Agente Cybertron
 
 **Azioni.** AzP della tabella e 1 Azione di Movimento.
 
-**Volo.** Passo in volo 8 Q, Corsa 16 Q, Scatto 24 Q (§3.1.1); a terra Passo 3 Q, senza Corsa né Scatto. Chi la attacca mentre vola subisce −2 VA (§3.1.1, proposta). Non resta sospesa ferma.
+**Volo.** Passo in volo 8 Q, Corsa 16 Q, Scatto 24 Q (§3.1.1); a terra Passo 3 Q, senza Corsa né Scatto. Non resta sospesa ferma.
 
 **Picchiata.** Una Carica in volo (Giocatore §5.2.4 e §5.6) che parte almeno 3 Q più in alto del bersaglio. Dopo l’attacco l’Alato riprende quota con il movimento della Carica che gli resta, e uscire dalla portata del bersaglio non gli provoca Attacchi di Opportunità.
 
@@ -671,7 +624,7 @@ I tipi sono: Fante Capitol, Soldato Bauhaus, Guerriero Mishima, Agente Cybertron
 | INT | 2 | 2 | 3 | 3 | 3 |
 | SAG | 5 | 5 | 6 | 6 | 7 |
 | CAR | 2 | 2 | 2 | 2 | 2 |
-| PV | 26 | 53 | 81 | 225 | 331 |
+| PV | 23 | 46 | 72 | 198 | 292 |
 | AR | 1 | 2 | 3 | 4 | 5 |
 | Natura AR | Naturale | Naturale | Naturale | Naturale | Naturale |
 | VA Schianto | 11 | 13 | 15 | 17 | 19 |
@@ -697,7 +650,7 @@ I tipi sono: Fante Capitol, Soldato Bauhaus, Guerriero Mishima, Agente Cybertron
 
 **Azioni.** AzP della tabella e 1 Azione di Movimento.
 
-**Taglia Grande.** Occupa 2 × 2 Q, 3 × 3 Q dal Potente; chi lo attacca ottiene +2 VA; Sbalzante non lo sposta (§3.1.1, proposta).
+**Taglia Grande.** Occupa 2 × 2 Q, 3 × 3 Q dal Potente; Sbalzante non lo sposta (§3.1.1).
 
 **Schianto.** Pugni, zampe o un tronco di metallo: portata 2 Q. Con una Carica riuscita applica Sbalzante 1 (Giocatore §5.24).
 
@@ -721,23 +674,22 @@ Un modulo si somma a una base e ne modifica i valori o aggiunge capacità. Ogni 
 
 | Voce | Significato |
 | :---- | :---- |
-| Costo | Quanto aumenta il grado effettivo nel bilancio dello scontro (§2.4). |
 | Basi | Le basi a cui si applica. |
 | Effetto | Le modifiche in numeri, con i rimandi alle regole. |
 
-Lo stesso modulo si applica una sola volta, salvo indicazione. Gli effetti che modificano la stessa voce si sommano, salvo che la regola indichi di usare il migliore. Il totale dei costi non supera +2 (§2.4). Le capacità dei moduli vanno nella riga Capacità della scheda.
+Lo stesso modulo si applica una sola volta, salvo indicazione. Gli effetti che modificano la stessa voce si sommano, salvo che la regola indichi di usare il migliore. Le capacità dei moduli vanno nella riga Capacità della scheda.
 
-**Armatura.** Contro le armi dei personaggi ogni punto di AR in più allunga la resistenza di una creatura di circa un terzo, quanto mezzo grado (Appendice A.3). Per questo un modulo che aggiunge 1 AR costa almeno +½, e Pelle di cenere (§4.2.4) aggiunge +½ al costo del Corrotto.
+**Armatura.** Contro le armi dei personaggi ogni punto di AR in più allunga la resistenza di una creatura di circa un terzo (Appendice A.3): il Direttore ne tiene conto nel bilancio dello scontro.
 
 ## **4.2 Corrotto dall’Oscura Simmetria**
 
 **Basi:** tutte. La creatura è toccata dall’Oscura Simmetria e ne porta i segni. Il modulo ha tre livelli; ogni livello comprende gli effetti dei precedenti.
 
-| Livello | Costo | Natura | Effetti | Manifestazioni oscure |
-| :---- | :---: | :---- | :---- | :---: |
-| Toccato | +½ | Oscura Simmetria | +2 PS Volontà. Esposizione Flebile per chi ne è ferito (§4.2.5). | 1 minore |
-| Posseduto | +1 | Oscura Simmetria | +1 AR magica (AR totale +1, di cui 1 magica). Attacchi naturali di danno Magico. Presenza terrificante. Esposizione Debole. | 1 minore e 1 maggiore |
-| Consacrato | +2 | Oscura Simmetria | +2 AR magica in totale. Un attacco di danno Etereo. Immune a Terrorizzato. Esposizione Normale. | 1 minore e 2 maggiori |
+| Livello | Natura | Effetti | Manifestazioni oscure |
+| :---- | :---- | :---- | :---: |
+| Toccato | Oscura Simmetria | +2 PS Volontà. Esposizione Flebile per chi ne è ferito (§4.2.5). | 1 minore |
+| Posseduto | Oscura Simmetria | +1 AR magica (AR totale +1, di cui 1 magica). Attacchi naturali di danno Magico. Presenza terrificante. Esposizione Debole. | 1 minore e 1 maggiore |
+| Consacrato | Oscura Simmetria | +2 AR magica in totale. Un attacco di danno Etereo. Immune a Terrorizzato. Esposizione Normale. | 1 minore e 2 maggiori |
 
 ### **4.2.1 Toccato**
 
@@ -760,7 +712,7 @@ Le Manifestazioni sono i segni visibili della corruzione. Non si scelgono due vo
 | Manifestazione minore | Effetto |
 | :---- | :---- |
 | Occhi senza luce | Visione al buio: non subisce le penalità dell’oscurità ordinaria. |
-| Pelle di cenere | +1 AR magica, compresa nella AR totale; +½ al costo del modulo (§4.1). Non si somma con Pelle di cenere di altre fonti. |
+| Pelle di cenere | +1 AR magica, compresa nella AR totale. Non si somma con Pelle di cenere di altre fonti. |
 | Sangue fermo | Immune a Sanguinamento. |
 | Sussurro continuo | Chi è adiacente alla creatura subisce −2 alle PS di Volontà. |
 | Gelo dell’abisso | Gli attacchi naturali hanno la proprietà Gelo (Giocatore §5.24). |
@@ -791,20 +743,20 @@ L’esposizione non modifica i danni né gli Stati dell’attacco. Gli esiti e l
 
 **Basi:** tutte, salvo indicazione; «Tutte» comprende anche le basi del §3.6–3.9. Le Mutazioni sono alterazioni del corpo, spesso prodotte dall’Oscura Simmetria; non cambiano da sole la Natura della creatura. Non servono Mutazioni nuove per le basi del §3.6–3.9: le loro capacità (Volo, Spire, Scavo, Spazzata del gigante) stanno nella base, e le Mutazioni esistenti le completano. Le Manifestazioni oscure (§4.2.4) sono ammesse su tutte le basi.
 
-| Mutazione | Costo | Basi | Effetto in breve |
-| :---- | :---: | :---- | :---- |
-| Carapace | +½ | Tutte | +1 AR naturale; −2 Passo per le basi con Passo 8 Q. |
-| Arti in più | +1 | Tutte | Un attacco naturale aggiuntivo per Round, senza AzP, con −2 VA. |
-| Veleno | +½ | Tutte | Un attacco naturale applica Avvelenato. |
-| Rigenerazione | +½ (+1 dal Potente) | Tutte | Recupera PV all’inizio della propria Iniziativa. |
-| Sangue acido | +½ | Tutte | Chi la ferisce in mischia subisce danno Corrosivo. |
-| Sensi oscuri | +0 | Tutte | Percepisce i viventi senza vista entro 12 Q. |
-| Aculei | +½ | Tutte | Gli attacchi naturali hanno Sanguinante 1; chi la colpisce senz’armi subisce 1d4. |
-| Mole | +1 | Insettoide, Aracnoide, Umanoide mostruoso, Quadrupede, Strisciante | Spazio 2 × 2 Q, PV × 1,5, portata 2 Q, −2 VA Difese. |
-| Ali membranose | +½ | Insettoide, Umanoide mostruoso, Quadrupede | Volo con Passo 6 Q (Giocatore §5.2.3). |
-| Scavatore | +0 | Insettoide, Aracnoide, Umanoide mostruoso, Quadrupede | Scava nel terreno sciolto con Passo 2 Q. |
-| Mimetismo | +½ | Tutte | +4 Furtività; colpisce per primo in un’Imboscata. |
-| Balzo | +½ | Insettoide, Aracnoide, Umanoide mostruoso, Quadrupede | Carica fino a 12 Q con Sbilanciante. |
+| Mutazione | Basi | Effetto in breve |
+| :---- | :---- | :---- |
+| Carapace | Tutte | +1 AR naturale; −2 Passo per le basi con Passo 8 Q. |
+| Arti in più | Tutte | Un attacco naturale aggiuntivo per Round, senza AzP, con −2 VA. |
+| Veleno | Tutte | Un attacco naturale applica Avvelenato. |
+| Rigenerazione | Tutte | Recupera PV all’inizio della propria Iniziativa. |
+| Sangue acido | Tutte | Chi la ferisce in mischia subisce danno Corrosivo. |
+| Sensi oscuri | Tutte | Percepisce i viventi senza vista entro 12 Q. |
+| Aculei | Tutte | Gli attacchi naturali hanno Sanguinante 1; chi la colpisce senz’armi subisce 1d4. |
+| Mole | Insettoide, Aracnoide, Umanoide mostruoso, Quadrupede, Strisciante | Spazio 2 × 2 Q, PV × 1,5, portata 2 Q, −2 VA Difese. |
+| Ali membranose | Insettoide, Umanoide mostruoso, Quadrupede | Volo con Passo 6 Q (Giocatore §5.2.3). |
+| Scavatore | Insettoide, Aracnoide, Umanoide mostruoso, Quadrupede | Scava nel terreno sciolto con Passo 2 Q. |
+| Mimetismo | Tutte | +4 Furtività; colpisce per primo in un’Imboscata. |
+| Balzo | Insettoide, Aracnoide, Umanoide mostruoso, Quadrupede | Carica fino a 12 Q con Sbilanciante. |
 
 **Carapace.** L’AR naturale aumenta di 1, sempre non magica. Le basi con Passo 8 Q scendono a 6 Q.
 
@@ -832,7 +784,7 @@ L’esposizione non modifica i danni né gli Stati dell’attacco. Gli esiti e l
 
 ## **4.4 Equipaggiamento**
 
-**Basi:** Umano, Umanoide mostruoso. La creatura usa armi, armature e scudi dei cataloghi del Manuale degli Armamenti, con le regole degli oggetti. Il costo dipende dalla fascia dell’equipaggiamento rispetto al grado.
+**Basi:** Umano, Umanoide mostruoso. La creatura usa armi, armature e scudi dei cataloghi del Manuale degli Armamenti, con le regole degli oggetti. La fascia dell’equipaggiamento rispetto al grado si sceglie nella tabella qui sotto.
 
 | Grado | Equipaggiamento tipico | AR | Arma tipica | Danno | Bonus al danno (Umanoide) |
 | :---- | :---- | :---: | :---- | :---: | :---: |
@@ -844,11 +796,11 @@ L’esposizione non modifica i danni né gli Stati dell’attacco. Gli esiti e l
 
 I danni indicati sono quelli del catalogo, prima del bonus di Caratteristica e, per l’Umanoide mostruoso, del bonus al danno dell’ultima colonna: nelle schede sono già compresi negli attacchi (Giocatore §5.13). Gli umani non ricevono un bonus di grado (A.79): usano le armi del convertitore. I requisiti di Forza delle armature e degli scudi valgono anche per le creature (Manuale degli Armamenti, §7.1.6).
 
-| Equipaggiamento | Costo |
+| Equipaggiamento | Fasce sopra il grado |
 | :---- | :---: |
-| Della fascia del grado o inferiore | +0 |
-| Della fascia del grado successivo | +½ |
-| Di due fasce sopra, oppure un’arma con Fuoco, Plasma o Laser in un grado Minore o Semplice | +1 |
+| Della fascia del grado o inferiore | 0 |
+| Della fascia del grado successivo | 1 |
+| Di due fasce sopra, oppure un’arma con Fuoco, Plasma o Laser in un grado Minore o Semplice | 2 |
 
 **Umanoide mostruoso con equipaggiamento.** Usa le armi ravvicinate con il VA degli Artigli e conserva gli Artigli come seconda arma naturale; il danno dell’arma riceve il bonus dell’ultima colonna della tabella. Con le armi a distanza subisce −2 VA. Un’armatura sostituisce l’AR naturale se è maggiore; altrimenti l’AR naturale aumenta di 1. Gli umani usano l’equipaggiamento dei personaggi senza limitazioni.
 
@@ -918,7 +870,7 @@ Ogni famiglia di creature non umane ne ha tre, con ruoli diversi al tavolo e alm
 
 Nelle fosse comuni ai margini delle città-bunker, dove la Corruzione Oscura filtra fra i cadaveri, la chitina degli insetti diventa nera e spessa come ardesia. Gli Scavafosse scavano cunicoli sotto i cimiteri e le discariche, attratti dai morti e da chi li maneggia. Escono dal terreno a gruppi, quando le vibrazioni dei passi si fermano sopra di loro.
 
-**Base:** Insettoide. **Moduli:** Carapace (+½), Scavatore (+0). **Grado effettivo:** mezzo grado sopra quello della colonna.
+**Base:** Insettoide. **Moduli:** Carapace, Scavatore (+0). **Grado effettivo:** mezzo grado sopra quello della colonna.
 
 | Valore | Minore | Semplice | Medio |
 | :---- | :---: | :---: | :---: |
@@ -948,14 +900,14 @@ Mandibole: natura Naturale, portata 1 Q, AC 1. Arrampicata e Vibrazioni come la 
 
 Dove gli Scavafosse si moltiplicano troppo a lungo, uno di loro smette di scavare e cresce. La Regina della Covata è gonfia, lenta a decidere e rapidissima a colpire; una volontà che non è sua la guida verso i luoghi in cui la Corruzione Oscura è più forte. Il suo ronzio basso si sente nelle ossa prima che nelle orecchie.
 
-**Base:** Insettoide. **Moduli:** Corrotto, Posseduto (+1); Mole (+1). **Grado effettivo:** due gradi sopra quello della colonna. **Manifestazioni:** Sussurro continuo (minore), Grido dell’Oscura Simmetria (maggiore).
+**Base:** Insettoide. **Moduli:** Corrotto, Posseduto; Mole. **Grado effettivo:** due gradi sopra quello della colonna. **Manifestazioni:** Sussurro continuo (minore), Grido dell’Oscura Simmetria (maggiore).
 
 | Valore | Medio | Potente | Molto potente | Boss (Potente) |
 | :---- | :---: | :---: | :---: | :---: |
 | Natura | Oscura Simmetria | Oscura Simmetria | Oscura Simmetria | Oscura Simmetria |
 | FOR · COS · DES | 6 · 7 · 8 | 7 · 7 · 9 | 8 · 8 · 9 | 7 · 7 · 9 |
 | INT · SAG · CAR | 2 · 6 · 1 | 3 · 6 · 1 | 3 · 7 · 1 | 3 · 6 · 1 |
-| PV | 89 | 243 | 359 | 128 |
+| PV | 89 | 243 | 359 | 243 |
 | AR (di cui magica) | 5 (1) | 6 (1) | 7 (1) | 6 (1) |
 | Mandibole: VA, danno | 15, 2d6+1 | 17, 2d8+1 | 19, 2d8+2 | 17, 2d8+1 |
 | VA Difese | 11 | 13 | 15 | 13 |
@@ -963,16 +915,16 @@ Dove gli Scavafosse si moltiplicano troppo a lungo, uno di loro smette di scavar
 | Iniziativa | 7 | 9 | 11 | 9 |
 | Movimento | Passo 8 Q | Passo 8 Q | Passo 8 Q | Passo 8 Q |
 | Spazio | 2 × 2 Q | 2 × 2 Q | 2 × 2 Q | 2 × 2 Q |
-| Azioni | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 3 AzP (2 d’attacco), 1 Movimento |
+| Azioni | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento |
 | Abilità | Atletica 15, Percezione 13 | Atletica 17, Percezione 15 | Atletica 19, Percezione 17 | Atletica 17, Percezione 15 |
 | Contromisure | — | — | — | — |
 | Capacità | Presenza terrificante, Sussurro continuo, Grido dell’Oscura Simmetria, Vibrazioni, Arrampicata | Come a sinistra | Come a sinistra | Come a sinistra, più Covata |
 | Immunità | Terrorizzato | Terrorizzato | Terrorizzato | Terrorizzato |
-| Round di resistenza · Round per abbattere un PG | 12,6 · 7,4 | 22,7 · 5,6 | 33,3 · 5,2 | 12,7 · 5,6 |
+| Round di resistenza · Round per abbattere un PG | 12,6 · 7,4 | 22,7 · 5,6 | 33,3 · 5,2 | 22,7 · 5,6 |
 
 Mandibole: natura Magico, portata 2 Q, AC 1. Chi è ferito dalla Regina è esposto alla Corruzione Oscura con intensità Debole (§4.2.5). I Round di resistenza oltre i 10 del grado sono quelli di una creatura che vale due gradi in più: nel bilancio la Regina Potente vale come due Molto potenti (§2.4).
 
-**Covata (Boss).** Alla soglia di fase (§2.5.3) 1d6 Scavafosse Minori escono dal terreno entro 6 Q dalla Regina e agiscono alla sua Iniziativa del Round successivo. Il Boss non usa la Mole per i PV (§2.5.1).
+**Covata (Boss).** Alla soglia di fase (§2.5) 1d6 Scavafosse Minori escono dal terreno entro 6 Q dalla Regina e agiscono alla sua Iniziativa del Round successivo. Il Boss non usa la Mole per i PV (§2.5.1).
 
 **Comportamento.** Resta al centro del nido e lancia il Grido appena vede più di tre nemici; poi carica chi è Terrorizzato. Non fugge: difende il nido fino a 0 PV e oltre.
 
@@ -980,7 +932,7 @@ Mandibole: natura Magico, portata 2 Q, AC 1. Chi è ferito dalla Regina è espos
 
 Nei condotti di ventilazione delle città-alveare, dove l’aria sale calda e sporca dalle fonderie ai piani alti, ronzano insetti grandi come un cane, con ali di membrana grigia e un pungiglione cavo fra le mandibole. I Pungiglioni dei Condotti seguono le correnti e cacciano da soli o in coppia: scendono su chi lavora nei pozzi, mordono e risalgono prima che la vittima capisca da dove sono venuti. Il loro veleno annebbia la vista e fa tremare le mani.
 
-**Base:** Insettoide. **Moduli:** Ali membranose (+½), Veleno sulle Mandibole (+½). **Grado effettivo:** un grado sopra quello della colonna.
+**Base:** Insettoide. **Moduli:** Ali membranose, Veleno sulle Mandibole. **Grado effettivo:** un grado sopra quello della colonna.
 
 | Valore | Semplice | Medio | Potente |
 | :---- | :---: | :---: | :---: |
@@ -1013,7 +965,7 @@ Mandibole: natura Naturale, portata 1 Q, AC 1; applicano il Veleno (§4.3) quand
 
 Nelle condotte abbandonate e nei piani sventrati degli alveari urbani le Tessitrici tendono fili quasi invisibili fra i tubi. La pelle cambia colore come la ruggine e il cemento su cui riposa, e il morso porta un veleno che intorpidisce prima di bruciare. Chi lavora nei sotterranei impara a gettare un tizzone davanti a sé prima di ogni passo.
 
-**Base:** Aracnoide. **Moduli:** Mimetismo (+½), Veleno sul Morso (+½). **Grado effettivo:** un grado sopra quello della colonna.
+**Base:** Aracnoide. **Moduli:** Mimetismo, Veleno sul Morso. **Grado effettivo:** un grado sopra quello della colonna.
 
 | Valore | Minore | Semplice | Medio |
 | :---- | :---: | :---: | :---: |
@@ -1044,14 +996,14 @@ Morso: natura Naturale, portata 1 Q, AC 1; applica il Veleno (§4.3) quando feri
 
 Alcune Tessitrici, nutrite troppo a lungo nei luoghi dove la Corruzione Oscura ristagna, diventano qualcosa di diverso. La Madre dei Fili Neri tesse una tela che trattiene la luce; il suo morso attraversa l’acciaio come se non ci fosse e lascia un freddo che non passa. Gli eretici la chiamano per nome e le portano offerte vive.
 
-**Base:** Aracnoide. **Moduli:** Corrotto, Consacrato (+2). **Grado effettivo:** due gradi sopra quello della colonna. **Manifestazioni:** Gelo dell’abisso (minore), Ferite che non si chiudono e Sguardo del vuoto (maggiori).
+**Base:** Aracnoide. **Moduli:** Corrotto, Consacrato. **Grado effettivo:** due gradi sopra quello della colonna. **Manifestazioni:** Gelo dell’abisso (minore), Ferite che non si chiudono e Sguardo del vuoto (maggiori).
 
 | Valore | Medio | Potente | Molto potente | Boss (Potente) |
 | :---- | :---: | :---: | :---: | :---: |
 | Natura | Oscura Simmetria | Oscura Simmetria | Oscura Simmetria | Oscura Simmetria |
 | FOR · COS · DES | 7 · 6 · 9 | 8 · 7 · 9 | 9 · 8 · 10 | 8 · 7 · 9 |
 | INT · SAG · CAR | 3 · 7 · 1 | 4 · 7 · 2 | 4 · 8 · 2 | 4 · 7 · 2 |
-| PV | 59 | 162 | 239 | 128 |
+| PV | 59 | 162 | 239 | 162 |
 | AR (di cui magica) | 5 (2) | 6 (2) | 7 (2) | 6 (2) |
 | Morso: VA, danno | 15, 2d6+2 | 17, 2d8+2 | 19, 2d8+3 | 17, 2d8+2 |
 | Ragnatela: VA, gittata | 14, 9 Q | 16, 9 Q | 18, 12 Q | 16, 9 Q |
@@ -1060,16 +1012,16 @@ Alcune Tessitrici, nutrite troppo a lungo nei luoghi dove la Corruzione Oscura r
 | Iniziativa | 8 | 10 | 12 | 10 |
 | Movimento | Passo 6 Q | Passo 6 Q | Passo 6 Q | Passo 6 Q |
 | Spazio | 1 Q | 2 × 2 Q | 2 × 2 Q | 2 × 2 Q |
-| Azioni | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 3 AzP (2 d’attacco), 1 Movimento |
+| Azioni | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento |
 | Abilità | Furtività 16, Atletica 14, Percezione 14 | Furtività 18, Atletica 16, Percezione 16 | Furtività 20, Atletica 18, Percezione 18 | Furtività 18, Atletica 16, Percezione 16 |
 | Contromisure | — | — | — | — |
 | Capacità | Presenza terrificante, Ragnatela, Sguardo del vuoto, Gelo dell’abisso, Ferite che non si chiudono, Arrampicata, Visione al buio | Come a sinistra | Come a sinistra | Come a sinistra, più Tela che beve la luce |
 | Immunità | Terrorizzato | Terrorizzato | Terrorizzato | Terrorizzato |
-| Round di resistenza · Round per abbattere un PG | 8,4 · 6 | 15,1 · 4,8 | 22,2 · 4,6 | 12,9 · 4,8 |
+| Round di resistenza · Round per abbattere un PG | 8,4 · 6 | 15,1 · 4,8 | 22,2 · 4,6 | 15,1 · 4,8 |
 
 Morso: natura **Etereo** (§4.2.3), proprietà Gelo e Sanguinante 1 (Sanguinante 2 dal Potente), portata 1 Q (2 Q dal Potente), AC 1. Chi è ferito dalla Madre è esposto alla Corruzione Oscura con intensità Normale (§4.2.5). Contro un personaggio senza AR magica il morso Etereo ignora l’Armatura: le misure, che usano l’AR dei personaggi, sottostimano il suo danno.
 
-**Tela che beve la luce (Boss).** Alla soglia di fase (§2.5.3) la Madre spegne ogni luce non magica entro 12 Q fino alla fine della Scena; i personaggi senza Visione al buio subiscono le penalità dell’oscurità.
+**Tela che beve la luce (Boss).** Alla soglia di fase (§2.5) la Madre spegne ogni luce non magica entro 12 Q fino alla fine della Scena; i personaggi senza Visione al buio subiscono le penalità dell’oscurità.
 
 **Comportamento.** Usa lo Sguardo del vuoto sul personaggio più armato, la Ragnatela su chi si avvicina e morde chi è Immobilizzato o Stordito. Fugge nel buio sotto un quarto dei PV e torna nella Scena successiva.
 
@@ -1077,7 +1029,7 @@ Morso: natura **Etereo** (§4.2.3), proprietà Gelo e Sanguinante 1 (Sanguinante
 
 Nelle miniere delle colonie di Mercurio, dove le gallerie scendono per chilometri nel buio caldo, i minatori parlano di ragni grandi come un carrello da trasporto che mangiano la roccia per il metallo che contiene. Il Rodiroccia scava con le zampe anteriori e digerisce il minerale con un sangue così acido da corrodere le punte delle trivelle. Non caccia: difende la vena che sta mangiando, e chiunque arrivi con un piccone per lui è un rivale.
 
-**Base:** Aracnoide. **Moduli:** Mole (+1; +½ al Potente, che ha già lo Spazio 2 × 2 Q), Sangue acido (+½). **Grado effettivo:** uno e mezzo sopra quello della colonna; uno al Potente.
+**Base:** Aracnoide. **Moduli:** Mole (+1; +½ al Potente, che ha già lo Spazio 2 × 2 Q), Sangue acido. **Grado effettivo:** uno e mezzo sopra quello della colonna; uno al Potente.
 
 | Valore | Semplice | Medio | Potente |
 | :---- | :---: | :---: | :---: |
@@ -1111,7 +1063,7 @@ Morso: natura Naturale, portata 2 Q (Mole), AC 1. Ragnatela come la base (§3.4)
 
 Nei quartieri dove l’acqua delle cisterne è passata vicino a qualcosa di sbagliato nascono bambini con le dita troppo lunghe. Crescendo, alcuni diventano Squarciatori: schiene coperte di spine ossee, artigli uncinati, un salto che attraversa una strada. Cacciano di notte, dai tetti, e lasciano bersagli che non smettono di sanguinare.
 
-**Base:** Umanoide mostruoso. **Moduli:** Aculei (+½), Balzo (+½). **Grado effettivo:** un grado sopra quello della colonna.
+**Base:** Umanoide mostruoso. **Moduli:** Aculei, Balzo. **Grado effettivo:** un grado sopra quello della colonna.
 
 | Valore | Minore | Semplice | Medio |
 | :---- | :---: | :---: | :---: |
@@ -1141,14 +1093,14 @@ Artigli: natura Naturale, Sanguinante 1, portata 1 Q, AC 1; con la Carica, Sbalz
 
 Le squadre di demolizione delle zone di confine conoscono il rumore che fa un Bruto contro una paratia: colpi lenti, regolari, che non si fermano. La pelle gli si indurisce in placche, le ferite si richiudono mentre le guardi, e negli occhi c’è appena un riflesso di qualcosa che lo spinge avanti. Chi lo ha visto rialzarsi dice che non sente il dolore; i medici dicono che lo sente, ma non gli importa.
 
-**Base:** Umanoide mostruoso. **Moduli:** Corrotto, Toccato (+½); Carapace (+½); Rigenerazione (+½, +1 dal Potente). **Grado effettivo:** uno e mezzo sopra quello della colonna (due dal Potente). **Manifestazione:** Sangue fermo (minore).
+**Base:** Umanoide mostruoso. **Moduli:** Corrotto, Toccato; Carapace; Rigenerazione (+½, +1 dal Potente). **Grado effettivo:** uno e mezzo sopra quello della colonna (due dal Potente). **Manifestazione:** Sangue fermo (minore).
 
 | Valore | Semplice | Medio | Potente | Boss (Medio) |
 | :---- | :---: | :---: | :---: | :---: |
 | Natura | Oscura Simmetria | Oscura Simmetria | Oscura Simmetria | Oscura Simmetria |
 | FOR · COS · DES | 8 · 8 · 5 | 8 · 8 · 6 | 9 · 9 · 6 | 8 · 8 · 6 |
 | INT · SAG · CAR | 3 · 5 · 3 | 4 · 5 · 3 | 4 · 6 · 3 | 4 · 5 · 3 |
-| PV | 46 | 72 | 198 | 171 |
+| PV | 46 | 72 | 198 | 72 |
 | AR (di cui magica) | 2 (0) | 3 (0) | 4 (0) | 3 (0) |
 | Artigli: VA, danno | 13, 1d10+3 | 15, 2d6+3 | 17, 2d8+3 | 15, 2d6+3 |
 | VA Difese | 9 | 11 | 13 | 11 |
@@ -1156,16 +1108,16 @@ Le squadre di demolizione delle zone di confine conoscono il rumore che fa un Br
 | Iniziativa | 3 | 5 | 7 | 5 |
 | Movimento | Passo 6 Q | Passo 6 Q | Passo 6 Q | Passo 6 Q |
 | Spazio | 1 Q | 1 Q | 1 Q | 1 Q |
-| Azioni | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 3 AzP (2 d’attacco), 1 Movimento |
+| Azioni | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento |
 | Abilità | Atletica 13, Percezione 11, Sopravvivenza 11 | Atletica 15, Percezione 13, Sopravvivenza 13 | Atletica 17, Percezione 15, Sopravvivenza 15 | Atletica 15, Percezione 13, Sopravvivenza 13 |
 | Contromisure | — | — | — | — |
 | Capacità | Rigenerazione 3, Sangue fermo, Olfatto | Rigenerazione 5, Sangue fermo, Olfatto | Rigenerazione 10, Sangue fermo, Olfatto | Rigenerazione 5, Sangue fermo, Olfatto, Non si ferma |
 | Immunità | Sanguinamento | Sanguinamento | Sanguinamento | Sanguinamento |
-| Round di resistenza · Round per abbattere un PG | 3,2 · 5,4 | 5 · 5 | 7,7 · 4,2 | 13,1 · 5 |
+| Round di resistenza · Round per abbattere un PG | 3,2 · 5,4 | 5 · 5 | 7,7 · 4,2 | 5 · 5 |
 
 Artigli: natura Naturale, portata 1 Q, AC 1; con la Carica, Sbalzante 1 (§3.5). Chi è ferito dal Bruto è esposto alla Corruzione Oscura con intensità Flebile (§4.2.5). Rigenerazione come il §4.3: Fuoco e Corrosivo la interrompono per un Round. Le misure non contano la Rigenerazione.
 
-**Non si ferma (Boss).** Alla soglia di fase (§2.5.3) il Bruto termina gli Stati, recupera 15 PV e per il resto della Scena non subisce le penalità degli Stati di Ferita.
+**Non si ferma (Boss).** Alla soglia di fase (§2.5) il Bruto termina gli Stati, recupera 15 PV e per il resto della Scena non subisce le penalità degli Stati di Ferita.
 
 **Comportamento.** Avanza verso il nemico più vicino, sfonda Coperture e porte e non usa le Difese se può attaccare. Non fugge.
 
@@ -1173,7 +1125,7 @@ Artigli: natura Naturale, portata 1 Q, AC 1; con la Carica, Sbalzante 1 (§3.5).
 
 Nelle cappelle abusive dei livelli bassi, dove gli eretici cantano preghiere rovesciate, a volte qualcosa risponde. Il Cantore Sfigurato era un uomo; ora ha la gola aperta in tre bocche che cantano insieme, braccia lunghe fino alle ginocchia e occhi che non si chiudono mai. Non comanda nessuno, ma chi gli sta vicino perde la voglia di combattere, e le creature attorno a lui attaccano come se seguissero il ritmo del suo canto.
 
-**Base:** Umanoide mostruoso. **Moduli:** Corrotto, Posseduto (+1). **Grado effettivo:** un grado sopra quello della colonna. **Manifestazioni:** Sussurro continuo (minore), Sguardo del vuoto (maggiore).
+**Base:** Umanoide mostruoso. **Moduli:** Corrotto, Posseduto. **Grado effettivo:** un grado sopra quello della colonna. **Manifestazioni:** Sussurro continuo (minore), Sguardo del vuoto (maggiore).
 
 | Valore | Semplice | Medio | Potente |
 | :---- | :---: | :---: | :---: |
@@ -1206,7 +1158,7 @@ Artigli: natura Magico, portata 1 Q, AC 1; con la Carica, Sbalzante 1 (§3.5). C
 
 L’Eretico del bestiario umano (§3.2) è un uomo comune che ha scelto l’Oscura Simmetria; l’Eretico corrotto è quello che ne ha ricevuto i doni. Parla piano, e chi gli sta accanto sente un sussurro sotto le sue parole; quando guarda qualcuno negli occhi, quello resta fermo un istante di troppo. I più devoti portano una lama rituale che non trova ostacoli nell’acciaio.
 
-**Base:** Umano, l’Eretico del bestiario umano del grado (§3.2), con i suoi valori. **Moduli:** Corrotto, Toccato al Minore (+½); Posseduto al Semplice e al Medio (+1); Consacrato al Boss (+2). **Manifestazioni:** Sussurro continuo; dal Posseduto anche Sguardo del vuoto; al Boss anche Grido dell’Oscura Simmetria.
+**Base:** Umano, l’Eretico del bestiario umano del grado (§3.2), con i suoi valori. **Moduli:** Corrotto, Toccato al Minore; Posseduto al Semplice e al Medio; Consacrato al Boss. **Manifestazioni:** Sussurro continuo; dal Posseduto anche Sguardo del vuoto; al Boss anche Grido dell’Oscura Simmetria.
 
 Le Manifestazioni del §4.2.4 sono i poteri di questa variante, dichiarati con la natura Oscura Simmetria e il modulo Corrotto: l’Eretico del bestiario umano resta un profilo umano senza poteri oscuri (A.79).
 
@@ -1215,7 +1167,7 @@ Le Manifestazioni del §4.2.4 sono i poteri di questa variante, dichiarati con l
 | Natura | Oscura Simmetria | Oscura Simmetria | Oscura Simmetria | Oscura Simmetria |
 | FOR · COS · DES | 8 · 6 · 8 | 8 · 6 · 8 | 9 · 6 · 9 | 9 · 6 · 9 |
 | INT · SAG · CAR | 5 · 5 · 7 | 5 · 5 · 7 | 5 · 5 · 7 | 5 · 5 · 7 |
-| PV | 17 | 25 | 33 | 155 |
+| PV | 17 | 25 | 33 | 33 |
 | AR (di cui magica) | 1 (0) | 2 (1) | 2 (1) | 3 (2) |
 | Pugnale da combattimento: VA, danno | 7, 1d6+2 | 9, 1d6+2 Magico | 11, 1d6+3 Magico | 11, 1d6+3 Etereo |
 | Pistola semiautomatica: VA, danno, gittata | 7, 1d6, 30 Q | 9, 1d6, 30 Q | 11, 1d6+1, 30 Q | 11, 1d6+1, 30 Q |
@@ -1224,12 +1176,12 @@ Le Manifestazioni del §4.2.4 sono i poteri di questa variante, dichiarati con l
 | Iniziativa | 3 | 3 | 6 | 6 |
 | Movimento | Passo 6 Q | Passo 6 Q | Passo 6 Q | Passo 6 Q |
 | Spazio | 1 Q | 1 Q | 1 Q | 1 Q |
-| Azioni | 1 AzP, 1 Movimento | 1 AzP, 1 Movimento | 1 AzP, 1 Movimento | 3 AzP (2 d’attacco), 1 Movimento |
+| Azioni | 1 AzP, 1 Movimento | 1 AzP, 1 Movimento | 1 AzP, 1 Movimento | 1 AzP, 1 Movimento |
 | Abilità | Furtività 12, Percezione 9, Atletica 9, Tecnologia 8 | Furtività 14, Percezione 11, Atletica 11, Tecnologia 9 | Furtività 16, Percezione 13, Atletica 13, Tecnologia 10 | Furtività 16, Percezione 13, Atletica 13, Tecnologia 10 |
 | Contromisure | — | — | — | — |
 | Capacità | Sussurro continuo; Movimento Tattico | Presenza terrificante, Sussurro continuo, Sguardo del vuoto; Movimento Tattico, Attacco Silenzioso, Imboscata Migliorata, Resistenza alla Corruzione | Come il Semplice, più Rapidità Operativa e Affondo Migliorato | Come il Medio, più Grido dell’Oscura Simmetria |
 | Immunità | — | — | — | Terrorizzato |
-| Round di resistenza · Round per abbattere un PG | 1,2 · 17,6 | 1,7 · 57,5 | 1,7 · 50,2 | 12,1 · 18,1 |
+| Round di resistenza · Round per abbattere un PG | 1,2 · 17,6 | 1,7 · 57,5 | 1,7 · 50,2 | 2,3 · 50,2 |
 
 I valori umani vengono dal convertitore (Eretico Recluta, Veterano ed Élite del Tavolo del Master) senza moltiplicatori né bonus di grado (A.79); i Talenti restano capacità da applicare a mano. Chi è ferito dall’Eretico è esposto alla Corruzione Oscura: Flebile al Minore, Debole al Semplice e al Medio, Normale al Boss (§4.2.5).
 
@@ -1243,7 +1195,7 @@ I valori umani vengono dal convertitore (Eretico Recluta, Veterano ed Élite del
 
 Ai margini delle discariche delle città-bunker, dove si gettano i rifiuti dei laboratori e dei reparti chiusi, i cani randagi nascono già sbagliati: senza occhi, con le costole fuori dalla pelle, sempre in branco. I Levrieri delle Discariche non abbaiano e non mangiano carne fresca finché non ha smesso di muoversi. Trovano chi si nasconde nel buio come se lo vedessero.
 
-**Base:** Quadrupede. **Moduli:** Corrotto, Toccato (+½); Sensi oscuri (+0). **Grado effettivo:** mezzo grado sopra quello della colonna. **Manifestazione:** Occhi senza luce (minore).
+**Base:** Quadrupede. **Moduli:** Corrotto, Toccato; Sensi oscuri (+0). **Grado effettivo:** mezzo grado sopra quello della colonna. **Manifestazione:** Occhi senza luce (minore).
 
 | Valore | Minore | Semplice | Medio |
 | :---- | :---: | :---: | :---: |
@@ -1275,7 +1227,7 @@ Morso e Artigli: natura Naturale, portata 1 Q, AC 1. Carica del branco come la b
 
 Sulle piantagioni di Venere i coloni usavano bestie da tiro grosse come un camion leggero, dalla pelle a scaglie e dalle corna basse. Nelle paludi abbandonate dalle corporazioni quelle mandrie sono tornate selvatiche e sono cresciute ancora: la pelle si è fatta spessa come lamiera, le corna sono diventate arieti. Il Cornofango non mangia carne, ma travolge qualunque cosa si muova nel suo territorio, veicoli compresi.
 
-**Base:** Quadrupede. **Moduli:** Mole (+1), Carapace (+½). **Grado effettivo:** uno e mezzo sopra quello della colonna.
+**Base:** Quadrupede. **Moduli:** Mole, Carapace. **Grado effettivo:** uno e mezzo sopra quello della colonna.
 
 | Valore | Medio | Potente | Molto potente |
 | :---- | :---: | :---: | :---: |
@@ -1307,14 +1259,14 @@ Morso e Artigli (corna e zoccoli): natura Naturale, portata 2 Q (Mole), AC 1. Ca
 
 Nelle zone di quarantena attorno ai laboratori profanati si parla di un lupo che non proietta ombra e non lascia orme nella neve sporca. Il Lupo senz’Ombra guida i branchi di Levrieri delle Discariche come un pastore guida il gregge: li manda avanti, sceglie la preda, aspetta. Il suo morso porta il freddo dell’abisso, e chi lo ha abbattuto una volta lo ha visto rialzarsi prima di potergli voltare le spalle.
 
-**Base:** Quadrupede. **Moduli:** Corrotto, Posseduto (+1); Balzo (+½). **Grado effettivo:** uno e mezzo sopra quello della colonna. **Manifestazioni:** Gelo dell’abisso (minore), Ritorno (maggiore).
+**Base:** Quadrupede. **Moduli:** Corrotto, Posseduto; Balzo. **Grado effettivo:** uno e mezzo sopra quello della colonna. **Manifestazioni:** Gelo dell’abisso (minore), Ritorno (maggiore).
 
 | Valore | Semplice | Medio | Potente | Boss (Medio) |
 | :---- | :---: | :---: | :---: | :---: |
 | Natura | Oscura Simmetria | Oscura Simmetria | Oscura Simmetria | Oscura Simmetria |
 | FOR · COS · DES | 7 · 6 · 7 | 7 · 7 · 8 | 8 · 8 · 9 | 7 · 7 · 8 |
 | INT · SAG · CAR | 2 · 6 · 2 | 2 · 7 · 2 | 3 · 7 · 2 | 2 · 7 · 2 |
-| PV | 42 | 65 | 180 | 109 |
+| PV | 42 | 65 | 180 | 65 |
 | AR (di cui magica) | 3 (1) | 4 (1) | 5 (1) | 4 (1) |
 | Morso: VA, danno | 13, 1d8+3 Magico | 15, 2d6+2 Magico | 17, 2d8+2 Magico | 15, 2d6+2 Magico |
 | Artigli: VA, danno | 13, 1d8+2 Magico | 15, 2d6+1 Magico | 17, 2d8+1 Magico | 15, 2d6+1 Magico |
@@ -1324,16 +1276,16 @@ Nelle zone di quarantena attorno ai laboratori profanati si parla di un lupo che
 | Movimento | Passo 10 Q | Passo 10 Q | Passo 10 Q | Passo 10 Q |
 | Spazio | 1 Q | 1 Q | 1 Q | 1 Q |
 | Taglia | Normale | Normale | Normale | Normale |
-| Azioni | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 3 AzP (2 d’attacco), 1 Movimento |
+| Azioni | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento |
 | Abilità | Atletica 13, Percezione 11, Sopravvivenza 11 | Atletica 15, Percezione 13, Sopravvivenza 13 | Atletica 17, Percezione 15, Sopravvivenza 15 | Atletica 15, Percezione 13, Sopravvivenza 13 |
 | Contromisure | — | — | — | — |
 | Capacità | Carica del branco, Olfatto, Balzo, Presenza terrificante, Gelo dell’abisso, Ritorno | Come a sinistra | Come a sinistra | Come a sinistra, più Branco |
 | Immunità | — | — | — | — |
-| Round di resistenza · Round per abbattere un PG | 3,9 · 7 | 6,2 · 6 | 10,4 · 4,8 | 11,9 · 6 |
+| Round di resistenza · Round per abbattere un PG | 3,9 · 7 | 6,2 · 6 | 10,4 · 4,8 | 6,2 · 6 |
 
 Morso e Artigli: natura Magico, proprietà Gelo, portata 1 Q, AC 1. Carica del branco (§3.6) fino a 12 Q con il Balzo, con Sbilanciante (§4.3). Chi è ferito dal Lupo è esposto alla Corruzione Oscura con intensità Debole (§4.2.5). Le misure non contano Carica, Gelo e Ritorno.
 
-**Branco (Boss).** Alla soglia di fase (§2.5.3) 1d4+1 Levrieri delle Discariche Minori (§5.6.1) arrivano di corsa entro 12 Q dal Lupo e agiscono alla sua Iniziativa del Round successivo.
+**Branco (Boss).** Alla soglia di fase (§2.5) 1d4+1 Levrieri delle Discariche Minori (§5.6.1) arrivano di corsa entro 12 Q dal Lupo e agiscono alla sua Iniziativa del Round successivo.
 
 **Comportamento.** Manda avanti il branco e resta fuori dalla luce; carica con il Balzo il personaggio che si stacca o che ha ferito un Levriero. Dopo il Ritorno attacca chi lo aveva abbattuto. Fugge soltanto se resta senza branco e sotto metà dei PV.
 
@@ -1343,14 +1295,14 @@ Morso e Artigli: natura Magico, proprietà Gelo, portata 1 Q, AC 1. Carica del b
 
 Sopra le ciminiere delle raffinerie volano stormi di uccelli dal becco di ferro e dalle penne incrostate di ruggine e catrame. Le Gracchie di Ruggine nidificano nei camini spenti e tagliano con gli artigli spinati chi sale sui tetti. Il loro verso, un raschio metallico, si sente prima che si vedano.
 
-**Base:** Alato. **Moduli:** Aculei (+½). **Grado effettivo:** mezzo grado sopra quello della colonna.
+**Base:** Alato. **Moduli:** Aculei. **Grado effettivo:** mezzo grado sopra quello della colonna.
 
 | Valore | Minore | Semplice | Medio |
 | :---- | :---: | :---: | :---: |
 | Natura | Comune | Comune | Comune |
 | FOR · COS · DES | 4 · 5 · 8 | 5 · 5 · 8 | 5 · 6 · 9 |
 | INT · SAG · CAR | 3 · 7 · 2 | 3 · 7 · 2 | 3 · 8 · 2 |
-| PV | 18 | 36 | 55 |
+| PV | 21 | 42 | 65 |
 | AR (di cui magica) | 1 (0) | 2 (0) | 3 (0) |
 | Artigli: VA, danno | 11, 1d6+2 | 13, 1d8+2 | 15, 2d6+2 |
 | VA Difese | 11 | 13 | 15 |
@@ -1364,9 +1316,9 @@ Sopra le ciminiere delle raffinerie volano stormi di uccelli dal becco di ferro 
 | Contromisure | — | — | — |
 | Capacità | Volo, Picchiata, Vista acuta, Aculei | Come a sinistra | Come a sinistra |
 | Immunità | — | — | — |
-| Round di resistenza · Round per abbattere un PG | 1,5 · 11,2 | 2,9 · 9,3 | 4,4 · 6 |
+| Round di resistenza · Round per abbattere un PG | 1,5 · 11,2 | 2,9 · 9,3 | 4,5 · 6 |
 
-Artigli: natura Naturale, Sanguinante 1, portata 1 Q, AC 1. Chi la colpisce senz’armi subisce 1d4 (Aculei). Volo e Picchiata come la base (§3.7); chi la attacca mentre vola subisce −2 VA (§3.1.1).
+Artigli: natura Naturale, Sanguinante 1, portata 1 Q, AC 1. Chi la colpisce senz’armi subisce 1d4 (Aculei). Volo e Picchiata come la base (§3.7).
 
 **Comportamento.** Lo stormo piomba sul personaggio più esposto con la Picchiata, risale e torna su chi sanguina. Si disperde quando metà dello stormo è a 0 PV.
 
@@ -1374,14 +1326,14 @@ Artigli: natura Naturale, Sanguinante 1, portata 1 Q, AC 1. Chi la colpisce senz
 
 Sui campanili delle cattedrali sventrate dai bombardamenti nidificano creature dalle ali di pelle grigia e dal volto quasi umano, che piangono con la voce di chi è morto lì sotto. Le Lamentatrici non hanno fame: seguono i vivi e gridano, e il loro grido svuota il coraggio anche dei soldati più duri. I predicatori della Fratellanza le considerano un presagio, e non sbagliano: dove volano, qualcos’altro arriva presto.
 
-**Base:** Alato. **Moduli:** Corrotto, Posseduto (+1). **Grado effettivo:** un grado sopra quello della colonna. **Manifestazioni:** Occhi senza luce (minore), Grido dell’Oscura Simmetria (maggiore).
+**Base:** Alato. **Moduli:** Corrotto, Posseduto. **Grado effettivo:** un grado sopra quello della colonna. **Manifestazioni:** Occhi senza luce (minore), Grido dell’Oscura Simmetria (maggiore).
 
 | Valore | Semplice | Medio | Potente |
 | :---- | :---: | :---: | :---: |
 | Natura | Oscura Simmetria | Oscura Simmetria | Oscura Simmetria |
 | FOR · COS · DES | 5 · 5 · 8 | 5 · 6 · 9 | 6 · 6 · 10 |
 | INT · SAG · CAR | 3 · 7 · 2 | 3 · 8 · 2 | 4 · 8 · 3 |
-| PV | 36 | 55 | 153 |
+| PV | 42 | 65 | 180 |
 | AR (di cui magica) | 3 (1) | 4 (1) | 5 (1) |
 | Artigli: VA, danno | 13, 1d8+2 Magico | 15, 2d6+2 Magico | 17, 2d8+2 Magico |
 | VA Difese | 13 | 15 | 17 |
@@ -1395,9 +1347,9 @@ Sui campanili delle cattedrali sventrate dai bombardamenti nidificano creature d
 | Contromisure | — | — | — |
 | Capacità | Volo, Picchiata, Vista acuta, Presenza terrificante, Occhi senza luce, Grido dell’Oscura Simmetria | Come a sinistra | Come a sinistra |
 | Immunità | — | — | — |
-| Round di resistenza · Round per abbattere un PG | 3,9 · 9,3 | 6,1 · 6 | 10 · 4,8 |
+| Round di resistenza · Round per abbattere un PG | 3,9 · 9,3 | 6,2 · 6 | 10,4 · 4,8 |
 
-Artigli: natura Magico, portata 1 Q, AC 1. Volo e Picchiata come la base (§3.7); chi la attacca mentre vola subisce −2 VA (§3.1.1). Chi è ferito dalla Lamentatrice è esposto alla Corruzione Oscura con intensità Debole (§4.2.5). Le misure non contano il Grido e la Presenza terrificante.
+Artigli: natura Magico, portata 1 Q, AC 1. Volo e Picchiata come la base (§3.7). Chi è ferito dalla Lamentatrice è esposto alla Corruzione Oscura con intensità Debole (§4.2.5). Le misure non contano il Grido e la Presenza terrificante.
 
 **Comportamento.** Gira sopra il gruppo fuori portata e grida appena lo scontro comincia; poi piomba con la Picchiata sui personaggi Terrorizzati. Accompagna altre creature; da sola fugge sotto metà dei PV.
 
@@ -1405,14 +1357,14 @@ Artigli: natura Magico, portata 1 Q, AC 1. Volo e Picchiata come la base (§3.7)
 
 Sulle linee dell’alta tensione che portano l’energia delle centrali alle città-bunker caccia un rapace grande come un uomo, con quattro zampe artigliate e penne nere che sfrigolano di scintille. Il Falco dei Tralicci si posa sui piloni, aspetta che una squadra di manutenzione salga e la stacca dal traliccio uno alla volta. I suoi artigli lasciano nella carne un veleno che brucia come una scossa.
 
-**Base:** Alato. **Moduli:** Arti in più (+1), Veleno sugli Artigli (+½). **Grado effettivo:** uno e mezzo sopra quello della colonna.
+**Base:** Alato. **Moduli:** Arti in più, Veleno sugli Artigli. **Grado effettivo:** uno e mezzo sopra quello della colonna.
 
 | Valore | Medio | Potente | Molto potente | Boss (Potente) |
 | :---- | :---: | :---: | :---: | :---: |
 | Natura | Comune | Comune | Comune | Comune |
 | FOR · COS · DES | 5 · 6 · 9 | 6 · 6 · 10 | 7 · 7 · 10 | 6 · 6 · 10 |
 | INT · SAG · CAR | 3 · 8 · 2 | 4 · 8 · 3 | 4 · 9 · 3 | 4 · 8 · 3 |
-| PV | 55 | 153 | 225 | 247 |
+| PV | 65 | 180 | 265 | 180 |
 | AR (di cui magica) | 3 (0) | 4 (0) | 5 (0) | 4 (0) |
 | Artigli: VA, danno | 15, 2d6+2 | 17, 2d8+2 | 19, 2d8+3 | 17, 2d8+2 |
 | VA Difese | 15 | 17 | 19 | 17 |
@@ -1421,16 +1373,16 @@ Sulle linee dell’alta tensione che portano l’energia delle centrali alle cit
 | Movimento | Passo 3 Q; volo 8 Q | Passo 3 Q; volo 8 Q | Passo 3 Q; volo 8 Q | Passo 3 Q; volo 8 Q |
 | Spazio | 1 Q | 1 Q | 1 Q | 1 Q |
 | Taglia | Normale | Normale | Normale | Normale |
-| Azioni | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 3 AzP (2 d’attacco), 1 Movimento |
+| Azioni | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento |
 | Abilità | Percezione 15, Atletica 13, Furtività 13 | Percezione 17, Atletica 15, Furtività 15 | Percezione 19, Atletica 17, Furtività 17 | Percezione 17, Atletica 15, Furtività 15 |
 | Contromisure | — | — | — | — |
 | Capacità | Volo, Picchiata, Vista acuta, Arti in più, Veleno | Come a sinistra | Come a sinistra | Come a sinistra, più Vento delle ali |
 | Immunità | — | — | — | — |
-| Round di resistenza · Round per abbattere un PG | 4,4 · 6 | 6,8 · 4,8 | 9,5 · 4,6 | 11,9 · 4,8 |
+| Round di resistenza · Round per abbattere un PG | 4,5 · 6 | 7 · 4,8 | 10,1 · 4,6 | 7 · 4,8 |
 
 Artigli: natura Naturale, portata 1 Q, AC 1; applicano il Veleno (§4.3) quando feriscono. Arti in più: dopo l’attacco con un’AzP, un attacco di Artigli in più con −2 VA (§4.3). Volo e Picchiata come la base (§3.7); chi lo attacca mentre vola subisce −2 VA (§3.1.1). Le misure non contano Arti in più e Veleno: il Falco abbatte un personaggio prima di quanto dicano i numeri.
 
-**Vento delle ali (Boss).** Alla soglia di fase (§2.5.3) scende a terra battendo le ali: ogni personaggio entro 3 Q effettua una PS di Riflessi o cade A Terra (Giocatore §5.5); poi riprende quota con l’Azione di Movimento.
+**Vento delle ali (Boss).** Alla soglia di fase (§2.5) scende a terra battendo le ali: ogni personaggio entro 3 Q effettua una PS di Riflessi o cade A Terra (Giocatore §5.5); poi riprende quota con l’Azione di Movimento.
 
 **Comportamento.** Caccia da solo: piomba con la Picchiata sul personaggio più in alto o più isolato e risale fuori portata delle armi ravvicinate. Il Boss resta in quota fino alla soglia di fase, poi combatte a terra fra i personaggi caduti. Fugge sotto un quarto dei PV.
 
@@ -1440,7 +1392,7 @@ Artigli: natura Naturale, portata 1 Q, AC 1; applicano il Veleno (§4.3) quando 
 
 Sotto i quartieri crollati, dove i palazzi sono caduti uno sull’altro, si scava il Verme dei Crolli: un corpo ad anelli lungo quanto un vagone, coperto di placche di cemento e chitina, con una bocca circolare piena di denti. Sente i passi attraverso le macerie e sale a prendere chi si ferma troppo a lungo nello stesso punto.
 
-**Base:** Strisciante. **Moduli:** Carapace (+½). **Grado effettivo:** mezzo grado sopra quello della colonna.
+**Base:** Strisciante. **Moduli:** Carapace. **Grado effettivo:** mezzo grado sopra quello della colonna.
 
 | Valore | Semplice | Medio | Potente |
 | :---- | :---: | :---: | :---: |
@@ -1472,7 +1424,7 @@ Morso e Spire: natura Naturale, portata 1 Q, AC 1; le Spire Immobilizzano come l
 
 Nelle sentine allagate dei quartieri portuali e nelle cisterne delle fogne vivono a centinaia vermi lunghi come un uomo, con una bocca a ventosa piena di denti uncinati. Le Lamprede di Sentina sentono il calore dei corpi attraverso l’acqua torbida e il fango, salgono in massa e si avvolgono alle gambe. Il loro morso lascia una febbre che piega anche chi le ha strappate via.
 
-**Base:** Strisciante. **Moduli:** Veleno sul Morso (+½), Sensi oscuri (+0). **Grado effettivo:** mezzo grado sopra quello della colonna.
+**Base:** Strisciante. **Moduli:** Veleno sul Morso, Sensi oscuri (+0). **Grado effettivo:** mezzo grado sopra quello della colonna.
 
 | Valore | Minore | Semplice | Medio |
 | :---- | :---: | :---: | :---: |
@@ -1504,14 +1456,14 @@ Morso: natura Naturale, portata 1 Q, AC 1; applica il Veleno (§4.3) quando feri
 
 Sotto le cripte profanate, dove gli eretici hanno distrutto le reliquie della Fratellanza, vive una serpe lunga come un treno merci e bianca come le ossa che ha mangiato. La Serpe del Reliquiario si nutre dei morti consacrati e di chi viene a riprenderli: le ferite che apre non si chiudono, le sue si richiudono da sole. Il suo morso passa attraverso le corazze come se non esistessero.
 
-**Base:** Strisciante. **Moduli:** Corrotto, Consacrato (+2). **Grado effettivo:** due gradi sopra quello della colonna. **Manifestazioni:** Occhi senza luce (minore), Ferite che non si chiudono e Carne che ricorda (maggiori).
+**Base:** Strisciante. **Moduli:** Corrotto, Consacrato. **Grado effettivo:** due gradi sopra quello della colonna. **Manifestazioni:** Occhi senza luce (minore), Ferite che non si chiudono e Carne che ricorda (maggiori).
 
 | Valore | Medio | Potente | Molto potente | Boss (Potente) |
 | :---- | :---: | :---: | :---: | :---: |
 | Natura | Oscura Simmetria | Oscura Simmetria | Oscura Simmetria | Oscura Simmetria |
 | FOR · COS · DES | 7 · 8 · 6 | 8 · 9 · 6 | 9 · 9 · 7 | 8 · 9 · 6 |
 | INT · SAG · CAR | 2 · 7 · 1 | 2 · 7 · 1 | 3 · 8 · 1 | 2 · 7 · 1 |
-| PV | 78 | 216 | 318 | 171 |
+| PV | 78 | 216 | 318 | 216 |
 | AR (di cui magica) | 5 (2) | 6 (2) | 7 (2) | 6 (2) |
 | Morso: VA, danno | 15, 2d6+1 Etereo | 17, 2d8+1 Etereo | 19, 2d8+2 Etereo | 17, 2d8+1 Etereo |
 | Spire: VA, danno | 15, 1d8+1 Magico | 17, 2d6+1 Magico | 19, 2d6+2 Magico | 17, 2d6+1 Magico |
@@ -1521,16 +1473,16 @@ Sotto le cripte profanate, dove gli eretici hanno distrutto le reliquie della Fr
 | Movimento | Passo 4 Q | Passo 4 Q | Passo 4 Q | Passo 4 Q |
 | Spazio | 1 Q | 1 Q | 1 Q | 1 Q |
 | Taglia | Normale | Normale | Normale | Normale |
-| Azioni | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 3 AzP (2 d’attacco), 1 Movimento |
+| Azioni | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento |
 | Abilità | Furtività 15, Atletica 13, Percezione 13 | Furtività 17, Atletica 15, Percezione 15 | Furtività 19, Atletica 17, Percezione 17 | Furtività 17, Atletica 15, Percezione 15 |
 | Contromisure | — | — | — | — |
 | Capacità | Spire, Agguato dal basso, Scavo, Vibrazioni, Presenza terrificante, Occhi senza luce, Ferite che non si chiudono, Carne che ricorda 3 | Spire, Agguato dal basso, Scavo, Vibrazioni, Presenza terrificante, Occhi senza luce, Ferite che non si chiudono, Carne che ricorda 10 | Spire, Agguato dal basso, Scavo, Vibrazioni, Presenza terrificante, Occhi senza luce, Ferite che non si chiudono, Carne che ricorda 10 | Spire, Agguato dal basso, Scavo, Vibrazioni, Presenza terrificante, Occhi senza luce, Ferite che non si chiudono, Carne che ricorda 10, Ritorno nella cripta |
 | Immunità | Terrorizzato | Terrorizzato | Terrorizzato | Terrorizzato |
-| Round di resistenza · Round per abbattere un PG | 11,1 · 7,4 | 20,2 · 5,6 | 29,5 · 5,2 | 17 · 5,6 |
+| Round di resistenza · Round per abbattere un PG | 11,1 · 7,4 | 20,2 · 5,6 | 29,5 · 5,2 | 20,2 · 5,6 |
 
 Morso: natura **Etereo** (§4.2.3), Sanguinante 1 (Sanguinante 2 dal Potente), portata 1 Q, AC 1. Spire: natura Magico, Sanguinante come il Morso; Immobilizzano come la base (§3.8). Carne che ricorda: 3 PV all’inizio della propria Iniziativa, 10 dal Potente (§4.2.4). Chi è ferito dalla Serpe è esposto alla Corruzione Oscura con intensità Normale (§4.2.5). I Round di resistenza oltre quelli del grado sono quelli di una creatura che vale due gradi in più (§2.4); le misure non contano il Morso Etereo, che contro chi non ha AR magica ignora l’Armatura, né Carne che ricorda.
 
-**Ritorno nella cripta (Boss).** Alla soglia di fase (§2.5.3) si inabissa nelle macerie con lo Scavo, senza Attacchi di Opportunità, e nel Round successivo riemerge con l’Agguato dal basso contro un personaggio a sua scelta entro 8 Q.
+**Ritorno nella cripta (Boss).** Alla soglia di fase (§2.5) si inabissa nelle macerie con lo Scavo, senza Attacchi di Opportunità, e nel Round successivo riemerge con l’Agguato dal basso contro un personaggio a sua scelta entro 8 Q.
 
 **Comportamento.** Resta sepolta sotto il pavimento della cripta finché qualcuno tocca le ossa; esce con l’Agguato dal basso, avvolge chi porta una reliquia o un simbolo della Fratellanza e lo trascina sotto. Non fugge: difende la cripta.
 
@@ -1540,14 +1492,14 @@ Morso: natura **Etereo** (§4.2.3), Sanguinante 1 (Sanguinante 2 dal Potente), p
 
 Nelle fonderie abbandonate qualcosa ha fuso insieme carne, scorie e metallo in una figura alta come due uomini, che cammina con la schiena curva sotto i soffitti. Il Colosso delle Fonderie ha la pelle di crosta nera e fessure da cui cola un fuoco che non scalda. Una voce che non è la sua sussurra a chi gli sta vicino.
 
-**Base:** Gigante. **Moduli:** Corrotto, Posseduto (+1). **Grado effettivo:** un grado sopra quello della colonna. **Manifestazioni:** Sussurro continuo (minore), Fiamma nera (maggiore).
+**Base:** Gigante. **Moduli:** Corrotto, Posseduto. **Grado effettivo:** un grado sopra quello della colonna. **Manifestazioni:** Sussurro continuo (minore), Fiamma nera (maggiore).
 
 | Valore | Medio | Potente | Molto potente | Boss (Potente) |
 | :---- | :---: | :---: | :---: | :---: |
 | Natura | Oscura Simmetria | Oscura Simmetria | Oscura Simmetria | Oscura Simmetria |
 | FOR · COS · DES | 10 · 9 · 5 | 11 · 10 · 5 | 12 · 11 · 6 | 11 · 10 · 5 |
 | INT · SAG · CAR | 3 · 6 · 2 | 3 · 6 · 2 | 3 · 7 · 2 | 3 · 6 · 2 |
-| PV | 81 | 225 | 331 | 254 |
+| PV | 72 | 198 | 292 | 198 |
 | AR (di cui magica) | 4 (1) | 5 (1) | 6 (1) | 5 (1) |
 | Schianto: VA, danno | 15, 2d6+2 Magico | 17, 2d8+2 Magico | 19, 2d8+3 Magico | 17, 2d8+2 Magico |
 | VA Difese | 9 | 11 | 13 | 11 |
@@ -1556,16 +1508,16 @@ Nelle fonderie abbandonate qualcosa ha fuso insieme carne, scorie e metallo in u
 | Movimento | Passo 6 Q | Passo 6 Q | Passo 6 Q | Passo 6 Q |
 | Spazio | 2 × 2 Q | 3 × 3 Q | 3 × 3 Q | 3 × 3 Q |
 | Taglia | Grande | Grande | Grande | Grande |
-| Azioni | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 3 AzP (2 d’attacco), 1 Movimento |
+| Azioni | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento |
 | Abilità | Atletica 15, Percezione 11, Sopravvivenza 11 | Atletica 17, Percezione 13, Sopravvivenza 13 | Atletica 19, Percezione 15, Sopravvivenza 15 | Atletica 17, Percezione 13, Sopravvivenza 13 |
 | Contromisure | — | — | — | — |
 | Capacità | Taglia Grande, Spazzata del gigante, Raro, Presenza terrificante, Sussurro continuo, Fiamma nera | Come a sinistra | Come a sinistra | Come a sinistra, più Colata |
 | Immunità | — | — | — | — |
-| Round di resistenza · Round per abbattere un PG | 6,8 · 6 | 11,8 · 4,8 | 18,5 · 4,6 | 13,9 · 4,8 |
+| Round di resistenza · Round per abbattere un PG | 6,9 · 6 | 11,4 · 4,8 | 16,6 · 4,6 | 11,4 · 4,8 |
 
-Schianto: natura Magico, proprietà Fuoco (Fiamma nera), portata 2 Q, AC 1; Spazzata del gigante come la base (§3.9). Taglia Grande: chi lo attacca ottiene +2 VA (§3.1.1). Chi è ferito dal Colosso è esposto alla Corruzione Oscura con intensità Debole (§4.2.5). Le misure non contano la Spazzata né il Fuoco.
+Schianto: natura Magico, proprietà Fuoco (Fiamma nera), portata 2 Q, AC 1; Spazzata del gigante come la base (§3.9). Taglia Grande (§3.1.1). Chi è ferito dal Colosso è esposto alla Corruzione Oscura con intensità Debole (§4.2.5). Le misure non contano la Spazzata né il Fuoco.
 
-**Colata (Boss).** Alla soglia di fase (§2.5.3) la crosta del Colosso si spacca: ogni personaggio entro 2 Q effettua una PS di Riflessi o è Incendiato (Giocatore §5.18), e il Colosso recupera 20 PV.
+**Colata (Boss).** Alla soglia di fase (§2.5) la crosta del Colosso si spacca: ogni personaggio entro 2 Q effettua una PS di Riflessi o è Incendiato (Giocatore §5.18), e il Colosso recupera 20 PV.
 
 **Comportamento.** Avanza verso il gruppo più folto e usa la Spazzata appena ha due personaggi a portata; abbatte le Coperture leggere. Non fugge. Al massimo un Colosso per scontro sotto il grado Potente (§3.9).
 
@@ -1573,14 +1525,14 @@ Schianto: natura Magico, proprietà Fuoco (Fiamma nera), portata 2 Q, AC 1; Spaz
 
 Nei complessi chimici delle corporazioni, quando una vasca di reagenti si rompe, gli operai che non fanno in tempo a scappare non sempre muoiono. Lo Sgorbio delle Vasche è uno di loro, o più d’uno fusi insieme: tre metri di carne gonfia e lucida, braccia come pistoni, un sangue giallo che fuma all’aria. Vaga nei reparti chiusi colpendo i macchinari e chi ci lavora, come se cercasse di spegnere un dolore che non passa.
 
-**Base:** Gigante. **Moduli:** Sangue acido (+½). **Grado effettivo:** mezzo grado sopra quello della colonna.
+**Base:** Gigante. **Moduli:** Sangue acido. **Grado effettivo:** mezzo grado sopra quello della colonna.
 
 | Valore | Minore | Semplice | Medio |
 | :---- | :---: | :---: | :---: |
 | Natura | Comune | Comune | Comune |
 | FOR · COS · DES | 8 · 8 · 4 | 9 · 9 · 4 | 10 · 9 · 5 |
 | INT · SAG · CAR | 2 · 5 · 2 | 2 · 5 · 2 | 3 · 6 · 2 |
-| PV | 26 | 53 | 81 |
+| PV | 23 | 46 | 72 |
 | AR (di cui magica) | 1 (0) | 2 (0) | 3 (0) |
 | Schianto: VA, danno | 11, 1d8+2 | 13, 1d8+3 | 15, 2d6+2 |
 | VA Difese | 5 | 7 | 9 |
@@ -1594,9 +1546,9 @@ Nei complessi chimici delle corporazioni, quando una vasca di reagenti si rompe,
 | Contromisure | — | — | — |
 | Capacità | Taglia Grande, Spazzata del gigante, Raro, Sangue acido | Come a sinistra | Come a sinistra |
 | Immunità | — | — | — |
-| Round di resistenza · Round per abbattere un PG | 1,5 · 8,9 | 3,1 · 7 | 4,9 · 6 |
+| Round di resistenza · Round per abbattere un PG | 1,6 · 8,9 | 3,2 · 7 | 5 · 6 |
 
-Schianto: natura Naturale, portata 2 Q, AC 1; Spazzata del gigante come la base (§3.9). Taglia Grande: chi lo attacca ottiene +2 VA (§3.1.1). Chi lo ferisce in mischia subisce 1d4 danni Corrosivi e l’arma effettua la PS Integrità (Sangue acido, §4.3). Le misure non contano Spazzata e Sangue acido.
+Schianto: natura Naturale, portata 2 Q, AC 1; Spazzata del gigante come la base (§3.9). Taglia Grande (§3.1.1). Chi lo ferisce in mischia subisce 1d4 danni Corrosivi e l’arma effettua la PS Integrità (Sangue acido, §4.3). Le misure non contano Spazzata e Sangue acido.
 
 **Comportamento.** Avanza in linea retta verso il rumore più forte e colpisce con la Spazzata chiunque gli stia attorno; abbatte Coperture e macchinari. Non fugge. Al massimo uno Sgorbio per scontro (Raro, §3.9).
 
@@ -1604,14 +1556,14 @@ Schianto: natura Naturale, portata 2 Q, AC 1; Spazzata del gigante come la base 
 
 Le serre idroponiche che nutrono le città-bunker sono enormi e silenziose, e di notte restano vuote. In alcune ha preso casa il Mietitore: un gigante storto con quattro braccia, due delle quali finiscono in lame d’osso ricurve come falci. Chi lo ha visto lavorare dice che miete le file di piante con cura, come un contadino; poi miete chi entra, con la stessa cura. Il sangue che gli cola addosso si secca subito, e nessuna ferita gli resta aperta.
 
-**Base:** Gigante. **Moduli:** Corrotto, Toccato (+½); Arti in più (+1). **Grado effettivo:** uno e mezzo sopra quello della colonna. **Manifestazione:** Sangue fermo (minore).
+**Base:** Gigante. **Moduli:** Corrotto, Toccato; Arti in più. **Grado effettivo:** uno e mezzo sopra quello della colonna. **Manifestazione:** Sangue fermo (minore).
 
 | Valore | Semplice | Medio | Potente | Boss (Medio) |
 | :---- | :---: | :---: | :---: | :---: |
 | Natura | Oscura Simmetria | Oscura Simmetria | Oscura Simmetria | Oscura Simmetria |
 | FOR · COS · DES | 9 · 9 · 4 | 10 · 9 · 5 | 11 · 10 · 5 | 10 · 9 · 5 |
 | INT · SAG · CAR | 2 · 5 · 2 | 3 · 6 · 2 | 3 · 6 · 2 | 3 · 6 · 2 |
-| PV | 53 | 81 | 225 | 194 |
+| PV | 46 | 72 | 198 | 72 |
 | AR (di cui magica) | 2 (0) | 3 (0) | 4 (0) | 3 (0) |
 | Schianto: VA, danno | 13, 1d8+3 | 15, 2d6+2 | 17, 2d8+2 | 15, 2d6+2 |
 | VA Difese | 7 | 9 | 11 | 9 |
@@ -1620,16 +1572,16 @@ Le serre idroponiche che nutrono le città-bunker sono enormi e silenziose, e di
 | Movimento | Passo 6 Q | Passo 6 Q | Passo 6 Q | Passo 6 Q |
 | Spazio | 2 × 2 Q | 2 × 2 Q | 3 × 3 Q | 2 × 2 Q |
 | Taglia | Grande | Grande | Grande | Grande |
-| Azioni | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 3 AzP (2 d’attacco), 1 Movimento |
+| Azioni | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento |
 | Abilità | Atletica 13, Percezione 9, Sopravvivenza 9 | Atletica 15, Percezione 11, Sopravvivenza 11 | Atletica 17, Percezione 13, Sopravvivenza 13 | Atletica 15, Percezione 11, Sopravvivenza 11 |
 | Contromisure | — | — | — | — |
 | Capacità | Taglia Grande, Spazzata del gigante, Raro, Arti in più, Sangue fermo | Come a sinistra | Come a sinistra | Come a sinistra, più Mietitura |
 | Immunità | Sanguinamento | Sanguinamento | Sanguinamento | Sanguinamento |
-| Round di resistenza · Round per abbattere un PG | 3,1 · 7 | 4,9 · 6 | 8 · 4,8 | 12,7 · 6 |
+| Round di resistenza · Round per abbattere un PG | 3,2 · 7 | 5 · 6 | 7,7 · 4,8 | 5 · 6 |
 
 Schianto (le lame d’osso): natura Naturale, portata 2 Q, AC 1. Arti in più: dopo l’attacco con un’AzP, uno Schianto in più con −2 VA (§4.3). Spazzata del gigante come la base (§3.9); Taglia Grande, chi lo attacca ottiene +2 VA (§3.1.1). Chi è ferito dal Mietitore è esposto alla Corruzione Oscura con intensità Flebile (§4.2.5). Le misure non contano Arti in più e Spazzata.
 
-**Mietitura (Boss).** Alla soglia di fase (§2.5.3) esegue subito, fuori dall’Iniziativa, una Spazzata del gigante contro fino a tre personaggi entro portata.
+**Mietitura (Boss).** Alla soglia di fase (§2.5) esegue subito, fuori dall’Iniziativa, una Spazzata del gigante contro fino a tre personaggi entro portata.
 
 **Comportamento.** Aspetta fra le file delle piante, dove la Copertura nasconde la sua mole, e colpisce con la Spazzata chi si avvicina. Insegue soltanto dentro la serra. Non fugge; al massimo un Mietitore per scontro (Raro, §3.9).
 
@@ -1708,7 +1660,7 @@ Il nido, il covo, il luogo dove le creature vivono e difendono qualcosa.
 | 3–5 | Normale | normale | 1 |
 | 6 | Duro | duro | 1,3 |
 
-Il **numero di creature** è quello della tabella dei gruppi misti del §2.3 (livello dei personaggi, grado effettivo della creatura) moltiplicato per il fattore, arrotondato all’unità e almeno 1. Un Boss è sempre uno solo. I fattori vengono dal bilancio del §2.3: con la legge del quadrato, il 30% e il 100% della forza del gruppo richiedono circa 0,7 e 1,3 volte le creature dello scontro normale (Appendice A.3).
+Il **numero di creature** è quello della tabella dei gruppi misti del §2.3 (livello dei personaggi, grado della creatura) moltiplicato per il fattore, arrotondato all’unità e almeno 1: stima sperimentale, da verificare al tavolo. Con l’etichetta Boss la creatura è una sola. I fattori vengono dal bilancio del §2.3: con la legge del quadrato, il 30% e il 100% della forza del gruppo richiedono circa 0,7 e 1,3 volte le creature dello scontro normale (Appendice A.3).
 
 ## **6.4 Moduli**
 
@@ -1721,7 +1673,7 @@ Il **numero di creature** è quello della tabella dei gruppi misti del §2.3 (li
 | 5 | Due | due | 2 |
 | 6 | Tre | tre | 3 |
 
-Si tirano i moduli uno alla volta, in ordine. Quando il costo totale arriverebbe oltre +2 (§2.4), quel modulo si scarta e si smette di tirare.
+Si tirano i moduli uno alla volta, in ordine.
 
 ### **6.4.2 Tipo di modulo**
 
@@ -1735,30 +1687,30 @@ Il Corrotto si prende una sola volta: se esce di nuovo vale Mutazione. L’Equip
 
 ### **6.4.3 Mutazione**
 
-| d20 | Mutazione | id | Costo | Basi |
-| :---: | :---- | :---- | :---: | :---- |
-| 1–2 | Carapace | carapace | +½ | Tutte |
-| 3–4 | Arti in più | arti-in-piu | +1 | Tutte |
-| 5–6 | Veleno | veleno | +½ | Tutte |
-| 7–8 | Rigenerazione | rigenerazione | +½ (+1 dal Potente) | Tutte |
-| 9–10 | Sangue acido | sangue-acido | +½ | Tutte |
-| 11 | Sensi oscuri | sensi-oscuri | +0 | Tutte |
-| 12–13 | Aculei | aculei | +½ | Tutte |
-| 14 | Mole | mole | +1 | Insettoide, Aracnoide, Umanoide mostruoso, Quadrupede, Strisciante |
-| 15 | Ali membranose | ali-membranose | +½ | Insettoide, Umanoide mostruoso, Quadrupede |
-| 16 | Scavatore | scavatore | +0 | Insettoide, Aracnoide, Umanoide mostruoso, Quadrupede |
-| 17–18 | Mimetismo | mimetismo | +½ | Tutte |
-| 19–20 | Balzo | balzo | +½ | Insettoide, Aracnoide, Umanoide mostruoso, Quadrupede |
+| d20 | Mutazione | id | Basi |
+| :---: | :---- | :---- | :---- |
+| 1–2 | Carapace | carapace | Tutte |
+| 3–4 | Arti in più | arti-in-piu | Tutte |
+| 5–6 | Veleno | veleno | Tutte |
+| 7–8 | Rigenerazione | rigenerazione | Tutte |
+| 9–10 | Sangue acido | sangue-acido | Tutte |
+| 11 | Sensi oscuri | sensi-oscuri | Tutte |
+| 12–13 | Aculei | aculei | Tutte |
+| 14 | Mole | mole | Insettoide, Aracnoide, Umanoide mostruoso, Quadrupede, Strisciante |
+| 15 | Ali membranose | ali-membranose | Insettoide, Umanoide mostruoso, Quadrupede |
+| 16 | Scavatore | scavatore | Insettoide, Aracnoide, Umanoide mostruoso, Quadrupede |
+| 17–18 | Mimetismo | mimetismo | Tutte |
+| 19–20 | Balzo | balzo | Insettoide, Aracnoide, Umanoide mostruoso, Quadrupede |
 
 Effetti nel §4.3. Una Mutazione già presa o non ammessa per la base si ritira.
 
 ### **6.4.4 Equipaggiamento**
 
-| d6 | Fascia | id | Costo |
-| :---: | :---- | :---- | :---: |
-| 1–4 | Della fascia del grado | del-grado | +0 |
-| 5 | Della fascia del grado successivo | grado-successivo | +½ |
-| 6 | Di due fasce sopra | due-fasce-sopra | +1 |
+| d6 | Fascia | id |
+| :---: | :---- | :---- |
+| 1–4 | Della fascia del grado | del-grado |
+| 5 | Della fascia del grado successivo | grado-successivo |
+| 6 | Di due fasce sopra | due-fasce-sopra |
 
 L’equipaggiamento della fascia è quello della tabella del §4.4; la scelta dell’arma è del Direttore.
 
@@ -1766,37 +1718,37 @@ L’equipaggiamento della fascia è quello della tabella del §4.4; la scelta de
 
 ### **6.5.1 Livello di Corruzione**
 
-| d10 | Livello | id | Costo | Manifestazioni minori | Manifestazioni maggiori |
-| :---: | :---- | :---- | :---: | :---: | :---: |
-| 1–6 | Toccato | toccato | +½ | 1 | 0 |
-| 7–9 | Posseduto | posseduto | +1 | 1 | 1 |
-| 10 | Consacrato | consacrato | +2 | 1 | 2 |
+| d10 | Livello | id | Manifestazioni minori | Manifestazioni maggiori |
+| :---: | :---- | :---- | :---: | :---: |
+| 1–6 | Toccato | toccato | 1 | 0 |
+| 7–9 | Posseduto | posseduto | 1 | 1 |
+| 10 | Consacrato | consacrato | 1 | 2 |
 
 Se il livello porta il costo totale oltre +2, si scende al livello inferiore che ci sta; se non ci sta neppure il Toccato, il modulo si scarta. Effetti nel §4.2.
 
 ### **6.5.2 Manifestazione minore**
 
-| d6 | Manifestazione | id | Costo |
-| :---: | :---- | :---- | :---: |
-| 1 | Occhi senza luce | occhi-senza-luce | +0 |
-| 2 | Pelle di cenere | pelle-di-cenere | +½ |
-| 3 | Sangue fermo | sangue-fermo | +0 |
-| 4 | Sussurro continuo | sussurro-continuo | +0 |
-| 5 | Gelo dell’abisso | gelo-dell-abisso | +0 |
-| 6 | Passo senza peso | passo-senza-peso | +0 |
+| d6 | Manifestazione | id |
+| :---: | :---- | :---- |
+| 1 | Occhi senza luce | occhi-senza-luce |
+| 2 | Pelle di cenere | pelle-di-cenere |
+| 3 | Sangue fermo | sangue-fermo |
+| 4 | Sussurro continuo | sussurro-continuo |
+| 5 | Gelo dell’abisso | gelo-dell-abisso |
+| 6 | Passo senza peso | passo-senza-peso |
 
 Il costo è quello che si aggiunge al modulo Corrotto (§4.1). Una Manifestazione che la creatura possiede già come capacità della base (per esempio Occhi senza luce per un Aracnoide, che ha la Visione al buio) si ritira.
 
 ### **6.5.3 Manifestazione maggiore**
 
-| d6 | Manifestazione | id | Costo |
-| :---: | :---- | :---- | :---: |
-| 1 | Ferite che non si chiudono | ferite-che-non-si-chiudono | +0 |
-| 2 | Fiamma nera | fiamma-nera | +0 |
-| 3 | Sguardo del vuoto | sguardo-del-vuoto | +0 |
-| 4 | Carne che ricorda | carne-che-ricorda | +0 |
-| 5 | Grido dell’Oscura Simmetria | grido-dell-oscura-simmetria | +0 |
-| 6 | Ritorno | ritorno | +0 |
+| d6 | Manifestazione | id |
+| :---: | :---- | :---- |
+| 1 | Ferite che non si chiudono | ferite-che-non-si-chiudono |
+| 2 | Fiamma nera | fiamma-nera |
+| 3 | Sguardo del vuoto | sguardo-del-vuoto |
+| 4 | Carne che ricorda | carne-che-ricorda |
+| 5 | Grido dell’Oscura Simmetria | grido-dell-oscura-simmetria |
+| 6 | Ritorno | ritorno |
 
 Le Manifestazioni non si ripetono: un risultato già preso si ritira. Effetti nel §4.2.4.
 
@@ -1806,9 +1758,9 @@ Le Manifestazioni non si ripetono: un risultato già preso si ritira. Effetti ne
 | :---: | :---- | :---- |
 | 1 | **Grado e difficoltà.** Si trova il grado del gruppo (§2.1), si sceglie il contesto e si tira lo scarto; poi la difficoltà. | 6.3.1–6.3.3, 6.3.4 |
 | 2 | **Base.** Si tira la base e se ne copia la colonna del grado (Capitolo 3). | 6.2 |
-| 3 | **Moduli.** Si tira il numero di moduli; per ciascuno il tipo e poi il modulo, rispettando basi ammesse e costo massimo +2. | 6.4.1–6.4.4 |
+| 3 | **Moduli.** Si tira il numero di moduli; per ciascuno il tipo e poi il modulo, rispettando le basi ammesse. | 6.4.1–6.4.4 |
 | 4 | **Corruzione.** Per il modulo Corrotto si tirano il livello e le Manifestazioni. | 6.5.1–6.5.3 |
-| 5 | **Scheda e numero.** Si applicano gli effetti dei moduli alla colonna della base, si calcola il grado effettivo (§2.4) e il numero di creature dalla tabella dei gruppi misti del §2.3, con il fattore della difficoltà. Per un Boss si applica il §2.5. | §2.3, §2.4, §2.5 |
+| 5 | **Scheda e numero.** Si applicano gli effetti dei moduli alla colonna della base, si stima il numero di creature dalla tabella dei gruppi misti del §2.3, con il fattore della difficoltà (stima sperimentale). Il Boss è un’etichetta (§2.5). | §2.3, §2.5 |
 
 ### **6.6.1 Esempio svolto**
 
@@ -1817,12 +1769,14 @@ Sette personaggi di 8° livello entrano in un deposito sotterraneo: il grado del
 1. **Grado e difficoltà.** Tabella 6.3.2, d20 = 12: grado del gruppo, quindi Medio. Tabella 6.3.4, d6 = 4: normale, fattore 1.
 2. **Base.** Tabella 6.2, d20 = 10: Aracnoide. Colonna Medio del §3.4: PV 59, AR 3, Morso VA 15 2d6+2, Ragnatela VA 14 a 9 Q, Difese 14, 2 AzP.
 3. **Moduli.** Tabella 6.4.1, d6 = 4: un modulo. Tabella 6.4.2, d6 = 5: Corrotto.
-4. **Corruzione.** Tabella 6.5.1, d10 = 8: Posseduto (+1), una Manifestazione minore e una maggiore. Tabella 6.5.2, d6 = 1: Occhi senza luce, che l’Aracnoide ha già come Visione al buio: si ritira, d6 = 3, Sangue fermo. Tabella 6.5.3, d6 = 3: Sguardo del vuoto.
-5. **Scheda e numero.** Natura Oscura Simmetria; AR 4, di cui 1 magica; Morso di danno Magico; PS di Volontà 13; Presenza terrificante, Sangue fermo, Sguardo del vuoto; chi è ferito è esposto alla Corruzione con intensità Debole. Il costo è +1: grado effettivo Potente. Nella tabella dei gruppi misti del §2.3, contro personaggi di 8° livello, il Potente vale 1: **una creatura**.
+4. **Corruzione.** Tabella 6.5.1, d10 = 8: Posseduto, una Manifestazione minore e una maggiore. Tabella 6.5.2, d6 = 1: Occhi senza luce, che l’Aracnoide ha già come Visione al buio: si ritira, d6 = 3, Sangue fermo. Tabella 6.5.3, d6 = 3: Sguardo del vuoto.
+5. **Scheda e numero.** Natura Oscura Simmetria; AR 4, di cui 1 magica; Morso di danno Magico; PS di Volontà 13; Presenza terrificante, Sangue fermo, Sguardo del vuoto; chi è ferito è esposto alla Corruzione con intensità Debole. Nella tabella dei gruppi misti del §2.3, contro personaggi di 8° livello, il Medio vale ½: due creature; con il Corrotto e le Manifestazioni il Direttore ne usa **una** e verifica al tavolo (stima sperimentale).
 
 Con il modello dell’Appendice A questa creatura resiste circa 5,5 Round contro i sette personaggi e ne abbatte uno, che para, in circa 6 Round; lo Sguardo del vuoto e la Ragnatela la rendono più pericolosa di quanto dicano i numeri.
 
 # **Appendice A — Taratura**
+
+**Nota del 05/10/2026.** Le misure di questa Appendice precedono le decisioni A.95–A.97 dell’E&L: il Boss non ha più PV né Azioni propri, i moduli non hanno un costo in grado e non ci sono più il −2 VA contro chi vola e il +2 VA contro le creature grandi (l’Alato ora ha i PV del grado, il Gigante × 1,1). Le tabelle restano come documentazione del metodo: la taratura definitiva è sperimentale e si verifica al tavolo.
 
 ## **A.1 Metodo**
 

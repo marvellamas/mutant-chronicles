@@ -44,22 +44,19 @@ const idGrado = (nome) => GRADI.find(([, n]) => n === nome)?.[0];
 // --- cap. 2: scala --------------------------------------------------------------------------------------------
 const [t21] = tabelle('2.1 I sei gradi');
 const [t22] = tabelle('2.2 Valori derivati per grado');
-const [, t251] = tabelle('2.5.1 Valori del Boss');
 const tA3 = tabelle('A.3 Modello dello scontro');
 const misti = tA3.find((t) => t.testa[0] === 'Livello dei PG');
 const equil = tA3.find((t) => t.testa.join() === 'Grado,Facile,Normale,Duro');
-verifica(t21.righe.length === 6 && t22.righe.length === 5 && t251.righe.length === 5 && misti && equil, 'tabelle della scala');
+verifica(t21.righe.length === 6 && t22.righe.length === 5 && misti && equil, 'tabelle della scala');
 const gradi = GRADI.map(([id, nome], i) => {
   const r = t21.righe[i];
   const d = t22.righe[i];
-  const b = t251.righe[i];
-  verifica(r[0] === nome && d[0] === nome && b[0] === nome, `grado ${nome}`);
+  verifica(r[0] === nome && d[0] === nome, `grado ${nome}`);
   const [forte, media, debole] = [num(d[2]), num(d[3]), num(d[4])];
   return {
     id, nome, livelli: r[1], livello_rif: num(r[2]), pv: num(r[3]), va: num(r[4]), difese: num(r[5]), ar: num(r[6]),
     danno_medio: num(r[7]), danno: r[8], azp: num(r[9]), round_resistenza: num(r[10]), round_abbattere: num(r[11]),
     iniziativa: num(d[1]), ps: { forte, media, debole }, passo: num(d[5]), spazio: d[6],
-    boss: { pv: num(b[1]), azp: num(b[2]), round_resistenza: num(b[3]) },
     equilibrato: Object.fromEntries(['facile', 'normale', 'duro'].map((k, j) => [k, num(equil.righe.find((x) => x[0] === nome)[j + 1])])),
   };
 });
@@ -168,9 +165,9 @@ const basi = {
     comportamento: 'In branco circonda il gruppo, carica chi si stacca e applica la Superiorità numerica. Fugge quando il capobranco va a 0 PV.',
   },
   alato: {
-    nome: 'Alato', paragrafo: '§3.7', natura: 'Comune', per_grado: base('3.7 Alato'), va_contro: -2,
+    nome: 'Alato', paragrafo: '§3.7', natura: 'Comune', per_grado: base('3.7 Alato'),
     capacita: [
-      { nome: 'Volo', effetto: 'Volo del Giocatore §5.2.3–5.2.5 con il Passo in volo della scheda; Corsa e Scatto il doppio e il triplo. Non resta sospeso fermo. Chi lo attacca mentre vola subisce −2 VA (Bestiario §3.1.1, proposta).' },
+      { nome: 'Volo', effetto: 'Volo del Giocatore §5.2.3–5.2.5 con il Passo in volo della scheda; Corsa e Scatto il doppio e il triplo. Non resta sospeso fermo. Nessuna penalità generica per chi lo attacca in volo (A.95).' },
       { nome: 'Picchiata', effetto: 'Carica in volo (Giocatore §5.2.4, §5.6) da almeno 3 Q più in alto del bersaglio; dopo l’attacco riprende quota con il movimento che resta, senza Attacchi di Opportunità dal bersaglio.' },
       { nome: 'Vista acuta', effetto: '+2 alle Prove di Percezione basate sulla vista.' },
     ],
@@ -190,9 +187,9 @@ const basi = {
     comportamento: 'Aspetta sepolto sotto il passaggio, esce sul primo che passa, lo avvolge e lo trascina verso il cunicolo. Si rintana sotto un quarto dei PV.',
   },
   gigante: {
-    nome: 'Gigante', paragrafo: '§3.9', natura: 'Comune', per_grado: base('3.9 Gigante'), va_contro: 2, massimo_per_scontro: { sotto: 'potente', numero: 1 },
+    nome: 'Gigante', paragrafo: '§3.9', natura: 'Comune', per_grado: base('3.9 Gigante'), massimo_per_scontro: { sotto: 'potente', numero: 1 },
     capacita: [
-      { nome: 'Taglia Grande', effetto: 'Chi lo attacca ottiene +2 VA; Sbalzante non lo sposta (Bestiario §3.1.1, proposta).' },
+      { nome: 'Taglia Grande', effetto: 'Occupa 2 × 2 Q (3 × 3 Q dal Potente); Sbalzante non lo sposta (Bestiario §3.1.1). Nessun bonus generico per chi lo attacca (A.95).' },
       { nome: 'Spazzata del gigante', effetto: 'Spazzata del Giocatore §5.12 come con Spazzata Migliorata: −2 VA contro due bersagli, −4 contro tre, entro la portata di 2 Q. Con una Carica riuscita lo Schianto applica Sbalzante 1.' },
       { nome: 'Raro', effetto: 'Al massimo un Gigante per scontro sotto il grado Potente.' },
     ],
@@ -200,17 +197,19 @@ const basi = {
     comportamento: 'Avanza verso il gruppo più folto per colpirne più d’uno con la Spazzata; abbatte le Coperture leggere. Non fugge.',
   },
 };
-// moltiplicatori della base rispetto al grado (§3.1), usati per i PV del Boss (§2.5.1)
-basi.umano.pv_molt_boss = 1;
-basi.insettoide.pv_molt_boss = 0.9;
-basi.aracnoide.pv_molt_boss = 0.9;
-basi['umanoide-mostruoso'].pv_molt_boss = 1.1;
-basi.quadrupede.pv_molt_boss = 1;
-basi.alato.pv_molt_boss = 0.85;
-basi.strisciante.pv_molt_boss = 1.2;
-basi.gigante.pv_molt_boss = 1.25;
+// moltiplicatori dei PV della base rispetto al grado (§3.1). A.95–A.97 (E&L del 05/10/2026): senza il −2 VA contro
+// chi vola e il +2 VA contro le creature grandi, l'Alato torna ai PV del grado (×1, prima 0,85) e il Gigante a ×1,1
+// (prima 1,25), lo stesso peso di prima nel modello dell'Appendice A (tools/taratura_bestiario.mjs → pesoBase)
+basi.umano.pv_molt = 1;
+basi.insettoide.pv_molt = 0.9;
+basi.aracnoide.pv_molt = 0.9;
+basi['umanoide-mostruoso'].pv_molt = 1.1;
+basi.quadrupede.pv_molt = 1;
+basi.alato.pv_molt = 1;
+basi.strisciante.pv_molt = 1.2;
+basi.gigante.pv_molt = 1.1;
 // controllo: i PV delle basi sono quelli del grado × il moltiplicatore, arrotondati
-for (const [id, b] of Object.entries(basi)) if (!b.umano) for (const g of gradi) verifica(b.per_grado[g.id].pv === Math.round(g.pv * b.pv_molt_boss), `${id} ${g.nome}: PV = grado × ${b.pv_molt_boss}`);
+for (const [id, b] of Object.entries(basi)) if (!b.umano) for (const g of gradi) verifica(b.per_grado[g.id].pv === Math.round(g.pv * b.pv_molt), `${id} ${g.nome}: PV = grado × ${b.pv_molt}`);
 
 // --- cap. 4: moduli -------------------------------------------------------------------------------------------
 const [t42] = tabelle('4.2 Corrotto dall’Oscura Simmetria');
@@ -230,14 +229,14 @@ const corrotto = {
   paragrafo: '§4.2',
   livelli: t42.righe.map((r) => {
     const id = idDa(r[0]);
-    const [min, mag] = r[4] === '1 minore' ? [1, 0] : r[4] === '1 minore e 1 maggiore' ? [1, 1] : [1, 2];
+    const [min, mag] = r[3] === '1 minore' ? [1, 0] : r[3] === '1 minore e 1 maggiore' ? [1, 1] : [1, 2];
     const esp = t425.righe.find((x) => x[0] === r[0]);
-    return { id, nome: r[0], costo: num(r[1].replace('½', '.5')), effetto: r[3], manifestazioni: { minori: min, maggiori: mag }, esposizione: { nome: esp[1], modificatore: esp[2], intensita: num(esp[3]) }, effetti: EFFETTI_LIVELLO[id] };
+    return { id, nome: r[0], effetto: r[2], manifestazioni: { minori: min, maggiori: mag }, esposizione: { nome: esp[1], modificatore: esp[2], intensita: num(esp[3]) }, effetti: EFFETTI_LIVELLO[id] };
   }),
   presenza_terrificante: 'La prima volta in una Scena che un personaggio vede la creatura agire in combattimento: PS di Volontà o Terrorizzato. Una volta per personaggio e per Scena.',
 };
 const EFFETTI_MANIFESTAZIONE = {
-  'pelle-di-cenere': { ar_magica: 1, costo: 0.5 },
+  'pelle-di-cenere': { ar_magica: 1 },
   'sangue-fermo': { immunita: ['sanguinamento'] },
   'gelo-dell-abisso': { proprieta_naturali: ['Gelo'] },
   'ferite-che-non-si-chiudono': { proprieta_naturali: ['Sanguinante 1'], dal_potente: { proprieta_naturali: ['Sanguinante 2'] } },
@@ -252,7 +251,7 @@ const EFFETTI_MUTAZIONE = {
   carapace: { ar: 1, passo_da_8: 6 },
   'arti-in-piu': {},
   veleno: { veleno: { minore: '1d4', semplice: '1d4', medio: '1d6', potente: '1d6', 'molto-potente': '1d6' } },
-  rigenerazione: { recupero_pv: { minore: 2, semplice: 3, medio: 5, potente: 10, 'molto-potente': 15 }, costo_dal_potente: 1 },
+  rigenerazione: { recupero_pv: { minore: 2, semplice: 3, medio: 5, potente: 10, 'molto-potente': 15 } },
   'sangue-acido': {},
   'sensi-oscuri': {},
   aculei: { proprieta_naturali: ['Sanguinante 1'] },
@@ -266,13 +265,13 @@ const mutazioni = t43.righe.map((r) => {
   const id = idDa(r[0]);
   const testo = md.find((x) => x.startsWith(`**${r[0]}.**`));
   verifica(testo, `testo di ${r[0]}`);
-  const basiAmmesse = r[2] === 'Tutte' ? BASI_ID.Tutte : r[2].split(', ').map((n) => Object.entries(basi).find(([, b]) => b.nome === n)?.[0]);
+  const basiAmmesse = r[1] === 'Tutte' ? BASI_ID.Tutte : r[1].split(', ').map((n) => Object.entries(basi).find(([, b]) => b.nome === n)?.[0]);
   verifica(basiAmmesse.every(Boolean), `${r[0]}: basi`);
-  return { id, nome: r[0], costo: num(r[1].replace(/\s*\(.*$/, '').replace('½', '.5')), basi: basiAmmesse, breve: r[3], effetto: pulisci(testo).replace(/^[^.]+\.\s*/, ''), effetti: EFFETTI_MUTAZIONE[id] ?? {} };
+  return { id, nome: r[0], basi: basiAmmesse, breve: r[2], effetto: pulisci(testo).replace(/^[^.]+\.\s*/, ''), effetti: EFFETTI_MUTAZIONE[id] ?? {} };
 });
 verifica(mutazioni.length === 12 && mutazioni.every((m) => EFFETTI_MUTAZIONE[m.id]), '12 Mutazioni');
-// §4.3 Mole: per un Aracnoide Potente o Molto potente (già 2 × 2 Q) vale soltanto PV e portata, con costo +½
-mutazioni.find((m) => m.id === 'mole').eccezioni = [{ base: 'aracnoide', gradi: ['potente', 'molto-potente'], costo: 0.5, senza: ['difese', 'spazio'] }];
+// §4.3 Mole: per un Aracnoide Potente o Molto potente (già 2 × 2 Q) vale soltanto PV e portata
+mutazioni.find((m) => m.id === 'mole').eccezioni = [{ base: 'aracnoide', gradi: ['potente', 'molto-potente'], senza: ['difese', 'spazio'] }];
 
 // §4.4: equipaggiamento per grado, armi e armature del catalogo dell'app
 const ARMI = {
@@ -283,7 +282,7 @@ const ARMI = {
 const equipaggiamento = {
   paragrafo: '§4.4', basi: ['umano', 'umanoide-mostruoso'],
   per_grado: Object.fromEntries(t44.righe.map((r) => [idGrado(r[0]), { protezione: r[1], ar: num(r[2].split('–')[0]), armi: r[3].split(', ').map((n) => ARMI[n]), bonus_danno: num(r[5]) }])),
-  fasce: t44c.righe.map((r, i) => ({ id: ['del-grado', 'grado-successivo', 'due-fasce-sopra'][i], nome: r[0], costo: num(r[1].replace('½', '.5')), salto: i })),
+  fasce: t44c.righe.map((r, i) => ({ id: ['del-grado', 'grado-successivo', 'due-fasce-sopra'][i], nome: r[0], salto: num(r[1]) })),
   distanza_va: -2,
 };
 verifica(Object.values(equipaggiamento.per_grado).every((g) => g.armi.every(Boolean)), 'armi del §4.4 nel catalogo');
@@ -352,7 +351,6 @@ const tabella = (titolo, campi = []) => {
   verifica(righe[0].da === 1 && righe.at(-1).a === facce && righe.every((r, i) => i === 0 || r.da === righe[i - 1].a + 1), `${titolo}: facce del ${dado}`);
   return { dado, righe };
 };
-const costo = (s) => (s === '—' ? null : num(String(s).replace(/\s*\(.*$/, '').replace('½', '.5')));
 const scarto = (s) => num(s);
 const tabelleCasuali = {
   base: tabella('6.2 Base'),
@@ -362,11 +360,11 @@ const tabelleCasuali = {
   difficolta: tabella('6.3.4 Difficoltà', [['fattore', 3, num]]),
   numero_moduli: tabella('6.4.1 Numero di moduli', [['numero', 3, num]]),
   tipo_modulo: tabella('6.4.2 Tipo di modulo'),
-  mutazione: tabella('6.4.3 Mutazione', [['costo', 3, costo]]),
-  equipaggiamento: tabella('6.4.4 Equipaggiamento', [['costo', 3, costo]]),
-  corruzione: tabella('6.5.1 Livello di Corruzione', [['costo', 3, costo]]),
-  manifestazione_minore: tabella('6.5.2 Manifestazione minore', [['costo', 3, costo]]),
-  manifestazione_maggiore: tabella('6.5.3 Manifestazione maggiore', [['costo', 3, costo]]),
+  mutazione: tabella('6.4.3 Mutazione'),
+  equipaggiamento: tabella('6.4.4 Equipaggiamento'),
+  corruzione: tabella('6.5.1 Livello di Corruzione'),
+  manifestazione_minore: tabella('6.5.2 Manifestazione minore'),
+  manifestazione_maggiore: tabella('6.5.3 Manifestazione maggiore'),
 };
 // gli id delle tabelle sono quelli dei dati
 verifica(tabelleCasuali.base.righe.every((r) => basi[r.id]), 'tabella 6.2: basi');
@@ -379,12 +377,10 @@ verifica(tabelleCasuali.equipaggiamento.righe.every((r, i) => r.id === equipaggi
 const bestiario = {
   versione_manuale: 'Bestiario, proposta (bozza 0.2, docs/bestiario/bestiario.md, 02/10/2026)',
   fonte: 'Bestiario, proposta: docs/bestiario/bestiario.md, cap. 2–6 e Appendice A; lotto tools/lotti/lotto_bestiario_dati.mjs. Le tabelle si leggono dal documento; effetti dei moduli e ricette delle creature pronte dal testo dei paragrafi.',
-  'TODO(Davide)': 'Bestiario proposto, in attesa di Davide: scala tarata su 7 PG, costi dei moduli, Boss, creature pronte e tabelle casuali; basi del §3.6–3.9 con le proposte su bersaglio in volo (−2 VA) e taglia Grande (+2 VA), che il Giocatore non ha (docs/bestiario/domande-per-davide.md).',
+  'TODO(Davide)': 'Bestiario proposto, in attesa di Davide: creature pronte e tabelle casuali da confermare; la scala tarata su 7 PG è una stima sperimentale da verificare al tavolo (A.97). Applicate il 05/10/2026 A.95 (nessun −2/+2 VA per volo e taglia), A.96 (Boss solo etichetta) e A.97 (nessun costo dei moduli né grado effettivo).',
   gruppo_pg: 7,
   gradi,
-  boss: { round_resistenza: 12, azp_in_piu: 1, riduzione_pv_per_ar: 0.7, paragrafo: '§2.5' },
-  equilibrato: { paragrafo: '§2.3', gruppi_misti: gruppiMisti, soglie: [{ fino_a: 0.75, id: 'facile', nome: 'facile' }, { fino_a: 1.25, id: 'normale', nome: 'normale' }, { fino_a: 1.75, id: 'duro', nome: 'duro' }, { fino_a: null, id: 'mortale', nome: 'mortale' }] },
-  costo_massimo: 2,
+  equilibrato: { paragrafo: '§2.3', etichetta: 'Stima sperimentale, da verificare al tavolo.', gruppi_misti: gruppiMisti, soglie: [{ fino_a: 0.75, id: 'facile', nome: 'facile' }, { fino_a: 1.25, id: 'normale', nome: 'normale' }, { fino_a: 1.75, id: 'duro', nome: 'duro' }, { fino_a: null, id: 'mortale', nome: 'mortale' }] },
   basi,
   moduli: { corrotto, mutazioni, equipaggiamento },
   creature,

@@ -1,10 +1,11 @@
 // «Crea nemico» del Tavolo del Master (richiesta di Marcello del 03/10/2026): il profilo di un nemico costruito
 // con il Bestiario proposto (docs/bestiario/bestiario.md, dati in data/bestiario.json). Funzioni pure, senza
 // interfaccia (la procedura guidata sta in src/ui/crea-nemico.js; test in tests/crea-nemico.test.js).
-// - profiloNemico: base + grado + moduli (+ Boss) → nemico nel formato di data/formato_nemici.json (A.73),
-//   con la provenienza di ogni valore, il costo dei moduli e il grado effettivo (§2.4);
+// - profiloNemico: base + grado + moduli (+ etichetta Boss) → nemico nel formato di data/formato_nemici.json (A.73),
+//   con la provenienza di ogni valore. A.95–A.97 (E&L del 05/10/2026): niente ±2 VA per volo e taglia, Boss solo
+//   etichetta (PV e Azioni del profilo), nessun costo universale dei moduli né grado effettivo;
 // - aCaso / ritiraPasso: la procedura in 5 passi del §6.6 con un seme, ripetibile, con un passo ritirabile;
-// - frazioneScontro / difficolta: la difficoltà di uno scontro contro 7 PG (§2.3), solo informativa.
+// - frazioneScontro / difficolta: stima sperimentale della difficoltà contro 7 PG (§2.3), da verificare al tavolo.
 // TODO(Davide): il Bestiario è una proposta in attesa di Davide (data/bestiario.json → «TODO(Davide)»).
 import { aggiungiDanno, catalogo } from './equipaggiamento.js';
 
@@ -18,8 +19,6 @@ export const fileUmano = (tipo, grado) => (SUFFISSO_UMANO[grado] ? `${tipo}-${SU
 
 const B = (dati) => dati.bestiario;
 const indiceGrado = (dati, id) => B(dati).gradi.findIndex((g) => g.id === id);
-const mezzo = (x) => (x === 0.5 ? '½' : x === 1.5 ? '1½' : String(x).replace('.', ','));
-export const testoCosto = (c) => `+${mezzo(c)}`;
 
 /** Ricetta di una creatura pronta (cap. 5) → scelte complete. */
 export function scelteCreatura(id, grado, { boss = false } = {}, dati) {
@@ -38,62 +37,9 @@ export function mutazioniAmmesse(base, dati) {
   return B(dati).moduli.mutazioni.filter((m) => m.basi.includes(base));
 }
 
-/** Costo di una Mutazione per base e grado (§4.3: Rigenerazione +1 dal Potente; Mole dell'Aracnoide Potente +½). */
-export function costoMutazione(m, base, grado, dati) {
-  const iG = indiceGrado(dati, grado);
-  const ecc = (m.eccezioni ?? []).find((e) => e.base === base && e.gradi.includes(grado));
-  if (ecc) return ecc.costo;
-  if (m.effetti?.costo_dal_potente && iG >= indiceGrado(dati, 'potente')) return m.effetti.costo_dal_potente;
-  return m.costo;
-}
-
-/** Costo totale dei moduli (§2.4), con il dettaglio. */
-export function costoModuli(scelte, dati) {
-  const voci = [];
-  for (const id of scelte.mutazioni ?? []) {
-    const m = B(dati).moduli.mutazioni.find((x) => x.id === id);
-    if (m) voci.push(riga(m.nome, costoMutazione(m, scelte.base, scelte.grado, dati)));
-  }
-  const c = scelte.corrotto;
-  if (c?.livello) {
-    const l = B(dati).moduli.corrotto.livelli.find((x) => x.id === c.livello);
-    if (l) voci.push(riga(`Corrotto, ${l.nome}`, l.costo));
-    for (const id of c.minori ?? []) {
-      const m = B(dati).moduli.corrotto.manifestazioni_minori.find((x) => x.id === id);
-      if (m?.effetti?.costo) voci.push(riga(m.nome, m.effetti.costo, 'si aggiunge al Corrotto (§4.2.4)'));
-    }
-  }
-  if (scelte.equipaggiamento?.fascia) {
-    const f = B(dati).moduli.equipaggiamento.fasce.find((x) => x.id === scelte.equipaggiamento.fascia);
-    if (f) voci.push(riga(`Equipaggiamento, ${f.nome.toLowerCase()}`, f.costo));
-  }
-  return { totale: voci.reduce((s, v) => s + v.valore, 0), voci };
-}
-
-/** Grado effettivo (§2.4): indice del grado + costo; nome leggibile. */
-export function gradoEffettivo(grado, costo, dati) {
-  return nomeEffettivo(indiceGrado(dati, grado) + costo, dati);
-}
-
-/** Nome di un grado effettivo dal suo valore (0 = Minore, mezzi gradi «fra … e …»). */
-export function nomeEffettivo(valore, dati) {
-  const gradi = B(dati).gradi;
-  const giu = Math.min(Math.floor(valore), gradi.length - 1);
-  const oltre = Math.max(0, valore - (gradi.length - 1));
-  let nome = gradi[giu].nome;
-  if (valore % 1 && valore < gradi.length - 1) nome = `fra ${gradi[giu].nome} e ${gradi[giu + 1].nome}`;
-  if (oltre) nome = `Molto potente + ${mezzo(oltre)}`;
-  return { valore, nome };
-}
-
-/** Round di resistenza attesi contro 7 PG del livello del grado (§2.1), per un grado o un grado effettivo. */
-export function roundResistenza(valore, dati, { boss = false } = {}) {
-  const gradi = B(dati).gradi;
-  if (boss) return B(dati).boss.round_resistenza;
-  const i = Math.max(0, Math.min(valore, gradi.length - 1));
-  const a = gradi[Math.floor(i)].round_resistenza;
-  const b = gradi[Math.ceil(i)].round_resistenza;
-  return Math.round((a + (b - a) * (i % 1)) * 10) / 10;
+/** Round di resistenza del grado contro 7 PG del suo livello (§2.1): stima sperimentale, da verificare al tavolo. */
+export function roundResistenza(grado, dati) {
+  return B(dati).gradi.find((g) => g.id === grado)?.round_resistenza ?? null;
 }
 
 /** «Attacchi naturali» (§4.2.4): per un umano gli attacchi in mischia. */
@@ -110,7 +56,7 @@ const aggiungiProprieta = (a, p) => {
  * @param scelte { base, tipoUmano?, grado, boss?, mutazioni: [id], corrotto: { livello, minori, maggiori, etereo? } | null,
  *   equipaggiamento: { fascia, armi?: [rif], armatura?: rif } | null, creatura?, nome?, descrizione?, id? }
  * @param opzioni { umani: { '<tipo>-<recluta|veterano|elite>': nemico } } per la base Umano
- * @returns {{ nemico, provenienza, costo, effettivo, round, avvisi: string[], errori: string[] }}
+ * @returns {{ nemico, provenienza, round, avvisi: string[], errori: string[] }}
  */
 export function profiloNemico(scelte, dati, { umani = {} } = {}) {
   const BE = B(dati);
@@ -120,7 +66,7 @@ export function profiloNemico(scelte, dati, { umani = {} } = {}) {
   const g = BE.gradi.find((x) => x.id === scelte.grado);
   if (!base) errori.push(`base sconosciuta: ${scelte.base}`);
   if (!g) errori.push(`grado sconosciuto: ${scelte.grado}`);
-  if (errori.length) return { nemico: null, provenienza: {}, costo: { totale: 0, voci: [] }, effettivo: null, round: null, avvisi, errori };
+  if (errori.length) return { nemico: null, provenienza: {}, round: null, avvisi, errori };
   const umano = Boolean(base.umano);
   const P = {}; // provenienza: campo → righe
   const prov = (campo, fonte, valore, nota) => { (P[campo] ??= []).push(riga(fonte, valore, nota)); };
@@ -130,8 +76,8 @@ export function profiloNemico(scelte, dati, { umani = {} } = {}) {
     const tipo = scelte.tipoUmano ?? base.tipi[0];
     const chiave = fileUmano(tipo, g.id);
     const u = chiave ? umani[chiave] : null;
-    if (!chiave) { errori.push(`${base.nome} ${g.nome}: ${BE.basi.umano.per_grado[g.id].tipo} da preparare (§3.2), non c'è ancora nel bestiario umano.`); return { nemico: null, provenienza: {}, costo: costoModuli(scelte, dati), effettivo: null, round: null, avvisi, errori }; }
-    if (!u) { errori.push(`bestiario umano: manca ${chiave}.json`); return { nemico: null, provenienza: {}, costo: costoModuli(scelte, dati), effettivo: null, round: null, avvisi, errori }; }
+    if (!chiave) { errori.push(`${base.nome} ${g.nome}: ${BE.basi.umano.per_grado[g.id].tipo} da preparare (§3.2), non c'è ancora nel bestiario umano.`); return { nemico: null, provenienza: {}, round: null, avvisi, errori }; }
+    if (!u) { errori.push(`bestiario umano: manca ${chiave}.json`); return { nemico: null, provenienza: {}, round: null, avvisi, errori }; }
     // A.79 (E&L del 05/10/2026): il profilo del convertitore vale com'è; il grado non dà PV, AzP né danni
     n = clona(u);
     delete n.stati;
@@ -301,47 +247,39 @@ export function profiloNemico(scelte, dati, { umani = {} } = {}) {
     }
   }
 
-  // §2.5 Boss
+  // A.96 (E&L del 05/10/2026): Boss è una classificazione, non un moltiplicatore: PV e Azioni restano quelli del
+  // profilo; vale soltanto la capacità propria della creatura pronta, se la scheda la dichiara
   if (scelte.boss) {
-    const molt = base.pv_molt_boss ?? 1;
-    const oltre = Math.max(0, n.ar.totale - g.ar);
-    const pv = Math.round(g.boss.pv * molt * 0.7 ** oltre);
-    P.pv = [riga(`Boss ${g.nome} (§2.5.1)`, g.boss.pv)];
-    if (molt !== 1) P.pv.push(riga(`${base.nome}: × ${String(molt).replace('.', ',')}`, Math.round(g.boss.pv * molt) - g.boss.pv));
-    if (oltre) P.pv.push(riga(`AR ${n.ar.totale}, ${oltre} oltre il grado: × 0,7 per punto`, pv - Math.round(g.boss.pv * molt)));
-    if ((scelte.mutazioni ?? []).includes('mole')) P.pv.push(riga('Mole: non aumenta i PV del Boss (§2.5.1)', 0));
-    n.pv = pv;
-    n.azioni.principali = g.azp + BE.boss.azp_in_piu;
-    n.azioni.eccezioni = `L’AzP in più non attacca: Parata, terminare uno Stato o una capacità; alla propria Iniziativa una sola AzP, le altre al termine dell’Iniziativa di personaggi diversi (§2.5.1).`;
-    prov('azioni', `Boss: AzP del grado + ${BE.boss.azp_in_piu} (§2.5.1)`, BE.boss.azp_in_piu);
-    capacita('Boss: resistenza agli Stati', '+2 alle PS per evitare uno Stato; gli Stati temporanei durano la metà, per eccesso; all’inizio della propria Iniziativa può spendere l’AzP in più per terminarne uno (non Immobilizzato da una presa né Sanguinamento) (§2.5.2).');
-    capacita('Boss: soglia di fase', `A ${Math.floor(pv / 2)} PV o meno la prima volta: termina gli Stati temporanei, cambia comportamento e ottiene la capacità della seconda fase oppure ripete l’Iniziativa con 1d10 nuovo (§2.5.3).`);
-    const ricetta = scelte.creatura ? BE.creature.find((x) => x.id === scelte.creatura) : null;
-    if (ricetta?.boss?.capacita) capacita(`${ricetta.boss.capacita.nome} (Boss)`, ricetta.boss.capacita.effetto);
+    const ricettaBoss = scelte.creatura ? BE.creature.find((x) => x.id === scelte.creatura) : null;
+    if (ricettaBoss?.boss?.capacita) capacita(`${ricettaBoss.boss.capacita.nome} (Boss)`, ricettaBoss.boss.capacita.effetto);
   }
 
   // valori finali
   if (!n.immunita.length) delete n.immunita;
-  const costo = costoModuli(scelte, dati);
-  if (costo.totale > BE.costo_massimo) avvisi.push(`Costo dei moduli ${testoCosto(costo.totale)}: oltre +${BE.costo_massimo} si sceglie direttamente un grado più alto (§2.4).`);
-  const effettivo = scelte.boss ? { valore: iG, nome: `Boss ${g.nome}` } : gradoEffettivo(g.id, costo.totale, dati);
   const ricetta = scelte.creatura ? BE.creature.find((x) => x.id === scelte.creatura) : null;
   n.nome = String(scelte.nome ?? '').trim() || proponiNome(scelte, dati);
   n.id = scelte.id ?? idDaNome(n.nome);
-  n.fonte = `Bestiario, proposta: ${ricetta ? `${ricetta.nome} (${ricetta.paragrafo}), ` : ''}${base.nome} ${scelte.boss ? `Boss ${g.nome}` : g.nome}${costo.voci.length ? `, ${costo.voci.map((v) => `${v.fonte} ${testoCosto(v.valore)}`).join(', ')}` : ''}`;
+  n.fonte = `Bestiario, proposta: ${ricetta ? `${ricetta.nome} (${ricetta.paragrafo}), ` : ''}${base.nome} ${scelte.boss ? `Boss ${g.nome}` : g.nome}${moduliTesto(scelte, dati)}`;
   const descr = String(scelte.descrizione ?? '').trim() || proponiDescrizione(scelte, dati);
   n.note = [descr, `Natura: ${natura[0]}.`, ricetta?.comportamento ? `Comportamento: ${ricetta.comportamento}` : null,
-    `Grado effettivo: ${effettivo.nome} (costo dei moduli ${testoCosto(costo.totale)}, §2.4).`, 'Bestiario proposto, da validare con Davide (TODO(Davide)).'].filter(Boolean).join(' ');
+    'Bestiario proposto, da validare con Davide (TODO(Davide)).'].filter(Boolean).join(' ');
   for (const k of Object.keys(P)) if (k.startsWith('salvezze.') || k === 'pv' || k === 'ar' || k === 'difese' || k === 'iniziativa' || k === 'passo') P[k].totale = valoreCampo(n, k);
   n._bestiario = {
     scelte: clona({ ...scelte, nome: undefined, descrizione: undefined, id: undefined }),
-    grado: g.id, boss: Boolean(scelte.boss), costo: costo.totale, grado_effettivo: effettivo.valore,
+    grado: g.id, boss: Boolean(scelte.boss),
   };
-  return {
-    nemico: n, provenienza: P, costo, effettivo,
-    round: { grado: scelte.boss ? BE.boss.round_resistenza : g.round_resistenza, effettivo: roundResistenza(effettivo.valore, dati, { boss: scelte.boss }) },
-    avvisi, errori,
-  };
+  return { nemico: n, provenienza: P, round: { grado: g.round_resistenza }, avvisi, errori };
+}
+
+/** I moduli scelti, per la fonte del nemico: «, Carapace, Veleno, Corrotto (Posseduto)». */
+function moduliTesto(scelte, dati) {
+  const BE = B(dati);
+  const nomi = [
+    ...(scelte.mutazioni ?? []).map((id) => BE.moduli.mutazioni.find((m) => m.id === id)?.nome ?? id),
+    ...(scelte.corrotto?.livello ? [`Corrotto (${BE.moduli.corrotto.livelli.find((l) => l.id === scelte.corrotto.livello)?.nome ?? scelte.corrotto.livello})`] : []),
+    ...(scelte.equipaggiamento?.fascia ? [`Equipaggiamento (${BE.moduli.equipaggiamento.fasce.find((f) => f.id === scelte.equipaggiamento.fascia)?.nome.toLowerCase() ?? scelte.equipaggiamento.fascia})`] : []),
+  ];
+  return nomi.length ? `, ${nomi.join(', ')}` : '';
 }
 
 const valoreCampo = (n, k) => (k === 'ar' ? n.ar.totale : k === 'passo' ? n.movimento.passo : k.startsWith('salvezze.') ? n.salvezze[k.slice(9)] : n[k]);
@@ -453,8 +391,6 @@ export function aCaso({ seme = 1, livello = 8, contesto = 'scontro', semi = {}, 
   // 3. Moduli: numero, poi uno alla volta (ognuno un passo ritirabile)
   const { p: p3, rng: r3 } = passo('moduli', 'Moduli');
   const rn = tiro(p3, r3, 'numero_moduli', 'Numero di moduli');
-  let costo = 0;
-  const costoDi = () => costoModuli(scelte, dati).totale;
   for (let k = 1; k <= rn.numero; k++) {
     const { p, rng } = passo(`modulo-${k}`, `Modulo ${k}`);
     let tipo = tiro(p, rng, 'tipo_modulo', 'Tipo di modulo').id;
@@ -467,30 +403,23 @@ export function aCaso({ seme = 1, livello = 8, contesto = 'scontro', semi = {}, 
       const ammesse = mutazioniAmmesse(scelte.base, dati).filter((m) => !scelte.mutazioni.includes(m.id));
       if (!ammesse.length) { p.tiri.push({ tabella: 'Mutazione', risultato: 'nessuna ammessa', id: null }); continue; }
       const r = tiro(p, rng, 'mutazione', 'Mutazione', (x) => ammesse.some((m) => m.id === x.id));
-      const prova = { ...scelte, mutazioni: [...scelte.mutazioni, r.id] };
-      if (costoModuli(prova, dati).totale > BE.costo_massimo) { p.tiri.at(-1).nota = 'oltre +2: si scarta e si smette (§6.4.1)'; fermo = true; }
-      else scelte.mutazioni.push(r.id);
+      scelte.mutazioni.push(r.id);
     } else if (tipo === 'equipaggiamento') {
       const r = tiro(p, rng, 'equipaggiamento', 'Equipaggiamento');
-      if (costoDi() + r.costo > BE.costo_massimo) { p.tiri.at(-1).nota = 'oltre +2: si scarta e si smette (§6.4.1)'; fermo = true; }
-      else scelte.equipaggiamento = { fascia: r.id };
+      scelte.equipaggiamento = { fascia: r.id };
     } else {
       // 4. Corruzione (§6.5): livello che ci sta, poi le Manifestazioni
       const { p: p4, rng: r4 } = passo('corruzione', 'Corruzione');
       const livelli = BE.moduli.corrotto.livelli;
       const r = tiro(p4, r4, 'corruzione', 'Livello di Corruzione');
-      let i = livelli.findIndex((l) => l.id === r.id);
-      while (i >= 0 && costoDi() + livelli[i].costo > BE.costo_massimo) i--;
-      if (i < 0) { p4.tiri.at(-1).nota = 'neppure il Toccato ci sta: il modulo si scarta (§6.5.1)'; fermo = true; }
-      else {
-        if (livelli[i].id !== r.id) p4.tiri.at(-1).nota = `si scende a ${livelli[i].nome} (§6.5.1)`;
+      const i = livelli.findIndex((l) => l.id === r.id);
+      {
         const l = livelli[i];
         const C = { livello: l.id, minori: [], maggiori: [] };
         // §6.5.2: una Manifestazione che la base ha già come capacità si ritira (Occhi senza luce e Visione al buio)
         const giaBase = (x) => x.id === 'occhi-senza-luce' && (BE.basi[scelte.base].capacita ?? []).some((c) => c.nome === 'Visione al buio');
         for (let j = 0; j < l.manifestazioni.minori; j++) {
-          const m = tiro(p4, r4, 'manifestazione_minore', 'Manifestazione minore', (x) => !C.minori.includes(x.id) && !giaBase(x)
-            && !(x.costo && costoDi() + l.costo + x.costo > BE.costo_massimo));
+          const m = tiro(p4, r4, 'manifestazione_minore', 'Manifestazione minore', (x) => !C.minori.includes(x.id) && !giaBase(x));
           if (m) C.minori.push(m.id);
         }
         for (let j = 0; j < l.manifestazioni.maggiori; j++) {
@@ -500,17 +429,15 @@ export function aCaso({ seme = 1, livello = 8, contesto = 'scontro', semi = {}, 
         scelte.corrotto = C;
       }
     }
-    costo = costoDi();
     if (fermo) break;
   }
-  // 5. Scheda e numero (§2.3 con il fattore della difficoltà; un Boss è uno solo)
-  const eff = scelte.boss ? null : gradoEffettivo(scelte.grado, costoDi(), dati);
-  const fr = frazioneScontro({ grado: scelte.grado, boss: scelte.boss, grado_effettivo: eff?.valore ?? iG }, livello, dati);
+  // 5. Scheda e numero (§2.3 con il fattore della difficoltà, stima sperimentale; con l'etichetta Boss uno solo)
+  const fr = frazioneScontro({ grado: scelte.grado }, livello, dati);
   let numero = scelte.boss ? 1 : Math.max(1, Math.round((1 / fr.frazione) * rd.fattore));
   // §3.9: una base rara (il Gigante) è una sola per scontro sotto il grado indicato nei dati
   const raro = BE.basi[scelte.base]?.massimo_per_scontro;
   if (raro && indiceGrado(dati, scelte.grado) < indiceGrado(dati, raro.sotto)) numero = Math.min(numero, raro.numero);
-  return { scelte, passi, difficolta: rd.id, numero, costo, livello, contesto, seme, fissa, semi: Object.fromEntries(passi.map((p) => [p.id, S(p.id)])) };
+  return { scelte, passi, difficolta: rd.id, numero, livello, contesto, seme, fissa, semi: Object.fromEntries(passi.map((p) => [p.id, S(p.id)])) };
 }
 
 /** Ritira un passo (§6.6, «ritira la Mutazione»): nuovo seme per quel passo, gli altri restano. */
@@ -534,30 +461,22 @@ export function stimaGrado(nemico, dati) {
 /** Dati del bilancio di un nemico: dal blocco _bestiario se c'è, altrimenti una stima. */
 export function infoBilancio(nemico, dati) {
   const b = nemico?._bestiario;
-  if (b?.grado) return { grado: b.grado, boss: Boolean(b.boss), grado_effettivo: b.grado_effettivo ?? indiceGrado(dati, b.grado), stima: false };
+  if (b?.grado) return { grado: b.grado, boss: Boolean(b.boss), stima: false };
   const g = stimaGrado(nemico, dati);
-  return { grado: g, boss: false, grado_effettivo: indiceGrado(dati, g), stima: true };
+  return { grado: g, boss: false, stima: true };
 }
 
 /**
- * Frazione dello scontro normale di una creatura contro 7 PG del livello dato (§2.3, §2.4): 1 / numero della
- * tabella dei gruppi misti; mezzo grado = media delle due frazioni; oltre il Molto potente ogni grado in più vale
- * una creatura aggiuntiva. Un Boss vale 1 contro PG del livello del suo grado.
+ * Frazione dello scontro normale di una creatura contro 7 PG del livello dato (§2.3): 1 / numero della tabella dei
+ * gruppi misti per il suo grado. A.97 (E&L del 05/10/2026): stima sperimentale, da verificare al tavolo; il Boss è
+ * un'etichetta e conta come il suo grado; nessun grado effettivo dei moduli.
  */
 export function frazioneScontro(info, livello, dati) {
   const BE = B(dati);
   const riga = rigaMisti(livello, dati);
-  const fr = (i) => 1 / riga[BE.gradi[i].id];
-  if (info.boss) {
-    const g = BE.gradi.find((x) => x.id === info.grado);
-    return { frazione: g.equilibrato.normale * fr(BE.gradi.indexOf(g)), livello: riga.livello };
-  }
-  const ultimo = BE.gradi.length - 1;
-  const v = info.grado_effettivo;
-  if (v > ultimo) return { frazione: fr(ultimo) * (1 + (v - ultimo)), livello: riga.livello };
-  const a = Math.floor(v);
-  const frazione = v % 1 ? (fr(a) + fr(a + 1)) / 2 : fr(a);
-  return { frazione, livello: riga.livello };
+  const i = Math.max(0, indiceGrado(dati, info.grado));
+  const numero = riga[BE.gradi[i].id];
+  return { frazione: numero ? 1 / numero : 1, livello: riga.livello };
 }
 
 /** Difficoltà di un elenco di nemici ({ nemico, quanti }) contro 7 PG del livello dato: somma delle frazioni. */
@@ -571,5 +490,5 @@ export function difficolta(voci, livello, dati) {
     somma += frazioneScontro(info, livello, dati).frazione * (v.quanti ?? 1);
   }
   const s = BE.equilibrato.soglie.find((x) => x.fino_a === null || somma <= x.fino_a);
-  return { somma: Math.round(somma * 100) / 100, id: s.id, nome: s.nome, stime, livello: rigaMisti(livello, dati).livello, pg: BE.gruppo_pg };
+  return { somma: Math.round(somma * 100) / 100, id: s.id, nome: s.nome, stime, livello: rigaMisti(livello, dati).livello, pg: BE.gruppo_pg, etichetta: BE.equilibrato.etichetta ?? null };
 }

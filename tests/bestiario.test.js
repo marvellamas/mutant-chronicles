@@ -45,13 +45,13 @@ test('data/bestiario.json è valido e porta la fonte e il TODO(Davide)', () => {
   assert.ok(e.includes('basi.aracnoide.per_grado.medio.attacchi[0].danno'), e);
 });
 
-test('scala dei gradi: PV, VA, Difese, AR, danno e AzP come il §2.1; Boss come il §2.5.1', () => {
+test('scala dei gradi: PV, VA, Difese, AR, danno e AzP come il §2.1; Boss solo etichetta (A.96)', () => {
   const t = perRiga(tabella('2.1 I sei gradi'));
-  const boss = perRiga(tabella('2.5.1 Valori del Boss', 1));
+  assert.equal(B.boss, undefined);
   B.gradi.forEach((g, i) => {
     const r = t.get(GRADI[i]);
     assert.deepEqual([g.pv, g.va, g.difese, g.ar, g.danno, g.azp, g.round_resistenza], [numero(r[2]), numero(r[3]), numero(r[4]), numero(r[5]), r[7], numero(r[8]), numero(r[9])], GRADI[i]);
-    assert.deepEqual([g.boss.pv, g.boss.azp], [numero(boss.get(GRADI[i])[0]), numero(boss.get(GRADI[i])[1])]);
+    assert.equal(g.boss, undefined);
   });
 });
 
@@ -100,7 +100,10 @@ test('basi nuove (§3.6–3.9): profili validi nel formato A.73 a ogni grado, co
   const alato = profiloNemico({ base: 'alato', grado: 'medio', mutazioni: [] }, dati).nemico;
   assert.deepEqual([alato.movimento.passo, alato.movimento.volo, alato.taglia], [3, 8, undefined]);
   const gigante = profiloNemico({ base: 'gigante', grado: 'potente', mutazioni: [] }, dati).nemico;
-  assert.deepEqual([gigante.taglia, gigante.pv, gigante.attacchi[0].portata_q], ['grande', 225, 2]);
+  // A.95 (E&L del 05/10/2026): niente ±2 VA per volo e taglia; Alato ai PV del grado, Gigante × 1,1
+  assert.deepEqual([gigante.taglia, gigante.pv, gigante.attacchi[0].portata_q], ['grande', 198, 2]);
+  assert.equal(alato.pv, B.gradi.find((g) => g.id === 'medio').pv);
+  assert.deepEqual([B.basi.alato.va_contro, B.basi.gigante.va_contro], [undefined, undefined]);
   assert.match(gigante.capacita.find((c) => c.nome === 'Spazio').effetto, /3 × 3 Q/);
   // le Ali membranose danno il Passo in volo anche a un Quadrupede
   assert.equal(profiloNemico({ base: 'quadrupede', grado: 'medio', mutazioni: ['ali-membranose'] }, dati).nemico.movimento.volo, 6);

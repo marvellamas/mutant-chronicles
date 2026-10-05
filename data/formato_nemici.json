@@ -158,7 +158,7 @@
           "tipo": "intero",
           "min": 1,
           "obbligatorio": false,
-          "descrizione": "Passo in volo in Q, solo per chi vola (Giocatore §5.2.3; Bestiario §3.1.1): Corsa e Scatto in volo sono il doppio e il triplo. Chi lo attacca mentre vola subisce −2 VA (Bestiario §3.1.1, proposta da confermare)."
+          "descrizione": "Passo in volo in Q, solo per chi vola (Giocatore §5.2.3; Bestiario §3.1.1): Corsa e Scatto in volo sono il doppio e il triplo. Nessuna penalità generica per chi lo attacca in volo (A.95, E&L del 05/10/2026)."
         }
       }
     },
@@ -169,7 +169,7 @@
         "grande"
       ],
       "obbligatorio": false,
-      "descrizione": "Normale se manca. Grande: occupa 2 × 2 Q o più, chi lo attacca ottiene +2 VA, Sbalzante non lo sposta (Bestiario §3.1.1, proposta da confermare)."
+      "descrizione": "Normale se manca. Grande: occupa 2 × 2 Q o più, Sbalzante non lo sposta (Bestiario §3.1.1); nessun bonus generico per chi lo attacca (A.95, E&L del 05/10/2026)."
     },
     "salvezze": {
       "tipo": "mappa",
