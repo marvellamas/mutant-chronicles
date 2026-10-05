@@ -841,6 +841,13 @@ le altre si registrano lotto per lotto.
     Combattimento e Abilità e in «Attacca!». Tolti i TODO A.106 degli impianti. Resta il `TODO(Davide)` A.116: quali
     Abilità sono «attività pratiche che richiedono visione» (per ora solo attacchi e Difese).
 
+105. **Regime di lancio dei nemici già esistenti** (seguito di A.84). Il Legionario oscuro d'esempio dichiara
+    «capacità specifica» (creatura); il bestiario umano ha già il regime; il Bestiario proposto non ha incantesimi. Per i
+    nemici salvati senza regime la carta della plancia propone il regime quando è certo (umano convertito da un PG:
+    dalla Classe indicata in «fonte», Taumaturgo o altro utilizzatore; creatura: capacità specifica) con «Conferma»,
+    che lo scrive nello scontro con una riga di registro; nulla cambia da solo. → `src/nemico-lancio.js` →
+    `regimeProposto`, `src/scontro.js` → `confermaRegimeNemico`, `src/ui/nemici.js`, `src/ui/tavolo.js`.
+
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 
 Il Manuale dei Veicoli 0.2 è completo di numeri e il lotto 2 (dati e motore) non ha dovuto inventare nulla. Restano

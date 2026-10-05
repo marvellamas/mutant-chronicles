@@ -16,6 +16,30 @@ import { voce as voceProv } from './attacco.js';
 import { aggiungiDanno } from './equipaggiamento.js';
 import { provenienza } from './provenienza.js';
 
+/**
+ * Seguito di A.84: regime di lancio da proporre per una voce salvata senza regime, solo quando è certo. Umano
+ * convertito da un PG («costruito come PG (…)», src/nemico-da-pg.js): dalla sua Classe (Addestramento Taumaturgo →
+ * Taumaturgo, altrimenti altro utilizzatore autorizzato); creatura con incantesimi nel profilo: capacità specifica.
+ * È una proposta da confermare, non si scrive da sola. null se la voce ha già il regime.
+ * @returns {{ regime, motivo } | null}
+ */
+export function regimeProposto(nemico, voce, dati) {
+  if (!voce || voce.regime) return null;
+  const fonte = String(nemico?.fonte ?? '');
+  if (/^costruito come PG/i.test(fonte)) {
+    const parti = (fonte.match(/\(([^)]*)\)/)?.[1] ?? '').split(',').map((x) => x.trim().replace(/\s+\d+$/, ''));
+    const classi = (dati.classi?.classi ?? []).filter((c) => parti.includes(c.nome));
+    if (!classi.length) return null;
+    const t = classi.find((c) => c.addestramento === 'Taumaturgo');
+    return t ? { regime: 'taumaturgo', motivo: `dalla Classe ${t.nome} (Taumaturgo)` }
+      : { regime: 'altro_utilizzatore', motivo: `dalla Classe ${classi[0].nome} (${classi[0].addestramento}, non Taumaturgo)` };
+  }
+  return { regime: 'capacita_specifica', motivo: 'creatura con incantesimi nel profilo: una creatura capace di magia non è automaticamente un Taumaturgo' };
+}
+
+/** Nome del regime di lancio per l'interfaccia. */
+export const NOMI_REGIMI = { taumaturgo: 'Taumaturgo', altro_utilizzatore: 'altro utilizzatore autorizzato', capacita_specifica: 'capacità specifica' };
+
 /** La scheda di incantesimi.json con il nome della voce (maiuscole e spazi non contano). */
 export function schedaIncantesimo(nome, dati) {
   const n = String(nome ?? '').trim().toLowerCase();

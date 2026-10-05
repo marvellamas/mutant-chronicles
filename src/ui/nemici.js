@@ -7,7 +7,7 @@ import { riempimento } from '../interfaccia.js';
 import { validaNemico, formattaErrore, sorgentiNemico } from '../validate.js';
 import { nemicoVuoto, voceVuota, pulisciNemico, idDaNome, testoMovimento } from '../nemici.js';
 import { variaPvNemico, variaPmNemico, cambiaStatoNemico } from '../scontro.js';
-import { statoIncantesimoNemico } from '../nemico-lancio.js';
+import { statoIncantesimoNemico, regimeProposto, NOMI_REGIMI } from '../nemico-lancio.js';
 import { nomeFerita } from '../danno.js';
 import { nemicoDaPg } from '../nemico-da-pg.js';
 import { elencoCartella, leggiCartella } from './cartella.js';
@@ -251,7 +251,7 @@ function testoAzioni(a) {
  * Difese, Azioni, Movimento, Resistenze (Immunità e Contromisure), Abilità, attacchi, incantesimi con «Lancia!»
  * (decisione 8) e capacità come promemoria.
  */
-export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false, onColpito = null, onAttacca = null, onLancia = null, onRiduci = null }) {
+export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false, onColpito = null, onAttacca = null, onLancia = null, onRiduci = null, onRegime = null }) {
   const n = p.scheda;
   const dati = ctx.dati;
   // a 0 PV la carta si riduce a una riga (nome, PV, Ferita) e va in fondo; un clic la riapre (src/scontro.js → conPv)
@@ -284,7 +284,13 @@ export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false,
         i.note ? h('small', { class: 'nota' }, ` · ${i.note}`) : null,
         st.completo && onLancia
           ? [' ', h('button', { type: 'button', class: 'btn btn-piccolo btn-lancia', disabled: !!senzaPm, title: senzaPm, onclick: () => onLancia(k) }, 'Lancia!')]
-          : h('small', { class: 'nota' }, ` · promemoria${st.motivo ? `: ${st.motivo}` : ''}`)));
+          : h('small', { class: 'nota' }, ` · promemoria${st.motivo ? `: ${st.motivo}` : ''}`),
+        // seguito di A.84: regime mancante, proposta da confermare (mai scritta in silenzio)
+        (() => {
+          const pr = regimeProposto(n, i, dati);
+          return pr && onRegime ? h('span', { class: 'proposta-regime' }, h('small', { class: 'nota' }, ` · regime proposto: ${NOMI_REGIMI[pr.regime]} (${pr.motivo}) `),
+            h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Conferma il regime di lancio di questo incantesimo (A.84)', onclick: () => onRegime(k, pr.regime) }, 'Conferma')) : null;
+        })()));
   };
   const resistenze = [
     n.immunita?.length ? `Immune a: ${n.immunita.map(nomeStato).join(', ')}` : null,

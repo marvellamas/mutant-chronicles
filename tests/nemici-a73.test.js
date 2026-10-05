@@ -5,9 +5,9 @@ import { test } from 'node:test';
 import { aggiungiDanno } from '../src/equipaggiamento.js';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { nuovoScontro, aggiungiNemici, registraColpo, annullaUltimoColpo, registraTiro, ordineIniziativa, registraLancioNemico, variaPmNemico, validaScontro } from '../src/scontro.js';
+import { nuovoScontro, aggiungiNemici, registraColpo, annullaUltimoColpo, registraTiro, ordineIniziativa, registraLancioNemico, variaPmNemico, validaScontro, confermaRegimeNemico } from '../src/scontro.js';
 import { applicaColpo, testoColpo } from '../src/danno.js';
-import { calcolaLancioNemico, statoIncantesimoNemico, propostaLancio } from '../src/nemico-lancio.js';
+import { calcolaLancioNemico, statoIncantesimoNemico, propostaLancio, regimeProposto } from '../src/nemico-lancio.js';
 import { movimentoNemico, testoMovimento } from '../src/nemici.js';
 import { esitoAttacco } from '../src/ui/attacco-nemico.js';
 import { validaNemico } from '../src/validate.js';
@@ -138,9 +138,10 @@ test('esempi aggiornati ad A.73: sei Caratteristiche, campi nuovi, incantesimo c
     assert.ok(n.azioni && n.abilita?.length && n.capacita?.length, f);
   }
   const leg0 = leggi('legionario-oscuro.json');
-  // A.84: una creatura capace di magia non è automaticamente un Taumaturgo: senza regime la voce è incompleta
+  // A.84: una creatura capace di magia non è automaticamente un Taumaturgo: il Legionario dichiara «capacità specifica»
+  assert.equal(leg0.incantesimi[0].regime, 'capacita_specifica');
   assert.deepEqual(leg0.incantesimi.map((i) => statoIncantesimoNemico(i, dati).completo), [false, false]);
-  assert.match(statoIncantesimoNemico(leg0.incantesimi[0], dati).motivo, /regime/);
+  assert.match(statoIncantesimoNemico(leg0.incantesimi[0], dati).motivo, /capacità specifica/);
   const leg = { ...leg0, incantesimi: [{ ...leg0.incantesimi[0], regime: 'altro_utilizzatore' }, leg0.incantesimi[1]] };
   assert.equal(testoMovimento(leg, dati), 'Passo 6 Q · Corsa 10 Q · Scatto non consentito');
   const p = nemico(conNemico(leg));
@@ -153,4 +154,22 @@ test('esempi aggiornati ad A.73: sei Caratteristiche, campi nuovi, incantesimo c
   // dopo il lancio, «Colpito» precompilata con il danno della versione (senza bonus di Caratteristica)
   const x = calcolaLancioNemico(p, 0, {}, dati);
   assert.deepEqual(propostaLancio(x.inc, x.risultato, dati), { formula: '1d4+2', moltiplicatore: 1, moltiplicatorePrimo: 1, tipo: 'distanza', ac: 1, proprieta: [] });
+});
+
+test('seguito di A.84: regime proposto per i nemici salvati senza regime, confermato dal Direttore', () => {
+  const voce = { nome: 'Dardo Psichico', livello: 3, va: 10, costo_pm: 3 };
+  assert.deepEqual(regimeProposto({ fonte: 'costruito come PG (Fratellanza, Invocatore 2, 6° livello)' }, voce, dati).regime, 'taumaturgo');
+  assert.equal(regimeProposto({ fonte: 'costruito come PG (Freelance, Agente 2, Soldato 1, 5° livello)' }, voce, dati).regime, 'altro_utilizzatore');
+  assert.equal(regimeProposto({ fonte: 'Bestiario' }, voce, dati).regime, 'capacita_specifica');
+  assert.equal(regimeProposto({ fonte: 'costruito come PG (Freelance, 3° livello)' }, voce, dati), null, 'Classe non riconosciuta: nessuna proposta');
+  assert.equal(regimeProposto({}, { ...voce, regime: 'taumaturgo' }, dati), null);
+  // la proposta non si scrive da sola: la conferma la registra nello scontro
+  const n = { ...copia(legionario), id: 'x', nome: 'Convertito', fonte: 'costruito come PG (Fratellanza, Invocatore 2, 6° livello)', pm: 10, incantesimi: [voce] };
+  let sc = conNemico(n);
+  const p = nemico(sc);
+  assert.equal(p.scheda.incantesimi[0].regime, undefined);
+  sc = confermaRegimeNemico(sc, p.id, 0, 'taumaturgo', T0);
+  assert.equal(nemico(sc).scheda.incantesimi[0].regime, 'taumaturgo');
+  assert.ok(statoIncantesimoNemico(nemico(sc).scheda.incantesimi[0], dati).completo);
+  assert.match(sc.registro.at(-1).testo, /regime di lancio di Dardo Psichico confermato/);
 });

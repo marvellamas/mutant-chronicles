@@ -143,6 +143,16 @@ export function variaPmNemico(s, id, delta, adesso) {
   return { ...t, registro: [...t.registro, { ora: ora(adesso), round: t.round, pm: { id }, testo: `${p.nome}: PM ${p.pm.attuali} → ${attuali}.` }] };
 }
 
+/** Seguito di A.84: il Direttore conferma il regime di lancio di un incantesimo del nemico (proposta della carta). */
+export function confermaRegimeNemico(s, id, indice, regime, adesso) {
+  const p = s.partecipanti.find((x) => x.id === id);
+  const voce = p?.scheda?.incantesimi?.[indice];
+  if (p?.tipo !== 'nemico' || !voce) throw new Error('incantesimo del nemico non trovato');
+  const incantesimi = p.scheda.incantesimi.map((x, k) => (k === indice ? { ...x, regime } : x));
+  const t = { ...s, partecipanti: s.partecipanti.map((x) => (x.id === id ? { ...x, scheda: { ...x.scheda, incantesimi } } : x)) };
+  return conRiga(t, `${p.nome}: regime di lancio di ${voce.nome} confermato (${regime}).`, adesso);
+}
+
 /**
  * «Lancia!» di un nemico (A.73, decisione 8; src/nemico-lancio.js): i PM si scalano dalla sua riserva nello
  * scontro, con una riga di registro. Errore se i PM non bastano.
