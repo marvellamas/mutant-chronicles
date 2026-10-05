@@ -170,7 +170,18 @@ export function applicaColpo(bersaglio, colpo, dati) {
   // Schivata». Vale per gli Stati periodici scelti nella finestra: la perdita non è moltiplicata dal
   // Magistrale (§1.6: «Danni persistenti, Sanguinamento ed effetti secondari… non vengono moltiplicati»).
   const immediate = [];
+  // A.76: solo se almeno 1 danno del colpo ha superato l'AR; una sola perdita iniziale per Stato e per attacco
+  // (con più voci dello stesso Stato vale la maggiore, senza sommarle)
+  const perStato = new Map();
   for (const im of colpo.periodiciImmediati ?? []) {
+    const s = dati.regole.stati.elenco.find((x) => x.id === im.stato);
+    if (s?.periodico?.richiede_penetrazione && !penetrati) {
+      promemoria.push(`${s.nome}: nessun danno ha superato l’Armatura, lo Stato non si applica (A.76).`);
+      continue;
+    }
+    if (!perStato.has(im.stato) || (im.valore ?? 0) > (perStato.get(im.stato).valore ?? 0)) perStato.set(im.stato, im);
+  }
+  for (const im of perStato.values()) {
     const s = dati.regole.stati.elenco.find((x) => x.id === im.stato);
     const per = s?.periodico;
     if (!per || !Number.isInteger(im.valore) || im.valore < 1) continue;

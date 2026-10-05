@@ -804,6 +804,13 @@ le altre si registrano lotto per lotto.
     terza fascia. → `regole.json` → `attacco_ravvicinato.carica.fasce` (ultima fascia con `a: null`, `decisione`),
     `src/attacco.js` → `fasciaCarica`, pulsanti dei Q in «Attacca!» con la Corsa, testo della SS.
 
+100. **Sanguinante X da un attacco** (A.76). Si applica se almeno 1 danno del colpo supera l'AR: prima il danno,
+    poi subito X PV ignorando AR, Parata e Schivata, una sola volta per bersaglio per attacco (con più colpi o più voci,
+    la maggiore); poi all'INI della fonte, al massimo una volta per Round, la perdita iniziale già contata; fra più
+    sanguinamenti il maggiore; nessuna Ferita immediata a 0 PV. → `regole.json` → `stati` (Sanguinamento:
+    `richiede_penetrazione`, `iniziale_una_per_attacco`, `decisione`), `src/danno.js` → `applicaColpo` (il controllo
+    dell'AR passa dall'interfaccia al motore). Periodicità e maggiore erano già in `src/periodici.js`.
+
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 
 Il Manuale dei Veicoli 0.2 è completo di numeri e il lotto 2 (dati e motore) non ha dovuto inventare nulla. Restano

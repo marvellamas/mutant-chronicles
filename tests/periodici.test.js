@@ -246,3 +246,20 @@ test('gli Stati attivi senza una perdita registrata si riconoscono (Stato messo 
   const r = allineaPeriodici(avanti(avanti(x, ADESSO), ADESSO), senzaStato, dati); // Round 2
   assert.deepEqual(r.daChiudere.map((y) => y.stato), ['sanguinamento']);
 });
+
+test('A.76: Sanguinante solo se almeno 1 danno supera l’AR; una perdita iniziale per attacco, la maggiore', () => {
+  const b = { nome: 'Lucas', pv: { attuali: 20, massimo: 20 }, ferite: 0, ar: { totale: 0, magica: 0 } };
+  // esempio della decisione: 20 PV, 5 danni e Sanguinante 2 → 13 PV
+  const es = applicaColpo(b, { danni: [5], natura: 'Naturale', difesa: 'nessuna', proprieta: ['Sanguinante 2'], periodiciImmediati: [{ stato: 'sanguinamento', valore: 2 }] }, dati);
+  assert.equal(es.pv.dopo, 13);
+  // più colpi dello stesso attacco: una sola perdita iniziale, con il valore maggiore
+  const raffica = applicaColpo(b, { danni: [3, 3], natura: 'Naturale', difesa: 'nessuna', proprieta: ['Sanguinante 2'],
+    periodiciImmediati: [{ stato: 'sanguinamento', valore: 1 }, { stato: 'sanguinamento', valore: 2 }] }, dati);
+  assert.deepEqual(raffica.immediate.map((x) => x.valore), [2]);
+  assert.equal(raffica.pv.dopo, 20 - 6 - 2);
+  // nessun danno oltre l'AR: lo Stato non si applica, anche se la finestra lo propone
+  const corazzato = { ...b, ar: { totale: 10, magica: 0 } };
+  const fermo = applicaColpo(corazzato, { danni: [5], natura: 'Naturale', difesa: 'nessuna', proprieta: ['Sanguinante 2'], periodiciImmediati: [{ stato: 'sanguinamento', valore: 2 }] }, dati);
+  assert.deepEqual([fermo.immediate, fermo.pv.dopo], [[], 20]);
+  assert.ok(fermo.promemoria.some((p) => /A\.76/.test(p)));
+});

@@ -1835,6 +1835,9 @@
           "ferita_quando_azzera": false,
           "a_zero_pv": { "salvezza": "Tempra", "successo": "nessuna nuova Ferita", "fallimento": "1 Ferita diretta", "testo": "Già a 0 PV: PS di Tempra. Con successo nessuna nuova Ferita, con fallimento 1 Ferita diretta (§5.15)." },
           "non_si_somma": "si usa il valore più alto",
+          "richiede_penetrazione": true,
+          "iniziale_una_per_attacco": true,
+          "decisione": "A.76 (E&L del 05/10/2026): Sanguinante X causato da un attacco si applica se almeno 1 danno del colpo supera l’AR; prima il danno dell’attacco, poi subito X PV ignorando AR, Parata e Schivata, una sola volta per bersaglio per attacco anche con più colpi. Poi all’INI della fonte, al massimo una volta per Round (la perdita iniziale conta già per quel Round); fra più sanguinamenti il maggiore. A 0 PV per sanguinamento nessuna Ferita immediata; se già a 0 PV, PS Tempra. Esempio: 20 PV, 5 danni e Sanguinante 2 → 13 PV.",
           "fine": "solo quando viene fermato (Medicina §5.15, Incantesimi, Talenti)",
           "frasi": [
             "Alla prima applicazione il personaggio perde immediatamente X PV ignorando Armatura, Parata e Schivata; le applicazioni successive avvengono all’Iniziativa di chi lo ha procurato, al massimo una volta per Round.",
