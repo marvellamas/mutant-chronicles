@@ -1442,6 +1442,15 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
         persisti();
         renderScheda({ mantieniScorrimento: true });
       },
+      // tab Cibernetica, A.69 e A.70 (E&L del 05/10/2026): intervento su un impianto o Riabilitazione, con i crediti
+      cibernetica: (modifica, costo = 0, messaggio = null) => {
+        const { scelte, avvisi } = applicaModifica(stato.scelte, modifica, dati);
+        stato.scelte = scelte;
+        if (costo) stato.sessione = variaSessione(stato.sessione, 'crediti', -costo, massimi);
+        stato.messaggioScheda = avvisi.length ? { tipo: 'attenzione', testo: avvisi.join(' ') } : messaggio ? { tipo: 'ok', testo: messaggio } : null;
+        persisti();
+        renderScheda({ mantieniScorrimento: true });
+      },
       // tab Cibernetica: perdite annullate per errore e recuperi concessi dal Direttore (Giocatore §5.21)
       umanita: (blocco) => {
         stato.scelte = applicaModifica(stato.scelte, { umanita: blocco }, dati).scelte;

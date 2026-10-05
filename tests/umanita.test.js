@@ -213,3 +213,45 @@ test('§5.21, esempio del Doc del 02/10: UMN 8 al I Grado porta la capacità da 
   const art2 = JSON.parse(readFileSync(new URL('../data/equipaggiamento/artefatti.json', import.meta.url), 'utf8'));
   assert.match(art2.sintonizzazione.esempio_umanita, /da 8 a 4.*da 10 a 6.*13 \+ 2 − 10/);
 });
+
+// A.69, A.70 e A.92 (E&L del 05/10/2026): interventi sugli impianti e Riabilitazione
+test('A.69: preventivo degli interventi — clinica (tariffe 100% / 50%), personaggio (set chirurgico, esiti), tempi', async () => {
+  const { preventivoIntervento } = await import('../src/umanita.js');
+  const def = { installazione_costo: 2000 };
+  const ins = preventivoIntervento('installazione', def, { modo: 'clinica' }, dati);
+  assert.deepEqual([ins.ore, ins.costo, ins.completato, ins.statoDopo, ins.prova], [4, 2000, true, 'installato', null]);
+  const rim = preventivoIntervento('rimozione', def, { modo: 'clinica', chirurgiaPrecisa: true }, dati);
+  assert.deepEqual([rim.ore, rim.costo, rim.statoDopo], [1.6, 1000, 'zaino']);
+  const mag = preventivoIntervento('reinstallazione', def, { modo: 'personaggio', esito: 'magistrale', chirurgiaPrecisa: true }, dati);
+  assert.deepEqual([mag.ore, mag.costo, mag.completato, mag.prova], [2, 500, true, 'Medicina'], 'riduzioni sommate al massimo 50%');
+  const md = preventivoIntervento('rimozione', def, { modo: 'personaggio', esito: 'maldestro' }, dati);
+  assert.deepEqual([md.completato, md.ferita, md.statoDopo], [false, true, null]);
+});
+
+test('A.70/A.92: Riabilitazione solo dopo la rimozione, una volta per perdita, fino a 20; reinstallare riconsuma', async () => {
+  const { riabilitazione } = await import('../src/umanita.js');
+  const blocco = { perdite: [{ uid: 'i1', rif: null, nome: 'Interfaccia neurale', umn: 2 }], recuperi: [] };
+  const conStato = (stato, b = blocco) => umanita({ equipaggiamento: [{ uid: 'i1', rif: 'impianti:interfaccia-neurale', stato, quantita: 1, note: '' }], umanita: b }, dati);
+  // installato: nessun recupero possibile
+  assert.equal(riabilitazione(blocco, 'i1', { modo: 'clinica' }, conStato('installato'), dati), null);
+  // tolto: clinica +1 (1.000 cr), poi personaggio Magistrale +2 limitato a 1 (resta 1 recuperabile)
+  const u = conStato('zaino');
+  assert.deepEqual([u.valore, u.perdite[0].recuperabile], [18, 2]);
+  const r1 = riabilitazione(blocco, 'i1', { modo: 'clinica' }, u, dati);
+  assert.deepEqual([r1.punti, r1.costo, r1.giorni], [1, 1000, 7]);
+  const u1 = conStato('zaino', r1.blocco);
+  assert.deepEqual([u1.valore, u1.perdite[0].recuperabile], [19, 1]);
+  const r2 = riabilitazione(r1.blocco, 'i1', { modo: 'personaggio', esito: 'magistrale' }, u1, dati);
+  assert.deepEqual([r2.punti, r2.costo], [1, 500]);
+  const u2 = conStato('zaino', r2.blocco);
+  assert.deepEqual([u2.valore, u2.perdite[0].recuperabile], [20, 0]);
+  assert.equal(riabilitazione(r2.blocco, 'i1', { modo: 'clinica' }, u2, dati), null, 'una sola volta per perdita');
+  // reinstallato lo stesso esemplare: la perdita non si ripaga, i recuperi si riconsumano
+  const u3 = conStato('installato', r2.blocco);
+  assert.equal(u3.valore, 18);
+  assert.ok(u3.recuperi.every((x) => x.riconsumato));
+  // i recuperi registrati prima della procedura restano, con l'avviso A.111
+  const vecchio = umanita({ equipaggiamento: [], umanita: { perdite: [], recuperi: [{ punti: 1, nota: 'concesso' }] } }, dati);
+  assert.equal(vecchio.valore, 20);
+  assert.match(vecchio.avvisi[0], /A\.111/);
+});

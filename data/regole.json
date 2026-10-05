@@ -1636,6 +1636,26 @@
     "zero": {
       "risorse_interiori": false
     },
+    "riabilitazione": {
+      "decisione": "A.70 e A.92 (E&L del 05/10/2026): l’Umanità si recupera soltanto con una procedura prevista. Rimuovere un impianto rende recuperabile la perdita associata, senza restituirla; gli impianti installati mantengono il costo; ogni perdita si recupera una sola volta, fino a UMN 20. Riabilitazione dopo la rimozione di un impianto: Medico e struttura attrezzata, cicli di 7 giorni, uno alla volta per paziente; Chirurgia Precisa non li abbrevia; non fa ricrescere parti del corpo.",
+      "ciclo_giorni": 7,
+      "personaggio": {
+        "cr": 500,
+        "prova": "Medicina",
+        "esiti": {
+          "magistrale": 2,
+          "successo": 1,
+          "fallimento": 0,
+          "maldestro": 0
+        },
+        "ferita_con_maldestro": true
+      },
+      "clinica": {
+        "cr": 1000,
+        "punti": 1
+      },
+      "TODO(Davide)": "A.111: i recuperi registrati prima della procedura (concessi dal Direttore, senza una rimozione) restano nel calcolo con un avviso, senza modifiche automatiche: che cosa farne?"
+    },
     "frasi": [
       "Il valore va da 0 a 20; un essere umano non modificato parte normalmente da UMN 20.",
       "Si applica soltanto la fascia del valore attuale, senza sommare i modificatori delle fasce precedenti.",
@@ -1651,6 +1671,71 @@
   "impianti": {
     "paragrafo": "Equipaggiamento §7.1–7.10 (0.5, 01/10/2026)",
     "stato_installato": "installato",
+    "procedure": {
+      "decisione": "A.69 (E&L del 05/10/2026): il servizio acquistato presso una clinica idonea riesce automaticamente, senza Prova né tiro di rigetto; acquisto e installazione sono costi distinti; un impianto non installato non consuma UMN. Tempi per voce completa: installazione 4 ore, rimozione 2, reinstallazione 4, sostituzione 6; Chirurgia Precisa −20% del tempo. Intervento di un personaggio: almeno Medico I e una struttura attrezzata (una Postazione medica da campo per gli interventi compatibili; il Kit chirurgico da solo non basta), una sola Prova di Medicina, un set chirurgico da 500 cr consumato all’inizio di ogni tentativo. Magistrale: metà tempo (riduzioni sommate al massimo 50%); fallimento: intervento incompleto, situazione precedente conservata, tempo e materiali spesi, nessun costo UMN; Maldestro: inoltre peggiora uno Stato di Ferita. Postazioni: semiautomatica Medicina dell’operatore +3, automatiche VA 12/15/18, una sola Prova. Tariffe: installazione da catalogo, rimozione 50%, reinstallazione 100%. L’impianto rimosso resta nell’inventario e la rimozione non restituisce UMN; reinstallare lo stesso esemplare nello stesso soggetto non fa ripagare la perdita non recuperata, ma riconsuma gli UMN recuperati associati.",
+      "interventi": {
+        "installazione": {
+          "nome": "Installazione",
+          "ore": 4,
+          "tariffa": 1,
+          "stato_dopo": "installato"
+        },
+        "rimozione": {
+          "nome": "Rimozione",
+          "ore": 2,
+          "tariffa": 0.5,
+          "stato_dopo": "zaino"
+        },
+        "reinstallazione": {
+          "nome": "Reinstallazione",
+          "ore": 4,
+          "tariffa": 1,
+          "stato_dopo": "installato"
+        }
+      },
+      "sostituzione_ore": 6,
+      "chirurgia_precisa": {
+        "talento": "Chirurgia Precisa",
+        "riduzione": 0.2
+      },
+      "riduzione_massima": 0.5,
+      "personaggio": {
+        "requisiti": "Medico I e struttura attrezzata (o Postazione medica da campo per gli interventi compatibili)",
+        "prova": "Medicina",
+        "set_chirurgico_cr": 500
+      },
+      "esiti": {
+        "magistrale": {
+          "nome": "Magistrale",
+          "completato": true,
+          "riduzione": 0.5
+        },
+        "successo": {
+          "nome": "Successo",
+          "completato": true
+        },
+        "fallimento": {
+          "nome": "Fallimento",
+          "completato": false,
+          "testo": "Intervento incompleto: impianto recuperabile, situazione precedente conservata, tempo e materiali spesi; nessun costo UMN."
+        },
+        "maldestro": {
+          "nome": "Maldestro",
+          "completato": false,
+          "ferita": true,
+          "testo": "Come il fallimento, e peggiora di uno lo Stato di Ferita del paziente."
+        }
+      },
+      "postazioni": {
+        "semiautomatica_va": 3,
+        "automatiche_va": [
+          12,
+          15,
+          18
+        ],
+        "testo": "Postazione semiautomatica: Medicina dell’operatore +3, anche senza Medico; automatiche: VA 12/15/18, già con gli strumenti. Una sola Prova, senza sommare i due modi; l’operazione consuma una cartuccia chirurgica e un ciclo di funzionamento."
+      }
+    },
     "installazione": {
       "struttura": "struttura medica attrezzata",
       "prova": false,
@@ -1682,7 +1767,7 @@
       "I benefici tecnologici equivalenti sulla stessa Prova o sullo stesso danno non si sommano: si applica il maggiore, anche con elmetti ed esoscheletri.",
       "Gli impianti di questo catalogo non richiedono NEC, ricariche o conteggio dell’autonomia."
     ],
-    "_nota": "Impianti cibernetici (data/equipaggiamento/impianti.json): tipo «impianto», stato «installato» (effetti come un oggetto in uso) o «zaino» (posseduto). Installare e togliere sono cambi di stato fatti a mano (ipotesi H3, A.69); il costo d’installazione si paga a parte. Gli impianti installati non pesano nel carico (fanno parte del corpo). I chip contano solo con un Processore installato; un solo chip attivo: con più chip accesi l’app avvisa (ipotesi H7)."
+    "_nota": "Impianti cibernetici (data/equipaggiamento/impianti.json): tipo «impianto», stato «installato» (effetti come un oggetto in uso) o «zaino» (posseduto). Installare, rimuovere e reinstallare: procedure del blocco «procedure» (A.69, E&L del 05/10/2026), dalla tab Cibernetica con clinica o personaggio; il cambio di stato nell’Inventario resta possibile a mano. Gli impianti installati non pesano nel carico (fanno parte del corpo). I chip contano solo con un Processore installato; un solo chip attivo: con più chip accesi l’app avvisa (ipotesi H7)."
   },
   "ferite": {
     "stati": [

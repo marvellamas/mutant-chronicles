@@ -871,6 +871,20 @@ le altre si registrano lotto per lotto.
     `src/ui/crea-nemico.js`, `src/ui/preparazione.js`, `src/ui/nemici.js`, `tools/taratura_bestiario.mjs`,
     `docs/bestiario/bestiario.md` e `.html` (§1.2, §1.7, §2.1, §2.3–§2.5, §3.1, §4.1–§4.4, cap. 5–6, nota in Appendice A).
 
+109. **Impianti: installare, rimuovere e reinstallare** (A.69). Clinica: riesce sempre, tariffa del catalogo
+    (installazione e reinstallazione 100%, rimozione 50%). Personaggio: Medico I e struttura, una Prova di Medicina, set
+    chirurgico da 500 cr per tentativo; Magistrale metà tempo, fallimento incompleto senza costo UMN, Maldestro peggiora
+    una Ferita. Tempi 4/2/4 ore (sostituzione 6), Chirurgia Precisa −20%, riduzioni al massimo 50%. L'impianto rimosso
+    resta nell'inventario e la perdita resta; reinstallare lo stesso esemplare non la fa ripagare e riconsuma gli UMN
+    recuperati. → `regole.json` → `impianti.procedure`, `src/umanita.js` → `preventivoIntervento`, tab Cibernetica
+    («Rimozione» sugli impianti installati, «Installazione»/«Reinstallazione» su quelli nell'inventario, con i crediti).
+110. **Recupero dell'Umanità** (A.70 e A.92). Solo con la Riabilitazione dopo la rimozione di un impianto: cicli di 7
+    giorni; personaggio 500 cr e Prova di Medicina (Magistrale +2, successo +1, altrimenti 0, Maldestro peggiora una
+    Ferita); clinica 1.000 cr per +1; ogni perdita una sola volta, fino a UMN 20. → `regole.json` →
+    `umanita.riabilitazione`, `src/umanita.js` → `riabilitazione` (recuperi legati alla perdita, `uid` e `procedura`),
+    tab Cibernetica («Riabilitazione» sulle perdite recuperabili; tolto il recupero libero). I recuperi registrati prima,
+    senza rimozione, restano nel calcolo con un avviso, senza modifiche automatiche: `TODO(Davide)` A.111.
+
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 
 Il Manuale dei Veicoli 0.2 è completo di numeri e il lotto 2 (dati e motore) non ha dovuto inventare nulla. Restano

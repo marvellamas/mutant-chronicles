@@ -34,7 +34,7 @@ import { nomeRiserva, nomeAlimentazione } from '../fonti.js';
 import { tabCalendario, pannelloAttivazione, pannelloImportaCalendario, pulsanteImportaCalendario } from './calendario.js';
 import { conOrdinale } from '../lingua.js';
 import { regoleRiparazione, esitoRiparazione, vaRiparazione, riparabile } from '../riparazione.js';
-import { annullaPerdita, aggiungiRecupero, togliRecupero } from '../umanita.js';
+import { annullaPerdita, togliRecupero, preventivoIntervento, riabilitazione } from '../umanita.js';
 import { impiantiAttivabili, cartucceDi, impostaCartucce, somministra, statoProcessore, attivaChip, terminaChip, nuovoIntervalloChip } from '../impianti.js';
 import { tabVeicoli, promemoriaConducente } from './veicoli.js';
 
@@ -2017,33 +2017,74 @@ function tabCibernetica(ctx) {
       scartati.length ? h('p', { class: 'nota' }, `Non si somma con un beneficio equivalente già attivo (§7.1, «Cumulo»): ${scartati.map((e) => testoEffettoOggetto(e)).join('; ')}.`) : null,
       def?.innesto === 'interfaccia_neurale' ? h('p', { class: 'nota' }, 'Le armi e i dispositivi con SIN in mano ricevono il bonus indicato dalla loro scheda (tab Combattimento).') : null,
       attivabile(ctx, attivabili.find((x) => x.uid === r.uid) ?? null, mieiChip),
-      h('p', { class: 'nota' }, [pi !== null ? `PI ${pi} / ${piMax} (Ripara nell’Inventario)` : null, def?.installazione_costo ? `installazione ${def.installazione_costo.toLocaleString('it-IT')} cr` : null].filter(Boolean).join(' · ')));
+      h('p', { class: 'nota' }, [pi !== null ? `PI ${pi} / ${piMax} (Ripara nell’Inventario)` : null, def?.installazione_costo ? `installazione ${def.installazione_costo.toLocaleString('it-IT')} cr` : null].filter(Boolean).join(' · ')),
+      pulsanteIntervento(r, 'rimozione'));
   };
+
+  // A.69 (E&L del 05/10/2026): installare, rimuovere e reinstallare con clinica o personaggio (regole.json → impianti.procedure)
+  const P = ctx.dati.regole.impianti?.procedure;
+  const ui = (ctx.ui.intervento ??= {});
+  const pulsanteIntervento = (r, tipo) => (P ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { ctx.ui.intervento = ui.uid === r.uid && ui.tipo === tipo ? {} : { uid: r.uid, tipo, modo: 'clinica', esito: 'successo', cp: false }; ctx.azioni.ridisegna(); } }, P.interventi[tipo].nome) : null);
+  const pannelloIntervento = () => {
+    if (!ui.uid || !P) return null;
+    const r = voci.find((x) => x.uid === ui.uid);
+    if (!r) return null;
+    const pr = preventivoIntervento(ui.tipo, r.def, { modo: ui.modo, esito: ui.esito, chirurgiaPrecisa: ui.cp }, ctx.dati);
+    const imposta = (k, v) => { ui[k] = v; ctx.azioni.ridisegna(); };
+    const applica = () => {
+      const voci = pr.completato ? ctx.scelte.equipaggiamento.map((v) => (v.uid === r.uid ? { ...v, stato: pr.statoDopo } : v)) : ctx.scelte.equipaggiamento;
+      ctx.ui.intervento = {};
+      ctx.azioni.cibernetica({ equipaggiamento: voci }, pr.costo, `${pr.nome} di ${r.nome}: ${pr.completato ? 'completata' : 'non riuscita'} (${pr.ore} ore, ${pr.costo.toLocaleString('it-IT')} cr)${pr.ferita ? '; peggiora di uno lo Stato di Ferita del paziente' : ''}.`);
+    };
+    return h('section', { class: 'riquadro pannello-veicolo pannello-intervento' },
+      h('h3', {}, `${pr.nome}: ${r.nome}`),
+      rigaScelte('Chi opera', [{ valore: 'clinica', etichetta: 'Clinica', riga: 'riesce sempre' }, { valore: 'personaggio', etichetta: 'Personaggio', riga: `${P.personaggio.prova}, set ${P.personaggio.set_chirurgico_cr} cr` }], ui.modo, (v) => imposta('modo', v)),
+      ui.modo === 'personaggio' ? [h('p', { class: 'nota' }, `Requisiti: ${P.personaggio.requisiti}. ${P.postazioni.testo}`),
+        rigaScelte(`Esito della Prova di ${P.personaggio.prova}`, Object.entries(P.esiti).map(([id, e]) => ({ valore: id, etichetta: e.nome })), ui.esito, (v) => imposta('esito', v))] : null,
+      h('label', { class: 'casella-veicolo' }, h('input', { type: 'checkbox', checked: ui.cp, onchange: (e) => imposta('cp', e.target.checked) }), ` ${P.chirurgia_precisa.talento} (−${Math.round(P.chirurgia_precisa.riduzione * 100)}% del tempo)`),
+      h('ul', {}, h('li', {}, `Tempo: ${String(pr.ore).replace('.', ',')} ore`),
+        h('li', {}, 'Costo: ', pr.tariffa === null ? 'tariffa da definire (manca l’installazione nel catalogo)' : `${pr.costo.toLocaleString('it-IT')} cr${pr.materiali ? ` (set chirurgico ${pr.materiali} cr)` : ''}`),
+        pr.testo ? h('li', {}, pr.testo) : null,
+        h('li', { class: 'nota' }, ui.tipo === 'rimozione' ? 'La rimozione non restituisce UMN: rende recuperabile la perdita con la Riabilitazione (A.70).' : 'Reinstallare lo stesso esemplare non fa ripagare la perdita non recuperata; gli UMN già recuperati per questo impianto si riconsumano (A.69).')),
+      h('p', { class: 'riga-azioni' }, h('button', { type: 'button', class: 'btn primario', onclick: applica }, 'Applica e paga'),
+        h('button', { type: 'button', class: 'btn', onclick: () => { ctx.ui.intervento = {}; ctx.azioni.ridisegna(); } }, 'Chiudi')));
+  };
+  // impianti nell'inventario non installati: installare o reinstallare (stesso esemplare con una perdita registrata)
+  const fermi = voci.filter((r) => r.tipo === 'impianto' && r.voce.stato !== (ctx.dati.regole.impianti?.stato_installato ?? 'installato') && !r.deposito);
+  const nonInstallati = fermi.length ? h('ul', { class: 'impianti-fermi' }, fermi.map((r) => {
+    const gia = u.perdite.some((p) => p.uid === r.uid);
+    return h('li', {}, h('strong', {}, r.nome), gia ? ' · già installato prima: la perdita resta registrata' : ` · UMN ${r.def?.umn ?? 0} all’installazione`, ' ', pulsanteIntervento(r, gia ? 'reinstallazione' : 'installazione'));
+  })) : null;
 
   // perdite registrate (restano anche se l'impianto si toglie) e recuperi concessi dal Direttore
   const blocco = ctx.scelte.umanita ?? null;
   const NOTE_PERDITA = { installato: 'installato', tolto: 'tolto: la perdita resta', assente: 'non più nell’inventario: la perdita resta' };
+  const RB = ctx.dati.regole.umanita?.riabilitazione;
+  const ria = (ctx.ui.riabilitazione ??= {});
+  const pannelloRiabilitazione = (p) => {
+    if (ria.uid !== p.uid || !RB) return null;
+    const esito = riabilitazione(blocco, p.uid, { modo: ria.modo ?? 'clinica', esito: ria.esito ?? 'successo' }, u, ctx.dati);
+    const imposta = (k, v) => { ria[k] = v; ctx.azioni.ridisegna(); };
+    return h('div', { class: 'riquadro pannello-intervento' },
+      rigaScelte('Riabilitazione (ciclo di 7 giorni)', [{ valore: 'clinica', etichetta: 'Clinica', riga: `${RB.clinica.cr.toLocaleString('it-IT')} cr, +${RB.clinica.punti}` }, { valore: 'personaggio', etichetta: 'Personaggio', riga: `${RB.personaggio.cr} cr e ${RB.personaggio.prova}` }], ria.modo ?? 'clinica', (v) => imposta('modo', v)),
+      (ria.modo ?? 'clinica') === 'personaggio' ? rigaScelte(`Esito della Prova di ${RB.personaggio.prova}`, Object.entries(RB.personaggio.esiti).map(([id, n]) => ({ valore: id, etichetta: id[0].toUpperCase() + id.slice(1), riga: `+${n}` })), ria.esito ?? 'successo', (v) => imposta('esito', v)) : null,
+      h('p', {}, `Recupero: +${esito.punti} UMN (recuperabili ${p.recuperabile}), ${esito.costo.toLocaleString('it-IT')} cr, ${esito.giorni} giorni${esito.ferita ? '; Maldestro: peggiora di uno lo Stato di Ferita' : ''}.`),
+      h('p', { class: 'riga-azioni' }, h('button', { type: 'button', class: 'btn primario', onclick: () => { ctx.ui.riabilitazione = {}; ctx.azioni.cibernetica({ umanita: esito.blocco }, esito.costo, `Riabilitazione per ${p.nome}: +${esito.punti} UMN.`); } }, 'Applica e paga'),
+        h('button', { type: 'button', class: 'btn', onclick: () => { ctx.ui.riabilitazione = {}; ctx.azioni.ridisegna(); } }, 'Chiudi')));
+  };
   const perdite = u.perdite.length ? h('ul', { class: 'perdite-umanita' }, u.perdite.map((p) => h('li', {},
-    h('strong', {}, `−${p.umn}`), ` ${p.nome} · ${NOTE_PERDITA[p.stato]}`,
+    h('strong', {}, `−${p.umn}`), ` ${p.nome} · ${NOTE_PERDITA[p.stato]}`, p.recuperato ? ` · recuperati ${p.recuperato}` : '',
+    p.recuperabile > 0 && RB ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { ctx.ui.riabilitazione = ria.uid === p.uid ? {} : { uid: p.uid }; ctx.azioni.ridisegna(); } }, 'Riabilitazione') : null,
+    pannelloRiabilitazione(p),
     p.stato !== 'installato' ? h('button', {
       type: 'button', class: 'btn btn-piccolo', title: 'Solo per un impianto segnato «Installato» per errore: §7.1, la rimozione non restituisce Umanità.',
       onclick: () => { if (confirm(`Annullare la perdita di ${p.umn} UMN per «${p.nome}»? Solo se l’impianto era stato segnato installato per errore.`)) ctx.azioni.umanita(annullaPerdita(blocco, p.uid)); },
     }, 'Annulla (errore)') : null))) : h('p', { class: 'vuoto' }, 'Nessuna perdita registrata.');
   const recuperi = h('div', { class: 'recuperi-umanita' },
-    u.recuperi.length ? h('ul', {}, u.recuperi.map((x, i) => h('li', {}, h('strong', {}, `+${x.punti}`), x.nota ? ` ${x.nota}` : ' recupero concesso dal Direttore',
-      h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => ctx.azioni.umanita(togliRecupero(blocco, i)) }, 'Togli')))) : null,
-    h('form', {
-      class: 'riga-recupero', onsubmit: (e) => {
-        e.preventDefault();
-        const f = e.target;
-        const punti = Number(f.punti.value);
-        if (Number.isInteger(punti) && punti > 0) ctx.azioni.umanita(aggiungiRecupero(blocco, punti, f.nota.value));
-      },
-    },
-    h('label', {}, 'Punti ', h('input', { name: 'punti', type: 'number', min: 1, max: u.massimo, step: 1, required: true, inputmode: 'numeric' })),
-    h('label', {}, 'Nota ', h('input', { name: 'nota', type: 'text', maxlength: 80, placeholder: 'procedura, sessione…' })),
-    h('button', { type: 'submit', class: 'btn' }, 'Registra')),
-    h('p', { class: 'nota' }, 'Il manuale non descrive ancora procedure di recupero (§5.21): si registra solo un recupero concesso dal Direttore.'));
+    u.avvisi?.length ? h('p', { class: 'riquadro attenzione' }, u.avvisi.join(' ')) : null,
+    u.recuperi.length ? h('ul', {}, u.recuperi.map((x, i) => h('li', {}, h('strong', {}, `+${x.punti}`), x.legacy ? ` ${x.nota || 'recupero concesso dal Direttore'} (prima della procedura, A.111)` : ` Riabilitazione (${x.nota})${x.riconsumato ? ': riconsumato, impianto reinstallato (A.69)' : ''}`,
+      h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Toglie il recupero registrato per errore', onclick: () => ctx.azioni.umanita(togliRecupero(blocco, i)) }, 'Togli')))) : null,
+    h('p', { class: 'nota' }, 'L’Umanità si recupera soltanto con la Riabilitazione, dopo la rimozione di un impianto: una volta per perdita, fino a UMN 20 (A.70, A.92).'));
 
   return [
     testa,
@@ -2051,6 +2092,8 @@ function tabCibernetica(ctx) {
     installati.length
       ? famiglie.map((f) => sezione(f, h('div', { class: 'armi-tab' }, installati.filter((r) => (r.def?.famiglia ?? 'Impianti personalizzati') === f).map(schedaImpianto))))
       : sezione('Impianti installati', h('p', { class: 'vuoto' }, 'Nessun impianto installato.')),
+    pannelloIntervento(),
+    nonInstallati ? sezione('Impianti nell’inventario, non installati', nonInstallati) : null,
     sezione('Perdite e recuperi di Umanità', perdite, recuperi),
   ];
 }
