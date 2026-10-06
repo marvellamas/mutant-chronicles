@@ -19,6 +19,7 @@ import { tira } from '../tiri.js';
 import { dadoIniziativa } from '../scontro.js';
 import { elencoScene, leggiScena, salvaScena } from './mappa/api.js';
 import { nuovaScena, idScena, scenaDellaBozza, collegaABozza } from '../mappa/scena.js';
+import { chiediTesto, chiedi } from './finestrella.js';
 import {
   nuovaBozza, aggiungiVoce, cambiaVoce, togliVoce, cambiaBozza, duplicaBozza, eliminaBozza, iniziaBozza, pgDellaBozza, STATO_BOZZA,
 } from '../preparazione.js';
@@ -142,7 +143,7 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
   const elimina = async (id) => {
     try {
       const b = await leggiScontro(id);
-      if (!confirm(`Eliminare la bozza «${b.nome}»? Il file passa in scontri/archivio/.`)) return;
+      if (!(await chiedi({ titolo: `Eliminare la bozza «${b.nome}»?`, testo: 'Il file passa in scontri/archivio/.', si: 'Elimina', pericolo: true }))) return;
       const r = await salvaScontro(eliminaBozza(b));
       if (r.scontro) avviso(`Bozza «${b.nome}» eliminata (in scontri/archivio/).`);
       if (st.bozza?.id === id) st.bozza = null;
@@ -249,7 +250,7 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
     try {
       let id = st.scenaScelta;
       if (!id) {
-        const nome = prompt('Nome della nuova scena:', b.nome)?.trim();
+        const nome = await chiediTesto({ titolo: 'Nuova scena per questa bozza', etichetta: 'Nome della scena', valore: b.nome, conferma: 'Crea e apri' });
         if (!nome) return;
         const r = await salvaScena(collegaABozza(nuovaScena({ id: idScena(nome), nome: nome.slice(0, 120), dati }), b.id));
         if (r.conflitto) throw new Error('una scena con questo nome esiste già: riprova');
@@ -257,7 +258,7 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
       } else {
         const s = await leggiScena(id);
         const c = s.collegamento ?? {};
-        if ((c.scontro || c.bozza) && c.bozza !== b.id && !confirm(`La scena «${s.nome}» è collegata a ${c.scontro ? 'uno scontro' : 'un’altra bozza'}: collegarla a «${b.nome}»? I token di chi non è in questa bozza verranno tolti, con conferma.`)) return;
+        if ((c.scontro || c.bozza) && c.bozza !== b.id && !(await chiedi({ titolo: `Collegare «${s.nome}» a «${b.nome}»?`, testo: `La scena è collegata a ${c.scontro ? 'uno scontro' : 'un’altra bozza'}. I token di chi non è in questa bozza verranno tolti, con conferma.`, si: 'Collega' }))) return;
         if (c.bozza !== b.id || c.scontro) {
           const r = await salvaScena(collegaABozza(s, b.id));
           if (r.conflitto) throw new Error('la scena è stata cambiata in un’altra finestra: riprova');

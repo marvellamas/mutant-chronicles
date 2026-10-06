@@ -5,6 +5,7 @@ import { h } from '../dom.js';
 import { avviso, avvisoErrore } from '../avvisi.js';
 import { nuovaScena, idScena, duplicaScena } from '../../mappa/scena.js';
 import { elencoScene, leggiScena, salvaScena } from './api.js';
+import { chiediTesto, chiedi } from '../finestrella.js';
 
 const ID_PANNELLO = 'plancia-scene-mappa';
 
@@ -59,39 +60,37 @@ async function salvaOAvvisa(s, cosa) {
   return esito.scena;
 }
 
-const chiediNome = (testo, attuale) => {
-  const n = prompt(testo, attuale)?.trim();
-  return n ? n.slice(0, 120) : null;
-};
+/** Nome con una finestrella dentro la pagina (non prompt del browser: tablet e prove). */
+const chiediNome = async (titolo, attuale, conferma = 'OK') => (await chiediTesto({ titolo, etichetta: 'Nome', valore: attuale, conferma }))?.slice(0, 120) ?? null;
 
 export function pannelloScene(ctx, st, { ridisegna, apri }) {
   const azioni = {
-    nuova: () => {
-      const nome = chiediNome('Nome della nuova scena (per esempio «Cripta di Mishima»):', '');
+    nuova: async () => {
+      const nome = await chiediNome('Nuova scena (per esempio «Cripta di Mishima»)', '', 'Crea');
       if (!nome) return;
       operazione(st, ridisegna, async () => {
         const s = await salvaOAvvisa(nuovaScena({ id: idScena(nome), nome, dati: ctx.dati }), 'Nuova scena');
         if (s) { avviso(`Scena creata: ${s.nome}.`); apri(s.id); }
       });
     },
-    rinomina: (v) => {
-      const nome = chiediNome('Nuovo nome della scena:', v.nome);
+    rinomina: async (v) => {
+      const nome = await chiediNome('Rinomina la scena', v.nome, 'Rinomina');
       if (!nome || nome === v.nome) return;
       operazione(st, ridisegna, async () => {
         const s = await salvaOAvvisa({ ...(await leggiScena(v.id)), nome }, 'Rinomina');
         if (s) avviso(`Scena rinominata: ${s.nome}.`);
       });
     },
-    duplica: (v) => {
-      const nome = chiediNome('Nome della copia:', `${v.nome} (copia)`);
+    duplica: async (v) => {
+      const nome = await chiediNome('Nome della copia', `${v.nome} (copia)`, 'Duplica');
       if (!nome) return;
       operazione(st, ridisegna, async () => {
         const s = await salvaOAvvisa(duplicaScena(await leggiScena(v.id), { id: idScena(nome), nome }), 'Duplica');
         if (s) avviso(`Scena duplicata: ${s.nome}.`);
       });
     },
-    archivia: (v) => {
-      if (!confirm(`Archiviare «${v.nome}»? Esce dall’elenco ma non si cancella: il file passa in scene/archivio/ sul PC del master.`)) return;
+    archivia: async (v) => {
+      if (!(await chiedi({ titolo: `Archiviare «${v.nome}»?`, testo: 'Esce dall’elenco ma non si cancella: il file passa in scene/archivio/ sul PC del master.', si: 'Archivia' }))) return;
       operazione(st, ridisegna, async () => {
         const s = await salvaOAvvisa({ ...(await leggiScena(v.id)), archiviata: true }, 'Archivia');
         if (s) avviso(`Scena archiviata: ${s.nome} (scene/archivio/).`);

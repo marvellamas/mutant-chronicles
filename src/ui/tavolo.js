@@ -35,6 +35,7 @@ import { statoScene, pannelloScene, apriElencoScene } from './mappa/scene.js';
 import { mostraCarta } from './mappa/canale.js';
 import { cartaDallaMappa, arrivoDallaMappa, tornaAllaMappa } from './ritorno.js';
 import { scegliImmagineNemico, impostaImmagineNemico } from './immagine-nemico.js';
+import { chiediTesto, chiedi } from './finestrella.js';
 
 const INTERVALLO_MS = 3000;
 /** Carta con la chiave del suo token (data-pezzo): la mappa di battaglia la cerca al clic sul token (src/ui/mappa/canale.js). */
@@ -249,7 +250,7 @@ export function renderTavolo(radice, ctx) {
   // «Termina le durate»: chiude le Tecniche in corso di tutti i PG al tavolo (durate rimaste dopo uno scontro)
   const terminaTutte = async (pgConDurate) => {
     const nomi = [...pgConDurate.map((v) => v.nome), ...((stato.scontro?.effetti ?? []).length ? ['nemici nello scontro'] : [])];
-    if (!confirm(`Terminare tutte le durate in corso (${nomi.join(', ')})?`)) return;
+    if (!(await chiedi({ titolo: 'Terminare tutte le durate in corso?', testo: nomi.join(', '), si: 'Termina' }))) return;
     for (const v of pgConDurate) await aggiornaPg(v.chiaveCartella, terminaDurate);
     // incantesimi dei nemici nello scontro
     if ((stato.scontro?.effetti ?? []).length) await modifica((x) => registraRiga({ ...x, effetti: [] }, 'Durate degli incantesimi dei nemici terminate dal master.'));
@@ -620,7 +621,7 @@ export function renderTavolo(radice, ctx) {
   // §5.15: arrestare il Sanguinamento (Medicina, un Incantesimo, un antidoto, spegnere le fiamme) fa finire
   // lo Stato: si toglie anche dalla scheda del PG o dalla carta del nemico, non solo la perdita
   const fermaPeriodico = async (p) => {
-    if (!confirm(`${nomeStatoPlancia(p.stato)} di ${p.nome}: fermato? Non toglierà più PV a ogni Round e lo Stato si toglie.`)) return;
+    if (!(await chiedi({ titolo: `${nomeStatoPlancia(p.stato)} di ${p.nome}: fermato?`, testo: 'Non toglierà più PV a ogni Round e lo Stato si toglie.', si: 'Fermato' }))) return;
     await modifica((x) => {
       const t = togliPeriodici(x, p.bersaglio, [p.stato], undefined, ctx.dati);
       return p.tipo === 'nemico' ? cambiaStatoNemico(t, p.bersaglio, ctx.dati.regole.stati.elenco.find((s) => s.id === p.stato), false) : t;
@@ -632,14 +633,14 @@ export function renderTavolo(radice, ctx) {
   const registraAMano = async (d) => {
     const per = periodicoDi(d.stato, ctx.dati);
     const atteso = per.danno === 'valore' ? 'quanti PV per Round (per esempio 1)' : `quanti PV per Round, o una formula (per esempio ${per.danno === 'dalla_fonte' ? '1d4' : per.danno})`;
-    const scritto = (prompt(`${d.nomeStato} di ${d.nome}: ${atteso}?`, per.danno === 'valore' ? '1' : per.danno === 'dalla_fonte' ? '1d4' : per.danno) ?? '').trim();
+    const scritto = (await chiediTesto({ titolo: `${d.nomeStato} di ${d.nome}`, etichetta: `${atteso[0].toUpperCase()}${atteso.slice(1)}`, valore: per.danno === 'valore' ? '1' : per.danno === 'dalla_fonte' ? '1d4' : per.danno, massimo: 20 })) ?? '';
     if (!scritto) return;
     const numero = Number(scritto);
     const valore = Number.isInteger(numero) && numero > 0 ? numero : null;
     const formula = valore === null && /^\d+d\d+([+-]\d+)?$/.test(scritto) ? scritto : null;
     if (valore === null && !formula) { avvisoErrore(`«${scritto}» non è un numero di PV né una formula come «1d4».`); return; }
     const t = diTurno(stato.scontro);
-    const fonte = t && confirm(`La fonte è ${t.nome} (di turno)? La perdita si applicherà alla sua Iniziativa. Annulla per metterla alla fine del Round.`) ? t.id : null;
+    const fonte = t && (await chiedi({ titolo: `La fonte è ${t.nome} (di turno)?`, testo: 'Sì: la perdita si applica alla sua Iniziativa. No: alla fine del Round.', si: `Sì, ${t.nome}`, no: 'No, a fine Round' })) ? t.id : null;
     await modifica((x) => registraPeriodico(x, { ...d, ...(valore ? { valore } : {}), ...(formula ? { formula } : {}), fonte, fonteNome: nomePartecipante(x, fonte) }, undefined, ctx.dati));
   };
   /**

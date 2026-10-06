@@ -27,7 +27,7 @@ import { DISPOSIZIONI, NOMI_DISPOSIZIONI, prossimaDisposizione, normalizzaDispos
 import { barraIniziativa } from '../../mappa/iniziativa.js';
 import { barraIniziativaEl, stileBordo } from './barra-iniziativa.js';
 import { bordoToken, assegnaColori, cambiaColore, tavolozzaPer, famiglia } from '../../mappa/colori.js';
-import { scegliColore } from '../finestrella.js';
+import { scegliColore, chiedi } from '../finestrella.js';
 import { calibraDaQuadretto, applicaGriglia, dimensioniMappa, lineeVisibili, testoScala } from '../../mappa/griglia.js';
 import { creaTela } from './canvas.js';
 import { leggiScena, salvaScena, caricaImmagine, controllaFile, preparaRidotta } from './api.js';
@@ -465,9 +465,9 @@ export function renderMappa(radice, ctx) {
     aggiornaBarra();
   }
 
-  function bloccaGriglia() {
+  async function bloccaGriglia() {
     const g = st.scena.griglia;
-    if (g.bloccata && !confirm('Sbloccare la griglia? Cambiando dimensione o scostamento, nebbia, muri e token disegnati finora potrebbero non combaciare più con l’immagine.')) return;
+    if (g.bloccata && !(await chiedi({ titolo: 'Sbloccare la griglia?', testo: 'Cambiando dimensione o scostamento, nebbia, muri e token disegnati finora potrebbero non combaciare più con l’immagine.', si: 'Sblocca' }))) return;
     if (cambiaGriglia({ bloccata: !g.bloccata })) avviso(g.bloccata ? 'Griglia sbloccata.' : 'Griglia bloccata.');
   }
 
@@ -512,7 +512,7 @@ export function renderMappa(radice, ctx) {
         const orfani = tokenOrfani(st.scena, st.pezzi);
         const cambio = st.collegamentoPrecedente;
         st.collegamentoPrecedente = null;
-        if (orfani.length && cambio && !confirm(`Con il nuovo collegamento ${orfani.length} token non hanno più un partecipante e verranno tolti dalla mappa (${orfani.map((t) => prima.get(chiaveRif(t.rif))?.nome ?? t.id).join(', ')}). Procedere? «Annulla» torna al collegamento di prima.`)) {
+        if (orfani.length && cambio && !(await chiedi({ titolo: 'Cambiare collegamento?', testo: `Con il nuovo collegamento ${orfani.length} token non hanno più un partecipante e verranno tolti dalla mappa (${orfani.map((t) => prima.get(chiaveRif(t.rif))?.nome ?? t.id).join(', ')}).`, si: 'Procedi', no: 'Torna al collegamento di prima' }))) {
           // si torna indietro: collegamento di prima, token intatti, nuova lettura
           st.scena = { ...st.scena, collegamento: cambio };
           st.fonti = null;
@@ -820,8 +820,10 @@ export function renderMappa(radice, ctx) {
     disegnaPannelli();
     ridisegna(['aree', 'sopra']);
   }
-  function tuttaUi(modo) {
-    if (!confirm(modo === 'copri' ? 'Coprire di nebbia tutta la mappa? I giocatori non vedranno più nulla (Ctrl+Z annulla).' : 'Rivelare tutta la mappa ai giocatori? (Ctrl+Z annulla)')) return;
+  async function tuttaUi(modo) {
+    if (!(await chiedi(modo === 'copri'
+      ? { titolo: 'Coprire tutta la mappa?', testo: 'I giocatori non vedranno più nulla (Ctrl+Z annulla).', si: 'Copri tutto' }
+      : { titolo: 'Rivelare tutta la mappa?', testo: 'I giocatori vedranno tutto (Ctrl+Z annulla).', si: 'Rivela tutto' }))) return;
     st.scena = tuttaNebbia(st.scena, modo, ctx.dati);
     dopoDisegno();
   }
