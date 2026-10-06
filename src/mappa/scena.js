@@ -75,6 +75,15 @@ export function nuovaScena({ id, nome, mappa = null, griglia = {}, colonne, righ
  */
 export const scenaDellaBozza = (elenco, idBozza) => elenco.find((v) => v.collegamento?.bozza === idBozza)?.id ?? null;
 
+/**
+ * Le scene da ricollegare quando la bozza `idBozza` diventa lo scontro `idScontro` («Inizia», difetto 5 del collaudo
+ * del lotto 7): gli id dei riassunti (GET /api/scene) collegati a quella bozza.
+ */
+export const sceneDellaBozza = (elenco, idBozza) => elenco.filter((v) => v.collegamento?.bozza === idBozza && !v.collegamento?.scontro).map((v) => v.id);
+
+/** La scena collegata allo scontro `idScontro` (i token preparati sulla bozza restano: gli id coincidono). */
+export const collegaAScontro = (s, idScontro) => ({ ...s, collegamento: { scontro: idScontro, bozza: null } });
+
 /** La scena collegata alla bozza `idBozza` (al posto di qualunque collegamento di prima). */
 export const collegaABozza = (s, idBozza) => ({ ...s, collegamento: { scontro: null, bozza: idBozza } });
 

@@ -18,7 +18,7 @@ import { vistaPlancia } from '../tavolo.js';
 import { tira } from '../tiri.js';
 import { dadoIniziativa } from '../scontro.js';
 import { elencoScene, leggiScena, salvaScena } from './mappa/api.js';
-import { nuovaScena, idScena, scenaDellaBozza, collegaABozza } from '../mappa/scena.js';
+import { nuovaScena, idScena, scenaDellaBozza, collegaABozza, sceneDellaBozza, collegaAScontro } from '../mappa/scena.js';
 import { chiediTesto, chiedi } from './finestrella.js';
 import {
   nuovaBozza, aggiungiVoce, cambiaVoce, togliVoce, cambiaBozza, duplicaBozza, eliminaBozza, iniziaBozza, pgDellaBozza, STATO_BOZZA,
@@ -269,6 +269,23 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
       ctx.azioni.mappa?.(id);
     } catch (e) { avvisoErrore(`Mappa non preparata: ${e.message}`); }
   };
+  /** Scene collegate alla bozza → collegate allo scontro nuovo (con avviso); la pagina della mappa aperta lo sa subito. */
+  const ricollegaScene = async (b, scontro) => {
+    let ids = [];
+    try { ids = sceneDellaBozza(await elencoScene(), b.id); } catch { return; }
+    const fatte = [];
+    for (const id of ids) {
+      try {
+        for (let i = 0; i < 2; i++) {
+          const r = await salvaScena(collegaAScontro(await leggiScena(id), scontro.id));
+          if (!r.conflitto) { fatte.push(r.scena); break; }
+        }
+      } catch (e) { avvisoErrore(`Scena ${id} non ricollegata allo scontro: ${e.message}`); }
+    }
+    if (!fatte.length) return;
+    avviso(`${fatte.length === 1 ? 'La scena' : 'Le scene'} ${fatte.map((s) => `«${s.nome}»`).join(', ')} della bozza ${fatte.length === 1 ? 'è collegata' : 'sono collegate'} allo scontro appena aperto.`, { durata: 8000 });
+    window.dispatchEvent(new CustomEvent('mutant:scene-ricollegate', { detail: fatte.map((s) => ({ id: s.id, collegamento: s.collegamento, revisione: s.revisione, aggiornato: s.aggiornato })) }));
+  };
   const salvaEChiudi = async () => {
     await coda;
     avviso(`Bozza «${st.bozza?.nome ?? ''}» salvata${st.salvataAlle ? ` alle ${ora(st.salvataAlle)}` : ''}.`);
@@ -365,6 +382,8 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
       try { await salvaScontro(eliminaBozza(b)); } catch (e) { avvisoErrore(`Scontro iniziato, ma la bozza non è stata archiviata: ${e.message}`); }
     }
     avviso(`«${b.nome}» iniziato: Iniziativa tirata, Round 1.${consuma ? ' Bozza archiviata.' : ' La bozza resta.'}`);
+    // difetto 5 del collaudo del lotto 7: le scene della bozza passano da sole allo scontro appena aperto
+    await ricollegaScene(b, scontro);
     finestra.close();
   };
 

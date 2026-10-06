@@ -164,3 +164,15 @@ test('riadattaCentro: finestra più stretta, stesso centro e zoom in proporzione
   assert.equal(riadattaCentro({ ...cam, scala: V.zoom_min }, prima, dopo, V).scala, V.zoom_min);
   assert.equal(riadattaCentro(cam, { larghezza: 0, altezza: 0 }, dopo, V), cam);
 });
+
+test('«Inizia»: le scene collegate alla bozza passano allo scontro nuovo', async () => {
+  const { sceneDellaBozza, collegaAScontro } = await import('../src/mappa/scena.js');
+  const elenco = [
+    { id: 'a', collegamento: { scontro: null, bozza: 'bozza-1' } },
+    { id: 'b', collegamento: { scontro: 'scontro-x', bozza: null } },
+    { id: 'c', collegamento: { scontro: null, bozza: 'bozza-2' } },
+    { id: 'd', collegamento: { scontro: null, bozza: 'bozza-1' } },
+  ];
+  assert.deepEqual(sceneDellaBozza(elenco, 'bozza-1'), ['a', 'd']);
+  assert.deepEqual(collegaAScontro({ id: 'a', collegamento: { scontro: null, bozza: 'bozza-1' } }, 'scontro-nuovo').collegamento, { scontro: 'scontro-nuovo', bozza: null });
+});

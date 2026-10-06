@@ -329,6 +329,17 @@ export function renderMappa(radice, ctx) {
       cambiaCamera(finestra ? riadattaCentro(st.cam, prima, dopo, V) : mantieniCentro(st.cam, prima, dopo));
     },
   });
+  // difetto 5 del collaudo del lotto 7: «Inizia» ha ricollegato questa scena dalla bozza allo scontro nuovo; si prende
+  // il collegamento e la revisione del server tenendo le modifiche in corso
+  const suRicollegate = (e) => {
+    const nuova = (e.detail ?? []).find((x) => x.id === ctx.id);
+    if (!nuova || !st.scena) return;
+    st.scena = { ...st.scena, collegamento: nuova.collegamento, revisione: nuova.revisione, aggiornato: nuova.aggiornato };
+    st.fonti = null;
+    disegnaPannelli();
+    aggiornaFonti().then(() => { st.planciaBarra?.ridisegna?.(); disegnaIniziativa(); selezionaDiTurno(); });
+  };
+  window.addEventListener('mutant:scene-ricollegate', suRicollegate);
   let finestraCambiata = 0;
   const suFinestra = () => { finestraCambiata = Date.now(); };
   window.addEventListener('resize', suFinestra);
@@ -1690,6 +1701,7 @@ export function renderMappa(radice, ctx) {
     togliBordo();
     window.removeEventListener('keydown', suTasto);
     window.removeEventListener('resize', suFinestra);
+    window.removeEventListener('mutant:scene-ricollegate', suRicollegate);
     window.removeEventListener('keyup', suRilasciaTasto);
     tela.distruggi();
     st.immagine?.close?.();
