@@ -7,7 +7,10 @@
 //   { tipo: 'muri', muri, terreno }                 src/mappa/muri.js
 //   { tipo: 'movimento', movimento: id, token, da, a }
 //   { tipo: 'token', id, prima, dopo }              prima null: messo; dopo null: tolto; tutti e due: cambiato
-// Movimenti (scena.movimenti, al più scena.movimenti_max): { id, token, scontro, round, da, a, costo, fascia, libero, quando }.
+// Movimenti (scena.movimenti, al più scena.movimenti_max): { id, token, scontro, round, turno?, da, a, costo, fascia, libero,
+// quando }. Senza scontro aperto (scena collegata a una bozza o a nulla) il movimento si conta lo stesso, per «turno»: il
+// numero del turno del token (turnoDi) che «Nuovo turno» fa avanzare, per un token o per tutti (scena.turni, primo test
+// di Marcello del 06/10/2026: prima senza scontro il movimento non aveva limite).
 // Funzioni pure.
 import { daBase64, inBase64 } from './celle.js';
 import { inverti } from './nebbia.js';
@@ -26,6 +29,20 @@ export function cambiaTokenAnnullabile(scena, prima, dopo, dati, adesso = new Da
   return conVoce({ ...scena, token }, { tipo: 'token', id, prima, dopo, quando: adesso.toISOString() }, dati);
 }
 
+/** Turno del token senza scontro: scena.turni = { tutti, token: { id: n } }, i due contatori sommati. */
+export const turnoDi = (scena, idToken) => (scena.turni?.tutti ?? 0) + (scena.turni?.token?.[idToken] ?? 0);
+
+/** «Nuovo turno» senza scontro: il conteggio del movimento riparte da 0 per un token (idToken) o per tutti (null). */
+export function nuovoTurno(scena, idToken = null) {
+  const turni = { tutti: scena.turni?.tutti ?? 0, token: { ...(scena.turni?.token ?? {}) } };
+  if (idToken) turni.token[idToken] = (turni.token[idToken] ?? 0) + 1;
+  else turni.tutti += 1;
+  // i contatori dei token che non ci sono più si tolgono
+  const presenti = new Set(scena.token.map((t) => t.id));
+  for (const id of Object.keys(turni.token)) if (!presenti.has(id)) delete turni.token[id];
+  return { ...scena, turni };
+}
+
 /**
  * Movimento di un token (§8): la posizione nuova, il movimento registrato nel Round dello scontro e la voce per Ctrl+Z.
  * @param m { a: [x, y], costo: Q spesi (null se fuori area), fascia, scontro, round, libero: mosso fuori area con Maiusc }
@@ -34,12 +51,13 @@ export function muoviToken(scena, idToken, m, dati, adesso = new Date()) {
   const t = scena.token.find((x) => x.id === idToken);
   if (!t) throw new Error('token non trovato');
   const id = `m${adesso.getTime().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
-  const mov = { id, token: idToken, scontro: m.scontro ?? null, round: m.round ?? null, da: [...t.q], a: [...m.a], costo: m.costo ?? null, fascia: m.fascia ?? null, libero: !!m.libero, quando: adesso.toISOString() };
+  const senzaScontro = !m.scontro;
+  const mov = { id, token: idToken, scontro: m.scontro ?? null, round: m.round ?? null, ...(senzaScontro ? { turno: turnoDi(scena, idToken) } : {}), da: [...t.q], a: [...m.a], costo: m.costo ?? null, fascia: m.fascia ?? null, libero: !!m.libero, quando: adesso.toISOString() };
   // la coda dei movimenti si accorcia togliendo prima quelli di altri Round
   let movimenti = [...scena.movimenti, mov];
   const max = dati.mappa.scena.movimenti_max;
   if (movimenti.length > max) {
-    const vecchi = movimenti.filter((x) => x.scontro !== mov.scontro || x.round !== mov.round);
+    const vecchi = movimenti.filter((x) => x.scontro !== mov.scontro || x.round !== mov.round || (senzaScontro && x.turno !== turnoDi(scena, x.token)));
     const togli = new Set(vecchi.slice(0, movimenti.length - max).map((x) => x.id));
     movimenti = movimenti.filter((x) => !togli.has(x.id)).slice(-max);
   }
@@ -49,12 +67,14 @@ export function muoviToken(scena, idToken, m, dati, adesso = new Date()) {
 
 /**
  * Q già usati da un token nel Round dello scontro (movimento diviso, TODO(Davide) A.129: provvisorio sì). Senza
- * scontro (scena collegata a una bozza) non si conta: 0.
+ * scontro aperto si contano i movimenti del turno del token (turnoDi), finché «Nuovo turno» non lo fa ripartire.
+ * I movimenti liberi non contano.
  */
 export function usatoNelRound(scena, idToken, scontro, round) {
-  if (!scontro || round === null || round === undefined) return 0;
-  return scena.movimenti.filter((x) => x.token === idToken && x.scontro === scontro && x.round === round && !x.libero)
-    .reduce((s, x) => s + (x.costo ?? 0), 0);
+  const delTurno = scontro
+    ? (x) => x.scontro === scontro && x.round === round
+    : (x) => !x.scontro && x.turno === turnoDi(scena, idToken);
+  return scena.movimenti.filter((x) => x.token === idToken && !x.libero && delTurno(x)).reduce((s, x) => s + (x.costo ?? 0), 0);
 }
 
 /** Il token ha già fatto un movimento in questo Round? (veicoli: uno solo per Round, A.105) */

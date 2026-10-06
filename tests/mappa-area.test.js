@@ -7,7 +7,7 @@ import { datiReali, copia } from './helpers.js';
 import { nuovaMaschera, rettangolo, impostaCella, inBase64, daBase64, cella, conta } from '../src/mappa/celle.js';
 import { areaRaggiungibile, costoVerso, percorso, fasceRimaste, fasciaDi, celleArea, stessaParte } from '../src/mappa/area.js';
 import { pennellataMuri, rettangoloMuri, trattoMuri, muriProvvisori, chiudiTrattoMuri } from '../src/mappa/muri.js';
-import { muoviToken, usatoNelRound, mossoNelRound, annullaUltima, annullaUltimoMovimento, cambiaTokenAnnullabile } from '../src/mappa/annulla.js';
+import { muoviToken, usatoNelRound, mossoNelRound, annullaUltima, annullaUltimoMovimento, cambiaTokenAnnullabile, nuovoTurno, turnoDi } from '../src/mappa/annulla.js';
 import { pennellata } from '../src/mappa/nebbia.js';
 import { nuovaScena, validaScena } from '../src/mappa/scena.js';
 import { movimentoNemico } from '../src/mappa/partecipanti.js';
@@ -197,7 +197,7 @@ test('movimenti nel Round, movimento diviso, Ctrl+Z e «Annulla ultimo movimento
   s = muoviToken(s, 'a', { a: [0, 0], costo: null, scontro: 'sc', round: 1, libero: true }, dati);
   assert.equal(usatoNelRound(s, 'a', 'sc', 1), 5, 'i movimenti liberi (Maiusc) non contano');
   assert.equal(usatoNelRound(s, 'a', 'sc', 2), 0, 'nuovo Round');
-  assert.equal(usatoNelRound(s, 'a', null, null), 0, 'senza scontro non si conta');
+  assert.equal(usatoNelRound(s, 'a', null, null), 0, 'senza scontro contano solo i movimenti fatti senza scontro');
   assert.ok(mossoNelRound(s, 'b', 'sc', 1) && !mossoNelRound(s, 'b', 'sc', 2));
   assert.equal(validaScena(s, dati), null);
   // «Annulla ultimo movimento» di a: l'ultimo suo, anche se dopo c'è altro
@@ -268,4 +268,33 @@ test('aggancio dentro l’area: la posizione raggiungibile più vicina al puntat
   assert.deepEqual(piuVicinaRaggiungibile(a, [0, 9], 1), [4, 6], 'con un limite più stretto');
   const vuotaArea = area({ chi: chi([5, 5]), massimo: 0 });
   assert.deepEqual(piuVicinaRaggiungibile(vuotaArea, [9, 9]), [5, 5], 'senza movimento resta dov’è');
+});
+
+test('senza scontro aperto il movimento si conta per turno; «Nuovo turno» lo fa ripartire, per un token o per tutti', () => {
+  // primo test di Marcello (06/10/2026): con la scena collegata a una bozza il token si muoveva senza limite
+  let s = scenaProva();
+  const muovi = (id, a, costo) => { s = muoviToken(s, id, { a, costo, fascia: 'passo', scontro: null, round: null }, dati); };
+  muovi('a', [3, 1], 2);
+  muovi('a', [5, 1], 2);
+  muovi('b', [8, 6], 2);
+  s = muoviToken(s, 'a', { a: [0, 0], costo: null, libero: true }, dati);
+  assert.equal(usatoNelRound(s, 'a', null, null), 4, 'i clic si sommano; il movimento libero non conta');
+  assert.equal(usatoNelRound(s, 'b', null, null), 2);
+  assert.equal(usatoNelRound(s, 'a', 'sc', 1), 0, 'lo scontro ha il suo conteggio');
+  // «Nuovo turno» di a: solo a riparte
+  s = nuovoTurno(s, 'a');
+  assert.deepEqual([turnoDi(s, 'a'), turnoDi(s, 'b')], [1, 0]);
+  assert.equal(usatoNelRound(s, 'a', null, null), 0);
+  assert.equal(usatoNelRound(s, 'b', null, null), 2);
+  muovi('a', [2, 0], 2);
+  assert.equal(usatoNelRound(s, 'a', null, null), 2);
+  // «Nuovo turno per tutti»
+  s = nuovoTurno(s);
+  assert.deepEqual([usatoNelRound(s, 'a', null, null), usatoNelRound(s, 'b', null, null)], [0, 0]);
+  assert.equal(validaScena(s, dati), null);
+  assert.match(validaScena({ ...s, turni: { tutti: -1, token: {} } }, dati), /turni/);
+  // Ctrl+Z di un movimento lo toglie dal conteggio del turno
+  muovi('b', [8, 8], 1);
+  assert.equal(usatoNelRound(s, 'b', null, null), 1);
+  assert.equal(usatoNelRound(annullaUltima(s).scena, 'b', null, null), 0);
 });

@@ -9,7 +9,8 @@
 //   token: [{ id, rif: { tipo: "partecipante" | "veicolo" | "segnaposto", id }, q: [x, y], ingombro, nascosto, nome? }],
 //   template: [{ id, forma, origine: [x, y], misure: { … in Q }, direzione?, colore?, fine_round?, fonte?, nascosto }],
 //   collegamento: { scontro: id | null, bozza: id | null },
-//   movimenti: [ … ], annulla: [ … ] }                         movimenti del Round e azioni del master (lotto 5)
+//   movimenti: [ … ], annulla: [ … ],                          movimenti del Round e azioni del master (lotto 5)
+//   turni?: { tutti, token: { id: n } } }                      «Nuovo turno» senza scontro aperto (src/mappa/annulla.js)
 import { nuovaMaschera, inBase64, mascheraValida } from './celle.js';
 import { tokenDentro } from './token.js';
 
@@ -168,6 +169,10 @@ export function validaScena(s, dati) {
   if (s.archiviata !== undefined && typeof s.archiviata !== 'boolean') return 'archiviata: vero o falso';
   if (!Array.isArray(s.movimenti) || s.movimenti.length > D.scena.movimenti_max) return `movimenti: elenco di al massimo ${D.scena.movimenti_max}`;
   if (!Array.isArray(s.annulla) || s.annulla.length > D.scena.annulla_max) return `annulla: elenco di al massimo ${D.scena.annulla_max}`;
+  if (s.turni !== undefined) {
+    if (!isOggetto(s.turni) || !isIntero(s.turni.tutti) || s.turni.tutti < 0 || !isOggetto(s.turni.token)) return 'turni: { tutti, token } attesi';
+    for (const [id, n] of Object.entries(s.turni.token)) if (!isIntero(n) || n < 0) return `turni.token.${id}: intero da 0 in su`;
+  }
   return null;
 }
 
@@ -186,6 +191,6 @@ export function idScena(nome, d = new Date()) {
  * stesse maschere e token; revisione 0, senza registro dei movimenti né annulla, non archiviata.
  */
 export function duplicaScena(s, { id, nome, adesso = new Date() }) {
-  const { aggiornato, archiviata, ...resto } = structuredClone(s);
+  const { aggiornato, archiviata, turni, ...resto } = structuredClone(s);
   return { ...resto, id, nome, revisione: 0, creato: adesso.toISOString(), movimenti: [], annulla: [] };
 }

@@ -27,7 +27,7 @@ import { daBase64, cella, conta } from '../../mappa/celle.js';
 import { tratto, valoreModo, nebbiaProvvisoria, chiudiPennellata, rettangoloNebbia, tuttaNebbia, trattiCoperti } from '../../mappa/nebbia.js';
 import { trattoMuri, muriProvvisori, chiudiTrattoMuri, rettangoloMuri } from '../../mappa/muri.js';
 import { areaRaggiungibile, costoVerso, percorso, fasceRimaste, fasciaDi, celleArea, piuVicinaRaggiungibile } from '../../mappa/area.js';
-import { muoviToken, usatoNelRound, mossoNelRound, annullaUltima, annullaUltimoMovimento, cambiaTokenAnnullabile } from '../../mappa/annulla.js';
+import { muoviToken, usatoNelRound, mossoNelRound, annullaUltima, annullaUltimoMovimento, cambiaTokenAnnullabile, nuovoTurno } from '../../mappa/annulla.js';
 import { disegnaMuri, disegnaArea, disegnaPercorso, coloriAree } from './disegno-aree.js';
 import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
 import { diTurno } from '../../scontro.js';
@@ -500,6 +500,8 @@ export function renderMappa(radice, ctx) {
       mov: scelto ? movimentoPannello(scelto) : null,
       fascia: (n) => cambiaFascia(n),
       annullaMovimento: () => annullaMovimentoUi(scelto.id),
+      nuovoTurno: () => nuovoTurnoUi(scelto.id),
+      nuovoTurnoTutti: () => nuovoTurnoUi(null),
       nascondi: () => cambiaToken(scelto.id, (x) => ({ ...x, nascosto: !x.nascosto })),
       ingombro: (n) => cambiaToken(scelto.id, (x) => ({ ...x, ingombro: n, q: agganciaQ(st.scena.griglia, centroToken(st.scena.griglia, x).x, centroToken(st.scena.griglia, x).y, n) }), { controllaSovrapposti: true }),
       togli: () => togliToken(scelto.id),
@@ -560,7 +562,8 @@ export function renderMappa(radice, ctx) {
   }
 
   function scegli(id) {
-    if (st.selezionato !== id) st.fascia = 1;
+    // la fascia riparte da quella che il movimento già fatto ha raggiunto (3 Q usati su Passo 2: Corsa)
+    if (st.selezionato !== id) st.fascia = fasciaRaggiunta(id);
     st.selezionato = id;
     invalidaArea();
     disegnaPannelli();
@@ -742,16 +745,28 @@ export function renderMappa(radice, ctx) {
   // ── Area raggiungibile e movimento (lotto 5, §8) ──
   const FASCE = ['passo', 'corsa', 'scatto'];
   function invalidaArea() { st.area = undefined; st.percorso = null; }
+  /** Fascia già raggiunta dal movimento del token in questo Round (o turno): 1 Passo, 2 Corsa, 3 Scatto. */
+  function fasciaRaggiunta(id) {
+    const t = id ? st.scena?.token.find((x) => x.id === id) : null;
+    const mov = t ? pezzoDi(t)?.movimento : null;
+    if (!mov) return 1;
+    const scontro = st.fonti?.scontro ?? null;
+    const usato = usatoNelRound(st.scena, t.id, scontro?.id ?? null, scontro?.round ?? null);
+    const i = FASCE.findIndex((f) => Number.isFinite(mov[f]) && usato <= mov[f]);
+    return i < 0 ? 1 : i + 1;
+  }
   /** Record del veicolo nel registro (fonti), o null. */
   const recordVeicolo = (t) => (t.rif.tipo === 'veicolo' ? (st.fonti?.veicoli ?? []).find((r) => r.id === t.rif.id) ?? null : null);
   /**
-   * Area del token: { area, rimaste, usato, fino, limite, celle, motivo, movimento }. Senza movimento (segnaposto,
+   * Area del token: { area, rimaste, usato, fino, limite, totale, disponibili, celle, motivo, movimento }. `limite`: Q
+   * che restano con la fascia scelta; `totale`: con la fascia più ampia (l'area si calcola fin lì, per riconoscere i
+   * clic che chiedono Corsa o Scatto); `disponibili`: Q della fascia scelta, già usati compresi. Senza movimento (segnaposto,
    * scritti a mano, scheda non ancora letta) area null e motivo; il master muove comunque, tenendo premuto Maiusc.
    */
   function infoArea(t) {
     const pz = pezzoDi(t);
     const scontro = st.fonti?.scontro ?? null;
-    const base = { area: null, rimaste: null, usato: 0, fino: st.fascia, limite: 0, celle: null, movimento: pz?.movimento ?? null, motivo: null };
+    const base = { area: null, rimaste: null, usato: 0, fino: st.fascia, limite: 0, totale: 0, disponibili: null, celle: null, movimento: pz?.movimento ?? null, motivo: null };
     if (!pz?.movimento) return { ...base, motivo: pz ? 'nessun profilo di movimento' : 'fuori dallo scontro' };
     let usato = usatoNelRound(st.scena, t.id, scontro?.id ?? null, scontro?.round ?? null);
     if (pz.tipo === 'veicolo' && scontro) {
@@ -766,13 +781,20 @@ export function renderMappa(radice, ctx) {
     // fino alla fascia scelta (Passo, Corri, Scatta), o alla migliore disponibile sotto di essa
     const disponibili = FASCE.slice(0, st.fascia).filter((f) => rimaste[f] !== null);
     const limite = disponibili.length ? Math.max(...disponibili.map((f) => rimaste[f])) : 0;
+    const tutte = FASCE.filter((f) => rimaste[f] !== null);
+    const totale = tutte.length ? Math.max(...tutte.map((f) => rimaste[f])) : 0;
+    const scelta = [...FASCE.slice(0, st.fascia)].reverse().find((f) => Number.isFinite(pz.movimento[f]));
     const g = st.scena.griglia;
     const area = areaRaggiungibile({
       colonne: g.colonne, righe: g.righe, muri: daBase64(st.scena.muri), terreno: daBase64(st.scena.terreno),
       token: st.scena.token.map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, lato: pezzoDi(x)?.lato ?? null })),
-      chi: { id: t.id, q: t.q, ingombro: t.ingombro, lato: pz.lato }, massimo: limite, regole: ctx.dati.mappa.movimento,
+      chi: { id: t.id, q: t.q, ingombro: t.ingombro, lato: pz.lato }, massimo: totale, regole: ctx.dati.mappa.movimento,
     });
-    return { ...base, area, rimaste, usato, limite, celle: celleArea(area, rimaste, st.fascia), motivo: limite <= 0 ? (usato ? `movimento del Round finito (${numero(usato, 1)} Q)` : 'movimento 0 Q') : null };
+    const quando = scontro ? 'del Round' : 'del turno';
+    const piuAmpie = FASCE.slice(st.fascia).filter((f) => rimaste[f] > 0).map((f) => (f === 'corsa' ? 'Corri' : 'Scatta'));
+    const motivo = limite > 0 ? null : !usato ? 'movimento 0 Q'
+      : piuAmpie.length ? `${st.fascia === 1 ? 'Passo' : 'Corsa'} finito: scegli ${piuAmpie.join(' o ')}` : `movimento ${quando} finito (${numero(usato, 1)} Q)`;
+    return { ...base, area, rimaste, usato, limite, totale, disponibili: scelta ? pz.movimento[scelta] : null, celle: celleArea(area, rimaste, st.fascia), motivo };
   }
   /** Area del token scelto, calcolata una volta finché non cambia qualcosa (invalidaArea). */
   function areaScelta() {
@@ -791,6 +813,10 @@ export function renderMappa(radice, ctx) {
   const posizioneVerso = (t, m) => agganciaQ(st.scena.griglia, m.x, m.y, t.ingombro);
   /** Costo per arrivare in q con l'area data (Infinity se fuori o oltre la fascia scelta). */
   const costoDentro = (info, q) => { const c = info?.area ? costoVerso(info.area, q) : Infinity; return c <= (info?.limite ?? 0) ? c : Infinity; };
+  /** q si raggiunge solo con una fascia più ampia di quella scelta (Corsa o Scatto)? */
+  const chiedeFascia = (info, q) => { const c = info?.area ? costoVerso(info.area, q) : Infinity; return c > (info?.limite ?? 0) && c <= (info?.totale ?? 0); };
+  /** Avviso per un movimento oltre la fascia scelta (primo test di Marcello, 06/10/2026). */
+  const avvisaFascia = () => avviso(st.fascia >= 2 ? 'Seleziona Scatto per effettuare questo movimento' : 'Seleziona Corsa o Scatto per effettuare questo movimento', { tipo: 'info', chiave: 'fuori-area' });
 
   /**
    * Movimento (§8): dentro l'area si registra nel Round dello scontro, con la sua fascia; con `libero` (Maiusc) il
@@ -801,6 +827,7 @@ export function renderMappa(radice, ctx) {
     if (q[0] === t.q[0] && q[1] === t.q[1]) return false;
     const costo = costoDentro(info, q);
     const nome = pezzoDi(t)?.nome ?? t.nome ?? t.id;
+    if (!libero && costo === Infinity && chiedeFascia(info, q)) { avvisaFascia(); return false; }
     if (!libero && costo === Infinity) {
       avviso(`${nome}: quel quadretto è fuori dall’area${info.motivo ? ` (${info.motivo})` : ''}. Tieni premuto Maiusc per spostarlo comunque.`, { tipo: 'info', chiave: 'fuori-area' });
       return false;
@@ -853,7 +880,14 @@ export function renderMappa(radice, ctx) {
   function movimentoPannello(t) {
     const info = st.area?.token === t.id ? st.area : infoArea(t);
     const ultimo = [...st.scena.movimenti].reverse().find((x) => x.token === t.id);
-    return { movimento: info.movimento, rimaste: info.rimaste, usato: info.usato, fascia: st.fascia, motivo: info.motivo, annullabile: !!ultimo, veicolo: t.rif.tipo === 'veicolo', andatura: pezzoDi(t)?.andatura ?? null };
+    return { movimento: info.movimento, rimaste: info.rimaste, usato: info.usato, disponibili: info.disponibili, fascia: st.fascia, motivo: info.motivo, annullabile: !!ultimo, veicolo: t.rif.tipo === 'veicolo', andatura: pezzoDi(t)?.andatura ?? null, senzaScontro: !st.fonti?.scontro };
+  }
+  /** «Nuovo turno» senza scontro aperto: il conteggio del movimento riparte per un token o per tutti (null). */
+  function nuovoTurnoUi(id = null) {
+    st.scena = nuovoTurno(st.scena, id);
+    if (!id || st.selezionato === id) st.fascia = 1;
+    avviso(id ? 'Nuovo turno: il movimento di questo token riparte da 0.' : 'Nuovo turno per tutti: il movimento riparte da 0.', { chiave: 'turno' });
+    dopoCambioToken();
   }
 
   // ── Puntatore, rotella e tastiera (§12); gesti comuni in ./gesti.js (lotto 4: due dita, doppio tocco) ──
@@ -910,6 +944,7 @@ export function renderMappa(radice, ctx) {
       const libero = e.shiftKey || !t.info?.area;
       // fuori dall'area il token resta sulla posizione raggiungibile più vicina al puntatore
       const q = libero ? puntata : piuVicinaRaggiungibile(t.info.area, puntata, t.info.limite) ?? t.q;
+      t.oltre = !libero && chiedeFascia(t.info, puntata);
       if (q[0] !== t.q[0] || q[1] !== t.q[1] || t.libero !== libero) {
         t.q = q;
         t.libero = libero;
@@ -943,6 +978,7 @@ export function renderMappa(radice, ctx) {
       if (!tok) { ridisegna(['sopra']); return true; }
       if (t.mosso) {
         if (!eseguiMovimento(tok, t.q, { libero: !!t.libero, info: t.info })) ridisegna(['sopra']);
+        if (t.oltre) avvisaFascia(); // rilasciato oltre la fascia scelta: il token si è fermato al suo limite
       } else {
         // clic: si sceglie il token, compare la sua area e si apre la sua carta accanto alla mappa
         scegli(tok.id);
@@ -957,6 +993,8 @@ export function renderMappa(radice, ctx) {
       if (tok && info) {
         const q = posizioneVerso(tok, mappaDaSchermo(st.cam, p.x, p.y));
         if (e.shiftKey || costoDentro(info, q) < Infinity) { eseguiMovimento(tok, q, { libero: e.shiftKey, info }); return true; }
+        // oltre il Passo (o la Corsa) ma alla portata di una fascia più ampia: il clic non vale e lo si dice
+        if (chiedeFascia(info, q)) { avvisaFascia(); return true; }
       }
       scegli(null);
     }
@@ -1041,6 +1079,7 @@ export function renderMappa(radice, ctx) {
       { testo: 'Corri', azione: () => cambiaFascia(2), scelta: st.fascia === 2, disabilitata: !Number.isFinite(mov?.corsa), titolo: 'Amplia l’area fino alla Corsa' },
       { testo: 'Scatta', azione: () => cambiaFascia(3), scelta: st.fascia === 3, disabilitata: !Number.isFinite(mov?.scatto), titolo: 'Amplia l’area fino allo Scatto' },
       { testo: 'Annulla ultimo movimento', azione: () => annullaMovimentoUi(tok.id), disabilitata: !ultimo },
+      ...(st.fonti?.scontro ? [] : [{ testo: 'Nuovo turno', azione: () => nuovoTurnoUi(tok.id), titolo: 'Senza scontro aperto: il movimento di questo token riparte da 0' }]),
       null,
       { testo: tok.nascosto ? 'Mostra ai giocatori' : 'Nascondi ai giocatori', azione: () => cambiaToken(tok.id, (x) => ({ ...x, nascosto: !x.nascosto })) },
       { testo: 'Carta', azione: () => apriCarta(tok), disabilitata: !pz },

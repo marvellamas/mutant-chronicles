@@ -1926,6 +1926,8 @@ body:has(.mappa-pagina) .piede { display: none; }
 }
 .mappa-movimento { display: flex; flex-direction: column; gap: 0.3rem; }
 .mappa-movimento p { margin: 0; }
+.mappa-usati { font-variant-numeric: tabular-nums; }
+.mappa-usati.finito strong { color: var(--pv); }
 .mappa-movimento .fascia-1 { border-left: 4px solid var(--mappa-passo); }
 .mappa-movimento .fascia-2 { border-left: 4px solid var(--mappa-corsa); }
 .mappa-movimento .fascia-3 { border-left: 4px solid var(--mappa-scatto); }

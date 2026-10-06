@@ -90,7 +90,8 @@ const q = (n) => `${String(n).replace('.', ',')} Q`;
 /**
  * Movimento del token scelto (lotto 5, §8): Passo, Corri e Scatta (l'area raggiungibile in tre colori), quanto ha già
  * usato nel Round, «Annulla ultimo movimento». Regole provvisorie in data/mappa.json → movimento (A.124, A.127–A.129).
- * @param m { movimento: { passo, corsa, scatto }, rimaste, usato, fascia, motivo, annullabile, veicolo, andatura }
+ * @param m { movimento: { passo, corsa, scatto }, rimaste, usato, disponibili, fascia, motivo, annullabile, veicolo,
+ *   andatura, senzaScontro }: senza scontro aperto il movimento si conta per turno, con «Nuovo turno».
  */
 function sezioneMovimento(m, a) {
   if (!m) return null;
@@ -100,8 +101,11 @@ function sezioneMovimento(m, a) {
     h('p', { class: 'nota' }, mov
       ? (m.veicolo
         ? `${q(mov.passo)} all’andatura ${m.andatura ?? '—'}, una volta per Round all’Iniziativa del conducente.`
-        : `Passo ${q(mov.passo)}${Number.isFinite(mov.corsa) ? ` · Corsa ${q(mov.corsa)}` : ''}${Number.isFinite(mov.scatto) ? ` · Scatto ${q(mov.scatto)}` : ''}${m.usato ? ` · già usati ${q(m.usato)} nel Round` : ''}.`)
+        : `Passo ${q(mov.passo)}${Number.isFinite(mov.corsa) ? ` · Corsa ${q(mov.corsa)}` : ''}${Number.isFinite(mov.scatto) ? ` · Scatto ${q(mov.scatto)}` : ''}.`)
       : 'Nessun profilo di movimento: si sposta solo con Maiusc.'),
+    // Q usati / disponibili con la fascia scelta, nel Round dello scontro o nel turno (senza scontro)
+    mov && m.disponibili !== null && m.disponibili !== undefined ? h('p', { class: `mappa-usati${m.usato >= m.disponibili ? ' finito' : ''}` },
+      h('strong', {}, `${String(m.usato).replace('.', ',')} / ${q(m.disponibili)}`), ` usati ${m.senzaScontro ? 'nel turno' : 'nel Round'}`) : null,
     m.motivo ? h('p', { class: 'nota motivo-movimento' }, `Area: ${m.motivo}. Con Maiusc il master lo sposta comunque.`) : null,
     mov && !m.veicolo ? h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Area raggiungibile' },
       fasce.map(([testo, n, v]) => h('button', {
@@ -109,5 +113,9 @@ function sezioneMovimento(m, a) {
         disabled: !Number.isFinite(v), title: Number.isFinite(v) ? `Area fino ${testo === 'Passo' ? 'al Passo' : testo === 'Corri' ? 'alla Corsa' : 'allo Scatto'}` : 'Non disponibile',
         onclick: () => a.fascia(n),
       }, testo))) : null,
-    h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !m.annullabile, onclick: a.annullaMovimento }, 'Annulla ultimo movimento'));
+    h('div', { class: 'mappa-azioni-token' },
+      h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !m.annullabile, onclick: a.annullaMovimento }, 'Annulla ultimo movimento'),
+      // senza scontro aperto il Round non avanza: il turno lo fa ripartire il master
+      m.senzaScontro && mov ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Il movimento di questo token riparte da 0', onclick: a.nuovoTurno }, 'Nuovo turno') : null,
+      m.senzaScontro ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Il movimento di tutti i token riparte da 0', onclick: a.nuovoTurnoTutti }, 'Nuovo turno per tutti') : null));
 }
