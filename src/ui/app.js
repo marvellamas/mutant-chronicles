@@ -22,6 +22,7 @@ import { registraRiga } from '../scontro.js';
 import { elencoUnito, confronta, chiaveDaFile, chiavePersonaggio, messaggioSalvataggio, attesaRitentativo, nomeFileLibero, haNome, fileProvvisorio } from '../cartella.js';
 import { renderTavolo } from './tavolo.js';
 import { renderMappa } from './mappa/pagina.js';
+import { renderGiocatori } from './mappa/giocatori.js';
 import { avviso, avvisoErrore } from './avvisi.js';
 import { controlloInUso } from './ridisegno.js';
 import { alRound, collegamentoScontro, tecnicheScadute, statiScaduti, durateCarta, testoDurata } from '../round-scontro.js';
@@ -175,6 +176,19 @@ function daIndirizzo() {
     // «← Torna al tavolo» da una scheda: la plancia rimette lo scorrimento di prima (src/ui/ritorno.js)
     const scorrimento = scorrimentoDaRimettere(sessionStorage);
     stato.fermaTavolo = renderTavolo(radice, { dati: stato.dati, scorrimento, azioni: { personaggi: () => vai('#/'), apri: (r) => apriDaCartella(r, { dalTavolo: true }), mappa: (id) => vai(`#/mappa/${id}`) } });
+    return;
+  }
+  // Mappa di battaglia, lotto 4: vista giocatori (televisore, proiettore, tablet), solo lettura, solo con il server
+  if (location.hash === '#/mappa/giocatori') {
+    stato.id = null;
+    stato.scelte = null;
+    stato.livelli = [];
+    if (!stato.cartella) {
+      stato.messaggioHome = { tipo: 'attenzione', testo: 'La vista giocatori della mappa serve il server di Mutant acceso sul PC del master.' };
+      return vai('#/');
+    }
+    document.title = 'Giocatori · Mappa · Mutant';
+    stato.fermaTavolo = renderGiocatori(radice, { dati: stato.dati });
     return;
   }
   // Mappa di battaglia (lotto 2, docs/battlemap/piano.md): la scena nella vista master, solo con il server

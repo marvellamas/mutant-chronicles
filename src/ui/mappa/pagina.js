@@ -6,16 +6,23 @@
 // Lotto 3: la scena si collega allo scontro aperto o a una bozza; i pezzi senza token si trascinano sulla mappa (o
 // «Metti tutti»); i token si agganciano alla griglia, si spostano, si nascondono, si tolgono; il clic apre la carta
 // nella plancia. PV, Stati, turno e ritratti si leggono ogni pochi secondi dalle fonti (./fonti.js), mai dalla scena.
-// Logica pura in src/mappa/ (camera, griglia, token, partecipanti); disegno in ./canvas.js e ./disegno-token.js.
+// Lotto 4: nebbia (pennello e rettangolo, «Rivela» o «Copri», tutto, Ctrl+Z), semitrasparente qui e piena per i
+// giocatori; gesti a due dita e doppio tocco (./gesti.js); sezione «Vista giocatori» con la scena mostrata, «Apri
+// vista giocatori» e il codice QR.
+// Logica pura in src/mappa/ (camera, griglia, token, partecipanti, nebbia); disegno in ./canvas.js e ./disegno-token.js.
 import { h, svuota } from '../dom.js';
 import { avviso, avvisoErrore } from '../avvisi.js';
-import { cameraIniziale, zoomVerso, fattoreRotella, sposta, adatta, mappaDaSchermo, schermoDaMappa, rettangoloVisibile } from '../../mappa/camera.js';
+import { cameraIniziale, zoomVerso, sposta, adatta, mappaDaSchermo, schermoDaMappa, rettangoloVisibile } from '../../mappa/camera.js';
 import { calibraDaQuadretto, applicaGriglia, dimensioniMappa, lineeVisibili, testoScala } from '../../mappa/griglia.js';
 import { creaTela } from './canvas.js';
 import { leggiScena, salvaScena, caricaImmagine, controllaFile, preparaRidotta } from './api.js';
 import { agganciaQ, centroToken, tokenSottoPunto, disponiInFila, sovrapposti, chiaveRif } from '../../mappa/token.js';
 import { pezziDellaScena, pezziSenzaToken, tokenOrfani, tokenPerPezzo } from '../../mappa/partecipanti.js';
-import { daBase64, cella } from '../../mappa/celle.js';
+import { daBase64, cella, conta } from '../../mappa/celle.js';
+import { tratto, valoreModo, nebbiaProvvisoria, chiudiPennellata, rettangoloNebbia, tuttaNebbia, annullaNebbia, quantiQ, trattiCoperti } from '../../mappa/nebbia.js';
+import { creaGesti } from './gesti.js';
+import { svgQR } from '../../qr.js';
+import { leggiRete } from '../collega.js';
 import { creaFonti } from './fonti.js';
 import { disegnaToken, coloriMappa, creaImmagini } from './disegno-token.js';
 import { sezioneScontro, sezioneToken, TIPO_TRASCINA } from './pannello-scontro.js';
@@ -57,6 +64,9 @@ export function renderMappa(radice, ctx) {
     selezionato: null,
     daPiazzare: null,
     firmaPannello: null,
+    // lotto 4: strumenti della nebbia e scena scelta per i giocatori (null = automatica)
+    nebbia: { strumento: null, modo: 'rivela', lato: 3 },
+    sceltaGiocatori: null,
   };
   const leggiFonti = creaFonti(ctx.dati);
 
@@ -87,6 +97,8 @@ export function renderMappa(radice, ctx) {
   el.secScontro = h('div');
   el.secToken = h('div');
   el.pGriglia = h('details', { class: 'mappa-sezione mappa-griglia' });
+  el.pNebbia = h('details', { class: 'mappa-sezione mappa-nebbia', open: true });
+  el.pGiocatori = h('details', { class: 'mappa-sezione mappa-giocatori' });
   svuota(radice, h('section', { class: 'mappa-pagina' }, el.barra, h('div', { class: 'mappa-corpo' }, el.riquadro, el.pannello)));
 
   // ── Disegno ──
@@ -122,11 +134,45 @@ export function renderMappa(radice, ctx) {
       c.stroke();
       c.restore();
     },
-    aree: () => {},
+    // §5: per il master la nebbia è semitrasparente (i giocatori la vedono piena: ./giocatori.js)
+    aree: (c, info) => {
+      const s = st.scena;
+      if (!s) return;
+      const g = s.griglia;
+      const r = rettangoloVisibile(st.cam, info.larghezza, info.altezza);
+      const q = g.q_px;
+      const tratti = trattiCoperti(daBase64(s.nebbia.coperti), g.colonne, g.righe,
+        { x0: Math.floor((r.x0 - g.scosto_x) / q), x1: Math.ceil((r.x1 - g.scosto_x) / q), y0: Math.floor((r.y0 - g.scosto_y) / q), y1: Math.ceil((r.y1 - g.scosto_y) / q) });
+      if (!tratti.length) return;
+      c.save();
+      c.globalAlpha = 0.5;
+      c.fillStyle = getComputedStyle(el.riquadro).getPropertyValue('--mappa-nebbia').trim() || '#111';
+      c.beginPath();
+      for (const [y, xa, xb] of tratti) {
+        const a = schermoDaMappa(st.cam, g.scosto_x + xa * q, g.scosto_y + y * q);
+        const b = schermoDaMappa(st.cam, g.scosto_x + xb * q, g.scosto_y + (y + 1) * q);
+        c.rect(Math.floor(a.x), Math.floor(a.y), Math.ceil(b.x - a.x) + 1, Math.ceil(b.y - a.y) + 1);
+      }
+      c.fill();
+      c.restore();
+    },
     sopra: (c) => {
       if (st.scena) {
         const t = st.trascina?.modo === 'token' ? { id: st.trascina.token, q: st.trascina.q } : null;
         disegnaToken(c, { scena: st.scena, cam: st.cam, pezzi: st.mappaPezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: st.selezionato, trascina: t });
+      }
+      // anteprima del rettangolo di nebbia
+      const tn = st.trascina;
+      if (tn?.modo === 'nebbia' && st.nebbia.strumento === 'rettangolo' && st.scena) {
+        const g = st.scena.griglia;
+        const a = schermoDaMappa(st.cam, g.scosto_x + Math.min(tn.da[0], tn.a[0]) * g.q_px, g.scosto_y + Math.min(tn.da[1], tn.a[1]) * g.q_px);
+        const b = schermoDaMappa(st.cam, g.scosto_x + (Math.max(tn.da[0], tn.a[0]) + 1) * g.q_px, g.scosto_y + (Math.max(tn.da[1], tn.a[1]) + 1) * g.q_px);
+        c.save();
+        c.strokeStyle = getComputedStyle(el.riquadro).getPropertyValue('--mappa-traccia').trim() || '#d00';
+        c.lineWidth = 2;
+        c.setLineDash([6, 4]);
+        c.strokeRect(a.x, a.y, b.x - a.x, b.y - a.y);
+        c.restore();
       }
       const k = st.calibrazione;
       if (!k?.b) return;
@@ -228,6 +274,7 @@ export function renderMappa(radice, ctx) {
     if (st.selezionato && !s.token.some((t) => t.id === st.selezionato)) st.selezionato = null;
     aggiornaPannello();
     disegnaPannelli();
+    if (st.fonti !== null) { disegnaPannelloNebbia(); disegnaPannelloGiocatori(); }
     ridisegna();
   };
 
@@ -273,7 +320,7 @@ export function renderMappa(radice, ctx) {
   el.blocca = h('button', { type: 'button', class: 'btn', onclick: () => bloccaGriglia() });
   el.info = h('p', { class: 'nota mappa-info' });
   el.notaBlocco = h('p', { class: 'riquadro attenzione mappa-nota-blocco', hidden: true }, 'Griglia bloccata: dimensione e scostamento non cambiano, così nebbia, muri e token restano allineati. Colore e opacità sì.');
-  svuota(el.pannello, el.secScontro, el.secToken, el.pGriglia);
+  svuota(el.pannello, el.secScontro, el.secToken, el.pNebbia, el.pGiocatori, el.pGriglia);
   svuota(el.pGriglia,
     h('summary', {}, h('strong', {}, 'Griglia')),
     h('p', { class: 'nota' }, 'Calibra tracciando sull’immagine un quadretto (o un riquadro di più quadretti) oppure inserendo i valori. Poi blocca la griglia.'),
@@ -490,40 +537,104 @@ export function renderMappa(radice, ctx) {
     dopoCambioToken();
   }
 
-  // ── Puntatore, rotella e tastiera (§12) ──
-  const punto = (e) => { const r = el.riquadro.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
-  const suRotella = (e) => {
-    e.preventDefault();
-    const p = punto(e);
-    const dy = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaMode === 2 ? e.deltaY * 400 : e.deltaY;
-    cambiaCamera(zoomVerso(st.cam, p.x, p.y, fattoreRotella(dy, V), V));
+  // ── Nebbia (lotto 4, §5): pennello e rettangolo, «Rivela» o «Copri», tutto, Ctrl+Z ──
+  const N = st.nebbia;
+  const qVicino = (m) => {
+    const g = st.scena.griglia;
+    return [Math.max(0, Math.min(g.colonne - 1, Math.floor((m.x - g.scosto_x) / g.q_px))), Math.max(0, Math.min(g.righe - 1, Math.floor((m.y - g.scosto_y) / g.q_px)))];
   };
-  const suPremi = (e) => {
-    if (e.button !== 0 && e.pointerType === 'mouse') return;
+  const contaNebbia = () => st.scena.annulla.filter((v) => v?.tipo === 'nebbia').length;
+  const pulsanteScelta = (testo, attivo, onclick, titolo) => h('button', { type: 'button', class: `btn btn-piccolo${attivo ? ' scelto' : ''}`, 'aria-pressed': String(attivo), title: titolo, onclick }, testo);
+  function disegnaPannelloNebbia() {
+    if (!st.scena) return;
+    const g = st.scena.griglia;
+    const coperti = conta(daBase64(st.scena.nebbia.coperti), g.colonne, g.righe);
+    svuota(el.pNebbia,
+      h('summary', {}, h('strong', {}, 'Nebbia'), ` (${coperti} Q coperti su ${g.colonne * g.righe})`),
+      h('p', { class: 'nota' }, 'Per te è semitrasparente, per i giocatori piena. Scegli lo strumento e trascina sulla mappa; la barra spaziatrice resta per spostarti.'),
+      h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Strumento della nebbia' },
+        pulsanteScelta('Pennello', N.strumento === 'pennello', () => strumentoNebbia(N.strumento === 'pennello' ? null : 'pennello'), 'Dipingi per quadretti'),
+        pulsanteScelta('Rettangolo', N.strumento === 'rettangolo', () => strumentoNebbia(N.strumento === 'rettangolo' ? null : 'rettangolo'), 'Da un angolo all’altro')),
+      h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Modalità della nebbia' },
+        pulsanteScelta('Rivela', N.modo === 'rivela', () => { N.modo = 'rivela'; disegnaPannelloNebbia(); }, 'Toglie la nebbia'),
+        pulsanteScelta('Copri', N.modo === 'copri', () => { N.modo = 'copri'; disegnaPannelloNebbia(); }, 'Mette la nebbia')),
+      h('label', { class: 'mappa-campo' }, h('span', {}, 'Dimensione del pennello (Q)'),
+        h('input', { type: 'number', min: 1, max: 15, step: 1, value: String(N.lato), onchange: (e) => { N.lato = Math.max(1, Math.min(15, Math.round(Number(e.target.value) || 1))); e.target.value = String(N.lato); } })),
+      h('div', { class: 'mappa-azioni-token' },
+        h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => tuttaUi('copri') }, 'Copri tutto'),
+        h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => tuttaUi('rivela') }, 'Rivela tutto'),
+        h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !contaNebbia(), title: 'Ctrl+Z', onclick: () => annullaNebbiaUi() }, `Annulla (${contaNebbia()})`)));
+  }
+  function strumentoNebbia(s) {
+    N.strumento = s;
+    if (s && st.strumento === 'calibra') impostaStrumento('sposta');
+    el.riquadro.classList.toggle('nebbia', !!s);
+    disegnaPannelloNebbia();
+  }
+  function dopoNebbia() {
+    salvaPresto();
+    disegnaPannelloNebbia();
+    ridisegna(['aree', 'sopra']);
+  }
+  function tuttaUi(modo) {
+    if (!confirm(modo === 'copri' ? 'Coprire di nebbia tutta la mappa? I giocatori non vedranno più nulla (Ctrl+Z annulla).' : 'Rivelare tutta la mappa ai giocatori? (Ctrl+Z annulla)')) return;
+    st.scena = tuttaNebbia(st.scena, modo, ctx.dati);
+    dopoNebbia();
+  }
+  function annullaNebbiaUi() {
+    const esito = annullaNebbia(st.scena);
+    if (!esito) { avviso('Nessuna modifica della nebbia da annullare.'); return; }
+    st.scena = esito.scena;
+    avviso(`Nebbia: annullata l’ultima modifica (${quantiQ(esito.voce.tratti)} Q).`);
+    dopoNebbia();
+  }
+
+  // ── Puntatore, rotella e tastiera (§12); gesti comuni in ./gesti.js (lotto 4: due dita, doppio tocco) ──
+  const punto = (e) => { const r = el.riquadro.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
+  const premi = (e, p) => {
     el.riquadro.focus({ preventScroll: true });
     nascondiSuggerimento();
-    const p = punto(e);
+    if (!st.scena) return;
     const m = mappaDaSchermo(st.cam, p.x, p.y);
-    if (st.daPiazzare && !st.spazio && st.scena) { piazza(st.daPiazzare, m); return; }
-    const tok = !st.spazio && st.strumento !== 'calibra' && st.scena ? tokenSotto(m) : null;
+    if (st.daPiazzare && !st.spazio) { piazza(st.daPiazzare, m); return; }
+    const base = { id: e.pointerId, x: p.x, y: p.y, x0: p.x, y0: p.y, mosso: false };
+    if (N.strumento && !st.spazio && st.strumento !== 'calibra') {
+      const q = qVicino(m);
+      st.trascina = { ...base, modo: 'nebbia', iniziale: st.scena.nebbia.coperti, da: q, a: q };
+      if (N.strumento === 'pennello') {
+        const g = st.scena.griglia;
+        st.scena = nebbiaProvvisoria(st.scena, tratto(daBase64(st.scena.nebbia.coperti), g.colonne, g.righe, q, q, N.lato, valoreModo(N.modo)));
+        ridisegna(['aree']);
+      } else ridisegna(['sopra']);
+      return;
+    }
+    const tok = !st.spazio && st.strumento !== 'calibra' ? tokenSotto(m) : null;
     const modo = tok ? 'token' : st.strumento === 'calibra' && !st.spazio ? 'calibra' : 'sposta';
-    st.trascina = { id: e.pointerId, x: p.x, y: p.y, x0: p.x, y0: p.y, mosso: false, modo };
+    st.trascina = { ...base, modo };
     if (modo === 'calibra') st.calibrazione = { a: m, b: null };
     if (tok) {
       const c = centroToken(st.scena.griglia, tok);
       Object.assign(st.trascina, { token: tok.id, q: tok.q, dx: m.x - c.x, dy: m.y - c.y, ingombro: tok.ingombro });
     }
-    el.riquadro.setPointerCapture(e.pointerId);
     el.riquadro.classList.toggle('trascina', modo !== 'calibra');
   };
-  const suMuovi = (e) => {
+  const muovi = (e, p, mio) => {
     const t = st.trascina;
-    if (!t || t.id !== e.pointerId) { suggerisci(e); return; }
-    const p = punto(e);
+    if (!t || !mio) { suggerisci(e); return; }
     if (!t.mosso && Math.hypot(p.x - t.x0, p.y - t.y0) < TRASCINAMENTO_MINIMO_PX) return;
     t.mosso = true;
     if (t.modo === 'sposta') cambiaCamera(sposta(st.cam, p.x - t.x, p.y - t.y));
-    else if (t.modo === 'token') {
+    else if (t.modo === 'nebbia') {
+      const q = qVicino(mappaDaSchermo(st.cam, p.x, p.y));
+      if (q[0] !== t.a[0] || q[1] !== t.a[1]) {
+        if (N.strumento === 'pennello') {
+          const g = st.scena.griglia;
+          st.scena = nebbiaProvvisoria(st.scena, tratto(daBase64(st.scena.nebbia.coperti), g.colonne, g.righe, t.a, q, N.lato, valoreModo(N.modo)));
+          t.a = q;
+          ridisegna(['aree']);
+        } else { t.a = q; ridisegna(['sopra']); }
+      }
+    } else if (t.modo === 'token') {
       // §7: il token resta sempre al centro di un quadretto anche mentre si trascina (nessuna regola di movimento:
       // arrivano nel lotto 5)
       const m = mappaDaSchermo(st.cam, p.x, p.y);
@@ -532,17 +643,26 @@ export function renderMappa(radice, ctx) {
     } else { st.calibrazione.b = mappaDaSchermo(st.cam, p.x, p.y); ridisegna(['sopra']); }
     t.x = p.x; t.y = p.y;
   };
-  const suRilascia = (e) => {
+  /** Restituisce true se il rilascio ha colpito qualcosa (niente doppio tocco per «Adatta»). */
+  const rilascia = (e, p, annullato) => {
     const t = st.trascina;
-    if (!t || t.id !== e.pointerId) return;
+    if (!t) return false;
     st.trascina = null;
     el.riquadro.classList.remove('trascina');
+    if (annullato) { annullaGesto(t); return true; }
+    if (t.modo === 'nebbia') {
+      st.scena = N.strumento === 'rettangolo' ? rettangoloNebbia(st.scena, t.da, t.a, N.modo, ctx.dati) : chiudiPennellata(st.scena, t.iniziale, ctx.dati);
+      dopoNebbia();
+      return true;
+    }
     if (t.modo === 'calibra') {
       if (t.mosso) chiudiCalibrazione();
       else { st.calibrazione = null; ridisegna(['sopra']); }
-    } else if (t.modo === 'token') {
+      return true;
+    }
+    if (t.modo === 'token') {
       const tok = st.scena.token.find((x) => x.id === t.token);
-      if (!tok) return ridisegna(['sopra']);
+      if (!tok) { ridisegna(['sopra']); return true; }
       if (t.mosso) {
         if (tok.q[0] !== t.q[0] || tok.q[1] !== t.q[1]) cambiaToken(tok.id, (x) => ({ ...x, q: t.q }), { controllaSovrapposti: true });
         else ridisegna(['sopra']);
@@ -551,8 +671,20 @@ export function renderMappa(radice, ctx) {
         scegli(tok.id);
         apriCarta(tok);
       }
-    } else if (!t.mosso && st.selezionato) scegli(null);
+      return true;
+    }
+    if (!t.mosso && st.selezionato) scegli(null);
+    return t.mosso;
   };
+  /** Il gesto di un dito si interrompe (arriva il secondo dito): niente resta a metà. */
+  function annullaGesto(t = st.trascina) {
+    st.trascina = null;
+    el.riquadro.classList.remove('trascina');
+    if (!t) return;
+    if (t.modo === 'nebbia' && t.iniziale) { st.scena = { ...st.scena, nebbia: { ...st.scena.nebbia, coperti: t.iniziale } }; ridisegna(['aree', 'sopra']); }
+    if (t.modo === 'calibra') st.calibrazione = null;
+    ridisegna(['sopra']);
+  }
   const tokenSotto = (m) => {
     const ordine = [...st.scena.token].sort((a, b) => (a.id === st.selezionato) - (b.id === st.selezionato));
     return ordine.reverse().find((t) => tokenSottoPunto(st.scena.griglia, t, m.x, m.y)) ?? null;
@@ -586,28 +718,72 @@ export function renderMappa(radice, ctx) {
     piazza(chiave, mappaDaSchermo(st.cam, p.x, p.y));
   };
   const suTasto = (e) => {
-    if (inCampo(e) || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (inCampo(e)) return;
+    // Ctrl+Z (lotto 4): annulla l'ultima modifica della nebbia
+    if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === 'z') { e.preventDefault(); if (st.scena) annullaNebbiaUi(); return; }
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.key === '+' || e.key === '=' || e.code === 'NumpadAdd') { e.preventDefault(); zoomCentro(V.passo_tasti); } else if (e.key === '-' || e.code === 'NumpadSubtract') { e.preventDefault(); zoomCentro(1 / V.passo_tasti); } else if (e.code === 'Space') {
       e.preventDefault(); // niente scorrimento della pagina
       if (!st.spazio) { st.spazio = true; el.riquadro.classList.add('spazio'); }
     } else if (e.key === 'Escape') {
       if (st.strumento === 'calibra') impostaStrumento('sposta');
+      else if (N.strumento) strumentoNebbia(null);
       else if (st.daPiazzare) { st.daPiazzare = null; el.riquadro.classList.remove('piazza'); disegnaPannelli(); } else if (st.selezionato) scegli(null);
     }
   };
   const suRilasciaTasto = (e) => {
     if (e.code === 'Space') { st.spazio = false; el.riquadro.classList.remove('spazio'); }
   };
-  el.riquadro.addEventListener('wheel', suRotella, { passive: false });
-  el.riquadro.addEventListener('pointerdown', suPremi);
-  el.riquadro.addEventListener('pointermove', suMuovi);
-  el.riquadro.addEventListener('pointerup', suRilascia);
-  el.riquadro.addEventListener('pointercancel', suRilascia);
+  const gesti = creaGesti(el.riquadro, {
+    vista: V, camera: () => st.cam, cambiaCamera, adatta: adattaSchermo,
+    premi, muovi, rilascia, annulla: () => annullaGesto(),
+    // doppio clic del mouse: «Adatta» solo su un punto vuoto e senza strumenti attivi
+    vuoto: (p) => !N.strumento && st.strumento !== 'calibra' && !!st.scena && !tokenSotto(mappaDaSchermo(st.cam, p.x, p.y)),
+  });
   el.riquadro.addEventListener('pointerleave', suEsce);
   el.riquadro.addEventListener('dragover', suSopra);
   el.riquadro.addEventListener('drop', suLascia);
   window.addEventListener('keydown', suTasto);
   window.addEventListener('keyup', suRilasciaTasto);
+
+  // ── Vista giocatori (lotto 4): quale scena vedono, «Apri vista giocatori», codice QR ──
+  let rete = null;
+  leggiRete().then((r) => { rete = r; disegnaPannelloGiocatori(); });
+  const indirizzoGiocatori = () => {
+    const base = !rete?.soloLocale && rete?.indirizzi?.length ? rete.indirizzi[0].url : `${location.origin}${location.pathname}`;
+    return `${base.replace(/\/?$/, '/')}#/mappa/giocatori`;
+  };
+  async function leggiScelta() {
+    try { const r = await fetch('api/vista-giocatori/scelta', { cache: 'no-store' }); if (r.ok) st.sceltaGiocatori = (await r.json()).scena ?? null; } catch { /* resta quella di prima */ }
+  }
+  async function scegliPerGiocatori(scena) {
+    try {
+      const r = await fetch('api/vista-giocatori/scelta', { method: 'PUT', body: JSON.stringify({ scena }), headers: { 'Content-Type': 'application/json' } });
+      if (!r.ok) throw new Error((await r.json().catch(() => ({}))).errore ?? `errore ${r.status}`);
+      st.sceltaGiocatori = scena;
+      avviso(scena ? 'I giocatori vedono questa scena.' : 'Vista giocatori automatica: la scena collegata allo scontro aperto.');
+    } catch (e) { avvisoErrore(`Scelta non salvata: ${e.message}`); }
+    disegnaPannelloGiocatori();
+  }
+  function disegnaPannelloGiocatori() {
+    if (!st.scena) return;
+    const s = st.sceltaGiocatori;
+    const url = indirizzoGiocatori();
+    const qr = h('span', { class: 'qr-collega' });
+    qr.innerHTML = svgQR(url, { pixel: 3 }); // SVG generato qui, dal solo indirizzo
+    const testo = s === st.scena.id ? 'I giocatori vedono questa scena (scelta da te).'
+      : s ? 'I giocatori vedono un’altra scena, scelta da te.'
+        : `Automatica: i giocatori vedono la scena collegata allo scontro aperto${st.scena.collegamento?.scontro && st.fonti?.scontro ? ' (questa, se è la più recente)' : ''}.`;
+    svuota(el.pGiocatori,
+      h('summary', {}, h('strong', {}, 'Vista giocatori')),
+      h('p', { class: 'nota' }, testo),
+      h('div', { class: 'mappa-azioni-token' },
+        s !== st.scena.id ? h('button', { type: 'button', class: 'btn btn-piccolo primario', onclick: () => scegliPerGiocatori(st.scena.id) }, 'Mostra questa scena') : null,
+        s ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => scegliPerGiocatori(null) }, 'Automatica') : null,
+        h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => window.open('#/mappa/giocatori', 'mutant-giocatori') }, 'Apri vista giocatori')),
+      h('div', { class: 'mappa-qr' }, qr, h('small', { class: 'nota' }, url)),
+      rete?.soloLocale ? h('p', { class: 'nota' }, 'Server acceso con --solo-locale: dai tablet non si raggiunge. Riavvialo con avvia-server.bat.') : null);
+  }
 
   // ── Avvio ──
   testoStato('Lettura della scena…');
@@ -616,19 +792,27 @@ export function renderMappa(radice, ctx) {
     await usaScena(s);
     testoStato(s.aggiornato ? `Salvata alle ${ora(new Date(s.aggiornato))}` : '');
     adattaSchermo();
-    await aggiornaFonti();
+    await Promise.all([aggiornaFonti(), leggiScelta()]);
+    disegnaPannelloNebbia();
+    disegnaPannelloGiocatori();
   }).catch((e) => {
     if (st.chiusa) return;
     svuota(radice, h('section', { class: 'mappa-pagina' }, h('p', { class: 'riquadro attenzione' }, `Scena non trovata: ${e.message}. `,
       h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.tavolo() }, '← Tavolo'))));
   });
 
-  const giro = setInterval(() => aggiornaFonti(), INTERVALLO_FONTI_MS);
+  const giro = setInterval(async () => {
+    aggiornaFonti();
+    const prima = st.sceltaGiocatori;
+    await leggiScelta();
+    if (st.sceltaGiocatori !== prima) disegnaPannelloGiocatori();
+  }, INTERVALLO_FONTI_MS);
 
   return () => {
     st.chiusa = true;
     clearInterval(giro);
     if (st.salvataggio.modificata) salvaOra();
+    gesti.distruggi();
     window.removeEventListener('keydown', suTasto);
     window.removeEventListener('keyup', suRilasciaTasto);
     tela.distruggi();

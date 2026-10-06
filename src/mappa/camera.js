@@ -28,6 +28,16 @@ export function zoomVerso(cam, sx, sy, fattore, vista) {
   return { scala, ox: sx - (sx - cam.ox) * r, oy: sy - (sy - cam.oy) * r };
 }
 
+/**
+ * Zoom a due dita (lotto 4): dalla camera all'inizio del gesto (cam0), con le dita a distanza d0 e centro m0, alla
+ * camera con le dita a distanza d e centro m. Il punto della mappa che era sotto m0 finisce sotto m: si zooma e ci si
+ * sposta insieme, come sui telefoni.
+ */
+export function pizzica(cam0, m0, d0, m, d, vista) {
+  const z = zoomVerso(cam0, m0.x, m0.y, d0 > 0 ? d / d0 : 1, vista);
+  return { ...z, ox: z.ox + (m.x - m0.x), oy: z.oy + (m.y - m0.y) };
+}
+
 /** Fattore di zoom della rotella: deltaY positivo (verso di sé) allontana. */
 export const fattoreRotella = (deltaY, vista) => vista.passo_rotella ** -deltaY;
 

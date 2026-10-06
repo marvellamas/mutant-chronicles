@@ -42,6 +42,12 @@
 //   PUT /api/scene/<id>                la salva se è valida e se `revisione` è quella del file (altrimenti 409 con
 //                                      la scena attuale); le immagini nominate devono essere in mappe/; con
 //                                      archiviata: true passa in scene/archivio/ (non si cancella)
+//   GET /api/vista-giocatori?firma=…   la vista giocatori della scena in gioco (lotto 4): quella scelta dal master
+//                                      o, in automatico, la più recente collegata allo scontro aperto; i token
+//                                      visibili con lato, nome, immagine, quota dei PV e turno; { invariata } se la
+//                                      firma è quella dell'ultima risposta
+//   GET|PUT /api/vista-giocatori/scelta  { scena: id | null } in tavolo/mappa-giocatori.json (null = automatica)
+//   GET /api/ritratti/<chiave>         il ritratto del PG (dalla sua scheda), per i token della vista giocatori
 //   GET /api/mappe                     immagini in mappe/: [{ file, dimensione, mtime }]
 //   GET /api/mappe/<file>              l'immagine (in cache: il nome contiene l'impronta del contenuto)
 //   POST /api/mappe?nome=…[&ridotta=1] corpo = JPG, PNG o WEBP: lo salva come <nome>-<impronta>[-ridotta].<est>
@@ -58,13 +64,15 @@ import { indirizziRete, testoAvvio } from './src/rete.js';
 import { validaScontro } from './src/scontro.js';
 import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
 import { NOME_FILE, fileProvvisorio, ultimiPerPersonaggio, chiaveDaFile, chiavePersonaggio } from './src/cartella.js';
-import { validaRecord, ID_VEICOLO, migraVeicoli, eRiferimento } from './src/veicoli-registro.js';
+import { validaRecord, ID_VEICOLO, migraVeicoli, eRiferimento, stessaChiave } from './src/veicoli-registro.js';
 import { normalizzaVeicoli } from './src/veicoli.js';
 import { caricaDati } from './src/rules.js';
 import { validaNemico, formattaErrore } from './src/validate.js';
 import { validaScena, riassuntoScena, ID_SCENA, FILE_MAPPA } from './src/mappa/scena.js';
 import { vistaGiocatori } from './src/mappa/vista.js';
 import { dimensioniImmagine } from './src/mappa/immagine.js';
+import { pezziDellaScena } from './src/mappa/partecipanti.js';
+import { vistaPlancia } from './src/tavolo.js';
 
 const RADICE = fileURLToPath(new URL('.', import.meta.url));
 const CARTELLA = 'personaggi';
@@ -340,7 +348,7 @@ async function apiNemici(req, res, percorso, nemici, radice) {
  * nascosto. Nessuna autenticazione, come il resto del server: il filtro vale per gli schermi che chiedono la vista
  * giocatori.
  */
-async function apiScene(req, res, percorso, scene, mappe, radice) {
+async function apiScene(req, res, percorso, scene, mappe, radice, cartelle) {
   if (percorso === '/api/scene' && req.method === 'GET') {
     await mkdir(scene, { recursive: true });
     const lista = [];
@@ -356,7 +364,7 @@ async function apiScene(req, res, percorso, scene, mappe, radice) {
     let s;
     try { s = await leggiJson(dove); } catch { return json(res, 404, { errore: 'scena non trovata' }); }
     const vista = new URL(req.url, 'http://x').searchParams.get('vista');
-    if (vista === 'giocatori') return json(res, 200, vistaGiocatori(s));
+    if (vista === 'giocatori') return json(res, 200, vistaGiocatori(s, await contestoScena(s, cartelle)));
     if (vista !== null) return json(res, 400, { errore: 'vista: solo «giocatori»' });
     return json(res, 200, s);
   }
@@ -386,6 +394,130 @@ async function apiScene(req, res, percorso, scene, mappe, radice) {
   }
   await scriviJson(dove, nuova);
   return json(res, 200, nuova);
+}
+
+/**
+ * Schede dei PG lette dal server per la vista giocatori (lotto 4): ultimo file di ogni PG in personaggi/, calcolato
+ * come nella plancia (src/tavolo.js → vistaPlancia, al Round dello scontro), riletto solo se cambia.
+ */
+const visteServer = new Map(); // file → { mtime, round, vista }
+async function vistePg(chiavi, cartella, dati, round) {
+  const viste = new Map();
+  if (!chiavi.length) return viste;
+  let elenco = [];
+  try {
+    for (const f of (await readdir(cartella)).filter((x) => x.endsWith('.json'))) elenco.push({ file: f, mtime: (await stat(join(cartella, f))).mtimeMs });
+  } catch { return viste; }
+  const ultimi = [...ultimiPerPersonaggio(elenco)];
+  for (const chiave of chiavi) {
+    const voce = ultimi.find(([k]) => stessaChiave(k, chiave))?.[1];
+    if (!voce) continue;
+    const c = visteServer.get(voce.file);
+    if (c && c.mtime === voce.mtime && c.round === round) { viste.set(chiave, c.vista); continue; }
+    try {
+      const vista = vistaPlancia(await readFile(join(cartella, voce.file), 'utf8'), dati, voce.file, round);
+      visteServer.set(voce.file, { mtime: voce.mtime, round, vista });
+      viste.set(chiave, vista);
+    } catch { /* scheda illeggibile: il token resta con le iniziali */ }
+  }
+  return viste;
+}
+
+const impronta = (t) => createHash('sha1').update(String(t)).digest('hex').slice(0, 12);
+
+/**
+ * Contesto della vista giocatori di una scena (lotto 4): scontro aperto o bozza collegati, schede dei PG, registro dei
+ * veicoli → pezzi (src/mappa/partecipanti.js), con gli indirizzi delle immagini per i giocatori: i ritratti dei PG
+ * da /api/ritratti (non i data URL dentro la risposta), le immagini dei nemici da /api/mappe.
+ */
+async function contestoScena(scena, { cartella, tavolo, scontri, veicoli, radice }) {
+  const { dati } = await datiDelServer(radice);
+  const c = scena.collegamento ?? {};
+  let scontro = null, bozza = null, alTavolo = [];
+  const id = c.scontro ?? c.bozza ?? null;
+  if (id && ID_SCONTRO.test(id)) {
+    try {
+      const x = await leggiJson(join(scontri, `${id}.json`));
+      if (c.scontro && x.stato === 'aperto') scontro = x;
+      else if (c.bozza && x.stato === 'bozza') bozza = x;
+    } catch { /* chiuso o mancante: nessun contesto */ }
+  }
+  if (bozza && !bozza.pg?.length) { try { alTavolo = selezione(await leggiJson(join(tavolo, 'sessione.json'))).personaggi; } catch { /* nessuno al tavolo */ } }
+  const chiavi = scontro ? scontro.partecipanti.filter((p) => p.tipo === 'pg').map((p) => p.chiave) : bozza ? (bozza.pg?.length ? bozza.pg : alTavolo) : [];
+  const viste = await vistePg(chiavi, cartella, dati, scontro?.round ?? null);
+  const registro = [];
+  try {
+    for (const f of (await readdir(veicoli)).filter((x) => x.endsWith('.json') && ID_VEICOLO.test(x.slice(0, -5)))) {
+      try { registro.push(await leggiJson(join(veicoli, f))); } catch { /* file rovinato */ }
+    }
+  } catch { /* nessun registro */ }
+  const pezzi = pezziDellaScena({ scontro, bozza, alTavolo, viste, veicoli: registro }, dati);
+  const immagineDi = (p) => (p.tipo === 'pg' ? (p.ritratto ? `api/ritratti/${encodeURIComponent(p.pg)}?v=${impronta(p.ritratto)}` : null) : p.ritratto);
+  return { pezzi, round: scontro?.round ?? null, immagineDi };
+}
+
+/** Scena mostrata ai giocatori: quella scelta dal master (tavolo/mappa-giocatori.json) o la più recente dello scontro aperto. */
+async function scenaInGioco({ tavolo, scontri, scene }) {
+  let scelta = null;
+  try { scelta = (await leggiJson(join(tavolo, 'mappa-giocatori.json'))).scena ?? null; } catch { /* automatica */ }
+  if (scelta && ID_SCENA.test(scelta)) {
+    try { return { scelta, scena: await leggiJson(join(scene, `${scelta}.json`)) }; } catch { return { scelta, scena: null, motivo: 'La scena scelta dal master non c’è più.' }; }
+  }
+  let aperto = null;
+  try {
+    for (const f of (await readdir(scontri)).filter((x) => x.endsWith('.json'))) {
+      try { const x = await leggiJson(join(scontri, f)); if (x.stato === 'aperto') { aperto = x.id; break; } } catch { /* rovinato */ }
+    }
+  } catch { /* nessuno scontro */ }
+  if (!aperto) return { scelta: null, scena: null, motivo: 'Nessuno scontro aperto e nessuna scena scelta dal master.' };
+  let migliore = null;
+  try {
+    for (const f of (await readdir(scene)).filter((x) => x.endsWith('.json') && ID_SCENA.test(x.slice(0, -5)))) {
+      try {
+        const x = await leggiJson(join(scene, f));
+        if (x.collegamento?.scontro === aperto && (!migliore || String(x.aggiornato ?? '') > String(migliore.aggiornato ?? ''))) migliore = x;
+      } catch { /* rovinata */ }
+    }
+  } catch { /* nessuna scena */ }
+  return migliore ? { scelta: null, scena: migliore } : { scelta: null, scena: null, motivo: 'Nessuna scena collegata allo scontro aperto.' };
+}
+
+/** Vista giocatori (lotto 4): la scena in gioco, filtrata, e la scelta del master. */
+async function apiVistaGiocatori(req, res, percorso, cartelle) {
+  const doveScelta = join(cartelle.tavolo, 'mappa-giocatori.json');
+  if (percorso === '/api/vista-giocatori/scelta') {
+    if (req.method === 'GET') {
+      try { return json(res, 200, { scena: (await leggiJson(doveScelta)).scena ?? null }); } catch { return json(res, 200, { scena: null }); }
+    }
+    if (req.method !== 'PUT') return json(res, 405, { errore: 'metodo non ammesso' });
+    let v;
+    try { v = JSON.parse((await leggiCorpo(req)).toString('utf8')); } catch (e) { return json(res, 400, { errore: `contenuto non valido: ${e.message}` }); }
+    const scena = v?.scena ?? null;
+    if (scena !== null && !(typeof scena === 'string' && ID_SCENA.test(scena))) return json(res, 400, { errore: 'scena: id di una scena o null (automatica)' });
+    if (scena) { try { await stat(join(cartelle.scene, `${scena}.json`)); } catch { return json(res, 404, { errore: 'scena non trovata' }); } }
+    await mkdir(cartelle.tavolo, { recursive: true });
+    await scriviJson(doveScelta, { versione: 1, scena });
+    return json(res, 200, { scena });
+  }
+  if (percorso !== '/api/vista-giocatori' || req.method !== 'GET') return json(res, 405, { errore: 'metodo non ammesso' });
+  const { scelta, scena, motivo } = await scenaInGioco(cartelle);
+  const corpo = { scelta, scena: scena ? vistaGiocatori(scena, await contestoScena(scena, cartelle)) : null, ...(motivo ? { motivo } : {}) };
+  const firma = impronta(JSON.stringify(corpo));
+  if (new URL(req.url, 'http://x').searchParams.get('firma') === firma) return json(res, 200, { firma, invariata: true });
+  return json(res, 200, { firma, ...corpo });
+}
+
+/** Ritratto di un PG (data URL della scheda) come immagine, per i token della vista giocatori. */
+async function apiRitratto(req, res, percorso, { cartella, radice }) {
+  if (req.method !== 'GET') return json(res, 405, { errore: 'metodo non ammesso' });
+  const chiave = decodeURIComponent(percorso.slice('/api/ritratti/'.length));
+  const { dati } = await datiDelServer(radice);
+  const vista = (await vistePg([chiave], cartella, dati, null)).get(chiave);
+  const m = /^data:(image\/(?:png|jpeg|webp|gif));base64,(.+)$/.exec(vista?.ritratto ?? '');
+  if (!m) return json(res, 404, { errore: 'ritratto non trovato' });
+  const corpo = Buffer.from(m[2], 'base64');
+  res.writeHead(200, { 'Content-Type': m[1], 'Content-Length': corpo.length, 'Cache-Control': 'public, max-age=86400' });
+  return res.end(corpo);
 }
 
 /** Nome leggibile per il file di una mappa: minuscole senza accenti, cifre e trattini. */
@@ -468,7 +600,10 @@ async function caricaEsempi(radice, cartella, nemici) {
 }
 
 async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice, soloLocale, veicoli, migraIn = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE)) {
-  if (percorso === '/api/scene' || percorso.startsWith('/api/scene/')) return apiScene(req, res, percorso, scene, mappe, radice);
+  const cartelle = { cartella, tavolo, scontri, veicoli, scene, radice };
+  if (percorso === '/api/scene' || percorso.startsWith('/api/scene/')) return apiScene(req, res, percorso, scene, mappe, radice, cartelle);
+  if (percorso === '/api/vista-giocatori' || percorso.startsWith('/api/vista-giocatori/')) return apiVistaGiocatori(req, res, percorso, cartelle);
+  if (percorso.startsWith('/api/ritratti/')) return apiRitratto(req, res, percorso, cartelle);
   if (percorso === '/api/mappe' || percorso.startsWith('/api/mappe/')) return apiMappe(req, res, percorso, mappe, radice);
   if (percorso === '/api/veicoli' || percorso.startsWith('/api/veicoli/')) return apiVeicoli(req, res, percorso, veicoli);
   if (percorso === '/api/ping') return json(res, 200, { ok: true, app: 'mutant', cartella: CARTELLA });

@@ -55,7 +55,7 @@ export function disegnaToken(c, { scena, cam, pezzi, colori, immagine, seleziona
 }
 
 function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano }) {
-  const colore = p ? colori[p.lato] ?? colori.avversario : colori.testo;
+  const colore = colori[p?.lato] ?? colori.testo;
   const veicolo = t.rif.tipo === 'veicolo';
   const cx = box.x + box.w / 2, cy = box.y + box.h / 2;
   const r = Math.min(box.w, box.h) / 2 * 0.88;
