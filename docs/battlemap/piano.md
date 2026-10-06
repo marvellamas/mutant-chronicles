@@ -2,52 +2,43 @@
 
 Data: 06/10/2026. Branch `battlemap`. Fonte delle funzioni: `docs/battlemap/specifica.md` (bozza 2 approvata da Marcello).
 Ricognizione dell'app di Davide: `docs/ricognizione-battlemap.md`. Decisioni: `docs/risposte-master.md` (115, A.123
-Iniziativa del manuale) e domande aperte A.121, A.122, A.124, A.125, più le nuove A.126–A.130 in fondo a questo
-documento. Qui niente codice: solo confronto, architettura e lotti.
+Iniziativa del manuale; 116, nessun riuso di codice) e domande aperte A.122, A.124, A.125, più le nuove A.126–A.130 in
+fondo a questo documento.
 
 Una scelta di fondo guida tutto il piano: **la specifica è a celle**. I token stanno sempre al centro di un Q, i muri
 sono Q invalicabili dipinti a pennello, la nebbia si copre per Q. L'app di Davide invece lavora in pixel continui, con
-muri a segmenti e pedine ruotate di 45°. Il modello a celle è più semplice da calcolare e da testare. Per questo dal
-suo codice si riusano soprattutto idee, non interi moduli.
+muri a segmenti e pedine ruotate di 45°. Il modello a celle è più semplice da calcolare e da testare.
+
+**Si scrive tutto da zero** (decisione di Marcello del 06/10/2026, decisione 116): dall'app di Davide non si copia né
+si adatta codice, e la domanda A.121 è ritirata. La sua app resta solo un riferimento per le funzioni che lui usa al
+tavolo (A.122).
 
 ---
 
-## 1. Confronto con l'app di Davide
+## 1. Confronto con l'app di Davide (solo le funzioni)
 
-| Funzione della specifica | Nell'app di Davide | Riusabile? | Adattamento al nostro stack | Risparmio |
-| --- | --- | --- | --- | --- |
-| §4 Immagine di fondo, copia ridotta | Immagine o video in IndexedDB e su R2, nessuna copia ridotta | No (Cloudflare, React) | Riscrittura: upload al server, copia ridotta fatta dal browser del master | — |
-| §4 Griglia calibrabile e bloccabile | `gridSize` (px per Q) dalla larghezza in Q, `mapOffset`, opacità | Idea | Calibrazione tracciando un quadretto (due clic) o con i valori; blocco | Poco |
-| §4 Zoom e pan | Rotella verso il cursore, 5–400 % (`page.tsx:3424-3443`) | Idea (formula dello zoom verso il punto) | Trasformazione della camera in un modulo puro | Poco |
-| §5 Nebbia manuale | Tratti a pennello tondo o a blocchi di Q (`FogStroke`), applicata sul frame del master | No (vettoriale in px) | Maschera di Q coperti, una cella per bit, filtrata dal server | — |
-| §6 Muri a pennello per Q | Muri e porte come segmenti (`BlockerSegment`), costruttore a stanze | Parziale | Da noi i muri sono celle. `segmentInRect` / `segmentIntersectsPawn` (`lib/pawn-geometry.ts:85-95`) servono per la linea di tiro di fase 2 | Poco |
-| §7 Token con Taglia, PV, Stati, nascosti | Pedina con dimensioni 1–10 Q, visibilità «solo Direttore», niente PV né Stati | Parziale | `getPawnFootprint`, `snapPawnToGrid` (`pawn-geometry.ts:24-51`) diventano banali a celle; PV e Stati vengono dallo scontro | Poco |
-| §8 Area raggiungibile Passo/Corsa/Scatto | Assente: il master muove senza limiti; online, passi da 1 Q entro un budget a mano | No | BFS a celle nostro (`src/mappa/area.js`), costi dai dati | — |
-| §8 Annulla ultimo movimento | No (solo l'ultimo ostacolo) | No | Registro dei movimenti del Round nella scena | — |
-| §8 Veicoli all'INI del conducente | Salire, scendere, gruppo che si muove e ruota (`lib/vehicles.ts`); nessuna iniziativa | **Sì** (fase 2) | `boardPawn`, `disembarkPawn`, `movePawnGroup`, `rotatePawnGroup` portati in JS e convertiti a celle | **0,5 sessione** |
-| §9 Linea di tiro (fase 2) | Misura senza muri; linea di vista a raycasting sul poligono di visibilità (`page.tsx:605-651`) | Idea + `segmentInRect` | Linea su griglia (celle attraversate) contro muri e token | Poco |
-| §10 Template (fase 2) | Quadrato, cono a due clic, libero; 14 effetti grafici | Idea (geometria del cono) | Celle coperte calcolate da un modulo puro, misure dai dati degli incantesimi | Poco |
-| §11 Barra dello scontro | Maschera dell'iniziativa d12 (`page.tsx:5470`) | No (sistema precedente, A.123) | Riuso della nostra plancia | — |
-| §11.1 Mappa ↔ scontro | No | — | Nostro | — |
-| §12 Menu con clic destro, scorciatoie | Scorciatoie del tastierino (`page.tsx:2491`), niente menu contestuale | Idea | Nostro | — |
-| §13 Avvisi e suoni (fase 2) | No | — | Riuso di `src/ui/avvisi.js` | — |
-| Fase 2: porte | Porte aperte, chiuse o bloccate, apertura atomica (`lib/pawn-movement.ts`) | Idea + test | Porta = cella speciale sul muro (aperta o chiusa) | Poco |
-| Fase 3: luci e rivelazione automatica | Luci a livello, raycasting | Idea | Linea di vista a celle; luci solo se A.122 dice che servono | Poco |
+| Funzione della specifica | Nell'app di Davide | In Mutant |
+| --- | --- | --- |
+| §4 Immagine di fondo, copia ridotta | Immagine o video, nessuna copia ridotta | Upload al server, copia ridotta fatta dal browser del master |
+| §4 Griglia calibrabile e bloccabile | Px per Q dalla larghezza in Q, scostamento, opacità | Calibrazione tracciando un quadretto o con i valori; blocco |
+| §4 Zoom e pan | Rotella verso il cursore | Camera in un modulo puro (`src/mappa/vista-camera.js`) |
+| §5 Nebbia manuale | Tratti a pennello in pixel, applicati sul frame del master | Maschera di Q coperti, filtrata dal server |
+| §6 Muri a pennello per Q | Muri e porte come segmenti, costruttore a stanze | Muri come celle |
+| §7 Token con Taglia, PV, Stati, nascosti | Pedina da 1 a 10 Q, visibilità «solo Direttore», niente PV né Stati | Ingombro dalla Taglia; PV e Stati dallo scontro |
+| §8 Area raggiungibile Passo/Corsa/Scatto | Assente: il master muove senza limiti | Ricerca a costo minimo sulle celle, costi dai dati |
+| §8 Annulla ultimo movimento | No | Registro dei movimenti del Round nella scena |
+| §8 Veicoli all'INI del conducente | Salire, scendere, gruppo che si muove e ruota; nessuna iniziativa | Nostro, con il registro dei veicoli (fase 2) |
+| §9 Linea di tiro (fase 2) | Misura senza muri; linea di vista a raycasting | Linea su griglia (celle attraversate) contro muri e token |
+| §10 Template (fase 2) | Quadrato, cono, libero | Celle coperte da un modulo puro, misure dai dati degli incantesimi |
+| §11 Barra dello scontro | Iniziativa d12 (sistema precedente, A.123) | La nostra plancia |
+| §11.1 Mappa ↔ scontro | No | Nostro |
+| §12 Menu con clic destro, scorciatoie | Scorciatoie del tastierino, niente menu contestuale | Nostro |
+| §13 Avvisi e suoni (fase 2) | No | `src/ui/avvisi.js` |
+| Fase 2: porte | Porte aperte, chiuse o bloccate | Porta = cella speciale sul muro (aperta o chiusa) |
+| Fase 3: luci e rivelazione automatica | Luci a livello, raycasting | Linea di vista a celle; luci solo se A.122 dice che servono |
 
-**Che cosa vale davvero la pena riusare** (se Davide dice sì, A.121):
-- **`lib/vehicles.ts` e i suoi test** (salita, trasporto, discesa, rotazione: circa 10 casi in `tests/live-session.test.mjs`). Servono per i veicoli sulla mappa (fase 2).
-- **`lib/pawn-geometry.ts`**: rotazione dei punti e intersezione fra segmento e rettangolo, per la linea di tiro e per i token grandi.
-- **`lib/pawn-movement.ts`**: l'idea dell'apertura atomica delle porte (se il movimento fallisce non si apre nulla) e i suoi test, per le porte di fase 2.
-
-**Come si adattano:**
-- **Linguaggio:** da TypeScript a JavaScript a mano, togliendo i tipi e lasciando i commenti JSDoc.
-- **Unità:** da pixel a Q.
-- **Dove:** `src/mappa/`, con un commento di provenienza («da EROI & LEGGENDE, `lib/vehicles.ts`, con il permesso di Davide (A.121)»).
-- **Test:** con `node --test`, come gli altri.
-
-**Risparmio complessivo:** modesto, circa 1 sessione su tutto il progetto, quasi tutta sui veicoli. Il valore maggiore sono i casi di prova già pensati (corridoi, ingombri, rotazioni).
-
-**Se Davide dice no:** si scrive tutto da zero sul modello a celle (circa +1 sessione), usando solo come promemoria l'elenco dei casi che i suoi test coprono (idee, non codice).
+Nessun modulo dell'app di Davide entra in Mutant. Senza riuso servono circa una sessione in più sull'intero progetto,
+quasi tutta per i veicoli sulla mappa (fase 2).
 
 ## 2. Che cosa c'è già in Mutant
 
@@ -224,7 +215,7 @@ Marcello preferisce.
 2. **Linea di tiro**: distanza, fascia di gittata dell'arma, colori libera / attraversa token (Copertura) / bloccata; apre «Attacca!» con bersaglio e distanza.
 3. **Template**: quadrato, cono, cerchio, rettangolo libero; durata in Round con avviso alla scadenza; proposta da «Lancia!» con le misure dell'incantesimo; token coperti evidenziati.
 4. **Porte** sui muri (aperta, chiusa).
-5. **Veicoli sulla mappa**: ingombro, passeggeri, movimento all'Iniziativa del conducente con l'andatura (riuso di `lib/vehicles.ts` se A.121 è sì).
+5. **Veicoli sulla mappa**: ingombro, passeggeri, movimento all'Iniziativa del conducente con l'andatura.
 6. **Avvisi** di turno («Sei il prossimo», «È il tuo turno»), richiami del master, suoni brevi e vibrazione con interruttore.
 
 ### Fase 3

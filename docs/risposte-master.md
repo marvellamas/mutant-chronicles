@@ -934,10 +934,13 @@ approvata da Marcello; copia in `docs/battlemap/specifica.md`, piano in `docs/ba
     di Davide («EROI & LEGGENDE – Tavolo Digitale», `docs/ricognizione-battlemap.md`) appartiene al sistema
     precedente e non si usa.
 
+116. **Nessun riuso del codice dell'app di Davide** (decisione di Marcello, 06/10/2026). La mappa di battaglia si
+    scrive tutta da zero sul modello a celle; dall'app «EROI & LEGGENDE» (`F:\REPOS\Eroi-Leggende`, solo in lettura)
+    non si copia né si adatta codice. La domanda A.121 (riuso del suo codice) è ritirata: nel pacchetto per il Doc va
+    spostata fra le risolte come «ritirata, nessun riuso».
+
 **Aperte** (testi nella sezione 15 della specifica; da mettere nel Doc «per-davide.md» con il pacchetto):
 
-- **A.121 — Riuso del suo codice.** Possiamo riusare, adattate, le funzioni pure della sua app (geometria delle pedine,
-  movimento con muri e porte, veicoli) e i loro test?
 - **A.122 — Funzioni usate davvero.** Quali funzioni della sua app usi al tavolo (mappe proprie o costruite, nebbia,
   luci, porte, template, vista dei giocatori)?
 - **A.124 — Azioni extra, movimento, diagonali.** Le azioni extra sono turni separati nel Round o azioni nello stesso
