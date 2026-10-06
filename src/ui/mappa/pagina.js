@@ -1564,6 +1564,15 @@ export function renderMappa(radice, ctx) {
     if (soloSeFuori && s.x >= margine && s.x <= d.larghezza - margine && s.y >= margine && s.y <= d.altezza - margine) return;
     cambiaCamera({ ...st.cam, ox: d.larghezza / 2 - c.x * st.cam.scala, oy: d.altezza / 2 - c.y * st.cam.scala });
   }
+  /** Il token di chi è di turno nello scontro aperto diventa quello scelto, con la mini-scheda (senza riaprire la barra). */
+  function selezionaDiTurno() {
+    const s = st.fonti?.scontro;
+    const id = s ? diTurno(s)?.id : null;
+    if (!id) return;
+    const t = st.scena.token.find((x) => chiaveRif(x.rif) === chiaveRif({ tipo: 'partecipante', id }));
+    if (t) scegli(t.id);
+    apriCartaChiave(chiaveRif({ tipo: 'partecipante', id }), { riapri: false });
+  }
   /**
    * Al cambio di turno («Avanti» della barra o della plancia, anche da un'altra finestra) il token attivo diventa quello
    * scelto, con la sua mini-scheda e la sua area (ritocchi del 06/10: non resta scelto il precedente); con «Centra su
@@ -1642,6 +1651,9 @@ export function renderMappa(radice, ctx) {
     disegnaPannelloMuri();
     disegnaPannelloGiocatori();
     if (vista?.carta) { const t = st.scena.token.find((x) => chiaveRif(x.rif) === vista.carta); if (t) apriCarta(t); }
+    // difetto 2 del collaudo del lotto 7: aprendo o ricaricando la pagina senza una vista da rimettere, il token di turno
+    // dello scontro aperto torna scelto, con la mini-scheda e l'area
+    else if (!vista?.selezionato) selezionaDiTurno();
   }).catch((e) => {
     if (st.chiusa) return;
     svuota(radice, h('section', { class: 'mappa-pagina' }, h('p', { class: 'riquadro attenzione' }, `Scena non trovata: ${e.message}. `,
