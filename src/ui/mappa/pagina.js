@@ -644,7 +644,7 @@ export function renderMappa(radice, ctx) {
     st.fonti = null; // nessun avviso di «nuovi» per il cambio di collegamento
     salvaPresto();
     disegnaPannelli();
-    aggiornaFonti();
+    aggiornaFonti().then(() => st.planciaBarra?.ridisegna?.());
   }
 
   /** Bordo di un pezzo con i colori della scena (src/mappa/colori.js). */
@@ -1503,7 +1503,7 @@ export function renderMappa(radice, ctx) {
     if (st.planciaBarra) return;
     st.planciaBarra = renderTavolo(el.piena, {
       dati: ctx.dati,
-      inMappa: { sezioni: el.slot },
+      inMappa: { sezioni: el.slot, collegamento: () => (st.scena ? { ...st.scena.collegamento, nomeBozza: st.fonti?.bozza?.nome ?? null } : null) },
       azioni: {
         personaggi: () => ctx.azioni.personaggi?.(),
         // «Prepara la mappa» sulla scena già aperta: si rilegge, con il nuovo collegamento

@@ -350,7 +350,14 @@ export function renderTavolo(radice, ctx) {
     // ritocchi del 06/10: nella barra della mappa la plancia si divide nei gruppi dei segnalibri (src/ui/mappa/pagina.js)
     const S = ctx.inMappa?.sezioni;
     if (S) {
-      svuota(S.iniziativa, h('div', { class: 'plancia plancia-in-mappa' }, pannelloScontro(ctx, stScontro, azScontro, 'iniziativa')));
+      // difetto 4 del collaudo del lotto 7: l'Iniziativa è quella dello scontro della scena, non per forza quello aperto
+      const c = ctx.inMappa.collegamento?.() ?? null;
+      const riquadro = (titolo, testo) => h('section', { class: 'riquadro scontro-pannello' }, h('h2', {}, titolo), h('p', { class: 'nota' }, testo));
+      svuota(S.iniziativa, h('div', { class: 'plancia plancia-in-mappa' },
+        c?.bozza ? riquadro('Scontro non ancora iniziato', `La scena è collegata alla bozza «${c.nomeBozza ?? c.bozza}»: l’ordine d’Iniziativa compare quando lo scontro inizia («Prepara scontro» → «Inizia»).`)
+          : !c?.scontro ? riquadro('Nessuno scontro collegato', 'Collega la scena a uno scontro o a una bozza dal gruppo «Mappa».')
+            : c.scontro !== stato.scontro?.id ? riquadro('Lo scontro della scena non è aperto', stato.scontro ? `È aperto un altro scontro («${stato.scontro.nome}»): collega la scena a quello dal gruppo «Mappa», o chiudilo.` : 'Lo scontro collegato è chiuso: collega la scena a un altro scontro o a una bozza dal gruppo «Mappa».')
+              : pannelloScontro(ctx, stScontro, azScontro, 'iniziativa')));
       svuota(S.pg, h('div', { class: 'plancia plancia-in-mappa' }, cartePg, sezioneVeicoli()));
       svuota(S.nemici, h('div', { class: 'plancia plancia-in-mappa' }, carteNemici ?? h('p', { class: 'vuoto' }, stato.scontro ? 'Nessun nemico nello scontro: aggiungili da «Scontro».' : 'Nessuno scontro aperto.')));
       svuota(S.scontro, h('div', { class: 'plancia plancia-in-mappa' },
