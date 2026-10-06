@@ -207,7 +207,14 @@ export function renderMappa(radice, ctx) {
     el.stato.textContent = st.salvataggio.testo;
   };
   const ridisegna = (livelli) => { tela.richiedi(livelli); aggiornaBarra(); };
-  const cambiaCamera = (cam) => { st.cam = cam; ridisegna(['fondo', 'sopra']); };
+  // anche il livello della nebbia segue zoom e spostamenti (nel lotto 4 restava fermo); data-zoom e data-origine
+  // dicono la vista attuale, per le prove (come data-disegno-ms di ./canvas.js e la vista giocatori)
+  const cambiaCamera = (cam) => {
+    st.cam = cam;
+    el.riquadro.dataset.zoom = String(Math.round(cam.scala * 1000) / 10);
+    el.riquadro.dataset.origine = `${Math.round(cam.ox)},${Math.round(cam.oy)}`;
+    ridisegna(['fondo', 'aree', 'sopra']);
+  };
   const zoomCentro = (f) => { const { larghezza, altezza } = tela.dimensioni(); cambiaCamera(zoomVerso(st.cam, larghezza / 2, altezza / 2, f, V)); };
   const adattaSchermo = () => {
     if (!st.scena) return;
