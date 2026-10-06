@@ -90,19 +90,19 @@ La Mappa di battaglia è un modulo del **Tavolo del Master** di Mutant: gira sul
 ## **11\. Gestione dello scontro**
 
 > * **Barra laterale dello scontro:** è la plancia del Tavolo già esistente, ridisegnata come pannello accanto alla mappa.  
-> * Cliccando un token si apre la sua carta nella barra (PV, Stati, attacchi, «Colpito», incantesimi); i danni si applicano da lì.  
+> * Cliccando un token si apre la sua mini-scheda nella barra (PV, Stati, attacchi, «Colpito», incantesimi); i danni si applicano da lì.  
 > * **Barra dell’Iniziativa** in alto: una barra graduata con i mini-token (foto o iniziali colorate) posizionati sul loro valore di Iniziativa; il token di turno è evidenziato; «Avanti» passa al successivo e al nuovo Round.  
 > * Tutto ciò che fa già la plancia resta: Round, durate, Sanguinamento e Stati periodici, bozze, «Crea nemico», veicoli.
-> * **Aggiunta di Marcello (06/10/2026): non si lascia mai la mappa con un clic.** Il clic su un token apre la sua carta in un pannello a lato della mappa (la carta della plancia: PV, Stati, «Colpito», attacchi), con «Apri scheda completa» per un PG e «Apri nella plancia» per la plancia intera. La scheda completa di un PG, o la plancia, aperte dalla mappa hanno in alto un pulsante grande e ben visibile **«Torna alla mappa»** che riporta alla stessa scena, allo stesso zoom e alla stessa posizione, con il token e la carta di prima.
+> * **Aggiunta di Marcello (06/10/2026): non si lascia mai la mappa con un clic.** Il clic su un token apre la sua mini-scheda in un pannello a lato della mappa (la mini-scheda della plancia: PV, Stati, «Colpito», attacchi), con «Apri scheda completa» per un PG e «Apri nella plancia» per la plancia intera. La scheda completa di un PG, o la plancia, aperte dalla mappa hanno in alto un pulsante grande e ben visibile **«Torna alla mappa»** che riporta alla stessa scena, allo stesso zoom e alla stessa posizione, con il token e la mini-scheda di prima.
 
 ### **11.1 Ridimensionamento rapido mappa ↔ scontro**
 
 Lo spazio dello schermo si sposta in un attimo fra mappa e barra dello scontro, a seconda di cosa serve in quel momento.
 
-> * **Tre disposizioni** con un pulsante ciascuna, sempre visibili in alto: **Mappa grande** (barra ridotta a una colonna stretta con i mini-token e i PV), **Equilibrata** (circa due terzi mappa, un terzo scontro), **Scontro grande** (barra larga con le carte complete, mappa ridotta).  
+> * **Tre disposizioni** con un pulsante ciascuna, sempre visibili in alto: **Mappa grande** (barra ridotta a una colonna stretta con i mini-token e i PV), **Equilibrata** (circa due terzi mappa, un terzo scontro), **Scontro grande** (barra larga con le mini-schede complete, mappa ridotta).  
 > * **Scorciatoia** per passare da una disposizione all’altra (per esempio il tasto **Tab**), più **doppio clic sul bordo** fra mappa e barra.  
 > * **Trascinamento del bordo** per una larghezza libera.  
-> * Con la barra ridotta, cliccare un token la riapre sulla sua carta.  
+> * Con la barra ridotta, cliccare un token la riapre sulla sua mini-scheda.  
 > * La scelta resta memorizzata per quello schermo.
 
 ## **12\. Comandi**
@@ -112,8 +112,8 @@ Lo spazio dello schermo si sposta in un attimo fra mappa e barra dello scontro, 
 > * **Rotella / \+ / −:** zoom.  
 > * **Barra spaziatrice \+ mouse:** sposta la mappa.  
 > * **Tab:** cambia la disposizione mappa ↔ scontro.  
-> * **Ctrl \+ clic su un token:** apre la scheda (PG) o la carta (nemico).  
-> * **Aggiunta di Marcello (06/10/2026):** il clic semplice su un token apre la sua carta a lato della mappa, senza lasciarla; dalla scheda completa o dalla plancia aperte dalla mappa si torna con **«Torna alla mappa»** (stessa scena, zoom e posizione), come al §11.  
+> * **Ctrl \+ clic su un token:** apre la scheda (PG) o la mini-scheda (nemico).  
+> * **Aggiunta di Marcello (06/10/2026):** il clic semplice su un token apre la sua mini-scheda a lato della mappa, senza lasciarla; dalla scheda completa o dalla plancia aperte dalla mappa si torna con **«Torna alla mappa»** (stessa scena, zoom e posizione), come al §11.  
 > * **Alt \+ clic su un token:** linea di tiro verso il punto cliccato dopo.  
 > * **Ctrl \+ Z:** annulla l’ultima azione del master.  
 > * **Esc:** chiude menu e strumenti.  

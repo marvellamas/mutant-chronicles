@@ -323,7 +323,7 @@ export function renderTavolo(radice, ctx) {
           h('button', { type: 'button', class: 'btn', title: 'Scene della mappa di battaglia: nuova, apri, rinomina, duplica, archivia', onclick: () => apriElencoScene(stato.scene, disegna) }, 'Mappa'),
           h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.personaggi() }, 'Personaggi'))),
       stato.esitoEsempi ? h('p', { class: 'riquadro attenzione', role: 'status' }, stato.esitoEsempi) : null,
-      h('p', { class: 'nota' }, 'Sola lettura: i valori sono quelli delle schede in personaggi/, ricalcolati con le regole attuali. Per cambiarli si apre il personaggio (clic sulla carta).'),
+      h('p', { class: 'nota' }, 'Sola lettura: i valori sono quelli delle schede in personaggi/, ricalcolati con le regole attuali. Per cambiarli si apre il personaggio (clic sulla mini-scheda).'),
       riquadroCollega(stato.rete, { aperto: stato.collegaAperto, onToggle: (v) => { stato.collegaAperto = v; } }),
       stato.sceltaAperta ? sceltaAlTavolo(stato, ultimi, async (nuova) => {
         try {
@@ -634,13 +634,13 @@ export function renderTavolo(radice, ctx) {
     const part = /^partecipante:(.+)$/.exec(chiave);
     if (part) {
       const p = (stato.scontro?.partecipanti ?? []).find((x) => x.id === part[1]);
-      if (!p) return h('p', { class: 'nota' }, stato.scontro ? 'Non è nello scontro aperto.' : 'Nessuno scontro aperto: i nemici di una bozza hanno la carta quando lo scontro parte («Inizia»).');
+      if (!p) return h('p', { class: 'nota' }, stato.scontro ? 'Non è nello scontro aperto.' : 'Nessuno scontro aperto: i nemici di una bozza hanno la mini-scheda quando lo scontro parte («Inizia»).');
       if (p.tipo !== 'nemico') return h('article', { class: 'carta-plancia' }, h('h2', {}, p.nome), h('p', { class: 'nota' }, `Scritto a mano nello scontro (${p.lato}): si gestisce dal riquadro dello scontro della plancia.`));
       return conPezzo(cartaNemico(ctx, p, { modifica, durate: durateNemico(p), diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p), onAttacca: attacchiDi(p).length ? () => attacca(p, alTavolo) : null, onLancia: (i) => lancia(p, i, alTavolo), onRiduci: (v) => modifica((x) => riduciNemico(x, p.id, v)), onRegime: (k, r) => modifica((x) => confermaRegimeNemico(x, p.id, k, r, new Date())), onImmagine: () => immagineNemico(p) }), `partecipante:${p.id}`);
     }
     const vei = /^veicolo:(.+)$/.exec(chiave);
     const rec = vei ? stato.veicoli.find((x) => x.id === vei[1]) : null;
-    return rec ? cartaVeicolo(rec) : h('p', { class: 'nota' }, vei ? 'Lettura del registro dei veicoli…' : 'Carta non trovata.');
+    return rec ? cartaVeicolo(rec) : h('p', { class: 'nota' }, vei ? 'Lettura del registro dei veicoli…' : 'Mini-scheda non trovata.');
   };
 
   // A.105: veicoli del registro; conducente e mitragliere fra i PG dello scontro e del tavolo

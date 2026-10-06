@@ -57,7 +57,7 @@ export function sezioneScontro(v, a) {
  * @param t token scelto, p il suo pezzo (o null se il pezzo non si legge), a { nascondi(), togli(), ingombro(n), carta() }
  */
 export function sezioneToken(t, p, dati, a) {
-  if (!t) return h('section', { class: 'mappa-sezione', 'aria-label': 'Token' }, h('h2', {}, 'Token'), h('p', { class: 'nota' }, 'Clic su un token per sceglierlo e aprire la sua carta nella plancia; trascinalo per spostarlo.'));
+  if (!t) return h('section', { class: 'mappa-sezione', 'aria-label': 'Token' }, h('h2', {}, 'Token'), h('p', { class: 'nota' }, 'Clic su un token per sceglierlo e aprire la sua mini-scheda; trascinalo per spostarlo.'));
   const creatura = t.rif.tipo !== 'veicolo';
   const dettagli = [
     p ? `${NOMI_LATO[p.lato] ?? p.lato}${p.tipo === 'veicolo' ? ' · veicolo' : ''}` : 'fuori dallo scontro',
@@ -78,7 +78,7 @@ export function sezioneToken(t, p, dati, a) {
     sezioneMovimento(a.mov, a),
     h('div', { class: 'mappa-azioni-token' },
       h('button', { type: 'button', class: 'btn btn-piccolo', title: t.nascosto ? 'I giocatori lo vedranno' : 'Solo il master lo vede', onclick: a.nascondi }, t.nascosto ? 'Mostra' : 'Nascondi'),
-      h('button', { type: 'button', class: 'btn btn-piccolo', title: 'La carta nella plancia intera, con «Torna alla mappa»', onclick: a.carta, disabled: !p }, 'Apri nella plancia'),
+      h('button', { type: 'button', class: 'btn btn-piccolo', title: 'La mini-scheda nella plancia intera, con «Torna alla mappa»', onclick: a.carta, disabled: !p }, 'Apri nella plancia'),
       // A.131: immagine del tipo di nemico (tutte le copie, e il bestiario se c'è)
       p?.tipo === 'nemico' ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Immagine del token per tutte le copie di questo nemico e, se c’è, nel bestiario', onclick: a.immagine }, p.ritratto ? 'Cambia immagine…' : 'Immagine…') : null,
       p?.tipo === 'nemico' && p.ritratto ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Torna alle iniziali', onclick: a.togliImmagine }, 'Togli immagine') : null,

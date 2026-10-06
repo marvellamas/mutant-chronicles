@@ -46,7 +46,7 @@ quasi tutta per i veicoli sulla mappa (fase 2).
 | --- | --- | --- |
 | Plancia e scontri: partecipanti, Iniziativa con 1d10 e parità del manuale, turno, Round, «Avanti» | `src/scontro.js`, `src/ui/scontro.js`, `src/ui/tavolo.js` | La barra dello scontro è la plancia; il token di turno è `diTurno(scontro)`; la barra dell'Iniziativa usa l'ordine già calcolato (A.123) |
 | Round e durate, Stati con durata, Stati periodici (Sanguinamento) | `src/round-scontro.js`, `src/periodici.js` | Durata dei template (fase 2); avvisi «scade al prossimo Round» |
-| Carte dei PG e dei nemici, «Colpito», «Attacca», «Lancia!» dei nemici | `src/ui/tavolo.js` → `cartaPg`, `src/ui/nemici.js` → `cartaNemico` | Clic su un token: la sua carta nella barra |
+| Mini-schede dei PG e dei nemici, «Colpito», «Attacca», «Lancia!» dei nemici | `src/ui/tavolo.js` → `cartaPg`, `src/ui/nemici.js` → `cartaNemico` | Clic su un token: la sua mini-scheda nella barra |
 | Nemici dal bestiario e «Crea nemico», bozze «Prepara scontro» | `src/crea-nemico.js`, `src/preparazione.js` | Una scena si collega a una bozza o a uno scontro aperto (§4) |
 | Veicoli con record unico, movimento all'INI del conducente | `src/veicoli-registro.js` (`statoMovimento`, `muoviVeicolo`) | Token del veicolo (fase 2) |
 | Taglia nel formato dei nemici (`normale` / `grande`) | `data/formato_nemici.json` → `taglia` | Dimensione del token: 1 Q o 2×2 Q (3×3 da chiarire, A.126) |
@@ -85,7 +85,7 @@ quasi tutta per i veicoli sulla mappa (fase 2).
 2. muri, nebbia e aree (raggiungibile, template);
 3. token, selezione e linee.
 
-Menu, barre e carte sono DOM normale, come il resto dell'app. Si ridisegna solo il livello che cambia, in un
+Menu, barre e mini-schede sono DOM normale, come il resto dell'app. Si ridisegna solo il livello che cambia, in un
 `requestAnimationFrame`, mai a ogni evento del puntatore: niente animazioni continue. L'immagine si decodifica una volta
 (`createImageBitmap`) e si disegna con la trasformazione della camera (`setTransform`).
 
@@ -159,7 +159,7 @@ nel browser di quello schermo, non nella scena.
 - **Comandi:** `Tab` passa da una disposizione all'altra; doppio clic sul separatore; trascinamento per una larghezza libera.
 - **Memoria:** la scelta vale per quello schermo e sta nel suo browser (`localStorage` con try/catch, come le altre
   preferenze).
-- **Barra stretta:** solo mini-token e PV. Un clic su un token la riapre sulla sua carta.
+- **Barra stretta:** solo mini-token e PV. Un clic su un token la riapre sulla sua mini-scheda.
 
 **Barra dell'Iniziativa:**
 - **Scala:** una scala graduata dal valore minimo al massimo dello scontro, con i mini-token (ritratto o iniziali
@@ -172,7 +172,7 @@ nel browser di quello schermo, non nella scena.
   - rotella e `+`/`−` per lo zoom;
   - spazio + mouse per spostarsi;
   - `Tab` per la disposizione;
-  - `Ctrl`+clic per aprire scheda o carta;
+  - `Ctrl`+clic per aprire scheda o mini-scheda;
   - `Alt`+clic per la linea di tiro (fase 2);
   - `Ctrl+Z` per annullare;
   - `Esc` per chiudere.
@@ -197,7 +197,7 @@ Stato: lotto 1 fatto il 06/10/2026 (scene e immagini sul server, logica pura e t
 
 Stato: lotto 2 fatto il 06/10/2026: elenco delle scene nella plancia (voce «Mappa»: nuova, apri, rinomina, duplica, archivia in `scene/archivio/`), pagina `#/mappa/<id>` con immagine (copia ridotta preparata dal browser), Canvas a tre livelli, zoom, spostamento, «Adatta allo schermo», griglia calibrata tracciando un riquadro o con i valori, colore, opacità, blocco. Logica pura in `src/mappa/camera.js` e `src/mappa/griglia.js` (`tests/mappa-griglia.test.js`); interfaccia in `src/ui/mappa/`. Prova con un'immagine di 4000 × 3000 px: 0,1–0,2 ms di CPU per disegno.
 
-Stato: lotto 3 fatto il 06/10/2026: collegamento della scena allo scontro aperto o a una bozza (gli id dei partecipanti che «Inizia» creerà coincidono, così i token preparati restano validi), elenco dei pezzi senza token (trascinamento, «Metti» e clic, «Metti tutti» in una fila libera vicino al centro), token agganciati alla griglia con ingombro dalla Taglia (3 × 3 a mano, A.126) e veicoli rettangolari dal profilo, ritratto o iniziali, bordo del lato, anello dei PV, sigle degli Stati, grigio a 0 PV, alone del turno (anche per il veicolo all'Iniziativa del conducente), Nascondi / Mostra, Togli, clic che porta la carta nella plancia (BroadcastChannel), token tolti con avviso quando il partecipante esce (con conferma se a toglierli è un cambio di collegamento). Logica pura in `src/mappa/token.js` e `src/mappa/partecipanti.js` (`tests/mappa-token.test.js`); interfaccia in `src/ui/mappa/` (fonti, disegno-token, pannello-scontro, canale).
+Stato: lotto 3 fatto il 06/10/2026: collegamento della scena allo scontro aperto o a una bozza (gli id dei partecipanti che «Inizia» creerà coincidono, così i token preparati restano validi), elenco dei pezzi senza token (trascinamento, «Metti» e clic, «Metti tutti» in una fila libera vicino al centro), token agganciati alla griglia con ingombro dalla Taglia (3 × 3 a mano, A.126) e veicoli rettangolari dal profilo, ritratto o iniziali, bordo del lato, anello dei PV, sigle degli Stati, grigio a 0 PV, alone del turno (anche per il veicolo all'Iniziativa del conducente), Nascondi / Mostra, Togli, clic che porta la mini-scheda nella plancia (BroadcastChannel), token tolti con avviso quando il partecipante esce (con conferma se a toglierli è un cambio di collegamento). Logica pura in `src/mappa/token.js` e `src/mappa/partecipanti.js` (`tests/mappa-token.test.js`); interfaccia in `src/ui/mappa/` (fonti, disegno-token, pannello-scontro, canale).
 
 Stato: lotto 4 fatto il 06/10/2026: vista giocatori `#/mappa/giocatori` (solo la scena filtrata da `/api/vista-giocatori`: quella scelta dal master o la più recente collegata allo scontro aperto; token visibili con quota dei PV, turno e immagini, Round e chi è di turno solo se il suo token si vede; firma per non rimandare risposte uguali; ritratti dei PG da `/api/ritratti`), «Apri vista giocatori» e QR nella vista master; due dita, un dito e doppio tocco su entrambe le viste (`src/ui/mappa/gesti.js`); nebbia con pennello e rettangolo, «Rivela» / «Copri», «Copri tutto» / «Rivela tutto» con conferma, semitrasparente per il master e piena per i giocatori, Ctrl+Z con la pila «annulla» della scena (differenze compatte, `src/mappa/nebbia.js`). Misura sulla mappa 4000 × 3000 con nebbia a scacchiera (caso peggiore, 950 tratti), griglia e 6 token su un canvas 1280 × 800: mediana 2,0 ms, 95° percentile 3,2 ms per disegno.
 
@@ -212,7 +212,7 @@ Stato: lotto 5 fatto il 06/10/2026: muri e terreno difficile a pennello e rettan
 | 3 | **Token dello scontro**: collegamento della scena a uno scontro aperto o a una bozza; token dai partecipanti (ritratto, iniziali, Taglia 1 o 2×2 Q); posizionamento al centro dei Q; anello dei PV, icone degli Stati, token di turno; nascosti; «Togli dalla mappa». | Grande | 2 | Token dallo scontro, ingombro, posizioni libere, nascosti | I PG e i nemici dello scontro stanno sulla mappa con PV e Stati veri |
 | 4 | **Vista giocatori e nebbia**: secondo indirizzo `#/mappa/giocatori` (polling, zoom proprio); nebbia iniziale coperta o scoperta, pennello per Q e rettangolo, semitrasparente per il master e piena per i giocatori; filtro dal server. | Medio | 3 | Filtro (nebbia, nascosti), pennello e rettangolo sulle maschere | Il televisore mostra la mappa con la nebbia; il master rivela una stanza alla volta |
 | 5 | **Muri e area raggiungibile**: pennello dei muri (e del terreno difficile); area con Passo in evidenza, Corri / Scatta in tre colori; movimento cliccando o trascinando dentro l'area; movimenti del Round; «Annulla ultimo movimento»; `Ctrl+Z` del master. | Grande | 3 (4 per la vista) | Area con muri, token, alleati, ingombri grandi, diagonali dei dati, movimento a pezzi; pila dell'annulla | Il master muove i token con le regole del manuale e annulla un errore |
-| 6 | **Barra dello scontro e Iniziativa**: plancia come pannello accanto alla mappa (carte, «Colpito», «Avanti»); tre disposizioni con `Tab`, doppio clic e trascinamento del bordo; barra dell'Iniziativa graduata; clic su un token apre la sua carta. | Grande | 3 | Scala dell'Iniziativa (posizioni, parità) e disposizioni come funzioni pure | Tutto lo scontro si gestisce da un solo schermo, senza la plancia a parte |
+| 6 | **Barra dello scontro e Iniziativa**: plancia come pannello accanto alla mappa (mini-schede, «Colpito», «Avanti»); tre disposizioni con `Tab`, doppio clic e trascinamento del bordo; barra dell'Iniziativa graduata; clic su un token apre la sua mini-scheda. | Grande | 3 | Scala dell'Iniziativa (posizioni, parità) e disposizioni come funzioni pure | Tutto lo scontro si gestisce da un solo schermo, senza la plancia a parte |
 | 7 | **Menu e scorciatoie; collaudo**: menu con clic destro (e pressione lunga), menu superiore, scorciatoie principali con i suggerimenti; prova con copie dei PG su PC, tablet e televisore. | Medio | 2–6 | Tabella delle scorciatoie (nessun conflitto con i campi), resto dal collaudo | La versione minima della specifica, pronta per una sessione vera |
 
 **Totale della versione minima:** 7 lotti, circa 9–12 sessioni di lavoro. Ogni lotto lascia l'app funzionante e

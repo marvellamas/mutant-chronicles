@@ -199,7 +199,7 @@ function risultato(ctx, inc, r) {
           onclick: () => lanciaConAvviso(ctx, inc.nome, { personali: f.personali, contenitore: f.contenitore }, durataEBersagli.registrazione()),
         }, `Lancia (−${r.pm_costo} PM)`),
         h('small', { class: 'nota' }, ctx.calcola
-          ? 'Tira 1d20 al tavolo, se serve la Prova. Il lancio va nel registro dello scontro; i PM si correggono con − e + sulla carta.'
+          ? 'Tira 1d20 al tavolo, se serve la Prova. Il lancio va nel registro dello scontro; i PM si correggono con − e + sulla mini-scheda.'
           : 'Tira 1d20 al tavolo, se serve la Prova. «Annulla» nell’intestazione annulla la spesa; il pannello resta aperto per rilanciare.'))),
   ];
 }

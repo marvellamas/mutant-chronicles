@@ -120,11 +120,11 @@ export function renderMappa(radice, ctx) {
   el.riquadro.append(el.suggerimento);
   el.pannello = h('aside', { class: 'mappa-pannello', 'aria-label': 'Scontro, token e griglia' });
   el.cartaCorpo = h('div', { class: 'mappa-carta-corpo' });
-  el.carta = h('aside', { class: 'mappa-carta', 'aria-label': 'Carta del token', hidden: true },
+  el.carta = h('aside', { class: 'mappa-carta', 'aria-label': 'Mini-scheda del token', hidden: true },
     h('div', { class: 'mappa-carta-testa' },
-      h('strong', {}, 'Carta'),
-      h('button', { type: 'button', class: 'btn btn-piccolo', title: 'La stessa carta nella plancia intera, con «Torna alla mappa»', onclick: () => apriNellaPlancia() }, 'Apri nella plancia'),
-      h('button', { type: 'button', class: 'btn tondo', 'aria-label': 'Chiudi la carta', title: 'Chiudi (Esc)', onclick: () => chiudiCarta() }, '×')),
+      h('strong', {}, 'Mini-scheda'),
+      h('button', { type: 'button', class: 'btn btn-piccolo', title: 'La stessa mini-scheda nella plancia intera, con «Torna alla mappa»', onclick: () => apriNellaPlancia() }, 'Apri nella plancia'),
+      h('button', { type: 'button', class: 'btn tondo', 'aria-label': 'Chiudi la mini-scheda', title: 'Chiudi (Esc)', onclick: () => chiudiCarta() }, '×')),
     el.cartaCorpo);
   el.secScontro = h('div');
   el.secToken = h('div');
@@ -579,7 +579,7 @@ export function renderMappa(radice, ctx) {
    */
   function apriCarta(t) {
     const pz = pezzoDi(t);
-    if (!pz) return avvisoErrore('Questo token non è più nello scontro: nessuna carta da aprire.');
+    if (!pz) return avvisoErrore('Questo token non è più nello scontro: nessuna mini-scheda da aprire.');
     st.cartaAperta = pz.chiave;
     el.carta.hidden = false;
     if (st.plancia) st.plancia.ridisegna();
@@ -1092,7 +1092,7 @@ export function renderMappa(radice, ctx) {
       ...(st.fonti?.scontro ? [] : [{ testo: 'Nuovo turno', azione: () => nuovoTurnoUi(tok.id), titolo: 'Senza scontro aperto: il movimento di questo token riparte da 0' }]),
       null,
       { testo: tok.nascosto ? 'Mostra ai giocatori' : 'Nascondi ai giocatori', azione: () => cambiaToken(tok.id, (x) => ({ ...x, nascosto: !x.nascosto })) },
-      { testo: 'Carta', azione: () => apriCarta(tok), disabilitata: !pz },
+      { testo: 'Mini-scheda', azione: () => apriCarta(tok), disabilitata: !pz },
       { testo: 'Togli dalla mappa', azione: () => togliToken(tok.id) },
     ]);
   };
