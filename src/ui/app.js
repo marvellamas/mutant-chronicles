@@ -27,7 +27,7 @@ import { avviso, avvisoErrore } from './avvisi.js';
 import { controlloInUso } from './ridisegno.js';
 import { alRound, collegamentoScontro, tecnicheScadute, statiScaduti, durateCarta, testoDurata } from '../round-scontro.js';
 import { registraIncantesimo, terminaIncantesimo, concentrazioniInterrotte } from '../durate-incantesimi.js';
-import { segnaDalTavolo, arrivoDalTavolo, tornaAlTavolo, scorrimentoDaRimettere, dimenticaTavolo } from './ritorno.js';
+import { segnaDalTavolo, arrivoDalTavolo, tornaAlTavolo, scorrimentoDaRimettere, dimenticaTavolo, segnaDallaMappa, arrivoDallaMappa, tornaAllaMappa, dimenticaMappa } from './ritorno.js';
 import { PASSI, passoVisibile, requisitoPasso } from './passi.js';
 import { inizializzaTooltip, nascondiTooltip } from './tooltip.js';
 import { renderRiepilogo } from './riepilogo.js';
@@ -202,7 +202,11 @@ function daIndirizzo() {
       return vai('#/');
     }
     document.title = 'Mappa · Mutant';
-    stato.fermaTavolo = renderMappa(radice, { dati: stato.dati, id: scenaMappa[1], azioni: { tavolo: () => vai('#/tavolo') } });
+    stato.fermaTavolo = renderMappa(radice, {
+      dati: stato.dati, id: scenaMappa[1],
+      // difetto 2 (06/10/2026): la scheda completa aperta dalla mappa ha «Torna alla mappa»
+      azioni: { tavolo: () => vai('#/tavolo'), apriScheda: (r, dallaMappa) => apriDaCartella(r, { dallaMappa }) },
+    });
     return;
   }
   const sali = location.hash.match(/^#\/p\/([\w-]+)\/sali\/(\d+)$/);
@@ -226,6 +230,7 @@ function daIndirizzo() {
     stato.livelli = [];
     // la pagina iniziale: le schede aperte da qui non hanno «Torna al tavolo»
     dimenticaTavolo(sessionStorage);
+    dimenticaMappa(sessionStorage);
     return renderHome();
   }
   const [, id, passoTesto] = m;
@@ -832,7 +837,7 @@ function rigaPersonaggio(p, origine = 'browser') {
  * sincronizzano browser e cartella (vince il più recente), poi si apre la copia del browser; se il
  * personaggio è solo nella cartella lo si porta nel browser.
  */
-async function apriDaCartella(r, { dalTavolo = false } = {}) {
+async function apriDaCartella(r, { dalTavolo = false, dallaMappa = null } = {}) {
   try {
     await sincronizzaCartella();
     const locale = elencoUnito(archivio.elenco(), [r]).find((x) => x.origine === 'entrambi')?.voce ?? null;
@@ -847,6 +852,8 @@ async function apriDaCartella(r, { dalTavolo = false } = {}) {
     const p = archivio.carica(id);
     // aperta dalla plancia: la scheda mostra «← Torna al tavolo» (anche dopo F5)
     if (dalTavolo) segnaDalTavolo(sessionStorage, id, window.scrollY);
+    // aperta dalla mappa di battaglia: «Torna alla mappa» riporta alla scena, allo zoom e alla posizione di prima
+    if (dallaMappa) segnaDallaMappa(sessionStorage, { scena: dallaMappa.scena, id, vista: dallaMappa.vista });
     vai(p.passo === PASSO_SCHEDA ? `#/p/${id}` : `#/p/${id}/${p.passo ?? 0}`);
   } catch (e) {
     stato.messaggioHome = { tipo: 'errore', testo: `Apertura di ${r.file} non riuscita: ${e.message}` };
@@ -1321,6 +1328,8 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
     puoAnnullareSessione: !!stato.precedenteTavolo,
     // scheda aperta dalla plancia del Tavolo del Master: il pulsante per tornarci (src/ui/ritorno.js)
     tornaAlTavolo: arrivoDalTavolo(sessionStorage, stato.id) ? () => { tornaAlTavolo(sessionStorage); vai('#/tavolo'); } : null,
+    // scheda aperta dalla mappa di battaglia: il pulsante grande per tornarci (src/ui/ritorno.js)
+    tornaAllaMappa: arrivoDallaMappa(sessionStorage, stato.id) ? () => { const scena = tornaAllaMappa(sessionStorage); vai(`#/mappa/${scena}`); } : null,
     // pezzo 6: indicatore e avviso del collegamento, solo con il server della cartella
     collegamento: indicatoreCollegamento(stato.cartella, stato.collegamento.stato === 'collegato'),
     // verifica del 06/10/2026: dove sta la scheda (src/collegamento.js → statoSalvataggioMaster)

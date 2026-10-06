@@ -1,4 +1,4 @@
-<!-- Copia fedele del Google Doc «Mutant — Mappa di battaglia (specifica)», bozza 2, ID 1UB3U98NoumK35w4nL5KHOwg7Nc-ET_-FMot7weanM3s, modificato il 2026-10-06T09:56:13Z; scaricata in Markdown il 06/10/2026. Fonte per i lavori della mappa (branch battlemap): non si modifica a mano, si riscarica se il Doc cambia. Piano tecnico: docs/battlemap/piano.md. -->
+<!-- Copia fedele del Google Doc «Mutant — Mappa di battaglia (specifica)», bozza 2, ID 1UB3U98NoumK35w4nL5KHOwg7Nc-ET_-FMot7weanM3s, modificato il 2026-10-06T09:56:13Z; scaricata in Markdown il 06/10/2026. Fonte per i lavori della mappa (branch battlemap): non si modifica a mano, si riscarica se il Doc cambia. Piano tecnico: docs/battlemap/piano.md. Eccezione: le righe segnate «Aggiunta di Marcello» (06/10/2026, dopo il primo test sul suo PC) sono state aggiunte qui su sua richiesta e non sono ancora nel Doc: vanno riportate nel Doc e conservate se lo si riscarica. -->
 
 # **Mutant — Mappa di battaglia**
 
@@ -93,6 +93,7 @@ La Mappa di battaglia è un modulo del **Tavolo del Master** di Mutant: gira sul
 > * Cliccando un token si apre la sua carta nella barra (PV, Stati, attacchi, «Colpito», incantesimi); i danni si applicano da lì.  
 > * **Barra dell’Iniziativa** in alto: una barra graduata con i mini-token (foto o iniziali colorate) posizionati sul loro valore di Iniziativa; il token di turno è evidenziato; «Avanti» passa al successivo e al nuovo Round.  
 > * Tutto ciò che fa già la plancia resta: Round, durate, Sanguinamento e Stati periodici, bozze, «Crea nemico», veicoli.
+> * **Aggiunta di Marcello (06/10/2026): non si lascia mai la mappa con un clic.** Il clic su un token apre la sua carta in un pannello a lato della mappa (la carta della plancia: PV, Stati, «Colpito», attacchi), con «Apri scheda completa» per un PG e «Apri nella plancia» per la plancia intera. La scheda completa di un PG, o la plancia, aperte dalla mappa hanno in alto un pulsante grande e ben visibile **«Torna alla mappa»** che riporta alla stessa scena, allo stesso zoom e alla stessa posizione, con il token e la carta di prima.
 
 ### **11.1 Ridimensionamento rapido mappa ↔ scontro**
 
@@ -112,6 +113,7 @@ Lo spazio dello schermo si sposta in un attimo fra mappa e barra dello scontro, 
 > * **Barra spaziatrice \+ mouse:** sposta la mappa.  
 > * **Tab:** cambia la disposizione mappa ↔ scontro.  
 > * **Ctrl \+ clic su un token:** apre la scheda (PG) o la carta (nemico).  
+> * **Aggiunta di Marcello (06/10/2026):** il clic semplice su un token apre la sua carta a lato della mappa, senza lasciarla; dalla scheda completa o dalla plancia aperte dalla mappa si torna con **«Torna alla mappa»** (stessa scena, zoom e posizione), come al §11.  
 > * **Alt \+ clic su un token:** linea di tiro verso il punto cliccato dopo.  
 > * **Ctrl \+ Z:** annulla l’ultima azione del master.  
 > * **Esc:** chiude menu e strumenti.  

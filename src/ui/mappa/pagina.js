@@ -26,7 +26,8 @@ import { leggiRete } from '../collega.js';
 import { creaFonti } from './fonti.js';
 import { disegnaToken, coloriMappa, creaImmagini } from './disegno-token.js';
 import { sezioneScontro, sezioneToken, TIPO_TRASCINA } from './pannello-scontro.js';
-import { apriCartaInPlancia } from './canale.js';
+import { renderTavolo } from '../tavolo.js';
+import { segnaDallaMappa, vistaDaRimettere, dimenticaMappa } from '../ritorno.js';
 import { scegliImmagineNemico, impostaImmagineNemico } from '../immagine-nemico.js';
 
 const ATTESA_SALVATAGGIO_MS = 600;
@@ -41,7 +42,7 @@ const inCampo = (e) => /^(INPUT|TEXTAREA|SELECT)$/.test(e.target?.tagName ?? '')
 
 /**
  * Disegna la pagina della scena `ctx.id` in `radice`.
- * @param ctx { dati, id, azioni: { tavolo() } }
+ * @param ctx { dati, id, azioni: { tavolo(), apriScheda(remoto, vista) } }
  * @returns {() => void} chiude la pagina (listener, osservatori, salvataggio in sospeso)
  */
 export function renderMappa(radice, ctx) {
@@ -68,6 +69,9 @@ export function renderMappa(radice, ctx) {
     // lotto 4: strumenti della nebbia e scena scelta per i giocatori (null = automatica)
     nebbia: { strumento: null, modo: 'rivela', lato: 3 },
     sceltaGiocatori: null,
+    // difetto 2: carta del token scelto in un pannello accanto alla mappa (la plancia in modalità «carta sola»)
+    cartaAperta: null,
+    plancia: null,
   };
   const leggiFonti = creaFonti(ctx.dati);
 
@@ -95,12 +99,19 @@ export function renderMappa(radice, ctx) {
   el.suggerimento = h('div', { class: 'mappa-suggerimento', hidden: true, role: 'status' });
   el.riquadro.append(el.suggerimento);
   el.pannello = h('aside', { class: 'mappa-pannello', 'aria-label': 'Scontro, token e griglia' });
+  el.cartaCorpo = h('div', { class: 'mappa-carta-corpo' });
+  el.carta = h('aside', { class: 'mappa-carta', 'aria-label': 'Carta del token', hidden: true },
+    h('div', { class: 'mappa-carta-testa' },
+      h('strong', {}, 'Carta'),
+      h('button', { type: 'button', class: 'btn btn-piccolo', title: 'La stessa carta nella plancia intera, con «Torna alla mappa»', onclick: () => apriNellaPlancia() }, 'Apri nella plancia'),
+      h('button', { type: 'button', class: 'btn tondo', 'aria-label': 'Chiudi la carta', title: 'Chiudi (Esc)', onclick: () => chiudiCarta() }, '×')),
+    el.cartaCorpo);
   el.secScontro = h('div');
   el.secToken = h('div');
   el.pGriglia = h('details', { class: 'mappa-sezione mappa-griglia' });
   el.pNebbia = h('details', { class: 'mappa-sezione mappa-nebbia', open: true });
   el.pGiocatori = h('details', { class: 'mappa-sezione mappa-giocatori' });
-  svuota(radice, h('section', { class: 'mappa-pagina' }, el.barra, h('div', { class: 'mappa-corpo' }, el.riquadro, el.pannello)));
+  svuota(radice, h('section', { class: 'mappa-pagina' }, el.barra, h('div', { class: 'mappa-corpo' }, el.riquadro, el.carta, el.pannello)));
 
   // ── Disegno ──
   const tela = creaTela(el.riquadro, {
@@ -452,7 +463,7 @@ export function renderMappa(radice, ctx) {
       nascondi: () => cambiaToken(scelto.id, (x) => ({ ...x, nascosto: !x.nascosto })),
       ingombro: (n) => cambiaToken(scelto.id, (x) => ({ ...x, ingombro: n, q: agganciaQ(st.scena.griglia, centroToken(st.scena.griglia, x).x, centroToken(st.scena.griglia, x).y, n) }), { controllaSovrapposti: true }),
       togli: () => { const id = scelto.id; st.selezionato = null; st.scena = { ...st.scena, token: st.scena.token.filter((x) => x.id !== id) }; dopoCambioToken(); },
-      carta: () => apriCarta(scelto),
+      carta: () => apriNellaPlancia(pz?.chiave),
       immagine: async () => { const img = await scegliImmagineNemico(ctx.dati, pz?.nome); if (img) await immagineNemico(pz, img); },
       togliImmagine: () => immagineNemico(pz, null),
     }));
@@ -502,13 +513,45 @@ export function renderMappa(radice, ctx) {
     ridisegna(['sopra']);
   }
 
-  async function apriCarta(t) {
+  /**
+   * Difetto 2 (primo test di Marcello, 06/10/2026): il clic su un token apre la sua carta in un pannello accanto alla
+   * mappa, senza lasciarla: la plancia in modalità «carta sola» (src/ui/tavolo.js), con PV, Stati, «Colpito» e
+   * «Apri scheda completa». Si aggiorna da sola come la plancia.
+   */
+  function apriCarta(t) {
     const pz = pezzoDi(t);
     if (!pz) return avvisoErrore('Questo token non è più nello scontro: nessuna carta da aprire.');
-    if (pz.tipo === 'manuale') return avviso(`${pz.nome} è scritto a mano nello scontro: non ha una carta, è nel riquadro dello scontro della plancia.`);
-    const esito = await apriCartaInPlancia(pz.chiave);
-    if (esito === 'bloccata') avvisoErrore('Il browser non ha aperto la plancia in un’altra finestra: aprila tu (indirizzo …#/tavolo) e riprova il clic.');
-    else if (esito === 'assente') avviso(`La carta di ${pz.nome} non è nella plancia (${pz.tipo === 'pg' ? 'il PG non è al tavolo' : 'scontro non aperto'}).`);
+    st.cartaAperta = pz.chiave;
+    el.carta.hidden = false;
+    if (st.plancia) st.plancia.ridisegna();
+    else {
+      st.plancia = renderTavolo(el.cartaCorpo, {
+        dati: ctx.dati,
+        soloCarta: () => st.cartaAperta,
+        azioni: { personaggi: () => {}, mappa: () => {}, apri: (r) => apriSchedaCompleta(r) },
+      });
+    }
+  }
+  function chiudiCarta() {
+    st.plancia?.();
+    st.plancia = null;
+    st.cartaAperta = null;
+    el.carta.hidden = true;
+    svuota(el.cartaCorpo);
+  }
+  /** La vista da rimettere tornando dalla scheda o dalla plancia: zoom, posizione, token scelto, carta aperta. */
+  const vistaAttuale = () => ({ cam: { ...st.cam }, selezionato: st.selezionato, carta: st.cartaAperta });
+  /** «Apri scheda completa» del PG: la scheda ha «Torna alla mappa» (src/ui/ritorno.js). */
+  function apriSchedaCompleta(r) {
+    if (st.salvataggio.modificata) salvaOra();
+    ctx.azioni.apriScheda(r, { scena: ctx.id, vista: vistaAttuale() });
+  }
+  /** «Apri nella plancia»: la plancia intera nella stessa finestra, sulla carta, con «Torna alla mappa». */
+  function apriNellaPlancia(chiave = st.cartaAperta) {
+    if (!chiave) return;
+    if (st.salvataggio.modificata) salvaOra();
+    segnaDallaMappa(sessionStorage, { scena: ctx.id, carta: chiave, vista: vistaAttuale() });
+    ctx.azioni.tavolo();
   }
 
   /** Mette in mappa il pezzo `chiave` con il centro più vicino possibile al punto m della mappa (aggancio §7). */
@@ -733,7 +776,7 @@ export function renderMappa(radice, ctx) {
     } else if (e.key === 'Escape') {
       if (st.strumento === 'calibra') impostaStrumento('sposta');
       else if (N.strumento) strumentoNebbia(null);
-      else if (st.daPiazzare) { st.daPiazzare = null; el.riquadro.classList.remove('piazza'); disegnaPannelli(); } else if (st.selezionato) scegli(null);
+      else if (st.daPiazzare) { st.daPiazzare = null; el.riquadro.classList.remove('piazza'); disegnaPannelli(); } else if (st.cartaAperta) chiudiCarta(); else if (st.selezionato) scegli(null);
     }
   };
   const suRilasciaTasto = (e) => {
@@ -796,10 +839,15 @@ export function renderMappa(radice, ctx) {
     if (st.chiusa) return;
     await usaScena(s);
     testoStato(s.aggiornato ? `Salvata alle ${ora(new Date(s.aggiornato))}` : '');
-    adattaSchermo();
+    const vista = vistaDaRimettere(sessionStorage, ctx.id);
+    // tornati sulla mappa (in qualunque modo): il segno per «Torna alla mappa» non serve più
+    dimenticaMappa(sessionStorage);
+    if (vista?.cam && Number.isFinite(vista.cam.scala)) cambiaCamera(vista.cam); else adattaSchermo();
+    if (vista?.selezionato && st.scena.token.some((t) => t.id === vista.selezionato)) st.selezionato = vista.selezionato;
     await Promise.all([aggiornaFonti(), leggiScelta()]);
     disegnaPannelloNebbia();
     disegnaPannelloGiocatori();
+    if (vista?.carta) { const t = st.scena.token.find((x) => chiaveRif(x.rif) === vista.carta); if (t) apriCarta(t); }
   }).catch((e) => {
     if (st.chiusa) return;
     svuota(radice, h('section', { class: 'mappa-pagina' }, h('p', { class: 'riquadro attenzione' }, `Scena non trovata: ${e.message}. `,
@@ -818,6 +866,7 @@ export function renderMappa(radice, ctx) {
     clearInterval(giro);
     if (st.salvataggio.modificata) salvaOra();
     gesti.distruggi();
+    st.plancia?.();
     window.removeEventListener('keydown', suTasto);
     window.removeEventListener('keyup', suRilasciaTasto);
     tela.distruggi();

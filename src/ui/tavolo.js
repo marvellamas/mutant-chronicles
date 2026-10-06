@@ -32,7 +32,8 @@ import { cartaVeicoloPlancia } from './veicoli.js';
 import { stessaChiave } from '../veicoli-registro.js';
 import { elencoVeicoli, aggiornaVeicolo } from './veicoli-registro.js';
 import { statoScene, pannelloScene, apriElencoScene } from './mappa/scene.js';
-import { ascoltaMappa } from './mappa/canale.js';
+import { mostraCarta } from './mappa/canale.js';
+import { cartaDallaMappa, arrivoDallaMappa, tornaAllaMappa } from './ritorno.js';
 import { scegliImmagineNemico, impostaImmagineNemico } from './immagine-nemico.js';
 
 const INTERVALLO_MS = 3000;
@@ -59,7 +60,10 @@ async function scriviSelezione(personaggi) {
 
 /**
  * Disegna la plancia in `radice` e avvia l'aggiornamento periodico.
- * @param ctx { dati, azioni: { personaggi(), apri(remoto) } }
+ * @param ctx { dati, azioni: { personaggi(), apri(remoto), mappa(id), tornaMappa?(id) }, soloCarta?: () => chiave }
+ *   soloCarta (mappa di battaglia, difetto 2 del 06/10/2026): la plancia disegna solo la carta del pezzo indicato
+ *   («partecipante:pg:<chiave>», «partecipante:<id>», «veicolo:<id>»), con «Colpito» e i suoi pulsanti, per il pannello
+ *   accanto alla mappa; il resto (aggiornamento, salvataggi, «Colpito») è lo stesso della plancia.
  * @returns {() => void} ferma l'aggiornamento (uscendo dalla plancia)
  */
 export function renderTavolo(radice, ctx) {
@@ -272,8 +276,9 @@ export function renderTavolo(radice, ctx) {
 
   // il ridisegno periodico non chiude le tendine né toglie il focus ai campi in uso (src/ui/ridisegno.js)
   const custode = creaCustode(radice, { ridisegna: () => disegna() });
-  // mappa di battaglia (lotto 3): il clic su un token porta qui la sua carta
-  const mappa = ascoltaMappa(radice);
+  // mappa di battaglia: plancia aperta dalla mappa («Apri nella plancia»): la carta da mostrare e la scena a cui tornare
+  let cartaDaMostrare = ctx.soloCarta ? null : cartaDallaMappa(sessionStorage);
+  const scenaDiRitorno = () => (ctx.soloCarta ? null : arrivoDallaMappa(sessionStorage));
   // vista del PG al Round dello scontro in cui si trova (durate di Tecniche e incantesimi finite: niente effetti)
   const roundDi = (v) => (v?.chiaveCartella ? collegamentoScontro(stato.scontro, v.chiaveCartella)?.round ?? null : null);
   const vistaAlRound = (file, testo) => {
@@ -294,7 +299,15 @@ export function renderTavolo(radice, ctx) {
     const foto = custode.fotografa();
     const ultimi = ultimiPerPersonaggio(stato.elenco);
     const alTavolo = stato.selezione.map((k) => ultimi.get(k) ?? { mancante: k });
+    if (ctx.soloCarta) {
+      svuota(radice, h('section', { class: 'plancia plancia-carta-sola' }, cartaSola(ctx.soloCarta(), ultimi, alTavolo)));
+      custode.ripristina(foto);
+      return;
+    }
+    const ritorno = scenaDiRitorno();
     svuota(radice, h('section', { class: 'plancia' },
+      // aperta dalla mappa: un pulsante grande per tornare alla scena, allo zoom e alla posizione di prima
+      ritorno ? h('button', { type: 'button', class: 'btn primario btn-torna-mappa', onclick: () => { tornaAllaMappa(sessionStorage); ctx.azioni.mappa(ritorno); } }, '← Torna alla mappa') : null,
       h('header', { class: 'plancia-testa' },
         h('div', { class: 'riga-titolo' }, h('a', { class: 'marchio marchio-in-linea', href: '#/', title: 'Elenco dei personaggi' }, 'Mutant'),
           h('h1', { class: 'titolo-con-stemma' }, iconaPagina('combattimento', '96', { classe: 'badge-pagina', lato: 40 }), 'Tavolo del Master')),
@@ -340,7 +353,7 @@ export function renderTavolo(radice, ctx) {
         procedura: (n) => creaNemico(n),
       })));
     custode.ripristina(foto);
-    mappa.controllaAttesa();
+    if (cartaDaMostrare && mostraCarta(radice, cartaDaMostrare)) cartaDaMostrare = null;
   };
   // A.131: immagine del token di un tipo di nemico, per tutte le sue copie nello scontro e nel bestiario
   const immagineNemico = async (p) => {
@@ -603,9 +616,35 @@ export function renderTavolo(radice, ctx) {
     const fonte = t && confirm(`La fonte è ${t.nome} (di turno)? La perdita si applicherà alla sua Iniziativa. Annulla per metterla alla fine del Round.`) ? t.id : null;
     await modifica((x) => registraPeriodico(x, { ...d, ...(valore ? { valore } : {}), ...(formula ? { formula } : {}), fonte, fonteNome: nomePartecipante(x, fonte) }, undefined, ctx.dati));
   };
+  /**
+   * Carta sola per il pannello della mappa: PG (con «Apri scheda completa»), nemico o veicolo, come nella plancia.
+   * Un nemico di una bozza non ha ancora una carta: lo dice.
+   */
+  const cartaSola = (chiave, ultimi, alTavolo) => {
+    if (!chiave) return h('p', { class: 'vuoto' }, 'Nessun token scelto.');
+    const pg = /^partecipante:pg:(.+)$/.exec(chiave);
+    if (pg) {
+      const r = [...ultimi].find(([k]) => stessaChiave(k, pg[1]))?.[1];
+      const v = r ? stato.viste.get(r.file) : null;
+      if (!r) return h('p', { class: 'nota' }, stato.elenco.length ? `Nessun file di ${pg[1]} in personaggi/.` : 'Lettura delle schede…');
+      if (!v) return h('p', { class: 'nota' }, stato.errori.get(r.file) ?? 'Lettura della scheda…');
+      return [conPezzo(cartaPg(ctx, v, r, turnoDi(r), colpitoPg, durateDi(v)), `partecipante:pg:${chiaveDaFile(r.file)}`),
+        h('button', { type: 'button', class: 'btn primario btn-scheda-completa', onclick: () => ctx.azioni.apri(r) }, 'Apri scheda completa')];
+    }
+    const part = /^partecipante:(.+)$/.exec(chiave);
+    if (part) {
+      const p = (stato.scontro?.partecipanti ?? []).find((x) => x.id === part[1]);
+      if (!p) return h('p', { class: 'nota' }, stato.scontro ? 'Non è nello scontro aperto.' : 'Nessuno scontro aperto: i nemici di una bozza hanno la carta quando lo scontro parte («Inizia»).');
+      if (p.tipo !== 'nemico') return h('article', { class: 'carta-plancia' }, h('h2', {}, p.nome), h('p', { class: 'nota' }, `Scritto a mano nello scontro (${p.lato}): si gestisce dal riquadro dello scontro della plancia.`));
+      return conPezzo(cartaNemico(ctx, p, { modifica, durate: durateNemico(p), diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p), onAttacca: attacchiDi(p).length ? () => attacca(p, alTavolo) : null, onLancia: (i) => lancia(p, i, alTavolo), onRiduci: (v) => modifica((x) => riduciNemico(x, p.id, v)), onRegime: (k, r) => modifica((x) => confermaRegimeNemico(x, p.id, k, r, new Date())), onImmagine: () => immagineNemico(p) }), `partecipante:${p.id}`);
+    }
+    const vei = /^veicolo:(.+)$/.exec(chiave);
+    const rec = vei ? stato.veicoli.find((x) => x.id === vei[1]) : null;
+    return rec ? cartaVeicolo(rec) : h('p', { class: 'nota' }, vei ? 'Lettura del registro dei veicoli…' : 'Carta non trovata.');
+  };
+
   // A.105: veicoli del registro; conducente e mitragliere fra i PG dello scontro e del tavolo
-  const sezioneVeicoli = () => {
-    if (!stato.veicoli.length) return null;
+  const cartaVeicolo = (rec) => {
     const persone = new Map();
     for (const p of stato.scontro?.partecipanti ?? []) if (p.tipo === 'pg' && p.chiave) persone.set(p.chiave, { chiave: p.chiave, nome: p.nome });
     for (const [file, v] of stato.viste) if (stato.selezione.includes(chiaveDaFile(file)) && v?.nome) persone.set(chiaveDaFile(file), { chiave: chiaveDaFile(file), nome: v.nome });
@@ -623,9 +662,13 @@ export function renderTavolo(radice, ctx) {
       disegna();
     };
     const t = stato.scontro ? diTurno(stato.scontro) : null;
+    return conPezzo(cartaVeicoloPlancia(ctxV, rec, { scontro: stato.scontro, diTurno: t, persone: [...persone.values()], incapace, scrivi: scrivi(rec) }), `veicolo:${rec.id}`);
+  };
+  const sezioneVeicoli = () => {
+    if (!stato.veicoli.length) return null;
     return [h('h2', { class: 'plancia-sezione' }, 'Veicoli'),
       h('p', { class: 'nota' }, 'Scheda unica dei veicoli (veicoli/, A.91 e A.105): le stesse modifiche le vedono le schede dei PG. Permessi e nomi provvisori (A.113).'),
-      h('div', { class: 'plancia-griglia' }, stato.veicoli.map((rec) => conPezzo(cartaVeicoloPlancia(ctxV, rec, { scontro: stato.scontro, diTurno: t, persone: [...persone.values()], incapace, scrivi: scrivi(rec) }), `veicolo:${rec.id}`)))];
+      h('div', { class: 'plancia-griglia' }, stato.veicoli.map(cartaVeicolo))];
   };
   const aggiornaVeicoli = async () => {
     const lista = await elencoVeicoli();
@@ -665,7 +708,10 @@ export function renderTavolo(radice, ctx) {
     stato.selezione = selezione;
     const ultimi = ultimiPerPersonaggio(elenco);
     let cambiato = forza;
-    for (const k of selezione) {
+    // carta sola di un PG (pannello della mappa): il suo file si legge anche se non è «al tavolo»
+    const pgSolo = /^partecipante:pg:(.+)$/.exec(ctx.soloCarta?.() ?? '')?.[1];
+    const daLeggere = [...selezione, ...(pgSolo ? [...ultimi.keys()].filter((k) => stessaChiave(k, pgSolo) && !selezione.includes(k)) : [])];
+    for (const k of daLeggere) {
       const r = ultimi.get(k);
       if (!r || visti.get(r.file) === r.mtime) continue;
       try {
@@ -718,7 +764,10 @@ export function renderTavolo(radice, ctx) {
   aggiorna().then(() => { disegna(); if (Number.isFinite(ctx.scorrimento)) window.scrollTo(0, ctx.scorrimento); });
   const giro = setInterval(() => aggiorna(), INTERVALLO_MS);
   const orologio = setInterval(aggiornaIndicatore, 1000);
-  return () => { stato.attivo = false; clearInterval(giro); clearInterval(orologio); custode.smonta(); mappa.chiudi(); };
+  const ferma = () => { stato.attivo = false; clearInterval(giro); clearInterval(orologio); custode.smonta(); };
+  // la mappa ridisegna la carta sola quando cambia il token scelto
+  ferma.ridisegna = () => disegna();
+  return ferma;
 }
 
 function testoAggiornato(ms) {

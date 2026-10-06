@@ -77,7 +77,7 @@ export function sezioneToken(t, p, dati, a) {
       : h('p', { class: 'nota' }, `Ingombro ${testoIngombro(t.ingombro)} dal profilo del veicolo.`),
     h('div', { class: 'mappa-azioni-token' },
       h('button', { type: 'button', class: 'btn btn-piccolo', title: t.nascosto ? 'I giocatori lo vedranno' : 'Solo il master lo vede', onclick: a.nascondi }, t.nascosto ? 'Mostra' : 'Nascondi'),
-      h('button', { type: 'button', class: 'btn btn-piccolo', onclick: a.carta, disabled: !p }, 'Carta nella plancia'),
+      h('button', { type: 'button', class: 'btn btn-piccolo', title: 'La carta nella plancia intera, con «Torna alla mappa»', onclick: a.carta, disabled: !p }, 'Apri nella plancia'),
       // A.131: immagine del tipo di nemico (tutte le copie, e il bestiario se c'è)
       p?.tipo === 'nemico' ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Immagine del token per tutte le copie di questo nemico e, se c’è, nel bestiario', onclick: a.immagine }, p.ritratto ? 'Cambia immagine…' : 'Immagine…') : null,
       p?.tipo === 'nemico' && p.ritratto ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Torna alle iniziali', onclick: a.togliImmagine }, 'Togli immagine') : null,

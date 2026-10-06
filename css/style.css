@@ -1906,3 +1906,15 @@ body:has(.mappa-pagina) .piede { display: none; }
 .barra-server-vecchio { background: var(--errore-tenue); border-bottom-color: var(--errore); color: var(--testo); font-weight: 600; }
 /* avviso ripetuto: un solo avviso con il contatore (src/ui/avvisi.js) */
 .avviso .avviso-volte { float: right; margin-left: 0.5rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* Mappa, difetto 2: carta del token accanto alla mappa; «Torna alla mappa» grande nella scheda e nella plancia */
+.mappa-carta { width: 22rem; flex: none; overflow-y: auto; background: var(--superficie); border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 0.5rem 0.6rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.mappa-carta[hidden] { display: none; }
+.mappa-carta-testa { display: flex; align-items: center; gap: 0.4rem; }
+.mappa-carta-testa strong { flex: 1; }
+.mappa-carta .plancia { max-width: none; margin: 0; }
+.mappa-carta .carta-plancia { border: none; padding: 0; }
+.btn-scheda-completa { margin-top: 0.5rem; width: 100%; }
+.btn-torna-mappa { font-size: 1.15rem; padding: 0.55rem 1.2rem; min-height: 48px; }
+.plancia > .btn-torna-mappa { margin: 0.5rem 0; position: sticky; top: 0.5rem; z-index: 5; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
+@media (max-width: 46rem) { .mappa-carta { width: auto; max-height: 45%; } }
