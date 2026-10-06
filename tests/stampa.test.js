@@ -78,7 +78,8 @@ test('senza accesso alla magia: quattro fogli (con l’Inventario), numerati 1�
   assert.equal(co.armi.righe.length, 0);
   assert.equal(co.armi.righeVuote, 6);
   assert.deepEqual(co.armi.colonne, ['Arma', 'Abilità', 'VA', 'Danno', 'Gittata', 'Munizioni', 'Note']);
-  assert.equal(co.stati.length, 11); // §5.18: «Gli Stati sono undici»
+  assert.equal(co.stati.length, 12); // §5.18: «Gli Stati sono undici», più Ammalato (playtest del 05/10, A.119)
+  assert.ok(co.stati.some((s) => s.nome === 'Ammalato'));
   assert.deepEqual(co.ferite.stati.map((f) => f.penalita), [-1, -2, -4, -6, -8]); // §5.14
   assert.equal(co.difese.va, calcolaVA(st, 'Difese'));
 });

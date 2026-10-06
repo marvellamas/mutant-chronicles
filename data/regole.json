@@ -1825,6 +1825,14 @@
         "limiti": { "manovre_vietate": ["mirato"], "testo": "Non può usare Tiro o Colpo Mirato.", "fonte": "Giocatore §5.18" }
       },
       {
+        "id": "ammalato",
+        "nome": "Ammalato",
+        "durata": "da definire",
+        "promemoria": "In attesa dei dettagli di Davide: per ora nessun effetto sui valori, è solo un segno sulla scheda.",
+        "riassunto": true,
+        "TODO(Davide)": "A.119: Stato Ammalato (richiesto nel playtest del 05/10/2026). Quali effetti ha (penalità, Prove, Salvezze), quanto dura, come si prende e come si guarisce? Intanto si segna senza effetti."
+      },
+      {
         "id": "assordato",
         "nome": "Assordato",
         "durata": "1+1d3 Round",
