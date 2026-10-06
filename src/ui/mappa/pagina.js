@@ -13,11 +13,19 @@
 // token scelto (Passo, Corri, Scatta) con il percorso sotto il puntatore; movimento con un clic o trascinando dentro
 // l'area, registrato nel Round dello scontro, «Libero» (o Maiusc) per muovere dove si vuole; clic destro sul token; Ctrl+Z per l'ultima
 // azione del master (movimento, muri, nebbia, token messo o tolto).
+// Lotto 6: la plancia è la barra di destra (src/ui/tavolo.js con ctx.inMappa), con la mini-scheda del token scelto e il
+// suo movimento in cima, «Scontro» (la plancia) e «Mappa» (collegamento, muri, nebbia, vista giocatori, griglia); tre
+// disposizioni (Mappa grande, Equilibrata, Scontro grande) con i pulsanti in alto, Tab, doppio clic e trascinamento del
+// bordo, ricordate per schermo; la barra dell'Iniziativa in cima con «Avanti» (lo stesso della plancia) e il centrare
+// chi è di turno (./barra-iniziativa.js, src/mappa/iniziativa.js, src/mappa/disposizione.js).
 // Logica pura in src/mappa/ (camera, griglia, token, partecipanti, nebbia, muri, area, annulla); disegno in ./canvas.js,
 // ./disegno-token.js e ./disegno-aree.js.
 import { h, svuota } from '../dom.js';
 import { avviso, avvisoErrore } from '../avvisi.js';
-import { cameraIniziale, zoomVerso, sposta, adatta, mappaDaSchermo, schermoDaMappa, rettangoloVisibile } from '../../mappa/camera.js';
+import { cameraIniziale, zoomVerso, sposta, adatta, mappaDaSchermo, schermoDaMappa, rettangoloVisibile, mantieniCentro } from '../../mappa/camera.js';
+import { DISPOSIZIONI, NOMI_DISPOSIZIONI, prossimaDisposizione, normalizzaDisposizione, larghezzaBarra, trascinaBordo, chiaveSchermo } from '../../mappa/disposizione.js';
+import { barraIniziativa } from '../../mappa/iniziativa.js';
+import { barraIniziativaEl } from './barra-iniziativa.js';
 import { calibraDaQuadretto, applicaGriglia, dimensioniMappa, lineeVisibili, testoScala } from '../../mappa/griglia.js';
 import { creaTela } from './canvas.js';
 import { leggiScena, salvaScena, caricaImmagine, controllaFile, preparaRidotta } from './api.js';
@@ -92,7 +100,19 @@ export function renderMappa(radice, ctx) {
     // difetto 2: carta del token scelto in un pannello accanto alla mappa (la plancia in modalità «carta sola»)
     cartaAperta: null,
     plancia: null,
+    // lotto 6: disposizione della barra (per schermo), scheda della barra, plancia intera nella barra, centrare il turno
+    disp: null,
+    scheda: 'scontro',
+    planciaBarra: null,
+    centra: true,
+    turnoVisto: null,
   };
+  const B = V.barra;
+  const chiaveDisp = chiaveSchermo(window.screen?.width ?? 0, window.screen?.height ?? 0);
+  const leggiLocale = (k) => { try { return JSON.parse(localStorage.getItem(k) ?? 'null'); } catch { return null; } };
+  const scriviLocale = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* solo per questa volta */ } };
+  st.disp = normalizzaDisposizione(leggiLocale(chiaveDisp), B);
+  st.centra = leggiLocale('mutant-mappa-centra-turno') !== false;
   const leggiFonti = creaFonti(ctx.dati);
 
   // ── Struttura della pagina, creata una volta: si aggiornano solo i testi e i campi ──
@@ -102,7 +122,9 @@ export function renderMappa(radice, ctx) {
   el.zoom = h('span', { class: 'mappa-zoom', title: 'Zoom (rotella, + e −)' }, '100 %');
   el.scala = h('span', { class: 'mappa-scala' });
   el.stato = h('span', { class: 'nota mappa-stato', 'aria-live': 'polite' });
-  el.btnGriglia = h('button', { type: 'button', class: 'btn', 'aria-expanded': 'true', title: 'Scontro, token e griglia', onclick: () => { el.pannello.hidden = !el.pannello.hidden; el.btnGriglia.setAttribute('aria-expanded', String(!el.pannello.hidden)); } }, 'Pannello');
+  // lotto 6 (§11.1): tre disposizioni, sempre visibili in alto (anche Tab e doppio clic sul bordo)
+  el.btnDisp = Object.fromEntries(DISPOSIZIONI.map((d) => [d, h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-pressed': 'false', title: `${NOMI_DISPOSIZIONI[d]} (Tab per passare alla prossima)`, onclick: () => scegliDisposizione(d) }, NOMI_DISPOSIZIONI[d])]));
+  el.btnGriglia = h('span', { class: 'mappa-disposizioni', role: 'group', 'aria-label': 'Disposizione' }, DISPOSIZIONI.map((d) => el.btnDisp[d]));
   el.btnCarica = h('button', { type: 'button', class: 'btn', title: 'Immagine di fondo: JPG, PNG o WEBP', onclick: () => el.scegliFile.click() }, 'Carica immagine');
   el.barra = h('header', { class: 'mappa-barra' },
     h('button', { type: 'button', class: 'btn', title: 'Torna alla plancia del Tavolo del Master', onclick: () => ctx.azioni.tavolo() }, '← Tavolo'),
@@ -118,9 +140,9 @@ export function renderMappa(radice, ctx) {
   el.riquadro = h('div', { class: 'mappa-tela', tabindex: '0', 'aria-label': 'Mappa: rotella per lo zoom, barra spaziatrice e mouse o trascinamento per spostarsi' });
   el.suggerimento = h('div', { class: 'mappa-suggerimento', hidden: true, role: 'status' });
   el.riquadro.append(el.suggerimento);
-  el.pannello = h('aside', { class: 'mappa-pannello', 'aria-label': 'Scontro, token e griglia' });
+  el.pannello = h('div', { class: 'mappa-pannello', 'aria-label': 'Collegamento, muri, nebbia, vista giocatori e griglia' });
   el.cartaCorpo = h('div', { class: 'mappa-carta-corpo' });
-  el.carta = h('aside', { class: 'mappa-carta', 'aria-label': 'Mini-scheda del token', hidden: true },
+  el.carta = h('section', { class: 'mappa-carta', 'aria-label': 'Mini-scheda del token', hidden: true },
     h('div', { class: 'mappa-carta-testa' },
       h('strong', {}, 'Mini-scheda'),
       h('button', { type: 'button', class: 'btn btn-piccolo', title: 'La stessa mini-scheda nella plancia intera, con «Torna alla mappa»', onclick: () => apriNellaPlancia() }, 'Apri nella plancia'),
@@ -132,7 +154,20 @@ export function renderMappa(radice, ctx) {
   el.pNebbia = h('details', { class: 'mappa-sezione mappa-nebbia', open: true });
   el.pMuri = h('details', { class: 'mappa-sezione mappa-muri' });
   el.pGiocatori = h('details', { class: 'mappa-sezione mappa-giocatori' });
-  svuota(radice, h('section', { class: 'mappa-pagina' }, el.barra, h('div', { class: 'mappa-corpo' }, el.riquadro, el.carta, el.pannello)));
+  // lotto 6: barra dell'Iniziativa in cima; a destra della mappa il bordo da trascinare e la barra (§11)
+  el.iniziativa = h('div', { class: 'mappa-iniziativa-posto', hidden: true });
+  el.planciaCorpo = h('div', { class: 'mappa-plancia-corpo' });
+  el.schede = Object.fromEntries([['scontro', 'Scontro'], ['mappa', 'Mappa']].map(([k, t]) => [k, h('button', { type: 'button', role: 'tab', class: 'btn btn-piccolo', title: k === 'scontro' ? 'La plancia: ordine d’Iniziativa, PG, nemici, veicoli, bestiario' : 'Collegamento allo scontro, muri, nebbia, vista giocatori, griglia', onclick: () => scegliScheda(k) }, t)]));
+  el.ridotta = h('div', { class: 'laterale-ridotta', 'aria-label': 'Mini-token: clic per la mini-scheda' });
+  el.piena = h('div', { class: 'laterale-piena' },
+    el.carta, el.secToken,
+    h('div', { class: 'laterale-schede', role: 'tablist' }, el.schede.scontro, el.schede.mappa),
+    el.planciaCorpo, el.pannello);
+  el.laterale = h('aside', { class: 'mappa-laterale', 'aria-label': 'Scontro, mini-scheda e strumenti della mappa' }, el.ridotta, el.piena);
+  el.bordo = h('div', { class: 'mappa-bordo', role: 'separator', 'aria-orientation': 'vertical', 'aria-label': 'Bordo fra mappa e barra: trascina per allargare, doppio clic per cambiare disposizione', title: 'Trascina per allargare o stringere la barra; doppio clic: prossima disposizione', tabindex: '0' });
+  el.corpo = h('div', { class: 'mappa-corpo' }, el.riquadro, el.bordo, el.laterale);
+  el.pagina = h('section', { class: 'mappa-pagina' }, el.barra, el.iniziativa, el.corpo);
+  svuota(radice, el.pagina);
 
   // ── Disegno ──
   const tela = creaTela(el.riquadro, {
@@ -225,7 +260,7 @@ export function renderMappa(radice, ctx) {
       c.strokeRect(Math.min(a.x, b.x), Math.min(a.y, b.y), Math.abs(b.x - a.x), Math.abs(b.y - a.y));
       c.restore();
     },
-  });
+  }, { ridimensionata: (prima, dopo) => { if (st.scena) cambiaCamera(mantieniCentro(st.cam, prima, dopo)); } });
 
   const immagine = creaImmagini(() => ridisegna(['sopra']));
 
@@ -373,7 +408,7 @@ export function renderMappa(radice, ctx) {
   el.blocca = h('button', { type: 'button', class: 'btn', onclick: () => bloccaGriglia() });
   el.info = h('p', { class: 'nota mappa-info' });
   el.notaBlocco = h('p', { class: 'riquadro attenzione mappa-nota-blocco', hidden: true }, 'Griglia bloccata: dimensione e scostamento non cambiano, così nebbia, muri e token restano allineati. Colore e opacità sì.');
-  svuota(el.pannello, el.secScontro, el.secToken, el.pMuri, el.pNebbia, el.pGiocatori, el.pGriglia);
+  svuota(el.pannello, el.secScontro, el.pMuri, el.pNebbia, el.pGiocatori, el.pGriglia);
   svuota(el.pGriglia,
     h('summary', {}, h('strong', {}, 'Griglia')),
     h('p', { class: 'nota' }, 'Calibra tracciando sull’immagine un quadretto (o un riquadro di più quadretti) oppure inserendo i valori. Poi blocca la griglia.'),
@@ -475,6 +510,8 @@ export function renderMappa(radice, ctx) {
       }
       invalidaArea();
       disegnaPannelli();
+      disegnaIniziativa();
+      seguiTurno();
       ridisegna(['aree', 'sopra']);
     })().finally(() => { lettura = null; });
     return lettura;
@@ -536,6 +573,7 @@ export function renderMappa(radice, ctx) {
     invalidaArea();
     salvaPresto();
     disegnaPannelli();
+    disegnaIniziativa(); // token messi, tolti, nascosti: anche la barra dell'Iniziativa
     ridisegna(['aree', 'sopra']); // l'area raggiungibile sta nel livello «aree»
   }
 
@@ -569,6 +607,7 @@ export function renderMappa(radice, ctx) {
     st.selezionato = id;
     invalidaArea();
     disegnaPannelli();
+    disegnaIniziativa();
     ridisegna(['aree', 'sopra']);
   }
 
@@ -580,8 +619,15 @@ export function renderMappa(radice, ctx) {
   function apriCarta(t) {
     const pz = pezzoDi(t);
     if (!pz) return avvisoErrore('Questo token non è più nello scontro: nessuna mini-scheda da aprire.');
-    st.cartaAperta = pz.chiave;
+    apriCartaChiave(pz.chiave);
+  }
+  /** Mini-scheda del pezzo `chiave` in cima alla barra (anche di un partecipante senza token in mappa). */
+  function apriCartaChiave(chiave) {
+    st.cartaAperta = chiave;
     el.carta.hidden = false;
+    // lotto 6: con la barra ridotta il clic su un token la riapre sulla sua mini-scheda
+    if (st.disp.disposizione === 'mappa') scegliDisposizione('equilibrata');
+    el.piena.scrollTop = 0;
     if (st.plancia) st.plancia.ridisegna();
     else {
       st.plancia = renderTavolo(el.cartaCorpo, {
@@ -1098,6 +1144,11 @@ export function renderMappa(radice, ctx) {
   };
   const suTasto = (e) => {
     if (inCampo(e)) return;
+    if (e.key === 'Tab' && !e.ctrlKey && !e.metaKey && !e.altKey && (document.activeElement === document.body || document.activeElement === el.riquadro || document.activeElement === el.bordo)) {
+      e.preventDefault();
+      scegliDisposizione(prossimaDisposizione(st.disp.disposizione, e.shiftKey ? -1 : 1));
+      return;
+    }
     // Ctrl+Z (lotto 5): annulla l'ultima azione del master (movimento, muro, nebbia, token messo o tolto)
     if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === 'z') { e.preventDefault(); if (st.scena) annullaUi(); return; }
     if (e.ctrlKey || e.metaKey || e.altKey) return;
@@ -1125,6 +1176,150 @@ export function renderMappa(radice, ctx) {
   el.riquadro.addEventListener('contextmenu', suMenu);
   window.addEventListener('keydown', suTasto);
   window.addEventListener('keyup', suRilasciaTasto);
+
+  // ── Lotto 6: barra accanto alla mappa, disposizioni, barra dell'Iniziativa (§11, §11.1) ──
+  function applicaDisposizione() {
+    const totale = el.corpo.clientWidth;
+    if (!totale) return;
+    el.laterale.style.width = `${larghezzaBarra(st.disp, totale, B)}px`;
+    el.pagina.dataset.disposizione = st.disp.disposizione;
+    for (const d of DISPOSIZIONI) { el.btnDisp[d].classList.toggle('scelto', d === st.disp.disposizione); el.btnDisp[d].setAttribute('aria-pressed', String(d === st.disp.disposizione)); }
+    const ridotta = st.disp.disposizione === 'mappa';
+    el.ridotta.hidden = !ridotta;
+    el.piena.hidden = ridotta;
+    if (ridotta) disegnaRidotta();
+  }
+  function scegliDisposizione(d) {
+    st.disp = { ...st.disp, disposizione: d };
+    scriviLocale(chiaveDisp, st.disp);
+    applicaDisposizione();
+  }
+  function scegliScheda(k) {
+    st.scheda = k;
+    el.planciaCorpo.hidden = k !== 'scontro';
+    el.pannello.hidden = k !== 'mappa';
+    for (const [n, b] of Object.entries(el.schede)) { b.classList.toggle('scelto', n === k); b.setAttribute('aria-selected', String(n === k)); }
+  }
+  // il bordo: trascinato allarga o stringe la barra (sotto una certa larghezza torna «Mappa grande»), doppio clic cambia
+  const bordo = { attivo: null };
+  const suPremiBordo = (e) => {
+    if (e.button !== 0) return;
+    e.preventDefault();
+    bordo.attivo = e.pointerId;
+    el.bordo.setPointerCapture(e.pointerId);
+    el.pagina.classList.add('trascina-bordo');
+  };
+  const suMuoviBordo = (e) => {
+    if (bordo.attivo !== e.pointerId) return;
+    const r = el.corpo.getBoundingClientRect();
+    st.disp = trascinaBordo(st.disp, r.right - e.clientX, r.width, B);
+    applicaDisposizione();
+  };
+  const suLasciaBordo = (e) => {
+    if (bordo.attivo !== e.pointerId) return;
+    bordo.attivo = null;
+    el.pagina.classList.remove('trascina-bordo');
+    scriviLocale(chiaveDisp, st.disp);
+  };
+  const suDoppioBordo = () => scegliDisposizione(prossimaDisposizione(st.disp.disposizione));
+  el.bordo.addEventListener('pointerdown', suPremiBordo);
+  el.bordo.addEventListener('pointermove', suMuoviBordo);
+  el.bordo.addEventListener('pointerup', suLasciaBordo);
+  el.bordo.addEventListener('pointercancel', suLasciaBordo);
+  el.bordo.addEventListener('dblclick', suDoppioBordo);
+  const togliBordo = () => { for (const [ev, f] of [['pointerdown', suPremiBordo], ['pointermove', suMuoviBordo], ['pointerup', suLasciaBordo], ['pointercancel', suLasciaBordo], ['dblclick', suDoppioBordo]]) el.bordo.removeEventListener(ev, f); };
+  const osservaCorpo = new ResizeObserver(() => applicaDisposizione());
+  osservaCorpo.observe(el.corpo);
+  applicaDisposizione();
+  scegliScheda(st.scheda);
+
+  /** La plancia intera nella barra (src/ui/tavolo.js, ctx.inMappa): tutto quello che fa a pagina intera. */
+  function montaPlanciaBarra() {
+    if (st.planciaBarra) return;
+    st.planciaBarra = renderTavolo(el.planciaCorpo, {
+      dati: ctx.dati,
+      inMappa: true,
+      azioni: {
+        personaggi: () => ctx.azioni.personaggi?.(),
+        mappa: (id) => (id === ctx.id ? null : ctx.azioni.mappa?.(id)),
+        apri: (r) => apriSchedaCompleta(r),
+        planciaIntera: () => apriPlanciaIntera(),
+      },
+    });
+  }
+  /** «Plancia intera»: la plancia a pagina intera con «Torna alla mappa» (sulla mini-scheda aperta, se c'è). */
+  function apriPlanciaIntera() {
+    if (st.salvataggio.modificata) salvaOra();
+    segnaDallaMappa(sessionStorage, { scena: ctx.id, carta: st.cartaAperta, vista: vistaAttuale() });
+    ctx.azioni.tavolo();
+  }
+
+  /** Barra dell'Iniziativa del master: dallo scontro aperto letto dalle fonti (nessuna barra con una bozza). */
+  const barraAttuale = () => (st.scena ? barraIniziativa({ scontro: st.fonti?.scontro ?? null, pezzi: st.pezzi, scena: st.scena }) : null);
+  function disegnaIniziativa() {
+    const barra = barraAttuale();
+    el.iniziativa.hidden = !barra;
+    if (barra) {
+      svuota(el.iniziativa, barraIniziativaEl(barra, {
+        pxPerPunto: B.iniziativa_px_per_punto,
+        avanti: () => avantiDallaMappa(),
+        scegli: (v) => scegliDallaBarra(v),
+        centra: { attivo: st.centra, cambia: (x) => { st.centra = x; scriviLocale('mutant-mappa-centra-turno', x); if (x) seguiTurno(true); } },
+      }));
+      const sc = pezzoScelto()?.chiave;
+      for (const b of el.iniziativa.querySelectorAll('.mini-token')) b.classList.toggle('scelto', !!sc && b.dataset.chiave === sc);
+    }
+    if (st.disp.disposizione === 'mappa') disegnaRidotta(barra);
+  }
+  const pezzoScelto = () => { const t = st.selezionato ? st.scena?.token.find((x) => x.id === st.selezionato) : null; return t ? pezzoDi(t) : null; };
+  /** «Mappa grande»: colonna stretta con i mini-token (in ordine d'Iniziativa, se c'è lo scontro), i PV e il turno. */
+  function disegnaRidotta(barra = barraAttuale()) {
+    const voci = barra ? barra.voci : st.pezzi.filter((p) => st.scena?.token.some((t) => chiaveRif(t.rif) === p.chiave)).map((p) => ({ chiave: p.chiave, nome: p.nome, iniziali: p.iniziali, lato: p.lato, ritratto: p.ritratto, pv: p.pv, diTurno: p.diTurno, token: st.scena.token.find((t) => chiaveRif(t.rif) === p.chiave)?.id ?? null, nascosto: !!st.scena.token.find((t) => chiaveRif(t.rif) === p.chiave)?.nascosto }));
+    const scelto = pezzoScelto()?.chiave;
+    svuota(el.ridotta,
+      barra ? h('p', { class: 'ridotta-round' }, `R ${barra.round}`) : null,
+      voci.map((v) => {
+        const quota = v.pv?.massimo > 0 ? Math.max(0, Math.min(1, v.pv.attuali / v.pv.massimo)) : null;
+        const titolo = `${v.nome}${v.pv ? ` · PV ${v.pv.attuali}/${v.pv.massimo}` : ''}${v.diTurno ? ' · di turno' : ''}${v.nascosto ? ' · nascosto ai giocatori' : ''}`;
+        return h('button', { type: 'button', class: `ridotta-voce${v.diTurno ? ' di-turno' : ''}${v.chiave === scelto ? ' scelto' : ''}`, title: titolo, 'aria-label': titolo, onclick: () => scegliDallaBarra(v) },
+          h('span', { class: `mini-token lato-${v.lato ?? 'nessuno'}${v.diTurno ? ' di-turno' : ''}${v.nascosto ? ' nascosto' : ''}` }, v.ritratto ? h('img', { src: v.ritratto, alt: '' }) : h('span', { class: 'iniziali' }, v.iniziali)),
+          quota !== null ? h('span', { class: 'pv-mini', style: `--quota: ${quota}` }) : null);
+      }));
+  }
+  /** Clic su un mini-token (barra dell'Iniziativa o colonna ridotta): token scelto in mappa, mini-scheda aperta. */
+  function scegliDallaBarra(v) {
+    const t = v.token ? st.scena.token.find((x) => x.id === v.token) : null;
+    if (t) { scegli(t.id); centraToken(t, { soloSeFuori: true }); }
+    apriCartaChiave(v.chiave);
+  }
+  /** «Avanti» della barra dell'Iniziativa: lo stesso della plancia (stessa coda e stessa revisione dello scontro). */
+  async function avantiDallaMappa() {
+    if (!st.planciaBarra?.avanti) return;
+    await st.planciaBarra.avanti();
+    await aggiornaFonti();
+  }
+  /** Centra la vista sul token (con `soloSeFuori`, solo se è fuori dal riquadro o troppo vicino al bordo). */
+  function centraToken(t, { soloSeFuori = false } = {}) {
+    const g = st.scena.griglia;
+    const c = centroToken(g, t);
+    const d = tela.dimensioni();
+    const s = schermoDaMappa(st.cam, c.x, c.y);
+    const margine = Math.min(80, d.larghezza / 6, d.altezza / 6);
+    if (soloSeFuori && s.x >= margine && s.x <= d.larghezza - margine && s.y >= margine && s.y <= d.altezza - margine) return;
+    cambiaCamera({ ...st.cam, ox: d.larghezza / 2 - c.x * st.cam.scala, oy: d.altezza / 2 - c.y * st.cam.scala });
+  }
+  /** Al cambio di turno (anche da un'altra finestra) la mappa centra chi è di turno, se è fuori vista. */
+  function seguiTurno(subito = false) {
+    const s = st.fonti?.scontro;
+    const chiave = s ? `${s.id}:${s.round}:${s.turno}` : null;
+    const cambiato = chiave !== st.turnoVisto;
+    const primo = st.turnoVisto === null;
+    st.turnoVisto = chiave;
+    if (!chiave || !st.centra || (!subito && (!cambiato || primo))) return;
+    const id = diTurno(s)?.id;
+    const t = id ? st.scena.token.find((x) => chiaveRif(x.rif) === chiaveRif({ tipo: 'partecipante', id })) : null;
+    if (t) centraToken(t, { soloSeFuori: true });
+  }
 
   // ── Vista giocatori (lotto 4): quale scena vedono, «Apri vista giocatori», codice QR ──
   let rete = null;
@@ -1176,6 +1371,7 @@ export function renderMappa(radice, ctx) {
     dimenticaMappa(sessionStorage);
     if (vista?.cam && Number.isFinite(vista.cam.scala)) cambiaCamera(vista.cam); else adattaSchermo();
     if (vista?.selezionato && st.scena.token.some((t) => t.id === vista.selezionato)) st.selezionato = vista.selezionato;
+    montaPlanciaBarra();
     await Promise.all([aggiornaFonti(), leggiScelta()]);
     disegnaPannelloNebbia();
     disegnaPannelloMuri();
@@ -1201,6 +1397,9 @@ export function renderMappa(radice, ctx) {
     gesti.distruggi();
     chiudiMenuToken();
     st.plancia?.();
+    st.planciaBarra?.();
+    osservaCorpo.disconnect();
+    togliBordo();
     window.removeEventListener('keydown', suTasto);
     window.removeEventListener('keyup', suRilasciaTasto);
     tela.distruggi();

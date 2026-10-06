@@ -458,7 +458,7 @@ async function contestoScena(scena, { cartella, tavolo, scontri, veicoli, radice
   } catch { /* nessun registro */ }
   const pezzi = pezziDellaScena({ scontro, bozza, alTavolo, viste, veicoli: registro }, dati);
   const immagineDi = (p) => (p.tipo === 'pg' ? (p.ritratto ? `api/ritratti/${encodeURIComponent(p.pg)}?v=${impronta(p.ritratto)}` : null) : p.ritratto);
-  return { pezzi, round: scontro?.round ?? null, immagineDi };
+  return { pezzi, round: scontro?.round ?? null, immagineDi, scontro };
 }
 
 /** Scena mostrata ai giocatori: quella scelta dal master (tavolo/mappa-giocatori.json) o la più recente dello scontro aperto. */

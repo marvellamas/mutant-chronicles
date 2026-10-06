@@ -10,9 +10,10 @@ export const LIVELLI = ['fondo', 'aree', 'sopra'];
 /**
  * Crea i tre canvas dentro `riquadro` (un elemento posizionato). `pittori[livello](c, info)` disegna un livello
  * su un contesto già pulito, con info = { larghezza, altezza, dpr } in pixel CSS.
- * Restituisce { richiedi(livelli?), dimensioni(), distruggi() }.
+ * Restituisce { richiedi(livelli?), dimensioni(), distruggi() }. `opzioni.ridimensionata(prima, dopo)`: il riquadro ha
+ * cambiato misura (lotto 6: la barra accanto alla mappa), per tenere fermo il centro della vista.
  */
-export function creaTela(riquadro, pittori) {
+export function creaTela(riquadro, pittori, opzioni = {}) {
   const tele = Object.fromEntries(LIVELLI.map((l) => {
     const t = document.createElement('canvas');
     t.className = `mappa-livello mappa-livello-${l}`;
@@ -48,7 +49,9 @@ export function creaTela(riquadro, pittori) {
   const misura = () => {
     const r = riquadro.getBoundingClientRect();
     const dpr = window.devicePixelRatio || 1;
+    const prima = info;
     info = { larghezza: r.width, altezza: r.height, dpr };
+    if (prima.larghezza > 0 && prima.altezza > 0 && (prima.larghezza !== info.larghezza || prima.altezza !== info.altezza)) opzioni.ridimensionata?.(prima, info);
     for (const t of Object.values(tele)) {
       t.width = Math.max(1, Math.round(r.width * dpr));
       t.height = Math.max(1, Math.round(r.height * dpr));

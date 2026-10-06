@@ -2686,6 +2686,15 @@ function validaMappa(dati, err) {
   if (!(V?.passo_rotella > 1 && V?.passo_rotella < 1.1)) err(F, 'vista.passo_rotella', 'numero fra 1 e 1,1 (si eleva al deltaY della rotella)');
   if (!(V?.margine_adatta_px >= 0)) err(F, 'vista.margine_adatta_px', 'numero da 0 in su');
   if (!positivo(V?.griglia_px_schermo_minimi)) err(F, 'vista.griglia_px_schermo_minimi', 'numero positivo');
+  // lotto 6, §11: barra accanto alla mappa (src/mappa/disposizione.js) e barra dell'Iniziativa
+  const B = V?.barra;
+  if (!isOggetto(B)) err(F, 'vista.barra', 'oggetto mancante');
+  else {
+    for (const k of ['mappa_grande_px', 'mappa_minima_px', 'riduci_sotto_px', 'iniziativa_px_per_punto']) if (!positivo(B[k])) err(F, `vista.barra.${k}`, 'numero positivo');
+    for (const k of ['equilibrata', 'scontro_grande', 'frazione_minima', 'frazione_massima']) if (!(B[k] > 0 && B[k] < 1)) err(F, `vista.barra.${k}`, 'frazione fra 0 e 1');
+    if (!(B.frazione_minima <= B.equilibrata && B.equilibrata < B.scontro_grande && B.scontro_grande <= B.frazione_massima)) err(F, 'vista.barra', 'frazione_minima ≤ equilibrata < scontro_grande ≤ frazione_massima');
+    if (!(B.riduci_sotto_px > B.mappa_grande_px)) err(F, 'vista.barra.riduci_sotto_px', 'maggiore di mappa_grande_px');
+  }
   const I = m.immagini;
   const estensioni = { jpeg: 'jpg', png: 'png', webp: 'webp' }; // quelle che src/mappa/scena.js → FILE_MAPPA accetta
   if (!isOggetto(I?.tipi) || !Object.keys(I.tipi).length) err(F, 'immagini.tipi', 'almeno un tipo di immagine');

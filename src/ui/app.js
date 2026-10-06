@@ -205,7 +205,8 @@ function daIndirizzo() {
     stato.fermaTavolo = renderMappa(radice, {
       dati: stato.dati, id: scenaMappa[1],
       // difetto 2 (06/10/2026): la scheda completa aperta dalla mappa ha «Torna alla mappa»
-      azioni: { tavolo: () => vai('#/tavolo'), apriScheda: (r, dallaMappa) => apriDaCartella(r, { dallaMappa }) },
+      // lotto 6: la plancia nella barra della mappa porta anche alla pagina dei personaggi e alle altre scene
+      azioni: { tavolo: () => vai('#/tavolo'), apriScheda: (r, dallaMappa) => apriDaCartella(r, { dallaMappa }), personaggi: () => vai('#/'), mappa: (id) => vai(`#/mappa/${id}`) },
     });
     return;
   }

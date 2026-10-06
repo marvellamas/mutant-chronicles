@@ -4,6 +4,8 @@
 // turno, nebbia piena; in alto il nome della scena, il Round e chi è di turno. Nessun comando del master: solo zoom
 // (rotella, due dita), spostamento (trascinamento) e doppio tocco o doppio clic per «Adatta allo schermo».
 // Si aggiorna da sola; la scena è quella scelta dal master o quella collegata allo scontro aperto.
+// Lotto 6: sotto il titolo la barra dell'Iniziativa del master (./barra-iniziativa.js), senza comandi e già filtrata dal
+// server: niente token nascosti né sotto la nebbia.
 import { h, svuota } from '../dom.js';
 import { cameraIniziale, sposta, adatta, schermoDaMappa, rettangoloVisibile } from '../../mappa/camera.js';
 import { dimensioniMappa, lineeVisibili } from '../../mappa/griglia.js';
@@ -13,6 +15,7 @@ import { chiaveRif } from '../../mappa/token.js';
 import { creaTela } from './canvas.js';
 import { creaGesti } from './gesti.js';
 import { disegnaToken, coloriMappa, creaImmagini } from './disegno-token.js';
+import { barraIniziativaEl } from './barra-iniziativa.js';
 
 const INTERVALLO_MS = 2000;
 
@@ -30,9 +33,10 @@ export function renderGiocatori(radice, ctx) {
   el.schermo = h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Schermo intero', onclick: () => (document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.()) }, 'Schermo intero');
   el.riquadro = h('div', { class: 'mappa-tela giocatori-tela', 'aria-label': 'Mappa dei giocatori: due dita o rotella per lo zoom, trascina per spostarti, doppio tocco per vedere tutto' });
   el.messaggio = h('p', { class: 'giocatori-messaggio', hidden: true });
+  el.iniziativa = h('div', { class: 'mappa-iniziativa-posto', hidden: true });
   el.riquadro.append(el.messaggio);
   svuota(radice, h('section', { class: 'mappa-pagina giocatori-pagina' },
-    h('header', { class: 'giocatori-barra' }, el.titolo, el.turno, el.stato, el.schermo), el.riquadro));
+    h('header', { class: 'giocatori-barra' }, el.titolo, el.turno, el.stato, el.schermo), el.iniziativa, el.riquadro));
 
   const immagine = creaImmagini(() => tela.richiedi(['sopra']));
   const tela = creaTela(el.riquadro, {
@@ -122,6 +126,9 @@ export function renderGiocatori(radice, ctx) {
   const messaggio = (t) => { el.messaggio.textContent = t ?? ''; el.messaggio.hidden = !t; };
   async function usa(corpo) {
     st.vista = corpo.scena;
+    const barra = corpo.scena?.iniziativa ?? null;
+    el.iniziativa.hidden = !barra;
+    svuota(el.iniziativa, barra ? barraIniziativaEl(barra, { pxPerPunto: V.barra.iniziativa_px_per_punto }) : null);
     if (!st.vista) {
       el.titolo.textContent = 'Mappa';
       el.turno.textContent = '';

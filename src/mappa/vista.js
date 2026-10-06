@@ -11,15 +11,18 @@
 // Lotto 4: con il contesto dello scontro ogni token visibile porta solo ciò che serve a disegnarlo (lato, nome,
 // iniziali, immagine, quota dei PV, a terra, di turno: niente PV esatti, Stati o schede), e la barra riceve il
 // Round e chi è di turno, solo se il suo token è visibile.
-// La nebbia arriva intera: i giocatori la vedono piena (§5). Limite: i pixel dell'immagine di fondo arrivano
-// comunque al dispositivo (A.130, docs/battlemap/piano.md §3).
+// Lotto 6: con lo scontro aperto nel contesto arriva anche la barra dell'Iniziativa (src/mappa/iniziativa.js), solo con
+// i partecipanti il cui token si vede (e i PG senza token in mappa).
+// La nebbia arriva intera: i giocatori la vedono piena (§5). Limite accettato: i pixel dell'immagine di fondo arrivano
+// comunque al dispositivo (decisione 118, ex A.130).
 import { daBase64, inBase64, cella, senza } from './celle.js';
 import { celleToken, chiaveRif, iniziali } from './token.js';
+import { barraIniziativa, barraPerGiocatori } from './iniziativa.js';
 
 /**
  * @param s la scena completa
  * @param contesto null, oppure { pezzi: [pezzo] (src/mappa/partecipanti.js), round: n | null,
- *   immagineDi: (pezzo) → indirizzo dell'immagine per i giocatori | null }
+ *   immagineDi: (pezzo) → indirizzo dell'immagine per i giocatori | null, scontro?: lo scontro aperto (barra dell'Iniziativa) }
  */
 export function vistaGiocatori(s, contesto = null) {
   const { colonne, righe } = s.griglia;
@@ -60,6 +63,12 @@ export function vistaGiocatori(s, contesto = null) {
     // nessun nome (nemmeno «qualcuno di nascosto»: anche questo sarebbe un'informazione)
     const diTurno = token.find((t) => t.info?.diTurno && t.rif.tipo === 'partecipante');
     vista.turno = { round: contesto.round ?? null, nome: diTurno?.info.nome ?? null };
+    if (contesto.scontro) {
+      const visibili = new Set(token.filter((t) => t.rif.tipo === 'partecipante').map((t) => chiaveRif(t.rif)));
+      const immagini = new Map(token.filter((t) => t.info).map((t) => [chiaveRif(t.rif), t.info.immagine]));
+      const immagineDi = (k) => (immagini.has(k) ? immagini.get(k) : pezzi.has(k) ? contesto.immagineDi?.(pezzi.get(k)) ?? null : null);
+      vista.iniziativa = barraPerGiocatori(barraIniziativa({ scontro: contesto.scontro, pezzi: contesto.pezzi, scena: s }), visibili, immagineDi);
+    }
   }
   return vista;
 }

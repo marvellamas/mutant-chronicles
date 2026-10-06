@@ -1939,3 +1939,56 @@ body:has(.mappa-pagina) .piede { display: none; }
 .mappa-menu button.scelta { font-weight: 700; }
 .mappa-menu button:disabled { opacity: 0.45; cursor: default; }
 .mappa-menu hr { border: none; border-top: 1px solid var(--bordo); margin: 0.2rem 0; }
+
+/* Mappa di battaglia, lotto 6 (§11): plancia come barra di destra, tre disposizioni, bordo da trascinare, barra
+   dell'Iniziativa in cima (src/ui/mappa/barra-iniziativa.js), colonna ridotta di «Mappa grande» */
+.mappa-disposizioni { display: inline-flex; gap: 0.25rem; }
+.mappa-disposizioni .btn.scelto { cursor: pointer; }
+.mappa-bordo { flex: none; width: 8px; margin: 0 -0.25rem; cursor: col-resize; border-radius: 4px; touch-action: none; position: relative; }
+.mappa-bordo::after { content: ''; position: absolute; top: 50%; left: 2px; width: 4px; height: 3rem; margin-top: -1.5rem; border-radius: 2px; background: var(--bordo); }
+.mappa-bordo:hover::after, .mappa-bordo:focus-visible::after, .trascina-bordo .mappa-bordo::after { background: var(--accento); }
+.trascina-bordo, .trascina-bordo * { cursor: col-resize !important; user-select: none; }
+.mappa-laterale { flex: none; min-width: 0; display: flex; flex-direction: column; background: var(--superficie); border: 1px solid var(--bordo); border-radius: var(--raggio); overflow: hidden; }
+.laterale-piena { flex: 1; min-height: 0; overflow-y: auto; padding: 0.5rem 0.6rem; display: flex; flex-direction: column; gap: 0.6rem; }
+.laterale-piena[hidden], .laterale-ridotta[hidden] { display: none; }
+.laterale-piena > *, .laterale-ridotta > * { flex-shrink: 0; }
+.laterale-schede { display: flex; gap: 0.3rem; position: sticky; top: -0.5rem; z-index: 2; background: var(--superficie); padding: 0.3rem 0; border-bottom: 1px solid var(--bordo); }
+.mappa-laterale .mappa-carta { width: auto; max-height: none; flex: none; overflow: visible; border: none; border-bottom: 1px solid var(--bordo); border-radius: 0; padding: 0 0 0.5rem; }
+.mappa-laterale .mappa-pannello { width: auto; flex: none; overflow: visible; border: none; padding: 0; background: none; }
+.mappa-plancia-corpo[hidden], .mappa-laterale .mappa-pannello[hidden] { display: none; }
+.mappa-plancia-corpo .plancia { max-width: none; margin: 0; }
+.plancia-in-mappa .plancia-testa .riga-azioni { flex-wrap: wrap; gap: 0.3rem; }
+.plancia-in-mappa .plancia-griglia { gap: 0.6rem; }
+.laterale-ridotta { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; align-items: center; gap: 0.35rem; padding: 0.4rem 0.2rem; }
+.ridotta-round { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; }
+.ridotta-voce { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; background: none; border: 2px solid transparent; border-radius: var(--raggio); padding: 0.2rem; cursor: pointer; color: inherit; }
+.ridotta-voce.di-turno { border-color: var(--mappa-turno); }
+.ridotta-voce.scelto { background: var(--accento-tenue); }
+.ridotta-voce .mini-token { position: static; transform: none; width: 40px; height: 40px; }
+.pv-mini { display: block; width: 44px; height: 5px; border-radius: 3px; background: linear-gradient(to right, var(--pv) calc(var(--quota) * 100%), var(--bordo) 0); }
+/* barra dell'Iniziativa: il valore più alto a sinistra; i pari merito impilati nell'ordine della plancia */
+.mappa-iniziativa-posto[hidden] { display: none; }
+.mappa-iniziativa { display: flex; align-items: center; gap: 0.6rem; background: var(--superficie); border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 0.25rem 0.6rem; }
+.mappa-iniziativa.vuota { padding: 0.35rem 0.6rem; }
+.iniziativa-round { display: flex; flex-direction: column; flex: none; line-height: 1.15; font-variant-numeric: tabular-nums; max-width: 9rem; }
+.iniziativa-round small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.iniziativa-scala { flex: 1; min-width: 0; overflow-x: auto; overflow-y: hidden; padding: 0 18px; }
+.iniziativa-scala-interna { position: relative; }
+.iniziativa-tacca { position: absolute; top: 0; transform: translateX(-50%); font-size: 0.7rem; color: var(--tenue); opacity: 0.8; font-variant-numeric: tabular-nums; }
+.iniziativa-comandi { display: inline-flex; align-items: center; gap: 0.5rem; flex: none; }
+.iniziativa-centra { font-size: 0.85rem; white-space: nowrap; }
+.mini-token { position: absolute; transform: translate(-50%, 16px); width: 28px; height: 28px; border-radius: 50%; border: 3px solid var(--tenue); background: var(--superficie); padding: 0; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; color: inherit; font: inherit; }
+button.mini-token { cursor: pointer; }
+.mini-token img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mini-token .iniziali { font-size: 0.65rem; font-weight: 700; letter-spacing: -0.02em; }
+.mini-token.lato-pg { border-color: var(--accento); }
+.mini-token.lato-alleato { border-color: var(--lato-alleato); }
+.mini-token.lato-avversario { border-color: var(--lato-avversario); }
+.mini-token.di-turno { box-shadow: 0 0 0 3px var(--mappa-turno); z-index: 1; }
+.mini-token.nascosto { opacity: 0.45; border-style: dashed; }
+.mini-token.scelto { outline: 2px solid var(--mappa-selezione); outline-offset: 2px; }
+@media (max-width: 46rem) {
+  .mappa-bordo { display: none; }
+  .mappa-laterale { width: auto !important; max-height: 45%; }
+  .iniziativa-centra { display: none; }
+}

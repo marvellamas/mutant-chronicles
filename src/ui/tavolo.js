@@ -21,7 +21,7 @@ import { testoColpo } from '../danno.js';
 import { perditeDovute, applicaPerdita, registraPeriodico, togliPeriodici, allineaPeriodici, periodicoDi, pvDopoPerdita } from '../periodici.js';
 import { pannelloScontro, leggiScontroAperto, leggiScontro, salvaScontro } from './scontro.js';
 import { pannelloBestiario, elencoNemici, cartaNemico } from './nemici.js';
-import { diTurno, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico, confermaRegimeNemico, aggiungiNemici, registraRiga, cambiaStatoNemico } from '../scontro.js';
+import { diTurno, avanti, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico, confermaRegimeNemico, aggiungiNemici, registraRiga, cambiaStatoNemico } from '../scontro.js';
 import { vociBestiario } from '../nemici.js';
 import { creaCustode } from './ridisegno.js';
 import { avviso, avvisoErrore } from './avvisi.js';
@@ -91,7 +91,7 @@ export function renderTavolo(radice, ctx) {
     scene: statoScene(),
     // «Collega i giocatori»: indirizzi della rete (server.mjs → /api/rete), riquadro aperto finché non lo si chiude
     rete: null,
-    collegaAperto: true,
+    collegaAperto: !ctx.inMappa,
     // A.105: registro unico dei veicoli (veicoli/ sul server), stato dei pannelli «Colpito» delle carte
     veicoli: [],
     firmaVeicoli: null,
@@ -277,8 +277,9 @@ export function renderTavolo(radice, ctx) {
   // il ridisegno periodico non chiude le tendine né toglie il focus ai campi in uso (src/ui/ridisegno.js)
   const custode = creaCustode(radice, { ridisegna: () => disegna() });
   // mappa di battaglia: plancia aperta dalla mappa («Apri nella plancia»): la carta da mostrare e la scena a cui tornare
-  let cartaDaMostrare = ctx.soloCarta ? null : cartaDallaMappa(sessionStorage);
-  const scenaDiRitorno = () => (ctx.soloCarta ? null : arrivoDallaMappa(sessionStorage));
+  // lotto 6: dentro la barra della mappa (ctx.inMappa) la plancia è tutta, senza titolo né «Torna alla mappa»
+  let cartaDaMostrare = ctx.soloCarta || ctx.inMappa ? null : cartaDallaMappa(sessionStorage);
+  const scenaDiRitorno = () => (ctx.soloCarta || ctx.inMappa ? null : arrivoDallaMappa(sessionStorage));
   // vista del PG al Round dello scontro in cui si trova (durate di Tecniche e incantesimi finite: niente effetti)
   const roundDi = (v) => (v?.chiaveCartella ? collegamentoScontro(stato.scontro, v.chiaveCartella)?.round ?? null : null);
   const vistaAlRound = (file, testo) => {
@@ -305,13 +306,15 @@ export function renderTavolo(radice, ctx) {
       return;
     }
     const ritorno = scenaDiRitorno();
-    svuota(radice, h('section', { class: 'plancia' },
+    svuota(radice, h('section', { class: `plancia${ctx.inMappa ? ' plancia-in-mappa' : ''}` },
       // aperta dalla mappa: un pulsante grande per tornare alla scena, allo zoom e alla posizione di prima
       ritorno ? h('button', { type: 'button', class: 'btn primario btn-torna-mappa', onclick: () => { tornaAllaMappa(sessionStorage); ctx.azioni.mappa(ritorno); } }, '← Torna alla mappa') : null,
       h('header', { class: 'plancia-testa' },
-        h('div', { class: 'riga-titolo' }, h('a', { class: 'marchio marchio-in-linea', href: '#/', title: 'Elenco dei personaggi' }, 'Mutant'),
+        ctx.inMappa ? null : h('div', { class: 'riga-titolo' }, h('a', { class: 'marchio marchio-in-linea', href: '#/', title: 'Elenco dei personaggi' }, 'Mutant'),
           h('h1', { class: 'titolo-con-stemma' }, iconaPagina('combattimento', '96', { classe: 'badge-pagina', lato: 40 }), 'Tavolo del Master')),
         h('div', { class: 'riga-azioni' },
+          // lotto 6: la plancia a pagina intera resta, con «Torna alla mappa»
+          ctx.inMappa ? h('button', { type: 'button', class: 'btn', title: 'La plancia a pagina intera, con «Torna alla mappa»', onclick: () => ctx.azioni.planciaIntera() }, 'Plancia intera') : null,
           h('span', { class: 'nota plancia-aggiornato', 'aria-live': 'polite' }, stato.errore ?? testoAggiornato(stato.ultimo)),
           h('button', { type: 'button', class: `btn${stato.sceltaAperta ? ' primario' : ''}`, 'aria-expanded': String(stato.sceltaAperta), onclick: () => { stato.sceltaAperta = !stato.sceltaAperta; disegna(); } }, 'Chi è al tavolo'),
           h('button', { type: 'button', class: 'btn', title: 'Sceglie uno o più file JSON di «SALVA PG», li controlla come «Importa», li scrive in personaggi/ senza mai sovrascrivere e li mette al tavolo', onclick: () => sceltaFile.click() }, 'Aggiungi PG al tavolo'),
@@ -323,7 +326,7 @@ export function renderTavolo(radice, ctx) {
           h('button', { type: 'button', class: 'btn', title: 'Scene della mappa di battaglia: nuova, apri, rinomina, duplica, archivia', onclick: () => apriElencoScene(stato.scene, disegna) }, 'Mappa'),
           h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.personaggi() }, 'Personaggi'))),
       stato.esitoEsempi ? h('p', { class: 'riquadro attenzione', role: 'status' }, stato.esitoEsempi) : null,
-      h('p', { class: 'nota' }, 'Sola lettura: i valori sono quelli delle schede in personaggi/, ricalcolati con le regole attuali. Per cambiarli si apre il personaggio (clic sulla mini-scheda).'),
+      ctx.inMappa ? null : h('p', { class: 'nota' }, 'Sola lettura: i valori sono quelli delle schede in personaggi/, ricalcolati con le regole attuali. Per cambiarli si apre il personaggio (clic sulla mini-scheda).'),
       riquadroCollega(stato.rete, { aperto: stato.collegaAperto, onToggle: (v) => { stato.collegaAperto = v; } }),
       stato.sceltaAperta ? sceltaAlTavolo(stato, ultimi, async (nuova) => {
         try {
@@ -767,6 +770,11 @@ export function renderTavolo(radice, ctx) {
   const ferma = () => { stato.attivo = false; clearInterval(giro); clearInterval(orologio); custode.smonta(); };
   // la mappa ridisegna la carta sola quando cambia il token scelto
   ferma.ridisegna = () => disegna();
+  // lotto 6: un solo «Avanti» per mappa, plancia e vista giocatori: la barra dell'Iniziativa usa questo, con la stessa
+  // coda delle modifiche e la stessa revisione dello scontro
+  // prima si rilegge lo scontro (un movimento «Libero» della mappa può averne cambiato la revisione)
+  ferma.avanti = async () => { await aggiorna(); return modifica((x) => avanti(x)); };
+  ferma.aggiorna = () => aggiorna();
   return ferma;
 }
 

@@ -68,7 +68,18 @@
     "passo_tasti": 1.25,
     "passo_rotella": 1.0015,
     "margine_adatta_px": 24,
-    "griglia_px_schermo_minimi": 6
+    "griglia_px_schermo_minimi": 6,
+    "barra": {
+      "_nota": "Lotto 6 (§11 della specifica): la plancia accanto alla mappa in tre disposizioni. «Mappa grande»: colonna stretta di mappa_grande_px pixel con i mini-token, i PV e il turno; «Equilibrata» e «Scontro grande»: frazione della larghezza della pagina occupata dalla barra. Il bordo si trascina fra frazione_minima e frazione_massima, lasciando alla mappa almeno mappa_minima_px; sotto riduci_sotto_px la barra torna «Mappa grande». La barra dell'Iniziativa mette almeno iniziativa_px_per_punto pixel fra due valori consecutivi (altrimenti scorre di lato).",
+      "mappa_grande_px": 92,
+      "equilibrata": 0.34,
+      "scontro_grande": 0.62,
+      "frazione_minima": 0.2,
+      "frazione_massima": 0.75,
+      "mappa_minima_px": 240,
+      "riduci_sotto_px": 160,
+      "iniziativa_px_per_punto": 30
+    }
   },
   "token": {
     "_nota": "§7 della specifica: lato del token in Q dalla Taglia (data/formato_nemici.json → taglia); i veicoli sono rettangoli [colonne, righe] dal loro profilo (data/veicoli.json → dimensioni.ingombro_q), al massimo veicolo_ingombro_max per lato. Il token sta sempre su Q interi; q è il Q in alto a sinistra del suo ingombro.",

@@ -11,6 +11,15 @@ export function mappaDaSchermo(cam, sx, sy) {
   return { x: (sx - cam.ox) / cam.scala, y: (sy - cam.oy) / cam.scala };
 }
 
+/**
+ * Il riquadro cambia misura (lotto 6: la barra accanto alla mappa si allarga o si stringe): stesso zoom e stesso punto
+ * della mappa al centro del riquadro.
+ */
+export function mantieniCentro(cam, prima, dopo) {
+  if (!prima?.larghezza || !prima?.altezza) return cam;
+  return { ...cam, ox: cam.ox + (dopo.larghezza - prima.larghezza) / 2, oy: cam.oy + (dopo.altezza - prima.altezza) / 2 };
+}
+
 /** Punto della mappa → punto dello schermo. */
 export function schermoDaMappa(cam, mx, my) {
   return { x: mx * cam.scala + cam.ox, y: my * cam.scala + cam.oy };
