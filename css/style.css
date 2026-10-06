@@ -2044,3 +2044,13 @@ button.mini-token { cursor: pointer; }
 .mappa-movimento .interruttore-mappa { align-self: flex-start; }
 /* ZoC (07/10): pulsanti dentro un avviso (Attacca! dall'Attacco di Opportunità) */
 .avviso-azioni { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.35rem; }
+/* difetto 1 del collaudo del lotto 7: barra della mappa su una riga; parole accanto alle icone solo se c'è spazio */
+.mappa-barra { flex-wrap: nowrap; min-width: 0; }
+.mappa-barra .mappa-titolo { max-width: 16rem; flex: 0 1 auto; }
+.mappa-barra .mappa-comandi { flex-wrap: nowrap; }
+.mappa-barra .mappa-stato { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.85rem; }
+.mappa-barra .lungo { display: none; }
+@media (min-width: 1600px) { .mappa-barra .lungo { display: inline; } }
+.menu-altro .menu-strumenti-voci { left: auto; right: 0; }
+.voce-strumenti-nota { margin: 0.25rem 0.6rem 0.35rem; font-size: 0.85rem; }
+@media (max-width: 46rem) { .mappa-barra, .mappa-barra .mappa-comandi { flex-wrap: wrap; } }

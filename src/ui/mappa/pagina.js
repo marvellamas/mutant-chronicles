@@ -141,22 +141,26 @@ export function renderMappa(radice, ctx) {
   el.scala = h('span', { class: 'mappa-scala' });
   el.stato = h('span', { class: 'nota mappa-stato', 'aria-live': 'polite' });
   // lotto 6 (§11.1): tre disposizioni, sempre visibili in alto (anche Tab e doppio clic sul bordo)
-  el.btnDisp = Object.fromEntries(DISPOSIZIONI.map((d) => [d, h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-pressed': 'false', title: `${NOMI_DISPOSIZIONI[d]} (Tab per passare alla prossima)`, onclick: () => scegliDisposizione(d) }, NOMI_DISPOSIZIONI[d])]));
+  // difetto 1 del collaudo del lotto 7: barra su una riga anche a 1366 × 768 e su tablet; icone con il suggerimento, le
+  // parole solo sugli schermi larghi (.lungo in css/style.css)
+  const ICONE_DISPOSIZIONI = { mappa: '🗺', equilibrata: '⚖', scontro: '⚔' };
+  const conIcona = (icona, testo) => [h('span', { class: 'icona', 'aria-hidden': 'true' }, icona), h('span', { class: 'lungo' }, ` ${testo}`)];
+  el.btnDisp = Object.fromEntries(DISPOSIZIONI.map((d) => [d, h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-pressed': 'false', 'aria-label': NOMI_DISPOSIZIONI[d], title: `${NOMI_DISPOSIZIONI[d]} (Tab per passare alla prossima)`, onclick: () => scegliDisposizione(d) }, conIcona(ICONE_DISPOSIZIONI[d], NOMI_DISPOSIZIONI[d]))]));
   el.btnGriglia = h('span', { class: 'mappa-disposizioni', role: 'group', 'aria-label': 'Disposizione' }, DISPOSIZIONI.map((d) => el.btnDisp[d]));
   el.btnCarica = h('button', { type: 'button', class: 'btn', title: 'Immagine di fondo: JPG, PNG o WEBP', onclick: () => el.scegliFile.click() }, 'Carica immagine');
   el.barra = h('header', { class: 'mappa-barra' },
-    h('button', { type: 'button', class: 'btn', title: 'Torna alla plancia del Tavolo del Master', onclick: () => ctx.azioni.tavolo() }, '← Tavolo'),
+    h('button', { type: 'button', class: 'btn', title: 'Torna alla plancia del Tavolo del Master', 'aria-label': 'Torna al Tavolo', onclick: () => ctx.azioni.tavolo() }, conIcona('←', 'Tavolo')),
     el.titolo,
     h('span', { class: 'mappa-comandi' },
-      el.btnCarica, el.scegliFile,
+      el.scegliFile,
       h('button', { type: 'button', class: 'btn tondo', title: 'Allontana (−)', 'aria-label': 'Allontana', onclick: () => zoomCentro(1 / V.passo_tasti) }, '−'),
       el.zoom,
       h('button', { type: 'button', class: 'btn tondo', title: 'Avvicina (+)', 'aria-label': 'Avvicina', onclick: () => zoomCentro(V.passo_tasti) }, '+'),
-      h('button', { type: 'button', class: 'btn', title: 'Tutta la mappa nel riquadro (doppio clic su un punto vuoto della mappa)', onclick: () => adattaSchermo() }, 'Adatta allo schermo'),
+      h('button', { type: 'button', class: 'btn', title: 'Adatta allo schermo: tutta la mappa nel riquadro (anche doppio clic su un punto vuoto)', 'aria-label': 'Adatta allo schermo', onclick: () => adattaSchermo() }, conIcona('⤢', 'Adatta')),
       el.btnGriglia,
       // lotto 7 (§12, menu superiore): gli strumenti del master in un menu
       el.strumenti = h('details', { class: 'menu-strumenti' },
-        h('summary', { class: 'btn', title: 'Strumenti del master: immagine, griglia, nebbia, muri, scene, movimenti dei giocatori' }, 'Strumenti ▾'),
+        h('summary', { class: 'btn', title: 'Strumenti del master: immagine, griglia, nebbia, muri, scene, movimenti dei giocatori', 'aria-label': 'Strumenti' }, conIcona('🛠', 'Strumenti'), ' ▾'),
         h('div', { class: 'menu-strumenti-voci', role: 'menu' },
           voceStrumenti('Carica immagine…', 'Immagine di fondo: JPG, PNG o WEBP', () => el.scegliFile.click()),
           voceStrumenti('Griglia', 'Calibra, colore, opacità, blocco', () => apriStrumento(el.pGriglia)),
@@ -166,8 +170,15 @@ export function renderMappa(radice, ctx) {
           voceStrumenti('Scene', 'Nuova, apri, rinomina, duplica, archivia', () => apriStrumento(document.getElementById('plancia-scene-mappa'))),
           voceStrumenti('Collegamento e token', 'Scontro o bozza collegati, pezzi da mettere in mappa', () => apriStrumento(el.secScontro)),
           el.bloccoGiocatori = h('button', { type: 'button', role: 'menuitemcheckbox', class: 'voce-strumenti', 'aria-checked': 'false', title: 'Pronto per la fase 2 (tab BattleMap dei giocatori): finché è acceso i giocatori non muovono i loro token', onclick: () => cambiaBloccoGiocatori() }, 'Blocca movimenti dei giocatori'))),
+      // «Altro»: immagine, scala della griglia e scorciatoie, fuori dalla riga
+      el.altro = h('details', { class: 'menu-strumenti menu-altro' },
+        h('summary', { class: 'btn', title: 'Altro: carica immagine, scala della griglia, scorciatoie', 'aria-label': 'Altro' }, '⋯'),
+        h('div', { class: 'menu-strumenti-voci', role: 'menu' },
+          h('button', { type: 'button', role: 'menuitem', class: 'voce-strumenti', title: 'Immagine di fondo: JPG, PNG o WEBP', onclick: () => { el.altro.open = false; el.scegliFile.click(); } }, 'Carica immagine…'),
+          h('button', { type: 'button', role: 'menuitem', class: 'voce-strumenti', title: 'Scorciatoie e comandi (?)', onclick: () => { el.altro.open = false; apriAiuto(); } }, 'Scorciatoie e comandi (?)'),
+          h('p', { class: 'nota voce-strumenti-nota' }, el.scala))),
       h('button', { type: 'button', class: 'btn tondo', title: 'Scorciatoie e comandi (?)', 'aria-label': 'Scorciatoie e comandi', onclick: () => apriAiuto() }, '?')),
-    el.scala, el.stato);
+    el.stato);
   el.riquadro = h('div', { class: 'mappa-tela', tabindex: '0', 'aria-label': 'Mappa: rotella per lo zoom, barra spaziatrice e mouse o trascinamento per spostarsi' });
   el.suggerimento = h('div', { class: 'mappa-suggerimento', hidden: true, role: 'status' });
   el.riquadro.append(el.suggerimento);
@@ -1382,7 +1393,7 @@ export function renderMappa(radice, ctx) {
     if (e.key === 'm' || e.key === 'M') { e.preventDefault(); cambiaMostraArea(); return; }
     if (e.key === 'z' || e.key === 'Z') { e.preventDefault(); cambiaMostraZoc(); return; }
     if (e.key === '?') { e.preventDefault(); apriAiuto(); return; }
-    if (e.key === 'Escape' && el.strumenti.open) { el.strumenti.open = false; return; }
+    if (e.key === 'Escape' && (el.strumenti.open || el.altro.open)) { el.strumenti.open = false; el.altro.open = false; return; }
     if (e.key === '+' || e.key === '=' || e.code === 'NumpadAdd') { e.preventDefault(); zoomCentro(V.passo_tasti); } else if (e.key === '-' || e.code === 'NumpadSubtract') { e.preventDefault(); zoomCentro(1 / V.passo_tasti); } else if (e.code === 'Space') {
       e.preventDefault(); // niente scorrimento della pagina
       if (!st.spazio) { st.spazio = true; el.riquadro.classList.add('spazio'); }
