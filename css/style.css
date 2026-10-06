@@ -2054,3 +2054,10 @@ button.mini-token { cursor: pointer; }
 .menu-altro .menu-strumenti-voci { left: auto; right: 0; }
 .voce-strumenti-nota { margin: 0.25rem 0.6rem 0.35rem; font-size: 0.85rem; }
 @media (max-width: 46rem) { .mappa-barra, .mappa-barra .mappa-comandi { flex-wrap: wrap; } }
+/* vista giocatori a schermo intero (due schermi del master, 07/10): solo mappa e barra dell'Iniziativa */
+body.schermo-intero .testata, body.schermo-intero .barra-aggiornamento, body.schermo-intero .barra-server-vecchio, body.schermo-intero .piede { display: none; }
+body.schermo-intero main:has(> .mappa-pagina) { padding: 0; }
+body.schermo-intero .giocatori-barra > :not(.giocatori-stato) { display: none; }
+body.schermo-intero .giocatori-barra:not(:has(.giocatori-stato:not(:empty))) { display: none; }
+body.schermo-intero .giocatori-pagina { gap: 0; }
+body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }

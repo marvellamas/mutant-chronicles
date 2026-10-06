@@ -18,7 +18,8 @@ import { disegnaToken, coloriMappa, creaImmagini } from './disegno-token.js';
 import { barraIniziativaEl } from './barra-iniziativa.js';
 import { avviso } from '../avvisi.js';
 
-const INTERVALLO_MS = 2000;
+// due schermi del master (07/10): la vista si aggiorna entro 1–2 secondi dalle azioni del master
+const INTERVALLO_MS = 1000;
 
 /**
  * @param ctx { dati }
@@ -184,6 +185,14 @@ export function renderGiocatori(radice, ctx) {
   }
   aggiorna();
   const giro = setInterval(aggiorna, INTERVALLO_MS);
+  // a schermo intero (pulsante o F11, anche sul secondo monitor) solo mappa e barra dell'Iniziativa: niente testata,
+  // barre né comandi; l'avviso «collegamento perso» resta (css/style.css → body.schermo-intero). F11 non avvisa la
+  // pagina: si riconosce dalla finestra grande quanto lo schermo
+  const suSchermo = () => document.body.classList.toggle('schermo-intero', !!document.fullscreenElement
+    || (window.innerHeight >= screen.height - 1 && window.innerWidth >= screen.width - 1));
+  suSchermo();
+  document.addEventListener('fullscreenchange', suSchermo);
+  window.addEventListener('resize', suSchermo);
   // lo schermo del tavolo non si spegne mentre la vista è aperta (§13), dove il browser lo permette
   let blocco = null;
   const tieniAcceso = async () => { try { blocco = await navigator.wakeLock?.request('screen'); } catch { /* non concesso */ } };
@@ -198,6 +207,9 @@ export function renderGiocatori(radice, ctx) {
     tela.distruggi();
     window.removeEventListener('resize', suMisura);
     document.removeEventListener('visibilitychange', suVisibile);
+    document.removeEventListener('fullscreenchange', suSchermo);
+    window.removeEventListener('resize', suSchermo);
+    document.body.classList.remove('schermo-intero');
     blocco?.release?.().catch(() => {});
     st.immagine?.close?.();
   };

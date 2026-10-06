@@ -1650,7 +1650,7 @@ export function renderMappa(radice, ctx) {
       h('div', { class: 'mappa-azioni-token' },
         s !== st.scena.id ? h('button', { type: 'button', class: 'btn btn-piccolo primario', onclick: () => scegliPerGiocatori(st.scena.id) }, 'Mostra questa scena') : null,
         s ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => scegliPerGiocatori(null) }, 'Automatica') : null,
-        h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => window.open('#/mappa/giocatori', 'mutant-giocatori') }, 'Apri vista giocatori')),
+        h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Una finestra a parte, da trascinare sul secondo schermo e mettere a schermo intero (F11)', onclick: () => window.open('#/mappa/giocatori', 'mutant-giocatori', 'popup,width=1280,height=800') }, 'Apri vista giocatori')),
       h('div', { class: 'mappa-qr' }, qr, h('small', { class: 'nota' }, url)),
       rete?.soloLocale ? h('p', { class: 'nota' }, 'Server acceso con --solo-locale: dai tablet non si raggiunge. Riavvialo con avvia-server.bat.') : null);
   }
