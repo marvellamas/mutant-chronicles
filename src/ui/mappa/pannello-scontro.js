@@ -108,6 +108,9 @@ function sezioneMovimento(m, a) {
       h('strong', {}, `${String(m.usato).replace('.', ',')} / ${q(m.disponibili)}`), ` usati ${m.senzaScontro ? 'nel turno' : 'nel Round'}`) : null,
     m.motivo ? h('p', { class: 'nota motivo-movimento' }, `Area: ${m.motivo}. Con Libero (o Maiusc) il master lo sposta comunque.`) : null,
     m.fascia === 4 ? h('p', { class: 'nota' }, `Libero: in qualunque quadretto, senza area e senza conteggio${m.senzaScontro ? '' : '; nel registro dello scontro resta una riga'}.`) : null,
+    // ritocchi del 06/10: l'area non è obbligatoria (anche clic destro e tasto M); il percorso resta
+    mov ? h('button', { type: 'button', role: 'switch', 'aria-checked': String(!!m.mostraArea), class: `interruttore${m.mostraArea ? ' acceso' : ''}`, title: 'Mostra o nasconde l’area di movimento (tasto M); il percorso sotto il puntatore resta', onclick: a.mostraArea },
+      h('span', { class: 'interruttore-pallino', 'aria-hidden': 'true' }), `Mostra area: ${m.mostraArea ? 'sì' : 'no'}`) : null,
     h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Area raggiungibile' },
       mov && !m.veicolo ? fasce.map(([testo, n, v]) => h('button', {
         type: 'button', class: `btn btn-piccolo fascia-${n}${m.fascia === n ? ' scelto' : ''}`, 'aria-pressed': String(m.fascia === n),

@@ -1,7 +1,9 @@
 // Mappa di battaglia, lotto 5 (docs/battlemap/piano.md): disegno sul livello «aree» e «sopra» della vista master.
 //   - muri come retino (righe oblique) e terreno difficile come puntinato, solo per il master: ai giocatori i muri
 //     sotto la nebbia non arrivano proprio (src/mappa/vista.js) e la loro vista non li disegna;
-//   - area raggiungibile in tre colori ben distinti (Passo, Corsa, Scatto: --mappa-passo, --mappa-corsa, --mappa-scatto);
+//   - area raggiungibile in tre colori ben distinti (Passo, Corsa, Scatto: --mappa-passo, --mappa-corsa, --mappa-scatto),
+//     leggera (ritocchi del 06/10): riempimento molto trasparente e contorno ben visibile di ogni fascia, con le
+//     opacità di data/mappa.json → vista.area;
 //   - percorso del token scelto verso il quadretto sotto il puntatore, con i Q che costa.
 import { schermoDaMappa, rettangoloVisibile } from '../../mappa/camera.js';
 import { dimensioni } from '../../mappa/token.js';
@@ -60,11 +62,17 @@ export function disegnaMuri(c, { scena, cam, info, muri, terreno, colori }) {
   }
 }
 
-/** Area raggiungibile: `celle` (src/mappa/area.js → celleArea) con 1 Passo, 2 Corsa, 3 Scatto. */
-export function disegnaArea(c, { scena, cam, info, celle, colori }) {
+/**
+ * Area raggiungibile: `celle` (src/mappa/area.js → celleArea) con 1 Passo, 2 Corsa, 3 Scatto. Ogni fascia ha un
+ * riempimento leggero e il suo contorno (i lati dei Q che confinano con un'altra fascia o con l'esterno).
+ * @param stile data/mappa.json → vista.area
+ */
+export function disegnaArea(c, { scena, cam, info, celle, colori, stile }) {
   const g = scena.griglia;
   const v = visibili(g, cam, info);
   const tinte = [null, colori.passo, colori.corsa, colori.scatto];
+  const val = (x, y) => (x < 0 || y < 0 || x >= g.colonne || y >= g.righe ? 0 : celle[y * g.colonne + x]);
+  const punto = (x, y) => { const s = schermoDaMappa(cam, g.scosto_x + x * g.q_px, g.scosto_y + y * g.q_px); return [Math.round(s.x) + 0.5, Math.round(s.y) + 0.5]; };
   for (let k = 1; k <= 3; k++) {
     c.save();
     c.beginPath();
@@ -72,7 +80,21 @@ export function disegnaArea(c, { scena, cam, info, celle, colori }) {
     for (let y = v.y0; y < v.y1; y++) {
       for (let x = v.x0; x < v.x1; x++) if (celle[y * g.colonne + x] === k) { c.rect(...rettQ(g, cam, x, y)); n++; }
     }
-    if (n) { c.globalAlpha = 0.32; c.fillStyle = tinte[k]; c.fill(); c.globalAlpha = 0.8; c.strokeStyle = tinte[k]; c.lineWidth = 1; c.stroke(); }
+    if (n) {
+      c.globalAlpha = stile.opacita_riempimento; c.fillStyle = tinte[k]; c.fill();
+      // contorno: un lato per ogni Q della fascia che confina con altro
+      c.beginPath();
+      for (let y = v.y0; y < v.y1; y++) {
+        for (let x = v.x0; x < v.x1; x++) {
+          if (val(x, y) !== k) continue;
+          for (const [dx, dy, a, b] of [[0, -1, [x, y], [x + 1, y]], [0, 1, [x, y + 1], [x + 1, y + 1]], [-1, 0, [x, y], [x, y + 1]], [1, 0, [x + 1, y], [x + 1, y + 1]]]) {
+            if (val(x + dx, y + dy) === k) continue;
+            c.moveTo(...punto(...a)); c.lineTo(...punto(...b));
+          }
+        }
+      }
+      c.globalAlpha = stile.opacita_contorno; c.strokeStyle = tinte[k]; c.lineWidth = stile.spessore_contorno_px; c.lineCap = 'round'; c.stroke();
+    }
     c.restore();
   }
 }

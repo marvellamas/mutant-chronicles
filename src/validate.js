@@ -2686,6 +2686,13 @@ function validaMappa(dati, err) {
   if (!(V?.passo_rotella > 1 && V?.passo_rotella < 1.1)) err(F, 'vista.passo_rotella', 'numero fra 1 e 1,1 (si eleva al deltaY della rotella)');
   if (!(V?.margine_adatta_px >= 0)) err(F, 'vista.margine_adatta_px', 'numero da 0 in su');
   if (!positivo(V?.griglia_px_schermo_minimi)) err(F, 'vista.griglia_px_schermo_minimi', 'numero positivo');
+  // ritocchi del 06/10: area raggiungibile leggera (src/ui/mappa/disegno-aree.js)
+  const A = V?.area;
+  if (!isOggetto(A)) err(F, 'vista.area', 'oggetto mancante');
+  else {
+    for (const k of ['opacita_riempimento', 'opacita_contorno']) if (!(A[k] >= 0 && A[k] <= 1)) err(F, `vista.area.${k}`, 'opacità da 0 a 1');
+    if (!positivo(A.spessore_contorno_px)) err(F, 'vista.area.spessore_contorno_px', 'numero positivo');
+  }
   // lotto 6, §11: barra accanto alla mappa (src/mappa/disposizione.js) e barra dell'Iniziativa
   const B = V?.barra;
   if (!isOggetto(B)) err(F, 'vista.barra', 'oggetto mancante');

@@ -106,6 +106,8 @@ export function renderMappa(radice, ctx) {
     planciaBarra: null,
     centra: true,
     turnoVisto: null,
+    // ritocchi del 06/10: l'area raggiungibile si mostra o si nasconde (pannello, clic destro, tasto M), ricordato
+    mostraArea: true,
   };
   const B = V.barra;
   const chiaveDisp = chiaveSchermo(window.screen?.width ?? 0, window.screen?.height ?? 0);
@@ -113,6 +115,7 @@ export function renderMappa(radice, ctx) {
   const scriviLocale = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* solo per questa volta */ } };
   st.disp = normalizzaDisposizione(leggiLocale(chiaveDisp), B);
   st.centra = leggiLocale('mutant-mappa-centra-turno') !== false;
+  st.mostraArea = leggiLocale('mutant-mappa-mostra-area') !== false;
   const leggiFonti = creaFonti(ctx.dati);
 
   // ── Struttura della pagina, creata una volta: si aggiornano solo i testi e i campi ──
@@ -215,7 +218,8 @@ export function renderMappa(radice, ctx) {
       const tratti = trattiCoperti(daBase64(s.nebbia.coperti), g.colonne, g.righe,
         { x0: Math.floor((r.x0 - g.scosto_x) / q), x1: Math.ceil((r.x1 - g.scosto_x) / q), y0: Math.floor((r.y0 - g.scosto_y) / q), y1: Math.ceil((r.y1 - g.scosto_y) / q) });
       // area raggiungibile del token scelto, sopra la nebbia (il master la vede sempre)
-      const disegnaAreaScelta = () => { const a = areaScelta(); if (a?.celle) disegnaArea(c, { scena: s, cam: st.cam, info, celle: a.celle, colori }); };
+      // con «Mostra area» spento non si disegna (il percorso sotto il puntatore resta, nel livello «sopra»)
+      const disegnaAreaScelta = () => { const a = st.mostraArea ? areaScelta() : null; if (a?.celle) disegnaArea(c, { scena: s, cam: st.cam, info, celle: a.celle, colori, stile: V.area }); };
       if (!tratti.length) { disegnaAreaScelta(); return; }
       c.save();
       c.globalAlpha = 0.5;
@@ -540,6 +544,7 @@ export function renderMappa(radice, ctx) {
       fascia: (n) => cambiaFascia(n),
       annullaMovimento: () => annullaMovimentoUi(scelto.id),
       nuovoTurno: () => nuovoTurnoUi(scelto.id),
+      mostraArea: () => cambiaMostraArea(),
       nuovoTurnoTutti: () => nuovoTurnoUi(null),
       nascondi: () => cambiaToken(scelto.id, (x) => ({ ...x, nascosto: !x.nascosto })),
       ingombro: (n) => cambiaToken(scelto.id, (x) => ({ ...x, ingombro: n, q: agganciaQ(st.scena.griglia, centroToken(st.scena.griglia, x).x, centroToken(st.scena.griglia, x).y, n) }), { controllaSovrapposti: true }),
@@ -855,6 +860,14 @@ export function renderMappa(radice, ctx) {
     st.area = t ? { token: t.id, ...infoArea(t) } : null;
     return st.area;
   }
+  /** «Mostra area»: interruttore ricordato (localStorage). */
+  function cambiaMostraArea(v = !st.mostraArea) {
+    st.mostraArea = v;
+    scriviLocale('mutant-mappa-mostra-area', v);
+    avviso(v ? 'Area di movimento mostrata (M per nasconderla).' : 'Area di movimento nascosta (M per mostrarla); il percorso resta.', { chiave: 'mostra-area' });
+    disegnaPannelli();
+    ridisegna(['aree', 'sopra']);
+  }
   function cambiaFascia(n) {
     st.fascia = n;
     invalidaArea();
@@ -935,7 +948,7 @@ export function renderMappa(radice, ctx) {
   function movimentoPannello(t) {
     const info = st.area?.token === t.id ? st.area : infoArea(t);
     const ultimo = [...st.scena.movimenti].reverse().find((x) => x.token === t.id);
-    return { movimento: info.movimento, rimaste: info.rimaste, usato: info.usato, disponibili: info.disponibili, fascia: st.fascia, motivo: info.motivo, annullabile: !!ultimo, veicolo: t.rif.tipo === 'veicolo', andatura: pezzoDi(t)?.andatura ?? null, senzaScontro: !st.fonti?.scontro };
+    return { mostraArea: st.mostraArea, movimento: info.movimento, rimaste: info.rimaste, usato: info.usato, disponibili: info.disponibili, fascia: st.fascia, motivo: info.motivo, annullabile: !!ultimo, veicolo: t.rif.tipo === 'veicolo', andatura: pezzoDi(t)?.andatura ?? null, senzaScontro: !st.fonti?.scontro };
   }
   /** «Nuovo turno» senza scontro aperto: il conteggio del movimento riparte per un token o per tutti (null). */
   function nuovoTurnoUi(id = null) {
@@ -1134,6 +1147,7 @@ export function renderMappa(radice, ctx) {
       { testo: 'Corri', azione: () => cambiaFascia(2), scelta: st.fascia === 2, disabilitata: !Number.isFinite(mov?.corsa), titolo: 'Amplia l’area fino alla Corsa' },
       { testo: 'Scatta', azione: () => cambiaFascia(3), scelta: st.fascia === 3, disabilitata: !Number.isFinite(mov?.scatto), titolo: 'Amplia l’area fino allo Scatto' },
       { testo: 'Libero', azione: () => cambiaFascia(LIBERO), scelta: st.fascia === LIBERO, titolo: 'In qualunque quadretto, senza area e senza conteggio (scorciatoia: Maiusc)' },
+      { testo: st.mostraArea ? 'Nascondi area (M)' : 'Mostra area (M)', azione: () => cambiaMostraArea() },
       { testo: 'Annulla ultimo movimento', azione: () => annullaMovimentoUi(tok.id), disabilitata: !ultimo },
       ...(st.fonti?.scontro ? [] : [{ testo: 'Nuovo turno', azione: () => nuovoTurnoUi(tok.id), titolo: 'Senza scontro aperto: il movimento di questo token riparte da 0' }]),
       null,
@@ -1152,6 +1166,7 @@ export function renderMappa(radice, ctx) {
     // Ctrl+Z (lotto 5): annulla l'ultima azione del master (movimento, muro, nebbia, token messo o tolto)
     if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === 'z') { e.preventDefault(); if (st.scena) annullaUi(); return; }
     if (e.ctrlKey || e.metaKey || e.altKey) return;
+    if (e.key === 'm' || e.key === 'M') { e.preventDefault(); cambiaMostraArea(); return; }
     if (e.key === '+' || e.key === '=' || e.code === 'NumpadAdd') { e.preventDefault(); zoomCentro(V.passo_tasti); } else if (e.key === '-' || e.code === 'NumpadSubtract') { e.preventDefault(); zoomCentro(1 / V.passo_tasti); } else if (e.code === 'Space') {
       e.preventDefault(); // niente scorrimento della pagina
       if (!st.spazio) { st.spazio = true; el.riquadro.classList.add('spazio'); }

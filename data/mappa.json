@@ -79,6 +79,12 @@
       "mappa_minima_px": 240,
       "riduci_sotto_px": 160,
       "iniziativa_px_per_punto": 30
+    },
+    "area": {
+      "_nota": "Ritocchi del 06/10 (test di Marcello sul lotto 6): area raggiungibile leggera, con la mappa che si vede sotto. Riempimento molto trasparente e contorno ben visibile di ogni fascia (Passo, Corsa, Scatto); opacità da 0 a 1, spessore del contorno in pixel dello schermo.",
+      "opacita_riempimento": 0.12,
+      "opacita_contorno": 0.95,
+      "spessore_contorno_px": 2.5
     }
   },
   "token": {
