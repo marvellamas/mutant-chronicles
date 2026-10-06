@@ -3,6 +3,9 @@
 // la difficoltà per 7 PG (solo informativa). Le bozze stanno sul server in scontri/ con stato «bozza»
 // (src/preparazione.js, server.mjs): si salvano a ogni modifica, si duplicano, si eliminano (in scontri/archivio/).
 // «Inizia» ne fa uno scontro vero con l'Iniziativa tirata e il Round 1. Finestra fuori dalla plancia che si ridisegna.
+// Ritocchi del 06/10 (test di Marcello sul lotto 6 della mappa): «Tutti» / «Nessuno» sui PG, «Salvata alle hh:mm» e
+// «Salva e chiudi», spiegazione di «Inizia» e «Inizia e consuma la bozza», «Prepara la mappa» (scena collegata alla
+// bozza, esistente o nuova, aperta per mettere i token).
 import { h } from './dom.js';
 import { nascondiTooltip } from './tooltip.js';
 import { avviso, avvisoErrore } from './avvisi.js';
@@ -14,6 +17,8 @@ import { ultimiPerPersonaggio } from '../cartella.js';
 import { vistaPlancia } from '../tavolo.js';
 import { tira } from '../tiri.js';
 import { dadoIniziativa } from '../scontro.js';
+import { elencoScene, leggiScena, salvaScena } from './mappa/api.js';
+import { nuovaScena, idScena, scenaDellaBozza, collegaABozza } from '../mappa/scena.js';
 import {
   nuovaBozza, aggiungiVoce, cambiaVoce, togliVoce, cambiaBozza, duplicaBozza, eliminaBozza, iniziaBozza, pgDellaBozza, STATO_BOZZA,
 } from '../preparazione.js';
@@ -37,6 +42,7 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
   const dati = ctx.dati;
   const BE = dati.bestiario;
   const st = { bozze: null, bozza: null, nuovoNome: '', errore: null, cartella: [], viste: new Map(), aperti: new Set(),
+    salvataAlle: null, scene: null, scenaScelta: '',
     daBestiario: { tipo: '', quanti: '1', lato: 'avversario' }, daCreatura: { id: BE.creature[0]?.id ?? '', grado: '', boss: false, quanti: '1', lato: 'avversario' } };
   const finestra = h('dialog', { class: 'pannello-scheda preparazione', 'aria-labelledby': 'preparazione-titolo' });
   finestra.addEventListener('close', () => { nascondiTooltip(); finestra.remove(); });
@@ -66,7 +72,10 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
       if (r.conflitto !== undefined) {
         st.bozza = r.conflitto?.stato === STATO_BOZZA ? r.conflitto : null;
         avvisoErrore('La bozza è stata cambiata in un’altra finestra: ho ricaricato quella attuale. Ripeti l’ultima modifica se serve.');
-      } else st.bozza = r.scontro.stato === STATO_BOZZA ? r.scontro : null;
+      } else {
+        st.bozza = r.scontro.stato === STATO_BOZZA ? r.scontro : null;
+        st.salvataAlle = new Date();
+      }
     } catch (e) { avvisoErrore(`Bozza non salvata: ${e.message}`); }
     disegna();
   };
@@ -93,8 +102,10 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
         const b = nuovaBozza({ nome: st.nuovoNome });
         st.nuovoNome = '';
         st.bozza = b;
+        st.scene = null;
         await salva(b);
         if (st.bozza) avviso(`Bozza «${st.bozza.nome}» creata.`);
+        caricaScene();
       } }, 'Nuova bozza')),
     st.bozze === null ? h('p', { class: 'nota' }, 'Lettura delle bozze…')
       : st.bozze.length ? h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
@@ -111,7 +122,10 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
   ];
   const apri = async (id) => {
     try { st.bozza = await leggiScontro(id); } catch (e) { avvisoErrore(e.message); return; }
+    st.salvataAlle = null;
+    st.scene = null;
     disegna();
+    caricaScene();
     // i PG scelti nella bozza: livello per la difficoltà
     await caricaCartella();
     await Promise.all((st.bozza?.pg ?? []).map(vista));
@@ -161,10 +175,17 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
     const pgNomi = new Set(b.pg ?? []);
     const chiaviCartella = [...new Set([...st.cartella.map((r) => r.file.replace(/_liv\d+_.*$/, '')), ...alTavolo().map((v) => v.chiaveCartella)])].sort((x, y) => x.localeCompare(y, 'it'));
     return [
-      h('div', { class: 'riga-azioni' }, h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { st.bozza = null; carica(); } }, '← Tutte le bozze')),
+      h('div', { class: 'riga-azioni' },
+        h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { st.bozza = null; carica(); } }, '← Tutte le bozze'),
+        // la bozza si salva da sola a ogni modifica: lo si dice, e «Salva e chiudi» aspetta l'ultimo salvataggio
+        h('span', { class: 'nota stato-bozza', role: 'status' }, st.salvataAlle ? `Salvata alle ${ora(st.salvataAlle)}` : 'Si salva da sola a ogni modifica'),
+        h('button', { type: 'button', class: 'btn btn-piccolo primario', title: 'Aspetta l’ultimo salvataggio e chiude la finestra; la bozza resta fra le bozze', onclick: salvaEChiudi }, 'Salva e chiudi')),
       h('label', { class: 'campo-nemico' }, h('span', {}, 'Nome dello scontro'), h('input', { type: 'text', maxlength: 60, value: b.nome, onchange: (e) => modifica((x) => cambiaBozza(x, { nome: e.target.value })) })),
       h('label', { class: 'campo-nemico' }, h('span', {}, 'Note per il master (non le vede nessun altro)'), h('textarea', { rows: 3, maxlength: 2000, value: b.note ?? '', onchange: (e) => modifica((x) => cambiaBozza(x, { note: e.target.value })) })),
       h('fieldset', { class: 'campo-nemico gruppo' }, h('legend', {}, 'PG (facoltativi: senza scelta, quelli al tavolo quando premi «Inizia»)'),
+        chiaviCartella.length ? h('div', { class: 'riga-azioni' },
+          h('button', { type: 'button', class: 'btn btn-piccolo', disabled: chiaviCartella.every((k) => pgNomi.has(k)), onclick: async () => { await Promise.all(chiaviCartella.map(vista)); modifica((x) => cambiaBozza(x, { pg: [...chiaviCartella] })); } }, 'Tutti'),
+          h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !pgNomi.size, onclick: () => modifica((x) => cambiaBozza(x, { pg: [] })) }, 'Nessuno')) : null,
         chiaviCartella.length ? h('div', { class: 'caselle-nemico' }, chiaviCartella.map((k) => h('label', {}, h('input', { type: 'checkbox', checked: pgNomi.has(k), onchange: async (e) => {
           if (e.target.checked) await vista(k);
           modifica((x) => cambiaBozza(x, { pg: e.target.checked ? [...(x.pg ?? []), k] : (x.pg ?? []).filter((y) => y !== k) }));
@@ -195,13 +216,64 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
             destinazione: { etichetta: 'Aggiungi alla preparazione', aggiungi: async (n, { quanti, lato, origine }) => { await modifica((x) => aggiungiVoce(x, { nemico: n, quanti, lato, origine })); avviso(`${n.nome} ×${quanti} nella bozza «${st.bozza?.nome ?? ''}».`); return true; } },
           }) }, 'Crea nemico…'),
           h('span', { class: 'nota' }, ' procedura guidata o tutto a caso, dal Bestiario'))),
+      preparaMappa(b),
       h('div', { class: 'riga-azioni azioni-bozza' },
-        h('button', { type: 'button', class: 'btn primario', disabled: !b.nemici.length, title: 'Crea lo scontro: Iniziativa tirata dall’app per tutti, Round 1. La bozza resta.', onclick: () => avvia(false) }, 'Inizia'),
-        h('button', { type: 'button', class: 'btn', disabled: !b.nemici.length, title: 'Come «Inizia», poi la bozza passa in scontri/archivio/', onclick: () => avvia(true) }, 'Inizia e consuma la bozza'),
+        h('button', { type: 'button', class: 'btn primario', disabled: !b.nemici.length, title: 'Avvia lo scontro: Iniziativa tirata dall’app per tutti, Round 1. La bozza resta fra le bozze e si può riusare.', onclick: () => avvia(false) }, 'Inizia'),
+        h('button', { type: 'button', class: 'btn', disabled: !b.nemici.length, title: 'Avvia lo scontro come «Inizia», poi archivia la bozza in scontri/archivio/: non resta fra le bozze', onclick: () => avvia(true) }, 'Inizia e consuma la bozza'),
         h('button', { type: 'button', class: 'btn', onclick: () => duplica(b.id) }, 'Duplica'),
         h('button', { type: 'button', class: 'btn', onclick: () => elimina(b.id) }, 'Elimina')),
+      h('ul', { class: 'nota spiega-inizia' },
+        h('li', {}, h('strong', {}, 'Inizia'), ': avvia lo scontro (Iniziativa tirata, Round 1); la bozza resta e si può riusare un’altra volta.'),
+        h('li', {}, h('strong', {}, 'Inizia e consuma la bozza'), ': avvia lo scontro e archivia la bozza (scontri/archivio/): per uno scontro che non si ripete.')),
     ];
   };
+  // --- «Prepara la mappa»: una scena collegata a questa bozza, aperta per mettere i token ---------------------
+  const caricaScene = async () => {
+    try { st.scene = await elencoScene(); } catch { st.scene = []; }
+    st.scenaScelta = scenaDellaBozza(st.scene, st.bozza?.id) ?? '';
+    disegna();
+  };
+  const preparaMappa = (b) => {
+    const scene = st.scene ?? [];
+    const gia = scenaDellaBozza(scene, b.id);
+    return h('div', { class: 'riga-aggiungi prepara-mappa' },
+      h('strong', {}, 'Mappa '),
+      h('select', { 'aria-label': 'Scena per questa bozza', onchange: (e) => { st.scenaScelta = e.target.value; } },
+        h('option', { value: '', selected: !st.scenaScelta }, 'Nuova scena…'),
+        scene.map((v) => h('option', { value: v.id, selected: v.id === st.scenaScelta }, `${v.nome}${v.id === gia ? ' (collegata)' : v.collegamento?.scontro || v.collegamento?.bozza ? ' (collegata ad altro)' : ''}`))),
+      h('button', { type: 'button', class: 'btn', disabled: st.scene === null, title: 'Collega la scena a questa bozza e apre la mappa per mettere i token', onclick: () => apriMappa(b) }, 'Prepara la mappa'),
+      h('span', { class: 'nota' }, gia ? ' la scena collegata si apre già con i pezzi della bozza' : ' i pezzi della bozza saranno fra i «senza token», da mettere in mappa'));
+  };
+  const apriMappa = async (b) => {
+    await coda;
+    try {
+      let id = st.scenaScelta;
+      if (!id) {
+        const nome = prompt('Nome della nuova scena:', b.nome)?.trim();
+        if (!nome) return;
+        const r = await salvaScena(collegaABozza(nuovaScena({ id: idScena(nome), nome: nome.slice(0, 120), dati }), b.id));
+        if (r.conflitto) throw new Error('una scena con questo nome esiste già: riprova');
+        id = r.scena.id;
+      } else {
+        const s = await leggiScena(id);
+        const c = s.collegamento ?? {};
+        if ((c.scontro || c.bozza) && c.bozza !== b.id && !confirm(`La scena «${s.nome}» è collegata a ${c.scontro ? 'uno scontro' : 'un’altra bozza'}: collegarla a «${b.nome}»? I token di chi non è in questa bozza verranno tolti, con conferma.`)) return;
+        if (c.bozza !== b.id || c.scontro) {
+          const r = await salvaScena(collegaABozza(s, b.id));
+          if (r.conflitto) throw new Error('la scena è stata cambiata in un’altra finestra: riprova');
+        }
+      }
+      avviso(`Mappa pronta per «${b.nome}»: metti i token dei pezzi della bozza.`);
+      finestra.close();
+      ctx.azioni.mappa?.(id);
+    } catch (e) { avvisoErrore(`Mappa non preparata: ${e.message}`); }
+  };
+  const salvaEChiudi = async () => {
+    await coda;
+    avviso(`Bozza «${st.bozza?.nome ?? ''}» salvata${st.salvataAlle ? ` alle ${ora(st.salvataAlle)}` : ''}.`);
+    finestra.close();
+  };
+  const ora = (d) => d.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });
   // difficoltà in parole semplici; i dettagli del calcolo nel suggerimento (richiesta di Marcello del 03/10)
   const delLivello = (l) => (l === 8 || l === 11 ? `dell’${l}°` : `del ${l}°`);
   const riquadroDifficolta = (b, d, liv) => {

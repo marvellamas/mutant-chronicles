@@ -1992,3 +1992,7 @@ button.mini-token { cursor: pointer; }
   .mappa-laterale { width: auto !important; max-height: 45%; }
   .iniziativa-centra { display: none; }
 }
+/* Prepara scontro, ritocchi del 06/10: stato del salvataggio, spiegazione di «Inizia», «Prepara la mappa» */
+.preparazione .stato-bozza { margin-left: auto; }
+.preparazione .spiega-inizia { margin: 0.25rem 0 0; padding-left: 1.2rem; }
+.preparazione .prepara-mappa { margin-top: 0.5rem; }

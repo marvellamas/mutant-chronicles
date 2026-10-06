@@ -1241,7 +1241,8 @@ export function renderMappa(radice, ctx) {
       inMappa: true,
       azioni: {
         personaggi: () => ctx.azioni.personaggi?.(),
-        mappa: (id) => (id === ctx.id ? null : ctx.azioni.mappa?.(id)),
+        // «Prepara la mappa» sulla scena già aperta: si rilegge, con il nuovo collegamento
+        mappa: (id) => (id === ctx.id ? location.reload() : ctx.azioni.mappa?.(id)),
         apri: (r) => apriSchedaCompleta(r),
         planciaIntera: () => apriPlanciaIntera(),
       },

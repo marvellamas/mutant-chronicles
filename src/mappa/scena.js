@@ -67,6 +67,15 @@ export function nuovaScena({ id, nome, mappa = null, griglia = {}, colonne, righ
   };
 }
 
+/**
+ * «Prepara la mappa» di una bozza (ritocchi del 06/10 sul lotto 6): la scena da proporre fra quelle dell'elenco
+ * (riassunti di GET /api/scene). Prima quella già collegata alla bozza, poi nessuna (si sceglie o se ne crea una).
+ */
+export const scenaDellaBozza = (elenco, idBozza) => elenco.find((v) => v.collegamento?.bozza === idBozza)?.id ?? null;
+
+/** La scena collegata alla bozza `idBozza` (al posto di qualunque collegamento di prima). */
+export const collegaABozza = (s, idBozza) => ({ ...s, collegamento: { scontro: null, bozza: idBozza } });
+
 /** Voce dell'elenco delle scene (GET /api/scene). */
 export function riassuntoScena(s, mtime = null) {
   return {

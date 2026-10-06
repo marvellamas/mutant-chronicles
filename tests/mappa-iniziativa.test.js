@@ -130,3 +130,15 @@ test('mantieniCentro: cambiando la misura del riquadro restano lo zoom e il punt
   assert.deepEqual(centro(c2, dopo), centro(cam, prima));
   assert.equal(mantieniCentro(cam, { larghezza: 0, altezza: 0 }, dopo), cam, 'prima misura: niente da mantenere');
 });
+
+test('«Prepara la mappa»: la scena già collegata alla bozza è quella proposta; il collegamento sostituisce quello di prima', async () => {
+  const { scenaDellaBozza, collegaABozza } = await import('../src/mappa/scena.js');
+  const elenco = [
+    { id: 'a', collegamento: { scontro: 'scontro-x', bozza: null } },
+    { id: 'b', collegamento: { scontro: null, bozza: 'bozza-1' } },
+    { id: 'c', collegamento: null },
+  ];
+  assert.equal(scenaDellaBozza(elenco, 'bozza-1'), 'b');
+  assert.equal(scenaDellaBozza(elenco, 'bozza-2'), null);
+  assert.deepEqual(collegaABozza({ id: 'a', collegamento: { scontro: 'scontro-x', bozza: null } }, 'bozza-2').collegamento, { scontro: null, bozza: 'bozza-2' });
+});
