@@ -70,6 +70,7 @@ La Mappa di battaglia è un modulo del **Tavolo del Master** di Mutant: gira sul
 > * **Annulla ultimo movimento** riporta il token dov’era.  
 > * Come contano le diagonali e il terreno difficile: da confermare con Davide (A.124).  
 > * Veicoli: si muovono all’Iniziativa del conducente con la loro andatura (A.105).
+> * **Ritocchi del 06/10/2026 (test di Marcello sul lotto 6):** l’area non è obbligatoria: l’interruttore **«Mostra area»** (nel pannello del token, nel clic destro e con il tasto **M**) la nasconde e la mostra, e la scelta resta memorizzata; il percorso al passaggio del mouse resta anche con l’area nascosta. L’area è **leggera**: riempimento molto trasparente e contorno ben visibile di ogni fascia, così la mappa sotto si vede (opacità in `data/mappa.json`).
 
 ## **9\. Linea di tiro**
 
@@ -86,6 +87,7 @@ La Mappa di battaglia è un modulo del **Tavolo del Master** di Mutant: gira sul
 > * Dal menu del token: **Genera un template da questo punto**, poi scelta di forma, misure e durata.  
 > * Collegamento con «Lancia\!»: un incantesimo ad area propone il template della misura e della durata giuste.  
 > * I token coperti dal template vengono evidenziati (utile per scegliere i bersagli).
+> * **Aggiunta di Marcello (06/10/2026):** la via principale è un **mini-menu dei template** (forma, misura, colore, durata) da cui il master sceglie e piazza; il template proposto da un incantesimo («Lancia!») è **facoltativo**, una comodità in più.
 
 ## **11\. Gestione dello scontro**
 
@@ -93,6 +95,17 @@ La Mappa di battaglia è un modulo del **Tavolo del Master** di Mutant: gira sul
 > * Cliccando un token si apre la sua mini-scheda nella barra (PV, Stati, attacchi, «Colpito», incantesimi); i danni si applicano da lì.  
 > * **Barra dell’Iniziativa** in alto: una barra graduata con i mini-token (foto o iniziali colorate) posizionati sul loro valore di Iniziativa; il token di turno è evidenziato; «Avanti» passa al successivo e al nuovo Round.  
 > * Tutto ciò che fa già la plancia resta: Round, durate, Sanguinamento e Stati periodici, bozze, «Crea nemico», veicoli.
+> * **Ritocchi del 06/10/2026 — barra dell’Iniziativa:** non un riquadro, ma una **linea spessa graduata** su cui i mini-token stanno al loro punteggio, dal più alto (a sinistra) al più basso. La linea si colora man mano che il turno avanza: dal punteggio più alto fino a chi è di turno è colorata, il resto è grigio; al nuovo Round si azzera. L’interruttore **«Centra su attivo»** (acceso / spento ben visibile) centra la mappa sul token di turno se è fuori vista. **«Avanti»** seleziona il nuovo token di turno: mini-scheda aperta e area di movimento sul token attivo (il precedente non resta selezionato).
+> * **Ritocchi del 06/10/2026 — barra laterale ordinata:** in cima alla barra i **segnalibri** fissi; un clic porta alla sezione e il segnalibro attivo è evidenziato. Le sezioni, in quest’ordine (dal token che si sta muovendo agli strumenti di preparazione):
+>   1. **Mini-scheda:** il token scelto, il suo movimento (Passo / Corri / Scatta / Libero, «Mostra area», usati / disponibili), Nascondi, Togli;
+>   2. **Iniziativa:** Round, «Avanti», «Fine scontro», ordine d’Iniziativa, tiri da fare;
+>   3. **PG:** mini-schede dei PG al tavolo e veicoli;
+>   4. **Nemici:** mini-schede dei nemici nello scontro;
+>   5. **Scontro:** chi è al tavolo, «Prepara scontro» (bozze), «Crea nemico», aggiungi nemici e partecipanti, durate, registro, «Collega i giocatori», bestiario;
+>   6. **Mappa:** collegamento allo scontro e token da mettere, muri, nebbia, vista giocatori, griglia, scene.
+>
+>   Niente doppioni: le scene stanno solo nel gruppo Mappa, «Apri nella plancia» solo nella mini-scheda.
+> * **Ritocchi del 06/10/2026 — «Prepara scontro»:** «Tutti» / «Nessuno» sopra le caselle dei PG; la bozza si salva da sola e lo dice («Salvata alle hh:mm»), con **«Salva e chiudi»**; sotto i pulsanti la spiegazione di **«Inizia»** (avvia lo scontro, la bozza resta riutilizzabile) e di **«Inizia e consuma la bozza»** (avvia e archivia la bozza); **«Prepara la mappa»** apre la mappa con una scena collegata alla bozza (una esistente o una nuova), pronta per mettere i token.
 > * **Aggiunta di Marcello (06/10/2026): non si lascia mai la mappa con un clic.** Il clic su un token apre la sua mini-scheda in un pannello a lato della mappa (la mini-scheda della plancia: PV, Stati, «Colpito», attacchi), con «Apri scheda completa» per un PG e «Apri nella plancia» per la plancia intera. La scheda completa di un PG, o la plancia, aperte dalla mappa hanno in alto un pulsante grande e ben visibile **«Torna alla mappa»** che riporta alla stessa scena, allo stesso zoom e alla stessa posizione, con il token e la mini-scheda di prima.
 
 ### **11.1 Ridimensionamento rapido mappa ↔ scontro**
@@ -111,7 +124,8 @@ Lo spazio dello schermo si sposta in un attimo fra mappa e barra dello scontro, 
 
 > * **Rotella / \+ / −:** zoom.  
 > * **Barra spaziatrice \+ mouse:** sposta la mappa.  
-> * **Tab:** cambia la disposizione mappa ↔ scontro.  
+> * **Tab:** cambia la disposizione mappa ↔ scontro.
+> * **M:** mostra o nasconde l’area di movimento.  
 > * **Ctrl \+ clic su un token:** apre la scheda (PG) o la mini-scheda (nemico).  
 > * **Aggiunta di Marcello (06/10/2026):** il clic semplice su un token apre la sua mini-scheda a lato della mappa, senza lasciarla; dalla scheda completa o dalla plancia aperte dalla mappa si torna con **«Torna alla mappa»** (stessa scena, zoom e posizione), come al §11.  
 > * **Alt \+ clic su un token:** linea di tiro verso il punto cliccato dopo.  
@@ -122,7 +136,8 @@ Lo spazio dello schermo si sposta in un attimo fra mappa e barra dello scontro, 
 ### **Menu con clic destro sul token**
 
 > * Linea di tiro  
-> * Corri / Scatta (amplia l’area raggiungibile)  
+> * Corri / Scatta (amplia l’area raggiungibile), Libero
+> * Mostra / Nascondi area (M)  
 > * Genera un template da questo punto  
 > * Annulla ultimo movimento  
 > * (master) Nascondi / Mostra, Apri scheda, Togli dalla mappa
@@ -153,7 +168,7 @@ Le stesse azioni più gli strumenti del master: carica mappa, griglia, nebbia, m
 ### **Fase 2**
 
 > * Tab BattleMap con movimento dei giocatori dal tablet.  
-> * Linea di tiro con Copertura; template (anche rettangolari e con durata) e collegamento a «Lancia\!».  
+> * Linea di tiro con Copertura; template (anche rettangolari e con durata) da un **mini-menu dei template** (forma, misura, colore, durata); il collegamento a «Lancia\!» è facoltativo.  
 > * Porte; veicoli sulla mappa.  
 > * Avvisi di turno, richiami del master, suoni.
 
