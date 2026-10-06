@@ -923,6 +923,28 @@ le altre si registrano lotto per lotto.
     (`regole.json` → `protezioni_rapide`, `TODO(Davide)` A.110). Ferite, Affaticamento, Corruzione e Stati modificabili
     anche nella tab Abilità, sugli stessi campi della sessione.
 
+## 6 ottobre 2026 — Mappa di battaglia (specifica, bozza 2)
+
+Fonte: Google Doc «Mutant — Mappa di battaglia (specifica)», bozza 2 (ID `1UB3U98NoumK35w4nL5KHOwg7Nc-ET_-FMot7weanM3s`),
+approvata da Marcello; copia in `docs/battlemap/specifica.md`, piano in `docs/battlemap/piano.md` (branch `battlemap`).
+
+115. **Iniziativa della mappa di battaglia** (A.123, 06/10/2026). Si usa il sistema del Manuale del Giocatore di Mutant:
+    Mod DES + Mod INT + 1d10 (§2.14), parità per DES, poi INT, poi scelta fra alleati o 1d10 fra avversari (§5.1),
+    cioè quello che la plancia del Tavolo già calcola (`src/scontro.js`). Il d12 con le Caratteristiche 1–30 dell'app
+    di Davide («EROI & LEGGENDE – Tavolo Digitale», `docs/ricognizione-battlemap.md`) appartiene al sistema
+    precedente e non si usa.
+
+**Aperte** (testi nella sezione 15 della specifica; da mettere nel Doc «per-davide.md» con il pacchetto):
+
+- **A.121 — Riuso del suo codice.** Possiamo riusare, adattate, le funzioni pure della sua app (geometria delle pedine,
+  movimento con muri e porte, veicoli) e i loro test?
+- **A.122 — Funzioni usate davvero.** Quali funzioni della sua app usi al tavolo (mappe proprie o costruite, nebbia,
+  luci, porte, template, vista dei giocatori)?
+- **A.124 — Azioni extra, movimento, diagonali.** Le azioni extra sono turni separati nel Round o azioni nello stesso
+  turno? Il movimento per turno è Passo/Corsa/Scatto? Le diagonali valgono 1 Q o 1,5? Come conta il terreno difficile?
+- **A.125 — Porte, luci, veicoli.** Quanto costa aprire una porta? Il «livello» delle luci è una regola e come si
+  traduce nell'illuminazione di A.106? Velocità dei veicoli sulla mappa per andatura?
+
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 
 Il Manuale dei Veicoli 0.2 è completo di numeri e il lotto 2 (dati e motore) non ha dovuto inventare nulla. Restano
