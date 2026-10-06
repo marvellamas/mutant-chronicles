@@ -67,7 +67,7 @@
     "griglia_px_schermo_minimi": 6
   },
   "token": {
-    "_nota": "§7 della specifica: lato del token in Q dalla Taglia (data/formato_nemici.json → taglia). Il token sta sempre su Q interi; q è il Q in alto a sinistra del suo ingombro.",
+    "_nota": "§7 della specifica: lato del token in Q dalla Taglia (data/formato_nemici.json → taglia); i veicoli sono rettangoli [colonne, righe] dal loro profilo (data/veicoli.json → dimensioni.ingombro_q), al massimo veicolo_ingombro_max per lato. Il token sta sempre su Q interi; q è il Q in alto a sinistra del suo ingombro.",
     "ingombro_per_taglia": {
       "normale": 1,
       "grande": 2
@@ -76,6 +76,11 @@
       1,
       2,
       3
+    ],
+    "veicolo_ingombro_max": 12,
+    "veicolo_predefinito": [
+      3,
+      2
     ],
     "TODO(Davide)": "A.126: quando una creatura occupa 3 × 3 Q («se indicato», §7 della specifica)? Serve un campo «ingombro in Q» nel formato dei nemici, oltre a normale e grande?",
     "riferimenti": [

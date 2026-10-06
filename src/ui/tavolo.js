@@ -32,8 +32,11 @@ import { cartaVeicoloPlancia } from './veicoli.js';
 import { stessaChiave } from '../veicoli-registro.js';
 import { elencoVeicoli, aggiornaVeicolo } from './veicoli-registro.js';
 import { statoScene, pannelloScene, apriElencoScene } from './mappa/scene.js';
+import { ascoltaMappa } from './mappa/canale.js';
 
 const INTERVALLO_MS = 3000;
+/** Carta con la chiave del suo token (data-pezzo): la mappa di battaglia la cerca al clic sul token (src/ui/mappa/canale.js). */
+const conPezzo = (el, chiave) => { if (el?.dataset) el.dataset.pezzo = chiave; return el; };
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
 /** Nome di un partecipante dello scontro (fonte di una perdita periodica), o null se non c'è. */
 const nomePartecipante = (s, id) => (id ? (s?.partecipanti ?? []).find((p) => p.id === id)?.nome ?? null : null);
@@ -268,6 +271,8 @@ export function renderTavolo(radice, ctx) {
 
   // il ridisegno periodico non chiude le tendine né toglie il focus ai campi in uso (src/ui/ridisegno.js)
   const custode = creaCustode(radice, { ridisegna: () => disegna() });
+  // mappa di battaglia (lotto 3): il clic su un token porta qui la sua carta
+  const mappa = ascoltaMappa(radice);
   // vista del PG al Round dello scontro in cui si trova (durate di Tecniche e incantesimi finite: niente effetti)
   const roundDi = (v) => (v?.chiaveCartella ? collegamentoScontro(stato.scontro, v.chiaveCartella)?.round ?? null : null);
   const vistaAlRound = (file, testo) => {
@@ -319,11 +324,11 @@ export function renderTavolo(radice, ctx) {
       barraPeriodici(alTavolo),
       alTavolo.length
         ? h('div', { class: 'plancia-griglia' }, alTavolo.map((r) => (r.mancante ? cartaMancante(r.mancante)
-          : stato.viste.get(r.file) ? cartaPg(ctx, stato.viste.get(r.file), r, turnoDi(r), colpitoPg, durateDi(stato.viste.get(r.file))) : cartaErrore(r, stato.errori.get(r.file)))))
+          : stato.viste.get(r.file) ? conPezzo(cartaPg(ctx, stato.viste.get(r.file), r, turnoDi(r), colpitoPg, durateDi(stato.viste.get(r.file))), `partecipante:pg:${chiaveDaFile(r.file)}`) : cartaErrore(r, stato.errori.get(r.file)))))
         : h('p', { class: 'vuoto' }, 'Nessun personaggio al tavolo: sceglili con «Chi è al tavolo».'),
       nemiciInScontro().length ? [
         h('h2', { class: 'plancia-sezione' }, 'Nemici nello scontro'),
-        h('div', { class: 'plancia-griglia' }, nemiciInCarta().map((p) => cartaNemico(ctx, p, { modifica, durate: durateNemico(p), diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p), onAttacca: attacchiDi(p).length ? () => attacca(p, alTavolo) : null, onLancia: (i) => lancia(p, i, alTavolo), onRiduci: (v) => modifica((x) => riduciNemico(x, p.id, v)), onRegime: (k, r) => modifica((x) => confermaRegimeNemico(x, p.id, k, r, new Date())) }))),
+        h('div', { class: 'plancia-griglia' }, nemiciInCarta().map((p) => conPezzo(cartaNemico(ctx, p, { modifica, durate: durateNemico(p), diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p), onAttacca: attacchiDi(p).length ? () => attacca(p, alTavolo) : null, onLancia: (i) => lancia(p, i, alTavolo), onRiduci: (v) => modifica((x) => riduciNemico(x, p.id, v)), onRegime: (k, r) => modifica((x) => confermaRegimeNemico(x, p.id, k, r, new Date())) }), `partecipante:${p.id}`))),
       ] : null,
       sezioneVeicoli(),
       pannelloScene(ctx, stato.scene, { ridisegna: disegna, apri: (id) => ctx.azioni.mappa(id) }),
@@ -334,6 +339,7 @@ export function renderTavolo(radice, ctx) {
         procedura: (n) => creaNemico(n),
       })));
     custode.ripristina(foto);
+    mappa.controllaAttesa();
   };
   // «Crea nemico» (src/ui/crea-nemico.js): con uno scontro aperto il nemico può entrare subito nello scontro;
   // con un nemico del bestiario creato dalla procedura, la riapre sul suo riepilogo
@@ -608,7 +614,7 @@ export function renderTavolo(radice, ctx) {
     const t = stato.scontro ? diTurno(stato.scontro) : null;
     return [h('h2', { class: 'plancia-sezione' }, 'Veicoli'),
       h('p', { class: 'nota' }, 'Scheda unica dei veicoli (veicoli/, A.91 e A.105): le stesse modifiche le vedono le schede dei PG. Permessi e nomi provvisori (A.113).'),
-      h('div', { class: 'plancia-griglia' }, stato.veicoli.map((rec) => cartaVeicoloPlancia(ctxV, rec, { scontro: stato.scontro, diTurno: t, persone: [...persone.values()], incapace, scrivi: scrivi(rec) })))];
+      h('div', { class: 'plancia-griglia' }, stato.veicoli.map((rec) => conPezzo(cartaVeicoloPlancia(ctxV, rec, { scontro: stato.scontro, diTurno: t, persone: [...persone.values()], incapace, scrivi: scrivi(rec) }), `veicolo:${rec.id}`)))];
   };
   const aggiornaVeicoli = async () => {
     const lista = await elencoVeicoli();
@@ -701,7 +707,7 @@ export function renderTavolo(radice, ctx) {
   aggiorna().then(() => { disegna(); if (Number.isFinite(ctx.scorrimento)) window.scrollTo(0, ctx.scorrimento); });
   const giro = setInterval(() => aggiorna(), INTERVALLO_MS);
   const orologio = setInterval(aggiornaIndicatore, 1000);
-  return () => { stato.attivo = false; clearInterval(giro); clearInterval(orologio); custode.smonta(); };
+  return () => { stato.attivo = false; clearInterval(giro); clearInterval(orologio); custode.smonta(); mappa.chiudi(); };
 }
 
 function testoAggiornato(ms) {

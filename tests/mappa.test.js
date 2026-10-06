@@ -7,7 +7,8 @@ import {
   nuovaMaschera, inBase64, daBase64, mascheraValida, cella, impostaCella, rettangolo, pennello, conta, senza, ridimensiona, byteMaschera,
 } from '../src/mappa/celle.js';
 import { tipoImmagine, dimensioniImmagine } from '../src/mappa/immagine.js';
-import { ingombroDaTaglia, celleToken, tokenDentro, sovrapposti, tokenSenzaPartecipante, partecipantiSenzaToken } from '../src/mappa/token.js';
+import { ingombroDaTaglia, celleToken, tokenDentro, sovrapposti } from '../src/mappa/token.js';
+import { tokenOrfani, pezziSenzaToken } from '../src/mappa/partecipanti.js';
 import { nuovaScena, validaScena, dimensioniGriglia, riassuntoScena } from '../src/mappa/scena.js';
 import { vistaGiocatori } from '../src/mappa/vista.js';
 import { validaDati } from '../src/validate.js';
@@ -120,8 +121,9 @@ test('token e scontro: token senza partecipante e partecipanti senza token', () 
     { id: 't2', rif: { tipo: 'partecipante', id: 'nem:predatore:2' } },
     { id: 't3', rif: { tipo: 'segnaposto' } },
   ] };
-  assert.deepEqual(tokenSenzaPartecipante(scena, scontro), ['t2']);
-  assert.deepEqual(partecipantiSenzaToken(scena, scontro).map((p) => p.id), ['nem:predatore:1']);
+  const pezzi = scontro.partecipanti.map((p) => ({ chiave: `partecipante:${p.id}` }));
+  assert.deepEqual(tokenOrfani(scena, pezzi).map((t) => t.id), ['t2']);
+  assert.deepEqual(pezziSenzaToken(scena, pezzi).map((p) => p.chiave), ['partecipante:nem:predatore:1']);
 });
 
 /** Scena di prova 10 × 8 Q con un po' di tutto. */

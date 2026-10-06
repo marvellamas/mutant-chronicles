@@ -85,6 +85,10 @@ Nella plancia del Tavolo del Master il bordo sinistro della carta di un nemico e
 
 Sono lontani dai colori riservati (PV cremisi, PM blu, Punti Eroe verde) e dalle bandierine. Il test controlla il contrasto ≥ 4.5:1 sulla superficie, perché il nome del lato è testo.
 
+### Token della mappa di battaglia
+
+Sulla mappa (lotto 3, `src/ui/mappa/disegno-token.js`) il bordo del token dice il lato: PG e loro veicoli con `--accento` (il colore dell'app, non riservato: non c'era un colore libero abbastanza lontano dagli altri), alleati con `--lato-alleato`, avversari con `--lato-avversario`. L'anello dei PV usa `--pv`. In `css/style.css`, solo per la pagina della mappa: `--mappa-turno` (alone del token di turno), `--mappa-selezione`, `--mappa-traccia-pv`.
+
 ## Altri colori (css/style.css, non riservati)
 
 - `--accento`: link, pulsanti primari, marchio.

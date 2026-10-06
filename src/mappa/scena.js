@@ -135,7 +135,11 @@ export function validaScena(s, dati) {
       if (rifPartecipanti.has(t.rif.id)) return `${k}: il partecipante «${t.rif.id}» ha già un token`;
       rifPartecipanti.add(t.rif.id);
     }
-    if (!D.token.ingombri_ammessi.includes(t.ingombro)) return `${k}.ingombro: ${D.token.ingombri_ammessi.join(', ')} Q per lato`;
+    const rettangolo = Array.isArray(t.ingombro);
+    if (rettangolo && (t.rif.tipo !== 'veicolo' || t.ingombro.length !== 2 || !t.ingombro.every((n) => isIntero(n) && n >= 1 && n <= D.token.veicolo_ingombro_max))) {
+      return `${k}.ingombro: [colonne, righe] solo per i veicoli, da 1 a ${D.token.veicolo_ingombro_max} Q`;
+    }
+    if (!rettangolo && !D.token.ingombri_ammessi.includes(t.ingombro)) return `${k}.ingombro: ${D.token.ingombri_ammessi.join(', ')} Q per lato`;
     if (!isQ(t.q) || !tokenDentro(t, colonne, righe)) return `${k}.q: il token deve stare tutto dentro la griglia`;
     if (typeof t.nascosto !== 'boolean') return `${k}.nascosto: vero o falso`;
   }

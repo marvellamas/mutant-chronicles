@@ -2709,6 +2709,9 @@ function validaMappa(dati, err) {
   }
   for (const t of Object.keys(T?.ingombro_per_taglia ?? {})) if (!taglie.includes(t)) err(F, `token.ingombro_per_taglia.${t}`, 'Taglia che formato_nemici.json non conosce');
   if (!['partecipante', 'veicolo', 'segnaposto'].every((r) => T?.riferimenti?.includes(r))) err(F, 'token.riferimenti', 'partecipante, veicolo e segnaposto attesi');
+  if (!isIntero(T?.veicolo_ingombro_max) || T.veicolo_ingombro_max < 1) err(F, 'token.veicolo_ingombro_max', 'intero da 1 in su');
+  const vp = T?.veicolo_predefinito;
+  if (!Array.isArray(vp) || vp.length !== 2 || !vp.every((n) => isIntero(n) && n >= 1 && n <= (T?.veicolo_ingombro_max ?? 0))) err(F, 'token.veicolo_predefinito', '[colonne, righe] interi entro veicolo_ingombro_max');
   const M = m.movimento;
   for (const k of ['costo_ortogonale', 'costo_diagonale', 'terreno_difficile_moltiplicatore']) if (!positivo(M?.[k])) err(F, `movimento.${k}`, 'numero positivo');
   for (const k of ['diagonali_alterne', 'attraversa_alleati', 'attraversa_avversari', 'fermarsi_su_alleato', 'movimento_diviso']) {

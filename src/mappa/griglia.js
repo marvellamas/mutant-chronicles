@@ -3,6 +3,7 @@
 // Coordinate in pixel dell'immagine originale; il Q (0, 0) comincia in (scosto_x, scosto_y).
 import { dimensioniGriglia } from './scena.js';
 import { daBase64, inBase64, ridimensiona } from './celle.js';
+import { dimensioni } from './token.js';
 
 /** Scostamento riportato dentro un quadretto: 0 ≤ scosto < q. */
 export function normalizzaScosto(scosto, q) {
@@ -70,8 +71,8 @@ export function applicaGriglia(scena, cambi, dati, { mappa } = {}) {
   const C0 = prima.colonne, R0 = prima.righe;
   const adatta = (b64, riempi) => (C0 === g.colonne && R0 === g.righe ? b64 : inBase64(ridimensiona(daBase64(b64), C0, R0, g.colonne, g.righe, riempi)));
   const dentro = (t) => {
-    const lato = t.ingombro ?? 1;
-    return { ...t, q: [Math.max(0, Math.min(g.colonne - lato, t.q[0])), Math.max(0, Math.min(g.righe - lato, t.q[1]))] };
+    const [w, h] = dimensioni(t.ingombro);
+    return { ...t, q: [Math.max(0, Math.min(g.colonne - w, t.q[0])), Math.max(0, Math.min(g.righe - h, t.q[1]))] };
   };
   return {
     scena: {
