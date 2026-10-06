@@ -22,7 +22,7 @@
 // ./disegno-token.js e ./disegno-aree.js.
 import { h, svuota } from '../dom.js';
 import { avviso, avvisoErrore } from '../avvisi.js';
-import { cameraIniziale, zoomVerso, sposta, adatta, mappaDaSchermo, schermoDaMappa, rettangoloVisibile, mantieniCentro } from '../../mappa/camera.js';
+import { cameraIniziale, zoomVerso, sposta, adatta, mappaDaSchermo, schermoDaMappa, rettangoloVisibile, mantieniCentro, riadattaCentro } from '../../mappa/camera.js';
 import { DISPOSIZIONI, NOMI_DISPOSIZIONI, prossimaDisposizione, normalizzaDisposizione, larghezzaBarra, trascinaBordo, chiaveSchermo } from '../../mappa/disposizione.js';
 import { barraIniziativa } from '../../mappa/iniziativa.js';
 import { barraIniziativaEl, stileBordo } from './barra-iniziativa.js';
@@ -320,7 +320,18 @@ export function renderMappa(radice, ctx) {
       c.strokeRect(Math.min(a.x, b.x), Math.min(a.y, b.y), Math.abs(b.x - a.x), Math.abs(b.y - a.y));
       c.restore();
     },
-  }, { ridimensionata: (prima, dopo) => { if (st.scena) cambiaCamera(mantieniCentro(st.cam, prima, dopo)); } });
+  }, {
+    // la barra che si allarga tiene zoom e centro (lotto 6); la finestra che cambia misura riadatta lo zoom al riquadro
+    // mantenendo il centro (difetto 3 del collaudo del lotto 7)
+    ridimensionata: (prima, dopo) => {
+      if (!st.scena) return;
+      const finestra = Date.now() - finestraCambiata < 600;
+      cambiaCamera(finestra ? riadattaCentro(st.cam, prima, dopo, V) : mantieniCentro(st.cam, prima, dopo));
+    },
+  });
+  let finestraCambiata = 0;
+  const suFinestra = () => { finestraCambiata = Date.now(); };
+  window.addEventListener('resize', suFinestra);
 
   const immagine = creaImmagini(() => ridisegna(['sopra']));
 
@@ -1678,6 +1689,7 @@ export function renderMappa(radice, ctx) {
     osservaCorpo.disconnect();
     togliBordo();
     window.removeEventListener('keydown', suTasto);
+    window.removeEventListener('resize', suFinestra);
     window.removeEventListener('keyup', suRilasciaTasto);
     tela.distruggi();
     st.immagine?.close?.();

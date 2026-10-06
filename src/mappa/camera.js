@@ -20,6 +20,19 @@ export function mantieniCentro(cam, prima, dopo) {
   return { ...cam, ox: cam.ox + (dopo.larghezza - prima.larghezza) / 2, oy: cam.oy + (dopo.altezza - prima.altezza) / 2 };
 }
 
+/**
+ * La finestra cambia misura (difetto 3 del collaudo del lotto 7: schermo più stretto): stesso punto della mappa al
+ * centro e zoom in proporzione alla larghezza del riquadro, entro i limiti di data/mappa.json → vista. Solo la
+ * larghezza: i passaggi intermedi di un ridimensionamento si compongono (col minimo dei due lati no).
+ */
+export function riadattaCentro(cam, prima, dopo, vista) {
+  if (!prima?.larghezza || !prima?.altezza) return cam;
+  const f = dopo.larghezza / prima.larghezza;
+  const scala = Math.min(vista.zoom_max, Math.max(vista.zoom_min, cam.scala * f));
+  const cx = (prima.larghezza / 2 - cam.ox) / cam.scala, cy = (prima.altezza / 2 - cam.oy) / cam.scala;
+  return { scala, ox: dopo.larghezza / 2 - cx * scala, oy: dopo.altezza / 2 - cy * scala };
+}
+
 /** Punto della mappa → punto dello schermo. */
 export function schermoDaMappa(cam, mx, my) {
   return { x: mx * cam.scala + cam.ox, y: my * cam.scala + cam.oy };

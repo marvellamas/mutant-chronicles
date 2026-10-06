@@ -152,3 +152,15 @@ test('avanzamentoTurno: la linea si colora dal più alto fino a chi è di turno;
   const nuovo = avanti({ ...s, turno: 4 });
   assert.deepEqual([nuovo.round, avanzamentoTurno(barraIniziativa({ scontro: nuovo }))], [3, 0]);
 });
+
+test('riadattaCentro: finestra più stretta, stesso centro e zoom in proporzione (entro i limiti)', async () => {
+  const { riadattaCentro } = await import('../src/mappa/camera.js');
+  const V = dati.mappa.vista;
+  const cam = { scala: 1, ox: -100, oy: -50 };
+  const prima = { larghezza: 1200, altezza: 800 }, dopo = { larghezza: 600, altezza: 800 };
+  const c2 = riadattaCentro(cam, prima, dopo, V);
+  assert.equal(c2.scala, 0.5);
+  assert.deepEqual(mappaDaSchermo(c2, 300, 400), mappaDaSchermo(cam, 600, 400));
+  assert.equal(riadattaCentro({ ...cam, scala: V.zoom_min }, prima, dopo, V).scala, V.zoom_min);
+  assert.equal(riadattaCentro(cam, { larghezza: 0, altezza: 0 }, dopo, V), cam);
+});
