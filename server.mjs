@@ -5,8 +5,9 @@
 //                                    tutte le interfacce e stampa gli indirizzi per i giocatori (src/rete.js)
 //   node server.mjs --solo-locale   solo da questo computer (127.0.0.1); --rete resta accettato, non serve più
 //   PORTA=8080 node server.mjs      altra porta (oppure --porta=8080)
-//   --cartella=<dir> --tavolo=<dir> --scontri=<dir> --nemici=<dir>  altre cartelle per personaggi,
-//                                    tavolo, scontri e bestiario (prove, più campagne)
+//   --cartella=<dir> --tavolo=<dir> --scontri=<dir> --nemici=<dir> --veicoli=<dir> --scene=<dir> --mappe=<dir>
+//                                    altre cartelle per personaggi, tavolo, scontri, bestiario, veicoli,
+//                                    scene e immagini delle mappe (prove, più campagne)
 // API (JSON):
 //   GET /api/ping                      { ok: true, app: 'mutant', cartella: 'personaggi' }: l'app capisce che il server c'è
 //   GET /api/rete                      { porta, soloLocale, indirizzi: [{ nome, indirizzo, url }], altri, tuttiPerDubbio }:
@@ -33,12 +34,25 @@
 //                                      file che lì non ci sono: { copiati: [...], saltati: [...] }
 //   PUT /api/nemici/<id>               salva nemici/<id>.json se è valido (data/formato_nemici.json,
 //                                      src/validate.js → validaNemico); altrimenti 400 con gli errori
+//   Mappa di battaglia (lotto 1 di docs/battlemap/piano.md; limiti in data/mappa.json):
+//   GET /api/scene                     scene in scene/: [{ id, nome, revisione, mappa, colonne, righe, token, collegamento, mtime }]
+//   GET /api/scene/<id>                la scena completa (src/mappa/scena.js), per il master
+//   GET /api/scene/<id>?vista=giocatori  la scena filtrata (src/mappa/vista.js): niente token o template nascosti,
+//                                      niente token, muri e terreno sotto la nebbia, solo la copia ridotta
+//   PUT /api/scene/<id>                la salva se è valida e se `revisione` è quella del file (altrimenti 409 con
+//                                      la scena attuale); le immagini nominate devono essere in mappe/
+//   GET /api/mappe                     immagini in mappe/: [{ file, dimensione, mtime }]
+//   GET /api/mappe/<file>              l'immagine (in cache: il nome contiene l'impronta del contenuto)
+//   POST /api/mappe?nome=…[&ridotta=1] corpo = JPG, PNG o WEBP: lo salva come <nome>-<impronta>[-ridotta].<est>
+//                                      e risponde { file, tipo, larghezza, altezza, dimensione }; ridotta=1
+//                                      controlla il lato massimo della copia per i tablet
 // Nessuna cancellazione dal server: i file vecchi si tolgono a mano dalla cartella.
 import { createServer } from 'node:http';
 import { readFile, writeFile, readdir, stat, mkdir, rename, copyFile, unlink, constants } from 'node:fs/promises';
 import { extname, join, normalize, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { networkInterfaces } from 'node:os';
+import { createHash } from 'node:crypto';
 import { indirizziRete, testoAvvio } from './src/rete.js';
 import { validaScontro } from './src/scontro.js';
 import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
@@ -47,6 +61,9 @@ import { validaRecord, ID_VEICOLO, migraVeicoli, eRiferimento } from './src/veic
 import { normalizzaVeicoli } from './src/veicoli.js';
 import { caricaDati } from './src/rules.js';
 import { validaNemico, formattaErrore } from './src/validate.js';
+import { validaScena, riassuntoScena, ID_SCENA, FILE_MAPPA } from './src/mappa/scena.js';
+import { vistaGiocatori } from './src/mappa/vista.js';
+import { dimensioniImmagine } from './src/mappa/immagine.js';
 
 const RADICE = fileURLToPath(new URL('.', import.meta.url));
 const CARTELLA = 'personaggi';
@@ -55,6 +72,8 @@ const SCONTRI = 'scontri';
 const ID_SCONTRO = /^[a-z0-9-]{1,60}$/;
 const NEMICI = 'nemici';
 const VEICOLI = 'veicoli';
+const SCENE = 'scene';
+const MAPPE = 'mappe';
 const ID_NEMICO = /^[a-z0-9-]{1,60}$/;
 
 const TIPI = {
@@ -111,12 +130,12 @@ const json = (res, codice, corpo) => {
   res.end(JSON.stringify(corpo));
 };
 
-async function leggiCorpo(req) {
+async function leggiCorpo(req, massimo = MASSIMO) {
   const parti = [];
   let n = 0;
   for await (const p of req) {
     n += p.length;
-    if (n > MASSIMO) throw Object.assign(new Error('file troppo grande'), { codice: 413 });
+    if (n > massimo) throw Object.assign(new Error('file troppo grande'), { codice: 413 });
     parti.push(p);
   }
   return Buffer.concat(parti);
@@ -315,6 +334,106 @@ async function apiNemici(req, res, percorso, nemici, radice) {
 }
 
 /**
+ * Scene della mappa di battaglia (lotto 1 di docs/battlemap/piano.md): un file per scena in scene/, revisione come
+ * gli scontri. La vista giocatori la filtra il server (src/mappa/vista.js): ai loro dispositivi non arriva nulla di
+ * nascosto. Nessuna autenticazione, come il resto del server: il filtro vale per gli schermi che chiedono la vista
+ * giocatori.
+ */
+async function apiScene(req, res, percorso, scene, mappe, radice) {
+  if (percorso === '/api/scene' && req.method === 'GET') {
+    await mkdir(scene, { recursive: true });
+    const lista = [];
+    for (const f of (await readdir(scene)).filter((x) => x.endsWith('.json') && ID_SCENA.test(x.slice(0, -5)))) {
+      try { lista.push(riassuntoScena(await leggiJson(join(scene, f)), (await stat(join(scene, f))).mtimeMs)); } catch { /* file rovinato: non si elenca */ }
+    }
+    return json(res, 200, lista.sort((a, b) => b.mtime - a.mtime));
+  }
+  const m = /^\/api\/scene\/([^/]+)$/.exec(percorso);
+  if (!m || !ID_SCENA.test(m[1])) return json(res, 400, { errore: 'id di scena non valido: minuscole, cifre e trattini' });
+  const dove = join(scene, `${m[1]}.json`);
+  if (req.method === 'GET') {
+    let s;
+    try { s = await leggiJson(dove); } catch { return json(res, 404, { errore: 'scena non trovata' }); }
+    const vista = new URL(req.url, 'http://x').searchParams.get('vista');
+    if (vista === 'giocatori') return json(res, 200, vistaGiocatori(s));
+    if (vista !== null) return json(res, 400, { errore: 'vista: solo «giocatori»' });
+    return json(res, 200, s);
+  }
+  if (req.method !== 'PUT') return json(res, 405, { errore: 'metodo non ammesso' });
+  let s;
+  try { s = JSON.parse((await leggiCorpo(req)).toString('utf8')); } catch (e) { return json(res, 400, { errore: `contenuto non valido: ${e.message}` }); }
+  const { dati } = await datiDelServer(radice);
+  const errore = validaScena(s, dati) ?? (s.id !== m[1] ? 'l’id non corrisponde al file' : null);
+  if (errore) return json(res, 400, { errore });
+  for (const file of [s.mappa?.file, s.mappa?.ridotta].filter(Boolean)) {
+    try { await stat(join(mappe, file)); } catch { return json(res, 400, { errore: `immagine «${file}» non trovata in ${MAPPE}/: caricala prima` }); }
+  }
+  let attuale = null;
+  try { attuale = await leggiJson(dove); } catch { /* nuova */ }
+  if ((attuale?.revisione ?? 0) !== s.revisione || (!attuale && s.revisione !== 0)) {
+    return json(res, 409, { errore: 'la scena è stata cambiata altrove: ricarica', attuale });
+  }
+  const nuova = { ...s, revisione: s.revisione + 1, aggiornato: new Date().toISOString() };
+  await mkdir(scene, { recursive: true });
+  await scriviJson(dove, nuova);
+  return json(res, 200, nuova);
+}
+
+/** Nome leggibile per il file di una mappa: minuscole senza accenti, cifre e trattini. */
+const nomeMappa = (t) => String(t ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+  .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60) || 'mappa';
+
+/**
+ * Immagini delle mappe (§4 della specifica): si accettano solo JPG, PNG e WEBP veri (intestazione letta da
+ * src/mappa/immagine.js), entro data/mappa.json → immagini.massimo_mb. Il nome contiene l'impronta del contenuto:
+ * lo stesso file caricato due volte non si duplica e il browser lo tiene in cache. Non si cancella nulla.
+ */
+async function apiMappe(req, res, percorso, mappe, radice) {
+  if (percorso === '/api/mappe' && req.method === 'GET') {
+    await mkdir(mappe, { recursive: true });
+    const lista = [];
+    for (const file of (await readdir(mappe)).filter((x) => FILE_MAPPA.test(x))) {
+      const st = await stat(join(mappe, file));
+      lista.push({ file, dimensione: st.size, mtime: st.mtimeMs });
+    }
+    return json(res, 200, lista.sort((a, b) => b.mtime - a.mtime));
+  }
+  if (percorso === '/api/mappe' && req.method === 'POST') {
+    const { dati } = await datiDelServer(radice);
+    const I = dati.mappa.immagini;
+    let corpo;
+    try { corpo = await leggiCorpo(req, I.massimo_mb * 1024 * 1024); } catch (e) {
+      return json(res, e.codice ?? 400, { errore: e.codice === 413 ? `immagine troppo grande: al massimo ${I.massimo_mb} MB` : e.message });
+    }
+    const d = dimensioniImmagine(new Uint8Array(corpo.buffer, corpo.byteOffset, corpo.length));
+    if (!d || !I.tipi[d.tipo]) return json(res, 415, { errore: 'immagine non riconosciuta: solo JPG, PNG o WEBP' });
+    const parametri = new URL(req.url, 'http://x').searchParams;
+    const ridotta = parametri.get('ridotta') === '1';
+    if (ridotta && Math.max(d.larghezza, d.altezza) > I.ridotta.lato_massimo_px) {
+      return json(res, 400, { errore: `copia ridotta: lato massimo ${I.ridotta.lato_massimo_px} pixel, questa ne ha ${Math.max(d.larghezza, d.altezza)}` });
+    }
+    const impronta = createHash('sha256').update(corpo).digest('hex').slice(0, 12);
+    const file = `${nomeMappa(parametri.get('nome'))}-${impronta}${ridotta ? '-ridotta' : ''}.${I.tipi[d.tipo].estensione}`;
+    await mkdir(mappe, { recursive: true });
+    const dove = join(mappe, file);
+    try { await stat(dove); } catch {
+      const tmp = `${dove}.tmp-${process.pid}`;
+      await writeFile(tmp, corpo);
+      await rename(tmp, dove);
+    }
+    return json(res, 200, { file, tipo: d.tipo, larghezza: d.larghezza, altezza: d.altezza, dimensione: corpo.length });
+  }
+  const m = /^\/api\/mappe\/([^/]+)$/.exec(percorso);
+  if (!m || !FILE_MAPPA.test(m[1])) return json(res, 400, { errore: 'nome di immagine non valido' });
+  if (req.method !== 'GET' && req.method !== 'HEAD') return json(res, 405, { errore: 'metodo non ammesso' });
+  let st;
+  try { st = await stat(join(mappe, m[1])); } catch { return json(res, 404, { errore: 'immagine non trovata' }); }
+  res.writeHead(200, { 'Content-Type': TIPI[extname(m[1])], 'Content-Length': st.size, 'Cache-Control': 'public, max-age=31536000, immutable' });
+  if (req.method === 'HEAD') return res.end();
+  return res.end(await readFile(join(mappe, m[1])));
+}
+
+/**
  * «Carica esempi» (Tavolo del Master): i personaggi d'esempio del repo (esempi/) nella cartella dei
  * personaggi e i nemici d'esempio (esempi/nemici/ ed esempi/nemici/umani/) nel bestiario. Non sovrascrive mai: un file con lo
  * stesso nome già presente si salta e si segnala (COPYFILE_EXCL, anche fra due richieste contemporanee).
@@ -339,7 +458,9 @@ async function caricaEsempi(radice, cartella, nemici) {
   return { copiati, saltati };
 }
 
-async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice, soloLocale, veicoli, migraIn = null) {
+async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice, soloLocale, veicoli, migraIn = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE)) {
+  if (percorso === '/api/scene' || percorso.startsWith('/api/scene/')) return apiScene(req, res, percorso, scene, mappe, radice);
+  if (percorso === '/api/mappe' || percorso.startsWith('/api/mappe/')) return apiMappe(req, res, percorso, mappe, radice);
   if (percorso === '/api/veicoli' || percorso.startsWith('/api/veicoli/')) return apiVeicoli(req, res, percorso, veicoli);
   if (percorso === '/api/ping') return json(res, 200, { ok: true, app: 'mutant', cartella: CARTELLA });
   if (percorso === '/api/rete') {
@@ -448,7 +569,7 @@ async function statico(req, res, percorso, radice) {
   let rel = percorso === '/' ? '/index.html' : percorso;
   // niente uscite dalla cartella del progetto, niente file nascosti né la cartella dei personaggi (passa dall'API)
   const pieno = normalize(join(radice, rel));
-  if (!pieno.startsWith(radice) || rel.split('/').some((p) => p.startsWith('.')) || rel.startsWith(`/${CARTELLA}/`) || rel.startsWith(`/${TAVOLO}/`) || rel.startsWith(`/${SCONTRI}/`) || rel.startsWith(`/${NEMICI}/`)) {
+  if (!pieno.startsWith(radice) || rel.split('/').some((p) => p.startsWith('.')) || rel.startsWith(`/${CARTELLA}/`) || rel.startsWith(`/${TAVOLO}/`) || rel.startsWith(`/${SCONTRI}/`) || rel.startsWith(`/${NEMICI}/`) || rel.startsWith(`/${VEICOLI}/`) || rel.startsWith(`/${SCENE}/`) || rel.startsWith(`/${MAPPE}/`)) {
     res.writeHead(404); return res.end('Non trovato');
   }
   try {
@@ -473,7 +594,7 @@ async function statico(req, res, percorso, radice) {
  * Crea il server. `radice`: cartella dell'app; `cartella`: dove stanno i personaggi (per i test, una
  * cartella temporanea).
  */
-export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA), tavolo = join(RADICE, TAVOLO), scontri = join(RADICE, SCONTRI), nemici = join(RADICE, NEMICI), veicoli: veicoliDati = null, soloLocale = false } = {}) {
+export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA), tavolo = join(RADICE, TAVOLO), scontri = join(RADICE, SCONTRI), nemici = join(RADICE, NEMICI), veicoli: veicoliDati = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), soloLocale = false } = {}) {
   const veicoli = veicoliDati ?? join(RADICE, VEICOLI);
   // A.91: la migrazione dei veicoli scrive nel registro solo se la sua cartella è indicata o con le cartelle del
   // progetto (un server di prova su un'altra cartella dei PG non tocca veicoli/ del progetto)
@@ -484,7 +605,7 @@ export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA),
   const server = createServer(async (req, res) => {
     try {
       const percorso = decodeURI(new URL(req.url, 'http://x').pathname);
-      if (percorso.startsWith('/api/')) return await api(req, res, percorso, cartella, tavolo, scontri, nemici, base, soloLocale, veicoli, migraIn);
+      if (percorso.startsWith('/api/')) return await api(req, res, percorso, cartella, tavolo, scontri, nemici, base, soloLocale, veicoli, migraIn, scene, mappe);
       return await statico(req, res, percorso, base);
     } catch (e) {
       if (!res.headersSent) json(res, 500, { errore: e.message });
@@ -509,7 +630,9 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const scontri = arg('scontri') ? normalize(arg('scontri')) : join(RADICE, SCONTRI);
   const nemici = arg('nemici') ? normalize(arg('nemici')) : join(RADICE, NEMICI);
   const veicoli = arg('veicoli') ? normalize(arg('veicoli')) : join(RADICE, VEICOLI);
-  const server = creaServer({ cartella, tavolo, scontri, nemici, veicoli, soloLocale });
+  const scene = arg('scene') ? normalize(arg('scene')) : join(RADICE, SCENE);
+  const mappe = arg('mappe') ? normalize(arg('mappe')) : join(RADICE, MAPPE);
+  const server = creaServer({ cartella, tavolo, scontri, nemici, veicoli, scene, mappe, soloLocale });
   server.listen(porta, host, () => {
     console.log(testoAvvio(indirizziRete(networkInterfaces(), porta), porta, { soloLocale }));
     console.log(`Personaggi salvati in ${cartella}`);

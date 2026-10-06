@@ -202,6 +202,8 @@ nel browser di quello schermo, non nella scena.
 
 ### Versione minima (§14), un lotto per prompt, in ordine
 
+Stato: lotto 1 fatto il 06/10/2026 (scene e immagini sul server, logica pura e test: `tests/mappa.test.js`, `tests/mappa-server.test.js`; l'elenco delle scene nella plancia passa al lotto 2, con la prima interfaccia).
+
 | # | Lotto | Dimensione | Dipende da | Test | Al tavolo, alla fine del lotto |
 | --- | --- | --- | --- | --- | --- |
 | 1 | **Scene sul server**: `data/mappa.json` con il validatore; `src/mappa/scena.js`, `celle.js`, `vista.js`; API `/api/scene` e `/api/mappe`; cartelle `scene/` e `mappe/` con `LEGGIMI.txt`; copia di fine sessione. | Medio | — | Formato e normalizzazione, maschere, filtro della vista giocatori (token nascosti e sotto la nebbia tolti), API con revisione e 409, upload | Ancora niente a schermo: elenco delle scene nella plancia |

@@ -19,7 +19,7 @@ const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v
 const isTodo = (v) => typeof v === 'string' && v.startsWith('TODO(');
 
 const FILE_VALIDATI = ['caratteristiche', 'abilita', 'corporazioni', 'addestramenti', 'classi', 'incantesimi', 'regole',
-  'talenti_liberi', 'specializzazioni', 'tecniche_interiori', 'dotazioni', 'formato_nemici', 'bestiario'];
+  'talenti_liberi', 'specializzazioni', 'tecniche_interiori', 'dotazioni', 'formato_nemici', 'bestiario', 'mappa'];
 
 /** Formatta un errore come riga leggibile. */
 export function formattaErrore(e) {
@@ -75,6 +75,7 @@ export function validaDati(dati) {
   if (isOggetto(dati.formato_nemici)) validaFormatoNemici(dati, err);
   if (isOggetto(dati.bestiario)) validaBestiario(dati, err);
   if (isOggetto(dati.veicoli)) validaVeicoli(dati, err);
+  if (isOggetto(dati.mappa)) validaMappa(dati, err);
   if (dati.incantesimi?.incantesimi?.length) validaDurateIncantesimi(dati, err);
   // durate in Round (Giocatore §8.9.1, §5.18): il Round di attivazione conta o no (src/tecniche.js → fineDurata)
   if (dati.regole?.durate_round !== undefined && typeof dati.regole.durate_round?.round_attivazione_conta !== 'boolean') err('regole', 'durate_round.round_attivazione_conta', 'vero o falso: il Round di attivazione conta nella durata?');
@@ -2647,4 +2648,66 @@ function validaVeicoli(dati, err) {
     });
   });
   if (!ids.has('autovettura-civile') || !ids.has('asa-scout-mk4')) err(F, 'profili', 'i due profili del manuale: autovettura-civile (§9) e asa-scout-mk4 (§10)');
+}
+
+/**
+ * Mappa di battaglia (data/mappa.json; lotto 1 di docs/battlemap/piano.md). Controlla i limiti che usano
+ * src/mappa/scena.js e il server: un numero sbagliato qui renderebbe ogni scena invalida o ogni immagine rifiutata.
+ */
+function validaMappa(dati, err) {
+  const F = 'mappa';
+  const m = dati.mappa;
+  const positivo = (v) => typeof v === 'number' && v > 0;
+  if (m.q_metri !== 1.5) err(F, 'q_metri', '1,5 atteso: 1 Q = 1,5 m (§2 della specifica)');
+  const S = m.scena;
+  if (!isOggetto(S)) err(F, 'scena', 'oggetto mancante');
+  else {
+    if (S.formato !== 'mutant-scena') err(F, 'scena.formato', '«mutant-scena» atteso');
+    if (!isIntero(S.versione) || S.versione < 1) err(F, 'scena.versione', 'intero da 1 in su');
+    for (const k of ['colonne_max', 'righe_max', 'token_max', 'template_max', 'movimenti_max', 'annulla_max']) {
+      if (!isIntero(S[k]) || S[k] < 1) err(F, `scena.${k}`, 'intero da 1 in su');
+    }
+    if (!Array.isArray(S.nebbie_iniziali) || !S.nebbie_iniziali.includes(S.nebbia_iniziale)) err(F, 'scena.nebbia_iniziale', 'uno dei valori di scena.nebbie_iniziali');
+  }
+  const I = m.immagini;
+  const estensioni = { jpeg: 'jpg', png: 'png', webp: 'webp' }; // quelle che src/mappa/scena.js → FILE_MAPPA accetta
+  if (!isOggetto(I?.tipi) || !Object.keys(I.tipi).length) err(F, 'immagini.tipi', 'almeno un tipo di immagine');
+  else {
+    for (const [t, v] of Object.entries(I.tipi)) {
+      if (!estensioni[t]) err(F, `immagini.tipi.${t}`, 'tipo non riconosciuto dal server: jpeg, png o webp');
+      else if (v?.estensione !== estensioni[t]) err(F, `immagini.tipi.${t}.estensione`, `«${estensioni[t]}» attesa`);
+      if (!isTesto(v?.mime) || !v.mime.startsWith('image/')) err(F, `immagini.tipi.${t}.mime`, 'tipo MIME image/… atteso');
+    }
+  }
+  if (!positivo(I?.massimo_mb)) err(F, 'immagini.massimo_mb', 'numero positivo');
+  if (!isIntero(I?.ridotta?.lato_massimo_px) || I.ridotta.lato_massimo_px < 256) err(F, 'immagini.ridotta.lato_massimo_px', 'intero da 256 in su');
+  if (!I?.tipi?.[I?.ridotta?.tipo]) err(F, 'immagini.ridotta.tipo', 'uno dei tipi di immagini.tipi');
+  if (!(I?.ridotta?.qualita > 0 && I.ridotta.qualita <= 1)) err(F, 'immagini.ridotta.qualita', 'da 0 (escluso) a 1');
+  const G = m.griglia;
+  if (!positivo(G?.q_px_min) || !(G?.q_px_max > G?.q_px_min)) err(F, 'griglia', 'q_px_min positivo e minore di q_px_max');
+  const P = G?.predefinita;
+  if (!(P?.q_px >= G?.q_px_min && P?.q_px <= G?.q_px_max)) err(F, 'griglia.predefinita.q_px', 'dentro q_px_min e q_px_max');
+  if (!/^#[0-9a-fA-F]{6}$/.test(String(P?.colore))) err(F, 'griglia.predefinita.colore', '#rrggbb atteso');
+  if (!(P?.opacita >= 0 && P?.opacita <= 1)) err(F, 'griglia.predefinita.opacita', 'da 0 a 1');
+  if (typeof P?.scosto_x !== 'number' || typeof P?.scosto_y !== 'number') err(F, 'griglia.predefinita', 'scosto_x e scosto_y numerici');
+  if (typeof P?.bloccata !== 'boolean') err(F, 'griglia.predefinita.bloccata', 'vero o falso');
+  const T = m.token;
+  const ammessi = Array.isArray(T?.ingombri_ammessi) ? T.ingombri_ammessi : [];
+  if (!ammessi.length || !ammessi.every((n) => isIntero(n) && n >= 1)) err(F, 'token.ingombri_ammessi', 'interi da 1 in su');
+  const taglie = dati.formato_nemici?.campi?.taglia?.valori ?? [];
+  for (const t of taglie) {
+    if (!ammessi.includes(T?.ingombro_per_taglia?.[t])) err(F, `token.ingombro_per_taglia.${t}`, `manca o non è fra gli ingombri ammessi (Taglia di formato_nemici.json)`);
+  }
+  for (const t of Object.keys(T?.ingombro_per_taglia ?? {})) if (!taglie.includes(t)) err(F, `token.ingombro_per_taglia.${t}`, 'Taglia che formato_nemici.json non conosce');
+  if (!['partecipante', 'veicolo', 'segnaposto'].every((r) => T?.riferimenti?.includes(r))) err(F, 'token.riferimenti', 'partecipante, veicolo e segnaposto attesi');
+  const M = m.movimento;
+  for (const k of ['costo_ortogonale', 'costo_diagonale', 'terreno_difficile_moltiplicatore']) if (!positivo(M?.[k])) err(F, `movimento.${k}`, 'numero positivo');
+  for (const k of ['diagonali_alterne', 'attraversa_alleati', 'attraversa_avversari', 'fermarsi_su_alleato', 'movimento_diviso']) {
+    if (typeof M?.[k] !== 'boolean') err(F, `movimento.${k}`, 'vero o falso');
+  }
+  const fasce = Array.isArray(M?.fasce) ? M.fasce : [];
+  if (fasce.join() !== 'passo,corsa,scatto') err(F, 'movimento.fasce', 'passo, corsa, scatto attese (§8 della specifica)');
+  for (const f of fasce) if (!isIntero(dati.regole?.movimento?.[f])) err(F, `movimento.fasce (${f})`, `regole.json → movimento.${f} mancante`);
+  if (!Array.isArray(m.template?.forme) || !m.template.forme.length) err(F, 'template.forme', 'almeno una forma');
+  if (!isIntero(m.template?.durata_round_predefinita) || m.template.durata_round_predefinita < 1) err(F, 'template.durata_round_predefinita', 'intero da 1 in su');
 }
