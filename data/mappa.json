@@ -42,6 +42,10 @@
       "lato_massimo_px": 2048,
       "tipo": "webp",
       "qualita": 0.85
+    },
+    "token": {
+      "_nota": "Immagini dei nemici sui token (A.131, decisione di Marcello del 06/10/2026): la copia ridotta che si disegna sul token.",
+      "lato_massimo_px": 256
     }
   },
   "griglia": {

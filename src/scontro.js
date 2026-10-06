@@ -452,3 +452,16 @@ export function registraRiga(s, testo, adesso) {
   if (!String(testo ?? '').trim()) throw new Error('riga di registro vuota');
   return conRiga(s, String(testo).trim(), adesso);
 }
+
+/**
+ * Immagine del token di un tipo di nemico (A.131, decisione di Marcello del 06/10/2026: non è una regola) su tutte le
+ * sue copie nello scontro: { file, ridotta } in mappe/, oppure null per tornare alle iniziali. Nessuna riga di registro.
+ */
+export function conImmagineNemico(s, tipo, immagine) {
+  const partecipanti = s.partecipanti.map((p) => {
+    if (p.tipo !== 'nemico' || p.nemico !== tipo) return p;
+    const { immagine: _, ...scheda } = p.scheda ?? {};
+    return { ...p, scheda: immagine ? { ...scheda, immagine } : scheda };
+  });
+  return { ...s, partecipanti };
+}

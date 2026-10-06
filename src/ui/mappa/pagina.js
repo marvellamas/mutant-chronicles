@@ -20,6 +20,7 @@ import { creaFonti } from './fonti.js';
 import { disegnaToken, coloriMappa, creaImmagini } from './disegno-token.js';
 import { sezioneScontro, sezioneToken, TIPO_TRASCINA } from './pannello-scontro.js';
 import { apriCartaInPlancia } from './canale.js';
+import { scegliImmagineNemico, impostaImmagineNemico } from '../immagine-nemico.js';
 
 const ATTESA_SALVATAGGIO_MS = 600;
 const SCARTO_AVVISO = 0.15; // riquadro tracciato poco quadrato: si avvisa (non si rifiuta)
@@ -400,7 +401,18 @@ export function renderMappa(radice, ctx) {
       ingombro: (n) => cambiaToken(scelto.id, (x) => ({ ...x, ingombro: n, q: agganciaQ(st.scena.griglia, centroToken(st.scena.griglia, x).x, centroToken(st.scena.griglia, x).y, n) }), { controllaSovrapposti: true }),
       togli: () => { const id = scelto.id; st.selezionato = null; st.scena = { ...st.scena, token: st.scena.token.filter((x) => x.id !== id) }; dopoCambioToken(); },
       carta: () => apriCarta(scelto),
+      immagine: async () => { const img = await scegliImmagineNemico(ctx.dati, pz?.nome); if (img) await immagineNemico(pz, img); },
+      togliImmagine: () => immagineNemico(pz, null),
     }));
+  }
+
+  /** A.131: immagine (o iniziali, con null) del tipo di nemico, nello scontro o nella bozza collegati e nel bestiario. */
+  async function immagineNemico(pz, immagine) {
+    if (!pz?.nemico) return;
+    try {
+      await impostaImmagineNemico({ tipo: pz.nemico, immagine, scontro: st.fonti?.scontro?.id ?? null, bozza: st.fonti?.bozza?.id ?? null, nome: pz.nome.replace(/\s+\d+$/, '') });
+      await aggiornaFonti();
+    } catch (e) { avvisoErrore(`Immagine non salvata: ${e.message}`); }
   }
 
   function collega(collegamento) {

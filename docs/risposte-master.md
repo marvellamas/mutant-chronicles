@@ -939,6 +939,13 @@ approvata da Marcello; copia in `docs/battlemap/specifica.md`, piano in `docs/ba
     non si copia né si adatta codice. La domanda A.121 (riuso del suo codice) è ritirata: nel pacchetto per il Doc va
     spostata fra le risolte come «ritirata, nessun riuso».
 
+117. **Immagine dei nemici sui token** (A.131, decisione di Marcello del 06/10/2026). Non è una regola di gioco:
+    il formato dei nemici (`data/formato_nemici.json`) ha un campo facoltativo «immagine» { file, ridotta } con
+    un'immagine caricata come le mappe (in `mappe/`, con la copia ridotta per il token: `data/mappa.json` →
+    immagini.token). Si imposta da «Crea nemico», dall'editor del bestiario, dalla carta del nemico nella plancia e
+    dal pannello del token della mappa, e vale per tutte le copie del tipo nello scontro o nella bozza e nel bestiario.
+    Senza immagine il token mostra le iniziali. Nel pacchetto per il Doc: A.131 fra le risolte.
+
 **Aperte** (testi nella sezione 15 della specifica; da mettere nel Doc «per-davide.md» con il pacchetto):
 
 - **A.122 — Funzioni usate davvero.** Quali funzioni della sua app usi al tavolo (mappe proprie o costruite, nebbia,
@@ -947,9 +954,6 @@ approvata da Marcello; copia in `docs/battlemap/specifica.md`, piano in `docs/ba
   turno? Il movimento per turno è Passo/Corsa/Scatto? Le diagonali valgono 1 Q o 1,5? Come conta il terreno difficile?
 - **A.125 — Porte, luci, veicoli.** Quanto costa aprire una porta? Il «livello» delle luci è una regola e come si
   traduce nell'illuminazione di A.106? Velocità dei veicoli sulla mappa per andatura?
-- **A.131 — Immagine dei nemici sulla mappa** (lotto 3 della mappa, 06/10/2026). Il formato dei nemici (A.73) non ha un
-  campo per un'immagine: sulla mappa i nemici sono cerchi con le iniziali e il numero («P2»). Serve un campo facoltativo
-  «immagine» nel profilo (e chi la sceglie: il master dall'editor del bestiario)?
 
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 

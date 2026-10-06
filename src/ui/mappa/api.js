@@ -55,13 +55,13 @@ export async function controllaFile(file, dati) {
  * Copia ridotta per la vista giocatori e i tablet (§4): lato massimo da immagini.ridotta, nel tipo dei dati (WEBP;
  * se il browser non sa scriverlo, quello che produce). null se l'immagine è già entro il lato massimo.
  */
-export async function preparaRidotta(file, dati) {
+export async function preparaRidotta(file, dati, { latoMassimo = dati.mappa.immagini.ridotta.lato_massimo_px } = {}) {
   const R = dati.mappa.immagini.ridotta;
   const bitmap = await createImageBitmap(file);
   try {
     const lato = Math.max(bitmap.width, bitmap.height);
-    if (lato <= R.lato_massimo_px) return null;
-    const f = R.lato_massimo_px / lato;
+    if (lato <= latoMassimo) return null;
+    const f = latoMassimo / lato;
     const tela = document.createElement('canvas');
     tela.width = Math.max(1, Math.round(bitmap.width * f));
     tela.height = Math.max(1, Math.round(bitmap.height * f));

@@ -33,6 +33,7 @@ import { stessaChiave } from '../veicoli-registro.js';
 import { elencoVeicoli, aggiornaVeicolo } from './veicoli-registro.js';
 import { statoScene, pannelloScene, apriElencoScene } from './mappa/scene.js';
 import { ascoltaMappa } from './mappa/canale.js';
+import { scegliImmagineNemico, impostaImmagineNemico } from './immagine-nemico.js';
 
 const INTERVALLO_MS = 3000;
 /** Carta con la chiave del suo token (data-pezzo): la mappa di battaglia la cerca al clic sul token (src/ui/mappa/canale.js). */
@@ -328,7 +329,7 @@ export function renderTavolo(radice, ctx) {
         : h('p', { class: 'vuoto' }, 'Nessun personaggio al tavolo: sceglili con «Chi è al tavolo».'),
       nemiciInScontro().length ? [
         h('h2', { class: 'plancia-sezione' }, 'Nemici nello scontro'),
-        h('div', { class: 'plancia-griglia' }, nemiciInCarta().map((p) => conPezzo(cartaNemico(ctx, p, { modifica, durate: durateNemico(p), diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p), onAttacca: attacchiDi(p).length ? () => attacca(p, alTavolo) : null, onLancia: (i) => lancia(p, i, alTavolo), onRiduci: (v) => modifica((x) => riduciNemico(x, p.id, v)), onRegime: (k, r) => modifica((x) => confermaRegimeNemico(x, p.id, k, r, new Date())) }), `partecipante:${p.id}`))),
+        h('div', { class: 'plancia-griglia' }, nemiciInCarta().map((p) => conPezzo(cartaNemico(ctx, p, { modifica, durate: durateNemico(p), diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p), onAttacca: attacchiDi(p).length ? () => attacca(p, alTavolo) : null, onLancia: (i) => lancia(p, i, alTavolo), onRiduci: (v) => modifica((x) => riduciNemico(x, p.id, v)), onRegime: (k, r) => modifica((x) => confermaRegimeNemico(x, p.id, k, r, new Date())), onImmagine: () => immagineNemico(p) }), `partecipante:${p.id}`))),
       ] : null,
       sezioneVeicoli(),
       pannelloScene(ctx, stato.scene, { ridisegna: disegna, apri: (id) => ctx.azioni.mappa(id) }),
@@ -340,6 +341,16 @@ export function renderTavolo(radice, ctx) {
       })));
     custode.ripristina(foto);
     mappa.controllaAttesa();
+  };
+  // A.131: immagine del token di un tipo di nemico, per tutte le sue copie nello scontro e nel bestiario
+  const immagineNemico = async (p) => {
+    const img = await scegliImmagineNemico(ctx.dati, p.scheda?.nome ?? p.nome);
+    if (!img) return;
+    try {
+      await impostaImmagineNemico({ tipo: p.nemico, immagine: img, scontro: stato.scontro?.id ?? null, nome: p.scheda?.nome ?? p.nome });
+      stato.firmaBestiario = null;
+      await aggiorna(true);
+    } catch (e) { avvisoErrore(`Immagine non salvata: ${e.message}`); }
   };
   // «Crea nemico» (src/ui/crea-nemico.js): con uno scontro aperto il nemico può entrare subito nello scontro;
   // con un nemico del bestiario creato dalla procedura, la riapre sul suo riepilogo

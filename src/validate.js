@@ -2,6 +2,7 @@
 // Controlla gli invarianti dei manuali e restituisce errori leggibili: file, chiave, problema.
 // Non lancia eccezioni: un file malformato produce errori, non un crash.
 import { TIPI as TIPI_EQUIP, STATI } from './equipaggiamento.js';
+import { FILE_MAPPA } from './mappa/scena.js';
 
 // Invarianti strutturali dei manuali. I valori numerici "di gioco" stanno in regole.json;
 // qui restano solo le forme fisse descritte dai paragrafi citati.
@@ -2183,7 +2184,8 @@ function validaMeccanicaIncantesimi(dati, err) {
 // Formato dei nemici del Tavolo del Master (data/formato_nemici.json, per-davide A.73): il file descrive
 // i campi, validaNemico controlla un file nemico. Il Giocatore 0.45 non ha un capitolo dei nemici.
 
-const TIPI_CAMPO_NEMICO = ['costante', 'testo', 'intero', 'dadi', 'scelta', 'lista', 'oggetto', 'mappa'];
+// «immagine»: { file, ridotta? } in mappe/ (mappa di battaglia, A.131): non è una regola, solo l'aspetto del token
+const TIPI_CAMPO_NEMICO = ['costante', 'testo', 'intero', 'dadi', 'scelta', 'lista', 'oggetto', 'mappa', 'immagine'];
 
 /** Valori ammessi per «valori_da» e «chiavi_da» del formato, presi dagli altri dati. */
 export function sorgentiNemico(dati) {
@@ -2280,6 +2282,12 @@ export function validaNemico(nemico, dati, file = 'nemico') {
         return;
       case 'dadi':
         if (!(typeof v === 'string' && DADI.test(v.replace(/\s+/g, '')))) err(k, `dadi come «1d8+2», non ${JSON.stringify(v)}`);
+        return;
+      case 'immagine':
+        // file caricati sul server in mappe/ (src/mappa/scena.js → FILE_MAPPA); la copia ridotta è facoltativa
+        if (!isOggetto(v) || !FILE_MAPPA.test(String(v.file ?? ''))) err(k, '{ file, ridotta? }: nomi di immagini in mappe/');
+        else if (v.ridotta !== undefined && v.ridotta !== null && !FILE_MAPPA.test(String(v.ridotta))) err(`${k}.ridotta`, 'nome di un\'immagine in mappe/ o null');
+        else for (const c of Object.keys(v)) if (!['file', 'ridotta'].includes(c)) err(`${k}.${c}`, 'campo sconosciuto (solo file e ridotta)');
         return;
       case 'scelta': {
         const ammessi = s.valori ?? sorgenti[s.valori_da] ?? [];
@@ -2692,6 +2700,7 @@ function validaMappa(dati, err) {
   if (!isIntero(I?.ridotta?.lato_massimo_px) || I.ridotta.lato_massimo_px < 256) err(F, 'immagini.ridotta.lato_massimo_px', 'intero da 256 in su');
   if (!I?.tipi?.[I?.ridotta?.tipo]) err(F, 'immagini.ridotta.tipo', 'uno dei tipi di immagini.tipi');
   if (!(I?.ridotta?.qualita > 0 && I.ridotta.qualita <= 1)) err(F, 'immagini.ridotta.qualita', 'da 0 (escluso) a 1');
+  if (!isIntero(I?.token?.lato_massimo_px) || I.token.lato_massimo_px < 32 || I.token.lato_massimo_px > (I?.ridotta?.lato_massimo_px ?? 0)) err(F, 'immagini.token.lato_massimo_px', 'intero da 32 al lato della copia ridotta');
   const G = m.griglia;
   if (!positivo(G?.q_px_min) || !(G?.q_px_max > G?.q_px_min)) err(F, 'griglia', 'q_px_min positivo e minore di q_px_max');
   const P = G?.predefinita;

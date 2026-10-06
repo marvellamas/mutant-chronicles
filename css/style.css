@@ -1882,3 +1882,9 @@ body:has(.mappa-pagina) .piede { display: none; }
 .mappa-suggerimento { position: absolute; z-index: 2; max-width: 220px; pointer-events: none; background: var(--superficie); color: var(--testo); border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 0.2rem 0.45rem; font-size: 0.85rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25); }
 .mappa-suggerimento[hidden] { display: none; }
 .carta-dalla-mappa { outline: 3px solid var(--accento); outline-offset: 3px; transition: outline-color 0.3s; }
+
+/* Immagine dei nemici sui token (A.131): campo dell'editor e di «Crea nemico», miniatura nella carta della plancia */
+.campo-immagine-nemico { display: flex; flex-wrap: wrap; align-items: center; gap: 0.45rem; margin: 0.4rem 0; }
+.anteprima-immagine-nemico { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid var(--lato-avversario); }
+.immagine-carta { padding: 0; border: none; background: none; cursor: pointer; flex: none; }
+.immagine-carta:disabled { cursor: default; }

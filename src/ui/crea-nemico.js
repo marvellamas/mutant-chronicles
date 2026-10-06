@@ -4,6 +4,7 @@
 // 1 Base o creatura pronta, 2 Grado (con i Round di resistenza attesi contro 7 PG), 3 Moduli, 4 Nome e descrizione,
 // 5 Riepilogo con la provenienza di ogni valore, modificabile a mano. «Tutto a caso» fa i 5 passi del §6.6 in un
 // clic, con un singolo passo da ritirare. Il calcolo sta in src/crea-nemico.js; qui solo presentazione.
+import { campoImmagine } from './immagine-nemico.js';
 import { h } from './dom.js';
 import { infoValore, nascondiTooltip } from './tooltip.js';
 import { rigaScelte, interruttore } from './pannello-passi.js';
@@ -58,6 +59,7 @@ export function apriCreaNemico(ctx, { voci = [], salvato = () => {}, destinazion
     nome: iniziale?.nome ?? '', descrizione: iniziale?.descrizione ?? '', nomeToccato: !!iniziale?.nome, descrToccata: !!iniziale?.descrizione,
     id: iniziale?.id ?? '', idToccato: !!iniziale?.id,
     ritocchi: iniziale?.ritocchi ? { ...iniziale.ritocchi } : {},
+    immagine: iniziale?.immagine ?? null, // A.131: immagine del token sulla mappa, non è una regola
     livello, contesto: 'scontro', casuale: null, quanti: 1, lato: 'avversario', errori: [], salvatoIn: null,
   };
   const finestra = h('dialog', { class: 'pannello-scheda crea-nemico', 'aria-labelledby': 'crea-nemico-titolo' });
@@ -84,6 +86,7 @@ export function apriCreaNemico(ctx, { voci = [], salvato = () => {}, destinazion
       else (r.provenienza[k] ??= []).push(riga('Ritocco a mano', v));
     }
     r.nemico._bestiario = { ...r.nemico._bestiario, descrizione: st.descrToccata ? st.descrizione : undefined, ...(Object.keys(st.ritocchi).length ? { ritocchi: { ...st.ritocchi } } : {}) };
+    if (st.immagine) r.nemico.immagine = st.immagine;
     return r;
   };
 
@@ -227,6 +230,7 @@ export function apriCreaNemico(ctx, { voci = [], salvato = () => {}, destinazion
       n.immunita?.length ? h('p', {}, h('strong', {}, 'Immunità: '), n.immunita.map((x) => dati.regole.stati.elenco.find((y) => y.id === x)?.nome ?? x).join(', ')) : null,
       h('details', { class: 'capacita-crea' }, h('summary', {}, `Capacità (${n.capacita.length})`), h('ul', {}, n.capacita.map((c) => h('li', {}, h('strong', {}, c.nome), ': ', c.effetto)))),
       h('p', { class: 'nota' }, n.note),
+      campoImmagine({ valore: st.immagine, nome: n.nome, dati, imposta: (v) => { st.immagine = v ?? null; st.salvatoIn = null; disegna(); } }),
       Object.keys(st.ritocchi).length ? h('p', { class: 'nota' }, `Ritoccati a mano: ${Object.keys(st.ritocchi).join(', ')}. `, h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { st.ritocchi = {}; disegna(); } }, 'Togli i ritocchi')) : null,
       errori.length || st.errori.length ? h('div', { class: 'riquadro attenzione', role: 'alert' }, h('p', {}, h('strong', {}, 'Da correggere:')), h('ul', {}, [...errori, ...st.errori].map((e) => h('li', {}, typeof e === 'string' ? e : formattaErrore({ ...e, file: '' }).replace(/^ › /, ''))))) : null,
       st.salvatoIn ? h('p', { class: 'riquadro ok', role: 'status' }, `Salvato nel bestiario: nemici/${st.salvatoIn}.`) : null,
@@ -347,7 +351,7 @@ export function apriCreaNemico(ctx, { voci = [], salvato = () => {}, destinazion
 export function apriDaBestiario(ctx, nemico, opzioni) {
   const b = nemico?._bestiario;
   if (!b?.scelte) return false;
-  apriCreaNemico(ctx, { ...opzioni, iniziale: { scelte: b.scelte, nome: nemico.nome, descrizione: b.descrizione ?? '', id: nemico.id, ritocchi: b.ritocchi ?? {} } });
+  apriCreaNemico(ctx, { ...opzioni, iniziale: { scelte: b.scelte, nome: nemico.nome, descrizione: b.descrizione ?? '', id: nemico.id, ritocchi: b.ritocchi ?? {}, immagine: nemico.immagine ?? null } });
   return true;
 }
 

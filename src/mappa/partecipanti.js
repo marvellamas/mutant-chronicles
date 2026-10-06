@@ -12,6 +12,9 @@ import { stessaChiave, partecipanteConducente } from '../veicoli-registro.js';
 import { profiloVeicolo } from '../veicoli.js';
 import { ingombroDaTaglia, ingombroVeicolo, iniziali, chiaveRif } from './token.js';
 
+/** Immagine del nemico sul token (A.131): la copia ridotta in mappe/, se c'è; altrimenti le iniziali. */
+export const urlImmagineNemico = (immagine) => (immagine?.file ? `api/mappe/${encodeURIComponent(immagine.ridotta ?? immagine.file)}` : null);
+
 const nomeStato = (dati) => {
   const elenco = dati?.regole?.stati?.elenco ?? [];
   return (id) => ({ id, nome: elenco.find((s) => s.id === id)?.nome ?? id });
@@ -39,7 +42,7 @@ function pezzoNemico(p, dati) {
   return {
     chiave: chiaveRif({ tipo: 'partecipante', id: p.id }), rif: { tipo: 'partecipante', id: p.id }, tipo: 'nemico', nemico: p.nemico ?? null,
     nome: p.nome, lato: p.lato === 'alleato' ? 'alleato' : 'avversario', ingombro: ingombroDaTaglia(p.scheda?.taglia, dati),
-    iniziali: iniziali(p.scheda?.nome ?? p.nome, p.numero ?? null), ritratto: null, pv: p.pv ?? null,
+    iniziali: iniziali(p.scheda?.nome ?? p.nome, p.numero ?? null), ritratto: urlImmagineNemico(p.scheda?.immagine), pv: p.pv ?? null,
     aZero: (p.pv?.attuali ?? 1) <= 0, stati: (p.stati ?? []).map(stato), ferite: null,
   };
 }

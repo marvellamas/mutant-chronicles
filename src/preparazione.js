@@ -121,3 +121,13 @@ export function testoVoce(v) {
   const n = v.nemico;
   return `${n.nome} ×${v.quanti} (${v.lato}) · PV ${n.pv} · AR ${n.ar?.totale ?? 0} · Difese ${n.difese ?? '—'} · Iniziativa ${n.iniziativa}`;
 }
+
+/** Immagine del token di un tipo di nemico (A.131) in tutte le voci della bozza che lo usano; null la toglie. */
+export function conImmagineNemicoBozza(b, tipo, immagine, adesso) {
+  const nemici = b.nemici.map((v) => {
+    if (v.nemico?.id !== tipo) return v;
+    const { immagine: _, ...nemico } = v.nemico;
+    return { ...v, nemico: immagine ? { ...nemico, immagine } : nemico };
+  });
+  return tocca({ ...b, nemici }, adesso);
+}
