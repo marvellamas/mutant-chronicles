@@ -102,17 +102,20 @@ function sezioneMovimento(m, a) {
       ? (m.veicolo
         ? `${q(mov.passo)} all’andatura ${m.andatura ?? '—'}, una volta per Round all’Iniziativa del conducente.`
         : `Passo ${q(mov.passo)}${Number.isFinite(mov.corsa) ? ` · Corsa ${q(mov.corsa)}` : ''}${Number.isFinite(mov.scatto) ? ` · Scatto ${q(mov.scatto)}` : ''}.`)
-      : 'Nessun profilo di movimento: si sposta solo con Maiusc.'),
+      : 'Nessun profilo di movimento: si sposta con Libero (o Maiusc).'),
     // Q usati / disponibili con la fascia scelta, nel Round dello scontro o nel turno (senza scontro)
     mov && m.disponibili !== null && m.disponibili !== undefined ? h('p', { class: `mappa-usati${m.usato >= m.disponibili ? ' finito' : ''}` },
       h('strong', {}, `${String(m.usato).replace('.', ',')} / ${q(m.disponibili)}`), ` usati ${m.senzaScontro ? 'nel turno' : 'nel Round'}`) : null,
-    m.motivo ? h('p', { class: 'nota motivo-movimento' }, `Area: ${m.motivo}. Con Maiusc il master lo sposta comunque.`) : null,
-    mov && !m.veicolo ? h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Area raggiungibile' },
-      fasce.map(([testo, n, v]) => h('button', {
+    m.motivo ? h('p', { class: 'nota motivo-movimento' }, `Area: ${m.motivo}. Con Libero (o Maiusc) il master lo sposta comunque.`) : null,
+    m.fascia === 4 ? h('p', { class: 'nota' }, 'Libero: in qualunque quadretto, senza area e senza conteggio; nel registro dello scontro resta una riga.') : null,
+    h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Area raggiungibile' },
+      mov && !m.veicolo ? fasce.map(([testo, n, v]) => h('button', {
         type: 'button', class: `btn btn-piccolo fascia-${n}${m.fascia === n ? ' scelto' : ''}`, 'aria-pressed': String(m.fascia === n),
         disabled: !Number.isFinite(v), title: Number.isFinite(v) ? `Area fino ${testo === 'Passo' ? 'al Passo' : testo === 'Corri' ? 'alla Corsa' : 'allo Scatto'}` : 'Non disponibile',
         onclick: () => a.fascia(n),
-      }, testo))) : null,
+      }, testo)) : null,
+      // quarta modalità (primo test di Marcello, 06/10/2026), per tutti i token: Maiusc ne è la scorciatoia
+      h('button', { type: 'button', class: `btn btn-piccolo fascia-4${m.fascia === 4 ? ' scelto' : ''}`, 'aria-pressed': String(m.fascia === 4), title: 'In qualunque quadretto, senza area e senza conteggio (scorciatoia: Maiusc)', onclick: () => a.fascia(4) }, 'Libero')),
     h('div', { class: 'mappa-azioni-token' },
       h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !m.annullabile, onclick: a.annullaMovimento }, 'Annulla ultimo movimento'),
       // senza scontro aperto il Round non avanza: il turno lo fa ripartire il master

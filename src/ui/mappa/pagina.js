@@ -11,7 +11,7 @@
 // vista giocatori» e il codice QR.
 // Lotto 5: muri e terreno difficile (pennello e rettangolo, «Muro», «Terreno difficile», «Gomma»); area raggiungibile del
 // token scelto (Passo, Corri, Scatta) con il percorso sotto il puntatore; movimento con un clic o trascinando dentro
-// l'area, registrato nel Round dello scontro, Maiusc per muovere fuori; clic destro sul token; Ctrl+Z per l'ultima
+// l'area, registrato nel Round dello scontro, «Libero» (o Maiusc) per muovere dove si vuole; clic destro sul token; Ctrl+Z per l'ultima
 // azione del master (movimento, muri, nebbia, token messo o tolto).
 // Logica pura in src/mappa/ (camera, griglia, token, partecipanti, nebbia, muri, area, annulla); disegno in ./canvas.js,
 // ./disegno-token.js e ./disegno-aree.js.
@@ -32,6 +32,8 @@ import { disegnaMuri, disegnaArea, disegnaPercorso, coloriAree } from './disegno
 import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
 import { diTurno } from '../../scontro.js';
 import { statoMovimento, muoviVeicolo } from '../../veicoli-registro.js';
+import { rigaMovimentoLibero } from '../../scontro.js';
+import { aggiornaInScontri } from '../immagine-nemico.js';
 import { aggiornaVeicolo } from '../veicoli-registro.js';
 import { creaGesti } from './gesti.js';
 import { svgQR } from '../../qr.js';
@@ -744,6 +746,8 @@ export function renderMappa(radice, ctx) {
 
   // ── Area raggiungibile e movimento (lotto 5, §8) ──
   const FASCE = ['passo', 'corsa', 'scatto'];
+  /** Quarta modalità accanto a Passo, Corri e Scatta: «Libero» (Maiusc ne è la scorciatoia). */
+  const LIBERO = 4;
   function invalidaArea() { st.area = undefined; st.percorso = null; }
   /** Fascia già raggiunta dal movimento del token in questo Round (o turno): 1 Passo, 2 Corsa, 3 Scatto. */
   function fasciaRaggiunta(id) {
@@ -766,7 +770,9 @@ export function renderMappa(radice, ctx) {
   function infoArea(t) {
     const pz = pezzoDi(t);
     const scontro = st.fonti?.scontro ?? null;
-    const base = { area: null, rimaste: null, usato: 0, fino: st.fascia, limite: 0, totale: 0, disponibili: null, celle: null, movimento: pz?.movimento ?? null, motivo: null };
+    const base = { area: null, rimaste: null, usato: 0, fino: st.fascia, limite: 0, totale: 0, disponibili: null, celle: null, movimento: pz?.movimento ?? null, motivo: null, libero: false };
+    // «Libero» (quarta modalità): nessuna area, nessun conteggio; il token va in qualunque quadretto
+    if (st.fascia === LIBERO) return { ...base, libero: true, usato: pz?.movimento ? usatoNelRound(st.scena, t.id, scontro?.id ?? null, scontro?.round ?? null) : 0 };
     if (!pz?.movimento) return { ...base, motivo: pz ? 'nessun profilo di movimento' : 'fuori dallo scontro' };
     let usato = usatoNelRound(st.scena, t.id, scontro?.id ?? null, scontro?.round ?? null);
     if (pz.tipo === 'veicolo' && scontro) {
@@ -816,11 +822,11 @@ export function renderMappa(radice, ctx) {
   /** q si raggiunge solo con una fascia più ampia di quella scelta (Corsa o Scatto)? */
   const chiedeFascia = (info, q) => { const c = info?.area ? costoVerso(info.area, q) : Infinity; return c > (info?.limite ?? 0) && c <= (info?.totale ?? 0); };
   /** Avviso per un movimento oltre la fascia scelta (primo test di Marcello, 06/10/2026). */
-  const avvisaFascia = () => avviso(st.fascia >= 2 ? 'Seleziona Scatto per effettuare questo movimento' : 'Seleziona Corsa o Scatto per effettuare questo movimento', { tipo: 'info', chiave: 'fuori-area' });
+  const avvisaFascia = () => avviso(st.fascia === 3 ? 'Seleziona Libero per effettuare questo movimento' : st.fascia === 2 ? 'Seleziona Scatto per effettuare questo movimento' : 'Seleziona Corsa o Scatto per effettuare questo movimento', { tipo: 'info', chiave: 'fuori-area' });
 
   /**
-   * Movimento (§8): dentro l'area si registra nel Round dello scontro, con la sua fascia; con `libero` (Maiusc) il
-   * master sposta dove vuole, con un avviso, e il movimento non conta. Un veicolo nello scontro segna anche il suo
+   * Movimento (§8): dentro l'area si registra nel Round dello scontro, con la sua fascia; con `libero` («Libero» o
+   * Maiusc) il master sposta dove vuole, il movimento non conta e nel registro dello scontro aperto resta una riga. Un veicolo nello scontro segna anche il suo
    * movimento del Round nel registro unico (A.105).
    */
   function eseguiMovimento(t, q, { libero = false, info = infoArea(t) } = {}) {
@@ -829,13 +835,16 @@ export function renderMappa(radice, ctx) {
     const nome = pezzoDi(t)?.nome ?? t.nome ?? t.id;
     if (!libero && costo === Infinity && chiedeFascia(info, q)) { avvisaFascia(); return false; }
     if (!libero && costo === Infinity) {
-      avviso(`${nome}: quel quadretto è fuori dall’area${info.motivo ? ` (${info.motivo})` : ''}. Tieni premuto Maiusc per spostarlo comunque.`, { tipo: 'info', chiave: 'fuori-area' });
+      avviso(`${nome}: quel quadretto è fuori dall’area${info.motivo ? ` (${info.motivo})` : ''}. Seleziona Libero (o tieni premuto Maiusc) per spostarlo comunque.`, { tipo: 'info', chiave: 'fuori-area' });
       return false;
     }
     const scontro = st.fonti?.scontro ?? null;
     const fascia = libero ? null : fasciaDi(costo, info.rimaste);
     st.scena = muoviToken(st.scena, t.id, { a: q, costo: libero ? null : costo, fascia, scontro: scontro?.id ?? null, round: scontro?.round ?? null, libero }, ctx.dati);
-    if (libero) avviso(`${nome} spostato fuori dall’area (Maiusc): non conta nel movimento del Round.`, { tipo: 'info', chiave: 'fuori-area' });
+    if (libero) {
+      avviso(`Libero: ${nome} spostato; non conta nel movimento${scontro ? ' (riga nel registro)' : ''}.`, { tipo: 'info', chiave: 'fuori-area' });
+      if (scontro) aggiornaInScontri(scontro.id, (s) => rigaMovimentoLibero(s, nome, t.q, q)).catch((e) => avvisoErrore(`Riga del registro non scritta: ${e.message}`));
+    }
     // il veicolo segna il suo movimento del Round nel registro unico
     const rec = recordVeicolo(t);
     if (rec && scontro && !libero) {
@@ -992,7 +1001,7 @@ export function renderMappa(radice, ctx) {
       const info = areaScelta();
       if (tok && info) {
         const q = posizioneVerso(tok, mappaDaSchermo(st.cam, p.x, p.y));
-        if (e.shiftKey || costoDentro(info, q) < Infinity) { eseguiMovimento(tok, q, { libero: e.shiftKey, info }); return true; }
+        if (e.shiftKey || info.libero || costoDentro(info, q) < Infinity) { eseguiMovimento(tok, q, { libero: e.shiftKey || info.libero, info }); return true; }
         // oltre il Passo (o la Corsa) ma alla portata di una fascia più ampia: il clic non vale e lo si dice
         if (chiedeFascia(info, q)) { avvisaFascia(); return true; }
       }
@@ -1078,6 +1087,7 @@ export function renderMappa(radice, ctx) {
       { testo: 'Passo', azione: () => cambiaFascia(1), scelta: st.fascia === 1, disabilitata: !mov },
       { testo: 'Corri', azione: () => cambiaFascia(2), scelta: st.fascia === 2, disabilitata: !Number.isFinite(mov?.corsa), titolo: 'Amplia l’area fino alla Corsa' },
       { testo: 'Scatta', azione: () => cambiaFascia(3), scelta: st.fascia === 3, disabilitata: !Number.isFinite(mov?.scatto), titolo: 'Amplia l’area fino allo Scatto' },
+      { testo: 'Libero', azione: () => cambiaFascia(LIBERO), scelta: st.fascia === LIBERO, titolo: 'In qualunque quadretto, senza area e senza conteggio (scorciatoia: Maiusc)' },
       { testo: 'Annulla ultimo movimento', azione: () => annullaMovimentoUi(tok.id), disabilitata: !ultimo },
       ...(st.fonti?.scontro ? [] : [{ testo: 'Nuovo turno', azione: () => nuovoTurnoUi(tok.id), titolo: 'Senza scontro aperto: il movimento di questo token riparte da 0' }]),
       null,

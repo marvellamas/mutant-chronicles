@@ -434,7 +434,14 @@ export function registraAttacco(s, a, adesso) {
   return conRiga(s, `${a.attaccante} attacca ${a.bersaglio} con ${a.arma}: VA ${a.va}${tiri ? `, tiro ${tiri}` : ''} → ${ESITI[a.esito] ?? a.esito}.`, adesso);
 }
 
-/** Una riga di registro scritta da fuori della plancia (pezzo 6: la scelta di un giocatore nella sua scheda). */
+/**
+ * Movimento «Libero» della mappa di battaglia (primo test di Marcello, 06/10/2026): il master sposta un token dove vuole,
+ * fuori dall'area e dal conteggio del movimento; nel registro resta una riga.
+ */
+export function rigaMovimentoLibero(s, nome, da, a, adesso) {
+  return conRiga(s, `Mappa: ${nome} spostato liberamente da (${da.join(', ')}) a (${a.join(', ')}); non conta nel movimento.`, adesso);
+}
+
 /**
  * Righe del registro aggiunte (o riscritte: i clic ripetuti su − e + dei PV) fra due stati dello stesso scontro;
  * per uno scontro nuovo, tutte. Le usa la plancia per le conferme delle azioni (src/ui/avvisi.js).

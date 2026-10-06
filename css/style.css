@@ -1931,6 +1931,7 @@ body:has(.mappa-pagina) .piede { display: none; }
 .mappa-movimento .fascia-1 { border-left: 4px solid var(--mappa-passo); }
 .mappa-movimento .fascia-2 { border-left: 4px solid var(--mappa-corsa); }
 .mappa-movimento .fascia-3 { border-left: 4px solid var(--mappa-scatto); }
+.mappa-movimento .fascia-4 { border-left: 4px dashed currentColor; }
 .mappa-menu { position: absolute; z-index: 3; min-width: 12rem; display: flex; flex-direction: column; padding: 0.3rem; background: var(--superficie); border: 1px solid var(--bordo); border-radius: var(--raggio); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35); }
 .mappa-menu-titolo { margin: 0 0 0.2rem; padding: 0.15rem 0.4rem; font-weight: 700; font-size: 0.9rem; }
 .mappa-menu button { font: inherit; text-align: left; background: none; border: none; color: var(--testo); padding: 0.35rem 0.5rem; border-radius: 4px; cursor: pointer; }

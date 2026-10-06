@@ -298,3 +298,9 @@ test('senza scontro aperto il movimento si conta per turno; «Nuovo turno» lo f
   assert.equal(usatoNelRound(s, 'b', null, null), 1);
   assert.equal(usatoNelRound(annullaUltima(s).scena, 'b', null, null), 0);
 });
+
+test('«Libero»: una riga nel registro dello scontro, con il Round', async () => {
+  const { rigaMovimentoLibero } = await import('../src/scontro.js');
+  const s = rigaMovimentoLibero({ round: 2, registro: [] }, 'Predone 1', [3, 4], [10, 2], new Date('2026-10-06T18:00:00Z'));
+  assert.deepEqual(s.registro, [{ ora: '2026-10-06T18:00:00.000Z', round: 2, testo: 'Mappa: Predone 1 spostato liberamente da (3, 4) a (10, 2); non conta nel movimento.' }]);
+});

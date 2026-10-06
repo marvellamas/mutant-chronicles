@@ -66,7 +66,7 @@ async function json(url, opzioni) {
 }
 
 /** Legge, cambia e riscrive un file di scontri/ con la revisione; riprova se un'altra finestra l'ha cambiato. */
-async function aggiornaInScontri(id, cambia) {
+export async function aggiornaInScontri(id, cambia) {
   for (let i = 0; i < 3; i++) {
     const letto = await json(`api/scontri/${encodeURIComponent(id)}`);
     if (letto.stato !== 200) throw new Error(`${id} non leggibile (${letto.stato})`);
