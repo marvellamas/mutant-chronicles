@@ -72,6 +72,12 @@ La Mappa di battaglia è un modulo del **Tavolo del Master** di Mutant: gira sul
 > * Veicoli: si muovono all’Iniziativa del conducente con la loro andatura (A.105).
 > * **Ritocchi del 06/10/2026 (test di Marcello sul lotto 6):** l’area non è obbligatoria: l’interruttore **«Mostra area»** (nel pannello del token, nel clic destro e con il tasto **M**) la nasconde e la mostra, e la scelta resta memorizzata; il percorso al passaggio del mouse resta anche con l’area nascosta. L’area è **leggera**: riempimento molto trasparente e contorno ben visibile di ogni fascia, così la mappa sotto si vede (opacità in `data/mappa.json`).
 
+### **8.1 Zone di controllo e Attacchi di Opportunità (07/10/2026)**
+
+> * **Regola del manuale (Giocatore §5.3):** «Un personaggio provoca un Attacco di Opportunità quando, con un Movimento volontario, esce dalla portata ravvicinata di un avversario in grado di attaccarlo»; non lo provocano il movimento forzato, l’ingresso nella portata, lo spostamento all’interno, la Ritirata e il teletrasporto; una sola volta per Round. La portata è quella dell’arma ravvicinata (Armamenti §7.1.2: 1 Q di norma, 2–3 Q per armi lunghe).
+> * **ZoC:** la fascia profonda quanto la portata attorno a tutto l’ingombro del token avversario (non a 0 PV, non Svenuto, non veicolo; per i giocatori non nascosto). Mentre un token è scelto o si muove le ZoC dei suoi avversari sono in rosso semitrasparente (interruttore «Mostra ZoC», tasto Z); i passi del percorso nella ZoC sono evidenziati; l’area non cambia.
+> * **Avviso:** a movimento fatto (non «Libero»), uscendo dalla portata di un avversario: «Oshi è uscito dalla ZoC di Legionario 1! Attacco di Opportunità…», uno per avversario, con «Attacca!» dell’avversario e il bersaglio già scelto; riga nel registro e avviso nella vista giocatori. Nessun tiro automatico. Domande A.132 (Stordito) e A.133 (creature grandi).
+
 ## **9\. Linea di tiro**
 
 > * Dal menu del token, **Linea di tiro**: si clicca un punto o un token e compare una linea dal centro del token al punto.  
