@@ -142,9 +142,14 @@ Lo spazio dello schermo si sposta in un attimo fra mappa e barra dello scontro, 
 > * Annulla ultimo movimento  
 > * (master) Nascondi / Mostra, Apri scheda, Togli dalla mappa
 
+> * **Fatto nel lotto 7 (06/10/2026):** menu completo anche con la **pressione lunga** sul tablet; voci Passo / Corri / Scatta / Libero, Mostra area, Annulla ultimo movimento, Nuovo turno, Apri mini-scheda, Apri scheda completa, Nascondi / Mostra, Colore del bordo, Togli dalla mappa. Linea di tiro e template arriveranno con la fase 2.
+
 ### **Menu superiore**
 
 Le stesse azioni più gli strumenti del master: carica mappa, griglia, nebbia, muri, template, scene, disposizione mappa ↔ scontro, blocco dei movimenti dei giocatori.
+
+> * **Fatto nel lotto 7 (06/10/2026):** menu «Strumenti» (immagine, griglia, nebbia, muri e terreno, vista giocatori, scene, collegamento, «Blocca movimenti dei giocatori», pronto per la fase 2), pulsanti delle disposizioni e «?» con l'elenco delle scorciatoie. Nomi e conferme con finestrelle dentro la pagina, non con quelle del browser.
+> * **Colori dei bordi (decisione di Marcello del 06/10/2026):** PG bordo pieno, un colore per PG (blu, rosso, giallo, verde chiaro, azzurro, arancione, verde scuro), stabile nella scena e modificabile; nemici bordo tratteggiato nero e colore del tipo (viola, lilla, verde marcio, bordeaux, marrone, grigio piombo, ocra scura), uguale per le copie; alleati non PG bordo doppio grigio-petrolio; veicoli il colore del PG proprietario (grigio se del gruppo); alone del turno bianco luminoso. Stessi colori nella barra dell'Iniziativa e nella vista giocatori.
 
 ## **13\. Notifiche e suoni**
 
