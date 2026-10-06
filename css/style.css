@@ -1751,3 +1751,12 @@ body.con-sfondo::before {
 .condizionale-valore.attivo { color: var(--accento); font-weight: 600; }
 .attivabile-impianto { margin: 0.4rem 0; }
 .conteggio-cartucce { font-weight: 700; }
+
+/* «Attacca!» e «Lancia!»: il danno da tirare in evidenza in cima al risultato (playtest del 05/10/2026) */
+.danno-evidenza { border: 2px solid var(--accento); border-radius: 8px; padding: 0.5rem 0.75rem; margin: 0 0 0.75rem; background: var(--accento-tenue); }
+.danno-riga { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 0.6rem; }
+.danno-riga + .danno-riga { margin-top: 0.35rem; }
+.danno-etichetta { text-transform: uppercase; font-weight: 700; letter-spacing: 0.04em; font-size: 0.95rem; }
+.danno-valore { font-size: 2rem; line-height: 1.1; font-weight: 800; overflow-wrap: anywhere; }
+.danno-dettagli { font-size: 0.85rem; opacity: 0.85; flex-basis: 100%; }
+.attacco-risultato > .danno-evidenza ~ :not(.attacco-azioni) { font-size: 0.93em; }

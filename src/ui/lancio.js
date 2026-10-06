@@ -5,7 +5,7 @@
 import { h } from './dom.js';
 import { pillola } from './attacco.js';
 import { listaProvenienza } from './tooltip.js';
-import { rigaScelte, interruttore, pannelloPassi } from './pannello-passi.js';
+import { riquadroDanno, rigaScelte, interruttore, pannelloPassi } from './pannello-passi.js';
 import { calcolaLancio, dichiarazioneLancio, versioniLancio, contenitoriLancio } from '../lancio.js';
 import { classeMacrofamiglia } from '../palette.js';
 import { avviso } from './avvisi.js';
@@ -161,6 +161,9 @@ function risultato(ctx, inc, r) {
     r.impossibile ? h('div', { class: 'riquadro errore', role: 'alert' }, h('p', {}, h('strong', {}, 'Lancio non possibile. '), r.impossibile.motivo)) : null,
     r.avvisi?.length ? h('div', { class: 'riquadro attenzione' }, r.avvisi.map((x) => h('p', {}, x))) : null,
     h('div', { class: 'attacco-risultato' },
+      // danno (e cura) da tirare in evidenza in cima: una riga per colonna della scheda, con la provenienza piccola
+      riquadroDanno([...(r.danno?.voci ?? []).map((x) => ({ etichetta: (r.danno.voci.length > 1 ? x.colonna : 'Danno'), valore: x.testo, dettagli: [x.provenienza && x.provenienza !== x.base ? x.provenienza : null] })),
+        ...(r.cura?.voci ?? []).map((x) => ({ etichetta: 'Cura', valore: x.testo, dettagli: [x.colonna, x.provenienza && x.provenienza !== x.base ? x.provenienza : null] }))]),
       h('p', { class: 'costo-lancio' }, h('strong', {}, `${r.pm_costo} PM`), ` · ${doveSpesa || '—'}`,
         r.costo.length > 1 ? h('small', { class: 'nota' }, ` (${r.costo.map((c, i) => (i ? `${segno(c.valore)} ${c.etichetta}` : `${c.valore} ${c.etichetta}`)).join(', ')})`) : null),
       r.prova_richiesta
@@ -179,10 +182,7 @@ function risultato(ctx, inc, r) {
         r.contatto ? h('div', {}, h('dt', {}, 'Contatto'), h('dd', {}, `${r.contatto.abilita} ${numero(r.contatto.va)} (${segno(L.contatto.va)}) `, h('small', { class: 'nota' }, r.contatto.nota))) : null,
         // Magia sez. 7, Giocatore §5.13: danno della versione con il bonus di SAG e i Talenti di lancio
         // (provenienza in una riga: «1d6 +1 SAG +1 Incantesimi Aggressivi (Grado I)»)
-        ...(r.danno?.voci ?? []).map((x) => h('div', {}, h('dt', {}, x.colonna), h('dd', {}, h('strong', {}, x.testo),
-          x.provenienza && x.provenienza !== x.base ? h('small', { class: 'nota' }, ` (${x.provenienza})`) : null))),
-        ...(r.cura?.voci ?? []).map((x) => h('div', {}, h('dt', {}, x.colonna), h('dd', {}, h('strong', {}, x.testo),
-          x.provenienza && x.provenienza !== x.base ? h('small', { class: 'nota' }, ` (${x.provenienza})`) : null))),
+        // danno e cura: in evidenza in cima (riquadroDanno)
         r.salvezza_bersaglio ? h('div', {}, h('dt', {}, 'Salvezza del bersaglio'), h('dd', {}, r.salvezza_bersaglio.testo,
           r.salvezza_bersaglio.mod_ps ? ` · Mod. PS ${r.salvezza_bersaglio.mod_ps}` : '',
           r.salvezza_bersaglio.talento ? ` · ${r.salvezza_bersaglio.talento.nome} ${segno(r.salvezza_bersaglio.talento.valore)}` : '')) : null),

@@ -88,3 +88,18 @@ export function pannelloPassi({ etichetta, titolo, classe = '', chiudi, passi, s
           h('span', { class: 'nota' }, `${passo + 1} / ${passi.length}`),
           passo < ultimo ? h('button', { type: 'button', class: 'btn primario', onclick: () => vai(passo + 1) }, `${passi[passo + 1].titolo} →`) : null))));
 }
+
+/**
+ * Danno da tirare in evidenza in cima al risultato (playtest del 05/10/2026: al tavolo i giocatori non lo
+ * trovavano): «DANNO 2d6+3» grande, in grassetto, in un riquadro proprio; sotto, piccoli, natura e varianti.
+ * righe: [{ etichetta?, valore, dettagli? }] (più righe per gli incantesimi con più colonne di danno).
+ */
+export function riquadroDanno(righe, { titolo = 'Danno' } = {}) {
+  const valide = righe.filter((x) => x && x.valore);
+  if (!valide.length) return null;
+  return h('div', { class: 'danno-evidenza', role: 'group', 'aria-label': titolo },
+    valide.map((x) => h('div', { class: 'danno-riga' },
+      h('span', { class: 'danno-etichetta' }, x.etichetta ?? titolo),
+      h('strong', { class: 'danno-valore' }, x.valore),
+      x.dettagli?.filter(Boolean).length ? h('span', { class: 'danno-dettagli' }, x.dettagli.filter(Boolean).join(' · ')) : null)));
+}

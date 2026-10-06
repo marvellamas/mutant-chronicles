@@ -11,7 +11,7 @@ import {
   calcolaAttaccoRavvicinato, vincoliRavvicinato, dichiarazioneRavvicinato, manovreRavvicinate, descriviManovraRavvicinata,
   modificatoriDistanza, vaDueArmi, effettiSituazionaliAttacco, fasciaCarica,
 } from '../attacco.js';
-import { rigaScelte, interruttore, pannelloPassi } from './pannello-passi.js';
+import { riquadroDanno, rigaScelte, interruttore, pannelloPassi } from './pannello-passi.js';
 import { selettoreLuce } from './tab.js';
 import { avviso } from './avvisi.js';
 
@@ -150,6 +150,7 @@ function risultatoRavvicinato(ctx, a, r) {
     r.impossibile ? h('div', { class: 'riquadro errore', role: 'alert' }, h('p', {}, h('strong', {}, 'Attacco non possibile. '), r.impossibile.motivo)) : null,
     r.avvisi.length ? h('div', { class: 'riquadro attenzione' }, r.avvisi.map((x) => h('p', {}, x))) : null,
     h('div', { class: 'attacco-risultato' },
+      riquadroDanno([r.danno?.testo ? { valore: r.danno.testo, dettagli: [r.danno.natura, r.danno.testo_magistrale ? `Magistrale ${r.danno.testo_magistrale}` : null] } : null]),
       h('p', { class: 'va-attacco' }, `${r.prova?.tipo === 'contrapposta' ? 'VA della Prova ' : 'VA finale '}`, pillola(a.nome, r.va_finale, r.provenienza),
         h('small', { class: 'nota' }, ` · ${r.manovra?.nome ?? ''}`)),
       r.attacchi.length > 1 ? h('ul', { class: 'promemoria-attacco' }, r.attacchi.map((x) => h('li', {}, `${x.etichetta}: VA ${numero(x.va)}${x.danno ? ` · danno ${x.danno} (della propria arma)` : ''}`))) : null,
@@ -157,9 +158,8 @@ function risultatoRavvicinato(ctx, a, r) {
       h('dl', { class: 'voci griglia-voci' },
         h('div', {}, h('dt', {}, 'Azioni'), h('dd', {}, r.azioni_principali ? `${r.azioni_principali} ${r.azioni_principali === 1 ? 'Principale' : 'Principali'}` : 'nessuna (gratuito)', r.azioni_movimento ? ` + ${r.azioni_movimento} di Movimento` : '')),
         h('div', {}, h('dt', {}, 'Bersaglio'), h('dd', {}, r.prova?.testo ?? '—')),
-        h('div', {}, h('dt', {}, 'Danno'), h('dd', {}, r.danno === null ? 'nessuno' : r.danno.testo ?? 'da definire',
-          r.danno?.natura ? ` (${r.danno.natura})` : null,
-          r.danno?.testo_magistrale ? h('small', { class: 'nota' }, ` · Magistrale ${r.danno.testo_magistrale}`) : null)),
+        // il danno da tirare sta in evidenza in cima (riquadroDanno); qui solo quando non c'è
+        r.danno?.testo ? null : h('div', {}, h('dt', {}, 'Danno'), h('dd', {}, r.danno === null ? 'nessuno' : 'da definire')),
         r.dopo_armatura.length ? h('div', {}, h('dt', {}, 'Dopo l’Armatura'), h('dd', {}, r.dopo_armatura.map((x) => x.etichetta).join(' · '), h('small', { class: 'nota' }, ' (solo se almeno 1 danno la supera)'))) : null,
         r.effetti.length ? h('div', {}, h('dt', {}, 'Effetti'), h('dd', {}, r.effetti.join(' '))) : null),
       r.dopo_armatura.length ? h('ul', { class: 'promemoria-attacco' }, r.dopo_armatura.map((x) => h('li', {}, x.testo))) : null,
@@ -323,14 +323,15 @@ function risultato(ctx, a, r, colpi, imposta) {
       r.impossibile.proposta ? h('button', { type: 'button', class: 'btn', onclick: () => imposta({ modalita: r.impossibile.proposta.modalita }) }, `Usa ${r.impossibile.proposta.nome}`) : null) : null,
     r.avvisi?.length ? h('div', { class: 'riquadro attenzione' }, r.avvisi.map((x) => h('p', {}, x))) : null,
     h('div', { class: 'attacco-risultato' },
+      riquadroDanno([r.danno_per_colpo ? { valore: r.danno_per_colpo, dettagli: [r.colpi_a_segno > 1 || r.applicazioni !== 1 ? 'per colpo' : null, r.applicazioni !== 1 ? `${r.applicazioni} applicazioni` : null,
+        r.danno_magistrale && r.danno_magistrale !== r.danno_per_colpo ? `Magistrale ${r.danno_magistrale}` : null] } : null]),
       h('p', { class: 'va-attacco' }, 'VA finale ', pillola(a.nome, r.va_finale, r.provenienza), r.tiri > 1 ? h('span', { class: 'nota' }, ` · ${r.tiri} tiri, ciascuno con questo VA`) : null),
       h('div', { class: 'provenienza-attacco' }, listaProvenienza(r.provenienza, 'VA finale')),
       h('dl', { class: 'voci griglia-voci' },
         h('div', {}, h('dt', {}, 'Azioni'), h('dd', {}, `${r.azioni_principali} ${r.azioni_principali === 1 ? 'Principale' : 'Principali'}${r.azioni_movimento ? ` + ${r.azioni_movimento} di Movimento` : ''}`)),
         h('div', {}, h('dt', {}, 'Munizioni'), h('dd', {}, `${r.munizioni}${colpi !== null ? (a.granata ? ` (granate ${colpi})` : ` (nel caricatore ${colpi})`) : ''}`)),
         h('div', {}, h('dt', {}, 'Colpi a segno'), h('dd', {}, r.colpi_a_segno ? `${r.colpi_a_segno}${r.tiri > 1 ? ' per tiro riuscito' : ' con la Prova riuscita'}` : 'nessuno: effetto ad Area')),
-        h('div', {}, h('dt', {}, 'Danno per colpo'), h('dd', {}, r.danno_per_colpo ?? '—', r.applicazioni !== 1 ? ` · ${r.applicazioni} applicazioni` : '',
-          r.danno_magistrale && r.danno_magistrale !== r.danno_per_colpo ? h('small', { class: 'nota' }, ` · Magistrale ${r.danno_magistrale}`) : null)),
+        r.danno_per_colpo ? null : h('div', {}, h('dt', {}, 'Danno per colpo'), h('dd', {}, '—')),
         r.dopo_armatura?.length ? h('div', {}, h('dt', {}, 'Dopo l’Armatura'), h('dd', {}, r.dopo_armatura.map((x) => x.etichetta).join(' · '), h('small', { class: 'nota' }, ' (solo se almeno 1 danno la supera)'))) : null),
       r.attacchi?.length > 1 ? h('ul', { class: 'promemoria-attacco' }, r.attacchi.map((x) => h('li', {}, `${x.etichetta}: VA ${numero(x.va)}${x.danno ? ` · danno ${x.danno} (della propria arma)` : ''}`))) : null,
       r.dopo_armatura?.length ? h('ul', { class: 'promemoria-attacco' }, r.dopo_armatura.map((x) => h('li', {}, x.testo))) : null,
