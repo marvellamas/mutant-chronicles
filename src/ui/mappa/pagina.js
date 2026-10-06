@@ -622,11 +622,11 @@ export function renderMappa(radice, ctx) {
     apriCartaChiave(pz.chiave);
   }
   /** Mini-scheda del pezzo `chiave` in cima alla barra (anche di un partecipante senza token in mappa). */
-  function apriCartaChiave(chiave) {
+  function apriCartaChiave(chiave, { riapri = true } = {}) {
     st.cartaAperta = chiave;
     el.carta.hidden = false;
-    // lotto 6: con la barra ridotta il clic su un token la riapre sulla sua mini-scheda
-    if (st.disp.disposizione === 'mappa') scegliDisposizione('equilibrata');
+    // lotto 6: con la barra ridotta il clic su un token la riapre sulla sua mini-scheda (non il cambio di turno)
+    if (riapri && st.disp.disposizione === 'mappa') scegliDisposizione('equilibrata');
     el.piena.scrollTop = 0;
     if (st.plancia) st.plancia.ridisegna();
     else {
@@ -1265,7 +1265,7 @@ export function renderMappa(radice, ctx) {
         pxPerPunto: B.iniziativa_px_per_punto,
         avanti: () => avantiDallaMappa(),
         scegli: (v) => scegliDallaBarra(v),
-        centra: { attivo: st.centra, cambia: (x) => { st.centra = x; scriviLocale('mutant-mappa-centra-turno', x); if (x) seguiTurno(true); } },
+        centra: { attivo: st.centra, cambia: (x) => { st.centra = x; scriviLocale('mutant-mappa-centra-turno', x); disegnaIniziativa(); if (x) seguiTurno(true); } },
       }));
       const sc = pezzoScelto()?.chiave;
       for (const b of el.iniziativa.querySelectorAll('.mini-token')) b.classList.toggle('scelto', !!sc && b.dataset.chiave === sc);
@@ -1309,17 +1309,25 @@ export function renderMappa(radice, ctx) {
     if (soloSeFuori && s.x >= margine && s.x <= d.larghezza - margine && s.y >= margine && s.y <= d.altezza - margine) return;
     cambiaCamera({ ...st.cam, ox: d.larghezza / 2 - c.x * st.cam.scala, oy: d.altezza / 2 - c.y * st.cam.scala });
   }
-  /** Al cambio di turno (anche da un'altra finestra) la mappa centra chi è di turno, se è fuori vista. */
+  /**
+   * Al cambio di turno («Avanti» della barra o della plancia, anche da un'altra finestra) il token attivo diventa quello
+   * scelto, con la sua mini-scheda e la sua area (ritocchi del 06/10: non resta scelto il precedente); con «Centra su
+   * attivo» la mappa lo centra, se è fuori vista.
+   */
   function seguiTurno(subito = false) {
     const s = st.fonti?.scontro;
     const chiave = s ? `${s.id}:${s.round}:${s.turno}` : null;
     const cambiato = chiave !== st.turnoVisto;
     const primo = st.turnoVisto === null;
     st.turnoVisto = chiave;
-    if (!chiave || !st.centra || (!subito && (!cambiato || primo))) return;
+    if (!chiave || (!subito && (!cambiato || primo))) return;
     const id = diTurno(s)?.id;
     const t = id ? st.scena.token.find((x) => chiaveRif(x.rif) === chiaveRif({ tipo: 'partecipante', id })) : null;
-    if (t) centraToken(t, { soloSeFuori: true });
+    if (!subito && !st.trascina) {
+      scegli(t?.id ?? null);
+      if (id) apriCartaChiave(chiaveRif({ tipo: 'partecipante', id }), { riapri: false });
+    }
+    if (t && st.centra) centraToken(t, { soloSeFuori: true });
   }
 
   // ── Vista giocatori (lotto 4): quale scena vedono, «Apri vista giocatori», codice QR ──

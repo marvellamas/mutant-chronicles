@@ -55,7 +55,7 @@ test('il clic su un token apre la carta accanto alla mappa e non cambia pagina',
   const pagina = readFileSync(new URL('../src/ui/mappa/pagina.js', import.meta.url), 'utf8');
   // lotto 6: apriCarta passa la chiave del pezzo ad apriCartaChiave (anche dalla barra dell'Iniziativa)
   assert.ok(pagina.indexOf('function apriCarta(t)') > 0, 'apriCarta c’è');
-  const inizio = pagina.indexOf('function apriCartaChiave(chiave)');
+  const inizio = pagina.indexOf('function apriCartaChiave(chiave');
   assert.ok(inizio > 0, 'apriCartaChiave c’è');
   const corpo = pagina.slice(inizio, pagina.indexOf('\n  }\n', inizio));
   for (const via of ['window.open', 'location', 'azioni.tavolo', 'vai(', 'apriCartaInPlancia']) assert.ok(!corpo.includes(via), `apriCarta non usa ${via}`);

@@ -67,6 +67,16 @@ export function barraPerGiocatori(barra, visibili, immagineDi = () => null) {
  */
 export const posizioneSullaScala = (barra, valore) => (barra.massimo === barra.minimo ? 0.5 : (barra.massimo - valore) / (barra.massimo - barra.minimo));
 
+/**
+ * Quanta linea è colorata (ritocchi del 06/10): dal punteggio più alto fino a chi è di turno, da 0 a 1; al primo turno
+ * del Round del più alto 0 (si riparte). Senza nessuno di turno nella barra (vista giocatori con chi è di turno
+ * nascosto) 0. Con un solo punteggio non c'è linea da colorare: 0.
+ */
+export function avanzamentoTurno(barra) {
+  const turno = barra.voci.find((v) => v.diTurno);
+  return turno && barra.massimo !== barra.minimo ? posizioneSullaScala(barra, turno.valore) : 0;
+}
+
 /** Tacche della scala: ogni valore fino a 30 punti di ampiezza, poi ogni 5 (sempre gli estremi). */
 export function tacche(barra) {
   const passo = barra.massimo - barra.minimo > 30 ? 5 : 1;

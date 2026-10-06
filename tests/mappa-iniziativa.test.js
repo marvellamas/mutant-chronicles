@@ -3,7 +3,7 @@
 // cambia misura (src/mappa/camera.js → mantieniCentro) e barra filtrata per i giocatori (src/mappa/vista.js).
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { barraIniziativa, barraPerGiocatori, posizioneSullaScala, tacche } from '../src/mappa/iniziativa.js';
+import { barraIniziativa, barraPerGiocatori, posizioneSullaScala, tacche, avanzamentoTurno } from '../src/mappa/iniziativa.js';
 import { DISPOSIZIONI, prossimaDisposizione, disposizioneIniziale, normalizzaDisposizione, larghezzaBarra, trascinaBordo, chiaveSchermo } from '../src/mappa/disposizione.js';
 import { mantieniCentro, mappaDaSchermo } from '../src/mappa/camera.js';
 import { vistaGiocatori } from '../src/mappa/vista.js';
@@ -141,4 +141,14 @@ test('«Prepara la mappa»: la scena già collegata alla bozza è quella propost
   assert.equal(scenaDellaBozza(elenco, 'bozza-1'), 'b');
   assert.equal(scenaDellaBozza(elenco, 'bozza-2'), null);
   assert.deepEqual(collegaABozza({ id: 'a', collegamento: { scontro: 'scontro-x', bozza: null } }, 'bozza-2').collegamento, { scontro: null, bozza: 'bozza-2' });
+});
+
+test('avanzamentoTurno: la linea si colora dal più alto fino a chi è di turno; al nuovo Round riparte', () => {
+  const s = scontroProva(); // turno 1: Pablo, 14 come il più alto
+  assert.equal(avanzamentoTurno(barraIniziativa({ scontro: { ...s, turno: 0 } })), 0);
+  assert.equal(avanzamentoTurno(barraIniziativa({ scontro: { ...s, turno: 2 } })), (14 - 11) / (14 - 7));
+  assert.equal(avanzamentoTurno(barraIniziativa({ scontro: { ...s, turno: 4 } })), 1);
+  // l'ultimo «Avanti» del Round: Round 3, di nuovo il primo, linea a 0
+  const nuovo = avanti({ ...s, turno: 4 });
+  assert.deepEqual([nuovo.round, avanzamentoTurno(barraIniziativa({ scontro: nuovo }))], [3, 0]);
 });
