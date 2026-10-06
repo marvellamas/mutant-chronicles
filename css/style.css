@@ -1760,3 +1760,8 @@ body.con-sfondo::before {
 .danno-valore { font-size: 2rem; line-height: 1.1; font-weight: 800; overflow-wrap: anywhere; }
 .danno-dettagli { font-size: 0.85rem; opacity: 0.85; flex-basis: 100%; }
 .attacco-risultato > .danno-evidenza ~ :not(.attacco-azioni) { font-size: 0.93em; }
+
+/* Ferite sotto i Punti Vita nella tab Identità (playtest del 05/10/2026): tutta la larghezza della colonna */
+.ferite-sotto-pv { grid-column: 1 / -1; }
+.ferite-sotto-pv .riquadro-gradi { margin: 0; }
+.colonna-risorse .ferite-sotto-pv .gradi-compatti, .risorse-laterali .ferite-sotto-pv .gradi-compatti { flex-wrap: wrap; }

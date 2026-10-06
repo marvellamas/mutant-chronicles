@@ -137,8 +137,8 @@ export function renderTab(ctx) {
       h('span', { class: 'tab-etichetta' }, t.etichetta ?? t.titolo, t.contatore ? h('small', { class: 'tab-contatore' }, t.contatore) : null)))),
       // Punti Eroe, PV e PM sotto le tab quando stanno a sinistra (da 900 px: css/style.css);
       // su telefono e tablet con le tab in basso restano nella tab Identità
-      inAlto ? null : h('div', { class: 'risorse-laterali', 'aria-label': 'Punti Eroe, Punti Vita e Punti Magia' }, colonnaRisorse(ctx))));
-  const lato = inAlto ? h('aside', { class: 'colonna-risorse', 'aria-label': 'Punti Eroe, Punti Vita e Punti Magia' }, colonnaRisorse(ctx)) : null;
+      inAlto ? null : h('div', { class: 'risorse-laterali', 'aria-label': 'Punti Eroe, Punti Vita e Punti Magia' }, colonnaRisorse(ctx, { ferite: corrente.id === 'identita' }))));
+  const lato = inAlto ? h('aside', { class: 'colonna-risorse', 'aria-label': 'Punti Eroe, Punti Vita e Punti Magia' }, colonnaRisorse(ctx, { ferite: corrente.id === 'identita' })) : null;
 
   const contenuti = {
     identita: tabIdentita, abilita: tabAbilita, combattimento: tabCombattimento, calendario: tabCalendario,
@@ -337,21 +337,23 @@ function contatoreTavolo(ctx, { titolo, campo, attuale, massimo, passi = [1, 5],
  * di sinistra (senza l'elenco dei cristalli, che resta nella tab Magia).
  */
 /** Colonna di sinistra, uguale in ogni tab: Punti Eroe sopra i PV, poi PV e PM (docs/layout-sd.md). */
-function colonnaRisorse(ctx) {
+function colonnaRisorse(ctx, { ferite = false } = {}) {
   const s = ctx.sessione;
   const m = ctx.massimi;
   return [
     contatoreTavolo(ctx, { titolo: 'Punti Eroe', campo: 'puntiEroe', attuale: s.puntiEroe, massimo: m.puntiEroe, passi: [1], classe: 'riquadro-pe compatto' }),
-    ...riquadriPvPm(ctx, { compatti: true }),
+    ...riquadriPvPm(ctx, { compatti: true, ferite }),
   ];
 }
 
-function riquadriPvPm(ctx, { compatti = false } = {}) {
+/** PV e PM; con `ferite` (tab Identità, playtest del 05/10/2026) il riquadro delle Ferite subito sotto i PV. */
+function riquadriPvPm(ctx, { compatti = false, ferite = false } = {}) {
   const s = ctx.sessione;
   const m = ctx.massimi;
   const classe = compatti ? ' compatto' : '';
   return [
     contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true, classe: `riquadro-pv${classe}`, extra: pilloleAR(ctx) }),
+    ferite ? h('div', { class: 'ferite-sotto-pv' }, riquadroFerite(ctx)) : null,
     compatti
       ? (m.pm ? contatoreTavolo(ctx, { titolo: 'Punti Magia', campo: 'pmAttuali', attuale: s.pmAttuali, massimo: m.pm, barra: true, classe: `riquadro-pm${classe}` }) : null)
       : riquadroPM(ctx),
@@ -979,7 +981,7 @@ function tabIdentita(ctx, d) {
   const riga = [d.nome, ...d.anagrafica.filter((x) => x.valore).map((x) => (x.campo === 'soprannome' ? `«${x.valore}»` : `${x.etichetta} ${x.valore}`))].join(' · ');
   return [
     promemoriaPenalita(ctx),
-    h('div', { class: 'griglia-tavolo pv-pm-identita' }, riquadriPvPm(ctx)),
+    h('div', { class: 'griglia-tavolo pv-pm-identita' }, riquadriPvPm(ctx, { ferite: true })),
 
     h('section', { class: `sezione-tab anagrafica-sezione${espansa ? ' espansa' : ''}` },
       h('div', { class: 'anagrafica-testa' },
@@ -1406,14 +1408,19 @@ function tabCombattimento(ctx, d) {
  * 05/10/2026), anche della tab Abilità, con gli stessi campi della sessione.
  * @param d dati della tab Combattimento (affaticamento, corruzione, stati)
  */
-function condizioniModificabili(ctx, d) {
-  const s = ctx.sessione;
+/** Riquadro delle Ferite (§5.14), modificabile: colonna destra di Combattimento e Abilità, e sotto i PV in Identità. */
+function riquadroFerite(ctx) {
   const m = ctx.massimi;
   const ferite = Array.from({ length: m.ferite + 1 }, (_, n) => ({ n, ...descriviFerite(n, ctx.dati) }))
     .map((g) => ({ nome: g.nome, breve: g.n === 0 ? 'Nessuna' : g.n > ctx.dati.regole.ferite.stati.length ? 'Oltre' : g.nome, penalita: g.penalita, descrizione: g.menomazione ?? null }));
+  return gradiCompatti(ctx, { titolo: 'Ferite (§5.14)', campo: 'ferite', attuale: ctx.sessione.ferite, gradi: ferite,
+    nota: 'Ogni nuova Ferita fa avanzare di un gradino. La penalità è cumulativa a VA e Prove Salvezza.' });
+}
+
+function condizioniModificabili(ctx, d) {
+  const s = ctx.sessione;
   return [
-        gradiCompatti(ctx, { titolo: 'Ferite (§5.14)', campo: 'ferite', attuale: s.ferite, gradi: ferite,
-          nota: 'Ogni nuova Ferita fa avanzare di un gradino. La penalità è cumulativa a VA e Prove Salvezza.' }),
+        riquadroFerite(ctx),
         gradiCompatti(ctx, { titolo: 'Affaticamento (§5.19)', campo: 'affaticamento', attuale: s.affaticamento, gradi: d.affaticamento,
           nota: 'Si applica solo la penalità dello Stato attuale, a tutte le Prove di Caratteristica, Abilità e Salvezza.' }),
         d.corruzione?.length ? gradiCompatti(ctx, { titolo: 'Corruzione (§5.20)', campo: 'corruzione', attuale: s.corruzione ?? 0,
