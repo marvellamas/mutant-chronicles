@@ -55,6 +55,7 @@
 //                                      controlla il lato massimo della copia per i tablet
 // Nessuna cancellazione dal server: i file vecchi si tolgono a mano dalla cartella.
 import { createServer } from 'node:http';
+import { readFileSync } from 'node:fs';
 import { readFile, writeFile, readdir, stat, mkdir, rename, copyFile, unlink, constants } from 'node:fs/promises';
 import { extname, join, normalize, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -708,7 +709,7 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
   return json(res, 405, { errore: 'metodo non ammesso' });
 }
 
-async function statico(req, res, percorso, radice) {
+async function statico(req, res, percorso, radice, versioneAvvio = null) {
   if (req.method !== 'GET' && req.method !== 'HEAD') return json(res, 405, { errore: 'metodo non ammesso' });
   let rel = percorso === '/' ? '/index.html' : percorso;
   // niente uscite dalla cartella del progetto, niente file nascosti né la cartella dei personaggi (passa dall'API)
@@ -725,6 +726,9 @@ async function statico(req, res, percorso, radice) {
     // un server statico qualunque: senza server nessuna richiesta fallita e nessun errore in console
     const intestazioni = { 'Content-Type': TIPI[est] ?? 'application/octet-stream', 'Content-Length': s.size, 'X-Mutant-Server': '1' };
     if (NO_CACHE.has(est)) intestazioni['Cache-Control'] = 'no-cache';
+    // la versione dell'app con cui questo server è stato acceso: se versione.json sul disco è cambiato (aggiornamento
+    // senza riavvio), l'app lo vede e chiede di riavviare avvia-server.bat (src/versione.js → serverDaRiavviare)
+    if (rel === '/versione.json' && versioneAvvio) intestazioni['X-Mutant-Versione-Server'] = versioneAvvio;
     res.writeHead(200, intestazioni);
     if (req.method === 'HEAD') return res.end();
     return res.end(await readFile(file));
@@ -740,6 +744,9 @@ async function statico(req, res, percorso, radice) {
  */
 export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA), tavolo = join(RADICE, TAVOLO), scontri = join(RADICE, SCONTRI), nemici = join(RADICE, NEMICI), veicoli: veicoliDati = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), soloLocale = false } = {}) {
   const veicoli = veicoliDati ?? join(RADICE, VEICOLI);
+  // versione dell'app all'accensione (versione.json): il codice del server resta questo finché non lo si riavvia
+  let versioneAvvio = null;
+  try { versioneAvvio = JSON.parse(readFileSync(join(radice, 'versione.json'), 'utf8')).versione ?? null; } catch { /* senza versione.json: nessun controllo */ }
   // A.91: la migrazione dei veicoli scrive nel registro solo se la sua cartella è indicata o con le cartelle del
   // progetto (un server di prova su un'altra cartella dei PG non tocca veicoli/ del progetto)
   const migraIn = veicoliDati ?? (normalize(cartella) === normalize(join(RADICE, CARTELLA)) ? veicoli : null);
@@ -750,7 +757,7 @@ export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA),
     try {
       const percorso = decodeURI(new URL(req.url, 'http://x').pathname);
       if (percorso.startsWith('/api/')) return await api(req, res, percorso, cartella, tavolo, scontri, nemici, base, soloLocale, veicoli, migraIn, scene, mappe);
-      return await statico(req, res, percorso, base);
+      return await statico(req, res, percorso, base, versioneAvvio);
     } catch (e) {
       if (!res.headersSent) json(res, 500, { errore: e.message });
       else res.end();

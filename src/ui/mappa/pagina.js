@@ -30,6 +30,7 @@ import { apriCartaInPlancia } from './canale.js';
 import { scegliImmagineNemico, impostaImmagineNemico } from '../immagine-nemico.js';
 
 const ATTESA_SALVATAGGIO_MS = 600;
+const ATTESA_RIPROVA_MS = 5000; // dopo un errore di rete o del server
 const SCARTO_AVVISO = 0.15; // riquadro tracciato poco quadrato: si avvisa (non si rifiuta)
 const TRASCINAMENTO_MINIMO_PX = 4;
 const INTERVALLO_FONTI_MS = 3000; // come la plancia (src/ui/tavolo.js)
@@ -208,6 +209,7 @@ export function renderMappa(radice, ctx) {
   const testoStato = (t) => { st.salvataggio.testo = t; aggiornaBarra(); };
   const salvaPresto = () => {
     st.salvataggio.modificata = true;
+    st.salvataggio.rifiutata = false;
     testoStato('Modifiche da salvare…');
     clearTimeout(st.salvataggio.timer);
     st.salvataggio.timer = setTimeout(salvaOra, ATTESA_SALVATAGGIO_MS);
@@ -234,12 +236,15 @@ export function renderMappa(radice, ctx) {
       }
     } catch (e) {
       S.modificata = true;
-      testoStato('Non salvata');
+      // rifiutata dal server (400): riprovare non serve, si riprova alla prossima modifica; un errore di rete o del
+      // server si riprova da solo, con calma (primo test di Marcello: una pila di avvisi identici ogni 600 ms)
+      S.rifiutata = e.stato === 400;
+      testoStato(S.rifiutata ? 'Non salvata: rifiutata dal server' : 'Non salvata: riprovo…');
       avvisoErrore(`Scena non salvata: ${e.message}`);
     } finally {
       S.inCorso = false;
       // anche a pagina chiusa: l'ultima modifica non si perde
-      if (S.modificata) S.timer = setTimeout(salvaOra, ATTESA_SALVATAGGIO_MS);
+      if (S.modificata && !S.rifiutata) S.timer = setTimeout(salvaOra, S.testo.startsWith('Non salvata') ? ATTESA_RIPROVA_MS : ATTESA_SALVATAGGIO_MS);
     }
   };
 

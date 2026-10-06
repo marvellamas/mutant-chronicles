@@ -1902,3 +1902,7 @@ body:has(.mappa-pagina) .piede { display: none; }
 .giocatori-stato { margin-left: auto; color: var(--errore); }
 .giocatori-messaggio { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; margin: 0; padding: 1rem; text-align: center; font-size: 1.2rem; color: #f0f0f0; z-index: 1; }
 .giocatori-messaggio[hidden] { display: none; }
+/* server di Mutant acceso con il codice di prima dell'aggiornamento (src/ui/aggiornamento.js) */
+.barra-server-vecchio { background: var(--errore-tenue); border-bottom-color: var(--errore); color: var(--testo); font-weight: 600; }
+/* avviso ripetuto: un solo avviso con il contatore (src/ui/avvisi.js) */
+.avviso .avviso-volte { float: right; margin-left: 0.5rem; font-weight: 700; font-variant-numeric: tabular-nums; }

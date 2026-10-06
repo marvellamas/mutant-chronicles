@@ -28,3 +28,11 @@ export function urlRicarica(href, versione) {
 
 /** Testo per il piè di pagina: «Versione 746c34f047 · 2026-09-30 14:52». */
 export const testoVersione = (v) => (v ? `Versione ${v.versione}${v.data ? ` · ${v.data}` : ''}` : '');
+
+/**
+ * Il server di Mutant (server.mjs) è stato acceso con una versione dell'app più vecchia di quella dei file? Il server
+ * tiene in memoria il suo codice (validatori compresi) finché non lo si riavvia, mentre i file dell'app li legge
+ * dal disco a ogni richiesta: dopo un aggiornamento senza riavvio, l'app nuova parla con il server vecchio
+ * (primo test della mappa di Marcello, 06/10/2026: scene rifiutate). Vero solo se entrambe sono note e diverse.
+ */
+export const serverDaRiavviare = (versioneAvvio, versioneFile) => !!versioneAvvio && !!versioneFile && versioneAvvio !== versioneFile;

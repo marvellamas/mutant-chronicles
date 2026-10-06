@@ -2,7 +2,8 @@
 // (/api/scene, /api/mappe) e copia ridotta dell'immagine preparata qui, con un canvas (nessuna libreria sul server).
 import { dimensioniImmagine } from '../../mappa/immagine.js';
 
-const errore = async (r) => new Error((await r.json().catch(() => ({}))).errore ?? `errore ${r.status}`);
+// lo stato HTTP resta nell'errore: un rifiuto (400) non si risolve riprovando, un errore di rete o del server sì
+const errore = async (r) => Object.assign(new Error((await r.json().catch(() => ({}))).errore ?? `errore ${r.status}`), { stato: r.status });
 
 /** Scene in scene/ (non archiviate), dalla più recente. */
 export async function elencoScene() {
