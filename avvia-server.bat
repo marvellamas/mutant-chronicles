@@ -30,12 +30,12 @@ echo  Gli indirizzi per i giocatori (telefoni e PC sulla stessa Wi-Fi) compaiono
 echo  fra le righe di uguali, e nella plancia nel riquadro "Collega i giocatori".
 echo  Se Windows chiede il permesso per Node.js: consenti le "reti private".
 echo  avvia.bat non serve: questa finestra basta per tutto.
-echo  Per spegnere Mutant chiudi questa finestra.
+echo  Per spegnere Mutant chiudi questa finestra: il server si spegne con lei.
 echo.
 start "" http://localhost:3000
 node server.mjs
 
 echo.
-echo  Mutant si e' fermato. Se il messaggio sopra parla della porta 3000 gia' in uso,
-echo  Mutant e' probabilmente gia' acceso in un'altra finestra.
+echo  Mutant si e' fermato. Se la porta 3000 era occupata, il messaggio sopra dice da chi:
+echo  da un Mutant rimasto acceso (rispondendo S lo si ferma e si riparte) o da un altro programma.
 pause
