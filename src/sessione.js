@@ -39,6 +39,7 @@
 // creditiIniziali: l'ultimo saldo iniziale visto; se il saldo cambia (dotazione rifatta, tabella
 // modificata) i crediti attuali si spostano della stessa differenza, così le spese restano.
 import { normalizzaCircostanze } from './circostanze.js';
+import { normalizzaTemporanei } from './temporanei.js';
 import { valoreTiro } from './tiri.js';
 import { SENZ_ARMI } from './attacco.js';
 import { saldoIniziale } from './dotazioni.js';
@@ -73,6 +74,9 @@ export function massimiSessione(scheda, creazione, dati) {
     stati: dati.regole.stati.elenco.map((s) => s.id),
     // bonus e malus di circostanza (src/circostanze.js): limiti e categorie dai dati
     circostanza: dati.regole.circostanza ?? null,
+    // modificatori temporanei di Caratteristica (src/temporanei.js)
+    temporanei: dati.regole.caratteristiche_temporanee ?? null,
+    sigle: dati.caratteristiche.caratteristiche.map((c) => c.sigla),
     // uid di tutti gli oggetti della lista: le scelte di «Attacca!» si conservano per ogni arma (anche ravvicinata)
     oggetti: normalizzaEquipaggiamento(creazione?.equipaggiamento).map((v) => v.uid),
     // capacità del caricatore di ogni arma a distanza della lista (uid → numero o null)
@@ -358,6 +362,7 @@ export function allineaSessione(sessione, m) {
     ...(sessione.luceVisione === true ? { luceVisione: true } : {}),
     // circostanze del Direttore (src/circostanze.js): la chiave c'è solo se ce ne sono
     ...(() => { const c = normalizzaCircostanze(sessione.circostanze, m.circostanza); return c.length ? { circostanze: c } : {}; })(),
+    ...(() => { const t = normalizzaTemporanei(sessione.caratteristicheTemporanee, m.temporanei, m.sigle); return t.length ? { caratteristicheTemporanee: t } : {}; })(),
     note: typeof sessione.note === 'string' ? sessione.note : '',
   };
 }
@@ -520,7 +525,9 @@ export function attivaArtefatto(sessione, uid, pm, m) {
 export function nuovaSessione(sessione, m) {
   // «Nuova sessione»: anche gli incantesimi in corso finiscono
   const { incantesimiAttivi: _inc, ...resto } = allineaSessione(sessione, m);
-  return { ...resto, pvAttuali: m.pv, pmAttuali: m.pm, statiAttivi: [], ferite: 0, affaticamento: 0, round: 1, ultimaTecnica: null, tecnicheAttive: [] };
+  const temporanei = (resto.caratteristicheTemporanee ?? []).filter((x) => x.al === null);
+  delete resto.caratteristicheTemporanee;
+  return { ...resto, pvAttuali: m.pv, pmAttuali: m.pm, statiAttivi: [], ferite: 0, affaticamento: 0, round: 1, ultimaTecnica: null, tecnicheAttive: [], ...(temporanei.length ? { caratteristicheTemporanee: temporanei } : {}) };
 }
 
 /**

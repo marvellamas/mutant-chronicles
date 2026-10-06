@@ -1152,7 +1152,7 @@ async function apriStampa() {
     const chi = { pg: archivio.carica(stato.id)?.pg ?? null, chiave: chiavePersonaggio(stato.scelte?.nome ?? ''), nome: String(stato.scelte?.nome ?? '').trim() };
     try { registroVeicoli = { record: await elencoVeicoli(), chi }; } catch (e) { registroVeicoli = { record: [], chi, errore: e.message }; }
   }
-  const stampa = preparaStampa(personaggio(), stato.dati, { versioniDati: stato.versioni, registroVeicoli });
+  const stampa = preparaStampa(personaggio(), stato.dati, { versioniDati: stato.versioni, registroVeicoli, modificatori: stato.sessione });
   const opzioni = normalizzaOpzioniStampa(stato.opzioniStampa);
   // le preferenze di stampa si salvano con il personaggio: ogni giocatore le ritrova come le ha lasciate
   const cambiaOpzioni = (modifica) => {

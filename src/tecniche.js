@@ -139,6 +139,8 @@ export function nuovoRound(sessione) {
     ...sessione, round, tecnicheAttive: attive.filter(vale),
     // incantesimi lanciati con una durata in Round (src/durate-incantesimi.js)
     ...(Array.isArray(sessione?.incantesimiAttivi) ? { incantesimiAttivi: sessione.incantesimiAttivi.filter(vale) } : {}),
+    // modificatori temporanei di Caratteristica in Round (src/temporanei.js)
+    ...(Array.isArray(sessione?.caratteristicheTemporanee) ? { caratteristicheTemporanee: sessione.caratteristicheTemporanee.filter((x) => x.al === null || x.al === undefined || x.al >= round) } : {}),
   };
 }
 

@@ -6,6 +6,7 @@
 // Le penalità di Ferite, Affaticamento e Stati sono solo promemoria: i VA mostrati non le
 // includono (le regole del cap. 5 sono situazionali).
 import { h, segno } from './dom.js';
+import { normalizzaTemporanei, variaTemporaneo, durataTemporaneo, togliTemporaneo, derivatiDi } from '../temporanei.js';
 import { normalizzaCircostanze, aggiungiCircostanza, variaCircostanza, commutaCategoria, notaCircostanza, togliCircostanza, tutteSpuntate, TUTTO } from '../circostanze.js';
 import { info, infoValore, etichettaMacro, pallini } from './tooltip.js';
 import { stemma, iconaPagina } from './immagini.js';
@@ -1013,11 +1014,9 @@ function tabIdentita(ctx, d) {
 
     h('div', { class: 'griglia-due' },
       sezione('Caratteristiche',
-        h('table', { class: 'tabella compatta' },
-          h('thead', {}, h('tr', {}, h('th', {}, ''), h('th', {}, 'Valore'), h('th', {}, 'Mod'), h('th', {}, 'Mod Salv.'))),
-          h('tbody', {}, d.caratteristiche.map((c) => h('tr', {},
-            h('th', { scope: 'row' }, info('caratteristica', c.sigla, `${c.nome} (${c.sigla})`)),
-            h('td', { class: 'forte' }, String(c.valore)), h('td', {}, segno(c.mod)), h('td', {}, segno(c.modSalvezza)))))),
+        h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta tabella-caratteristiche' },
+          h('thead', {}, h('tr', {}, h('th', {}, ''), h('th', {}, 'Valore'), h('th', {}, 'Mod'), h('th', {}, 'Mod Salv.'), h('th', { class: 'col-temporaneo', title: 'Modificatore temporaneo dato dal master' }, 'Temp.'))),
+          h('tbody', {}, d.caratteristiche.flatMap((c) => righeCaratteristica(ctx, c))))),
         usiCaratteristicheTalenti(ctx)),
       sezione('Prove Salvezza',
         h('table', { class: 'tabella compatta' },
@@ -1285,6 +1284,47 @@ function oggettiDisponibili(ctx, tipi, { verbo, statoAttivo, soloNonAttivi = fal
         ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => cambiaStato(ctx, r.uid, statoRiposto(r.stati)) }, r.tipo === 'scudo' || r.tipo === 'arma_ravvicinata' || r.tipo === 'arma_distanza' ? 'Riponi' : 'Togli')
         : attivo ? h('button', { type: 'button', class: 'btn btn-piccolo primario', onclick: () => cambiaStato(ctx, r.uid, attivo) }, verbo(r)) : null);
   }));
+}
+
+/**
+ * Riga di una Caratteristica nella tab Identità con il modificatore temporaneo (primo playtest, 05/10/2026;
+ * src/temporanei.js): − / + nella colonna «Temporaneo», il valore modificato con la base accanto, e sotto la
+ * durata (numero − / + e unità) con «Togli». Si ripercuote su ciò che deriva dalla Caratteristica (tooltip).
+ */
+function righeCaratteristica(ctx, c) {
+  const R = ctx.dati.regole.caratteristiche_temporanee;
+  const riga = h('tr', { class: c.temporaneo !== undefined ? 'con-temporaneo' : null },
+    h('th', { scope: 'row' }, info('caratteristica', c.sigla, `${c.nome} (${c.sigla})`)),
+    h('td', { class: 'forte' }, String(c.valore), c.temporaneo !== undefined ? h('small', { class: `nota val-eff ${c.temporaneo < 0 ? 'malus' : 'bonus'}` }, ` (base ${c.base}${c.valore === ctx.dati.caratteristiche.valore_massimo || c.valore === ctx.dati.caratteristiche.valore_minimo ? ', al limite della tabella' : ''})`) : null),
+    h('td', {}, segno(c.mod)), h('td', {}, segno(c.modSalvezza)),
+    R ? h('td', { class: 'col-temporaneo' }, controlloTemporaneo(ctx, c, R)) : null);
+  if (!R) return [riga];
+  const x = normalizzaTemporanei(ctx.sessione.caratteristicheTemporanee, R).find((y) => y.sigla === c.sigla);
+  if (!x) return [riga];
+  const salva = (lista) => ctx.azioni.imposta('caratteristicheTemporanee', lista);
+  const u = R.unita.find((y) => y.id === x.unita);
+  return [riga, h('tr', { class: 'riga-durata-temporaneo' }, h('td', { colspan: 5 },
+    h('div', { class: 'durata-temporaneo' },
+      h('span', { class: 'nota' }, `${c.sigla} ${segno(x.valore)} per `),
+      h('button', { type: 'button', class: 'btn-tavolo', disabled: x.numero <= 1, 'aria-label': `Durata di ${c.sigla}: togli 1`, onclick: () => salva(durataTemporaneo(ctx.sessione, c.sigla, { numero: x.numero - 1 }, R)) }, '−'),
+      h('strong', {}, String(x.numero)),
+      h('button', { type: 'button', class: 'btn-tavolo', 'aria-label': `Durata di ${c.sigla}: aggiungi 1`, onclick: () => salva(durataTemporaneo(ctx.sessione, c.sigla, { numero: x.numero + 1 }, R)) }, '+'),
+      h('select', { 'aria-label': `Unità della durata di ${c.sigla}`, onchange: (e) => salva(durataTemporaneo(ctx.sessione, c.sigla, { unita: e.target.value }, R)) },
+        R.unita.map((y) => h('option', { value: y.id, selected: y.id === x.unita }, y.nome))),
+      h('small', { class: 'nota' }, u?.round ? ` dal Round ${x.dal} fino alla fine del Round ${x.al}` : ' · promemoria: si toglie a mano'),
+      h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => salva(togliTemporaneo(ctx.sessione, c.sigla, R)) }, 'Togli'))))];
+}
+
+/** − / + del modificatore temporaneo di una Caratteristica; il tooltip dice che cosa ne deriva (dai dati). */
+function controlloTemporaneo(ctx, c, R) {
+  const salva = (lista) => ctx.azioni.imposta('caratteristicheTemporanee', lista);
+  // il modificatore impostato (la Caratteristica modificata si ferma ai limiti della tabella dei modificatori)
+  const v = normalizzaTemporanei(ctx.sessione.caratteristicheTemporanee, R).find((y) => y.sigla === c.sigla)?.valore ?? 0;
+  const deriva = derivatiDi(c.sigla, ctx.dati);
+  return h('div', { class: 'controllo-temporaneo', title: `Modificatore temporaneo di ${c.nome}: vale per ${deriva.join('; ') || 'nessun valore derivato'}.` },
+    h('button', { type: 'button', class: 'btn-tavolo', disabled: v <= R.minimo, 'aria-label': `${c.sigla} temporaneo: togli 1`, onclick: () => salva(variaTemporaneo(ctx.sessione, c.sigla, -1, R)) }, '−'),
+    h('span', { class: `valore-temporaneo${v ? (v < 0 ? ' malus' : ' bonus') : ''}` }, v ? segno(v) : '0'),
+    h('button', { type: 'button', class: 'btn-tavolo', disabled: v >= R.massimo, 'aria-label': `${c.sigla} temporaneo: aggiungi 1`, onclick: () => salva(variaTemporaneo(ctx.sessione, c.sigla, 1, R)) }, '+'));
 }
 
 /**

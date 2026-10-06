@@ -3,6 +3,8 @@
 // Un foglio senza contenuto non si stampa. Funzioni pure, senza DOM:
 // la vista src/ui/stampa.js trasforma il risultato in HTML e lo impagina (il carattere non si
 // riduce: css/stampa.css, --ss-font).
+import { testiTemporanei } from './temporanei.js';
+import { testoCircostanze } from './circostanze.js';
 import { calcolaScheda } from './calc.js';
 import { migraPersonaggio } from './avanzamento.js';
 import { valoreTiro } from './tiri.js';
@@ -188,10 +190,13 @@ export function condizionaliAbilita(scheda, nome) {
  *   sessione: solo per le tab, valori effettivi con le condizioni; la stampa resta a riposo }
  * @returns {{ completa, errori, scheda, fogli: {id, titolo, numero, totale, dati}[], piede: {nome, livello, versioni} }}
  */
-export function preparaStampa(personaggio, dati, { versioniDati = '', completo = false, sessione = null, registroVeicoli = null } = {}) {
+export function preparaStampa(personaggio, dati, { versioniDati = '', completo = false, sessione = null, registroVeicoli = null, temporanei = false, modificatori = null } = {}) {
   const p = migraPersonaggio(personaggio);
   const c = p.creazione;
-  const s = calcolaScheda(sessione ? { ...p, sessione } : p, dati);
+  // la stampa resta a riposo: i modificatori temporanei di Caratteristica non entrano nel calcolo (riga a parte)
+  // (la scheda digitale, con temporanei: true, li usa: src/stampa.js → preparaTab)
+  const senzaTemporanei = (x) => (!temporanei && x?.caratteristicheTemporanee ? (({ caratteristicheTemporanee: _t, ...r }) => r)(x) : x);
+  const s = calcolaScheda(sessione ? { ...p, sessione: senzaTemporanei(sessione) } : { ...p, sessione: senzaTemporanei(p.sessione) }, dati);
   if (!s.caratteristiche) return { completa: false, errori: s.errori ?? [], scheda: s, fogli: [], piede: null };
 
   const nome = String(c.nome ?? '').trim() || 'Personaggio senza nome';
@@ -204,6 +209,9 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
   const equip = elencoZaino(s.equipaggiamento?.zaino ?? []);
 
   const identita = {
+    // modificatori della sessione, non nei valori stampati (a riposo): una riga a parte (playtest del 05/10/2026)
+    // «modificatori»: la sessione della scheda, solo per questa riga (la stampa non usa la sessione nel calcolo)
+    modificatoriTemporanei: [...testiTemporanei(modificatori ?? sessione ?? personaggio?.sessione, dati), ...testoCircostanze(modificatori ?? sessione ?? personaggio?.sessione, dati)],
     nome,
     livello: s.livello,
     corporazione: s.corporazione,
@@ -212,7 +220,7 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     // Anagrafica facoltativa: un campo vuoto si stampa come riga da compilare a penna
     anagrafica: CAMPI_ANAGRAFICA.map(({ campo, etichetta }) => ({ campo, etichetta, valore: testo(c[campo]) })),
     puntiEsperienza: typeof c.puntiEsperienza === 'number' && Number.isFinite(c.puntiEsperienza) ? c.puntiEsperienza : null,
-    caratteristiche: Object.entries(s.caratteristiche).map(([sigla, x]) => ({ sigla, nome: x.nome, valore: x.valore, mod: x.mod, modSalvezza: x.modSalvezza })),
+    caratteristiche: Object.entries(s.caratteristiche).map(([sigla, x]) => ({ sigla, nome: x.nome, valore: x.valore, mod: x.mod, modSalvezza: x.modSalvezza, ...(x.temporaneo !== undefined ? { base: x.base, temporaneo: x.temporaneo } : {}) })),
     salvezze: Object.entries(s.salvezze).map(([id, x]) => ({
       id, nome: x.nome, caratteristica: x.caratteristica, totale: x.totale, limitato: x.limitato, tetto: x.tetto,
       effettivo: x.effettivo ?? x.totale, scomposizione: x.scomposizione ?? [], provenienza: x.provenienza ?? null,
@@ -1151,7 +1159,7 @@ const TITOLI_TAB = { identita: 'Identità', abilita: 'Abilità', combattimento: 
  * @returns {{ completa, errori, scheda, tab: {id, titolo, dati}[] }}
  */
 export function preparaTab(personaggio, dati, { sessione = null } = {}) {
-  const st = preparaStampa(personaggio, dati, { completo: true, sessione });
+  const st = preparaStampa(personaggio, dati, { completo: true, sessione, temporanei: true });
   const p = migraPersonaggio(personaggio);
   // la SD ha i suoi tab Inventario e Artefatti (src/ui/tab.js): i fogli di stampa non diventano tab
   const tab = st.fogli.filter((f) => !['inventario', 'artefatti'].includes(f.id)).map((f) => ({ id: f.id, titolo: TITOLI_TAB[f.id], dati: { ...f.dati } }));

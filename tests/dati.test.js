@@ -39,7 +39,7 @@ test('i TODO(Davide) sono elencabili', () => {
   assert.equal(todo.some((t) => t.percorso.startsWith('classi.json')), false);
   // tutte chiuse dalle risposte ai 19 quesiti (E&L del 29/09) e ai 6 quesiti del 03/10 (A.80, A.86); restano
   // le scelte sui Rituali (per-davide A.74); A.78 chiusa il 02/10 (decisione 71)
-  assert.ok(todo.filter((t) => t.percorso.startsWith('regole.json')).every((t) => (/^regole\.json\.rituali/.test(t.percorso) && /A\.74/.test(t.testo)) || (/^regole\.json\.illuminazione/.test(t.percorso) && /A\.116/.test(t.testo)) || (/^regole\.json\.umanita\.riabilitazione/.test(t.percorso) && /A\.111/.test(t.testo)) || (/^regole\.json\.protezioni_rapide/.test(t.percorso) && /A\.110/.test(t.testo)) || (/^regole\.json\.stati/.test(t.percorso) && /A\.119/.test(t.testo)))); // A.116 (05/10): attività pratiche visive
+  assert.ok(todo.filter((t) => t.percorso.startsWith('regole.json')).every((t) => (/^regole\.json\.rituali/.test(t.percorso) && /A\.74/.test(t.testo)) || (/^regole\.json\.illuminazione/.test(t.percorso) && /A\.116/.test(t.testo)) || (/^regole\.json\.umanita\.riabilitazione/.test(t.percorso) && /A\.111/.test(t.testo)) || (/^regole\.json\.protezioni_rapide/.test(t.percorso) && /A\.110/.test(t.testo)) || (/^regole\.json\.stati/.test(t.percorso) && /A\.119/.test(t.testo)) || (/^regole\.json\.caratteristiche_temporanee/.test(t.percorso) && /A\.120/.test(t.testo)))); // A.116 (05/10): attività pratiche visive
   // durate delle Tecniche Interiori: decise dal master il 26/09/2026 (A.4 del Doc E&L); effetti di Pelle di
   // Rinoceronte (A.81) e di Onda Interiore (A.82) decisi il 03/10/2026
   assert.equal(todo.some((t) => t.percorso.startsWith('tecniche_interiori.json')), false);

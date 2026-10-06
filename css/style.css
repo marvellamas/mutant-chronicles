@@ -1789,3 +1789,19 @@ body.con-sfondo::before {
 .casella-circostanza { white-space: nowrap; }
 .piede-circostanza { display: flex; gap: 0.4rem; align-items: center; min-width: 0; }
 .nota-circostanza { flex: 1 1 auto; min-width: 0; }
+
+/* Modificatori temporanei di Caratteristica nella tab Identità (playtest del 05/10/2026, src/temporanei.js) */
+.controllo-temporaneo { display: inline-flex; align-items: center; gap: 0.25rem; white-space: nowrap; }
+.controllo-temporaneo .btn-tavolo, .durata-temporaneo .btn-tavolo { min-width: 2rem; padding: 0.1rem 0.4rem; }
+.valore-temporaneo { min-width: 1.8rem; text-align: center; font-weight: 700; }
+.valore-temporaneo.bonus { color: var(--ok); }
+.valore-temporaneo.malus { color: var(--errore); }
+.durata-temporaneo { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem 0.5rem; }
+.riga-durata-temporaneo td { padding-top: 0; }
+@media (max-width: 34rem) {
+  .tabella-caratteristiche td small.val-eff { display: block; }
+  .tabella-caratteristiche th, .tabella-caratteristiche td { padding-left: 0.25rem; padding-right: 0.25rem; }
+  .controllo-temporaneo { gap: 0.1rem; }
+  .controllo-temporaneo .btn-tavolo { min-width: 1.7rem; padding: 0.1rem 0.25rem; }
+  .valore-temporaneo { min-width: 1.4rem; }
+}

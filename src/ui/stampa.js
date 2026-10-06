@@ -267,6 +267,7 @@ function foglioIdentita(d) {
         h('p', {}, d.classi.map((c) => `${c.nome} ${c.grado}`).join(' · '))),
       h('dl', { class: 'f1-anagrafica' },
         campi.map((x) => h('div', { class: `campo-anagrafica campo-${x.campo}` }, h('dt', {}, x.etichetta), h('dd', {}, x.valore || ' '))))),
+    d.modificatoriTemporanei?.length ? h('p', { class: 'piccolo f1-modificatori' }, h('strong', {}, 'Modificatori temporanei attivi: '), d.modificatoriTemporanei.join('; '), ' (non compresi nei valori stampati).') : null,
     box({ titolo: 'Caratteristiche', tinta: 'accento', forte: true, classe: 'f1-caratteristiche' },
       h('div', { class: 'tessere' }, d.caratteristiche.map((c) => h('div', { class: 'tessera' },
         h('span', { class: 'sigla-car' }, c.sigla), h('span', { class: 'nome-car' }, c.nome),

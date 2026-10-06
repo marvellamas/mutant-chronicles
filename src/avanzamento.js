@@ -9,6 +9,7 @@
 //   grado: { classe: 'Agente' }, tiroPV: {valore, origine}, tiroPM: {valore, origine} | assente,
 //   talentoClasse: 'Reazione Operativa' (Gradi II, IV, VI), puntiAbilita: { Furtività: 2 }   "grado_classe"
 //   incantesimi: [nomi], tecniche: [id]                    quando una quota cresce
+import { modificatoriAttivi } from './temporanei.js';
 import {
   calcolaScheda, modOrdinario, modSalvezza, valoreAbilita, salvezza, iniziativa as sommaIniziativa,
   puntiMagiaCreazione, incantesimiLiberi, livelloMassimoIncantesimi,
@@ -1061,6 +1062,13 @@ export function calcolaSchedaPersonaggio(personaggio, dati) {
 function schedaARiposo(personaggio, dati) {
   const { stato, errori, completamenti, eccessi } = ricalcola(personaggio, dati);
   if (!stato) return { livello: 1, errori, completamenti, eccessi, completa: false };
+  // modificatori temporanei di Caratteristica al tavolo (src/temporanei.js): la Caratteristica cambia prima di tutto
+  // ciò che ne deriva (Abilità, Difese, Prove Salvezza, Iniziativa, danno, carico); i PV e PM massimi restano quelli
+  // della Caratteristica base salvo regole.json → caratteristiche_temporanee.massimi_pv_pm (TODO(Davide) A.120)
+  const carBase = { ...stato.car };
+  const temporanei = modificatoriAttivi(personaggio?.sessione, dati);
+  for (const [s, v] of Object.entries(temporanei)) if (s in stato.car) stato.car[s] = Math.min(dati.caratteristiche.valore_massimo ?? Infinity, Math.max(dati.caratteristiche.valore_minimo ?? 1, stato.car[s] + v));
+  const carMassimi = dati.regole.caratteristiche_temporanee?.massimi_pv_pm ? stato.car : carBase;
   const r = dati.regole;
   const n = stato.livello;
   const talenti = talentiConEffetti(stato, dati);
@@ -1070,7 +1078,8 @@ function schedaARiposo(personaggio, dati) {
   const caratteristiche = {};
   for (const { sigla, nome } of dati.caratteristiche.caratteristiche) {
     const valore = stato.car[sigla];
-    caratteristiche[sigla] = { nome, valore, mod: modOrdinario(valore, tabOrd), modSalvezza: modSalvezza(valore, tabSal), massimo: massimoCaratteristica(n, dati) };
+    caratteristiche[sigla] = { nome, valore, mod: modOrdinario(valore, tabOrd), modSalvezza: modSalvezza(valore, tabSal), massimo: massimoCaratteristica(n, dati),
+      ...(temporanei[sigla] ? { base: carBase[sigla], temporaneo: valore - carBase[sigla] } : {}) };
   }
   // §1.2.1, §2.3, §8.7 (29/09): base dalla prima Classe, limite dalle Classi possedute; `totale` è il VA
   // personale (grezzo limitato); equipaggiamento e condizioni si sommano dopo
@@ -1083,6 +1092,7 @@ function schedaARiposo(personaggio, dati) {
     const grezzo = valoreAbilita(componenti);
     return {
       nome, categoria, caratteristica, ...componenti, daClasse: x.daClasse, liberi: x.liberi,
+      ...(caratteristiche[caratteristica].temporaneo !== undefined ? { caratteristicaTemporanea: { sigla: caratteristica, valore: caratteristiche[caratteristica].valore, base: caratteristiche[caratteristica].base } } : {}),
       competenza: competenzaDi(prima, nome), competenzaDa: prima.nome, limite: lim.valore, limiteCategoria: lim.categoria, limiteDa: lim.classi,
       grezzo, totale: vaPersonale(grezzo, lim.valore),
     };
@@ -1137,7 +1147,7 @@ function schedaARiposo(personaggio, dati) {
   const primaClasse = stato.classi[0];
   // Magia sez. 1, Potere Mistico: +5 PM Massimi per acquisizione (effetti.pm), fino a +15; poi la fascia
   // di Umanità (§5.21), non sotto 1
-  const pmRegole = pmMancanti ? null : stato.car.SAG + stato.contributiPM.reduce((s, c) => s + c.valore, 0) + effetto('pm');
+  const pmRegole = pmMancanti ? null : carMassimi.SAG + stato.contributiPM.reduce((s, c) => s + c.valore, 0) + effetto('pm');
   const pmUmn = pmConUmanita(pmRegole, umn);
   return {
     livello: n,
@@ -1153,7 +1163,9 @@ function schedaARiposo(personaggio, dati) {
     abilita: abilitaEquip,
     equipaggiamento,
     salvezze: salvezzeDi(stato, dati),
-    pv: stato.car.COS + stato.contributiPV.reduce((s, c) => s + c.valore, 0) + effetto('pv'),
+    pv: carMassimi.COS + stato.contributiPV.reduce((s, c) => s + c.valore, 0) + effetto('pv'),
+    // modificatori temporanei di Caratteristica attivi: { sigla: valore } (plancia, scheda)
+    ...(Object.keys(temporanei).length ? { caratteristicheTemporanee: temporanei } : {}),
     pm: pmUmn.pm,
     // riduzione dei PM Massimi per l'Umanità (≤ 0), già compresa in `pm`
     pmUmanita: pmUmn.riduzione,

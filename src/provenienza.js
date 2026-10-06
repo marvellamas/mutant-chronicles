@@ -69,7 +69,7 @@ const NOMI_COMPETENZA = { S: 'Specializzata', P: 'Professionale', G: 'Generica',
 export function righeRegoleAbilita(a, scheda) {
   const comp = a.competenza ? `Competenza ${a.competenza} (${a.competenzaDa ?? scheda.classi?.[0]?.nome ?? scheda.classe ?? 'prima Classe'})` : 'Base iniziale';
   const righe = [
-    riga(`Mod ${a.caratteristica}`, a.mod, 'Caratteristica'),
+    riga(`Mod ${a.caratteristica}`, a.mod, a.caratteristicaTemporanea ? `Caratteristica: ${a.caratteristica} ${a.caratteristicaTemporanea.valore} con il modificatore temporaneo (base ${a.caratteristicaTemporanea.base})` : 'Caratteristica'),
     riga(comp, a.base, a.competenza ? `base ${NOMI_COMPETENZA[a.competenza] ?? a.competenza} (§2.3)` : '§2.3'),
     a.corporazione ? riga(`Corporazione ${scheda.corporazione ?? ''}`.trim(), a.corporazione, 'Abilità della Corporazione') : null,
   ].filter(Boolean);

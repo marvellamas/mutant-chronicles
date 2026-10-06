@@ -32,8 +32,10 @@ export function alRound(sessione, r) {
   if (!sessione || !Number.isInteger(r) || r < round(sessione)) return sessione;
   const attive = lista(sessione.tecnicheAttive).filter(vale(r));
   const incantesimi = lista(sessione.incantesimiAttivi).filter(vale(r));
-  if (r === sessione.round && attive.length === lista(sessione.tecnicheAttive).length && incantesimi.length === lista(sessione.incantesimiAttivi).length) return sessione;
-  return { ...sessione, round: r, tecnicheAttive: attive, ...(Array.isArray(sessione.incantesimiAttivi) ? { incantesimiAttivi: incantesimi } : {}) };
+  // modificatori temporanei di Caratteristica in Round (src/temporanei.js): quelli a tempo hanno al = null
+  const temporanei = lista(sessione.caratteristicheTemporanee).filter((x) => x.al === null || x.al === undefined || x.al >= r);
+  if (r === sessione.round && attive.length === lista(sessione.tecnicheAttive).length && incantesimi.length === lista(sessione.incantesimiAttivi).length && temporanei.length === lista(sessione.caratteristicheTemporanee).length) return sessione;
+  return { ...sessione, round: r, tecnicheAttive: attive, ...(Array.isArray(sessione.incantesimiAttivi) ? { incantesimiAttivi: incantesimi } : {}), ...(Array.isArray(sessione.caratteristicheTemporanee) ? { caratteristicheTemporanee: temporanei } : {}) };
 }
 
 /**
@@ -51,6 +53,7 @@ export function riallinea(sessione, r) {
     round: r,
     tecnicheAttive: lista(sessione.tecnicheAttive).map(durata),
     ...(Array.isArray(sessione.incantesimiAttivi) ? { incantesimiAttivi: sessione.incantesimiAttivi.map(durata) } : {}),
+    ...(Array.isArray(sessione.caratteristicheTemporanee) ? { caratteristicheTemporanee: sessione.caratteristicheTemporanee.map((x) => (x.al === null || x.al === undefined ? x : durata(x))) } : {}),
     ultimaTecnica: sessione.ultimaTecnica ? { ...sessione.ultimaTecnica, round: sposta(sessione.ultimaTecnica.round) } : null,
   };
 }
@@ -105,6 +108,8 @@ export function tecnicheScadute(sessione, da, a, dati) {
   return [
     ...lista(sessione?.tecnicheAttive).filter(fra).map((x) => tecnicaDi(x.id, dati)?.nome ?? x.id),
     ...lista(sessione?.incantesimiAttivi).filter(fra).map((x) => x.nome),
+    // modificatori temporanei di Caratteristica: «FOR +2 temporaneo» (alla scadenza la Caratteristica torna al valore base)
+    ...lista(sessione?.caratteristicheTemporanee).filter(fra).map((x) => `${x.sigla} ${x.valore < 0 ? '−' : '+'}${Math.abs(x.valore)} temporaneo`),
   ];
 }
 

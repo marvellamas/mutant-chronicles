@@ -2944,6 +2944,20 @@
       "Indossare o togliere un elmetto richiede 1 AzP ed entrambe le mani libere."
     ]
   },
+  "caratteristiche_temporanee": {
+    "_nota": "Modificatori temporanei di Caratteristica dati dal Direttore (richiesta del primo playtest, 05/10/2026; src/temporanei.js). Si applicano a cascata su ciò che deriva dalla Caratteristica (Abilità, Difese, Prove Salvezza, Iniziativa, bonus al danno, carico: src/temporanei.js → derivatiDi, dai dati), solo al tavolo: i valori a riposo e la stampa non cambiano. Con i Round la durata scade con il contatore della scheda o dello scontro, come le Tecniche Interiori; minuti, ore e giorni sono promemoria, da togliere a mano.",
+    "minimo": -10,
+    "massimo": 10,
+    "unita": [
+      { "id": "round", "nome": "Round", "singolare": "Round", "round": true },
+      { "id": "minuti", "nome": "minuti", "singolare": "minuto" },
+      { "id": "ore", "nome": "ore", "singolare": "ora" },
+      { "id": "giorni", "nome": "giorni", "singolare": "giorno" }
+    ],
+    "durata_predefinita": { "numero": 1, "unita": "round" },
+    "massimi_pv_pm": false,
+    "TODO(Davide)": "A.120: un modificatore temporaneo di COS o SAG cambia anche i PV e i PM massimi (che a riposo ne dipendono), oppure solo Abilità, Prove Salvezza, danno e carico? Intanto i massimi non cambiano, così i PV e PM attuali non vengono tagliati."
+  },
   "circostanza": {
     "paragrafo": "Giocatore §1.4",
     "_nota": "Bonus e malus di circostanza dati dal Direttore (richiesta del primo playtest, 05/10/2026): righe della sessione con valore e categorie, nei valori effettivi della scheda e nelle utility, mai nei valori a riposo (src/circostanze.js). Le categorie dividono le Abilità senza sovrapporsi: una riga con più categorie conta una volta sola per Abilità. «Tutto» nella scheda spunta tutte le categorie.",

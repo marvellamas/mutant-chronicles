@@ -764,6 +764,8 @@ function cartaPg(ctx, v, r, diTurnoOra = false, colpito = null, durate = []) {
         const d = durate.find((x) => x.tipo === 'stato' && x.nome === s.nome);
         return h('span', { class: 'etichetta stato-plancia', title: d ? `fino alla fine del Round ${d.al}` : null }, d ? `${s.nome} · ${d.rimasti} Round` : s.nome);
       })) : null,
+      // modificatori temporanei e circostanze segnati nella scheda (src/temporanei.js, src/circostanze.js)
+      v.modificatori?.length ? h('p', { class: 'plancia-modificatori' }, h('small', { class: 'nota' }, 'Modificatori: '), v.modificatori.map((x) => h('span', { class: 'etichetta' }, x))) : null,
       // durate di Tecniche e incantesimi attivati dalla scheda, incantesimi subiti, con i Round che restano (src/round-scontro.js)
       rigaDurate(durate, 'tecnica', 'Tecniche in corso'),
       rigaDurate(durate, 'incantesimo', 'Incantesimi in corso'),
