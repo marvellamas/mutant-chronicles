@@ -38,6 +38,7 @@
 // crediti: crediti attuali (§2.16.28), null finché la dotazione iniziale non è nell'inventario.
 // creditiIniziali: l'ultimo saldo iniziale visto; se il saldo cambia (dotazione rifatta, tabella
 // modificata) i crediti attuali si spostano della stessa differenza, così le spese restano.
+import { normalizzaCircostanze } from './circostanze.js';
 import { valoreTiro } from './tiri.js';
 import { SENZ_ARMI } from './attacco.js';
 import { saldoIniziale } from './dotazioni.js';
@@ -70,6 +71,8 @@ export function massimiSessione(scheda, creazione, dati) {
     affaticamento: dati.regole.affaticamento.stati.length - 1,
     corruzione: (dati.regole.corruzione?.stati?.length ?? 1) - 1,
     stati: dati.regole.stati.elenco.map((s) => s.id),
+    // bonus e malus di circostanza (src/circostanze.js): limiti e categorie dai dati
+    circostanza: dati.regole.circostanza ?? null,
     // uid di tutti gli oggetti della lista: le scelte di «Attacca!» si conservano per ogni arma (anche ravvicinata)
     oggetti: normalizzaEquipaggiamento(creazione?.equipaggiamento).map((v) => v.uid),
     // capacità del caricatore di ogni arma a distanza della lista (uid → numero o null)
@@ -353,6 +356,8 @@ export function allineaSessione(sessione, m) {
     // A.106: luce della scena (regole.json → illuminazione) e visione che copre il bersaglio; solo se servono
     ...(typeof sessione.luce === 'string' && sessione.luce && sessione.luce !== 'sufficiente' ? { luce: sessione.luce } : {}),
     ...(sessione.luceVisione === true ? { luceVisione: true } : {}),
+    // circostanze del Direttore (src/circostanze.js): la chiave c'è solo se ce ne sono
+    ...(() => { const c = normalizzaCircostanze(sessione.circostanze, m.circostanza); return c.length ? { circostanze: c } : {}; })(),
     note: typeof sessione.note === 'string' ? sessione.note : '',
   };
 }

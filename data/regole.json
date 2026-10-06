@@ -2944,6 +2944,19 @@
       "Indossare o togliere un elmetto richiede 1 AzP ed entrambe le mani libere."
     ]
   },
+  "circostanza": {
+    "paragrafo": "Giocatore §1.4",
+    "_nota": "Bonus e malus di circostanza dati dal Direttore (richiesta del primo playtest, 05/10/2026): righe della sessione con valore e categorie, nei valori effettivi della scheda e nelle utility, mai nei valori a riposo (src/circostanze.js). Le categorie dividono le Abilità senza sovrapporsi: una riga con più categorie conta una volta sola per Abilità. «Tutto» nella scheda spunta tutte le categorie.",
+    "minimo": -10,
+    "massimo": 10,
+    "categorie": [
+      { "id": "corpo_a_corpo", "nome": "Corpo a corpo", "abilita": ["Armi da guerra", "Armi da mischia", "Corpo a corpo"] },
+      { "id": "distanza", "nome": "Distanza", "abilita": ["Armi da lancio", "Armi leggere", "Armi medie", "Armi pesanti"] },
+      { "id": "poteri", "nome": "Poteri", "abilita": ["Potere", "Rituali"] },
+      { "id": "abilita", "nome": "Abilità", "altre_abilita": true, "_nota": "tutte le Abilità non elencate nelle altre categorie, Difese comprese" },
+      { "id": "derivate", "nome": "Derivate", "salvezze": true, "iniziativa": true, "_nota": "Prove Salvezza e Iniziativa" }
+    ]
+  },
   "protezioni_rapide": {
     "_nota": "A.60 (E&L del 05/10/2026): vista rapida nella tab Combattimento di armatura (con i rinforzi montati), scudo ed elmetto, con il costo in Azioni per indossarli o toglierli. L'elmetto prende il costo da elmetti.azioni_indossare (Armamenti §7.21.1); per armatura, rinforzi e scudo il manuale non lo scrive.",
     "TODO(Davide)": "A.110: quante Azioni costano indossare e togliere armatura, rinforzi e scudo? Intanto la vista rapida scrive «costo da definire».",

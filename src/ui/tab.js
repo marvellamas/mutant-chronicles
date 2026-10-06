@@ -6,6 +6,7 @@
 // Le penalità di Ferite, Affaticamento e Stati sono solo promemoria: i VA mostrati non le
 // includono (le regole del cap. 5 sono situazionali).
 import { h, segno } from './dom.js';
+import { normalizzaCircostanze, aggiungiCircostanza, variaCircostanza, commutaCategoria, notaCircostanza, togliCircostanza, tutteSpuntate, TUTTO } from '../circostanze.js';
 import { info, infoValore, etichettaMacro, pallini } from './tooltip.js';
 import { stemma, iconaPagina } from './immagini.js';
 import { classeMacrofamiglia } from '../palette.js';
@@ -1123,6 +1124,7 @@ function tabAbilita(ctx, d) {
           h('h2', {}, 'Condizioni attive'),
           condizioni.length ? h('ul', {}, condizioni.map(rigaCondizione)) : h('p', { class: 'nota' }, 'Nessuna: Ferite, Affaticamento e Stati si segnano qui sotto o nel Combattimento, il carico nell’Inventario.'),
           usi.length ? h('ul', { class: 'usi-specifici', 'aria-label': 'Solo per un uso specifico' }, usi.map(rigaCondizione)) : null),
+        riquadroCircostanze(ctx),
         selettoreLuce(ctx),
         // A.60: Ferite, Affaticamento, Corruzione e Stati modificabili anche qui, come nel Combattimento
         ...(() => { const dc = ctx.tab.tab.find((x) => x.id === 'combattimento')?.dati; return dc ? condizioniModificabili(ctx, dc) : []; })(),
@@ -1285,6 +1287,39 @@ function oggettiDisponibili(ctx, tipi, { verbo, statoAttivo, soloNonAttivi = fal
   }));
 }
 
+/**
+ * «Bonus di circostanza» (Giocatore §1.4; primo playtest, 05/10/2026): i modificatori dati dal master, in righe con
+ * valore − / + (limiti in regole.json → circostanza), categorie a caselle (al primo valore diverso da 0 si spuntano
+ * tutte; «Tutto» le spunta o le toglie tutte), nota e «Togli». Stesso stato in Combattimento, Poteri e Abilità
+ * (sessione.circostanze); entrano nei valori effettivi e nelle utility con la provenienza (src/circostanze.js).
+ */
+function riquadroCircostanze(ctx) {
+  const R = ctx.dati.regole.circostanza;
+  if (!R) return null;
+  const lista = normalizzaCircostanze(ctx.sessione.circostanze, R);
+  const salva = (l) => ctx.azioni.imposta('circostanze', l);
+  const casella = (x, id, nome, spuntata) => h('label', { class: `casella-circostanza${spuntata ? ' spuntata' : ''}` },
+    h('input', { type: 'checkbox', checked: spuntata, onchange: () => salva(commutaCategoria(lista, x.id, id, R)) }), ` ${nome}`);
+  const riga = (x) => h('div', { class: `riga-circostanza${x.valore ? '' : ' a-zero'}` },
+    h('div', { class: 'valore-circostanza pulsanti-tavolo' },
+      h('button', { type: 'button', class: 'btn-tavolo', disabled: x.valore <= R.minimo, 'aria-label': 'Circostanza: togli 1', onclick: () => salva(variaCircostanza(lista, x.id, -1, R)) }, '−1'),
+      h('strong', { 'aria-live': 'polite' }, x.valore ? segno(x.valore) : '0'),
+      h('button', { type: 'button', class: 'btn-tavolo', disabled: x.valore >= R.massimo, 'aria-label': 'Circostanza: aggiungi 1', onclick: () => salva(variaCircostanza(lista, x.id, 1, R)) }, '+1')),
+    h('div', { class: 'categorie-circostanza', role: 'group', 'aria-label': 'A che cosa si applica' },
+      casella(x, TUTTO, 'Tutto', tutteSpuntate(x, R)),
+      R.categorie.map((c) => casella(x, c.id, c.nome, x.categorie.includes(c.id)))),
+    h('div', { class: 'piede-circostanza' },
+      h('input', { type: 'text', class: 'nota-circostanza', value: x.nota ?? '', maxlength: 120, placeholder: 'nota (facoltativa)', 'aria-label': 'Nota della circostanza',
+        onchange: (e) => salva(notaCircostanza(lista, x.id, e.target.value.trim(), R)) }),
+      h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => salva(togliCircostanza(lista, x.id, R)) }, 'Togli')),
+    x.valore && !x.categorie.length ? h('small', { class: 'nota motivo' }, 'Nessuna categoria spuntata: non si applica a nulla.') : null);
+  return h('section', { class: 'riquadro riquadro-circostanze', 'aria-label': 'Bonus di circostanza' },
+    h('header', { class: 'testa-gradi' }, h('h3', {}, `Bonus di circostanza (${R.paragrafo})`),
+      infoValore('?', { titolo: 'Bonus di circostanza', sottotitolo: R.paragrafo, sezioni: [{ testo: `Il modificatore che dà il master, da ${R.minimo} a +${R.massimo}. Si somma ai VA mostrati, a «Attacca!», «Lancia!», Prove Salvezza e Iniziativa delle categorie spuntate (Derivate: Prove Salvezza e Iniziativa); i valori da regole e la stampa non cambiano. Più righe si sommano.` }] }, { classe: 'info-gradi' }),
+      h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => salva(aggiungiCircostanza(lista, R)) }, '+ Aggiungi')),
+    lista.length ? lista.map(riga) : h('p', { class: 'nota' }, 'Nessuno: «+ Aggiungi» per segnare un bonus o malus del master.'));
+}
+
 /** Riga compatta di un riquadro della colonna destra: titolo, stato attuale e gradi cliccabili. */
 function gradiCompatti(ctx, { titolo, campo, attuale, gradi, nota }) {
   const g = gradi[attuale];
@@ -1320,6 +1355,7 @@ function tabCombattimento(ctx, d) {
   return [
     interruttoreTalenti(ctx),
     promemoriaPenalita(ctx),
+    riquadroCircostanze(ctx),
     // conducente di un veicolo: andatura e penalità come promemoria, senza cambiare i VA (Veicoli §2.1, §3.1)
     promemoriaConducente(ctx),
     d.avvisiEquipaggiamento.length ? h('div', { class: 'riquadro attenzione' },
@@ -1869,6 +1905,7 @@ function tabPoteri(ctx, d) {
   if (d && d.conMagia === false) d = null;
   return [
     interruttoreTalenti(ctx),
+    riquadroCircostanze(ctx),
     ...(d ? tabMagia(ctx, d) : risorse ? [] : [h('section', { class: 'riquadro nessun-potere' }, h('h2', {}, 'Nessun potere'), p.nessuno ? h('p', { class: 'nota' }, p.nessuno) : null)]),
     // Risorse Interiori (Giocatore §8.9; richiesta di Davide del 02/10): le Tecniche con «Attiva»
     risorse,

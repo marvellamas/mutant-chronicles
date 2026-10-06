@@ -22,6 +22,7 @@ const NOTE = {
   movimento: 'movimento', bersaglio: 'bersaglio', copertura: 'Copertura', distanza: 'distanza', mirino: 'mirino',
   modalita: 'modalità di fuoco', 'modalità': 'modalità di fuoco', manovra: 'manovra', talento: 'Talento', situazione: 'situazione',
   livello: 'livello dell’incantesimo', componenti: 'componenti', circostanze: 'circostanze', magia: 'effetto magico',
+  circostanza: 'circostanza del Direttore (§1.4)',
 };
 
 /**

@@ -3,6 +3,7 @@
 // Funzioni pure. Il valore EFFETTIVO = valore da regole + equipaggiamento + condizioni attive;
 // il `totale` da regole non cambia (serve all'avanzamento) e la stampa resta a riposo.
 
+import { condizioniCircostanza } from './circostanze.js';
 import { descriviFerite } from './sessione.js';
 import { calcolaCarico } from './carico.js';
 import { aggiungiDanno, infoArtefatto, applicaMunizione } from './equipaggiamento.js';
@@ -98,6 +99,8 @@ export function condizioniAttive(sessione, dati, scheda = null) {
       .filter((e) => e.valore < 0);
     out.push({ etichetta: `Luce: ${luce.nome}`, fonte: 'stato', effetto: effettoDaEffetti(luce.effetti), usi });
   }
+  // circostanze del Direttore (Giocatore §1.4; src/circostanze.js): una condizione per riga
+  out.push(...condizioniCircostanza(sessione, dati));
   // §5.2.6: il Sovraccarico penalizza le Prove fisiche, compresi attacchi e Difese
   if (scheda && r.carico) {
     const c = calcolaCarico(scheda, sessione, dati);
@@ -497,11 +500,14 @@ export function valoriTavolo(scheda, sessione, dati) {
   const iniSpente = talOff ? tutteIni.filter((v) => !eMod(v)) : [];
   // effetti «iniziativa» dell'equipaggiamento in uso (Allerta tattica dell'elmetto, Armamenti §7.21.2)
   const vociIniEquip = (scheda.equipaggiamento?.iniziativa ?? []).map((v) => voce(v.etichetta, v.valore, 'equipaggiamento'));
-  const iniziativa = { effettivo: somma([...vociIni, ...vociIniEquip]), daRegole: somma(vociIni), scomposizione: [...vociIni, ...vociIniEquip], note: [] };
+  // circostanze del Direttore sulle Derivate (src/circostanze.js)
+  const vociIniCond = (scheda.condizioni ?? condizioniAttive(sessione, dati, scheda)).filter((c) => c.effetto.iniziativa).map((c) => voce(c.etichetta, c.effetto.iniziativa, c.fonte));
+  const iniziativa = { effettivo: somma([...vociIni, ...vociIniEquip, ...vociIniCond]), daRegole: somma(vociIni), scomposizione: [...vociIni, ...vociIniEquip, ...vociIniCond], note: [] };
   iniziativa.provenienza = provenienza([
     ...vociIni.map((v) => riga(v.etichetta, v.valore, /^Mod /.test(v.etichetta) ? 'Caratteristica (§2.14)' : 'Talento')),
     ...iniSpente.map((v) => ({ ...riga(v.etichetta, v.valore, 'Talenti spenti: non conta'), escluso: true, barrato: true })),
     ...righeDaScomposizione(vociIniEquip),
+    ...righeDaScomposizione(vociIniCond),
   ], iniziativa.effettivo);
 
   const base = scheda.movimento ?? {};

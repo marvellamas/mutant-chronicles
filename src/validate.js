@@ -61,6 +61,7 @@ export function validaDati(dati) {
   validaTalentiLiberi(dati.talenti_liberi, idSpec, err, (dati.addestramenti?.addestramenti ?? []).map((a) => a.nome));
   validaTecniche(dati.tecniche_interiori, err);
   validaSintesiTalenti(dati, err);
+  validaCircostanza(dati, err);
   validaEquipaggiamento(dati.equipaggiamento, [...nomiAbilita], [...(idSpec ?? [])], err, Object.keys(dati.regole?.chroma?.colori ?? {}).filter((c) => !dati.regole.chroma.colori[c]?.esausto && dati.regole.chroma.colori[c]?.contenitore !== false), Object.keys(dati.regole?.corruzione ?? {}));
   if (dati.regole?.chroma !== undefined) validaChroma(dati, err);
   if (dati.equipaggiamento?.file) validaNec(dati, err);
@@ -832,6 +833,30 @@ const EFFETTI_NOTI = new Set(['iniziativa', 'pv', 'pm', 'salvezza', 'movimento',
 // effetti.magia: valori che sostituiscono la base di regole.json → lancio (numeri) o capacità (true)
 const EFFETTI_MAGIA = { focalizzazione_va: 'numero', penalita_ingaggio: 'numero', penalita_contromagia: 'numero', tiro_armi_da_lancio: 'numero', contromagia: 'vero', contromagia_senza_conoscenza: 'vero', occultata: 'vero' };
 const EFFETTI_MEDITAZIONE = { accesso: 'vero', pm_per_ora: 'numero', moltiplicatore_ore: 'numero' };
+
+// Bonus e malus di circostanza (src/circostanze.js): limiti interi, categorie con Abilità esistenti, senza sovrapporsi
+function validaCircostanza(dati, err) {
+  const C = dati.regole?.circostanza;
+  if (C === undefined) return;
+  const F = 'regole';
+  if (!isOggetto(C) || !isIntero(C.minimo) || !isIntero(C.massimo) || C.minimo >= 0 || C.massimo <= 0) { err(F, 'circostanza', 'servono «minimo» < 0 e «massimo» > 0 interi'); return; }
+  const nomi = new Set((dati.abilita?.abilita ?? []).map((a) => a.nome));
+  const viste = new Set();
+  const ids = new Set();
+  (Array.isArray(C.categorie) ? C.categorie : []).forEach((c, i) => {
+    const P = `circostanza.categorie[${i}]`;
+    if (!isTesto(c?.id) || ids.has(c.id) || c.id === 'tutto') err(F, `${P}.id`, 'id mancante, ripetuto o riservato («tutto»)');
+    ids.add(c?.id);
+    if (!isTesto(c?.nome)) err(F, `${P}.nome`, 'nome mancante');
+    for (const a of c?.abilita ?? []) {
+      if (!nomi.has(a)) err(F, `${P}.abilita`, `«${a}» non è un'Abilità`);
+      else if (viste.has(a)) err(F, `${P}.abilita`, `«${a}» è già in un'altra categoria`);
+      viste.add(a);
+    }
+    if (!(c?.abilita?.length || c?.altre_abilita || c?.salvezze || c?.iniziativa)) err(F, P, 'la categoria non tocca nulla');
+  });
+  if (!ids.size) err(F, 'circostanza.categorie', 'elenco delle categorie mancante');
+}
 
 // Sintesi operative dei Talenti per la SS (decisione 112): { testo, rif, stato } con stato «da_verificare» o «approvata»
 function validaSintesiTalenti(dati, err) {

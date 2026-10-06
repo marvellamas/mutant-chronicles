@@ -1778,3 +1778,14 @@ body.con-sfondo::before {
 .ferite-sotto-pv { grid-column: 1 / -1; }
 .ferite-sotto-pv .riquadro-gradi { margin: 0; }
 .colonna-risorse .ferite-sotto-pv .gradi-compatti, .risorse-laterali .ferite-sotto-pv .gradi-compatti { flex-wrap: wrap; }
+
+/* «Bonus di circostanza» (playtest del 05/10/2026, src/ui/tab.js → riquadroCircostanze) */
+.riquadro-circostanze .testa-gradi { flex-wrap: wrap; }
+.riga-circostanza { display: grid; gap: 0.35rem; padding: 0.4rem 0; border-top: 1px solid var(--bordo); }
+.riga-circostanza.a-zero { opacity: 0.85; }
+.valore-circostanza { display: flex; align-items: center; gap: 0.4rem; }
+.valore-circostanza strong { font-size: 1.3rem; min-width: 2.2rem; text-align: center; }
+.categorie-circostanza { display: flex; flex-wrap: wrap; gap: 0.2rem 0.75rem; font-size: 0.9rem; }
+.casella-circostanza { white-space: nowrap; }
+.piede-circostanza { display: flex; gap: 0.4rem; align-items: center; min-width: 0; }
+.nota-circostanza { flex: 1 1 auto; min-width: 0; }
