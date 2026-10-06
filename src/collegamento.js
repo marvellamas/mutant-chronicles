@@ -117,3 +117,21 @@ export function indicatoreCollegamento(server, ultimoControlloRiuscito = true) {
   const stato = ultimoControlloRiuscito ? 'collegato' : 'non_collegato';
   return { stato, testo: stato === 'collegato' ? 'collegato al tavolo' : 'non collegato', titolo: TITOLI[stato] };
 }
+
+/**
+ * Indicatore del salvataggio sul PC del master (verifica del 06/10/2026): «Salvato sul PC del master alle 14:32»
+ * quando il contenuto della scheda è quello del file in personaggi/ (stessa impronta), altrimenti «Modifiche non ancora
+ * salvate…» (si salvano da sole appena il server risponde); senza nome il PG resta nel browser. null senza server.
+ * @param cartella voce.cartella { file, mtime, impronta } dell'ultima scrittura o lettura
+ */
+export function statoSalvataggioMaster({ server, haNome, cartella, improntaLocale }, dati) {
+  if (!server) return null;
+  const T = dati.regole.interfaccia.salvataggio;
+  if (!haNome) return { stato: 'senza_nome', testo: T.indicatore_senza_nome };
+  if (cartella?.impronta && cartella.impronta === improntaLocale && Number.isFinite(cartella.mtime)) {
+    const d = new Date(cartella.mtime);
+    const ora = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+    return { stato: 'salvato', testo: T.indicatore_salvato.replace('{ora}', ora), file: cartella.file };
+  }
+  return { stato: 'da_salvare', testo: T.indicatore_da_salvare };
+}

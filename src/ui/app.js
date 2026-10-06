@@ -16,7 +16,7 @@ import * as archivio from './storage.js';
 import { elencoVeicoli, migraNelRegistro } from './veicoli-registro.js';
 import { eRiferimento } from '../veicoli-registro.js';
 import { serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella } from './cartella.js';
-import { controllaRemoto, revisioneDaScrivere, differenzeSessione, testoScelta, indicatoreCollegamento, impronta } from '../collegamento.js';
+import { statoSalvataggioMaster, controllaRemoto, revisioneDaScrivere, differenzeSessione, testoScelta, indicatoreCollegamento, impronta } from '../collegamento.js';
 import { leggiScontroAperto, leggiScontro, salvaScontro } from './scontro.js';
 import { registraRiga } from '../scontro.js';
 import { elencoUnito, confronta, chiaveDaFile, chiavePersonaggio, messaggioSalvataggio, attesaRitentativo, nomeFileLibero, haNome, fileProvvisorio } from '../cartella.js';
@@ -377,6 +377,7 @@ async function scriviInCartella(id, { revisione = false, mtime = null } = {}) {
     }
     const r = await scriviCartella(file, testo, { mtime: rev });
     archivio.segnaCartella(id, { file: r.file, mtime: r.mtime, salvato: p.aggiornato, impronta: impronta(testo) });
+    if (id === stato.id) aggiornaIndicatoreSalvataggio();
     // il server è tornato dopo un salvataggio fallito: lo si dice, e il ritentativo si ferma
     if (ritentativo.id === id) fineRitentativo(id);
     return r;
@@ -429,6 +430,11 @@ async function controllaScheda() {
   const { azione } = controllaRemoto(voce, lista, !!stato.collegamento.conflitto, improntaLocale(id));
   if (azione === 'ricarica') await ricaricaDaCartella();
   else if (azione === 'conflitto') await apriConflitto();
+  // verifica del 06/10/2026: una modifica fatta col server irraggiungibile (o con un altro PG aperto) e non ancora
+  // nella cartella si scrive appena il server risponde, senza aspettare la pagina iniziale
+  else if (!stato.collegamento.conflitto && !attesaCartella.has(id) && !ritentativo.timer && haNome(voce.scelte)
+    && (!voce.cartella || voce.cartella.impronta !== improntaLocale(id))) programmaCartella(id);
+  aggiornaIndicatoreSalvataggio();
   await aggiornaRoundScontro();
 }
 
@@ -511,6 +517,22 @@ function improntaLocale(id) {
   const p = archivio.carica(id);
   if (!p) return null;
   return impronta(fileEsportazione(normalizza(p.scelte, stato.dati).scelte, p.livelli ?? [], p.sessione ?? null, normalizzaCalendario(p.calendario, stato.dati), p.pg ?? null).testo);
+}
+
+/** Indicatore «Salvato sul PC del master alle hh:mm» della scheda aperta, o null senza server. */
+function indicatoreSalvataggio(id) {
+  const p = id ? archivio.carica(id) : null;
+  if (!p) return null;
+  return statoSalvataggioMaster({ server: !!stato.cartella, haNome: haNome(p.scelte), cartella: p.cartella ?? null, improntaLocale: improntaLocale(id) }, stato.dati);
+}
+/** Aggiorna l'indicatore sul posto, senza ridisegnare la scheda. */
+function aggiornaIndicatoreSalvataggio() {
+  const el = document.querySelector('.indicatore-salvataggio');
+  const i = indicatoreSalvataggio(stato.id);
+  if (!el || !i) return;
+  el.className = `indicatore-salvataggio ${i.stato}`;
+  el.textContent = i.testo;
+  el.title = i.file ? `File: personaggi/${i.file}` : '';
 }
 
 /** Registra la sincronizzazione con il file `file` alla revisione `mtime`, con l'impronta del contenuto attuale. */
@@ -1272,6 +1294,8 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
     tornaAlTavolo: arrivoDalTavolo(sessionStorage, stato.id) ? () => { tornaAlTavolo(sessionStorage); vai('#/tavolo'); } : null,
     // pezzo 6: indicatore e avviso del collegamento, solo con il server della cartella
     collegamento: indicatoreCollegamento(stato.cartella, stato.collegamento.stato === 'collegato'),
+    // verifica del 06/10/2026: dove sta la scheda (src/collegamento.js → statoSalvataggioMaster)
+    salvataggioMaster: indicatoreSalvataggio(stato.id),
     avvisoMaster: stato.cartella && stato.collegamento.conflitto ? {
       differenze: differenzeSessione(stato.sessione, stato.collegamento.conflitto.sessione, nomeStato),
       ora: new Date(stato.collegamento.conflitto.mtime),

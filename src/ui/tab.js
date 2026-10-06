@@ -116,6 +116,8 @@ export function renderTab(ctx) {
       // aperta dalla plancia del Tavolo del Master (src/ui/ritorno.js)
       ctx.tornaAlTavolo ? h('button', { type: 'button', class: 'btn btn-torna-tavolo', onclick: ctx.tornaAlTavolo, title: 'Torna alla plancia del Tavolo del Master, allo stesso punto' }, '← Torna al tavolo') : null,
       // Tavolo del Master, pezzo 6: solo con il server di Mutant
+      // verifica del 06/10/2026: «Salvato sul PC del master alle hh:mm» (solo con il server)
+      ctx.salvataggioMaster ? h('span', { class: `indicatore-salvataggio ${ctx.salvataggioMaster.stato}`, role: 'status', title: ctx.salvataggioMaster.file ? `File: personaggi/${ctx.salvataggioMaster.file}` : '' }, ctx.salvataggioMaster.testo) : null,
       ctx.collegamento ? h('span', { class: `indicatore-collegamento ${ctx.collegamento.stato}`, role: 'status', title: ctx.collegamento.titolo },
         ctx.collegamento.testo) : null,
       // Round collegato allo scontro (src/round-scontro.js): in ogni tab

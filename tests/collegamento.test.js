@@ -152,3 +152,17 @@ test('conflitto: modifica locale non scritta e colpo del master; «Aggiorna» e 
   assert.equal(r.file, FILE);
   assert.equal(deserializzaPersonaggio(await ui.leggiCartella(FILE)).sessione.pvAttuali, deserializzaPersonaggio(mio).sessione.pvAttuali);
 });
+
+test('indicatore «Salvato sul PC del master alle hh:mm» (verifica del 06/10/2026)', async () => {
+  const { statoSalvataggioMaster } = await import('../src/collegamento.js');
+  const { datiReali } = await import('./helpers.js');
+  const { dati } = await datiReali();
+  const ore = new Date(2026, 9, 6, 21, 7).getTime();
+  assert.equal(statoSalvataggioMaster({ server: false, haNome: true, cartella: null, improntaLocale: 'x' }, dati), null);
+  assert.equal(statoSalvataggioMaster({ server: true, haNome: false, cartella: null, improntaLocale: 'x' }, dati).stato, 'senza_nome');
+  const ok = statoSalvataggioMaster({ server: true, haNome: true, cartella: { file: 'Lia_liv1_2026-10-06.json', mtime: ore, impronta: 'x' }, improntaLocale: 'x' }, dati);
+  assert.deepEqual([ok.stato, ok.testo], ['salvato', 'Salvato sul PC del master alle 21:07']);
+  // modifiche dopo l'ultimo salvataggio (o mai salvato): da salvare
+  assert.equal(statoSalvataggioMaster({ server: true, haNome: true, cartella: { file: 'f', mtime: ore, impronta: 'x' }, improntaLocale: 'y' }, dati).stato, 'da_salvare');
+  assert.equal(statoSalvataggioMaster({ server: true, haNome: true, cartella: null, improntaLocale: 'y' }, dati).stato, 'da_salvare');
+});

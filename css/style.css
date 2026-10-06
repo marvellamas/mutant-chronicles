@@ -1805,3 +1805,9 @@ body.con-sfondo::before {
   .controllo-temporaneo .btn-tavolo { min-width: 1.7rem; padding: 0.1rem 0.25rem; }
   .valore-temporaneo { min-width: 1.4rem; }
 }
+
+/* «Salvato sul PC del master alle hh:mm» (verifica del 06/10/2026) */
+.indicatore-salvataggio { align-self: center; font-size: 0.8rem; padding: 0.1rem 0.55rem; border-radius: 999px; border: 1px solid var(--bordo); }
+.indicatore-salvataggio.salvato { color: var(--ok); border-color: var(--ok); background: var(--ok-tenue); }
+.indicatore-salvataggio.da_salvare { color: var(--errore); border-color: var(--errore); background: var(--errore-tenue); }
+.indicatore-salvataggio.senza_nome { color: var(--tenue); }

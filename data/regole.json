@@ -470,6 +470,10 @@
       "server_non_risponde": "Il Tavolo del Master non risponde: controlla che la finestra di avvia-server.bat sia aperta, poi ricarica la pagina. Il personaggio è al sicuro nel browser.",
       "non_riuscito": "Salvataggio nella cartella personaggi/ non riuscito: {errore}. Il personaggio resta salvato nel browser.",
       "ritenta_ogni_s": 5,
+    "indicatore_salvato": "Salvato sul PC del master alle {ora}",
+    "indicatore_da_salvare": "Modifiche non ancora salvate sul PC del master",
+    "indicatore_senza_nome": "Dai un nome al personaggio per salvarlo sul PC del master",
+    "_nota_indicatore": "Indicatore sempre visibile nella scheda con il server (src/collegamento.js → statoSalvataggioMaster): l'ora è quella del file nella cartella personaggi/ del PC del master. Se la scheda ha modifiche non ancora nella cartella, la scheda riprova da sola al controllo successivo (ogni 3 secondi).",
       "_nota": "Messaggi del salvataggio nella cartella del server (src/cartella.js → messaggioSalvataggio, src/ui/app.js). Quando il server non risponde (errore di rete) si mostra «server_non_risponde», senza gergo tecnico, e l'app ritenta da sé ogni «ritenta_ogni_s» secondi: appena il server torna, scrive e mostra «riuscito». Il messaggio tecnico resta nella console del browser. «non_riuscito» ({errore}) vale per gli errori veri del server (file non valido, permessi), che un nuovo tentativo non risolve."
     },
     "_nota": "Scheda digitale: barre dei PV e dei PM. Verde sopra verde_sopra del massimo, rosso sotto rosso_sotto, giallo fra le due soglie (comprese). Frazioni da 0 a 1."
