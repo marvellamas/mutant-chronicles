@@ -102,6 +102,39 @@ Il cap. 7 dell’Equipaggiamento dice che il catalogo dei recuperi di UMN «rest
 
 **A.116 — Luce e attività pratiche visive.** Oltre a Percezione visiva, attacchi e Difese, quali Abilità prendono le penalità di luce: Pilotare, Tecnologia, Medicina, altre?
 
+**A.119 — Stato «Ammalato».**  
+Quali effetti ha (penalità, Prove, Prove Salvezza), quanto dura, come si prende e come si guarisce?  
+*Nel frattempo:* lo Stato si può segnare, ma senza effetti.
+
+**A.120 — Modificatori temporanei di caratteristiche: COS e SAG.**  
+Un bonus o malus temporaneo di COS o SAG cambia anche i PV e i PM massimi?  
+*Nel frattempo:* non li cambia, così PV e PM attuali non vengono tagliati.
+
+**A.122 — Quali funzioni della mappa usi davvero al tavolo?**  
+Segna le indispensabili: immagine della mappa, griglia, pedine, iniziativa, misura, muri e porte, nebbia, luci e linea di vista, template ad area, veicoli sulla mappa, rotazione delle pedine, mappe video, costruttore di stanze, aiuto-master.
+
+**A.124 — Azioni extra e movimento sulla mappa.**  
+Nella tua app le Azioni extra sono turni separati a INI −3/−6 e il movimento è un budget fissato dal master, con le diagonali da 1 Q. Sulla nuova mappa usiamo le regole del manuale (seconda AzP nello stesso turno dal 12° livello; Passo/Corsa/Scatto 6/12/18 Q)? Le diagonali valgono 1 Q?
+
+**A.125 — Porte, luci e veicoli sulla mappa.**  
+Aprire una porta costa un’Azione? Il «livello» delle luci della tua app corrisponde a penombra / luce molto scarsa / buio della A.106? I veicoli si muovono sulla mappa all’Iniziativa del conducente con la loro andatura?
+
+**A.126 — Creature da 3×3 Q.**  
+Quando una creatura occupa 3×3 Q invece di 2×2? Serve nella scheda un campo con l’ingombro in Q?  
+*Nel frattempo:* 1 Q, oppure 2×2 per la Taglia Grande; 3×3 solo se indicato nel profilo.
+
+**A.127 — Attraversare i quadretti occupati.**  
+Si può attraversare il quadretto di un alleato? E di un nemico? Si può fermarsi nello stesso quadretto?  
+*Nel frattempo:* alleati attraversabili ma non occupabili; nemici né attraversabili né occupabili.
+
+**A.128 — Terreno difficile.**  
+Quanto costa muoversi su terreno difficile (per esempio 2 Q per ogni quadretto)?  
+*Nel frattempo:* 2 Q per quadretto.
+
+**A.129 — Movimento diviso e Corsa/Scatto.**  
+Il movimento si può dividere nel turno (muovo, attacco, muovo)? Corsa e Scatto cosa consumano in Azioni?  
+*Nel frattempo:* movimento diviso consentito entro il totale; Corsa e Scatto come da manuale.
+
 ## ---
 
 **3\. Da correggere nella prossima edizione dei manuali**
@@ -269,7 +302,8 @@ Voci con risposta recepita e funzione implementata nell’app. La data è quella
 > * **A.82** — Onda Interiore: dado della Disciplina e del Grado più il bonus di SAG (tetti \+1/+2/+3), non FOR; il \+2 Ravvicinato di Pelle di Rinoceronte non si applica. *Implementata il 03/10.*  
 > * **A.83** — REP Epica: ricerca con Oratoria −6, se il Direttore ammette una possibilità concreta; Batterie Matrice colorate Epiche, Bianche Leggendarie. *Implementata il 03/10.*  
 > * **A.86** — Granate e razzi: danno completo della munizione, senza bonus di Caratteristica. *Implementata il 03/10.*  
-> * **A.88** — Individuare a Concentrazione: 10 min / 30 min / 1 h / 2 h / 4 h per le versioni 6–8 / 9–11 / 12–14 / 15–17 / 18\. *Implementata il 03/10.*
+> * **A.88** — Individuare a Concentrazione: 10 min / 30 min / 1 h / 2 h / 4 h per le versioni 6–8 / 9–11 / 12–14 / 15–17 / 18\. *Implementata il 03/10.*  
+> * **A.123 — Iniziativa sulla mappa**: vale il Manuale del Giocatore (Mod DES \+ Mod INT \+ 1d10; parità per DES, poi INT, poi scelta fra alleati o 1d10 fra avversari); il d12 della tua app è del sistema precedente — deciso il 06/10.
 
 > 
 
