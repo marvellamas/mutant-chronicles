@@ -9,7 +9,12 @@
 // Lotto 4: nebbia (pennello e rettangolo, «Rivela» o «Copri», tutto, Ctrl+Z), semitrasparente qui e piena per i
 // giocatori; gesti a due dita e doppio tocco (./gesti.js); sezione «Vista giocatori» con la scena mostrata, «Apri
 // vista giocatori» e il codice QR.
-// Logica pura in src/mappa/ (camera, griglia, token, partecipanti, nebbia); disegno in ./canvas.js e ./disegno-token.js.
+// Lotto 5: muri e terreno difficile (pennello e rettangolo, «Muro», «Terreno difficile», «Gomma»); area raggiungibile del
+// token scelto (Passo, Corri, Scatta) con il percorso sotto il puntatore; movimento con un clic o trascinando dentro
+// l'area, registrato nel Round dello scontro, Maiusc per muovere fuori; clic destro sul token; Ctrl+Z per l'ultima
+// azione del master (movimento, muri, nebbia, token messo o tolto).
+// Logica pura in src/mappa/ (camera, griglia, token, partecipanti, nebbia, muri, area, annulla); disegno in ./canvas.js,
+// ./disegno-token.js e ./disegno-aree.js.
 import { h, svuota } from '../dom.js';
 import { avviso, avvisoErrore } from '../avvisi.js';
 import { cameraIniziale, zoomVerso, sposta, adatta, mappaDaSchermo, schermoDaMappa, rettangoloVisibile } from '../../mappa/camera.js';
@@ -19,7 +24,15 @@ import { leggiScena, salvaScena, caricaImmagine, controllaFile, preparaRidotta }
 import { agganciaQ, centroToken, tokenSottoPunto, disponiInFila, sovrapposti, chiaveRif } from '../../mappa/token.js';
 import { pezziDellaScena, pezziSenzaToken, tokenOrfani, tokenPerPezzo } from '../../mappa/partecipanti.js';
 import { daBase64, cella, conta } from '../../mappa/celle.js';
-import { tratto, valoreModo, nebbiaProvvisoria, chiudiPennellata, rettangoloNebbia, tuttaNebbia, annullaNebbia, quantiQ, trattiCoperti } from '../../mappa/nebbia.js';
+import { tratto, valoreModo, nebbiaProvvisoria, chiudiPennellata, rettangoloNebbia, tuttaNebbia, trattiCoperti } from '../../mappa/nebbia.js';
+import { trattoMuri, muriProvvisori, chiudiTrattoMuri, rettangoloMuri } from '../../mappa/muri.js';
+import { areaRaggiungibile, costoVerso, percorso, fasceRimaste, fasciaDi, celleArea, piuVicinaRaggiungibile } from '../../mappa/area.js';
+import { muoviToken, usatoNelRound, mossoNelRound, annullaUltima, annullaUltimoMovimento, cambiaTokenAnnullabile } from '../../mappa/annulla.js';
+import { disegnaMuri, disegnaArea, disegnaPercorso, coloriAree } from './disegno-aree.js';
+import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
+import { diTurno } from '../../scontro.js';
+import { statoMovimento, muoviVeicolo } from '../../veicoli-registro.js';
+import { aggiornaVeicolo } from '../veicoli-registro.js';
 import { creaGesti } from './gesti.js';
 import { svgQR } from '../../qr.js';
 import { leggiRete } from '../collega.js';
@@ -69,6 +82,11 @@ export function renderMappa(radice, ctx) {
     // lotto 4: strumenti della nebbia e scena scelta per i giocatori (null = automatica)
     nebbia: { strumento: null, modo: 'rivela', lato: 3 },
     sceltaGiocatori: null,
+    // lotto 5: strumenti dei muri, fascia mostrata (1 Passo, 2 Corri, 3 Scatta), area del token scelto, percorso
+    muri: { strumento: null, modo: 'muro', lato: 1 },
+    fascia: 1,
+    area: undefined,
+    percorso: null,
     // difetto 2: carta del token scelto in un pannello accanto alla mappa (la plancia in modalità «carta sola»)
     cartaAperta: null,
     plancia: null,
@@ -110,6 +128,7 @@ export function renderMappa(radice, ctx) {
   el.secToken = h('div');
   el.pGriglia = h('details', { class: 'mappa-sezione mappa-griglia' });
   el.pNebbia = h('details', { class: 'mappa-sezione mappa-nebbia', open: true });
+  el.pMuri = h('details', { class: 'mappa-sezione mappa-muri' });
   el.pGiocatori = h('details', { class: 'mappa-sezione mappa-giocatori' });
   svuota(radice, h('section', { class: 'mappa-pagina' }, el.barra, h('div', { class: 'mappa-corpo' }, el.riquadro, el.carta, el.pannello)));
 
@@ -151,11 +170,16 @@ export function renderMappa(radice, ctx) {
       const s = st.scena;
       if (!s) return;
       const g = s.griglia;
+      const colori = coloriAree(el.riquadro);
+      // lotto 5: muri (retino) e terreno difficile (puntinato), solo per il master
+      disegnaMuri(c, { scena: s, cam: st.cam, info, muri: daBase64(s.muri), terreno: daBase64(s.terreno), colori });
       const r = rettangoloVisibile(st.cam, info.larghezza, info.altezza);
       const q = g.q_px;
       const tratti = trattiCoperti(daBase64(s.nebbia.coperti), g.colonne, g.righe,
         { x0: Math.floor((r.x0 - g.scosto_x) / q), x1: Math.ceil((r.x1 - g.scosto_x) / q), y0: Math.floor((r.y0 - g.scosto_y) / q), y1: Math.ceil((r.y1 - g.scosto_y) / q) });
-      if (!tratti.length) return;
+      // area raggiungibile del token scelto, sopra la nebbia (il master la vede sempre)
+      const disegnaAreaScelta = () => { const a = areaScelta(); if (a?.celle) disegnaArea(c, { scena: s, cam: st.cam, info, celle: a.celle, colori }); };
+      if (!tratti.length) { disegnaAreaScelta(); return; }
       c.save();
       c.globalAlpha = 0.5;
       c.fillStyle = getComputedStyle(el.riquadro).getPropertyValue('--mappa-nebbia').trim() || '#111';
@@ -167,15 +191,18 @@ export function renderMappa(radice, ctx) {
       }
       c.fill();
       c.restore();
+      disegnaAreaScelta();
     },
     sopra: (c) => {
       if (st.scena) {
         const t = st.trascina?.modo === 'token' ? { id: st.trascina.token, q: st.trascina.q } : null;
         disegnaToken(c, { scena: st.scena, cam: st.cam, pezzi: st.mappaPezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: st.selezionato, trascina: t });
       }
-      // anteprima del rettangolo di nebbia
+      // percorso del token scelto (o trascinato) verso il quadretto sotto il puntatore, con i Q che costa
+      if (st.percorso && st.scena) disegnaPercorso(c, { scena: st.scena, cam: st.cam, percorso: st.percorso.punti, ingombro: st.percorso.ingombro, costo: st.percorso.costo, fascia: st.percorso.fascia, colori: coloriAree(el.riquadro) });
+      // anteprima del rettangolo di nebbia o di muri
       const tn = st.trascina;
-      if (tn?.modo === 'nebbia' && st.nebbia.strumento === 'rettangolo' && st.scena) {
+      if (tn?.modo === 'disegno' && tn.forma === 'rettangolo' && st.scena) {
         const g = st.scena.griglia;
         const a = schermoDaMappa(st.cam, g.scosto_x + Math.min(tn.da[0], tn.a[0]) * g.q_px, g.scosto_y + Math.min(tn.da[1], tn.a[1]) * g.q_px);
         const b = schermoDaMappa(st.cam, g.scosto_x + (Math.max(tn.da[0], tn.a[0]) + 1) * g.q_px, g.scosto_y + (Math.max(tn.da[1], tn.a[1]) + 1) * g.q_px);
@@ -297,7 +324,8 @@ export function renderMappa(radice, ctx) {
     if (st.selezionato && !s.token.some((t) => t.id === st.selezionato)) st.selezionato = null;
     aggiornaPannello();
     disegnaPannelli();
-    if (st.fonti !== null) { disegnaPannelloNebbia(); disegnaPannelloGiocatori(); }
+    invalidaArea();
+    if (st.fonti !== null) { disegnaPannelloNebbia(); disegnaPannelloMuri(); disegnaPannelloGiocatori(); }
     ridisegna();
   };
 
@@ -343,7 +371,7 @@ export function renderMappa(radice, ctx) {
   el.blocca = h('button', { type: 'button', class: 'btn', onclick: () => bloccaGriglia() });
   el.info = h('p', { class: 'nota mappa-info' });
   el.notaBlocco = h('p', { class: 'riquadro attenzione mappa-nota-blocco', hidden: true }, 'Griglia bloccata: dimensione e scostamento non cambiano, così nebbia, muri e token restano allineati. Colore e opacità sì.');
-  svuota(el.pannello, el.secScontro, el.secToken, el.pNebbia, el.pGiocatori, el.pGriglia);
+  svuota(el.pannello, el.secScontro, el.secToken, el.pMuri, el.pNebbia, el.pGiocatori, el.pGriglia);
   svuota(el.pGriglia,
     h('summary', {}, h('strong', {}, 'Griglia')),
     h('p', { class: 'nota' }, 'Calibra tracciando sull’immagine un quadretto (o un riquadro di più quadretti) oppure inserendo i valori. Poi blocca la griglia.'),
@@ -443,8 +471,9 @@ export function renderMappa(radice, ctx) {
         const nuovi = primaLettura ? [] : pezziSenzaToken(st.scena, st.pezzi).filter((p) => !prima.has(p.chiave));
         if (nuovi.length) avviso(`Nello scontro: ${nuovi.map((p) => p.nome).join(', ')}. Fra i «senza token», da mettere in mappa.`, { durata: 8000 });
       }
+      invalidaArea();
       disegnaPannelli();
-      ridisegna(['sopra']);
+      ridisegna(['aree', 'sopra']);
     })().finally(() => { lettura = null; });
     return lettura;
   }
@@ -457,7 +486,8 @@ export function renderMappa(radice, ctx) {
     const pz = scelto ? pezzoDi(scelto) : null;
     // si ridisegna solo se cambia qualcosa: un menu aperto non si chiude da solo ogni tre secondi
     const firma = JSON.stringify([st.scena.collegamento, f.candidati.aperti.map((x) => [x.id, x.nome, x.round]), f.candidati.bozze.map((x) => [x.id, x.nome]),
-      f.mancante, f.errori, !!f.scontro, !!f.bozza, f.scontro?.round, senza.map((p) => [p.chiave, p.nome, p.lato, p.ingombro]), st.daPiazzare, scelto, pz]);
+      f.mancante, f.errori, !!f.scontro, !!f.bozza, f.scontro?.round, senza.map((p) => [p.chiave, p.nome, p.lato, p.ingombro]), st.daPiazzare, scelto, pz,
+      scelto ? movimentoPannello(scelto) : null]);
     if (firma === st.firmaPannello) return;
     st.firmaPannello = firma;
     svuota(el.secScontro, sezioneScontro({ ...f, collegamento: st.scena.collegamento, senzaToken: senza, daPiazzare: st.daPiazzare }, {
@@ -467,9 +497,12 @@ export function renderMappa(radice, ctx) {
       mettiTutti,
     }));
     svuota(el.secToken, sezioneToken(scelto, pz, ctx.dati, {
+      mov: scelto ? movimentoPannello(scelto) : null,
+      fascia: (n) => cambiaFascia(n),
+      annullaMovimento: () => annullaMovimentoUi(scelto.id),
       nascondi: () => cambiaToken(scelto.id, (x) => ({ ...x, nascosto: !x.nascosto })),
       ingombro: (n) => cambiaToken(scelto.id, (x) => ({ ...x, ingombro: n, q: agganciaQ(st.scena.griglia, centroToken(st.scena.griglia, x).x, centroToken(st.scena.griglia, x).y, n) }), { controllaSovrapposti: true }),
-      togli: () => { const id = scelto.id; st.selezionato = null; st.scena = { ...st.scena, token: st.scena.token.filter((x) => x.id !== id) }; dopoCambioToken(); },
+      togli: () => togliToken(scelto.id),
       carta: () => apriNellaPlancia(pz?.chiave),
       immagine: async () => { const img = await scegliImmagineNemico(ctx.dati, pz?.nome); if (img) await immagineNemico(pz, img); },
       togliImmagine: () => immagineNemico(pz, null),
@@ -496,13 +529,16 @@ export function renderMappa(radice, ctx) {
   }
 
   function dopoCambioToken() {
+    invalidaArea();
     salvaPresto();
     disegnaPannelli();
-    ridisegna(['sopra']);
+    ridisegna(['aree', 'sopra']); // l'area raggiungibile sta nel livello «aree»
   }
 
   function cambiaToken(id, fn, { controllaSovrapposti = false } = {}) {
-    st.scena = { ...st.scena, token: st.scena.token.map((t) => (t.id === id ? fn(t) : t)) };
+    const prima = st.scena.token.find((t) => t.id === id);
+    if (!prima) return;
+    st.scena = cambiaTokenAnnullabile(st.scena, prima, fn(prima), ctx.dati);
     if (controllaSovrapposti) avvisaSovrapposti([id]);
     dopoCambioToken();
   }
@@ -514,10 +550,21 @@ export function renderMappa(radice, ctx) {
     if (coppie.length) avviso(`Sovrapposti: ${coppie.map(([a, b]) => `${nomeDi(a)} e ${nomeDi(b)}`).join('; ')}.`, { durata: 5000 });
   }
 
+  /** «Togli dalla mappa»: il pezzo torna fra quelli senza token (Ctrl+Z lo rimette). */
+  function togliToken(id) {
+    const prima = st.scena.token.find((t) => t.id === id);
+    if (!prima) return;
+    if (st.selezionato === id) st.selezionato = null;
+    st.scena = cambiaTokenAnnullabile(st.scena, prima, null, ctx.dati);
+    dopoCambioToken();
+  }
+
   function scegli(id) {
+    if (st.selezionato !== id) st.fascia = 1;
     st.selezionato = id;
+    invalidaArea();
     disegnaPannelli();
-    ridisegna(['sopra']);
+    ridisegna(['aree', 'sopra']);
   }
 
   /**
@@ -568,7 +615,7 @@ export function renderMappa(radice, ctx) {
     const pz = st.mappaPezzi.get(chiave);
     if (!pz || st.scena.token.some((t) => chiaveRif(t.rif) === chiave)) { disegnaPannelli(); return; }
     const t = tokenPerPezzo(pz, agganciaQ(st.scena.griglia, m.x, m.y, pz.ingombro));
-    st.scena = { ...st.scena, token: [...st.scena.token, t] };
+    st.scena = cambiaTokenAnnullabile(st.scena, null, t, ctx.dati);
     avvisaSovrapposti([t.id]);
     st.selezionato = t.id;
     dopoCambioToken();
@@ -586,20 +633,26 @@ export function renderMappa(radice, ctx) {
     const { posti, nonPiazzati } = disponiInFila(senza.map((p) => ({ id: p.chiave, ingombro: p.ingombro })), centro,
       { token: st.scena.token, muro: (x, y) => cella(muri, g.colonne, g.righe, x, y), colonne: g.colonne, righe: g.righe });
     const nuovi = posti.map((x) => tokenPerPezzo(st.mappaPezzi.get(x.id), x.q));
-    st.scena = { ...st.scena, token: [...st.scena.token, ...nuovi] };
+    for (const t of nuovi) st.scena = cambiaTokenAnnullabile(st.scena, null, t, ctx.dati);
     if (nonPiazzati.length) avvisoErrore(`Non c’è posto per: ${nonPiazzati.map((k) => st.mappaPezzi.get(k)?.nome ?? k).join(', ')}.`);
     else avviso(`In mappa: ${nuovi.length} token.`);
     dopoCambioToken();
   }
 
-  // ── Nebbia (lotto 4, §5): pennello e rettangolo, «Rivela» o «Copri», tutto, Ctrl+Z ──
+  // ── Strumenti di disegno (lotti 4 e 5): nebbia (§5) e muri (§6), pennello o rettangolo, uno solo attivo ──
   const N = st.nebbia;
+  const M = st.muri;
   const qVicino = (m) => {
     const g = st.scena.griglia;
     return [Math.max(0, Math.min(g.colonne - 1, Math.floor((m.x - g.scosto_x) / g.q_px))), Math.max(0, Math.min(g.righe - 1, Math.floor((m.y - g.scosto_y) / g.q_px)))];
   };
-  const contaNebbia = () => st.scena.annulla.filter((v) => v?.tipo === 'nebbia').length;
+  /** Lo strumento di disegno attivo: { gruppo: 'nebbia' | 'muri', forma: 'pennello' | 'rettangolo' } oppure null. */
+  const disegnoAttivo = () => (N.strumento ? { gruppo: 'nebbia', forma: N.strumento } : M.strumento ? { gruppo: 'muri', forma: M.strumento } : null);
+  const quanteAnnulla = () => st.scena.annulla.length;
   const pulsanteScelta = (testo, attivo, onclick, titolo) => h('button', { type: 'button', class: `btn btn-piccolo${attivo ? ' scelto' : ''}`, 'aria-pressed': String(attivo), title: titolo, onclick }, testo);
+  const pulsanteAnnulla = () => h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !quanteAnnulla(), title: 'Annulla l’ultima azione del master: movimento, muro, nebbia, token (Ctrl+Z)', onclick: () => annullaUi() }, `Annulla (${quanteAnnulla()})`);
+  const campoLato = (o) => h('label', { class: 'mappa-campo' }, h('span', {}, 'Dimensione del pennello (Q)'),
+    h('input', { type: 'number', min: 1, max: 15, step: 1, value: String(o.lato), onchange: (e) => { o.lato = Math.max(1, Math.min(15, Math.round(Number(e.target.value) || 1))); e.target.value = String(o.lato); } }));
   function disegnaPannelloNebbia() {
     if (!st.scena) return;
     const g = st.scena.griglia;
@@ -613,35 +666,194 @@ export function renderMappa(radice, ctx) {
       h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Modalità della nebbia' },
         pulsanteScelta('Rivela', N.modo === 'rivela', () => { N.modo = 'rivela'; disegnaPannelloNebbia(); }, 'Toglie la nebbia'),
         pulsanteScelta('Copri', N.modo === 'copri', () => { N.modo = 'copri'; disegnaPannelloNebbia(); }, 'Mette la nebbia')),
-      h('label', { class: 'mappa-campo' }, h('span', {}, 'Dimensione del pennello (Q)'),
-        h('input', { type: 'number', min: 1, max: 15, step: 1, value: String(N.lato), onchange: (e) => { N.lato = Math.max(1, Math.min(15, Math.round(Number(e.target.value) || 1))); e.target.value = String(N.lato); } })),
+      campoLato(N),
       h('div', { class: 'mappa-azioni-token' },
         h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => tuttaUi('copri') }, 'Copri tutto'),
         h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => tuttaUi('rivela') }, 'Rivela tutto'),
-        h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !contaNebbia(), title: 'Ctrl+Z', onclick: () => annullaNebbiaUi() }, `Annulla (${contaNebbia()})`)));
+        pulsanteAnnulla()));
+  }
+  /** Lotto 5, §6: muri invalicabili e terreno difficile per quadretti; «Gomma» toglie l'uno e l'altro. */
+  function disegnaPannelloMuri() {
+    if (!st.scena) return;
+    const g = st.scena.griglia;
+    const muri = conta(daBase64(st.scena.muri), g.colonne, g.righe);
+    const terreno = conta(daBase64(st.scena.terreno), g.colonne, g.righe);
+    svuota(el.pMuri,
+      h('summary', {}, h('strong', {}, 'Muri'), ` (${muri} Q di muro, ${terreno} di terreno difficile)`),
+      h('p', { class: 'nota' }, 'Muri e terreno difficile si vedono solo qui (retino e puntinato) e decidono l’area raggiungibile. Ai giocatori non arrivano quelli sotto la nebbia.'),
+      h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Strumento dei muri' },
+        pulsanteScelta('Pennello', M.strumento === 'pennello', () => strumentoMuri(M.strumento === 'pennello' ? null : 'pennello'), 'Dipingi per quadretti'),
+        pulsanteScelta('Rettangolo', M.strumento === 'rettangolo', () => strumentoMuri(M.strumento === 'rettangolo' ? null : 'rettangolo'), 'Per le aree grandi: da un angolo all’altro')),
+      h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Modalità dei muri' },
+        pulsanteScelta('Muro', M.modo === 'muro', () => { M.modo = 'muro'; disegnaPannelloMuri(); }, 'Invalicabile'),
+        pulsanteScelta('Terreno difficile', M.modo === 'terreno', () => { M.modo = 'terreno'; disegnaPannelloMuri(); }, 'Costa di più (provvisorio: ×2, A.128)'),
+        pulsanteScelta('Gomma', M.modo === 'gomma', () => { M.modo = 'gomma'; disegnaPannelloMuri(); }, 'Toglie muri e terreno difficile')),
+      campoLato(M),
+      h('div', { class: 'mappa-azioni-token' }, pulsanteAnnulla()));
   }
   function strumentoNebbia(s) {
     N.strumento = s;
-    if (s && st.strumento === 'calibra') impostaStrumento('sposta');
-    el.riquadro.classList.toggle('nebbia', !!s);
-    disegnaPannelloNebbia();
+    if (s) M.strumento = null;
+    dopoStrumento();
   }
-  function dopoNebbia() {
+  function strumentoMuri(s) {
+    M.strumento = s;
+    if (s) N.strumento = null;
+    dopoStrumento();
+  }
+  function dopoStrumento() {
+    if (disegnoAttivo() && st.strumento === 'calibra') impostaStrumento('sposta');
+    el.riquadro.classList.toggle('nebbia', !!disegnoAttivo());
+    st.percorso = null;
+    disegnaPannelloNebbia();
+    disegnaPannelloMuri();
+    ridisegna(['aree', 'sopra']);
+  }
+  function dopoDisegno() {
+    invalidaArea();
     salvaPresto();
     disegnaPannelloNebbia();
+    disegnaPannelloMuri();
+    disegnaPannelli();
     ridisegna(['aree', 'sopra']);
   }
   function tuttaUi(modo) {
     if (!confirm(modo === 'copri' ? 'Coprire di nebbia tutta la mappa? I giocatori non vedranno più nulla (Ctrl+Z annulla).' : 'Rivelare tutta la mappa ai giocatori? (Ctrl+Z annulla)')) return;
     st.scena = tuttaNebbia(st.scena, modo, ctx.dati);
-    dopoNebbia();
+    dopoDisegno();
   }
-  function annullaNebbiaUi() {
-    const esito = annullaNebbia(st.scena);
-    if (!esito) { avviso('Nessuna modifica della nebbia da annullare.'); return; }
+  /**
+   * Ctrl+Z (lotto 5): annulla l'ultima azione del master, qualunque sia (src/mappa/annulla.js). Un token tolto non torna
+   * se il suo partecipante non è più nello scontro (solo con una lettura completa delle fonti).
+   */
+  function annullaUi() {
+    const completa = (st.fonti?.scontro || st.fonti?.bozza) && !st.fonti.errori.length;
+    const prima = st.scena;
+    const esito = annullaUltima(st.scena, { chiaviPresenti: completa ? new Set(st.pezzi.map((p) => p.chiave)) : null });
+    if (!esito) { avviso('Niente da annullare.'); return; }
     st.scena = esito.scena;
-    avviso(`Nebbia: annullata l’ultima modifica (${quantiQ(esito.voce.tratti)} Q).`);
-    dopoNebbia();
+    if (esito.voce.tipo === 'movimento' && !esito.errore) veicoloNonPiuMosso(prima.movimenti.find((x) => x.id === esito.voce.movimento));
+    if (st.selezionato && !st.scena.token.some((t) => t.id === st.selezionato)) st.selezionato = null;
+    if (esito.errore) avvisoErrore(`Non annullato: ${esito.errore}.`);
+    else avviso(`Annullato: ${{ nebbia: 'nebbia', muri: 'muri', movimento: 'movimento', token: 'modifica del token', 'token tolto': 'token tolto (torna in mappa)', 'token messo': 'token messo (esce dalla mappa)' }[esito.testo] ?? esito.testo}.`, { chiave: 'annulla' });
+    dopoDisegno();
+  }
+
+  // ── Area raggiungibile e movimento (lotto 5, §8) ──
+  const FASCE = ['passo', 'corsa', 'scatto'];
+  function invalidaArea() { st.area = undefined; st.percorso = null; }
+  /** Record del veicolo nel registro (fonti), o null. */
+  const recordVeicolo = (t) => (t.rif.tipo === 'veicolo' ? (st.fonti?.veicoli ?? []).find((r) => r.id === t.rif.id) ?? null : null);
+  /**
+   * Area del token: { area, rimaste, usato, fino, limite, celle, motivo, movimento }. Senza movimento (segnaposto,
+   * scritti a mano, scheda non ancora letta) area null e motivo; il master muove comunque, tenendo premuto Maiusc.
+   */
+  function infoArea(t) {
+    const pz = pezzoDi(t);
+    const scontro = st.fonti?.scontro ?? null;
+    const base = { area: null, rimaste: null, usato: 0, fino: st.fascia, limite: 0, celle: null, movimento: pz?.movimento ?? null, motivo: null };
+    if (!pz?.movimento) return { ...base, motivo: pz ? 'nessun profilo di movimento' : 'fuori dallo scontro' };
+    let usato = usatoNelRound(st.scena, t.id, scontro?.id ?? null, scontro?.round ?? null);
+    if (pz.tipo === 'veicolo' && scontro) {
+      // A.105: un solo movimento per Round, all'Iniziativa del conducente (src/veicoli-registro.js)
+      const rec = recordVeicolo(t);
+      const sv = rec ? statoMovimento(rec, scontro, diTurno(scontro)) : null;
+      if (mossoNelRound(st.scena, t.id, scontro.id, scontro.round) || sv?.mosso) return { ...base, usato: pz.movimento.passo, motivo: `già mosso nel Round ${scontro.round}` };
+      if (sv && !sv.puo) return { ...base, motivo: sv.motivo };
+      usato = 0;
+    }
+    const rimaste = fasceRimaste(pz.movimento, usato);
+    // fino alla fascia scelta (Passo, Corri, Scatta), o alla migliore disponibile sotto di essa
+    const disponibili = FASCE.slice(0, st.fascia).filter((f) => rimaste[f] !== null);
+    const limite = disponibili.length ? Math.max(...disponibili.map((f) => rimaste[f])) : 0;
+    const g = st.scena.griglia;
+    const area = areaRaggiungibile({
+      colonne: g.colonne, righe: g.righe, muri: daBase64(st.scena.muri), terreno: daBase64(st.scena.terreno),
+      token: st.scena.token.map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, lato: pezzoDi(x)?.lato ?? null })),
+      chi: { id: t.id, q: t.q, ingombro: t.ingombro, lato: pz.lato }, massimo: limite, regole: ctx.dati.mappa.movimento,
+    });
+    return { ...base, area, rimaste, usato, limite, celle: celleArea(area, rimaste, st.fascia), motivo: limite <= 0 ? (usato ? `movimento del Round finito (${numero(usato, 1)} Q)` : 'movimento 0 Q') : null };
+  }
+  /** Area del token scelto, calcolata una volta finché non cambia qualcosa (invalidaArea). */
+  function areaScelta() {
+    if (st.area !== undefined) return st.area;
+    const t = st.selezionato && !disegnoAttivo() ? st.scena.token.find((x) => x.id === st.selezionato) : null;
+    st.area = t ? { token: t.id, ...infoArea(t) } : null;
+    return st.area;
+  }
+  function cambiaFascia(n) {
+    st.fascia = n;
+    invalidaArea();
+    disegnaPannelli();
+    ridisegna(['aree', 'sopra']);
+  }
+  /** Posizione del token se il suo centro va nel punto m della mappa (aggancio §7). */
+  const posizioneVerso = (t, m) => agganciaQ(st.scena.griglia, m.x, m.y, t.ingombro);
+  /** Costo per arrivare in q con l'area data (Infinity se fuori o oltre la fascia scelta). */
+  const costoDentro = (info, q) => { const c = info?.area ? costoVerso(info.area, q) : Infinity; return c <= (info?.limite ?? 0) ? c : Infinity; };
+
+  /**
+   * Movimento (§8): dentro l'area si registra nel Round dello scontro, con la sua fascia; con `libero` (Maiusc) il
+   * master sposta dove vuole, con un avviso, e il movimento non conta. Un veicolo nello scontro segna anche il suo
+   * movimento del Round nel registro unico (A.105).
+   */
+  function eseguiMovimento(t, q, { libero = false, info = infoArea(t) } = {}) {
+    if (q[0] === t.q[0] && q[1] === t.q[1]) return false;
+    const costo = costoDentro(info, q);
+    const nome = pezzoDi(t)?.nome ?? t.nome ?? t.id;
+    if (!libero && costo === Infinity) {
+      avviso(`${nome}: quel quadretto è fuori dall’area${info.motivo ? ` (${info.motivo})` : ''}. Tieni premuto Maiusc per spostarlo comunque.`, { tipo: 'info', chiave: 'fuori-area' });
+      return false;
+    }
+    const scontro = st.fonti?.scontro ?? null;
+    const fascia = libero ? null : fasciaDi(costo, info.rimaste);
+    st.scena = muoviToken(st.scena, t.id, { a: q, costo: libero ? null : costo, fascia, scontro: scontro?.id ?? null, round: scontro?.round ?? null, libero }, ctx.dati);
+    if (libero) avviso(`${nome} spostato fuori dall’area (Maiusc): non conta nel movimento del Round.`, { tipo: 'info', chiave: 'fuori-area' });
+    // il veicolo segna il suo movimento del Round nel registro unico
+    const rec = recordVeicolo(t);
+    if (rec && scontro && !libero) {
+      try {
+        aggiornaVeicolo(rec, muoviVeicolo(rec, scontro, diTurno(scontro))).then(({ record }) => {
+          if (st.fonti) st.fonti.veicoli = st.fonti.veicoli.map((x) => (x.id === record.id ? record : x));
+        }).catch((e) => avvisoErrore(`Movimento del veicolo non registrato: ${e.message}`));
+      } catch (e) { avvisoErrore(`Movimento del veicolo non registrato: ${e.message}`); }
+    }
+    avvisaSovrapposti([t.id]);
+    invalidaArea();
+    dopoCambioToken();
+    return true;
+  }
+  function annullaMovimentoUi(id = st.selezionato) {
+    const esito = id ? annullaUltimoMovimento(st.scena, id) : null;
+    if (!esito) { avviso('Nessun movimento da annullare per questo token.'); return; }
+    if (esito.errore) { avvisoErrore(`Non annullato: ${esito.errore}.`); return; }
+    st.scena = esito.scena;
+    veicoloNonPiuMosso(esito.movimento);
+    avviso('Annullato l’ultimo movimento.', { chiave: 'annulla' });
+    invalidaArea();
+    dopoCambioToken();
+  }
+  /**
+   * Annullato il movimento di un veicolo nel Round: anche il registro unico torna «non mosso» (A.105), così la mappa e
+   * la plancia restano d'accordo e il conducente può muoverlo di nuovo.
+   */
+  function veicoloNonPiuMosso(mov) {
+    if (!mov || mov.libero) return;
+    const t = st.scena.token.find((x) => x.id === mov.token);
+    const rec = t ? recordVeicolo(t) : null;
+    if (!rec || rec.movimento?.scontro !== mov.scontro || rec.movimento?.round !== mov.round) return;
+    aggiornaVeicolo(rec, { ...rec, movimento: null }).then(({ record }) => {
+      if (st.fonti) st.fonti.veicoli = st.fonti.veicoli.map((x) => (x.id === record.id ? record : x));
+      invalidaArea();
+      disegnaPannelli();
+      ridisegna(['aree', 'sopra']);
+    }).catch((e) => avvisoErrore(`Registro del veicolo non aggiornato: ${e.message}`));
+  }
+  /** Dati del movimento per il pannello del token. */
+  function movimentoPannello(t) {
+    const info = st.area?.token === t.id ? st.area : infoArea(t);
+    const ultimo = [...st.scena.movimenti].reverse().find((x) => x.token === t.id);
+    return { movimento: info.movimento, rimaste: info.rimaste, usato: info.usato, fascia: st.fascia, motivo: info.motivo, annullabile: !!ultimo, veicolo: t.rif.tipo === 'veicolo', andatura: pezzoDi(t)?.andatura ?? null };
   }
 
   // ── Puntatore, rotella e tastiera (§12); gesti comuni in ./gesti.js (lotto 4: due dita, doppio tocco) ──
@@ -649,18 +861,16 @@ export function renderMappa(radice, ctx) {
   const premi = (e, p) => {
     el.riquadro.focus({ preventScroll: true });
     nascondiSuggerimento();
+    chiudiMenuToken();
     if (!st.scena) return;
     const m = mappaDaSchermo(st.cam, p.x, p.y);
     if (st.daPiazzare && !st.spazio) { piazza(st.daPiazzare, m); return; }
     const base = { id: e.pointerId, x: p.x, y: p.y, x0: p.x, y0: p.y, mosso: false };
-    if (N.strumento && !st.spazio && st.strumento !== 'calibra') {
+    const d = disegnoAttivo();
+    if (d && !st.spazio && st.strumento !== 'calibra') {
       const q = qVicino(m);
-      st.trascina = { ...base, modo: 'nebbia', iniziale: st.scena.nebbia.coperti, da: q, a: q };
-      if (N.strumento === 'pennello') {
-        const g = st.scena.griglia;
-        st.scena = nebbiaProvvisoria(st.scena, tratto(daBase64(st.scena.nebbia.coperti), g.colonne, g.righe, q, q, N.lato, valoreModo(N.modo)));
-        ridisegna(['aree']);
-      } else ridisegna(['sopra']);
+      st.trascina = { ...base, modo: 'disegno', ...d, iniziale: d.gruppo === 'nebbia' ? { nebbia: st.scena.nebbia.coperti } : { muri: st.scena.muri, terreno: st.scena.terreno }, da: q, a: q };
+      if (d.forma === 'pennello') { passoPennello(q, q); ridisegna(['aree']); } else ridisegna(['sopra']);
       return;
     }
     const tok = !st.spazio && st.strumento !== 'calibra' ? tokenSotto(m) : null;
@@ -669,32 +879,43 @@ export function renderMappa(radice, ctx) {
     if (modo === 'calibra') st.calibrazione = { a: m, b: null };
     if (tok) {
       const c = centroToken(st.scena.griglia, tok);
-      Object.assign(st.trascina, { token: tok.id, q: tok.q, dx: m.x - c.x, dy: m.y - c.y, ingombro: tok.ingombro });
+      // l'area del token trascinato: il trascinamento si aggancia solo dentro (Maiusc per uscire)
+      Object.assign(st.trascina, { token: tok.id, q: tok.q, dx: m.x - c.x, dy: m.y - c.y, ingombro: tok.ingombro, info: infoArea(tok) });
     }
     el.riquadro.classList.toggle('trascina', modo !== 'calibra');
   };
+  /** Un passo del pennello (nebbia o muri) da a ad b, senza voce di «annulla» (la voce arriva al rilascio). */
+  function passoPennello(a, b) {
+    if (st.trascina?.gruppo === 'muri') st.scena = muriProvvisori(st.scena, trattoMuri(st.scena, a, b, M.lato, M.modo));
+    else {
+      const g = st.scena.griglia;
+      st.scena = nebbiaProvvisoria(st.scena, tratto(daBase64(st.scena.nebbia.coperti), g.colonne, g.righe, a, b, N.lato, valoreModo(N.modo)));
+    }
+  }
   const muovi = (e, p, mio) => {
     const t = st.trascina;
     if (!t || !mio) { suggerisci(e); return; }
     if (!t.mosso && Math.hypot(p.x - t.x0, p.y - t.y0) < TRASCINAMENTO_MINIMO_PX) return;
     t.mosso = true;
     if (t.modo === 'sposta') cambiaCamera(sposta(st.cam, p.x - t.x, p.y - t.y));
-    else if (t.modo === 'nebbia') {
+    else if (t.modo === 'disegno') {
       const q = qVicino(mappaDaSchermo(st.cam, p.x, p.y));
       if (q[0] !== t.a[0] || q[1] !== t.a[1]) {
-        if (N.strumento === 'pennello') {
-          const g = st.scena.griglia;
-          st.scena = nebbiaProvvisoria(st.scena, tratto(daBase64(st.scena.nebbia.coperti), g.colonne, g.righe, t.a, q, N.lato, valoreModo(N.modo)));
-          t.a = q;
-          ridisegna(['aree']);
-        } else { t.a = q; ridisegna(['sopra']); }
+        if (t.forma === 'pennello') { passoPennello(t.a, q); t.a = q; ridisegna(['aree']); } else { t.a = q; ridisegna(['sopra']); }
       }
     } else if (t.modo === 'token') {
-      // §7: il token resta sempre al centro di un quadretto anche mentre si trascina (nessuna regola di movimento:
-      // arrivano nel lotto 5)
+      // §7 e §8: sempre al centro di un quadretto; dentro l'area raggiungibile, o dove si vuole con Maiusc
       const m = mappaDaSchermo(st.cam, p.x, p.y);
-      const q = agganciaQ(st.scena.griglia, m.x - t.dx, m.y - t.dy, t.ingombro);
-      if (q[0] !== t.q[0] || q[1] !== t.q[1]) { t.q = q; ridisegna(['sopra']); }
+      const puntata = agganciaQ(st.scena.griglia, m.x - t.dx, m.y - t.dy, t.ingombro);
+      const libero = e.shiftKey || !t.info?.area;
+      // fuori dall'area il token resta sulla posizione raggiungibile più vicina al puntatore
+      const q = libero ? puntata : piuVicinaRaggiungibile(t.info.area, puntata, t.info.limite) ?? t.q;
+      if (q[0] !== t.q[0] || q[1] !== t.q[1] || t.libero !== libero) {
+        t.q = q;
+        t.libero = libero;
+        st.percorso = libero ? null : { punti: percorso(t.info.area, q), costo: costoVerso(t.info.area, q), ingombro: t.ingombro, fascia: fasciaDi(costoVerso(t.info.area, q), t.info.rimaste) };
+        ridisegna(['sopra']);
+      }
     } else { st.calibrazione.b = mappaDaSchermo(st.cam, p.x, p.y); ridisegna(['sopra']); }
     t.x = p.x; t.y = p.y;
   };
@@ -705,9 +926,10 @@ export function renderMappa(radice, ctx) {
     st.trascina = null;
     el.riquadro.classList.remove('trascina');
     if (annullato) { annullaGesto(t); return true; }
-    if (t.modo === 'nebbia') {
-      st.scena = N.strumento === 'rettangolo' ? rettangoloNebbia(st.scena, t.da, t.a, N.modo, ctx.dati) : chiudiPennellata(st.scena, t.iniziale, ctx.dati);
-      dopoNebbia();
+    if (t.modo === 'disegno') {
+      if (t.gruppo === 'nebbia') st.scena = t.forma === 'rettangolo' ? rettangoloNebbia(st.scena, t.da, t.a, N.modo, ctx.dati) : chiudiPennellata(st.scena, t.iniziale.nebbia, ctx.dati);
+      else st.scena = t.forma === 'rettangolo' ? rettangoloMuri(st.scena, t.da, t.a, M.modo, ctx.dati) : chiudiTrattoMuri(st.scena, t.iniziale, ctx.dati);
+      dopoDisegno();
       return true;
     }
     if (t.modo === 'calibra') {
@@ -717,26 +939,39 @@ export function renderMappa(radice, ctx) {
     }
     if (t.modo === 'token') {
       const tok = st.scena.token.find((x) => x.id === t.token);
+      st.percorso = null;
       if (!tok) { ridisegna(['sopra']); return true; }
       if (t.mosso) {
-        if (tok.q[0] !== t.q[0] || tok.q[1] !== t.q[1]) cambiaToken(tok.id, (x) => ({ ...x, q: t.q }), { controllaSovrapposti: true });
-        else ridisegna(['sopra']);
+        if (!eseguiMovimento(tok, t.q, { libero: !!t.libero, info: t.info })) ridisegna(['sopra']);
       } else {
-        // clic: si sceglie il token e si apre la sua carta nella plancia
+        // clic: si sceglie il token, compare la sua area e si apre la sua carta accanto alla mappa
         scegli(tok.id);
         apriCarta(tok);
       }
       return true;
     }
-    if (!t.mosso && st.selezionato) scegli(null);
+    // clic su un quadretto con un token scelto: dentro l'area (o con Maiusc) il token ci va; altrimenti si deseleziona
+    if (!t.mosso && st.selezionato) {
+      const tok = st.scena.token.find((x) => x.id === st.selezionato);
+      const info = areaScelta();
+      if (tok && info) {
+        const q = posizioneVerso(tok, mappaDaSchermo(st.cam, p.x, p.y));
+        if (e.shiftKey || costoDentro(info, q) < Infinity) { eseguiMovimento(tok, q, { libero: e.shiftKey, info }); return true; }
+      }
+      scegli(null);
+    }
     return t.mosso;
   };
   /** Il gesto di un dito si interrompe (arriva il secondo dito): niente resta a metà. */
   function annullaGesto(t = st.trascina) {
     st.trascina = null;
+    st.percorso = null;
     el.riquadro.classList.remove('trascina');
     if (!t) return;
-    if (t.modo === 'nebbia' && t.iniziale) { st.scena = { ...st.scena, nebbia: { ...st.scena.nebbia, coperti: t.iniziale } }; ridisegna(['aree', 'sopra']); }
+    if (t.modo === 'disegno' && t.iniziale) {
+      st.scena = t.gruppo === 'nebbia' ? { ...st.scena, nebbia: { ...st.scena.nebbia, coperti: t.iniziale.nebbia } } : { ...st.scena, muri: t.iniziale.muri, terreno: t.iniziale.terreno };
+      ridisegna(['aree', 'sopra']);
+    }
     if (t.modo === 'calibra') st.calibrazione = null;
     ridisegna(['sopra']);
   }
@@ -745,12 +980,15 @@ export function renderMappa(radice, ctx) {
     return ordine.reverse().find((t) => tokenSottoPunto(st.scena.griglia, t, m.x, m.y)) ?? null;
   };
   const pezzoDi = (t) => st.mappaPezzi.get(chiaveRif(t.rif)) ?? null;
-  // nome, PV e Stati al passaggio del mouse
+  // nome, PV e Stati al passaggio del mouse; con un token scelto, il percorso verso il quadretto sotto il puntatore
   const nascondiSuggerimento = () => { el.suggerimento.hidden = true; };
   const suggerisci = (e) => {
-    if (!st.scena || e.pointerType !== 'mouse') return nascondiSuggerimento();
+    if (!st.scena) return nascondiSuggerimento();
     const p = punto(e);
-    const t = tokenSotto(mappaDaSchermo(st.cam, p.x, p.y));
+    const m = mappaDaSchermo(st.cam, p.x, p.y);
+    aggiornaPercorso(m);
+    if (e.pointerType !== 'mouse') return nascondiSuggerimento();
+    const t = tokenSotto(m);
     if (!t) return nascondiSuggerimento();
     const pz = pezzoDi(t);
     const righe = [pz?.nome ?? t.nome ?? t.id,
@@ -762,7 +1000,22 @@ export function renderMappa(radice, ctx) {
     el.suggerimento.style.top = `${p.y + 16}px`;
     el.suggerimento.hidden = false;
   };
-  const suEsce = () => nascondiSuggerimento();
+  /** Percorso mostrato mentre il puntatore passa sopra l'area del token scelto. */
+  function aggiornaPercorso(m) {
+    const info = areaScelta();
+    const tok = info ? st.scena.token.find((x) => x.id === info.token) : null;
+    let nuovo = null;
+    if (tok && info.area) {
+      const q = posizioneVerso(tok, m);
+      const costo = costoDentro(info, q);
+      if (costo < Infinity && (q[0] !== tok.q[0] || q[1] !== tok.q[1])) nuovo = { punti: percorso(info.area, q), costo, ingombro: tok.ingombro, fascia: fasciaDi(costo, info.rimaste), q };
+    }
+    const prima = st.percorso?.q?.join() ?? null;
+    if ((nuovo?.q?.join() ?? null) === prima) return;
+    st.percorso = nuovo;
+    ridisegna(['sopra']);
+  }
+  const suEsce = () => { nascondiSuggerimento(); if (st.percorso && !st.trascina) { st.percorso = null; ridisegna(['sopra']); } };
   // trascinamento dall'elenco dei pezzi senza token
   const suSopra = (e) => { if ([...e.dataTransfer.types].includes(TIPO_TRASCINA)) { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; } };
   const suLascia = (e) => {
@@ -772,18 +1025,40 @@ export function renderMappa(radice, ctx) {
     const p = punto(e);
     piazza(chiave, mappaDaSchermo(st.cam, p.x, p.y));
   };
+  /** Clic destro sul token (§12): Passo / Corri / Scatta, Annulla ultimo movimento, Nascondi, Carta, Togli. */
+  const suMenu = (e) => {
+    if (!st.scena) return;
+    e.preventDefault();
+    const p = punto(e);
+    const tok = tokenSotto(mappaDaSchermo(st.cam, p.x, p.y));
+    if (!tok) { chiudiMenuToken(); return; }
+    if (st.selezionato !== tok.id) scegli(tok.id);
+    const pz = pezzoDi(tok);
+    const mov = pz?.movimento;
+    const ultimo = st.scena.movimenti.some((x) => x.token === tok.id);
+    apriMenuToken(el.riquadro, p.x, p.y, pz?.nome ?? tok.nome ?? tok.id, [
+      { testo: 'Passo', azione: () => cambiaFascia(1), scelta: st.fascia === 1, disabilitata: !mov },
+      { testo: 'Corri', azione: () => cambiaFascia(2), scelta: st.fascia === 2, disabilitata: !Number.isFinite(mov?.corsa), titolo: 'Amplia l’area fino alla Corsa' },
+      { testo: 'Scatta', azione: () => cambiaFascia(3), scelta: st.fascia === 3, disabilitata: !Number.isFinite(mov?.scatto), titolo: 'Amplia l’area fino allo Scatto' },
+      { testo: 'Annulla ultimo movimento', azione: () => annullaMovimentoUi(tok.id), disabilitata: !ultimo },
+      null,
+      { testo: tok.nascosto ? 'Mostra ai giocatori' : 'Nascondi ai giocatori', azione: () => cambiaToken(tok.id, (x) => ({ ...x, nascosto: !x.nascosto })) },
+      { testo: 'Carta', azione: () => apriCarta(tok), disabilitata: !pz },
+      { testo: 'Togli dalla mappa', azione: () => togliToken(tok.id) },
+    ]);
+  };
   const suTasto = (e) => {
     if (inCampo(e)) return;
-    // Ctrl+Z (lotto 4): annulla l'ultima modifica della nebbia
-    if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === 'z') { e.preventDefault(); if (st.scena) annullaNebbiaUi(); return; }
+    // Ctrl+Z (lotto 5): annulla l'ultima azione del master (movimento, muro, nebbia, token messo o tolto)
+    if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === 'z') { e.preventDefault(); if (st.scena) annullaUi(); return; }
     if (e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.key === '+' || e.key === '=' || e.code === 'NumpadAdd') { e.preventDefault(); zoomCentro(V.passo_tasti); } else if (e.key === '-' || e.code === 'NumpadSubtract') { e.preventDefault(); zoomCentro(1 / V.passo_tasti); } else if (e.code === 'Space') {
       e.preventDefault(); // niente scorrimento della pagina
       if (!st.spazio) { st.spazio = true; el.riquadro.classList.add('spazio'); }
     } else if (e.key === 'Escape') {
-      if (st.strumento === 'calibra') impostaStrumento('sposta');
-      else if (N.strumento) strumentoNebbia(null);
-      else if (st.daPiazzare) { st.daPiazzare = null; el.riquadro.classList.remove('piazza'); disegnaPannelli(); } else if (st.cartaAperta) chiudiCarta(); else if (st.selezionato) scegli(null);
+      if (menuAperto()) chiudiMenuToken();
+      else if (st.strumento === 'calibra') impostaStrumento('sposta');
+      else if (disegnoAttivo()) { N.strumento = null; M.strumento = null; dopoStrumento(); } else if (st.daPiazzare) { st.daPiazzare = null; el.riquadro.classList.remove('piazza'); disegnaPannelli(); } else if (st.cartaAperta) chiudiCarta(); else if (st.selezionato) scegli(null);
     }
   };
   const suRilasciaTasto = (e) => {
@@ -792,12 +1067,13 @@ export function renderMappa(radice, ctx) {
   const gesti = creaGesti(el.riquadro, {
     vista: V, camera: () => st.cam, cambiaCamera, adatta: adattaSchermo,
     premi, muovi, rilascia, annulla: () => annullaGesto(),
-    // doppio clic del mouse: «Adatta» solo su un punto vuoto e senza strumenti attivi
-    vuoto: (p) => !N.strumento && st.strumento !== 'calibra' && !!st.scena && !tokenSotto(mappaDaSchermo(st.cam, p.x, p.y)),
+    // doppio clic del mouse: «Adatta» solo su un punto vuoto, senza strumenti attivi e senza un token scelto
+    vuoto: (p) => !disegnoAttivo() && st.strumento !== 'calibra' && !!st.scena && !st.selezionato && !tokenSotto(mappaDaSchermo(st.cam, p.x, p.y)),
   });
   el.riquadro.addEventListener('pointerleave', suEsce);
   el.riquadro.addEventListener('dragover', suSopra);
   el.riquadro.addEventListener('drop', suLascia);
+  el.riquadro.addEventListener('contextmenu', suMenu);
   window.addEventListener('keydown', suTasto);
   window.addEventListener('keyup', suRilasciaTasto);
 
@@ -853,6 +1129,7 @@ export function renderMappa(radice, ctx) {
     if (vista?.selezionato && st.scena.token.some((t) => t.id === vista.selezionato)) st.selezionato = vista.selezionato;
     await Promise.all([aggiornaFonti(), leggiScelta()]);
     disegnaPannelloNebbia();
+    disegnaPannelloMuri();
     disegnaPannelloGiocatori();
     if (vista?.carta) { const t = st.scena.token.find((x) => chiaveRif(x.rif) === vista.carta); if (t) apriCarta(t); }
   }).catch((e) => {
@@ -873,6 +1150,7 @@ export function renderMappa(radice, ctx) {
     clearInterval(giro);
     if (st.salvataggio.modificata) salvaOra();
     gesti.distruggi();
+    chiudiMenuToken();
     st.plancia?.();
     window.removeEventListener('keydown', suTasto);
     window.removeEventListener('keyup', suRilasciaTasto);

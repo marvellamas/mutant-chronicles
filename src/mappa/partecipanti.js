@@ -9,11 +9,33 @@
 // Funzioni pure.
 import { diTurno } from '../scontro.js';
 import { stessaChiave, partecipanteConducente } from '../veicoli-registro.js';
-import { profiloVeicolo } from '../veicoli.js';
+import { profiloVeicolo, movimentoMassimo } from '../veicoli.js';
 import { ingombroDaTaglia, ingombroVeicolo, iniziali, chiaveRif } from './token.js';
 
 /** Immagine del nemico sul token (A.131): la copia ridotta in mappe/, se c'è; altrimenti le iniziali. */
 export const urlImmagineNemico = (immagine) => (immagine?.file ? `api/mappe/${encodeURIComponent(immagine.ridotta ?? immagine.file)}` : null);
+
+/**
+ * Passo, Corsa e Scatto di un nemico (lotto 5): dal profilo (A.73: Corsa e Scatto, se mancano, il doppio e il triplo
+ * del Passo da formato_nemici.json → campi.movimento.moltiplicatori; «non_consentito»: null), poi gli Stati con effetto
+ * sul movimento (regole.json → stati.elenco[].movimento: nessuno, solo Passo, Passo massimo).
+ */
+export function movimentoNemico(scheda, stati, dati) {
+  const m = scheda?.movimento ?? {};
+  const molt = dati?.formato_nemici?.campi?.movimento?.moltiplicatori ?? { corsa: 2, scatto: 3 };
+  const passo = Number.isInteger(m.passo) ? m.passo : 0;
+  const altro = (k) => (m[k] === 'non_consentito' ? null : Number.isInteger(m[k]) ? m[k] : passo * molt[k]);
+  const r = { passo, corsa: altro('corsa'), scatto: altro('scatto') };
+  const elenco = dati?.regole?.stati?.elenco ?? [];
+  for (const id of stati ?? []) {
+    const e = elenco.find((x) => x.id === id)?.movimento;
+    if (!e) continue;
+    if (e.nessuno) { r.passo = 0; r.corsa = null; r.scatto = null; }
+    if (e.solo_passo) { r.corsa = null; r.scatto = null; }
+    if (Number.isInteger(e.passo_q)) r.passo = Math.min(r.passo, e.passo_q);
+  }
+  return r;
+}
 
 const nomeStato = (dati) => {
   const elenco = dati?.regole?.stati?.elenco ?? [];
@@ -34,6 +56,8 @@ function pezzoPg(id, chiave, nomeScontro, lato, viste) {
     nome: v?.nome ?? nomeScontro ?? chiave, lato: lato === 'avversario' ? 'avversario' : 'pg', ingombro: 1,
     iniziali: iniziali(v?.nome ?? nomeScontro ?? chiave), ritratto: v?.ritratto ?? null, pv,
     aZero: pv ? pv.attuali <= 0 : false, stati: v?.completa ? v.stati : [], ferite: v?.completa ? v.ferite?.nome ?? null : null,
+    // lotto 5: Passo, Corsa e Scatto effettivi dalla scheda (null finché la scheda non si legge)
+    movimento: v?.completa && v.movimento ? { ...v.movimento } : null,
   };
 }
 
@@ -44,6 +68,7 @@ function pezzoNemico(p, dati) {
     nome: p.nome, lato: p.lato === 'alleato' ? 'alleato' : 'avversario', ingombro: ingombroDaTaglia(p.scheda?.taglia, dati),
     iniziali: iniziali(p.scheda?.nome ?? p.nome, p.numero ?? null), ritratto: urlImmagineNemico(p.scheda?.immagine), pv: p.pv ?? null,
     aZero: (p.pv?.attuali ?? 1) <= 0, stati: (p.stati ?? []).map(stato), ferite: null,
+    movimento: movimentoNemico(p.scheda, p.stati, dati),
   };
 }
 
@@ -51,7 +76,7 @@ function pezzoManuale(p) {
   return {
     chiave: chiaveRif({ tipo: 'partecipante', id: p.id }), rif: { tipo: 'partecipante', id: p.id }, tipo: 'manuale',
     nome: p.nome, lato: p.lato === 'alleato' ? 'alleato' : 'avversario', ingombro: 1, iniziali: iniziali(p.nome),
-    ritratto: null, pv: null, aZero: false, stati: [], ferite: null,
+    ritratto: null, pv: null, aZero: false, stati: [], ferite: null, movimento: null,
   };
 }
 
@@ -102,6 +127,10 @@ export function pezziDellaScena({ scontro = null, bozza = null, alTavolo = [], v
       chiave: chiaveRif({ tipo: 'veicolo', id: rec.id }), rif: { tipo: 'veicolo', id: rec.id }, tipo: 'veicolo', nome,
       lato: 'pg', ingombro: ingombroVeicolo(profilo, dati), iniziali: iniziali(nome), ritratto: null, pv: null, aZero: false,
       stati: [], ferite: null, conducente: rec.conducente?.nome ?? null,
+      // lotto 5: un solo movimento per Round, all'Iniziativa del conducente (A.105), lungo quanto l'andatura del
+      // record unico (Veicoli §2.1: MOV × andatura); niente Corsa né Scatto
+      movimento: profilo ? { passo: movimentoMassimo(profilo, rec.mezzo?.andatura ?? 'controllata', dati).q, corsa: null, scatto: null } : null,
+      andatura: rec.mezzo?.andatura ?? 'controllata',
       // A.105: il mezzo si muove all'Iniziativa del conducente
       diTurno: Boolean(guida && turno === guida.id),
     });

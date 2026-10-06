@@ -49,6 +49,9 @@ export function vistaPlancia(testo, dati, file = null, round = null) {
     pe: { attuali: sessione.puntiEroe, massimo: massimi.puntiEroe },
     // Iniziativa effettiva (src/condizioni.js → valoriTavolo) e le Caratteristiche per la parità (§5.1)
     iniziativa: { valore: scheda.tavolo?.iniziativa?.effettivo ?? scheda.iniziativa, provenienza: scheda.tavolo?.iniziativa?.provenienza ?? null },
+    // Passo, Corsa e Scatto effettivi (armatura, carico, Stati, Tecniche: src/condizioni.js → valoriTavolo), null se
+    // non disponibili: l'area raggiungibile della mappa di battaglia (lotto 5)
+    movimento: Object.fromEntries(['passo', 'corsa', 'scatto'].map((m) => [m, scheda.tavolo?.movimento?.[m] ? scheda.tavolo.movimento[m].effettivo : (scheda.movimento?.[m] ?? null)])),
     caratteristichePerParita: Object.fromEntries((r.iniziativa?.caratteristiche ?? []).map((k) => [k, scheda.caratteristiche[k]?.valore ?? null])),
     // AR al tavolo (src/condizioni.js): il valore principale e gli altri (contro Etereo, esplosioni)
     ar: ar ? { totale: ar.totale, magica: ar.magica, valori: (ar.valori ?? []).map((v) => ({ id: v.id, etichetta: v.etichetta, valore: v.valore, principale: !!v.principale, provenienza: v.provenienza })) } : null,

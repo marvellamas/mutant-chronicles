@@ -99,6 +99,8 @@
     "costo_diagonale": 1,
     "TODO(Davide) diagonali": "A.124: una diagonale costa 1 Q (misura dell'app EROI & LEGGENDE, provvisoria) o si alterna 1/2/1? Con la risposta cambia solo costo_diagonale o diagonali_alterne.",
     "diagonali_alterne": false,
+    "taglio_angoli_muri": false,
+    "TODO(Davide) angoli": "A.124: in diagonale si può passare accanto allo spigolo di un muro? Provvisorio: no, una diagonale vuole liberi dai muri anche i due quadretti ai lati.",
     "terreno_difficile_moltiplicatore": 2,
     "TODO(Davide) terreno": "A.128: quanto costa un Q di terreno difficile (il doppio, provvisorio) e vale anche per Corsa e Scatto?",
     "attraversa_alleati": true,

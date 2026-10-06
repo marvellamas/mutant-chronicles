@@ -1,0 +1,112 @@
+// Pila «annulla» della scena e movimenti dei token (lotto 5 di docs/battlemap/piano.md; §8 e §12 della specifica).
+// Ctrl+Z annulla l'ultima azione del master, qualunque sia: nebbia, muri, movimento, token messo, tolto o cambiato.
+// «Annulla ultimo movimento» riporta indietro l'ultimo movimento di un token. Annullare non rompe la coerenza con lo
+// scontro: un token tolto non torna se il suo partecipante non c'è più.
+// Voci della pila (scena.annulla, al più data/mappa.json → scena.annulla_max):
+//   { tipo: 'nebbia', tratti }                      src/mappa/nebbia.js
+//   { tipo: 'muri', muri, terreno }                 src/mappa/muri.js
+//   { tipo: 'movimento', movimento: id, token, da, a }
+//   { tipo: 'token', id, prima, dopo }              prima null: messo; dopo null: tolto; tutti e due: cambiato
+// Movimenti (scena.movimenti, al più scena.movimenti_max): { id, token, scontro, round, da, a, costo, fascia, libero, quando }.
+// Funzioni pure.
+import { daBase64, inBase64 } from './celle.js';
+import { inverti } from './nebbia.js';
+import { chiaveRif } from './token.js';
+
+const conVoce = (scena, voce, dati) => ({ ...scena, annulla: [...scena.annulla, voce].slice(-dati.mappa.scena.annulla_max) });
+
+/** Un token messo, tolto o cambiato dal master, con la voce per Ctrl+Z. `prima` null: messo; `dopo` null: tolto. */
+export function cambiaTokenAnnullabile(scena, prima, dopo, dati, adesso = new Date()) {
+  const id = (dopo ?? prima).id;
+  let token = scena.token.filter((t) => t.id !== id);
+  if (dopo) {
+    const i = scena.token.findIndex((t) => t.id === id);
+    token = i >= 0 ? scena.token.map((t) => (t.id === id ? dopo : t)) : [...scena.token, dopo];
+  }
+  return conVoce({ ...scena, token }, { tipo: 'token', id, prima, dopo, quando: adesso.toISOString() }, dati);
+}
+
+/**
+ * Movimento di un token (§8): la posizione nuova, il movimento registrato nel Round dello scontro e la voce per Ctrl+Z.
+ * @param m { a: [x, y], costo: Q spesi (null se fuori area), fascia, scontro, round, libero: mosso fuori area con Maiusc }
+ */
+export function muoviToken(scena, idToken, m, dati, adesso = new Date()) {
+  const t = scena.token.find((x) => x.id === idToken);
+  if (!t) throw new Error('token non trovato');
+  const id = `m${adesso.getTime().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
+  const mov = { id, token: idToken, scontro: m.scontro ?? null, round: m.round ?? null, da: [...t.q], a: [...m.a], costo: m.costo ?? null, fascia: m.fascia ?? null, libero: !!m.libero, quando: adesso.toISOString() };
+  // la coda dei movimenti si accorcia togliendo prima quelli di altri Round
+  let movimenti = [...scena.movimenti, mov];
+  const max = dati.mappa.scena.movimenti_max;
+  if (movimenti.length > max) {
+    const vecchi = movimenti.filter((x) => x.scontro !== mov.scontro || x.round !== mov.round);
+    const togli = new Set(vecchi.slice(0, movimenti.length - max).map((x) => x.id));
+    movimenti = movimenti.filter((x) => !togli.has(x.id)).slice(-max);
+  }
+  const s = { ...scena, token: scena.token.map((x) => (x.id === idToken ? { ...x, q: [...m.a] } : x)), movimenti };
+  return conVoce(s, { tipo: 'movimento', movimento: id, token: idToken, da: [...t.q], a: [...m.a], quando: adesso.toISOString() }, dati);
+}
+
+/**
+ * Q già usati da un token nel Round dello scontro (movimento diviso, TODO(Davide) A.129: provvisorio sì). Senza
+ * scontro (scena collegata a una bozza) non si conta: 0.
+ */
+export function usatoNelRound(scena, idToken, scontro, round) {
+  if (!scontro || round === null || round === undefined) return 0;
+  return scena.movimenti.filter((x) => x.token === idToken && x.scontro === scontro && x.round === round && !x.libero)
+    .reduce((s, x) => s + (x.costo ?? 0), 0);
+}
+
+/** Il token ha già fatto un movimento in questo Round? (veicoli: uno solo per Round, A.105) */
+export const mossoNelRound = (scena, idToken, scontro, round) => !!scontro && scena.movimenti.some((x) => x.token === idToken && x.scontro === scontro && x.round === round);
+
+/** Annulla un movimento: il token torna dov'era e il movimento esce dal Round. */
+function annullaMovimento(scena, idMovimento) {
+  const mov = scena.movimenti.find((x) => x.id === idMovimento);
+  if (!mov) return { errore: 'movimento non più registrato' };
+  const t = scena.token.find((x) => x.id === mov.token);
+  if (!t) return { errore: 'il token non è più sulla mappa' };
+  return { scena: { ...scena, token: scena.token.map((x) => (x.id === mov.token ? { ...x, q: [...mov.da] } : x)), movimenti: scena.movimenti.filter((x) => x.id !== idMovimento) } };
+}
+
+/**
+ * Ctrl+Z: annulla l'ultima voce della pila. `chiaviPresenti`: chiavi dei pezzi ancora nello scontro (src/mappa/
+ * partecipanti.js), per non rimettere in mappa un token il cui partecipante è uscito.
+ * @returns { scena, voce, testo } oppure null se non c'è nulla da annullare; una voce che non si può più applicare
+ *   esce dalla pila con { scena, voce, errore }.
+ */
+export function annullaUltima(scena, { chiaviPresenti = null } = {}) {
+  const voce = scena.annulla.at(-1);
+  if (!voce) return null;
+  const senza = { ...scena, annulla: scena.annulla.slice(0, -1) };
+  switch (voce.tipo) {
+    case 'nebbia':
+      return { scena: { ...senza, nebbia: { ...senza.nebbia, coperti: inBase64(inverti(daBase64(senza.nebbia.coperti), voce.tratti)) } }, voce, testo: 'nebbia' };
+    case 'muri':
+      return { scena: { ...senza, muri: inBase64(inverti(daBase64(senza.muri), voce.muri)), terreno: inBase64(inverti(daBase64(senza.terreno), voce.terreno)) }, voce, testo: 'muri' };
+    case 'movimento': {
+      const r = annullaMovimento(senza, voce.movimento);
+      return r.errore ? { scena: senza, voce, errore: r.errore } : { scena: r.scena, voce, testo: 'movimento' };
+    }
+    case 'token': {
+      if (voce.prima && chiaviPresenti && voce.prima.rif?.tipo !== 'segnaposto' && !chiaviPresenti.has(chiaveRif(voce.prima.rif))) {
+        return { scena: senza, voce, errore: 'il suo partecipante non è più nello scontro' };
+      }
+      // il token torna com'era (cambiato), torna in mappa (tolto) o esce (messo)
+      let token = senza.token.filter((t) => t.id !== voce.id);
+      if (voce.prima) token = [...token, voce.prima];
+      return { scena: { ...senza, token }, voce, testo: voce.prima && voce.dopo ? 'token' : voce.prima ? 'token tolto' : 'token messo' };
+    }
+    default:
+      return { scena: senza, voce, errore: `voce sconosciuta: ${voce.tipo}` };
+  }
+}
+
+/** «Annulla ultimo movimento» di un token: l'ultimo suo movimento, anche se nella pila c'è altro dopo. */
+export function annullaUltimoMovimento(scena, idToken) {
+  const mov = [...scena.movimenti].reverse().find((x) => x.token === idToken);
+  if (!mov) return null;
+  const r = annullaMovimento(scena, mov.id);
+  if (r.errore) return r;
+  return { scena: { ...r.scena, annulla: r.scena.annulla.filter((v) => !(v.tipo === 'movimento' && v.movimento === mov.id)) }, movimento: mov };
+}

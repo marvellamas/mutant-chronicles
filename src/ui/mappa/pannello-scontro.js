@@ -75,6 +75,7 @@ export function sezioneToken(t, p, dati, a) {
         dati.mappa.token.ingombri_ammessi.map((n) => h('option', { value: String(n), selected: t.ingombro === n }, `${n} × ${n} Q${n === p?.ingombro ? ' (dalla Taglia)' : ''}`))),
       h('small', { class: 'nota' }, 'Il 3 × 3 solo se indicato (A.126).'))
       : h('p', { class: 'nota' }, `Ingombro ${testoIngombro(t.ingombro)} dal profilo del veicolo.`),
+    sezioneMovimento(a.mov, a),
     h('div', { class: 'mappa-azioni-token' },
       h('button', { type: 'button', class: 'btn btn-piccolo', title: t.nascosto ? 'I giocatori lo vedranno' : 'Solo il master lo vede', onclick: a.nascondi }, t.nascosto ? 'Mostra' : 'Nascondi'),
       h('button', { type: 'button', class: 'btn btn-piccolo', title: 'La carta nella plancia intera, con «Torna alla mappa»', onclick: a.carta, disabled: !p }, 'Apri nella plancia'),
@@ -82,4 +83,31 @@ export function sezioneToken(t, p, dati, a) {
       p?.tipo === 'nemico' ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Immagine del token per tutte le copie di questo nemico e, se c’è, nel bestiario', onclick: a.immagine }, p.ritratto ? 'Cambia immagine…' : 'Immagine…') : null,
       p?.tipo === 'nemico' && p.ritratto ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Torna alle iniziali', onclick: a.togliImmagine }, 'Togli immagine') : null,
       h('button', { type: 'button', class: 'btn btn-piccolo pericolo', title: 'Il pezzo torna fra quelli senza token', onclick: a.togli }, 'Togli dalla mappa')));
+}
+
+const q = (n) => `${String(n).replace('.', ',')} Q`;
+
+/**
+ * Movimento del token scelto (lotto 5, §8): Passo, Corri e Scatta (l'area raggiungibile in tre colori), quanto ha già
+ * usato nel Round, «Annulla ultimo movimento». Regole provvisorie in data/mappa.json → movimento (A.124, A.127–A.129).
+ * @param m { movimento: { passo, corsa, scatto }, rimaste, usato, fascia, motivo, annullabile, veicolo, andatura }
+ */
+function sezioneMovimento(m, a) {
+  if (!m) return null;
+  const mov = m.movimento;
+  const fasce = [['Passo', 1, mov?.passo], ['Corri', 2, mov?.corsa], ['Scatta', 3, mov?.scatto]];
+  return h('div', { class: 'mappa-movimento' },
+    h('p', { class: 'nota' }, mov
+      ? (m.veicolo
+        ? `${q(mov.passo)} all’andatura ${m.andatura ?? '—'}, una volta per Round all’Iniziativa del conducente.`
+        : `Passo ${q(mov.passo)}${Number.isFinite(mov.corsa) ? ` · Corsa ${q(mov.corsa)}` : ''}${Number.isFinite(mov.scatto) ? ` · Scatto ${q(mov.scatto)}` : ''}${m.usato ? ` · già usati ${q(m.usato)} nel Round` : ''}.`)
+      : 'Nessun profilo di movimento: si sposta solo con Maiusc.'),
+    m.motivo ? h('p', { class: 'nota motivo-movimento' }, `Area: ${m.motivo}. Con Maiusc il master lo sposta comunque.`) : null,
+    mov && !m.veicolo ? h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Area raggiungibile' },
+      fasce.map(([testo, n, v]) => h('button', {
+        type: 'button', class: `btn btn-piccolo fascia-${n}${m.fascia === n ? ' scelto' : ''}`, 'aria-pressed': String(m.fascia === n),
+        disabled: !Number.isFinite(v), title: Number.isFinite(v) ? `Area fino ${testo === 'Passo' ? 'al Passo' : testo === 'Corri' ? 'alla Corsa' : 'allo Scatto'}` : 'Non disponibile',
+        onclick: () => a.fascia(n),
+      }, testo))) : null,
+    h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !m.annullabile, onclick: a.annullaMovimento }, 'Annulla ultimo movimento'));
 }

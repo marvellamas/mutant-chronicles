@@ -2723,7 +2723,7 @@ function validaMappa(dati, err) {
   if (!Array.isArray(vp) || vp.length !== 2 || !vp.every((n) => isIntero(n) && n >= 1 && n <= (T?.veicolo_ingombro_max ?? 0))) err(F, 'token.veicolo_predefinito', '[colonne, righe] interi entro veicolo_ingombro_max');
   const M = m.movimento;
   for (const k of ['costo_ortogonale', 'costo_diagonale', 'terreno_difficile_moltiplicatore']) if (!positivo(M?.[k])) err(F, `movimento.${k}`, 'numero positivo');
-  for (const k of ['diagonali_alterne', 'attraversa_alleati', 'attraversa_avversari', 'fermarsi_su_alleato', 'movimento_diviso']) {
+  for (const k of ['diagonali_alterne', 'taglio_angoli_muri', 'attraversa_alleati', 'attraversa_avversari', 'fermarsi_su_alleato', 'movimento_diviso']) {
     if (typeof M?.[k] !== 'boolean') err(F, `movimento.${k}`, 'vero o falso');
   }
   const fasce = Array.isArray(M?.fasce) ? M.fasce : [];
