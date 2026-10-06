@@ -9,7 +9,9 @@
 //                                    altre cartelle per personaggi, tavolo, scontri, bestiario, veicoli,
 //                                    scene e immagini delle mappe (prove, più campagne)
 // API (JSON):
-//   GET /api/ping                      { ok: true, app: 'mutant', cartella: 'personaggi' }: l'app capisce che il server c'è
+//   GET /api/ping                      { ok: true, app: 'mutant', cartella: 'personaggi', versione, avviato, pid }: l'app
+//                                      capisce che il server c'è; un nuovo avvio riconosce un Mutant già acceso
+//   node server.mjs --sostituisci      se la porta è occupata da un Mutant, lo ferma senza chiedere (avvii senza console)
 //   GET /api/rete                      { porta, soloLocale, indirizzi: [{ nome, indirizzo, url }], altri, tuttiPerDubbio }:
 //                                      gli indirizzi per i giocatori (riquadro «Collega i giocatori» della plancia)
 //   GET /api/personaggi                [{ file, nome, livello, data, mtime, dimensione }] dei file in personaggi/
@@ -61,6 +63,8 @@ import { extname, join, normalize, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { networkInterfaces } from 'node:os';
 import { createHash } from 'node:crypto';
+import { createInterface } from 'node:readline/promises';
+import { chiOccupa, testoDomanda, risposteSi, fermaMutant, sorvegliaFinestra } from './src/porta-occupata.js';
 import { indirizziRete, testoAvvio } from './src/rete.js';
 import { validaScontro } from './src/scontro.js';
 import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
@@ -607,7 +611,6 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
   if (percorso.startsWith('/api/ritratti/')) return apiRitratto(req, res, percorso, cartelle);
   if (percorso === '/api/mappe' || percorso.startsWith('/api/mappe/')) return apiMappe(req, res, percorso, mappe, radice);
   if (percorso === '/api/veicoli' || percorso.startsWith('/api/veicoli/')) return apiVeicoli(req, res, percorso, veicoli);
-  if (percorso === '/api/ping') return json(res, 200, { ok: true, app: 'mutant', cartella: CARTELLA });
   if (percorso === '/api/rete') {
     const porta = req.socket.localPort;
     return json(res, 200, { porta, soloLocale, ...(soloLocale ? { indirizzi: [], altri: [], tuttiPerDubbio: false } : indirizziRete(networkInterfaces(), porta)) });
@@ -753,9 +756,12 @@ export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA),
   // all'avvio, i veicoli ancora nei file dei PG passano nel registro (una sola volta per veicolo)
   const migrazione = migraVeicoliCartella({ cartella, veicoli: migraIn, radice }).catch((e) => ({ errore: e.message }));
   const base = normalize(radice.endsWith(sep) ? radice : radice + sep);
+  // chi è questo server (per un nuovo avvio che trova la porta occupata, src/porta-occupata.js)
+  const identita = { versione: versioneAvvio, avviato: new Date().toISOString(), pid: process.pid };
   const server = createServer(async (req, res) => {
     try {
       const percorso = decodeURI(new URL(req.url, 'http://x').pathname);
+      if (percorso === '/api/ping') return json(res, 200, { ok: true, app: 'mutant', cartella: CARTELLA, ...identita });
       if (percorso.startsWith('/api/')) return await api(req, res, percorso, cartella, tavolo, scontri, nemici, base, soloLocale, veicoli, migraIn, scene, mappe);
       return await statico(req, res, percorso, base, versioneAvvio);
     } catch (e) {
@@ -784,15 +790,46 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const scene = arg('scene') ? normalize(arg('scene')) : join(RADICE, SCENE);
   const mappe = arg('mappe') ? normalize(arg('mappe')) : join(RADICE, MAPPE);
   const server = creaServer({ cartella, tavolo, scontri, nemici, veicoli, scene, mappe, soloLocale });
-  server.listen(porta, host, () => {
+  // si spegne quando si chiude la finestra di avvia-server.bat (o con Ctrl+C), senza restare in ascolto da solo
+  const esci = (perche) => {
+    console.log(`\nMutant si spegne (${perche}).`);
+    server.close();
+    process.exit(0);
+  };
+  for (const segnale of ['SIGINT', 'SIGTERM', 'SIGHUP', 'SIGBREAK']) process.on(segnale, () => esci(segnale));
+  sorvegliaFinestra(esci);
+  const avvia = () => server.listen(porta, host, () => {
     console.log(testoAvvio(indirizziRete(networkInterfaces(), porta), porta, { soloLocale }));
     console.log(`Personaggi salvati in ${cartella}`);
     server.migrazione.then((e) => {
       if (e?.record?.length) console.log(`Veicoli spostati nel registro (veicoli/): ${e.record.join(', ')}.`);
       for (const a of e?.avvisi ?? []) console.log(`Attenzione: ${a}`);
     });
-  }).on('error', (e) => {
-    console.error(e.code === 'EADDRINUSE' ? `La porta ${porta} è già in uso: Mutant è forse già acceso.` : e.message);
-    process.exit(1);
   });
+  server.on('error', async (e) => {
+    if (e.code !== 'EADDRINUSE') { console.error(e.message); process.exit(1); }
+    const chi = await chiOccupa(porta);
+    if (chi.tipo === 'nessuno') { avvia(); return; } // liberata nel frattempo
+    if (chi.tipo !== 'mutant') {
+      console.error(`\nLa porta ${porta} è occupata da ${chi.descrizione}.\nMutant non può partire: chiudi quel programma oppure avvia Mutant su un'altra porta (node server.mjs --porta=3001).`);
+      process.exit(1);
+    }
+    // un Mutant già acceso: si chiede (o si ferma senza chiedere con --sostituisci)
+    let si = process.argv.includes('--sostituisci');
+    if (!si) {
+      if (!process.stdin.isTTY) {
+        console.error(`\n${testoDomanda(chi).replace(/ \[S\/N\] $/, '')}\nSenza una finestra per rispondere non lo fermo: chiudilo, oppure avvia con --sostituisci.`);
+        process.exit(1);
+      }
+      const rl = createInterface({ input: process.stdin, output: process.stdout });
+      si = risposteSi(await rl.question(`\n${testoDomanda(chi)}`));
+      rl.close();
+    }
+    if (!si) { console.log('Va bene: resta acceso quello di prima. Questa finestra si può chiudere.'); process.exit(1); }
+    const esito = await fermaMutant(porta, chi);
+    if (!esito.fermato) { console.error(`Non sono riuscito a fermarlo: ${esito.motivo}. Riavvia il computer o chiudilo da Gestione attività (node.exe).`); process.exit(1); }
+    console.log('Fermato. Riparto…');
+    avvia();
+  });
+  avvia();
 }
