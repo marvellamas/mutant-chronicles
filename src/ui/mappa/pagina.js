@@ -58,6 +58,15 @@ const ATTESA_RIPROVA_MS = 5000; // dopo un errore di rete o del server
 const SCARTO_AVVISO = 0.15; // riquadro tracciato poco quadrato: si avvisa (non si rifiuta)
 const TRASCINAMENTO_MINIMO_PX = 4;
 const INTERVALLO_FONTI_MS = 3000; // come la plancia (src/ui/tavolo.js)
+/** Gruppi della barra accanto alla mappa, nell'ordine (ritocchi del 06/10): chiave, segnalibro, suggerimento. */
+const GRUPPI_BARRA = [
+  ['scheda', 'Mini-scheda', 'Il token scelto: mini-scheda, movimento, Nascondi, Togli'],
+  ['iniziativa', 'Iniziativa', 'Round, «Avanti», ordine d’Iniziativa, tiri da fare'],
+  ['pg', 'PG', 'Le mini-schede dei PG al tavolo e i veicoli'],
+  ['nemici', 'Nemici', 'Le mini-schede dei nemici nello scontro'],
+  ['scontro', 'Scontro', 'Chi è al tavolo, bozze («Prepara scontro»), «Crea nemico», aggiungi nemici, durate, registro, bestiario'],
+  ['mappa', 'Mappa', 'Collegamento, token da mettere, muri, nebbia, vista giocatori, griglia, scene'],
+];
 
 const numero = (n, cifre = 2) => String(Math.round(n * 10 ** cifre) / 10 ** cifre).replace('.', ',');
 const ora = (d = new Date()) => `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
@@ -102,7 +111,6 @@ export function renderMappa(radice, ctx) {
     plancia: null,
     // lotto 6: disposizione della barra (per schermo), scheda della barra, plancia intera nella barra, centrare il turno
     disp: null,
-    scheda: 'scontro',
     planciaBarra: null,
     centra: true,
     turnoVisto: null,
@@ -159,13 +167,21 @@ export function renderMappa(radice, ctx) {
   el.pGiocatori = h('details', { class: 'mappa-sezione mappa-giocatori' });
   // lotto 6: barra dell'Iniziativa in cima; a destra della mappa il bordo da trascinare e la barra (§11)
   el.iniziativa = h('div', { class: 'mappa-iniziativa-posto', hidden: true });
-  el.planciaCorpo = h('div', { class: 'mappa-plancia-corpo' });
-  el.schede = Object.fromEntries([['scontro', 'Scontro'], ['mappa', 'Mappa']].map(([k, t]) => [k, h('button', { type: 'button', role: 'tab', class: 'btn btn-piccolo', title: k === 'scontro' ? 'La plancia: ordine d’Iniziativa, PG, nemici, veicoli, bestiario' : 'Collegamento allo scontro, muri, nebbia, vista giocatori, griglia', onclick: () => scegliScheda(k) }, t)]));
+  // ritocchi del 06/10: la barra a gruppi, con i segnalibri fissi in cima (un clic porta alla sezione, quello attivo è
+  // evidenziato). Ordine: chi si sta muovendo, chi tocca, i PG, i nemici, la gestione dello scontro, gli strumenti
+  // della mappa. La plancia (src/ui/tavolo.js con ctx.inMappa.sezioni) riempie Iniziativa, PG, Nemici, Scontro e le
+  // scene del gruppo Mappa.
+  el.gruppi = Object.fromEntries(GRUPPI_BARRA.map(([k, titolo]) => [k, h('section', { class: 'laterale-sezione', id: `laterale-${k}`, 'aria-label': titolo, dataset: { gruppo: k } },
+    h('h2', { class: 'laterale-titolo' }, titolo))]));
+  el.slot = Object.fromEntries(['iniziativa', 'pg', 'nemici', 'scontro', 'mappa'].map((k) => [k, h('div', { class: `laterale-slot slot-${k}` })]));
+  el.gruppi.scheda.append(el.carta, el.secToken);
+  for (const k of ['iniziativa', 'pg', 'nemici', 'scontro']) el.gruppi[k].append(el.slot[k]);
+  el.gruppi.mappa.append(el.pannello, el.slot.mappa);
+  el.segnalibri = Object.fromEntries(GRUPPI_BARRA.map(([k, titolo, spiega]) => [k, h('button', { type: 'button', class: 'segnalibro', title: spiega, onclick: () => vaiAlGruppo(k) }, titolo)]));
   el.ridotta = h('div', { class: 'laterale-ridotta', 'aria-label': 'Mini-token: clic per la mini-scheda' });
   el.piena = h('div', { class: 'laterale-piena' },
-    el.carta, el.secToken,
-    h('div', { class: 'laterale-schede', role: 'tablist' }, el.schede.scontro, el.schede.mappa),
-    el.planciaCorpo, el.pannello);
+    h('nav', { class: 'laterale-segnalibri', 'aria-label': 'Sezioni della barra' }, GRUPPI_BARRA.map(([k]) => el.segnalibri[k])),
+    GRUPPI_BARRA.map(([k]) => el.gruppi[k]));
   el.laterale = h('aside', { class: 'mappa-laterale', 'aria-label': 'Scontro, mini-scheda e strumenti della mappa' }, el.ridotta, el.piena);
   el.bordo = h('div', { class: 'mappa-bordo', role: 'separator', 'aria-orientation': 'vertical', 'aria-label': 'Bordo fra mappa e barra: trascina per allargare, doppio clic per cambiare disposizione', title: 'Trascina per allargare o stringere la barra; doppio clic: prossima disposizione', tabindex: '0' });
   el.corpo = h('div', { class: 'mappa-corpo' }, el.riquadro, el.bordo, el.laterale);
@@ -633,6 +649,7 @@ export function renderMappa(radice, ctx) {
     // lotto 6: con la barra ridotta il clic su un token la riapre sulla sua mini-scheda (non il cambio di turno)
     if (riapri && st.disp.disposizione === 'mappa') scegliDisposizione('equilibrata');
     el.piena.scrollTop = 0;
+    segnaGruppo('scheda');
     if (st.plancia) st.plancia.ridisegna();
     else {
       st.plancia = renderTavolo(el.cartaCorpo, {
@@ -1209,12 +1226,24 @@ export function renderMappa(radice, ctx) {
     scriviLocale(chiaveDisp, st.disp);
     applicaDisposizione();
   }
-  function scegliScheda(k) {
-    st.scheda = k;
-    el.planciaCorpo.hidden = k !== 'scontro';
-    el.pannello.hidden = k !== 'mappa';
-    for (const [n, b] of Object.entries(el.schede)) { b.classList.toggle('scelto', n === k); b.setAttribute('aria-selected', String(n === k)); }
+  /** Segnalibro: porta alla sezione del gruppo, che diventa quello evidenziato. */
+  function vaiAlGruppo(k) {
+    if (st.disp.disposizione === 'mappa') scegliDisposizione('equilibrata');
+    el.gruppi[k].scrollIntoView({ block: 'start' });
+    segnaGruppo(k);
   }
+  function segnaGruppo(k) {
+    for (const [n, b] of Object.entries(el.segnalibri)) { b.classList.toggle('attivo', n === k); b.setAttribute('aria-current', n === k ? 'true' : 'false'); }
+  }
+  /** Il segnalibro segue lo scorrimento: il gruppo la cui sezione è in cima alla barra. */
+  const suScorriBarra = () => {
+    const cima = el.piena.getBoundingClientRect().top + el.piena.querySelector('.laterale-segnalibri').offsetHeight + 8;
+    let attivo = GRUPPI_BARRA[0][0];
+    for (const [k] of GRUPPI_BARRA) if (el.gruppi[k].getBoundingClientRect().top <= cima) attivo = k;
+    segnaGruppo(attivo);
+  };
+  el.piena.addEventListener('scroll', suScorriBarra, { passive: true });
+
   // il bordo: trascinato allarga o stringe la barra (sotto una certa larghezza torna «Mappa grande»), doppio clic cambia
   const bordo = { attivo: null };
   const suPremiBordo = (e) => {
@@ -1246,14 +1275,14 @@ export function renderMappa(radice, ctx) {
   const osservaCorpo = new ResizeObserver(() => applicaDisposizione());
   osservaCorpo.observe(el.corpo);
   applicaDisposizione();
-  scegliScheda(st.scheda);
+  segnaGruppo(GRUPPI_BARRA[0][0]);
 
   /** La plancia intera nella barra (src/ui/tavolo.js, ctx.inMappa): tutto quello che fa a pagina intera. */
   function montaPlanciaBarra() {
     if (st.planciaBarra) return;
-    st.planciaBarra = renderTavolo(el.planciaCorpo, {
+    st.planciaBarra = renderTavolo(el.piena, {
       dati: ctx.dati,
-      inMappa: true,
+      inMappa: { sezioni: el.slot },
       azioni: {
         personaggi: () => ctx.azioni.personaggi?.(),
         // «Prepara la mappa» sulla scena già aperta: si rilegge, con il nuovo collegamento

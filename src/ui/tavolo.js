@@ -306,55 +306,78 @@ export function renderTavolo(radice, ctx) {
       return;
     }
     const ritorno = scenaDiRitorno();
+    // i pezzi della plancia, gli stessi a pagina intera e nella barra della mappa (ritocchi del 06/10: a gruppi)
+    const azioniPlancia = h('div', { class: 'riga-azioni' },
+      // lotto 6: la plancia a pagina intera resta, con «Torna alla mappa»
+      ctx.inMappa ? h('button', { type: 'button', class: 'btn', title: 'La plancia a pagina intera, con «Torna alla mappa»', onclick: () => ctx.azioni.planciaIntera() }, 'Plancia intera') : null,
+      h('span', { class: 'nota plancia-aggiornato', 'aria-live': 'polite' }, stato.errore ?? testoAggiornato(stato.ultimo)),
+      h('button', { type: 'button', class: `btn${stato.sceltaAperta ? ' primario' : ''}`, 'aria-expanded': String(stato.sceltaAperta), onclick: () => { stato.sceltaAperta = !stato.sceltaAperta; disegna(); } }, 'Chi è al tavolo'),
+      h('button', { type: 'button', class: 'btn', title: 'Sceglie uno o più file JSON di «SALVA PG», li controlla come «Importa», li scrive in personaggi/ senza mai sovrascrivere e li mette al tavolo', onclick: () => sceltaFile.click() }, 'Aggiungi PG al tavolo'),
+      sceltaFile,
+      h('button', { type: 'button', class: 'btn', title: 'Copia i personaggi e i nemici d’esempio del repo (esempi/) nelle cartelle del server; non sovrascrive mai un file già presente', onclick: caricaEsempi }, 'Carica esempi'),
+      // richiesta di Marcello del 03/10: bozze di scontro e nemici dal Bestiario, anche senza scontro aperto
+      h('button', { type: 'button', class: 'btn', title: 'Bozze di scontro: nemici, quanti, note, difficoltà; «Inizia» le apre con l’Iniziativa tirata', onclick: preparaScontro }, 'Prepara scontro'),
+      h('button', { type: 'button', class: 'btn', title: 'Procedura guidata dal Bestiario (base, grado, moduli), oppure tutto a caso', onclick: () => creaNemico() }, 'Crea nemico'),
+      // nella mappa le scene stanno già nel gruppo «Mappa»: niente doppione
+      ctx.inMappa ? null : h('button', { type: 'button', class: 'btn', title: 'Scene della mappa di battaglia: nuova, apri, rinomina, duplica, archivia', onclick: () => apriElencoScene(stato.scene, disegna) }, 'Mappa'),
+      h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.personaggi() }, 'Personaggi'));
+    const esitoEsempi = stato.esitoEsempi ? h('p', { class: 'riquadro attenzione', role: 'status' }, stato.esitoEsempi) : null;
+    const collega = riquadroCollega(stato.rete, { aperto: stato.collegaAperto, onToggle: (v) => { stato.collegaAperto = v; } });
+    const scelta = stato.sceltaAperta ? sceltaAlTavolo(stato, ultimi, async (nuova) => {
+      try {
+        stato.selezione = await scriviSelezione(nuova);
+        avviso(`Al tavolo: ${stato.selezione.length ? stato.selezione.map((k) => k.replace(/-/g, ' ')).join(', ') : 'nessuno'}.`, { chiave: 'al-tavolo' });
+      } catch (e) { avvisoErrore(`Selezione non salvata: ${e.message}`); }
+      await aggiorna(true);
+    }) : null;
+    const stScontro = Object.assign(stato, { pgAlTavolo: alTavolo.map((r) => stato.viste.get(r.file)).filter((v) => v?.completa) });
+    const azScontro = { modifica, crea: (s) => salva(s), ridisegna: disegna, annullaColpo, attacca: (p) => attacca(p, alTavolo) };
+    const cartePg = alTavolo.length
+      ? h('div', { class: 'plancia-griglia' }, alTavolo.map((r) => (r.mancante ? cartaMancante(r.mancante)
+        : stato.viste.get(r.file) ? conPezzo(cartaPg(ctx, stato.viste.get(r.file), r, turnoDi(r), colpitoPg, durateDi(stato.viste.get(r.file))), `partecipante:pg:${chiaveDaFile(r.file)}`) : cartaErrore(r, stato.errori.get(r.file)))))
+      : h('p', { class: 'vuoto' }, 'Nessun personaggio al tavolo: sceglili con «Chi è al tavolo».');
+    const carteNemici = nemiciInScontro().length
+      ? h('div', { class: 'plancia-griglia' }, nemiciInCarta().map((p) => conPezzo(cartaNemico(ctx, p, { modifica, durate: durateNemico(p), diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p), onAttacca: attacchiDi(p).length ? () => attacca(p, alTavolo) : null, onLancia: (i) => lancia(p, i, alTavolo), onRiduci: (v) => modifica((x) => riduciNemico(x, p.id, v)), onRegime: (k, r) => modifica((x) => confermaRegimeNemico(x, p.id, k, r, new Date())), onImmagine: () => immagineNemico(p) }), `partecipante:${p.id}`)))
+      : null;
+    const scene = pannelloScene(ctx, stato.scene, { ridisegna: disegna, apri: (id) => ctx.azioni.mappa(id) });
+    const bestiario = pannelloBestiario(ctx, stato.bestiario, {
+      aperto: stato.bestiarioAperto,
+      onToggle: (v) => { stato.bestiarioAperto = v; },
+      salvato: async (n) => { avviso(`Tipo di nemico salvato: ${n?.nome ?? ''} (nemici/${n?.id ?? '…'}.json).`); stato.firmaBestiario = null; await aggiornaBestiario(); disegna(); },
+      procedura: (n) => creaNemico(n),
+    });
+    // ritocchi del 06/10: nella barra della mappa la plancia si divide nei gruppi dei segnalibri (src/ui/mappa/pagina.js)
+    const S = ctx.inMappa?.sezioni;
+    if (S) {
+      svuota(S.iniziativa, h('div', { class: 'plancia plancia-in-mappa' }, pannelloScontro(ctx, stScontro, azScontro, 'iniziativa')));
+      svuota(S.pg, h('div', { class: 'plancia plancia-in-mappa' }, cartePg, sezioneVeicoli()));
+      svuota(S.nemici, h('div', { class: 'plancia plancia-in-mappa' }, carteNemici ?? h('p', { class: 'vuoto' }, stato.scontro ? 'Nessun nemico nello scontro: aggiungili da «Scontro».' : 'Nessuno scontro aperto.')));
+      svuota(S.scontro, h('div', { class: 'plancia plancia-in-mappa' },
+        h('header', { class: 'plancia-testa' }, azioniPlancia), esitoEsempi, scelta,
+        pannelloScontro(ctx, stScontro, azScontro, 'gestione'), barraDurate(alTavolo), barraPeriodici(alTavolo), collega, bestiario));
+      svuota(S.mappa, h('div', { class: 'plancia plancia-in-mappa' }, scene));
+      custode.ripristina(foto);
+      return;
+    }
     svuota(radice, h('section', { class: `plancia${ctx.inMappa ? ' plancia-in-mappa' : ''}` },
       // aperta dalla mappa: un pulsante grande per tornare alla scena, allo zoom e alla posizione di prima
       ritorno ? h('button', { type: 'button', class: 'btn primario btn-torna-mappa', onclick: () => { tornaAllaMappa(sessionStorage); ctx.azioni.mappa(ritorno); } }, '← Torna alla mappa') : null,
       h('header', { class: 'plancia-testa' },
         ctx.inMappa ? null : h('div', { class: 'riga-titolo' }, h('a', { class: 'marchio marchio-in-linea', href: '#/', title: 'Elenco dei personaggi' }, 'Mutant'),
           h('h1', { class: 'titolo-con-stemma' }, iconaPagina('combattimento', '96', { classe: 'badge-pagina', lato: 40 }), 'Tavolo del Master')),
-        h('div', { class: 'riga-azioni' },
-          // lotto 6: la plancia a pagina intera resta, con «Torna alla mappa»
-          ctx.inMappa ? h('button', { type: 'button', class: 'btn', title: 'La plancia a pagina intera, con «Torna alla mappa»', onclick: () => ctx.azioni.planciaIntera() }, 'Plancia intera') : null,
-          h('span', { class: 'nota plancia-aggiornato', 'aria-live': 'polite' }, stato.errore ?? testoAggiornato(stato.ultimo)),
-          h('button', { type: 'button', class: `btn${stato.sceltaAperta ? ' primario' : ''}`, 'aria-expanded': String(stato.sceltaAperta), onclick: () => { stato.sceltaAperta = !stato.sceltaAperta; disegna(); } }, 'Chi è al tavolo'),
-          h('button', { type: 'button', class: 'btn', title: 'Sceglie uno o più file JSON di «SALVA PG», li controlla come «Importa», li scrive in personaggi/ senza mai sovrascrivere e li mette al tavolo', onclick: () => sceltaFile.click() }, 'Aggiungi PG al tavolo'),
-          sceltaFile,
-          h('button', { type: 'button', class: 'btn', title: 'Copia i personaggi e i nemici d’esempio del repo (esempi/) nelle cartelle del server; non sovrascrive mai un file già presente', onclick: caricaEsempi }, 'Carica esempi'),
-          // richiesta di Marcello del 03/10: bozze di scontro e nemici dal Bestiario, anche senza scontro aperto
-          h('button', { type: 'button', class: 'btn', title: 'Bozze di scontro: nemici, quanti, note, difficoltà; «Inizia» le apre con l’Iniziativa tirata', onclick: preparaScontro }, 'Prepara scontro'),
-          h('button', { type: 'button', class: 'btn', title: 'Procedura guidata dal Bestiario (base, grado, moduli), oppure tutto a caso', onclick: () => creaNemico() }, 'Crea nemico'),
-          h('button', { type: 'button', class: 'btn', title: 'Scene della mappa di battaglia: nuova, apri, rinomina, duplica, archivia', onclick: () => apriElencoScene(stato.scene, disegna) }, 'Mappa'),
-          h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.personaggi() }, 'Personaggi'))),
-      stato.esitoEsempi ? h('p', { class: 'riquadro attenzione', role: 'status' }, stato.esitoEsempi) : null,
+        azioniPlancia),
+      esitoEsempi,
       ctx.inMappa ? null : h('p', { class: 'nota' }, 'Sola lettura: i valori sono quelli delle schede in personaggi/, ricalcolati con le regole attuali. Per cambiarli si apre il personaggio (clic sulla mini-scheda).'),
-      riquadroCollega(stato.rete, { aperto: stato.collegaAperto, onToggle: (v) => { stato.collegaAperto = v; } }),
-      stato.sceltaAperta ? sceltaAlTavolo(stato, ultimi, async (nuova) => {
-        try {
-          stato.selezione = await scriviSelezione(nuova);
-          avviso(`Al tavolo: ${stato.selezione.length ? stato.selezione.map((k) => k.replace(/-/g, ' ')).join(', ') : 'nessuno'}.`, { chiave: 'al-tavolo' });
-        } catch (e) { avvisoErrore(`Selezione non salvata: ${e.message}`); }
-        await aggiorna(true);
-      }) : null,
-      pannelloScontro(ctx, Object.assign(stato, { pgAlTavolo: alTavolo.map((r) => stato.viste.get(r.file)).filter((v) => v?.completa) }),
-        { modifica, crea: (s) => salva(s), ridisegna: disegna, annullaColpo, attacca: (p) => attacca(p, alTavolo) }),
+      collega,
+      scelta,
+      pannelloScontro(ctx, stScontro, azScontro),
       barraDurate(alTavolo),
       barraPeriodici(alTavolo),
-      alTavolo.length
-        ? h('div', { class: 'plancia-griglia' }, alTavolo.map((r) => (r.mancante ? cartaMancante(r.mancante)
-          : stato.viste.get(r.file) ? conPezzo(cartaPg(ctx, stato.viste.get(r.file), r, turnoDi(r), colpitoPg, durateDi(stato.viste.get(r.file))), `partecipante:pg:${chiaveDaFile(r.file)}`) : cartaErrore(r, stato.errori.get(r.file)))))
-        : h('p', { class: 'vuoto' }, 'Nessun personaggio al tavolo: sceglili con «Chi è al tavolo».'),
-      nemiciInScontro().length ? [
-        h('h2', { class: 'plancia-sezione' }, 'Nemici nello scontro'),
-        h('div', { class: 'plancia-griglia' }, nemiciInCarta().map((p) => conPezzo(cartaNemico(ctx, p, { modifica, durate: durateNemico(p), diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p), onAttacca: attacchiDi(p).length ? () => attacca(p, alTavolo) : null, onLancia: (i) => lancia(p, i, alTavolo), onRiduci: (v) => modifica((x) => riduciNemico(x, p.id, v)), onRegime: (k, r) => modifica((x) => confermaRegimeNemico(x, p.id, k, r, new Date())), onImmagine: () => immagineNemico(p) }), `partecipante:${p.id}`))),
-      ] : null,
+      cartePg,
+      carteNemici ? [h('h2', { class: 'plancia-sezione' }, 'Nemici nello scontro'), carteNemici] : null,
       sezioneVeicoli(),
-      pannelloScene(ctx, stato.scene, { ridisegna: disegna, apri: (id) => ctx.azioni.mappa(id) }),
-      pannelloBestiario(ctx, stato.bestiario, {
-        aperto: stato.bestiarioAperto,
-        onToggle: (v) => { stato.bestiarioAperto = v; },
-        salvato: async (n) => { avviso(`Tipo di nemico salvato: ${n?.nome ?? ''} (nemici/${n?.id ?? '…'}.json).`); stato.firmaBestiario = null; await aggiornaBestiario(); disegna(); },
-        procedura: (n) => creaNemico(n),
-      })));
+      scene,
+      bestiario));
     custode.ripristina(foto);
     if (cartaDaMostrare && mostraCarta(radice, cartaDaMostrare)) cartaDaMostrare = null;
   };

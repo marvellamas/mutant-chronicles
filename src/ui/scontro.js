@@ -50,11 +50,14 @@ export const idNuovo = (d = new Date()) => {
  *   bestiario: voci di src/nemici.js → vociBestiario, bozzaNemici }
  * @param modifica (fn: scontro → scontro) salva il nuovo stato con la revisione
  * @param crea (scontro) salva uno scontro nuovo
+ * @param parte 'tutto' (plancia a pagina intera), 'iniziativa' (Round, «Avanti», ordine, da tirare) o 'gestione'
+ *   (aggiungi nemici e partecipanti, durate degli Stati, registro): i gruppi della barra della mappa (ritocchi del 06/10)
  */
-export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaColpo = null, attacca = null }) {
+export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaColpo = null, attacca = null }, parte = 'tutto') {
   const s = st.scontro;
   const dado = dadoIniziativa(ctx.dati);
   if (!s) {
+    if (parte === 'gestione') return null;
     return h('section', { class: 'riquadro scontro-pannello' },
       h('h2', {}, 'Scontro'),
       h('p', { class: 'nota' }, `Nessuno scontro aperto. «Nuovo scontro» parte con i PG al tavolo; l’Iniziativa di ciascuno è quella della scheda più ${dado.formula}, tirato dal vivo o dall’app (Giocatore §2.14, §5.1).`),
@@ -143,7 +146,7 @@ export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaCol
   const campo = (k, attr) => h('input', { ...attr, value: b[k], dataset: { chiave: `manuale-${k}` }, oninput: (e) => { b[k] = e.target.value; } });
   const intero = (v) => (v === '' ? null : Number(v));
 
-  return h('section', { class: 'riquadro scontro-pannello' },
+  const testa = [
     h('header', { class: 'scontro-testa' },
       h('h2', {}, `${s.nome} · Round ${s.round}`),
       h('div', { class: 'riga-azioni' },
@@ -160,6 +163,8 @@ export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaCol
       h('h3', {}, `Da tirare (${dado.formula})`),
       h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => modifica((x) => daTirare.reduce((acc, p) => registraTiro(acc, p.id, 'd10', tira(dado).tiro, ctx.dati), x)) }, 'Tira per tutti con l’app'),
       h('ul', {}, daTirare.map((p) => h('li', {}, h('strong', {}, p.nome), p.provvisorio ? h('span', { class: 'etichetta' }, 'provvisorio') : null, ' · Iniziativa ', baseConProvenienza(p), ' + ', tiroDalVivo(p, 'd10'))))) : null,
+  ];
+  const gestione = [
     aggiungiNemiciRiga,
     // aperto o chiuso resta com'era dopo il ridisegno periodico
     h('details', { class: 'aggiungi-partecipante', open: !!st.manualeAperto, ontoggle: (e) => { st.manualeAperto = e.target.open; } }, h('summary', {}, 'Aggiungi partecipante a mano (provvisorio, senza scheda)'),
@@ -188,7 +193,11 @@ export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaCol
     statiPg.length ? h('div', { class: 'durate-stati' }, h('h3', {}, 'Durate degli Stati'), h('ul', {}, statiPg.map(durata))) : null,
     h('details', { class: 'registro-scontro', open: st.registroAperto, ontoggle: (e) => { st.registroAperto = e.target.open; } },
       h('summary', {}, `Registro (${s.registro.length})`),
-      h('ol', { reversed: true }, [...s.registro].reverse().map((r) => h('li', {}, h('small', { class: 'nota' }, `${new Date(r.ora).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit', second: '2-digit' })} · Round ${r.round} · `), r.testo)))));
+      h('ol', { reversed: true }, [...s.registro].reverse().map((r) => h('li', {}, h('small', { class: 'nota' }, `${new Date(r.ora).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit', second: '2-digit' })} · Round ${r.round} · `), r.testo)))),
+  ];
+  if (parte === 'iniziativa') return h('section', { class: 'riquadro scontro-pannello' }, testa);
+  if (parte === 'gestione') return h('section', { class: 'riquadro scontro-pannello scontro-gestione' }, h('h3', {}, `${s.nome} · gestione`), gestione);
+  return h('section', { class: 'riquadro scontro-pannello' }, testa, gestione);
 }
 
 /** PG per un nuovo scontro, dalla vista della plancia (Iniziativa effettiva, Caratteristiche per la parità). */
