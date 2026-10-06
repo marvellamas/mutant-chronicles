@@ -31,8 +31,8 @@ Claude outputs/
 
 # Personaggi salvati dal server di Mutant (server.mjs): dati dei giocatori, non codice.
 # Si traccia solo il LEGGIMI che spiega la cartella.
-#personaggi/*
-#!personaggi/LEGGIMI.txt
+personaggi/*
+!personaggi/LEGGIMI.txt
 
 # Selezione «al tavolo» e stato del Tavolo del Master (server.mjs): dati di gioco; si traccia solo il LEGGIMI
 tavolo/*
@@ -49,3 +49,9 @@ nemici/*
 # Registro dei veicoli del Tavolo del Master (server.mjs, A.91): dati di gioco; si traccia solo il LEGGIMI
 veicoli/*
 !veicoli/LEGGIMI.txt
+
+# Copie di fine sessione (salva-sessione.bat, tools/salva-sessione.mjs): dati di gioco; si traccia solo il LEGGIMI
+salvataggi/*
+!salvataggi/LEGGIMI.txt
+# configurazione della copia (cartella di Drive, clone del repository privato): personale, non va su GitHub
+config-salvataggi.json

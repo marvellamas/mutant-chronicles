@@ -1,0 +1,14 @@
+Salvataggi di fine sessione di Mutant
+=====================================
+
+Qui salva-sessione.bat (tools/salva-sessione.mjs) mette un archivio per ogni copia:
+sessione_AAAA-MM-GG_hhmm.zip, con dentro le cartelle personaggi, veicoli, scontri,
+nemici e tavolo del server, cioe' lo stato di tutti i personaggi e del Tavolo a fine sessione.
+
+- Nessun salvataggio viene mai cancellato o sovrascritto: due copie nello stesso minuto
+  prendono un nome con _2, _3...
+- Per rimettere a posto una sessione: si apre l'archivio e si copiano le cartelle nella
+  cartella dell'app, con il server spento.
+- I file di questa cartella non vanno su GitHub con l'app (.gitignore): sono dati di gioco.
+  La copia su Drive o su un repository privato si configura in config-salvataggi.json
+  (modello: config-salvataggi.esempio.json).

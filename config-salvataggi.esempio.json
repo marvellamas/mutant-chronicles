@@ -1,0 +1,5 @@
+{
+  "_nota": "Copia questo file come config-salvataggi.json (non va su GitHub) e togli le voci che non servono. copia_in: una cartella in cui copiare anche l'archivio, per esempio quella di Google Drive sul PC. github: la cartella di un clone di un repository GitHub PRIVATO, solo per i salvataggi (non quello dell'app), con le credenziali già configurate; ramo facoltativo.",
+  "copia_in": "C:/Users/Davide/Google Drive/Mutant salvataggi",
+  "github": { "cartella": "C:/Users/Davide/Documenti/mutant-salvataggi", "ramo": "main" }
+}

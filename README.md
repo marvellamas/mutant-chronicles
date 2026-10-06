@@ -39,6 +39,11 @@ pubblico.
 
 Per tenere il server chiuso agli altri dispositivi: `node server.mjs --solo-locale`.
 
+**Copia di fine sessione: `salva-sessione.bat`.**
+1. A fine sessione fai doppio clic su `salva-sessione.bat` (anche con il server acceso): crea `salvataggi/sessione_AAAA-MM-GG_hhmm.zip` con personaggi, veicoli, scontri, nemici e tavolo. I salvataggi non vengono mai cancellati né sovrascritti.
+2. Per avere la copia anche su Google Drive: copia `config-salvataggi.esempio.json` come `config-salvataggi.json` e scrivi in `copia_in` la cartella di Drive sul PC (togli la voce `github` se non ti serve).
+3. Per la copia anche su GitHub (per Marcello): in `github.cartella` metti la cartella di un clone di un repository **privato** solo per i salvataggi, già collegato con le tue credenziali; senza, la copia salta con un messaggio e il resto funziona.
+
 ### Avvio diretto dal repo: avvia.bat
 
 Chi lavora sul repo può fare doppio clic su **`avvia.bat`**, nella cartella principale:
