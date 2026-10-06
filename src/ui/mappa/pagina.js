@@ -27,7 +27,7 @@ import { DISPOSIZIONI, NOMI_DISPOSIZIONI, prossimaDisposizione, normalizzaDispos
 import { barraIniziativa } from '../../mappa/iniziativa.js';
 import { barraIniziativaEl, stileBordo } from './barra-iniziativa.js';
 import { bordoToken, assegnaColori, cambiaColore, tavolozzaPer, famiglia } from '../../mappa/colori.js';
-import { scegliColore, chiedi } from '../finestrella.js';
+import { scegliColore, chiedi, informa } from '../finestrella.js';
 import { calibraDaQuadretto, applicaGriglia, dimensioniMappa, lineeVisibili, testoScala } from '../../mappa/griglia.js';
 import { creaTela } from './canvas.js';
 import { leggiScena, salvaScena, caricaImmagine, controllaFile, preparaRidotta } from './api.js';
@@ -147,8 +147,21 @@ export function renderMappa(radice, ctx) {
       h('button', { type: 'button', class: 'btn tondo', title: 'Allontana (−)', 'aria-label': 'Allontana', onclick: () => zoomCentro(1 / V.passo_tasti) }, '−'),
       el.zoom,
       h('button', { type: 'button', class: 'btn tondo', title: 'Avvicina (+)', 'aria-label': 'Avvicina', onclick: () => zoomCentro(V.passo_tasti) }, '+'),
-      h('button', { type: 'button', class: 'btn', title: 'Tutta la mappa nel riquadro', onclick: () => adattaSchermo() }, 'Adatta allo schermo'),
-      el.btnGriglia),
+      h('button', { type: 'button', class: 'btn', title: 'Tutta la mappa nel riquadro (doppio clic su un punto vuoto della mappa)', onclick: () => adattaSchermo() }, 'Adatta allo schermo'),
+      el.btnGriglia,
+      // lotto 7 (§12, menu superiore): gli strumenti del master in un menu
+      el.strumenti = h('details', { class: 'menu-strumenti' },
+        h('summary', { class: 'btn', title: 'Strumenti del master: immagine, griglia, nebbia, muri, scene, movimenti dei giocatori' }, 'Strumenti ▾'),
+        h('div', { class: 'menu-strumenti-voci', role: 'menu' },
+          voceStrumenti('Carica immagine…', 'Immagine di fondo: JPG, PNG o WEBP', () => el.scegliFile.click()),
+          voceStrumenti('Griglia', 'Calibra, colore, opacità, blocco', () => apriStrumento(el.pGriglia)),
+          voceStrumenti('Nebbia', 'Pennello e rettangolo, Rivela / Copri, tutto', () => apriStrumento(el.pNebbia)),
+          voceStrumenti('Muri e terreno', 'Muro, terreno difficile, gomma', () => apriStrumento(el.pMuri)),
+          voceStrumenti('Vista giocatori', 'Quale scena vedono, QR, «Apri vista giocatori»', () => apriStrumento(el.pGiocatori)),
+          voceStrumenti('Scene', 'Nuova, apri, rinomina, duplica, archivia', () => apriStrumento(document.getElementById('plancia-scene-mappa'))),
+          voceStrumenti('Collegamento e token', 'Scontro o bozza collegati, pezzi da mettere in mappa', () => apriStrumento(el.secScontro)),
+          el.bloccoGiocatori = h('button', { type: 'button', role: 'menuitemcheckbox', class: 'voce-strumenti', 'aria-checked': 'false', title: 'Pronto per la fase 2 (tab BattleMap dei giocatori): finché è acceso i giocatori non muovono i loro token', onclick: () => cambiaBloccoGiocatori() }, 'Blocca movimenti dei giocatori'))),
+      h('button', { type: 'button', class: 'btn tondo', title: 'Scorciatoie e comandi (?)', 'aria-label': 'Scorciatoie e comandi', onclick: () => apriAiuto() }, '?')),
     el.scala, el.stato);
   el.riquadro = h('div', { class: 'mappa-tela', tabindex: '0', 'aria-label': 'Mappa: rotella per lo zoom, barra spaziatrice e mouse o trascinamento per spostarsi' });
   el.suggerimento = h('div', { class: 'mappa-suggerimento', hidden: true, role: 'status' });
@@ -357,7 +370,10 @@ export function renderMappa(radice, ctx) {
     if (esito.errore) { avvisoErrore(`Griglia: ${esito.errore}.`); aggiornaPannello(); return false; }
     st.scena = esito.scena;
     aggiornaPannello();
-    ridisegna(['fondo']);
+    // collaudo del lotto 7: le maschere cambiano misura con la griglia, anche i conteggi di nebbia e muri
+    disegnaPannelloNebbia();
+    disegnaPannelloMuri();
+    ridisegna(['fondo', 'aree', 'sopra']);
     salvaPresto();
     return true;
   };
@@ -595,7 +611,7 @@ export function renderMappa(radice, ctx) {
   }
 
   /** Bordo di un pezzo con i colori della scena (src/mappa/colori.js). */
-  const bordoDi = (p) => bordoToken(p, st.scena?.colori, ctx.dati);
+  function bordoDi(p) { return bordoToken(p, st.scena?.colori, ctx.dati); }
   /** Primo ingresso in mappa: un colore ai PG e ai tipi di nemico che non ne hanno; true se la scena è cambiata. */
   function coloraNuovi() {
     if (!st.scena) return false;
@@ -629,6 +645,65 @@ export function renderMappa(radice, ctx) {
   }
 
   /** «Togli dalla mappa»: il pezzo torna fra quelli senza token (Ctrl+Z lo rimette). */
+  /** Il record della cartella del PG del pezzo (per la scheda completa), se le fonti lo hanno letto. */
+  const recordPg = (pz) => (pz?.tipo === 'pg' ? st.fonti?.record?.get(pz.pg) ?? null : null);
+  /** «Apri scheda completa» (clic destro, Ctrl+clic): la scheda del PG con «Torna alla mappa»; per gli altri la mini-scheda. */
+  function apriSchedaToken(t) {
+    const pz = pezzoDi(t);
+    const r = recordPg(pz);
+    if (r) apriSchedaCompleta(r);
+    else apriCarta(t);
+  }
+  /** Una voce del menu «Strumenti»: chiude il menu e fa l'azione. */
+  function voceStrumenti(testo, titolo, azione) {
+    return h('button', { type: 'button', role: 'menuitem', class: 'voce-strumenti', title: titolo, onclick: () => { el.strumenti.open = false; azione(); } }, testo);
+  }
+  /** Porta alla sezione dello strumento nel gruppo «Mappa» della barra e la apre. */
+  function apriStrumento(sezione) {
+    if (!sezione) return;
+    if (st.disp.disposizione === 'mappa') scegliDisposizione('equilibrata');
+    if (sezione.tagName === 'DETAILS' && !sezione.open) { sezione.open = true; sezione.dispatchEvent(new Event('toggle')); }
+    sezione.scrollIntoView({ block: 'start' });
+    segnaGruppo('mappa');
+  }
+  /** Blocco dei movimenti dei giocatori: si salva nella scena, lo userà la tab BattleMap della fase 2. */
+  function cambiaBloccoGiocatori() {
+    if (!st.scena) return;
+    const v = !st.scena.bloccaGiocatori;
+    st.scena = { ...st.scena, bloccaGiocatori: v };
+    salvaPresto();
+    aggiornaBlocco();
+    avviso(v ? 'Movimenti dei giocatori bloccati (vale dalla fase 2, quando i giocatori muoveranno dal tablet).' : 'Movimenti dei giocatori sbloccati.');
+  }
+  function aggiornaBlocco() {
+    const v = !!st.scena?.bloccaGiocatori;
+    el.bloccoGiocatori.setAttribute('aria-checked', String(v));
+    el.bloccoGiocatori.textContent = `${v ? '✓ ' : ''}Blocca movimenti dei giocatori`;
+  }
+  /** Pannello «?»: scorciatoie e comandi della mappa (§12). */
+  function apriAiuto() {
+    const righe = [
+      ['Rotella, + e −', 'zoom (verso il puntatore con la rotella)'],
+      ['Barra spaziatrice + mouse, o trascinare un punto vuoto', 'sposta la mappa'],
+      ['Doppio clic su un punto vuoto', 'adatta allo schermo'],
+      ['Clic su un token', 'lo sceglie: area di movimento e mini-scheda'],
+      ['Clic su un quadretto dell’area, o trascinare il token', 'movimento nel Round'],
+      ['Maiusc + clic o trascinamento', 'movimento libero (come «Libero»)'],
+      ['Ctrl + clic su un token', 'scheda completa (PG) o mini-scheda (nemico)'],
+      ['Clic destro su un token', 'menu: fasce, Annulla movimento, Nuovo turno, schede, Nascondi, Colore, Togli'],
+      ['M', 'mostra o nasconde l’area di movimento'],
+      ['Tab (Maiusc + Tab indietro)', 'cambia disposizione: Mappa grande, Equilibrata, Scontro grande'],
+      ['Doppio clic sul bordo della barra', 'disposizione successiva; trascinarlo cambia la larghezza'],
+      ['Ctrl + Z', 'annulla l’ultima azione del master (movimento, muri, nebbia, token)'],
+      ['Esc', 'chiude menu e strumenti, poi la mini-scheda, poi deseleziona'],
+      ['?', 'questo pannello'],
+      ['Due dita (tablet)', 'zoom e spostamento; doppio tocco: adatta allo schermo'],
+    ];
+    informa({
+      titolo: 'Scorciatoie e comandi della mappa', classe: 'aiuto-mappa',
+      contenuto: h('table', { class: 'tabella compatta' }, h('tbody', {}, righe.map(([k, v]) => h('tr', {}, h('th', { scope: 'row' }, k), h('td', {}, v))))),
+    });
+  }
   /** «Colore del bordo»: il master sceglie il colore di un PG o di un tipo di nemico (tutte le sue copie). */
   async function coloreBordo(id) {
     const t = st.scena.token.find((x) => x.id === id);
@@ -1096,6 +1171,10 @@ export function renderMappa(radice, ctx) {
       if (t.mosso) {
         if (!eseguiMovimento(tok, t.q, { libero: !!t.libero, info: t.info })) ridisegna(['sopra']);
         if (t.oltre) avvisaFascia(); // rilasciato oltre la fascia scelta: il token si è fermato al suo limite
+      } else if (e.ctrlKey || e.metaKey) {
+        // lotto 7 (§12): Ctrl+clic apre la scheda completa del PG, la mini-scheda per gli altri
+        scegli(tok.id);
+        apriSchedaToken(tok);
       } else {
         // clic: si sceglie il token, compare la sua area e si apre la sua carta accanto alla mappa
         scegli(tok.id);
@@ -1191,6 +1270,8 @@ export function renderMappa(radice, ctx) {
     const pz = pezzoDi(tok);
     const mov = pz?.movimento;
     const ultimo = st.scena.movimenti.some((x) => x.token === tok.id);
+    const conScontro = !!st.fonti?.scontro;
+    const pg = pz?.tipo === 'pg';
     apriMenuToken(el.riquadro, p.x, p.y, pz?.nome ?? tok.nome ?? tok.id, [
       { testo: 'Passo', azione: () => cambiaFascia(1), scelta: st.fascia === 1, disabilitata: !mov },
       { testo: 'Corri', azione: () => cambiaFascia(2), scelta: st.fascia === 2, disabilitata: !Number.isFinite(mov?.corsa), titolo: 'Amplia l’area fino alla Corsa' },
@@ -1198,10 +1279,12 @@ export function renderMappa(radice, ctx) {
       { testo: 'Libero', azione: () => cambiaFascia(LIBERO), scelta: st.fascia === LIBERO, titolo: 'In qualunque quadretto, senza area e senza conteggio (scorciatoia: Maiusc)' },
       { testo: st.mostraArea ? 'Nascondi area (M)' : 'Mostra area (M)', azione: () => cambiaMostraArea() },
       { testo: 'Annulla ultimo movimento', azione: () => annullaMovimentoUi(tok.id), disabilitata: !ultimo },
-      ...(st.fonti?.scontro ? [] : [{ testo: 'Nuovo turno', azione: () => nuovoTurnoUi(tok.id), titolo: 'Senza scontro aperto: il movimento di questo token riparte da 0' }]),
+      { testo: 'Nuovo turno', azione: () => nuovoTurnoUi(tok.id), disabilitata: conScontro, titolo: conScontro ? 'Con lo scontro aperto il movimento riparte al nuovo Round («Avanti»)' : 'Il movimento di questo token riparte da 0' },
+      null,
+      { testo: 'Apri mini-scheda', azione: () => apriCarta(tok), disabilitata: !pz },
+      { testo: 'Apri scheda completa (Ctrl+clic)', azione: () => apriSchedaToken(tok), disabilitata: !pg || !recordPg(pz), titolo: pg ? 'La scheda del PG, con «Torna alla mappa»' : 'Solo per i PG' },
       null,
       { testo: tok.nascosto ? 'Mostra ai giocatori' : 'Nascondi ai giocatori', azione: () => cambiaToken(tok.id, (x) => ({ ...x, nascosto: !x.nascosto })) },
-      { testo: 'Mini-scheda', azione: () => apriCarta(tok), disabilitata: !pz },
       { testo: 'Colore del bordo…', azione: () => coloreBordo(tok.id), disabilitata: !pz },
       { testo: 'Togli dalla mappa', azione: () => togliToken(tok.id) },
     ]);
@@ -1217,6 +1300,8 @@ export function renderMappa(radice, ctx) {
     if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === 'z') { e.preventDefault(); if (st.scena) annullaUi(); return; }
     if (e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.key === 'm' || e.key === 'M') { e.preventDefault(); cambiaMostraArea(); return; }
+    if (e.key === '?') { e.preventDefault(); apriAiuto(); return; }
+    if (e.key === 'Escape' && el.strumenti.open) { el.strumenti.open = false; return; }
     if (e.key === '+' || e.key === '=' || e.code === 'NumpadAdd') { e.preventDefault(); zoomCentro(V.passo_tasti); } else if (e.key === '-' || e.code === 'NumpadSubtract') { e.preventDefault(); zoomCentro(1 / V.passo_tasti); } else if (e.code === 'Space') {
       e.preventDefault(); // niente scorrimento della pagina
       if (!st.spazio) { st.spazio = true; el.riquadro.classList.add('spazio'); }
@@ -1333,7 +1418,8 @@ export function renderMappa(radice, ctx) {
   }
 
   /** Barra dell'Iniziativa del master: dallo scontro aperto letto dalle fonti (nessuna barra con una bozza). */
-  const barraAttuale = () => (st.scena ? barraIniziativa({ scontro: st.fonti?.scontro ?? null, pezzi: st.pezzi, scena: st.scena, bordoDi }) : null);
+  // dichiarazioni di funzione (non const): applicaDisposizione le usa già all'avvio, se lo schermo ricorda «Mappa grande»
+  function barraAttuale() { return st.scena ? barraIniziativa({ scontro: st.fonti?.scontro ?? null, pezzi: st.pezzi, scena: st.scena, bordoDi }) : null; }
   function disegnaIniziativa() {
     const barra = barraAttuale();
     el.iniziativa.hidden = !barra;
@@ -1349,7 +1435,7 @@ export function renderMappa(radice, ctx) {
     }
     if (st.disp.disposizione === 'mappa') disegnaRidotta(barra);
   }
-  const pezzoScelto = () => { const t = st.selezionato ? st.scena?.token.find((x) => x.id === st.selezionato) : null; return t ? pezzoDi(t) : null; };
+  function pezzoScelto() { const t = st.selezionato ? st.scena?.token.find((x) => x.id === st.selezionato) : null; return t ? pezzoDi(t) : null; }
   /** «Mappa grande»: colonna stretta con i mini-token (in ordine d'Iniziativa, se c'è lo scontro), i PV e il turno. */
   function disegnaRidotta(barra = barraAttuale()) {
     const voci = barra ? barra.voci : st.pezzi.filter((p) => st.scena?.token.some((t) => chiaveRif(t.rif) === p.chiave)).map((p) => ({ chiave: p.chiave, nome: p.nome, iniziali: p.iniziali, lato: p.lato, ritratto: p.ritratto, pv: p.pv, diTurno: p.diTurno, bordo: bordoDi(p), token: st.scena.token.find((t) => chiaveRif(t.rif) === p.chiave)?.id ?? null, nascosto: !!st.scena.token.find((t) => chiaveRif(t.rif) === p.chiave)?.nascosto }));
@@ -1458,6 +1544,7 @@ export function renderMappa(radice, ctx) {
     if (vista?.cam && Number.isFinite(vista.cam.scala)) cambiaCamera(vista.cam); else adattaSchermo();
     if (vista?.selezionato && st.scena.token.some((t) => t.id === vista.selezionato)) st.selezionato = vista.selezionato;
     montaPlanciaBarra();
+    aggiornaBlocco();
     await Promise.all([aggiornaFonti(), leggiScelta()]);
     disegnaPannelloNebbia();
     disegnaPannelloMuri();

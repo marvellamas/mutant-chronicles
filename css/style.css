@@ -2029,3 +2029,16 @@ button.mini-token { cursor: pointer; }
 .campione { display: flex; align-items: center; gap: 0.45rem; font: inherit; color: inherit; background: none; border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 0.3rem 0.45rem; cursor: pointer; text-align: left; }
 .campione.scelto { border-color: var(--accento); box-shadow: 0 0 0 2px var(--accento); }
 .campione-colore { width: 1.4rem; height: 1.4rem; border-radius: 50%; border: 2px solid var(--testo); flex: none; }
+/* lotto 7: menu «Strumenti» del master e pannello «?» */
+.menu-strumenti { position: relative; }
+.menu-strumenti > summary { list-style: none; cursor: pointer; }
+.menu-strumenti > summary::-webkit-details-marker { display: none; }
+.menu-strumenti-voci { position: absolute; top: calc(100% + 0.25rem); left: 0; z-index: 30; min-width: 15rem; display: flex; flex-direction: column; background: var(--superficie); border: 1px solid var(--bordo); border-radius: var(--raggio); box-shadow: 0 8px 24px var(--ombra, rgba(0, 0, 0, 0.3)); padding: 0.25rem; }
+.voce-strumenti { font: inherit; color: inherit; background: none; border: none; text-align: left; padding: 0.4rem 0.6rem; border-radius: calc(var(--raggio) - 2px); cursor: pointer; }
+.voce-strumenti:hover, .voce-strumenti:focus-visible { background: var(--accento-tenue); }
+.aiuto-mappa { max-width: min(40rem, calc(100vw - 2rem)); }
+.aiuto-mappa table { width: 100%; }
+.aiuto-mappa th { text-align: left; width: 45%; padding-right: 0.75rem; vertical-align: top; }
+.aiuto-mappa td { text-align: left; vertical-align: top; }
+/* collaudo del lotto 7: l'interruttore «Mostra area» non si allarga a tutta la colonna */
+.mappa-movimento .interruttore { align-self: flex-start; }

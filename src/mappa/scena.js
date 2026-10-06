@@ -11,7 +11,8 @@
 //   collegamento: { scontro: id | null, bozza: id | null },
 //   movimenti: [ … ], annulla: [ … ],                          movimenti del Round e azioni del master (lotto 5)
 //   turni?: { tutti, token: { id: n } },                       «Nuovo turno» senza scontro aperto (src/mappa/annulla.js)
-//   colori?: { pg: { chiave: id }, nemici: { tipo: id } } }    colori dei bordi dei token (src/mappa/colori.js)
+//   colori?: { pg: { chiave: id }, nemici: { tipo: id } },     colori dei bordi dei token (src/mappa/colori.js)
+//   bloccaGiocatori?: true }                                   i giocatori non muovono i loro token (fase 2, tab BattleMap)
 import { nuovaMaschera, inBase64, mascheraValida } from './celle.js';
 import { tokenDentro } from './token.js';
 
@@ -179,6 +180,7 @@ export function validaScena(s, dati) {
   if (s.archiviata !== undefined && typeof s.archiviata !== 'boolean') return 'archiviata: vero o falso';
   if (!Array.isArray(s.movimenti) || s.movimenti.length > D.scena.movimenti_max) return `movimenti: elenco di al massimo ${D.scena.movimenti_max}`;
   if (!Array.isArray(s.annulla) || s.annulla.length > D.scena.annulla_max) return `annulla: elenco di al massimo ${D.scena.annulla_max}`;
+  if (s.bloccaGiocatori !== undefined && typeof s.bloccaGiocatori !== 'boolean') return 'bloccaGiocatori: vero o falso';
   if (s.colori !== undefined) {
     if (!isOggetto(s.colori) || !isOggetto(s.colori.pg) || !isOggetto(s.colori.nemici)) return 'colori: { pg, nemici } attesi';
     for (const [k, tav] of [['pg', D.colori.pg], ['nemici', D.colori.nemici]]) {

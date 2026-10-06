@@ -81,3 +81,15 @@ test('alleati, veicoli, cambio del master, validazione della scena, barra dell�
   const b = barraIniziativa({ scontro, pezzi: [lucas], bordoDi: (p) => bordoToken(p, s.colori, dati) });
   assert.equal(b.voci[0].bordo.id, 'azzurro');
 });
+
+test('lotto 7: blocco dei movimenti dei giocatori nella scena; avvio della pagina con «Mappa grande» ricordata', async () => {
+  const scena = nuovaScena({ id: 'prova', nome: 'Prova', dati });
+  assert.equal(validaScena({ ...scena, bloccaGiocatori: true }, dati), null);
+  assert.match(validaScena({ ...scena, bloccaGiocatori: 'sì' }, dati), /bloccaGiocatori/);
+  // collaudo del 06/10: con «Mappa grande» ricordata la pagina si bloccava (funzioni const usate prima della
+  // definizione da applicaDisposizione): devono essere dichiarazioni di funzione
+  const { readFileSync } = await import('node:fs');
+  const pagina = readFileSync(new URL('../src/ui/mappa/pagina.js', import.meta.url), 'utf8');
+  for (const f of ['barraAttuale', 'pezzoScelto', 'bordoDi', 'disegnaRidotta']) assert.ok(pagina.includes(`function ${f}(`), f);
+  assert.doesNotMatch(pagina, /const (barraAttuale|pezzoScelto|bordoDi) = /);
+});

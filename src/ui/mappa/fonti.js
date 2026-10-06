@@ -26,7 +26,7 @@ async function json(url) {
 export function creaFonti(dati) {
   const cache = new Map(); // file → { mtime, round, vista }
   return async function leggi(collegamento) {
-    const esito = { scontro: null, bozza: null, mancante: null, candidati: { aperti: [], bozze: [] }, viste: new Map(), veicoli: [], alTavolo: [], errori: [] };
+    const esito = { scontro: null, bozza: null, mancante: null, candidati: { aperti: [], bozze: [] }, viste: new Map(), record: new Map(), veicoli: [], alTavolo: [], errori: [] };
     try {
       const lista = await json('api/scontri');
       esito.candidati.aperti = lista.filter((s) => s.stato === 'aperto');
@@ -57,6 +57,7 @@ export function creaFonti(dati) {
       for (const chiave of chiavi) {
         const voce = [...ultimi].find(([k]) => stessaChiave(k, chiave))?.[1];
         if (!voce) continue;
+        esito.record.set(chiave, voce); // lotto 7: «Apri scheda completa» dal clic destro o con Ctrl+clic
         const c = cache.get(voce.file);
         if (c && c.mtime === voce.mtime && c.round === round) { esito.viste.set(chiave, c.vista); continue; }
         try {

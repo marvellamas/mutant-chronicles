@@ -44,6 +44,12 @@ export function chiedi({ titolo, testo = '', si = 'Sì', no = 'Annulla', pericol
   ]).then((v) => v === true);
 }
 
+/** Finestrella che mostra solo un contenuto (per esempio il pannello «?» delle scorciatoie), con «Chiudi». */
+export function informa({ titolo, contenuto, classe = '' }) {
+  return apri(`informa ${classe}`, titolo, (fine) => [contenuto,
+    h('div', { class: 'riga-azioni finestrella-azioni' }, h('button', { type: 'button', class: 'btn primario', onclick: () => fine(true) }, 'Chiudi'))]);
+}
+
 export function scegliColore({ titolo, colori, attuale = null, nota = '' }) {
   return apri('scegli-colore', titolo, (fine) => [
     nota ? h('p', { class: 'nota' }, nota) : null,
