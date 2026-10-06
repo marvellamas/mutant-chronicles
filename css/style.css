@@ -101,10 +101,23 @@ a { color: var(--accento); }
   line-height: 1.3;
   white-space: nowrap;
 }
-.marchio { font-weight: 700; font-size: 0.95rem; text-decoration: none; color: var(--accento); flex: none; }
-.sottotitolo { color: var(--tenue); flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
-/* testo completo nel tooltip (title, src/ui/app.js) */
-.versioni { margin-left: auto; color: var(--tenue); font-size: 0.72rem; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+/* il pulsante Mutant (playtest del 05/10/2026): più grande, con l'aspetto di un pulsante; nella scheda e nella
+   plancia sta a sinistra del titolo e la riga in alto sparisce, recuperando lo spazio */
+.marchio {
+  display: inline-flex; align-items: center; flex: none;
+  padding: 0.3rem 0.85rem; border: 1px solid var(--accento); border-radius: 8px;
+  background: var(--accento-tenue); color: var(--accento);
+  font-weight: 800; font-size: 1.15rem; line-height: 1.2; text-decoration: none; white-space: nowrap;
+}
+.marchio:hover, .marchio:focus-visible { background: var(--accento); color: var(--accento-testo); }
+body:has(.marchio-in-linea) > .testata { display: none; }
+.riga-titolo { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; min-width: 0; }
+.riga-titolo h1 { margin: 0; min-width: 0; }
+/* nome dell'app e versioni dei dati in fondo a ogni pagina, piccoli; testo completo nel tooltip */
+.piede-app { display: block; }
+.sottotitolo { color: var(--tenue); }
+.versioni { color: var(--tenue); font-size: 0.72rem; overflow-wrap: anywhere; }
+.versioni:not(:empty)::before { content: " · "; }
 
 main { padding: 0 1rem 6rem; max-width: 1280px; margin: 0 auto; }
 /* SD a larghezza piena: fino a 1650 px (ingranaggio della scheda, «Larghezza») */

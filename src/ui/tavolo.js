@@ -287,7 +287,8 @@ export function renderTavolo(radice, ctx) {
     const alTavolo = stato.selezione.map((k) => ultimi.get(k) ?? { mancante: k });
     svuota(radice, h('section', { class: 'plancia' },
       h('header', { class: 'plancia-testa' },
-        h('h1', { class: 'titolo-con-stemma' }, iconaPagina('combattimento', '96', { classe: 'badge-pagina', lato: 40 }), 'Tavolo del Master'),
+        h('div', { class: 'riga-titolo' }, h('a', { class: 'marchio marchio-in-linea', href: '#/', title: 'Elenco dei personaggi' }, 'Mutant'),
+          h('h1', { class: 'titolo-con-stemma' }, iconaPagina('combattimento', '96', { classe: 'badge-pagina', lato: 40 }), 'Tavolo del Master')),
         h('div', { class: 'riga-azioni' },
           h('span', { class: 'nota plancia-aggiornato', 'aria-live': 'polite' }, stato.errore ?? testoAggiornato(stato.ultimo)),
           h('button', { type: 'button', class: `btn${stato.sceltaAperta ? ' primario' : ''}`, 'aria-expanded': String(stato.sceltaAperta), onclick: () => { stato.sceltaAperta = !stato.sceltaAperta; disegna(); } }, 'Chi è al tavolo'),

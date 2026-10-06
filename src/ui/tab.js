@@ -101,7 +101,9 @@ export function renderTab(ctx) {
     ritratto ? h('img', { class: 'ritratto-testa', src: ritratto, alt: '' }) : null,
     h('div', { class: 'barra-titolo' },
       // stemma della Corporazione accanto al nome (img/corporazioni/<id>-96; senza file, niente)
-      h('h1', { class: 'titolo-con-stemma' }, stemma(id.corporazione, '96', { classe: 'stemma-testa', alt: '', lato: 40 }), id.nome),
+      // playtest del 05/10/2026: il pulsante Mutant a sinistra del nome (la riga in alto non c'è più)
+      h('div', { class: 'riga-titolo' }, h('a', { class: 'marchio marchio-in-linea', href: '#/', title: 'Elenco dei personaggi' }, 'Mutant'),
+        h('h1', { class: 'titolo-con-stemma' }, stemma(id.corporazione, '96', { classe: 'stemma-testa', alt: '', lato: 40 }), id.nome)),
       h('p', {}, h('strong', {}, `${id.livello}° livello`), ` · ${id.corporazione} · ${id.addestramento} · ${id.classi.map((c) => `${c.nome} ${c.grado}`).join(', ')}`),
       // riepilogo sempre visibile, in ogni tab: PV e PM attuali con la barra
       h('div', { class: 'riepilogo-risorse' },
