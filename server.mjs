@@ -40,7 +40,8 @@
 //   GET /api/scene/<id>?vista=giocatori  la scena filtrata (src/mappa/vista.js): niente token o template nascosti,
 //                                      niente token, muri e terreno sotto la nebbia, solo la copia ridotta
 //   PUT /api/scene/<id>                la salva se è valida e se `revisione` è quella del file (altrimenti 409 con
-//                                      la scena attuale); le immagini nominate devono essere in mappe/
+//                                      la scena attuale); le immagini nominate devono essere in mappe/; con
+//                                      archiviata: true passa in scene/archivio/ (non si cancella)
 //   GET /api/mappe                     immagini in mappe/: [{ file, dimensione, mtime }]
 //   GET /api/mappe/<file>              l'immagine (in cache: il nome contiene l'impronta del contenuto)
 //   POST /api/mappe?nome=…[&ridotta=1] corpo = JPG, PNG o WEBP: lo salva come <nome>-<impronta>[-ridotta].<est>
@@ -375,6 +376,14 @@ async function apiScene(req, res, percorso, scene, mappe, radice) {
   }
   const nuova = { ...s, revisione: s.revisione + 1, aggiornato: new Date().toISOString() };
   await mkdir(scene, { recursive: true });
+  if (nuova.archiviata === true) {
+    // «Archivia» (lotto 2): la scena esce dall'elenco ma resta, in scene/archivio/ (non si cancella nulla)
+    const archivio = join(scene, 'archivio');
+    await mkdir(archivio, { recursive: true });
+    if (attuale) await rename(dove, join(archivio, `${m[1]}.json`));
+    await scriviJson(join(archivio, `${m[1]}.json`), nuova);
+    return json(res, 200, nuova);
+  }
   await scriviJson(dove, nuova);
   return json(res, 200, nuova);
 }

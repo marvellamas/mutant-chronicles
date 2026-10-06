@@ -2668,7 +2668,16 @@ function validaMappa(dati, err) {
       if (!isIntero(S[k]) || S[k] < 1) err(F, `scena.${k}`, 'intero da 1 in su');
     }
     if (!Array.isArray(S.nebbie_iniziali) || !S.nebbie_iniziali.includes(S.nebbia_iniziale)) err(F, 'scena.nebbia_iniziale', 'uno dei valori di scena.nebbie_iniziali');
+    if (!isIntero(S.colonne_predefinite) || S.colonne_predefinite < 1 || S.colonne_predefinite > S.colonne_max) err(F, 'scena.colonne_predefinite', 'intero da 1 a colonne_max');
+    if (!isIntero(S.righe_predefinite) || S.righe_predefinite < 1 || S.righe_predefinite > S.righe_max) err(F, 'scena.righe_predefinite', 'intero da 1 a righe_max');
   }
+  // §4 e §12 della specifica: zoom e «Adatta allo schermo» (src/mappa/camera.js)
+  const V = m.vista;
+  if (!positivo(V?.zoom_min) || !(V?.zoom_max > V?.zoom_min)) err(F, 'vista', 'zoom_min positivo e minore di zoom_max');
+  if (!(V?.passo_tasti > 1)) err(F, 'vista.passo_tasti', 'numero maggiore di 1');
+  if (!(V?.passo_rotella > 1 && V?.passo_rotella < 1.1)) err(F, 'vista.passo_rotella', 'numero fra 1 e 1,1 (si eleva al deltaY della rotella)');
+  if (!(V?.margine_adatta_px >= 0)) err(F, 'vista.margine_adatta_px', 'numero da 0 in su');
+  if (!positivo(V?.griglia_px_schermo_minimi)) err(F, 'vista.griglia_px_schermo_minimi', 'numero positivo');
   const I = m.immagini;
   const estensioni = { jpeg: 'jpg', png: 'png', webp: 'webp' }; // quelle che src/mappa/scena.js → FILE_MAPPA accetta
   if (!isOggetto(I?.tipi) || !Object.keys(I.tipi).length) err(F, 'immagini.tipi', 'almeno un tipo di immagine');

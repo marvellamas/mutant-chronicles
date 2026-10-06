@@ -1811,3 +1811,48 @@ body.con-sfondo::before {
 .indicatore-salvataggio.salvato { color: var(--ok); border-color: var(--ok); background: var(--ok-tenue); }
 .indicatore-salvataggio.da_salvare { color: var(--errore); border-color: var(--errore); background: var(--errore-tenue); }
 .indicatore-salvataggio.senza_nome { color: var(--tenue); }
+
+/* Mappa di battaglia, lotto 2 (docs/battlemap/piano.md): elenco delle scene nella plancia e pagina #/mappa/<id> */
+.scene-elenco { list-style: none; padding: 0; margin: 0.5rem 0 0; display: flex; flex-direction: column; gap: 0.35rem; }
+.scene-elenco li { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; }
+.nome-scena { font: inherit; font-weight: 700; background: none; border: none; padding: 0; color: inherit; cursor: pointer; text-align: left; }
+.nome-scena:hover { text-decoration: underline; }
+.scene-azioni { display: inline-flex; flex-wrap: wrap; gap: 0.3rem; margin-left: auto; }
+.mappa-pagina {
+  --mappa-sfondo: #3a3a40; --mappa-vuota: #e9e6df; --mappa-traccia: #d9480f;
+  display: flex; flex-direction: column; height: 100%; min-height: 18rem; gap: 0.5rem; overflow: hidden;
+}
+@media (prefers-color-scheme: dark) {
+  .mappa-pagina { --mappa-sfondo: #0f0f12; --mappa-vuota: #2b2b31; --mappa-traccia: #ff8c5a; }
+}
+.mappa-barra { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem; }
+.mappa-titolo { margin: 0; font-size: 1.25rem; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 22rem; }
+.mappa-comandi { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; }
+.mappa-zoom { min-width: 3.6rem; text-align: center; font-variant-numeric: tabular-nums; }
+.mappa-scala { font-variant-numeric: tabular-nums; font-size: 0.9rem; }
+.mappa-stato { margin-left: auto; }
+.mappa-corpo { flex: 1; min-height: 0; display: flex; gap: 0.5rem; }
+.mappa-tela { position: relative; flex: 1; min-width: 0; overflow: hidden; background: var(--mappa-sfondo); border-radius: var(--raggio); cursor: grab; touch-action: none; outline-offset: -2px; }
+.mappa-tela.trascina, .mappa-tela.spazio.trascina { cursor: grabbing; }
+.mappa-tela.calibra { cursor: crosshair; }
+.mappa-tela.spazio { cursor: grab; }
+.mappa-livello { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.mappa-pannello { width: 17rem; flex: none; overflow-y: auto; background: var(--superficie); border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 0.6rem 0.75rem; display: flex; flex-direction: column; gap: 0.55rem; }
+.mappa-pannello[hidden] { display: none; }
+.mappa-pannello h2 { margin: 0; font-size: 1.05rem; }
+.mappa-pannello p { margin: 0; }
+.mappa-campo { display: flex; flex-direction: column; gap: 0.15rem; font-size: 0.9rem; min-width: 0; }
+.mappa-campo input[type="number"] { width: 100%; }
+.mappa-campi-riga { display: flex; gap: 0.5rem; }
+.mappa-campi-riga > * { flex: 1; }
+.mappa-campi-riga[hidden] { display: none; }
+.mappa-calibra { display: flex; flex-direction: column; gap: 0.35rem; }
+@media (max-width: 46rem) {
+  .mappa-corpo { flex-direction: column; }
+  .mappa-pannello { width: auto; max-height: 40%; }
+  .mappa-stato { margin-left: 0; }
+}
+/* la pagina della mappa occupa tutta la finestra: niente piè di pagina, niente larghezza massima */
+body:has(.mappa-pagina) { display: flex; flex-direction: column; height: 100dvh; overflow: hidden; }
+main:has(> .mappa-pagina) { max-width: none; width: 100%; padding: 0.5rem 0.75rem; flex: 1; min-height: 0; }
+body:has(.mappa-pagina) .piede { display: none; }

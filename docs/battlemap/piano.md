@@ -21,7 +21,7 @@ tavolo (A.122).
 | --- | --- | --- |
 | §4 Immagine di fondo, copia ridotta | Immagine o video, nessuna copia ridotta | Upload al server, copia ridotta fatta dal browser del master |
 | §4 Griglia calibrabile e bloccabile | Px per Q dalla larghezza in Q, scostamento, opacità | Calibrazione tracciando un quadretto o con i valori; blocco |
-| §4 Zoom e pan | Rotella verso il cursore | Camera in un modulo puro (`src/mappa/vista-camera.js`) |
+| §4 Zoom e pan | Rotella verso il cursore | Camera in un modulo puro (`src/mappa/camera.js`) |
 | §5 Nebbia manuale | Tratti a pennello in pixel, applicati sul frame del master | Maschera di Q coperti, filtrata dal server |
 | §6 Muri a pennello per Q | Muri e porte come segmenti, costruttore a stanze | Muri come celle |
 | §7 Token con Taglia, PV, Stati, nascosti | Pedina da 1 a 10 Q, visibilità «solo Direttore», niente PV né Stati | Ingombro dalla Taglia; PV e Stati dallo scontro |
@@ -194,6 +194,8 @@ nel browser di quello schermo, non nella scena.
 ### Versione minima (§14), un lotto per prompt, in ordine
 
 Stato: lotto 1 fatto il 06/10/2026 (scene e immagini sul server, logica pura e test: `tests/mappa.test.js`, `tests/mappa-server.test.js`; l'elenco delle scene nella plancia passa al lotto 2, con la prima interfaccia).
+
+Stato: lotto 2 fatto il 06/10/2026: elenco delle scene nella plancia (voce «Mappa»: nuova, apri, rinomina, duplica, archivia in `scene/archivio/`), pagina `#/mappa/<id>` con immagine (copia ridotta preparata dal browser), Canvas a tre livelli, zoom, spostamento, «Adatta allo schermo», griglia calibrata tracciando un riquadro o con i valori, colore, opacità, blocco. Logica pura in `src/mappa/camera.js` e `src/mappa/griglia.js` (`tests/mappa-griglia.test.js`); interfaccia in `src/ui/mappa/`. Prova con un'immagine di 4000 × 3000 px: 0,1–0,2 ms di CPU per disegno.
 
 | # | Lotto | Dimensione | Dipende da | Test | Al tavolo, alla fine del lotto |
 | --- | --- | --- | --- | --- | --- |

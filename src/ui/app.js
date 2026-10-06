@@ -21,6 +21,7 @@ import { leggiScontroAperto, leggiScontro, salvaScontro } from './scontro.js';
 import { registraRiga } from '../scontro.js';
 import { elencoUnito, confronta, chiaveDaFile, chiavePersonaggio, messaggioSalvataggio, attesaRitentativo, nomeFileLibero, haNome, fileProvvisorio } from '../cartella.js';
 import { renderTavolo } from './tavolo.js';
+import { renderMappa } from './mappa/pagina.js';
 import { avviso, avvisoErrore } from './avvisi.js';
 import { controlloInUso } from './ridisegno.js';
 import { alRound, collegamentoScontro, tecnicheScadute, statiScaduti, durateCarta, testoDurata } from '../round-scontro.js';
@@ -173,7 +174,21 @@ function daIndirizzo() {
     document.title = 'Tavolo del Master · Mutant';
     // «← Torna al tavolo» da una scheda: la plancia rimette lo scorrimento di prima (src/ui/ritorno.js)
     const scorrimento = scorrimentoDaRimettere(sessionStorage);
-    stato.fermaTavolo = renderTavolo(radice, { dati: stato.dati, scorrimento, azioni: { personaggi: () => vai('#/'), apri: (r) => apriDaCartella(r, { dalTavolo: true }) } });
+    stato.fermaTavolo = renderTavolo(radice, { dati: stato.dati, scorrimento, azioni: { personaggi: () => vai('#/'), apri: (r) => apriDaCartella(r, { dalTavolo: true }), mappa: (id) => vai(`#/mappa/${id}`) } });
+    return;
+  }
+  // Mappa di battaglia (lotto 2, docs/battlemap/piano.md): la scena nella vista master, solo con il server
+  const scenaMappa = location.hash.match(/^#\/mappa\/([a-z0-9-]{1,60})$/);
+  if (scenaMappa) {
+    stato.id = null;
+    stato.scelte = null;
+    stato.livelli = [];
+    if (!stato.cartella) {
+      stato.messaggioHome = { tipo: 'attenzione', testo: 'La mappa di battaglia serve il server di Mutant: avvia l’app con avvia-server.bat (node server.mjs).' };
+      return vai('#/');
+    }
+    document.title = 'Mappa · Mutant';
+    stato.fermaTavolo = renderMappa(radice, { dati: stato.dati, id: scenaMappa[1], azioni: { tavolo: () => vai('#/tavolo') } });
     return;
   }
   const sali = location.hash.match(/^#\/p\/([\w-]+)\/sali\/(\d+)$/);

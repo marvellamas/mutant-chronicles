@@ -14,30 +14,75 @@
     "movimenti_max": 500,
     "annulla_max": 50,
     "nebbia_iniziale": "coperta",
-    "nebbie_iniziali": ["coperta", "scoperta"]
+    "nebbie_iniziali": [
+      "coperta",
+      "scoperta"
+    ],
+    "colonne_predefinite": 30,
+    "righe_predefinite": 20
   },
   "immagini": {
     "_nota": "§4 della specifica: JPG, PNG o WEBP. L'originale va al PC del master; la copia ridotta la prepara il browser del master al caricamento (nessuna libreria nativa sul server) e va alla vista giocatori e ai tablet.",
     "tipi": {
-      "jpeg": { "estensione": "jpg", "mime": "image/jpeg" },
-      "png": { "estensione": "png", "mime": "image/png" },
-      "webp": { "estensione": "webp", "mime": "image/webp" }
+      "jpeg": {
+        "estensione": "jpg",
+        "mime": "image/jpeg"
+      },
+      "png": {
+        "estensione": "png",
+        "mime": "image/png"
+      },
+      "webp": {
+        "estensione": "webp",
+        "mime": "image/webp"
+      }
     },
     "massimo_mb": 30,
-    "ridotta": { "lato_massimo_px": 2048, "tipo": "webp", "qualita": 0.85 }
+    "ridotta": {
+      "lato_massimo_px": 2048,
+      "tipo": "webp",
+      "qualita": 0.85
+    }
   },
   "griglia": {
     "_nota": "§4 della specifica: q_px = pixel dell'immagine originale per un Q (1,5 m); lo scostamento dice dove comincia il primo quadretto.",
     "q_px_min": 8,
     "q_px_max": 600,
-    "predefinita": { "q_px": 64, "scosto_x": 0, "scosto_y": 0, "colore": "#000000", "opacita": 0.35, "bloccata": false }
+    "predefinita": {
+      "q_px": 64,
+      "scosto_x": 0,
+      "scosto_y": 0,
+      "colore": "#000000",
+      "opacita": 0.35,
+      "bloccata": false
+    }
+  },
+  "vista": {
+    "_nota": "§4 e §12 della specifica: zoom con la rotella verso il puntatore e con + e −; «Adatta allo schermo» lascia un margine. La griglia non si disegna sotto griglia_px_schermo_minimi pixel per Q sullo schermo (troppo fitta per servire).",
+    "zoom_min": 0.05,
+    "zoom_max": 8,
+    "passo_tasti": 1.25,
+    "passo_rotella": 1.0015,
+    "margine_adatta_px": 24,
+    "griglia_px_schermo_minimi": 6
   },
   "token": {
     "_nota": "§7 della specifica: lato del token in Q dalla Taglia (data/formato_nemici.json → taglia). Il token sta sempre su Q interi; q è il Q in alto a sinistra del suo ingombro.",
-    "ingombro_per_taglia": { "normale": 1, "grande": 2 },
-    "ingombri_ammessi": [1, 2, 3],
+    "ingombro_per_taglia": {
+      "normale": 1,
+      "grande": 2
+    },
+    "ingombri_ammessi": [
+      1,
+      2,
+      3
+    ],
     "TODO(Davide)": "A.126: quando una creatura occupa 3 × 3 Q («se indicato», §7 della specifica)? Serve un campo «ingombro in Q» nel formato dei nemici, oltre a normale e grande?",
-    "riferimenti": ["partecipante", "veicolo", "segnaposto"]
+    "riferimenti": [
+      "partecipante",
+      "veicolo",
+      "segnaposto"
+    ]
   },
   "movimento": {
     "_nota": "Parametri dell'area raggiungibile (§8 della specifica, lotto 5): provvisori finché Davide non risponde. Costi in Q.",
@@ -53,11 +98,20 @@
     "TODO(Davide) occupazione": "A.127: durante il movimento si può passare nel Q di un alleato? E di un avversario? Ci si può fermare nel Q di un alleato? (Provvisorio: alleati sì, avversari no, fermarsi no.)",
     "movimento_diviso": true,
     "TODO(Davide) movimento diviso": "A.129: nello stesso turno si può muovere, attaccare e muovere ancora, con il Passo speso a pezzi (provvisorio: sì)? Corsa e Scatto consumano anche l'Azione Principale?",
-    "fasce": ["passo", "corsa", "scatto"]
+    "fasce": [
+      "passo",
+      "corsa",
+      "scatto"
+    ]
   },
   "template": {
     "_nota": "§10 della specifica (fase 2): forme e durata predefinita in Round.",
-    "forme": ["quadrato", "cono", "cerchio", "rettangolo"],
+    "forme": [
+      "quadrato",
+      "cono",
+      "cerchio",
+      "rettangolo"
+    ],
     "durata_round_predefinita": 1
   }
 }

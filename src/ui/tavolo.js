@@ -31,6 +31,7 @@ import { riquadroCollega, leggiRete } from './collega.js';
 import { cartaVeicoloPlancia } from './veicoli.js';
 import { stessaChiave } from '../veicoli-registro.js';
 import { elencoVeicoli, aggiornaVeicolo } from './veicoli-registro.js';
+import { statoScene, pannelloScene, apriElencoScene } from './mappa/scene.js';
 
 const INTERVALLO_MS = 3000;
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
@@ -78,6 +79,8 @@ export function renderTavolo(radice, ctx) {
     firmaBestiario: null,
     bestiarioAperto: false,
     bozzaNemici: null,
+    // mappa di battaglia (lotto 2, docs/battlemap/piano.md): elenco delle scene, letto quando si apre
+    scene: statoScene(),
     // «Collega i giocatori»: indirizzi della rete (server.mjs → /api/rete), riquadro aperto finché non lo si chiude
     rete: null,
     collegaAperto: true,
@@ -298,6 +301,7 @@ export function renderTavolo(radice, ctx) {
           // richiesta di Marcello del 03/10: bozze di scontro e nemici dal Bestiario, anche senza scontro aperto
           h('button', { type: 'button', class: 'btn', title: 'Bozze di scontro: nemici, quanti, note, difficoltà; «Inizia» le apre con l’Iniziativa tirata', onclick: preparaScontro }, 'Prepara scontro'),
           h('button', { type: 'button', class: 'btn', title: 'Procedura guidata dal Bestiario (base, grado, moduli), oppure tutto a caso', onclick: () => creaNemico() }, 'Crea nemico'),
+          h('button', { type: 'button', class: 'btn', title: 'Scene della mappa di battaglia: nuova, apri, rinomina, duplica, archivia', onclick: () => apriElencoScene(stato.scene, disegna) }, 'Mappa'),
           h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.personaggi() }, 'Personaggi'))),
       stato.esitoEsempi ? h('p', { class: 'riquadro attenzione', role: 'status' }, stato.esitoEsempi) : null,
       h('p', { class: 'nota' }, 'Sola lettura: i valori sono quelli delle schede in personaggi/, ricalcolati con le regole attuali. Per cambiarli si apre il personaggio (clic sulla carta).'),
@@ -322,6 +326,7 @@ export function renderTavolo(radice, ctx) {
         h('div', { class: 'plancia-griglia' }, nemiciInCarta().map((p) => cartaNemico(ctx, p, { modifica, durate: durateNemico(p), diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p), onAttacca: attacchiDi(p).length ? () => attacca(p, alTavolo) : null, onLancia: (i) => lancia(p, i, alTavolo), onRiduci: (v) => modifica((x) => riduciNemico(x, p.id, v)), onRegime: (k, r) => modifica((x) => confermaRegimeNemico(x, p.id, k, r, new Date())) }))),
       ] : null,
       sezioneVeicoli(),
+      pannelloScene(ctx, stato.scene, { ridisegna: disegna, apri: (id) => ctx.azioni.mappa(id) }),
       pannelloBestiario(ctx, stato.bestiario, {
         aperto: stato.bestiarioAperto,
         onToggle: (v) => { stato.bestiarioAperto = v; },

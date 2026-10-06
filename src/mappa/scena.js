@@ -36,13 +36,14 @@ export function dimensioniGriglia(mappa, griglia) {
 }
 
 /**
- * Scena nuova, con revisione 0 (il server la porta a 1 al primo salvataggio). Senza immagine servono colonne e
- * righe (griglia vuota); con l'immagine si calcolano dalla griglia. Nebbia iniziale dai dati (§5: coperta).
+ * Scena nuova, con revisione 0 (il server la porta a 1 al primo salvataggio). Senza immagine, griglia vuota di
+ * colonne × righe (predefinite in data/mappa.json → scena); con l'immagine si calcolano dalla griglia. Nebbia
+ * iniziale dai dati (§5: coperta).
  */
 export function nuovaScena({ id, nome, mappa = null, griglia = {}, colonne, righe, nebbia, dati, adesso = new Date() }) {
   const D = dati.mappa;
   const g = { ...D.griglia.predefinita, ...griglia };
-  const dim = mappa ? dimensioniGriglia(mappa, g) : { colonne, righe };
+  const dim = mappa ? dimensioniGriglia(mappa, g) : { colonne: colonne ?? D.scena.colonne_predefinite, righe: righe ?? D.scena.righe_predefinite };
   const iniziale = nebbia ?? D.scena.nebbia_iniziale;
   const vuota = () => inBase64(nuovaMaschera(dim.colonne, dim.righe));
   return {
@@ -160,7 +161,27 @@ export function validaScena(s, dati) {
     if (c[campo] !== null && c[campo] !== undefined && !(isTesto(c[campo]) && ID_SCENA.test(c[campo]))) return `collegamento.${campo}: id di scontro o null`;
   }
 
+  if (s.archiviata !== undefined && typeof s.archiviata !== 'boolean') return 'archiviata: vero o falso';
   if (!Array.isArray(s.movimenti) || s.movimenti.length > D.scena.movimenti_max) return `movimenti: elenco di al massimo ${D.scena.movimenti_max}`;
   if (!Array.isArray(s.annulla) || s.annulla.length > D.scena.annulla_max) return `annulla: elenco di al massimo ${D.scena.annulla_max}`;
   return null;
+}
+
+/** Nome della scena ridotto a id: minuscole senza accenti, cifre e trattini. */
+const ridotto = (t) => String(t ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+  .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40) || 'scena';
+const due = (n) => String(n).padStart(2, '0');
+
+/** Id di una scena nuova dal nome e dall'ora: «cripta-20261006-201500» (id e nome del file in scene/). */
+export function idScena(nome, d = new Date()) {
+  return `${ridotto(nome)}-${d.getFullYear()}${due(d.getMonth() + 1)}${due(d.getDate())}-${due(d.getHours())}${due(d.getMinutes())}${due(d.getSeconds())}`;
+}
+
+/**
+ * Copia di una scena con un altro id e un altro nome («Duplica» della plancia): stessa immagine, stessa griglia,
+ * stesse maschere e token; revisione 0, senza registro dei movimenti né annulla, non archiviata.
+ */
+export function duplicaScena(s, { id, nome, adesso = new Date() }) {
+  const { aggiornato, archiviata, ...resto } = structuredClone(s);
+  return { ...resto, id, nome, revisione: 0, creato: adesso.toISOString(), movimenti: [], annulla: [] };
 }

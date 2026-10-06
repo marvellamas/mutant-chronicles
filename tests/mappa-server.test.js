@@ -136,3 +136,15 @@ test('le cartelle dei dati non si servono come file statici', async () => {
     assert.equal((await fetch(`${base}${p}`)).status, 404, p);
   }
 });
+
+test('«Archivia»: la scena esce dall’elenco e passa in scene/archivio/, senza cancellare nulla', async () => {
+  const s = nuovaScena({ id: 'da-archiviare', nome: 'Da archiviare', colonne: 4, righe: 3, dati });
+  const salvata = await (await metti(s)).json();
+  const r = await metti({ ...salvata, archiviata: true });
+  assert.equal(r.status, 200);
+  assert.equal((await r.json()).archiviata, true);
+  const elenco = await (await fetch(`${base}/api/scene`)).json();
+  assert.ok(!elenco.some((x) => x.id === 'da-archiviare'));
+  assert.ok(readdirSync(join(scene, 'archivio')).includes('da-archiviare.json'));
+  assert.ok(!readdirSync(scene).includes('da-archiviare.json'));
+});

@@ -81,7 +81,7 @@ src/
   veicoli.js    veicoli (Manuale dei Veicoli 0.2): strutture, colpi, riparazioni, mezzi del PG; ui/veicoli.js la tab
   veicoli-registro.js  registro unico dei veicoli (A.91, A.105): record, migrazione, patch senza perdite, movimento all'INI del conducente
   versione.js   confronto fra versione caricata e versione.json; ui/aggiornamento.js la barra «Nuova versione»
-  mappa/        mappa di battaglia (branch battlemap, docs/battlemap/piano.md): scena.js (formato e validaScena), celle.js (maschere di Q), token.js, vista.js (vista giocatori filtrata dal server), immagine.js (tipo e dimensioni delle immagini)
+  mappa/        mappa di battaglia (branch battlemap, docs/battlemap/piano.md): scena.js (formato e validaScena), celle.js (maschere di Q), token.js, vista.js (vista giocatori filtrata dal server), immagine.js (tipo e dimensioni delle immagini), camera.js (zoom e spostamento), griglia.js (calibrazione e linee); interfaccia in src/ui/mappa/ (pagina #/mappa/<id>, elenco delle scene nella plancia, canvas a livelli)
   provenienza.js  righe { fonte, valore, nota? } dei valori calcolati (AR, VA, Salvezze, Iniziativa, Movimento, danno): le stampano i tooltip della SD e la SS
   stampa.js     dati dei fogli di stampa e delle tab
   ui/           wizard a passi (fasi 0–9 del §2.0), scheda a tab, Sali di livello, stampa, import/export
