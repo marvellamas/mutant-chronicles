@@ -175,6 +175,23 @@ Fuori perimetro per ora: tiri automatici fuori dalla plancia; manovre, inseguime
 - Le domande a Davide stanno nel Google Doc «per-davide.md» (fonte unica, link fisso) e seguono `docs/protocollo-davide.md`. Quando si **crea** un `TODO(Davide)`, la voce A.n nuova va nel «pacchetto per il Doc» di fine sessione (§5 del protocollo). Quando Davide **risponde** (in coda al Doc, sezione 7): riga datata in `docs/risposte-master.md`, decisione applicata nei dati, TODO tolto, e nel pacchetto lo spostamento della voce nella sezione «Risolte». Claude Code non scrive nei Google Doc e non modifica a mano `docs/per-davide.md`: il pacchetto lo applica Cowork (o Marcello).
 - Commit piccoli e descrittivi, in italiano. **Prima di ogni commit che tocca `src/`, `css/`, `data/`, `index.html` o `img/immagini.json`: `node tools/versione.mjs`** (aggiorna `versione.json` e l'importmap con `?v=` in `index.html`; `--controlla` dice se servirebbe) e si committano anche quei due file (docs/cache.md). Lo fa da sé l'hook pre-commit, **da installare una volta per PC** con `node tools/installa-hook.mjs` (o `npm run hook`): rigenera e aggiunge i due file al commit, e ferma il commit se nei file serviti ci sono modifiche non aggiunte. `npm test` fallisce (tests/versione.test.js) se la versione non corrisponde al contenuto.
 
+## Regole permanenti di lavoro
+
+Valgono per ogni prompt, anche quando il prompt non le ripete.
+
+- Rispondere sempre in italiano.
+- Un ambito per prompt: niente lavori fuori da quello chiesto (le cose notate si segnalano nel riepilogo).
+- Le regole stanno in `data/`, non nel codice.
+- Per le ambiguità, `TODO(Davide)` nel dato o nel codice, con la domanda numerata (A.n) nelle aperte di `docs/risposte-master.md` e nel pacchetto per il Doc «per-davide.md».
+- Cartelle reali intoccabili: `personaggi/`, `tavolo/`, `scontri/`, `nemici/`, `veicoli/`, `scene/`, `mappe/`, `salvataggi/`. Intoccabile anche la porta 3000. Le prove si fanno su cartelle temporanee nello scratchpad e su un'altra porta (3017).
+- I PG reali (Drive «FILE PG», `PersonaggiBackup/`) solo in lettura: si lavora sulle copie.
+- Prima del commit devono essere verdi:
+  - i test (`npm test`);
+  - il validatore dei dati;
+  - `node tools/verifica_frasi.mjs`.
+- Dopo il commit, il push. Se fallisce per le credenziali, dirlo.
+- Riepilogo finale breve, con `git status -sb`.
+
 ## Come trattare i prompt di Marcello
 
 I messaggi di Marcello sono ordini di lavoro, anche quando sono solo un testo
