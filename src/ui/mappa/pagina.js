@@ -27,6 +27,7 @@ import { DISPOSIZIONI, NOMI_DISPOSIZIONI, prossimaDisposizione, normalizzaDispos
 import { barraIniziativa } from '../../mappa/iniziativa.js';
 import { barraIniziativaEl, stileBordo } from './barra-iniziativa.js';
 import { bordoToken, assegnaColori, cambiaColore, tavolozzaPer, famiglia } from '../../mappa/colori.js';
+import { avversariZoc, celleZoc, passiInZoc, attacchiDiOpportunita, testoOpportunita } from '../../mappa/zoc.js';
 import { scegliColore, chiedi, informa } from '../finestrella.js';
 import { calibraDaQuadretto, applicaGriglia, dimensioniMappa, lineeVisibili, testoScala } from '../../mappa/griglia.js';
 import { creaTela } from './canvas.js';
@@ -38,11 +39,11 @@ import { tratto, valoreModo, nebbiaProvvisoria, chiudiPennellata, rettangoloNebb
 import { trattoMuri, muriProvvisori, chiudiTrattoMuri, rettangoloMuri } from '../../mappa/muri.js';
 import { areaRaggiungibile, costoVerso, percorso, fasceRimaste, fasciaDi, celleArea, piuVicinaRaggiungibile } from '../../mappa/area.js';
 import { muoviToken, usatoNelRound, mossoNelRound, annullaUltima, annullaUltimoMovimento, cambiaTokenAnnullabile, nuovoTurno } from '../../mappa/annulla.js';
-import { disegnaMuri, disegnaArea, disegnaPercorso, coloriAree } from './disegno-aree.js';
+import { disegnaMuri, disegnaArea, disegnaPercorso, disegnaZoc, coloriAree } from './disegno-aree.js';
 import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
 import { diTurno } from '../../scontro.js';
 import { statoMovimento, muoviVeicolo } from '../../veicoli-registro.js';
-import { rigaMovimentoLibero } from '../../scontro.js';
+import { rigaMovimentoLibero, rigaOpportunita, opportunitaNelRound } from '../../scontro.js';
 import { aggiornaInScontri } from '../immagine-nemico.js';
 import { aggiornaVeicolo } from '../veicoli-registro.js';
 import { creaGesti } from './gesti.js';
@@ -119,6 +120,8 @@ export function renderMappa(radice, ctx) {
     turnoVisto: null,
     // ritocchi del 06/10: l'area raggiungibile si mostra o si nasconde (pannello, clic destro, tasto M), ricordato
     mostraArea: true,
+    // ZoC (07/10): le zone di controllo degli avversari del token scelto, interruttore «Mostra ZoC» (tasto Z)
+    mostraZoc: true,
   };
   const B = V.barra;
   const chiaveDisp = chiaveSchermo(window.screen?.width ?? 0, window.screen?.height ?? 0);
@@ -127,6 +130,7 @@ export function renderMappa(radice, ctx) {
   st.disp = normalizzaDisposizione(leggiLocale(chiaveDisp), B);
   st.centra = leggiLocale('mutant-mappa-centra-turno') !== false;
   st.mostraArea = leggiLocale('mutant-mappa-mostra-area') !== false;
+  st.mostraZoc = leggiLocale('mutant-mappa-mostra-zoc') !== false;
   const leggiFonti = creaFonti(ctx.dati);
 
   // ── Struttura della pagina, creata una volta: si aggiornano solo i testi e i campi ──
@@ -251,7 +255,16 @@ export function renderMappa(radice, ctx) {
         { x0: Math.floor((r.x0 - g.scosto_x) / q), x1: Math.ceil((r.x1 - g.scosto_x) / q), y0: Math.floor((r.y0 - g.scosto_y) / q), y1: Math.ceil((r.y1 - g.scosto_y) / q) });
       // area raggiungibile del token scelto, sopra la nebbia (il master la vede sempre)
       // con «Mostra area» spento non si disegna (il percorso sotto il puntatore resta, nel livello «sopra»)
-      const disegnaAreaScelta = () => { const a = st.mostraArea ? areaScelta() : null; if (a?.celle) disegnaArea(c, { scena: s, cam: st.cam, info, celle: a.celle, colori, stile: V.area }); };
+      const disegnaAreaScelta = () => {
+        // prima le ZoC degli avversari del token scelto o trascinato (sotto l'area), poi l'area
+        const id = st.trascina?.modo === 'token' ? st.trascina.token : st.selezionato;
+        if (st.mostraZoc && id && !disegnoAttivo()) {
+          const avv = avversariZoc(s, st.pezzi, id, ctx.dati);
+          if (avv.length) disegnaZoc(c, { scena: s, cam: st.cam, info, celle: celleZoc(s, avv), stile: ctx.dati.mappa.zoc });
+        }
+        const a = st.mostraArea ? areaScelta() : null;
+        if (a?.celle) disegnaArea(c, { scena: s, cam: st.cam, info, celle: a.celle, colori, stile: V.area });
+      };
       if (!tratti.length) { disegnaAreaScelta(); return; }
       c.save();
       c.globalAlpha = 0.5;
@@ -272,7 +285,7 @@ export function renderMappa(radice, ctx) {
         disegnaToken(c, { scena: st.scena, cam: st.cam, pezzi: st.mappaPezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: st.selezionato, trascina: t, bordo: bordoDi, alone: ctx.dati.mappa.colori.alone_turno });
       }
       // percorso del token scelto (o trascinato) verso il quadretto sotto il puntatore, con i Q che costa
-      if (st.percorso && st.scena) disegnaPercorso(c, { scena: st.scena, cam: st.cam, percorso: st.percorso.punti, ingombro: st.percorso.ingombro, costo: st.percorso.costo, fascia: st.percorso.fascia, colori: coloriAree(el.riquadro) });
+      if (st.percorso && st.scena) disegnaPercorso(c, { scena: st.scena, cam: st.cam, percorso: st.percorso.punti, ingombro: st.percorso.ingombro, costo: st.percorso.costo, fascia: st.percorso.fascia, colori: coloriAree(el.riquadro), inZoc: zocDelPercorso(st.percorso), coloreZoc: ctx.dati.mappa.zoc.colore });
       // anteprima del rettangolo di nebbia o di muri
       const tn = st.trascina;
       if (tn?.modo === 'disegno' && tn.forma === 'rettangolo' && st.scena) {
@@ -581,6 +594,7 @@ export function renderMappa(radice, ctx) {
       annullaMovimento: () => annullaMovimentoUi(scelto.id),
       nuovoTurno: () => nuovoTurnoUi(scelto.id),
       mostraArea: () => cambiaMostraArea(),
+      mostraZoc: () => cambiaMostraZoc(),
       nuovoTurnoTutti: () => nuovoTurnoUi(null),
       nascondi: () => cambiaToken(scelto.id, (x) => ({ ...x, nascosto: !x.nascosto })),
       ingombro: (n) => cambiaToken(scelto.id, (x) => ({ ...x, ingombro: n, q: agganciaQ(st.scena.griglia, centroToken(st.scena.griglia, x).x, centroToken(st.scena.griglia, x).y, n) }), { controllaSovrapposti: true }),
@@ -693,6 +707,7 @@ export function renderMappa(radice, ctx) {
       ['Ctrl + clic su un token', 'scheda completa (PG) o mini-scheda (nemico)'],
       ['Clic destro su un token', 'menu: fasce, Annulla movimento, Nuovo turno, schede, Nascondi, Colore, Togli'],
       ['M', 'mostra o nasconde l’area di movimento'],
+      ['Z', 'mostra o nasconde le zone di controllo (ZoC) degli avversari'],
       ['Tab (Maiusc + Tab indietro)', 'cambia disposizione: Mappa grande, Equilibrata, Scontro grande'],
       ['Doppio clic sul bordo della barra', 'disposizione successiva; trascinarlo cambia la larghezza'],
       ['Ctrl + Z', 'annulla l’ultima azione del master (movimento, muri, nebbia, token)'],
@@ -985,6 +1000,48 @@ export function renderMappa(radice, ctx) {
     st.area = t ? { token: t.id, ...infoArea(t) } : null;
     return st.area;
   }
+  /** Passi del percorso dentro una ZoC degli avversari del token che si muove (null con «Mostra ZoC» spento). */
+  function zocDelPercorso(per) {
+    const id = st.trascina?.modo === 'token' ? st.trascina.token : st.selezionato;
+    if (!st.mostraZoc || !id || !per?.punti?.length) return null;
+    return passiInZoc(per.punti, per.ingombro, avversariZoc(st.scena, st.pezzi, id, ctx.dati));
+  }
+  /** «Mostra ZoC»: interruttore ricordato (localStorage), come «Mostra area». */
+  function cambiaMostraZoc(v = !st.mostraZoc) {
+    st.mostraZoc = v;
+    scriviLocale('mutant-mappa-mostra-zoc', v);
+    avviso(v ? 'Zone di controllo mostrate (Z per nasconderle).' : 'Zone di controllo nascoste (Z per mostrarle); gli avvisi degli Attacchi di Opportunità restano.', { chiave: 'mostra-zoc' });
+    disegnaPannelli();
+    ridisegna(['aree', 'sopra']);
+  }
+  /**
+   * Dopo un movimento (non «Libero»): gli Attacchi di Opportunità provocati (Giocatore §5.3: uscire dalla portata di
+   * un avversario). Un avviso per avversario con «Attacca!» quando l'avversario ha un attacco nella plancia, e una riga
+   * nel registro dello scontro aperto. Solo segnalazione: nessun tiro.
+   */
+  function segnalaOpportunita(t, punti) {
+    const pz = pezzoDi(t);
+    if (!pz || pz.tipo === 'veicolo' || pz.aZero || punti.length < 2) return;
+    const avv = avversariZoc(st.scena, st.pezzi, t.id, ctx.dati);
+    const scontro = st.fonti?.scontro ?? null;
+    const eccezioni = (pz.scheda?.capacita ?? []).filter((c) => String(c.effetto ?? '').includes(ctx.dati.mappa.zoc.frase_eccezione)).map((c) => c.nome);
+    const righeRegistro = [];
+    for (const a of attacchiDiOpportunita(punti, t.ingombro, avv)) {
+      const idDa = a.token.rif.id;
+      const gia = scontro && opportunitaNelRound(scontro, idDa);
+      const righe = [testoOpportunita(pz.nome, a.pezzo.nome),
+        gia ? `${a.pezzo.nome} ha già avuto un Attacco di Opportunità in questo Round: uno solo per Round.` : null,
+        `Salvo Ritirata${eccezioni.length ? ` o ${eccezioni.join(', ')}` : ''}. Nessun tiro automatico.`];
+      const puo = scontro && st.planciaBarra?.puoAttaccare?.(idDa);
+      avviso(righe, {
+        tipo: 'info', durata: 15000,
+        azioni: puo ? [{ testo: `Attacca! (${a.pezzo.nome} → ${pz.nome})`, fai: () => st.planciaBarra.attaccaContro(idDa, t.rif.id) }] : [],
+      });
+      if (scontro && !gia) righeRegistro.push({ da: idDa, nomeDa: a.pezzo.nome, contro: t.rif.id, nomeContro: pz.nome });
+    }
+    // tutte le righe in una sola scrittura dello scontro (con la revisione)
+    if (righeRegistro.length) aggiornaInScontri(scontro.id, (s) => righeRegistro.reduce((x, r) => rigaOpportunita(x, r), s)).catch((e) => avvisoErrore(`Righe del registro non scritte: ${e.message}`));
+  }
   /** «Mostra area»: interruttore ricordato (localStorage). */
   function cambiaMostraArea(v = !st.mostraArea) {
     st.mostraArea = v;
@@ -1024,6 +1081,8 @@ export function renderMappa(radice, ctx) {
     }
     const scontro = st.fonti?.scontro ?? null;
     const fascia = libero ? null : fasciaDi(costo, info.rimaste);
+    // ZoC: il percorso fatto, per gli Attacchi di Opportunità (non con «Libero»: è il master che sposta)
+    const fatto = !libero && info.area ? percorso(info.area, q) : [];
     st.scena = muoviToken(st.scena, t.id, { a: q, costo: libero ? null : costo, fascia, scontro: scontro?.id ?? null, round: scontro?.round ?? null, libero }, ctx.dati);
     if (libero) {
       avviso(`Libero: ${nome} spostato; non conta nel movimento${scontro ? ' (riga nel registro)' : ''}.`, { tipo: 'info', chiave: 'fuori-area' });
@@ -1041,6 +1100,7 @@ export function renderMappa(radice, ctx) {
     avvisaSovrapposti([t.id]);
     invalidaArea();
     dopoCambioToken();
+    if (fatto.length) segnalaOpportunita(t, fatto);
     return true;
   }
   function annullaMovimentoUi(id = st.selezionato) {
@@ -1073,7 +1133,7 @@ export function renderMappa(radice, ctx) {
   function movimentoPannello(t) {
     const info = st.area?.token === t.id ? st.area : infoArea(t);
     const ultimo = [...st.scena.movimenti].reverse().find((x) => x.token === t.id);
-    return { mostraArea: st.mostraArea, movimento: info.movimento, rimaste: info.rimaste, usato: info.usato, disponibili: info.disponibili, fascia: st.fascia, motivo: info.motivo, annullabile: !!ultimo, veicolo: t.rif.tipo === 'veicolo', andatura: pezzoDi(t)?.andatura ?? null, senzaScontro: !st.fonti?.scontro };
+    return { mostraArea: st.mostraArea, mostraZoc: st.mostraZoc, movimento: info.movimento, rimaste: info.rimaste, usato: info.usato, disponibili: info.disponibili, fascia: st.fascia, motivo: info.motivo, annullabile: !!ultimo, veicolo: t.rif.tipo === 'veicolo', andatura: pezzoDi(t)?.andatura ?? null, senzaScontro: !st.fonti?.scontro };
   }
   /** «Nuovo turno» senza scontro aperto: il conteggio del movimento riparte per un token o per tutti (null). */
   function nuovoTurnoUi(id = null) {
@@ -1297,6 +1357,7 @@ export function renderMappa(radice, ctx) {
       { testo: 'Scatta', azione: () => cambiaFascia(3), scelta: st.fascia === 3, disabilitata: !Number.isFinite(mov?.scatto), titolo: 'Amplia l’area fino allo Scatto' },
       { testo: 'Libero', azione: () => cambiaFascia(LIBERO), scelta: st.fascia === LIBERO, titolo: 'In qualunque quadretto, senza area e senza conteggio (scorciatoia: Maiusc)' },
       { testo: st.mostraArea ? 'Nascondi area (M)' : 'Mostra area (M)', azione: () => cambiaMostraArea() },
+      { testo: st.mostraZoc ? 'Nascondi ZoC (Z)' : 'Mostra ZoC (Z)', azione: () => cambiaMostraZoc(), titolo: 'Zone di controllo degli avversari: uscendone si provoca un Attacco di Opportunità (§5.3)' },
       { testo: 'Annulla ultimo movimento', azione: () => annullaMovimentoUi(tok.id), disabilitata: !ultimo },
       { testo: 'Nuovo turno', azione: () => nuovoTurnoUi(tok.id), disabilitata: conScontro, titolo: conScontro ? 'Con lo scontro aperto il movimento riparte al nuovo Round («Avanti»)' : 'Il movimento di questo token riparte da 0' },
       null,
@@ -1319,6 +1380,7 @@ export function renderMappa(radice, ctx) {
     if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === 'z') { e.preventDefault(); if (st.scena) annullaUi(); return; }
     if (e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.key === 'm' || e.key === 'M') { e.preventDefault(); cambiaMostraArea(); return; }
+    if (e.key === 'z' || e.key === 'Z') { e.preventDefault(); cambiaMostraZoc(); return; }
     if (e.key === '?') { e.preventDefault(); apriAiuto(); return; }
     if (e.key === 'Escape' && el.strumenti.open) { el.strumenti.open = false; return; }
     if (e.key === '+' || e.key === '=' || e.code === 'NumpadAdd') { e.preventDefault(); zoomCentro(V.passo_tasti); } else if (e.key === '-' || e.code === 'NumpadSubtract') { e.preventDefault(); zoomCentro(1 / V.passo_tasti); } else if (e.code === 'Space') {

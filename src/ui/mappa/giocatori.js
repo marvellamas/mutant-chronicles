@@ -16,6 +16,7 @@ import { creaTela } from './canvas.js';
 import { creaGesti } from './gesti.js';
 import { disegnaToken, coloriMappa, creaImmagini } from './disegno-token.js';
 import { barraIniziativaEl } from './barra-iniziativa.js';
+import { avviso } from '../avvisi.js';
 
 const INTERVALLO_MS = 2000;
 
@@ -126,6 +127,15 @@ export function renderGiocatori(radice, ctx) {
   const messaggio = (t) => { el.messaggio.textContent = t ?? ''; el.messaggio.hidden = !t; };
   async function usa(corpo) {
     st.vista = corpo.scena;
+    // ZoC (07/10): gli Attacchi di Opportunità nuovi diventano un avviso anche qui (la prima lettura non li ripete)
+    const primaLettura = !st.opportunitaViste;
+    st.opportunitaViste ??= new Set();
+    for (const o of corpo.scena?.opportunita ?? []) {
+      const k = `${o.ora}|${o.testo}`;
+      if (st.opportunitaViste.has(k)) continue;
+      st.opportunitaViste.add(k);
+      if (!primaLettura) avviso(o.testo, { tipo: 'info', durata: 12000 });
+    }
     const barra = corpo.scena?.iniziativa ?? null;
     el.iniziativa.hidden = !barra;
     svuota(el.iniziativa, barra ? barraIniziativaEl(barra, { pxPerPunto: V.barra.iniziativa_px_per_punto }) : null);

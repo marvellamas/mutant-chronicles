@@ -38,9 +38,9 @@ export function barraIniziativaEl(barra, o = {}) {
     comandi ? h('span', { class: 'iniziativa-comandi' },
       h('button', { type: 'button', class: 'btn primario', title: 'Il turno passa al prossimo, che diventa il token scelto (lo stesso «Avanti» della plancia)', disabled: !barra.voci.length, onclick: () => o.avanti() }, 'Avanti'),
       o.centra ? h('button', {
-        type: 'button', role: 'switch', 'aria-checked': String(!!o.centra.attivo), class: `interruttore${o.centra.attivo ? ' acceso' : ''}`,
+        type: 'button', role: 'switch', 'aria-checked': String(!!o.centra.attivo), class: `interruttore-mappa${o.centra.attivo ? ' acceso' : ''}`,
         title: 'Al cambio di turno la mappa centra il token attivo, se è fuori vista', onclick: () => o.centra.cambia(!o.centra.attivo),
-      }, h('span', { class: 'interruttore-pallino', 'aria-hidden': 'true' }), `Centra su attivo: ${o.centra.attivo ? 'sì' : 'no'}`) : null) : null);
+      }, h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `Centra su attivo: ${o.centra.attivo ? 'sì' : 'no'}`) : null) : null);
 }
 
 /** Bordo di un mini-token (src/mappa/colori.js), come sul token in mappa: stile e classi. */

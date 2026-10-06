@@ -1995,12 +1995,12 @@ button.mini-token { cursor: pointer; }
 /* ritocchi del 06/10: la barra dell'Iniziativa è una linea spessa che si colora fino a chi è di turno */
 .iniziativa-linea { position: absolute; left: 0; right: 0; height: 8px; margin-top: -4px; border-radius: 4px; background: linear-gradient(to right, var(--mappa-turno) var(--fatto), var(--bordo) var(--fatto)); }
 .iniziativa-segno { position: absolute; width: 2px; height: 14px; margin-top: -7px; transform: translateX(-50%); background: var(--tenue); opacity: 0.6; }
-.interruttore { display: inline-flex; align-items: center; gap: 0.4rem; font: inherit; font-size: 0.85rem; white-space: nowrap; color: inherit; background: var(--superficie); border: 1px solid var(--bordo); border-radius: 999px; padding: 0.2rem 0.6rem 0.2rem 0.25rem; cursor: pointer; }
-.interruttore-pallino { width: 2rem; height: 1.1rem; border-radius: 999px; background: var(--bordo); position: relative; flex: none; transition: background 0.15s; }
-.interruttore-pallino::after { content: ''; position: absolute; top: 0.15rem; left: 0.15rem; width: 0.8rem; height: 0.8rem; border-radius: 50%; background: var(--superficie); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4); transition: left 0.15s; }
-.interruttore.acceso { border-color: var(--ok); color: var(--ok); font-weight: 600; }
-.interruttore.acceso .interruttore-pallino { background: var(--ok); }
-.interruttore.acceso .interruttore-pallino::after { left: 1.05rem; }
+.interruttore-mappa { display: inline-flex; align-items: center; gap: 0.4rem; font: inherit; font-size: 0.85rem; white-space: nowrap; color: inherit; background: var(--superficie); border: 1px solid var(--bordo); border-radius: 999px; padding: 0.2rem 0.6rem 0.2rem 0.25rem; cursor: pointer; }
+.interruttore-mappa-pallino { width: 2rem; height: 1.1rem; border-radius: 999px; background: var(--bordo); position: relative; flex: none; transition: background 0.15s; }
+.interruttore-mappa-pallino::after { content: ''; position: absolute; top: 0.15rem; left: 0.15rem; width: 0.8rem; height: 0.8rem; border-radius: 50%; background: var(--superficie); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4); transition: left 0.15s; }
+.interruttore-mappa.acceso { border-color: var(--ok); color: var(--ok); font-weight: 600; }
+.interruttore-mappa.acceso .interruttore-mappa-pallino { background: var(--ok); }
+.interruttore-mappa.acceso .interruttore-mappa-pallino::after { left: 1.05rem; }
 /* ritocchi del 06/10: barra della mappa a gruppi con i segnalibri fissi in cima */
 .laterale-segnalibri { position: sticky; top: -0.5rem; z-index: 3; display: flex; flex-wrap: wrap; gap: 0.25rem; margin: -0.5rem -0.6rem 0; padding: 0.4rem 0.6rem; background: var(--superficie); border-bottom: 1px solid var(--bordo); }
 .segnalibro { font: inherit; font-size: 0.85rem; color: inherit; background: none; border: 1px solid var(--bordo); border-radius: 999px; padding: 0.15rem 0.6rem; cursor: pointer; }
@@ -2041,4 +2041,6 @@ button.mini-token { cursor: pointer; }
 .aiuto-mappa th { text-align: left; width: 45%; padding-right: 0.75rem; vertical-align: top; }
 .aiuto-mappa td { text-align: left; vertical-align: top; }
 /* collaudo del lotto 7: l'interruttore «Mostra area» non si allarga a tutta la colonna */
-.mappa-movimento .interruttore { align-self: flex-start; }
+.mappa-movimento .interruttore-mappa { align-self: flex-start; }
+/* ZoC (07/10): pulsanti dentro un avviso (Attacca! dall'Attacco di Opportunità) */
+.avviso-azioni { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.35rem; }

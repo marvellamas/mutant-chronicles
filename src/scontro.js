@@ -435,6 +435,20 @@ export function registraAttacco(s, a, adesso) {
 }
 
 /**
+ * Attacco di Opportunità segnalato dalla mappa (07/10/2026, Giocatore §5.3): una riga nel registro, con chi può
+ * attaccare e chi; nessun tiro. La riga porta { opportunita: { da, contro } } per sapere se l'avversario l'ha già
+ * avuto in questo Round (una sola volta per Round).
+ */
+export function rigaOpportunita(s, { da, nomeDa, contro, nomeContro }, adesso) {
+  const t = conRiga(s, `Mappa: ${nomeContro} è uscito dalla ZoC di ${nomeDa}: Attacco di Opportunità di ${nomeDa} nei suoi confronti.`, adesso);
+  t.registro[t.registro.length - 1].opportunita = { da, contro };
+  return t;
+}
+
+/** L'avversario `da` ha già avuto un Attacco di Opportunità segnalato in questo Round? */
+export const opportunitaNelRound = (s, da) => (s?.registro ?? []).some((r) => r.round === s.round && r.opportunita?.da === da);
+
+/**
  * Movimento «Libero» della mappa di battaglia (primo test di Marcello, 06/10/2026): il master sposta un token dove vuole,
  * fuori dall'area e dal conteggio del movimento; nel registro resta una riga.
  */

@@ -165,7 +165,7 @@ function selezione(v) {
 
 const leggiJson = async (p) => JSON.parse(await readFile(p, 'utf8'));
 async function scriviJson(dove, v) {
-  const tmp = `${dove}.tmp-${process.pid}`;
+  const tmp = nomeTmp(dove);
   await writeFile(tmp, `${JSON.stringify(v, null, 2)}\n`);
   await rename(tmp, dove);
 }
@@ -303,7 +303,7 @@ async function migraOra({ cartella, veicoli, radice, chiavi }) {
     const ora = await stat(dove).then((s) => s.mtimeMs, () => null);
     if (cambiati && ora === r.mtime) {
       const nuovo = { ...o, scelte: { ...o.scelte, veicoli: m.veicoli.map((v) => (eRiferimento(v) ? v : o.scelte.veicoli.find((x) => x?.uid === v.uid) ?? v)) } };
-      const tmp = `${dove}.tmp-${process.pid}`;
+      const tmp = nomeTmp(dove);
       await writeFile(tmp, JSON.stringify(nuovo, null, 2));
       await rename(tmp, dove);
       cacheFile.delete(dove);
@@ -429,6 +429,10 @@ async function vistePg(chiavi, cartella, dati, round) {
   return viste;
 }
 
+// file temporanei delle scritture atomiche: un nome diverso per ogni scrittura, anche contemporanea sullo stesso file
+// (collaudo della ZoC del 07/10: due righe di registro insieme facevano fallire il rename con ENOENT)
+let numeroTmp = 0;
+const nomeTmp = (dove) => `${dove}.tmp-${process.pid}-${++numeroTmp}`;
 const impronta = (t) => createHash('sha1').update(String(t)).digest('hex').slice(0, 12);
 
 /**
@@ -565,7 +569,7 @@ async function apiMappe(req, res, percorso, mappe, radice) {
     await mkdir(mappe, { recursive: true });
     const dove = join(mappe, file);
     try { await stat(dove); } catch {
-      const tmp = `${dove}.tmp-${process.pid}`;
+      const tmp = nomeTmp(dove);
       await writeFile(tmp, corpo);
       await rename(tmp, dove);
     }
@@ -633,7 +637,7 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
       let v;
       try { v = selezione(JSON.parse((await leggiCorpo(req)).toString('utf8'))); } catch (e) { return json(res, 400, { errore: e.message }); }
       await mkdir(tavolo, { recursive: true });
-      const tmp = `${dove}.tmp-${process.pid}`;
+      const tmp = nomeTmp(dove);
       await writeFile(tmp, `${JSON.stringify(v, null, 2)}\n`);
       await rename(tmp, dove);
       if (v.personaggi.length) await migraVeicoliCartella({ cartella, veicoli: migraIn, radice, chiavi: v.personaggi }).catch(() => null);
@@ -697,7 +701,7 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
     }
     await mkdir(cartella, { recursive: true });
     // scrittura atomica: un file temporaneo e poi la rinomina, così una lettura non vede mai mezzo file
-    const tmp = `${dove}.tmp-${process.pid}`;
+    const tmp = nomeTmp(dove);
     await writeFile(tmp, corpo);
     await rename(tmp, dove);
     const s = await stat(dove);

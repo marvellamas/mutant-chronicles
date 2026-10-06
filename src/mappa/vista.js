@@ -68,6 +68,10 @@ export function vistaGiocatori(s, contesto = null) {
       const visibili = new Set(token.filter((t) => t.rif.tipo === 'partecipante').map((t) => chiaveRif(t.rif)));
       const immagini = new Map(token.filter((t) => t.info).map((t) => [chiaveRif(t.rif), t.info.immagine]));
       const immagineDi = (k) => (immagini.has(k) ? immagini.get(k) : pezzi.has(k) ? contesto.immagineDi?.(pezzi.get(k)) ?? null : null);
+      // ZoC (07/10): gli Attacchi di Opportunità segnalati in questo Round, solo con l'avversario visibile
+      vista.opportunita = (contesto.scontro.registro ?? [])
+        .filter((r) => r.opportunita && r.round === contesto.scontro.round && visibili.has(chiaveRif({ tipo: 'partecipante', id: r.opportunita.da })))
+        .slice(-5).map((r) => ({ ora: r.ora, testo: r.testo.replace(/^Mappa: /, '') }));
       vista.iniziativa = barraPerGiocatori(barraIniziativa({ scontro: contesto.scontro, pezzi: contesto.pezzi, scena: s, bordoDi: contesto.bordoDi }), visibili, immagineDi);
     }
   }

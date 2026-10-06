@@ -2693,6 +2693,17 @@ function validaMappa(dati, err) {
     for (const k of ['opacita_riempimento', 'opacita_contorno']) if (!(A[k] >= 0 && A[k] <= 1)) err(F, `vista.area.${k}`, 'opacità da 0 a 1');
     if (!positivo(A.spessore_contorno_px)) err(F, 'vista.area.spessore_contorno_px', 'numero positivo');
   }
+  // zone di controllo (07/10, src/mappa/zoc.js; Giocatore §5.3)
+  const Z = m.zoc;
+  if (!isOggetto(Z)) err(F, 'zoc', 'oggetto mancante');
+  else {
+    if (!isIntero(Z.portata_predefinita) || Z.portata_predefinita < 1) err(F, 'zoc.portata_predefinita', 'intero da 1 in su (Q)');
+    for (const k of ['opacita_riempimento', 'opacita_contorno']) if (!(Z[k] >= 0 && Z[k] <= 1)) err(F, `zoc.${k}`, 'opacità da 0 a 1');
+    if (!/^#[0-9a-f]{6}$/i.test(Z.colore ?? '')) err(F, 'zoc.colore', 'colore #rrggbb');
+    if (!Array.isArray(Z.stati_che_impediscono)) err(F, 'zoc.stati_che_impediscono', 'elenco di id di Stati');
+    else for (const id of Z.stati_che_impediscono) if (!(dati.regole?.stati?.elenco ?? []).some((s) => s.id === id)) err(F, 'zoc.stati_che_impediscono', `Stato «${id}» non in regole.json`);
+    if (!isTesto(Z.frase_eccezione)) err(F, 'zoc.frase_eccezione', 'testo mancante');
+  }
   // colori dei bordi dei token (decisione di Marcello del 06/10, src/mappa/colori.js)
   const CO = m.colori;
   const esa = (v) => typeof v === 'string' && /^#[0-9a-f]{6}$/i.test(v);

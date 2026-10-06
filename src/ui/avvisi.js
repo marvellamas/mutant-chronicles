@@ -24,10 +24,10 @@ export const firmaAvviso = (tipo, righe) => `${tipo}|${[righe].flat().filter(Boo
  * Mostra un avviso.
  * @param testo una riga o più (array: una riga ciascuna)
  * @param opzioni { tipo: 'ok' | 'info' | 'errore', chiave: un avviso nuovo con la stessa chiave sostituisce il
- *   precedente (clic ripetuti su − e +), durata in ms }
+ *   precedente (clic ripetuti su − e +), durata in ms, azioni: [{ testo, fai }] pulsanti dentro l'avviso }
  * @returns l'elemento dell'avviso, o null senza documento (test)
  */
-export function avviso(testo, { tipo = 'ok', chiave = null, durata = DURATA[tipo] ?? DURATA.ok } = {}) {
+export function avviso(testo, { tipo = 'ok', chiave = null, durata = DURATA[tipo] ?? DURATA.ok, azioni = [] } = {}) {
   if (typeof document === 'undefined' || !testo || (Array.isArray(testo) && !testo.length)) return null;
   const c = contenitore();
   if (chiave) for (const x of c.querySelectorAll('.avviso')) if (x.dataset.chiave === chiave) x.remove();
@@ -49,7 +49,9 @@ export function avviso(testo, { tipo = 'ok', chiave = null, durata = DURATA[tipo
   const el = h('div', {
     class: `avviso avviso-${tipo}`, role: tipo === 'errore' ? 'alert' : 'status', dataset: { firma, volte: '1', ...(chiave ? { chiave } : {}) },
     title: 'Clic per chiudere', onclick: () => el.remove(),
-  }, righe.map((r) => h('p', {}, r)));
+  }, righe.map((r) => h('p', {}, r)),
+  // pulsanti (per esempio «Attacca!» dall'avviso di un Attacco di Opportunità): fanno la loro azione e chiudono
+  azioni.length ? h('div', { class: 'avviso-azioni' }, azioni.map((a) => h('button', { type: 'button', class: 'btn btn-piccolo primario', onclick: (e) => { e.stopPropagation(); el.remove(); a.fai(); } }, a.testo))) : null);
   c.append(el);
   // al massimo cinque avvisi insieme: i più vecchi lasciano il posto
   while (c.children.length > 5) c.firstElementChild.remove();

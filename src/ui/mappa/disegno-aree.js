@@ -67,13 +67,13 @@ export function disegnaMuri(c, { scena, cam, info, muri, terreno, colori }) {
  * riempimento leggero e il suo contorno (i lati dei Q che confinano con un'altra fascia o con l'esterno).
  * @param stile data/mappa.json → vista.area
  */
-export function disegnaArea(c, { scena, cam, info, celle, colori, stile }) {
+export function disegnaArea(c, { scena, cam, info, celle, colori, stile, solo = null }) {
   const g = scena.griglia;
   const v = visibili(g, cam, info);
   const tinte = [null, colori.passo, colori.corsa, colori.scatto];
   const val = (x, y) => (x < 0 || y < 0 || x >= g.colonne || y >= g.righe ? 0 : celle[y * g.colonne + x]);
   const punto = (x, y) => { const s = schermoDaMappa(cam, g.scosto_x + x * g.q_px, g.scosto_y + y * g.q_px); return [Math.round(s.x) + 0.5, Math.round(s.y) + 0.5]; };
-  for (let k = 1; k <= 3; k++) {
+  for (let k = solo ?? 1; k <= (solo ?? 3); k++) {
     c.save();
     c.beginPath();
     let n = 0;
@@ -99,8 +99,16 @@ export function disegnaArea(c, { scena, cam, info, celle, colori, stile }) {
   }
 }
 
-/** Percorso del token (posizioni del Q in alto a sinistra) con il costo in Q all'arrivo. */
-export function disegnaPercorso(c, { scena, cam, percorso, ingombro, costo, fascia, colori }) {
+/**
+ * Zone di controllo degli avversari del token scelto (07/10, src/mappa/zoc.js): rosso semitrasparente con il contorno,
+ * come l'area raggiungibile. `celle`: Uint8Array, 1 dentro una ZoC; `stile`: data/mappa.json → zoc.
+ */
+export function disegnaZoc(c, { scena, cam, info, celle, stile }) {
+  disegnaArea(c, { scena, cam, info, celle, colori: { passo: stile.colore, corsa: stile.colore, scatto: stile.colore }, stile: { opacita_riempimento: stile.opacita_riempimento, opacita_contorno: stile.opacita_contorno, spessore_contorno_px: 2 }, solo: 1 });
+}
+
+/** Percorso del token (posizioni del Q in alto a sinistra) con il costo in Q all'arrivo; `inZoc`: passi in una ZoC. */
+export function disegnaPercorso(c, { scena, cam, percorso, ingombro, costo, fascia, colori, inZoc = null, coloreZoc = '#e03131' }) {
   if (!percorso?.length) return;
   const g = scena.griglia;
   const [w, h] = dimensioni(ingombro);
@@ -115,6 +123,19 @@ export function disegnaPercorso(c, { scena, cam, percorso, ingombro, costo, fasc
   c.beginPath();
   percorso.forEach((p, i) => { const s = centro(p); if (i) c.lineTo(s.x, s.y); else c.moveTo(s.x, s.y); });
   c.stroke();
+  // i passi dentro una ZoC: un quadrato rosso attorno al Q (la ZoC non blocca, segnala)
+  if (inZoc?.some(Boolean)) {
+    const lato = g.q_px * cam.scala;
+    c.save();
+    c.strokeStyle = coloreZoc;
+    c.lineWidth = Math.max(2, lato * 0.08);
+    percorso.forEach((p, i) => {
+      if (!inZoc[i]) return;
+      const s = centro(p);
+      c.strokeRect(s.x - lato * 0.32, s.y - lato * 0.32, lato * 0.64, lato * 0.64);
+    });
+    c.restore();
+  }
   const fine = centro(percorso.at(-1));
   const testo = `${String(costo).replace('.', ',')} Q`;
   c.font = '700 13px system-ui, sans-serif';

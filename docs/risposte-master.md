@@ -961,6 +961,12 @@ approvata da Marcello; copia in `docs/battlemap/specifica.md`, piano in `docs/ba
   turno? Il movimento per turno è Passo/Corsa/Scatto? Le diagonali valgono 1 Q o 1,5? Come conta il terreno difficile?
 - **A.125 — Porte, luci, veicoli.** Quanto costa aprire una porta? Il «livello» delle luci è una regola e come si
   traduce nell'illuminazione di A.106? Velocità dei veicoli sulla mappa per andatura?
+- **A.132 — Stordito e Attacchi di Opportunità** (07/10/2026, zone di controllo della mappa). Uno Stordito (§5.18:
+  nessuna Azione Principale) può fare un Attacco di Opportunità, che per il §5.3 «non consuma Azioni»? Provvisorio: sì
+  (`data/mappa.json` → zoc.stati_che_impediscono ha solo Svenuto).
+- **A.133 — Portata delle creature grandi** (07/10/2026). Una creatura Grande (2 × 2 Q) o Enorme (3 × 3 Q) ha la portata
+  del suo profilo (i profili del Manuale dei Mostri dicono «portata 1 Q») attorno a tutto l'ingombro, o una portata
+  maggiore per la Taglia (Marcello aveva proposto 2 Q per i 2 × 2 e 3 Q per i 3 × 3)? Provvisorio: quella del profilo.
 
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 

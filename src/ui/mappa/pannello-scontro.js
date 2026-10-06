@@ -109,8 +109,11 @@ function sezioneMovimento(m, a) {
     m.motivo ? h('p', { class: 'nota motivo-movimento' }, `Area: ${m.motivo}. Con Libero (o Maiusc) il master lo sposta comunque.`) : null,
     m.fascia === 4 ? h('p', { class: 'nota' }, `Libero: in qualunque quadretto, senza area e senza conteggio${m.senzaScontro ? '' : '; nel registro dello scontro resta una riga'}.`) : null,
     // ritocchi del 06/10: l'area non è obbligatoria (anche clic destro e tasto M); il percorso resta
-    mov ? h('button', { type: 'button', role: 'switch', 'aria-checked': String(!!m.mostraArea), class: `interruttore${m.mostraArea ? ' acceso' : ''}`, title: 'Mostra o nasconde l’area di movimento (tasto M); il percorso sotto il puntatore resta', onclick: a.mostraArea },
-      h('span', { class: 'interruttore-pallino', 'aria-hidden': 'true' }), `Mostra area: ${m.mostraArea ? 'sì' : 'no'}`) : null,
+    mov ? h('button', { type: 'button', role: 'switch', 'aria-checked': String(!!m.mostraArea), class: `interruttore-mappa${m.mostraArea ? ' acceso' : ''}`, title: 'Mostra o nasconde l’area di movimento (tasto M); il percorso sotto il puntatore resta', onclick: a.mostraArea },
+      h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `Mostra area: ${m.mostraArea ? 'sì' : 'no'}`) : null,
+    // ZoC (07/10): le zone di controllo degli avversari, interruttore come l'area (tasto Z)
+    mov ? h('button', { type: 'button', role: 'switch', 'aria-checked': String(!!m.mostraZoc), class: `interruttore-mappa${m.mostraZoc ? ' acceso' : ''}`, title: 'Zone di controllo degli avversari (tasto Z): uscendone si provoca un Attacco di Opportunità (Giocatore §5.3)', onclick: a.mostraZoc },
+      h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `Mostra ZoC: ${m.mostraZoc ? 'sì' : 'no'}`) : null,
     h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Area raggiungibile' },
       mov && !m.veicolo ? fasce.map(([testo, n, v]) => h('button', {
         type: 'button', class: `btn btn-piccolo fascia-${n}${m.fascia === n ? ' scelto' : ''}`, 'aria-pressed': String(m.fascia === n),

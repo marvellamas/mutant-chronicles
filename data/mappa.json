@@ -226,5 +226,18 @@
     "contorno_chiaro": "#ffffff",
     "alone_turno": "#ffffff",
     "contrasto_minimo": 3
+  },
+  "zoc": {
+    "_nota": "Zone di controllo e Attacchi di Opportunità (richiesta di Marcello del 07/10/2026; src/mappa/zoc.js). Giocatore §5.3: provoca un Attacco di Opportunità chi, con un Movimento volontario, esce dalla portata ravvicinata di un avversario in grado di attaccarlo (non entrare, non muoversi dentro, non la Ritirata, non il movimento forzato); una volta per Round per avversario. Armamenti §7.1.2: la portata è quella dell'arma (1 Q di norma, 2–3 Q per armi lunghe), e Ingaggio e Attacchi di Opportunità la usano. La ZoC è quindi la fascia profonda quanto la portata attorno all'ingombro; per i nemici la portata viene dagli attacchi ravvicinati del profilo (portata_q), per PG e partecipanti a mano è portata_predefinita. La ZoC non blocca, segnala.",
+    "portata_predefinita": 1,
+    "TODO(Davide) creature grandi": "A.133: una creatura Grande (2 × 2 Q) o Enorme (3 × 3 Q) ha la portata del suo profilo (1 Q, come nei profili del Manuale dei Mostri) attorno a tutto l'ingombro, o una portata maggiore per la Taglia? Provvisorio: quella del profilo.",
+    "stati_che_impediscono": [
+      "svenuto"
+    ],
+    "TODO(Davide) stordito": "A.132: uno Stordito (§5.18: nessuna Azione Principale) può fare Attacchi di Opportunità, che «non consumano Azioni» (§5.3)? Provvisorio: sì (non è fra gli Stati che lo impediscono).",
+    "opacita_riempimento": 0.16,
+    "opacita_contorno": 0.7,
+    "colore": "#e03131",
+    "frase_eccezione": "senza Attacchi di Opportunità"
   }
 }
