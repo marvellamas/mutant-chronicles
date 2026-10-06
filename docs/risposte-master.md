@@ -946,6 +946,13 @@ approvata da Marcello; copia in `docs/battlemap/specifica.md`, piano in `docs/ba
     dal pannello del token della mappa, e vale per tutte le copie del tipo nello scontro o nella bozza e nel bestiario.
     Senza immagine il token mostra le iniziali. Nel pacchetto per il Doc: A.131 fra le risolte.
 
+118. **Mappa sotto la nebbia nel browser dei giocatori** (A.130, scelta tecnica di Marcello del 06/10/2026, per ora
+    accettata: si gioca in casa). L'immagine di fondo arriva intera ai dispositivi dei giocatori; la nebbia è piena sul
+    disegno, quindi a schermo non si vede nulla, e il server toglie dalla vista token, muri e posizioni sotto la nebbia.
+    Chi apre gli strumenti del browser può vedere la mappa intera: si accetta. Non è una domanda per Davide: A.130 esce
+    dalle domande (nel pacchetto per il Doc non va aggiunta). Se un giorno servisse la segretezza piena, la via è il
+    frame calcolato dal master (`docs/battlemap/piano.md`, §3).
+
 **Aperte** (testi nella sezione 15 della specifica; da mettere nel Doc «per-davide.md» con il pacchetto):
 
 - **A.122 — Funzioni usate davvero.** Quali funzioni della sua app usi al tavolo (mappe proprie o costruite, nebbia,

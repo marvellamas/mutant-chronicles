@@ -2,8 +2,8 @@
 
 Data: 06/10/2026. Branch `battlemap`. Fonte delle funzioni: `docs/battlemap/specifica.md` (bozza 2 approvata da Marcello).
 Ricognizione dell'app di Davide: `docs/ricognizione-battlemap.md`. Decisioni: `docs/risposte-master.md` (115, A.123
-Iniziativa del manuale; 116, nessun riuso di codice) e domande aperte A.122, A.124, A.125, più le nuove A.126–A.130 in
-fondo a questo documento.
+Iniziativa del manuale; 116, nessun riuso di codice; 118, mappa sotto la nebbia leggibile dagli strumenti del browser,
+accettata) e domande aperte A.122, A.124, A.125, più le nuove A.126–A.129 in fondo a questo documento.
 
 Una scelta di fondo guida tutto il piano: **la specifica è a celle**. I token stanno sempre al centro di un Q, i muri
 sono Q invalicabili dipinti a pennello, la nebbia si copre per Q. L'app di Davide invece lavora in pixel continui, con
@@ -130,7 +130,7 @@ nel browser di quello schermo, non nella scena.
 - **Limite dichiarato:** l'immagine di fondo arriva intera al dispositivo dei giocatori. Il filtro del server toglie
   token, muri e posizioni sotto la nebbia, ma non può mascherare i pixel dell'immagine senza una libreria. La nebbia sul
   disegno è piena, quindi a schermo non si vede nulla; un giocatore che apre gli strumenti del browser potrebbe vedere
-  la mappa intera (A.130).
+  la mappa intera. Scelta di Marcello del 06/10: si accetta, si gioca in casa (decisione 118, ex A.130).
 
 **Area raggiungibile** (`src/mappa/area.js`, pura):
 - **Calcolo:** ricerca a costo minimo (Dijkstra su griglia) dal Q del token, su un massimo di Scatto Q.
@@ -257,7 +257,7 @@ Marcello preferisce.
     (§13).
   - Il master non deve confondere le finestre: la vista giocatori non ha comandi e lo dice in alto.
 - **Riservatezza.** L'immagine intera arriva ai giocatori (vedi §3). Sul tavolo basta; se no, servirebbe una libreria
-  nativa o il frame calcolato dal master (A.130).
+  nativa o il frame calcolato dal master (decisione 118: per ora non serve).
 - **Due app che convivono.** Finché la mappa non è completa, Davide può usare la sua app. La specifica (§1) chiede una
   sola app: la versione minima deve coprire quello che lui usa davvero (A.122) prima di proporgliela.
 
@@ -270,5 +270,6 @@ Marcello preferisce.
 - **A.128 — Terreno difficile.** Quanto costa un Q di terreno difficile (il doppio?) e vale anche per Corsa e Scatto?
 - **A.129 — Movimento diviso.** Nello stesso turno si può muovere, attaccare e muovere ancora (il Passo si spende a
   pezzi)? Corsa e Scatto consumano anche l'Azione Principale?
-- **A.130 — Mappa sotto la nebbia.** Va tenuta segreta anche a chi apre gli strumenti del browser, o basta che non si
-  veda sullo schermo? (Nel primo caso serve un passo in più, vedi §3.)
+
+A.130 (mappa sotto la nebbia leggibile dagli strumenti del browser) non è più una domanda: è una scelta tecnica di
+Marcello, decisione 118.
