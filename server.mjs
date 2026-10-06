@@ -66,6 +66,7 @@ import { createHash } from 'node:crypto';
 import { createInterface } from 'node:readline/promises';
 import { chiOccupa, testoDomanda, risposteSi, fermaMutant, sorvegliaFinestra } from './src/porta-occupata.js';
 import { indirizziRete, testoAvvio } from './src/rete.js';
+import { bordoToken } from './src/mappa/colori.js';
 import { validaScontro } from './src/scontro.js';
 import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
 import { NOME_FILE, fileProvvisorio, ultimiPerPersonaggio, chiaveDaFile, chiavePersonaggio } from './src/cartella.js';
@@ -458,7 +459,8 @@ async function contestoScena(scena, { cartella, tavolo, scontri, veicoli, radice
   } catch { /* nessun registro */ }
   const pezzi = pezziDellaScena({ scontro, bozza, alTavolo, viste, veicoli: registro }, dati);
   const immagineDi = (p) => (p.tipo === 'pg' ? (p.ritratto ? `api/ritratti/${encodeURIComponent(p.pg)}?v=${impronta(p.ritratto)}` : null) : p.ritratto);
-  return { pezzi, round: scontro?.round ?? null, immagineDi, scontro };
+  // colori dei bordi dei token (src/mappa/colori.js): gli stessi della vista master
+  return { pezzi, round: scontro?.round ?? null, immagineDi, scontro, bordoDi: (p) => bordoToken(p, scena.colori, dati) };
 }
 
 /** Scena mostrata ai giocatori: quella scelta dal master (tavolo/mappa-giocatori.json) o la più recente dello scontro aperto. */

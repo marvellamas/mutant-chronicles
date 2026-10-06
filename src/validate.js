@@ -2693,6 +2693,25 @@ function validaMappa(dati, err) {
     for (const k of ['opacita_riempimento', 'opacita_contorno']) if (!(A[k] >= 0 && A[k] <= 1)) err(F, `vista.area.${k}`, 'opacità da 0 a 1');
     if (!positivo(A.spessore_contorno_px)) err(F, 'vista.area.spessore_contorno_px', 'numero positivo');
   }
+  // colori dei bordi dei token (decisione di Marcello del 06/10, src/mappa/colori.js)
+  const CO = m.colori;
+  const esa = (v) => typeof v === 'string' && /^#[0-9a-f]{6}$/i.test(v);
+  if (!isOggetto(CO)) err(F, 'colori', 'oggetto mancante');
+  else {
+    for (const k of ['pg', 'nemici']) {
+      if (!Array.isArray(CO[k]) || CO[k].length < 2) { err(F, `colori.${k}`, 'almeno due colori'); continue; }
+      const ids = new Set();
+      for (const [i, c] of CO[k].entries()) {
+        if (!isTesto(c?.id) || ids.has(c.id)) err(F, `colori.${k}[${i}].id`, 'mancante o ripetuto');
+        ids.add(c?.id);
+        if (!isTesto(c?.nome)) err(F, `colori.${k}[${i}].nome`, 'nome mancante');
+        if (!esa(c?.valore)) err(F, `colori.${k}[${i}].valore`, 'colore #rrggbb');
+      }
+    }
+    if (Array.isArray(CO.pg) && Array.isArray(CO.nemici) && CO.pg.some((a) => CO.nemici.some((b) => a.valore?.toLowerCase() === b.valore?.toLowerCase()))) err(F, 'colori', 'le tavolozze dei PG e dei nemici devono essere diverse');
+    for (const k of ['nemici_alterno', 'alleati', 'veicolo_del_gruppo', 'senza_colore', 'contorno_scuro', 'contorno_chiaro', 'alone_turno']) if (!esa(CO[k])) err(F, `colori.${k}`, 'colore #rrggbb');
+    if (!positivo(CO.contrasto_minimo)) err(F, 'colori.contrasto_minimo', 'numero positivo');
+  }
   // lotto 6, §11: barra accanto alla mappa (src/mappa/disposizione.js) e barra dell'Iniziativa
   const B = V?.barra;
   if (!isOggetto(B)) err(F, 'vista.barra', 'oggetto mancante');

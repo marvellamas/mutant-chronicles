@@ -141,5 +141,90 @@
       "rettangolo"
     ],
     "durata_round_predefinita": 1
+  },
+  "colori": {
+    "_nota": "Colori dei bordi dei token (decisione di Marcello del 06/10/2026; src/mappa/colori.js). PG: bordo pieno, un colore per PG, assegnato al primo ingresso in mappa e salvato nella scena. Nemici: bordo tratteggiato che alterna nemici_alterno e il colore del tipo (tavolozza diversa da quella dei PG). Alleati non PG: bordo pieno doppio color alleati. Veicoli: il colore del PG proprietario, del gruppo veicolo_del_gruppo. Ogni bordo ha un contorno sottile scuro o chiaro (il più contrastato), per le mappe chiare e scure. alone_turno: l'alone del token di turno, bianco, che non si confonde col giallo dei PG.",
+    "pg": [
+      {
+        "id": "blu",
+        "nome": "Blu",
+        "valore": "#1f6feb"
+      },
+      {
+        "id": "rosso",
+        "nome": "Rosso",
+        "valore": "#e5383b"
+      },
+      {
+        "id": "giallo",
+        "nome": "Giallo",
+        "valore": "#ffd60a"
+      },
+      {
+        "id": "verde-chiaro",
+        "nome": "Verde chiaro",
+        "valore": "#7ed957"
+      },
+      {
+        "id": "azzurro",
+        "nome": "Azzurro",
+        "valore": "#3bc9db"
+      },
+      {
+        "id": "arancione",
+        "nome": "Arancione",
+        "valore": "#fd7e14"
+      },
+      {
+        "id": "verde-scuro",
+        "nome": "Verde scuro",
+        "valore": "#1f7a35"
+      }
+    ],
+    "nemici": [
+      {
+        "id": "viola",
+        "nome": "Viola",
+        "valore": "#7b2cbf"
+      },
+      {
+        "id": "lilla",
+        "nome": "Lilla",
+        "valore": "#c8a2ff"
+      },
+      {
+        "id": "verde-marcio",
+        "nome": "Verde marcio",
+        "valore": "#8a8f2a"
+      },
+      {
+        "id": "bordeaux",
+        "nome": "Bordeaux",
+        "valore": "#8c1c3a"
+      },
+      {
+        "id": "marrone",
+        "nome": "Marrone",
+        "valore": "#8b5a2b"
+      },
+      {
+        "id": "grigio-piombo",
+        "nome": "Grigio piombo",
+        "valore": "#6c757d"
+      },
+      {
+        "id": "ocra-scura",
+        "nome": "Ocra scura",
+        "valore": "#b8860b"
+      }
+    ],
+    "nemici_alterno": "#111111",
+    "alleati": "#3a7d7c",
+    "veicolo_del_gruppo": "#adb5bd",
+    "senza_colore": "#868e96",
+    "contorno_scuro": "#111111",
+    "contorno_chiaro": "#ffffff",
+    "alone_turno": "#ffffff",
+    "contrasto_minimo": 3
   }
 }

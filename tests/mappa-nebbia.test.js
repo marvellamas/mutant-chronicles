@@ -125,7 +125,7 @@ test('vista giocatori con il contesto: nascosti e coperti non arrivano, PV come 
   };
   const v = vistaGiocatori(s, contesto);
   assert.deepEqual(v.token.map((t) => t.id), ['a', 'b', 'e']);
-  assert.deepEqual(v.token[0].info, { lato: 'pg', nome: 'Lucas', iniziali: 'XX', immagine: 'api/ritratti/Lucas?v=1', pv: 0.45, aZero: false, diTurno: false });
+  assert.deepEqual(v.token[0].info, { lato: 'pg', nome: 'Lucas', iniziali: 'XX', immagine: 'api/ritratti/Lucas?v=1', pv: 0.45, aZero: false, diTurno: false, bordo: null });
   assert.equal(v.token[1].info.pv, 0);
   assert.equal(v.token[2].info.nome, 'Porta');
   const testo = JSON.stringify(v);

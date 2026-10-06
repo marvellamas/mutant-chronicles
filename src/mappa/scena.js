@@ -10,7 +10,8 @@
 //   template: [{ id, forma, origine: [x, y], misure: { … in Q }, direzione?, colore?, fine_round?, fonte?, nascosto }],
 //   collegamento: { scontro: id | null, bozza: id | null },
 //   movimenti: [ … ], annulla: [ … ],                          movimenti del Round e azioni del master (lotto 5)
-//   turni?: { tutti, token: { id: n } } }                      «Nuovo turno» senza scontro aperto (src/mappa/annulla.js)
+//   turni?: { tutti, token: { id: n } },                       «Nuovo turno» senza scontro aperto (src/mappa/annulla.js)
+//   colori?: { pg: { chiave: id }, nemici: { tipo: id } } }    colori dei bordi dei token (src/mappa/colori.js)
 import { nuovaMaschera, inBase64, mascheraValida } from './celle.js';
 import { tokenDentro } from './token.js';
 
@@ -178,6 +179,12 @@ export function validaScena(s, dati) {
   if (s.archiviata !== undefined && typeof s.archiviata !== 'boolean') return 'archiviata: vero o falso';
   if (!Array.isArray(s.movimenti) || s.movimenti.length > D.scena.movimenti_max) return `movimenti: elenco di al massimo ${D.scena.movimenti_max}`;
   if (!Array.isArray(s.annulla) || s.annulla.length > D.scena.annulla_max) return `annulla: elenco di al massimo ${D.scena.annulla_max}`;
+  if (s.colori !== undefined) {
+    if (!isOggetto(s.colori) || !isOggetto(s.colori.pg) || !isOggetto(s.colori.nemici)) return 'colori: { pg, nemici } attesi';
+    for (const [k, tav] of [['pg', D.colori.pg], ['nemici', D.colori.nemici]]) {
+      for (const [chi, id] of Object.entries(s.colori[k])) if (!tav.some((c) => c.id === id)) return `colori.${k}.${chi}: colore «${id}» non nella tavolozza`;
+    }
+  }
   if (s.turni !== undefined) {
     if (!isOggetto(s.turni) || !isIntero(s.turni.tutti) || s.turni.tutti < 0 || !isOggetto(s.turni.token)) return 'turni: { tutti, token } attesi';
     for (const [id, n] of Object.entries(s.turni.token)) if (!isIntero(n) || n < 0) return `turni.token.${id}: intero da 0 in su`;

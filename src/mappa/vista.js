@@ -22,7 +22,8 @@ import { barraIniziativa, barraPerGiocatori } from './iniziativa.js';
 /**
  * @param s la scena completa
  * @param contesto null, oppure { pezzi: [pezzo] (src/mappa/partecipanti.js), round: n | null,
- *   immagineDi: (pezzo) → indirizzo dell'immagine per i giocatori | null, scontro?: lo scontro aperto (barra dell'Iniziativa) }
+ *   immagineDi: (pezzo) → indirizzo dell'immagine per i giocatori | null, scontro?: lo scontro aperto (barra dell'Iniziativa),
+ *   bordoDi?: (pezzo) → bordo del token (src/mappa/colori.js) }
  */
 export function vistaGiocatori(s, contesto = null) {
   const { colonne, righe } = s.griglia;
@@ -39,7 +40,7 @@ export function vistaGiocatori(s, contesto = null) {
     const p = pezzi.get(chiaveRif(t.rif));
     if (!p) return { info: null };
     const quota = p.pv?.massimo > 0 ? Math.max(0, Math.min(1, Math.round((p.pv.attuali / p.pv.massimo) * 20) / 20)) : null;
-    return { info: { lato: p.lato, nome: p.nome, iniziali: p.iniziali, immagine: contesto.immagineDi?.(p) ?? null, pv: quota, aZero: !!p.aZero, diTurno: !!p.diTurno } };
+    return { info: { lato: p.lato, nome: p.nome, iniziali: p.iniziali, immagine: contesto.immagineDi?.(p) ?? null, pv: quota, aZero: !!p.aZero, diTurno: !!p.diTurno, bordo: contesto.bordoDi?.(p) ?? null } };
   };
   const token = s.token.filter((t) => !t.nascosto && visibile(t)).map(({ nascosto, ...t }) => ({ ...t, ...info(t) }));
   const vista = {
@@ -67,7 +68,7 @@ export function vistaGiocatori(s, contesto = null) {
       const visibili = new Set(token.filter((t) => t.rif.tipo === 'partecipante').map((t) => chiaveRif(t.rif)));
       const immagini = new Map(token.filter((t) => t.info).map((t) => [chiaveRif(t.rif), t.info.immagine]));
       const immagineDi = (k) => (immagini.has(k) ? immagini.get(k) : pezzi.has(k) ? contesto.immagineDi?.(pezzi.get(k)) ?? null : null);
-      vista.iniziativa = barraPerGiocatori(barraIniziativa({ scontro: contesto.scontro, pezzi: contesto.pezzi, scena: s }), visibili, immagineDi);
+      vista.iniziativa = barraPerGiocatori(barraIniziativa({ scontro: contesto.scontro, pezzi: contesto.pezzi, scena: s, bordoDi: contesto.bordoDi }), visibili, immagineDi);
     }
   }
   return vista;

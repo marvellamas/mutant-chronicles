@@ -1981,7 +1981,7 @@ button.mini-token { cursor: pointer; }
 .mini-token.lato-pg { border-color: var(--accento); }
 .mini-token.lato-alleato { border-color: var(--lato-alleato); }
 .mini-token.lato-avversario { border-color: var(--lato-avversario); }
-.mini-token.di-turno { box-shadow: 0 0 0 3px var(--mappa-turno); z-index: 1; }
+.mini-token.di-turno { box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(0, 0, 0, 0.55), 0 0 12px 5px rgba(255, 255, 255, 0.85); z-index: 1; }
 .mini-token.nascosto { opacity: 0.45; border-style: dashed; }
 .mini-token.scelto { outline: 2px solid var(--mappa-selezione); outline-offset: 2px; }
 @media (max-width: 46rem) {
@@ -2010,3 +2010,22 @@ button.mini-token { cursor: pointer; }
 .laterale-sezione:last-child { border-bottom: none; min-height: 60vh; }
 .laterale-titolo { margin: 0; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--tenue); }
 .laterale-slot .scontro-pannello, .laterale-slot .scene-mappa { margin: 0; }
+/* colori dei bordi dei token (06/10, src/mappa/colori.js): gli stessi sui mini-token; il tratteggio dei nemici alterna
+   nero e colore (lo sfondo nero si vede negli spazi del bordo tratteggiato) */
+.mini-token.con-bordo { border-color: var(--bordo); outline: 1px solid var(--contorno); outline-offset: 0; }
+.mini-token.con-bordo.tratteggio { border-style: dashed; background-color: var(--alterno); }
+.mini-token.con-bordo.doppio { border-style: double; border-width: 4px; }
+.mini-token.con-bordo.scelto { outline: 2px solid var(--mappa-selezione); outline-offset: 2px; }
+.ridotta-voce.di-turno { border-color: #fff; box-shadow: 0 0 8px rgba(255, 255, 255, 0.7); }
+/* finestrelle dentro la pagina al posto di prompt() e confirm() (src/ui/finestrella.js) */
+.finestrella { max-width: min(28rem, calc(100vw - 2rem)); border: 1px solid var(--bordo); border-radius: var(--raggio); background: var(--superficie); color: var(--testo); padding: 1rem 1.1rem; box-shadow: 0 10px 40px var(--ombra, rgba(0, 0, 0, 0.35)); }
+.finestrella::backdrop { background: rgba(0, 0, 0, 0.45); }
+.finestrella-titolo { margin: 0 0 0.6rem; font-size: 1.1rem; }
+.finestrella p { margin: 0 0 0.6rem; }
+.finestrella-campo { display: flex; flex-direction: column; gap: 0.25rem; margin-bottom: 0.75rem; }
+.finestrella-campo input { width: 100%; font: inherit; padding: 0.4rem 0.5rem; }
+.finestrella-azioni { justify-content: flex-end; }
+.campioni { display: grid; grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr)); gap: 0.35rem; margin-bottom: 0.75rem; }
+.campione { display: flex; align-items: center; gap: 0.45rem; font: inherit; color: inherit; background: none; border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 0.3rem 0.45rem; cursor: pointer; text-align: left; }
+.campione.scelto { border-color: var(--accento); box-shadow: 0 0 0 2px var(--accento); }
+.campione-colore { width: 1.4rem; height: 1.4rem; border-radius: 50%; border: 2px solid var(--testo); flex: none; }

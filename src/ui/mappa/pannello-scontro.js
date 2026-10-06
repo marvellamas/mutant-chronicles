@@ -81,6 +81,7 @@ export function sezioneToken(t, p, dati, a) {
       // A.131: immagine del tipo di nemico (tutte le copie, e il bestiario se c'è)
       p?.tipo === 'nemico' ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Immagine del token per tutte le copie di questo nemico e, se c’è, nel bestiario', onclick: a.immagine }, p.ritratto ? 'Cambia immagine…' : 'Immagine…') : null,
       p?.tipo === 'nemico' && p.ritratto ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Torna alle iniziali', onclick: a.togliImmagine }, 'Togli immagine') : null,
+      p ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Colore del bordo del token (per un nemico: tutte le copie del tipo)', onclick: a.colore }, 'Colore del bordo…') : null,
       h('button', { type: 'button', class: 'btn btn-piccolo pericolo', title: 'Il pezzo torna fra quelli senza token', onclick: a.togli }, 'Togli dalla mappa')));
 }
 

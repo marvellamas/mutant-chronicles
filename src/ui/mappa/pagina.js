@@ -25,7 +25,9 @@ import { avviso, avvisoErrore } from '../avvisi.js';
 import { cameraIniziale, zoomVerso, sposta, adatta, mappaDaSchermo, schermoDaMappa, rettangoloVisibile, mantieniCentro } from '../../mappa/camera.js';
 import { DISPOSIZIONI, NOMI_DISPOSIZIONI, prossimaDisposizione, normalizzaDisposizione, larghezzaBarra, trascinaBordo, chiaveSchermo } from '../../mappa/disposizione.js';
 import { barraIniziativa } from '../../mappa/iniziativa.js';
-import { barraIniziativaEl } from './barra-iniziativa.js';
+import { barraIniziativaEl, stileBordo } from './barra-iniziativa.js';
+import { bordoToken, assegnaColori, cambiaColore, tavolozzaPer, famiglia } from '../../mappa/colori.js';
+import { scegliColore } from '../finestrella.js';
 import { calibraDaQuadretto, applicaGriglia, dimensioniMappa, lineeVisibili, testoScala } from '../../mappa/griglia.js';
 import { creaTela } from './canvas.js';
 import { leggiScena, salvaScena, caricaImmagine, controllaFile, preparaRidotta } from './api.js';
@@ -253,7 +255,7 @@ export function renderMappa(radice, ctx) {
     sopra: (c) => {
       if (st.scena) {
         const t = st.trascina?.modo === 'token' ? { id: st.trascina.token, q: st.trascina.q } : null;
-        disegnaToken(c, { scena: st.scena, cam: st.cam, pezzi: st.mappaPezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: st.selezionato, trascina: t });
+        disegnaToken(c, { scena: st.scena, cam: st.cam, pezzi: st.mappaPezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: st.selezionato, trascina: t, bordo: bordoDi, alone: ctx.dati.mappa.colori.alone_turno });
       }
       // percorso del token scelto (o trascinato) verso il quadretto sotto il puntatore, con i Q che costa
       if (st.percorso && st.scena) disegnaPercorso(c, { scena: st.scena, cam: st.cam, percorso: st.percorso.punti, ingombro: st.percorso.ingombro, costo: st.percorso.costo, fascia: st.percorso.fascia, colori: coloriAree(el.riquadro) });
@@ -528,6 +530,7 @@ export function renderMappa(radice, ctx) {
         const nuovi = primaLettura ? [] : pezziSenzaToken(st.scena, st.pezzi).filter((p) => !prima.has(p.chiave));
         if (nuovi.length) avviso(`Nello scontro: ${nuovi.map((p) => p.nome).join(', ')}. Fra i «senza token», da mettere in mappa.`, { durata: 8000 });
       }
+      if (coloraNuovi()) salvaPresto();
       invalidaArea();
       disegnaPannelli();
       disegnaIniziativa();
@@ -565,6 +568,7 @@ export function renderMappa(radice, ctx) {
       nascondi: () => cambiaToken(scelto.id, (x) => ({ ...x, nascosto: !x.nascosto })),
       ingombro: (n) => cambiaToken(scelto.id, (x) => ({ ...x, ingombro: n, q: agganciaQ(st.scena.griglia, centroToken(st.scena.griglia, x).x, centroToken(st.scena.griglia, x).y, n) }), { controllaSovrapposti: true }),
       togli: () => togliToken(scelto.id),
+      colore: () => coloreBordo(scelto.id),
       carta: () => apriNellaPlancia(pz?.chiave),
       immagine: async () => { const img = await scegliImmagineNemico(ctx.dati, pz?.nome); if (img) await immagineNemico(pz, img); },
       togliImmagine: () => immagineNemico(pz, null),
@@ -590,7 +594,18 @@ export function renderMappa(radice, ctx) {
     aggiornaFonti();
   }
 
+  /** Bordo di un pezzo con i colori della scena (src/mappa/colori.js). */
+  const bordoDi = (p) => bordoToken(p, st.scena?.colori, ctx.dati);
+  /** Primo ingresso in mappa: un colore ai PG e ai tipi di nemico che non ne hanno; true se la scena è cambiata. */
+  function coloraNuovi() {
+    if (!st.scena) return false;
+    const n = assegnaColori(st.scena, st.pezzi, ctx.dati);
+    if (n === st.scena) return false;
+    st.scena = n;
+    return true;
+  }
   function dopoCambioToken() {
+    coloraNuovi();
     invalidaArea();
     salvaPresto();
     disegnaPannelli();
@@ -614,6 +629,21 @@ export function renderMappa(radice, ctx) {
   }
 
   /** «Togli dalla mappa»: il pezzo torna fra quelli senza token (Ctrl+Z lo rimette). */
+  /** «Colore del bordo»: il master sceglie il colore di un PG o di un tipo di nemico (tutte le sue copie). */
+  async function coloreBordo(id) {
+    const t = st.scena.token.find((x) => x.id === id);
+    const p = t ? pezzoDi(t) : null;
+    const tav = p ? tavolozzaPer(p, ctx.dati) : null;
+    if (!tav) { avviso(famiglia(p) === 'veicolo' ? 'Il veicolo ha il colore del suo proprietario (o il grigio del gruppo).' : 'Gli alleati hanno sempre il bordo grigio-petrolio doppio.'); return; }
+    const scelto = await scegliColore({
+      titolo: `Colore del bordo: ${famiglia(p) === 'nemici' ? (p.scheda?.nome ?? p.nome.replace(/\s+\d+$/, '')) : p.nome}`,
+      colori: tav, attuale: bordoDi(p).id,
+      nota: famiglia(p) === 'nemici' ? 'Vale per tutte le copie di questo tipo; si distinguono dal numero.' : 'Il colore resta a questo PG in questa scena.',
+    });
+    if (!scelto || !st.scena) return;
+    st.scena = cambiaColore(st.scena, p, scelto);
+    dopoCambioToken();
+  }
   function togliToken(id) {
     const prima = st.scena.token.find((t) => t.id === id);
     if (!prima) return;
@@ -1170,6 +1200,7 @@ export function renderMappa(radice, ctx) {
       null,
       { testo: tok.nascosto ? 'Mostra ai giocatori' : 'Nascondi ai giocatori', azione: () => cambiaToken(tok.id, (x) => ({ ...x, nascosto: !x.nascosto })) },
       { testo: 'Mini-scheda', azione: () => apriCarta(tok), disabilitata: !pz },
+      { testo: 'Colore del bordo…', azione: () => coloreBordo(tok.id), disabilitata: !pz },
       { testo: 'Togli dalla mappa', azione: () => togliToken(tok.id) },
     ]);
   };
@@ -1300,7 +1331,7 @@ export function renderMappa(radice, ctx) {
   }
 
   /** Barra dell'Iniziativa del master: dallo scontro aperto letto dalle fonti (nessuna barra con una bozza). */
-  const barraAttuale = () => (st.scena ? barraIniziativa({ scontro: st.fonti?.scontro ?? null, pezzi: st.pezzi, scena: st.scena }) : null);
+  const barraAttuale = () => (st.scena ? barraIniziativa({ scontro: st.fonti?.scontro ?? null, pezzi: st.pezzi, scena: st.scena, bordoDi }) : null);
   function disegnaIniziativa() {
     const barra = barraAttuale();
     el.iniziativa.hidden = !barra;
@@ -1319,7 +1350,7 @@ export function renderMappa(radice, ctx) {
   const pezzoScelto = () => { const t = st.selezionato ? st.scena?.token.find((x) => x.id === st.selezionato) : null; return t ? pezzoDi(t) : null; };
   /** «Mappa grande»: colonna stretta con i mini-token (in ordine d'Iniziativa, se c'è lo scontro), i PV e il turno. */
   function disegnaRidotta(barra = barraAttuale()) {
-    const voci = barra ? barra.voci : st.pezzi.filter((p) => st.scena?.token.some((t) => chiaveRif(t.rif) === p.chiave)).map((p) => ({ chiave: p.chiave, nome: p.nome, iniziali: p.iniziali, lato: p.lato, ritratto: p.ritratto, pv: p.pv, diTurno: p.diTurno, token: st.scena.token.find((t) => chiaveRif(t.rif) === p.chiave)?.id ?? null, nascosto: !!st.scena.token.find((t) => chiaveRif(t.rif) === p.chiave)?.nascosto }));
+    const voci = barra ? barra.voci : st.pezzi.filter((p) => st.scena?.token.some((t) => chiaveRif(t.rif) === p.chiave)).map((p) => ({ chiave: p.chiave, nome: p.nome, iniziali: p.iniziali, lato: p.lato, ritratto: p.ritratto, pv: p.pv, diTurno: p.diTurno, bordo: bordoDi(p), token: st.scena.token.find((t) => chiaveRif(t.rif) === p.chiave)?.id ?? null, nascosto: !!st.scena.token.find((t) => chiaveRif(t.rif) === p.chiave)?.nascosto }));
     const scelto = pezzoScelto()?.chiave;
     svuota(el.ridotta,
       barra ? h('p', { class: 'ridotta-round' }, `R ${barra.round}`) : null,
@@ -1327,7 +1358,7 @@ export function renderMappa(radice, ctx) {
         const quota = v.pv?.massimo > 0 ? Math.max(0, Math.min(1, v.pv.attuali / v.pv.massimo)) : null;
         const titolo = `${v.nome}${v.pv ? ` · PV ${v.pv.attuali}/${v.pv.massimo}` : ''}${v.diTurno ? ' · di turno' : ''}${v.nascosto ? ' · nascosto ai giocatori' : ''}`;
         return h('button', { type: 'button', class: `ridotta-voce${v.diTurno ? ' di-turno' : ''}${v.chiave === scelto ? ' scelto' : ''}`, title: titolo, 'aria-label': titolo, onclick: () => scegliDallaBarra(v) },
-          h('span', { class: `mini-token lato-${v.lato ?? 'nessuno'}${v.diTurno ? ' di-turno' : ''}${v.nascosto ? ' nascosto' : ''}` }, v.ritratto ? h('img', { src: v.ritratto, alt: '' }) : h('span', { class: 'iniziali' }, v.iniziali)),
+          h('span', { class: `mini-token lato-${v.lato ?? 'nessuno'}${stileBordo(v.bordo).classi}${v.diTurno ? ' di-turno' : ''}${v.nascosto ? ' nascosto' : ''}`, style: stileBordo(v.bordo).stile }, v.ritratto ? h('img', { src: v.ritratto, alt: '' }) : h('span', { class: 'iniziali' }, v.iniziali)),
           quota !== null ? h('span', { class: 'pv-mini', style: `--quota: ${quota}` }) : null);
       }));
   }

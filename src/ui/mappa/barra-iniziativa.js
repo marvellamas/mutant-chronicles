@@ -43,13 +43,20 @@ export function barraIniziativaEl(barra, o = {}) {
       }, h('span', { class: 'interruttore-pallino', 'aria-hidden': 'true' }), `Centra su attivo: ${o.centra.attivo ? 'sì' : 'no'}`) : null) : null);
 }
 
+/** Bordo di un mini-token (src/mappa/colori.js), come sul token in mappa: stile e classi. */
+export function stileBordo(b) {
+  if (!b) return { stile: '', classi: '' };
+  return { stile: `--bordo: ${b.colore}; --contorno: ${b.contorno};${b.tratteggio ? ` --alterno: ${b.tratteggio};` : ''}`, classi: ` con-bordo${b.tratteggio ? ' tratteggio' : ''}${b.doppio ? ' doppio' : ''}` };
+}
+
 function miniToken(v, barra, o) {
   const x = posizioneSullaScala(barra, v.valore) * 100;
   const titolo = `${v.nome} · Iniziativa ${v.valore}${v.diTurno ? ' · di turno' : ''}${v.nascosto ? ' · nascosto ai giocatori' : ''}${o.scegli && !v.token ? ' · senza token in mappa' : ''}`;
   const corpo = v.ritratto ? h('img', { src: v.ritratto, alt: '' }) : h('span', { class: 'iniziali' }, v.iniziali);
+  const sb = stileBordo(v.bordo);
   const attr = {
-    class: `mini-token lato-${v.lato ?? 'nessuno'}${v.diTurno ? ' di-turno' : ''}${v.nascosto ? ' nascosto' : ''}`,
-    style: `left: ${x.toFixed(3)}%; top: ${LINEA_PX + v.pila * ALTEZZA_PILA_PX}px`,
+    class: `mini-token lato-${v.lato ?? 'nessuno'}${sb.classi}${v.diTurno ? ' di-turno' : ''}${v.nascosto ? ' nascosto' : ''}`,
+    style: `left: ${x.toFixed(3)}%; top: ${LINEA_PX + v.pila * ALTEZZA_PILA_PX}px; ${sb.stile}`,
     title: titolo, 'aria-label': titolo, dataset: { chiave: v.chiave },
   };
   return o.scegli ? h('button', { type: 'button', ...attr, onclick: () => o.scegli(v) }, corpo) : h('span', attr, corpo);

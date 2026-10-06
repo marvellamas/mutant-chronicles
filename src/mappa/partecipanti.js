@@ -127,6 +127,8 @@ export function pezziDellaScena({ scontro = null, bozza = null, alTavolo = [], v
       chiave: chiaveRif({ tipo: 'veicolo', id: rec.id }), rif: { tipo: 'veicolo', id: rec.id }, tipo: 'veicolo', nome,
       lato: 'pg', ingombro: ingombroVeicolo(profilo, dati), iniziali: iniziali(nome), ritratto: null, pv: null, aZero: false,
       stati: [], ferite: null, conducente: rec.conducente?.nome ?? null,
+      // colore del bordo (src/mappa/colori.js): quello del PG proprietario
+      proprietario: rec.proprietario?.tipo === 'gruppo' ? null : rec.proprietario?.chiave ?? null,
       // lotto 5: un solo movimento per Round, all'Iniziativa del conducente (A.105), lungo quanto l'andatura del
       // record unico (Veicoli §2.1: MOV × andatura); niente Corsa né Scatto
       movimento: profilo ? { passo: movimentoMassimo(profilo, rec.mezzo?.andatura ?? 'controllata', dati).q, corsa: null, scatto: null } : null,

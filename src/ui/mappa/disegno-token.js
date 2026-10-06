@@ -1,7 +1,9 @@
 // Mappa di battaglia, lotto 3 (docs/battlemap/piano.md; §7 della specifica): disegno dei token sul livello «sopra».
-// Ritratto del PG o cerchio con le iniziali; veicoli come rettangoli; bordo del colore del lato (PG --accento,
-// alleati --lato-alleato, avversari --lato-avversario); anello dei PV; piccole sigle degli Stati; a 0 PV in grigio;
-// il token di turno con un alone; i token nascosti (solo nella vista master) tratteggiati e trasparenti.
+// Ritratto del PG o cerchio con le iniziali; veicoli come rettangoli; bordo dai colori del 06/10 (src/mappa/colori.js:
+// PG pieno col suo colore, nemici tratteggiati nero e colore del tipo, alleati doppio grigio-petrolio, veicoli col colore
+// del proprietario), sempre con un contorno sottile scuro o chiaro; anello dei PV; piccole sigle degli Stati; a 0 PV in
+// grigio; il token di turno con un alone bianco luminoso (non si confonde col giallo dei PG); i token nascosti (solo
+// nella vista master) trasparenti.
 import { schermoDaMappa } from '../../mappa/camera.js';
 import { dimensioni, chiaveRif } from '../../mappa/token.js';
 
@@ -40,7 +42,7 @@ const sigla = (nome) => String(nome ?? '?').replace(/[^\p{L}\p{N} ]/gu, '').spli
  * Disegna i token della scena. `pezzi`: Map(chiave del rif → pezzo, src/mappa/partecipanti.js); `trascina`: il token
  * spostato ora ({ id, q }) o null; `selezionato`: id del token scelto.
  */
-export function disegnaToken(c, { scena, cam, pezzi, colori, immagine, selezionato = null, trascina = null }) {
+export function disegnaToken(c, { scena, cam, pezzi, colori, immagine, selezionato = null, trascina = null, bordo = () => null, alone = '#ffffff' }) {
   const g = scena.griglia;
   const qs = g.q_px * cam.scala;
   const ordinati = [...scena.token].sort((a, b) => (a.id === selezionato) - (b.id === selezionato) || (a.id === trascina?.id) - (b.id === trascina?.id));
@@ -50,12 +52,12 @@ export function disegnaToken(c, { scena, cam, pezzi, colori, immagine, seleziona
     const a = schermoDaMappa(cam, g.scosto_x + q[0] * g.q_px, g.scosto_y + q[1] * g.q_px);
     const box = { x: a.x, y: a.y, w: w * qs, h: h * qs };
     const p = pezzi.get(chiaveRif(t.rif)) ?? null;
-    disegnaUno(c, { t, p, box, colori, immagine, qs, scelto: t.id === selezionato, inMano: trascina?.id === t.id });
+    disegnaUno(c, { t, p, box, colori, immagine, qs, scelto: t.id === selezionato, inMano: trascina?.id === t.id, b: p ? bordo(p) : null, alone });
   }
 }
 
-function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano }) {
-  const colore = colori[p?.lato] ?? colori.testo;
+function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alone }) {
+  const colore = b?.colore ?? colori[p?.lato] ?? colori.testo;
   const veicolo = t.rif.tipo === 'veicolo';
   const cx = box.x + box.w / 2, cy = box.y + box.h / 2;
   const r = Math.min(box.w, box.h) / 2 * 0.88;
@@ -64,14 +66,19 @@ function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano }) {
   c.save();
   if (t.nascosto) c.globalAlpha = 0.45;
   if (inMano) c.globalAlpha *= 0.75;
-  // alone del turno (A.73: Iniziativa della plancia; un veicolo all'Iniziativa del conducente, A.105)
+  // alone del turno (A.73: Iniziativa della plancia; un veicolo all'Iniziativa del conducente, A.105): bianco luminoso
+  // su un anello scuro, così si vede anche su una mappa chiara e non si confonde col giallo di un PG
   if (p?.diTurno) {
     c.save();
-    c.shadowColor = colori.turno;
-    c.shadowBlur = Math.max(8, r * 0.6);
-    c.strokeStyle = colori.turno;
-    c.lineWidth = bordo * 1.6;
-    forma(c, veicolo, box, cx, cy, r + bordo * 1.4);
+    c.strokeStyle = 'rgba(0, 0, 0, 0.55)';
+    c.lineWidth = bordo * 2.8;
+    forma(c, veicolo, box, cx, cy, r + bordo * 1.5);
+    c.stroke();
+    c.shadowColor = alone;
+    c.shadowBlur = Math.max(10, r * 0.8);
+    c.strokeStyle = alone;
+    c.lineWidth = bordo * 1.4;
+    forma(c, veicolo, box, cx, cy, r + bordo * 1.5);
     c.stroke();
     c.restore();
   }
@@ -101,13 +108,33 @@ function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano }) {
     }
   }
   c.restore();
-  // bordo del lato, tratteggiato se nascosto
+  // bordo (src/mappa/colori.js): contorno sottile per il contrasto, poi pieno, doppio o tratteggiato nero e colore
   c.save();
-  c.strokeStyle = colore;
+  if (b?.contorno) {
+    c.strokeStyle = b.contorno;
+    c.globalAlpha *= 0.85;
+    c.lineWidth = bordo + Math.max(2, bordo * 0.6);
+    forma(c, veicolo, box, cx, cy, r);
+    c.stroke();
+    c.globalAlpha /= 0.85;
+  }
   c.lineWidth = bordo;
-  if (t.nascosto) c.setLineDash([bordo * 2, bordo * 1.5]);
+  if (b?.tratteggio) {
+    c.strokeStyle = b.tratteggio;
+    forma(c, veicolo, box, cx, cy, r);
+    c.stroke();
+    c.setLineDash([bordo * 1.8, bordo * 1.4]);
+  }
+  c.strokeStyle = colore;
   forma(c, veicolo, box, cx, cy, r);
   c.stroke();
+  if (b?.doppio) {
+    c.setLineDash([]);
+    c.strokeStyle = b.contorno;
+    c.lineWidth = Math.max(1, bordo * 0.3);
+    forma(c, veicolo, box, cx, cy, r);
+    c.stroke();
+  }
   c.restore();
   // anello dei PV (§7): l'arco pieno è la parte di PV rimasti
   if (p?.pv?.massimo > 0 && !veicolo) {

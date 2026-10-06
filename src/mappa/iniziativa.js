@@ -14,7 +14,7 @@ import { chiaveRif, iniziali } from './token.js';
  * @returns null oppure { round, diTurno: id | null, minimo, massimo, pile, voci: [{ id, chiave, nome, iniziali, lato,
  *   ritratto, pv, valore, ordine, pila, diTurno, token, nascosto }] }
  */
-export function barraIniziativa({ scontro, pezzi = [], scena = null }) {
+export function barraIniziativa({ scontro, pezzi = [], scena = null, bordoDi = () => null }) {
   if (!scontro || scontro.stato !== 'aperto') return null;
   const { ordinati } = ordineIniziativa(scontro);
   const turno = diTurno(scontro)?.id ?? null;
@@ -26,7 +26,7 @@ export function barraIniziativa({ scontro, pezzi = [], scena = null }) {
     const t = tokenDi.get(chiave) ?? null;
     return {
       id: p.id, chiave, nome: pz?.nome ?? p.nome, iniziali: pz?.iniziali ?? iniziali(p.nome), lato: pz?.lato ?? p.lato ?? null,
-      ritratto: pz?.ritratto ?? null, pv: pz?.pv ?? null, valore: p.base + p.d10.valore, ordine,
+      ritratto: pz?.ritratto ?? null, pv: pz?.pv ?? null, valore: p.base + p.d10.valore, ordine, bordo: pz ? bordoDi(pz) : null,
       pila: 0, diTurno: p.id === turno, token: t?.id ?? null, nascosto: !!t?.nascosto,
     };
   });
@@ -56,7 +56,7 @@ export function barraPerGiocatori(barra, visibili, immagineDi = () => null) {
   if (!barra) return null;
   const voci = barra.voci
     .filter((v) => visibili.has(v.chiave) || (v.id.startsWith('pg:') && !v.nascosto))
-    .map((v) => ({ chiave: v.chiave, nome: v.nome, iniziali: v.iniziali, lato: v.lato, ritratto: immagineDi(v.chiave), valore: v.valore, ordine: v.ordine, diTurno: v.diTurno }));
+    .map((v) => ({ chiave: v.chiave, nome: v.nome, iniziali: v.iniziali, lato: v.lato, ritratto: immagineDi(v.chiave), valore: v.valore, ordine: v.ordine, diTurno: v.diTurno, bordo: v.bordo ?? null }));
   const turno = voci.some((v) => v.diTurno) ? barra.diTurno : null;
   return conPile({ round: barra.round, diTurno: turno, voci });
 }

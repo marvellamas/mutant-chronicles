@@ -73,7 +73,7 @@ export function renderGiocatori(radice, ctx) {
       const s = st.vista;
       if (!s) return;
       const pezzi = new Map(s.token.filter((t) => t.info).map((t) => [chiaveRif(t.rif), { ...t.info, ritratto: t.info.immagine, pv: t.info.pv === null ? null : { attuali: t.info.pv, massimo: 1 }, stati: [] }]));
-      disegnaToken(c, { scena: s, cam: st.cam, pezzi, colori: coloriMappa(el.riquadro), immagine });
+      disegnaToken(c, { scena: s, cam: st.cam, pezzi, colori: coloriMappa(el.riquadro), immagine, bordo: (p) => p.bordo ?? null, alone: ctx.dati.mappa.colori.alone_turno });
     },
   });
 
