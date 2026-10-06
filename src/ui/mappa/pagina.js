@@ -59,6 +59,7 @@ const ATTESA_SALVATAGGIO_MS = 600;
 const ATTESA_RIPROVA_MS = 5000; // dopo un errore di rete o del server
 const SCARTO_AVVISO = 0.15; // riquadro tracciato poco quadrato: si avvisa (non si rifiuta)
 const TRASCINAMENTO_MINIMO_PX = 4;
+const PRESSIONE_LUNGA_MS = 550; // lotto 7: pressione lunga sul tablet = clic destro
 const INTERVALLO_FONTI_MS = 3000; // come la plancia (src/ui/tavolo.js)
 /** Gruppi della barra accanto alla mappa, nell'ordine (ritocchi del 06/10): chiave, segnalibro, suggerimento. */
 const GRUPPI_BARRA = [
@@ -1084,7 +1085,20 @@ export function renderMappa(radice, ctx) {
 
   // ── Puntatore, rotella e tastiera (§12); gesti comuni in ./gesti.js (lotto 4: due dita, doppio tocco) ──
   const punto = (e) => { const r = el.riquadro.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
+  // lotto 7: pressione lunga su un token col dito o la penna = clic destro (menu del token sul tablet)
+  let pressioneLunga = null;
+  const fermaPressione = () => { clearTimeout(pressioneLunga); pressioneLunga = null; };
   const premi = (e, p) => {
+    fermaPressione();
+    if (e.pointerType && e.pointerType !== 'mouse') {
+      pressioneLunga = setTimeout(() => {
+        pressioneLunga = null;
+        const t = st.trascina;
+        if (!t || t.mosso || t.modo !== 'token') return;
+        annullaGesto(t);
+        menuSu(p);
+      }, PRESSIONE_LUNGA_MS);
+    }
     el.riquadro.focus({ preventScroll: true });
     nascondiSuggerimento();
     chiudiMenuToken();
@@ -1123,6 +1137,7 @@ export function renderMappa(radice, ctx) {
     if (!t || !mio) { suggerisci(e); return; }
     if (!t.mosso && Math.hypot(p.x - t.x0, p.y - t.y0) < TRASCINAMENTO_MINIMO_PX) return;
     t.mosso = true;
+    fermaPressione();
     if (t.modo === 'sposta') cambiaCamera(sposta(st.cam, p.x - t.x, p.y - t.y));
     else if (t.modo === 'disegno') {
       const q = qVicino(mappaDaSchermo(st.cam, p.x, p.y));
@@ -1148,6 +1163,7 @@ export function renderMappa(radice, ctx) {
   };
   /** Restituisce true se il rilascio ha colpito qualcosa (niente doppio tocco per «Adatta»). */
   const rilascia = (e, p, annullato) => {
+    fermaPressione();
     const t = st.trascina;
     if (!t) return false;
     st.trascina = null;
@@ -1263,7 +1279,10 @@ export function renderMappa(radice, ctx) {
   const suMenu = (e) => {
     if (!st.scena) return;
     e.preventDefault();
-    const p = punto(e);
+    menuSu(punto(e));
+  };
+  /** Menu del token nel punto p del riquadro (clic destro, o pressione lunga sul tablet). */
+  function menuSu(p) {
     const tok = tokenSotto(mappaDaSchermo(st.cam, p.x, p.y));
     if (!tok) { chiudiMenuToken(); return; }
     if (st.selezionato !== tok.id) scegli(tok.id);
@@ -1288,7 +1307,7 @@ export function renderMappa(radice, ctx) {
       { testo: 'Colore del bordo…', azione: () => coloreBordo(tok.id), disabilitata: !pz },
       { testo: 'Togli dalla mappa', azione: () => togliToken(tok.id) },
     ]);
-  };
+  }
   const suTasto = (e) => {
     if (inCampo(e)) return;
     if (e.key === 'Tab' && !e.ctrlKey && !e.metaKey && !e.altKey && (document.activeElement === document.body || document.activeElement === el.riquadro || document.activeElement === el.bordo)) {
