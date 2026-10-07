@@ -5,6 +5,7 @@
 //                                    tutte le interfacce e stampa gli indirizzi per i giocatori (src/rete.js)
 //   node server.mjs --solo-locale   solo da questo computer (127.0.0.1); --rete resta accettato, non serve più
 //   PORTA=8080 node server.mjs      altra porta (oppure --porta=8080)
+//   --senza-avvisi                    nessun avviso a Marcello (tools/avvisi.mjs; anche con --cartella=…)
 //   --cartella=<dir> --tavolo=<dir> --scontri=<dir> --nemici=<dir> --veicoli=<dir> --scene=<dir> --mappe=<dir>
 //                                    altre cartelle per personaggi, tavolo, scontri, bestiario, veicoli,
 //                                    scene e immagini delle mappe (prove, più campagne)
@@ -72,6 +73,7 @@ import { createHash } from 'node:crypto';
 import { createInterface } from 'node:readline/promises';
 import { chiOccupa, testoDomanda, risposteSi, fermaMutant, sorvegliaFinestra } from './src/porta-occupata.js';
 import { indirizziRete, testoAvvio } from './src/rete.js';
+import { avvisa } from './tools/avvisi.mjs';
 import { bordoToken } from './src/mappa/colori.js';
 import { validaScontro } from './src/scontro.js';
 import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
@@ -431,6 +433,8 @@ async function apiScene(req, res, percorso, scene, mappe, radice, cartelle) {
     const vista = new URL(req.url, 'http://x').searchParams.get('vista');
     if (vista === 'giocatori') return json(res, 200, vistaGiocatori(s, await contestoScena(s, cartelle)));
     if (vista !== null) return json(res, 400, { errore: 'vista: solo «giocatori»' });
+    // avviso a Marcello (tools/avvisi.mjs): «Mappa aperta», al massimo una volta al giorno; solo dal server avviato
+    cartelle.avvisi?.('mappa');
     return json(res, 200, s);
   }
   if (req.method !== 'PUT') return json(res, 405, { errore: 'metodo non ammesso' });
@@ -735,8 +739,8 @@ async function caricaEsempi(radice, cartella, nemici) {
   return { copiati, saltati };
 }
 
-async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice, soloLocale, veicoli, migraIn = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), canale = null) {
-  const cartelle = { cartella, tavolo, scontri, veicoli, scene, radice, canale };
+async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice, soloLocale, veicoli, migraIn = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), canale = null, avvisi = null) {
+  const cartelle = { cartella, tavolo, scontri, veicoli, scene, radice, canale, avvisi };
   // diretta (07/10): dopo una scrittura riuscita di scena o scontro la vista giocatori si rilegge subito
   const segnala = (r) => { if (req.method !== 'GET' && res.statusCode < 300) canale?.cambiata(); return r; };
   if (percorso === '/api/scene' || percorso.startsWith('/api/scene/')) return segnala(await apiScene(req, res, percorso, scene, mappe, radice, cartelle));
@@ -877,7 +881,7 @@ async function statico(req, res, percorso, radice, versioneAvvio = null) {
  * Crea il server. `radice`: cartella dell'app; `cartella`: dove stanno i personaggi (per i test, una
  * cartella temporanea).
  */
-export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA), tavolo = join(RADICE, TAVOLO), scontri = join(RADICE, SCONTRI), nemici = join(RADICE, NEMICI), veicoli: veicoliDati = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), soloLocale = false } = {}) {
+export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA), tavolo = join(RADICE, TAVOLO), scontri = join(RADICE, SCONTRI), nemici = join(RADICE, NEMICI), veicoli: veicoliDati = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), soloLocale = false, avvisi = null } = {}) {
   const veicoli = veicoliDati ?? join(RADICE, VEICOLI);
   // versione dell'app all'accensione (versione.json): il codice del server resta questo finché non lo si riavvia
   let versioneAvvio = null;
@@ -895,7 +899,7 @@ export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA),
     try {
       const percorso = decodeURI(new URL(req.url, 'http://x').pathname);
       if (percorso === '/api/ping') return json(res, 200, { ok: true, app: 'mutant', cartella: CARTELLA, ...identita });
-      if (percorso.startsWith('/api/')) return await api(req, res, percorso, cartella, tavolo, scontri, nemici, base, soloLocale, veicoli, migraIn, scene, mappe, canale);
+      if (percorso.startsWith('/api/')) return await api(req, res, percorso, cartella, tavolo, scontri, nemici, base, soloLocale, veicoli, migraIn, scene, mappe, canale, avvisi);
       return await statico(req, res, percorso, base, versioneAvvio);
     } catch (e) {
       if (!res.headersSent) json(res, 500, { errore: e.message });
@@ -925,7 +929,11 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const veicoli = arg('veicoli') ? normalize(arg('veicoli')) : join(RADICE, VEICOLI);
   const scene = arg('scene') ? normalize(arg('scene')) : join(RADICE, SCENE);
   const mappe = arg('mappe') ? normalize(arg('mappe')) : join(RADICE, MAPPE);
-  const server = creaServer({ cartella, tavolo, scontri, nemici, veicoli, scene, mappe, soloLocale });
+  // avvisi a Marcello (tools/avvisi.mjs, avvisi/LEGGIMI.txt): solo dal server avviato da qui, mai nei test né con cartelle
+  // di prova (--cartella=…) o con --senza-avvisi; in silenzio
+  const senzaAvvisi = process.argv.includes('--senza-avvisi') || !!arg('cartella');
+  const avvisi = senzaAvvisi ? null : (evento) => { avvisa(evento, { radice: RADICE }).catch(() => {}); };
+  const server = creaServer({ cartella, tavolo, scontri, nemici, veicoli, scene, mappe, soloLocale, avvisi });
   // si spegne quando si chiude la finestra di avvia-server.bat (o con Ctrl+C), senza restare in ascolto da solo
   const esci = (perche) => {
     console.log(`\nMutant si spegne (${perche}).`);
@@ -937,6 +945,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const avvia = () => server.listen(porta, host, () => {
     console.log(testoAvvio(indirizziRete(networkInterfaces(), porta), porta, { soloLocale }));
     console.log(`Personaggi salvati in ${cartella}`);
+    avvisi?.('avvio');
     server.migrazione.then((e) => {
       if (e?.record?.length) console.log(`Veicoli spostati nel registro (veicoli/): ${e.record.join(', ')}.`);
       for (const a of e?.avvisi ?? []) console.log(`Attenzione: ${a}`);

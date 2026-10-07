@@ -21,6 +21,11 @@ echo.
 git checkout -- versione.json index.html
 git pull --ff-only
 if errorlevel 1 goto errore_pull
+rem Avvisi a Marcello (tools\avvisi.mjs, avvisi\LEGGIMI.txt): la prima volta la configurazione si crea
+rem dall'esempio; poi una notifica con il nome del PC e la versione. Mai bloccante, mai errori a schermo.
+rem Tutto quello che sta sopra la riga del pull deve restare uguale: questo file si aggiorna mentre gira.
+if not exist "avvisi\avvisi.json" if exist "avvisi\avvisi.esempio.json" copy /y "avvisi\avvisi.esempio.json" "avvisi\avvisi.json" >nul 2>nul
+call :avviso aggiornato
 
 echo.
 echo  Fatto: Mutant e' aggiornato. Adesso fai doppio clic su avvia.bat
@@ -30,6 +35,7 @@ pause
 exit /b 0
 
 :errore_pull
+call :avviso non-aggiornato "git pull non riuscito"
 echo.
 echo  ==============================================================
 echo   Aggiornamento non riuscito: manda questo schermo a Marcello.
@@ -44,9 +50,18 @@ pause
 exit /b 1
 
 :senza_git
+call :avviso non-aggiornato "cartella senza Git o Git non installato"
 echo.
 echo  Questa cartella non e' una copia con Git (oppure Git non e' installato).
 echo  Per aggiornare usa distribuzione\1_scarica_o_aggiorna_app.bat
 echo.
 pause
 exit /b 1
+
+rem Notifica a Marcello (avvisi\LEGGIMI.txt): solo con Node e lo script presenti; in silenzio
+:avviso
+where node >nul 2>nul
+if errorlevel 1 exit /b 0
+if not exist "tools\avvisi.mjs" exit /b 0
+node tools\avvisi.mjs %* >nul 2>nul
+exit /b 0

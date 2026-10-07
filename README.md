@@ -39,6 +39,8 @@ pubblico.
 
 Per tenere il server chiuso agli altri dispositivi: `node server.mjs --solo-locale`.
 
+**Avvisi a Marcello.** Quando aggiorni o avvii Mutant, a Marcello arriva un avviso con la versione: serve a sapere se stai provando l'ultima. Per disattivarlo: `avvisi.json` → `attivo: false`. Il file è `avvisi/avvisi.json` (lo crea `aggiorna.bat` la prima volta); parte solo nome del PC, versione, data e ora, esito (dettagli in `avvisi/LEGGIMI.txt`).
+
 **Copia di fine sessione: `salva-sessione.bat`.**
 1. A fine sessione fai doppio clic su `salva-sessione.bat` (anche con il server acceso): crea `salvataggi/sessione_AAAA-MM-GG_hhmm.zip` con personaggi, veicoli, scontri, nemici e tavolo. I salvataggi non vengono mai cancellati né sovrascritti.
 2. Per avere la copia anche su Google Drive: copia `config-salvataggi.esempio.json` come `config-salvataggi.json` e scrivi in `copia_in` la cartella di Drive sul PC (togli la voce `github` se non ti serve).
