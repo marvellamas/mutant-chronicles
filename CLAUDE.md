@@ -192,6 +192,7 @@ Valgono per ogni prompt, anche quando il prompt non le ripete.
   - `node tools/verifica_frasi.mjs`.
 - Dopo il commit, il push. Se fallisce per le credenziali, dirlo.
 - Riepilogo finale breve, con `git status -sb`.
+- Prove banali a Marcello. I test automatici (`npm test`, validatore, `node tools/verifica_frasi.mjs`) si fanno sempre. Le prove nel browser banali (un pulsante che compare, un testo, un colore, una voce di menu, una disposizione) non si fanno: si elencano in fondo al riepilogo come «Da provare (Marcello)», una riga ciascuna con cosa fare e cosa deve succedere; l'esito arriva nel prompt successivo. Le prove nel browser su logica, dati, salvataggi, filtri dei segreti, server e casi limite restano di Claude Code.
 
 ## Come trattare i prompt di Marcello
 
