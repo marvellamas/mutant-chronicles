@@ -741,6 +741,7 @@ export function renderMappa(radice, ctx) {
       ['Barra spaziatrice + mouse, o trascinare un punto vuoto', 'sposta la mappa'],
       ['Doppio clic su un punto vuoto', 'adatta allo schermo'],
       ['Clic su un token', 'lo sceglie: area di movimento e mini-scheda'],
+      ['Clic sul token scelto, Esc, o clic fuori dall’area', 'lo lascia: area e percorso spariscono, i Q usati restano'],
       ['Clic su un quadretto dell’area, o trascinare il token', 'movimento nel Round'],
       ['Maiusc + clic o trascinamento', 'movimento libero (come «Libero»)'],
       ['Ctrl + clic su un token', 'scheda completa (PG) o mini-scheda (nemico)'],
@@ -751,7 +752,7 @@ export function renderMappa(radice, ctx) {
       ['Tab (Maiusc + Tab indietro)', 'cambia disposizione: Mappa grande, Equilibrata, Scontro grande'],
       ['Doppio clic sul bordo della barra', 'disposizione successiva; trascinarlo cambia la larghezza'],
       ['Ctrl + Z', 'annulla l’ultima azione del master (movimento, muri, nebbia, token)'],
-      ['Esc', 'chiude menu e strumenti, poi la mini-scheda, poi deseleziona'],
+      ['Esc', 'chiude menu e strumenti, poi lascia il token scelto, poi chiude la mini-scheda'],
       ['?', 'questo pannello'],
       ['Due dita (tablet)', 'zoom e spostamento; doppio tocco: adatta allo schermo'],
     ];
@@ -1312,6 +1313,9 @@ export function renderMappa(radice, ctx) {
         // lotto 7 (§12): Ctrl+clic apre la scheda completa del PG, la mini-scheda per gli altri
         scegli(tok.id);
         apriSchedaToken(tok);
+      } else if (st.selezionato === tok.id) {
+        // 07/10: ricliccare il token scelto lo lascia (area e percorso spariscono; i Q usati restano)
+        scegli(null);
       } else {
         // clic: si sceglie il token, compare la sua area e si apre la sua carta accanto alla mappa
         scegli(tok.id);
@@ -1319,15 +1323,14 @@ export function renderMappa(radice, ctx) {
       }
       return true;
     }
-    // clic su un quadretto con un token scelto: dentro l'area (o con Maiusc) il token ci va; altrimenti si deseleziona
+    // clic su un quadretto con un token scelto: dentro l'area (o con Maiusc) il token ci va; altrimenti si deseleziona,
+    // senza muovere e senza avvisi (07/10: il master lascia il token per fare altro)
     if (!t.mosso && st.selezionato) {
       const tok = st.scena.token.find((x) => x.id === st.selezionato);
       const info = areaScelta();
       if (tok && info) {
         const q = posizioneVerso(tok, mappaDaSchermo(st.cam, p.x, p.y));
         if (e.shiftKey || info.libero || costoDentro(info, q) < Infinity) { eseguiMovimento(tok, q, { libero: e.shiftKey || info.libero, info }); return true; }
-        // oltre il Passo (o la Corsa) ma alla portata di una fascia più ampia: il clic non vale e lo si dice
-        if (chiedeFascia(info, q)) { avvisaFascia(); return true; }
       }
       scegli(null);
     }
@@ -1451,7 +1454,7 @@ export function renderMappa(radice, ctx) {
     } else if (e.key === 'Escape') {
       if (menuAperto()) chiudiMenuToken();
       else if (st.strumento === 'calibra') impostaStrumento('sposta');
-      else if (disegnoAttivo()) { N.strumento = null; M.strumento = null; dopoStrumento(); } else if (st.daPiazzare) { st.daPiazzare = null; el.riquadro.classList.remove('piazza'); disegnaPannelli(); } else if (st.cartaAperta) chiudiCarta(); else if (st.selezionato) scegli(null);
+      else if (disegnoAttivo()) { N.strumento = null; M.strumento = null; dopoStrumento(); } else if (st.daPiazzare) { st.daPiazzare = null; el.riquadro.classList.remove('piazza'); disegnaPannelli(); } else if (st.selezionato) scegli(null); else if (st.cartaAperta) chiudiCarta(); // 07/10: Esc prima lascia il token, poi chiude la mini-scheda
     }
   };
   const suRilasciaTasto = (e) => {
