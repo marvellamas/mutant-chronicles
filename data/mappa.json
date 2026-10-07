@@ -121,7 +121,7 @@
     "taglio_angoli_muri": false,
     "TODO(Davide) angoli": "A.134: in diagonale si può passare rasente allo spigolo di un muro (dei due quadretti ai lati della diagonale uno libero e uno murato)? La A.124 dice solo che la diagonale non attraversa muri o passaggi ostruiti. Provvisorio: no, una diagonale vuole liberi dai muri anche i due quadretti ai lati.",
     "terreno_difficile_moltiplicatore": 2,
-    "TODO(Davide) terreno": "A.128: quanto costa un Q di terreno difficile (il doppio, provvisorio) e vale anche per Corsa e Scatto?",
+    "_nota_terreno": "A.128 (decisione 132): ogni quadretto di terreno difficile costa 2 Q, anche in diagonale e anche in Corsa e Scatto; nei percorsi misti 1 Q per i quadretti normali e 2 Q per quelli difficili (2 normali + 2 difficili = 6 Q, il Passo intero); nessuna penalità o Prova aggiunta. Le zone le segna il Direttore (Strumenti → Muri e terreno).",
     "attraversa_alleati": true,
     "attraversa_avversari": false,
     "fermarsi_su_alleato": false,

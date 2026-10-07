@@ -89,6 +89,19 @@ test('terreno difficile: ×2 per ogni Q in cui si entra', () => {
   assert.equal(costoVerso(a, [8, 5]), 5);
 });
 
+test('A.128: terreno difficile 2 Q anche in diagonale; percorso misto contato a tratti; tutto difficile 3/6/9 quadretti', () => {
+  // tutto difficile: Passo 6 → 3 quadretti, Corsa 12 → 6, Scatto 18 → 9 (anche in diagonale)
+  const tutto = rettangolo(vuota(), C, R, 0, 0, C - 1, R - 1, true);
+  const t = area({ chi: chi([0, 0]), terreno: tutto, massimo: 18 });
+  assert.equal(costoVerso(t, [3, 0]), 6);
+  assert.equal(costoVerso(t, [3, 3]), 6, 'tre diagonali difficili');
+  assert.equal(costoVerso(t, [6, 0]), 12);
+  assert.equal(costoVerso(t, [9, 9]), 18);
+  // l'esempio di Davide: 2 quadretti normali e 2 difficili = 2 + 4 = 6 Q
+  const misto = rettangolo(vuota(), C, R, 3, 0, 4, R - 1, true);
+  assert.equal(costoVerso(area({ chi: chi([0, 5]), terreno: misto }), [4, 5]), 6);
+});
+
 test('alleati attraversabili ma non occupabili, avversari no', () => {
   const token = [
     { id: 'amico', q: [6, 5], ingombro: 1, lato: 'pg' },
