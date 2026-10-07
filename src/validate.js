@@ -2708,6 +2708,21 @@ function validaMappa(dati, err) {
     for (const k of ['nemico', 'pg']) if (!/^img\/[\w./-]+\.(png|webp|svg)$/.test(PZ[k] ?? '')) err(F, `pv_zero.${k}`, 'percorso di un’immagine in img/ (png, webp o svg)');
     if (!(typeof PZ.quota_token === 'number' && PZ.quota_token >= 0.2 && PZ.quota_token <= 1)) err(F, 'pv_zero.quota_token', 'numero da 0.2 a 1');
   }
+  // suoni della mappa (07/10, src/mappa/audio.js): evento → file, musica di fondo, volumi predefiniti
+  const AU = m.audio;
+  if (!isOggetto(AU)) err(F, 'audio', 'oggetto mancante');
+  else {
+    const NOTI = ['nuovo_round', 'attacco_opportunita', 'template_scaduto'];
+    if (!isOggetto(AU.effetti)) err(F, 'audio.effetti', 'oggetto evento → file mancante');
+    else for (const [k, v] of Object.entries(AU.effetti)) {
+      if (!NOTI.includes(k)) err(F, `audio.effetti.${k}`, `evento sconosciuto (noti: ${NOTI.join(', ')})`);
+      else if (v !== null && !/^[\w/.-]+\.(mp3|ogg|wav|m4a|aac)$/i.test(v)) err(F, `audio.effetti.${k}`, 'null oppure il percorso di un file audio del progetto (mp3, ogg, wav, m4a, aac)');
+    }
+    if (!/^[a-z0-9-]+$/.test(AU.musica?.cartella ?? '')) err(F, 'audio.musica.cartella', 'nome semplice di una cartella');
+    if (!Array.isArray(AU.musica?.formati) || !AU.musica.formati.length || AU.musica.formati.some((x) => !['mp3', 'ogg', 'wav', 'm4a', 'aac', 'opus', 'flac', 'webm'].includes(x))) err(F, 'audio.musica.formati', 'elenco di formati audio noti');
+    for (const k of ['musica', 'effetti']) if (!(typeof AU.volume_predefinito?.[k] === 'number' && AU.volume_predefinito[k] >= 0 && AU.volume_predefinito[k] <= 1)) err(F, `audio.volume_predefinito.${k}`, 'numero da 0 a 1');
+    if (typeof AU.giocatori_predefinito !== 'boolean') err(F, 'audio.giocatori_predefinito', 'true o false');
+  }
   // «Indietro» nell'Iniziativa (07/10, src/scontro.js → indietro): quanti «Avanti» si possono annullare
   if (!isIntero(m.iniziativa?.indietro_max) || m.iniziativa.indietro_max < 1) err(F, 'iniziativa.indietro_max', 'intero da 1 in su');
   if (!isIntero(m.iniziativa?.centra_px_per_q) || m.iniziativa.centra_px_per_q < 8 || m.iniziativa.centra_px_per_q > 400) err(F, 'iniziativa.centra_px_per_q', 'intero da 8 a 400 (pixel di schermo per Q dopo «Centra»)');

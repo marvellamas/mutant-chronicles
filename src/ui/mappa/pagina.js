@@ -63,6 +63,8 @@ import { svgQR } from '../../qr.js';
 import { leggiRete } from '../collega.js';
 import { creaFonti } from './fonti.js';
 import { disegnaToken, coloriMappa, creaImmagini } from './disegno-token.js';
+import { creaAudio } from './audio.js';
+import { eventiScontro } from '../../mappa/audio.js';
 import { sezioneScontro, sezioneToken, TIPO_TRASCINA } from './pannello-scontro.js';
 import { renderTavolo } from '../tavolo.js';
 import { segnaDallaMappa, vistaDaRimettere, dimenticaMappa } from '../ritorno.js';
@@ -421,6 +423,8 @@ export function renderMappa(radice, ctx) {
   window.addEventListener('resize', suFinestra);
 
   const immagine = creaImmagini(() => ridisegna(['sopra']));
+  // suoni della mappa (07/10): effetti degli eventi dello scontro, sul PC del master
+  const audio = creaAudio(ctx.dati);
 
   const aggiornaBarra = () => {
     el.zoom.textContent = `${Math.round(st.cam.scala * 100)} %`;
@@ -648,6 +652,8 @@ export function renderMappa(radice, ctx) {
       const primaLettura = st.fonti === null;
       const esito = await leggiFonti(st.scena.collegamento);
       if (st.chiusa) return;
+      // 07/10: al nuovo Round la campanella (data/mappa.json → audio.effetti), anche se l'«Avanti» viene da un'altra finestra
+      for (const ev of eventiScontro(st.fonti?.scontro ?? null, esito.scontro ?? null)) audio.effetto(ev);
       st.fonti = esito;
       st.pezzi = pezziDellaScena(esito, ctx.dati);
       st.mappaPezzi = new Map(st.pezzi.map((p) => [p.chiave, p]));
@@ -2893,6 +2899,7 @@ export function renderMappa(radice, ctx) {
     // la vista giocatori perde la diretta quando il master lascia la mappa
     if (st.diretta.chiave !== 'nessuna') { st.diretta.inVolo = false; mandaDiretta(null); }
     st.chiusa = true;
+    audio.chiudi();
     clearInterval(giro);
     if (st.salvataggio.modificata) salvaOra();
     gesti.distruggi();

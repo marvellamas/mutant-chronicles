@@ -538,5 +538,19 @@
       "totale": "#e03131"
     },
     "tasto": "l"
+  },
+  "audio": {
+    "_nota": "Suoni della mappa (richiesta di Marcello del 07/10/2026; src/mappa/audio.js, src/ui/mappa/audio.js). effetti: evento → file (percorso nel progetto, servito come gli altri file statici); un evento senza file non suona. Per ora solo nuovo_round; gli altri eventi previsti (attacco_opportunita, template_scaduto) restano null finché non si sceglie un file. musica: la cartella reale del server con la musica di fondo (fuori da git, come mappe/) e i formati che tutti i browser leggono. volume_predefinito: Musica ed Effetti da 0 a 1, prima che il master li cambi (poi si ricordano su quel PC). giocatori_predefinito: «suona anche nella vista giocatori», spento.",
+    "effetti": {
+      "nuovo_round": "Sounds/Effects/RoundBell.mp3",
+      "attacco_opportunita": null,
+      "template_scaduto": null
+    },
+    "musica": {
+      "cartella": "musica",
+      "formati": ["mp3", "ogg", "wav", "m4a", "aac"]
+    },
+    "volume_predefinito": { "musica": 0.4, "effetti": 0.8 },
+    "giocatori_predefinito": false
   }
 }

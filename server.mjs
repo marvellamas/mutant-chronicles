@@ -104,6 +104,8 @@ const TIPI = {
   '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.ico': 'image/x-icon',
   '.pdf': 'application/pdf', '.txt': 'text/plain; charset=utf-8', '.md': 'text/markdown; charset=utf-8',
   '.woff2': 'font/woff2', '.woff': 'font/woff',
+  // suoni della mappa (07/10): effetti in Sounds/ e musica di fondo
+  '.mp3': 'audio/mpeg', '.ogg': 'audio/ogg', '.wav': 'audio/wav', '.m4a': 'audio/mp4', '.aac': 'audio/aac',
 };
 // come serve.json: «**/*.@(js|css|json|html)» → Cache-Control: no-cache (docs/cache.md)
 const NO_CACHE = new Set(['.js', '.mjs', '.css', '.json', '.html']);
