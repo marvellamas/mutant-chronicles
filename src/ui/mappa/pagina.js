@@ -34,13 +34,16 @@ import { creaTela } from './canvas.js';
 import { leggiScena, salvaScena, caricaImmagine, controllaFile, preparaRidotta } from './api.js';
 import { agganciaQ, centroToken, tokenSottoPunto, disponiInFila, sovrapposti, chiaveRif } from '../../mappa/token.js';
 import { pezziDellaScena, pezziSenzaToken, tokenOrfani, tokenPerPezzo } from '../../mappa/partecipanti.js';
-import { daBase64, cella, conta } from '../../mappa/celle.js';
+import { daBase64, inBase64, cella, conta } from '../../mappa/celle.js';
+import { ostacoliVista, lineaDiTiro, visuale as visualePg, nebbiaDopoVisuale, tokenPg } from '../../mappa/visuale.js';
+import { fasciaDistanza } from '../../attacco.js';
+import { CHIAVE_DALLA_MAPPA } from '../attacco.js';
 import { tratto, valoreModo, nebbiaProvvisoria, chiudiPennellata, rettangoloNebbia, tuttaNebbia, trattiCoperti } from '../../mappa/nebbia.js';
 import { trattoMuri, muriProvvisori, chiudiTrattoMuri, rettangoloMuri } from '../../mappa/muri.js';
 import { areaRaggiungibile, costoVerso, percorso, statoFasce, fasciaDi, celleArea, piuVicinaRaggiungibile } from '../../mappa/area.js';
 import { statoDiretta, visibileAiGiocatori } from '../../mappa/diretta.js';
 import { muoviToken, usatoNelRound, fasceNelRound, mossoNelRound, annullaUltima, annullaUltimoMovimento, cambiaTokenAnnullabile, cambiaTemplateAnnullabile, cambiaPortaAnnullabile, nuovoTurno, turnoDi } from '../../mappa/annulla.js';
-import { disegnaMuri, disegnaArea, disegnaPercorso, disegnaZoc, coloriAree, disegnaTemplate, disegnaPorte } from './disegno-aree.js';
+import { disegnaMuri, disegnaArea, disegnaPercorso, disegnaZoc, coloriAree, disegnaTemplate, disegnaPorte, disegnaLineaTiro } from './disegno-aree.js';
 import { celleTemplate, tokenDentro as tokenNelTemplate, nuovoTemplate, scaduto, direzioneVerso, ORIENTABILI, templateVisibili, ostacoliVisibili, ruota, cambiaMisura } from '../../mappa/template.js';
 import { portaA, muriEffettivi, porteVicine, apriChiudi, nuovaPorta, conAzione, azpNelRound, orientamento } from '../../mappa/porte.js';
 import { apriMenuTemplate, sezioneTemplate, etichettaTemplate, testoMisure } from './template.js';
@@ -330,6 +333,8 @@ export function renderMappa(radice, ctx) {
         disegnaToken(c, { scena: st.scena, cam: st.cam, pezzi: st.mappaPezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: st.selezionato, trascina: t, bordo: bordoDi, alone: ctx.dati.mappa.colori.alone_turno, ritrattoVerticale: ctx.dati.mappa.token.ritratto_verticale, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => st.mostraPv } });
       }
       // percorso del token scelto (o trascinato) verso il quadretto sotto il puntatore, con i Q che costa
+      // fase 2, lotto 3: la linea di tiro del token scelto verso il mouse o il bersaglio
+      disegnaLineaScelta(c);
       if (st.percorso && st.scena) disegnaPercorso(c, { scena: st.scena, cam: st.cam, percorso: st.percorso.punti, ingombro: st.percorso.ingombro, costo: st.percorso.costo, fascia: st.percorso.fascia, colori: coloriAree(el.riquadro), inZoc: zocDelPercorso(st.percorso), coloreZoc: ctx.dati.mappa.zoc.colore });
       // anteprima del rettangolo di nebbia o di muri
       const tn = st.trascina;
@@ -663,6 +668,7 @@ export function renderMappa(radice, ctx) {
     svuota(el.secToken, sezioneToken(scelto, pz, ctx.dati, {
       mov: scelto ? movimentoPannello(scelto) : null,
       fascia: (n) => cambiaFascia(n),
+      lineaTiro: () => iniziaLinea(scelto.id),
       // fase 2, lotto 2 (A.125): la porta adiacente, 1 AzP
       porta: (id) => { const p = st.scena.porte?.find((x) => x.id === id); if (p) portaToken(scelto, p, p.stato === 'aperta' ? 'chiudi' : 'apri'); },
       annullaMovimento: () => annullaMovimentoUi(scelto.id),
@@ -715,6 +721,7 @@ export function renderMappa(radice, ctx) {
     salvaPresto();
     disegnaPannelli();
     disegnaPannelloTemplate(); // chi è dentro i template cambia con i token
+    aggiornaVisuale();
     disegnaIniziativa(); // token messi, tolti, nascosti: anche la barra dell'Iniziativa
     ridisegna(['aree', 'sopra']); // l'area raggiungibile sta nel livello «aree»
   }
@@ -819,6 +826,8 @@ export function renderMappa(radice, ctx) {
       ['Maiusc+T (pulsante «◫ Template»)', 'mostra o nasconde i template senza durata, muri, porte e terreno (per il movimento valgono sempre); con «anche a durata» anche i template a Round'],
       ['Strumenti → Muri e terreno → «Porta»', 'clic su un Q di muro: porta (aperta, chiusa o bloccata; segreta); clic su una porta: la toglie'],
       ['Clic su una porta', 'il master la apre o la chiude (bloccata: no); clic destro: Apri / Chiudi / Blocca / Sblocca / Rivela / Togli'],
+      ['L (o clic destro → «Linea di tiro»)', 'dal token scelto verso il mouse o un token: distanza (diagonale 1 Q), vista, Copertura (§5.8); clic per fissarla: «Attacca!» con distanza e Copertura; Esc per chiudere'],
+      ['Nebbia automatica (pannello Nebbia)', 'la nebbia si apre dove i PG vedono (muri e porte chiuse fermano la vista); per i giocatori le zone esplorate restano più scure'],
       ['Token scelto accanto a una porta', 'clic destro o pannello: «Apri porta» / «Chiudi porta», 1 AzP e una riga nel registro (A.125)'],
       ['M', 'mostra o nasconde l’area di movimento'],
       ['Z', 'mostra o nasconde le zone di controllo (ZoC) degli avversari'],
@@ -974,6 +983,9 @@ export function renderMappa(radice, ctx) {
       h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Strumento della nebbia' },
         pulsanteScelta('Pennello', N.strumento === 'pennello', () => strumentoNebbia(N.strumento === 'pennello' ? null : 'pennello'), 'Dipingi per quadretti'),
         pulsanteScelta('Rettangolo', N.strumento === 'rettangolo', () => strumentoNebbia(N.strumento === 'rettangolo' ? null : 'rettangolo'), 'Da un angolo all’altro')),
+      // fase 2, lotto 3: nebbia automatica dalla visuale dei PG
+      h('button', { type: 'button', role: 'switch', 'aria-checked': String(!!st.scena.visuale?.automatica), class: `interruttore-mappa${st.scena.visuale?.automatica ? ' acceso' : ''}`, title: `La nebbia si apre da sola dove i PG vedono (fino a ${ctx.dati.mappa.visuale.raggio_q} Q; muri e porte chiuse fermano la vista). Le zone esplorate restano scoperte; per i giocatori, più scure. La nebbia a mano continua a funzionare.`, onclick: () => cambiaVisualeAutomatica() },
+        h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `Nebbia automatica (visuale dei PG): ${st.scena.visuale?.automatica ? 'sì' : 'no'}`),
       h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Modalità della nebbia' },
         pulsanteScelta('Rivela', N.modo === 'rivela', () => { N.modo = 'rivela'; disegnaPannelloNebbia(); }, 'Toglie la nebbia'),
         pulsanteScelta('Copri', N.modo === 'copri', () => { N.modo = 'copri'; disegnaPannelloNebbia(); }, 'Mette la nebbia')),
@@ -1193,12 +1205,15 @@ export function renderMappa(radice, ctx) {
     const anteprima = st.tpl?.anteprima && !st.tpl.anteprima.nascosto ? st.tpl.anteprima : null;
     const attiva = !!s && s.movimentoGiocatori !== false && !!id && !disegnoAttivo() && !st.tpl?.anteprima;
     if (attiva && !st.trascina) areaScelta();
-    const chiave = attiva || anteprima ? JSON.stringify([idDi(s), attiva ? id : null, st.fascia, s.zocGiocatori, idDi(st.area), idDi(st.pezzi), st.percorso?.punti?.at(-1) ?? null, st.trascina?.info ? idDi(st.trascina.info) : 0, idDi(anteprima)]) : 'nessuna';
+    // fase 2, lotto 3: la linea di tiro, filtrata dal server come il percorso
+    const lin = lineaPerDiretta();
+    const chiave = attiva || anteprima || lin ? JSON.stringify([idDi(s), attiva ? id : null, st.fascia, s.zocGiocatori, idDi(st.area), idDi(st.pezzi), st.percorso?.punti?.at(-1) ?? null, st.trascina?.info ? idDi(st.trascina.info) : 0, idDi(anteprima), lin]) : 'nessuna';
     if (chiave === st.diretta.chiave) return;
     st.diretta.chiave = chiave;
     let stato = null;
     try { stato = attiva ? costruisciDiretta(id) : null; } catch { stato = null; }
     if (anteprima) stato = stato ? { ...stato, template: [anteprima] } : statoDiretta({ scena: s, template: [anteprima] });
+    if (lin) stato = stato ? { ...stato, linea: lin } : statoDiretta({ scena: s, linea: lin });
     // lo stesso stato (a parte l'istante) non si rimanda: le fonti si rileggono ogni secondo
     const testo = JSON.stringify(stato && { ...stato, quando: 0 });
     if (testo === st.diretta.testo) return;
@@ -1411,10 +1426,121 @@ export function renderMappa(radice, ctx) {
     st.tpl.firma = firma;
     svuota(el.pTemplate, ...sezioneTemplate(voci, RT, { nuovo: () => nuovoTemplateUi(), sposta: spostaTemplate, nascondi: nascondiTemplate, togli: togliTemplate, round: roundAttuale() }));
   }
+  // ── Linea di tiro e visuale (fase 2, lotto 3; src/mappa/visuale.js; Giocatore §5.8, §5.10, §5.11) ──
+  const RV = ctx.dati.mappa.visuale;
+  const NOMI_COPERTURA = { nessuna: 'nessuna Copertura', leggera: 'Copertura Leggera', media: 'Copertura Media', totale: 'Copertura Totale' };
+  st.linea = null;
+  function iniziaLinea(id) {
+    const tok = id ? st.scena.token.find((x) => x.id === id) : null;
+    if (!tok) { avviso('Scegli prima il token che tira (clic sul token), poi L.', { chiave: 'linea' }); return; }
+    if (st.selezionato !== id) scegli(id);
+    st.linea = { da: id, a: null, punto: null, fissa: false };
+    el.riquadro.classList.add('linea-tiro');
+    avviso('Linea di tiro: muovi il mouse su un token o un quadretto; clic per fissarla. Esc (o L) per chiuderla.', { tipo: 'info', chiave: 'linea' });
+    ridisegna(['sopra']);
+  }
+  function chiudiLinea() {
+    st.linea = null;
+    el.riquadro.classList.remove('linea-tiro');
+    ridisegna(['sopra']);
+  }
+  /** Il bersaglio della linea sotto il punto m: un token (non chi tira) o il Q. */
+  function bersaglioIn(m) {
+    const t = tokenSotto(m);
+    return t && t.id !== st.linea.da ? { a: t.id, punto: null } : { a: null, punto: qVicino(m) };
+  }
+  function aggiornaLinea(m) {
+    const b = bersaglioIn(m);
+    if (b.a === st.linea.a && b.punto?.join() === st.linea.punto?.join()) return;
+    st.linea = { ...st.linea, ...b };
+    ridisegna(['sopra']);
+  }
+  /** Calcolo della linea (cache per bersaglio e scena). */
+  const cacheLinea = { chiave: null, valore: null };
+  function calcolaLinea() {
+    const l = st.linea;
+    const da = l ? st.scena.token.find((x) => x.id === l.da) : null;
+    const a = l?.a ? st.scena.token.find((x) => x.id === l.a) : null;
+    if (!da || (!a && !l.punto)) return null;
+    const chiave = JSON.stringify([idDi(st.scena), l.da, l.a, l.punto]);
+    if (cacheLinea.chiave === chiave) return cacheLinea.valore;
+    const r = lineaDiTiro(st.scena, da, a ?? l.punto, ostacoliVista(st.scena, RP), RV);
+    cacheLinea.chiave = chiave;
+    cacheLinea.valore = { ...r, da, a: a ?? { q: l.punto, ingombro: 1 } };
+    return cacheLinea.valore;
+  }
+  const testoLinea = (r) => `${r.distanza} Q · ${NOMI_COPERTURA[r.copertura]}`;
+  function disegnaLineaScelta(c) {
+    if (!st.linea || !st.scena) return;
+    const r = calcolaLinea();
+    if (!r) return;
+    disegnaLineaTiro(c, { scena: st.scena, cam: st.cam, da: r.da, a: r.a, copertura: r.copertura, etichetta: testoLinea(r), colori: RV.colori, linee: r.linee });
+  }
+  /** La linea per la vista giocatori (il server la filtra con le regole dei segreti). */
+  function lineaPerDiretta() {
+    if (!st.linea || !st.scena) return null;
+    const r = calcolaLinea();
+    return r ? { da: st.linea.da, a: st.linea.a, punto: st.linea.a ? null : st.linea.punto, distanza: r.distanza, copertura: r.copertura, vista: r.vista } : null;
+  }
+  /** Clic con la linea attiva: fissa il bersaglio e dice distanza, gittata, vista, Copertura; «Attacca!» con quei valori. */
+  function fissaLinea(m) {
+    const t = tokenSotto(m);
+    if (t && t.id === st.linea.da) { chiudiLinea(); return; }
+    st.linea = { ...st.linea, ...bersaglioIn(m), fissa: true };
+    ridisegna(['sopra']);
+    const r = calcolaLinea();
+    if (!r) return;
+    const daTok = r.da, aTok = st.linea.a ? st.scena.token.find((x) => x.id === st.linea.a) : null;
+    const nomeDa = pezzoDi(daTok)?.nome ?? daTok.nome ?? daTok.id;
+    const nomeA = aTok ? pezzoDi(aTok)?.nome ?? aTok.nome ?? aTok.id : `il quadretto (${st.linea.punto.join(', ')})`;
+    const gittata = fasciaDistanza(r.distanza, ctx.dati).va;
+    const pen = { leggera: ctx.dati.regole.attacco_distanza.copertura.bersaglio.leggera, media: ctx.dati.regole.attacco_distanza.copertura.bersaglio.media }[r.copertura];
+    const righe = [
+      `${nomeDa} → ${nomeA}: ${r.distanza} Q (gittata ${gittata ? `${gittata} VA` : '0'}), vista ${r.vista}, ${NOMI_COPERTURA[r.copertura]}${pen ? ` (${pen} VA)` : ''}.`,
+      r.copertura === 'totale' ? 'Il bersaglio non può essere attaccato direttamente (§5.8).' : null,
+      r.inMezzo.length ? `In mezzo: ${r.inMezzo.map((x) => pezzoDi(x)?.nome ?? x.nome ?? x.id).join(', ')}: niente Copertura, ma forse «bersaglio protetto» (−4 VA, §5.10), da decidere.` : null,
+      'Regola della Copertura sulla griglia provvisoria (A.140).',
+    ];
+    const azioni = [];
+    const preset = { distanza: r.distanza, bersaglio: { copertura: r.copertura, distanza: r.distanza } };
+    if (aTok && r.copertura !== 'totale') {
+      const pzDa = pezzoDi(daTok);
+      const idDa = daTok.rif?.id, idA = aTok.rif?.id;
+      if (st.fonti?.scontro && st.planciaBarra?.puoAttaccare?.(idDa)) azioni.push({ testo: `Attacca! (${nomeDa} → ${nomeA})`, fai: () => st.planciaBarra.attaccaContro(idDa, idA, preset) });
+      else if (pzDa?.tipo === 'pg' && recordPg(pzDa)) azioni.push({ testo: `Apri la scheda di ${nomeDa} per «Attacca!»`, fai: () => {
+        try { sessionStorage.setItem(CHIAVE_DALLA_MAPPA, JSON.stringify({ nome: pzDa.nome, distanza: r.distanza, copertura: r.copertura, bersaglio: nomeA, quando: Date.now() })); } catch { /* senza: valori a mano */ }
+        apriSchedaToken(daTok);
+      } });
+    }
+    avviso(righe, { tipo: 'info', chiave: 'linea', durata: 20000, azioni });
+  }
+  // ── Nebbia automatica (fase 2, lotto 3): la nebbia si apre dove i PG vedono; prossimo lotto: le luci ──
+  function aggiornaVisuale() {
+    const s = st.scena;
+    if (!s?.visuale?.automatica) return;
+    const g = s.griglia;
+    const visti = visualePg(s, tokenPg(s), ostacoliVista(s, RP, { perGiocatori: true }), RV);
+    const m = nebbiaDopoVisuale(s.nebbia.coperti, visti, g.colonne, g.righe);
+    if (!m) return;
+    st.scena = { ...s, nebbia: { ...s.nebbia, coperti: inBase64(m) } };
+    salvaPresto();
+    disegnaPannelloNebbia();
+    ridisegna(['aree']);
+  }
+  function cambiaVisualeAutomatica() {
+    if (!st.scena) return;
+    const v = !st.scena.visuale?.automatica;
+    st.scena = { ...st.scena, visuale: { automatica: v } };
+    salvaPresto();
+    disegnaPannelloNebbia();
+    if (v) aggiornaVisuale();
+    avviso(v ? 'Nebbia automatica: si apre dove i PG vedono; per i giocatori le zone esplorate restano più scure.' : 'Nebbia automatica spenta: la nebbia la muovi solo tu.', { chiave: 'visuale' });
+  }
   // ── Porte (fase 2, lotto 2; A.125; src/mappa/porte.js) ──
   const RP = ctx.dati.mappa.porte;
   const AVVISO_BLOCCATA = 'Porta bloccata: serve sbloccarla, scassinarla o forzarla.';
   function dopoPorta() {
+    aggiornaVisuale();
     invalidaArea();
     salvaPresto();
     disegnaPannelli();
@@ -1704,6 +1830,8 @@ export function renderMappa(radice, ctx) {
     if (st.daPiazzare && !st.spazio) { piazza(st.daPiazzare, m); return; }
     // fase 2, lotto 1: un clic fissa il template che si sta piazzando
     if (st.tpl.anteprima && !st.spazio) { aggiornaAnteprima(m); fissaTemplate(); return; }
+    // fase 2, lotto 3: con la linea di tiro un clic fissa il bersaglio (un token o un Q); su chi tira, esce
+    if (st.linea && !st.spazio) { fissaLinea(m); return; }
     const base = { id: e.pointerId, x: p.x, y: p.y, x0: p.x, y0: p.y, mosso: false };
     const d = disegnoAttivo();
     if (d && d.forma === 'porta' && !st.spazio && st.strumento !== 'calibra') { mettiTogliPorta(qVicino(m)); return; }
@@ -1734,6 +1862,7 @@ export function renderMappa(radice, ctx) {
   }
   const muovi = (e, p, mio) => {
     if (st.tpl.anteprima && !st.trascina) { aggiornaAnteprima(mappaDaSchermo(st.cam, p.x, p.y)); return; }
+    if (st.linea && !st.linea.fissa && !st.trascina) { aggiornaLinea(mappaDaSchermo(st.cam, p.x, p.y)); return; }
     const t = st.trascina;
     if (!t || !mio) { suggerisci(e); return; }
     if (!t.mosso && Math.hypot(p.x - t.x0, p.y - t.y0) < TRASCINAMENTO_MINIMO_PX) return;
@@ -1927,6 +2056,7 @@ export function renderMappa(radice, ctx) {
       ...porteVicine(st.scena, tok).map((porta) => ({ testo: `${porta.stato === 'aperta' ? 'Chiudi' : 'Apri'} porta (${ctx.dati.mappa.porte.costo_azp} AzP)`, azione: () => portaToken(tok, porta, porta.stato === 'aperta' ? 'chiudi' : 'apri'), titolo: porta.stato === 'bloccata' ? 'Porta bloccata: serve sbloccarla, scassinarla o forzarla' : 'Adiacente, con una mano libera, senza Prova (A.125)' })),
       { testo: 'Nuovo turno', azione: () => nuovoTurnoUi(tok.id), disabilitata: conScontro, titolo: conScontro ? 'Con lo scontro aperto il movimento riparte al nuovo Round («Avanti»)' : 'Il movimento di questo token riparte da 0' },
       null,
+      { testo: 'Linea di tiro (L)', azione: () => iniziaLinea(tok.id), titolo: 'Distanza, vista e Copertura verso il mouse o un token (Giocatore §5.8, §5.11)' },
       { testo: 'Apri mini-scheda', azione: () => apriCarta(tok), disabilitata: !pz },
       { testo: 'Apri scheda completa (Ctrl+clic)', azione: () => apriSchedaToken(tok), disabilitata: !pg || !recordPg(pz), titolo: pg ? 'La scheda del PG, con «Torna alla mappa»' : 'Solo per i PG' },
       null,
@@ -1953,6 +2083,8 @@ export function renderMappa(radice, ctx) {
     if (e.shiftKey && e.key.toLowerCase() === ctx.dati.mappa.template.tasto && st.scena) { e.preventDefault(); cambiaSovrapposizioni('master', 'nascoste'); return; }
     if (e.key.toLowerCase() === ctx.dati.mappa.template.tasto && st.scena && !st.tpl.anteprima) { e.preventDefault(); nuovoTemplateUi(); return; }
     if (e.key === 'Escape' && st.tpl.anteprima) { e.preventDefault(); annullaPiazzamento(); return; }
+    if (e.key === 'Escape' && st.linea) { e.preventDefault(); chiudiLinea(); return; }
+    if (e.key.toLowerCase() === ctx.dati.mappa.visuale.tasto && !e.shiftKey && st.scena) { e.preventDefault(); if (st.linea) chiudiLinea(); else iniziaLinea(st.selezionato); return; }
     if (e.key === '?') { e.preventDefault(); apriAiuto(); return; }
     if (e.key === 'Escape' && (el.strumenti.open || el.altro.open)) { el.strumenti.open = false; el.altro.open = false; return; }
     if (e.key === '+' || e.key === '=' || e.code === 'NumpadAdd') { e.preventDefault(); zoomCentro(V.passo_tasti); } else if (e.key === '-' || e.code === 'NumpadSubtract') { e.preventDefault(); zoomCentro(1 / V.passo_tasti); } else if (e.code === 'Space') {

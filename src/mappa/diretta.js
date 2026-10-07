@@ -33,9 +33,9 @@ export function visibileAiGiocatori(t, scena, nebbia = daBase64(scena.nebbia.cop
  *   2 Corsa, 3 Scatto: src/mappa/area.js → celleArea) o null, percorso: { punti, costo, fascia } o null,
  *   zoc: avversari (src/mappa/zoc.js → avversariZoc) o null, template: [] (fase 2), quando: ms }
  */
-export function statoDiretta({ scena, token = null, modo, usato = 0, disponibili = null, celle = null, percorso = null, zoc = null, template = [], quando = Date.now() }) {
-  // solo l'anteprima di un template, senza token scelto
-  if (!token) return { versione: 1, scena: scena.id, token: null, template, quando };
+export function statoDiretta({ scena, token = null, modo, usato = 0, disponibili = null, celle = null, percorso = null, zoc = null, template = [], linea = null, quando = Date.now() }) {
+  // solo l'anteprima di un template o la linea di tiro, senza il movimento di un token
+  if (!token) return { versione: 1, scena: scena.id, token: null, template, ...(linea ? { linea } : {}), quando };
   const { colonne: C, righe: R } = scena.griglia;
   let area = null;
   if (celle) {
@@ -65,7 +65,12 @@ export function validaDiretta(d) {
   if (typeof d.scena !== 'string') return 'scena: id atteso';
   if (!Array.isArray(d.template ?? []) || (d.template ?? []).length > 20) return 'template: elenco (al più 20)';
   if (!numero(d.quando)) return 'quando: istante in ms';
-  if (d.token === null) return null; // solo l'anteprima di un template
+  // fase 2, lotto 3: la linea di tiro { da, a | null, punto | null, distanza, copertura, vista }
+  if (d.linea !== undefined && d.linea !== null) {
+    const l = d.linea;
+    if (typeof l !== 'object' || typeof l.da !== 'string' || (l.a !== null && typeof l.a !== 'string') || (l.punto !== null && !posizione(l.punto)) || !numero(l.distanza) || typeof l.copertura !== 'string' || typeof l.vista !== 'string') return 'linea: { da, a, punto, distanza, copertura, vista }';
+  }
+  if (d.token === null) return null; // solo l'anteprima di un template o la linea di tiro
   if (typeof d.token !== 'string') return 'token: id o null';
   if (!posizione(d.q)) return 'q: [x, y] interi attesi';
   if (!MODI.includes(d.modo)) return `modo: ${MODI.join(', ')}`;
@@ -91,8 +96,29 @@ export function direttaPerGiocatori(d, scena, regoleTemplate = null) {
   if (!d || !scena || d.scena !== scena.id || validaDiretta(d)) return null;
   const template = regoleTemplate ? templatePerGiocatori(d.template ?? [], scena, regoleTemplate) : [];
   const mov = d.token && scena.movimentoGiocatori !== false ? movimentoPerGiocatori(d, scena) : null;
-  if (!mov && !template.length) return null;
-  return { scena: d.scena, ...(mov ?? { token: null }), template, quando: d.quando };
+  const linea = d.linea ? lineaPerGiocatori(d.linea, scena) : null;
+  if (!mov && !template.length && !linea) return null;
+  return { scena: d.scena, ...(mov ?? { token: null }), template, ...(linea ? { linea } : {}), quando: d.quando };
+}
+
+/**
+ * La linea di tiro per i giocatori (fase 2, lotto 3), con le regole dei segreti: chi tira e il bersaglio devono vedersi
+ * (non nascosti, non tutti sotto la nebbia); verso un Q, il Q fuori dalla nebbia. Arrivano le posizioni, non gli id.
+ */
+function lineaPerGiocatori(l, scena) {
+  const nebbia = daBase64(scena.nebbia.coperti);
+  const da = scena.token.find((t) => t.id === l.da);
+  if (!da || !visibileAiGiocatori(da, scena, nebbia)) return null;
+  let verso = null;
+  if (l.a) {
+    const a = scena.token.find((t) => t.id === l.a);
+    if (!a || !visibileAiGiocatori(a, scena, nebbia)) return null;
+    verso = { q: [...a.q], ingombro: a.ingombro };
+  } else if (l.punto) {
+    if (!visibileAiGiocatori({ q: l.punto, ingombro: 1 }, scena, nebbia)) return null;
+    verso = { q: [...l.punto], ingombro: 1 };
+  } else return null;
+  return { da: { q: [...da.q], ingombro: da.ingombro }, a: verso, distanza: l.distanza, copertura: l.copertura, vista: l.vista };
 }
 
 /** La parte del movimento (token scelto, area, percorso, ZoC), o null se il token non si vede. */

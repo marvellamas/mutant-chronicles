@@ -20,7 +20,7 @@ import { creaTela } from './canvas.js';
 import { creaGesti } from './gesti.js';
 import { disegnaToken, coloriMappa, creaImmagini } from './disegno-token.js';
 import { barraIniziativaEl } from './barra-iniziativa.js';
-import { disegnaArea, disegnaZoc, disegnaPercorso, coloriAree, disegnaTemplate, disegnaPorte, disegnaMuri } from './disegno-aree.js';
+import { disegnaArea, disegnaZoc, disegnaPercorso, coloriAree, disegnaTemplate, disegnaPorte, disegnaMuri, disegnaLineaTiro } from './disegno-aree.js';
 import { celleDaMaschera, templateVisibili, ostacoliVisibili } from '../../mappa/template.js';
 import { celleDellaDiretta, zocDellaDiretta, avversariDellaDiretta, trattiPercorso } from '../../mappa/diretta.js';
 import { passiInZoc } from '../../mappa/zoc.js';
@@ -104,6 +104,8 @@ export function renderGiocatori(radice, ctx) {
         if (st.celle.area) disegnaArea(c, { scena: s, cam: st.cam, info, celle: st.celle.area, colori: coloriAree(el.riquadro), stile: V.area });
       }
       disegnaNebbia(c, info, 1);
+      // fase 2, lotto 3: con la nebbia automatica le zone esplorate ma non viste adesso sono più scure
+      if (st.vista?.ombra) disegnaOmbra(c, info);
     },
     sopra: (c) => {
       const s = st.vista;
@@ -111,6 +113,8 @@ export function renderGiocatori(radice, ctx) {
       const pezzi = new Map(s.token.filter((t) => t.info).map((t) => [chiaveRif(t.rif), { ...t.info, ritratto: t.info.immagine, pv: t.info.pv === null ? null : { attuali: t.info.pv, massimo: 1 }, stati: [] }]));
       const d = direttaAttuale();
       disegnaToken(c, { scena: s, cam: st.cam, pezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: d?.token ?? null, bordo: (p) => p.bordo ?? null, alone: ctx.dati.mappa.colori.alone_turno, ritrattoVerticale: ctx.dati.mappa.token.ritratto_verticale, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => true } });
+      // fase 2, lotto 3: la linea di tiro del master (già filtrata dal server)
+      if (d?.linea) disegnaLineaTiro(c, { scena: s, cam: st.cam, da: d.linea.da, a: d.linea.a, copertura: d.linea.copertura, etichetta: `${d.linea.distanza} Q · ${{ nessuna: 'nessuna Copertura', leggera: 'Copertura Leggera', media: 'Copertura Media', totale: 'Copertura Totale' }[d.linea.copertura] ?? ''}`, colori: ctx.dati.mappa.visuale.colori });
       // percorso del master, a tratti fra le interruzioni della nebbia; il costo all'ultimo tratto
       if (d?.percorso) {
         const tratti = trattiPercorso(d.percorso.punti);
@@ -146,6 +150,7 @@ export function renderGiocatori(radice, ctx) {
     st.celle = { area: a ? celleDellaDiretta(a, st.vista) : null, zoc: a ? zocDellaDiretta(a, st.vista) : null };
     const t = a ? st.vista.token.find((x) => x.id === a.token) : null;
     el.movimento.hidden = !a?.token;
+    // (una diretta può portare solo la linea di tiro o l'anteprima di un template)
     el.movimento.textContent = a?.token ? [`Movimento${t?.info?.nome ? ` di ${t.info.nome}` : ''}: ${NOMI_MODI[a.modo]}`,
       a.modo !== 'libero' && a.disponibili !== null ? `${numeroQ(a.usato)} / ${numeroQ(a.disponibili)} Q usati` : null].filter(Boolean).join(' · ') : '';
     el.movimento.className = `giocatori-movimento${a ? ` modo-${a.modo}` : ''}`;
@@ -154,6 +159,26 @@ export function renderGiocatori(radice, ctx) {
     tela.richiedi(['aree', 'sopra']);
   }
 
+  /** Zone esplorate ma non viste adesso dai PG (vista.ombra, nebbia automatica): un velo scuro. */
+  function disegnaOmbra(c, info) {
+    const s = st.vista;
+    const g = s.griglia;
+    const r = rettangoloVisibile(st.cam, info.larghezza, info.altezza);
+    const q = g.q_px;
+    const tratti = trattiCoperti(daBase64(s.ombra), g.colonne, g.righe, { x0: Math.floor((r.x0 - g.scosto_x) / q), x1: Math.ceil((r.x1 - g.scosto_x) / q), y0: Math.floor((r.y0 - g.scosto_y) / q), y1: Math.ceil((r.y1 - g.scosto_y) / q) });
+    if (!tratti.length) return;
+    c.save();
+    c.globalAlpha = ctx.dati.mappa.visuale.opacita_esplorate;
+    c.fillStyle = getComputedStyle(el.riquadro).getPropertyValue('--mappa-nebbia').trim() || '#111';
+    c.beginPath();
+    for (const [y, xa, xb] of tratti) {
+      const a = schermoDaMappa(st.cam, g.scosto_x + xa * q, g.scosto_y + y * q);
+      const b = schermoDaMappa(st.cam, g.scosto_x + xb * q, g.scosto_y + (y + 1) * q);
+      c.rect(Math.floor(a.x), Math.floor(a.y), Math.ceil(b.x - a.x) + 1, Math.ceil(b.y - a.y) + 1);
+    }
+    c.fill();
+    c.restore();
+  }
   function disegnaNebbia(c, info, opacita) {
     const s = st.vista;
     if (!s) return;

@@ -52,11 +52,12 @@ export function esitoAttacco(tiri, valori, dati) {
  * @param bersagli [{ id, nome, descrizione, colpito: (proposta) → apre «Colpito» }] (l'attaccante escluso)
  * @param registra async ({ attaccante, bersaglio, arma, va, tiri, esito }) → true se scritto nel registro
  */
-export function apriAttaccoNemico(ctx, p, { bersagli, registra }) {
+export function apriAttaccoNemico(ctx, p, { bersagli, registra, dichiarazione = {} }) {
   const attacchi = attacchiDi(p);
   const contenitore = h('div', { class: 'attacco-nemico' });
   document.body.append(contenitore);
-  const st = { indice: 0, bersaglio: bersagli[0]?.id ?? null, fase: 'scelta', dichiarazione: {}, ui: {}, tiri: [], errore: null, inCorso: false };
+  // dichiarazione: valori già impostati (linea di tiro della mappa: distanza e Copertura), modificabili nel pannello
+  const st = { indice: 0, bersaglio: bersagli[0]?.id ?? null, fase: 'scelta', dichiarazione: { ...dichiarazione }, ui: {}, tiri: [], errore: null, inCorso: false };
   const chiudi = () => contenitore.remove();
   const esc = (e) => { if (e.key === 'Escape' && document.body.contains(contenitore)) { chiudi(); document.removeEventListener('keydown', esc); } };
   document.addEventListener('keydown', esc);
@@ -74,7 +75,7 @@ export function apriAttaccoNemico(ctx, p, { bersagli, registra }) {
         }, b.nome, b.descrizione ? h('small', { class: 'nota' }, ` · ${b.descrizione}`) : null)))
           : h('p', { class: 'nota' }, 'Nessun bersaglio: servono PG al tavolo o altri nemici nello scontro.')),
       h('div', { class: 'attacco-azioni' },
-        h('button', { type: 'button', class: 'btn primario btn-grande', disabled: !attacchi[st.indice] || !st.bersaglio, onclick: () => { st.fase = 'pannello'; st.dichiarazione = {}; st.ui = {}; st.tiri = []; disegna(); } }, 'Avanti: «Attacca!» →'))));
+        h('button', { type: 'button', class: 'btn primario btn-grande', disabled: !attacchi[st.indice] || !st.bersaglio, onclick: () => { st.fase = 'pannello'; st.dichiarazione = { ...dichiarazione }; st.ui = {}; st.tiri = []; disegna(); } }, 'Avanti: «Attacca!» →'))));
 
   // riga finale del pannello: bersaglio, tiri per colpire, esito, registro e «Applica danno»
   const finale = (attacco, arma, b) => (r) => {

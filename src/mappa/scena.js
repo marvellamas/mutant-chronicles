@@ -8,6 +8,7 @@
 //   nebbia: { iniziale: "coperta" | "scoperta", coperti: maschera },
 //   token: [{ id, rif: { tipo: "partecipante" | "veicolo" | "segnaposto", id }, q: [x, y], ingombro, nascosto, nome? }],
 //   porte?: [{ id, q: [x, y], stato: aperta | chiusa | bloccata, segreta }]   porte (fase 2, lotto 2; src/mappa/porte.js)
+//   visuale?: { automatica }            nebbia automatica dalla visuale dei PG (fase 2, lotto 3; src/mappa/visuale.js)
 //   sovrapposizioni?: { master?: { nascoste, ancheDurata }, giocatori?: { nascoste, ancheDurata } }
 //                                       «Mostra / nascondi template»: template senza durata, muri, porte, terreno (07/10)
 //   azioni?: [{ id, token, tipo: 'porta', porta, azione, azp, scontro, round, turno?, quando }]  AzP dei token (A.125)
@@ -193,6 +194,7 @@ export function validaScena(s, dati) {
     if (typeof t.nascosto !== 'boolean') return `${k}.nascosto: vero o falso`;
   }
 
+  if (s.visuale !== undefined && (!isOggetto(s.visuale) || typeof s.visuale.automatica !== 'boolean')) return 'visuale: { automatica: vero o falso } atteso';
   // «Mostra / nascondi template» (ritocchi del 07/10): due scelte, del master e dei giocatori
   if (s.sovrapposizioni !== undefined) {
     if (!isOggetto(s.sovrapposizioni)) return 'sovrapposizioni: { master, giocatori } atteso';

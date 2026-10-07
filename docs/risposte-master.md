@@ -1090,6 +1090,16 @@ dell'aspetto: nel pacchetto del 07/10), A.111 (solo Pablo Zaion), A.112, A.113, 
 - **A.139 — Porta «adiacente» in diagonale** (07/10/2026, porte della mappa, fase 2). La A.125 chiede di essere
   adiacenti alla porta per aprirla o chiuderla (1 AzP). Basta essere in diagonale rispetto al Q della porta? Provvisorio:
   sì, come la portata di 1 Q (`data/mappa.json` → porte, `TODO(Davide)`). La mano libera l'app non la controlla.
+- **A.140 — Copertura sulla griglia** (07/10/2026, linea di tiro della mappa, fase 2). Il §5.8 dà gli effetti della
+  Copertura (Leggera −2, Media −4, Totale) ma non dice come si stabilisce dalla posizione sulla mappa. Provvisorio «dagli
+  angoli»: da ogni angolo del Q di chi tira quattro linee verso gli angoli del bersaglio; vale l'angolo migliore per chi
+  tira; linee bloccate da muri o porte chiuse 0 = nessuna, 1–2 = Leggera, 3 = Media, 4 = Totale (`data/mappa.json` →
+  visuale.copertura_linee). Va bene, o serve un'altra regola (per esempio una linea sola dal centro)?
+- **A.141 — Token fra chi tira e il bersaglio** (07/10/2026). Danno Copertura? Provvisorio: no, il §5.8 parla di
+  ostacoli; la linea li segnala come possibile «bersaglio protetto da un alleato» del §5.10 (−4 VA), da decidere al tavolo.
+- **A.142 — Fin dove vedono i PG** (07/10/2026, nebbia automatica). Con luce sufficiente, entro quanti Q la nebbia si
+  apre da sola? Provvisorio: 30 Q (45 m), contati a quadretti; le luci (prossimo lotto) ridurranno la vista in penombra e
+  al buio.
 
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 

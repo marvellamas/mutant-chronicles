@@ -233,3 +233,44 @@ export function disegnaPorte(c, { scena, cam, info, porte, colori }) {
     c.restore();
   }
 }
+
+/**
+ * Linea di tiro (fase 2, lotto 3; src/mappa/visuale.js): dal centro di chi tira al centro del bersaglio, nel colore della
+ * Copertura, con l'etichetta (distanza, Copertura); `linee` (solo master): le quattro linee dall'angolo migliore,
+ * tratteggiate se bloccate.
+ * @param colori data/mappa.json → visuale.colori
+ */
+export function disegnaLineaTiro(c, { scena, cam, da, a, copertura, etichetta, colori, linee = null }) {
+  const g = scena.griglia;
+  const sch = ([x, y]) => schermoDaMappa(cam, g.scosto_x + x * g.q_px, g.scosto_y + y * g.q_px);
+  const centro = (t) => { const [w, h] = dimensioni(t.ingombro); return sch([t.q[0] + w / 2, t.q[1] + h / 2]); };
+  const colore = colori[copertura] ?? colori.nessuna;
+  c.save();
+  if (linee) {
+    c.lineWidth = 1.5;
+    for (const l of linee) {
+      const p = sch(l.da), q = sch(l.a);
+      c.strokeStyle = l.bloccata ? colori.totale : colori.nessuna;
+      c.globalAlpha = 0.8;
+      c.setLineDash(l.bloccata ? [4, 4] : []);
+      c.beginPath(); c.moveTo(p.x, p.y); c.lineTo(q.x, q.y); c.stroke();
+    }
+  }
+  const p = centro(da), q = centro(a);
+  c.globalAlpha = 1;
+  c.setLineDash([]);
+  c.strokeStyle = colore;
+  c.lineWidth = Math.max(3, Math.min(6, g.q_px * cam.scala * 0.08));
+  c.lineCap = 'round';
+  c.beginPath(); c.moveTo(p.x, p.y); c.lineTo(q.x, q.y); c.stroke();
+  c.beginPath(); c.arc(q.x, q.y, Math.max(6, g.q_px * cam.scala * 0.2), 0, Math.PI * 2); c.stroke();
+  if (etichetta) {
+    c.font = '700 13px system-ui, sans-serif';
+    const larg = c.measureText(etichetta).width + 12;
+    c.fillStyle = '#000'; c.globalAlpha = 0.85;
+    c.fillRect(q.x + 10, q.y - 24, larg, 20);
+    c.globalAlpha = 1; c.fillStyle = '#fff'; c.textBaseline = 'middle';
+    c.fillText(etichetta, q.x + 16, q.y - 14);
+  }
+  c.restore();
+}

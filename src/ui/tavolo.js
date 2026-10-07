@@ -811,14 +811,15 @@ export function renderTavolo(radice, ctx) {
   ferma.aggiorna = () => aggiorna();
   // ZoC della mappa (07/10): «Attacca!» dell'avversario con il bersaglio già scelto, dall'avviso dell'Attacco di
   // Opportunità; false se non si può (PG: l'attacco si fa dalla sua scheda; nessun attacco nel profilo)
-  ferma.attaccaContro = (idDa, idContro) => {
+  // fase 2, lotto 3: `dichiarazione` dalla linea di tiro (distanza, Copertura), modificabile nel pannello
+  ferma.attaccaContro = (idDa, idContro, dichiarazione = {}) => {
     const p = (stato.scontro?.partecipanti ?? []).find((x) => x.id === idDa);
     if (!p || p.tipo === 'pg' || !attacchiDi(p).length) return false;
     const ultimi = ultimiPerPersonaggio(stato.elenco);
     const alTavolo = stato.selezione.map((k) => ultimi.get(k) ?? { mancante: k });
     const bersagli = bersagliPer(p, alTavolo);
     bersagli.sort((a, b) => (b.id === idContro) - (a.id === idContro));
-    apriAttaccoNemico(ctx, p, { bersagli, registra: (a) => modifica((x) => registraAttacco(x, a)) });
+    apriAttaccoNemico(ctx, p, { bersagli, registra: (a) => modifica((x) => registraAttacco(x, a)), dichiarazione });
     return true;
   };
   ferma.puoAttaccare = (idDa) => { const p = (stato.scontro?.partecipanti ?? []).find((x) => x.id === idDa); return !!p && p.tipo !== 'pg' && attacchiDi(p).length > 0; };

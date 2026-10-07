@@ -525,7 +525,7 @@ async function contestoScena(scena, { cartella, tavolo, scontri, veicoli, radice
   const pezzi = pezziDellaScena({ scontro, bozza, alTavolo, viste, veicoli: registro }, dati);
   const immagineDi = (p) => (p.tipo === 'pg' ? (p.ritratto ? `api/ritratti/${encodeURIComponent(p.pg)}?v=${impronta(p.ritratto)}` : null) : p.ritratto);
   // colori dei bordi dei token (src/mappa/colori.js): gli stessi della vista master
-  return { pezzi, round: scontro?.round ?? null, immagineDi, scontro, bordoDi: (p) => bordoToken(p, scena.colori, dati), regoleTemplate: dati.mappa.template };
+  return { pezzi, round: scontro?.round ?? null, immagineDi, scontro, bordoDi: (p) => bordoToken(p, scena.colori, dati), regoleTemplate: dati.mappa.template, regoleMappa: dati.mappa };
 }
 
 /** Scena mostrata ai giocatori: quella scelta dal master (tavolo/mappa-giocatori.json) o la più recente dello scontro aperto. */

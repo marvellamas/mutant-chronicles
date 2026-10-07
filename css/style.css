@@ -2094,3 +2094,5 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 /* vista giocatori (07/10): «Adatta allo schermo» discreto, anche a schermo intero */
 .giocatori-adatta { position: absolute; right: .6rem; bottom: .6rem; z-index: 2; opacity: .55; }
 .giocatori-adatta:hover, .giocatori-adatta:focus-visible { opacity: 1; }
+/* linea di tiro (fase 2, lotto 3) */
+.mappa-tela.linea-tiro { cursor: crosshair; }

@@ -6,7 +6,7 @@ successiva. Fonte: controllo del 07/10 (`docs/diff-manuali-2026-10-07.md`), deci
 
 Riepilogo: una voce fra le Risolte (A.120) più le due mancanti del pacchetto del 06/10 (A.121, A.131); risposte
 ricevute e in implementazione per A.107, A.108, A.110, A.111, A.114, A.116, A.119, A.122, A.124, A.125, A.127, A.128,
-A.129; l'elenco chiesto da Davide per la A.109; sei domande nuove (A.134–A.139); pulizia dei doppioni della sezione 2.
+A.129; l'elenco chiesto da Davide per la A.109; nove domande nuove (A.134–A.142); pulizia dei doppioni della sezione 2.
 
 ---
 
@@ -183,6 +183,18 @@ Il Cono è «lunghezza × larghezza finale, con apertura progressiva» e parte d
 **A.139 — Porta «adiacente» in diagonale.**
 Per aprire o chiudere una porta (1 AzP, A.125) bisogna esserle adiacenti. Basta essere in diagonale rispetto alla porta?
 *Nel frattempo:* sì, come per la portata di 1 Q. La mano libera la controlla il master.
+
+**A.140 — Copertura sulla mappa.**
+Il §5.8 dice quanto vale la Copertura (Leggera −2, Media −4, Totale) ma non come si decide guardando la mappa. Proposta: dagli angoli del quadretto di chi tira si tracciano quattro linee verso gli angoli del bersaglio; contano le linee che passano per muri o porte chiuse; 0 = nessuna, 1–2 = Leggera, 3 = Media, 4 = Totale. Va bene così?
+*Nel frattempo:* si usa questa regola; il master può cambiare la Copertura nel pannello «Attacca!».
+
+**A.141 — Personaggi in mezzo alla linea di tiro.**
+Un personaggio (alleato o nemico) fra chi tira e il bersaglio dà Copertura?
+*Nel frattempo:* no; l'app lo segnala e il master valuta il «bersaglio protetto da un alleato» del §5.10 (−4 VA).
+
+**A.142 — Fin dove vedono i PG.**
+Per la nebbia che si apre da sola dove i PG vedono: con luce sufficiente, fino a quanti quadretti?
+*Nel frattempo:* 30 Q (45 m). Penombra e buio entreranno con le luci.
 ```
 
 ```

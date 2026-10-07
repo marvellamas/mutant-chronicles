@@ -104,6 +104,14 @@ La Mappa di battaglia è un modulo del **Tavolo del Master** di Mutant: gira sul
 > * La linea mostra la **distanza in Q** e la **fascia di gittata** dell’arma scelta.  
 > * **Colore:** verde se libera, giallo se attraversa altri token (PG o nemici: possibile Copertura), rosso se un muro la blocca.  
 > * Da lì si può aprire «Attacca\!» con bersaglio e distanza già impostati.
+> * **Fatto il 07/10/2026 (fase 2, lotto 3; `src/mappa/visuale.js`, `data/mappa.json` → visuale).** Dal manuale: Giocatore §5.8 (Copertura Leggera −2, Media −4, Totale «il bersaglio non può essere attaccato direttamente»; «la Copertura è direzionale»), §5.10 (bersaglio «protetto da un alleato» −4), §5.11 (gittata a fasce), diagonale 1 Q (Scarto, A.124). Nessun manuale dice come si legge la Copertura sulla griglia: regola provvisoria (A.140).
+>   * **Uso:** con un token scelto, tasto **L** (o clic destro → «Linea di tiro», o pannello del token): la linea segue il mouse verso un token o un Q; clic per fissarla, Esc o L per chiuderla. Etichetta «7 Q · Copertura Leggera», colore della Copertura; per il master anche le quattro linee dall’angolo migliore (tratteggiate quelle bloccate). Avviso con distanza, gittata (§5.11), vista (libera, parziale, bloccata), Copertura e token in mezzo.
+>   * **Copertura «dagli angoli»:** da ogni angolo dell’ingombro di chi tira, quattro linee verso gli angoli del bersaglio; vale l’angolo migliore per chi tira; linee che attraversano muri o porte chiuse/bloccate: 0 nessuna, 1–2 Leggera, 3 Media, 4 Totale. Sfiorare il bordo di un muro non blocca; correre lungo due muri o infilarsi fra due muri in diagonale sì.
+>   * **Token in mezzo:** non danno Copertura (il §5.8 parla di ostacoli); l’avviso li segnala come possibile «bersaglio protetto» del §5.10 (−4 VA), da decidere al tavolo (A.141).
+>   * **«Attacca!»:** dalla linea fissata su un token, per un nemico si apre «Attacca!» con bersaglio, distanza e Copertura già impostati (modificabili); per un PG «Apri la scheda»: il primo «Attacca!» della sua scheda (entro 10 minuti) parte con quella distanza e quella Copertura.
+>   * **Giocatori:** la linea del master in diretta, con l’etichetta, solo fra token che vedono (niente nascosti, niente sotto la nebbia; verso un Q, il Q fuori dalla nebbia); arrivano le posizioni, non gli id.
+>   * **Nebbia automatica** (pannello Nebbia, spenta di default, salvata nella scena): la nebbia si apre dove i PG vedono, fino a 30 Q (A.142), con muri e porte chiuse che fermano la vista; le zone esplorate restano scoperte. Per i giocatori quelle non viste adesso sono più scure e senza i token che non sono PG. La nebbia a mano continua a funzionare. Prossimo lotto: le luci (penombra, buio) entreranno nel parametro «fuori» della visuale.
+>   * **Tempi** (test su 300 × 300 Q con muri): visuale di 6 PG con raggio 30 Q 3–4 ms; 100 linee di tiro 3–4 ms.
 
 ## **10\. Template**
 

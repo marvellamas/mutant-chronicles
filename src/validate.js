@@ -2787,6 +2787,16 @@ function validaMappa(dati, err) {
   if (!Array.isArray(M?.divisibili) || !M.divisibili.every((f) => fasce.includes(f))) err(F, 'movimento.divisibili', 'elenco di fasce (passo, corsa, scatto)');
   if (!Array.isArray(m.template?.forme) || !m.template.forme.length) err(F, 'template.forme', 'almeno una forma');
   if (!isIntero(m.template?.durata_round_predefinita) || m.template.durata_round_predefinita < 1) err(F, 'template.durata_round_predefinita', 'intero da 1 in su');
+  // fase 2, lotto 3: linea di visuale e di tiro (src/mappa/visuale.js)
+  const VV = m.visuale ?? {};
+  const LIVELLI = ['nessuna', 'leggera', 'media', 'totale'];
+  if (!Array.isArray(VV.copertura_linee) || VV.copertura_linee.length !== 5 || !VV.copertura_linee.every((x) => LIVELLI.includes(x)) || VV.copertura_linee[0] !== 'nessuna') err(F, 'visuale.copertura_linee', 'cinque livelli (0–4 linee bloccate), il primo «nessuna» (§5.8)');
+  if (!isIntero(VV.campioni_per_q) || VV.campioni_per_q < 2 || VV.campioni_per_q > 50) err(F, 'visuale.campioni_per_q', 'intero da 2 a 50');
+  if (!positivo(VV.raggio_q)) err(F, 'visuale.raggio_q', 'numero positivo (Q)');
+  if (!['quadretti', 'euclidea'].includes(VV.metrica)) err(F, 'visuale.metrica', 'quadretti o euclidea');
+  if (typeof VV.automatica_predefinita !== 'boolean') err(F, 'visuale.automatica_predefinita', 'vero o falso');
+  if (!(VV.opacita_esplorate >= 0 && VV.opacita_esplorate <= 1)) err(F, 'visuale.opacita_esplorate', 'da 0 a 1');
+  for (const l of LIVELLI) if (!/^#[0-9a-fA-F]{6}$/.test(String(VV.colori?.[l]))) err(F, `visuale.colori.${l}`, '#rrggbb');
   // fase 2, lotto 2: porte (src/mappa/porte.js; A.125)
   const PP = m.porte ?? {};
   if (['aperta', 'chiusa', 'bloccata'].some((s) => !PP.stati?.includes(s))) err(F, 'porte.stati', 'aperta, chiusa, bloccata attese (A.125)');

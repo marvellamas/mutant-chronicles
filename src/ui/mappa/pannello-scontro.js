@@ -137,6 +137,8 @@ function sezioneMovimento(m, a) {
         p.stato === 'aperta' ? 'Chiudi porta' : p.stato === 'bloccata' ? 'Apri porta (bloccata)' : 'Apri porta'))) : null,
     h('div', { class: 'mappa-azioni-token' },
       h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !m.annullabile, onclick: a.annullaMovimento }, 'Annulla ultimo movimento'),
+      // fase 2, lotto 3: linea di tiro verso il mouse o un token (distanza, vista, Copertura)
+      a.lineaTiro ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Distanza, vista e Copertura verso il mouse o un token (Giocatore §5.8); clic per fissarla', onclick: a.lineaTiro }, 'Linea di tiro (L)') : null,
       // senza scontro aperto il Round non avanza: il turno lo fa ripartire il master
       m.senzaScontro && mov ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Il movimento di questo token riparte da 0', onclick: a.nuovoTurno }, 'Nuovo turno') : null,
       m.senzaScontro ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Il movimento di tutti i token riparte da 0', onclick: a.nuovoTurnoTutti }, 'Nuovo turno per tutti') : null));

@@ -36,6 +36,22 @@ function caselleOggetti(ctx, a, tipo, d, imposta) {
  * Pannello d'attacco per l'arma `a` (voce di scheda.equipaggiamento.armi).
  * ctx: contesto della scheda a tab (dati, tab.scheda, sessione, ui, azioni).
  */
+/**
+ * Linea di tiro della mappa (fase 2, lotto 3): «Apri la scheda per Attacca!» lascia in sessionStorage distanza e
+ * Copertura per il PG; il primo «Attacca!» aperto nella sua scheda entro 10 minuti le usa come valori iniziali.
+ */
+export const CHIAVE_DALLA_MAPPA = 'mutant-attacco-dalla-mappa';
+function dallaMappa(ctx, a, salvate) {
+  let p = null;
+  try { p = JSON.parse(sessionStorage.getItem(CHIAVE_DALLA_MAPPA) ?? 'null'); } catch { return salvate; }
+  const nome = ctx.tab?.tab?.[0]?.dati?.nome;
+  if (!p || !nome || String(p.nome).trim().toUpperCase() !== String(nome).trim().toUpperCase() || Date.now() - p.quando > 10 * 60 * 1000) return salvate;
+  try { sessionStorage.removeItem(CHIAVE_DALLA_MAPPA); } catch { /* resta */ }
+  const v = { ...salvate, distanza: p.distanza, bersaglio: { ...(salvate.bersaglio ?? {}), copertura: p.copertura, distanza: p.distanza } };
+  queueMicrotask(() => { ctx.azioni.ricordaAttacco?.(a.uid, v); avviso(`Dalla mappa: bersaglio ${p.bersaglio ?? ''} a ${p.distanza} Q, Copertura ${p.copertura}.`); });
+  return v;
+}
+
 export function pannelloAttacco(ctx, a) {
   const chiudi = () => { ctx.ui.attacco = null; ctx.azioni.ridisegna(); };
   const intestazione = { etichetta: `Attacco con ${a.nome}`, titolo: `Attacca! · ${a.nome}`, chiudi, etichettaNav: 'Passi dell’attacco' };
@@ -47,7 +63,7 @@ function corpoRavvicinato(ctx, a, intestazione) {
   const R = ctx.dati.regole.attacco_ravvicinato;
   const personaggio = { scheda: ctx.tab.scheda, sessione: ctx.sessione };
   // le scelte salvate contengono anche l’ultima Manovra: si conservano
-  const salvate = ctx.sessione.attacchi?.[a.uid] ?? {};
+  const salvate = dallaMappa(ctx, a, ctx.sessione.attacchi?.[a.uid] ?? {});
   const d = dichiarazioneRavvicinato(salvate);
   const imposta = (modifica) => ctx.azioni.ricordaAttacco(a.uid, { ...salvate, ...d, ...modifica, bersaglio: { ...d.bersaglio, ...(modifica.bersaglio ?? {}) } });
   const b = (modifica) => imposta({ bersaglio: modifica });
@@ -182,7 +198,7 @@ export function pillola(nome, va, provenienza) {
 
 function corpoDistanza(ctx, a, intestazione) {
   const personaggio = { scheda: ctx.tab.scheda, sessione: ctx.sessione };
-  const salvate = ctx.sessione.attacchi?.[a.uid] ?? {};
+  const salvate = dallaMappa(ctx, a, ctx.sessione.attacchi?.[a.uid] ?? {});
   const d = dichiarazioneDistanza(salvate);
   const imposta = (modifica) => ctx.azioni.ricordaAttacco(a.uid, { ...d, ...modifica, bersaglio: { ...d.bersaglio, ...(modifica.bersaglio ?? {}) } });
   const b = (modifica) => imposta({ bersaglio: modifica });
