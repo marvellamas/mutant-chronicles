@@ -6,7 +6,7 @@ successiva. Fonte: controllo del 07/10 (`docs/diff-manuali-2026-10-07.md`), deci
 
 Riepilogo: una voce fra le Risolte (A.120) più le due mancanti del pacchetto del 06/10 (A.121, A.131); risposte
 ricevute e in implementazione per A.107, A.108, A.110, A.111, A.114, A.116, A.119, A.122, A.124, A.125, A.127, A.128,
-A.129; l'elenco chiesto da Davide per la A.109; tre domande nuove (A.134, A.135, A.136); pulizia dei doppioni della sezione 2.
+A.129; l'elenco chiesto da Davide per la A.109; cinque domande nuove (A.134–A.138); pulizia dei doppioni della sezione 2.
 
 ---
 
@@ -171,6 +171,14 @@ Il Manuale degli Armamenti 0.59 distingue i fucili a pallini a pompa (solo Colpo
 **A.136 — Corsa o Scatto dopo un Passo già cominciato.**
 La A.129 dice che solo il Passo si divide e che Corsa e Scatto sono un blocco unico da completare prima delle Azioni Principali, tutti al costo dell'unica Azione di Movimento. Se un personaggio ha già fatto una parte del Passo (per esempio 2 Q, prima di ogni Azione Principale), può trasformare il movimento in una Corsa o in uno Scatto, contando i Q già fatti nel blocco (2 + 10 = 12)?
 *Nel frattempo:* no, Corsa e Scatto partono solo da fermi; il master annulla il movimento e lo rifà come Corsa.
+
+**A.137 — Raggio di un'Area sulla griglia.**
+Il Manuale della Magia dice che il Raggio è la «distanza dal centro al limite» e che un Q rientra nell'Area se è incluso per almeno metà; il movimento conta la diagonale come 1 Q (A.124). Il raggio di un'esplosione o di una granata si conta a quadretti (raggio 2 Q = un quadrato di 5 × 5 Q; una granata con Raggio di Scoppio 1 Q colpisce il suo Q e gli otto attorno) oppure è un cerchio vero, con i Q coperti per almeno metà?
+*Nel frattempo:* a quadretti, come il movimento; anche coni e linee in diagonale si misurano a quadretti.
+
+**A.138 — Forma del Cono.**
+Il Cono è «lunghezza × larghezza finale, con apertura progressiva» e parte dal bordo dello spazio del Taumaturgo (Cono Elementale, da 3 × 2 a 18 × 9 Q). Quanto è largo all'inizio, accanto al Taumaturgo? E con una larghezza finale pari (3 × 2, 12 × 6), quando il cono va dritto lungo una fila di quadretti, come si contano i Q del bordo?
+*Nel frattempo:* largo 1 Q accanto al Taumaturgo, poi si allarga in modo uniforme; i Q del bordo coperti per meno di metà restano fuori.
 ```
 
 ```

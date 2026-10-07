@@ -524,7 +524,7 @@ async function contestoScena(scena, { cartella, tavolo, scontri, veicoli, radice
   const pezzi = pezziDellaScena({ scontro, bozza, alTavolo, viste, veicoli: registro }, dati);
   const immagineDi = (p) => (p.tipo === 'pg' ? (p.ritratto ? `api/ritratti/${encodeURIComponent(p.pg)}?v=${impronta(p.ritratto)}` : null) : p.ritratto);
   // colori dei bordi dei token (src/mappa/colori.js): gli stessi della vista master
-  return { pezzi, round: scontro?.round ?? null, immagineDi, scontro, bordoDi: (p) => bordoToken(p, scena.colori, dati) };
+  return { pezzi, round: scontro?.round ?? null, immagineDi, scontro, bordoDi: (p) => bordoToken(p, scena.colori, dati), regoleTemplate: dati.mappa.template };
 }
 
 /** Scena mostrata ai giocatori: quella scelta dal master (tavolo/mappa-giocatori.json) o la più recente dello scontro aperto. */
@@ -577,7 +577,7 @@ function creaCanaleDiretta(cartelle) {
   };
   // in fila: gli stati arrivano in ordine anche quando il master manda in fretta
   const rifiltra = () => (lavoro = lavoro.then(async () => {
-    const nuova = grezza ? direttaPerGiocatori(grezza, await scenaAttuale()) : null;
+    const nuova = grezza ? direttaPerGiocatori(grezza, await scenaAttuale(), (await datiDelServer(cartelle.radice)).dati.mappa.template) : null;
     const f = JSON.stringify(nuova);
     if (f !== firma) { firma = f; filtrata = nuova; tutti('diretta', nuova); }
   }).catch(() => {}));
@@ -882,7 +882,7 @@ export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA),
   const base = normalize(radice.endsWith(sep) ? radice : radice + sep);
   // chi è questo server (per un nuovo avvio che trova la porta occupata, src/porta-occupata.js)
   const identita = { versione: versioneAvvio, avviato: new Date().toISOString(), pid: process.pid };
-  const canale = creaCanaleDiretta({ tavolo, scontri, scene });
+  const canale = creaCanaleDiretta({ tavolo, scontri, scene, radice });
   const server = createServer(async (req, res) => {
     try {
       const percorso = decodeURI(new URL(req.url, 'http://x').pathname);

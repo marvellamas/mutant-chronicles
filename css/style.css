@@ -2077,3 +2077,12 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 .guida-mappa h2 { margin-top: 0; }
 .guida-mappa li { margin-bottom: .35rem; }
 .link-guida-mappa { align-self: center; white-space: nowrap; }
+/* template ad area (fase 2, lotto 1): piazzamento, mini-menu, sezione della barra */
+.mappa-tela.piazza-template { cursor: crosshair; }
+.menu-template .menu-template-corpo { display: grid; gap: .6rem; max-width: 34rem; }
+.menu-template .riga-scelte { display: flex; flex-wrap: wrap; gap: .35rem; align-items: center; }
+.menu-template .etichetta { min-width: 4.5rem; font-weight: 600; }
+.menu-template .campo-misura input { width: 4.5rem; }
+.lista-template { list-style: none; margin: .4rem 0 0; padding: 0; display: grid; gap: .5rem; }
+.lista-template li { padding: .35rem .5rem; border: 1px solid var(--bordo, #444); border-radius: var(--raggio, 6px); }
+.lista-template .campione-colore { display: inline-block; width: .8rem; height: .8rem; border-radius: 50%; margin-right: .35rem; vertical-align: middle; }

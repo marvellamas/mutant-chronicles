@@ -20,7 +20,8 @@ import { creaTela } from './canvas.js';
 import { creaGesti } from './gesti.js';
 import { disegnaToken, coloriMappa, creaImmagini } from './disegno-token.js';
 import { barraIniziativaEl } from './barra-iniziativa.js';
-import { disegnaArea, disegnaZoc, disegnaPercorso, coloriAree } from './disegno-aree.js';
+import { disegnaArea, disegnaZoc, disegnaPercorso, coloriAree, disegnaTemplate } from './disegno-aree.js';
+import { celleDaMaschera } from '../../mappa/template.js';
 import { celleDellaDiretta, zocDellaDiretta, avversariDellaDiretta, trattiPercorso } from '../../mappa/diretta.js';
 import { passiInZoc } from '../../mappa/zoc.js';
 import { avviso } from '../avvisi.js';
@@ -84,6 +85,9 @@ export function renderGiocatori(radice, ctx) {
     },
     // §5: per i giocatori la nebbia è piena; sotto, le ZoC e l'area della diretta (già senza i Q sotto la nebbia)
     aree: (c, info) => {
+      // template ad area (fase 2, lotto 1): quelli della scena e l'anteprima di quello che il master sta piazzando,
+      // già filtrati dal server (solo i Q fuori dalla nebbia, niente nascosti)
+      if (st.vista) for (const t of [...(st.vista.template ?? []), ...(direttaAttuale()?.template ?? [])]) disegnaTemplateGiocatori(c, info, t);
       const d = direttaAttuale();
       if (d) {
         const s = st.vista;
@@ -108,6 +112,21 @@ export function renderGiocatori(radice, ctx) {
       }
     },
   });
+  const celleTemplate = new Map(); // celle per maschera (la stessa maschera torna a ogni lettura)
+  function disegnaTemplateGiocatori(c, info, t) {
+    const chiave = `${st.vista.griglia.colonne}x${st.vista.griglia.righe}|${t.celle}`;
+    if (!celleTemplate.has(chiave)) { if (celleTemplate.size > 200) celleTemplate.clear(); celleTemplate.set(chiave, celleDaMaschera(t.celle, st.vista.griglia)); }
+    const celle = celleTemplate.get(chiave);
+    // il nome sul Q coperto più vicino al centro dei Q coperti
+    let origine = null;
+    if (t.nome) {
+      const C = st.vista.griglia.colonne;
+      let sx = 0, sy = 0, n = 0;
+      for (let i = 0; i < celle.length; i++) if (celle[i]) { sx += i % C; sy += Math.floor(i / C); n++; }
+      if (n) origine = [Math.floor(sx / n), Math.floor(sy / n)];
+    }
+    disegnaTemplate(c, { scena: st.vista, cam: st.cam, info, celle, colore: t.colore, stile: ctx.dati.mappa.template, etichetta: t.nome ?? null, origine });
+  }
   /** La diretta, se riguarda la scena mostrata. */
   const direttaAttuale = () => (st.diretta && st.vista && st.diretta.scena === st.vista.id ? st.diretta : null);
   const NOMI_MODI = { passo: 'Passo', corsa: 'Corsa', scatto: 'Scatto', libero: 'Libero' };
@@ -118,8 +137,8 @@ export function renderGiocatori(radice, ctx) {
     const a = direttaAttuale();
     st.celle = { area: a ? celleDellaDiretta(a, st.vista) : null, zoc: a ? zocDellaDiretta(a, st.vista) : null };
     const t = a ? st.vista.token.find((x) => x.id === a.token) : null;
-    el.movimento.hidden = !a;
-    el.movimento.textContent = a ? [`Movimento${t?.info?.nome ? ` di ${t.info.nome}` : ''}: ${NOMI_MODI[a.modo]}`,
+    el.movimento.hidden = !a?.token;
+    el.movimento.textContent = a?.token ? [`Movimento${t?.info?.nome ? ` di ${t.info.nome}` : ''}: ${NOMI_MODI[a.modo]}`,
       a.modo !== 'libero' && a.disponibili !== null ? `${numeroQ(a.usato)} / ${numeroQ(a.disponibili)} Q usati` : null].filter(Boolean).join(' · ') : '';
     el.movimento.className = `giocatori-movimento${a ? ` modo-${a.modo}` : ''}`;
     // il token è già altrove (movimento appena fatto): la vista si rilegge senza aspettare il giro

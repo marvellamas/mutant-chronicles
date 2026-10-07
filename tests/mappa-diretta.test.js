@@ -93,9 +93,16 @@ test('filtro: token nascosto o sotto la nebbia, altra scena, interruttori del ma
   assert.ok(senzaZoc.area);
   assert.equal(direttaPerGiocatori(null, s), null);
   assert.equal(direttaPerGiocatori({ ...d, modo: 'vola' }, s), null, 'stato non valido');
-  // template (fase 2): stessa regola della vista
-  const t = direttaPerGiocatori({ ...d, template: [{ id: 'a', origine: [1, 1], nascosto: false }, { id: 'b', origine: [1, 1], nascosto: true }, { id: 'c', origine: [10, 1] }] }, s);
-  assert.deepEqual(t.template, [{ id: 'a', origine: [1, 1] }]);
+  // template (fase 2, lotto 1): l'anteprima, anche senza token e con il movimento spento; niente nascosti né sotto la nebbia
+  const tp = (id, origine, o = {}) => ({ id, forma: 'cerchio', origine, misure: { raggio: 1 }, colore: '#f76707', nascosto: false, ...o });
+  const t = direttaPerGiocatori({ ...d, template: [tp('a', [1, 1]), tp('b', [1, 1], { nascosto: true }), tp('c', [10, 3])] }, s, dati.mappa.template);
+  assert.deepEqual(t.template.map((x) => x.id), ['a']);
+  assert.ok(!('origine' in t.template[0]), 'arriva la maschera dei Q visibili, non la forma');
+  const solo = direttaPerGiocatori({ versione: 1, scena: 'prova', token: null, template: [tp('a', [1, 1])], quando: 1 }, { ...s, movimentoGiocatori: false }, dati.mappa.template);
+  assert.equal(solo.token, null);
+  assert.equal(solo.template.length, 1);
+  assert.equal(direttaPerGiocatori({ versione: 1, scena: 'prova', token: null, template: [tp('c', [10, 3])], quando: 1 }, s, dati.mappa.template), null, 'tutto sotto la nebbia: niente');
+  assert.equal(direttaPerGiocatori({ ...d, template: [tp('a', [1, 1])] }, s).template.length, 0, 'senza regole nessun template');
   // visibile = non nascosto e almeno un Q fuori dalla nebbia (una pedina 2 × 2 sul confine si vede)
   assert.ok(visibileAiGiocatori({ q: [8, 1], ingombro: 2 }, s));
   assert.ok(!visibileAiGiocatori({ q: [9, 1], ingombro: 2 }, s));

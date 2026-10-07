@@ -9,11 +9,14 @@
 // le ZoC restano solo per gli avversari che i giocatori vedono (e i passi «in ZoC» del percorso li calcola la vista
 // giocatori da quelle: un avversario nascosto non si indovina). L'area la calcola il master senza gli ostacoli che i
 // giocatori non vedono (token nascosti o sotto la nebbia), così un buco nell'area non rivela nessuno.
-// Template (fase 2): stesso posto nello stato condiviso, con la regola della vista (non nascosti, origine visibile).
+// Template (fase 2, lotto 1): l'anteprima del template che il master sta piazzando o spostando viaggia nello stesso
+// stato (`template`), anche senza token scelto (`token` null), con la regola della vista: niente template nascosti,
+// dei visibili solo i Q fuori dalla nebbia (src/mappa/template.js → templatePerGiocatori).
 // Funzioni pure, condivise da master, server, vista giocatori e test.
 import { daBase64, inBase64, nuovaMaschera, senza, cella, mascheraValida } from './celle.js';
 import { celleToken } from './token.js';
 import { celleZoc } from './zoc.js';
+import { templatePerGiocatori } from './template.js';
 
 export const MODI = ['passo', 'corsa', 'scatto', 'libero'];
 const PUNTI_MAX = 2000;
@@ -30,7 +33,9 @@ export function visibileAiGiocatori(t, scena, nebbia = daBase64(scena.nebbia.cop
  *   2 Corsa, 3 Scatto: src/mappa/area.js → celleArea) o null, percorso: { punti, costo, fascia } o null,
  *   zoc: avversari (src/mappa/zoc.js → avversariZoc) o null, template: [] (fase 2), quando: ms }
  */
-export function statoDiretta({ scena, token, modo, usato = 0, disponibili = null, celle = null, percorso = null, zoc = null, template = [], quando = Date.now() }) {
+export function statoDiretta({ scena, token = null, modo, usato = 0, disponibili = null, celle = null, percorso = null, zoc = null, template = [], quando = Date.now() }) {
+  // solo l'anteprima di un template, senza token scelto
+  if (!token) return { versione: 1, scena: scena.id, token: null, template, quando };
   const { colonne: C, righe: R } = scena.griglia;
   let area = null;
   if (celle) {
@@ -57,7 +62,11 @@ export function validaDiretta(d) {
   if (d === null) return null;
   if (typeof d !== 'object' || Array.isArray(d)) return 'oggetto o null atteso';
   if (d.versione !== 1) return 'versione: 1 attesa';
-  if (typeof d.scena !== 'string' || typeof d.token !== 'string') return 'scena e token: id attesi';
+  if (typeof d.scena !== 'string') return 'scena: id atteso';
+  if (!Array.isArray(d.template ?? []) || (d.template ?? []).length > 20) return 'template: elenco (al più 20)';
+  if (!numero(d.quando)) return 'quando: istante in ms';
+  if (d.token === null) return null; // solo l'anteprima di un template
+  if (typeof d.token !== 'string') return 'token: id o null';
   if (!posizione(d.q)) return 'q: [x, y] interi attesi';
   if (!MODI.includes(d.modo)) return `modo: ${MODI.join(', ')}`;
   if (!numero(d.usato) || (d.disponibili !== null && !numero(d.disponibili))) return 'usato e disponibili: numeri';
@@ -67,8 +76,6 @@ export function validaDiretta(d) {
     if (!p || !Array.isArray(p.punti) || !p.punti.length || p.punti.length > PUNTI_MAX || !p.punti.every(posizione) || !numero(p.costo)) return 'percorso: punti [x, y] e costo';
   }
   if (d.zoc !== null && !(Array.isArray(d.zoc) && d.zoc.length <= 500 && d.zoc.every((a) => a && typeof a.token === 'string' && posizione(a.q) && intero(a.portata) && a.portata >= 0))) return 'zoc: elenco di { token, q, portata }';
-  if (!Array.isArray(d.template ?? [])) return 'template: elenco';
-  if (!numero(d.quando)) return 'quando: istante in ms';
   return null;
 }
 
@@ -77,9 +84,19 @@ export function validaDiretta(d) {
  * (scena.movimentoGiocatori false) o se il token non si vede; altrimenti senza i Q sotto la nebbia, con il percorso
  * interrotto (null) dove il token sparirebbe nella nebbia e le ZoC dei soli avversari visibili (nessuna con
  * scena.zocGiocatori false). Il token e le sue misure vengono dalla scena salvata, la posizione dal master.
+ * L'anteprima dei template (`regoleTemplate`: data/mappa.json → template) vale anche senza token e anche con il
+ * movimento spento; senza le regole, nessun template.
  */
-export function direttaPerGiocatori(d, scena) {
-  if (!d || !scena || d.scena !== scena.id || scena.movimentoGiocatori === false || validaDiretta(d)) return null;
+export function direttaPerGiocatori(d, scena, regoleTemplate = null) {
+  if (!d || !scena || d.scena !== scena.id || validaDiretta(d)) return null;
+  const template = regoleTemplate ? templatePerGiocatori(d.template ?? [], scena, regoleTemplate) : [];
+  const mov = d.token && scena.movimentoGiocatori !== false ? movimentoPerGiocatori(d, scena) : null;
+  if (!mov && !template.length) return null;
+  return { scena: d.scena, ...(mov ?? { token: null }), template, quando: d.quando };
+}
+
+/** La parte del movimento (token scelto, area, percorso, ZoC), o null se il token non si vede. */
+function movimentoPerGiocatori(d, scena) {
   const { colonne: C, righe: R } = scena.griglia;
   const nebbia = daBase64(scena.nebbia.coperti);
   const t = scena.token.find((x) => x.id === d.token);
@@ -94,8 +111,7 @@ export function direttaPerGiocatori(d, scena) {
     const z = scena.token.find((x) => x.id === a.token);
     return z && visibileAiGiocatori({ ...z, q: a.q }, scena, nebbia) ? [{ q: a.q, ingombro: z.ingombro, portata: a.portata }] : [];
   });
-  const template = (d.template ?? []).filter((x) => x && !x.nascosto && posizione(x.origine) && !cella(nebbia, C, R, x.origine[0], x.origine[1])).map(({ nascosto, ...x }) => x);
-  return { scena: d.scena, token: d.token, q: d.q, ingombro: t.ingombro, modo: d.modo, usato: d.usato, disponibili: d.disponibili, area, percorso, zoc, template, quando: d.quando };
+  return { token: d.token, q: d.q, ingombro: t.ingombro, modo: d.modo, usato: d.usato, disponibili: d.disponibili, area, percorso, zoc };
 }
 
 /** Dalla diretta filtrata: Int8Array per Q con 1 Passo, 2 Corsa, 3 Scatto (per disegnaArea), o null. */

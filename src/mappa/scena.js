@@ -7,7 +7,8 @@
 //   muri, terreno: maschere di Q in base64 (src/mappa/celle.js),
 //   nebbia: { iniziale: "coperta" | "scoperta", coperti: maschera },
 //   token: [{ id, rif: { tipo: "partecipante" | "veicolo" | "segnaposto", id }, q: [x, y], ingombro, nascosto, nome? }],
-//   template: [{ id, forma, origine: [x, y], misure: { … in Q }, direzione?, colore?, fine_round?, fonte?, nascosto }],
+//   template: [{ id, forma, origine: [x, y], misure: { … in Q }, direzione?, colore?, nome?, durata?, fine_round?,
+//                scontro?, nascosto }]                       template ad area (fase 2, lotto 1; src/mappa/template.js)
 //   collegamento: { scontro: id | null, bozza: id | null },
 //   movimenti: [ … ], annulla: [ … ],                          movimenti del Round e azioni del master (lotto 5)
 //   turni?: { tutti, token: { id: n } },                       «Nuovo turno» senza scontro aperto (src/mappa/annulla.js)
@@ -18,6 +19,7 @@
 //   zocGiocatori?: false }                                      ZoC nella diretta spente (07/10)
 import { nuovaMaschera, inBase64, mascheraValida } from './celle.js';
 import { tokenDentro } from './token.js';
+import { erroreTemplate } from './template.js';
 
 export const ID_SCENA = /^[a-z0-9-]{1,60}$/;
 /** Nome dei file in mappe/: lo sceglie il server (nome ridotto + impronta del contenuto). */
@@ -168,16 +170,18 @@ export function validaScena(s, dati) {
     if (typeof t.nascosto !== 'boolean') return `${k}.nascosto: vero o falso`;
   }
 
-  // template (§10, fase 2: qui solo la forma del dato)
+  // template ad area (§10; fase 2, lotto 1: src/mappa/template.js → erroreTemplate)
   if (!Array.isArray(s.template) || s.template.length > D.scena.template_max) return `template: elenco di al massimo ${D.scena.template_max}`;
   const idTemplate = new Set();
   for (const [i, t] of s.template.entries()) {
     const k = `template[${i}]`;
     if (!isOggetto(t) || !isTesto(t.id) || !ID_RIF.test(t.id) || idTemplate.has(t.id)) return `${k}.id mancante o ripetuto`;
     idTemplate.add(t.id);
-    if (!D.template.forme.includes(t.forma)) return `${k}.forma: ${D.template.forme.join(', ')}`;
+    const e = erroreTemplate(t, D.template);
+    if (e) return `${k}.${e}`;
     if (!isQ(t.origine) || t.origine[0] < 0 || t.origine[1] < 0 || t.origine[0] >= colonne || t.origine[1] >= righe) return `${k}.origine: un Q della griglia`;
     if (!isOggetto(t.misure) || !Object.values(t.misure).every((v) => typeof v === 'number' && v > 0)) return `${k}.misure: misure in Q positive`;
+    if (t.scontro !== undefined && t.scontro !== null && !(isTesto(t.scontro) && ID_SCENA.test(t.scontro))) return `${k}.scontro: id di scontro o null`;
     if (t.fine_round !== undefined && t.fine_round !== null && !isIntero(t.fine_round)) return `${k}.fine_round: intero o null`;
     if (typeof t.nascosto !== 'boolean') return `${k}.nascosto: vero o falso`;
   }

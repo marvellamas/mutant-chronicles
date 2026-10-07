@@ -2787,4 +2787,19 @@ function validaMappa(dati, err) {
   if (!Array.isArray(M?.divisibili) || !M.divisibili.every((f) => fasce.includes(f))) err(F, 'movimento.divisibili', 'elenco di fasce (passo, corsa, scatto)');
   if (!Array.isArray(m.template?.forme) || !m.template.forme.length) err(F, 'template.forme', 'almeno una forma');
   if (!isIntero(m.template?.durata_round_predefinita) || m.template.durata_round_predefinita < 1) err(F, 'template.durata_round_predefinita', 'intero da 1 in su');
+  // fase 2, lotto 1: template ad area (src/mappa/template.js)
+  const TT = m.template ?? {};
+  const noteForme = ['cerchio', 'cono', 'linea', 'quadrato', 'rettangolo'];
+  for (const f of TT.forme ?? []) if (!noteForme.includes(f)) err(F, 'template.forme', `${f}: forma sconosciuta (${noteForme.join(', ')})`);
+  if (!['quadretti', 'euclidea'].includes(TT.metrica_raggio)) err(F, 'template.metrica_raggio', 'quadretti o euclidea');
+  if (TT.regola_copertura !== 'almeno_meta') err(F, 'template.regola_copertura', 'almeno_meta (Magia, «Gittate e geometria»)');
+  if (!isIntero(TT.campioni_per_lato) || TT.campioni_per_lato < 2 || TT.campioni_per_lato > 32) err(F, 'template.campioni_per_lato', 'intero da 2 a 32');
+  for (const k of ['cono_larghezza_iniziale', 'linea_larghezza', 'misura_max_q']) if (!positivo(TT[k])) err(F, `template.${k}`, 'numero positivo');
+  for (const f of TT.forme ?? []) {
+    const lista = TT.misure_proposte?.[f];
+    if (!Array.isArray(lista) || !lista.length || !lista.every((x) => x && Object.values(x).every((v) => positivo(v) && v <= TT.misura_max_q))) err(F, `template.misure_proposte.${f}`, 'elenco di misure in Q');
+    if (typeof TT.nomi_forme?.[f] !== 'string') err(F, `template.nomi_forme.${f}`, 'nome della forma');
+  }
+  if (!Array.isArray(TT.colori) || !TT.colori.length || !TT.colori.every((c) => /^#[0-9a-fA-F]{6}$/.test(String(c?.valore)))) err(F, 'template.colori', 'colori #rrggbb');
+  for (const k of ['opacita_riempimento', 'opacita_contorno']) if (!(TT[k] >= 0 && TT[k] <= 1)) err(F, `template.${k}`, 'da 0 a 1');
 }

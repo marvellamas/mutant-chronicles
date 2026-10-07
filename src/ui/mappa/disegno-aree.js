@@ -161,3 +161,27 @@ export function coloriAree(el) {
     fondo: v('--superficie', '#fff'), testo: v('--testo', '#111'),
   };
 }
+
+/**
+ * Template ad area (fase 2, lotto 1; src/mappa/template.js): i Q coperti nel colore del template, riempimento leggero e
+ * contorno come l'area di movimento, e il nome (o la forma) sul Q d'origine. `anteprima`: tratteggiato, mentre si piazza.
+ * @param stile data/mappa.json → template ({ opacita_riempimento, opacita_contorno, spessore_contorno_px })
+ */
+export function disegnaTemplate(c, { scena, cam, info, celle, colore, stile, etichetta = null, origine = null, anteprima = false }) {
+  disegnaArea(c, { scena, cam, info, celle, colori: { passo: colore, corsa: colore, scatto: colore }, stile: { ...stile, opacita_riempimento: anteprima ? stile.opacita_riempimento * 0.7 : stile.opacita_riempimento }, solo: 1 });
+  if (!etichetta || !origine) return;
+  const g = scena.griglia;
+  const s = schermoDaMappa(cam, g.scosto_x + (origine[0] + 0.5) * g.q_px, g.scosto_y + (origine[1] + 0.5) * g.q_px);
+  c.save();
+  c.font = '700 12px system-ui, sans-serif';
+  const larg = c.measureText(etichetta).width + 10;
+  c.globalAlpha = 0.85;
+  c.fillStyle = '#000';
+  c.fillRect(s.x - larg / 2, s.y - 9, larg, 18);
+  c.globalAlpha = 1;
+  c.fillStyle = '#fff';
+  c.textAlign = 'center';
+  c.textBaseline = 'middle';
+  c.fillText(etichetta, s.x, s.y);
+  c.restore();
+}

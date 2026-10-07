@@ -139,14 +139,176 @@
     ]
   },
   "template": {
-    "_nota": "§10 della specifica (fase 2): forme e durata predefinita in Round.",
+    "_nota": "Template ad area (fase 2, lotto 1; §10 della specifica; src/mappa/template.js). Forme dai manuali: Magia, «Gittate e geometria» (Raggio «distanza dal centro al limite», Linea «lunghezza × larghezza, normalmente 1 Q», Cono «lunghezza × larghezza finale, con apertura progressiva»; «un Q rientra nell’Area se è incluso per almeno metà»; Linee e Coni «non includono automaticamente» il Q del lanciatore); Cono Elementale (il cono «parte dal bordo dello spazio del Taumaturgo»); Campo di Forza (cubo), Piattaforma Levitante (area rettangolare); Giocatore §5.10 (Fuoco di Soppressione, «un’Area di 3 × 3 Q»; Raggio di Scoppio delle esplosioni); Armamenti (RS delle granate 1–2 Q, dei razzi 2–4 Q; fumogena raggio 2 Q). Il Muro Elementale (segmenti di 1 Q) non è un template: si disegna con più linee o rettangoli.",
     "forme": [
-      "quadrato",
-      "cono",
       "cerchio",
+      "cono",
+      "linea",
+      "quadrato",
       "rettangolo"
     ],
-    "durata_round_predefinita": 1
+    "nomi_forme": {
+      "cerchio": "Raggio",
+      "cono": "Cono",
+      "linea": "Linea",
+      "quadrato": "Quadrato",
+      "rettangolo": "Rettangolo"
+    },
+    "regola_copertura": "almeno_meta",
+    "campioni_per_lato": 8,
+    "metrica_raggio": "quadretti",
+    "TODO(Davide) metrica": "A.137: il raggio di un’Area (esplosioni, granate, incantesimi) si misura a quadretti, con la diagonale a 1 Q come il movimento (A.124), così un raggio di 2 Q è un quadrato di 5 × 5 Q? Oppure è un cerchio vero, con i Q coperti per almeno metà (Magia, «Gittate e geometria»)? Provvisorio: a quadretti (anche lunghezza di coni e linee in diagonale); «euclidea» per il cerchio vero.",
+    "cono_larghezza_iniziale": 1,
+    "TODO(Davide) cono": "A.138: il Cono («lunghezza × larghezza finale, con apertura progressiva») quanto è largo all’inizio, al bordo del lanciatore? Provvisorio: 1 Q, poi si allarga in modo uniforme fino alla larghezza finale. Con una larghezza finale pari (Cono Elementale 3 × 2, 12 × 6) e il cono dritto su una fila, i Q di bordo restano coperti per meno di metà: va bene così o la larghezza finale si conta in Q interi da un lato?",
+    "linea_larghezza": 1,
+    "misura_max_q": 60,
+    "misure_proposte": {
+      "_nota": "Dai manuali: Esplosione Elementale raggio 2–5 Q, Devastazione 4–8, Esorcizzare 3–7, granate RS 1–2, razzi 2–4, fumogena 2; Cono Elementale 3 × 2, 6 × 3, 9 × 5, 12 × 6, 15 × 8, 18 × 9; Fiammata, Sbuffo, Soffio degli elementali 3–5 × 1; Fuoco di Soppressione 3 × 3, Campo di Forza 2–6; Piattaforma Levitante 1 × 1 → 3 × 3.",
+      "cerchio": [
+        {
+          "raggio": 1
+        },
+        {
+          "raggio": 2
+        },
+        {
+          "raggio": 3
+        },
+        {
+          "raggio": 4
+        },
+        {
+          "raggio": 5
+        },
+        {
+          "raggio": 6
+        },
+        {
+          "raggio": 8
+        }
+      ],
+      "cono": [
+        {
+          "lunghezza": 3,
+          "larghezza": 2
+        },
+        {
+          "lunghezza": 6,
+          "larghezza": 3
+        },
+        {
+          "lunghezza": 9,
+          "larghezza": 5
+        },
+        {
+          "lunghezza": 12,
+          "larghezza": 6
+        },
+        {
+          "lunghezza": 15,
+          "larghezza": 8
+        },
+        {
+          "lunghezza": 18,
+          "larghezza": 9
+        }
+      ],
+      "linea": [
+        {
+          "lunghezza": 3
+        },
+        {
+          "lunghezza": 4
+        },
+        {
+          "lunghezza": 5
+        },
+        {
+          "lunghezza": 6
+        },
+        {
+          "lunghezza": 10
+        }
+      ],
+      "quadrato": [
+        {
+          "lato": 2
+        },
+        {
+          "lato": 3
+        },
+        {
+          "lato": 4
+        },
+        {
+          "lato": 5
+        },
+        {
+          "lato": 6
+        }
+      ],
+      "rettangolo": [
+        {
+          "larghezza": 2,
+          "altezza": 1
+        },
+        {
+          "larghezza": 3,
+          "altezza": 2
+        },
+        {
+          "larghezza": 4,
+          "altezza": 2
+        }
+      ]
+    },
+    "nomi_proposti": [
+      "Esplosione",
+      "Granata",
+      "Fumo",
+      "Fiammata",
+      "Cono elementale",
+      "Soppressione",
+      "Barriera"
+    ],
+    "colori": [
+      {
+        "id": "arancione",
+        "nome": "Arancione",
+        "valore": "#f76707"
+      },
+      {
+        "id": "rosso",
+        "nome": "Rosso",
+        "valore": "#e03131"
+      },
+      {
+        "id": "grigio",
+        "nome": "Grigio (fumo)",
+        "valore": "#868e96"
+      },
+      {
+        "id": "azzurro",
+        "nome": "Azzurro",
+        "valore": "#1c7ed6"
+      },
+      {
+        "id": "viola",
+        "nome": "Viola",
+        "valore": "#9c36b5"
+      },
+      {
+        "id": "verde",
+        "nome": "Verde",
+        "valore": "#2f9e44"
+      }
+    ],
+    "durata_round_predefinita": 1,
+    "_nota_durata": "Come le altre durate in Round (regole.json → durate_round; Magia, «Scadenze e interruzione degli effetti»): il Round del piazzamento non si conta; con durata N piazzato nel Round R il template resta fino alla fine del Round R + N, poi esce con un avviso. Durata vuota: finché il master non lo toglie. Senza scontro aperto nessuna scadenza automatica.",
+    "opacita_riempimento": 0.28,
+    "opacita_contorno": 0.95,
+    "spessore_contorno_px": 2.5,
+    "tasto": "t"
   },
   "colori": {
     "_nota": "Colori dei bordi dei token (decisione di Marcello del 06/10/2026; src/mappa/colori.js). PG: bordo pieno, un colore per PG, assegnato al primo ingresso in mappa e salvato nella scena. Nemici: bordo tratteggiato che alterna nemici_alterno e il colore del tipo (tavolozza diversa da quella dei PG). Alleati non PG: bordo pieno doppio color alleati. Veicoli: il colore del PG proprietario, del gruppo veicolo_del_gruppo. Ogni bordo ha un contorno sottile scuro o chiaro (il più contrastato), per le mappe chiare e scure. alone_turno: l'alone del token di turno, bianco, che non si confonde col giallo dei PG.",

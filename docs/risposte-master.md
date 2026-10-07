@@ -1075,6 +1075,17 @@ dell'aspetto: nel pacchetto del 07/10), A.111 (solo Pablo Zaion), A.112, A.113, 
   Corsa o Scatto, con i Q già fatti contati nel blocco (2 + 10 = 12)? Provvisorio: no, Corsa e Scatto partono solo da
   fermi; il master annulla il movimento e lo rifà come Corsa, o usa «Libero» (`data/mappa.json` →
   movimento.blocco_dopo_passo false, con il `TODO(Davide)`).
+- **A.137 — Raggio di un'Area sulla griglia** (07/10/2026, template ad area della mappa, fase 2). Magia, «Gittate e
+  geometria»: il Raggio è la «distanza dal centro al limite» e «un Q rientra nell'Area se è incluso per almeno metà»;
+  il Giocatore (§5.10, Scarto) e la A.124 contano la diagonale come 1 Q. Il raggio si misura a quadretti (raggio 2 Q =
+  quadrato di 5 × 5 Q, granata con RS 1 Q = il Q e gli otto attorno) o è un cerchio vero, con i Q coperti per metà?
+  Provvisorio: a quadretti, anche la lunghezza di coni e linee in diagonale (`data/mappa.json` →
+  template.metrica_raggio «quadretti»; «euclidea» per il cerchio vero).
+- **A.138 — Forma del Cono** (07/10/2026, template ad area). Il Cono è «lunghezza × larghezza finale, con apertura
+  progressiva» e «parte dal bordo dello spazio del Taumaturgo» (Cono Elementale, da 3 × 2 a 18 × 9 Q), ma non dice quanto
+  è largo all'inizio né come si contano le larghezze finali pari (3 × 2, 12 × 6) quando il cono è dritto su una fila.
+  Provvisorio: largo 1 Q al bordo del lanciatore, poi si allarga in modo uniforme; con la larghezza pari i Q di bordo
+  coperti per meno di metà restano fuori (`data/mappa.json` → template.cono_larghezza_iniziale 1).
 
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 

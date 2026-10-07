@@ -4,7 +4,8 @@
 //
 // Si tolgono:
 //   - i token nascosti dal master e quelli con tutti i Q sotto la nebbia (basta un Q scoperto per vederlo);
-//   - i template nascosti e quelli con l'origine sotto la nebbia;
+//   - i template nascosti; dei visibili arrivano solo i Q fuori dalla nebbia, come maschera (fase 2, lotto 1:
+//     src/mappa/template.js → templatePerGiocatori), e nessun template se è tutto sotto la nebbia;
 //   - muri e terreno difficile sotto la nebbia (la forma delle stanze non ancora viste);
 //   - l'immagine originale (resta la copia ridotta, se c'è), il registro dei movimenti, la pila dell'annulla,
 //     la bozza collegata e le date.
@@ -18,6 +19,7 @@
 import { daBase64, inBase64, cella, senza } from './celle.js';
 import { celleToken, chiaveRif, iniziali } from './token.js';
 import { barraIniziativa, barraPerGiocatori } from './iniziativa.js';
+import { templatePerGiocatori } from './template.js';
 
 /**
  * @param s la scena completa
@@ -25,7 +27,7 @@ import { barraIniziativa, barraPerGiocatori } from './iniziativa.js';
  *   immagineDi: (pezzo) → indirizzo dell'immagine per i giocatori | null, scontro?: lo scontro aperto (barra dell'Iniziativa),
  *   bordoDi?: (pezzo) → bordo del token (src/mappa/colori.js) }
  */
-export function vistaGiocatori(s, contesto = null) {
+export function vistaGiocatori(s, contesto = null, regoleTemplate = contesto?.regoleTemplate ?? null) {
   const { colonne, righe } = s.griglia;
   const nebbia = daBase64(s.nebbia.coperti);
   const coperto = (x, y) => cella(nebbia, colonne, righe, x, y);
@@ -58,7 +60,8 @@ export function vistaGiocatori(s, contesto = null) {
     terreno: inBase64(senza(daBase64(s.terreno), nebbia)),
     nebbia: { coperti: s.nebbia.coperti },
     token,
-    template: s.template.filter((t) => !t.nascosto && !coperto(t.origine[0], t.origine[1])).map(({ nascosto, ...t }) => t),
+    // senza le regole dei template (data/mappa.json → template) nessun template: meglio niente che un segreto
+    template: regoleTemplate ? templatePerGiocatori(s.template, s, regoleTemplate) : [],
     collegamento: { scontro: s.collegamento?.scontro ?? null },
   };
   if (contesto) {

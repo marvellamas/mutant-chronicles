@@ -39,8 +39,10 @@ import { tratto, valoreModo, nebbiaProvvisoria, chiudiPennellata, rettangoloNebb
 import { trattoMuri, muriProvvisori, chiudiTrattoMuri, rettangoloMuri } from '../../mappa/muri.js';
 import { areaRaggiungibile, costoVerso, percorso, statoFasce, fasciaDi, celleArea, piuVicinaRaggiungibile } from '../../mappa/area.js';
 import { statoDiretta, visibileAiGiocatori } from '../../mappa/diretta.js';
-import { muoviToken, usatoNelRound, fasceNelRound, mossoNelRound, annullaUltima, annullaUltimoMovimento, cambiaTokenAnnullabile, nuovoTurno } from '../../mappa/annulla.js';
-import { disegnaMuri, disegnaArea, disegnaPercorso, disegnaZoc, coloriAree } from './disegno-aree.js';
+import { muoviToken, usatoNelRound, fasceNelRound, mossoNelRound, annullaUltima, annullaUltimoMovimento, cambiaTokenAnnullabile, cambiaTemplateAnnullabile, nuovoTurno } from '../../mappa/annulla.js';
+import { disegnaMuri, disegnaArea, disegnaPercorso, disegnaZoc, coloriAree, disegnaTemplate } from './disegno-aree.js';
+import { celleTemplate, tokenDentro as tokenNelTemplate, nuovoTemplate, scaduto, direzioneVerso, ORIENTABILI } from '../../mappa/template.js';
+import { apriMenuTemplate, sezioneTemplate, etichettaTemplate, testoMisure } from './template.js';
 import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
 import { diTurno } from '../../scontro.js';
 import { statoMovimento, muoviVeicolo } from '../../veicoli-registro.js';
@@ -141,6 +143,10 @@ export function renderMappa(radice, ctx) {
   const chiaveDisp = chiaveSchermo(window.screen?.width ?? 0, window.screen?.height ?? 0);
   const leggiLocale = (k) => { try { return JSON.parse(localStorage.getItem(k) ?? 'null'); } catch { return null; } };
   const scriviLocale = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* solo per questa volta */ } };
+  // fase 2, lotto 1: template ad area. bozza: l'ultima scelta del mini-menu (ricordata); anteprima: il template che
+  // segue il mouse mentre si piazza; sposta: l'id del template ripreso con «Sposta»; ancorato: cono e linea che partono
+  // dal token scelto e si orientano verso il mouse
+  st.tpl = { bozza: leggiLocale('mutant-mappa-template'), anteprima: null, sposta: null, ancorato: false, firma: null };
   st.disp = normalizzaDisposizione(leggiLocale(chiaveDisp), B);
   st.centra = leggiLocale('mutant-mappa-centra-turno') !== false;
   st.mostraArea = leggiLocale('mutant-mappa-mostra-area') !== false;
@@ -181,6 +187,7 @@ export function renderMappa(radice, ctx) {
           voceStrumenti('Griglia', 'Calibra, colore, opacità, blocco', () => apriStrumento(el.pGriglia)),
           voceStrumenti('Nebbia', 'Pennello e rettangolo, Rivela / Copri, tutto', () => apriStrumento(el.pNebbia)),
           voceStrumenti('Muri e terreno', 'Muro, terreno difficile, gomma', () => apriStrumento(el.pMuri)),
+          voceStrumenti('Template ad area… (T)', 'Raggio, cono, linea, quadrato, rettangolo: forma, misura, colore, durata; poi lo piazzi sulla mappa', () => { el.strumenti.open = false; nuovoTemplateUi(); }),
           voceStrumenti('Vista giocatori', 'Quale scena vedono, QR, «Apri vista giocatori»', () => apriStrumento(el.pGiocatori)),
           voceStrumenti('Scene', 'Nuova, apri, rinomina, duplica, archivia', () => apriStrumento(document.getElementById('plancia-scene-mappa'))),
           voceStrumenti('Collegamento e token', 'Scontro o bozza collegati, pezzi da mettere in mappa', () => apriStrumento(el.secScontro)),
@@ -212,6 +219,7 @@ export function renderMappa(radice, ctx) {
   el.pNebbia = h('details', { class: 'mappa-sezione mappa-nebbia', open: true });
   el.pMuri = h('details', { class: 'mappa-sezione mappa-muri' });
   el.pGiocatori = h('details', { class: 'mappa-sezione mappa-giocatori' });
+  el.pTemplate = h('details', { class: 'mappa-sezione mappa-template', open: true });
   // lotto 6: barra dell'Iniziativa in cima; a destra della mappa il bordo da trascinare e la barra (§11)
   el.iniziativa = h('div', { class: 'mappa-iniziativa-posto', hidden: true });
   // ritocchi del 06/10: la barra a gruppi, con i segnalibri fissi in cima (un clic porta alla sezione, quello attivo è
@@ -283,6 +291,7 @@ export function renderMappa(radice, ctx) {
       // area raggiungibile del token scelto, sopra la nebbia (il master la vede sempre)
       // con «Mostra area» spento non si disegna (il percorso sotto il puntatore resta, nel livello «sopra»)
       const disegnaAreaScelta = () => {
+        disegnaTemplateScena(c, info);
         // prima le ZoC degli avversari del token scelto o trascinato (sotto l'area), poi l'area
         const id = st.trascina?.modo === 'token' ? st.trascina.token : st.selezionato;
         if (st.mostraZoc && id && !disegnoAttivo()) {
@@ -462,6 +471,8 @@ export function renderMappa(radice, ctx) {
     if (st.selezionato && !s.token.some((t) => t.id === st.selezionato)) st.selezionato = null;
     aggiornaPannello();
     disegnaPannelli();
+    st.tpl.firma = null;
+    disegnaPannelloTemplate();
     invalidaArea();
     if (st.fonti !== null) { disegnaPannelloNebbia(); disegnaPannelloMuri(); disegnaPannelloGiocatori(); }
     ridisegna();
@@ -509,7 +520,7 @@ export function renderMappa(radice, ctx) {
   el.blocca = h('button', { type: 'button', class: 'btn', onclick: () => bloccaGriglia() });
   el.info = h('p', { class: 'nota mappa-info' });
   el.notaBlocco = h('p', { class: 'riquadro attenzione mappa-nota-blocco', hidden: true }, 'Griglia bloccata: dimensione e scostamento non cambiano, così nebbia, muri e token restano allineati. Colore e opacità sì.');
-  svuota(el.pannello, el.secScontro, el.pMuri, el.pNebbia, el.pGiocatori, el.pGriglia);
+  svuota(el.pannello, el.secScontro, el.pTemplate, el.pMuri, el.pNebbia, el.pGiocatori, el.pGriglia);
   svuota(el.pGriglia,
     h('summary', {}, h('strong', {}, 'Griglia')),
     h('p', { class: 'nota' }, 'Calibra tracciando sull’immagine un quadretto (o un riquadro di più quadretti) oppure inserendo i valori. Poi blocca la griglia.'),
@@ -610,6 +621,8 @@ export function renderMappa(radice, ctx) {
         if (nuovi.length) avviso(`Nello scontro: ${nuovi.map((p) => p.nome).join(', ')}. Fra i «senza token», da mettere in mappa.`, { durata: 8000 });
       }
       if (coloraNuovi()) salvaPresto();
+      scadiTemplate();
+      disegnaPannelloTemplate();
       invalidaArea();
       disegnaPannelli();
       disegnaIniziativa();
@@ -689,6 +702,7 @@ export function renderMappa(radice, ctx) {
     invalidaArea();
     salvaPresto();
     disegnaPannelli();
+    disegnaPannelloTemplate(); // chi è dentro i template cambia con i token
     disegnaIniziativa(); // token messi, tolti, nascosti: anche la barra dell'Iniziativa
     ridisegna(['aree', 'sopra']); // l'area raggiungibile sta nel livello «aree»
   }
@@ -756,6 +770,9 @@ export function renderMappa(radice, ctx) {
       ['Maiusc + clic o trascinamento', 'movimento libero (come «Libero»)'],
       ['Ctrl + clic su un token', 'scheda completa (PG) o mini-scheda (nemico)'],
       ['Clic destro su un token', 'menu: fasce, Annulla movimento, Nuovo turno, schede, Nascondi, Colore, Togli'],
+      ['T (o Strumenti → «Template ad area», o clic destro su un punto vuoto)', 'nuovo template: forma, misura in Q, colore, durata in Round, nome'],
+      ['Mentre piazzi un template', 'segue il mouse; cono e linea partono dal token scelto verso il mouse, senza token si ruotano con la rotella; clic per fissarlo, Esc per annullare'],
+      ['Clic destro su un template', 'Sposta, Nascondi / Mostra ai giocatori, Togli'],
       ['M', 'mostra o nasconde l’area di movimento'],
       ['Z', 'mostra o nasconde le zone di controllo (ZoC) degli avversari'],
       ['P', 'mostra o nasconde la barretta dei PV sui token (solo per te)'],
@@ -986,6 +1003,7 @@ export function renderMappa(radice, ctx) {
       ritiraOpportunita(esito.voce.movimento);
     }
     if (st.selezionato && !st.scena.token.some((t) => t.id === st.selezionato)) st.selezionato = null;
+    if (esito.voce.tipo === 'template') disegnaPannelloTemplate();
     if (esito.errore) avvisoErrore(`Non annullato: ${esito.errore}.`);
     else avviso(`Annullato: ${{ nebbia: 'nebbia', muri: 'muri', movimento: 'movimento', token: 'modifica del token', 'token tolto': 'token tolto (torna in mappa)', 'token messo': 'token messo (esce dalla mappa)' }[esito.testo] ?? esito.testo}.`, { chiave: 'annulla' });
     dopoDisegno();
@@ -1120,13 +1138,16 @@ export function renderMappa(radice, ctx) {
     if (st.chiusa || !st.diretta.pronta) return;
     const s = st.scena;
     const id = st.trascina?.modo === 'token' ? st.trascina.token : st.selezionato;
-    const attiva = !!s && s.movimentoGiocatori !== false && !!id && !disegnoAttivo();
+    // fase 2, lotto 1: l'anteprima del template che si piazza (non quello nascosto ai giocatori), anche senza token
+    const anteprima = st.tpl?.anteprima && !st.tpl.anteprima.nascosto ? st.tpl.anteprima : null;
+    const attiva = !!s && s.movimentoGiocatori !== false && !!id && !disegnoAttivo() && !st.tpl?.anteprima;
     if (attiva && !st.trascina) areaScelta();
-    const chiave = attiva ? JSON.stringify([idDi(s), id, st.fascia, s.zocGiocatori, idDi(st.area), idDi(st.pezzi), st.percorso?.punti?.at(-1) ?? null, st.trascina?.info ? idDi(st.trascina.info) : 0]) : 'nessuna';
+    const chiave = attiva || anteprima ? JSON.stringify([idDi(s), attiva ? id : null, st.fascia, s.zocGiocatori, idDi(st.area), idDi(st.pezzi), st.percorso?.punti?.at(-1) ?? null, st.trascina?.info ? idDi(st.trascina.info) : 0, idDi(anteprima)]) : 'nessuna';
     if (chiave === st.diretta.chiave) return;
     st.diretta.chiave = chiave;
     let stato = null;
     try { stato = attiva ? costruisciDiretta(id) : null; } catch { stato = null; }
+    if (anteprima) stato = stato ? { ...stato, template: [anteprima] } : statoDiretta({ scena: s, template: [anteprima] });
     // lo stesso stato (a parte l'istante) non si rimanda: le fonti si rileggono ogni secondo
     const testo = JSON.stringify(stato && { ...stato, quando: 0 });
     if (testo === st.diretta.testo) return;
@@ -1194,6 +1215,144 @@ export function renderMappa(radice, ctx) {
     salvaPresto();
     disegnaPannelloGiocatori();
     avviso(v ? 'I giocatori vedono i PV dei nemici.' : 'I giocatori non vedono i PV dei nemici.');
+  }
+  // ── Template ad area (fase 2, lotto 1; §10 della specifica; src/mappa/template.js) ──
+  const RT = ctx.dati.mappa.template;
+  const celleDi = new WeakMap();
+  /** Q coperti dal template (calcolati una volta per oggetto: i template cambiano solo sostituendoli). */
+  const celleTpl = (t) => { if (!celleDi.has(t)) celleDi.set(t, celleTemplate(t, st.scena.griglia, RT)); return celleDi.get(t); };
+  const roundAttuale = () => st.fonti?.scontro?.round ?? null;
+  const nomeToken = (k) => pezzoDi(k)?.nome ?? k.nome ?? k.id;
+  /** Chi è dentro il template: i nomi (per «Colpito» sulla plancia; nessun tiro automatico). */
+  const dentroTpl = (t) => tokenNelTemplate(t, st.scena, RT, celleTpl(t)).map(nomeToken);
+  function disegnaTemplateScena(c, info) {
+    const s = st.scena;
+    for (const t of s.template) {
+      if (t.id === st.tpl.sposta) continue;
+      disegnaTemplate(c, { scena: s, cam: st.cam, info, celle: celleTpl(t), colore: t.colore ?? RT.colori[0].valore, stile: RT, etichetta: `${etichettaTemplate(t, RT, roundAttuale())}${t.nascosto ? ' (nascosto)' : ''}`, origine: t.origine });
+    }
+    const a = st.tpl.anteprima;
+    if (a) disegnaTemplate(c, { scena: s, cam: st.cam, info, celle: celleTpl(a), colore: a.colore, stile: RT, etichetta: a.nome || testoMisure(a, RT), origine: a.origine, anteprima: true });
+  }
+  /** Mini-menu, poi il piazzamento; `origine`: il Q del clic destro (l'anteprima parte da lì). */
+  async function nuovoTemplateUi(origine = null) {
+    if (!st.scena) return;
+    const b = await apriMenuTemplate({ regole: RT, bozza: st.tpl.bozza });
+    if (!b || !st.scena) return;
+    st.tpl.bozza = b;
+    scriviLocale('mutant-mappa-template', b);
+    iniziaPiazzamento({ ...b, id: `tpl-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}` }, origine);
+  }
+  function iniziaPiazzamento(base, origine = null, sposta = null) {
+    const g = st.scena.griglia;
+    const o = origine ?? [Math.floor(g.colonne / 2), Math.floor(g.righe / 2)];
+    st.tpl.sposta = sposta;
+    st.tpl.anteprima = { ...base, origine: o, ...(ORIENTABILI.includes(base.forma) ? { direzione: base.direzione ?? 0 } : {}) };
+    el.riquadro.classList.add('piazza-template');
+    avviso(ORIENTABILI.includes(base.forma)
+      ? 'Template: con un token scelto parte da lui e si orienta verso il mouse; senza, segue il mouse e si ruota con la rotella. Clic per fissarlo, Esc per annullare.'
+      : 'Template: segue il mouse. Clic per fissarlo, Esc per annullare.', { tipo: 'info', chiave: 'template', durata: 8000 });
+    ridisegna(['aree']);
+  }
+  /** L'anteprima segue il punto m della mappa: cono e linea dal token scelto verso m, le altre forme su m. */
+  function aggiornaAnteprima(m) {
+    const a = st.tpl.anteprima;
+    if (!a) return;
+    const g = st.scena.griglia;
+    const verso = [(m.x - g.scosto_x) / g.q_px, (m.y - g.scosto_y) / g.q_px];
+    const tok = ORIENTABILI.includes(a.forma) && !st.tpl.sposta && st.selezionato ? st.scena.token.find((x) => x.id === st.selezionato) : null;
+    let nuovo;
+    if (tok) {
+      const [w, hh] = Array.isArray(tok.ingombro) ? tok.ingombro : [tok.ingombro ?? 1, tok.ingombro ?? 1];
+      const origine = [tok.q[0] + Math.floor((w - 1) / 2), tok.q[1] + Math.floor((hh - 1) / 2)];
+      nuovo = { ...a, origine, direzione: direzioneVerso(origine, verso) };
+    } else nuovo = { ...a, origine: qVicino(m) };
+    st.tpl.ancorato = !!tok;
+    if (nuovo.origine[0] === a.origine[0] && nuovo.origine[1] === a.origine[1] && nuovo.direzione === a.direzione) return;
+    st.tpl.anteprima = nuovo;
+    ridisegna(['aree']);
+  }
+  /** Rotella durante il piazzamento di un cono o di una linea non ancorati: ruota di 15° (niente zoom). */
+  const suRotellaTemplate = (e) => {
+    const a = st.tpl.anteprima;
+    if (!a || !ORIENTABILI.includes(a.forma) || st.tpl.ancorato) return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    st.tpl.anteprima = { ...a, direzione: (((a.direzione ?? 0) + (e.deltaY > 0 ? 15 : -15)) % 360 + 360) % 360 };
+    ridisegna(['aree']);
+  };
+  el.riquadro.addEventListener('wheel', suRotellaTemplate, { capture: true, passive: false });
+  function annullaPiazzamento() {
+    st.tpl.anteprima = null;
+    st.tpl.sposta = null;
+    el.riquadro.classList.remove('piazza-template');
+    avviso('Template annullato.', { tipo: 'info', chiave: 'template' });
+    ridisegna(['aree']);
+  }
+  /** Clic: il template si fissa (nuovo o spostato), si salva con la scena e l'avviso dice chi c'è dentro. */
+  function fissaTemplate() {
+    const a = st.tpl.anteprima;
+    if (!a) return;
+    const scontro = st.fonti?.scontro ?? null;
+    const prima = st.tpl.sposta ? st.scena.template.find((t) => t.id === st.tpl.sposta) ?? null : null;
+    const t = prima ? { ...prima, origine: [...a.origine], ...(ORIENTABILI.includes(a.forma) ? { direzione: a.direzione } : {}) }
+      : nuovoTemplate({ id: a.id, forma: a.forma, misure: a.misure, origine: a.origine, direzione: a.direzione ?? 0, colore: a.colore, nome: a.nome, durata: a.durata, round: scontro?.round ?? null, nascosto: a.nascosto, scontro: scontro?.id ?? null });
+    st.scena = cambiaTemplateAnnullabile(st.scena, prima, t, ctx.dati);
+    st.tpl.anteprima = null;
+    st.tpl.sposta = null;
+    el.riquadro.classList.remove('piazza-template');
+    const dentro = dentroTpl(t);
+    avviso([`${t.nome || testoMisure(t, RT)}${prima ? ' spostato' : ''}: ${dentro.length ? `dentro ${dentro.join(', ')}` : 'nessun token dentro'}.`,
+      dentro.length ? 'Il danno si applica dalla plancia («Colpito»): nessun tiro automatico.' : null], { tipo: 'info', chiave: 'template', durata: 12000 });
+    dopoTemplate();
+  }
+  function dopoTemplate() {
+    salvaPresto();
+    disegnaPannelloTemplate();
+    ridisegna(['aree']);
+  }
+  function cambiaTemplate(id, fn) {
+    const prima = st.scena.template.find((t) => t.id === id);
+    if (!prima) return;
+    st.scena = cambiaTemplateAnnullabile(st.scena, prima, fn(prima), ctx.dati);
+    dopoTemplate();
+  }
+  const togliTemplate = (id) => cambiaTemplate(id, () => null);
+  const nascondiTemplate = (id) => cambiaTemplate(id, (t) => ({ ...t, nascosto: !t.nascosto }));
+  function spostaTemplate(id) {
+    const t = st.scena.template.find((x) => x.id === id);
+    if (t) iniziaPiazzamento(t, t.origine, id);
+  }
+  /** Con il Round dello scontro (Magia, «Scadenze e interruzione degli effetti»): fino alla fine del Round R + N. */
+  function scadiTemplate() {
+    const sc = st.fonti?.scontro;
+    if (!sc || !st.scena) return;
+    const via = st.scena.template.filter((t) => t.scontro === sc.id && scaduto(t, sc.round));
+    if (!via.length) return;
+    st.scena = { ...st.scena, template: st.scena.template.filter((t) => !via.includes(t)) };
+    salvaPresto();
+    avviso(`Template scadut${via.length > 1 ? 'i' : 'o'}: ${via.map((t) => `${t.nome || testoMisure(t, RT)} (fine del Round ${t.fine_round})`).join(', ')}.`, { tipo: 'info', durata: 10000 });
+  }
+  function disegnaPannelloTemplate() {
+    if (!st.scena) return;
+    const voci = st.scena.template.map((t) => ({ t, dentro: dentroTpl(t) }));
+    const firma = JSON.stringify([voci, roundAttuale()]);
+    if (firma === st.tpl.firma) return;
+    st.tpl.firma = firma;
+    svuota(el.pTemplate, ...sezioneTemplate(voci, RT, { nuovo: () => nuovoTemplateUi(), sposta: spostaTemplate, nascondi: nascondiTemplate, togli: togliTemplate, round: roundAttuale() }));
+  }
+  /** Clic destro su un punto senza token: nuovo template lì, e i comandi dei template che coprono quel Q. */
+  function menuMappa(p) {
+    if (!st.scena) return;
+    const q = qVicino(mappaDaSchermo(st.cam, p.x, p.y));
+    const qui = st.scena.template.filter((t) => celleTpl(t)[q[1] * st.scena.griglia.colonne + q[0]]);
+    apriMenuToken(el.riquadro, p.x, p.y, 'Mappa', [
+      { testo: 'Nuovo template qui… (T)', azione: () => nuovoTemplateUi(q) },
+      ...qui.flatMap((t) => [null,
+        { testo: `Sposta «${t.nome || testoMisure(t, RT)}»`, azione: () => spostaTemplate(t.id) },
+        { testo: t.nascosto ? 'Mostra ai giocatori' : 'Nascondi ai giocatori', azione: () => nascondiTemplate(t.id) },
+        { testo: `Togli «${t.nome || testoMisure(t, RT)}»`, azione: () => togliTemplate(t.id) }]),
+    ]);
   }
   /** «Mostra ZoC»: interruttore ricordato (localStorage), come «Mostra area». */
   function cambiaMostraZoc(v = !st.mostraZoc) {
@@ -1402,6 +1561,8 @@ export function renderMappa(radice, ctx) {
     if (!st.scena) return;
     const m = mappaDaSchermo(st.cam, p.x, p.y);
     if (st.daPiazzare && !st.spazio) { piazza(st.daPiazzare, m); return; }
+    // fase 2, lotto 1: un clic fissa il template che si sta piazzando
+    if (st.tpl.anteprima && !st.spazio) { aggiornaAnteprima(m); fissaTemplate(); return; }
     const base = { id: e.pointerId, x: p.x, y: p.y, x0: p.x, y0: p.y, mosso: false };
     const d = disegnoAttivo();
     if (d && !st.spazio && st.strumento !== 'calibra') {
@@ -1430,6 +1591,7 @@ export function renderMappa(radice, ctx) {
     }
   }
   const muovi = (e, p, mio) => {
+    if (st.tpl.anteprima && !st.trascina) { aggiornaAnteprima(mappaDaSchermo(st.cam, p.x, p.y)); return; }
     const t = st.trascina;
     if (!t || !mio) { suggerisci(e); return; }
     if (!t.mosso && Math.hypot(p.x - t.x0, p.y - t.y0) < TRASCINAMENTO_MINIMO_PX) return;
@@ -1589,7 +1751,7 @@ export function renderMappa(radice, ctx) {
   /** Menu del token nel punto p del riquadro (clic destro, o pressione lunga sul tablet). */
   function menuSu(p) {
     const tok = tokenSotto(mappaDaSchermo(st.cam, p.x, p.y));
-    if (!tok) { chiudiMenuToken(); return; }
+    if (!tok) { menuMappa(p); return; }
     if (st.selezionato !== tok.id) scegli(tok.id);
     const pz = pezzoDi(tok);
     const mov = pz?.movimento;
@@ -1631,6 +1793,8 @@ export function renderMappa(radice, ctx) {
     if (e.key === 'm' || e.key === 'M') { e.preventDefault(); cambiaMostraArea(); return; }
     if (e.key === 'z' || e.key === 'Z') { e.preventDefault(); cambiaMostraZoc(); return; }
     if (e.key === 'p' || e.key === 'P') { e.preventDefault(); cambiaMostraPv(); return; }
+    if (e.key.toLowerCase() === ctx.dati.mappa.template.tasto && st.scena && !st.tpl.anteprima) { e.preventDefault(); nuovoTemplateUi(); return; }
+    if (e.key === 'Escape' && st.tpl.anteprima) { e.preventDefault(); annullaPiazzamento(); return; }
     if (e.key === '?') { e.preventDefault(); apriAiuto(); return; }
     if (e.key === 'Escape' && (el.strumenti.open || el.altro.open)) { el.strumenti.open = false; el.altro.open = false; return; }
     if (e.key === '+' || e.key === '=' || e.code === 'NumpadAdd') { e.preventDefault(); zoomCentro(V.passo_tasti); } else if (e.key === '-' || e.code === 'NumpadSubtract') { e.preventDefault(); zoomCentro(1 / V.passo_tasti); } else if (e.code === 'Space') {

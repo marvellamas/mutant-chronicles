@@ -7,6 +7,7 @@
 //   { tipo: 'muri', muri, terreno }                 src/mappa/muri.js
 //   { tipo: 'movimento', movimento: id, token, da, a }
 //   { tipo: 'token', id, prima, dopo }              prima null: messo; dopo null: tolto; tutti e due: cambiato
+//   { tipo: 'template', id, prima, dopo }           template ad area (fase 2, lotto 1): piazzato, spostato, tolto
 // Movimenti (scena.movimenti, al più scena.movimenti_max): { id, token, scontro, round, turno?, da, a, costo, fascia, libero,
 // quando }. Senza scontro aperto (scena collegata a una bozza o a nulla) il movimento si conta lo stesso, per «turno»: il
 // numero del turno del token (turnoDi) che «Nuovo turno» fa avanzare, per un token o per tutti (scena.turni, primo test
@@ -27,6 +28,17 @@ export function cambiaTokenAnnullabile(scena, prima, dopo, dati, adesso = new Da
     token = i >= 0 ? scena.token.map((t) => (t.id === id ? dopo : t)) : [...scena.token, dopo];
   }
   return conVoce({ ...scena, token }, { tipo: 'token', id, prima, dopo, quando: adesso.toISOString() }, dati);
+}
+
+/** Un template messo, tolto o cambiato dal master, con la voce per Ctrl+Z. `prima` null: messo; `dopo` null: tolto. */
+export function cambiaTemplateAnnullabile(scena, prima, dopo, dati, adesso = new Date()) {
+  const id = (dopo ?? prima).id;
+  let template = scena.template.filter((t) => t.id !== id);
+  if (dopo) {
+    const i = scena.template.findIndex((t) => t.id === id);
+    template = i >= 0 ? scena.template.map((t) => (t.id === id ? dopo : t)) : [...scena.template, dopo];
+  }
+  return conVoce({ ...scena, template }, { tipo: 'template', id, prima, dopo, quando: adesso.toISOString() }, dati);
 }
 
 /** Turno del token senza scontro: scena.turni = { tutti, token: { id: n } }, i due contatori sommati. */
@@ -127,6 +139,11 @@ export function annullaUltima(scena, { chiaviPresenti = null } = {}) {
       let token = senza.token.filter((t) => t.id !== voce.id);
       if (voce.prima) token = [...token, voce.prima];
       return { scena: { ...senza, token }, voce, testo: voce.prima && voce.dopo ? 'token' : voce.prima ? 'token tolto' : 'token messo' };
+    }
+    case 'template': {
+      let template = senza.template.filter((t) => t.id !== voce.id);
+      if (voce.prima) template = [...template, voce.prima];
+      return { scena: { ...senza, template }, voce, testo: voce.prima && voce.dopo ? 'template spostato' : voce.prima ? 'template tolto' : 'template piazzato' };
     }
     default:
       return { scena: senza, voce, errore: `voce sconosciuta: ${voce.tipo}` };

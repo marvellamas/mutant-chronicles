@@ -144,7 +144,7 @@ function scenaDiProva() {
   ];
   s.template = [
     { id: 'tp-1', forma: 'cerchio', origine: [1, 1], misure: { raggio: 2 }, fine_round: 3, nascosto: false },
-    { id: 'tp-2', forma: 'cono', origine: [9, 4], misure: { lunghezza: 6 }, nascosto: false },
+    { id: 'tp-2', forma: 'cono', origine: [9, 4], misure: { lunghezza: 6, larghezza: 3 }, direzione: 0, nascosto: false },
     { id: 'tp-3', forma: 'quadrato', origine: [0, 4], misure: { lato: 2 }, nascosto: true },
   ];
   s.mappa = { file: 'cripta-0123456789ab.jpg', ridotta: 'cripta-0123456789ab-ridotta.webp', larghezza: 640, altezza: 512 };
@@ -200,7 +200,7 @@ test('validaScena: ogni problema dice dove', () => {
 
 test('vista giocatori: niente nascosti, niente sotto la nebbia, solo la copia ridotta', () => {
   const s = scenaDiProva();
-  const v = vistaGiocatori(s);
+  const v = vistaGiocatori(s, null, dati.mappa.template);
   assert.equal(v.vista, 'giocatori');
   // token: Lucas (scoperto), il demone grande a cavallo del confine (un Q scoperto basta), la cassa;
   // fuori l'agguato nascosto e l'ombra sotto la nebbia
