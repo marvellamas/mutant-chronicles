@@ -45,7 +45,8 @@ test('«Torna al tavolo» è cablato: la plancia segna, la pagina iniziale dimen
   const app = readFileSync(new URL('../src/ui/app.js', import.meta.url), 'utf8');
   assert.match(app, /apri: \(r\) => apriDaCartella\(r, \{ dalTavolo: true \}\)/);
   assert.match(app, /if \(dalTavolo\) segnaDalTavolo\(sessionStorage, id, window\.scrollY\)/);
-  assert.match(app, /dimenticaTavolo\(sessionStorage\);\s+return renderHome\(\);/);
+  // la pagina iniziale dimentica anche la mappa («Torna alla mappa», difetto 2 del 06/10/2026)
+  assert.match(app, /dimenticaTavolo\(sessionStorage\);\s+(dimenticaMappa\(sessionStorage\);\s+)?return renderHome\(\);/);
   assert.match(app, /tornaAlTavolo: arrivoDalTavolo\(sessionStorage, stato\.id\) \?/);
   const tab = readFileSync(new URL('../src/ui/tab.js', import.meta.url), 'utf8');
   assert.match(tab, /ctx\.tornaAlTavolo \? h\('button', \{ type: 'button', class: 'btn btn-torna-tavolo'.*'← Torna al tavolo'\) : null/);

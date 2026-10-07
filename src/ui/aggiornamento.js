@@ -4,8 +4,10 @@
 // - Alla ripresa della finestra e ogni INTERVALLO_CONTROLLO_MS lo rilegge: se la versione del server
 //   è diversa da quella caricata (meta «mutant-versione»), mostra in alto «Nuova versione
 //   disponibile» con «Ricarica», che apre la stessa pagina con ?v=<versione nuova>.
+// - Con il server di Mutant: se il server è stato acceso con una versione più vecchia di quella dei file
+//   (aggiornamento senza riavvio), barra rossa «Riavvia avvia-server.bat» (src/versione.js → serverDaRiavviare).
 // Non tocca il localStorage: i personaggi restano dove sono.
-import { leggiVersione, serveAggiornamento, urlRicarica, testoVersione, INTERVALLO_CONTROLLO_MS } from '../versione.js';
+import { leggiVersione, serveAggiornamento, urlRicarica, testoVersione, INTERVALLO_CONTROLLO_MS, serverDaRiavviare } from '../versione.js';
 
 const caricata = document.querySelector('meta[name="mutant-versione"]')?.content || null;
 let mostrata = null;
@@ -13,7 +15,12 @@ let mostrata = null;
 async function versioneServer() {
   try {
     const r = await fetch('versione.json', { cache: 'no-store' });
-    return r.ok ? leggiVersione(await r.json()) : null;
+    if (!r.ok) return null;
+    const v = leggiVersione(await r.json());
+    // versione con cui è stato acceso il server di Mutant (solo con server.mjs)
+    const avvio = r.headers.get('X-Mutant-Versione-Server');
+    if (v && serverDaRiavviare(avvio, v.versione)) barraServer();
+    return v;
   } catch {
     return null; // senza rete o senza file: nessun avviso
   }
@@ -35,6 +42,19 @@ function barra(v) {
   b.textContent = 'Ricarica';
   b.addEventListener('click', () => { location.href = urlRicarica(location.href, v.versione); });
   el.append(testo, ' ', b);
+  document.body.prepend(el);
+}
+
+/** Il server di Mutant gira ancora con il codice di prima dell'aggiornamento: va riavviato. */
+function barraServer() {
+  if (document.getElementById('barra-server-vecchio')) return;
+  const el = document.createElement('div');
+  el.id = 'barra-server-vecchio';
+  el.className = 'barra-aggiornamento barra-server-vecchio';
+  el.setAttribute('role', 'alert');
+  el.textContent = 'Il server di Mutant è acceso da prima dell’ultimo aggiornamento dell’app e usa ancora il codice vecchio: '
+    + 'alcuni salvataggi (mappa, scontri, schede) potrebbero essere rifiutati. Chiudi la finestra di avvia-server.bat, '
+    + 'riaprila e ricarica questa pagina.';
   document.body.prepend(el);
 }
 

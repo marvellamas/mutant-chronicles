@@ -1,0 +1,13 @@
+Immagini delle mappe di battaglia
+=================================
+
+Qui il server di Mutant (avvia-server.bat, cioe' node server.mjs) salva le immagini caricate per
+la mappa di battaglia: JPG, PNG o WEBP, fino al limite di data/mappa.json (immagini.massimo_mb).
+
+- Il nome del file e' quello della mappa seguito da un'impronta del contenuto: la stessa immagine
+  caricata due volte non si duplica.
+- Accanto all'originale c'e' la copia ridotta (...-ridotta.webp), preparata dal browser del master,
+  per la vista giocatori e per i tablet.
+- Il server non cancella nulla: un'immagine che non serve piu' si toglie a mano (controllando prima
+  che nessuna scena di scene/ la usi).
+- I file di questa cartella non vanno su GitHub (.gitignore): sono dati di gioco.

@@ -55,3 +55,9 @@ salvataggi/*
 !salvataggi/LEGGIMI.txt
 # configurazione della copia (cartella di Drive, clone del repository privato): personale, non va su GitHub
 config-salvataggi.json
+
+# Mappa di battaglia (server.mjs, docs/battlemap/): scene e immagini delle mappe; si traccia solo il LEGGIMI
+scene/*
+!scene/LEGGIMI.txt
+mappe/*
+!mappe/LEGGIMI.txt

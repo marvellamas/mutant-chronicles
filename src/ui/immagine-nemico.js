@@ -1,0 +1,136 @@
+// Immagine dei nemici sui token della mappa (A.131, decisione di Marcello del 06/10/2026: non è una regola di gioco).
+// Si carica come le mappe (server.mjs → /api/mappe): l'originale e una copia ridotta per il token, lato da
+// data/mappa.json → immagini.token. Il nemico la tiene nel campo facoltativo «immagine» { file, ridotta }
+// (data/formato_nemici.json); senza immagine il token mostra le iniziali.
+// Si imposta da «Crea nemico», dall'editor del bestiario, dalla carta del nemico nella plancia e dal pannello del token.
+import { h } from './dom.js';
+import { avviso, avvisoErrore } from './avvisi.js';
+import { controllaFile, preparaRidotta, caricaImmagine } from './mappa/api.js';
+import { conImmagineNemico } from '../scontro.js';
+import { conImmagineNemicoBozza } from '../preparazione.js';
+
+/** Come src/ui/nemici.js → salvaNemico (qui a parte: nemici.js usa questo modulo). */
+async function salvaNemico(n) {
+  const r = await fetch(`api/nemici/${encodeURIComponent(n.id)}`, { method: 'PUT', body: JSON.stringify(n), headers: { 'Content-Type': 'application/json' } });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.errore ?? `errore ${r.status}`);
+  return j;
+}
+
+/** Indirizzo dell'immagine da disegnare (la copia ridotta, se c'è). */
+export const urlImmagine = (immagine) => (immagine?.file ? `api/mappe/${encodeURIComponent(immagine.ridotta ?? immagine.file)}` : null);
+
+/** Apre la scelta del file; risolve con il File o null. */
+function scegliFile() {
+  return new Promise((risolvi) => {
+    const input = h('input', { type: 'file', accept: '.jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp', hidden: true });
+    input.addEventListener('change', () => { risolvi(input.files?.[0] ?? null); input.remove(); });
+    input.addEventListener('cancel', () => { risolvi(null); input.remove(); });
+    document.body.append(input);
+    input.click();
+  });
+}
+
+/** Sceglie e carica un'immagine per il nemico `nome`: { file, ridotta } oppure null (annullato o errore, con avviso). */
+export async function scegliImmagineNemico(dati, nome) {
+  const file = await scegliFile();
+  if (!file) return null;
+  const controllo = await controllaFile(file, dati);
+  if (controllo.errore) { avvisoErrore(controllo.errore, { durata: 12000 }); return null; }
+  try {
+    const ridotta = await preparaRidotta(file, dati, { latoMassimo: dati.mappa.immagini.token.lato_massimo_px });
+    const base = `nemico ${nome ?? ''}`;
+    const orig = await caricaImmagine(file, base);
+    const rid = ridotta ? await caricaImmagine(ridotta, base, { ridotta: true }) : null;
+    return { file: orig.file, ridotta: rid?.file ?? null };
+  } catch (e) {
+    avvisoErrore(`Immagine non caricata: ${e.message}`, { durata: 10000 });
+    return null;
+  }
+}
+
+/** Anteprima, «Scegli immagine…» e «Togli»: per l'editor del bestiario e «Crea nemico». */
+export function campoImmagine({ valore, nome, dati, imposta, etichetta = 'Immagine sulla mappa' }) {
+  const url = urlImmagine(valore);
+  return h('div', { class: 'campo-immagine-nemico' },
+    h('span', {}, etichetta),
+    url ? h('img', { src: url, alt: `Immagine di ${nome ?? 'nemico'}`, class: 'anteprima-immagine-nemico' }) : h('small', { class: 'nota' }, 'nessuna: il token mostra le iniziali'),
+    h('button', { type: 'button', class: 'btn btn-piccolo', onclick: async () => { const i = await scegliImmagineNemico(dati, typeof nome === 'function' ? nome() : nome); if (i) imposta(i); } }, url ? 'Cambia immagine…' : 'Scegli immagine…'),
+    url ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => imposta(undefined) }, 'Togli') : null);
+}
+
+async function json(url, opzioni) {
+  const r = await fetch(url, { cache: 'no-store', ...opzioni });
+  const corpo = await r.json().catch(() => ({}));
+  return { stato: r.status, corpo };
+}
+
+/** Attese prima dei nuovi tentativi dopo un errore del server o della rete (ms); poi l'errore arriva a chi chiama. */
+export const ATTESE_RIPROVA_MS = [150, 400, 1000];
+/** Per quanto si ritenta dopo i conflitti (409: un'altra finestra ha scritto prima), in ms: rileggere è sempre sicuro. */
+export const TEMPO_CONFLITTI_MS = 10000;
+/** Code per scontro della pagina: le scritture della stessa finestra sullo stesso file partono una alla volta. */
+const codeScontri = new Map();
+
+/**
+ * Legge, cambia e riscrive un file di scontri/ con la revisione. Riprova se un'altra finestra l'ha cambiato (409,
+ * rileggendo: `cambia` si applica sempre all'ultima versione) e, dopo una breve attesa, se il server o la rete
+ * falliscono (07/10/2026: su Windows il file può essere occupato un attimo); solo dopo l'ultimo tentativo l'errore.
+ * Le chiamate della stessa pagina sullo stesso scontro passano una alla volta (codeScontri).
+ */
+export function aggiornaInScontri(id, cambia, opzioni = {}) {
+  const prima = codeScontri.get(id) ?? Promise.resolve();
+  const questo = prima.then(() => aggiornaOra(id, cambia, opzioni));
+  const fine = questo.then(() => {}, () => {});
+  codeScontri.set(id, fine);
+  fine.then(() => { if (codeScontri.get(id) === fine) codeScontri.delete(id); });
+  return questo;
+}
+async function aggiornaOra(id, cambia, { attese = ATTESE_RIPROVA_MS } = {}) {
+  const url = `api/scontri/${encodeURIComponent(id)}`;
+  let conflitti = 0;
+  let guasti = 0;
+  const inizio = Date.now();
+  for (;;) {
+    let letto = null;
+    let scritto = null;
+    let errore = null;
+    try {
+      letto = await json(url);
+      if (letto.stato === 200) scritto = await json(url, { method: 'PUT', body: JSON.stringify(cambia(letto.corpo)), headers: { 'Content-Type': 'application/json' } });
+    } catch (e) { errore = e.message; }
+    if (scritto?.stato === 200) return scritto.corpo;
+    if (letto && letto.stato !== 200 && letto.stato < 500) throw new Error(`${id} non leggibile (${letto.stato})`);
+    if (scritto?.stato === 409) {
+      if (Date.now() - inizio > TEMPO_CONFLITTI_MS) throw new Error(`${id} cambiato più volte altrove: riprova`);
+      // un'altra finestra scrive insieme: un'attesa breve, a caso e crescente, così non si ritenta in coro
+      await new Promise((ok) => setTimeout(ok, Math.random() * 30 * Math.min(++conflitti, 10)));
+      continue;
+    }
+    if (scritto && scritto.stato < 500) throw new Error(scritto.corpo.errore ?? `errore ${scritto.stato}`);
+    // errore del server (500) o della rete: si ritenta dopo un'attesa crescente
+    errore = scritto?.corpo?.errore ?? letto?.corpo?.errore ?? errore ?? 'errore del server';
+    if (guasti >= attese.length) throw new Error(`${errore} (ritentato ${guasti} volte)`);
+    await new Promise((ok) => setTimeout(ok, attese[guasti++]));
+  }
+}
+
+/**
+ * Mette (o toglie, con immagine null) l'immagine del tipo di nemico `tipo` nello scontro e nella bozza indicati e,
+ * se c'è, nel suo file del bestiario (nemici/<tipo>.json), così vale anche per gli scontri futuri.
+ * @returns {Promise<string[]>} dove è stata scritta
+ */
+export async function impostaImmagineNemico({ tipo, immagine, scontro = null, bozza = null, nome = tipo }) {
+  const fatto = [];
+  if (scontro) { await aggiornaInScontri(scontro, (s) => conImmagineNemico(s, tipo, immagine)); fatto.push('scontro'); }
+  if (bozza) { await aggiornaInScontri(bozza, (b) => conImmagineNemicoBozza(b, tipo, immagine, new Date())); fatto.push('bozza'); }
+  const elenco = await json('api/nemici');
+  const voce = Array.isArray(elenco.corpo) ? elenco.corpo.find((v) => v.nemico?.id === tipo) : null;
+  if (voce) {
+    const { immagine: _, ...resto } = voce.nemico;
+    await salvaNemico(immagine ? { ...resto, immagine } : resto);
+    fatto.push('bestiario');
+  }
+  avviso(`${immagine ? 'Immagine' : 'Iniziali'} per ${nome}: ${fatto.join(', ') || 'nessun file da aggiornare'}.`);
+  return fatto;
+}

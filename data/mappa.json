@@ -1,0 +1,257 @@
+{
+  "versione_manuale": "Mappa di battaglia, specifica bozza 2 (Google Doc del 06/10/2026); Giocatore 0.43 §2.14, §5.1",
+  "fonte": "docs/battlemap/specifica.md; piano tecnico in docs/battlemap/piano.md (lotto 1: scene sul server)",
+  "_nota": "Parametri della mappa di battaglia del Tavolo del Master. Logica pura in src/mappa/ (scena.js, celle.js, token.js, vista.js, immagine.js); API /api/scene e /api/mappe in server.mjs. Le dimensioni del movimento (Passo, Corsa, Scatto) restano in regole.json → movimento.",
+  "q_metri": 1.5,
+  "scena": {
+    "_nota": "Limiti del file della scena (scene/<id>.json): li controlla src/mappa/scena.js → validaScena, anche nel server.",
+    "formato": "mutant-scena",
+    "versione": 1,
+    "colonne_max": 300,
+    "righe_max": 300,
+    "token_max": 300,
+    "template_max": 100,
+    "movimenti_max": 500,
+    "annulla_max": 50,
+    "nebbia_iniziale": "coperta",
+    "nebbie_iniziali": [
+      "coperta",
+      "scoperta"
+    ],
+    "colonne_predefinite": 30,
+    "righe_predefinite": 20
+  },
+  "immagini": {
+    "_nota": "§4 della specifica: JPG, PNG o WEBP. L'originale va al PC del master; la copia ridotta la prepara il browser del master al caricamento (nessuna libreria nativa sul server) e va alla vista giocatori e ai tablet.",
+    "tipi": {
+      "jpeg": {
+        "estensione": "jpg",
+        "mime": "image/jpeg"
+      },
+      "png": {
+        "estensione": "png",
+        "mime": "image/png"
+      },
+      "webp": {
+        "estensione": "webp",
+        "mime": "image/webp"
+      }
+    },
+    "massimo_mb": 30,
+    "ridotta": {
+      "lato_massimo_px": 2048,
+      "tipo": "webp",
+      "qualita": 0.85
+    },
+    "token": {
+      "_nota": "Immagini dei nemici sui token (A.131, decisione di Marcello del 06/10/2026): la copia ridotta che si disegna sul token.",
+      "lato_massimo_px": 256
+    }
+  },
+  "griglia": {
+    "_nota": "§4 della specifica: q_px = pixel dell'immagine originale per un Q (1,5 m); lo scostamento dice dove comincia il primo quadretto.",
+    "q_px_min": 8,
+    "q_px_max": 600,
+    "predefinita": {
+      "q_px": 64,
+      "scosto_x": 0,
+      "scosto_y": 0,
+      "colore": "#000000",
+      "opacita": 0.35,
+      "bloccata": false
+    }
+  },
+  "vista": {
+    "_nota": "§4 e §12 della specifica: zoom con la rotella verso il puntatore e con + e −; «Adatta allo schermo» lascia un margine. La griglia non si disegna sotto griglia_px_schermo_minimi pixel per Q sullo schermo (troppo fitta per servire).",
+    "zoom_min": 0.05,
+    "zoom_max": 8,
+    "passo_tasti": 1.25,
+    "passo_rotella": 1.0015,
+    "margine_adatta_px": 24,
+    "griglia_px_schermo_minimi": 6,
+    "barra": {
+      "_nota": "Lotto 6 (§11 della specifica): la plancia accanto alla mappa in tre disposizioni. «Mappa grande»: colonna stretta di mappa_grande_px pixel con i mini-token, i PV e il turno; «Equilibrata» e «Scontro grande»: frazione della larghezza della pagina occupata dalla barra. Il bordo si trascina fra frazione_minima e frazione_massima, lasciando alla mappa almeno mappa_minima_px; sotto riduci_sotto_px la barra torna «Mappa grande». La barra dell'Iniziativa mette almeno iniziativa_px_per_punto pixel fra due valori consecutivi (altrimenti scorre di lato).",
+      "mappa_grande_px": 92,
+      "equilibrata": 0.34,
+      "scontro_grande": 0.62,
+      "frazione_minima": 0.2,
+      "frazione_massima": 0.75,
+      "mappa_minima_px": 240,
+      "riduci_sotto_px": 160,
+      "iniziativa_px_per_punto": 30
+    },
+    "area": {
+      "_nota": "Ritocchi del 06/10 (test di Marcello sul lotto 6): area raggiungibile leggera, con la mappa che si vede sotto. Riempimento molto trasparente e contorno ben visibile di ogni fascia (Passo, Corsa, Scatto); opacità da 0 a 1, spessore del contorno in pixel dello schermo.",
+      "opacita_riempimento": 0.12,
+      "opacita_contorno": 0.95,
+      "spessore_contorno_px": 2.5
+    }
+  },
+  "token": {
+    "_nota": "§7 della specifica: lato del token in Q dalla Taglia (data/formato_nemici.json → taglia); i veicoli sono rettangoli [colonne, righe] dal loro profilo (data/veicoli.json → dimensioni.ingombro_q), al massimo veicolo_ingombro_max per lato. Il token sta sempre su Q interi; q è il Q in alto a sinistra del suo ingombro.",
+    "ingombro_per_taglia": {
+      "normale": 1,
+      "grande": 2
+    },
+    "ingombri_ammessi": [
+      1,
+      2,
+      3
+    ],
+    "veicolo_ingombro_max": 12,
+    "veicolo_predefinito": [
+      3,
+      2
+    ],
+    "TODO(Davide)": "A.126: quando una creatura occupa 3 × 3 Q («se indicato», §7 della specifica)? Serve un campo «ingombro in Q» nel formato dei nemici, oltre a normale e grande?",
+    "riferimenti": [
+      "partecipante",
+      "veicolo",
+      "segnaposto"
+    ],
+    "ritratto_verticale": 0.2,
+    "_nota_ritratto": "07/10: il ritratto riempie il cerchio dentro il bordo; delle foto più alte che larghe si tiene il quadrato a questa altezza (0 = in cima, 0,5 = al centro), dove di solito sta il viso."
+  },
+  "movimento": {
+    "_nota": "Parametri dell'area raggiungibile (§8 della specifica, lotto 5), confermati dalle risposte di Davide del 06/10/2026 (A.124, A.127, A.128, A.129; decisioni 129, 131–133 di docs/risposte-master.md). Costi in Q.",
+    "costo_ortogonale": 1,
+    "costo_diagonale": 1,
+    "_nota_diagonali": "A.124 (decisione 129): ogni diagonale costa 1 Q, come un passo orizzontale o verticale su terreno normale (niente 1/2/1: diagonali_alterne false); non permette di attraversare muri o passaggi ostruiti. Passo 6, Corsa 12, Scatto 18 Q con i modificatori (regole.json → movimento); il Direttore corregge a mano con «Libero». Le AzP (1 ai livelli 1–11, 2 ai 12–20, nella stessa Iniziativa) la mappa non le conta.",
+    "diagonali_alterne": false,
+    "taglio_angoli_muri": false,
+    "TODO(Davide) angoli": "A.134: in diagonale si può passare rasente allo spigolo di un muro (dei due quadretti ai lati della diagonale uno libero e uno murato)? La A.124 dice solo che la diagonale non attraversa muri o passaggi ostruiti. Provvisorio: no, una diagonale vuole liberi dai muri anche i due quadretti ai lati.",
+    "terreno_difficile_moltiplicatore": 2,
+    "_nota_terreno": "A.128 (decisione 132): ogni quadretto di terreno difficile costa 2 Q, anche in diagonale e anche in Corsa e Scatto; nei percorsi misti 1 Q per i quadretti normali e 2 Q per quelli difficili (2 normali + 2 difficili = 6 Q, il Passo intero); nessuna penalità o Prova aggiunta. Le zone le segna il Direttore (Strumenti → Muri e terreno).",
+    "attraversa_alleati": true,
+    "attraversa_avversari": false,
+    "fermarsi_su_alleato": false,
+    "_nota_occupazione": "A.127 (decisione 131): i quadretti degli alleati si attraversano al costo normale, quelli dei nemici no (salvo capacità); non si termina né ci si ferma in un quadretto occupato e per una pedina grande serve libero tutto l'ingombro d'arrivo; attraversare un alleato non evita gli Attacchi di Opportunità (zoc).",
+    "divisibili": [
+      "passo"
+    ],
+    "_nota_divisibili": "A.129 (decisione 133 del 06/10/2026): solo il Passo si divide prima, fra e dopo le AzP, entro la disponibilità complessiva; Corsa e Scatto (1 AzM, nessuna AzP in più) sono un blocco unico da completare prima delle AzP: una sola mossa, i Q non usati si perdono. Passo, Corsa e Scatto costano l'unica AzM: dopo un blocco il movimento del Round è finito.",
+    "blocco_dopo_passo": false,
+    "TODO(Davide) blocco dopo il Passo": "A.136: un token che ha già percorso una parte del Passo (prima di ogni AzP) può trasformare l'AzM in Corsa o Scatto, con il movimento già fatto contato nel blocco? Provvisorio: no, Corsa e Scatto partono solo da fermi; il master annulla il movimento e lo rifà come Corsa (o usa Libero).",
+    "fasce": [
+      "passo",
+      "corsa",
+      "scatto"
+    ]
+  },
+  "template": {
+    "_nota": "§10 della specifica (fase 2): forme e durata predefinita in Round.",
+    "forme": [
+      "quadrato",
+      "cono",
+      "cerchio",
+      "rettangolo"
+    ],
+    "durata_round_predefinita": 1
+  },
+  "colori": {
+    "_nota": "Colori dei bordi dei token (decisione di Marcello del 06/10/2026; src/mappa/colori.js). PG: bordo pieno, un colore per PG, assegnato al primo ingresso in mappa e salvato nella scena. Nemici: bordo tratteggiato che alterna nemici_alterno e il colore del tipo (tavolozza diversa da quella dei PG). Alleati non PG: bordo pieno doppio color alleati. Veicoli: il colore del PG proprietario, del gruppo veicolo_del_gruppo. Ogni bordo ha un contorno sottile scuro o chiaro (il più contrastato), per le mappe chiare e scure. alone_turno: l'alone del token di turno, bianco, che non si confonde col giallo dei PG.",
+    "pg": [
+      {
+        "id": "blu",
+        "nome": "Blu",
+        "valore": "#1f6feb"
+      },
+      {
+        "id": "rosso",
+        "nome": "Rosso",
+        "valore": "#e5383b"
+      },
+      {
+        "id": "giallo",
+        "nome": "Giallo",
+        "valore": "#ffd60a"
+      },
+      {
+        "id": "verde-chiaro",
+        "nome": "Verde chiaro",
+        "valore": "#7ed957"
+      },
+      {
+        "id": "azzurro",
+        "nome": "Azzurro",
+        "valore": "#3bc9db"
+      },
+      {
+        "id": "arancione",
+        "nome": "Arancione",
+        "valore": "#fd7e14"
+      },
+      {
+        "id": "verde-scuro",
+        "nome": "Verde scuro",
+        "valore": "#1f7a35"
+      }
+    ],
+    "nemici": [
+      {
+        "id": "viola",
+        "nome": "Viola",
+        "valore": "#7b2cbf"
+      },
+      {
+        "id": "lilla",
+        "nome": "Lilla",
+        "valore": "#c8a2ff"
+      },
+      {
+        "id": "verde-marcio",
+        "nome": "Verde marcio",
+        "valore": "#8a8f2a"
+      },
+      {
+        "id": "bordeaux",
+        "nome": "Bordeaux",
+        "valore": "#8c1c3a"
+      },
+      {
+        "id": "marrone",
+        "nome": "Marrone",
+        "valore": "#8b5a2b"
+      },
+      {
+        "id": "grigio-piombo",
+        "nome": "Grigio piombo",
+        "valore": "#6c757d"
+      },
+      {
+        "id": "ocra-scura",
+        "nome": "Ocra scura",
+        "valore": "#b8860b"
+      }
+    ],
+    "nemici_alterno": "#111111",
+    "alleati": "#3a7d7c",
+    "veicolo_del_gruppo": "#adb5bd",
+    "senza_colore": "#868e96",
+    "contorno_scuro": "#111111",
+    "contorno_chiaro": "#ffffff",
+    "alone_turno": "#ffffff",
+    "contrasto_minimo": 3
+  },
+  "zoc": {
+    "_nota": "Zone di controllo e Attacchi di Opportunità (richiesta di Marcello del 07/10/2026; src/mappa/zoc.js). Giocatore §5.3: provoca un Attacco di Opportunità chi, con un Movimento volontario, esce dalla portata ravvicinata di un avversario in grado di attaccarlo (non entrare, non muoversi dentro, non la Ritirata, non il movimento forzato); una volta per Round per avversario. Armamenti §7.1.2: la portata è quella dell'arma (1 Q di norma, 2–3 Q per armi lunghe), e Ingaggio e Attacchi di Opportunità la usano. La ZoC è quindi la fascia profonda quanto la portata attorno all'ingombro; per i nemici la portata viene dagli attacchi ravvicinati del profilo (portata_q), per PG e partecipanti a mano è portata_predefinita. La ZoC non blocca, segnala.",
+    "portata_predefinita": 1,
+    "TODO(Davide) creature grandi": "A.133: una creatura Grande (2 × 2 Q) o Enorme (3 × 3 Q) ha la portata del suo profilo (1 Q, come nei profili del Manuale dei Mostri) attorno a tutto l'ingombro, o una portata maggiore per la Taglia? Provvisorio: quella del profilo.",
+    "stati_che_impediscono": [
+      "svenuto"
+    ],
+    "TODO(Davide) stordito": "A.132: uno Stordito (§5.18: nessuna Azione Principale) può fare Attacchi di Opportunità, che «non consumano Azioni» (§5.3)? Provvisorio: sì (non è fra gli Stati che lo impediscono).",
+    "opacita_riempimento": 0.16,
+    "opacita_contorno": 0.7,
+    "colore": "#e03131",
+    "frase_eccezione": "senza Attacchi di Opportunità"
+  },
+  "pv_token": {
+    "_nota": "Barretta dei PV sui token (test di Marcello del 07/10/2026, al posto dell'anello): rossa, sul fondo del token e sovrapposta al bordo, larga quanto il quadretto (o l'ingombro) a PV pieni, più corta in proporzione ai PV persi. Spessore: rispetto_al_bordo volte lo spessore del bordo colorato, almeno spessore_minimo_px; traccia: il fondo scuro della parte persa. Gli stessi valori per i mini-token della barra dell'Iniziativa (in pixel CSS).",
+    "colore": "#e03131",
+    "traccia": "#00000099",
+    "rispetto_al_bordo": 1,
+    "spessore_minimo_px": 3,
+    "mini_token_px": 4
+  }
+}

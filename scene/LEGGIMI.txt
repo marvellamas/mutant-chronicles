@@ -1,0 +1,15 @@
+Scene della mappa di battaglia
+==============================
+
+Qui il server di Mutant (avvia-server.bat, cioe' node server.mjs) salva le scene della mappa di
+battaglia del Tavolo del Master: un file per scena (<id>.json) con la griglia, i muri, il terreno
+difficile, la nebbia, i token legati ai partecipanti dello scontro e i template.
+Specifica in docs/battlemap/specifica.md, formato in src/mappa/scena.js.
+
+- Le immagini delle mappe non stanno qui ma in mappe/: la scena ne riporta solo il nome.
+- Ogni salvataggio porta un numero di revisione: se due finestre cambiano la stessa scena, la
+  seconda scrittura viene rifiutata e la mappa ricarica lo stato piu' recente.
+- Ai giocatori il server manda una copia filtrata: niente token nascosti, niente di quello che
+  sta sotto la nebbia.
+- Il server non cancella nulla: una scena che non serve piu' si toglie a mano.
+- I file di questa cartella non vanno su GitHub (.gitignore): sono dati di gioco.

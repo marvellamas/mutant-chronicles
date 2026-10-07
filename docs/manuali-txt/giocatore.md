@@ -4,7 +4,7 @@
 
 ## Personaggi e regole di gioco
 
-**EDIZIONE CONSULTABILE 0.45**
+**EDIZIONE CONSULTABILE 0.46**
 
 Settembre 2026
 
@@ -3574,7 +3574,7 @@ Comprende pistole, revolver, pistole automatiche, pistole mitragliatrici, armi c
 
 ### **Armi medie**
 
-Comprende fucili, carabine, fucili d'assalto, fucili a pompa, mitra, fucili di precisione e armi individuali a energia. Intelligenza rappresenta mira controllata, valutazione della distanza e gestione delle modalità di fuoco.
+Comprende fucili, carabine, fucili d'assalto, fucili a pallini e doppiette, mitra, fucili di precisione e armi individuali a energia. Intelligenza rappresenta mira controllata, valutazione della distanza e gestione delle modalità di fuoco.
 
 ### **Armi pesanti**
 
@@ -4040,7 +4040,7 @@ Tiro Ravvicinato Migliorato porta il bonus al danno da \+3 a \+5 ed è cumulabil
 
 Con un’Azione Principale e la stessa arma effettua due Tiri Singoli, ciascuno a −4 VA, contro lo stesso bersaglio o bersagli differenti, consumando due munizioni. Tiro Rapido Migliorato riduce la penalità a −2. Non si combina con Tiro Mirato, Tiro Ravvicinato, Tiro a Bruciapelo o Raffiche. Dal 12° livello può essere eseguito due volte.
 
-La disponibilità di Tiro Rapido dipende dalla scheda. Tutti i fucili possono eseguirlo, eccetto i fucili a pompa; HD14M e SA SG2001 sono eccezioni espresse. Con una doppietta i due Tiri Rapidi devono essere diretti contro bersagli differenti. Ogni tiro impiega lo stesso profilo: non si può combinare il fucile con il suo lanciagranate integrato nella stessa manovra.
+La disponibilità di Tiro Rapido dipende dalla scheda. Nella famiglia Fucili a Pallini e Doppiette, i modelli a pompa dispongono del solo Colpo Singolo; i semiautomatici di Colpo Singolo e Tiro Rapido; gli automatici anche di Raffica Breve. HD14M, SA SG2001 e Airbrush sono semiautomatici; Mandible è automatico. I modelli automatici del catalogo non dispongono di Raffica Media o Lunga. Con una doppietta i due Tiri Rapidi devono essere diretti contro bersagli differenti; contro lo stesso bersaglio si usa Doppio Colpo. Ogni tiro impiega lo stesso profilo: non si può combinare il fucile con il suo lanciagranate integrato nella stessa manovra. Per gli altri fucili valgono le modalità della scheda.
 
 ### **Tiro Mirato**
 
@@ -5649,7 +5649,7 @@ Quando un’arma cambia modalità si usa soltanto la Specializzazione della moda
 | Spade | Carabine |
 | Asce | Fucili d’Assalto |
 | Martelli | Fucili di Precisione |
-| Mazze e Bastoni | Fucili a Pompa e Doppiette |
+| Mazze e Bastoni | Fucili a Pallini e Doppiette |
 | Armi Inastate | Mitragliatori |
 | Armi Flessibili | Lanciagranate |
 | Armi da Pugno | Lanciarazzi |

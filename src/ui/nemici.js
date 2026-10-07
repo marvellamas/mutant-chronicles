@@ -2,6 +2,7 @@
 // tipo di nemico e carta compatta di un nemico nello scontro. L'editor si genera dal formato
 // (data/formato_nemici.json): un campo nuovo nel formato compare da sé nel modulo. Le regole dei nemici
 // nello scontro sono in src/scontro.js; qui presentazione e salvataggio (server.mjs → /api/nemici).
+import { campoImmagine, urlImmagine } from './immagine-nemico.js';
 import { h } from './dom.js';
 import { riempimento } from '../interfaccia.js';
 import { validaNemico, formattaErrore, sorgentiNemico } from '../validate.js';
@@ -164,6 +165,11 @@ export function apriEditorNemico(ctx, nemico, voci, salvato, { modello = null, o
             campiOggetto(v, x, `${percorso}[${i}]`, disegna))),
           h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { cont[k] = [...voci, voceVuota(s)]; disegna(); } }, `Aggiungi a ${etichetta(k)}`));
       }
+      case 'immagine':
+        // A.131: immagine del token sulla mappa, caricata in mappe/ (non è una regola)
+        return h('div', { class: 'campo-nemico', title: tit }, campoImmagine({
+          valore: cont[k], nome: () => bozza.nome, dati, imposta: (v) => { imposta(v); disegna(); },
+        }), marca);
       case 'oggetto':
         cont[k] ??= {};
         return h('fieldset', { class: 'campo-nemico gruppo', title: tit }, h('legend', {}, etichetta(k), s.obbligatorio ? ' *' : '', marca), campiOggetto(s, cont[k], percorso, disegna));
@@ -251,14 +257,14 @@ function testoAzioni(a) {
  * Difese, Azioni, Movimento, Resistenze (Immunità e Contromisure), Abilità, attacchi, incantesimi con «Lancia!»
  * (decisione 8) e capacità come promemoria.
  */
-export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false, onColpito = null, onAttacca = null, onLancia = null, onRiduci = null, onRegime = null }) {
+export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false, onColpito = null, onAttacca = null, onLancia = null, onRiduci = null, onRegime = null, onImmagine = null }) {
   const n = p.scheda;
   const dati = ctx.dati;
   // a 0 PV la carta si riduce a una riga (nome, PV, Ferita) e va in fondo; un clic la riapre (src/scontro.js → conPv)
   if (p.pv.attuali === 0 && p.ridotta) {
     const fer = p.ferite ? ` · Ferita ${nomeFerita(p.ferite, dati)}` : '';
     return h('article', { class: `carta-plancia carta-nemico carta-ridotta lato-${p.lato} a-zero`, 'aria-label': `${p.nome}, a 0 PV` },
-      h('button', { type: 'button', class: 'btn-link riga-ridotta', 'aria-expanded': 'false', title: 'Riapri la carta', onclick: () => onRiduci?.(false) },
+      h('button', { type: 'button', class: 'btn-link riga-ridotta', 'aria-expanded': 'false', title: 'Riapri la mini-scheda', onclick: () => onRiduci?.(false) },
         h('span', { class: 'freccia' }, '▸ '), h('strong', {}, p.nome), ` · PV 0 / ${p.pv.massimo}${fer}`));
   }
   const stati = dati.regole.stati?.elenco ?? [];
@@ -297,15 +303,20 @@ export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false,
     n.contromisure?.length ? `Contromisure: ${n.contromisure.map((c) => (c.valore ? `${c.nome} ${c.valore}` : c.nome)).join(', ')}` : null,
   ].filter(Boolean);
   return h('article', { class: `carta-plancia carta-nemico lato-${p.lato}${diTurnoOra ? ' di-turno' : ''}${p.pv.attuali === 0 ? ' a-zero' : ''}`, 'aria-label': `${p.nome}, ${p.lato}${diTurnoOra ? ', di turno' : ''}` },
-    h('header', { class: 'carta-plancia-testa' }, h('div', {},
-      h('h2', {}, p.nome),
-      h('p', { class: 'nota' }, h('span', { class: 'nome-lato' }, p.lato), ` · ${n.nome}`, n.fonte ? ` · ${n.fonte}` : '')),
+    h('header', { class: 'carta-plancia-testa' },
+      // A.131: immagine del token sulla mappa (un clic la cambia per tutte le copie del tipo e nel bestiario)
+      urlImmagine(n.immagine) ? h('button', { type: 'button', class: 'immagine-carta', title: onImmagine ? 'Immagine sulla mappa: clic per cambiarla' : null, disabled: !onImmagine, onclick: onImmagine },
+        h('img', { src: urlImmagine(n.immagine), alt: '', class: 'ritratto-plancia' })) : null,
+      h('div', {},
+        h('h2', {}, p.nome),
+        h('p', { class: 'nota' }, h('span', { class: 'nome-lato' }, p.lato), ` · ${n.nome}`, n.fonte ? ` · ${n.fonte}` : '')),
       // pezzo 4: «Colpito» (src/ui/colpo.js)
       h('span', { class: 'pulsanti-carta' },
-        p.pv.attuali === 0 && onRiduci ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Riduci la carta a una riga, in fondo', onclick: () => onRiduci(true) }, 'Riduci') : null,
+        p.pv.attuali === 0 && onRiduci ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Riduci la mini-scheda a una riga, in fondo', onclick: () => onRiduci(true) }, 'Riduci') : null,
         // pezzo 5: «Attacca» (src/ui/attacco-nemico.js)
         onAttacca ? h('button', { type: 'button', class: 'btn btn-piccolo btn-attacca', onclick: onAttacca }, 'Attacca') : null,
-        onColpito ? h('button', { type: 'button', class: 'btn btn-piccolo btn-colpito', onclick: onColpito }, 'Colpito') : null)),
+        onColpito ? h('button', { type: 'button', class: 'btn btn-piccolo btn-colpito', onclick: onColpito }, 'Colpito') : null,
+        onImmagine && !urlImmagine(n.immagine) ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Immagine del token sulla mappa (A.131): vale per tutte le copie e, se c’è, nel bestiario', onclick: onImmagine }, 'Immagine…') : null)),
     barraPv(p, modifica),
     p.pm ? barraPm(p, modifica) : n.pm !== undefined ? h('p', { class: 'nota' }, `PM ${n.pm}`) : null,
     // A.73, decisione 7: Stato di Ferita e Menomazioni come i PG (§5.14, §5.14.1); nessun Affaticamento

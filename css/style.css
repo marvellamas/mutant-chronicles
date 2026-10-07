@@ -1811,3 +1811,269 @@ body.con-sfondo::before {
 .indicatore-salvataggio.salvato { color: var(--ok); border-color: var(--ok); background: var(--ok-tenue); }
 .indicatore-salvataggio.da_salvare { color: var(--errore); border-color: var(--errore); background: var(--errore-tenue); }
 .indicatore-salvataggio.senza_nome { color: var(--tenue); }
+
+/* Mappa di battaglia, lotto 2 (docs/battlemap/piano.md): elenco delle scene nella plancia e pagina #/mappa/<id> */
+.scene-elenco { list-style: none; padding: 0; margin: 0.5rem 0 0; display: flex; flex-direction: column; gap: 0.35rem; }
+.scene-elenco li { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; }
+.nome-scena { font: inherit; font-weight: 700; background: none; border: none; padding: 0; color: inherit; cursor: pointer; text-align: left; }
+.nome-scena:hover { text-decoration: underline; }
+.scene-azioni { display: inline-flex; flex-wrap: wrap; gap: 0.3rem; margin-left: auto; }
+.mappa-pagina {
+  --mappa-sfondo: #3a3a40; --mappa-vuota: #e9e6df; --mappa-traccia: #d9480f;
+  display: flex; flex-direction: column; height: 100%; min-height: 18rem; gap: 0.5rem; overflow: hidden;
+}
+@media (prefers-color-scheme: dark) {
+  .mappa-pagina { --mappa-sfondo: #0f0f12; --mappa-vuota: #2b2b31; --mappa-traccia: #ff8c5a; }
+}
+.mappa-barra { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem; }
+.mappa-titolo { margin: 0; font-size: 1.25rem; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 22rem; }
+.mappa-comandi { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; }
+.mappa-zoom { min-width: 3.6rem; text-align: center; font-variant-numeric: tabular-nums; }
+.mappa-scala { font-variant-numeric: tabular-nums; font-size: 0.9rem; }
+.mappa-stato { margin-left: auto; }
+.mappa-corpo { flex: 1; min-height: 0; display: flex; gap: 0.5rem; }
+.mappa-tela { position: relative; flex: 1; min-width: 0; overflow: hidden; background: var(--mappa-sfondo); border-radius: var(--raggio); cursor: grab; touch-action: none; outline-offset: -2px; }
+.mappa-tela.trascina, .mappa-tela.spazio.trascina { cursor: grabbing; }
+.mappa-tela.calibra { cursor: crosshair; }
+.mappa-tela.spazio { cursor: grab; }
+.mappa-livello { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.mappa-pannello { width: 17rem; flex: none; overflow-y: auto; background: var(--superficie); border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 0.6rem 0.75rem; display: flex; flex-direction: column; gap: 0.55rem; }
+.mappa-pannello[hidden] { display: none; }
+.mappa-pannello h2 { margin: 0; font-size: 1.05rem; }
+.mappa-pannello p { margin: 0; }
+.mappa-campo { display: flex; flex-direction: column; gap: 0.15rem; font-size: 0.9rem; min-width: 0; }
+.mappa-campo input[type="number"] { width: 100%; }
+.mappa-campi-riga { display: flex; gap: 0.5rem; }
+.mappa-campi-riga > * { flex: 1; }
+.mappa-campi-riga[hidden] { display: none; }
+.mappa-calibra { display: flex; flex-direction: column; gap: 0.35rem; }
+@media (max-width: 46rem) {
+  .mappa-corpo { flex-direction: column; }
+  .mappa-pannello { width: auto; max-height: 40%; }
+  .mappa-stato { margin-left: 0; }
+}
+/* la pagina della mappa occupa tutta la finestra: niente piè di pagina, niente larghezza massima */
+body:has(.mappa-pagina) { display: flex; flex-direction: column; height: 100dvh; overflow: hidden; }
+main:has(> .mappa-pagina) { max-width: none; width: 100%; padding: 0.5rem 0.75rem; flex: 1; min-height: 0; }
+body:has(.mappa-pagina) .piede { display: none; }
+
+/* Mappa di battaglia, lotto 3: token dello scontro, pannello laterale, carta indicata dalla mappa nella plancia */
+.mappa-pagina { --mappa-turno: #e0a800; --mappa-selezione: #1f6fd1; --mappa-traccia-pv: rgba(0, 0, 0, 0.3); }
+@media (prefers-color-scheme: dark) {
+  .mappa-pagina { --mappa-turno: #ffd23f; --mappa-selezione: #6aa8ff; --mappa-traccia-pv: rgba(255, 255, 255, 0.25); }
+}
+.mappa-pannello .mappa-sezione { display: flex; flex-direction: column; gap: 0.45rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--bordo); }
+.mappa-pannello details.mappa-sezione { border-bottom: none; }
+.mappa-pannello details.mappa-sezione > summary { cursor: pointer; }
+.mappa-pannello h3 { margin: 0; font-size: 0.95rem; }
+.mappa-collegamento { width: 100%; }
+.mappa-senza-testa { display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; }
+.mappa-senza { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.25rem; }
+.mappa-senza li { display: flex; align-items: center; gap: 0.35rem; padding: 0.2rem 0.3rem; border: 1px solid var(--bordo); border-radius: var(--raggio); cursor: grab; background: var(--superficie); }
+.mappa-senza li.da-piazzare { border-color: var(--accento); }
+.mappa-senza-nome { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mappa-pallino { display: inline-block; width: 0.7rem; height: 0.7rem; border-radius: 50%; flex: none; border: 2px solid currentColor; }
+.mappa-pallino.lato-pg { color: var(--accento); }
+.mappa-pallino.lato-alleato { color: var(--lato-alleato); }
+.mappa-pallino.lato-avversario { color: var(--lato-avversario); }
+.mappa-stati { display: flex; flex-wrap: wrap; gap: 0.25rem; margin: 0; }
+.mappa-azioni-token { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.mappa-tela.piazza { cursor: copy; }
+.mappa-suggerimento { position: absolute; z-index: 2; max-width: 220px; pointer-events: none; background: var(--superficie); color: var(--testo); border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 0.2rem 0.45rem; font-size: 0.85rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25); }
+.mappa-suggerimento[hidden] { display: none; }
+.carta-dalla-mappa { outline: 3px solid var(--accento); outline-offset: 3px; transition: outline-color 0.3s; }
+
+/* Immagine dei nemici sui token (A.131): campo dell'editor e di «Crea nemico», miniatura nella carta della plancia */
+.campo-immagine-nemico { display: flex; flex-wrap: wrap; align-items: center; gap: 0.45rem; margin: 0.4rem 0; }
+.anteprima-immagine-nemico { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid var(--lato-avversario); }
+.immagine-carta { padding: 0; border: none; background: none; cursor: pointer; flex: none; }
+.immagine-carta:disabled { cursor: default; }
+
+/* Mappa di battaglia, lotto 4: nebbia (semitrasparente per il master, piena per i giocatori), vista giocatori, QR */
+.mappa-pagina { --mappa-nebbia: #15151a; }
+@media (prefers-color-scheme: dark) { .mappa-pagina { --mappa-nebbia: #000000; } }
+.mappa-tela.nebbia { cursor: crosshair; }
+.mappa-tela.nebbia.spazio { cursor: grab; }
+.mappa-qr { display: flex; flex-direction: column; align-items: flex-start; gap: 0.25rem; }
+.mappa-qr small { word-break: break-all; }
+.giocatori-barra { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1rem; }
+.giocatori-titolo { font-size: 1.1rem; }
+.giocatori-turno { font-size: 1.05rem; font-variant-numeric: tabular-nums; }
+.giocatori-stato { margin-left: auto; color: var(--errore); }
+.giocatori-messaggio { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; margin: 0; padding: 1rem; text-align: center; font-size: 1.2rem; color: #f0f0f0; z-index: 1; }
+.giocatori-messaggio[hidden] { display: none; }
+/* server di Mutant acceso con il codice di prima dell'aggiornamento (src/ui/aggiornamento.js) */
+.barra-server-vecchio { background: var(--errore-tenue); border-bottom-color: var(--errore); color: var(--testo); font-weight: 600; }
+/* avviso ripetuto: un solo avviso con il contatore (src/ui/avvisi.js) */
+.avviso .avviso-volte { float: right; margin-left: 0.5rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* Mappa, difetto 2: carta del token accanto alla mappa; «Torna alla mappa» grande nella scheda e nella plancia */
+.mappa-carta { width: 22rem; flex: none; overflow-y: auto; background: var(--superficie); border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 0.5rem 0.6rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.mappa-carta[hidden] { display: none; }
+.mappa-carta-testa { display: flex; align-items: center; gap: 0.4rem; }
+.mappa-carta-testa strong { flex: 1; }
+.mappa-carta .plancia { max-width: none; margin: 0; }
+.mappa-carta .carta-plancia { border: none; padding: 0; }
+.btn-scheda-completa { margin-top: 0.5rem; width: 100%; }
+.btn-torna-mappa { font-size: 1.15rem; padding: 0.55rem 1.2rem; min-height: 48px; }
+.plancia > .btn-torna-mappa { margin: 0.5rem 0; position: sticky; top: 0.5rem; z-index: 5; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
+@media (max-width: 46rem) { .mappa-carta { width: auto; max-height: 45%; } }
+
+/* Mappa di battaglia, lotto 5: muri, area raggiungibile in tre colori, menu del clic destro, movimento nel pannello */
+.mappa-pagina { --mappa-passo: #1f9d55; --mappa-corsa: #d9a400; --mappa-scatto: #d6336c; --mappa-muro: #c0392b; --mappa-terreno: #2b6cb0; }
+@media (prefers-color-scheme: dark) {
+  .mappa-pagina { --mappa-passo: #3ddc84; --mappa-corsa: #ffd23f; --mappa-scatto: #ff6b9d; --mappa-muro: #ff7a6b; --mappa-terreno: #6ab0ff; }
+}
+.mappa-movimento { display: flex; flex-direction: column; gap: 0.3rem; }
+.mappa-movimento p { margin: 0; }
+.mappa-usati { font-variant-numeric: tabular-nums; }
+.mappa-usati.finito strong { color: var(--pv); }
+.mappa-movimento .fascia-1 { border-left: 4px solid var(--mappa-passo); }
+.mappa-movimento .fascia-2 { border-left: 4px solid var(--mappa-corsa); }
+.mappa-movimento .fascia-3 { border-left: 4px solid var(--mappa-scatto); }
+.mappa-movimento .fascia-4 { border-left: 4px dashed currentColor; }
+.mappa-menu { position: absolute; z-index: 3; min-width: 12rem; display: flex; flex-direction: column; padding: 0.3rem; background: var(--superficie); border: 1px solid var(--bordo); border-radius: var(--raggio); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35); }
+.mappa-menu-titolo { margin: 0 0 0.2rem; padding: 0.15rem 0.4rem; font-weight: 700; font-size: 0.9rem; }
+.mappa-menu button { font: inherit; text-align: left; background: none; border: none; color: var(--testo); padding: 0.35rem 0.5rem; border-radius: 4px; cursor: pointer; }
+.mappa-menu button:hover:not(:disabled), .mappa-menu button:focus-visible { background: var(--accento-tenue); }
+.mappa-menu button.scelta { font-weight: 700; }
+.mappa-menu button:disabled { opacity: 0.45; cursor: default; }
+.mappa-menu hr { border: none; border-top: 1px solid var(--bordo); margin: 0.2rem 0; }
+
+/* Mappa di battaglia, lotto 6 (§11): plancia come barra di destra, tre disposizioni, bordo da trascinare, barra
+   dell'Iniziativa in cima (src/ui/mappa/barra-iniziativa.js), colonna ridotta di «Mappa grande» */
+.mappa-disposizioni { display: inline-flex; gap: 0.25rem; }
+.mappa-disposizioni .btn.scelto { cursor: pointer; }
+.mappa-bordo { flex: none; width: 8px; margin: 0 -0.25rem; cursor: col-resize; border-radius: 4px; touch-action: none; position: relative; }
+.mappa-bordo::after { content: ''; position: absolute; top: 50%; left: 2px; width: 4px; height: 3rem; margin-top: -1.5rem; border-radius: 2px; background: var(--bordo); }
+.mappa-bordo:hover::after, .mappa-bordo:focus-visible::after, .trascina-bordo .mappa-bordo::after { background: var(--accento); }
+.trascina-bordo, .trascina-bordo * { cursor: col-resize !important; user-select: none; }
+.mappa-laterale { flex: none; min-width: 0; display: flex; flex-direction: column; background: var(--superficie); border: 1px solid var(--bordo); border-radius: var(--raggio); overflow: hidden; }
+.laterale-piena { flex: 1; min-height: 0; overflow-y: auto; padding: 0.5rem 0.6rem; display: flex; flex-direction: column; gap: 0.6rem; }
+.laterale-piena[hidden], .laterale-ridotta[hidden] { display: none; }
+.laterale-piena > *, .laterale-ridotta > * { flex-shrink: 0; }
+.mappa-laterale .mappa-carta { width: auto; max-height: none; flex: none; overflow: visible; border: none; border-bottom: 1px solid var(--bordo); border-radius: 0; padding: 0 0 0.5rem; }
+.mappa-laterale .mappa-pannello { width: auto; flex: none; overflow: visible; border: none; padding: 0; background: none; }
+.laterale-slot .plancia { max-width: none; margin: 0; }
+.plancia-in-mappa .plancia-testa .riga-azioni { flex-wrap: wrap; gap: 0.3rem; }
+.plancia-in-mappa .plancia-griglia { gap: 0.6rem; }
+.laterale-ridotta { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; align-items: center; gap: 0.35rem; padding: 0.4rem 0.2rem; }
+.ridotta-round { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; }
+.ridotta-voce { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; background: none; border: 2px solid transparent; border-radius: var(--raggio); padding: 0.2rem; cursor: pointer; color: inherit; }
+.ridotta-voce.di-turno { border-color: var(--mappa-turno); }
+.ridotta-voce.scelto { background: var(--accento-tenue); }
+.ridotta-voce .mini-token { position: static; transform: none; width: 40px; height: 40px; }
+.pv-mini { display: block; width: 44px; height: 5px; border-radius: 3px; background: linear-gradient(to right, var(--pv) calc(var(--quota) * 100%), var(--bordo) 0); }
+/* barra dell'Iniziativa: il valore più alto a sinistra; i pari merito impilati nell'ordine della plancia */
+.mappa-iniziativa-posto[hidden] { display: none; }
+.mappa-iniziativa { display: flex; align-items: center; gap: 0.6rem; padding: 0 0.25rem; }
+.mappa-iniziativa.vuota { padding: 0.35rem 0.6rem; }
+.iniziativa-round { display: flex; flex-direction: column; flex: none; line-height: 1.15; font-variant-numeric: tabular-nums; max-width: 9rem; }
+.iniziativa-round small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.iniziativa-scala { flex: 1; min-width: 0; overflow-x: auto; overflow-y: hidden; padding: 0 18px; }
+.iniziativa-scala-interna { position: relative; }
+.iniziativa-tacca { position: absolute; top: 0; transform: translateX(-50%); line-height: 1; font-size: 0.7rem; color: var(--tenue); opacity: 0.8; font-variant-numeric: tabular-nums; }
+.iniziativa-comandi { display: inline-flex; align-items: center; gap: 0.5rem; flex: none; }
+.mini-token { position: absolute; transform: translate(-50%, -50%); width: 28px; height: 28px; border-radius: 50%; border: 3px solid var(--tenue); background: var(--superficie); padding: 0; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; color: inherit; font: inherit; }
+button.mini-token { cursor: pointer; }
+.mini-token img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mini-token .iniziali { font-size: 0.65rem; font-weight: 700; letter-spacing: -0.02em; }
+.mini-token.lato-pg { border-color: var(--accento); }
+.mini-token.lato-alleato { border-color: var(--lato-alleato); }
+.mini-token.lato-avversario { border-color: var(--lato-avversario); }
+.mini-token.di-turno { box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(0, 0, 0, 0.55), 0 0 12px 5px rgba(255, 255, 255, 0.85); z-index: 1; }
+.mini-token.nascosto { opacity: 0.45; border-style: dashed; }
+.mini-token.scelto { outline: 2px solid var(--mappa-selezione); outline-offset: 2px; }
+@media (max-width: 46rem) {
+  .mappa-bordo { display: none; }
+  .mappa-laterale { width: auto !important; max-height: 45%; }
+}
+/* Prepara scontro, ritocchi del 06/10: stato del salvataggio, spiegazione di «Inizia», «Prepara la mappa» */
+.preparazione .stato-bozza { margin-left: auto; }
+.preparazione .spiega-inizia { margin: 0.25rem 0 0; padding-left: 1.2rem; }
+.preparazione .prepara-mappa { margin-top: 0.5rem; }
+/* ritocchi del 06/10: la barra dell'Iniziativa è una linea spessa che si colora fino a chi è di turno */
+.iniziativa-linea { position: absolute; left: 0; right: 0; height: 8px; margin-top: -4px; border-radius: 4px; background: linear-gradient(to right, var(--mappa-turno) var(--fatto), var(--bordo) var(--fatto)); }
+.iniziativa-segno { position: absolute; width: 2px; height: 14px; margin-top: -7px; transform: translateX(-50%); background: var(--tenue); opacity: 0.6; }
+.interruttore-mappa { display: inline-flex; align-items: center; gap: 0.4rem; font: inherit; font-size: 0.85rem; white-space: nowrap; color: inherit; background: var(--superficie); border: 1px solid var(--bordo); border-radius: 999px; padding: 0.2rem 0.6rem 0.2rem 0.25rem; cursor: pointer; }
+.interruttore-mappa-pallino { width: 2rem; height: 1.1rem; border-radius: 999px; background: var(--bordo); position: relative; flex: none; transition: background 0.15s; }
+.interruttore-mappa-pallino::after { content: ''; position: absolute; top: 0.15rem; left: 0.15rem; width: 0.8rem; height: 0.8rem; border-radius: 50%; background: var(--superficie); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4); transition: left 0.15s; }
+.interruttore-mappa.acceso { border-color: var(--ok); color: var(--ok); font-weight: 600; }
+.interruttore-mappa.acceso .interruttore-mappa-pallino { background: var(--ok); }
+.interruttore-mappa.acceso .interruttore-mappa-pallino::after { left: 1.05rem; }
+/* ritocchi del 06/10: barra della mappa a gruppi con i segnalibri fissi in cima */
+.laterale-segnalibri { position: sticky; top: -0.5rem; z-index: 3; display: flex; flex-wrap: wrap; gap: 0.25rem; margin: -0.5rem -0.6rem 0; padding: 0.4rem 0.6rem; background: var(--superficie); border-bottom: 1px solid var(--bordo); }
+.segnalibro { font: inherit; font-size: 0.85rem; color: inherit; background: none; border: 1px solid var(--bordo); border-radius: 999px; padding: 0.15rem 0.6rem; cursor: pointer; }
+.segnalibro:hover { border-color: var(--accento); }
+.segnalibro.attivo { background: var(--accento); border-color: var(--accento); color: var(--accento-testo, #fff); font-weight: 600; }
+.laterale-sezione { scroll-margin-top: 2.6rem; display: flex; flex-direction: column; gap: 0.5rem; padding-bottom: 0.6rem; border-bottom: 2px solid var(--bordo); }
+.laterale-sezione:last-child { border-bottom: none; min-height: 60vh; }
+.laterale-titolo { margin: 0; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--tenue); }
+.laterale-slot .scontro-pannello, .laterale-slot .scene-mappa { margin: 0; }
+/* colori dei bordi dei token (06/10, src/mappa/colori.js): gli stessi sui mini-token; il tratteggio dei nemici alterna
+   nero e colore (lo sfondo nero si vede negli spazi del bordo tratteggiato) */
+/* 07/10: il bordo colorato è l'unica cornice (nessun filo di contorno attorno al mini-token); il ritratto lo riempie */
+.mini-token.con-bordo { border-color: var(--bordo); }
+.mini-token img { border-radius: 50%; object-position: 50% var(--ritratto-y, 20%); }
+.mini-token.con-bordo.tratteggio { border-style: dashed; background-color: var(--alterno); }
+.mini-token.con-bordo.doppio { border-style: double; border-width: 4px; }
+.mini-token.con-bordo.scelto { outline: 2px solid var(--mappa-selezione); outline-offset: 2px; }
+.ridotta-voce.di-turno { border-color: #fff; box-shadow: 0 0 8px rgba(255, 255, 255, 0.7); }
+/* finestrelle dentro la pagina al posto di prompt() e confirm() (src/ui/finestrella.js) */
+.finestrella { max-width: min(28rem, calc(100vw - 2rem)); border: 1px solid var(--bordo); border-radius: var(--raggio); background: var(--superficie); color: var(--testo); padding: 1rem 1.1rem; box-shadow: 0 10px 40px var(--ombra, rgba(0, 0, 0, 0.35)); }
+.finestrella::backdrop { background: rgba(0, 0, 0, 0.45); }
+.finestrella-titolo { margin: 0 0 0.6rem; font-size: 1.1rem; }
+.finestrella p { margin: 0 0 0.6rem; }
+.finestrella-campo { display: flex; flex-direction: column; gap: 0.25rem; margin-bottom: 0.75rem; }
+.finestrella-campo input { width: 100%; font: inherit; padding: 0.4rem 0.5rem; }
+.finestrella-azioni { justify-content: flex-end; }
+.campioni { display: grid; grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr)); gap: 0.35rem; margin-bottom: 0.75rem; }
+.campione { display: flex; align-items: center; gap: 0.45rem; font: inherit; color: inherit; background: none; border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 0.3rem 0.45rem; cursor: pointer; text-align: left; }
+.campione.scelto { border-color: var(--accento); box-shadow: 0 0 0 2px var(--accento); }
+.campione-colore { width: 1.4rem; height: 1.4rem; border-radius: 50%; border: 2px solid var(--testo); flex: none; }
+/* lotto 7: menu «Strumenti» del master e pannello «?» */
+.menu-strumenti { position: relative; }
+.menu-strumenti > summary { list-style: none; cursor: pointer; }
+.menu-strumenti > summary::-webkit-details-marker { display: none; }
+.menu-strumenti-voci { position: absolute; top: calc(100% + 0.25rem); left: 0; z-index: 30; min-width: 15rem; display: flex; flex-direction: column; background: var(--superficie); border: 1px solid var(--bordo); border-radius: var(--raggio); box-shadow: 0 8px 24px var(--ombra, rgba(0, 0, 0, 0.3)); padding: 0.25rem; }
+.voce-strumenti { font: inherit; color: inherit; background: none; border: none; text-align: left; padding: 0.4rem 0.6rem; border-radius: calc(var(--raggio) - 2px); cursor: pointer; }
+.voce-strumenti:hover, .voce-strumenti:focus-visible { background: var(--accento-tenue); }
+.aiuto-mappa { max-width: min(40rem, calc(100vw - 2rem)); }
+.aiuto-mappa table { width: 100%; }
+.aiuto-mappa th { text-align: left; width: 45%; padding-right: 0.75rem; vertical-align: top; }
+.aiuto-mappa td { text-align: left; vertical-align: top; }
+/* collaudo del lotto 7: l'interruttore «Mostra area» non si allarga a tutta la colonna */
+.mappa-movimento .interruttore-mappa { align-self: flex-start; }
+/* ZoC (07/10): pulsanti dentro un avviso (Attacca! dall'Attacco di Opportunità) */
+.avviso-azioni { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.35rem; }
+/* difetto 1 del collaudo del lotto 7: barra della mappa su una riga; parole accanto alle icone solo se c'è spazio */
+.mappa-barra { flex-wrap: nowrap; min-width: 0; }
+.mappa-barra .mappa-titolo { max-width: 16rem; flex: 0 1 auto; }
+.mappa-barra .mappa-comandi { flex-wrap: nowrap; }
+.mappa-barra .mappa-stato { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.85rem; }
+.mappa-barra .lungo { display: none; }
+@media (min-width: 1600px) { .mappa-barra .lungo { display: inline; } }
+.menu-altro .menu-strumenti-voci { left: auto; right: 0; }
+.voce-strumenti-nota { margin: 0.25rem 0.6rem 0.35rem; font-size: 0.85rem; }
+@media (max-width: 46rem) { .mappa-barra, .mappa-barra .mappa-comandi { flex-wrap: wrap; } }
+/* vista giocatori a schermo intero (due schermi del master, 07/10): solo mappa e barra dell'Iniziativa */
+body.schermo-intero .testata, body.schermo-intero .barra-aggiornamento, body.schermo-intero .barra-server-vecchio, body.schermo-intero .piede { display: none; }
+body.schermo-intero main:has(> .mappa-pagina) { padding: 0; }
+body.schermo-intero .giocatori-barra > :not(.giocatori-stato) { display: none; }
+body.schermo-intero .giocatori-barra:not(:has(.giocatori-stato:not(:empty))) { display: none; }
+body.schermo-intero .giocatori-pagina { gap: 0; }
+body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
+/* 07/10: barretta dei PV dei mini-token della barra dell'Iniziativa, come sui token: sul fondo, sopra il bordo */
+.pv-barretta { position: absolute; width: 28px; height: var(--pv-mini-alto, 4px); transform: translate(-50%, calc(14px - var(--pv-mini-alto, 4px) / 2)); z-index: 2; pointer-events: none;
+  background: linear-gradient(to right, var(--pv-colore, #e03131) calc(var(--quota) * 100%), var(--pv-traccia, #00000099) 0); }
+/* diretta del movimento nella vista giocatori (07/10): modalità e Q usati, in alto a sinistra sopra la mappa */
+.giocatori-movimento { position: absolute; top: .6rem; left: .6rem; z-index: 2; padding: .3rem .7rem; border-radius: .4rem; background: #000000c0; color: #f5f5f5; font-weight: 700; font-size: 1.05rem; font-variant-numeric: tabular-nums; border-left: .35rem solid var(--mappa-passo, #1f9d55); pointer-events: none; }
+.giocatori-movimento[hidden] { display: none; }
+.giocatori-movimento.modo-corsa { border-left-color: var(--mappa-corsa, #d9a400); }
+.giocatori-movimento.modo-scatto { border-left-color: var(--mappa-scatto, #d6336c); }
+.giocatori-movimento.modo-libero { border-left-color: #adb5bd; }
+/* guida della mappa (#/guida-mappa, docs/battlemap/guida-davide.md) */
+.guida-pagina { max-width: 48rem; margin: 0 auto; padding: 0 1rem 2rem; }
+.guida-mappa h2 { margin-top: 0; }
+.guida-mappa li { margin-bottom: .35rem; }
+.link-guida-mappa { align-self: center; white-space: nowrap; }

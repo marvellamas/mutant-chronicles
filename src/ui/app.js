@@ -21,11 +21,14 @@ import { leggiScontroAperto, leggiScontro, salvaScontro } from './scontro.js';
 import { registraRiga } from '../scontro.js';
 import { elencoUnito, confronta, chiaveDaFile, chiavePersonaggio, messaggioSalvataggio, attesaRitentativo, nomeFileLibero, haNome, fileProvvisorio } from '../cartella.js';
 import { renderTavolo } from './tavolo.js';
+import { renderMappa } from './mappa/pagina.js';
+import { renderGiocatori } from './mappa/giocatori.js';
+import { renderGuidaMappa } from './guida.js';
 import { avviso, avvisoErrore } from './avvisi.js';
 import { controlloInUso } from './ridisegno.js';
 import { alRound, collegamentoScontro, tecnicheScadute, statiScaduti, durateCarta, testoDurata } from '../round-scontro.js';
 import { registraIncantesimo, terminaIncantesimo, concentrazioniInterrotte } from '../durate-incantesimi.js';
-import { segnaDalTavolo, arrivoDalTavolo, tornaAlTavolo, scorrimentoDaRimettere, dimenticaTavolo } from './ritorno.js';
+import { segnaDalTavolo, arrivoDalTavolo, tornaAlTavolo, scorrimentoDaRimettere, dimenticaTavolo, segnaDallaMappa, arrivoDallaMappa, tornaAllaMappa, dimenticaMappa } from './ritorno.js';
 import { PASSI, passoVisibile, requisitoPasso } from './passi.js';
 import { inizializzaTooltip, nascondiTooltip } from './tooltip.js';
 import { renderRiepilogo } from './riepilogo.js';
@@ -173,7 +176,48 @@ function daIndirizzo() {
     document.title = 'Tavolo del Master · Mutant';
     // «← Torna al tavolo» da una scheda: la plancia rimette lo scorrimento di prima (src/ui/ritorno.js)
     const scorrimento = scorrimentoDaRimettere(sessionStorage);
-    stato.fermaTavolo = renderTavolo(radice, { dati: stato.dati, scorrimento, azioni: { personaggi: () => vai('#/'), apri: (r) => apriDaCartella(r, { dalTavolo: true }) } });
+    stato.fermaTavolo = renderTavolo(radice, { dati: stato.dati, scorrimento, azioni: { personaggi: () => vai('#/'), apri: (r) => apriDaCartella(r, { dalTavolo: true }), mappa: (id) => vai(`#/mappa/${id}`) } });
+    return;
+  }
+  // guida della mappa per il master (docs/battlemap/guida-davide.md): file statico, anche senza il server
+  if (location.hash === '#/guida-mappa') {
+    stato.id = null;
+    stato.scelte = null;
+    stato.livelli = [];
+    document.title = 'Guida della mappa · Mutant';
+    renderGuidaMappa(radice);
+    return;
+  }
+  // Mappa di battaglia, lotto 4: vista giocatori (televisore, proiettore, tablet), solo lettura, solo con il server
+  if (location.hash === '#/mappa/giocatori') {
+    stato.id = null;
+    stato.scelte = null;
+    stato.livelli = [];
+    if (!stato.cartella) {
+      stato.messaggioHome = { tipo: 'attenzione', testo: 'La vista giocatori della mappa serve il server di Mutant acceso sul PC del master.' };
+      return vai('#/');
+    }
+    document.title = 'Giocatori · Mappa · Mutant';
+    stato.fermaTavolo = renderGiocatori(radice, { dati: stato.dati });
+    return;
+  }
+  // Mappa di battaglia (lotto 2, docs/battlemap/piano.md): la scena nella vista master, solo con il server
+  const scenaMappa = location.hash.match(/^#\/mappa\/([a-z0-9-]{1,60})$/);
+  if (scenaMappa) {
+    stato.id = null;
+    stato.scelte = null;
+    stato.livelli = [];
+    if (!stato.cartella) {
+      stato.messaggioHome = { tipo: 'attenzione', testo: 'La mappa di battaglia serve il server di Mutant: avvia l’app con avvia-server.bat (node server.mjs).' };
+      return vai('#/');
+    }
+    document.title = 'Mappa · Mutant';
+    stato.fermaTavolo = renderMappa(radice, {
+      dati: stato.dati, id: scenaMappa[1],
+      // difetto 2 (06/10/2026): la scheda completa aperta dalla mappa ha «Torna alla mappa»
+      // lotto 6: la plancia nella barra della mappa porta anche alla pagina dei personaggi e alle altre scene
+      azioni: { tavolo: () => vai('#/tavolo'), apriScheda: (r, dallaMappa) => apriDaCartella(r, { dallaMappa }), personaggi: () => vai('#/'), mappa: (id) => vai(`#/mappa/${id}`) },
+    });
     return;
   }
   const sali = location.hash.match(/^#\/p\/([\w-]+)\/sali\/(\d+)$/);
@@ -197,6 +241,7 @@ function daIndirizzo() {
     stato.livelli = [];
     // la pagina iniziale: le schede aperte da qui non hanno «Torna al tavolo»
     dimenticaTavolo(sessionStorage);
+    dimenticaMappa(sessionStorage);
     return renderHome();
   }
   const [, id, passoTesto] = m;
@@ -803,7 +848,7 @@ function rigaPersonaggio(p, origine = 'browser') {
  * sincronizzano browser e cartella (vince il più recente), poi si apre la copia del browser; se il
  * personaggio è solo nella cartella lo si porta nel browser.
  */
-async function apriDaCartella(r, { dalTavolo = false } = {}) {
+async function apriDaCartella(r, { dalTavolo = false, dallaMappa = null } = {}) {
   try {
     await sincronizzaCartella();
     const locale = elencoUnito(archivio.elenco(), [r]).find((x) => x.origine === 'entrambi')?.voce ?? null;
@@ -818,6 +863,8 @@ async function apriDaCartella(r, { dalTavolo = false } = {}) {
     const p = archivio.carica(id);
     // aperta dalla plancia: la scheda mostra «← Torna al tavolo» (anche dopo F5)
     if (dalTavolo) segnaDalTavolo(sessionStorage, id, window.scrollY);
+    // aperta dalla mappa di battaglia: «Torna alla mappa» riporta alla scena, allo zoom e alla posizione di prima
+    if (dallaMappa) segnaDallaMappa(sessionStorage, { scena: dallaMappa.scena, id, vista: dallaMappa.vista });
     vai(p.passo === PASSO_SCHEDA ? `#/p/${id}` : `#/p/${id}/${p.passo ?? 0}`);
   } catch (e) {
     stato.messaggioHome = { tipo: 'errore', testo: `Apertura di ${r.file} non riuscita: ${e.message}` };
@@ -1292,6 +1339,8 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
     puoAnnullareSessione: !!stato.precedenteTavolo,
     // scheda aperta dalla plancia del Tavolo del Master: il pulsante per tornarci (src/ui/ritorno.js)
     tornaAlTavolo: arrivoDalTavolo(sessionStorage, stato.id) ? () => { tornaAlTavolo(sessionStorage); vai('#/tavolo'); } : null,
+    // scheda aperta dalla mappa di battaglia: il pulsante grande per tornarci (src/ui/ritorno.js)
+    tornaAllaMappa: arrivoDallaMappa(sessionStorage, stato.id) ? () => { const scena = tornaAllaMappa(sessionStorage); vai(`#/mappa/${scena}`); } : null,
     // pezzo 6: indicatore e avviso del collegamento, solo con il server della cartella
     collegamento: indicatoreCollegamento(stato.cartella, stato.collegamento.stato === 'collegato'),
     // verifica del 06/10/2026: dove sta la scheda (src/collegamento.js → statoSalvataggioMaster)

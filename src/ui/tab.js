@@ -115,6 +115,8 @@ export function renderTab(ctx) {
     h('div', { class: 'barra-azioni' },
       // aperta dalla plancia del Tavolo del Master (src/ui/ritorno.js)
       ctx.tornaAlTavolo ? h('button', { type: 'button', class: 'btn btn-torna-tavolo', onclick: ctx.tornaAlTavolo, title: 'Torna alla plancia del Tavolo del Master, allo stesso punto' }, '← Torna al tavolo') : null,
+      // aperta dalla mappa di battaglia: grande e ben visibile (difetto 2 del 06/10/2026)
+      ctx.tornaAllaMappa ? h('button', { type: 'button', class: 'btn primario btn-torna-mappa', onclick: ctx.tornaAllaMappa, title: 'Torna alla mappa: stessa scena, stesso zoom e stessa posizione' }, '← Torna alla mappa') : null,
       // Tavolo del Master, pezzo 6: solo con il server di Mutant
       // verifica del 06/10/2026: «Salvato sul PC del master alle hh:mm» (solo con il server)
       ctx.salvataggioMaster ? h('span', { class: `indicatore-salvataggio ${ctx.salvataggioMaster.stato}`, role: 'status', title: ctx.salvataggioMaster.file ? `File: personaggi/${ctx.salvataggioMaster.file}` : '' }, ctx.salvataggioMaster.testo) : null,

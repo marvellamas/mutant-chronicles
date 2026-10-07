@@ -434,7 +434,28 @@ export function registraAttacco(s, a, adesso) {
   return conRiga(s, `${a.attaccante} attacca ${a.bersaglio} con ${a.arma}: VA ${a.va}${tiri ? `, tiro ${tiri}` : ''} → ${ESITI[a.esito] ?? a.esito}.`, adesso);
 }
 
-/** Una riga di registro scritta da fuori della plancia (pezzo 6: la scelta di un giocatore nella sua scheda). */
+/**
+ * Attacco di Opportunità segnalato dalla mappa (07/10/2026, Giocatore §5.3): una riga nel registro, con chi può
+ * attaccare e chi; nessun tiro. La riga porta { opportunita: { da, contro } } per sapere se l'avversario l'ha già
+ * avuto in questo Round (una sola volta per Round).
+ */
+export function rigaOpportunita(s, { da, nomeDa, contro, nomeContro }, adesso) {
+  const t = conRiga(s, `Mappa: ${nomeContro} è uscito dalla ZoC di ${nomeDa}: Attacco di Opportunità di ${nomeDa} nei suoi confronti.`, adesso);
+  t.registro[t.registro.length - 1].opportunita = { da, contro };
+  return t;
+}
+
+/** L'avversario `da` ha già avuto un Attacco di Opportunità segnalato in questo Round? */
+export const opportunitaNelRound = (s, da) => (s?.registro ?? []).some((r) => r.round === s.round && r.opportunita?.da === da);
+
+/**
+ * Movimento «Libero» della mappa di battaglia (primo test di Marcello, 06/10/2026): il master sposta un token dove vuole,
+ * fuori dall'area e dal conteggio del movimento; nel registro resta una riga.
+ */
+export function rigaMovimentoLibero(s, nome, da, a, adesso) {
+  return conRiga(s, `Mappa: ${nome} spostato liberamente da (${da.join(', ')}) a (${a.join(', ')}); non conta nel movimento.`, adesso);
+}
+
 /**
  * Righe del registro aggiunte (o riscritte: i clic ripetuti su − e + dei PV) fra due stati dello stesso scontro;
  * per uno scontro nuovo, tutte. Le usa la plancia per le conferme delle azioni (src/ui/avvisi.js).
@@ -451,4 +472,17 @@ export function righeNuove(prima, dopo) {
 export function registraRiga(s, testo, adesso) {
   if (!String(testo ?? '').trim()) throw new Error('riga di registro vuota');
   return conRiga(s, String(testo).trim(), adesso);
+}
+
+/**
+ * Immagine del token di un tipo di nemico (A.131, decisione di Marcello del 06/10/2026: non è una regola) su tutte le
+ * sue copie nello scontro: { file, ridotta } in mappe/, oppure null per tornare alle iniziali. Nessuna riga di registro.
+ */
+export function conImmagineNemico(s, tipo, immagine) {
+  const partecipanti = s.partecipanti.map((p) => {
+    if (p.tipo !== 'nemico' || p.nemico !== tipo) return p;
+    const { immagine: _, ...scheda } = p.scheda ?? {};
+    return { ...p, scheda: immagine ? { ...scheda, immagine } : scheda };
+  });
+  return { ...s, partecipanti };
 }

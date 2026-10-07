@@ -463,6 +463,11 @@
       "tipo": "testo",
       "obbligatorio": false,
       "descrizione": "Comportamento, immunità e resistenze non tabellate, tattica."
+    },
+    "immagine": {
+      "tipo": "immagine",
+      "obbligatorio": false,
+      "descrizione": "Immagine del token sulla mappa di battaglia (non è una regola: decisione di Marcello del 06/10/2026, A.131). File in mappe/ sul server, caricato da «Crea nemico», dall'editor del bestiario, dalla carta nella plancia o dal pannello del token, con la copia ridotta per il token. Senza immagine il token mostra le iniziali."
     }
   },
   "regimi_lancio": {

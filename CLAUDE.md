@@ -41,7 +41,7 @@ Drive si usa **in sola lettura**: mai scrivere nei Doc di Davide, nemmeno commen
 - Web app statica, **senza build step**: `index.html` + `src/*.js` (ES modules) + `css/`. Vanilla JS. Nessun framework, nessun bundler, nessuna dipendenza npm a runtime.
 - Deve funzionare da browser desktop e telefono. Si serve con un qualunque server statico (`python -m http.server` in locale; GitHub Pages o simile per il gruppo).
 - Avvio con e senza server: `avvia.bat` (e `npm start`, `npx serve`, GitHub Pages) è l'app di sempre, con i personaggi nel browser; `avvia-server.bat` (`node server.mjs`, porta 3000, in ascolto su tutte le interfacce: indirizzi per i giocatori nella finestra e nel riquadro «Collega i giocatori», `src/rete.js`, QR da `src/qr.js`; `--solo-locale` per chiuderlo) aggiunge il Tavolo del Master e la cartella dei personaggi; non va aperto insieme ad `avvia.bat`. L'app riconosce il server dall'intestazione `X-Mutant-Server` su `versione.json` (`src/ui/cartella.js`): senza server nessuna richiesta a `/api`. Piano ed esito in `docs/tavolo-direttore.md`; resta il pezzo 7 (sessione di prova vera).
-- Cartelle del server, fuori da git salvo il `LEGGIMI.txt`: `personaggi/` (file dei PG), `tavolo/` (chi è al tavolo), `scontri/` (scontri e archivio), `nemici/` (bestiario della campagna), `veicoli/` (registro unico dei veicoli, A.91). `esempi/` (tracciata): PG d'esempio, `esempi/nemici/` e il bestiario umano `esempi/nemici/umani/`, copiati da «Carica esempi» della plancia senza sovrascrivere.
+- Cartelle del server, fuori da git salvo il `LEGGIMI.txt`: `personaggi/` (file dei PG), `tavolo/` (chi è al tavolo), `scontri/` (scontri e archivio), `nemici/` (bestiario della campagna), `veicoli/` (registro unico dei veicoli, A.91), `scene/` e `mappe/` (scene e immagini della mappa di battaglia, branch `battlemap`). `esempi/` (tracciata): PG d'esempio, `esempi/nemici/` e il bestiario umano `esempi/nemici/umani/`, copiati da «Carica esempi» della plancia senza sovrascrivere.
 - Test: Node (`node --test`, cioè `npm test`) sulle funzioni pure del motore. I test non richiedono browser.
 - File del personaggio esportato: formato 8 (`VERSIONE_FORMATO` in `src/character.js`): `{ formato, versione, versioni_dati, scelte, livelli, sessione, calendario? }`, con i PI attuali degli oggetti in `sessione.integrita`, l'Umanità in `scelte.umanita` (scritta solo se non vuota) e i veicoli in `scelte.veicoli` (scritti solo se ce ne sono); identificativo del PG in `pg`, creato alla nascita e scritto solo se c'è (`nuovoPg`): la cartella del server riconosce un PG da quello, non dal nome del file (`docs/tavolo-direttore.md`, «Identità dei personaggi»). I formati precedenti si importano e si migrano (senza `calendario`: non attivo; senza `integrita`: oggetti ai PI massimi; senza `umanita`: si registrano gli impianti già installati).
 - File del solo calendario: `calendario_<nome>_<data>.json`, `{ tipo: "calendario", versione: 1, app: "mutant", esportato, da, calendario }` con il blocco com'è nel salvataggio (`src/calendario.js` → `fileCalendario`, `leggiFileCalendario`); l'import sostituisce l'intero blocco dopo una conferma. L'export del personaggio non cambia.
@@ -81,12 +81,13 @@ src/
   veicoli.js    veicoli (Manuale dei Veicoli 0.2): strutture, colpi, riparazioni, mezzi del PG; ui/veicoli.js la tab
   veicoli-registro.js  registro unico dei veicoli (A.91, A.105): record, migrazione, patch senza perdite, movimento all'INI del conducente
   versione.js   confronto fra versione caricata e versione.json; ui/aggiornamento.js la barra «Nuova versione»
+  mappa/        mappa di battaglia (branch battlemap, docs/battlemap/piano.md): scena.js (formato e validaScena), celle.js (maschere di Q), token.js, vista.js (vista giocatori filtrata dal server), immagine.js (tipo e dimensioni delle immagini), camera.js (zoom e spostamento), griglia.js (calibrazione e linee), partecipanti.js (pezzi della scena da scontro, bozza, schede e veicoli), nebbia.js (pennello, rettangolo), muri.js (muri e terreno difficile), area.js (area raggiungibile: ricerca a costo minimo con ingombri), annulla.js (movimenti del Round e pila di Ctrl+Z); interfaccia in src/ui/mappa/ (pagina #/mappa/<id> con la plancia come barra di destra in tre disposizioni e la barra dell'Iniziativa, lotto 6: disposizione.js e iniziativa.js; vista giocatori #/mappa/giocatori, elenco delle scene nella plancia, canvas a livelli, gesti a due dita, token e mini-scheda, canale verso la plancia; lotto 7: colori dei bordi in colori.js, menu «Strumenti», pannello «?», guida in docs/battlemap/guida-davide.md); finestrelle nella pagina al posto di prompt e confirm in src/ui/finestrella.js; zone di controllo e Attacchi di Opportunità in mappa/zoc.js (07/10); immagine dei nemici in src/ui/immagine-nemico.js (A.131)
   provenienza.js  righe { fonte, valore, nota? } dei valori calcolati (AR, VA, Salvezze, Iniziativa, Movimento, danno): le stampano i tooltip della SD e la SS
   stampa.js     dati dei fogli di stampa e delle tab
   ui/           wizard a passi (fasi 0–9 del §2.0), scheda a tab, Sali di livello, stampa, import/export
-data/           JSON delle regole (fonte di verità): 13 file in data/ (formato_nemici.json: formato dei nemici del Tavolo del Master, per-davide A.73, validaNemico in validate.js; bestiario.json: Bestiario proposto per «Crea nemico» e «Prepara scontro», dal lotto tools/lotti/lotto_bestiario_dati.mjs), catalogo in data/equipaggiamento/ (index.json + 21 file)
+data/           JSON delle regole (fonte di verità): 15 file in data/ (mappa.json: parametri della mappa di battaglia; formato_nemici.json: formato dei nemici del Tavolo del Master, per-davide A.73, validaNemico in validate.js; bestiario.json: Bestiario proposto per «Crea nemico» e «Prepara scontro», dal lotto tools/lotti/lotto_bestiario_dati.mjs), catalogo in data/equipaggiamento/ (index.json + 21 file)
 server.mjs      server di Mutant per il Tavolo del Master (avvia-server.bat): file statici, /api per personaggi, tavolo, scontri, nemici, esempi
-personaggi/ tavolo/ scontri/ nemici/ veicoli/  dati del server, fuori da git (si traccia il LEGGIMI)
+personaggi/ tavolo/ scontri/ nemici/ veicoli/ scene/ mappe/  dati del server, fuori da git (si traccia il LEGGIMI)
 tests/          node --test; tests/collaudo/ tre personaggi di riferimento con PDF
 esempi/         PG d'esempio (tools/genera_esempi.mjs; Aiko Tenzan da tools/genera_esempio_tecniche.mjs), nemici/ e nemici/umani/ (tools/genera_nemici_umani.mjs)
 tools/          estrazione dai manuali, generatori dei lotti (tools/lotti/), collaudo_pdf.mjs, genera_immagini.py, versione.mjs, installa-hook.mjs e hooks/pre-commit
@@ -149,7 +150,7 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 
 - Durate degli Incantesimi lanciati (03/10, `docs/tavolo-direttore.md`): `incantesimi.json` → `meccanica.durata` (`tools/durate_incantesimi.mjs`, validatore), «Lancia!» con «Durata e bersagli», «Incantesimi in corso» nella tab Poteri (`src/durate-incantesimi.js`, sessione `incantesimiAttivi`): Round con `durate_round`, a tempo come promemoria, «Termina», AR di Scudo, Armatura di Forza e Pelle Corazzata finché durano (`regole.json` → `ar.incantesimi`); in scontro col Round dello scontro, nella plancia e per i nemici (`scontro.effetti`).
 
-- Veicoli, lotto 3 (04/10, backlog 24; Manuale dei Veicoli 0.2): dati in `data/veicoli.json`, motore puro in `src/veicoli.js`; con il server il veicolo è un record unico in `veicoli/` (A.91, decisione 111: `src/veicoli-registro.js`, `/api/veicoli`, revisione e 409), con proprietario (PG o gruppo) e conducente, e nel file del PG resta il riferimento; senza server resta nel file del PG (`scelte.veicoli`) come copia locale, con l'avviso; carta del veicolo nella plancia (A.105: «Muovi» all'INI del conducente, una volta per Round, «Colpito»); permessi provvisori (A.113); tab Veicoli con «Colpito» (localizzazione, AR, PS, Corazzato, Copriruote) e «Ripara», promemoria del conducente in Combattimento, foglio Veicoli della SS. Non pesa sul carico.
+- Veicoli, lotto 3 (04/10, backlog 24; Manuale dei Veicoli 0.2): dati in `data/veicoli.json`, motore puro in `src/veicoli.js`; con il server il veicolo è un record unico in `veicoli/` (A.91, decisione 111: `src/veicoli-registro.js`, `/api/veicoli`, revisione e 409), con proprietario (PG o gruppo) e conducente, e nel file del PG resta il riferimento; senza server resta nel file del PG (`scelte.veicoli`) come copia locale, con l'avviso; mini-scheda del veicolo nella plancia (A.105: «Muovi» all'INI del conducente, una volta per Round, «Colpito»); permessi provvisori (A.113); tab Veicoli con «Colpito» (localizzazione, AR, PS, Corazzato, Copriruote) e «Ripara», promemoria del conducente in Combattimento, foglio Veicoli della SS. Non pesa sul carico.
 
 Fuori perimetro per ora: tiri automatici fuori dalla plancia; manovre, inseguimenti e collisioni dei veicoli al tavolo.
 
@@ -174,6 +175,23 @@ Fuori perimetro per ora: tiri automatici fuori dalla plancia; manovre, inseguime
 - Quando un dato del manuale è ambiguo, non inventare: mettere un `TODO(Davide)` nel JSON o nel codice e segnalarlo a Marcello a fine sessione.
 - Le domande a Davide stanno nel Google Doc «per-davide.md» (fonte unica, link fisso) e seguono `docs/protocollo-davide.md`. Quando si **crea** un `TODO(Davide)`, la voce A.n nuova va nel «pacchetto per il Doc» di fine sessione (§5 del protocollo). Quando Davide **risponde** (in coda al Doc, sezione 7): riga datata in `docs/risposte-master.md`, decisione applicata nei dati, TODO tolto, e nel pacchetto lo spostamento della voce nella sezione «Risolte». Claude Code non scrive nei Google Doc e non modifica a mano `docs/per-davide.md`: il pacchetto lo applica Cowork (o Marcello).
 - Commit piccoli e descrittivi, in italiano. **Prima di ogni commit che tocca `src/`, `css/`, `data/`, `index.html` o `img/immagini.json`: `node tools/versione.mjs`** (aggiorna `versione.json` e l'importmap con `?v=` in `index.html`; `--controlla` dice se servirebbe) e si committano anche quei due file (docs/cache.md). Lo fa da sé l'hook pre-commit, **da installare una volta per PC** con `node tools/installa-hook.mjs` (o `npm run hook`): rigenera e aggiunge i due file al commit, e ferma il commit se nei file serviti ci sono modifiche non aggiunte. `npm test` fallisce (tests/versione.test.js) se la versione non corrisponde al contenuto.
+
+## Regole permanenti di lavoro
+
+Valgono per ogni prompt, anche quando il prompt non le ripete.
+
+- Rispondere sempre in italiano.
+- Un ambito per prompt: niente lavori fuori da quello chiesto (le cose notate si segnalano nel riepilogo).
+- Le regole stanno in `data/`, non nel codice.
+- Per le ambiguità, `TODO(Davide)` nel dato o nel codice, con la domanda numerata (A.n) nelle aperte di `docs/risposte-master.md` e nel pacchetto per il Doc «per-davide.md».
+- Cartelle reali intoccabili: `personaggi/`, `tavolo/`, `scontri/`, `nemici/`, `veicoli/`, `scene/`, `mappe/`, `salvataggi/`. Intoccabile anche la porta 3000. Le prove si fanno su cartelle temporanee nello scratchpad e su un'altra porta (3017).
+- I PG reali (Drive «FILE PG», `PersonaggiBackup/`) solo in lettura: si lavora sulle copie.
+- Prima del commit devono essere verdi:
+  - i test (`npm test`);
+  - il validatore dei dati;
+  - `node tools/verifica_frasi.mjs`.
+- Dopo il commit, il push. Se fallisce per le credenziali, dirlo.
+- Riepilogo finale breve, con `git status -sb`.
 
 ## Come trattare i prompt di Marcello
 

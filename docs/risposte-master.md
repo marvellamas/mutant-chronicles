@@ -923,6 +923,159 @@ le altre si registrano lotto per lotto.
     (`regole.json` → `protezioni_rapide`, `TODO(Davide)` A.110). Ferite, Affaticamento, Corruzione e Stati modificabili
     anche nella tab Abilità, sugli stessi campi della sessione.
 
+## 6 ottobre 2026 — Mappa di battaglia (specifica, bozza 2)
+
+Fonte: Google Doc «Mutant — Mappa di battaglia (specifica)», bozza 2 (ID `1UB3U98NoumK35w4nL5KHOwg7Nc-ET_-FMot7weanM3s`),
+approvata da Marcello; copia in `docs/battlemap/specifica.md`, piano in `docs/battlemap/piano.md` (branch `battlemap`).
+
+115. **Iniziativa della mappa di battaglia** (A.123, 06/10/2026). Si usa il sistema del Manuale del Giocatore di Mutant:
+    Mod DES + Mod INT + 1d10 (§2.14), parità per DES, poi INT, poi scelta fra alleati o 1d10 fra avversari (§5.1),
+    cioè quello che la plancia del Tavolo già calcola (`src/scontro.js`). Il d12 con le Caratteristiche 1–30 dell'app
+    di Davide («EROI & LEGGENDE – Tavolo Digitale», `docs/ricognizione-battlemap.md`) appartiene al sistema
+    precedente e non si usa.
+
+116. **Nessun riuso del codice dell'app di Davide** (decisione di Marcello, 06/10/2026). La mappa di battaglia si
+    scrive tutta da zero sul modello a celle; dall'app «EROI & LEGGENDE» (`F:\REPOS\Eroi-Leggende`, solo in lettura)
+    non si copia né si adatta codice. La domanda A.121 (riuso del suo codice) è ritirata: nel pacchetto per il Doc va
+    spostata fra le risolte come «ritirata, nessun riuso».
+
+117. **Immagine dei nemici sui token** (A.131, decisione di Marcello del 06/10/2026). Non è una regola di gioco:
+    il formato dei nemici (`data/formato_nemici.json`) ha un campo facoltativo «immagine» { file, ridotta } con
+    un'immagine caricata come le mappe (in `mappe/`, con la copia ridotta per il token: `data/mappa.json` →
+    immagini.token). Si imposta da «Crea nemico», dall'editor del bestiario, dalla carta del nemico nella plancia e
+    dal pannello del token della mappa, e vale per tutte le copie del tipo nello scontro o nella bozza e nel bestiario.
+    Senza immagine il token mostra le iniziali. Nel pacchetto per il Doc: A.131 fra le risolte.
+
+118. **Mappa sotto la nebbia nel browser dei giocatori** (A.130, scelta tecnica di Marcello del 06/10/2026, per ora
+    accettata: si gioca in casa). L'immagine di fondo arriva intera ai dispositivi dei giocatori; la nebbia è piena sul
+    disegno, quindi a schermo non si vede nulla, e il server toglie dalla vista token, muri e posizioni sotto la nebbia.
+    Chi apre gli strumenti del browser può vedere la mappa intera: si accetta. Non è una domanda per Davide: A.130 esce
+    dalle domande (nel pacchetto per il Doc non va aggiunta). Se un giorno servisse la segretezza piena, la via è il
+    frame calcolato dal master (`docs/battlemap/piano.md`, §3).
+
+**Aperte** (testi nella sezione 15 della specifica; da mettere nel Doc «per-davide.md» con il pacchetto). A.122,
+A.124 e A.125 hanno avuto risposta il 06/10 (decisioni 128–130); restano la voce «Aiuto-master» di A.122, i veicoli
+e le vecchie etichette numeriche delle luci di A.125, e A.134 qui sotto.
+
+- **A.132 — Stordito e Attacchi di Opportunità** (07/10/2026, zone di controllo della mappa). Uno Stordito (§5.18:
+  nessuna Azione Principale) può fare un Attacco di Opportunità, che per il §5.3 «non consuma Azioni»? Provvisorio: sì
+  (`data/mappa.json` → zoc.stati_che_impediscono ha solo Svenuto).
+- **A.133 — Portata delle creature grandi** (07/10/2026). Una creatura Grande (2 × 2 Q) o Enorme (3 × 3 Q) ha la portata
+  del suo profilo (i profili del Manuale dei Mostri dicono «portata 1 Q») attorno a tutto l'ingombro, o una portata
+  maggiore per la Taglia (Marcello aveva proposto 2 Q per i 2 × 2 e 3 Q per i 3 × 3)? Provvisorio: quella del profilo.
+- **A.134 — Diagonale accanto allo spigolo di un muro** (07/10/2026). La A.124 fissa la diagonale a 1 Q e dice che
+  non permette di attraversare muri o passaggi ostruiti, ma non dice se una diagonale può passare rasente allo spigolo
+  di un muro (i due quadretti ai lati: uno libero, uno murato). Provvisorio: no, servono liberi anche i due quadretti
+  ai lati (`data/mappa.json` → movimento.taglio_angoli_muri, con il `TODO(Davide)` A.134, riscritto il 07/10 nel
+  branch della mappa).
+
+## 7 ottobre 2026 — risposte del 06/10 (E&L «Risposte approvate — regole tecniche e Stati», sezione 7 di «per-davide.md»)
+
+Fonte: E&L del 06/10/2026, 17:23 UTC, blocco «Risposte approvate — regole tecniche e Stati» (testo in
+`docs/risposte-master-2026-09-26.md`), riportato tale e quale nella sezione 7 del Doc «per-davide.md» del 07/10
+(«Allineamento delle risposte approvate — regole tecniche e Stati»). Controllo del 07/10, rapporto in
+`docs/diff-manuali-2026-10-07.md`: applicato nei dati solo ciò che non chiede codice; il resto è nei lotti del rapporto.
+
+119. **COS e SAG temporanee: PV e PM** (A.120). Bonus e malus temporanei di COS non cambiano i PV massimi, quelli di SAG
+    non cambiano i PM massimi; non cambiano neppure i valori attuali, né all'inizio né alla fine dell'effetto. La
+    Caratteristica modificata vale per le Prove e i bonus pertinenti (COS sulla Tempra, SAG su Potere). Un effetto cambia
+    PV o PM solo se lo dice. È l'ipotesi già in uso: `regole.json` → `caratteristiche_temporanee.massimi_pv_pm: false`,
+    con la `decisione` al posto del `TODO(Davide)`. **Applicata.**
+120. **Indossare e togliere le protezioni** (A.110). «Combattimento con armatura» è la vista delle protezioni nella tab
+    Combattimento, non una manovra. Scudo accessibile: 1 AzP per prepararlo e impugnarlo, 1 AzP per riporlo, nella mano
+    della scheda. Elmetto: 1 AzP per indossarlo, 1 per toglierlo, a mani libere (già così). Armature: Leggera 1 minuto /
+    1 minuto, Media 5 / 1, Pesante 10 / 5 (indossare / togliere, da soli, a mani libere, senza Prova; benefici solo a
+    protezione interamente indossata; le procedure delle servoassistite prevalgono). Soprabiti, mantelli e Tabardo
+    consacrato 1 AzP / 1 AzP, a mani libere, fissati; con un'armatura compatibile non si aggiunge un montaggio. Sottogiacca
+    IES 1 AzP / 1 AzP, togliendo prima l'armatura che la copre. Rinforzi strutturali sull'armatura tolta, con gli
+    strumenti: leggero 1 minuto / 1 minuto, pesante 5 / 5; un rinforzo già montato non aggiunge tempo. → `regole.json` →
+    `protezioni_rapide` (scudo `azioni: 1`; `tempi` per armature, rinforzi, soprabiti e sottogiacca; `decisione`).
+    **In parte:** la vista rapida mostra scudo ed elmetto; per armatura e rinforzi deve leggere `tempi` (lotto R3 del
+    rapporto).
+121. **Correzioni retroattive dell'avanzamento** (A.107). Si può correggere un evento vecchio: l'app ricalcola in ordine
+    tutti gli eventi successivi; un punto libero successivo che nella cronologia corretta non aumenta più il VA si
+    riassegna nello stesso avanzamento, con i limiti di allora; le altre assegnazioni restano; la salita di livello è
+    bloccata finché ricostruzione e riassegnazioni non sono finite. Un punto legittimo non si restituisce perché un aumento
+    automatico successivo supera il limite. Sostituisce il divieto provvisorio. **Da implementare** (lotto R1).
+122. **Punti Abilità liberi in eccesso** (A.108). Confermati 7 punti a ogni Grado, compreso il primo. I punti residui dei
+    10 per Grado vanno eliminati e **bloccano** la salita di livello finché la scheda non è riconciliata; se l'eccesso è
+    stato speso il giocatore sceglie quali assegnazioni togliere (l'app non sceglie da sola); i punti eccedenti si
+    eliminano, non si riassegnano; poi la cronologia si ricalcola come A.107. Punti non assegnati in eccesso: si eliminano
+    senza toccare le Abilità. Oggi «Togli» funziona ma l'eccesso dà solo l'avviso e «Togli» procede dal più vecchio.
+    **Da implementare** (lotto R1).
+123. **Recuperi di Umanità pregressi** (A.111). I recuperi pregressi concessi e confermati dal Direttore restano nel
+    calcolo come «Recupero straordinario di Umanità — concessione del Direttore», distinti dalla Riabilitazione; dopo la
+    conferma l'avviso diventa una nota nello storico; nessuna rimozione inventata, nessun doppio conteggio. Quelli di
+    provenienza incerta restano «da verificare», nel calcolo, con UMN provvisoria; il Direttore li conferma o li annulla
+    lasciando traccia. L'assenza di un impianto dall'inventario non prova una rimozione. Resta aperto il caso di Pablo
+    Zaion (Interfaccia neurale). **Da implementare** (lotto R2); `TODO(Davide)` A.111 riscritto per il solo caso aperto.
+124. **Chip del Processore e strumenti** (A.114). Il bonus del chip si somma al modificatore degli strumenti (non è un
+    secondo strumento); resta un solo modificatore complessivo degli strumenti (§1.4.1); benefici tecnologici equivalenti
+    al chip non si sommano (Equipaggiamento §7.1). Esempio: Medicina 10, chip +2, Kit trauma Professionale +2 → VA 14.
+    Superata l'ipotesi «vale il maggiore» (`src/condizioni.js`, usi specifici). **Da implementare** (lotto R2).
+125. **Luce e attività pratiche visive** (A.116). La penalità di luce dipende dall'impiego concreto, non dall'Abilità:
+    esempi Pilotare a vista, Tecnologia su componenti, Medicina per esami visivi, Scienza su campioni, Sopravvivenza su
+    tracce, Atletica su appigli; non conoscenze, ascolto, Potere, Prove Salvezza. −2 / −4 / Accecato (−8, impossibili le
+    attività solo visive). L'app deve poter segnare il singolo uso come «richiede la vista», con correzione del Direttore,
+    una sola volta. **Da implementare** (lotto R4); `TODO(Davide)` A.116 riscritto con la risposta.
+126. **Stati: sintesi operative approvate** (E&L del 06/10, «Stato 1/11»–«11/11»). Undici sintesi da usare nell'app al
+    posto dei promemoria; nuovi rispetto ai nostri: A Terra striscia 3 Q con un'AzM, buttarsi o rialzarsi AzM o AzP;
+    Accecato con PS Riflessi dimezza la durata e dura quanto il buio; Avvelenato con PS Tempra che dimezza il danno
+    periodico (o la durata); Immobilizzato da presa (1 AzP e Prova contrapposta; chi tiene può infliggere il danno
+    senz'armi con 1 AzP); Incendiato spento con 1 AzP e Riflessi o senza Prova con un mezzo adeguato; Sanguinamento con
+    la procedura di Medicina in 10 Round e gli esiti per kit; Stordito con PS Volontà e Prova di Potere subito per
+    Concentrazione e Focalizzazione; Svenuto a 0 PM fino a 1 PM; Terrorizzato terminato da Oratoria di un alleato
+    adiacente. Nessun valore numerico già nei dati cambia. **Da implementare** (lotto R5: testi e promemoria).
+127. **Ammalato** (A.119). Sei intensità selezionabili con penalità −1, −2, −4, −6, −8, −10 a tutte le Prove di Abilità,
+    compresi attacchi e Difese, non alle Prove Salvezza; si mostra «Ammalato 3 — penalità −4»; cambiare intensità
+    sostituisce la penalità; niente durata generica 1+1d3; contagio, incubazione, durata e cure nel futuro Manuale del
+    Direttore. **Da implementare** (lotto R5); `TODO(Davide)` A.119 riscritto con la risposta.
+128. **Priorità delle funzioni della mappa** (A.122). Indispensabili: immagine e griglia in Q; pedine con dimensioni e
+    rotazione; Iniziativa e turno; misura di distanze e movimento; muri e porte; nebbia ed esplorazione; luci e linea di
+    vista; template delle aree. Aggiuntive: mappe video (sfondi animati, senza effetti di regola) e costruttore di
+    stanze. Veicoli sulla mappa rimandati. Resta da precisare «Aiuto-master». → `docs/battlemap/piano.md` (branch
+    `battlemap`).
+129. **Azioni, movimento e diagonali sulla mappa** (A.124). Livelli 1–11: 1 AzM e 1 AzP per Round; 12–20: 1 AzM e 2 AzP,
+    nella stessa Iniziativa (niente turni a INI −3/−6). Passo 6, Corsa 12, Scatto 18 Q con i modificatori; il Direttore
+    può correggere a mano. Ogni diagonale costa 1 Q. Conferma `data/mappa.json` → movimento (costo_diagonale 1).
+    **Applicata** il 07/10 (branch `battlemap`): via il `TODO(Davide)` delle diagonali, nota della decisione nel dato.
+130. **Porte e illuminazione sulla mappa** (A.125). Aprire o chiudere una porta normale non bloccata: 1 AzP, senza Prova,
+    adiacenti e con una mano libera; attraversarla costa il movimento normale; «chiusa» e «bloccata» sono distinte.
+    Illuminazione con le categorie di A.106; la mappa distingue la portata della sorgente (in Q) dalla luce della zona; le
+    lampade del catalogo hanno una sola portata; i vecchi «livelli» non si convertono. Restano aperti i veicoli e la
+    corrispondenza delle vecchie etichette numeriche.
+131. **Quadretti occupati** (A.127). Alleati attraversabili al costo normale; nemici no, salvo capacità; non si termina
+    né ci si ferma in un quadretto occupato; per una pedina grande serve libero tutto l'ingombro d'arrivo; attraversare
+    un alleato non evita gli Attacchi di Opportunità. Conferma `data/mappa.json` → movimento.
+    **Applicata** il 07/10 (branch `battlemap`): via il `TODO(Davide)` dell'occupazione, nota della decisione nel dato.
+132. **Terreno difficile** (A.128). 2 Q per quadretto, anche in diagonale, anche in Corsa e Scatto; percorsi misti
+    contati a tratti; nessuna penalità o Prova aggiunta. Conferma `data/mappa.json` → terreno_difficile_moltiplicatore 2.
+    **Applicata** il 07/10 (branch `battlemap`): via il `TODO(Davide)` del terreno, nota della decisione nel dato.
+133. **Movimento diviso, Corsa e Scatto** (A.129). Solo il Passo si divide prima, fra e dopo le AzP; Corsa e Scatto
+    (1 AzM, nessuna AzP in più) sono un blocco unico da completare prima delle AzP, con la Prova di Atletica compresa
+    (Scatto −2) e le penalità d'andatura −2 / −6 alle altre Azioni; nella stessa Iniziativa niente Incantesimi dopo Corsa
+    o Scatto. **Cambia** la regola provvisoria della mappa (movimento diviso consentito con ogni andatura): lotto R6 del
+    rapporto, nel branch della mappa. **Applicata** il 07/10 (branch `battlemap`): `data/mappa.json` → movimento.divisibili
+    ["passo"]; il caso «Corsa dopo un Passo cominciato» è la A.136.
+
+**Sospese** (E&L del 06/10, «Quesiti sospesi»): A.109 (Davide chiede l'elenco con il nome dell'incantesimo e
+dell'aspetto: nel pacchetto del 07/10), A.111 (solo Pablo Zaion), A.112, A.113, A.115, A.122 («Aiuto-master»), A.125
+(veicoli, vecchie etichette delle luci), A.126.
+
+**Nuova** (07/10/2026):
+
+- **A.135 — Ricarica dei fucili a pallini semiautomatici e automatici** (Armamenti 0.59, §7.7). La famiglia distingue i
+  modelli a pompa (solo Colpo Singolo) dai semiautomatici (HD14M, SA SG2001, Airbrush) e dagli automatici (Mandible),
+  ma non dice come si ricaricano: una cartuccia per operazione come i fucili a pompa, o un caricatore che si sostituisce?
+  Provvisorio: come prima (HD14M una cartuccia per operazione, SA SG2001 a caricatore per la A.37, Mandible e Airbrush a
+  caricatore); `TODO(Davide)` in `munizioni.json` → `ricarica.inserimento_singolo`.
+- **A.136 — Corsa o Scatto dopo un Passo già cominciato** (07/10/2026, lotto R6 della mappa). La A.129 dice che solo il
+  Passo si divide e che Corsa e Scatto sono un blocco unico da completare prima delle AzP, tutti al costo dell'unica AzM.
+  Un personaggio che ha già percorso una parte del Passo (per esempio 2 Q, prima di ogni AzP) può trasformare l'AzM in
+  Corsa o Scatto, con i Q già fatti contati nel blocco (2 + 10 = 12)? Provvisorio: no, Corsa e Scatto partono solo da
+  fermi; il master annulla il movimento e lo rifà come Corsa, o usa «Libero» (`data/mappa.json` →
+  movimento.blocco_dopo_passo false, con il `TODO(Davide)`).
+
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 
 Il Manuale dei Veicoli 0.2 è completo di numeri e il lotto 2 (dati e motore) non ha dovuto inventare nulla. Restano

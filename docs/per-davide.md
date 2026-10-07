@@ -1,6 +1,6 @@
 # **Per Davide — domande aperte ed errata dei manuali**
 
-Aggiornato al 30 settembre 2026, mattina.  
+Allineamento delle risposte al ott 6, 2026\. Le risposte nuove sono in coda alla sezione 7; le domande originali e lo stato di implementazione dell’app restano a cura del collaboratore.  
 **Istruzioni per Davide (e per l’AI che usi per rispondere).**
 
 > * Questo è l’unico documento con le domande dell’app Mutant. Il link resta sempre questo: non ne esistono altri e non se ne creano di nuovi. Lo stesso testo è nel repo GitHub, docs/per-davide.md.  
@@ -101,6 +101,47 @@ Il cap. 7 dell’Equipaggiamento dice che il catalogo dei recuperi di UMN «rest
 **A.115 — Nemici con «capacità specifica».** L'app deve solo mostrare il testo della capacità, o ci sono Prova e costo da calcolare?
 
 **A.116 — Luce e attività pratiche visive.** Oltre a Percezione visiva, attacchi e Difese, quali Abilità prendono le penalità di luce: Pilotare, Tecnologia, Medicina, altre?
+
+**A.119 — Stato «Ammalato».**  
+Quali effetti ha (penalità, Prove, Prove Salvezza), quanto dura, come si prende e come si guarisce?  
+*Nel frattempo:* lo Stato si può segnare, ma senza effetti.
+
+**A.120 — Modificatori temporanei di caratteristiche: COS e SAG.**  
+Un bonus o malus temporaneo di COS o SAG cambia anche i PV e i PM massimi?  
+*Nel frattempo:* non li cambia, così PV e PM attuali non vengono tagliati.
+
+**A.122 — Quali funzioni della mappa usi davvero al tavolo?**  
+Segna le indispensabili: immagine della mappa, griglia, pedine, iniziativa, misura, muri e porte, nebbia, luci e linea di vista, template ad area, veicoli sulla mappa, rotazione delle pedine, mappe video, costruttore di stanze, aiuto-master.
+
+**A.124 — Azioni extra e movimento sulla mappa.**  
+Nella tua app le Azioni extra sono turni separati a INI −3/−6 e il movimento è un budget fissato dal master, con le diagonali da 1 Q. Sulla nuova mappa usiamo le regole del manuale (seconda AzP nello stesso turno dal 12° livello; Passo/Corsa/Scatto 6/12/18 Q)? Le diagonali valgono 1 Q?
+
+**A.125 — Porte, luci e veicoli sulla mappa.**  
+Aprire una porta costa un’Azione? Il «livello» delle luci della tua app corrisponde a penombra / luce molto scarsa / buio della A.106? I veicoli si muovono sulla mappa all’Iniziativa del conducente con la loro andatura?
+
+**A.126 — Creature da 3×3 Q.**  
+Quando una creatura occupa 3×3 Q invece di 2×2? Serve nella scheda un campo con l’ingombro in Q?  
+*Nel frattempo:* 1 Q, oppure 2×2 per la Taglia Grande; 3×3 solo se indicato nel profilo.
+
+**A.127 — Attraversare i quadretti occupati.**  
+Si può attraversare il quadretto di un alleato? E di un nemico? Si può fermarsi nello stesso quadretto?  
+*Nel frattempo:* alleati attraversabili ma non occupabili; nemici né attraversabili né occupabili.
+
+**A.128 — Terreno difficile.**  
+Quanto costa muoversi su terreno difficile (per esempio 2 Q per ogni quadretto)?  
+*Nel frattempo:* 2 Q per quadretto.
+
+**A.129 — Movimento diviso e Corsa/Scatto.**  
+Il movimento si può dividere nel turno (muovo, attacco, muovo)? Corsa e Scatto cosa consumano in Azioni?  
+*Nel frattempo:* movimento diviso consentito entro il totale; Corsa e Scatto come da manuale.
+
+**A.132 — Stordito e Attacchi di Opportunità.**  
+Un personaggio Stordito può fare Attacchi di Opportunità, visto che «non consumano Azioni»?  
+*Nel frattempo:* sì.
+
+**A.133 — Portata delle creature grandi (zona di controllo).**  
+Per il Giocatore §5.3 l’Attacco di Opportunità scatta uscendo dalla portata ravvicinata dell’avversario (1 Q di norma, di più con armi lunghe). Una creatura 2×2 o 3×3 ha la portata del suo profilo (1 Q attorno a tutto l’ingombro) o una portata maggiore per la Taglia (2 Q per i 2×2, 3 Q per i 3×3, come proposto da Marcello)?  
+*Nel frattempo:* la portata del profilo.
 
 ## ---
 
@@ -269,7 +310,8 @@ Voci con risposta recepita e funzione implementata nell’app. La data è quella
 > * **A.82** — Onda Interiore: dado della Disciplina e del Grado più il bonus di SAG (tetti \+1/+2/+3), non FOR; il \+2 Ravvicinato di Pelle di Rinoceronte non si applica. *Implementata il 03/10.*  
 > * **A.83** — REP Epica: ricerca con Oratoria −6, se il Direttore ammette una possibilità concreta; Batterie Matrice colorate Epiche, Bianche Leggendarie. *Implementata il 03/10.*  
 > * **A.86** — Granate e razzi: danno completo della munizione, senza bonus di Caratteristica. *Implementata il 03/10.*  
-> * **A.88** — Individuare a Concentrazione: 10 min / 30 min / 1 h / 2 h / 4 h per le versioni 6–8 / 9–11 / 12–14 / 15–17 / 18\. *Implementata il 03/10.*
+> * **A.88** — Individuare a Concentrazione: 10 min / 30 min / 1 h / 2 h / 4 h per le versioni 6–8 / 9–11 / 12–14 / 15–17 / 18\. *Implementata il 03/10.*  
+> * **A.123 — Iniziativa sulla mappa**: vale il Manuale del Giocatore (Mod DES \+ Mod INT \+ 1d10; parità per DES, poi INT, poi scelta fra alleati o 1d10 fra avversari); il d12 della tua app è del sistema precedente — deciso il 06/10.
 
 > 
 
@@ -372,4 +414,262 @@ Esempio: con AR totale 6, di cui 2 magica, un risultato di 3 sul d4 di Incendiat
 Assorbire interamente il danno non spegne le fiamme e non elimina il −2 VA dello Stato. Quattro punti di AR magica pertinente possono annullare il normale 1d4, ma Incendiato deve comunque terminare o essere spento.  
 **Risposta approvata A.13** — Rainy Dayer (§7.14.6): il profilo di tiro appartiene alla Specializzazione Carabine, che conferisce \+1 al VA e \+1 al danno. L’Abilità utilizzata rimane Armi medie; il tiro richiede due mani sia con l’ombrello aperto sia con l’ombrello chiuso, con gittata massima di 30 Q.  
 La funzione difensiva segue le regole già presenti: aperta, la Rainy Dayer fornisce AR \+1 e permette la Parata con Difese. La Specializzazione Carabine riguarda il tiro e non aumenta questa protezione.
+
+### **Allineamento delle risposte approvate — regole tecniche e Stati**
+
+Aggiornamento del ott 6, 2026  
+Fonte delle decisioni: [E\&L – Risposte e correzioni approvate](https://docs.google.com/document/d/1VaqZaAe4NK5P8A956Eahua_ZT60eh3ohnR2xSqh-tVs/edit)  
+Questo aggiornamento riporta le risposte approvate già registrate nel documento E\&L: 14 quesiti tecnici e le sintesi degli undici Stati, con Ammalato disciplinato dalla A.119. Non introduce nuove decisioni.  
+Stato delle risposte: A.107, A.108, A.110, A.114, A.116, A.119, A.120, A.124, A.127, A.128 e A.129 sono definite nei limiti esplicitati; A.111, A.122 e A.125 hanno ancora dati o sottopunti da chiarire, indicati in fondo. Le regole dettagliate delle malattie restano destinate al Manuale del Direttore.  
+«Risposta approvata» non significa «implementata nell’app». Le domande originali e le annotazioni del collaboratore sono conservate: le ipotesi «Nel frattempo» corrispondenti sono superate dalle risposte riportate qui. Il passaggio alla sezione 6 richiede la verifica del recepimento nell’app.
+
+#### **A.107 — Correzioni retroattive dell’avanzamento**
+
+Approvato il ott 5, 2026  
+È consentito correggere un evento precedente dell’avanzamento. L’app ricalcola in ordine cronologico tutti gli eventi successivi.  
+Se, nella cronologia corretta, un punto libero assegnato successivamente non produce più un incremento valido del VA al momento della sua assegnazione, quel punto va riassegnato nello stesso avanzamento originario, rispettando i limiti applicabili allora. Le altre assegnazioni ancora valide restano invariate.  
+La salita a nuovi livelli resta bloccata finché la ricostruzione e le riassegnazioni necessarie non sono completate.  
+Questa regola riguarda la correzione della cronologia: un punto legittimo quando assegnato non viene restituito soltanto perché un successivo aumento automatico di Caratteristica o Classe supera legittimamente il limite.
+
+#### **A.108 — Punti Abilità liberi in eccesso**
+
+Approvato il ott 5, 2026  
+Si confermano 7 Punti Abilità liberi a ogni Grado, compreso il primo. I punti residui della precedente assegnazione di 10 per Grado devono essere eliminati e bloccano ulteriori passaggi di livello finché la scheda non è riconciliata.  
+Quando l’eccesso è stato speso, il giocatore sceglie quali assegnazioni rimuovere; l’app non cancella arbitrariamente punti da un’Abilità. I punti eccedenti sono eliminati, non riassegnati. La cronologia viene poi ricalcolata secondo A.107.  
+Esempi: se sono stati spesi 10 punti dove ne spettavano 7, occorre rimuovere 3 punti dalle assegnazioni; se sono stati spesi 7 punti e ne restano 3 non assegnati, si eliminano quei 3 senza modificare le Abilità.
+
+#### **A.110 — Indossare e togliere protezioni**
+
+Approvato il ott 5, 2026  
+«Combattimento con armatura» indica la gestione delle protezioni nella vista di Combattimento dell’app, non una nuova manovra o modalità di combattimento.  
+Scudo accessibile: prepararlo e impugnarlo costa 1 AzP; riporlo costa 1 AzP. Occupa la mano richiesta dalla scheda.  
+Elmetto accessibile: indossarlo costa 1 AzP e toglierlo costa 1 AzP; occorrono entrambe le mani libere. Connessioni e procedure speciali seguono la rispettiva scheda.  
+Armatura leggera: indossare 1 minuto; togliere 1 minuto.  
+Armatura media: indossare 5 minuti; togliere 1 minuto.  
+Armatura pesante: indossare 10 minuti; togliere 5 minuti.  
+I tempi delle armature sono per un personaggio che opera da solo, con entrambe le mani libere e la protezione accessibile. Normalmente non occorre una Prova. I benefici si applicano quando l’armatura è interamente indossata e fissata. Le procedure specifiche, comprese quelle delle protezioni servoassistite, prevalgono.  
+Soprabiti, mantelli e Tabardo consacrato: indossare 1 AzP; togliere 1 AzP. Richiedono accessibilità, fissaggio ed entrambe le mani libere. Con un’armatura compatibile è sufficiente indossarli e fissarli: non si aggiunge un ulteriore montaggio.  
+Sottogiacca protettiva IES: indossare 1 AzP; togliere 1 AzP, con entrambe le mani libere. Se un’armatura impedisce di accedere alla sottogiacca, va prima rimossa.  
+Rinforzo strutturale leggero: montare 1 minuto; smontare 1 minuto.  
+Rinforzo strutturale pesante: montare 5 minuti; smontare 5 minuti.  
+Il montaggio o smontaggio dei rinforzi strutturali avviene sull’armatura tolta, con gli strumenti appropriati. Su componenti integri e compatibili non richiede normalmente una Prova, salvo la scheda. I tempi per togliere e rimettere l’armatura si conteggiano separatamente. Un rinforzo già montato non aggiunge tempo al normale indossare o togliere l’armatura.  
+Restano il limite di un rinforzo, le compatibilità, i profili autonomi della A.80 e le eccezioni espresse delle schede.
+
+#### **A.111 — Recuperi di Umanità pregressi e impianti rimossi**
+
+Approvato il ott 5, 2026  
+I recuperi pregressi realmente concessi e confermati dal Direttore restano validi e inclusi nel calcolo, anche se non derivano dalla rimozione di un impianto. Si registrano come «Recupero straordinario di Umanità — concessione del Direttore», distintamente dalla riabilitazione ordinaria.  
+Dopo la conferma, l’avviso di verifica è sostituito da una nota nello storico. Non si inventa una rimozione per giustificare il recupero e lo stesso beneficio non può essere conteggiato due volte.  
+I recuperi di provenienza incerta restano «da verificare» e conservati nel calcolo, senza modifiche automatiche; il totale di UMN è indicato come provvisorio fino alla verifica. Il Direttore controlla causa e procedura: se il recupero è valido si completa lo storico; se è errato si annulla il beneficio e si ricalcola UMN conservando traccia della correzione.  
+L’assenza di un impianto dall’inventario non prova una rimozione chirurgica e non restituisce automaticamente UMN. Le concessioni straordinarie pregresse non autorizzano l’app ad assegnare nuovi recuperi automatici fuori dalla procedura ordinaria.  
+La conferma generale non risolve il caso fattuale di Pablo Zaion: resta da verificare perché l’Interfaccia neurale, associata alla perdita di 2 UMN, non compare più nell’inventario.
+
+#### **A.114 — Chip del Processore e strumenti**
+
+Approvato il ott 5, 2026  
+Il bonus pertinente di un chip del Processore si somma al modificatore degli strumenti. Il chip non è un secondo modificatore degli strumenti.  
+Si applica comunque un solo modificatore complessivo degli strumenti, secondo §1.4.1. Il chip non sostituisce strumenti, materiali, requisiti o Talenti necessari. Benefici tecnologici equivalenti a quello del chip non si sommano, secondo Equipaggiamento §7.1.  
+Esempio: Medicina 10, chip di assistenza \+2 e Kit trauma Professionale \+2 producono VA 14 quando tutti i benefici sono pertinenti.  
+Restano i limiti ordinari del Processore: un chip attivo, durata 30 minuti e una attivazione ogni 24 ore; nessun beneficio ad attacchi, Difese, manovre di combattimento o prove di magia. È superata l’ipotesi provvisoria dell’app che applicava soltanto il maggiore tra chip e strumenti.
+
+#### **A.116 — Luce e attività pratiche che richiedono visione**
+
+Approvato il ott 5, 2026  
+La penalità dipende dall’impiego concreto, non dal nome dell’Abilità o dalla Caratteristica scelta. Non si applica indistintamente a tutte le prove di una stessa Abilità.  
+Esempi pertinenti: Pilotare quando occorre vedere percorso e comandi; Tecnologia per esaminare o lavorare su componenti; Medicina per esami e interventi visivi; Scienza per osservare campioni o leggere misure; Sopravvivenza per seguire tracce visibili o orientarsi a vista; Atletica per ostacoli e appigli da individuare.  
+Richiamare conoscenze, ascoltare o svolgere attività che non richiedono la vista non riceve automaticamente la penalità. Restano i limiti della A.106: non si estende automaticamente a Potere o alle Prove Salvezza.  
+Si applicano −2 in penombra, −4 con luce molto scarsa e gli effetti sensoriali di Accecato nel buio totale: −8 per ciò che resta possibile, impossibilità per attività esclusivamente visive.  
+L’app deve poter qualificare il singolo uso come «richiede la vista», con correzione del Direttore. Il modificatore si applica una sola volta, dopo aver considerato illuminazione effettiva e capacità visive, senza duplicarlo con la medesima penalità già applicata alla prova.
+
+#### **Stati — Sintesi operative approvate per l’app**
+
+Approvato il ott 5, 2026  
+Sono approvate le seguenti sintesi degli undici Stati del Manuale del Giocatore, §§5.5, 5.15 e 5.18. Sono testi operativi ricostruiti dal manuale e approvati uno alla volta: non è stato possibile confrontarli con le undici righe originarie dell’app, non disponibili.  
+Il precedente promemoria che indicava le sintesi ancora da approvare è superato da questo blocco. Ammalato è disciplinato separatamente dalla nuova A.119 riportata oltre.
+
+#### **Stato 1/11 — A Terra**
+
+−4 VA agli attacchi ravvicinati, alle Difese e alle prove che richiedono equilibrio. La penalità non si estende automaticamente a tutte le attività fisiche.  
+Può usare attacchi a distanza senza penalità propria dello Stato, se la posizione lo consente.  
+Chi lo attacca ottiene \+2 VA in Ravvicinato e subisce −2 VA a Distanza. Nessun modificatore per gli attacchi ad Area.  
+Non può Correre o Scattare; può strisciare di 3 Q con un’AzM. Buttarsi a terra o rialzarsi richiede un’AzM oppure un’AzP.  
+Dura finché si rialza: non si applica la durata generica di 1+1d3 Round.
+
+#### **Stato 2/11 — Accecato**
+
+−8 VA alle prove che richiedono la vista, compresi attacchi e Difese contro avversari non percepiti. Le attività esclusivamente visive falliscono automaticamente.  
+Non può effettuare Tiro Mirato o Colpo Mirato. Può attaccare soltanto conoscendo almeno la posizione approssimativa del bersaglio.  
+Gli avversari che non riesce a percepire ottengono \+4 VA contro di lui. Le attività basate soltanto su altri sensi disponibili non ricevono automaticamente la penalità; sensi speciali, Talenti e strumenti seguono le proprie regole.  
+Durata ordinaria 1+1d3 Round, salvo la fonte. Solo quando la fonte consente una PS Riflessi, il successo dimezza la durata per eccesso; il fallimento conserva la durata intera.  
+Quando l’impossibilità di vedere dipende dal buio totale, dura finché permane la condizione ambientale: non si tira una durata casuale.
+
+#### **Stato 3/11 — Assordato**
+
+Le prove basate esclusivamente sull’udito falliscono automaticamente. −4 VA alle prove in cui l’udito è importante ma non indispensabile.  
+Non riceve ordini, avvertimenti o informazioni trasmessi soltanto a voce. Può parlare, ma controlla male il volume.  
+Le attività basate su vista o altri sensi disponibili non ricevono automaticamente penalità. È immune agli effetti che richiedono di essere uditi.  
+Durata ordinaria 1+1d3 Round, salvo la fonte. Nessuna PS generale: si effettua soltanto se la fonte la consente.  
+Il −4 non si applica automaticamente a tutti gli attacchi e alle Difese: conta quanto l’azione dipende dall’udito.
+
+#### **Stato 4/11 — Avvelenato**
+
+All’esposizione si effettua PS Tempra con il modificatore del veleno. Il successo dimezza per eccesso ciascun danno periodico; se il veleno non provoca danni, dimezza invece la durata, salvo la fonte.  
+Danni, frequenza, penalità, altri Stati e durata dipendono dal veleno. Non esiste una penalità generale comune a tutti i veleni.  
+Il danno ignora AR; a 0 PV si applicano le normali regole delle Ferite. Per un effetto temporaneo senza durata specifica si usa 1+1d3 Round.  
+Una nuova esposizione allo stesso veleno rinnova la durata senza sommare i danni periodici. Veleni diversi possono coesistere.  
+L’antidoto appropriato interrompe immediatamente l’effetto. Medicina permette di identificarlo e trattarne i sintomi, ma non elimina automaticamente lo Stato.
+
+#### **Stato 5/11 — Immobilizzato**
+
+Non può spostarsi, Correre o Scattare. Subisce −4 VA alle azioni fisiche ancora possibili; gli arti bloccati non possono essere utilizzati.  
+Liberarsi segue la fonte. Per la manovra Immobilizzare, il tentativo richiede 1 AzP e una Prova contrapposta.  
+Gli effetti temporanei durano normalmente 1+1d3 Round, salvo la fonte; una presa permane finché spezzata o rilasciata.  
+Mantenere una presa non costa Azioni, ma impegna le mani utilizzate. Chi la mantiene può spendere 1 AzP ed effettuare una nuova Prova contrapposta per infliggere il proprio danno senz’armi; il fallimento non interrompe la presa.  
+Il −4 non si applica automaticamente alle PS o alle attività mentali.
+
+#### **Stato 6/11 — Incendiato**
+
+PS Riflessi iniziale, salvo esplicita eccezione della fonte: il successo evita lo Stato. Durata ordinaria 1+1d3 Round, salvo la fonte.  
+Infligge immediatamente 1d4 PV da fuoco, poi all’Iniziativa della fonte nei Round successivi, al massimo una volta per Round. Il danno iniziale non viene ripetuto nello stesso Round.  
+Per tutta la durata: −2 VA a tutte le prove di Abilità, non alle PS.  
+Spegnersi richiede 1 AzP e PS Riflessi. Con mezzi adeguati, come acqua, sabbia o coperta antifiamma, basta 1 AzP senza prova; può intervenire un alleato.  
+Applicazioni ripetute non sommano i danni; si mantiene la durata maggiore.  
+Il danno ignora AR generica non magica. AR magica pertinente può ridurlo a 0; protezioni specifiche contro il Fuoco seguono la propria descrizione. Ignifugo X è una contromisura preventiva e non si sottrae al danno.  
+Ridurre il danno a 0 non spegne le fiamme e non elimina il −2 VA. Restano le precisazioni della A.50 su natura dell’AR e protezioni contro il Fuoco.
+
+#### **Stato 7/11 — Rallentato**
+
+Passo ridotto a 3 Q; non può Correre o Scattare. Se un altro effetto impone movimento inferiore, prevale il limite più restrittivo.  
+−2 VA alle prove fisiche e alle Difese; non si applica automaticamente ad attività mentali o PS.  
+Solo quando la fonte consente PS Tempra o Riflessi, il successo evita lo Stato.  
+Durata ordinaria 1+1d3 Round, salvo la fonte. Applicazioni ripetute non sommano le penalità; si mantiene la durata maggiore.  
+Continuano ad applicarsi i normali costi di terreno e modalità di movimento, compreso il Nuoto.
+
+#### **Stato 8/11 — Sanguinamento**
+
+Possiede un valore X indicato dalla fonte. Perde subito X PV ignorando Armatura, Parata e Schivata; la perdita si ripete all’Iniziativa della fonte, al massimo una volta per Round, contando l’applicazione iniziale.  
+La perdita non porta sotto 0 PV. Quella che porta a 0 non provoca immediatamente una Ferita. Se il personaggio è già a 0 PV, effettua PS Tempra: successo, nessuna nuova Ferita; fallimento, 1 Ferita.  
+Il Magistrale rende automaticamente riuscita la successiva Tempra contro lo stesso Sanguinamento. Il Maldestro provoca 1 Ferita e −4 alla prossima Tempra contro lo stesso Sanguinamento.  
+Più Sanguinamenti non si sommano: si usa il valore più alto. Persiste finché arrestato, senza durata generica di 1+1d3 Round. Un Sanguinamento attivo impedisce il recupero di PV e Ferite.  
+Arrestarlo con Medicina richiede un kit utilizzabile, accesso al paziente e 10 Round continuativi. Un’applicazione si consuma all’inizio. Il soccorritore resta adiacente e spende 1 AzP ogni Round; può soltanto effettuare Passo, mentre il paziente non può Correre o Scattare. Durante il trattamento il Sanguinamento è sospeso.  
+Prova finale: \+2 VA per X=1; nessun modificatore per X=2; −2 VA per X≥3, oltre a strumenti e Talenti pertinenti.  
+Kit Improvvisato: successo, sospende per 10 Round; Magistrale, arresta.  
+Kit Standard: successo, arresta; Magistrale, arresta e recupera 1d4 PV.  
+Kit Professionale: successo, arresta e recupera 1d4 PV; Magistrale, arresta e recupera il doppio del risultato di un unico 1d4. Non si superano i PV massimi.  
+Interruzione o fallimento fanno riprendere il Sanguinamento; l’interruzione non concede prova finale né restituisce materiali. Con Maldestro il paziente perde anche 1d4 PV, senza scendere sotto 0 né subire una Ferita diretta.  
+Ripresa e sospensione rispettano il limite di una perdita periodica per Round. Restano le condizioni di applicazione della proprietà e gli altri chiarimenti della A.76.
+
+#### **Stato 9/11 — Stordito**
+
+Può effettuare soltanto Passo; non può compiere Azioni Principali. Conserva PS e Prove contrapposte passive, ma non può utilizzare Difese che richiedono Azioni.  
+Durata ordinaria 1+1d3 Round, salvo la fonte. Applicazioni ripetute non si sommano; si mantiene la durata maggiore.  
+Quando diventa Stordito, effettua immediatamente PS Volontà per mantenere la Concentrazione e Prova di Potere per mantenere la Focalizzazione, se pertinenti. Le prove sono senza costo in Azioni: il successo mantiene l’effetto, il fallimento lo interrompe.  
+Queste verifiche sono richieste anche senza danni e non si ripetono ogni Round per la sola permanenza dello Stato.
+
+#### **Stato 10/11 — Svenuto**
+
+Non può compiere Azioni né muoversi e cade A Terra. Non può usare Difese attive e normalmente non percepisce l’ambiente; è incapace di reagire per le regole che richiedono questa condizione.  
+Perde immediatamente Concentrazione e tutte le Focalizzazioni, senza prove per mantenerle.  
+La durata dipende dalla causa. Per un effetto temporaneo senza durata specifica si usa 1+1d3 Round.  
+A 0 PM lo svenimento permane finché recupera almeno 1 PM: non termina per la semplice scadenza di Round.  
+Se sta volando o nuotando si applicano le conseguenze delle rispettive regole di movimento.
+
+#### **Stato 11/11 — Terrorizzato**
+
+Una PS Volontà iniziale riuscita evita lo Stato. Durante lo Stato: −4 a tutte le prove, comprese le PS. Il −4 non si applica alla PS iniziale per evitarlo.  
+Non può avvicinarsi volontariamente alla fonte della paura e deve usare il Movimento per fuggire lungo il percorso ragionevolmente più sicuro.  
+Le AzP possono essere usate soltanto per difendersi, nascondersi, agevolare la fuga o rimuovere lo Stato. Se fuggire è impossibile, può effettuare Passo o cercare Copertura, ma non compiere azioni offensive contro la fonte.  
+Durata ordinaria 1+1d3 Round, salvo la fonte. Applicazioni ripetute non sommano le penalità; si mantiene la durata maggiore.  
+Un alleato adiacente può spendere 1 AzP ed effettuare Oratoria: con successo lo Stato termina. Termina immediatamente anche quando la scomparsa della fonte della paura è evidente al personaggio.
+
+#### **A.119 — Ammalato: intensità ed effetti nell’app**
+
+Approvato il ott 6, 2026  
+Ammalato ha sei intensità selezionabili nell’app, con penalità rispettivamente −1, −2, −4, −6, −8 e −10.  
+La penalità si applica a tutte le prove di Abilità, compresi attacchi e Difese; sono escluse le Prove Salvezza. Eventuali eccezioni specifiche potranno essere definite nelle singole malattie.  
+L’app applica automaticamente il modificatore e mostra intensità ed effetto, per esempio «Ammalato 3 — penalità −4». Cambiare intensità sostituisce la penalità precedente, senza sommarla.  
+Gli effetti possono manifestarsi immediatamente quando la fonte lo prevede, come la febbre dell’incontro già giocato. Non si applica la durata generica di 1+1d3 Round.  
+Contagio, incubazione, progressione, durata e guarigione saranno definiti nel Manuale del Direttore. Non si introducono ora frequenze, tiri o cure automatiche aggiuntive.  
+È superata la proposta di lasciare Ammalato come semplice indicatore privo di effetti, così come il comportamento provvisorio dell’app che lo segnava senza applicare penalità.
+
+#### **A.120 — COS e SAG temporanee: PV e PM**
+
+Approvato il ott 6, 2026  
+Bonus e malus temporanei a COS non modificano automaticamente i PV massimi. Bonus e malus temporanei a SAG non modificano automaticamente i PM massimi.  
+Non cambiano direttamente neppure i rispettivi valori attuali, né all’inizio né alla fine dell’effetto.  
+Le Caratteristiche modificate continuano a influire sulle prove e sui bonus pertinenti, per esempio COS sulla Tempra e SAG su Potere, secondo le normali formule e i limiti applicabili.  
+Un effetto può modificare direttamente PV o PM soltanto se lo dichiara espressamente. Gli aumenti permanenti, compresi quelli dell’avanzamento, conservano le rispettive regole.  
+Esempio: COS 6 e 25/40 PV; con \+2 COS temporaneo si usa COS 8 per gli effetti pertinenti, ma la riserva resta 25/40. La scadenza del bonus non sottrae PV. È confermata l’ipotesi dell’app sui massimi invariati.
+
+#### **A.122 — Priorità delle funzioni della mappa**
+
+Approvato il ott 6, 2026  
+Funzioni indispensabili: immagine della mappa e griglia in Q; pedine, dimensioni e rotazione; Iniziativa e indicazione del turno; misurazione di distanze e movimento; muri e porte; nebbia ed esplorazione delle zone; luci e linea di vista; template delle aree degli effetti.  
+Funzioni aggiuntive: mappe video e costruttore di stanze. Le mappe video sono sfondi animati, normalmente in ripetizione: l’animazione non modifica automaticamente movimento, danni, illuminazione o linea di vista.  
+«Aiuto-master» resta da precisare: il quesito non specifica quali funzioni comprenda.  
+La parte relativa ai veicoli sulla mappa rimane rimandata.
+
+#### **A.124 — Azioni extra, movimento e diagonali sulla mappa**
+
+Approvato il ott 6, 2026  
+La mappa segue il Manuale del Giocatore. Livelli 1–11: 1 AzM e 1 AzP per Round. Livelli 12–20: 1 AzM e 2 AzP per Round.  
+Le AzP si svolgono durante la stessa Iniziativa: non si creano turni aggiuntivi a INI −3 o −6. Eventuali Azioni già consumate, per esempio per difendersi, restano spese.  
+Valori ordinari: Passo 6 Q, Corsa 12 Q, Scatto 18 Q. L’app considera modificatori del personaggio, Stati, terreno ed esiti delle prove richieste. Il Direttore può correggere manualmente la disponibilità per situazioni particolari, ma il valore predefinito deriva dalle regole.  
+Ogni diagonale costa 1 Q, come uno spostamento orizzontale o verticale su terreno normale. Questo non permette di attraversare muri o passaggi ostruiti.  
+Divisione del movimento e costi di Corsa e Scatto sono precisati nella A.129.
+
+#### **A.125 — Porte e illuminazione sulla mappa**
+
+Approvato il ott 6, 2026  
+Parte porte approvata. Aprire o chiudere una normale porta accessibile e non bloccata costa 1 AzP, senza prova. Per azionarla manualmente occorre essere adiacenti e avere una mano libera.  
+Attraversare la porta consuma il normale movimento, separatamente dall’apertura. Una porta bloccata richiede prima la procedura pertinente per sbloccarla, scassinarla o forzarla. Nell’app «chiusa» e «bloccata» sono condizioni distinte.  
+Parte illuminazione approvata. Le categorie sono quelle della A.106: luce sufficiente, nessuna penalità; penombra, −2 alle prove dipendenti dalla vista; luce molto scarsa, −4; buio totale, effetti di Accecato con −8 alle attività ancora possibili e impossibilità di quelle esclusivamente visive.  
+La mappa distingue la portata della sorgente, espressa in Q, dalla condizione di illuminazione della zona. I vecchi numeri chiamati «livello» non vanno convertiti automaticamente senza averne chiarito il significato.  
+Le normali lampade del catalogo hanno una sola portata. Un bersaglio effettivamente illuminato non beneficia delle penalità per mancanza di luce. Muri, ostacoli e capacità visive speciali conservano i propri effetti.  
+La domanda sul movimento dei veicoli rimane rimandata: questa risposta non chiude quella parte della A.125.
+
+#### **A.127 — Attraversamento dei quadretti occupati**
+
+Approvato il ott 6, 2026  
+I quadretti degli alleati sono attraversabili pagando il normale costo di movimento, senza sovrapprezzo per la sola presenza dell’alleato.  
+I quadretti dei nemici non sono attraversabili, salvo capacità o regole che lo consentano espressamente.  
+Non si può terminare il movimento in un quadretto occupato, né fermarvisi per attaccare o compiere un’altra Azione. Per una pedina che occupa più quadretti, l’intero ingombro della posizione di arrivo deve essere libero.  
+Attraversare un alleato non evita gli Attacchi di Opportunità: restano le regole dell’Ingaggio. Capacità speciali e spostamenti forzati conservano le proprie regole; poter attraversare un quadretto occupato non autorizza automaticamente a fermarvisi.  
+Esempio: si può passare attraverso un compagno e raggiungere uno spazio libero oltre di lui, ma non attaccare restando sovrapposti.
+
+#### **A.128 — Terreno difficile**
+
+Approvato il ott 6, 2026  
+Ogni quadretto percorso su terreno difficile costa 2 Q di movimento, anche in diagonale. Il Direttore identifica le zone, per esempio macerie, fango profondo o vegetazione fitta.  
+Nei percorsi misti si conteggiano separatamente i tratti: 1 Q per quadretto normale e 2 Q per quadretto difficile.  
+Il costo maggiore non aggiunge da solo penalità al VA o nuove prove. Eventuali pericoli e le normali prove di Corsa e Scatto mantengono le proprie regole. Le capacità che ignorano il terreno difficile seguono la propria descrizione.  
+Con i valori ordinari e un percorso interamente difficile: Passo 6 Q disponibili → 3 quadretti effettivi; Corsa 12 Q → 6 quadretti; Scatto 18 Q → 9 quadretti. Questi valori precedono ulteriori modificatori e gli esiti delle prove di movimento.  
+Esempio: 2 quadretti normali e 2 difficili consumano 2 \+ 4 \= 6 Q, esaurendo il Passo ordinario.
+
+#### **A.129 — Movimento diviso, Corsa e Scatto**
+
+Approvato il ott 6, 2026  
+Passo: distanza ordinaria 6 Q, costo 1 AzM; può essere diviso prima, fra e dopo le AzP, entro la disponibilità complessiva.  
+Corsa: distanza ordinaria 12 Q, costo 1 AzM; è un unico blocco da completare prima delle AzP.  
+Scatto: distanza ordinaria 18 Q, costo 1 AzM; è un unico blocco da completare prima delle AzP.  
+Corsa e Scatto non consumano un’AzP aggiuntiva. Richiedono una Prova di Atletica compresa nell’AzM: su terra, senza penalità propria in Corsa e −2 in Scatto.  
+Alle altre Azioni si applicano le penalità dell’andatura: −2 VA in Corsa e −6 VA in Scatto. Non si aggiungono nuovamente alla prova di movimento.  
+Nella stessa Iniziativa in cui corre o scatta, il personaggio non può lanciare Incantesimi. Gli Artefatti conservano le proprie regole.  
+La disponibilità di movimento resta unica; la seconda AzP non concede un’altra AzM. Manovre e capacità specifiche mantengono i propri costi ed eccezioni.  
+Esempio: al Passo si possono percorrere 2 Q, attaccare e completare i 4 Q restanti; non si può correre 6 Q, attaccare e completare gli altri 6 Q.  
+L’ipotesi provvisoria «movimento diviso consentito entro il totale» va quindi limitata al Passo, salvo eccezioni espresse.
+
+#### **Quesiti sospesi e dati ancora da fornire**
+
+Stato verificato al ott 6, 2026  
+A.109 — Anticipazione: sospesa. L’ultimo elenco incollato in conversazione contiene 32 riferimenti a incantesimi/aspetti, mentre il vecchio testo del quesito parlava di 31\. Non si attribuiscono nomi o gradini agli indici per supposizione. Serve il file incantesimi.json oppure un elenco con nome dell’incantesimo, nome dell’aspetto e relativa scheda. Le risposte già approvate sull’Anticipazione restano valide.  
+A.111 — Rimane da verificare la storia dell’Interfaccia neurale di Pablo Zaion; la regola generale sui recuperi pregressi è invece approvata.  
+A.112 — Riserve degli Artefatti di Lucas e Dimitri: resta da confermare se i valori massimi nei file dei PG siano residui reali o valori iniziali. Non si modificano automaticamente.  
+A.113 — Permessi e denominazioni dei veicoli: rimandata.  
+A.115 — Capacità specifiche dei nemici: rimandata con il bestiario.  
+A.122 — La voce generica «Aiuto-master» richiede una descrizione delle funzioni; le altre priorità sono approvate.  
+A.125 — La parte sui veicoli resta rimandata. Le vecchie etichette numeriche delle luci richiedono una corrispondenza tecnica verificata, senza nuovi modificatori di regola.  
+A.126 — Ingombro delle creature da 3×3 Q: rimandata con il bestiario.  
+Le regole dettagliate di malattie e cure della A.119 sono destinate al Manuale del Direttore. Ammalato ha già la scala operativa approvata per l’app.  
+Questo aggiornamento registra le risposte approvate; non dichiara completati il recepimento nei manuali o l’implementazione nell’app. Le domande del collaboratore non sono state spostate o cancellate.
 

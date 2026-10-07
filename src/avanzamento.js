@@ -1064,7 +1064,7 @@ function schedaARiposo(personaggio, dati) {
   if (!stato) return { livello: 1, errori, completamenti, eccessi, completa: false };
   // modificatori temporanei di Caratteristica al tavolo (src/temporanei.js): la Caratteristica cambia prima di tutto
   // ciò che ne deriva (Abilità, Difese, Prove Salvezza, Iniziativa, danno, carico); i PV e PM massimi restano quelli
-  // della Caratteristica base salvo regole.json → caratteristiche_temporanee.massimi_pv_pm (TODO(Davide) A.120)
+  // della Caratteristica base salvo regole.json → caratteristiche_temporanee.massimi_pv_pm (false: A.120, E&L del 06/10/2026)
   const carBase = { ...stato.car };
   const temporanei = modificatoriAttivi(personaggio?.sessione, dati);
   for (const [s, v] of Object.entries(temporanei)) if (s in stato.car) stato.car[s] = Math.min(dati.caratteristiche.valore_massimo ?? Infinity, Math.max(dati.caratteristiche.valore_minimo ?? 1, stato.car[s] + v));

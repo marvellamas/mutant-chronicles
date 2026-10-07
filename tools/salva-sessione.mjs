@@ -1,7 +1,7 @@
 // Copia di fine sessione per il master (salva-sessione.bat; richiesta di Marcello del 06/10/2026).
 // Crea salvataggi/sessione_AAAA-MM-GG_hhmm.zip con le cartelle dei dati di gioco del server (personaggi/, veicoli/,
-// scontri/, nemici/, tavolo/). Poi, solo se configurato in config-salvataggi.json (non tracciato, modello in
-// config-salvataggi.esempio.json):
+// scontri/, nemici/, tavolo/, scene/ e mappe/ della mappa di battaglia). Poi, solo se configurato in
+// config-salvataggi.json (non tracciato, modello in config-salvataggi.esempio.json):
 //   - "copia_in": una cartella in cui copiare anche l'archivio (per esempio quella di Google Drive sul PC);
 //   - "github": { "cartella", "ramo"? }: un clone di un repository GitHub PRIVATO separato, solo per i salvataggi
 //     (non quello dell'app): l'archivio si copia lì, si fa commit e push. Senza git, senza clone o senza credenziali
@@ -15,7 +15,7 @@ import { fileURLToPath } from 'node:url';
 import { deflateRawSync, crc32 } from 'node:zlib';
 import { spawnSync } from 'node:child_process';
 
-export const CARTELLE = ['personaggi', 'veicoli', 'scontri', 'nemici', 'tavolo'];
+export const CARTELLE = ['personaggi', 'veicoli', 'scontri', 'nemici', 'tavolo', 'scene', 'mappe'];
 const RADICE = fileURLToPath(new URL('..', import.meta.url));
 
 const due = (n) => String(n).padStart(2, '0');

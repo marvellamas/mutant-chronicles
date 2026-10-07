@@ -5,8 +5,9 @@
 //                                    tutte le interfacce e stampa gli indirizzi per i giocatori (src/rete.js)
 //   node server.mjs --solo-locale   solo da questo computer (127.0.0.1); --rete resta accettato, non serve più
 //   PORTA=8080 node server.mjs      altra porta (oppure --porta=8080)
-//   --cartella=<dir> --tavolo=<dir> --scontri=<dir> --nemici=<dir>  altre cartelle per personaggi,
-//                                    tavolo, scontri e bestiario (prove, più campagne)
+//   --cartella=<dir> --tavolo=<dir> --scontri=<dir> --nemici=<dir> --veicoli=<dir> --scene=<dir> --mappe=<dir>
+//                                    altre cartelle per personaggi, tavolo, scontri, bestiario, veicoli,
+//                                    scene e immagini delle mappe (prove, più campagne)
 // API (JSON):
 //   GET /api/ping                      { ok: true, app: 'mutant', cartella: 'personaggi', versione, avviato, pid }: l'app
 //                                      capisce che il server c'è; un nuovo avvio riconosce un Mutant già acceso
@@ -35,23 +36,55 @@
 //                                      file che lì non ci sono: { copiati: [...], saltati: [...] }
 //   PUT /api/nemici/<id>               salva nemici/<id>.json se è valido (data/formato_nemici.json,
 //                                      src/validate.js → validaNemico); altrimenti 400 con gli errori
+//   Mappa di battaglia (lotto 1 di docs/battlemap/piano.md; limiti in data/mappa.json):
+//   GET /api/scene                     scene in scene/: [{ id, nome, revisione, mappa, colonne, righe, token, collegamento, mtime }]
+//   GET /api/scene/<id>                la scena completa (src/mappa/scena.js), per il master
+//   GET /api/scene/<id>?vista=giocatori  la scena filtrata (src/mappa/vista.js): niente token o template nascosti,
+//                                      niente token, muri e terreno sotto la nebbia, solo la copia ridotta
+//   PUT /api/scene/<id>                la salva se è valida e se `revisione` è quella del file (altrimenti 409 con
+//                                      la scena attuale); le immagini nominate devono essere in mappe/; con
+//                                      archiviata: true passa in scene/archivio/ (non si cancella)
+//   GET /api/vista-giocatori?firma=…   la vista giocatori della scena in gioco (lotto 4): quella scelta dal master
+//                                      o, in automatico, la più recente collegata allo scontro aperto; i token
+//                                      visibili con lato, nome, immagine, quota dei PV e turno; { invariata } se la
+//                                      firma è quella dell'ultima risposta
+//   GET|PUT /api/vista-giocatori/scelta  { scena: id | null } in tavolo/mappa-giocatori.json (null = automatica)
+//   PUT /api/vista-giocatori/diretta   il movimento in diretta del master (src/mappa/diretta.js): token scelto, area,
+//                                      percorso, ZoC; null = nessuna selezione. Non si salva: resta in memoria
+//   GET /api/vista-giocatori/diretta   flusso di eventi (text/event-stream) per la vista giocatori: «diretta» con lo
+//                                      stato già filtrato (nessun nascosto, niente sotto la nebbia), «aggiorna» quando
+//                                      scena, scontro o scelta cambiano (la vista si rilegge subito)
+//   GET /api/ritratti/<chiave>         il ritratto del PG (dalla sua scheda), per i token della vista giocatori
+//   GET /api/mappe                     immagini in mappe/: [{ file, dimensione, mtime }]
+//   GET /api/mappe/<file>              l'immagine (in cache: il nome contiene l'impronta del contenuto)
+//   POST /api/mappe?nome=…[&ridotta=1] corpo = JPG, PNG o WEBP: lo salva come <nome>-<impronta>[-ridotta].<est>
+//                                      e risponde { file, tipo, larghezza, altezza, dimensione }; ridotta=1
+//                                      controlla il lato massimo della copia per i tablet
 // Nessuna cancellazione dal server: i file vecchi si tolgono a mano dalla cartella.
 import { createServer } from 'node:http';
+import { readFileSync } from 'node:fs';
 import { readFile, writeFile, readdir, stat, mkdir, rename, copyFile, unlink, constants } from 'node:fs/promises';
 import { extname, join, normalize, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { networkInterfaces } from 'node:os';
-import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { createInterface } from 'node:readline/promises';
 import { chiOccupa, testoDomanda, risposteSi, fermaMutant, sorvegliaFinestra } from './src/porta-occupata.js';
 import { indirizziRete, testoAvvio } from './src/rete.js';
+import { bordoToken } from './src/mappa/colori.js';
 import { validaScontro } from './src/scontro.js';
 import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
 import { NOME_FILE, fileProvvisorio, ultimiPerPersonaggio, chiaveDaFile, chiavePersonaggio } from './src/cartella.js';
-import { validaRecord, ID_VEICOLO, migraVeicoli, eRiferimento } from './src/veicoli-registro.js';
+import { validaRecord, ID_VEICOLO, migraVeicoli, eRiferimento, stessaChiave } from './src/veicoli-registro.js';
 import { normalizzaVeicoli } from './src/veicoli.js';
 import { caricaDati } from './src/rules.js';
 import { validaNemico, formattaErrore } from './src/validate.js';
+import { validaScena, riassuntoScena, ID_SCENA, FILE_MAPPA } from './src/mappa/scena.js';
+import { vistaGiocatori } from './src/mappa/vista.js';
+import { validaDiretta, direttaPerGiocatori } from './src/mappa/diretta.js';
+import { dimensioniImmagine } from './src/mappa/immagine.js';
+import { pezziDellaScena } from './src/mappa/partecipanti.js';
+import { vistaPlancia } from './src/tavolo.js';
 
 const RADICE = fileURLToPath(new URL('.', import.meta.url));
 const CARTELLA = 'personaggi';
@@ -60,6 +93,8 @@ const SCONTRI = 'scontri';
 const ID_SCONTRO = /^[a-z0-9-]{1,60}$/;
 const NEMICI = 'nemici';
 const VEICOLI = 'veicoli';
+const SCENE = 'scene';
+const MAPPE = 'mappe';
 const ID_NEMICO = /^[a-z0-9-]{1,60}$/;
 
 const TIPI = {
@@ -116,12 +151,12 @@ const json = (res, codice, corpo) => {
   res.end(JSON.stringify(corpo));
 };
 
-async function leggiCorpo(req) {
+async function leggiCorpo(req, massimo = MASSIMO) {
   const parti = [];
   let n = 0;
   for await (const p of req) {
     n += p.length;
-    if (n > MASSIMO) throw Object.assign(new Error('file troppo grande'), { codice: 413 });
+    if (n > massimo) throw Object.assign(new Error('file troppo grande'), { codice: 413 });
     parti.push(p);
   }
   return Buffer.concat(parti);
@@ -135,11 +170,55 @@ function selezione(v) {
 }
 
 const leggiJson = async (p) => JSON.parse(await readFile(p, 'utf8'));
-async function scriviJson(dove, v) {
-  const tmp = `${dove}.tmp-${process.pid}`;
-  await writeFile(tmp, `${JSON.stringify(v, null, 2)}\n`);
-  await rename(tmp, dove);
+
+// Scritture dei file dei dati (errore del test di Marcello del 07/10/2026 su Windows: «EPERM: operation not permitted,
+// rename '…scontro-….json.tmp-…' -> '…scontro-….json'» dopo l'avviso di un Attacco di Opportunità, mentre la plancia
+// salvava lo stesso scontro). Due regole:
+//  - in coda per file (inCoda): le richieste che scrivono lo stesso file passano una alla volta, dal controllo della
+//    revisione alla scrittura; prima due PUT ravvicinate potevano leggere la stessa revisione e sovrapporsi;
+//  - rinomina con riprova: su Windows rinominare sopra un file tenuto aperto un attimo da altri (antivirus,
+//    indicizzazione, una lettura in corso) fallisce con EPERM, EACCES o EBUSY: si ritenta con attese crescenti e, se
+//    non basta, si cancella il file temporaneo e si restituisce l'errore. Nessun temporaneo orfano.
+/** Riprova della rinomina: tentativi in tutto, prima attesa in ms, fattore di crescita (15, 30, 60, 120, 240 ms). */
+export const RIPROVA_RENAME = { tentativi: 6, attesa_ms: 15, fattore: 2 };
+const ERRORI_DA_RIPROVARE = new Set(['EPERM', 'EACCES', 'EBUSY']);
+/** Operazioni sul disco sostituibili nei test (una rinomina che fallisce). */
+export const operazioniFile = { rename };
+const codeFile = new Map();
+/** Esegue `lavoro` quando sono finiti i lavori già in coda sullo stesso file; restituisce il suo esito. */
+export function inCoda(dove, lavoro) {
+  const prima = codeFile.get(dove) ?? Promise.resolve();
+  const questo = prima.then(lavoro);
+  const fine = questo.then(() => {}, () => {});
+  codeFile.set(dove, fine);
+  fine.then(() => { if (codeFile.get(dove) === fine) codeFile.delete(dove); });
+  return questo;
 }
+/** rename con la riprova di RIPROVA_RENAME sugli errori di file occupato. */
+export async function rinomina(da, a) {
+  let attesa = RIPROVA_RENAME.attesa_ms;
+  for (let i = 1; ; i++) {
+    try {
+      return await operazioniFile.rename(da, a);
+    } catch (e) {
+      if (!ERRORI_DA_RIPROVARE.has(e.code) || i >= RIPROVA_RENAME.tentativi) throw e;
+      await new Promise((ok) => setTimeout(ok, attesa));
+      attesa *= RIPROVA_RENAME.fattore;
+    }
+  }
+}
+/** Scrittura atomica: un file temporaneo e poi la rinomina (una lettura non vede mai mezzo file); il temporaneo non resta. */
+export async function scriviAtomico(dove, contenuto) {
+  const tmp = nomeTmp(dove);
+  try {
+    await writeFile(tmp, contenuto);
+    await rinomina(tmp, dove);
+  } catch (e) {
+    await unlink(tmp).catch(() => {});
+    throw e;
+  }
+}
+const scriviJson = (dove, v) => scriviAtomico(dove, `${JSON.stringify(v, null, 2)}\n`);
 
 /** Scontri (pezzo 2): un file per scontro, revisione per non sovrascrivere le modifiche di un'altra finestra. */
 async function apiScontri(req, res, percorso, scontri) {
@@ -168,24 +247,27 @@ async function apiScontri(req, res, percorso, scontri) {
   // «Prepara scontro»: le bozze stanno accanto agli scontri, con stato «bozza» (src/preparazione.js)
   const errore = (String(s?.stato ?? '').startsWith('bozza') ? validaBozza(s) : validaScontro(s)) ?? (s.id !== id ? 'l’id non corrisponde al file' : null);
   if (errore) return json(res, 400, { errore });
-  let attuale = null;
-  try { attuale = await leggiJson(dove); } catch { /* nuovo */ }
-  if ((attuale?.revisione ?? 0) !== s.revisione || (!attuale && s.revisione !== 0)) {
-    return json(res, 409, { errore: 'lo scontro è stato cambiato altrove: ricarica', attuale });
-  }
-  const nuovo = { ...s, revisione: s.revisione + 1 };
-  await mkdir(scontri, { recursive: true });
-  if (nuovo.stato === 'chiuso' || nuovo.stato === STATO_BOZZA_ELIMINATA) {
-    // archivio: il file esce dagli scontri aperti ma resta, in scontri/archivio/
-    const archivio = join(scontri, 'archivio');
-    await mkdir(archivio, { recursive: true });
-    // si sposta il file (nessuna cancellazione) e poi lo si aggiorna con lo stato chiuso
-    if (attuale) await rename(dove, join(archivio, `${id}.json`));
-    await scriviJson(join(archivio, `${id}.json`), nuovo);
+  // in coda sul file: revisione e scrittura senza sovrapposizioni
+  return inCoda(dove, async () => {
+    let attuale = null;
+    try { attuale = await leggiJson(dove); } catch { /* nuovo */ }
+    if ((attuale?.revisione ?? 0) !== s.revisione || (!attuale && s.revisione !== 0)) {
+      return json(res, 409, { errore: 'lo scontro è stato cambiato altrove: ricarica', attuale });
+    }
+    const nuovo = { ...s, revisione: s.revisione + 1 };
+    await mkdir(scontri, { recursive: true });
+    if (nuovo.stato === 'chiuso' || nuovo.stato === STATO_BOZZA_ELIMINATA) {
+      // archivio: il file esce dagli scontri aperti ma resta, in scontri/archivio/
+      const archivio = join(scontri, 'archivio');
+      await mkdir(archivio, { recursive: true });
+      // si sposta il file (nessuna cancellazione) e poi lo si aggiorna con lo stato chiuso
+      if (attuale) await rinomina(dove, join(archivio, `${id}.json`));
+      await scriviJson(join(archivio, `${id}.json`), nuovo);
+      return json(res, 200, nuovo);
+    }
+    await scriviJson(dove, nuovo);
     return json(res, 200, nuovo);
-  }
-  await scriviJson(dove, nuovo);
-  return json(res, 200, nuovo);
+  });
 }
 
 /** Registro dei veicoli (A.91, A.105): un file per veicolo, revisione come gli scontri. */
@@ -209,14 +291,16 @@ async function apiVeicoli(req, res, percorso, veicoli) {
   try { v = JSON.parse((await leggiCorpo(req)).toString('utf8')); } catch (e) { return json(res, 400, { errore: `contenuto non valido: ${e.message}` }); }
   const errore = validaRecord(v) ?? (v.id !== m[1] ? 'l’id non corrisponde al file' : null);
   if (errore) return json(res, 400, { errore });
-  let attuale = null;
-  try { attuale = await leggiJson(dove); } catch { /* nuovo */ }
-  if ((attuale?.revisione ?? 0) !== v.revisione || (!attuale && v.revisione !== 0)) {
-    return json(res, 409, { errore: 'il veicolo è stato cambiato altrove: ricarica', attuale });
-  }
-  const nuovo = { ...v, revisione: v.revisione + 1, aggiornato: new Date().toISOString() };
-  await scriviJson(dove, nuovo);
-  return json(res, 200, nuovo);
+  return inCoda(dove, async () => {
+    let attuale = null;
+    try { attuale = await leggiJson(dove); } catch { /* nuovo */ }
+    if ((attuale?.revisione ?? 0) !== v.revisione || (!attuale && v.revisione !== 0)) {
+      return json(res, 409, { errore: 'il veicolo è stato cambiato altrove: ricarica', attuale });
+    }
+    const nuovo = { ...v, revisione: v.revisione + 1, aggiornato: new Date().toISOString() };
+    await scriviJson(dove, nuovo);
+    return json(res, 200, nuovo);
+  });
 }
 
 /**
@@ -265,21 +349,24 @@ async function migraOra({ cartella, veicoli, radice, chiavi }) {
     esito.avvisi.push(...m.avvisi.map((x) => `${r.file}: ${x}`));
     for (const rec of m.nuovi) {
       const dv = join(veicoli, `${rec.id}.json`);
-      if (await stat(dv).then(() => true, () => false)) continue; // creato nel frattempo: resta quello
-      await scriviJson(dv, { ...rec, revisione: 1, aggiornato: new Date().toISOString() });
-      esito.record.push(rec.id);
+      // creato nel frattempo: resta quello
+      const scritto = await inCoda(dv, async () => {
+        if (await stat(dv).then(() => true, () => false)) return false;
+        await scriviJson(dv, { ...rec, revisione: 1, aggiornato: new Date().toISOString() });
+        return true;
+      });
+      if (scritto) esito.record.push(rec.id);
     }
     const cambiati = m.veicoli.some((v, i) => v !== o.scelte.veicoli[i]) && m.veicoli.some(eRiferimento);
     // la revisione: si riscrive solo se il file è ancora quello letto
-    const ora = await stat(dove).then((s) => s.mtimeMs, () => null);
-    if (cambiati && ora === r.mtime) {
+    await inCoda(dove, async () => {
+      const ora = await stat(dove).then((s) => s.mtimeMs, () => null);
+      if (!cambiati || ora !== r.mtime) return;
       const nuovo = { ...o, scelte: { ...o.scelte, veicoli: m.veicoli.map((v) => (eRiferimento(v) ? v : o.scelte.veicoli.find((x) => x?.uid === v.uid) ?? v)) } };
-      const tmp = `${dove}.tmp-${process.pid}`;
-      await writeFile(tmp, JSON.stringify(nuovo, null, 2));
-      await rename(tmp, dove);
+      await scriviAtomico(dove, JSON.stringify(nuovo, null, 2));
       cacheFile.delete(dove);
       esito.file.push(r.file);
-    }
+    });
     migrazioni.visti.set(dove, await stat(dove).then((s) => s.mtimeMs, () => null));
   }
   return esito;
@@ -315,8 +402,304 @@ async function apiNemici(req, res, percorso, nemici, radice) {
   if (n?.id !== id) errori.push({ file: `${NEMICI}/${id}.json`, chiave: 'id', problema: 'non corrisponde al nome del file' });
   if (errori.length) return json(res, 400, { errore: errori.map(formattaErrore).join('; '), errori });
   await mkdir(nemici, { recursive: true });
-  await scriviJson(join(nemici, `${id}.json`), n);
+  await inCoda(join(nemici, `${id}.json`), () => scriviJson(join(nemici, `${id}.json`), n));
   return json(res, 200, { file: `${id}.json`, mtime: (await stat(join(nemici, `${id}.json`))).mtimeMs, nemico: n });
+}
+
+/**
+ * Scene della mappa di battaglia (lotto 1 di docs/battlemap/piano.md): un file per scena in scene/, revisione come
+ * gli scontri. La vista giocatori la filtra il server (src/mappa/vista.js): ai loro dispositivi non arriva nulla di
+ * nascosto. Nessuna autenticazione, come il resto del server: il filtro vale per gli schermi che chiedono la vista
+ * giocatori.
+ */
+async function apiScene(req, res, percorso, scene, mappe, radice, cartelle) {
+  if (percorso === '/api/scene' && req.method === 'GET') {
+    await mkdir(scene, { recursive: true });
+    const lista = [];
+    for (const f of (await readdir(scene)).filter((x) => x.endsWith('.json') && ID_SCENA.test(x.slice(0, -5)))) {
+      try { lista.push(riassuntoScena(await leggiJson(join(scene, f)), (await stat(join(scene, f))).mtimeMs)); } catch { /* file rovinato: non si elenca */ }
+    }
+    return json(res, 200, lista.sort((a, b) => b.mtime - a.mtime));
+  }
+  const m = /^\/api\/scene\/([^/]+)$/.exec(percorso);
+  if (!m || !ID_SCENA.test(m[1])) return json(res, 400, { errore: 'id di scena non valido: minuscole, cifre e trattini' });
+  const dove = join(scene, `${m[1]}.json`);
+  if (req.method === 'GET') {
+    let s;
+    try { s = await leggiJson(dove); } catch { return json(res, 404, { errore: 'scena non trovata' }); }
+    const vista = new URL(req.url, 'http://x').searchParams.get('vista');
+    if (vista === 'giocatori') return json(res, 200, vistaGiocatori(s, await contestoScena(s, cartelle)));
+    if (vista !== null) return json(res, 400, { errore: 'vista: solo «giocatori»' });
+    return json(res, 200, s);
+  }
+  if (req.method !== 'PUT') return json(res, 405, { errore: 'metodo non ammesso' });
+  let s;
+  try { s = JSON.parse((await leggiCorpo(req)).toString('utf8')); } catch (e) { return json(res, 400, { errore: `contenuto non valido: ${e.message}` }); }
+  const { dati } = await datiDelServer(radice);
+  const errore = validaScena(s, dati) ?? (s.id !== m[1] ? 'l’id non corrisponde al file' : null);
+  if (errore) return json(res, 400, { errore });
+  for (const file of [s.mappa?.file, s.mappa?.ridotta].filter(Boolean)) {
+    try { await stat(join(mappe, file)); } catch { return json(res, 400, { errore: `immagine «${file}» non trovata in ${MAPPE}/: caricala prima` }); }
+  }
+  return inCoda(dove, async () => {
+    let attuale = null;
+    try { attuale = await leggiJson(dove); } catch { /* nuova */ }
+    if ((attuale?.revisione ?? 0) !== s.revisione || (!attuale && s.revisione !== 0)) {
+      return json(res, 409, { errore: 'la scena è stata cambiata altrove: ricarica', attuale });
+    }
+    const nuova = { ...s, revisione: s.revisione + 1, aggiornato: new Date().toISOString() };
+    await mkdir(scene, { recursive: true });
+    if (nuova.archiviata === true) {
+      // «Archivia» (lotto 2): la scena esce dall'elenco ma resta, in scene/archivio/ (non si cancella nulla)
+      const archivio = join(scene, 'archivio');
+      await mkdir(archivio, { recursive: true });
+      if (attuale) await rinomina(dove, join(archivio, `${m[1]}.json`));
+      await scriviJson(join(archivio, `${m[1]}.json`), nuova);
+      return json(res, 200, nuova);
+    }
+    await scriviJson(dove, nuova);
+    return json(res, 200, nuova);
+  });
+}
+
+/**
+ * Schede dei PG lette dal server per la vista giocatori (lotto 4): ultimo file di ogni PG in personaggi/, calcolato
+ * come nella plancia (src/tavolo.js → vistaPlancia, al Round dello scontro), riletto solo se cambia.
+ */
+const visteServer = new Map(); // file → { mtime, round, vista }
+async function vistePg(chiavi, cartella, dati, round) {
+  const viste = new Map();
+  if (!chiavi.length) return viste;
+  let elenco = [];
+  try {
+    for (const f of (await readdir(cartella)).filter((x) => x.endsWith('.json'))) elenco.push({ file: f, mtime: (await stat(join(cartella, f))).mtimeMs });
+  } catch { return viste; }
+  const ultimi = [...ultimiPerPersonaggio(elenco)];
+  for (const chiave of chiavi) {
+    const voce = ultimi.find(([k]) => stessaChiave(k, chiave))?.[1];
+    if (!voce) continue;
+    const c = visteServer.get(voce.file);
+    if (c && c.mtime === voce.mtime && c.round === round) { viste.set(chiave, c.vista); continue; }
+    try {
+      const vista = vistaPlancia(await readFile(join(cartella, voce.file), 'utf8'), dati, voce.file, round);
+      visteServer.set(voce.file, { mtime: voce.mtime, round, vista });
+      viste.set(chiave, vista);
+    } catch { /* scheda illeggibile: il token resta con le iniziali */ }
+  }
+  return viste;
+}
+
+// file temporanei delle scritture atomiche: un nome diverso per ogni scrittura, anche contemporanea sullo stesso file
+// (collaudo della ZoC del 07/10: due righe di registro insieme facevano fallire il rename con ENOENT)
+let numeroTmp = 0;
+const nomeTmp = (dove) => `${dove}.tmp-${process.pid}-${++numeroTmp}`;
+const impronta = (t) => createHash('sha1').update(String(t)).digest('hex').slice(0, 12);
+
+/**
+ * Contesto della vista giocatori di una scena (lotto 4): scontro aperto o bozza collegati, schede dei PG, registro dei
+ * veicoli → pezzi (src/mappa/partecipanti.js), con gli indirizzi delle immagini per i giocatori: i ritratti dei PG
+ * da /api/ritratti (non i data URL dentro la risposta), le immagini dei nemici da /api/mappe.
+ */
+async function contestoScena(scena, { cartella, tavolo, scontri, veicoli, radice }) {
+  const { dati } = await datiDelServer(radice);
+  const c = scena.collegamento ?? {};
+  let scontro = null, bozza = null, alTavolo = [];
+  const id = c.scontro ?? c.bozza ?? null;
+  if (id && ID_SCONTRO.test(id)) {
+    try {
+      const x = await leggiJson(join(scontri, `${id}.json`));
+      if (c.scontro && x.stato === 'aperto') scontro = x;
+      else if (c.bozza && x.stato === 'bozza') bozza = x;
+    } catch { /* chiuso o mancante: nessun contesto */ }
+  }
+  if (bozza && !bozza.pg?.length) { try { alTavolo = selezione(await leggiJson(join(tavolo, 'sessione.json'))).personaggi; } catch { /* nessuno al tavolo */ } }
+  const chiavi = scontro ? scontro.partecipanti.filter((p) => p.tipo === 'pg').map((p) => p.chiave) : bozza ? (bozza.pg?.length ? bozza.pg : alTavolo) : [];
+  const viste = await vistePg(chiavi, cartella, dati, scontro?.round ?? null);
+  const registro = [];
+  try {
+    for (const f of (await readdir(veicoli)).filter((x) => x.endsWith('.json') && ID_VEICOLO.test(x.slice(0, -5)))) {
+      try { registro.push(await leggiJson(join(veicoli, f))); } catch { /* file rovinato */ }
+    }
+  } catch { /* nessun registro */ }
+  const pezzi = pezziDellaScena({ scontro, bozza, alTavolo, viste, veicoli: registro }, dati);
+  const immagineDi = (p) => (p.tipo === 'pg' ? (p.ritratto ? `api/ritratti/${encodeURIComponent(p.pg)}?v=${impronta(p.ritratto)}` : null) : p.ritratto);
+  // colori dei bordi dei token (src/mappa/colori.js): gli stessi della vista master
+  return { pezzi, round: scontro?.round ?? null, immagineDi, scontro, bordoDi: (p) => bordoToken(p, scena.colori, dati) };
+}
+
+/** Scena mostrata ai giocatori: quella scelta dal master (tavolo/mappa-giocatori.json) o la più recente dello scontro aperto. */
+async function scenaInGioco({ tavolo, scontri, scene }) {
+  let scelta = null;
+  try { scelta = (await leggiJson(join(tavolo, 'mappa-giocatori.json'))).scena ?? null; } catch { /* automatica */ }
+  if (scelta && ID_SCENA.test(scelta)) {
+    try { return { scelta, scena: await leggiJson(join(scene, `${scelta}.json`)) }; } catch { return { scelta, scena: null, motivo: 'La scena scelta dal master non c’è più.' }; }
+  }
+  let aperto = null;
+  try {
+    for (const f of (await readdir(scontri)).filter((x) => x.endsWith('.json'))) {
+      try { const x = await leggiJson(join(scontri, f)); if (x.stato === 'aperto') { aperto = x.id; break; } } catch { /* rovinato */ }
+    }
+  } catch { /* nessuno scontro */ }
+  if (!aperto) return { scelta: null, scena: null, motivo: 'Nessuno scontro aperto e nessuna scena scelta dal master.' };
+  let migliore = null;
+  try {
+    for (const f of (await readdir(scene)).filter((x) => x.endsWith('.json') && ID_SCENA.test(x.slice(0, -5)))) {
+      try {
+        const x = await leggiJson(join(scene, f));
+        if (x.collegamento?.scontro === aperto && (!migliore || String(x.aggiornato ?? '') > String(migliore.aggiornato ?? ''))) migliore = x;
+      } catch { /* rovinata */ }
+    }
+  } catch { /* nessuna scena */ }
+  return migliore ? { scelta: null, scena: migliore } : { scelta: null, scena: null, motivo: 'Nessuna scena collegata allo scontro aperto.' };
+}
+
+/**
+ * Canale della diretta (07/10/2026, src/mappa/diretta.js): l'ultimo stato mandato dal master, in memoria, e i flussi
+ * di eventi aperti dalle viste giocatori. Ogni cambio si filtra con la scena in gioco (letta al più ogni secondo, o
+ * subito dopo una scrittura) e va a tutti solo se il risultato filtrato cambia. Nessun file scritto.
+ */
+function creaCanaleDiretta(cartelle) {
+  const clienti = new Set();
+  let grezza = null;
+  let firma = 'null';
+  let filtrata = null;
+  let inGioco = { quando: 0, scena: null };
+  let lavoro = Promise.resolve();
+  const manda = (res, evento, dati) => { try { res.write(`event: ${evento}\ndata: ${JSON.stringify(dati)}\n\n`); } catch { clienti.delete(res); } };
+  const tutti = (evento, dati) => { for (const r of clienti) manda(r, evento, dati); };
+  const scenaAttuale = async () => {
+    if (Date.now() - inGioco.quando > 1000) {
+      let scena = null;
+      try { ({ scena } = await scenaInGioco(cartelle)); } catch { /* nessuna */ }
+      inGioco = { quando: Date.now(), scena };
+    }
+    return inGioco.scena;
+  };
+  // in fila: gli stati arrivano in ordine anche quando il master manda in fretta
+  const rifiltra = () => (lavoro = lavoro.then(async () => {
+    const nuova = grezza ? direttaPerGiocatori(grezza, await scenaAttuale()) : null;
+    const f = JSON.stringify(nuova);
+    if (f !== firma) { firma = f; filtrata = nuova; tutti('diretta', nuova); }
+  }).catch(() => {}));
+  const battito = setInterval(() => { for (const r of clienti) { try { r.write(': battito\n\n'); } catch { clienti.delete(r); } } }, 15000);
+  battito.unref?.();
+  return {
+    async api(req, res) {
+      if (req.method === 'GET') {
+        res.writeHead(200, { 'Content-Type': 'text/event-stream; charset=utf-8', 'Cache-Control': 'no-cache, no-transform', Connection: 'keep-alive', 'X-Accel-Buffering': 'no' });
+        res.write('retry: 1000\n\n');
+        clienti.add(res);
+        req.on('close', () => clienti.delete(res));
+        manda(res, 'diretta', filtrata);
+        return;
+      }
+      if (req.method !== 'PUT' && req.method !== 'POST') return json(res, 405, { errore: 'metodo non ammesso' });
+      let d;
+      try { d = JSON.parse((await leggiCorpo(req, 2 * 1024 * 1024)).toString('utf8')); } catch (e) { return json(res, 400, { errore: `contenuto non valido: ${e.message}` }); }
+      const errore = validaDiretta(d);
+      if (errore) return json(res, 400, { errore: `diretta: ${errore}` });
+      grezza = d;
+      await rifiltra();
+      return json(res, 200, { ok: true, giocatori: clienti.size });
+    },
+    /** Scena, scontro o scelta cambiati: si rilegge la scena in gioco e le viste si aggiornano. */
+    cambiata() {
+      inGioco.quando = 0;
+      tutti('aggiorna', {});
+      rifiltra();
+    },
+    chiudi() { clearInterval(battito); for (const r of clienti) { try { r.end(); } catch { /* già chiuso */ } } clienti.clear(); },
+  };
+}
+
+/** Vista giocatori (lotto 4): la scena in gioco, filtrata, e la scelta del master. */
+async function apiVistaGiocatori(req, res, percorso, cartelle) {
+  const doveScelta = join(cartelle.tavolo, 'mappa-giocatori.json');
+  if (percorso === '/api/vista-giocatori/scelta') {
+    if (req.method === 'GET') {
+      try { return json(res, 200, { scena: (await leggiJson(doveScelta)).scena ?? null }); } catch { return json(res, 200, { scena: null }); }
+    }
+    if (req.method !== 'PUT') return json(res, 405, { errore: 'metodo non ammesso' });
+    let v;
+    try { v = JSON.parse((await leggiCorpo(req)).toString('utf8')); } catch (e) { return json(res, 400, { errore: `contenuto non valido: ${e.message}` }); }
+    const scena = v?.scena ?? null;
+    if (scena !== null && !(typeof scena === 'string' && ID_SCENA.test(scena))) return json(res, 400, { errore: 'scena: id di una scena o null (automatica)' });
+    if (scena) { try { await stat(join(cartelle.scene, `${scena}.json`)); } catch { return json(res, 404, { errore: 'scena non trovata' }); } }
+    await mkdir(cartelle.tavolo, { recursive: true });
+    await scriviJson(doveScelta, { versione: 1, scena });
+    cartelle.canale?.cambiata();
+    return json(res, 200, { scena });
+  }
+  if (percorso === '/api/vista-giocatori/diretta') return cartelle.canale.api(req, res);
+  if (percorso !== '/api/vista-giocatori' || req.method !== 'GET') return json(res, 405, { errore: 'metodo non ammesso' });
+  const { scelta, scena, motivo } = await scenaInGioco(cartelle);
+  const corpo = { scelta, scena: scena ? vistaGiocatori(scena, await contestoScena(scena, cartelle)) : null, ...(motivo ? { motivo } : {}) };
+  const firma = impronta(JSON.stringify(corpo));
+  if (new URL(req.url, 'http://x').searchParams.get('firma') === firma) return json(res, 200, { firma, invariata: true });
+  return json(res, 200, { firma, ...corpo });
+}
+
+/** Ritratto di un PG (data URL della scheda) come immagine, per i token della vista giocatori. */
+async function apiRitratto(req, res, percorso, { cartella, radice }) {
+  if (req.method !== 'GET') return json(res, 405, { errore: 'metodo non ammesso' });
+  const chiave = decodeURIComponent(percorso.slice('/api/ritratti/'.length));
+  const { dati } = await datiDelServer(radice);
+  const vista = (await vistePg([chiave], cartella, dati, null)).get(chiave);
+  const m = /^data:(image\/(?:png|jpeg|webp|gif));base64,(.+)$/.exec(vista?.ritratto ?? '');
+  if (!m) return json(res, 404, { errore: 'ritratto non trovato' });
+  const corpo = Buffer.from(m[2], 'base64');
+  res.writeHead(200, { 'Content-Type': m[1], 'Content-Length': corpo.length, 'Cache-Control': 'public, max-age=86400' });
+  return res.end(corpo);
+}
+
+/** Nome leggibile per il file di una mappa: minuscole senza accenti, cifre e trattini. */
+const nomeMappa = (t) => String(t ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+  .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60) || 'mappa';
+
+/**
+ * Immagini delle mappe (§4 della specifica): si accettano solo JPG, PNG e WEBP veri (intestazione letta da
+ * src/mappa/immagine.js), entro data/mappa.json → immagini.massimo_mb. Il nome contiene l'impronta del contenuto:
+ * lo stesso file caricato due volte non si duplica e il browser lo tiene in cache. Non si cancella nulla.
+ */
+async function apiMappe(req, res, percorso, mappe, radice) {
+  if (percorso === '/api/mappe' && req.method === 'GET') {
+    await mkdir(mappe, { recursive: true });
+    const lista = [];
+    for (const file of (await readdir(mappe)).filter((x) => FILE_MAPPA.test(x))) {
+      const st = await stat(join(mappe, file));
+      lista.push({ file, dimensione: st.size, mtime: st.mtimeMs });
+    }
+    return json(res, 200, lista.sort((a, b) => b.mtime - a.mtime));
+  }
+  if (percorso === '/api/mappe' && req.method === 'POST') {
+    const { dati } = await datiDelServer(radice);
+    const I = dati.mappa.immagini;
+    let corpo;
+    try { corpo = await leggiCorpo(req, I.massimo_mb * 1024 * 1024); } catch (e) {
+      return json(res, e.codice ?? 400, { errore: e.codice === 413 ? `immagine troppo grande: al massimo ${I.massimo_mb} MB` : e.message });
+    }
+    const d = dimensioniImmagine(new Uint8Array(corpo.buffer, corpo.byteOffset, corpo.length));
+    if (!d || !I.tipi[d.tipo]) return json(res, 415, { errore: 'immagine non riconosciuta: solo JPG, PNG o WEBP' });
+    const parametri = new URL(req.url, 'http://x').searchParams;
+    const ridotta = parametri.get('ridotta') === '1';
+    if (ridotta && Math.max(d.larghezza, d.altezza) > I.ridotta.lato_massimo_px) {
+      return json(res, 400, { errore: `copia ridotta: lato massimo ${I.ridotta.lato_massimo_px} pixel, questa ne ha ${Math.max(d.larghezza, d.altezza)}` });
+    }
+    const impronta = createHash('sha256').update(corpo).digest('hex').slice(0, 12);
+    const file = `${nomeMappa(parametri.get('nome'))}-${impronta}${ridotta ? '-ridotta' : ''}.${I.tipi[d.tipo].estensione}`;
+    await mkdir(mappe, { recursive: true });
+    const dove = join(mappe, file);
+    await inCoda(dove, async () => { try { await stat(dove); } catch { await scriviAtomico(dove, corpo); } });
+    return json(res, 200, { file, tipo: d.tipo, larghezza: d.larghezza, altezza: d.altezza, dimensione: corpo.length });
+  }
+  const m = /^\/api\/mappe\/([^/]+)$/.exec(percorso);
+  if (!m || !FILE_MAPPA.test(m[1])) return json(res, 400, { errore: 'nome di immagine non valido' });
+  if (req.method !== 'GET' && req.method !== 'HEAD') return json(res, 405, { errore: 'metodo non ammesso' });
+  let st;
+  try { st = await stat(join(mappe, m[1])); } catch { return json(res, 404, { errore: 'immagine non trovata' }); }
+  res.writeHead(200, { 'Content-Type': TIPI[extname(m[1])], 'Content-Length': st.size, 'Cache-Control': 'public, max-age=31536000, immutable' });
+  if (req.method === 'HEAD') return res.end();
+  return res.end(await readFile(join(mappe, m[1])));
 }
 
 /**
@@ -344,7 +727,14 @@ async function caricaEsempi(radice, cartella, nemici) {
   return { copiati, saltati };
 }
 
-async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice, soloLocale, veicoli, migraIn = null) {
+async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice, soloLocale, veicoli, migraIn = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), canale = null) {
+  const cartelle = { cartella, tavolo, scontri, veicoli, scene, radice, canale };
+  // diretta (07/10): dopo una scrittura riuscita di scena o scontro la vista giocatori si rilegge subito
+  const segnala = (r) => { if (req.method !== 'GET' && res.statusCode < 300) canale?.cambiata(); return r; };
+  if (percorso === '/api/scene' || percorso.startsWith('/api/scene/')) return segnala(await apiScene(req, res, percorso, scene, mappe, radice, cartelle));
+  if (percorso === '/api/vista-giocatori' || percorso.startsWith('/api/vista-giocatori/')) return apiVistaGiocatori(req, res, percorso, cartelle);
+  if (percorso.startsWith('/api/ritratti/')) return apiRitratto(req, res, percorso, cartelle);
+  if (percorso === '/api/mappe' || percorso.startsWith('/api/mappe/')) return apiMappe(req, res, percorso, mappe, radice);
   if (percorso === '/api/veicoli' || percorso.startsWith('/api/veicoli/')) return apiVeicoli(req, res, percorso, veicoli);
   if (percorso === '/api/rete') {
     const porta = req.socket.localPort;
@@ -352,7 +742,7 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
   }
   if (percorso === '/api/esempi') return req.method === 'POST' ? json(res, 200, await caricaEsempi(radice, cartella, nemici)) : json(res, 405, { errore: 'metodo non ammesso' });
   if (percorso === '/api/nemici' || percorso.startsWith('/api/nemici/')) return apiNemici(req, res, percorso, nemici, radice);
-  if (percorso === '/api/scontri' || percorso.startsWith('/api/scontri/')) return apiScontri(req, res, percorso, scontri);
+  if (percorso === '/api/scontri' || percorso.startsWith('/api/scontri/')) return segnala(await apiScontri(req, res, percorso, scontri));
   if (percorso === '/api/tavolo') {
     const dove = join(tavolo, 'sessione.json');
     if (req.method === 'GET') {
@@ -366,9 +756,7 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
       let v;
       try { v = selezione(JSON.parse((await leggiCorpo(req)).toString('utf8'))); } catch (e) { return json(res, 400, { errore: e.message }); }
       await mkdir(tavolo, { recursive: true });
-      const tmp = `${dove}.tmp-${process.pid}`;
-      await writeFile(tmp, `${JSON.stringify(v, null, 2)}\n`);
-      await rename(tmp, dove);
+      await inCoda(dove, () => scriviJson(dove, v));
       if (v.personaggi.length) await migraVeicoliCartella({ cartella, veicoli: migraIn, radice, chiavi: v.personaggi }).catch(() => null);
       return json(res, 200, v);
     }
@@ -420,39 +808,40 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
     if (altro) return json(res, 409, { errore: altro, altroPersonaggio: true });
     // revisione (Tavolo del Master, pezzo 4): la plancia scrive solo se il file è quello che ha letto
     // «Aggiungi PG al tavolo»: un file nuovo non sovrascrive mai quello che c'è già
-    if (req.headers['x-mutant-nuovo'] === '1' && await stat(dove).then(() => true, () => false)) {
-      return json(res, 409, { errore: 'esiste già un file con questo nome: non sovrascritto', esiste: true });
-    }
-    const attesa = req.headers['x-mutant-mtime'];
-    if (attesa !== undefined) {
-      const attuale = await stat(dove).then((s) => String(s.mtimeMs), () => null);
-      if (attuale !== attesa) return json(res, 409, { errore: 'il personaggio è stato cambiato altrove: rileggi', mtime: attuale });
-    }
-    await mkdir(cartella, { recursive: true });
-    // scrittura atomica: un file temporaneo e poi la rinomina, così una lettura non vede mai mezzo file
-    const tmp = `${dove}.tmp-${process.pid}`;
-    await writeFile(tmp, corpo);
-    await rename(tmp, dove);
-    const s = await stat(dove);
-    // il PG ha preso il nome: i suoi file provvisori «personaggio_…» (versioni precedenti) diventano questo, non restano accanto
-    const rinominati = [];
-    if (typeof o.pg === 'string' && !fileProvvisorio(file)) {
-      for (const x of (await readdir(cartella)).filter((n) => n !== file && NOME_FILE.test(n) && fileProvvisorio(n))) {
-        if ((await personaggioDelFile(join(cartella, x))).pg !== o.pg) continue;
-        try { await unlink(join(cartella, x)); cacheFile.delete(join(cartella, x)); rinominati.push(x); } catch { /* resta: niente di grave */ }
+    // in coda sul file: controllo della data (revisione) e scrittura senza sovrapposizioni
+    return inCoda(dove, async () => {
+      if (req.headers['x-mutant-nuovo'] === '1' && await stat(dove).then(() => true, () => false)) {
+        return json(res, 409, { errore: 'esiste già un file con questo nome: non sovrascritto', esiste: true });
       }
-    }
-    return json(res, 200, { file, mtime: s.mtimeMs, ...(rinominati.length ? { rinominati } : {}) });
+      const attesa = req.headers['x-mutant-mtime'];
+      if (attesa !== undefined) {
+        const attuale = await stat(dove).then((s) => String(s.mtimeMs), () => null);
+        if (attuale !== attesa) return json(res, 409, { errore: 'il personaggio è stato cambiato altrove: rileggi', mtime: attuale });
+      }
+      await mkdir(cartella, { recursive: true });
+      // scrittura atomica: un file temporaneo e poi la rinomina, così una lettura non vede mai mezzo file
+      await scriviAtomico(dove, corpo);
+      const s = await stat(dove);
+      // il PG ha preso il nome: i suoi file provvisori «personaggio_…» (versioni precedenti) diventano questo, non restano accanto
+      const rinominati = [];
+      if (typeof o.pg === 'string' && !fileProvvisorio(file)) {
+        for (const x of (await readdir(cartella)).filter((n) => n !== file && NOME_FILE.test(n) && fileProvvisorio(n))) {
+          if ((await personaggioDelFile(join(cartella, x))).pg !== o.pg) continue;
+          try { await unlink(join(cartella, x)); cacheFile.delete(join(cartella, x)); rinominati.push(x); } catch { /* resta: niente di grave */ }
+        }
+      }
+      return json(res, 200, { file, mtime: s.mtimeMs, ...(rinominati.length ? { rinominati } : {}) });
+    });
   }
   return json(res, 405, { errore: 'metodo non ammesso' });
 }
 
-async function statico(req, res, percorso, radice) {
+async function statico(req, res, percorso, radice, versioneAvvio = null) {
   if (req.method !== 'GET' && req.method !== 'HEAD') return json(res, 405, { errore: 'metodo non ammesso' });
   let rel = percorso === '/' ? '/index.html' : percorso;
   // niente uscite dalla cartella del progetto, niente file nascosti né la cartella dei personaggi (passa dall'API)
   const pieno = normalize(join(radice, rel));
-  if (!pieno.startsWith(radice) || rel.split('/').some((p) => p.startsWith('.')) || rel.startsWith(`/${CARTELLA}/`) || rel.startsWith(`/${TAVOLO}/`) || rel.startsWith(`/${SCONTRI}/`) || rel.startsWith(`/${NEMICI}/`)) {
+  if (!pieno.startsWith(radice) || rel.split('/').some((p) => p.startsWith('.')) || rel.startsWith(`/${CARTELLA}/`) || rel.startsWith(`/${TAVOLO}/`) || rel.startsWith(`/${SCONTRI}/`) || rel.startsWith(`/${NEMICI}/`) || rel.startsWith(`/${VEICOLI}/`) || rel.startsWith(`/${SCENE}/`) || rel.startsWith(`/${MAPPE}/`)) {
     res.writeHead(404); return res.end('Non trovato');
   }
   try {
@@ -464,6 +853,9 @@ async function statico(req, res, percorso, radice) {
     // un server statico qualunque: senza server nessuna richiesta fallita e nessun errore in console
     const intestazioni = { 'Content-Type': TIPI[est] ?? 'application/octet-stream', 'Content-Length': s.size, 'X-Mutant-Server': '1' };
     if (NO_CACHE.has(est)) intestazioni['Cache-Control'] = 'no-cache';
+    // la versione dell'app con cui questo server è stato acceso: se versione.json sul disco è cambiato (aggiornamento
+    // senza riavvio), l'app lo vede e chiede di riavviare avvia-server.bat (src/versione.js → serverDaRiavviare)
+    if (rel === '/versione.json' && versioneAvvio) intestazioni['X-Mutant-Versione-Server'] = versioneAvvio;
     res.writeHead(200, intestazioni);
     if (req.method === 'HEAD') return res.end();
     return res.end(await readFile(file));
@@ -477,8 +869,11 @@ async function statico(req, res, percorso, radice) {
  * Crea il server. `radice`: cartella dell'app; `cartella`: dove stanno i personaggi (per i test, una
  * cartella temporanea).
  */
-export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA), tavolo = join(RADICE, TAVOLO), scontri = join(RADICE, SCONTRI), nemici = join(RADICE, NEMICI), veicoli: veicoliDati = null, soloLocale = false } = {}) {
+export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA), tavolo = join(RADICE, TAVOLO), scontri = join(RADICE, SCONTRI), nemici = join(RADICE, NEMICI), veicoli: veicoliDati = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), soloLocale = false } = {}) {
   const veicoli = veicoliDati ?? join(RADICE, VEICOLI);
+  // versione dell'app all'accensione (versione.json): il codice del server resta questo finché non lo si riavvia
+  let versioneAvvio = null;
+  try { versioneAvvio = JSON.parse(readFileSync(join(radice, 'versione.json'), 'utf8')).versione ?? null; } catch { /* senza versione.json: nessun controllo */ }
   // A.91: la migrazione dei veicoli scrive nel registro solo se la sua cartella è indicata o con le cartelle del
   // progetto (un server di prova su un'altra cartella dei PG non tocca veicoli/ del progetto)
   const migraIn = veicoliDati ?? (normalize(cartella) === normalize(join(RADICE, CARTELLA)) ? veicoli : null);
@@ -486,21 +881,23 @@ export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA),
   const migrazione = migraVeicoliCartella({ cartella, veicoli: migraIn, radice }).catch((e) => ({ errore: e.message }));
   const base = normalize(radice.endsWith(sep) ? radice : radice + sep);
   // chi è questo server (per un nuovo avvio che trova la porta occupata, src/porta-occupata.js)
-  let versione = null;
-  try { versione = JSON.parse(readFileSync(join(radice, 'versione.json'), 'utf8')).versione ?? null; } catch { /* senza versione.json */ }
-  const identita = { versione, avviato: new Date().toISOString(), pid: process.pid };
+  const identita = { versione: versioneAvvio, avviato: new Date().toISOString(), pid: process.pid };
+  const canale = creaCanaleDiretta({ tavolo, scontri, scene });
   const server = createServer(async (req, res) => {
     try {
       const percorso = decodeURI(new URL(req.url, 'http://x').pathname);
       if (percorso === '/api/ping') return json(res, 200, { ok: true, app: 'mutant', cartella: CARTELLA, ...identita });
-      if (percorso.startsWith('/api/')) return await api(req, res, percorso, cartella, tavolo, scontri, nemici, base, soloLocale, veicoli, migraIn);
-      return await statico(req, res, percorso, base);
+      if (percorso.startsWith('/api/')) return await api(req, res, percorso, cartella, tavolo, scontri, nemici, base, soloLocale, veicoli, migraIn, scene, mappe, canale);
+      return await statico(req, res, percorso, base, versioneAvvio);
     } catch (e) {
       if (!res.headersSent) json(res, 500, { errore: e.message });
       else res.end();
     }
   });
   server.migrazione = migrazione; // per i test e per il messaggio di avvio
+  // i flussi della diretta restano aperti: chiudendo il server si chiudono anche loro
+  const chiudi = server.close.bind(server);
+  server.close = (cb) => { canale.chiudi(); return chiudi(cb); };
   return server;
 }
 
@@ -518,7 +915,9 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const scontri = arg('scontri') ? normalize(arg('scontri')) : join(RADICE, SCONTRI);
   const nemici = arg('nemici') ? normalize(arg('nemici')) : join(RADICE, NEMICI);
   const veicoli = arg('veicoli') ? normalize(arg('veicoli')) : join(RADICE, VEICOLI);
-  const server = creaServer({ cartella, tavolo, scontri, nemici, veicoli, soloLocale });
+  const scene = arg('scene') ? normalize(arg('scene')) : join(RADICE, SCENE);
+  const mappe = arg('mappe') ? normalize(arg('mappe')) : join(RADICE, MAPPE);
+  const server = creaServer({ cartella, tavolo, scontri, nemici, veicoli, scene, mappe, soloLocale });
   // si spegne quando si chiude la finestra di avvia-server.bat (o con Ctrl+C), senza restare in ascolto da solo
   const esci = (perche) => {
     console.log(`\nMutant si spegne (${perche}).`);
