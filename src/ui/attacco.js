@@ -293,16 +293,17 @@ function corpoDistanza(ctx, a, intestazione) {
  */
 function promemoriaAR(ctx, a) {
   const testo = ctx.dati.regole.ar?.promemoria_danno;
-  // A.50: ordine delle riduzioni dell'AR del bersaglio (regole.json → ar.ordine_riduzioni), aperto
-  // quando l'arma o la munizione ha una delle proprietà che lo toccano; nessun calcolo del danno
+  // A.50: ordine delle riduzioni dell'AR del bersaglio (regole.json → ar.ordine_riduzioni); parte chiuso anche quando
+  // l'arma o la munizione ha una delle proprietà che lo toccano (richiesta di Marcello del 07/10: allungava molto la
+  // colonna «Risultato»), e in quel caso il titolo lo segnala; nessun calcolo del danno
   const o = ctx.dati.regole.ar?.ordine_riduzioni;
   const nomi = [...(a.proprieta ?? []).map((p) => String(p.nome ?? p)), ...(a.munizioneRiferimento?.proprieta ?? []).map(String)];
   const pertinente = !!o && o.proprieta.some((x) => nomi.some((n) => n.startsWith(x)));
   return [
     a.rotta ? h('div', { class: 'riquadro attenzione' }, h('p', {}, h('strong', {}, `${a.nome} è Rotta (0 PI): `), 'non può essere utilizzata finché non viene riparata (Armamenti §7.2.1).')) : null,
     testo ? h('p', { class: 'nota promemoria-ar' }, h('strong', {}, 'Armatura del bersaglio: '), testo) : null,
-    o ? h('details', { class: 'nota promemoria-ar', open: pertinente || null },
-      h('summary', {}, 'Perforante, Laser, Incendiato: ordine delle riduzioni dell’AR (A.50)'),
+    o ? h('details', { class: 'nota promemoria-ar' },
+      h('summary', {}, 'Perforante, Laser, Incendiato: ordine delle riduzioni dell’AR (A.50)', pertinente ? h('strong', {}, ' · vale per quest’arma') : null),
       h('ol', {}, o.passi.map((x) => h('li', {}, x))),
       h('p', {}, h('em', {}, 'Esempio: '), o.esempio),
       h('p', {}, o.incendiato)) : null,
