@@ -456,14 +456,9 @@
   },
   "visuale": {
     "_nota": "Linea di visuale e di tiro (fase 2, lotto 3; src/mappa/visuale.js). Dai manuali: Giocatore §5.8 («Leggera −2 VA», «Media −4 VA», «Totale: il bersaglio non può essere attaccato direttamente»; «La Copertura è direzionale, non costituisce Armatura e più Coperture non si sommano»), §5.10 (bersaglio «protetto da un alleato» −4 VA), §5.11 (gittata a fasce), Scarto e A.124 (diagonale 1 Q). Nessun manuale dice come si legge la Copertura sulla griglia: la regola sotto è provvisoria.",
-    "copertura_linee": [
-      "nessuna",
-      "leggera",
-      "leggera",
-      "media",
-      "totale"
-    ],
-    "TODO(Davide) copertura": "A.140: come si stabilisce la Copertura sulla griglia? Provvisorio «dagli angoli»: da ogni angolo del Q di chi tira quattro linee verso gli angoli del bersaglio; vale l’angolo migliore per chi tira; linee bloccate da muri o porte chiuse 0 = nessuna, 1–2 = Leggera, 3 = Media, 4 = Totale. Sfiorare il bordo di un muro non blocca.",
+    "_nota_copertura": "Copertura «dal centro» (decisione di Marcello del 07/10/2026, al posto di «dagli angoli»): dal centro del Q di chi tira cinque linee, verso i quattro angoli e il centro dell'ingombro del bersaglio; contano quelle che attraversano un muro o una porta chiusa (sfiorare il bordo non blocca). copertura_linee dà il livello per 0, 1, 2, 3, 4, 5 linee bloccate. Chi tira con un ingombro grande parte dal centro del suo Q più favorevole. La nebbia automatica parte dallo stesso punto (il centro del Q del PG) verso il centro di ogni Q.",
+  "copertura_linee": ["nessuna", "leggera", "leggera", "media", "media", "totale"],
+  "TODO(Davide) copertura": "A.140: come si stabilisce la Copertura sulla griglia? Provvisorio «dal centro» (punto di partenza deciso da Marcello il 07/10): dal centro del Q di chi tira cinque linee verso i quattro angoli e il centro del bersaglio; linee bloccate da muri o porte chiuse 0 = nessuna, 1–2 = Leggera, 3–4 = Media, 5 = Totale. Sfiorare il bordo di un muro non blocca.",
     "token_in_mezzo": "protetto",
     "TODO(Davide) token in mezzo": "A.141: i token fra chi tira e il bersaglio danno Copertura? Provvisorio: no (il §5.8 parla di ostacoli); la linea li segnala come possibile «bersaglio protetto da un alleato» del §5.10 (−4 VA), da decidere al tavolo.",
     "campioni_per_q": 10,

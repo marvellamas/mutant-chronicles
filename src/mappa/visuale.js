@@ -5,13 +5,16 @@
 // direzionale»), la gittata (§5.11, fasce dei 10, 20, 40… Q) e la diagonale da 1 Q (§5.10, Scarto; A.124). La regola
 // sulla griglia è quindi provvisoria e sta nei dati (data/mappa.json → visuale, TODO(Davide) A.140 e A.141):
 //   - ostacoli alla vista: i muri e le porte negli stati che bloccano la vista (porte.bloccano_vista; aperte libere);
-//   - Copertura «dagli angoli»: per ogni angolo dell'ingombro di chi tira si tracciano le linee verso i quattro angoli
-//     dell'ingombro del bersaglio e si contano quelle che attraversano un Q ostacolo (sfiorarne il bordo non conta);
-//     vale l'angolo migliore per chi tira; il numero di linee bloccate (0–4) dà il livello (visuale.copertura_linee);
+//   - Copertura «dal centro» (decisione di Marcello del 07/10/2026, al posto di «dagli angoli»): dal centro del Q di chi
+//     tira si tracciano cinque linee, verso i quattro angoli e il centro dell'ingombro del bersaglio, e si contano quelle
+//     che attraversano un Q ostacolo (sfiorarne il bordo non conta); il numero di linee bloccate (0–5) dà il livello
+//     (visuale.copertura_linee). Chi tira con un ingombro grande (2 × 2, 3 × 3, veicoli) parte dal centro del suo Q più
+//     favorevole (quello con meno linee bloccate): come sporgersi dal proprio spazio;
 //   - i token in mezzo non danno Copertura (il §5.8 parla di ostacoli): segnalano il bersaglio «protetto» del §5.10
 //     (−4 VA), da decidere al tavolo;
 //   - distanza fra gli ingombri con la diagonale da 1 Q;
-//   - visuale dei PG (nebbia automatica): raggi dal centro del Q verso ogni Q entro il raggio, attraversando la griglia
+//   - visuale dei PG (nebbia automatica, motore a parte ma stesso punto di partenza): raggi dal centro del Q del PG
+//     (di ogni Q, per un ingombro grande) verso il centro di ogni Q entro il raggio, attraversando la griglia
 //     Q per Q (si vede il Q ostacolo, non oltre; fra due ostacoli in diagonale non si passa). Le luci (prossimo lotto:
 //     penombra, buio) entreranno con `luce`, una funzione del Q che potrà ridurre il raggio o togliere Q.
 import { daBase64, cella, impostaCella } from './celle.js';
@@ -55,18 +58,25 @@ const angoli = (t) => { const [w, h] = dimensioni(t.ingombro); const [x, y] = t.
 /** Centro dell'ingombro (in Q). */
 export const centro = (t) => { const [w, h] = dimensioni(t.ingombro); return [t.q[0] + w / 2, t.q[1] + h / 2]; };
 
+/** Centri dei Q dell'ingombro (in Q): i punti da cui può tirare un token grande. */
+export const centriQ = (t) => celleToken(t).map(([x, y]) => [x + 0.5, y + 0.5]);
+/** I cinque punti del bersaglio: i quattro angoli e il centro del suo ingombro. */
+export const puntiBersaglio = (t) => [...angoli(t), centro(t)];
+
 /**
- * Copertura del bersaglio `a` per chi tira da `da` (token: { q, ingombro }), con l'algoritmo degli angoli.
- * @param regole data/mappa.json → visuale
- * @returns { livello: nessuna | leggera | media | totale, bloccate: 0–4, angolo, linee: [{ da, a, bloccata }] }
+ * Copertura del bersaglio `a` per chi tira da `da` (token: { q, ingombro }), «dal centro»: cinque linee dal centro del
+ * Q di chi tira (il più favorevole, per un ingombro grande) ai quattro angoli e al centro del bersaglio.
+ * @param regole data/mappa.json → visuale (copertura_linee: livello per 0–5 linee bloccate)
+ * @returns { livello: nessuna | leggera | media | totale, bloccate: 0–5, origine: [x, y] in Q, linee: [{ da, a, bloccata }] }
  */
 export function copertura(scena, da, a, ost, regole) {
   const { colonne: C, righe: R } = scena.griglia;
+  const verso = puntiBersaglio(a);
   let migliore = null;
-  for (const p of angoli(da)) {
-    const linee = angoli(a).map((q) => ({ da: p, a: q, bloccata: segmentoBloccato(ost, C, R, p, q, regole.campioni_per_q) }));
+  for (const p of centriQ(da)) {
+    const linee = verso.map((q) => ({ da: p, a: q, bloccata: segmentoBloccato(ost, C, R, p, q, regole.campioni_per_q) }));
     const bloccate = linee.filter((l) => l.bloccata).length;
-    if (!migliore || bloccate < migliore.bloccate) migliore = { bloccate, angolo: p, linee };
+    if (!migliore || bloccate < migliore.bloccate) migliore = { bloccate, origine: p, linee };
     if (bloccate === 0) break;
   }
   return { livello: regole.copertura_linee[migliore.bloccate], ...migliore };
@@ -97,7 +107,7 @@ export function lineaDiTiro(scena, da, verso, ost, regole) {
   const cop = copertura(scena, da, a, ost, regole);
   return {
     distanza: distanzaIngombri(da.q, da.ingombro, a.q, a.ingombro),
-    copertura: cop.livello, bloccate: cop.bloccate, linee: cop.linee, angolo: cop.angolo,
+    copertura: cop.livello, bloccate: cop.bloccate, linee: cop.linee, origine: cop.origine,
     vista: cop.livello === 'totale' ? 'bloccata' : cop.livello === 'nessuna' ? 'libera' : 'parziale',
     inMezzo: tokenInMezzo(scena, da, a, regole),
   };

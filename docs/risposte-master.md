@@ -1091,10 +1091,10 @@ dell'aspetto: nel pacchetto del 07/10), A.111 (solo Pablo Zaion), A.112, A.113, 
   adiacenti alla porta per aprirla o chiuderla (1 AzP). Basta essere in diagonale rispetto al Q della porta? Provvisorio:
   sì, come la portata di 1 Q (`data/mappa.json` → porte, `TODO(Davide)`). La mano libera l'app non la controlla.
 - **A.140 — Copertura sulla griglia** (07/10/2026, linea di tiro della mappa, fase 2). Il §5.8 dà gli effetti della
-  Copertura (Leggera −2, Media −4, Totale) ma non dice come si stabilisce dalla posizione sulla mappa. Provvisorio «dagli
-  angoli»: da ogni angolo del Q di chi tira quattro linee verso gli angoli del bersaglio; vale l'angolo migliore per chi
-  tira; linee bloccate da muri o porte chiuse 0 = nessuna, 1–2 = Leggera, 3 = Media, 4 = Totale (`data/mappa.json` →
-  visuale.copertura_linee). Va bene, o serve un'altra regola (per esempio una linea sola dal centro)?
+  Copertura (Leggera −2, Media −4, Totale) ma non dice come si stabilisce dalla posizione sulla mappa. Provvisorio «dal
+  centro» (punto di partenza deciso da Marcello il 07/10, decisione 137): dal centro del Q di chi tira cinque linee verso
+  i quattro angoli e il centro del bersaglio; linee bloccate da muri o porte chiuse 0 = nessuna, 1–2 = Leggera,
+  3–4 = Media, 5 = Totale (`data/mappa.json` → visuale.copertura_linee). Va bene la tabella?
 - **A.141 — Token fra chi tira e il bersaglio** (07/10/2026). Danno Copertura? Provvisorio: no, il §5.8 parla di
   ostacoli; la linea li segnala come possibile «bersaglio protetto da un alleato» del §5.10 (−4 VA), da decidere al tavolo.
 - **A.142 — Fin dove vedono i PG** (07/10/2026, nebbia automatica). Con luce sufficiente, entro quanti Q la nebbia si
@@ -1120,6 +1120,12 @@ Marcello»: Davide può rivederle (nel pacchetto per il Doc vanno fra le Risolte
     muove all'Iniziativa del suo conducente, come già nella plancia (A.105). Solo registrazione: i veicoli sulla mappa
     sono il lotto successivo (decisione 128: rimandati), e lì si applicherà questa regola. Della A.125 resta aperta solo
     la corrispondenza delle vecchie etichette numeriche delle luci.
+137. **Linea di visuale: punto di partenza** (A.140, in parte; decisione di Marcello, 07/10). Le linee di controllo
+    partono dal centro del Q di chi tira, non da un suo vertice, verso i quattro angoli e il centro del bersaglio. Tabella
+    ricalibrata sulle cinque linee: 0 nessuna, 1–2 Leggera, 3–4 Media, 5 Totale. Token grandi: dal centro del Q
+    dell'ingombro più favorevole a chi tira; bersaglio grande ai suoi angoli e al centro. La nebbia automatica partiva già
+    dal centro del Q del PG. Resta da confermare con Davide la tabella (A.140). **Applicata** il 07/10 (branch
+    `battlemap`): `src/mappa/visuale.js` → copertura, `data/mappa.json` → visuale.copertura_linee (sei livelli).
 
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 

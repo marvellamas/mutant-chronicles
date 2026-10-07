@@ -242,11 +242,12 @@ export function disegnaPorte(c, { scena, cam, info, porte, colori }) {
 
 /**
  * Linea di tiro (fase 2, lotto 3; src/mappa/visuale.js): dal centro di chi tira al centro del bersaglio, nel colore della
- * Copertura, con l'etichetta (distanza, Copertura); `linee` (solo master): le quattro linee dall'angolo migliore,
- * tratteggiate se bloccate.
+ * Copertura, con l'etichetta (distanza, Copertura); `linee` (solo master, con «Mostra dettaglio linea di tiro»): le
+ * cinque linee di controllo dal centro del Q di chi tira, tratteggiate se bloccate; `origine` (in Q): il punto di
+ * partenza, per un ingombro grande il centro del Q più favorevole (07/10).
  * @param colori data/mappa.json → visuale.colori
  */
-export function disegnaLineaTiro(c, { scena, cam, da, a, copertura, etichetta, colori, linee = null }) {
+export function disegnaLineaTiro(c, { scena, cam, da, a, copertura, etichetta, colori, linee = null, origine = null }) {
   const g = scena.griglia;
   const sch = ([x, y]) => schermoDaMappa(cam, g.scosto_x + x * g.q_px, g.scosto_y + y * g.q_px);
   const centro = (t) => { const [w, h] = dimensioni(t.ingombro); return sch([t.q[0] + w / 2, t.q[1] + h / 2]); };
@@ -262,7 +263,7 @@ export function disegnaLineaTiro(c, { scena, cam, da, a, copertura, etichetta, c
       c.beginPath(); c.moveTo(p.x, p.y); c.lineTo(q.x, q.y); c.stroke();
     }
   }
-  const p = centro(da), q = centro(a);
+  const p = origine ? sch(origine) : centro(da), q = centro(a);
   c.globalAlpha = 1;
   c.setLineDash([]);
   c.strokeStyle = colore;

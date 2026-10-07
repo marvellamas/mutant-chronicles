@@ -2797,7 +2797,8 @@ function validaMappa(dati, err) {
   // fase 2, lotto 3: linea di visuale e di tiro (src/mappa/visuale.js)
   const VV = m.visuale ?? {};
   const LIVELLI = ['nessuna', 'leggera', 'media', 'totale'];
-  if (!Array.isArray(VV.copertura_linee) || VV.copertura_linee.length !== 5 || !VV.copertura_linee.every((x) => LIVELLI.includes(x)) || VV.copertura_linee[0] !== 'nessuna') err(F, 'visuale.copertura_linee', 'cinque livelli (0–4 linee bloccate), il primo «nessuna» (§5.8)');
+  // 07/10: «dal centro», cinque linee (quattro angoli e centro del bersaglio): sei livelli per 0–5 linee bloccate
+  if (!Array.isArray(VV.copertura_linee) || VV.copertura_linee.length !== 6 || !VV.copertura_linee.every((x) => LIVELLI.includes(x)) || VV.copertura_linee[0] !== 'nessuna' || VV.copertura_linee[5] !== 'totale') err(F, 'visuale.copertura_linee', 'sei livelli (0–5 linee bloccate), il primo «nessuna» e l’ultimo «totale» (§5.8)');
   if (!isIntero(VV.campioni_per_q) || VV.campioni_per_q < 2 || VV.campioni_per_q > 50) err(F, 'visuale.campioni_per_q', 'intero da 2 a 50');
   if (!positivo(VV.raggio_q)) err(F, 'visuale.raggio_q', 'numero positivo (Q)');
   if (!['quadretti', 'euclidea'].includes(VV.metrica)) err(F, 'visuale.metrica', 'quadretti o euclidea');

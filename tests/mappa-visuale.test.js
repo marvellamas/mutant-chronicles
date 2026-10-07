@@ -1,4 +1,4 @@
-// Linea di visuale e di tiro (fase 2, lotto 3; src/mappa/visuale.js): ostacoli (muri, porte), Copertura «dagli angoli»
+// Linea di visuale e di tiro (fase 2, lotto 3; src/mappa/visuale.js): ostacoli (muri, porte), Copertura «dal centro» (07/10)
 // (Giocatore §5.8; A.140), token in mezzo (§5.10; A.141), distanze (diagonale 1 Q), visuale dei PG e nebbia automatica,
 // tempi su una mappa grande.
 import { test } from 'node:test';
@@ -27,10 +27,11 @@ const tok = (id, q, o = {}) => ({ id, q, ingombro: 1, nascosto: false, rif: { ti
 test('dati: le regole del manuale e le provvisorie A.140, A.141, A.142', () => {
   assert.match(RV._nota, /Leggera −2 VA/);
   assert.match(RV._nota, /direzionale/);
-  assert.deepEqual(RV.copertura_linee, ['nessuna', 'leggera', 'leggera', 'media', 'totale']);
+  // 07/10, «dal centro»: cinque linee, sei livelli (0 nessuna, 1–2 Leggera, 3–4 Media, 5 Totale)
+  assert.deepEqual(RV.copertura_linee, ['nessuna', 'leggera', 'leggera', 'media', 'media', 'totale']);
   for (const [k, n] of [['copertura', 140], ['token in mezzo', 141], ['raggio', 142]]) assert.match(RV[`TODO(Davide) ${k}`], new RegExp(`^A\\.${n}`));
   const d = copia(dati);
-  d.mappa.visuale.copertura_linee = ['leggera', 'leggera', 'media', 'totale', 'totale'];
+  d.mappa.visuale.copertura_linee = ['nessuna', 'leggera', 'leggera', 'media', 'totale'];
   assert.ok(validaDati(d).some((e) => e.file === 'mappa.json' && e.chiave === 'visuale.copertura_linee'));
 });
 
@@ -47,24 +48,45 @@ test('ostacoli: il muro e la porta chiusa o bloccata bloccano, la porta aperta n
   assert.ok(cella(ostacoliVista(s, RP, { perGiocatori: true }), C, R, 10, 6));
 });
 
-test('Copertura dagli angoli: nessuna in campo aperto, Leggera, Media e Totale dietro il muro', () => {
+test('Copertura dal centro (07/10): cinque linee dal centro di chi tira verso angoli e centro del bersaglio', () => {
   const s = { ...nuovaScena({ id: 'c', nome: 'C', colonne: C, righe: R, dati }), revisione: 0 };
   const chi = tok('a', [2, 5]);
   const vuoto = ostacoliVista(s, RP);
-  assert.equal(copertura(s, chi, tok('b', [8, 5]), vuoto, RV).livello, 'nessuna');
-  // un muro di 1 Q fra i due, sulla stessa riga: tutte e quattro le linee da ogni angolo lo attraversano? no: quelle
-  // dagli angoli lo aggirano in parte
+  const libera = copertura(s, chi, tok('b', [8, 5]), vuoto, RV);
+  assert.deepEqual([libera.livello, libera.bloccate, libera.origine, libera.linee.length], ['nessuna', 0, [2.5, 5.5], 5]);
+  assert.deepEqual(libera.linee.map((l) => l.a), [[8, 5], [9, 5], [8, 6], [9, 6], [8.5, 5.5]], 'quattro angoli e il centro');
+  const liv = (q, da = chi) => { const r = copertura(s, da, tok('b', q), ostacoliVista(s, RP), RV); return `${r.livello}/${r.bloccate}`; };
+  // un pilastro di 1 Q sulla stessa riga: dal centro non ci si sporge, Totale; una riga sopra o sotto, Media; due, nessuna
   s.muri = inBase64(rettangolo(nuovaMaschera(C, R), C, R, 5, 5, 5, 5, true));
-  const uno = copertura(s, chi, tok('b', [8, 5]), ostacoliVista(s, RP), RV);
-  assert.ok(['leggera', 'media'].includes(uno.livello), uno.livello);
-  // un muro alto 3 Q: Totale
+  assert.deepEqual([liv([8, 5]), liv([8, 6]), liv([8, 4]), liv([8, 7])], ['totale/5', 'media/3', 'media/3', 'nessuna/0']);
+  // muro a metà (colonna 5, righe 0–5): il bersaglio subito sotto la fine del muro è coperto in parte
+  s.muri = inBase64(rettangolo(nuovaMaschera(C, R), C, R, 5, 0, 5, 5, true));
+  assert.deepEqual([liv([8, 5]), liv([8, 6]), liv([7, 6]), liv([6, 6])], ['totale/5', 'media/3', 'leggera/2', 'leggera/2']);
+  // dietro lo spigolo di un muro alto 5 Q (righe 3–7): la Copertura cala allontanandosi dalla fine del muro
   s.muri = inBase64(rettangolo(nuovaMaschera(C, R), C, R, 5, 3, 5, 7, true));
-  const tre = copertura(s, chi, tok('b', [8, 5]), ostacoliVista(s, RP), RV);
-  assert.equal(tre.livello, 'totale');
-  assert.equal(tre.bloccate, 4);
-  // oltre l'estremità del muro la Copertura cala: Media (3 linee), Leggera (1–2), nessuna
-  const liv = (q) => copertura(s, chi, tok('b', q), ostacoliVista(s, RP), RV);
-  assert.deepEqual([liv([6, 8]).livello, liv([7, 9]).livello, liv([6, 9]).livello, liv([6, 10]).livello], ['media', 'leggera', 'leggera', 'nessuna']);
+  assert.deepEqual([liv([8, 5]), liv([7, 8]), liv([6, 8]), liv([6, 9]), liv([6, 10])], ['totale/5', 'totale/5', 'media/4', 'leggera/1', 'nessuna/0']);
+});
+
+test('Copertura e porte (07/10): la porta chiusa blocca tutte le linee, quella aperta è un varco largo 1 Q', () => {
+  const da = tok('a', [8, 6]);
+  const liv = (sc, q) => { const r = copertura(sc, da, tok('b', q), ostacoliVista(sc, RP), RV); return `${r.livello}/${r.bloccate}`; };
+  const aperta = scena('aperta');
+  assert.deepEqual([liv(scena('chiusa'), [14, 6]), liv(scena('bloccata'), [14, 6]), liv(aperta, [14, 6]), liv(aperta, [14, 7]), liv(aperta, [14, 4])],
+    ['totale/5', 'totale/5', 'nessuna/0', 'leggera/2', 'totale/5']);
+});
+
+test('token grandi (07/10): chi tira parte dal centro del suo Q più favorevole; il bersaglio grande con i suoi angoli e il centro', () => {
+  const s = { ...nuovaScena({ id: 'g', nome: 'G', colonne: C, righe: R, dati }), revisione: 0 };
+  s.muri = inBase64(rettangolo(nuovaMaschera(C, R), C, R, 5, 0, 5, 4, true));
+  const ost = ostacoliVista(s, RP);
+  const b = tok('b', [8, 5]);
+  const piccolo = copertura(s, tok('a', [2, 4]), b, ost, RV);
+  const grande = copertura(s, tok('a', [2, 4], { ingombro: 2 }), b, ost, RV);
+  assert.deepEqual([piccolo.livello, piccolo.bloccate], ['media', 3]);
+  assert.deepEqual([grande.livello, grande.bloccate, grande.origine], ['nessuna', 0, [2.5, 5.5]], 'dal Q (2, 5), il primo senza linee bloccate');
+  // bersaglio 2 × 2: angoli dell'ingombro e il suo centro
+  const g = copertura(s, tok('a', [2, 8]), tok('b', [8, 8], { ingombro: 2 }), ost, RV);
+  assert.deepEqual(g.linee.map((l) => l.a), [[8, 8], [10, 8], [8, 10], [10, 10], [9, 9]]);
 });
 
 test('linea di tiro: distanza con la diagonale da 1 Q, vista, token in mezzo segnalati (non Copertura)', () => {

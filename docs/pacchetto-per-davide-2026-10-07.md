@@ -183,7 +183,7 @@ Per aprire o chiudere una porta (1 AzP, A.125) bisogna esserle adiacenti. Basta 
 *Nel frattempo:* sì, come per la portata di 1 Q. La mano libera la controlla il master.
 
 **A.140 — Copertura sulla mappa.**
-Il §5.8 dice quanto vale la Copertura (Leggera −2, Media −4, Totale) ma non come si decide guardando la mappa. Proposta: dagli angoli del quadretto di chi tira si tracciano quattro linee verso gli angoli del bersaglio; contano le linee che passano per muri o porte chiuse; 0 = nessuna, 1–2 = Leggera, 3 = Media, 4 = Totale. Va bene così?
+Il §5.8 dice quanto vale la Copertura (Leggera −2, Media −4, Totale) ma non come si decide guardando la mappa. Proposta (il punto di partenza l'ha deciso Marcello il 07/10): dal centro del quadretto di chi tira si tracciano cinque linee, verso i quattro angoli e il centro del quadretto del bersaglio; contano le linee che passano per muri o porte chiuse; 0 = nessuna, 1–2 = Leggera, 3–4 = Media, 5 = Totale. Va bene così?
 *Nel frattempo:* si usa questa regola; il master può cambiare la Copertura nel pannello «Attacca!».
 
 **A.141 — Personaggi in mezzo alla linea di tiro.**

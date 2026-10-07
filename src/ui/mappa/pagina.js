@@ -157,6 +157,8 @@ export function renderMappa(radice, ctx) {
   st.mostraArea = leggiLocale('mutant-mappa-mostra-area') !== false;
   st.mostraZoc = leggiLocale('mutant-mappa-mostra-zoc') !== false;
   st.mostraPv = leggiLocale('mutant-mappa-mostra-pv') !== false;
+  // 07/10: le linee di controllo della linea di tiro (verso angoli e centro del bersaglio), spente di default
+  st.dettaglioLinea = leggiLocale('mutant-mappa-dettaglio-linea') === true;
   const leggiFonti = creaFonti(ctx.dati);
 
   // ── Struttura della pagina, creata una volta: si aggiornano solo i testi e i campi ──
@@ -198,6 +200,7 @@ export function renderMappa(radice, ctx) {
           voceStrumenti('Griglia', 'Calibra, colore, opacità, blocco', () => apriStrumento(el.pGriglia)),
           voceStrumenti('Nebbia', 'Pennello e rettangolo, Rivela / Copri, tutto', () => apriStrumento(el.pNebbia)),
           voceStrumenti('Muri e terreno', 'Muro, terreno difficile, gomma', () => apriStrumento(el.pMuri)),
+          el.voceDettaglioLinea = voceStrumenti(testoDettaglioLinea(), 'Le cinque linee sottili dal centro di chi tira verso angoli e centro del bersaglio, verdi se libere e tratteggiate rosse se bloccate (solo qui, non ai giocatori; anche Maiusc+L)', () => cambiaDettaglioLinea()),
           voceStrumenti('Template ad area… (T)', 'Raggio, cono, linea, quadrato, rettangolo: forma, misura, colore, durata; poi lo piazzi sulla mappa', () => { el.strumenti.open = false; nuovoTemplateUi(); }),
           voceStrumenti('Cancella template temporanei', 'Toglie tutti i template a durata in Round; quelli senza durata restano (Ctrl+Z li rimette)', () => cancellaTemplate({ tutti: false })),
           voceStrumenti('Cancella tutti i template…', 'Toglie tutti i template, anche quelli senza durata (Ctrl+Z li rimette)', () => cancellaTemplate({ tutti: true })),
@@ -880,6 +883,7 @@ export function renderMappa(radice, ctx) {
       ['Clic su una porta', 'il master la apre o la chiude (bloccata: no); clic destro: Apri / Chiudi / Blocca / Sblocca / Rivela / Togli'],
       ['L (o clic destro → «Linea di tiro»)', 'dal token scelto verso il mouse o un token: distanza (diagonale 1 Q), vista, Copertura (§5.8); clic per fissarla: «Attacca!» con distanza e Copertura; Esc per chiudere'],
       ['Nebbia automatica (pannello Nebbia)', 'la nebbia si apre dove i PG vedono (muri e porte chiuse fermano la vista); per i giocatori le zone esplorate restano più scure'],
+      ['Maiusc+L (o Strumenti → «Mostra dettaglio linea di tiro»)', 'mostra o nasconde le cinque linee di controllo della linea di tiro, dal centro di chi tira verso angoli e centro del bersaglio (solo qui)'],
       ['Strumento «Porta»: ← →', 'gira la porta da mettere (verticale / orizzontale); di solito segue da sola i muri vicini. Sulla porta già messa: clic destro → «Ruota»'],
       ['Token scelto accanto a una porta', 'clic destro o pannello: «Apri porta» / «Chiudi porta», 1 AzP e una riga nel registro (A.125)'],
       ['M', 'mostra o nasconde l’area di movimento'],
@@ -1539,7 +1543,16 @@ export function renderMappa(radice, ctx) {
     if (!st.linea || !st.scena) return;
     const r = calcolaLinea();
     if (!r) return;
-    disegnaLineaTiro(c, { scena: st.scena, cam: st.cam, da: r.da, a: r.a, copertura: r.copertura, etichetta: testoLinea(r), colori: RV.colori, linee: r.linee });
+    disegnaLineaTiro(c, { scena: st.scena, cam: st.cam, da: r.da, a: r.a, copertura: r.copertura, etichetta: `${testoLinea(r)}${st.dettaglioLinea ? ` · ${r.bloccate}/5 bloccate` : ''}`, colori: RV.colori, linee: st.dettaglioLinea ? r.linee : null, origine: r.origine });
+  }
+  /** «Mostra dettaglio linea di tiro» (07/10): interruttore del master, ricordato su questo schermo. */
+  function testoDettaglioLinea() { return `Mostra dettaglio linea di tiro: ${st.dettaglioLinea ? 'sì' : 'no'}`; }
+  function cambiaDettaglioLinea(v = !st.dettaglioLinea) {
+    st.dettaglioLinea = v;
+    scriviLocale('mutant-mappa-dettaglio-linea', v);
+    if (el.voceDettaglioLinea) el.voceDettaglioLinea.textContent = testoDettaglioLinea();
+    avviso(v ? 'Dettaglio della linea di tiro: le cinque linee di controllo dal centro di chi tira (solo qui).' : 'Dettaglio della linea di tiro nascosto: resta la linea principale.', { chiave: 'linea', tipo: 'info', durata: 3000 });
+    ridisegna(['sopra']);
   }
   /** La linea per la vista giocatori (il server la filtra con le regole dei segreti). */
   function lineaPerDiretta() {
@@ -2192,6 +2205,7 @@ export function renderMappa(radice, ctx) {
     if (e.key.toLowerCase() === ctx.dati.mappa.template.tasto && st.scena && !st.tpl.anteprima) { e.preventDefault(); nuovoTemplateUi(); return; }
     if (e.key === 'Escape' && st.tpl.anteprima) { e.preventDefault(); annullaPiazzamento(); return; }
     if (e.key === 'Escape' && st.linea) { e.preventDefault(); chiudiLinea(); return; }
+    if (e.key.toLowerCase() === ctx.dati.mappa.visuale.tasto && e.shiftKey && st.scena) { e.preventDefault(); cambiaDettaglioLinea(); return; }
     if (e.key.toLowerCase() === ctx.dati.mappa.visuale.tasto && !e.shiftKey && st.scena) { e.preventDefault(); if (st.linea) chiudiLinea(); else iniziaLinea(st.selezionato); return; }
     if (e.key === '?') { e.preventDefault(); apriAiuto(); return; }
     if (e.key === 'Escape' && (el.strumenti.open || el.altro.open)) { el.strumenti.open = false; el.altro.open = false; return; }
