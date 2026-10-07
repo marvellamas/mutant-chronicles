@@ -204,6 +204,8 @@ export function renderMappa(radice, ctx) {
           voceStrumenti('Carica immagine…', 'Immagine di fondo: JPG, PNG o WEBP', () => el.scegliFile.click()),
           voceStrumenti('Griglia', 'Calibra, colore, opacità, blocco', () => apriStrumento(el.pGriglia)),
           voceStrumenti('Nebbia', 'Pennello e rettangolo, Rivela / Copri, tutto', () => apriStrumento(el.pNebbia)),
+          // 07/10: la nebbia automatica anche dal menu, con lo stato
+          el.voceNebbiaAuto = voceStrumenti('Nebbia automatica: no', 'La nebbia si apre da sola dove i PG vedono quando si spostano (muri, porte chiuse e luci ne tengono conto)', () => cambiaVisualeAutomatica()),
           voceStrumenti('Muri e terreno', 'Muro, terreno difficile, gomma', () => apriStrumento(el.pMuri)),
           voceStrumenti('Luci', 'Luce della scena (Luce, Penombra, Luce scarsa, Buio) e zone a pennello', () => apriStrumento(el.pLuci)),
           el.voceDettaglioLinea = voceStrumenti(testoDettaglioLinea(), 'Le cinque linee sottili dal centro di chi tira verso angoli e centro del bersaglio, verdi se libere e tratteggiate rosse se bloccate (solo qui, non ai giocatori; anche Maiusc+L)', () => cambiaDettaglioLinea()),
@@ -1073,17 +1075,20 @@ export function renderMappa(radice, ctx) {
     h('input', { type: 'number', min: 1, max: 15, step: 1, value: String(o.lato), onchange: (e) => { o.lato = Math.max(1, Math.min(15, Math.round(Number(e.target.value) || 1))); e.target.value = String(o.lato); } }));
   function disegnaPannelloNebbia() {
     if (!st.scena) return;
+    aggiornaVoceNebbiaAutomatica();
     const g = st.scena.griglia;
     const coperti = conta(daBase64(st.scena.nebbia.coperti), g.colonne, g.righe);
     svuota(el.pNebbia,
-      h('summary', {}, h('strong', {}, 'Nebbia'), ` (${coperti} Q coperti su ${g.colonne * g.righe})`),
+      h('summary', {}, h('strong', {}, 'Nebbia'), ` (${coperti} Q coperti su ${g.colonne * g.righe}; automatica: ${st.scena.visuale?.automatica ? 'sì' : 'no'})`),
+      // 07/10 (test di Marcello): l'interruttore della nebbia automatica in cima alla sezione, evidente, con lo stato
+      // fase 2, lotto 3: nebbia automatica dalla visuale dei PG
+      h('button', { type: 'button', role: 'switch', 'aria-checked': String(!!st.scena.visuale?.automatica), class: `interruttore-mappa interruttore-evidente${st.scena.visuale?.automatica ? ' acceso' : ''}`, title: `La nebbia si apre da sola dove i PG vedono (fino a ${ctx.dati.mappa.visuale.raggio_q} Q; muri e porte chiuse fermano la vista). Le zone esplorate restano scoperte; per i giocatori, più scure. La nebbia a mano continua a funzionare.`, onclick: () => cambiaVisualeAutomatica() },
+        h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `Nebbia automatica (visuale dei PG): ${st.scena.visuale?.automatica ? 'sì' : 'no'}`),
+      h('p', { class: 'nota' }, st.scena.visuale?.automatica ? 'Spostando un PG la nebbia si apre dove vede: in Luce fino a 30 Q, in Penombra 6, con Luce scarsa 3, al Buio solo attorno a lui (Strumenti → Luci).' : 'Spenta: la nebbia la apri e la chiudi solo tu, con gli strumenti qui sotto. Accesa, si apre da sola dove i PG vedono quando si spostano.'),
       h('p', { class: 'nota' }, 'Per te è semitrasparente, per i giocatori piena. Scegli lo strumento e trascina sulla mappa; la barra spaziatrice resta per spostarti.'),
       h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Strumento della nebbia' },
         pulsanteScelta('Pennello', N.strumento === 'pennello', () => strumentoNebbia(N.strumento === 'pennello' ? null : 'pennello'), 'Dipingi per quadretti'),
         pulsanteScelta('Rettangolo', N.strumento === 'rettangolo', () => strumentoNebbia(N.strumento === 'rettangolo' ? null : 'rettangolo'), 'Da un angolo all’altro')),
-      // fase 2, lotto 3: nebbia automatica dalla visuale dei PG
-      h('button', { type: 'button', role: 'switch', 'aria-checked': String(!!st.scena.visuale?.automatica), class: `interruttore-mappa${st.scena.visuale?.automatica ? ' acceso' : ''}`, title: `La nebbia si apre da sola dove i PG vedono (fino a ${ctx.dati.mappa.visuale.raggio_q} Q; muri e porte chiuse fermano la vista). Le zone esplorate restano scoperte; per i giocatori, più scure. La nebbia a mano continua a funzionare.`, onclick: () => cambiaVisualeAutomatica() },
-        h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `Nebbia automatica (visuale dei PG): ${st.scena.visuale?.automatica ? 'sì' : 'no'}`),
       h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Modalità della nebbia' },
         pulsanteScelta('Rivela', N.modo === 'rivela', () => { N.modo = 'rivela'; disegnaPannelloNebbia(); }, 'Toglie la nebbia'),
         pulsanteScelta('Copri', N.modo === 'copri', () => { N.modo = 'copri'; disegnaPannelloNebbia(); }, 'Mette la nebbia')),
@@ -1832,14 +1837,23 @@ export function renderMappa(radice, ctx) {
     disegnaPannelloNebbia();
     ridisegna(['aree']);
   }
+  function aggiornaVoceNebbiaAutomatica() {
+    if (el.voceNebbiaAuto) el.voceNebbiaAuto.textContent = `Nebbia automatica: ${st.scena?.visuale?.automatica ? 'sì' : 'no'}`;
+  }
   function cambiaVisualeAutomatica() {
     if (!st.scena) return;
     const v = !st.scena.visuale?.automatica;
     st.scena = { ...st.scena, visuale: { automatica: v } };
     salvaPresto();
     disegnaPannelloNebbia();
+    const g = st.scena.griglia;
+    const prima = conta(daBase64(st.scena.nebbia.coperti), g.colonne, g.righe);
     if (v) aggiornaVisuale();
-    avviso(v ? 'Nebbia automatica: si apre dove i PG vedono; per i giocatori le zone esplorate restano più scure.' : 'Nebbia automatica spenta: la nebbia la muovi solo tu.', { chiave: 'visuale' });
+    const dopo = conta(daBase64(st.scena.nebbia.coperti), g.colonne, g.righe);
+    // 07/10: con la scena tutta in Luce i PG vedono fino a 30 Q e la nebbia si apre quasi tutta subito: lo si dice
+    const quasiTutta = v && prima > 0 && dopo < prima * 0.1;
+    avviso(v ? ['Nebbia automatica accesa: si apre dove i PG vedono quando si spostano; per i giocatori le zone esplorate restano più scure.', prima ? `Aperti ora ${prima - dopo} Q su ${prima} coperti.` : 'La mappa è già tutta scoperta: «Copri tutto» per ripartire.', quasiTutta ? 'In Luce i PG vedono fino a 30 Q: per una scena da esplorare metti Penombra o Buio (Strumenti → Luci).' : null] : 'Nebbia automatica spenta: la nebbia la muovi solo tu.', { chiave: 'visuale', tipo: 'info', durata: 9000 });
+    aggiornaVoceNebbiaAutomatica();
   }
   // ── Porte (fase 2, lotto 2; A.125; src/mappa/porte.js) ──
   const RP = ctx.dati.mappa.porte;

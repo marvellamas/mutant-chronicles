@@ -2130,3 +2130,7 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 .mappa-badge[hidden] { display: none; }
 .mappa-badge-libero { top: 0.6rem; border-color: var(--accento); font-weight: 700; }
 .mappa-badge-gruppo { bottom: 0.6rem; border-color: #22b8cf; }
+
+/* 07/10: l'interruttore della nebbia automatica, in cima alla sezione Nebbia, ben visibile */
+.interruttore-mappa.interruttore-evidente { font-weight: 700; padding: 0.35rem 0.6rem; border: 2px solid var(--bordo); border-radius: var(--raggio); }
+.interruttore-mappa.interruttore-evidente.acceso { border-color: var(--accento); }
