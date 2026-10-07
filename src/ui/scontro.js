@@ -55,7 +55,7 @@ export const idNuovo = (d = new Date()) => {
  * @param parte 'tutto' (plancia a pagina intera), 'iniziativa' (Round, «Avanti», ordine, da tirare) o 'gestione'
  *   (aggiungi nemici e partecipanti, durate degli Stati, registro): i gruppi della barra della mappa (ritocchi del 06/10)
  */
-export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaColpo = null, attacca = null, indietro: indietroUi = null, reimposta = null }, parte = 'tutto') {
+export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaColpo = null, attacca = null, indietro: indietroUi = null, reimposta = null, centra = null }, parte = 'tutto') {
   const s = st.scontro;
   const dado = dadoIniziativa(ctx.dati);
   if (!s) {
@@ -96,7 +96,14 @@ export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaCol
       h('td', { class: 'pos-scontro' }, diT?.id === p.id ? '▶' : String(i + 1)),
       h('th', { scope: 'row', class: p.tipo === 'nemico' ? `lato-${p.lato}` : null },
         // ritocchi del 07/10: dal nome si reimposta l'Iniziativa di quel partecipante (ritiro o valore a mano)
-        reimposta ? h('button', { type: 'button', class: 'btn-nome-scontro', title: `Reimposta l’Iniziativa di ${p.nome}: ritira o scrivi il valore a mano`, onclick: () => reimposta(p.id) }, p.nome) : p.nome,
+        // nella mappa il doppio clic sul nome centra la mappa sul token (il clic singolo aspetta un attimo il secondo)
+        reimposta ? h('button', {
+          type: 'button', class: 'btn-nome-scontro', title: `Reimposta l’Iniziativa di ${p.nome}: ritira o scrivi il valore a mano${centra ? ' (doppio clic: centra la mappa sul token)' : ''}`,
+          onclick: () => { if (!centra) { reimposta(p.id); return; } clearTimeout(st.attesaNome); st.attesaNome = setTimeout(() => reimposta(p.id), 300); },
+          ondblclick: centra ? () => { clearTimeout(st.attesaNome); centra(p); } : null,
+        }, p.nome) : p.nome,
+        // ritocchi del 07/10: ⌖ centra la mappa sul token e lo sceglie
+        centra ? h('button', { type: 'button', class: 'btn btn-piccolo btn-centra', title: `Centra la mappa su ${p.nome} e sceglie il suo token`, 'aria-label': `Centra su ${p.nome}`, onclick: () => centra(p) }, '⌖') : null,
         p.provvisorio ? h('span', { class: 'etichetta' }, 'provvisorio') : null,
         p.lato === 'avversario' || p.tipo === 'nemico' ? h('small', { class: 'nota nome-lato' }, ` ${p.lato}`) : null,
         p.tipo === 'nemico' ? h('small', { class: 'nota' }, ` · PV ${p.pv.attuali}/${p.pv.massimo}`) : null),

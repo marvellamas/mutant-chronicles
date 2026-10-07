@@ -2634,7 +2634,7 @@ export function renderMappa(radice, ctx) {
     if (st.planciaBarra) return;
     st.planciaBarra = renderTavolo(el.piena, {
       dati: ctx.dati,
-      inMappa: { sezioni: el.slot, collegamento: () => (st.scena ? { ...st.scena.collegamento, nomeBozza: st.fonti?.bozza?.nome ?? null } : null) },
+      inMappa: { sezioni: el.slot, centra: (chiave) => centraSuPezzo(chiave), collegamento: () => (st.scena ? { ...st.scena.collegamento, nomeBozza: st.fonti?.bozza?.nome ?? null } : null) },
       azioni: {
         personaggi: () => ctx.azioni.personaggi?.(),
         // «Prepara la mappa» sulla scena già aperta: si rilegge, con il nuovo collegamento
@@ -2710,6 +2710,21 @@ export function renderMappa(radice, ctx) {
   async function reimpostaDallaMappa() {
     if (!st.planciaBarra?.reimposta) return;
     if (await st.planciaBarra.reimposta()) await aggiornaFonti();
+  }
+  /**
+   * «Centra» dall'ordine d'Iniziativa della barra (⌖ o doppio clic sul nome; ritocchi del 07/10): la mappa si centra sul
+   * token, con lo zoom di data/mappa.json → iniziativa.centra_px_per_q, e lo sceglie; senza token, un avviso.
+   */
+  function centraSuPezzo(chiave) {
+    const t = st.scena?.token.find((x) => chiaveRif(x.rif) === chiave);
+    const nome = st.pezzi.find((p) => p.chiave === chiave)?.nome ?? chiave.replace(/^partecipante:/, '');
+    if (!t) { avviso(`${nome} non è sulla mappa: mettilo con «Metti» in «Senza token» (gruppo «Mappa»).`, { chiave: 'centra' }); return; }
+    const scala = Math.min(V.zoom_max, Math.max(V.zoom_min, ctx.dati.mappa.iniziativa.centra_px_per_q / st.scena.griglia.q_px));
+    const c = centroToken(st.scena.griglia, t);
+    const d = tela.dimensioni();
+    cambiaCamera({ ...st.cam, scala, ox: d.larghezza / 2 - c.x * scala, oy: d.altezza / 2 - c.y * scala });
+    scegli(t.id);
+    apriCartaChiave(chiave, { riapri: false });
   }
   /** Centra la vista sul token (con `soloSeFuori`, solo se è fuori dal riquadro o troppo vicino al bordo). */
   function centraToken(t, { soloSeFuori = false } = {}) {

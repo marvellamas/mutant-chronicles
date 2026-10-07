@@ -417,7 +417,9 @@
   },
   "iniziativa": {
     "_nota": "«Indietro» nella barra dell'Iniziativa e nella plancia (ritocchi del 07/10/2026; src/scontro.js → avanti, indietro): annulla l'ultimo «Avanti» e riporta turno, Round, durate degli Stati, effetti degli incantesimi, Stati tolti ai nemici e perdite periodiche applicate a quel turno; le modifiche fatte dopo (PV, «Colpito», movimenti) restano. Lo storico sta nello scontro (indietro) e tiene al massimo indietro_max «Avanti».",
-    "indietro_max": 20
+    "indietro_max": 20,
+    "_nota_centra": "«Centra» (⌖ o doppio clic sul nome nell'ordine d'Iniziativa della barra; ritocchi del 07/10/2026): la mappa si centra sul token, lo sceglie e porta lo zoom a centra_px_per_q pixel di schermo per Q (entro zoom_min e zoom_max della vista).",
+    "centra_px_per_q": 72
   },
   "menu": {
     "_nota": "Menu del clic destro sulla mappa (richiesta di Marcello del 07/10/2026; src/mappa/menu.js): per contesto (token, porta, template, punto vuoto) la riga rapida, i gruppi con intestazione e le «Opzioni» (sottomenu), con gli id delle voci nell'ordine in cui compaiono. Si mostrano solo le voci utilizzabili in quel momento (la riga rapida anche spenta, con il motivo); i gruppi vuoti non si mostrano. «{nome}» nel titolo di un gruppo diventa il nome del template. altezza_voce_px: altezza minima di una voce, per il dito sul tablet.",

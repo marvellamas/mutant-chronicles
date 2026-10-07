@@ -100,3 +100,12 @@ test('chi è entrato dopo la «Reimposta» tiene il suo tiro all’«Indietro»;
   assert.equal(diTurno(u).nome, 'Ada');
   assert.match(u.registro.at(-1).testo, /Restano le modifiche fatte dopo \(2 righe del registro\)/);
 });
+
+test('«Centra» dall’ordine d’Iniziativa: lo zoom sta in data/mappa.json, validato', async () => {
+  const { validaDati } = await import('../src/validate.js');
+  const { copia } = await import('./helpers.js');
+  assert.ok(Number.isInteger(dati.mappa.iniziativa.centra_px_per_q));
+  const d = copia(dati);
+  d.mappa.iniziativa.centra_px_per_q = 2;
+  assert.ok(validaDati(d).some((e) => e.file === 'mappa.json' && e.chiave === 'iniziativa.centra_px_per_q'));
+});

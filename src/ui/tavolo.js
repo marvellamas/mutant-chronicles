@@ -342,7 +342,7 @@ export function renderTavolo(radice, ctx) {
       await aggiorna(true);
     }) : null;
     const stScontro = Object.assign(stato, { pgAlTavolo: alTavolo.map((r) => stato.viste.get(r.file)).filter((v) => v?.completa) });
-    const azScontro = { modifica, crea: (s) => salva(s), ridisegna: disegna, annullaColpo, indietro: indietroUi, reimposta: (id) => reimpostaUi(id), attacca: (p) => attacca(p, alTavolo) };
+    const azScontro = { modifica, crea: (s) => salva(s), ridisegna: disegna, annullaColpo, indietro: indietroUi, reimposta: (id) => reimpostaUi(id), centra: ctx.inMappa?.centra ? (p) => ctx.inMappa.centra(`partecipante:${p.id}`) : null, attacca: (p) => attacca(p, alTavolo) };
     const cartePg = alTavolo.length
       ? h('div', { class: 'plancia-griglia' }, alTavolo.map((r) => (r.mancante ? cartaMancante(r.mancante)
         : stato.viste.get(r.file) ? conPezzo(cartaPg(ctx, stato.viste.get(r.file), r, turnoDi(r), colpitoPg, durateDi(stato.viste.get(r.file))), `partecipante:pg:${chiaveDaFile(r.file)}`) : cartaErrore(r, stato.errori.get(r.file)))))

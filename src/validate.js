@@ -2703,6 +2703,7 @@ function validaMappa(dati, err) {
   }
   // «Indietro» nell'Iniziativa (07/10, src/scontro.js → indietro): quanti «Avanti» si possono annullare
   if (!isIntero(m.iniziativa?.indietro_max) || m.iniziativa.indietro_max < 1) err(F, 'iniziativa.indietro_max', 'intero da 1 in su');
+  if (!isIntero(m.iniziativa?.centra_px_per_q) || m.iniziativa.centra_px_per_q < 8 || m.iniziativa.centra_px_per_q > 400) err(F, 'iniziativa.centra_px_per_q', 'intero da 8 a 400 (pixel di schermo per Q dopo «Centra»)');
   // fase 2, lotto 4: luci semplici (src/mappa/luce.js): categorie di regole.json → illuminazione, raggi di scoperta
   {
     const LU = m.luci;
