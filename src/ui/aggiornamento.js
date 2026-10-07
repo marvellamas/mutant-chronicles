@@ -19,7 +19,8 @@ async function versioneServer() {
     const v = leggiVersione(await r.json());
     // versione con cui è stato acceso il server di Mutant (solo con server.mjs)
     const avvio = r.headers.get('X-Mutant-Versione-Server');
-    if (v && serverDaRiavviare(avvio, v.versione)) barraServer();
+    // un server di Mutant che non dice la sua versione è di prima del 06/10: va riavviato anche lui
+    if (v && serverDaRiavviare(avvio, v.versione, r.headers.get('X-Mutant-Server') === '1')) barraServer();
     return v;
   } catch {
     return null; // senza rete o senza file: nessun avviso

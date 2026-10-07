@@ -68,6 +68,10 @@ test('il server dice con quale versione è stato acceso: dopo un aggiornamento s
   assert.equal(dopo.headers.get('x-mutant-versione-server'), 'aaaa000001');
   assert.equal(serverDaRiavviare(dopo.headers.get('x-mutant-versione-server'), (await dopo.json()).versione), true);
   assert.equal(serverDaRiavviare(null, 'bbbb000002'), false, 'senza server di Mutant: nessun avviso');
+  // il server di Mutant di prima del 06/10 non dice la sua versione (X-Mutant-Server sì): va riavviato
+  assert.equal(dopo.headers.get('x-mutant-server'), '1');
+  assert.equal(serverDaRiavviare(null, 'bbbb000002', true), true);
+  assert.equal(serverDaRiavviare('bbbb000002', 'bbbb000002', true), false, 'stessa versione: niente');
 });
 
 test('avvisi uguali ravvicinati: uno solo, con «×N»; quelli diversi restano separati', async () => {

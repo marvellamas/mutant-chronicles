@@ -33,6 +33,8 @@ export const testoVersione = (v) => (v ? `Versione ${v.versione}${v.data ? ` · 
  * Il server di Mutant (server.mjs) è stato acceso con una versione dell'app più vecchia di quella dei file? Il server
  * tiene in memoria il suo codice (validatori compresi) finché non lo si riavvia, mentre i file dell'app li legge
  * dal disco a ogni richiesta: dopo un aggiornamento senza riavvio, l'app nuova parla con il server vecchio
- * (primo test della mappa di Marcello, 06/10/2026: scene rifiutate). Vero solo se entrambe sono note e diverse.
+ * (primo test della mappa di Marcello, 06/10/2026: scene rifiutate). Vero se entrambe sono note e diverse, e anche con
+ * un server di Mutant (`serverMutant`: intestazione X-Mutant-Server) che non dice la sua versione: è di prima del
+ * 06/10, quando l'intestazione X-Mutant-Versione-Server non c'era (primo aggiornamento di Davide dopo la mappa).
  */
-export const serverDaRiavviare = (versioneAvvio, versioneFile) => !!versioneAvvio && !!versioneFile && versioneAvvio !== versioneFile;
+export const serverDaRiavviare = (versioneAvvio, versioneFile, serverMutant = false) => (!!versioneAvvio ? !!versioneFile && versioneAvvio !== versioneFile : !!serverMutant && !!versioneFile);
