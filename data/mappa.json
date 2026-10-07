@@ -429,6 +429,7 @@
       "gruppi": [
         { "titolo": "Movimento", "voci": ["annulla_movimento", "nuovo_turno"] },
         { "titolo": "Azioni", "voci": ["attacca", "porta_token"] },
+        { "titolo": "Veicolo", "voci": ["sali", "ruota_veicolo", "a_bordo"] },
         { "titolo": "Strumenti", "voci": ["linea", "area", "zoc", "template_qui"] },
         { "titolo": "Scheda", "voci": ["mini_scheda", "scheda_completa"] },
         { "titolo": "Selezione", "voci": ["selezione_token"] }

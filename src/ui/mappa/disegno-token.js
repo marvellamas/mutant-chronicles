@@ -7,6 +7,7 @@
 // nella vista master) trasparenti.
 import { schermoDaMappa } from '../../mappa/camera.js';
 import { dimensioni, chiaveRif } from '../../mappa/token.js';
+import { direzioneDi, angoloImmagine } from '../../mappa/veicoli-mappa.js';
 
 const SOGLIA_TESTO_PX = 16; // sotto questo lato in pixel di schermo niente testo né sigle
 
@@ -53,11 +54,13 @@ export function disegnaToken(c, { scena, cam, pezzi, colori, immagine, seleziona
     const a = schermoDaMappa(cam, g.scosto_x + q[0] * g.q_px, g.scosto_y + q[1] * g.q_px);
     const box = { x: a.x, y: a.y, w: w * qs, h: h * qs };
     const p = pezzi.get(chiaveRif(t.rif)) ?? null;
-    disegnaUno(c, { t, p, box, colori, immagine, qs, scelto: t.id === selezionato, inMano: trascina?.id === t.id, b: p ? bordo(p) : null, alone, pv, ritrattoVerticale, zero });
+    // fase 2, lotto 5: chi è a bordo, come piccole icone sul veicolo (pezzi della mappa o info della vista giocatori)
+    const bordoPass = (t.passeggeri ?? []).map((x) => ({ ruolo: x.ruolo, pezzo: pezzi.get(chiaveRif(x.rif)) ?? x.info ?? null }));
+    disegnaUno(c, { t, p, box, colori, immagine, qs, scelto: t.id === selezionato, inMano: trascina?.id === t.id, b: p ? bordo(p) : null, alone, pv, ritrattoVerticale, zero, passeggeri: bordoPass });
   }
 }
 
-function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alone, pv, ritrattoVerticale, zero }) {
+function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alone, pv, ritrattoVerticale, zero, passeggeri = [] }) {
   const colore = b?.colore ?? colori[p?.lato] ?? colori.testo;
   const veicolo = t.rif.tipo === 'veicolo';
   const cx = box.x + box.w / 2, cy = box.y + box.h / 2;
@@ -87,10 +90,21 @@ function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alo
   if (p?.aZero) c.filter = 'grayscale(1)';
   c.save();
   forma(c, veicolo, box, cx, cy, r);
-  c.fillStyle = colori.fondo;
-  c.fill();
-  const img = p ? immagine(p.ritratto) : null;
-  if (img) {
+  // fase 2, lotto 5: l'immagine del veicolo (data/veicoli.json → profili[].mappa), ruotata con il muso del token
+  const imgV = veicolo && p ? immagine(p.immagine ?? p.veicoloImmagine ?? null) : null;
+  if (!imgV) { c.fillStyle = colori.fondo; c.fill(); }
+  const img = p && !veicolo ? immagine(p.ritratto) : null;
+  if (imgV) {
+    c.clip();
+    const ang = angoloImmagine(direzioneDi(t), p.musoImmagine ?? 's');
+    const margine = Math.min(box.w, box.h) / 2 - r;
+    const w = box.w - 2 * margine, hh = box.h - 2 * margine;
+    c.translate(cx, cy);
+    c.rotate((ang * Math.PI) / 180);
+    // ruotato di 90° o 270° l'immagine (verticale) va disegnata con i lati scambiati
+    const [dw, dh] = ang % 180 ? [hh, w] : [w, hh];
+    c.drawImage(imgV, -dw / 2, -dh / 2, dw, dh);
+  } else if (img) {
     // 07/10: il ritratto riempie il cerchio fino al bordo colorato, l'unica cornice; delle foto più alte che larghe si
     // tiene il quadrato verso l'alto (data/mappa.json → token.ritratto_verticale), dove sta il viso
     c.clip();
@@ -164,6 +178,25 @@ function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alo
     c.fillStyle = pv.stile.colore;
     if (quota > 0) c.fillRect(box.x, y, box.w * quota, alto);
     c.restore();
+  }
+  // chi è a bordo (fase 2, lotto 5): un cerchietto per persona in alto a sinistra, il conducente per primo, colore del lato
+  if (passeggeri.length && testo) {
+    const rp = Math.max(6, Math.min(12, qs * 0.2));
+    const per = Math.max(1, Math.floor((box.w - rp) / (rp * 2.2)));
+    const ordinati = [...passeggeri].sort((a, x) => (x.ruolo === 'conducente') - (a.ruolo === 'conducente'));
+    c.font = `700 ${Math.round(rp * 0.95)}px system-ui, sans-serif`;
+    c.textAlign = 'center';
+    c.textBaseline = 'middle';
+    ordinati.forEach((x, i) => {
+      const px = box.x + rp * 1.2 + (i % per) * rp * 2.2, py = box.y + rp * 1.2 + Math.floor(i / per) * rp * 2.2;
+      c.fillStyle = colori[x.pezzo?.lato] ?? colori.testo;
+      c.beginPath(); c.arc(px, py, rp, 0, Math.PI * 2); c.fill();
+      c.lineWidth = x.ruolo === 'conducente' ? 2.5 : 1;
+      c.strokeStyle = x.ruolo === 'conducente' ? colori.selezione : colori.fondo;
+      c.stroke();
+      c.fillStyle = colori.fondo;
+      c.fillText(x.pezzo?.iniziali ?? '?', px, py + 0.5);
+    });
   }
   // Stati: piccole sigle in basso a destra, al massimo tre più «+n»
   if (testo && p?.stati?.length) {

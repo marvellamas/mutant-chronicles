@@ -52,8 +52,9 @@ import { apriMenuTemplate, sezioneTemplate, etichettaTemplate, testoMisure } fro
 import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
 import { componiMenu, unisciMenu } from '../../mappa/menu.js';
 import { diTurno, ordineIniziativa } from '../../scontro.js';
-import { statoMovimento, muoviVeicolo } from '../../veicoli-registro.js';
-import { rigaMovimentoLibero, rigaOpportunita, senzaOpportunitaDelMovimento, rigaPorta, rigaTemplateTolti, rigaGruppo } from '../../scontro.js';
+import { statoMovimento, muoviVeicolo, cambiaConducente } from '../../veicoli-registro.js';
+import { DIREZIONI, NOMI_DIREZIONI, ingombroOrientato, ruotaSeLibero, sali, scendi, qPerScendere, veicoliVicini, aBordo, veicoloDi } from '../../mappa/veicoli-mappa.js';
+import { rigaMovimentoLibero, rigaOpportunita, senzaOpportunitaDelMovimento, rigaPorta, rigaTemplateTolti, rigaGruppo, registraRiga } from '../../scontro.js';
 import { tokenNelRettangolo, alternaSelezione, spostaGruppo } from '../../mappa/gruppo.js';
 import { aggiornaInScontri } from '../immagine-nemico.js';
 import { linkGuidaMappa } from '../guida.js';
@@ -377,6 +378,21 @@ export function renderMappa(radice, ctx) {
         const t = st.trascina?.modo === 'token' ? { id: st.trascina.token, q: st.trascina.q } : null;
         disegnaToken(c, { scena: st.scena, cam: st.cam, pezzi: st.mappaPezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: st.selezionato, trascina: t, bordo: bordoDi, alone: ctx.dati.mappa.colori.alone_turno, ritrattoVerticale: ctx.dati.mappa.token.ritratto_verticale, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => st.mostraPv }, zero: ctx.dati.mappa.pv_zero });
         disegnaSelezioneGruppo(c);
+        // fase 2, lotto 5: i quadretti liberi accanto al veicolo per «Scendi»
+        if (st.scendi) {
+          const g = st.scena.griglia;
+          c.save();
+          c.fillStyle = 'rgba(43, 140, 255, 0.28)';
+          c.strokeStyle = 'rgba(43, 140, 255, 0.9)';
+          c.lineWidth = 2;
+          for (const [x, y] of st.scendi.celle) {
+            const a = schermoDaMappa(st.cam, g.scosto_x + x * g.q_px, g.scosto_y + y * g.q_px);
+            const b = schermoDaMappa(st.cam, g.scosto_x + (x + 1) * g.q_px, g.scosto_y + (y + 1) * g.q_px);
+            c.fillRect(a.x, a.y, b.x - a.x, b.y - a.y);
+            c.strokeRect(a.x + 1, a.y + 1, b.x - a.x - 2, b.y - a.y - 2);
+          }
+          c.restore();
+        }
       }
       // percorso del token scelto (o trascinato) verso il quadretto sotto il puntatore, con i Q che costa
       // fase 2, lotto 3: la linea di tiro del token scelto verso il mouse o il bersaglio
@@ -755,6 +771,11 @@ export function renderMappa(radice, ctx) {
       nascondi: () => cambiaToken(scelto.id, (x) => ({ ...x, nascosto: !x.nascosto })),
       ingombro: (n) => cambiaToken(scelto.id, (x) => ({ ...x, ingombro: n, q: agganciaQ(st.scena.griglia, centroToken(st.scena.griglia, x).x, centroToken(st.scena.griglia, x).y, n) }), { controllaSovrapposti: true }),
       togli: () => togliToken(scelto.id),
+      // fase 2, lotto 5: veicolo
+      ruota: (verso) => ruotaVeicoloUi(scelto.id, verso),
+      aBordo: aBordo(scelto).map((x) => ({ id: x.id, nome: nomeTok(x), ruolo: x.ruolo })),
+      scendi: (id) => iniziaScendi(scelto.id, id),
+      lineaPasseggero: (id) => lineaPasseggero(scelto.id, id),
       colore: () => coloreBordo(scelto.id),
       carta: () => apriNellaPlancia(pz?.chiave),
       immagine: async () => { const img = await scegliImmagineNemico(ctx.dati, pz?.nome); if (img) await immagineNemico(pz, img); },
@@ -968,6 +989,9 @@ export function renderMappa(radice, ctx) {
       ['♫ in alto', 'musica di fondo dello scontro (file della cartella musica/ del server): parte con lo scontro, si ripete, si ferma alla chiusura; ⏸ / ▶ la mette in pausa'],
       ['🔊 e cursori Musica / Effetti', 'muto generale e volumi su questo PC (ricordati); la campanella suona a ogni nuovo Round. Strumenti → «Suoni anche nella vista giocatori» per il televisore con le casse'],
       ['Avviso «clic per attivare l’audio»', 'il browser blocca i suoni finché non tocchi la pagina: un clic qualunque li sblocca'],
+      ['Veicolo da mettere o scelto: ← →', 'gira il veicolo di 90° (anche clic destro → «Ruota»); Ctrl+Z annulla'],
+      ['Clic destro su un PG o un nemico accanto a un veicolo', '«Sali su … come conducente» (un PG) o «come passeggero»: il token va a bordo e si muove con il mezzo'],
+      ['Pannello del veicolo → «A bordo»', '«Scendi…» e clic su un quadretto evidenziato accanto; «Linea di tiro» di chi è a bordo, dal veicolo'],
       ['M', 'mostra o nasconde l’area di movimento'],
       ['Z', 'mostra o nasconde le zone di controllo (ZoC) degli avversari'],
       ['P', 'mostra o nasconde la barretta dei PV sui token (solo per te)'],
@@ -1003,6 +1027,7 @@ export function renderMappa(radice, ctx) {
   function togliToken(id) {
     const prima = st.scena.token.find((t) => t.id === id);
     if (!prima) return;
+    if (aBordo(prima).length) { avvisoErrore('Prima fai scendere chi è a bordo (pannello del veicolo → «A bordo» → «Scendi…»).'); return; }
     if (st.selezionato === id) st.selezionato = null;
     st.scena = cambiaTokenAnnullabile(st.scena, prima, null, ctx.dati);
     dopoCambioToken();
@@ -1073,11 +1098,109 @@ export function renderMappa(radice, ctx) {
     el.riquadro.classList.remove('piazza');
     const pz = st.mappaPezzi.get(chiave);
     if (!pz || st.scena.token.some((t) => chiaveRif(t.rif) === chiave)) { disegnaPannelli(); return; }
-    const t = tokenPerPezzo(pz, agganciaQ(st.scena.griglia, m.x, m.y, pz.ingombro));
+    // fase 2, lotto 5: un veicolo entra con il muso scelto con ← → durante il piazzamento (di norma in basso)
+    const dir = pz.tipo === 'veicolo' ? st.dirPiazza ?? 's' : null;
+    const ingombro = dir ? ingombroOrientato(pz.ingombro, dir) : pz.ingombro;
+    const t = { ...tokenPerPezzo({ ...pz, ingombro }, agganciaQ(st.scena.griglia, m.x, m.y, ingombro)), ...(dir ? { direzione: dir } : {}) };
+    st.dirPiazza = null;
     st.scena = cambiaTokenAnnullabile(st.scena, null, t, ctx.dati);
     avvisaSovrapposti([t.id]);
     st.selezionato = t.id;
     dopoCambioToken();
+  }
+
+  // ── Veicoli sulla mappa (fase 2, lotto 5; src/mappa/veicoli-mappa.js): girare, salire, scendere, linea dei passeggeri ──
+  const muroQ = () => { const muri = muriEffettivi(st.scena); const g = st.scena.griglia; return (x, y) => cella(muri, g.colonne, g.righe, x, y); };
+  const nomeTok = (t) => pezzoDi(t)?.nome ?? t?.nome ?? t?.id ?? '—';
+  /** Gira il veicolo di 90° attorno al suo centro (Ctrl+Z annulla); non su muri o altri token. */
+  function ruotaVeicoloUi(id, verso) {
+    const prima = st.scena.token.find((t) => t.id === id);
+    if (!prima) return;
+    const r = ruotaSeLibero(st.scena, id, verso, muroQ());
+    if (r.errore) { avvisoErrore(`${nomeTok(prima)} non si gira: ${r.errore}.`); return; }
+    st.scena = cambiaTokenAnnullabile(st.scena, prima, r.token, ctx.dati);
+    avviso(`${nomeTok(prima)}: muso ${NOMI_DIREZIONI[r.token.direzione]} (Ctrl+Z annulla).`, { tipo: 'info', chiave: 'ruota-veicolo' });
+    dopoCambioToken();
+  }
+  /** ← → : gira il veicolo da mettere (prima del clic) o quello scelto. */
+  function frecciaVeicolo(e) {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return false;
+    const verso = e.key === 'ArrowRight' ? 1 : -1;
+    const daMettere = st.daPiazzare ? st.mappaPezzi.get(st.daPiazzare) : null;
+    if (daMettere?.tipo === 'veicolo') {
+      e.preventDefault();
+      st.dirPiazza = DIREZIONI[(DIREZIONI.indexOf(st.dirPiazza ?? 's') + (verso < 0 ? 3 : 1)) % 4];
+      avviso(`${daMettere.nome}: muso ${NOMI_DIREZIONI[st.dirPiazza]}; clic sulla mappa per metterlo.`, { tipo: 'info', chiave: 'ruota-veicolo' });
+      return true;
+    }
+    const t = st.selezionato && !st.gruppo.size && !st.trascina ? st.scena.token.find((x) => x.id === st.selezionato) : null;
+    if (t?.rif.tipo !== 'veicolo') return false;
+    e.preventDefault();
+    ruotaVeicoloUi(t.id, verso);
+    return true;
+  }
+  /** Una riga nel registro dello scontro aperto (salire, scendere). */
+  function rigaVeicolo(testo) {
+    const scontro = st.fonti?.scontro;
+    if (scontro) scriviRegistro(scontro.id, (x) => registraRiga(x, testo), 'Riga del registro (veicolo)');
+  }
+  /** Conducente nel registro unico del veicolo (A.91): il PG che sale come conducente, nessuno quando scende. */
+  async function conducenteNelRegistro(vTok, pgTok) {
+    const rec = recordVeicolo(vTok);
+    if (!rec) { avvisoErrore('Registro del veicolo non trovato: il conducente non è cambiato nella sua scheda.'); return; }
+    const nuovo = pgTok ? { chiave: pgTok.rif.id.replace(/^pg:/, ''), nome: nomeTok(pgTok) } : null;
+    try {
+      const record = await aggiornaVeicolo(rec, cambiaConducente(rec, nuovo));
+      if (st.fonti) st.fonti.veicoli = st.fonti.veicoli.map((x) => (x.id === record.id ? record : x));
+      await aggiornaFonti();
+    } catch (e) { avvisoErrore(`Conducente non salvato nella scheda del veicolo: ${e.message}`); }
+  }
+  /** «Sali sul veicolo» (come conducente o passeggero): il token esce dalla mappa e va a bordo. */
+  async function saliUi(idTok, idVeicolo, ruolo) {
+    const tok = st.scena.token.find((t) => t.id === idTok);
+    const vTok = st.scena.token.find((t) => t.id === idVeicolo);
+    if (!tok || !vTok) return;
+    if (ruolo === 'conducente' && pezzoDi(tok)?.tipo !== 'pg') { avvisoErrore('Il conducente della scheda del veicolo è un PG (A.91): un nemico sale come passeggero.'); return; }
+    const r = sali(st.scena, idTok, idVeicolo, ruolo, pezzoDi(vTok)?.posti ?? { conducente: 1, passeggeri: 0 }, ctx.dati);
+    if (r.errore) { avvisoErrore(`${nomeTok(tok)} non sale: ${r.errore}.`); return; }
+    st.scena = r.scena;
+    if (st.selezionato === idTok) st.selezionato = idVeicolo;
+    avviso(`${nomeTok(tok)} sale su ${nomeTok(vTok)} come ${ruolo}. Costo in Azioni da definire (A.145): applicalo a voce. Ctrl+Z annulla.`, { tipo: 'info', chiave: 'bordo' });
+    rigaVeicolo(`Mappa: ${nomeTok(tok)} sale su ${nomeTok(vTok)} (${ruolo}).`);
+    dopoCambioToken();
+    if (ruolo === 'conducente') await conducenteNelRegistro(vTok, tok);
+  }
+  /** «Scendi»: si sceglie con un clic il quadretto libero accanto al veicolo (evidenziato). */
+  function iniziaScendi(idVeicolo, idPasseggero) {
+    const vTok = st.scena.token.find((t) => t.id === idVeicolo);
+    const p = aBordo(vTok).find((x) => x.id === idPasseggero);
+    if (!p) return;
+    const celle = qPerScendere(st.scena, idVeicolo, idPasseggero, muroQ());
+    if (!celle.length) { avvisoErrore('Nessun quadretto libero accanto al veicolo: sposta qualcosa o il veicolo.'); return; }
+    st.scendi = { veicolo: idVeicolo, passeggero: idPasseggero, celle };
+    avviso(`${nomeTok(p)} scende: clic su un quadretto evidenziato accanto a ${nomeTok(vTok)} (Esc annulla).`, { tipo: 'info', chiave: 'scendi', durata: 15000 });
+    ridisegna(['sopra']);
+  }
+  async function scendiQui(m) {
+    const { veicolo, passeggero } = st.scendi;
+    const vTok = st.scena.token.find((t) => t.id === veicolo);
+    const p = aBordo(vTok).find((x) => x.id === passeggero);
+    if (!p) { st.scendi = null; return; }
+    const q = typeof p.ingombro === 'number' && p.ingombro > 1 ? agganciaQ(st.scena.griglia, m.x, m.y, p.ingombro) : qVicino(m);
+    const r = scendi(st.scena, veicolo, passeggero, q, ctx.dati, { muro: muroQ() });
+    if (r.errore) { avviso(`${r.errore} (Esc annulla).`, { chiave: 'scendi' }); return; }
+    st.scendi = null;
+    st.scena = r.scena;
+    st.selezionato = passeggero;
+    avviso(`${nomeTok(p)} scende da ${nomeTok(vTok)}. Costo in Azioni da definire (A.145). Ctrl+Z annulla.`, { tipo: 'info', chiave: 'scendi' });
+    rigaVeicolo(`Mappa: ${nomeTok(p)} scende da ${nomeTok(vTok)}.`);
+    dopoCambioToken();
+    if (r.passeggero.ruolo === 'conducente') await conducenteNelRegistro(vTok, null);
+  }
+  /** Linea di tiro di chi è a bordo: parte dal veicolo, dal quadretto dell'ingombro più favorevole (come i token grandi). */
+  function lineaPasseggero(idVeicolo, idPasseggero) {
+    iniziaLinea(idVeicolo);
+    if (st.linea) st.linea.passeggero = idPasseggero;
   }
 
   /** «Metti tutti»: una fila libera vicino al centro della vista (src/mappa/token.js → disponiInFila). */
@@ -1445,6 +1568,8 @@ export function renderMappa(radice, ctx) {
     }
     if (!pz?.movimento) return { ...base, motivo: pz ? 'nessun profilo di movimento' : 'fuori dallo scontro' };
     let usato = usatoNelRound(st.scena, t.id, scontro?.id ?? null, scontro?.round ?? null);
+    // fase 2, lotto 5: senza conducente il veicolo resta fermo (anche fuori dallo scontro); il master lo sposta con Libero
+    if (pz.tipo === 'veicolo' && recordVeicolo(t) && !recordVeicolo(t).conducente) return { ...base, motivo: 'senza conducente: fermo (fai salire un PG come conducente)' };
     if (pz.tipo === 'veicolo' && scontro) {
       // A.105: un solo movimento per Round, all'Iniziativa del conducente (src/veicoli-registro.js)
       const rec = recordVeicolo(t);
@@ -1834,8 +1959,11 @@ export function renderMappa(radice, ctx) {
     ridisegna(['sopra']);
     const r = calcolaLinea();
     if (!r) return;
-    const daTok = r.da, aTok = st.linea.a ? st.scena.token.find((x) => x.id === st.linea.a) : null;
-    const nomeDa = pezzoDi(daTok)?.nome ?? daTok.nome ?? daTok.id;
+    const veicoloDa = r.da;
+    // fase 2, lotto 5: chi è a bordo tira dal veicolo (linea dal mezzo, attaccante il passeggero)
+    const passeggero = st.linea.passeggero ? aBordo(veicoloDa).find((x) => x.id === st.linea.passeggero) ?? null : null;
+    const daTok = passeggero ?? r.da, aTok = st.linea.a ? st.scena.token.find((x) => x.id === st.linea.a) : null;
+    const nomeDa = `${pezzoDi(daTok)?.nome ?? daTok.nome ?? daTok.id}${passeggero ? ` (da ${nomeTok(veicoloDa)})` : ''}`;
     const nomeA = aTok ? pezzoDi(aTok)?.nome ?? aTok.nome ?? aTok.id : `il quadretto (${st.linea.punto.join(', ')})`;
     const gittata = fasciaDistanza(r.distanza, ctx.dati).va;
     const pen = { leggera: ctx.dati.regole.attacco_distanza.copertura.bersaglio.leggera, media: ctx.dati.regole.attacco_distanza.copertura.bersaglio.media }[r.copertura];
@@ -2260,6 +2388,8 @@ export function renderMappa(radice, ctx) {
     if (!st.scena) return;
     const m = mappaDaSchermo(st.cam, p.x, p.y);
     if (st.daPiazzare && !st.spazio) { piazza(st.daPiazzare, m); return; }
+    // fase 2, lotto 5: un clic su un quadretto accanto al veicolo fa scendere chi si è scelto
+    if (st.scendi && !st.spazio) { scendiQui(m); return; }
     // fase 2, lotto 1: un clic fissa il template che si sta piazzando
     if (st.tpl.anteprima && !st.spazio) { aggiornaAnteprima(m); fissaTemplate(); return; }
     // fase 2, lotto 3: con la linea di tiro un clic fissa il bersaglio (un token o un Q); su chi tira, esce
@@ -2526,6 +2656,28 @@ export function renderMappa(radice, ctx) {
       libero: () => ({ testo: 'Libero', azione: () => cambiaFascia(LIBERO), scelta: st.fascia === LIBERO, titolo: 'In qualunque quadretto, senza area e senza conteggio (scorciatoia: tieni premuto Maiusc)' }),
       annulla_movimento: () => (ultimo ? { testo: 'Annulla ultimo movimento', tasto: ultimaVoce?.tipo === 'movimento' && ultimaVoce.token === tok.id ? 'Ctrl+Z' : null, azione: () => annullaMovimentoUi(tok.id) } : null),
       nuovo_turno: () => (conScontro ? null : { testo: 'Nuovo turno', titolo: 'Senza scontro: il movimento di questo token riparte da 0', azione: () => nuovoTurnoUi(tok.id) }),
+      // fase 2, lotto 5: salire su un veicolo accanto (conducente se è un PG e il posto è libero, passeggero se ci sono posti)
+      sali: () => {
+        if (tok.rif.tipo !== 'partecipante') return null;
+        const voci = veicoliVicini(st.scena, tok).flatMap((v) => {
+          const pv = pezzoDi(v);
+          const bordo = aBordo(v);
+          const posti = pv?.posti ?? { conducente: 1, passeggeri: 0 };
+          return [
+            pg && bordo.filter((x) => x.ruolo === 'conducente').length < posti.conducente ? { testo: `Sali su ${nomeTok(v)} come conducente`, chiave: `sali:${v.id}:conducente`, titolo: 'Diventa il conducente nella scheda del veicolo; costo in Azioni da definire (A.145)', azione: () => saliUi(tok.id, v.id, 'conducente') } : null,
+            bordo.filter((x) => x.ruolo === 'passeggero').length < posti.passeggeri ? { testo: `Sali su ${nomeTok(v)} come passeggero`, chiave: `sali:${v.id}:passeggero`, titolo: 'Il token sparisce dalla mappa e va con il veicolo; costo in Azioni da definire (A.145)', azione: () => saliUi(tok.id, v.id, 'passeggero') } : null,
+          ].filter(Boolean);
+        });
+        return voci.length ? voci : null;
+      },
+      ruota_veicolo: () => (tok.rif.tipo === 'veicolo' ? [
+        { testo: 'Ruota a sinistra', tasto: '←', chiave: 'ruota:-1', azione: () => ruotaVeicoloUi(tok.id, -1) },
+        { testo: 'Ruota a destra', tasto: '→', chiave: 'ruota:1', azione: () => ruotaVeicoloUi(tok.id, 1) },
+      ] : null),
+      a_bordo: () => (tok.rif.tipo === 'veicolo' && aBordo(tok).length ? aBordo(tok).flatMap((x) => [
+        { testo: `Scendi: ${nomeTok(x)}${x.ruolo === 'conducente' ? ' (conducente)' : ''}…`, chiave: `scendi:${x.id}`, titolo: 'Poi un clic su un quadretto libero accanto al veicolo', azione: () => iniziaScendi(tok.id, x.id) },
+        { testo: `Linea di tiro di ${nomeTok(x)}`, chiave: `linea:${x.id}`, titolo: 'Dal veicolo, dal suo quadretto più favorevole', azione: () => lineaPasseggero(tok.id, x.id) },
+      ]) : null),
       attacca: () => {
         if (conScontro && st.planciaBarra?.puoAttaccare?.(id)) return { testo: 'Attacca!', titolo: 'Il pannello «Attacca!» del nemico; con la linea di tiro fissata, bersaglio, distanza e Copertura già scelti', azione: () => st.planciaBarra.attaccaContro(id, st.linea?.da === tok.id ? st.scena.token.find((x) => x.id === st.linea.a)?.rif?.id ?? null : null) };
         if (pg && recordPg(pz)) return { testo: 'Attacca! (scheda)', titolo: 'L’attacco di un PG si fa dalla sua scheda, tab Combattimento; con la linea di tiro fissata, il bersaglio è già scelto', azione: () => {
@@ -2574,6 +2726,8 @@ export function renderMappa(radice, ctx) {
     if ((e.key === 'a' || e.key === 'A') && !e.shiftKey) { e.preventDefault(); adattaSchermo(); return; }
     if (frecciaTemplate(e)) return;
     if (frecciaPorta(e)) return;
+    if (frecciaVeicolo(e)) return;
+    if (e.key === 'Escape' && st.scendi) { e.preventDefault(); st.scendi = null; ridisegna(['sopra']); avviso('Discesa annullata.', { chiave: 'scendi' }); return; }
     // 07/10: le frecce spostano il gruppo selezionato di 1 Q (un Ctrl+Z per passo)
     if (st.gruppo.size && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
       e.preventDefault();
@@ -2836,7 +2990,8 @@ export function renderMappa(radice, ctx) {
     const s = st.fonti?.scontro;
     const id = s ? diTurno(s)?.id : null;
     if (!id) return;
-    const t = st.scena.token.find((x) => chiaveRif(x.rif) === chiaveRif({ tipo: 'partecipante', id }));
+    // fase 2, lotto 5: chi è a bordo non ha un token in mappa: si sceglie il veicolo su cui si trova
+    const t = st.scena.token.find((x) => chiaveRif(x.rif) === chiaveRif({ tipo: 'partecipante', id })) ?? veicoloDi(st.scena, chiaveRif({ tipo: 'partecipante', id }))?.veicolo;
     if (t) scegli(t.id);
     apriCartaChiave(chiaveRif({ tipo: 'partecipante', id }), { riapri: false });
   }
@@ -2853,7 +3008,7 @@ export function renderMappa(radice, ctx) {
     st.turnoVisto = chiave;
     if (!chiave || (!subito && (!cambiato || primo))) return;
     const id = diTurno(s)?.id;
-    const t = id ? st.scena.token.find((x) => chiaveRif(x.rif) === chiaveRif({ tipo: 'partecipante', id })) : null;
+    const t = id ? st.scena.token.find((x) => chiaveRif(x.rif) === chiaveRif({ tipo: 'partecipante', id })) ?? veicoloDi(st.scena, chiaveRif({ tipo: 'partecipante', id }))?.veicolo ?? null : null;
     if (!subito && !st.trascina) {
       scegli(t?.id ?? null);
       if (id) apriCartaChiave(chiaveRif({ tipo: 'partecipante', id }), { riapri: false });

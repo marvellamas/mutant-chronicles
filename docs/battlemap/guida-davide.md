@@ -54,6 +54,16 @@ Si preparano in pochi secondi e durante il gioco non si toccano più.
 4. Con la **nebbia automatica** (interruttore in cima alla sezione Nebbia, o «Strumenti» → «Nebbia automatica») i PG vedono lontano dove c'è Luce (30 Q), poco in Penombra (6 Q) e con Luce scarsa (3 Q), al Buio solo il quadretto accanto o fin dove arriva una torcia. **All'aperto di giorno spegni pure la nebbia.**
 5. La linea di tiro e «Attacca!» propongono la penalità della zona del bersaglio (per esempio «Penombra −2»); puoi cambiarla. Ai giocatori le zone scure arrivano più scure, ma la mappa resta leggibile.
 
+## Veicoli
+
+- **Metterlo:** come gli altri token («Metti» fra i «senza token»); prima del clic, ← → scelgono dove punta il muso.
+- **Girarlo:** con il veicolo scelto, ← → (o clic destro → «Ruota»): 90° alla volta; Ctrl+Z annulla.
+- **Guidarlo:** si muove al turno del suo conducente, una volta per Round, con l'andatura della sua scheda. Senza conducente resta fermo.
+- **Salire:** clic destro su un PG o un nemico accanto al veicolo → «Sali su … come conducente» (un PG) o «come passeggero». Il token sparisce e diventa un cerchietto sul veicolo; nel pannello c'è l'elenco «A bordo».
+- **Scendere:** pannello del veicolo → «A bordo» → «Scendi…», poi clic su un quadretto evidenziato accanto al mezzo.
+- **Sparare da bordo:** «Linea di tiro» accanto al nome nell'elenco «A bordo»: la linea parte dal veicolo.
+- Quante Azioni costano salire e scendere lo decide Davide (A.145): per ora contale a voce.
+
 ## Suoni
 
 - **Campanella del Round:** a ogni nuovo Round suona sul PC della mappa (non con «Indietro»).

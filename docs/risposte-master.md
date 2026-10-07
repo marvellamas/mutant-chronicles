@@ -1180,6 +1180,15 @@ questi punti, con un `TODO(Davide)` dove serve; nel pacchetto per il Doc «per-d
   partecipante dello scontro, ma ha tre riserve di PI e una procedura di danno sua. Nella plancia lo mettiamo come
   carta collegata al conducente (si muove alla sua Iniziativa) o come partecipante a sé con l'Iniziativa del
   conducente? È il lotto 4 della ricognizione, serve prima di scrivere l'interfaccia.
+- **A.145 — Salire su un veicolo e scenderne: quante Azioni?** (07/10/2026, veicoli sulla mappa, fase 2, lotto 5). Il
+  Manuale dei Veicoli 0.2 dice che il mezzo si muove all'Iniziativa del conducente e che «essere trasportati non consuma
+  la loro AzM» (§1.3), ma non quanto costa salire a bordo, prendere il posto di guida o scendere (1 AzM? 1 AzP? niente,
+  se il mezzo è fermo?). Provvisorio: la mappa non le conta, il master le applica a voce (`veicoli.json` → mappa,
+  `TODO(Davide)`).
+- **A.146 — Veicoli e zone di controllo** (07/10/2026, veicoli sulla mappa). Un veicolo che esce dalla zona di
+  controllo di un avversario provoca un Attacco di Opportunità (contro il mezzo, o contro chi è a bordo e si espone)? E un
+  avversario a bordo minaccia la zona attorno al mezzo? Provvisorio: no, i veicoli non provocano e non controllano zone,
+  come prima (`veicoli.json` → mappa, `TODO(Davide) opportunita`).
 
 ## Domande aperte sugli impianti (censimento del 04/10/2026)
 

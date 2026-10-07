@@ -2492,6 +2492,14 @@ function validaVeicoli(dati, err) {
   if (!(dati.abilita?.abilita ?? []).some((a) => a.nome === 'Pilotare' && a.caratteristica === v.pilotare?.caratteristica)) {
     err(F, 'pilotare.caratteristica', `l’Abilità Pilotare di abilita.json non usa ${v.pilotare?.caratteristica} (§1.2: INT)`);
   }
+  // mappa di battaglia (fase 2, lotto 5): immagine e muso del token, rotazione a 90°, posti dal profilo
+  if (v.mappa?.rotazione_gradi !== 90) err(F, 'mappa.rotazione_gradi', '90 atteso (i veicoli si girano a passi di 90°)');
+  for (const k of ['salire_azioni', 'scendere_azioni']) if (v.mappa?.[k] !== null && !(Number.isInteger(v.mappa?.[k]) && v.mappa[k] >= 0)) err(F, `mappa.${k}`, 'null (A.145, da definire) o un numero di Azioni');
+  for (const [i, p] of (v.profili ?? []).entries()) {
+    if (p.mappa === undefined) continue;
+    if (!/^img\/[\w./-]+\.(png|webp|jpg)$/.test(p.mappa?.immagine ?? '')) err(F, `profili[${i}].mappa.immagine`, 'percorso di un’immagine in img/ (png, webp o jpg)');
+    if (!['s', 'o', 'n', 'e'].includes(p.mappa?.muso_immagine)) err(F, `profili[${i}].mappa.muso_immagine`, 's, o, n o e (dove punta il muso nell’immagine)');
+  }
   // §1.4: MAN da −2 a +2, una fascia per valore
   const man = v.manovrabilita;
   if (!Array.isArray(man?.fasce) || man.fasce.length !== 5) err(F, 'manovrabilita.fasce', 'cinque fasce da +2 a −2 attese (§1.4)');

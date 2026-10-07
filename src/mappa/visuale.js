@@ -228,4 +228,6 @@ export function nebbiaDopoVisuale(coperti64, visti, C, R) {
 }
 
 /** I token dei PG che guardano (non nascosti): riferimenti ai partecipanti «pg:…». */
-export const tokenPg = (scena) => scena.token.filter((t) => !t.nascosto && t.rif?.tipo === 'partecipante' && String(t.rif.id).startsWith('pg:'));
+// fase 2, lotto 5: un veicolo con un PG a bordo vede come un PG (i PG a bordo guardano dal mezzo)
+export const tokenPg = (scena) => scena.token.filter((t) => !t.nascosto && ((t.rif?.tipo === 'partecipante' && String(t.rif.id).startsWith('pg:'))
+  || (t.passeggeri ?? []).some((p) => !p.nascosto && String(p.rif?.id).startsWith('pg:'))));

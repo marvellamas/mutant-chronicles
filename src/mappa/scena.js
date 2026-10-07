@@ -6,7 +6,8 @@
 //   griglia: { q_px, scosto_x, scosto_y, colore, opacita, bloccata, colonne, righe },
 //   muri, terreno: maschere di Q in base64 (src/mappa/celle.js),
 //   nebbia: { iniziale: "coperta" | "scoperta", coperti: maschera },
-//   token: [{ id, rif: { tipo: "partecipante" | "veicolo" | "segnaposto", id }, q: [x, y], ingombro, nascosto, nome?, luce? }],
+//   token: [{ id, rif: { tipo: "partecipante" | "veicolo" | "segnaposto", id }, q: [x, y], ingombro, nascosto, nome?, luce?,
+//            direzione?, passeggeri? }]  (veicoli: muso e chi è a bordo, fase 2 lotto 5, src/mappa/veicoli-mappa.js)
 //   luce?: { ambiente, zone?: { categoria: maschera } }   luci della scena (fase 2, lotto 4; src/mappa/luce.js); token.luce: raggio in Q
 //   porte?: [{ id, q: [x, y], stato: aperta | chiusa | bloccata, segreta, orientamento?: orizzontale | verticale }]   porte (fase 2, lotto 2; src/mappa/porte.js; orientamento dal 07/10)
 //   visuale?: { automatica }            nebbia automatica dalla visuale dei PG (fase 2, lotto 3; src/mappa/visuale.js)
@@ -31,6 +32,7 @@ import { erroreTemplate } from './template.js';
 import { errorePorta } from './porte.js';
 import { erroreIniziale } from './iniziale.js';
 import { erroreLuce, erroreLuceToken } from './luce.js';
+import { erroreBordo } from './veicoli-mappa.js';
 
 export const ID_SCENA = /^[a-z0-9-]{1,60}$/;
 /** Nome dei file in mappe/: lo sceglie il server (nome ridotto + impronta del contenuto). */
@@ -182,6 +184,14 @@ export function validaScena(s, dati) {
     if (!isQ(t.q) || !tokenDentro(t, colonne, righe)) return `${k}.q: il token deve stare tutto dentro la griglia`;
     if (typeof t.nascosto !== 'boolean') return `${k}.nascosto: vero o falso`;
     { const e = erroreLuceToken(t.luce, dati); if (e) return `${k}.${e}`; }
+    // veicoli (fase 2, lotto 5): muso e chi è a bordo; un partecipante a bordo non ha anche un token in mappa
+    { const e = erroreBordo(t, D); if (e) return `${k}.${e}`; }
+    for (const p of t.passeggeri ?? []) {
+      if (rifPartecipanti.has(p.rif.id)) return `${k}.passeggeri: il partecipante «${p.rif.id}» ha già un token`;
+      rifPartecipanti.add(p.rif.id);
+      if (idToken.has(p.id)) return `${k}.passeggeri: id «${p.id}» ripetuto`;
+      idToken.add(p.id);
+    }
   }
 
   // template ad area (§10; fase 2, lotto 1: src/mappa/template.js → erroreTemplate)

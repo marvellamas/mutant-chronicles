@@ -80,9 +80,20 @@ export function vistaGiocatori(s, contesto = null, regoleTemplate = contesto?.re
     // 07/10: la barretta dei PV dei PG (e degli alleati) sempre; dei nemici solo con scena.pvNemiciGiocatori
     const pvVisibile = p.lato !== 'avversario' || s.pvNemiciGiocatori === true;
     const quota = pvVisibile && p.pv?.massimo > 0 ? Math.max(0, Math.min(1, Math.round((p.pv.attuali / p.pv.massimo) * 20) / 20)) : null;
-    return { info: { lato: p.lato, nome: p.nome, iniziali: p.iniziali, immagine: contesto.immagineDi?.(p) ?? null, pv: quota, aZero: !!p.aZero, diTurno: !!p.diTurno, bordo: contesto.bordoDi?.(p) ?? null } };
+    // fase 2, lotto 5: il veicolo con la sua immagine (file statico del progetto) e il muso
+    const veicolo = p.tipo === 'veicolo' && p.immagine ? { veicoloImmagine: p.immagine, musoImmagine: p.musoImmagine ?? 's' } : {};
+    return { info: { lato: p.lato, nome: p.nome, iniziali: p.iniziali, immagine: contesto.immagineDi?.(p) ?? null, pv: quota, aZero: !!p.aZero, diTurno: !!p.diTurno, bordo: contesto.bordoDi?.(p) ?? null, ...veicolo } };
   };
-  const token = s.token.filter((t) => !t.nascosto && visibile(t)).map(({ nascosto, ...t }) => ({ ...t, ...info(t) }));
+  // chi è a bordo (fase 2, lotto 5): i passeggeri nascosti dal master non arrivano; degli altri nome e immagine
+  const passeggeri = (t) => {
+    const visibili = (t.passeggeri ?? []).filter((x) => !x.nascosto);
+    if (!visibili.length) return {};
+    return { passeggeri: visibili.map(({ nascosto, luce, ...x }) => {
+      const p = contesto ? pezzi.get(chiaveRif(x.rif)) : null;
+      return { ...x, ...(p ? { info: { lato: p.lato, nome: p.nome, iniziali: p.iniziali, immagine: contesto.immagineDi?.(p) ?? null } } : {}) };
+    }) };
+  };
+  const token = s.token.filter((t) => !t.nascosto && visibile(t)).map(({ nascosto, passeggeri: _p, ...t }) => ({ ...t, ...info(t), ...passeggeri({ ...t, passeggeri: _p }) }));
   const vista = {
     formato: s.formato,
     versione: s.versione,
