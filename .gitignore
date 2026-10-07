@@ -65,3 +65,7 @@ mappe/*
 # Musica di fondo della mappa (server.mjs → /api/musica, 07/10): file del master; si traccia solo il LEGGIMI
 musica/*
 !musica/LEGGIMI.txt
+
+# Avvisi a Marcello con ntfy.sh (tools/avvisi.mjs): configurazione e stato di ogni PC; si tracciano LEGGIMI ed esempio
+avvisi/avvisi.json
+avvisi/stato.json

@@ -1,0 +1,15 @@
+Avvisi a Marcello (ntfy.sh)
+===========================
+
+Quando aggiorni Mutant (aggiorna.bat) o lo avvii con avvia-server.bat, a Marcello arriva sul
+telefono un avviso con il nome di questo PC e la versione dell'app: serve a sapere se stai provando
+l'ultima. Non parte nient'altro: nessun personaggio, nessuna scena, nessuno scontro.
+
+- avvisi.json: la configurazione di questo PC. aggiorna.bat la crea da avvisi.esempio.json se manca.
+    "attivo": true      avvisi accesi
+    "attivo": false     avvisi spenti (non parte nulla)
+    "ntfy_argomento"    il canale su ntfy.sh a cui Marcello e' iscritto: non cambiarlo
+- stato.json: quando e' partito l'ultimo avviso di avvio (al massimo uno ogni 6 ore) e di
+  «Mappa aperta» (al massimo uno al giorno). Si puo' cancellare.
+- Senza rete o se l'invio non riesce, Mutant funziona lo stesso: l'avviso semplicemente non parte.
+- avvisi.json e stato.json non vanno su GitHub (.gitignore).

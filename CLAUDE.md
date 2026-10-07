@@ -90,6 +90,7 @@ server.mjs      server di Mutant per il Tavolo del Master (avvia-server.bat): fi
 personaggi/ tavolo/ scontri/ nemici/ veicoli/ scene/ mappe/ musica/  dati del server, fuori da git (si traccia il LEGGIMI)
 tests/          node --test; tests/collaudo/ tre personaggi di riferimento con PDF
 esempi/         PG d'esempio (tools/genera_esempi.mjs; Aiko Tenzan da tools/genera_esempio_tecniche.mjs), nemici/ e nemici/umani/ (tools/genera_nemici_umani.mjs)
+avvisi/         avvisi a Marcello con ntfy.sh (tools/avvisi.mjs, chiamato da aggiorna.bat e dall'avvio del server): avvisi.json e stato.json fuori da git, LEGGIMI ed esempio tracciati
 tools/          estrazione dai manuali, generatori dei lotti (tools/lotti/), collaudo_pdf.mjs, genera_immagini.py, versione.mjs, installa-hook.mjs e hooks/pre-commit
 img/            stemmi e icone generati (img/immagini.json li elenca); originali in img/originali/, non tracciati
 docs/           studio di fattibilità, lotti, domande e risposte del master, roadmap
