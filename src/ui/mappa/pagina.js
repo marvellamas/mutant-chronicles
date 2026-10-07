@@ -430,6 +430,27 @@ export function renderMappa(radice, ctx) {
   const immagine = creaImmagini(() => ridisegna(['sopra']));
   // suoni della mappa (07/10): effetti degli eventi dello scontro, sul PC del master
   const audio = creaAudio(ctx.dati);
+  // muto generale e volumi di Musica ed Effetti (0–100 %), ricordati su questo PC (src/mappa/audio.js → CHIAVE_AUDIO)
+  const cursore = (canale, etichetta) => h('label', { class: 'cursore-audio', title: `${etichetta}: volume su questo PC` },
+    h('span', { class: 'lungo' }, etichetta),
+    h('input', { type: 'range', min: 0, max: 100, step: 5, value: Math.round(audio.impostazioni()[canale] * 100), 'aria-label': `Volume ${etichetta}`,
+      oninput: (e) => { audio.imposta({ [canale]: Number(e.target.value) / 100 }); aggiornaControlliAudio(); } }));
+  el.audioMuto = h('button', { type: 'button', class: 'btn btn-piccolo tondo', onclick: () => { audio.imposta({ muto: !audio.impostazioni().muto }); aggiornaControlliAudio(); } });
+  el.audioMusica = h('span', { class: 'mappa-audio-musica' });
+  el.audioCursori = [cursore('musica', 'Musica'), cursore('effetti', 'Effetti')];
+  function aggiornaControlliAudio() {
+    const i = audio.impostazioni();
+    el.audioMuto.textContent = i.muto ? '🔇' : '🔊';
+    el.audioMuto.title = i.muto ? 'Audio spento su questo PC: clic per riaccenderlo' : 'Spegne tutti i suoni su questo PC (musica ed effetti)';
+    el.audioMuto.setAttribute('aria-pressed', String(i.muto));
+    el.audioMuto.setAttribute('aria-label', i.muto ? 'Riaccendi l’audio' : 'Audio muto');
+    for (const [k, l] of [['musica', el.audioCursori[0]], ['effetti', el.audioCursori[1]]]) {
+      const inp = l.querySelector('input');
+      if (document.activeElement !== inp) inp.value = String(Math.round(i[k] * 100));
+      inp.title = `${Math.round(i[k] * 100)} %${i.muto ? ' (muto)' : ''}`;
+      l.classList.toggle('spento', i.muto);
+    }
+  }
 
   const aggiornaBarra = () => {
     el.zoom.textContent = `${Math.round(st.cam.scala * 100)} %`;
@@ -2757,11 +2778,13 @@ export function renderMappa(radice, ctx) {
    */
   function disegnaAudio() {
     if (!el.audio) return;
+    // la prima volta: muto e cursori, che poi restano (il ridisegno non interrompe il trascinamento)
+    if (!el.audio.childNodes.length) { el.audio.append(el.audioMusica, el.audioMuto, ...el.audioCursori); aggiornaControlliAudio(); }
     const f = st.fonti;
     const file = f?.scontro ? f.scontro.musica ?? null : f?.bozza ? f.bozza.musica ?? null : null;
     const m = audio.statoMusica();
     const puo = !!(f?.scontro || f?.bozza);
-    svuota(el.audio,
+    svuota(el.audioMusica,
       h('button', { type: 'button', class: `btn btn-piccolo${file ? ' acceso' : ''}`, disabled: !puo, title: puo ? `Musica di fondo: ${file ?? 'nessuna'} (clic per sceglierla dalla cartella musica/)` : 'Musica di fondo: collega la scena a uno scontro o a una bozza', 'aria-label': 'Musica di fondo', onclick: () => scegliMusicaUi() },
         conIcona('♫', file ? file.replace(/\.[^.]+$/, '') : 'Musica')),
       f?.scontro && file ? h('button', { type: 'button', class: 'btn btn-piccolo tondo', title: m.pausa ? 'Riprendi la musica' : 'Metti in pausa la musica', 'aria-label': m.pausa ? 'Riprendi la musica' : 'Pausa della musica', onclick: () => { audio.pausa(!m.pausa); disegnaAudio(); } }, m.pausa ? '▶' : '⏸') : null);

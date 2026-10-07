@@ -2157,3 +2157,6 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 .mappa-audio { display: inline-flex; align-items: center; gap: 0.25rem; }
 .mappa-audio .btn.acceso { border-color: var(--pe); }
 .finestrella.scegli-musica .scelta-colonna { max-height: 50vh; overflow-y: auto; }
+.cursore-audio { display: inline-flex; align-items: center; gap: 0.2rem; font-size: 0.85rem; }
+.cursore-audio input[type=range] { width: 4.5rem; }
+.cursore-audio.spento { opacity: 0.5; }

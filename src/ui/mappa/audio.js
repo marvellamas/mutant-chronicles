@@ -11,10 +11,11 @@ const leggi = () => { try { return JSON.parse(localStorage.getItem(CHIAVE_AUDIO)
 const scrivi = (v) => { try { localStorage.setItem(CHIAVE_AUDIO, JSON.stringify(v)); } catch { /* solo per questa volta */ } };
 
 /**
- * @param o { attivo(): false per non suonare (vista giocatori senza «suona anche qui») }
+ * @param o { attivo(): false per non suonare (vista giocatori senza «suona anche qui»), avvisa?(sblocca): l'avviso del
+ *   blocco dell'autoplay (di solito quello qui sotto) }
  * @returns { effetto(evento), musica(file|null), pausa(sì/no), statoMusica(), impostazioni(), imposta(modifica), sbloccato(), chiudi() }
  */
-export function creaAudio(dati, { attivo = () => true } = {}) {
+export function creaAudio(dati, { attivo = () => true, avvisa = null } = {}) {
   let imp = impostazioniAudio(leggi(), dati);
   let sbloccato = false;
   const ascoltatori = new Set();
@@ -31,9 +32,9 @@ export function creaAudio(dati, { attivo = () => true } = {}) {
     m.el.volume = volumeDi(imp, 'musica');
     if (m.el.paused) prova(m.el);
   };
-  const avvisaBlocco = () => avviso('Il browser blocca l’audio finché non tocchi la pagina: clic per attivare l’audio.', {
+  const avvisaBlocco = () => (avvisa ? avvisa(() => sblocca()) : avviso('Il browser blocca l’audio finché non tocchi la pagina: clic per attivare l’audio.', {
     tipo: 'info', chiave: 'audio-bloccato', durata: 15000, azioni: [{ testo: 'Attiva l’audio', fai: () => sblocca() }],
-  });
+  }));
   const sblocca = () => {
     if (sbloccato) return;
     sbloccato = true;
