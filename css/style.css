@@ -1585,6 +1585,10 @@ body.con-sfondo::before {
 .scontro-testa { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem; }
 .scontro-testa h2 { margin: 0; }
 .di-turno-testo { margin: 0.4rem 0; font-size: 1.05rem; }
+/* «Reimposta Iniziativa» (07/10): il nome nella tabella dell'ordine apre la reimpostazione di quel partecipante */
+.btn-nome-scontro { font: inherit; font-weight: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-align: left; text-decoration: underline dotted; text-underline-offset: 3px; }
+.btn-nome-scontro:hover, .btn-nome-scontro:focus-visible { text-decoration-style: solid; }
+.reimposta-elenco { list-style: none; padding: 0; margin: 0 0 0.6rem; display: flex; flex-wrap: wrap; gap: 0.3rem; }
 .ordine-iniziativa tr.di-turno { background: var(--accento-tenue); }
 .ordine-iniziativa tr.di-turno th, .ordine-iniziativa tr.di-turno .pos-scontro { color: var(--accento); }
 .ordine-iniziativa tr.provvisorio th { font-style: italic; }

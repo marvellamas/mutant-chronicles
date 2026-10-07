@@ -19,9 +19,9 @@ import { apriLancioNemico } from './lancio-nemico.js';
 import { attacchiDi } from '../nemico-attacco.js';
 import { testoColpo } from '../danno.js';
 import { perditeDovute, applicaPerdita, registraPeriodico, togliPeriodici, allineaPeriodici, periodicoDi, pvDopoPerdita } from '../periodici.js';
-import { pannelloScontro, leggiScontroAperto, leggiScontro, salvaScontro } from './scontro.js';
+import { pannelloScontro, leggiScontroAperto, leggiScontro, salvaScontro, scegliReimposta } from './scontro.js';
 import { pannelloBestiario, elencoNemici, cartaNemico } from './nemici.js';
-import { diTurno, avanti, indietro, anteprimaIndietro, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico, confermaRegimeNemico, aggiungiNemici, registraRiga, cambiaStatoNemico } from '../scontro.js';
+import { diTurno, avanti, indietro, anteprimaIndietro, reimpostaIniziativa, reimpostaIniziativaDi, dadoIniziativa, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico, confermaRegimeNemico, aggiungiNemici, registraRiga, cambiaStatoNemico } from '../scontro.js';
 import { vociBestiario } from '../nemici.js';
 import { creaCustode } from './ridisegno.js';
 import { avviso, avvisoErrore } from './avvisi.js';
@@ -342,7 +342,7 @@ export function renderTavolo(radice, ctx) {
       await aggiorna(true);
     }) : null;
     const stScontro = Object.assign(stato, { pgAlTavolo: alTavolo.map((r) => stato.viste.get(r.file)).filter((v) => v?.completa) });
-    const azScontro = { modifica, crea: (s) => salva(s), ridisegna: disegna, annullaColpo, indietro: indietroUi, attacca: (p) => attacca(p, alTavolo) };
+    const azScontro = { modifica, crea: (s) => salva(s), ridisegna: disegna, annullaColpo, indietro: indietroUi, reimposta: (id) => reimpostaUi(id), attacca: (p) => attacca(p, alTavolo) };
     const cartePg = alTavolo.length
       ? h('div', { class: 'plancia-griglia' }, alTavolo.map((r) => (r.mancante ? cartaMancante(r.mancante)
         : stato.viste.get(r.file) ? conPezzo(cartaPg(ctx, stato.viste.get(r.file), r, turnoDi(r), colpitoPg, durateDi(stato.viste.get(r.file))), `partecipante:pg:${chiaveDaFile(r.file)}`) : cartaErrore(r, stato.errori.get(r.file)))))
@@ -560,6 +560,23 @@ export function renderTavolo(radice, ctx) {
     if (testi.length) avviso(testi, { tipo: 'info', durata: 9000 });
     await aggiorna(true);
     return true;
+  };
+  // «Reimposta Iniziativa» (ritocchi del 07/10; src/scontro.js → reimpostaIniziativa, reimpostaIniziativaDi): per tutti,
+  // con conferma, o per uno solo (dal suo nome). Chi è di turno resta di turno; «Indietro» la annulla. I dadi li tira
+  // l'app, anche gli spareggi fra avversari (A.123); il dado dal vivo o il valore a mano solo per uno.
+  const reimpostaUi = async (soloId = null) => {
+    await aggiorna();
+    if (!stato.scontro) return false;
+    const dado = dadoIniziativa(ctx.dati);
+    const scelta = await scegliReimposta(stato.scontro, dado, soloId);
+    if (!scelta) return false;
+    const opz = { indietroMax: ctx.dati.mappa.iniziativa.indietro_max };
+    const app = () => tira(dado).tiro;
+    if (scelta.tutti) {
+      if (!await chiedi({ titolo: 'Reimpostare l’Iniziativa di tutti?', testo: `Ognuno ritira ${dado.formula} con l’app; gli spareggi fra avversari si tirano di nuovo. Chi è di turno resta di turno. «Indietro» la annulla.`, si: 'Ritira per tutti' })) return false;
+      return modifica((x) => reimpostaIniziativa(x, app, ctx.dati, undefined, opz));
+    }
+    return modifica((x) => reimpostaIniziativaDi(x, scelta.id, scelta.tiro, ctx.dati, undefined, { ...opz, tiraSpareggio: app }));
   };
   // «Annulla ultimo colpo»: per un PG si rimettono nel file PV, Ferite e Stati di prima (con la revisione)
   const annullaColpo = async () => {
@@ -846,6 +863,8 @@ export function renderTavolo(radice, ctx) {
   // «Indietro» (07/10): lo stesso della plancia; puoIndietro per il pulsante della barra
   ferma.indietro = () => indietroUi();
   ferma.puoIndietro = () => anteprimaIndietro(stato.scontro);
+  // «Reimposta Iniziativa» (07/10): la stessa della plancia, per la barra dell'Iniziativa della mappa
+  ferma.reimposta = (id = null) => reimpostaUi(id);
   ferma.aggiorna = () => aggiorna();
   // ZoC della mappa (07/10): «Attacca!» dell'avversario con il bersaglio già scelto, dall'avviso dell'Attacco di
   // Opportunità; false se non si può (PG: l'attacco si fa dalla sua scheda; nessun attacco nel profilo)

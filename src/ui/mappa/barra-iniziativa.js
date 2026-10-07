@@ -12,7 +12,7 @@ const LINEA_PX = 24; // altezza del centro della linea: sopra, i numeri della sc
 
 /**
  * @param barra da barraIniziativa (master) o dalla vista giocatori; null: «nessuno scontro aperto»
- * @param o { pxPerPunto, avanti?(), indietro?(), puoIndietro?: anteprima di «Indietro» o null, scegli?(voce),
+ * @param o { pxPerPunto, avanti?(), indietro?(), puoIndietro?: anteprima di «Indietro» o null, reimposta?(), scegli?(voce),
  *   centra?: { attivo, cambia(v) }, vuoto?: testo senza scontro }
  */
 export function barraIniziativaEl(barra, o = {}) {
@@ -38,7 +38,9 @@ export function barraIniziativaEl(barra, o = {}) {
     h('div', { class: 'iniziativa-scala' }, interna),
     comandi ? h('span', { class: 'iniziativa-comandi' },
       // «Indietro» (07/10): annulla l'ultimo «Avanti» (anche Maiusc+clic su «Avanti»); solo master
-      o.indietro ? h('button', { type: 'button', class: 'btn', disabled: !o.puoIndietro, title: o.puoIndietro ? `Annulla l’ultimo «Avanti»: torna il turno di ${o.puoIndietro.diTurno?.nome ?? '—'}${o.puoIndietro.cambiaRound ? `, Round ${o.puoIndietro.round}` : ''} (Maiusc+clic su «Avanti»)` : 'Nessun «Avanti» da annullare' , onclick: () => o.indietro() }, '◀ Indietro') : null,
+      o.indietro ? h('button', { type: 'button', class: 'btn', disabled: !o.puoIndietro, title: o.puoIndietro ? `Annulla l’ultimo ${o.puoIndietro.iniziativa ? '«Reimposta Iniziativa»' : '«Avanti»'}: torna il turno di ${o.puoIndietro.diTurno?.nome ?? '—'}${o.puoIndietro.cambiaRound ? `, Round ${o.puoIndietro.round}` : ''} (Maiusc+clic su «Avanti»)` : 'Nessun «Avanti» da annullare' , onclick: () => o.indietro() }, '◀ Indietro') : null,
+      // «Reimposta Iniziativa» (07/10): per tutti o per uno solo, la stessa della plancia
+      o.reimposta ? h('button', { type: 'button', class: 'btn', title: 'Reimposta Iniziativa: ritira per tutti (con conferma) o per uno solo (ritiro o valore a mano); chi è di turno resta di turno; «Indietro» la annulla', disabled: !barra.voci.length, onclick: () => o.reimposta() }, '⟳ Iniziativa') : null,
       h('button', { type: 'button', class: 'btn primario', title: 'Il turno passa al prossimo, che diventa il token scelto (lo stesso «Avanti» della plancia; Maiusc+clic: «Indietro»)', disabled: !barra.voci.length, onclick: (e) => (e.shiftKey && o.indietro ? o.indietro() : o.avanti()) }, 'Avanti'),
       o.centra ? h('button', {
         type: 'button', role: 'switch', 'aria-checked': String(!!o.centra.attivo), class: `interruttore-mappa${o.centra.attivo ? ' acceso' : ''}`,

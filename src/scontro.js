@@ -287,6 +287,110 @@ export function spostaAlleato(s, id, verso, adesso) {
   return conRiga({ ...s, ordineAlleati: [...resto, ...ord] }, `Ordine fra alleati alla pari: ${p.nome} ${verso < 0 ? 'prima' : 'dopo'}.`, adesso);
 }
 
+/**
+ * Spareggi ancora da fare (§5.1, A.123) tirati con `tiraSpareggio` (() → { valore, origine }): fra gli avversari alla
+ * pari dopo DES e INT si tira 1d10; «le ulteriori parità si ritirano soltanto fra i contendenti ancora alla pari».
+ * Con `solo` soltanto i gruppi che contengono quel partecipante. Restituisce lo scontro e i testi per il registro.
+ */
+function conSpareggi(s, tiraSpareggio, solo = null) {
+  let t = s;
+  const testi = [];
+  for (let giro = 0; giro < 20; giro++) {
+    const gruppi = ordineIniziativa(t).spareggi.filter((g) => !solo || g.includes(solo));
+    if (!gruppi.length) break;
+    for (const g of gruppi) {
+      const membri = g.map((id) => t.partecipanti.find((p) => p.id === id));
+      const conta = new Map();
+      for (const m of membri) if (m.spareggio) conta.set(m.spareggio.valore, (conta.get(m.spareggio.valore) ?? 0) + 1);
+      const daTirare = membri.filter((m) => !m.spareggio || conta.get(m.spareggio.valore) > 1).map((m) => m.id);
+      const tiri = new Map(daTirare.map((id) => [id, tiraSpareggio()]));
+      t = { ...t, partecipanti: t.partecipanti.map((p) => (tiri.has(p.id) ? { ...p, spareggio: { valore: tiri.get(p.id).valore, origine: tiri.get(p.id).origine } } : p)) };
+      testi.push(`spareggio ${daTirare.map((id) => `${t.partecipanti.find((p) => p.id === id).nome} ${tiri.get(id).valore}`).join(', ')}`);
+    }
+  }
+  return { scontro: t, testi };
+}
+
+/** Voce di «Indietro» per una «Reimposta Iniziativa»: tiri, spareggi e ordine fra alleati di prima, e chi era di turno. */
+function voceIniziativa(s, t, adesso) {
+  const d = diTurno(s);
+  return {
+    tipo: 'iniziativa', quando: ora(adesso), prima: { round: s.round, turno: s.turno, diTurno: d?.id ?? null }, dopo: { round: t.round, turno: t.turno },
+    tiri: s.partecipanti.map((p) => ({ id: p.id, d10: p.d10 ?? null, spareggio: p.spareggio ?? null })), ordineAlleati: s.ordineAlleati,
+    righeInizio: s.registro.length, righe: t.registro.length, durateFinite: [], effettiFiniti: [], statiTolti: [], perdite: [],
+  };
+}
+
+/** Lo scontro con i tiri d'Iniziativa di una voce «iniziativa» (chi è entrato dopo tiene i suoi). */
+function conIniziativaDi(s, v) {
+  const tiri = new Map(v.tiri.map((x) => [x.id, x]));
+  return { ...s, ordineAlleati: v.ordineAlleati, partecipanti: s.partecipanti.map((p) => (tiri.has(p.id) ? { ...p, d10: tiri.get(p.id).d10, spareggio: tiri.get(p.id).spareggio } : p)) };
+}
+
+/** Turno dello stesso partecipante nell'ordine nuovo (chi era di turno resta di turno). */
+function turnoDello(t, id, ripiego) {
+  const { ordinati } = ordineIniziativa(t);
+  const i = id ? ordinati.findIndex((p) => p.id === id) : -1;
+  return i >= 0 ? i : Math.min(ripiego, Math.max(0, ordinati.length - 1));
+}
+
+const testoTiro = (p, spec) => (p.d10.origine === 'mano'
+  ? `${p.nome} ${p.base + p.d10.valore} (a mano)`
+  : `${p.nome} ${p.base} + ${spec.formula} ${p.d10.valore}${p.d10.origine === 'app' ? '' : ' (dal vivo)'} = ${p.base + p.d10.valore}`);
+
+/**
+ * «Reimposta Iniziativa» per tutti (ritocchi del 07/10; Giocatore §2.14, §5.1, A.123): ogni partecipante ritira il
+ * dado (Iniziativa della scheda + 1d10), gli spareggi di prima si cancellano e quelli nuovi fra avversari si tirano;
+ * l'ordine scelto fra alleati alla pari resta. Chi era di turno resta di turno, al suo posto nell'ordine nuovo (il
+ * Round non cambia). Una riga nel registro; con `indietroMax` una voce in `s.indietro`, che «Indietro» annulla.
+ * @param tira () → { valore, origine } per ogni dado (Iniziativa e spareggi), di solito l'app (src/tiri.js → tira)
+ */
+export function reimpostaIniziativa(s, tira, dati, adesso, { indietroMax = 0 } = {}) {
+  const spec = dadoIniziativa(dati);
+  const chi = diTurno(s);
+  let t = { ...s, partecipanti: s.partecipanti.map((p) => { const x = tira(); return { ...p, d10: { valore: x.valore, origine: x.origine }, spareggio: null }; }) };
+  for (const p of t.partecipanti) { const m = motivoFuoriIntervallo(p.d10.valore, spec); if (m) throw new Error(m); }
+  const sp = conSpareggi(t, tira);
+  t = sp.scontro;
+  t = { ...t, turno: turnoDello(t, chi?.id, s.turno) };
+  const ordine = ordineIniziativa(t).ordinati;
+  const testo = `Iniziativa reimpostata per tutti (${spec.formula}): ${ordine.map((p) => testoTiro(p, spec)).join('; ')}.${sp.testi.length ? ` Parità fra avversari: ${sp.testi.join('; ')}.` : ''}${chi ? ` Di turno resta ${chi.nome}.` : ''}`;
+  t = conRiga(t, testo, adesso);
+  return indietroMax > 0 ? { ...t, indietro: [...(s.indietro ?? []), voceIniziativa(s, t, adesso)].slice(-indietroMax) } : t;
+}
+
+/**
+ * «Reimposta Iniziativa» di un solo partecipante (ritocchi del 07/10): ritira il dado ({ valore, origine: 'app'|'vivo' },
+ * controllato sull'intervallo) oppure il valore totale scritto a mano ({ totale }: un ritocco del master, senza limiti
+ * di dado). Il suo spareggio si cancella; se finisce alla pari con un avversario lo spareggio si tira con
+ * `tiraSpareggio` (senza, resta da tirare nella colonna «Parità»). Chi era di turno resta di turno. Una riga nel
+ * registro; con `indietroMax` la voce per «Indietro».
+ */
+export function reimpostaIniziativaDi(s, id, tiro, dati, adesso, { indietroMax = 0, tiraSpareggio = null } = {}) {
+  const spec = dadoIniziativa(dati);
+  const p = s.partecipanti.find((x) => x.id === id);
+  if (!p) throw new Error('partecipante non trovato');
+  let d10;
+  if (tiro && 'totale' in tiro) {
+    if (!Number.isInteger(tiro.totale)) throw new Error('il valore d’Iniziativa scritto a mano dev’essere un numero intero');
+    d10 = { valore: tiro.totale - p.base, origine: 'mano' };
+  } else {
+    const m = motivoFuoriIntervallo(tiro?.valore, spec);
+    if (m) throw new Error(m);
+    d10 = { valore: tiro.valore, origine: tiro.origine };
+  }
+  const chi = diTurno(s);
+  let t = { ...s, partecipanti: s.partecipanti.map((x) => (x.id === id ? { ...x, d10, spareggio: null } : x)) };
+  const sp = tiraSpareggio ? conSpareggi(t, tiraSpareggio, id) : { scontro: t, testi: [] };
+  t = sp.scontro;
+  t = { ...t, turno: turnoDello(t, chi?.id, s.turno) };
+  const nuovo = t.partecipanti.find((x) => x.id === id);
+  const prima = p.d10 ? p.base + p.d10.valore : null;
+  const testo = `Iniziativa di ${p.nome} reimpostata: ${testoTiro(nuovo, spec)}${prima !== null ? ` (prima ${prima})` : ''}.${sp.testi.length ? ` Parità con un avversario: ${sp.testi.join('; ')}.` : ''}${chi ? ` Di turno resta ${chi.nome}.` : ''}`;
+  t = conRiga(t, testo, adesso);
+  return indietroMax > 0 ? { ...t, indietro: [...(s.indietro ?? []), voceIniziativa(s, t, adesso)].slice(-indietroMax) } : t;
+}
+
 /** Chi agisce ora (o null se nessuno ha tirato). */
 export function diTurno(s) {
   const { ordinati } = ordineIniziativa(s);
@@ -360,10 +464,11 @@ export function avanti(s, adesso, { indietroMax = 0 } = {}) {
 export function anteprimaIndietro(s) {
   const v = (s?.indietro ?? []).at(-1);
   if (!v || s.stato !== 'aperto') return null;
-  const { ordinati } = ordineIniziativa(s);
+  // una «Reimposta Iniziativa»: chi era di turno, nell'ordine di prima
+  const { ordinati } = ordineIniziativa(v.tipo === 'iniziativa' ? conIniziativaDi(s, v) : s);
   const chi = ordinati.find((p) => p.id === v.prima.diTurno) ?? ordinati[Math.min(v.prima.turno, ordinati.length - 1)] ?? null;
   return {
-    voce: v, round: v.prima.round, cambiaRound: v.prima.round !== s.round, diTurno: chi,
+    voce: v, iniziativa: v.tipo === 'iniziativa', round: v.prima.round, cambiaRound: v.prima.round !== s.round, diTurno: chi,
     altre: Math.max(0, s.registro.length - v.righe),
     perditePg: v.perdite.filter((x) => x.tipo === 'pg'),
     passi: s.indietro.length,
@@ -384,6 +489,14 @@ export function indietro(s, adesso) {
   const a = anteprimaIndietro(s);
   if (!a) return s;
   const v = a.voce;
+  if (v.tipo === 'iniziativa') {
+    // «Reimposta Iniziativa» annullata: tornano tiri, spareggi e ordine fra alleati di prima; di turno chi lo era
+    let t = conIniziativaDi(s, v);
+    t = { ...t, turno: turnoDello(t, v.prima.diTurno, v.prima.turno), indietro: conRigheProprie(s.indietro.slice(0, -1), v) };
+    const parti = [`Indietro: torna l’Iniziativa di prima della «Reimposta»; di turno ${a.diTurno?.nome ?? '—'}.`];
+    if (a.altre) parti.push(`Restano le modifiche fatte dopo (${a.altre} righe del registro).`);
+    return conRiga(t, parti.join(' '), adesso);
+  }
   const { ordinati } = ordineIniziativa(s);
   const turno = a.diTurno ? ordinati.indexOf(a.diTurno) : 0;
   const round = v.prima.round;

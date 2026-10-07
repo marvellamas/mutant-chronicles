@@ -2664,6 +2664,7 @@ export function renderMappa(radice, ctx) {
         avanti: () => avantiDallaMappa(),
         indietro: st.planciaBarra?.indietro ? () => indietroDallaMappa() : null,
         puoIndietro: st.planciaBarra?.puoIndietro?.() ?? null,
+        reimposta: st.planciaBarra?.reimposta ? () => reimpostaDallaMappa() : null,
         scegli: (v) => scegliDallaBarra(v),
         centra: { attivo: st.centra, cambia: (x) => { st.centra = x; scriviLocale('mutant-mappa-centra-turno', x); disegnaIniziativa(); if (x) seguiTurno(true); } },
       }));
@@ -2704,6 +2705,11 @@ export function renderMappa(radice, ctx) {
     if (!st.planciaBarra?.indietro) return;
     await st.planciaBarra.indietro();
     await aggiornaFonti();
+  }
+  /** «Reimposta Iniziativa» della barra (07/10): la stessa della plancia (stessa coda e stessa revisione dello scontro). */
+  async function reimpostaDallaMappa() {
+    if (!st.planciaBarra?.reimposta) return;
+    if (await st.planciaBarra.reimposta()) await aggiornaFonti();
   }
   /** Centra la vista sul token (con `soloSeFuori`, solo se è fuori dal riquadro o troppo vicino al bordo). */
   function centraToken(t, { soloSeFuori = false } = {}) {

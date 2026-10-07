@@ -3,7 +3,7 @@
 // partecipanti scritti a mano (provvisori), durate degli Stati, registro. Le regole stanno in src/scontro.js; qui la
 // presentazione e il salvataggio sul server con la revisione (server.mjs → /api/scontri).
 import { h } from './dom.js';
-import { chiedi } from './finestrella.js';
+import { chiedi, apri } from './finestrella.js';
 import { avvisoErrore } from './avvisi.js';
 import { infoValore } from './tooltip.js';
 import { tira, tiroManuale } from '../tiri.js';
@@ -55,7 +55,7 @@ export const idNuovo = (d = new Date()) => {
  * @param parte 'tutto' (plancia a pagina intera), 'iniziativa' (Round, «Avanti», ordine, da tirare) o 'gestione'
  *   (aggiungi nemici e partecipanti, durate degli Stati, registro): i gruppi della barra della mappa (ritocchi del 06/10)
  */
-export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaColpo = null, attacca = null, indietro: indietroUi = null }, parte = 'tutto') {
+export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaColpo = null, attacca = null, indietro: indietroUi = null, reimposta = null }, parte = 'tutto') {
   const s = st.scontro;
   const dado = dadoIniziativa(ctx.dati);
   if (!s) {
@@ -94,7 +94,10 @@ export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaCol
     // un nemico a 0 PV resta nella tabella, in grigio, al suo posto: saltarlo o no lo decide il master
     return h('tr', { class: `${diT?.id === p.id ? 'di-turno' : ''}${p.provvisorio ? ' provvisorio' : ''}${p.tipo === 'nemico' && p.pv.attuali === 0 ? ' a-zero' : ''}`.trim(), 'aria-current': diT?.id === p.id ? 'true' : null },
       h('td', { class: 'pos-scontro' }, diT?.id === p.id ? '▶' : String(i + 1)),
-      h('th', { scope: 'row', class: p.tipo === 'nemico' ? `lato-${p.lato}` : null }, p.nome, p.provvisorio ? h('span', { class: 'etichetta' }, 'provvisorio') : null,
+      h('th', { scope: 'row', class: p.tipo === 'nemico' ? `lato-${p.lato}` : null },
+        // ritocchi del 07/10: dal nome si reimposta l'Iniziativa di quel partecipante (ritiro o valore a mano)
+        reimposta ? h('button', { type: 'button', class: 'btn-nome-scontro', title: `Reimposta l’Iniziativa di ${p.nome}: ritira o scrivi il valore a mano`, onclick: () => reimposta(p.id) }, p.nome) : p.nome,
+        p.provvisorio ? h('span', { class: 'etichetta' }, 'provvisorio') : null,
         p.lato === 'avversario' || p.tipo === 'nemico' ? h('small', { class: 'nota nome-lato' }, ` ${p.lato}`) : null,
         p.tipo === 'nemico' ? h('small', { class: 'nota' }, ` · PV ${p.pv.attuali}/${p.pv.massimo}`) : null),
       h('td', {}, baseConProvenienza(p), ` + ${p.d10.valore}`, h('small', { class: 'nota' }, ` (${origine(p.d10)})`)),
@@ -153,7 +156,9 @@ export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaCol
       h('h2', {}, `${s.nome} · Round ${s.round}`),
       h('div', { class: 'riga-azioni' },
         // «Indietro» (07/10): annulla l'ultimo «Avanti» (anche Maiusc+clic su «Avanti»)
-        indietroUi ? h('button', { type: 'button', class: 'btn', disabled: !s.indietro?.length, title: s.indietro?.length ? `Annulla l’ultimo «Avanti»: torna il turno di prima, con Round, durate e Stati (${s.indietro.length} passi possibili; anche Maiusc+clic su «Avanti»)` : 'Nessun «Avanti» da annullare', onclick: () => indietroUi() }, '◀ Indietro') : null,
+        indietroUi ? h('button', { type: 'button', class: 'btn', disabled: !s.indietro?.length, title: s.indietro?.length ? `Annulla l’ultimo «Avanti» (o «Reimposta Iniziativa»): torna il turno di prima, con Round, durate e Stati (${s.indietro.length} passi possibili; anche Maiusc+clic su «Avanti»)` : 'Nessun «Avanti» da annullare', onclick: () => indietroUi() }, '◀ Indietro') : null,
+        // ritocchi del 07/10: ritira l'Iniziativa di tutti (con conferma) o di uno solo
+        reimposta ? h('button', { type: 'button', class: 'btn', disabled: !ordinati.length, title: 'Ritira l’Iniziativa di tutti (Iniziativa + 1d10, parità come §5.1) o di uno solo; chi è di turno resta di turno; «Indietro» la annulla', onclick: () => reimposta() }, 'Reimposta Iniziativa') : null,
         h('button', { type: 'button', class: 'btn primario', disabled: !ordinati.length, title: 'Il turno passa al prossimo (Maiusc+clic: «Indietro»)', onclick: (e) => (e.shiftKey && indietroUi ? indietroUi() : modifica((x) => avanti(x, undefined, { indietroMax: ctx.dati.mappa.iniziativa.indietro_max }))) }, 'Avanti'),
         // pezzo 4: annulla l'ultimo colpo applicato (PV, Ferite e Stati di prima)
         annullaColpo && s.colpi?.length ? h('button', { type: 'button', class: 'btn', title: `Ultimo: ${s.colpi.at(-1).testo}`, onclick: async () => { if (await chiedi({ titolo: `Annullare l’ultimo colpo a ${s.colpi.at(-1).nome}?`, testo: s.colpi.at(-1).testo, si: 'Annulla il colpo', no: 'Lascia' })) annullaColpo(); } }, 'Annulla ultimo colpo') : null,
@@ -203,6 +208,52 @@ export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaCol
   if (parte === 'gestione') return h('section', { class: 'riquadro scontro-pannello scontro-gestione' }, h('h3', {}, `${s.nome} · gestione`), gestione);
   return h('section', { class: 'riquadro scontro-pannello' }, testa, gestione);
 }
+
+/**
+ * Finestrella «Reimposta Iniziativa» (ritocchi del 07/10): «Ritira per tutti» oppure un nome dell'ordine, e per quel
+ * nome «Ritira con l'app», il dado dal vivo o il valore totale scritto a mano.
+ * @param soloId apre direttamente sul partecipante (clic sul nome nella tabella)
+ * @returns Promise di { tutti: true } | { id, tiro } | null
+ */
+export function scegliReimposta(s, dado, soloId = null) {
+  const { ordinati } = ordineIniziativa(s);
+  return apri('reimposta-iniziativa', 'Reimposta Iniziativa', (fine) => {
+    const corpo = h('div', {});
+    const elenco = () => svuotaIn(corpo,
+      h('p', { class: 'nota' }, `Per tutti: ogni partecipante ritira ${dado.formula} con l’app (Iniziativa della scheda + ${dado.formula}, parità come §5.1). Chi è di turno resta di turno; «Indietro» la annulla.`),
+      h('div', { class: 'riga-azioni' }, h('button', { type: 'button', class: 'btn primario', onclick: () => fine({ tutti: true }) }, 'Ritira per tutti…')),
+      h('p', { class: 'nota' }, 'Per uno solo:'),
+      h('ul', { class: 'reimposta-elenco' }, ordinati.map((p) => h('li', {}, h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => uno(p) }, `${p.nome} · ${numero(p.base + p.d10.valore)}`)))),
+      h('div', { class: 'riga-azioni finestrella-azioni' }, h('button', { type: 'button', class: 'btn', onclick: () => fine(null) }, 'Annulla')));
+    const uno = (p) => {
+      const vivo = h('input', { type: 'number', min: dado.minimo, max: dado.massimo, step: 1, inputmode: 'numeric', class: 'input-d10', 'aria-label': `${dado.formula} dal vivo di ${p.nome}` });
+      const mano = h('input', { type: 'number', step: 1, inputmode: 'numeric', class: 'input-d10', value: p.base + p.d10.valore, 'aria-label': `Iniziativa totale di ${p.nome}, a mano` });
+      const errore = h('p', { class: 'motivo', role: 'alert' });
+      const conferma = (tiro) => { if (tiro) fine({ id: p.id, tiro }); };
+      svuotaIn(corpo,
+        h('p', {}, h('strong', {}, p.nome), ` · ora ${numero(p.base + p.d10.valore)} (${numero(p.base)} + ${p.d10.valore}${p.d10.origine === 'mano' ? ', a mano' : ''})`),
+        h('div', { class: 'riga-azioni' }, h('button', { type: 'button', class: 'btn primario', onclick: () => conferma({ ...tira(dado).tiro, origine: 'app' }) }, `Ritira ${dado.formula} con l’app`)),
+        h('label', { class: 'finestrella-campo' }, h('span', {}, `${dado.formula} dal vivo`), h('span', { class: 'riga-azioni' }, vivo, h('button', { type: 'button', class: 'btn', onclick: () => {
+          const r = tiroManuale(Number(vivo.value), dado);
+          if (r.errore) { errore.textContent = r.errore; return; }
+          conferma(r.tiro);
+        } }, 'Inserisci'))),
+        h('label', { class: 'finestrella-campo' }, h('span', {}, 'Valore totale a mano (ritocco del master)'), h('span', { class: 'riga-azioni' }, mano, h('button', { type: 'button', class: 'btn', onclick: () => {
+          const v = Number(mano.value);
+          if (!Number.isInteger(v)) { errore.textContent = 'Scrivi un numero intero.'; return; }
+          conferma({ totale: v });
+        } }, 'Imposta'))),
+        errore,
+        h('div', { class: 'riga-azioni finestrella-azioni' },
+          soloId ? null : h('button', { type: 'button', class: 'btn', onclick: elenco }, '← Elenco'),
+          h('button', { type: 'button', class: 'btn', onclick: () => fine(null) }, 'Annulla')));
+    };
+    const scelto = soloId ? ordinati.find((p) => p.id === soloId) : null;
+    if (scelto) uno(scelto); else elenco();
+    return corpo;
+  });
+}
+const svuotaIn = (el, ...figli) => { el.replaceChildren(...figli.flat().filter(Boolean)); };
 
 /** PG per un nuovo scontro, dalla vista della plancia (Iniziativa effettiva, Caratteristiche per la parità). */
 export function pgDaVista(v) {
