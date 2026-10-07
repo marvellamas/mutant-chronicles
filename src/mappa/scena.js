@@ -10,6 +10,7 @@
 //   luce?: { ambiente, zone?: { categoria: maschera } }   luci della scena (fase 2, lotto 4; src/mappa/luce.js); token.luce: raggio in Q
 //   porte?: [{ id, q: [x, y], stato: aperta | chiusa | bloccata, segreta, orientamento?: orizzontale | verticale }]   porte (fase 2, lotto 2; src/mappa/porte.js; orientamento dal 07/10)
 //   visuale?: { automatica }            nebbia automatica dalla visuale dei PG (fase 2, lotto 3; src/mappa/visuale.js)
+//   audio?: { giocatori }               suoni anche nella vista giocatori (07/10; src/mappa/audio.js), spento di norma
 //   iniziale?: { quando, token, porte, template, nebbia }   posizione iniziale salvata (src/mappa/iniziale.js, 07/10)
 //   sovrapposizioni?: { master?: { nascoste, ancheDurata }, giocatori?: { nascoste, ancheDurata } }
 //                                       «Mostra / nascondi template»: template senza durata, muri, porte, terreno (07/10)
@@ -200,6 +201,7 @@ export function validaScena(s, dati) {
   }
 
   if (s.visuale !== undefined && (!isOggetto(s.visuale) || typeof s.visuale.automatica !== 'boolean')) return 'visuale: { automatica: vero o falso } atteso';
+  if (s.audio !== undefined && (!isOggetto(s.audio) || typeof s.audio.giocatori !== 'boolean')) return 'audio: { giocatori: vero o falso } atteso';
   // fase 2, lotto 4: luci (facoltative; scene di prima: Luce sufficiente)
   if (s.luce !== undefined) { const e = erroreLuce(s.luce, dati, (m) => mascheraValida(m, colonne, righe)); if (e) return `luce.${e}`; }
   if (s.iniziale !== undefined) { const e = erroreIniziale(s.iniziale, (m) => mascheraValida(m, colonne, righe)); if (e) return `iniziale.${e}`; }

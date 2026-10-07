@@ -11,7 +11,7 @@ export async function elencoMusica() {
   return r.json();
 }
 
-const mb = (n) => `${(n / 1024 / 1024).toLocaleString('it-IT', { maximumFractionDigits: 1 })} MB`;
+const mb = (n) => (n < 1024 * 1024 ? `${Math.max(1, Math.round(n / 1024))} KB` : `${(n / 1024 / 1024).toLocaleString('it-IT', { maximumFractionDigits: 1 })} MB`);
 
 /**
  * Finestrella con i file disponibili, «Nessuna musica» e il file attuale evidenziato.

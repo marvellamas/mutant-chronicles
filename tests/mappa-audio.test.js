@@ -52,3 +52,18 @@ test('impostazioni del PC: predefinite dai dati, volumi fra 0 e 1, muto generale
   // si salvano come JSON (localStorage) e si rileggono uguali
   assert.deepEqual(impostazioniAudio(JSON.parse(JSON.stringify(i)), dati), i);
 });
+
+test('vista giocatori: suoni solo con «suona anche nella vista giocatori» (spento di norma), con la musica dello scontro', async () => {
+  const { nuovaScena, validaScena } = await import('../src/mappa/scena.js');
+  const { vistaGiocatori } = await import('../src/mappa/vista.js');
+  assert.equal(AU.giocatori_predefinito, false);
+  const base = { ...nuovaScena({ id: 'aud', nome: 'Aud', colonne: 10, righe: 10, nebbia: 'scoperta', dati }), revisione: 0, collegamento: { scontro: 'sc', bozza: null } };
+  const scontro = { id: 'sc', stato: 'aperto', round: 2, turno: 0, ordineAlleati: [], durate: [], registro: [], partecipanti: [], musica: 'Tema.ogg' };
+  const contesto = { scontro, pezzi: [], round: 2, regoleMappa: dati.mappa, regoleTemplate: dati.mappa.template };
+  assert.equal(vistaGiocatori(base, contesto).audio, undefined, 'spento: niente');
+  const accesa = { ...base, audio: { giocatori: true } };
+  assert.equal(validaScena(accesa, dati), null);
+  assert.deepEqual(vistaGiocatori(accesa, contesto).audio, { giocatori: true, musica: 'Tema.ogg' });
+  assert.deepEqual(vistaGiocatori(accesa, { ...contesto, scontro: { ...scontro, musica: null } }).audio, { giocatori: true, musica: null });
+  assert.match(validaScena({ ...base, audio: { giocatori: 'sì' } }, dati), /^audio/);
+});

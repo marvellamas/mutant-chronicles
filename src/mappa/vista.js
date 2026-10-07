@@ -19,6 +19,7 @@
 import { daBase64, inBase64, cella, senza } from './celle.js';
 import { celleToken, chiaveRif, iniziali } from './token.js';
 import { barraIniziativa, barraPerGiocatori } from './iniziativa.js';
+import { musicaDi } from './audio.js';
 import { templatePerGiocatori } from './template.js';
 import { muriPerGiocatori, portePerGiocatori } from './porte.js';
 import { ostacoliVista, visuale as visualePg, tokenPg } from './visuale.js';
@@ -125,6 +126,8 @@ export function vistaGiocatori(s, contesto = null, regoleTemplate = contesto?.re
         const p = pezzi.get(k);
         return p && p.lato !== 'avversario' && p.pv?.massimo > 0 ? Math.max(0, Math.min(1, Math.round((p.pv.attuali / p.pv.massimo) * 20) / 20)) : null;
       };
+      // suoni (07/10): solo se il master ha acceso «suona anche nella vista giocatori»; con la musica dello scontro
+      if (s.audio?.giocatori) vista.audio = { giocatori: true, musica: musicaDi(contesto.scontro) };
       vista.iniziativa = barraPerGiocatori(barraIniziativa({ scontro: contesto.scontro, pezzi: contesto.pezzi, scena: s, bordoDi: contesto.bordoDi }), visibili, immagineDi, pvDi);
     }
   }

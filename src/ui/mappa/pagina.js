@@ -221,6 +221,8 @@ export function renderMappa(radice, ctx) {
           voceStrumenti('Seleziona tutti i nemici', 'Gli avversari in mappa, per spostarli insieme', () => selezionaTipo('nemici')),
           voceStrumenti('Seleziona tutti', 'Tutti i token in mappa', () => selezionaTipo('tutti')),
           voceStrumenti('Vista giocatori', 'Quale scena vedono, QR, «Apri vista giocatori»', () => apriStrumento(el.pGiocatori)),
+          // 07/10: i suoni di norma solo qui (PC con le casse); se il televisore ha le casse, anche nella vista giocatori
+          el.voceAudioGiocatori = voceStrumenti('Suoni anche nella vista giocatori: no', 'Campanella del Round e musica di fondo anche sullo schermo dei giocatori (utile se il televisore ha le casse); là serve un primo clic per sbloccare l’audio', () => cambiaAudioGiocatori()),
           voceStrumenti('Scene', 'Nuova, apri, rinomina, duplica, archivia', () => apriStrumento(document.getElementById('plancia-scene-mappa'))),
           // 07/10: posizione iniziale della scena (token, porte, template, nebbia)
           el.voceSalvaIniziale = voceStrumenti('Salva posizione iniziale', 'Token, porte, template e nebbia come sono adesso: per rigiocare la scena (un solo salvataggio, sovrascrivibile)', () => salvaInizialeUi()),
@@ -1872,7 +1874,17 @@ export function renderMappa(radice, ctx) {
     disegnaPannelloNebbia();
     ridisegna(['aree']);
   }
+  /** «Suoni anche nella vista giocatori» (07/10): un'opzione della scena, che la vista giocatori legge. */
+  function cambiaAudioGiocatori() {
+    if (!st.scena) return;
+    const v = !st.scena.audio?.giocatori;
+    st.scena = { ...st.scena, audio: { giocatori: v } };
+    salvaPresto();
+    aggiornaVoceNebbiaAutomatica();
+    avviso(v ? 'Suoni anche nella vista giocatori: sullo schermo dei giocatori serve un clic per sbloccare l’audio (lo chiede un avviso).' : 'Suoni solo su questo PC.', { chiave: 'audio-giocatori', tipo: 'info' });
+  }
   function aggiornaVoceNebbiaAutomatica() {
+    if (el.voceAudioGiocatori) el.voceAudioGiocatori.textContent = `Suoni anche nella vista giocatori: ${st.scena?.audio?.giocatori ? 'sì' : 'no'}`;
     if (el.voceNebbiaAuto) el.voceNebbiaAuto.textContent = `Nebbia automatica: ${st.scena?.visuale?.automatica ? 'sì' : 'no'}`;
   }
   function cambiaVisualeAutomatica() {

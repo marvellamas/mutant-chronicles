@@ -20,6 +20,7 @@ import { creaTela } from './canvas.js';
 import { creaGesti } from './gesti.js';
 import { disegnaToken, coloriMappa, creaImmagini } from './disegno-token.js';
 import { barraIniziativaEl } from './barra-iniziativa.js';
+import { creaAudio } from './audio.js';
 import { disegnaArea, disegnaZoc, disegnaPercorso, coloriAree, disegnaTemplate, disegnaPorte, disegnaMuri, disegnaLineaTiro, disegnaLuci } from './disegno-aree.js';
 import { celleDaMaschera, templateVisibili, ostacoliVisibili } from '../../mappa/template.js';
 import { celleDellaDiretta, zocDellaDiretta, avversariDellaDiretta, trattiPercorso } from '../../mappa/diretta.js';
@@ -242,9 +243,17 @@ export function renderGiocatori(radice, ctx) {
   };
   window.addEventListener('keydown', suTasto);
 
+  // suoni della vista giocatori: spenti finché il master non accende «suona anche nella vista giocatori» (scena → audio)
+  const audio = creaAudio(ctx.dati, { attivo: () => !!st.vista?.audio?.giocatori });
   const messaggio = (t) => { el.messaggio.textContent = t ?? ''; el.messaggio.hidden = !t; };
   async function usa(corpo) {
+    const roundPrima = st.vista?.collegamento?.scontro ? { id: st.vista.collegamento.scontro, round: st.vista.turno?.round ?? null } : null;
     st.vista = corpo.scena;
+    // suoni (07/10): solo con «suona anche nella vista giocatori» acceso dal master; campanella al nuovo Round, musica
+    audio.riprova();
+    audio.musica(st.vista?.audio?.musica ?? null);
+    const r = st.vista?.turno?.round ?? null;
+    if (roundPrima && roundPrima.id === st.vista?.collegamento?.scontro && Number.isInteger(r) && Number.isInteger(roundPrima.round) && r > roundPrima.round) audio.effetto('nuovo_round');
     // ZoC (07/10): gli Attacchi di Opportunità nuovi diventano un avviso anche qui (la prima lettura non li ripete)
     const primaLettura = !st.opportunitaViste;
     st.opportunitaViste ??= new Set();
@@ -341,6 +350,7 @@ export function renderGiocatori(radice, ctx) {
 
   return () => {
     st.chiusa = true;
+    audio.chiudi();
     clearInterval(giro);
     clearInterval(giroVersione);
     flusso?.close();
