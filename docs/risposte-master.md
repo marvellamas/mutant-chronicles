@@ -1047,6 +1047,7 @@ Fonte: E&L del 06/10/2026, 17:23 UTC, blocco «Risposte approvate — regole tec
 131. **Quadretti occupati** (A.127). Alleati attraversabili al costo normale; nemici no, salvo capacità; non si termina
     né ci si ferma in un quadretto occupato; per una pedina grande serve libero tutto l'ingombro d'arrivo; attraversare
     un alleato non evita gli Attacchi di Opportunità. Conferma `data/mappa.json` → movimento.
+    **Applicata** il 07/10 (branch `battlemap`): via il `TODO(Davide)` dell'occupazione, nota della decisione nel dato.
 132. **Terreno difficile** (A.128). 2 Q per quadretto, anche in diagonale, anche in Corsa e Scatto; percorsi misti
     contati a tratti; nessuna penalità o Prova aggiunta. Conferma `data/mappa.json` → terreno_difficile_moltiplicatore 2.
 133. **Movimento diviso, Corsa e Scatto** (A.129). Solo il Passo si divide prima, fra e dopo le AzP; Corsa e Scatto

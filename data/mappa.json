@@ -125,7 +125,7 @@
     "attraversa_alleati": true,
     "attraversa_avversari": false,
     "fermarsi_su_alleato": false,
-    "TODO(Davide) occupazione": "A.127: durante il movimento si può passare nel Q di un alleato? E di un avversario? Ci si può fermare nel Q di un alleato? (Provvisorio: alleati sì, avversari no, fermarsi no.)",
+    "_nota_occupazione": "A.127 (decisione 131): i quadretti degli alleati si attraversano al costo normale, quelli dei nemici no (salvo capacità); non si termina né ci si ferma in un quadretto occupato e per una pedina grande serve libero tutto l'ingombro d'arrivo; attraversare un alleato non evita gli Attacchi di Opportunità (zoc).",
     "divisibili": [
       "passo"
     ],

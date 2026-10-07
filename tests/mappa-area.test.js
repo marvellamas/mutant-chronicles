@@ -107,6 +107,14 @@ test('alleati attraversabili ma non occupabili, avversari no', () => {
   assert.ok(stessaParte('pg', 'alleato') && !stessaParte('pg', 'avversario'));
 });
 
+test('A.127: una pedina grande attraversa un alleato al costo normale ma si ferma solo con tutto l’ingombro libero', () => {
+  const token = [{ id: 'amico', q: [4, 1], ingombro: 1, lato: 'pg' }];
+  const a = area({ chi: chi([0, 0], 2), token, massimo: 8 });
+  // le posizioni del 2 × 2 che coprirebbero l'alleato: si passa, non ci si ferma
+  for (const q of [[3, 0], [4, 0], [3, 1], [4, 1]]) assert.equal(costoVerso(a, q), Infinity, String(q));
+  assert.equal(costoVerso(a, [5, 0]), 5, 'oltre l’alleato, al costo normale (nessun sovrapprezzo)');
+});
+
 test('ingombri 2 × 2, 3 × 3 e veicolo 4 × 2: tutto l’ingombro deve passare', () => {
   // corridoio largo 2 fra due muri orizzontali (righe 3 e 6): passa un 2 × 2, non un 3 × 3
   let muri = rettangolo(vuota(), C, R, 0, 3, 11, 3, true);
