@@ -38,6 +38,7 @@ import { daBase64, cella, conta } from '../../mappa/celle.js';
 import { tratto, valoreModo, nebbiaProvvisoria, chiudiPennellata, rettangoloNebbia, tuttaNebbia, trattiCoperti } from '../../mappa/nebbia.js';
 import { trattoMuri, muriProvvisori, chiudiTrattoMuri, rettangoloMuri } from '../../mappa/muri.js';
 import { areaRaggiungibile, costoVerso, percorso, statoFasce, fasciaDi, celleArea, piuVicinaRaggiungibile } from '../../mappa/area.js';
+import { statoDiretta, visibileAiGiocatori } from '../../mappa/diretta.js';
 import { muoviToken, usatoNelRound, fasceNelRound, mossoNelRound, annullaUltima, annullaUltimoMovimento, cambiaTokenAnnullabile, nuovoTurno } from '../../mappa/annulla.js';
 import { disegnaMuri, disegnaArea, disegnaPercorso, disegnaZoc, coloriAree } from './disegno-aree.js';
 import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
@@ -128,6 +129,8 @@ export function renderMappa(radice, ctx) {
     mostraZoc: true,
     // 07/10: barretta dei PV sui token, «Mostra PV sui token» (tasto P)
     mostraPv: true,
+    // diretta (07/10): il movimento mandato alla vista giocatori (chiave dell'ultimo stato, invio in corso, prossimo)
+    diretta: { pronta: false, chiave: null, inVolo: false, prossimo: undefined, areaG: null },
   };
   const B = V.barra;
   const chiaveDisp = chiaveSchermo(window.screen?.width ?? 0, window.screen?.height ?? 0);
@@ -360,7 +363,7 @@ export function renderMappa(radice, ctx) {
     el.scala.textContent = g ? `${testoScala(ctx.dati)} · ${numero(g.q_px)} px per Q · ${g.colonne} × ${g.righe} Q` : testoScala(ctx.dati);
     el.stato.textContent = st.salvataggio.testo;
   };
-  const ridisegna = (livelli) => { tela.richiedi(livelli); aggiornaBarra(); };
+  const ridisegna = (livelli) => { tela.richiedi(livelli); aggiornaBarra(); programmaDiretta(); };
   // anche il livello della nebbia segue zoom e spostamenti (nel lotto 4 restava fermo); data-zoom e data-origine
   // dicono la vista attuale, per le prove (come data-disegno-ms di ./canvas.js e la vista giocatori)
   const cambiaCamera = (cam) => {
@@ -982,7 +985,13 @@ export function renderMappa(radice, ctx) {
   const FASCE = ['passo', 'corsa', 'scatto'];
   /** Quarta modalità accanto a Passo, Corri e Scatta: «Libero» (Maiusc ne è la scorciatoia). */
   const LIBERO = 4;
-  function invalidaArea() { st.area = undefined; st.percorso = null; }
+  function invalidaArea() {
+    st.area = undefined;
+    st.percorso = null;
+    // diretta (07/10): il percorso torna da solo verso il punto sotto il puntatore (le fonti si rileggono ogni secondo:
+    // prima il percorso spariva finché il mouse non si muoveva, anche sullo schermo dei giocatori)
+    if (st.puntatore && !st.trascina) queueMicrotask(() => { if (!st.chiusa && !st.trascina && st.puntatore && st.scena) aggiornaPercorso(st.puntatore); });
+  }
   /** Fascia già raggiunta dal movimento del token in questo Round (o turno): 1 Passo, 2 Corsa, 3 Scatto. */
   function fasciaRaggiunta(id) {
     const t = id ? st.scena?.token.find((x) => x.id === id) : null;
@@ -1089,6 +1098,85 @@ export function renderMappa(radice, ctx) {
     el.voceMostraPv.textContent = `${st.mostraPv ? '✓ ' : ''}Mostra PV sui token (P)`;
   }
   /** PV dei nemici nella vista giocatori: scelta del master salvata nella scena, predefinito nascosto. */
+  // ── Diretta del movimento per la vista giocatori (07/10, src/mappa/diretta.js) ──
+  // A ogni ridisegno si confronta una chiave dello stato (token scelto, fascia, area, percorso, interruttori); se cambia,
+  // lo stato nuovo va al server (PUT /api/vista-giocatori/diretta), con al più una richiesta in volo: quelle intermedie
+  // si saltano, l'ultima arriva sempre. Il server lo filtra e lo spinge ai giocatori; nulla si salva nella scena.
+  const idOggetti = new WeakMap();
+  let ultimoId = 0;
+  const idDi = (o) => { if (!o || typeof o !== 'object') return 0; if (!idOggetti.has(o)) idOggetti.set(o, ++ultimoId); return idOggetti.get(o); };
+  function programmaDiretta() {
+    // solo a pagina pronta (durante l'avvio alcune funzioni non sono ancora definite)
+    if (st.chiusa || !st.diretta.pronta) return;
+    const s = st.scena;
+    const id = st.trascina?.modo === 'token' ? st.trascina.token : st.selezionato;
+    const attiva = !!s && s.movimentoGiocatori !== false && !!id && !disegnoAttivo();
+    if (attiva && !st.trascina) areaScelta();
+    const chiave = attiva ? JSON.stringify([idDi(s), id, st.fascia, s.zocGiocatori, idDi(st.area), idDi(st.pezzi), st.percorso?.punti?.at(-1) ?? null, st.trascina?.info ? idDi(st.trascina.info) : 0]) : 'nessuna';
+    if (chiave === st.diretta.chiave) return;
+    st.diretta.chiave = chiave;
+    let stato = null;
+    try { stato = attiva ? costruisciDiretta(id) : null; } catch { stato = null; }
+    // lo stesso stato (a parte l'istante) non si rimanda: le fonti si rileggono ogni secondo
+    const testo = JSON.stringify(stato && { ...stato, quando: 0 });
+    if (testo === st.diretta.testo) return;
+    st.diretta.testo = testo;
+    mandaDiretta(stato);
+  }
+  /** Lo stato della diretta per il token `id`: area e percorso senza gli ostacoli che i giocatori non vedono. */
+  function costruisciDiretta(id) {
+    const s = st.scena;
+    const t = s.token.find((x) => x.id === id);
+    if (!t) return null;
+    const info = st.trascina?.modo === 'token' && st.trascina.token === id && st.trascina.info ? st.trascina.info : areaScelta();
+    if (!info) return null;
+    const modo = info.libero ? 'libero' : FASCE[st.fascia - 1] ?? 'passo';
+    let celle = null;
+    let per = null;
+    if (info.area && !info.libero) {
+      // l'area dei giocatori: gli stessi muri e terreno, ma solo i token che vedono (un buco non rivela un nascosto)
+      if (st.diretta.areaG?.per !== info.area) {
+        const nebbia = daBase64(s.nebbia.coperti);
+        const g = s.griglia;
+        const pz = pezzoDi(t);
+        const areaG = areaRaggiungibile({
+          colonne: g.colonne, righe: g.righe, muri: daBase64(s.muri), terreno: daBase64(s.terreno),
+          token: s.token.filter((x) => x.id === t.id || visibileAiGiocatori(x, s, nebbia)).map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, lato: pezzoDi(x)?.lato ?? null })),
+          chi: { id: t.id, q: t.q, ingombro: t.ingombro, lato: pz?.lato ?? null }, massimo: info.totale, regole: ctx.dati.mappa.movimento,
+        });
+        st.diretta.areaG = { per: info.area, area: areaG, celle: celleArea(areaG, info.rimaste, st.fascia), fascia: st.fascia };
+      }
+      if (st.diretta.areaG.fascia !== st.fascia) st.diretta.areaG = { ...st.diretta.areaG, celle: celleArea(st.diretta.areaG.area, info.rimaste, st.fascia), fascia: st.fascia };
+      celle = st.diretta.areaG.celle;
+      const fine = st.percorso?.punti?.at(-1);
+      const costo = fine ? costoVerso(st.diretta.areaG.area, fine) : Infinity;
+      if (fine && costo < Infinity && costo > 0) per = { punti: percorso(st.diretta.areaG.area, fine), costo, fascia: fasciaDi(costo, info.rimaste) };
+    }
+    const zoc = s.zocGiocatori === false ? null : avversariZoc(s, st.pezzi, id, ctx.dati, { perGiocatori: true });
+    return statoDiretta({ scena: s, token: t, modo, usato: info.usato ?? 0, disponibili: info.disponibili ?? null, celle, percorso: per, zoc });
+  }
+  function mandaDiretta(stato) {
+    if (st.diretta.inVolo) { st.diretta.prossimo = stato; return; }
+    st.diretta.inVolo = true;
+    fetch('api/vista-giocatori/diretta', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(stato), keepalive: stato === null })
+      .catch(() => { /* senza server o collegamento perso: la vista giocatori resta senza diretta */ })
+      .finally(() => {
+        st.diretta.inVolo = false;
+        if (st.diretta.prossimo !== undefined) { const p = st.diretta.prossimo; st.diretta.prossimo = undefined; mandaDiretta(p); }
+      });
+  }
+  /** «Movimento ai giocatori» e «ZoC ai giocatori» (sezione «Vista giocatori»): accesi se non spenti, salvati nella scena. */
+  function cambiaDirettaGiocatori(campo) {
+    if (!st.scena) return;
+    const v = st.scena[campo] === false;
+    st.scena = { ...st.scena, [campo]: v };
+    salvaPresto();
+    disegnaPannelloGiocatori();
+    programmaDiretta();
+    avviso(campo === 'movimentoGiocatori'
+      ? (v ? 'I giocatori vedono il movimento del token scelto: area, percorso e Q usati.' : 'I giocatori non vedono più il movimento.')
+      : (v ? 'I giocatori vedono le ZoC degli avversari del token scelto.' : 'I giocatori non vedono più le ZoC.'));
+  }
   function cambiaPvNemiciGiocatori() {
     if (!st.scena) return;
     const v = !st.scena.pvNemiciGiocatori;
@@ -1425,6 +1513,7 @@ export function renderMappa(radice, ctx) {
   };
   /** Percorso mostrato mentre il puntatore passa sopra l'area del token scelto. */
   function aggiornaPercorso(m) {
+    st.puntatore = m;
     const info = areaScelta();
     const tok = info ? st.scena.token.find((x) => x.id === info.token) : null;
     let nuovo = null;
@@ -1438,7 +1527,7 @@ export function renderMappa(radice, ctx) {
     st.percorso = nuovo;
     ridisegna(['sopra']);
   }
-  const suEsce = () => { nascondiSuggerimento(); if (st.percorso && !st.trascina) { st.percorso = null; ridisegna(['sopra']); } };
+  const suEsce = () => { nascondiSuggerimento(); st.puntatore = null; if (st.percorso && !st.trascina) { st.percorso = null; ridisegna(['sopra']); } };
   // trascinamento dall'elenco dei pezzi senza token
   const suSopra = (e) => { if ([...e.dataTransfer.types].includes(TIPO_TRASCINA)) { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; } };
   const suLascia = (e) => {
@@ -1740,6 +1829,13 @@ export function renderMappa(radice, ctx) {
       // 07/10: i giocatori vedono sempre la barretta dei PV dei PG; quella dei nemici solo se il master la mostra
       h('button', { type: 'button', role: 'switch', 'aria-checked': String(!!st.scena.pvNemiciGiocatori), class: `interruttore-mappa${st.scena.pvNemiciGiocatori ? ' acceso' : ''}`, title: 'La barretta dei PV dei nemici nella vista giocatori (quella dei PG si vede sempre)', onclick: () => cambiaPvNemiciGiocatori() },
         h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `PV dei nemici ai giocatori: ${st.scena.pvNemiciGiocatori ? 'mostrati' : 'nascosti'}`),
+      // diretta (07/10): area, modalità, Q usati e percorso del token scelto, e le ZoC dei suoi avversari visibili
+      ...[['movimentoGiocatori', 'Mostra il movimento ai giocatori', 'L’area, la modalità, i Q usati e il percorso del token scelto anche sullo schermo dei giocatori (mai per i token nascosti o sotto la nebbia)'],
+        ['zocGiocatori', 'Mostra le ZoC ai giocatori', 'Le zone di controllo degli avversari visibili del token scelto, sullo schermo dei giocatori']].map(([campo, testo, titolo]) => {
+        const acceso = st.scena[campo] !== false;
+        return h('button', { type: 'button', role: 'switch', 'aria-checked': String(acceso), class: `interruttore-mappa${acceso ? ' acceso' : ''}`, title: titolo, disabled: campo === 'zocGiocatori' && st.scena.movimentoGiocatori === false, onclick: () => cambiaDirettaGiocatori(campo) },
+          h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `${testo}: ${acceso ? 'sì' : 'no'}`);
+      }),
       h('div', { class: 'mappa-qr' }, qr, h('small', { class: 'nota' }, url)),
       rete?.soloLocale ? h('p', { class: 'nota' }, 'Server acceso con --solo-locale: dai tablet non si raggiunge. Riavvialo con avvia-server.bat.') : null);
   }
@@ -1749,6 +1845,7 @@ export function renderMappa(radice, ctx) {
   leggiScena(ctx.id).then(async (s) => {
     if (st.chiusa) return;
     await usaScena(s);
+    st.diretta.pronta = true;
     testoStato(s.aggiornato ? `Salvata alle ${ora(new Date(s.aggiornato))}` : '');
     const vista = vistaDaRimettere(sessionStorage, ctx.id);
     // tornati sulla mappa (in qualunque modo): il segno per «Torna alla mappa» non serve più
@@ -1780,6 +1877,8 @@ export function renderMappa(radice, ctx) {
   }, INTERVALLO_FONTI_MS);
 
   return () => {
+    // la vista giocatori perde la diretta quando il master lascia la mappa
+    if (st.diretta.chiave !== 'nessuna') { st.diretta.inVolo = false; mandaDiretta(null); }
     st.chiusa = true;
     clearInterval(giro);
     if (st.salvataggio.modificata) salvaOra();

@@ -136,6 +136,7 @@ export function disegnaPercorso(c, { scena, cam, percorso, ingombro, costo, fasc
     });
     c.restore();
   }
+  if (costo === null || costo === undefined) { c.restore(); return; }
   const fine = centro(percorso.at(-1));
   const testo = `${String(costo).replace('.', ',')} Q`;
   c.font = '700 13px system-ui, sans-serif';

@@ -31,6 +31,15 @@ La Mappa di battaglia è un modulo del **Tavolo del Master** di Mutant: gira sul
 > * **Tab BattleMap** (scheda del giocatore): come la vista giocatori; il giocatore può muovere **solo il proprio token**, nel proprio turno, dentro l’area raggiungibile. Il master può bloccare i movimenti di tutti.  
 > * Ogni schermo ha il proprio zoom e la propria posizione.
 
+### **3.1 Movimento in diretta nella vista giocatori (07/10/2026)**
+
+> * **Perché:** al tavolo il secondo schermo lo guardano i giocatori; quando il master muove i loro token devono vedere dove possono andare e che cosa rischiano.
+> * **Che cosa vedono:** finché il master tiene scelto un token (o lo trascina), sul loro schermo compaiono la stessa **area di movimento** con il contorno, la riga «Movimento di Oshi: Corsa · 3 / 12 Q usati» sopra la mappa (anche a schermo intero), il **percorso** che il master indica col mouse con il costo in Q e i passi dentro una ZoC evidenziati, le **ZoC** degli avversari visibili del token (stesso rosso semitrasparente) e il token scelto evidenziato. Tutto sparisce appena il master lascia il token (Esc, clic fuori, altro clic sul token) o la mappa.
+> * **Interruttori del master** (sezione «Vista giocatori», salvati nella scena): «Mostra il movimento ai giocatori» (acceso per impostazione predefinita) e «Mostra le ZoC ai giocatori».
+> * **Canale:** lo stato «selezione / area / percorso / ZoC» non si salva nella scena. Il master lo manda al server a ogni cambio (PUT `/api/vista-giocatori/diretta`, al più una richiesta in volo); il server lo filtra e lo spinge alle viste giocatori con un flusso di eventi (EventSource, GET dello stesso indirizzo), che dice anche «aggiorna» quando scena, scontro o scelta cambiano. Latenza misurata nella prova del 07/10 sullo stesso PC: 2–7 ms dal master allo schermo dei giocatori. La lettura ogni secondo della vista resta come riserva.
+> * **Segreti (filtro del server, `src/mappa/diretta.js`):** nessuna diretta per un token nascosto o tutto sotto la nebbia; l'area perde i Q sotto la nebbia; il percorso si interrompe dove il token sparirebbe nella nebbia; le ZoC solo degli avversari che i giocatori vedono, e i passi «in ZoC» li calcola la vista giocatori da quelle. L'area per i giocatori la calcola il master senza gli ostacoli che i giocatori non vedono: un buco nell'area non rivela un nemico nascosto (il percorso mostrato può quindi essere più corto di quello vero). I PV seguono le regole della vista (nemici solo se il master li mostra).
+> * **Template (fase 2):** lo stato condiviso ha già il posto (`template`), con la regola della vista: niente template nascosti o con l'origine sotto la nebbia.
+
 ## **4\. Mappa**
 
 > * **Immagine di fondo:** JPG, PNG o WEBP caricata dal master. Il server ne prepara una copia ridotta per tablet e telefoni.  
@@ -58,7 +67,7 @@ La Mappa di battaglia è un modulo del **Tavolo del Master** di Mutant: gira sul
 > * **Origine:** PG dal ritratto della scheda; nemici dal bestiario o da «Crea nemico»; veicoli dal loro record unico. Senza immagine: cerchio colorato con le iniziali.  
 > * **Dimensione:** secondo la Taglia: 1 Q, oppure 2×2 Q per le creature grandi (e 3×3 se indicato).  
 > * **Posizione:** sempre al centro di un quadretto; non esistono posizioni intermedie.  
-> * **Stato visibile:** anello dei PV, icone degli Stati, evidenziazione del token di turno.  
+> * **Stato visibile:** barretta rossa dei PV sul fondo del token (07/10/2026, al posto dell'anello: lunga quanto i PV rimasti), icone degli Stati, alone bianco del token di turno.  
 > * **Nascosti:** il master può nascondere un token (visibile solo a lui) e rivelarlo.  
 > * *Facoltativo, fase 3:* generazione dell’immagine del token con AI quando manca (chiave API, internet, piccolo costo per immagine).
 

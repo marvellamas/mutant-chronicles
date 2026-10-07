@@ -29,7 +29,8 @@ Con un secondo monitor (o il televisore) collegato al PC del master:
 1. Nella mappa, gruppo «Mappa» → «Vista giocatori»: «Mostra questa scena», poi «Apri vista giocatori». Si apre una seconda finestra del browser.
 2. Trascina quella finestra sul secondo schermo (per la barra del titolo, oppure Windows + Maiusc + freccia).
 3. Sul secondo schermo premi **F11** (o il pulsante «Schermo intero» della vista): restano solo la mappa e la barra dell'Iniziativa, senza barre, pulsanti né strumenti. Per uscire, F11 di nuovo.
-4. Torna a lavorare nella finestra del master sul primo schermo: ogni azione (movimento, «Avanti», nebbia, colpi) arriva sul secondo schermo entro un paio di secondi. Se il collegamento si interrompe, sullo schermo dei giocatori compare «Collegamento con il master perso: riprovo…».
+4. Torna a lavorare nella finestra del master sul primo schermo: ogni azione (movimento, «Avanti», nebbia, colpi) arriva sul secondo schermo subito (al più un paio di secondi). Se il collegamento si interrompe, sullo schermo dei giocatori compare «Collegamento con il master perso: riprovo…».
+5. **Il movimento si vede in diretta.** Quando scegli un token, sullo schermo dei giocatori compaiono la sua area di movimento, la modalità (Passo, Corsa, Scatto, Libero) con i Q usati, il percorso che indichi col mouse e le zone di controllo dei nemici vicini: i giocatori vedono dove possono andare e che cosa rischiano. Sparisce quando lasci il token. Non mostra mai token nascosti né quello che sta sotto la nebbia. Nella sezione «Vista giocatori» lo spegni con «Mostra il movimento ai giocatori», e le sole ZoC con «Mostra le ZoC ai giocatori».
 
 ## Zone di controllo
 

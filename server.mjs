@@ -49,6 +49,11 @@
 //                                      visibili con lato, nome, immagine, quota dei PV e turno; { invariata } se la
 //                                      firma è quella dell'ultima risposta
 //   GET|PUT /api/vista-giocatori/scelta  { scena: id | null } in tavolo/mappa-giocatori.json (null = automatica)
+//   PUT /api/vista-giocatori/diretta   il movimento in diretta del master (src/mappa/diretta.js): token scelto, area,
+//                                      percorso, ZoC; null = nessuna selezione. Non si salva: resta in memoria
+//   GET /api/vista-giocatori/diretta   flusso di eventi (text/event-stream) per la vista giocatori: «diretta» con lo
+//                                      stato già filtrato (nessun nascosto, niente sotto la nebbia), «aggiorna» quando
+//                                      scena, scontro o scelta cambiano (la vista si rilegge subito)
 //   GET /api/ritratti/<chiave>         il ritratto del PG (dalla sua scheda), per i token della vista giocatori
 //   GET /api/mappe                     immagini in mappe/: [{ file, dimensione, mtime }]
 //   GET /api/mappe/<file>              l'immagine (in cache: il nome contiene l'impronta del contenuto)
@@ -76,6 +81,7 @@ import { caricaDati } from './src/rules.js';
 import { validaNemico, formattaErrore } from './src/validate.js';
 import { validaScena, riassuntoScena, ID_SCENA, FILE_MAPPA } from './src/mappa/scena.js';
 import { vistaGiocatori } from './src/mappa/vista.js';
+import { validaDiretta, direttaPerGiocatori } from './src/mappa/diretta.js';
 import { dimensioniImmagine } from './src/mappa/immagine.js';
 import { pezziDellaScena } from './src/mappa/partecipanti.js';
 import { vistaPlancia } from './src/tavolo.js';
@@ -493,6 +499,65 @@ async function scenaInGioco({ tavolo, scontri, scene }) {
   return migliore ? { scelta: null, scena: migliore } : { scelta: null, scena: null, motivo: 'Nessuna scena collegata allo scontro aperto.' };
 }
 
+/**
+ * Canale della diretta (07/10/2026, src/mappa/diretta.js): l'ultimo stato mandato dal master, in memoria, e i flussi
+ * di eventi aperti dalle viste giocatori. Ogni cambio si filtra con la scena in gioco (letta al più ogni secondo, o
+ * subito dopo una scrittura) e va a tutti solo se il risultato filtrato cambia. Nessun file scritto.
+ */
+function creaCanaleDiretta(cartelle) {
+  const clienti = new Set();
+  let grezza = null;
+  let firma = 'null';
+  let filtrata = null;
+  let inGioco = { quando: 0, scena: null };
+  let lavoro = Promise.resolve();
+  const manda = (res, evento, dati) => { try { res.write(`event: ${evento}\ndata: ${JSON.stringify(dati)}\n\n`); } catch { clienti.delete(res); } };
+  const tutti = (evento, dati) => { for (const r of clienti) manda(r, evento, dati); };
+  const scenaAttuale = async () => {
+    if (Date.now() - inGioco.quando > 1000) {
+      let scena = null;
+      try { ({ scena } = await scenaInGioco(cartelle)); } catch { /* nessuna */ }
+      inGioco = { quando: Date.now(), scena };
+    }
+    return inGioco.scena;
+  };
+  // in fila: gli stati arrivano in ordine anche quando il master manda in fretta
+  const rifiltra = () => (lavoro = lavoro.then(async () => {
+    const nuova = grezza ? direttaPerGiocatori(grezza, await scenaAttuale()) : null;
+    const f = JSON.stringify(nuova);
+    if (f !== firma) { firma = f; filtrata = nuova; tutti('diretta', nuova); }
+  }).catch(() => {}));
+  const battito = setInterval(() => { for (const r of clienti) { try { r.write(': battito\n\n'); } catch { clienti.delete(r); } } }, 15000);
+  battito.unref?.();
+  return {
+    async api(req, res) {
+      if (req.method === 'GET') {
+        res.writeHead(200, { 'Content-Type': 'text/event-stream; charset=utf-8', 'Cache-Control': 'no-cache, no-transform', Connection: 'keep-alive', 'X-Accel-Buffering': 'no' });
+        res.write('retry: 1000\n\n');
+        clienti.add(res);
+        req.on('close', () => clienti.delete(res));
+        manda(res, 'diretta', filtrata);
+        return;
+      }
+      if (req.method !== 'PUT' && req.method !== 'POST') return json(res, 405, { errore: 'metodo non ammesso' });
+      let d;
+      try { d = JSON.parse((await leggiCorpo(req, 2 * 1024 * 1024)).toString('utf8')); } catch (e) { return json(res, 400, { errore: `contenuto non valido: ${e.message}` }); }
+      const errore = validaDiretta(d);
+      if (errore) return json(res, 400, { errore: `diretta: ${errore}` });
+      grezza = d;
+      await rifiltra();
+      return json(res, 200, { ok: true, giocatori: clienti.size });
+    },
+    /** Scena, scontro o scelta cambiati: si rilegge la scena in gioco e le viste si aggiornano. */
+    cambiata() {
+      inGioco.quando = 0;
+      tutti('aggiorna', {});
+      rifiltra();
+    },
+    chiudi() { clearInterval(battito); for (const r of clienti) { try { r.end(); } catch { /* già chiuso */ } } clienti.clear(); },
+  };
+}
+
 /** Vista giocatori (lotto 4): la scena in gioco, filtrata, e la scelta del master. */
 async function apiVistaGiocatori(req, res, percorso, cartelle) {
   const doveScelta = join(cartelle.tavolo, 'mappa-giocatori.json');
@@ -508,8 +573,10 @@ async function apiVistaGiocatori(req, res, percorso, cartelle) {
     if (scena) { try { await stat(join(cartelle.scene, `${scena}.json`)); } catch { return json(res, 404, { errore: 'scena non trovata' }); } }
     await mkdir(cartelle.tavolo, { recursive: true });
     await scriviJson(doveScelta, { versione: 1, scena });
+    cartelle.canale?.cambiata();
     return json(res, 200, { scena });
   }
+  if (percorso === '/api/vista-giocatori/diretta') return cartelle.canale.api(req, res);
   if (percorso !== '/api/vista-giocatori' || req.method !== 'GET') return json(res, 405, { errore: 'metodo non ammesso' });
   const { scelta, scena, motivo } = await scenaInGioco(cartelle);
   const corpo = { scelta, scena: scena ? vistaGiocatori(scena, await contestoScena(scena, cartelle)) : null, ...(motivo ? { motivo } : {}) };
@@ -610,9 +677,11 @@ async function caricaEsempi(radice, cartella, nemici) {
   return { copiati, saltati };
 }
 
-async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice, soloLocale, veicoli, migraIn = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE)) {
-  const cartelle = { cartella, tavolo, scontri, veicoli, scene, radice };
-  if (percorso === '/api/scene' || percorso.startsWith('/api/scene/')) return apiScene(req, res, percorso, scene, mappe, radice, cartelle);
+async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice, soloLocale, veicoli, migraIn = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), canale = null) {
+  const cartelle = { cartella, tavolo, scontri, veicoli, scene, radice, canale };
+  // diretta (07/10): dopo una scrittura riuscita di scena o scontro la vista giocatori si rilegge subito
+  const segnala = (r) => { if (req.method !== 'GET' && res.statusCode < 300) canale?.cambiata(); return r; };
+  if (percorso === '/api/scene' || percorso.startsWith('/api/scene/')) return segnala(await apiScene(req, res, percorso, scene, mappe, radice, cartelle));
   if (percorso === '/api/vista-giocatori' || percorso.startsWith('/api/vista-giocatori/')) return apiVistaGiocatori(req, res, percorso, cartelle);
   if (percorso.startsWith('/api/ritratti/')) return apiRitratto(req, res, percorso, cartelle);
   if (percorso === '/api/mappe' || percorso.startsWith('/api/mappe/')) return apiMappe(req, res, percorso, mappe, radice);
@@ -623,7 +692,7 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
   }
   if (percorso === '/api/esempi') return req.method === 'POST' ? json(res, 200, await caricaEsempi(radice, cartella, nemici)) : json(res, 405, { errore: 'metodo non ammesso' });
   if (percorso === '/api/nemici' || percorso.startsWith('/api/nemici/')) return apiNemici(req, res, percorso, nemici, radice);
-  if (percorso === '/api/scontri' || percorso.startsWith('/api/scontri/')) return apiScontri(req, res, percorso, scontri);
+  if (percorso === '/api/scontri' || percorso.startsWith('/api/scontri/')) return segnala(await apiScontri(req, res, percorso, scontri));
   if (percorso === '/api/tavolo') {
     const dove = join(tavolo, 'sessione.json');
     if (req.method === 'GET') {
@@ -764,11 +833,12 @@ export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA),
   const base = normalize(radice.endsWith(sep) ? radice : radice + sep);
   // chi è questo server (per un nuovo avvio che trova la porta occupata, src/porta-occupata.js)
   const identita = { versione: versioneAvvio, avviato: new Date().toISOString(), pid: process.pid };
+  const canale = creaCanaleDiretta({ tavolo, scontri, scene });
   const server = createServer(async (req, res) => {
     try {
       const percorso = decodeURI(new URL(req.url, 'http://x').pathname);
       if (percorso === '/api/ping') return json(res, 200, { ok: true, app: 'mutant', cartella: CARTELLA, ...identita });
-      if (percorso.startsWith('/api/')) return await api(req, res, percorso, cartella, tavolo, scontri, nemici, base, soloLocale, veicoli, migraIn, scene, mappe);
+      if (percorso.startsWith('/api/')) return await api(req, res, percorso, cartella, tavolo, scontri, nemici, base, soloLocale, veicoli, migraIn, scene, mappe, canale);
       return await statico(req, res, percorso, base, versioneAvvio);
     } catch (e) {
       if (!res.headersSent) json(res, 500, { errore: e.message });
@@ -776,6 +846,9 @@ export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA),
     }
   });
   server.migrazione = migrazione; // per i test e per il messaggio di avvio
+  // i flussi della diretta restano aperti: chiudendo il server si chiudono anche loro
+  const chiudi = server.close.bind(server);
+  server.close = (cb) => { canale.chiudi(); return chiudi(cb); };
   return server;
 }
 

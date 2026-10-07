@@ -13,7 +13,9 @@
 //   turni?: { tutti, token: { id: n } },                       «Nuovo turno» senza scontro aperto (src/mappa/annulla.js)
 //   colori?: { pg: { chiave: id }, nemici: { tipo: id } },     colori dei bordi dei token (src/mappa/colori.js)
 //   bloccaGiocatori?: true,                                    i giocatori non muovono i loro token (fase 2, tab BattleMap)
-//   pvNemiciGiocatori?: true }                                 i giocatori vedono la barretta dei PV dei nemici (07/10)
+//   pvNemiciGiocatori?: true,                                  i giocatori vedono la barretta dei PV dei nemici (07/10)
+//   movimentoGiocatori?: false,                                 diretta del movimento nella vista giocatori spenta (07/10)
+//   zocGiocatori?: false }                                      ZoC nella diretta spente (07/10)
 import { nuovaMaschera, inBase64, mascheraValida } from './celle.js';
 import { tokenDentro } from './token.js';
 
@@ -192,6 +194,7 @@ export function validaScena(s, dati) {
   if (!Array.isArray(s.annulla) || s.annulla.length > D.scena.annulla_max) return `annulla: elenco di al massimo ${D.scena.annulla_max}`;
   if (s.bloccaGiocatori !== undefined && typeof s.bloccaGiocatori !== 'boolean') return 'bloccaGiocatori: vero o falso';
   if (s.pvNemiciGiocatori !== undefined && typeof s.pvNemiciGiocatori !== 'boolean') return 'pvNemiciGiocatori: vero o falso';
+  for (const k of ['movimentoGiocatori', 'zocGiocatori']) if (s[k] !== undefined && typeof s[k] !== 'boolean') return `${k}: vero o falso`;
   if (s.colori !== undefined) {
     if (!isOggetto(s.colori) || !isOggetto(s.colori.pg) || !isOggetto(s.colori.nemici)) return 'colori: { pg, nemici } attesi';
     for (const [k, tav] of [['pg', D.colori.pg], ['nemici', D.colori.nemici]]) {

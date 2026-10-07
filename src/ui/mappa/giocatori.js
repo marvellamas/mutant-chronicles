@@ -1,11 +1,15 @@
 // Mappa di battaglia, lotto 4 (docs/battlemap/piano.md; §3 della specifica): vista giocatori, #/mappa/giocatori, da
 // aprire sul televisore, sul proiettore o su un tablet. Legge solo la scena filtrata dal server
-// (/api/vista-giocatori: src/mappa/vista.js): mappa ridotta, griglia, token visibili con l'anello dei PV, il token di
+// (/api/vista-giocatori: src/mappa/vista.js): mappa ridotta, griglia, token visibili con la barretta dei PV, il token di
 // turno, nebbia piena; in alto il nome della scena, il Round e chi è di turno. Nessun comando del master: solo zoom
 // (rotella, due dita), spostamento (trascinamento) e doppio tocco o doppio clic per «Adatta allo schermo».
 // Si aggiorna da sola; la scena è quella scelta dal master o quella collegata allo scontro aperto.
 // Lotto 6: sotto il titolo la barra dell'Iniziativa del master (./barra-iniziativa.js), senza comandi e già filtrata dal
 // server: niente token nascosti né sotto la nebbia.
+// Diretta (07/10, src/mappa/diretta.js): un flusso di eventi dal server (EventSource) porta il movimento che il master
+// sta facendo: token scelto, area con il contorno, modalità e Q usati / disponibili in testata, percorso sotto il suo
+// puntatore con i passi in ZoC, ZoC degli avversari visibili. Già filtrato dal server; sparisce quando il master lascia il
+// token. Lo stesso flusso dice «aggiorna» quando la scena o lo scontro cambiano: la vista si rilegge subito.
 import { h, svuota } from '../dom.js';
 import { cameraIniziale, sposta, adatta, schermoDaMappa, rettangoloVisibile } from '../../mappa/camera.js';
 import { dimensioniMappa, lineeVisibili } from '../../mappa/griglia.js';
@@ -16,6 +20,9 @@ import { creaTela } from './canvas.js';
 import { creaGesti } from './gesti.js';
 import { disegnaToken, coloriMappa, creaImmagini } from './disegno-token.js';
 import { barraIniziativaEl } from './barra-iniziativa.js';
+import { disegnaArea, disegnaZoc, disegnaPercorso, coloriAree } from './disegno-aree.js';
+import { celleDellaDiretta, zocDellaDiretta, avversariDellaDiretta, trattiPercorso } from '../../mappa/diretta.js';
+import { passiInZoc } from '../../mappa/zoc.js';
 import { avviso } from '../avvisi.js';
 
 // due schermi del master (07/10): la vista si aggiorna entro 1–2 secondi dalle azioni del master
@@ -31,16 +38,18 @@ export function renderGiocatori(radice, ctx) {
   document.documentElement.style.setProperty('--ritratto-y', `${ctx.dati.mappa.token.ritratto_verticale * 100}%`);
   // 07/10: barretta dei PV dei mini-token (data/mappa.json → pv_token)
   for (const [k, v] of [['--pv-colore', ctx.dati.mappa.pv_token.colore], ['--pv-traccia', ctx.dati.mappa.pv_token.traccia], ['--pv-mini-alto', `${ctx.dati.mappa.pv_token.mini_token_px}px`]]) document.documentElement.style.setProperty(k, v);
-  const st = { vista: null, firma: null, cam: cameraIniziale(), immagine: null, fileImmagine: null, chiusa: false, errore: null, adattata: null, toccata: false, trascina: null };
+  const st = { vista: null, firma: null, cam: cameraIniziale(), immagine: null, fileImmagine: null, chiusa: false, errore: null, adattata: null, toccata: false, trascina: null, diretta: null, celle: { area: null, zoc: null } };
   const el = {};
   el.titolo = h('strong', { class: 'giocatori-titolo' }, 'Mappa');
   el.turno = h('span', { class: 'giocatori-turno', 'aria-live': 'polite' });
   el.stato = h('span', { class: 'nota giocatori-stato' });
+  el.movimento = h('span', { class: 'giocatori-movimento', 'aria-live': 'polite', hidden: true });
   el.schermo = h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Schermo intero', onclick: () => (document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.()) }, 'Schermo intero');
   el.riquadro = h('div', { class: 'mappa-tela giocatori-tela', 'aria-label': 'Mappa dei giocatori: due dita o rotella per lo zoom, trascina per spostarti, doppio tocco per vedere tutto' });
   el.messaggio = h('p', { class: 'giocatori-messaggio', hidden: true });
   el.iniziativa = h('div', { class: 'mappa-iniziativa-posto', hidden: true });
-  el.riquadro.append(el.messaggio);
+  // la riga del movimento sta sulla mappa: resta anche a schermo intero, dove la testata sparisce
+  el.riquadro.append(el.messaggio, el.movimento);
   svuota(radice, h('section', { class: 'mappa-pagina giocatori-pagina' },
     h('header', { class: 'giocatori-barra' }, el.titolo, el.turno, el.stato, el.schermo), el.iniziativa, el.riquadro));
 
@@ -73,15 +82,50 @@ export function renderGiocatori(radice, ctx) {
       c.stroke();
       c.restore();
     },
-    // §5: per i giocatori la nebbia è piena
-    aree: (c, info) => disegnaNebbia(c, info, 1),
+    // §5: per i giocatori la nebbia è piena; sotto, le ZoC e l'area della diretta (già senza i Q sotto la nebbia)
+    aree: (c, info) => {
+      const d = direttaAttuale();
+      if (d) {
+        const s = st.vista;
+        const zoc = st.celle.zoc;
+        if (zoc) disegnaZoc(c, { scena: s, cam: st.cam, info, celle: zoc, stile: ctx.dati.mappa.zoc });
+        if (st.celle.area) disegnaArea(c, { scena: s, cam: st.cam, info, celle: st.celle.area, colori: coloriAree(el.riquadro), stile: V.area });
+      }
+      disegnaNebbia(c, info, 1);
+    },
     sopra: (c) => {
       const s = st.vista;
       if (!s) return;
       const pezzi = new Map(s.token.filter((t) => t.info).map((t) => [chiaveRif(t.rif), { ...t.info, ritratto: t.info.immagine, pv: t.info.pv === null ? null : { attuali: t.info.pv, massimo: 1 }, stati: [] }]));
-      disegnaToken(c, { scena: s, cam: st.cam, pezzi, colori: coloriMappa(el.riquadro), immagine, bordo: (p) => p.bordo ?? null, alone: ctx.dati.mappa.colori.alone_turno, ritrattoVerticale: ctx.dati.mappa.token.ritratto_verticale, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => true } });
+      const d = direttaAttuale();
+      disegnaToken(c, { scena: s, cam: st.cam, pezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: d?.token ?? null, bordo: (p) => p.bordo ?? null, alone: ctx.dati.mappa.colori.alone_turno, ritrattoVerticale: ctx.dati.mappa.token.ritratto_verticale, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => true } });
+      // percorso del master, a tratti fra le interruzioni della nebbia; il costo all'ultimo tratto
+      if (d?.percorso) {
+        const tratti = trattiPercorso(d.percorso.punti);
+        const avv = avversariDellaDiretta(d);
+        const colori = coloriAree(el.riquadro);
+        tratti.forEach((t, i) => disegnaPercorso(c, { scena: s, cam: st.cam, percorso: t, ingombro: d.ingombro, costo: i === tratti.length - 1 ? d.percorso.costo : null, fascia: d.percorso.fascia, colori, inZoc: avv.length ? passiInZoc(t, d.ingombro, avv) : null, coloreZoc: ctx.dati.mappa.zoc.colore }));
+      }
     },
   });
+  /** La diretta, se riguarda la scena mostrata. */
+  const direttaAttuale = () => (st.diretta && st.vista && st.diretta.scena === st.vista.id ? st.diretta : null);
+  const NOMI_MODI = { passo: 'Passo', corsa: 'Corsa', scatto: 'Scatto', libero: 'Libero' };
+  const numeroQ = (n) => String(n).replace('.', ',');
+  /** Celle calcolate una volta per diretta (area e ZoC), e la riga in testata. */
+  function usaDiretta(d) {
+    st.diretta = d;
+    const a = direttaAttuale();
+    st.celle = { area: a ? celleDellaDiretta(a, st.vista) : null, zoc: a ? zocDellaDiretta(a, st.vista) : null };
+    const t = a ? st.vista.token.find((x) => x.id === a.token) : null;
+    el.movimento.hidden = !a;
+    el.movimento.textContent = a ? [`Movimento${t?.info?.nome ? ` di ${t.info.nome}` : ''}: ${NOMI_MODI[a.modo]}`,
+      a.modo !== 'libero' && a.disponibili !== null ? `${numeroQ(a.usato)} / ${numeroQ(a.disponibili)} Q usati` : null].filter(Boolean).join(' · ') : '';
+    el.movimento.className = `giocatori-movimento${a ? ` modo-${a.modo}` : ''}`;
+    // il token è già altrove (movimento appena fatto): la vista si rilegge senza aspettare il giro
+    if (a && t && (t.q[0] !== a.q[0] || t.q[1] !== a.q[1])) aggiorna();
+    tela.richiedi(['aree', 'sopra']);
+  }
 
   function disegnaNebbia(c, info, opacita) {
     const s = st.vista;
@@ -152,6 +196,8 @@ export function renderGiocatori(radice, ctx) {
       return;
     }
     messaggio(null);
+    // la diretta si ricalcola sulla scena nuova (nebbia e griglia possono essere cambiate)
+    if (st.diretta) { const d = st.diretta; st.diretta = null; usaDiretta(d); }
     document.title = `${st.vista.nome} · Giocatori · Mutant`;
     el.titolo.textContent = st.vista.nome;
     const t = st.vista.turno;
@@ -189,6 +235,10 @@ export function renderGiocatori(radice, ctx) {
   }
   aggiorna();
   const giro = setInterval(aggiorna, INTERVALLO_MS);
+  // diretta: EventSource si ricollega da solo (retry del server: 1 s)
+  const flusso = typeof EventSource === 'function' ? new EventSource('api/vista-giocatori/diretta') : null;
+  flusso?.addEventListener('diretta', (e) => { try { usaDiretta(JSON.parse(e.data)); } catch { /* evento rovinato: si aspetta il prossimo */ } });
+  flusso?.addEventListener('aggiorna', () => aggiorna());
   // a schermo intero (pulsante o F11, anche sul secondo monitor) solo mappa e barra dell'Iniziativa: niente testata,
   // barre né comandi; l'avviso «collegamento perso» resta (css/style.css → body.schermo-intero). F11 non avvisa la
   // pagina: si riconosce dalla finestra grande quanto lo schermo
@@ -207,6 +257,7 @@ export function renderGiocatori(radice, ctx) {
   return () => {
     st.chiusa = true;
     clearInterval(giro);
+    flusso?.close();
     gesti.distruggi();
     tela.distruggi();
     window.removeEventListener('resize', suMisura);
