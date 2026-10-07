@@ -20,12 +20,16 @@ const vuota = () => nuovaMaschera(C, R);
 const area = (o) => areaRaggiungibile({ colonne: C, righe: R, muri: vuota(), terreno: vuota(), token: [], massimo: 6, regole: REG, ...o });
 const chi = (q, ingombro = 1, lato = 'pg') => ({ id: 'me', q, ingombro, lato });
 
-test('regole provvisorie nei dati, con i TODO(Davide)', () => {
+test('regole nei dati, confermate da Davide il 06/10 (A.124, A.127–A.129); resta il TODO(Davide) A.134', () => {
   assert.equal(REG.costo_diagonale, 1);
   assert.equal(REG.terreno_difficile_moltiplicatore, 2);
   assert.deepEqual([REG.attraversa_alleati, REG.attraversa_avversari, REG.fermarsi_su_alleato, REG.taglio_angoli_muri], [true, false, false, false]);
   const testo = JSON.stringify(dati.mappa.movimento);
   for (const a of ['A.124', 'A.127', 'A.128', 'A.129']) assert.ok(testo.includes(a), a);
+  // A.124: diagonale 1 Q confermata, il TODO degli angoli è la A.134
+  assert.equal(REG.diagonali_alterne, false);
+  assert.equal(REG['TODO(Davide) diagonali'], undefined);
+  assert.match(REG['TODO(Davide) angoli'], /^A.134/);
   const d = copia(dati);
   d.mappa.movimento.taglio_angoli_muri = 'no';
   assert.ok(validaDati(d).some((e) => e.file === 'mappa.json' && e.chiave === 'movimento.taglio_angoli_muri'));

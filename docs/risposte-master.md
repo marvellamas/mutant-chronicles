@@ -966,8 +966,8 @@ e le vecchie etichette numeriche delle luci di A.125, e A.134 qui sotto.
 - **A.134 — Diagonale accanto allo spigolo di un muro** (07/10/2026). La A.124 fissa la diagonale a 1 Q e dice che
   non permette di attraversare muri o passaggi ostruiti, ma non dice se una diagonale può passare rasente allo spigolo
   di un muro (i due quadretti ai lati: uno libero, uno murato). Provvisorio: no, servono liberi anche i due quadretti
-  ai lati (`data/mappa.json` → movimento.taglio_angoli_muri, dove il `TODO(Davide)` cita ancora A.124: da riscrivere
-  con A.134 nel branch della mappa).
+  ai lati (`data/mappa.json` → movimento.taglio_angoli_muri, con il `TODO(Davide)` A.134, riscritto il 07/10 nel
+  branch della mappa).
 
 ## 7 ottobre 2026 — risposte del 06/10 (E&L «Risposte approvate — regole tecniche e Stati», sezione 7 di «per-davide.md»)
 
@@ -1038,6 +1038,7 @@ Fonte: E&L del 06/10/2026, 17:23 UTC, blocco «Risposte approvate — regole tec
 129. **Azioni, movimento e diagonali sulla mappa** (A.124). Livelli 1–11: 1 AzM e 1 AzP per Round; 12–20: 1 AzM e 2 AzP,
     nella stessa Iniziativa (niente turni a INI −3/−6). Passo 6, Corsa 12, Scatto 18 Q con i modificatori; il Direttore
     può correggere a mano. Ogni diagonale costa 1 Q. Conferma `data/mappa.json` → movimento (costo_diagonale 1).
+    **Applicata** il 07/10 (branch `battlemap`): via il `TODO(Davide)` delle diagonali, nota della decisione nel dato.
 130. **Porte e illuminazione sulla mappa** (A.125). Aprire o chiudere una porta normale non bloccata: 1 AzP, senza Prova,
     adiacenti e con una mano libera; attraversarla costa il movimento normale; «chiusa» e «bloccata» sono distinte.
     Illuminazione con le categorie di A.106; la mappa distingue la portata della sorgente (in Q) dalla luce della zona; le

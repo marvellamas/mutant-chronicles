@@ -113,13 +113,13 @@
     "_nota_ritratto": "07/10: il ritratto riempie il cerchio dentro il bordo; delle foto più alte che larghe si tiene il quadrato a questa altezza (0 = in cima, 0,5 = al centro), dove di solito sta il viso."
   },
   "movimento": {
-    "_nota": "Parametri dell'area raggiungibile (§8 della specifica, lotto 5): provvisori finché Davide non risponde. Costi in Q.",
+    "_nota": "Parametri dell'area raggiungibile (§8 della specifica, lotto 5), confermati dalle risposte di Davide del 06/10/2026 (A.124, A.127, A.128, A.129; decisioni 129, 131–133 di docs/risposte-master.md). Costi in Q.",
     "costo_ortogonale": 1,
     "costo_diagonale": 1,
-    "TODO(Davide) diagonali": "A.124: una diagonale costa 1 Q (misura dell'app EROI & LEGGENDE, provvisoria) o si alterna 1/2/1? Con la risposta cambia solo costo_diagonale o diagonali_alterne.",
+    "_nota_diagonali": "A.124 (decisione 129): ogni diagonale costa 1 Q, come un passo orizzontale o verticale su terreno normale (niente 1/2/1: diagonali_alterne false); non permette di attraversare muri o passaggi ostruiti. Passo 6, Corsa 12, Scatto 18 Q con i modificatori (regole.json → movimento); il Direttore corregge a mano con «Libero». Le AzP (1 ai livelli 1–11, 2 ai 12–20, nella stessa Iniziativa) la mappa non le conta.",
     "diagonali_alterne": false,
     "taglio_angoli_muri": false,
-    "TODO(Davide) angoli": "A.124: in diagonale si può passare accanto allo spigolo di un muro? Provvisorio: no, una diagonale vuole liberi dai muri anche i due quadretti ai lati.",
+    "TODO(Davide) angoli": "A.134: in diagonale si può passare rasente allo spigolo di un muro (dei due quadretti ai lati della diagonale uno libero e uno murato)? La A.124 dice solo che la diagonale non attraversa muri o passaggi ostruiti. Provvisorio: no, una diagonale vuole liberi dai muri anche i due quadretti ai lati.",
     "terreno_difficile_moltiplicatore": 2,
     "TODO(Davide) terreno": "A.128: quanto costa un Q di terreno difficile (il doppio, provvisorio) e vale anche per Corsa e Scatto?",
     "attraversa_alleati": true,
