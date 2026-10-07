@@ -207,6 +207,7 @@ Le stesse azioni più gli strumenti del master: carica mappa, griglia, nebbia, m
 > * **Avvisi nell’app** (tab BattleMap e scheda aperta sul tablet): «Sei il prossimo: preparati\!», «È il tuo turno», «Il tuo incantesimo scade al prossimo Round».  
 > * **Richiamo del master:** il master può mandare un avviso a un giocatore o a tutti, con un breve testo.  
 > * **Suoni brevi** e **vibrazione** (sui dispositivi Android) per turno e richiami, con un interruttore per spegnerli. Il browser riproduce i suoni solo dopo il primo tocco sulla pagina.  
+> * **Suoni della mappa (07/10/2026, fatto):** campanella al nuovo Round (`Sounds/Effects/RoundBell.mp3`; elenco evento → file in `data/mappa.json` → `audio.effetti`, pronto per Attacco di Opportunità e scadenza dei template); musica di fondo per scontro, scelta nella preparazione o nella mappa fra i file della cartella `musica/` del server (MP3, OGG, WAV, M4A, AAC), ripetuta finché lo scontro è aperto; nella barra in alto muto generale e cursori Musica ed Effetti, ricordati sul PC del master. I suoni stanno sul PC del master; «Suoni anche nella vista giocatori» (Strumenti, spento di norma) li porta sullo schermo dei giocatori. Autoplay bloccato dal browser: avviso «clic per attivare l’audio».  
 > * **Limite:** le notifiche di sistema con l’app chiusa o in secondo piano non sono possibili su una rete locale senza HTTPS; gli avvisi funzionano con la pagina aperta. Consiglio: tablet con lo schermo che non si spegne durante la sessione.
 
 ## **14\. Fasi**

@@ -52,6 +52,13 @@ Si preparano in pochi secondi e durante il gioco non si toccano più.
 4. Con la **nebbia automatica** (interruttore in cima alla sezione Nebbia, o «Strumenti» → «Nebbia automatica») i PG vedono lontano dove c'è Luce (30 Q), poco in Penombra (6 Q) e con Luce scarsa (3 Q), al Buio solo il quadretto accanto o fin dove arriva una torcia. **All'aperto di giorno spegni pure la nebbia.**
 5. La linea di tiro e «Attacca!» propongono la penalità della zona del bersaglio (per esempio «Penombra −2»); puoi cambiarla. Ai giocatori le zone scure arrivano più scure, ma la mappa resta leggibile.
 
+## Suoni
+
+- **Campanella del Round:** a ogni nuovo Round suona sul PC della mappa (non con «Indietro»).
+- **Musica di fondo:** copia i file nella cartella `musica/` accanto ad avvia-server.bat (MP3, OGG, WAV, M4A o AAC). Poi scegline uno in «Prepara scontro» («Musica di fondo: Scegli…») o nella mappa con ♫ in alto. Parte con lo scontro, si ripete di continuo e si ferma con «Fine scontro»; ⏸ / ▶ la mette in pausa.
+- **Volume:** in alto 🔊 spegne tutto, i due cursori regolano Musica ed Effetti. Il PC se li ricorda.
+- **Televisore con le casse:** Strumenti → «Suoni anche nella vista giocatori». Sullo schermo dei giocatori serve un primo clic per sbloccare l'audio (lo chiede un avviso); lo stesso vale per la mappa del master se il browser blocca l'audio.
+
 ## Zone di controllo
 
 Scegliendo un token, in rosso compaiono le zone di controllo degli avversari: la fascia entro la portata delle loro armi ravvicinate (di solito 1 Q). Chi ne esce con il proprio movimento provoca un Attacco di Opportunità (Giocatore §5.3): compare un avviso, anche sullo schermo dei giocatori, con «Attacca!» per l'avversario. Entrare o muoversi dentro la zona non provoca nulla; «Libero» non segnala. Il tasto Z mostra o nasconde le zone.
