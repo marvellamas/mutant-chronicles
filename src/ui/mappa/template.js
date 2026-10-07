@@ -76,7 +76,8 @@ export function apriMenuTemplate({ regole, bozza }) {
 export function sezioneTemplate(voci, regole, a) {
   return [
     h('summary', {}, h('strong', {}, `Template${voci.length ? ` (${voci.length})` : ''}`)),
-    h('div', { class: 'mappa-azioni-token' }, h('button', { type: 'button', class: 'btn btn-piccolo primario', title: 'Forma, misura, colore, durata e nome; poi lo piazzi sulla mappa (tasto T)', onclick: a.nuovo }, 'Nuovo template (T)')),
+    h('div', { class: 'mappa-azioni-token' }, h('button', { type: 'button', class: 'btn btn-piccolo primario', title: 'Forma, misura, colore, durata e nome; poi lo piazzi sulla mappa (tasto T)', onclick: a.nuovo }, 'Nuovo template (T)'),
+      a.cancellaTemporanei && voci.some(({ t }) => t.durata !== null && t.durata !== undefined) ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Toglie tutti i template a durata in Round (Ctrl+Z li rimette)', onclick: a.cancellaTemporanei }, 'Cancella temporanei') : null),
     voci.length ? h('ul', { class: 'lista-template' }, voci.map(({ t, dentro }) => h('li', {},
       h('span', { class: 'campione-colore', style: `background: ${t.colore}`, 'aria-hidden': 'true' }),
       h('strong', {}, t.nome || testoMisure(t, regole)),

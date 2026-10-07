@@ -9,6 +9,7 @@
 //   { tipo: 'token', id, prima, dopo }              prima null: messo; dopo null: tolto; tutti e due: cambiato
 //   { tipo: 'template', id, prima, dopo }           template ad area (fase 2, lotto 1): piazzato, spostato, tolto
 //   { tipo: 'ripristino', prima }                   «Ripristina posizione iniziale» (src/mappa/iniziale.js): tutto com'era
+//   { tipo: 'template-tolti', prima }               «Cancella template temporanei» o «tutti»: l'elenco di prima
 //   { tipo: 'porta', id, prima, dopo, azione? }     porta (fase 2, lotto 2): messa, cambiata, tolta; con l'azione del
 //                                                   token che l'ha aperta o chiusa (annullando esce anche l'AzP)
 // Movimenti (scena.movimenti, al più scena.movimenti_max): { id, token, scontro, round, turno?, da, a, costo, fascia, libero,
@@ -55,6 +56,17 @@ export function cambiaPortaAnnullabile(scena, prima, dopo, dati, azione = null, 
     nuove = i >= 0 ? porte.map((p) => (p.id === id ? dopo : p)) : [...porte, dopo];
   }
   return conVoce({ ...scena, porte: nuove }, { tipo: 'porta', id, prima, dopo, ...(azione ? { azione } : {}), quando: adesso.toISOString() }, dati);
+}
+
+/**
+ * Toglie in un colpo i template che soddisfano `via` (ritocchi del 07/10: «Cancella template temporanei», quelli a
+ * durata; «Cancella tutti i template»), con una sola voce per Ctrl+Z. Restituisce { scena, tolti }.
+ */
+export function togliTemplateAnnullabile(scena, via, dati, adesso = new Date()) {
+  const tolti = scena.template.filter(via);
+  if (!tolti.length) return { scena, tolti };
+  const s = { ...scena, template: scena.template.filter((t) => !via(t)) };
+  return { scena: conVoce(s, { tipo: 'template-tolti', prima: scena.template, quando: adesso.toISOString() }, dati), tolti };
 }
 
 /** Turno del token senza scontro: scena.turni = { tutti, token: { id: n } }, i due contatori sommati. */
@@ -164,6 +176,8 @@ export function annullaUltima(scena, { chiaviPresenti = null } = {}) {
       const azioni = voce.azione ? (senza.azioni ?? []).filter((a) => a.id !== voce.azione) : senza.azioni;
       return { scena: { ...senza, porte, ...(azioni ? { azioni } : {}) }, voce, testo: !voce.prima ? 'porta messa' : !voce.dopo ? 'porta tolta' : 'porta' };
     }
+    case 'template-tolti':
+      return { scena: { ...senza, template: voce.prima }, voce, testo: 'template rimessi' };
     case 'template': {
       let template = senza.template.filter((t) => t.id !== voce.id);
       if (voce.prima) template = [...template, voce.prima];

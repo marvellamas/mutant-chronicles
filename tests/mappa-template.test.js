@@ -164,3 +164,22 @@ test('frecce: cono e linea a 45° (agganciati alle 8 direzioni), rettangolo di 9
   const ld = celleTemplate(ruota(tpl('linea', { lunghezza: 3 }, { direzione: 0 }), 1), G, RT);
   assert.ok(ld[16 * 30 + 16] && ld[18 * 30 + 18]);
 });
+
+test('«Cancella template temporanei»: via quelli a durata in un colpo, restano gli altri; Ctrl+Z li rimette; riga nel registro', async () => {
+  const { togliTemplateAnnullabile } = await import('../src/mappa/annulla.js');
+  const { permanente } = await import('../src/mappa/template.js');
+  const { nuovoScontro, rigaTemplateTolti } = await import('../src/scontro.js');
+  let s = { ...nuovaScena({ id: 'p', nome: 'P', colonne: 30, righe: 30, dati }), revisione: 0 };
+  s.template = [tpl('cerchio', { raggio: 1 }, { id: 'f', durata: null }), tpl('cerchio', { raggio: 2 }, { id: 'a', durata: 1, fine_round: 3 }), tpl('cono', { lunghezza: 6, larghezza: 3 }, { id: 'b', durata: 2, fine_round: 4, direzione: 0 })];
+  const r = togliTemplateAnnullabile(s, (t) => !permanente(t), dati);
+  assert.deepEqual(r.tolti.map((t) => t.id), ['a', 'b']);
+  assert.deepEqual(r.scena.template.map((t) => t.id), ['f']);
+  const u = annullaUltima(r.scena);
+  assert.equal(u.testo, 'template rimessi');
+  assert.deepEqual(u.scena.template.map((t) => t.id), ['f', 'a', 'b'], 'una sola voce: tutti di nuovo, nell’ordine');
+  assert.equal(togliTemplateAnnullabile(r.scena, (t) => !permanente(t), dati).tolti.length, 0);
+  const tutti = togliTemplateAnnullabile(s, () => true, dati);
+  assert.equal(tutti.scena.template.length, 0);
+  const sc = rigaTemplateTolti({ ...nuovoScontro({ id: 'sc', nome: 'S', pg: [] }), round: 2 }, { quanti: 2 });
+  assert.match(sc.registro.at(-1).testo, /tolti 2 template temporanei/);
+});

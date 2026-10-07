@@ -43,15 +43,15 @@ import { trattoMuri, muriProvvisori, chiudiTrattoMuri, rettangoloMuri } from '..
 import { areaRaggiungibile, costoVerso, percorso, statoFasce, fasciaDi, celleArea, piuVicinaRaggiungibile } from '../../mappa/area.js';
 import { statoDiretta, visibileAiGiocatori } from '../../mappa/diretta.js';
 import { salvaIniziale, ripristinaIniziale } from '../../mappa/iniziale.js';
-import { muoviToken, usatoNelRound, fasceNelRound, mossoNelRound, annullaUltima, annullaUltimoMovimento, cambiaTokenAnnullabile, cambiaTemplateAnnullabile, cambiaPortaAnnullabile, nuovoTurno, turnoDi } from '../../mappa/annulla.js';
+import { muoviToken, usatoNelRound, fasceNelRound, mossoNelRound, annullaUltima, annullaUltimoMovimento, cambiaTokenAnnullabile, cambiaTemplateAnnullabile, cambiaPortaAnnullabile, togliTemplateAnnullabile, nuovoTurno, turnoDi } from '../../mappa/annulla.js';
 import { disegnaMuri, disegnaArea, disegnaPercorso, disegnaZoc, coloriAree, disegnaTemplate, disegnaPorte, disegnaLineaTiro } from './disegno-aree.js';
-import { celleTemplate, tokenDentro as tokenNelTemplate, nuovoTemplate, scaduto, direzioneVerso, ORIENTABILI, templateVisibili, ostacoliVisibili, ruota, cambiaMisura } from '../../mappa/template.js';
+import { celleTemplate, tokenDentro as tokenNelTemplate, nuovoTemplate, scaduto, direzioneVerso, ORIENTABILI, templateVisibili, ostacoliVisibili, ruota, cambiaMisura, permanente } from '../../mappa/template.js';
 import { portaA, muriEffettivi, porteVicine, apriChiudi, nuovaPorta, conAzione, azpNelRound, orientamento } from '../../mappa/porte.js';
 import { apriMenuTemplate, sezioneTemplate, etichettaTemplate, testoMisure } from './template.js';
 import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
 import { diTurno } from '../../scontro.js';
 import { statoMovimento, muoviVeicolo } from '../../veicoli-registro.js';
-import { rigaMovimentoLibero, rigaOpportunita, senzaOpportunitaDelMovimento, rigaPorta } from '../../scontro.js';
+import { rigaMovimentoLibero, rigaOpportunita, senzaOpportunitaDelMovimento, rigaPorta, rigaTemplateTolti } from '../../scontro.js';
 import { aggiornaInScontri } from '../immagine-nemico.js';
 import { linkGuidaMappa } from '../guida.js';
 import { aggiornaVeicolo } from '../veicoli-registro.js';
@@ -187,7 +187,9 @@ export function renderMappa(radice, ctx) {
       // ritocchi del 07/10: «Mostra / nascondi template» (Maiusc+T), con «anche i template a durata»
       el.sovrapposizioni = h('span', { class: 'mappa-sovrapposizioni', role: 'group', 'aria-label': 'Sovrapposizioni' },
         el.btnSovr = h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-pressed': 'true', title: 'Mostra o nasconde i template senza durata, i muri, le porte e il terreno difficile (Maiusc+T); per il movimento valgono sempre', onclick: () => cambiaSovrapposizioni('master', 'nascoste') }, conIcona('◫', 'Template')),
-        el.ancheDurata = h('label', { class: 'casella-sovr', title: 'Il pulsante nasconde e mostra anche i template con durata in Round' }, h('input', { type: 'checkbox', onchange: () => cambiaSovrapposizioni('master', 'ancheDurata') }), h('span', { class: 'lungo' }, ' anche a durata'))),
+        el.ancheDurata = h('label', { class: 'casella-sovr', title: 'Il pulsante nasconde e mostra anche i template con durata in Round' }, h('input', { type: 'checkbox', onchange: () => cambiaSovrapposizioni('master', 'ancheDurata') }), h('span', { class: 'lungo' }, ' anche a durata')),
+        // ritocchi del 07/10: toglie in un colpo i template a durata (quelli dello scontro)
+        h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Cancella template temporanei: toglie tutti i template a durata in Round; quelli senza durata, muri, porte e terreno restano (Ctrl+Z li rimette)', 'aria-label': 'Cancella template temporanei', onclick: () => cancellaTemplate({ tutti: false }) }, conIcona('🧹', 'Temporanei'))),
       // lotto 7 (§12, menu superiore): gli strumenti del master in un menu
       el.strumenti = h('details', { class: 'menu-strumenti' },
         h('summary', { class: 'btn', title: 'Strumenti del master: immagine, griglia, nebbia, muri, scene, movimenti dei giocatori', 'aria-label': 'Strumenti' }, conIcona('🛠', 'Strumenti'), ' ▾'),
@@ -197,6 +199,8 @@ export function renderMappa(radice, ctx) {
           voceStrumenti('Nebbia', 'Pennello e rettangolo, Rivela / Copri, tutto', () => apriStrumento(el.pNebbia)),
           voceStrumenti('Muri e terreno', 'Muro, terreno difficile, gomma', () => apriStrumento(el.pMuri)),
           voceStrumenti('Template ad area… (T)', 'Raggio, cono, linea, quadrato, rettangolo: forma, misura, colore, durata; poi lo piazzi sulla mappa', () => { el.strumenti.open = false; nuovoTemplateUi(); }),
+          voceStrumenti('Cancella template temporanei', 'Toglie tutti i template a durata in Round; quelli senza durata restano (Ctrl+Z li rimette)', () => cancellaTemplate({ tutti: false })),
+          voceStrumenti('Cancella tutti i template…', 'Toglie tutti i template, anche quelli senza durata (Ctrl+Z li rimette)', () => cancellaTemplate({ tutti: true })),
           voceStrumenti('Vista giocatori', 'Quale scena vedono, QR, «Apri vista giocatori»', () => apriStrumento(el.pGiocatori)),
           voceStrumenti('Scene', 'Nuova, apri, rinomina, duplica, archivia', () => apriStrumento(document.getElementById('plancia-scene-mappa'))),
           // 07/10: posizione iniziale della scena (token, porte, template, nebbia)
@@ -864,6 +868,7 @@ export function renderMappa(radice, ctx) {
       ['Mentre piazzi un template', 'segue il mouse; cono e linea partono dal token scelto verso il mouse; ← → ruotano di 45° (rettangolo: 90°), ↑ ↓ cambiano la misura, rotella 15°; clic per fissarlo, Esc per annullare'],
       ['Clic destro su un template', 'Sposta o ruota (poi le frecce), Nascondi / Mostra ai giocatori, Togli'],
       ['Strumenti → «Salva posizione iniziale» / «Ripristina posizione iniziale»', 'token, porte, template e nebbia della scena, per rigiocarla; PV, Stati e registro dello scontro non cambiano; Ctrl+Z annulla il ripristino'],
+      ['Pulsante «🧹 Temporanei» (o Strumenti → «Cancella template temporanei»)', 'toglie in un colpo i template a durata (con conferma e il numero); quelli senza durata restano; Ctrl+Z li rimette'],
       ['Maiusc+T (pulsante «◫ Template»)', 'mostra o nasconde i template senza durata, muri, porte e terreno (per il movimento valgono sempre); con «anche a durata» anche i template a Round'],
       ['Strumenti → Muri e terreno → «Porta»', 'clic su un Q di muro: porta (aperta, chiusa o bloccata; segreta); clic su una porta: la toglie'],
       ['Clic su una porta', 'il master la apre o la chiude (bloccata: no); clic destro: Apri / Chiudi / Blocca / Sblocca / Rivela / Togli'],
@@ -1107,7 +1112,7 @@ export function renderMappa(radice, ctx) {
       ritiraOpportunita(esito.voce.movimento);
     }
     if (st.selezionato && !st.scena.token.some((t) => t.id === st.selezionato)) st.selezionato = null;
-    if (esito.voce.tipo === 'template' || esito.voce.tipo === 'ripristino') { st.tpl.firma = null; disegnaPannelloTemplate(); }
+    if (['template', 'ripristino', 'template-tolti'].includes(esito.voce.tipo)) { st.tpl.firma = null; disegnaPannelloTemplate(); }
     if (esito.voce.tipo === 'ripristino') { invalidaArea(); disegnaPannelli(); }
     if (esito.errore) avvisoErrore(`Non annullato: ${esito.errore}.`);
     else avviso(`Annullato: ${{ nebbia: 'nebbia', muri: 'muri', movimento: 'movimento', token: 'modifica del token', 'token tolto': 'token tolto (torna in mappa)', 'token messo': 'token messo (esce dalla mappa)' }[esito.testo] ?? esito.testo}.`, { chiave: 'annulla' });
@@ -1466,7 +1471,7 @@ export function renderMappa(radice, ctx) {
     const firma = JSON.stringify([voci, roundAttuale()]);
     if (firma === st.tpl.firma) return;
     st.tpl.firma = firma;
-    svuota(el.pTemplate, ...sezioneTemplate(voci, RT, { nuovo: () => nuovoTemplateUi(), sposta: spostaTemplate, nascondi: nascondiTemplate, togli: togliTemplate, round: roundAttuale() }));
+    svuota(el.pTemplate, ...sezioneTemplate(voci, RT, { nuovo: () => nuovoTemplateUi(), cancellaTemporanei: () => cancellaTemplate({ tutti: false }), sposta: spostaTemplate, nascondi: nascondiTemplate, togli: togliTemplate, round: roundAttuale() }));
   }
   // ── Linea di tiro e visuale (fase 2, lotto 3; src/mappa/visuale.js; Giocatore §5.8, §5.10, §5.11) ──
   const RV = ctx.dati.mappa.visuale;
@@ -1646,6 +1651,27 @@ export function renderMappa(radice, ctx) {
       { testo: 'Togli la porta', azione: () => { st.scena = cambiaPortaAnnullabile(st.scena, porta, null, ctx.dati); avviso('Porta tolta.', { chiave: 'porta' }); dopoPorta(); } },
       null);
     return v;
+  }
+  /**
+   * «Cancella template temporanei» (ritocchi del 07/10): via in un colpo i template a durata in Round, con conferma e
+   * il numero; `tutti`: anche quelli senza durata, con una conferma più forte. Ctrl+Z li rimette; una riga nel registro.
+   */
+  async function cancellaTemplate({ tutti }) {
+    if (!st.scena) return;
+    const via = tutti ? () => true : (t) => !permanente(t);
+    const quanti = st.scena.template.filter(via).length;
+    if (!quanti) { avviso(tutti ? 'Nessun template sulla mappa.' : 'Nessun template temporaneo (a durata) sulla mappa.', { chiave: 'template' }); return; }
+    const restano = st.scena.template.length - quanti;
+    const ok = await chiedi(tutti
+      ? { titolo: `Togliere tutti i ${quanti} template?`, testo: 'Anche quelli senza durata («finché non lo tolgo»). Muri, porte e terreno restano. Ctrl+Z li rimette.', si: `Togli tutti (${quanti})`, pericolo: true }
+      : { titolo: `Tolgo ${quanti} template temporane${quanti === 1 ? 'o' : 'i'}?`, testo: `Quelli a durata in Round. Restano${restano ? ` ${restano} template senza durata,` : ''} muri, porte e terreno. Ctrl+Z li rimette.`, si: 'Togli' });
+    if (!ok || !st.scena) return;
+    const r = togliTemplateAnnullabile(st.scena, via, ctx.dati);
+    st.scena = r.scena;
+    const sc = st.fonti?.scontro ?? null;
+    if (sc) scriviRegistro(sc.id, (x) => rigaTemplateTolti(x, { quanti: r.tolti.length, temporanei: !tutti }), 'Riga del registro (template tolti)');
+    avviso(`Tolt${r.tolti.length === 1 ? 'o' : 'i'} ${r.tolti.length} template${tutti ? '' : (r.tolti.length === 1 ? ' temporaneo' : ' temporanei')}. Ctrl+Z per rimetterli.`, { chiave: 'template' });
+    dopoTemplate();
   }
   /** Clic destro su un punto senza token: nuovo template lì, e i comandi dei template che coprono quel Q. */
   function menuMappa(p) {
