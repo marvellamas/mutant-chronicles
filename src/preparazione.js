@@ -4,7 +4,7 @@
 // accanto agli scontri: gli scontri aperti la ignorano (src/ui/scontro.js → leggiScontroAperto). «Inizia» la
 // trasforma in uno scontro vero con src/scontro.js: Iniziativa tirata dall'app per tutti e Round 1.
 // La difficoltà per 7 PG (src/crea-nemico.js → difficolta) è solo informativa.
-import { FORMATO_SCONTRO, VERSIONE_SCONTRO, nuovoScontro, aggiungiNemici, registraTiro, registraRiga } from './scontro.js';
+import { FORMATO_SCONTRO, VERSIONE_SCONTRO, nuovoScontro, aggiungiNemici, registraRiga } from './scontro.js';
 
 export const STATO_BOZZA = 'bozza';
 /** Una bozza eliminata: il server la sposta in scontri/archivio/ (non cancella mai). */
@@ -101,10 +101,11 @@ export function pgDellaBozza(b, alTavolo) {
 
 /**
  * «Inizia»: dalla bozza uno scontro vero, aperto. I PG (vista della plancia: { chiave, nome, iniziativa, des, int })
- * entrano con l'Iniziativa della scheda; i nemici con le loro copie numerate; il dado d'Iniziativa si tira con
- * l'app per tutti (`tiro()` → { valore, origine: 'app' }); lo scontro parte dal Round 1.
+ * entrano con l'Iniziativa della scheda; i nemici con le loro copie numerate; lo scontro parte dal Round 1.
+ * Il dado d'Iniziativa non si tira qui (difetto del test di Marcello del 07/10): tutti partono «da tirare» e la plancia
+ * chiede i valori con la finestra «Iniziativa» (src/ui/scontro.js → chiediIniziativa; src/scontro.js → registraIniziative).
  */
-export function iniziaBozza(b, { id, pg, dati, tiro, adesso = new Date() }) {
+export function iniziaBozza(b, { id, pg, adesso = new Date() }) {
   const errore = validaBozza(b);
   if (errore) throw new Error(errore);
   if (!b.nemici.length && !pg.length) throw new Error('la bozza non ha partecipanti');
@@ -112,7 +113,6 @@ export function iniziaBozza(b, { id, pg, dati, tiro, adesso = new Date() }) {
   if (b.note?.trim()) s = { ...s, note: b.note };
   s = registraRiga(s, `Dalla preparazione «${b.nome}».`, adesso);
   for (const v of b.nemici) s = aggiungiNemici(s, v.nemico, v.quanti, { lato: v.lato }, adesso);
-  for (const p of s.partecipanti) s = registraTiro(s, p.id, 'd10', tiro(), dati, adesso);
   return s;
 }
 

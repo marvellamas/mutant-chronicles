@@ -13,7 +13,8 @@ const LINEA_PX = 24; // altezza del centro della linea: sopra, i numeri della sc
 /**
  * @param barra da barraIniziativa (master) o dalla vista giocatori; null: «nessuno scontro aperto»
  * @param o { pxPerPunto, avanti?(), indietro?(), puoIndietro?: anteprima di «Indietro» o null, reimposta?(), scegli?(voce),
- *   centra?: { attivo, cambia(v) }, vuoto?: testo senza scontro, zero?: data/mappa.json → pv_zero (icone a 0 PV) }
+ *   centra?: { attivo, cambia(v) }, vuoto?: testo senza scontro, zero?: data/mappa.json → pv_zero (icone a 0 PV),
+ *   daTirare?: { nomi: [...], chiedi() } partecipanti ancora senza Iniziativa (solo master) }
  */
 export function barraIniziativaEl(barra, o = {}) {
   const comandi = !!o.avanti;
@@ -39,6 +40,8 @@ export function barraIniziativaEl(barra, o = {}) {
     comandi ? h('span', { class: 'iniziativa-comandi' },
       // «Indietro» (07/10): annulla l'ultimo «Avanti» (anche Maiusc+clic su «Avanti»); solo master
       o.indietro ? h('button', { type: 'button', class: 'btn', disabled: !o.puoIndietro, title: o.puoIndietro ? `Annulla l’ultimo ${o.puoIndietro.iniziativa ? '«Reimposta Iniziativa»' : '«Avanti»'}: torna il turno di ${o.puoIndietro.diTurno?.nome ?? '—'}${o.puoIndietro.cambiaRound ? `, Round ${o.puoIndietro.round}` : ''} (Maiusc+clic su «Avanti»)` : 'Nessun «Avanti» da annullare' , onclick: () => o.indietro() }, '◀ Indietro') : null,
+      // difetto del test del 07/10: chi è ancora senza Iniziativa resta fuori dalla linea; il pulsante apre la finestra
+      o.daTirare?.nomi.length ? h('button', { type: 'button', class: 'btn primario', title: `Senza Iniziativa, fuori dall’ordine: ${o.daTirare.nomi.join(', ')}`, onclick: () => o.daTirare.chiedi() }, `Iniziativa… (${o.daTirare.nomi.length} senza)`) : null,
       // «Reimposta Iniziativa» (07/10): per tutti o per uno solo, la stessa della plancia
       o.reimposta ? h('button', { type: 'button', class: 'btn', title: 'Reimposta Iniziativa: ritira per tutti (con conferma) o per uno solo (ritiro o valore a mano); chi è di turno resta di turno; «Indietro» la annulla', disabled: !barra.voci.length, onclick: () => o.reimposta() }, '⟳ Iniziativa') : null,
       h('button', { type: 'button', class: 'btn primario', title: 'Il turno passa al prossimo, che diventa il token scelto (lo stesso «Avanti» della plancia; Maiusc+clic: «Indietro»)', disabled: !barra.voci.length, onclick: (e) => (e.shiftKey && o.indietro ? o.indietro() : o.avanti()) }, 'Avanti'),

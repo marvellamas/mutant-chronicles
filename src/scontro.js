@@ -391,6 +391,46 @@ export function reimpostaIniziativaDi(s, id, tiro, dati, adesso, { indietroMax =
   return indietroMax > 0 ? { ...t, indietro: [...(s.indietro ?? []), voceIniziativa(s, t, adesso)].slice(-indietroMax) } : t;
 }
 
+/**
+ * Iniziativa chiesta all'avvio dello scontro o all'ingresso di un partecipante (difetto del test di Marcello del
+ * 07/10: niente più tiri automatici). `voci`: [{ id, tiro: { valore, origine: 'app'|'manuale' } }] per il d10 (tirato
+ * dall'app o dal vivo, controllato sull'intervallo del dado) oppure [{ id, totale }] per il valore scritto a mano (il
+ * d10 si registra come totale − Iniziativa, origine «mano»). Chi non ha una voce resta «da tirare», fuori dall'ordine.
+ * Parità come §5.1 (A.123): l'ordine la risolve con DES e INT; fra avversari ancora pari resta lo spareggio da tirare.
+ * Chi era di turno resta di turno. Una riga nel registro.
+ */
+export function registraIniziative(s, voci, dati, adesso) {
+  const spec = dadoIniziativa(dati);
+  const nuovi = new Map();
+  for (const v of voci) {
+    const p = s.partecipanti.find((x) => x.id === v.id);
+    if (!p) throw new Error('partecipante non trovato');
+    if (v.totale !== undefined) {
+      if (!Number.isInteger(v.totale)) throw new Error(`${p.nome}: il totale scritto a mano dev’essere un numero intero`);
+      nuovi.set(p.id, { valore: v.totale - p.base, origine: 'mano' });
+    } else {
+      const m = motivoFuoriIntervallo(v.tiro?.valore, spec);
+      if (m) throw new Error(`${p.nome}: ${m}`);
+      nuovi.set(p.id, { valore: v.tiro.valore, origine: v.tiro.origine === 'app' ? 'app' : 'manuale' });
+    }
+  }
+  if (!nuovi.size) return s;
+  const chi = diTurno(s);
+  let t = { ...s, partecipanti: s.partecipanti.map((p) => (nuovi.has(p.id) ? { ...p, d10: nuovi.get(p.id), spareggio: null } : p)) };
+  t = { ...t, turno: chi ? turnoDello(t, chi.id, s.turno) : 0 };
+  const scritti = ordineIniziativa(t).ordinati.filter((p) => nuovi.has(p.id));
+  const restano = ordineIniziativa(t).daTirare;
+  return conRiga(t, `Iniziativa: ${scritti.map((p) => testoTiro(p, spec)).join('; ')}.${restano.length ? ` Ancora da tirare: ${restano.map((p) => p.nome).join(', ')}.` : ''}`, adesso);
+}
+
+/** Partecipanti dello scontro salvato senza Iniziativa che prima non c'erano (o tutti, per uno
+ * scontro nuovo): a loro la plancia chiede l'Iniziativa (difetto del test del 07/10). Gli scontri già iniziati non cambiano. */
+export function senzaIniziativaNuovi(prima, dopo) {
+  if (!dopo || dopo.stato !== 'aperto') return [];
+  const gia = new Set(prima && prima.id === dopo.id ? prima.partecipanti.map((p) => p.id) : []);
+  return dopo.partecipanti.filter((p) => !p.d10 && !gia.has(p.id)).map((p) => p.id);
+}
+
 /** Chi agisce ora (o null se nessuno ha tirato). */
 export function diTurno(s) {
   const { ordinati } = ordineIniziativa(s);

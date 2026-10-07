@@ -500,7 +500,7 @@ In fondo:
 - **PG.** Sono facoltativi: senza scelta, quelli al tavolo alla partenza.
 - **Difficoltà per 7 PG.** È solo informativa, da 1 / numero della tabella dei gruppi misti (§2.3), con i mezzi gradi e il Boss. Per un nemico del bestiario senza `_bestiario` il grado si stima dai PV, e la difficoltà lo dice.
 - **Salvataggio.** Ogni modifica si salva con la revisione, in fila.
-- **«Inizia».** Rifiuta se c'è già uno scontro aperto. Mette al tavolo i PG scelti e crea lo scontro: PG, copie numerate dei nemici, Iniziativa tirata dall'app per tutti, Round 1, note e la riga «Dalla preparazione …».
+- **«Inizia».** Rifiuta se c'è già uno scontro aperto. Mette al tavolo i PG scelti e crea lo scontro: PG, copie numerate dei nemici, Round 1; dal 07/10 (difetto del test di Marcello) l'Iniziativa non si tira più da sola: la plancia apre la finestra «Iniziativa» (d10 dal vivo, totale a mano, app; `src/scontro.js` → `registraIniziative`), anche per chi entra a scontro iniziato (`senzaIniziativaNuovi`), note e la riga «Dalla preparazione …».
 
 **Decisioni prese:**
 - le creature pronte sono ricette calcolate dal motore; il test le confronta con le tabelle del cap. 5, e coincidono tutte;

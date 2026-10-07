@@ -20,9 +20,9 @@ import { attacchiDi } from '../nemico-attacco.js';
 import { testoColpo } from '../danno.js';
 import { colpoSuNemico } from '../colpo-nemico.js';
 import { perditeDovute, applicaPerdita, registraPeriodico, togliPeriodici, allineaPeriodici, periodicoDi, pvDopoPerdita } from '../periodici.js';
-import { pannelloScontro, leggiScontroAperto, leggiScontro, salvaScontro, scegliReimposta } from './scontro.js';
+import { pannelloScontro, leggiScontroAperto, leggiScontro, salvaScontro, scegliReimposta, chiediIniziativa } from './scontro.js';
 import { pannelloBestiario, elencoNemici, cartaNemico } from './nemici.js';
-import { diTurno, avanti, indietro, anteprimaIndietro, reimpostaIniziativa, reimpostaIniziativaDi, dadoIniziativa, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico, confermaRegimeNemico, aggiungiNemici, registraRiga, cambiaStatoNemico } from '../scontro.js';
+import { diTurno, ordineIniziativa, registraIniziative, senzaIniziativaNuovi, avanti, indietro, anteprimaIndietro, reimpostaIniziativa, reimpostaIniziativaDi, dadoIniziativa, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico, confermaRegimeNemico, aggiungiNemici, registraRiga, cambiaStatoNemico } from '../scontro.js';
 import { vociBestiario } from '../nemici.js';
 import { creaCustode } from './ridisegno.js';
 import { avviso, avvisoErrore } from './avvisi.js';
@@ -118,6 +118,10 @@ export function renderTavolo(radice, ctx) {
         const righe = conferme ? righeNuove(prima, r.scontro) : [];
         // Round collegato (src/round-scontro.js): i file dei PG seguono lo scontro (inizio, Stati scaduti, fine)
         seguiScontro(prima, r.scontro);
+        // difetto del test del 07/10: l'Iniziativa non si tira da sola; a chi entra senza (avvio dello scontro, «Inizia»
+        // dalla bozza, nemici e partecipanti aggiunti dopo) la chiede la finestra «Iniziativa», solo in questa finestra
+        const nuovi = senzaIniziativaNuovi(prima, r.scontro);
+        if (nuovi.length) setTimeout(() => iniziativaUi(nuovi), 0);
         // − e + dei PV e dei PM: un avviso per nemico, che si aggiorna ai clic successivi
         for (const x of righe.filter((y) => y.chiave)) avviso(x.testo, { chiave: x.chiave });
         const altre = righe.filter((y) => !y.chiave).map((y) => y.testo);
@@ -326,7 +330,7 @@ export function renderTavolo(radice, ctx) {
       sceltaFile,
       h('button', { type: 'button', class: 'btn', title: 'Copia i personaggi e i nemici d’esempio del repo (esempi/) nelle cartelle del server; non sovrascrive mai un file già presente', onclick: caricaEsempi }, 'Carica esempi'),
       // richiesta di Marcello del 03/10: bozze di scontro e nemici dal Bestiario, anche senza scontro aperto
-      h('button', { type: 'button', class: 'btn', title: 'Bozze di scontro: nemici, quanti, note, difficoltà; «Inizia» le apre con l’Iniziativa tirata', onclick: preparaScontro }, 'Prepara scontro'),
+      h('button', { type: 'button', class: 'btn', title: 'Bozze di scontro: nemici, quanti, note, difficoltà; «Inizia» le apre e chiede l’Iniziativa', onclick: preparaScontro }, 'Prepara scontro'),
       h('button', { type: 'button', class: 'btn', title: 'Procedura guidata dal Bestiario (base, grado, moduli), oppure tutto a caso', onclick: () => creaNemico() }, 'Crea nemico'),
       // nella mappa le scene stanno già nel gruppo «Mappa»: niente doppione
       ctx.inMappa ? null : h('button', { type: 'button', class: 'btn', title: 'Scene della mappa di battaglia: nuova, apri, rinomina, duplica, archivia', onclick: () => apriElencoScene(stato.scene, disegna) }, 'Mappa'),
@@ -343,7 +347,7 @@ export function renderTavolo(radice, ctx) {
       await aggiorna(true);
     }) : null;
     const stScontro = Object.assign(stato, { pgAlTavolo: alTavolo.map((r) => stato.viste.get(r.file)).filter((v) => v?.completa) });
-    const azScontro = { modifica, crea: (s) => salva(s), ridisegna: disegna, annullaColpo, indietro: indietroUi, reimposta: (id) => reimpostaUi(id), centra: ctx.inMappa?.centra ? (p) => ctx.inMappa.centra(`partecipante:${p.id}`) : null, attacca: (p) => attacca(p, alTavolo) };
+    const azScontro = { modifica, crea: (s) => salva(s), ridisegna: disegna, annullaColpo, indietro: indietroUi, reimposta: (id) => reimpostaUi(id), chiediIniziativa: () => iniziativaUi(null), centra: ctx.inMappa?.centra ? (p) => ctx.inMappa.centra(`partecipante:${p.id}`) : null, attacca: (p) => attacca(p, alTavolo) };
     const cartePg = alTavolo.length
       ? h('div', { class: 'plancia-griglia' }, alTavolo.map((r) => (r.mancante ? cartaMancante(r.mancante)
         : stato.viste.get(r.file) ? conPezzo(cartaPg(ctx, stato.viste.get(r.file), r, turnoDi(r), colpitoPg, durateDi(stato.viste.get(r.file))), `partecipante:pg:${chiaveDaFile(r.file)}`) : cartaErrore(r, stato.errori.get(r.file)))))
@@ -565,6 +569,21 @@ export function renderTavolo(radice, ctx) {
       return modifica((x) => reimpostaIniziativa(x, app, ctx.dati, undefined, opz));
     }
     return modifica((x) => reimpostaIniziativaDi(x, scelta.id, scelta.tiro, ctx.dati, undefined, { ...opz, tiraSpareggio: app }));
+  };
+  // finestra «Iniziativa» (difetto del test del 07/10): i valori scritti o tirati entrano con registraIniziative; chi
+  // resta vuoto resta «da tirare», fuori dall'ordine, e l'avviso lo dice. ids null: tutti quelli ancora senza.
+  let iniziativaAperta = false;
+  const iniziativaUi = async (ids = null) => {
+    if (iniziativaAperta || !stato.scontro) return false;
+    iniziativaAperta = true;
+    try {
+      const dado = dadoIniziativa(ctx.dati);
+      const voci = await chiediIniziativa(stato.scontro, dado, ids);
+      if (voci?.length) await modifica((x) => registraIniziative(x, voci.filter((v) => x.partecipanti.some((p) => p.id === v.id && !p.d10)), ctx.dati));
+      const restano = stato.scontro ? ordineIniziativa(stato.scontro).daTirare : [];
+      if (restano.length) avviso(`Senza Iniziativa, fuori dall’ordine finché non hanno un valore: ${restano.map((p) => p.nome).join(', ')}. Scrivila in «Da tirare» della plancia o con «Iniziativa…» nella barra della mappa.`, { tipo: 'info', durata: 10000, chiave: 'da-tirare' });
+      return true;
+    } finally { iniziativaAperta = false; }
   };
   // «Annulla ultimo colpo»: per un PG si rimettono nel file PV, Ferite e Stati di prima (con la revisione)
   const annullaColpo = async () => {
@@ -853,6 +872,8 @@ export function renderTavolo(radice, ctx) {
   ferma.puoIndietro = () => anteprimaIndietro(stato.scontro);
   // «Reimposta Iniziativa» (07/10): la stessa della plancia, per la barra dell'Iniziativa della mappa
   ferma.reimposta = (id = null) => reimpostaUi(id);
+  // la finestra «Iniziativa» per chi è ancora senza (pulsante «Iniziativa…» della barra)
+  ferma.chiediIniziativa = () => iniziativaUi(null);
   ferma.aggiorna = () => aggiorna();
   // ZoC della mappa (07/10): «Attacca!» dell'avversario con il bersaglio già scelto, dall'avviso dell'Attacco di
   // Opportunità; false se non si può (PG: l'attacco si fa dalla sua scheda; nessun attacco nel profilo)

@@ -54,25 +54,24 @@ test('bozza: nome, note, nemici con «Quanti» e lato, PG; validata; ritocchi so
   assert.deepEqual(pgDellaBozza({ ...b, pg: [] }, [lucas]).map((p) => p.nome), ['Lucas']);
 });
 
-test('«Inizia»: scontro aperto con PG e nemici, Iniziativa tirata per tutti, Round 1, note e registro', () => {
+test('«Inizia»: scontro aperto con PG e nemici, Round 1, note e registro; l’Iniziativa NON si tira da sola (difetto del 07/10)', () => {
   const b = bozzaDiProva();
-  const tiri = [7, 3, 9, 1];
-  const s = iniziaBozza(b, { id: 'scontro-prova', pg: [lucas], dati, tiro: () => ({ valore: tiri.shift(), origine: 'app' }), adesso: T0 });
+  const s = iniziaBozza(b, { id: 'scontro-prova', pg: [lucas], adesso: T0 });
   assert.equal(validaScontro(s), null);
   assert.deepEqual([s.stato, s.round, s.turno, s.nome, s.note], ['aperto', 1, 0, 'Imboscata al porto', 'Dai condotti sotto il molo.']);
-  assert.deepEqual(s.partecipanti.map((p) => [p.nome, p.base, p.d10.valore, p.d10.origine]), [
-    ['Lucas', 4, 7, 'app'], [`${eretico.nome} 1`, eretico.iniziativa, 3, 'app'], ['Scavafosse Semplice 1', 5, 9, 'app'], ['Scavafosse Semplice 2', 5, 1, 'app'],
+  assert.deepEqual(s.partecipanti.map((p) => [p.nome, p.base, p.d10]), [
+    ['Lucas', 4, null], [`${eretico.nome} 1`, eretico.iniziativa, null], ['Scavafosse Semplice 1', 5, null], ['Scavafosse Semplice 2', 5, null],
   ]);
   const { ordinati, daTirare } = ordineIniziativa(s);
-  assert.equal(daTirare.length, 0);
-  const totali = ordinati.map((p) => p.base + p.d10.valore);
-  assert.deepEqual(totali, [...totali].sort((a, b) => b - a));
-  assert.equal(ordinati[0].nome, 'Scavafosse Semplice 1'); // 5 + 9 = 14
-  assert.equal(diTurno(s).id, ordinati[0].id);
-  assert.match(s.registro[1].testo, /^Dalla preparazione «Imboscata al porto»\.$/);
-  assert.ok(s.registro.some((r) => /Iniziativa di Lucas: 4 \+ 1d10 7 \(tirato dall’app\) = 11\./.test(r.testo)));
+  assert.deepEqual([ordinati.length, daTirare.length], [0, 4]);
+  assert.equal(diTurno(s), null);
+  assert.match(s.registro[1].testo, /^Dalla preparazione «Imboscata al porto».$/);
+  assert.ok(!s.registro.some((r) => /Iniziativa di/.test(r.testo)), 'nessun tiro nel registro');
+  // un tiro passato per errore non si usa
+  const conTiro = iniziaBozza(b, { id: 'scontro-prova', pg: [lucas], dati, tiro: () => ({ valore: 7, origine: 'app' }), adesso: T0 });
+  assert.ok(conTiro.partecipanti.every((p) => !p.d10));
   // una bozza vuota non parte
-  assert.throws(() => iniziaBozza(nuovaBozza({ nome: 'x' }), { id: 's', pg: [], dati, tiro: () => ({ valore: 1, origine: 'app' }) }), /non ha partecipanti/);
+  assert.throws(() => iniziaBozza(nuovaBozza({ nome: 'x' }), { id: 's', pg: [] }), /non ha partecipanti/);
 });
 
 // --- server: bozze in scontri/ -------------------------------------------------------------------------------
@@ -102,7 +101,7 @@ test('server: la bozza si salva con la revisione, si elenca come bozza, si elimi
   // nessuno scontro aperto: la plancia cerca solo stato «aperto» (src/ui/scontro.js → leggiScontroAperto)
   assert.equal(elenco.find((x) => x.stato === 'aperto'), undefined);
   // «Inizia»: lo scontro accanto alla bozza, che resta
-  const s = iniziaBozza(r.corpo, { id: 'scontro-20261003-213000', pg: [lucas], dati, tiro: () => ({ valore: 5, origine: 'app' }) });
+  const s = iniziaBozza(r.corpo, { id: 'scontro-20261003-213000', pg: [lucas] });
   assert.equal((await put(s)).status, 200);
   const dopo = await (await fetch(`${base}/api/scontri`)).json();
   assert.deepEqual(dopo.map((x) => x.stato).sort(), ['aperto', 'bozza']);

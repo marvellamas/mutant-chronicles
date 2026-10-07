@@ -55,7 +55,7 @@ export const idNuovo = (d = new Date()) => {
  * @param parte 'tutto' (plancia a pagina intera), 'iniziativa' (Round, «Avanti», ordine, da tirare) o 'gestione'
  *   (aggiungi nemici e partecipanti, durate degli Stati, registro): i gruppi della barra della mappa (ritocchi del 06/10)
  */
-export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaColpo = null, attacca = null, indietro: indietroUi = null, reimposta = null, centra = null }, parte = 'tutto') {
+export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaColpo = null, attacca = null, indietro: indietroUi = null, reimposta = null, centra = null, chiediIniziativa: chiediUi = null }, parte = 'tutto') {
   const s = st.scontro;
   const dado = dadoIniziativa(ctx.dati);
   if (!s) {
@@ -177,6 +177,9 @@ export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaCol
       h('tbody', {}, ordinati.map(riga)))) : null,
     daTirare.length ? h('div', { class: 'da-tirare' },
       h('h3', {}, `Da tirare (${dado.formula})`),
+      h('p', { class: 'nota' }, 'Senza Iniziativa non entrano nell’ordine finché non hanno un valore.'),
+      // difetto del test del 07/10: la finestra «Iniziativa» (dal vivo, totale a mano o app)
+      chiediUi ? h('button', { type: 'button', class: 'btn btn-piccolo primario', onclick: () => chiediUi() }, 'Iniziativa…') : null,
       h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => modifica((x) => daTirare.reduce((acc, p) => registraTiro(acc, p.id, 'd10', tira(dado).tiro, ctx.dati), x)) }, 'Tira per tutti con l’app'),
       h('ul', {}, daTirare.map((p) => h('li', {}, h('strong', {}, p.nome), p.provvisorio ? h('span', { class: 'etichetta' }, 'provvisorio') : null, ' · Iniziativa ', baseConProvenienza(p), ' + ', tiroDalVivo(p, 'd10'))))) : null,
   ];
@@ -261,6 +264,84 @@ export function scegliReimposta(s, dado, soloId = null) {
   });
 }
 const svuotaIn = (el, ...figli) => { el.replaceChildren(...figli.flat().filter(Boolean)); };
+
+/**
+ * Finestra «Iniziativa» all'avvio dello scontro o all'ingresso di un partecipante (difetto del test di Marcello del
+ * 07/10: l'Iniziativa non si tira più da sola). Per ognuno dei partecipanti `ids` (tutti quelli senza Iniziativa, se
+ * null): il d10 tirato dal vivo (controllato sull'intervallo, il totale lo calcola l'app), il totale scritto a mano, o
+ * «Tira con l'app»; in cima «Tira con l'app per tutti i nemici» e «Tira con l'app per tutti». Chi resta vuoto resta
+ * «da tirare», fuori dall'ordine.
+ * @returns Promise di [{ id, tiro } | { id, totale }] (anche vuoto) oppure null se chiusa con «Più tardi»
+ */
+export function chiediIniziativa(s, dado, ids = null) {
+  const lista = s.partecipanti.filter((p) => (ids ? ids.includes(p.id) : !p.d10));
+  if (!lista.length) return Promise.resolve([]);
+  return apri('chiedi-iniziativa', 'Iniziativa', (fine) => {
+    // per ognuno: { d10: { valore, origine } | null, totale: intero | null, errore }
+    const st = new Map(lista.map((p) => [p.id, { d10: null, totale: null, errore: null }]));
+    const righe = h('div', { class: 'iniziativa-righe' });
+    const errore = h('p', { class: 'motivo', role: 'alert' });
+    const appA = (filtro) => { for (const p of lista.filter(filtro)) { const x = st.get(p.id); Object.assign(x, { d10: tira(dado).tiro, totale: null, errore: null }); x.aggiorna(); } };
+    const riga = (p) => {
+      const x = st.get(p.id);
+      const esito = h('span', { class: 'iniziativa-totale' });
+      const motivo = h('small', { class: 'motivo' });
+      const el = h('div', { class: 'iniziativa-riga' });
+      // aggiorna solo questa riga (ricostruirla farebbe perdere il focus passando al campo dopo con Tab)
+      const aggiorna = () => {
+        const totale = x.totale ?? (x.d10 ? p.base + x.d10.valore : null);
+        vivo.value = x.d10 ? x.d10.valore : (x.errore && document.activeElement === vivo ? vivo.value : '');
+        if (x.totale !== null) mano.value = x.totale; else if (document.activeElement !== mano) mano.value = '';
+        esito.textContent = totale === null ? '—' : `= ${numero(totale)}${x.totale !== null ? ' (a mano)' : x.d10.origine === 'app' ? ' (app)' : ' (dal vivo)'}`;
+        motivo.textContent = x.errore ? ` ${x.errore}` : '';
+        el.classList.toggle('vuota', totale === null);
+      };
+      const vivo = h('input', { type: 'number', min: dado.minimo, max: dado.massimo, step: 1, inputmode: 'numeric', class: 'input-d10', 'aria-label': `${dado.formula} di ${p.nome}, dal vivo`,
+        onchange: (e) => {
+          if (e.target.value === '') { x.d10 = null; x.errore = null; aggiorna(); return; }
+          const r = tiroManuale(Number(e.target.value), dado);
+          x.errore = r.errore ?? null;
+          x.d10 = r.errore ? null : r.tiro;
+          if (!r.errore) x.totale = null;
+          aggiorna();
+        } });
+      const mano = h('input', { type: 'number', step: 1, inputmode: 'numeric', class: 'input-d10', 'aria-label': `Iniziativa totale di ${p.nome}, a mano`,
+        onchange: (e) => {
+          const v = e.target.value === '' ? null : Number(e.target.value);
+          x.errore = v !== null && !Number.isInteger(v) ? 'il totale dev’essere un numero intero' : null;
+          x.totale = x.errore ? null : v;
+          if (x.totale !== null) x.d10 = null;
+          aggiorna();
+        } });
+      x.aggiorna = aggiorna;
+      el.append(
+        h('span', { class: 'iniziativa-nome' }, h('strong', {}, p.nome), h('small', { class: 'nota' }, ` ${p.tipo === 'pg' ? 'PG' : p.lato} · Iniziativa ${numero(p.base)}`)),
+        h('label', {}, `${dado.formula} `, vivo),
+        h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { Object.assign(x, { d10: tira(dado).tiro, totale: null, errore: null }); aggiorna(); } }, 'Tira con l’app'),
+        h('label', {}, ' o totale ', mano),
+        esito, motivo);
+      aggiorna();
+      return el;
+    };
+    const disegna = () => { righe.replaceChildren(...lista.map(riga)); errore.textContent = ''; };
+    const conferma = () => {
+      if ([...st.values()].some((x) => x.errore)) { errore.textContent = 'Correggi i valori segnati.'; return; }
+      fine(lista.flatMap((p) => { const x = st.get(p.id); return x.totale !== null ? [{ id: p.id, totale: x.totale }] : x.d10 ? [{ id: p.id, tiro: x.d10 }] : []; }));
+    };
+    disegna();
+    return [
+      h('p', { class: 'nota' }, `Iniziativa della scheda + ${dado.formula} (Giocatore §2.14). Scrivi il dado tirato dal vivo, oppure il totale a mano, oppure tira con l’app. Chi resta vuoto non entra nell’ordine finché non ha un valore. Parità come §5.1: DES, poi INT, poi scelta fra alleati o spareggio fra avversari.`),
+      h('div', { class: 'riga-azioni' },
+        lista.some((p) => p.tipo !== 'pg') ? h('button', { type: 'button', class: 'btn', onclick: () => appA((p) => p.tipo !== 'pg') }, 'Tira con l’app per tutti i nemici') : null,
+        h('button', { type: 'button', class: 'btn', onclick: () => appA(() => true) }, 'Tira con l’app per tutti')),
+      righe,
+      errore,
+      h('div', { class: 'riga-azioni finestrella-azioni' },
+        h('button', { type: 'button', class: 'btn', onclick: () => fine(null) }, 'Più tardi'),
+        h('button', { type: 'button', class: 'btn primario', onclick: conferma }, 'Registra')),
+    ];
+  });
+}
 
 /** PG per un nuovo scontro, dalla vista della plancia (Iniziativa effettiva, Caratteristiche per la parità). */
 export function pgDaVista(v) {

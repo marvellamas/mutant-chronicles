@@ -51,7 +51,7 @@ import { portaA, muriEffettivi, porteVicine, apriChiudi, nuovaPorta, conAzione, 
 import { apriMenuTemplate, sezioneTemplate, etichettaTemplate, testoMisure } from './template.js';
 import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
 import { componiMenu, unisciMenu } from '../../mappa/menu.js';
-import { diTurno } from '../../scontro.js';
+import { diTurno, ordineIniziativa } from '../../scontro.js';
 import { statoMovimento, muoviVeicolo } from '../../veicoli-registro.js';
 import { rigaMovimentoLibero, rigaOpportunita, senzaOpportunitaDelMovimento, rigaPorta, rigaTemplateTolti, rigaGruppo } from '../../scontro.js';
 import { tokenNelRettangolo, alternaSelezione, spostaGruppo } from '../../mappa/gruppo.js';
@@ -2673,6 +2673,7 @@ export function renderMappa(radice, ctx) {
         indietro: st.planciaBarra?.indietro ? () => indietroDallaMappa() : null,
         puoIndietro: st.planciaBarra?.puoIndietro?.() ?? null,
         reimposta: st.planciaBarra?.reimposta ? () => reimpostaDallaMappa() : null,
+        daTirare: st.planciaBarra?.chiediIniziativa && st.fonti?.scontro ? { nomi: ordineIniziativa(st.fonti.scontro).daTirare.map((p) => p.nome), chiedi: async () => { await st.planciaBarra.chiediIniziativa(); await aggiornaFonti(); } } : null,
         scegli: (v) => scegliDallaBarra(v),
         centra: { attivo: st.centra, cambia: (x) => { st.centra = x; scriviLocale('mutant-mappa-centra-turno', x); disegnaIniziativa(); if (x) seguiTurno(true); } },
       }));
