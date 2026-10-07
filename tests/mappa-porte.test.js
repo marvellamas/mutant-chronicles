@@ -10,7 +10,7 @@ import { cambiaPortaAnnullabile, annullaUltima } from '../src/mappa/annulla.js';
 import { nuovaScena, validaScena } from '../src/mappa/scena.js';
 import { vistaGiocatori } from '../src/mappa/vista.js';
 import { nuovoScontro, rigaPorta } from '../src/scontro.js';
-import { daBase64, inBase64, rettangolo, cella, nuovaMaschera } from '../src/mappa/celle.js';
+import { daBase64, inBase64, rettangolo, cella, nuovaMaschera, impostaCella } from '../src/mappa/celle.js';
 import { validaDati } from '../src/validate.js';
 
 const { dati } = await datiReali();
@@ -48,14 +48,18 @@ test('movimento: aperta = passaggio, chiusa e bloccata = muro (percorso dall’a
   assert.ok(cella(muriEffettivi(libera), C, R, 5, 3));
 });
 
-test('diagonali accanto alla porta come per i muri (A.124, A.134): niente angolo tagliato vicino a una porta chiusa', () => {
+test('diagonali accanto alla porta come per i muri (A.124, A.134): rasente sì, fra porta chiusa e muro a spigolo no', () => {
   // una porta chiusa isolata in (5, 3), senza muri attorno: la diagonale (4, 3) → (5, 2) le passa rasente
   const s = { ...nuovaScena({ id: 'd', nome: 'D', colonne: C, righe: R, nebbia: 'scoperta', dati }), revisione: 0 };
   s.muri = inBase64(nuovaMaschera(C, R));
   s.porte = [nuovaPorta({ id: 'p', q: [5, 3], stato: 'chiusa' })];
-  const a = area(s, [4, 3], 3);
-  // da (4, 3) a (5, 2) in diagonale: il Q a lato (5, 3) è la porta chiusa → serve aggirarla (2 passi)
-  assert.equal(costoVerso(a, [5, 2]), 2);
+  // da (4, 3) a (5, 2) in diagonale: un lato (5, 3) è la porta chiusa, l'altro (4, 2) libero → si passa (A.134)
+  assert.equal(costoVerso(area(s, [4, 3], 3), [5, 2]), 1);
+  // porta chiusa in (5, 3) e muro in (4, 2): passaggio chiuso a spigolo, la diagonale no; aperta sì
+  s.muri = inBase64(impostaCella(nuovaMaschera(C, R), C, R, 4, 2, true));
+  assert.equal(costoVerso(area(s, [4, 3], 3), [5, 2]), 3);
+  s.porte = [{ ...s.porte[0], stato: 'bloccata' }];
+  assert.equal(costoVerso(area(s, [4, 3], 3), [5, 2]), 3, 'la bloccata come la chiusa');
   s.porte = [{ ...s.porte[0], stato: 'aperta' }];
   assert.equal(costoVerso(area(s, [4, 3], 3), [5, 2]), 1);
 });

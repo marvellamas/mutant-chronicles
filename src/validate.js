@@ -2780,7 +2780,9 @@ function validaMappa(dati, err) {
   if (!Array.isArray(vp) || vp.length !== 2 || !vp.every((n) => isIntero(n) && n >= 1 && n <= (T?.veicolo_ingombro_max ?? 0))) err(F, 'token.veicolo_predefinito', '[colonne, righe] interi entro veicolo_ingombro_max');
   const M = m.movimento;
   for (const k of ['costo_ortogonale', 'costo_diagonale', 'terreno_difficile_moltiplicatore']) if (!positivo(M?.[k])) err(F, `movimento.${k}`, 'numero positivo');
-  for (const k of ['diagonali_alterne', 'taglio_angoli_muri', 'attraversa_alleati', 'attraversa_avversari', 'fermarsi_su_alleato', 'blocco_dopo_passo']) {
+  // A.134: diagonale rasente allo spigolo di un muro
+  if (!['un_lato', 'vietata', 'libera'].includes(M?.diagonale_spigolo)) err(F, 'movimento.diagonale_spigolo', 'un_lato, vietata o libera (A.134)');
+  for (const k of ['diagonali_alterne', 'attraversa_alleati', 'attraversa_avversari', 'fermarsi_su_alleato', 'blocco_dopo_passo']) {
     if (typeof M?.[k] !== 'boolean') err(F, `movimento.${k}`, 'vero o falso');
   }
   const fasce = Array.isArray(M?.fasce) ? M.fasce : [];

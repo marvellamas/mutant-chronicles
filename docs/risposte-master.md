@@ -965,9 +965,8 @@ e le vecchie etichette numeriche delle luci di A.125, e A.134 qui sotto.
   maggiore per la Taglia (Marcello aveva proposto 2 Q per i 2 × 2 e 3 Q per i 3 × 3)? Provvisorio: quella del profilo.
 - **A.134 — Diagonale accanto allo spigolo di un muro** (07/10/2026). La A.124 fissa la diagonale a 1 Q e dice che
   non permette di attraversare muri o passaggi ostruiti, ma non dice se una diagonale può passare rasente allo spigolo
-  di un muro (i due quadretti ai lati: uno libero, uno murato). Provvisorio: no, servono liberi anche i due quadretti
-  ai lati (`data/mappa.json` → movimento.taglio_angoli_muri, con il `TODO(Davide)` A.134, riscritto il 07/10 nel
-  branch della mappa).
+  di un muro (i due quadretti ai lati: uno libero, uno murato). **Risolta** dalla risposta di Marcello del 07/10
+  (decisione 135): sì.
 
 ## 7 ottobre 2026 — risposte del 06/10 (E&L «Risposte approvate — regole tecniche e Stati», sezione 7 di «per-davide.md»)
 
@@ -1111,6 +1110,11 @@ Marcello»: Davide può rivederle (nel pacchetto per il Doc vanno fra le Risolte
     senza riempimento («inattiva», per capire perché non c'è l'avviso); i giocatori non la vedono; a 0 PV non si mostra.
     **Applicata** il 07/10 (branch `battlemap`): `data/mappa.json` → zoc.stati_che_impediscono [stordito, svenuto] e
     zoc.inattiva, `src/mappa/zoc.js` → avversariZocInattivi; via il `TODO(Davide)`.
+135. **Diagonale rasente allo spigolo di un muro** (A.134; risposta di Marcello, 07/10). In diagonale basta che sia libero
+    il quadretto d'arrivo e che la diagonale non attraversi un muro: uno dei due quadretti ai lati può essere murato. Se
+    lo sono entrambi (passaggio chiuso a spigolo) la diagonale resta vietata. Le porte chiuse o bloccate contano come
+    muri. **Applicata** il 07/10 (branch `battlemap`): `data/mappa.json` → movimento.diagonale_spigolo «un_lato» (al
+    posto di taglio_angoli_muri), area di movimento e percorso in `src/mappa/area.js`; via il `TODO(Davide)`.
 
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 

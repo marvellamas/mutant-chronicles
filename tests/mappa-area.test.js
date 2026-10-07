@@ -20,19 +20,21 @@ const vuota = () => nuovaMaschera(C, R);
 const area = (o) => areaRaggiungibile({ colonne: C, righe: R, muri: vuota(), terreno: vuota(), token: [], massimo: 6, regole: REG, ...o });
 const chi = (q, ingombro = 1, lato = 'pg') => ({ id: 'me', q, ingombro, lato });
 
-test('regole nei dati, confermate da Davide il 06/10 (A.124, A.127–A.129); resta il TODO(Davide) A.134', () => {
+test('regole nei dati, confermate da Davide il 06/10 (A.124, A.127–A.129) e da Marcello il 07/10 (A.134)', () => {
   assert.equal(REG.costo_diagonale, 1);
   assert.equal(REG.terreno_difficile_moltiplicatore, 2);
-  assert.deepEqual([REG.attraversa_alleati, REG.attraversa_avversari, REG.fermarsi_su_alleato, REG.taglio_angoli_muri], [true, false, false, false]);
+  assert.deepEqual([REG.attraversa_alleati, REG.attraversa_avversari, REG.fermarsi_su_alleato, REG.diagonale_spigolo], [true, false, false, 'un_lato']);
   const testo = JSON.stringify(dati.mappa.movimento);
   for (const a of ['A.124', 'A.127', 'A.128', 'A.129']) assert.ok(testo.includes(a), a);
-  // A.124: diagonale 1 Q confermata, il TODO degli angoli è la A.134
+  // A.124: diagonale 1 Q confermata; A.134 risolta, niente più TODO
   assert.equal(REG.diagonali_alterne, false);
   assert.equal(REG['TODO(Davide) diagonali'], undefined);
-  assert.match(REG['TODO(Davide) angoli'], /^A.134/);
+  assert.equal(Object.keys(REG).some((k) => k.startsWith('TODO(Davide)') && /A.134/.test(REG[k])), false);
+  assert.equal(REG['TODO(Davide) angoli'], undefined);
+  assert.match(REG._nota_spigolo, /A\.134/);
   const d = copia(dati);
-  d.mappa.movimento.taglio_angoli_muri = 'no';
-  assert.ok(validaDati(d).some((e) => e.file === 'mappa.json' && e.chiave === 'movimento.taglio_angoli_muri'));
+  d.mappa.movimento.diagonale_spigolo = false;
+  assert.ok(validaDati(d).some((e) => e.file === 'mappa.json' && e.chiave === 'movimento.diagonale_spigolo'));
 });
 
 test('area aperta: diagonale 1 Q (Chebyshev), percorso e limiti', () => {
@@ -62,23 +64,30 @@ test('diagonali alterne 1/2/1 se i dati lo chiedono', () => {
   assert.equal(costoVerso(a, [4, 4]), 6);
 });
 
-test('muri: si girano attorno, niente angoli tagliati', () => {
+test('muri: si girano attorno; A.134: rasente allo spigolo sì, fra due muri a spigolo no', () => {
   // muro verticale nella colonna 6, righe 0–8 (un varco in basso)
   const muri = rettangolo(vuota(), C, R, 6, 0, 6, 8, true);
   const a = area({ chi: chi([4, 4]), muri, massimo: 20 });
   assert.equal(costoVerso(a, [6, 4]), Infinity, 'sul muro mai');
-  // per passare: giù fino alla riga 9, il varco in ortogonale (la diagonale toccherebbe lo spigolo del muro), poi su:
-  // 5 + 1 + 1 + 5
-  assert.equal(costoVerso(a, [8, 4]), 12);
+  // per passare: giù fino alla riga 8, nel varco in diagonale rasente allo spigolo (A.134), su: 4 + 1 + 1 + 4
+  assert.equal(costoVerso(a, [8, 4]), 10);
   assert.ok(percorso(a, [8, 4]).some(([x, y]) => x === 6 && y === 9), 'passa dal varco');
-  // spigolo: muro in (6,5) e (5,6); da (5,5) a (6,6) in diagonale no
+  // con la regola di prima («vietata»): il varco in ortogonale, 5 + 1 + 1 + 5
+  assert.equal(costoVerso(area({ chi: chi([4, 4]), muri, massimo: 20, regole: { ...REG, diagonale_spigolo: 'vietata' } }), [8, 4]), 12);
+  // passaggio chiuso a spigolo: muro in (6,5) e (5,6); da (5,5) a (6,6) in diagonale no (attraverserebbe il muro)
   const spigolo = impostaCella(impostaCella(vuota(), C, R, 6, 5, true), C, R, 5, 6, true);
   const b = area({ chi: chi([5, 5]), muri: spigolo });
-  assert.equal(costoVerso(b, [6, 6]), 6, 'gira attorno ai due muri (5,4 → 6,4 → 7,4 → 7,5 → 7,6 → 6,6): niente diagonali accanto agli spigoli');
+  assert.equal(costoVerso(b, [6, 6]), 3, 'gira attorno a uno dei muri (5,5 → 6,4 → 7,5 → 6,6), rasente agli spigoli');
+  assert.ok(!percorso(b, [6, 6]).some(([x, y], i, p) => i && p[i - 1][0] === 5 && p[i - 1][1] === 5 && x === 6 && y === 6));
+  // un solo muro a lato: la diagonale passa rasente (A.134)
   const c = area({ chi: chi([5, 5]), muri: impostaCella(vuota(), C, R, 6, 5, true) });
-  assert.equal(costoVerso(c, [6, 6]), 2, 'anche con un solo muro a lato la diagonale non taglia lo spigolo');
-  const conTaglio = area({ chi: chi([5, 5]), muri: spigolo, regole: { ...REG, taglio_angoli_muri: true } });
-  assert.equal(costoVerso(conTaglio, [6, 6]), 1);
+  assert.equal(costoVerso(c, [6, 6]), 1, 'un lato murato e uno libero: la diagonale passa');
+  assert.equal(costoVerso(area({ chi: chi([5, 5]), muri: impostaCella(vuota(), C, R, 6, 5, true), regole: { ...REG, diagonale_spigolo: 'vietata' } }), [6, 6]), 2);
+  const libera = area({ chi: chi([5, 5]), muri: spigolo, regole: { ...REG, diagonale_spigolo: 'libera' } });
+  assert.equal(costoVerso(libera, [6, 6]), 1);
+  // token 2 × 2: i lati sono le posizioni intere; uno murato basta a non bloccare, due sì
+  const m2 = impostaCella(vuota(), C, R, 7, 5, true);
+  assert.equal(costoVerso(area({ chi: chi([5, 5], 2), muri: m2 }), [6, 6]), 1);
 });
 
 test('terreno difficile: ×2 per ogni Q in cui si entra', () => {

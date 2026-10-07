@@ -64,7 +64,7 @@ La Mappa di battaglia è un modulo del **Tavolo del Master** di Mutant: gira sul
 > * I muri bloccano movimento e linea di tiro.  
 > * **Porte (fatto il 07/10/2026, fase 2, lotto 2; `src/mappa/porte.js`, `data/mappa.json` → porte; A.125, decisione 130).** Regola di Davide: aprire o chiudere una normale porta accessibile e non bloccata costa **1 AzP**, senza Prova, essendo adiacenti e con una mano libera; attraversarla consuma il normale movimento; una porta bloccata richiede prima di sbloccarla, scassinarla o forzarla; «chiusa» e «bloccata» sono distinte.
 >   * **Disegno:** «Strumenti → Muri e terreno → Porta»: un clic su un Q di muro mette una porta (aperta, chiusa o bloccata; «segreta» a scelta), un clic su una porta la toglie. Aperta = stipiti verdi e varco tratteggiato; chiusa = battente marrone; bloccata = battente rosso con la croce; segreta (solo master) = contorno viola tratteggiato con la «S». Dati nella scena (`porte`, `azioni`), validati.
->   * **Movimento:** aperta = passaggio; chiusa o bloccata = muro per l’area e il percorso, diagonali comprese (A.124, A.134).
+>   * **Movimento:** aperta = passaggio; chiusa o bloccata = muro per l’area e il percorso: in diagonale si passa rasente a una porta chiusa, non fra una porta chiusa e un muro a spigolo (A.124, A.134).
 >   * **Aprire e chiudere:** il master con un clic sulla porta (o clic destro: Apri, Chiudi, Blocca, Sblocca, Rivela / Rendi segreta, Togli); il token scelto adiacente con «Apri porta» / «Chiudi porta» (clic destro o pannello): 1 AzP contata nel Round accanto ai Q usati (non blocca nulla) e una riga nel registro. Bloccata: «Porta bloccata: serve sbloccarla, scassinarla o forzarla»; «Sblocca» solo dal master. Adiacente anche in diagonale (A.139).
 >   * **Giocatori:** le porte visibili con il loro stato (arrivano dopo il salvataggio della scena, entro un secondo); le **segrete** non rivelate sono un Q di muro anche nei dati del server, e muro anche per l’area di movimento mostrata ai giocatori.
 >   * **Vista:** per ora le porte non cambiano la nebbia; con la linea di visuale (prossimo lotto) le porte chiuse e bloccate fermeranno la vista (`porte.bloccano_vista`).
@@ -90,7 +90,8 @@ La Mappa di battaglia è un modulo del **Tavolo del Master** di Mutant: gira sul
 >   * **A.127:** i quadretti degli alleati si attraversano al costo normale, quelli dei nemici no; non ci si ferma in un quadretto occupato; una pedina grande vuole libero tutto l’ingombro d’arrivo; attraversare un alleato non evita gli Attacchi di Opportunità.
 >   * **A.128:** terreno difficile 2 Q per quadretto, anche in diagonale e in Corsa e Scatto; percorsi misti contati a tratti.
 >   * **A.129:** solo il **Passo** si divide in più clic, prima e dopo le Azioni Principali (2 Q, attacco, altri 4 Q). **Corsa** e **Scatto** sono un **blocco unico**: il token si muove una volta sola e i Q non usati si perdono; dopo il blocco il movimento del Round è finito. Il pannello mostra «Q usati / disponibili» con quanto resta del Passo diviso, oppure i Q persi; pulsanti e clic destro spengono Corri e Scatta quando non si possono più scegliere, e un avviso lo spiega.
->   * **Domande aperte:** A.134 (diagonale rasente allo spigolo di un muro; provvisorio no) e A.136 (Corsa o Scatto dopo un Passo già cominciato; provvisorio no: si annulla il movimento e lo si rifà con Corri).
+>   * **A.134 (risposta di Marcello del 07/10):** in diagonale si passa rasente allo spigolo di un muro (uno dei due quadretti ai lati murato); se lo sono entrambi (passaggio chiuso a spigolo) la diagonale è vietata. Le porte chiuse o bloccate contano come muri (`data/mappa.json` → movimento.diagonale_spigolo).
+>   * **Domanda aperta:** A.136 (Corsa o Scatto dopo un Passo già cominciato; provvisorio no: si annulla il movimento e lo si rifà con Corri).
 > * Veicoli: si muovono all’Iniziativa del conducente con la loro andatura (A.105).
 > * **Ritocchi del 06/10/2026 (test di Marcello sul lotto 6):** l’area non è obbligatoria: l’interruttore **«Mostra area»** (nel pannello del token, nel clic destro e con il tasto **M**) la nasconde e la mostra, e la scelta resta memorizzata; il percorso al passaggio del mouse resta anche con l’area nascosta. L’area è **leggera**: riempimento molto trasparente e contorno ben visibile di ogni fascia, così la mappa sotto si vede (opacità in `data/mappa.json`).
 
@@ -230,8 +231,8 @@ Le stesse azioni più gli strumenti del master: carica mappa, griglia, nebbia, m
 
 > * **Iniziativa — deciso:** si usa il sistema del Manuale del Giocatore di Mutant (Mod DES \+ Mod INT \+ 1d10; parità per DES, poi INT, poi scelta fra alleati o 1d10 fra avversari). Il d12 dell’app di Davide appartiene al sistema precedente.  
 > * **Risposte del 06/10/2026:** A.121 ritirata; A.122 priorità delle funzioni (resta «Aiuto-master»); A.124, A.127, A.128 e A.129 sul movimento, applicate il 07/10 (§8); A.125 porte e luci (restano i veicoli e le vecchie etichette delle luci).
-> * **Risposte di Marcello del 07/10/2026 (decisioni del gruppo, Davide può rivederle):** A.132 (uno Stordito non fa AdO; ZoC tratteggiata solo per il master).  
-> * **Ancora aperte:** A.126 (creature 3 × 3), A.133 (portata delle creature grandi), A.134 (diagonale rasente allo spigolo), A.136 (Corsa o Scatto dopo un Passo cominciato).
+> * **Risposte di Marcello del 07/10/2026 (decisioni del gruppo, Davide può rivederle):** A.132 (uno Stordito non fa AdO; ZoC tratteggiata solo per il master); A.134 (diagonale rasente allo spigolo sì, fra due muri a spigolo no).  
+> * **Ancora aperte:** A.126 (creature 3 × 3), A.133 (portata delle creature grandi), A.136 (Corsa o Scatto dopo un Passo cominciato).
 
 ## **16\. Fuori ambito**
 

@@ -6,7 +6,9 @@
 //   - se l'ingombro entra anche solo in parte in un Q di terreno difficile, il passo costa ×terreno_difficile_moltiplicatore;
 //   - muri: mai; avversari: attraversabili solo con attraversa_avversari; alleati (e segnaposto): attraversabili con
 //     attraversa_alleati, ci si ferma sopra solo con fermarsi_su_alleato;
-//   - taglio_angoli_muri false: in diagonale non si passa fra due Q se uno dei due lati è un muro.
+//   - diagonale_spigolo (A.134, risposta di Marcello del 07/10): «un_lato», in diagonale si passa rasente allo spigolo
+//     di un muro (uno dei due Q ai lati murato), non fra due muri a spigolo (entrambi murati: la diagonale li
+//     attraverserebbe); «vietata», servono liberi entrambi; «libera», i lati non contano. Le porte chiuse sono muri.
 // Funzioni pure. Con griglie da 300 × 300 Q e 300 token resta sotto i 50 ms (tests/mappa-area.test.js).
 import { dimensioni } from './token.js';
 
@@ -122,9 +124,11 @@ export function areaRaggiungibile({ colonne: C, righe: R, muri, terreno, token, 
       const nx = x + dx, ny = y + dy;
       if (!passa(nx, ny)) continue;
       const diagonale = dx !== 0 && dy !== 0;
-      if (diagonale && !regole.taglio_angoli_muri) {
-        // niente angoli tagliati: anche i due passi ortogonali devono essere liberi dai muri
-        if (!dentro(nx, y) || !dentro(x, ny) || nMuro(nx, y, w, h) !== 0 || nMuro(x, ny, w, h) !== 0) continue;
+      if (diagonale && regole.diagonale_spigolo !== 'libera') {
+        // i due Q (posizioni) ai lati della diagonale: murati o fuori dalla griglia
+        const latoA = !dentro(nx, y) || nMuro(nx, y, w, h) !== 0;
+        const latoB = !dentro(x, ny) || nMuro(x, ny, w, h) !== 0;
+        if (regole.diagonale_spigolo === 'vietata' ? latoA || latoB : latoA && latoB) continue;
       }
       let passo = diagonale ? (alterne && parita ? 2 * regole.costo_diagonale : regole.costo_diagonale) : regole.costo_ortogonale;
       if (nTerr(nx, ny, w, h) > 0) passo *= regole.terreno_difficile_moltiplicatore;
