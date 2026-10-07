@@ -43,7 +43,7 @@ import { trattoMuri, muriProvvisori, chiudiTrattoMuri, rettangoloMuri } from '..
 import { areaRaggiungibile, costoVerso, percorso, statoFasce, fasciaDi, celleArea, piuVicinaRaggiungibile } from '../../mappa/area.js';
 import { statoDiretta, visibileAiGiocatori } from '../../mappa/diretta.js';
 import { salvaIniziale, ripristinaIniziale } from '../../mappa/iniziale.js';
-import { muoviToken, usatoNelRound, fasceNelRound, mossoNelRound, annullaUltima, annullaUltimoMovimento, cambiaTokenAnnullabile, cambiaTemplateAnnullabile, cambiaPortaAnnullabile, togliTemplateAnnullabile, nuovoTurno, turnoDi } from '../../mappa/annulla.js';
+import { muoviToken, usatoNelRound, fasceNelRound, mossoNelRound, annullaUltima, annullaUltimoMovimento, cambiaTokenAnnullabile, cambiaTemplateAnnullabile, cambiaPortaAnnullabile, togliTemplateAnnullabile, scadiTemplateAnnullabile, rimettiScaduti, nuovoTurno, turnoDi } from '../../mappa/annulla.js';
 import { disegnaMuri, disegnaArea, disegnaPercorso, disegnaZoc, coloriAree, disegnaTemplate, disegnaPorte, disegnaLineaTiro } from './disegno-aree.js';
 import { celleTemplate, tokenDentro as tokenNelTemplate, nuovoTemplate, scaduto, direzioneVerso, ORIENTABILI, templateVisibili, ostacoliVisibili, ruota, cambiaMisura, permanente } from '../../mappa/template.js';
 import { portaA, muriEffettivi, porteVicine, apriChiudi, nuovaPorta, conAzione, azpNelRound, orientamento } from '../../mappa/porte.js';
@@ -1115,7 +1115,7 @@ export function renderMappa(radice, ctx) {
       ritiraOpportunita(esito.voce.movimento);
     }
     if (st.selezionato && !st.scena.token.some((t) => t.id === st.selezionato)) st.selezionato = null;
-    if (['template', 'ripristino', 'template-tolti'].includes(esito.voce.tipo)) { st.tpl.firma = null; disegnaPannelloTemplate(); }
+    if (['template', 'ripristino', 'template-tolti', 'template-scaduti'].includes(esito.voce.tipo)) { st.tpl.firma = null; disegnaPannelloTemplate(); }
     if (esito.voce.tipo === 'ripristino') { invalidaArea(); disegnaPannelli(); }
     if (esito.errore) avvisoErrore(`Non annullato: ${esito.errore}.`);
     else avviso(`Annullato: ${{ nebbia: 'nebbia', muri: 'muri', movimento: 'movimento', token: 'modifica del token', 'token tolto': 'token tolto (torna in mappa)', 'token messo': 'token messo (esce dalla mappa)' }[esito.testo] ?? esito.testo}.`, { chiave: 'annulla' });
@@ -1462,9 +1462,17 @@ export function renderMappa(radice, ctx) {
   function scadiTemplate() {
     const sc = st.fonti?.scontro;
     if (!sc || !st.scena) return;
+    // «Indietro» oltre il cambio di Round (07/10): i template scaduti dopo il Round attuale tornano
+    const r = rimettiScaduti(st.scena, sc.id, sc.round);
+    if (r.rimessi.length) {
+      st.scena = r.scena;
+      st.tpl.firma = null;
+      salvaPresto();
+      avviso(`Round ${sc.round} di nuovo: torna${r.rimessi.length > 1 ? 'no' : ''} ${r.rimessi.map((t) => t.nome || testoMisure(t, RT)).join(', ')}.`, { tipo: 'info', chiave: 'template-rimessi', durata: 8000 });
+    }
     const via = st.scena.template.filter((t) => t.scontro === sc.id && scaduto(t, sc.round));
     if (!via.length) return;
-    st.scena = { ...st.scena, template: st.scena.template.filter((t) => !via.includes(t)) };
+    st.scena = scadiTemplateAnnullabile(st.scena, (t) => via.includes(t), { scontro: sc.id, round: sc.round }, ctx.dati).scena;
     salvaPresto();
     avviso(`Template scadut${via.length > 1 ? 'i' : 'o'}: ${via.map((t) => `${t.nome || testoMisure(t, RT)} (fine del Round ${t.fine_round})`).join(', ')}.`, { tipo: 'info', durata: 10000 });
   }
@@ -2284,6 +2292,8 @@ export function renderMappa(radice, ctx) {
         pxPerPunto: B.iniziativa_px_per_punto,
         pv: st.mostraPv,
         avanti: () => avantiDallaMappa(),
+        indietro: st.planciaBarra?.indietro ? () => indietroDallaMappa() : null,
+        puoIndietro: st.planciaBarra?.puoIndietro?.() ?? null,
         scegli: (v) => scegliDallaBarra(v),
         centra: { attivo: st.centra, cambia: (x) => { st.centra = x; scriviLocale('mutant-mappa-centra-turno', x); disegnaIniziativa(); if (x) seguiTurno(true); } },
       }));
@@ -2317,6 +2327,12 @@ export function renderMappa(radice, ctx) {
   async function avantiDallaMappa() {
     if (!st.planciaBarra?.avanti) return;
     await st.planciaBarra.avanti();
+    await aggiornaFonti();
+  }
+  /** «Indietro» della barra (07/10): lo stesso della plancia; i template scaduti tornano con scadiTemplate. */
+  async function indietroDallaMappa() {
+    if (!st.planciaBarra?.indietro) return;
+    await st.planciaBarra.indietro();
     await aggiornaFonti();
   }
   /** Centra la vista sul token (con `soloSeFuori`, solo se è fuori dal riquadro o troppo vicino al bordo). */

@@ -55,7 +55,7 @@ export const idNuovo = (d = new Date()) => {
  * @param parte 'tutto' (plancia a pagina intera), 'iniziativa' (Round, «Avanti», ordine, da tirare) o 'gestione'
  *   (aggiungi nemici e partecipanti, durate degli Stati, registro): i gruppi della barra della mappa (ritocchi del 06/10)
  */
-export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaColpo = null, attacca = null }, parte = 'tutto') {
+export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaColpo = null, attacca = null, indietro: indietroUi = null }, parte = 'tutto') {
   const s = st.scontro;
   const dado = dadoIniziativa(ctx.dati);
   if (!s) {
@@ -152,7 +152,9 @@ export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaCol
     h('header', { class: 'scontro-testa' },
       h('h2', {}, `${s.nome} · Round ${s.round}`),
       h('div', { class: 'riga-azioni' },
-        h('button', { type: 'button', class: 'btn primario', disabled: !ordinati.length, onclick: () => modifica((x) => avanti(x)) }, 'Avanti'),
+        // «Indietro» (07/10): annulla l'ultimo «Avanti» (anche Maiusc+clic su «Avanti»)
+        indietroUi ? h('button', { type: 'button', class: 'btn', disabled: !s.indietro?.length, title: s.indietro?.length ? `Annulla l’ultimo «Avanti»: torna il turno di prima, con Round, durate e Stati (${s.indietro.length} passi possibili; anche Maiusc+clic su «Avanti»)` : 'Nessun «Avanti» da annullare', onclick: () => indietroUi() }, '◀ Indietro') : null,
+        h('button', { type: 'button', class: 'btn primario', disabled: !ordinati.length, title: 'Il turno passa al prossimo (Maiusc+clic: «Indietro»)', onclick: (e) => (e.shiftKey && indietroUi ? indietroUi() : modifica((x) => avanti(x, undefined, { indietroMax: ctx.dati.mappa.iniziativa.indietro_max }))) }, 'Avanti'),
         // pezzo 4: annulla l'ultimo colpo applicato (PV, Ferite e Stati di prima)
         annullaColpo && s.colpi?.length ? h('button', { type: 'button', class: 'btn', title: `Ultimo: ${s.colpi.at(-1).testo}`, onclick: async () => { if (await chiedi({ titolo: `Annullare l’ultimo colpo a ${s.colpi.at(-1).nome}?`, testo: s.colpi.at(-1).testo, si: 'Annulla il colpo', no: 'Lascia' })) annullaColpo(); } }, 'Annulla ultimo colpo') : null,
         h('button', { type: 'button', class: 'btn', onclick: async () => { if (await chiedi({ titolo: 'Chiudere lo scontro?', testo: 'Il file passa in scontri/archivio/.', si: 'Fine scontro' })) modifica((x) => chiudi(x)); } }, 'Fine scontro'))),

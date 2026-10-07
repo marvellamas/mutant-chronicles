@@ -2700,6 +2700,8 @@ function validaMappa(dati, err) {
     for (const k of ['colore', 'traccia']) if (!/^#[0-9a-f]{6}([0-9a-f]{2})?$/i.test(PT[k] ?? '')) err(F, `pv_token.${k}`, 'colore #rrggbb o #rrggbbaa');
     for (const k of ['rispetto_al_bordo', 'spessore_minimo_px', 'mini_token_px']) if (!positivo(PT[k])) err(F, `pv_token.${k}`, 'numero positivo');
   }
+  // «Indietro» nell'Iniziativa (07/10, src/scontro.js → indietro): quanti «Avanti» si possono annullare
+  if (!isIntero(m.iniziativa?.indietro_max) || m.iniziativa.indietro_max < 1) err(F, 'iniziativa.indietro_max', 'intero da 1 in su');
   // zone di controllo (07/10, src/mappa/zoc.js; Giocatore §5.3)
   const Z = m.zoc;
   if (!isOggetto(Z)) err(F, 'zoc', 'oggetto mancante');

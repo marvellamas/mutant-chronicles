@@ -152,6 +152,12 @@ export function applicaPerdita(s, perdita, pv, adesso, dati) {
     periodici: lista(s.periodici).map((p) => (p.id === in_corso.id ? { ...p, ultimo: s.round, valore } : p)),
     ...(nemico ? { partecipanti: s.partecipanti.map((x) => (x.id === nemico.id ? { ...x, pv: { ...x.pv, attuali: dopo } } : x)) } : {}),
   };
+  // «Indietro» (07/10): la perdita applicata al turno dell'ultimo «Avanti» si annulla con lui (src/scontro.js → indietro)
+  const voce = lista(s.indietro).at(-1);
+  if (voce && voce.dopo?.round === s.round && voce.dopo?.turno === s.turno) {
+    const perdita_ = { id: in_corso.id, bersaglio: perdita.bersaglio, tipo: nemico ? 'nemico' : 'pg', chiave: perdita.chiave ?? in_corso.chiave ?? null, nome: perdita.nome, ultimoPrima: in_corso.ultimo ?? null, pvPrima: prima, pvDopo: prima === 0 ? 0 : dopo };
+    t = { ...t, indietro: [...s.indietro.slice(0, -1), { ...voce, perdite: [...voce.perdite, perdita_], righe: voce.righe + 1 }] };
+  }
   // §5.15: già a 0 PV la perdita non toglie PV: serve la Prova Salvezza, che si fa al tavolo
   if (prima === 0) {
     return conRiga(t, `${perdita.nomeStato ?? nomeStato(perdita.stato, dati)} di ${perdita.nome}: è a 0 PV. ${per?.a_zero_pv?.testo ?? 'Serve una PS di Tempra.'}`, adesso);

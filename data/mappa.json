@@ -413,6 +413,10 @@
     "colore": "#e03131",
     "frase_eccezione": "senza Attacchi di Opportunità"
   },
+  "iniziativa": {
+    "_nota": "«Indietro» nella barra dell'Iniziativa e nella plancia (ritocchi del 07/10/2026; src/scontro.js → avanti, indietro): annulla l'ultimo «Avanti» e riporta turno, Round, durate degli Stati, effetti degli incantesimi, Stati tolti ai nemici e perdite periodiche applicate a quel turno; le modifiche fatte dopo (PV, «Colpito», movimenti) restano. Lo storico sta nello scontro (indietro) e tiene al massimo indietro_max «Avanti».",
+    "indietro_max": 20
+  },
   "pv_token": {
     "_nota": "Barretta dei PV sui token (test di Marcello del 07/10/2026, al posto dell'anello): rossa, sul fondo del token e sovrapposta al bordo, larga quanto il quadretto (o l'ingombro) a PV pieni, più corta in proporzione ai PV persi. Spessore: rispetto_al_bordo volte lo spessore del bordo colorato, almeno spessore_minimo_px; traccia: il fondo scuro della parte persa. Gli stessi valori per i mini-token della barra dell'Iniziativa (in pixel CSS).",
     "colore": "#e03131",
