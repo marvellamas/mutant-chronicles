@@ -65,16 +65,54 @@ async function json(url, opzioni) {
   return { stato: r.status, corpo };
 }
 
-/** Legge, cambia e riscrive un file di scontri/ con la revisione; riprova se un'altra finestra l'ha cambiato. */
-export async function aggiornaInScontri(id, cambia) {
-  for (let i = 0; i < 3; i++) {
-    const letto = await json(`api/scontri/${encodeURIComponent(id)}`);
-    if (letto.stato !== 200) throw new Error(`${id} non leggibile (${letto.stato})`);
-    const scritto = await json(`api/scontri/${encodeURIComponent(id)}`, { method: 'PUT', body: JSON.stringify(cambia(letto.corpo)), headers: { 'Content-Type': 'application/json' } });
-    if (scritto.stato === 200) return scritto.corpo;
-    if (scritto.stato !== 409) throw new Error(scritto.corpo.errore ?? `errore ${scritto.stato}`);
+/** Attese prima dei nuovi tentativi dopo un errore del server o della rete (ms); poi l'errore arriva a chi chiama. */
+export const ATTESE_RIPROVA_MS = [150, 400, 1000];
+/** Per quanto si ritenta dopo i conflitti (409: un'altra finestra ha scritto prima), in ms: rileggere è sempre sicuro. */
+export const TEMPO_CONFLITTI_MS = 10000;
+/** Code per scontro della pagina: le scritture della stessa finestra sullo stesso file partono una alla volta. */
+const codeScontri = new Map();
+
+/**
+ * Legge, cambia e riscrive un file di scontri/ con la revisione. Riprova se un'altra finestra l'ha cambiato (409,
+ * rileggendo: `cambia` si applica sempre all'ultima versione) e, dopo una breve attesa, se il server o la rete
+ * falliscono (07/10/2026: su Windows il file può essere occupato un attimo); solo dopo l'ultimo tentativo l'errore.
+ * Le chiamate della stessa pagina sullo stesso scontro passano una alla volta (codeScontri).
+ */
+export function aggiornaInScontri(id, cambia, opzioni = {}) {
+  const prima = codeScontri.get(id) ?? Promise.resolve();
+  const questo = prima.then(() => aggiornaOra(id, cambia, opzioni));
+  const fine = questo.then(() => {}, () => {});
+  codeScontri.set(id, fine);
+  fine.then(() => { if (codeScontri.get(id) === fine) codeScontri.delete(id); });
+  return questo;
+}
+async function aggiornaOra(id, cambia, { attese = ATTESE_RIPROVA_MS } = {}) {
+  const url = `api/scontri/${encodeURIComponent(id)}`;
+  let conflitti = 0;
+  let guasti = 0;
+  const inizio = Date.now();
+  for (;;) {
+    let letto = null;
+    let scritto = null;
+    let errore = null;
+    try {
+      letto = await json(url);
+      if (letto.stato === 200) scritto = await json(url, { method: 'PUT', body: JSON.stringify(cambia(letto.corpo)), headers: { 'Content-Type': 'application/json' } });
+    } catch (e) { errore = e.message; }
+    if (scritto?.stato === 200) return scritto.corpo;
+    if (letto && letto.stato !== 200 && letto.stato < 500) throw new Error(`${id} non leggibile (${letto.stato})`);
+    if (scritto?.stato === 409) {
+      if (Date.now() - inizio > TEMPO_CONFLITTI_MS) throw new Error(`${id} cambiato più volte altrove: riprova`);
+      // un'altra finestra scrive insieme: un'attesa breve, a caso e crescente, così non si ritenta in coro
+      await new Promise((ok) => setTimeout(ok, Math.random() * 30 * Math.min(++conflitti, 10)));
+      continue;
+    }
+    if (scritto && scritto.stato < 500) throw new Error(scritto.corpo.errore ?? `errore ${scritto.stato}`);
+    // errore del server (500) o della rete: si ritenta dopo un'attesa crescente
+    errore = scritto?.corpo?.errore ?? letto?.corpo?.errore ?? errore ?? 'errore del server';
+    if (guasti >= attese.length) throw new Error(`${errore} (ritentato ${guasti} volte)`);
+    await new Promise((ok) => setTimeout(ok, attese[guasti++]));
   }
-  throw new Error(`${id} cambiato più volte altrove: riprova`);
 }
 
 /**

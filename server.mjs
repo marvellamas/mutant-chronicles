@@ -170,11 +170,55 @@ function selezione(v) {
 }
 
 const leggiJson = async (p) => JSON.parse(await readFile(p, 'utf8'));
-async function scriviJson(dove, v) {
-  const tmp = nomeTmp(dove);
-  await writeFile(tmp, `${JSON.stringify(v, null, 2)}\n`);
-  await rename(tmp, dove);
+
+// Scritture dei file dei dati (errore del test di Marcello del 07/10/2026 su Windows: «EPERM: operation not permitted,
+// rename '…scontro-….json.tmp-…' -> '…scontro-….json'» dopo l'avviso di un Attacco di Opportunità, mentre la plancia
+// salvava lo stesso scontro). Due regole:
+//  - in coda per file (inCoda): le richieste che scrivono lo stesso file passano una alla volta, dal controllo della
+//    revisione alla scrittura; prima due PUT ravvicinate potevano leggere la stessa revisione e sovrapporsi;
+//  - rinomina con riprova: su Windows rinominare sopra un file tenuto aperto un attimo da altri (antivirus,
+//    indicizzazione, una lettura in corso) fallisce con EPERM, EACCES o EBUSY: si ritenta con attese crescenti e, se
+//    non basta, si cancella il file temporaneo e si restituisce l'errore. Nessun temporaneo orfano.
+/** Riprova della rinomina: tentativi in tutto, prima attesa in ms, fattore di crescita (15, 30, 60, 120, 240 ms). */
+export const RIPROVA_RENAME = { tentativi: 6, attesa_ms: 15, fattore: 2 };
+const ERRORI_DA_RIPROVARE = new Set(['EPERM', 'EACCES', 'EBUSY']);
+/** Operazioni sul disco sostituibili nei test (una rinomina che fallisce). */
+export const operazioniFile = { rename };
+const codeFile = new Map();
+/** Esegue `lavoro` quando sono finiti i lavori già in coda sullo stesso file; restituisce il suo esito. */
+export function inCoda(dove, lavoro) {
+  const prima = codeFile.get(dove) ?? Promise.resolve();
+  const questo = prima.then(lavoro);
+  const fine = questo.then(() => {}, () => {});
+  codeFile.set(dove, fine);
+  fine.then(() => { if (codeFile.get(dove) === fine) codeFile.delete(dove); });
+  return questo;
 }
+/** rename con la riprova di RIPROVA_RENAME sugli errori di file occupato. */
+export async function rinomina(da, a) {
+  let attesa = RIPROVA_RENAME.attesa_ms;
+  for (let i = 1; ; i++) {
+    try {
+      return await operazioniFile.rename(da, a);
+    } catch (e) {
+      if (!ERRORI_DA_RIPROVARE.has(e.code) || i >= RIPROVA_RENAME.tentativi) throw e;
+      await new Promise((ok) => setTimeout(ok, attesa));
+      attesa *= RIPROVA_RENAME.fattore;
+    }
+  }
+}
+/** Scrittura atomica: un file temporaneo e poi la rinomina (una lettura non vede mai mezzo file); il temporaneo non resta. */
+export async function scriviAtomico(dove, contenuto) {
+  const tmp = nomeTmp(dove);
+  try {
+    await writeFile(tmp, contenuto);
+    await rinomina(tmp, dove);
+  } catch (e) {
+    await unlink(tmp).catch(() => {});
+    throw e;
+  }
+}
+const scriviJson = (dove, v) => scriviAtomico(dove, `${JSON.stringify(v, null, 2)}\n`);
 
 /** Scontri (pezzo 2): un file per scontro, revisione per non sovrascrivere le modifiche di un'altra finestra. */
 async function apiScontri(req, res, percorso, scontri) {
@@ -203,24 +247,27 @@ async function apiScontri(req, res, percorso, scontri) {
   // «Prepara scontro»: le bozze stanno accanto agli scontri, con stato «bozza» (src/preparazione.js)
   const errore = (String(s?.stato ?? '').startsWith('bozza') ? validaBozza(s) : validaScontro(s)) ?? (s.id !== id ? 'l’id non corrisponde al file' : null);
   if (errore) return json(res, 400, { errore });
-  let attuale = null;
-  try { attuale = await leggiJson(dove); } catch { /* nuovo */ }
-  if ((attuale?.revisione ?? 0) !== s.revisione || (!attuale && s.revisione !== 0)) {
-    return json(res, 409, { errore: 'lo scontro è stato cambiato altrove: ricarica', attuale });
-  }
-  const nuovo = { ...s, revisione: s.revisione + 1 };
-  await mkdir(scontri, { recursive: true });
-  if (nuovo.stato === 'chiuso' || nuovo.stato === STATO_BOZZA_ELIMINATA) {
-    // archivio: il file esce dagli scontri aperti ma resta, in scontri/archivio/
-    const archivio = join(scontri, 'archivio');
-    await mkdir(archivio, { recursive: true });
-    // si sposta il file (nessuna cancellazione) e poi lo si aggiorna con lo stato chiuso
-    if (attuale) await rename(dove, join(archivio, `${id}.json`));
-    await scriviJson(join(archivio, `${id}.json`), nuovo);
+  // in coda sul file: revisione e scrittura senza sovrapposizioni
+  return inCoda(dove, async () => {
+    let attuale = null;
+    try { attuale = await leggiJson(dove); } catch { /* nuovo */ }
+    if ((attuale?.revisione ?? 0) !== s.revisione || (!attuale && s.revisione !== 0)) {
+      return json(res, 409, { errore: 'lo scontro è stato cambiato altrove: ricarica', attuale });
+    }
+    const nuovo = { ...s, revisione: s.revisione + 1 };
+    await mkdir(scontri, { recursive: true });
+    if (nuovo.stato === 'chiuso' || nuovo.stato === STATO_BOZZA_ELIMINATA) {
+      // archivio: il file esce dagli scontri aperti ma resta, in scontri/archivio/
+      const archivio = join(scontri, 'archivio');
+      await mkdir(archivio, { recursive: true });
+      // si sposta il file (nessuna cancellazione) e poi lo si aggiorna con lo stato chiuso
+      if (attuale) await rinomina(dove, join(archivio, `${id}.json`));
+      await scriviJson(join(archivio, `${id}.json`), nuovo);
+      return json(res, 200, nuovo);
+    }
+    await scriviJson(dove, nuovo);
     return json(res, 200, nuovo);
-  }
-  await scriviJson(dove, nuovo);
-  return json(res, 200, nuovo);
+  });
 }
 
 /** Registro dei veicoli (A.91, A.105): un file per veicolo, revisione come gli scontri. */
@@ -244,14 +291,16 @@ async function apiVeicoli(req, res, percorso, veicoli) {
   try { v = JSON.parse((await leggiCorpo(req)).toString('utf8')); } catch (e) { return json(res, 400, { errore: `contenuto non valido: ${e.message}` }); }
   const errore = validaRecord(v) ?? (v.id !== m[1] ? 'l’id non corrisponde al file' : null);
   if (errore) return json(res, 400, { errore });
-  let attuale = null;
-  try { attuale = await leggiJson(dove); } catch { /* nuovo */ }
-  if ((attuale?.revisione ?? 0) !== v.revisione || (!attuale && v.revisione !== 0)) {
-    return json(res, 409, { errore: 'il veicolo è stato cambiato altrove: ricarica', attuale });
-  }
-  const nuovo = { ...v, revisione: v.revisione + 1, aggiornato: new Date().toISOString() };
-  await scriviJson(dove, nuovo);
-  return json(res, 200, nuovo);
+  return inCoda(dove, async () => {
+    let attuale = null;
+    try { attuale = await leggiJson(dove); } catch { /* nuovo */ }
+    if ((attuale?.revisione ?? 0) !== v.revisione || (!attuale && v.revisione !== 0)) {
+      return json(res, 409, { errore: 'il veicolo è stato cambiato altrove: ricarica', attuale });
+    }
+    const nuovo = { ...v, revisione: v.revisione + 1, aggiornato: new Date().toISOString() };
+    await scriviJson(dove, nuovo);
+    return json(res, 200, nuovo);
+  });
 }
 
 /**
@@ -300,21 +349,24 @@ async function migraOra({ cartella, veicoli, radice, chiavi }) {
     esito.avvisi.push(...m.avvisi.map((x) => `${r.file}: ${x}`));
     for (const rec of m.nuovi) {
       const dv = join(veicoli, `${rec.id}.json`);
-      if (await stat(dv).then(() => true, () => false)) continue; // creato nel frattempo: resta quello
-      await scriviJson(dv, { ...rec, revisione: 1, aggiornato: new Date().toISOString() });
-      esito.record.push(rec.id);
+      // creato nel frattempo: resta quello
+      const scritto = await inCoda(dv, async () => {
+        if (await stat(dv).then(() => true, () => false)) return false;
+        await scriviJson(dv, { ...rec, revisione: 1, aggiornato: new Date().toISOString() });
+        return true;
+      });
+      if (scritto) esito.record.push(rec.id);
     }
     const cambiati = m.veicoli.some((v, i) => v !== o.scelte.veicoli[i]) && m.veicoli.some(eRiferimento);
     // la revisione: si riscrive solo se il file è ancora quello letto
-    const ora = await stat(dove).then((s) => s.mtimeMs, () => null);
-    if (cambiati && ora === r.mtime) {
+    await inCoda(dove, async () => {
+      const ora = await stat(dove).then((s) => s.mtimeMs, () => null);
+      if (!cambiati || ora !== r.mtime) return;
       const nuovo = { ...o, scelte: { ...o.scelte, veicoli: m.veicoli.map((v) => (eRiferimento(v) ? v : o.scelte.veicoli.find((x) => x?.uid === v.uid) ?? v)) } };
-      const tmp = nomeTmp(dove);
-      await writeFile(tmp, JSON.stringify(nuovo, null, 2));
-      await rename(tmp, dove);
+      await scriviAtomico(dove, JSON.stringify(nuovo, null, 2));
       cacheFile.delete(dove);
       esito.file.push(r.file);
-    }
+    });
     migrazioni.visti.set(dove, await stat(dove).then((s) => s.mtimeMs, () => null));
   }
   return esito;
@@ -350,7 +402,7 @@ async function apiNemici(req, res, percorso, nemici, radice) {
   if (n?.id !== id) errori.push({ file: `${NEMICI}/${id}.json`, chiave: 'id', problema: 'non corrisponde al nome del file' });
   if (errori.length) return json(res, 400, { errore: errori.map(formattaErrore).join('; '), errori });
   await mkdir(nemici, { recursive: true });
-  await scriviJson(join(nemici, `${id}.json`), n);
+  await inCoda(join(nemici, `${id}.json`), () => scriviJson(join(nemici, `${id}.json`), n));
   return json(res, 200, { file: `${id}.json`, mtime: (await stat(join(nemici, `${id}.json`))).mtimeMs, nemico: n });
 }
 
@@ -389,23 +441,25 @@ async function apiScene(req, res, percorso, scene, mappe, radice, cartelle) {
   for (const file of [s.mappa?.file, s.mappa?.ridotta].filter(Boolean)) {
     try { await stat(join(mappe, file)); } catch { return json(res, 400, { errore: `immagine «${file}» non trovata in ${MAPPE}/: caricala prima` }); }
   }
-  let attuale = null;
-  try { attuale = await leggiJson(dove); } catch { /* nuova */ }
-  if ((attuale?.revisione ?? 0) !== s.revisione || (!attuale && s.revisione !== 0)) {
-    return json(res, 409, { errore: 'la scena è stata cambiata altrove: ricarica', attuale });
-  }
-  const nuova = { ...s, revisione: s.revisione + 1, aggiornato: new Date().toISOString() };
-  await mkdir(scene, { recursive: true });
-  if (nuova.archiviata === true) {
-    // «Archivia» (lotto 2): la scena esce dall'elenco ma resta, in scene/archivio/ (non si cancella nulla)
-    const archivio = join(scene, 'archivio');
-    await mkdir(archivio, { recursive: true });
-    if (attuale) await rename(dove, join(archivio, `${m[1]}.json`));
-    await scriviJson(join(archivio, `${m[1]}.json`), nuova);
+  return inCoda(dove, async () => {
+    let attuale = null;
+    try { attuale = await leggiJson(dove); } catch { /* nuova */ }
+    if ((attuale?.revisione ?? 0) !== s.revisione || (!attuale && s.revisione !== 0)) {
+      return json(res, 409, { errore: 'la scena è stata cambiata altrove: ricarica', attuale });
+    }
+    const nuova = { ...s, revisione: s.revisione + 1, aggiornato: new Date().toISOString() };
+    await mkdir(scene, { recursive: true });
+    if (nuova.archiviata === true) {
+      // «Archivia» (lotto 2): la scena esce dall'elenco ma resta, in scene/archivio/ (non si cancella nulla)
+      const archivio = join(scene, 'archivio');
+      await mkdir(archivio, { recursive: true });
+      if (attuale) await rinomina(dove, join(archivio, `${m[1]}.json`));
+      await scriviJson(join(archivio, `${m[1]}.json`), nuova);
+      return json(res, 200, nuova);
+    }
+    await scriviJson(dove, nuova);
     return json(res, 200, nuova);
-  }
-  await scriviJson(dove, nuova);
-  return json(res, 200, nuova);
+  });
 }
 
 /**
@@ -635,11 +689,7 @@ async function apiMappe(req, res, percorso, mappe, radice) {
     const file = `${nomeMappa(parametri.get('nome'))}-${impronta}${ridotta ? '-ridotta' : ''}.${I.tipi[d.tipo].estensione}`;
     await mkdir(mappe, { recursive: true });
     const dove = join(mappe, file);
-    try { await stat(dove); } catch {
-      const tmp = nomeTmp(dove);
-      await writeFile(tmp, corpo);
-      await rename(tmp, dove);
-    }
+    await inCoda(dove, async () => { try { await stat(dove); } catch { await scriviAtomico(dove, corpo); } });
     return json(res, 200, { file, tipo: d.tipo, larghezza: d.larghezza, altezza: d.altezza, dimensione: corpo.length });
   }
   const m = /^\/api\/mappe\/([^/]+)$/.exec(percorso);
@@ -706,9 +756,7 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
       let v;
       try { v = selezione(JSON.parse((await leggiCorpo(req)).toString('utf8'))); } catch (e) { return json(res, 400, { errore: e.message }); }
       await mkdir(tavolo, { recursive: true });
-      const tmp = nomeTmp(dove);
-      await writeFile(tmp, `${JSON.stringify(v, null, 2)}\n`);
-      await rename(tmp, dove);
+      await inCoda(dove, () => scriviJson(dove, v));
       if (v.personaggi.length) await migraVeicoliCartella({ cartella, veicoli: migraIn, radice, chiavi: v.personaggi }).catch(() => null);
       return json(res, 200, v);
     }
@@ -760,29 +808,30 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
     if (altro) return json(res, 409, { errore: altro, altroPersonaggio: true });
     // revisione (Tavolo del Master, pezzo 4): la plancia scrive solo se il file è quello che ha letto
     // «Aggiungi PG al tavolo»: un file nuovo non sovrascrive mai quello che c'è già
-    if (req.headers['x-mutant-nuovo'] === '1' && await stat(dove).then(() => true, () => false)) {
-      return json(res, 409, { errore: 'esiste già un file con questo nome: non sovrascritto', esiste: true });
-    }
-    const attesa = req.headers['x-mutant-mtime'];
-    if (attesa !== undefined) {
-      const attuale = await stat(dove).then((s) => String(s.mtimeMs), () => null);
-      if (attuale !== attesa) return json(res, 409, { errore: 'il personaggio è stato cambiato altrove: rileggi', mtime: attuale });
-    }
-    await mkdir(cartella, { recursive: true });
-    // scrittura atomica: un file temporaneo e poi la rinomina, così una lettura non vede mai mezzo file
-    const tmp = nomeTmp(dove);
-    await writeFile(tmp, corpo);
-    await rename(tmp, dove);
-    const s = await stat(dove);
-    // il PG ha preso il nome: i suoi file provvisori «personaggio_…» (versioni precedenti) diventano questo, non restano accanto
-    const rinominati = [];
-    if (typeof o.pg === 'string' && !fileProvvisorio(file)) {
-      for (const x of (await readdir(cartella)).filter((n) => n !== file && NOME_FILE.test(n) && fileProvvisorio(n))) {
-        if ((await personaggioDelFile(join(cartella, x))).pg !== o.pg) continue;
-        try { await unlink(join(cartella, x)); cacheFile.delete(join(cartella, x)); rinominati.push(x); } catch { /* resta: niente di grave */ }
+    // in coda sul file: controllo della data (revisione) e scrittura senza sovrapposizioni
+    return inCoda(dove, async () => {
+      if (req.headers['x-mutant-nuovo'] === '1' && await stat(dove).then(() => true, () => false)) {
+        return json(res, 409, { errore: 'esiste già un file con questo nome: non sovrascritto', esiste: true });
       }
-    }
-    return json(res, 200, { file, mtime: s.mtimeMs, ...(rinominati.length ? { rinominati } : {}) });
+      const attesa = req.headers['x-mutant-mtime'];
+      if (attesa !== undefined) {
+        const attuale = await stat(dove).then((s) => String(s.mtimeMs), () => null);
+        if (attuale !== attesa) return json(res, 409, { errore: 'il personaggio è stato cambiato altrove: rileggi', mtime: attuale });
+      }
+      await mkdir(cartella, { recursive: true });
+      // scrittura atomica: un file temporaneo e poi la rinomina, così una lettura non vede mai mezzo file
+      await scriviAtomico(dove, corpo);
+      const s = await stat(dove);
+      // il PG ha preso il nome: i suoi file provvisori «personaggio_…» (versioni precedenti) diventano questo, non restano accanto
+      const rinominati = [];
+      if (typeof o.pg === 'string' && !fileProvvisorio(file)) {
+        for (const x of (await readdir(cartella)).filter((n) => n !== file && NOME_FILE.test(n) && fileProvvisorio(n))) {
+          if ((await personaggioDelFile(join(cartella, x))).pg !== o.pg) continue;
+          try { await unlink(join(cartella, x)); cacheFile.delete(join(cartella, x)); rinominati.push(x); } catch { /* resta: niente di grave */ }
+        }
+      }
+      return json(res, 200, { file, mtime: s.mtimeMs, ...(rinominati.length ? { rinominati } : {}) });
+    });
   }
   return json(res, 405, { errore: 'metodo non ammesso' });
 }

@@ -1219,7 +1219,16 @@ export function renderMappa(radice, ctx) {
       if (scontro && !gia) righeRegistro.push({ da: idDa, nomeDa: a.pezzo.nome, contro: t.rif.id, nomeContro: pz.nome });
     }
     // tutte le righe in una sola scrittura dello scontro (con la revisione)
-    if (righeRegistro.length) aggiornaInScontri(scontro.id, (s) => righeRegistro.reduce((x, r) => rigaOpportunita(x, r), s)).catch((e) => avvisoErrore(`Righe del registro non scritte: ${e.message}`));
+    if (righeRegistro.length) scriviRegistro(scontro.id, (s) => righeRegistro.reduce((x, r) => rigaOpportunita(x, r), s), 'Righe del registro (Attacchi di Opportunità)');
+  }
+  /**
+   * Righe nel registro dello scontro (07/10/2026): aggiornaInScontri ritenta da sé sui conflitti e sugli errori
+   * passeggeri del server; se non basta, l'avviso lo dice e offre «Riprova», così le righe non si perdono in silenzio.
+   */
+  function scriviRegistro(id, cambia, cosa) {
+    aggiornaInScontri(id, cambia).catch((e) => avvisoErrore(`${cosa}: non scritte nello scontro (${e.message}).`, {
+      durata: 60000, azioni: [{ testo: 'Riprova', fai: () => scriviRegistro(id, cambia, cosa) }],
+    }));
   }
   /** «Mostra area»: interruttore ricordato (localStorage). */
   function cambiaMostraArea(v = !st.mostraArea) {
@@ -1275,7 +1284,7 @@ export function renderMappa(radice, ctx) {
     st.scena = muoviToken(st.scena, t.id, { a: q, costo: libero ? null : costo, fascia, scontro: scontro?.id ?? null, round: scontro?.round ?? null, libero }, ctx.dati);
     if (libero) {
       avviso(`Libero: ${nome} spostato; non conta nel movimento${scontro ? ' (riga nel registro)' : ''}.`, { tipo: 'info', chiave: 'fuori-area' });
-      if (scontro) aggiornaInScontri(scontro.id, (s) => rigaMovimentoLibero(s, nome, t.q, q)).catch((e) => avvisoErrore(`Riga del registro non scritta: ${e.message}`));
+      if (scontro) scriviRegistro(scontro.id, (s) => rigaMovimentoLibero(s, nome, t.q, q), 'Riga del registro (movimento libero)');
     }
     // il veicolo segna il suo movimento del Round nel registro unico
     const rec = recordVeicolo(t);
