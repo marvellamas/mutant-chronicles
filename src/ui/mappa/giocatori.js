@@ -27,6 +27,8 @@ const INTERVALLO_MS = 1000;
  */
 export function renderGiocatori(radice, ctx) {
   const V = ctx.dati.mappa.vista;
+  // 07/10: i mini-token ritagliano il ritratto alla stessa altezza dei token (data/mappa.json → token.ritratto_verticale)
+  document.documentElement.style.setProperty('--ritratto-y', `${ctx.dati.mappa.token.ritratto_verticale * 100}%`);
   const st = { vista: null, firma: null, cam: cameraIniziale(), immagine: null, fileImmagine: null, chiusa: false, errore: null, adattata: null, toccata: false, trascina: null };
   const el = {};
   el.titolo = h('strong', { class: 'giocatori-titolo' }, 'Mappa');
@@ -75,7 +77,7 @@ export function renderGiocatori(radice, ctx) {
       const s = st.vista;
       if (!s) return;
       const pezzi = new Map(s.token.filter((t) => t.info).map((t) => [chiaveRif(t.rif), { ...t.info, ritratto: t.info.immagine, pv: t.info.pv === null ? null : { attuali: t.info.pv, massimo: 1 }, stati: [] }]));
-      disegnaToken(c, { scena: s, cam: st.cam, pezzi, colori: coloriMappa(el.riquadro), immagine, bordo: (p) => p.bordo ?? null, alone: ctx.dati.mappa.colori.alone_turno, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => true } });
+      disegnaToken(c, { scena: s, cam: st.cam, pezzi, colori: coloriMappa(el.riquadro), immagine, bordo: (p) => p.bordo ?? null, alone: ctx.dati.mappa.colori.alone_turno, ritrattoVerticale: ctx.dati.mappa.token.ritratto_verticale, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => true } });
     },
   });
 

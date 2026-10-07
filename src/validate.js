@@ -2763,6 +2763,7 @@ function validaMappa(dati, err) {
   if (typeof P?.scosto_x !== 'number' || typeof P?.scosto_y !== 'number') err(F, 'griglia.predefinita', 'scosto_x e scosto_y numerici');
   if (typeof P?.bloccata !== 'boolean') err(F, 'griglia.predefinita.bloccata', 'vero o falso');
   const T = m.token;
+  if (!(T?.ritratto_verticale >= 0 && T?.ritratto_verticale <= 1)) err(F, 'token.ritratto_verticale', 'numero da 0 a 1 (0 = in cima)');
   const ammessi = Array.isArray(T?.ingombri_ammessi) ? T.ingombri_ammessi : [];
   if (!ammessi.length || !ammessi.every((n) => isIntero(n) && n >= 1)) err(F, 'token.ingombri_ammessi', 'interi da 1 in su');
   const taglie = dati.formato_nemici?.campi?.taglia?.valori ?? [];

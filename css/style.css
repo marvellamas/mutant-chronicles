@@ -2012,7 +2012,9 @@ button.mini-token { cursor: pointer; }
 .laterale-slot .scontro-pannello, .laterale-slot .scene-mappa { margin: 0; }
 /* colori dei bordi dei token (06/10, src/mappa/colori.js): gli stessi sui mini-token; il tratteggio dei nemici alterna
    nero e colore (lo sfondo nero si vede negli spazi del bordo tratteggiato) */
-.mini-token.con-bordo { border-color: var(--bordo); outline: 1px solid var(--contorno); outline-offset: 0; }
+/* 07/10: il bordo colorato è l'unica cornice (nessun filo di contorno attorno al mini-token); il ritratto lo riempie */
+.mini-token.con-bordo { border-color: var(--bordo); }
+.mini-token img { border-radius: 50%; object-position: 50% var(--ritratto-y, 20%); }
 .mini-token.con-bordo.tratteggio { border-style: dashed; background-color: var(--alterno); }
 .mini-token.con-bordo.doppio { border-style: double; border-width: 4px; }
 .mini-token.con-bordo.scelto { outline: 2px solid var(--mappa-selezione); outline-offset: 2px; }

@@ -1,7 +1,7 @@
 // Mappa di battaglia, lotto 3 (docs/battlemap/piano.md; §7 della specifica): disegno dei token sul livello «sopra».
 // Ritratto del PG o cerchio con le iniziali; veicoli come rettangoli; bordo dai colori del 06/10 (src/mappa/colori.js:
 // PG pieno col suo colore, nemici tratteggiati nero e colore del tipo, alleati doppio grigio-petrolio, veicoli col colore
-// del proprietario), con un contorno sottile scuro o chiaro; barretta rossa dei PV sul fondo, sopra il
+// del proprietario), con un contorno sottile scuro o chiaro solo all'esterno; barretta rossa dei PV sul fondo, sopra il
 // bordo (07/10, data/mappa.json → pv_token; al posto dell'anello); piccole sigle degli Stati; a 0 PV in
 // grigio; il token di turno con un alone bianco luminoso (non si confonde col giallo dei PG); i token nascosti (solo
 // nella vista master) trasparenti.
@@ -43,7 +43,7 @@ const sigla = (nome) => String(nome ?? '?').replace(/[^\p{L}\p{N} ]/gu, '').spli
  * Disegna i token della scena. `pezzi`: Map(chiave del rif → pezzo, src/mappa/partecipanti.js); `trascina`: il token
  * spostato ora ({ id, q }) o null; `selezionato`: id del token scelto.
  */
-export function disegnaToken(c, { scena, cam, pezzi, colori, immagine, selezionato = null, trascina = null, bordo = () => null, alone = '#ffffff', pv = null }) {
+export function disegnaToken(c, { scena, cam, pezzi, colori, immagine, selezionato = null, trascina = null, bordo = () => null, alone = '#ffffff', pv = null, ritrattoVerticale = 0.5 }) {
   const g = scena.griglia;
   const qs = g.q_px * cam.scala;
   const ordinati = [...scena.token].sort((a, b) => (a.id === selezionato) - (b.id === selezionato) || (a.id === trascina?.id) - (b.id === trascina?.id));
@@ -53,11 +53,11 @@ export function disegnaToken(c, { scena, cam, pezzi, colori, immagine, seleziona
     const a = schermoDaMappa(cam, g.scosto_x + q[0] * g.q_px, g.scosto_y + q[1] * g.q_px);
     const box = { x: a.x, y: a.y, w: w * qs, h: h * qs };
     const p = pezzi.get(chiaveRif(t.rif)) ?? null;
-    disegnaUno(c, { t, p, box, colori, immagine, qs, scelto: t.id === selezionato, inMano: trascina?.id === t.id, b: p ? bordo(p) : null, alone, pv });
+    disegnaUno(c, { t, p, box, colori, immagine, qs, scelto: t.id === selezionato, inMano: trascina?.id === t.id, b: p ? bordo(p) : null, alone, pv, ritrattoVerticale });
   }
 }
 
-function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alone, pv }) {
+function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alone, pv, ritrattoVerticale }) {
   const colore = b?.colore ?? colori[p?.lato] ?? colori.testo;
   const veicolo = t.rif.tipo === 'veicolo';
   const cx = box.x + box.w / 2, cy = box.y + box.h / 2;
@@ -91,10 +91,12 @@ function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alo
   c.fill();
   const img = p ? immagine(p.ritratto) : null;
   if (img) {
+    // 07/10: il ritratto riempie il cerchio fino al bordo colorato, l'unica cornice; delle foto più alte che larghe si
+    // tiene il quadrato verso l'alto (data/mappa.json → token.ritratto_verticale), dove sta il viso
     c.clip();
-    const lato = r * 2;
-    const k = Math.max(lato / img.naturalWidth, lato / img.naturalHeight);
-    c.drawImage(img, cx - (img.naturalWidth * k) / 2, cy - (img.naturalHeight * k) / 2, img.naturalWidth * k, img.naturalHeight * k);
+    const w = img.naturalWidth, hh = img.naturalHeight, lato = Math.min(w, hh);
+    const sx = (w - lato) / 2, sy = hh > w ? (hh - lato) * ritrattoVerticale : (hh - lato) / 2;
+    c.drawImage(img, sx, sy, lato, lato, cx - r, cy - r, r * 2, r * 2);
   } else {
     c.globalAlpha *= 0.22;
     c.fillStyle = colore;
@@ -109,13 +111,15 @@ function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alo
     }
   }
   c.restore();
-  // bordo (src/mappa/colori.js): contorno sottile per il contrasto, poi pieno, doppio o tratteggiato nero e colore
+  // bordo (src/mappa/colori.js): contorno sottile per il contrasto solo all'esterno (dentro il bordo colorato non ci sono
+  // altre cornici: il ritratto arriva fino al bordo), poi pieno, doppio o tratteggiato nero e colore
   c.save();
   if (b?.contorno) {
+    const w = Math.max(1.5, bordo * 0.35);
     c.strokeStyle = b.contorno;
     c.globalAlpha *= 0.85;
-    c.lineWidth = bordo + Math.max(2, bordo * 0.6);
-    forma(c, veicolo, box, cx, cy, r);
+    c.lineWidth = w;
+    forma(c, veicolo, box, cx, cy, r + bordo / 2 + w / 2);
     c.stroke();
     c.globalAlpha /= 0.85;
   }

@@ -83,6 +83,8 @@ const inCampo = (e) => /^(INPUT|TEXTAREA|SELECT)$/.test(e.target?.tagName ?? '')
  */
 export function renderMappa(radice, ctx) {
   const V = ctx.dati.mappa.vista;
+  // 07/10: i mini-token ritagliano il ritratto alla stessa altezza dei token (data/mappa.json → token.ritratto_verticale)
+  document.documentElement.style.setProperty('--ritratto-y', `${ctx.dati.mappa.token.ritratto_verticale * 100}%`);
   const st = {
     scena: null,
     immagine: null, // ImageBitmap dell'originale
@@ -297,7 +299,7 @@ export function renderMappa(radice, ctx) {
     sopra: (c) => {
       if (st.scena) {
         const t = st.trascina?.modo === 'token' ? { id: st.trascina.token, q: st.trascina.q } : null;
-        disegnaToken(c, { scena: st.scena, cam: st.cam, pezzi: st.mappaPezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: st.selezionato, trascina: t, bordo: bordoDi, alone: ctx.dati.mappa.colori.alone_turno, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => st.mostraPv } });
+        disegnaToken(c, { scena: st.scena, cam: st.cam, pezzi: st.mappaPezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: st.selezionato, trascina: t, bordo: bordoDi, alone: ctx.dati.mappa.colori.alone_turno, ritrattoVerticale: ctx.dati.mappa.token.ritratto_verticale, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => st.mostraPv } });
       }
       // percorso del token scelto (o trascinato) verso il quadretto sotto il puntatore, con i Q che costa
       if (st.percorso && st.scena) disegnaPercorso(c, { scena: st.scena, cam: st.cam, percorso: st.percorso.punti, ingombro: st.percorso.ingombro, costo: st.percorso.costo, fascia: st.percorso.fascia, colori: coloriAree(el.riquadro), inZoc: zocDelPercorso(st.percorso), coloreZoc: ctx.dati.mappa.zoc.colore });

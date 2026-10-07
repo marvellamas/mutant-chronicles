@@ -108,7 +108,9 @@
       "partecipante",
       "veicolo",
       "segnaposto"
-    ]
+    ],
+    "ritratto_verticale": 0.2,
+    "_nota_ritratto": "07/10: il ritratto riempie il cerchio dentro il bordo; delle foto più alte che larghe si tiene il quadrato a questa altezza (0 = in cima, 0,5 = al centro), dove di solito sta il viso."
   },
   "movimento": {
     "_nota": "Parametri dell'area raggiungibile (§8 della specifica, lotto 5): provvisori finché Davide non risponde. Costi in Q.",
