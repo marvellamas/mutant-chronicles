@@ -68,7 +68,12 @@ La Mappa di battaglia è un modulo del **Tavolo del Master** di Mutant: gira sul
 > * Dal menu del token: **Corri** o **Scatta** ampliano l’area (Passo / Corsa / Scatto dalla scheda, per esempio 6 / 12 / 18 Q), in tre colori.  
 > * Si muove cliccando un quadretto dell’area (o trascinando); l’app registra il movimento del Round.  
 > * **Annulla ultimo movimento** riporta il token dov’era.  
-> * Come contano le diagonali e il terreno difficile: da confermare con Davide (A.124).  
+> * **Regole confermate da Davide il 06/10/2026** (lotto R6, parametri in `data/mappa.json` → movimento):
+>   * **A.124:** ogni diagonale costa 1 Q; non si attraversano muri né passaggi ostruiti. Passo 6, Corsa 12, Scatto 18 Q con i modificatori; il master corregge con «Libero». La mappa non conta le AzP (1 ai livelli 1–11, 2 ai 12–20, nella stessa Iniziativa).
+>   * **A.127:** i quadretti degli alleati si attraversano al costo normale, quelli dei nemici no; non ci si ferma in un quadretto occupato; una pedina grande vuole libero tutto l’ingombro d’arrivo; attraversare un alleato non evita gli Attacchi di Opportunità.
+>   * **A.128:** terreno difficile 2 Q per quadretto, anche in diagonale e in Corsa e Scatto; percorsi misti contati a tratti.
+>   * **A.129:** solo il **Passo** si divide in più clic, prima e dopo le Azioni Principali (2 Q, attacco, altri 4 Q). **Corsa** e **Scatto** sono un **blocco unico**: il token si muove una volta sola e i Q non usati si perdono; dopo il blocco il movimento del Round è finito. Il pannello mostra «Q usati / disponibili» con quanto resta del Passo diviso, oppure i Q persi; pulsanti e clic destro spengono Corri e Scatta quando non si possono più scegliere, e un avviso lo spiega.
+>   * **Domande aperte:** A.134 (diagonale rasente allo spigolo di un muro; provvisorio no) e A.136 (Corsa o Scatto dopo un Passo già cominciato; provvisorio no: si annulla il movimento e lo si rifà con Corri).
 > * Veicoli: si muovono all’Iniziativa del conducente con la loro andatura (A.105).
 > * **Ritocchi del 06/10/2026 (test di Marcello sul lotto 6):** l’area non è obbligatoria: l’interruttore **«Mostra area»** (nel pannello del token, nel clic destro e con il tasto **M**) la nasconde e la mostra, e la scelta resta memorizzata; il percorso al passaggio del mouse resta anche con l’area nascosta. L’area è **leggera**: riempimento molto trasparente e contorno ben visibile di ogni fascia, così la mappa sotto si vede (opacità in `data/mappa.json`).
 
@@ -191,7 +196,8 @@ Le stesse azioni più gli strumenti del master: carica mappa, griglia, nebbia, m
 ## **15\. Decisioni e domande per Davide**
 
 > * **Iniziativa — deciso:** si usa il sistema del Manuale del Giocatore di Mutant (Mod DES \+ Mod INT \+ 1d10; parità per DES, poi INT, poi scelta fra alleati o 1d10 fra avversari). Il d12 dell’app di Davide appartiene al sistema precedente.  
-> * **Ancora da chiedere** (Doc fisso): A.121 (riuso del suo codice), A.122 (funzioni usate davvero), A.124 (Azioni extra, movimento, diagonali), A.125 (porte, luci, veicoli).
+> * **Risposte del 06/10/2026:** A.121 ritirata; A.122 priorità delle funzioni (resta «Aiuto-master»); A.124, A.127, A.128 e A.129 sul movimento, applicate il 07/10 (§8); A.125 porte e luci (restano i veicoli e le vecchie etichette delle luci).  
+> * **Ancora aperte:** A.126 (creature 3 × 3), A.132 (Stordito e AdO), A.133 (portata delle creature grandi), A.134 (diagonale rasente allo spigolo), A.136 (Corsa o Scatto dopo un Passo cominciato).
 
 ## **16\. Fuori ambito**
 

@@ -6,7 +6,7 @@ successiva. Fonte: controllo del 07/10 (`docs/diff-manuali-2026-10-07.md`), deci
 
 Riepilogo: una voce fra le Risolte (A.120) più le due mancanti del pacchetto del 06/10 (A.121, A.131); risposte
 ricevute e in implementazione per A.107, A.108, A.110, A.111, A.114, A.116, A.119, A.122, A.124, A.125, A.127, A.128,
-A.129; l'elenco chiesto da Davide per la A.109; due domande nuove (A.134, A.135); pulizia dei doppioni della sezione 2.
+A.129; l'elenco chiesto da Davide per la A.109; tre domande nuove (A.134, A.135, A.136); pulizia dei doppioni della sezione 2.
 
 ---
 
@@ -111,7 +111,7 @@ Risposta ricevuta il 06/10 (sezione 7): coincide con quello che la mappa già fa
 *** AZIONE: aggiungi la riga alla voce A.129
 
 --- TESTO ---
-Risposta ricevuta il 06/10 (sezione 7): in implementazione. La mappa oggi lascia dividere qualunque andatura: diventerà solo il Passo, con Corsa e Scatto in un unico blocco prima delle Azioni Principali.
+Risposta ricevuta il 06/10 (sezione 7): applicata alla mappa il 07/10. Solo il Passo si divide in più movimenti; Corsa e Scatto sono un blocco unico, il token si muove una volta sola e i Q non usati si perdono. Resta un caso, chiesto nella A.136.
 ```
 
 ```
@@ -167,6 +167,10 @@ La A.124 fissa la diagonale a 1 Q e dice che non si attraversano muri o passaggi
 **A.135 — Ricarica dei fucili a pallini semiautomatici e automatici.**
 Il Manuale degli Armamenti 0.59 distingue i fucili a pallini a pompa (solo Colpo Singolo) dai semiautomatici (HD14M, SA SG2001, Airbrush) e dall'automatico Mandible, ma non dice come si ricaricano. Si inserisce una cartuccia per operazione, come nei fucili a pompa, oppure si sostituisce un caricatore?
 *Nel frattempo:* come prima. HD14M si ricarica una cartuccia per operazione; SA SG2001 ha un caricatore (A.37); Mandible e Airbrush hanno un caricatore, come le altre armi delle loro tabelle.
+
+**A.136 — Corsa o Scatto dopo un Passo già cominciato.**
+La A.129 dice che solo il Passo si divide e che Corsa e Scatto sono un blocco unico da completare prima delle Azioni Principali, tutti al costo dell'unica Azione di Movimento. Se un personaggio ha già fatto una parte del Passo (per esempio 2 Q, prima di ogni Azione Principale), può trasformare il movimento in una Corsa o in uno Scatto, contando i Q già fatti nel blocco (2 + 10 = 12)?
+*Nel frattempo:* no, Corsa e Scatto partono solo da fermi; il master annulla il movimento e lo rifà come Corsa.
 ```
 
 ```
