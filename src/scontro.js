@@ -547,6 +547,11 @@ export function rigaPorta(s, { nome, azione, azp = 1 }, adesso) {
   return conRiga(s, `Mappa: ${nome} ${azione === 'apri' ? 'apre' : 'chiude'} una porta (${azp} AzP).`, adesso);
 }
 
+/** Spostamento di gruppo sulla mappa (07/10, src/mappa/gruppo.js): una riga sola per tutto il gruppo. */
+export function rigaGruppo(s, { quanti, aggiustati = 0 }, adesso) {
+  return conRiga(s, `Mappa: spostati ${quanti} token insieme${aggiustati ? ` (${aggiustati} al quadretto libero più vicino)` : ''}; libero, non conta nel movimento.`, adesso);
+}
+
 export function rigaMovimentoLibero(s, nome, da, a, adesso) {
   return conRiga(s, `Mappa: ${nome} spostato liberamente da (${da.join(', ')}) a (${a.join(', ')}); non conta nel movimento.`, adesso);
 }

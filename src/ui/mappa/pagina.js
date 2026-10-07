@@ -32,7 +32,7 @@ import { scegliColore, chiedi, informa, apri as apriFinestrella } from '../fines
 import { calibraDaQuadretto, applicaGriglia, dimensioniMappa, lineeVisibili, testoScala } from '../../mappa/griglia.js';
 import { creaTela } from './canvas.js';
 import { leggiScena, salvaScena, caricaImmagine, controllaFile, preparaRidotta } from './api.js';
-import { agganciaQ, centroToken, tokenSottoPunto, disponiInFila, sovrapposti, chiaveRif } from '../../mappa/token.js';
+import { agganciaQ, centroToken, tokenSottoPunto, disponiInFila, sovrapposti, chiaveRif, dimensioni } from '../../mappa/token.js';
 import { pezziDellaScena, pezziSenzaToken, tokenOrfani, tokenPerPezzo } from '../../mappa/partecipanti.js';
 import { daBase64, inBase64, cella, conta } from '../../mappa/celle.js';
 import { ostacoliVista, lineaDiTiro, visuale as visualePg, nebbiaDopoVisuale, tokenPg } from '../../mappa/visuale.js';
@@ -53,7 +53,8 @@ import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
 import { componiMenu, unisciMenu } from '../../mappa/menu.js';
 import { diTurno } from '../../scontro.js';
 import { statoMovimento, muoviVeicolo } from '../../veicoli-registro.js';
-import { rigaMovimentoLibero, rigaOpportunita, senzaOpportunitaDelMovimento, rigaPorta, rigaTemplateTolti } from '../../scontro.js';
+import { rigaMovimentoLibero, rigaOpportunita, senzaOpportunitaDelMovimento, rigaPorta, rigaTemplateTolti, rigaGruppo } from '../../scontro.js';
+import { tokenNelRettangolo, alternaSelezione, spostaGruppo } from '../../mappa/gruppo.js';
 import { aggiornaInScontri } from '../immagine-nemico.js';
 import { linkGuidaMappa } from '../guida.js';
 import { aggiornaVeicolo } from '../veicoli-registro.js';
@@ -209,6 +210,9 @@ export function renderMappa(radice, ctx) {
           voceStrumenti('Template ad area… (T)', 'Raggio, cono, linea, quadrato, rettangolo: forma, misura, colore, durata; poi lo piazzi sulla mappa', () => { el.strumenti.open = false; nuovoTemplateUi(); }),
           voceStrumenti('Cancella template temporanei', 'Toglie tutti i template a durata in Round; quelli senza durata restano (Ctrl+Z li rimette)', () => cancellaTemplate({ tutti: false })),
           voceStrumenti('Cancella tutti i template…', 'Toglie tutti i template, anche quelli senza durata (Ctrl+Z li rimette)', () => cancellaTemplate({ tutti: true })),
+          voceStrumenti('Seleziona tutti i PG', 'Per spostarli insieme: trascinane uno (libero, in formazione), o le frecce', () => selezionaTipo('pg')),
+          voceStrumenti('Seleziona tutti i nemici', 'Gli avversari in mappa, per spostarli insieme', () => selezionaTipo('nemici')),
+          voceStrumenti('Seleziona tutti', 'Tutti i token in mappa', () => selezionaTipo('tutti')),
           voceStrumenti('Vista giocatori', 'Quale scena vedono, QR, «Apri vista giocatori»', () => apriStrumento(el.pGiocatori)),
           voceStrumenti('Scene', 'Nuova, apri, rinomina, duplica, archivia', () => apriStrumento(document.getElementById('plancia-scene-mappa'))),
           // 07/10: posizione iniziale della scena (token, porte, template, nebbia)
@@ -229,9 +233,10 @@ export function renderMappa(radice, ctx) {
   el.riquadro = h('div', { class: 'mappa-tela', tabindex: '0', 'aria-label': 'Mappa: rotella per lo zoom, barra spaziatrice e mouse o trascinamento per spostarsi' });
   el.suggerimento = h('div', { class: 'mappa-suggerimento', hidden: true, role: 'status' });
   el.riquadro.append(el.suggerimento);
-  // 07/10: Maiusc premuto con un token scelto = Libero (l'area sparisce)
+  // 07/10: Maiusc premuto con un token scelto = Libero (l'area sparisce); selezione multipla con il contatore
   el.liberoInfo = h('div', { class: 'mappa-badge mappa-badge-libero', hidden: true, role: 'status' }, 'Libero (Maiusc): clic dove vuoi, senza conteggio');
-  el.riquadro.append(el.liberoInfo);
+  el.gruppoInfo = h('div', { class: 'mappa-badge mappa-badge-gruppo', hidden: true, role: 'status' });
+  el.riquadro.append(el.liberoInfo, el.gruppoInfo);
   el.pannello = h('div', { class: 'mappa-pannello', 'aria-label': 'Collegamento, template, muri, nebbia, luci, vista giocatori e griglia' });
   el.cartaCorpo = h('div', { class: 'mappa-carta-corpo' });
   el.carta = h('section', { class: 'mappa-carta', 'aria-label': 'Mini-scheda del token', hidden: true },
@@ -360,6 +365,7 @@ export function renderMappa(radice, ctx) {
       if (st.scena) {
         const t = st.trascina?.modo === 'token' ? { id: st.trascina.token, q: st.trascina.q } : null;
         disegnaToken(c, { scena: st.scena, cam: st.cam, pezzi: st.mappaPezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: st.selezionato, trascina: t, bordo: bordoDi, alone: ctx.dati.mappa.colori.alone_turno, ritrattoVerticale: ctx.dati.mappa.token.ritratto_verticale, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => st.mostraPv } });
+        disegnaSelezioneGruppo(c);
       }
       // percorso del token scelto (o trascinato) verso il quadretto sotto il puntatore, con i Q che costa
       // fase 2, lotto 3: la linea di tiro del token scelto verso il mouse o il bersaglio
@@ -898,6 +904,10 @@ export function renderMappa(radice, ctx) {
       ['Clic sul token scelto, Esc, o clic fuori dall’area', 'lo lascia: area e percorso spariscono, i Q usati restano'],
       ['Clic su un quadretto dell’area, o trascinare il token', 'movimento nel Round: il Passo si divide in più clic; Corsa e Scatto sono un blocco unico (una mossa, i Q non usati si perdono) e solo da fermi (A.129)'],
       ['Maiusc (tenuto premuto, con un token scelto)', 'movimento libero: l’area sparisce, il clic o il trascinamento vanno dove vuoi, senza conteggio; rilasciato, si torna alla modalità di prima'],
+      ['Maiusc + trascina su un punto vuoto', 'rettangolo di selezione: tutti i token dentro'],
+      ['Maiusc + clic su un token', 'lo aggiunge o lo toglie dalla selezione'],
+      ['Strumenti → «Seleziona tutti i PG / i nemici / tutti»', 'anche dal clic destro su un punto vuoto'],
+      ['Trascina uno dei token selezionati (o frecce)', 'si spostano tutti insieme, in formazione, liberi (niente Q, ZoC né Attacchi di Opportunità); chi trova il posto occupato va al più vicino libero; un solo Ctrl+Z; Esc o clic su un punto vuoto annulla la selezione'],
       ['Ctrl + clic su un token', 'scheda completa (PG) o mini-scheda (nemico)'],
       ['Clic destro su un token (o pressione lunga sul tablet)', 'in cima Passo · Corsa · Scatto · Libero; poi Movimento, Azioni (Attacca!, porte vicine), Strumenti (linea, area, ZoC, template), Scheda; «Opzioni ▸»: Nascondi, Colore del bordo, Togli dalla mappa. Solo le voci utilizzabili, la scorciatoia a destra'],
       ['T (o Strumenti → «Template ad area», o clic destro su un punto vuoto)', 'nuovo template: forma, misura in Q, colore, durata in Round, nome'],
@@ -1249,6 +1259,7 @@ export function renderMappa(radice, ctx) {
     if (st.selezionato && !st.scena.token.some((t) => t.id === st.selezionato)) st.selezionato = null;
     if (['template', 'ripristino', 'template-tolti', 'template-scaduti'].includes(esito.voce.tipo)) { st.tpl.firma = null; disegnaPannelloTemplate(); }
     if (esito.voce.tipo === 'ripristino') { invalidaArea(); disegnaPannelli(); }
+    if (esito.voce.tipo === 'gruppo') dopoCambioToken();
     if (esito.errore) avvisoErrore(`Non annullato: ${esito.errore}.`);
     else avviso(`Annullato: ${{ nebbia: 'nebbia', muri: 'muri', movimento: 'movimento', token: 'modifica del token', 'token tolto': 'token tolto (torna in mappa)', 'token messo': 'token messo (esce dalla mappa)' }[esito.testo] ?? esito.testo}.`, { chiave: 'annulla' });
     dopoDisegno();
@@ -1256,9 +1267,11 @@ export function renderMappa(radice, ctx) {
 
   // ── Area raggiungibile e movimento (lotto 5, §8) ──
   const FASCE = ['passo', 'corsa', 'scatto'];
-  // ── Maiusc = movimento libero (07/10): tenuto premuto con un token scelto, l'area sparisce e il clic va dove si vuole ──
+  // ── Maiusc = movimento libero, per un token e per un gruppo (07/10; src/mappa/gruppo.js) ──
+  st.gruppo = new Set();
   st.maiusc = false;
-  function liberoConMaiusc() { return st.maiusc && !!st.selezionato; }
+  /** Maiusc premuto con un token scelto: Libero finché si tiene (l'area sparisce, il clic va dove si vuole). */
+  function liberoConMaiusc() { return st.maiusc && !!st.selezionato && !st.gruppo.size; }
   function cambiaMaiusc(v) {
     if (st.maiusc === v) return;
     st.maiusc = v;
@@ -1267,7 +1280,69 @@ export function renderMappa(radice, ctx) {
     ridisegna(['aree', 'sopra']);
   }
   function aggiornaBadge() {
-    if (el.liberoInfo) el.liberoInfo.hidden = !liberoConMaiusc();
+    if (!el.liberoInfo) return;
+    el.liberoInfo.hidden = !liberoConMaiusc();
+    const n = st.gruppo.size;
+    el.gruppoInfo.hidden = !n;
+    if (n) svuota(el.gruppoInfo, h('strong', {}, `${n} token selezionat${n === 1 ? 'o' : 'i'}`), ' · trascinane uno per spostarli tutti (libero) · frecce: 1 Q · Esc annulla ',
+      h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Annulla la selezione (Esc)', onclick: () => cambiaGruppo(new Set()) }, '✕'));
+  }
+  /** La selezione multipla cambia: contorni, contatore; il token scelto singolo si lascia. */
+  function cambiaGruppo(nuova) {
+    st.gruppo = new Set([...nuova].filter((id) => st.scena?.token.some((t) => t.id === id)));
+    if (st.gruppo.size && st.selezionato) scegli(null);
+    aggiornaBadge();
+    ridisegna(['aree', 'sopra']);
+  }
+  /** «Seleziona tutti i PG / i nemici / tutti» (Strumenti, clic destro su un punto vuoto). */
+  function selezionaTipo(tipo) {
+    const ok = (t) => (tipo === 'tutti' ? true : tipo === 'pg' ? t.rif?.tipo === 'partecipante' && String(t.rif.id).startsWith('pg:') : pezzoDi(t)?.lato === 'avversario');
+    const ids = st.scena.token.filter(ok).map((t) => t.id);
+    cambiaGruppo(new Set(ids));
+    if (!ids.length) avviso(tipo === 'pg' ? 'Nessun PG in mappa.' : tipo === 'nemici' ? 'Nessun nemico in mappa.' : 'Nessun token in mappa.', { chiave: 'gruppo' });
+  }
+  /** Sposta il gruppo di delta Q (trascinamento o frecce): libero, una riga nel registro, un solo Ctrl+Z. */
+  function muoviGruppo(delta) {
+    const ids = [...st.gruppo];
+    const r = spostaGruppo(st.scena, ids, delta, muriEffettivi(st.scena), ctx.dati);
+    if (!r.mossi.length) { if (r.fermi.length) avviso('Nessun quadretto libero per il gruppo.', { tipo: 'info', chiave: 'gruppo' }); ridisegna(['sopra']); return; }
+    st.scena = r.scena;
+    const sc = st.fonti?.scontro ?? null;
+    if (sc) scriviRegistro(sc.id, (x) => rigaGruppo(x, { quanti: r.mossi.length, aggiustati: r.aggiustati.length }), 'Riga del registro (spostamento di gruppo)');
+    const nomeDi = (id) => { const t = st.scena.token.find((x) => x.id === id); return (t && pezzoDi(t)?.nome) ?? t?.nome ?? id; };
+    avviso([`Spostati ${r.mossi.length} token insieme (libero, Ctrl+Z li rimette).`,
+      r.aggiustati.length ? `Al quadretto libero più vicino: ${r.aggiustati.map((x) => nomeDi(x.id)).join(', ')}.` : null,
+      r.fermi.length ? `Fermi (nessun posto libero): ${r.fermi.map(nomeDi).join(', ')}.` : null], { chiave: 'gruppo', tipo: r.aggiustati.length || r.fermi.length ? 'info' : 'ok' });
+    dopoCambioToken();
+  }
+  /** Contorni dei token selezionati, rettangolo di selezione, sagome del gruppo mentre se ne trascina uno. */
+  function disegnaSelezioneGruppo(c) {
+    const g = st.scena.griglia;
+    const col = ctx.dati.mappa.colori.selezione_gruppo;
+    const rett = (q, ingombro, tratteggio) => {
+      const [w, h2] = dimensioni(ingombro);
+      const a = schermoDaMappa(st.cam, g.scosto_x + q[0] * g.q_px, g.scosto_y + q[1] * g.q_px);
+      const b = schermoDaMappa(st.cam, g.scosto_x + (q[0] + w) * g.q_px, g.scosto_y + (q[1] + h2) * g.q_px);
+      c.setLineDash(tratteggio);
+      c.strokeRect(a.x + 1, a.y + 1, b.x - a.x - 2, b.y - a.y - 2);
+    };
+    c.save();
+    c.strokeStyle = col;
+    c.lineWidth = 3;
+    const t = st.trascina;
+    const delta = t?.modo === 'token' && t.diGruppo && t.q0 ? [t.q[0] - t.q0[0], t.q[1] - t.q0[1]] : null;
+    for (const tok of st.scena.token) {
+      if (!st.gruppo.has(tok.id)) continue;
+      rett(tok.q, tok.ingombro, [6, 4]);
+      if (delta && (delta[0] || delta[1]) && tok.id !== t.token) { c.globalAlpha = 0.7; rett([tok.q[0] + delta[0], tok.q[1] + delta[1]], tok.ingombro, [2, 3]); c.globalAlpha = 1; }
+    }
+    if (t?.modo === 'selezione' && t.mosso) {
+      const a = schermoDaMappa(st.cam, t.da.x, t.da.y), b = schermoDaMappa(st.cam, t.a.x, t.a.y);
+      c.setLineDash([5, 4]); c.lineWidth = 2;
+      c.globalAlpha = 0.15; c.fillStyle = col; c.fillRect(Math.min(a.x, b.x), Math.min(a.y, b.y), Math.abs(b.x - a.x), Math.abs(b.y - a.y));
+      c.globalAlpha = 1; c.strokeRect(Math.min(a.x, b.x), Math.min(a.y, b.y), Math.abs(b.x - a.x), Math.abs(b.y - a.y));
+    }
+    c.restore();
   }
   /** Quarta modalità accanto a Passo, Corri e Scatta: «Libero» (Maiusc ne è la scorciatoia). */
   const LIBERO = 4;
@@ -1887,6 +1962,10 @@ export function renderMappa(radice, ctx) {
     const g = st.scena.griglia;
     const fabbricheMappa = {
       template_qui: () => ({ testo: 'Nuovo template qui…', tasto: 'T', azione: () => nuovoTemplateUi(q) }),
+      seleziona_pg: () => ({ testo: 'Seleziona tutti i PG', azione: () => selezionaTipo('pg') }),
+      seleziona_nemici: () => ({ testo: 'Seleziona tutti i nemici', azione: () => selezionaTipo('nemici') }),
+      seleziona_tutti: () => ({ testo: 'Seleziona tutti', azione: () => selezionaTipo('tutti') }),
+      annulla_selezione: () => (st.gruppo.size ? { testo: `Annulla la selezione (${st.gruppo.size})`, tasto: 'Esc', azione: () => cambiaGruppo(new Set()) } : null),
       linea_qui: () => (scelto ? { testo: `Linea di tiro di ${pezzoDi(scelto)?.nome ?? scelto.id} fin qui`, tasto: 'L', azione: () => { iniziaLinea(scelto.id); fissaLinea({ x: g.scosto_x + (q[0] + 0.5) * g.q_px, y: g.scosto_y + (q[1] + 0.5) * g.q_px }); } } : null),
     };
     const menu = unisciMenu([
@@ -2117,13 +2196,16 @@ export function renderMappa(radice, ctx) {
       return;
     }
     const tok = !st.spazio && st.strumento !== 'calibra' ? tokenSotto(m) : null;
+    // 07/10: Maiusc + trascina su un punto vuoto = rettangolo di selezione (Maiusc + clic, senza trascinare, resta il
+    // movimento libero del token scelto)
+    if (!tok && e.shiftKey && !st.spazio && st.strumento !== 'calibra') { st.trascina = { ...base, modo: 'selezione', da: m, a: m }; return; }
     const modo = tok ? 'token' : st.strumento === 'calibra' && !st.spazio ? 'calibra' : 'sposta';
     st.trascina = { ...base, modo };
     if (modo === 'calibra') st.calibrazione = { a: m, b: null };
     if (tok) {
       const c = centroToken(st.scena.griglia, tok);
       // l'area del token trascinato: il trascinamento si aggancia solo dentro (Maiusc per uscire)
-      Object.assign(st.trascina, { token: tok.id, q: tok.q, dx: m.x - c.x, dy: m.y - c.y, ingombro: tok.ingombro, info: infoArea(tok) });
+      Object.assign(st.trascina, { token: tok.id, q: tok.q, q0: [...tok.q], dx: m.x - c.x, dy: m.y - c.y, ingombro: tok.ingombro, info: infoArea(tok), diGruppo: st.gruppo.has(tok.id) && st.gruppo.size > 1 });
     }
     el.riquadro.classList.toggle('trascina', modo !== 'calibra');
   };
@@ -2145,6 +2227,7 @@ export function renderMappa(radice, ctx) {
     t.mosso = true;
     fermaPressione();
     if (t.modo === 'sposta') cambiaCamera(sposta(st.cam, p.x - t.x, p.y - t.y));
+    else if (t.modo === 'selezione') { t.a = mappaDaSchermo(st.cam, p.x, p.y); ridisegna(['sopra']); }
     else if (t.modo === 'disegno') {
       const q = qVicino(mappaDaSchermo(st.cam, p.x, p.y));
       if (q[0] !== t.a[0] || q[1] !== t.a[1]) {
@@ -2154,7 +2237,8 @@ export function renderMappa(radice, ctx) {
       // §7 e §8: sempre al centro di un quadretto; dentro l'area raggiungibile, o dove si vuole con Maiusc
       const m = mappaDaSchermo(st.cam, p.x, p.y);
       const puntata = agganciaQ(st.scena.griglia, m.x - t.dx, m.y - t.dy, t.ingombro);
-      const libero = e.shiftKey || !t.info?.area;
+      // il gruppo si sposta sempre libero (07/10)
+      const libero = e.shiftKey || !t.info?.area || t.diGruppo;
       // fuori dall'area il token resta sulla posizione raggiungibile più vicina al puntatore
       const q = libero ? puntata : piuVicinaRaggiungibile(t.info.area, puntata, t.info.limite) ?? t.q;
       t.oltre = !libero && chiedeFascia(t.info, puntata);
@@ -2189,6 +2273,18 @@ export function renderMappa(radice, ctx) {
       dopoDisegno();
       return true;
     }
+    if (t.modo === 'selezione') {
+      if (t.mosso) {
+        const g = st.scena.griglia;
+        const inQ = (pt) => [(pt.x - g.scosto_x) / g.q_px, (pt.y - g.scosto_y) / g.q_px];
+        const ids = tokenNelRettangolo(st.scena, inQ(t.da), inQ(t.a));
+        cambiaGruppo(new Set(ids));
+        if (!ids.length) avviso('Nessun token nel rettangolo.', { chiave: 'gruppo' });
+        return true;
+      }
+      // Maiusc + clic su un punto vuoto: il movimento libero del token scelto, come prima (sotto)
+      st.trascina = null;
+    }
     if (t.modo === 'calibra') {
       if (t.mosso) chiudiCalibrazione();
       else { st.calibrazione = null; ridisegna(['sopra']); }
@@ -2198,6 +2294,15 @@ export function renderMappa(radice, ctx) {
       const tok = st.scena.token.find((x) => x.id === t.token);
       st.percorso = null;
       if (!tok) { ridisegna(['sopra']); return true; }
+      // 07/10: un token del gruppo trascinato porta con sé tutti gli altri, in formazione, sempre libero
+      if (t.mosso && t.diGruppo) { muoviGruppo([t.q[0] - tok.q[0], t.q[1] - tok.q[1]]); return true; }
+      // Maiusc + clic su un token: dentro o fuori dalla selezione multipla (con il token scelto, se c'era)
+      if (!t.mosso && e.shiftKey) {
+        const base = !st.gruppo.size && st.selezionato && st.selezionato !== tok.id ? new Set([st.selezionato]) : st.gruppo;
+        cambiaGruppo(alternaSelezione(base, tok.id));
+        return true;
+      }
+      if (st.gruppo.size && !t.mosso) cambiaGruppo(new Set());
       if (t.mosso) {
         if (!eseguiMovimento(tok, t.q, { libero: !!t.libero, info: t.info })) ridisegna(['sopra']);
         if (t.oltre) avvisaFascia(); // rilasciato oltre la fascia scelta: il token si è fermato al suo limite
@@ -2218,6 +2323,8 @@ export function renderMappa(radice, ctx) {
     }
     // fase 2, lotto 2: clic su una porta (senza token sopra): il master la apre o la chiude; con un token scelto che ci
     // può arrivare (porta aperta dentro l'area) vale il movimento
+    // 07/10: clic su un punto vuoto con una selezione multipla: la selezione si annulla
+    if (!t.mosso && st.gruppo.size && !e.shiftKey) { cambiaGruppo(new Set()); return true; }
     if (!t.mosso && t.modo === 'sposta' && !st.spazio && !e.shiftKey) {
       const mm = mappaDaSchermo(st.cam, p.x, p.y);
       const porta = portaA(st.scena, qVicino(mm));
@@ -2356,6 +2463,7 @@ export function renderMappa(radice, ctx) {
       scheda_completa: () => (pg && recordPg(pz) ? { testo: 'Apri scheda completa', tasto: 'Ctrl+clic', titolo: 'La scheda del PG, con «Torna alla mappa»', azione: () => apriSchedaToken(tok) } : null),
       nascondi: () => ({ testo: tok.nascosto ? 'Mostra ai giocatori' : 'Nascondi ai giocatori', azione: () => cambiaToken(tok.id, (x) => ({ ...x, nascosto: !x.nascosto })) }),
       colore_bordo: () => (pz ? { testo: 'Colore del bordo…', azione: () => coloreBordo(tok.id) } : null),
+      selezione_token: () => ({ testo: st.gruppo.has(tok.id) ? 'Togli dalla selezione' : 'Aggiungi alla selezione', tasto: 'Maiusc+clic', titolo: 'Selezione multipla: trascinando uno dei selezionati si spostano tutti, liberi e in formazione', azione: () => cambiaGruppo(alternaSelezione(!st.gruppo.size && st.selezionato && st.selezionato !== tok.id ? new Set([st.selezionato]) : st.gruppo, tok.id)) }),
       luce_token: () => ({ testo: tok.luce ? `Luce portata: ${tok.luce} Q…` : 'Porta una luce…', titolo: 'Torcia, lanterna…: la zona attorno al token diventa Luce e lo segue', azione: () => luceToken(tok) }),
       togli_token: () => ({ testo: 'Togli dalla mappa…', pericolo: true, titolo: 'Con conferma; resta nello scontro', azione: async () => {
         if (await chiedi({ titolo: `Togliere ${nome} dalla mappa?`, testo: 'Resta nello scontro: lo rimetti dai «senza token» del gruppo «Mappa». Ctrl+Z lo riporta qui.', si: 'Togli', pericolo: true })) togliToken(tok.id);
@@ -2381,6 +2489,13 @@ export function renderMappa(radice, ctx) {
     if ((e.key === 'a' || e.key === 'A') && !e.shiftKey) { e.preventDefault(); adattaSchermo(); return; }
     if (frecciaTemplate(e)) return;
     if (frecciaPorta(e)) return;
+    // 07/10: le frecce spostano il gruppo selezionato di 1 Q (un Ctrl+Z per passo)
+    if (st.gruppo.size && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
+      e.preventDefault();
+      muoviGruppo({ ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[e.key]);
+      return;
+    }
+    if (e.key === 'Escape' && st.gruppo.size && !menuAperto()) { e.preventDefault(); cambiaGruppo(new Set()); return; }
     if (e.shiftKey && e.key.toLowerCase() === ctx.dati.mappa.template.tasto && st.scena) { e.preventDefault(); cambiaSovrapposizioni('master', 'nascoste'); return; }
     if (e.key.toLowerCase() === ctx.dati.mappa.template.tasto && st.scena && !st.tpl.anteprima) { e.preventDefault(); nuovoTemplateUi(); return; }
     if (e.key === 'Escape' && st.tpl.anteprima) { e.preventDefault(); annullaPiazzamento(); return; }

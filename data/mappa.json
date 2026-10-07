@@ -393,6 +393,8 @@
     "contorno_scuro": "#111111",
     "contorno_chiaro": "#ffffff",
     "alone_turno": "#ffffff",
+    "selezione_gruppo": "#22b8cf",
+    "_nota_selezione": "Selezione multipla (07/10/2026, src/mappa/gruppo.js): contorno tratteggiato di questo colore attorno ai token selezionati, diverso dall'alone del turno e dalla scelta del token singolo.",
     "contrasto_minimo": 3
   },
   "zoc": {
@@ -426,7 +428,8 @@
         { "titolo": "Movimento", "voci": ["annulla_movimento", "nuovo_turno"] },
         { "titolo": "Azioni", "voci": ["attacca", "porta_token"] },
         { "titolo": "Strumenti", "voci": ["linea", "area", "zoc", "template_qui"] },
-        { "titolo": "Scheda", "voci": ["mini_scheda", "scheda_completa"] }
+        { "titolo": "Scheda", "voci": ["mini_scheda", "scheda_completa"] },
+        { "titolo": "Selezione", "voci": ["selezione_token"] }
       ],
       "opzioni": ["nascondi", "luce_token", "colore_bordo", "togli_token"]
     },
@@ -442,7 +445,10 @@
       "opzioni": ["togli_template"]
     },
     "mappa": {
-      "gruppi": [{ "titolo": "Strumenti", "voci": ["template_qui", "linea_qui"] }],
+      "gruppi": [
+        { "titolo": "Strumenti", "voci": ["template_qui", "linea_qui"] },
+        { "titolo": "Selezione", "voci": ["seleziona_pg", "seleziona_nemici", "seleziona_tutti", "annulla_selezione"] }
+      ],
       "opzioni": []
     }
   },

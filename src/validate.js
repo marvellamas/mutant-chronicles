@@ -2752,7 +2752,7 @@ function validaMappa(dati, err) {
       }
     }
     if (Array.isArray(CO.pg) && Array.isArray(CO.nemici) && CO.pg.some((a) => CO.nemici.some((b) => a.valore?.toLowerCase() === b.valore?.toLowerCase()))) err(F, 'colori', 'le tavolozze dei PG e dei nemici devono essere diverse');
-    for (const k of ['nemici_alterno', 'alleati', 'veicolo_del_gruppo', 'senza_colore', 'contorno_scuro', 'contorno_chiaro', 'alone_turno']) if (!esa(CO[k])) err(F, `colori.${k}`, 'colore #rrggbb');
+    for (const k of ['nemici_alterno', 'alleati', 'veicolo_del_gruppo', 'senza_colore', 'contorno_scuro', 'contorno_chiaro', 'alone_turno', 'selezione_gruppo']) if (!esa(CO[k])) err(F, `colori.${k}`, 'colore #rrggbb');
     if (!positivo(CO.contrasto_minimo)) err(F, 'colori.contrasto_minimo', 'numero positivo');
   }
   // lotto 6, §11: barra accanto alla mappa (src/mappa/disposizione.js) e barra dell'Iniziativa
