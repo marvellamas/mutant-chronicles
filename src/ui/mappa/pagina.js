@@ -42,6 +42,7 @@ import { tratto, valoreModo, nebbiaProvvisoria, chiudiPennellata, rettangoloNebb
 import { trattoMuri, muriProvvisori, chiudiTrattoMuri, rettangoloMuri } from '../../mappa/muri.js';
 import { areaRaggiungibile, costoVerso, percorso, statoFasce, fasciaDi, celleArea, piuVicinaRaggiungibile } from '../../mappa/area.js';
 import { statoDiretta, visibileAiGiocatori } from '../../mappa/diretta.js';
+import { salvaIniziale, ripristinaIniziale } from '../../mappa/iniziale.js';
 import { muoviToken, usatoNelRound, fasceNelRound, mossoNelRound, annullaUltima, annullaUltimoMovimento, cambiaTokenAnnullabile, cambiaTemplateAnnullabile, cambiaPortaAnnullabile, nuovoTurno, turnoDi } from '../../mappa/annulla.js';
 import { disegnaMuri, disegnaArea, disegnaPercorso, disegnaZoc, coloriAree, disegnaTemplate, disegnaPorte, disegnaLineaTiro } from './disegno-aree.js';
 import { celleTemplate, tokenDentro as tokenNelTemplate, nuovoTemplate, scaduto, direzioneVerso, ORIENTABILI, templateVisibili, ostacoliVisibili, ruota, cambiaMisura } from '../../mappa/template.js';
@@ -198,6 +199,9 @@ export function renderMappa(radice, ctx) {
           voceStrumenti('Template ad area… (T)', 'Raggio, cono, linea, quadrato, rettangolo: forma, misura, colore, durata; poi lo piazzi sulla mappa', () => { el.strumenti.open = false; nuovoTemplateUi(); }),
           voceStrumenti('Vista giocatori', 'Quale scena vedono, QR, «Apri vista giocatori»', () => apriStrumento(el.pGiocatori)),
           voceStrumenti('Scene', 'Nuova, apri, rinomina, duplica, archivia', () => apriStrumento(document.getElementById('plancia-scene-mappa'))),
+          // 07/10: posizione iniziale della scena (token, porte, template, nebbia)
+          el.voceSalvaIniziale = voceStrumenti('Salva posizione iniziale', 'Token, porte, template e nebbia come sono adesso: per rigiocare la scena (un solo salvataggio, sovrascrivibile)', () => salvaInizialeUi()),
+          el.voceRipristina = voceStrumenti('Ripristina posizione iniziale', 'Rimette token, porte, template e nebbia come nella posizione salvata; PV, Stati e registro dello scontro non cambiano; Ctrl+Z annulla', () => ripristinaInizialeUi()),
           voceStrumenti('Collegamento e token', 'Scontro o bozza collegati, pezzi da mettere in mappa', () => apriStrumento(el.secScontro)),
           el.bloccoGiocatori = h('button', { type: 'button', role: 'menuitemcheckbox', class: 'voce-strumenti', 'aria-checked': 'false', title: 'Pronto per la fase 2 (tab BattleMap dei giocatori): finché è acceso i giocatori non muovono i loro token', onclick: () => cambiaBloccoGiocatori() }, 'Blocca movimenti dei giocatori'))),
       // «Altro»: immagine, scala della griglia e scorciatoie, fuori dalla riga
@@ -417,7 +421,7 @@ export function renderMappa(radice, ctx) {
     clearTimeout(st.salvataggio.timer);
     st.salvataggio.timer = setTimeout(salvaOra, ATTESA_SALVATAGGIO_MS);
   };
-  const salvaOra = async () => {
+  const salvaOra = async ({ keepalive = false } = {}) => {
     const S = st.salvataggio;
     clearTimeout(S.timer);
     if (S.inCorso || !S.modificata || !st.scena) return;
@@ -426,7 +430,7 @@ export function renderMappa(radice, ctx) {
     const inviata = st.scena;
     testoStato('Salvataggio…');
     try {
-      const esito = await salvaScena(inviata);
+      const esito = await salvaScena(inviata, { keepalive });
       if (esito.conflitto) {
         avvisoErrore('La scena è stata cambiata in un’altra finestra: ripresa quella salvata sul server. Rifai l’ultima modifica, se serve.', { durata: 9000 });
         S.modificata = false;
@@ -488,6 +492,7 @@ export function renderMappa(radice, ctx) {
     st.tpl.firma = null;
     disegnaPannelloTemplate();
     if (el.btnSovr) aggiornaSovrapposizioni();
+    aggiornaVociIniziale();
     invalidaArea();
     if (st.fonti !== null) { disegnaPannelloNebbia(); disegnaPannelloMuri(); disegnaPannelloGiocatori(); }
     ridisegna();
@@ -780,6 +785,41 @@ export function renderMappa(radice, ctx) {
       avviso(c.giocatori ? `Schermo dei giocatori adattato (${c.giocatori} ${c.giocatori === 1 ? 'vista aperta' : 'viste aperte'}).` : 'Nessuna vista giocatori aperta.', { chiave: 'adatta' });
     } catch (e) { avvisoErrore(`Non adattato: ${e.message}`); }
   }
+  // ── Posizione iniziale della scena (07/10; src/mappa/iniziale.js) ──
+  const quandoIniziale = () => { const q = st.scena?.iniziale?.quando; if (!q) return null; const d = new Date(q); return `${d.toLocaleDateString('it-IT')} alle ${ora(d)}`; };
+  function aggiornaVociIniziale() {
+    if (!el.voceRipristina) return;
+    const q = quandoIniziale();
+    el.voceRipristina.disabled = !q;
+    el.voceRipristina.textContent = q ? `Ripristina posizione iniziale (${q})` : 'Ripristina posizione iniziale (nessuna salvata)';
+    el.voceSalvaIniziale.textContent = q ? 'Salva posizione iniziale (sovrascrive)' : 'Salva posizione iniziale';
+  }
+  async function salvaInizialeUi() {
+    if (!st.scena) return;
+    const q = quandoIniziale();
+    if (q && !(await chiedi({ titolo: 'Sovrascrivere la posizione iniziale?', testo: `C'è già una posizione iniziale, salvata il ${q}: sarà sostituita da quella di adesso.`, si: 'Sovrascrivi' }))) return;
+    st.scena = salvaIniziale(st.scena);
+    salvaPresto();
+    aggiornaVociIniziale();
+    avviso(`Posizione iniziale salvata (${quandoIniziale()}): ${st.scena.token.length} token, ${st.scena.porte?.length ?? 0} porte, ${st.scena.template.length} template e la nebbia.`, { chiave: 'iniziale' });
+  }
+  async function ripristinaInizialeUi({ chiedendo = true } = {}) {
+    if (!st.scena?.iniziale) { avviso('Questa scena non ha una posizione iniziale: «Salva posizione iniziale» nel menu Strumenti.', { chiave: 'iniziale' }); return; }
+    if (chiedendo && !(await chiedi({ titolo: 'Ripristinare la posizione iniziale?', testo: `Token, porte, template e nebbia tornano come il ${quandoIniziale()}. PV, Stati e registro dello scontro non cambiano; i Q usati nel Round ripartono da 0. Ctrl+Z lo annulla.`, si: 'Ripristina' }))) return;
+    const completa = (st.fonti?.scontro || st.fonti?.bozza) && !st.fonti.errori.length;
+    const sc = st.fonti?.scontro ?? null;
+    const r = ripristinaIniziale(st.scena, { chiaviPresenti: completa ? new Set(st.pezzi.map((p) => p.chiave)) : null, scontro: sc?.id ?? null, round: sc?.round ?? null, annullaMax: ctx.dati.mappa.scena.annulla_max });
+    if (!r) return;
+    st.scena = r.scena;
+    if (st.selezionato && !st.scena.token.some((t) => t.id === st.selezionato)) st.selezionato = null;
+    st.tpl.firma = null;
+    disegnaPannelloNebbia();
+    disegnaPannelloTemplate();
+    dopoCambioToken();
+    avviso([`Posizione iniziale ripristinata (${quandoIniziale()}). Ctrl+Z per tornare indietro.`,
+      r.ignorati.length ? `Non più nello scontro, ignorati: ${r.ignorati.map((t) => t.nome ?? t.rif?.id ?? t.id).join(', ')}.` : null,
+      r.nuovi.length ? `Nuovi, restano dove sono: ${r.nuovi.map((t) => pezzoDi(t)?.nome ?? t.nome ?? t.id).join(', ')}.` : null], { chiave: 'iniziale', durata: 10000 });
+  }
   // ── «Mostra / nascondi template» (ritocchi del 07/10): scelte memorizzate nella scena, del master e dei giocatori ──
   const sovrapposizioni = (chi) => ({ nascoste: false, ancheDurata: false, ...(st.scena?.sovrapposizioni?.[chi] ?? {}) });
   function cambiaSovrapposizioni(chi, campo) {
@@ -823,6 +863,7 @@ export function renderMappa(radice, ctx) {
       ['T (o Strumenti → «Template ad area», o clic destro su un punto vuoto)', 'nuovo template: forma, misura in Q, colore, durata in Round, nome'],
       ['Mentre piazzi un template', 'segue il mouse; cono e linea partono dal token scelto verso il mouse; ← → ruotano di 45° (rettangolo: 90°), ↑ ↓ cambiano la misura, rotella 15°; clic per fissarlo, Esc per annullare'],
       ['Clic destro su un template', 'Sposta o ruota (poi le frecce), Nascondi / Mostra ai giocatori, Togli'],
+      ['Strumenti → «Salva posizione iniziale» / «Ripristina posizione iniziale»', 'token, porte, template e nebbia della scena, per rigiocarla; PV, Stati e registro dello scontro non cambiano; Ctrl+Z annulla il ripristino'],
       ['Maiusc+T (pulsante «◫ Template»)', 'mostra o nasconde i template senza durata, muri, porte e terreno (per il movimento valgono sempre); con «anche a durata» anche i template a Round'],
       ['Strumenti → Muri e terreno → «Porta»', 'clic su un Q di muro: porta (aperta, chiusa o bloccata; segreta); clic su una porta: la toglie'],
       ['Clic su una porta', 'il master la apre o la chiude (bloccata: no); clic destro: Apri / Chiudi / Blocca / Sblocca / Rivela / Togli'],
@@ -1066,7 +1107,8 @@ export function renderMappa(radice, ctx) {
       ritiraOpportunita(esito.voce.movimento);
     }
     if (st.selezionato && !st.scena.token.some((t) => t.id === st.selezionato)) st.selezionato = null;
-    if (esito.voce.tipo === 'template') disegnaPannelloTemplate();
+    if (esito.voce.tipo === 'template' || esito.voce.tipo === 'ripristino') { st.tpl.firma = null; disegnaPannelloTemplate(); }
+    if (esito.voce.tipo === 'ripristino') { invalidaArea(); disegnaPannelli(); }
     if (esito.errore) avvisoErrore(`Non annullato: ${esito.errore}.`);
     else avviso(`Annullato: ${{ nebbia: 'nebbia', muri: 'muri', movimento: 'movimento', token: 'modifica del token', 'token tolto': 'token tolto (torna in mappa)', 'token messo': 'token messo (esce dalla mappa)' }[esito.testo] ?? esito.testo}.`, { chiave: 'annulla' });
     dopoDisegno();
@@ -2362,8 +2404,13 @@ export function renderMappa(radice, ctx) {
     montaPlanciaBarra();
     aggiornaBlocco();
     aggiornaSovrapposizioni();
+    aggiornaVociIniziale();
     aggiornaVoceMostraPv();
     await Promise.all([aggiornaFonti(), leggiScelta()]);
+    // aperta da «Prepara scontro» → «Prepara la mappa»: se c'è una posizione iniziale, si propone di partire da quella
+    let proponi = null;
+    try { proponi = sessionStorage.getItem('mutant-mappa-proponi-iniziale'); sessionStorage.removeItem('mutant-mappa-proponi-iniziale'); } catch { /* niente */ }
+    if (proponi === ctx.id && st.scena?.iniziale && await chiedi({ titolo: 'Partire dalla posizione iniziale?', testo: `Questa scena ha una posizione iniziale salvata il ${quandoIniziale()}: token, porte, template e nebbia.`, si: 'Parti da quella', no: 'Lascia com’è' })) ripristinaInizialeUi({ chiedendo: false });
     disegnaPannelloNebbia();
     disegnaPannelloMuri();
     disegnaPannelloGiocatori();
@@ -2384,7 +2431,16 @@ export function renderMappa(radice, ctx) {
     if (st.sceltaGiocatori !== prima) disegnaPannelloGiocatori();
   }, INTERVALLO_FONTI_MS);
 
+  // verifica della persistenza (07/10): la finestra va in secondo piano o si chiude: le modifiche non ancora salvate
+  // (si salvano 600 ms dopo l'ultima) partono subito; chiudendo, con keepalive (la richiesta sopravvive alla pagina)
+  const suNascosta = () => { if (document.visibilityState === 'hidden' && st.salvataggio.modificata) salvaOra(); };
+  const suChiusura = () => { if (st.salvataggio.modificata) salvaOra({ keepalive: true }); };
+  document.addEventListener('visibilitychange', suNascosta);
+  window.addEventListener('pagehide', suChiusura);
+
   return () => {
+    document.removeEventListener('visibilitychange', suNascosta);
+    window.removeEventListener('pagehide', suChiusura);
     // la vista giocatori perde la diretta quando il master lascia la mappa
     if (st.diretta.chiave !== 'nessuna') { st.diretta.inVolo = false; mandaDiretta(null); }
     st.chiusa = true;

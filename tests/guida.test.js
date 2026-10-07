@@ -23,5 +23,5 @@ test('la guida della mappa si legge tutta: sezioni e passi', () => {
   const b = blocchiMarkdown(readFileSync(new URL('../docs/battlemap/guida-davide.md', import.meta.url), 'utf8'));
   const titoli = b.filter((x) => x.tipo === 'titolo').map((x) => x.pezzi.map((p) => p.testo).join(''));
   for (const t of ['Preparare la scena', 'Giocare', 'Due schermi sullo stesso PC']) assert.ok(titoli.includes(t), t);
-  assert.ok(b.some((x) => x.tipo === 'numerato' && x.inizio === 8), 'la sezione «Giocare» riparte da 8');
+  assert.ok(b.some((x) => x.tipo === 'numerato' && x.inizio === 9), 'la sezione «Giocare» riparte da 9');
 });

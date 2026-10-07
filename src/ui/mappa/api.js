@@ -22,9 +22,12 @@ export async function leggiScena(id) {
 /**
  * Salva la scena con la sua revisione. Restituisce { scena } (con la revisione nuova) oppure, se è stata cambiata
  * altrove, { conflitto: true, attuale } con la scena del server; gli altri errori sono eccezioni.
+ * `keepalive` (pagina che si chiude, 07/10): la richiesta continua anche dopo la chiusura, se il corpo sta nei 64 kB
+ * che il browser concede; oltre, è una richiesta normale.
  */
-export async function salvaScena(s) {
-  const r = await fetch(`api/scene/${encodeURIComponent(s.id)}`, { method: 'PUT', body: JSON.stringify(s), headers: { 'Content-Type': 'application/json' } });
+export async function salvaScena(s, { keepalive = false } = {}) {
+  const corpo = JSON.stringify(s);
+  const r = await fetch(`api/scene/${encodeURIComponent(s.id)}`, { method: 'PUT', body: corpo, headers: { 'Content-Type': 'application/json' }, keepalive: keepalive && corpo.length < 60000 });
   if (r.status === 409) return { conflitto: true, attuale: (await r.json()).attuale };
   if (!r.ok) throw await errore(r);
   return { scena: await r.json() };

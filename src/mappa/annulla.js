@@ -8,6 +8,7 @@
 //   { tipo: 'movimento', movimento: id, token, da, a }
 //   { tipo: 'token', id, prima, dopo }              prima null: messo; dopo null: tolto; tutti e due: cambiato
 //   { tipo: 'template', id, prima, dopo }           template ad area (fase 2, lotto 1): piazzato, spostato, tolto
+//   { tipo: 'ripristino', prima }                   «Ripristina posizione iniziale» (src/mappa/iniziale.js): tutto com'era
 //   { tipo: 'porta', id, prima, dopo, azione? }     porta (fase 2, lotto 2): messa, cambiata, tolta; con l'azione del
 //                                                   token che l'ha aperta o chiusa (annullando esce anche l'AzP)
 // Movimenti (scena.movimenti, al più scena.movimenti_max): { id, token, scontro, round, turno?, da, a, costo, fascia, libero,
@@ -18,6 +19,7 @@
 import { daBase64, inBase64 } from './celle.js';
 import { inverti } from './nebbia.js';
 import { chiaveRif } from './token.js';
+import { annullaRipristino } from './iniziale.js';
 
 const conVoce = (scena, voce, dati) => ({ ...scena, annulla: [...scena.annulla, voce].slice(-dati.mappa.scena.annulla_max) });
 
@@ -154,6 +156,8 @@ export function annullaUltima(scena, { chiaviPresenti = null } = {}) {
       if (voce.prima) token = [...token, voce.prima];
       return { scena: { ...senza, token }, voce, testo: voce.prima && voce.dopo ? 'token' : voce.prima ? 'token tolto' : 'token messo' };
     }
+    case 'ripristino':
+      return { scena: annullaRipristino(senza, voce), voce, testo: 'ripristino della posizione iniziale' };
     case 'porta': {
       let porte = (senza.porte ?? []).filter((p) => p.id !== voce.id);
       if (voce.prima) porte = [...porte, voce.prima];

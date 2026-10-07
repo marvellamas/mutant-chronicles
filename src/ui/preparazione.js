@@ -266,6 +266,8 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
       }
       avviso(`Mappa pronta per «${b.nome}»: metti i token dei pezzi della bozza.`);
       finestra.close();
+      // la mappa, se la scena ha una posizione iniziale, propone di partire da quella (src/ui/mappa/pagina.js)
+      try { sessionStorage.setItem('mutant-mappa-proponi-iniziale', id); } catch { /* senza: nessuna proposta */ }
       ctx.azioni.mappa?.(id);
     } catch (e) { avvisoErrore(`Mappa non preparata: ${e.message}`); }
   };

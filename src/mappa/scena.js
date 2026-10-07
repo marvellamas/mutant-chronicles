@@ -9,6 +9,7 @@
 //   token: [{ id, rif: { tipo: "partecipante" | "veicolo" | "segnaposto", id }, q: [x, y], ingombro, nascosto, nome? }],
 //   porte?: [{ id, q: [x, y], stato: aperta | chiusa | bloccata, segreta }]   porte (fase 2, lotto 2; src/mappa/porte.js)
 //   visuale?: { automatica }            nebbia automatica dalla visuale dei PG (fase 2, lotto 3; src/mappa/visuale.js)
+//   iniziale?: { quando, token, porte, template, nebbia }   posizione iniziale salvata (src/mappa/iniziale.js, 07/10)
 //   sovrapposizioni?: { master?: { nascoste, ancheDurata }, giocatori?: { nascoste, ancheDurata } }
 //                                       «Mostra / nascondi template»: template senza durata, muri, porte, terreno (07/10)
 //   azioni?: [{ id, token, tipo: 'porta', porta, azione, azp, scontro, round, turno?, quando }]  AzP dei token (A.125)
@@ -26,6 +27,7 @@ import { nuovaMaschera, inBase64, mascheraValida } from './celle.js';
 import { tokenDentro } from './token.js';
 import { erroreTemplate } from './template.js';
 import { errorePorta } from './porte.js';
+import { erroreIniziale } from './iniziale.js';
 
 export const ID_SCENA = /^[a-z0-9-]{1,60}$/;
 /** Nome dei file in mappe/: lo sceglie il server (nome ridotto + impronta del contenuto). */
@@ -195,6 +197,7 @@ export function validaScena(s, dati) {
   }
 
   if (s.visuale !== undefined && (!isOggetto(s.visuale) || typeof s.visuale.automatica !== 'boolean')) return 'visuale: { automatica: vero o falso } atteso';
+  if (s.iniziale !== undefined) { const e = erroreIniziale(s.iniziale, (m) => mascheraValida(m, colonne, righe)); if (e) return `iniziale.${e}`; }
   // «Mostra / nascondi template» (ritocchi del 07/10): due scelte, del master e dei giocatori
   if (s.sovrapposizioni !== undefined) {
     if (!isOggetto(s.sovrapposizioni)) return 'sovrapposizioni: { master, giocatori } atteso';
