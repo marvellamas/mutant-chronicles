@@ -6,7 +6,7 @@ successiva. Fonte: controllo del 07/10 (`docs/diff-manuali-2026-10-07.md`), deci
 
 Riepilogo: una voce fra le Risolte (A.120) più le due mancanti del pacchetto del 06/10 (A.121, A.131); risposte
 ricevute e in implementazione per A.107, A.108, A.110, A.111, A.114, A.116, A.119, A.122, A.124, A.125, A.127, A.128,
-A.129; l'elenco chiesto da Davide per la A.109; cinque domande nuove (A.134–A.138); pulizia dei doppioni della sezione 2.
+A.129; l'elenco chiesto da Davide per la A.109; sei domande nuove (A.134–A.139); pulizia dei doppioni della sezione 2.
 
 ---
 
@@ -179,6 +179,10 @@ Il Manuale della Magia dice che il Raggio è la «distanza dal centro al limite�
 **A.138 — Forma del Cono.**
 Il Cono è «lunghezza × larghezza finale, con apertura progressiva» e parte dal bordo dello spazio del Taumaturgo (Cono Elementale, da 3 × 2 a 18 × 9 Q). Quanto è largo all'inizio, accanto al Taumaturgo? E con una larghezza finale pari (3 × 2, 12 × 6), quando il cono va dritto lungo una fila di quadretti, come si contano i Q del bordo?
 *Nel frattempo:* largo 1 Q accanto al Taumaturgo, poi si allarga in modo uniforme; i Q del bordo coperti per meno di metà restano fuori.
+
+**A.139 — Porta «adiacente» in diagonale.**
+Per aprire o chiudere una porta (1 AzP, A.125) bisogna esserle adiacenti. Basta essere in diagonale rispetto alla porta?
+*Nel frattempo:* sì, come per la portata di 1 Q. La mano libera la controlla il master.
 ```
 
 ```

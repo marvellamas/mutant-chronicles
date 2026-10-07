@@ -59,7 +59,12 @@ La Mappa di battaglia è un modulo del **Tavolo del Master** di Mutant: gira sul
 
 > * **Editor dei muri:** il master segna con un pennello i quadretti invalicabili (muri, rocce, acqua profonda) ed eventualmente il terreno difficile.  
 > * I muri bloccano movimento e linea di tiro.  
-> * *Fase 2:* **porte** apri/chiudi sui muri.  
+> * **Porte (fatto il 07/10/2026, fase 2, lotto 2; `src/mappa/porte.js`, `data/mappa.json` → porte; A.125, decisione 130).** Regola di Davide: aprire o chiudere una normale porta accessibile e non bloccata costa **1 AzP**, senza Prova, essendo adiacenti e con una mano libera; attraversarla consuma il normale movimento; una porta bloccata richiede prima di sbloccarla, scassinarla o forzarla; «chiusa» e «bloccata» sono distinte.
+>   * **Disegno:** «Strumenti → Muri e terreno → Porta»: un clic su un Q di muro mette una porta (aperta, chiusa o bloccata; «segreta» a scelta), un clic su una porta la toglie. Aperta = stipiti verdi e varco tratteggiato; chiusa = battente marrone; bloccata = battente rosso con la croce; segreta (solo master) = contorno viola tratteggiato con la «S». Dati nella scena (`porte`, `azioni`), validati.
+>   * **Movimento:** aperta = passaggio; chiusa o bloccata = muro per l’area e il percorso, diagonali comprese (A.124, A.134).
+>   * **Aprire e chiudere:** il master con un clic sulla porta (o clic destro: Apri, Chiudi, Blocca, Sblocca, Rivela / Rendi segreta, Togli); il token scelto adiacente con «Apri porta» / «Chiudi porta» (clic destro o pannello): 1 AzP contata nel Round accanto ai Q usati (non blocca nulla) e una riga nel registro. Bloccata: «Porta bloccata: serve sbloccarla, scassinarla o forzarla»; «Sblocca» solo dal master. Adiacente anche in diagonale (A.139).
+>   * **Giocatori:** le porte visibili con il loro stato (arrivano dopo il salvataggio della scena, entro un secondo); le **segrete** non rivelate sono un Q di muro anche nei dati del server, e muro anche per l’area di movimento mostrata ai giocatori.
+>   * **Vista:** per ora le porte non cambiano la nebbia; con la linea di visuale (prossimo lotto) le porte chiuse e bloccate fermeranno la vista (`porte.bloccano_vista`).
 > * *Fase 3:* **pre-analisi con AI** dell’immagine: l’AI propone muri e aree invalicabili, il master corregge con il pennello. Richiede una chiave API e internet sul PC del master.
 
 ## **7\. Token**

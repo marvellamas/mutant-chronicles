@@ -39,14 +39,15 @@ import { tratto, valoreModo, nebbiaProvvisoria, chiudiPennellata, rettangoloNebb
 import { trattoMuri, muriProvvisori, chiudiTrattoMuri, rettangoloMuri } from '../../mappa/muri.js';
 import { areaRaggiungibile, costoVerso, percorso, statoFasce, fasciaDi, celleArea, piuVicinaRaggiungibile } from '../../mappa/area.js';
 import { statoDiretta, visibileAiGiocatori } from '../../mappa/diretta.js';
-import { muoviToken, usatoNelRound, fasceNelRound, mossoNelRound, annullaUltima, annullaUltimoMovimento, cambiaTokenAnnullabile, cambiaTemplateAnnullabile, nuovoTurno } from '../../mappa/annulla.js';
-import { disegnaMuri, disegnaArea, disegnaPercorso, disegnaZoc, coloriAree, disegnaTemplate } from './disegno-aree.js';
+import { muoviToken, usatoNelRound, fasceNelRound, mossoNelRound, annullaUltima, annullaUltimoMovimento, cambiaTokenAnnullabile, cambiaTemplateAnnullabile, cambiaPortaAnnullabile, nuovoTurno, turnoDi } from '../../mappa/annulla.js';
+import { disegnaMuri, disegnaArea, disegnaPercorso, disegnaZoc, coloriAree, disegnaTemplate, disegnaPorte } from './disegno-aree.js';
 import { celleTemplate, tokenDentro as tokenNelTemplate, nuovoTemplate, scaduto, direzioneVerso, ORIENTABILI } from '../../mappa/template.js';
+import { portaA, muriEffettivi, porteVicine, apriChiudi, nuovaPorta, conAzione, azpNelRound, orientamento } from '../../mappa/porte.js';
 import { apriMenuTemplate, sezioneTemplate, etichettaTemplate, testoMisure } from './template.js';
 import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
 import { diTurno } from '../../scontro.js';
 import { statoMovimento, muoviVeicolo } from '../../veicoli-registro.js';
-import { rigaMovimentoLibero, rigaOpportunita, senzaOpportunitaDelMovimento } from '../../scontro.js';
+import { rigaMovimentoLibero, rigaOpportunita, senzaOpportunitaDelMovimento, rigaPorta } from '../../scontro.js';
 import { aggiornaInScontri } from '../immagine-nemico.js';
 import { linkGuidaMappa } from '../guida.js';
 import { aggiornaVeicolo } from '../veicoli-registro.js';
@@ -114,7 +115,7 @@ export function renderMappa(radice, ctx) {
     nebbia: { strumento: null, modo: 'rivela', lato: 3 },
     sceltaGiocatori: null,
     // lotto 5: strumenti dei muri, fascia mostrata (1 Passo, 2 Corri, 3 Scatta), area del token scelto, percorso
-    muri: { strumento: null, modo: 'muro', lato: 1 },
+    muri: { strumento: null, modo: 'muro', lato: 1, porta: { stato: ctx.dati.mappa.porte.stato_predefinito, segreta: false } },
     fascia: 1,
     area: undefined,
     percorso: null,
@@ -284,6 +285,8 @@ export function renderMappa(radice, ctx) {
       const colori = coloriAree(el.riquadro);
       // lotto 5: muri (retino) e terreno difficile (puntinato), solo per il master
       disegnaMuri(c, { scena: s, cam: st.cam, info, muri: daBase64(s.muri), terreno: daBase64(s.terreno), colori });
+      // fase 2, lotto 2: le porte, ciascuna con il suo stato (le segrete con la «S»)
+      if (s.porte?.length) disegnaPorte(c, { scena: s, cam: st.cam, info, porte: s.porte.map((p) => ({ ...p, orientamento: orientamento(s, p.q) })), colori: ctx.dati.mappa.porte.colori });
       const r = rettangoloVisibile(st.cam, info.larghezza, info.altezza);
       const q = g.q_px;
       const tratti = trattiCoperti(daBase64(s.nebbia.coperti), g.colonne, g.righe,
@@ -653,6 +656,8 @@ export function renderMappa(radice, ctx) {
     svuota(el.secToken, sezioneToken(scelto, pz, ctx.dati, {
       mov: scelto ? movimentoPannello(scelto) : null,
       fascia: (n) => cambiaFascia(n),
+      // fase 2, lotto 2 (A.125): la porta adiacente, 1 AzP
+      porta: (id) => { const p = st.scena.porte?.find((x) => x.id === id); if (p) portaToken(scelto, p, p.stato === 'aperta' ? 'chiudi' : 'apri'); },
       annullaMovimento: () => annullaMovimentoUi(scelto.id),
       nuovoTurno: () => nuovoTurnoUi(scelto.id),
       mostraArea: () => cambiaMostraArea(),
@@ -773,6 +778,9 @@ export function renderMappa(radice, ctx) {
       ['T (o Strumenti → «Template ad area», o clic destro su un punto vuoto)', 'nuovo template: forma, misura in Q, colore, durata in Round, nome'],
       ['Mentre piazzi un template', 'segue il mouse; cono e linea partono dal token scelto verso il mouse, senza token si ruotano con la rotella; clic per fissarlo, Esc per annullare'],
       ['Clic destro su un template', 'Sposta, Nascondi / Mostra ai giocatori, Togli'],
+      ['Strumenti → Muri e terreno → «Porta»', 'clic su un Q di muro: porta (aperta, chiusa o bloccata; segreta); clic su una porta: la toglie'],
+      ['Clic su una porta', 'il master la apre o la chiude (bloccata: no); clic destro: Apri / Chiudi / Blocca / Sblocca / Rivela / Togli'],
+      ['Token scelto accanto a una porta', 'clic destro o pannello: «Apri porta» / «Chiudi porta», 1 AzP e una riga nel registro (A.125)'],
       ['M', 'mostra o nasconde l’area di movimento'],
       ['Z', 'mostra o nasconde le zone di controllo (ZoC) degli avversari'],
       ['P', 'mostra o nasconde la barretta dei PV sui token (solo per te)'],
@@ -893,7 +901,7 @@ export function renderMappa(radice, ctx) {
     const d = tela.dimensioni();
     const m = mappaDaSchermo(st.cam, d.larghezza / 2, d.altezza / 2);
     const centro = [Math.max(0, Math.min(g.colonne - 1, (m.x - g.scosto_x) / g.q_px)), Math.max(0, Math.min(g.righe - 1, (m.y - g.scosto_y) / g.q_px))];
-    const muri = daBase64(st.scena.muri);
+    const muri = muriEffettivi(st.scena);
     const { posti, nonPiazzati } = disponiInFila(senza.map((p) => ({ id: p.chiave, ingombro: p.ingombro })), centro,
       { token: st.scena.token, muro: (x, y) => cella(muri, g.colonne, g.righe, x, y), colonne: g.colonne, righe: g.righe });
     const nuovi = posti.map((x) => tokenPerPezzo(st.mappaPezzi.get(x.id), x.q));
@@ -947,7 +955,11 @@ export function renderMappa(radice, ctx) {
       h('p', { class: 'nota' }, 'Muri e terreno difficile si vedono solo qui (retino e puntinato) e decidono l’area raggiungibile. Ai giocatori non arrivano quelli sotto la nebbia.'),
       h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Strumento dei muri' },
         pulsanteScelta('Pennello', M.strumento === 'pennello', () => strumentoMuri(M.strumento === 'pennello' ? null : 'pennello'), 'Dipingi per quadretti'),
-        pulsanteScelta('Rettangolo', M.strumento === 'rettangolo', () => strumentoMuri(M.strumento === 'rettangolo' ? null : 'rettangolo'), 'Per le aree grandi: da un angolo all’altro')),
+        pulsanteScelta('Rettangolo', M.strumento === 'rettangolo', () => strumentoMuri(M.strumento === 'rettangolo' ? null : 'rettangolo'), 'Per le aree grandi: da un angolo all’altro'),
+        pulsanteScelta('Porta', M.strumento === 'porta', () => strumentoMuri(M.strumento === 'porta' ? null : 'porta'), 'Clic su un Q di muro: mette una porta; clic su una porta: la toglie')),
+      M.strumento === 'porta' ? h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Porta nuova' },
+        ctx.dati.mappa.porte.stati.map((s) => pulsanteScelta(ctx.dati.mappa.porte.nomi_stati[s], M.porta.stato === s, () => { M.porta.stato = s; disegnaPannelloMuri(); }, `Le porte nuove nascono ${ctx.dati.mappa.porte.nomi_stati[s].toLowerCase()}`)),
+        h('label', { title: 'Per i giocatori è muro finché non la riveli (clic destro → Rivela)' }, h('input', { type: 'checkbox', checked: M.porta.segreta, onchange: (e) => { M.porta.segreta = e.target.checked; } }), ' segreta')) : null,
       h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Modalità dei muri' },
         pulsanteScelta('Muro', M.modo === 'muro', () => { M.modo = 'muro'; disegnaPannelloMuri(); }, 'Invalicabile'),
         pulsanteScelta('Terreno difficile', M.modo === 'terreno', () => { M.modo = 'terreno'; disegnaPannelloMuri(); }, 'Costa di più (provvisorio: ×2, A.128)'),
@@ -1088,7 +1100,7 @@ export function renderMappa(radice, ctx) {
     const scelta = sf.chiusa ?? [...FASCE.slice(0, st.fascia)].reverse().find((f) => rimaste[f] !== null);
     const g = st.scena.griglia;
     const area = areaRaggiungibile({
-      colonne: g.colonne, righe: g.righe, muri: daBase64(st.scena.muri), terreno: daBase64(st.scena.terreno),
+      colonne: g.colonne, righe: g.righe, muri: muriEffettivi(st.scena), terreno: daBase64(st.scena.terreno),
       token: st.scena.token.map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, lato: pezzoDi(x)?.lato ?? null })),
       chi: { id: t.id, q: t.q, ingombro: t.ingombro, lato: pz.lato }, massimo: Math.max(totale, portata), regole: ctx.dati.mappa.movimento,
     });
@@ -1171,7 +1183,7 @@ export function renderMappa(radice, ctx) {
         const g = s.griglia;
         const pz = pezzoDi(t);
         const areaG = areaRaggiungibile({
-          colonne: g.colonne, righe: g.righe, muri: daBase64(s.muri), terreno: daBase64(s.terreno),
+          colonne: g.colonne, righe: g.righe, muri: muriEffettivi(s, { perGiocatori: true }), terreno: daBase64(s.terreno),
           token: s.token.filter((x) => x.id === t.id || visibileAiGiocatori(x, s, nebbia)).map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, lato: pezzoDi(x)?.lato ?? null })),
           chi: { id: t.id, q: t.q, ingombro: t.ingombro, lato: pz?.lato ?? null }, massimo: info.totale, regole: ctx.dati.mappa.movimento,
         });
@@ -1341,12 +1353,83 @@ export function renderMappa(radice, ctx) {
     st.tpl.firma = firma;
     svuota(el.pTemplate, ...sezioneTemplate(voci, RT, { nuovo: () => nuovoTemplateUi(), sposta: spostaTemplate, nascondi: nascondiTemplate, togli: togliTemplate, round: roundAttuale() }));
   }
+  // ── Porte (fase 2, lotto 2; A.125; src/mappa/porte.js) ──
+  const RP = ctx.dati.mappa.porte;
+  const AVVISO_BLOCCATA = 'Porta bloccata: serve sbloccarla, scassinarla o forzarla.';
+  function dopoPorta() {
+    invalidaArea();
+    salvaPresto();
+    disegnaPannelli();
+    ridisegna(['aree', 'sopra']);
+  }
+  /** Strumento «Porta»: clic su un Q mette una porta (stato e segreta dal pannello) o toglie quella che c'è. */
+  function mettiTogliPorta(q) {
+    const c = portaA(st.scena, q);
+    if (c) { st.scena = cambiaPortaAnnullabile(st.scena, c, null, ctx.dati); avviso('Porta tolta.', { chiave: 'porta' }); dopoPorta(); return; }
+    if ((st.scena.porte?.length ?? 0) >= RP.porte_max) { avvisoErrore(`Al massimo ${RP.porte_max} porte.`); return; }
+    const p = nuovaPorta({ id: `porta-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`, q, stato: M.porta.stato, segreta: M.porta.segreta });
+    st.scena = cambiaPortaAnnullabile({ ...st.scena, porte: st.scena.porte ?? [] }, null, p, ctx.dati);
+    avviso(`Porta ${RP.nomi_stati[p.stato].toLowerCase()}${p.segreta ? ', segreta' : ''}.`, { chiave: 'porta' });
+    dopoPorta();
+  }
+  /** Cambio di stato deciso dal master (nessuna AzP): Apri, Chiudi, Blocca, Sblocca, Rivela, Rendi segreta. */
+  function cambiaPortaMaster(porta, dopo, testo) {
+    st.scena = cambiaPortaAnnullabile(st.scena, porta, { ...porta, ...dopo }, ctx.dati);
+    avviso(testo, { chiave: 'porta' });
+    dopoPorta();
+  }
+  /** Clic del master sulla porta: aperta ↔ chiusa; bloccata: l'avviso. */
+  function portaMaster(porta) {
+    if (porta.stato === 'bloccata') { avviso([AVVISO_BLOCCATA, 'Clic destro sulla porta → «Sblocca».'], { tipo: 'info', chiave: 'porta' }); return; }
+    cambiaPortaMaster(porta, { stato: porta.stato === 'aperta' ? 'chiusa' : 'aperta' }, porta.stato === 'aperta' ? 'Porta chiusa.' : 'Porta aperta.');
+  }
+  /**
+   * Il token apre o chiude una porta adiacente (A.125): 1 AzP nel Round, senza Prova; una riga nel registro dello
+   * scontro. La porta bloccata non si apre. Nulla si blocca: l'AzP si conta e si mostra accanto ai Q usati.
+   */
+  function portaToken(tok, porta, azione) {
+    const r = apriChiudi(porta, azione);
+    if (r.errore === 'bloccata') { avviso(AVVISO_BLOCCATA, { tipo: 'info', chiave: 'porta' }); return; }
+    if (r.errore) { avviso(`La porta è ${r.errore}.`, { chiave: 'porta' }); return; }
+    const scontro = st.fonti?.scontro ?? null;
+    const nome = pezzoDi(tok)?.nome ?? tok.nome ?? tok.id;
+    const id = `az-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
+    let s = conAzione(st.scena, { id, token: tok.id, porta: porta.id, azione, scontro: scontro?.id ?? null, round: scontro?.round ?? null, ...(scontro ? {} : { turno: turnoDi(st.scena, tok.id) }), quando: new Date().toISOString() }, RP);
+    s = cambiaPortaAnnullabile(s, porta, r.porta, ctx.dati, id);
+    st.scena = s;
+    if (scontro) scriviRegistro(scontro.id, (x) => rigaPorta(x, { nome, azione, azp: RP.costo_azp }), 'Riga del registro (porta)');
+    avviso(`${nome} ${azione === 'apri' ? 'apre' : 'chiude'} la porta: ${RP.costo_azp} AzP.`, { chiave: 'porta' });
+    dopoPorta();
+  }
+  /** AzP usate dal token nel Round (o nel turno), per il pannello. */
+  const azpToken = (t) => { const sc = st.fonti?.scontro ?? null; return azpNelRound(st.scena, t.id, sc?.id ?? null, sc?.round ?? null, sc ? null : turnoDi(st.scena, t.id)); };
+  /** Voci del clic destro su una porta: quelle del token scelto adiacente, poi quelle del master. */
+  function vociPorta(porta, scelto) {
+    const v = [];
+    if (scelto && porteVicine(st.scena, scelto).some((p) => p.id === porta.id)) {
+      const nome = pezzoDi(scelto)?.nome ?? scelto.id;
+      v.push({ testo: `${nome}: ${porta.stato === 'aperta' ? 'chiudi' : 'apri'} la porta (${RP.costo_azp} AzP)`, azione: () => portaToken(scelto, porta, porta.stato === 'aperta' ? 'chiudi' : 'apri') });
+    }
+    v.push(
+      porta.stato === 'aperta' ? { testo: 'Chiudi (master)', azione: () => cambiaPortaMaster(porta, { stato: 'chiusa' }, 'Porta chiusa.') }
+        : { testo: 'Apri (master)', azione: () => portaMaster(porta), disabilitata: porta.stato === 'bloccata', titolo: porta.stato === 'bloccata' ? AVVISO_BLOCCATA : '' },
+      porta.stato === 'bloccata' ? { testo: 'Sblocca', azione: () => cambiaPortaMaster(porta, { stato: 'chiusa' }, 'Porta sbloccata: ora è chiusa.') }
+        : { testo: 'Blocca', azione: () => cambiaPortaMaster(porta, { stato: 'bloccata' }, 'Porta bloccata.') },
+      porta.segreta ? { testo: 'Rivela ai giocatori', azione: () => cambiaPortaMaster(porta, { segreta: false }, 'Porta rivelata: ora i giocatori la vedono.') }
+        : { testo: 'Rendi segreta', azione: () => cambiaPortaMaster(porta, { segreta: true }, 'Porta segreta: per i giocatori è muro.') },
+      { testo: 'Togli la porta', azione: () => { st.scena = cambiaPortaAnnullabile(st.scena, porta, null, ctx.dati); avviso('Porta tolta.', { chiave: 'porta' }); dopoPorta(); } },
+      null);
+    return v;
+  }
   /** Clic destro su un punto senza token: nuovo template lì, e i comandi dei template che coprono quel Q. */
   function menuMappa(p) {
     if (!st.scena) return;
     const q = qVicino(mappaDaSchermo(st.cam, p.x, p.y));
     const qui = st.scena.template.filter((t) => celleTpl(t)[q[1] * st.scena.griglia.colonne + q[0]]);
-    apriMenuToken(el.riquadro, p.x, p.y, 'Mappa', [
+    const porta = portaA(st.scena, q);
+    const scelto = st.selezionato ? st.scena.token.find((x) => x.id === st.selezionato) : null;
+    apriMenuToken(el.riquadro, p.x, p.y, porta ? 'Porta' : 'Mappa', [
+      ...(porta ? vociPorta(porta, scelto) : []),
       { testo: 'Nuovo template qui… (T)', azione: () => nuovoTemplateUi(q) },
       ...qui.flatMap((t) => [null,
         { testo: `Sposta «${t.nome || testoMisure(t, RT)}»`, azione: () => spostaTemplate(t.id) },
@@ -1529,7 +1612,7 @@ export function renderMappa(radice, ctx) {
   function movimentoPannello(t) {
     const info = st.area?.token === t.id ? st.area : infoArea(t);
     const ultimo = [...st.scena.movimenti].reverse().find((x) => x.token === t.id);
-    return { mostraArea: st.mostraArea, mostraZoc: st.mostraZoc, movimento: info.movimento, rimaste: info.rimaste, usato: info.usato, disponibili: info.disponibili, fascia: st.fascia, motivo: info.motivo, nota: info.nota, escluse: info.escluse ?? [], chiusa: info.chiusa ?? null, annullabile: !!ultimo, veicolo: t.rif.tipo === 'veicolo', andatura: pezzoDi(t)?.andatura ?? null, senzaScontro: !st.fonti?.scontro };
+    return { mostraArea: st.mostraArea, mostraZoc: st.mostraZoc, movimento: info.movimento, rimaste: info.rimaste, usato: info.usato, disponibili: info.disponibili, fascia: st.fascia, motivo: info.motivo, nota: info.nota, escluse: info.escluse ?? [], chiusa: info.chiusa ?? null, annullabile: !!ultimo, azp: azpToken(t), porte: porteVicine(st.scena, t).map((p) => ({ id: p.id, stato: p.stato })), veicolo: t.rif.tipo === 'veicolo', andatura: pezzoDi(t)?.andatura ?? null, senzaScontro: !st.fonti?.scontro };
   }
   /** «Nuovo turno» senza scontro aperto: il conteggio del movimento riparte per un token o per tutti (null). */
   function nuovoTurnoUi(id = null) {
@@ -1565,6 +1648,7 @@ export function renderMappa(radice, ctx) {
     if (st.tpl.anteprima && !st.spazio) { aggiornaAnteprima(m); fissaTemplate(); return; }
     const base = { id: e.pointerId, x: p.x, y: p.y, x0: p.x, y0: p.y, mosso: false };
     const d = disegnoAttivo();
+    if (d && d.forma === 'porta' && !st.spazio && st.strumento !== 'calibra') { mettiTogliPorta(qVicino(m)); return; }
     if (d && !st.spazio && st.strumento !== 'calibra') {
       const q = qVicino(m);
       st.trascina = { ...base, modo: 'disegno', ...d, iniziale: d.gruppo === 'nebbia' ? { nebbia: st.scena.nebbia.coperti } : { muri: st.scena.muri, terreno: st.scena.terreno }, da: q, a: q };
@@ -1662,6 +1746,17 @@ export function renderMappa(radice, ctx) {
         apriCarta(tok);
       }
       return true;
+    }
+    // fase 2, lotto 2: clic su una porta (senza token sopra): il master la apre o la chiude; con un token scelto che ci
+    // può arrivare (porta aperta dentro l'area) vale il movimento
+    if (!t.mosso && t.modo === 'sposta' && !st.spazio && !e.shiftKey) {
+      const mm = mappaDaSchermo(st.cam, p.x, p.y);
+      const porta = portaA(st.scena, qVicino(mm));
+      if (porta && !tokenSotto(mm)) {
+        const tok = st.selezionato ? st.scena.token.find((x) => x.id === st.selezionato) : null;
+        const info = tok ? areaScelta() : null;
+        if (!(tok && info && costoDentro(info, posizioneVerso(tok, mm)) < Infinity)) { portaMaster(porta); return true; }
+      }
     }
     // clic su un quadretto con un token scelto: dentro l'area (o con Maiusc) il token ci va; altrimenti si deseleziona,
     // senza muovere e senza avvisi (07/10: il master lascia il token per fare altro)
@@ -1770,6 +1865,8 @@ export function renderMappa(radice, ctx) {
       { testo: st.mostraArea ? 'Nascondi area (M)' : 'Mostra area (M)', azione: () => cambiaMostraArea() },
       { testo: st.mostraZoc ? 'Nascondi ZoC (Z)' : 'Mostra ZoC (Z)', azione: () => cambiaMostraZoc(), titolo: 'Zone di controllo degli avversari: uscendone si provoca un Attacco di Opportunità (§5.3)' },
       { testo: 'Annulla ultimo movimento', azione: () => annullaMovimentoUi(tok.id), disabilitata: !ultimo },
+      // fase 2, lotto 2 (A.125): le porte adiacenti, 1 AzP ciascuna
+      ...porteVicine(st.scena, tok).map((porta) => ({ testo: `${porta.stato === 'aperta' ? 'Chiudi' : 'Apri'} porta (${ctx.dati.mappa.porte.costo_azp} AzP)`, azione: () => portaToken(tok, porta, porta.stato === 'aperta' ? 'chiudi' : 'apri'), titolo: porta.stato === 'bloccata' ? 'Porta bloccata: serve sbloccarla, scassinarla o forzarla' : 'Adiacente, con una mano libera, senza Prova (A.125)' })),
       { testo: 'Nuovo turno', azione: () => nuovoTurnoUi(tok.id), disabilitata: conScontro, titolo: conScontro ? 'Con lo scontro aperto il movimento riparte al nuovo Round («Avanti»)' : 'Il movimento di questo token riparte da 0' },
       null,
       { testo: 'Apri mini-scheda', azione: () => apriCarta(tok), disabilitata: !pz },

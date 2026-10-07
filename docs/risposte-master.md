@@ -1043,7 +1043,8 @@ Fonte: E&L del 06/10/2026, 17:23 UTC, blocco «Risposte approvate — regole tec
     adiacenti e con una mano libera; attraversarla costa il movimento normale; «chiusa» e «bloccata» sono distinte.
     Illuminazione con le categorie di A.106; la mappa distingue la portata della sorgente (in Q) dalla luce della zona; le
     lampade del catalogo hanno una sola portata; i vecchi «livelli» non si convertono. Restano aperti i veicoli e la
-    corrispondenza delle vecchie etichette numeriche.
+    corrispondenza delle vecchie etichette numeriche. **Porte applicate** il 07/10 (branch `battlemap`, fase 2, lotto 2:
+    `src/mappa/porte.js`, `data/mappa.json` → porte); l'illuminazione è il prossimo lotto (linea di visuale).
 131. **Quadretti occupati** (A.127). Alleati attraversabili al costo normale; nemici no, salvo capacità; non si termina
     né ci si ferma in un quadretto occupato; per una pedina grande serve libero tutto l'ingombro d'arrivo; attraversare
     un alleato non evita gli Attacchi di Opportunità. Conferma `data/mappa.json` → movimento.
@@ -1086,6 +1087,9 @@ dell'aspetto: nel pacchetto del 07/10), A.111 (solo Pablo Zaion), A.112, A.113, 
   è largo all'inizio né come si contano le larghezze finali pari (3 × 2, 12 × 6) quando il cono è dritto su una fila.
   Provvisorio: largo 1 Q al bordo del lanciatore, poi si allarga in modo uniforme; con la larghezza pari i Q di bordo
   coperti per meno di metà restano fuori (`data/mappa.json` → template.cono_larghezza_iniziale 1).
+- **A.139 — Porta «adiacente» in diagonale** (07/10/2026, porte della mappa, fase 2). La A.125 chiede di essere
+  adiacenti alla porta per aprirla o chiuderla (1 AzP). Basta essere in diagonale rispetto al Q della porta? Provvisorio:
+  sì, come la portata di 1 Q (`data/mappa.json` → porte, `TODO(Davide)`). La mano libera l'app non la controlla.
 
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 

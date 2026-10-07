@@ -8,6 +8,8 @@
 //   { tipo: 'movimento', movimento: id, token, da, a }
 //   { tipo: 'token', id, prima, dopo }              prima null: messo; dopo null: tolto; tutti e due: cambiato
 //   { tipo: 'template', id, prima, dopo }           template ad area (fase 2, lotto 1): piazzato, spostato, tolto
+//   { tipo: 'porta', id, prima, dopo, azione? }     porta (fase 2, lotto 2): messa, cambiata, tolta; con l'azione del
+//                                                   token che l'ha aperta o chiusa (annullando esce anche l'AzP)
 // Movimenti (scena.movimenti, al più scena.movimenti_max): { id, token, scontro, round, turno?, da, a, costo, fascia, libero,
 // quando }. Senza scontro aperto (scena collegata a una bozza o a nulla) il movimento si conta lo stesso, per «turno»: il
 // numero del turno del token (turnoDi) che «Nuovo turno» fa avanzare, per un token o per tutti (scena.turni, primo test
@@ -39,6 +41,18 @@ export function cambiaTemplateAnnullabile(scena, prima, dopo, dati, adesso = new
     template = i >= 0 ? scena.template.map((t) => (t.id === id ? dopo : t)) : [...scena.template, dopo];
   }
   return conVoce({ ...scena, template }, { tipo: 'template', id, prima, dopo, quando: adesso.toISOString() }, dati);
+}
+
+/** Una porta messa, tolta o cambiata (aperta, chiusa, bloccata, rivelata), con la voce per Ctrl+Z; `azione`: l'id dell'AzP. */
+export function cambiaPortaAnnullabile(scena, prima, dopo, dati, azione = null, adesso = new Date()) {
+  const id = (dopo ?? prima).id;
+  const porte = scena.porte ?? [];
+  let nuove = porte.filter((p) => p.id !== id);
+  if (dopo) {
+    const i = porte.findIndex((p) => p.id === id);
+    nuove = i >= 0 ? porte.map((p) => (p.id === id ? dopo : p)) : [...porte, dopo];
+  }
+  return conVoce({ ...scena, porte: nuove }, { tipo: 'porta', id, prima, dopo, ...(azione ? { azione } : {}), quando: adesso.toISOString() }, dati);
 }
 
 /** Turno del token senza scontro: scena.turni = { tutti, token: { id: n } }, i due contatori sommati. */
@@ -139,6 +153,12 @@ export function annullaUltima(scena, { chiaviPresenti = null } = {}) {
       let token = senza.token.filter((t) => t.id !== voce.id);
       if (voce.prima) token = [...token, voce.prima];
       return { scena: { ...senza, token }, voce, testo: voce.prima && voce.dopo ? 'token' : voce.prima ? 'token tolto' : 'token messo' };
+    }
+    case 'porta': {
+      let porte = (senza.porte ?? []).filter((p) => p.id !== voce.id);
+      if (voce.prima) porte = [...porte, voce.prima];
+      const azioni = voce.azione ? (senza.azioni ?? []).filter((a) => a.id !== voce.azione) : senza.azioni;
+      return { scena: { ...senza, porte, ...(azioni ? { azioni } : {}) }, voce, testo: !voce.prima ? 'porta messa' : !voce.dopo ? 'porta tolta' : 'porta' };
     }
     case 'template': {
       let template = senza.template.filter((t) => t.id !== voce.id);

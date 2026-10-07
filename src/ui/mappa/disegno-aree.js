@@ -185,3 +185,51 @@ export function disegnaTemplate(c, { scena, cam, info, celle, colore, stile, eti
   c.fillText(etichetta, s.x, s.y);
   c.restore();
 }
+
+/**
+ * Porte (fase 2, lotto 2; src/mappa/porte.js), disegnate lungo il muro: aperta = due stipiti e il varco tratteggiato
+ * (verde), chiusa = battente pieno (marrone), bloccata = battente pieno rosso con la croce; segreta (solo il master) =
+ * contorno tratteggiato viola con la «S».
+ * @param porte [{ q, stato, segreta?, orientamento }]; colori: data/mappa.json → porte.colori
+ */
+export function disegnaPorte(c, { scena, cam, info, porte, colori }) {
+  const g = scena.griglia;
+  const v = visibili(g, cam, info);
+  for (const p of porte) {
+    const [x, y] = p.q;
+    if (x < v.x0 - 1 || x > v.x1 || y < v.y0 - 1 || y > v.y1) continue;
+    const [rx, ry, rw, rh] = rettQ(g, cam, x, y);
+    const oriz = p.orientamento !== 'verticale';
+    const spessore = Math.max(3, (oriz ? rh : rw) * 0.28);
+    const colore = colori[p.stato] ?? colori.chiusa;
+    c.save();
+    // il battente (o il varco) al centro del Q, lungo il muro
+    const bx = oriz ? rx : rx + rw / 2 - spessore / 2, by = oriz ? ry + rh / 2 - spessore / 2 : ry;
+    const bw = oriz ? rw : spessore, bh = oriz ? spessore : rh;
+    if (p.stato === 'aperta') {
+      c.fillStyle = colore;
+      const stipite = Math.max(2, (oriz ? rw : rh) * 0.14);
+      if (oriz) { c.fillRect(bx, by, stipite, bh); c.fillRect(bx + bw - stipite, by, stipite, bh); } else { c.fillRect(bx, by, bw, stipite); c.fillRect(bx, by + bh - stipite, bw, stipite); }
+      c.strokeStyle = colore; c.lineWidth = 2; c.setLineDash([4, 3]);
+      c.beginPath();
+      if (oriz) { c.moveTo(bx, by + bh / 2); c.lineTo(bx + bw, by + bh / 2); } else { c.moveTo(bx + bw / 2, by); c.lineTo(bx + bw / 2, by + bh); }
+      c.stroke();
+    } else {
+      c.fillStyle = colore; c.fillRect(bx, by, bw, bh);
+      c.strokeStyle = '#111'; c.lineWidth = 1; c.strokeRect(bx + 0.5, by + 0.5, bw - 1, bh - 1);
+      if (p.stato === 'bloccata') {
+        const cx = rx + rw / 2, cy = ry + rh / 2, r = Math.min(rw, rh) * 0.18;
+        c.strokeStyle = '#fff'; c.lineWidth = 2;
+        c.beginPath(); c.moveTo(cx - r, cy - r); c.lineTo(cx + r, cy + r); c.moveTo(cx + r, cy - r); c.lineTo(cx - r, cy + r); c.stroke();
+      }
+    }
+    if (p.segreta) {
+      c.strokeStyle = colori.segreta; c.lineWidth = 2; c.setLineDash([5, 4]);
+      c.strokeRect(rx + 2, ry + 2, rw - 4, rh - 4);
+      c.setLineDash([]);
+      c.fillStyle = colori.segreta; c.font = `700 ${Math.max(9, Math.min(16, rh * 0.35))}px system-ui, sans-serif`;
+      c.textAlign = 'left'; c.textBaseline = 'top'; c.fillText('S', rx + 4, ry + 3);
+    }
+    c.restore();
+  }
+}

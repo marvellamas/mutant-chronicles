@@ -20,6 +20,7 @@ import { daBase64, inBase64, cella, senza } from './celle.js';
 import { celleToken, chiaveRif, iniziali } from './token.js';
 import { barraIniziativa, barraPerGiocatori } from './iniziativa.js';
 import { templatePerGiocatori } from './template.js';
+import { muriPerGiocatori, portePerGiocatori } from './porte.js';
 
 /**
  * @param s la scena completa
@@ -56,7 +57,9 @@ export function vistaGiocatori(s, contesto = null, regoleTemplate = contesto?.re
     revisione: s.revisione,
     mappa,
     griglia: { ...s.griglia },
-    muri: inBase64(senza(daBase64(s.muri), nebbia)),
+    // porte (fase 2, lotto 2): le segrete restano muro, le altre arrivano a parte con il loro stato
+    muri: inBase64(senza(muriPerGiocatori(s), nebbia)),
+    porte: portePerGiocatori(s),
     terreno: inBase64(senza(daBase64(s.terreno), nebbia)),
     nebbia: { coperti: s.nebbia.coperti },
     token,

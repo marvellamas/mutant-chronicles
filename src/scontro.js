@@ -460,6 +460,11 @@ export function senzaOpportunitaDelMovimento(s, movimento) {
  * Movimento «Libero» della mappa di battaglia (primo test di Marcello, 06/10/2026): il master sposta un token dove vuole,
  * fuori dall'area e dal conteggio del movimento; nel registro resta una riga.
  */
+/** Porta aperta o chiusa da un token sulla mappa (A.125: 1 AzP, senza Prova): una riga nel registro. */
+export function rigaPorta(s, { nome, azione, azp = 1 }, adesso) {
+  return conRiga(s, `Mappa: ${nome} ${azione === 'apri' ? 'apre' : 'chiude'} una porta (${azp} AzP).`, adesso);
+}
+
 export function rigaMovimentoLibero(s, nome, da, a, adesso) {
   return conRiga(s, `Mappa: ${nome} spostato liberamente da (${da.join(', ')}) a (${a.join(', ')}); non conta nel movimento.`, adesso);
 }

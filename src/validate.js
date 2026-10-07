@@ -2787,6 +2787,14 @@ function validaMappa(dati, err) {
   if (!Array.isArray(M?.divisibili) || !M.divisibili.every((f) => fasce.includes(f))) err(F, 'movimento.divisibili', 'elenco di fasce (passo, corsa, scatto)');
   if (!Array.isArray(m.template?.forme) || !m.template.forme.length) err(F, 'template.forme', 'almeno una forma');
   if (!isIntero(m.template?.durata_round_predefinita) || m.template.durata_round_predefinita < 1) err(F, 'template.durata_round_predefinita', 'intero da 1 in su');
+  // fase 2, lotto 2: porte (src/mappa/porte.js; A.125)
+  const PP = m.porte ?? {};
+  if (['aperta', 'chiusa', 'bloccata'].some((s) => !PP.stati?.includes(s))) err(F, 'porte.stati', 'aperta, chiusa, bloccata attese (A.125)');
+  if (!PP.stati?.includes(PP.stato_predefinito)) err(F, 'porte.stato_predefinito', 'uno degli stati');
+  if (!isIntero(PP.costo_azp) || PP.costo_azp < 0) err(F, 'porte.costo_azp', 'intero da 0 in su (A.125: 1 AzP)');
+  for (const k of ['porte_max', 'azioni_max']) if (!isIntero(PP[k]) || PP[k] < 1) err(F, `porte.${k}`, 'intero da 1 in su');
+  if (!Array.isArray(PP.bloccano_vista) || !PP.bloccano_vista.every((s) => PP.stati?.includes(s))) err(F, 'porte.bloccano_vista', 'stati delle porte');
+  for (const s of [...(PP.stati ?? []), 'segreta']) if (!/^#[0-9a-fA-F]{6}$/.test(String(PP.colori?.[s]))) err(F, `porte.colori.${s}`, '#rrggbb');
   // fase 2, lotto 1: template ad area (src/mappa/template.js)
   const TT = m.template ?? {};
   const noteForme = ['cerchio', 'cono', 'linea', 'quadrato', 'rettangolo'];

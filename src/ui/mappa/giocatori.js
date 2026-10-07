@@ -20,7 +20,7 @@ import { creaTela } from './canvas.js';
 import { creaGesti } from './gesti.js';
 import { disegnaToken, coloriMappa, creaImmagini } from './disegno-token.js';
 import { barraIniziativaEl } from './barra-iniziativa.js';
-import { disegnaArea, disegnaZoc, disegnaPercorso, coloriAree, disegnaTemplate } from './disegno-aree.js';
+import { disegnaArea, disegnaZoc, disegnaPercorso, coloriAree, disegnaTemplate, disegnaPorte } from './disegno-aree.js';
 import { celleDaMaschera } from '../../mappa/template.js';
 import { celleDellaDiretta, zocDellaDiretta, avversariDellaDiretta, trattiPercorso } from '../../mappa/diretta.js';
 import { passiInZoc } from '../../mappa/zoc.js';
@@ -88,6 +88,8 @@ export function renderGiocatori(radice, ctx) {
       // template ad area (fase 2, lotto 1): quelli della scena e l'anteprima di quello che il master sta piazzando,
       // già filtrati dal server (solo i Q fuori dalla nebbia, niente nascosti)
       if (st.vista) for (const t of [...(st.vista.template ?? []), ...(direttaAttuale()?.template ?? [])]) disegnaTemplateGiocatori(c, info, t);
+      // porte (fase 2, lotto 2): già filtrate dal server (niente segrete non rivelate, niente sotto la nebbia)
+      if (st.vista?.porte?.length) disegnaPorte(c, { scena: st.vista, cam: st.cam, info, porte: st.vista.porte, colori: ctx.dati.mappa.porte.colori });
       const d = direttaAttuale();
       if (d) {
         const s = st.vista;

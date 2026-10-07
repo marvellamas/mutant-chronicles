@@ -7,6 +7,8 @@
 //   muri, terreno: maschere di Q in base64 (src/mappa/celle.js),
 //   nebbia: { iniziale: "coperta" | "scoperta", coperti: maschera },
 //   token: [{ id, rif: { tipo: "partecipante" | "veicolo" | "segnaposto", id }, q: [x, y], ingombro, nascosto, nome? }],
+//   porte?: [{ id, q: [x, y], stato: aperta | chiusa | bloccata, segreta }]   porte (fase 2, lotto 2; src/mappa/porte.js)
+//   azioni?: [{ id, token, tipo: 'porta', porta, azione, azp, scontro, round, turno?, quando }]  AzP dei token (A.125)
 //   template: [{ id, forma, origine: [x, y], misure: { … in Q }, direzione?, colore?, nome?, durata?, fine_round?,
 //                scontro?, nascosto }]                       template ad area (fase 2, lotto 1; src/mappa/template.js)
 //   collegamento: { scontro: id | null, bozza: id | null },
@@ -20,6 +22,7 @@
 import { nuovaMaschera, inBase64, mascheraValida } from './celle.js';
 import { tokenDentro } from './token.js';
 import { erroreTemplate } from './template.js';
+import { errorePorta } from './porte.js';
 
 export const ID_SCENA = /^[a-z0-9-]{1,60}$/;
 /** Nome dei file in mappe/: lo sceglie il server (nome ridotto + impronta del contenuto). */
@@ -68,6 +71,8 @@ export function nuovaScena({ id, nome, mappa = null, griglia = {}, colonne, righ
     nebbia: { iniziale, coperti: inBase64(nuovaMaschera(dim.colonne, dim.righe, iniziale === 'coperta')) },
     token: [],
     template: [],
+    porte: [],
+    azioni: [],
     collegamento: { scontro: null, bozza: null },
     movimenti: [],
     annulla: [],
@@ -184,6 +189,27 @@ export function validaScena(s, dati) {
     if (t.scontro !== undefined && t.scontro !== null && !(isTesto(t.scontro) && ID_SCENA.test(t.scontro))) return `${k}.scontro: id di scontro o null`;
     if (t.fine_round !== undefined && t.fine_round !== null && !isIntero(t.fine_round)) return `${k}.fine_round: intero o null`;
     if (typeof t.nascosto !== 'boolean') return `${k}.nascosto: vero o falso`;
+  }
+
+  // porte (fase 2, lotto 2; A.125): un Q ciascuna, stato e segreta; le azioni dei token (AzP del Round)
+  if (s.porte !== undefined) {
+    if (!Array.isArray(s.porte) || s.porte.length > (D.porte?.porte_max ?? 0)) return `porte: elenco di al massimo ${D.porte?.porte_max}`;
+    const idPorte = new Set();
+    const posti = new Set();
+    for (const [i, p] of s.porte.entries()) {
+      const e = errorePorta(p, colonne, righe);
+      if (e) return `porte[${i}].${e}`;
+      if (idPorte.has(p.id)) return `porte[${i}].id ripetuto`;
+      if (posti.has(p.q.join())) return `porte[${i}].q: c'è già una porta su quel Q`;
+      idPorte.add(p.id);
+      posti.add(p.q.join());
+    }
+  }
+  if (s.azioni !== undefined) {
+    if (!Array.isArray(s.azioni) || s.azioni.length > (D.porte?.azioni_max ?? 0)) return `azioni: elenco di al massimo ${D.porte?.azioni_max}`;
+    for (const [i, a] of s.azioni.entries()) {
+      if (!isOggetto(a) || !isTesto(a.token) || a.tipo !== 'porta' || !['apri', 'chiudi'].includes(a.azione) || !isIntero(a.azp)) return `azioni[${i}]: { token, tipo: porta, azione: apri | chiudi, azp } atteso`;
+    }
   }
 
   // collegamento allo scontro o alla bozza di «Prepara scontro» (§4)

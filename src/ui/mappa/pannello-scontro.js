@@ -91,7 +91,9 @@ const q = (n) => `${String(n).replace('.', ',')} Q`;
  * Movimento del token scelto (lotto 5, §8): Passo, Corri e Scatta (l'area raggiungibile in tre colori), quanto ha già
  * usato nel Round, «Annulla ultimo movimento». Regole in data/mappa.json → movimento (A.124, A.127–A.129): il Passo si
  * divide, Corsa e Scatto sono un blocco unico (escluse dopo un Passo cominciato; chiusa: il blocco fatto, Q persi).
- * @param m { movimento: { passo, corsa, scatto }, rimaste, usato, disponibili, fascia, motivo, nota, escluse, chiusa, annullabile, veicolo,
+ * Porte (fase 2, lotto 2; A.125): le AzP usate nel Round accanto ai Q usati (solo conteggio, nulla si blocca) e
+ * «Apri porta» / «Chiudi porta» per le porte adiacenti.
+ * @param m { movimento: { passo, corsa, scatto }, rimaste, usato, disponibili, fascia, motivo, nota, escluse, chiusa, annullabile, veicolo, azp, porte,
  *   andatura, senzaScontro }: senza scontro aperto il movimento si conta per turno, con «Nuovo turno».
  */
 function sezioneMovimento(m, a) {
@@ -107,7 +109,8 @@ function sezioneMovimento(m, a) {
       : 'Nessun profilo di movimento: si sposta con Libero (o Maiusc).'),
     // Q usati / disponibili con la fascia scelta, nel Round dello scontro o nel turno (senza scontro)
     mov && m.disponibili !== null && m.disponibili !== undefined ? h('p', { class: `mappa-usati${m.usato >= m.disponibili ? ' finito' : ''}` },
-      h('strong', {}, `${String(m.usato).replace('.', ',')} / ${q(m.disponibili)}`), ` usati ${m.senzaScontro ? 'nel turno' : 'nel Round'}`) : null,
+      h('strong', {}, `${String(m.usato).replace('.', ',')} / ${q(m.disponibili)}`), ` usati ${m.senzaScontro ? 'nel turno' : 'nel Round'}`,
+      m.azp ? h('span', { class: 'azp-usate', title: 'Azioni Principali usate (porte, A.125): si contano, non bloccano' }, ` · ${m.azp} AzP`) : null) : null,
     // A.129: Passo diviso (quanto resta) o blocco di Corsa e Scatto (Q persi)
     m.nota ? h('p', { class: 'nota nota-fasce' }, m.nota) : null,
     m.motivo ? h('p', { class: 'nota motivo-movimento' }, `Area: ${m.motivo}. Con Libero (o Maiusc) il master lo sposta comunque.`) : null,
@@ -129,6 +132,9 @@ function sezioneMovimento(m, a) {
       }, testo)) : null,
       // quarta modalità (primo test di Marcello, 06/10/2026), per tutti i token: Maiusc ne è la scorciatoia
       h('button', { type: 'button', class: `btn btn-piccolo fascia-4${m.fascia === 4 ? ' scelto' : ''}`, 'aria-pressed': String(m.fascia === 4), title: 'In qualunque quadretto, senza area e senza conteggio (scorciatoia: Maiusc)', onclick: () => a.fascia(4) }, 'Libero')),
+    m.porte?.length && !m.veicolo ? h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Porte vicine' },
+      m.porte.map((p) => h('button', { type: 'button', class: 'btn btn-piccolo', title: p.stato === 'bloccata' ? 'Porta bloccata: serve sbloccarla, scassinarla o forzarla' : 'Adiacente, con una mano libera, senza Prova: 1 AzP (A.125)', onclick: () => a.porta(p.id) },
+        p.stato === 'aperta' ? 'Chiudi porta' : p.stato === 'bloccata' ? 'Apri porta (bloccata)' : 'Apri porta'))) : null,
     h('div', { class: 'mappa-azioni-token' },
       h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !m.annullabile, onclick: a.annullaMovimento }, 'Annulla ultimo movimento'),
       // senza scontro aperto il Round non avanza: il turno lo fa ripartire il master
