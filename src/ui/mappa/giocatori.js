@@ -25,9 +25,12 @@ import { celleDaMaschera, templateVisibili, ostacoliVisibili } from '../../mappa
 import { celleDellaDiretta, zocDellaDiretta, avversariDellaDiretta, trattiPercorso } from '../../mappa/diretta.js';
 import { passiInZoc } from '../../mappa/zoc.js';
 import { avviso } from '../avvisi.js';
+import { leggiVersione, serveAggiornamento, urlRicarica } from '../../versione.js';
 
 // due schermi del master (07/10): la vista si aggiorna entro 1–2 secondi dalle azioni del master
 const INTERVALLO_MS = 1000;
+// ritocchi del 07/10: ogni quanto la vista giocatori guarda se c'è una versione nuova dell'app
+const CONTROLLO_VERSIONE_MS = 20000;
 
 /**
  * @param ctx { dati }
@@ -51,7 +54,8 @@ export function renderGiocatori(radice, ctx) {
   el.iniziativa = h('div', { class: 'mappa-iniziativa-posto', hidden: true });
   // la riga del movimento sta sulla mappa: resta anche a schermo intero, dove la testata sparisce
   // ritocchi del 07/10: «Adatta allo schermo», discreto sulla mappa, resta anche a schermo intero (tasto A)
-  el.adatta = h('button', { type: 'button', class: 'btn tondo giocatori-adatta', title: 'Adatta allo schermo: tutta la parte di mappa scoperta (tasto A, doppio tocco)', 'aria-label': 'Adatta allo schermo', onclick: () => adattaSchermo() }, '⤢');
+  // ritocchi del 07/10 (test di Marcello): un pulsante vero, come quelli del master, non solo un'icona semitrasparente
+  el.adatta = h('button', { type: 'button', class: 'btn giocatori-adatta', title: 'Adatta allo schermo: tutta la parte di mappa scoperta (tasto A, doppio tocco)', 'aria-label': 'Adatta allo schermo', onclick: () => adattaSchermo() }, h('span', { 'aria-hidden': 'true' }, '⤢'), ' Adatta');
   el.riquadro.append(el.messaggio, el.movimento, el.adatta);
   svuota(radice, h('section', { class: 'mappa-pagina giocatori-pagina' },
     h('header', { class: 'giocatori-barra' }, el.titolo, el.turno, el.stato, el.schermo), el.iniziativa, el.riquadro));
@@ -302,6 +306,20 @@ export function renderGiocatori(radice, ctx) {
   const flusso = typeof EventSource === 'function' ? new EventSource('api/vista-giocatori/diretta') : null;
   flusso?.addEventListener('diretta', (e) => { try { usaDiretta(JSON.parse(e.data)); } catch { /* evento rovinato: si aspetta il prossimo */ } });
   flusso?.addEventListener('aggiorna', () => aggiorna());
+  // ritocchi del 07/10: la vista giocatori si aggiorna da sola a una versione nuova dell'app (a schermo intero la barra
+  // «Nuova versione» non si vede, e una finestra aperta prima dell'aggiornamento restava sul codice vecchio): controllo
+  // ogni CONTROLLO_VERSIONE_MS e a ogni ricollegamento del flusso (server riavviato); niente da perdere ricaricando
+  const caricata = document.querySelector('meta[name="mutant-versione"]')?.content || null;
+  const controllaVersione = async () => {
+    if (st.chiusa) return;
+    try {
+      const r = await fetch('versione.json', { cache: 'no-store' });
+      const v = r.ok ? leggiVersione(await r.json()) : null;
+      if (v && serveAggiornamento(caricata, v.versione)) location.href = urlRicarica(location.href, v.versione);
+    } catch { /* senza rete: si riprova al prossimo giro */ }
+  };
+  const giroVersione = setInterval(controllaVersione, CONTROLLO_VERSIONE_MS);
+  flusso?.addEventListener('open', () => controllaVersione());
   // il master chiede «Adatta allo schermo» (sezione «Vista giocatori»)
   flusso?.addEventListener('adatta', () => adattaSchermo());
   // a schermo intero (pulsante o F11, anche sul secondo monitor) solo mappa e barra dell'Iniziativa: niente testata,
@@ -322,6 +340,7 @@ export function renderGiocatori(radice, ctx) {
   return () => {
     st.chiusa = true;
     clearInterval(giro);
+    clearInterval(giroVersione);
     flusso?.close();
     gesti.distruggi();
     tela.distruggi();
