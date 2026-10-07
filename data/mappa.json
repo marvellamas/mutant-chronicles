@@ -481,6 +481,12 @@
     "spessore_minimo_px": 3,
     "mini_token_px": 4
   },
+  "pv_zero": {
+    "_nota": "Icone a 0 PV (ritocchi del 07/10/2026): un nemico (o un partecipante a mano) a 0 PV o meno ha il teschio sopra il token, un PG a 0 PV la croce rossa; anche sui mini-token della barra dell'Iniziativa e nella vista giocatori (i nemici solo se il loro token si vede). Copie ridotte a 96 px delle immagini di Marcello in img/Icons/. quota_token: lato dell'icona rispetto al diametro del token.",
+    "nemico": "img/Icons/Skull-96.png",
+    "pg": "img/Icons/RedCross-96.png",
+    "quota_token": 0.7
+  },
   "porte": {
     "_nota": "Porte (fase 2, lotto 2; src/mappa/porte.js). A.125, decisione 130 (risposta di Davide del 06/10/2026): «Aprire o chiudere una normale porta accessibile e non bloccata costa 1 AzP, senza prova. Per azionarla manualmente occorre essere adiacenti e avere una mano libera. Attraversare la porta consuma il normale movimento, separatamente dall’apertura. Una porta bloccata richiede prima la procedura pertinente per sbloccarla, scassinarla o forzarla. Nell’app «chiusa» e «bloccata» sono condizioni distinte.» Per il movimento la porta aperta è un passaggio, chiusa o bloccata è muro. Le porte segrete sono muro per i giocatori finché il master non le rivela.",
     "stati": [

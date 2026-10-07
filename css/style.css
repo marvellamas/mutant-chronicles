@@ -1980,7 +1980,7 @@ body:has(.mappa-pagina) .piede { display: none; }
 .ridotta-voce { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; background: none; border: 2px solid transparent; border-radius: var(--raggio); padding: 0.2rem; cursor: pointer; color: inherit; }
 .ridotta-voce.di-turno { border-color: var(--mappa-turno); }
 .ridotta-voce.scelto { background: var(--accento-tenue); }
-.ridotta-voce .mini-token { position: static; transform: none; width: 40px; height: 40px; }
+.ridotta-voce .mini-token { position: relative; transform: none; width: 40px; height: 40px; }
 .pv-mini { display: block; width: 44px; height: 5px; border-radius: 3px; background: linear-gradient(to right, var(--pv) calc(var(--quota) * 100%), var(--bordo) 0); }
 /* barra dell'Iniziativa: il valore più alto a sinistra; i pari merito impilati nell'ordine della plancia */
 .mappa-iniziativa-posto[hidden] { display: none; }
@@ -2033,6 +2033,8 @@ button.mini-token { cursor: pointer; }
 /* 07/10: il bordo colorato è l'unica cornice (nessun filo di contorno attorno al mini-token); il ritratto lo riempie */
 .mini-token.con-bordo { border-color: var(--bordo); }
 .mini-token img { border-radius: 50%; object-position: 50% var(--ritratto-y, 20%); }
+/* icona a 0 PV sul mini-token (07/10; data/mappa.json → pv_zero): teschio o croce rossa, sopra il ritratto */
+.mini-token img.icona-zero { position: absolute; left: 15%; top: 15%; width: 70%; height: 70%; object-fit: contain; border-radius: 0; pointer-events: none; }
 .mini-token.con-bordo.tratteggio { border-style: dashed; background-color: var(--alterno); }
 .mini-token.con-bordo.doppio { border-style: double; border-width: 4px; }
 .mini-token.con-bordo.scelto { outline: 2px solid var(--mappa-selezione); outline-offset: 2px; }

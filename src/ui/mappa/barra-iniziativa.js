@@ -13,7 +13,7 @@ const LINEA_PX = 24; // altezza del centro della linea: sopra, i numeri della sc
 /**
  * @param barra da barraIniziativa (master) o dalla vista giocatori; null: «nessuno scontro aperto»
  * @param o { pxPerPunto, avanti?(), indietro?(), puoIndietro?: anteprima di «Indietro» o null, reimposta?(), scegli?(voce),
- *   centra?: { attivo, cambia(v) }, vuoto?: testo senza scontro }
+ *   centra?: { attivo, cambia(v) }, vuoto?: testo senza scontro, zero?: data/mappa.json → pv_zero (icone a 0 PV) }
  */
 export function barraIniziativaEl(barra, o = {}) {
   const comandi = !!o.avanti;
@@ -56,15 +56,17 @@ export function stileBordo(b) {
 
 function miniToken(v, barra, o) {
   const x = posizioneSullaScala(barra, v.valore) * 100;
-  const titolo = `${v.nome} · Iniziativa ${v.valore}${v.diTurno ? ' · di turno' : ''}${v.nascosto ? ' · nascosto ai giocatori' : ''}${o.scegli && !v.token ? ' · senza token in mappa' : ''}`;
+  const titolo = `${v.nome} · Iniziativa ${v.valore}${v.aZero ? ' · a 0 PV' : ''}${v.diTurno ? ' · di turno' : ''}${v.nascosto ? ' · nascosto ai giocatori' : ''}${o.scegli && !v.token ? ' · senza token in mappa' : ''}`;
   const corpo = v.ritratto ? h('img', { src: v.ritratto, alt: '' }) : h('span', { class: 'iniziali' }, v.iniziali);
+  // ritocchi del 07/10: a 0 PV, piccolo, il teschio (nemici) o la croce rossa (PG), come sul token
+  const zero = v.aZero && o.zero ? h('img', { class: 'icona-zero', src: v.lato === 'pg' ? o.zero.pg : o.zero.nemico, alt: '' }) : null;
   const sb = stileBordo(v.bordo);
   const attr = {
     class: `mini-token lato-${v.lato ?? 'nessuno'}${sb.classi}${v.diTurno ? ' di-turno' : ''}${v.nascosto ? ' nascosto' : ''}`,
     style: `left: ${x.toFixed(3)}%; top: ${LINEA_PX + v.pila * ALTEZZA_PILA_PX}px; ${sb.stile}`,
     title: titolo, 'aria-label': titolo, dataset: { chiave: v.chiave },
   };
-  const el = o.scegli ? h('button', { type: 'button', ...attr, onclick: () => o.scegli(v) }, corpo) : h('span', attr, corpo);
+  const el = o.scegli ? h('button', { type: 'button', ...attr, onclick: () => o.scegli(v) }, corpo, zero) : h('span', attr, corpo, zero);
   // 07/10: la barretta dei PV come sui token, sul fondo del mini-token e sopra il bordo, larga quanto il mini-token
   // (fuori dall'elemento, che taglia il ritratto); misure e colori da data/mappa.json → pv_token (variabili CSS)
   if (!(v.pv?.massimo > 0) || o.pv === false) return el;

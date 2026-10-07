@@ -366,7 +366,7 @@ export function renderMappa(radice, ctx) {
     sopra: (c) => {
       if (st.scena) {
         const t = st.trascina?.modo === 'token' ? { id: st.trascina.token, q: st.trascina.q } : null;
-        disegnaToken(c, { scena: st.scena, cam: st.cam, pezzi: st.mappaPezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: st.selezionato, trascina: t, bordo: bordoDi, alone: ctx.dati.mappa.colori.alone_turno, ritrattoVerticale: ctx.dati.mappa.token.ritratto_verticale, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => st.mostraPv } });
+        disegnaToken(c, { scena: st.scena, cam: st.cam, pezzi: st.mappaPezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: st.selezionato, trascina: t, bordo: bordoDi, alone: ctx.dati.mappa.colori.alone_turno, ritrattoVerticale: ctx.dati.mappa.token.ritratto_verticale, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => st.mostraPv }, zero: ctx.dati.mappa.pv_zero });
         disegnaSelezioneGruppo(c);
       }
       // percorso del token scelto (o trascinato) verso il quadretto sotto il puntatore, con i Q che costa
@@ -2668,6 +2668,7 @@ export function renderMappa(radice, ctx) {
       svuota(el.iniziativa, barraIniziativaEl(barra, {
         pxPerPunto: B.iniziativa_px_per_punto,
         pv: st.mostraPv,
+        zero: ctx.dati.mappa.pv_zero,
         avanti: () => avantiDallaMappa(),
         indietro: st.planciaBarra?.indietro ? () => indietroDallaMappa() : null,
         puoIndietro: st.planciaBarra?.puoIndietro?.() ?? null,
@@ -2691,7 +2692,9 @@ export function renderMappa(radice, ctx) {
         const quota = v.pv?.massimo > 0 ? Math.max(0, Math.min(1, v.pv.attuali / v.pv.massimo)) : null;
         const titolo = `${v.nome}${v.pv ? ` · PV ${v.pv.attuali}/${v.pv.massimo}` : ''}${v.diTurno ? ' · di turno' : ''}${v.nascosto ? ' · nascosto ai giocatori' : ''}`;
         return h('button', { type: 'button', class: `ridotta-voce${v.diTurno ? ' di-turno' : ''}${v.chiave === scelto ? ' scelto' : ''}`, title: titolo, 'aria-label': titolo, onclick: () => scegliDallaBarra(v) },
-          h('span', { class: `mini-token lato-${v.lato ?? 'nessuno'}${stileBordo(v.bordo).classi}${v.diTurno ? ' di-turno' : ''}${v.nascosto ? ' nascosto' : ''}`, style: stileBordo(v.bordo).stile }, v.ritratto ? h('img', { src: v.ritratto, alt: '' }) : h('span', { class: 'iniziali' }, v.iniziali)),
+          h('span', { class: `mini-token lato-${v.lato ?? 'nessuno'}${stileBordo(v.bordo).classi}${v.diTurno ? ' di-turno' : ''}${v.nascosto ? ' nascosto' : ''}`, style: stileBordo(v.bordo).stile }, v.ritratto ? h('img', { src: v.ritratto, alt: '' }) : h('span', { class: 'iniziali' }, v.iniziali),
+            // 07/10: l'icona a 0 PV, come sul token
+            (v.aZero ?? st.pezzi.find((p) => p.chiave === v.chiave)?.aZero) ? h('img', { class: 'icona-zero', src: v.lato === 'pg' ? ctx.dati.mappa.pv_zero.pg : ctx.dati.mappa.pv_zero.nemico, alt: '' }) : null),
           quota !== null ? h('span', { class: 'pv-mini', style: `--quota: ${quota}` }) : null);
       }));
   }

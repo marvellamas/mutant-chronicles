@@ -118,7 +118,7 @@ export function renderGiocatori(radice, ctx) {
       if (!s) return;
       const pezzi = new Map(s.token.filter((t) => t.info).map((t) => [chiaveRif(t.rif), { ...t.info, ritratto: t.info.immagine, pv: t.info.pv === null ? null : { attuali: t.info.pv, massimo: 1 }, stati: [] }]));
       const d = direttaAttuale();
-      disegnaToken(c, { scena: s, cam: st.cam, pezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: d?.token ?? null, bordo: (p) => p.bordo ?? null, alone: ctx.dati.mappa.colori.alone_turno, ritrattoVerticale: ctx.dati.mappa.token.ritratto_verticale, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => true } });
+      disegnaToken(c, { scena: s, cam: st.cam, pezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: d?.token ?? null, bordo: (p) => p.bordo ?? null, alone: ctx.dati.mappa.colori.alone_turno, ritrattoVerticale: ctx.dati.mappa.token.ritratto_verticale, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => true }, zero: ctx.dati.mappa.pv_zero });
       // fase 2, lotto 3: la linea di tiro del master (già filtrata dal server)
       if (d?.linea) disegnaLineaTiro(c, { scena: s, cam: st.cam, da: d.linea.da, a: d.linea.a, copertura: d.linea.copertura, etichetta: d.linea.testo ?? `${d.linea.distanza} Q · ${{ nessuna: 'nessuna Copertura', leggera: 'Copertura Leggera', media: 'Copertura Media', totale: 'Copertura Totale' }[d.linea.copertura] ?? ''}`, colori: ctx.dati.mappa.visuale.colori });
       // percorso del master, a tratti fra le interruzioni della nebbia; il costo all'ultimo tratto
@@ -256,7 +256,7 @@ export function renderGiocatori(radice, ctx) {
     }
     const barra = corpo.scena?.iniziativa ?? null;
     el.iniziativa.hidden = !barra;
-    svuota(el.iniziativa, barra ? barraIniziativaEl(barra, { pxPerPunto: V.barra.iniziativa_px_per_punto }) : null);
+    svuota(el.iniziativa, barra ? barraIniziativaEl(barra, { pxPerPunto: V.barra.iniziativa_px_per_punto, zero: ctx.dati.mappa.pv_zero }) : null);
     if (!st.vista) {
       el.titolo.textContent = 'Mappa';
       el.turno.textContent = '';

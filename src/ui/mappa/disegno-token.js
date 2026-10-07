@@ -43,7 +43,7 @@ const sigla = (nome) => String(nome ?? '?').replace(/[^\p{L}\p{N} ]/gu, '').spli
  * Disegna i token della scena. `pezzi`: Map(chiave del rif → pezzo, src/mappa/partecipanti.js); `trascina`: il token
  * spostato ora ({ id, q }) o null; `selezionato`: id del token scelto.
  */
-export function disegnaToken(c, { scena, cam, pezzi, colori, immagine, selezionato = null, trascina = null, bordo = () => null, alone = '#ffffff', pv = null, ritrattoVerticale = 0.5 }) {
+export function disegnaToken(c, { scena, cam, pezzi, colori, immagine, selezionato = null, trascina = null, bordo = () => null, alone = '#ffffff', pv = null, ritrattoVerticale = 0.5, zero = null }) {
   const g = scena.griglia;
   const qs = g.q_px * cam.scala;
   const ordinati = [...scena.token].sort((a, b) => (a.id === selezionato) - (b.id === selezionato) || (a.id === trascina?.id) - (b.id === trascina?.id));
@@ -53,11 +53,11 @@ export function disegnaToken(c, { scena, cam, pezzi, colori, immagine, seleziona
     const a = schermoDaMappa(cam, g.scosto_x + q[0] * g.q_px, g.scosto_y + q[1] * g.q_px);
     const box = { x: a.x, y: a.y, w: w * qs, h: h * qs };
     const p = pezzi.get(chiaveRif(t.rif)) ?? null;
-    disegnaUno(c, { t, p, box, colori, immagine, qs, scelto: t.id === selezionato, inMano: trascina?.id === t.id, b: p ? bordo(p) : null, alone, pv, ritrattoVerticale });
+    disegnaUno(c, { t, p, box, colori, immagine, qs, scelto: t.id === selezionato, inMano: trascina?.id === t.id, b: p ? bordo(p) : null, alone, pv, ritrattoVerticale, zero });
   }
 }
 
-function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alone, pv, ritrattoVerticale }) {
+function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alone, pv, ritrattoVerticale, zero }) {
   const colore = b?.colore ?? colori[p?.lato] ?? colori.testo;
   const veicolo = t.rif.tipo === 'veicolo';
   const cx = box.x + box.w / 2, cy = box.y + box.h / 2;
@@ -142,6 +142,15 @@ function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alo
   }
   c.restore();
   c.filter = 'none';
+  // ritocchi del 07/10: a 0 PV il teschio (nemici) o la croce rossa (PG) sopra il token; `zero`: data/mappa.json → pv_zero
+  const icona = p?.aZero && zero ? immagine(p.lato === 'pg' ? zero.pg : zero.nemico) : null;
+  if (icona) {
+    const l = r * 2 * zero.quota_token;
+    c.save();
+    if (t.nascosto) c.globalAlpha = 0.45;
+    c.drawImage(icona, cx - l / 2, cy - l / 2, l, l);
+    c.restore();
+  }
   // barretta dei PV (07/10, al posto dell'anello): sul fondo del token, sopra il bordo, larga quanto il quadretto o
   // l'ingombro a PV pieni e più corta in proporzione ai PV persi; `pv`: { stile: data/mappa.json → pv_token, mostra(p) }
   if (pv && p?.pv?.massimo > 0 && pv.mostra(p)) {

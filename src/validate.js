@@ -2701,6 +2701,13 @@ function validaMappa(dati, err) {
     for (const k of ['colore', 'traccia']) if (!/^#[0-9a-f]{6}([0-9a-f]{2})?$/i.test(PT[k] ?? '')) err(F, `pv_token.${k}`, 'colore #rrggbb o #rrggbbaa');
     for (const k of ['rispetto_al_bordo', 'spessore_minimo_px', 'mini_token_px']) if (!positivo(PT[k])) err(F, `pv_token.${k}`, 'numero positivo');
   }
+  // icone a 0 PV sui token (07/10): immagini in img/, lato rispetto al token
+  const PZ = m.pv_zero;
+  if (!isOggetto(PZ)) err(F, 'pv_zero', 'oggetto mancante');
+  else {
+    for (const k of ['nemico', 'pg']) if (!/^img\/[\w./-]+\.(png|webp|svg)$/.test(PZ[k] ?? '')) err(F, `pv_zero.${k}`, 'percorso di un’immagine in img/ (png, webp o svg)');
+    if (!(typeof PZ.quota_token === 'number' && PZ.quota_token >= 0.2 && PZ.quota_token <= 1)) err(F, 'pv_zero.quota_token', 'numero da 0.2 a 1');
+  }
   // «Indietro» nell'Iniziativa (07/10, src/scontro.js → indietro): quanti «Avanti» si possono annullare
   if (!isIntero(m.iniziativa?.indietro_max) || m.iniziativa.indietro_max < 1) err(F, 'iniziativa.indietro_max', 'intero da 1 in su');
   if (!isIntero(m.iniziativa?.centra_px_per_q) || m.iniziativa.centra_px_per_q < 8 || m.iniziativa.centra_px_per_q > 400) err(F, 'iniziativa.centra_px_per_q', 'intero da 8 a 400 (pixel di schermo per Q dopo «Centra»)');
