@@ -1052,7 +1052,8 @@ Fonte: E&L del 06/10/2026, 17:23 UTC, blocco «Risposte approvate — regole tec
     (1 AzM, nessuna AzP in più) sono un blocco unico da completare prima delle AzP, con la Prova di Atletica compresa
     (Scatto −2) e le penalità d'andatura −2 / −6 alle altre Azioni; nella stessa Iniziativa niente Incantesimi dopo Corsa
     o Scatto. **Cambia** la regola provvisoria della mappa (movimento diviso consentito con ogni andatura): lotto R6 del
-    rapporto, nel branch della mappa.
+    rapporto, nel branch della mappa. **Applicata** il 07/10 (branch `battlemap`): `data/mappa.json` → movimento.divisibili
+    ["passo"]; il caso «Corsa dopo un Passo cominciato» è la A.136.
 
 **Sospese** (E&L del 06/10, «Quesiti sospesi»): A.109 (Davide chiede l'elenco con il nome dell'incantesimo e
 dell'aspetto: nel pacchetto del 07/10), A.111 (solo Pablo Zaion), A.112, A.113, A.115, A.122 («Aiuto-master»), A.125
@@ -1065,6 +1066,12 @@ dell'aspetto: nel pacchetto del 07/10), A.111 (solo Pablo Zaion), A.112, A.113, 
   ma non dice come si ricaricano: una cartuccia per operazione come i fucili a pompa, o un caricatore che si sostituisce?
   Provvisorio: come prima (HD14M una cartuccia per operazione, SA SG2001 a caricatore per la A.37, Mandible e Airbrush a
   caricatore); `TODO(Davide)` in `munizioni.json` → `ricarica.inserimento_singolo`.
+- **A.136 — Corsa o Scatto dopo un Passo già cominciato** (07/10/2026, lotto R6 della mappa). La A.129 dice che solo il
+  Passo si divide e che Corsa e Scatto sono un blocco unico da completare prima delle AzP, tutti al costo dell'unica AzM.
+  Un personaggio che ha già percorso una parte del Passo (per esempio 2 Q, prima di ogni AzP) può trasformare l'AzM in
+  Corsa o Scatto, con i Q già fatti contati nel blocco (2 + 10 = 12)? Provvisorio: no, Corsa e Scatto partono solo da
+  fermi; il master annulla il movimento e lo rifà come Corsa, o usa «Libero» (`data/mappa.json` →
+  movimento.blocco_dopo_passo false, con il `TODO(Davide)`).
 
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 

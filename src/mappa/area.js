@@ -185,6 +185,35 @@ export function fasceRimaste(movimento, usato = 0) {
   return r;
 }
 
+/**
+ * Fasce ancora disponibili nel Round (A.129, decisione 133): solo le fasce `regole.divisibili` (il Passo) si spendono
+ * a pezzi, prima, fra e dopo le AzP; Corsa e Scatto sono un blocco unico (una sola mossa, i Q non usati si perdono).
+ * Tutte costano l'unica AzM: dopo un blocco il movimento del Round è finito; con un Passo già cominciato Corsa e Scatto
+ * restano solo se `regole.blocco_dopo_passo` (TODO(Davide) A.136, provvisorio no).
+ * @param movimento { passo, corsa, scatto } in Q (null: non disponibile)
+ * @param usato Q già spesi nel Round
+ * @param fatte fasce dei movimenti già fatti nel Round (src/mappa/annulla.js → fasceNelRound)
+ * @param regole data/mappa.json → movimento
+ * @returns { rimaste: come fasceRimaste, chiusa: la fascia a blocco che ha chiuso il movimento o null, persi: Q non
+ *   usati di quel blocco, escluse: fasce a blocco tolte perché il Passo è già cominciato }
+ */
+export function statoFasce(movimento, usato = 0, fatte = [], regole = {}) {
+  const divisibili = regole.divisibili ?? ['passo', 'corsa', 'scatto'];
+  const ordine = ['passo', 'corsa', 'scatto'];
+  const blocchi = fatte.filter((f) => f && !divisibili.includes(f));
+  if (blocchi.length) {
+    const chiusa = ordine.filter((f) => blocchi.includes(f)).at(-1);
+    const rimaste = Object.fromEntries(ordine.map((f) => [f, Number.isFinite(movimento?.[f]) ? 0 : null]));
+    return { rimaste, chiusa, persi: Math.max(0, (movimento?.[chiusa] ?? 0) - usato), escluse: [] };
+  }
+  const rimaste = fasceRimaste(movimento, usato);
+  const escluse = [];
+  if (usato > 0 && !regole.blocco_dopo_passo) {
+    for (const f of ordine) if (!divisibili.includes(f) && rimaste[f] !== null) { rimaste[f] = null; escluse.push(f); }
+  }
+  return { rimaste, chiusa: null, persi: 0, escluse };
+}
+
 /** Fascia di un costo: la prima fra passo, corsa e scatto che basta, oppure null. */
 export function fasciaDi(costo, rimaste) {
   for (const f of ['passo', 'corsa', 'scatto']) if (rimaste[f] !== null && costo <= rimaste[f]) return f;

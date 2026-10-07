@@ -66,7 +66,7 @@ export function muoviToken(scena, idToken, m, dati, adesso = new Date()) {
 }
 
 /**
- * Q già usati da un token nel Round dello scontro (movimento diviso, TODO(Davide) A.129: provvisorio sì). Senza
+ * Q già usati da un token nel Round dello scontro (il Passo si divide, Corsa e Scatto no: A.129, statoFasce). Senza
  * scontro aperto si contano i movimenti del turno del token (turnoDi), finché «Nuovo turno» non lo fa ripartire.
  * I movimenti liberi non contano.
  */
@@ -75,6 +75,17 @@ export function usatoNelRound(scena, idToken, scontro, round) {
     ? (x) => x.scontro === scontro && x.round === round
     : (x) => !x.scontro && x.turno === turnoDi(scena, idToken);
   return scena.movimenti.filter((x) => x.token === idToken && !x.libero && delTurno(x)).reduce((s, x) => s + (x.costo ?? 0), 0);
+}
+
+/**
+ * Fasce dei movimenti contati del token nel Round (o nel turno senza scontro), nell'ordine: servono a statoFasce
+ * (src/mappa/area.js) per sapere se Corsa o Scatto, che sono un blocco unico (A.129), hanno già chiuso il movimento.
+ */
+export function fasceNelRound(scena, idToken, scontro, round) {
+  const delTurno = scontro
+    ? (x) => x.scontro === scontro && x.round === round
+    : (x) => !x.scontro && x.turno === turnoDi(scena, idToken);
+  return scena.movimenti.filter((x) => x.token === idToken && !x.libero && delTurno(x)).map((x) => x.fascia ?? null);
 }
 
 /** Il token ha già fatto un movimento in questo Round? (veicoli: uno solo per Round, A.105) */

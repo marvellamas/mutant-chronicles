@@ -37,8 +37,8 @@ import { pezziDellaScena, pezziSenzaToken, tokenOrfani, tokenPerPezzo } from '..
 import { daBase64, cella, conta } from '../../mappa/celle.js';
 import { tratto, valoreModo, nebbiaProvvisoria, chiudiPennellata, rettangoloNebbia, tuttaNebbia, trattiCoperti } from '../../mappa/nebbia.js';
 import { trattoMuri, muriProvvisori, chiudiTrattoMuri, rettangoloMuri } from '../../mappa/muri.js';
-import { areaRaggiungibile, costoVerso, percorso, fasceRimaste, fasciaDi, celleArea, piuVicinaRaggiungibile } from '../../mappa/area.js';
-import { muoviToken, usatoNelRound, mossoNelRound, annullaUltima, annullaUltimoMovimento, cambiaTokenAnnullabile, nuovoTurno } from '../../mappa/annulla.js';
+import { areaRaggiungibile, costoVerso, percorso, statoFasce, fasciaDi, celleArea, piuVicinaRaggiungibile } from '../../mappa/area.js';
+import { muoviToken, usatoNelRound, fasceNelRound, mossoNelRound, annullaUltima, annullaUltimoMovimento, cambiaTokenAnnullabile, nuovoTurno } from '../../mappa/annulla.js';
 import { disegnaMuri, disegnaArea, disegnaPercorso, disegnaZoc, coloriAree } from './disegno-aree.js';
 import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
 import { diTurno } from '../../scontro.js';
@@ -744,7 +744,7 @@ export function renderMappa(radice, ctx) {
       ['Doppio clic su un punto vuoto', 'adatta allo schermo'],
       ['Clic su un token', 'lo sceglie: area di movimento e mini-scheda'],
       ['Clic sul token scelto, Esc, o clic fuori dall’area', 'lo lascia: area e percorso spariscono, i Q usati restano'],
-      ['Clic su un quadretto dell’area, o trascinare il token', 'movimento nel Round'],
+      ['Clic su un quadretto dell’area, o trascinare il token', 'movimento nel Round: il Passo si divide in più clic; Corsa e Scatto sono un blocco unico (una mossa, i Q non usati si perdono) e solo da fermi (A.129)'],
       ['Maiusc + clic o trascinamento', 'movimento libero (come «Libero»)'],
       ['Ctrl + clic su un token', 'scheda completa (PG) o mini-scheda (nemico)'],
       ['Clic destro su un token', 'menu: fasce, Annulla movimento, Nuovo turno, schede, Nascondi, Colore, Togli'],
@@ -989,9 +989,25 @@ export function renderMappa(radice, ctx) {
     const mov = t ? pezzoDi(t)?.movimento : null;
     if (!mov) return 1;
     const scontro = st.fonti?.scontro ?? null;
-    const usato = usatoNelRound(st.scena, t.id, scontro?.id ?? null, scontro?.round ?? null);
-    const i = FASCE.findIndex((f) => Number.isFinite(mov[f]) && usato <= mov[f]);
-    return i < 0 ? 1 : i + 1;
+    // A.129: dopo una Corsa o uno Scatto (blocco unico) resta quella fascia; il Passo diviso resta al Passo
+    const fatte = fasceNelRound(st.scena, t.id, scontro?.id ?? null, scontro?.round ?? null);
+    return Math.max(0, ...fatte.map((f) => FASCE.indexOf(f))) + 1;
+  }
+  const NOMI_FASCE = { passo: 'Passo', corsa: 'Corsa', scatto: 'Scatto' };
+  /**
+   * Fasce del token nel Round (A.129, src/mappa/area.js → statoFasce) con i testi per il master: `nonPiu` quando Corsa e
+   * Scatto non si possono più scegliere perché il Passo è cominciato, `nota` per il pannello (Passo diviso, Q persi).
+   */
+  function fasceToken(t, pz, usato) {
+    const scontro = st.fonti?.scontro ?? null;
+    const fatte = pz.tipo === 'veicolo' && scontro ? [] : fasceNelRound(st.scena, t.id, scontro?.id ?? null, scontro?.round ?? null);
+    const sf = statoFasce(pz.movimento, usato, fatte, ctx.dati.mappa.movimento);
+    const quando = scontro ? 'in questo Round' : 'in questo turno';
+    const escluse = sf.escluse.map((f) => NOMI_FASCE[f]).join(' e ');
+    const nonPiu = sf.escluse.length ? `${escluse} non più disponibil${sf.escluse.length > 1 ? 'i' : 'e'}: ${pz.nome} ha già cominciato il Passo (${numero(usato, 1)} Q) ${quando}, e Corsa e Scatto si fanno in un blocco unico. Per correre, «Annulla ultimo movimento» e rifallo con Corri o Scatta.` : null;
+    // il blocco chiuso lo dice già il motivo dell'area (Q persi)
+    const nota = !sf.chiusa && usato > 0 && sf.rimaste.passo > 0 ? `Passo diviso: restano ${numero(sf.rimaste.passo, 1)} Q, anche dopo l’Azione Principale.` : null;
+    return { ...sf, nonPiu, nota };
   }
   /** Record del veicolo nel registro (fonti), o null. */
   const recordVeicolo = (t) => (t.rif.tipo === 'veicolo' ? (st.fonti?.veicoli ?? []).find((r) => r.id === t.rif.id) ?? null : null);
@@ -1004,9 +1020,14 @@ export function renderMappa(radice, ctx) {
   function infoArea(t) {
     const pz = pezzoDi(t);
     const scontro = st.fonti?.scontro ?? null;
-    const base = { area: null, rimaste: null, usato: 0, fino: st.fascia, limite: 0, totale: 0, disponibili: null, celle: null, movimento: pz?.movimento ?? null, motivo: null, libero: false };
+    const base = { area: null, rimaste: null, usato: 0, fino: st.fascia, limite: 0, totale: 0, disponibili: null, celle: null, movimento: pz?.movimento ?? null, motivo: null, libero: false, escluse: [], chiusa: null, nonPiu: null, nota: null };
     // «Libero» (quarta modalità): nessuna area, nessun conteggio; il token va in qualunque quadretto
-    if (st.fascia === LIBERO) return { ...base, libero: true, usato: pz?.movimento ? usatoNelRound(st.scena, t.id, scontro?.id ?? null, scontro?.round ?? null) : 0 };
+    if (st.fascia === LIBERO) {
+      if (!pz?.movimento) return { ...base, libero: true };
+      const u = usatoNelRound(st.scena, t.id, scontro?.id ?? null, scontro?.round ?? null);
+      const sf = fasceToken(t, pz, u);
+      return { ...base, libero: true, usato: u, rimaste: sf.rimaste, escluse: sf.escluse, chiusa: sf.chiusa, nonPiu: sf.nonPiu, nota: sf.nota };
+    }
     if (!pz?.movimento) return { ...base, motivo: pz ? 'nessun profilo di movimento' : 'fuori dallo scontro' };
     let usato = usatoNelRound(st.scena, t.id, scontro?.id ?? null, scontro?.round ?? null);
     if (pz.tipo === 'veicolo' && scontro) {
@@ -1017,24 +1038,29 @@ export function renderMappa(radice, ctx) {
       if (sv && !sv.puo) return { ...base, motivo: sv.motivo };
       usato = 0;
     }
-    const rimaste = fasceRimaste(pz.movimento, usato);
+    // A.129: il Passo si divide; Corsa e Scatto sono un blocco unico (i Q non usati si perdono)
+    const sf = fasceToken(t, pz, usato);
+    const rimaste = sf.rimaste;
     // fino alla fascia scelta (Passo, Corri, Scatta), o alla migliore disponibile sotto di essa
     const disponibili = FASCE.slice(0, st.fascia).filter((f) => rimaste[f] !== null);
     const limite = disponibili.length ? Math.max(...disponibili.map((f) => rimaste[f])) : 0;
     const tutte = FASCE.filter((f) => rimaste[f] !== null);
     const totale = tutte.length ? Math.max(...tutte.map((f) => rimaste[f])) : 0;
-    const scelta = [...FASCE.slice(0, st.fascia)].reverse().find((f) => Number.isFinite(pz.movimento[f]));
+    // A.129: fin dove arriverebbero Corsa e Scatto esclusi, per riconoscere i clic che li chiedono (avviso, non «lascia»)
+    const portata = sf.escluse.length ? Math.max(...sf.escluse.map((f) => pz.movimento[f])) : 0;
+    const scelta = sf.chiusa ?? [...FASCE.slice(0, st.fascia)].reverse().find((f) => rimaste[f] !== null);
     const g = st.scena.griglia;
     const area = areaRaggiungibile({
       colonne: g.colonne, righe: g.righe, muri: daBase64(st.scena.muri), terreno: daBase64(st.scena.terreno),
       token: st.scena.token.map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, lato: pezzoDi(x)?.lato ?? null })),
-      chi: { id: t.id, q: t.q, ingombro: t.ingombro, lato: pz.lato }, massimo: totale, regole: ctx.dati.mappa.movimento,
+      chi: { id: t.id, q: t.q, ingombro: t.ingombro, lato: pz.lato }, massimo: Math.max(totale, portata), regole: ctx.dati.mappa.movimento,
     });
     const quando = scontro ? 'del Round' : 'del turno';
     const piuAmpie = FASCE.slice(st.fascia).filter((f) => rimaste[f] > 0).map((f) => (f === 'corsa' ? 'Corri' : 'Scatta'));
-    const motivo = limite > 0 ? null : !usato ? 'movimento 0 Q'
+    const motivo = sf.chiusa ? `${NOMI_FASCE[sf.chiusa]} fatta in un blocco unico: movimento ${quando} finito${sf.persi ? ` (${numero(sf.persi, 1)} Q non usati persi)` : ''}`
+      : limite > 0 ? null : !usato ? 'movimento 0 Q'
       : piuAmpie.length ? `${st.fascia === 1 ? 'Passo' : 'Corsa'} finito: scegli ${piuAmpie.join(' o ')}` : `movimento ${quando} finito (${numero(usato, 1)} Q)`;
-    return { ...base, area, rimaste, usato, limite, totale, disponibili: scelta ? pz.movimento[scelta] : null, celle: celleArea(area, rimaste, st.fascia), motivo };
+    return { ...base, area, rimaste, usato, limite, totale, disponibili: scelta ? pz.movimento[scelta] : null, celle: celleArea(area, rimaste, st.fascia), motivo, escluse: sf.escluse, chiusa: sf.chiusa, nonPiu: sf.nonPiu, nota: sf.nota, portata };
   }
   /** Area del token scelto, calcolata una volta finché non cambia qualcosa (invalidaArea). */
   function areaScelta() {
@@ -1116,6 +1142,14 @@ export function renderMappa(radice, ctx) {
     ridisegna(['aree', 'sopra']);
   }
   function cambiaFascia(n) {
+    // A.129: Corsa e Scatto non si scelgono più dopo un Passo cominciato, né dopo un blocco già fatto
+    const t = st.selezionato ? st.scena?.token.find((x) => x.id === st.selezionato) : null;
+    const f = FASCE[n - 1];
+    if (t && f && f !== 'passo') {
+      const info = st.area?.token === t.id ? st.area : infoArea(t);
+      if (info.escluse?.includes(f)) { avviso(info.nonPiu, { tipo: 'info', chiave: 'fuori-area', durata: 9000 }); return; }
+      if (info.chiusa) { avviso(`${pezzoDi(t)?.nome ?? 'Il token'}: ${info.motivo}. Con Libero (o Maiusc) il master lo sposta comunque.`, { tipo: 'info', chiave: 'fuori-area' }); return; }
+    }
     st.fascia = n;
     invalidaArea();
     disegnaPannelli();
@@ -1141,6 +1175,8 @@ export function renderMappa(radice, ctx) {
     const nome = pezzoDi(t)?.nome ?? t.nome ?? t.id;
     if (!libero && costo === Infinity && chiedeFascia(info, q)) { avvisaFascia(); return false; }
     if (!libero && costo === Infinity) {
+      // A.129: oltre il Passo rimasto, se Corsa e Scatto non sono più permessi lo dice
+      if (info.nonPiu) { avviso([`${nome}: quel quadretto è oltre il Passo rimasto (${numero(info.rimaste?.passo ?? 0, 1)} Q).`, info.nonPiu, 'Con Libero (o Maiusc) il master lo sposta comunque.'], { tipo: 'info', chiave: 'fuori-area', durata: 9000 }); return false; }
       avviso(`${nome}: quel quadretto è fuori dall’area${info.motivo ? ` (${info.motivo})` : ''}. Seleziona Libero (o tieni premuto Maiusc) per spostarlo comunque.`, { tipo: 'info', chiave: 'fuori-area' });
       return false;
     }
@@ -1165,6 +1201,11 @@ export function renderMappa(radice, ctx) {
     avvisaSovrapposti([t.id]);
     invalidaArea();
     dopoCambioToken();
+    // A.129: Corsa e Scatto in un blocco unico; i Q non usati si perdono
+    if (fascia && !ctx.dati.mappa.movimento.divisibili.includes(fascia)) {
+      const persi = Math.max(0, (info.movimento?.[fascia] ?? 0) - info.usato - costo);
+      avviso(`${nome}: ${NOMI_FASCE[fascia]} in un blocco unico (${numero(info.usato + costo, 1)} Q)${persi ? `; i ${numero(persi, 1)} Q non usati sono persi` : ''}. Movimento ${scontro ? 'del Round' : 'del turno'} finito.`, { tipo: 'info', chiave: 'blocco' });
+    }
     if (fatto.length) segnalaOpportunita(t, fatto);
     return true;
   }
@@ -1198,7 +1239,7 @@ export function renderMappa(radice, ctx) {
   function movimentoPannello(t) {
     const info = st.area?.token === t.id ? st.area : infoArea(t);
     const ultimo = [...st.scena.movimenti].reverse().find((x) => x.token === t.id);
-    return { mostraArea: st.mostraArea, mostraZoc: st.mostraZoc, movimento: info.movimento, rimaste: info.rimaste, usato: info.usato, disponibili: info.disponibili, fascia: st.fascia, motivo: info.motivo, annullabile: !!ultimo, veicolo: t.rif.tipo === 'veicolo', andatura: pezzoDi(t)?.andatura ?? null, senzaScontro: !st.fonti?.scontro };
+    return { mostraArea: st.mostraArea, mostraZoc: st.mostraZoc, movimento: info.movimento, rimaste: info.rimaste, usato: info.usato, disponibili: info.disponibili, fascia: st.fascia, motivo: info.motivo, nota: info.nota, escluse: info.escluse ?? [], chiusa: info.chiusa ?? null, annullabile: !!ultimo, veicolo: t.rif.tipo === 'veicolo', andatura: pezzoDi(t)?.andatura ?? null, senzaScontro: !st.fonti?.scontro };
   }
   /** «Nuovo turno» senza scontro aperto: il conteggio del movimento riparte per un token o per tutti (null). */
   function nuovoTurnoUi(id = null) {
@@ -1277,6 +1318,8 @@ export function renderMappa(radice, ctx) {
       // fuori dall'area il token resta sulla posizione raggiungibile più vicina al puntatore
       const q = libero ? puntata : piuVicinaRaggiungibile(t.info.area, puntata, t.info.limite) ?? t.q;
       t.oltre = !libero && chiedeFascia(t.info, puntata);
+      // A.129: oltre il Passo rimasto con Corsa e Scatto non più permessi
+      t.oltreNonPiu = !libero && !!t.info?.nonPiu && costoVerso(t.info.area, puntata) > t.info.limite;
       if (q[0] !== t.q[0] || q[1] !== t.q[1] || t.libero !== libero) {
         t.q = q;
         t.libero = libero;
@@ -1312,6 +1355,7 @@ export function renderMappa(radice, ctx) {
       if (t.mosso) {
         if (!eseguiMovimento(tok, t.q, { libero: !!t.libero, info: t.info })) ridisegna(['sopra']);
         if (t.oltre) avvisaFascia(); // rilasciato oltre la fascia scelta: il token si è fermato al suo limite
+        else if (t.oltreNonPiu) avviso(t.info.nonPiu, { tipo: 'info', chiave: 'fuori-area', durata: 9000 });
       } else if (e.ctrlKey || e.metaKey) {
         // lotto 7 (§12): Ctrl+clic apre la scheda completa del PG, la mini-scheda per gli altri
         scegli(tok.id);
@@ -1334,6 +1378,8 @@ export function renderMappa(radice, ctx) {
       if (tok && info) {
         const q = posizioneVerso(tok, mappaDaSchermo(st.cam, p.x, p.y));
         if (e.shiftKey || info.libero || costoDentro(info, q) < Infinity) { eseguiMovimento(tok, q, { libero: e.shiftKey || info.libero, info }); return true; }
+        // A.129: un quadretto che chiederebbe Corsa o Scatto, non più permessi dopo il Passo cominciato: avviso, il token resta scelto
+        if (info.nonPiu && info.area && costoVerso(info.area, q) <= info.portata) { eseguiMovimento(tok, q, { info }); return true; }
       }
       scegli(null);
     }
@@ -1418,10 +1464,14 @@ export function renderMappa(radice, ctx) {
     const ultimo = st.scena.movimenti.some((x) => x.token === tok.id);
     const conScontro = !!st.fonti?.scontro;
     const pg = pz?.tipo === 'pg';
+    // A.129: Corsa e Scatto spenti dopo un Passo cominciato o un blocco già fatto
+    const info = mov ? (st.area?.token === tok.id ? st.area : infoArea(tok)) : null;
+    const bloccata = (f) => !!info && (info.escluse?.includes(f) || !!info.chiusa);
+    const titoloBloccata = info?.chiusa ? `${NOMI_FASCE[info.chiusa]} già fatta: movimento finito` : 'Passo già cominciato: Corsa e Scatto sono un blocco unico';
     apriMenuToken(el.riquadro, p.x, p.y, pz?.nome ?? tok.nome ?? tok.id, [
       { testo: 'Passo', azione: () => cambiaFascia(1), scelta: st.fascia === 1, disabilitata: !mov },
-      { testo: 'Corri', azione: () => cambiaFascia(2), scelta: st.fascia === 2, disabilitata: !Number.isFinite(mov?.corsa), titolo: 'Amplia l’area fino alla Corsa' },
-      { testo: 'Scatta', azione: () => cambiaFascia(3), scelta: st.fascia === 3, disabilitata: !Number.isFinite(mov?.scatto), titolo: 'Amplia l’area fino allo Scatto' },
+      { testo: 'Corri', azione: () => cambiaFascia(2), scelta: st.fascia === 2, disabilitata: !Number.isFinite(mov?.corsa) || bloccata('corsa'), titolo: bloccata('corsa') ? titoloBloccata : 'Amplia l’area fino alla Corsa (un blocco unico: i Q non usati si perdono)' },
+      { testo: 'Scatta', azione: () => cambiaFascia(3), scelta: st.fascia === 3, disabilitata: !Number.isFinite(mov?.scatto) || bloccata('scatto'), titolo: bloccata('scatto') ? titoloBloccata : 'Amplia l’area fino allo Scatto (un blocco unico: i Q non usati si perdono)' },
       { testo: 'Libero', azione: () => cambiaFascia(LIBERO), scelta: st.fascia === LIBERO, titolo: 'In qualunque quadretto, senza area e senza conteggio (scorciatoia: Maiusc)' },
       { testo: st.mostraArea ? 'Nascondi area (M)' : 'Mostra area (M)', azione: () => cambiaMostraArea() },
       { testo: st.mostraZoc ? 'Nascondi ZoC (Z)' : 'Mostra ZoC (Z)', azione: () => cambiaMostraZoc(), titolo: 'Zone di controllo degli avversari: uscendone si provoca un Attacco di Opportunità (§5.3)' },

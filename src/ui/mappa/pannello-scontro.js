@@ -89,14 +89,16 @@ const q = (n) => `${String(n).replace('.', ',')} Q`;
 
 /**
  * Movimento del token scelto (lotto 5, §8): Passo, Corri e Scatta (l'area raggiungibile in tre colori), quanto ha già
- * usato nel Round, «Annulla ultimo movimento». Regole provvisorie in data/mappa.json → movimento (A.124, A.127–A.129).
- * @param m { movimento: { passo, corsa, scatto }, rimaste, usato, disponibili, fascia, motivo, annullabile, veicolo,
+ * usato nel Round, «Annulla ultimo movimento». Regole in data/mappa.json → movimento (A.124, A.127–A.129): il Passo si
+ * divide, Corsa e Scatto sono un blocco unico (escluse dopo un Passo cominciato; chiusa: il blocco fatto, Q persi).
+ * @param m { movimento: { passo, corsa, scatto }, rimaste, usato, disponibili, fascia, motivo, nota, escluse, chiusa, annullabile, veicolo,
  *   andatura, senzaScontro }: senza scontro aperto il movimento si conta per turno, con «Nuovo turno».
  */
 function sezioneMovimento(m, a) {
   if (!m) return null;
   const mov = m.movimento;
-  const fasce = [['Passo', 1, mov?.passo], ['Corri', 2, mov?.corsa], ['Scatta', 3, mov?.scatto]];
+  const fasce = [['Passo', 1, mov?.passo, 'passo'], ['Corri', 2, mov?.corsa, 'corsa'], ['Scatta', 3, mov?.scatto, 'scatto']];
+  const spenta = (f) => f !== 'passo' && ((m.escluse ?? []).includes(f) || !!m.chiusa);
   return h('div', { class: 'mappa-movimento' },
     h('p', { class: 'nota' }, mov
       ? (m.veicolo
@@ -106,6 +108,8 @@ function sezioneMovimento(m, a) {
     // Q usati / disponibili con la fascia scelta, nel Round dello scontro o nel turno (senza scontro)
     mov && m.disponibili !== null && m.disponibili !== undefined ? h('p', { class: `mappa-usati${m.usato >= m.disponibili ? ' finito' : ''}` },
       h('strong', {}, `${String(m.usato).replace('.', ',')} / ${q(m.disponibili)}`), ` usati ${m.senzaScontro ? 'nel turno' : 'nel Round'}`) : null,
+    // A.129: Passo diviso (quanto resta) o blocco di Corsa e Scatto (Q persi)
+    m.nota ? h('p', { class: 'nota nota-fasce' }, m.nota) : null,
     m.motivo ? h('p', { class: 'nota motivo-movimento' }, `Area: ${m.motivo}. Con Libero (o Maiusc) il master lo sposta comunque.`) : null,
     m.fascia === 4 ? h('p', { class: 'nota' }, `Libero: in qualunque quadretto, senza area e senza conteggio${m.senzaScontro ? '' : '; nel registro dello scontro resta una riga'}.`) : null,
     // ritocchi del 06/10: l'area non è obbligatoria (anche clic destro e tasto M); il percorso resta
@@ -115,9 +119,12 @@ function sezioneMovimento(m, a) {
     mov ? h('button', { type: 'button', role: 'switch', 'aria-checked': String(!!m.mostraZoc), class: `interruttore-mappa${m.mostraZoc ? ' acceso' : ''}`, title: 'Zone di controllo degli avversari (tasto Z): uscendone si provoca un Attacco di Opportunità (Giocatore §5.3)', onclick: a.mostraZoc },
       h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `Mostra ZoC: ${m.mostraZoc ? 'sì' : 'no'}`) : null,
     h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Area raggiungibile' },
-      mov && !m.veicolo ? fasce.map(([testo, n, v]) => h('button', {
+      mov && !m.veicolo ? fasce.map(([testo, n, v, f]) => h('button', {
         type: 'button', class: `btn btn-piccolo fascia-${n}${m.fascia === n ? ' scelto' : ''}`, 'aria-pressed': String(m.fascia === n),
-        disabled: !Number.isFinite(v), title: Number.isFinite(v) ? `Area fino ${testo === 'Passo' ? 'al Passo' : testo === 'Corri' ? 'alla Corsa' : 'allo Scatto'}` : 'Non disponibile',
+        disabled: !Number.isFinite(v) || spenta(f),
+        title: !Number.isFinite(v) ? 'Non disponibile'
+          : spenta(f) ? (m.chiusa ? 'Movimento del Round finito: Corsa o Scatto già fatti in un blocco' : 'Passo già cominciato: Corsa e Scatto si fanno in un blocco unico, da fermi')
+          : f === 'passo' ? 'Area fino al Passo (si divide prima e dopo l’Azione Principale)' : `Area fino ${f === 'corsa' ? 'alla Corsa' : 'allo Scatto'} (un blocco unico: i Q non usati si perdono)`,
         onclick: () => a.fascia(n),
       }, testo)) : null,
       // quarta modalità (primo test di Marcello, 06/10/2026), per tutti i token: Maiusc ne è la scorciatoia

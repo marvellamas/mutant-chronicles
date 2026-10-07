@@ -126,8 +126,12 @@
     "attraversa_avversari": false,
     "fermarsi_su_alleato": false,
     "TODO(Davide) occupazione": "A.127: durante il movimento si può passare nel Q di un alleato? E di un avversario? Ci si può fermare nel Q di un alleato? (Provvisorio: alleati sì, avversari no, fermarsi no.)",
-    "movimento_diviso": true,
-    "TODO(Davide) movimento diviso": "A.129: nello stesso turno si può muovere, attaccare e muovere ancora, con il Passo speso a pezzi (provvisorio: sì)? Corsa e Scatto consumano anche l'Azione Principale?",
+    "divisibili": [
+      "passo"
+    ],
+    "_nota_divisibili": "A.129 (decisione 133 del 06/10/2026): solo il Passo si divide prima, fra e dopo le AzP, entro la disponibilità complessiva; Corsa e Scatto (1 AzM, nessuna AzP in più) sono un blocco unico da completare prima delle AzP: una sola mossa, i Q non usati si perdono. Passo, Corsa e Scatto costano l'unica AzM: dopo un blocco il movimento del Round è finito.",
+    "blocco_dopo_passo": false,
+    "TODO(Davide) blocco dopo il Passo": "A.136: un token che ha già percorso una parte del Passo (prima di ogni AzP) può trasformare l'AzM in Corsa o Scatto, con il movimento già fatto contato nel blocco? Provvisorio: no, Corsa e Scatto partono solo da fermi; il master annulla il movimento e lo rifà come Corsa (o usa Libero).",
     "fasce": [
       "passo",
       "corsa",

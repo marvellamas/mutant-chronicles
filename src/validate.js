@@ -2777,12 +2777,14 @@ function validaMappa(dati, err) {
   if (!Array.isArray(vp) || vp.length !== 2 || !vp.every((n) => isIntero(n) && n >= 1 && n <= (T?.veicolo_ingombro_max ?? 0))) err(F, 'token.veicolo_predefinito', '[colonne, righe] interi entro veicolo_ingombro_max');
   const M = m.movimento;
   for (const k of ['costo_ortogonale', 'costo_diagonale', 'terreno_difficile_moltiplicatore']) if (!positivo(M?.[k])) err(F, `movimento.${k}`, 'numero positivo');
-  for (const k of ['diagonali_alterne', 'taglio_angoli_muri', 'attraversa_alleati', 'attraversa_avversari', 'fermarsi_su_alleato', 'movimento_diviso']) {
+  for (const k of ['diagonali_alterne', 'taglio_angoli_muri', 'attraversa_alleati', 'attraversa_avversari', 'fermarsi_su_alleato', 'blocco_dopo_passo']) {
     if (typeof M?.[k] !== 'boolean') err(F, `movimento.${k}`, 'vero o falso');
   }
   const fasce = Array.isArray(M?.fasce) ? M.fasce : [];
   if (fasce.join() !== 'passo,corsa,scatto') err(F, 'movimento.fasce', 'passo, corsa, scatto attese (§8 della specifica)');
   for (const f of fasce) if (!isIntero(dati.regole?.movimento?.[f])) err(F, `movimento.fasce (${f})`, `regole.json → movimento.${f} mancante`);
+  // A.129: le fasce che si dividono (il Passo); le altre sono un blocco unico
+  if (!Array.isArray(M?.divisibili) || !M.divisibili.every((f) => fasce.includes(f))) err(F, 'movimento.divisibili', 'elenco di fasce (passo, corsa, scatto)');
   if (!Array.isArray(m.template?.forme) || !m.template.forme.length) err(F, 'template.forme', 'almeno una forma');
   if (!isIntero(m.template?.durata_round_predefinita) || m.template.durata_round_predefinita < 1) err(F, 'template.durata_round_predefinita', 'intero da 1 in su');
 }
