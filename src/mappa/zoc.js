@@ -93,5 +93,23 @@ export function attacchiDiOpportunita(percorso, ingombro, avversari) {
   return r;
 }
 
+/**
+ * Avversari che hanno già avuto il loro Attacco di Opportunità nel Round dello scontro (Giocatore §5.3: «una sola volta
+ * per Round»). Contano le righe del registro dello scontro letto (che si rilegge ogni secondo) e le segnalazioni fatte
+ * da questa pagina e non ancora rilette (`locali`: scritte o in coda di scrittura), così una raffica di movimenti non ne
+ * segnala uno a ogni passo. Le righe dei movimenti annullati (`ritirati`: id dei movimenti) non contano più.
+ * @param locali [{ scontro, round, da, movimento }]
+ * @returns Set degli id dei partecipanti attaccanti
+ */
+export function giaInQuestoRound(scontro, locali = [], ritirati = new Set()) {
+  const r = new Set();
+  if (!scontro) return r;
+  for (const x of scontro.registro ?? []) {
+    if (x.round === scontro.round && x.opportunita?.da && !ritirati.has(x.opportunita.movimento)) r.add(x.opportunita.da);
+  }
+  for (const l of locali) if (l.scontro === scontro.id && l.round === scontro.round && !ritirati.has(l.movimento)) r.add(l.da);
+  return r;
+}
+
 /** Testo dell'avviso: «Oshi è uscito dalla portata di Legionario 1: Attacco di Opportunità nei suoi confronti!» */
 export const testoOpportunita = (nomeChi, nomeAvversario) => `${nomeChi} è uscito dalla ZoC di ${nomeAvversario}! Attacco di Opportunità di ${nomeAvversario} nei suoi confronti (Giocatore §5.3).`;

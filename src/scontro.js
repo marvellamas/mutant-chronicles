@@ -436,17 +436,25 @@ export function registraAttacco(s, a, adesso) {
 
 /**
  * Attacco di Opportunità segnalato dalla mappa (07/10/2026, Giocatore §5.3): una riga nel registro, con chi può
- * attaccare e chi; nessun tiro. La riga porta { opportunita: { da, contro } } per sapere se l'avversario l'ha già
- * avuto in questo Round (una sola volta per Round).
+ * attaccare e chi; nessun tiro. La riga porta { opportunita: { da, contro, movimento? } } per sapere se l'avversario
+ * l'ha già avuto in questo Round (una sola volta per Round) e per ritirarla se il movimento si annulla.
+ * Se nello scontro letto ora l'avversario l'ha già avuto (un'altra finestra, una scrittura in coda), nessuna riga.
  */
-export function rigaOpportunita(s, { da, nomeDa, contro, nomeContro }, adesso) {
+export function rigaOpportunita(s, { da, nomeDa, contro, nomeContro, movimento = null }, adesso) {
+  if (opportunitaNelRound(s, da)) return s;
   const t = conRiga(s, `Mappa: ${nomeContro} è uscito dalla ZoC di ${nomeDa}: Attacco di Opportunità di ${nomeDa} nei suoi confronti.`, adesso);
-  t.registro[t.registro.length - 1].opportunita = { da, contro };
+  t.registro[t.registro.length - 1].opportunita = { da, contro, ...(movimento ? { movimento } : {}) };
   return t;
 }
 
 /** L'avversario `da` ha già avuto un Attacco di Opportunità segnalato in questo Round? */
 export const opportunitaNelRound = (s, da) => (s?.registro ?? []).some((r) => r.round === s.round && r.opportunita?.da === da);
+
+/** «Annulla ultimo movimento» o Ctrl+Z sulla mappa: via le righe degli Attacchi di Opportunità di quel movimento. */
+export function senzaOpportunitaDelMovimento(s, movimento) {
+  const registro = (s.registro ?? []).filter((r) => r.opportunita?.movimento !== movimento);
+  return registro.length === (s.registro ?? []).length ? s : { ...s, registro };
+}
 
 /**
  * Movimento «Libero» della mappa di battaglia (primo test di Marcello, 06/10/2026): il master sposta un token dove vuole,

@@ -27,7 +27,7 @@ import { DISPOSIZIONI, NOMI_DISPOSIZIONI, prossimaDisposizione, normalizzaDispos
 import { barraIniziativa } from '../../mappa/iniziativa.js';
 import { barraIniziativaEl, stileBordo } from './barra-iniziativa.js';
 import { bordoToken, assegnaColori, cambiaColore, tavolozzaPer, famiglia } from '../../mappa/colori.js';
-import { avversariZoc, celleZoc, passiInZoc, attacchiDiOpportunita, testoOpportunita } from '../../mappa/zoc.js';
+import { avversariZoc, celleZoc, passiInZoc, attacchiDiOpportunita, testoOpportunita, giaInQuestoRound } from '../../mappa/zoc.js';
 import { scegliColore, chiedi, informa } from '../finestrella.js';
 import { calibraDaQuadretto, applicaGriglia, dimensioniMappa, lineeVisibili, testoScala } from '../../mappa/griglia.js';
 import { creaTela } from './canvas.js';
@@ -44,7 +44,7 @@ import { disegnaMuri, disegnaArea, disegnaPercorso, disegnaZoc, coloriAree } fro
 import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
 import { diTurno } from '../../scontro.js';
 import { statoMovimento, muoviVeicolo } from '../../veicoli-registro.js';
-import { rigaMovimentoLibero, rigaOpportunita, opportunitaNelRound } from '../../scontro.js';
+import { rigaMovimentoLibero, rigaOpportunita, senzaOpportunitaDelMovimento } from '../../scontro.js';
 import { aggiornaInScontri } from '../immagine-nemico.js';
 import { linkGuidaMappa } from '../guida.js';
 import { aggiornaVeicolo } from '../veicoli-registro.js';
@@ -130,6 +130,10 @@ export function renderMappa(radice, ctx) {
     mostraZoc: true,
     // 07/10: barretta dei PV sui token, «Mostra PV sui token» (tasto P)
     mostraPv: true,
+    // Attacchi di Opportunità segnalati da questa pagina ({ scontro, round, da, movimento }) e movimenti annullati:
+    // il controllo «uno per Round» li vede subito, senza aspettare la rilettura dello scontro (Giocatore §5.3)
+    opportunita: [],
+    movimentiRitirati: new Set(),
     // diretta (07/10): il movimento mandato alla vista giocatori (chiave dell'ultimo stato, invio in corso, prossimo)
     diretta: { pronta: false, chiave: null, inVolo: false, prossimo: undefined, areaG: null },
   };
@@ -977,7 +981,10 @@ export function renderMappa(radice, ctx) {
     const esito = annullaUltima(st.scena, { chiaviPresenti: completa ? new Set(st.pezzi.map((p) => p.chiave)) : null });
     if (!esito) { avviso('Niente da annullare.'); return; }
     st.scena = esito.scena;
-    if (esito.voce.tipo === 'movimento' && !esito.errore) veicoloNonPiuMosso(prima.movimenti.find((x) => x.id === esito.voce.movimento));
+    if (esito.voce.tipo === 'movimento' && !esito.errore) {
+      veicoloNonPiuMosso(prima.movimenti.find((x) => x.id === esito.voce.movimento));
+      ritiraOpportunita(esito.voce.movimento);
+    }
     if (st.selezionato && !st.scena.token.some((t) => t.id === st.selezionato)) st.selezionato = null;
     if (esito.errore) avvisoErrore(`Non annullato: ${esito.errore}.`);
     else avviso(`Annullato: ${{ nebbia: 'nebbia', muri: 'muri', movimento: 'movimento', token: 'modifica del token', 'token tolto': 'token tolto (torna in mappa)', 'token messo': 'token messo (esce dalla mappa)' }[esito.testo] ?? esito.testo}.`, { chiave: 'annulla' });
@@ -1201,28 +1208,51 @@ export function renderMappa(radice, ctx) {
    * un avversario). Un avviso per avversario con «Attacca!» quando l'avversario ha un attacco nella plancia, e una riga
    * nel registro dello scontro aperto. Solo segnalazione: nessun tiro.
    */
-  function segnalaOpportunita(t, punti) {
+  function segnalaOpportunita(t, punti, movimento = null) {
     const pz = pezzoDi(t);
     if (!pz || pz.tipo === 'veicolo' || pz.aZero || punti.length < 2) return;
     const avv = avversariZoc(st.scena, st.pezzi, t.id, ctx.dati);
     const scontro = st.fonti?.scontro ?? null;
+    // Giocatore §5.3, «una sola volta per Round» per attaccante: registro letto + segnalazioni di questa pagina
+    if (scontro) st.opportunita = st.opportunita.filter((l) => l.scontro === scontro.id && l.round === scontro.round);
+    const giaAvuto = giaInQuestoRound(scontro, st.opportunita, st.movimentiRitirati);
     const eccezioni = (pz.scheda?.capacita ?? []).filter((c) => String(c.effetto ?? '').includes(ctx.dati.mappa.zoc.frase_eccezione)).map((c) => c.nome);
     const righeRegistro = [];
     for (const a of attacchiDiOpportunita(punti, t.ingombro, avv)) {
       const idDa = a.token.rif.id;
-      const gia = scontro && opportunitaNelRound(scontro, idDa);
+      const gia = giaAvuto.has(idDa);
       const righe = [testoOpportunita(pz.nome, a.pezzo.nome),
         gia ? `${a.pezzo.nome} ha già avuto un Attacco di Opportunità in questo Round: uno solo per Round.` : null,
         `Salvo Ritirata${eccezioni.length ? ` o ${eccezioni.join(', ')}` : ''}. Nessun tiro automatico.`];
-      const puo = scontro && st.planciaBarra?.puoAttaccare?.(idDa);
+      const puo = scontro && !gia && st.planciaBarra?.puoAttaccare?.(idDa);
       avviso(righe, {
         tipo: 'info', durata: 15000,
         azioni: puo ? [{ testo: `Attacca! (${a.pezzo.nome} → ${pz.nome})`, fai: () => st.planciaBarra.attaccaContro(idDa, t.rif.id) }] : [],
       });
-      if (scontro && !gia) righeRegistro.push({ da: idDa, nomeDa: a.pezzo.nome, contro: t.rif.id, nomeContro: pz.nome });
+      if (scontro && !gia) {
+        righeRegistro.push({ da: idDa, nomeDa: a.pezzo.nome, contro: t.rif.id, nomeContro: pz.nome, movimento });
+        st.opportunita.push({ scontro: scontro.id, round: scontro.round, da: idDa, nomeDa: a.pezzo.nome, movimento });
+      }
     }
     // tutte le righe in una sola scrittura dello scontro (con la revisione)
     if (righeRegistro.length) scriviRegistro(scontro.id, (s) => righeRegistro.reduce((x, r) => rigaOpportunita(x, r), s), 'Righe del registro (Attacchi di Opportunità)');
+  }
+  /**
+   * Movimento annullato («Annulla ultimo movimento» o Ctrl+Z): gli Attacchi di Opportunità che aveva provocato si
+   * ritirano. Escono dal registro dello scontro (le righe portano l'id del movimento) e dal controllo «uno per Round»,
+   * così rifacendo il movimento l'avversario può di nuovo attaccare; un avviso lo dice.
+   */
+  function ritiraOpportunita(movimento) {
+    if (!movimento) return;
+    const ritirate = st.opportunita.filter((l) => l.movimento === movimento);
+    const nelRegistro = (st.fonti?.scontro?.registro ?? []).some((r) => r.opportunita?.movimento === movimento);
+    if (!ritirate.length && !nelRegistro) return;
+    st.movimentiRitirati.add(movimento);
+    st.opportunita = st.opportunita.filter((l) => l.movimento !== movimento);
+    const scontro = st.fonti?.scontro ?? null;
+    if (scontro) scriviRegistro(scontro.id, (s) => senzaOpportunitaDelMovimento(s, movimento), 'Attacchi di Opportunità ritirati');
+    const nomi = ritirate.map((l) => l.nomeDa).join(', ');
+    avviso(`Movimento annullato: ritirato l’Attacco di Opportunità${nomi ? ` di ${nomi}` : ''}.`, { tipo: 'info', chiave: 'opportunita-ritirata' });
   }
   /**
    * Righe nel registro dello scontro (07/10/2026): aggiornaInScontri ritenta da sé sui conflitti e sugli errori
@@ -1306,7 +1336,7 @@ export function renderMappa(radice, ctx) {
       const persi = Math.max(0, (info.movimento?.[fascia] ?? 0) - info.usato - costo);
       avviso(`${nome}: ${NOMI_FASCE[fascia]} in un blocco unico (${numero(info.usato + costo, 1)} Q)${persi ? `; i ${numero(persi, 1)} Q non usati sono persi` : ''}. Movimento ${scontro ? 'del Round' : 'del turno'} finito.`, { tipo: 'info', chiave: 'blocco' });
     }
-    if (fatto.length) segnalaOpportunita(t, fatto);
+    if (fatto.length) segnalaOpportunita(t, fatto, st.scena.movimenti.at(-1)?.id ?? null);
     return true;
   }
   function annullaMovimentoUi(id = st.selezionato) {
@@ -1316,6 +1346,7 @@ export function renderMappa(radice, ctx) {
     st.scena = esito.scena;
     veicoloNonPiuMosso(esito.movimento);
     avviso('Annullato l’ultimo movimento.', { chiave: 'annulla' });
+    ritiraOpportunita(esito.movimento?.id);
     invalidaArea();
     dopoCambioToken();
   }
