@@ -74,7 +74,14 @@ export function vistaGiocatori(s, contesto = null) {
       vista.opportunita = (contesto.scontro.registro ?? [])
         .filter((r) => r.opportunita && r.round === contesto.scontro.round && visibili.has(chiaveRif({ tipo: 'partecipante', id: r.opportunita.da })))
         .slice(-5).map((r) => ({ ora: r.ora, testo: r.testo.replace(/^Mappa: /, '') }));
-      vista.iniziativa = barraPerGiocatori(barraIniziativa({ scontro: contesto.scontro, pezzi: contesto.pezzi, scena: s, bordoDi: contesto.bordoDi }), visibili, immagineDi);
+      // 07/10: la barretta dei PV sui mini-token, con le stesse regole dei token (quota già filtrata nell'info)
+      const quote = new Map(token.filter((t) => t.info).map((t) => [chiaveRif(t.rif), t.info.pv]));
+      const pvDi = (k) => {
+        if (quote.has(k)) return quote.get(k);
+        const p = pezzi.get(k);
+        return p && p.lato !== 'avversario' && p.pv?.massimo > 0 ? Math.max(0, Math.min(1, Math.round((p.pv.attuali / p.pv.massimo) * 20) / 20)) : null;
+      };
+      vista.iniziativa = barraPerGiocatori(barraIniziativa({ scontro: contesto.scontro, pezzi: contesto.pezzi, scena: s, bordoDi: contesto.bordoDi }), visibili, immagineDi, pvDi);
     }
   }
   return vista;

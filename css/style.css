@@ -2063,3 +2063,6 @@ body.schermo-intero .giocatori-barra > :not(.giocatori-stato) { display: none; }
 body.schermo-intero .giocatori-barra:not(:has(.giocatori-stato:not(:empty))) { display: none; }
 body.schermo-intero .giocatori-pagina { gap: 0; }
 body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
+/* 07/10: barretta dei PV dei mini-token della barra dell'Iniziativa, come sui token: sul fondo, sopra il bordo */
+.pv-barretta { position: absolute; width: 28px; height: var(--pv-mini-alto, 4px); transform: translate(-50%, calc(14px - var(--pv-mini-alto, 4px) / 2)); z-index: 2; pointer-events: none;
+  background: linear-gradient(to right, var(--pv-colore, #e03131) calc(var(--quota) * 100%), var(--pv-traccia, #00000099) 0); }

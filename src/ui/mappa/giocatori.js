@@ -29,6 +29,8 @@ export function renderGiocatori(radice, ctx) {
   const V = ctx.dati.mappa.vista;
   // 07/10: i mini-token ritagliano il ritratto alla stessa altezza dei token (data/mappa.json → token.ritratto_verticale)
   document.documentElement.style.setProperty('--ritratto-y', `${ctx.dati.mappa.token.ritratto_verticale * 100}%`);
+  // 07/10: barretta dei PV dei mini-token (data/mappa.json → pv_token)
+  for (const [k, v] of [['--pv-colore', ctx.dati.mappa.pv_token.colore], ['--pv-traccia', ctx.dati.mappa.pv_token.traccia], ['--pv-mini-alto', `${ctx.dati.mappa.pv_token.mini_token_px}px`]]) document.documentElement.style.setProperty(k, v);
   const st = { vista: null, firma: null, cam: cameraIniziale(), immagine: null, fileImmagine: null, chiusa: false, errore: null, adattata: null, toccata: false, trascina: null };
   const el = {};
   el.titolo = h('strong', { class: 'giocatori-titolo' }, 'Mappa');

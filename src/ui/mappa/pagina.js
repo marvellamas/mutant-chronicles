@@ -85,6 +85,8 @@ export function renderMappa(radice, ctx) {
   const V = ctx.dati.mappa.vista;
   // 07/10: i mini-token ritagliano il ritratto alla stessa altezza dei token (data/mappa.json → token.ritratto_verticale)
   document.documentElement.style.setProperty('--ritratto-y', `${ctx.dati.mappa.token.ritratto_verticale * 100}%`);
+  // 07/10: barretta dei PV dei mini-token (data/mappa.json → pv_token)
+  for (const [k, v] of [['--pv-colore', ctx.dati.mappa.pv_token.colore], ['--pv-traccia', ctx.dati.mappa.pv_token.traccia], ['--pv-mini-alto', `${ctx.dati.mappa.pv_token.mini_token_px}px`]]) document.documentElement.style.setProperty(k, v);
   const st = {
     scena: null,
     immagine: null, // ImageBitmap dell'originale
@@ -1052,6 +1054,7 @@ export function renderMappa(radice, ctx) {
     st.mostraPv = v;
     scriviLocale('mutant-mappa-mostra-pv', v);
     aggiornaVoceMostraPv();
+    disegnaIniziativa();
     avviso(v ? 'PV mostrati sui token (P per nasconderli).' : 'PV nascosti sui token (P per mostrarli); i giocatori vedono comunque quelli dei PG.', { chiave: 'mostra-pv' });
     ridisegna(['sopra']);
   }
@@ -1572,6 +1575,7 @@ export function renderMappa(radice, ctx) {
     if (barra) {
       svuota(el.iniziativa, barraIniziativaEl(barra, {
         pxPerPunto: B.iniziativa_px_per_punto,
+        pv: st.mostraPv,
         avanti: () => avantiDallaMappa(),
         scegli: (v) => scegliDallaBarra(v),
         centra: { attivo: st.centra, cambia: (x) => { st.centra = x; scriviLocale('mutant-mappa-centra-turno', x); disegnaIniziativa(); if (x) seguiTurno(true); } },

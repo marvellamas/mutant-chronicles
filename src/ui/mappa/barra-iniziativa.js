@@ -59,5 +59,10 @@ function miniToken(v, barra, o) {
     style: `left: ${x.toFixed(3)}%; top: ${LINEA_PX + v.pila * ALTEZZA_PILA_PX}px; ${sb.stile}`,
     title: titolo, 'aria-label': titolo, dataset: { chiave: v.chiave },
   };
-  return o.scegli ? h('button', { type: 'button', ...attr, onclick: () => o.scegli(v) }, corpo) : h('span', attr, corpo);
+  const el = o.scegli ? h('button', { type: 'button', ...attr, onclick: () => o.scegli(v) }, corpo) : h('span', attr, corpo);
+  // 07/10: la barretta dei PV come sui token, sul fondo del mini-token e sopra il bordo, larga quanto il mini-token
+  // (fuori dall'elemento, che taglia il ritratto); misure e colori da data/mappa.json → pv_token (variabili CSS)
+  if (!(v.pv?.massimo > 0) || o.pv === false) return el;
+  const quota = Math.max(0, Math.min(1, v.pv.attuali / v.pv.massimo));
+  return [el, h('span', { class: 'pv-barretta', 'aria-hidden': 'true', style: `left: ${x.toFixed(3)}%; top: ${LINEA_PX + v.pila * ALTEZZA_PILA_PX}px; --quota: ${quota}` })];
 }

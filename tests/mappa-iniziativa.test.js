@@ -70,7 +70,8 @@ test('barraPerGiocatori: via i nascosti e i nemici sotto la nebbia; i PG restano
   const g = barraPerGiocatori(b, new Set(['partecipante:nem:predone:2']), (k) => `api/${k}`);
   assert.deepEqual(g.voci.map((v) => v.id ?? v.chiave), ['partecipante:pg:LUCAS', 'partecipante:pg:PABLO', 'partecipante:nem:predone:2']);
   assert.equal(g.diTurno, null, 'chi è di turno è nascosto: nessun nome');
-  assert.ok(g.voci.every((v) => !('token' in v) && !('pv' in v) && !('nascosto' in v)));
+  // niente id dei token né PV esatti (la quota solo con pvDi, 07/10)
+  assert.ok(g.voci.every((v) => !('token' in v) && v.pv === null && !('nascosto' in v)));
   assert.equal(g.voci[2].ritratto, 'api/partecipante:nem:predone:2');
   assert.deepEqual([g.minimo, g.massimo, g.pile], [11, 14, 2]);
   assert.equal(barraPerGiocatori(null, new Set()), null);
@@ -175,4 +176,22 @@ test('«Inizia»: le scene collegate alla bozza passano allo scontro nuovo', asy
   ];
   assert.deepEqual(sceneDellaBozza(elenco, 'bozza-1'), ['a', 'd']);
   assert.deepEqual(collegaAScontro({ id: 'a', collegamento: { scontro: null, bozza: 'bozza-1' } }, 'scontro-nuovo').collegamento, { scontro: 'scontro-nuovo', bozza: null });
+});
+
+test('barretta dei PV sui mini-token: i giocatori vedono la quota dei PG; dei nemici solo se il master li mostra', async () => {
+  const { nuovaScena } = await import('../src/mappa/scena.js');
+  const { vistaGiocatori } = await import('../src/mappa/vista.js');
+  const s0 = { ...scontroProva(), turno: 0 };
+  const base = nuovaScena({ id: 'p', nome: 'P', dati, nebbia: 'scoperta' });
+  const scena = { ...base, token: [
+    { id: 'tl', rif: { tipo: 'partecipante', id: 'pg:LUCAS' }, q: [1, 1], ingombro: 1, nascosto: false },
+    { id: 'tp', rif: { tipo: 'partecipante', id: 'nem:predone:1' }, q: [3, 3], ingombro: 2, nascosto: false },
+  ] };
+  const pezzi = [pezzo('pg:LUCAS', 'pg', { pv: { attuali: 5, massimo: 10 } }), pezzo('nem:predone:1', 'avversario', { pv: { attuali: 3, massimo: 12 } }), pezzo('pg:OSHI', 'pg', { pv: { attuali: 33, massimo: 33 } })];
+  const voce = (v, k) => v.iniziativa.voci.find((x) => x.chiave === `partecipante:${k}`);
+  const v = vistaGiocatori(scena, { pezzi, round: 2, scontro: s0 });
+  assert.deepEqual(voce(v, 'pg:LUCAS').pv, { attuali: 0.5, massimo: 1 });
+  assert.deepEqual(voce(v, 'pg:OSHI').pv, { attuali: 1, massimo: 1 }, 'PG senza token: la quota dalla scheda');
+  assert.equal(voce(v, 'nem:predone:1').pv, null, 'nemico: nascosta per i giocatori');
+  assert.deepEqual(voce(vistaGiocatori({ ...scena, pvNemiciGiocatori: true }, { pezzi, round: 2, scontro: s0 }), 'nem:predone:1').pv, { attuali: 0.25, massimo: 1 });
 });

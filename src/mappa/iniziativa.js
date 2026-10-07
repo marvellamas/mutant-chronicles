@@ -52,11 +52,15 @@ function conPile(barra) {
  * sotto la nebbia. Niente PV, niente id dei token; il ritratto è l'indirizzo per i giocatori (`immagineDi(chiave)`).
  * Chi è di turno resta solo se è nella barra.
  */
-export function barraPerGiocatori(barra, visibili, immagineDi = () => null) {
+export function barraPerGiocatori(barra, visibili, immagineDi = () => null, pvDi = () => null) {
   if (!barra) return null;
   const voci = barra.voci
     .filter((v) => visibili.has(v.chiave) || (v.id.startsWith('pg:') && !v.nascosto))
-    .map((v) => ({ chiave: v.chiave, nome: v.nome, iniziali: v.iniziali, lato: v.lato, ritratto: immagineDi(v.chiave), valore: v.valore, ordine: v.ordine, diTurno: v.diTurno, bordo: v.bordo ?? null }));
+    .map((v) => {
+      // 07/10: la quota dei PV (da 0 a 1) solo dove la vista giocatori la mostra (PG sempre, nemici a scelta del master)
+      const q = pvDi(v.chiave);
+      return { chiave: v.chiave, nome: v.nome, iniziali: v.iniziali, lato: v.lato, ritratto: immagineDi(v.chiave), valore: v.valore, ordine: v.ordine, diTurno: v.diTurno, bordo: v.bordo ?? null, pv: q === null || q === undefined ? null : { attuali: q, massimo: 1 } };
+    });
   const turno = voci.some((v) => v.diTurno) ? barra.diTurno : null;
   return conPile({ round: barra.round, diTurno: turno, voci });
 }
