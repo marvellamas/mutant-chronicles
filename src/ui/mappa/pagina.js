@@ -80,7 +80,7 @@ const GRUPPI_BARRA = [
   ['pg', 'PG', 'Le mini-schede dei PG al tavolo e i veicoli'],
   ['nemici', 'Nemici', 'Le mini-schede dei nemici nello scontro'],
   ['scontro', 'Scontro', 'Chi è al tavolo, bozze («Prepara scontro»), «Crea nemico», aggiungi nemici, durate, registro, bestiario'],
-  ['mappa', 'Mappa', 'Collegamento, token da mettere, muri, nebbia, vista giocatori, griglia, scene'],
+  ['mappa', 'Mappa', 'Collegamento, token da mettere, template, muri e porte, nebbia, luci, vista giocatori, griglia, scene'],
 ];
 
 const numero = (n, cifre = 2) => String(Math.round(n * 10 ** cifre) / 10 ** cifre).replace('.', ',');
@@ -229,7 +229,7 @@ export function renderMappa(radice, ctx) {
   el.riquadro = h('div', { class: 'mappa-tela', tabindex: '0', 'aria-label': 'Mappa: rotella per lo zoom, barra spaziatrice e mouse o trascinamento per spostarsi' });
   el.suggerimento = h('div', { class: 'mappa-suggerimento', hidden: true, role: 'status' });
   el.riquadro.append(el.suggerimento);
-  el.pannello = h('div', { class: 'mappa-pannello', 'aria-label': 'Collegamento, muri, nebbia, vista giocatori e griglia' });
+  el.pannello = h('div', { class: 'mappa-pannello', 'aria-label': 'Collegamento, template, muri, nebbia, luci, vista giocatori e griglia' });
   el.cartaCorpo = h('div', { class: 'mappa-carta-corpo' });
   el.carta = h('section', { class: 'mappa-carta', 'aria-label': 'Mini-scheda del token', hidden: true },
     h('div', { class: 'mappa-carta-testa' },
@@ -485,6 +485,7 @@ export function renderMappa(radice, ctx) {
     // collaudo del lotto 7: le maschere cambiano misura con la griglia, anche i conteggi di nebbia e muri
     disegnaPannelloNebbia();
     disegnaPannelloMuri();
+    disegnaPannelloLuci();
     ridisegna(['fondo', 'aree', 'sopra']);
     salvaPresto();
     return true;
@@ -516,7 +517,7 @@ export function renderMappa(radice, ctx) {
     if (el.btnSovr) aggiornaSovrapposizioni();
     aggiornaVociIniziale();
     invalidaArea();
-    if (st.fonti !== null) { disegnaPannelloNebbia(); disegnaPannelloMuri(); disegnaPannelloGiocatori(); }
+    if (st.fonti !== null) { disegnaPannelloNebbia(); disegnaPannelloMuri(); disegnaPannelloLuci(); disegnaPannelloGiocatori(); }
     ridisegna();
   };
 
@@ -562,7 +563,7 @@ export function renderMappa(radice, ctx) {
   el.blocca = h('button', { type: 'button', class: 'btn', onclick: () => bloccaGriglia() });
   el.info = h('p', { class: 'nota mappa-info' });
   el.notaBlocco = h('p', { class: 'riquadro attenzione mappa-nota-blocco', hidden: true }, 'Griglia bloccata: dimensione e scostamento non cambiano, così nebbia, muri e token restano allineati. Colore e opacità sì.');
-  svuota(el.pannello, el.secScontro, el.pTemplate, el.pMuri, el.pLuci, el.pNebbia, el.pGiocatori, el.pGriglia);
+  svuota(el.pannello, el.secScontro, el.pTemplate, el.pMuri, el.pNebbia, el.pLuci, el.pGiocatori, el.pGriglia);
   svuota(el.pGriglia,
     h('summary', {}, h('strong', {}, 'Griglia')),
     h('p', { class: 'nota' }, 'Calibra tracciando sull’immagine un quadretto (o un riquadro di più quadretti) oppure inserendo i valori. Poi blocca la griglia.'),
@@ -748,6 +749,7 @@ export function renderMappa(radice, ctx) {
     salvaPresto();
     disegnaPannelli();
     disegnaPannelloTemplate(); // chi è dentro i template cambia con i token
+    if (st.scena?.token.some((t) => t.luce) || el.pLuci?.querySelector('.elenco-luci')) disegnaPannelloLuci(); // le luci portate seguono i token
     aggiornaVisuale();
     disegnaIniziativa(); // token messi, tolti, nascosti: anche la barra dell'Iniziativa
     ridisegna(['aree', 'sopra']); // l'area raggiungibile sta nel livello «aree»
@@ -787,8 +789,19 @@ export function renderMappa(radice, ctx) {
     if (!sezione) return;
     if (st.disp.disposizione === 'mappa') scegliDisposizione('equilibrata');
     if (sezione.tagName === 'DETAILS' && !sezione.open) { sezione.open = true; sezione.dispatchEvent(new Event('toggle')); }
-    sezione.scrollIntoView({ block: 'start' });
-    segnaGruppo('mappa');
+    // difetto del 07/10: la sezione va in cima alla barra, sotto i segnalibri fissi (scrollIntoView la lasciava sotto di
+    // loro); il segnalibro è quello del gruppo che la contiene; la sezione si evidenzia per un momento
+    const barra = el.piena;
+    if (barra?.contains(sezione)) {
+      const testa = barra.querySelector('.laterale-segnalibri')?.offsetHeight ?? 0;
+      barra.scrollTop += sezione.getBoundingClientRect().top - barra.getBoundingClientRect().top - testa - 6;
+    } else sezione.scrollIntoView({ block: 'start' });
+    const gruppo = Object.entries(el.gruppi ?? {}).find(([, g]) => g.contains(sezione))?.[0] ?? 'mappa';
+    segnaGruppo(gruppo);
+    sezione.classList.remove('mappa-evidenzia');
+    void sezione.offsetWidth;
+    sezione.classList.add('mappa-evidenzia');
+    setTimeout(() => sezione.classList.remove('mappa-evidenzia'), 1600);
   }
   /** Blocco dei movimenti dei giocatori: si salva nella scena, lo userà la tab BattleMap della fase 2. */
   function cambiaBloccoGiocatori() {
@@ -835,7 +848,9 @@ export function renderMappa(radice, ctx) {
     st.scena = r.scena;
     if (st.selezionato && !st.scena.token.some((t) => t.id === st.selezionato)) st.selezionato = null;
     st.tpl.firma = null;
+    st.luceCache = null;
     disegnaPannelloNebbia();
+    disegnaPannelloLuci();
     disegnaPannelloTemplate();
     dopoCambioToken();
     avviso([`Posizione iniziale ripristinata (${quandoIniziale()}). Ctrl+Z per tornare indietro.`,
@@ -1117,7 +1132,7 @@ export function renderMappa(radice, ctx) {
     const zone = Object.keys(st.scena.luce?.zone ?? {}).length;
     const portate = st.scena.token.filter((t) => t.luce).length;
     svuota(el.pLuci,
-      h('summary', {}, h('strong', {}, 'Luci'), ` (${cats.find((c) => c.id === amb)?.nome ?? amb}${zone ? ', con zone' : ''}${portate ? `, ${portate} luci portate` : ''})`),
+      h('summary', {}, h('strong', {}, 'Luci'), ` (${cats.find((c) => c.id === amb)?.nome ?? amb}${zone ? ', con zone' : ''}${portate ? `, ${portate} ${portate === 1 ? 'luce portata' : 'luci portate'}` : ''})`),
       h('p', { class: 'nota' }, 'Luce della scena: basta per quasi tutte le scene. Le zone a pennello sono facoltative (stanza buia, corridoio in penombra); le torce si danno ai token dal loro menu (Opzioni → «Porta una luce»). I muri non fermano la luce.'),
       h('label', { class: 'mappa-campo' }, h('span', {}, 'Luce della scena'),
         h('select', { onchange: (e) => { st.scena = cambiaAmbiente(st.scena, e.target.value, ctx.dati); dopoLuci(); } },
@@ -1129,7 +1144,14 @@ export function renderMappa(radice, ctx) {
         cats.map((c) => pulsanteScelta(c.nome, L.modo === c.id, () => { L.modo = c.id; disegnaPannelloLuci(); }, `Zona: ${c.nome} (${c.riga})`)),
         pulsanteScelta('Gomma', L.modo === 'gomma', () => { L.modo = 'gomma'; disegnaPannelloLuci(); }, 'Toglie le zone: torna la luce della scena')),
       campoLato(L),
-      h('div', { class: 'mappa-azioni-token' }, pulsanteAnnulla()));
+      h('div', { class: 'mappa-azioni-token' }, pulsanteAnnulla()),
+      // le luci portate dai token: chi, quanto, e «Cambia» (lo stesso di Opzioni → «Porta una luce…»)
+      h('p', { class: 'mappa-sottotitolo' }, h('strong', {}, 'Luci portate')),
+      portate
+        ? h('ul', { class: 'elenco-luci' }, st.scena.token.filter((t) => t.luce).map((t) => h('li', {},
+          `${pezzoDi(t)?.nome ?? t.nome ?? t.id}: ${t.luce} Q `,
+          h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Cambia il raggio o spegni', onclick: () => luceToken(t) }, 'Cambia'))))
+        : h('p', { class: 'nota' }, 'Nessuna. Clic destro su un token → Opzioni → «Porta una luce…».'));
   }
   /** Dopo un cambio delle luci: nebbia automatica, pannello, salvataggio, disegno. */
   function dopoLuci() {
@@ -2640,6 +2662,8 @@ export function renderMappa(radice, ctx) {
     if (proponi === ctx.id && st.scena?.iniziale && await chiedi({ titolo: 'Partire dalla posizione iniziale?', testo: `Questa scena ha una posizione iniziale salvata il ${quandoIniziale()}: token, porte, template e nebbia.`, si: 'Parti da quella', no: 'Lascia com’è' })) ripristinaInizialeUi({ chiedendo: false });
     disegnaPannelloNebbia();
     disegnaPannelloMuri();
+    // difetto del 07/10: la sezione «Luci» non si disegnava mai all'apertura e restava vuota
+    disegnaPannelloLuci();
     disegnaPannelloGiocatori();
     if (vista?.carta) { const t = st.scena.token.find((x) => chiaveRif(x.rif) === vista.carta); if (t) apriCarta(t); }
     // difetto 2 del collaudo del lotto 7: aprendo o ricaricando la pagina senza una vista da rimettere, il token di turno

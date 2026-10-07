@@ -2106,3 +2106,10 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 .giocatori-adatta:hover, .giocatori-adatta:focus-visible { background: var(--accento, #8a3b12); color: var(--accento-testo, #fff); }
 /* linea di tiro (fase 2, lotto 3) */
 .mappa-tela.linea-tiro { cursor: crosshair; }
+
+/* 07/10: la sezione aperta dal menu «Strumenti» si evidenzia per un momento; elenco delle luci portate */
+@keyframes mappa-evidenzia { from { box-shadow: 0 0 0 3px var(--accento); } to { box-shadow: 0 0 0 3px transparent; } }
+.mappa-evidenzia { animation: mappa-evidenzia 1.6s ease-out; border-radius: var(--raggio); }
+.mappa-sottotitolo { margin: 0.5rem 0 0.2rem; }
+.elenco-luci { margin: 0; padding-left: 1.1rem; display: flex; flex-direction: column; gap: 0.25rem; }
+.elenco-luci .btn { margin-left: 0.3rem; }

@@ -60,8 +60,9 @@ export function apriMenuToken(contenitore, x, y, titolo, menu, o = {}) {
   const chiudiOpzioni = (pulsante) => { sotto?.remove(); sotto = null; pulsante?.setAttribute('aria-expanded', 'false'); };
   const pulsanteOpzioni = opzioni.length ? h('button', {
     type: 'button', class: 'mappa-menu-voce mappa-menu-opzioni', 'aria-haspopup': 'menu', 'aria-expanded': 'false', title: 'Voci usate di rado',
-    onclick: (e) => (sotto ? chiudiOpzioni(e.currentTarget) : apriOpzioni(e.currentTarget)),
-    onpointerenter: (e) => { if (e.pointerType === 'mouse') apriOpzioni(e.currentTarget); },
+    // aperto dal passaggio del mouse, il clic che segue lo lascia aperto (prima lo richiudeva); poi il clic alterna
+    onclick: (e) => { if (sotto?.dataset.da === 'passaggio') { sotto.dataset.da = 'clic'; return; } if (sotto) chiudiOpzioni(e.currentTarget); else { apriOpzioni(e.currentTarget); sotto.dataset.da = 'clic'; } },
+    onpointerenter: (e) => { if (e.pointerType === 'mouse' && !sotto) { apriOpzioni(e.currentTarget); sotto.dataset.da = 'passaggio'; } },
   }, h('span', { class: 'mappa-menu-testo' }, 'Opzioni'), h('span', { class: 'mappa-menu-tasto', 'aria-hidden': 'true' }, '▸')) : null;
   aperto = h('div', {
     class: 'mappa-menu', role: 'menu', 'aria-label': `Menu di ${titolo}`,
