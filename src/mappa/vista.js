@@ -39,7 +39,9 @@ export function vistaGiocatori(s, contesto = null) {
     if (t.rif.tipo === 'segnaposto') return { info: { lato: null, nome: t.nome, iniziali: iniziali(t.nome), immagine: null, pv: null, aZero: false, diTurno: false } };
     const p = pezzi.get(chiaveRif(t.rif));
     if (!p) return { info: null };
-    const quota = p.pv?.massimo > 0 ? Math.max(0, Math.min(1, Math.round((p.pv.attuali / p.pv.massimo) * 20) / 20)) : null;
+    // 07/10: la barretta dei PV dei PG (e degli alleati) sempre; dei nemici solo con scena.pvNemiciGiocatori
+    const pvVisibile = p.lato !== 'avversario' || s.pvNemiciGiocatori === true;
+    const quota = pvVisibile && p.pv?.massimo > 0 ? Math.max(0, Math.min(1, Math.round((p.pv.attuali / p.pv.massimo) * 20) / 20)) : null;
     return { info: { lato: p.lato, nome: p.nome, iniziali: p.iniziali, immagine: contesto.immagineDi?.(p) ?? null, pv: quota, aZero: !!p.aZero, diTurno: !!p.diTurno, bordo: contesto.bordoDi?.(p) ?? null } };
   };
   const token = s.token.filter((t) => !t.nascosto && visibile(t)).map(({ nascosto, ...t }) => ({ ...t, ...info(t) }));

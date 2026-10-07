@@ -239,5 +239,13 @@
     "opacita_contorno": 0.7,
     "colore": "#e03131",
     "frase_eccezione": "senza Attacchi di Opportunità"
+  },
+  "pv_token": {
+    "_nota": "Barretta dei PV sui token (test di Marcello del 07/10/2026, al posto dell'anello): rossa, sul fondo del token e sovrapposta al bordo, larga quanto il quadretto (o l'ingombro) a PV pieni, più corta in proporzione ai PV persi. Spessore: rispetto_al_bordo volte lo spessore del bordo colorato, almeno spessore_minimo_px; traccia: il fondo scuro della parte persa. Gli stessi valori per i mini-token della barra dell'Iniziativa (in pixel CSS).",
+    "colore": "#e03131",
+    "traccia": "#00000099",
+    "rispetto_al_bordo": 1,
+    "spessore_minimo_px": 3,
+    "mini_token_px": 4
   }
 }

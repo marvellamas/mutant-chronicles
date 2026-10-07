@@ -9,7 +9,7 @@ import {
   chiudiPennellata, annullaNebbia, trattiCoperti,
 } from '../src/mappa/nebbia.js';
 import { pizzica, mappaDaSchermo } from '../src/mappa/camera.js';
-import { nuovaScena } from '../src/mappa/scena.js';
+import { nuovaScena, validaScena } from '../src/mappa/scena.js';
 import { vistaGiocatori } from '../src/mappa/vista.js';
 
 const { dati } = await datiReali();
@@ -126,7 +126,10 @@ test('vista giocatori con il contesto: nascosti e coperti non arrivano, PV come 
   const v = vistaGiocatori(s, contesto);
   assert.deepEqual(v.token.map((t) => t.id), ['a', 'b', 'e']);
   assert.deepEqual(v.token[0].info, { lato: 'pg', nome: 'Lucas', iniziali: 'XX', immagine: 'api/ritratti/Lucas?v=1', pv: 0.45, aZero: false, diTurno: false, bordo: null });
-  assert.equal(v.token[1].info.pv, 0);
+  // 07/10: i PV dei nemici ai giocatori solo se il master li mostra (predefinito nascosto)
+  assert.equal(v.token[1].info.pv, null);
+  assert.equal(vistaGiocatori({ ...s, pvNemiciGiocatori: true }, contesto).token[1].info.pv, 0);
+  assert.match(validaScena({ ...s, pvNemiciGiocatori: 'sì' }, dati), /pvNemiciGiocatori/);
   assert.equal(v.token[2].info.nome, 'Porta');
   const testo = JSON.stringify(v);
   for (const segreto of ['Boss segreto', 'Predone 2', 'data:image', '"attuali"', '90']) assert.ok(!testo.includes(segreto), segreto);

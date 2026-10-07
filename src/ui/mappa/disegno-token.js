@@ -1,7 +1,8 @@
 // Mappa di battaglia, lotto 3 (docs/battlemap/piano.md; §7 della specifica): disegno dei token sul livello «sopra».
 // Ritratto del PG o cerchio con le iniziali; veicoli come rettangoli; bordo dai colori del 06/10 (src/mappa/colori.js:
 // PG pieno col suo colore, nemici tratteggiati nero e colore del tipo, alleati doppio grigio-petrolio, veicoli col colore
-// del proprietario), sempre con un contorno sottile scuro o chiaro; anello dei PV; piccole sigle degli Stati; a 0 PV in
+// del proprietario), con un contorno sottile scuro o chiaro; barretta rossa dei PV sul fondo, sopra il
+// bordo (07/10, data/mappa.json → pv_token; al posto dell'anello); piccole sigle degli Stati; a 0 PV in
 // grigio; il token di turno con un alone bianco luminoso (non si confonde col giallo dei PG); i token nascosti (solo
 // nella vista master) trasparenti.
 import { schermoDaMappa } from '../../mappa/camera.js';
@@ -42,7 +43,7 @@ const sigla = (nome) => String(nome ?? '?').replace(/[^\p{L}\p{N} ]/gu, '').spli
  * Disegna i token della scena. `pezzi`: Map(chiave del rif → pezzo, src/mappa/partecipanti.js); `trascina`: il token
  * spostato ora ({ id, q }) o null; `selezionato`: id del token scelto.
  */
-export function disegnaToken(c, { scena, cam, pezzi, colori, immagine, selezionato = null, trascina = null, bordo = () => null, alone = '#ffffff' }) {
+export function disegnaToken(c, { scena, cam, pezzi, colori, immagine, selezionato = null, trascina = null, bordo = () => null, alone = '#ffffff', pv = null }) {
   const g = scena.griglia;
   const qs = g.q_px * cam.scala;
   const ordinati = [...scena.token].sort((a, b) => (a.id === selezionato) - (b.id === selezionato) || (a.id === trascina?.id) - (b.id === trascina?.id));
@@ -52,11 +53,11 @@ export function disegnaToken(c, { scena, cam, pezzi, colori, immagine, seleziona
     const a = schermoDaMappa(cam, g.scosto_x + q[0] * g.q_px, g.scosto_y + q[1] * g.q_px);
     const box = { x: a.x, y: a.y, w: w * qs, h: h * qs };
     const p = pezzi.get(chiaveRif(t.rif)) ?? null;
-    disegnaUno(c, { t, p, box, colori, immagine, qs, scelto: t.id === selezionato, inMano: trascina?.id === t.id, b: p ? bordo(p) : null, alone });
+    disegnaUno(c, { t, p, box, colori, immagine, qs, scelto: t.id === selezionato, inMano: trascina?.id === t.id, b: p ? bordo(p) : null, alone, pv });
   }
 }
 
-function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alone }) {
+function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alone, pv }) {
   const colore = b?.colore ?? colori[p?.lato] ?? colori.testo;
   const veicolo = t.rif.tipo === 'veicolo';
   const cx = box.x + box.w / 2, cy = box.y + box.h / 2;
@@ -136,19 +137,21 @@ function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alo
     c.stroke();
   }
   c.restore();
-  // anello dei PV (§7): l'arco pieno è la parte di PV rimasti
-  if (p?.pv?.massimo > 0 && !veicolo) {
-    const quota = Math.max(0, Math.min(1, p.pv.attuali / p.pv.massimo));
-    const ra = r - bordo * 1.3;
-    c.lineWidth = Math.max(1.5, bordo * 0.8);
-    c.strokeStyle = colori.traccia;
-    c.beginPath(); c.arc(cx, cy, ra, 0, Math.PI * 2); c.stroke();
-    if (quota > 0) {
-      c.strokeStyle = colori.pv;
-      c.beginPath(); c.arc(cx, cy, ra, -Math.PI / 2, -Math.PI / 2 + quota * Math.PI * 2); c.stroke();
-    }
-  }
   c.filter = 'none';
+  // barretta dei PV (07/10, al posto dell'anello): sul fondo del token, sopra il bordo, larga quanto il quadretto o
+  // l'ingombro a PV pieni e più corta in proporzione ai PV persi; `pv`: { stile: data/mappa.json → pv_token, mostra(p) }
+  if (pv && p?.pv?.massimo > 0 && pv.mostra(p)) {
+    const quota = Math.max(0, Math.min(1, p.pv.attuali / p.pv.massimo));
+    const alto = Math.max(pv.stile.spessore_minimo_px, bordo * pv.stile.rispetto_al_bordo);
+    const y = (veicolo ? box.y + box.h - (Math.min(box.w, box.h) / 2 - r) : cy + r) - alto / 2;
+    c.save();
+    c.globalAlpha = t.nascosto ? 0.45 : 1;
+    c.fillStyle = pv.stile.traccia;
+    c.fillRect(box.x, y, box.w, alto);
+    c.fillStyle = pv.stile.colore;
+    if (quota > 0) c.fillRect(box.x, y, box.w * quota, alto);
+    c.restore();
+  }
   // Stati: piccole sigle in basso a destra, al massimo tre più «+n»
   if (testo && p?.stati?.length) {
     const rr = Math.max(6, Math.min(11, qs * 0.17));

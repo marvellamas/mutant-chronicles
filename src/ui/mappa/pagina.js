@@ -122,6 +122,8 @@ export function renderMappa(radice, ctx) {
     mostraArea: true,
     // ZoC (07/10): le zone di controllo degli avversari del token scelto, interruttore «Mostra ZoC» (tasto Z)
     mostraZoc: true,
+    // 07/10: barretta dei PV sui token, «Mostra PV sui token» (tasto P)
+    mostraPv: true,
   };
   const B = V.barra;
   const chiaveDisp = chiaveSchermo(window.screen?.width ?? 0, window.screen?.height ?? 0);
@@ -131,6 +133,7 @@ export function renderMappa(radice, ctx) {
   st.centra = leggiLocale('mutant-mappa-centra-turno') !== false;
   st.mostraArea = leggiLocale('mutant-mappa-mostra-area') !== false;
   st.mostraZoc = leggiLocale('mutant-mappa-mostra-zoc') !== false;
+  st.mostraPv = leggiLocale('mutant-mappa-mostra-pv') !== false;
   const leggiFonti = creaFonti(ctx.dati);
 
   // ── Struttura della pagina, creata una volta: si aggiornano solo i testi e i campi ──
@@ -176,6 +179,7 @@ export function renderMappa(radice, ctx) {
         h('div', { class: 'menu-strumenti-voci', role: 'menu' },
           h('button', { type: 'button', role: 'menuitem', class: 'voce-strumenti', title: 'Immagine di fondo: JPG, PNG o WEBP', onclick: () => { el.altro.open = false; el.scegliFile.click(); } }, 'Carica immagine…'),
           h('button', { type: 'button', role: 'menuitem', class: 'voce-strumenti', title: 'Scorciatoie e comandi (?)', onclick: () => { el.altro.open = false; apriAiuto(); } }, 'Scorciatoie e comandi (?)'),
+          el.voceMostraPv = h('button', { type: 'button', role: 'menuitemcheckbox', class: 'voce-strumenti', 'aria-checked': 'true', title: 'Barretta rossa dei PV sotto i token (tasto P); i giocatori vedono sempre quella dei PG', onclick: () => { el.altro.open = false; cambiaMostraPv(); } }, 'Mostra PV sui token (P)'),
           h('p', { class: 'nota voce-strumenti-nota' }, el.scala))),
       h('button', { type: 'button', class: 'btn tondo', title: 'Scorciatoie e comandi (?)', 'aria-label': 'Scorciatoie e comandi', onclick: () => apriAiuto() }, '?')),
     el.stato);
@@ -293,7 +297,7 @@ export function renderMappa(radice, ctx) {
     sopra: (c) => {
       if (st.scena) {
         const t = st.trascina?.modo === 'token' ? { id: st.trascina.token, q: st.trascina.q } : null;
-        disegnaToken(c, { scena: st.scena, cam: st.cam, pezzi: st.mappaPezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: st.selezionato, trascina: t, bordo: bordoDi, alone: ctx.dati.mappa.colori.alone_turno });
+        disegnaToken(c, { scena: st.scena, cam: st.cam, pezzi: st.mappaPezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: st.selezionato, trascina: t, bordo: bordoDi, alone: ctx.dati.mappa.colori.alone_turno, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => st.mostraPv } });
       }
       // percorso del token scelto (o trascinato) verso il quadretto sotto il puntatore, con i Q che costa
       if (st.percorso && st.scena) disegnaPercorso(c, { scena: st.scena, cam: st.cam, percorso: st.percorso.punti, ingombro: st.percorso.ingombro, costo: st.percorso.costo, fascia: st.percorso.fascia, colori: coloriAree(el.riquadro), inZoc: zocDelPercorso(st.percorso), coloreZoc: ctx.dati.mappa.zoc.colore });
@@ -741,6 +745,7 @@ export function renderMappa(radice, ctx) {
       ['Clic destro su un token', 'menu: fasce, Annulla movimento, Nuovo turno, schede, Nascondi, Colore, Togli'],
       ['M', 'mostra o nasconde l’area di movimento'],
       ['Z', 'mostra o nasconde le zone di controllo (ZoC) degli avversari'],
+      ['P', 'mostra o nasconde la barretta dei PV sui token (solo per te)'],
       ['Tab (Maiusc + Tab indietro)', 'cambia disposizione: Mappa grande, Equilibrata, Scontro grande'],
       ['Doppio clic sul bordo della barra', 'disposizione successiva; trascinarlo cambia la larghezza'],
       ['Ctrl + Z', 'annulla l’ultima azione del master (movimento, muri, nebbia, token)'],
@@ -1038,6 +1043,27 @@ export function renderMappa(radice, ctx) {
     const id = st.trascina?.modo === 'token' ? st.trascina.token : st.selezionato;
     if (!st.mostraZoc || !id || !per?.punti?.length) return null;
     return passiInZoc(per.punti, per.ingombro, avversariZoc(st.scena, st.pezzi, id, ctx.dati));
+  }
+  /** «Mostra PV sui token»: interruttore ricordato (localStorage); vale solo per la vista master. */
+  function cambiaMostraPv(v = !st.mostraPv) {
+    st.mostraPv = v;
+    scriviLocale('mutant-mappa-mostra-pv', v);
+    aggiornaVoceMostraPv();
+    avviso(v ? 'PV mostrati sui token (P per nasconderli).' : 'PV nascosti sui token (P per mostrarli); i giocatori vedono comunque quelli dei PG.', { chiave: 'mostra-pv' });
+    ridisegna(['sopra']);
+  }
+  function aggiornaVoceMostraPv() {
+    el.voceMostraPv.setAttribute('aria-checked', String(st.mostraPv));
+    el.voceMostraPv.textContent = `${st.mostraPv ? '✓ ' : ''}Mostra PV sui token (P)`;
+  }
+  /** PV dei nemici nella vista giocatori: scelta del master salvata nella scena, predefinito nascosto. */
+  function cambiaPvNemiciGiocatori() {
+    if (!st.scena) return;
+    const v = !st.scena.pvNemiciGiocatori;
+    st.scena = { ...st.scena, pvNemiciGiocatori: v };
+    salvaPresto();
+    disegnaPannelloGiocatori();
+    avviso(v ? 'I giocatori vedono i PV dei nemici.' : 'I giocatori non vedono i PV dei nemici.');
   }
   /** «Mostra ZoC»: interruttore ricordato (localStorage), come «Mostra area». */
   function cambiaMostraZoc(v = !st.mostraZoc) {
@@ -1414,6 +1440,7 @@ export function renderMappa(radice, ctx) {
     if (e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.key === 'm' || e.key === 'M') { e.preventDefault(); cambiaMostraArea(); return; }
     if (e.key === 'z' || e.key === 'Z') { e.preventDefault(); cambiaMostraZoc(); return; }
+    if (e.key === 'p' || e.key === 'P') { e.preventDefault(); cambiaMostraPv(); return; }
     if (e.key === '?') { e.preventDefault(); apriAiuto(); return; }
     if (e.key === 'Escape' && (el.strumenti.open || el.altro.open)) { el.strumenti.open = false; el.altro.open = false; return; }
     if (e.key === '+' || e.key === '=' || e.code === 'NumpadAdd') { e.preventDefault(); zoomCentro(V.passo_tasti); } else if (e.key === '-' || e.code === 'NumpadSubtract') { e.preventDefault(); zoomCentro(1 / V.passo_tasti); } else if (e.code === 'Space') {
@@ -1651,6 +1678,9 @@ export function renderMappa(radice, ctx) {
         s !== st.scena.id ? h('button', { type: 'button', class: 'btn btn-piccolo primario', onclick: () => scegliPerGiocatori(st.scena.id) }, 'Mostra questa scena') : null,
         s ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => scegliPerGiocatori(null) }, 'Automatica') : null,
         h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Una finestra a parte, da trascinare sul secondo schermo e mettere a schermo intero (F11)', onclick: () => window.open('#/mappa/giocatori', 'mutant-giocatori', 'popup,width=1280,height=800') }, 'Apri vista giocatori')),
+      // 07/10: i giocatori vedono sempre la barretta dei PV dei PG; quella dei nemici solo se il master la mostra
+      h('button', { type: 'button', role: 'switch', 'aria-checked': String(!!st.scena.pvNemiciGiocatori), class: `interruttore-mappa${st.scena.pvNemiciGiocatori ? ' acceso' : ''}`, title: 'La barretta dei PV dei nemici nella vista giocatori (quella dei PG si vede sempre)', onclick: () => cambiaPvNemiciGiocatori() },
+        h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `PV dei nemici ai giocatori: ${st.scena.pvNemiciGiocatori ? 'mostrati' : 'nascosti'}`),
       h('div', { class: 'mappa-qr' }, qr, h('small', { class: 'nota' }, url)),
       rete?.soloLocale ? h('p', { class: 'nota' }, 'Server acceso con --solo-locale: dai tablet non si raggiunge. Riavvialo con avvia-server.bat.') : null);
   }
@@ -1668,6 +1698,7 @@ export function renderMappa(radice, ctx) {
     if (vista?.selezionato && st.scena.token.some((t) => t.id === vista.selezionato)) st.selezionato = vista.selezionato;
     montaPlanciaBarra();
     aggiornaBlocco();
+    aggiornaVoceMostraPv();
     await Promise.all([aggiornaFonti(), leggiScelta()]);
     disegnaPannelloNebbia();
     disegnaPannelloMuri();

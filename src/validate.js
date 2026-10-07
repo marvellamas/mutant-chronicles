@@ -2693,6 +2693,13 @@ function validaMappa(dati, err) {
     for (const k of ['opacita_riempimento', 'opacita_contorno']) if (!(A[k] >= 0 && A[k] <= 1)) err(F, `vista.area.${k}`, 'opacità da 0 a 1');
     if (!positivo(A.spessore_contorno_px)) err(F, 'vista.area.spessore_contorno_px', 'numero positivo');
   }
+  // barretta dei PV sui token (07/10)
+  const PT = m.pv_token;
+  if (!isOggetto(PT)) err(F, 'pv_token', 'oggetto mancante');
+  else {
+    for (const k of ['colore', 'traccia']) if (!/^#[0-9a-f]{6}([0-9a-f]{2})?$/i.test(PT[k] ?? '')) err(F, `pv_token.${k}`, 'colore #rrggbb o #rrggbbaa');
+    for (const k of ['rispetto_al_bordo', 'spessore_minimo_px', 'mini_token_px']) if (!positivo(PT[k])) err(F, `pv_token.${k}`, 'numero positivo');
+  }
   // zone di controllo (07/10, src/mappa/zoc.js; Giocatore §5.3)
   const Z = m.zoc;
   if (!isOggetto(Z)) err(F, 'zoc', 'oggetto mancante');
