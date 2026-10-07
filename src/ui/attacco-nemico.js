@@ -47,6 +47,44 @@ export function esitoAttacco(tiri, valori, dati) {
 }
 
 /**
+ * Tiri per colpire (d20 dal vivo o con l'app, uno per tiro richiesto) ed esito: comuni ad «Attacca» dei nemici e, dai
+ * ritocchi del 07/10, al bersaglio nemico del pannello «Attacca!» di un PG (src/ui/attacco-pg.js).
+ * @param st { tiri: [{ valore, origine }], errore } stato del pannello; disegna: ridisegno dopo un tiro
+ * @returns {{ tiri, e: esitoAttacco, nodi }}
+ */
+export function righeTiri(ctx, arma, r, st, disegna) {
+  const tiri = tiriRichiesti(arma, r);
+  const e = esitoAttacco(tiri, st.tiri.map((t) => t?.valore ?? null), ctx.dati);
+  const nodi = [
+    tiri.map((t, i) => {
+      const x = e.esiti[i];
+      const input = h('input', { type: 'number', min: 1, max: 20, step: 1, class: 'input-d10', value: st.tiri[i]?.origine === 'vivo' ? st.tiri[i].valore : '', 'aria-label': `${t.etichetta}: d20 dal vivo` });
+      const senzaTiro = x.esito === 'automatico' || x.esito === 'impossibile';
+      return h('div', { class: 'tiro-colpire' },
+        h('span', {}, `${t.etichetta}: VA `, pillola(arma.nome, t.va, r.provenienza), ' '),
+        senzaTiro ? null : [
+          input,
+          h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => {
+            const v = Number(input.value);
+            if (!Number.isInteger(v) || v < 1 || v > 20) { st.errore = 'Il d20 dal vivo va da 1 a 20.'; disegna(); return; }
+            st.errore = null; st.tiri[i] = { valore: v, origine: 'vivo' }; disegna();
+          } }, 'Inserisci'),
+          h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { st.tiri[i] = { valore: tira(D20).tiro.valore, origine: 'app' }; disegna(); } }, 'Tira 1d20 con l’app'),
+        ],
+        h('span', { class: `esito-tiro esito-${x.esito}` }, ' ', st.tiri[i] ? `${st.tiri[i].valore} (${st.tiri[i].origine === 'app' ? 'app' : 'dal vivo'}) → ` : '', x.testo));
+    }),
+    e.completo ? h('p', { class: `esito-attacco esito-${e.esito}`, role: 'status' }, h('strong', {}, {
+      magistrale: 'Colpito: Successo Magistrale.', successo: `Colpito${e.riusciti > 1 ? ` (${e.riusciti} tiri riusciti)` : ''}.`, automatico: 'Colpito (successo automatico).',
+      fallimento: 'Mancato.', maldestro: 'Mancato: Fallimento Maldestro.', impossibile: 'Attacco impossibile.',
+    }[e.esito])) : null,
+  ];
+  return { tiri, e, nodi };
+}
+
+/** I tiri per la riga del registro (src/scontro.js → registraAttacco). */
+export const tiriPerRegistro = (tiri, st, e) => tiri.map((t, i) => ({ valore: st.tiri[i]?.valore ?? '—', origine: st.tiri[i]?.origine ?? null, esito: e.esiti[i].esito }));
+
+/**
  * Apre la scelta dell'attacco e del bersaglio, poi il pannello.
  * @param p partecipante che attacca (nemico o manuale con attacco)
  * @param bersagli [{ id, nome, descrizione, colpito: (proposta) → apre «Colpito» }] (l'attaccante escluso)
@@ -80,15 +118,14 @@ export function apriAttaccoNemico(ctx, p, { bersagli, registra, dichiarazione = 
 
   // riga finale del pannello: bersaglio, tiri per colpire, esito, registro e «Applica danno»
   const finale = (attacco, arma, b) => (r) => {
-    const tiri = tiriRichiesti(arma, r);
-    const e = esitoAttacco(tiri, st.tiri.map((t) => t?.valore ?? null), ctx.dati);
+    const { tiri, e, nodi } = righeTiri(ctx, arma, r, st, disegna);
     const conDanno = attacco.tipo === 'distanza' ? !!r.danno_per_colpo : !!r.danno;
     const esegui = async (applica) => {
       st.inCorso = true; st.errore = null; disegna();
       try {
         const ok = await registra({
           attaccante: p.nome, bersaglio: b.nome, arma: attacco.nome, va: tiri.map((t) => t.va).join('/'),
-          tiri: tiri.map((t, i) => ({ valore: st.tiri[i]?.valore ?? '—', origine: st.tiri[i]?.origine ?? null, esito: e.esiti[i].esito })), esito: e.esito,
+          tiri: tiriPerRegistro(tiri, st, e), esito: e.esito,
         });
         if (!ok) throw new Error('attacco non registrato (scontro cambiato o chiuso): riprova.');
         chiudi();
@@ -102,27 +139,7 @@ export function apriAttaccoNemico(ctx, p, { bersagli, registra, dichiarazione = 
       h('p', {}, h('strong', {}, 'Bersaglio: '), b.nome, b.descrizione ? h('small', { class: 'nota' }, ` · ${b.descrizione}`) : null,
         ' ', h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { st.fase = 'scelta'; disegna(); } }, 'Cambia attacco o bersaglio')),
       r.prova?.tipo === 'contrapposta' ? h('p', { class: 'nota' }, 'Prova contrapposta: l’esito qui sotto è quello del d20 del nemico; il confronto con la Prova del bersaglio si fa al tavolo (§5.12).') : null,
-      tiri.map((t, i) => {
-        const x = e.esiti[i];
-        const input = h('input', { type: 'number', min: 1, max: 20, step: 1, class: 'input-d10', value: st.tiri[i]?.origine === 'vivo' ? st.tiri[i].valore : '', 'aria-label': `${t.etichetta}: d20 dal vivo` });
-        const senzaTiro = x.esito === 'automatico' || x.esito === 'impossibile';
-        return h('div', { class: 'tiro-colpire' },
-          h('span', {}, `${t.etichetta}: VA `, pillola(arma.nome, t.va, r.provenienza), ' '),
-          senzaTiro ? null : [
-            input,
-            h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => {
-              const v = Number(input.value);
-              if (!Number.isInteger(v) || v < 1 || v > 20) { st.errore = 'Il d20 dal vivo va da 1 a 20.'; disegna(); return; }
-              st.errore = null; st.tiri[i] = { valore: v, origine: 'vivo' }; disegna();
-            } }, 'Inserisci'),
-            h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { st.tiri[i] = { valore: tira(D20).tiro.valore, origine: 'app' }; disegna(); } }, 'Tira 1d20 con l’app'),
-          ],
-          h('span', { class: `esito-tiro esito-${x.esito}` }, ' ', st.tiri[i] ? `${st.tiri[i].valore} (${st.tiri[i].origine === 'app' ? 'app' : 'dal vivo'}) → ` : '', x.testo));
-      }),
-      e.completo ? h('p', { class: `esito-attacco esito-${e.esito}`, role: 'status' }, h('strong', {}, {
-        magistrale: 'Colpito: Successo Magistrale.', successo: `Colpito${e.riusciti > 1 ? ` (${e.riusciti} tiri riusciti)` : ''}.`, automatico: 'Colpito (successo automatico).',
-        fallimento: 'Mancato.', maldestro: 'Mancato: Fallimento Maldestro.', impossibile: 'Attacco impossibile.',
-      }[e.esito])) : null,
+      nodi,
       st.errore ? h('p', { class: 'motivo', role: 'alert' }, st.errore) : null,
       h('div', { class: 'riga-azioni' },
         e.colpisce && conDanno ? h('button', { type: 'button', class: 'btn primario btn-grande', disabled: st.inCorso, onclick: () => esegui(true) }, 'Applica danno') : null,

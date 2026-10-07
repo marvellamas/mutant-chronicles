@@ -1818,7 +1818,7 @@ export function renderMappa(radice, ctx) {
       const idDa = daTok.rif?.id, idA = aTok.rif?.id;
       if (st.fonti?.scontro && st.planciaBarra?.puoAttaccare?.(idDa)) azioni.push({ testo: `Attacca! (${nomeDa} → ${nomeA})`, fai: () => st.planciaBarra.attaccaContro(idDa, idA, preset) });
       else if (pzDa?.tipo === 'pg' && recordPg(pzDa)) azioni.push({ testo: `Apri la scheda di ${nomeDa} per «Attacca!»`, fai: () => {
-        try { sessionStorage.setItem(CHIAVE_DALLA_MAPPA, JSON.stringify({ nome: pzDa.nome, distanza: r.distanza, copertura: r.copertura, protetto: r.protetto, bersaglio: nomeA, luce: luceB, luceMappa: rigaLuce, quando: Date.now() })); } catch { /* senza: valori a mano */ }
+        try { sessionStorage.setItem(CHIAVE_DALLA_MAPPA, JSON.stringify({ nome: pzDa.nome, distanza: r.distanza, copertura: r.copertura, protetto: r.protetto, bersaglio: nomeA, bersaglioId: idA ?? null, luce: luceB, luceMappa: rigaLuce, quando: Date.now() })); } catch { /* senza: valori a mano */ }
         apriSchedaToken(daTok);
       } });
     }
@@ -2478,7 +2478,14 @@ export function renderMappa(radice, ctx) {
       nuovo_turno: () => (conScontro ? null : { testo: 'Nuovo turno', titolo: 'Senza scontro: il movimento di questo token riparte da 0', azione: () => nuovoTurnoUi(tok.id) }),
       attacca: () => {
         if (conScontro && st.planciaBarra?.puoAttaccare?.(id)) return { testo: 'Attacca!', titolo: 'Il pannello «Attacca!» del nemico; con la linea di tiro fissata, bersaglio, distanza e Copertura già scelti', azione: () => st.planciaBarra.attaccaContro(id, st.linea?.da === tok.id ? st.scena.token.find((x) => x.id === st.linea.a)?.rif?.id ?? null : null) };
-        if (pg && recordPg(pz)) return { testo: 'Attacca! (scheda)', titolo: 'L’attacco di un PG si fa dalla sua scheda, tab Combattimento', azione: () => apriSchedaToken(tok) };
+        if (pg && recordPg(pz)) return { testo: 'Attacca! (scheda)', titolo: 'L’attacco di un PG si fa dalla sua scheda, tab Combattimento; con la linea di tiro fissata, il bersaglio è già scelto', azione: () => {
+          // ritocchi del 07/10: con la linea di tiro da questo token, il bersaglio (nemico dello scontro) già proposto
+          const bTok = st.linea?.da === tok.id ? st.scena.token.find((x) => x.id === st.linea.a) : null;
+          if (bTok?.rif?.tipo === 'partecipante') {
+            try { sessionStorage.setItem(CHIAVE_DALLA_MAPPA, JSON.stringify({ nome: pz.nome, soloBersaglio: true, bersaglio: pezzoDi(bTok)?.nome ?? null, bersaglioId: bTok.rif.id, quando: Date.now() })); } catch { /* senza: si sceglie nel pannello */ }
+          }
+          apriSchedaToken(tok);
+        } };
         return null;
       },
       // fase 2, lotto 2 (A.125): le porte adiacenti, 1 AzP ciascuna (la bloccata non si apre: «Sblocca» è del master)

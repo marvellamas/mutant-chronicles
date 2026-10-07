@@ -18,6 +18,7 @@ import { apriAttaccoNemico } from './attacco-nemico.js';
 import { apriLancioNemico } from './lancio-nemico.js';
 import { attacchiDi } from '../nemico-attacco.js';
 import { testoColpo } from '../danno.js';
+import { colpoSuNemico } from '../colpo-nemico.js';
 import { perditeDovute, applicaPerdita, registraPeriodico, togliPeriodici, allineaPeriodici, periodicoDi, pvDopoPerdita } from '../periodici.js';
 import { pannelloScontro, leggiScontroAperto, leggiScontro, salvaScontro, scegliReimposta } from './scontro.js';
 import { pannelloBestiario, elencoNemici, cartaNemico } from './nemici.js';
@@ -451,7 +452,6 @@ export function renderTavolo(radice, ctx) {
   };
   // Pezzo 4: «Colpito» (src/danno.js → applicaColpo, finestra src/ui/colpo.js). Serve uno scontro aperto:
   // il colpo va nel registro e si può annullare. Il PG si scrive nel suo file con la revisione (mtime).
-  const statiValidi = (ids, immuni = []) => ids.filter((id) => !immuni.includes(id));
   // fonti possibili delle perdite periodiche (§5.15: l'Iniziativa di chi le ha procurate): chi è di turno
   // per primo, poi gli altri partecipanti dello scontro
   const fontiPeriodiche = () => {
@@ -495,20 +495,8 @@ export function renderTavolo(radice, ctx) {
     apriColpo(ctx, bersaglio, {
       proposta,
       fonti: fontiPeriodiche(),
-      applica: async (ris, colpo, stati, periodici = []) => modifica((x) => {
-        const q = x.partecipanti.find((y) => y.id === p.id);
-        if (!q || q.pv.attuali !== p.pv.attuali || (q.ferite ?? 0) !== (p.ferite ?? 0)) throw new Error(`${p.nome} è cambiato nel frattempo: chiudi e riapri «Colpito».`);
-        const ammessi = statiValidi(stati, q.scheda?.immunita ?? []);
-        const dopoStati = [...new Set([...q.stati, ...ammessi])];
-        const prima = { pv: q.pv.attuali, ferite: q.ferite ?? 0, menomazioni: q.menomazioni ?? [], stati: q.stati };
-        const dopo = { pv: ris.pv.dopo, ferite: ris.ferite?.dopo ?? prima.ferite, menomazioni: [...prima.menomazioni, ...(ris.menomazioni ?? [])], stati: dopoStati };
-        let t = registraColpo(x, { bersaglio: p.id, nome: p.nome, tipo: 'nemico', testo: testoColpo(p.nome, colpo, ris), prima, dopo });
-        // §5.15: perdita periodica dei soli Stati applicati davvero (un nemico immune non la prende)
-        for (const y of periodici.filter((z) => ammessi.includes(z.stato))) {
-          t = registraPeriodico(t, { ...y, bersaglio: p.id, nome: p.nome, tipo: 'nemico', fonteNome: nomePartecipante(t, y.fonte) }, undefined, ctx.dati);
-        }
-        return t;
-      }),
+      // la stessa procedura del pannello «Attacca!» dei PG (src/colpo-nemico.js)
+      applica: async (ris, colpo, stati, periodici = []) => modifica((x) => colpoSuNemico(x, p, ris, colpo, stati, periodici, ctx.dati)),
     });
   };
   // Pezzo 5: «Attacca» di un nemico o di un partecipante manuale con un attacco (src/ui/attacco-nemico.js).

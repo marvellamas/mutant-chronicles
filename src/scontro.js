@@ -617,11 +617,16 @@ export function attaccoManuale(a) {
  * @param a { attaccante, bersaglio, arma, va, tiri: [{ valore, origine, esito }], esito }
  */
 export function registraAttacco(s, a, adesso) {
+  return conRiga(s, testoAttacco(a), adesso);
+}
+
+/** Testo della riga dell'attacco (anche in testa alla riga del colpo, quando un PG colpisce un nemico dalla scheda). */
+export function testoAttacco(a) {
   const ESITI = { magistrale: 'Successo Magistrale, colpito', successo: 'colpito', fallimento: 'mancato', maldestro: 'Fallimento Maldestro', automatico: 'colpito (successo automatico, §1.7)', impossibile: 'impossibile' };
   // con più tiri (raffiche, Manovre con più attacchi) l'esito di ciascuno; i tiri non necessari (successo automatico) non si scrivono
   const fatti = (a.tiri ?? []).filter((t) => Number.isInteger(t.valore));
   const tiri = fatti.map((t) => `${t.valore}${t.origine === 'app' ? ' (app)' : ' (dal vivo)'}${fatti.length > 1 ? ` ${ESITI[t.esito] ?? t.esito}` : ''}`).join(', ');
-  return conRiga(s, `${a.attaccante} attacca ${a.bersaglio} con ${a.arma}: VA ${a.va}${tiri ? `, tiro ${tiri}` : ''} → ${ESITI[a.esito] ?? a.esito}.`, adesso);
+  return `${a.attaccante} attacca ${a.bersaglio} con ${a.arma}: VA ${a.va}${tiri ? `, tiro ${tiri}` : ''} → ${ESITI[a.esito] ?? a.esito}.`;
 }
 
 /**
