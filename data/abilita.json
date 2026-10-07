@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Giocatore 0.45 (Google Doc del 01/10/2026, 21:25 UTC)",
+  "versione_manuale": "Giocatore 0.46 (Google Doc del 06/10/2026, 18:20 UTC)",
   "fonte": "§4.3 (quadro e ambito), §4.4 (descrizione); verificato con §4.6",
   "categorie": [
     "Distanza",
@@ -29,7 +29,7 @@
       "categoria": "Distanza",
       "caratteristica": "INT",
       "ambito": "Fucili, mitra e armi individuali impiegate con mira e controllo.",
-      "descrizione": "Comprende fucili, carabine, fucili d'assalto, fucili a pompa, mitra, fucili di precisione e armi individuali a energia. Intelligenza rappresenta mira controllata, valutazione della distanza e gestione delle modalità di fuoco."
+      "descrizione": "Comprende fucili, carabine, fucili d'assalto, fucili a pallini e doppiette, mitra, fucili di precisione e armi individuali a energia. Intelligenza rappresenta mira controllata, valutazione della distanza e gestione delle modalità di fuoco."
     },
     {
       "nome": "Armi pesanti",

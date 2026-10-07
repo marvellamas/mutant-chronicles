@@ -241,7 +241,7 @@
     },
     {
       "rif": "armi_distanza_corporative:mandible",
-      "famiglia": "fucile"
+      "famiglia": "pallini"
     },
     {
       "rif": "armi_distanza_corporative:interceptor",
@@ -265,7 +265,7 @@
     },
     {
       "rif": "armi_distanza_corporative:airbrush",
-      "famiglia": "fucile"
+      "famiglia": "pallini"
     },
     {
       "rif": "armi_distanza_corporative:windrider-n4",
@@ -354,7 +354,8 @@
       "_nota": "E&L del 29/09, risposta 19 (A.37): la ricarica segue il sistema di alimentazione del modello. Doppiette (cartucce nelle canne), fucili a pompa ordinari e di base (serbatoio tubolare fisso), archi e balestre: una operazione (1 AzP, Giocatore §5.1.1) inserisce 1 munizione; Ricarica Migliorata fino a 3 (§8.6.4), senza superare la capacità. «caricatore_amovibile»: modelli delle stesse famiglie con caricatore amovibile specifico (M310 da 20, SA SG2001 da 10): si sostituisce il caricatore.",
       "famiglie": [
         "Fucili a pompa",
-        "Fucili a pompa e doppiette",
+        "Fucili a pallini",
+        "Fucili a pallini e doppiette",
         "Archi e balestre"
       ],
       "armi": [

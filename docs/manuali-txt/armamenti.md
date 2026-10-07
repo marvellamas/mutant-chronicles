@@ -4,7 +4,7 @@
 
 ## Armi armature scudi e dotazioni operative
 
-**EDIZIONE 0.58**
+**EDIZIONE 0.59**
 
 Settembre 2026
 
@@ -169,7 +169,7 @@ La Specializzazione dell’arma dipende dalla famiglia e dalla modalità effetti
 | Spada bastarda | 5 | 6 | Comune | 10 | NC | 700 |
 | Spadone | 6 | 6 | Comune | 10 | NC | 850 |
 | Ascia leggera | 4 | 5 | Comune | 10 | CO | 180 |
-| Ascia bipenne | 7 | 6 | Comune | 10 | NC | 500 |
+| Ascia bipenne | 6 | 6 | Comune | 10 | NC | 500 |
 | Martello | 4 | 5 | Comune | 10 | CO | 80 |
 | Martello da guerra | 5 | 5 | Comune | 10 | NC | 280 |
 | Martello a due mani | 6 | 6 | Comune | 10 | CO | 180 |
@@ -180,7 +180,7 @@ La Specializzazione dell’arma dipende dalla famiglia e dalla modalità effetti
 | Lancia | 5 | 6 | Comune | 10 | CO | 220 |
 | Picca | 6 | 6 | Comune | 10 | NC | 250 |
 | Tridente | 4 | 6 | Comune | 10 | NC | 320 |
-| Arma inastata pesante | 7 | 6 | Comune | 10 | NC | 450 |
+| Arma inastata pesante | 6 | 6 | Comune | 10 | NC | 450 |
 | Frusta | 4 | 4 | Comune | 10 | CO | 100 |
 | Mazzafrusto | 4 | 5 | Comune | 10 | NC | 350 |
 | Artigli | 3 | 4 | Comune | 10 | NC | 250 |
@@ -258,7 +258,7 @@ L’effetto termina con la liberazione, il rilascio, la perdita del controllo de
 
 ### **7.1.6 Requisito di Forza**
 
-Un personaggio può utilizzare un’arma anche se la propria Forza è inferiore al requisito. Subisce una penalità al VA pari alla differenza fra FOR richiesta e Forza posseduta, applicata ad attacchi, Parate e Manovre effettuati con quell’arma. Si confrontano i valori della Caratteristica, non i modificatori. Soddisfare o superare il requisito non concede un bonus.
+Un personaggio può utilizzare un’arma anche se la propria Forza è inferiore al requisito. Subisce una penalità al VA pari alla differenza fra FOR richiesta e Forza posseduta, applicata ad attacchi, Parate e Manovre effettuati con quell’arma. Si confrontano i valori della Caratteristica, non i modificatori. Soddisfare o superare il requisito non concede un bonus. Le fasce orientative dei requisiti sono: FOR 2–3 per armi leggere e maneggevoli; FOR 4–5 per armi ordinarie da combattimento, pistole potenti e fucili; FOR 6 per armi particolarmente impegnative, comprese molte armi pesanti portatili; FOR 7–8 per modelli eccezionalmente ingombranti o potenti. Fa fede il requisito della singola scheda. Il requisito rappresenta lo sforzo di impugnare e controllare l’arma; danno, tecnologia e qualità non ne determinano automaticamente l’aumento.
 
 Il requisito FOR della scheda si riferisce all’impugnatura ordinaria dell’arma. Lancia e Spada bastarda mantengono lo stesso requisito con entrambe le impugnature consentite da Versatile. Le stesse regole valgono per i profili corporativi e per lo Scudo delle Guardie Sacre.
 
@@ -1242,7 +1242,7 @@ Max Q è la gittata massima; CC è la capacità del caricatore, della cella o de
 
 Pistole: pistole ordinarie e mitragliette, compreso il Mitra compatto e i modelli Colt Hammershot, MP105, P1000 e Nemesis 210\. Restano Armi Leggere in tutte le modalità; la Raffica non li trasferisce nella famiglia Mitragliatori. La SA30 a dardi usa Pistole per il \+1 VA, ma Danno calibrato esclude il \+1 danno.
 
-Fucili di Precisione: Eruptor, Mefisto, Archer e Assailant. Fucili d’Assalto: M50, AR3000, Volcano, Invader, Shogun e Panzerknacker. Carabine: Mandible, Interceptor, Airbrush, Windrider N4, MP105GW, Nemesis 21 e Rainy Dayer.
+Fucili di Precisione: Eruptor, Mefisto, Archer e Assailant. Fucili d’Assalto: M50, AR3000, Volcano, Invader, Shogun e Panzerknacker. Carabine: Interceptor, Windrider N4, MP105GW, Nemesis 21 e Rainy Dayer. Mandible e Airbrush appartengono invece a Fucili a Pallini e Doppiette, insieme agli altri modelli della famiglia.
 
 Mitragliatori: Justifier, Purifier, MG40, Deathlock Drum, Kensai e Nimrod Autocannon. Justifier e Purifier usano Armi Pesanti; gli altri quattordici fucili del catalogo principale usano Armi Medie secondo il proprio profilo.
 
@@ -1250,7 +1250,7 @@ Armi al Plasma: Hellblazer, KEP 808 e Intruder. Hellblazer e KEP 808 mantengono 
 
 S \= Colpo Singolo; RB \= Raffica Breve; RM \= Raffica Media; RL \= Raffica Lunga; TR \= Tiro Rapido; FS \= Fuoco di Soppressione; DC \= Doppio Colpo. Una modalità assente non è disponibile. Il profilo generico Mitra è eliminato; le specifiche armi corporative a due mani sono classificate singolarmente come carabine o fucili.
 
-Tutti i fucili possono eseguire Tiro Rapido eccetto quelli a pompa; le sole eccezioni in questi cataloghi sono HD14M e SA SG2001. Le doppiette usano Tiro Rapido contro due bersagli differenti e Doppio Colpo contro un unico bersaglio. Fucili a pompa e doppiette possiedono Sbilanciante.
+Fucili a pallini e doppiette usano Armi Medie (INT), la Specializzazione Fucili a Pallini e Doppiette e cartucce a pallini; possiedono AC 2 e Sbilanciante. Il funzionamento determina le modalità disponibili: a pompa, solo Colpo Singolo; semiautomatici, Colpo Singolo e Tiro Rapido; automatici, Colpo Singolo, Tiro Rapido e Raffica Breve. I modelli automatici di questo catalogo non dispongono di Raffica Media o Lunga. HD14M, SA SG2001 e Airbrush sono semiautomatici; Mandible è automatico. I modelli a pompa privi di Tiro Rapido conservano Colpo Singolo. Le doppiette conservano Colpo Singolo, Tiro Rapido contro due bersagli differenti e Doppio Colpo contro un unico bersaglio. Ogni cartuccia sparata applica il proprio AC: AC non indica il numero di munizioni consumate. Le modalità degli altri fucili restano quelle della scheda.
 
 Le penalità MOV delle armi impugnate si sottraggono una sola volta al budget di movimento della modalità scelta e non modificano gli spostamenti forzati. MOV −1 porta Passo, Corsa e Scatto a 5, 11 e 17 Q; MOV −2 a 4, 10 e 16 Q. Restano gli altri modificatori applicabili.
 
@@ -1462,7 +1462,7 @@ Danno calibrato. Per SA30 e SA50F, i bonus ordinari al danno di Classi, Talenti 
 | Piranha | 1d6+1 | 1 | 0 | 2 | 35 | 8 | 8 |
 | Punisher | 1d6+2 | 1 | 0 | 4 | 25 | 10 | 6 |
 | Hellblazer | 1d6+1 | 1 | 0 | 3 | 30 | 30 | 6 |
-| KEP 808 | 1d6+1 | 1d3 | \+1 | 6 | 20 | 10 | 6 |
+| KEP 808 | 1d6+1 | 1d3 | \+1 | 5 | 20 | 10 | 6 |
 
 | Modello | Abilità | Mani | PI | MOV | Modalità |
 | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -1513,7 +1513,7 @@ Lanciagranate Alleanza. Richiede Imbracciatura; si applica Postura. Munizione di
 | Modello | Danno | AC | VA | FOR | Max Q | CC | INC |
 | ----- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | Lanciagranate Carabina Punisher | Munizione | Mun. | 0 | 5 | 70 | 2 | 6 |
-| Lanciagranate Deathlock Drum | Munizione | Mun. | 0 | 8 | 100 | 6 | 6 |
+| Lanciagranate Deathlock Drum | Munizione | Mun. | 0 | 7 | 100 | 6 | 6 |
 
 | Modello | Abilità | Mani | PI | MOV | Modalità |
 | ----- | :---: | :---: | :---: | :---: | :---: |
@@ -1533,8 +1533,8 @@ Lanciagranate Alleanza. Richiede Imbracciatura; si applica Postura. Munizione di
 
 | Modello | Danno | AC | VA | FOR | Max Q | CC | INC |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| Deathlock Drum | 1d10+3 | 1 | 0 | 8 | 1000 | 750 | 6 |
-| Nimrod Autocannon | 2d8+5 | 1 | \+1 | 9 | 150 | 300 | 7 |
+| Deathlock Drum | 1d10+3 | 1 | 0 | 7 | 1000 | 750 | 6 |
+| Nimrod Autocannon | 2d8+5 | 1 | \+1 | 8 | 150 | 300 | 7 |
 | Gehemmapuker | 2d6 | 1d3 | 0 | 7 | 15 | 50 | 7 |
 
 | Modello | Abilità | Mani | PI | MOV | Modalità |
@@ -1583,12 +1583,14 @@ Lanciagranate Alleanza. Richiede Imbracciatura; si applica Postura. Munizione di
 
 **SA30 a dardi. Proprietà:** Danno calibrato. Include quattro dardi stordenti; caricamento misto ammesso annotando l’ordine.
 
-#### **Fucili a pompa**
+#### **Fucili a pallini**
+
+#### 
 
 | Modello | Danno | AC | VA | FOR | Max Q | CC | INC |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | HD14M | 1d6 | 2 | \+1 | 4 | 10 | 6 | 6 |
-| HG14 | 1d6+1 | 2 | 0 | 6 | 30 | 6 | 8 |
+| HG14 | 1d6+1 | 2 | 0 | 5 | 30 | 6 | 8 |
 
 | Modello | Abilità | Mani | PI | MOV | Modalità |
 | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -1600,9 +1602,9 @@ Lanciagranate Alleanza. Richiede Imbracciatura; si applica Postura. Munizione di
 | HD14M | Non comune | 12 | NC | 1.700 |
 | HG14 | Non comune | 12 | RA | 2.200 |
 
-**HD14M. Proprietà:** Sbilanciante. Eccezione: può eseguire Tiro Rapido.
+**HD14M.** Fucile a pallini semiautomatico. **Proprietà:** Sbilanciante. Modalità: Colpo Singolo e Tiro Rapido.
 
-**HG14. Proprietà:** Sbilanciante.
+**HG14.** Fucile a pallini a pompa. **Proprietà:** Sbilanciante. Modalità: Colpo Singolo.
 
 #### **Armi medie**
 
@@ -1694,7 +1696,7 @@ MP105GW. Carabina automatica; modello distinto dalla pistola MP105.
 | Bolter 09 | 1d6 | 1 | 0 | 3 | 60 | 10 | 6 |
 | Enforcer | 1d6+1 | 1 | 0 | 2 | 15 | 6 | 6 |
 | Jemson 45 | 1d6+2 | 1 | 0 | 3 | 15 | 6 | 6 |
-| Colt Hammershot | 1d6+3 | 1 | −1 | 7 | 10 | 6 | 5 |
+| Colt Hammershot | 1d6+3 | 1 | −1 | 5 | 10 | 6 | 5 |
 
 | Modello | Abilità | Mani | PI | MOV | Modalità |
 | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -1768,7 +1770,9 @@ MP105GW. Carabina automatica; modello distinto dalla pistola MP105.
 
 **Lanciagranate M50. Munizione di riferimento:** Granata standard a frammentazione.
 
-#### **Fucili a pompa e doppiette**
+#### **Fucili a pallini e doppiette**
+
+#### 
 
 | Modello | Danno | AC | VA | FOR | Max Q | CC | INC |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -1847,7 +1851,7 @@ SR30. Carabina priva di Raffiche Breve, Media e Lunga.
 | Modello | Danno | AC | VA | FOR | Max Q | CC | INC |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | M606 | 1d8+3 | 1 | 0 | 6 | 600 | 400 | 6 |
-| Improved M89 | 1d10+5 | 1 | 0 | 8 | 650 | 1000 | 3 |
+| Improved M89 | 1d10+5 | 1 | 0 | 7 | 650 | 1000 | 3 |
 | Lanciarazzi Deuce | Munizione | Mun. | 0 | 7 | 200 | 6 | 3 |
 
 | Modello | Abilità | Mani | PI | MOV | Modalità |
@@ -1885,7 +1889,9 @@ SR30. Carabina priva di Raffiche Breve, Media e Lunga.
 
 **P500.** Pistola semiautomatica convenzionale con gittata 30 Q e INC 7\. Non possiede SIN: funziona senza innesti e non riceve bonus da un’interfaccia neurale del tiratore. La P1000 offre \+1 VA nativo, gittata 60 Q, capacità trenta colpi, Raffica Breve e Media, Qualità Non comune e SIN 1 con un innesto compatibile.
 
-#### **Fucili a pompa**
+#### **Fucili a pallini**
+
+#### 
 
 | Modello | Danno | AC | VA | FOR | Max Q | CC | INC |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -1899,7 +1905,7 @@ SR30. Carabina priva di Raffiche Breve, Media e Lunga.
 | :---: | :---: | :---: | :---: | :---: |
 | SA SG2001 | Non comune | 12 | RA | 3.150 |
 
-**SA SG2001. Proprietà:** Sbilanciante. Eccezione: può eseguire Tiro Rapido.
+**SA SG2001.** Fucile a pallini semiautomatico. **Proprietà:** Sbilanciante. Modalità: Colpo Singolo e Tiro Rapido.
 
 #### **Carabine e fucili d’assalto**
 
@@ -2080,7 +2086,7 @@ La Belliger ha Qualità Comune e PS Integrità 10; gli altri modelli hanno Quali
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | Belliger | 1d6+1 | 1 | −1 | 3 | 15 | 10 | 4 |
 | Aggressor | 1d6+1 | 1 | −1 | 4 | 25 | 25 | 4 |
-| Mandible | 1d6+2 | 1 | 0 | 5 | 80 | 20 | 5 |
+| Mandible | 1d6+2 | 2 | 0 | 5 | 80 | 20 | 5 |
 | Interceptor | 1d6+2 | 1 | 0 | 5 | 50 | 40 | 4 |
 | Invader | 1d6+3 | 1 | 0 | 6 | 80 | 40 | 5 |
 | Assailant | 1d6+4 | 1 | 0 | 6 | 400 | 15 | 3 |
@@ -2089,7 +2095,7 @@ La Belliger ha Qualità Comune e PS Integrità 10; gli altri modelli hanno Quali
 | :---: | :---: | :---: | :---: | :---: | :---: |
 | Belliger | Leggere | 1 | 4 | 0 | S TR |
 | Aggressor | Leggere | 1 | 4 | 0 | S RB TR |
-| Mandible | Medie | 2 | 6 | 0 | S TR |
+| Mandible | Medie | 2 | 6 | 0 | S RB TR |
 | Interceptor | Medie | 2 | 6 | 0 | S RB RM TR |
 | Invader | Medie | 2 | 6 | 0 | S RB RM RL TR FS |
 | Assailant | Medie | 2 | 6 | 0 | S RB TR |
@@ -2110,8 +2116,8 @@ La Belliger ha Qualità Comune e PS Integrità 10; gli altri modelli hanno Quali
 | Modello | Danno | AC | VA | FOR | Max Q | CC | INC |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | Destroyer | 1d8+4 | 1 | 0 | 7 | 600 | 500 | 5 |
-| Charger | 1d10+6 | 1 | 0 | 9 | 450 | 1.000 | 4 |
-| Lanciarazzi Southpaw | Munizione | Mun. | 0 | 8 | 80 | 20 | 5 |
+| Charger | 1d10+6 | 1 | 0 | 8 | 450 | 1.000 | 4 |
+| Lanciarazzi Southpaw | Munizione | Mun. | 0 | 7 | 80 | 20 | 5 |
 
 | Modello | Abilità | Mani | PI | MOV | Modalità |
 | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -2144,7 +2150,7 @@ La Belliger ha Qualità Comune e PS Integrità 10; gli altri modelli hanno Quali
 
 I moduli Interceptor e Invader utilizzano granate compatibili, compresa la Granata standard a frammentazione; Fumogena ed Elettroshock sono descritte nel §7.14.7. Mantengono alimentazioni separate e condividono PI, Qualità e MOV con l’arma principale. Il costo è incluso nell’insieme; le munizioni sono separate. Il caricatore da dieci del modulo Invader non concede modalità ulteriori rispetto a S.
 
-Mandible non dispone di Raffiche. Assailant conserva la gittata massima di 400 Q e INC 3\. Southpaw usa il Razzo a carica maggiorata: 1d10+2, AC 1d3, RS 2 Q, Sbilanciante e Sbalzante 2\. La sua modalità TR segue le normali regole del Tiro Rapido.
+Mandible. Fucile a pallini automatico: AC 2, Sbilanciante, Colpo Singolo, Tiro Rapido e Raffica Breve. Usa cartucce a pallini e la Specializzazione Fucili a Pallini e Doppiette. Assailant conserva la gittata massima di 400 Q e INC 3\. Southpaw usa il Razzo a carica maggiorata: 1d10+2, AC 1d3, RS 2 Q, Sbilanciante e Sbalzante 2\. La sua modalità TR segue le normali regole del Tiro Rapido.
 
 ### **Mishima**
 
@@ -2156,7 +2162,7 @@ I modelli del catalogo hanno Qualità Comune e PS Integrità 10\. Le caratterist
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | Ronin 25AP | 1d6 | 1 | 0 | 2 | 25 | 10 | 2 |
 | Ronin 45AP | 1d6 | 1 | 0 | 3 | 25 | 15 | 2 |
-| Airbrush | 1d6 | 1 | 0 | 4 | 40 | 10 | 1 |
+| Airbrush | 1d6 | 2 | 0 | 4 | 40 | 10 | 1 |
 | Windrider N4 | 1d6 | 1 | 0 | 4 | 40 | 25 | 3 |
 | Shogun | 1d6+1 | 1 | 0 | 5 | 80 | 30 | 2 |
 | Archer | 1d6+2 | 1 | 0 | 5 | 1.100 | 15 | 3 |
@@ -2179,7 +2185,7 @@ I modelli del catalogo hanno Qualità Comune e PS Integrità 10\. Le caratterist
 | Shogun | Comune | 10 | NC | 4.500 |
 | Archer | Comune | 10 | NC | 4.500 |
 
-**Ronin 25AP.** Pistola leggera da difesa personale con requisito FOR 2, gittata 25 Q e caricatore da dieci colpi. INC 2 rappresenta la sua scarsa affidabilità; la sigla AP non concede proprietà perforanti. La Ronin 45AP porta la capacità a quindici colpi e aggiunge Raffica Breve, richiedendo FOR 3 e conservando INC 2\.
+**Ronin 25AP.** Pistola leggera da difesa personale con requisito FOR 2, gittata 25 Q e caricatore da dieci colpi. INC 2 rappresenta la sua scarsa affidabilità; la sigla AP non concede proprietà perforanti. La Ronin 45AP porta la capacità a quindici colpi e aggiunge Raffica Breve, richiedendo FOR 3 e conservando INC 2\. Airbrush è un fucile a pallini semiautomatico: AC 2, Sbilanciante, Colpo Singolo e Tiro Rapido. Usa cartucce a pallini e la Specializzazione Fucili a Pallini e Doppiette.
 
 #### **Armi pesanti**
 
@@ -4755,8 +4761,8 @@ Le tabelle assegnano la famiglia del tiro balistico principale. Eventuali lancia
 | Capitol | Bolter 10; Bolter 09; Enforcer; Jemson 45; Colt Hammershot; Bolter 13; Bolter 20; Ironfist 15 | M310; M510; M516S; M516D; M410 |
 | Cybertronic | P500; P1000 | SA SG2001 |
 | Fratellanza | Nemesis 100; Eliminator; Nemesis 210; Nemesis 214; Nemesis 221 | — |
-| Imperial | Belliger; Aggressor; Rainy Dayer | — |
-| Mishima | Ronin 25AP; Ronin 45 AP | — |
+| Imperial | Belliger; Aggressor; Rainy Dayer | Mandible |
+| Mishima | Ronin 25AP; Ronin 45 AP | Airbrush |
 
 HG10, Bolter 10, P500, Nemesis 100, Belliger e Ronin 25AP usano proiettili da pistola ordinari, intercambiabili fra Corporazioni. Ciascun modello impiega un caricatore specifico: la compatibilità con il modello superiore non è automatica. Il caricatore vuoto aggiuntivo costa 50; ogni proiettile ordinario costa 2 (§§7.20.1–7.20.2).
 
@@ -4771,8 +4777,8 @@ La Rainy Dayer usa proiettili da pistola ma conserva Armi Medie, tiro a due mani
 | Capitol | CAR 24; M50; SR30; SR50; M606 | Improved M89 |
 | Cybertronic | CAW2000; AR3000; SR3500; TSW4000 | SSW4200P |
 | Fratellanza | Nemesis 21; Volcano; Eruptor; Mefisto; Justifier | Purifier |
-| Imperial | Mandible; Interceptor; Invader; Assailant; Destroyer | Charger |
-| Mishima | Airbrush; Windrider N4; Shogun; Archer; Kensai | Dragonfire |
+| Imperial | Interceptor; Invader; Assailant; Destroyer | Charger |
+| Mishima | Windrider N4; Shogun; Archer; Kensai | Dragonfire |
 
 MG40, M606, TSW4000, Justifier, Destroyer e Kensai usano proiettili da fucile. La loro funzione di mitragliatrice leggera non li sposta nella famiglia dei proiettili pesanti.
 
@@ -5042,7 +5048,7 @@ Mefisto 100 possiede **Purificatrice 1**, separata dal danno in tabella. Mefisto
 | Imperiali | Breacher | 1d6+1 | −1 | 20 | 4 | 5 | CO | 1.300 |
 | Mishima | Kaze 10 | 1d6 | 0 | 20 | 8 | 4 | CO | 1.000 |
 
-Judicator 100 possiede **Purificatrice 1**, separata dal danno in tabella. HD10 e SA SG1000 non possiedono l'eccezione al Tiro Rapido dei modelli superiori HD14M e SA SG2001.
+Judicator 100 possiede **Purificatrice 1**, separata dal danno in tabella. HD10 e SA SG1000 sono a pompa e dispongono del solo Colpo Singolo; i modelli superiori HD14M e SA SG2001 sono semiautomatici e dispongono anche di Tiro Rapido.
 
 **Purificatrice 1:** si applica esattamente secondo il §7.1.3 del Manuale degli Armamenti, contro i bersagli validi dell'Oscura Simmetria. Non trasforma il danno in Magico, non richiede PM o Sintonizzazione e non considera automaticamente valida la sola Corruzione. Il bonus non è già incluso nei danni tabellari.
 

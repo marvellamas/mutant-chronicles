@@ -67,12 +67,14 @@ test('VA per colpire = VA dell’Abilità dell’arma; FOR insufficiente toglie 
   assert.equal(arma.va, guerra);
   assert.deepEqual(arma.danno, { una_mano: '1d8+2', due_mani: null }); // +1 di FOR 6 (§5.13)
   assert.equal(arma.portataQ, 1);
-  // Arcanista: FOR 5; Spadone FOR 6 → −1; Ascia bipenne FOR 7 → −2
-  const a = scheda(ARCANISTA, [voce('a', 'armi:spadone', 'impugnata'), voce('b', 'armi:ascia-bipenne', 'impugnata')]);
+  // Arcanista: FOR 5; Spadone FOR 6 → −1; Lanciarazzi Southpaw FOR 7 → −2 (Armamenti 0.59: l'Ascia bipenne,
+  // prima l'esempio a FOR 7, è scesa a FOR 6 e non ci sono più armi ravvicinate a FOR 7)
+  const a = scheda(ARCANISTA, [voce('a', 'armi:spadone', 'impugnata'), voce('b', 'armi_distanza_corporative:lanciarazzi-southpaw', 'impugnata')]);
   const guerraA = a.abilita.find((x) => x.nome === 'Armi da guerra').totale;
+  const pesantiA = a.abilita.find((x) => x.nome === 'Armi pesanti').totale;
   assert.equal(a.caratteristiche.FOR.valore, 5);
   assert.equal(a.equipaggiamento.armi[0].va, guerraA - 1);
-  assert.equal(a.equipaggiamento.armi[1].va, guerraA - 2);
+  assert.equal(a.equipaggiamento.armi[1].va, pesantiA - 2);
   assert.ok(a.equipaggiamento.armi[1].componenti.some((c) => c.valore === -2 && /§7\.1\.6/.test(c.nome)));
   // Parata con l'arma: Difese − penalità FOR; il Tonfa aggiunge Difensiva +2
   const difese = a.abilita.find((x) => x.nome === 'Difese').vaEquip;

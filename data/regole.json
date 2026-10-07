@@ -541,7 +541,7 @@
       "modificatore_va": -4,
       "colpi_a_segno": "uno per ciascuno dei due Tiri Singoli riusciti",
       "regola": "Con un’Azione Principale e la stessa arma effettua due Tiri Singoli, ciascuno a −4 VA, contro lo stesso bersaglio o bersagli differenti, consumando due munizioni. Tiro Rapido Migliorato riduce la penalità a −2. Non si combina con Tiro Mirato, Tiro Ravvicinato, Tiro a Bruciapelo o Raffiche. Dal 12° livello può essere eseguito due volte.",
-      "note": "La disponibilità di Tiro Rapido dipende dalla scheda. Tutti i fucili possono eseguirlo, eccetto i fucili a pompa; HD14M e SA SG2001 sono eccezioni espresse. Con una doppietta i due Tiri Rapidi devono essere diretti contro bersagli differenti.",
+      "note": "La disponibilità di Tiro Rapido dipende dalla scheda. Nella famiglia Fucili a Pallini e Doppiette, i modelli a pompa dispongono del solo Colpo Singolo; i semiautomatici di Colpo Singolo e Tiro Rapido; gli automatici anche di Raffica Breve. HD14M, SA SG2001 e Airbrush sono semiautomatici; Mandible è automatico. I modelli automatici del catalogo non dispongono di Raffica Media o Lunga. Con una doppietta i due Tiri Rapidi devono essere diretti contro bersagli differenti; contro lo stesso bersaglio si usa Doppio Colpo.",
       "migliorata": {
         "talento": "Tiro Rapido Migliorato",
         "modificatore_va": -2
