@@ -22,7 +22,7 @@ import { colpoSuNemico } from '../colpo-nemico.js';
 import { perditeDovute, applicaPerdita, registraPeriodico, togliPeriodici, allineaPeriodici, periodicoDi, pvDopoPerdita } from '../periodici.js';
 import { pannelloScontro, leggiScontroAperto, leggiScontro, salvaScontro, scegliReimposta, chiediIniziativa } from './scontro.js';
 import { pannelloBestiario, elencoNemici, cartaNemico } from './nemici.js';
-import { diTurno, ordineIniziativa, registraIniziative, senzaIniziativaNuovi, avanti, indietro, anteprimaIndietro, reimpostaIniziativa, reimpostaIniziativaDi, dadoIniziativa, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico, confermaRegimeNemico, aggiungiNemici, registraRiga, cambiaStatoNemico } from '../scontro.js';
+import { cambiaMusica, diTurno, ordineIniziativa, registraIniziative, senzaIniziativaNuovi, avanti, indietro, anteprimaIndietro, reimpostaIniziativa, reimpostaIniziativaDi, dadoIniziativa, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico, confermaRegimeNemico, aggiungiNemici, registraRiga, cambiaStatoNemico } from '../scontro.js';
 import { vociBestiario } from '../nemici.js';
 import { creaCustode } from './ridisegno.js';
 import { avviso, avvisoErrore } from './avvisi.js';
@@ -874,6 +874,8 @@ export function renderTavolo(radice, ctx) {
   ferma.reimposta = (id = null) => reimpostaUi(id);
   // la finestra «Iniziativa» per chi è ancora senza (pulsante «Iniziativa…» della barra)
   ferma.chiediIniziativa = () => iniziativaUi(null);
+  // musica di fondo dello scontro (07/10), dalla barra della mappa
+  ferma.impostaMusica = async (file) => { await aggiorna(); return modifica((x) => cambiaMusica(x, file)); };
   ferma.aggiorna = () => aggiorna();
   // ZoC della mappa (07/10): «Attacca!» dell'avversario con il bersaglio già scelto, dall'avviso dell'Attacco di
   // Opportunità; false se non si può (PG: l'attacco si fa dalla sua scheda; nessun attacco nel profilo)

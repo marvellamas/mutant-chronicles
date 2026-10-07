@@ -572,6 +572,13 @@ export function indietro(s, adesso) {
   return conRiga(t, parti.join(' '), adesso);
 }
 
+/** Musica di fondo dello scontro (07/10): il file di musica/ o null; una riga nel registro. */
+export function cambiaMusica(s, file, adesso) {
+  const m = file || null;
+  if ((s.musica ?? null) === m) return s;
+  return conRiga({ ...s, musica: m }, m ? `Musica di fondo: ${m}.` : 'Musica di fondo tolta.', adesso);
+}
+
 /** Fine scontro: lo stato diventa «chiuso» (il server lo sposta in scontri/archivio/, senza cancellarlo). */
 export function chiudi(s, adesso) {
   if (s.stato !== 'aperto') return s;
@@ -587,6 +594,8 @@ export function validaScontro(s) {
   if (!Array.isArray(s.partecipanti) || !Array.isArray(s.registro) || !Array.isArray(s.durate) || !Array.isArray(s.ordineAlleati)) return 'struttura incompleta';
   if (!Number.isInteger(s.round) || s.round < 1 || !Number.isInteger(s.turno) || s.turno < 0) return 'Round o turno non validi';
   // «Indietro» (07/10): storico degli «Avanti», facoltativo
+  // musica di fondo (07/10): il nome di un file della cartella musica/, facoltativo
+  if (s.musica !== undefined && s.musica !== null && !(typeof s.musica === 'string' && /^[^/\\]{1,200}$/.test(s.musica))) return 'musica di fondo non valida';
   if (s.indietro !== undefined && !(Array.isArray(s.indietro) && s.indietro.every((v) => v && v.prima && Number.isInteger(v.prima.round) && Number.isInteger(v.righe) && Array.isArray(v.durateFinite) && Array.isArray(v.statiTolti) && Array.isArray(v.perdite)))) return 'storico di «Indietro» non valido';
   const nemicoRotto = s.partecipanti.find((p) => p?.tipo === 'nemico'
     && !(Number.isInteger(p.pv?.attuali) && Number.isInteger(p.pv?.massimo) && Array.isArray(p.stati) && p.scheda && typeof p.scheda === 'object'));

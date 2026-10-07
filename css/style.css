@@ -2152,3 +2152,8 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 /* 07/10: l'interruttore della nebbia automatica, in cima alla sezione Nebbia, ben visibile */
 .interruttore-mappa.interruttore-evidente { font-weight: 700; padding: 0.35rem 0.6rem; border: 2px solid var(--bordo); border-radius: var(--raggio); }
 .interruttore-mappa.interruttore-evidente.acceso { border-color: var(--accento); }
+
+/* suoni della mappa (07/10, src/ui/mappa/audio.js): musica di fondo, muto e volumi nella barra in alto */
+.mappa-audio { display: inline-flex; align-items: center; gap: 0.25rem; }
+.mappa-audio .btn.acceso { border-color: var(--pe); }
+.finestrella.scegli-musica .scelta-colonna { max-height: 50vh; overflow-y: auto; }

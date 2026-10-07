@@ -1,0 +1,13 @@
+Musica di fondo della mappa di battaglia
+========================================
+
+Qui si mettono i file di musica da usare come sottofondo degli scontri (avvia-server.bat, cioe'
+node server.mjs, li elenca nella mappa e nella preparazione dello scontro: «Musica di fondo»).
+
+- Formati: MP3, OGG, WAV, M4A e AAC, quelli che tutti i browser leggono (data/mappa.json →
+  audio.musica.formati). Gli altri file della cartella non compaiono nell'elenco.
+- Basta copiare il file qui dentro: non serve riavviare il server. Il nome del file e' quello che si
+  vede nell'elenco.
+- La musica suona sul PC del master (quello collegato alle casse) e, se acceso «suona anche nella
+  vista giocatori», anche sul televisore.
+- I file di questa cartella non vanno su GitHub (.gitignore): sono dati del master, spesso pesanti.

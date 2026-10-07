@@ -5,7 +5,7 @@
 //                                    tutte le interfacce e stampa gli indirizzi per i giocatori (src/rete.js)
 //   node server.mjs --solo-locale   solo da questo computer (127.0.0.1); --rete resta accettato, non serve più
 //   PORTA=8080 node server.mjs      altra porta (oppure --porta=8080)
-//   --cartella=<dir> --tavolo=<dir> --scontri=<dir> --nemici=<dir> --veicoli=<dir> --scene=<dir> --mappe=<dir>
+//   --cartella=<dir> --tavolo=<dir> --scontri=<dir> --nemici=<dir> --veicoli=<dir> --scene=<dir> --mappe=<dir> --musica=<dir>
 //                                    altre cartelle per personaggi, tavolo, scontri, bestiario, veicoli,
 //                                    scene e immagini delle mappe (prove, più campagne)
 // API (JSON):
@@ -57,13 +57,16 @@
 //                                      scena, scontro o scelta cambiano (la vista si rilegge subito)
 //   GET /api/ritratti/<chiave>         il ritratto del PG (dalla sua scheda), per i token della vista giocatori
 //   GET /api/mappe                     immagini in mappe/: [{ file, dimensione, mtime }]
+//   GET /api/musica                    musica di fondo in musica/ (07/10): [{ file, dimensione }], formati di
+//                                      data/mappa.json → audio.musica.formati
+//   GET /api/musica/<file>             il file audio, anche a pezzi (Range), per la ripetizione continua
 //   GET /api/mappe/<file>              l'immagine (in cache: il nome contiene l'impronta del contenuto)
 //   POST /api/mappe?nome=…[&ridotta=1] corpo = JPG, PNG o WEBP: lo salva come <nome>-<impronta>[-ridotta].<est>
 //                                      e risponde { file, tipo, larghezza, altezza, dimensione }; ridotta=1
 //                                      controlla il lato massimo della copia per i tablet
 // Nessuna cancellazione dal server: i file vecchi si tolgono a mano dalla cartella.
 import { createServer } from 'node:http';
-import { readFileSync } from 'node:fs';
+import { readFileSync, createReadStream } from 'node:fs';
 import { readFile, writeFile, readdir, stat, mkdir, rename, copyFile, unlink, constants } from 'node:fs/promises';
 import { extname, join, normalize, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -96,6 +99,7 @@ const NEMICI = 'nemici';
 const VEICOLI = 'veicoli';
 const SCENE = 'scene';
 const MAPPE = 'mappe';
+const MUSICA = 'musica';
 const ID_NEMICO = /^[a-z0-9-]{1,60}$/;
 
 const TIPI = {
@@ -662,6 +666,46 @@ async function apiRitratto(req, res, percorso, { cartella, radice }) {
   return res.end(corpo);
 }
 
+/**
+ * Musica di fondo della mappa (richiesta di Marcello del 07/10/2026): i file audio che il master mette nella cartella
+ * reale musica/ (fuori da git, come mappe/), con i formati di data/mappa.json → audio.musica.formati. Solo lettura:
+ * l'elenco e il file, anche a pezzi (intestazione Range), così il browser lo ripete e lo scorre senza riscaricarlo.
+ */
+async function apiMusica(req, res, percorso, musica, radice) {
+  if (req.method !== 'GET' && req.method !== 'HEAD') return json(res, 405, { errore: 'metodo non ammesso' });
+  const { dati } = await datiDelServer(radice);
+  const formati = dati.mappa.audio.musica.formati;
+  const valido = (f) => /^[^/\\]+$/.test(f) && !f.startsWith('.') && formati.includes(extname(f).slice(1).toLowerCase());
+  if (percorso === '/api/musica') {
+    await mkdir(musica, { recursive: true });
+    const lista = [];
+    for (const file of (await readdir(musica)).filter(valido)) {
+      const st = await stat(join(musica, file));
+      if (st.isFile()) lista.push({ file, dimensione: st.size });
+    }
+    return json(res, 200, lista.sort((a, b) => a.file.localeCompare(b.file, 'it')));
+  }
+  let file;
+  try { file = decodeURIComponent(percorso.slice('/api/musica/'.length)); } catch { return json(res, 400, { errore: 'nome di file non valido' }); }
+  if (!valido(file)) return json(res, 400, { errore: `file di musica non valido (formati: ${formati.join(', ')})` });
+  const dove = join(musica, file);
+  let st;
+  try { st = await stat(dove); } catch { return json(res, 404, { errore: 'file di musica non trovato' }); }
+  const tipo = TIPI[extname(file).toLowerCase()] ?? 'application/octet-stream';
+  const r = /^bytes=(\d*)-(\d*)$/.exec(req.headers.range ?? '');
+  if (r && (r[1] !== '' || r[2] !== '')) {
+    const inizio = r[1] === '' ? Math.max(0, st.size - Number(r[2])) : Number(r[1]);
+    const fine = r[1] === '' || r[2] === '' ? st.size - 1 : Math.min(Number(r[2]), st.size - 1);
+    if (inizio > fine || inizio >= st.size) { res.writeHead(416, { 'Content-Range': `bytes */${st.size}` }); return res.end(); }
+    res.writeHead(206, { 'Content-Type': tipo, 'Content-Length': fine - inizio + 1, 'Content-Range': `bytes ${inizio}-${fine}/${st.size}`, 'Accept-Ranges': 'bytes', 'Cache-Control': 'no-cache' });
+    if (req.method === 'HEAD') return res.end();
+    return createReadStream(dove, { start: inizio, end: fine }).pipe(res);
+  }
+  res.writeHead(200, { 'Content-Type': tipo, 'Content-Length': st.size, 'Accept-Ranges': 'bytes', 'Cache-Control': 'no-cache' });
+  if (req.method === 'HEAD') return res.end();
+  return createReadStream(dove).pipe(res);
+}
+
 /** Nome leggibile per il file di una mappa: minuscole senza accenti, cifre e trattini. */
 const nomeMappa = (t) => String(t ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
   .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60) || 'mappa';
@@ -737,7 +781,7 @@ async function caricaEsempi(radice, cartella, nemici) {
   return { copiati, saltati };
 }
 
-async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice, soloLocale, veicoli, migraIn = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), canale = null) {
+async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice, soloLocale, veicoli, migraIn = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), canale = null, musica = join(RADICE, MUSICA)) {
   const cartelle = { cartella, tavolo, scontri, veicoli, scene, radice, canale };
   // diretta (07/10): dopo una scrittura riuscita di scena o scontro la vista giocatori si rilegge subito
   const segnala = (r) => { if (req.method !== 'GET' && res.statusCode < 300) canale?.cambiata(); return r; };
@@ -745,6 +789,7 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
   if (percorso === '/api/vista-giocatori' || percorso.startsWith('/api/vista-giocatori/')) return apiVistaGiocatori(req, res, percorso, cartelle);
   if (percorso.startsWith('/api/ritratti/')) return apiRitratto(req, res, percorso, cartelle);
   if (percorso === '/api/mappe' || percorso.startsWith('/api/mappe/')) return apiMappe(req, res, percorso, mappe, radice);
+  if (percorso === '/api/musica' || percorso.startsWith('/api/musica/')) return apiMusica(req, res, percorso, musica, radice);
   if (percorso === '/api/veicoli' || percorso.startsWith('/api/veicoli/')) return apiVeicoli(req, res, percorso, veicoli);
   if (percorso === '/api/rete') {
     const porta = req.socket.localPort;
@@ -851,7 +896,7 @@ async function statico(req, res, percorso, radice, versioneAvvio = null) {
   let rel = percorso === '/' ? '/index.html' : percorso;
   // niente uscite dalla cartella del progetto, niente file nascosti né la cartella dei personaggi (passa dall'API)
   const pieno = normalize(join(radice, rel));
-  if (!pieno.startsWith(radice) || rel.split('/').some((p) => p.startsWith('.')) || rel.startsWith(`/${CARTELLA}/`) || rel.startsWith(`/${TAVOLO}/`) || rel.startsWith(`/${SCONTRI}/`) || rel.startsWith(`/${NEMICI}/`) || rel.startsWith(`/${VEICOLI}/`) || rel.startsWith(`/${SCENE}/`) || rel.startsWith(`/${MAPPE}/`)) {
+  if (!pieno.startsWith(radice) || rel.split('/').some((p) => p.startsWith('.')) || rel.startsWith(`/${CARTELLA}/`) || rel.startsWith(`/${TAVOLO}/`) || rel.startsWith(`/${SCONTRI}/`) || rel.startsWith(`/${NEMICI}/`) || rel.startsWith(`/${VEICOLI}/`) || rel.startsWith(`/${SCENE}/`) || rel.startsWith(`/${MAPPE}/`) || rel.startsWith(`/${MUSICA}/`)) {
     res.writeHead(404); return res.end('Non trovato');
   }
   try {
@@ -879,7 +924,7 @@ async function statico(req, res, percorso, radice, versioneAvvio = null) {
  * Crea il server. `radice`: cartella dell'app; `cartella`: dove stanno i personaggi (per i test, una
  * cartella temporanea).
  */
-export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA), tavolo = join(RADICE, TAVOLO), scontri = join(RADICE, SCONTRI), nemici = join(RADICE, NEMICI), veicoli: veicoliDati = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), soloLocale = false } = {}) {
+export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA), tavolo = join(RADICE, TAVOLO), scontri = join(RADICE, SCONTRI), nemici = join(RADICE, NEMICI), veicoli: veicoliDati = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), musica = join(RADICE, MUSICA), soloLocale = false } = {}) {
   const veicoli = veicoliDati ?? join(RADICE, VEICOLI);
   // versione dell'app all'accensione (versione.json): il codice del server resta questo finché non lo si riavvia
   let versioneAvvio = null;
@@ -897,7 +942,7 @@ export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA),
     try {
       const percorso = decodeURI(new URL(req.url, 'http://x').pathname);
       if (percorso === '/api/ping') return json(res, 200, { ok: true, app: 'mutant', cartella: CARTELLA, ...identita });
-      if (percorso.startsWith('/api/')) return await api(req, res, percorso, cartella, tavolo, scontri, nemici, base, soloLocale, veicoli, migraIn, scene, mappe, canale);
+      if (percorso.startsWith('/api/')) return await api(req, res, percorso, cartella, tavolo, scontri, nemici, base, soloLocale, veicoli, migraIn, scene, mappe, canale, musica);
       return await statico(req, res, percorso, base, versioneAvvio);
     } catch (e) {
       if (!res.headersSent) json(res, 500, { errore: e.message });
@@ -927,7 +972,8 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const veicoli = arg('veicoli') ? normalize(arg('veicoli')) : join(RADICE, VEICOLI);
   const scene = arg('scene') ? normalize(arg('scene')) : join(RADICE, SCENE);
   const mappe = arg('mappe') ? normalize(arg('mappe')) : join(RADICE, MAPPE);
-  const server = creaServer({ cartella, tavolo, scontri, nemici, veicoli, scene, mappe, soloLocale });
+  const musica = arg('musica') ? normalize(arg('musica')) : join(RADICE, MUSICA);
+  const server = creaServer({ cartella, tavolo, scontri, nemici, veicoli, scene, mappe, musica, soloLocale });
   // si spegne quando si chiude la finestra di avvia-server.bat (o con Ctrl+C), senza restare in ascolto da solo
   const esci = (perche) => {
     console.log(`\nMutant si spegne (${perche}).`);

@@ -38,6 +38,8 @@ export function validaBozza(b) {
   if (typeof (b.note ?? '') !== 'string') return 'note non valide';
   if (!Array.isArray(b.pg) || !b.pg.every((k) => typeof k === 'string')) return 'PG non validi';
   if (b.livello !== null && b.livello !== undefined && !(Number.isInteger(b.livello) && b.livello >= 1 && b.livello <= 20)) return 'livello dei PG fra 1 e 20';
+  // musica di fondo (07/10): il nome di un file della cartella musica/, facoltativo
+  if (b.musica !== undefined && b.musica !== null && !(typeof b.musica === 'string' && /^[^/\\]{1,200}$/.test(b.musica))) return 'musica di fondo non valida';
   if (!Array.isArray(b.nemici)) return 'elenco dei nemici mancante';
   for (const [i, v] of b.nemici.entries()) {
     const n = v?.nemico;
@@ -81,6 +83,7 @@ export function cambiaBozza(b, campi, adesso) {
   const c = { ...campi };
   if ('nome' in c) c.nome = String(c.nome ?? '').trim() || b.nome;
   if ('livello' in c) c.livello = c.livello === '' || c.livello === null ? null : Number(c.livello);
+  if ('musica' in c && !c.musica) c.musica = null;
   return tocca({ ...b, ...c }, adesso);
 }
 
@@ -111,6 +114,8 @@ export function iniziaBozza(b, { id, pg, adesso = new Date() }) {
   if (!b.nemici.length && !pg.length) throw new Error('la bozza non ha partecipanti');
   let s = nuovoScontro({ id, nome: b.nome, pg, adesso });
   if (b.note?.trim()) s = { ...s, note: b.note };
+  // la musica di fondo scelta nella preparazione passa allo scontro (07/10)
+  if (b.musica) s = { ...s, musica: b.musica };
   s = registraRiga(s, `Dalla preparazione «${b.nome}».`, adesso);
   for (const v of b.nemici) s = aggiungiNemici(s, v.nemico, v.quanti, { lato: v.lato }, adesso);
   return s;

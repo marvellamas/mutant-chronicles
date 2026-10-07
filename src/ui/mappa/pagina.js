@@ -64,7 +64,10 @@ import { leggiRete } from '../collega.js';
 import { creaFonti } from './fonti.js';
 import { disegnaToken, coloriMappa, creaImmagini } from './disegno-token.js';
 import { creaAudio } from './audio.js';
-import { eventiScontro } from '../../mappa/audio.js';
+import { eventiScontro, musicaDi } from '../../mappa/audio.js';
+import { scegliMusica } from '../musica.js';
+import { leggiScontro, salvaScontro } from '../scontro.js';
+import { cambiaBozza } from '../../preparazione.js';
 import { sezioneScontro, sezioneToken, TIPO_TRASCINA } from './pannello-scontro.js';
 import { renderTavolo } from '../tavolo.js';
 import { segnaDallaMappa, vistaDaRimettere, dimenticaMappa } from '../ritorno.js';
@@ -232,6 +235,8 @@ export function renderMappa(radice, ctx) {
           h('button', { type: 'button', role: 'menuitem', class: 'voce-strumenti', title: 'Scorciatoie e comandi (?)', onclick: () => { el.altro.open = false; apriAiuto(); } }, 'Scorciatoie e comandi (?)'),
           el.voceMostraPv = h('button', { type: 'button', role: 'menuitemcheckbox', class: 'voce-strumenti', 'aria-checked': 'true', title: 'Barretta rossa dei PV sotto i token (tasto P); i giocatori vedono sempre quella dei PG', onclick: () => { el.altro.open = false; cambiaMostraPv(); } }, 'Mostra PV sui token (P)'),
           h('p', { class: 'nota voce-strumenti-nota' }, el.scala))),
+      // suoni (07/10): musica di fondo dello scontro e, accanto, muto e volumi (disegnaAudio)
+      el.audio = h('span', { class: 'mappa-audio', role: 'group', 'aria-label': 'Suoni' }),
       h('button', { type: 'button', class: 'btn tondo', title: 'Scorciatoie e comandi (?)', 'aria-label': 'Scorciatoie e comandi', onclick: () => apriAiuto() }, '?')),
     el.stato);
   el.riquadro = h('div', { class: 'mappa-tela', tabindex: '0', 'aria-label': 'Mappa: rotella per lo zoom, barra spaziatrice e mouse o trascinamento per spostarsi' });
@@ -654,7 +659,10 @@ export function renderMappa(radice, ctx) {
       if (st.chiusa) return;
       // 07/10: al nuovo Round la campanella (data/mappa.json → audio.effetti), anche se l'«Avanti» viene da un'altra finestra
       for (const ev of eventiScontro(st.fonti?.scontro ?? null, esito.scontro ?? null)) audio.effetto(ev);
+      // musica di fondo dello scontro aperto: parte quando c'è, si ferma alla chiusura (o se la si toglie)
+      audio.musica(musicaDi(esito.scontro));
       st.fonti = esito;
+      disegnaAudio();
       st.pezzi = pezziDellaScena(esito, ctx.dati);
       st.mappaPezzi = new Map(st.pezzi.map((p) => [p.chiave, p]));
       // §6 del lotto: chi esce dallo scontro perde il token, con un avviso; mai con una lettura incompleta
@@ -2742,6 +2750,38 @@ export function renderMappa(radice, ctx) {
     cambiaCamera({ ...st.cam, scala, ox: d.larghezza / 2 - c.x * scala, oy: d.altezza / 2 - c.y * scala });
     scegli(t.id);
     apriCartaChiave(chiave, { riapri: false });
+  }
+  /**
+   * Suoni nella barra in alto (07/10): ♫ «Musica di fondo» (file della cartella musica/ del server, nello scontro aperto
+   * o nella bozza collegata) e ▶/⏸ della musica.
+   */
+  function disegnaAudio() {
+    if (!el.audio) return;
+    const f = st.fonti;
+    const file = f?.scontro ? f.scontro.musica ?? null : f?.bozza ? f.bozza.musica ?? null : null;
+    const m = audio.statoMusica();
+    const puo = !!(f?.scontro || f?.bozza);
+    svuota(el.audio,
+      h('button', { type: 'button', class: `btn btn-piccolo${file ? ' acceso' : ''}`, disabled: !puo, title: puo ? `Musica di fondo: ${file ?? 'nessuna'} (clic per sceglierla dalla cartella musica/)` : 'Musica di fondo: collega la scena a uno scontro o a una bozza', 'aria-label': 'Musica di fondo', onclick: () => scegliMusicaUi() },
+        conIcona('♫', file ? file.replace(/\.[^.]+$/, '') : 'Musica')),
+      f?.scontro && file ? h('button', { type: 'button', class: 'btn btn-piccolo tondo', title: m.pausa ? 'Riprendi la musica' : 'Metti in pausa la musica', 'aria-label': m.pausa ? 'Riprendi la musica' : 'Pausa della musica', onclick: () => { audio.pausa(!m.pausa); disegnaAudio(); } }, m.pausa ? '▶' : '⏸') : null);
+  }
+  /** «Musica di fondo»: la scelta va nello scontro aperto (con una riga nel registro) o nella bozza collegata. */
+  async function scegliMusicaUi() {
+    const f = st.fonti;
+    const attuale = f?.scontro?.musica ?? f?.bozza?.musica ?? null;
+    const scelta = await scegliMusica(attuale, ctx.dati.mappa.audio.musica.formati);
+    if (!scelta || scelta.file === attuale) return;
+    try {
+      if (f?.scontro && st.planciaBarra?.impostaMusica) await st.planciaBarra.impostaMusica(scelta.file);
+      else if (f?.bozza) {
+        const b = await leggiScontro(f.bozza.id);
+        const r = await salvaScontro(cambiaBozza(b, { musica: scelta.file }));
+        if (!r.scontro) throw new Error('la bozza è cambiata in un’altra finestra: riprova');
+      }
+    } catch (e) { avvisoErrore(`Musica non salvata: ${e.message}`); }
+    audio.pausa(false);
+    await aggiornaFonti();
   }
   /** Centra la vista sul token (con `soloSeFuori`, solo se è fuori dal riquadro o troppo vicino al bordo). */
   function centraToken(t, { soloSeFuori = false } = {}) {

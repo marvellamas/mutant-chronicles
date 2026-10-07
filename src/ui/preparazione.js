@@ -18,6 +18,7 @@ import { vistaPlancia } from '../tavolo.js';
 import { elencoScene, leggiScena, salvaScena } from './mappa/api.js';
 import { nuovaScena, idScena, scenaDellaBozza, collegaABozza, sceneDellaBozza, collegaAScontro } from '../mappa/scena.js';
 import { chiediTesto, chiedi } from './finestrella.js';
+import { scegliMusica } from './musica.js';
 import {
   nuovaBozza, aggiungiVoce, cambiaVoce, togliVoce, cambiaBozza, duplicaBozza, eliminaBozza, iniziaBozza, pgDellaBozza, STATO_BOZZA,
 } from '../preparazione.js';
@@ -180,6 +181,12 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
         h('span', { class: 'nota stato-bozza', role: 'status' }, st.salvataAlle ? `Salvata alle ${ora(st.salvataAlle)}` : 'Si salva da sola a ogni modifica'),
         h('button', { type: 'button', class: 'btn btn-piccolo primario', title: 'Aspetta l’ultimo salvataggio e chiude la finestra; la bozza resta fra le bozze', onclick: salvaEChiudi }, 'Salva e chiudi')),
       h('label', { class: 'campo-nemico' }, h('span', {}, 'Nome dello scontro'), h('input', { type: 'text', maxlength: 60, value: b.nome, onchange: (e) => modifica((x) => cambiaBozza(x, { nome: e.target.value })) })),
+      // 07/10: musica di fondo dello scontro (cartella musica/ del server); passa allo scontro con «Inizia»
+      h('div', { class: 'campo-nemico riga-azioni' }, h('span', {}, 'Musica di fondo: ', h('strong', {}, b.musica ?? 'nessuna')),
+        h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Un file della cartella musica/ accanto ad avvia-server.bat; suona sulla mappa, di continuo, finché lo scontro è aperto', onclick: async () => {
+          const scelta = await scegliMusica(b.musica ?? null, dati.mappa.audio.musica.formati);
+          if (scelta) modifica((x) => cambiaBozza(x, { musica: scelta.file }));
+        } }, 'Scegli…')),
       h('label', { class: 'campo-nemico' }, h('span', {}, 'Note per il master (non le vede nessun altro)'), h('textarea', { rows: 3, maxlength: 2000, value: b.note ?? '', onchange: (e) => modifica((x) => cambiaBozza(x, { note: e.target.value })) })),
       h('fieldset', { class: 'campo-nemico gruppo' }, h('legend', {}, 'PG (facoltativi: senza scelta, quelli al tavolo quando premi «Inizia»)'),
         chiaviCartella.length ? h('div', { class: 'riga-azioni' },

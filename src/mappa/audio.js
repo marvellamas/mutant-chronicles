@@ -35,3 +35,15 @@ export function impostazioniAudio(grezze, dati) {
 
 /** Volume effettivo di un canale ('musica' | 'effetti'): 0 con il muto generale. */
 export const volumeDi = (imp, canale) => (imp.muto ? 0 : imp[canale]);
+
+/** Il file è un formato di musica ammesso (data/mappa.json → audio.musica.formati) e un nome semplice, senza cartelle? */
+export function fileMusicaValido(nome, dati) {
+  const m = /^[^/\\]+\.([a-z0-9]+)$/i.exec(String(nome ?? ''));
+  return !!m && !nome.startsWith('.') && dati.mappa.audio.musica.formati.includes(m[1].toLowerCase());
+}
+
+/** Indirizzo della musica di fondo sul server (server.mjs → /api/musica/<file>). */
+export const urlMusica = (file) => `api/musica/${encodeURIComponent(file)}`;
+
+/** Musica che deve suonare per lo scontro letto: il suo file se è aperto e ne ha uno, altrimenti null (si ferma). */
+export const musicaDi = (scontro) => (scontro?.stato === 'aperto' && typeof scontro.musica === 'string' && scontro.musica ? scontro.musica : null);

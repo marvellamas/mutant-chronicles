@@ -61,3 +61,7 @@ scene/*
 !scene/LEGGIMI.txt
 mappe/*
 !mappe/LEGGIMI.txt
+
+# Musica di fondo della mappa (server.mjs → /api/musica, 07/10): file del master; si traccia solo il LEGGIMI
+musica/*
+!musica/LEGGIMI.txt
