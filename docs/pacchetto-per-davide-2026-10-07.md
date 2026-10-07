@@ -2,11 +2,13 @@
 
 Da applicare nel Google Doc «per-davide.md» (`1Jg5rqbBtcHGE1E10xYElO_qCDCwh8K87LAInovtpF6A`) da Cowork o da Marcello,
 secondo `docs/protocollo-davide.md` §5. Non si incolla nel repo: il repo si aggiorna scaricando il Doc alla sessione
-successiva. Fonte: controllo del 07/10 (`docs/diff-manuali-2026-10-07.md`), decisioni 119–133 di `docs/risposte-master.md`.
+successiva. Fonte: controllo del 07/10 (`docs/diff-manuali-2026-10-07.md`), decisioni 119–136 di `docs/risposte-master.md`
+(134–136: risposte di Marcello del 07/10, decisioni del gruppo che Davide può rivedere).
 
-Riepilogo: una voce fra le Risolte (A.120) più le due mancanti del pacchetto del 06/10 (A.121, A.131); risposte
-ricevute e in implementazione per A.107, A.108, A.110, A.111, A.114, A.116, A.119, A.122, A.124, A.125, A.127, A.128,
-A.129; l'elenco chiesto da Davide per la A.109; nove domande nuove (A.134–A.142); pulizia dei doppioni della sezione 2.
+Riepilogo: tre voci fra le Risolte (A.120; A.132 e A.134 con «risposta di Marcello») più le due mancanti del pacchetto
+del 06/10 (A.121, A.131); risposte ricevute e in implementazione per A.107, A.108, A.110, A.111, A.114, A.116, A.119,
+A.122, A.124, A.125 (veicoli: risposta di Marcello), A.127, A.128, A.129; l'elenco chiesto da Davide per la A.109; otto
+domande nuove (A.135–A.142); pulizia dei doppioni della sezione 2.
 
 ---
 
@@ -87,7 +89,7 @@ Risposta ricevuta il 06/10 (sezione 7): coincide con quello che la mappa già fa
 *** AZIONE: aggiungi la riga alla voce A.125
 
 --- TESTO ---
-Risposta ricevuta il 06/10 (sezione 7) per porte e illuminazione: in implementazione. Restano aperti i veicoli sulla mappa e le vecchie etichette numeriche delle luci.
+Risposta ricevuta il 06/10 (sezione 7) per porte e illuminazione: in implementazione. Veicoli: risposta di Marcello del 07/10 (decisione del gruppo, puoi rivederla): si muovono sulla mappa all'Iniziativa del conducente, come nella plancia (A.105); si applicherà quando i veicoli arriveranno sulla mappa. Resta aperta solo la corrispondenza delle vecchie etichette numeriche delle luci.
 ```
 
 ```
@@ -160,10 +162,6 @@ Molti hanno già la scala scritta (per esempio 9, 12, 18, 27, 29): in quei casi 
 *** AZIONE: aggiungi in fondo alla sezione 2
 
 --- TESTO ---
-**A.134 — Diagonale accanto allo spigolo di un muro.**
-La A.124 fissa la diagonale a 1 Q e dice che non si attraversano muri o passaggi ostruiti. Una pedina può muoversi in diagonale rasente allo spigolo di un muro, cioè quando dei due quadretti ai lati della diagonale uno è libero e l'altro è murato?
-*Nel frattempo:* no, in diagonale servono liberi anche i due quadretti ai lati.
-
 **A.135 — Ricarica dei fucili a pallini semiautomatici e automatici.**
 Il Manuale degli Armamenti 0.59 distingue i fucili a pallini a pompa (solo Colpo Singolo) dai semiautomatici (HD14M, SA SG2001, Airbrush) e dall'automatico Mandible, ma non dice come si ricaricano. Si inserisce una cartuccia per operazione, come nei fucili a pompa, oppure si sostituisce un caricatore?
 *Nel frattempo:* come prima. HD14M si ricarica una cartuccia per operazione; SA SG2001 ha un caricatore (A.37); Mandible e Airbrush hanno un caricatore, come le altre armi delle loro tabelle.
@@ -212,6 +210,15 @@ Per la nebbia che si apre da sola dove i PG vedono: con luce sufficiente, fino a
 --- TESTO ---
 **A.121** — Riuso del codice della tua app per la mappa: domanda ritirata, la mappa è scritta da zero. *Ritirata il 06/10.*
 **A.131** — Immagine dei nemici sulle pedine: campo facoltativo nella scheda del nemico, valido per tutte le copie; senza immagine la pedina mostra le iniziali. Scelta tecnica dell'app, non una regola. *Implementata il 06/10.*
+**A.134** — Diagonale rasente allo spigolo di un muro: sì. In diagonale basta che sia libero il quadretto d'arrivo e che la diagonale non attraversi un muro; uno dei due quadretti ai lati può essere murato. Se lo sono entrambi (passaggio chiuso a spigolo) la diagonale resta vietata. Le porte chiuse o bloccate contano come muri. *Risposta di Marcello del 07/10 (decisione del gruppo, puoi rivederla); applicata alla mappa il 07/10.*
+```
+
+```
+*** DOC per-davide.md — voce A.132
+*** AZIONE: sposta la voce A.132 nella sezione 6
+
+--- TESTO ---
+**A.132** — Stordito e Attacchi di Opportunità: no, uno Stordito non fa Attacchi di Opportunità, come chi è Svenuto o a 0 PV; la sua zona di controllo non dà l'avviso (sulla mappa il master la vede tratteggiata, i giocatori non la vedono). *Risposta di Marcello del 07/10 (decisione del gruppo, puoi rivederla); applicata alla mappa il 07/10.*
 ```
 
 ```
