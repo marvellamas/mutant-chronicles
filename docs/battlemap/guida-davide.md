@@ -2,6 +2,8 @@
 
 Una scena si prepara prima della sessione e si gioca dalla stessa pagina. Serve `avvia-server.bat` acceso sul PC del master; i giocatori guardano la mappa su un secondo schermo (televisore o tablet).
 
+Questa guida si apre anche dall'app: nel Tavolo del Master «Guida della mappa», oppure il tasto «?» nella mappa.
+
 ## Preparare la scena
 
 1. **Prepara lo scontro.** Nel Tavolo del Master, «Prepara scontro» → «Nuova bozza»: nemici dal bestiario (o «Crea nemico»), PG con «Tutti» o a scelta. La bozza si salva da sola («Salvata alle…»).

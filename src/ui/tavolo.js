@@ -33,6 +33,7 @@ import { stessaChiave } from '../veicoli-registro.js';
 import { elencoVeicoli, aggiornaVeicolo } from './veicoli-registro.js';
 import { statoScene, pannelloScene, apriElencoScene } from './mappa/scene.js';
 import { mostraCarta } from './mappa/canale.js';
+import { linkGuidaMappa } from './guida.js';
 import { cartaDallaMappa, arrivoDallaMappa, tornaAllaMappa } from './ritorno.js';
 import { scegliImmagineNemico, impostaImmagineNemico } from './immagine-nemico.js';
 import { chiediTesto, chiedi } from './finestrella.js';
@@ -321,6 +322,8 @@ export function renderTavolo(radice, ctx) {
       h('button', { type: 'button', class: 'btn', title: 'Procedura guidata dal Bestiario (base, grado, moduli), oppure tutto a caso', onclick: () => creaNemico() }, 'Crea nemico'),
       // nella mappa le scene stanno già nel gruppo «Mappa»: niente doppione
       ctx.inMappa ? null : h('button', { type: 'button', class: 'btn', title: 'Scene della mappa di battaglia: nuova, apri, rinomina, duplica, archivia', onclick: () => apriElencoScene(stato.scene, disegna) }, 'Mappa'),
+      // la guida della mappa per il master (docs/battlemap/guida-davide.md), in una scheda nuova
+      ctx.inMappa || ctx.soloCarta ? null : linkGuidaMappa('Guida della mappa'),
       h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.personaggi() }, 'Personaggi'));
     const esitoEsempi = stato.esitoEsempi ? h('p', { class: 'riquadro attenzione', role: 'status' }, stato.esitoEsempi) : null;
     const collega = riquadroCollega(stato.rete, { aperto: stato.collegaAperto, onToggle: (v) => { stato.collegaAperto = v; } });

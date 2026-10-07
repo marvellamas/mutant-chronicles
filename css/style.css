@@ -2072,3 +2072,8 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 .giocatori-movimento.modo-corsa { border-left-color: var(--mappa-corsa, #d9a400); }
 .giocatori-movimento.modo-scatto { border-left-color: var(--mappa-scatto, #d6336c); }
 .giocatori-movimento.modo-libero { border-left-color: #adb5bd; }
+/* guida della mappa (#/guida-mappa, docs/battlemap/guida-davide.md) */
+.guida-pagina { max-width: 48rem; margin: 0 auto; padding: 0 1rem 2rem; }
+.guida-mappa h2 { margin-top: 0; }
+.guida-mappa li { margin-bottom: .35rem; }
+.link-guida-mappa { align-self: center; white-space: nowrap; }

@@ -46,6 +46,7 @@ import { diTurno } from '../../scontro.js';
 import { statoMovimento, muoviVeicolo } from '../../veicoli-registro.js';
 import { rigaMovimentoLibero, rigaOpportunita, opportunitaNelRound } from '../../scontro.js';
 import { aggiornaInScontri } from '../immagine-nemico.js';
+import { linkGuidaMappa } from '../guida.js';
 import { aggiornaVeicolo } from '../veicoli-registro.js';
 import { creaGesti } from './gesti.js';
 import { svgQR } from '../../qr.js';
@@ -763,7 +764,9 @@ export function renderMappa(radice, ctx) {
     ];
     informa({
       titolo: 'Scorciatoie e comandi della mappa', classe: 'aiuto-mappa',
-      contenuto: h('table', { class: 'tabella compatta' }, h('tbody', {}, righe.map(([k, v]) => h('tr', {}, h('th', { scope: 'row' }, k), h('td', {}, v))))),
+      contenuto: h('div', {}, h('table', { class: 'tabella compatta' }, h('tbody', {}, righe.map(([k, v]) => h('tr', {}, h('th', { scope: 'row' }, k), h('td', {}, v))))),
+        // la guida per il master (docs/battlemap/guida-davide.md), in una scheda nuova
+        h('p', {}, linkGuidaMappa('Guida completa della mappa (preparare la scena, giocare, due schermi)'))),
     });
   }
   /** «Colore del bordo»: il master sceglie il colore di un PG o di un tipo di nemico (tutte le sue copie). */

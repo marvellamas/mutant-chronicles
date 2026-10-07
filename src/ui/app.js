@@ -23,6 +23,7 @@ import { elencoUnito, confronta, chiaveDaFile, chiavePersonaggio, messaggioSalva
 import { renderTavolo } from './tavolo.js';
 import { renderMappa } from './mappa/pagina.js';
 import { renderGiocatori } from './mappa/giocatori.js';
+import { renderGuidaMappa } from './guida.js';
 import { avviso, avvisoErrore } from './avvisi.js';
 import { controlloInUso } from './ridisegno.js';
 import { alRound, collegamentoScontro, tecnicheScadute, statiScaduti, durateCarta, testoDurata } from '../round-scontro.js';
@@ -176,6 +177,15 @@ function daIndirizzo() {
     // «← Torna al tavolo» da una scheda: la plancia rimette lo scorrimento di prima (src/ui/ritorno.js)
     const scorrimento = scorrimentoDaRimettere(sessionStorage);
     stato.fermaTavolo = renderTavolo(radice, { dati: stato.dati, scorrimento, azioni: { personaggi: () => vai('#/'), apri: (r) => apriDaCartella(r, { dalTavolo: true }), mappa: (id) => vai(`#/mappa/${id}`) } });
+    return;
+  }
+  // guida della mappa per il master (docs/battlemap/guida-davide.md): file statico, anche senza il server
+  if (location.hash === '#/guida-mappa') {
+    stato.id = null;
+    stato.scelte = null;
+    stato.livelli = [];
+    document.title = 'Guida della mappa · Mutant';
+    renderGuidaMappa(radice);
     return;
   }
   // Mappa di battaglia, lotto 4: vista giocatori (televisore, proiettore, tablet), solo lettura, solo con il server
