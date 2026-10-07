@@ -954,8 +954,9 @@ approvata da Marcello; copia in `docs/battlemap/specifica.md`, piano in `docs/ba
     frame calcolato dal master (`docs/battlemap/piano.md`, §3).
 
 **Aperte** (testi nella sezione 15 della specifica; da mettere nel Doc «per-davide.md» con il pacchetto). A.122,
-A.124 e A.125 hanno avuto risposta il 06/10 (decisioni 128–130); restano la voce «Aiuto-master» di A.122, i veicoli
-e le vecchie etichette numeriche delle luci di A.125, e A.134 qui sotto.
+A.124 e A.125 hanno avuto risposta il 06/10 (decisioni 128–130); restano la voce «Aiuto-master» di A.122 e le vecchie
+etichette numeriche delle luci di A.125 (i veicoli: risposta di Marcello del 07/10, decisione 136). A.132 e A.134 qui
+sotto: risposte di Marcello del 07/10 (decisioni 134 e 135).
 
 - **A.132 — Stordito e Attacchi di Opportunità** (07/10/2026, zone di controllo della mappa). Uno Stordito (§5.18:
   nessuna Azione Principale) può fare un Attacco di Opportunità, che per il §5.3 «non consuma Azioni»? **Risolta** dalla
@@ -1060,7 +1061,7 @@ Fonte: E&L del 06/10/2026, 17:23 UTC, blocco «Risposte approvate — regole tec
 
 **Sospese** (E&L del 06/10, «Quesiti sospesi»): A.109 (Davide chiede l'elenco con il nome dell'incantesimo e
 dell'aspetto: nel pacchetto del 07/10), A.111 (solo Pablo Zaion), A.112, A.113, A.115, A.122 («Aiuto-master»), A.125
-(veicoli, vecchie etichette delle luci), A.126.
+(vecchie etichette delle luci; i veicoli hanno la decisione 136), A.126.
 
 **Nuova** (07/10/2026):
 
@@ -1115,6 +1116,10 @@ Marcello»: Davide può rivederle (nel pacchetto per il Doc vanno fra le Risolte
     lo sono entrambi (passaggio chiuso a spigolo) la diagonale resta vietata. Le porte chiuse o bloccate contano come
     muri. **Applicata** il 07/10 (branch `battlemap`): `data/mappa.json` → movimento.diagonale_spigolo «un_lato» (al
     posto di taglio_angoli_muri), area di movimento e percorso in `src/mappa/area.js`; via il `TODO(Davide)`.
+136. **Veicoli sulla mappa: quando si muovono** (A.125, parte dei veicoli; risposta di Marcello, 07/10). Un veicolo si
+    muove all'Iniziativa del suo conducente, come già nella plancia (A.105). Solo registrazione: i veicoli sulla mappa
+    sono il lotto successivo (decisione 128: rimandati), e lì si applicherà questa regola. Della A.125 resta aperta solo
+    la corrispondenza delle vecchie etichette numeriche delle luci.
 
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 

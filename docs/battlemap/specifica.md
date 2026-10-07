@@ -92,7 +92,7 @@ La Mappa di battaglia è un modulo del **Tavolo del Master** di Mutant: gira sul
 >   * **A.129:** solo il **Passo** si divide in più clic, prima e dopo le Azioni Principali (2 Q, attacco, altri 4 Q). **Corsa** e **Scatto** sono un **blocco unico**: il token si muove una volta sola e i Q non usati si perdono; dopo il blocco il movimento del Round è finito. Il pannello mostra «Q usati / disponibili» con quanto resta del Passo diviso, oppure i Q persi; pulsanti e clic destro spengono Corri e Scatta quando non si possono più scegliere, e un avviso lo spiega.
 >   * **A.134 (risposta di Marcello del 07/10):** in diagonale si passa rasente allo spigolo di un muro (uno dei due quadretti ai lati murato); se lo sono entrambi (passaggio chiuso a spigolo) la diagonale è vietata. Le porte chiuse o bloccate contano come muri (`data/mappa.json` → movimento.diagonale_spigolo).
 >   * **Domanda aperta:** A.136 (Corsa o Scatto dopo un Passo già cominciato; provvisorio no: si annulla il movimento e lo si rifà con Corri).
-> * Veicoli: si muovono all’Iniziativa del conducente con la loro andatura (A.105).
+> * Veicoli: si muovono all’Iniziativa del conducente con la loro andatura (A.105; per la mappa confermato da A.125, risposta di Marcello del 07/10). Sulla mappa arrivano con il lotto dei veicoli.
 > * **Ritocchi del 06/10/2026 (test di Marcello sul lotto 6):** l’area non è obbligatoria: l’interruttore **«Mostra area»** (nel pannello del token, nel clic destro e con il tasto **M**) la nasconde e la mostra, e la scelta resta memorizzata; il percorso al passaggio del mouse resta anche con l’area nascosta. L’area è **leggera**: riempimento molto trasparente e contorno ben visibile di ogni fascia, così la mappa sotto si vede (opacità in `data/mappa.json`).
 
 ### **8.1 Zone di controllo e Attacchi di Opportunità (07/10/2026)**
@@ -230,8 +230,8 @@ Le stesse azioni più gli strumenti del master: carica mappa, griglia, nebbia, m
 ## **15\. Decisioni e domande per Davide**
 
 > * **Iniziativa — deciso:** si usa il sistema del Manuale del Giocatore di Mutant (Mod DES \+ Mod INT \+ 1d10; parità per DES, poi INT, poi scelta fra alleati o 1d10 fra avversari). Il d12 dell’app di Davide appartiene al sistema precedente.  
-> * **Risposte del 06/10/2026:** A.121 ritirata; A.122 priorità delle funzioni (resta «Aiuto-master»); A.124, A.127, A.128 e A.129 sul movimento, applicate il 07/10 (§8); A.125 porte e luci (restano i veicoli e le vecchie etichette delle luci).
-> * **Risposte di Marcello del 07/10/2026 (decisioni del gruppo, Davide può rivederle):** A.132 (uno Stordito non fa AdO; ZoC tratteggiata solo per il master); A.134 (diagonale rasente allo spigolo sì, fra due muri a spigolo no).  
+> * **Risposte del 06/10/2026:** A.121 ritirata; A.122 priorità delle funzioni (resta «Aiuto-master»); A.124, A.127, A.128 e A.129 sul movimento, applicate il 07/10 (§8); A.125 porte e luci (restano le vecchie etichette delle luci).
+> * **Risposte di Marcello del 07/10/2026 (decisioni del gruppo, Davide può rivederle):** A.132 (uno Stordito non fa AdO; ZoC tratteggiata solo per il master); A.134 (diagonale rasente allo spigolo sì, fra due muri a spigolo no); A.125 (i veicoli si muovono all’Iniziativa del conducente, come A.105; da applicare con il lotto dei veicoli).  
 > * **Ancora aperte:** A.126 (creature 3 × 3), A.133 (portata delle creature grandi), A.136 (Corsa o Scatto dopo un Passo cominciato).
 
 ## **16\. Fuori ambito**
