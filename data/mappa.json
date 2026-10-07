@@ -403,10 +403,10 @@
       "stordito",
       "svenuto"
     ],
-    "_nota_stati": "A.132 (risposta di Marcello del 07/10/2026, decisione 134 di docs/risposte-master.md; Davide può rivederla): uno Stordito non fa Attacchi di Opportunità, come chi è Svenuto o a 0 PV. La sua ZoC non genera l'avviso; il master la vede tratteggiata, senza riempimento («inattiva», zoc.inattiva), i giocatori non la vedono. A 0 PV la ZoC non si mostra affatto.",
+    "_nota_stati": "A.132 (risposta di Marcello del 07/10/2026, decisione 134 di docs/risposte-master.md; Davide può rivederla): uno Stordito non fa Attacchi di Opportunità, come chi è Svenuto o a 0 PV. La sua ZoC non genera l'avviso; il master la vede tratteggiata, senza riempimento («inattiva», zoc.inattiva: contorno ben visibile, tratteggio 8 × 6 px), i giocatori non la vedono. A 0 PV la ZoC non si mostra affatto.",
     "inattiva": {
-      "opacita_contorno": 0.55,
-      "tratteggio_px": [6, 5]
+      "opacita_contorno": 0.9,
+      "tratteggio_px": [8, 6]
     },
     "opacita_riempimento": 0.16,
     "opacita_contorno": 0.7,
