@@ -2124,3 +2124,8 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 .blocco-scelta select { max-width: min(28rem, 100%); }
 .blocco-quanti .btn { margin-left: auto; min-width: 7rem; }
 .aggiungi-nemici .blocco-crea { flex-direction: row; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+
+/* 07/10: indicazione sulla mappa: «Libero» con Maiusc */
+.mappa-badge { position: absolute; left: 0.6rem; z-index: 3; max-width: calc(100% - 1.2rem); padding: 0.3rem 0.6rem; border-radius: var(--raggio); background: var(--superficie); border: 2px solid var(--bordo); box-shadow: 0 2px 8px #0006; font-size: 0.9rem; display: flex; align-items: center; gap: 0.3rem; flex-wrap: wrap; }
+.mappa-badge[hidden] { display: none; }
+.mappa-badge-libero { top: 0.6rem; border-color: var(--accento); font-weight: 700; }

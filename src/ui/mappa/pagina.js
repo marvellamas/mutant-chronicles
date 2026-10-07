@@ -229,6 +229,9 @@ export function renderMappa(radice, ctx) {
   el.riquadro = h('div', { class: 'mappa-tela', tabindex: '0', 'aria-label': 'Mappa: rotella per lo zoom, barra spaziatrice e mouse o trascinamento per spostarsi' });
   el.suggerimento = h('div', { class: 'mappa-suggerimento', hidden: true, role: 'status' });
   el.riquadro.append(el.suggerimento);
+  // 07/10: Maiusc premuto con un token scelto = Libero (l'area sparisce)
+  el.liberoInfo = h('div', { class: 'mappa-badge mappa-badge-libero', hidden: true, role: 'status' }, 'Libero (Maiusc): clic dove vuoi, senza conteggio');
+  el.riquadro.append(el.liberoInfo);
   el.pannello = h('div', { class: 'mappa-pannello', 'aria-label': 'Collegamento, template, muri, nebbia, luci, vista giocatori e griglia' });
   el.cartaCorpo = h('div', { class: 'mappa-carta-corpo' });
   el.carta = h('section', { class: 'mappa-carta', 'aria-label': 'Mini-scheda del token', hidden: true },
@@ -336,7 +339,7 @@ export function renderMappa(radice, ctx) {
           const avv = avversariZoc(s, st.pezzi, id, ctx.dati);
           if (avv.length) disegnaZoc(c, { scena: s, cam: st.cam, info, celle: celleZoc(s, avv), stile: ctx.dati.mappa.zoc });
         }
-        const a = st.mostraArea ? areaScelta() : null;
+        const a = st.mostraArea && !liberoConMaiusc() ? areaScelta() : null;
         if (a?.celle) disegnaArea(c, { scena: s, cam: st.cam, info, celle: a.celle, colori, stile: V.area });
       };
       if (!tratti.length) { disegnaAreaScelta(); return; }
@@ -894,7 +897,7 @@ export function renderMappa(radice, ctx) {
       ['Clic su un token', 'lo sceglie: area di movimento e mini-scheda'],
       ['Clic sul token scelto, Esc, o clic fuori dall’area', 'lo lascia: area e percorso spariscono, i Q usati restano'],
       ['Clic su un quadretto dell’area, o trascinare il token', 'movimento nel Round: il Passo si divide in più clic; Corsa e Scatto sono un blocco unico (una mossa, i Q non usati si perdono) e solo da fermi (A.129)'],
-      ['Maiusc + clic o trascinamento', 'movimento libero (come «Libero»)'],
+      ['Maiusc (tenuto premuto, con un token scelto)', 'movimento libero: l’area sparisce, il clic o il trascinamento vanno dove vuoi, senza conteggio; rilasciato, si torna alla modalità di prima'],
       ['Ctrl + clic su un token', 'scheda completa (PG) o mini-scheda (nemico)'],
       ['Clic destro su un token (o pressione lunga sul tablet)', 'in cima Passo · Corsa · Scatto · Libero; poi Movimento, Azioni (Attacca!, porte vicine), Strumenti (linea, area, ZoC, template), Scheda; «Opzioni ▸»: Nascondi, Colore del bordo, Togli dalla mappa. Solo le voci utilizzabili, la scorciatoia a destra'],
       ['T (o Strumenti → «Template ad area», o clic destro su un punto vuoto)', 'nuovo template: forma, misura in Q, colore, durata in Round, nome'],
@@ -1253,6 +1256,19 @@ export function renderMappa(radice, ctx) {
 
   // ── Area raggiungibile e movimento (lotto 5, §8) ──
   const FASCE = ['passo', 'corsa', 'scatto'];
+  // ── Maiusc = movimento libero (07/10): tenuto premuto con un token scelto, l'area sparisce e il clic va dove si vuole ──
+  st.maiusc = false;
+  function liberoConMaiusc() { return st.maiusc && !!st.selezionato; }
+  function cambiaMaiusc(v) {
+    if (st.maiusc === v) return;
+    st.maiusc = v;
+    aggiornaBadge();
+    if (v) st.percorso = null;
+    ridisegna(['aree', 'sopra']);
+  }
+  function aggiornaBadge() {
+    if (el.liberoInfo) el.liberoInfo.hidden = !liberoConMaiusc();
+  }
   /** Quarta modalità accanto a Passo, Corri e Scatta: «Libero» (Maiusc ne è la scorciatoia). */
   const LIBERO = 4;
   function invalidaArea() {
@@ -2269,6 +2285,7 @@ export function renderMappa(radice, ctx) {
   /** Percorso mostrato mentre il puntatore passa sopra l'area del token scelto. */
   function aggiornaPercorso(m) {
     st.puntatore = m;
+    if (liberoConMaiusc()) { if (st.percorso) { st.percorso = null; ridisegna(['sopra']); } return; }
     const info = areaScelta();
     const tok = info ? st.scena.token.find((x) => x.id === info.token) : null;
     let nuovo = null;
@@ -2348,6 +2365,8 @@ export function renderMappa(radice, ctx) {
   }
   const suTasto = (e) => {
     if (inCampo(e)) return;
+    // 07/10: Maiusc premuto = Libero per il token scelto (l'area sparisce); rilasciato, si torna alla modalità di prima
+    if (e.key === 'Shift') { cambiaMaiusc(true); return; }
     if (e.key === 'Tab' && !e.ctrlKey && !e.metaKey && !e.altKey && (document.activeElement === document.body || document.activeElement === el.riquadro || document.activeElement === el.bordo)) {
       e.preventDefault();
       scegliDisposizione(prossimaDisposizione(st.disp.disposizione, e.shiftKey ? -1 : 1));
@@ -2381,7 +2400,11 @@ export function renderMappa(radice, ctx) {
   };
   const suRilasciaTasto = (e) => {
     if (e.code === 'Space') { st.spazio = false; el.riquadro.classList.remove('spazio'); }
+    if (e.key === 'Shift') cambiaMaiusc(false);
   };
+  // la finestra perde il fuoco con Maiusc premuto (Alt+Tab): il tasto non torna su, lo si rilascia qui
+  const suSfuoca = () => cambiaMaiusc(false);
+  window.addEventListener('blur', suSfuoca);
   const gesti = creaGesti(el.riquadro, {
     vista: V, camera: () => st.cam, cambiaCamera, adatta: adattaSchermo,
     premi, muovi, rilascia, annulla: () => annullaGesto(),
@@ -2707,6 +2730,7 @@ export function renderMappa(radice, ctx) {
     window.removeEventListener('resize', suFinestra);
     window.removeEventListener('mutant:scene-ricollegate', suRicollegate);
     window.removeEventListener('keyup', suRilasciaTasto);
+    window.removeEventListener('blur', suSfuoca);
     tela.distruggi();
     st.immagine?.close?.();
   };
