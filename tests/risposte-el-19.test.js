@@ -236,7 +236,8 @@ test('E&L 19: fucile a pompa, 1 cartuccia per operazione; 3 con Ricarica Miglior
   s = variaMunizioni(s, 'r', 'colpi', -6, m);
   s = ricaricaArma(s, 'r', m);
   assert.equal(s.munizioni.r.colpi, 6);
-  assert.equal(dati.equipaggiamento.file.munizioni.ricarica.inserimento_singolo['TODO(Davide)'], undefined);
+  // la domanda della A.37 è chiusa; resta solo quella nuova sui fucili a pallini semiautomatici e automatici (07/10)
+  assert.match(dati.equipaggiamento.file.munizioni.ricarica.inserimento_singolo['TODO(Davide)'] ?? 'A.135', /^A\.135/);
 });
 
 // --- 1, 2, 17, 18. Magia ---------------------------------------------------------------------------

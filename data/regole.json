@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Giocatore 0.45 (Google Doc del 03/10/2026, 19:16 UTC); Magia 1.3; Equipaggiamento 0.1; E&L del 03/10/2026",
+  "versione_manuale": "Giocatore 0.46 (Google Doc del 06/10/2026, 18:20 UTC); Magia 1.3; Equipaggiamento 0.1; E&L del 06/10/2026",
   "fonte": "Giocatore §1.2.3, §2.1, §2.3, §2.10, §2.12–2.15, §3.3, §1.8.3, §5.2.6, §5.5, §5.9, §5.14, §5.18, §5.19, cap. 8; Magia sezioni 1 e 11; Equipaggiamento §1.6, §1.7; docs/risposte-master.md",
   "creazione": {
     "punti_caratteristica": 5,
@@ -1658,7 +1658,7 @@
         "cr": 1000,
         "punti": 1
       },
-      "TODO(Davide)": "A.111: i recuperi registrati prima della procedura (concessi dal Direttore, senza una rimozione) restano nel calcolo con un avviso, senza modifiche automatiche: che cosa farne?"
+      "TODO(Davide)": "A.111: risposta del 06/10/2026 (decisione 123), da implementare: i recuperi pregressi confermati dal Direttore restano come «Recupero straordinario di Umanità — concessione del Direttore», con una nota nello storico al posto dell’avviso; quelli incerti restano «da verificare» con il totale provvisorio. Resta aperto il caso di Pablo Zaion (Interfaccia neurale)."
     },
     "frasi": [
       "Il valore va da 0 a 20; un essere umano non modificato parte normalmente da UMN 20.",
@@ -1834,7 +1834,7 @@
         "durata": "da definire",
         "promemoria": "In attesa dei dettagli di Davide: per ora nessun effetto sui valori, è solo un segno sulla scheda.",
         "riassunto": true,
-        "TODO(Davide)": "A.119: Stato Ammalato (richiesto nel playtest del 05/10/2026). Quali effetti ha (penalità, Prove, Salvezze), quanto dura, come si prende e come si guarisce? Intanto si segna senza effetti."
+        "TODO(Davide)": "A.119: risposta del 06/10/2026 (decisione 127), da implementare: sei intensità con penalità −1, −2, −4, −6, −8, −10 a tutte le Prove di Abilità (attacchi e Difese compresi, non le Prove Salvezza), una sola alla volta, senza durata generica; contagio e cure nel futuro Manuale del Direttore. Intanto si segna senza effetti."
       },
       {
         "id": "assordato",
@@ -2113,7 +2113,7 @@
       "testo": "Visione Perfetta riduce di 3, fino a 0, le penalità alle Prove di Percezione visiva; non migliora gli attacchi e non dà la vista nel buio assoluto."
     },
     "decisione": "A.106 (E&L del 05/10/2026): luce sufficiente nessuna penalità; penombra −2 VA; luce molto scarsa −4 VA; buio totale come Accecato (−8), senza sommare luce e Accecato per la stessa impossibilità di vedere. Riguarda Percezione visiva, attacchi, Difese che dipendono dalla vista e attività pratiche che richiedono la vista; non udito, Potere o PS. Si valuta la luce sull’oggetto osservato.",
-    "TODO(Davide)": "A.116: quali Abilità sono «attività pratiche che richiedono visione» (guida, lavoro su un meccanismo: Pilotare, Tecnologia, Medicina…)? Per ora la penalità di luce vale per attacchi e Difese (categorie_prove.luce) e per la Percezione visiva come valore a parte."
+    "TODO(Davide)": "A.116: risposta del 06/10/2026 (decisione 125), da implementare: la penalità dipende dall’uso concreto, non dall’Abilità (esempi: Pilotare, Tecnologia su componenti, Medicina visiva, Scienza su campioni, Sopravvivenza su tracce, Atletica su appigli); l’app qualifica il singolo uso come «richiede la vista», con correzione del Direttore, una sola volta. Per ora la penalità vale per attacchi e Difese (categorie_prove.luce) e per la Percezione visiva come valore a parte."
   },
   "categorie_prove": {
     "fisiche": ["Armi da lancio", "Armi leggere", "Armi medie", "Armi pesanti", "Armi da guerra", "Armi da mischia", "Corpo a corpo", "Difese", "Atletica", "Furtività"],
@@ -2960,7 +2960,7 @@
     ],
     "durata_predefinita": { "numero": 1, "unita": "round" },
     "massimi_pv_pm": false,
-    "TODO(Davide)": "A.120: un modificatore temporaneo di COS o SAG cambia anche i PV e i PM massimi (che a riposo ne dipendono), oppure solo Abilità, Prove Salvezza, danno e carico? Intanto i massimi non cambiano, così i PV e PM attuali non vengono tagliati."
+    "decisione": "A.120 (E&L del 06/10/2026; decisione 119 in docs/risposte-master.md): bonus e malus temporanei di COS e SAG non cambiano i PV e i PM massimi né quelli attuali, all’inizio e alla fine dell’effetto; la Caratteristica modificata vale per le Prove e i bonus pertinenti (Tempra, Potere…). Un effetto cambia PV o PM solo se lo dice espressamente."
   },
   "circostanza": {
     "paragrafo": "Giocatore §1.4",
@@ -2976,11 +2976,17 @@
     ]
   },
   "protezioni_rapide": {
-    "_nota": "A.60 (E&L del 05/10/2026): vista rapida nella tab Combattimento di armatura (con i rinforzi montati), scudo ed elmetto, con il costo in Azioni per indossarli o toglierli. L'elmetto prende il costo da elmetti.azioni_indossare (Armamenti §7.21.1); per armatura, rinforzi e scudo il manuale non lo scrive.",
-    "TODO(Davide)": "A.110: quante Azioni costano indossare e togliere armatura, rinforzi e scudo? Intanto la vista rapida scrive «costo da definire».",
+    "_nota": "A.60 (E&L del 05/10/2026): vista rapida nella tab Combattimento di armatura (con i rinforzi montati), scudo ed elmetto, con il costo in Azioni per indossarli o toglierli. L'elmetto prende il costo da elmetti.azioni_indossare (Armamenti §7.21.1); lo scudo 1 AzP (A.110).",
+    "decisione": "A.110 (E&L del 06/10/2026; decisione 120 in docs/risposte-master.md): scudo accessibile 1 AzP per prepararlo e impugnarlo, 1 AzP per riporlo; elmetto 1 AzP per indossarlo e 1 per toglierlo, a mani libere; armature e rinforzi in minuti (tempi qui sotto, per chi opera da solo con la protezione accessibile, senza Prova; i benefici solo a protezione interamente indossata). La vista rapida usa ancora solo «azioni»: armatura e rinforzi restano «costo da definire» finché non legge «tempi» (docs/diff-manuali-2026-10-07.md).",
+    "tempi": {
+      "armatura": { "Leggera": { "indossare_min": 1, "togliere_min": 1 }, "Media": { "indossare_min": 5, "togliere_min": 1 }, "Pesante": { "indossare_min": 10, "togliere_min": 5 } },
+      "rinforzo_strutturale": { "leggero": { "montare_min": 1, "smontare_min": 1 }, "pesante": { "montare_min": 5, "smontare_min": 5 }, "_nota": "Sull’armatura tolta, con gli strumenti appropriati; i tempi per togliere e rimettere l’armatura si contano a parte; un rinforzo già montato non aggiunge tempo." },
+      "soprabiti_mantelli_tabardo": { "indossare_azp": 1, "togliere_azp": 1, "condizione": "accessibili, fissati, entrambe le mani libere" },
+      "sottogiacca_ies": { "indossare_azp": 1, "togliere_azp": 1, "condizione": "entrambe le mani libere; se un’armatura la copre, prima si toglie l’armatura" }
+    },
     "voci": [
       { "tipo": "armatura", "nome": "Armatura", "vuoto": "nessuna", "azioni": null },
-      { "tipo": "scudo", "nome": "Scudo", "vuoto": "nessuno", "azioni": null },
+      { "tipo": "scudo", "nome": "Scudo", "vuoto": "nessuno", "azioni": 1, "condizione": "occupa la mano richiesta dalla scheda" },
       { "tipo": "elmetto", "nome": "Elmetto", "vuoto": "nessuno", "azioni": "elmetti", "condizione": "entrambe le mani libere" }
     ]
   },
