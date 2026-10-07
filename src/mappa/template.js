@@ -123,6 +123,41 @@ export function nuovoTemplate({ id, forma, misure, origine, direzione = 0, color
   };
 }
 
+/**
+ * Rotazione con le frecce (ritocchi del 07/10): cono e linea a passi di `passo` gradi (45°: le otto direzioni della
+ * griglia, quadretti coperti regolari), agganciati al multiplo più vicino; il rettangolo ruota di 90° scambiando i lati.
+ * Raggio e quadrato non hanno verso: restano uguali.
+ */
+export function ruota(t, verso, passo = 45) {
+  if (ORIENTABILI.includes(t.forma)) {
+    const n = Math.round((t.direzione ?? 0) / passo) + verso;
+    return { ...t, direzione: ((n * passo) % 360 + 360) % 360 };
+  }
+  if (t.forma === 'rettangolo') return { ...t, misure: { larghezza: t.misure.altezza, altezza: t.misure.larghezza } };
+  return t;
+}
+/**
+ * Misura successiva o precedente fra quelle proposte (data/mappa.json → template.misure_proposte): ↑ la più grande dopo
+ * quella attuale, ↓ la più piccola prima; da una misura fuori elenco si parte dalla più vicina.
+ */
+export function cambiaMisura(t, verso, regole) {
+  const lista = regole.misure_proposte[t.forma] ?? [];
+  if (!lista.length) return t;
+  const chiavi = MISURE_FORMA[t.forma];
+  const k = chiavi[0];
+  let i = lista.findIndex((m) => chiavi.every((c) => m[c] === t.misure[c]));
+  if (i < 0) {
+    // la più vicina sulla misura principale, poi un passo nel verso chiesto
+    const sotto = lista.filter((m) => m[k] <= t.misure[k]).length - 1;
+    i = verso > 0 ? sotto + 1 : sotto;
+  } else i += verso;
+  i = Math.max(0, Math.min(lista.length - 1, i));
+  // il rettangolo tiene il suo orientamento (lato lungo in orizzontale o in verticale)
+  const m = { ...lista[i] };
+  if (t.forma === 'rettangolo' && t.misure.altezza > t.misure.larghezza) return { ...t, misure: { larghezza: m.altezza, altezza: m.larghezza } };
+  return { ...t, misure: m };
+}
+
 /** Template senza durata («finché non lo tolgo»): quelli che «Mostra / nascondi template» toglie sempre. */
 export const permanente = (t) => t.durata === null || t.durata === undefined || t.permanente === true;
 /**

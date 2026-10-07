@@ -41,7 +41,7 @@ import { areaRaggiungibile, costoVerso, percorso, statoFasce, fasciaDi, celleAre
 import { statoDiretta, visibileAiGiocatori } from '../../mappa/diretta.js';
 import { muoviToken, usatoNelRound, fasceNelRound, mossoNelRound, annullaUltima, annullaUltimoMovimento, cambiaTokenAnnullabile, cambiaTemplateAnnullabile, cambiaPortaAnnullabile, nuovoTurno, turnoDi } from '../../mappa/annulla.js';
 import { disegnaMuri, disegnaArea, disegnaPercorso, disegnaZoc, coloriAree, disegnaTemplate, disegnaPorte } from './disegno-aree.js';
-import { celleTemplate, tokenDentro as tokenNelTemplate, nuovoTemplate, scaduto, direzioneVerso, ORIENTABILI, templateVisibili, ostacoliVisibili } from '../../mappa/template.js';
+import { celleTemplate, tokenDentro as tokenNelTemplate, nuovoTemplate, scaduto, direzioneVerso, ORIENTABILI, templateVisibili, ostacoliVisibili, ruota, cambiaMisura } from '../../mappa/template.js';
 import { portaA, muriEffettivi, porteVicine, apriChiudi, nuovaPorta, conAzione, azpNelRound, orientamento } from '../../mappa/porte.js';
 import { apriMenuTemplate, sezioneTemplate, etichettaTemplate, testoMisure } from './template.js';
 import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
@@ -806,8 +806,8 @@ export function renderMappa(radice, ctx) {
       ['Ctrl + clic su un token', 'scheda completa (PG) o mini-scheda (nemico)'],
       ['Clic destro su un token', 'menu: fasce, Annulla movimento, Nuovo turno, schede, Nascondi, Colore, Togli'],
       ['T (o Strumenti → «Template ad area», o clic destro su un punto vuoto)', 'nuovo template: forma, misura in Q, colore, durata in Round, nome'],
-      ['Mentre piazzi un template', 'segue il mouse; cono e linea partono dal token scelto verso il mouse, senza token si ruotano con la rotella; clic per fissarlo, Esc per annullare'],
-      ['Clic destro su un template', 'Sposta, Nascondi / Mostra ai giocatori, Togli'],
+      ['Mentre piazzi un template', 'segue il mouse; cono e linea partono dal token scelto verso il mouse; ← → ruotano di 45° (rettangolo: 90°), ↑ ↓ cambiano la misura, rotella 15°; clic per fissarlo, Esc per annullare'],
+      ['Clic destro su un template', 'Sposta o ruota (poi le frecce), Nascondi / Mostra ai giocatori, Togli'],
       ['Maiusc+T (pulsante «◫ Template»)', 'mostra o nasconde i template senza durata, muri, porte e terreno (per il movimento valgono sempre); con «anche a durata» anche i template a Round'],
       ['Strumenti → Muri e terreno → «Porta»', 'clic su un Q di muro: porta (aperta, chiusa o bloccata; segreta); clic su una porta: la toglie'],
       ['Clic su una porta', 'il master la apre o la chiude (bloccata: no); clic destro: Apri / Chiudi / Blocca / Sblocca / Rivela / Togli'],
@@ -1290,11 +1290,12 @@ export function renderMappa(radice, ctx) {
     const g = st.scena.griglia;
     const o = origine ?? [Math.floor(g.colonne / 2), Math.floor(g.righe / 2)];
     st.tpl.sposta = sposta;
+    st.tpl.direzioneFissa = !!sposta; // spostando un template fissato la sua direzione resta (si cambia con le frecce)
     st.tpl.anteprima = { ...base, origine: o, ...(ORIENTABILI.includes(base.forma) ? { direzione: base.direzione ?? 0 } : {}) };
     el.riquadro.classList.add('piazza-template');
     avviso(ORIENTABILI.includes(base.forma)
-      ? 'Template: con un token scelto parte da lui e si orienta verso il mouse; senza, segue il mouse e si ruota con la rotella. Clic per fissarlo, Esc per annullare.'
-      : 'Template: segue il mouse. Clic per fissarlo, Esc per annullare.', { tipo: 'info', chiave: 'template', durata: 8000 });
+      ? 'Template: con un token scelto parte da lui e si orienta verso il mouse; senza, segue il mouse. ← → ruotano di 45° (anche la rotella, di 15°), ↑ ↓ cambiano la misura. Clic per fissarlo, Esc per annullare.'
+      : `Template: segue il mouse. ${base.forma === 'rettangolo' ? '← → lo girano di 90°, ' : ''}↑ ↓ cambiano la misura. Clic per fissarlo, Esc per annullare.`, { tipo: 'info', chiave: 'template', durata: 8000 });
     ridisegna(['aree']);
   }
   /** L'anteprima segue il punto m della mappa: cono e linea dal token scelto verso m, le altre forme su m. */
@@ -1308,7 +1309,7 @@ export function renderMappa(radice, ctx) {
     if (tok) {
       const [w, hh] = Array.isArray(tok.ingombro) ? tok.ingombro : [tok.ingombro ?? 1, tok.ingombro ?? 1];
       const origine = [tok.q[0] + Math.floor((w - 1) / 2), tok.q[1] + Math.floor((hh - 1) / 2)];
-      nuovo = { ...a, origine, direzione: direzioneVerso(origine, verso) };
+      nuovo = { ...a, origine, direzione: st.tpl.direzioneFissa ? a.direzione : direzioneVerso(origine, verso) };
     } else nuovo = { ...a, origine: qVicino(m) };
     st.tpl.ancorato = !!tok;
     if (nuovo.origine[0] === a.origine[0] && nuovo.origine[1] === a.origine[1] && nuovo.direzione === a.direzione) return;
@@ -1325,6 +1326,24 @@ export function renderMappa(radice, ctx) {
     ridisegna(['aree']);
   };
   el.riquadro.addEventListener('wheel', suRotellaTemplate, { capture: true, passive: false });
+  /**
+   * Frecce durante il piazzamento (ritocchi del 07/10): ← → ruotano cono e linea di 45° (partendo dalla direzione di
+   * quel momento, anche verso il mouse da un token scelto, che poi resta fissa) e il rettangolo di 90°; ↑ ↓ cambiano la
+   * misura fra quelle proposte. Restituisce true se ha usato il tasto.
+   */
+  function frecciaTemplate(e) {
+    const a = st.tpl.anteprima;
+    if (!a || !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) return false;
+    e.preventDefault();
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+      if (!ORIENTABILI.includes(a.forma) && a.forma !== 'rettangolo') { avviso(`${RT.nomi_forme[a.forma]}: non ha un verso da girare (↑ ↓ cambiano la misura).`, { chiave: 'template' }); return true; }
+      st.tpl.anteprima = ruota(a, e.key === 'ArrowRight' ? 1 : -1);
+      if (ORIENTABILI.includes(a.forma)) st.tpl.direzioneFissa = true;
+    } else st.tpl.anteprima = cambiaMisura(a, e.key === 'ArrowUp' ? 1 : -1, RT);
+    avviso(`${st.tpl.anteprima.nome || testoMisure(st.tpl.anteprima, RT)}${ORIENTABILI.includes(a.forma) ? ` · ${st.tpl.anteprima.direzione}°` : ''}`, { chiave: 'template', durata: 2500 });
+    ridisegna(['aree']);
+    return true;
+  }
   function annullaPiazzamento() {
     st.tpl.anteprima = null;
     st.tpl.sposta = null;
@@ -1338,7 +1357,7 @@ export function renderMappa(radice, ctx) {
     if (!a) return;
     const scontro = st.fonti?.scontro ?? null;
     const prima = st.tpl.sposta ? st.scena.template.find((t) => t.id === st.tpl.sposta) ?? null : null;
-    const t = prima ? { ...prima, origine: [...a.origine], ...(ORIENTABILI.includes(a.forma) ? { direzione: a.direzione } : {}) }
+    const t = prima ? { ...prima, origine: [...a.origine], misure: { ...a.misure }, ...(ORIENTABILI.includes(a.forma) ? { direzione: a.direzione } : {}) }
       : nuovoTemplate({ id: a.id, forma: a.forma, misure: a.misure, origine: a.origine, direzione: a.direzione ?? 0, colore: a.colore, nome: a.nome, durata: a.durata, round: scontro?.round ?? null, nascosto: a.nascosto, scontro: scontro?.id ?? null });
     st.scena = cambiaTemplateAnnullabile(st.scena, prima, t, ctx.dati);
     st.tpl.anteprima = null;
@@ -1463,7 +1482,7 @@ export function renderMappa(radice, ctx) {
       ...(porta ? vociPorta(porta, scelto) : []),
       { testo: 'Nuovo template qui… (T)', azione: () => nuovoTemplateUi(q) },
       ...qui.flatMap((t) => [null,
-        { testo: `Sposta «${t.nome || testoMisure(t, RT)}»`, azione: () => spostaTemplate(t.id) },
+        { testo: `Sposta o ruota «${t.nome || testoMisure(t, RT)}»`, azione: () => spostaTemplate(t.id) },
         { testo: t.nascosto ? 'Mostra ai giocatori' : 'Nascondi ai giocatori', azione: () => nascondiTemplate(t.id) },
         { testo: `Togli «${t.nome || testoMisure(t, RT)}»`, azione: () => togliTemplate(t.id) }]),
     ]);
@@ -1921,6 +1940,7 @@ export function renderMappa(radice, ctx) {
     if (e.key === 'm' || e.key === 'M') { e.preventDefault(); cambiaMostraArea(); return; }
     if (e.key === 'z' || e.key === 'Z') { e.preventDefault(); cambiaMostraZoc(); return; }
     if (e.key === 'p' || e.key === 'P') { e.preventDefault(); cambiaMostraPv(); return; }
+    if (frecciaTemplate(e)) return;
     if (e.shiftKey && e.key.toLowerCase() === ctx.dati.mappa.template.tasto && st.scena) { e.preventDefault(); cambiaSovrapposizioni('master', 'nascoste'); return; }
     if (e.key.toLowerCase() === ctx.dati.mappa.template.tasto && st.scena && !st.tpl.anteprima) { e.preventDefault(); nuovoTemplateUi(); return; }
     if (e.key === 'Escape' && st.tpl.anteprima) { e.preventDefault(); annullaPiazzamento(); return; }

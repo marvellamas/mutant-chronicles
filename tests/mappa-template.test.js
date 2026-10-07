@@ -144,3 +144,23 @@ test('«Mostra / nascondi template»: senza durata (e, a scelta, anche a durata)
   assert.deepEqual(v.sovrapposizioni, { nascoste: true, ancheDurata: true }, 'la scelta dei giocatori, non quella del master');
   assert.deepEqual(v.template.map((t) => [t.id, t.permanente]), [['f', true], ['r', false]]);
 });
+
+test('frecce: cono e linea a 45° (agganciati alle 8 direzioni), rettangolo di 90°; ↑ ↓ fra le misure proposte', async () => {
+  const { ruota, cambiaMisura } = await import('../src/mappa/template.js');
+  const cono = tpl('cono', { lunghezza: 6, larghezza: 3 }, { direzione: 127 });
+  assert.equal(ruota(cono, 1).direzione, 180, 'da 127° (verso il mouse) al multiplo di 45° successivo');
+  assert.equal(ruota(cono, -1).direzione, 90);
+  assert.equal(ruota({ ...cono, direzione: 0 }, -1).direzione, 315);
+  assert.deepEqual(ruota(tpl('rettangolo', { larghezza: 4, altezza: 2 }), 1).misure, { larghezza: 2, altezza: 4 });
+  const r = tpl('cerchio', { raggio: 2 });
+  assert.equal(ruota(r, 1), r, 'il raggio non ha verso');
+  assert.deepEqual(cambiaMisura(cono, 1, RT).misure, { lunghezza: 9, larghezza: 5 });
+  assert.deepEqual(cambiaMisura(cono, -1, RT).misure, { lunghezza: 3, larghezza: 2 });
+  assert.deepEqual(cambiaMisura(tpl('cono', { lunghezza: 18, larghezza: 9 }), 1, RT).misure, { lunghezza: 18, larghezza: 9 }, 'oltre l’ultima resta');
+  assert.deepEqual(cambiaMisura(tpl('cerchio', { raggio: 7 }), 1, RT).misure, { raggio: 8 }, 'da una misura fuori elenco: la successiva');
+  assert.deepEqual(cambiaMisura(tpl('cerchio', { raggio: 7 }), -1, RT).misure, { raggio: 6 });
+  assert.deepEqual(cambiaMisura(tpl('rettangolo', { larghezza: 2, altezza: 4 }), 1, RT).misure, { larghezza: 2, altezza: 3 }, 'il rettangolo girato resta girato');
+  // la linea a 45° copre davvero la diagonale
+  const ld = celleTemplate(ruota(tpl('linea', { lunghezza: 3 }, { direzione: 0 }), 1), G, RT);
+  assert.ok(ld[16 * 30 + 16] && ld[18 * 30 + 18]);
+});

@@ -85,7 +85,7 @@ export function sezioneTemplate(voci, regole, a) {
       t.nascosto ? h('span', { class: 'nota' }, ' · nascosto ai giocatori') : null,
       h('div', { class: 'nota' }, dentro.length ? `Dentro: ${dentro.join(', ')}` : 'Nessun token dentro'),
       h('div', { class: 'mappa-azioni-token' },
-        h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Lo riprendi e lo rimetti con un clic (Esc lo lascia dov’era)', onclick: () => a.sposta(t.id) }, 'Sposta'),
+        h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Lo riprendi: segue il mouse, ← → lo ruotano, ↑ ↓ cambiano la misura; clic per rimetterlo (Esc lo lascia dov’era)', onclick: () => a.sposta(t.id) }, 'Sposta o ruota'),
         h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => a.nascondi(t.id) }, t.nascosto ? 'Mostra ai giocatori' : 'Nascondi ai giocatori'),
         h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => a.togli(t.id) }, 'Togli'))))) : h('p', { class: 'nota' }, 'Nessun template sulla mappa.'),
   ];
