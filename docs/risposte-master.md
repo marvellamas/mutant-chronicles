@@ -958,8 +958,8 @@ A.124 e A.125 hanno avuto risposta il 06/10 (decisioni 128–130); restano la vo
 e le vecchie etichette numeriche delle luci di A.125, e A.134 qui sotto.
 
 - **A.132 — Stordito e Attacchi di Opportunità** (07/10/2026, zone di controllo della mappa). Uno Stordito (§5.18:
-  nessuna Azione Principale) può fare un Attacco di Opportunità, che per il §5.3 «non consuma Azioni»? Provvisorio: sì
-  (`data/mappa.json` → zoc.stati_che_impediscono ha solo Svenuto).
+  nessuna Azione Principale) può fare un Attacco di Opportunità, che per il §5.3 «non consuma Azioni»? **Risolta** dalla
+  risposta di Marcello del 07/10 (decisione 134): no.
 - **A.133 — Portata delle creature grandi** (07/10/2026). Una creatura Grande (2 × 2 Q) o Enorme (3 × 3 Q) ha la portata
   del suo profilo (i profili del Manuale dei Mostri dicono «portata 1 Q») attorno a tutto l'ingombro, o una portata
   maggiore per la Taglia (Marcello aveva proposto 2 Q per i 2 × 2 e 3 Q per i 3 × 3)? Provvisorio: quella del profilo.
@@ -1100,6 +1100,17 @@ dell'aspetto: nel pacchetto del 07/10), A.111 (solo Pablo Zaion), A.112, A.113, 
 - **A.142 — Fin dove vedono i PG** (07/10/2026, nebbia automatica). Con luce sufficiente, entro quanti Q la nebbia si
   apre da sola? Provvisorio: 30 Q (45 m), contati a quadretti; le luci (prossimo lotto) ridurranno la vista in penombra e
   al buio.
+
+## 7 ottobre 2026 — risposte di Marcello (decisioni del gruppo)
+
+Fonte: prompt di Marcello del 07/10/2026 sera, decisioni del gruppo di gioco sulle domande della mappa. Sono «risposta di
+Marcello»: Davide può rivederle (nel pacchetto per il Doc vanno fra le Risolte con questa dicitura).
+
+134. **Stordito e Attacchi di Opportunità** (A.132; risposta di Marcello, 07/10). Un token Stordito non fa Attacchi di
+    Opportunità, come chi è Svenuto o a 0 PV: la sua ZoC non genera l'avviso. Sulla mappa il master la vede tratteggiata,
+    senza riempimento («inattiva», per capire perché non c'è l'avviso); i giocatori non la vedono; a 0 PV non si mostra.
+    **Applicata** il 07/10 (branch `battlemap`): `data/mappa.json` → zoc.stati_che_impediscono [stordito, svenuto] e
+    zoc.inattiva, `src/mappa/zoc.js` → avversariZocInattivi; via il `TODO(Davide)`.
 
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 

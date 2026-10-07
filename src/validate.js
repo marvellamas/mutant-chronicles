@@ -2710,6 +2710,9 @@ function validaMappa(dati, err) {
     if (!Array.isArray(Z.stati_che_impediscono)) err(F, 'zoc.stati_che_impediscono', 'elenco di id di Stati');
     else for (const id of Z.stati_che_impediscono) if (!(dati.regole?.stati?.elenco ?? []).some((s) => s.id === id)) err(F, 'zoc.stati_che_impediscono', `Stato «${id}» non in regole.json`);
     if (!isTesto(Z.frase_eccezione)) err(F, 'zoc.frase_eccezione', 'testo mancante');
+    // A.132: ZoC inattiva (Stati che impediscono gli Attacchi di Opportunità), tratteggiata per il master
+    if (!isOggetto(Z.inattiva) || !(Z.inattiva.opacita_contorno >= 0 && Z.inattiva.opacita_contorno <= 1)) err(F, 'zoc.inattiva.opacita_contorno', 'opacità da 0 a 1');
+    else if (!Array.isArray(Z.inattiva.tratteggio_px) || Z.inattiva.tratteggio_px.length !== 2 || !Z.inattiva.tratteggio_px.every((n) => isIntero(n) && n > 0)) err(F, 'zoc.inattiva.tratteggio_px', '[tratto, spazio] in pixel, interi da 1 in su');
   }
   // colori dei bordi dei token (decisione di Marcello del 06/10, src/mappa/colori.js)
   const CO = m.colori;

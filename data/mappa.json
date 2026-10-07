@@ -400,9 +400,14 @@
     "portata_predefinita": 1,
     "TODO(Davide) creature grandi": "A.133: una creatura Grande (2 × 2 Q) o Enorme (3 × 3 Q) ha la portata del suo profilo (1 Q, come nei profili del Manuale dei Mostri) attorno a tutto l'ingombro, o una portata maggiore per la Taglia? Provvisorio: quella del profilo.",
     "stati_che_impediscono": [
+      "stordito",
       "svenuto"
     ],
-    "TODO(Davide) stordito": "A.132: uno Stordito (§5.18: nessuna Azione Principale) può fare Attacchi di Opportunità, che «non consumano Azioni» (§5.3)? Provvisorio: sì (non è fra gli Stati che lo impediscono).",
+    "_nota_stati": "A.132 (risposta di Marcello del 07/10/2026, decisione 134 di docs/risposte-master.md; Davide può rivederla): uno Stordito non fa Attacchi di Opportunità, come chi è Svenuto o a 0 PV. La sua ZoC non genera l'avviso; il master la vede tratteggiata, senza riempimento («inattiva», zoc.inattiva), i giocatori non la vedono. A 0 PV la ZoC non si mostra affatto.",
+    "inattiva": {
+      "opacita_contorno": 0.55,
+      "tratteggio_px": [6, 5]
+    },
     "opacita_riempimento": 0.16,
     "opacita_contorno": 0.7,
     "colore": "#e03131",

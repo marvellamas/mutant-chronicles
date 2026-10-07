@@ -97,8 +97,8 @@ La Mappa di battaglia è un modulo del **Tavolo del Master** di Mutant: gira sul
 ### **8.1 Zone di controllo e Attacchi di Opportunità (07/10/2026)**
 
 > * **Regola del manuale (Giocatore §5.3):** «Un personaggio provoca un Attacco di Opportunità quando, con un Movimento volontario, esce dalla portata ravvicinata di un avversario in grado di attaccarlo»; non lo provocano il movimento forzato, l’ingresso nella portata, lo spostamento all’interno, la Ritirata e il teletrasporto; una sola volta per Round. La portata è quella dell’arma ravvicinata (Armamenti §7.1.2: 1 Q di norma, 2–3 Q per armi lunghe).
-> * **ZoC:** la fascia profonda quanto la portata attorno a tutto l’ingombro del token avversario (non a 0 PV, non Svenuto, non veicolo; per i giocatori non nascosto). Mentre un token è scelto o si muove le ZoC dei suoi avversari sono in rosso semitrasparente (interruttore «Mostra ZoC», tasto Z); i passi del percorso nella ZoC sono evidenziati; l’area non cambia.
-> * **Avviso:** a movimento fatto (non «Libero»), uscendo dalla portata di un avversario: «Oshi è uscito dalla ZoC di Legionario 1! Attacco di Opportunità…», uno per avversario, con «Attacca!» dell’avversario e il bersaglio già scelto; riga nel registro e avviso nella vista giocatori. Nessun tiro automatico. Domande A.132 (Stordito) e A.133 (creature grandi).
+> * **ZoC:** la fascia profonda quanto la portata attorno a tutto l’ingombro del token avversario (non a 0 PV, non Stordito né Svenuto, non veicolo; per i giocatori non nascosto). **A.132 (risposta di Marcello del 07/10):** uno Stordito non fa Attacchi di Opportunità; il master vede la sua ZoC solo tratteggiata («inattiva», nessun avviso), i giocatori non la vedono. Mentre un token è scelto o si muove le ZoC dei suoi avversari sono in rosso semitrasparente (interruttore «Mostra ZoC», tasto Z); i passi del percorso nella ZoC sono evidenziati; l’area non cambia.
+> * **Avviso:** a movimento fatto (non «Libero»), uscendo dalla portata di un avversario: «Oshi è uscito dalla ZoC di Legionario 1! Attacco di Opportunità…», uno per avversario, con «Attacca!» dell’avversario e il bersaglio già scelto; riga nel registro e avviso nella vista giocatori. Nessun tiro automatico. Domanda aperta A.133 (creature grandi).
 
 ## **9\. Linea di tiro**
 
@@ -229,8 +229,9 @@ Le stesse azioni più gli strumenti del master: carica mappa, griglia, nebbia, m
 ## **15\. Decisioni e domande per Davide**
 
 > * **Iniziativa — deciso:** si usa il sistema del Manuale del Giocatore di Mutant (Mod DES \+ Mod INT \+ 1d10; parità per DES, poi INT, poi scelta fra alleati o 1d10 fra avversari). Il d12 dell’app di Davide appartiene al sistema precedente.  
-> * **Risposte del 06/10/2026:** A.121 ritirata; A.122 priorità delle funzioni (resta «Aiuto-master»); A.124, A.127, A.128 e A.129 sul movimento, applicate il 07/10 (§8); A.125 porte e luci (restano i veicoli e le vecchie etichette delle luci).  
-> * **Ancora aperte:** A.126 (creature 3 × 3), A.132 (Stordito e AdO), A.133 (portata delle creature grandi), A.134 (diagonale rasente allo spigolo), A.136 (Corsa o Scatto dopo un Passo cominciato).
+> * **Risposte del 06/10/2026:** A.121 ritirata; A.122 priorità delle funzioni (resta «Aiuto-master»); A.124, A.127, A.128 e A.129 sul movimento, applicate il 07/10 (§8); A.125 porte e luci (restano i veicoli e le vecchie etichette delle luci).
+> * **Risposte di Marcello del 07/10/2026 (decisioni del gruppo, Davide può rivederle):** A.132 (uno Stordito non fa AdO; ZoC tratteggiata solo per il master).  
+> * **Ancora aperte:** A.126 (creature 3 × 3), A.133 (portata delle creature grandi), A.134 (diagonale rasente allo spigolo), A.136 (Corsa o Scatto dopo un Passo cominciato).
 
 ## **16\. Fuori ambito**
 

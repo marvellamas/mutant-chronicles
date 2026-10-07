@@ -27,7 +27,7 @@ import { DISPOSIZIONI, NOMI_DISPOSIZIONI, prossimaDisposizione, normalizzaDispos
 import { barraIniziativa } from '../../mappa/iniziativa.js';
 import { barraIniziativaEl, stileBordo } from './barra-iniziativa.js';
 import { bordoToken, assegnaColori, cambiaColore, tavolozzaPer, famiglia } from '../../mappa/colori.js';
-import { avversariZoc, celleZoc, passiInZoc, attacchiDiOpportunita, testoOpportunita, giaInQuestoRound } from '../../mappa/zoc.js';
+import { avversariZoc, avversariZocInattivi, celleZoc, passiInZoc, attacchiDiOpportunita, testoOpportunita, giaInQuestoRound } from '../../mappa/zoc.js';
 import { scegliColore, chiedi, informa } from '../finestrella.js';
 import { calibraDaQuadretto, applicaGriglia, dimensioniMappa, lineeVisibili, testoScala } from '../../mappa/griglia.js';
 import { creaTela } from './canvas.js';
@@ -315,6 +315,9 @@ export function renderMappa(radice, ctx) {
         // prima le ZoC degli avversari del token scelto o trascinato (sotto l'area), poi l'area
         const id = st.trascina?.modo === 'token' ? st.trascina.token : st.selezionato;
         if (st.mostraZoc && id && !disegnoAttivo()) {
+          // A.132: prima le ZoC inattive (Stordito, Svenuto), tratteggiate; poi quelle attive
+          const inattivi = avversariZocInattivi(s, st.pezzi, id, ctx.dati);
+          if (inattivi.length) disegnaZoc(c, { scena: s, cam: st.cam, info, celle: celleZoc(s, inattivi), stile: ctx.dati.mappa.zoc, inattiva: true });
           const avv = avversariZoc(s, st.pezzi, id, ctx.dati);
           if (avv.length) disegnaZoc(c, { scena: s, cam: st.cam, info, celle: celleZoc(s, avv), stile: ctx.dati.mappa.zoc });
         }

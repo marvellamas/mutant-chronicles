@@ -67,7 +67,7 @@ export function disegnaMuri(c, { scena, cam, info, muri, terreno, colori }) {
  * riempimento leggero e il suo contorno (i lati dei Q che confinano con un'altra fascia o con l'esterno).
  * @param stile data/mappa.json → vista.area
  */
-export function disegnaArea(c, { scena, cam, info, celle, colori, stile, solo = null }) {
+export function disegnaArea(c, { scena, cam, info, celle, colori, stile, solo = null, tratteggio = null }) {
   const g = scena.griglia;
   const v = visibili(g, cam, info);
   const tinte = [null, colori.passo, colori.corsa, colori.scatto];
@@ -81,7 +81,7 @@ export function disegnaArea(c, { scena, cam, info, celle, colori, stile, solo = 
       for (let x = v.x0; x < v.x1; x++) if (celle[y * g.colonne + x] === k) { c.rect(...rettQ(g, cam, x, y)); n++; }
     }
     if (n) {
-      c.globalAlpha = stile.opacita_riempimento; c.fillStyle = tinte[k]; c.fill();
+      if (stile.opacita_riempimento > 0) { c.globalAlpha = stile.opacita_riempimento; c.fillStyle = tinte[k]; c.fill(); }
       // contorno: un lato per ogni Q della fascia che confina con altro
       c.beginPath();
       for (let y = v.y0; y < v.y1; y++) {
@@ -93,7 +93,9 @@ export function disegnaArea(c, { scena, cam, info, celle, colori, stile, solo = 
           }
         }
       }
-      c.globalAlpha = stile.opacita_contorno; c.strokeStyle = tinte[k]; c.lineWidth = stile.spessore_contorno_px; c.lineCap = 'round'; c.stroke();
+      c.globalAlpha = stile.opacita_contorno; c.strokeStyle = tinte[k]; c.lineWidth = stile.spessore_contorno_px; c.lineCap = tratteggio ? 'butt' : 'round';
+      if (tratteggio) c.setLineDash(tratteggio);
+      c.stroke();
     }
     c.restore();
   }
@@ -103,8 +105,12 @@ export function disegnaArea(c, { scena, cam, info, celle, colori, stile, solo = 
  * Zone di controllo degli avversari del token scelto (07/10, src/mappa/zoc.js): rosso semitrasparente con il contorno,
  * come l'area raggiungibile. `celle`: Uint8Array, 1 dentro una ZoC; `stile`: data/mappa.json → zoc.
  */
-export function disegnaZoc(c, { scena, cam, info, celle, stile }) {
-  disegnaArea(c, { scena, cam, info, celle, colori: { passo: stile.colore, corsa: stile.colore, scatto: stile.colore }, stile: { opacita_riempimento: stile.opacita_riempimento, opacita_contorno: stile.opacita_contorno, spessore_contorno_px: 2 }, solo: 1 });
+export function disegnaZoc(c, { scena, cam, info, celle, stile, inattiva = false }) {
+  // A.132: la ZoC di chi non può fare Attacchi di Opportunità (Stordito, Svenuto) solo tratteggiata, senza riempimento
+  const s = inattiva
+    ? { opacita_riempimento: 0, opacita_contorno: stile.inattiva.opacita_contorno, spessore_contorno_px: 2 }
+    : { opacita_riempimento: stile.opacita_riempimento, opacita_contorno: stile.opacita_contorno, spessore_contorno_px: 2 };
+  disegnaArea(c, { scena, cam, info, celle, colori: { passo: stile.colore, corsa: stile.colore, scatto: stile.colore }, stile: s, solo: 1, tratteggio: inattiva ? stile.inattiva.tratteggio_px : null });
 }
 
 /** Percorso del token (posizioni del Q in alto a sinistra) con il costo in Q all'arrivo; `inZoc`: passi in una ZoC. */
