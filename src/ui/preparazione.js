@@ -195,28 +195,34 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
       avvisoRari(b),
       h('h3', {}, `Nemici (${b.nemici.reduce((s, v) => s + v.quanti, 0)})`),
       b.nemici.length ? h('ul', { class: 'voci-bozza' }, b.nemici.map(voce)) : h('p', { class: 'vuoto' }, 'Nessun nemico: aggiungili qui sotto.'),
+      // 07/10 (test di Marcello): due blocchi distinti con la stessa struttura, la scelta sopra e sotto «Quanti», «Lato» e
+      // «Aggiungi» sempre nello stesso punto; una riga di separazione fra i blocchi
       h('div', { class: 'aggiungi-nemici' },
-        h('h3', {}, 'Aggiungi'),
-        h('div', { class: 'riga-aggiungi' },
-          h('strong', {}, 'Dal bestiario '),
+        h('h3', {}, 'Aggiungi nemici'),
+        h('section', { class: 'blocco-aggiungi', 'aria-label': 'Dal bestiario' },
+          h('h4', {}, 'Dal bestiario'),
+          h('p', { class: 'nota' }, 'I tipi di nemico già salvati (nemici/).'),
           voci.length ? [
-            h('select', { 'aria-label': 'Tipo dal bestiario', onchange: (e) => { dB.tipo = e.target.value; } }, voci.map((v) => h('option', { value: v.id, selected: v.id === dB.tipo }, `${v.nemico.nome} (PV ${v.nemico.pv})`))),
-            quantiLato(dB),
-            h('button', { type: 'button', class: 'btn', onclick: () => { const n = voci.find((v) => v.id === dB.tipo)?.nemico; if (n) modifica((x) => aggiungiVoce(x, { nemico: n, quanti: Number(dB.quanti), lato: dB.lato, origine: 'bestiario' })); } }, 'Aggiungi'),
-          ] : h('span', { class: 'nota' }, 'il bestiario è vuoto')),
-        h('div', { class: 'riga-aggiungi' },
-          h('strong', {}, 'Creatura pronta '),
-          tendinaCreature(BE, dC.id, (v) => { dC.id = v; dC.boss = false; disegna(); }),
-          h('select', { 'aria-label': 'Grado della creatura', onchange: (e) => { dC.grado = e.target.value; } }, (creatura?.gradi ?? []).map((g) => h('option', { value: g, selected: g === dC.grado }, BE.gradi.find((x) => x.id === g).nome))),
-          creatura?.boss ? h('label', {}, h('input', { type: 'checkbox', checked: dC.boss, onchange: (e) => { dC.boss = e.target.checked; } }), ` Boss (${BE.gradi.find((x) => x.id === creatura.boss.grado).nome})`) : null,
-          quantiLato(dC),
-          h('button', { type: 'button', class: 'btn', onclick: () => aggiungiCreatura() }, 'Aggiungi')),
-        h('div', { class: 'riga-aggiungi' },
+            h('div', { class: 'blocco-scelta' },
+              h('label', {}, h('span', {}, 'Tipo'), h('select', { 'aria-label': 'Tipo dal bestiario', onchange: (e) => { dB.tipo = e.target.value; } }, voci.map((v) => h('option', { value: v.id, selected: v.id === dB.tipo }, `${v.nemico.nome} (PV ${v.nemico.pv})`))))),
+            h('div', { class: 'blocco-quanti' }, quantiLato(dB),
+              h('button', { type: 'button', class: 'btn primario', onclick: () => { const n = voci.find((v) => v.id === dB.tipo)?.nemico; if (n) modifica((x) => aggiungiVoce(x, { nemico: n, quanti: Number(dB.quanti), lato: dB.lato, origine: 'bestiario' })); } }, 'Aggiungi')),
+          ] : h('p', { class: 'nota' }, 'Il bestiario è vuoto: usa «Creatura pronta» o «Crea nemico…».')),
+        h('section', { class: 'blocco-aggiungi', 'aria-label': 'Creatura pronta' },
+          h('h4', {}, 'Creatura pronta'),
+          h('p', { class: 'nota' }, 'Dal Bestiario proposto, con il Grado.'),
+          h('div', { class: 'blocco-scelta' },
+            h('label', {}, h('span', {}, 'Creatura'), tendinaCreature(BE, dC.id, (v) => { dC.id = v; dC.boss = false; disegna(); })),
+            h('label', {}, h('span', {}, 'Grado'), h('select', { 'aria-label': 'Grado della creatura', onchange: (e) => { dC.grado = e.target.value; } }, (creatura?.gradi ?? []).map((g) => h('option', { value: g, selected: g === dC.grado }, BE.gradi.find((x) => x.id === g).nome)))),
+            creatura?.boss ? h('label', { class: 'casella-boss' }, h('input', { type: 'checkbox', checked: dC.boss, onchange: (e) => { dC.boss = e.target.checked; } }), ` Boss (${BE.gradi.find((x) => x.id === creatura.boss.grado).nome})`) : null),
+          h('div', { class: 'blocco-quanti' }, quantiLato(dC),
+            h('button', { type: 'button', class: 'btn primario', onclick: () => aggiungiCreatura() }, 'Aggiungi'))),
+        h('section', { class: 'blocco-aggiungi blocco-crea', 'aria-label': 'Crea nemico' },
           h('button', { type: 'button', class: 'btn', onclick: () => apriCreaNemico(ctx, {
             voci: bestiario(), livello: liv.valore, salvato: salvatoBestiario,
             destinazione: { etichetta: 'Aggiungi alla preparazione', aggiungi: async (n, { quanti, lato, origine }) => { await modifica((x) => aggiungiVoce(x, { nemico: n, quanti, lato, origine })); avviso(`${n.nome} ×${quanti} nella bozza «${st.bozza?.nome ?? ''}».`); return true; } },
           }) }, 'Crea nemico…'),
-          h('span', { class: 'nota' }, ' procedura guidata o tutto a caso, dal Bestiario'))),
+          h('span', { class: 'nota' }, ' un tipo nuovo: procedura guidata o tutto a caso, dal Bestiario'))),
       preparaMappa(b),
       h('div', { class: 'riga-azioni azioni-bozza' },
         h('button', { type: 'button', class: 'btn primario', disabled: !b.nemici.length, title: 'Avvia lo scontro: Iniziativa tirata dall’app per tutti, Round 1. La bozza resta fra le bozze e si può riusare.', onclick: () => avvia(false) }, 'Inizia'),
@@ -326,8 +332,8 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
     }).join(' ')) : null;
   };
   const quantiLato = (o) => [
-    h('label', {}, ' Quanti ', h('input', { type: 'number', min: 1, max: 30, step: 1, class: 'input-d10', value: o.quanti, oninput: (e) => { o.quanti = e.target.value; } })),
-    h('label', {}, ' Lato ', h('select', { onchange: (e) => { o.lato = e.target.value; } }, ['avversario', 'alleato'].map((x) => h('option', { value: x, selected: o.lato === x }, x)))),
+    h('label', {}, h('span', {}, 'Quanti'), h('input', { type: 'number', min: 1, max: 30, step: 1, class: 'input-d10', value: o.quanti, oninput: (e) => { o.quanti = e.target.value; } })),
+    h('label', {}, h('span', {}, 'Lato'), h('select', { onchange: (e) => { o.lato = e.target.value; } }, ['avversario', 'alleato'].map((x) => h('option', { value: x, selected: o.lato === x }, x)))),
   ];
   const aggiungiCreatura = async () => {
     const dC = st.daCreatura;

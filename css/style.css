@@ -2113,3 +2113,14 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 .mappa-sottotitolo { margin: 0.5rem 0 0.2rem; }
 .elenco-luci { margin: 0; padding-left: 1.1rem; display: flex; flex-direction: column; gap: 0.25rem; }
 .elenco-luci .btn { margin-left: 0.3rem; }
+
+/* «Prepara scontro» → Aggiungi nemici (07/10): due blocchi distinti, stessa struttura, «Aggiungi» sempre a destra */
+.aggiungi-nemici .blocco-aggiungi { padding: 0.6rem 0; border-top: 1px solid var(--bordo); display: flex; flex-direction: column; gap: 0.45rem; }
+.aggiungi-nemici .blocco-aggiungi h4 { margin: 0; font-size: 1rem; }
+.aggiungi-nemici .blocco-aggiungi > .nota { margin: 0; }
+.blocco-scelta, .blocco-quanti { display: flex; flex-wrap: wrap; gap: 0.5rem 0.75rem; align-items: end; }
+.blocco-scelta label, .blocco-quanti label { display: flex; flex-direction: column; gap: 0.15rem; font-size: 0.9rem; }
+.blocco-scelta label.casella-boss { flex-direction: row; align-items: center; gap: 0.3rem; padding-bottom: 0.35rem; }
+.blocco-scelta select { max-width: min(28rem, 100%); }
+.blocco-quanti .btn { margin-left: auto; min-width: 7rem; }
+.aggiungi-nemici .blocco-crea { flex-direction: row; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
