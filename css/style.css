@@ -2091,3 +2091,6 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 .mappa-sovrapposizioni .btn[aria-pressed="true"] { outline: 2px solid var(--mappa-passo, #1f9d55); }
 .mappa-sovrapposizioni .btn.spento { opacity: .65; text-decoration: line-through; }
 .casella-sovr { font-size: .85rem; white-space: nowrap; }
+/* vista giocatori (07/10): «Adatta allo schermo» discreto, anche a schermo intero */
+.giocatori-adatta { position: absolute; right: .6rem; bottom: .6rem; z-index: 2; opacity: .55; }
+.giocatori-adatta:hover, .giocatori-adatta:focus-visible { opacity: 1; }

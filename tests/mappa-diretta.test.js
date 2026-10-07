@@ -191,3 +191,28 @@ test('server: salvare la scena manda «aggiorna» e rifiltra (token nascosto dal
   });
   assert.ok(ricevuti.some((x) => x.evento === 'aggiorna'));
 });
+
+test('server: «Adatta lo schermo dei giocatori» manda l’evento «adatta» alle viste aperte', async () => {
+  const ricevuti = await eventi((v) => v.some((x) => x.evento === 'adatta'), async () => {
+    const r = await fetch(`${base}/api/vista-giocatori/adatta`, { method: 'POST' });
+    assert.equal(r.status, 200);
+    assert.ok((await r.json()).giocatori >= 1);
+  });
+  assert.ok(ricevuti.some((x) => x.evento === 'adatta'));
+  assert.equal((await fetch(`${base}/api/vista-giocatori/adatta`)).status, 405);
+});
+
+test('vista giocatori, «Adatta allo schermo»: la parte scoperta della mappa, nel riquadro con il margine', async () => {
+  const { rettangoloScoperto } = await import('../src/mappa/nebbia.js');
+  const { adattaRettangolo } = await import('../src/mappa/camera.js');
+  const s = scena();
+  const g = { ...s.griglia, q_px: 10, scosto_x: 0, scosto_y: 0 };
+  // scoperte le colonne 0–8 (la nebbia copre 9–11), tutte le righe
+  assert.deepEqual(rettangoloScoperto(daBase64(s.nebbia.coperti), g), { x: 0, y: 0, larghezza: 90, altezza: 80 });
+  const tutta = inBase64(rettangolo(daBase64(s.nebbia.coperti), C, R, 0, 0, C - 1, R - 1, true));
+  assert.equal(rettangoloScoperto(daBase64(tutta), g), null, 'tutta coperta: si adatta alla mappa intera');
+  const V = dati.mappa.vista;
+  const cam = adattaRettangolo({ x: 100, y: 50, larghezza: 200, altezza: 100 }, 448, 248, V);
+  assert.equal(cam.scala, 2);
+  assert.deepEqual([cam.ox + 100 * cam.scala, cam.oy + 50 * cam.scala], [24, 24], 'l’angolo del rettangolo al margine');
+});

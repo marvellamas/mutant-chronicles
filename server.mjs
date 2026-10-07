@@ -51,6 +51,7 @@
 //   GET|PUT /api/vista-giocatori/scelta  { scena: id | null } in tavolo/mappa-giocatori.json (null = automatica)
 //   PUT /api/vista-giocatori/diretta   il movimento in diretta del master (src/mappa/diretta.js): token scelto, area,
 //                                      percorso, ZoC; null = nessuna selezione. Non si salva: resta in memoria
+//   POST /api/vista-giocatori/adatta   le viste giocatori aperte fanno «Adatta allo schermo» (evento «adatta»)
 //   GET /api/vista-giocatori/diretta   flusso di eventi (text/event-stream) per la vista giocatori: «diretta» con lo
 //                                      stato già filtrato (nessun nascosto, niente sotto la nebbia), «aggiorna» quando
 //                                      scena, scontro o scelta cambiano (la vista si rilegge subito)
@@ -608,6 +609,8 @@ function creaCanaleDiretta(cartelle) {
       tutti('aggiorna', {});
       rifiltra();
     },
+    /** «Adatta allo schermo» sulle viste giocatori aperte; restituisce quante sono. */
+    adatta() { tutti('adatta', {}); return clienti.size; },
     chiudi() { clearInterval(battito); for (const r of clienti) { try { r.end(); } catch { /* già chiuso */ } } clienti.clear(); },
   };
 }
@@ -631,6 +634,11 @@ async function apiVistaGiocatori(req, res, percorso, cartelle) {
     return json(res, 200, { scena });
   }
   if (percorso === '/api/vista-giocatori/diretta') return cartelle.canale.api(req, res);
+  // ritocchi del 07/10: «Adatta lo schermo dei giocatori» dal master (un evento sul flusso della diretta)
+  if (percorso === '/api/vista-giocatori/adatta') {
+    if (req.method !== 'POST') return json(res, 405, { errore: 'metodo non ammesso' });
+    return json(res, 200, { giocatori: cartelle.canale.adatta() });
+  }
   if (percorso !== '/api/vista-giocatori' || req.method !== 'GET') return json(res, 405, { errore: 'metodo non ammesso' });
   const { scelta, scena, motivo } = await scenaInGioco(cartelle);
   const corpo = { scelta, scena: scena ? vistaGiocatori(scena, await contestoScena(scena, cartelle)) : null, ...(motivo ? { motivo } : {}) };

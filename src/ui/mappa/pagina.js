@@ -178,7 +178,7 @@ export function renderMappa(radice, ctx) {
       h('button', { type: 'button', class: 'btn tondo', title: 'Allontana (−)', 'aria-label': 'Allontana', onclick: () => zoomCentro(1 / V.passo_tasti) }, '−'),
       el.zoom,
       h('button', { type: 'button', class: 'btn tondo', title: 'Avvicina (+)', 'aria-label': 'Avvicina', onclick: () => zoomCentro(V.passo_tasti) }, '+'),
-      h('button', { type: 'button', class: 'btn', title: 'Adatta allo schermo: tutta la mappa nel riquadro (anche doppio clic su un punto vuoto)', 'aria-label': 'Adatta allo schermo', onclick: () => adattaSchermo() }, conIcona('⤢', 'Adatta')),
+      h('button', { type: 'button', class: 'btn', title: 'Adatta allo schermo: tutta la mappa nel riquadro (tasto A, anche doppio clic su un punto vuoto)', 'aria-label': 'Adatta allo schermo', onclick: () => adattaSchermo() }, conIcona('⤢', 'Adatta')),
       el.btnGriglia,
       // ritocchi del 07/10: «Mostra / nascondi template» (Maiusc+T), con «anche i template a durata»
       el.sovrapposizioni = h('span', { class: 'mappa-sovrapposizioni', role: 'group', 'aria-label': 'Sovrapposizioni' },
@@ -765,6 +765,14 @@ export function renderMappa(radice, ctx) {
     aggiornaBlocco();
     avviso(v ? 'Movimenti dei giocatori bloccati (vale dalla fase 2, quando i giocatori muoveranno dal tablet).' : 'Movimenti dei giocatori sbloccati.');
   }
+  /** «Adatta lo schermo dei giocatori»: l'evento arriva alle viste giocatori aperte (canale della diretta). */
+  async function adattaGiocatori() {
+    try {
+      const r = await fetch('api/vista-giocatori/adatta', { method: 'POST' });
+      const c = await r.json();
+      avviso(c.giocatori ? `Schermo dei giocatori adattato (${c.giocatori} ${c.giocatori === 1 ? 'vista aperta' : 'viste aperte'}).` : 'Nessuna vista giocatori aperta.', { chiave: 'adatta' });
+    } catch (e) { avvisoErrore(`Non adattato: ${e.message}`); }
+  }
   // ── «Mostra / nascondi template» (ritocchi del 07/10): scelte memorizzate nella scena, del master e dei giocatori ──
   const sovrapposizioni = (chi) => ({ nascoste: false, ancheDurata: false, ...(st.scena?.sovrapposizioni?.[chi] ?? {}) });
   function cambiaSovrapposizioni(chi, campo) {
@@ -798,7 +806,7 @@ export function renderMappa(radice, ctx) {
     const righe = [
       ['Rotella, + e −', 'zoom (verso il puntatore con la rotella)'],
       ['Barra spaziatrice + mouse, o trascinare un punto vuoto', 'sposta la mappa'],
-      ['Doppio clic su un punto vuoto', 'adatta allo schermo'],
+      ['A, o doppio clic su un punto vuoto', 'adatta allo schermo (anche nella vista giocatori: la parte scoperta)'],
       ['Clic su un token', 'lo sceglie: area di movimento e mini-scheda'],
       ['Clic sul token scelto, Esc, o clic fuori dall’area', 'lo lascia: area e percorso spariscono, i Q usati restano'],
       ['Clic su un quadretto dell’area, o trascinare il token', 'movimento nel Round: il Passo si divide in più clic; Corsa e Scatto sono un blocco unico (una mossa, i Q non usati si perdono) e solo da fermi (A.129)'],
@@ -1940,6 +1948,7 @@ export function renderMappa(radice, ctx) {
     if (e.key === 'm' || e.key === 'M') { e.preventDefault(); cambiaMostraArea(); return; }
     if (e.key === 'z' || e.key === 'Z') { e.preventDefault(); cambiaMostraZoc(); return; }
     if (e.key === 'p' || e.key === 'P') { e.preventDefault(); cambiaMostraPv(); return; }
+    if ((e.key === 'a' || e.key === 'A') && !e.shiftKey) { e.preventDefault(); adattaSchermo(); return; }
     if (frecciaTemplate(e)) return;
     if (e.shiftKey && e.key.toLowerCase() === ctx.dati.mappa.template.tasto && st.scena) { e.preventDefault(); cambiaSovrapposizioni('master', 'nascoste'); return; }
     if (e.key.toLowerCase() === ctx.dati.mappa.template.tasto && st.scena && !st.tpl.anteprima) { e.preventDefault(); nuovoTemplateUi(); return; }
@@ -2181,7 +2190,9 @@ export function renderMappa(radice, ctx) {
       h('div', { class: 'mappa-azioni-token' },
         s !== st.scena.id ? h('button', { type: 'button', class: 'btn btn-piccolo primario', onclick: () => scegliPerGiocatori(st.scena.id) }, 'Mostra questa scena') : null,
         s ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => scegliPerGiocatori(null) }, 'Automatica') : null,
-        h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Una finestra a parte, da trascinare sul secondo schermo e mettere a schermo intero (F11)', onclick: () => window.open('#/mappa/giocatori', 'mutant-giocatori', 'popup,width=1280,height=800') }, 'Apri vista giocatori')),
+        h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Una finestra a parte, da trascinare sul secondo schermo e mettere a schermo intero (F11)', onclick: () => window.open('#/mappa/giocatori', 'mutant-giocatori', 'popup,width=1280,height=800') }, 'Apri vista giocatori'),
+        // ritocchi del 07/10: lo schermo dei giocatori inquadra di nuovo tutta la parte scoperta
+        h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Lo schermo dei giocatori inquadra tutta la parte di mappa scoperta', onclick: () => adattaGiocatori() }, 'Adatta lo schermo dei giocatori')),
       // 07/10: i giocatori vedono sempre la barretta dei PV dei PG; quella dei nemici solo se il master la mostra
       h('button', { type: 'button', role: 'switch', 'aria-checked': String(!!st.scena.pvNemiciGiocatori), class: `interruttore-mappa${st.scena.pvNemiciGiocatori ? ' acceso' : ''}`, title: 'La barretta dei PV dei nemici nella vista giocatori (quella dei PG si vede sempre)', onclick: () => cambiaPvNemiciGiocatori() },
         h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `PV dei nemici ai giocatori: ${st.scena.pvNemiciGiocatori ? 'mostrati' : 'nascosti'}`),

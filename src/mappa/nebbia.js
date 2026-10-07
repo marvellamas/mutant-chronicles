@@ -11,6 +11,26 @@ export const valoreModo = (modo) => modo === 'copri';
  * Pennello lungo il tratto da `da` ad `a` (Q della griglia), un passo per Q (Bresenham), così un movimento veloce
  * del mouse non lascia buchi. Restituisce una maschera nuova.
  */
+/**
+ * La parte della mappa fuori dalla nebbia (vista giocatori, «Adatta allo schermo»): il rettangolo in pixel della mappa
+ * che contiene tutti i Q scoperti, oppure null se è tutto coperto. `g`: la griglia (q_px, scosto, colonne, righe).
+ */
+export function rettangoloScoperto(coperti, g) {
+  let x0 = Infinity, y0 = Infinity, x1 = -1, y1 = -1;
+  for (let y = 0; y < g.righe; y++) {
+    for (let x = 0; x < g.colonne; x++) {
+      const i = y * g.colonne + x;
+      if ((coperti[i >> 3] >> (i & 7)) & 1) continue;
+      if (x < x0) x0 = x;
+      if (x > x1) x1 = x;
+      if (y < y0) y0 = y;
+      if (y > y1) y1 = y;
+    }
+  }
+  if (x1 < 0) return null;
+  return { x: g.scosto_x + x0 * g.q_px, y: g.scosto_y + y0 * g.q_px, larghezza: (x1 - x0 + 1) * g.q_px, altezza: (y1 - y0 + 1) * g.q_px };
+}
+
 export function tratto(m, colonne, righe, da, a, lato, valore) {
   let r = m;
   let [x, y] = da;

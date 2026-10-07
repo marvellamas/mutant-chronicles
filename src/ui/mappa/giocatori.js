@@ -11,10 +11,10 @@
 // puntatore con i passi in ZoC, ZoC degli avversari visibili. Già filtrato dal server; sparisce quando il master lascia il
 // token. Lo stesso flusso dice «aggiorna» quando la scena o lo scontro cambiano: la vista si rilegge subito.
 import { h, svuota } from '../dom.js';
-import { cameraIniziale, sposta, adatta, schermoDaMappa, rettangoloVisibile } from '../../mappa/camera.js';
+import { cameraIniziale, sposta, adatta, adattaRettangolo, schermoDaMappa, rettangoloVisibile } from '../../mappa/camera.js';
 import { dimensioniMappa, lineeVisibili } from '../../mappa/griglia.js';
 import { daBase64 } from '../../mappa/celle.js';
-import { trattiCoperti } from '../../mappa/nebbia.js';
+import { trattiCoperti, rettangoloScoperto } from '../../mappa/nebbia.js';
 import { chiaveRif } from '../../mappa/token.js';
 import { creaTela } from './canvas.js';
 import { creaGesti } from './gesti.js';
@@ -50,7 +50,9 @@ export function renderGiocatori(radice, ctx) {
   el.messaggio = h('p', { class: 'giocatori-messaggio', hidden: true });
   el.iniziativa = h('div', { class: 'mappa-iniziativa-posto', hidden: true });
   // la riga del movimento sta sulla mappa: resta anche a schermo intero, dove la testata sparisce
-  el.riquadro.append(el.messaggio, el.movimento);
+  // ritocchi del 07/10: «Adatta allo schermo», discreto sulla mappa, resta anche a schermo intero (tasto A)
+  el.adatta = h('button', { type: 'button', class: 'btn tondo giocatori-adatta', title: 'Adatta allo schermo: tutta la parte di mappa scoperta (tasto A, doppio tocco)', 'aria-label': 'Adatta allo schermo', onclick: () => adattaSchermo() }, '⤢');
+  el.riquadro.append(el.messaggio, el.movimento, el.adatta);
   svuota(radice, h('section', { class: 'mappa-pagina giocatori-pagina' },
     h('header', { class: 'giocatori-barra' }, el.titolo, el.turno, el.stato, el.schermo), el.iniziativa, el.riquadro));
 
@@ -182,7 +184,9 @@ export function renderGiocatori(radice, ctx) {
     if (!st.vista) return;
     const { larghezza, altezza } = dimensioniMappa(st.vista);
     const d = tela.dimensioni();
-    st.cam = adatta(larghezza, altezza, d.larghezza, d.altezza, V);
+    // la parte fuori dalla nebbia (tutta la mappa se è tutta scoperta o tutta coperta)
+    const r = rettangoloScoperto(daBase64(st.vista.nebbia.coperti), st.vista.griglia);
+    st.cam = r ? adattaRettangolo(r, d.larghezza, d.altezza, V) : adatta(larghezza, altezza, d.larghezza, d.altezza, V);
     segnaCamera();
     st.toccata = false;
     tela.richiedi();
@@ -197,6 +201,15 @@ export function renderGiocatori(radice, ctx) {
   // se la finestra cambia misura e nessuno ha toccato la vista, si riadatta
   const suMisura = () => { if (!st.toccata) adattaSchermo(); };
   window.addEventListener('resize', suMisura);
+  // anche quando cambia solo il riquadro (barra dell'Iniziativa, scheda tornata visibile: prima l'adattamento poteva
+  // essere calcolato con il riquadro a misura zero e la mappa restava ingrandita)
+  const osservatore = typeof ResizeObserver === 'function' ? new ResizeObserver(() => suMisura()) : null;
+  osservatore?.observe(el.riquadro);
+  const suTasto = (e) => {
+    if (e.ctrlKey || e.metaKey || e.altKey || /^(INPUT|TEXTAREA|SELECT)$/.test(e.target?.tagName ?? '')) return;
+    if (e.key === 'a' || e.key === 'A') { e.preventDefault(); adattaSchermo(); }
+  };
+  window.addEventListener('keydown', suTasto);
 
   const messaggio = (t) => { el.messaggio.textContent = t ?? ''; el.messaggio.hidden = !t; };
   async function usa(corpo) {
@@ -264,6 +277,8 @@ export function renderGiocatori(radice, ctx) {
   const flusso = typeof EventSource === 'function' ? new EventSource('api/vista-giocatori/diretta') : null;
   flusso?.addEventListener('diretta', (e) => { try { usaDiretta(JSON.parse(e.data)); } catch { /* evento rovinato: si aspetta il prossimo */ } });
   flusso?.addEventListener('aggiorna', () => aggiorna());
+  // il master chiede «Adatta allo schermo» (sezione «Vista giocatori»)
+  flusso?.addEventListener('adatta', () => adattaSchermo());
   // a schermo intero (pulsante o F11, anche sul secondo monitor) solo mappa e barra dell'Iniziativa: niente testata,
   // barre né comandi; l'avviso «collegamento perso» resta (css/style.css → body.schermo-intero). F11 non avvisa la
   // pagina: si riconosce dalla finestra grande quanto lo schermo
@@ -286,6 +301,8 @@ export function renderGiocatori(radice, ctx) {
     gesti.distruggi();
     tela.distruggi();
     window.removeEventListener('resize', suMisura);
+    osservatore?.disconnect();
+    window.removeEventListener('keydown', suTasto);
     document.removeEventListener('visibilitychange', suVisibile);
     document.removeEventListener('fullscreenchange', suSchermo);
     window.removeEventListener('resize', suSchermo);
