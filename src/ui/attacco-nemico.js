@@ -6,7 +6,7 @@
 // Il pannello sta fuori dalla plancia (che si ridisegna ogni pochi secondi), come «Colpito».
 import { h } from './dom.js';
 import { pannelloAttacco, pillola } from './attacco.js';
-import { attacchiDi, armaDaAttacco, attaccanteDa, propostaColpo } from '../nemico-attacco.js';
+import { attacchiDi, armaDaAttacco, attaccanteDa, conLuceNemico, propostaColpo } from '../nemico-attacco.js';
 import { esitoProva } from '../prova.js';
 import { specTiro, tira } from '../tiri.js';
 
@@ -52,11 +52,13 @@ export function esitoAttacco(tiri, valori, dati) {
  * @param bersagli [{ id, nome, descrizione, colpito: (proposta) → apre «Colpito» }] (l'attaccante escluso)
  * @param registra async ({ attaccante, bersaglio, arma, va, tiri, esito }) → true se scritto nel registro
  */
-export function apriAttaccoNemico(ctx, p, { bersagli, registra }) {
+export function apriAttaccoNemico(ctx, p, { bersagli, registra, dichiarazione = {} }) {
   const attacchi = attacchiDi(p);
   const contenitore = h('div', { class: 'attacco-nemico' });
   document.body.append(contenitore);
-  const st = { indice: 0, bersaglio: bersagli[0]?.id ?? null, fase: 'scelta', dichiarazione: {}, ui: {}, tiri: [], errore: null, inCorso: false };
+  // dichiarazione: valori già impostati (linea di tiro della mappa: distanza e Copertura), modificabili nel pannello
+  // fase 2, lotto 4: la luce della zona del bersaglio dalla mappa (modificabile con «Luce sul bersaglio»)
+  const st = { indice: 0, bersaglio: bersagli[0]?.id ?? null, fase: 'scelta', dichiarazione: { ...dichiarazione }, luce: dichiarazione.luce ?? null, luceVisione: false, ui: {}, tiri: [], errore: null, inCorso: false };
   const chiudi = () => contenitore.remove();
   const esc = (e) => { if (e.key === 'Escape' && document.body.contains(contenitore)) { chiudi(); document.removeEventListener('keydown', esc); } };
   document.addEventListener('keydown', esc);
@@ -74,7 +76,7 @@ export function apriAttaccoNemico(ctx, p, { bersagli, registra }) {
         }, b.nome, b.descrizione ? h('small', { class: 'nota' }, ` · ${b.descrizione}`) : null)))
           : h('p', { class: 'nota' }, 'Nessun bersaglio: servono PG al tavolo o altri nemici nello scontro.')),
       h('div', { class: 'attacco-azioni' },
-        h('button', { type: 'button', class: 'btn primario btn-grande', disabled: !attacchi[st.indice] || !st.bersaglio, onclick: () => { st.fase = 'pannello'; st.dichiarazione = {}; st.ui = {}; st.tiri = []; disegna(); } }, 'Avanti: «Attacca!» →'))));
+        h('button', { type: 'button', class: 'btn primario btn-grande', disabled: !attacchi[st.indice] || !st.bersaglio, onclick: () => { st.fase = 'pannello'; st.dichiarazione = { ...dichiarazione }; st.ui = {}; st.tiri = []; disegna(); } }, 'Avanti: «Attacca!» →'))));
 
   // riga finale del pannello: bersaglio, tiri per colpire, esito, registro e «Applica danno»
   const finale = (attacco, arma, b) => (r) => {
@@ -133,19 +135,21 @@ export function apriAttaccoNemico(ctx, p, { bersagli, registra }) {
     if (st.fase === 'scelta') { contenitore.replaceChildren(scelta()); return; }
     const attacco = attacchi[st.indice];
     const b = bersagli.find((x) => x.id === st.bersaglio);
-    const arma = armaDaAttacco(attacco, `${p.id}:${st.indice}`, ctx.dati);
-    const chi = attaccanteDa(p, ctx.dati);
+    // fase 2, lotto 4: la luce sul bersaglio (proposta dalla mappa, modificabile) entra nel VA del nemico
+    const { arma, chi } = conLuceNemico(armaDaAttacco(attacco, `${p.id}:${st.indice}`, ctx.dati), attaccanteDa(p, ctx.dati), st.luce, ctx.dati, { visione: st.luceVisione === true });
     // il pannello chiude mettendo ctx.ui.attacco a null
     if (st.ui.aperto && st.ui.attacco === null) { chiudi(); return; }
     st.ui.aperto = true;
     const finto = {
       dati: ctx.dati,
       tab: { scheda: chi.scheda },
-      sessione: { ...chi.sessione, attacchi: { [arma.uid]: st.dichiarazione } },
+      sessione: { ...chi.sessione, ...(st.luce ? { luce: st.luce, luceVisione: st.luceVisione } : {}), attacchi: { [arma.uid]: st.dichiarazione } },
       ui: st.ui,
       azioni: {
         ridisegna: disegna,
         ricordaAttacco: (uid, d) => { st.dichiarazione = d; st.tiri = []; disegna(); },
+        // «Luce sul bersaglio» del pannello: vale per questo attacco
+        imposta: (k, v) => { if (k === 'luce' || k === 'luceVisione') { st[k] = v; st.tiri = []; disegna(); } },
         spara: () => {},
         finale: finale(attacco, arma, b),
       },

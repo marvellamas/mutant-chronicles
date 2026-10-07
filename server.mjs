@@ -51,6 +51,7 @@
 //   GET|PUT /api/vista-giocatori/scelta  { scena: id | null } in tavolo/mappa-giocatori.json (null = automatica)
 //   PUT /api/vista-giocatori/diretta   il movimento in diretta del master (src/mappa/diretta.js): token scelto, area,
 //                                      percorso, ZoC; null = nessuna selezione. Non si salva: resta in memoria
+//   POST /api/vista-giocatori/adatta   le viste giocatori aperte fanno «Adatta allo schermo» (evento «adatta»)
 //   GET /api/vista-giocatori/diretta   flusso di eventi (text/event-stream) per la vista giocatori: «diretta» con lo
 //                                      stato già filtrato (nessun nascosto, niente sotto la nebbia), «aggiorna» quando
 //                                      scena, scontro o scelta cambiano (la vista si rilegge subito)
@@ -524,7 +525,7 @@ async function contestoScena(scena, { cartella, tavolo, scontri, veicoli, radice
   const pezzi = pezziDellaScena({ scontro, bozza, alTavolo, viste, veicoli: registro }, dati);
   const immagineDi = (p) => (p.tipo === 'pg' ? (p.ritratto ? `api/ritratti/${encodeURIComponent(p.pg)}?v=${impronta(p.ritratto)}` : null) : p.ritratto);
   // colori dei bordi dei token (src/mappa/colori.js): gli stessi della vista master
-  return { pezzi, round: scontro?.round ?? null, immagineDi, scontro, bordoDi: (p) => bordoToken(p, scena.colori, dati) };
+  return { pezzi, round: scontro?.round ?? null, immagineDi, scontro, bordoDi: (p) => bordoToken(p, scena.colori, dati), regoleTemplate: dati.mappa.template, regoleMappa: dati.mappa };
 }
 
 /** Scena mostrata ai giocatori: quella scelta dal master (tavolo/mappa-giocatori.json) o la più recente dello scontro aperto. */
@@ -577,7 +578,7 @@ function creaCanaleDiretta(cartelle) {
   };
   // in fila: gli stati arrivano in ordine anche quando il master manda in fretta
   const rifiltra = () => (lavoro = lavoro.then(async () => {
-    const nuova = grezza ? direttaPerGiocatori(grezza, await scenaAttuale()) : null;
+    const nuova = grezza ? direttaPerGiocatori(grezza, await scenaAttuale(), (await datiDelServer(cartelle.radice)).dati.mappa.template) : null;
     const f = JSON.stringify(nuova);
     if (f !== firma) { firma = f; filtrata = nuova; tutti('diretta', nuova); }
   }).catch(() => {}));
@@ -608,6 +609,8 @@ function creaCanaleDiretta(cartelle) {
       tutti('aggiorna', {});
       rifiltra();
     },
+    /** «Adatta allo schermo» sulle viste giocatori aperte; restituisce quante sono. */
+    adatta() { tutti('adatta', {}); return clienti.size; },
     chiudi() { clearInterval(battito); for (const r of clienti) { try { r.end(); } catch { /* già chiuso */ } } clienti.clear(); },
   };
 }
@@ -631,6 +634,11 @@ async function apiVistaGiocatori(req, res, percorso, cartelle) {
     return json(res, 200, { scena });
   }
   if (percorso === '/api/vista-giocatori/diretta') return cartelle.canale.api(req, res);
+  // ritocchi del 07/10: «Adatta lo schermo dei giocatori» dal master (un evento sul flusso della diretta)
+  if (percorso === '/api/vista-giocatori/adatta') {
+    if (req.method !== 'POST') return json(res, 405, { errore: 'metodo non ammesso' });
+    return json(res, 200, { giocatori: cartelle.canale.adatta() });
+  }
   if (percorso !== '/api/vista-giocatori' || req.method !== 'GET') return json(res, 405, { errore: 'metodo non ammesso' });
   const { scelta, scena, motivo } = await scenaInGioco(cartelle);
   const corpo = { scelta, scena: scena ? vistaGiocatori(scena, await contestoScena(scena, cartelle)) : null, ...(motivo ? { motivo } : {}) };
@@ -882,7 +890,7 @@ export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA),
   const base = normalize(radice.endsWith(sep) ? radice : radice + sep);
   // chi è questo server (per un nuovo avvio che trova la porta occupata, src/porta-occupata.js)
   const identita = { versione: versioneAvvio, avviato: new Date().toISOString(), pid: process.pid };
-  const canale = creaCanaleDiretta({ tavolo, scontri, scene });
+  const canale = creaCanaleDiretta({ tavolo, scontri, scene, radice });
   const server = createServer(async (req, res) => {
     try {
       const percorso = decodeURI(new URL(req.url, 'http://x').pathname);

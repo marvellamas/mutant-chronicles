@@ -93,9 +93,16 @@ test('filtro: token nascosto o sotto la nebbia, altra scena, interruttori del ma
   assert.ok(senzaZoc.area);
   assert.equal(direttaPerGiocatori(null, s), null);
   assert.equal(direttaPerGiocatori({ ...d, modo: 'vola' }, s), null, 'stato non valido');
-  // template (fase 2): stessa regola della vista
-  const t = direttaPerGiocatori({ ...d, template: [{ id: 'a', origine: [1, 1], nascosto: false }, { id: 'b', origine: [1, 1], nascosto: true }, { id: 'c', origine: [10, 1] }] }, s);
-  assert.deepEqual(t.template, [{ id: 'a', origine: [1, 1] }]);
+  // template (fase 2, lotto 1): l'anteprima, anche senza token e con il movimento spento; niente nascosti né sotto la nebbia
+  const tp = (id, origine, o = {}) => ({ id, forma: 'cerchio', origine, misure: { raggio: 1 }, colore: '#f76707', nascosto: false, ...o });
+  const t = direttaPerGiocatori({ ...d, template: [tp('a', [1, 1]), tp('b', [1, 1], { nascosto: true }), tp('c', [10, 3])] }, s, dati.mappa.template);
+  assert.deepEqual(t.template.map((x) => x.id), ['a']);
+  assert.ok(!('origine' in t.template[0]), 'arriva la maschera dei Q visibili, non la forma');
+  const solo = direttaPerGiocatori({ versione: 1, scena: 'prova', token: null, template: [tp('a', [1, 1])], quando: 1 }, { ...s, movimentoGiocatori: false }, dati.mappa.template);
+  assert.equal(solo.token, null);
+  assert.equal(solo.template.length, 1);
+  assert.equal(direttaPerGiocatori({ versione: 1, scena: 'prova', token: null, template: [tp('c', [10, 3])], quando: 1 }, s, dati.mappa.template), null, 'tutto sotto la nebbia: niente');
+  assert.equal(direttaPerGiocatori({ ...d, template: [tp('a', [1, 1])] }, s).template.length, 0, 'senza regole nessun template');
   // visibile = non nascosto e almeno un Q fuori dalla nebbia (una pedina 2 × 2 sul confine si vede)
   assert.ok(visibileAiGiocatori({ q: [8, 1], ingombro: 2 }, s));
   assert.ok(!visibileAiGiocatori({ q: [9, 1], ingombro: 2 }, s));
@@ -183,4 +190,29 @@ test('server: salvare la scena manda «aggiorna» e rifiltra (token nascosto dal
     assert.equal(r.status, 200);
   });
   assert.ok(ricevuti.some((x) => x.evento === 'aggiorna'));
+});
+
+test('server: «Adatta lo schermo dei giocatori» manda l’evento «adatta» alle viste aperte', async () => {
+  const ricevuti = await eventi((v) => v.some((x) => x.evento === 'adatta'), async () => {
+    const r = await fetch(`${base}/api/vista-giocatori/adatta`, { method: 'POST' });
+    assert.equal(r.status, 200);
+    assert.ok((await r.json()).giocatori >= 1);
+  });
+  assert.ok(ricevuti.some((x) => x.evento === 'adatta'));
+  assert.equal((await fetch(`${base}/api/vista-giocatori/adatta`)).status, 405);
+});
+
+test('vista giocatori, «Adatta allo schermo»: la parte scoperta della mappa, nel riquadro con il margine', async () => {
+  const { rettangoloScoperto } = await import('../src/mappa/nebbia.js');
+  const { adattaRettangolo } = await import('../src/mappa/camera.js');
+  const s = scena();
+  const g = { ...s.griglia, q_px: 10, scosto_x: 0, scosto_y: 0 };
+  // scoperte le colonne 0–8 (la nebbia copre 9–11), tutte le righe
+  assert.deepEqual(rettangoloScoperto(daBase64(s.nebbia.coperti), g), { x: 0, y: 0, larghezza: 90, altezza: 80 });
+  const tutta = inBase64(rettangolo(daBase64(s.nebbia.coperti), C, R, 0, 0, C - 1, R - 1, true));
+  assert.equal(rettangoloScoperto(daBase64(tutta), g), null, 'tutta coperta: si adatta alla mappa intera');
+  const V = dati.mappa.vista;
+  const cam = adattaRettangolo({ x: 100, y: 50, larghezza: 200, altezza: 100 }, 448, 248, V);
+  assert.equal(cam.scala, 2);
+  assert.deepEqual([cam.ox + 100 * cam.scala, cam.oy + 50 * cam.scala], [24, 24], 'l’angolo del rettangolo al margine');
 });

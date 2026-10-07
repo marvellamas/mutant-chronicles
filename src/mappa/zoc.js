@@ -18,15 +18,22 @@ export function portataDi(p, dati) {
   return portate.length ? Math.max(...portate) : Z.portata_predefinita;
 }
 
+/** Lo Stato che impedisce al pezzo gli Attacchi di Opportunità (A.132: Stordito, Svenuto), o null. */
+export function statoCheImpedisce(p, dati) {
+  const vietati = new Set(dati.mappa.zoc.stati_che_impediscono);
+  const s = (p?.stati ?? []).find((x) => vietati.has(x.id ?? x));
+  return s ? (s.id ?? s) : null;
+}
+
 /**
  * Il pezzo controlla una ZoC? Creature dello scontro (non i veicoli), non a 0 PV, senza Stati che impediscono di
- * attaccare (data/mappa.json → zoc.stati_che_impediscono); per la vista giocatori, non nascoste.
+ * attaccare (data/mappa.json → zoc.stati_che_impediscono: Stordito e Svenuto, A.132); per la vista giocatori, non
+ * nascoste.
  */
 export function controllaZoc(p, t, dati, { perGiocatori = false } = {}) {
   if (!p || !t || p.tipo === 'veicolo' || t.rif?.tipo === 'veicolo' || p.aZero) return false;
   if (perGiocatori && t.nascosto) return false;
-  const vietati = new Set(dati.mappa.zoc.stati_che_impediscono);
-  return !(p.stati ?? []).some((s) => vietati.has(s.id ?? s));
+  return !statoCheImpedisce(p, dati);
 }
 
 /** Gli avversari del token `idChi` che controllano una ZoC: [{ token, pezzo, portata }]. */
@@ -40,6 +47,23 @@ export function avversariZoc(scena, pezzi, idChi, dati, opzioni = {}) {
     .map((t) => ({ token: t, pezzo: perChiave.get(chiaveRif(t.rif)) ?? null }))
     .filter(({ token, pezzo }) => pezzo?.lato && !stessaParte(pezzo.lato, pChi.lato) && controllaZoc(pezzo, token, dati, opzioni))
     .map((x) => ({ ...x, portata: portataDi(x.pezzo, dati) }));
+}
+
+/**
+ * ZoC inattive (A.132, risposta di Marcello del 07/10): gli avversari del token `idChi` che la controllerebbero ma
+ * hanno uno Stato che impedisce gli Attacchi di Opportunità (Stordito, Svenuto). Non a 0 PV: quelli non si mostrano.
+ * Solo per il master, che le vede tratteggiate: [{ token, pezzo, portata, stato }].
+ */
+export function avversariZocInattivi(scena, pezzi, idChi, dati) {
+  const perChiave = new Map(pezzi.map((p) => [p.chiave, p]));
+  const chi = scena.token.find((t) => t.id === idChi);
+  const pChi = chi ? perChiave.get(chiaveRif(chi.rif)) : null;
+  if (!chi || !pChi?.lato) return [];
+  return scena.token
+    .filter((t) => t.id !== idChi && t.rif?.tipo !== 'veicolo')
+    .map((t) => ({ token: t, pezzo: perChiave.get(chiaveRif(t.rif)) ?? null }))
+    .filter(({ pezzo }) => pezzo?.lato && pezzo.tipo !== 'veicolo' && !pezzo.aZero && !stessaParte(pezzo.lato, pChi.lato) && statoCheImpedisce(pezzo, dati))
+    .map((x) => ({ ...x, portata: portataDi(x.pezzo, dati), stato: statoCheImpedisce(x.pezzo, dati) }));
 }
 
 /** Distanza in Q fra due ingombri (Chebyshev fra rettangoli: 1 = adiacenti, 0 = sovrapposti). */

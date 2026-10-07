@@ -6,8 +6,16 @@
 //   griglia: { q_px, scosto_x, scosto_y, colore, opacita, bloccata, colonne, righe },
 //   muri, terreno: maschere di Q in base64 (src/mappa/celle.js),
 //   nebbia: { iniziale: "coperta" | "scoperta", coperti: maschera },
-//   token: [{ id, rif: { tipo: "partecipante" | "veicolo" | "segnaposto", id }, q: [x, y], ingombro, nascosto, nome? }],
-//   template: [{ id, forma, origine: [x, y], misure: { … in Q }, direzione?, colore?, fine_round?, fonte?, nascosto }],
+//   token: [{ id, rif: { tipo: "partecipante" | "veicolo" | "segnaposto", id }, q: [x, y], ingombro, nascosto, nome?, luce? }],
+//   luce?: { ambiente, zone?: { categoria: maschera } }   luci della scena (fase 2, lotto 4; src/mappa/luce.js); token.luce: raggio in Q
+//   porte?: [{ id, q: [x, y], stato: aperta | chiusa | bloccata, segreta, orientamento?: orizzontale | verticale }]   porte (fase 2, lotto 2; src/mappa/porte.js; orientamento dal 07/10)
+//   visuale?: { automatica }            nebbia automatica dalla visuale dei PG (fase 2, lotto 3; src/mappa/visuale.js)
+//   iniziale?: { quando, token, porte, template, nebbia }   posizione iniziale salvata (src/mappa/iniziale.js, 07/10)
+//   sovrapposizioni?: { master?: { nascoste, ancheDurata }, giocatori?: { nascoste, ancheDurata } }
+//                                       «Mostra / nascondi template»: template senza durata, muri, porte, terreno (07/10)
+//   azioni?: [{ id, token, tipo: 'porta', porta, azione, azp, scontro, round, turno?, quando }]  AzP dei token (A.125)
+//   template: [{ id, forma, origine: [x, y], misure: { … in Q }, direzione?, colore?, nome?, durata?, fine_round?,
+//                scontro?, nascosto }]                       template ad area (fase 2, lotto 1; src/mappa/template.js)
 //   collegamento: { scontro: id | null, bozza: id | null },
 //   movimenti: [ … ], annulla: [ … ],                          movimenti del Round e azioni del master (lotto 5)
 //   turni?: { tutti, token: { id: n } },                       «Nuovo turno» senza scontro aperto (src/mappa/annulla.js)
@@ -18,6 +26,10 @@
 //   zocGiocatori?: false }                                      ZoC nella diretta spente (07/10)
 import { nuovaMaschera, inBase64, mascheraValida } from './celle.js';
 import { tokenDentro } from './token.js';
+import { erroreTemplate } from './template.js';
+import { errorePorta } from './porte.js';
+import { erroreIniziale } from './iniziale.js';
+import { erroreLuce, erroreLuceToken } from './luce.js';
 
 export const ID_SCENA = /^[a-z0-9-]{1,60}$/;
 /** Nome dei file in mappe/: lo sceglie il server (nome ridotto + impronta del contenuto). */
@@ -66,6 +78,8 @@ export function nuovaScena({ id, nome, mappa = null, griglia = {}, colonne, righ
     nebbia: { iniziale, coperti: inBase64(nuovaMaschera(dim.colonne, dim.righe, iniziale === 'coperta')) },
     token: [],
     template: [],
+    porte: [],
+    azioni: [],
     collegamento: { scontro: null, bozza: null },
     movimenti: [],
     annulla: [],
@@ -166,20 +180,57 @@ export function validaScena(s, dati) {
     if (!rettangolo && !D.token.ingombri_ammessi.includes(t.ingombro)) return `${k}.ingombro: ${D.token.ingombri_ammessi.join(', ')} Q per lato`;
     if (!isQ(t.q) || !tokenDentro(t, colonne, righe)) return `${k}.q: il token deve stare tutto dentro la griglia`;
     if (typeof t.nascosto !== 'boolean') return `${k}.nascosto: vero o falso`;
+    { const e = erroreLuceToken(t.luce, dati); if (e) return `${k}.${e}`; }
   }
 
-  // template (§10, fase 2: qui solo la forma del dato)
+  // template ad area (§10; fase 2, lotto 1: src/mappa/template.js → erroreTemplate)
   if (!Array.isArray(s.template) || s.template.length > D.scena.template_max) return `template: elenco di al massimo ${D.scena.template_max}`;
   const idTemplate = new Set();
   for (const [i, t] of s.template.entries()) {
     const k = `template[${i}]`;
     if (!isOggetto(t) || !isTesto(t.id) || !ID_RIF.test(t.id) || idTemplate.has(t.id)) return `${k}.id mancante o ripetuto`;
     idTemplate.add(t.id);
-    if (!D.template.forme.includes(t.forma)) return `${k}.forma: ${D.template.forme.join(', ')}`;
+    const e = erroreTemplate(t, D.template);
+    if (e) return `${k}.${e}`;
     if (!isQ(t.origine) || t.origine[0] < 0 || t.origine[1] < 0 || t.origine[0] >= colonne || t.origine[1] >= righe) return `${k}.origine: un Q della griglia`;
     if (!isOggetto(t.misure) || !Object.values(t.misure).every((v) => typeof v === 'number' && v > 0)) return `${k}.misure: misure in Q positive`;
+    if (t.scontro !== undefined && t.scontro !== null && !(isTesto(t.scontro) && ID_SCENA.test(t.scontro))) return `${k}.scontro: id di scontro o null`;
     if (t.fine_round !== undefined && t.fine_round !== null && !isIntero(t.fine_round)) return `${k}.fine_round: intero o null`;
     if (typeof t.nascosto !== 'boolean') return `${k}.nascosto: vero o falso`;
+  }
+
+  if (s.visuale !== undefined && (!isOggetto(s.visuale) || typeof s.visuale.automatica !== 'boolean')) return 'visuale: { automatica: vero o falso } atteso';
+  // fase 2, lotto 4: luci (facoltative; scene di prima: Luce sufficiente)
+  if (s.luce !== undefined) { const e = erroreLuce(s.luce, dati, (m) => mascheraValida(m, colonne, righe)); if (e) return `luce.${e}`; }
+  if (s.iniziale !== undefined) { const e = erroreIniziale(s.iniziale, (m) => mascheraValida(m, colonne, righe)); if (e) return `iniziale.${e}`; }
+  // «Mostra / nascondi template» (ritocchi del 07/10): due scelte, del master e dei giocatori
+  if (s.sovrapposizioni !== undefined) {
+    if (!isOggetto(s.sovrapposizioni)) return 'sovrapposizioni: { master, giocatori } atteso';
+    for (const k of ['master', 'giocatori']) {
+      const v = s.sovrapposizioni[k];
+      if (v === undefined) continue;
+      if (!isOggetto(v) || typeof v.nascoste !== 'boolean' || typeof v.ancheDurata !== 'boolean') return `sovrapposizioni.${k}: { nascoste, ancheDurata } vero o falso`;
+    }
+  }
+  // porte (fase 2, lotto 2; A.125): un Q ciascuna, stato e segreta; le azioni dei token (AzP del Round)
+  if (s.porte !== undefined) {
+    if (!Array.isArray(s.porte) || s.porte.length > (D.porte?.porte_max ?? 0)) return `porte: elenco di al massimo ${D.porte?.porte_max}`;
+    const idPorte = new Set();
+    const posti = new Set();
+    for (const [i, p] of s.porte.entries()) {
+      const e = errorePorta(p, colonne, righe);
+      if (e) return `porte[${i}].${e}`;
+      if (idPorte.has(p.id)) return `porte[${i}].id ripetuto`;
+      if (posti.has(p.q.join())) return `porte[${i}].q: c'è già una porta su quel Q`;
+      idPorte.add(p.id);
+      posti.add(p.q.join());
+    }
+  }
+  if (s.azioni !== undefined) {
+    if (!Array.isArray(s.azioni) || s.azioni.length > (D.porte?.azioni_max ?? 0)) return `azioni: elenco di al massimo ${D.porte?.azioni_max}`;
+    for (const [i, a] of s.azioni.entries()) {
+      if (!isOggetto(a) || !isTesto(a.token) || a.tipo !== 'porta' || !['apri', 'chiudi'].includes(a.azione) || !isIntero(a.azp)) return `azioni[${i}]: { token, tipo: porta, azione: apri | chiudi, azp } atteso`;
+    }
   }
 
   // collegamento allo scontro o alla bozza di «Prepara scontro» (§4)

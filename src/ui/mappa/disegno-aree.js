@@ -7,6 +7,7 @@
 //   - percorso del token scelto verso il quadretto sotto il puntatore, con i Q che costa.
 import { schermoDaMappa, rettangoloVisibile } from '../../mappa/camera.js';
 import { dimensioni } from '../../mappa/token.js';
+import { trattiCoperti } from '../../mappa/nebbia.js';
 
 /** Limiti dei Q visibili nel riquadro, per non scorrere tutta la griglia a ogni disegno. */
 function visibili(g, cam, info) {
@@ -67,7 +68,7 @@ export function disegnaMuri(c, { scena, cam, info, muri, terreno, colori }) {
  * riempimento leggero e il suo contorno (i lati dei Q che confinano con un'altra fascia o con l'esterno).
  * @param stile data/mappa.json → vista.area
  */
-export function disegnaArea(c, { scena, cam, info, celle, colori, stile, solo = null }) {
+export function disegnaArea(c, { scena, cam, info, celle, colori, stile, solo = null, tratteggio = null }) {
   const g = scena.griglia;
   const v = visibili(g, cam, info);
   const tinte = [null, colori.passo, colori.corsa, colori.scatto];
@@ -81,7 +82,7 @@ export function disegnaArea(c, { scena, cam, info, celle, colori, stile, solo = 
       for (let x = v.x0; x < v.x1; x++) if (celle[y * g.colonne + x] === k) { c.rect(...rettQ(g, cam, x, y)); n++; }
     }
     if (n) {
-      c.globalAlpha = stile.opacita_riempimento; c.fillStyle = tinte[k]; c.fill();
+      if (stile.opacita_riempimento > 0) { c.globalAlpha = stile.opacita_riempimento; c.fillStyle = tinte[k]; c.fill(); }
       // contorno: un lato per ogni Q della fascia che confina con altro
       c.beginPath();
       for (let y = v.y0; y < v.y1; y++) {
@@ -93,7 +94,9 @@ export function disegnaArea(c, { scena, cam, info, celle, colori, stile, solo = 
           }
         }
       }
-      c.globalAlpha = stile.opacita_contorno; c.strokeStyle = tinte[k]; c.lineWidth = stile.spessore_contorno_px; c.lineCap = 'round'; c.stroke();
+      c.globalAlpha = stile.opacita_contorno; c.strokeStyle = tinte[k]; c.lineWidth = stile.spessore_contorno_px; c.lineCap = tratteggio ? 'butt' : 'round';
+      if (tratteggio) c.setLineDash(tratteggio);
+      c.stroke();
     }
     c.restore();
   }
@@ -103,8 +106,12 @@ export function disegnaArea(c, { scena, cam, info, celle, colori, stile, solo = 
  * Zone di controllo degli avversari del token scelto (07/10, src/mappa/zoc.js): rosso semitrasparente con il contorno,
  * come l'area raggiungibile. `celle`: Uint8Array, 1 dentro una ZoC; `stile`: data/mappa.json → zoc.
  */
-export function disegnaZoc(c, { scena, cam, info, celle, stile }) {
-  disegnaArea(c, { scena, cam, info, celle, colori: { passo: stile.colore, corsa: stile.colore, scatto: stile.colore }, stile: { opacita_riempimento: stile.opacita_riempimento, opacita_contorno: stile.opacita_contorno, spessore_contorno_px: 2 }, solo: 1 });
+export function disegnaZoc(c, { scena, cam, info, celle, stile, inattiva = false }) {
+  // A.132: la ZoC di chi non può fare Attacchi di Opportunità (Stordito, Svenuto) solo tratteggiata, senza riempimento
+  const s = inattiva
+    ? { opacita_riempimento: 0, opacita_contorno: stile.inattiva.opacita_contorno, spessore_contorno_px: 2 }
+    : { opacita_riempimento: stile.opacita_riempimento, opacita_contorno: stile.opacita_contorno, spessore_contorno_px: 2 };
+  disegnaArea(c, { scena, cam, info, celle, colori: { passo: stile.colore, corsa: stile.colore, scatto: stile.colore }, stile: s, solo: 1, tratteggio: inattiva ? stile.inattiva.tratteggio_px : null });
 }
 
 /** Percorso del token (posizioni del Q in alto a sinistra) con il costo in Q all'arrivo; `inZoc`: passi in una ZoC. */
@@ -160,4 +167,142 @@ export function coloriAree(el) {
     muro: v('--mappa-muro', '#c0392b'), terreno: v('--mappa-terreno', '#2b6cb0'),
     fondo: v('--superficie', '#fff'), testo: v('--testo', '#111'),
   };
+}
+
+/**
+ * Template ad area (fase 2, lotto 1; src/mappa/template.js): i Q coperti nel colore del template, riempimento leggero e
+ * contorno come l'area di movimento, e il nome (o la forma) sul Q d'origine. `anteprima`: tratteggiato, mentre si piazza.
+ * @param stile data/mappa.json → template ({ opacita_riempimento, opacita_contorno, spessore_contorno_px })
+ */
+export function disegnaTemplate(c, { scena, cam, info, celle, colore, stile, etichetta = null, origine = null, anteprima = false }) {
+  disegnaArea(c, { scena, cam, info, celle, colori: { passo: colore, corsa: colore, scatto: colore }, stile: { ...stile, opacita_riempimento: anteprima ? stile.opacita_riempimento * 0.7 : stile.opacita_riempimento }, solo: 1 });
+  if (!etichetta || !origine) return;
+  const g = scena.griglia;
+  const s = schermoDaMappa(cam, g.scosto_x + (origine[0] + 0.5) * g.q_px, g.scosto_y + (origine[1] + 0.5) * g.q_px);
+  c.save();
+  c.font = '700 12px system-ui, sans-serif';
+  const larg = c.measureText(etichetta).width + 10;
+  c.globalAlpha = 0.85;
+  c.fillStyle = '#000';
+  c.fillRect(s.x - larg / 2, s.y - 9, larg, 18);
+  c.globalAlpha = 1;
+  c.fillStyle = '#fff';
+  c.textAlign = 'center';
+  c.textBaseline = 'middle';
+  c.fillText(etichetta, s.x, s.y);
+  c.restore();
+}
+
+/**
+ * Porte (fase 2, lotto 2; src/mappa/porte.js), disegnate lungo il muro: aperta = due stipiti e il varco tratteggiato
+ * (verde), chiusa = battente pieno (marrone), bloccata = battente pieno rosso con la croce; segreta (solo il master) =
+ * contorno tratteggiato viola con la «S».
+ * @param porte [{ q, stato, segreta?, orientamento }]; colori: data/mappa.json → porte.colori
+ */
+export function disegnaPorte(c, { scena, cam, info, porte, colori }) {
+  const g = scena.griglia;
+  const v = visibili(g, cam, info);
+  for (const p of porte) {
+    const [x, y] = p.q;
+    if (x < v.x0 - 1 || x > v.x1 || y < v.y0 - 1 || y > v.y1) continue;
+    const [rx, ry, rw, rh] = rettQ(g, cam, x, y);
+    const oriz = p.orientamento !== 'verticale';
+    const spessore = Math.max(3, (oriz ? rh : rw) * 0.28);
+    const colore = colori[p.stato] ?? colori.chiusa;
+    c.save();
+    // il battente (o il varco) al centro del Q, lungo il muro
+    const bx = oriz ? rx : rx + rw / 2 - spessore / 2, by = oriz ? ry + rh / 2 - spessore / 2 : ry;
+    const bw = oriz ? rw : spessore, bh = oriz ? spessore : rh;
+    if (p.stato === 'aperta') {
+      c.fillStyle = colore;
+      const stipite = Math.max(2, (oriz ? rw : rh) * 0.14);
+      if (oriz) { c.fillRect(bx, by, stipite, bh); c.fillRect(bx + bw - stipite, by, stipite, bh); } else { c.fillRect(bx, by, bw, stipite); c.fillRect(bx, by + bh - stipite, bw, stipite); }
+      c.strokeStyle = colore; c.lineWidth = 2; c.setLineDash([4, 3]);
+      c.beginPath();
+      if (oriz) { c.moveTo(bx, by + bh / 2); c.lineTo(bx + bw, by + bh / 2); } else { c.moveTo(bx + bw / 2, by); c.lineTo(bx + bw / 2, by + bh); }
+      c.stroke();
+    } else {
+      c.fillStyle = colore; c.fillRect(bx, by, bw, bh);
+      c.strokeStyle = '#111'; c.lineWidth = 1; c.strokeRect(bx + 0.5, by + 0.5, bw - 1, bh - 1);
+      if (p.stato === 'bloccata') {
+        const cx = rx + rw / 2, cy = ry + rh / 2, r = Math.min(rw, rh) * 0.18;
+        c.strokeStyle = '#fff'; c.lineWidth = 2;
+        c.beginPath(); c.moveTo(cx - r, cy - r); c.lineTo(cx + r, cy + r); c.moveTo(cx + r, cy - r); c.lineTo(cx - r, cy + r); c.stroke();
+      }
+    }
+    if (p.segreta) {
+      c.strokeStyle = colori.segreta; c.lineWidth = 2; c.setLineDash([5, 4]);
+      c.strokeRect(rx + 2, ry + 2, rw - 4, rh - 4);
+      c.setLineDash([]);
+      c.fillStyle = colori.segreta; c.font = `700 ${Math.max(9, Math.min(16, rh * 0.35))}px system-ui, sans-serif`;
+      c.textAlign = 'left'; c.textBaseline = 'top'; c.fillText('S', rx + 4, ry + 3);
+    }
+    c.restore();
+  }
+}
+
+/**
+ * Linea di tiro (fase 2, lotto 3; src/mappa/visuale.js): dal centro di chi tira al centro del bersaglio, nel colore della
+ * Copertura, con l'etichetta (distanza, Copertura); `linee` (solo master, con «Mostra dettaglio linea di tiro»): le
+ * cinque linee di controllo dal centro del Q di chi tira, tratteggiate se bloccate; `origine` (in Q): il punto di
+ * partenza, per un ingombro grande il centro del Q più favorevole (07/10).
+ * @param colori data/mappa.json → visuale.colori
+ */
+export function disegnaLineaTiro(c, { scena, cam, da, a, copertura, etichetta, colori, linee = null, origine = null }) {
+  const g = scena.griglia;
+  const sch = ([x, y]) => schermoDaMappa(cam, g.scosto_x + x * g.q_px, g.scosto_y + y * g.q_px);
+  const centro = (t) => { const [w, h] = dimensioni(t.ingombro); return sch([t.q[0] + w / 2, t.q[1] + h / 2]); };
+  const colore = colori[copertura] ?? colori.nessuna;
+  c.save();
+  if (linee) {
+    c.lineWidth = 1.5;
+    for (const l of linee) {
+      const p = sch(l.da), q = sch(l.a);
+      c.strokeStyle = l.bloccata ? colori.totale : colori.nessuna;
+      c.globalAlpha = 0.8;
+      c.setLineDash(l.bloccata ? [4, 4] : []);
+      c.beginPath(); c.moveTo(p.x, p.y); c.lineTo(q.x, q.y); c.stroke();
+    }
+  }
+  const p = origine ? sch(origine) : centro(da), q = centro(a);
+  c.globalAlpha = 1;
+  c.setLineDash([]);
+  c.strokeStyle = colore;
+  c.lineWidth = Math.max(3, Math.min(6, g.q_px * cam.scala * 0.08));
+  c.lineCap = 'round';
+  c.beginPath(); c.moveTo(p.x, p.y); c.lineTo(q.x, q.y); c.stroke();
+  c.beginPath(); c.arc(q.x, q.y, Math.max(6, g.q_px * cam.scala * 0.2), 0, Math.PI * 2); c.stroke();
+  if (etichetta) {
+    c.font = '700 13px system-ui, sans-serif';
+    const larg = c.measureText(etichetta).width + 12;
+    c.fillStyle = '#000'; c.globalAlpha = 0.85;
+    c.fillRect(q.x + 10, q.y - 24, larg, 20);
+    c.globalAlpha = 1; c.fillStyle = '#fff'; c.textBaseline = 'middle';
+    c.fillText(etichetta, q.x + 16, q.y - 14);
+  }
+  c.restore();
+}
+
+/**
+ * Luci della scena (fase 2, lotto 4; src/mappa/luce.js): un velo scuro sui Q in Penombra, Luce scarsa e Buio, con
+ * l'opacità della categoria (data/mappa.json → luci.oscurita, per i giocatori luci.oscurita_giocatori, più leggera
+ * perché la mappa resti leggibile). Sta sotto i token: il buio non li nasconde (a quello pensa la nebbia).
+ * @param maschere { categoria: maschera a bit (src/mappa/celle.js) }
+ */
+export function disegnaLuci(c, { scena, cam, info, maschere, opacita, colore = '#05060a' }) {
+  const g = scena.griglia;
+  const v = visibili(g, cam, info);
+  for (const [id, m] of Object.entries(maschere)) {
+    const a = opacita[id];
+    if (!(a > 0)) continue;
+    const tratti = trattiCoperti(m, g.colonne, g.righe, v);
+    if (!tratti.length) continue;
+    c.save();
+    c.globalAlpha = a;
+    c.fillStyle = colore;
+    c.beginPath();
+    for (const [y, xa, xb] of tratti) c.rect(...rettQ(g, cam, xa, y, xb - xa, 1));
+    c.fill();
+    c.restore();
+  }
 }

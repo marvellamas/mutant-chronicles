@@ -7,6 +7,14 @@
 //   { tipo: 'muri', muri, terreno }                 src/mappa/muri.js
 //   { tipo: 'movimento', movimento: id, token, da, a }
 //   { tipo: 'token', id, prima, dopo }              prima null: messo; dopo null: tolto; tutti e due: cambiato
+//   { tipo: 'template', id, prima, dopo }           template ad area (fase 2, lotto 1): piazzato, spostato, tolto
+//   { tipo: 'ripristino', prima }                   «Ripristina posizione iniziale» (src/mappa/iniziale.js): tutto com'era
+//   { tipo: 'template-tolti', prima }               «Cancella template temporanei» o «tutti»: l'elenco di prima
+//   { tipo: 'template-scaduti', tolti, scontro, round }  template a durata scaduti al Round `round` dello scontro
+//   { tipo: 'luce', prima }                         luci della scena (lotto 4): ambiente e zone di prima
+//   { tipo: 'gruppo', prima: [{ id, q }] }          spostamento di gruppo (07/10, src/mappa/gruppo.js): tutti dov'erano
+//   { tipo: 'porta', id, prima, dopo, azione? }     porta (fase 2, lotto 2): messa, cambiata, tolta; con l'azione del
+//                                                   token che l'ha aperta o chiusa (annullando esce anche l'AzP)
 // Movimenti (scena.movimenti, al più scena.movimenti_max): { id, token, scontro, round, turno?, da, a, costo, fascia, libero,
 // quando }. Senza scontro aperto (scena collegata a una bozza o a nulla) il movimento si conta lo stesso, per «turno»: il
 // numero del turno del token (turnoDi) che «Nuovo turno» fa avanzare, per un token o per tutti (scena.turni, primo test
@@ -15,6 +23,9 @@
 import { daBase64, inBase64 } from './celle.js';
 import { inverti } from './nebbia.js';
 import { chiaveRif } from './token.js';
+import { annullaRipristino } from './iniziale.js';
+import { annullaLuce } from './luce.js';
+import { annullaGruppo } from './gruppo.js';
 
 const conVoce = (scena, voce, dati) => ({ ...scena, annulla: [...scena.annulla, voce].slice(-dati.mappa.scena.annulla_max) });
 
@@ -27,6 +38,64 @@ export function cambiaTokenAnnullabile(scena, prima, dopo, dati, adesso = new Da
     token = i >= 0 ? scena.token.map((t) => (t.id === id ? dopo : t)) : [...scena.token, dopo];
   }
   return conVoce({ ...scena, token }, { tipo: 'token', id, prima, dopo, quando: adesso.toISOString() }, dati);
+}
+
+/** Un template messo, tolto o cambiato dal master, con la voce per Ctrl+Z. `prima` null: messo; `dopo` null: tolto. */
+export function cambiaTemplateAnnullabile(scena, prima, dopo, dati, adesso = new Date()) {
+  const id = (dopo ?? prima).id;
+  let template = scena.template.filter((t) => t.id !== id);
+  if (dopo) {
+    const i = scena.template.findIndex((t) => t.id === id);
+    template = i >= 0 ? scena.template.map((t) => (t.id === id ? dopo : t)) : [...scena.template, dopo];
+  }
+  return conVoce({ ...scena, template }, { tipo: 'template', id, prima, dopo, quando: adesso.toISOString() }, dati);
+}
+
+/** Una porta messa, tolta o cambiata (aperta, chiusa, bloccata, rivelata), con la voce per Ctrl+Z; `azione`: l'id dell'AzP. */
+export function cambiaPortaAnnullabile(scena, prima, dopo, dati, azione = null, adesso = new Date()) {
+  const id = (dopo ?? prima).id;
+  const porte = scena.porte ?? [];
+  let nuove = porte.filter((p) => p.id !== id);
+  if (dopo) {
+    const i = porte.findIndex((p) => p.id === id);
+    nuove = i >= 0 ? porte.map((p) => (p.id === id ? dopo : p)) : [...porte, dopo];
+  }
+  return conVoce({ ...scena, porte: nuove }, { tipo: 'porta', id, prima, dopo, ...(azione ? { azione } : {}), quando: adesso.toISOString() }, dati);
+}
+
+/**
+ * Toglie in un colpo i template che soddisfano `via` (ritocchi del 07/10: «Cancella template temporanei», quelli a
+ * durata; «Cancella tutti i template»), con una sola voce per Ctrl+Z. Restituisce { scena, tolti }.
+ */
+export function togliTemplateAnnullabile(scena, via, dati, adesso = new Date()) {
+  const tolti = scena.template.filter(via);
+  if (!tolti.length) return { scena, tolti };
+  const s = { ...scena, template: scena.template.filter((t) => !via(t)) };
+  return { scena: conVoce(s, { tipo: 'template-tolti', prima: scena.template, quando: adesso.toISOString() }, dati), tolti };
+}
+
+/**
+ * Template a durata scaduti al nuovo Round dello scontro (Magia, «Scadenze e interruzione degli effetti»): si tolgono
+ * con una voce per Ctrl+Z che ricorda Round e scontro, così «Indietro» oltre il cambio di Round li rimette
+ * (ritocchi del 07/10; rimettiScaduti). Restituisce { scena, tolti }.
+ */
+export function scadiTemplateAnnullabile(scena, via, { scontro, round }, dati, adesso = new Date()) {
+  const tolti = scena.template.filter(via);
+  if (!tolti.length) return { scena, tolti };
+  const s = { ...scena, template: scena.template.filter((t) => !via(t)) };
+  return { scena: conVoce(s, { tipo: 'template-scaduti', tolti, scontro, round, quando: adesso.toISOString() }, dati), tolti };
+}
+
+/**
+ * «Indietro» oltre il cambio di Round (07/10): i template scaduti a un Round dopo `round` dello scontro tornano, e le
+ * loro voci escono dalla pila di Ctrl+Z. Restituisce { scena, rimessi }.
+ */
+export function rimettiScaduti(scena, scontro, round) {
+  const voci = scena.annulla.filter((v) => v.tipo === 'template-scaduti' && v.scontro === scontro && v.round > round);
+  if (!voci.length) return { scena, rimessi: [] };
+  const ci = new Set(scena.template.map((t) => t.id));
+  const rimessi = voci.flatMap((v) => v.tolti).filter((t) => !ci.has(t.id) && ci.add(t.id));
+  return { scena: { ...scena, template: [...scena.template, ...rimessi], annulla: scena.annulla.filter((v) => !voci.includes(v)) }, rimessi };
 }
 
 /** Turno del token senza scontro: scena.turni = { tutti, token: { id: n } }, i due contatori sommati. */
@@ -127,6 +196,29 @@ export function annullaUltima(scena, { chiaviPresenti = null } = {}) {
       let token = senza.token.filter((t) => t.id !== voce.id);
       if (voce.prima) token = [...token, voce.prima];
       return { scena: { ...senza, token }, voce, testo: voce.prima && voce.dopo ? 'token' : voce.prima ? 'token tolto' : 'token messo' };
+    }
+    case 'ripristino':
+      return { scena: annullaRipristino(senza, voce), voce, testo: 'ripristino della posizione iniziale' };
+    case 'porta': {
+      let porte = (senza.porte ?? []).filter((p) => p.id !== voce.id);
+      if (voce.prima) porte = [...porte, voce.prima];
+      const azioni = voce.azione ? (senza.azioni ?? []).filter((a) => a.id !== voce.azione) : senza.azioni;
+      return { scena: { ...senza, porte, ...(azioni ? { azioni } : {}) }, voce, testo: !voce.prima ? 'porta messa' : !voce.dopo ? 'porta tolta' : 'porta' };
+    }
+    case 'gruppo':
+      return { scena: annullaGruppo(senza, voce), voce, testo: `spostamento di ${voce.prima.length} token` };
+    case 'luce':
+      return { scena: annullaLuce(senza, voce), voce, testo: 'luci' };
+    case 'template-scaduti': {
+      const ci = new Set(senza.template.map((t) => t.id));
+      return { scena: { ...senza, template: [...senza.template, ...voce.tolti.filter((t) => !ci.has(t.id))] }, voce, testo: 'template scaduti rimessi' };
+    }
+    case 'template-tolti':
+      return { scena: { ...senza, template: voce.prima }, voce, testo: 'template rimessi' };
+    case 'template': {
+      let template = senza.template.filter((t) => t.id !== voce.id);
+      if (voce.prima) template = [...template, voce.prima];
+      return { scena: { ...senza, template }, voce, testo: voce.prima && voce.dopo ? 'template spostato' : voce.prima ? 'template tolto' : 'template piazzato' };
     }
     default:
       return { scena: senza, voce, errore: `voce sconosciuta: ${voce.tipo}` };

@@ -11,22 +11,26 @@
 // puntatore con i passi in ZoC, ZoC degli avversari visibili. Già filtrato dal server; sparisce quando il master lascia il
 // token. Lo stesso flusso dice «aggiorna» quando la scena o lo scontro cambiano: la vista si rilegge subito.
 import { h, svuota } from '../dom.js';
-import { cameraIniziale, sposta, adatta, schermoDaMappa, rettangoloVisibile } from '../../mappa/camera.js';
+import { cameraIniziale, sposta, adatta, adattaRettangolo, schermoDaMappa, rettangoloVisibile } from '../../mappa/camera.js';
 import { dimensioniMappa, lineeVisibili } from '../../mappa/griglia.js';
 import { daBase64 } from '../../mappa/celle.js';
-import { trattiCoperti } from '../../mappa/nebbia.js';
+import { trattiCoperti, rettangoloScoperto } from '../../mappa/nebbia.js';
 import { chiaveRif } from '../../mappa/token.js';
 import { creaTela } from './canvas.js';
 import { creaGesti } from './gesti.js';
 import { disegnaToken, coloriMappa, creaImmagini } from './disegno-token.js';
 import { barraIniziativaEl } from './barra-iniziativa.js';
-import { disegnaArea, disegnaZoc, disegnaPercorso, coloriAree } from './disegno-aree.js';
+import { disegnaArea, disegnaZoc, disegnaPercorso, coloriAree, disegnaTemplate, disegnaPorte, disegnaMuri, disegnaLineaTiro, disegnaLuci } from './disegno-aree.js';
+import { celleDaMaschera, templateVisibili, ostacoliVisibili } from '../../mappa/template.js';
 import { celleDellaDiretta, zocDellaDiretta, avversariDellaDiretta, trattiPercorso } from '../../mappa/diretta.js';
 import { passiInZoc } from '../../mappa/zoc.js';
 import { avviso } from '../avvisi.js';
+import { leggiVersione, serveAggiornamento, urlRicarica } from '../../versione.js';
 
 // due schermi del master (07/10): la vista si aggiorna entro 1–2 secondi dalle azioni del master
 const INTERVALLO_MS = 1000;
+// ritocchi del 07/10: ogni quanto la vista giocatori guarda se c'è una versione nuova dell'app
+const CONTROLLO_VERSIONE_MS = 20000;
 
 /**
  * @param ctx { dati }
@@ -49,7 +53,10 @@ export function renderGiocatori(radice, ctx) {
   el.messaggio = h('p', { class: 'giocatori-messaggio', hidden: true });
   el.iniziativa = h('div', { class: 'mappa-iniziativa-posto', hidden: true });
   // la riga del movimento sta sulla mappa: resta anche a schermo intero, dove la testata sparisce
-  el.riquadro.append(el.messaggio, el.movimento);
+  // ritocchi del 07/10: «Adatta allo schermo», discreto sulla mappa, resta anche a schermo intero (tasto A)
+  // ritocchi del 07/10 (test di Marcello): un pulsante vero, come quelli del master, non solo un'icona semitrasparente
+  el.adatta = h('button', { type: 'button', class: 'btn giocatori-adatta', title: 'Adatta allo schermo: tutta la parte di mappa scoperta (tasto A, doppio tocco)', 'aria-label': 'Adatta allo schermo', onclick: () => adattaSchermo() }, h('span', { 'aria-hidden': 'true' }, '⤢'), ' Adatta');
+  el.riquadro.append(el.messaggio, el.movimento, el.adatta);
   svuota(radice, h('section', { class: 'mappa-pagina giocatori-pagina' },
     h('header', { class: 'giocatori-barra' }, el.titolo, el.turno, el.stato, el.schermo), el.iniziativa, el.riquadro));
 
@@ -84,6 +91,15 @@ export function renderGiocatori(radice, ctx) {
     },
     // §5: per i giocatori la nebbia è piena; sotto, le ZoC e l'area della diretta (già senza i Q sotto la nebbia)
     aree: (c, info) => {
+      // template ad area (fase 2, lotto 1): quelli della scena e l'anteprima di quello che il master sta piazzando,
+      // già filtrati dal server (solo i Q fuori dalla nebbia, niente nascosti)
+      // ritocchi del 07/10: «Mostra / nascondi template» scelto dal master per i giocatori (template senza durata, muri,
+      // porte e terreno; con «anche a durata» anche gli altri); l'anteprima di chi piazza resta
+      const sov = st.vista?.sovrapposizioni;
+      if (st.vista && ostacoliVisibili(sov)) disegnaMuri(c, { scena: st.vista, cam: st.cam, info, muri: daBase64(st.vista.muri), terreno: daBase64(st.vista.terreno), colori: coloriAree(el.riquadro) });
+      if (st.vista) for (const t of [...templateVisibili(st.vista.template ?? [], sov), ...(direttaAttuale()?.template ?? [])]) disegnaTemplateGiocatori(c, info, t);
+      // porte (fase 2, lotto 2): già filtrate dal server (niente segrete non rivelate, niente sotto la nebbia)
+      if (st.vista?.porte?.length && ostacoliVisibili(sov)) disegnaPorte(c, { scena: st.vista, cam: st.cam, info, porte: st.vista.porte, colori: ctx.dati.mappa.porte.colori });
       const d = direttaAttuale();
       if (d) {
         const s = st.vista;
@@ -91,7 +107,11 @@ export function renderGiocatori(radice, ctx) {
         if (zoc) disegnaZoc(c, { scena: s, cam: st.cam, info, celle: zoc, stile: ctx.dati.mappa.zoc });
         if (st.celle.area) disegnaArea(c, { scena: s, cam: st.cam, info, celle: st.celle.area, colori: coloriAree(el.riquadro), stile: V.area });
       }
+      // fase 2, lotto 4: le zone in Penombra, Luce scarsa e Buio più scure (già filtrate dal server: niente sotto la nebbia)
+      if (st.vista?.luce) disegnaLuci(c, { scena: st.vista, cam: st.cam, info, maschere: Object.fromEntries(Object.entries(st.vista.luce).map(([k, v]) => [k, daBase64(v)])), opacita: ctx.dati.mappa.luci.oscurita_giocatori });
       disegnaNebbia(c, info, 1);
+      // fase 2, lotto 3: con la nebbia automatica le zone esplorate ma non viste adesso sono più scure
+      if (st.vista?.ombra) disegnaOmbra(c, info);
     },
     sopra: (c) => {
       const s = st.vista;
@@ -99,6 +119,8 @@ export function renderGiocatori(radice, ctx) {
       const pezzi = new Map(s.token.filter((t) => t.info).map((t) => [chiaveRif(t.rif), { ...t.info, ritratto: t.info.immagine, pv: t.info.pv === null ? null : { attuali: t.info.pv, massimo: 1 }, stati: [] }]));
       const d = direttaAttuale();
       disegnaToken(c, { scena: s, cam: st.cam, pezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: d?.token ?? null, bordo: (p) => p.bordo ?? null, alone: ctx.dati.mappa.colori.alone_turno, ritrattoVerticale: ctx.dati.mappa.token.ritratto_verticale, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => true } });
+      // fase 2, lotto 3: la linea di tiro del master (già filtrata dal server)
+      if (d?.linea) disegnaLineaTiro(c, { scena: s, cam: st.cam, da: d.linea.da, a: d.linea.a, copertura: d.linea.copertura, etichetta: d.linea.testo ?? `${d.linea.distanza} Q · ${{ nessuna: 'nessuna Copertura', leggera: 'Copertura Leggera', media: 'Copertura Media', totale: 'Copertura Totale' }[d.linea.copertura] ?? ''}`, colori: ctx.dati.mappa.visuale.colori });
       // percorso del master, a tratti fra le interruzioni della nebbia; il costo all'ultimo tratto
       if (d?.percorso) {
         const tratti = trattiPercorso(d.percorso.punti);
@@ -108,6 +130,21 @@ export function renderGiocatori(radice, ctx) {
       }
     },
   });
+  const celleTemplate = new Map(); // celle per maschera (la stessa maschera torna a ogni lettura)
+  function disegnaTemplateGiocatori(c, info, t) {
+    const chiave = `${st.vista.griglia.colonne}x${st.vista.griglia.righe}|${t.celle}`;
+    if (!celleTemplate.has(chiave)) { if (celleTemplate.size > 200) celleTemplate.clear(); celleTemplate.set(chiave, celleDaMaschera(t.celle, st.vista.griglia)); }
+    const celle = celleTemplate.get(chiave);
+    // il nome sul Q coperto più vicino al centro dei Q coperti
+    let origine = null;
+    if (t.nome) {
+      const C = st.vista.griglia.colonne;
+      let sx = 0, sy = 0, n = 0;
+      for (let i = 0; i < celle.length; i++) if (celle[i]) { sx += i % C; sy += Math.floor(i / C); n++; }
+      if (n) origine = [Math.floor(sx / n), Math.floor(sy / n)];
+    }
+    disegnaTemplate(c, { scena: st.vista, cam: st.cam, info, celle, colore: t.colore, stile: ctx.dati.mappa.template, etichetta: t.nome ?? null, origine });
+  }
   /** La diretta, se riguarda la scena mostrata. */
   const direttaAttuale = () => (st.diretta && st.vista && st.diretta.scena === st.vista.id ? st.diretta : null);
   const NOMI_MODI = { passo: 'Passo', corsa: 'Corsa', scatto: 'Scatto', libero: 'Libero' };
@@ -118,8 +155,9 @@ export function renderGiocatori(radice, ctx) {
     const a = direttaAttuale();
     st.celle = { area: a ? celleDellaDiretta(a, st.vista) : null, zoc: a ? zocDellaDiretta(a, st.vista) : null };
     const t = a ? st.vista.token.find((x) => x.id === a.token) : null;
-    el.movimento.hidden = !a;
-    el.movimento.textContent = a ? [`Movimento${t?.info?.nome ? ` di ${t.info.nome}` : ''}: ${NOMI_MODI[a.modo]}`,
+    el.movimento.hidden = !a?.token;
+    // (una diretta può portare solo la linea di tiro o l'anteprima di un template)
+    el.movimento.textContent = a?.token ? [`Movimento${t?.info?.nome ? ` di ${t.info.nome}` : ''}: ${NOMI_MODI[a.modo]}`,
       a.modo !== 'libero' && a.disponibili !== null ? `${numeroQ(a.usato)} / ${numeroQ(a.disponibili)} Q usati` : null].filter(Boolean).join(' · ') : '';
     el.movimento.className = `giocatori-movimento${a ? ` modo-${a.modo}` : ''}`;
     // il token è già altrove (movimento appena fatto): la vista si rilegge senza aspettare il giro
@@ -127,6 +165,26 @@ export function renderGiocatori(radice, ctx) {
     tela.richiedi(['aree', 'sopra']);
   }
 
+  /** Zone esplorate ma non viste adesso dai PG (vista.ombra, nebbia automatica): un velo scuro. */
+  function disegnaOmbra(c, info) {
+    const s = st.vista;
+    const g = s.griglia;
+    const r = rettangoloVisibile(st.cam, info.larghezza, info.altezza);
+    const q = g.q_px;
+    const tratti = trattiCoperti(daBase64(s.ombra), g.colonne, g.righe, { x0: Math.floor((r.x0 - g.scosto_x) / q), x1: Math.ceil((r.x1 - g.scosto_x) / q), y0: Math.floor((r.y0 - g.scosto_y) / q), y1: Math.ceil((r.y1 - g.scosto_y) / q) });
+    if (!tratti.length) return;
+    c.save();
+    c.globalAlpha = ctx.dati.mappa.visuale.opacita_esplorate;
+    c.fillStyle = getComputedStyle(el.riquadro).getPropertyValue('--mappa-nebbia').trim() || '#111';
+    c.beginPath();
+    for (const [y, xa, xb] of tratti) {
+      const a = schermoDaMappa(st.cam, g.scosto_x + xa * q, g.scosto_y + y * q);
+      const b = schermoDaMappa(st.cam, g.scosto_x + xb * q, g.scosto_y + (y + 1) * q);
+      c.rect(Math.floor(a.x), Math.floor(a.y), Math.ceil(b.x - a.x) + 1, Math.ceil(b.y - a.y) + 1);
+    }
+    c.fill();
+    c.restore();
+  }
   function disegnaNebbia(c, info, opacita) {
     const s = st.vista;
     if (!s) return;
@@ -157,7 +215,9 @@ export function renderGiocatori(radice, ctx) {
     if (!st.vista) return;
     const { larghezza, altezza } = dimensioniMappa(st.vista);
     const d = tela.dimensioni();
-    st.cam = adatta(larghezza, altezza, d.larghezza, d.altezza, V);
+    // la parte fuori dalla nebbia (tutta la mappa se è tutta scoperta o tutta coperta)
+    const r = rettangoloScoperto(daBase64(st.vista.nebbia.coperti), st.vista.griglia);
+    st.cam = r ? adattaRettangolo(r, d.larghezza, d.altezza, V) : adatta(larghezza, altezza, d.larghezza, d.altezza, V);
     segnaCamera();
     st.toccata = false;
     tela.richiedi();
@@ -172,6 +232,15 @@ export function renderGiocatori(radice, ctx) {
   // se la finestra cambia misura e nessuno ha toccato la vista, si riadatta
   const suMisura = () => { if (!st.toccata) adattaSchermo(); };
   window.addEventListener('resize', suMisura);
+  // anche quando cambia solo il riquadro (barra dell'Iniziativa, scheda tornata visibile: prima l'adattamento poteva
+  // essere calcolato con il riquadro a misura zero e la mappa restava ingrandita)
+  const osservatore = typeof ResizeObserver === 'function' ? new ResizeObserver(() => suMisura()) : null;
+  osservatore?.observe(el.riquadro);
+  const suTasto = (e) => {
+    if (e.ctrlKey || e.metaKey || e.altKey || /^(INPUT|TEXTAREA|SELECT)$/.test(e.target?.tagName ?? '')) return;
+    if (e.key === 'a' || e.key === 'A') { e.preventDefault(); adattaSchermo(); }
+  };
+  window.addEventListener('keydown', suTasto);
 
   const messaggio = (t) => { el.messaggio.textContent = t ?? ''; el.messaggio.hidden = !t; };
   async function usa(corpo) {
@@ -239,6 +308,22 @@ export function renderGiocatori(radice, ctx) {
   const flusso = typeof EventSource === 'function' ? new EventSource('api/vista-giocatori/diretta') : null;
   flusso?.addEventListener('diretta', (e) => { try { usaDiretta(JSON.parse(e.data)); } catch { /* evento rovinato: si aspetta il prossimo */ } });
   flusso?.addEventListener('aggiorna', () => aggiorna());
+  // ritocchi del 07/10: la vista giocatori si aggiorna da sola a una versione nuova dell'app (a schermo intero la barra
+  // «Nuova versione» non si vede, e una finestra aperta prima dell'aggiornamento restava sul codice vecchio): controllo
+  // ogni CONTROLLO_VERSIONE_MS e a ogni ricollegamento del flusso (server riavviato); niente da perdere ricaricando
+  const caricata = document.querySelector('meta[name="mutant-versione"]')?.content || null;
+  const controllaVersione = async () => {
+    if (st.chiusa) return;
+    try {
+      const r = await fetch('versione.json', { cache: 'no-store' });
+      const v = r.ok ? leggiVersione(await r.json()) : null;
+      if (v && serveAggiornamento(caricata, v.versione)) location.href = urlRicarica(location.href, v.versione);
+    } catch { /* senza rete: si riprova al prossimo giro */ }
+  };
+  const giroVersione = setInterval(controllaVersione, CONTROLLO_VERSIONE_MS);
+  flusso?.addEventListener('open', () => controllaVersione());
+  // il master chiede «Adatta allo schermo» (sezione «Vista giocatori»)
+  flusso?.addEventListener('adatta', () => adattaSchermo());
   // a schermo intero (pulsante o F11, anche sul secondo monitor) solo mappa e barra dell'Iniziativa: niente testata,
   // barre né comandi; l'avviso «collegamento perso» resta (css/style.css → body.schermo-intero). F11 non avvisa la
   // pagina: si riconosce dalla finestra grande quanto lo schermo
@@ -257,10 +342,13 @@ export function renderGiocatori(radice, ctx) {
   return () => {
     st.chiusa = true;
     clearInterval(giro);
+    clearInterval(giroVersione);
     flusso?.close();
     gesti.distruggi();
     tela.distruggi();
     window.removeEventListener('resize', suMisura);
+    osservatore?.disconnect();
+    window.removeEventListener('keydown', suTasto);
     document.removeEventListener('visibilitychange', suVisibile);
     document.removeEventListener('fullscreenchange', suSchermo);
     window.removeEventListener('resize', suSchermo);

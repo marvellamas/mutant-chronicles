@@ -80,6 +80,16 @@ export function adatta(larghezza, altezza, lv, av, vista) {
 }
 
 /**
+ * «Adatta allo schermo» su una parte della mappa (vista giocatori, ritocchi del 07/10): il rettangolo r (pixel della
+ * mappa) nel riquadro lv × av, con il margine della vista.
+ */
+export function adattaRettangolo(r, lv, av, vista) {
+  const cam = adatta(r.larghezza, r.altezza, lv, av, vista);
+  if (!(r.larghezza > 0 && r.altezza > 0)) return cam;
+  return { ...cam, ox: cam.ox - r.x * cam.scala, oy: cam.oy - r.y * cam.scala };
+}
+
+/**
  * Rettangolo della mappa visibile nel riquadro (lv × av), in pixel della mappa: serve a disegnare solo la parte
  * di griglia che si vede.
  */

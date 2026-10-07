@@ -954,20 +954,20 @@ approvata da Marcello; copia in `docs/battlemap/specifica.md`, piano in `docs/ba
     frame calcolato dal master (`docs/battlemap/piano.md`, §3).
 
 **Aperte** (testi nella sezione 15 della specifica; da mettere nel Doc «per-davide.md» con il pacchetto). A.122,
-A.124 e A.125 hanno avuto risposta il 06/10 (decisioni 128–130); restano la voce «Aiuto-master» di A.122, i veicoli
-e le vecchie etichette numeriche delle luci di A.125, e A.134 qui sotto.
+A.124 e A.125 hanno avuto risposta il 06/10 (decisioni 128–130); restano la voce «Aiuto-master» di A.122 e le vecchie
+etichette numeriche delle luci di A.125 (i veicoli: risposta di Marcello del 07/10, decisione 136). A.132 e A.134 qui
+sotto: risposte di Marcello del 07/10 (decisioni 134 e 135).
 
 - **A.132 — Stordito e Attacchi di Opportunità** (07/10/2026, zone di controllo della mappa). Uno Stordito (§5.18:
-  nessuna Azione Principale) può fare un Attacco di Opportunità, che per il §5.3 «non consuma Azioni»? Provvisorio: sì
-  (`data/mappa.json` → zoc.stati_che_impediscono ha solo Svenuto).
+  nessuna Azione Principale) può fare un Attacco di Opportunità, che per il §5.3 «non consuma Azioni»? **Risolta** dalla
+  risposta di Marcello del 07/10 (decisione 134): no.
 - **A.133 — Portata delle creature grandi** (07/10/2026). Una creatura Grande (2 × 2 Q) o Enorme (3 × 3 Q) ha la portata
   del suo profilo (i profili del Manuale dei Mostri dicono «portata 1 Q») attorno a tutto l'ingombro, o una portata
   maggiore per la Taglia (Marcello aveva proposto 2 Q per i 2 × 2 e 3 Q per i 3 × 3)? Provvisorio: quella del profilo.
 - **A.134 — Diagonale accanto allo spigolo di un muro** (07/10/2026). La A.124 fissa la diagonale a 1 Q e dice che
   non permette di attraversare muri o passaggi ostruiti, ma non dice se una diagonale può passare rasente allo spigolo
-  di un muro (i due quadretti ai lati: uno libero, uno murato). Provvisorio: no, servono liberi anche i due quadretti
-  ai lati (`data/mappa.json` → movimento.taglio_angoli_muri, con il `TODO(Davide)` A.134, riscritto il 07/10 nel
-  branch della mappa).
+  di un muro (i due quadretti ai lati: uno libero, uno murato). **Risolta** dalla risposta di Marcello del 07/10
+  (decisione 135): sì.
 
 ## 7 ottobre 2026 — risposte del 06/10 (E&L «Risposte approvate — regole tecniche e Stati», sezione 7 di «per-davide.md»)
 
@@ -1043,7 +1043,8 @@ Fonte: E&L del 06/10/2026, 17:23 UTC, blocco «Risposte approvate — regole tec
     adiacenti e con una mano libera; attraversarla costa il movimento normale; «chiusa» e «bloccata» sono distinte.
     Illuminazione con le categorie di A.106; la mappa distingue la portata della sorgente (in Q) dalla luce della zona; le
     lampade del catalogo hanno una sola portata; i vecchi «livelli» non si convertono. Restano aperti i veicoli e la
-    corrispondenza delle vecchie etichette numeriche.
+    corrispondenza delle vecchie etichette numeriche. **Porte applicate** il 07/10 (branch `battlemap`, fase 2, lotto 2:
+    `src/mappa/porte.js`, `data/mappa.json` → porte); l'illuminazione è il prossimo lotto (linea di visuale).
 131. **Quadretti occupati** (A.127). Alleati attraversabili al costo normale; nemici no, salvo capacità; non si termina
     né ci si ferma in un quadretto occupato; per una pedina grande serve libero tutto l'ingombro d'arrivo; attraversare
     un alleato non evita gli Attacchi di Opportunità. Conferma `data/mappa.json` → movimento.
@@ -1060,7 +1061,7 @@ Fonte: E&L del 06/10/2026, 17:23 UTC, blocco «Risposte approvate — regole tec
 
 **Sospese** (E&L del 06/10, «Quesiti sospesi»): A.109 (Davide chiede l'elenco con il nome dell'incantesimo e
 dell'aspetto: nel pacchetto del 07/10), A.111 (solo Pablo Zaion), A.112, A.113, A.115, A.122 («Aiuto-master»), A.125
-(veicoli, vecchie etichette delle luci), A.126.
+(vecchie etichette delle luci; i veicoli hanno la decisione 136), A.126.
 
 **Nuova** (07/10/2026):
 
@@ -1075,6 +1076,80 @@ dell'aspetto: nel pacchetto del 07/10), A.111 (solo Pablo Zaion), A.112, A.113, 
   Corsa o Scatto, con i Q già fatti contati nel blocco (2 + 10 = 12)? Provvisorio: no, Corsa e Scatto partono solo da
   fermi; il master annulla il movimento e lo rifà come Corsa, o usa «Libero» (`data/mappa.json` →
   movimento.blocco_dopo_passo false, con il `TODO(Davide)`).
+- **A.137 — Raggio di un'Area sulla griglia** (07/10/2026, template ad area della mappa, fase 2). Magia, «Gittate e
+  geometria»: il Raggio è la «distanza dal centro al limite» e «un Q rientra nell'Area se è incluso per almeno metà»;
+  il Giocatore (§5.10, Scarto) e la A.124 contano la diagonale come 1 Q. Il raggio si misura a quadretti (raggio 2 Q =
+  quadrato di 5 × 5 Q, granata con RS 1 Q = il Q e gli otto attorno) o è un cerchio vero, con i Q coperti per metà?
+  Provvisorio: a quadretti, anche la lunghezza di coni e linee in diagonale (`data/mappa.json` →
+  template.metrica_raggio «quadretti»; «euclidea» per il cerchio vero).
+- **A.138 — Forma del Cono** (07/10/2026, template ad area). Il Cono è «lunghezza × larghezza finale, con apertura
+  progressiva» e «parte dal bordo dello spazio del Taumaturgo» (Cono Elementale, da 3 × 2 a 18 × 9 Q), ma non dice quanto
+  è largo all'inizio né come si contano le larghezze finali pari (3 × 2, 12 × 6) quando il cono è dritto su una fila.
+  Provvisorio: largo 1 Q al bordo del lanciatore, poi si allarga in modo uniforme; con la larghezza pari i Q di bordo
+  coperti per meno di metà restano fuori (`data/mappa.json` → template.cono_larghezza_iniziale 1).
+- **A.139 — Porta «adiacente» in diagonale** (07/10/2026, porte della mappa, fase 2). La A.125 chiede di essere
+  adiacenti alla porta per aprirla o chiuderla (1 AzP). Basta essere in diagonale rispetto al Q della porta? Provvisorio:
+  sì, come la portata di 1 Q (`data/mappa.json` → porte, `TODO(Davide)`). La mano libera l'app non la controlla.
+- **A.140 — Copertura sulla griglia** (07/10/2026, linea di tiro della mappa, fase 2). Il §5.8 dà gli effetti della
+  Copertura (Leggera −2, Media −4, Totale) ma non dice come si stabilisce dalla posizione sulla mappa. Provvisorio «dal
+  centro» (punto di partenza deciso da Marcello il 07/10, decisione 137): dal centro del Q di chi tira cinque linee verso
+  i quattro angoli e il centro del bersaglio; linee bloccate da muri o porte chiuse 0 = nessuna, 1–2 = Leggera,
+  3–4 = Media, 5 = Totale (`data/mappa.json` → visuale.copertura_linee). Va bene la tabella?
+- **A.141 — Token fra chi tira e il bersaglio** (07/10/2026). Danno Copertura? Provvisorio: no, il §5.8 parla di
+  ostacoli; vale il «bersaglio impegnato o protetto» del §5.10 (−4 VA e seconda Prova), che dal 07/10 la linea di tiro
+  propone in «Attacca!» (`data/mappa.json` → visuale.token_in_mezzo «protetto»).
+- **A.144 — Creature in mezzo: Copertura o «bersaglio protetto»?** (07/10/2026, richiesta di Marcello di contare i token
+  come ostacoli). Il Giocatore §5.10 dà per chi spara «contro un nemico impegnato in Ravvicinato, protetto da un alleato o
+  che usa un ostaggio» −4 VA e una seconda Prova a −4 (con successo manca tutti, altrimenti colpisce il bersaglio
+  secondario); il §5.8 dà la Copertura degli ostacoli. Una creatura fra chi tira e il bersaglio (anche un alleato di chi
+  tira o un neutrale, anche una creatura grande che lo nasconde del tutto) dà anche Copertura, con la tabella delle linee,
+  o vale solo il §5.10? Provvisorio: solo §5.10, come dice il manuale; l'app ha anche il valore «copertura» (i token come
+  ostacoli, proposta di Marcello), da scegliere in `data/mappa.json` → visuale.token_in_mezzo. Non contano i token a 0 PV o
+  A Terra; per i giocatori nemmeno i nascosti.
+- **A.142 — Fin dove vedono i PG** (07/10/2026, nebbia automatica). Con luce sufficiente, entro quanti Q la nebbia si
+  apre da sola? Provvisorio: 30 Q (45 m), contati a quadretti; con le luci (lotto 4, decisione 138) Penombra 6 Q, Luce
+  scarsa 3 Q, Buio solo il Q accanto.
+- **A.143 — Visione notturna e nebbia automatica** (07/10/2026, luci della mappa, fase 2, lotto 4). La Visione notturna
+  (80 Q), la visione termica (40 Q) e la Vista Felina (20 Q) eliminano le penalità di Penombra e Luce molto scarsa entro
+  la portata (A.106; `regole.json` → illuminazione.visione). Sulla mappa devono anche allargare la nebbia automatica
+  per il PG che le ha (per esempio Penombra e Luce scarsa come Luce entro la portata)? Provvisorio: no, la nebbia usa
+  solo la luce della zona (`data/mappa.json` → luci, `TODO(Davide)`).
+
+## 7 ottobre 2026 — risposte di Marcello (decisioni del gruppo)
+
+Fonte: prompt di Marcello del 07/10/2026 sera, decisioni del gruppo di gioco sulle domande della mappa. Sono «risposta di
+Marcello»: Davide può rivederle (nel pacchetto per il Doc vanno fra le Risolte con questa dicitura).
+
+134. **Stordito e Attacchi di Opportunità** (A.132; risposta di Marcello, 07/10). Un token Stordito non fa Attacchi di
+    Opportunità, come chi è Svenuto o a 0 PV: la sua ZoC non genera l'avviso. Sulla mappa il master la vede tratteggiata,
+    senza riempimento («inattiva», per capire perché non c'è l'avviso); i giocatori non la vedono; a 0 PV non si mostra.
+    **Applicata** il 07/10 (branch `battlemap`): `data/mappa.json` → zoc.stati_che_impediscono [stordito, svenuto] e
+    zoc.inattiva, `src/mappa/zoc.js` → avversariZocInattivi; via il `TODO(Davide)`.
+135. **Diagonale rasente allo spigolo di un muro** (A.134; risposta di Marcello, 07/10). In diagonale basta che sia libero
+    il quadretto d'arrivo e che la diagonale non attraversi un muro: uno dei due quadretti ai lati può essere murato. Se
+    lo sono entrambi (passaggio chiuso a spigolo) la diagonale resta vietata. Le porte chiuse o bloccate contano come
+    muri. **Applicata** il 07/10 (branch `battlemap`): `data/mappa.json` → movimento.diagonale_spigolo «un_lato» (al
+    posto di taglio_angoli_muri), area di movimento e percorso in `src/mappa/area.js`; via il `TODO(Davide)`.
+136. **Veicoli sulla mappa: quando si muovono** (A.125, parte dei veicoli; risposta di Marcello, 07/10). Un veicolo si
+    muove all'Iniziativa del suo conducente, come già nella plancia (A.105). Solo registrazione: i veicoli sulla mappa
+    sono il lotto successivo (decisione 128: rimandati), e lì si applicherà questa regola. Della A.125 resta aperta solo
+    la corrispondenza delle vecchie etichette numeriche delle luci.
+137. **Linea di visuale: punto di partenza** (A.140, in parte; decisione di Marcello, 07/10). Le linee di controllo
+    partono dal centro del Q di chi tira, non da un suo vertice, verso i quattro angoli e il centro del bersaglio. Tabella
+    ricalibrata sulle cinque linee: 0 nessuna, 1–2 Leggera, 3–4 Media, 5 Totale. Token grandi: dal centro del Q
+    dell'ingombro più favorevole a chi tira; bersaglio grande ai suoi angoli e al centro. La nebbia automatica partiva già
+    dal centro del Q del PG. Resta da confermare con Davide la tabella (A.140). **Applicata** il 07/10 (branch
+    `battlemap`): `src/mappa/visuale.js` → copertura, `data/mappa.json` → visuale.copertura_linee (sei livelli).
+138. **Luci della mappa, versione semplice** (A.106, A.116, A.125; decisione di Marcello, 07/10). Nella vecchia app le
+    luci erano complesse e facevano perdere tempo: qui si preparano in pochi secondi e non si ritoccano in gioco. Niente
+    ombre dinamiche, intensità o livelli numerici: le quattro categorie di A.106 (Luce, Penombra −2, Luce scarsa −4, Buio
+    come Accecato). Luce della scena (una per scena), zone a pennello facoltative, luci portate dai token con il raggio in
+    Q (raggi del catalogo: bastoncino 2, lanterna e lampada frontale 6, torcia 10; il fascio si semplifica in un cerchio);
+    i muri non fermano la luce. Nebbia automatica: il raggio dipende dalla luce del Q visto (Luce 30 Q, Penombra 6, Luce
+    scarsa 3, Buio 1). In «Attacca!» dalla linea di tiro si propone la luce della zona del bersaglio (modificabile). Le
+    vecchie etichette numeriche delle luci dell'app di Davide non si usano: la parte aperta della A.125 è **superata**.
+    **Applicata** il 07/10 (branch `battlemap`, fase 2, lotto 4): `src/mappa/luce.js`, `data/mappa.json` → luci;
+    domanda nuova A.143 (visione notturna e nebbia).
 
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 

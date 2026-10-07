@@ -6,12 +6,13 @@
 // Esc e «Annulla» chiudono senza scelta; Invio conferma il testo.
 import { h } from './dom.js';
 
-/** Apre la finestrella e la chiude con il valore di `fine(valore)`. */
-function apri(classe, titolo, corpo) {
+/** Apre la finestrella e la chiude con il valore di `fine(valore)` (anche per finestrelle su misura: il mini-menu dei template). */
+export function apri(classe, titolo, corpo) {
   return new Promise((risolvi) => {
     let fatto = false;
     const d = h('dialog', { class: `finestrella ${classe}`, 'aria-label': titolo });
-    const fine = (v) => { if (fatto) return; fatto = true; risolvi(v); d.close(); };
+    // via anche subito (non solo all'evento «close», che in una scheda in secondo piano può tardare)
+    const fine = (v) => { if (fatto) return; fatto = true; risolvi(v); d.close(); d.remove(); };
     d.addEventListener('close', () => { if (!fatto) { fatto = true; risolvi(null); } d.remove(); });
     d.append(h('h2', { class: 'finestrella-titolo' }, titolo), ...[corpo(fine)].flat());
     document.body.append(d);

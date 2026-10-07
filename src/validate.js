@@ -3,6 +3,7 @@
 // Non lancia eccezioni: un file malformato produce errori, non un crash.
 import { TIPI as TIPI_EQUIP, STATI } from './equipaggiamento.js';
 import { FILE_MAPPA } from './mappa/scena.js';
+import { erroreMenu } from './mappa/menu.js';
 
 // Invarianti strutturali dei manuali. I valori numerici "di gioco" stanno in regole.json;
 // qui restano solo le forme fisse descritte dai paragrafi citati.
@@ -2700,6 +2701,27 @@ function validaMappa(dati, err) {
     for (const k of ['colore', 'traccia']) if (!/^#[0-9a-f]{6}([0-9a-f]{2})?$/i.test(PT[k] ?? '')) err(F, `pv_token.${k}`, 'colore #rrggbb o #rrggbbaa');
     for (const k of ['rispetto_al_bordo', 'spessore_minimo_px', 'mini_token_px']) if (!positivo(PT[k])) err(F, `pv_token.${k}`, 'numero positivo');
   }
+  // «Indietro» nell'Iniziativa (07/10, src/scontro.js → indietro): quanti «Avanti» si possono annullare
+  if (!isIntero(m.iniziativa?.indietro_max) || m.iniziativa.indietro_max < 1) err(F, 'iniziativa.indietro_max', 'intero da 1 in su');
+  // fase 2, lotto 4: luci semplici (src/mappa/luce.js): categorie di regole.json → illuminazione, raggi di scoperta
+  {
+    const LU = m.luci;
+    const livelli = (dati.regole?.illuminazione?.livelli ?? []).map((x) => x.id);
+    if (!isOggetto(LU)) err(F, 'luci', 'oggetto mancante');
+    else {
+      if (!Array.isArray(LU.categorie) || LU.categorie.length < 2 || !LU.categorie.every((x) => livelli.includes(x))) err(F, 'luci.categorie', `categorie di regole.json → illuminazione.livelli (${livelli.join(', ')})`);
+      else {
+        if (!LU.categorie.includes(LU.predefinita)) err(F, 'luci.predefinita', 'una delle categorie');
+        for (const id of LU.categorie) if (!isIntero(LU.raggio_scoperta_q?.[id]) || LU.raggio_scoperta_q[id] < 1) err(F, `luci.raggio_scoperta_q.${id}`, 'intero da 1 in su (Q)');
+        if (isIntero(LU.raggio_scoperta_q?.[LU.predefinita]) && m.visuale && LU.raggio_scoperta_q[LU.predefinita] > m.visuale.raggio_q) err(F, `luci.raggio_scoperta_q.${LU.predefinita}`, 'non oltre visuale.raggio_q');
+        for (const k of ['oscurita', 'oscurita_giocatori']) for (const id of LU.categorie) if (id !== LU.predefinita && !(LU[k]?.[id] >= 0 && LU[k][id] <= 1)) err(F, `luci.${k}.${id}`, 'opacità da 0 a 1');
+      }
+      if (!isIntero(LU.raggio_max_q) || LU.raggio_max_q < 1) err(F, 'luci.raggio_max_q', 'intero da 1 in su');
+      if (!Array.isArray(LU.sorgenti) || !LU.sorgenti.length || !LU.sorgenti.every((x) => isTesto(x.id) && isTesto(x.nome) && isIntero(x.raggio_q) && x.raggio_q >= 1 && x.raggio_q <= (LU.raggio_max_q ?? 0))) err(F, 'luci.sorgenti', '{ id, nome, raggio_q } con raggio da 1 a raggio_max_q');
+    }
+  }
+  // menu del clic destro (07/10, src/mappa/menu.js): gruppi e voci note, senza ripetizioni
+  { const e = erroreMenu(m.menu); if (e) err(F, e.split(':')[0], e.slice(e.indexOf(':') + 2)); }
   // zone di controllo (07/10, src/mappa/zoc.js; Giocatore §5.3)
   const Z = m.zoc;
   if (!isOggetto(Z)) err(F, 'zoc', 'oggetto mancante');
@@ -2710,6 +2732,9 @@ function validaMappa(dati, err) {
     if (!Array.isArray(Z.stati_che_impediscono)) err(F, 'zoc.stati_che_impediscono', 'elenco di id di Stati');
     else for (const id of Z.stati_che_impediscono) if (!(dati.regole?.stati?.elenco ?? []).some((s) => s.id === id)) err(F, 'zoc.stati_che_impediscono', `Stato «${id}» non in regole.json`);
     if (!isTesto(Z.frase_eccezione)) err(F, 'zoc.frase_eccezione', 'testo mancante');
+    // A.132: ZoC inattiva (Stati che impediscono gli Attacchi di Opportunità), tratteggiata per il master
+    if (!isOggetto(Z.inattiva) || !(Z.inattiva.opacita_contorno >= 0 && Z.inattiva.opacita_contorno <= 1)) err(F, 'zoc.inattiva.opacita_contorno', 'opacità da 0 a 1');
+    else if (!Array.isArray(Z.inattiva.tratteggio_px) || Z.inattiva.tratteggio_px.length !== 2 || !Z.inattiva.tratteggio_px.every((n) => isIntero(n) && n > 0)) err(F, 'zoc.inattiva.tratteggio_px', '[tratto, spazio] in pixel, interi da 1 in su');
   }
   // colori dei bordi dei token (decisione di Marcello del 06/10, src/mappa/colori.js)
   const CO = m.colori;
@@ -2727,7 +2752,7 @@ function validaMappa(dati, err) {
       }
     }
     if (Array.isArray(CO.pg) && Array.isArray(CO.nemici) && CO.pg.some((a) => CO.nemici.some((b) => a.valore?.toLowerCase() === b.valore?.toLowerCase()))) err(F, 'colori', 'le tavolozze dei PG e dei nemici devono essere diverse');
-    for (const k of ['nemici_alterno', 'alleati', 'veicolo_del_gruppo', 'senza_colore', 'contorno_scuro', 'contorno_chiaro', 'alone_turno']) if (!esa(CO[k])) err(F, `colori.${k}`, 'colore #rrggbb');
+    for (const k of ['nemici_alterno', 'alleati', 'veicolo_del_gruppo', 'senza_colore', 'contorno_scuro', 'contorno_chiaro', 'alone_turno', 'selezione_gruppo']) if (!esa(CO[k])) err(F, `colori.${k}`, 'colore #rrggbb');
     if (!positivo(CO.contrasto_minimo)) err(F, 'colori.contrasto_minimo', 'numero positivo');
   }
   // lotto 6, §11: barra accanto alla mappa (src/mappa/disposizione.js) e barra dell'Iniziativa
@@ -2777,7 +2802,9 @@ function validaMappa(dati, err) {
   if (!Array.isArray(vp) || vp.length !== 2 || !vp.every((n) => isIntero(n) && n >= 1 && n <= (T?.veicolo_ingombro_max ?? 0))) err(F, 'token.veicolo_predefinito', '[colonne, righe] interi entro veicolo_ingombro_max');
   const M = m.movimento;
   for (const k of ['costo_ortogonale', 'costo_diagonale', 'terreno_difficile_moltiplicatore']) if (!positivo(M?.[k])) err(F, `movimento.${k}`, 'numero positivo');
-  for (const k of ['diagonali_alterne', 'taglio_angoli_muri', 'attraversa_alleati', 'attraversa_avversari', 'fermarsi_su_alleato', 'blocco_dopo_passo']) {
+  // A.134: diagonale rasente allo spigolo di un muro
+  if (!['un_lato', 'vietata', 'libera'].includes(M?.diagonale_spigolo)) err(F, 'movimento.diagonale_spigolo', 'un_lato, vietata o libera (A.134)');
+  for (const k of ['diagonali_alterne', 'attraversa_alleati', 'attraversa_avversari', 'fermarsi_su_alleato', 'blocco_dopo_passo']) {
     if (typeof M?.[k] !== 'boolean') err(F, `movimento.${k}`, 'vero o falso');
   }
   const fasce = Array.isArray(M?.fasce) ? M.fasce : [];
@@ -2787,4 +2814,40 @@ function validaMappa(dati, err) {
   if (!Array.isArray(M?.divisibili) || !M.divisibili.every((f) => fasce.includes(f))) err(F, 'movimento.divisibili', 'elenco di fasce (passo, corsa, scatto)');
   if (!Array.isArray(m.template?.forme) || !m.template.forme.length) err(F, 'template.forme', 'almeno una forma');
   if (!isIntero(m.template?.durata_round_predefinita) || m.template.durata_round_predefinita < 1) err(F, 'template.durata_round_predefinita', 'intero da 1 in su');
+  // fase 2, lotto 3: linea di visuale e di tiro (src/mappa/visuale.js)
+  const VV = m.visuale ?? {};
+  const LIVELLI = ['nessuna', 'leggera', 'media', 'totale'];
+  // 07/10: «dal centro», cinque linee (quattro angoli e centro del bersaglio): sei livelli per 0–5 linee bloccate
+  if (!Array.isArray(VV.copertura_linee) || VV.copertura_linee.length !== 6 || !VV.copertura_linee.every((x) => LIVELLI.includes(x)) || VV.copertura_linee[0] !== 'nessuna' || VV.copertura_linee[5] !== 'totale') err(F, 'visuale.copertura_linee', 'sei livelli (0–5 linee bloccate), il primo «nessuna» e l’ultimo «totale» (§5.8)');
+  if (!isIntero(VV.campioni_per_q) || VV.campioni_per_q < 2 || VV.campioni_per_q > 50) err(F, 'visuale.campioni_per_q', 'intero da 2 a 50');
+  // 07/10: token in mezzo alla linea di tiro (A.141, A.144): «protetto» (§5.10) o «copertura» (ostacolo)
+  if (!['protetto', 'copertura'].includes(VV.token_in_mezzo)) err(F, 'visuale.token_in_mezzo', 'protetto o copertura');
+  if (!positivo(VV.raggio_q)) err(F, 'visuale.raggio_q', 'numero positivo (Q)');
+  if (!['quadretti', 'euclidea'].includes(VV.metrica)) err(F, 'visuale.metrica', 'quadretti o euclidea');
+  if (typeof VV.automatica_predefinita !== 'boolean') err(F, 'visuale.automatica_predefinita', 'vero o falso');
+  if (!(VV.opacita_esplorate >= 0 && VV.opacita_esplorate <= 1)) err(F, 'visuale.opacita_esplorate', 'da 0 a 1');
+  for (const l of LIVELLI) if (!/^#[0-9a-fA-F]{6}$/.test(String(VV.colori?.[l]))) err(F, `visuale.colori.${l}`, '#rrggbb');
+  // fase 2, lotto 2: porte (src/mappa/porte.js; A.125)
+  const PP = m.porte ?? {};
+  if (['aperta', 'chiusa', 'bloccata'].some((s) => !PP.stati?.includes(s))) err(F, 'porte.stati', 'aperta, chiusa, bloccata attese (A.125)');
+  if (!PP.stati?.includes(PP.stato_predefinito)) err(F, 'porte.stato_predefinito', 'uno degli stati');
+  if (!isIntero(PP.costo_azp) || PP.costo_azp < 0) err(F, 'porte.costo_azp', 'intero da 0 in su (A.125: 1 AzP)');
+  for (const k of ['porte_max', 'azioni_max']) if (!isIntero(PP[k]) || PP[k] < 1) err(F, `porte.${k}`, 'intero da 1 in su');
+  if (!Array.isArray(PP.bloccano_vista) || !PP.bloccano_vista.every((s) => PP.stati?.includes(s))) err(F, 'porte.bloccano_vista', 'stati delle porte');
+  for (const s of [...(PP.stati ?? []), 'segreta']) if (!/^#[0-9a-fA-F]{6}$/.test(String(PP.colori?.[s]))) err(F, `porte.colori.${s}`, '#rrggbb');
+  // fase 2, lotto 1: template ad area (src/mappa/template.js)
+  const TT = m.template ?? {};
+  const noteForme = ['cerchio', 'cono', 'linea', 'quadrato', 'rettangolo'];
+  for (const f of TT.forme ?? []) if (!noteForme.includes(f)) err(F, 'template.forme', `${f}: forma sconosciuta (${noteForme.join(', ')})`);
+  if (!['quadretti', 'euclidea'].includes(TT.metrica_raggio)) err(F, 'template.metrica_raggio', 'quadretti o euclidea');
+  if (TT.regola_copertura !== 'almeno_meta') err(F, 'template.regola_copertura', 'almeno_meta (Magia, «Gittate e geometria»)');
+  if (!isIntero(TT.campioni_per_lato) || TT.campioni_per_lato < 2 || TT.campioni_per_lato > 32) err(F, 'template.campioni_per_lato', 'intero da 2 a 32');
+  for (const k of ['cono_larghezza_iniziale', 'linea_larghezza', 'misura_max_q']) if (!positivo(TT[k])) err(F, `template.${k}`, 'numero positivo');
+  for (const f of TT.forme ?? []) {
+    const lista = TT.misure_proposte?.[f];
+    if (!Array.isArray(lista) || !lista.length || !lista.every((x) => x && Object.values(x).every((v) => positivo(v) && v <= TT.misura_max_q))) err(F, `template.misure_proposte.${f}`, 'elenco di misure in Q');
+    if (typeof TT.nomi_forme?.[f] !== 'string') err(F, `template.nomi_forme.${f}`, 'nome della forma');
+  }
+  if (!Array.isArray(TT.colori) || !TT.colori.length || !TT.colori.every((c) => /^#[0-9a-fA-F]{6}$/.test(String(c?.valore)))) err(F, 'template.colori', 'colori #rrggbb');
+  for (const k of ['opacita_riempimento', 'opacita_contorno']) if (!(TT[k] >= 0 && TT[k] <= 1)) err(F, `template.${k}`, 'da 0 a 1');
 }

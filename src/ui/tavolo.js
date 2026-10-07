@@ -21,7 +21,7 @@ import { testoColpo } from '../danno.js';
 import { perditeDovute, applicaPerdita, registraPeriodico, togliPeriodici, allineaPeriodici, periodicoDi, pvDopoPerdita } from '../periodici.js';
 import { pannelloScontro, leggiScontroAperto, leggiScontro, salvaScontro } from './scontro.js';
 import { pannelloBestiario, elencoNemici, cartaNemico } from './nemici.js';
-import { diTurno, avanti, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico, confermaRegimeNemico, aggiungiNemici, registraRiga, cambiaStatoNemico } from '../scontro.js';
+import { diTurno, avanti, indietro, anteprimaIndietro, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico, confermaRegimeNemico, aggiungiNemici, registraRiga, cambiaStatoNemico } from '../scontro.js';
 import { vociBestiario } from '../nemici.js';
 import { creaCustode } from './ridisegno.js';
 import { avviso, avvisoErrore } from './avvisi.js';
@@ -174,6 +174,13 @@ export function renderTavolo(radice, ctx) {
       for (const p of pg) {
         const finiti = prima.durate.filter((d) => d.partecipante === p.id && !restano.has(`${d.partecipante}|${d.stato}`)).map((d) => d.stato);
         if (finiti.length) await aggiornaPg(p.chiave, (x) => ({ ...x, statiAttivi: (x.statiAttivi ?? []).filter((y) => !finiti.includes(y)) }));
+      }
+    } else if (prima && dopo.stato === 'aperto' && dopo.round < prima.round) {
+      // «Indietro» oltre il cambio di Round (07/10): gli Stati dei PG la cui durata torna in corso rientrano nella scheda
+      const cerano = new Set(prima.durate.map((d) => `${d.partecipante}|${d.stato}`));
+      for (const p of pg) {
+        const tornati = dopo.durate.filter((d) => d.partecipante === p.id && !cerano.has(`${d.partecipante}|${d.stato}`)).map((d) => d.stato);
+        if (tornati.length) await aggiornaPg(p.chiave, (x) => ({ ...x, statiAttivi: [...new Set([...(x.statiAttivi ?? []), ...tornati])] }));
       }
     } else return;
     await aggiorna(true);
@@ -335,7 +342,7 @@ export function renderTavolo(radice, ctx) {
       await aggiorna(true);
     }) : null;
     const stScontro = Object.assign(stato, { pgAlTavolo: alTavolo.map((r) => stato.viste.get(r.file)).filter((v) => v?.completa) });
-    const azScontro = { modifica, crea: (s) => salva(s), ridisegna: disegna, annullaColpo, attacca: (p) => attacca(p, alTavolo) };
+    const azScontro = { modifica, crea: (s) => salva(s), ridisegna: disegna, annullaColpo, indietro: indietroUi, attacca: (p) => attacca(p, alTavolo) };
     const cartePg = alTavolo.length
       ? h('div', { class: 'plancia-griglia' }, alTavolo.map((r) => (r.mancante ? cartaMancante(r.mancante)
         : stato.viste.get(r.file) ? conPezzo(cartaPg(ctx, stato.viste.get(r.file), r, turnoDi(r), colpitoPg, durateDi(stato.viste.get(r.file))), `partecipante:pg:${chiaveDaFile(r.file)}`) : cartaErrore(r, stato.errori.get(r.file)))))
@@ -525,6 +532,34 @@ export function renderTavolo(radice, ctx) {
   const lancia = (p, indice, alTavolo) => {
     if (!stato.scontro) return;
     apriLancioNemico(ctx, p, indice, { bersagli: bersagliPer(p, alTavolo), registra: (l) => modifica((x) => registraLancioNemico(x, l, undefined, ctx.dati)) });
+  };
+  // «Indietro» (ritocchi del 07/10; src/scontro.js → indietro): annulla l'ultimo «Avanti». Lo scontro torna com'era
+  // (turno, Round, durate, effetti, Stati dei nemici, perdite periodiche dei nemici); i PV dei PG tolti dalle perdite
+  // periodiche di quel turno si rimettono nel loro file, se non sono cambiati; gli Stati dei PG tornati in corso li
+  // rimette seguiScontro. Le modifiche fatte dopo l'«Avanti» restano, e l'avviso lo dice.
+  const indietroUi = async () => {
+    await aggiorna();
+    const a = anteprimaIndietro(stato.scontro);
+    if (!a) { avviso('Nessun «Avanti» da annullare.', { chiave: 'indietro' }); return false; }
+    const ok = await modifica((x) => indietro(x));
+    if (!ok) return false;
+    const nonRimessi = [];
+    for (const pe of a.perditePg) {
+      if (!pe.chiave || pe.pvPrima === pe.pvDopo) continue;
+      let cambiato = false;
+      await aggiornaPg(pe.chiave, (x) => {
+        if (x.pvAttuali !== pe.pvDopo) { cambiato = true; return x; }
+        return { ...x, pvAttuali: pe.pvPrima };
+      });
+      if (cambiato) nonRimessi.push(pe.nome);
+    }
+    const testi = [];
+    if (a.cambiaRound) testi.push(`Torno al Round ${a.round}: le durate scalate tornano come prima.`);
+    if (a.altre) testi.push(`Le modifiche fatte dopo l’«Avanti» (${a.altre === 1 ? '1 riga' : `${a.altre} righe`} del registro: PV, colpi, Stati…) restano: torna solo il turno.`);
+    if (nonRimessi.length) testi.push(`PV della perdita periodica non rimessi (cambiati dopo): ${nonRimessi.join(', ')}. Correggili dalla scheda.`);
+    if (testi.length) avviso(testi, { tipo: 'info', durata: 9000 });
+    await aggiorna(true);
+    return true;
   };
   // «Annulla ultimo colpo»: per un PG si rimettono nel file PV, Ferite e Stati di prima (con la revisione)
   const annullaColpo = async () => {
@@ -807,18 +842,22 @@ export function renderTavolo(radice, ctx) {
   // lotto 6: un solo «Avanti» per mappa, plancia e vista giocatori: la barra dell'Iniziativa usa questo, con la stessa
   // coda delle modifiche e la stessa revisione dello scontro
   // prima si rilegge lo scontro (un movimento «Libero» della mappa può averne cambiato la revisione)
-  ferma.avanti = async () => { await aggiorna(); return modifica((x) => avanti(x)); };
+  ferma.avanti = async () => { await aggiorna(); return modifica((x) => avanti(x, undefined, { indietroMax: ctx.dati.mappa.iniziativa.indietro_max })); };
+  // «Indietro» (07/10): lo stesso della plancia; puoIndietro per il pulsante della barra
+  ferma.indietro = () => indietroUi();
+  ferma.puoIndietro = () => anteprimaIndietro(stato.scontro);
   ferma.aggiorna = () => aggiorna();
   // ZoC della mappa (07/10): «Attacca!» dell'avversario con il bersaglio già scelto, dall'avviso dell'Attacco di
   // Opportunità; false se non si può (PG: l'attacco si fa dalla sua scheda; nessun attacco nel profilo)
-  ferma.attaccaContro = (idDa, idContro) => {
+  // fase 2, lotto 3: `dichiarazione` dalla linea di tiro (distanza, Copertura), modificabile nel pannello
+  ferma.attaccaContro = (idDa, idContro, dichiarazione = {}) => {
     const p = (stato.scontro?.partecipanti ?? []).find((x) => x.id === idDa);
     if (!p || p.tipo === 'pg' || !attacchiDi(p).length) return false;
     const ultimi = ultimiPerPersonaggio(stato.elenco);
     const alTavolo = stato.selezione.map((k) => ultimi.get(k) ?? { mancante: k });
     const bersagli = bersagliPer(p, alTavolo);
     bersagli.sort((a, b) => (b.id === idContro) - (a.id === idContro));
-    apriAttaccoNemico(ctx, p, { bersagli, registra: (a) => modifica((x) => registraAttacco(x, a)) });
+    apriAttaccoNemico(ctx, p, { bersagli, registra: (a) => modifica((x) => registraAttacco(x, a)), dichiarazione });
     return true;
   };
   ferma.puoAttaccare = (idDa) => { const p = (stato.scontro?.partecipanti ?? []).find((x) => x.id === idDa); return !!p && p.tipo !== 'pg' && attacchiDi(p).length > 0; };

@@ -2,11 +2,13 @@
 
 Da applicare nel Google Doc «per-davide.md» (`1Jg5rqbBtcHGE1E10xYElO_qCDCwh8K87LAInovtpF6A`) da Cowork o da Marcello,
 secondo `docs/protocollo-davide.md` §5. Non si incolla nel repo: il repo si aggiorna scaricando il Doc alla sessione
-successiva. Fonte: controllo del 07/10 (`docs/diff-manuali-2026-10-07.md`), decisioni 119–133 di `docs/risposte-master.md`.
+successiva. Fonte: controllo del 07/10 (`docs/diff-manuali-2026-10-07.md`), decisioni 119–136 di `docs/risposte-master.md`
+(134–136: risposte di Marcello del 07/10, decisioni del gruppo che Davide può rivedere).
 
-Riepilogo: una voce fra le Risolte (A.120) più le due mancanti del pacchetto del 06/10 (A.121, A.131); risposte
-ricevute e in implementazione per A.107, A.108, A.110, A.111, A.114, A.116, A.119, A.122, A.124, A.125, A.127, A.128,
-A.129; l'elenco chiesto da Davide per la A.109; tre domande nuove (A.134, A.135, A.136); pulizia dei doppioni della sezione 2.
+Riepilogo: tre voci fra le Risolte (A.120; A.132 e A.134 con «risposta di Marcello») più le due mancanti del pacchetto
+del 06/10 (A.121, A.131); risposte ricevute e in implementazione per A.107, A.108, A.110, A.111, A.114, A.116, A.119,
+A.122, A.124, A.125 (veicoli: risposta di Marcello; etichette delle luci superate), A.127, A.128, A.129; l'elenco chiesto da Davide per la A.109; dieci
+domande nuove (A.135–A.144); pulizia dei doppioni della sezione 2.
 
 ---
 
@@ -87,7 +89,7 @@ Risposta ricevuta il 06/10 (sezione 7): coincide con quello che la mappa già fa
 *** AZIONE: aggiungi la riga alla voce A.125
 
 --- TESTO ---
-Risposta ricevuta il 06/10 (sezione 7) per porte e illuminazione: in implementazione. Restano aperti i veicoli sulla mappa e le vecchie etichette numeriche delle luci.
+Risposta ricevuta il 06/10 (sezione 7) per porte e illuminazione: applicata alla mappa il 07/10. Veicoli: risposta di Marcello del 07/10 (decisione del gruppo, puoi rivederla): si muovono sulla mappa all'Iniziativa del conducente, come nella plancia (A.105); si applicherà quando i veicoli arriveranno sulla mappa. Vecchie etichette numeriche delle luci: superata dal sistema semplice (decisione di Marcello del 07/10): la mappa usa solo Luce, Penombra, Luce scarsa e Buio, con zone a pennello e torce sui token. Con questo la A.125 passa fra le Risolte.
 ```
 
 ```
@@ -160,10 +162,6 @@ Molti hanno già la scala scritta (per esempio 9, 12, 18, 27, 29): in quei casi 
 *** AZIONE: aggiungi in fondo alla sezione 2
 
 --- TESTO ---
-**A.134 — Diagonale accanto allo spigolo di un muro.**
-La A.124 fissa la diagonale a 1 Q e dice che non si attraversano muri o passaggi ostruiti. Una pedina può muoversi in diagonale rasente allo spigolo di un muro, cioè quando dei due quadretti ai lati della diagonale uno è libero e l'altro è murato?
-*Nel frattempo:* no, in diagonale servono liberi anche i due quadretti ai lati.
-
 **A.135 — Ricarica dei fucili a pallini semiautomatici e automatici.**
 Il Manuale degli Armamenti 0.59 distingue i fucili a pallini a pompa (solo Colpo Singolo) dai semiautomatici (HD14M, SA SG2001, Airbrush) e dall'automatico Mandible, ma non dice come si ricaricano. Si inserisce una cartuccia per operazione, come nei fucili a pompa, oppure si sostituisce un caricatore?
 *Nel frattempo:* come prima. HD14M si ricarica una cartuccia per operazione; SA SG2001 ha un caricatore (A.37); Mandible e Airbrush hanno un caricatore, come le altre armi delle loro tabelle.
@@ -171,6 +169,38 @@ Il Manuale degli Armamenti 0.59 distingue i fucili a pallini a pompa (solo Colpo
 **A.136 — Corsa o Scatto dopo un Passo già cominciato.**
 La A.129 dice che solo il Passo si divide e che Corsa e Scatto sono un blocco unico da completare prima delle Azioni Principali, tutti al costo dell'unica Azione di Movimento. Se un personaggio ha già fatto una parte del Passo (per esempio 2 Q, prima di ogni Azione Principale), può trasformare il movimento in una Corsa o in uno Scatto, contando i Q già fatti nel blocco (2 + 10 = 12)?
 *Nel frattempo:* no, Corsa e Scatto partono solo da fermi; il master annulla il movimento e lo rifà come Corsa.
+
+**A.137 — Raggio di un'Area sulla griglia.**
+Il Manuale della Magia dice che il Raggio è la «distanza dal centro al limite» e che un Q rientra nell'Area se è incluso per almeno metà; il movimento conta la diagonale come 1 Q (A.124). Il raggio di un'esplosione o di una granata si conta a quadretti (raggio 2 Q = un quadrato di 5 × 5 Q; una granata con Raggio di Scoppio 1 Q colpisce il suo Q e gli otto attorno) oppure è un cerchio vero, con i Q coperti per almeno metà?
+*Nel frattempo:* a quadretti, come il movimento; anche coni e linee in diagonale si misurano a quadretti.
+
+**A.138 — Forma del Cono.**
+Il Cono è «lunghezza × larghezza finale, con apertura progressiva» e parte dal bordo dello spazio del Taumaturgo (Cono Elementale, da 3 × 2 a 18 × 9 Q). Quanto è largo all'inizio, accanto al Taumaturgo? E con una larghezza finale pari (3 × 2, 12 × 6), quando il cono va dritto lungo una fila di quadretti, come si contano i Q del bordo?
+*Nel frattempo:* largo 1 Q accanto al Taumaturgo, poi si allarga in modo uniforme; i Q del bordo coperti per meno di metà restano fuori.
+
+**A.139 — Porta «adiacente» in diagonale.**
+Per aprire o chiudere una porta (1 AzP, A.125) bisogna esserle adiacenti. Basta essere in diagonale rispetto alla porta?
+*Nel frattempo:* sì, come per la portata di 1 Q. La mano libera la controlla il master.
+
+**A.140 — Copertura sulla mappa.**
+Il §5.8 dice quanto vale la Copertura (Leggera −2, Media −4, Totale) ma non come si decide guardando la mappa. Proposta (il punto di partenza l'ha deciso Marcello il 07/10): dal centro del quadretto di chi tira si tracciano cinque linee, verso i quattro angoli e il centro del quadretto del bersaglio; contano le linee che passano per muri o porte chiuse; 0 = nessuna, 1–2 = Leggera, 3–4 = Media, 5 = Totale. Va bene così?
+*Nel frattempo:* si usa questa regola; il master può cambiare la Copertura nel pannello «Attacca!».
+
+**A.141 — Personaggi in mezzo alla linea di tiro.**
+Un personaggio (alleato o nemico) fra chi tira e il bersaglio dà Copertura?
+*Nel frattempo:* no; l'app propone in «Attacca!» il «bersaglio impegnato o protetto» del §5.10 (−4 VA e seconda Prova).
+
+**A.144 — Creature in mezzo: Copertura o bersaglio protetto?**
+Il §5.10 dice che sparare a un nemico «impegnato in Ravvicinato, protetto da un alleato o che usa un ostaggio» costa −4 VA, con una seconda Prova per vedere se si colpisce chi sta in mezzo. Una creatura fra chi tira e il bersaglio dà anche Copertura (Leggera, Media, Totale come un muro)? Vale anche se è un alleato di chi tira o un neutrale, o una creatura grande che nasconde del tutto il bersaglio?
+*Nel frattempo:* vale solo il §5.10, come dice il manuale; le creature a terra o a 0 PV non contano.
+
+**A.142 — Fin dove vedono i PG.**
+Per la nebbia che si apre da sola dove i PG vedono: con luce sufficiente, fino a quanti quadretti?
+*Nel frattempo:* 30 Q (45 m) con luce sufficiente; in Penombra 6 Q, con Luce scarsa 3 Q, al Buio solo il quadretto accanto (o fin dove arriva una torcia).
+
+**A.143 — Visione notturna e nebbia della mappa.**
+La Visione notturna (80 Q), la visione termica (40 Q) e la Vista Felina (20 Q) tolgono le penalità di Penombra e Luce molto scarsa entro la loro portata. Sulla mappa devono anche far vedere più lontano al PG che le ha, cioè aprire la nebbia come se ci fosse Luce entro la portata?
+*Nel frattempo:* no, la nebbia segue solo la luce della zona; le penalità nell'attacco restano quelle della scheda.
 ```
 
 ```
@@ -188,6 +218,15 @@ La A.129 dice che solo il Passo si divide e che Corsa e Scatto sono un blocco un
 --- TESTO ---
 **A.121** — Riuso del codice della tua app per la mappa: domanda ritirata, la mappa è scritta da zero. *Ritirata il 06/10.*
 **A.131** — Immagine dei nemici sulle pedine: campo facoltativo nella scheda del nemico, valido per tutte le copie; senza immagine la pedina mostra le iniziali. Scelta tecnica dell'app, non una regola. *Implementata il 06/10.*
+**A.134** — Diagonale rasente allo spigolo di un muro: sì. In diagonale basta che sia libero il quadretto d'arrivo e che la diagonale non attraversi un muro; uno dei due quadretti ai lati può essere murato. Se lo sono entrambi (passaggio chiuso a spigolo) la diagonale resta vietata. Le porte chiuse o bloccate contano come muri. *Risposta di Marcello del 07/10 (decisione del gruppo, puoi rivederla); applicata alla mappa il 07/10.*
+```
+
+```
+*** DOC per-davide.md — voce A.132
+*** AZIONE: sposta la voce A.132 nella sezione 6
+
+--- TESTO ---
+**A.132** — Stordito e Attacchi di Opportunità: no, uno Stordito non fa Attacchi di Opportunità, come chi è Svenuto o a 0 PV; la sua zona di controllo non dà l'avviso (sulla mappa il master la vede tratteggiata, i giocatori non la vedono). *Risposta di Marcello del 07/10 (decisione del gruppo, puoi rivederla); applicata alla mappa il 07/10.*
 ```
 
 ```

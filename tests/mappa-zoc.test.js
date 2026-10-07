@@ -1,7 +1,7 @@
 // Zone di controllo e Attacchi di Opportunità (07/10/2026; src/mappa/zoc.js; Giocatore §5.3, Armamenti §7.1.2).
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { portataDi, controllaZoc, avversariZoc, distanzaIngombri, celleZoc, passiInZoc, attacchiDiOpportunita, testoOpportunita } from '../src/mappa/zoc.js';
+import { portataDi, controllaZoc, avversariZoc, avversariZocInattivi, statoCheImpedisce, distanzaIngombri, celleZoc, passiInZoc, attacchiDiOpportunita, testoOpportunita } from '../src/mappa/zoc.js';
 import { datiReali } from './helpers.js';
 
 const { dati } = await datiReali();
@@ -26,6 +26,21 @@ test('chi controlla una ZoC: avversari, non a 0 PV, non Svenuti, non veicoli; na
   // vale anche al contrario: per il Legionario gli avversari sono i PG (e l'alleato dei PG)
   assert.deepEqual(avversariZoc(s, pezzi, 't-Legionario 1', dati).map((a) => a.pezzo.nome).sort(), ['Mercenario', 'Oshi']);
   assert.equal(controllaZoc({ tipo: 'veicolo', lato: 'pg' }, { rif: { tipo: 'veicolo' } }, dati), false);
+});
+
+test('A.132 (risposta di Marcello del 07/10): uno Stordito non fa AdO; ZoC inattiva per il master, non a 0 PV', () => {
+  assert.deepEqual(dati.mappa.zoc.stati_che_impediscono.slice().sort(), ['stordito', 'svenuto']);
+  assert.equal(Object.keys(dati.mappa.zoc).some((k) => k.startsWith('TODO(Davide) stordito')), false);
+  const oshi = pg('Oshi'), st = nem('Stordito 1', { stati: [{ id: 'stordito', round: 1 }] }), sv = nem('Svenuto 1', { stati: ['svenuto'] }), morto = nem('Morto', { aZero: true, stati: [{ id: 'stordito' }] }), l1 = nem('Legionario 1');
+  const s = scena([tok(oshi, [5, 5]), tok(st, [6, 5]), tok(sv, [4, 5]), tok(morto, [5, 6]), tok(l1, [5, 4])]);
+  const pezzi = [oshi, st, sv, morto, l1];
+  assert.equal(statoCheImpedisce(st, dati), 'stordito');
+  assert.equal(statoCheImpedisce(l1, dati), null);
+  assert.deepEqual(avversariZoc(s, pezzi, 't-Oshi', dati).map((a) => a.pezzo.nome), ['Legionario 1']);
+  assert.deepEqual(avversariZocInattivi(s, pezzi, 't-Oshi', dati).map((a) => [a.pezzo.nome, a.stato]), [['Stordito 1', 'stordito'], ['Svenuto 1', 'svenuto']]);
+  // uscendo dalle portate di tutti: l'avviso solo per il Legionario, non per lo Stordito
+  const avv = avversariZoc(s, pezzi, 't-Oshi', dati);
+  assert.deepEqual(attacchiDiOpportunita([[5, 5], [6, 4], [7, 3], [8, 2]], 1, avv).map((a) => a.pezzo.nome), ['Legionario 1']);
 });
 
 test('ZoC: fascia profonda quanto la portata attorno a tutto l’ingombro (anche 2 × 2)', () => {

@@ -36,6 +36,27 @@ function caselleOggetti(ctx, a, tipo, d, imposta) {
  * Pannello d'attacco per l'arma `a` (voce di scheda.equipaggiamento.armi).
  * ctx: contesto della scheda a tab (dati, tab.scheda, sessione, ui, azioni).
  */
+/**
+ * Linea di tiro della mappa (fase 2, lotto 3): «Apri la scheda per Attacca!» lascia in sessionStorage distanza e
+ * Copertura per il PG; il primo «Attacca!» aperto nella sua scheda entro 10 minuti le usa come valori iniziali.
+ */
+export const CHIAVE_DALLA_MAPPA = 'mutant-attacco-dalla-mappa';
+function dallaMappa(ctx, a, salvate) {
+  let p = null;
+  try { p = JSON.parse(sessionStorage.getItem(CHIAVE_DALLA_MAPPA) ?? 'null'); } catch { return salvate; }
+  const nome = ctx.tab?.tab?.[0]?.dati?.nome;
+  if (!p || !nome || String(p.nome).trim().toUpperCase() !== String(nome).trim().toUpperCase() || Date.now() - p.quando > 10 * 60 * 1000) return salvate;
+  try { sessionStorage.removeItem(CHIAVE_DALLA_MAPPA); } catch { /* resta */ }
+  // fase 2, lotto 4: anche la luce della zona del bersaglio, proposta in «Luce sul bersaglio» (modificabile)
+  const v = { ...salvate, distanza: p.distanza, bersaglio: { ...(salvate.bersaglio ?? {}), copertura: p.copertura, distanza: p.distanza, ...(p.protetto ? { impegnato: true } : {}) }, ...(p.luceMappa ? { luceMappa: p.luceMappa } : {}) };
+  queueMicrotask(() => {
+    ctx.azioni.ricordaAttacco?.(a.uid, v);
+    if (p.luce && p.luce !== ctx.sessione?.luce) ctx.azioni.imposta?.('luce', p.luce);
+    avviso(`Dalla mappa: bersaglio ${p.bersaglio ?? ''} a ${p.distanza} Q, Copertura ${p.copertura}${p.luceMappa ? `, ${p.luceMappa}` : ''}.`);
+  });
+  return v;
+}
+
 export function pannelloAttacco(ctx, a) {
   const chiudi = () => { ctx.ui.attacco = null; ctx.azioni.ridisegna(); };
   const intestazione = { etichetta: `Attacco con ${a.nome}`, titolo: `Attacca! · ${a.nome}`, chiudi, etichettaNav: 'Passi dell’attacco' };
@@ -47,7 +68,7 @@ function corpoRavvicinato(ctx, a, intestazione) {
   const R = ctx.dati.regole.attacco_ravvicinato;
   const personaggio = { scheda: ctx.tab.scheda, sessione: ctx.sessione };
   // le scelte salvate contengono anche l’ultima Manovra: si conservano
-  const salvate = ctx.sessione.attacchi?.[a.uid] ?? {};
+  const salvate = dallaMappa(ctx, a, ctx.sessione.attacchi?.[a.uid] ?? {});
   const d = dichiarazioneRavvicinato(salvate);
   const imposta = (modifica) => ctx.azioni.ricordaAttacco(a.uid, { ...salvate, ...d, ...modifica, bersaglio: { ...d.bersaglio, ...(modifica.bersaglio ?? {}) } });
   const b = (modifica) => imposta({ bersaglio: modifica });
@@ -100,6 +121,10 @@ function corpoRavvicinato(ctx, a, intestazione) {
       ...caselleOggetti(ctx, a, 'ravvicinati', d, imposta),
     ] },
     { titolo: 'Il bersaglio', contenuto: [
+      // fase 2, lotto 4: la luce sul bersaglio anche nel corpo a corpo (A.106: attacchi che dipendono dalla vista), con
+      // la riga della luce proposta dalla mappa
+      selettoreLuce(ctx, { compatto: true }),
+      salvate.luceMappa ? h('p', { class: 'nota luce-mappa' }, salvate.luceMappa) : null,
       interruttore('A Terra', d.bersaglio.aTerra, (x) => b({ aTerra: x }), { mod: segno(R.a_terra.bersaglio) }),
       interruttore('Ignaro della tua presenza', d.bersaglio.ignaro, (x) => b({ ignaro: x }), { mod: ha('ignaro') ? `${segno(ha('ignaro').e.ignaro.va)} (${ha('ignaro').nome})` : 'per i Talenti' }),
       ha('alleato_adiacente') ? interruttore('Adiacente a un alleato', d.bersaglio.alleatoAdiacente, (x) => b({ alleatoAdiacente: x }), { mod: `${segno(ha('alleato_adiacente').e.alleato_adiacente.va)} (${ha('alleato_adiacente').nome})` }) : null,
@@ -182,9 +207,9 @@ export function pillola(nome, va, provenienza) {
 
 function corpoDistanza(ctx, a, intestazione) {
   const personaggio = { scheda: ctx.tab.scheda, sessione: ctx.sessione };
-  const salvate = ctx.sessione.attacchi?.[a.uid] ?? {};
+  const salvate = dallaMappa(ctx, a, ctx.sessione.attacchi?.[a.uid] ?? {});
   const d = dichiarazioneDistanza(salvate);
-  const imposta = (modifica) => ctx.azioni.ricordaAttacco(a.uid, { ...d, ...modifica, bersaglio: { ...d.bersaglio, ...(modifica.bersaglio ?? {}) } });
+  const imposta = (modifica) => ctx.azioni.ricordaAttacco(a.uid, { ...(salvate.luceMappa ? { luceMappa: salvate.luceMappa } : {}), ...d, ...modifica, bersaglio: { ...d.bersaglio, ...(modifica.bersaglio ?? {}) } });
   const b = (modifica) => imposta({ bersaglio: modifica });
   const v = vincoliDistanza(personaggio, a, d, ctx.dati);
   const T = talentiAttacco(ctx.tab.scheda, ctx.dati);
@@ -229,6 +254,8 @@ function corpoDistanza(ctx, a, intestazione) {
     ],
     [
       selettoreLuce(ctx, { compatto: true }),
+      // fase 2, lotto 4: la riga della luce proposta dalla mappa
+      salvate.luceMappa ? h('p', { class: 'nota luce-mappa' }, salvate.luceMappa) : null,
       rigaScelte('Movimento del bersaglio', [
         { valore: 'fermo', etichetta: 'Fermo' }, { valore: 'passo', etichetta: 'Passo' }, { valore: 'corsa', etichetta: `Corsa ${numero(R.movimento.bersaglio.corsa)}` }, { valore: 'scatto', etichetta: `Scatto ${numero(R.movimento.bersaglio.scatto)}` },
       ], d.bersaglio.movimento, (x) => b({ movimento: x })),

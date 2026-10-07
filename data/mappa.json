@@ -118,8 +118,8 @@
     "costo_diagonale": 1,
     "_nota_diagonali": "A.124 (decisione 129): ogni diagonale costa 1 Q, come un passo orizzontale o verticale su terreno normale (niente 1/2/1: diagonali_alterne false); non permette di attraversare muri o passaggi ostruiti. Passo 6, Corsa 12, Scatto 18 Q con i modificatori (regole.json → movimento); il Direttore corregge a mano con «Libero». Le AzP (1 ai livelli 1–11, 2 ai 12–20, nella stessa Iniziativa) la mappa non le conta.",
     "diagonali_alterne": false,
-    "taglio_angoli_muri": false,
-    "TODO(Davide) angoli": "A.134: in diagonale si può passare rasente allo spigolo di un muro (dei due quadretti ai lati della diagonale uno libero e uno murato)? La A.124 dice solo che la diagonale non attraversa muri o passaggi ostruiti. Provvisorio: no, una diagonale vuole liberi dai muri anche i due quadretti ai lati.",
+    "diagonale_spigolo": "un_lato",
+    "_nota_spigolo": "A.134 (risposta di Marcello del 07/10/2026, decisione 135 di docs/risposte-master.md; Davide può rivederla): in diagonale basta che sia libero il quadretto d'arrivo e che la diagonale non attraversi un muro; uno dei due quadretti ai lati può essere murato (si passa rasente allo spigolo). Se lo sono entrambi (passaggio chiuso a spigolo) la diagonale resta vietata. Le porte chiuse o bloccate contano come muri. Valori: «un_lato» (questa regola), «vietata» (servono liberi entrambi i lati, la regola provvisoria di prima), «libera» (lati mai controllati).",
     "terreno_difficile_moltiplicatore": 2,
     "_nota_terreno": "A.128 (decisione 132): ogni quadretto di terreno difficile costa 2 Q, anche in diagonale e anche in Corsa e Scatto; nei percorsi misti 1 Q per i quadretti normali e 2 Q per quelli difficili (2 normali + 2 difficili = 6 Q, il Passo intero); nessuna penalità o Prova aggiunta. Le zone le segna il Direttore (Strumenti → Muri e terreno).",
     "attraversa_alleati": true,
@@ -139,14 +139,176 @@
     ]
   },
   "template": {
-    "_nota": "§10 della specifica (fase 2): forme e durata predefinita in Round.",
+    "_nota": "Template ad area (fase 2, lotto 1; §10 della specifica; src/mappa/template.js). Forme dai manuali: Magia, «Gittate e geometria» (Raggio «distanza dal centro al limite», Linea «lunghezza × larghezza, normalmente 1 Q», Cono «lunghezza × larghezza finale, con apertura progressiva»; «un Q rientra nell’Area se è incluso per almeno metà»; Linee e Coni «non includono automaticamente» il Q del lanciatore); Cono Elementale (il cono «parte dal bordo dello spazio del Taumaturgo»); Campo di Forza (cubo), Piattaforma Levitante (area rettangolare); Giocatore §5.10 (Fuoco di Soppressione, «un’Area di 3 × 3 Q»; Raggio di Scoppio delle esplosioni); Armamenti (RS delle granate 1–2 Q, dei razzi 2–4 Q; fumogena raggio 2 Q). Il Muro Elementale (segmenti di 1 Q) non è un template: si disegna con più linee o rettangoli.",
     "forme": [
-      "quadrato",
-      "cono",
       "cerchio",
+      "cono",
+      "linea",
+      "quadrato",
       "rettangolo"
     ],
-    "durata_round_predefinita": 1
+    "nomi_forme": {
+      "cerchio": "Raggio",
+      "cono": "Cono",
+      "linea": "Linea",
+      "quadrato": "Quadrato",
+      "rettangolo": "Rettangolo"
+    },
+    "regola_copertura": "almeno_meta",
+    "campioni_per_lato": 8,
+    "metrica_raggio": "quadretti",
+    "TODO(Davide) metrica": "A.137: il raggio di un’Area (esplosioni, granate, incantesimi) si misura a quadretti, con la diagonale a 1 Q come il movimento (A.124), così un raggio di 2 Q è un quadrato di 5 × 5 Q? Oppure è un cerchio vero, con i Q coperti per almeno metà (Magia, «Gittate e geometria»)? Provvisorio: a quadretti (anche lunghezza di coni e linee in diagonale); «euclidea» per il cerchio vero.",
+    "cono_larghezza_iniziale": 1,
+    "TODO(Davide) cono": "A.138: il Cono («lunghezza × larghezza finale, con apertura progressiva») quanto è largo all’inizio, al bordo del lanciatore? Provvisorio: 1 Q, poi si allarga in modo uniforme fino alla larghezza finale. Con una larghezza finale pari (Cono Elementale 3 × 2, 12 × 6) e il cono dritto su una fila, i Q di bordo restano coperti per meno di metà: va bene così o la larghezza finale si conta in Q interi da un lato?",
+    "linea_larghezza": 1,
+    "misura_max_q": 60,
+    "misure_proposte": {
+      "_nota": "Dai manuali: Esplosione Elementale raggio 2–5 Q, Devastazione 4–8, Esorcizzare 3–7, granate RS 1–2, razzi 2–4, fumogena 2; Cono Elementale 3 × 2, 6 × 3, 9 × 5, 12 × 6, 15 × 8, 18 × 9; Fiammata, Sbuffo, Soffio degli elementali 3–5 × 1; Fuoco di Soppressione 3 × 3, Campo di Forza 2–6; Piattaforma Levitante 1 × 1 → 3 × 3.",
+      "cerchio": [
+        {
+          "raggio": 1
+        },
+        {
+          "raggio": 2
+        },
+        {
+          "raggio": 3
+        },
+        {
+          "raggio": 4
+        },
+        {
+          "raggio": 5
+        },
+        {
+          "raggio": 6
+        },
+        {
+          "raggio": 8
+        }
+      ],
+      "cono": [
+        {
+          "lunghezza": 3,
+          "larghezza": 2
+        },
+        {
+          "lunghezza": 6,
+          "larghezza": 3
+        },
+        {
+          "lunghezza": 9,
+          "larghezza": 5
+        },
+        {
+          "lunghezza": 12,
+          "larghezza": 6
+        },
+        {
+          "lunghezza": 15,
+          "larghezza": 8
+        },
+        {
+          "lunghezza": 18,
+          "larghezza": 9
+        }
+      ],
+      "linea": [
+        {
+          "lunghezza": 3
+        },
+        {
+          "lunghezza": 4
+        },
+        {
+          "lunghezza": 5
+        },
+        {
+          "lunghezza": 6
+        },
+        {
+          "lunghezza": 10
+        }
+      ],
+      "quadrato": [
+        {
+          "lato": 2
+        },
+        {
+          "lato": 3
+        },
+        {
+          "lato": 4
+        },
+        {
+          "lato": 5
+        },
+        {
+          "lato": 6
+        }
+      ],
+      "rettangolo": [
+        {
+          "larghezza": 2,
+          "altezza": 1
+        },
+        {
+          "larghezza": 3,
+          "altezza": 2
+        },
+        {
+          "larghezza": 4,
+          "altezza": 2
+        }
+      ]
+    },
+    "nomi_proposti": [
+      "Esplosione",
+      "Granata",
+      "Fumo",
+      "Fiammata",
+      "Cono elementale",
+      "Soppressione",
+      "Barriera"
+    ],
+    "colori": [
+      {
+        "id": "arancione",
+        "nome": "Arancione",
+        "valore": "#f76707"
+      },
+      {
+        "id": "rosso",
+        "nome": "Rosso",
+        "valore": "#e03131"
+      },
+      {
+        "id": "grigio",
+        "nome": "Grigio (fumo)",
+        "valore": "#868e96"
+      },
+      {
+        "id": "azzurro",
+        "nome": "Azzurro",
+        "valore": "#1c7ed6"
+      },
+      {
+        "id": "viola",
+        "nome": "Viola",
+        "valore": "#9c36b5"
+      },
+      {
+        "id": "verde",
+        "nome": "Verde",
+        "valore": "#2f9e44"
+      }
+    ],
+    "durata_round_predefinita": 1,
+    "_nota_durata": "Come le altre durate in Round (regole.json → durate_round; Magia, «Scadenze e interruzione degli effetti»): il Round del piazzamento non si conta; con durata N piazzato nel Round R il template resta fino alla fine del Round R + N, poi esce con un avviso. Durata vuota: finché il master non lo toglie. Senza scontro aperto nessuna scadenza automatica.",
+    "opacita_riempimento": 0.28,
+    "opacita_contorno": 0.95,
+    "spessore_contorno_px": 2.5,
+    "tasto": "t"
   },
   "colori": {
     "_nota": "Colori dei bordi dei token (decisione di Marcello del 06/10/2026; src/mappa/colori.js). PG: bordo pieno, un colore per PG, assegnato al primo ingresso in mappa e salvato nella scena. Nemici: bordo tratteggiato che alterna nemici_alterno e il colore del tipo (tavolozza diversa da quella dei PG). Alleati non PG: bordo pieno doppio color alleati. Veicoli: il colore del PG proprietario, del gruppo veicolo_del_gruppo. Ogni bordo ha un contorno sottile scuro o chiaro (il più contrastato), per le mappe chiare e scure. alone_turno: l'alone del token di turno, bianco, che non si confonde col giallo dei PG.",
@@ -231,6 +393,8 @@
     "contorno_scuro": "#111111",
     "contorno_chiaro": "#ffffff",
     "alone_turno": "#ffffff",
+    "selezione_gruppo": "#22b8cf",
+    "_nota_selezione": "Selezione multipla (07/10/2026, src/mappa/gruppo.js): contorno tratteggiato di questo colore attorno ai token selezionati, diverso dall'alone del turno e dalla scelta del token singolo.",
     "contrasto_minimo": 3
   },
   "zoc": {
@@ -238,13 +402,74 @@
     "portata_predefinita": 1,
     "TODO(Davide) creature grandi": "A.133: una creatura Grande (2 × 2 Q) o Enorme (3 × 3 Q) ha la portata del suo profilo (1 Q, come nei profili del Manuale dei Mostri) attorno a tutto l'ingombro, o una portata maggiore per la Taglia? Provvisorio: quella del profilo.",
     "stati_che_impediscono": [
+      "stordito",
       "svenuto"
     ],
-    "TODO(Davide) stordito": "A.132: uno Stordito (§5.18: nessuna Azione Principale) può fare Attacchi di Opportunità, che «non consumano Azioni» (§5.3)? Provvisorio: sì (non è fra gli Stati che lo impediscono).",
+    "_nota_stati": "A.132 (risposta di Marcello del 07/10/2026, decisione 134 di docs/risposte-master.md; Davide può rivederla): uno Stordito non fa Attacchi di Opportunità, come chi è Svenuto o a 0 PV. La sua ZoC non genera l'avviso; il master la vede tratteggiata, senza riempimento («inattiva», zoc.inattiva: contorno ben visibile, tratteggio 8 × 6 px), i giocatori non la vedono. A 0 PV la ZoC non si mostra affatto.",
+    "inattiva": {
+      "opacita_contorno": 0.9,
+      "tratteggio_px": [8, 6]
+    },
     "opacita_riempimento": 0.16,
     "opacita_contorno": 0.7,
     "colore": "#e03131",
     "frase_eccezione": "senza Attacchi di Opportunità"
+  },
+  "iniziativa": {
+    "_nota": "«Indietro» nella barra dell'Iniziativa e nella plancia (ritocchi del 07/10/2026; src/scontro.js → avanti, indietro): annulla l'ultimo «Avanti» e riporta turno, Round, durate degli Stati, effetti degli incantesimi, Stati tolti ai nemici e perdite periodiche applicate a quel turno; le modifiche fatte dopo (PV, «Colpito», movimenti) restano. Lo storico sta nello scontro (indietro) e tiene al massimo indietro_max «Avanti».",
+    "indietro_max": 20
+  },
+  "menu": {
+    "_nota": "Menu del clic destro sulla mappa (richiesta di Marcello del 07/10/2026; src/mappa/menu.js): per contesto (token, porta, template, punto vuoto) la riga rapida, i gruppi con intestazione e le «Opzioni» (sottomenu), con gli id delle voci nell'ordine in cui compaiono. Si mostrano solo le voci utilizzabili in quel momento (la riga rapida anche spenta, con il motivo); i gruppi vuoti non si mostrano. «{nome}» nel titolo di un gruppo diventa il nome del template. altezza_voce_px: altezza minima di una voce, per il dito sul tablet.",
+    "altezza_voce_px": 40,
+    "token": {
+      "rapida": ["passo", "corsa", "scatto", "libero"],
+      "gruppi": [
+        { "titolo": "Movimento", "voci": ["annulla_movimento", "nuovo_turno"] },
+        { "titolo": "Azioni", "voci": ["attacca", "porta_token"] },
+        { "titolo": "Strumenti", "voci": ["linea", "area", "zoc", "template_qui"] },
+        { "titolo": "Scheda", "voci": ["mini_scheda", "scheda_completa"] },
+        { "titolo": "Selezione", "voci": ["selezione_token"] }
+      ],
+      "opzioni": ["nascondi", "luce_token", "colore_bordo", "togli_token"]
+    },
+    "porta": {
+      "gruppi": [
+        { "titolo": "Azioni", "voci": ["porta_token"] },
+        { "titolo": "Porta", "voci": ["apri_chiudi", "blocca"] }
+      ],
+      "opzioni": ["ruota", "segreta", "togli_porta"]
+    },
+    "template": {
+      "gruppi": [{ "titolo": "{nome}", "voci": ["sposta_template", "nascondi_template"] }],
+      "opzioni": ["togli_template"]
+    },
+    "mappa": {
+      "gruppi": [
+        { "titolo": "Strumenti", "voci": ["template_qui", "linea_qui"] },
+        { "titolo": "Selezione", "voci": ["seleziona_pg", "seleziona_nemici", "seleziona_tutti", "annulla_selezione"] }
+      ],
+      "opzioni": []
+    }
+  },
+  "luci": {
+    "_nota": "Luci della mappa, versione semplice (fase 2, lotto 4; decisione di Marcello del 07/10/2026: si preparano in pochi secondi e non si ritoccano durante il gioco; niente ombre, intensità o livelli numerici; src/mappa/luce.js). Le categorie sono quelle di A.106 / A.116 (data/regole.json → illuminazione.livelli: sufficiente nessuna penalità, penombra −2, scarsa −4, buio come Accecato −8). Luce della scena: una per scena (ambiente). Zone a pennello facoltative: un Q può avere la sua categoria (anche «Luce» in una scena buia). Luci portate dai token: entro il raggio in Q (diagonale 1 Q) la zona diventa Luce; i muri non fermano la luce (nessun calcolo d'ombra, scelta voluta). Le vecchie etichette numeriche delle luci dell'app di Davide non si usano (A.125, decisione di Marcello del 07/10).",
+    "categorie": ["sufficiente", "penombra", "scarsa", "buio"],
+    "predefinita": "sufficiente",
+    "raggio_scoperta_q": { "sufficiente": 30, "penombra": 6, "scarsa": 3, "buio": 1 },
+    "_nota_scoperta": "Nebbia automatica: un Q si scopre se il PG lo vede (muri e porte chiuse lo fermano) entro il raggio della luce di quel Q, non di quello del PG: Luce fino a visuale.raggio_q (30 Q, A.142), Penombra 6 Q, Luce scarsa 3 Q, Buio solo il Q accanto. Una luce portata rende Luce la zona attorno a sé, quindi si vede fin dove arriva.",
+    "TODO(Davide) visione": "A.143: la visione notturna e le capacità simili (Visione notturna 80 Q, termica 40 Q, Vista Felina 20 Q: regole.json → illuminazione.visione) devono allargare la nebbia automatica della mappa per il PG che le ha (per esempio Penombra e Luce scarsa come Luce entro la portata)? Provvisorio: no, la nebbia usa solo la luce della zona; le penalità nell'attacco restano quelle della scheda.",
+    "sorgenti": [
+      { "id": "bastoncino", "nome": "Bastoncino luminoso", "raggio_q": 2, "rif": "dotazioni_personali:bastoncino-luminoso" },
+      { "id": "lanterna", "nome": "Lanterna elettrica", "raggio_q": 6, "rif": "dotazioni_personali:lanterna-elettrica" },
+      { "id": "frontale", "nome": "Lampada frontale", "raggio_q": 6, "rif": "dotazioni_personali:lampada-frontale" },
+      { "id": "torcia", "nome": "Torcia elettrica", "raggio_q": 10, "rif": "dotazioni_personali:torcia-elettrica" }
+    ],
+    "_nota_sorgenti": "Raggi dal catalogo (Equipaggiamento §2.3). Torcia e lampada frontale hanno un fascio direzionale: sulla mappa illuminano tutto attorno, per semplicità.",
+    "raggio_max_q": 30,
+    "oscurita": { "penombra": 0.22, "scarsa": 0.4, "buio": 0.6 },
+    "oscurita_giocatori": { "penombra": 0.18, "scarsa": 0.32, "buio": 0.48 },
+    "_nota_oscurita": "Opacità del velo scuro sulle zone non illuminate: per il master e (più leggero, perché la mappa resti leggibile) per i giocatori. Il buio non nasconde i token: a quello pensa la nebbia."
   },
   "pv_token": {
     "_nota": "Barretta dei PV sui token (test di Marcello del 07/10/2026, al posto dell'anello): rossa, sul fondo del token e sovrapposta al bordo, larga quanto il quadretto (o l'ingombro) a PV pieni, più corta in proporzione ai PV persi. Spessore: rispetto_al_bordo volte lo spessore del bordo colorato, almeno spessore_minimo_px; traccia: il fondo scuro della parte persa. Gli stessi valori per i mini-token della barra dell'Iniziativa (in pixel CSS).",
@@ -253,5 +478,57 @@
     "rispetto_al_bordo": 1,
     "spessore_minimo_px": 3,
     "mini_token_px": 4
+  },
+  "porte": {
+    "_nota": "Porte (fase 2, lotto 2; src/mappa/porte.js). A.125, decisione 130 (risposta di Davide del 06/10/2026): «Aprire o chiudere una normale porta accessibile e non bloccata costa 1 AzP, senza prova. Per azionarla manualmente occorre essere adiacenti e avere una mano libera. Attraversare la porta consuma il normale movimento, separatamente dall’apertura. Una porta bloccata richiede prima la procedura pertinente per sbloccarla, scassinarla o forzarla. Nell’app «chiusa» e «bloccata» sono condizioni distinte.» Per il movimento la porta aperta è un passaggio, chiusa o bloccata è muro. Le porte segrete sono muro per i giocatori finché il master non le rivela.",
+    "stati": [
+      "aperta",
+      "chiusa",
+      "bloccata"
+    ],
+    "nomi_stati": {
+      "aperta": "Aperta",
+      "chiusa": "Chiusa",
+      "bloccata": "Bloccata"
+    },
+    "stato_predefinito": "chiusa",
+    "costo_azp": 1,
+    "TODO(Davide) adiacenza": "A.139: «adiacenti» (A.125) comprende anche la diagonale? Provvisorio: sì, come la portata di 1 Q (un Q del token a distanza 1, anche in diagonale). La mano libera l’app non la controlla: la verifica il master.",
+    "porte_max": 300,
+    "azioni_max": 500,
+    "bloccano_vista": [
+      "chiusa",
+      "bloccata"
+    ],
+    "_nota_vista": "Prossimo lotto (linea di visuale): le porte in questi stati bloccano la vista; per ora non cambiano la nebbia.",
+    "colori": {
+      "aperta": "#2f9e44",
+      "chiusa": "#8b5a2b",
+      "bloccata": "#c92a2a",
+      "segreta": "#9c36b5"
+    }
+  },
+  "visuale": {
+    "_nota": "Linea di visuale e di tiro (fase 2, lotto 3; src/mappa/visuale.js). Dai manuali: Giocatore §5.8 («Leggera −2 VA», «Media −4 VA», «Totale: il bersaglio non può essere attaccato direttamente»; «La Copertura è direzionale, non costituisce Armatura e più Coperture non si sommano»), §5.10 (bersaglio «protetto da un alleato» −4 VA), §5.11 (gittata a fasce), Scarto e A.124 (diagonale 1 Q). Nessun manuale dice come si legge la Copertura sulla griglia: la regola sotto è provvisoria.",
+    "_nota_copertura": "Copertura «dal centro» (decisione di Marcello del 07/10/2026, al posto di «dagli angoli»): dal centro del Q di chi tira cinque linee, verso i quattro angoli e il centro dell'ingombro del bersaglio; contano quelle che attraversano un muro o una porta chiusa (sfiorare il bordo non blocca). copertura_linee dà il livello per 0, 1, 2, 3, 4, 5 linee bloccate. Chi tira con un ingombro grande parte dal centro del suo Q più favorevole. La nebbia automatica parte dallo stesso punto (il centro del Q del PG) verso il centro di ogni Q.",
+  "copertura_linee": ["nessuna", "leggera", "leggera", "media", "media", "totale"],
+  "TODO(Davide) copertura": "A.140: come si stabilisce la Copertura sulla griglia? Provvisorio «dal centro» (punto di partenza deciso da Marcello il 07/10): dal centro del Q di chi tira cinque linee verso i quattro angoli e il centro del bersaglio; linee bloccate da muri o porte chiuse 0 = nessuna, 1–2 = Leggera, 3–4 = Media, 5 = Totale. Sfiorare il bordo di un muro non blocca.",
+    "token_in_mezzo": "protetto",
+    "_nota_token_in_mezzo": "Token fra chi tira e il bersaglio (07/10/2026). «protetto» (dal manuale, predefinito): Giocatore §5.10 «Sparare contro un nemico impegnato in Ravvicinato, protetto da un alleato o che usa un ostaggio impone −4 VA», con la seconda Prova per il bersaglio secondario; un token attraversato dalla linea fra i centri propone in «Attacca!» il «bersaglio impegnato o protetto», senza Copertura. «copertura» (proposta di Marcello del 07/10): i token contano come ostacoli nelle cinque linee, con la stessa tabella dei muri. Non contano i token a 0 PV o A Terra; per i giocatori nemmeno i nascosti.",
+    "TODO(Davide) token in mezzo": "A.141 e A.144: una creatura fra chi tira e il bersaglio dà Copertura (come un ostacolo, con la tabella delle linee) oppure vale solo il «bersaglio protetto» del §5.10 (−4 VA e seconda Prova)? E se è un alleato di chi tira, o un neutrale? Provvisorio: solo §5.10, come dice il manuale; Marcello aveva proposto la Copertura (valore «copertura»).",
+    "campioni_per_q": 10,
+    "raggio_q": 30,
+    "metrica": "quadretti",
+    "TODO(Davide) raggio": "A.142: fin dove vedono i PG con luce sufficiente, per la nebbia automatica della mappa? Provvisorio: 30 Q (45 m), contati a quadretti come le distanze. Con le luci (prossimo lotto) penombra e buio ridurranno la vista.",
+    "automatica_predefinita": false,
+    "opacita_esplorate": 0.5,
+    "_nota_esplorate": "Nebbia automatica (interruttore del master, spento di default): i Q visti dai PG escono dalla nebbia e restano scoperti; per i giocatori quelli scoperti ma non visti in questo momento sono più scuri (opacità sopra) e senza i token non PG. Prossimo lotto: le luci (penombra, buio) agganciate al parametro «fuori» della visuale.",
+    "colori": {
+      "nessuna": "#2f9e44",
+      "leggera": "#f59f00",
+      "media": "#f76707",
+      "totale": "#e03131"
+    },
+    "tasto": "l"
   }
 }

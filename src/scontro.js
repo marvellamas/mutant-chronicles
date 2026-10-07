@@ -313,14 +313,20 @@ export function registraDurata(s, partecipante, stato, tiro, adesso, dati = null
  * «Avanti»: il turno passa al successivo; dopo l'ultimo comincia un nuovo Round e finiscono le durate degli Stati
  * il cui ultimo Round (`al`) è passato. Lo Stato di un nemico si toglie qui; quello di un PG lo toglie la plancia dal
  * suo file (src/ui/tavolo.js), che segue lo scontro (src/round-scontro.js).
+ * Con `indietroMax` (data/mappa.json → iniziativa.indietro_max) registra in `s.indietro` quello che serve a «Indietro»
+ * (ritocchi del 07/10): turno e Round di prima, durate ed effetti finiti, Stati tolti ai nemici, righe del registro.
  */
-export function avanti(s, adesso) {
+export function avanti(s, adesso, { indietroMax = 0 } = {}) {
   if (s.stato !== 'aperto') return s;
   const { ordinati } = ordineIniziativa(s);
   if (!ordinati.length) return s;
+  const prima = { round: s.round, turno: s.turno, diTurno: ordinati[Math.min(s.turno, ordinati.length - 1)]?.id ?? null };
+  const conVoce = (t, extra = {}) => (indietroMax > 0
+    ? { ...t, indietro: [...(s.indietro ?? []), { quando: ora(adesso), prima, dopo: { round: t.round, turno: t.turno }, righeInizio: s.registro.length, righe: t.registro.length, durateFinite: [], effettiFiniti: [], statiTolti: [], perdite: [], ...extra }].slice(-indietroMax) }
+    : t);
   if (s.turno + 1 < ordinati.length) {
     const t = { ...s, turno: s.turno + 1 };
-    return conRiga(t, `Tocca a ${ordinati[t.turno].nome}.`, adesso);
+    return conVoce(conRiga(t, `Tocca a ${ordinati[t.turno].nome}.`, adesso));
   }
   let t = { ...s, round: s.round + 1, turno: 0 };
   const conFine = s.durate.map((d) => { const al = fineDi(d, s.round); return { ...d, al, rimasti: al - t.round + 1 }; });
@@ -333,15 +339,84 @@ export function avanti(s, adesso) {
     t = { ...t, effetti: s.effetti.filter((e) => !effettiFiniti.includes(e)) };
     for (const e of effettiFiniti) t = conRiga(t, `${e.nome} di ${e.daNome} è finito.`, adesso);
   }
+  const statiTolti = [];
   for (const d of finite) {
     const p = s.partecipanti.find((x) => x.id === d.partecipante);
     if (p?.tipo === 'nemico') {
       // lo Stato di un nemico sta nello scontro: finisce da sé
+      if (p.stati.includes(d.stato)) statiTolti.push({ partecipante: p.id, stato: d.stato });
       t = { ...t, partecipanti: t.partecipanti.map((x) => (x.id === p.id ? { ...x, stati: x.stati.filter((y) => y !== d.stato) } : x)) };
       t = conRiga(t, `${d.nome} di ${p.nome} è finito.`, adesso);
     } else t = conRiga(t, `${d.nome} di ${p?.nome ?? d.partecipante} è finito.`, adesso);
   }
-  return t;
+  return conVoce(t, { durateFinite: finite, effettiFiniti, statiTolti });
+}
+
+/**
+ * Quello che farebbe «Indietro» (ritocchi del 07/10), senza cambiare nulla: null se non c'è un «Avanti» da annullare.
+ * `altre`: righe del registro scritte dopo quell'«Avanti» che non sono sue (PV, «Colpito», Stati…): restano.
+ * `perditePg`: perdite periodiche dei PG applicate a quel turno, i cui PV stanno nei file (li rimette la plancia).
+ */
+export function anteprimaIndietro(s) {
+  const v = (s?.indietro ?? []).at(-1);
+  if (!v || s.stato !== 'aperto') return null;
+  const { ordinati } = ordineIniziativa(s);
+  const chi = ordinati.find((p) => p.id === v.prima.diTurno) ?? ordinati[Math.min(v.prima.turno, ordinati.length - 1)] ?? null;
+  return {
+    voce: v, round: v.prima.round, cambiaRound: v.prima.round !== s.round, diTurno: chi,
+    altre: Math.max(0, s.registro.length - v.righe),
+    perditePg: v.perdite.filter((x) => x.tipo === 'pg'),
+    passi: s.indietro.length,
+  };
+}
+
+const conRigheProprie = (pila, v) => (pila.length && Number.isInteger(v.righeInizio)
+  ? [...pila.slice(0, -1), { ...pila.at(-1), righe: pila.at(-1).righe + (v.righe - v.righeInizio) + 1 }]
+  : pila);
+
+/**
+ * «Indietro» (ritocchi del 07/10): annulla l'ultimo «Avanti». Tornano turno e Round, le durate finite (con i Round
+ * che restano di nuovo contati dal Round di prima), gli effetti degli incantesimi finiti, gli Stati tolti ai nemici e
+ * le perdite periodiche applicate a quel turno (PV dei nemici, se non sono cambiati nel frattempo; Round dell'ultima
+ * applicazione). Le altre modifiche fatte dopo (PV, «Colpito», Stati, movimenti) restano. Una riga nel registro.
+ */
+export function indietro(s, adesso) {
+  const a = anteprimaIndietro(s);
+  if (!a) return s;
+  const v = a.voce;
+  const { ordinati } = ordineIniziativa(s);
+  const turno = a.diTurno ? ordinati.indexOf(a.diTurno) : 0;
+  const round = v.prima.round;
+  const chiave = (d) => `${d.partecipante}|${d.stato}`;
+  const presenti = new Set(s.durate.map(chiave));
+  const durate = [...s.durate, ...v.durateFinite.filter((d) => !presenti.has(chiave(d)))].map((d) => ({ ...d, rimasti: d.al - round + 1 }));
+  const uid = new Set((s.effetti ?? []).map((e) => e.uid));
+  const effetti = [...(s.effetti ?? []), ...v.effettiFiniti.filter((e) => !uid.has(e.uid))];
+  const nonRimessi = [];
+  let partecipanti = s.partecipanti.map((p) => {
+    const da = v.statiTolti.filter((x) => x.partecipante === p.id && !p.stati.includes(x.stato)).map((x) => x.stato);
+    return da.length ? { ...p, stati: [...p.stati, ...da] } : p;
+  });
+  let periodici = s.periodici;
+  for (const pe of v.perdite) {
+    if (periodici) periodici = periodici.map((x) => (x.id === pe.id ? { ...x, ultimo: pe.ultimoPrima } : x));
+    if (pe.tipo !== 'nemico') continue;
+    const n = partecipanti.find((x) => x.id === pe.bersaglio);
+    if (n && n.pv.attuali === pe.pvDopo) partecipanti = partecipanti.map((x) => (x === n ? { ...x, pv: { ...x.pv, attuali: pe.pvPrima } } : x));
+    else if (n) nonRimessi.push(`${pe.nome} (PV cambiati dopo)`);
+  }
+  const t = {
+    // le righe di questo «Avanti» e quella di «Indietro» non sono «altre modifiche» per l'«Avanti» precedente
+    ...s, round, turno: Math.max(0, turno), durate, partecipanti, indietro: conRigheProprie(s.indietro.slice(0, -1), v),
+    ...(s.effetti ? { effetti } : v.effettiFiniti.length ? { effetti } : {}),
+    ...(periodici ? { periodici } : {}),
+  };
+  const parti = [`Indietro: torna il turno di ${a.diTurno?.nome ?? '—'}${a.cambiaRound ? `, Round ${round}` : ''}.`];
+  if (v.durateFinite.length || v.effettiFiniti.length) parti.push(`Tornano in corso: ${[...v.durateFinite.map((d) => d.nome), ...v.effettiFiniti.map((e) => e.nome)].join(', ')}.`);
+  if (v.perdite.length) parti.push(`Perdite periodiche annullate: ${v.perdite.map((p) => p.nome).join(', ')}.`);
+  if (nonRimessi.length) parti.push(`PV non rimessi: ${nonRimessi.join(', ')}.`);
+  if (a.altre) parti.push(`Restano le modifiche fatte dopo l’«Avanti» (${a.altre} righe del registro).`);
+  return conRiga(t, parti.join(' '), adesso);
 }
 
 /** Fine scontro: lo stato diventa «chiuso» (il server lo sposta in scontri/archivio/, senza cancellarlo). */
@@ -358,6 +433,8 @@ export function validaScontro(s) {
   if (!['aperto', 'chiuso'].includes(s.stato)) return 'stato non valido';
   if (!Array.isArray(s.partecipanti) || !Array.isArray(s.registro) || !Array.isArray(s.durate) || !Array.isArray(s.ordineAlleati)) return 'struttura incompleta';
   if (!Number.isInteger(s.round) || s.round < 1 || !Number.isInteger(s.turno) || s.turno < 0) return 'Round o turno non validi';
+  // «Indietro» (07/10): storico degli «Avanti», facoltativo
+  if (s.indietro !== undefined && !(Array.isArray(s.indietro) && s.indietro.every((v) => v && v.prima && Number.isInteger(v.prima.round) && Number.isInteger(v.righe) && Array.isArray(v.durateFinite) && Array.isArray(v.statiTolti) && Array.isArray(v.perdite)))) return 'storico di «Indietro» non valido';
   const nemicoRotto = s.partecipanti.find((p) => p?.tipo === 'nemico'
     && !(Number.isInteger(p.pv?.attuali) && Number.isInteger(p.pv?.massimo) && Array.isArray(p.stati) && p.scheda && typeof p.scheda === 'object'));
   if (nemicoRotto) return `nemico ${nemicoRotto.nome ?? nemicoRotto.id}: PV, Stati o scheda mancanti`;
@@ -460,6 +537,21 @@ export function senzaOpportunitaDelMovimento(s, movimento) {
  * Movimento «Libero» della mappa di battaglia (primo test di Marcello, 06/10/2026): il master sposta un token dove vuole,
  * fuori dall'area e dal conteggio del movimento; nel registro resta una riga.
  */
+/** Template tolti dalla mappa in un colpo (ritocchi del 07/10): una riga nel registro. */
+export function rigaTemplateTolti(s, { quanti, temporanei = true }, adesso) {
+  return conRiga(s, `Mappa: tolti ${quanti} template${temporanei ? (quanti === 1 ? ' temporaneo' : ' temporanei') : ''}.`, adesso);
+}
+
+/** Porta aperta o chiusa da un token sulla mappa (A.125: 1 AzP, senza Prova): una riga nel registro. */
+export function rigaPorta(s, { nome, azione, azp = 1 }, adesso) {
+  return conRiga(s, `Mappa: ${nome} ${azione === 'apri' ? 'apre' : 'chiude'} una porta (${azp} AzP).`, adesso);
+}
+
+/** Spostamento di gruppo sulla mappa (07/10, src/mappa/gruppo.js): una riga sola per tutto il gruppo. */
+export function rigaGruppo(s, { quanti, aggiustati = 0 }, adesso) {
+  return conRiga(s, `Mappa: spostati ${quanti} token insieme${aggiustati ? ` (${aggiustati} al quadretto libero più vicino)` : ''}; libero, non conta nel movimento.`, adesso);
+}
+
 export function rigaMovimentoLibero(s, nome, da, a, adesso) {
   return conRiga(s, `Mappa: ${nome} spostato liberamente da (${da.join(', ')}) a (${a.join(', ')}); non conta nel movimento.`, adesso);
 }
