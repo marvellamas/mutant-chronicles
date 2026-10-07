@@ -3,7 +3,10 @@
 // adiacenti e con una mano libera; attraversarla consuma il normale movimento, separato dall'apertura; una porta
 // bloccata richiede prima la procedura per sbloccarla, scassinarla o forzarla; «chiusa» e «bloccata» sono distinte.
 //
-// Una porta sta su un Q (di solito un Q di muro): { id, q: [x, y], stato: aperta | chiusa | bloccata, segreta }.
+// Una porta sta su un Q (di solito un Q di muro): { id, q: [x, y], stato: aperta | chiusa | bloccata, segreta,
+// orientamento? }. L'orientamento (ritocchi del 07/10) è solo il disegno lungo il muro: si sceglie da solo dai muri vicini
+// quando la porta si mette, si gira con ← → durante il piazzamento o con «Ruota»; le scene di prima senza il campo lo
+// ricavano dai muri. Movimento e linea di visuale guardano il Q intero, quindi non cambiano.
 // Per il movimento la porta aperta è un passaggio, chiusa o bloccata è muro (stesso trattamento dei muri anche per le
 // diagonali, A.124 e A.134). Una porta segreta, per i giocatori, è muro finché il master non la rivela (segreta: false):
 // nei dati che il server manda ai giocatori resta un Q di muro, senza la porta. Per la linea di visuale (prossimo lotto)
@@ -14,6 +17,8 @@ import { daBase64, cella, impostaCella } from './celle.js';
 import { celleToken } from './token.js';
 
 export const STATI_PORTA = ['aperta', 'chiusa', 'bloccata'];
+export const ORIENTAMENTI = ['orizzontale', 'verticale'];
+export const opposto = (o) => (o === 'verticale' ? 'orizzontale' : 'verticale');
 
 const stessoQ = (a, b) => a[0] === b[0] && a[1] === b[1];
 /** La porta sul Q q, o null. */
@@ -57,8 +62,8 @@ export function apriChiudi(porta, azione) {
   return { porta: { ...porta, stato: 'chiusa' } };
 }
 
-/** Nuova porta sul Q q. */
-export const nuovaPorta = ({ id, q, stato = 'chiusa', segreta = false }) => ({ id, q: [...q], stato, segreta });
+/** Nuova porta sul Q q (con l'orientamento, se dato). */
+export const nuovaPorta = ({ id, q, stato = 'chiusa', segreta = false, orientamento = null }) => ({ id, q: [...q], stato, segreta, ...(ORIENTAMENTI.includes(orientamento) ? { orientamento } : {}) });
 
 /**
  * Azione di un token su una porta, contata come AzP del Round (A.125: 1 AzP). Senza scontro si conta per turno, come
@@ -76,17 +81,30 @@ export function azpNelRound(scena, idToken, scontro, round, turno = null) {
 }
 
 /**
- * Orientamento del disegno della porta: lungo i muri vicini (muro a destra o a sinistra: la porta è orizzontale).
+ * Orientamento automatico della porta sul Q q, lungo i muri vicini (ritocchi del 07/10): muri (o altre porte) sopra e
+ * sotto → verticale, a destra e a sinistra → orizzontale; si contano i Q accanto e, a parità, quelli a due Q; a parità
+ * piena orizzontale. Prima bastava un muro a lato per farla orizzontale.
  * @returns 'orizzontale' | 'verticale'
  */
 export function orientamento(scena, q) {
   const { colonne: C, righe: R } = scena.griglia;
   const m = daBase64(scena.muri);
-  const muro = (x, y) => cella(m, C, R, x, y);
-  const lati = muro(q[0] - 1, q[1]) || muro(q[0] + 1, q[1]);
-  const sopraSotto = muro(q[0], q[1] - 1) || muro(q[0], q[1] + 1);
-  return sopraSotto && !lati ? 'verticale' : 'orizzontale';
+  const porte = new Set((scena.porte ?? []).map((p) => p.q.join()));
+  const muro = (x, y) => (cella(m, C, R, x, y) || porte.has(`${x},${y}`) ? 1 : 0);
+  const [x, y] = q;
+  for (const d of [1, 2]) {
+    const v = muro(x, y - d) + muro(x, y + d);
+    const o = muro(x - d, y) + muro(x + d, y);
+    if (v !== o) return v > o ? 'verticale' : 'orizzontale';
+  }
+  return 'orizzontale';
 }
+
+/** Orientamento della porta: quello salvato, o quello automatico (scene di prima del 07/10). */
+export const orientamentoPorta = (scena, p) => (ORIENTAMENTI.includes(p.orientamento) ? p.orientamento : orientamento(scena, p.q));
+
+/** «Ruota» (07/10): la porta girata di 90°, con l'orientamento salvato. */
+export const ruotaPorta = (scena, p) => ({ ...p, orientamento: opposto(orientamentoPorta(scena, p)) });
 
 /**
  * Porte per i giocatori (vista e diretta): senza le segrete non rivelate (sono muro nella maschera dei muri) e senza
@@ -96,7 +114,7 @@ export function portePerGiocatori(scena) {
   const { colonne: C, righe: R } = scena.griglia;
   const nebbia = daBase64(scena.nebbia.coperti);
   return (scena.porte ?? []).filter((p) => !p.segreta && !cella(nebbia, C, R, p.q[0], p.q[1]))
-    .map((p) => ({ id: p.id, q: [...p.q], stato: p.stato, orientamento: orientamento(scena, p.q) }));
+    .map((p) => ({ id: p.id, q: [...p.q], stato: p.stato, orientamento: orientamentoPorta(scena, p) }));
 }
 
 /**
@@ -116,6 +134,7 @@ export function errorePorta(p, colonne, righe) {
   if (!Array.isArray(p.q) || p.q.length !== 2 || !p.q.every(Number.isInteger) || p.q[0] < 0 || p.q[1] < 0 || p.q[0] >= colonne || p.q[1] >= righe) return 'q: un Q della griglia';
   if (!STATI_PORTA.includes(p.stato)) return `stato: ${STATI_PORTA.join(', ')}`;
   if (typeof p.segreta !== 'boolean') return 'segreta: vero o falso';
+  if (p.orientamento !== undefined && !ORIENTAMENTI.includes(p.orientamento)) return `orientamento: ${ORIENTAMENTI.join(' o ')}`;
   return null;
 }
 

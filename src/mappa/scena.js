@@ -7,7 +7,7 @@
 //   muri, terreno: maschere di Q in base64 (src/mappa/celle.js),
 //   nebbia: { iniziale: "coperta" | "scoperta", coperti: maschera },
 //   token: [{ id, rif: { tipo: "partecipante" | "veicolo" | "segnaposto", id }, q: [x, y], ingombro, nascosto, nome? }],
-//   porte?: [{ id, q: [x, y], stato: aperta | chiusa | bloccata, segreta }]   porte (fase 2, lotto 2; src/mappa/porte.js)
+//   porte?: [{ id, q: [x, y], stato: aperta | chiusa | bloccata, segreta, orientamento?: orizzontale | verticale }]   porte (fase 2, lotto 2; src/mappa/porte.js; orientamento dal 07/10)
 //   visuale?: { automatica }            nebbia automatica dalla visuale dei PG (fase 2, lotto 3; src/mappa/visuale.js)
 //   iniziale?: { quando, token, porte, template, nebbia }   posizione iniziale salvata (src/mappa/iniziale.js, 07/10)
 //   sovrapposizioni?: { master?: { nascoste, ancheDurata }, giocatori?: { nascoste, ancheDurata } }

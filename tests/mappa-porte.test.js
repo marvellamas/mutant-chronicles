@@ -4,7 +4,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali, copia } from './helpers.js';
-import { muriEffettivi, portaA, apriChiudi, nuovaPorta, conAzione, azpNelRound, adiacente, porteVicine, portePerGiocatori, muriPerGiocatori, orientamento, bloccaVista } from '../src/mappa/porte.js';
+import { muriEffettivi, portaA, apriChiudi, nuovaPorta, conAzione, azpNelRound, adiacente, porteVicine, portePerGiocatori, muriPerGiocatori, orientamento, orientamentoPorta, ruotaPorta, bloccaVista } from '../src/mappa/porte.js';
 import { areaRaggiungibile, costoVerso } from '../src/mappa/area.js';
 import { cambiaPortaAnnullabile, annullaUltima } from '../src/mappa/annulla.js';
 import { nuovaScena, validaScena } from '../src/mappa/scena.js';
@@ -121,4 +121,32 @@ test('formato della scena: porte e azioni validate; Ctrl+Z della porta toglie an
   const u = annullaUltima(s);
   assert.equal(portaA(u.scena, [5, 3]).stato, 'chiusa');
   assert.equal(u.scena.azioni.length, 0);
+});
+
+test('porte verticali (ritocchi del 07/10): orientamento dai muri vicini, salvato, «Ruota»; scene di prima compatibili', () => {
+  // muro verticale (colonna 5) con un muro che sporge a destra accanto alla porta: prima bastava per farla orizzontale
+  const s = scena('chiusa');
+  const sporgente = { ...s, muri: inBase64(impostaCella(daBase64(s.muri), C, R, 6, 3, true)) };
+  assert.equal(orientamento(sporgente, [5, 3]), 'verticale', 'due muri sopra e sotto contro uno a lato');
+  // muro orizzontale (riga 4): porta orizzontale; incrocio pieno: orizzontale
+  const oriz = { ...s, muri: inBase64(rettangolo(nuovaMaschera(C, R), C, R, 0, 4, C - 1, 4, true)), porte: [] };
+  assert.equal(orientamento(oriz, [3, 4]), 'orizzontale');
+  // altre porte contano come muro: due porte una sopra l'altra in un muro verticale
+  const due = { ...s, muri: inBase64(nuovaMaschera(C, R)), porte: [nuovaPorta({ id: 'a', q: [5, 3] }), nuovaPorta({ id: 'b', q: [5, 4] })] };
+  assert.equal(orientamento(due, [5, 3]), 'verticale');
+  // salvato: vale quello della porta; senza campo (scene di prima) quello automatico
+  assert.equal(nuovaPorta({ id: 'x', q: [1, 1] }).orientamento, undefined);
+  const salvata = { ...s, porte: [nuovaPorta({ id: 'p1', q: [5, 3], orientamento: 'orizzontale' })] };
+  assert.equal(orientamentoPorta(salvata, salvata.porte[0]), 'orizzontale');
+  assert.equal(orientamentoPorta(s, s.porte[0]), 'verticale');
+  // «Ruota»: 90°, salvato
+  assert.equal(ruotaPorta(s, s.porte[0]).orientamento, 'orizzontale');
+  assert.equal(ruotaPorta(salvata, salvata.porte[0]).orientamento, 'verticale');
+  // ai giocatori arriva quello salvato; il movimento non cambia (la porta è il Q intero)
+  assert.deepEqual(portePerGiocatori(salvata).map((p) => p.orientamento), ['orizzontale']);
+  assert.deepEqual(muriEffettivi(salvata), muriEffettivi(s));
+  // formato: orientamento facoltativo, solo i due valori
+  assert.equal(validaScena(salvata, dati), null);
+  assert.equal(validaScena(s, dati), null);
+  assert.match(validaScena({ ...s, porte: [{ ...s.porte[0], orientamento: 'obliquo' }] }, dati), /^porte\[0\]\.orientamento/);
 });

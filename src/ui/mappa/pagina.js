@@ -46,7 +46,7 @@ import { salvaIniziale, ripristinaIniziale } from '../../mappa/iniziale.js';
 import { muoviToken, usatoNelRound, fasceNelRound, mossoNelRound, annullaUltima, annullaUltimoMovimento, cambiaTokenAnnullabile, cambiaTemplateAnnullabile, cambiaPortaAnnullabile, togliTemplateAnnullabile, scadiTemplateAnnullabile, rimettiScaduti, nuovoTurno, turnoDi } from '../../mappa/annulla.js';
 import { disegnaMuri, disegnaArea, disegnaPercorso, disegnaZoc, coloriAree, disegnaTemplate, disegnaPorte, disegnaLineaTiro } from './disegno-aree.js';
 import { celleTemplate, tokenDentro as tokenNelTemplate, nuovoTemplate, scaduto, direzioneVerso, ORIENTABILI, templateVisibili, ostacoliVisibili, ruota, cambiaMisura, permanente } from '../../mappa/template.js';
-import { portaA, muriEffettivi, porteVicine, apriChiudi, nuovaPorta, conAzione, azpNelRound, orientamento } from '../../mappa/porte.js';
+import { portaA, muriEffettivi, porteVicine, apriChiudi, nuovaPorta, conAzione, azpNelRound, orientamento, orientamentoPorta, ruotaPorta, opposto } from '../../mappa/porte.js';
 import { apriMenuTemplate, sezioneTemplate, etichettaTemplate, testoMisure } from './template.js';
 import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
 import { diTurno } from '../../scontro.js';
@@ -119,7 +119,7 @@ export function renderMappa(radice, ctx) {
     nebbia: { strumento: null, modo: 'rivela', lato: 3 },
     sceltaGiocatori: null,
     // lotto 5: strumenti dei muri, fascia mostrata (1 Passo, 2 Corri, 3 Scatta), area del token scelto, percorso
-    muri: { strumento: null, modo: 'muro', lato: 1, porta: { stato: ctx.dati.mappa.porte.stato_predefinito, segreta: false } },
+    muri: { strumento: null, modo: 'muro', lato: 1, porta: { stato: ctx.dati.mappa.porte.stato_predefinito, segreta: false, verso: null } },
     fascia: 1,
     area: undefined,
     percorso: null,
@@ -303,7 +303,10 @@ export function renderMappa(radice, ctx) {
       const ostacoli = ostacoliVisibili(sovrapposizioni('master'));
       if (ostacoli) disegnaMuri(c, { scena: s, cam: st.cam, info, muri: daBase64(s.muri), terreno: daBase64(s.terreno), colori });
       // fase 2, lotto 2: le porte, ciascuna con il suo stato (le segrete con la «S»)
-      if (ostacoli && s.porte?.length) disegnaPorte(c, { scena: s, cam: st.cam, info, porte: s.porte.map((p) => ({ ...p, orientamento: orientamento(s, p.q) })), colori: ctx.dati.mappa.porte.colori });
+      if (ostacoli && s.porte?.length) disegnaPorte(c, { scena: s, cam: st.cam, info, porte: s.porte.map((p) => ({ ...p, orientamento: orientamentoPorta(s, p) })), colori: ctx.dati.mappa.porte.colori });
+      // 07/10: anteprima della porta da mettere sotto il puntatore, con l'orientamento (← → per girarla)
+      const ap = st.muri.strumento === 'porta' ? anteprimaPorta() : null;
+      if (ap) { c.save(); c.globalAlpha = 0.6; disegnaPorte(c, { scena: s, cam: st.cam, info, porte: [ap], colori: ctx.dati.mappa.porte.colori }); c.restore(); }
       const r = rettangoloVisibile(st.cam, info.larghezza, info.altezza);
       const q = g.q_px;
       const tratti = trattiCoperti(daBase64(s.nebbia.coperti), g.colonne, g.righe,
@@ -877,6 +880,7 @@ export function renderMappa(radice, ctx) {
       ['Clic su una porta', 'il master la apre o la chiude (bloccata: no); clic destro: Apri / Chiudi / Blocca / Sblocca / Rivela / Togli'],
       ['L (o clic destro → «Linea di tiro»)', 'dal token scelto verso il mouse o un token: distanza (diagonale 1 Q), vista, Copertura (§5.8); clic per fissarla: «Attacca!» con distanza e Copertura; Esc per chiudere'],
       ['Nebbia automatica (pannello Nebbia)', 'la nebbia si apre dove i PG vedono (muri e porte chiuse fermano la vista); per i giocatori le zone esplorate restano più scure'],
+      ['Strumento «Porta»: ← →', 'gira la porta da mettere (verticale / orizzontale); di solito segue da sola i muri vicini. Sulla porta già messa: clic destro → «Ruota»'],
       ['Token scelto accanto a una porta', 'clic destro o pannello: «Apri porta» / «Chiudi porta», 1 AzP e una riga nel registro (A.125)'],
       ['M', 'mostra o nasconde l’area di movimento'],
       ['Z', 'mostra o nasconde le zone di controllo (ZoC) degli avversari'],
@@ -1059,7 +1063,10 @@ export function renderMappa(radice, ctx) {
         pulsanteScelta('Porta', M.strumento === 'porta', () => strumentoMuri(M.strumento === 'porta' ? null : 'porta'), 'Clic su un Q di muro: mette una porta; clic su una porta: la toglie')),
       M.strumento === 'porta' ? h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Porta nuova' },
         ctx.dati.mappa.porte.stati.map((s) => pulsanteScelta(ctx.dati.mappa.porte.nomi_stati[s], M.porta.stato === s, () => { M.porta.stato = s; disegnaPannelloMuri(); }, `Le porte nuove nascono ${ctx.dati.mappa.porte.nomi_stati[s].toLowerCase()}`)),
-        h('label', { title: 'Per i giocatori è muro finché non la riveli (clic destro → Rivela)' }, h('input', { type: 'checkbox', checked: M.porta.segreta, onchange: (e) => { M.porta.segreta = e.target.checked; } }), ' segreta')) : null,
+        h('label', { title: 'Per i giocatori è muro finché non la riveli (clic destro → Rivela)' }, h('input', { type: 'checkbox', checked: M.porta.segreta, onchange: (e) => { M.porta.segreta = e.target.checked; } }), ' segreta'),
+        // 07/10: orientamento, automatico dai muri vicini o scelto con ← →
+        h('span', { class: 'nota' }, M.porta.verso ? `${M.porta.verso}, scelta a mano (← →)` : 'orientamento automatico dai muri (← → per girarla)'),
+        M.porta.verso ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Torna all’orientamento automatico, dai muri vicini', onclick: () => { M.porta.verso = null; disegnaPannelloMuri(); ridisegna(['aree']); } }, 'Automatico') : null) : null,
       h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Modalità dei muri' },
         pulsanteScelta('Muro', M.modo === 'muro', () => { M.modo = 'muro'; disegnaPannelloMuri(); }, 'Invalicabile'),
         pulsanteScelta('Terreno difficile', M.modo === 'terreno', () => { M.modo = 'terreno'; disegnaPannelloMuri(); }, 'Costa di più (provvisorio: ×2, A.128)'),
@@ -1609,10 +1616,28 @@ export function renderMappa(radice, ctx) {
     const c = portaA(st.scena, q);
     if (c) { st.scena = cambiaPortaAnnullabile(st.scena, c, null, ctx.dati); avviso('Porta tolta.', { chiave: 'porta' }); dopoPorta(); return; }
     if ((st.scena.porte?.length ?? 0) >= RP.porte_max) { avvisoErrore(`Al massimo ${RP.porte_max} porte.`); return; }
-    const p = nuovaPorta({ id: `porta-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`, q, stato: M.porta.stato, segreta: M.porta.segreta });
+    // 07/10: l'orientamento si salva (automatico dai muri, o quello scelto con ← →)
+    const p = nuovaPorta({ id: `porta-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`, q, stato: M.porta.stato, segreta: M.porta.segreta, orientamento: M.porta.verso ?? orientamento(st.scena, q) });
     st.scena = cambiaPortaAnnullabile({ ...st.scena, porte: st.scena.porte ?? [] }, null, p, ctx.dati);
     avviso(`Porta ${RP.nomi_stati[p.stato].toLowerCase()}${p.segreta ? ', segreta' : ''}.`, { chiave: 'porta' });
     dopoPorta();
+  }
+  /** Anteprima della porta nuova sotto il puntatore (strumento «Porta»): { q, stato, segreta, orientamento } o null. */
+  function anteprimaPorta() {
+    const q = st.portaSotto;
+    if (!q || !st.scena || portaA(st.scena, q)) return null;
+    return { q, stato: M.porta.stato, segreta: M.porta.segreta, orientamento: M.porta.verso ?? orientamento(st.scena, q) };
+  }
+  /** ← → con lo strumento «Porta» (07/10): gira la porta da mettere; la scelta resta per le porte successive. */
+  function frecciaPorta(e) {
+    if (M.strumento !== 'porta' || (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')) return false;
+    e.preventDefault();
+    const ora = anteprimaPorta()?.orientamento ?? M.porta.verso ?? 'orizzontale';
+    M.porta.verso = opposto(ora);
+    avviso(`Porta ${M.porta.verso} (← → per girarla; «Automatico» nel pannello per tornare ai muri).`, { chiave: 'porta', durata: 2500 });
+    disegnaPannelloMuri();
+    ridisegna(['aree']);
+    return true;
   }
   /** Cambio di stato deciso dal master (nessuna AzP): Apri, Chiudi, Blocca, Sblocca, Rivela, Rendi segreta. */
   function cambiaPortaMaster(porta, dopo, testo) {
@@ -1659,6 +1684,7 @@ export function renderMappa(radice, ctx) {
         : { testo: 'Blocca', azione: () => cambiaPortaMaster(porta, { stato: 'bloccata' }, 'Porta bloccata.') },
       porta.segreta ? { testo: 'Rivela ai giocatori', azione: () => cambiaPortaMaster(porta, { segreta: false }, 'Porta rivelata: ora i giocatori la vedono.') }
         : { testo: 'Rendi segreta', azione: () => cambiaPortaMaster(porta, { segreta: true }, 'Porta segreta: per i giocatori è muro.') },
+      { testo: `Ruota (ora ${orientamentoPorta(st.scena, porta)})`, azione: () => { const r = ruotaPorta(st.scena, porta); cambiaPortaMaster(porta, { orientamento: r.orientamento }, `Porta ${r.orientamento}.`); } },
       { testo: 'Togli la porta', azione: () => { st.scena = cambiaPortaAnnullabile(st.scena, porta, null, ctx.dati); avviso('Porta tolta.', { chiave: 'porta' }); dopoPorta(); } },
       null);
     return v;
@@ -2064,6 +2090,8 @@ export function renderMappa(radice, ctx) {
     const p = punto(e);
     const m = mappaDaSchermo(st.cam, p.x, p.y);
     aggiornaPercorso(m);
+    // 07/10: il Q sotto il puntatore per l'anteprima della porta
+    if (M.strumento === 'porta') { const q = qVicino(m); if (q.join() !== st.portaSotto?.join()) { st.portaSotto = q; ridisegna(['aree']); } }
     if (e.pointerType !== 'mouse') return nascondiSuggerimento();
     const t = tokenSotto(m);
     if (!t) return nascondiSuggerimento();
@@ -2159,6 +2187,7 @@ export function renderMappa(radice, ctx) {
     if (e.key === 'p' || e.key === 'P') { e.preventDefault(); cambiaMostraPv(); return; }
     if ((e.key === 'a' || e.key === 'A') && !e.shiftKey) { e.preventDefault(); adattaSchermo(); return; }
     if (frecciaTemplate(e)) return;
+    if (frecciaPorta(e)) return;
     if (e.shiftKey && e.key.toLowerCase() === ctx.dati.mappa.template.tasto && st.scena) { e.preventDefault(); cambiaSovrapposizioni('master', 'nascoste'); return; }
     if (e.key.toLowerCase() === ctx.dati.mappa.template.tasto && st.scena && !st.tpl.anteprima) { e.preventDefault(); nuovoTemplateUi(); return; }
     if (e.key === 'Escape' && st.tpl.anteprima) { e.preventDefault(); annullaPiazzamento(); return; }
