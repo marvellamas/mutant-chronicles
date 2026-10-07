@@ -20,8 +20,8 @@ import { creaTela } from './canvas.js';
 import { creaGesti } from './gesti.js';
 import { disegnaToken, coloriMappa, creaImmagini } from './disegno-token.js';
 import { barraIniziativaEl } from './barra-iniziativa.js';
-import { disegnaArea, disegnaZoc, disegnaPercorso, coloriAree, disegnaTemplate, disegnaPorte } from './disegno-aree.js';
-import { celleDaMaschera } from '../../mappa/template.js';
+import { disegnaArea, disegnaZoc, disegnaPercorso, coloriAree, disegnaTemplate, disegnaPorte, disegnaMuri } from './disegno-aree.js';
+import { celleDaMaschera, templateVisibili, ostacoliVisibili } from '../../mappa/template.js';
 import { celleDellaDiretta, zocDellaDiretta, avversariDellaDiretta, trattiPercorso } from '../../mappa/diretta.js';
 import { passiInZoc } from '../../mappa/zoc.js';
 import { avviso } from '../avvisi.js';
@@ -87,9 +87,13 @@ export function renderGiocatori(radice, ctx) {
     aree: (c, info) => {
       // template ad area (fase 2, lotto 1): quelli della scena e l'anteprima di quello che il master sta piazzando,
       // già filtrati dal server (solo i Q fuori dalla nebbia, niente nascosti)
-      if (st.vista) for (const t of [...(st.vista.template ?? []), ...(direttaAttuale()?.template ?? [])]) disegnaTemplateGiocatori(c, info, t);
+      // ritocchi del 07/10: «Mostra / nascondi template» scelto dal master per i giocatori (template senza durata, muri,
+      // porte e terreno; con «anche a durata» anche gli altri); l'anteprima di chi piazza resta
+      const sov = st.vista?.sovrapposizioni;
+      if (st.vista && ostacoliVisibili(sov)) disegnaMuri(c, { scena: st.vista, cam: st.cam, info, muri: daBase64(st.vista.muri), terreno: daBase64(st.vista.terreno), colori: coloriAree(el.riquadro) });
+      if (st.vista) for (const t of [...templateVisibili(st.vista.template ?? [], sov), ...(direttaAttuale()?.template ?? [])]) disegnaTemplateGiocatori(c, info, t);
       // porte (fase 2, lotto 2): già filtrate dal server (niente segrete non rivelate, niente sotto la nebbia)
-      if (st.vista?.porte?.length) disegnaPorte(c, { scena: st.vista, cam: st.cam, info, porte: st.vista.porte, colori: ctx.dati.mappa.porte.colori });
+      if (st.vista?.porte?.length && ostacoliVisibili(sov)) disegnaPorte(c, { scena: st.vista, cam: st.cam, info, porte: st.vista.porte, colori: ctx.dati.mappa.porte.colori });
       const d = direttaAttuale();
       if (d) {
         const s = st.vista;

@@ -123,6 +123,20 @@ export function nuovoTemplate({ id, forma, misure, origine, direzione = 0, color
   };
 }
 
+/** Template senza durata («finché non lo tolgo»): quelli che «Mostra / nascondi template» toglie sempre. */
+export const permanente = (t) => t.durata === null || t.durata === undefined || t.permanente === true;
+/**
+ * Template da disegnare secondo la scelta «Mostra / nascondi template» (ritocchi del 07/10): `sov` =
+ * scena.sovrapposizioni.master o .giocatori, { nascoste, ancheDurata }. Nascoste: via i template senza durata e, con
+ * «anche i template a durata», anche gli altri. Le stesse sovrapposizioni nascoste sono muri, porte e terreno.
+ */
+export function templateVisibili(lista, sov) {
+  if (!sov?.nascoste) return lista ?? [];
+  return sov.ancheDurata ? [] : (lista ?? []).filter((t) => !permanente(t));
+}
+/** Ostacoli (muri, porte, terreno difficile) disegnati? Valgono comunque per il movimento. */
+export const ostacoliVisibili = (sov) => !sov?.nascoste;
+
 /** Errore di forma di un template della scena (null se va bene); \`regole\`: data/mappa.json → template. */
 export function erroreTemplate(t, regole) {
   if (!regole.forme.includes(t.forma)) return `forma: ${regole.forme.join(', ')}`;
@@ -151,7 +165,7 @@ export function templatePerGiocatori(lista, scena, regole) {
     let n = 0;
     for (let i = 0; i < C * R; i++) if (celle[i] && !(nebbia[i >> 3] & (1 << (i & 7)))) { m[i >> 3] |= 1 << (i & 7); n++; }
     if (!n) continue;
-    r.push({ id: t.id, forma: t.forma, colore: t.colore ?? regole.colori[0].valore, ...(t.nome ? { nome: t.nome } : {}), celle: inBase64(m) });
+    r.push({ id: t.id, forma: t.forma, colore: t.colore ?? regole.colori[0].valore, ...(t.nome ? { nome: t.nome } : {}), permanente: permanente(t), celle: inBase64(m) });
   }
   return r;
 }

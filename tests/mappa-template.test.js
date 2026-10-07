@@ -125,3 +125,22 @@ test('scena: template validati e salvati; Ctrl+Z annulla piazzamento, spostament
   assert.deepEqual(passi, ['template tolto', 'template spostato', 'template piazzato']);
   assert.equal(s.template.length, 0);
 });
+
+test('«Mostra / nascondi template»: senza durata (e, a scelta, anche a durata); scelta del master e dei giocatori nella scena', async () => {
+  const { templateVisibili, ostacoliVisibili, permanente } = await import('../src/mappa/template.js');
+  const { vistaGiocatori } = await import('../src/mappa/vista.js');
+  const fisso = tpl('cerchio', { raggio: 1 }, { id: 'f', durata: null });
+  const aRound = tpl('cerchio', { raggio: 1 }, { id: 'r', durata: 2, fine_round: 4 });
+  assert.deepEqual(templateVisibili([fisso, aRound], undefined).map((t) => t.id), ['f', 'r']);
+  assert.deepEqual(templateVisibili([fisso, aRound], { nascoste: true, ancheDurata: false }).map((t) => t.id), ['r']);
+  assert.deepEqual(templateVisibili([fisso, aRound], { nascoste: true, ancheDurata: true }), []);
+  assert.ok(permanente({}) && !permanente(aRound), 'senza durata = finché non lo tolgo');
+  assert.ok(ostacoliVisibili(null) && !ostacoliVisibili({ nascoste: true }));
+  const s = { ...nuovaScena({ id: 'p', nome: 'P', colonne: 30, righe: 30, nebbia: 'scoperta', dati }), revisione: 0, template: [fisso, aRound] };
+  s.sovrapposizioni = { master: { nascoste: true, ancheDurata: false }, giocatori: { nascoste: true, ancheDurata: true } };
+  assert.equal(validaScena(s, dati), null);
+  assert.match(validaScena({ ...s, sovrapposizioni: { giocatori: { nascoste: 'sì' } } }, dati), /sovrapposizioni\.giocatori/);
+  const v = vistaGiocatori(s, null, RT);
+  assert.deepEqual(v.sovrapposizioni, { nascoste: true, ancheDurata: true }, 'la scelta dei giocatori, non quella del master');
+  assert.deepEqual(v.template.map((t) => [t.id, t.permanente]), [['f', true], ['r', false]]);
+});

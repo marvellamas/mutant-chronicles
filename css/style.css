@@ -2086,3 +2086,8 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 .lista-template { list-style: none; margin: .4rem 0 0; padding: 0; display: grid; gap: .5rem; }
 .lista-template li { padding: .35rem .5rem; border: 1px solid var(--bordo, #444); border-radius: var(--raggio, 6px); }
 .lista-template .campione-colore { display: inline-block; width: .8rem; height: .8rem; border-radius: 50%; margin-right: .35rem; vertical-align: middle; }
+/* «Mostra / nascondi template» (07/10): acceso/spento ben visibile */
+.mappa-sovrapposizioni { display: inline-flex; align-items: center; gap: .3rem; }
+.mappa-sovrapposizioni .btn[aria-pressed="true"] { outline: 2px solid var(--mappa-passo, #1f9d55); }
+.mappa-sovrapposizioni .btn.spento { opacity: .65; text-decoration: line-through; }
+.casella-sovr { font-size: .85rem; white-space: nowrap; }

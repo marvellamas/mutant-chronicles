@@ -8,6 +8,8 @@
 //   nebbia: { iniziale: "coperta" | "scoperta", coperti: maschera },
 //   token: [{ id, rif: { tipo: "partecipante" | "veicolo" | "segnaposto", id }, q: [x, y], ingombro, nascosto, nome? }],
 //   porte?: [{ id, q: [x, y], stato: aperta | chiusa | bloccata, segreta }]   porte (fase 2, lotto 2; src/mappa/porte.js)
+//   sovrapposizioni?: { master?: { nascoste, ancheDurata }, giocatori?: { nascoste, ancheDurata } }
+//                                       «Mostra / nascondi template»: template senza durata, muri, porte, terreno (07/10)
 //   azioni?: [{ id, token, tipo: 'porta', porta, azione, azp, scontro, round, turno?, quando }]  AzP dei token (A.125)
 //   template: [{ id, forma, origine: [x, y], misure: { … in Q }, direzione?, colore?, nome?, durata?, fine_round?,
 //                scontro?, nascosto }]                       template ad area (fase 2, lotto 1; src/mappa/template.js)
@@ -191,6 +193,15 @@ export function validaScena(s, dati) {
     if (typeof t.nascosto !== 'boolean') return `${k}.nascosto: vero o falso`;
   }
 
+  // «Mostra / nascondi template» (ritocchi del 07/10): due scelte, del master e dei giocatori
+  if (s.sovrapposizioni !== undefined) {
+    if (!isOggetto(s.sovrapposizioni)) return 'sovrapposizioni: { master, giocatori } atteso';
+    for (const k of ['master', 'giocatori']) {
+      const v = s.sovrapposizioni[k];
+      if (v === undefined) continue;
+      if (!isOggetto(v) || typeof v.nascoste !== 'boolean' || typeof v.ancheDurata !== 'boolean') return `sovrapposizioni.${k}: { nascoste, ancheDurata } vero o falso`;
+    }
+  }
   // porte (fase 2, lotto 2; A.125): un Q ciascuna, stato e segreta; le azioni dei token (AzP del Round)
   if (s.porte !== undefined) {
     if (!Array.isArray(s.porte) || s.porte.length > (D.porte?.porte_max ?? 0)) return `porte: elenco di al massimo ${D.porte?.porte_max}`;

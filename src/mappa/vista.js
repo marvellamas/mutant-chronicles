@@ -60,6 +60,8 @@ export function vistaGiocatori(s, contesto = null, regoleTemplate = contesto?.re
     // porte (fase 2, lotto 2): le segrete restano muro, le altre arrivano a parte con il loro stato
     muri: inBase64(senza(muriPerGiocatori(s), nebbia)),
     porte: portePerGiocatori(s),
+    // «Mostra / nascondi template» dei giocatori (07/10): la vista disegna o no muri, porte, terreno e template
+    sovrapposizioni: s.sovrapposizioni?.giocatori ?? { nascoste: false, ancheDurata: false },
     terreno: inBase64(senza(daBase64(s.terreno), nebbia)),
     nebbia: { coperti: s.nebbia.coperti },
     token,
