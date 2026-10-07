@@ -48,7 +48,7 @@ function dallaMappa(ctx, a, salvate) {
   if (!p || !nome || String(p.nome).trim().toUpperCase() !== String(nome).trim().toUpperCase() || Date.now() - p.quando > 10 * 60 * 1000) return salvate;
   try { sessionStorage.removeItem(CHIAVE_DALLA_MAPPA); } catch { /* resta */ }
   // fase 2, lotto 4: anche la luce della zona del bersaglio, proposta in «Luce sul bersaglio» (modificabile)
-  const v = { ...salvate, distanza: p.distanza, bersaglio: { ...(salvate.bersaglio ?? {}), copertura: p.copertura, distanza: p.distanza }, ...(p.luceMappa ? { luceMappa: p.luceMappa } : {}) };
+  const v = { ...salvate, distanza: p.distanza, bersaglio: { ...(salvate.bersaglio ?? {}), copertura: p.copertura, distanza: p.distanza, ...(p.protetto ? { impegnato: true } : {}) }, ...(p.luceMappa ? { luceMappa: p.luceMappa } : {}) };
   queueMicrotask(() => {
     ctx.azioni.ricordaAttacco?.(a.uid, v);
     if (p.luce && p.luce !== ctx.sessione?.luce) ctx.azioni.imposta?.('luce', p.luce);

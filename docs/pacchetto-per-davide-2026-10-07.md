@@ -7,8 +7,8 @@ successiva. Fonte: controllo del 07/10 (`docs/diff-manuali-2026-10-07.md`), deci
 
 Riepilogo: tre voci fra le Risolte (A.120; A.132 e A.134 con «risposta di Marcello») più le due mancanti del pacchetto
 del 06/10 (A.121, A.131); risposte ricevute e in implementazione per A.107, A.108, A.110, A.111, A.114, A.116, A.119,
-A.122, A.124, A.125 (veicoli: risposta di Marcello; etichette delle luci superate), A.127, A.128, A.129; l'elenco chiesto da Davide per la A.109; nove
-domande nuove (A.135–A.143); pulizia dei doppioni della sezione 2.
+A.122, A.124, A.125 (veicoli: risposta di Marcello; etichette delle luci superate), A.127, A.128, A.129; l'elenco chiesto da Davide per la A.109; dieci
+domande nuove (A.135–A.144); pulizia dei doppioni della sezione 2.
 
 ---
 
@@ -188,7 +188,11 @@ Il §5.8 dice quanto vale la Copertura (Leggera −2, Media −4, Totale) ma non
 
 **A.141 — Personaggi in mezzo alla linea di tiro.**
 Un personaggio (alleato o nemico) fra chi tira e il bersaglio dà Copertura?
-*Nel frattempo:* no; l'app lo segnala e il master valuta il «bersaglio protetto da un alleato» del §5.10 (−4 VA).
+*Nel frattempo:* no; l'app propone in «Attacca!» il «bersaglio impegnato o protetto» del §5.10 (−4 VA e seconda Prova).
+
+**A.144 — Creature in mezzo: Copertura o bersaglio protetto?**
+Il §5.10 dice che sparare a un nemico «impegnato in Ravvicinato, protetto da un alleato o che usa un ostaggio» costa −4 VA, con una seconda Prova per vedere se si colpisce chi sta in mezzo. Una creatura fra chi tira e il bersaglio dà anche Copertura (Leggera, Media, Totale come un muro)? Vale anche se è un alleato di chi tira o un neutrale, o una creatura grande che nasconde del tutto il bersaglio?
+*Nel frattempo:* vale solo il §5.10, come dice il manuale; le creature a terra o a 0 PV non contano.
 
 **A.142 — Fin dove vedono i PG.**
 Per la nebbia che si apre da sola dove i PG vedono: con luce sufficiente, fino a quanti quadretti?

@@ -69,6 +69,7 @@ export function validaDiretta(d) {
   if (d.linea !== undefined && d.linea !== null) {
     const l = d.linea;
     if (typeof l !== 'object' || typeof l.da !== 'string' || (l.a !== null && typeof l.a !== 'string') || (l.punto !== null && !posizione(l.punto)) || !numero(l.distanza) || typeof l.copertura !== 'string' || typeof l.vista !== 'string') return 'linea: { da, a, punto, distanza, copertura, vista }';
+    if (l.testo !== undefined && (typeof l.testo !== 'string' || l.testo.length > 120)) return 'linea.testo: etichetta breve';
   }
   if (d.token === null) return null; // solo l'anteprima di un template o la linea di tiro
   if (typeof d.token !== 'string') return 'token: id o null';
@@ -118,7 +119,7 @@ function lineaPerGiocatori(l, scena) {
     if (!visibileAiGiocatori({ q: l.punto, ingombro: 1 }, scena, nebbia)) return null;
     verso = { q: [...l.punto], ingombro: 1 };
   } else return null;
-  return { da: { q: [...da.q], ingombro: da.ingombro }, a: verso, distanza: l.distanza, copertura: l.copertura, vista: l.vista };
+  return { da: { q: [...da.q], ingombro: da.ingombro }, a: verso, distanza: l.distanza, copertura: l.copertura, vista: l.vista, ...(typeof l.testo === 'string' ? { testo: l.testo } : {}) };
 }
 
 /** La parte del movimento (token scelto, area, percorso, ZoC), o null se il token non si vede. */

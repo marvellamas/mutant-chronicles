@@ -2820,6 +2820,8 @@ function validaMappa(dati, err) {
   // 07/10: «dal centro», cinque linee (quattro angoli e centro del bersaglio): sei livelli per 0–5 linee bloccate
   if (!Array.isArray(VV.copertura_linee) || VV.copertura_linee.length !== 6 || !VV.copertura_linee.every((x) => LIVELLI.includes(x)) || VV.copertura_linee[0] !== 'nessuna' || VV.copertura_linee[5] !== 'totale') err(F, 'visuale.copertura_linee', 'sei livelli (0–5 linee bloccate), il primo «nessuna» e l’ultimo «totale» (§5.8)');
   if (!isIntero(VV.campioni_per_q) || VV.campioni_per_q < 2 || VV.campioni_per_q > 50) err(F, 'visuale.campioni_per_q', 'intero da 2 a 50');
+  // 07/10: token in mezzo alla linea di tiro (A.141, A.144): «protetto» (§5.10) o «copertura» (ostacolo)
+  if (!['protetto', 'copertura'].includes(VV.token_in_mezzo)) err(F, 'visuale.token_in_mezzo', 'protetto o copertura');
   if (!positivo(VV.raggio_q)) err(F, 'visuale.raggio_q', 'numero positivo (Q)');
   if (!['quadretti', 'euclidea'].includes(VV.metrica)) err(F, 'visuale.metrica', 'quadretti o euclidea');
   if (typeof VV.automatica_predefinita !== 'boolean') err(F, 'visuale.automatica_predefinita', 'vero o falso');

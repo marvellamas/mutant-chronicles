@@ -35,7 +35,7 @@ import { leggiScena, salvaScena, caricaImmagine, controllaFile, preparaRidotta }
 import { agganciaQ, centroToken, tokenSottoPunto, disponiInFila, sovrapposti, chiaveRif, dimensioni } from '../../mappa/token.js';
 import { pezziDellaScena, pezziSenzaToken, tokenOrfani, tokenPerPezzo } from '../../mappa/partecipanti.js';
 import { daBase64, inBase64, cella, conta } from '../../mappa/celle.js';
-import { ostacoliVista, lineaDiTiro, visuale as visualePg, nebbiaDopoVisuale, tokenPg } from '../../mappa/visuale.js';
+import { ostacoliVista, lineaDiTiro, testoCopertura, visuale as visualePg, nebbiaDopoVisuale, tokenPg } from '../../mappa/visuale.js';
 import { fasciaDistanza } from '../../attacco.js';
 import { CHIAVE_DALLA_MAPPA } from '../attacco.js';
 import { tratto, valoreModo, nebbiaProvvisoria, chiudiPennellata, rettangoloNebbia, tuttaNebbia, trattiCoperti } from '../../mappa/nebbia.js';
@@ -921,7 +921,7 @@ export function renderMappa(radice, ctx) {
       ['Maiusc+T (pulsante «◫ Template»)', 'mostra o nasconde i template senza durata, muri, porte e terreno (per il movimento valgono sempre); con «anche a durata» anche i template a Round'],
       ['Strumenti → Muri e terreno → «Porta»', 'clic su un Q di muro: porta (aperta, chiusa o bloccata; segreta); clic su una porta: la toglie'],
       ['Clic su una porta', 'il master la apre o la chiude (bloccata: no); clic destro: il token scelto vicino la apre (1 AzP); Apri / Chiudi, Blocca / Sblocca; «Opzioni ▸»: Ruota, Rivela / Rendi segreta, Togli'],
-      ['L (o clic destro → «Linea di tiro»)', 'dal token scelto verso il mouse o un token: distanza (diagonale 1 Q), vista, Copertura (§5.8); clic per fissarla: «Attacca!» con distanza e Copertura; Esc per chiudere'],
+      ['L (o clic destro → «Linea di tiro»)', 'dal token scelto verso il mouse o un token: distanza (diagonale 1 Q), vista, Copertura (§5.8) con la causa, token in mezzo come «bersaglio protetto» (§5.10); clic per fissarla: «Attacca!» con distanza e Copertura; Esc per chiudere'],
       ['Nebbia automatica (pannello Nebbia)', 'la nebbia si apre dove i PG vedono (muri e porte chiuse fermano la vista); per i giocatori le zone esplorate restano più scure'],
       ['Maiusc+L (o Strumenti → «Mostra dettaglio linea di tiro»)', 'mostra o nasconde le cinque linee di controllo della linea di tiro, dal centro di chi tira verso angoli e centro del bersaglio (solo qui)'],
       ['Strumento «Porta»: ← →', 'gira la porta da mettere (verticale / orizzontale); di solito segue da sola i muri vicini. Sulla porta già messa: clic destro → «Ruota»'],
@@ -1742,12 +1742,20 @@ export function renderMappa(radice, ctx) {
     if (!da || (!a && !l.punto)) return null;
     const chiave = JSON.stringify([idDi(st.scena), l.da, l.a, l.punto]);
     if (cacheLinea.chiave === chiave) return cacheLinea.valore;
-    const r = lineaDiTiro(st.scena, da, a ?? l.punto, ostacoliVista(st.scena, RP), RV);
+    const r = lineaDiTiro(st.scena, da, a ?? l.punto, ostacoliVista(st.scena, RP), RV, { contaToken: contaInLinea });
     cacheLinea.chiave = chiave;
     cacheLinea.valore = { ...r, da, a: a ?? { q: l.punto, ingombro: 1 } };
     return cacheLinea.valore;
   }
-  const testoLinea = (r) => `${r.distanza} Q · ${NOMI_COPERTURA[r.copertura]}`;
+  /**
+   * 07/10 (A.141, A.144): i token che contano nella linea di tiro (in mezzo o come ostacolo): non quelli a 0 PV o A Terra
+   * (sotto la linea); per i giocatori nemmeno i nascosti.
+   */
+  function contaInLinea(t) {
+    const p = pezzoDi(t);
+    return !p?.aZero && !(p?.stati ?? []).some((x) => (x?.id ?? x) === 'a-terra');
+  }
+  const testoLinea = (r) => `${r.distanza} Q · ${testoCopertura(r)}${r.protetto ? ' · protetto' : ''}`;
   function disegnaLineaScelta(c) {
     if (!st.linea || !st.scena) return;
     const r = calcolaLinea();
@@ -1767,7 +1775,11 @@ export function renderMappa(radice, ctx) {
   function lineaPerDiretta() {
     if (!st.linea || !st.scena) return null;
     const r = calcolaLinea();
-    return r ? { da: st.linea.da, a: st.linea.a, punto: st.linea.a ? null : st.linea.punto, distanza: r.distanza, copertura: r.copertura, vista: r.vista } : null;
+    if (!r) return null;
+    // 07/10: per i giocatori la linea si ricalcola con quello che vedono: porte segrete come muro, niente token nascosti
+    // (né come ostacolo né in mezzo), così la Copertura non tradisce un token che non vedono
+    const g = lineaDiTiro(st.scena, r.da, r.a.id ? r.a : r.a.q, ostacoliVista(st.scena, RP, { perGiocatori: true }), RV, { contaToken: (t) => !t.nascosto && contaInLinea(t) });
+    return { da: st.linea.da, a: st.linea.a, punto: st.linea.a ? null : st.linea.punto, distanza: g.distanza, copertura: g.copertura, vista: g.vista, testo: `${g.distanza} Q · ${testoCopertura(g)}${g.protetto ? ' · protetto' : ''}` };
   }
   /** Clic con la linea attiva: fissa il bersaglio e dice distanza, gittata, vista, Copertura; «Attacca!» con quei valori. */
   function fissaLinea(m) {
@@ -1783,9 +1795,11 @@ export function renderMappa(radice, ctx) {
     const gittata = fasciaDistanza(r.distanza, ctx.dati).va;
     const pen = { leggera: ctx.dati.regole.attacco_distanza.copertura.bersaglio.leggera, media: ctx.dati.regole.attacco_distanza.copertura.bersaglio.media }[r.copertura];
     const righe = [
-      `${nomeDa} → ${nomeA}: ${r.distanza} Q (gittata ${gittata ? `${gittata} VA` : '0'}), vista ${r.vista}, ${NOMI_COPERTURA[r.copertura]}${pen ? ` (${pen} VA)` : ''}.`,
+      `${nomeDa} → ${nomeA}: ${r.distanza} Q (gittata ${gittata ? `${gittata} VA` : '0'}), vista ${r.vista}, ${testoCopertura(r)}${pen ? ` (${pen} VA)` : ''}.`,
       r.copertura === 'totale' ? 'Il bersaglio non può essere attaccato direttamente (§5.8).' : null,
-      r.inMezzo.length ? `In mezzo: ${r.inMezzo.map((x) => pezzoDi(x)?.nome ?? x.nome ?? x.id).join(', ')}: niente Copertura, ma forse «bersaglio protetto» (−4 VA, §5.10), da decidere.` : null,
+      // 07/10: token in mezzo (Giocatore §5.10, A.141, A.144): «bersaglio impegnato o protetto» proposto in «Attacca!»
+      r.protetto ? `In mezzo: ${r.inMezzo.map((x) => pezzoDi(x)?.nome ?? x.nome ?? x.id).join(', ')}: bersaglio protetto (§5.10), −4 VA; se il tiro fallisce, seconda Prova a −4: con successo manca tutti, altrimenti colpisce chi sta in mezzo. Proposto in «Attacca!».` : null,
+      r.causa?.token?.length ? `Copertura data da: ${r.causa.token.map((x) => pezzoDi(x)?.nome ?? x.nome ?? x.id).join(', ')}${r.causa.muro ? ' e da muri o porte' : ''}.` : null,
       'Regola della Copertura sulla griglia provvisoria (A.140).',
     ];
     const azioni = [];
@@ -1793,13 +1807,13 @@ export function renderMappa(radice, ctx) {
     const luceB = luceIngombro(st.scena, aTok ?? { q: st.linea.punto, ingombro: 1 }, ctx.dati);
     const rigaLuce = testoLuceBersaglio(luceB, ctx.dati);
     if (rigaLuce) righe.splice(1, 0, `Luce: ${rigaLuce}.`);
-    const preset = { distanza: r.distanza, bersaglio: { copertura: r.copertura, distanza: r.distanza }, luce: luceB, ...(rigaLuce ? { luceMappa: rigaLuce } : {}) };
+    const preset = { distanza: r.distanza, bersaglio: { copertura: r.copertura, distanza: r.distanza, ...(r.protetto ? { impegnato: true } : {}) }, luce: luceB, ...(rigaLuce ? { luceMappa: rigaLuce } : {}) };
     if (aTok && r.copertura !== 'totale') {
       const pzDa = pezzoDi(daTok);
       const idDa = daTok.rif?.id, idA = aTok.rif?.id;
       if (st.fonti?.scontro && st.planciaBarra?.puoAttaccare?.(idDa)) azioni.push({ testo: `Attacca! (${nomeDa} → ${nomeA})`, fai: () => st.planciaBarra.attaccaContro(idDa, idA, preset) });
       else if (pzDa?.tipo === 'pg' && recordPg(pzDa)) azioni.push({ testo: `Apri la scheda di ${nomeDa} per «Attacca!»`, fai: () => {
-        try { sessionStorage.setItem(CHIAVE_DALLA_MAPPA, JSON.stringify({ nome: pzDa.nome, distanza: r.distanza, copertura: r.copertura, bersaglio: nomeA, luce: luceB, luceMappa: rigaLuce, quando: Date.now() })); } catch { /* senza: valori a mano */ }
+        try { sessionStorage.setItem(CHIAVE_DALLA_MAPPA, JSON.stringify({ nome: pzDa.nome, distanza: r.distanza, copertura: r.copertura, protetto: r.protetto, bersaglio: nomeA, luce: luceB, luceMappa: rigaLuce, quando: Date.now() })); } catch { /* senza: valori a mano */ }
         apriSchedaToken(daTok);
       } });
     }

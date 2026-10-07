@@ -1096,7 +1096,16 @@ dell'aspetto: nel pacchetto del 07/10), A.111 (solo Pablo Zaion), A.112, A.113, 
   i quattro angoli e il centro del bersaglio; linee bloccate da muri o porte chiuse 0 = nessuna, 1–2 = Leggera,
   3–4 = Media, 5 = Totale (`data/mappa.json` → visuale.copertura_linee). Va bene la tabella?
 - **A.141 — Token fra chi tira e il bersaglio** (07/10/2026). Danno Copertura? Provvisorio: no, il §5.8 parla di
-  ostacoli; la linea li segnala come possibile «bersaglio protetto da un alleato» del §5.10 (−4 VA), da decidere al tavolo.
+  ostacoli; vale il «bersaglio impegnato o protetto» del §5.10 (−4 VA e seconda Prova), che dal 07/10 la linea di tiro
+  propone in «Attacca!» (`data/mappa.json` → visuale.token_in_mezzo «protetto»).
+- **A.144 — Creature in mezzo: Copertura o «bersaglio protetto»?** (07/10/2026, richiesta di Marcello di contare i token
+  come ostacoli). Il Giocatore §5.10 dà per chi spara «contro un nemico impegnato in Ravvicinato, protetto da un alleato o
+  che usa un ostaggio» −4 VA e una seconda Prova a −4 (con successo manca tutti, altrimenti colpisce il bersaglio
+  secondario); il §5.8 dà la Copertura degli ostacoli. Una creatura fra chi tira e il bersaglio (anche un alleato di chi
+  tira o un neutrale, anche una creatura grande che lo nasconde del tutto) dà anche Copertura, con la tabella delle linee,
+  o vale solo il §5.10? Provvisorio: solo §5.10, come dice il manuale; l'app ha anche il valore «copertura» (i token come
+  ostacoli, proposta di Marcello), da scegliere in `data/mappa.json` → visuale.token_in_mezzo. Non contano i token a 0 PV o
+  A Terra; per i giocatori nemmeno i nascosti.
 - **A.142 — Fin dove vedono i PG** (07/10/2026, nebbia automatica). Con luce sufficiente, entro quanti Q la nebbia si
   apre da sola? Provvisorio: 30 Q (45 m), contati a quadretti; con le luci (lotto 4, decisione 138) Penombra 6 Q, Luce
   scarsa 3 Q, Buio solo il Q accanto.

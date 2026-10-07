@@ -191,3 +191,47 @@ test('diretta: la linea di tiro arriva ai giocatori solo fra token visibili; ver
   assert.equal(direttaPerGiocatori(linea(null, [17, 3]), s, dati.mappa.template), null, 'verso un Q sotto la nebbia: niente');
   assert.ok(direttaPerGiocatori(linea(null, [12, 3]), s, dati.mappa.template).linea);
 });
+
+test('token in mezzo (07/10, A.141, A.144): dal manuale «bersaglio protetto» (§5.10), con «copertura» un ostacolo; causa nell’etichetta', async () => {
+  const { lineaDiTiro, testoCopertura } = await import('../src/mappa/visuale.js');
+  const s = { ...nuovaScena({ id: 't', nome: 'T', colonne: C, righe: R, dati }), revisione: 0 };
+  const chi = tok('a', [2, 5]), bers = tok('b', [9, 5]), mezzo = tok('c', [5, 5]);
+  s.token = [chi, bers, mezzo];
+  const ost = ostacoliVista(s, RP);
+  // predefinito «protetto»: nessuna Copertura, il token è in mezzo e si propone il bersaglio protetto
+  assert.equal(RV.token_in_mezzo, 'protetto');
+  const p = lineaDiTiro(s, chi, bers, ost, RV);
+  assert.deepEqual([p.copertura, p.protetto, p.inMezzo.map((t) => t.id)], ['nessuna', true, ['c']]);
+  // un token a 0 PV o A Terra non conta (contaToken)
+  assert.equal(lineaDiTiro(s, chi, bers, ost, RV, { contaToken: (t) => t.id !== 'c' }).protetto, false);
+  // «copertura»: il token blocca le cinque linee (sulla stessa riga, dal centro: Totale), causa «1 token»
+  const RC = { ...RV, token_in_mezzo: 'copertura' };
+  const c = lineaDiTiro(s, chi, bers, ost, RC);
+  assert.deepEqual([c.copertura, c.protetto, c.causa.muro, c.causa.token.map((t) => t.id)], ['totale', false, 0, ['c']]);
+  assert.equal(testoCopertura(c), 'Copertura Totale (1 token)');
+  // muro e token insieme: «muro + 1 token»; il token più in basso copre solo una parte
+  s.muri = inBase64(rettangolo(nuovaMaschera(C, R), C, R, 6, 2, 6, 4, true));
+  const m = lineaDiTiro({ ...s, token: [chi, tok('b', [9, 4]), tok('c', [5, 5])] }, chi, tok('b', [9, 4]), ostacoliVista(s, RP), RC);
+  assert.ok(m.causa.muro > 0 && m.causa.token.length === 1, JSON.stringify(m.causa));
+  assert.match(testoCopertura(m), /\(muro \+ 1 token\)$/);
+  assert.equal(testoCopertura({ copertura: 'nessuna', causa: { muro: 0, token: [] } }), 'nessuna Copertura');
+  // validatore: solo i due valori
+  const d = copia(dati);
+  d.mappa.visuale.token_in_mezzo = 'sì';
+  assert.ok(validaDati(d).some((e) => e.file === 'mappa.json' && e.chiave === 'visuale.token_in_mezzo'));
+});
+
+test('vista giocatori: la linea arriva con la sua etichetta; un token nascosto non pesa sulla Copertura che vedono', async () => {
+  const { validaDiretta } = await import('../src/mappa/diretta.js');
+  const { lineaDiTiro } = await import('../src/mappa/visuale.js');
+  const base = { versione: 1, scena: 's', quando: 1, token: null, linea: { da: 'a', a: 'b', punto: null, distanza: 7, copertura: 'leggera', vista: 'parziale', testo: '7 Q · Copertura Leggera (muro)' } };
+  assert.equal(validaDiretta(base), null);
+  assert.match(validaDiretta({ ...base, linea: { ...base.linea, testo: 5 } }), /linea\.testo/);
+  // con «copertura» il nascosto blocca la linea del master, non quella dei giocatori (contaToken senza i nascosti)
+  const s = { ...nuovaScena({ id: 't', nome: 'T', colonne: C, righe: R, dati }), revisione: 0 };
+  const chi = tok('a', [2, 5]), bers = tok('b', [9, 5]), nascosto = tok('n', [5, 5], { nascosto: true });
+  s.token = [chi, bers, nascosto];
+  const RC = { ...RV, token_in_mezzo: 'copertura' };
+  assert.equal(lineaDiTiro(s, chi, bers, ostacoliVista(s, RP), RC).copertura, 'totale');
+  assert.equal(lineaDiTiro(s, chi, bers, ostacoliVista(s, RP, { perGiocatori: true }), RC, { contaToken: (t) => !t.nascosto }).copertura, 'nessuna');
+});

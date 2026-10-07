@@ -10,8 +10,12 @@
 //     che attraversano un Q ostacolo (sfiorarne il bordo non conta); il numero di linee bloccate (0–5) dà il livello
 //     (visuale.copertura_linee). Chi tira con un ingombro grande (2 × 2, 3 × 3, veicoli) parte dal centro del suo Q più
 //     favorevole (quello con meno linee bloccate): come sporgersi dal proprio spazio;
-//   - i token in mezzo non danno Copertura (il §5.8 parla di ostacoli): segnalano il bersaglio «protetto» del §5.10
-//     (−4 VA), da decidere al tavolo;
+//   - i token in mezzo (07/10, A.141 e A.144): per il Giocatore §5.10 «Sparare contro un nemico impegnato in
+//     Ravvicinato, protetto da un alleato o che usa un ostaggio impone −4 VA» con la seconda Prova per il bersaglio
+//     secondario; il §5.8 parla di ostacoli. Con visuale.token_in_mezzo «protetto» (predefinito, dal manuale) un token
+//     attraversato dalla linea fra i centri propone il «bersaglio impegnato o protetto» in «Attacca!», senza Copertura;
+//     con «copertura» (proposta di Marcello del 07/10) i token contano come ostacoli nelle cinque linee, con la stessa
+//     tabella. Non contano i token a 0 PV o A Terra (sotto la linea) e, per i giocatori, quelli nascosti (contaToken);
 //   - distanza fra gli ingombri con la diagonale da 1 Q;
 //   - visuale dei PG (nebbia automatica, motore a parte ma stesso punto di partenza): raggi dal centro del Q del PG
 //     (di ogni Q, per un ingombro grande) verso il centro di ogni Q entro il raggio, attraversando la griglia
@@ -99,19 +103,57 @@ export function tokenInMezzo(scena, da, a, regole) {
   return [...r];
 }
 
+/** Maschera dei Q occupati dai token che contano come ostacolo (07/10). */
+function maschereToken(scena, tokens) {
+  const { colonne: C, righe: R } = scena.griglia;
+  const m = new Uint8Array(Math.ceil((C * R) / 8));
+  for (const t of tokens) for (const [x, y] of celleToken(t)) impostaCella(m, C, R, x, y, true);
+  return m;
+}
+/** Unione di due maschere. */
+function unione(a, b) { const m = new Uint8Array(a.length); for (let i = 0; i < a.length; i++) m[i] = a[i] | b[i]; return m; }
+
 /**
  * La linea di tiro da un token verso un altro token (o verso un Q): distanza (diagonale 1 Q), vista libera o bloccata,
- * Copertura, token in mezzo. Verso un Q vuoto: il Q come bersaglio di 1 × 1.
+ * Copertura con la causa, token in mezzo. Verso un Q vuoto: il Q come bersaglio di 1 × 1.
+ * @param o { contaToken(t): il token conta (in mezzo o come ostacolo)? } — di norma tutti tranne 0 PV e A Terra; per i
+ *   giocatori anche i nascosti esclusi, così la linea che vedono non tradisce un token che non vedono
+ * @returns { distanza, copertura, bloccate, linee, origine, vista, inMezzo: [token], causa: { muro, token: [token] },
+ *   protetto: vero se si propone il «bersaglio impegnato o protetto» (§5.10) }
  */
-export function lineaDiTiro(scena, da, verso, ost, regole) {
+export function lineaDiTiro(scena, da, verso, ost, regole, { contaToken = () => true } = {}) {
   const a = verso.q ? verso : { id: null, q: verso, ingombro: 1 };
-  const cop = copertura(scena, da, a, ost, regole);
+  const { colonne: C, righe: R } = scena.griglia;
+  const candidati = scena.token.filter((t) => t.id !== da.id && t.id !== a.id && contaToken(t));
+  const comeOstacolo = regole.token_in_mezzo === 'copertura';
+  const mt = comeOstacolo && candidati.length ? maschereToken(scena, candidati) : null;
+  const cop = copertura(scena, da, a, mt ? unione(ost, mt) : ost, regole);
+  // la causa delle linee bloccate: muro (o porta chiusa) prima, poi token
+  let muro = 0;
+  const tokCausa = new Set();
+  for (const l of cop.linee) {
+    if (!l.bloccata) continue;
+    if (segmentoBloccato(ost, C, R, l.da, l.a, regole.campioni_per_q)) { muro++; l.causa = 'muro'; continue; }
+    l.causa = 'token';
+    for (const t of candidati) if (segmentoBloccato(maschereToken(scena, [t]), C, R, l.da, l.a, regole.campioni_per_q)) tokCausa.add(t);
+  }
+  const inMezzo = tokenInMezzo({ ...scena, token: [da, a, ...candidati].filter((t) => t.id) }, da, a, regole);
   return {
     distanza: distanzaIngombri(da.q, da.ingombro, a.q, a.ingombro),
     copertura: cop.livello, bloccate: cop.bloccate, linee: cop.linee, origine: cop.origine,
     vista: cop.livello === 'totale' ? 'bloccata' : cop.livello === 'nessuna' ? 'libera' : 'parziale',
-    inMezzo: tokenInMezzo(scena, da, a, regole),
+    inMezzo,
+    causa: { muro, token: [...tokCausa] },
+    protetto: !comeOstacolo && inMezzo.length > 0,
   };
+}
+
+/** «Copertura Media (muro + 1 token)», «nessuna Copertura»; per l'etichetta della linea. */
+export function testoCopertura(r) {
+  const base = { nessuna: 'nessuna Copertura', leggera: 'Copertura Leggera', media: 'Copertura Media', totale: 'Copertura Totale' }[r.copertura];
+  if (r.copertura === 'nessuna') return base;
+  const parti = [r.causa?.muro ? 'muro' : null, r.causa?.token?.length ? `${r.causa.token.length} token` : null].filter(Boolean);
+  return parti.length ? `${base} (${parti.join(' + ')})` : base;
 }
 
 /**
