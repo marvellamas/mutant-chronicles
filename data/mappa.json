@@ -417,6 +417,35 @@
     "_nota": "«Indietro» nella barra dell'Iniziativa e nella plancia (ritocchi del 07/10/2026; src/scontro.js → avanti, indietro): annulla l'ultimo «Avanti» e riporta turno, Round, durate degli Stati, effetti degli incantesimi, Stati tolti ai nemici e perdite periodiche applicate a quel turno; le modifiche fatte dopo (PV, «Colpito», movimenti) restano. Lo storico sta nello scontro (indietro) e tiene al massimo indietro_max «Avanti».",
     "indietro_max": 20
   },
+  "menu": {
+    "_nota": "Menu del clic destro sulla mappa (richiesta di Marcello del 07/10/2026; src/mappa/menu.js): per contesto (token, porta, template, punto vuoto) la riga rapida, i gruppi con intestazione e le «Opzioni» (sottomenu), con gli id delle voci nell'ordine in cui compaiono. Si mostrano solo le voci utilizzabili in quel momento (la riga rapida anche spenta, con il motivo); i gruppi vuoti non si mostrano. «{nome}» nel titolo di un gruppo diventa il nome del template. altezza_voce_px: altezza minima di una voce, per il dito sul tablet.",
+    "altezza_voce_px": 40,
+    "token": {
+      "rapida": ["passo", "corsa", "scatto", "libero"],
+      "gruppi": [
+        { "titolo": "Movimento", "voci": ["annulla_movimento", "nuovo_turno"] },
+        { "titolo": "Azioni", "voci": ["attacca", "porta_token"] },
+        { "titolo": "Strumenti", "voci": ["linea", "area", "zoc", "template_qui"] },
+        { "titolo": "Scheda", "voci": ["mini_scheda", "scheda_completa"] }
+      ],
+      "opzioni": ["nascondi", "colore_bordo", "togli_token"]
+    },
+    "porta": {
+      "gruppi": [
+        { "titolo": "Azioni", "voci": ["porta_token"] },
+        { "titolo": "Porta", "voci": ["apri_chiudi", "blocca"] }
+      ],
+      "opzioni": ["ruota", "segreta", "togli_porta"]
+    },
+    "template": {
+      "gruppi": [{ "titolo": "{nome}", "voci": ["sposta_template", "nascondi_template"] }],
+      "opzioni": ["togli_template"]
+    },
+    "mappa": {
+      "gruppi": [{ "titolo": "Strumenti", "voci": ["template_qui", "linea_qui"] }],
+      "opzioni": []
+    }
+  },
   "pv_token": {
     "_nota": "Barretta dei PV sui token (test di Marcello del 07/10/2026, al posto dell'anello): rossa, sul fondo del token e sovrapposta al bordo, larga quanto il quadretto (o l'ingombro) a PV pieni, più corta in proporzione ai PV persi. Spessore: rispetto_al_bordo volte lo spessore del bordo colorato, almeno spessore_minimo_px; traccia: il fondo scuro della parte persa. Gli stessi valori per i mini-token della barra dell'Iniziativa (in pixel CSS).",
     "colore": "#e03131",

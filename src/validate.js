@@ -3,6 +3,7 @@
 // Non lancia eccezioni: un file malformato produce errori, non un crash.
 import { TIPI as TIPI_EQUIP, STATI } from './equipaggiamento.js';
 import { FILE_MAPPA } from './mappa/scena.js';
+import { erroreMenu } from './mappa/menu.js';
 
 // Invarianti strutturali dei manuali. I valori numerici "di gioco" stanno in regole.json;
 // qui restano solo le forme fisse descritte dai paragrafi citati.
@@ -2702,6 +2703,8 @@ function validaMappa(dati, err) {
   }
   // «Indietro» nell'Iniziativa (07/10, src/scontro.js → indietro): quanti «Avanti» si possono annullare
   if (!isIntero(m.iniziativa?.indietro_max) || m.iniziativa.indietro_max < 1) err(F, 'iniziativa.indietro_max', 'intero da 1 in su');
+  // menu del clic destro (07/10, src/mappa/menu.js): gruppi e voci note, senza ripetizioni
+  { const e = erroreMenu(m.menu); if (e) err(F, e.split(':')[0], e.slice(e.indexOf(':') + 2)); }
   // zone di controllo (07/10, src/mappa/zoc.js; Giocatore §5.3)
   const Z = m.zoc;
   if (!isOggetto(Z)) err(F, 'zoc', 'oggetto mancante');

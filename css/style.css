@@ -1932,13 +1932,22 @@ body:has(.mappa-pagina) .piede { display: none; }
 .mappa-movimento .fascia-2 { border-left: 4px solid var(--mappa-corsa); }
 .mappa-movimento .fascia-3 { border-left: 4px solid var(--mappa-scatto); }
 .mappa-movimento .fascia-4 { border-left: 4px dashed currentColor; }
-.mappa-menu { position: absolute; z-index: 3; min-width: 12rem; display: flex; flex-direction: column; padding: 0.3rem; background: var(--superficie); border: 1px solid var(--bordo); border-radius: var(--raggio); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35); }
+.mappa-menu { position: absolute; z-index: 3; min-width: 14rem; max-width: min(22rem, calc(100% - 8px)); max-height: calc(100% - 8px); overflow-y: auto; display: flex; flex-direction: column; padding: 0.3rem; background: var(--superficie); border: 1px solid var(--bordo); border-radius: var(--raggio); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35); }
+.mappa-sottomenu { z-index: 4; min-width: 12rem; }
 .mappa-menu-titolo { margin: 0 0 0.2rem; padding: 0.15rem 0.4rem; font-weight: 700; font-size: 0.9rem; }
-.mappa-menu button { font: inherit; text-align: left; background: none; border: none; color: var(--testo); padding: 0.35rem 0.5rem; border-radius: 4px; cursor: pointer; }
-.mappa-menu button:hover:not(:disabled), .mappa-menu button:focus-visible { background: var(--accento-tenue); }
-.mappa-menu button.scelta { font-weight: 700; }
-.mappa-menu button:disabled { opacity: 0.45; cursor: default; }
-.mappa-menu hr { border: none; border-top: 1px solid var(--bordo); margin: 0.2rem 0; }
+/* 07/10: riga rapida del movimento, gruppi con intestazione, scorciatoia a destra, «Opzioni» in un sottomenu */
+.mappa-menu-rapida { display: flex; flex-wrap: wrap; gap: 0.25rem; padding: 0.1rem 0.3rem 0.35rem; border-bottom: 1px solid var(--bordo); }
+.mappa-menu-rapida .btn { flex: 1 1 auto; min-height: var(--voce-menu, 40px); }
+.mappa-menu-rapida .btn.scelto { background: var(--accento); color: var(--accento-testo, #fff); border-color: var(--accento); }
+.mappa-menu-gruppo { display: flex; flex-direction: column; padding: 0.15rem 0; }
+.mappa-menu-gruppo + .mappa-menu-gruppo { border-top: 1px solid var(--bordo); }
+.mappa-menu-intestazione { margin: 0.15rem 0 0; padding: 0 0.5rem; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--tenue); }
+.mappa-menu .mappa-menu-voce { font: inherit; display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: var(--voce-menu, 40px); text-align: left; background: none; border: none; color: var(--testo); padding: 0.3rem 0.5rem; border-radius: 4px; cursor: pointer; }
+.mappa-menu .mappa-menu-voce:hover:not(:disabled), .mappa-menu .mappa-menu-voce:focus-visible, .mappa-menu .mappa-menu-opzioni[aria-expanded="true"] { background: var(--accento-tenue); }
+.mappa-menu .mappa-menu-voce.scelta { font-weight: 700; }
+.mappa-menu .mappa-menu-voce:disabled { opacity: 0.45; cursor: default; }
+.mappa-menu .mappa-menu-voce.pericolo { color: var(--errore, #e03131); font-weight: 600; }
+.mappa-menu-tasto { flex: none; font: 600 0.75rem system-ui, sans-serif; padding: 0.05rem 0.35rem; border: 1px solid var(--bordo); border-radius: 4px; opacity: 0.85; }
 
 /* Mappa di battaglia, lotto 6 (§11): plancia come barra di destra, tre disposizioni, bordo da trascinare, barra
    dell'Iniziativa in cima (src/ui/mappa/barra-iniziativa.js), colonna ridotta di «Mappa grande» */
