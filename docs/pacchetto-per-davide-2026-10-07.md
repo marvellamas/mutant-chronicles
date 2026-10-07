@@ -7,8 +7,8 @@ successiva. Fonte: controllo del 07/10 (`docs/diff-manuali-2026-10-07.md`), deci
 
 Riepilogo: tre voci fra le Risolte (A.120; A.132 e A.134 con «risposta di Marcello») più le due mancanti del pacchetto
 del 06/10 (A.121, A.131); risposte ricevute e in implementazione per A.107, A.108, A.110, A.111, A.114, A.116, A.119,
-A.122, A.124, A.125 (veicoli: risposta di Marcello), A.127, A.128, A.129; l'elenco chiesto da Davide per la A.109; otto
-domande nuove (A.135–A.142); pulizia dei doppioni della sezione 2.
+A.122, A.124, A.125 (veicoli: risposta di Marcello; etichette delle luci superate), A.127, A.128, A.129; l'elenco chiesto da Davide per la A.109; nove
+domande nuove (A.135–A.143); pulizia dei doppioni della sezione 2.
 
 ---
 
@@ -89,7 +89,7 @@ Risposta ricevuta il 06/10 (sezione 7): coincide con quello che la mappa già fa
 *** AZIONE: aggiungi la riga alla voce A.125
 
 --- TESTO ---
-Risposta ricevuta il 06/10 (sezione 7) per porte e illuminazione: in implementazione. Veicoli: risposta di Marcello del 07/10 (decisione del gruppo, puoi rivederla): si muovono sulla mappa all'Iniziativa del conducente, come nella plancia (A.105); si applicherà quando i veicoli arriveranno sulla mappa. Resta aperta solo la corrispondenza delle vecchie etichette numeriche delle luci.
+Risposta ricevuta il 06/10 (sezione 7) per porte e illuminazione: applicata alla mappa il 07/10. Veicoli: risposta di Marcello del 07/10 (decisione del gruppo, puoi rivederla): si muovono sulla mappa all'Iniziativa del conducente, come nella plancia (A.105); si applicherà quando i veicoli arriveranno sulla mappa. Vecchie etichette numeriche delle luci: superata dal sistema semplice (decisione di Marcello del 07/10): la mappa usa solo Luce, Penombra, Luce scarsa e Buio, con zone a pennello e torce sui token. Con questo la A.125 passa fra le Risolte.
 ```
 
 ```
@@ -192,7 +192,11 @@ Un personaggio (alleato o nemico) fra chi tira e il bersaglio dà Copertura?
 
 **A.142 — Fin dove vedono i PG.**
 Per la nebbia che si apre da sola dove i PG vedono: con luce sufficiente, fino a quanti quadretti?
-*Nel frattempo:* 30 Q (45 m). Penombra e buio entreranno con le luci.
+*Nel frattempo:* 30 Q (45 m) con luce sufficiente; in Penombra 6 Q, con Luce scarsa 3 Q, al Buio solo il quadretto accanto (o fin dove arriva una torcia).
+
+**A.143 — Visione notturna e nebbia della mappa.**
+La Visione notturna (80 Q), la visione termica (40 Q) e la Vista Felina (20 Q) tolgono le penalità di Penombra e Luce molto scarsa entro la loro portata. Sulla mappa devono anche far vedere più lontano al PG che le ha, cioè aprire la nebbia come se ci fosse Luce entro la portata?
+*Nel frattempo:* no, la nebbia segue solo la luce della zona; le penalità nell'attacco restano quelle della scheda.
 ```
 
 ```

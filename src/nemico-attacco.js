@@ -68,6 +68,29 @@ export function attaccanteDa(p, dati = null) {
   };
 }
 
+/**
+ * Luce sul bersaglio per l'attacco di un nemico (A.106; mappa, fase 2, lotto 4): il VA dei nemici viene dal profilo,
+ * quindi la penalità si aggiunge qui, con la sua riga. Penombra −2 e Luce molto scarsa −4 (regole.json →
+ * illuminazione.livelli[].effetti); Buio totale come Accecato (−8 e i suoi divieti, non sommato a un Accecato già
+ * attivo). `visione`: una visione che copre il bersaglio elimina −2/−4, non il buio.
+ * @returns { arma, chi } con la penalità applicata (o gli stessi oggetti con luce sufficiente)
+ */
+export function conLuceNemico(arma, chi, luce, dati, { visione = false } = {}) {
+  const L = dati.regole.illuminazione;
+  const liv = L?.livelli?.find((x) => x.id === luce && !x.base);
+  if (!liv) return { arma, chi };
+  const conVa = (v, testo) => ({ ...arma, va: arma.va + v, vaEffettivo: (arma.vaEffettivo ?? arma.va) + v, scomposizione: [...(arma.scomposizione ?? []), voce(testo, v, 'stato')] });
+  if (liv.stato) {
+    if ((chi.sessione.statiAttivi ?? []).includes(liv.stato)) return { arma, chi };
+    const st = dati.regole.stati.elenco.find((x) => x.id === liv.stato);
+    const v = st?.effetti?.find((e) => e.tipo === 'va' && e.ambito === 'generale')?.valore ?? 0;
+    return { arma: conVa(v, `Luce: ${liv.nome} (come ${st?.nome ?? liv.stato})`), chi: { ...chi, sessione: { ...chi.sessione, statiAttivi: [...(chi.sessione.statiAttivi ?? []), liv.stato] } } };
+  }
+  if (visione && (L.visione?.elimina ?? []).includes(liv.id)) return { arma, chi };
+  const v = liv.effetti?.find((e) => e.prove === 'luce' && e.ambito === 'generale')?.valore ?? 0;
+  return v ? { arma: conVa(v, `Luce: ${liv.nome}`), chi } : { arma, chi };
+}
+
 /** VA finale e danno dell'attacco con la dichiarazione di «Attacca!» (src/attacco.js, stesso contratto dei PG). */
 export function calcolaAttaccoNemico(p, indice, dichiarazione, dati) {
   const attacco = attacchiDi(p)[indice];

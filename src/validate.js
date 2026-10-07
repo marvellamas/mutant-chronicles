@@ -2703,6 +2703,23 @@ function validaMappa(dati, err) {
   }
   // «Indietro» nell'Iniziativa (07/10, src/scontro.js → indietro): quanti «Avanti» si possono annullare
   if (!isIntero(m.iniziativa?.indietro_max) || m.iniziativa.indietro_max < 1) err(F, 'iniziativa.indietro_max', 'intero da 1 in su');
+  // fase 2, lotto 4: luci semplici (src/mappa/luce.js): categorie di regole.json → illuminazione, raggi di scoperta
+  {
+    const LU = m.luci;
+    const livelli = (dati.regole?.illuminazione?.livelli ?? []).map((x) => x.id);
+    if (!isOggetto(LU)) err(F, 'luci', 'oggetto mancante');
+    else {
+      if (!Array.isArray(LU.categorie) || LU.categorie.length < 2 || !LU.categorie.every((x) => livelli.includes(x))) err(F, 'luci.categorie', `categorie di regole.json → illuminazione.livelli (${livelli.join(', ')})`);
+      else {
+        if (!LU.categorie.includes(LU.predefinita)) err(F, 'luci.predefinita', 'una delle categorie');
+        for (const id of LU.categorie) if (!isIntero(LU.raggio_scoperta_q?.[id]) || LU.raggio_scoperta_q[id] < 1) err(F, `luci.raggio_scoperta_q.${id}`, 'intero da 1 in su (Q)');
+        if (isIntero(LU.raggio_scoperta_q?.[LU.predefinita]) && m.visuale && LU.raggio_scoperta_q[LU.predefinita] > m.visuale.raggio_q) err(F, `luci.raggio_scoperta_q.${LU.predefinita}`, 'non oltre visuale.raggio_q');
+        for (const k of ['oscurita', 'oscurita_giocatori']) for (const id of LU.categorie) if (id !== LU.predefinita && !(LU[k]?.[id] >= 0 && LU[k][id] <= 1)) err(F, `luci.${k}.${id}`, 'opacità da 0 a 1');
+      }
+      if (!isIntero(LU.raggio_max_q) || LU.raggio_max_q < 1) err(F, 'luci.raggio_max_q', 'intero da 1 in su');
+      if (!Array.isArray(LU.sorgenti) || !LU.sorgenti.length || !LU.sorgenti.every((x) => isTesto(x.id) && isTesto(x.nome) && isIntero(x.raggio_q) && x.raggio_q >= 1 && x.raggio_q <= (LU.raggio_max_q ?? 0))) err(F, 'luci.sorgenti', '{ id, nome, raggio_q } con raggio da 1 a raggio_max_q');
+    }
+  }
   // menu del clic destro (07/10, src/mappa/menu.js): gruppi e voci note, senza ripetizioni
   { const e = erroreMenu(m.menu); if (e) err(F, e.split(':')[0], e.slice(e.indexOf(':') + 2)); }
   // zone di controllo (07/10, src/mappa/zoc.js; Giocatore §5.3)

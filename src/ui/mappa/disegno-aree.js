@@ -7,6 +7,7 @@
 //   - percorso del token scelto verso il quadretto sotto il puntatore, con i Q che costa.
 import { schermoDaMappa, rettangoloVisibile } from '../../mappa/camera.js';
 import { dimensioni } from '../../mappa/token.js';
+import { trattiCoperti } from '../../mappa/nebbia.js';
 
 /** Limiti dei Q visibili nel riquadro, per non scorrere tutta la griglia a ogni disegno. */
 function visibili(g, cam, info) {
@@ -280,4 +281,28 @@ export function disegnaLineaTiro(c, { scena, cam, da, a, copertura, etichetta, c
     c.fillText(etichetta, q.x + 16, q.y - 14);
   }
   c.restore();
+}
+
+/**
+ * Luci della scena (fase 2, lotto 4; src/mappa/luce.js): un velo scuro sui Q in Penombra, Luce scarsa e Buio, con
+ * l'opacità della categoria (data/mappa.json → luci.oscurita, per i giocatori luci.oscurita_giocatori, più leggera
+ * perché la mappa resti leggibile). Sta sotto i token: il buio non li nasconde (a quello pensa la nebbia).
+ * @param maschere { categoria: maschera a bit (src/mappa/celle.js) }
+ */
+export function disegnaLuci(c, { scena, cam, info, maschere, opacita, colore = '#05060a' }) {
+  const g = scena.griglia;
+  const v = visibili(g, cam, info);
+  for (const [id, m] of Object.entries(maschere)) {
+    const a = opacita[id];
+    if (!(a > 0)) continue;
+    const tratti = trattiCoperti(m, g.colonne, g.righe, v);
+    if (!tratti.length) continue;
+    c.save();
+    c.globalAlpha = a;
+    c.fillStyle = colore;
+    c.beginPath();
+    for (const [y, xa, xb] of tratti) c.rect(...rettQ(g, cam, xa, y, xb - xa, 1));
+    c.fill();
+    c.restore();
+  }
 }

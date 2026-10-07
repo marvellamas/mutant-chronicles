@@ -1098,8 +1098,13 @@ dell'aspetto: nel pacchetto del 07/10), A.111 (solo Pablo Zaion), A.112, A.113, 
 - **A.141 — Token fra chi tira e il bersaglio** (07/10/2026). Danno Copertura? Provvisorio: no, il §5.8 parla di
   ostacoli; la linea li segnala come possibile «bersaglio protetto da un alleato» del §5.10 (−4 VA), da decidere al tavolo.
 - **A.142 — Fin dove vedono i PG** (07/10/2026, nebbia automatica). Con luce sufficiente, entro quanti Q la nebbia si
-  apre da sola? Provvisorio: 30 Q (45 m), contati a quadretti; le luci (prossimo lotto) ridurranno la vista in penombra e
-  al buio.
+  apre da sola? Provvisorio: 30 Q (45 m), contati a quadretti; con le luci (lotto 4, decisione 138) Penombra 6 Q, Luce
+  scarsa 3 Q, Buio solo il Q accanto.
+- **A.143 — Visione notturna e nebbia automatica** (07/10/2026, luci della mappa, fase 2, lotto 4). La Visione notturna
+  (80 Q), la visione termica (40 Q) e la Vista Felina (20 Q) eliminano le penalità di Penombra e Luce molto scarsa entro
+  la portata (A.106; `regole.json` → illuminazione.visione). Sulla mappa devono anche allargare la nebbia automatica
+  per il PG che le ha (per esempio Penombra e Luce scarsa come Luce entro la portata)? Provvisorio: no, la nebbia usa
+  solo la luce della zona (`data/mappa.json` → luci, `TODO(Davide)`).
 
 ## 7 ottobre 2026 — risposte di Marcello (decisioni del gruppo)
 
@@ -1126,6 +1131,16 @@ Marcello»: Davide può rivederle (nel pacchetto per il Doc vanno fra le Risolte
     dell'ingombro più favorevole a chi tira; bersaglio grande ai suoi angoli e al centro. La nebbia automatica partiva già
     dal centro del Q del PG. Resta da confermare con Davide la tabella (A.140). **Applicata** il 07/10 (branch
     `battlemap`): `src/mappa/visuale.js` → copertura, `data/mappa.json` → visuale.copertura_linee (sei livelli).
+138. **Luci della mappa, versione semplice** (A.106, A.116, A.125; decisione di Marcello, 07/10). Nella vecchia app le
+    luci erano complesse e facevano perdere tempo: qui si preparano in pochi secondi e non si ritoccano in gioco. Niente
+    ombre dinamiche, intensità o livelli numerici: le quattro categorie di A.106 (Luce, Penombra −2, Luce scarsa −4, Buio
+    come Accecato). Luce della scena (una per scena), zone a pennello facoltative, luci portate dai token con il raggio in
+    Q (raggi del catalogo: bastoncino 2, lanterna e lampada frontale 6, torcia 10; il fascio si semplifica in un cerchio);
+    i muri non fermano la luce. Nebbia automatica: il raggio dipende dalla luce del Q visto (Luce 30 Q, Penombra 6, Luce
+    scarsa 3, Buio 1). In «Attacca!» dalla linea di tiro si propone la luce della zona del bersaglio (modificabile). Le
+    vecchie etichette numeriche delle luci dell'app di Davide non si usano: la parte aperta della A.125 è **superata**.
+    **Applicata** il 07/10 (branch `battlemap`, fase 2, lotto 4): `src/mappa/luce.js`, `data/mappa.json` → luci;
+    domanda nuova A.143 (visione notturna e nebbia).
 
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 

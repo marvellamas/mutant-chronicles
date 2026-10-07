@@ -16,7 +16,7 @@ test('dati: i quattro contesti, voci note, altezza per il dito; il validatore li
   assert.deepEqual(CONTESTI_MENU, ['token', 'porta', 'template', 'mappa']);
   assert.deepEqual(M.token.rapida, ['passo', 'corsa', 'scatto', 'libero']);
   assert.deepEqual(M.token.gruppi.map((g) => g.titolo), ['Movimento', 'Azioni', 'Strumenti', 'Scheda']);
-  assert.deepEqual(M.token.opzioni, ['nascondi', 'colore_bordo', 'togli_token']);
+  assert.deepEqual(M.token.opzioni, ['nascondi', 'luce_token', 'colore_bordo', 'togli_token']);
   assert.ok(M.altezza_voce_px >= 32);
   for (const [k, cambia, re] of [
     ['voce', (d) => d.mappa.menu.token.gruppi[0].voci.push('vola'), /vola/],

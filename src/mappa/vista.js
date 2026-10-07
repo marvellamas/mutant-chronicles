@@ -22,6 +22,7 @@ import { barraIniziativa, barraPerGiocatori } from './iniziativa.js';
 import { templatePerGiocatori } from './template.js';
 import { muriPerGiocatori, portePerGiocatori } from './porte.js';
 import { ostacoliVista, visuale as visualePg, tokenPg } from './visuale.js';
+import { luceQ } from './luce.js';
 
 /**
  * @param s la scena completa
@@ -29,6 +30,26 @@ import { ostacoliVista, visuale as visualePg, tokenPg } from './visuale.js';
  *   immagineDi: (pezzo) → indirizzo dell'immagine per i giocatori | null, scontro?: lo scontro aperto (barra dell'Iniziativa),
  *   bordoDi?: (pezzo) → bordo del token (src/mappa/colori.js) }
  */
+/**
+ * Luci per i giocatori (fase 2, lotto 4): una maschera per ogni categoria scura (penombra, scarsa, buio), solo dei Q fuori
+ * dalla nebbia; nulla se la scena è tutta in Luce sufficiente. La vista le scurisce, senza nascondere i token.
+ */
+function lucePerGiocatori(s, nebbia, regoleMappa) {
+  if (!regoleMappa?.luci) return null;
+  const { colonne: C, righe: R } = s.griglia;
+  const cat = regoleMappa.luci.categorie;
+  const m = luceQ(s, { mappa: regoleMappa });
+  const fuori = {};
+  for (let k = 0; k < cat.length; k++) {
+    if (cat[k] === regoleMappa.luci.predefinita) continue;
+    const z = new Uint8Array(Math.ceil((C * R) / 8));
+    let n = 0;
+    for (let i = 0; i < C * R; i++) if (m[i] === k && !(nebbia[i >> 3] & (1 << (i & 7)))) { z[i >> 3] |= 1 << (i & 7); n++; }
+    if (n) fuori[cat[k]] = inBase64(z);
+  }
+  return Object.keys(fuori).length ? fuori : null;
+}
+
 /** Q scoperti ma non visti adesso dai PG (nebbia automatica): la vista giocatori li scurisce. */
 function ombraDi(nebbia, visti, C, R) {
   const m = new Uint8Array(Math.ceil((C * R) / 8));
@@ -43,7 +64,7 @@ export function vistaGiocatori(s, contesto = null, regoleTemplate = contesto?.re
   // fase 2, lotto 3: con la nebbia automatica (scena.visuale.automatica) i token che non sono PG si vedono solo dove i PG
   // vedono adesso; le zone esplorate ma non viste arrivano come «ombra» (più scure nella vista)
   const auto = s.visuale?.automatica && regoleMappa?.visuale && regoleMappa?.porte;
-  const visti = auto ? visualePg(s, tokenPg(s), ostacoliVista(s, regoleMappa.porte, { perGiocatori: true }), regoleMappa.visuale) : null;
+  const visti = auto ? visualePg(s, tokenPg(s), ostacoliVista(s, regoleMappa.porte, { perGiocatori: true }), regoleMappa.visuale, null, regoleMappa) : null;
   const pg = (t) => t.rif?.tipo === 'partecipante' && String(t.rif.id).startsWith('pg:');
   const visibile = (t) => celleToken(t).some(([x, y]) => !coperto(x, y) && (!visti || pg(t) || visti[y * colonne + x]));
   const mappa = s.mappa
@@ -76,6 +97,7 @@ export function vistaGiocatori(s, contesto = null, regoleTemplate = contesto?.re
     // «Mostra / nascondi template» dei giocatori (07/10): la vista disegna o no muri, porte, terreno e template
     sovrapposizioni: s.sovrapposizioni?.giocatori ?? { nascoste: false, ancheDurata: false },
     ...(visti ? { ombra: inBase64(ombraDi(nebbia, visti, colonne, righe)) } : {}),
+    ...((l) => (l ? { luce: l } : {}))(lucePerGiocatori(s, nebbia, regoleMappa)),
     terreno: inBase64(senza(daBase64(s.terreno), nebbia)),
     nebbia: { coperti: s.nebbia.coperti },
     token,

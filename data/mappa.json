@@ -428,7 +428,7 @@
         { "titolo": "Strumenti", "voci": ["linea", "area", "zoc", "template_qui"] },
         { "titolo": "Scheda", "voci": ["mini_scheda", "scheda_completa"] }
       ],
-      "opzioni": ["nascondi", "colore_bordo", "togli_token"]
+      "opzioni": ["nascondi", "luce_token", "colore_bordo", "togli_token"]
     },
     "porta": {
       "gruppi": [
@@ -445,6 +445,25 @@
       "gruppi": [{ "titolo": "Strumenti", "voci": ["template_qui", "linea_qui"] }],
       "opzioni": []
     }
+  },
+  "luci": {
+    "_nota": "Luci della mappa, versione semplice (fase 2, lotto 4; decisione di Marcello del 07/10/2026: si preparano in pochi secondi e non si ritoccano durante il gioco; niente ombre, intensità o livelli numerici; src/mappa/luce.js). Le categorie sono quelle di A.106 / A.116 (data/regole.json → illuminazione.livelli: sufficiente nessuna penalità, penombra −2, scarsa −4, buio come Accecato −8). Luce della scena: una per scena (ambiente). Zone a pennello facoltative: un Q può avere la sua categoria (anche «Luce» in una scena buia). Luci portate dai token: entro il raggio in Q (diagonale 1 Q) la zona diventa Luce; i muri non fermano la luce (nessun calcolo d'ombra, scelta voluta). Le vecchie etichette numeriche delle luci dell'app di Davide non si usano (A.125, decisione di Marcello del 07/10).",
+    "categorie": ["sufficiente", "penombra", "scarsa", "buio"],
+    "predefinita": "sufficiente",
+    "raggio_scoperta_q": { "sufficiente": 30, "penombra": 6, "scarsa": 3, "buio": 1 },
+    "_nota_scoperta": "Nebbia automatica: un Q si scopre se il PG lo vede (muri e porte chiuse lo fermano) entro il raggio della luce di quel Q, non di quello del PG: Luce fino a visuale.raggio_q (30 Q, A.142), Penombra 6 Q, Luce scarsa 3 Q, Buio solo il Q accanto. Una luce portata rende Luce la zona attorno a sé, quindi si vede fin dove arriva.",
+    "TODO(Davide) visione": "A.143: la visione notturna e le capacità simili (Visione notturna 80 Q, termica 40 Q, Vista Felina 20 Q: regole.json → illuminazione.visione) devono allargare la nebbia automatica della mappa per il PG che le ha (per esempio Penombra e Luce scarsa come Luce entro la portata)? Provvisorio: no, la nebbia usa solo la luce della zona; le penalità nell'attacco restano quelle della scheda.",
+    "sorgenti": [
+      { "id": "bastoncino", "nome": "Bastoncino luminoso", "raggio_q": 2, "rif": "dotazioni_personali:bastoncino-luminoso" },
+      { "id": "lanterna", "nome": "Lanterna elettrica", "raggio_q": 6, "rif": "dotazioni_personali:lanterna-elettrica" },
+      { "id": "frontale", "nome": "Lampada frontale", "raggio_q": 6, "rif": "dotazioni_personali:lampada-frontale" },
+      { "id": "torcia", "nome": "Torcia elettrica", "raggio_q": 10, "rif": "dotazioni_personali:torcia-elettrica" }
+    ],
+    "_nota_sorgenti": "Raggi dal catalogo (Equipaggiamento §2.3). Torcia e lampada frontale hanno un fascio direzionale: sulla mappa illuminano tutto attorno, per semplicità.",
+    "raggio_max_q": 30,
+    "oscurita": { "penombra": 0.22, "scarsa": 0.4, "buio": 0.6 },
+    "oscurita_giocatori": { "penombra": 0.18, "scarsa": 0.32, "buio": 0.48 },
+    "_nota_oscurita": "Opacità del velo scuro sulle zone non illuminate: per il master e (più leggero, perché la mappa resti leggibile) per i giocatori. Il buio non nasconde i token: a quello pensa la nebbia."
   },
   "pv_token": {
     "_nota": "Barretta dei PV sui token (test di Marcello del 07/10/2026, al posto dell'anello): rossa, sul fondo del token e sovrapposta al bordo, larga quanto il quadretto (o l'ingombro) a PV pieni, più corta in proporzione ai PV persi. Spessore: rispetto_al_bordo volte lo spessore del bordo colorato, almeno spessore_minimo_px; traccia: il fondo scuro della parte persa. Gli stessi valori per i mini-token della barra dell'Iniziativa (in pixel CSS).",

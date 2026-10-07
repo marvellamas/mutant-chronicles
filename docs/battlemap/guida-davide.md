@@ -39,6 +39,16 @@ Con un secondo monitor (o il televisore) collegato al PC del master:
 4. Torna a lavorare nella finestra del master sul primo schermo: ogni azione (movimento, «Avanti», nebbia, colpi) arriva sul secondo schermo subito (al più un paio di secondi). Se il collegamento si interrompe, sullo schermo dei giocatori compare «Collegamento con il master perso: riprovo…».
 5. **Il movimento si vede in diretta.** Quando scegli un token, sullo schermo dei giocatori compaiono la sua area di movimento, la modalità (Passo, Corsa, Scatto, Libero) con i Q usati, il percorso che indichi col mouse e le zone di controllo dei nemici vicini: i giocatori vedono dove possono andare e che cosa rischiano. Sparisce quando lasci il token. Non mostra mai token nascosti né quello che sta sotto la nebbia. Nella sezione «Vista giocatori» lo spegni con «Mostra il movimento ai giocatori», e le sole ZoC con «Mostra le ZoC ai giocatori». Un nemico Stordito o Svenuto non fa Attacchi di Opportunità: tu vedi la sua ZoC solo tratteggiata (nessun avviso), i giocatori non la vedono.
 
+## Luci
+
+Si preparano in pochi secondi e durante il gioco non si toccano più.
+
+1. «Strumenti» → «Luci»: scegli la **luce della scena** (Luce, Penombra −2, Luce scarsa −4, Buio come Accecato). Per quasi tutte le scene basta questo.
+2. Se serve, con il pennello o il rettangolo dipingi una **zona** diversa (una stanza buia, un corridoio in penombra, una sala illuminata); «Gomma» la toglie.
+3. Le **torce**: clic destro sul token → Opzioni → «Porta una luce…» (bastoncino 2 Q, lanterna 6, torcia 10, o un altro raggio). La luce segue il token. **I muri non fermano la luce**: niente ombre, per semplicità.
+4. Con la **nebbia automatica** i PG vedono lontano dove c'è Luce (30 Q), poco in Penombra (6 Q) e con Luce scarsa (3 Q), al Buio solo il quadretto accanto o fin dove arriva una torcia. **All'aperto di giorno spegni pure la nebbia.**
+5. La linea di tiro e «Attacca!» propongono la penalità della zona del bersaglio (per esempio «Penombra −2»); puoi cambiarla. Ai giocatori le zone scure arrivano più scure, ma la mappa resta leggibile.
+
 ## Zone di controllo
 
 Scegliendo un token, in rosso compaiono le zone di controllo degli avversari: la fascia entro la portata delle loro armi ravvicinate (di solito 1 Q). Chi ne esce con il proprio movimento provoca un Attacco di Opportunità (Giocatore §5.3): compare un avviso, anche sullo schermo dei giocatori, con «Attacca!» per l'avversario. Entrare o muoversi dentro la zona non provoca nulla; «Libero» non segnala. Il tasto Z mostra o nasconde le zone.

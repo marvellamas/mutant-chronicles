@@ -11,6 +11,7 @@
 //   { tipo: 'ripristino', prima }                   «Ripristina posizione iniziale» (src/mappa/iniziale.js): tutto com'era
 //   { tipo: 'template-tolti', prima }               «Cancella template temporanei» o «tutti»: l'elenco di prima
 //   { tipo: 'template-scaduti', tolti, scontro, round }  template a durata scaduti al Round `round` dello scontro
+//   { tipo: 'luce', prima }                         luci della scena (lotto 4): ambiente e zone di prima
 //   { tipo: 'porta', id, prima, dopo, azione? }     porta (fase 2, lotto 2): messa, cambiata, tolta; con l'azione del
 //                                                   token che l'ha aperta o chiusa (annullando esce anche l'AzP)
 // Movimenti (scena.movimenti, al più scena.movimenti_max): { id, token, scontro, round, turno?, da, a, costo, fascia, libero,
@@ -22,6 +23,7 @@ import { daBase64, inBase64 } from './celle.js';
 import { inverti } from './nebbia.js';
 import { chiaveRif } from './token.js';
 import { annullaRipristino } from './iniziale.js';
+import { annullaLuce } from './luce.js';
 
 const conVoce = (scena, voce, dati) => ({ ...scena, annulla: [...scena.annulla, voce].slice(-dati.mappa.scena.annulla_max) });
 
@@ -201,6 +203,8 @@ export function annullaUltima(scena, { chiaviPresenti = null } = {}) {
       const azioni = voce.azione ? (senza.azioni ?? []).filter((a) => a.id !== voce.azione) : senza.azioni;
       return { scena: { ...senza, porte, ...(azioni ? { azioni } : {}) }, voce, testo: !voce.prima ? 'porta messa' : !voce.dopo ? 'porta tolta' : 'porta' };
     }
+    case 'luce':
+      return { scena: annullaLuce(senza, voce), voce, testo: 'luci' };
     case 'template-scaduti': {
       const ci = new Set(senza.template.map((t) => t.id));
       return { scena: { ...senza, template: [...senza.template, ...voce.tolti.filter((t) => !ci.has(t.id))] }, voce, testo: 'template scaduti rimessi' };

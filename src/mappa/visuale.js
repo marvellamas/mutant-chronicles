@@ -20,6 +20,7 @@
 import { daBase64, cella, impostaCella } from './celle.js';
 import { dimensioni, celleToken } from './token.js';
 import { distanzaIngombri } from './zoc.js';
+import { raggiScoperta } from './luce.js';
 
 /** Ostacoli alla vista: muri disegnati, porte che bloccano la vista; `perGiocatori`: le porte segrete sono muro. */
 export function ostacoliVista(scena, regolePorte, { perGiocatori = false } = {}) {
@@ -119,7 +120,7 @@ export function lineaDiTiro(scena, da, verso, ost, regole) {
  * è chiusa solo se entrambi i Q ai lati sono ostacoli. `fuori` (prossimo lotto, luci): Q che non si vedono comunque.
  * Scrive in `visti` (Uint8Array per Q).
  */
-export function qVisti(ost, C, R, o, raggio, metrica, visti = new Uint8Array(C * R), fuori = null) {
+export function qVisti(ost, C, R, o, raggio, metrica, visti = new Uint8Array(C * R), fuori = null, raggioDi = null) {
   const [ox, oy] = o;
   if (ox < 0 || oy < 0 || ox >= C || oy >= R) return visti;
   visti[oy * C + ox] = 1;
@@ -129,6 +130,8 @@ export function qVisti(ost, C, R, o, raggio, metrica, visti = new Uint8Array(C *
       if (visti[ty * C + tx]) continue;
       const dx = tx - ox, dy = ty - oy;
       if (metrica === 'euclidea' && dx * dx + dy * dy > raggio * raggio) continue;
+      // fase 2, lotto 4: il raggio dipende dalla luce del Q visto (src/mappa/luce.js → raggiScoperta)
+      if (raggioDi) { const d = metrica === 'euclidea' ? Math.hypot(dx, dy) : Math.max(Math.abs(dx), Math.abs(dy)); if (d > raggioDi(tx, ty)) continue; }
       if (fuori?.(tx, ty)) continue;
       if (raggioLibero(ost, C, R, ox, oy, tx, ty)) visti[ty * C + tx] = 1;
     }
@@ -160,12 +163,17 @@ function raggioLibero(ost, C, R, x0, y0, x1, y1) {
 
 /**
  * Visuale dei PG (nebbia automatica): i Q visti da almeno un Q di uno dei token `origini`, con gli ostacoli `ost`.
+ * Con `mappa` (data/mappa.json, fase 2, lotto 4) il raggio dipende dalla luce del Q visto (luci.raggio_scoperta_q:
+ * Luce fino a visuale.raggio_q, Penombra 6, Luce scarsa 3, Buio 1), non da quella del PG.
  * @param regole data/mappa.json → visuale ({ raggio_q, metrica })
  */
-export function visuale(scena, origini, ost, regole, fuori = null) {
+export function visuale(scena, origini, ost, regole, fuori = null, mappa = null) {
   const { colonne: C, righe: R } = scena.griglia;
   const visti = new Uint8Array(C * R);
-  for (const t of origini) for (const q of celleToken(t)) qVisti(ost, C, R, q, regole.raggio_q, regole.metrica, visti, fuori);
+  const l = mappa?.luci ? raggiScoperta(scena, { mappa }) : null;
+  const raggioDi = l ? (x, y) => Math.min(regole.raggio_q, l.raggio(x, y)) : null;
+  const raggio = l ? Math.min(regole.raggio_q, l.massimo) : regole.raggio_q;
+  for (const t of origini) for (const q of celleToken(t)) qVisti(ost, C, R, q, raggio, regole.metrica, visti, fuori, raggioDi);
   return visti;
 }
 

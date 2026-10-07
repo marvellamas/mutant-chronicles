@@ -20,7 +20,7 @@ import { creaTela } from './canvas.js';
 import { creaGesti } from './gesti.js';
 import { disegnaToken, coloriMappa, creaImmagini } from './disegno-token.js';
 import { barraIniziativaEl } from './barra-iniziativa.js';
-import { disegnaArea, disegnaZoc, disegnaPercorso, coloriAree, disegnaTemplate, disegnaPorte, disegnaMuri, disegnaLineaTiro } from './disegno-aree.js';
+import { disegnaArea, disegnaZoc, disegnaPercorso, coloriAree, disegnaTemplate, disegnaPorte, disegnaMuri, disegnaLineaTiro, disegnaLuci } from './disegno-aree.js';
 import { celleDaMaschera, templateVisibili, ostacoliVisibili } from '../../mappa/template.js';
 import { celleDellaDiretta, zocDellaDiretta, avversariDellaDiretta, trattiPercorso } from '../../mappa/diretta.js';
 import { passiInZoc } from '../../mappa/zoc.js';
@@ -107,6 +107,8 @@ export function renderGiocatori(radice, ctx) {
         if (zoc) disegnaZoc(c, { scena: s, cam: st.cam, info, celle: zoc, stile: ctx.dati.mappa.zoc });
         if (st.celle.area) disegnaArea(c, { scena: s, cam: st.cam, info, celle: st.celle.area, colori: coloriAree(el.riquadro), stile: V.area });
       }
+      // fase 2, lotto 4: le zone in Penombra, Luce scarsa e Buio più scure (già filtrate dal server: niente sotto la nebbia)
+      if (st.vista?.luce) disegnaLuci(c, { scena: st.vista, cam: st.cam, info, maschere: Object.fromEntries(Object.entries(st.vista.luce).map(([k, v]) => [k, daBase64(v)])), opacita: ctx.dati.mappa.luci.oscurita_giocatori });
       disegnaNebbia(c, info, 1);
       // fase 2, lotto 3: con la nebbia automatica le zone esplorate ma non viste adesso sono più scure
       if (st.vista?.ombra) disegnaOmbra(c, info);
