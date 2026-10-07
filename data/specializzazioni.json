@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Giocatore 0.43",
+  "versione_manuale": "Giocatore 0.46 (Google Doc del 06/10/2026, 18:20 UTC)",
   "fonte": "§8.8 (8.8.1 armi, 8.8.2 mistiche, 8.8.3 operative, sociali e professionali)",
   "regole": [
     "Ogni Specializzazione è un Talento Libero e si acquisisce una sola volta. Si annota come «Specializzazione in» seguita dal nome dell’ambito. Quando indica più Abilità, il singolo Talento vale per tutti gli impieghi descritti (§8.8).",
@@ -180,11 +180,11 @@
     },
     {
       "id": "specializzazione-fucili-a-pompa-e-doppiette",
-      "nome": "Fucili a Pompa e Doppiette",
+      "nome": "Fucili a Pallini e Doppiette",
       "gruppo": "armi",
       "sottogruppo": "distanza",
       "abilita": [],
-      "ambito": "Armi della categoria Fucili a Pompa e Doppiette. Si usa l’Abilità indicata dalla scheda dell’arma (Manuale degli Armamenti).",
+      "ambito": "Armi della categoria Fucili a Pallini e Doppiette (comprese Mandible e Airbrush). Si usa l’Abilità indicata dalla scheda dell’arma (Manuale degli Armamenti).",
       "effetto": {
         "va": 1,
         "danno": 1

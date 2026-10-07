@@ -12,7 +12,7 @@ const r = (rif) => cat.perRif.get(rif);
 test('KEP 808: pistola al plasma, Armi al Plasma, AC 1d3, +1 VA già nella scheda, cella specifica da 10', () => {
   const k = r('armi_distanza_corporative:kep-808');
   assert.equal(k.specializzazione, 'specializzazione-armi-al-plasma');
-  assert.deepEqual([k.abilita, k.danno.una_mano, k.ac, k.modificatore_va, k.gittata_q, k.for_richiesta, k.costo], ['Armi leggere', '1d6+1', '1d3', 1, 20, 6, 12500]);
+  assert.deepEqual([k.abilita, k.danno.una_mano, k.ac, k.modificatore_va, k.gittata_q, k.for_richiesta, k.costo], ['Armi leggere', '1d6+1', '1d3', 1, 20, 5, 12500]); // FOR 5 dalla 0.59 (06/10/2026)
   assert.ok(k.proprieta.some((p) => p.nome === 'Plasma'));
   assert.equal(modoRicarica(k, dati, cat).modo, 'cella');
   // Armamenti 0.58 §7.20.5: NEC Blu da 250 Lx, carica 200 cr, ricarica 2,5 cr
@@ -22,6 +22,6 @@ test('KEP 808: pistola al plasma, Armi al Plasma, AC 1d3, +1 VA già nella sched
 test('Colt Hammershot: revolver pesante, Pistole, tamburo da 6 riempito in una operazione (E&L 19)', () => {
   const c = r('armi_distanza_corporative:colt-hammershot');
   assert.equal(c.specializzazione, 'specializzazione-pistole');
-  assert.deepEqual([c.famiglia, c.danno.una_mano, c.modificatore_va, c.munizioni.capacita, c.for_richiesta, c.inc, c.qualita, c.costo], ['Revolver', '1d6+3', -1, 6, 7, 5, 'Rara', 3500]);
+  assert.deepEqual([c.famiglia, c.danno.una_mano, c.modificatore_va, c.munizioni.capacita, c.for_richiesta, c.inc, c.qualita, c.costo], ['Revolver', '1d6+3', -1, 6, 5, 5, 'Rara', 3500]); // FOR 5 dalla 0.59 (06/10/2026)
   assert.deepEqual([modoRicarica(c, dati, cat).modo, modoRicarica(c, dati, cat).famiglia], ['tamburo', 'pistola']); // §7.20.9
 });

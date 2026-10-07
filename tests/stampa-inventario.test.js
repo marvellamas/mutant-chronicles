@@ -19,7 +19,7 @@ test('piè di pagina: ogni manuale una volta, con la versione più recente (nume
   ]), 'Giocatore 0.45 (03/10/2026), Magia 1.3 (01/10/2026), Equipaggiamento 0.1, E&L del 03/10/2026, Armamenti 0.52');
   const reali = versioniCompatte(Object.values(versioniPersonaggio(dati)));
   for (const m of ['Giocatore', 'Magia', 'E&L']) assert.equal(reali.split(', ').filter((x) => x.startsWith(m)).length, 1, m);
-  assert.match(testoPiede({ nome: 'Ada', livello: 3, versioni: reali }, { foglio: 4, pagina: 6, totale: 10 }), /^Ada · 3° livello · foglio 4 · pagina 6 di 10 · Dati: Giocatore 0\.45/);
+  assert.match(testoPiede({ nome: 'Ada', livello: 3, versioni: reali }, { foglio: 4, pagina: 6, totale: 10 }), /^Ada · 3° livello · foglio 4 · pagina 6 di 10 · Dati: Giocatore 0\.46/); // Giocatore 0.46 del 06/10/2026
 });
 
 test('foglio 4: Qualità in sigla con la legenda dai dati, Costo e Peso senza unità', () => {

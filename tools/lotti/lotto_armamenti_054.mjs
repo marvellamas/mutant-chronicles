@@ -14,6 +14,10 @@
 // - Il +1 VA del KEP 808 «è già incluso nella scheda»: modificatore_va 1 come nella tabella.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { normalizza, testoManuali } from '../verifica_frasi.mjs';
+import { bloccaRiscrittura } from './superato.mjs';
+// superato il 07/10/2026 dall'Armamenti 0.59 (tools/lotti/lotto_armamenti_059.mjs: FOR del KEP 808 e della Colt
+// Hammershot a 5): un rilancio con --scrivi riporterebbe i requisiti della 0.54.
+bloccaRiscrittura('lotto_armamenti_054');
 
 const RADICE = new URL('../../', import.meta.url);
 const scrivi = process.argv.includes('--scrivi');
