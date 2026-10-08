@@ -418,8 +418,9 @@ export function renderTavolo(radice, ctx) {
       barraDurate(alTavolo),
       barraPeriodici(alTavolo),
       scene,
-      sezioneVeicoli(),
       bestiario,
+      // 08/10: anche i veicoli in un gruppo richiudibile, come le mini-schede
+      stato.veicoli.length ? gruppoCarte('veicoli', `Mini-schede dei veicoli (${stato.veicoli.length})`, sezioneVeicoli().slice(1)) : null,
       gruppoCarte('pg', `Mini-schede dei PG${alTavolo.length ? ` (${alTavolo.length})` : ''}`, cartePg),
       gruppoCarte('nemici', `Mini-schede dei nemici${nemiciInScontro().length ? ` (${nemiciInScontro().length})` : ''}`, carteNemici ?? h('p', { class: 'vuoto' }, stato.scontro ? 'Nessun nemico nello scontro.' : 'Nessuno scontro aperto.'))));
     custode.ripristina(foto);

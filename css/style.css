@@ -1731,12 +1731,17 @@ body.con-sfondo::before {
 
 /* «Collega i giocatori» (src/ui/collega.js): indirizzi della rete con il codice QR */
 .collega-giocatori > summary { cursor: pointer; }
-.collega-elenco { list-style: none; padding: 0; margin: 0.5rem 0; display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; }
-.collega-voce { display: flex; align-items: center; gap: 0.8rem; }
-.collega-voce p { margin: 0 0 0.4rem; }
-.collega-url { font-size: 1.25rem; font-family: ui-monospace, monospace; overflow-wrap: anywhere; }
-.qr-collega { display: inline-block; line-height: 0; border-radius: 4px; overflow: hidden; }
-.qr-collega svg { width: 132px; height: auto; }
+/* 08/10: «Collega i giocatori» compatto: QR piccolo, indirizzo su una riga sola (monospazio, mai a capo), «Copia» */
+.collega-spiega { margin: 0.3rem 0 0; }
+.collega-elenco { list-style: none; padding: 0; margin: 0.45rem 0; display: flex; flex-direction: column; gap: 0.6rem; }
+.collega-voce { display: flex; align-items: center; gap: 0.7rem; min-width: 0; }
+.collega-testo { display: flex; flex-direction: column; gap: 0.3rem; min-width: 0; }
+.collega-url { font-family: ui-monospace, Consolas, monospace; font-size: 0.95rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.collega-azioni { display: flex; align-items: center; gap: 0.5rem; }
+.qr-collega { display: inline-block; flex: none; line-height: 0; border-radius: 4px; overflow: hidden; }
+.qr-collega svg { width: 84px; height: auto; }
+.collega-aiuto > summary { cursor: pointer; font-size: 0.85rem; color: var(--tenue); }
+.collega-aiuto p { margin: 0.3rem 0 0; }
 
 /* Bestiario §3.1.1: volo e taglia sulla carta del nemico */
 .tratto-nemico { margin-left: 0; cursor: help; font-size: 0.8rem; }
@@ -2299,7 +2304,7 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 /* 08/10: Tavolo del Master, «Scontro» e «Collega i giocatori» sulla stessa riga; mini-schede in gruppi richiudibili */
 .plancia-riga-scontro { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.9rem; align-items: start; margin-top: 0.75rem; }
 .plancia-riga-scontro > * { margin: 0; min-width: 0; }
-@media (min-width: 70rem) { .plancia-riga-scontro { grid-template-columns: minmax(0, 2.2fr) minmax(18rem, 1fr); } }
+@media (min-width: 70rem) { .plancia-riga-scontro { grid-template-columns: minmax(0, 2fr) minmax(17rem, 1fr); align-items: stretch; } }
 .plancia-gruppo-carte { margin-top: 0.9rem; }
 .plancia-gruppo-carte > summary { cursor: pointer; font-size: 1.1rem; }
 .plancia-gruppo-carte > .plancia-griglia { margin-top: 0.6rem; }
