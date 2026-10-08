@@ -555,14 +555,14 @@
     "tasto": "l"
   },
   "tablet": {
-    "_nota": "Tablet dei giocatori (fase 2, lotto 7; src/mappa/tablet.js, src/ui/mappa/giocatori.js, server.mjs → /api/vista-giocatori/movimento e /api/tablet). Il giocatore apre la vista giocatori dal tablet, sceglie «Sono…» e muove solo il suo PG; il server ricontrolla ogni movimento sulla scena completa. movimento_predefinito: «turno» (solo al proprio turno dello scontro aperto) o «sempre» (anche fuori turno e senza scontro); il master lo cambia per la scena da Strumenti → Tablet dei giocatori. avviso_turno_predefinito: avviso automatico «Tocca a te» quando arriva il turno del PG, spento finché il master non lo accende. vibrazione_ms: lo schema della vibrazione dell’avviso (solo dove il tablet la supporta). avviso_durata_ms: quanto resta l’avviso grande, se nessuno lo tocca. collegato_s: un tablet conta come collegato se il suo flusso di eventi è aperto o se ha chiesto la vista negli ultimi collegato_s secondi. testo_campanello e testo_turno: i testi dell’avviso grande.",
+    "_nota": "Tablet dei giocatori (fase 2, lotto 7; src/mappa/tablet.js, src/ui/mappa/giocatori.js, server.mjs → /api/vista-giocatori/movimento e /api/tablet). Il giocatore apre la vista giocatori dal tablet, sceglie «Sono…» e muove solo il suo PG; il server ricontrolla ogni movimento sulla scena completa. movimento_predefinito: «turno» (solo al proprio turno dello scontro aperto) o «sempre» (anche fuori turno e senza scontro); il master lo cambia per la scena da Strumenti → Tablet dei giocatori. avviso_turno_predefinito: avviso automatico «Tocca a te» quando arriva il turno del PG, spento finché il master non lo accende. vibrazione_ms: lo schema della vibrazione dell’avviso (solo dove il tablet la supporta). avviso_durata_ms: quanto resta l’avviso grande, se nessuno lo tocca. collegato_s: un tablet conta come collegato se il suo flusso di eventi è aperto o se ha chiesto la vista negli ultimi collegato_s secondi. testo_muovi («Chiedi di muovere» del master, 08/10) e testo_turno («Tocca a te», mandato dal server al cambio di turno): i testi dell’avviso grande, {nome} è il nome del PG. Gli avvisi arrivano alla scheda del PG e alla mappa aperte sul tablet.",
     "movimento_predefinito": "turno",
     "avviso_turno_predefinito": false,
     "vibrazione_ms": [300, 120, 300],
     "avviso_durata_ms": 12000,
     "collegato_s": 6,
-    "testo_campanello": "Il master ti chiama!",
-    "testo_turno": "Tocca a te!"
+    "testo_muovi": "Il master ti chiede di muovere {nome}",
+    "testo_turno": "Tocca a te, {nome}!"
   },
   "audio": {
     "_nota": "Suoni della mappa (richiesta di Marcello del 07/10/2026; src/mappa/audio.js, src/ui/mappa/audio.js). effetti: evento → file (percorso nel progetto, servito come gli altri file statici); un evento senza file non suona. Per ora nuovo_round e avviso_giocatore (il campanellino del master e «Tocca a te» sul tablet del giocatore, fase 2, lotto 7: suona sempre sul tablet, anche senza «suona anche nella vista giocatori»); gli altri eventi previsti (attacco_opportunita, template_scaduto) restano null finché non si sceglie un file. musica: la cartella reale del server con la musica di fondo (fuori da git, come mappe/) e i formati che tutti i browser leggono. volume_predefinito: Musica ed Effetti da 0 a 1, prima che il master li cambi (poi si ricordano su quel PC). giocatori_predefinito: «suona anche nella vista giocatori», spento.",

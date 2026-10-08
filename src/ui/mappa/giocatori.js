@@ -35,6 +35,7 @@ import { leggiVersione, serveAggiornamento, urlRicarica } from '../../versione.j
 import { mappaDaSchermo } from '../../mappa/camera.js';
 import { dimensioni, centroToken } from '../../mappa/token.js';
 import { apri as apriFinestrella } from '../finestrella.js';
+import { creaAllarme } from '../allarme.js';
 
 // fase 2, lotto 7: il PG scelto con «Sono…», ricordato su questo tablet
 const CHIAVE_PG = 'mutant.tablet.pg';
@@ -79,13 +80,11 @@ export function renderGiocatori(radice, ctx) {
   el.sono = h('button', { type: 'button', class: 'btn btn-piccolo tablet-sono', hidden: true, onclick: () => scegliPg() }, 'Sono…');
   el.torna = h('button', { type: 'button', class: 'btn tablet-torna', hidden: !(ctx.pg && ctx.scheda), onclick: () => tornaAllaScheda() }, '← Torna alla scheda');
   el.tablet = h('section', { class: 'tablet-pannello', hidden: true, 'aria-label': 'Il tuo PG' });
-  el.allarme = h('div', { class: 'tablet-allarme', hidden: true, role: 'alertdialog', 'aria-live': 'assertive', onclick: () => chiudiAllarme() });
-  el.audioSblocca = h('button', { type: 'button', class: 'btn tablet-audio', hidden: true, onclick: () => sbloccaAudio() }, '🔈 Tocca per attivare l’audio');
   el.riquadro.append(el.messaggio, el.movimento, el.adatta);
   svuota(radice, h('section', { class: 'mappa-pagina giocatori-pagina' },
     h('header', { class: 'giocatori-barra' }, el.torna, el.titolo, el.turno, el.sono, el.stato, el.schermo), el.iniziativa,
     // la mappa e, sul tablet del giocatore, il suo pannello: sotto in verticale, a destra in orizzontale
-    h('div', { class: 'giocatori-corpo' }, el.riquadro, el.tablet), el.audioSblocca, el.allarme));
+    h('div', { class: 'giocatori-corpo' }, el.riquadro, el.tablet)));
 
   const immagine = creaImmagini(() => tela.richiedi(['sopra']));
   const tela = creaTela(el.riquadro, {
@@ -348,28 +347,12 @@ export function renderGiocatori(radice, ctx) {
   }
 
   // ── Tablet del giocatore (fase 2, lotto 7) ──
-  // il suono dell'avviso suona sempre sul tablet del giocatore (anche senza «suona anche nella vista giocatori»)
-  const audioTablet = creaAudio(ctx.dati, { avvisa: () => { if (st.pg) el.audioSblocca.hidden = false; } });
-  audioTablet.ascolta(() => { if (audioTablet.sbloccato()) el.audioSblocca.hidden = true; });
-  /** Il primo tocco sblocca l'audio (i browser lo chiedono): un suono a volume zero, poi gli avvisi suonano. */
-  function sbloccaAudio() {
-    const file = ctx.dati.mappa.audio.effetti.avviso_giocatore;
-    if (file) { const a = new Audio(file); a.volume = 0; a.play().catch(() => {}); }
-    el.audioSblocca.hidden = true;
+  // avviso grande con suono e vibrazione (src/ui/allarme.js), anche senza «suona anche nella vista giocatori»
+  const allarme = creaAllarme(ctx.dati);
+  /** Avviso dal master («Chiedi di muovere») o «Tocca a te» (dal server): sulla mappa il pulsante centra sul PG. */
+  function mostraAllarme(testo, tipo = 'muovi') {
+    allarme.mostra({ testo, tipo, azioni: st.io?.token ? [{ testo: '🗺 Muovi il PG sulla mappa', primario: true, fai: () => centraSuDiMe() }] : [] });
   }
-  let timerAllarme = null;
-  /** L'avviso grande: testo a tutto schermo, suono e vibrazione (se il tablet la supporta); un tocco lo chiude. */
-  function mostraAllarme(testo, tipo = 'campanello') {
-    clearTimeout(timerAllarme);
-    svuota(el.allarme, h('div', { class: 'tablet-allarme-testo' }, h('span', { class: 'tablet-allarme-icona', 'aria-hidden': 'true' }, tipo === 'turno' ? '⚔' : '🔔'), testo),
-      h('p', { class: 'tablet-allarme-nota' }, 'Tocca per chiudere'));
-    el.allarme.className = `tablet-allarme tipo-${tipo}`;
-    el.allarme.hidden = false;
-    audioTablet.effetto('avviso_giocatore');
-    try { navigator.vibrate?.(T.vibrazione_ms); } catch { /* niente vibrazione */ }
-    timerAllarme = setTimeout(chiudiAllarme, T.avviso_durata_ms);
-  }
-  function chiudiAllarme() { clearTimeout(timerAllarme); el.allarme.hidden = true; }
 
   /** «Sono…»: il PG del giocatore su questo tablet (ricordato), oppure solo guardare (lo schermo del tavolo). */
   async function scegliPg() {
@@ -389,7 +372,6 @@ export function renderGiocatori(radice, ctx) {
     st.firma = null;
     apriFlusso();
     aggiornaTablet();
-    if (st.pg) sbloccaAudio();
     await aggiorna();
     centraSuDiMe();
   }
@@ -410,7 +392,7 @@ export function renderGiocatori(radice, ctx) {
     st.celleMie = null;
     if (st.io?.permesso?.puo) el.movimento.hidden = true;
     const turno = !!st.io?.mini?.diTurno;
-    if (st.turnoPrima === false && turno && st.io?.impostazioni?.avvisoTurno) mostraAllarme(T.testo_turno, 'turno');
+    // «Tocca a te» lo manda il server al cambio di turno (08/10), alla scheda o alla mappa aperta
     st.turnoPrima = st.io?.mini ? turno : null;
     // il permesso è cambiato o il token si è mosso: la prova non vale più
     if (st.prova && (!st.io?.permesso?.puo || prima?.area?.usato !== st.io?.area?.usato)) st.prova = null;
@@ -621,8 +603,7 @@ export function renderGiocatori(radice, ctx) {
   return () => {
     st.chiusa = true;
     audio.chiudi();
-    audioTablet.chiudi();
-    clearTimeout(timerAllarme);
+    allarme.distruggi();
     clearInterval(giro);
     clearInterval(giroVersione);
     flusso?.close();

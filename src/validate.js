@@ -2741,7 +2741,7 @@ function validaMappa(dati, err) {
       if (!Array.isArray(T.vibrazione_ms) || T.vibrazione_ms.length > 10 || T.vibrazione_ms.some((x) => !isIntero(x) || x < 0 || x > 2000)) err(F, 'tablet.vibrazione_ms', 'elenco di al più 10 interi da 0 a 2000 (ms)');
       if (!isIntero(T.avviso_durata_ms) || T.avviso_durata_ms < 1000) err(F, 'tablet.avviso_durata_ms', 'intero da 1000 in su (ms)');
       if (!isIntero(T.collegato_s) || T.collegato_s < 2) err(F, 'tablet.collegato_s', 'intero da 2 in su (secondi)');
-      if (typeof T.testo_campanello !== 'string' || !T.testo_campanello.trim() || typeof T.testo_turno !== 'string' || !T.testo_turno.trim()) err(F, 'tablet.testo_campanello / testo_turno', 'testi non vuoti');
+      for (const k of ['testo_muovi', 'testo_turno']) if (typeof T[k] !== 'string' || !T[k].trim()) err(F, `tablet.${k}`, 'testo non vuoto ({nome} = il nome del PG)');
     }
   }
   // «Indietro» nell'Iniziativa (07/10, src/scontro.js → indietro): quanti «Avanti» si possono annullare

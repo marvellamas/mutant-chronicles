@@ -66,7 +66,11 @@
 //                                      +1, voce per Ctrl+Z del master) e gli Attacchi di Opportunità nel registro
 //   GET /api/vista-giocatori/diretta?pg=<chiave>  il flusso di eventi di un tablet: in più «avviso» (campanellino)
 //   GET /api/tablet                    { collegati: [chiavi dei PG con un tablet collegato] } per il master
-//   POST /api/tablet/avviso            { pg, tipo: campanello | turno }: l'avviso grande al tablet di quel PG; { consegnati }
+//   POST /api/tablet/avviso            { pg, nome, tipo: muovi | turno }: «Il master ti chiede di muovere <PG>» (o «Tocca a
+//                                      te») ai tablet di quel PG, scheda o mappa aperta; { consegnati }
+//   GET /api/tablet/eventi?pg=<chiave> flusso di eventi della scheda del PG sul tablet: solo «avviso» (08/10)
+//                                      «Tocca a te» lo manda il server quando, salvando lo scontro, il turno passa a un PG
+//                                      e una scena dello scontro ha tablet.avvisoTurno
 //   GET /api/scene/<id>?revisione=N    { invariata: true } se la scena è ancora alla revisione N (il master la rilegge
 //                                      solo se un tablet l'ha cambiata)
 //   GET /api/ritratti/<chiave>         il ritratto del PG (dalla sua scheda), per i token della vista giocatori
@@ -91,7 +95,7 @@ import { chiOccupa, testoDomanda, risposteSi, fermaMutant, sorvegliaFinestra } f
 import { indirizziRete, testoAvvio } from './src/rete.js';
 import { avvisa } from './tools/avvisi.mjs';
 import { bordoToken } from './src/mappa/colori.js';
-import { validaScontro, rigaOpportunita } from './src/scontro.js';
+import { validaScontro, rigaOpportunita, diTurno } from './src/scontro.js';
 import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
 import { NOME_FILE, fileProvvisorio, ultimiPerPersonaggio, chiaveDaFile, chiavePersonaggio } from './src/cartella.js';
 import { validaRecord, ID_VEICOLO, migraVeicoli, eRiferimento, stessaChiave } from './src/veicoli-registro.js';
@@ -248,7 +252,7 @@ export async function scriviAtomico(dove, contenuto) {
 const scriviJson = (dove, v) => scriviAtomico(dove, `${JSON.stringify(v, null, 2)}\n`);
 
 /** Scontri (pezzo 2): un file per scontro, revisione per non sovrascrivere le modifiche di un'altra finestra. */
-async function apiScontri(req, res, percorso, scontri) {
+async function apiScontri(req, res, percorso, scontri, dopoScrittura = null) {
   if (percorso === '/api/scontri' && req.method === 'GET') {
     await mkdir(scontri, { recursive: true });
     const nomi = (await readdir(scontri)).filter((f) => f.endsWith('.json') && ID_SCONTRO.test(f.slice(0, -5)));
@@ -293,6 +297,8 @@ async function apiScontri(req, res, percorso, scontri) {
       return json(res, 200, nuovo);
     }
     await scriviJson(dove, nuovo);
+    // 08/10: «Tocca a te» ai tablet (avvisoTurno), dopo la scrittura
+    try { dopoScrittura?.(attuale, nuovo); } catch { /* l'avviso non ferma il salvataggio */ }
     return json(res, 200, nuovo);
   });
 }
@@ -632,6 +638,7 @@ function creaCanaleDiretta(cartelle) {
   // fase 2, lotto 7: i flussi dei tablet con il loro PG, e l'ultima lettura della vista di ogni PG
   const tablet = new Map(); // res → chiave del PG
   const letture = new Map(); // chiave del PG → ms
+  const soloAvvisi = new Set(); // flussi delle schede dei PG (08/10): fuori da `clienti`, niente diretta
   let grezza = null;
   let firma = 'null';
   let filtrata = null;
@@ -653,7 +660,7 @@ function creaCanaleDiretta(cartelle) {
     const f = JSON.stringify(nuova);
     if (f !== firma) { firma = f; filtrata = nuova; tutti('diretta', nuova); }
   }).catch(() => {}));
-  const battito = setInterval(() => { for (const r of clienti) { try { r.write(': battito\n\n'); } catch { clienti.delete(r); } } }, 15000);
+  const battito = setInterval(() => { for (const r of [...clienti, ...soloAvvisi]) { try { r.write(': battito\n\n'); } catch { clienti.delete(r); soloAvvisi.delete(r); tablet.delete(r); } } }, 15000);
   battito.unref?.();
   return {
     async api(req, res) {
@@ -688,6 +695,14 @@ function creaCanaleDiretta(cartelle) {
       for (const [r, k] of tablet) if (stessaChiave(k, pg)) { manda(r, evento, dati); n++; }
       return n;
     },
+    /** Flusso della scheda del PG sul tablet (08/10): riceve solo gli avvisi, conta come tablet collegato. */
+    apriScheda(req, res, pg) {
+      res.writeHead(200, { 'Content-Type': 'text/event-stream; charset=utf-8', 'Cache-Control': 'no-cache, no-transform', Connection: 'keep-alive', 'X-Accel-Buffering': 'no' });
+      res.write('retry: 1000\n\n');
+      tablet.set(res, pg);
+      soloAvvisi.add(res);
+      req.on('close', () => { tablet.delete(res); soloAvvisi.delete(res); });
+    },
     /** Il tablet di quel PG ha chiesto la vista (anche senza flusso di eventi aperto). */
     letta(pg) { letture.set(pg, Date.now()); },
     /** Chiavi dei PG con un tablet collegato: flusso aperto o vista chiesta negli ultimi `secondi`. */
@@ -698,7 +713,7 @@ function creaCanaleDiretta(cartelle) {
     },
     /** «Adatta allo schermo» sulle viste giocatori aperte; restituisce quante sono. */
     adatta() { tutti('adatta', {}); return clienti.size; },
-    chiudi() { clearInterval(battito); for (const r of clienti) { try { r.end(); } catch { /* già chiuso */ } } clienti.clear(); tablet.clear(); },
+    chiudi() { clearInterval(battito); for (const r of clienti) { try { r.end(); } catch { /* già chiuso */ } } clienti.clear(); for (const r of soloAvvisi) { try { r.end(); } catch { /* già chiuso */ } } soloAvvisi.clear(); tablet.clear(); },
   };
 }
 
@@ -837,16 +852,41 @@ async function opportunitaNelRegistro(scontri, id, prova, movimento) {
 async function apiTablet(req, res, percorso, cartelle) {
   const { dati } = await datiDelServer(cartelle.radice);
   if (percorso === '/api/tablet' && req.method === 'GET') return json(res, 200, { collegati: cartelle.canale?.collegati(dati.mappa.tablet.collegato_s) ?? [] });
+  if (percorso === '/api/tablet/eventi' && req.method === 'GET') {
+    const pg = new URL(req.url, 'http://x').searchParams.get('pg');
+    if (!pg || !cartelle.canale) return json(res, 400, { errore: 'pg atteso' });
+    return cartelle.canale.apriScheda(req, res, pg);
+  }
   if (percorso === '/api/tablet/avviso' && req.method === 'POST') {
     let d;
     try { d = JSON.parse((await leggiCorpo(req, 16 * 1024)).toString('utf8')); } catch (e) { return json(res, 400, { errore: `contenuto non valido: ${e.message}` }); }
     if (typeof d?.pg !== 'string' || !d.pg) return json(res, 400, { errore: 'pg atteso' });
-    const tipo = d.tipo === 'turno' ? 'turno' : 'campanello';
-    const testo = tipo === 'turno' ? dati.mappa.tablet.testo_turno : dati.mappa.tablet.testo_campanello;
-    const consegnati = cartelle.canale?.aTablet(d.pg, 'avviso', { tipo, testo, quando: Date.now() }) ?? 0;
+    const tipo = d.tipo === 'turno' ? 'turno' : 'muovi';
+    const nome = typeof d.nome === 'string' && d.nome.trim() ? d.nome.trim().slice(0, 80) : d.pg;
+    const testo = (tipo === 'turno' ? dati.mappa.tablet.testo_turno : dati.mappa.tablet.testo_muovi).replace('{nome}', nome);
+    const scontro = typeof d.scontro === 'string' && ID_SCONTRO.test(d.scontro) ? d.scontro : null;
+    const consegnati = cartelle.canale?.aTablet(d.pg, 'avviso', { tipo, testo, nome, scontro, quando: Date.now() }) ?? 0;
     return json(res, 200, { consegnati });
   }
   return json(res, 405, { errore: 'metodo non ammesso' });
+}
+
+/**
+ * «Tocca a te» automatico (08/10): salvato lo scontro aperto, se il turno è passato a un PG e una scena collegata a
+ * quello scontro ha l'avviso acceso (scena.tablet.avvisoTurno), i tablet di quel PG (scheda o mappa) ricevono l'avviso.
+ */
+async function avvisoTurnoTablet(prima, dopo, cartelle) {
+  if (!cartelle.canale || dopo?.stato !== 'aperto') return;
+  const t = diTurno(dopo);
+  if (!t || t.tipo !== 'pg' || (prima?.stato === 'aperto' && diTurno(prima)?.id === t.id)) return;
+  const { dati } = await datiDelServer(cartelle.radice);
+  let acceso = false;
+  try {
+    for (const f of (await readdir(cartelle.scene)).filter((x) => x.endsWith('.json') && ID_SCENA.test(x.slice(0, -5)))) {
+      try { const s = await leggiJson(join(cartelle.scene, f)); if (s.collegamento?.scontro === dopo.id && impostazioniTablet(s, dati).avvisoTurno) { acceso = true; break; } } catch { /* rovinata */ }
+    }
+  } catch { /* nessuna scena */ }
+  if (acceso) cartelle.canale.aTablet(t.chiave, 'avviso', { tipo: 'turno', testo: dati.mappa.tablet.testo_turno.replace('{nome}', t.nome), nome: t.nome, scontro: dopo.id, quando: Date.now() });
 }
 
 /** Ritratto di un PG (data URL della scheda) come immagine, per i token della vista giocatori. */
@@ -994,7 +1034,7 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
   }
   if (percorso === '/api/esempi') return req.method === 'POST' ? json(res, 200, await caricaEsempi(radice, cartella, nemici)) : json(res, 405, { errore: 'metodo non ammesso' });
   if (percorso === '/api/nemici' || percorso.startsWith('/api/nemici/')) return apiNemici(req, res, percorso, nemici, radice);
-  if (percorso === '/api/scontri' || percorso.startsWith('/api/scontri/')) return segnala(await apiScontri(req, res, percorso, scontri));
+  if (percorso === '/api/scontri' || percorso.startsWith('/api/scontri/')) return segnala(await apiScontri(req, res, percorso, scontri, (prima, dopo) => { avvisoTurnoTablet(prima, dopo, cartelle).catch(() => {}); }));
   if (percorso === '/api/tavolo') {
     const dove = join(tavolo, 'sessione.json');
     if (req.method === 'GET') {

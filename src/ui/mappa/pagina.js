@@ -1105,7 +1105,7 @@ export function renderMappa(radice, ctx) {
       ['Pannello del veicolo → «A bordo» (o clic destro sul veicolo)', 'gruppo «Scendi»: il nome, poi clic su un quadretto evidenziato accanto; gruppo «Linea di tiro»: la linea di chi è a bordo, dal veicolo'],
       ['Mappa collegata a una bozza', 'gruppo «Iniziativa» → «Inizia scontro»: come «Inizia» della bozza, poi la finestra «Iniziativa»'],
       ['Tablet dei giocatori', 'aprono la vista giocatori (Strumenti → «Collega i tablet»), toccano «Sono…» e muovono il proprio PG: tocco sul quadretto, poi «Conferma». Il server controlla ogni movimento; tu lo vedi in diretta e lo annulli con Ctrl+Z'],
-      ['📱 e 🔔 nell’elenco dell’Iniziativa', '📱 pieno: il tablet del PG è collegato (pagina aperta); 🔔 manda al suo tablet un avviso grande con suono e vibrazione'],
+      ['📱 e «🔔 Chiedi di muovere» nell’elenco dell’Iniziativa', '📱 pieno: il tablet del PG è collegato (scheda o mappa aperta); «Chiedi di muovere» manda al suo tablet l’avviso grande con suono, vibrazione e «Muovi il PG sulla mappa»'],
       ['Strumenti → Tablet dei giocatori', 'blocca i movimenti, «solo al proprio turno» o «sempre», avviso automatico «Tocca a te»'],
       ['Strumenti (in alto)', 'sette categorie: Preparazione mappa, Scena, In gioco, Vista giocatori, Tablet dei giocatori, Suoni, Pulizia; scorciatoia a destra, le voci spente dicono perché'],
       ['M', 'mostra o nasconde l’area di movimento'],

@@ -2279,3 +2279,5 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 .scontro-in-corso.tuo-turno { border-color: var(--pe, #1b7a3a); }
 .tuo-turno-testo { color: var(--pe, #1b7a3a); font-weight: 700; }
 .btn-muovi-mappa { min-height: 3rem; font-size: 1.1rem; }
+.tablet-allarme-azioni { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; }
+.tablet-allarme-azioni .btn { min-height: 3.5rem; font-size: 1.3rem; padding: .6rem 1.4rem; }

@@ -211,16 +211,16 @@ function flusso(pg) {
 }
 const aspetta = (ms) => new Promise((ok) => setTimeout(ok, ms));
 
-test('notifiche: il campanellino arriva solo al tablet di quel PG; il master vede chi è collegato', async () => {
+test('notifiche: «Chiedi di muovere» arriva solo al tablet di quel PG; il master vede chi è collegato', async () => {
   const a = flusso('Akira'), b = flusso('Bea');
   await Promise.all([a.pronto, b.pronto]);
   await aspetta(100);
   const collegati = (await (await fetch(`${base}/api/tablet`)).json()).collegati;
   assert.deepEqual([...collegati].sort(), ['Akira', 'Bea']);
-  const r = await (await fetch(`${base}/api/tablet/avviso`, { method: 'POST', body: JSON.stringify({ pg: 'Akira', tipo: 'campanello' }) })).json();
+  const r = await (await fetch(`${base}/api/tablet/avviso`, { method: 'POST', body: JSON.stringify({ pg: 'Akira', nome: 'Akira', tipo: 'muovi', scontro: 'scontro-prova' }) })).json();
   assert.equal(r.consegnati, 1);
   await aspetta(150);
-  assert.match(a.testo, /event: avviso\ndata: \{"tipo":"campanello","testo":"Il master ti chiama!"/);
+  assert.match(a.testo, /event: avviso\ndata: \{"tipo":"muovi","testo":"Il master ti chiede di muovere Akira","nome":"Akira","scontro":"scontro-prova"/);
   assert.ok(!b.testo.includes('event: avviso'), 'Bea non riceve l’avviso di Akira');
   // un PG senza tablet: nessuno lo riceve
   assert.equal((await (await fetch(`${base}/api/tablet/avviso`, { method: 'POST', body: JSON.stringify({ pg: 'Carlo' }) })).json()).consegnati, 0);
@@ -315,4 +315,55 @@ test('scheda del PG: «Muovi il PG sulla mappa» solo al proprio turno, con chi 
   assert.equal(v.scontroAperto, true);
   assert.equal(v.scena.id, 'cripta');
   assert.equal((await (await fetch(`${base}/api/vista-giocatori?pg=Akira&scontro=finito`)).json()).scontroAperto, false);
+});
+
+/** Flusso della scheda del PG sul tablet (08/10): solo gli avvisi. */
+function flussoScheda(pg) {
+  const ctl = new AbortController();
+  const f = { testo: '', chiudi: () => ctl.abort() };
+  f.pronto = fetch(`${base}/api/tablet/eventi?pg=${encodeURIComponent(pg)}`, { signal: ctl.signal }).then(async (r) => {
+    const lettore = r.body.getReader();
+    const dec = new TextDecoder();
+    (async () => { try { for (;;) { const { value, done } = await lettore.read(); if (done) break; f.testo += dec.decode(value); } } catch { /* chiuso */ } })();
+  });
+  return f;
+}
+
+test('«Chiedi di muovere» arriva anche alla scheda del PG aperta sul tablet, solo a quel PG; la scheda conta come collegata', async () => {
+  const sa = flussoScheda('Akira'), sb = flussoScheda('Bea');
+  await Promise.all([sa.pronto, sb.pronto]);
+  await aspetta(100);
+  assert.ok((await (await fetch(`${base}/api/tablet`)).json()).collegati.includes('Bea'));
+  const r = await (await fetch(`${base}/api/tablet/avviso`, { method: 'POST', body: JSON.stringify({ pg: 'Bea', nome: 'Bea', tipo: 'muovi', scontro: 'scontro-prova' }) })).json();
+  assert.ok(r.consegnati >= 1);
+  await aspetta(150);
+  assert.match(sb.testo, /"testo":"Il master ti chiede di muovere Bea"/);
+  assert.ok(!sa.testo.includes('event: avviso'));
+  assert.ok(!sb.testo.includes('event: diretta'), 'la scheda non riceve la diretta della mappa');
+  sa.chiudi(); sb.chiudi();
+});
+
+test('«Tocca a te» dal server: salvando lo scontro, al PG che diventa di turno, solo con l’avviso acceso nella scena', async () => {
+  const sb = flussoScheda('Bea');
+  await sb.pronto;
+  await aspetta(100);
+  const passa = async (turno) => {
+    const s = JSON.parse(readFileSync(SCONTRO, 'utf8'));
+    const r = await fetch(`${base}/api/scontri/scontro-prova`, { method: 'PUT', body: JSON.stringify({ ...s, turno }) });
+    assert.equal(r.status, 200);
+    await aspetta(200);
+  };
+  try {
+    await passa(0);
+    await passa(1); // tocca a Bea, ma l'avviso è spento
+    assert.ok(!sb.testo.includes('event: avviso'), 'spento: nessun avviso');
+    await passa(0);
+    scriviScena((s) => ({ ...s, tablet: { avvisoTurno: true } }));
+    await passa(1);
+    assert.match(sb.testo, /"tipo":"turno","testo":"Tocca a te, Bea!"/);
+  } finally {
+    scriviScena((s) => { const { tablet, ...resto } = s; return resto; });
+    await passa(0);
+    sb.chiudi();
+  }
 });

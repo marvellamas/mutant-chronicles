@@ -816,9 +816,9 @@ export function renderTavolo(radice, ctx) {
   };
   async function chiamaTablet(p) {
     try {
-      const r = await fetch('api/tablet/avviso', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ pg: p.chiave, tipo: 'campanello' }) });
+      const r = await fetch('api/tablet/avviso', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ pg: p.chiave, nome: p.nome, tipo: 'muovi', scontro: stato.scontro?.id ?? null }) });
       const { consegnati = 0 } = await r.json().catch(() => ({}));
-      if (consegnati) avviso(`🔔 Avviso mandato al tablet di ${p.nome}.`, { chiave: 'campanello' });
+      if (consegnati) avviso(`🔔 Chiesto a ${p.nome} di muovere (avviso sul suo tablet).`, { chiave: 'campanello' });
       else avvisoErrore(`Il tablet di ${p.nome} non è collegato: la pagina deve essere aperta (senza HTTPS gli avvisi non arrivano a pagina chiusa).`, { chiave: 'campanello' });
     } catch (e) { avvisoErrore(`Avviso non mandato: ${e.message}`, { chiave: 'campanello' }); }
   }

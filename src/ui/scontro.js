@@ -91,12 +91,12 @@ export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaCol
       : h('span', {}, numero(p.base));
   };
   const origine = (t) => (t.origine === 'app' ? 'app' : 'dal vivo');
-  // fase 2, lotto 7: 📱 pieno se il tablet del PG è collegato (pagina aperta), sbiadito se no; 🔔 lo chiama
+  // fase 2, lotto 7: 📱 pieno se il tablet del PG è collegato (scheda o mappa aperta), sbiadito se no; «🔔 Chiedi di muovere»
   const statoTablet = (p) => {
     const c = (tablet.collegati ?? []).some((k) => stessaChiave(k, p.chiave));
     return h('span', { class: 'tablet-pg' },
       h('span', { class: `tablet-indicatore ${c ? 'collegato' : 'scollegato'}`, title: c ? `Tablet di ${p.nome} collegato` : `Tablet di ${p.nome} non collegato (pagina chiusa o in secondo piano)`, role: 'img', 'aria-label': c ? 'tablet collegato' : 'tablet non collegato' }, '📱'),
-      c ? h('button', { type: 'button', class: 'btn btn-piccolo btn-campanello', title: `Chiama ${p.nome}: avviso grande, suono e vibrazione sul suo tablet`, 'aria-label': `Chiama ${p.nome} sul tablet`, onclick: () => tablet.chiama(p) }, '🔔') : null);
+      c ? h('button', { type: 'button', class: 'btn btn-piccolo btn-campanello', title: `Chiedi a ${p.nome} di muovere: sul suo tablet (scheda o mappa) l’avviso grande con suono, vibrazione e «Muovi il PG sulla mappa»`, onclick: () => tablet.chiama(p) }, '🔔 Chiedi di muovere') : null);
   };
   const riga = (p, i) => {
     const inSpareggio = spareggi.some((g) => g.includes(p.id));

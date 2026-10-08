@@ -101,13 +101,13 @@ L'indirizzo è fatto così: `http://`, l'**indirizzo IP del PC del master** (qua
 - ogni movimento dai tablet lo controlla il **server** con le stesse regole della mappa (area, muri, porte chiuse, terreno difficile, Passo diviso, Corsa e Scatto in un blocco unico, turno, blocco): un movimento non valido viene rifiutato, qualunque cosa mandi il tablet;
 - lo vedi sulla mappa entro un secondo, con l'avviso «📱 … si è mosso dal tablet» e, se serve, l'Attacco di Opportunità con «Attacca!». **Ctrl+Z** (o «Annulla» nell'avviso) lo annulla, come un movimento tuo;
 - Strumenti → 📱 Tablet dei giocatori: **«Blocca movimenti dei giocatori»** (i tablet guardano soltanto, e lo vedono scritto), **«Movimento dai tablet: solo al proprio turno / sempre»**, **«Avviso «Tocca a te» ai tablet»** (all'arrivo del turno il tablet del PG mostra un avviso grande, con suono e vibrazione). Gli stessi interruttori stanno in fondo alla sezione «Vista giocatori»;
-- nell'elenco dell'Iniziativa, accanto a ogni PG, **📱** pieno se il suo tablet è collegato, sbiadito se no; **🔔** accanto a un tablet collegato lo chiama: avviso grande «Il master ti chiama!», suono e vibrazione (sui tablet che la supportano, di solito Android).
+- nell'elenco dell'Iniziativa, accanto a ogni PG, **📱** pieno se il suo tablet è collegato (scheda o mappa aperta), sbiadito se no; **«🔔 Chiedi di muovere»** accanto a un tablet collegato: sul tablet l'avviso grande «Il master ti chiede di muovere <PG>», con suono, vibrazione (sui tablet che la supportano, di solito Android) e il pulsante «🗺 Muovi il PG sulla mappa».
 
 **Limiti (senza HTTPS sulla rete di casa):**
 
 - gli avvisi arrivano **solo con la pagina aperta** sul tablet: a pagina chiusa, in secondo piano o con lo schermo spento non arriva nulla. Tieni lo schermo acceso durante la sessione (la pagina lo chiede al tablet, dove il browser lo permette);
 - il suono parte solo dopo il **primo tocco** sulla pagina: se il tablet lo blocca compare «🔈 Tocca per attivare l'audio»;
-- se il tablet non è collegato, 🔔 te lo dice.
+- se il tablet non è collegato, «Chiedi di muovere» te lo dice.
 
 ## Suoni
 

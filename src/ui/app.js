@@ -23,6 +23,7 @@ import { elencoUnito, confronta, chiaveDaFile, chiavePersonaggio, messaggioSalva
 import { renderTavolo } from './tavolo.js';
 import { renderMappa } from './mappa/pagina.js';
 import { renderGiocatori } from './mappa/giocatori.js';
+import { creaAllarme } from './allarme.js';
 import { renderGuidaMappa } from './guida.js';
 import { avviso, avvisoErrore } from './avvisi.js';
 import { controlloInUso } from './ridisegno.js';
@@ -493,6 +494,29 @@ async function controllaScheda() {
 // giocatore fa qualcosa. Fuori da uno scontro, o senza server, il contatore è quello della scheda, come prima.
 // stato.scontroPg: { id, nome, round, durate } | null; stato.roundFinale: { id, round } dopo la fine dello scontro.
 
+// 08/10: avvisi del master alla scheda del PG aperta sul tablet («Chiedi di muovere», «Tocca a te»): un flusso di
+// eventi (server.mjs → /api/tablet/eventi) finché il PG è in uno scontro aperto e la scheda è aperta
+let flussoAvvisi = null; // { pg, es }
+let allarmeScheda = null;
+function flussoAvvisiScheda(chiave, coll) {
+  const vuole = coll && chiave && inScheda() ? chiave : null;
+  if (flussoAvvisi?.pg === vuole) return;
+  flussoAvvisi?.es.close();
+  flussoAvvisi = null;
+  if (!vuole || typeof EventSource !== 'function') return;
+  const es = new EventSource(`api/tablet/eventi?pg=${encodeURIComponent(vuole)}`);
+  es.addEventListener('avviso', (e) => {
+    let a;
+    try { a = JSON.parse(e.data); } catch { return; }
+    allarmeScheda ??= creaAllarme(stato.dati);
+    const id = stato.id;
+    const scontro = a.scontro ?? stato.scontroPg?.id ?? null;
+    allarmeScheda.mostra({ testo: a.testo, tipo: a.tipo, azioni: scontro ? [{ testo: '🗺 Muovi il PG sulla mappa', primario: true, fai: () => vai(urlMuovi(vuole, scontro, id)) }] : [] });
+  });
+  flussoAvvisi = { pg: vuole, es };
+}
+window.addEventListener('hashchange', () => { if (!inScheda()) { flussoAvvisiScheda(null, null); allarmeScheda?.chiudi(); } });
+
 /** Chiave del personaggio aperto nella cartella del server (src/cartella.js), o null se non c'è. */
 function chiaveCartellaAperta() {
   const f = archivio.carica(stato.id)?.cartella?.file;
@@ -526,6 +550,7 @@ async function aggiornaRoundScontro() {
   }
   const prima = stato.scontroPg;
   stato.scontroPg = coll;
+  flussoAvvisiScheda(chiave, coll);
   const dati = stato.dati;
   if (!prima && coll) {
     stato.roundFinale = null;
