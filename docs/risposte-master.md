@@ -1189,6 +1189,12 @@ questi punti, con un `TODO(Davide)` dove serve; nel pacchetto per il Doc «per-d
   controllo di un avversario provoca un Attacco di Opportunità (contro il mezzo, o contro chi è a bordo e si espone)? E un
   avversario a bordo minaccia la zona attorno al mezzo? Provvisorio: no, i veicoli non provocano e non controllano zone,
   come prima (`veicoli.json` → mappa, `TODO(Davide) opportunita`).
+- **A.147 — Girare il veicolo sulla mappa costa movimento?** (08/10/2026, orientamento libero dei veicoli). Il Manuale
+  dei Veicoli dice che «Curve ordinarie e normali regolazioni dell’andatura sono comprese nella conduzione» (§1.3) e che
+  Sterzata stretta e Inversione rapida sono manovre complesse da 1 AzP con Prova (§2.4), ma non se girare il mezzo sulla
+  griglia consumi Q, né da quanti gradi una curva smette di essere ordinaria (per esempio 90° in un Round, o girarsi sul
+  posto da fermo). Provvisorio: la rotazione è libera prima e dopo lo spostamento e non consuma Q; le manovre complesse
+  le applica il master a voce (`mappa.json` → token.rotazione_veicoli, `TODO(Davide)`).
 
 ## Domande aperte sugli impianti (censimento del 04/10/2026)
 
