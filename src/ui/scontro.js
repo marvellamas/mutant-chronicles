@@ -180,7 +180,7 @@ export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaCol
         h('button', { type: 'button', class: 'btn primario', disabled: !ordinati.length, title: 'Il turno passa al prossimo (Maiusc+clic: «Indietro»)', onclick: (e) => (e.shiftKey && indietroUi ? indietroUi() : modifica((x) => avanti(x, undefined, { indietroMax: ctx.dati.mappa.iniziativa.indietro_max }))) }, 'Avanti'),
         // pezzo 4: annulla l'ultimo colpo applicato (PV, Ferite e Stati di prima)
         annullaColpo && s.colpi?.length ? h('button', { type: 'button', class: 'btn', title: `Ultimo: ${s.colpi.at(-1).testo}`, onclick: async () => { if (await chiedi({ titolo: `Annullare l’ultimo colpo a ${s.colpi.at(-1).nome}?`, testo: s.colpi.at(-1).testo, si: 'Annulla il colpo', no: 'Lascia' })) annullaColpo(); } }, 'Annulla ultimo colpo') : null,
-        h('button', { type: 'button', class: 'btn', onclick: async () => { if (await chiedi({ titolo: 'Chiudere lo scontro?', testo: 'Il file passa in scontri/archivio/.', si: 'Fine scontro' })) modifica((x) => chiudi(x)); } }, 'Fine scontro'))),
+        h('button', { type: 'button', class: 'btn pericolo', onclick: async () => { if (await chiedi({ titolo: 'Chiudere lo scontro?', testo: 'Il file passa in scontri/archivio/.', si: 'Fine scontro', pericolo: true })) modifica((x) => chiudi(x)); } }, 'Fine scontro'))),
     st.avvisoScontro ? h('p', { class: 'riquadro attenzione', role: 'status' }, st.avvisoScontro) : null,
     diT ? h('p', { class: 'di-turno-testo' }, 'Di turno: ', h('strong', {}, diT.nome)) : null,
     ordinati.length ? h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta ordine-iniziativa' },

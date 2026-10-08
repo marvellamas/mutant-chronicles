@@ -46,7 +46,7 @@ export function barraIniziativaEl(barra, o = {}) {
       o.reimposta ? h('button', { type: 'button', class: 'btn', title: 'Reimposta Iniziativa: ritira per tutti (con conferma) o per uno solo (ritiro o valore a mano); chi è di turno resta di turno; «Indietro» la annulla', disabled: !barra.voci.length, onclick: () => o.reimposta() }, '⟳ Iniziativa') : null,
       h('button', { type: 'button', class: 'btn primario', title: 'Il turno passa al prossimo, che diventa il token scelto (lo stesso «Avanti» della plancia; Maiusc+clic: «Indietro»)', disabled: !barra.voci.length, onclick: (e) => (e.shiftKey && o.indietro ? o.indietro() : o.avanti()) }, 'Avanti'),
       // 08/10: «Fine scontro» anche dalla mappa (con conferma): la musica si ferma, i tablet tornano alla scheda
-      o.fine ? h('button', { type: 'button', class: 'btn btn-fine-scontro', title: 'Chiude lo scontro (con conferma), come «Fine scontro» della plancia: il file passa in scontri/archivio/, la musica si ferma, i tablet tornano alla scheda', onclick: () => o.fine() }, '⏹ Fine scontro') : null,
+      o.fine ? h('button', { type: 'button', class: 'btn pericolo btn-fine-scontro', title: 'Chiude lo scontro (con conferma), come «Fine scontro» della plancia: il file passa in scontri/archivio/, la musica si ferma, i tablet tornano alla scheda', onclick: () => o.fine() }, '⏹ Fine scontro') : null,
       o.centra ? h('button', {
         type: 'button', role: 'switch', 'aria-checked': String(!!o.centra.attivo), class: `interruttore-mappa${o.centra.attivo ? ' acceso' : ''}`,
         title: 'Al cambio di turno la mappa centra il token attivo, se è fuori vista', onclick: () => o.centra.cambia(!o.centra.attivo),

@@ -24,6 +24,9 @@
   --attenzione-tenue: #fbf0d9;
   --errore: #a3261b;
   --errore-tenue: #fbe4e1;
+  /* pulsante pieno di un'azione definitiva (conferme «pericolo», «Fine scontro»): rosso con testo bianco, 08/10 */
+  --pericolo-pieno: #a3261b;
+  --pericolo-testo: #ffffff;
   --barra-verde: #2e8b4e;
   --barra-giallo: #a87400; /* 3,2:1 sulla traccia, 4,1:1 sul bianco */
   --barra-rosso: #c23b2c;
@@ -51,6 +54,8 @@
     --attenzione-tenue: #3a2f1a;
     --errore: #f08a80;
     --errore-tenue: #3d201d;
+    --pericolo-pieno: #c0392b;
+    --pericolo-testo: #ffffff;
     --barra-verde: #5cc47f;
     --barra-giallo: #e8b64c;
     --barra-rosso: #f07a6e;
@@ -147,6 +152,9 @@ main:has(> .scheda-tab.larghezza-piena) { max-width: 1650px; }
 .btn.primario { background: var(--accento); border-color: var(--accento); color: var(--accento-testo); font-weight: 600; }
 .btn.scelto { background: var(--ok-tenue); border-color: var(--ok); color: var(--ok); opacity: 1; cursor: default; font-weight: 600; }
 .btn.pericolo { color: var(--errore); }
+/* 08/10: una conferma «pericolo» è primario + pericolo: prima testo --errore su sfondo --accento (illeggibile, soprattutto
+   nel tema scuro: salmone su arancione); ora rosso pieno con testo bianco, anche al passaggio del mouse e al clic */
+.btn.primario.pericolo, .btn.primario.pericolo:hover:not(:disabled), .btn.primario.pericolo:active, .btn.primario.pericolo:focus-visible { background: var(--pericolo-pieno); border-color: var(--pericolo-pieno); color: var(--pericolo-testo); }
 .btn.tondo { width: 2.5rem; min-width: 2.5rem; padding: 0; font-size: 1.2rem; font-weight: 700; }
 
 .riga-azioni { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin: 0.75rem 0; }
@@ -2171,7 +2179,7 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 .riquadro-prep { border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 0.6rem 0.8rem 0.8rem; margin: 0.8rem 0; background: var(--superficie); }
 .riquadro-prep > .nota { margin: 0 0 0.5rem; }
 .riquadro-prep-titolo { display: flex; align-items: center; gap: 0.5rem; margin: 0 0 0.3rem; font-size: 1.05rem; }
-.riquadro-prep-numero { display: inline-flex; align-items: center; justify-content: center; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--accento); color: var(--su-accento, #fff); font-size: 0.9rem; font-weight: 700; }
+.riquadro-prep-numero { display: inline-flex; align-items: center; justify-content: center; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--accento); color: var(--accento-testo); font-size: 0.9rem; font-weight: 700; }
 .veicoli-bozza h4 { margin: 0.5rem 0 0.2rem; }
 .veicoli-bozza ul { margin: 0; padding-left: 1.2rem; }
 
@@ -2185,7 +2193,7 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 .mappa-gruppo.gruppo-app .marchio-in-linea { margin: 0; }
 .mappa-gruppo.gruppo-app .mappa-titolo { max-width: 14rem; font-size: 1.1rem; }
 .mappa-gruppo.gruppo-strumenti { border-color: var(--accento); }
-.mappa-gruppo.gruppo-strumenti .menu-strumenti:not(.menu-altro) > summary { background: var(--accento); color: var(--su-accento, #fff); border-color: var(--accento); font-weight: 700; font-size: 1.05rem; padding: 0.35rem 0.9rem; }
+.mappa-gruppo.gruppo-strumenti .menu-strumenti:not(.menu-altro) > summary { background: var(--accento); color: var(--accento-testo); border-color: var(--accento); font-weight: 700; font-size: 1.05rem; padding: 0.35rem 0.9rem; }
 .mappa-gruppo.gruppo-suoni { margin-left: auto; }
 .mappa-gruppo.gruppo-suoni .mappa-stato { max-width: 11rem; }
 @media (max-width: 30rem) { .mappa-gruppo { flex-wrap: wrap; } }
