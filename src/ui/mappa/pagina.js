@@ -53,7 +53,7 @@ import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
 import { componiMenu, unisciMenu } from '../../mappa/menu.js';
 import { diTurno, ordineIniziativa } from '../../scontro.js';
 import { statoMovimento, muoviVeicolo, cambiaConducente } from '../../veicoli-registro.js';
-import { DIREZIONI, NOMI_DIREZIONI, ingombroOrientato, ruotaSeLibero, sali, scendi, qPerScendere, veicoliVicini, aBordo, veicoloDi } from '../../mappa/veicoli-mappa.js';
+import { DIREZIONI, NOMI_DIREZIONI, ingombroOrientato, ruotaSeLibero, sali, scendi, qPerScendere, veicoliVicini, aBordo, veicoloDi, veicoloFermo } from '../../mappa/veicoli-mappa.js';
 import { rigaMovimentoLibero, rigaOpportunita, senzaOpportunitaDelMovimento, rigaPorta, rigaTemplateTolti, rigaGruppo, registraRiga } from '../../scontro.js';
 import { tokenNelRettangolo, alternaSelezione, spostaGruppo } from '../../mappa/gruppo.js';
 import { aggiornaInScontri } from '../immagine-nemico.js';
@@ -1067,11 +1067,18 @@ export function renderMappa(radice, ctx) {
   function scegli(id) {
     // la fascia riparte da quella che il movimento già fatto ha raggiunto (3 Q usati su Passo 2: Corsa)
     if (st.selezionato !== id) st.fascia = fasciaRaggiunta(id);
+    const nuovo = st.selezionato !== id;
     st.selezionato = id;
     invalidaArea();
     disegnaPannelli();
     disegnaIniziativa();
     ridisegna(['aree', 'sopra']);
+    // ritocchi del 08/10: un veicolo che non si può muovere lo dice subito (mai un silenzio), con il modo di farlo
+    const t = nuovo && id ? st.scena?.token.find((x) => x.id === id) : null;
+    if (t?.rif.tipo === 'veicolo' && st.fascia !== LIBERO) {
+      const info = infoArea(t);
+      if (!info.area && info.motivo) avviso(`${pezzoDi(t)?.nome ?? 'Veicolo'}: ${info.motivo}.`, { tipo: 'info', chiave: 'veicolo-fermo', durata: 9000 });
+    }
   }
 
   /**
@@ -1181,7 +1188,7 @@ export function renderMappa(radice, ctx) {
     if (!rec) { avvisoErrore('Registro del veicolo non trovato: il conducente non è cambiato nella sua scheda.'); return; }
     const nuovo = pgTok ? { chiave: pgTok.rif.id.replace(/^pg:/, ''), nome: nomeTok(pgTok) } : null;
     try {
-      const record = await aggiornaVeicolo(rec, cambiaConducente(rec, nuovo));
+      const { record } = await aggiornaVeicolo(rec, cambiaConducente(rec, nuovo));
       if (st.fonti) st.fonti.veicoli = st.fonti.veicoli.map((x) => (x.id === record.id ? record : x));
       await aggiornaFonti();
     } catch (e) { avvisoErrore(`Conducente non salvato nella scheda del veicolo: ${e.message}`); }
@@ -1599,14 +1606,16 @@ export function renderMappa(radice, ctx) {
     }
     if (!pz?.movimento) return { ...base, motivo: pz ? 'nessun profilo di movimento' : 'fuori dallo scontro' };
     let usato = usatoNelRound(st.scena, t.id, scontro?.id ?? null, scontro?.round ?? null);
-    // fase 2, lotto 5: senza conducente il veicolo resta fermo (anche fuori dallo scontro); il master lo sposta con Libero
-    if (pz.tipo === 'veicolo' && recordVeicolo(t) && !recordVeicolo(t).conducente) return { ...base, motivo: 'senza conducente: fermo (fai salire un PG come conducente)' };
-    if (pz.tipo === 'veicolo' && scontro) {
-      // A.105: un solo movimento per Round, all'Iniziativa del conducente (src/veicoli-registro.js)
+    // veicoli (A.105; ritocchi del 08/10): con lo scontro aperto e un conducente nello scontro l'area c'è sempre, anche
+    // fuori dal suo turno (il master lo muove come un token), una volta per Round; altrimenti il motivo, mai un silenzio
+    let notaVeicolo = null;
+    if (pz.tipo === 'veicolo') {
       const rec = recordVeicolo(t);
-      const sv = rec ? statoMovimento(rec, scontro, diTurno(scontro)) : null;
-      if (mossoNelRound(st.scena, t.id, scontro.id, scontro.round) || sv?.mosso) return { ...base, usato: pz.movimento.passo, motivo: `già mosso nel Round ${scontro.round}` };
-      if (sv && !sv.puo) return { ...base, motivo: sv.motivo };
+      const sv = rec && scontro ? statoMovimento(rec, scontro, diTurno(scontro), { fuoriTurno: true }) : null;
+      const mosso = scontro ? mossoNelRound(st.scena, t.id, scontro.id, scontro.round) || !!sv?.mosso : false;
+      const f = veicoloFermo(rec, scontro, sv ? { ...sv, mosso, motivo: mosso ? `già mosso nel Round ${scontro.round}` : sv.motivo } : null);
+      if (rec && f.motivo) return { ...base, usato: mosso ? pz.movimento.passo : 0, motivo: f.motivo };
+      notaVeicolo = f.nota;
       usato = 0;
     }
     // A.129: il Passo si divide; Corsa e Scatto sono un blocco unico (i Q non usati si perdono)
@@ -1631,7 +1640,7 @@ export function renderMappa(radice, ctx) {
     const motivo = sf.chiusa ? `${NOMI_FASCE[sf.chiusa]} fatta in un blocco unico: movimento ${quando} finito${sf.persi ? ` (${numero(sf.persi, 1)} Q non usati persi)` : ''}`
       : limite > 0 ? null : !usato ? 'movimento 0 Q'
       : piuAmpie.length ? `${st.fascia === 1 ? 'Passo' : 'Corsa'} finito: scegli ${piuAmpie.join(' o ')}` : `movimento ${quando} finito (${numero(usato, 1)} Q)`;
-    return { ...base, area, rimaste, usato, limite, totale, disponibili: scelta ? pz.movimento[scelta] : null, celle: celleArea(area, rimaste, st.fascia), motivo, escluse: sf.escluse, chiusa: sf.chiusa, nonPiu: sf.nonPiu, nota: sf.nota, portata };
+    return { ...base, area, rimaste, usato, limite, totale, disponibili: scelta ? pz.movimento[scelta] : null, celle: celleArea(area, rimaste, st.fascia), motivo, escluse: sf.escluse, chiusa: sf.chiusa, nonPiu: sf.nonPiu, nota: [notaVeicolo, sf.nota].filter(Boolean).join(' ') || null, portata };
   }
   /** Area del token scelto, calcolata una volta finché non cambia qualcosa (invalidaArea). */
   function areaScelta() {
@@ -2339,7 +2348,7 @@ export function renderMappa(radice, ctx) {
     const rec = recordVeicolo(t);
     if (rec && scontro && !libero) {
       try {
-        aggiornaVeicolo(rec, muoviVeicolo(rec, scontro, diTurno(scontro))).then(({ record }) => {
+        aggiornaVeicolo(rec, muoviVeicolo(rec, scontro, diTurno(scontro), { fuoriTurno: true })).then(({ record }) => {
           if (st.fonti) st.fonti.veicoli = st.fonti.veicoli.map((x) => (x.id === record.id ? record : x));
         }).catch((e) => avvisoErrore(`Movimento del veicolo non registrato: ${e.message}`));
       } catch (e) { avvisoErrore(`Movimento del veicolo non registrato: ${e.message}`); }

@@ -62,7 +62,7 @@ Si preparano in pochi secondi e durante il gioco non si toccano più.
 
 - **Metterlo:** come gli altri token («Metti» fra i «senza token»); prima del clic, ← → scelgono dove punta il muso.
 - **Girarlo:** con il veicolo scelto, ← → (o clic destro → «Ruota»): 90° alla volta; Ctrl+Z annulla.
-- **Guidarlo:** si muove al turno del suo conducente, una volta per Round, con l'andatura della sua scheda. Senza conducente resta fermo.
+- **Guidarlo:** sceglilo e trascinalo come un token: area di movimento sull'ingombro intero, con l'andatura della sua scheda, una volta per Round. Di norma lo muovi al turno del conducente (la mappa lo sceglie da sola), ma puoi muoverlo anche fuori turno. Senza conducente o senza scontro aperto resta fermo e un avviso dice perché; con Libero (Maiusc) lo sposti comunque.
 - **Salire:** clic destro su un PG o un nemico accanto al veicolo → «Sali su … come conducente» (un PG) o «come passeggero». Il token sparisce e compare in piccolo sul veicolo (due terzi di un token, con il suo bordo; il conducente per primo, con un anello blu); nel pannello c'è l'elenco «A bordo».
 - **Scendere:** pannello del veicolo → «A bordo» → gruppo «Scendi» (o clic destro sul veicolo → «Scendi»), il nome, poi clic su un quadretto evidenziato accanto al mezzo.
 - **Sparare da bordo:** gruppo «Linea di tiro» (pannello o clic destro), il nome: la linea parte dal veicolo.

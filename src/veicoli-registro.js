@@ -134,22 +134,24 @@ export const partecipanteConducente = (rec, scontro) => (rec.conducente ? (scont
  * Il mezzo non ha Iniziativa né Azioni: si muove all'Iniziativa del conducente, con le sue Azioni, una volta per
  * Round. Il cambio di conducente non concede un secondo movimento nello stesso Round.
  * @param diTurno il partecipante di turno (src/scontro.js → diTurno)
- * @returns {{ mosso: boolean, puo: boolean, motivo: string|null, conducente }}
+ * @param o { fuoriTurno }: la mappa (ritocchi del 08/10) lascia muovere il mezzo al master anche fuori dal turno del
+ *   conducente, come i token; resta una volta per Round. `fuori`: vero se non è il turno del conducente
+ * @returns {{ mosso: boolean, puo: boolean, motivo: string|null, conducente, fuori: boolean }}
  */
-export function statoMovimento(rec, scontro, diTurno) {
+export function statoMovimento(rec, scontro, diTurno, { fuoriTurno = false } = {}) {
   const mosso = Boolean(rec.movimento && scontro && rec.movimento.scontro === scontro.id && rec.movimento.round === scontro.round);
   const c = partecipanteConducente(rec, scontro);
   const motivo = !scontro ? 'nessuno scontro aperto'
     : !rec.conducente ? 'nessun conducente'
       : !c ? `${rec.conducente.nome} non è nello scontro`
         : mosso ? `già mosso nel Round ${scontro.round}${rec.movimento.da ? ` (con ${rec.movimento.da})` : ''}`
-          : diTurno?.id !== c.id ? `si muove all’Iniziativa di ${rec.conducente.nome}` : null;
-  return { mosso, puo: !motivo, motivo, conducente: c };
+          : diTurno?.id !== c.id && !fuoriTurno ? `si muove all’Iniziativa di ${rec.conducente.nome}` : null;
+  return { mosso, puo: !motivo, motivo, conducente: c, fuori: Boolean(c && diTurno?.id !== c.id) };
 }
 
 /** Il movimento del Round, all'Iniziativa del conducente. Errore se non si può. */
-export function muoviVeicolo(rec, scontro, diTurno) {
-  const st = statoMovimento(rec, scontro, diTurno);
+export function muoviVeicolo(rec, scontro, diTurno, opzioni = {}) {
+  const st = statoMovimento(rec, scontro, diTurno, opzioni);
   if (!st.puo) throw new Error(st.motivo);
   return { ...rec, movimento: { scontro: scontro.id, round: scontro.round, da: rec.conducente.nome } };
 }

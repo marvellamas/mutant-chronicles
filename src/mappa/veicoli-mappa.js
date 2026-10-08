@@ -156,6 +156,22 @@ export function postiCerchietti(n, box, qs, quota = 2 / 3) {
   return Array.from({ length: n }, (_, i) => ({ x: x0 + (i % colonne) * lato, y: box.y + Math.floor(i / colonne) * lato, lato }));
 }
 
+/**
+ * Perché il veicolo non si muove sulla mappa (ritocchi del 08/10, mai un silenzio), o null se si muove: senza scontro
+ * aperto, senza conducente nel registro (A.91), con il conducente fuori dallo scontro, già mosso nel Round. Fuori dal
+ * turno del conducente il master lo muove comunque: lo dice `nota`.
+ * @param stato src/veicoli-registro.js → statoMovimento(rec, scontro, diTurno, { fuoriTurno: true })
+ * @returns {{ motivo: string|null, nota: string|null }}
+ */
+export function veicoloFermo(rec, scontro, stato) {
+  const libero = 'oppure usa Libero (Maiusc)';
+  if (!scontro) return { motivo: `Nessuno scontro aperto: il veicolo si muove all’Iniziativa del conducente; ${libero}`, nota: null };
+  if (!rec?.conducente) return { motivo: `Nessun conducente a bordo: fai salire un PG come conducente, ${libero}`, nota: null };
+  if (!stato?.conducente) return { motivo: `${rec.conducente.nome} (il conducente) non è nello scontro: fallo entrare o cambia conducente, ${libero}`, nota: null };
+  if (stato.mosso) return { motivo: `${stato.motivo}: un solo movimento per Round (A.105); ${libero}`, nota: null };
+  return { motivo: null, nota: stato.fuori ? `Fuori dal turno di ${rec.conducente.nome}: il master lo muove comunque, una volta per Round` : null };
+}
+
 /** Chiavi dei partecipanti a bordo di qualche veicolo (hanno un token, anche se non in mappa). */
 export const chiaviABordo = (scena) => new Set(scena.token.flatMap((t) => aBordo(t).map((p) => chiaveRif(p.rif))));
 
