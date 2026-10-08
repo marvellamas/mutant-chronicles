@@ -34,6 +34,7 @@ import { errorePorta } from './porte.js';
 import { erroreIniziale } from './iniziale.js';
 import { erroreLuce, erroreLuceToken } from './luce.js';
 import { erroreBordo } from './veicoli-mappa.js';
+import { erroreVolo } from './volo.js';
 
 export const ID_SCENA = /^[a-z0-9-]{1,60}$/;
 /** Nome dei file in mappe/: lo sceglie il server (nome ridotto + impronta del contenuto). */
@@ -189,6 +190,8 @@ export function validaScena(s, dati) {
     { const e = erroreLuceToken(t.luce, dati); if (e) return `${k}.${e}`; }
     // veicoli (fase 2, lotto 5): muso e chi è a bordo; un partecipante a bordo non ha anche un token in mappa
     { const e = erroreBordo(t, D); if (e) return `${k}.${e}`; }
+    // 08/10: token in volo (src/mappa/volo.js)
+    { const e = erroreVolo(t, D); if (e) return `${k}.${e}`; }
     for (const p of t.passeggeri ?? []) {
       if (rifPartecipanti.has(p.rif.id)) return `${k}.passeggeri: il partecipante «${p.rif.id}» ha già un token`;
       rifPartecipanti.add(p.rif.id);

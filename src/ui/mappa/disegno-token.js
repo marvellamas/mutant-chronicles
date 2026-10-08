@@ -8,6 +8,7 @@
 import { schermoDaMappa } from '../../mappa/camera.js';
 import { dimensioni, chiaveRif } from '../../mappa/token.js';
 import { direzioneDi, angoloImmagine, postiCerchietti } from '../../mappa/veicoli-mappa.js';
+import { inVolo, quotaDi } from '../../mappa/volo.js';
 import { angoloDi, formaDi, baseDaIngombro } from '../../mappa/forma.js';
 
 const SOGLIA_TESTO_PX = 16; // sotto questo lato in pixel di schermo niente testo né sigle
@@ -45,7 +46,7 @@ const sigla = (nome) => String(nome ?? '?').replace(/[^\p{L}\p{N} ]/gu, '').spli
  * Disegna i token della scena. `pezzi`: Map(chiave del rif → pezzo, src/mappa/partecipanti.js); `trascina`: il token
  * spostato ora ({ id, q }) o null; `selezionato`: id del token scelto.
  */
-export function disegnaToken(c, { scena, cam, pezzi, colori, immagine, selezionato = null, trascina = null, bordo = () => null, alone = '#ffffff', pv = null, ritrattoVerticale = 0.5, zero = null }) {
+export function disegnaToken(c, { scena, cam, pezzi, colori, immagine, selezionato = null, trascina = null, bordo = () => null, alone = '#ffffff', pv = null, ritrattoVerticale = 0.5, zero = null, volo = null }) {
   const g = scena.griglia;
   const qs = g.q_px * cam.scala;
   const ordinati = [...scena.token].sort((a, b) => (a.id === selezionato) - (b.id === selezionato) || (a.id === trascina?.id) - (b.id === trascina?.id));
@@ -57,7 +58,7 @@ export function disegnaToken(c, { scena, cam, pezzi, colori, immagine, seleziona
     const a = schermoDaMappa(cam, g.scosto_x + q[0] * g.q_px, g.scosto_y + q[1] * g.q_px);
     const box = { x: a.x, y: a.y, w: w * qs, h: h * qs };
     const p = pezzi.get(chiaveRif(t.rif)) ?? null;
-    disegnaUno(c, { t, p, box, colori, immagine, qs, scelto: t.id === selezionato, inMano: trascina?.id === t.id, b: p ? bordo(p) : null, alone, pv, ritrattoVerticale, zero });
+    disegnaUno(c, { t, p, box, colori, immagine, qs, scelto: t.id === selezionato, inMano: trascina?.id === t.id, b: p ? bordo(p) : null, alone, pv, ritrattoVerticale, zero, volo });
     // chi è a bordo (fase 2, lotto 5; ritocchi del 08/10): come i token, due terzi di un Q, in griglia sul veicolo, il
     // conducente per primo con un anello del colore della selezione (pezzi della mappa o info della vista giocatori)
     const bordo_ = [...(t.passeggeri ?? [])].sort((a, x) => (x.ruolo === 'conducente') - (a.ruolo === 'conducente'));
@@ -154,13 +155,24 @@ function disegnaVeicolo(c, { t, q, g, cam, qs, pezzi, colori, immagine, scelto, 
   });
 }
 
-function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alone, pv, ritrattoVerticale, zero }) {
+function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alone, pv, ritrattoVerticale, zero, volo = null }) {
   const colore = b?.colore ?? colori[p?.lato] ?? colori.testo;
   const veicolo = t.rif.tipo === 'veicolo';
   const cx = box.x + box.w / 2, cy = box.y + box.h / 2;
   const r = Math.min(box.w, box.h) / 2 * 0.88;
   const bordo = Math.max(2, Math.min(6, r * 0.14));
   const testo = Math.min(box.w, box.h) >= SOGLIA_TESTO_PX;
+  // in volo (08/10, data/mappa.json → volo): un'ombra leggera sotto, spostata in basso, dice che è sollevato
+  const aria = !veicolo && inVolo(t);
+  if (aria) {
+    c.save();
+    c.globalAlpha = t.nascosto ? 0.22 : 0.45;
+    c.fillStyle = '#000000';
+    c.beginPath();
+    c.ellipse(cx + r * 0.12, cy + r * 0.55, r * 0.9, r * 0.45, 0, 0, Math.PI * 2);
+    c.fill();
+    c.restore();
+  }
   c.save();
   if (t.nascosto) c.globalAlpha = 0.45;
   if (inMano) c.globalAlpha *= 0.75;
@@ -250,6 +262,28 @@ function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alo
   }
   c.restore();
   c.filter = 'none';
+  // in volo: l'icona in alto a destra, sopra il bordo, e la quota in Q se c'è
+  const iconaVolo = aria && volo ? immagine(volo.icona) : null;
+  if (aria && volo) {
+    const l = Math.max(12, r * 2 * volo.quota_icona);
+    const ix = cx + r * 0.95 - l / 2, iy = cy - r * 0.95 - l / 2;
+    c.save();
+    if (t.nascosto) c.globalAlpha = 0.45;
+    if (iconaVolo) c.drawImage(iconaVolo, ix, iy, l, l);
+    else { c.fillStyle = '#ffffff'; c.beginPath(); c.arc(ix + l / 2, iy + l / 2, l / 2, 0, Math.PI * 2); c.fill(); }
+    const quota = quotaDi(t);
+    if (quota && testo) {
+      c.font = `700 ${Math.round(Math.max(10, l * 0.5))}px system-ui, sans-serif`;
+      c.textAlign = 'center';
+      c.textBaseline = 'top';
+      c.lineWidth = 3;
+      c.strokeStyle = '#000000';
+      c.strokeText(`${quota} Q`, ix + l / 2, iy + l);
+      c.fillStyle = '#ffffff';
+      c.fillText(`${quota} Q`, ix + l / 2, iy + l);
+    }
+    c.restore();
+  }
   // ritocchi del 07/10: a 0 PV il teschio (nemici) o la croce rossa (PG) sopra il token; `zero`: data/mappa.json → pv_zero
   const icona = p?.aZero && zero ? immagine(p.lato === 'pg' ? zero.pg : zero.nemico) : null;
   if (icona) {

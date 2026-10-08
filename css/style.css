@@ -2285,3 +2285,5 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 /* 08/10: muso del veicolo guidato sul mini-token del conducente (barra dell'Iniziativa) */
 .mini-muso { position: absolute; transform: translate(6px, -22px); width: 14px; height: 14px; display: flex; align-items: center; justify-content: center; font-size: 10px; line-height: 1; color: var(--muso); background: #000c; border-radius: 50%; pointer-events: none; z-index: 2; }
 .mini-muso > span { display: block; transform: rotate(var(--angolo)); }
+.mini-volo { position: absolute; transform: translate(4px, -24px); width: 15px; height: 15px; pointer-events: none; z-index: 2; }
+.carta-volo { margin-top: .4rem; }

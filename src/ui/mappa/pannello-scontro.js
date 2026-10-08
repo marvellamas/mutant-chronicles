@@ -70,6 +70,11 @@ export function sezioneToken(t, p, dati, a) {
     h('h2', {}, p ? pallino(p.lato) : null, ' ', p?.nome ?? t.nome ?? t.id),
     h('p', { class: 'nota' }, dettagli.join(' · ')),
     p?.stati?.length ? h('p', { class: 'mappa-stati' }, p.stati.map((s) => h('span', { class: 'etichetta' }, s.nome))) : null,
+    // 08/10: «In volo» (src/mappa/volo.js), con la quota come etichetta
+    a.volo ? h('div', { class: 'mappa-azioni-token' },
+      h('button', { type: 'button', role: 'switch', 'aria-checked': String(a.volo.attivo), class: `interruttore-mappa${a.volo.attivo ? ' acceso' : ''}`, title: a.volo.sa ? `Sa volare: Passo in volo ${a.volo.passo} Q` : 'Il volo lo concede una capacità, un Incantesimo o un Artefatto (Giocatore §5.2.3)', onclick: () => a.volo.cambia() },
+        h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `In volo: ${a.volo.attivo ? 'sì' : 'no'}${a.volo.sa && !a.volo.attivo ? ' (sa volare)' : ''}`),
+      a.volo.attivo ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => a.volo.cambiaQuota() }, a.volo.quota ? `Quota ${a.volo.quota} Q…` : 'Quota…') : null) : null,
     creatura ? h('label', { class: 'mappa-campo' }, h('span', {}, 'Ingombro'),
       h('select', { onchange: (e) => a.ingombro(Number(e.target.value)) },
         dati.mappa.token.ingombri_ammessi.map((n) => h('option', { value: String(n), selected: t.ingombro === n }, `${n} × ${n} Q${n === p?.ingombro ? ' (dalla Taglia)' : ''}`))),

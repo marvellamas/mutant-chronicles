@@ -72,6 +72,8 @@ function pezzoNemico(p, dati) {
     iniziali: iniziali(p.scheda?.nome ?? p.nome, p.numero ?? null), ritratto: urlImmagineNemico(p.scheda?.immagine), pv: p.pv ?? null,
     aZero: (p.pv?.attuali ?? 1) <= 0, stati: (p.stati ?? []).map(stato), ferite: null,
     movimento: movimentoNemico(p.scheda, p.stati, dati),
+    // 08/10: Passo in volo del profilo (data/formato_nemici.json → movimento.volo), per «In volo» (src/mappa/volo.js)
+    voloQ: Number.isInteger(p.scheda?.movimento?.volo) ? p.scheda.movimento.volo : null,
   };
 }
 

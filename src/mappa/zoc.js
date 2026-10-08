@@ -10,6 +10,7 @@
 // blocca: segnala. Parametri in data/mappa.json → zoc. Funzioni pure.
 import { dimensioni, chiaveRif } from './token.js';
 import { stessaParte } from './area.js';
+import { quotaDi } from './volo.js';
 
 /** Portata ravvicinata del pezzo in Q: il massimo fra i suoi attacchi ravvicinati (nemici), altrimenti la predefinita. */
 export function portataDi(p, dati) {
@@ -36,7 +37,11 @@ export function controllaZoc(p, t, dati, { perGiocatori = false } = {}) {
   return !statoCheImpedisce(p, dati);
 }
 
-/** Gli avversari del token `idChi` che controllano una ZoC: [{ token, pezzo, portata }]. */
+/**
+ * Gli avversari del token `idChi` che controllano una ZoC: [{ token, pezzo, portata, dz }]. Token in volo (08/10,
+ * data/mappa.json → volo.zoc_quota): dz è la differenza di quota; chi è più in alto (o più in basso) della portata non
+ * è nella ZoC (Giocatore §5.2.3: uscire dalla portata «anche salendo» può provocare; A.149).
+ */
 export function avversariZoc(scena, pezzi, idChi, dati, opzioni = {}) {
   const perChiave = new Map(pezzi.map((p) => [p.chiave, p]));
   const chi = scena.token.find((t) => t.id === idChi);
@@ -46,7 +51,8 @@ export function avversariZoc(scena, pezzi, idChi, dati, opzioni = {}) {
     .filter((t) => t.id !== idChi)
     .map((t) => ({ token: t, pezzo: perChiave.get(chiaveRif(t.rif)) ?? null }))
     .filter(({ token, pezzo }) => pezzo?.lato && !stessaParte(pezzo.lato, pChi.lato) && controllaZoc(pezzo, token, dati, opzioni))
-    .map((x) => ({ ...x, portata: portataDi(x.pezzo, dati) }));
+    .map((x) => ({ ...x, portata: portataDi(x.pezzo, dati), dz: dati.mappa.volo?.zoc_quota ? Math.abs(quotaDi(chi) - quotaDi(x.token)) : 0 }))
+    .filter((x) => x.dz <= x.portata);
 }
 
 /**
@@ -75,7 +81,7 @@ export function distanzaIngombri(qa, ia, qb, ib) {
 }
 
 /** Il token che sta in `q` con il suo ingombro è dentro la portata dell'avversario `a`? */
-export const inPortata = (q, ingombro, a) => distanzaIngombri(q, ingombro, a.token.q, a.token.ingombro) <= a.portata;
+export const inPortata = (q, ingombro, a) => Math.max(distanzaIngombri(q, ingombro, a.token.q, a.token.ingombro), a.dz ?? 0) <= a.portata;
 
 /** Q delle ZoC degli avversari (fuori dai loro ingombri): Uint8Array per Q della griglia, 1 = dentro una ZoC. */
 export function celleZoc(scena, avversari) {

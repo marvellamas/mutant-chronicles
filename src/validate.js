@@ -2731,6 +2731,21 @@ function validaMappa(dati, err) {
     for (const k of ['musica', 'effetti']) if (!(typeof AU.volume_predefinito?.[k] === 'number' && AU.volume_predefinito[k] >= 0 && AU.volume_predefinito[k] <= 1)) err(F, `audio.volume_predefinito.${k}`, 'numero da 0 a 1');
     if (typeof AU.giocatori_predefinito !== 'boolean') err(F, 'audio.giocatori_predefinito', 'true o false');
   }
+  // token in volo (08/10, src/mappa/volo.js): icona, movimento del Giocatore §5.2.3, regole di area e linea di tiro
+  {
+    const VO = m.volo;
+    if (!isOggetto(VO)) err(F, 'volo', 'oggetto mancante');
+    else {
+      if (!/^img\/[\w./-]+\.(png|webp|svg)$/.test(VO.icona ?? '')) err(F, 'volo.icona', 'percorso di un’immagine in img/ (png, webp o svg)');
+      if (!(typeof VO.quota_icona === 'number' && VO.quota_icona > 0 && VO.quota_icona <= 1)) err(F, 'volo.quota_icona', 'numero da 0 a 1');
+      if (!isIntero(VO.quota_massima) || VO.quota_massima < 1) err(F, 'volo.quota_massima', 'intero da 1 in su');
+      for (const k of ['passo', 'corsa', 'scatto']) if (!isIntero(VO.movimento_predefinito?.[k]) || VO.movimento_predefinito[k] < 0) err(F, `volo.movimento_predefinito.${k}`, 'intero da 0 in su (Q)');
+      if (!isOggetto(VO.movimento)) err(F, 'volo.movimento', 'oggetto con le regole del movimento in volo');
+      else for (const [k, v] of Object.entries(VO.movimento)) if (!k.startsWith('_') && !(k in (m.movimento ?? {}))) err(F, `volo.movimento.${k}`, 'non è una regola di movimento (data/mappa.json → movimento)');
+      if (!isOggetto(VO.linea_di_tiro) || typeof VO.linea_di_tiro.ignora_token !== 'boolean' || !Array.isArray(VO.linea_di_tiro.coperture_annullate) || VO.linea_di_tiro.coperture_annullate.some((c) => !['leggera', 'media', 'totale'].includes(c))) err(F, 'volo.linea_di_tiro', '{ ignora_token: sì/no, coperture_annullate: leggera, media, totale }');
+      for (const k of ['visibile_oltre_nebbia', 'zoc_quota']) if (typeof VO[k] !== 'boolean') err(F, `volo.${k}`, 'true o false');
+    }
+  }
   // veicoli ruotati (08/10, src/mappa/forma.js): passi di rotazione in gradi
   {
     const RV = m.token?.rotazione_veicoli;

@@ -28,7 +28,7 @@ import { barraIniziativa } from '../../mappa/iniziativa.js';
 import { barraIniziativaEl, stileBordo } from './barra-iniziativa.js';
 import { bordoToken, assegnaColori, cambiaColore, tavolozzaPer, famiglia } from '../../mappa/colori.js';
 import { avversariZoc, avversariZocInattivi, celleZoc, passiInZoc, attacchiDiOpportunita, testoOpportunita, giaInQuestoRound } from '../../mappa/zoc.js';
-import { scegliColore, chiedi, informa, apri as apriFinestrella } from '../finestrella.js';
+import { scegliColore, chiedi, chiediTesto, informa, apri as apriFinestrella } from '../finestrella.js';
 import { calibraDaQuadretto, applicaGriglia, dimensioniMappa, lineeVisibili, testoScala } from '../../mappa/griglia.js';
 import { creaTela } from './canvas.js';
 import { leggiScena, salvaScena, caricaImmagine, controllaFile, preparaRidotta } from './api.js';
@@ -76,6 +76,7 @@ import { renderTavolo } from '../tavolo.js';
 import { segnaDallaMappa, vistaDaRimettere, dimenticaMappa } from '../ritorno.js';
 import { scegliImmagineNemico, impostaImmagineNemico } from '../immagine-nemico.js';
 import { impostazioniTablet, fondiMovimentiTablet } from '../../mappa/tablet.js';
+import { inVolo, quotaDi, movimentoInVolo, regoleMovimento, sapeVolare, conVolo } from '../../mappa/volo.js';
 
 const ATTESA_SALVATAGGIO_MS = 600;
 const ATTESA_RIPROVA_MS = 5000; // dopo un errore di rete o del server
@@ -368,7 +369,7 @@ export function renderMappa(radice, ctx) {
     sopra: (c) => {
       if (st.scena) {
         const t = st.trascina?.modo === 'token' ? { id: st.trascina.token, q: st.trascina.q } : null;
-        disegnaToken(c, { scena: st.scena, cam: st.cam, pezzi: st.mappaPezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: st.selezionato, trascina: t, bordo: bordoDi, alone: ctx.dati.mappa.colori.alone_turno, ritrattoVerticale: ctx.dati.mappa.token.ritratto_verticale, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => st.mostraPv }, zero: ctx.dati.mappa.pv_zero });
+        disegnaToken(c, { scena: st.scena, cam: st.cam, pezzi: st.mappaPezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: st.selezionato, trascina: t, bordo: bordoDi, alone: ctx.dati.mappa.colori.alone_turno, ritrattoVerticale: ctx.dati.mappa.token.ritratto_verticale, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => st.mostraPv }, zero: ctx.dati.mappa.pv_zero, volo: ctx.dati.mappa.volo });
         disegnaSelezioneGruppo(c);
         // fase 2, lotto 5: i quadretti liberi accanto al veicolo per «Scendi»
         if (st.scendi) {
@@ -771,6 +772,7 @@ export function renderMappa(radice, ctx) {
       mostraZoc: () => cambiaMostraZoc(),
       nuovoTurnoTutti: () => nuovoTurnoUi(null),
       nascondi: () => cambiaToken(scelto.id, (x) => ({ ...x, nascosto: !x.nascosto })),
+      volo: comandoVolo(scelto),
       ingombro: (n) => cambiaToken(scelto.id, (x) => ({ ...x, ingombro: n, q: agganciaQ(st.scena.griglia, centroToken(st.scena.griglia, x).x, centroToken(st.scena.griglia, x).y, n) }), { controllaSovrapposti: true }),
       togli: () => togliToken(scelto.id),
       // fase 2, lotto 5: veicolo
@@ -835,6 +837,36 @@ export function renderMappa(radice, ctx) {
     st.scena = cambiaTokenAnnullabile(st.scena, prima, fn(prima), ctx.dati);
     if (controllaSovrapposti) avvisaSovrapposti([id]);
     dopoCambioToken();
+  }
+
+  /**
+   * «In volo» (08/10, src/mappa/volo.js): mette o toglie il token dal volo (Ctrl+Z annulla). Il volo lo concede una
+   * capacità, un Incantesimo o un Artefatto (Giocatore §5.2.3): la mappa non lo controlla, lo decide il master.
+   */
+  function cambiaVoloUi(id, attivo = null) {
+    const t = st.scena.token.find((x) => x.id === id);
+    if (!t || t.rif.tipo === 'veicolo') return;
+    const nuovo = attivo ?? !inVolo(t);
+    cambiaToken(id, (x) => conVolo(x, nuovo, nuovo ? x.quota ?? null : null));
+    const pz = pezzoDi(t);
+    const m = nuovo ? movimentoInVolo(pz ?? {}, ctx.dati) : null;
+    avviso(nuovo ? `${pz?.nome ?? 'Token'} in volo: sopra terreno difficile e token, niente Copertura Leggera o Media (Passo ${m.passo} Q). Ctrl+Z annulla.` : `${pz?.nome ?? 'Token'} è atterrato.`, { tipo: 'info', chiave: 'volo' });
+  }
+  /** «Quota…»: l'altezza in Q del token in volo, come etichetta (e per la portata ravvicinata, A.149). */
+  async function quotaVoloUi(id) {
+    const t = st.scena.token.find((x) => x.id === id);
+    if (!t || !inVolo(t)) return;
+    const v = await chiediTesto({ titolo: 'Quota in volo', etichetta: `Quota in Q (vuoto o 0: nessuna; al massimo ${ctx.dati.mappa.volo.quota_massima})`, valore: t.quota ? String(t.quota) : '', conferma: 'Imposta' });
+    if (v === null) return;
+    const n = Math.round(Number(v.replace(',', '.')));
+    if (!Number.isFinite(n) || n < 0 || n > ctx.dati.mappa.volo.quota_massima) { avvisoErrore('Quota: un numero di Q da 0 in su.'); return; }
+    cambiaToken(id, (x) => conVolo(x, true, n || null));
+  }
+  /** Il comando del volo per la carta della plancia e il pannello del token: { attivo, sa, cambia, quota }. */
+  function comandoVolo(t) {
+    if (!t || t.rif.tipo === 'veicolo') return null;
+    const pz = pezzoDi(t);
+    return { attivo: inVolo(t), sa: sapeVolare(pz), quota: quotaDi(t), cambia: () => cambiaVoloUi(t.id), cambiaQuota: () => quotaVoloUi(t.id), passo: sapeVolare(pz) ? pz.voloQ : ctx.dati.mappa.volo.movimento_predefinito.passo };
   }
 
   /** Due token sullo stesso Q non sono un errore (A.127): si avvisa soltanto. */
@@ -1101,6 +1133,7 @@ export function renderMappa(radice, ctx) {
       ['♫ in alto', 'musica di fondo dello scontro (file della cartella musica/ del server): parte con lo scontro, si ripete, si ferma alla chiusura; ⏸ / ▶ la mette in pausa'],
       ['🔊 e cursori Musica / Effetti', 'muto generale e volumi su questo PC (ricordati); la campanella suona a ogni nuovo Round. Strumenti → «Suoni anche nella vista giocatori» per il televisore con le casse'],
       ['Avviso «clic per attivare l’audio»', 'il browser blocca i suoni finché non tocchi la pagina: un clic qualunque li sblocca'],
+      ['Clic destro → «In volo» (gruppo Movimento; anche pannello e carta)', 'icona e ombra sul token: passa sopra terreno difficile e token (senza fermarsi su un altro token), muri e porte chiuse restano; niente token in mezzo né Copertura Leggera o Media; i giocatori lo vedono anche sotto la nebbia se un PG ha una linea senza muri. «Quota…» per l’etichetta in Q. Un nemico che sa volare lo propone quando lo metti in mappa'],
       ['Veicolo da mettere o scelto: ← → (Maiusc: a 45°)', 'gira il veicolo di 10° (con Maiusc di 45°) attorno al centro; anche clic destro → «Ruota». Il triangolino indica il muso; girare non consuma movimento. Ctrl+Z annulla'],
       ['Veicolo scelto: riga «Andatura» del pannello (o clic destro → «Movimento»)', 'Fermo, Controllata, Veloce, Massima con i Q del Round; l’area si aggiorna subito. Nello scontro una fascia per Round (Veicoli §2.1): il resto resta scelto per i Round dopo. Con l’andatura Fermo il veicolo non si muove e un avviso lo dice, con le andature come pulsanti'],
       ['Veicolo: muoverlo', 'trascinalo o clic sul quadretto di arrivo, come un token; una volta per Round'],
@@ -1193,6 +1226,8 @@ export function renderMappa(radice, ctx) {
       st.plancia = renderTavolo(el.cartaCorpo, {
         dati: ctx.dati,
         soloCarta: () => st.cartaAperta,
+        // 08/10: «In volo» anche dalla carta
+        volo: (chiave) => comandoVolo(st.scena?.token.find((x) => chiaveRif(x.rif) === chiave)),
         azioni: { personaggi: () => {}, mappa: () => {}, apri: (r) => apriSchedaCompleta(r) },
       });
     }
@@ -1237,6 +1272,8 @@ export function renderMappa(radice, ctx) {
     } else t = tokenPerPezzo(pz, agganciaQ(st.scena.griglia, m.x, m.y, pz.ingombro));
     st.angPiazza = null;
     st.scena = cambiaTokenAnnullabile(st.scena, null, t, ctx.dati);
+    // 08/10: un nemico che sa volare (movimento.volo del profilo): il volo si propone, non si attiva
+    if (sapeVolare(pz)) avviso(`${pz.nome} sa volare (Passo in volo ${pz.voloQ} Q): mettilo in volo?`, { tipo: 'info', chiave: 'volo-proposto', durata: 12000, azioni: [{ testo: 'In volo', fai: () => cambiaVoloUi(t.id, true) }] });
     avvisaSovrapposti([t.id]);
     st.selezionato = t.id;
     dopoCambioToken();
@@ -1712,7 +1749,8 @@ export function renderMappa(radice, ctx) {
    * scritti a mano, scheda non ancora letta) area null e motivo; il master muove comunque, tenendo premuto Maiusc.
    */
   function infoArea(t) {
-    const pz = pezzoDi(t);
+    // in volo (08/10, src/mappa/volo.js): Passo, Corsa e Scatto del volo; sopra terreno difficile e token
+    const pz = conMovimentoVolo(t, pezzoDi(t));
     const scontro = st.fonti?.scontro ?? null;
     const base = { area: null, rimaste: null, usato: 0, fino: st.fascia, limite: 0, totale: 0, disponibili: null, celle: null, movimento: pz?.movimento ?? null, motivo: null, libero: false, escluse: [], chiusa: null, nonPiu: null, nota: null };
     // «Libero» (quarta modalità): nessuna area, nessun conteggio; il token va in qualunque quadretto
@@ -1751,7 +1789,7 @@ export function renderMappa(radice, ctx) {
     const area = areaRaggiungibile({
       colonne: g.colonne, righe: g.righe, muri: muriEffettivi(st.scena), terreno: daBase64(st.scena.terreno),
       token: st.scena.token.map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: pezzoDi(x)?.lato ?? null })),
-      chi: { id: t.id, q: t.q, ingombro: t.ingombro, angolo: t.angolo, base: t.base, lato: pz.lato }, massimo: Math.max(totale, portata), regole: ctx.dati.mappa.movimento,
+      chi: { id: t.id, q: t.q, ingombro: t.ingombro, angolo: t.angolo, base: t.base, lato: pz.lato }, massimo: Math.max(totale, portata), regole: regoleMovimento(t, ctx.dati),
     });
     const quando = scontro ? 'del Round' : 'del turno';
     const piuAmpie = FASCE.slice(st.fascia).filter((f) => rimaste[f] > 0).map((f) => (f === 'corsa' ? 'Corri' : 'Scatta'));
@@ -1837,7 +1875,7 @@ export function renderMappa(radice, ctx) {
         const areaG = areaRaggiungibile({
           colonne: g.colonne, righe: g.righe, muri: muriEffettivi(s, { perGiocatori: true }), terreno: daBase64(s.terreno),
           token: s.token.filter((x) => x.id === t.id || visibileAiGiocatori(x, s, nebbia)).map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: pezzoDi(x)?.lato ?? null })),
-          chi: { id: t.id, q: t.q, ingombro: t.ingombro, angolo: t.angolo, base: t.base, lato: pz?.lato ?? null }, massimo: info.totale, regole: ctx.dati.mappa.movimento,
+          chi: { id: t.id, q: t.q, ingombro: t.ingombro, angolo: t.angolo, base: t.base, lato: pz?.lato ?? null }, massimo: info.totale, regole: regoleMovimento(t, ctx.dati),
         });
         st.diretta.areaG = { per: info.area, area: areaG, celle: celleArea(areaG, info.rimaste, st.fascia), fascia: st.fascia };
       }
@@ -2070,7 +2108,7 @@ export function renderMappa(radice, ctx) {
     if (!da || (!a && !l.punto)) return null;
     const chiave = JSON.stringify([idDi(st.scena), l.da, l.a, l.punto]);
     if (cacheLinea.chiave === chiave) return cacheLinea.valore;
-    const r = lineaDiTiro(st.scena, da, a ?? l.punto, ostacoliVista(st.scena, RP), RV, { contaToken: contaInLinea });
+    const r = lineaDiTiro(st.scena, da, a ?? l.punto, ostacoliVista(st.scena, RP), RV, { contaToken: contaInLinea, volo: ctx.dati.mappa.volo.linea_di_tiro });
     cacheLinea.chiave = chiave;
     cacheLinea.valore = { ...r, da, a: a ?? { q: l.punto, ingombro: 1 } };
     return cacheLinea.valore;
@@ -2106,7 +2144,7 @@ export function renderMappa(radice, ctx) {
     if (!r) return null;
     // 07/10: per i giocatori la linea si ricalcola con quello che vedono: porte segrete come muro, niente token nascosti
     // (né come ostacolo né in mezzo), così la Copertura non tradisce un token che non vedono
-    const g = lineaDiTiro(st.scena, r.da, r.a.id ? r.a : r.a.q, ostacoliVista(st.scena, RP, { perGiocatori: true }), RV, { contaToken: (t) => !t.nascosto && contaInLinea(t) });
+    const g = lineaDiTiro(st.scena, r.da, r.a.id ? r.a : r.a.q, ostacoliVista(st.scena, RP, { perGiocatori: true }), RV, { contaToken: (t) => !t.nascosto && contaInLinea(t), volo: ctx.dati.mappa.volo.linea_di_tiro });
     return { da: st.linea.da, a: st.linea.a, punto: st.linea.a ? null : st.linea.punto, distanza: g.distanza, copertura: g.copertura, vista: g.vista, testo: `${g.distanza} Q · ${testoCopertura(g)}${g.protetto ? ' · protetto' : ''}` };
   }
   /** Clic con la linea attiva: fissa il bersaglio e dice distanza, gittata, vista, Copertura; «Attacca!» con quei valori. */
@@ -2732,6 +2770,8 @@ export function renderMappa(radice, ctx) {
     return ordine.reverse().find((t) => tokenSottoPunto(st.scena.griglia, t, m.x, m.y)) ?? null;
   };
   const pezzoDi = (t) => st.mappaPezzi.get(chiaveRif(t.rif)) ?? null;
+  /** Il pezzo con il movimento in volo, se il token è in volo (08/10). */
+  const conMovimentoVolo = (t, pz) => (pz && inVolo(t) ? { ...pz, movimento: movimentoInVolo(pz, ctx.dati) } : pz);
   // nome, PV e Stati al passaggio del mouse; con un token scelto, il percorso verso il quadretto sotto il puntatore
   const nascondiSuggerimento = () => { el.suggerimento.hidden = true; };
   const suggerisci = (e) => {
@@ -2827,6 +2867,8 @@ export function renderMappa(radice, ctx) {
         });
         return voci.length ? voci : null;
       },
+      in_volo: () => (tok.rif.tipo === 'veicolo' ? null : { testo: inVolo(tok) ? 'In volo ✓ (atterra)' : 'In volo', chiave: 'volo', scelta: inVolo(tok), titolo: inVolo(tok) ? 'Il token atterra' : sapeVolare(pz) ? `Sa volare: Passo in volo ${pz.voloQ} Q` : 'Il volo lo concede una capacità, un Incantesimo o un Artefatto (Giocatore §5.2.3): Passo 6, Corsa 12, Scatto 18 Q', azione: () => cambiaVoloUi(tok.id) }),
+      quota_volo: () => (inVolo(tok) ? { testo: `Quota…${quotaDi(tok) ? ` (${quotaDi(tok)} Q)` : ''}`, chiave: 'quota', titolo: 'L’altezza in Q, come etichetta sul token', azione: () => quotaVoloUi(tok.id) } : null),
       andature: () => {
         const rec = tok.rif.tipo === 'veicolo' ? recordVeicolo(tok) : null;
         if (!rec) return null;
@@ -3008,7 +3050,7 @@ export function renderMappa(radice, ctx) {
     if (st.planciaBarra) return;
     st.planciaBarra = renderTavolo(el.piena, {
       dati: ctx.dati,
-      inMappa: { sezioni: el.slot, centra: (chiave) => centraSuPezzo(chiave), collegamento: () => (st.scena ? { ...st.scena.collegamento, nomeBozza: st.fonti?.bozza?.nome ?? null } : null) },
+      inMappa: { sezioni: el.slot, volo: (chiave) => comandoVolo(st.scena?.token.find((x) => chiaveRif(x.rif) === chiave)), centra: (chiave) => centraSuPezzo(chiave), collegamento: () => (st.scena ? { ...st.scena.collegamento, nomeBozza: st.fonti?.bozza?.nome ?? null } : null) },
       azioni: {
         personaggi: () => ctx.azioni.personaggi?.(),
         // «Prepara la mappa» sulla scena già aperta: si rilegge, con il nuovo collegamento
@@ -3033,6 +3075,7 @@ export function renderMappa(radice, ctx) {
     el.iniziativa.hidden = !barra;
     if (barra) {
       svuota(el.iniziativa, barraIniziativaEl(barra, {
+        voloIcona: ctx.dati.mappa.volo.icona,
         pxPerPunto: B.iniziativa_px_per_punto,
         pv: st.mostraPv,
         zero: ctx.dati.mappa.pv_zero,

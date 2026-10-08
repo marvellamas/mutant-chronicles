@@ -26,6 +26,7 @@ import { dimensioni, celleToken } from './token.js';
 import { formaDi } from './forma.js';
 import { distanzaIngombri } from './zoc.js';
 import { raggiScoperta } from './luce.js';
+import { inVolo } from './volo.js';
 
 /** Ostacoli alla vista: muri disegnati, porte che bloccano la vista; `perGiocatori`: le porte segrete sono muro. */
 export function ostacoliVista(scena, regolePorte, { perGiocatori = false } = {}) {
@@ -119,17 +120,21 @@ function unione(a, b) { const m = new Uint8Array(a.length); for (let i = 0; i < 
  * La linea di tiro da un token verso un altro token (o verso un Q): distanza (diagonale 1 Q), vista libera o bloccata,
  * Copertura con la causa, token in mezzo. Verso un Q vuoto: il Q come bersaglio di 1 × 1.
  * @param o { contaToken(t): il token conta (in mezzo o come ostacolo)? } — di norma tutti tranne 0 PV e A Terra; per i
- *   giocatori anche i nascosti esclusi, così la linea che vedono non tradisce un token che non vedono
+ *   giocatori anche i nascosti esclusi, così la linea che vedono non tradisce un token che non vedono;
+ *   volo: data/mappa.json → volo.linea_di_tiro (08/10): da o verso un token in volo niente token in mezzo e niente
+ *   Copertura Leggera o Media; un muro pieno blocca comunque (A.148)
  * @returns { distanza, copertura, bloccate, linee, origine, vista, inMezzo: [token], causa: { muro, token: [token] },
  *   protetto: vero se si propone il «bersaglio impegnato o protetto» (§5.10) }
  */
-export function lineaDiTiro(scena, da, verso, ost, regole, { contaToken = () => true } = {}) {
+export function lineaDiTiro(scena, da, verso, ost, regole, { contaToken = () => true, volo = null } = {}) {
   const a = verso.q ? verso : { id: null, q: verso, ingombro: 1 };
   const { colonne: C, righe: R } = scena.griglia;
-  const candidati = scena.token.filter((t) => t.id !== da.id && t.id !== a.id && contaToken(t));
+  const inAria = !!volo && (inVolo(da) || inVolo(a));
+  const candidati = inAria && volo.ignora_token ? [] : scena.token.filter((t) => t.id !== da.id && t.id !== a.id && contaToken(t));
   const comeOstacolo = regole.token_in_mezzo === 'copertura';
   const mt = comeOstacolo && candidati.length ? maschereToken(scena, candidati) : null;
   const cop = copertura(scena, da, a, mt ? unione(ost, mt) : ost, regole);
+  if (inAria && volo.coperture_annullate?.includes(cop.livello)) { cop.livello = 'nessuna'; cop.inVolo = true; }
   // la causa delle linee bloccate: muro (o porta chiusa) prima, poi token
   let muro = 0;
   const tokCausa = new Set();
@@ -147,6 +152,7 @@ export function lineaDiTiro(scena, da, verso, ost, regole, { contaToken = () => 
     inMezzo,
     causa: { muro, token: [...tokCausa] },
     protetto: !comeOstacolo && inMezzo.length > 0,
+    ...(inAria ? { inVolo: true } : {}),
   };
 }
 

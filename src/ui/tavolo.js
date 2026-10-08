@@ -41,7 +41,17 @@ import { chiediTesto, chiedi } from './finestrella.js';
 
 const INTERVALLO_MS = 3000;
 /** Carta con la chiave del suo token (data-pezzo): la mappa di battaglia la cerca al clic sul token (src/ui/mappa/canale.js). */
-const conPezzo = (el, chiave) => { if (el?.dataset) el.dataset.pezzo = chiave; return el; };
+const conPezzo = (el, chiave, volo = null) => {
+  if (el?.dataset) el.dataset.pezzo = chiave;
+  // 08/10: nella mappa, «In volo» anche dalla carta (src/ui/mappa/pagina.js → comandoVolo)
+  const v = volo?.(chiave);
+  if (v && el?.append) {
+    el.append(h('div', { class: 'carta-volo' },
+      h('button', { type: 'button', role: 'switch', 'aria-checked': String(v.attivo), class: `interruttore-mappa${v.attivo ? ' acceso' : ''}`, title: v.sa ? `Sa volare: Passo in volo ${v.passo} Q` : 'Il volo lo concede una capacità, un Incantesimo o un Artefatto (Giocatore §5.2.3)', onclick: () => v.cambia() },
+        h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `In volo: ${v.attivo ? 'sì' : 'no'}${v.sa && !v.attivo ? ' (sa volare)' : ''}`)));
+  }
+  return el;
+};
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
 /** Nome di un partecipante dello scontro (fonte di una perdita periodica), o null se non c'è. */
 const nomePartecipante = (s, id) => (id ? (s?.partecipanti ?? []).find((p) => p.id === id)?.nome ?? null : null);
@@ -347,15 +357,15 @@ export function renderTavolo(radice, ctx) {
       await aggiorna(true);
     }) : null;
     const stScontro = Object.assign(stato, { pgAlTavolo: alTavolo.map((r) => stato.viste.get(r.file)).filter((v) => v?.completa) });
-    const azScontro = { modifica, crea: (s) => salva(s), ridisegna: disegna, annullaColpo, indietro: indietroUi, reimposta: (id) => reimpostaUi(id), chiediIniziativa: () => iniziativaUi(null), centra: ctx.inMappa?.centra ? (p) => ctx.inMappa.centra(`partecipante:${p.id}`) : null, attacca: (p) => attacca(p, alTavolo),
+    const azScontro = { modifica, crea: (s) => salva(s), ridisegna: disegna, annullaColpo, indietro: indietroUi, reimposta: (id) => reimpostaUi(id), chiediIniziativa: () => iniziativaUi(null), centra: ctx.inMappa?.centra ? (p) => ctx.inMappa.centra(`partecipante:${p.id}`, ctx.inMappa?.volo ?? ctx.volo) : null, attacca: (p) => attacca(p, alTavolo),
       // fase 2, lotto 7: tablet dei giocatori collegati e campanellino
       tablet: { collegati: stato.tablet ?? [], chiama: (p) => chiamaTablet(p) } };
     const cartePg = alTavolo.length
       ? h('div', { class: 'plancia-griglia' }, alTavolo.map((r) => (r.mancante ? cartaMancante(r.mancante)
-        : stato.viste.get(r.file) ? conPezzo(cartaPg(ctx, stato.viste.get(r.file), r, turnoDi(r), colpitoPg, durateDi(stato.viste.get(r.file))), `partecipante:pg:${chiaveDaFile(r.file)}`) : cartaErrore(r, stato.errori.get(r.file)))))
+        : stato.viste.get(r.file) ? conPezzo(cartaPg(ctx, stato.viste.get(r.file), r, turnoDi(r), colpitoPg, durateDi(stato.viste.get(r.file))), `partecipante:pg:${chiaveDaFile(r.file)}`, ctx.inMappa?.volo ?? ctx.volo) : cartaErrore(r, stato.errori.get(r.file)))))
       : h('p', { class: 'vuoto' }, 'Nessun personaggio al tavolo: sceglili con «Chi è al tavolo».');
     const carteNemici = nemiciInScontro().length
-      ? h('div', { class: 'plancia-griglia' }, nemiciInCarta().map((p) => conPezzo(cartaNemico(ctx, p, { modifica, durate: durateNemico(p), diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p), onAttacca: attacchiDi(p).length ? () => attacca(p, alTavolo) : null, onLancia: (i) => lancia(p, i, alTavolo), onRiduci: (v) => modifica((x) => riduciNemico(x, p.id, v)), onRegime: (k, r) => modifica((x) => confermaRegimeNemico(x, p.id, k, r, new Date())), onImmagine: () => immagineNemico(p) }), `partecipante:${p.id}`)))
+      ? h('div', { class: 'plancia-griglia' }, nemiciInCarta().map((p) => conPezzo(cartaNemico(ctx, p, { modifica, durate: durateNemico(p), diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p), onAttacca: attacchiDi(p).length ? () => attacca(p, alTavolo) : null, onLancia: (i) => lancia(p, i, alTavolo), onRiduci: (v) => modifica((x) => riduciNemico(x, p.id, v)), onRegime: (k, r) => modifica((x) => confermaRegimeNemico(x, p.id, k, r, new Date())), onImmagine: () => immagineNemico(p) }), `partecipante:${p.id}`, ctx.inMappa?.volo ?? ctx.volo)))
       : null;
     const scene = pannelloScene(ctx, stato.scene, { ridisegna: disegna, apri: (id) => ctx.azioni.mappa(id) });
     const bestiario = pannelloBestiario(ctx, stato.bestiario, {
@@ -736,7 +746,7 @@ export function renderTavolo(radice, ctx) {
       const v = r ? stato.viste.get(r.file) : null;
       if (!r) return h('p', { class: 'nota' }, stato.elenco.length ? `Nessun file di ${pg[1]} in personaggi/.` : 'Lettura delle schede…');
       if (!v) return h('p', { class: 'nota' }, stato.errori.get(r.file) ?? 'Lettura della scheda…');
-      return [conPezzo(cartaPg(ctx, v, r, turnoDi(r), colpitoPg, durateDi(v)), `partecipante:pg:${chiaveDaFile(r.file)}`),
+      return [conPezzo(cartaPg(ctx, v, r, turnoDi(r), colpitoPg, durateDi(v)), `partecipante:pg:${chiaveDaFile(r.file)}`, ctx.inMappa?.volo ?? ctx.volo),
         h('button', { type: 'button', class: 'btn primario btn-scheda-completa', onclick: () => ctx.azioni.apri(r) }, 'Apri scheda completa')];
     }
     const part = /^partecipante:(.+)$/.exec(chiave);
@@ -744,7 +754,7 @@ export function renderTavolo(radice, ctx) {
       const p = (stato.scontro?.partecipanti ?? []).find((x) => x.id === part[1]);
       if (!p) return h('p', { class: 'nota' }, stato.scontro ? 'Non è nello scontro aperto.' : 'Nessuno scontro aperto: i nemici di una bozza hanno la mini-scheda quando lo scontro parte («Inizia»).');
       if (p.tipo !== 'nemico') return h('article', { class: 'carta-plancia' }, h('h2', {}, p.nome), h('p', { class: 'nota' }, `Scritto a mano nello scontro (${p.lato}): si gestisce dal riquadro dello scontro della plancia.`));
-      return conPezzo(cartaNemico(ctx, p, { modifica, durate: durateNemico(p), diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p), onAttacca: attacchiDi(p).length ? () => attacca(p, alTavolo) : null, onLancia: (i) => lancia(p, i, alTavolo), onRiduci: (v) => modifica((x) => riduciNemico(x, p.id, v)), onRegime: (k, r) => modifica((x) => confermaRegimeNemico(x, p.id, k, r, new Date())), onImmagine: () => immagineNemico(p) }), `partecipante:${p.id}`);
+      return conPezzo(cartaNemico(ctx, p, { modifica, durate: durateNemico(p), diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p), onAttacca: attacchiDi(p).length ? () => attacca(p, alTavolo) : null, onLancia: (i) => lancia(p, i, alTavolo), onRiduci: (v) => modifica((x) => riduciNemico(x, p.id, v)), onRegime: (k, r) => modifica((x) => confermaRegimeNemico(x, p.id, k, r, new Date())), onImmagine: () => immagineNemico(p) }), `partecipante:${p.id}`, ctx.inMappa?.volo ?? ctx.volo);
     }
     const vei = /^veicolo:(.+)$/.exec(chiave);
     const rec = vei ? stato.veicoli.find((x) => x.id === vei[1]) : null;

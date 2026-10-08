@@ -17,6 +17,7 @@ import { avversariZoc, attacchiDiOpportunita } from './zoc.js';
 import { visibileAiGiocatori, statoDiretta } from './diretta.js';
 import { diTurno } from '../scontro.js';
 import { stessaChiave } from '../veicoli-registro.js';
+import { inVolo, movimentoInVolo, regoleMovimento } from './volo.js';
 
 export const FASCE = ['passo', 'corsa', 'scatto'];
 export const MODI_MOVIMENTO = ['turno', 'sempre'];
@@ -62,7 +63,8 @@ export function permessoMovimento({ scena, pezzi, scontro = null, chiavePg, dati
   }
   if (!pezzo.movimento) return no('Il master non ha ancora letto la tua scheda: niente movimento per ora.', ok);
   if (pezzo.aZero) return no('Sei a 0 PV: non puoi muoverti.', ok);
-  return { puo: true, motivo: null, token, pezzo, bordo: null };
+  // in volo (08/10): Passo, Corsa e Scatto del volo (Giocatore §5.2.3)
+  return { puo: true, motivo: null, token, pezzo: inVolo(token) ? { ...pezzo, movimento: movimentoInVolo(pezzo, dati) } : pezzo, bordo: null };
 }
 
 /**
@@ -90,7 +92,7 @@ export function areaGiocatore({ scena, token, pezzo, pezzi, scontro = null, fasc
   const area = areaRaggiungibile({
     colonne: g.colonne, righe: g.righe, muri, terreno,
     token: scena.token.filter(ostacolo).map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: perChiave.get(chiaveRif(x.rif))?.lato ?? null })),
-    chi: { id: token.id, q: token.q, ingombro: token.ingombro, lato: pezzo.lato }, massimo: totale, regole: dati.mappa.movimento,
+    chi: { id: token.id, q: token.q, ingombro: token.ingombro, lato: pezzo.lato }, massimo: totale, regole: regoleMovimento(token, dati),
   });
   const scelta = sf.chiusa ?? [...FASCE.slice(0, fascia)].reverse().find((f) => rimaste[f] !== null);
   const quando = scontro ? 'del Round' : 'del turno';

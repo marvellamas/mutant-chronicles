@@ -445,7 +445,7 @@
     "token": {
       "rapida": ["passo", "corsa", "scatto", "libero"],
       "gruppi": [
-        { "titolo": "Movimento", "voci": ["andature", "annulla_movimento", "nuovo_turno"] },
+        { "titolo": "Movimento", "voci": ["in_volo", "quota_volo", "andature", "annulla_movimento", "nuovo_turno"] },
         { "titolo": "Azioni", "voci": ["attacca", "porta_token"] },
         { "titolo": "Veicolo", "voci": ["sali", "ruota_veicolo"] },
         { "titolo": "Scendi", "voci": ["scendi_bordo"] },
@@ -569,6 +569,37 @@
     "collegato_s": 6,
     "testo_muovi": "Il master ti chiede di muovere {nome}",
     "testo_turno": "Tocca a te, {nome}!"
+  },
+  "volo": {
+    "_nota": "Token in volo (fase 2, lotto 6 bis, richiesta di Marcello dell’08/10/2026; src/mappa/volo.js). Giocatore §5.2.3: «Una capacità, un Incantesimo o un Artefatto deve concedere espressamente la possibilità di volare. Il Volo usa l’AzM e, salvo indicazioni differenti della fonte, consente Passo 6 Q, Corsa 12 Q e Scatto 18 Q» (movimento_predefinito; i nemici usano movimento.volo del profilo, Corsa e Scatto ×2 e ×3); «Uscire volontariamente dalla portata di un avversario, anche salendo, può provocare Attacchi di Opportunità». Giocatore §5.2.5: in volo senza appoggio Stordito «Soltanto Passo». Mostri §4.5: «Essere in volo non impone un nuovo −2 universale a chi attacca». Il token in volo ha un’icona (icona) e un’ombra; la quota in Q è un’etichetta facoltativa (quota_massima).",
+    "icona": "img/Icons/Flying-96.png",
+    "quota_icona": 0.55,
+    "quota_massima": 99,
+    "movimento_predefinito": {
+      "passo": 6,
+      "corsa": 12,
+      "scatto": 18
+    },
+    "movimento": {
+      "_nota": "In volo il percorso ignora il terreno difficile e può passare sopra gli altri token, senza fermarsi nel loro quadretto; muri e porte chiuse restano ostacoli (il soffitto). Si sommano a movimento.",
+      "terreno_difficile_moltiplicatore": 1,
+      "attraversa_avversari": true,
+      "attraversa_alleati": true,
+      "fermarsi_su_alleato": false
+    },
+    "linea_di_tiro": {
+      "_nota": "Indicazione di Marcello dell’08/10: un token in volo «non ha coperture». Verso un token in volo e da un token in volo i token in mezzo non contano e la Copertura Leggera e Media non si applicano; un muro pieno blocca comunque (Copertura Totale: tutte le linee bloccate). TODO(Davide) A.148.",
+      "ignora_token": true,
+      "coperture_annullate": [
+        "leggera",
+        "media"
+      ]
+    },
+    "visibile_oltre_nebbia": true,
+    "_nota_visibile": "Indicazione di Marcello: «un nemico in volo in generale è sempre visibile». Regola proposta (la più semplice): un token in volo non nascosto dal master si vede nella vista giocatori anche sotto la nebbia (manuale o automatica), se c’è una linea di vista senza muri né porte chiuse dal centro di almeno un PG in mappa. Il master può sempre nasconderlo. TODO(Davide) A.150.",
+    "zoc_quota": true,
+    "_nota_zoc": "ZoC e Attacchi di Opportunità come a terra (Giocatore §5.2.3); con la quota la distanza è la maggiore fra quella sulla griglia e la differenza di quota (diagonale 1 Q, A.124): un token in volo più alto della portata ravvicinata non è nella ZoC e non provoca uscendo. Nessun manuale parla di Picchiata: TODO(Davide) A.149.",
+    "TODO(Davide)": "A.148: verso e da un token in volo valgono la Copertura Leggera e Media e il bersaglio protetto (§5.8, §5.10)? Provvisorio (indicazione di Marcello): no, un muro pieno blocca comunque. A.149: esiste una manovra di Picchiata (attacco in discesa senza Attacchi di Opportunità)? Nessun manuale la descrive; e la quota conta per la portata ravvicinata? Provvisorio: distanza = la maggiore fra griglia e quota. A.150: un token in volo si vede da lontano anche sotto la nebbia, con una linea di vista senza muri? Provvisorio: sì (indicazione di Marcello)."
   },
   "audio": {
     "_nota": "Suoni della mappa (richiesta di Marcello del 07/10/2026; src/mappa/audio.js, src/ui/mappa/audio.js). effetti: evento → file (percorso nel progetto, servito come gli altri file statici); un evento senza file non suona. Per ora nuovo_round e avviso_giocatore (il campanellino del master e «Tocca a te» sul tablet del giocatore, fase 2, lotto 7: suona sempre sul tablet, anche senza «suona anche nella vista giocatori»); gli altri eventi previsti (attacco_opportunita, template_scaduto) restano null finché non si sceglie un file. musica: la cartella reale del server con la musica di fondo (fuori da git, come mappe/) e i formati che tutti i browser leggono. volume_predefinito: Musica ed Effetti da 0 a 1, prima che il master li cambi (poi si ricordano su quel PC). giocatori_predefinito: «suona anche nella vista giocatori», spento.",

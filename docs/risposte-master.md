@@ -1196,6 +1196,26 @@ questi punti, con un `TODO(Davide)` dove serve; nel pacchetto per il Doc «per-d
   posto da fermo). Provvisorio: la rotazione è libera prima e dopo lo spostamento e non consuma Q; le manovre complesse
   le applica il master a voce (`mappa.json` → token.rotazione_veicoli, `TODO(Davide)`).
 
+## Domande aperte sui token in volo (08/10/2026, fase 2 della mappa)
+
+- **A.148 — Copertura verso e da un token in volo.** Il Giocatore §5.8 dice che «La Copertura è direzionale» e che vale
+  «quando l’ostacolo protegge realmente dalla direzione dell’attacco», senza parlare dell’altezza; Mostri §4.5: «Essere in
+  volo non impone un nuovo −2 universale a chi attacca». Indicazione di Marcello: un nemico in volo «non ha coperture».
+  Provvisorio: verso e da un token in volo non contano i token in mezzo (§5.10, bersaglio protetto) né la Copertura
+  Leggera e Media; un muro pieno blocca comunque (Copertura Totale). Va bene, o conta l’altezza rispetto all’ostacolo?
+  (`mappa.json` → volo.linea_di_tiro, `TODO(Davide)`.)
+- **A.149 — Picchiata e quota.** Marcello chiede di applicare la «Picchiata senza Attacchi di Opportunità», ma nessun
+  manuale la descrive: il Giocatore §5.2.3 dice solo che «Uscire volontariamente dalla portata di un avversario, anche
+  salendo, può provocare Attacchi di Opportunità». Esiste una manovra di Picchiata? E la quota conta per la portata
+  ravvicinata? Provvisorio: ZoC e Attacchi di Opportunità come a terra, con la distanza pari alla maggiore fra quella
+  sulla griglia e la differenza di quota (diagonale 1 Q, A.124): chi vola più in alto della portata non è nella ZoC.
+  (`mappa.json` → volo.zoc_quota.)
+- **A.150 — Un token in volo si vede da lontano?** Indicazione di Marcello: «un nemico in volo in generale è sempre
+  visibile». Provvisorio: un token in volo non nascosto dal master si vede nella vista giocatori anche sotto la nebbia,
+  manuale o automatica, se dal centro di almeno un PG in mappa c’è una linea di vista senza muri né porte chiuse; il
+  master può sempre nasconderlo. Vale anche al buio (Accecato e luce non cambiano la mappa)? (`mappa.json` →
+  volo.visibile_oltre_nebbia.)
+
 ## Domande aperte sugli impianti (censimento del 04/10/2026)
 
 Il censimento degli impianti (`docs/censimento-impianti.md`) ha trovato i numeri del manuale già nei dati, salvo il +1 danno del Braccio potenziato. Era generale e il §7.5 lo limita «agli attacchi ravvicinati effettuati con quell’arto»: è stato corretto senza domanda, perché il testo è chiaro. Resta un punto, con il `TODO(Davide)` in `data/equipaggiamento/impianti.json`:

@@ -77,7 +77,9 @@ function miniToken(v, barra, o) {
   const el = o.scegli ? h('button', { type: 'button', ...attr, onclick: () => o.scegli(v) }, corpo, zero) : h('span', attr, corpo, zero);
   // 07/10: la barretta dei PV come sui token, sul fondo del mini-token e sopra il bordo, larga quanto il mini-token
   // (fuori dall'elemento, che taglia il ritratto); misure e colori da data/mappa.json → pv_token (variabili CSS)
-  if (!(v.pv?.massimo > 0) || o.pv === false) return muso ? [el, muso] : el;
+  // 08/10: in volo, l'icona accanto al mini-token (fuori dall'elemento, come il muso)
+  const volo = v.volo && o.voloIcona ? h('img', { class: 'mini-volo', src: o.voloIcona, alt: '', title: `${v.nome} è in volo`, style: `left: ${x.toFixed(3)}%; top: ${LINEA_PX + v.pila * ALTEZZA_PILA_PX}px` }) : null;
+  if (!(v.pv?.massimo > 0) || o.pv === false) return [el, muso, volo].filter(Boolean);
   const quota = Math.max(0, Math.min(1, v.pv.attuali / v.pv.massimo));
-  return [el, muso, h('span', { class: 'pv-barretta', 'aria-hidden': 'true', style: `left: ${x.toFixed(3)}%; top: ${LINEA_PX + v.pila * ALTEZZA_PILA_PX}px; --quota: ${quota}` })];
+  return [el, muso, volo, h('span', { class: 'pv-barretta', 'aria-hidden': 'true', style: `left: ${x.toFixed(3)}%; top: ${LINEA_PX + v.pila * ALTEZZA_PILA_PX}px; --quota: ${quota}` })];
 }

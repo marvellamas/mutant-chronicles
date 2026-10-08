@@ -6,6 +6,7 @@
 import { ordineIniziativa, diTurno } from '../scontro.js';
 import { chiaveRif, iniziali } from './token.js';
 import { angoloDi } from './forma.js';
+import { inVolo } from './volo.js';
 
 /**
  * Barra dello scontro aperto, per il master.
@@ -38,6 +39,8 @@ export function barraIniziativa({ scontro, pezzi = [], scena = null, bordoDi = (
       ritratto: pz?.ritratto ?? null, pv: pz?.pv ?? null, valore: p.base + p.d10.valore, ordine, bordo: pz ? bordoDi(pz) : null,
       pila: 0, diTurno: p.id === turno, token: t?.id ?? null, nascosto: !!t?.nascosto, aZero: !!pz?.aZero,
       ...(guida.has(chiave) ? { veicolo: guida.get(chiave) } : {}),
+      // 08/10: in volo (icona sul mini-token)
+      ...(inVolo(t) ? { volo: true } : {}),
     };
   });
   return conPile({ round: scontro.round, diTurno: turno, voci });
@@ -71,7 +74,7 @@ export function barraPerGiocatori(barra, visibili, immagineDi = () => null, pvDi
       const q = pvDi(v.chiave);
       // 08/10: il muso del veicolo guidato, se il veicolo non è nascosto
       const veicolo = v.veicolo && !v.veicolo.nascosto ? { angolo: v.veicolo.angolo, nome: v.veicolo.nome, colore: v.veicolo.colore } : null;
-      return { chiave: v.chiave, nome: v.nome, iniziali: v.iniziali, lato: v.lato, ritratto: immagineDi(v.chiave), valore: v.valore, ordine: v.ordine, diTurno: v.diTurno, bordo: v.bordo ?? null, pv: q === null || q === undefined ? null : { attuali: q, massimo: 1 }, aZero: !!v.aZero, ...(veicolo ? { veicolo } : {}) };
+      return { chiave: v.chiave, nome: v.nome, iniziali: v.iniziali, lato: v.lato, ritratto: immagineDi(v.chiave), valore: v.valore, ordine: v.ordine, diTurno: v.diTurno, bordo: v.bordo ?? null, pv: q === null || q === undefined ? null : { attuali: q, massimo: 1 }, aZero: !!v.aZero, ...(veicolo ? { veicolo } : {}), ...(v.volo ? { volo: true } : {}) };
     });
   const turno = voci.some((v) => v.diTurno) ? barra.diTurno : null;
   return conPile({ round: barra.round, diTurno: turno, voci });
