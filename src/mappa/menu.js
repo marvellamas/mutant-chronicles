@@ -8,7 +8,7 @@
 
 /** Gli id delle voci che la pagina sa costruire, per contesto (il validatore controlla data/mappa.json → menu). */
 export const VOCI_MENU = {
-  token: ['passo', 'corsa', 'scatto', 'libero', 'annulla_movimento', 'nuovo_turno', 'attacca', 'porta_token', 'sali', 'ruota_veicolo', 'a_bordo', 'linea', 'area', 'zoc', 'template_qui', 'mini_scheda', 'scheda_completa', 'nascondi', 'luce_token', 'colore_bordo', 'togli_token', 'selezione_token'],
+  token: ['passo', 'corsa', 'scatto', 'libero', 'annulla_movimento', 'nuovo_turno', 'attacca', 'porta_token', 'sali', 'ruota_veicolo', 'scendi_bordo', 'linea_bordo', 'linea', 'area', 'zoc', 'template_qui', 'mini_scheda', 'scheda_completa', 'nascondi', 'luce_token', 'colore_bordo', 'togli_token', 'selezione_token'],
   porta: ['porta_token', 'apri_chiudi', 'blocca', 'ruota', 'segreta', 'togli_porta'],
   template: ['sposta_template', 'nascondi_template', 'togli_template'],
   mappa: ['template_qui', 'linea_qui', 'seleziona_pg', 'seleziona_nemici', 'seleziona_tutti', 'annulla_selezione'],

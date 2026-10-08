@@ -143,6 +143,19 @@ export function annullaBordo(scena, voce) {
   return { ...scena, token: [...scena.token.filter((t) => !voce.ids.includes(t.id)), ...voce.prima] };
 }
 
+/**
+ * Dove disegnare chi è a bordo sul veicolo (ritocchi del 08/10): cerchietti grandi due terzi di un token normale
+ * (`quota` del lato di un Q), in griglia dall'alto a sinistra, il conducente per primo; se non ci stanno tutti
+ * nell'ingombro le righe continuano sotto il mezzo. @returns [{ x, y, lato }] in pixel di schermo, uno per persona
+ */
+export function postiCerchietti(n, box, qs, quota = 2 / 3) {
+  const lato = qs * quota;
+  const colonne = Math.max(1, Math.floor((box.w + 0.5) / lato));
+  const usate = Math.min(colonne, n);
+  const x0 = box.x + (box.w - usate * lato) / 2;
+  return Array.from({ length: n }, (_, i) => ({ x: x0 + (i % colonne) * lato, y: box.y + Math.floor(i / colonne) * lato, lato }));
+}
+
 /** Chiavi dei partecipanti a bordo di qualche veicolo (hanno un token, anche se non in mappa). */
 export const chiaviABordo = (scena) => new Set(scena.token.flatMap((t) => aBordo(t).map((p) => chiaveRif(p.rif))));
 

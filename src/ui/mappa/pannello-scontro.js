@@ -81,10 +81,14 @@ export function sezioneToken(t, p, dati, a) {
       h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Gira il veicolo di 90° in senso orario (→)', onclick: () => a.ruota(1) }, 'Ruota ↻')),
     creatura ? null : h('div', { class: 'mappa-a-bordo' },
       h('h3', {}, `A bordo (${a.aBordo.length}${p?.posti ? ` su ${p.posti.conducente + p.posti.passeggeri} posti` : ''})`),
-      a.aBordo.length ? h('ul', {}, a.aBordo.map((x) => h('li', {}, h('span', {}, x.nome, x.ruolo === 'conducente' ? h('small', { class: 'nota' }, ' · conducente') : null),
-        ' ', h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Scegli un quadretto libero accanto al veicolo', onclick: () => a.scendi(x.id) }, 'Scendi…'),
-        ' ', h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Linea di tiro dal veicolo (dal suo quadretto più favorevole)', onclick: () => a.lineaPasseggero(x.id) }, 'Linea di tiro'))))
-        : h('p', { class: 'nota' }, 'Nessuno: clic destro su un PG o un nemico accanto al veicolo → «Sali».')),
+      // ritocchi del 08/10: chi è a bordo, poi le discese tutte insieme, poi le linee di tiro tutte insieme
+      a.aBordo.length ? [
+        h('ul', {}, a.aBordo.map((x) => h('li', {}, x.nome, x.ruolo === 'conducente' ? h('small', { class: 'nota' }, ' · conducente') : null))),
+        h('h4', {}, 'Scendi'),
+        h('div', { class: 'mappa-azioni-token' }, a.aBordo.map((x) => h('button', { type: 'button', class: 'btn btn-piccolo', title: `${x.nome} scende: poi un clic su un quadretto libero accanto al veicolo`, onclick: () => a.scendi(x.id) }, `${x.nome}…`))),
+        h('h4', {}, 'Linea di tiro'),
+        h('div', { class: 'mappa-azioni-token' }, a.aBordo.map((x) => h('button', { type: 'button', class: 'btn btn-piccolo', title: `Linea di tiro di ${x.nome} dal veicolo (dal suo quadretto più favorevole)`, onclick: () => a.lineaPasseggero(x.id) }, x.nome))),
+      ] : h('p', { class: 'nota' }, 'Nessuno: clic destro su un PG o un nemico accanto al veicolo → «Sali».')),
     sezioneMovimento(a.mov, a),
     h('div', { class: 'mappa-azioni-token' },
       h('button', { type: 'button', class: 'btn btn-piccolo', title: t.nascosto ? 'I giocatori lo vedranno' : 'Solo il master lo vede', onclick: a.nascondi }, t.nascosto ? 'Mostra' : 'Nascondi'),

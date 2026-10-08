@@ -90,7 +90,7 @@ export function vistaGiocatori(s, contesto = null, regoleTemplate = contesto?.re
     if (!visibili.length) return {};
     return { passeggeri: visibili.map(({ nascosto, luce, ...x }) => {
       const p = contesto ? pezzi.get(chiaveRif(x.rif)) : null;
-      return { ...x, ...(p ? { info: { lato: p.lato, nome: p.nome, iniziali: p.iniziali, immagine: contesto.immagineDi?.(p) ?? null } } : {}) };
+      return { ...x, ...(p ? { info: { lato: p.lato, nome: p.nome, iniziali: p.iniziali, immagine: contesto.immagineDi?.(p) ?? null, bordo: contesto.bordoDi?.(p) ?? null } } : {}) };
     }) };
   };
   const token = s.token.filter((t) => !t.nascosto && visibile(t)).map(({ nascosto, passeggeri: _p, ...t }) => ({ ...t, ...info(t), ...passeggeri({ ...t, passeggeri: _p }) }));

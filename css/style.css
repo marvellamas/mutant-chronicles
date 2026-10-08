@@ -2165,3 +2165,4 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 .mappa-a-bordo h3 { margin: 0.5rem 0 0.25rem; font-size: 0.95rem; }
 .mappa-a-bordo ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.25rem; }
 .mappa-a-bordo li { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem; }
+.mappa-a-bordo h4 { margin: 0.4rem 0 0.2rem; font-size: 0.85rem; }

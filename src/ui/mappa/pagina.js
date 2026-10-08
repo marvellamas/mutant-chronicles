@@ -991,7 +991,7 @@ export function renderMappa(radice, ctx) {
       ['Avviso «clic per attivare l’audio»', 'il browser blocca i suoni finché non tocchi la pagina: un clic qualunque li sblocca'],
       ['Veicolo da mettere o scelto: ← →', 'gira il veicolo di 90° (anche clic destro → «Ruota»); Ctrl+Z annulla'],
       ['Clic destro su un PG o un nemico accanto a un veicolo', '«Sali su … come conducente» (un PG) o «come passeggero»: il token va a bordo e si muove con il mezzo'],
-      ['Pannello del veicolo → «A bordo»', '«Scendi…» e clic su un quadretto evidenziato accanto; «Linea di tiro» di chi è a bordo, dal veicolo'],
+      ['Pannello del veicolo → «A bordo» (o clic destro sul veicolo)', 'gruppo «Scendi»: il nome, poi clic su un quadretto evidenziato accanto; gruppo «Linea di tiro»: la linea di chi è a bordo, dal veicolo'],
       ['M', 'mostra o nasconde l’area di movimento'],
       ['Z', 'mostra o nasconde le zone di controllo (ZoC) degli avversari'],
       ['P', 'mostra o nasconde la barretta dei PV sui token (solo per te)'],
@@ -2674,10 +2674,9 @@ export function renderMappa(radice, ctx) {
         { testo: 'Ruota a sinistra', tasto: '←', chiave: 'ruota:-1', azione: () => ruotaVeicoloUi(tok.id, -1) },
         { testo: 'Ruota a destra', tasto: '→', chiave: 'ruota:1', azione: () => ruotaVeicoloUi(tok.id, 1) },
       ] : null),
-      a_bordo: () => (tok.rif.tipo === 'veicolo' && aBordo(tok).length ? aBordo(tok).flatMap((x) => [
-        { testo: `Scendi: ${nomeTok(x)}${x.ruolo === 'conducente' ? ' (conducente)' : ''}…`, chiave: `scendi:${x.id}`, titolo: 'Poi un clic su un quadretto libero accanto al veicolo', azione: () => iniziaScendi(tok.id, x.id) },
-        { testo: `Linea di tiro di ${nomeTok(x)}`, chiave: `linea:${x.id}`, titolo: 'Dal veicolo, dal suo quadretto più favorevole', azione: () => lineaPasseggero(tok.id, x.id) },
-      ]) : null),
+      // ritocchi del 08/10: prima tutte le discese (gruppo «Scendi»), poi tutte le linee di tiro (gruppo «Linea di tiro»)
+      scendi_bordo: () => (tok.rif.tipo === 'veicolo' && aBordo(tok).length ? aBordo(tok).map((x) => ({ testo: `${nomeTok(x)}${x.ruolo === 'conducente' ? ' (conducente)' : ''}…`, chiave: `scendi:${x.id}`, titolo: 'Scende: poi un clic su un quadretto libero accanto al veicolo', azione: () => iniziaScendi(tok.id, x.id) })) : null),
+      linea_bordo: () => (tok.rif.tipo === 'veicolo' && aBordo(tok).length ? aBordo(tok).map((x) => ({ testo: nomeTok(x), chiave: `linea:${x.id}`, titolo: 'Linea di tiro dal veicolo, dal suo quadretto più favorevole', azione: () => lineaPasseggero(tok.id, x.id) })) : null),
       attacca: () => {
         if (conScontro && st.planciaBarra?.puoAttaccare?.(id)) return { testo: 'Attacca!', titolo: 'Il pannello «Attacca!» del nemico; con la linea di tiro fissata, bersaglio, distanza e Copertura già scelti', azione: () => st.planciaBarra.attaccaContro(id, st.linea?.da === tok.id ? st.scena.token.find((x) => x.id === st.linea.a)?.rif?.id ?? null : null) };
         if (pg && recordPg(pz)) return { testo: 'Attacca! (scheda)', titolo: 'L’attacco di un PG si fa dalla sua scheda, tab Combattimento; con la linea di tiro fissata, il bersaglio è già scelto', azione: () => {

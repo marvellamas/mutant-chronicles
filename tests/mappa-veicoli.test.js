@@ -161,3 +161,18 @@ test('vista giocatori: veicolo con muso e immagine, passeggeri visibili sì, nas
   const vuoto = vistaGiocatori(scena([veicolo([5, 5])]), { pezzi, round: 1, regoleMappa: dati.mappa, regoleTemplate: dati.mappa.template });
   assert.equal(vuoto.token[0].passeggeri, undefined);
 });
+
+test('cerchietti di chi è a bordo: due terzi di un Q, in griglia sull’ingombro (ritocchi del 08/10)', async () => {
+  const { postiCerchietti } = await import('../src/mappa/veicoli-mappa.js');
+  const qs = 60;
+  // Scout verticale 2 × 4 Q: tre per riga, otto persone in tre righe, dentro il mezzo
+  const p = postiCerchietti(8, { x: 0, y: 0, w: 2 * qs, h: 4 * qs }, qs);
+  assert.ok(p.every((x) => Math.abs(x.lato - qs * 2 / 3) < 1e-9));
+  assert.deepEqual([...new Set(p.map((x) => Math.round(x.y)))], [0, 40, 80]);
+  assert.ok(p.every((x) => x.x >= 0 && x.x + x.lato <= 2 * qs + 1e-9 && x.y + x.lato <= 4 * qs));
+  // orizzontale 4 × 2: sei per riga
+  assert.equal(new Set(postiCerchietti(8, { x: 0, y: 0, w: 4 * qs, h: 2 * qs }, qs).map((x) => x.y)).size, 2);
+  // uno solo: centrato in alto
+  const [u] = postiCerchietti(1, { x: 0, y: 0, w: 2 * qs, h: 4 * qs }, qs);
+  assert.equal(u.x, (2 * qs - u.lato) / 2);
+});

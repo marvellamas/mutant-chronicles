@@ -7,7 +7,7 @@
 // nella vista master) trasparenti.
 import { schermoDaMappa } from '../../mappa/camera.js';
 import { dimensioni, chiaveRif } from '../../mappa/token.js';
-import { direzioneDi, angoloImmagine } from '../../mappa/veicoli-mappa.js';
+import { direzioneDi, angoloImmagine, postiCerchietti } from '../../mappa/veicoli-mappa.js';
 
 const SOGLIA_TESTO_PX = 16; // sotto questo lato in pixel di schermo niente testo né sigle
 
@@ -54,13 +54,29 @@ export function disegnaToken(c, { scena, cam, pezzi, colori, immagine, seleziona
     const a = schermoDaMappa(cam, g.scosto_x + q[0] * g.q_px, g.scosto_y + q[1] * g.q_px);
     const box = { x: a.x, y: a.y, w: w * qs, h: h * qs };
     const p = pezzi.get(chiaveRif(t.rif)) ?? null;
-    // fase 2, lotto 5: chi è a bordo, come piccole icone sul veicolo (pezzi della mappa o info della vista giocatori)
-    const bordoPass = (t.passeggeri ?? []).map((x) => ({ ruolo: x.ruolo, pezzo: pezzi.get(chiaveRif(x.rif)) ?? x.info ?? null }));
-    disegnaUno(c, { t, p, box, colori, immagine, qs, scelto: t.id === selezionato, inMano: trascina?.id === t.id, b: p ? bordo(p) : null, alone, pv, ritrattoVerticale, zero, passeggeri: bordoPass });
+    disegnaUno(c, { t, p, box, colori, immagine, qs, scelto: t.id === selezionato, inMano: trascina?.id === t.id, b: p ? bordo(p) : null, alone, pv, ritrattoVerticale, zero });
+    // chi è a bordo (fase 2, lotto 5; ritocchi del 08/10): come i token, due terzi di un Q, in griglia sul veicolo, il
+    // conducente per primo con un anello del colore della selezione (pezzi della mappa o info della vista giocatori)
+    const bordo_ = [...(t.passeggeri ?? [])].sort((a, x) => (x.ruolo === 'conducente') - (a.ruolo === 'conducente'));
+    if (bordo_.length) {
+      const posti = postiCerchietti(bordo_.length, box, qs);
+      bordo_.forEach((x, i) => {
+        const pz = pezzi.get(chiaveRif(x.rif)) ?? (x.info ? { ...x.info, ritratto: x.info.immagine } : null);
+        const pb = { x: posti[i].x, y: posti[i].y, w: posti[i].lato, h: posti[i].lato };
+        disegnaUno(c, { t: { ...x, nascosto: t.nascosto || x.nascosto }, p: pz, box: pb, colori, immagine, qs: posti[i].lato, scelto: false, inMano: false, b: pz ? bordo(pz) : null, alone, pv, ritrattoVerticale, zero });
+        if (x.ruolo === 'conducente') {
+          c.save();
+          c.strokeStyle = colori.selezione;
+          c.lineWidth = Math.max(2, pb.w * 0.07);
+          c.beginPath(); c.arc(pb.x + pb.w / 2, pb.y + pb.h / 2, pb.w / 2 - c.lineWidth / 2, 0, Math.PI * 2); c.stroke();
+          c.restore();
+        }
+      });
+    }
   }
 }
 
-function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alone, pv, ritrattoVerticale, zero, passeggeri = [] }) {
+function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alone, pv, ritrattoVerticale, zero }) {
   const colore = b?.colore ?? colori[p?.lato] ?? colori.testo;
   const veicolo = t.rif.tipo === 'veicolo';
   const cx = box.x + box.w / 2, cy = box.y + box.h / 2;
@@ -178,25 +194,6 @@ function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alo
     c.fillStyle = pv.stile.colore;
     if (quota > 0) c.fillRect(box.x, y, box.w * quota, alto);
     c.restore();
-  }
-  // chi è a bordo (fase 2, lotto 5): un cerchietto per persona in alto a sinistra, il conducente per primo, colore del lato
-  if (passeggeri.length && testo) {
-    const rp = Math.max(6, Math.min(12, qs * 0.2));
-    const per = Math.max(1, Math.floor((box.w - rp) / (rp * 2.2)));
-    const ordinati = [...passeggeri].sort((a, x) => (x.ruolo === 'conducente') - (a.ruolo === 'conducente'));
-    c.font = `700 ${Math.round(rp * 0.95)}px system-ui, sans-serif`;
-    c.textAlign = 'center';
-    c.textBaseline = 'middle';
-    ordinati.forEach((x, i) => {
-      const px = box.x + rp * 1.2 + (i % per) * rp * 2.2, py = box.y + rp * 1.2 + Math.floor(i / per) * rp * 2.2;
-      c.fillStyle = colori[x.pezzo?.lato] ?? colori.testo;
-      c.beginPath(); c.arc(px, py, rp, 0, Math.PI * 2); c.fill();
-      c.lineWidth = x.ruolo === 'conducente' ? 2.5 : 1;
-      c.strokeStyle = x.ruolo === 'conducente' ? colori.selezione : colori.fondo;
-      c.stroke();
-      c.fillStyle = colori.fondo;
-      c.fillText(x.pezzo?.iniziali ?? '?', px, py + 0.5);
-    });
   }
   // Stati: piccole sigle in basso a destra, al massimo tre più «+n»
   if (testo && p?.stati?.length) {
