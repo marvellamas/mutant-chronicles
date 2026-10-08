@@ -217,6 +217,15 @@ Le stesse azioni più gli strumenti del master: carica mappa, griglia, nebbia, m
 > * **Suoni della mappa (07/10/2026, fatto):** campanella al nuovo Round (`Sounds/Effects/RoundBell.mp3`; elenco evento → file in `data/mappa.json` → `audio.effetti`, pronto per Attacco di Opportunità e scadenza dei template); musica di fondo per scontro, scelta nella preparazione o nella mappa fra i file della cartella `musica/` del server (MP3, OGG, WAV, M4A, AAC), ripetuta finché lo scontro è aperto; nella barra in alto muto generale e cursori Musica ed Effetti, ricordati sul PC del master. I suoni stanno sul PC del master; «Suoni anche nella vista giocatori» (Strumenti, spento di norma) li porta sullo schermo dei giocatori. Autoplay bloccato dal browser: avviso «clic per attivare l’audio».  
 > * **Limite:** le notifiche di sistema con l’app chiusa o in secondo piano non sono possibili su una rete locale senza HTTPS; gli avvisi funzionano con la pagina aperta. Consiglio: tablet con lo schermo che non si spegne durante la sessione.
 
+## **13 bis. Tablet dei giocatori (fase 2, lotto 7, fatto l'08/10/2026)**
+
+> * **Collegamento:** il tablet apre la vista giocatori (`http://<IP del PC del master>:3000/#/mappa/giocatori`, QR nella sezione «Vista giocatori» e Strumenti → «Collega i tablet») sulla rete di casa, in HTTP. «Sono…» sceglie il PG (il campo `pg` del file, univoco), ricordato sul tablet (`localStorage`). Nessuna password: si gioca in casa; «Solo guardare» per lo schermo del tavolo.
+> * **Vista:** quella dei giocatori, con gli stessi filtri dei segreti calcolati dal server; in più il proprio token evidenziato, la mini-scheda (PV, PM, Stati, «tocca a te»), «Centra su di me». Il blocco `io` arriva da `GET /api/vista-giocatori?pg=<chiave>` con i soli dati del proprio PG.
+> * **Movimento** (`src/mappa/tablet.js`, `POST /api/vista-giocatori/movimento`): solo il proprio PG; solo al proprio turno dello scontro aperto, oppure sempre (`scena.tablet.movimento`, scelta del master); mai con «Blocca movimenti dei giocatori». Stesse regole del master: Passo diviso, Corsa e Scatto in un blocco unico (A.129), area con muri, porte chiuse, terreno difficile e ingombri, ZoC con l'avviso dell'Attacco di Opportunità prima della conferma. Niente Libero, niente selezione multipla, niente porte. Tocco sul quadretto → prova del server (percorso e costo) → «Conferma». Il server rifà il controllo sulla scena completa e scrive la scena (revisione +1, voce per Ctrl+Z, movimento segnato `tablet`) e le righe degli Attacchi di Opportunità nel registro dello scontro. L'area mostrata al tablet si calcola senza gli ostacoli che i giocatori non vedono; un quadretto che sembra libero ma non lo è viene rifiutato con «c'è qualcosa che non vedi».
+> * **Master:** la mappa guarda la revisione della scena ogni secondo (`GET /api/scene/<id>?revisione=N`) e, se non ha modifiche sue in corso, riprende quella del server: il movimento si vede in diretta, con l'avviso e «Attacca!»; Ctrl+Z lo annulla e ritira l'Attacco di Opportunità.
+> * **Notifiche:** nell'elenco dell'Iniziativa 📱 (tablet collegato: flusso di eventi aperto o vista letta negli ultimi secondi, `data/mappa.json` → `tablet.collegato_s`) e 🔔, che manda al solo tablet di quel PG (`POST /api/tablet/avviso`, evento `avviso` sul flusso del tablet) un avviso grande con il suono `Sounds/Effects/PlayerAlert.mp3` e la vibrazione, dove c'è. Facoltativo, interruttore del master: «Tocca a te» quando arriva il turno del PG.
+> * **Limiti:** senza HTTPS niente notifiche di sistema: gli avvisi arrivano solo con la pagina aperta; il suono chiede un primo tocco («Tocca per attivare l'audio»). Il PG a bordo di un veicolo non muove (lo muove il conducente, dalla mappa del master).
+
 ## **14\. Fasi**
 
 ### **Versione minima (utilizzabile al tavolo)**
@@ -231,10 +240,10 @@ Le stesse azioni più gli strumenti del master: carica mappa, griglia, nebbia, m
 
 ### **Fase 2**
 
-> * Tab BattleMap con movimento dei giocatori dal tablet.  
+> * Tab BattleMap con movimento dei giocatori dal tablet (fatto l'08/10/2026: §13 bis).  
 > * Linea di tiro con Copertura; template (anche rettangolari e con durata) da un **mini-menu dei template** (forma, misura, colore, durata); il collegamento a «Lancia\!» è facoltativo.  
 > * Porte; veicoli sulla mappa.  
-> * Avvisi di turno, richiami del master, suoni.
+> * Avvisi di turno, richiami del master, suoni (fatto: campanellino e «Tocca a te» sui tablet, §13 bis; suoni della mappa, §13).
 
 ### **Fase 3**
 

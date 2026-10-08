@@ -56,6 +56,19 @@
 //   GET /api/vista-giocatori/diretta   flusso di eventi (text/event-stream) per la vista giocatori: «diretta» con lo
 //                                      stato già filtrato (nessun nascosto, niente sotto la nebbia), «aggiorna» quando
 //                                      scena, scontro o scelta cambiano (la vista si rilegge subito)
+//   GET /api/vista-giocatori?pg=<chiave>  (fase 2, lotto 7) come sopra, più `pgs` (i PG della scena, per «Sono…») e
+//                                      `io`: il PG del tablet con mini-scheda (PV, PM, Stati), permesso di muovere e area
+//                                      (solo Q fuori dalla nebbia, senza ostacoli nascosti); segna il tablet come collegato
+//   POST /api/vista-giocatori/movimento  { scena, pg, a: [x, y], fascia: 1–3, prova? }: il movimento del giocatore dal
+//                                      tablet, rifatto sulla scena completa (src/mappa/tablet.js): solo il proprio PG,
+//                                      al proprio turno (o sempre, scena.tablet.movimento), non con il blocco del master;
+//                                      con prova: true solo il percorso e il costo; altrimenti scrive la scena (revisione
+//                                      +1, voce per Ctrl+Z del master) e gli Attacchi di Opportunità nel registro
+//   GET /api/vista-giocatori/diretta?pg=<chiave>  il flusso di eventi di un tablet: in più «avviso» (campanellino)
+//   GET /api/tablet                    { collegati: [chiavi dei PG con un tablet collegato] } per il master
+//   POST /api/tablet/avviso            { pg, tipo: campanello | turno }: l'avviso grande al tablet di quel PG; { consegnati }
+//   GET /api/scene/<id>?revisione=N    { invariata: true } se la scena è ancora alla revisione N (il master la rilegge
+//                                      solo se un tablet l'ha cambiata)
 //   GET /api/ritratti/<chiave>         il ritratto del PG (dalla sua scheda), per i token della vista giocatori
 //   GET /api/mappe                     immagini in mappe/: [{ file, dimensione, mtime }]
 //   GET /api/musica                    musica di fondo in musica/ (07/10): [{ file, dimensione }], formati di
@@ -78,7 +91,7 @@ import { chiOccupa, testoDomanda, risposteSi, fermaMutant, sorvegliaFinestra } f
 import { indirizziRete, testoAvvio } from './src/rete.js';
 import { avvisa } from './tools/avvisi.mjs';
 import { bordoToken } from './src/mappa/colori.js';
-import { validaScontro } from './src/scontro.js';
+import { validaScontro, rigaOpportunita } from './src/scontro.js';
 import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
 import { NOME_FILE, fileProvvisorio, ultimiPerPersonaggio, chiaveDaFile, chiavePersonaggio } from './src/cartella.js';
 import { validaRecord, ID_VEICOLO, migraVeicoli, eRiferimento, stessaChiave } from './src/veicoli-registro.js';
@@ -87,10 +100,12 @@ import { caricaDati } from './src/rules.js';
 import { validaNemico, formattaErrore } from './src/validate.js';
 import { validaScena, riassuntoScena, ID_SCENA, FILE_MAPPA } from './src/mappa/scena.js';
 import { vistaGiocatori } from './src/mappa/vista.js';
-import { validaDiretta, direttaPerGiocatori } from './src/mappa/diretta.js';
+import { validaDiretta, direttaPerGiocatori, visibileAiGiocatori } from './src/mappa/diretta.js';
+import { avversariZoc } from './src/mappa/zoc.js';
 import { dimensioniImmagine } from './src/mappa/immagine.js';
 import { pezziDellaScena } from './src/mappa/partecipanti.js';
 import { vistaPlancia } from './src/tavolo.js';
+import { pgDellaScena, pezzoDelPg, areaPerTablet, provaMovimento, eseguiMovimentoGiocatore, impostazioniTablet, miniScheda } from './src/mappa/tablet.js';
 
 const RADICE = fileURLToPath(new URL('.', import.meta.url));
 const CARTELLA = 'personaggi';
@@ -436,7 +451,10 @@ async function apiScene(req, res, percorso, scene, mappe, radice, cartelle) {
   if (req.method === 'GET') {
     let s;
     try { s = await leggiJson(dove); } catch { return json(res, 404, { errore: 'scena non trovata' }); }
-    const vista = new URL(req.url, 'http://x').searchParams.get('vista');
+    const parametri = new URL(req.url, 'http://x').searchParams;
+    // fase 2, lotto 7: il master guarda se un tablet ha cambiato la scena (movimento di un giocatore)
+    if (parametri.has('revisione') && Number(parametri.get('revisione')) === s.revisione) return json(res, 200, { invariata: true, revisione: s.revisione });
+    const vista = parametri.get('vista');
     if (vista === 'giocatori') return json(res, 200, vistaGiocatori(s, await contestoScena(s, cartelle)));
     if (vista !== null) return json(res, 400, { errore: 'vista: solo «giocatori»' });
     // avviso a Marcello (tools/avvisi.mjs): «Mappa aperta», al massimo una volta al giorno; solo dal server avviato
@@ -571,6 +589,9 @@ async function scenaInGioco({ tavolo, scontri, scene }) {
  */
 function creaCanaleDiretta(cartelle) {
   const clienti = new Set();
+  // fase 2, lotto 7: i flussi dei tablet con il loro PG, e l'ultima lettura della vista di ogni PG
+  const tablet = new Map(); // res → chiave del PG
+  const letture = new Map(); // chiave del PG → ms
   let grezza = null;
   let firma = 'null';
   let filtrata = null;
@@ -600,7 +621,9 @@ function creaCanaleDiretta(cartelle) {
         res.writeHead(200, { 'Content-Type': 'text/event-stream; charset=utf-8', 'Cache-Control': 'no-cache, no-transform', Connection: 'keep-alive', 'X-Accel-Buffering': 'no' });
         res.write('retry: 1000\n\n');
         clienti.add(res);
-        req.on('close', () => clienti.delete(res));
+        const pg = new URL(req.url, 'http://x').searchParams.get('pg');
+        if (pg) tablet.set(res, pg);
+        req.on('close', () => { clienti.delete(res); tablet.delete(res); });
         manda(res, 'diretta', filtrata);
         return;
       }
@@ -619,9 +642,23 @@ function creaCanaleDiretta(cartelle) {
       tutti('aggiorna', {});
       rifiltra();
     },
+    /** Un evento ai soli tablet di quel PG (campanellino): quanti l'hanno ricevuto. */
+    aTablet(pg, evento, dati) {
+      let n = 0;
+      for (const [r, k] of tablet) if (stessaChiave(k, pg)) { manda(r, evento, dati); n++; }
+      return n;
+    },
+    /** Il tablet di quel PG ha chiesto la vista (anche senza flusso di eventi aperto). */
+    letta(pg) { letture.set(pg, Date.now()); },
+    /** Chiavi dei PG con un tablet collegato: flusso aperto o vista chiesta negli ultimi `secondi`. */
+    collegati(secondi) {
+      const r = new Set(tablet.values());
+      for (const [k, t] of letture) if (Date.now() - t <= secondi * 1000) r.add(k); else letture.delete(k);
+      return [...r];
+    },
     /** «Adatta allo schermo» sulle viste giocatori aperte; restituisce quante sono. */
     adatta() { tutti('adatta', {}); return clienti.size; },
-    chiudi() { clearInterval(battito); for (const r of clienti) { try { r.end(); } catch { /* già chiuso */ } } clienti.clear(); },
+    chiudi() { clearInterval(battito); for (const r of clienti) { try { r.end(); } catch { /* già chiuso */ } } clienti.clear(); tablet.clear(); },
   };
 }
 
@@ -649,12 +686,118 @@ async function apiVistaGiocatori(req, res, percorso, cartelle) {
     if (req.method !== 'POST') return json(res, 405, { errore: 'metodo non ammesso' });
     return json(res, 200, { giocatori: cartelle.canale.adatta() });
   }
+  if (percorso === '/api/vista-giocatori/movimento') return movimentoDalTablet(req, res, cartelle);
   if (percorso !== '/api/vista-giocatori' || req.method !== 'GET') return json(res, 405, { errore: 'metodo non ammesso' });
+  const parametri = new URL(req.url, 'http://x').searchParams;
+  const pg = parametri.get('pg') || null;
   const { scelta, scena, motivo } = await scenaInGioco(cartelle);
-  const corpo = { scelta, scena: scena ? vistaGiocatori(scena, await contestoScena(scena, cartelle)) : null, ...(motivo ? { motivo } : {}) };
+  const contesto = scena ? await contestoScena(scena, cartelle) : null;
+  const corpo = { scelta, scena: scena ? vistaGiocatori(scena, contesto) : null, ...(motivo ? { motivo } : {}) };
+  // fase 2, lotto 7: i PG della scena per «Sono…» e, con ?pg=, il blocco del tablet di quel giocatore
+  if (contesto) corpo.pgs = pgDellaScena(contesto.pezzi).map(({ chiave, nome }) => ({ chiave, nome }));
+  if (pg) {
+    cartelle.canale?.letta(pg);
+    if (scena) corpo.io = await perIlTablet(scena, contesto, pg, cartelle);
+  }
   const firma = impronta(JSON.stringify(corpo));
-  if (new URL(req.url, 'http://x').searchParams.get('firma') === firma) return json(res, 200, { firma, invariata: true });
+  if (parametri.get('firma') === firma) return json(res, 200, { firma, invariata: true });
   return json(res, 200, { firma, ...corpo });
+}
+
+/**
+ * Il blocco `io` della vista per il tablet di un giocatore (fase 2, lotto 7; src/mappa/tablet.js): mini-scheda del suo
+ * PG, permesso di muovere con il motivo, impostazioni del master e l'area di movimento per Passo, Corsa e Scatto (tre
+ * maschere già senza i Q sotto la nebbia). Solo i dati del proprio PG.
+ */
+async function perIlTablet(scena, contesto, pg, cartelle) {
+  const { dati } = await datiDelServer(cartelle.radice);
+  const pezzo = pezzoDelPg(contesto.pezzi, pg);
+  const imp = impostazioniTablet(scena, dati);
+  if (!pezzo) return { pg, trovato: false, impostazioni: imp, permesso: { puo: false, motivo: 'Il tuo PG non è in questa scena: chiedi al master di farlo entrare.' } };
+  const { permesso, area } = areaPerTablet({ scena, pezzi: contesto.pezzi, scontro: contesto.scontro, chiavePg: pg, fascia: 3, dati });
+  const token = permesso.token ?? scena.token.find((t) => t.rif?.id === pezzo.rif.id) ?? null;
+  // le ZoC degli avversari che il giocatore vede (Giocatore §5.3), come nella diretta: nessun nascosto, niente sotto la nebbia
+  const zoc = permesso.puo && scena.zocGiocatori !== false
+    ? avversariZoc(scena, contesto.pezzi, permesso.token.id, dati, { perGiocatori: true }).filter((a) => visibileAiGiocatori(a.token, scena)).map((a) => ({ q: [...a.token.q], ingombro: a.token.ingombro, portata: a.portata }))
+    : [];
+  return {
+    pg, trovato: true, nome: pezzo.nome, token: token && !token.nascosto ? token.id : null, bordo: permesso.bordo ?? null,
+    mini: miniScheda(pezzo), impostazioni: imp, permesso: { puo: permesso.puo, motivo: permesso.motivo }, area, zoc,
+  };
+}
+
+/**
+ * Movimento dal tablet (fase 2, lotto 7): POST /api/vista-giocatori/movimento. Il server non si fida del tablet: rilegge
+ * scena, scontro e schede, rifà il controllo (src/mappa/tablet.js) e solo allora scrive, in coda sul file della scena.
+ */
+async function movimentoDalTablet(req, res, cartelle) {
+  if (req.method !== 'POST') return json(res, 405, { errore: 'metodo non ammesso' });
+  let d;
+  try { d = JSON.parse((await leggiCorpo(req, 64 * 1024)).toString('utf8')); } catch (e) { return json(res, 400, { errore: `contenuto non valido: ${e.message}` }); }
+  if (typeof d?.pg !== 'string' || !d.pg || typeof d.scena !== 'string' || !ID_SCENA.test(d.scena)) return json(res, 400, { errore: 'pg e scena attesi' });
+  const { dati } = await datiDelServer(cartelle.radice);
+  const { scena: inGioco } = await scenaInGioco(cartelle);
+  if (!inGioco || inGioco.id !== d.scena) return json(res, 409, { errore: 'La mappa in gioco è cambiata: attendi un momento.' });
+  const dove = join(cartelle.scene, `${d.scena}.json`);
+  const perTablet = (p) => ({ costo: p.costo, fascia: p.fascia, percorso: p.percorso, blocco: !!p.blocco, persi: p.persi ?? 0,
+    // gli Attacchi di Opportunità si dicono al tablet solo per gli avversari che il giocatore vede
+    opportunita: p.opportunita.filter((o) => o.visibile).map((o) => ({ nome: o.nomeDa })) });
+  if (d.prova) {
+    const contesto = await contestoScena(inGioco, cartelle);
+    const p = provaMovimento({ scena: inGioco, pezzi: contesto.pezzi, scontro: contesto.scontro, chiavePg: d.pg, a: d.a, fascia: d.fascia, dati });
+    return p.ok ? json(res, 200, { ok: true, prova: true, ...perTablet(p) }) : json(res, 422, { ok: false, errore: p.errore });
+  }
+  const esito = await inCoda(dove, async () => {
+    let scena;
+    try { scena = await leggiJson(dove); } catch { return { stato: 404, corpo: { errore: 'scena non trovata' } }; }
+    const contesto = await contestoScena(scena, cartelle);
+    const r = eseguiMovimentoGiocatore({ scena, pezzi: contesto.pezzi, scontro: contesto.scontro, chiavePg: d.pg, a: d.a, fascia: d.fascia, dati });
+    if (!r.ok) return { stato: 422, corpo: { ok: false, errore: r.errore } };
+    const nuova = { ...r.scena, revisione: scena.revisione + 1, aggiornato: new Date().toISOString() };
+    const errore = validaScena(nuova, dati);
+    if (errore) return { stato: 500, corpo: { ok: false, errore: `scena non valida dopo il movimento: ${errore}` } };
+    await scriviJson(dove, nuova);
+    return { stato: 200, corpo: { ok: true, revisione: nuova.revisione, movimento: r.movimento.id, ...perTablet(r.prova) }, scontro: contesto.scontro, prova: r.prova, movimento: r.movimento };
+  });
+  // Attacchi di Opportunità nel registro dello scontro (Giocatore §5.3: uno per Round per avversario), come fa il master
+  if (esito.stato === 200 && esito.scontro && esito.prova.opportunita.length) {
+    try { await opportunitaNelRegistro(cartelle.scontri, esito.scontro.id, esito.prova, esito.movimento.id); } catch { /* il movimento resta; il master vede l'avviso sulla mappa */ }
+  }
+  if (esito.stato === 200) cartelle.canale?.cambiata();
+  return json(res, esito.stato, esito.corpo);
+}
+
+/** Le righe degli Attacchi di Opportunità di un movimento dal tablet, nel registro dello scontro (revisione +1). */
+async function opportunitaNelRegistro(scontri, id, prova, movimento) {
+  if (!ID_SCONTRO.test(id)) return;
+  const dove = join(scontri, `${id}.json`);
+  await inCoda(dove, async () => {
+    const s = await leggiJson(dove);
+    if (s.stato !== 'aperto') return;
+    const adesso = new Date();
+    const dopo = prova.opportunita.reduce((x, o) => rigaOpportunita(x, { da: o.da, nomeDa: o.nomeDa, contro: prova.rifId, nomeContro: prova.nome, movimento }, adesso), s);
+    if (dopo === s) return;
+    await scriviJson(dove, { ...dopo, revisione: s.revisione + 1 });
+  });
+}
+
+/**
+ * Tablet dei giocatori (fase 2, lotto 7): GET /api/tablet (chi è collegato, per il master) e POST /api/tablet/avviso
+ * (il campanellino: l'avviso grande al tablet di un PG, con suono e vibrazione).
+ */
+async function apiTablet(req, res, percorso, cartelle) {
+  const { dati } = await datiDelServer(cartelle.radice);
+  if (percorso === '/api/tablet' && req.method === 'GET') return json(res, 200, { collegati: cartelle.canale?.collegati(dati.mappa.tablet.collegato_s) ?? [] });
+  if (percorso === '/api/tablet/avviso' && req.method === 'POST') {
+    let d;
+    try { d = JSON.parse((await leggiCorpo(req, 16 * 1024)).toString('utf8')); } catch (e) { return json(res, 400, { errore: `contenuto non valido: ${e.message}` }); }
+    if (typeof d?.pg !== 'string' || !d.pg) return json(res, 400, { errore: 'pg atteso' });
+    const tipo = d.tipo === 'turno' ? 'turno' : 'campanello';
+    const testo = tipo === 'turno' ? dati.mappa.tablet.testo_turno : dati.mappa.tablet.testo_campanello;
+    const consegnati = cartelle.canale?.aTablet(d.pg, 'avviso', { tipo, testo, quando: Date.now() }) ?? 0;
+    return json(res, 200, { consegnati });
+  }
+  return json(res, 405, { errore: 'metodo non ammesso' });
 }
 
 /** Ritratto di un PG (data URL della scheda) come immagine, per i token della vista giocatori. */
@@ -792,6 +935,7 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
   if (percorso === '/api/scene' || percorso.startsWith('/api/scene/')) return segnala(await apiScene(req, res, percorso, scene, mappe, radice, cartelle));
   if (percorso === '/api/vista-giocatori' || percorso.startsWith('/api/vista-giocatori/')) return apiVistaGiocatori(req, res, percorso, cartelle);
   if (percorso.startsWith('/api/ritratti/')) return apiRitratto(req, res, percorso, cartelle);
+  if (percorso === '/api/tablet' || percorso.startsWith('/api/tablet/')) return apiTablet(req, res, percorso, cartelle);
   if (percorso === '/api/mappe' || percorso.startsWith('/api/mappe/')) return apiMappe(req, res, percorso, mappe, radice);
   if (percorso === '/api/musica' || percorso.startsWith('/api/musica/')) return apiMusica(req, res, percorso, musica, radice);
   if (percorso === '/api/veicoli' || percorso.startsWith('/api/veicoli/')) return apiVeicoli(req, res, percorso, veicoli);

@@ -11,8 +11,9 @@ import { datiReali, copia } from './helpers.js';
 const { dati } = await datiReali();
 const AU = dati.mappa.audio;
 
-test('dati: evento → file; per ora suona solo il nuovo Round; file leggeri e tracciati in git; validatore', () => {
+test('dati: evento → file; per ora suonano il nuovo Round e l’avviso del tablet; file leggeri e tracciati in git; validatore', () => {
   assert.equal(effettoDi('nuovo_round', dati), 'Sounds/Effects/RoundBell.mp3');
+  assert.equal(effettoDi('avviso_giocatore', dati), 'Sounds/Effects/PlayerAlert.mp3');
   assert.equal(effettoDi('attacco_opportunita', dati), null);
   assert.equal(effettoDi('inventato', dati), null);
   assert.deepEqual(Object.keys(AU.effetti).sort(), [...EVENTI_AUDIO].sort());

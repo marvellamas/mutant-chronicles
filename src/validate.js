@@ -2720,7 +2720,7 @@ function validaMappa(dati, err) {
   const AU = m.audio;
   if (!isOggetto(AU)) err(F, 'audio', 'oggetto mancante');
   else {
-    const NOTI = ['nuovo_round', 'attacco_opportunita', 'template_scaduto'];
+    const NOTI = ['nuovo_round', 'attacco_opportunita', 'template_scaduto', 'avviso_giocatore'];
     if (!isOggetto(AU.effetti)) err(F, 'audio.effetti', 'oggetto evento → file mancante');
     else for (const [k, v] of Object.entries(AU.effetti)) {
       if (!NOTI.includes(k)) err(F, `audio.effetti.${k}`, `evento sconosciuto (noti: ${NOTI.join(', ')})`);
@@ -2730,6 +2730,19 @@ function validaMappa(dati, err) {
     if (!Array.isArray(AU.musica?.formati) || !AU.musica.formati.length || AU.musica.formati.some((x) => !['mp3', 'ogg', 'wav', 'm4a', 'aac', 'opus', 'flac', 'webm'].includes(x))) err(F, 'audio.musica.formati', 'elenco di formati audio noti');
     for (const k of ['musica', 'effetti']) if (!(typeof AU.volume_predefinito?.[k] === 'number' && AU.volume_predefinito[k] >= 0 && AU.volume_predefinito[k] <= 1)) err(F, `audio.volume_predefinito.${k}`, 'numero da 0 a 1');
     if (typeof AU.giocatori_predefinito !== 'boolean') err(F, 'audio.giocatori_predefinito', 'true o false');
+  }
+  // tablet dei giocatori (fase 2, lotto 7; src/mappa/tablet.js): movimento al turno o sempre, avviso «Tocca a te»
+  {
+    const T = m.tablet;
+    if (!isOggetto(T)) err(F, 'tablet', 'oggetto mancante');
+    else {
+      if (!['turno', 'sempre'].includes(T.movimento_predefinito)) err(F, 'tablet.movimento_predefinito', 'turno o sempre');
+      if (typeof T.avviso_turno_predefinito !== 'boolean') err(F, 'tablet.avviso_turno_predefinito', 'true o false');
+      if (!Array.isArray(T.vibrazione_ms) || T.vibrazione_ms.length > 10 || T.vibrazione_ms.some((x) => !isIntero(x) || x < 0 || x > 2000)) err(F, 'tablet.vibrazione_ms', 'elenco di al più 10 interi da 0 a 2000 (ms)');
+      if (!isIntero(T.avviso_durata_ms) || T.avviso_durata_ms < 1000) err(F, 'tablet.avviso_durata_ms', 'intero da 1000 in su (ms)');
+      if (!isIntero(T.collegato_s) || T.collegato_s < 2) err(F, 'tablet.collegato_s', 'intero da 2 in su (secondi)');
+      if (typeof T.testo_campanello !== 'string' || !T.testo_campanello.trim() || typeof T.testo_turno !== 'string' || !T.testo_turno.trim()) err(F, 'tablet.testo_campanello / testo_turno', 'testi non vuoti');
+    }
   }
   // «Indietro» nell'Iniziativa (07/10, src/scontro.js → indietro): quanti «Avanti» si possono annullare
   if (!isIntero(m.iniziativa?.indietro_max) || m.iniziativa.indietro_max < 1) err(F, 'iniziativa.indietro_max', 'intero da 1 in su');

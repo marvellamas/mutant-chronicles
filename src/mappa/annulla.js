@@ -115,14 +115,15 @@ export function nuovoTurno(scena, idToken = null) {
 
 /**
  * Movimento di un token (§8): la posizione nuova, il movimento registrato nel Round dello scontro e la voce per Ctrl+Z.
- * @param m { a: [x, y], costo: Q spesi (null se fuori area), fascia, scontro, round, libero: mosso fuori area con Maiusc }
+ * @param m { a: [x, y], costo: Q spesi (null se fuori area), fascia, scontro, round, libero: mosso fuori area con Maiusc,
+ *   tablet?: chiave del PG che l'ha mosso dal suo tablet (fase 2, lotto 7) }
  */
 export function muoviToken(scena, idToken, m, dati, adesso = new Date()) {
   const t = scena.token.find((x) => x.id === idToken);
   if (!t) throw new Error('token non trovato');
   const id = `m${adesso.getTime().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
   const senzaScontro = !m.scontro;
-  const mov = { id, token: idToken, scontro: m.scontro ?? null, round: m.round ?? null, ...(senzaScontro ? { turno: turnoDi(scena, idToken) } : {}), da: [...t.q], a: [...m.a], costo: m.costo ?? null, fascia: m.fascia ?? null, libero: !!m.libero, quando: adesso.toISOString() };
+  const mov = { id, token: idToken, scontro: m.scontro ?? null, round: m.round ?? null, ...(senzaScontro ? { turno: turnoDi(scena, idToken) } : {}), da: [...t.q], a: [...m.a], costo: m.costo ?? null, fascia: m.fascia ?? null, libero: !!m.libero, ...(m.tablet ? { tablet: m.tablet } : {}), quando: adesso.toISOString() };
   // la coda dei movimenti si accorcia togliendo prima quelli di altri Round
   let movimenti = [...scena.movimenti, mov];
   const max = dati.mappa.scena.movimenti_max;
@@ -132,7 +133,7 @@ export function muoviToken(scena, idToken, m, dati, adesso = new Date()) {
     movimenti = movimenti.filter((x) => !togli.has(x.id)).slice(-max);
   }
   const s = { ...scena, token: scena.token.map((x) => (x.id === idToken ? { ...x, q: [...m.a] } : x)), movimenti };
-  return conVoce(s, { tipo: 'movimento', movimento: id, token: idToken, da: [...t.q], a: [...m.a], quando: adesso.toISOString() }, dati);
+  return conVoce(s, { tipo: 'movimento', movimento: id, token: idToken, da: [...t.q], a: [...m.a], ...(m.tablet ? { tablet: m.tablet } : {}), quando: adesso.toISOString() }, dati);
 }
 
 /**

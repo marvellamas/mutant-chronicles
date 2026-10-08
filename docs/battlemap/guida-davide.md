@@ -8,7 +8,7 @@ Quando aggiorni o avvii Mutant, a Marcello arriva un avviso con la versione: ser
 
 **La barra in alto** ha cinque gruppi, da sinistra: «Mutant» e «← Tavolo» con il nome della scena; zoom, «Adatta» e le tre disposizioni; template e «🧹 Temporanei»; **«Strumenti»** (il menu più importante), «⋯» e «?»; musica, volumi e «Salvata alle…». Sugli schermi stretti i gruppi vanno a capo interi.
 
-**Il menu «Strumenti»** ha sei categorie: 🗺 Preparazione mappa (immagine, griglia, muri e terreno, porte, luci, nebbia e nebbia automatica), 🎬 Scena (scene, collegamento e token, posizione iniziale), ⚔ In gioco (linea di tiro, template, area e ZoC, selezioni), 📺 Vista giocatori (apri, adatta, PV dei nemici, template e muri, suoni, blocco), ♫ Suoni (musica, audio muto), 🧹 Pulizia (cancella i template). A destra la scorciatoia; le voci che in quel momento non servono sono spente e dicono perché.
+**Il menu «Strumenti»** ha sette categorie: 🗺 Preparazione mappa (immagine, griglia, muri e terreno, porte, luci, nebbia e nebbia automatica), 🎬 Scena (scene, collegamento e token, posizione iniziale), ⚔ In gioco (linea di tiro, template, area e ZoC, selezioni), 📺 Vista giocatori (apri, adatta, PV dei nemici, template e muri, suoni), 📱 Tablet dei giocatori (blocco, quando muovono, «Tocca a te», collegamento), ♫ Suoni (musica, audio muto), 🧹 Pulizia (cancella i template). A destra la scorciatoia; le voci che in quel momento non servono sono spente e dicono perché.
 
 ## Preparare la scena
 
@@ -68,6 +68,44 @@ Si preparano in pochi secondi e durante il gioco non si toccano più.
 - **Scendere:** pannello del veicolo → «A bordo» → gruppo «Scendi» (o clic destro sul veicolo → «Scendi»), il nome, poi clic su un quadretto evidenziato accanto al mezzo.
 - **Sparare da bordo:** gruppo «Linea di tiro» (pannello o clic destro), il nome: la linea parte dal veicolo.
 - Quante Azioni costano salire e scendere lo decide Davide (A.145): per ora contale a voce.
+
+## Tablet dei giocatori
+
+Ogni giocatore può guardare la mappa dal suo tablet (o telefono) e muovere da sé il proprio PG. Serve `avvia-server.bat` acceso sul PC del master e i tablet sulla **stessa rete Wi-Fi** di casa. Nessuna password: si gioca in casa, e chiunque sia sulla rete può scegliere un PG.
+
+**Come si collega un tablet (da leggere ai giocatori):**
+
+1. Collega il tablet al Wi-Fi di casa, lo stesso del PC del master.
+2. Apri il browser (Chrome, Safari…) e scrivi l'indirizzo che ti dà il master, per esempio `http://192.168.1.20:3000/#/mappa/giocatori`, oppure inquadra il QR.
+3. Tocca **«Sono…»** in alto e scegli il tuo PG: il tablet lo ricorda per le volte successive.
+
+**Dove trovi l'indirizzo (master):**
+
+- nella finestra nera di `avvia-server.bat`, che all'avvio scrive gli indirizzi per i giocatori (`http://<IP del PC>:3000`);
+- nella mappa, Strumenti → 📱 «Collega i tablet: QR e indirizzo…»: QR e indirizzo pronti, nella sezione «Vista giocatori»;
+- nella plancia, il riquadro «Collega i giocatori».
+
+L'indirizzo è fatto così: `http://`, l'**indirizzo IP del PC del master** (quattro numeri, di solito `192.168.x.y`), due punti e la **porta 3000**. Se servisse trovarlo a mano: sul PC, menu Start → «cmd» → `ipconfig` → la riga «Indirizzo IPv4» della scheda Wi-Fi o Ethernet. Se Windows chiede di consentire Node.js sulla rete, rispondi sì per le reti private. Con `--solo-locale` i tablet non si collegano.
+
+**Che cosa fa il giocatore sul tablet:**
+
+- vede la mappa come lo schermo dei giocatori (stessi segreti: niente token nascosti, niente sotto la nebbia), con il suo token evidenziato;
+- in basso (a destra, col tablet in orizzontale) ha la sua mini-scheda: PV, PM e Stati, «tocca a te» quando è di turno, e «⌖ Centra su di me»;
+- **muove solo il suo PG, solo al suo turno** (se non hai scelto «sempre»): sceglie Passo, Corsa o Scatto (pulsanti grandi), tocca il quadretto di arrivo dentro l'area verde, controlla il percorso e i Q, poi tocca **«Conferma»**. Se uscendo da una zona di controllo provoca un Attacco di Opportunità, il tablet lo avvisa prima della conferma. Due dita per lo zoom, trascinare per spostare la vista;
+- niente «Libero», niente selezione di altri token, niente porte: quelle restano a te.
+
+**Che cosa fai tu:**
+
+- ogni movimento dai tablet lo controlla il **server** con le stesse regole della mappa (area, muri, porte chiuse, terreno difficile, Passo diviso, Corsa e Scatto in un blocco unico, turno, blocco): un movimento non valido viene rifiutato, qualunque cosa mandi il tablet;
+- lo vedi sulla mappa entro un secondo, con l'avviso «📱 … si è mosso dal tablet» e, se serve, l'Attacco di Opportunità con «Attacca!». **Ctrl+Z** (o «Annulla» nell'avviso) lo annulla, come un movimento tuo;
+- Strumenti → 📱 Tablet dei giocatori: **«Blocca movimenti dei giocatori»** (i tablet guardano soltanto, e lo vedono scritto), **«Movimento dai tablet: solo al proprio turno / sempre»**, **«Avviso «Tocca a te» ai tablet»** (all'arrivo del turno il tablet del PG mostra un avviso grande, con suono e vibrazione). Gli stessi interruttori stanno in fondo alla sezione «Vista giocatori»;
+- nell'elenco dell'Iniziativa, accanto a ogni PG, **📱** pieno se il suo tablet è collegato, sbiadito se no; **🔔** accanto a un tablet collegato lo chiama: avviso grande «Il master ti chiama!», suono e vibrazione (sui tablet che la supportano, di solito Android).
+
+**Limiti (senza HTTPS sulla rete di casa):**
+
+- gli avvisi arrivano **solo con la pagina aperta** sul tablet: a pagina chiusa, in secondo piano o con lo schermo spento non arriva nulla. Tieni lo schermo acceso durante la sessione (la pagina lo chiede al tablet, dove il browser lo permette);
+- il suono parte solo dopo il **primo tocco** sulla pagina: se il tablet lo blocca compare «🔈 Tocca per attivare l'audio»;
+- se il tablet non è collegato, 🔔 te lo dice.
 
 ## Suoni
 

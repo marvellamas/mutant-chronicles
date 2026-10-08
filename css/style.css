@@ -2213,3 +2213,58 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 .mappa-gruppo.gruppo-strumenti .menu-strumenti:not(.menu-altro) > summary { font-size: 0.95rem; padding: 0.3rem 0.7rem; }
 .cursore-audio input[type=range] { width: 3.2rem; }
 .mappa-gruppo.gruppo-suoni .mappa-stato { max-width: 8rem; font-size: 0.8rem; }
+
+/* Tablet dei giocatori (fase 2, lotto 7; src/ui/mappa/giocatori.js): «Sono…», mini-scheda, fasce e conferma a misura di
+   dito, avviso grande del campanellino e di «Tocca a te» */
+.tablet-sono { font-weight: 700; }
+.tablet-pannello { display: flex; flex-wrap: wrap; align-items: flex-start; gap: .5rem 1rem; padding: .5rem .75rem; border-radius: .5rem; background: var(--superficie, #fff); border: 1px solid var(--bordo, #ccc); }
+.tablet-pannello[hidden] { display: none; }
+.tablet-pannello .btn { min-height: 3rem; font-size: 1.1rem; padding: .5rem 1rem; }
+.tablet-mini { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem 1rem; flex: 1 1 100%; }
+.tablet-nome { font-size: 1.2rem; }
+.tablet-tuo-turno { color: var(--pe, #1b7a3a); }
+.tablet-valore { display: inline-flex; align-items: center; gap: .35rem; font-variant-numeric: tabular-nums; }
+.tablet-barra { display: inline-block; width: 6rem; height: .6rem; border-radius: .3rem; background: #8884; overflow: hidden; }
+.tablet-barra > span { display: block; height: 100%; }
+.tablet-barra.pv > span { background: var(--pv, #c8102e); }
+.tablet-barra.pm > span { background: var(--pm, #1d5fc4); }
+.tablet-stati { opacity: .85; }
+.tablet-stato { margin: 0; flex: 1 1 16rem; font-size: 1.05rem; align-self: center; }
+.tablet-stato.bloccato { font-weight: 700; }
+.tablet-fasce { display: flex; flex-wrap: wrap; gap: .4rem; }
+.tablet-fasce .btn.scelto { outline: 3px solid currentColor; outline-offset: 1px; font-weight: 700; }
+.tablet-fasce .modo-passo { border-left: .4rem solid var(--mappa-passo, #1f9d55); }
+.tablet-fasce .modo-corsa { border-left: .4rem solid var(--mappa-corsa, #d9a400); }
+.tablet-fasce .modo-scatto { border-left: .4rem solid var(--mappa-scatto, #d6336c); }
+.tablet-conferma { flex: 1 1 100%; display: flex; flex-wrap: wrap; align-items: center; gap: .3rem 1rem; padding: .4rem .6rem; border-radius: .4rem; background: #8882; }
+.tablet-conferma p { margin: 0; font-weight: 700; font-size: 1.1rem; }
+.tablet-conferma .tablet-zoc { color: var(--errore, #c92a2a); flex: 1 1 100%; }
+.tablet-conferma .riga-azioni { margin-left: auto; }
+.tablet-motivo { margin: 0; }
+.tablet-scelte { display: grid; grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); gap: .5rem; margin: .5rem 0; }
+.tablet-scelte .btn { min-height: 3.5rem; font-size: 1.15rem; }
+.tablet-scelte .btn.scelto { outline: 3px solid currentColor; }
+.tablet-audio { position: fixed; left: 50%; bottom: 1rem; transform: translateX(-50%); z-index: 40; min-height: 3rem; font-size: 1.1rem; box-shadow: 0 2px 10px #0008; }
+.tablet-audio[hidden] { display: none; }
+.tablet-allarme { position: fixed; inset: 0; z-index: 50; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; background: #b8410ef2; color: #fff; cursor: pointer; text-align: center; padding: 1rem; animation: tablet-lampo 1s ease-in-out 3; }
+.tablet-allarme.tipo-turno { background: #1b7a3af2; }
+.tablet-allarme[hidden] { display: none; }
+.tablet-allarme-testo { font-size: clamp(2rem, 8vw, 5rem); font-weight: 800; display: flex; flex-direction: column; align-items: center; gap: .5rem; }
+.tablet-allarme-icona { font-size: 1.4em; }
+.tablet-allarme-nota { margin: 0; font-size: 1.1rem; opacity: .9; }
+@keyframes tablet-lampo { 50% { filter: brightness(1.35); } }
+@media (prefers-reduced-motion: reduce) { .tablet-allarme { animation: none; } }
+.tablet-pg { display: inline-flex; align-items: center; gap: .15rem; margin-left: .3rem; }
+.tablet-indicatore { font-size: .95rem; }
+.tablet-indicatore.scollegato { opacity: .3; filter: grayscale(1); }
+.btn-campanello { padding: 0 .35rem; }
+.giocatori-corpo { display: flex; flex-direction: column; flex: 1; min-height: 0; gap: .5rem; }
+.giocatori-corpo > .mappa-tela { min-height: 12rem; }
+@media (orientation: landscape) and (min-width: 50rem) {
+  .giocatori-corpo { flex-direction: row; }
+  .giocatori-corpo > .tablet-pannello { flex: 0 0 18rem; flex-direction: column; flex-wrap: nowrap; align-items: stretch; overflow-y: auto; }
+  .giocatori-corpo > .tablet-pannello .tablet-mini { flex-direction: column; align-items: flex-start; flex: none; }
+  .giocatori-corpo > .tablet-pannello .tablet-stato { flex: none; }
+  .giocatori-corpo > .tablet-pannello .tablet-fasce .btn { flex: 1 1 100%; justify-content: space-between; }
+  .giocatori-corpo > .tablet-pannello .tablet-conferma { flex: none; }
+}

@@ -74,6 +74,7 @@ import { sezioneScontro, sezioneToken, TIPO_TRASCINA } from './pannello-scontro.
 import { renderTavolo } from '../tavolo.js';
 import { segnaDallaMappa, vistaDaRimettere, dimenticaMappa } from '../ritorno.js';
 import { scegliImmagineNemico, impostaImmagineNemico } from '../immagine-nemico.js';
+import { impostazioniTablet } from '../../mappa/tablet.js';
 
 const ATTESA_SALVATAGGIO_MS = 600;
 const ATTESA_RIPROVA_MS = 5000; // dopo un errore di rete o del server
@@ -857,14 +858,73 @@ export function renderMappa(radice, ctx) {
     sezione.classList.add('mappa-evidenzia');
     setTimeout(() => sezione.classList.remove('mappa-evidenzia'), 1600);
   }
-  /** Blocco dei movimenti dei giocatori: si salva nella scena, lo userà la tab BattleMap della fase 2. */
+  /** Blocco dei movimenti dei giocatori: si salva nella scena; il server lo controlla a ogni movimento dai tablet. */
   function cambiaBloccoGiocatori() {
     if (!st.scena) return;
     const v = !st.scena.bloccaGiocatori;
     st.scena = { ...st.scena, bloccaGiocatori: v };
     salvaPresto();
     aggiornaBlocco();
-    avviso(v ? 'Movimenti dei giocatori bloccati (vale dalla fase 2, quando i giocatori muoveranno dal tablet).' : 'Movimenti dei giocatori sbloccati.');
+    disegnaPannelloGiocatori();
+    avviso(v ? 'Movimenti dei giocatori bloccati: i tablet vedono la mappa ma non muovono.' : 'Movimenti dei giocatori sbloccati: i tablet muovono il proprio PG.');
+  }
+  /** Tablet dei giocatori (fase 2, lotto 7): movimento solo al proprio turno o sempre; avviso «Tocca a te». */
+  function cambiaTablet(campo) {
+    if (!st.scena) return;
+    const imp = impostazioniTablet(st.scena, ctx.dati);
+    const tablet = { movimento: imp.movimento, avvisoTurno: imp.avvisoTurno };
+    if (campo === 'movimento') tablet.movimento = imp.movimento === 'sempre' ? 'turno' : 'sempre';
+    else tablet.avvisoTurno = !imp.avvisoTurno;
+    st.scena = { ...st.scena, tablet };
+    salvaPresto();
+    aggiornaBlocco();
+    disegnaPannelloGiocatori();
+    avviso(campo === 'movimento'
+      ? (tablet.movimento === 'sempre' ? 'Movimento dai tablet: sempre, anche fuori turno.' : 'Movimento dai tablet: solo al proprio turno dello scontro.')
+      : (tablet.avvisoTurno ? 'Avviso «Tocca a te»: il tablet del PG di turno lo mostra, con suono e vibrazione (la pagina deve essere aperta).' : 'Avviso «Tocca a te» spento.'), { chiave: 'tablet', tipo: 'info' });
+  }
+  /**
+   * Movimenti dai tablet (fase 2, lotto 7): il server scrive la scena (revisione +1). Ogni secondo la mappa guarda se la
+   * revisione è cambiata e, se non ha modifiche sue in corso, riprende la scena del server: il master vede il movimento
+   * in diretta e lo annulla con Ctrl+Z (la voce è nella pila della scena). Con modifiche in corso aspetta il salvataggio.
+   */
+  let controlloRevisione = null;
+  async function controllaRevisione() {
+    const S = st.salvataggio;
+    if (!st.scena || st.chiusa || controlloRevisione || S.modificata || S.inCorso || st.trascina) return;
+    controlloRevisione = (async () => {
+      try {
+        const r = await fetch(`api/scene/${encodeURIComponent(ctx.id)}?revisione=${st.scena.revisione}`, { cache: 'no-store' });
+        if (!r.ok) return;
+        const nuova = await r.json();
+        if (nuova.invariata || st.chiusa || S.modificata || S.inCorso || st.trascina || !(nuova.revisione > st.scena.revisione)) return;
+        const prima = new Set(st.scena.movimenti.map((m) => m.id));
+        const daTablet = nuova.movimenti.filter((m) => m.tablet && !prima.has(m.id));
+        await usaScena(nuova);
+        testoStato(`Aggiornata alle ${ora()}`);
+        if (daTablet.length) {
+          dopoCambioToken();
+          // la scena è già quella del server: niente da salvare
+          clearTimeout(S.timer); S.modificata = false; testoStato(`Aggiornata alle ${ora()}`);
+          await aggiornaFonti();
+          for (const m of daTablet) avvisaMovimentoTablet(m);
+        }
+      } catch { /* senza rete: si riprova al prossimo giro */ } finally { controlloRevisione = null; }
+    })();
+  }
+  /** Un movimento arrivato da un tablet: l'avviso con Ctrl+Z e gli Attacchi di Opportunità scritti dal server. */
+  function avvisaMovimentoTablet(m) {
+    const t = st.scena.token.find((x) => x.id === m.token);
+    const nome = (t && pezzoDi(t)?.nome) ?? m.tablet;
+    avviso(`📱 ${nome} si è mosso dal tablet: ${numero(m.costo ?? 0, 1)} Q (${NOMI_FASCE[m.fascia] ?? 'movimento'}). Ctrl+Z per annullarlo.`, { tipo: 'info', chiave: `tablet-${m.id}`, durata: 8000,
+      azioni: [{ testo: 'Annulla', fai: () => { if (st.scena.annulla.at(-1)?.movimento === m.id) annullaUi(); else annullaMovimentoUi(m.token); } }] });
+    for (const r of (st.fonti?.scontro?.registro ?? []).filter((x) => x.opportunita?.movimento === m.id)) {
+      const idDa = r.opportunita.da;
+      const da = st.pezzi.find((p) => p.rif?.id === idDa);
+      const puo = st.planciaBarra?.puoAttaccare?.(idDa);
+      avviso([testoOpportunita(nome, da?.nome ?? idDa), 'Nessun tiro automatico.'], { tipo: 'info', durata: 15000,
+        azioni: puo ? [{ testo: `Attacca! (${da?.nome ?? idDa} → ${nome})`, fai: () => st.planciaBarra.attaccaContro(idDa, r.opportunita.contro) }] : [] });
+    }
   }
   /** «Adatta lo schermo dei giocatori»: l'evento arriva alle viste giocatori aperte (canale della diretta). */
   async function adattaGiocatori() {
@@ -968,7 +1028,11 @@ export function renderMappa(radice, ctx) {
       pv_nemici: { testo: `PV dei nemici ai giocatori: ${sn(sc?.pvNemiciGiocatori)}`, titolo: 'La barretta dei PV dei nemici nella vista giocatori (quella dei PG si vede sempre)', azione: () => cambiaPvNemiciGiocatori() },
       sovrapposizioni_giocatori: { testo: `Template e muri ai giocatori: ${sn(!g.nascoste)}`, titolo: 'Template senza durata, muri, porte e terreno sullo schermo dei giocatori', azione: () => cambiaSovrapposizioni('giocatori', 'nascoste') },
       suoni_giocatori: { testo: `Suoni anche ai giocatori: ${sn(sc?.audio?.giocatori)}`, titolo: 'Campanella e musica anche sullo schermo dei giocatori (televisore con le casse)', azione: () => cambiaAudioGiocatori() },
-      blocco_giocatori: { testo: `Blocca movimenti dei giocatori: ${sn(sc?.bloccaGiocatori)}`, titolo: 'Pronto per la fase 2 (tab BattleMap dei giocatori)', azione: () => cambiaBloccoGiocatori() },
+      blocco_giocatori: { testo: `Blocca movimenti dei giocatori: ${sn(sc?.bloccaGiocatori)}`, titolo: 'I tablet dei giocatori vedono la mappa ma non muovono (lo dice anche il tablet)', azione: () => cambiaBloccoGiocatori() },
+      // fase 2, lotto 7: tablet dei giocatori (src/mappa/tablet.js)
+      movimento_tablet: { testo: `Movimento dai tablet: ${impostazioniTablet(sc, ctx.dati).movimento === 'sempre' ? 'sempre' : 'solo al proprio turno'}`, titolo: 'Solo al proprio turno dello scontro aperto, oppure sempre (anche fuori turno e senza scontro)', azione: () => cambiaTablet('movimento') },
+      avviso_turno_tablet: { testo: `Avviso «Tocca a te» ai tablet: ${sn(impostazioniTablet(sc, ctx.dati).avvisoTurno)}`, titolo: 'Quando arriva il turno di un PG, il suo tablet mostra l’avviso grande con suono e vibrazione', azione: () => cambiaTablet('avvisoTurno') },
+      collega_tablet: { testo: 'Collega i tablet: QR e indirizzo…', titolo: 'L’indirizzo da aprire sui tablet (stessa rete Wi-Fi), poi «Sono…»', azione: () => apriStrumento(el.pGiocatori) },
       musica: { testo: 'Musica di fondo…', titolo: 'Un file della cartella musica/ del server', azione: () => scegliMusicaUi(), spenta: f?.scontro || f?.bozza ? null : 'Collega la scena a uno scontro o a una bozza' },
       muto: { testo: `Audio su questo PC: ${audio.impostazioni().muto ? 'muto' : 'attivo'}`, titolo: 'Spegne o riaccende musica ed effetti su questo PC', azione: () => { audio.imposta({ muto: !audio.impostazioni().muto }); aggiornaControlliAudio(); } },
       cancella_temporanei: { testo: 'Cancella template temporanei', titolo: 'Toglie i template a durata in Round; Ctrl+Z li rimette', azione: () => cancellaTemplate({ tutti: false }), spenta: (sc?.template ?? []).some((t) => Number.isInteger(t.durata)) ? null : 'Nessun template a durata in mappa' },
@@ -1026,7 +1090,10 @@ export function renderMappa(radice, ctx) {
       ['Clic destro su un PG o un nemico accanto a un veicolo', '«Sali su … come conducente» (un PG) o «come passeggero»: il token va a bordo e si muove con il mezzo'],
       ['Pannello del veicolo → «A bordo» (o clic destro sul veicolo)', 'gruppo «Scendi»: il nome, poi clic su un quadretto evidenziato accanto; gruppo «Linea di tiro»: la linea di chi è a bordo, dal veicolo'],
       ['Mappa collegata a una bozza', 'gruppo «Iniziativa» → «Inizia scontro»: come «Inizia» della bozza, poi la finestra «Iniziativa»'],
-      ['Strumenti (in alto)', 'sei categorie: Preparazione mappa, Scena, In gioco, Vista giocatori, Suoni, Pulizia; scorciatoia a destra, le voci spente dicono perché'],
+      ['Tablet dei giocatori', 'aprono la vista giocatori (Strumenti → «Collega i tablet»), toccano «Sono…» e muovono il proprio PG: tocco sul quadretto, poi «Conferma». Il server controlla ogni movimento; tu lo vedi in diretta e lo annulli con Ctrl+Z'],
+      ['📱 e 🔔 nell’elenco dell’Iniziativa', '📱 pieno: il tablet del PG è collegato (pagina aperta); 🔔 manda al suo tablet un avviso grande con suono e vibrazione'],
+      ['Strumenti → Tablet dei giocatori', 'blocca i movimenti, «solo al proprio turno» o «sempre», avviso automatico «Tocca a te»'],
+      ['Strumenti (in alto)', 'sette categorie: Preparazione mappa, Scena, In gioco, Vista giocatori, Tablet dei giocatori, Suoni, Pulizia; scorciatoia a destra, le voci spente dicono perché'],
       ['M', 'mostra o nasconde l’area di movimento'],
       ['Z', 'mostra o nasconde le zone di controllo (ZoC) degli avversari'],
       ['P', 'mostra o nasconde la barretta dei PV sui token (solo per te)'],
@@ -3137,6 +3204,17 @@ export function renderMappa(radice, ctx) {
           h('label', { title: 'Nasconde ai giocatori anche i template con durata in Round' }, h('input', { type: 'checkbox', checked: g.ancheDurata, onchange: () => cambiaSovrapposizioni('giocatori', 'ancheDurata') }), ' anche a durata'));
       })(),
       h('div', { class: 'mappa-qr' }, qr, h('small', { class: 'nota' }, url)),
+      // fase 2, lotto 7: i tablet dei giocatori aprono lo stesso indirizzo e scelgono «Sono…»
+      (() => {
+        const imp = impostazioniTablet(st.scena, ctx.dati);
+        const interruttore = (acceso, testo, titolo, fai) => h('button', { type: 'button', role: 'switch', 'aria-checked': String(acceso), class: `interruttore-mappa${acceso ? ' acceso' : ''}`, title: titolo, onclick: fai },
+          h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), testo);
+        return h('div', { class: 'mappa-tablet' },
+          h('p', { class: 'nota' }, h('strong', {}, 'Tablet dei giocatori: '), 'aprono questo indirizzo (o il QR) e toccano «Sono…» per scegliere il loro PG; poi lo muovono da soli. Nessuna password: si gioca in casa.'),
+          interruttore(!imp.bloccato, `Movimenti dai tablet: ${imp.bloccato ? 'bloccati' : 'permessi'}`, 'Bloccati: i tablet vedono ma non muovono', () => cambiaBloccoGiocatori()),
+          interruttore(imp.movimento === 'sempre', `Quando: ${imp.movimento === 'sempre' ? 'sempre' : 'solo al proprio turno'}`, 'Solo al proprio turno dello scontro aperto, oppure sempre', () => cambiaTablet('movimento')),
+          interruttore(imp.avvisoTurno, `Avviso «Tocca a te»: ${imp.avvisoTurno ? 'sì' : 'no'}`, 'Il tablet del PG di turno mostra l’avviso grande, con suono e vibrazione', () => cambiaTablet('avvisoTurno')));
+      })(),
       rete?.soloLocale ? h('p', { class: 'nota' }, 'Server acceso con --solo-locale: dai tablet non si raggiunge. Riavvialo con avvia-server.bat.') : null);
   }
 
@@ -3177,6 +3255,8 @@ export function renderMappa(radice, ctx) {
       h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.tavolo() }, '← Tavolo'))));
   });
 
+  // fase 2, lotto 7: i movimenti dai tablet arrivano entro un secondo
+  const giroRevisione = setInterval(() => controllaRevisione(), 1000);
   const giro = setInterval(async () => {
     aggiornaFonti();
     const prima = st.sceltaGiocatori;
@@ -3199,6 +3279,7 @@ export function renderMappa(radice, ctx) {
     st.chiusa = true;
     audio.chiudi();
     clearInterval(giro);
+    clearInterval(giroRevisione);
     if (st.salvataggio.modificata) salvaOra();
     gesti.distruggi();
     chiudiMenuToken();

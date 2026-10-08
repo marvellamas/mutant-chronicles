@@ -7,7 +7,8 @@
 export const CHIAVE_AUDIO = 'mutant-audio';
 
 /** Eventi audio previsti (data/mappa.json → audio.effetti); per ora suona solo nuovo_round. */
-export const EVENTI_AUDIO = ['nuovo_round', 'attacco_opportunita', 'template_scaduto'];
+// avviso_giocatore (fase 2, lotto 7): il campanellino del master e «Tocca a te», sul tablet del giocatore
+export const EVENTI_AUDIO = ['nuovo_round', 'attacco_opportunita', 'template_scaduto', 'avviso_giocatore'];
 
 /** File dell'effetto per un evento, o null (evento senza suono). */
 export function effettoDi(evento, dati) {

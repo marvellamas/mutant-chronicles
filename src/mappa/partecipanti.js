@@ -56,6 +56,8 @@ function pezzoPg(id, chiave, nomeScontro, lato, viste) {
     chiave: chiaveRif({ tipo: 'partecipante', id }), rif: { tipo: 'partecipante', id }, tipo: 'pg', pg: chiave,
     nome: v?.nome ?? nomeScontro ?? chiave, lato: lato === 'avversario' ? 'avversario' : 'pg', ingombro: 1,
     iniziali: iniziali(v?.nome ?? nomeScontro ?? chiave), ritratto: v?.ritratto ?? null, pv,
+    // fase 2, lotto 7: i PM per la mini-scheda del tablet del giocatore
+    pm: v?.completa ? v.pm ?? null : null,
     aZero: pv ? pv.attuali <= 0 : false, stati: v?.completa ? v.stati : [], ferite: v?.completa ? v.ferite?.nome ?? null : null,
     // lotto 5: Passo, Corsa e Scatto effettivi dalla scheda (null finché la scheda non si legge)
     movimento: v?.completa && v.movimento ? { ...v.movimento } : null,

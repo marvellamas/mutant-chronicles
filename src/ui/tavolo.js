@@ -347,7 +347,9 @@ export function renderTavolo(radice, ctx) {
       await aggiorna(true);
     }) : null;
     const stScontro = Object.assign(stato, { pgAlTavolo: alTavolo.map((r) => stato.viste.get(r.file)).filter((v) => v?.completa) });
-    const azScontro = { modifica, crea: (s) => salva(s), ridisegna: disegna, annullaColpo, indietro: indietroUi, reimposta: (id) => reimpostaUi(id), chiediIniziativa: () => iniziativaUi(null), centra: ctx.inMappa?.centra ? (p) => ctx.inMappa.centra(`partecipante:${p.id}`) : null, attacca: (p) => attacca(p, alTavolo) };
+    const azScontro = { modifica, crea: (s) => salva(s), ridisegna: disegna, annullaColpo, indietro: indietroUi, reimposta: (id) => reimpostaUi(id), chiediIniziativa: () => iniziativaUi(null), centra: ctx.inMappa?.centra ? (p) => ctx.inMappa.centra(`partecipante:${p.id}`) : null, attacca: (p) => attacca(p, alTavolo),
+      // fase 2, lotto 7: tablet dei giocatori collegati e campanellino
+      tablet: { collegati: stato.tablet ?? [], chiama: (p) => chiamaTablet(p) } };
     const cartePg = alTavolo.length
       ? h('div', { class: 'plancia-griglia' }, alTavolo.map((r) => (r.mancante ? cartaMancante(r.mancante)
         : stato.viste.get(r.file) ? conPezzo(cartaPg(ctx, stato.viste.get(r.file), r, turnoDi(r), colpitoPg, durateDi(stato.viste.get(r.file))), `partecipante:pg:${chiaveDaFile(r.file)}`) : cartaErrore(r, stato.errori.get(r.file)))))
@@ -803,6 +805,24 @@ export function renderTavolo(radice, ctx) {
     return !!t && t.tipo === 'pg' && t.chiave === chiaveDaFile(r.file);
   };
 
+  // fase 2, lotto 7: chi ha il tablet collegato (server.mjs → /api/tablet) e il campanellino
+  const aggiornaTablet = async () => {
+    const r = await fetch('api/tablet', { cache: 'no-store' });
+    if (!r.ok) return false;
+    const collegati = ((await r.json()).collegati ?? []).slice().sort();
+    if (JSON.stringify(collegati) === JSON.stringify(stato.tablet ?? [])) return false;
+    stato.tablet = collegati;
+    return true;
+  };
+  async function chiamaTablet(p) {
+    try {
+      const r = await fetch('api/tablet/avviso', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ pg: p.chiave, tipo: 'campanello' }) });
+      const { consegnati = 0 } = await r.json().catch(() => ({}));
+      if (consegnati) avviso(`🔔 Avviso mandato al tablet di ${p.nome}.`, { chiave: 'campanello' });
+      else avvisoErrore(`Il tablet di ${p.nome} non è collegato: la pagina deve essere aperta (senza HTTPS gli avvisi non arrivano a pagina chiusa).`, { chiave: 'campanello' });
+    } catch (e) { avvisoErrore(`Avviso non mandato: ${e.message}`, { chiave: 'campanello' }); }
+  }
+
   // rilegge l'elenco e i file cambiati dei personaggi al tavolo (confronto sull'mtime)
   const visti = new Map(); // file → mtime letto
   const aggiorna = async (forza = false) => {
@@ -841,6 +861,9 @@ export function renderTavolo(radice, ctx) {
     } catch (e) {
       stato.errore = e.message;
     }
+    try {
+      if (await aggiornaTablet()) cambiato = true;
+    } catch { /* senza server dei tablet: nessun indicatore */ }
     // scontro aperto: si rilegge quando cambia la revisione (un'altra finestra, un altro PC)
     try {
       const aperto = await leggiScontroAperto();
