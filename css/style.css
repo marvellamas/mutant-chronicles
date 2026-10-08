@@ -2079,7 +2079,7 @@ button.mini-token { cursor: pointer; }
 .mappa-barra .mappa-comandi { flex-wrap: nowrap; }
 .mappa-barra .mappa-stato { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.85rem; }
 .mappa-barra .lungo { display: none; }
-@media (min-width: 1600px) { .mappa-barra .lungo { display: inline; } }
+
 .menu-altro .menu-strumenti-voci { left: auto; right: 0; }
 .voce-strumenti-nota { margin: 0.25rem 0.6rem 0.35rem; font-size: 0.85rem; }
 @media (max-width: 46rem) { .mappa-barra, .mappa-barra .mappa-comandi { flex-wrap: wrap; } }
@@ -2174,3 +2174,18 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 .riquadro-prep-numero { display: inline-flex; align-items: center; justify-content: center; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--accento); color: var(--su-accento, #fff); font-size: 0.9rem; font-weight: 700; }
 .veicoli-bozza h4 { margin: 0.5rem 0 0.2rem; }
 .veicoli-bozza ul { margin: 0; padding-left: 1.2rem; }
+
+/* barra della mappa a gruppi (ritocchi del 08/10): cinque riquadri distinti, che vanno a capo interi */
+.mappa-barra { flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+/* le parole accanto alle icone solo sugli schermi molto larghi: a 1920 la barra sta su una riga */
+.mappa-barra .lungo { display: none; }
+@media (min-width: 2000px) { .mappa-barra .lungo { display: inline; } }
+.mappa-gruppo { display: inline-flex; flex-wrap: nowrap; align-items: center; gap: 0.3rem; padding: 0.25rem 0.45rem; border: 1px solid var(--bordo); border-radius: var(--raggio); background: var(--superficie); min-width: 0; }
+.mappa-gruppo.gruppo-app { background: var(--accento-tenue); }
+.mappa-gruppo.gruppo-app .marchio-in-linea { margin: 0; }
+.mappa-gruppo.gruppo-app .mappa-titolo { max-width: 14rem; font-size: 1.1rem; }
+.mappa-gruppo.gruppo-strumenti { border-color: var(--accento); }
+.mappa-gruppo.gruppo-strumenti .menu-strumenti:not(.menu-altro) > summary { background: var(--accento); color: var(--su-accento, #fff); border-color: var(--accento); font-weight: 700; font-size: 1.05rem; padding: 0.35rem 0.9rem; }
+.mappa-gruppo.gruppo-suoni { margin-left: auto; }
+.mappa-gruppo.gruppo-suoni .mappa-stato { max-width: 11rem; }
+@media (max-width: 30rem) { .mappa-gruppo { flex-wrap: wrap; } }

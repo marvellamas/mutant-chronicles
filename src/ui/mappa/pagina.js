@@ -187,22 +187,28 @@ export function renderMappa(radice, ctx) {
   el.btnDisp = Object.fromEntries(DISPOSIZIONI.map((d) => [d, h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-pressed': 'false', 'aria-label': NOMI_DISPOSIZIONI[d], title: `${NOMI_DISPOSIZIONI[d]} (Tab per passare alla prossima)`, onclick: () => scegliDisposizione(d) }, conIcona(ICONE_DISPOSIZIONI[d], NOMI_DISPOSIZIONI[d]))]));
   el.btnGriglia = h('span', { class: 'mappa-disposizioni', role: 'group', 'aria-label': 'Disposizione' }, DISPOSIZIONI.map((d) => el.btnDisp[d]));
   el.btnCarica = h('button', { type: 'button', class: 'btn', title: 'Immagine di fondo: JPG, PNG o WEBP', onclick: () => el.scegliFile.click() }, 'Carica immagine');
+  // ritocchi del 08/10 (test di Marcello): cinque gruppi distinti, che vanno a capo interi: 1 «Mutant», «← Tavolo» e il
+  // nome della scena (la testata dell'app sparisce: una riga in meno); 2 zoom e disposizioni; 3 sovrapposizioni;
+  // 4 «Strumenti» (il più importante), «⋯» e «?»; 5 suoni e stato del salvataggio
   el.barra = h('header', { class: 'mappa-barra' },
-    h('button', { type: 'button', class: 'btn', title: 'Torna alla plancia del Tavolo del Master', 'aria-label': 'Torna al Tavolo', onclick: () => ctx.azioni.tavolo() }, conIcona('←', 'Tavolo')),
-    el.titolo,
-    h('span', { class: 'mappa-comandi' },
+    h('span', { class: 'mappa-gruppo gruppo-app', role: 'group', 'aria-label': 'App' },
+      h('a', { class: 'marchio marchio-in-linea', href: '#/', title: 'Elenco dei personaggi' }, 'Mutant'),
+      h('button', { type: 'button', class: 'btn', title: 'Torna alla plancia del Tavolo del Master', 'aria-label': 'Torna al Tavolo', onclick: () => ctx.azioni.tavolo() }, conIcona('←', 'Tavolo')),
+      el.titolo),
+    h('span', { class: 'mappa-gruppo gruppo-vista', role: 'group', 'aria-label': 'Zoom e disposizione' },
       el.scegliFile,
       h('button', { type: 'button', class: 'btn tondo', title: 'Allontana (−)', 'aria-label': 'Allontana', onclick: () => zoomCentro(1 / V.passo_tasti) }, '−'),
       el.zoom,
       h('button', { type: 'button', class: 'btn tondo', title: 'Avvicina (+)', 'aria-label': 'Avvicina', onclick: () => zoomCentro(V.passo_tasti) }, '+'),
       h('button', { type: 'button', class: 'btn', title: 'Adatta allo schermo: tutta la mappa nel riquadro (tasto A, anche doppio clic su un punto vuoto)', 'aria-label': 'Adatta allo schermo', onclick: () => adattaSchermo() }, conIcona('⤢', 'Adatta')),
-      el.btnGriglia,
-      // ritocchi del 07/10: «Mostra / nascondi template» (Maiusc+T), con «anche i template a durata»
-      el.sovrapposizioni = h('span', { class: 'mappa-sovrapposizioni', role: 'group', 'aria-label': 'Sovrapposizioni' },
+      el.btnGriglia),
+    // ritocchi del 07/10: «Mostra / nascondi template» (Maiusc+T), con «anche i template a durata»
+    el.sovrapposizioni = h('span', { class: 'mappa-sovrapposizioni mappa-gruppo gruppo-sovr', role: 'group', 'aria-label': 'Sovrapposizioni' },
         el.btnSovr = h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-pressed': 'true', title: 'Mostra o nasconde i template senza durata, i muri, le porte e il terreno difficile (Maiusc+T); per il movimento valgono sempre', onclick: () => cambiaSovrapposizioni('master', 'nascoste') }, conIcona('◫', 'Template')),
         el.ancheDurata = h('label', { class: 'casella-sovr', title: 'Il pulsante nasconde e mostra anche i template con durata in Round' }, h('input', { type: 'checkbox', onchange: () => cambiaSovrapposizioni('master', 'ancheDurata') }), h('span', { class: 'lungo' }, ' anche a durata')),
         // ritocchi del 07/10: toglie in un colpo i template a durata (quelli dello scontro)
         h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Cancella template temporanei: toglie tutti i template a durata in Round; quelli senza durata, muri, porte e terreno restano (Ctrl+Z li rimette)', 'aria-label': 'Cancella template temporanei', onclick: () => cancellaTemplate({ tutti: false }) }, conIcona('🧹', 'Temporanei'))),
+    h('span', { class: 'mappa-gruppo gruppo-strumenti', role: 'group', 'aria-label': 'Strumenti' },
       // lotto 7 (§12, menu superiore): gli strumenti del master in un menu
       el.strumenti = h('details', { class: 'menu-strumenti' },
         h('summary', { class: 'btn', title: 'Strumenti del master: immagine, griglia, nebbia, muri, scene, movimenti dei giocatori', 'aria-label': 'Strumenti' }, conIcona('🛠', 'Strumenti'), ' ▾'),
@@ -238,10 +244,11 @@ export function renderMappa(radice, ctx) {
           h('button', { type: 'button', role: 'menuitem', class: 'voce-strumenti', title: 'Scorciatoie e comandi (?)', onclick: () => { el.altro.open = false; apriAiuto(); } }, 'Scorciatoie e comandi (?)'),
           el.voceMostraPv = h('button', { type: 'button', role: 'menuitemcheckbox', class: 'voce-strumenti', 'aria-checked': 'true', title: 'Barretta rossa dei PV sotto i token (tasto P); i giocatori vedono sempre quella dei PG', onclick: () => { el.altro.open = false; cambiaMostraPv(); } }, 'Mostra PV sui token (P)'),
           h('p', { class: 'nota voce-strumenti-nota' }, el.scala))),
+      h('button', { type: 'button', class: 'btn tondo', title: 'Scorciatoie e comandi (?)', 'aria-label': 'Scorciatoie e comandi', onclick: () => apriAiuto() }, '?')),
+    h('span', { class: 'mappa-gruppo gruppo-suoni', role: 'group', 'aria-label': 'Suoni e salvataggio' },
       // suoni (07/10): musica di fondo dello scontro e, accanto, muto e volumi (disegnaAudio)
       el.audio = h('span', { class: 'mappa-audio', role: 'group', 'aria-label': 'Suoni' }),
-      h('button', { type: 'button', class: 'btn tondo', title: 'Scorciatoie e comandi (?)', 'aria-label': 'Scorciatoie e comandi', onclick: () => apriAiuto() }, '?')),
-    el.stato);
+      el.stato));
   el.riquadro = h('div', { class: 'mappa-tela', tabindex: '0', 'aria-label': 'Mappa: rotella per lo zoom, barra spaziatrice e mouse o trascinamento per spostarsi' });
   el.suggerimento = h('div', { class: 'mappa-suggerimento', hidden: true, role: 'status' });
   el.riquadro.append(el.suggerimento);

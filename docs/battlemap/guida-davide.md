@@ -6,6 +6,8 @@ Questa guida si apre anche dall'app: nel Tavolo del Master «Guida della mappa»
 
 Quando aggiorni o avvii Mutant, a Marcello arriva un avviso con la versione: serve a sapere se stai provando l'ultima. Per disattivarlo: `avvisi.json` → `attivo: false`. Il file sta in `avvisi/avvisi.json`.
 
+**La barra in alto** ha cinque gruppi, da sinistra: «Mutant» e «← Tavolo» con il nome della scena; zoom, «Adatta» e le tre disposizioni; template e «🧹 Temporanei»; **«Strumenti»** (il menu più importante), «⋯» e «?»; musica, volumi e «Salvata alle…». Sugli schermi stretti i gruppi vanno a capo interi.
+
 ## Preparare la scena
 
 1. **Prepara lo scontro.** Nel Tavolo del Master, «Prepara scontro» → «Nuova bozza». La bozza ha quattro riquadri: **1 Base** (nome, musica di fondo, note), **2 PG e veicoli** (PG con «Tutti» o a scelta; i veicoli che entreranno), **3 Nemici** (presenti, difficoltà, «Dal bestiario», «Creatura pronta», «Crea nemico»), **4 Mappa** («Prepara la mappa», scena, posizione iniziale). In fondo «Inizia», «Inizia e consuma la bozza», «Salva e chiudi»: passandoci sopra dicono cosa fanno. La bozza si salva da sola («Salvata alle…»).
