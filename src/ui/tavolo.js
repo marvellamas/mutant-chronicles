@@ -353,7 +353,16 @@ export function renderTavolo(radice, ctx) {
       ctx.inMappa || ctx.soloCarta ? null : linkGuidaMappa('Guida della mappa'),
       h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.personaggi() }, 'Personaggi'));
     const esitoEsempi = stato.esitoEsempi ? h('p', { class: 'riquadro attenzione', role: 'status' }, stato.esitoEsempi) : null;
-    const collega = riquadroCollega(stato.rete, { aperto: stato.collegaAperto, onToggle: (v) => { stato.collegaAperto = v; } });
+    // 08/10: nel riquadro anche l'elenco «Tablet collegati» dei PG al tavolo (stesso dato dell'elenco dell'Iniziativa)
+    const iniz = (n) => String(n ?? '?').split(/\s+/).filter(Boolean).map((x) => x[0]).join('').slice(0, 2).toUpperCase();
+    const tabletPg = alTavolo.filter((r) => r.file).map((r) => {
+      const v = stato.viste.get(r.file);
+      const chiave = chiaveDaFile(r.file);
+      const nome = v?.nome ?? chiave.replace(/-/g, ' ');
+      return { chiave, nome, ritratto: v?.ritratto ?? null, iniziali: iniz(nome), collegato: (stato.tablet ?? []).some((k) => stessaChiave(k, chiave)),
+        nelloScontro: (stato.scontro?.partecipanti ?? []).some((p) => p.tipo === 'pg' && stessaChiave(p.chiave, chiave)) };
+    });
+    const collega = riquadroCollega(stato.rete, { aperto: stato.collegaAperto, onToggle: (v) => { stato.collegaAperto = v; }, tablet: { pg: tabletPg, chiama: stato.scontro ? (p) => chiamaTablet(p) : null } });
     const scelta = stato.sceltaAperta ? sceltaAlTavolo(stato, ultimi, async (nuova) => {
       try {
         stato.selezione = await scriviSelezione(nuova);

@@ -34,11 +34,25 @@ const qr = (url) => {
   return el;
 };
 
+/** «Tablet collegati»: una riga per PG del tavolo con ritratto o iniziali, nome, 📱 e, nello scontro, «🔔 Chiedi di muovere». */
+function elencoTablet({ pg, chiama }) {
+  const quanti = pg.filter((p) => p.collegato).length;
+  return h('section', { class: 'collega-tablet', 'aria-label': 'Tablet collegati' },
+    h('h3', {}, `Tablet collegati `, h('small', { class: 'nota' }, `${quanti} su ${pg.length}`)),
+    h('ul', { class: 'collega-tablet-elenco' }, pg.map((p) => h('li', { class: `collega-tablet-voce${p.collegato ? ' collegato' : ''}` },
+      p.ritratto ? h('img', { class: 'collega-tablet-ritratto', src: p.ritratto, alt: '' }) : h('span', { class: 'collega-tablet-ritratto iniziali', 'aria-hidden': 'true' }, p.iniziali),
+      h('span', { class: 'collega-tablet-nome' }, p.nome),
+      h('span', { class: `tablet-indicatore ${p.collegato ? 'collegato' : 'scollegato'}`, role: 'img', 'aria-label': p.collegato ? 'tablet collegato' : 'tablet non collegato', title: p.collegato ? 'Tablet collegato (scheda o mappa aperta)' : 'Tablet non collegato' }, '📱'),
+      h('small', { class: 'nota' }, p.collegato ? 'collegato' : 'non collegato'),
+      chiama && p.collegato && p.nelloScontro ? h('button', { type: 'button', class: 'btn btn-piccolo btn-campanello', title: `Chiedi a ${p.nome} di muovere: avviso grande, suono e vibrazione sul suo tablet`, onclick: () => chiama(p) }, '🔔 Chiedi di muovere') : null))));
+}
+
 /**
  * @param rete risposta di /api/rete (null finché non arriva)
- * @param opzioni { aperto, onToggle }
+ * @param opzioni { aperto, onToggle, tablet? }: tablet (08/10) = { pg: [{ chiave, nome, ritratto, iniziali, collegato }],
+ *   chiama(p) | null }: l'elenco «Tablet collegati» dei PG al tavolo, con «🔔 Chiedi di muovere» se c'è uno scontro aperto
  */
-export function riquadroCollega(rete, { aperto, onToggle }) {
+export function riquadroCollega(rete, { aperto, onToggle, tablet = null }) {
   if (!rete) return null;
   const { indirizzi = [], altri = [], tuttiPerDubbio, soloLocale, porta } = rete;
   // 08/10 (screenshot di Marcello): compatto, non più alto del riquadro «Scontro»: per ogni indirizzo il QR piccolo, l'URL
@@ -56,6 +70,8 @@ export function riquadroCollega(rete, { aperto, onToggle }) {
               h('span', { class: 'collega-azioni' },
                 h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-label': `Copia ${v.url}`, onclick: () => copia(v.url) }, 'Copia'),
                 indirizzi.length > 1 || tuttiPerDubbio ? h('small', { class: 'nota' }, v.nome) : null))))),
+          // 08/10: chi ha il tablet collegato (scheda o mappa aperta), lo stesso dato dell'elenco dell'Iniziativa
+          tablet?.pg?.length ? elencoTablet(tablet) : null,
           h('details', { class: 'collega-aiuto' }, h('summary', {}, 'Non si collegano?'),
             h('p', { class: 'nota' }, 'In Windows la rete Wi-Fi deve essere «privata», non «pubblica», e il firewall deve consentire Node.js (alla prima accensione Windows lo chiede: «reti private»).'),
             tuttiPerDubbio ? h('p', { class: 'nota' }, 'Non so quale sia la rete Wi-Fi: provate gli indirizzi uno alla volta.') : null,
