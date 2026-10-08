@@ -344,6 +344,8 @@ export function renderGiocatori(radice, ctx) {
     // scena nuova o mappa di altre misure: si riparte da «Adatta allo schermo»
     const chiave = `${st.vista.id}|${st.vista.griglia.colonne}x${st.vista.griglia.righe}|${file}`;
     if (chiave !== st.adattata) { st.adattata = chiave; adattaSchermo(); } else tela.richiedi();
+    // dalla scheda (08/10): la mappa si apre centrata sul PG, dopo il primo «Adatta» (una volta; poi la muove il giocatore)
+    if (st.daScheda && !st.centrato && st.io?.token && st.vista.token.some((t) => t.id === st.io.token)) { st.centrato = true; centraSuDiMe(); }
   }
 
   // ── Tablet del giocatore (fase 2, lotto 7) ──
@@ -397,8 +399,6 @@ export function renderGiocatori(radice, ctx) {
     // il permesso è cambiato o il token si è mosso: la prova non vale più
     if (st.prova && (!st.io?.permesso?.puo || prima?.area?.usato !== st.io?.area?.usato)) st.prova = null;
     aggiornaTablet();
-    // dalla scheda: la mappa si apre centrata sul PG (una volta; poi la vista la muove il giocatore)
-    if (st.daScheda && !st.centrato && st.io?.token && st.vista?.token.some((t) => t.id === st.io.token)) { st.centrato = true; queueMicrotask(() => centraSuDiMe()); }
   }
 
   /** Celle dell'area del proprio PG fino alla fascia scelta (1 Passo, 2 Corsa, 3 Scatto), o null. */
