@@ -1,14 +1,55 @@
-Salvataggi di fine sessione di Mutant
-=====================================
+Salvataggi della sessione di Mutant
+===================================
 
-Qui salva-sessione.bat (tools/salva-sessione.mjs) mette un archivio per ogni copia:
-sessione_AAAA-MM-GG_hhmm.zip, con dentro le cartelle personaggi, veicoli, scontri,
-nemici e tavolo del server, cioe' lo stato di tutti i personaggi e del Tavolo a fine sessione.
+Qui va un archivio per ogni salvataggio completo: sessione_AAAA-MM-GG_hhmm.zip, con dentro le
+cartelle personaggi, veicoli, scontri, nemici, tavolo, scene e mappe del server, cioe' lo stato di
+tutti i personaggi, del Tavolo e delle mappe in quel momento.
 
-- Nessun salvataggio viene mai cancellato o sovrascritto: due copie nello stesso minuto
-  prendono un nome con _2, _3...
-- Per rimettere a posto una sessione: si apre l'archivio e si copiano le cartelle nella
-  cartella dell'app, con il server spento.
-- I file di questa cartella non vanno su GitHub con l'app (.gitignore): sono dati di gioco.
-  La copia su Drive o su un repository privato si configura in config-salvataggi.json
-  (modello: config-salvataggi.esempio.json).
+Il salvataggio completo e' uno solo e parte da tre punti:
+- «Salva sessione» nel Tavolo del Master (anche dalla mappa, gruppo «Scontro»);
+- «Spegni Mutant» nel Tavolo del Master: salva, mostra l'esito e spegne il server;
+- salva-sessione.bat (doppio clic, con il server acceso o spento).
+Anche chiudendo la finestra nera del server con la X Mutant prova a salvare (Windows lascia pochi
+secondi: lo zip qui e su Drive di solito si fa, la notifica non sempre).
+
+Ogni volta:
+1. crea lo zip qui (mai cancellato ne' sovrascritto: due nello stesso minuto prendono _2, _3...);
+2. lo copia nella cartella di Google Drive, se impostata (config-salvataggi.json, "cartella_drive");
+3. manda a Marcello la notifica «Sessione salvata» con ntfy (lo stesso canale degli avvisi), con
+   allegato lo zip dei soli dati (senza le immagini delle mappe, pochi KB).
+L'esito compare a schermo: «Sessione salvata: zip 812 KB · Drive ✓ · ntfy ✓». Se Drive o ntfy non
+riescono lo dice, ma lo zip qui c'e' sempre.
+
+Oltre a questi, il server salva da solo ogni 5 minuti nella cartella autosave (autosave\LEGGIMI.txt).
+
+
+Impostare la copia su Google Drive (una volta sola)
+---------------------------------------------------
+1. Installa «Google Drive per desktop» (https://www.google.com/drive/download/) e accedi con il tuo
+   account Google. In Esplora file compare un disco «Google Drive» (di solito G:) con «Il mio Drive».
+2. Dentro «Il mio Drive» crea la cartella «Mutant salvataggi» e condividila con Marcello
+   (dal sito drive.google.com: tasto destro sulla cartella > Condividi).
+3. Apri con il Blocco note il file config-salvataggi.json nella cartella di Mutant (se non c'e',
+   lancia aggiorna.bat: lo crea lui) e scrivi il percorso della cartella, con le barre / :
+       "cartella_drive": "G:/Il mio Drive/Mutant salvataggi",
+   Il percorso giusto si copia dalla barra dell'indirizzo di Esplora file, dentro la cartella;
+   poi si cambiano le \ in /.
+4. Fai doppio clic su salva-sessione.bat: deve dire «Drive ✓». Lo zip compare nella cartella di
+   Drive e, dopo qualche minuto, anche sul Drive di Marcello.
+
+
+Rimettere a posto una sessione (ripristino)
+-------------------------------------------
+Si puo' ripartire da un salvataggio di questa cartella, da autosave\autosave.zip (l'ultimo
+automatico) o da autosave\autosave-precedente.zip (quello prima).
+1. Spegni Mutant («Spegni Mutant» o chiudi la finestra nera).
+2. Fai doppio clic su salva-sessione.bat: e' la copia di sicurezza di come sono le cose adesso,
+   se poi volessi tornare indietro.
+3. Apri lo zip scelto con un doppio clic: si vedono le cartelle personaggi, veicoli, scontri,
+   nemici, tavolo, scene e mappe.
+4. Nella cartella di Mutant sposta nel Cestino le cartelle con lo stesso nome di quelle dello zip.
+5. Trascina le cartelle dello zip nella cartella di Mutant.
+6. Riaccendi con avvia-server.bat. Le schede aperte sui tablet si aggiornano da sole; se una chiede
+   «Aggiorna» o «Tieni la mia», premi «Aggiorna» (altrimenti riscrive la versione del tablet).
+
+I file di questa cartella non vanno su GitHub con l'app (.gitignore): sono dati di gioco.

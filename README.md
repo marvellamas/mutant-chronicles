@@ -41,10 +41,14 @@ Per tenere il server chiuso agli altri dispositivi: `node server.mjs --solo-loca
 
 **Avvisi a Marcello.** Quando aggiorni o avvii Mutant, a Marcello arriva un avviso con la versione: serve a sapere se stai provando l'ultima. Per disattivarlo: `avvisi.json` → `attivo: false`. Il file è `avvisi/avvisi.json` (lo crea `aggiorna.bat` la prima volta); parte solo nome del PC, versione, data e ora, esito (dettagli in `avvisi/LEGGIMI.txt`).
 
-**Copia di fine sessione: `salva-sessione.bat`.**
-1. A fine sessione fai doppio clic su `salva-sessione.bat` (anche con il server acceso): crea `salvataggi/sessione_AAAA-MM-GG_hhmm.zip` con personaggi, veicoli, scontri, nemici e tavolo. I salvataggi non vengono mai cancellati né sovrascritti.
-2. Per avere la copia anche su Google Drive: copia `config-salvataggi.esempio.json` come `config-salvataggi.json` e scrivi in `copia_in` la cartella di Drive sul PC (togli la voce `github` se non ti serve).
-3. Per la copia anche su GitHub (per Marcello): in `github.cartella` metti la cartella di un clone di un repository **privato** solo per i salvataggi, già collegato con le tue credenziali; senza, la copia salta con un messaggio e il resto funziona.
+**Salvataggi (per Davide).**
+1. Con il server acceso Mutant salva da solo ogni 5 minuti nella cartella `autosave`, se qualcosa è cambiato. Non devi fare nulla.
+2. A fine serata premi **«Spegni Mutant»** nel Tavolo del Master: salva la sessione, ti mostra l'esito e chiude la finestra nera.
+3. Il salvataggio crea uno zip in `salvataggi` (mai cancellato), lo copia nella tua cartella di Google Drive e manda a Marcello una notifica con i dati allegati.
+4. Durante la serata puoi salvare quando vuoi con **«Salva sessione»** (nel Tavolo e nella mappa, gruppo «Scontro»), oppure con `salva-sessione.bat`.
+5. Se chiudi la finestra nera con la X, Mutant prova comunque a salvare. Se il PC si spegne di colpo, resta l'ultimo salvataggio automatico.
+
+La cartella di Google Drive si imposta una volta in `config-salvataggi.json` (lo crea `aggiorna.bat`), voce `cartella_drive`. I passi sono in `salvataggi/LEGGIMI.txt`, insieme a come rimettere a posto una sessione da un salvataggio. Facoltativo: `github` per un repository **privato** solo per i salvataggi.
 
 ### Avvio diretto dal repo: avvia.bat
 

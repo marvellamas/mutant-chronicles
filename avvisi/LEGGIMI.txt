@@ -11,5 +11,9 @@ l'ultima. Non parte nient'altro: nessun personaggio, nessuna scena, nessuno scon
     "ntfy_argomento"    il canale su ntfy.sh a cui Marcello e' iscritto: non cambiarlo
 - stato.json: quando e' partito l'ultimo avviso di avvio (al massimo uno ogni 6 ore) e di
   «Mappa aperta» (al massimo uno al giorno). Si puo' cancellare.
+- Eccezione voluta (08/10): il salvataggio della sessione («Salva sessione», «Spegni Mutant»,
+  salva-sessione.bat) manda sullo stesso canale la notifica «Sessione salvata» con allegati i dati
+  di gioco (personaggi, scontri, scene...; non le immagini delle mappe). Si spegne con "ntfy": false
+  in config-salvataggi.json. L'allegato resta scaricabile su ntfy.sh per qualche ora.
 - Senza rete o se l'invio non riesce, Mutant funziona lo stesso: l'avviso semplicemente non parte.
 - avvisi.json e stato.json non vanno su GitHub (.gitignore).
