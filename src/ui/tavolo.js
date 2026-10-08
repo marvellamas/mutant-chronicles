@@ -27,7 +27,7 @@ import { vociBestiario } from '../nemici.js';
 import { creaCustode } from './ridisegno.js';
 import { avviso, avvisoErrore } from './avvisi.js';
 import { apriCreaNemico, apriDaBestiario } from './crea-nemico.js';
-import { apriPreparazione } from './preparazione.js';
+import { apriPreparazione, iniziaBozzaDallaMappa } from './preparazione.js';
 import { riquadroCollega, leggiRete } from './collega.js';
 import { cartaVeicoloPlancia } from './veicoli.js';
 import { stessaChiave } from '../veicoli-registro.js';
@@ -369,7 +369,10 @@ export function renderTavolo(radice, ctx) {
       const c = ctx.inMappa.collegamento?.() ?? null;
       const riquadro = (titolo, testo) => h('section', { class: 'riquadro scontro-pannello' }, h('h2', {}, titolo), h('p', { class: 'nota' }, testo));
       svuota(S.iniziativa, h('div', { class: 'plancia plancia-in-mappa' },
-        c?.bozza ? riquadro('Scontro non ancora iniziato', `La scena è collegata alla bozza «${c.nomeBozza ?? c.bozza}»: l’ordine d’Iniziativa compare quando lo scontro inizia («Prepara scontro» → «Inizia»).`)
+        c?.bozza ? h('section', { class: 'riquadro scontro-pannello' }, h('h2', {}, 'Scontro non ancora iniziato'),
+          h('p', { class: 'nota' }, `La scena è collegata alla bozza «${c.nomeBozza ?? c.bozza}»: l’ordine d’Iniziativa compare quando lo scontro inizia.`),
+          stato.scontro ? h('p', { class: 'nota' }, `È già aperto lo scontro «${stato.scontro.nome}»: chiudilo con «Fine scontro» prima di iniziarne un altro.`) : null,
+          h('button', { type: 'button', class: 'btn primario', disabled: !!stato.scontro, title: 'Inizia scontro: come «Inizia» della bozza; poi la finestra «Iniziativa». La bozza resta per rigiocarlo', onclick: () => iniziaDallaMappa(c.bozza) }, 'Inizia scontro'))
           : !c?.scontro ? riquadro('Nessuno scontro collegato', 'Collega la scena a uno scontro o a una bozza dal gruppo «Mappa».')
             : c.scontro !== stato.scontro?.id ? riquadro('Lo scontro della scena non è aperto', stato.scontro ? `È aperto un altro scontro («${stato.scontro.nome}»): collega la scena a quello dal gruppo «Mappa», o chiudilo.` : 'Lo scontro collegato è chiuso: collega la scena a un altro scontro o a una bozza dal gruppo «Mappa».')
               : pannelloScontro(ctx, stScontro, azScontro, 'iniziativa')));
@@ -427,17 +430,24 @@ export function renderTavolo(radice, ctx) {
     if (riapri) apriDaBestiario(ctx, riapri, opzioni); else apriCreaNemico(ctx, opzioni);
   };
   // «Prepara scontro» (src/ui/preparazione.js): «Inizia» mette al tavolo i PG scelti nella bozza e apre lo scontro
+  // mette al tavolo i PG scelti nella bozza e salva lo scontro (poi la finestra «Iniziativa», dal salvataggio)
+  const iniziaScontroBozza = async (scontro, chiaviPg) => {
+    if (chiaviPg.length) {
+      try { stato.selezione = await scriviSelezione([...new Set([...stato.selezione, ...chiaviPg])]); } catch (e) { avvisoErrore(`Selezione «al tavolo» non salvata: ${e.message}`); }
+    }
+    const ok = await salva(scontro, { conferme: false });
+    await aggiorna(true);
+    return ok;
+  };
   const preparaScontro = () => apriPreparazione(ctx, {
     bestiario: () => stato.bestiario, alTavolo: pgAlTavolo, scontroAperto: () => !!stato.scontro, salvatoBestiario: bestiarioSalvato,
-    inizia: async (scontro, chiaviPg) => {
-      if (chiaviPg.length) {
-        try { stato.selezione = await scriviSelezione([...new Set([...stato.selezione, ...chiaviPg])]); } catch (e) { avvisoErrore(`Selezione «al tavolo» non salvata: ${e.message}`); }
-      }
-      const ok = await salva(scontro, { conferme: false });
-      await aggiorna(true);
-      return ok;
-    },
+    inizia: iniziaScontroBozza,
   });
+  // ritocchi del 08/10: «Inizia scontro» dalla mappa collegata a una bozza (come «Inizia» della preparazione)
+  const iniziaDallaMappa = async (idBozza) => {
+    await aggiorna();
+    return iniziaBozzaDallaMappa(ctx, idBozza, { alTavolo: pgAlTavolo, scontroAperto: () => !!stato.scontro, inizia: iniziaScontroBozza });
+  };
   // «Carica esempi»: copia esempi/ nelle cartelle del server senza sovrascrivere (server.mjs → /api/esempi)
   const caricaEsempi = async () => {
     try {
