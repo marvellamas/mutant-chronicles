@@ -185,3 +185,26 @@ export function miniScheda(pezzo) {
 /** Il token del PG si vede nella vista giocatori? (per «Centra su di me» e l'evidenza). */
 export const tokenVisibile = (scena, token) => !!token && visibileAiGiocatori(token, scena);
 
+
+/**
+ * Fusione delle scritture (08/10): i movimenti dai tablet `ids` (già nella scena del server `server`) applicati alla
+ * scena `locale` del master, che non li conosceva: solo posizione del token, movimento registrato (Q usati) e voce per
+ * Ctrl+Z. Tutto il resto resta quello del master. Un movimento già presente, o di un token che il master ha tolto,
+ * non si applica. Funzione pura, usata dal server (PUT su una revisione vecchia) e dalla mappa del master.
+ */
+export function fondiMovimentiTablet(locale, server, ids, dati) {
+  let s = locale;
+  const S = dati.mappa.scena;
+  for (const id of ids) {
+    const m = (server.movimenti ?? []).find((x) => x.id === id);
+    if (!m || s.movimenti.some((x) => x.id === id) || !s.token.some((t) => t.id === m.token)) continue;
+    const voce = (server.annulla ?? []).find((v) => v.tipo === 'movimento' && v.movimento === id);
+    s = {
+      ...s,
+      token: s.token.map((t) => (t.id === m.token ? { ...t, q: [...m.a] } : t)),
+      movimenti: [...s.movimenti, m].slice(-S.movimenti_max),
+      annulla: voce ? [...s.annulla, voce].slice(-S.annulla_max) : s.annulla,
+    };
+  }
+  return s;
+}

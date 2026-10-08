@@ -243,3 +243,56 @@ test('validatore: data/mappa.json → tablet e scena.tablet', async () => {
   assert.match(validaScena({ ...s, tablet: { movimento: 'mai' } }, dati), /tablet\.movimento/);
   assert.match(validaScena({ ...s, tablet: { avvisoTurno: 'sì' } }, dati), /tablet\.avvisoTurno/);
 });
+
+test('scritture contemporanee: il salvataggio del master si fonde con il movimento dal tablet, nessuna perdita', async () => {
+  scriviScena((s) => ({ ...s, tablet: { movimento: 'sempre' } }));
+  try {
+    // il master legge la scena, poi cambia il nome e sposta il predone visibile; intanto Bea si muove dal tablet
+    const master = await (await fetch(`${base}/api/scene/cripta`)).json();
+    const daSalvare = { ...master, nome: 'Cripta del master', token: master.token.map((t) => (t.id === 't-p2' ? { ...t, q: [2, 3] } : t)) };
+    const bea = await muovi({ pg: 'Bea', a: [6, 3] });
+    assert.equal(bea.stato, 200);
+    const r = await fetch(`${base}/api/scene/cripta`, { method: 'PUT', body: JSON.stringify(daSalvare) });
+    assert.equal(r.status, 200, 'niente 409: in mezzo c’è solo un movimento dal tablet');
+    const fusa = await r.json();
+    assert.deepEqual(fusa.fusi, [bea.movimento]);
+    const s = leggiScena();
+    assert.equal(s.nome, 'Cripta del master', 'la modifica del master resta');
+    assert.deepEqual(s.token.find((t) => t.id === 't-p2').q, [2, 3]);
+    assert.deepEqual(s.token.find((t) => t.id === 't-bea').q, [6, 3], 'il movimento di Bea resta');
+    assert.ok(s.movimenti.some((m) => m.id === bea.movimento && m.tablet === 'Bea'), 'con i Q usati');
+    assert.ok(s.annulla.some((v) => v.movimento === bea.movimento), 'e la voce per Ctrl+Z');
+    assert.ok(!('fusi' in s), 'il campo della risposta non finisce nel file');
+
+    // insieme davvero: il PUT del master e il POST del tablet partono nello stesso istante
+    const m2 = await (await fetch(`${base}/api/scene/cripta`)).json();
+    const [put, post] = await Promise.all([
+      fetch(`${base}/api/scene/cripta`, { method: 'PUT', body: JSON.stringify({ ...m2, nome: 'Cripta 2' }) }),
+      muovi({ pg: 'Bea', a: [6, 4] }),
+    ]);
+    assert.equal(put.status, 200);
+    assert.equal(post.stato, 200);
+    const s2 = leggiScena();
+    assert.equal(s2.nome, 'Cripta 2');
+    assert.deepEqual(s2.token.find((t) => t.id === 't-bea').q, [6, 4]);
+
+    // una modifica d'altra origine (un'altra finestra del master) resta un conflitto: 409 come prima
+    const vecchia = await (await fetch(`${base}/api/scene/cripta`)).json();
+    assert.equal((await fetch(`${base}/api/scene/cripta`, { method: 'PUT', body: JSON.stringify({ ...vecchia, nome: 'Altra finestra' }) })).status, 200);
+    assert.equal((await fetch(`${base}/api/scene/cripta`, { method: 'PUT', body: JSON.stringify({ ...vecchia, nome: 'Persa?' }) })).status, 409);
+  } finally {
+    scriviScena((s) => { const { tablet, ...resto } = s; return resto; });
+  }
+});
+
+test('fondiMovimentiTablet: solo posizione, movimento e voce di quel token; niente doppioni', async () => {
+  const { fondiMovimentiTablet } = await import('../src/mappa/tablet.js');
+  const locale = { token: [{ id: 'a', q: [0, 0] }, { id: 'b', q: [5, 5] }], movimenti: [], annulla: [{ tipo: 'nebbia', tratti: [] }], nome: 'M' };
+  const server = { token: [{ id: 'a', q: [2, 0] }, { id: 'b', q: [9, 9] }], movimenti: [{ id: 'm1', token: 'a', a: [2, 0], tablet: 'X' }], annulla: [{ tipo: 'movimento', movimento: 'm1', token: 'a' }], nome: 'S' };
+  const f = fondiMovimentiTablet(locale, server, ['m1'], dati);
+  assert.deepEqual(f.token, [{ id: 'a', q: [2, 0] }, { id: 'b', q: [5, 5] }]);
+  assert.equal(f.nome, 'M');
+  assert.equal(f.annulla.length, 2);
+  assert.equal(fondiMovimentiTablet(f, server, ['m1'], dati), f, 'già fuso: niente da fare');
+  assert.equal(fondiMovimentiTablet({ ...locale, token: [locale.token[1]] }, server, ['m1'], dati).movimenti.length, 0, 'token tolto dal master');
+});

@@ -105,13 +105,16 @@ import { avversariZoc } from './src/mappa/zoc.js';
 import { dimensioniImmagine } from './src/mappa/immagine.js';
 import { pezziDellaScena } from './src/mappa/partecipanti.js';
 import { vistaPlancia } from './src/tavolo.js';
-import { pgDellaScena, pezzoDelPg, areaPerTablet, provaMovimento, eseguiMovimentoGiocatore, impostazioniTablet, miniScheda } from './src/mappa/tablet.js';
+import { pgDellaScena, pezzoDelPg, areaPerTablet, provaMovimento, eseguiMovimentoGiocatore, impostazioniTablet, miniScheda, fondiMovimentiTablet } from './src/mappa/tablet.js';
 
 const RADICE = fileURLToPath(new URL('.', import.meta.url));
 const CARTELLA = 'personaggi';
 const TAVOLO = 'tavolo';
 const SCONTRI = 'scontri';
 const ID_SCONTRO = /^[a-z0-9-]{1,60}$/;
+// fusione delle scritture (08/10): per ogni file di scena, le revisioni scritte da un movimento dal tablet
+// (revisione → id del movimento). Un PUT del master su una revisione vecchia si fonde se in mezzo ci sono solo queste.
+const revisioniTablet = new Map();
 const NEMICI = 'nemici';
 const VEICOLI = 'veicoli';
 const SCENE = 'scene';
@@ -473,10 +476,18 @@ async function apiScene(req, res, percorso, scene, mappe, radice, cartelle) {
   return inCoda(dove, async () => {
     let attuale = null;
     try { attuale = await leggiJson(dove); } catch { /* nuova */ }
+    let base = s;
+    let fusi = [];
     if ((attuale?.revisione ?? 0) !== s.revisione || (!attuale && s.revisione !== 0)) {
-      return json(res, 409, { errore: 'la scena è stata cambiata altrove: ricarica', attuale });
+      // 08/10: se dopo la revisione del master ci sono stati solo movimenti dai tablet, si riapplicano al suo
+      // salvataggio (posizione, Q usati e voce per Ctrl+Z di quei token): nessuna perdita, nessun 409
+      const log = revisioniTablet.get(dove);
+      const tutte = attuale && Number.isInteger(s.revisione) && s.revisione < attuale.revisione ? Array.from({ length: attuale.revisione - s.revisione }, (_, i) => s.revisione + 1 + i) : null;
+      if (!tutte || !log || !tutte.every((r) => log.has(r))) return json(res, 409, { errore: 'la scena è stata cambiata altrove: ricarica', attuale });
+      fusi = tutte.map((r) => log.get(r));
+      base = { ...fondiMovimentiTablet(s, attuale, fusi, dati), revisione: attuale.revisione };
     }
-    const nuova = { ...s, revisione: s.revisione + 1, aggiornato: new Date().toISOString() };
+    const nuova = { ...base, revisione: base.revisione + 1, aggiornato: new Date().toISOString() };
     await mkdir(scene, { recursive: true });
     if (nuova.archiviata === true) {
       // «Archivia» (lotto 2): la scena esce dall'elenco ma resta, in scene/archivio/ (non si cancella nulla)
@@ -487,7 +498,7 @@ async function apiScene(req, res, percorso, scene, mappe, radice, cartelle) {
       return json(res, 200, nuova);
     }
     await scriviJson(dove, nuova);
-    return json(res, 200, nuova);
+    return json(res, 200, fusi.length ? { ...nuova, fusi } : nuova);
   });
 }
 
@@ -788,6 +799,10 @@ async function movimentoDalTablet(req, res, cartelle) {
     const errore = validaScena(nuova, dati);
     if (errore) return { stato: 500, corpo: { ok: false, errore: `scena non valida dopo il movimento: ${errore}` } };
     await scriviJson(dove, nuova);
+    if (!revisioniTablet.has(dove)) revisioniTablet.set(dove, new Map());
+    const log = revisioniTablet.get(dove);
+    log.set(nuova.revisione, r.movimento.id);
+    for (const k of log.keys()) if (k < nuova.revisione - 200) log.delete(k);
     return { stato: 200, corpo: { ok: true, revisione: nuova.revisione, movimento: r.movimento.id, ...perTablet(r.prova) }, scontro: contesto.scontro, prova: r.prova, movimento: r.movimento };
   });
   // Attacchi di Opportunità nel registro dello scontro (Giocatore §5.3: uno per Round per avversario), come fa il master

@@ -74,7 +74,7 @@ import { sezioneScontro, sezioneToken, TIPO_TRASCINA } from './pannello-scontro.
 import { renderTavolo } from '../tavolo.js';
 import { segnaDallaMappa, vistaDaRimettere, dimenticaMappa } from '../ritorno.js';
 import { scegliImmagineNemico, impostaImmagineNemico } from '../immagine-nemico.js';
-import { impostazioniTablet } from '../../mappa/tablet.js';
+import { impostazioniTablet, fondiMovimentiTablet } from '../../mappa/tablet.js';
 
 const ATTESA_SALVATAGGIO_MS = 600;
 const ATTESA_RIPROVA_MS = 5000; // dopo un errore di rete o del server
@@ -510,7 +510,17 @@ export function renderMappa(radice, ctx) {
         testoStato(`Ripresa dal server alle ${ora()}`);
       } else {
         // le modifiche fatte durante il salvataggio restano: si aggiorna solo la revisione
-        st.scena = { ...st.scena, revisione: esito.scena.revisione, aggiornato: esito.scena.aggiornato };
+        // 08/10: se nel frattempo un tablet ha mosso un PG, il server ha fuso le scritture (esito.scena.fusi): qui si
+        // riprendono quei movimenti, senza toccare il resto
+        const fusi = esito.scena.fusi ?? [];
+        st.scena = { ...(fusi.length ? fondiMovimentiTablet(st.scena, esito.scena, fusi, ctx.dati) : st.scena), revisione: esito.scena.revisione, aggiornato: esito.scena.aggiornato };
+        if (fusi.length) {
+          invalidaArea();
+          disegnaPannelli();
+          disegnaIniziativa();
+          ridisegna(['aree', 'sopra']);
+          aggiornaFonti().then(() => { for (const id of fusi) { const m = st.scena.movimenti.find((x) => x.id === id); if (m) avvisaMovimentoTablet(m); } });
+        }
         testoStato(S.modificata ? 'Modifiche da salvare…' : `Salvata alle ${ora()}`);
       }
     } catch (e) {
