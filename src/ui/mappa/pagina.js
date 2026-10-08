@@ -210,32 +210,11 @@ export function renderMappa(radice, ctx) {
         h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Cancella template temporanei: toglie tutti i template a durata in Round; quelli senza durata, muri, porte e terreno restano (Ctrl+Z li rimette)', 'aria-label': 'Cancella template temporanei', onclick: () => cancellaTemplate({ tutti: false }) }, conIcona('🧹', 'Temporanei'))),
     h('span', { class: 'mappa-gruppo gruppo-strumenti', role: 'group', 'aria-label': 'Strumenti' },
       // lotto 7 (§12, menu superiore): gli strumenti del master in un menu
-      el.strumenti = h('details', { class: 'menu-strumenti' },
+      // ritocchi del 08/10: categorie con intestazione e icona dai dati (data/mappa.json → strumenti); si ricostruisce a ogni
+      // apertura, così stati e voci spente sono sempre quelli del momento
+      el.strumenti = h('details', { class: 'menu-strumenti', ontoggle: (e) => { if (e.target.open) disegnaMenuStrumenti(); } },
         h('summary', { class: 'btn', title: 'Strumenti del master: immagine, griglia, nebbia, muri, scene, movimenti dei giocatori', 'aria-label': 'Strumenti' }, conIcona('🛠', 'Strumenti'), ' ▾'),
-        h('div', { class: 'menu-strumenti-voci', role: 'menu' },
-          voceStrumenti('Carica immagine…', 'Immagine di fondo: JPG, PNG o WEBP', () => el.scegliFile.click()),
-          voceStrumenti('Griglia', 'Calibra, colore, opacità, blocco', () => apriStrumento(el.pGriglia)),
-          voceStrumenti('Nebbia', 'Pennello e rettangolo, Rivela / Copri, tutto', () => apriStrumento(el.pNebbia)),
-          // 07/10: la nebbia automatica anche dal menu, con lo stato
-          el.voceNebbiaAuto = voceStrumenti('Nebbia automatica: no', 'La nebbia si apre da sola dove i PG vedono quando si spostano (muri, porte chiuse e luci ne tengono conto)', () => cambiaVisualeAutomatica()),
-          voceStrumenti('Muri e terreno', 'Muro, terreno difficile, gomma', () => apriStrumento(el.pMuri)),
-          voceStrumenti('Luci', 'Luce della scena (Luce, Penombra, Luce scarsa, Buio) e zone a pennello', () => apriStrumento(el.pLuci)),
-          el.voceDettaglioLinea = voceStrumenti(testoDettaglioLinea(), 'Le cinque linee sottili dal centro di chi tira verso angoli e centro del bersaglio, verdi se libere e tratteggiate rosse se bloccate (solo qui, non ai giocatori; anche Maiusc+L)', () => cambiaDettaglioLinea()),
-          voceStrumenti('Template ad area… (T)', 'Raggio, cono, linea, quadrato, rettangolo: forma, misura, colore, durata; poi lo piazzi sulla mappa', () => { el.strumenti.open = false; nuovoTemplateUi(); }),
-          voceStrumenti('Cancella template temporanei', 'Toglie tutti i template a durata in Round; quelli senza durata restano (Ctrl+Z li rimette)', () => cancellaTemplate({ tutti: false })),
-          voceStrumenti('Cancella tutti i template…', 'Toglie tutti i template, anche quelli senza durata (Ctrl+Z li rimette)', () => cancellaTemplate({ tutti: true })),
-          voceStrumenti('Seleziona tutti i PG', 'Per spostarli insieme: trascinane uno (libero, in formazione), o le frecce', () => selezionaTipo('pg')),
-          voceStrumenti('Seleziona tutti i nemici', 'Gli avversari in mappa, per spostarli insieme', () => selezionaTipo('nemici')),
-          voceStrumenti('Seleziona tutti', 'Tutti i token in mappa', () => selezionaTipo('tutti')),
-          voceStrumenti('Vista giocatori', 'Quale scena vedono, QR, «Apri vista giocatori»', () => apriStrumento(el.pGiocatori)),
-          // 07/10: i suoni di norma solo qui (PC con le casse); se il televisore ha le casse, anche nella vista giocatori
-          el.voceAudioGiocatori = voceStrumenti('Suoni anche nella vista giocatori: no', 'Campanella del Round e musica di fondo anche sullo schermo dei giocatori (utile se il televisore ha le casse); là serve un primo clic per sbloccare l’audio', () => cambiaAudioGiocatori()),
-          voceStrumenti('Scene', 'Nuova, apri, rinomina, duplica, archivia', () => apriStrumento(document.getElementById('plancia-scene-mappa'))),
-          // 07/10: posizione iniziale della scena (token, porte, template, nebbia)
-          el.voceSalvaIniziale = voceStrumenti('Salva posizione iniziale', 'Token, porte, template e nebbia come sono adesso: per rigiocare la scena (un solo salvataggio, sovrascrivibile)', () => salvaInizialeUi()),
-          el.voceRipristina = voceStrumenti('Ripristina posizione iniziale', 'Rimette token, porte, template e nebbia come nella posizione salvata; PV, Stati e registro dello scontro non cambiano; Ctrl+Z annulla', () => ripristinaInizialeUi()),
-          voceStrumenti('Collegamento e token', 'Scontro o bozza collegati, pezzi da mettere in mappa', () => apriStrumento(el.secScontro)),
-          el.bloccoGiocatori = h('button', { type: 'button', role: 'menuitemcheckbox', class: 'voce-strumenti', 'aria-checked': 'false', title: 'Pronto per la fase 2 (tab BattleMap dei giocatori): finché è acceso i giocatori non muovono i loro token', onclick: () => cambiaBloccoGiocatori() }, 'Blocca movimenti dei giocatori'))),
+        el.vociStrumenti = h('div', { class: 'menu-strumenti-voci menu-strumenti-gruppi', role: 'menu' })),
       // «Altro»: immagine, scala della griglia e scorciatoie, fuori dalla riga
       el.altro = h('details', { class: 'menu-strumenti menu-altro' },
         h('summary', { class: 'btn', title: 'Altro: carica immagine, scala della griglia, scorciatoie', 'aria-label': 'Altro' }, '⋯'),
@@ -857,9 +836,6 @@ export function renderMappa(radice, ctx) {
     else apriCarta(t);
   }
   /** Una voce del menu «Strumenti»: chiude il menu e fa l'azione. */
-  function voceStrumenti(testo, titolo, azione) {
-    return h('button', { type: 'button', role: 'menuitem', class: 'voce-strumenti', title: titolo, onclick: () => { el.strumenti.open = false; azione(); } }, testo);
-  }
   /** Porta alla sezione dello strumento nel gruppo «Mappa» della barra e la apre. */
   function apriStrumento(sezione) {
     if (!sezione) return;
@@ -899,11 +875,7 @@ export function renderMappa(radice, ctx) {
   // ── Posizione iniziale della scena (07/10; src/mappa/iniziale.js) ──
   const quandoIniziale = () => { const q = st.scena?.iniziale?.quando; if (!q) return null; const d = new Date(q); return `${d.toLocaleDateString('it-IT')} alle ${ora(d)}`; };
   function aggiornaVociIniziale() {
-    if (!el.voceRipristina) return;
-    const q = quandoIniziale();
-    el.voceRipristina.disabled = !q;
-    el.voceRipristina.textContent = q ? `Ripristina posizione iniziale (${q})` : 'Ripristina posizione iniziale (nessuna salvata)';
-    el.voceSalvaIniziale.textContent = q ? 'Salva posizione iniziale (sovrascrive)' : 'Salva posizione iniziale';
+    if (el.strumenti?.open) disegnaMenuStrumenti();
   }
   async function salvaInizialeUi() {
     if (!st.scena) return;
@@ -957,9 +929,59 @@ export function renderMappa(radice, ctx) {
     el.ancheDurata.querySelector('input').checked = v.ancheDurata;
   }
   function aggiornaBlocco() {
-    const v = !!st.scena?.bloccaGiocatori;
-    el.bloccoGiocatori.setAttribute('aria-checked', String(v));
-    el.bloccoGiocatori.textContent = `${v ? '✓ ' : ''}Blocca movimenti dei giocatori`;
+    if (el.strumenti?.open) disegnaMenuStrumenti();
+  }
+  /**
+   * Menu «Strumenti» (ritocchi del 08/10): gruppi e voci da data/mappa.json → strumenti, con l'icona del gruppo, la
+   * scorciatoia a destra, lo stato (sì/no) nelle voci a interruttore e le voci non usabili spente con il motivo.
+   */
+  function disegnaMenuStrumenti() {
+    const sc = st.scena;
+    const f = st.fonti;
+    const sn = (v) => (v ? 'sì' : 'no');
+    const q = quandoIniziale();
+    const g = sc?.sovrapposizioni?.giocatori ?? {};
+    const VOCI = {
+      immagine: { testo: 'Immagine di fondo…', titolo: 'JPG, PNG o WEBP', azione: () => el.scegliFile.click() },
+      griglia: { testo: 'Griglia', titolo: 'Calibra, colore, opacità, blocco', azione: () => apriStrumento(el.pGriglia) },
+      muri: { testo: 'Muri e terreno', titolo: 'Muro, terreno difficile, gomma', azione: () => apriStrumento(el.pMuri) },
+      porte: { testo: 'Porte', titolo: 'Clic su un Q di muro: mette una porta; clic su una porta: la toglie', azione: () => { apriStrumento(el.pMuri); if (st.muri.strumento !== 'porta') strumentoMuri('porta'); } },
+      luci: { testo: 'Luci', titolo: 'Luce della scena e zone a pennello', azione: () => apriStrumento(el.pLuci) },
+      nebbia: { testo: 'Nebbia', titolo: 'Pennello e rettangolo, Rivela / Copri, tutto', azione: () => apriStrumento(el.pNebbia) },
+      nebbia_automatica: { testo: `Nebbia automatica: ${sn(sc?.visuale?.automatica)}`, titolo: 'La nebbia si apre da sola dove i PG vedono', azione: () => cambiaVisualeAutomatica() },
+      scene: { testo: 'Scene…', titolo: 'Nuova, apri, rinomina, duplica, archivia', azione: () => apriStrumento(document.getElementById('plancia-scene-mappa')) },
+      collegamento: { testo: 'Collegamento e token', titolo: 'Scontro o bozza collegati, pezzi da mettere in mappa', azione: () => apriStrumento(el.secScontro) },
+      salva_iniziale: { testo: q ? 'Salva posizione iniziale (sovrascrive)' : 'Salva posizione iniziale', titolo: 'Token, porte, template e nebbia come sono adesso', azione: () => salvaInizialeUi() },
+      ripristina_iniziale: { testo: q ? `Ripristina posizione iniziale (${q})` : 'Ripristina posizione iniziale', titolo: 'Rimette token, porte, template e nebbia; Ctrl+Z annulla', azione: () => ripristinaInizialeUi(), spenta: q ? null : 'Nessuna posizione iniziale salvata in questa scena' },
+      linea: { testo: 'Linea di tiro', tasto: 'L', titolo: 'Dal token scelto verso un token o un quadretto', azione: () => iniziaLinea(st.selezionato), spenta: st.selezionato ? null : 'Scegli prima il token che tira' },
+      dettaglio_linea: { testo: testoDettaglioLinea(), tasto: 'Maiusc+L', titolo: 'Le cinque linee di controllo della linea di tiro (solo qui)', azione: () => cambiaDettaglioLinea() },
+      template: { testo: 'Template ad area…', tasto: 'T', titolo: 'Raggio, cono, linea, quadrato, rettangolo', azione: () => nuovoTemplateUi() },
+      mostra_area: { testo: `Mostra area: ${sn(st.mostraArea)}`, tasto: 'M', titolo: 'L’area di movimento del token scelto', azione: () => cambiaMostraArea() },
+      mostra_zoc: { testo: `Mostra ZoC: ${sn(st.mostraZoc)}`, tasto: 'Z', titolo: 'Le zone di controllo degli avversari', azione: () => cambiaMostraZoc() },
+      seleziona_pg: { testo: 'Seleziona tutti i PG', titolo: 'Per spostarli insieme: trascinane uno, o le frecce', azione: () => selezionaTipo('pg') },
+      seleziona_nemici: { testo: 'Seleziona tutti i nemici', titolo: 'Gli avversari in mappa', azione: () => selezionaTipo('nemici') },
+      seleziona_tutti: { testo: 'Seleziona tutti', titolo: 'Tutti i token in mappa', azione: () => selezionaTipo('tutti') },
+      vista_giocatori: { testo: 'Vista giocatori: scena, QR, apri…', titolo: 'Quale scena vedono, il QR, «Apri vista giocatori»', azione: () => apriStrumento(el.pGiocatori) },
+      adatta_giocatori: { testo: 'Adatta lo schermo dei giocatori', titolo: 'Lo schermo dei giocatori inquadra tutta la parte scoperta', azione: () => adattaGiocatori() },
+      pv_nemici: { testo: `PV dei nemici ai giocatori: ${sn(sc?.pvNemiciGiocatori)}`, titolo: 'La barretta dei PV dei nemici nella vista giocatori (quella dei PG si vede sempre)', azione: () => cambiaPvNemiciGiocatori() },
+      sovrapposizioni_giocatori: { testo: `Template e muri ai giocatori: ${sn(!g.nascoste)}`, titolo: 'Template senza durata, muri, porte e terreno sullo schermo dei giocatori', azione: () => cambiaSovrapposizioni('giocatori', 'nascoste') },
+      suoni_giocatori: { testo: `Suoni anche ai giocatori: ${sn(sc?.audio?.giocatori)}`, titolo: 'Campanella e musica anche sullo schermo dei giocatori (televisore con le casse)', azione: () => cambiaAudioGiocatori() },
+      blocco_giocatori: { testo: `Blocca movimenti dei giocatori: ${sn(sc?.bloccaGiocatori)}`, titolo: 'Pronto per la fase 2 (tab BattleMap dei giocatori)', azione: () => cambiaBloccoGiocatori() },
+      musica: { testo: 'Musica di fondo…', titolo: 'Un file della cartella musica/ del server', azione: () => scegliMusicaUi(), spenta: f?.scontro || f?.bozza ? null : 'Collega la scena a uno scontro o a una bozza' },
+      muto: { testo: `Audio su questo PC: ${audio.impostazioni().muto ? 'muto' : 'attivo'}`, titolo: 'Spegne o riaccende musica ed effetti su questo PC', azione: () => { audio.imposta({ muto: !audio.impostazioni().muto }); aggiornaControlliAudio(); } },
+      cancella_temporanei: { testo: 'Cancella template temporanei', titolo: 'Toglie i template a durata in Round; Ctrl+Z li rimette', azione: () => cancellaTemplate({ tutti: false }), spenta: (sc?.template ?? []).some((t) => Number.isInteger(t.durata)) ? null : 'Nessun template a durata in mappa' },
+      cancella_tutti: { testo: 'Cancella tutti i template…', titolo: 'Anche quelli senza durata, con conferma; Ctrl+Z li rimette', azione: () => cancellaTemplate({ tutti: true }), spenta: sc?.template?.length ? null : 'Nessun template in mappa' },
+    };
+    svuota(el.vociStrumenti, ctx.dati.mappa.strumenti.gruppi.map((gr) => h('div', { class: 'gruppo-strumenti-menu', role: 'group', 'aria-label': gr.titolo },
+      h('p', { class: 'voce-strumenti-titolo' }, h('span', { class: 'icona', 'aria-hidden': 'true' }, gr.icona), ` ${gr.titolo}`),
+      gr.voci.map((id) => {
+        const v = VOCI[id];
+        if (!v) return null;
+        return h('button', {
+          type: 'button', role: 'menuitem', class: 'voce-strumenti', disabled: !sc || !!v.spenta, title: !sc ? 'Nessuna scena aperta' : v.spenta ?? v.titolo,
+          onclick: () => { el.strumenti.open = false; v.azione(); },
+        }, h('span', { class: 'voce-testo' }, v.testo), v.tasto ? h('kbd', { class: 'voce-tasto' }, v.tasto) : null);
+      }))));
   }
   /** Pannello «?»: scorciatoie e comandi della mappa (§12). */
   function apriAiuto() {
@@ -1000,6 +1022,7 @@ export function renderMappa(radice, ctx) {
       ['Clic destro su un PG o un nemico accanto a un veicolo', '«Sali su … come conducente» (un PG) o «come passeggero»: il token va a bordo e si muove con il mezzo'],
       ['Pannello del veicolo → «A bordo» (o clic destro sul veicolo)', 'gruppo «Scendi»: il nome, poi clic su un quadretto evidenziato accanto; gruppo «Linea di tiro»: la linea di chi è a bordo, dal veicolo'],
       ['Mappa collegata a una bozza', 'gruppo «Iniziativa» → «Inizia scontro»: come «Inizia» della bozza, poi la finestra «Iniziativa»'],
+      ['Strumenti (in alto)', 'sei categorie: Preparazione mappa, Scena, In gioco, Vista giocatori, Suoni, Pulizia; scorciatoia a destra, le voci spente dicono perché'],
       ['M', 'mostra o nasconde l’area di movimento'],
       ['Z', 'mostra o nasconde le zone di controllo (ZoC) degli avversari'],
       ['P', 'mostra o nasconde la barretta dei PV sui token (solo per te)'],
@@ -1945,7 +1968,7 @@ export function renderMappa(radice, ctx) {
   function cambiaDettaglioLinea(v = !st.dettaglioLinea) {
     st.dettaglioLinea = v;
     scriviLocale('mutant-mappa-dettaglio-linea', v);
-    if (el.voceDettaglioLinea) el.voceDettaglioLinea.textContent = testoDettaglioLinea();
+    if (el.strumenti?.open) disegnaMenuStrumenti();
     avviso(v ? 'Dettaglio della linea di tiro: le cinque linee di controllo dal centro di chi tira (solo qui).' : 'Dettaglio della linea di tiro nascosto: resta la linea principale.', { chiave: 'linea', tipo: 'info', durata: 3000 });
     ridisegna(['sopra']);
   }
@@ -2023,8 +2046,7 @@ export function renderMappa(radice, ctx) {
     avviso(v ? 'Suoni anche nella vista giocatori: sullo schermo dei giocatori serve un clic per sbloccare l’audio (lo chiede un avviso).' : 'Suoni solo su questo PC.', { chiave: 'audio-giocatori', tipo: 'info' });
   }
   function aggiornaVoceNebbiaAutomatica() {
-    if (el.voceAudioGiocatori) el.voceAudioGiocatori.textContent = `Suoni anche nella vista giocatori: ${st.scena?.audio?.giocatori ? 'sì' : 'no'}`;
-    if (el.voceNebbiaAuto) el.voceNebbiaAuto.textContent = `Nebbia automatica: ${st.scena?.visuale?.automatica ? 'sì' : 'no'}`;
+    if (el.strumenti?.open) disegnaMenuStrumenti();
   }
   function cambiaVisualeAutomatica() {
     if (!st.scena) return;

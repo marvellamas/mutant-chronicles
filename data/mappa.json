@@ -421,6 +421,17 @@
     "_nota_centra": "«Centra» (⌖ o doppio clic sul nome nell'ordine d'Iniziativa della barra; ritocchi del 07/10/2026): la mappa si centra sul token, lo sceglie e porta lo zoom a centra_px_per_q pixel di schermo per Q (entro zoom_min e zoom_max della vista).",
     "centra_px_per_q": 72
   },
+  "strumenti": {
+    "_nota": "Menu «Strumenti» della barra in alto (ritocchi del 08/10/2026; src/mappa/menu.js → VOCI_STRUMENTI, src/ui/mappa/pagina.js → disegnaMenuStrumenti): gruppi con titolo e icona, voci brevi con la scorciatoia a destra, nell'ordine dei dati. Le voci che in quel momento non si possono usare restano spente, con il motivo nel suggerimento.",
+    "gruppi": [
+      { "titolo": "Preparazione mappa", "icona": "🗺", "voci": ["immagine", "griglia", "muri", "porte", "luci", "nebbia", "nebbia_automatica"] },
+      { "titolo": "Scena", "icona": "🎬", "voci": ["scene", "collegamento", "salva_iniziale", "ripristina_iniziale"] },
+      { "titolo": "In gioco", "icona": "⚔", "voci": ["linea", "dettaglio_linea", "template", "mostra_area", "mostra_zoc", "seleziona_pg", "seleziona_nemici", "seleziona_tutti"] },
+      { "titolo": "Vista giocatori", "icona": "📺", "voci": ["vista_giocatori", "adatta_giocatori", "pv_nemici", "sovrapposizioni_giocatori", "suoni_giocatori", "blocco_giocatori"] },
+      { "titolo": "Suoni", "icona": "♫", "voci": ["musica", "muto"] },
+      { "titolo": "Pulizia", "icona": "🧹", "voci": ["cancella_temporanei", "cancella_tutti"] }
+    ]
+  },
   "menu": {
     "_nota": "Menu del clic destro sulla mappa (richiesta di Marcello del 07/10/2026; src/mappa/menu.js): per contesto (token, porta, template, punto vuoto) la riga rapida, i gruppi con intestazione e le «Opzioni» (sottomenu), con gli id delle voci nell'ordine in cui compaiono. Si mostrano solo le voci utilizzabili in quel momento (la riga rapida anche spenta, con il motivo); i gruppi vuoti non si mostrano. «{nome}» nel titolo di un gruppo diventa il nome del template. altezza_voce_px: altezza minima di una voce, per il dito sul tablet.",
     "altezza_voce_px": 40,

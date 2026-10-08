@@ -71,3 +71,22 @@ test('posizione: vicino al bordo destro si apre a sinistra, vicino al fondo vers
   // menu più alto del riquadro: in cima, dentro
   assert.deepEqual(posizioneMenu(100, 300, 240, 700, 1366, 600).top, 4);
 });
+
+test('menu «Strumenti» (08/10): categorie con icona dai dati, voci note e non ripetute; il validatore le controlla', async () => {
+  const { erroreStrumenti, VOCI_STRUMENTI } = await import('../src/mappa/menu.js');
+  const S = dati.mappa.strumenti;
+  assert.equal(erroreStrumenti(S), null);
+  assert.deepEqual(S.gruppi.map((g) => g.titolo), ['Preparazione mappa', 'Scena', 'In gioco', 'Vista giocatori', 'Suoni', 'Pulizia']);
+  assert.ok(S.gruppi.every((g) => g.icona));
+  // tutte le voci note sono nel menu, una volta sola
+  assert.deepEqual(S.gruppi.flatMap((g) => g.voci).sort(), [...VOCI_STRUMENTI].sort());
+  for (const [k, cambia, re] of [
+    ['sconosciuta', (d) => d.mappa.strumenti.gruppi[0].voci.push('vola'), /vola/],
+    ['ripetuta', (d) => d.mappa.strumenti.gruppi[1].voci.push('griglia'), /ripetuta/],
+    ['icona', (d) => { d.mappa.strumenti.gruppi[2].icona = ''; }, /icona/],
+  ]) {
+    const d = copia(dati);
+    cambia(d);
+    assert.ok(validaDati(d).some((e) => e.file === 'mappa.json' && /^strumenti/.test(e.chiave) && re.test(`${e.chiave} ${e.problema}`)), k);
+  }
+});

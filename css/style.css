@@ -2189,3 +2189,13 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 .mappa-gruppo.gruppo-suoni { margin-left: auto; }
 .mappa-gruppo.gruppo-suoni .mappa-stato { max-width: 11rem; }
 @media (max-width: 30rem) { .mappa-gruppo { flex-wrap: wrap; } }
+
+/* menu «Strumenti» a categorie (ritocchi del 08/10): gruppi con icona e titolo, voci con la scorciatoia a destra */
+.menu-strumenti-gruppi { display: grid; grid-template-columns: repeat(3, minmax(14rem, 1fr)); gap: 0.4rem 0.8rem; width: min(52rem, 94vw); max-height: 80vh; overflow-y: auto; padding: 0.5rem; }
+@media (max-width: 60rem) { .menu-strumenti-gruppi { grid-template-columns: repeat(2, minmax(13rem, 1fr)); } }
+@media (max-width: 34rem) { .menu-strumenti-gruppi { grid-template-columns: 1fr; } }
+.gruppo-strumenti-menu { display: flex; flex-direction: column; }
+.voce-strumenti-titolo { margin: 0.2rem 0 0.15rem; padding: 0.2rem 0.4rem; font-weight: 700; font-size: 0.9rem; border-bottom: 1px solid var(--bordo); color: var(--accento); }
+.menu-strumenti-gruppi .voce-strumenti { display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; }
+.menu-strumenti-gruppi .voce-strumenti:disabled { opacity: 0.45; cursor: not-allowed; }
+.voce-tasto { font: inherit; font-size: 0.8rem; opacity: 0.75; padding: 0 0.3rem; border: 1px solid var(--bordo); border-radius: 4px; white-space: nowrap; }
