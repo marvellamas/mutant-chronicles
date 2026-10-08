@@ -1204,10 +1204,9 @@ questi punti, con un `TODO(Davide)` dove serve; nel pacchetto per il Doc «per-d
   Provvisorio: verso e da un token in volo non contano i token in mezzo (§5.10, bersaglio protetto) né la Copertura
   Leggera e Media; un muro pieno blocca comunque (Copertura Totale). Va bene, o conta l’altezza rispetto all’ostacolo?
   (`mappa.json` → volo.linea_di_tiro, `TODO(Davide)`.)
-- **A.149 — Picchiata e quota.** Marcello chiede di applicare la «Picchiata senza Attacchi di Opportunità», ma nessun
-  manuale la descrive: il Giocatore §5.2.3 dice solo che «Uscire volontariamente dalla portata di un avversario, anche
-  salendo, può provocare Attacchi di Opportunità». Esiste una manovra di Picchiata? E la quota conta per la portata
-  ravvicinata? Provvisorio: ZoC e Attacchi di Opportunità come a terra, con la distanza pari alla maggiore fra quella
+- **A.149 — La quota conta per la portata delle armi ravvicinate?** Il Giocatore §5.2.3 dice che «Uscire
+  volontariamente dalla portata di un avversario, anche salendo, può provocare Attacchi di Opportunità», ma non come si
+  misura la portata in altezza. Provvisorio: ZoC e Attacchi di Opportunità come a terra, con la distanza pari alla maggiore fra quella
   sulla griglia e la differenza di quota (diagonale 1 Q, A.124): chi vola più in alto della portata non è nella ZoC.
   (`mappa.json` → volo.zoc_quota.)
 - **A.150 — Un token in volo si vede da lontano?** Indicazione di Marcello: «un nemico in volo in generale è sempre
