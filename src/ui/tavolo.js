@@ -38,6 +38,7 @@ import { linkGuidaMappa } from './guida.js';
 import { cartaDallaMappa, arrivoDallaMappa, tornaAllaMappa } from './ritorno.js';
 import { scegliImmagineNemico, impostaImmagineNemico } from './immagine-nemico.js';
 import { chiediTesto, chiedi } from './finestrella.js';
+import { pulsanteSalvaSessione, pulsanteSpegni } from './salvataggio.js';
 
 const INTERVALLO_MS = 3000;
 /** Carta con la chiave del suo token (data-pezzo): la mappa di battaglia la cerca al clic sul token (src/ui/mappa/canale.js). */
@@ -351,7 +352,11 @@ export function renderTavolo(radice, ctx) {
       ctx.inMappa ? null : h('button', { type: 'button', class: 'btn', title: 'Scene della mappa di battaglia: nuova, apri, rinomina, duplica, archivia', onclick: () => apriElencoScene(stato.scene, disegna) }, 'Mappa'),
       // la guida della mappa per il master (docs/battlemap/guida-davide.md), in una scheda nuova
       ctx.inMappa || ctx.soloCarta ? null : linkGuidaMappa('Guida della mappa'),
-      h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.personaggi() }, 'Personaggi'));
+      h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.personaggi() }, 'Personaggi'),
+      // 08/10: salvataggio completo (zip, Drive, ntfy), anche dalla mappa (gruppo «Scontro»); «Spegni Mutant» solo qui,
+      // a pagina intera (posto definitivo da decidere)
+      pulsanteSalvaSessione(),
+      ctx.inMappa || ctx.soloCarta ? null : pulsanteSpegni());
     const esitoEsempi = stato.esitoEsempi ? h('p', { class: 'riquadro attenzione', role: 'status' }, stato.esitoEsempi) : null;
     // 08/10: nel riquadro anche l'elenco «Tablet collegati» dei PG al tavolo (stesso dato dell'elenco dell'Iniziativa)
     const iniz = (n) => String(n ?? '?').split(/\s+/).filter(Boolean).map((x) => x[0]).join('').slice(0, 2).toUpperCase();

@@ -30,10 +30,14 @@ echo  Gli indirizzi per i giocatori (telefoni e PC sulla stessa Wi-Fi) compaiono
 echo  fra le righe di uguali, e nella plancia nel riquadro "Collega i giocatori".
 echo  Se Windows chiede il permesso per Node.js: consenti le "reti private".
 echo  avvia.bat non serve: questa finestra basta per tutto.
-echo  Per spegnere Mutant chiudi questa finestra: il server si spegne con lei.
+echo  Salvataggio automatico ogni 5 minuti nella cartella autosave.
+echo  Per spegnere a fine serata: "Spegni Mutant" nel Tavolo del Master (salva, manda la copia
+echo  e chiude questa finestra). Chiudendo questa finestra con la X Mutant prova comunque a salvare.
 echo.
 start "" http://localhost:3000
 node server.mjs
+rem 42 = spento da "Spegni Mutant" (server.mjs, 08/10): la sessione e' gia' salvata, la finestra si chiude
+if "%errorlevel%"=="42" exit
 
 echo.
 echo  Mutant si e' fermato. Se la porta 3000 era occupata, il messaggio sopra dice da chi:

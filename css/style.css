@@ -2318,3 +2318,7 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 .collega-tablet-ritratto.iniziali { display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; background: var(--superficie-2, #8883); }
 .collega-tablet-nome { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
 .collega-tablet-voce .btn-campanello { margin-left: auto; white-space: nowrap; }
+
+/* 08/10: pagina dopo «Spegni Mutant» (src/ui/salvataggio.js) */
+.pagina-spento { max-width: 40rem; margin: 3rem auto; padding: 0 1rem; }
+.pagina-spento h1 { margin-bottom: 1rem; }
