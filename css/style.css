@@ -2199,3 +2199,17 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 .menu-strumenti-gruppi .voce-strumenti { display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; }
 .menu-strumenti-gruppi .voce-strumenti:disabled { opacity: 0.45; cursor: not-allowed; }
 .voce-tasto { font: inherit; font-size: 0.8rem; opacity: 0.75; padding: 0 0.3rem; border: 1px solid var(--bordo); border-radius: 4px; white-space: nowrap; }
+/* barra della mappa su una riga anche con la musica scelta (ritocchi del 08/10, seconda tornata): caratteri e spazi
+   interni un poco più piccoli, cursori più corti, titolo accorciato con i puntini; il nome della musica è nel suggerimento
+   di ♫ */
+.mappa-barra { gap: 0.3rem; font-size: 0.9rem; }
+.mappa-gruppo { gap: 0.2rem; padding: 0.15rem 0.3rem; }
+.mappa-barra .btn { padding: 0.25rem 0.5rem; font-size: 0.88rem; min-height: 2rem; }
+.mappa-barra .btn.tondo { padding: 0.25rem 0.45rem; min-width: 2rem; }
+.mappa-barra .btn-piccolo { padding: 0.2rem 0.4rem; }
+.mappa-barra .marchio-in-linea { font-size: 0.95rem; padding: 0.25rem 0.55rem; }
+.mappa-gruppo.gruppo-app .mappa-titolo { max-width: 9rem; font-size: 1rem; }
+.mappa-barra .mappa-zoom { font-size: 0.85rem; min-width: 2.6rem; text-align: center; }
+.mappa-gruppo.gruppo-strumenti .menu-strumenti:not(.menu-altro) > summary { font-size: 0.95rem; padding: 0.3rem 0.7rem; }
+.cursore-audio input[type=range] { width: 3.2rem; }
+.mappa-gruppo.gruppo-suoni .mappa-stato { max-width: 8rem; font-size: 0.8rem; }
