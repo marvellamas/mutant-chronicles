@@ -2079,7 +2079,7 @@ button.mini-token { cursor: pointer; }
 .mappa-barra .mappa-comandi { flex-wrap: nowrap; }
 .mappa-barra .mappa-stato { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.85rem; }
 .mappa-barra .lungo { display: none; }
-@media (min-width: 1600px) { .mappa-barra .lungo { display: inline; } }
+
 .menu-altro .menu-strumenti-voci { left: auto; right: 0; }
 .voce-strumenti-nota { margin: 0.25rem 0.6rem 0.35rem; font-size: 0.85rem; }
 @media (max-width: 46rem) { .mappa-barra, .mappa-barra .mappa-comandi { flex-wrap: wrap; } }
@@ -2165,3 +2165,125 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 .mappa-a-bordo h3 { margin: 0.5rem 0 0.25rem; font-size: 0.95rem; }
 .mappa-a-bordo ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.25rem; }
 .mappa-a-bordo li { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem; }
+.mappa-a-bordo h4 { margin: 0.4rem 0 0.2rem; font-size: 0.85rem; }
+
+/* «Prepara scontro» a riquadri (ritocchi del 08/10, src/ui/preparazione.js → riquadroPrep) */
+.riquadro-prep { border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 0.6rem 0.8rem 0.8rem; margin: 0.8rem 0; background: var(--superficie); }
+.riquadro-prep > .nota { margin: 0 0 0.5rem; }
+.riquadro-prep-titolo { display: flex; align-items: center; gap: 0.5rem; margin: 0 0 0.3rem; font-size: 1.05rem; }
+.riquadro-prep-numero { display: inline-flex; align-items: center; justify-content: center; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--accento); color: var(--su-accento, #fff); font-size: 0.9rem; font-weight: 700; }
+.veicoli-bozza h4 { margin: 0.5rem 0 0.2rem; }
+.veicoli-bozza ul { margin: 0; padding-left: 1.2rem; }
+
+/* barra della mappa a gruppi (ritocchi del 08/10): cinque riquadri distinti, che vanno a capo interi */
+.mappa-barra { flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+/* le parole accanto alle icone solo sugli schermi molto larghi: a 1920 la barra sta su una riga */
+.mappa-barra .lungo { display: none; }
+@media (min-width: 2000px) { .mappa-barra .lungo { display: inline; } }
+.mappa-gruppo { display: inline-flex; flex-wrap: nowrap; align-items: center; gap: 0.3rem; padding: 0.25rem 0.45rem; border: 1px solid var(--bordo); border-radius: var(--raggio); background: var(--superficie); min-width: 0; }
+.mappa-gruppo.gruppo-app { background: var(--accento-tenue); }
+.mappa-gruppo.gruppo-app .marchio-in-linea { margin: 0; }
+.mappa-gruppo.gruppo-app .mappa-titolo { max-width: 14rem; font-size: 1.1rem; }
+.mappa-gruppo.gruppo-strumenti { border-color: var(--accento); }
+.mappa-gruppo.gruppo-strumenti .menu-strumenti:not(.menu-altro) > summary { background: var(--accento); color: var(--su-accento, #fff); border-color: var(--accento); font-weight: 700; font-size: 1.05rem; padding: 0.35rem 0.9rem; }
+.mappa-gruppo.gruppo-suoni { margin-left: auto; }
+.mappa-gruppo.gruppo-suoni .mappa-stato { max-width: 11rem; }
+@media (max-width: 30rem) { .mappa-gruppo { flex-wrap: wrap; } }
+
+/* menu «Strumenti» a categorie (ritocchi del 08/10): gruppi con icona e titolo, voci con la scorciatoia a destra */
+.menu-strumenti-gruppi { display: grid; grid-template-columns: repeat(3, minmax(14rem, 1fr)); gap: 0.4rem 0.8rem; width: min(52rem, 94vw); max-height: 80vh; overflow-y: auto; padding: 0.5rem; }
+@media (max-width: 60rem) { .menu-strumenti-gruppi { grid-template-columns: repeat(2, minmax(13rem, 1fr)); } }
+@media (max-width: 34rem) { .menu-strumenti-gruppi { grid-template-columns: 1fr; } }
+.gruppo-strumenti-menu { display: flex; flex-direction: column; }
+.voce-strumenti-titolo { margin: 0.2rem 0 0.15rem; padding: 0.2rem 0.4rem; font-weight: 700; font-size: 0.9rem; border-bottom: 1px solid var(--bordo); color: var(--accento); }
+.menu-strumenti-gruppi .voce-strumenti { display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; }
+.menu-strumenti-gruppi .voce-strumenti:disabled { opacity: 0.45; cursor: not-allowed; }
+.voce-tasto { font: inherit; font-size: 0.8rem; opacity: 0.75; padding: 0 0.3rem; border: 1px solid var(--bordo); border-radius: 4px; white-space: nowrap; }
+/* barra della mappa su una riga anche con la musica scelta (ritocchi del 08/10, seconda tornata): caratteri e spazi
+   interni un poco più piccoli, cursori più corti, titolo accorciato con i puntini; il nome della musica è nel suggerimento
+   di ♫ */
+.mappa-barra { gap: 0.3rem; font-size: 0.9rem; }
+.mappa-gruppo { gap: 0.2rem; padding: 0.15rem 0.3rem; }
+.mappa-barra .btn { padding: 0.25rem 0.5rem; font-size: 0.88rem; min-height: 2rem; }
+.mappa-barra .btn.tondo { padding: 0.25rem 0.45rem; min-width: 2rem; }
+.mappa-barra .btn-piccolo { padding: 0.2rem 0.4rem; }
+.mappa-barra .marchio-in-linea { font-size: 0.95rem; padding: 0.25rem 0.55rem; }
+.mappa-gruppo.gruppo-app .mappa-titolo { max-width: 9rem; font-size: 1rem; }
+.mappa-barra .mappa-zoom { font-size: 0.85rem; min-width: 2.6rem; text-align: center; }
+.mappa-gruppo.gruppo-strumenti .menu-strumenti:not(.menu-altro) > summary { font-size: 0.95rem; padding: 0.3rem 0.7rem; }
+.cursore-audio input[type=range] { width: 3.2rem; }
+.mappa-gruppo.gruppo-suoni .mappa-stato { max-width: 8rem; font-size: 0.8rem; }
+
+/* Tablet dei giocatori (fase 2, lotto 7; src/ui/mappa/giocatori.js): «Sono…», mini-scheda, fasce e conferma a misura di
+   dito, avviso grande del campanellino e di «Tocca a te» */
+.tablet-sono { font-weight: 700; }
+.tablet-pannello { display: flex; flex-wrap: wrap; align-items: flex-start; gap: .5rem 1rem; padding: .5rem .75rem; border-radius: .5rem; background: var(--superficie, #fff); border: 1px solid var(--bordo, #ccc); }
+.tablet-pannello[hidden] { display: none; }
+.tablet-pannello .btn { min-height: 3rem; font-size: 1.1rem; padding: .5rem 1rem; }
+.tablet-mini { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem 1rem; flex: 1 1 100%; }
+.tablet-nome { font-size: 1.2rem; }
+.tablet-tuo-turno { color: var(--pe, #1b7a3a); }
+.tablet-valore { display: inline-flex; align-items: center; gap: .35rem; font-variant-numeric: tabular-nums; }
+.tablet-barra { display: inline-block; width: 6rem; height: .6rem; border-radius: .3rem; background: #8884; overflow: hidden; }
+.tablet-barra > span { display: block; height: 100%; }
+.tablet-barra.pv > span { background: var(--pv, #c8102e); }
+.tablet-barra.pm > span { background: var(--pm, #1d5fc4); }
+.tablet-stati { opacity: .85; }
+.tablet-stato { margin: 0; flex: 1 1 16rem; font-size: 1.05rem; align-self: center; }
+.tablet-stato.bloccato { font-weight: 700; }
+.tablet-fasce { display: flex; flex-wrap: wrap; gap: .4rem; }
+.tablet-fasce .btn.scelto { outline: 3px solid currentColor; outline-offset: 1px; font-weight: 700; }
+.tablet-fasce .modo-passo { border-left: .4rem solid var(--mappa-passo, #1f9d55); }
+.tablet-fasce .modo-corsa { border-left: .4rem solid var(--mappa-corsa, #d9a400); }
+.tablet-fasce .modo-scatto { border-left: .4rem solid var(--mappa-scatto, #d6336c); }
+.tablet-conferma { flex: 1 1 100%; display: flex; flex-wrap: wrap; align-items: center; gap: .3rem 1rem; padding: .4rem .6rem; border-radius: .4rem; background: #8882; }
+.tablet-conferma p { margin: 0; font-weight: 700; font-size: 1.1rem; }
+.tablet-conferma .tablet-zoc { color: var(--errore, #c92a2a); flex: 1 1 100%; }
+.tablet-conferma .riga-azioni { margin-left: auto; }
+.tablet-motivo { margin: 0; }
+.tablet-scelte { display: grid; grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); gap: .5rem; margin: .5rem 0; }
+.tablet-scelte .btn { min-height: 3.5rem; font-size: 1.15rem; }
+.tablet-scelte .btn.scelto { outline: 3px solid currentColor; }
+.tablet-audio { position: fixed; left: 50%; bottom: 1rem; transform: translateX(-50%); z-index: 40; min-height: 3rem; font-size: 1.1rem; box-shadow: 0 2px 10px #0008; }
+.tablet-audio[hidden] { display: none; }
+.tablet-allarme { position: fixed; inset: 0; z-index: 50; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; background: #b8410ef2; color: #fff; cursor: pointer; text-align: center; padding: 1rem; animation: tablet-lampo 1s ease-in-out 3; }
+.tablet-allarme.tipo-turno { background: #1b7a3af2; }
+.tablet-allarme[hidden] { display: none; }
+.tablet-allarme-testo { font-size: clamp(2rem, 8vw, 5rem); font-weight: 800; display: flex; flex-direction: column; align-items: center; gap: .5rem; }
+.tablet-allarme-icona { font-size: 1.4em; }
+.tablet-allarme-nota { margin: 0; font-size: 1.1rem; opacity: .9; }
+@keyframes tablet-lampo { 50% { filter: brightness(1.35); } }
+@media (prefers-reduced-motion: reduce) { .tablet-allarme { animation: none; } }
+.tablet-pg { display: inline-flex; align-items: center; gap: .15rem; margin-left: .3rem; }
+.tablet-indicatore { font-size: .95rem; }
+.tablet-indicatore.scollegato { opacity: .3; filter: grayscale(1); }
+.btn-campanello { padding: 0 .35rem; }
+.giocatori-corpo { display: flex; flex-direction: column; flex: 1; min-height: 0; gap: .5rem; }
+.giocatori-corpo > .mappa-tela { min-height: 12rem; }
+@media (orientation: landscape) and (min-width: 50rem) {
+  .giocatori-corpo { flex-direction: row; }
+  .giocatori-corpo > .tablet-pannello { flex: 0 0 18rem; flex-direction: column; flex-wrap: nowrap; align-items: stretch; overflow-y: auto; }
+  .giocatori-corpo > .tablet-pannello .tablet-mini { flex-direction: column; align-items: flex-start; flex: none; }
+  .giocatori-corpo > .tablet-pannello .tablet-stato { flex: none; }
+  .giocatori-corpo > .tablet-pannello .tablet-fasce .btn { flex: 1 1 100%; justify-content: space-between; }
+  .giocatori-corpo > .tablet-pannello .tablet-conferma { flex: none; }
+}
+
+/* 08/10: la scena che vedono i giocatori, accanto al nome della scena */
+.indicatore-giocatori { white-space: nowrap; opacity: .7; }
+.indicatore-giocatori.mostrata { opacity: 1; border-color: var(--pe, #1b7a3a); color: var(--pe, #1b7a3a); font-weight: 700; }
+
+/* 08/10: «Scontro in corso» nella scheda del PG, con «Muovi il PG sulla mappa» (tablet dei giocatori) */
+.scontro-in-corso { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; justify-content: space-between; }
+.scontro-in-corso-testo { margin: 0; }
+.scontro-in-corso.tuo-turno { border-color: var(--pe, #1b7a3a); }
+.tuo-turno-testo { color: var(--pe, #1b7a3a); font-weight: 700; }
+.btn-muovi-mappa { min-height: 3rem; font-size: 1.1rem; }
+.tablet-allarme-azioni { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; }
+.tablet-allarme-azioni .btn { min-height: 3.5rem; font-size: 1.3rem; padding: .6rem 1.4rem; }
+
+/* 08/10: muso del veicolo guidato sul mini-token del conducente (barra dell'Iniziativa) */
+.mini-muso { position: absolute; transform: translate(6px, -22px); width: 14px; height: 14px; display: flex; align-items: center; justify-content: center; font-size: 10px; line-height: 1; color: var(--muso); background: #000c; border-radius: 50%; pointer-events: none; z-index: 2; }
+.mini-muso > span { display: block; transform: rotate(var(--angolo)); }
+.mini-volo { position: absolute; transform: translate(4px, -24px); width: 15px; height: 15px; pointer-events: none; z-index: 2; }
+.carta-volo { margin-top: .4rem; }

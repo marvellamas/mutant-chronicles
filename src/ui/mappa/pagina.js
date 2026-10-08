@@ -28,7 +28,7 @@ import { barraIniziativa } from '../../mappa/iniziativa.js';
 import { barraIniziativaEl, stileBordo } from './barra-iniziativa.js';
 import { bordoToken, assegnaColori, cambiaColore, tavolozzaPer, famiglia } from '../../mappa/colori.js';
 import { avversariZoc, avversariZocInattivi, celleZoc, passiInZoc, attacchiDiOpportunita, testoOpportunita, giaInQuestoRound } from '../../mappa/zoc.js';
-import { scegliColore, chiedi, informa, apri as apriFinestrella } from '../finestrella.js';
+import { scegliColore, chiedi, chiediTesto, informa, apri as apriFinestrella } from '../finestrella.js';
 import { calibraDaQuadretto, applicaGriglia, dimensioniMappa, lineeVisibili, testoScala } from '../../mappa/griglia.js';
 import { creaTela } from './canvas.js';
 import { leggiScena, salvaScena, caricaImmagine, controllaFile, preparaRidotta } from './api.js';
@@ -52,13 +52,15 @@ import { apriMenuTemplate, sezioneTemplate, etichettaTemplate, testoMisure } fro
 import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
 import { componiMenu, unisciMenu } from '../../mappa/menu.js';
 import { diTurno, ordineIniziativa } from '../../scontro.js';
-import { statoMovimento, muoviVeicolo, cambiaConducente } from '../../veicoli-registro.js';
-import { DIREZIONI, NOMI_DIREZIONI, ingombroOrientato, ruotaSeLibero, sali, scendi, qPerScendere, veicoliVicini, aBordo, veicoloDi } from '../../mappa/veicoli-mappa.js';
+import { statoMovimento, muoviVeicolo, cambiaConducente, scegliAndatura } from '../../veicoli-registro.js';
+import { formaRuotata, normaAngolo, baseDaIngombro, angoloDi } from '../../mappa/forma.js';
+import { ruotaSeLibero, sali, scendi, qPerScendere, veicoliVicini, aBordo, veicoloDi, veicoloFermo } from '../../mappa/veicoli-mappa.js';
 import { rigaMovimentoLibero, rigaOpportunita, senzaOpportunitaDelMovimento, rigaPorta, rigaTemplateTolti, rigaGruppo, registraRiga } from '../../scontro.js';
 import { tokenNelRettangolo, alternaSelezione, spostaGruppo } from '../../mappa/gruppo.js';
 import { aggiornaInScontri } from '../immagine-nemico.js';
 import { linkGuidaMappa } from '../guida.js';
 import { aggiornaVeicolo } from '../veicoli-registro.js';
+import { rigaAndature } from '../veicoli.js';
 import { creaGesti } from './gesti.js';
 import { svgQR } from '../../qr.js';
 import { leggiRete } from '../collega.js';
@@ -73,6 +75,8 @@ import { sezioneScontro, sezioneToken, TIPO_TRASCINA } from './pannello-scontro.
 import { renderTavolo } from '../tavolo.js';
 import { segnaDallaMappa, vistaDaRimettere, dimenticaMappa } from '../ritorno.js';
 import { scegliImmagineNemico, impostaImmagineNemico } from '../immagine-nemico.js';
+import { impostazioniTablet, fondiMovimentiTablet } from '../../mappa/tablet.js';
+import { inVolo, quotaDi, movimentoInVolo, regoleMovimento, sapeVolare, conVolo } from '../../mappa/volo.js';
 
 const ATTESA_SALVATAGGIO_MS = 600;
 const ATTESA_RIPROVA_MS = 5000; // dopo un errore di rete o del server
@@ -127,6 +131,7 @@ export function renderMappa(radice, ctx) {
     // lotto 4: strumenti della nebbia e scena scelta per i giocatori (null = automatica)
     nebbia: { strumento: null, modo: 'rivela', lato: 3 },
     sceltaGiocatori: null,
+    inGioco: null,
     // lotto 5: strumenti dei muri, fascia mostrata (1 Passo, 2 Corri, 3 Scatta), area del token scelto, percorso
     // fase 2, lotto 4: zone di luce a pennello (come il terreno difficile)
     luci: { strumento: null, modo: 'buio', lato: 3 },
@@ -176,6 +181,8 @@ export function renderMappa(radice, ctx) {
   const el = {};
   el.scegliFile = h('input', { type: 'file', accept: '.jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp', hidden: true, onchange: (e) => { const f = e.target.files?.[0]; e.target.value = ''; if (f) caricaDaFile(f); } });
   el.titolo = h('h1', { class: 'mappa-titolo' }, 'Mappa');
+  // 08/10: se i giocatori (secondo schermo e tablet) vedono questa scena; un clic la mostra a loro
+  el.aiGiocatori = h('button', { type: 'button', class: 'btn btn-piccolo indicatore-giocatori', onclick: () => { if (st.inGioco !== ctx.id) scegliPerGiocatori(ctx.id); else apriStrumento(el.pGiocatori); } });
   el.zoom = h('span', { class: 'mappa-zoom', title: 'Zoom (rotella, + e −)' }, '100 %');
   el.scala = h('span', { class: 'mappa-scala' });
   el.stato = h('span', { class: 'nota mappa-stato', 'aria-live': 'polite' });
@@ -187,49 +194,34 @@ export function renderMappa(radice, ctx) {
   el.btnDisp = Object.fromEntries(DISPOSIZIONI.map((d) => [d, h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-pressed': 'false', 'aria-label': NOMI_DISPOSIZIONI[d], title: `${NOMI_DISPOSIZIONI[d]} (Tab per passare alla prossima)`, onclick: () => scegliDisposizione(d) }, conIcona(ICONE_DISPOSIZIONI[d], NOMI_DISPOSIZIONI[d]))]));
   el.btnGriglia = h('span', { class: 'mappa-disposizioni', role: 'group', 'aria-label': 'Disposizione' }, DISPOSIZIONI.map((d) => el.btnDisp[d]));
   el.btnCarica = h('button', { type: 'button', class: 'btn', title: 'Immagine di fondo: JPG, PNG o WEBP', onclick: () => el.scegliFile.click() }, 'Carica immagine');
+  // ritocchi del 08/10 (test di Marcello): cinque gruppi distinti, che vanno a capo interi: 1 «Mutant», «← Tavolo» e il
+  // nome della scena (la testata dell'app sparisce: una riga in meno); 2 zoom e disposizioni; 3 sovrapposizioni;
+  // 4 «Strumenti» (il più importante), «⋯» e «?»; 5 suoni e stato del salvataggio
   el.barra = h('header', { class: 'mappa-barra' },
-    h('button', { type: 'button', class: 'btn', title: 'Torna alla plancia del Tavolo del Master', 'aria-label': 'Torna al Tavolo', onclick: () => ctx.azioni.tavolo() }, conIcona('←', 'Tavolo')),
-    el.titolo,
-    h('span', { class: 'mappa-comandi' },
+    h('span', { class: 'mappa-gruppo gruppo-app', role: 'group', 'aria-label': 'App' },
+      h('a', { class: 'marchio marchio-in-linea', href: '#/', title: 'Elenco dei personaggi' }, 'Mutant'),
+      h('button', { type: 'button', class: 'btn', title: 'Torna alla plancia del Tavolo del Master', 'aria-label': 'Torna al Tavolo', onclick: () => ctx.azioni.tavolo() }, conIcona('←', 'Tavolo')),
+      el.titolo, el.aiGiocatori),
+    h('span', { class: 'mappa-gruppo gruppo-vista', role: 'group', 'aria-label': 'Zoom e disposizione' },
       el.scegliFile,
       h('button', { type: 'button', class: 'btn tondo', title: 'Allontana (−)', 'aria-label': 'Allontana', onclick: () => zoomCentro(1 / V.passo_tasti) }, '−'),
       el.zoom,
       h('button', { type: 'button', class: 'btn tondo', title: 'Avvicina (+)', 'aria-label': 'Avvicina', onclick: () => zoomCentro(V.passo_tasti) }, '+'),
       h('button', { type: 'button', class: 'btn', title: 'Adatta allo schermo: tutta la mappa nel riquadro (tasto A, anche doppio clic su un punto vuoto)', 'aria-label': 'Adatta allo schermo', onclick: () => adattaSchermo() }, conIcona('⤢', 'Adatta')),
-      el.btnGriglia,
-      // ritocchi del 07/10: «Mostra / nascondi template» (Maiusc+T), con «anche i template a durata»
-      el.sovrapposizioni = h('span', { class: 'mappa-sovrapposizioni', role: 'group', 'aria-label': 'Sovrapposizioni' },
+      el.btnGriglia),
+    // ritocchi del 07/10: «Mostra / nascondi template» (Maiusc+T), con «anche i template a durata»
+    el.sovrapposizioni = h('span', { class: 'mappa-sovrapposizioni mappa-gruppo gruppo-sovr', role: 'group', 'aria-label': 'Sovrapposizioni' },
         el.btnSovr = h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-pressed': 'true', title: 'Mostra o nasconde i template senza durata, i muri, le porte e il terreno difficile (Maiusc+T); per il movimento valgono sempre', onclick: () => cambiaSovrapposizioni('master', 'nascoste') }, conIcona('◫', 'Template')),
         el.ancheDurata = h('label', { class: 'casella-sovr', title: 'Il pulsante nasconde e mostra anche i template con durata in Round' }, h('input', { type: 'checkbox', onchange: () => cambiaSovrapposizioni('master', 'ancheDurata') }), h('span', { class: 'lungo' }, ' anche a durata')),
         // ritocchi del 07/10: toglie in un colpo i template a durata (quelli dello scontro)
         h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Cancella template temporanei: toglie tutti i template a durata in Round; quelli senza durata, muri, porte e terreno restano (Ctrl+Z li rimette)', 'aria-label': 'Cancella template temporanei', onclick: () => cancellaTemplate({ tutti: false }) }, conIcona('🧹', 'Temporanei'))),
+    h('span', { class: 'mappa-gruppo gruppo-strumenti', role: 'group', 'aria-label': 'Strumenti' },
       // lotto 7 (§12, menu superiore): gli strumenti del master in un menu
-      el.strumenti = h('details', { class: 'menu-strumenti' },
+      // ritocchi del 08/10: categorie con intestazione e icona dai dati (data/mappa.json → strumenti); si ricostruisce a ogni
+      // apertura, così stati e voci spente sono sempre quelli del momento
+      el.strumenti = h('details', { class: 'menu-strumenti', ontoggle: (e) => { if (e.target.open) disegnaMenuStrumenti(); } },
         h('summary', { class: 'btn', title: 'Strumenti del master: immagine, griglia, nebbia, muri, scene, movimenti dei giocatori', 'aria-label': 'Strumenti' }, conIcona('🛠', 'Strumenti'), ' ▾'),
-        h('div', { class: 'menu-strumenti-voci', role: 'menu' },
-          voceStrumenti('Carica immagine…', 'Immagine di fondo: JPG, PNG o WEBP', () => el.scegliFile.click()),
-          voceStrumenti('Griglia', 'Calibra, colore, opacità, blocco', () => apriStrumento(el.pGriglia)),
-          voceStrumenti('Nebbia', 'Pennello e rettangolo, Rivela / Copri, tutto', () => apriStrumento(el.pNebbia)),
-          // 07/10: la nebbia automatica anche dal menu, con lo stato
-          el.voceNebbiaAuto = voceStrumenti('Nebbia automatica: no', 'La nebbia si apre da sola dove i PG vedono quando si spostano (muri, porte chiuse e luci ne tengono conto)', () => cambiaVisualeAutomatica()),
-          voceStrumenti('Muri e terreno', 'Muro, terreno difficile, gomma', () => apriStrumento(el.pMuri)),
-          voceStrumenti('Luci', 'Luce della scena (Luce, Penombra, Luce scarsa, Buio) e zone a pennello', () => apriStrumento(el.pLuci)),
-          el.voceDettaglioLinea = voceStrumenti(testoDettaglioLinea(), 'Le cinque linee sottili dal centro di chi tira verso angoli e centro del bersaglio, verdi se libere e tratteggiate rosse se bloccate (solo qui, non ai giocatori; anche Maiusc+L)', () => cambiaDettaglioLinea()),
-          voceStrumenti('Template ad area… (T)', 'Raggio, cono, linea, quadrato, rettangolo: forma, misura, colore, durata; poi lo piazzi sulla mappa', () => { el.strumenti.open = false; nuovoTemplateUi(); }),
-          voceStrumenti('Cancella template temporanei', 'Toglie tutti i template a durata in Round; quelli senza durata restano (Ctrl+Z li rimette)', () => cancellaTemplate({ tutti: false })),
-          voceStrumenti('Cancella tutti i template…', 'Toglie tutti i template, anche quelli senza durata (Ctrl+Z li rimette)', () => cancellaTemplate({ tutti: true })),
-          voceStrumenti('Seleziona tutti i PG', 'Per spostarli insieme: trascinane uno (libero, in formazione), o le frecce', () => selezionaTipo('pg')),
-          voceStrumenti('Seleziona tutti i nemici', 'Gli avversari in mappa, per spostarli insieme', () => selezionaTipo('nemici')),
-          voceStrumenti('Seleziona tutti', 'Tutti i token in mappa', () => selezionaTipo('tutti')),
-          voceStrumenti('Vista giocatori', 'Quale scena vedono, QR, «Apri vista giocatori»', () => apriStrumento(el.pGiocatori)),
-          // 07/10: i suoni di norma solo qui (PC con le casse); se il televisore ha le casse, anche nella vista giocatori
-          el.voceAudioGiocatori = voceStrumenti('Suoni anche nella vista giocatori: no', 'Campanella del Round e musica di fondo anche sullo schermo dei giocatori (utile se il televisore ha le casse); là serve un primo clic per sbloccare l’audio', () => cambiaAudioGiocatori()),
-          voceStrumenti('Scene', 'Nuova, apri, rinomina, duplica, archivia', () => apriStrumento(document.getElementById('plancia-scene-mappa'))),
-          // 07/10: posizione iniziale della scena (token, porte, template, nebbia)
-          el.voceSalvaIniziale = voceStrumenti('Salva posizione iniziale', 'Token, porte, template e nebbia come sono adesso: per rigiocare la scena (un solo salvataggio, sovrascrivibile)', () => salvaInizialeUi()),
-          el.voceRipristina = voceStrumenti('Ripristina posizione iniziale', 'Rimette token, porte, template e nebbia come nella posizione salvata; PV, Stati e registro dello scontro non cambiano; Ctrl+Z annulla', () => ripristinaInizialeUi()),
-          voceStrumenti('Collegamento e token', 'Scontro o bozza collegati, pezzi da mettere in mappa', () => apriStrumento(el.secScontro)),
-          el.bloccoGiocatori = h('button', { type: 'button', role: 'menuitemcheckbox', class: 'voce-strumenti', 'aria-checked': 'false', title: 'Pronto per la fase 2 (tab BattleMap dei giocatori): finché è acceso i giocatori non muovono i loro token', onclick: () => cambiaBloccoGiocatori() }, 'Blocca movimenti dei giocatori'))),
+        el.vociStrumenti = h('div', { class: 'menu-strumenti-voci menu-strumenti-gruppi', role: 'menu' })),
       // «Altro»: immagine, scala della griglia e scorciatoie, fuori dalla riga
       el.altro = h('details', { class: 'menu-strumenti menu-altro' },
         h('summary', { class: 'btn', title: 'Altro: carica immagine, scala della griglia, scorciatoie', 'aria-label': 'Altro' }, '⋯'),
@@ -238,10 +230,11 @@ export function renderMappa(radice, ctx) {
           h('button', { type: 'button', role: 'menuitem', class: 'voce-strumenti', title: 'Scorciatoie e comandi (?)', onclick: () => { el.altro.open = false; apriAiuto(); } }, 'Scorciatoie e comandi (?)'),
           el.voceMostraPv = h('button', { type: 'button', role: 'menuitemcheckbox', class: 'voce-strumenti', 'aria-checked': 'true', title: 'Barretta rossa dei PV sotto i token (tasto P); i giocatori vedono sempre quella dei PG', onclick: () => { el.altro.open = false; cambiaMostraPv(); } }, 'Mostra PV sui token (P)'),
           h('p', { class: 'nota voce-strumenti-nota' }, el.scala))),
+      h('button', { type: 'button', class: 'btn tondo', title: 'Scorciatoie e comandi (?)', 'aria-label': 'Scorciatoie e comandi', onclick: () => apriAiuto() }, '?')),
+    h('span', { class: 'mappa-gruppo gruppo-suoni', role: 'group', 'aria-label': 'Suoni e salvataggio' },
       // suoni (07/10): musica di fondo dello scontro e, accanto, muto e volumi (disegnaAudio)
       el.audio = h('span', { class: 'mappa-audio', role: 'group', 'aria-label': 'Suoni' }),
-      h('button', { type: 'button', class: 'btn tondo', title: 'Scorciatoie e comandi (?)', 'aria-label': 'Scorciatoie e comandi', onclick: () => apriAiuto() }, '?')),
-    el.stato);
+      el.stato));
   el.riquadro = h('div', { class: 'mappa-tela', tabindex: '0', 'aria-label': 'Mappa: rotella per lo zoom, barra spaziatrice e mouse o trascinamento per spostarsi' });
   el.suggerimento = h('div', { class: 'mappa-suggerimento', hidden: true, role: 'status' });
   el.riquadro.append(el.suggerimento);
@@ -376,7 +369,7 @@ export function renderMappa(radice, ctx) {
     sopra: (c) => {
       if (st.scena) {
         const t = st.trascina?.modo === 'token' ? { id: st.trascina.token, q: st.trascina.q } : null;
-        disegnaToken(c, { scena: st.scena, cam: st.cam, pezzi: st.mappaPezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: st.selezionato, trascina: t, bordo: bordoDi, alone: ctx.dati.mappa.colori.alone_turno, ritrattoVerticale: ctx.dati.mappa.token.ritratto_verticale, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => st.mostraPv }, zero: ctx.dati.mappa.pv_zero });
+        disegnaToken(c, { scena: st.scena, cam: st.cam, pezzi: st.mappaPezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: st.selezionato, trascina: t, bordo: bordoDi, alone: ctx.dati.mappa.colori.alone_turno, ritrattoVerticale: ctx.dati.mappa.token.ritratto_verticale, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => st.mostraPv }, zero: ctx.dati.mappa.pv_zero, volo: ctx.dati.mappa.volo });
         disegnaSelezioneGruppo(c);
         // fase 2, lotto 5: i quadretti liberi accanto al veicolo per «Scendi»
         if (st.scendi) {
@@ -519,7 +512,17 @@ export function renderMappa(radice, ctx) {
         testoStato(`Ripresa dal server alle ${ora()}`);
       } else {
         // le modifiche fatte durante il salvataggio restano: si aggiorna solo la revisione
-        st.scena = { ...st.scena, revisione: esito.scena.revisione, aggiornato: esito.scena.aggiornato };
+        // 08/10: se nel frattempo un tablet ha mosso un PG, il server ha fuso le scritture (esito.scena.fusi): qui si
+        // riprendono quei movimenti, senza toccare il resto
+        const fusi = esito.scena.fusi ?? [];
+        st.scena = { ...(fusi.length ? fondiMovimentiTablet(st.scena, esito.scena, fusi, ctx.dati) : st.scena), revisione: esito.scena.revisione, aggiornato: esito.scena.aggiornato };
+        if (fusi.length) {
+          invalidaArea();
+          disegnaPannelli();
+          disegnaIniziativa();
+          ridisegna(['aree', 'sopra']);
+          aggiornaFonti().then(() => { for (const id of fusi) { const m = st.scena.movimenti.find((x) => x.id === id); if (m) avvisaMovimentoTablet(m); } });
+        }
         testoStato(S.modificata ? 'Modifiche da salvare…' : `Salvata alle ${ora()}`);
       }
     } catch (e) {
@@ -769,10 +772,14 @@ export function renderMappa(radice, ctx) {
       mostraZoc: () => cambiaMostraZoc(),
       nuovoTurnoTutti: () => nuovoTurnoUi(null),
       nascondi: () => cambiaToken(scelto.id, (x) => ({ ...x, nascosto: !x.nascosto })),
+      volo: comandoVolo(scelto),
       ingombro: (n) => cambiaToken(scelto.id, (x) => ({ ...x, ingombro: n, q: agganciaQ(st.scena.griglia, centroToken(st.scena.griglia, x).x, centroToken(st.scena.griglia, x).y, n) }), { controllaSovrapposti: true }),
       togli: () => togliToken(scelto.id),
       // fase 2, lotto 5: veicolo
-      ruota: (verso) => ruotaVeicoloUi(scelto.id, verso),
+      rigaAndature: () => (recordVeicolo(scelto) ? rigaAndature(ctx.dati, recordVeicolo(scelto).mezzo, (id) => andaturaUi(scelto, id), { classe: 'mappa-andature' }) : null),
+      ruota: (verso, rapido = false) => ruotaVeicoloUi(scelto.id, verso, rapido),
+      passiRotazione: [passoRotazione(false), passoRotazione(true)],
+      angolo: scelto?.rif?.tipo === 'veicolo' ? angoloDi(scelto) : null,
       aBordo: aBordo(scelto).map((x) => ({ id: x.id, nome: nomeTok(x), ruolo: x.ruolo })),
       scendi: (id) => iniziaScendi(scelto.id, id),
       lineaPasseggero: (id) => lineaPasseggero(scelto.id, id),
@@ -832,6 +839,36 @@ export function renderMappa(radice, ctx) {
     dopoCambioToken();
   }
 
+  /**
+   * «In volo» (08/10, src/mappa/volo.js): mette o toglie il token dal volo (Ctrl+Z annulla). Il volo lo concede una
+   * capacità, un Incantesimo o un Artefatto (Giocatore §5.2.3): la mappa non lo controlla, lo decide il master.
+   */
+  function cambiaVoloUi(id, attivo = null) {
+    const t = st.scena.token.find((x) => x.id === id);
+    if (!t || t.rif.tipo === 'veicolo') return;
+    const nuovo = attivo ?? !inVolo(t);
+    cambiaToken(id, (x) => conVolo(x, nuovo, nuovo ? x.quota ?? null : null));
+    const pz = pezzoDi(t);
+    const m = nuovo ? movimentoInVolo(pz ?? {}, ctx.dati) : null;
+    avviso(nuovo ? `${pz?.nome ?? 'Token'} in volo: sopra terreno difficile e token, niente Copertura Leggera o Media (Passo ${m.passo} Q). Ctrl+Z annulla.` : `${pz?.nome ?? 'Token'} è atterrato.`, { tipo: 'info', chiave: 'volo' });
+  }
+  /** «Quota…»: l'altezza in Q del token in volo, come etichetta (e per la portata ravvicinata, A.149). */
+  async function quotaVoloUi(id) {
+    const t = st.scena.token.find((x) => x.id === id);
+    if (!t || !inVolo(t)) return;
+    const v = await chiediTesto({ titolo: 'Quota in volo', etichetta: `Quota in Q (vuoto o 0: nessuna; al massimo ${ctx.dati.mappa.volo.quota_massima})`, valore: t.quota ? String(t.quota) : '', conferma: 'Imposta' });
+    if (v === null) return;
+    const n = Math.round(Number(v.replace(',', '.')));
+    if (!Number.isFinite(n) || n < 0 || n > ctx.dati.mappa.volo.quota_massima) { avvisoErrore('Quota: un numero di Q da 0 in su.'); return; }
+    cambiaToken(id, (x) => conVolo(x, true, n || null));
+  }
+  /** Il comando del volo per la carta della plancia e il pannello del token: { attivo, sa, cambia, quota }. */
+  function comandoVolo(t) {
+    if (!t || t.rif.tipo === 'veicolo') return null;
+    const pz = pezzoDi(t);
+    return { attivo: inVolo(t), sa: sapeVolare(pz), quota: quotaDi(t), cambia: () => cambiaVoloUi(t.id), cambiaQuota: () => quotaVoloUi(t.id), passo: sapeVolare(pz) ? pz.voloQ : ctx.dati.mappa.volo.movimento_predefinito.passo };
+  }
+
   /** Due token sullo stesso Q non sono un errore (A.127): si avvisa soltanto. */
   function avvisaSovrapposti(ids) {
     const nomeDi = (id) => { const t = st.scena.token.find((x) => x.id === id); return (t && pezzoDi(t)?.nome) ?? t?.nome ?? id; };
@@ -850,9 +887,6 @@ export function renderMappa(radice, ctx) {
     else apriCarta(t);
   }
   /** Una voce del menu «Strumenti»: chiude il menu e fa l'azione. */
-  function voceStrumenti(testo, titolo, azione) {
-    return h('button', { type: 'button', role: 'menuitem', class: 'voce-strumenti', title: titolo, onclick: () => { el.strumenti.open = false; azione(); } }, testo);
-  }
   /** Porta alla sezione dello strumento nel gruppo «Mappa» della barra e la apre. */
   function apriStrumento(sezione) {
     if (!sezione) return;
@@ -872,14 +906,73 @@ export function renderMappa(radice, ctx) {
     sezione.classList.add('mappa-evidenzia');
     setTimeout(() => sezione.classList.remove('mappa-evidenzia'), 1600);
   }
-  /** Blocco dei movimenti dei giocatori: si salva nella scena, lo userà la tab BattleMap della fase 2. */
+  /** Blocco dei movimenti dei giocatori: si salva nella scena; il server lo controlla a ogni movimento dai tablet. */
   function cambiaBloccoGiocatori() {
     if (!st.scena) return;
     const v = !st.scena.bloccaGiocatori;
     st.scena = { ...st.scena, bloccaGiocatori: v };
     salvaPresto();
     aggiornaBlocco();
-    avviso(v ? 'Movimenti dei giocatori bloccati (vale dalla fase 2, quando i giocatori muoveranno dal tablet).' : 'Movimenti dei giocatori sbloccati.');
+    disegnaPannelloGiocatori();
+    avviso(v ? 'Movimenti dei giocatori bloccati: i tablet vedono la mappa ma non muovono.' : 'Movimenti dei giocatori sbloccati: i tablet muovono il proprio PG.');
+  }
+  /** Tablet dei giocatori (fase 2, lotto 7): movimento solo al proprio turno o sempre; avviso «Tocca a te». */
+  function cambiaTablet(campo) {
+    if (!st.scena) return;
+    const imp = impostazioniTablet(st.scena, ctx.dati);
+    const tablet = { movimento: imp.movimento, avvisoTurno: imp.avvisoTurno };
+    if (campo === 'movimento') tablet.movimento = imp.movimento === 'sempre' ? 'turno' : 'sempre';
+    else tablet.avvisoTurno = !imp.avvisoTurno;
+    st.scena = { ...st.scena, tablet };
+    salvaPresto();
+    aggiornaBlocco();
+    disegnaPannelloGiocatori();
+    avviso(campo === 'movimento'
+      ? (tablet.movimento === 'sempre' ? 'Movimento dai tablet: sempre, anche fuori turno.' : 'Movimento dai tablet: solo al proprio turno dello scontro.')
+      : (tablet.avvisoTurno ? 'Avviso «Tocca a te»: il tablet del PG di turno lo mostra, con suono e vibrazione (la pagina deve essere aperta).' : 'Avviso «Tocca a te» spento.'), { chiave: 'tablet', tipo: 'info' });
+  }
+  /**
+   * Movimenti dai tablet (fase 2, lotto 7): il server scrive la scena (revisione +1). Ogni secondo la mappa guarda se la
+   * revisione è cambiata e, se non ha modifiche sue in corso, riprende la scena del server: il master vede il movimento
+   * in diretta e lo annulla con Ctrl+Z (la voce è nella pila della scena). Con modifiche in corso aspetta il salvataggio.
+   */
+  let controlloRevisione = null;
+  async function controllaRevisione() {
+    const S = st.salvataggio;
+    if (!st.scena || st.chiusa || controlloRevisione || S.modificata || S.inCorso || st.trascina) return;
+    controlloRevisione = (async () => {
+      try {
+        const r = await fetch(`api/scene/${encodeURIComponent(ctx.id)}?revisione=${st.scena.revisione}`, { cache: 'no-store' });
+        if (!r.ok) return;
+        const nuova = await r.json();
+        if (nuova.invariata || st.chiusa || S.modificata || S.inCorso || st.trascina || !(nuova.revisione > st.scena.revisione)) return;
+        const prima = new Set(st.scena.movimenti.map((m) => m.id));
+        const daTablet = nuova.movimenti.filter((m) => m.tablet && !prima.has(m.id));
+        await usaScena(nuova);
+        testoStato(`Aggiornata alle ${ora()}`);
+        if (daTablet.length) {
+          dopoCambioToken();
+          // la scena è già quella del server: niente da salvare
+          clearTimeout(S.timer); S.modificata = false; testoStato(`Aggiornata alle ${ora()}`);
+          await aggiornaFonti();
+          for (const m of daTablet) avvisaMovimentoTablet(m);
+        }
+      } catch { /* senza rete: si riprova al prossimo giro */ } finally { controlloRevisione = null; }
+    })();
+  }
+  /** Un movimento arrivato da un tablet: l'avviso con Ctrl+Z e gli Attacchi di Opportunità scritti dal server. */
+  function avvisaMovimentoTablet(m) {
+    const t = st.scena.token.find((x) => x.id === m.token);
+    const nome = (t && pezzoDi(t)?.nome) ?? m.tablet;
+    avviso(`📱 ${nome} si è mosso dal tablet: ${numero(m.costo ?? 0, 1)} Q (${NOMI_FASCE[m.fascia] ?? 'movimento'}). Ctrl+Z per annullarlo.`, { tipo: 'info', chiave: `tablet-${m.id}`, durata: 8000,
+      azioni: [{ testo: 'Annulla', fai: () => { if (st.scena.annulla.at(-1)?.movimento === m.id) annullaUi(); else annullaMovimentoUi(m.token); } }] });
+    for (const r of (st.fonti?.scontro?.registro ?? []).filter((x) => x.opportunita?.movimento === m.id)) {
+      const idDa = r.opportunita.da;
+      const da = st.pezzi.find((p) => p.rif?.id === idDa);
+      const puo = st.planciaBarra?.puoAttaccare?.(idDa);
+      avviso([testoOpportunita(nome, da?.nome ?? idDa), 'Nessun tiro automatico.'], { tipo: 'info', durata: 15000,
+        azioni: puo ? [{ testo: `Attacca! (${da?.nome ?? idDa} → ${nome})`, fai: () => st.planciaBarra.attaccaContro(idDa, r.opportunita.contro) }] : [] });
+    }
   }
   /** «Adatta lo schermo dei giocatori»: l'evento arriva alle viste giocatori aperte (canale della diretta). */
   async function adattaGiocatori() {
@@ -892,11 +985,7 @@ export function renderMappa(radice, ctx) {
   // ── Posizione iniziale della scena (07/10; src/mappa/iniziale.js) ──
   const quandoIniziale = () => { const q = st.scena?.iniziale?.quando; if (!q) return null; const d = new Date(q); return `${d.toLocaleDateString('it-IT')} alle ${ora(d)}`; };
   function aggiornaVociIniziale() {
-    if (!el.voceRipristina) return;
-    const q = quandoIniziale();
-    el.voceRipristina.disabled = !q;
-    el.voceRipristina.textContent = q ? `Ripristina posizione iniziale (${q})` : 'Ripristina posizione iniziale (nessuna salvata)';
-    el.voceSalvaIniziale.textContent = q ? 'Salva posizione iniziale (sovrascrive)' : 'Salva posizione iniziale';
+    if (el.strumenti?.open) disegnaMenuStrumenti();
   }
   async function salvaInizialeUi() {
     if (!st.scena) return;
@@ -950,9 +1039,64 @@ export function renderMappa(radice, ctx) {
     el.ancheDurata.querySelector('input').checked = v.ancheDurata;
   }
   function aggiornaBlocco() {
-    const v = !!st.scena?.bloccaGiocatori;
-    el.bloccoGiocatori.setAttribute('aria-checked', String(v));
-    el.bloccoGiocatori.textContent = `${v ? '✓ ' : ''}Blocca movimenti dei giocatori`;
+    if (el.strumenti?.open) disegnaMenuStrumenti();
+  }
+  /**
+   * Menu «Strumenti» (ritocchi del 08/10): gruppi e voci da data/mappa.json → strumenti, con l'icona del gruppo, la
+   * scorciatoia a destra, lo stato (sì/no) nelle voci a interruttore e le voci non usabili spente con il motivo.
+   */
+  function disegnaMenuStrumenti() {
+    const sc = st.scena;
+    const f = st.fonti;
+    const sn = (v) => (v ? 'sì' : 'no');
+    const q = quandoIniziale();
+    const g = sc?.sovrapposizioni?.giocatori ?? {};
+    const VOCI = {
+      immagine: { testo: 'Immagine di fondo…', titolo: 'JPG, PNG o WEBP', azione: () => el.scegliFile.click() },
+      griglia: { testo: 'Griglia', titolo: 'Calibra, colore, opacità, blocco', azione: () => apriStrumento(el.pGriglia) },
+      muri: { testo: 'Muri e terreno', titolo: 'Muro, terreno difficile, gomma', azione: () => apriStrumento(el.pMuri) },
+      porte: { testo: 'Porte', titolo: 'Clic su un Q di muro: mette una porta; clic su una porta: la toglie', azione: () => { apriStrumento(el.pMuri); if (st.muri.strumento !== 'porta') strumentoMuri('porta'); } },
+      luci: { testo: 'Luci', titolo: 'Luce della scena e zone a pennello', azione: () => apriStrumento(el.pLuci) },
+      nebbia: { testo: 'Nebbia', titolo: 'Pennello e rettangolo, Rivela / Copri, tutto', azione: () => apriStrumento(el.pNebbia) },
+      nebbia_automatica: { testo: `Nebbia automatica: ${sn(sc?.visuale?.automatica)}`, titolo: 'La nebbia si apre da sola dove i PG vedono', azione: () => cambiaVisualeAutomatica() },
+      scene: { testo: 'Scene…', titolo: 'Nuova, apri, rinomina, duplica, archivia', azione: () => apriStrumento(document.getElementById('plancia-scene-mappa')) },
+      collegamento: { testo: 'Collegamento e token', titolo: 'Scontro o bozza collegati, pezzi da mettere in mappa', azione: () => apriStrumento(el.secScontro) },
+      salva_iniziale: { testo: q ? 'Salva posizione iniziale (sovrascrive)' : 'Salva posizione iniziale', titolo: 'Token, porte, template e nebbia come sono adesso', azione: () => salvaInizialeUi() },
+      ripristina_iniziale: { testo: q ? `Ripristina posizione iniziale (${q})` : 'Ripristina posizione iniziale', titolo: 'Rimette token, porte, template e nebbia; Ctrl+Z annulla', azione: () => ripristinaInizialeUi(), spenta: q ? null : 'Nessuna posizione iniziale salvata in questa scena' },
+      linea: { testo: 'Linea di tiro', tasto: 'L', titolo: 'Dal token scelto verso un token o un quadretto', azione: () => iniziaLinea(st.selezionato), spenta: st.selezionato ? null : 'Scegli prima il token che tira' },
+      dettaglio_linea: { testo: testoDettaglioLinea(), tasto: 'Maiusc+L', titolo: 'Le cinque linee di controllo della linea di tiro (solo qui)', azione: () => cambiaDettaglioLinea() },
+      template: { testo: 'Template ad area…', tasto: 'T', titolo: 'Raggio, cono, linea, quadrato, rettangolo', azione: () => nuovoTemplateUi() },
+      mostra_area: { testo: `Mostra area: ${sn(st.mostraArea)}`, tasto: 'M', titolo: 'L’area di movimento del token scelto', azione: () => cambiaMostraArea() },
+      mostra_zoc: { testo: `Mostra ZoC: ${sn(st.mostraZoc)}`, tasto: 'Z', titolo: 'Le zone di controllo degli avversari', azione: () => cambiaMostraZoc() },
+      seleziona_pg: { testo: 'Seleziona tutti i PG', titolo: 'Per spostarli insieme: trascinane uno, o le frecce', azione: () => selezionaTipo('pg') },
+      seleziona_nemici: { testo: 'Seleziona tutti i nemici', titolo: 'Gli avversari in mappa', azione: () => selezionaTipo('nemici') },
+      seleziona_tutti: { testo: 'Seleziona tutti', titolo: 'Tutti i token in mappa', azione: () => selezionaTipo('tutti') },
+      mostra_giocatori: { testo: st.inGioco === ctx.id ? 'Mostrata ai giocatori ✓' : 'Mostra questa ai giocatori', titolo: 'Segna questa scena per lo schermo dei giocatori e i tablet (con uno scontro aperto vedono comunque la sua scena)', azione: () => scegliPerGiocatori(ctx.id) },
+      vista_giocatori: { testo: 'Vista giocatori: scena, QR, apri…', titolo: 'Quale scena vedono, il QR, «Apri vista giocatori»', azione: () => apriStrumento(el.pGiocatori) },
+      adatta_giocatori: { testo: 'Adatta lo schermo dei giocatori', titolo: 'Lo schermo dei giocatori inquadra tutta la parte scoperta', azione: () => adattaGiocatori() },
+      pv_nemici: { testo: `PV dei nemici ai giocatori: ${sn(sc?.pvNemiciGiocatori)}`, titolo: 'La barretta dei PV dei nemici nella vista giocatori (quella dei PG si vede sempre)', azione: () => cambiaPvNemiciGiocatori() },
+      sovrapposizioni_giocatori: { testo: `Template e muri ai giocatori: ${sn(!g.nascoste)}`, titolo: 'Template senza durata, muri, porte e terreno sullo schermo dei giocatori', azione: () => cambiaSovrapposizioni('giocatori', 'nascoste') },
+      suoni_giocatori: { testo: `Suoni anche ai giocatori: ${sn(sc?.audio?.giocatori)}`, titolo: 'Campanella e musica anche sullo schermo dei giocatori (televisore con le casse)', azione: () => cambiaAudioGiocatori() },
+      blocco_giocatori: { testo: `Blocca movimenti dei giocatori: ${sn(sc?.bloccaGiocatori)}`, titolo: 'I tablet dei giocatori vedono la mappa ma non muovono (lo dice anche il tablet)', azione: () => cambiaBloccoGiocatori() },
+      // fase 2, lotto 7: tablet dei giocatori (src/mappa/tablet.js)
+      movimento_tablet: { testo: `Movimento dai tablet: ${impostazioniTablet(sc, ctx.dati).movimento === 'sempre' ? 'sempre' : 'solo al proprio turno'}`, titolo: 'Solo al proprio turno dello scontro aperto, oppure sempre (anche fuori turno e senza scontro)', azione: () => cambiaTablet('movimento') },
+      avviso_turno_tablet: { testo: `Avviso «Tocca a te» ai tablet: ${sn(impostazioniTablet(sc, ctx.dati).avvisoTurno)}`, titolo: 'Quando arriva il turno di un PG, il suo tablet mostra l’avviso grande con suono e vibrazione', azione: () => cambiaTablet('avvisoTurno') },
+      collega_tablet: { testo: 'Collega i tablet: QR e indirizzo…', titolo: 'L’indirizzo da aprire sui tablet (stessa rete Wi-Fi), poi «Sono…»', azione: () => apriStrumento(el.pGiocatori) },
+      musica: { testo: 'Musica di fondo…', titolo: 'Un file della cartella musica/ del server', azione: () => scegliMusicaUi(), spenta: f?.scontro || f?.bozza ? null : 'Collega la scena a uno scontro o a una bozza' },
+      muto: { testo: `Audio su questo PC: ${audio.impostazioni().muto ? 'muto' : 'attivo'}`, titolo: 'Spegne o riaccende musica ed effetti su questo PC', azione: () => { audio.imposta({ muto: !audio.impostazioni().muto }); aggiornaControlliAudio(); } },
+      cancella_temporanei: { testo: 'Cancella template temporanei', titolo: 'Toglie i template a durata in Round; Ctrl+Z li rimette', azione: () => cancellaTemplate({ tutti: false }), spenta: (sc?.template ?? []).some((t) => Number.isInteger(t.durata)) ? null : 'Nessun template a durata in mappa' },
+      cancella_tutti: { testo: 'Cancella tutti i template…', titolo: 'Anche quelli senza durata, con conferma; Ctrl+Z li rimette', azione: () => cancellaTemplate({ tutti: true }), spenta: sc?.template?.length ? null : 'Nessun template in mappa' },
+    };
+    svuota(el.vociStrumenti, ctx.dati.mappa.strumenti.gruppi.map((gr) => h('div', { class: 'gruppo-strumenti-menu', role: 'group', 'aria-label': gr.titolo },
+      h('p', { class: 'voce-strumenti-titolo' }, h('span', { class: 'icona', 'aria-hidden': 'true' }, gr.icona), ` ${gr.titolo}`),
+      gr.voci.map((id) => {
+        const v = VOCI[id];
+        if (!v) return null;
+        return h('button', {
+          type: 'button', role: 'menuitem', class: 'voce-strumenti', disabled: !sc || !!v.spenta, title: !sc ? 'Nessuna scena aperta' : v.spenta ?? v.titolo,
+          onclick: () => { el.strumenti.open = false; v.azione(); },
+        }, h('span', { class: 'voce-testo' }, v.testo), v.tasto ? h('kbd', { class: 'voce-tasto' }, v.tasto) : null);
+      }))));
   }
   /** Pannello «?»: scorciatoie e comandi della mappa (§12). */
   function apriAiuto() {
@@ -989,9 +1133,18 @@ export function renderMappa(radice, ctx) {
       ['♫ in alto', 'musica di fondo dello scontro (file della cartella musica/ del server): parte con lo scontro, si ripete, si ferma alla chiusura; ⏸ / ▶ la mette in pausa'],
       ['🔊 e cursori Musica / Effetti', 'muto generale e volumi su questo PC (ricordati); la campanella suona a ogni nuovo Round. Strumenti → «Suoni anche nella vista giocatori» per il televisore con le casse'],
       ['Avviso «clic per attivare l’audio»', 'il browser blocca i suoni finché non tocchi la pagina: un clic qualunque li sblocca'],
-      ['Veicolo da mettere o scelto: ← →', 'gira il veicolo di 90° (anche clic destro → «Ruota»); Ctrl+Z annulla'],
+      ['Clic destro → «In volo» (gruppo Movimento; anche pannello e carta)', 'icona e ombra sul token: passa sopra terreno difficile e token (senza fermarsi su un altro token), muri e porte chiuse restano; niente token in mezzo né Copertura Leggera o Media; i giocatori lo vedono anche sotto la nebbia se un PG ha una linea senza muri. «Quota…» per l’etichetta in Q. Un nemico che sa volare lo propone quando lo metti in mappa'],
+      ['Veicolo da mettere o scelto: ← → (Maiusc: a 45°)', 'gira il veicolo di 10° (con Maiusc di 45°) attorno al centro; anche clic destro → «Ruota». Il triangolino indica il muso; girare non consuma movimento. Ctrl+Z annulla'],
+      ['Veicolo scelto: riga «Andatura» del pannello (o clic destro → «Movimento»)', 'Fermo, Controllata, Veloce, Massima con i Q del Round; l’area si aggiorna subito. Nello scontro una fascia per Round (Veicoli §2.1): il resto resta scelto per i Round dopo. Con l’andatura Fermo il veicolo non si muove e un avviso lo dice, con le andature come pulsanti'],
+      ['Veicolo: muoverlo', 'trascinalo o clic sul quadretto di arrivo, come un token; una volta per Round'],
       ['Clic destro su un PG o un nemico accanto a un veicolo', '«Sali su … come conducente» (un PG) o «come passeggero»: il token va a bordo e si muove con il mezzo'],
-      ['Pannello del veicolo → «A bordo»', '«Scendi…» e clic su un quadretto evidenziato accanto; «Linea di tiro» di chi è a bordo, dal veicolo'],
+      ['Pannello del veicolo → «A bordo» (o clic destro sul veicolo)', 'gruppo «Scendi»: il nome, poi clic su un quadretto evidenziato accanto; gruppo «Linea di tiro»: la linea di chi è a bordo, dal veicolo'],
+      ['Mappa collegata a una bozza', 'gruppo «Iniziativa» → «Inizia scontro»: come «Inizia» della bozza, poi la finestra «Iniziativa»'],
+      ['Tablet dei giocatori', 'aprono la vista giocatori (Strumenti → «Collega i tablet»), toccano «Sono…» e muovono il proprio PG: tocco sul quadretto, poi «Conferma». Il server controlla ogni movimento; tu lo vedi in diretta e lo annulli con Ctrl+Z'],
+      ['📱 e «🔔 Chiedi di muovere» nell’elenco dell’Iniziativa', '📱 pieno: il tablet del PG è collegato (scheda o mappa aperta); «Chiedi di muovere» manda al suo tablet l’avviso grande con suono, vibrazione e «Muovi il PG sulla mappa»'],
+      ['⏹ Fine scontro (barra dell’Iniziativa)', 'chiude lo scontro con conferma, come nella plancia: la musica si ferma, i tablet aperti dalla scheda tornano alla scheda'],
+      ['Strumenti → Tablet dei giocatori', 'blocca i movimenti, «solo al proprio turno» o «sempre», avviso automatico «Tocca a te»'],
+      ['Strumenti (in alto)', 'sette categorie: Preparazione mappa, Scena, In gioco, Vista giocatori, Tablet dei giocatori, Suoni, Pulizia; scorciatoia a destra, le voci spente dicono perché'],
       ['M', 'mostra o nasconde l’area di movimento'],
       ['Z', 'mostra o nasconde le zone di controllo (ZoC) degli avversari'],
       ['P', 'mostra o nasconde la barretta dei PV sui token (solo per te)'],
@@ -1036,11 +1189,18 @@ export function renderMappa(radice, ctx) {
   function scegli(id) {
     // la fascia riparte da quella che il movimento già fatto ha raggiunto (3 Q usati su Passo 2: Corsa)
     if (st.selezionato !== id) st.fascia = fasciaRaggiunta(id);
+    const nuovo = st.selezionato !== id;
     st.selezionato = id;
     invalidaArea();
     disegnaPannelli();
     disegnaIniziativa();
     ridisegna(['aree', 'sopra']);
+    // ritocchi del 08/10: un veicolo che non si può muovere lo dice subito (mai un silenzio), con il modo di farlo
+    const t = nuovo && id ? st.scena?.token.find((x) => x.id === id) : null;
+    if (t?.rif.tipo === 'veicolo' && st.fascia !== LIBERO) {
+      const info = infoArea(t);
+      if (!info.area && info.motivo) avviso(info.fermoAndatura ? `${info.motivo}.` : `${pezzoDi(t)?.nome ?? 'Veicolo'}: ${info.motivo}.`, { tipo: 'info', chiave: 'veicolo-fermo', durata: 12000, azioni: info.fermoAndatura ? azioniAndatura(t) : [] });
+    }
   }
 
   /**
@@ -1066,6 +1226,8 @@ export function renderMappa(radice, ctx) {
       st.plancia = renderTavolo(el.cartaCorpo, {
         dati: ctx.dati,
         soloCarta: () => st.cartaAperta,
+        // 08/10: «In volo» anche dalla carta
+        volo: (chiave) => comandoVolo(st.scena?.token.find((x) => chiaveRif(x.rif) === chiave)),
         azioni: { personaggi: () => {}, mappa: () => {}, apri: (r) => apriSchedaCompleta(r) },
       });
     }
@@ -1098,12 +1260,20 @@ export function renderMappa(radice, ctx) {
     el.riquadro.classList.remove('piazza');
     const pz = st.mappaPezzi.get(chiave);
     if (!pz || st.scena.token.some((t) => chiaveRif(t.rif) === chiave)) { disegnaPannelli(); return; }
-    // fase 2, lotto 5: un veicolo entra con il muso scelto con ← → durante il piazzamento (di norma in basso)
-    const dir = pz.tipo === 'veicolo' ? st.dirPiazza ?? 's' : null;
-    const ingombro = dir ? ingombroOrientato(pz.ingombro, dir) : pz.ingombro;
-    const t = { ...tokenPerPezzo({ ...pz, ingombro }, agganciaQ(st.scena.griglia, m.x, m.y, ingombro)), ...(dir ? { direzione: dir } : {}) };
-    st.dirPiazza = null;
+    // un veicolo entra con il muso scelto con ← → durante il piazzamento (di norma in basso, 180°): dall'08/10 con
+    // angolo e base (src/mappa/forma.js), anche non retto
+    let t;
+    if (pz.tipo === 'veicolo') {
+      const base = baseDaIngombro(pz.ingombro);
+      const angolo = normaAngolo(st.angPiazza ?? 180);
+      const ingombro = formaRuotata(base, angolo).ingombro;
+      const { direzione: _d, ...tok } = tokenPerPezzo({ ...pz, ingombro }, agganciaQ(st.scena.griglia, m.x, m.y, ingombro));
+      t = { ...tok, angolo, base };
+    } else t = tokenPerPezzo(pz, agganciaQ(st.scena.griglia, m.x, m.y, pz.ingombro));
+    st.angPiazza = null;
     st.scena = cambiaTokenAnnullabile(st.scena, null, t, ctx.dati);
+    // 08/10: un nemico che sa volare (movimento.volo del profilo): il volo si propone, non si attiva
+    if (sapeVolare(pz)) avviso(`${pz.nome} sa volare (Passo in volo ${pz.voloQ} Q): mettilo in volo?`, { tipo: 'info', chiave: 'volo-proposto', durata: 12000, azioni: [{ testo: 'In volo', fai: () => cambiaVoloUi(t.id, true) }] });
     avvisaSovrapposti([t.id]);
     st.selezionato = t.id;
     dopoCambioToken();
@@ -1112,31 +1282,54 @@ export function renderMappa(radice, ctx) {
   // ── Veicoli sulla mappa (fase 2, lotto 5; src/mappa/veicoli-mappa.js): girare, salire, scendere, linea dei passeggeri ──
   const muroQ = () => { const muri = muriEffettivi(st.scena); const g = st.scena.griglia; return (x, y) => cella(muri, g.colonne, g.righe, x, y); };
   const nomeTok = (t) => pezzoDi(t)?.nome ?? t?.nome ?? t?.id ?? '—';
-  /** Gira il veicolo di 90° attorno al suo centro (Ctrl+Z annulla); non su muri o altri token. */
-  function ruotaVeicoloUi(id, verso) {
+  /** Andatura del veicolo dalla mappa (ritocchi del 08/10): nel registro unico, poi area ricalcolata subito. */
+  async function andaturaUi(t, id) {
+    const rec = recordVeicolo(t);
+    if (!rec) { avvisoErrore('Registro del veicolo non trovato: l’andatura si cambia dalla sua scheda.'); return; }
+    let r;
+    try { r = scegliAndatura(rec, id, st.fonti?.scontro ?? null, ctx.dati); } catch (e) { avvisoErrore(e.message); return; }
+    try {
+      const { record } = await aggiornaVeicolo(rec, r.rec);
+      if (st.fonti) st.fonti.veicoli = st.fonti.veicoli.map((x) => (x.id === record.id ? record : x));
+      avviso(r.testo, { tipo: 'info', chiave: 'andatura' });
+      await aggiornaFonti();
+      invalidaArea();
+      disegnaPannelli();
+      ridisegna(['aree', 'sopra']);
+    } catch (e) { avvisoErrore(`Andatura non salvata: ${e.message}`); }
+  }
+  /** Le andature come pulsanti di un avviso (veicolo fermo). */
+  const azioniAndatura = (t) => ctx.dati.veicoli.andature.elenco.filter((a) => a.moltiplicatore > 0).map((a) => ({ testo: a.nome, fai: () => andaturaUi(t, a.id) }));
+  /** Passo della rotazione (08/10; data/mappa.json → token.rotazione_veicoli): 10°, oppure 45° con Maiusc. */
+  const passoRotazione = (rapido) => ctx.dati.mappa.token.rotazione_veicoli[rapido ? 'passo_rapido_gradi' : 'passo_gradi'];
+  /**
+   * Gira il veicolo attorno al suo centro (Ctrl+Z annulla) di un passo (verso +1 orario, −1 antiorario); non su muri o
+   * altri token, controllati sui quadretti occupati. Girare non consuma movimento (Veicoli §1.3; A.147).
+   */
+  function ruotaVeicoloUi(id, verso, rapido = false) {
     const prima = st.scena.token.find((t) => t.id === id);
     if (!prima) return;
-    const r = ruotaSeLibero(st.scena, id, verso, muroQ());
+    const r = ruotaSeLibero(st.scena, id, verso * passoRotazione(rapido), muroQ());
     if (r.errore) { avvisoErrore(`${nomeTok(prima)} non si gira: ${r.errore}.`); return; }
     st.scena = cambiaTokenAnnullabile(st.scena, prima, r.token, ctx.dati);
-    avviso(`${nomeTok(prima)}: muso ${NOMI_DIREZIONI[r.token.direzione]} (Ctrl+Z annulla).`, { tipo: 'info', chiave: 'ruota-veicolo' });
+    avviso(`${nomeTok(prima)}: muso a ${r.token.angolo}° (0° in alto; Ctrl+Z annulla).`, { tipo: 'info', chiave: 'ruota-veicolo' });
     dopoCambioToken();
   }
-  /** ← → : gira il veicolo da mettere (prima del clic) o quello scelto. */
+  /** ← → : gira il veicolo da mettere (prima del clic) o quello scelto, di 10° (Maiusc: 45°). */
   function frecciaVeicolo(e) {
     if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return false;
     const verso = e.key === 'ArrowRight' ? 1 : -1;
     const daMettere = st.daPiazzare ? st.mappaPezzi.get(st.daPiazzare) : null;
     if (daMettere?.tipo === 'veicolo') {
       e.preventDefault();
-      st.dirPiazza = DIREZIONI[(DIREZIONI.indexOf(st.dirPiazza ?? 's') + (verso < 0 ? 3 : 1)) % 4];
-      avviso(`${daMettere.nome}: muso ${NOMI_DIREZIONI[st.dirPiazza]}; clic sulla mappa per metterlo.`, { tipo: 'info', chiave: 'ruota-veicolo' });
+      st.angPiazza = normaAngolo((st.angPiazza ?? 180) + verso * passoRotazione(e.shiftKey));
+      avviso(`${daMettere.nome}: muso a ${st.angPiazza}° (0° in alto); clic sulla mappa per metterlo.`, { tipo: 'info', chiave: 'ruota-veicolo' });
       return true;
     }
     const t = st.selezionato && !st.gruppo.size && !st.trascina ? st.scena.token.find((x) => x.id === st.selezionato) : null;
     if (t?.rif.tipo !== 'veicolo') return false;
     e.preventDefault();
-    ruotaVeicoloUi(t.id, verso);
+    ruotaVeicoloUi(t.id, verso, e.shiftKey);
     return true;
   }
   /** Una riga nel registro dello scontro aperto (salire, scendere). */
@@ -1150,7 +1343,7 @@ export function renderMappa(radice, ctx) {
     if (!rec) { avvisoErrore('Registro del veicolo non trovato: il conducente non è cambiato nella sua scheda.'); return; }
     const nuovo = pgTok ? { chiave: pgTok.rif.id.replace(/^pg:/, ''), nome: nomeTok(pgTok) } : null;
     try {
-      const record = await aggiornaVeicolo(rec, cambiaConducente(rec, nuovo));
+      const { record } = await aggiornaVeicolo(rec, cambiaConducente(rec, nuovo));
       if (st.fonti) st.fonti.veicoli = st.fonti.veicoli.map((x) => (x.id === record.id ? record : x));
       await aggiornaFonti();
     } catch (e) { avvisoErrore(`Conducente non salvato nella scheda del veicolo: ${e.message}`); }
@@ -1556,7 +1749,8 @@ export function renderMappa(radice, ctx) {
    * scritti a mano, scheda non ancora letta) area null e motivo; il master muove comunque, tenendo premuto Maiusc.
    */
   function infoArea(t) {
-    const pz = pezzoDi(t);
+    // in volo (08/10, src/mappa/volo.js): Passo, Corsa e Scatto del volo; sopra terreno difficile e token
+    const pz = conMovimentoVolo(t, pezzoDi(t));
     const scontro = st.fonti?.scontro ?? null;
     const base = { area: null, rimaste: null, usato: 0, fino: st.fascia, limite: 0, totale: 0, disponibili: null, celle: null, movimento: pz?.movimento ?? null, motivo: null, libero: false, escluse: [], chiusa: null, nonPiu: null, nota: null };
     // «Libero» (quarta modalità): nessuna area, nessun conteggio; il token va in qualunque quadretto
@@ -1568,14 +1762,16 @@ export function renderMappa(radice, ctx) {
     }
     if (!pz?.movimento) return { ...base, motivo: pz ? 'nessun profilo di movimento' : 'fuori dallo scontro' };
     let usato = usatoNelRound(st.scena, t.id, scontro?.id ?? null, scontro?.round ?? null);
-    // fase 2, lotto 5: senza conducente il veicolo resta fermo (anche fuori dallo scontro); il master lo sposta con Libero
-    if (pz.tipo === 'veicolo' && recordVeicolo(t) && !recordVeicolo(t).conducente) return { ...base, motivo: 'senza conducente: fermo (fai salire un PG come conducente)' };
-    if (pz.tipo === 'veicolo' && scontro) {
-      // A.105: un solo movimento per Round, all'Iniziativa del conducente (src/veicoli-registro.js)
+    // veicoli (A.105; ritocchi del 08/10): con lo scontro aperto e un conducente nello scontro l'area c'è sempre, anche
+    // fuori dal suo turno (il master lo muove come un token), una volta per Round; altrimenti il motivo, mai un silenzio
+    let notaVeicolo = null;
+    if (pz.tipo === 'veicolo') {
       const rec = recordVeicolo(t);
-      const sv = rec ? statoMovimento(rec, scontro, diTurno(scontro)) : null;
-      if (mossoNelRound(st.scena, t.id, scontro.id, scontro.round) || sv?.mosso) return { ...base, usato: pz.movimento.passo, motivo: `già mosso nel Round ${scontro.round}` };
-      if (sv && !sv.puo) return { ...base, motivo: sv.motivo };
+      const sv = rec && scontro ? statoMovimento(rec, scontro, diTurno(scontro), { fuoriTurno: true, dati: ctx.dati }) : null;
+      const mosso = scontro ? mossoNelRound(st.scena, t.id, scontro.id, scontro.round) || !!sv?.mosso : false;
+      const f = veicoloFermo(rec, scontro, sv ? { ...sv, mosso, motivo: mosso ? `già mosso nel Round ${scontro.round}` : sv.motivo } : null);
+      if (rec && f.motivo) return { ...base, usato: mosso ? pz.movimento.passo : 0, motivo: f.motivo, fermoAndatura: !!f.andatura };
+      notaVeicolo = f.nota;
       usato = 0;
     }
     // A.129: il Passo si divide; Corsa e Scatto sono un blocco unico (i Q non usati si perdono)
@@ -1592,15 +1788,15 @@ export function renderMappa(radice, ctx) {
     const g = st.scena.griglia;
     const area = areaRaggiungibile({
       colonne: g.colonne, righe: g.righe, muri: muriEffettivi(st.scena), terreno: daBase64(st.scena.terreno),
-      token: st.scena.token.map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, lato: pezzoDi(x)?.lato ?? null })),
-      chi: { id: t.id, q: t.q, ingombro: t.ingombro, lato: pz.lato }, massimo: Math.max(totale, portata), regole: ctx.dati.mappa.movimento,
+      token: st.scena.token.map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: pezzoDi(x)?.lato ?? null })),
+      chi: { id: t.id, q: t.q, ingombro: t.ingombro, angolo: t.angolo, base: t.base, lato: pz.lato }, massimo: Math.max(totale, portata), regole: regoleMovimento(t, ctx.dati),
     });
     const quando = scontro ? 'del Round' : 'del turno';
     const piuAmpie = FASCE.slice(st.fascia).filter((f) => rimaste[f] > 0).map((f) => (f === 'corsa' ? 'Corri' : 'Scatta'));
     const motivo = sf.chiusa ? `${NOMI_FASCE[sf.chiusa]} fatta in un blocco unico: movimento ${quando} finito${sf.persi ? ` (${numero(sf.persi, 1)} Q non usati persi)` : ''}`
       : limite > 0 ? null : !usato ? 'movimento 0 Q'
       : piuAmpie.length ? `${st.fascia === 1 ? 'Passo' : 'Corsa'} finito: scegli ${piuAmpie.join(' o ')}` : `movimento ${quando} finito (${numero(usato, 1)} Q)`;
-    return { ...base, area, rimaste, usato, limite, totale, disponibili: scelta ? pz.movimento[scelta] : null, celle: celleArea(area, rimaste, st.fascia), motivo, escluse: sf.escluse, chiusa: sf.chiusa, nonPiu: sf.nonPiu, nota: sf.nota, portata };
+    return { ...base, area, rimaste, usato, limite, totale, disponibili: scelta ? pz.movimento[scelta] : null, celle: celleArea(area, rimaste, st.fascia), motivo, escluse: sf.escluse, chiusa: sf.chiusa, nonPiu: sf.nonPiu, nota: [notaVeicolo, sf.nota].filter(Boolean).join(' ') || null, portata };
   }
   /** Area del token scelto, calcolata una volta finché non cambia qualcosa (invalidaArea). */
   function areaScelta() {
@@ -1678,8 +1874,8 @@ export function renderMappa(radice, ctx) {
         const pz = pezzoDi(t);
         const areaG = areaRaggiungibile({
           colonne: g.colonne, righe: g.righe, muri: muriEffettivi(s, { perGiocatori: true }), terreno: daBase64(s.terreno),
-          token: s.token.filter((x) => x.id === t.id || visibileAiGiocatori(x, s, nebbia)).map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, lato: pezzoDi(x)?.lato ?? null })),
-          chi: { id: t.id, q: t.q, ingombro: t.ingombro, lato: pz?.lato ?? null }, massimo: info.totale, regole: ctx.dati.mappa.movimento,
+          token: s.token.filter((x) => x.id === t.id || visibileAiGiocatori(x, s, nebbia)).map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: pezzoDi(x)?.lato ?? null })),
+          chi: { id: t.id, q: t.q, ingombro: t.ingombro, angolo: t.angolo, base: t.base, lato: pz?.lato ?? null }, massimo: info.totale, regole: regoleMovimento(t, ctx.dati),
         });
         st.diretta.areaG = { per: info.area, area: areaG, celle: celleArea(areaG, info.rimaste, st.fascia), fascia: st.fascia };
       }
@@ -1912,7 +2108,7 @@ export function renderMappa(radice, ctx) {
     if (!da || (!a && !l.punto)) return null;
     const chiave = JSON.stringify([idDi(st.scena), l.da, l.a, l.punto]);
     if (cacheLinea.chiave === chiave) return cacheLinea.valore;
-    const r = lineaDiTiro(st.scena, da, a ?? l.punto, ostacoliVista(st.scena, RP), RV, { contaToken: contaInLinea });
+    const r = lineaDiTiro(st.scena, da, a ?? l.punto, ostacoliVista(st.scena, RP), RV, { contaToken: contaInLinea, volo: ctx.dati.mappa.volo.linea_di_tiro });
     cacheLinea.chiave = chiave;
     cacheLinea.valore = { ...r, da, a: a ?? { q: l.punto, ingombro: 1 } };
     return cacheLinea.valore;
@@ -1937,7 +2133,7 @@ export function renderMappa(radice, ctx) {
   function cambiaDettaglioLinea(v = !st.dettaglioLinea) {
     st.dettaglioLinea = v;
     scriviLocale('mutant-mappa-dettaglio-linea', v);
-    if (el.voceDettaglioLinea) el.voceDettaglioLinea.textContent = testoDettaglioLinea();
+    if (el.strumenti?.open) disegnaMenuStrumenti();
     avviso(v ? 'Dettaglio della linea di tiro: le cinque linee di controllo dal centro di chi tira (solo qui).' : 'Dettaglio della linea di tiro nascosto: resta la linea principale.', { chiave: 'linea', tipo: 'info', durata: 3000 });
     ridisegna(['sopra']);
   }
@@ -1948,7 +2144,7 @@ export function renderMappa(radice, ctx) {
     if (!r) return null;
     // 07/10: per i giocatori la linea si ricalcola con quello che vedono: porte segrete come muro, niente token nascosti
     // (né come ostacolo né in mezzo), così la Copertura non tradisce un token che non vedono
-    const g = lineaDiTiro(st.scena, r.da, r.a.id ? r.a : r.a.q, ostacoliVista(st.scena, RP, { perGiocatori: true }), RV, { contaToken: (t) => !t.nascosto && contaInLinea(t) });
+    const g = lineaDiTiro(st.scena, r.da, r.a.id ? r.a : r.a.q, ostacoliVista(st.scena, RP, { perGiocatori: true }), RV, { contaToken: (t) => !t.nascosto && contaInLinea(t), volo: ctx.dati.mappa.volo.linea_di_tiro });
     return { da: st.linea.da, a: st.linea.a, punto: st.linea.a ? null : st.linea.punto, distanza: g.distanza, copertura: g.copertura, vista: g.vista, testo: `${g.distanza} Q · ${testoCopertura(g)}${g.protetto ? ' · protetto' : ''}` };
   }
   /** Clic con la linea attiva: fissa il bersaglio e dice distanza, gittata, vista, Copertura; «Attacca!» con quei valori. */
@@ -2015,8 +2211,7 @@ export function renderMappa(radice, ctx) {
     avviso(v ? 'Suoni anche nella vista giocatori: sullo schermo dei giocatori serve un clic per sbloccare l’audio (lo chiede un avviso).' : 'Suoni solo su questo PC.', { chiave: 'audio-giocatori', tipo: 'info' });
   }
   function aggiornaVoceNebbiaAutomatica() {
-    if (el.voceAudioGiocatori) el.voceAudioGiocatori.textContent = `Suoni anche nella vista giocatori: ${st.scena?.audio?.giocatori ? 'sì' : 'no'}`;
-    if (el.voceNebbiaAuto) el.voceNebbiaAuto.textContent = `Nebbia automatica: ${st.scena?.visuale?.automatica ? 'sì' : 'no'}`;
+    if (el.strumenti?.open) disegnaMenuStrumenti();
   }
   function cambiaVisualeAutomatica() {
     if (!st.scena) return;
@@ -2309,7 +2504,7 @@ export function renderMappa(radice, ctx) {
     const rec = recordVeicolo(t);
     if (rec && scontro && !libero) {
       try {
-        aggiornaVeicolo(rec, muoviVeicolo(rec, scontro, diTurno(scontro))).then(({ record }) => {
+        aggiornaVeicolo(rec, muoviVeicolo(rec, scontro, diTurno(scontro), { fuoriTurno: true, dati: ctx.dati })).then(({ record }) => {
           if (st.fonti) st.fonti.veicoli = st.fonti.veicoli.map((x) => (x.id === record.id ? record : x));
         }).catch((e) => avvisoErrore(`Movimento del veicolo non registrato: ${e.message}`));
       } catch (e) { avvisoErrore(`Movimento del veicolo non registrato: ${e.message}`); }
@@ -2575,6 +2770,8 @@ export function renderMappa(radice, ctx) {
     return ordine.reverse().find((t) => tokenSottoPunto(st.scena.griglia, t, m.x, m.y)) ?? null;
   };
   const pezzoDi = (t) => st.mappaPezzi.get(chiaveRif(t.rif)) ?? null;
+  /** Il pezzo con il movimento in volo, se il token è in volo (08/10). */
+  const conMovimentoVolo = (t, pz) => (pz && inVolo(t) ? { ...pz, movimento: movimentoInVolo(pz, ctx.dati) } : pz);
   // nome, PV e Stati al passaggio del mouse; con un token scelto, il percorso verso il quadretto sotto il puntatore
   const nascondiSuggerimento = () => { el.suggerimento.hidden = true; };
   const suggerisci = (e) => {
@@ -2670,14 +2867,22 @@ export function renderMappa(radice, ctx) {
         });
         return voci.length ? voci : null;
       },
+      in_volo: () => (tok.rif.tipo === 'veicolo' ? null : { testo: inVolo(tok) ? 'In volo ✓ (atterra)' : 'In volo', chiave: 'volo', scelta: inVolo(tok), titolo: inVolo(tok) ? 'Il token atterra' : sapeVolare(pz) ? `Sa volare: Passo in volo ${pz.voloQ} Q` : 'Il volo lo concede una capacità, un Incantesimo o un Artefatto (Giocatore §5.2.3): Passo 6, Corsa 12, Scatto 18 Q', azione: () => cambiaVoloUi(tok.id) }),
+      quota_volo: () => (inVolo(tok) ? { testo: `Quota…${quotaDi(tok) ? ` (${quotaDi(tok)} Q)` : ''}`, chiave: 'quota', titolo: 'L’altezza in Q, come etichetta sul token', azione: () => quotaVoloUi(tok.id) } : null),
+      andature: () => {
+        const rec = tok.rif.tipo === 'veicolo' ? recordVeicolo(tok) : null;
+        if (!rec) return null;
+        return ctx.dati.veicoli.andature.elenco.map((a) => ({ testo: `Andatura ${a.nome}`, chiave: `andatura:${a.id}`, scelta: rec.mezzo?.andatura === a.id, titolo: rec.mezzo?.andatura === a.id ? 'Andatura attuale' : 'Nello scontro: una fascia per Round (Veicoli §2.1)', azione: () => andaturaUi(tok, a.id) }));
+      },
       ruota_veicolo: () => (tok.rif.tipo === 'veicolo' ? [
-        { testo: 'Ruota a sinistra', tasto: '←', chiave: 'ruota:-1', azione: () => ruotaVeicoloUi(tok.id, -1) },
-        { testo: 'Ruota a destra', tasto: '→', chiave: 'ruota:1', azione: () => ruotaVeicoloUi(tok.id, 1) },
+        { testo: `Ruota di ${passoRotazione(false)}° a sinistra`, tasto: '←', chiave: 'ruota:-1', azione: () => ruotaVeicoloUi(tok.id, -1) },
+        { testo: `Ruota di ${passoRotazione(false)}° a destra`, tasto: '→', chiave: 'ruota:1', azione: () => ruotaVeicoloUi(tok.id, 1) },
+        { testo: `Ruota di ${passoRotazione(true)}° a sinistra`, tasto: 'Maiusc+←', chiave: 'ruota:-45', azione: () => ruotaVeicoloUi(tok.id, -1, true) },
+        { testo: `Ruota di ${passoRotazione(true)}° a destra`, tasto: 'Maiusc+→', chiave: 'ruota:45', azione: () => ruotaVeicoloUi(tok.id, 1, true) },
       ] : null),
-      a_bordo: () => (tok.rif.tipo === 'veicolo' && aBordo(tok).length ? aBordo(tok).flatMap((x) => [
-        { testo: `Scendi: ${nomeTok(x)}${x.ruolo === 'conducente' ? ' (conducente)' : ''}…`, chiave: `scendi:${x.id}`, titolo: 'Poi un clic su un quadretto libero accanto al veicolo', azione: () => iniziaScendi(tok.id, x.id) },
-        { testo: `Linea di tiro di ${nomeTok(x)}`, chiave: `linea:${x.id}`, titolo: 'Dal veicolo, dal suo quadretto più favorevole', azione: () => lineaPasseggero(tok.id, x.id) },
-      ]) : null),
+      // ritocchi del 08/10: prima tutte le discese (gruppo «Scendi»), poi tutte le linee di tiro (gruppo «Linea di tiro»)
+      scendi_bordo: () => (tok.rif.tipo === 'veicolo' && aBordo(tok).length ? aBordo(tok).map((x) => ({ testo: `${nomeTok(x)}${x.ruolo === 'conducente' ? ' (conducente)' : ''}…`, chiave: `scendi:${x.id}`, titolo: 'Scende: poi un clic su un quadretto libero accanto al veicolo', azione: () => iniziaScendi(tok.id, x.id) })) : null),
+      linea_bordo: () => (tok.rif.tipo === 'veicolo' && aBordo(tok).length ? aBordo(tok).map((x) => ({ testo: nomeTok(x), chiave: `linea:${x.id}`, titolo: 'Linea di tiro dal veicolo, dal suo quadretto più favorevole', azione: () => lineaPasseggero(tok.id, x.id) })) : null),
       attacca: () => {
         if (conScontro && st.planciaBarra?.puoAttaccare?.(id)) return { testo: 'Attacca!', titolo: 'Il pannello «Attacca!» del nemico; con la linea di tiro fissata, bersaglio, distanza e Copertura già scelti', azione: () => st.planciaBarra.attaccaContro(id, st.linea?.da === tok.id ? st.scena.token.find((x) => x.id === st.linea.a)?.rif?.id ?? null : null) };
         if (pg && recordPg(pz)) return { testo: 'Attacca! (scheda)', titolo: 'L’attacco di un PG si fa dalla sua scheda, tab Combattimento; con la linea di tiro fissata, il bersaglio è già scelto', azione: () => {
@@ -2845,7 +3050,7 @@ export function renderMappa(radice, ctx) {
     if (st.planciaBarra) return;
     st.planciaBarra = renderTavolo(el.piena, {
       dati: ctx.dati,
-      inMappa: { sezioni: el.slot, centra: (chiave) => centraSuPezzo(chiave), collegamento: () => (st.scena ? { ...st.scena.collegamento, nomeBozza: st.fonti?.bozza?.nome ?? null } : null) },
+      inMappa: { sezioni: el.slot, volo: (chiave) => comandoVolo(st.scena?.token.find((x) => chiaveRif(x.rif) === chiave)), centra: (chiave) => centraSuPezzo(chiave), collegamento: () => (st.scena ? { ...st.scena.collegamento, nomeBozza: st.fonti?.bozza?.nome ?? null } : null) },
       azioni: {
         personaggi: () => ctx.azioni.personaggi?.(),
         // «Prepara la mappa» sulla scena già aperta: si rilegge, con il nuovo collegamento
@@ -2870,10 +3075,12 @@ export function renderMappa(radice, ctx) {
     el.iniziativa.hidden = !barra;
     if (barra) {
       svuota(el.iniziativa, barraIniziativaEl(barra, {
+        voloIcona: ctx.dati.mappa.volo.icona,
         pxPerPunto: B.iniziativa_px_per_punto,
         pv: st.mostraPv,
         zero: ctx.dati.mappa.pv_zero,
         avanti: () => avantiDallaMappa(),
+        fine: st.planciaBarra?.fine ? () => fineDallaMappa() : null,
         indietro: st.planciaBarra?.indietro ? () => indietroDallaMappa() : null,
         puoIndietro: st.planciaBarra?.puoIndietro?.() ?? null,
         reimposta: st.planciaBarra?.reimposta ? () => reimpostaDallaMappa() : null,
@@ -2910,6 +3117,14 @@ export function renderMappa(radice, ctx) {
     apriCartaChiave(v.chiave);
   }
   /** «Avanti» della barra dell'Iniziativa: lo stesso della plancia (stessa coda e stessa revisione dello scontro). */
+  /** «Fine scontro» dalla mappa (08/10): lo stesso della plancia, con conferma. */
+  async function fineDallaMappa() {
+    const s = st.fonti?.scontro;
+    if (!s || !st.planciaBarra?.fine) return;
+    if (!(await chiedi({ titolo: `Chiudere lo scontro «${s.nome}»?`, testo: 'Il file passa in scontri/archivio/. La musica si ferma e i tablet aperti dalla scheda tornano alla scheda.', si: 'Fine scontro', pericolo: true }))) return;
+    try { await st.planciaBarra.fine(); avviso(`Scontro «${s.nome}» chiuso.`, { chiave: 'fine-scontro' }); } catch (e) { avvisoErrore(`Scontro non chiuso: ${e.message}`); }
+    await aggiornaFonti();
+  }
   async function avantiDallaMappa() {
     if (!st.planciaBarra?.avanti) return;
     await st.planciaBarra.avanti();
@@ -3024,14 +3239,27 @@ export function renderMappa(radice, ctx) {
     return `${base.replace(/\/?$/, '/')}#/mappa/giocatori`;
   };
   async function leggiScelta() {
-    try { const r = await fetch('api/vista-giocatori/scelta', { cache: 'no-store' }); if (r.ok) st.sceltaGiocatori = (await r.json()).scena ?? null; } catch { /* resta quella di prima */ }
+    try {
+      const r = await fetch('api/vista-giocatori/scelta', { cache: 'no-store' });
+      if (r.ok) { const j = await r.json(); st.sceltaGiocatori = j.scena ?? null; st.inGioco = j.inGioco ?? null; }
+    } catch { /* resta quella di prima */ }
+    aggiornaIndicatoreGiocatori();
+  }
+  /** L'indicatore accanto al nome: i giocatori vedono questa scena? (regola del server: scenaInGioco) */
+  function aggiornaIndicatoreGiocatori() {
+    const mostrata = st.inGioco === ctx.id;
+    el.aiGiocatori.className = `btn btn-piccolo indicatore-giocatori${mostrata ? ' mostrata' : ''}`;
+    el.aiGiocatori.textContent = mostrata ? '📺 ai giocatori' : '📺 non mostrata';
+    el.aiGiocatori.title = mostrata ? 'I giocatori (secondo schermo e tablet) vedono questa scena' : `I giocatori ${st.inGioco ? 'vedono un’altra scena' : 'non vedono nessuna mappa'}: clic per mostrare questa`;
   }
   async function scegliPerGiocatori(scena) {
     try {
       const r = await fetch('api/vista-giocatori/scelta', { method: 'PUT', body: JSON.stringify({ scena }), headers: { 'Content-Type': 'application/json' } });
       if (!r.ok) throw new Error((await r.json().catch(() => ({}))).errore ?? `errore ${r.status}`);
       st.sceltaGiocatori = scena;
-      avviso(scena ? 'I giocatori vedono questa scena.' : 'Vista giocatori automatica: la scena collegata allo scontro aperto.');
+      await leggiScelta();
+      // 08/10: con uno scontro aperto i giocatori vedono la sua scena; la scena segnata vale senza scontro (o con più scontri)
+      avviso(st.inGioco === ctx.id ? 'I giocatori vedono questa scena.' : scena ? 'Segnata per i giocatori: la vedranno quando non c’è uno scontro aperto con un’altra scena.' : 'Nessuna scena segnata: i giocatori vedono la scena dello scontro aperto.');
     } catch (e) { avvisoErrore(`Scelta non salvata: ${e.message}`); }
     disegnaPannelloGiocatori();
   }
@@ -3041,15 +3269,17 @@ export function renderMappa(radice, ctx) {
     const url = indirizzoGiocatori();
     const qr = h('span', { class: 'qr-collega' });
     qr.innerHTML = svgQR(url, { pixel: 3 }); // SVG generato qui, dal solo indirizzo
-    const testo = s === st.scena.id ? 'I giocatori vedono questa scena (scelta da te).'
-      : s ? 'I giocatori vedono un’altra scena, scelta da te.'
-        : `Automatica: i giocatori vedono la scena collegata allo scontro aperto${st.scena.collegamento?.scontro && st.fonti?.scontro ? ' (questa, se è la più recente)' : ''}.`;
+    // 08/10: una regola sola (server.mjs → scenaInGioco): la scena dello scontro aperto; senza scontro (o con più
+    // scontri) quella segnata «mostrata ai giocatori»; altrimenti nessuna
+    const testo = [st.inGioco === st.scena.id ? 'I giocatori vedono questa scena.' : st.inGioco ? 'I giocatori vedono un’altra scena.' : 'I giocatori non vedono nessuna mappa.',
+      s === st.scena.id ? 'È segnata «mostrata ai giocatori».' : s ? 'È segnata un’altra scena.' : 'Nessuna scena segnata.',
+      'Con uno scontro aperto vedono la sua scena; altrimenti quella segnata.'].join(' ');
     svuota(el.pGiocatori,
       h('summary', {}, h('strong', {}, 'Vista giocatori')),
       h('p', { class: 'nota' }, testo),
       h('div', { class: 'mappa-azioni-token' },
-        s !== st.scena.id ? h('button', { type: 'button', class: 'btn btn-piccolo primario', onclick: () => scegliPerGiocatori(st.scena.id) }, 'Mostra questa scena') : null,
-        s ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => scegliPerGiocatori(null) }, 'Automatica') : null,
+        s !== st.scena.id ? h('button', { type: 'button', class: 'btn btn-piccolo primario', onclick: () => scegliPerGiocatori(st.scena.id) }, 'Mostra questa ai giocatori') : null,
+        s ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Toglie il segno: senza scontro aperto i giocatori non vedono nessuna mappa', onclick: () => scegliPerGiocatori(null) }, 'Togli il segno') : null,
         h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Una finestra a parte, da trascinare sul secondo schermo e mettere a schermo intero (F11)', onclick: () => window.open('#/mappa/giocatori', 'mutant-giocatori', 'popup,width=1280,height=800') }, 'Apri vista giocatori'),
         // ritocchi del 07/10: lo schermo dei giocatori inquadra di nuovo tutta la parte scoperta
         h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Lo schermo dei giocatori inquadra tutta la parte di mappa scoperta', onclick: () => adattaGiocatori() }, 'Adatta lo schermo dei giocatori')),
@@ -3072,6 +3302,17 @@ export function renderMappa(radice, ctx) {
           h('label', { title: 'Nasconde ai giocatori anche i template con durata in Round' }, h('input', { type: 'checkbox', checked: g.ancheDurata, onchange: () => cambiaSovrapposizioni('giocatori', 'ancheDurata') }), ' anche a durata'));
       })(),
       h('div', { class: 'mappa-qr' }, qr, h('small', { class: 'nota' }, url)),
+      // fase 2, lotto 7: i tablet dei giocatori aprono lo stesso indirizzo e scelgono «Sono…»
+      (() => {
+        const imp = impostazioniTablet(st.scena, ctx.dati);
+        const interruttore = (acceso, testo, titolo, fai) => h('button', { type: 'button', role: 'switch', 'aria-checked': String(acceso), class: `interruttore-mappa${acceso ? ' acceso' : ''}`, title: titolo, onclick: fai },
+          h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), testo);
+        return h('div', { class: 'mappa-tablet' },
+          h('p', { class: 'nota' }, h('strong', {}, 'Tablet dei giocatori: '), 'aprono questo indirizzo (o il QR) e toccano «Sono…» per scegliere il loro PG; poi lo muovono da soli. Nessuna password: si gioca in casa.'),
+          interruttore(!imp.bloccato, `Movimenti dai tablet: ${imp.bloccato ? 'bloccati' : 'permessi'}`, 'Bloccati: i tablet vedono ma non muovono', () => cambiaBloccoGiocatori()),
+          interruttore(imp.movimento === 'sempre', `Quando: ${imp.movimento === 'sempre' ? 'sempre' : 'solo al proprio turno'}`, 'Solo al proprio turno dello scontro aperto, oppure sempre', () => cambiaTablet('movimento')),
+          interruttore(imp.avvisoTurno, `Avviso «Tocca a te»: ${imp.avvisoTurno ? 'sì' : 'no'}`, 'Il tablet del PG di turno mostra l’avviso grande, con suono e vibrazione', () => cambiaTablet('avvisoTurno')));
+      })(),
       rete?.soloLocale ? h('p', { class: 'nota' }, 'Server acceso con --solo-locale: dai tablet non si raggiunge. Riavvialo con avvia-server.bat.') : null);
   }
 
@@ -3112,11 +3353,13 @@ export function renderMappa(radice, ctx) {
       h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.tavolo() }, '← Tavolo'))));
   });
 
+  // fase 2, lotto 7: i movimenti dai tablet arrivano entro un secondo
+  const giroRevisione = setInterval(() => controllaRevisione(), 1000);
   const giro = setInterval(async () => {
     aggiornaFonti();
-    const prima = st.sceltaGiocatori;
+    const prima = [st.sceltaGiocatori, st.inGioco].join();
     await leggiScelta();
-    if (st.sceltaGiocatori !== prima) disegnaPannelloGiocatori();
+    if ([st.sceltaGiocatori, st.inGioco].join() !== prima) disegnaPannelloGiocatori();
   }, INTERVALLO_FONTI_MS);
 
   // verifica della persistenza (07/10): la finestra va in secondo piano o si chiude: le modifiche non ancora salvate
@@ -3134,6 +3377,7 @@ export function renderMappa(radice, ctx) {
     st.chiusa = true;
     audio.chiudi();
     clearInterval(giro);
+    clearInterval(giroRevisione);
     if (st.salvataggio.modificata) salvaOra();
     gesti.distruggi();
     chiudiMenuToken();

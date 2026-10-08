@@ -12,7 +12,7 @@ const LINEA_PX = 24; // altezza del centro della linea: sopra, i numeri della sc
 
 /**
  * @param barra da barraIniziativa (master) o dalla vista giocatori; null: «nessuno scontro aperto»
- * @param o { pxPerPunto, avanti?(), indietro?(), puoIndietro?: anteprima di «Indietro» o null, reimposta?(), scegli?(voce),
+ * @param o { pxPerPunto, avanti?(), fine?(): «Fine scontro» (08/10, con conferma), indietro?(), puoIndietro?: anteprima di «Indietro» o null, reimposta?(), scegli?(voce),
  *   centra?: { attivo, cambia(v) }, vuoto?: testo senza scontro, zero?: data/mappa.json → pv_zero (icone a 0 PV),
  *   daTirare?: { nomi: [...], chiedi() } partecipanti ancora senza Iniziativa (solo master) }
  */
@@ -45,6 +45,8 @@ export function barraIniziativaEl(barra, o = {}) {
       // «Reimposta Iniziativa» (07/10): per tutti o per uno solo, la stessa della plancia
       o.reimposta ? h('button', { type: 'button', class: 'btn', title: 'Reimposta Iniziativa: ritira per tutti (con conferma) o per uno solo (ritiro o valore a mano); chi è di turno resta di turno; «Indietro» la annulla', disabled: !barra.voci.length, onclick: () => o.reimposta() }, '⟳ Iniziativa') : null,
       h('button', { type: 'button', class: 'btn primario', title: 'Il turno passa al prossimo, che diventa il token scelto (lo stesso «Avanti» della plancia; Maiusc+clic: «Indietro»)', disabled: !barra.voci.length, onclick: (e) => (e.shiftKey && o.indietro ? o.indietro() : o.avanti()) }, 'Avanti'),
+      // 08/10: «Fine scontro» anche dalla mappa (con conferma): la musica si ferma, i tablet tornano alla scheda
+      o.fine ? h('button', { type: 'button', class: 'btn btn-fine-scontro', title: 'Chiude lo scontro (con conferma), come «Fine scontro» della plancia: il file passa in scontri/archivio/, la musica si ferma, i tablet tornano alla scheda', onclick: () => o.fine() }, '⏹ Fine scontro') : null,
       o.centra ? h('button', {
         type: 'button', role: 'switch', 'aria-checked': String(!!o.centra.attivo), class: `interruttore-mappa${o.centra.attivo ? ' acceso' : ''}`,
         title: 'Al cambio di turno la mappa centra il token attivo, se è fuori vista', onclick: () => o.centra.cambia(!o.centra.attivo),
@@ -59,7 +61,7 @@ export function stileBordo(b) {
 
 function miniToken(v, barra, o) {
   const x = posizioneSullaScala(barra, v.valore) * 100;
-  const titolo = `${v.nome} · Iniziativa ${v.valore}${v.aZero ? ' · a 0 PV' : ''}${v.diTurno ? ' · di turno' : ''}${v.nascosto ? ' · nascosto ai giocatori' : ''}${o.scegli && !v.token ? ' · senza token in mappa' : ''}`;
+  const titolo = `${v.nome} · Iniziativa ${v.valore}${v.veicolo ? ` · guida ${v.veicolo.nome} (muso a ${v.veicolo.angolo}°)` : ''}${v.aZero ? ' · a 0 PV' : ''}${v.diTurno ? ' · di turno' : ''}${v.nascosto ? ' · nascosto ai giocatori' : ''}${o.scegli && !v.token ? ' · senza token in mappa' : ''}`;
   const corpo = v.ritratto ? h('img', { src: v.ritratto, alt: '' }) : h('span', { class: 'iniziali' }, v.iniziali);
   // ritocchi del 07/10: a 0 PV, piccolo, il teschio (nemici) o la croce rossa (PG), come sul token
   const zero = v.aZero && o.zero ? h('img', { class: 'icona-zero', src: v.lato === 'pg' ? o.zero.pg : o.zero.nemico, alt: '' }) : null;
@@ -69,10 +71,15 @@ function miniToken(v, barra, o) {
     style: `left: ${x.toFixed(3)}%; top: ${LINEA_PX + v.pila * ALTEZZA_PILA_PX}px; ${sb.stile}`,
     title: titolo, 'aria-label': titolo, dataset: { chiave: v.chiave },
   };
+  // 08/10: chi guida un veicolo ha il muso del mezzo, una freccina orientata nel colore del proprietario
+  // (fuori dall'elemento, che taglia il ritratto, come la barretta dei PV)
+  const muso = v.veicolo ? h('span', { class: 'mini-muso', title: `Guida ${v.veicolo.nome}: muso a ${v.veicolo.angolo}°`, style: `left: ${x.toFixed(3)}%; top: ${LINEA_PX + v.pila * ALTEZZA_PILA_PX}px; --muso: ${v.veicolo.colore ?? 'currentColor'}; --angolo: ${v.veicolo.angolo}deg`, 'aria-hidden': 'true' }, h('span', {}, '▲')) : null;
   const el = o.scegli ? h('button', { type: 'button', ...attr, onclick: () => o.scegli(v) }, corpo, zero) : h('span', attr, corpo, zero);
   // 07/10: la barretta dei PV come sui token, sul fondo del mini-token e sopra il bordo, larga quanto il mini-token
   // (fuori dall'elemento, che taglia il ritratto); misure e colori da data/mappa.json → pv_token (variabili CSS)
-  if (!(v.pv?.massimo > 0) || o.pv === false) return el;
+  // 08/10: in volo, l'icona accanto al mini-token (fuori dall'elemento, come il muso)
+  const volo = v.volo && o.voloIcona ? h('img', { class: 'mini-volo', src: o.voloIcona, alt: '', title: `${v.nome} è in volo`, style: `left: ${x.toFixed(3)}%; top: ${LINEA_PX + v.pila * ALTEZZA_PILA_PX}px` }) : null;
+  if (!(v.pv?.massimo > 0) || o.pv === false) return [el, muso, volo].filter(Boolean);
   const quota = Math.max(0, Math.min(1, v.pv.attuali / v.pv.massimo));
-  return [el, h('span', { class: 'pv-barretta', 'aria-hidden': 'true', style: `left: ${x.toFixed(3)}%; top: ${LINEA_PX + v.pila * ALTEZZA_PILA_PX}px; --quota: ${quota}` })];
+  return [el, muso, volo, h('span', { class: 'pv-barretta', 'aria-hidden': 'true', style: `left: ${x.toFixed(3)}%; top: ${LINEA_PX + v.pila * ALTEZZA_PILA_PX}px; --quota: ${quota}` })];
 }

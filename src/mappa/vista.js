@@ -22,7 +22,8 @@ import { barraIniziativa, barraPerGiocatori } from './iniziativa.js';
 import { musicaDi } from './audio.js';
 import { templatePerGiocatori } from './template.js';
 import { muriPerGiocatori, portePerGiocatori } from './porte.js';
-import { ostacoliVista, visuale as visualePg, tokenPg } from './visuale.js';
+import { ostacoliVista, visuale as visualePg, tokenPg, segmentoBloccato, centro } from './visuale.js';
+import { inVolo } from './volo.js';
 import { luceQ } from './luce.js';
 
 /**
@@ -67,7 +68,15 @@ export function vistaGiocatori(s, contesto = null, regoleTemplate = contesto?.re
   const auto = s.visuale?.automatica && regoleMappa?.visuale && regoleMappa?.porte;
   const visti = auto ? visualePg(s, tokenPg(s), ostacoliVista(s, regoleMappa.porte, { perGiocatori: true }), regoleMappa.visuale, null, regoleMappa) : null;
   const pg = (t) => t.rif?.tipo === 'partecipante' && String(t.rif.id).startsWith('pg:');
-  const visibile = (t) => celleToken(t).some(([x, y]) => !coperto(x, y) && (!visti || pg(t) || visti[y * colonne + x]));
+  // token in volo (08/10, data/mappa.json → volo.visibile_oltre_nebbia; A.150): si vede anche sotto la nebbia se dal
+  // centro di almeno un PG in mappa c'è una linea di vista senza muri né porte chiuse; il master può sempre nasconderlo
+  const voloVisto = (() => {
+    if (!regoleMappa?.volo?.visibile_oltre_nebbia || !regoleMappa?.porte || !regoleMappa?.visuale || !s.token.some(inVolo)) return () => false;
+    const ost = ostacoliVista(s, regoleMappa.porte, { perGiocatori: true });
+    const occhi = tokenPg(s).map(centro);
+    return (t) => occhi.some((o) => !segmentoBloccato(ost, colonne, righe, o, centro(t), regoleMappa.visuale.campioni_per_q));
+  })();
+  const visibile = (t) => celleToken(t).some(([x, y]) => !coperto(x, y) && (!visti || pg(t) || visti[y * colonne + x])) || (inVolo(t) && voloVisto(t));
   const mappa = s.mappa
     ? { file: s.mappa.ridotta ?? s.mappa.file, larghezza: s.mappa.larghezza, altezza: s.mappa.altezza }
     : null;
@@ -90,10 +99,12 @@ export function vistaGiocatori(s, contesto = null, regoleTemplate = contesto?.re
     if (!visibili.length) return {};
     return { passeggeri: visibili.map(({ nascosto, luce, ...x }) => {
       const p = contesto ? pezzi.get(chiaveRif(x.rif)) : null;
-      return { ...x, ...(p ? { info: { lato: p.lato, nome: p.nome, iniziali: p.iniziali, immagine: contesto.immagineDi?.(p) ?? null } } : {}) };
+      return { ...x, ...(p ? { info: { lato: p.lato, nome: p.nome, iniziali: p.iniziali, immagine: contesto.immagineDi?.(p) ?? null, bordo: contesto.bordoDi?.(p) ?? null } } : {}) };
     }) };
   };
-  const token = s.token.filter((t) => !t.nascosto && visibile(t)).map(({ nascosto, passeggeri: _p, ...t }) => ({ ...t, ...info(t), ...passeggeri({ ...t, passeggeri: _p }) }));
+  // 08/10: con il contesto, un token senza partecipante (orfano) non arriva: sarebbe un «?» senza nome
+  const conPezzo = (t) => !contesto?.completo || t.rif?.tipo === 'segnaposto' || pezzi.has(chiaveRif(t.rif));
+  const token = s.token.filter((t) => !t.nascosto && visibile(t) && conPezzo(t)).map(({ nascosto, passeggeri: _p, ...t }) => ({ ...t, ...info(t), ...passeggeri({ ...t, passeggeri: _p }) }));
   const vista = {
     formato: s.formato,
     versione: s.versione,

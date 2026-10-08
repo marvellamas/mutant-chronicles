@@ -19,6 +19,8 @@ import { elencoScene, leggiScena, salvaScena } from './mappa/api.js';
 import { nuovaScena, idScena, scenaDellaBozza, collegaABozza, sceneDellaBozza, collegaAScontro } from '../mappa/scena.js';
 import { chiediTesto, chiedi } from './finestrella.js';
 import { scegliMusica } from './musica.js';
+import { elencoVeicoli } from './veicoli-registro.js';
+import { stessaChiave } from '../veicoli-registro.js';
 import {
   nuovaBozza, aggiungiVoce, cambiaVoce, togliVoce, cambiaBozza, duplicaBozza, eliminaBozza, iniziaBozza, pgDellaBozza, STATO_BOZZA,
 } from '../preparazione.js';
@@ -38,6 +40,69 @@ export async function elencoBozze() {
  * @param opzioni { bestiario: () => voci valide e no (src/nemici.js → vociBestiario), alTavolo: () => viste dei PG al
  *   tavolo, scontroAperto: () => bool, inizia: async (scontro, chiaviPg) → bool, salvatoBestiario: (nemico) → void }
  */
+/**
+ * Avvio di una bozza (ritocchi del 08/10: comune a «Inizia» della preparazione e a «Inizia scontro» della mappa): lo
+ * scontro dalla bozza con i PG `viste` (vista della plancia), salvato con `inizia` (la plancia apre poi la finestra
+ * «Iniziativa»), la bozza archiviata se `consuma`, le scene della bozza collegate allo scontro. Lo scontro, o null.
+ */
+export async function avviaBozza(b, { viste, inizia, consuma = false }) {
+  const pg = pgDellaBozza(b, viste.map(pgDaVista));
+  let scontro;
+  try { scontro = iniziaBozza(b, { id: idNuovo(), pg }); } catch (e) { avvisoErrore(`Non iniziato: ${e.message}`); return null; }
+  const ok = await inizia(scontro, b.pg ?? []);
+  if (!ok) return null;
+  if (consuma) {
+    try { await salvaScontro(eliminaBozza(b)); } catch (e) { avvisoErrore(`Scontro iniziato, ma la bozza non è stata archiviata: ${e.message}`); }
+  }
+  avviso(`«${b.nome}» iniziato, Round 1: scrivi o tira l’Iniziativa nella finestra «Iniziativa».${consuma ? ' Bozza archiviata.' : ' La bozza resta.'}`);
+  // difetto 5 del collaudo del lotto 7: le scene della bozza passano da sole allo scontro appena aperto
+  await ricollegaScene(b, scontro);
+  return scontro;
+}
+
+/**
+ * «Inizia scontro» dalla mappa collegata a una bozza (ritocchi del 08/10): come «Inizia» della preparazione. I PG scelti
+ * nella bozza si leggono dalla cartella (o dal tavolo), quelli al tavolo se la bozza non ne sceglie.
+ */
+export async function iniziaBozzaDallaMappa(ctx, idBozza, { alTavolo, scontroAperto, inizia }) {
+  if (scontroAperto()) { avvisoErrore('C’è già uno scontro aperto: chiudilo con «Fine scontro» prima di iniziarne un altro.'); return null; }
+  let b;
+  try { b = await leggiScontro(idBozza); } catch (e) { avvisoErrore(`Bozza non leggibile: ${e.message}`); return null; }
+  if (b?.stato !== STATO_BOZZA) { avvisoErrore('La bozza collegata non c’è più (iniziata o archiviata).'); return null; }
+  let viste = alTavolo();
+  if (b.pg?.length) {
+    const cartella = (await elencoCartella()) ?? [];
+    const ultimi = ultimiPerPersonaggio(cartella);
+    viste = [];
+    for (const k of b.pg) {
+      const al = alTavolo().find((v) => v.chiaveCartella === k);
+      if (al) { viste.push(al); continue; }
+      const r = ultimi.get(k);
+      if (!r) continue;
+      try { const v = vistaPlancia(await leggiCartella(r.file), ctx.dati, r.file); if (v?.completa) viste.push(v); } catch { /* PG non leggibile: non entra */ }
+    }
+  }
+  return avviaBozza(b, { viste, inizia, consuma: false });
+}
+
+/** Le scene collegate alla bozza passano allo scontro appena aperto (con l'avviso e l'evento per la mappa aperta). */
+async function ricollegaScene(b, scontro) {
+  let ids = [];
+  try { ids = sceneDellaBozza(await elencoScene(), b.id); } catch { return; }
+  const fatte = [];
+  for (const id of ids) {
+    try {
+      for (let i = 0; i < 2; i++) {
+        const r = await salvaScena(collegaAScontro(await leggiScena(id), scontro.id));
+        if (!r.conflitto) { fatte.push(r.scena); break; }
+      }
+    } catch (e) { avvisoErrore(`Scena ${id} non ricollegata allo scontro: ${e.message}`); }
+  }
+  if (!fatte.length) return;
+  avviso(`${fatte.length === 1 ? 'La scena' : 'Le scene'} ${fatte.map((x) => `«${x.nome}»`).join(', ')} della bozza ${fatte.length === 1 ? 'è collegata' : 'sono collegate'} allo scontro appena aperto.`, { durata: 8000 });
+  window.dispatchEvent(new CustomEvent('mutant:scene-ricollegate', { detail: fatte.map((x) => ({ id: x.id, collegamento: x.collegamento, revisione: x.revisione, aggiornato: x.aggiornato })) }));
+}
+
 export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, inizia, salvatoBestiario = () => {} }) {
   const dati = ctx.dati;
   const BE = dati.bestiario;
@@ -174,12 +239,15 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
     if (creatura && !creatura.gradi.includes(dC.grado)) dC.grado = creatura.gradi[0];
     const pgNomi = new Set(b.pg ?? []);
     const chiaviCartella = [...new Set([...st.cartella.map((r) => r.file.replace(/_liv\d+_.*$/, '')), ...alTavolo().map((v) => v.chiaveCartella)])].sort((x, y) => x.localeCompare(y, 'it'));
+    // ritocchi del 08/10 (test di Marcello): quattro riquadri con titolo, nell'ordine Base, PG e veicoli, Nemici, Mappa;
+    // in fondo i pulsanti per avviare, con il suggerimento al passaggio del mouse
     return [
       h('div', { class: 'riga-azioni' },
         h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { st.bozza = null; carica(); } }, '← Tutte le bozze'),
         // la bozza si salva da sola a ogni modifica: lo si dice, e «Salva e chiudi» aspetta l'ultimo salvataggio
         h('span', { class: 'nota stato-bozza', role: 'status' }, st.salvataAlle ? `Salvata alle ${ora(st.salvataAlle)}` : 'Si salva da sola a ogni modifica'),
         h('button', { type: 'button', class: 'btn btn-piccolo primario', title: 'Aspetta l’ultimo salvataggio e chiude la finestra; la bozza resta fra le bozze', onclick: salvaEChiudi }, 'Salva e chiudi')),
+      riquadroPrep('1', 'Base', 'Nome, musica di fondo e note dello scontro.', [
       h('label', { class: 'campo-nemico' }, h('span', {}, 'Nome dello scontro'), h('input', { type: 'text', maxlength: 60, value: b.nome, onchange: (e) => modifica((x) => cambiaBozza(x, { nome: e.target.value })) })),
       // 07/10: musica di fondo dello scontro (cartella musica/ del server); passa allo scontro con «Inizia»
       h('div', { class: 'campo-nemico riga-azioni' }, h('span', {}, 'Musica di fondo: ', h('strong', {}, b.musica ?? 'nessuna')),
@@ -188,7 +256,9 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
           if (scelta) modifica((x) => cambiaBozza(x, { musica: scelta.file }));
         } }, 'Scegli…')),
       h('label', { class: 'campo-nemico' }, h('span', {}, 'Note per il master (non le vede nessun altro)'), h('textarea', { rows: 3, maxlength: 2000, value: b.note ?? '', onchange: (e) => modifica((x) => cambiaBozza(x, { note: e.target.value })) })),
-      h('fieldset', { class: 'campo-nemico gruppo' }, h('legend', {}, 'PG (facoltativi: senza scelta, quelli al tavolo quando premi «Inizia»)'),
+      ]),
+      riquadroPrep('2', 'PG e veicoli', 'Chi partecipa: senza scelta, i PG al tavolo quando premi «Inizia».', [
+      h('fieldset', { class: 'campo-nemico gruppo' }, h('legend', {}, 'PG'),
         chiaviCartella.length ? h('div', { class: 'riga-azioni' },
           h('button', { type: 'button', class: 'btn btn-piccolo', disabled: chiaviCartella.every((k) => pgNomi.has(k)), onclick: async () => { await Promise.all(chiaviCartella.map(vista)); modifica((x) => cambiaBozza(x, { pg: [...chiaviCartella] })); } }, 'Tutti'),
           h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !pgNomi.size, onclick: () => modifica((x) => cambiaBozza(x, { pg: [] })) }, 'Nessuno')) : null,
@@ -196,9 +266,11 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
           if (e.target.checked) await vista(k);
           modifica((x) => cambiaBozza(x, { pg: e.target.checked ? [...(x.pg ?? []), k] : (x.pg ?? []).filter((y) => y !== k) }));
         } }), ` ${k.replace(/-/g, ' ')}`))) : h('p', { class: 'nota' }, 'Nessun personaggio in personaggi/.')),
+        veicoliDellaBozza(b),
+      ]),
+      riquadroPrep('3', `Nemici (${b.nemici.reduce((n, v) => n + v.quanti, 0)})`, 'Nemici presenti, difficoltà stimata, e da dove aggiungerne.', [
       riquadroDifficolta(b, d, liv),
       avvisoRari(b),
-      h('h3', {}, `Nemici (${b.nemici.reduce((s, v) => s + v.quanti, 0)})`),
       b.nemici.length ? h('ul', { class: 'voci-bozza' }, b.nemici.map(voce)) : h('p', { class: 'vuoto' }, 'Nessun nemico: aggiungili qui sotto.'),
       // 07/10 (test di Marcello): due blocchi distinti con la stessa struttura, la scelta sopra e sotto «Quanti», «Lato» e
       // «Aggiungi» sempre nello stesso punto; una riga di separazione fra i blocchi
@@ -228,16 +300,44 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
             destinazione: { etichetta: 'Aggiungi alla preparazione', aggiungi: async (n, { quanti, lato, origine }) => { await modifica((x) => aggiungiVoce(x, { nemico: n, quanti, lato, origine })); avviso(`${n.nome} ×${quanti} nella bozza «${st.bozza?.nome ?? ''}».`); return true; } },
           }) }, 'Crea nemico…'),
           h('span', { class: 'nota' }, ' un tipo nuovo: procedura guidata o tutto a caso, dal Bestiario'))),
-      preparaMappa(b),
+      ]),
+      riquadroPrep('4', 'Mappa', 'La scena dello scontro, i token e la posizione iniziale.', [
+        preparaMappa(b),
+        posizioneIniziale(b),
+      ]),
       h('div', { class: 'riga-azioni azioni-bozza' },
-        h('button', { type: 'button', class: 'btn primario', disabled: !b.nemici.length, title: 'Avvia lo scontro dal Round 1; poi la finestra «Iniziativa» chiede i valori (dal vivo, a mano o con l’app). La bozza resta fra le bozze e si può riusare.', onclick: () => avvia(false) }, 'Inizia'),
-        h('button', { type: 'button', class: 'btn', disabled: !b.nemici.length, title: 'Avvia lo scontro come «Inizia», poi archivia la bozza in scontri/archivio/: non resta fra le bozze', onclick: () => avvia(true) }, 'Inizia e consuma la bozza'),
-        h('button', { type: 'button', class: 'btn', onclick: () => duplica(b.id) }, 'Duplica'),
-        h('button', { type: 'button', class: 'btn', onclick: () => elimina(b.id) }, 'Elimina')),
-      h('ul', { class: 'nota spiega-inizia' },
-        h('li', {}, h('strong', {}, 'Inizia'), ': avvia lo scontro (Round 1; l’Iniziativa la chiede la finestra «Iniziativa»); la bozza resta e si può riusare un’altra volta.'),
-        h('li', {}, h('strong', {}, 'Inizia e consuma la bozza'), ': avvia lo scontro e archivia la bozza (scontri/archivio/): per uno scontro che non si ripete.')),
+        h('button', { type: 'button', class: 'btn primario', disabled: !b.nemici.length, title: b.nemici.length ? 'Inizia: avvia lo scontro dal Round 1 (poi la finestra «Iniziativa»); la bozza resta per rigiocarlo' : 'Serve almeno un nemico', onclick: () => avvia(false) }, 'Inizia'),
+        h('button', { type: 'button', class: 'btn', disabled: !b.nemici.length, title: b.nemici.length ? 'Inizia e consuma la bozza: avvia lo scontro e archivia la bozza (scontri/archivio/), per uno scontro che non si ripete' : 'Serve almeno un nemico', onclick: () => avvia(true) }, 'Inizia e consuma la bozza'),
+        h('button', { type: 'button', class: 'btn', title: 'Salva e chiudi: aspetta l’ultimo salvataggio e chiude; la bozza resta fra le bozze', onclick: salvaEChiudi }, 'Salva e chiudi'),
+        h('button', { type: 'button', class: 'btn', title: 'Duplica: una copia della bozza con un nome nuovo, da cambiare', onclick: () => duplica(b.id) }, 'Duplica'),
+        h('button', { type: 'button', class: 'btn pericolo', title: 'Elimina: con conferma, la bozza va in scontri/archivio/ (non si cancella)', onclick: () => elimina(b.id) }, 'Elimina')),
     ];
+  };
+  /** Un riquadro numerato con titolo e una riga di spiegazione (ritocchi del 08/10). */
+  const riquadroPrep = (n, titolo, nota, figli) => h('section', { class: 'riquadro-prep', 'aria-label': titolo },
+    h('h3', { class: 'riquadro-prep-titolo' }, h('span', { class: 'riquadro-prep-numero', 'aria-hidden': 'true' }, n), titolo),
+    nota ? h('p', { class: 'nota' }, nota) : null,
+    figli);
+  /** I veicoli che entreranno nello scontro: del gruppo, o di proprietà o guidati da un PG scelto (scheda unica, A.91). */
+  const veicoliDellaBozza = (b) => {
+    if (st.veicoli === undefined) {
+      st.veicoli = null;
+      elencoVeicoli().then((v) => { st.veicoli = v ?? []; disegna(); }).catch(() => { st.veicoli = []; disegna(); });
+    }
+    if (!st.veicoli) return h('p', { class: 'nota' }, 'Veicoli: lettura del registro…');
+    const chiavi = (b.pg?.length ? b.pg : alTavolo().map((v) => v.chiaveCartella));
+    const presenti = st.veicoli.filter((r) => r.proprietario?.tipo === 'gruppo' || [r.proprietario?.chiave, r.conducente?.chiave].some((k) => k && chiavi.some((c) => stessaChiave(c, k))));
+    return h('div', { class: 'veicoli-bozza' }, h('h4', {}, 'Veicoli'),
+      presenti.length ? h('ul', {}, presenti.map((r) => h('li', {}, r.mezzo?.nome ?? r.id, h('small', { class: 'nota' }, ` · ${r.proprietario?.tipo === 'gruppo' ? 'del gruppo' : `di ${r.proprietario?.nome ?? r.proprietario?.chiave ?? '—'}`}${r.conducente ? `, guida ${r.conducente.nome}` : ', senza conducente'}`))))
+        : h('p', { class: 'nota' }, 'Nessun veicolo: entrano da soli quelli del gruppo e quelli dei PG scelti (scheda del veicolo).'));
+  };
+  /** La posizione iniziale della scena collegata (si salva dalla mappa: Strumenti → «Salva posizione iniziale»). */
+  const posizioneIniziale = (b) => {
+    const sc = (st.scene ?? []).find((x) => x.id === scenaDellaBozza(st.scene ?? [], b.id));
+    return h('p', { class: 'nota' }, h('strong', {}, 'Posizione iniziale: '),
+      !sc ? 'prima collega una scena con «Prepara la mappa».'
+        : sc.iniziale ? `salvata il ${new Date(sc.iniziale).toLocaleString('it-IT', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })} (dalla mappa: Strumenti → «Ripristina posizione iniziale»).`
+          : 'non ancora salvata: nella mappa, Strumenti → «Salva posizione iniziale».');
   };
   // --- «Prepara la mappa»: una scena collegata a questa bozza, aperta per mettere i token ---------------------
   const caricaScene = async () => {
@@ -283,22 +383,6 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
     } catch (e) { avvisoErrore(`Mappa non preparata: ${e.message}`); }
   };
   /** Scene collegate alla bozza → collegate allo scontro nuovo (con avviso); la pagina della mappa aperta lo sa subito. */
-  const ricollegaScene = async (b, scontro) => {
-    let ids = [];
-    try { ids = sceneDellaBozza(await elencoScene(), b.id); } catch { return; }
-    const fatte = [];
-    for (const id of ids) {
-      try {
-        for (let i = 0; i < 2; i++) {
-          const r = await salvaScena(collegaAScontro(await leggiScena(id), scontro.id));
-          if (!r.conflitto) { fatte.push(r.scena); break; }
-        }
-      } catch (e) { avvisoErrore(`Scena ${id} non ricollegata allo scontro: ${e.message}`); }
-    }
-    if (!fatte.length) return;
-    avviso(`${fatte.length === 1 ? 'La scena' : 'Le scene'} ${fatte.map((s) => `«${s.nome}»`).join(', ')} della bozza ${fatte.length === 1 ? 'è collegata' : 'sono collegate'} allo scontro appena aperto.`, { durata: 8000 });
-    window.dispatchEvent(new CustomEvent('mutant:scene-ricollegate', { detail: fatte.map((s) => ({ id: s.id, collegamento: s.collegamento, revisione: s.revisione, aggiornato: s.aggiornato })) }));
-  };
   const salvaEChiudi = async () => {
     await coda;
     avviso(`Bozza «${st.bozza?.nome ?? ''}» salvata${st.salvataAlle ? ` alle ${ora(st.salvataAlle)}` : ''}.`);
@@ -385,18 +469,7 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
     await coda;
     const b = st.bozza;
     const scelti = b.pg?.length ? (await Promise.all(b.pg.map(vista))).filter((x) => x?.completa) : alTavolo();
-    const pg = pgDellaBozza(b, scelti.map(pgDaVista));
-    let scontro;
-    try { scontro = iniziaBozza(b, { id: idNuovo(), pg }); } catch (e) { avvisoErrore(`Non iniziato: ${e.message}`); return; }
-    const ok = await inizia(scontro, b.pg ?? []);
-    if (!ok) return;
-    if (consuma) {
-      try { await salvaScontro(eliminaBozza(b)); } catch (e) { avvisoErrore(`Scontro iniziato, ma la bozza non è stata archiviata: ${e.message}`); }
-    }
-    avviso(`«${b.nome}» iniziato, Round 1: scrivi o tira l’Iniziativa nella finestra «Iniziativa».${consuma ? ' Bozza archiviata.' : ' La bozza resta.'}`);
-    // difetto 5 del collaudo del lotto 7: le scene della bozza passano da sole allo scontro appena aperto
-    await ricollegaScene(b, scontro);
-    finestra.close();
+    if (await avviaBozza(b, { viste: scelti, inizia, consuma })) finestra.close();
   };
 
   const disegna = () => {

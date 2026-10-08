@@ -56,6 +56,23 @@
 //   GET /api/vista-giocatori/diretta   flusso di eventi (text/event-stream) per la vista giocatori: «diretta» con lo
 //                                      stato già filtrato (nessun nascosto, niente sotto la nebbia), «aggiorna» quando
 //                                      scena, scontro o scelta cambiano (la vista si rilegge subito)
+//   GET /api/vista-giocatori?pg=<chiave>  (fase 2, lotto 7) come sopra, più `pgs` (i PG della scena, per «Sono…») e
+//                                      `io`: il PG del tablet con mini-scheda (PV, PM, Stati), permesso di muovere e area
+//                                      (solo Q fuori dalla nebbia, senza ostacoli nascosti); segna il tablet come collegato
+//   POST /api/vista-giocatori/movimento  { scena, pg, a: [x, y], fascia: 1–3, prova? }: il movimento del giocatore dal
+//                                      tablet, rifatto sulla scena completa (src/mappa/tablet.js): solo il proprio PG,
+//                                      al proprio turno (o sempre, scena.tablet.movimento), non con il blocco del master;
+//                                      con prova: true solo il percorso e il costo; altrimenti scrive la scena (revisione
+//                                      +1, voce per Ctrl+Z del master) e gli Attacchi di Opportunità nel registro
+//   GET /api/vista-giocatori/diretta?pg=<chiave>  il flusso di eventi di un tablet: in più «avviso» (campanellino)
+//   GET /api/tablet                    { collegati: [chiavi dei PG con un tablet collegato] } per il master
+//   POST /api/tablet/avviso            { pg, nome, tipo: muovi | turno }: «Il master ti chiede di muovere <PG>» (o «Tocca a
+//                                      te») ai tablet di quel PG, scheda o mappa aperta; { consegnati }
+//   GET /api/tablet/eventi?pg=<chiave> flusso di eventi della scheda del PG sul tablet: solo «avviso» (08/10)
+//                                      «Tocca a te» lo manda il server quando, salvando lo scontro, il turno passa a un PG
+//                                      e una scena dello scontro ha tablet.avvisoTurno
+//   GET /api/scene/<id>?revisione=N    { invariata: true } se la scena è ancora alla revisione N (il master la rilegge
+//                                      solo se un tablet l'ha cambiata)
 //   GET /api/ritratti/<chiave>         il ritratto del PG (dalla sua scheda), per i token della vista giocatori
 //   GET /api/mappe                     immagini in mappe/: [{ file, dimensione, mtime }]
 //   GET /api/musica                    musica di fondo in musica/ (07/10): [{ file, dimensione }], formati di
@@ -78,7 +95,7 @@ import { chiOccupa, testoDomanda, risposteSi, fermaMutant, sorvegliaFinestra } f
 import { indirizziRete, testoAvvio } from './src/rete.js';
 import { avvisa } from './tools/avvisi.mjs';
 import { bordoToken } from './src/mappa/colori.js';
-import { validaScontro } from './src/scontro.js';
+import { validaScontro, rigaOpportunita, diTurno } from './src/scontro.js';
 import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
 import { NOME_FILE, fileProvvisorio, ultimiPerPersonaggio, chiaveDaFile, chiavePersonaggio } from './src/cartella.js';
 import { validaRecord, ID_VEICOLO, migraVeicoli, eRiferimento, stessaChiave } from './src/veicoli-registro.js';
@@ -87,16 +104,21 @@ import { caricaDati } from './src/rules.js';
 import { validaNemico, formattaErrore } from './src/validate.js';
 import { validaScena, riassuntoScena, ID_SCENA, FILE_MAPPA } from './src/mappa/scena.js';
 import { vistaGiocatori } from './src/mappa/vista.js';
-import { validaDiretta, direttaPerGiocatori } from './src/mappa/diretta.js';
+import { validaDiretta, direttaPerGiocatori, visibileAiGiocatori } from './src/mappa/diretta.js';
+import { avversariZoc } from './src/mappa/zoc.js';
 import { dimensioniImmagine } from './src/mappa/immagine.js';
 import { pezziDellaScena } from './src/mappa/partecipanti.js';
 import { vistaPlancia } from './src/tavolo.js';
+import { pgDellaScena, pezzoDelPg, areaPerTablet, provaMovimento, eseguiMovimentoGiocatore, impostazioniTablet, miniScheda, fondiMovimentiTablet } from './src/mappa/tablet.js';
 
 const RADICE = fileURLToPath(new URL('.', import.meta.url));
 const CARTELLA = 'personaggi';
 const TAVOLO = 'tavolo';
 const SCONTRI = 'scontri';
 const ID_SCONTRO = /^[a-z0-9-]{1,60}$/;
+// fusione delle scritture (08/10): per ogni file di scena, le revisioni scritte da un movimento dal tablet
+// (revisione → id del movimento). Un PUT del master su una revisione vecchia si fonde se in mezzo ci sono solo queste.
+const revisioniTablet = new Map();
 const NEMICI = 'nemici';
 const VEICOLI = 'veicoli';
 const SCENE = 'scene';
@@ -230,7 +252,7 @@ export async function scriviAtomico(dove, contenuto) {
 const scriviJson = (dove, v) => scriviAtomico(dove, `${JSON.stringify(v, null, 2)}\n`);
 
 /** Scontri (pezzo 2): un file per scontro, revisione per non sovrascrivere le modifiche di un'altra finestra. */
-async function apiScontri(req, res, percorso, scontri) {
+async function apiScontri(req, res, percorso, scontri, dopoScrittura = null) {
   if (percorso === '/api/scontri' && req.method === 'GET') {
     await mkdir(scontri, { recursive: true });
     const nomi = (await readdir(scontri)).filter((f) => f.endsWith('.json') && ID_SCONTRO.test(f.slice(0, -5)));
@@ -275,6 +297,8 @@ async function apiScontri(req, res, percorso, scontri) {
       return json(res, 200, nuovo);
     }
     await scriviJson(dove, nuovo);
+    // 08/10: «Tocca a te» ai tablet (avvisoTurno), dopo la scrittura
+    try { dopoScrittura?.(attuale, nuovo); } catch { /* l'avviso non ferma il salvataggio */ }
     return json(res, 200, nuovo);
   });
 }
@@ -436,7 +460,10 @@ async function apiScene(req, res, percorso, scene, mappe, radice, cartelle) {
   if (req.method === 'GET') {
     let s;
     try { s = await leggiJson(dove); } catch { return json(res, 404, { errore: 'scena non trovata' }); }
-    const vista = new URL(req.url, 'http://x').searchParams.get('vista');
+    const parametri = new URL(req.url, 'http://x').searchParams;
+    // fase 2, lotto 7: il master guarda se un tablet ha cambiato la scena (movimento di un giocatore)
+    if (parametri.has('revisione') && Number(parametri.get('revisione')) === s.revisione) return json(res, 200, { invariata: true, revisione: s.revisione });
+    const vista = parametri.get('vista');
     if (vista === 'giocatori') return json(res, 200, vistaGiocatori(s, await contestoScena(s, cartelle)));
     if (vista !== null) return json(res, 400, { errore: 'vista: solo «giocatori»' });
     // avviso a Marcello (tools/avvisi.mjs): «Mappa aperta», al massimo una volta al giorno; solo dal server avviato
@@ -455,10 +482,18 @@ async function apiScene(req, res, percorso, scene, mappe, radice, cartelle) {
   return inCoda(dove, async () => {
     let attuale = null;
     try { attuale = await leggiJson(dove); } catch { /* nuova */ }
+    let base = s;
+    let fusi = [];
     if ((attuale?.revisione ?? 0) !== s.revisione || (!attuale && s.revisione !== 0)) {
-      return json(res, 409, { errore: 'la scena è stata cambiata altrove: ricarica', attuale });
+      // 08/10: se dopo la revisione del master ci sono stati solo movimenti dai tablet, si riapplicano al suo
+      // salvataggio (posizione, Q usati e voce per Ctrl+Z di quei token): nessuna perdita, nessun 409
+      const log = revisioniTablet.get(dove);
+      const tutte = attuale && Number.isInteger(s.revisione) && s.revisione < attuale.revisione ? Array.from({ length: attuale.revisione - s.revisione }, (_, i) => s.revisione + 1 + i) : null;
+      if (!tutte || !log || !tutte.every((r) => log.has(r))) return json(res, 409, { errore: 'la scena è stata cambiata altrove: ricarica', attuale });
+      fusi = tutte.map((r) => log.get(r));
+      base = { ...fondiMovimentiTablet(s, attuale, fusi, dati), revisione: attuale.revisione };
     }
-    const nuova = { ...s, revisione: s.revisione + 1, aggiornato: new Date().toISOString() };
+    const nuova = { ...base, revisione: base.revisione + 1, aggiornato: new Date().toISOString() };
     await mkdir(scene, { recursive: true });
     if (nuova.archiviata === true) {
       // «Archivia» (lotto 2): la scena esce dall'elenco ma resta, in scene/archivio/ (non si cancella nulla)
@@ -469,7 +504,7 @@ async function apiScene(req, res, percorso, scene, mappe, radice, cartelle) {
       return json(res, 200, nuova);
     }
     await scriviJson(dove, nuova);
-    return json(res, 200, nuova);
+    return json(res, 200, fusi.length ? { ...nuova, fusi } : nuova);
   });
 }
 
@@ -516,15 +551,25 @@ async function contestoScena(scena, { cartella, tavolo, scontri, veicoli, radice
   const c = scena.collegamento ?? {};
   let scontro = null, bozza = null, alTavolo = [];
   const id = c.scontro ?? c.bozza ?? null;
+  let chiuso = null;
   if (id && ID_SCONTRO.test(id)) {
-    try {
-      const x = await leggiJson(join(scontri, `${id}.json`));
-      if (c.scontro && x.stato === 'aperto') scontro = x;
-      else if (c.bozza && x.stato === 'bozza') bozza = x;
-    } catch { /* chiuso o mancante: nessun contesto */ }
+    let x = null;
+    try { x = await leggiJson(join(scontri, `${id}.json`)); } catch {
+      // 08/10: uno scontro finito passa in scontri/archivio/: i suoi partecipanti servono ancora per nomi e immagini
+      try { x = await leggiJson(join(scontri, 'archivio', `${id}.json`)); } catch { /* mancante: nessun contesto */ }
+    }
+    if (x && c.scontro && x.stato === 'aperto') scontro = x;
+    else if (x && c.scontro && Array.isArray(x.partecipanti)) chiuso = x;
+    else if (x && c.bozza && x.stato === 'bozza') bozza = x;
   }
   if (bozza && !bozza.pg?.length) { try { alTavolo = selezione(await leggiJson(join(tavolo, 'sessione.json'))).personaggi; } catch { /* nessuno al tavolo */ } }
-  const chiavi = scontro ? scontro.partecipanti.filter((p) => p.tipo === 'pg').map((p) => p.chiave) : bozza ? (bozza.pg?.length ? bozza.pg : alTavolo) : [];
+  // 08/10: scena senza scontro né bozza: i PG dai loro token (nome e ritratto dalla scheda), niente «?»
+  if (!scontro && !chiuso && !bozza) {
+    const pg = [...new Set((scena.token ?? []).map((t) => /^pg:(.+)$/.exec(t.rif?.id ?? '')?.[1]).filter(Boolean))];
+    if (pg.length) bozza = { pg, nemici: [] };
+  }
+  const fonte = scontro ?? chiuso;
+  const chiavi = fonte ? fonte.partecipanti.filter((p) => p.tipo === 'pg').map((p) => p.chiave) : bozza ? (bozza.pg?.length ? bozza.pg : alTavolo) : [];
   const viste = await vistePg(chiavi, cartella, dati, scontro?.round ?? null);
   const registro = [];
   try {
@@ -532,36 +577,55 @@ async function contestoScena(scena, { cartella, tavolo, scontri, veicoli, radice
       try { registro.push(await leggiJson(join(veicoli, f))); } catch { /* file rovinato */ }
     }
   } catch { /* nessun registro */ }
-  const pezzi = pezziDellaScena({ scontro, bozza, alTavolo, viste, veicoli: registro }, dati);
+  // scontro chiuso: gli stessi pezzi, senza turno (i token hanno nome e immagine, non «?»)
+  const pezzi = chiuso ? pezziDellaScena({ scontro: chiuso, viste, veicoli: registro }, dati).map((p) => ({ ...p, diTurno: false })) : pezziDellaScena({ scontro, bozza, alTavolo, viste, veicoli: registro }, dati);
   const immagineDi = (p) => (p.tipo === 'pg' ? (p.ritratto ? `api/ritratti/${encodeURIComponent(p.pg)}?v=${impronta(p.ritratto)}` : null) : p.ritratto);
   // colori dei bordi dei token (src/mappa/colori.js): gli stessi della vista master
-  return { pezzi, round: scontro?.round ?? null, immagineDi, scontro, bordoDi: (p) => bordoToken(p, scena.colori, dati), regoleTemplate: dati.mappa.template, regoleMappa: dati.mappa };
+  // completo: c'è uno scontro (aperto o chiuso) o una bozza vera, quindi un token senza partecipante è un orfano
+  return { pezzi, completo: !!(scontro || chiuso || (bozza && (c.scontro || c.bozza))), round: scontro?.round ?? null, immagineDi, scontro, bordoDi: (p) => bordoToken(p, scena.colori, dati), regoleTemplate: dati.mappa.template, regoleMappa: dati.mappa };
 }
 
-/** Scena mostrata ai giocatori: quella scelta dal master (tavolo/mappa-giocatori.json) o la più recente dello scontro aperto. */
-async function scenaInGioco({ tavolo, scontri, scene }) {
+/**
+ * Scena mostrata ai giocatori (secondo schermo e tablet; test di Marcello dell'08/10: prima vinceva sempre la scena
+ * «scelta» in tavolo/mappa-giocatori.json, anche se vecchia e con lo scontro chiuso). Una regola sola:
+ *   1. con un solo scontro aperto (o quello chiesto, `scontro`, se è aperto), la sua scena: fra più scene collegate
+ *      quella segnata dal master, altrimenti la più recente;
+ *   2. con nessuno o più scontri aperti, la scena che il master ha segnato «mostrata ai giocatori» (se c'è ancora);
+ *   3. altrimenti nessuna: «Il master non ha ancora aperto una mappa». Mai una scena a caso.
+ * @returns { scelta: la scena segnata o null, scena | null, motivo?, scontri: id degli scontri aperti }
+ */
+async function scenaInGioco({ tavolo, scontri, scene }, { scontro: chiesto = null } = {}) {
   let scelta = null;
-  try { scelta = (await leggiJson(join(tavolo, 'mappa-giocatori.json'))).scena ?? null; } catch { /* automatica */ }
-  if (scelta && ID_SCENA.test(scelta)) {
-    try { return { scelta, scena: await leggiJson(join(scene, `${scelta}.json`)) }; } catch { return { scelta, scena: null, motivo: 'La scena scelta dal master non c’è più.' }; }
-  }
-  let aperto = null;
+  try { scelta = (await leggiJson(join(tavolo, 'mappa-giocatori.json'))).scena ?? null; } catch { /* nessuna */ }
+  if (!(typeof scelta === 'string' && ID_SCENA.test(scelta))) scelta = null;
+  const aperti = [];
   try {
     for (const f of (await readdir(scontri)).filter((x) => x.endsWith('.json'))) {
-      try { const x = await leggiJson(join(scontri, f)); if (x.stato === 'aperto') { aperto = x.id; break; } } catch { /* rovinato */ }
+      try { const x = await leggiJson(join(scontri, f)); if (x.stato === 'aperto') aperti.push(x.id); } catch { /* rovinato */ }
     }
   } catch { /* nessuno scontro */ }
-  if (!aperto) return { scelta: null, scena: null, motivo: 'Nessuno scontro aperto e nessuna scena scelta dal master.' };
-  let migliore = null;
-  try {
-    for (const f of (await readdir(scene)).filter((x) => x.endsWith('.json') && ID_SCENA.test(x.slice(0, -5)))) {
-      try {
-        const x = await leggiJson(join(scene, f));
-        if (x.collegamento?.scontro === aperto && (!migliore || String(x.aggiornato ?? '') > String(migliore.aggiornato ?? ''))) migliore = x;
-      } catch { /* rovinata */ }
-    }
-  } catch { /* nessuna scena */ }
-  return migliore ? { scelta: null, scena: migliore } : { scelta: null, scena: null, motivo: 'Nessuna scena collegata allo scontro aperto.' };
+  const scontro = chiesto && aperti.includes(chiesto) ? chiesto : aperti.length === 1 ? aperti[0] : null;
+  if (scontro) {
+    let migliore = null;
+    try {
+      for (const f of (await readdir(scene)).filter((x) => x.endsWith('.json') && ID_SCENA.test(x.slice(0, -5)))) {
+        try {
+          const x = await leggiJson(join(scene, f));
+          if (x.collegamento?.scontro !== scontro || x.archiviata) continue;
+          if (x.id === scelta) { migliore = x; break; }
+          if (!migliore || String(x.aggiornato ?? '') > String(migliore.aggiornato ?? '')) migliore = x;
+        } catch { /* rovinata */ }
+      }
+    } catch { /* nessuna scena */ }
+    if (migliore) return { scelta, scena: migliore, scontri: aperti };
+  }
+  if (scelta) {
+    try {
+      const x = await leggiJson(join(scene, `${scelta}.json`));
+      if (!x.archiviata) return { scelta, scena: x, scontri: aperti };
+    } catch { /* non c'è più (archiviata o tolta) */ }
+  }
+  return { scelta, scena: null, scontri: aperti, motivo: 'Il master non ha ancora aperto una mappa.' };
 }
 
 /**
@@ -571,6 +635,10 @@ async function scenaInGioco({ tavolo, scontri, scene }) {
  */
 function creaCanaleDiretta(cartelle) {
   const clienti = new Set();
+  // fase 2, lotto 7: i flussi dei tablet con il loro PG, e l'ultima lettura della vista di ogni PG
+  const tablet = new Map(); // res → chiave del PG
+  const letture = new Map(); // chiave del PG → ms
+  const soloAvvisi = new Set(); // flussi delle schede dei PG (08/10): fuori da `clienti`, niente diretta
   let grezza = null;
   let firma = 'null';
   let filtrata = null;
@@ -592,7 +660,7 @@ function creaCanaleDiretta(cartelle) {
     const f = JSON.stringify(nuova);
     if (f !== firma) { firma = f; filtrata = nuova; tutti('diretta', nuova); }
   }).catch(() => {}));
-  const battito = setInterval(() => { for (const r of clienti) { try { r.write(': battito\n\n'); } catch { clienti.delete(r); } } }, 15000);
+  const battito = setInterval(() => { for (const r of [...clienti, ...soloAvvisi]) { try { r.write(': battito\n\n'); } catch { clienti.delete(r); soloAvvisi.delete(r); tablet.delete(r); } } }, 15000);
   battito.unref?.();
   return {
     async api(req, res) {
@@ -600,7 +668,9 @@ function creaCanaleDiretta(cartelle) {
         res.writeHead(200, { 'Content-Type': 'text/event-stream; charset=utf-8', 'Cache-Control': 'no-cache, no-transform', Connection: 'keep-alive', 'X-Accel-Buffering': 'no' });
         res.write('retry: 1000\n\n');
         clienti.add(res);
-        req.on('close', () => clienti.delete(res));
+        const pg = new URL(req.url, 'http://x').searchParams.get('pg');
+        if (pg) tablet.set(res, pg);
+        req.on('close', () => { clienti.delete(res); tablet.delete(res); });
         manda(res, 'diretta', filtrata);
         return;
       }
@@ -619,9 +689,31 @@ function creaCanaleDiretta(cartelle) {
       tutti('aggiorna', {});
       rifiltra();
     },
+    /** Un evento ai soli tablet di quel PG (campanellino): quanti l'hanno ricevuto. */
+    aTablet(pg, evento, dati) {
+      let n = 0;
+      for (const [r, k] of tablet) if (stessaChiave(k, pg)) { manda(r, evento, dati); n++; }
+      return n;
+    },
+    /** Flusso della scheda del PG sul tablet (08/10): riceve solo gli avvisi, conta come tablet collegato. */
+    apriScheda(req, res, pg) {
+      res.writeHead(200, { 'Content-Type': 'text/event-stream; charset=utf-8', 'Cache-Control': 'no-cache, no-transform', Connection: 'keep-alive', 'X-Accel-Buffering': 'no' });
+      res.write('retry: 1000\n\n');
+      tablet.set(res, pg);
+      soloAvvisi.add(res);
+      req.on('close', () => { tablet.delete(res); soloAvvisi.delete(res); });
+    },
+    /** Il tablet di quel PG ha chiesto la vista (anche senza flusso di eventi aperto). */
+    letta(pg) { letture.set(pg, Date.now()); },
+    /** Chiavi dei PG con un tablet collegato: flusso aperto o vista chiesta negli ultimi `secondi`. */
+    collegati(secondi) {
+      const r = new Set(tablet.values());
+      for (const [k, t] of letture) if (Date.now() - t <= secondi * 1000) r.add(k); else letture.delete(k);
+      return [...r];
+    },
     /** «Adatta allo schermo» sulle viste giocatori aperte; restituisce quante sono. */
     adatta() { tutti('adatta', {}); return clienti.size; },
-    chiudi() { clearInterval(battito); for (const r of clienti) { try { r.end(); } catch { /* già chiuso */ } } clienti.clear(); },
+    chiudi() { clearInterval(battito); for (const r of clienti) { try { r.end(); } catch { /* già chiuso */ } } clienti.clear(); for (const r of soloAvvisi) { try { r.end(); } catch { /* già chiuso */ } } soloAvvisi.clear(); tablet.clear(); },
   };
 }
 
@@ -630,7 +722,9 @@ async function apiVistaGiocatori(req, res, percorso, cartelle) {
   const doveScelta = join(cartelle.tavolo, 'mappa-giocatori.json');
   if (percorso === '/api/vista-giocatori/scelta') {
     if (req.method === 'GET') {
-      try { return json(res, 200, { scena: (await leggiJson(doveScelta)).scena ?? null }); } catch { return json(res, 200, { scena: null }); }
+      // 08/10: anche la scena che i giocatori vedono davvero (regola di scenaInGioco), per l'indicatore del master
+      const { scelta, scena } = await scenaInGioco(cartelle);
+      return json(res, 200, { scena: scelta, inGioco: scena?.id ?? null });
     }
     if (req.method !== 'PUT') return json(res, 405, { errore: 'metodo non ammesso' });
     let v;
@@ -649,12 +743,150 @@ async function apiVistaGiocatori(req, res, percorso, cartelle) {
     if (req.method !== 'POST') return json(res, 405, { errore: 'metodo non ammesso' });
     return json(res, 200, { giocatori: cartelle.canale.adatta() });
   }
+  if (percorso === '/api/vista-giocatori/movimento') return movimentoDalTablet(req, res, cartelle);
   if (percorso !== '/api/vista-giocatori' || req.method !== 'GET') return json(res, 405, { errore: 'metodo non ammesso' });
-  const { scelta, scena, motivo } = await scenaInGioco(cartelle);
-  const corpo = { scelta, scena: scena ? vistaGiocatori(scena, await contestoScena(scena, cartelle)) : null, ...(motivo ? { motivo } : {}) };
+  const parametri = new URL(req.url, 'http://x').searchParams;
+  const pg = parametri.get('pg') || null;
+  const chiesto = parametri.get('scontro') || null;
+  const { scelta, scena, motivo, scontri: aperti } = await scenaInGioco(cartelle, { scontro: chiesto });
+  const contesto = scena ? await contestoScena(scena, cartelle) : null;
+  const corpo = { scelta, scena: scena ? vistaGiocatori(scena, contesto) : null, ...(motivo ? { motivo } : {}),
+    // 08/10: il tablet aperto dalla scheda sa se il suo scontro è ancora aperto (alla fine torna alla scheda)
+    ...(chiesto ? { scontroAperto: (aperti ?? []).includes(chiesto) } : {}) };
+  // fase 2, lotto 7: i PG della scena per «Sono…» e, con ?pg=, il blocco del tablet di quel giocatore
+  if (contesto) corpo.pgs = pgDellaScena(contesto.pezzi).map(({ chiave, nome }) => ({ chiave, nome }));
+  if (pg) {
+    cartelle.canale?.letta(pg);
+    if (scena) corpo.io = await perIlTablet(scena, contesto, pg, cartelle);
+  }
   const firma = impronta(JSON.stringify(corpo));
-  if (new URL(req.url, 'http://x').searchParams.get('firma') === firma) return json(res, 200, { firma, invariata: true });
+  if (parametri.get('firma') === firma) return json(res, 200, { firma, invariata: true });
   return json(res, 200, { firma, ...corpo });
+}
+
+/**
+ * Il blocco `io` della vista per il tablet di un giocatore (fase 2, lotto 7; src/mappa/tablet.js): mini-scheda del suo
+ * PG, permesso di muovere con il motivo, impostazioni del master e l'area di movimento per Passo, Corsa e Scatto (tre
+ * maschere già senza i Q sotto la nebbia). Solo i dati del proprio PG.
+ */
+async function perIlTablet(scena, contesto, pg, cartelle) {
+  const { dati } = await datiDelServer(cartelle.radice);
+  const pezzo = pezzoDelPg(contesto.pezzi, pg);
+  const imp = impostazioniTablet(scena, dati);
+  if (!pezzo) return { pg, trovato: false, impostazioni: imp, permesso: { puo: false, motivo: 'Il tuo PG non è in questa scena: chiedi al master di farlo entrare.' } };
+  const { permesso, area } = areaPerTablet({ scena, pezzi: contesto.pezzi, scontro: contesto.scontro, chiavePg: pg, fascia: 3, dati });
+  const token = permesso.token ?? scena.token.find((t) => t.rif?.id === pezzo.rif.id) ?? null;
+  // le ZoC degli avversari che il giocatore vede (Giocatore §5.3), come nella diretta: nessun nascosto, niente sotto la nebbia
+  const zoc = permesso.puo && scena.zocGiocatori !== false
+    ? avversariZoc(scena, contesto.pezzi, permesso.token.id, dati, { perGiocatori: true }).filter((a) => visibileAiGiocatori(a.token, scena)).map((a) => ({ q: [...a.token.q], ingombro: a.token.ingombro, portata: a.portata }))
+    : [];
+  return {
+    pg, trovato: true, nome: pezzo.nome, token: token && !token.nascosto ? token.id : null, bordo: permesso.bordo ?? null,
+    mini: miniScheda(pezzo), impostazioni: imp, permesso: { puo: permesso.puo, motivo: permesso.motivo }, area, zoc,
+  };
+}
+
+/**
+ * Movimento dal tablet (fase 2, lotto 7): POST /api/vista-giocatori/movimento. Il server non si fida del tablet: rilegge
+ * scena, scontro e schede, rifà il controllo (src/mappa/tablet.js) e solo allora scrive, in coda sul file della scena.
+ */
+async function movimentoDalTablet(req, res, cartelle) {
+  if (req.method !== 'POST') return json(res, 405, { errore: 'metodo non ammesso' });
+  let d;
+  try { d = JSON.parse((await leggiCorpo(req, 64 * 1024)).toString('utf8')); } catch (e) { return json(res, 400, { errore: `contenuto non valido: ${e.message}` }); }
+  if (typeof d?.pg !== 'string' || !d.pg || typeof d.scena !== 'string' || !ID_SCENA.test(d.scena)) return json(res, 400, { errore: 'pg e scena attesi' });
+  const { dati } = await datiDelServer(cartelle.radice);
+  const { scena: inGioco } = await scenaInGioco(cartelle, { scontro: typeof d.scontro === 'string' ? d.scontro : null });
+  if (!inGioco || inGioco.id !== d.scena) return json(res, 409, { errore: 'La mappa in gioco è cambiata: attendi un momento.' });
+  const dove = join(cartelle.scene, `${d.scena}.json`);
+  const perTablet = (p) => ({ costo: p.costo, fascia: p.fascia, percorso: p.percorso, blocco: !!p.blocco, persi: p.persi ?? 0,
+    // gli Attacchi di Opportunità si dicono al tablet solo per gli avversari che il giocatore vede
+    opportunita: p.opportunita.filter((o) => o.visibile).map((o) => ({ nome: o.nomeDa })) });
+  if (d.prova) {
+    const contesto = await contestoScena(inGioco, cartelle);
+    const p = provaMovimento({ scena: inGioco, pezzi: contesto.pezzi, scontro: contesto.scontro, chiavePg: d.pg, a: d.a, fascia: d.fascia, dati });
+    return p.ok ? json(res, 200, { ok: true, prova: true, ...perTablet(p) }) : json(res, 422, { ok: false, errore: p.errore });
+  }
+  const esito = await inCoda(dove, async () => {
+    let scena;
+    try { scena = await leggiJson(dove); } catch { return { stato: 404, corpo: { errore: 'scena non trovata' } }; }
+    const contesto = await contestoScena(scena, cartelle);
+    const r = eseguiMovimentoGiocatore({ scena, pezzi: contesto.pezzi, scontro: contesto.scontro, chiavePg: d.pg, a: d.a, fascia: d.fascia, dati });
+    if (!r.ok) return { stato: 422, corpo: { ok: false, errore: r.errore } };
+    const nuova = { ...r.scena, revisione: scena.revisione + 1, aggiornato: new Date().toISOString() };
+    const errore = validaScena(nuova, dati);
+    if (errore) return { stato: 500, corpo: { ok: false, errore: `scena non valida dopo il movimento: ${errore}` } };
+    await scriviJson(dove, nuova);
+    if (!revisioniTablet.has(dove)) revisioniTablet.set(dove, new Map());
+    const log = revisioniTablet.get(dove);
+    log.set(nuova.revisione, r.movimento.id);
+    for (const k of log.keys()) if (k < nuova.revisione - 200) log.delete(k);
+    return { stato: 200, corpo: { ok: true, revisione: nuova.revisione, movimento: r.movimento.id, ...perTablet(r.prova) }, scontro: contesto.scontro, prova: r.prova, movimento: r.movimento };
+  });
+  // Attacchi di Opportunità nel registro dello scontro (Giocatore §5.3: uno per Round per avversario), come fa il master
+  if (esito.stato === 200 && esito.scontro && esito.prova.opportunita.length) {
+    try { await opportunitaNelRegistro(cartelle.scontri, esito.scontro.id, esito.prova, esito.movimento.id); } catch { /* il movimento resta; il master vede l'avviso sulla mappa */ }
+  }
+  if (esito.stato === 200) cartelle.canale?.cambiata();
+  return json(res, esito.stato, esito.corpo);
+}
+
+/** Le righe degli Attacchi di Opportunità di un movimento dal tablet, nel registro dello scontro (revisione +1). */
+async function opportunitaNelRegistro(scontri, id, prova, movimento) {
+  if (!ID_SCONTRO.test(id)) return;
+  const dove = join(scontri, `${id}.json`);
+  await inCoda(dove, async () => {
+    const s = await leggiJson(dove);
+    if (s.stato !== 'aperto') return;
+    const adesso = new Date();
+    const dopo = prova.opportunita.reduce((x, o) => rigaOpportunita(x, { da: o.da, nomeDa: o.nomeDa, contro: prova.rifId, nomeContro: prova.nome, movimento }, adesso), s);
+    if (dopo === s) return;
+    await scriviJson(dove, { ...dopo, revisione: s.revisione + 1 });
+  });
+}
+
+/**
+ * Tablet dei giocatori (fase 2, lotto 7): GET /api/tablet (chi è collegato, per il master) e POST /api/tablet/avviso
+ * (il campanellino: l'avviso grande al tablet di un PG, con suono e vibrazione).
+ */
+async function apiTablet(req, res, percorso, cartelle) {
+  const { dati } = await datiDelServer(cartelle.radice);
+  if (percorso === '/api/tablet' && req.method === 'GET') return json(res, 200, { collegati: cartelle.canale?.collegati(dati.mappa.tablet.collegato_s) ?? [] });
+  if (percorso === '/api/tablet/eventi' && req.method === 'GET') {
+    const pg = new URL(req.url, 'http://x').searchParams.get('pg');
+    if (!pg || !cartelle.canale) return json(res, 400, { errore: 'pg atteso' });
+    return cartelle.canale.apriScheda(req, res, pg);
+  }
+  if (percorso === '/api/tablet/avviso' && req.method === 'POST') {
+    let d;
+    try { d = JSON.parse((await leggiCorpo(req, 16 * 1024)).toString('utf8')); } catch (e) { return json(res, 400, { errore: `contenuto non valido: ${e.message}` }); }
+    if (typeof d?.pg !== 'string' || !d.pg) return json(res, 400, { errore: 'pg atteso' });
+    const tipo = d.tipo === 'turno' ? 'turno' : 'muovi';
+    const nome = typeof d.nome === 'string' && d.nome.trim() ? d.nome.trim().slice(0, 80) : d.pg;
+    const testo = (tipo === 'turno' ? dati.mappa.tablet.testo_turno : dati.mappa.tablet.testo_muovi).replace('{nome}', nome);
+    const scontro = typeof d.scontro === 'string' && ID_SCONTRO.test(d.scontro) ? d.scontro : null;
+    const consegnati = cartelle.canale?.aTablet(d.pg, 'avviso', { tipo, testo, nome, scontro, quando: Date.now() }) ?? 0;
+    return json(res, 200, { consegnati });
+  }
+  return json(res, 405, { errore: 'metodo non ammesso' });
+}
+
+/**
+ * «Tocca a te» automatico (08/10): salvato lo scontro aperto, se il turno è passato a un PG e una scena collegata a
+ * quello scontro ha l'avviso acceso (scena.tablet.avvisoTurno), i tablet di quel PG (scheda o mappa) ricevono l'avviso.
+ */
+async function avvisoTurnoTablet(prima, dopo, cartelle) {
+  if (!cartelle.canale || dopo?.stato !== 'aperto') return;
+  const t = diTurno(dopo);
+  if (!t || t.tipo !== 'pg' || (prima?.stato === 'aperto' && diTurno(prima)?.id === t.id)) return;
+  const { dati } = await datiDelServer(cartelle.radice);
+  let acceso = false;
+  try {
+    for (const f of (await readdir(cartelle.scene)).filter((x) => x.endsWith('.json') && ID_SCENA.test(x.slice(0, -5)))) {
+      try { const s = await leggiJson(join(cartelle.scene, f)); if (s.collegamento?.scontro === dopo.id && impostazioniTablet(s, dati).avvisoTurno) { acceso = true; break; } } catch { /* rovinata */ }
+    }
+  } catch { /* nessuna scena */ }
+  if (acceso) cartelle.canale.aTablet(t.chiave, 'avviso', { tipo: 'turno', testo: dati.mappa.tablet.testo_turno.replace('{nome}', t.nome), nome: t.nome, scontro: dopo.id, quando: Date.now() });
 }
 
 /** Ritratto di un PG (data URL della scheda) come immagine, per i token della vista giocatori. */
@@ -792,6 +1024,7 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
   if (percorso === '/api/scene' || percorso.startsWith('/api/scene/')) return segnala(await apiScene(req, res, percorso, scene, mappe, radice, cartelle));
   if (percorso === '/api/vista-giocatori' || percorso.startsWith('/api/vista-giocatori/')) return apiVistaGiocatori(req, res, percorso, cartelle);
   if (percorso.startsWith('/api/ritratti/')) return apiRitratto(req, res, percorso, cartelle);
+  if (percorso === '/api/tablet' || percorso.startsWith('/api/tablet/')) return apiTablet(req, res, percorso, cartelle);
   if (percorso === '/api/mappe' || percorso.startsWith('/api/mappe/')) return apiMappe(req, res, percorso, mappe, radice);
   if (percorso === '/api/musica' || percorso.startsWith('/api/musica/')) return apiMusica(req, res, percorso, musica, radice);
   if (percorso === '/api/veicoli' || percorso.startsWith('/api/veicoli/')) return apiVeicoli(req, res, percorso, veicoli);
@@ -801,7 +1034,7 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
   }
   if (percorso === '/api/esempi') return req.method === 'POST' ? json(res, 200, await caricaEsempi(radice, cartella, nemici)) : json(res, 405, { errore: 'metodo non ammesso' });
   if (percorso === '/api/nemici' || percorso.startsWith('/api/nemici/')) return apiNemici(req, res, percorso, nemici, radice);
-  if (percorso === '/api/scontri' || percorso.startsWith('/api/scontri/')) return segnala(await apiScontri(req, res, percorso, scontri));
+  if (percorso === '/api/scontri' || percorso.startsWith('/api/scontri/')) return segnala(await apiScontri(req, res, percorso, scontri, (prima, dopo) => { avvisoTurnoTablet(prima, dopo, cartelle).catch(() => {}); }));
   if (percorso === '/api/tavolo') {
     const dove = join(tavolo, 'sessione.json');
     if (req.method === 'GET') {

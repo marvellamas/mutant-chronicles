@@ -99,6 +99,12 @@
       3
     ],
     "veicolo_ingombro_max": 12,
+    "rotazione_veicoli": {
+      "_nota": "Orientamento libero dei veicoli (richiesta di Marcello dell’08/10/2026; src/mappa/forma.js): ← → girano il veicolo di passo_gradi (durante il piazzamento e con il veicolo scelto), Maiusc+← → di passo_rapido_gradi. Con angoli non retti i quadretti occupati sono quelli coperti per almeno metà dal rettangolo ruotato, come i template (template.campioni_per_lato). Girare non consuma movimento (Veicoli §1.3: «Curve ordinarie e normali regolazioni dell’andatura sono comprese nella conduzione»); A.147 per sterzate strette e inversioni.",
+      "TODO(Davide)": "A.147: girare il veicolo sulla griglia consuma Q di movimento? Da quanti gradi una curva non è più «ordinaria» (Veicoli §1.3) e diventa Sterzata stretta o Inversione rapida (§2.4, 1 AzP e Prova)? Si può girare sul posto da fermo? Provvisorio: rotazione libera prima e dopo lo spostamento, senza costo; le manovre le applica il master a voce.",
+      "passo_gradi": 10,
+      "passo_rapido_gradi": 45
+    },
     "veicolo_predefinito": [
       3,
       2
@@ -421,15 +427,29 @@
     "_nota_centra": "«Centra» (⌖ o doppio clic sul nome nell'ordine d'Iniziativa della barra; ritocchi del 07/10/2026): la mappa si centra sul token, lo sceglie e porta lo zoom a centra_px_per_q pixel di schermo per Q (entro zoom_min e zoom_max della vista).",
     "centra_px_per_q": 72
   },
+  "strumenti": {
+    "_nota": "Menu «Strumenti» della barra in alto (ritocchi del 08/10/2026; src/mappa/menu.js → VOCI_STRUMENTI, src/ui/mappa/pagina.js → disegnaMenuStrumenti): gruppi con titolo e icona, voci brevi con la scorciatoia a destra, nell'ordine dei dati. Le voci che in quel momento non si possono usare restano spente, con il motivo nel suggerimento.",
+    "gruppi": [
+      { "titolo": "Preparazione mappa", "icona": "🗺", "voci": ["immagine", "griglia", "muri", "porte", "luci", "nebbia", "nebbia_automatica"] },
+      { "titolo": "Scena", "icona": "🎬", "voci": ["scene", "collegamento", "salva_iniziale", "ripristina_iniziale"] },
+      { "titolo": "In gioco", "icona": "⚔", "voci": ["linea", "dettaglio_linea", "template", "mostra_area", "mostra_zoc", "seleziona_pg", "seleziona_nemici", "seleziona_tutti"] },
+      { "titolo": "Vista giocatori", "icona": "📺", "voci": ["mostra_giocatori", "vista_giocatori", "adatta_giocatori", "pv_nemici", "sovrapposizioni_giocatori", "suoni_giocatori"] },
+      { "titolo": "Tablet dei giocatori", "icona": "📱", "voci": ["blocco_giocatori", "movimento_tablet", "avviso_turno_tablet", "collega_tablet"] },
+      { "titolo": "Suoni", "icona": "♫", "voci": ["musica", "muto"] },
+      { "titolo": "Pulizia", "icona": "🧹", "voci": ["cancella_temporanei", "cancella_tutti"] }
+    ]
+  },
   "menu": {
     "_nota": "Menu del clic destro sulla mappa (richiesta di Marcello del 07/10/2026; src/mappa/menu.js): per contesto (token, porta, template, punto vuoto) la riga rapida, i gruppi con intestazione e le «Opzioni» (sottomenu), con gli id delle voci nell'ordine in cui compaiono. Si mostrano solo le voci utilizzabili in quel momento (la riga rapida anche spenta, con il motivo); i gruppi vuoti non si mostrano. «{nome}» nel titolo di un gruppo diventa il nome del template. altezza_voce_px: altezza minima di una voce, per il dito sul tablet.",
     "altezza_voce_px": 40,
     "token": {
       "rapida": ["passo", "corsa", "scatto", "libero"],
       "gruppi": [
-        { "titolo": "Movimento", "voci": ["annulla_movimento", "nuovo_turno"] },
+        { "titolo": "Movimento", "voci": ["in_volo", "quota_volo", "andature", "annulla_movimento", "nuovo_turno"] },
         { "titolo": "Azioni", "voci": ["attacca", "porta_token"] },
-        { "titolo": "Veicolo", "voci": ["sali", "ruota_veicolo", "a_bordo"] },
+        { "titolo": "Veicolo", "voci": ["sali", "ruota_veicolo"] },
+        { "titolo": "Scendi", "voci": ["scendi_bordo"] },
+        { "titolo": "Linea di tiro", "voci": ["linea_bordo"] },
         { "titolo": "Strumenti", "voci": ["linea", "area", "zoc", "template_qui"] },
         { "titolo": "Scheda", "voci": ["mini_scheda", "scheda_completa"] },
         { "titolo": "Selezione", "voci": ["selezione_token"] }
@@ -540,12 +560,54 @@
     },
     "tasto": "l"
   },
+  "tablet": {
+    "_nota": "Tablet dei giocatori (fase 2, lotto 7; src/mappa/tablet.js, src/ui/mappa/giocatori.js, server.mjs → /api/vista-giocatori/movimento e /api/tablet). Il giocatore apre la vista giocatori dal tablet, sceglie «Sono…» e muove solo il suo PG; il server ricontrolla ogni movimento sulla scena completa. movimento_predefinito: «turno» (solo al proprio turno dello scontro aperto) o «sempre» (anche fuori turno e senza scontro); il master lo cambia per la scena da Strumenti → Tablet dei giocatori. avviso_turno_predefinito: avviso automatico «Tocca a te» quando arriva il turno del PG, spento finché il master non lo accende. vibrazione_ms: lo schema della vibrazione dell’avviso (solo dove il tablet la supporta). avviso_durata_ms: quanto resta l’avviso grande, se nessuno lo tocca. collegato_s: un tablet conta come collegato se il suo flusso di eventi è aperto o se ha chiesto la vista negli ultimi collegato_s secondi. testo_muovi («Chiedi di muovere» del master, 08/10) e testo_turno («Tocca a te», mandato dal server al cambio di turno): i testi dell’avviso grande, {nome} è il nome del PG. Gli avvisi arrivano alla scheda del PG e alla mappa aperte sul tablet.",
+    "movimento_predefinito": "turno",
+    "avviso_turno_predefinito": false,
+    "vibrazione_ms": [300, 120, 300],
+    "avviso_durata_ms": 12000,
+    "collegato_s": 6,
+    "testo_muovi": "Il master ti chiede di muovere {nome}",
+    "testo_turno": "Tocca a te, {nome}!"
+  },
+  "volo": {
+    "_nota": "Token in volo (fase 2, lotto 6 bis, richiesta di Marcello dell’08/10/2026; src/mappa/volo.js). Giocatore §5.2.3: «Una capacità, un Incantesimo o un Artefatto deve concedere espressamente la possibilità di volare. Il Volo usa l’AzM e, salvo indicazioni differenti della fonte, consente Passo 6 Q, Corsa 12 Q e Scatto 18 Q» (movimento_predefinito; i nemici usano movimento.volo del profilo, Corsa e Scatto ×2 e ×3); «Uscire volontariamente dalla portata di un avversario, anche salendo, può provocare Attacchi di Opportunità». Giocatore §5.2.5: in volo senza appoggio Stordito «Soltanto Passo». Mostri §4.5: «Essere in volo non impone un nuovo −2 universale a chi attacca». Il token in volo ha un’icona (icona) e un’ombra; la quota in Q è un’etichetta facoltativa (quota_massima).",
+    "icona": "img/Icons/Flying-96.png",
+    "quota_icona": 0.55,
+    "quota_massima": 99,
+    "movimento_predefinito": {
+      "passo": 6,
+      "corsa": 12,
+      "scatto": 18
+    },
+    "movimento": {
+      "_nota": "In volo il percorso ignora il terreno difficile e può passare sopra gli altri token, senza fermarsi nel loro quadretto; muri e porte chiuse restano ostacoli (il soffitto). Si sommano a movimento.",
+      "terreno_difficile_moltiplicatore": 1,
+      "attraversa_avversari": true,
+      "attraversa_alleati": true,
+      "fermarsi_su_alleato": false
+    },
+    "linea_di_tiro": {
+      "_nota": "Indicazione di Marcello dell’08/10: un token in volo «non ha coperture». Verso un token in volo e da un token in volo i token in mezzo non contano e la Copertura Leggera e Media non si applicano; un muro pieno blocca comunque (Copertura Totale: tutte le linee bloccate). TODO(Davide) A.148.",
+      "ignora_token": true,
+      "coperture_annullate": [
+        "leggera",
+        "media"
+      ]
+    },
+    "visibile_oltre_nebbia": true,
+    "_nota_visibile": "Indicazione di Marcello: «un nemico in volo in generale è sempre visibile». Regola proposta (la più semplice): un token in volo non nascosto dal master si vede nella vista giocatori anche sotto la nebbia (manuale o automatica), se c’è una linea di vista senza muri né porte chiuse dal centro di almeno un PG in mappa. Il master può sempre nasconderlo. TODO(Davide) A.150.",
+    "zoc_quota": true,
+    "_nota_zoc": "ZoC e Attacchi di Opportunità come a terra (Giocatore §5.2.3); con la quota la distanza è la maggiore fra quella sulla griglia e la differenza di quota (diagonale 1 Q, A.124): un token in volo più alto della portata ravvicinata non è nella ZoC e non provoca uscendo. TODO(Davide) A.149.",
+    "TODO(Davide)": "A.148: verso e da un token in volo valgono la Copertura Leggera e Media e il bersaglio protetto (§5.8, §5.10)? Provvisorio (indicazione di Marcello): no, un muro pieno blocca comunque. A.149: la quota conta per la portata delle armi ravvicinate? Provvisorio: sì, distanza = la maggiore fra griglia e quota. A.150: un token in volo si vede da lontano anche sotto la nebbia, con una linea di vista senza muri? Provvisorio: sì (indicazione di Marcello)."
+  },
   "audio": {
-    "_nota": "Suoni della mappa (richiesta di Marcello del 07/10/2026; src/mappa/audio.js, src/ui/mappa/audio.js). effetti: evento → file (percorso nel progetto, servito come gli altri file statici); un evento senza file non suona. Per ora solo nuovo_round; gli altri eventi previsti (attacco_opportunita, template_scaduto) restano null finché non si sceglie un file. musica: la cartella reale del server con la musica di fondo (fuori da git, come mappe/) e i formati che tutti i browser leggono. volume_predefinito: Musica ed Effetti da 0 a 1, prima che il master li cambi (poi si ricordano su quel PC). giocatori_predefinito: «suona anche nella vista giocatori», spento.",
+    "_nota": "Suoni della mappa (richiesta di Marcello del 07/10/2026; src/mappa/audio.js, src/ui/mappa/audio.js). effetti: evento → file (percorso nel progetto, servito come gli altri file statici); un evento senza file non suona. Per ora nuovo_round e avviso_giocatore (il campanellino del master e «Tocca a te» sul tablet del giocatore, fase 2, lotto 7: suona sempre sul tablet, anche senza «suona anche nella vista giocatori»); gli altri eventi previsti (attacco_opportunita, template_scaduto) restano null finché non si sceglie un file. musica: la cartella reale del server con la musica di fondo (fuori da git, come mappe/) e i formati che tutti i browser leggono. volume_predefinito: Musica ed Effetti da 0 a 1, prima che il master li cambi (poi si ricordano su quel PC). giocatori_predefinito: «suona anche nella vista giocatori», spento.",
     "effetti": {
       "nuovo_round": "Sounds/Effects/RoundBell.mp3",
       "attacco_opportunita": null,
-      "template_scaduto": null
+      "template_scaduto": null,
+      "avviso_giocatore": "Sounds/Effects/PlayerAlert.mp3"
     },
     "musica": {
       "cartella": "musica",

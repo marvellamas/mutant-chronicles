@@ -8,10 +8,11 @@
 //   direzione: 's' | 'o' | 'n' | 'e'   dove punta il muso (s = in basso); l'ingombro è già quello orientato
 //   passeggeri: [{ id, rif, ingombro, nascosto, ruolo: 'conducente' | 'passeggero', luce?, nome? }]
 //     i token di chi è a bordo, tolti dalla mappa (niente q): si muovono con il mezzo e non occupano Q.
-// I 45° non si fanno: un rettangolo 2 × 4 in diagonale non sta su Q interi della griglia (si dovrebbe arrotondare
-// l'ingombro a una «scala» di Q, con muri e linea di tiro poco chiari); il veicolo si gira a 90°. Funzioni pure.
-import { dimensioni, liberoPer, tokenDentro, chiaveRif } from './token.js';
-import { distanzaIngombri } from './zoc.js';
+// 08/10 (richiesta di Marcello): orientamento libero a passi di data/mappa.json → token.rotazione_veicoli (10°, 45° con
+// Maiusc); con angoli non retti il veicolo occupa i quadretti coperti per almeno metà (src/mappa/forma.js). Le scene di
+// prima, con `direzione`, restano valide. Funzioni pure.
+import { dimensioni, liberoPer, tokenDentro, chiaveRif, celleToken } from './token.js';
+import { ruotaDi, erroreForma, angoloDi } from './forma.js';
 
 /** Direzioni del muso in senso orario: in basso, a sinistra, in alto, a destra. */
 export const DIREZIONI = ['s', 'o', 'n', 'e'];
@@ -55,16 +56,30 @@ export function ruotaVeicolo(t, verso, { colonne, righe }) {
   return { ...t, direzione: dir, ingombro, q: [x, y] };
 }
 
-/** Rotazione permessa: il mezzo girato non va su muri o altri token. { token, errore } */
-export function ruotaSeLibero(scena, idVeicolo, verso, muro = () => false) {
+/**
+ * Rotazione permessa (08/10: di `gradi`, positivi in senso orario, attorno al centro): il mezzo girato non va su muri o
+ * altri token, controllato sui quadretti della sua forma. { token, errore }
+ */
+export function ruotaSeLibero(scena, idVeicolo, gradi, muro = () => false) {
   const t = scena.token.find((x) => x.id === idVeicolo);
   if (!t || t.rif.tipo !== 'veicolo') return { errore: 'non è un veicolo' };
   const g = scena.griglia;
-  const r = ruotaVeicolo(t, verso, g);
+  const r = ruotaDi(t, gradi, g);
   if (!tokenDentro(r, g.colonne, g.righe)) return { errore: 'girato non sta nella griglia' };
-  if (!liberoPer(r.q, r.ingombro, { token: scena.token, tranne: t.id, muro, colonne: g.colonne, righe: g.righe })) return { errore: 'girato andrebbe su un muro o su un altro token' };
+  if (!liberoPer(r.q, r.ingombro, { token: scena.token, tranne: t.id, muro, colonne: g.colonne, righe: g.righe, come: r })) return { errore: 'girato andrebbe su un muro o su un altro token' };
   return { token: r };
 }
+
+/** Distanza in Q fra due token sui loro quadretti veri (Chebyshev: 1 = adiacenti, 0 = sovrapposti), anche ruotati. */
+export function distanzaToken(a, b) {
+  const cb = celleToken(b);
+  let d = Infinity;
+  for (const [x, y] of celleToken(a)) for (const [u, v] of cb) d = Math.min(d, Math.max(Math.abs(x - u), Math.abs(y - v)));
+  return d;
+}
+
+/** Angolo del muso in gradi (0 in alto, senso orario), anche per le scene di prima. */
+export { angoloDi };
 
 /** Posti del profilo: { conducente, passeggeri } (data/veicoli.json → profili[].equipaggio). */
 export const postiDi = (profilo) => ({ conducente: profilo?.equipaggio?.conducente ?? 1, passeggeri: profilo?.equipaggio?.passeggeri ?? Math.max(0, (profilo?.equipaggio?.posti ?? 1) - 1) });
@@ -74,7 +89,7 @@ export const aBordo = (t) => (Array.isArray(t?.passeggeri) ? t.passeggeri : []);
 
 /** I veicoli della scena accanto al token (entro 1 Q dal suo ingombro): dove può salire. */
 export function veicoliVicini(scena, tok) {
-  return scena.token.filter((v) => v.rif.tipo === 'veicolo' && v.id !== tok.id && distanzaIngombri(tok.q, tok.ingombro, v.q, v.ingombro) <= 1);
+  return scena.token.filter((v) => v.rif.tipo === 'veicolo' && v.id !== tok.id && distanzaToken(tok, v) <= 1);
 }
 
 const voceBordo = (scena, prima, ids, testo, dati, adesso) => ({
@@ -93,7 +108,7 @@ export function sali(scena, idToken, idVeicolo, ruolo, posti, dati, adesso = new
   if (!tok || !v || v.rif.tipo !== 'veicolo') return { errore: 'veicolo o token non trovato' };
   if (tok.rif.tipo !== 'partecipante') return { errore: 'a bordo salgono solo i partecipanti (PG e nemici)' };
   if (!RUOLI.includes(ruolo)) return { errore: 'ruolo: conducente o passeggero' };
-  if (distanzaIngombri(tok.q, tok.ingombro, v.q, v.ingombro) > 1) return { errore: 'per salire bisogna essere accanto al veicolo' };
+  if (distanzaToken(tok, v) > 1) return { errore: 'per salire bisogna essere accanto al veicolo' };
   const bordo = aBordo(v);
   const quanti = bordo.filter((p) => p.ruolo === ruolo).length;
   if (ruolo === 'conducente' && quanti >= posti.conducente) return { errore: 'il posto del conducente è già occupato' };
@@ -115,7 +130,8 @@ export function qPerScendere(scena, idVeicolo, idPasseggero, muro = () => false)
   const r = [];
   for (let y = v.q[1] - h; y <= v.q[1] + vh; y++) {
     for (let x = v.q[0] - w; x <= v.q[0] + vw; x++) {
-      if (distanzaIngombri([x, y], p.ingombro, v.q, v.ingombro) !== 1) continue;
+      // accanto ai quadretti veri del mezzo (anche ruotato), non al suo rettangolo
+      if (distanzaToken({ q: [x, y], ingombro: p.ingombro }, v) !== 1) continue;
       if (liberoPer([x, y], p.ingombro, { token: scena.token, muro, colonne, righe })) r.push([x, y]);
     }
   }
@@ -143,6 +159,47 @@ export function annullaBordo(scena, voce) {
   return { ...scena, token: [...scena.token.filter((t) => !voce.ids.includes(t.id)), ...voce.prima] };
 }
 
+/**
+ * Dove disegnare chi è a bordo sul veicolo (ritocchi del 08/10, seconda tornata): sempre dentro l'ingombro, lontano
+ * dal bordo del mezzo (`margine`, in pixel), in una griglia centrata; il lato parte da due terzi di un token normale e
+ * scende fino a metà se serve per farli stare tutti. Solo se nemmeno a metà ci stanno le righe in più escono dal mezzo.
+ * Il conducente è il primo (in alto a sinistra). @returns [{ x, y, lato }] in pixel di schermo, uno per persona
+ */
+export function postiCerchietti(n, box, qs, { massimo = 2 / 3, minimo = 1 / 2, margine = 0 } = {}) {
+  if (!n) return [];
+  const W = Math.max(1, box.w - 2 * margine), H = Math.max(1, box.h - 2 * margine);
+  const prova = (lato) => { const colonne = Math.max(1, Math.floor((W + 0.01) / lato)); return { lato, colonne, righe: Math.ceil(n / colonne) }; };
+  let scelta = null;
+  for (let q = massimo; q >= minimo - 1e-9; q -= 0.02) {
+    const g = prova(qs * q);
+    if (g.righe * g.lato <= H + 0.01) { scelta = g; break; }
+  }
+  scelta ??= prova(qs * minimo);
+  const { lato, colonne, righe } = scelta;
+  const usate = Math.min(colonne, n);
+  const x0 = box.x + margine + (W - usate * lato) / 2;
+  const y0 = box.y + margine + Math.max(0, (H - righe * lato) / 2);
+  return Array.from({ length: n }, (_, i) => ({ x: x0 + (i % colonne) * lato, y: y0 + Math.floor(i / colonne) * lato, lato }));
+}
+
+/**
+ * Perché il veicolo non si muove sulla mappa (ritocchi del 08/10, mai un silenzio), o null se si muove: senza scontro
+ * aperto, senza conducente nel registro (A.91), con il conducente fuori dallo scontro, già mosso nel Round. Fuori dal
+ * turno del conducente il master lo muove comunque: lo dice `nota`.
+ * @param stato src/veicoli-registro.js → statoMovimento(rec, scontro, diTurno, { fuoriTurno: true })
+ * @returns {{ motivo: string|null, nota: string|null }}
+ */
+export function veicoloFermo(rec, scontro, stato) {
+  const libero = 'oppure usa Libero (Maiusc)';
+  if (!scontro) return { motivo: `Nessuno scontro aperto: il veicolo si muove all’Iniziativa del conducente; ${libero}`, nota: null };
+  if (!rec?.conducente) return { motivo: `Nessun conducente a bordo: fai salire un PG come conducente, ${libero}`, nota: null };
+  if (!stato?.conducente) return { motivo: `${rec.conducente.nome} (il conducente) non è nello scontro: fallo entrare o cambia conducente, ${libero}`, nota: null };
+  if (stato.mosso) return { motivo: `${stato.motivo}: un solo movimento per Round (A.105); ${libero}`, nota: null };
+  // ritocchi del 08/10: andatura Fermo (0 Q), la causa del veicolo che «non si muove»
+  if (stato.fermo) return { motivo: stato.motivo.replace(/^andatura/, 'Andatura'), nota: null, andatura: true };
+  return { motivo: null, nota: stato.fuori ? `Fuori dal turno di ${rec.conducente.nome}: il master lo muove comunque, una volta per Round` : null };
+}
+
 /** Chiavi dei partecipanti a bordo di qualche veicolo (hanno un token, anche se non in mappa). */
 export const chiaviABordo = (scena) => new Set(scena.token.flatMap((t) => aBordo(t).map((p) => chiaveRif(p.rif))));
 
@@ -157,6 +214,7 @@ export function veicoloDi(scena, chiave) {
 
 /** Errore nel formato di direzione e passeggeri di un token, o null (src/mappa/scena.js → validaScena). */
 export function erroreBordo(t, D) {
+  { const e = erroreForma(t); if (e) return e; }
   if (t.direzione !== undefined && (t.rif.tipo !== 'veicolo' || !DIREZIONI.includes(t.direzione))) return `direzione: ${DIREZIONI.join(', ')}, solo per i veicoli`;
   if (t.passeggeri === undefined) return null;
   if (t.rif.tipo !== 'veicolo' || !Array.isArray(t.passeggeri)) return 'passeggeri: elenco, solo per i veicoli';

@@ -12,12 +12,26 @@
 // - Le regole delle durate (dal Round R alla fine del Round R + N, il Round di attivazione non conta) stanno in
 //   data/regole.json → durate_round (Giocatore §8.9.1, §5.18; Magia, «Scadenze e interruzione degli effetti»).
 import { tecnicaDi, fineDurata } from './tecniche.js';
+import { diTurno as chiDiTurno } from './scontro.js';
 
 export { fineDurata };
 
 const lista = (v) => (Array.isArray(v) ? v : []);
 const round = (sessione) => (Number.isInteger(sessione?.round) && sessione.round >= 1 ? sessione.round : 1);
 
+
+/** Indirizzo della vista tablet per muovere il PG (08/10): scena dello scontro, PG già scelto, ritorno alla scheda. */
+export const urlMuovi = (chiave, scontro, scheda) => `#/mappa/giocatori?${new URLSearchParams({ pg: chiave, scontro, scheda })}`;
+
+/**
+ * «Muovi il PG sulla mappa» nella scheda (08/10): attivo solo al turno del PG; fuori turno il motivo con chi è di turno.
+ * @param coll collegamentoScontro(…) o null
+ * @returns null (nessuno scontro) oppure { attivo, testo }
+ */
+export function pulsanteMuovi(coll) {
+  if (!coll) return null;
+  return coll.diTurno ? { attivo: true, testo: 'È il tuo turno' } : { attivo: false, testo: `Non è il tuo turno · tocca a ${coll.turnoDi ?? '…'}` };
+}
 
 /** Round che restano a una durata che vale fino alla fine del Round `al`, visto dal Round `r` (compreso). */
 export const roundRimasti = (al, r) => (al === null || al === undefined ? null : Math.max(0, al - r + 1));
@@ -76,6 +90,7 @@ export const idPg = (chiave) => `pg:${chiave}`;
  * durate: gli Stati del PG registrati nella plancia; periodici: gli Stati che gli togliono PV a ogni Round, con
  * il valore e la fonte (§5.15, §5.18), così la scheda mostra «Sanguinamento · 1 PV per Round»; effetti: gli
  * incantesimi lanciati dai nemici su di lui (scontro → effetti); partecipanti: gli altri, per i bersagli di un lancio.
+ * 08/10 (tablet dei giocatori): diTurno, vero se è il turno del PG; turnoDi, il nome di chi è di turno.
  */
 export function collegamentoScontro(scontro, chiave) {
   if (!scontro || scontro.stato !== 'aperto' || !chiave) return null;
@@ -91,7 +106,8 @@ export function collegamentoScontro(scontro, chiave) {
   // ritocchi del 07/10: dei nemici anche lato, PV, Difese e AR, per il bersaglio di «Attacca!» dalla scheda
   const partecipanti = lista(scontro.partecipanti).filter((p) => p.id !== id).map((p) => ({ id: p.id, nome: p.nome, tipo: p.tipo,
     ...(p.tipo === 'nemico' ? { lato: p.lato, pv: { attuali: p.pv?.attuali, massimo: p.pv?.massimo }, difese: p.scheda?.difese ?? null, ar: p.scheda?.ar?.totale ?? null } : {}) }));
-  return { id: scontro.id, nome: scontro.nome, round: scontro.round, durate, periodici, effetti, partecipanti };
+  const t = chiDiTurno(scontro);
+  return { id: scontro.id, nome: scontro.nome, round: scontro.round, durate, periodici, effetti, partecipanti, diTurno: t?.id === id, turnoDi: t?.nome ?? null };
 }
 
 /** Incantesimi lanciati nello scontro (dai nemici) che hanno per bersaglio il partecipante `id`, ancora in corso. */

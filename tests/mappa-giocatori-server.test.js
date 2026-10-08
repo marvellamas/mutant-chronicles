@@ -84,25 +84,70 @@ test('firma: se nulla cambia la risposta è minima', async () => {
   assert.equal(altra.scena.id, 'cripta');
 });
 
-test('scelta del master: un\'altra scena, poi di nuovo automatica', async () => {
-  const metti = (scena) => fetch(`${base}/api/vista-giocatori/scelta`, { method: 'PUT', body: JSON.stringify({ scena }) });
+// 08/10 (test di Marcello con un tablet vero): una regola sola per secondo schermo e tablet (server.mjs → scenaInGioco)
+const metti = (scena) => fetch(`${base}/api/vista-giocatori/scelta`, { method: 'PUT', body: JSON.stringify({ scena }) });
+const SCONTRO_FILE = () => join(c.scontri, 'scontro-prova.json');
+const scontroCom = () => JSON.parse(readFileSync(SCONTRO_FILE(), 'utf8'));
+
+test('scena dello scontro aperto: vince anche su una scena segnata dal master (la causa della mappa sbagliata)', async () => {
   assert.equal((await metti('manca')).status, 404);
   assert.equal((await metti('Non Valida')).status, 400);
   assert.equal((await metti('altra')).status, 200);
-  assert.deepEqual(await (await fetch(`${base}/api/vista-giocatori/scelta`)).json(), { scena: 'altra' });
   const v = await leggi();
+  assert.equal(v.scena.id, 'cripta', 'con lo scontro aperto la sua scena, non quella segnata');
   assert.equal(v.scelta, 'altra');
-  assert.equal(v.scena.id, 'altra');
-  assert.deepEqual(v.scena.turno, { round: null, nome: null }, 'scena senza scontro: niente Round');
+  assert.deepEqual(await (await fetch(`${base}/api/vista-giocatori/scelta`)).json(), { scena: 'altra', inGioco: 'cripta' });
   assert.equal((await metti(null)).status, 200);
-  assert.equal((await leggi()).scena.id, 'cripta');
 });
 
-test('senza scontro aperto né scelta: nessuna scena, con il motivo', async () => {
-  const s = JSON.parse(readFileSync(join(c.scontri, 'scontro-prova.json'), 'utf8'));
-  writeFileSync(join(c.scontri, 'scontro-prova.json'), JSON.stringify({ ...s, stato: 'chiuso' }));
-  const v = await leggi();
-  assert.equal(v.scena, null);
-  assert.match(v.motivo, /Nessuno scontro aperto/);
-  writeFileSync(join(c.scontri, 'scontro-prova.json'), JSON.stringify(s));
+test('nessuno scontro aperto: la scena segnata; senza segno nessuna mappa, con «Il master non ha ancora aperto una mappa»', async () => {
+  const s = scontroCom();
+  writeFileSync(SCONTRO_FILE(), JSON.stringify({ ...s, stato: 'chiuso' }));
+  try {
+    const nulla = await leggi();
+    assert.equal(nulla.scena, null);
+    assert.equal(nulla.motivo, 'Il master non ha ancora aperto una mappa.');
+    assert.equal((await metti('altra')).status, 200);
+    const v = await leggi();
+    assert.equal(v.scena.id, 'altra');
+    assert.deepEqual(v.scena.turno, { round: null, nome: null }, 'scena senza scontro: niente Round');
+  } finally {
+    await metti(null);
+    writeFileSync(SCONTRO_FILE(), JSON.stringify(s));
+  }
+});
+
+test('più scontri aperti: la scena segnata; con ?scontro= quella di quello scontro', async () => {
+  const s = scontroCom();
+  writeFileSync(join(c.scontri, 'secondo.json'), JSON.stringify({ ...s, id: 'secondo', nome: 'Secondo' }));
+  try {
+    assert.equal((await leggi()).scena, null, 'due scontri aperti e nessun segno: nessuna scena a caso');
+    assert.equal((await leggi('?scontro=scontro-prova')).scena.id, 'cripta');
+    await metti('altra');
+    assert.equal((await leggi()).scena.id, 'altra');
+  } finally {
+    await metti(null);
+    rmSync(join(c.scontri, 'secondo.json'));
+  }
+});
+
+test('«?» al posto dei PG: con lo scontro finito (anche in archivio) i token hanno ancora nome e immagine', async () => {
+  const s = scontroCom();
+  mkdirSync(join(c.scontri, 'archivio'), { recursive: true });
+  writeFileSync(join(c.scontri, 'archivio', 'scontro-prova.json'), JSON.stringify({ ...s, stato: 'chiuso' }));
+  rmSync(SCONTRO_FILE());
+  try {
+    await metti('cripta');
+    const v = await leggi();
+    assert.equal(v.scena.id, 'cripta');
+    const akira = v.scena.token.find((t) => t.id === 't-akira');
+    assert.equal(akira.info.nome, 'Akira');
+    assert.match(akira.info.immagine, /^api\/ritratti\/Akira/);
+    assert.equal(akira.info.diTurno, false);
+    assert.ok(v.scena.token.every((t) => t.info), 'nessun token senza nome');
+  } finally {
+    await metti(null);
+    writeFileSync(SCONTRO_FILE(), JSON.stringify(s));
+    rmSync(join(c.scontri, 'archivio'), { recursive: true, force: true });
+  }
 });

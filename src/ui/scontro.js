@@ -11,6 +11,7 @@ import {
   nuovoScontro, aggiungiPartecipante, attaccoManuale, togliPartecipante, registraTiro, ordineIniziativa, spostaAlleato,
   diTurno, registraDurata, avanti, chiudi, dadoIniziativa, durataStato, aggiungiNemici,
 } from '../scontro.js';
+import { stessaChiave } from '../veicoli-registro.js';
 
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
 /** Tiro dal vivo: il valore scritto, controllato sull'intervallo del dado (src/tiri.js). */
@@ -54,8 +55,10 @@ export const idNuovo = (d = new Date()) => {
  * @param crea (scontro) salva uno scontro nuovo
  * @param parte 'tutto' (plancia a pagina intera), 'iniziativa' (Round, «Avanti», ordine, da tirare) o 'gestione'
  *   (aggiungi nemici e partecipanti, durate degli Stati, registro): i gruppi della barra della mappa (ritocchi del 06/10)
+ * @param tablet (fase 2, lotto 7) { collegati: [chiavi dei PG con il tablet collegato], chiama(p) }: accanto a ogni PG
+ *   l'indicatore del tablet e, se è collegato, il campanellino
  */
-export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaColpo = null, attacca = null, indietro: indietroUi = null, reimposta = null, centra = null, chiediIniziativa: chiediUi = null }, parte = 'tutto') {
+export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaColpo = null, attacca = null, indietro: indietroUi = null, reimposta = null, centra = null, chiediIniziativa: chiediUi = null, tablet = null }, parte = 'tutto') {
   const s = st.scontro;
   const dado = dadoIniziativa(ctx.dati);
   if (!s) {
@@ -88,6 +91,13 @@ export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaCol
       : h('span', {}, numero(p.base));
   };
   const origine = (t) => (t.origine === 'app' ? 'app' : 'dal vivo');
+  // fase 2, lotto 7: 📱 pieno se il tablet del PG è collegato (scheda o mappa aperta), sbiadito se no; «🔔 Chiedi di muovere»
+  const statoTablet = (p) => {
+    const c = (tablet.collegati ?? []).some((k) => stessaChiave(k, p.chiave));
+    return h('span', { class: 'tablet-pg' },
+      h('span', { class: `tablet-indicatore ${c ? 'collegato' : 'scollegato'}`, title: c ? `Tablet di ${p.nome} collegato` : `Tablet di ${p.nome} non collegato (pagina chiusa o in secondo piano)`, role: 'img', 'aria-label': c ? 'tablet collegato' : 'tablet non collegato' }, '📱'),
+      c ? h('button', { type: 'button', class: 'btn btn-piccolo btn-campanello', title: `Chiedi a ${p.nome} di muovere: sul suo tablet (scheda o mappa) l’avviso grande con suono, vibrazione e «Muovi il PG sulla mappa»`, onclick: () => tablet.chiama(p) }, '🔔 Chiedi di muovere') : null);
+  };
   const riga = (p, i) => {
     const inSpareggio = spareggi.some((g) => g.includes(p.id));
     const gruppoAlleati = scelteAlleati.find((g) => g.includes(p.id));
@@ -105,6 +115,7 @@ export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaCol
         // ritocchi del 07/10: ⌖ centra la mappa sul token e lo sceglie
         centra ? h('button', { type: 'button', class: 'btn btn-piccolo btn-centra', title: `Centra la mappa su ${p.nome} e sceglie il suo token`, 'aria-label': `Centra su ${p.nome}`, onclick: () => centra(p) }, '⌖') : null,
         p.provvisorio ? h('span', { class: 'etichetta' }, 'provvisorio') : null,
+        p.tipo === 'pg' && tablet ? statoTablet(p) : null,
         p.lato === 'avversario' || p.tipo === 'nemico' ? h('small', { class: 'nota nome-lato' }, ` ${p.lato}`) : null,
         p.tipo === 'nemico' ? h('small', { class: 'nota' }, ` · PV ${p.pv.attuali}/${p.pv.massimo}`) : null),
       h('td', {}, baseConProvenienza(p), ` + ${p.d10.valore}`, h('small', { class: 'nota' }, ` (${origine(p.d10)})`)),

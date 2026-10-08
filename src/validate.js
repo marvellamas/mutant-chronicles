@@ -3,7 +3,7 @@
 // Non lancia eccezioni: un file malformato produce errori, non un crash.
 import { TIPI as TIPI_EQUIP, STATI } from './equipaggiamento.js';
 import { FILE_MAPPA } from './mappa/scena.js';
-import { erroreMenu } from './mappa/menu.js';
+import { erroreMenu, erroreStrumenti } from './mappa/menu.js';
 
 // Invarianti strutturali dei manuali. I valori numerici "di gioco" stanno in regole.json;
 // qui restano solo le forme fisse descritte dai paragrafi citati.
@@ -2720,7 +2720,7 @@ function validaMappa(dati, err) {
   const AU = m.audio;
   if (!isOggetto(AU)) err(F, 'audio', 'oggetto mancante');
   else {
-    const NOTI = ['nuovo_round', 'attacco_opportunita', 'template_scaduto'];
+    const NOTI = ['nuovo_round', 'attacco_opportunita', 'template_scaduto', 'avviso_giocatore'];
     if (!isOggetto(AU.effetti)) err(F, 'audio.effetti', 'oggetto evento → file mancante');
     else for (const [k, v] of Object.entries(AU.effetti)) {
       if (!NOTI.includes(k)) err(F, `audio.effetti.${k}`, `evento sconosciuto (noti: ${NOTI.join(', ')})`);
@@ -2730,6 +2730,39 @@ function validaMappa(dati, err) {
     if (!Array.isArray(AU.musica?.formati) || !AU.musica.formati.length || AU.musica.formati.some((x) => !['mp3', 'ogg', 'wav', 'm4a', 'aac', 'opus', 'flac', 'webm'].includes(x))) err(F, 'audio.musica.formati', 'elenco di formati audio noti');
     for (const k of ['musica', 'effetti']) if (!(typeof AU.volume_predefinito?.[k] === 'number' && AU.volume_predefinito[k] >= 0 && AU.volume_predefinito[k] <= 1)) err(F, `audio.volume_predefinito.${k}`, 'numero da 0 a 1');
     if (typeof AU.giocatori_predefinito !== 'boolean') err(F, 'audio.giocatori_predefinito', 'true o false');
+  }
+  // token in volo (08/10, src/mappa/volo.js): icona, movimento del Giocatore §5.2.3, regole di area e linea di tiro
+  {
+    const VO = m.volo;
+    if (!isOggetto(VO)) err(F, 'volo', 'oggetto mancante');
+    else {
+      if (!/^img\/[\w./-]+\.(png|webp|svg)$/.test(VO.icona ?? '')) err(F, 'volo.icona', 'percorso di un’immagine in img/ (png, webp o svg)');
+      if (!(typeof VO.quota_icona === 'number' && VO.quota_icona > 0 && VO.quota_icona <= 1)) err(F, 'volo.quota_icona', 'numero da 0 a 1');
+      if (!isIntero(VO.quota_massima) || VO.quota_massima < 1) err(F, 'volo.quota_massima', 'intero da 1 in su');
+      for (const k of ['passo', 'corsa', 'scatto']) if (!isIntero(VO.movimento_predefinito?.[k]) || VO.movimento_predefinito[k] < 0) err(F, `volo.movimento_predefinito.${k}`, 'intero da 0 in su (Q)');
+      if (!isOggetto(VO.movimento)) err(F, 'volo.movimento', 'oggetto con le regole del movimento in volo');
+      else for (const [k, v] of Object.entries(VO.movimento)) if (!k.startsWith('_') && !(k in (m.movimento ?? {}))) err(F, `volo.movimento.${k}`, 'non è una regola di movimento (data/mappa.json → movimento)');
+      if (!isOggetto(VO.linea_di_tiro) || typeof VO.linea_di_tiro.ignora_token !== 'boolean' || !Array.isArray(VO.linea_di_tiro.coperture_annullate) || VO.linea_di_tiro.coperture_annullate.some((c) => !['leggera', 'media', 'totale'].includes(c))) err(F, 'volo.linea_di_tiro', '{ ignora_token: sì/no, coperture_annullate: leggera, media, totale }');
+      for (const k of ['visibile_oltre_nebbia', 'zoc_quota']) if (typeof VO[k] !== 'boolean') err(F, `volo.${k}`, 'true o false');
+    }
+  }
+  // veicoli ruotati (08/10, src/mappa/forma.js): passi di rotazione in gradi
+  {
+    const RV = m.token?.rotazione_veicoli;
+    for (const k of ['passo_gradi', 'passo_rapido_gradi']) if (!isIntero(RV?.[k]) || RV[k] < 1 || RV[k] > 180 || 360 % RV[k] !== 0) err(F, `token.rotazione_veicoli.${k}`, 'intero da 1 a 180 che divide 360 (gradi)');
+  }
+  // tablet dei giocatori (fase 2, lotto 7; src/mappa/tablet.js): movimento al turno o sempre, avviso «Tocca a te»
+  {
+    const T = m.tablet;
+    if (!isOggetto(T)) err(F, 'tablet', 'oggetto mancante');
+    else {
+      if (!['turno', 'sempre'].includes(T.movimento_predefinito)) err(F, 'tablet.movimento_predefinito', 'turno o sempre');
+      if (typeof T.avviso_turno_predefinito !== 'boolean') err(F, 'tablet.avviso_turno_predefinito', 'true o false');
+      if (!Array.isArray(T.vibrazione_ms) || T.vibrazione_ms.length > 10 || T.vibrazione_ms.some((x) => !isIntero(x) || x < 0 || x > 2000)) err(F, 'tablet.vibrazione_ms', 'elenco di al più 10 interi da 0 a 2000 (ms)');
+      if (!isIntero(T.avviso_durata_ms) || T.avviso_durata_ms < 1000) err(F, 'tablet.avviso_durata_ms', 'intero da 1000 in su (ms)');
+      if (!isIntero(T.collegato_s) || T.collegato_s < 2) err(F, 'tablet.collegato_s', 'intero da 2 in su (secondi)');
+      for (const k of ['testo_muovi', 'testo_turno']) if (typeof T[k] !== 'string' || !T[k].trim()) err(F, `tablet.${k}`, 'testo non vuoto ({nome} = il nome del PG)');
+    }
   }
   // «Indietro» nell'Iniziativa (07/10, src/scontro.js → indietro): quanti «Avanti» si possono annullare
   if (!isIntero(m.iniziativa?.indietro_max) || m.iniziativa.indietro_max < 1) err(F, 'iniziativa.indietro_max', 'intero da 1 in su');
@@ -2753,6 +2786,8 @@ function validaMappa(dati, err) {
   }
   // menu del clic destro (07/10, src/mappa/menu.js): gruppi e voci note, senza ripetizioni
   { const e = erroreMenu(m.menu); if (e) err(F, e.split(':')[0], e.slice(e.indexOf(':') + 2)); }
+  // menu «Strumenti» della barra (ritocchi del 08/10)
+  { const e = erroreStrumenti(m.strumenti); if (e) err(F, e.chiave, e.problema); }
   // zone di controllo (07/10, src/mappa/zoc.js; Giocatore §5.3)
   const Z = m.zoc;
   if (!isOggetto(Z)) err(F, 'zoc', 'oggetto mancante');

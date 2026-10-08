@@ -13,7 +13,7 @@
 // (server.mjs → migraVeicoliCartella) e all'apertura della scheda con il server (src/ui/app.js).
 // TODO(Davide) A.113: permessi (oggi il master può cambiare tutto, i PG i veicoli che vedono) e nome della struttura
 // («Corpo principale» come nel Manuale dei Veicoli) sono provvisori.
-import { normalizzaVeicoli, andaturaResidua } from './veicoli.js';
+import { normalizzaVeicoli, andaturaResidua, andaturaDi, eseguiCambioAndatura } from './veicoli.js';
 
 export const FORMATO_VEICOLO = 'mutant-veicolo';
 export const VERSIONE_VEICOLO = 1;
@@ -48,11 +48,13 @@ export function normalizzaRecord(r, dati, avvisi = []) {
   const [mezzo] = normalizzaVeicoli([r.mezzo], dati, avvisi);
   const { conducente: _c, gruppo: _g, ...resto } = mezzo ?? {};
   const mov = isOggetto(r.movimento) && testo(r.movimento.scontro) && Number.isInteger(r.movimento.round) ? { scontro: r.movimento.scontro, round: r.movimento.round, da: testo(r.movimento.da) } : null;
+  // ritocchi del 08/10: il cambio di andatura del Round (una fascia per AzM di conduzione, Veicoli §2.1)
+  const cambio = isOggetto(r.cambio) && testo(r.cambio.scontro) && Number.isInteger(r.cambio.round) ? { scontro: r.cambio.scontro, round: r.cambio.round } : null;
   return {
     formato: FORMATO_VEICOLO, versione: VERSIONE_VEICOLO, id: r.id, revisione: Number.isInteger(r.revisione) ? r.revisione : 0, aggiornato: r.aggiornato ?? null,
     proprietario: r.proprietario?.tipo === 'gruppo' ? { tipo: 'gruppo' } : { tipo: 'pg', ...persona(r.proprietario) ?? {}, ...(testo(r.proprietario?.pg) ? { pg: r.proprietario.pg } : {}) },
     conducente: persona(r.conducente), mitragliere: persona(r.mitragliere),
-    mezzo: { ...resto, uid: r.id }, movimento: mov,
+    mezzo: { ...resto, uid: r.id }, movimento: mov, ...(cambio ? { cambio } : {}),
   };
 }
 
@@ -134,22 +136,51 @@ export const partecipanteConducente = (rec, scontro) => (rec.conducente ? (scont
  * Il mezzo non ha Iniziativa né Azioni: si muove all'Iniziativa del conducente, con le sue Azioni, una volta per
  * Round. Il cambio di conducente non concede un secondo movimento nello stesso Round.
  * @param diTurno il partecipante di turno (src/scontro.js → diTurno)
- * @returns {{ mosso: boolean, puo: boolean, motivo: string|null, conducente }}
+ * @param o { fuoriTurno }: la mappa (ritocchi del 08/10) lascia muovere il mezzo al master anche fuori dal turno del
+ *   conducente, come i token; resta una volta per Round. `fuori`: vero se non è il turno del conducente.
+ *   { dati }: con i dati, l'andatura a 0 Q (Fermo) ferma il mezzo (`fermo`), con il motivo
+ * @returns {{ mosso: boolean, puo: boolean, motivo: string|null, conducente, fuori: boolean, fermo: boolean }}
  */
-export function statoMovimento(rec, scontro, diTurno) {
+export function statoMovimento(rec, scontro, diTurno, { fuoriTurno = false, dati = null } = {}) {
   const mosso = Boolean(rec.movimento && scontro && rec.movimento.scontro === scontro.id && rec.movimento.round === scontro.round);
   const c = partecipanteConducente(rec, scontro);
   const motivo = !scontro ? 'nessuno scontro aperto'
     : !rec.conducente ? 'nessun conducente'
       : !c ? `${rec.conducente.nome} non è nello scontro`
         : mosso ? `già mosso nel Round ${scontro.round}${rec.movimento.da ? ` (con ${rec.movimento.da})` : ''}`
-          : diTurno?.id !== c.id ? `si muove all’Iniziativa di ${rec.conducente.nome}` : null;
-  return { mosso, puo: !motivo, motivo, conducente: c };
+          : diTurno?.id !== c.id && !fuoriTurno ? `si muove all’Iniziativa di ${rec.conducente.nome}` : null;
+  // ritocchi del 08/10: con l'andatura Fermo (moltiplicatore 0, Veicoli §2.1) il mezzo non percorre nulla
+  const a = dati ? andaturaDi(rec.mezzo?.andatura ?? 'controllata', dati) : null;
+  const fermo = Boolean(a && a.moltiplicatore === 0);
+  const motivoFinale = motivo ?? (fermo ? `andatura ${a.nome}: scegli un’andatura per muovere ${rec.mezzo?.nome ?? 'il veicolo'}` : null);
+  return { mosso, puo: !motivoFinale, motivo: motivoFinale, conducente: c, fuori: Boolean(c && diTurno?.id !== c.id), fermo };
+}
+
+/**
+ * Andatura scelta dalla mappa o dalla plancia (ritocchi del 08/10; Veicoli §2.1, A.104). Fuori dallo scontro diventa
+ * subito quella attuale. Nello scontro «con una normale AzM di conduzione si cambia al massimo una fascia»: l'attuale
+ * avanza di una fascia verso quella scelta, che resta come «andatura scelta» se è più lontana; un secondo cambio nello
+ * stesso Round registra solo la scelta per il Round dopo.
+ * @returns {{ rec, testo }}
+ */
+export function scegliAndatura(rec, id, scontro, dati) {
+  const A = dati.veicoli.andature.elenco;
+  const nome = (x) => A.find((a) => a.id === x)?.nome ?? x;
+  if (!A.some((a) => a.id === id)) throw new Error(`andatura sconosciuta: ${id}`);
+  const m = rec.mezzo;
+  const v = m?.nome ?? 'Il veicolo';
+  if (!scontro) return { rec: { ...rec, mezzo: { ...m, andatura: id, andatura_scelta: null } }, testo: `${v}: andatura ${nome(id)}.` };
+  if (id === m.andatura) return { rec: { ...rec, mezzo: { ...m, andatura_scelta: null } }, testo: `${v}: resta ${nome(id)}.` };
+  const giaCambiata = rec.cambio?.scontro === scontro.id && rec.cambio?.round === scontro.round;
+  if (giaCambiata) return { rec: { ...rec, mezzo: { ...m, andatura_scelta: id } }, testo: `${v}: andatura già cambiata in questo Round (una fascia per AzM, §2.1); ${nome(id)} scelta per il prossimo Round.` };
+  const nuovo = eseguiCambioAndatura({ ...m, andatura_scelta: id }, dati);
+  const resta = nuovo.andatura_scelta ? ` ${nome(nuovo.andatura_scelta)} resta scelta per i prossimi Round (una fascia per Round, §2.1).` : '';
+  return { rec: { ...rec, mezzo: nuovo, cambio: { scontro: scontro.id, round: scontro.round } }, testo: `${v}: andatura ${nome(nuovo.andatura)} (1 AzM di conduzione).${resta}` };
 }
 
 /** Il movimento del Round, all'Iniziativa del conducente. Errore se non si può. */
-export function muoviVeicolo(rec, scontro, diTurno) {
-  const st = statoMovimento(rec, scontro, diTurno);
+export function muoviVeicolo(rec, scontro, diTurno, opzioni = {}) {
+  const st = statoMovimento(rec, scontro, diTurno, opzioni);
   if (!st.puo) throw new Error(st.motivo);
   return { ...rec, movimento: { scontro: scontro.id, round: scontro.round, da: rec.conducente.nome } };
 }

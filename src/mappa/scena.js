@@ -22,10 +22,11 @@
 //   movimenti: [ … ], annulla: [ … ],                          movimenti del Round e azioni del master (lotto 5)
 //   turni?: { tutti, token: { id: n } },                       «Nuovo turno» senza scontro aperto (src/mappa/annulla.js)
 //   colori?: { pg: { chiave: id }, nemici: { tipo: id } },     colori dei bordi dei token (src/mappa/colori.js)
-//   bloccaGiocatori?: true,                                    i giocatori non muovono i loro token (fase 2, tab BattleMap)
+//   bloccaGiocatori?: true,                                    i tablet dei giocatori vedono ma non muovono (fase 2, lotto 7)
 //   pvNemiciGiocatori?: true,                                  i giocatori vedono la barretta dei PV dei nemici (07/10)
 //   movimentoGiocatori?: false,                                 diretta del movimento nella vista giocatori spenta (07/10)
-//   zocGiocatori?: false }                                      ZoC nella diretta spente (07/10)
+//   zocGiocatori?: false,                                      ZoC nella diretta spente (07/10)
+//   tablet?: { movimento: turno | sempre, avvisoTurno } }      tablet dei giocatori (fase 2, lotto 7; src/mappa/tablet.js)
 import { nuovaMaschera, inBase64, mascheraValida } from './celle.js';
 import { tokenDentro } from './token.js';
 import { erroreTemplate } from './template.js';
@@ -33,6 +34,7 @@ import { errorePorta } from './porte.js';
 import { erroreIniziale } from './iniziale.js';
 import { erroreLuce, erroreLuceToken } from './luce.js';
 import { erroreBordo } from './veicoli-mappa.js';
+import { erroreVolo } from './volo.js';
 
 export const ID_SCENA = /^[a-z0-9-]{1,60}$/;
 /** Nome dei file in mappe/: lo sceglie il server (nome ridotto + impronta del contenuto). */
@@ -115,6 +117,8 @@ export function riassuntoScena(s, mtime = null) {
     colonne: s.griglia?.colonne, righe: s.griglia?.righe,
     token: s.token?.length ?? 0,
     collegamento: s.collegamento ?? null,
+    // ritocchi del 08/10: «Prepara scontro» dice se la posizione iniziale è salvata
+    iniziale: s.iniziale?.quando ?? null,
     ...(mtime !== null ? { mtime } : {}),
   };
 }
@@ -186,6 +190,8 @@ export function validaScena(s, dati) {
     { const e = erroreLuceToken(t.luce, dati); if (e) return `${k}.${e}`; }
     // veicoli (fase 2, lotto 5): muso e chi è a bordo; un partecipante a bordo non ha anche un token in mappa
     { const e = erroreBordo(t, D); if (e) return `${k}.${e}`; }
+    // 08/10: token in volo (src/mappa/volo.js)
+    { const e = erroreVolo(t, D); if (e) return `${k}.${e}`; }
     for (const p of t.passeggeri ?? []) {
       if (rifPartecipanti.has(p.rif.id)) return `${k}.passeggeri: il partecipante «${p.rif.id}» ha già un token`;
       rifPartecipanti.add(p.rif.id);
@@ -258,6 +264,13 @@ export function validaScena(s, dati) {
   if (s.bloccaGiocatori !== undefined && typeof s.bloccaGiocatori !== 'boolean') return 'bloccaGiocatori: vero o falso';
   if (s.pvNemiciGiocatori !== undefined && typeof s.pvNemiciGiocatori !== 'boolean') return 'pvNemiciGiocatori: vero o falso';
   for (const k of ['movimentoGiocatori', 'zocGiocatori']) if (s[k] !== undefined && typeof s[k] !== 'boolean') return `${k}: vero o falso`;
+  // fase 2, lotto 7: tablet dei giocatori (src/mappa/tablet.js)
+  if (s.tablet !== undefined) {
+    const t = s.tablet;
+    if (!isOggetto(t)) return 'tablet: { movimento, avvisoTurno } atteso';
+    if (t.movimento !== undefined && !['turno', 'sempre'].includes(t.movimento)) return 'tablet.movimento: turno o sempre';
+    if (t.avvisoTurno !== undefined && typeof t.avvisoTurno !== 'boolean') return 'tablet.avvisoTurno: vero o falso';
+  }
   if (s.colori !== undefined) {
     if (!isOggetto(s.colori) || !isOggetto(s.colori.pg) || !isOggetto(s.colori.nemici)) return 'colori: { pg, nemici } attesi';
     for (const [k, tav] of [['pg', D.colori.pg], ['nemici', D.colori.nemici]]) {

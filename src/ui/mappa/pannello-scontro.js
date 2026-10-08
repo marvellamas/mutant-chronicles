@@ -70,6 +70,11 @@ export function sezioneToken(t, p, dati, a) {
     h('h2', {}, p ? pallino(p.lato) : null, ' ', p?.nome ?? t.nome ?? t.id),
     h('p', { class: 'nota' }, dettagli.join(' · ')),
     p?.stati?.length ? h('p', { class: 'mappa-stati' }, p.stati.map((s) => h('span', { class: 'etichetta' }, s.nome))) : null,
+    // 08/10: «In volo» (src/mappa/volo.js), con la quota come etichetta
+    a.volo ? h('div', { class: 'mappa-azioni-token' },
+      h('button', { type: 'button', role: 'switch', 'aria-checked': String(a.volo.attivo), class: `interruttore-mappa${a.volo.attivo ? ' acceso' : ''}`, title: a.volo.sa ? `Sa volare: Passo in volo ${a.volo.passo} Q` : 'Il volo lo concede una capacità, un Incantesimo o un Artefatto (Giocatore §5.2.3)', onclick: () => a.volo.cambia() },
+        h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `In volo: ${a.volo.attivo ? 'sì' : 'no'}${a.volo.sa && !a.volo.attivo ? ' (sa volare)' : ''}`),
+      a.volo.attivo ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => a.volo.cambiaQuota() }, a.volo.quota ? `Quota ${a.volo.quota} Q…` : 'Quota…') : null) : null,
     creatura ? h('label', { class: 'mappa-campo' }, h('span', {}, 'Ingombro'),
       h('select', { onchange: (e) => a.ingombro(Number(e.target.value)) },
         dati.mappa.token.ingombri_ammessi.map((n) => h('option', { value: String(n), selected: t.ingombro === n }, `${n} × ${n} Q${n === p?.ingombro ? ' (dalla Taglia)' : ''}`))),
@@ -77,14 +82,22 @@ export function sezioneToken(t, p, dati, a) {
       : h('p', { class: 'nota' }, `Ingombro ${testoIngombro(t.ingombro)} dal profilo del veicolo.`),
     // fase 2, lotto 5: girare il mezzo e chi è a bordo (conducente e passeggeri), con «Scendi» e la linea di tiro
     creatura ? null : h('div', { class: 'mappa-azioni-token' },
-      h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Gira il veicolo di 90° in senso antiorario (←)', onclick: () => a.ruota(-1) }, '↺ Ruota'),
-      h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Gira il veicolo di 90° in senso orario (→)', onclick: () => a.ruota(1) }, 'Ruota ↻')),
+      // 08/10: orientamento libero, a passi di 10° (← →) o 45° (Maiusc+← →)
+      h('button', { type: 'button', class: 'btn btn-piccolo', title: `Gira il veicolo di ${a.passiRotazione?.[1] ?? 45}° in senso antiorario (Maiusc+←)`, onclick: () => a.ruota(-1, true) }, `↺ ${a.passiRotazione?.[1] ?? 45}°`),
+      h('button', { type: 'button', class: 'btn btn-piccolo', title: `Gira il veicolo di ${a.passiRotazione?.[0] ?? 10}° in senso antiorario (←)`, onclick: () => a.ruota(-1) }, `↺ ${a.passiRotazione?.[0] ?? 10}°`),
+      a.angolo !== null && a.angolo !== undefined ? h('span', { class: 'nota', title: 'Direzione del muso: 0° in alto, in senso orario' }, ` ${a.angolo}° `) : null,
+      h('button', { type: 'button', class: 'btn btn-piccolo', title: `Gira il veicolo di ${a.passiRotazione?.[0] ?? 10}° in senso orario (→)`, onclick: () => a.ruota(1) }, `${a.passiRotazione?.[0] ?? 10}° ↻`),
+      h('button', { type: 'button', class: 'btn btn-piccolo', title: `Gira il veicolo di ${a.passiRotazione?.[1] ?? 45}° in senso orario (Maiusc+→)`, onclick: () => a.ruota(1, true) }, `${a.passiRotazione?.[1] ?? 45}° ↻`)),
     creatura ? null : h('div', { class: 'mappa-a-bordo' },
       h('h3', {}, `A bordo (${a.aBordo.length}${p?.posti ? ` su ${p.posti.conducente + p.posti.passeggeri} posti` : ''})`),
-      a.aBordo.length ? h('ul', {}, a.aBordo.map((x) => h('li', {}, h('span', {}, x.nome, x.ruolo === 'conducente' ? h('small', { class: 'nota' }, ' · conducente') : null),
-        ' ', h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Scegli un quadretto libero accanto al veicolo', onclick: () => a.scendi(x.id) }, 'Scendi…'),
-        ' ', h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Linea di tiro dal veicolo (dal suo quadretto più favorevole)', onclick: () => a.lineaPasseggero(x.id) }, 'Linea di tiro'))))
-        : h('p', { class: 'nota' }, 'Nessuno: clic destro su un PG o un nemico accanto al veicolo → «Sali».')),
+      // ritocchi del 08/10: chi è a bordo, poi le discese tutte insieme, poi le linee di tiro tutte insieme
+      a.aBordo.length ? [
+        h('ul', {}, a.aBordo.map((x) => h('li', {}, x.nome, x.ruolo === 'conducente' ? h('small', { class: 'nota' }, ' · conducente') : null))),
+        h('h4', {}, 'Scendi'),
+        h('div', { class: 'mappa-azioni-token' }, a.aBordo.map((x) => h('button', { type: 'button', class: 'btn btn-piccolo', title: `${x.nome} scende: poi un clic su un quadretto libero accanto al veicolo`, onclick: () => a.scendi(x.id) }, `${x.nome}…`))),
+        h('h4', {}, 'Linea di tiro'),
+        h('div', { class: 'mappa-azioni-token' }, a.aBordo.map((x) => h('button', { type: 'button', class: 'btn btn-piccolo', title: `Linea di tiro di ${x.nome} dal veicolo (dal suo quadretto più favorevole)`, onclick: () => a.lineaPasseggero(x.id) }, x.nome))),
+      ] : h('p', { class: 'nota' }, 'Nessuno: clic destro su un PG o un nemico accanto al veicolo → «Sali».')),
     sezioneMovimento(a.mov, a),
     h('div', { class: 'mappa-azioni-token' },
       h('button', { type: 'button', class: 'btn btn-piccolo', title: t.nascosto ? 'I giocatori lo vedranno' : 'Solo il master lo vede', onclick: a.nascondi }, t.nascosto ? 'Mostra' : 'Nascondi'),
@@ -132,6 +145,7 @@ function sezioneMovimento(m, a) {
     mov ? h('button', { type: 'button', role: 'switch', 'aria-checked': String(!!m.mostraZoc), class: `interruttore-mappa${m.mostraZoc ? ' acceso' : ''}`, title: 'Zone di controllo degli avversari (tasto Z): uscendone si provoca un Attacco di Opportunità (Giocatore §5.3)', onclick: a.mostraZoc },
       h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `Mostra ZoC: ${m.mostraZoc ? 'sì' : 'no'}`) : null,
     h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Area raggiungibile' },
+      m.veicolo && a.rigaAndature ? a.rigaAndature() : null,
       mov && !m.veicolo ? fasce.map(([testo, n, v, f]) => h('button', {
         type: 'button', class: `btn btn-piccolo fascia-${n}${m.fascia === n ? ' scelto' : ''}`, 'aria-pressed': String(m.fascia === n),
         disabled: !Number.isFinite(v) || spenta(f),

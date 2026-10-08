@@ -8,12 +8,39 @@
 
 /** Gli id delle voci che la pagina sa costruire, per contesto (il validatore controlla data/mappa.json → menu). */
 export const VOCI_MENU = {
-  token: ['passo', 'corsa', 'scatto', 'libero', 'annulla_movimento', 'nuovo_turno', 'attacca', 'porta_token', 'sali', 'ruota_veicolo', 'a_bordo', 'linea', 'area', 'zoc', 'template_qui', 'mini_scheda', 'scheda_completa', 'nascondi', 'luce_token', 'colore_bordo', 'togli_token', 'selezione_token'],
+  token: ['passo', 'corsa', 'scatto', 'libero', 'annulla_movimento', 'nuovo_turno', 'in_volo', 'quota_volo', 'attacca', 'porta_token', 'andature', 'sali', 'ruota_veicolo', 'scendi_bordo', 'linea_bordo', 'linea', 'area', 'zoc', 'template_qui', 'mini_scheda', 'scheda_completa', 'nascondi', 'luce_token', 'colore_bordo', 'togli_token', 'selezione_token'],
   porta: ['porta_token', 'apri_chiudi', 'blocca', 'ruota', 'segreta', 'togli_porta'],
   template: ['sposta_template', 'nascondi_template', 'togli_template'],
   mappa: ['template_qui', 'linea_qui', 'seleziona_pg', 'seleziona_nemici', 'seleziona_tutti', 'annulla_selezione'],
 };
 export const CONTESTI_MENU = Object.keys(VOCI_MENU);
+
+/** Le voci del menu «Strumenti» della barra in alto (ritocchi del 08/10; data/mappa.json → strumenti). */
+export const VOCI_STRUMENTI = [
+  'immagine', 'griglia', 'muri', 'porte', 'luci', 'nebbia', 'nebbia_automatica',
+  'scene', 'collegamento', 'salva_iniziale', 'ripristina_iniziale',
+  'linea', 'dettaglio_linea', 'template', 'mostra_area', 'mostra_zoc', 'seleziona_pg', 'seleziona_nemici', 'seleziona_tutti',
+  'mostra_giocatori', 'vista_giocatori', 'adatta_giocatori', 'pv_nemici', 'sovrapposizioni_giocatori', 'suoni_giocatori', 'blocco_giocatori',
+  'movimento_tablet', 'avviso_turno_tablet', 'collega_tablet',
+  'musica', 'muto', 'cancella_temporanei', 'cancella_tutti',
+];
+
+/** Problema nei dati del menu «Strumenti» (gruppi con titolo, icona e voci note, senza ripetizioni), o null. */
+export function erroreStrumenti(S) {
+  if (!S || !Array.isArray(S.gruppi) || !S.gruppi.length) return { chiave: 'strumenti.gruppi', problema: 'elenco dei gruppi mancante' };
+  const viste = new Set();
+  for (const [i, g] of S.gruppi.entries()) {
+    if (typeof g?.titolo !== 'string' || !g.titolo.trim()) return { chiave: `strumenti.gruppi[${i}].titolo`, problema: 'titolo mancante' };
+    if (typeof g.icona !== 'string' || !g.icona.trim()) return { chiave: `strumenti.gruppi[${i}].icona`, problema: 'icona mancante' };
+    if (!Array.isArray(g.voci) || !g.voci.length) return { chiave: `strumenti.gruppi[${i}].voci`, problema: 'nessuna voce' };
+    for (const v of g.voci) {
+      if (!VOCI_STRUMENTI.includes(v)) return { chiave: `strumenti.gruppi[${i}].voci`, problema: `voce sconosciuta «${v}»` };
+      if (viste.has(v)) return { chiave: `strumenti.gruppi[${i}].voci`, problema: `«${v}» ripetuta` };
+      viste.add(v);
+    }
+  }
+  return null;
+}
 
 const chiave = (v) => v.chiave ?? v.testo;
 const elenco = (v) => (v === null || v === undefined ? [] : Array.isArray(v) ? v : [v]);

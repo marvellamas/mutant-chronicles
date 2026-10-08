@@ -56,6 +56,8 @@ function pezzoPg(id, chiave, nomeScontro, lato, viste) {
     chiave: chiaveRif({ tipo: 'partecipante', id }), rif: { tipo: 'partecipante', id }, tipo: 'pg', pg: chiave,
     nome: v?.nome ?? nomeScontro ?? chiave, lato: lato === 'avversario' ? 'avversario' : 'pg', ingombro: 1,
     iniziali: iniziali(v?.nome ?? nomeScontro ?? chiave), ritratto: v?.ritratto ?? null, pv,
+    // fase 2, lotto 7: i PM per la mini-scheda del tablet del giocatore
+    pm: v?.completa ? v.pm ?? null : null,
     aZero: pv ? pv.attuali <= 0 : false, stati: v?.completa ? v.stati : [], ferite: v?.completa ? v.ferite?.nome ?? null : null,
     // lotto 5: Passo, Corsa e Scatto effettivi dalla scheda (null finché la scheda non si legge)
     movimento: v?.completa && v.movimento ? { ...v.movimento } : null,
@@ -70,6 +72,8 @@ function pezzoNemico(p, dati) {
     iniziali: iniziali(p.scheda?.nome ?? p.nome, p.numero ?? null), ritratto: urlImmagineNemico(p.scheda?.immagine), pv: p.pv ?? null,
     aZero: (p.pv?.attuali ?? 1) <= 0, stati: (p.stati ?? []).map(stato), ferite: null,
     movimento: movimentoNemico(p.scheda, p.stati, dati),
+    // 08/10: Passo in volo del profilo (data/formato_nemici.json → movimento.volo), per «In volo» (src/mappa/volo.js)
+    voloQ: Number.isInteger(p.scheda?.movimento?.volo) ? p.scheda.movimento.volo : null,
   };
 }
 

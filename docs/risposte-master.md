@@ -1189,6 +1189,31 @@ questi punti, con un `TODO(Davide)` dove serve; nel pacchetto per il Doc «per-d
   controllo di un avversario provoca un Attacco di Opportunità (contro il mezzo, o contro chi è a bordo e si espone)? E un
   avversario a bordo minaccia la zona attorno al mezzo? Provvisorio: no, i veicoli non provocano e non controllano zone,
   come prima (`veicoli.json` → mappa, `TODO(Davide) opportunita`).
+- **A.147 — Girare il veicolo sulla mappa costa movimento?** (08/10/2026, orientamento libero dei veicoli). Il Manuale
+  dei Veicoli dice che «Curve ordinarie e normali regolazioni dell’andatura sono comprese nella conduzione» (§1.3) e che
+  Sterzata stretta e Inversione rapida sono manovre complesse da 1 AzP con Prova (§2.4), ma non se girare il mezzo sulla
+  griglia consumi Q, né da quanti gradi una curva smette di essere ordinaria (per esempio 90° in un Round, o girarsi sul
+  posto da fermo). Provvisorio: la rotazione è libera prima e dopo lo spostamento e non consuma Q; le manovre complesse
+  le applica il master a voce (`mappa.json` → token.rotazione_veicoli, `TODO(Davide)`).
+
+## Domande aperte sui token in volo (08/10/2026, fase 2 della mappa)
+
+- **A.148 — Copertura verso e da un token in volo.** Il Giocatore §5.8 dice che «La Copertura è direzionale» e che vale
+  «quando l’ostacolo protegge realmente dalla direzione dell’attacco», senza parlare dell’altezza; Mostri §4.5: «Essere in
+  volo non impone un nuovo −2 universale a chi attacca». Indicazione di Marcello: un nemico in volo «non ha coperture».
+  Provvisorio: verso e da un token in volo non contano i token in mezzo (§5.10, bersaglio protetto) né la Copertura
+  Leggera e Media; un muro pieno blocca comunque (Copertura Totale). Va bene, o conta l’altezza rispetto all’ostacolo?
+  (`mappa.json` → volo.linea_di_tiro, `TODO(Davide)`.)
+- **A.149 — La quota conta per la portata delle armi ravvicinate?** Il Giocatore §5.2.3 dice che «Uscire
+  volontariamente dalla portata di un avversario, anche salendo, può provocare Attacchi di Opportunità», ma non come si
+  misura la portata in altezza. Provvisorio: ZoC e Attacchi di Opportunità come a terra, con la distanza pari alla maggiore fra quella
+  sulla griglia e la differenza di quota (diagonale 1 Q, A.124): chi vola più in alto della portata non è nella ZoC.
+  (`mappa.json` → volo.zoc_quota.)
+- **A.150 — Un token in volo si vede da lontano?** Indicazione di Marcello: «un nemico in volo in generale è sempre
+  visibile». Provvisorio: un token in volo non nascosto dal master si vede nella vista giocatori anche sotto la nebbia,
+  manuale o automatica, se dal centro di almeno un PG in mappa c’è una linea di vista senza muri né porte chiuse; il
+  master può sempre nasconderlo. Vale anche al buio (Accecato e luce non cambiano la mappa)? (`mappa.json` →
+  volo.visibile_oltre_nebbia.)
 
 ## Domande aperte sugli impianti (censimento del 04/10/2026)
 

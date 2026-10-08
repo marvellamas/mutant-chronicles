@@ -22,12 +22,12 @@ import { colpoSuNemico } from '../colpo-nemico.js';
 import { perditeDovute, applicaPerdita, registraPeriodico, togliPeriodici, allineaPeriodici, periodicoDi, pvDopoPerdita } from '../periodici.js';
 import { pannelloScontro, leggiScontroAperto, leggiScontro, salvaScontro, scegliReimposta, chiediIniziativa } from './scontro.js';
 import { pannelloBestiario, elencoNemici, cartaNemico } from './nemici.js';
-import { cambiaMusica, diTurno, ordineIniziativa, registraIniziative, senzaIniziativaNuovi, avanti, indietro, anteprimaIndietro, reimpostaIniziativa, reimpostaIniziativaDi, dadoIniziativa, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico, confermaRegimeNemico, aggiungiNemici, registraRiga, cambiaStatoNemico } from '../scontro.js';
+import { chiudi as chiudiScontro, cambiaMusica, diTurno, ordineIniziativa, registraIniziative, senzaIniziativaNuovi, avanti, indietro, anteprimaIndietro, reimpostaIniziativa, reimpostaIniziativaDi, dadoIniziativa, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico, confermaRegimeNemico, aggiungiNemici, registraRiga, cambiaStatoNemico } from '../scontro.js';
 import { vociBestiario } from '../nemici.js';
 import { creaCustode } from './ridisegno.js';
 import { avviso, avvisoErrore } from './avvisi.js';
 import { apriCreaNemico, apriDaBestiario } from './crea-nemico.js';
-import { apriPreparazione } from './preparazione.js';
+import { apriPreparazione, iniziaBozzaDallaMappa } from './preparazione.js';
 import { riquadroCollega, leggiRete } from './collega.js';
 import { cartaVeicoloPlancia } from './veicoli.js';
 import { stessaChiave } from '../veicoli-registro.js';
@@ -41,7 +41,17 @@ import { chiediTesto, chiedi } from './finestrella.js';
 
 const INTERVALLO_MS = 3000;
 /** Carta con la chiave del suo token (data-pezzo): la mappa di battaglia la cerca al clic sul token (src/ui/mappa/canale.js). */
-const conPezzo = (el, chiave) => { if (el?.dataset) el.dataset.pezzo = chiave; return el; };
+const conPezzo = (el, chiave, volo = null) => {
+  if (el?.dataset) el.dataset.pezzo = chiave;
+  // 08/10: nella mappa, «In volo» anche dalla carta (src/ui/mappa/pagina.js → comandoVolo)
+  const v = volo?.(chiave);
+  if (v && el?.append) {
+    el.append(h('div', { class: 'carta-volo' },
+      h('button', { type: 'button', role: 'switch', 'aria-checked': String(v.attivo), class: `interruttore-mappa${v.attivo ? ' acceso' : ''}`, title: v.sa ? `Sa volare: Passo in volo ${v.passo} Q` : 'Il volo lo concede una capacità, un Incantesimo o un Artefatto (Giocatore §5.2.3)', onclick: () => v.cambia() },
+        h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `In volo: ${v.attivo ? 'sì' : 'no'}${v.sa && !v.attivo ? ' (sa volare)' : ''}`)));
+  }
+  return el;
+};
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
 /** Nome di un partecipante dello scontro (fonte di una perdita periodica), o null se non c'è. */
 const nomePartecipante = (s, id) => (id ? (s?.partecipanti ?? []).find((p) => p.id === id)?.nome ?? null : null);
@@ -347,13 +357,15 @@ export function renderTavolo(radice, ctx) {
       await aggiorna(true);
     }) : null;
     const stScontro = Object.assign(stato, { pgAlTavolo: alTavolo.map((r) => stato.viste.get(r.file)).filter((v) => v?.completa) });
-    const azScontro = { modifica, crea: (s) => salva(s), ridisegna: disegna, annullaColpo, indietro: indietroUi, reimposta: (id) => reimpostaUi(id), chiediIniziativa: () => iniziativaUi(null), centra: ctx.inMappa?.centra ? (p) => ctx.inMappa.centra(`partecipante:${p.id}`) : null, attacca: (p) => attacca(p, alTavolo) };
+    const azScontro = { modifica, crea: (s) => salva(s), ridisegna: disegna, annullaColpo, indietro: indietroUi, reimposta: (id) => reimpostaUi(id), chiediIniziativa: () => iniziativaUi(null), centra: ctx.inMappa?.centra ? (p) => ctx.inMappa.centra(`partecipante:${p.id}`, ctx.inMappa?.volo ?? ctx.volo) : null, attacca: (p) => attacca(p, alTavolo),
+      // fase 2, lotto 7: tablet dei giocatori collegati e campanellino
+      tablet: { collegati: stato.tablet ?? [], chiama: (p) => chiamaTablet(p) } };
     const cartePg = alTavolo.length
       ? h('div', { class: 'plancia-griglia' }, alTavolo.map((r) => (r.mancante ? cartaMancante(r.mancante)
-        : stato.viste.get(r.file) ? conPezzo(cartaPg(ctx, stato.viste.get(r.file), r, turnoDi(r), colpitoPg, durateDi(stato.viste.get(r.file))), `partecipante:pg:${chiaveDaFile(r.file)}`) : cartaErrore(r, stato.errori.get(r.file)))))
+        : stato.viste.get(r.file) ? conPezzo(cartaPg(ctx, stato.viste.get(r.file), r, turnoDi(r), colpitoPg, durateDi(stato.viste.get(r.file))), `partecipante:pg:${chiaveDaFile(r.file)}`, ctx.inMappa?.volo ?? ctx.volo) : cartaErrore(r, stato.errori.get(r.file)))))
       : h('p', { class: 'vuoto' }, 'Nessun personaggio al tavolo: sceglili con «Chi è al tavolo».');
     const carteNemici = nemiciInScontro().length
-      ? h('div', { class: 'plancia-griglia' }, nemiciInCarta().map((p) => conPezzo(cartaNemico(ctx, p, { modifica, durate: durateNemico(p), diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p), onAttacca: attacchiDi(p).length ? () => attacca(p, alTavolo) : null, onLancia: (i) => lancia(p, i, alTavolo), onRiduci: (v) => modifica((x) => riduciNemico(x, p.id, v)), onRegime: (k, r) => modifica((x) => confermaRegimeNemico(x, p.id, k, r, new Date())), onImmagine: () => immagineNemico(p) }), `partecipante:${p.id}`)))
+      ? h('div', { class: 'plancia-griglia' }, nemiciInCarta().map((p) => conPezzo(cartaNemico(ctx, p, { modifica, durate: durateNemico(p), diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p), onAttacca: attacchiDi(p).length ? () => attacca(p, alTavolo) : null, onLancia: (i) => lancia(p, i, alTavolo), onRiduci: (v) => modifica((x) => riduciNemico(x, p.id, v)), onRegime: (k, r) => modifica((x) => confermaRegimeNemico(x, p.id, k, r, new Date())), onImmagine: () => immagineNemico(p) }), `partecipante:${p.id}`, ctx.inMappa?.volo ?? ctx.volo)))
       : null;
     const scene = pannelloScene(ctx, stato.scene, { ridisegna: disegna, apri: (id) => ctx.azioni.mappa(id) });
     const bestiario = pannelloBestiario(ctx, stato.bestiario, {
@@ -369,7 +381,10 @@ export function renderTavolo(radice, ctx) {
       const c = ctx.inMappa.collegamento?.() ?? null;
       const riquadro = (titolo, testo) => h('section', { class: 'riquadro scontro-pannello' }, h('h2', {}, titolo), h('p', { class: 'nota' }, testo));
       svuota(S.iniziativa, h('div', { class: 'plancia plancia-in-mappa' },
-        c?.bozza ? riquadro('Scontro non ancora iniziato', `La scena è collegata alla bozza «${c.nomeBozza ?? c.bozza}»: l’ordine d’Iniziativa compare quando lo scontro inizia («Prepara scontro» → «Inizia»).`)
+        c?.bozza ? h('section', { class: 'riquadro scontro-pannello' }, h('h2', {}, 'Scontro non ancora iniziato'),
+          h('p', { class: 'nota' }, `La scena è collegata alla bozza «${c.nomeBozza ?? c.bozza}»: l’ordine d’Iniziativa compare quando lo scontro inizia.`),
+          stato.scontro ? h('p', { class: 'nota' }, `È già aperto lo scontro «${stato.scontro.nome}»: chiudilo con «Fine scontro» prima di iniziarne un altro.`) : null,
+          h('button', { type: 'button', class: 'btn primario', disabled: !!stato.scontro, title: 'Inizia scontro: come «Inizia» della bozza; poi la finestra «Iniziativa». La bozza resta per rigiocarlo', onclick: () => iniziaDallaMappa(c.bozza) }, 'Inizia scontro'))
           : !c?.scontro ? riquadro('Nessuno scontro collegato', 'Collega la scena a uno scontro o a una bozza dal gruppo «Mappa».')
             : c.scontro !== stato.scontro?.id ? riquadro('Lo scontro della scena non è aperto', stato.scontro ? `È aperto un altro scontro («${stato.scontro.nome}»): collega la scena a quello dal gruppo «Mappa», o chiudilo.` : 'Lo scontro collegato è chiuso: collega la scena a un altro scontro o a una bozza dal gruppo «Mappa».')
               : pannelloScontro(ctx, stScontro, azScontro, 'iniziativa')));
@@ -427,17 +442,24 @@ export function renderTavolo(radice, ctx) {
     if (riapri) apriDaBestiario(ctx, riapri, opzioni); else apriCreaNemico(ctx, opzioni);
   };
   // «Prepara scontro» (src/ui/preparazione.js): «Inizia» mette al tavolo i PG scelti nella bozza e apre lo scontro
+  // mette al tavolo i PG scelti nella bozza e salva lo scontro (poi la finestra «Iniziativa», dal salvataggio)
+  const iniziaScontroBozza = async (scontro, chiaviPg) => {
+    if (chiaviPg.length) {
+      try { stato.selezione = await scriviSelezione([...new Set([...stato.selezione, ...chiaviPg])]); } catch (e) { avvisoErrore(`Selezione «al tavolo» non salvata: ${e.message}`); }
+    }
+    const ok = await salva(scontro, { conferme: false });
+    await aggiorna(true);
+    return ok;
+  };
   const preparaScontro = () => apriPreparazione(ctx, {
     bestiario: () => stato.bestiario, alTavolo: pgAlTavolo, scontroAperto: () => !!stato.scontro, salvatoBestiario: bestiarioSalvato,
-    inizia: async (scontro, chiaviPg) => {
-      if (chiaviPg.length) {
-        try { stato.selezione = await scriviSelezione([...new Set([...stato.selezione, ...chiaviPg])]); } catch (e) { avvisoErrore(`Selezione «al tavolo» non salvata: ${e.message}`); }
-      }
-      const ok = await salva(scontro, { conferme: false });
-      await aggiorna(true);
-      return ok;
-    },
+    inizia: iniziaScontroBozza,
   });
+  // ritocchi del 08/10: «Inizia scontro» dalla mappa collegata a una bozza (come «Inizia» della preparazione)
+  const iniziaDallaMappa = async (idBozza) => {
+    await aggiorna();
+    return iniziaBozzaDallaMappa(ctx, idBozza, { alTavolo: pgAlTavolo, scontroAperto: () => !!stato.scontro, inizia: iniziaScontroBozza });
+  };
   // «Carica esempi»: copia esempi/ nelle cartelle del server senza sovrascrivere (server.mjs → /api/esempi)
   const caricaEsempi = async () => {
     try {
@@ -724,7 +746,7 @@ export function renderTavolo(radice, ctx) {
       const v = r ? stato.viste.get(r.file) : null;
       if (!r) return h('p', { class: 'nota' }, stato.elenco.length ? `Nessun file di ${pg[1]} in personaggi/.` : 'Lettura delle schede…');
       if (!v) return h('p', { class: 'nota' }, stato.errori.get(r.file) ?? 'Lettura della scheda…');
-      return [conPezzo(cartaPg(ctx, v, r, turnoDi(r), colpitoPg, durateDi(v)), `partecipante:pg:${chiaveDaFile(r.file)}`),
+      return [conPezzo(cartaPg(ctx, v, r, turnoDi(r), colpitoPg, durateDi(v)), `partecipante:pg:${chiaveDaFile(r.file)}`, ctx.inMappa?.volo ?? ctx.volo),
         h('button', { type: 'button', class: 'btn primario btn-scheda-completa', onclick: () => ctx.azioni.apri(r) }, 'Apri scheda completa')];
     }
     const part = /^partecipante:(.+)$/.exec(chiave);
@@ -732,7 +754,7 @@ export function renderTavolo(radice, ctx) {
       const p = (stato.scontro?.partecipanti ?? []).find((x) => x.id === part[1]);
       if (!p) return h('p', { class: 'nota' }, stato.scontro ? 'Non è nello scontro aperto.' : 'Nessuno scontro aperto: i nemici di una bozza hanno la mini-scheda quando lo scontro parte («Inizia»).');
       if (p.tipo !== 'nemico') return h('article', { class: 'carta-plancia' }, h('h2', {}, p.nome), h('p', { class: 'nota' }, `Scritto a mano nello scontro (${p.lato}): si gestisce dal riquadro dello scontro della plancia.`));
-      return conPezzo(cartaNemico(ctx, p, { modifica, durate: durateNemico(p), diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p), onAttacca: attacchiDi(p).length ? () => attacca(p, alTavolo) : null, onLancia: (i) => lancia(p, i, alTavolo), onRiduci: (v) => modifica((x) => riduciNemico(x, p.id, v)), onRegime: (k, r) => modifica((x) => confermaRegimeNemico(x, p.id, k, r, new Date())), onImmagine: () => immagineNemico(p) }), `partecipante:${p.id}`);
+      return conPezzo(cartaNemico(ctx, p, { modifica, durate: durateNemico(p), diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p), onAttacca: attacchiDi(p).length ? () => attacca(p, alTavolo) : null, onLancia: (i) => lancia(p, i, alTavolo), onRiduci: (v) => modifica((x) => riduciNemico(x, p.id, v)), onRegime: (k, r) => modifica((x) => confermaRegimeNemico(x, p.id, k, r, new Date())), onImmagine: () => immagineNemico(p) }), `partecipante:${p.id}`, ctx.inMappa?.volo ?? ctx.volo);
     }
     const vei = /^veicolo:(.+)$/.exec(chiave);
     const rec = vei ? stato.veicoli.find((x) => x.id === vei[1]) : null;
@@ -793,6 +815,24 @@ export function renderTavolo(radice, ctx) {
     return !!t && t.tipo === 'pg' && t.chiave === chiaveDaFile(r.file);
   };
 
+  // fase 2, lotto 7: chi ha il tablet collegato (server.mjs → /api/tablet) e il campanellino
+  const aggiornaTablet = async () => {
+    const r = await fetch('api/tablet', { cache: 'no-store' });
+    if (!r.ok) return false;
+    const collegati = ((await r.json()).collegati ?? []).slice().sort();
+    if (JSON.stringify(collegati) === JSON.stringify(stato.tablet ?? [])) return false;
+    stato.tablet = collegati;
+    return true;
+  };
+  async function chiamaTablet(p) {
+    try {
+      const r = await fetch('api/tablet/avviso', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ pg: p.chiave, nome: p.nome, tipo: 'muovi', scontro: stato.scontro?.id ?? null }) });
+      const { consegnati = 0 } = await r.json().catch(() => ({}));
+      if (consegnati) avviso(`🔔 Chiesto a ${p.nome} di muovere (avviso sul suo tablet).`, { chiave: 'campanello' });
+      else avvisoErrore(`Il tablet di ${p.nome} non è collegato: la pagina deve essere aperta (senza HTTPS gli avvisi non arrivano a pagina chiusa).`, { chiave: 'campanello' });
+    } catch (e) { avvisoErrore(`Avviso non mandato: ${e.message}`, { chiave: 'campanello' }); }
+  }
+
   // rilegge l'elenco e i file cambiati dei personaggi al tavolo (confronto sull'mtime)
   const visti = new Map(); // file → mtime letto
   const aggiorna = async (forza = false) => {
@@ -831,6 +871,9 @@ export function renderTavolo(radice, ctx) {
     } catch (e) {
       stato.errore = e.message;
     }
+    try {
+      if (await aggiornaTablet()) cambiato = true;
+    } catch { /* senza server dei tablet: nessun indicatore */ }
     // scontro aperto: si rilegge quando cambia la revisione (un'altra finestra, un altro PC)
     try {
       const aperto = await leggiScontroAperto();
@@ -872,6 +915,8 @@ export function renderTavolo(radice, ctx) {
   ferma.puoIndietro = () => anteprimaIndietro(stato.scontro);
   // «Reimposta Iniziativa» (07/10): la stessa della plancia, per la barra dell'Iniziativa della mappa
   ferma.reimposta = (id = null) => reimpostaUi(id);
+  // 08/10: «Fine scontro» dalla mappa, lo stesso della plancia (lo scontro passa in scontri/archivio/)
+  ferma.fine = async () => { await aggiorna(); return modifica((x) => chiudiScontro(x)); };
   // la finestra «Iniziativa» per chi è ancora senza (pulsante «Iniziativa…» della barra)
   ferma.chiediIniziativa = () => iniziativaUi(null);
   // musica di fondo dello scontro (07/10), dalla barra della mappa

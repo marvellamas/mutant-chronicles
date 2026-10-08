@@ -240,7 +240,7 @@ Marcello preferisce.
 
 ### Fase 2
 
-1. **Tab BattleMap** nella scheda con il movimento del giocatore dal tablet (`POST /api/scene/<id>/movimento`, controllo nel server) e il blocco dei movimenti dal master.
+1. **Tab BattleMap** nella scheda con il movimento del giocatore dal tablet (`POST /api/scene/<id>/movimento`, controllo nel server) e il blocco dei movimenti dal master. Fatto l'08/10/2026 come lotto 7 della fase 2, nella vista giocatori con «Sono…» invece che nella scheda: `POST /api/vista-giocatori/movimento` (`src/mappa/tablet.js`), campanellino e «Tocca a te» (specifica, §13 bis).
 2. **Linea di tiro**: distanza, fascia di gittata dell'arma, colori libera / attraversa token (Copertura) / bloccata; apre «Attacca!» con bersaglio e distanza.
 3. **Template**: quadrato, cono, cerchio, rettangolo libero; durata in Round con avviso alla scadenza; proposta da «Lancia!» con le misure dell'incantesimo; token coperti evidenziati.
 4. **Porte** sui muri (aperta, chiusa).
