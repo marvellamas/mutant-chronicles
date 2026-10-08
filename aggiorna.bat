@@ -26,6 +26,8 @@ rem dall'esempio; poi una notifica con il nome del PC e la versione. Mai bloccan
 rem Tutto quello che sta sopra la riga del pull deve restare uguale: questo file si aggiorna mentre gira.
 if not exist "avvisi\avvisi.json" if exist "avvisi\avvisi.esempio.json" copy /y "avvisi\avvisi.esempio.json" "avvisi\avvisi.json" >nul 2>nul
 call :avviso aggiornato
+rem Salvataggi (salvataggi\LEGGIMI.txt, 08/10): la prima volta la configurazione si crea dall'esempio
+if not exist "config-salvataggi.json" if exist "config-salvataggi.esempio.json" copy /y "config-salvataggi.esempio.json" "config-salvataggi.json" >nul 2>nul
 
 echo.
 echo  Fatto: Mutant e' aggiornato. Adesso fai doppio clic su avvia.bat

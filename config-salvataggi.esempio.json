@@ -1,5 +1,8 @@
 {
-  "_nota": "Copia questo file come config-salvataggi.json (non va su GitHub) e togli le voci che non servono. copia_in: una cartella in cui copiare anche l'archivio, per esempio quella di Google Drive sul PC. github: la cartella di un clone di un repository GitHub PRIVATO, solo per i salvataggi (non quello dell'app), con le credenziali già configurate; ramo facoltativo.",
-  "copia_in": "C:/Users/Davide/Google Drive/Mutant salvataggi",
-  "github": { "cartella": "C:/Users/Davide/Documenti/mutant-salvataggi", "ramo": "main" }
+  "_nota": "Salvataggi di Mutant su questo PC (salvataggi/LEGGIMI.txt). aggiorna.bat crea config-salvataggi.json da questo file se manca; config-salvataggi.json non va su GitHub. autosave_minuti: ogni quanti minuti il server salva da solo in autosave/ (0 = spento). cartella_drive: la cartella di Google Drive per desktop in cui copiare ogni salvataggio, per esempio \"G:/Il mio Drive/Mutant salvataggi\" (con le barre /); vuota = nessuna copia. ntfy: true manda a Marcello la notifica «Sessione salvata» con i dati allegati, sull'argomento degli avvisi (avvisi/avvisi.json); false la spegne. ntfy_allegato_max_mb: oltre questa dimensione la notifica parte senza allegato. github (facoltativo): { \"cartella\": clone di un repository GitHub PRIVATO solo per i salvataggi, \"ramo\": \"main\" }.",
+  "autosave_minuti": 5,
+  "cartella_drive": "",
+  "ntfy": true,
+  "ntfy_allegato_max_mb": 15,
+  "github": null
 }

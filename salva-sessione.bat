@@ -1,9 +1,10 @@
 @echo off
-rem Copia di fine sessione di Mutant: doppio clic su questo file (anche con il server acceso).
-rem Crea salvataggi\sessione_AAAA-MM-GG_hhmm.zip con personaggi, veicoli, scontri, nemici e tavolo;
-rem se configurato in config-salvataggi.json, lo copia anche su Drive e su un repository GitHub privato.
+rem Salvataggio della sessione di Mutant: doppio clic su questo file (con il server acceso o spento).
+rem E' lo stesso di "Salva sessione" nel Tavolo del Master (tools\salva-sessione.mjs): crea
+rem salvataggi\sessione_AAAA-MM-GG_hhmm.zip con personaggi, veicoli, scontri, nemici, tavolo, scene e mappe,
+rem poi lo copia nella cartella di Google Drive e avvisa Marcello con ntfy (config-salvataggi.json).
 rem Niente lettere accentate: la console di Windows non e' in UTF-8.
-title Mutant - copia di fine sessione
+title Mutant - salvataggio della sessione
 cd /d "%~dp0"
 
 where node >nul 2>nul
@@ -17,7 +18,7 @@ if errorlevel 1 (
 )
 
 echo.
-echo  Copia di fine sessione in corso...
+echo  Salvataggio della sessione in corso...
 echo.
 node tools\salva-sessione.mjs
 echo.

@@ -6,6 +6,9 @@
 //   node server.mjs --solo-locale   solo da questo computer (127.0.0.1); --rete resta accettato, non serve più
 //   PORTA=8080 node server.mjs      altra porta (oppure --porta=8080)
 //   --senza-avvisi                    nessun avviso a Marcello (tools/avvisi.mjs; anche con --cartella=…)
+//   --salvataggi=<dir> --autosave=<dir> --config-salvataggi=<file>
+//                                    salvataggi (tools/salva-sessione.mjs): di norma salvataggi/, autosave/ e
+//                                    config-salvataggi.json dell'app; con --cartella=… accanto alla cartella di prova
 //   --cartella=<dir> --tavolo=<dir> --scontri=<dir> --nemici=<dir> --veicoli=<dir> --scene=<dir> --mappe=<dir> --musica=<dir>
 //                                    altre cartelle per personaggi, tavolo, scontri, bestiario, veicoli,
 //                                    scene e immagini delle mappe (prove, più campagne)
@@ -84,11 +87,17 @@
 //   POST /api/mappe?nome=…[&ridotta=1] corpo = JPG, PNG o WEBP: lo salva come <nome>-<impronta>[-ridotta].<est>
 //                                      e risponde { file, tipo, larghezza, altezza, dimensione }; ridotta=1
 //                                      controlla il lato massimo della copia per i tablet
+//   Salvataggi (08/10, tools/salva-sessione.mjs): autosave ogni N minuti in autosave/ (solo se qualcosa è cambiato) e
+//   GET /api/salvataggi                { attivo, locale, autosave: { quando, file, dimensione } | null, ultimo }
+//   POST /api/salva-sessione           il salvataggio completo («Salva sessione»): zip in salvataggi/, Drive, ntfy;
+//                                      risponde con l'esito ({ ok, riga, drive, ntfy, … })
+//   POST /api/spegni                   «Spegni Mutant», solo da questo PC (403 dagli altri): salvataggio completo,
+//                                      esito, poi il server si spegne (codice 42: avvia-server.bat chiude la finestra)
 // Nessuna cancellazione dal server: i file vecchi si tolgono a mano dalla cartella.
 import { createServer } from 'node:http';
 import { readFileSync, createReadStream } from 'node:fs';
 import { readFile, writeFile, readdir, stat, mkdir, rename, copyFile, unlink, constants } from 'node:fs/promises';
-import { extname, join, normalize, sep } from 'node:path';
+import { extname, join, normalize, sep, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { networkInterfaces } from 'node:os';
 import { createHash } from 'node:crypto';
@@ -96,6 +105,7 @@ import { createInterface } from 'node:readline/promises';
 import { chiOccupa, testoDomanda, risposteSi, fermaMutant, sorvegliaFinestra } from './src/porta-occupata.js';
 import { indirizziRete, testoAvvio } from './src/rete.js';
 import { avvisa } from './tools/avvisi.mjs';
+import { creaGestore, leggiConfig } from './tools/salva-sessione.mjs';
 import { bordoToken } from './src/mappa/colori.js';
 import { validaScontro, rigaOpportunita, diTurno } from './src/scontro.js';
 import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
@@ -1182,7 +1192,35 @@ async function statico(req, res, percorso, radice, versioneAvvio = null) {
  * Crea il server. `radice`: cartella dell'app; `cartella`: dove stanno i personaggi (per i test, una
  * cartella temporanea).
  */
-export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA), tavolo = join(RADICE, TAVOLO), scontri = join(RADICE, SCONTRI), nemici = join(RADICE, NEMICI), veicoli: veicoliDati = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), musica = join(RADICE, MUSICA), soloLocale = false, avvisi = null } = {}) {
+/**
+ * La richiesta viene da questo PC? (08/10: «Spegni Mutant» solo dal PC del master) Indirizzo di loopback o uno degli
+ * indirizzi delle schede di rete di questo PC.
+ */
+export function daQuestoPc(indirizzo, interfacce = networkInterfaces()) {
+  const a = String(indirizzo ?? '').replace(/^::ffff:/, '');
+  if (!a) return false;
+  if (a === '::1' || a.startsWith('127.')) return true;
+  return Object.values(interfacce).flat().some((i) => i && String(i.address).replace(/^::ffff:/, '') === a);
+}
+
+/** Salvataggi del server (08/10): GET /api/salvataggi, POST /api/salva-sessione, POST /api/spegni. */
+async function apiSalvataggi(req, res, percorso, salvataggi) {
+  if (!salvataggi) return json(res, 404, { errore: 'salvataggi non attivi su questo server' });
+  const locale = daQuestoPc(req.socket.remoteAddress);
+  if (percorso === '/api/salvataggi') {
+    if (req.method !== 'GET') return json(res, 405, { errore: 'metodo non ammesso' });
+    return json(res, 200, { attivo: true, locale, autosave: salvataggi.autosave?.() ?? null, ultimo: salvataggi.ultimo?.() ?? null });
+  }
+  if (req.method !== 'POST') return json(res, 405, { errore: 'metodo non ammesso' });
+  if (percorso === '/api/salva-sessione') return json(res, 200, await salvataggi.salva('Salva sessione'));
+  // «Spegni Mutant»: solo dal PC del server (un tablet non spegne il tavolo)
+  if (!locale) return json(res, 403, { errore: '«Spegni Mutant» funziona solo dal PC dove gira il server.' });
+  const esito = await salvataggi.salva('Spegni Mutant', { seCambiato: true });
+  res.on('finish', () => salvataggi.spegni?.(esito));
+  return json(res, 200, { ...esito, spento: true });
+}
+
+export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA), tavolo = join(RADICE, TAVOLO), scontri = join(RADICE, SCONTRI), nemici = join(RADICE, NEMICI), veicoli: veicoliDati = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), musica = join(RADICE, MUSICA), soloLocale = false, avvisi = null, salvataggi = null } = {}) {
   const veicoli = veicoliDati ?? join(RADICE, VEICOLI);
   // versione dell'app all'accensione (versione.json): il codice del server resta questo finché non lo si riavvia
   let versioneAvvio = null;
@@ -1200,6 +1238,7 @@ export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA),
     try {
       const percorso = decodeURI(new URL(req.url, 'http://x').pathname);
       if (percorso === '/api/ping') return json(res, 200, { ok: true, app: 'mutant', cartella: CARTELLA, ...identita });
+      if (percorso === '/api/salvataggi' || percorso === '/api/salva-sessione' || percorso === '/api/spegni') return await apiSalvataggi(req, res, percorso, salvataggi);
       if (percorso.startsWith('/api/')) return await api(req, res, percorso, cartella, tavolo, scontri, nemici, base, soloLocale, veicoli, migraIn, scene, mappe, canale, musica, avvisi);
       return await statico(req, res, percorso, base, versioneAvvio);
     } catch (e) {
@@ -1235,18 +1274,57 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   // di prova (--cartella=…) o con --senza-avvisi; in silenzio
   const senzaAvvisi = process.argv.includes('--senza-avvisi') || !!arg('cartella');
   const avvisi = senzaAvvisi ? null : (evento) => { avvisa(evento, { radice: RADICE }).catch(() => {}); };
-  const server = creaServer({ cartella, tavolo, scontri, nemici, veicoli, scene, mappe, musica, soloLocale, avvisi });
-  // si spegne quando si chiude la finestra di avvia-server.bat (o con Ctrl+C), senza restare in ascolto da solo
-  const esci = (perche) => {
-    console.log(`\nMutant si spegne (${perche}).`);
+  // Salvataggi (08/10, tools/salva-sessione.mjs, salvataggi/LEGGIMI.txt): con cartelle di prova (--cartella=…) i
+  // salvataggi, l'autosave e la configurazione stanno accanto alla cartella di prova, mai in quelli dell'app
+  const prova = !!arg('cartella');
+  const baseSalvataggi = prova ? dirname(cartella) : RADICE;
+  const dirSalvataggi = arg('salvataggi') ? normalize(arg('salvataggi')) : join(baseSalvataggi, 'salvataggi');
+  const dirAutosave = arg('autosave') ? normalize(arg('autosave')) : join(baseSalvataggi, 'autosave');
+  const fileConfig = arg('config-salvataggi') ? normalize(arg('config-salvataggi')) : join(baseSalvataggi, 'config-salvataggi.json');
+  // l'argomento ntfy degli avvisi a Marcello (avvisi/avvisi.json); con cartelle di prova solo quello del file di prova
+  const gestore = creaGestore({
+    cartelle: { personaggi: cartella, veicoli, scontri, nemici, tavolo, scene, mappe },
+    salvataggi: dirSalvataggi,
+    autosave: dirAutosave,
+    config: () => { try { return leggiConfig(fileConfig); } catch (e) { console.log(`Attenzione: ${e.message}`); return {}; } },
+    avvisi: () => { if (senzaAvvisi) return null; try { return JSON.parse(readFileSync(join(RADICE, 'avvisi', 'avvisi.json'), 'utf8')); } catch { return null; } },
+  });
+  const minuti = gestore.minuti();
+  // autosave ogni N minuti, solo se qualcosa è cambiato; resta sul PC
+  const timerAutosave = minuti ? setInterval(gestore.faiAutosave, minuti * 60 * 1000) : null;
+  let spegnendo = false;
+  const salvataggi = {
+    ...gestore,
+    // «Spegni Mutant»: il salvataggio è già fatto; codice 42 = avvia-server.bat chiude la sua finestra senza pausa
+    spegni: () => {
+      spegnendo = true;
+      clearInterval(timerAutosave);
+      console.log('\nMutant si spegne («Spegni Mutant» dal Tavolo del Master).');
+      server.close();
+      setTimeout(() => process.exit(42), 300);
+    },
+  };
+  const server = creaServer({ cartella, tavolo, scontri, nemici, veicoli, scene, mappe, musica, soloLocale, avvisi, salvataggi });
+  // si spegne quando si chiude la finestra di avvia-server.bat (o con Ctrl+C), senza restare in ascolto da solo; prima
+  // prova il salvataggio completo (08/10): Windows concede pochi secondi alla chiusura con la X, per questo ntfy ha un
+  // tempo breve e GitHub si salta; l'autosave copre gli spegnimenti bruschi
+  const PERCHE = { SIGINT: 'Ctrl+C', SIGHUP: 'finestra chiusa', SIGBREAK: 'finestra chiusa', SIGTERM: 'arresto' };
+  const esci = async (perche) => {
+    if (spegnendo) return;
+    spegnendo = true;
+    clearInterval(timerAutosave);
+    console.log(`\nMutant si spegne (${perche}): salvo la sessione…`);
+    setTimeout(() => process.exit(0), 15000).unref();
+    try { await gestore.salva(`chiusura: ${perche}`, { seCambiato: true, veloce: true }); } catch { /* niente da fare */ }
     server.close();
     process.exit(0);
   };
-  for (const segnale of ['SIGINT', 'SIGTERM', 'SIGHUP', 'SIGBREAK']) process.on(segnale, () => esci(segnale));
+  for (const segnale of ['SIGINT', 'SIGTERM', 'SIGHUP', 'SIGBREAK']) process.on(segnale, () => esci(PERCHE[segnale] ?? segnale));
   sorvegliaFinestra(esci);
   const avvia = () => server.listen(porta, host, () => {
     console.log(testoAvvio(indirizziRete(networkInterfaces(), porta), porta, { soloLocale }));
     console.log(`Personaggi salvati in ${cartella}`);
+    console.log(minuti ? `Salvataggio automatico ogni ${minuti} minuti in ${dirAutosave}; «Salva sessione» e «Spegni Mutant» nel Tavolo del Master.` : 'Salvataggio automatico spento (config-salvataggi.json → autosave_minuti: 0).');
     avvisi?.('avvio');
     server.migrazione.then((e) => {
       if (e?.record?.length) console.log(`Veicoli spostati nel registro (veicoli/): ${e.record.join(', ')}.`);

@@ -53,7 +53,10 @@ veicoli/*
 # Copie di fine sessione (salva-sessione.bat, tools/salva-sessione.mjs): dati di gioco; si traccia solo il LEGGIMI
 salvataggi/*
 !salvataggi/LEGGIMI.txt
-# configurazione della copia (cartella di Drive, clone del repository privato): personale, non va su GitHub
+# Salvataggio automatico del server ogni 5 minuti (tools/salva-sessione.mjs, 08/10): dati di gioco; si traccia solo il LEGGIMI
+autosave/*
+!autosave/LEGGIMI.txt
+# configurazione dei salvataggi (cartella di Drive, ntfy, clone del repository privato): personale, non va su GitHub
 config-salvataggi.json
 
 # Mappa di battaglia (server.mjs, docs/battlemap/): scene e immagini delle mappe; si traccia solo il LEGGIMI

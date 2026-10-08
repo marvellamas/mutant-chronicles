@@ -1,0 +1,17 @@
+Salvataggio automatico di Mutant
+================================
+
+Con il server acceso (avvia-server.bat), Mutant salva da solo qui ogni 5 minuti (il numero si
+cambia in config-salvataggi.json, "autosave_minuti"), solo se qualcosa e' cambiato:
+
+- autosave.zip             l'ultimo salvataggio automatico;
+- autosave-precedente.zip  quello di prima: se l'ultimo si fosse interrotto (PC spento di colpo),
+                           questo e' comunque buono;
+- autosave.json            quando e' stato fatto l'ultimo e quanti file contiene.
+
+Dentro lo zip ci sono le cartelle personaggi, veicoli, scontri, nemici, tavolo, scene e mappe.
+L'autosave resta su questo PC: non va su Drive e non manda notifiche. La copia fuori dal PC la fa
+il salvataggio completo («Salva sessione», «Spegni Mutant», salva-sessione.bat), nella cartella
+salvataggi (vedi salvataggi\LEGGIMI.txt, anche per rimettere a posto una sessione).
+
+I file di questa cartella non vanno su GitHub con l'app (.gitignore): sono dati di gioco.
