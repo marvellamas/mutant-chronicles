@@ -61,7 +61,7 @@ export function stileBordo(b) {
 
 function miniToken(v, barra, o) {
   const x = posizioneSullaScala(barra, v.valore) * 100;
-  const titolo = `${v.nome} · Iniziativa ${v.valore}${v.aZero ? ' · a 0 PV' : ''}${v.diTurno ? ' · di turno' : ''}${v.nascosto ? ' · nascosto ai giocatori' : ''}${o.scegli && !v.token ? ' · senza token in mappa' : ''}`;
+  const titolo = `${v.nome} · Iniziativa ${v.valore}${v.veicolo ? ` · guida ${v.veicolo.nome} (muso a ${v.veicolo.angolo}°)` : ''}${v.aZero ? ' · a 0 PV' : ''}${v.diTurno ? ' · di turno' : ''}${v.nascosto ? ' · nascosto ai giocatori' : ''}${o.scegli && !v.token ? ' · senza token in mappa' : ''}`;
   const corpo = v.ritratto ? h('img', { src: v.ritratto, alt: '' }) : h('span', { class: 'iniziali' }, v.iniziali);
   // ritocchi del 07/10: a 0 PV, piccolo, il teschio (nemici) o la croce rossa (PG), come sul token
   const zero = v.aZero && o.zero ? h('img', { class: 'icona-zero', src: v.lato === 'pg' ? o.zero.pg : o.zero.nemico, alt: '' }) : null;
@@ -71,10 +71,13 @@ function miniToken(v, barra, o) {
     style: `left: ${x.toFixed(3)}%; top: ${LINEA_PX + v.pila * ALTEZZA_PILA_PX}px; ${sb.stile}`,
     title: titolo, 'aria-label': titolo, dataset: { chiave: v.chiave },
   };
+  // 08/10: chi guida un veicolo ha il muso del mezzo, una freccina orientata nel colore del proprietario
+  // (fuori dall'elemento, che taglia il ritratto, come la barretta dei PV)
+  const muso = v.veicolo ? h('span', { class: 'mini-muso', title: `Guida ${v.veicolo.nome}: muso a ${v.veicolo.angolo}°`, style: `left: ${x.toFixed(3)}%; top: ${LINEA_PX + v.pila * ALTEZZA_PILA_PX}px; --muso: ${v.veicolo.colore ?? 'currentColor'}; --angolo: ${v.veicolo.angolo}deg`, 'aria-hidden': 'true' }, h('span', {}, '▲')) : null;
   const el = o.scegli ? h('button', { type: 'button', ...attr, onclick: () => o.scegli(v) }, corpo, zero) : h('span', attr, corpo, zero);
   // 07/10: la barretta dei PV come sui token, sul fondo del mini-token e sopra il bordo, larga quanto il mini-token
   // (fuori dall'elemento, che taglia il ritratto); misure e colori da data/mappa.json → pv_token (variabili CSS)
-  if (!(v.pv?.massimo > 0) || o.pv === false) return el;
+  if (!(v.pv?.massimo > 0) || o.pv === false) return muso ? [el, muso] : el;
   const quota = Math.max(0, Math.min(1, v.pv.attuali / v.pv.massimo));
-  return [el, h('span', { class: 'pv-barretta', 'aria-hidden': 'true', style: `left: ${x.toFixed(3)}%; top: ${LINEA_PX + v.pila * ALTEZZA_PILA_PX}px; --quota: ${quota}` })];
+  return [el, muso, h('span', { class: 'pv-barretta', 'aria-hidden': 'true', style: `left: ${x.toFixed(3)}%; top: ${LINEA_PX + v.pila * ALTEZZA_PILA_PX}px; --quota: ${quota}` })];
 }

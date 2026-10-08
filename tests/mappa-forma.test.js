@@ -9,6 +9,7 @@ import { celleToken, tokenSottoPunto } from '../src/mappa/token.js';
 import { ruotaSeLibero, qPerScendere, sali, distanzaToken } from '../src/mappa/veicoli-mappa.js';
 import { areaRaggiungibile, costoVerso, celleArea } from '../src/mappa/area.js';
 import { tokenInMezzo } from '../src/mappa/visuale.js';
+import { barraIniziativa } from '../src/mappa/iniziativa.js';
 import { validaScena, nuovaScena } from '../src/mappa/scena.js';
 import { nuovaMaschera, inBase64 } from '../src/mappa/celle.js';
 
@@ -141,3 +142,10 @@ test('scene di prima (direzione a 90°): stessi quadretti, validazione, e alla p
   assert.ok(inBase64);
 });
 
+test('muso nella barra dell’Iniziativa: il conducente porta angolo e colore del proprietario del suo veicolo', () => {
+  const scontro = { id: 's', stato: 'aperto', round: 1, turno: 0, partecipanti: [{ id: 'pg:A', tipo: 'pg', chiave: 'A', nome: 'A', base: 5, d10: { valore: 5 }, des: 5, int: 5 }] };
+  const v = scout([2, 2], 30, { passeggeri: [{ id: 'pa', rif: { tipo: 'partecipante', id: 'pg:A' }, ingombro: 1, nascosto: false, ruolo: 'conducente' }] });
+  const pezzi = [{ chiave: 'partecipante:pg:A', lato: 'pg', nome: 'A' }, { chiave: 'veicolo:v1', lato: 'pg', nome: 'Scout', tipo: 'veicolo' }];
+  const b = barraIniziativa({ scontro, pezzi, scena: { token: [v] }, bordoDi: (p) => (p.tipo === 'veicolo' ? { colore: '#123456' } : null) });
+  assert.deepEqual(b.voci[0].veicolo, { angolo: 30, nome: 'Scout', colore: '#123456', nascosto: false });
+});

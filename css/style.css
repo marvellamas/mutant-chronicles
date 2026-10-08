@@ -2281,3 +2281,7 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 .btn-muovi-mappa { min-height: 3rem; font-size: 1.1rem; }
 .tablet-allarme-azioni { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; }
 .tablet-allarme-azioni .btn { min-height: 3.5rem; font-size: 1.3rem; padding: .6rem 1.4rem; }
+
+/* 08/10: muso del veicolo guidato sul mini-token del conducente (barra dell'Iniziativa) */
+.mini-muso { position: absolute; transform: translate(6px, -22px); width: 14px; height: 14px; display: flex; align-items: center; justify-content: center; font-size: 10px; line-height: 1; color: var(--muso); background: #000c; border-radius: 50%; pointer-events: none; z-index: 2; }
+.mini-muso > span { display: block; transform: rotate(var(--angolo)); }
