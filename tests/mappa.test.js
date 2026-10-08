@@ -169,7 +169,7 @@ test('scena nuova: griglia dai dati o dall’immagine, nebbia iniziale, valida',
   assert.deepEqual(dimensioniGriglia({ larghezza: 1000, altezza: 700 }, { q_px: 64, scosto_x: 10, scosto_y: 10 }), { colonne: 16, righe: 11 });
   assert.equal(validaScena(conMappa, dati), null);
   assert.equal(validaScena(scenaDiProva(), dati), null);
-  assert.deepEqual(riassuntoScena(scenaDiProva(), 5), { id: 'cripta', nome: 'Cripta di Mishima', revisione: 0, mappa: 'cripta-0123456789ab.jpg', colonne: 10, righe: 8, token: 5, collegamento: { scontro: 'scontro-20261006-200000', bozza: 'bozza-cripta' }, mtime: 5 });
+  assert.deepEqual(riassuntoScena(scenaDiProva(), 5), { id: 'cripta', nome: 'Cripta di Mishima', revisione: 0, mappa: 'cripta-0123456789ab.jpg', colonne: 10, righe: 8, token: 5, collegamento: { scontro: 'scontro-20261006-200000', bozza: 'bozza-cripta' }, iniziale: null, mtime: 5 });
 });
 
 test('validaScena: ogni problema dice dove', () => {

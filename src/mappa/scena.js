@@ -115,6 +115,8 @@ export function riassuntoScena(s, mtime = null) {
     colonne: s.griglia?.colonne, righe: s.griglia?.righe,
     token: s.token?.length ?? 0,
     collegamento: s.collegamento ?? null,
+    // ritocchi del 08/10: «Prepara scontro» dice se la posizione iniziale è salvata
+    iniziale: s.iniziale?.quando ?? null,
     ...(mtime !== null ? { mtime } : {}),
   };
 }
