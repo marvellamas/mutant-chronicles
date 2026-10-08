@@ -85,6 +85,7 @@ Ogni giocatore può guardare la mappa dal suo tablet (o telefono) e muovere da s
 1. Sul tablet il giocatore apre Mutant dall'indirizzo del PC del master (per esempio `http://192.168.1.20:3000`, vedi sotto) e la **scheda del suo PG**, come fa già per giocare.
 2. Quando il suo PG è in uno scontro aperto, in cima alla scheda compare il riquadro **«Scontro in corso»** con **«🗺 Muovi il PG sulla mappa»**: si accende al suo turno (fuori turno è spento e dice «Non è il tuo turno · tocca a …»).
 3. Il pulsante apre la mappa dello scontro con il PG già scelto e centrata su di lui: tocca il quadretto di arrivo, poi «Conferma», poi **«← Torna alla scheda»**. Quando chiudi lo scontro, il tablet torna da solo alla scheda.
+4. **«🎯 Linea di tiro»** (nel pannello del tablet): poi un tocco su un token o un quadretto che il giocatore vede. Distanza, Copertura, «bersaglio protetto» e luce della zona, come nella tua mappa; anche fuori turno, per pianificare. Non cambia nulla nella scena: l’attacco si fa poi dalla scheda, con quei valori.
 
 **Riserva (secondo schermo, o un tablet senza la scheda):** l'indirizzo diretto della vista giocatori, per esempio `http://192.168.1.20:3000/#/mappa/giocatori` (o il QR), e «Sono…» per scegliere il PG, che il tablet ricorda.
 
@@ -101,6 +102,7 @@ L'indirizzo è fatto così: `http://`, l'**indirizzo IP del PC del master** (qua
 - vede la mappa come lo schermo dei giocatori (stessi segreti: niente token nascosti, niente sotto la nebbia), con il suo token evidenziato;
 - in basso (a destra, col tablet in orizzontale) ha la sua mini-scheda: PV, PM e Stati, «tocca a te» quando è di turno, e «⌖ Centra su di me»;
 - **muove solo il suo PG, solo al suo turno** (se non hai scelto «sempre»): sceglie Passo, Corsa o Scatto (pulsanti grandi), tocca il quadretto di arrivo dentro l'area verde, controlla il percorso e i Q, poi tocca **«Conferma»**. Se uscendo da una zona di controllo provoca un Attacco di Opportunità, il tablet lo avvisa prima della conferma. Due dita per lo zoom, trascinare per spostare la vista;
+- traccia la **linea di tiro** dal suo PG (🎯), anche fuori turno: contano solo i token che vede, i nascosti non lo proteggono e non si possono scegliere;
 - niente «Libero», niente selezione di altri token, niente porte: quelle restano a te.
 
 **Che cosa fai tu:**
