@@ -41,6 +41,10 @@ import { chiediTesto, chiedi } from './finestrella.js';
 
 const INTERVALLO_MS = 3000;
 /** Carta con la chiave del suo token (data-pezzo): la mappa di battaglia la cerca al clic sul token (src/ui/mappa/canale.js). */
+// 08/10: gruppi richiudibili delle mini-schede nella pagina del Tavolo, aperti o chiusi su questo PC
+const GRUPPI_CARTE = 'mutant-tavolo-gruppi';
+const leggiGruppi = () => { try { return JSON.parse(localStorage.getItem(GRUPPI_CARTE) ?? '{}') ?? {}; } catch { return {}; } };
+const scriviGruppo = (chiave, aperto) => { try { localStorage.setItem(GRUPPI_CARTE, JSON.stringify({ ...leggiGruppi(), [chiave]: aperto })); } catch { /* solo per questa volta */ } };
 const conPezzo = (el, chiave, volo = null) => {
   if (el?.dataset) el.dataset.pezzo = chiave;
   // 08/10: nella mappa, «In volo» anche dalla carta (src/ui/mappa/pagina.js → comandoVolo)
@@ -101,7 +105,8 @@ export function renderTavolo(radice, ctx) {
     bestiarioAperto: false,
     bozzaNemici: null,
     // mappa di battaglia (lotto 2, docs/battlemap/piano.md): elenco delle scene, letto quando si apre
-    scene: statoScene(),
+    // 08/10: nella pagina del Tavolo la sezione delle mappe è aperta di partenza
+    scene: statoScene({ aperto: !ctx.inMappa }),
     // «Collega i giocatori»: indirizzi della rete (server.mjs → /api/rete), riquadro aperto finché non lo si chiude
     rete: null,
     collegaAperto: !ctx.inMappa,
@@ -406,19 +411,28 @@ export function renderTavolo(radice, ctx) {
         azioniPlancia),
       esitoEsempi,
       ctx.inMappa ? null : h('p', { class: 'nota' }, 'Sola lettura: i valori sono quelli delle schede in personaggi/, ricalcolati con le regole attuali. Per cambiarli si apre il personaggio (clic sulla mini-scheda).'),
-      collega,
       scelta,
-      pannelloScontro(ctx, stScontro, azScontro),
+      // 08/10 (Marcello): in cima «Scontro» e accanto «Collega i giocatori»; poi durate e perdite del Round, le mappe
+      // (aperte), veicoli e bestiario; in fondo le mini-schede di PG e nemici, in gruppi richiudibili (si usano poco qui)
+      h('div', { class: 'plancia-riga-scontro' }, pannelloScontro(ctx, stScontro, azScontro), collega),
       barraDurate(alTavolo),
       barraPeriodici(alTavolo),
-      cartePg,
-      carteNemici ? [h('h2', { class: 'plancia-sezione' }, 'Nemici nello scontro'), carteNemici] : null,
-      sezioneVeicoli(),
       scene,
-      bestiario));
+      sezioneVeicoli(),
+      bestiario,
+      gruppoCarte('pg', `Mini-schede dei PG${alTavolo.length ? ` (${alTavolo.length})` : ''}`, cartePg),
+      gruppoCarte('nemici', `Mini-schede dei nemici${nemiciInScontro().length ? ` (${nemiciInScontro().length})` : ''}`, carteNemici ?? h('p', { class: 'vuoto' }, stato.scontro ? 'Nessun nemico nello scontro.' : 'Nessuno scontro aperto.'))));
     custode.ripristina(foto);
     if (cartaDaMostrare && mostraCarta(radice, cartaDaMostrare)) cartaDaMostrare = null;
   };
+  /**
+   * Gruppo richiudibile di mini-schede (08/10): aperto o chiuso a scelta, ricordato su questo PC (localStorage
+   * GRUPPI_CARTE); di partenza chiuso. Una carta richiesta dalla mappa apre il suo gruppo (src/ui/mappa/canale.js).
+   */
+  const gruppoCarte = (chiave, titolo, contenuto) => h('details', {
+    class: 'riquadro plancia-gruppo-carte', open: leggiGruppi()[chiave] === true,
+    ontoggle: (e) => scriviGruppo(chiave, e.target.open),
+  }, h('summary', {}, h('strong', {}, titolo)), contenuto);
   // A.131: immagine del token di un tipo di nemico, per tutte le sue copie nello scontro e nel bestiario
   const immagineNemico = async (p) => {
     const img = await scegliImmagineNemico(ctx.dati, p.scheda?.nome ?? p.nome);

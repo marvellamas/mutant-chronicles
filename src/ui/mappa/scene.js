@@ -13,8 +13,8 @@ const ID_PANNELLO = 'plancia-scene-mappa';
  * Stato del pannello dentro lo stato della plancia: { aperto, elenco: [...] | null, errore, occupato }.
  * `ridisegna` ridisegna la plancia; `apri(id)` va alla pagina della scena.
  */
-export function statoScene() {
-  return { aperto: false, elenco: null, errore: null, occupato: false };
+export function statoScene({ aperto = false } = {}) {
+  return { aperto, elenco: null, errore: null, occupato: false };
 }
 
 async function ricarica(st, ridisegna) {
@@ -98,6 +98,8 @@ export function pannelloScene(ctx, st, { ridisegna, apri }) {
     },
   };
   const elenco = st.elenco ?? [];
+  // 08/10: aperto di partenza (pagina del Tavolo): l'elenco si legge alla prima apertura, una volta
+  if (st.aperto && st.elenco === null && !st.lettaAllApertura) { st.lettaAllApertura = true; ricarica(st, ridisegna); }
   return h('details', {
     class: 'riquadro scene-mappa', id: ID_PANNELLO, open: st.aperto,
     ontoggle: (e) => {
@@ -105,7 +107,7 @@ export function pannelloScene(ctx, st, { ridisegna, apri }) {
       if (st.aperto && st.elenco === null) ricarica(st, ridisegna);
     },
   },
-  h('summary', {}, h('strong', {}, 'Mappa di battaglia'), st.elenco ? ` (${elenco.length} scen${elenco.length === 1 ? 'a' : 'e'})` : ''),
+  h('summary', {}, h('strong', {}, 'Mappe di battaglia'), st.elenco ? ` (${elenco.length} scen${elenco.length === 1 ? 'a' : 'e'})` : ''),
   h('p', { class: 'nota' }, 'Scene della mappa, in scene/ sul server: immagine, griglia e, nei prossimi lotti, nebbia, muri e token. Le immagini stanno in mappe/.'),
   h('div', { class: 'riga-azioni' },
     h('button', { type: 'button', class: 'btn', disabled: st.occupato, onclick: azioni.nuova }, 'Nuova scena')),

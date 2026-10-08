@@ -17,6 +17,8 @@ export function mostraCarta(radice, chiave) {
   const carta = [...radice.querySelectorAll('[data-pezzo]')].find((x) => stessoPezzo(x.dataset.pezzo, chiave));
   if (!carta) return false;
   if (carta.tagName === 'DETAILS') carta.open = true;
+  // 08/10: la carta può stare in un gruppo richiuso del Tavolo (mini-schede dei PG o dei nemici): si apre
+  for (let p = carta.parentElement?.closest('details'); p; p = p.parentElement?.closest('details')) p.open = true;
   // scorrimento immediato: quello «smooth» non parte in una finestra o in un tab in secondo piano
   carta.scrollIntoView({ block: 'center' });
   carta.classList.remove('carta-dalla-mappa');

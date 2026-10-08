@@ -2295,3 +2295,11 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 .mini-muso > span { display: block; transform: rotate(var(--angolo)); }
 .mini-volo { position: absolute; transform: translate(4px, -24px); width: 15px; height: 15px; pointer-events: none; z-index: 2; }
 .carta-volo { margin-top: .4rem; }
+
+/* 08/10: Tavolo del Master, «Scontro» e «Collega i giocatori» sulla stessa riga; mini-schede in gruppi richiudibili */
+.plancia-riga-scontro { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.9rem; align-items: start; margin-top: 0.75rem; }
+.plancia-riga-scontro > * { margin: 0; min-width: 0; }
+@media (min-width: 70rem) { .plancia-riga-scontro { grid-template-columns: minmax(0, 2.2fr) minmax(18rem, 1fr); } }
+.plancia-gruppo-carte { margin-top: 0.9rem; }
+.plancia-gruppo-carte > summary { cursor: pointer; font-size: 1.1rem; }
+.plancia-gruppo-carte > .plancia-griglia { margin-top: 0.6rem; }
