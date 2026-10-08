@@ -11,6 +11,7 @@ import { diTurno } from '../scontro.js';
 import { stessaChiave, partecipanteConducente } from '../veicoli-registro.js';
 import { profiloVeicolo, movimentoMassimo } from '../veicoli.js';
 import { ingombroDaTaglia, ingombroVeicolo, iniziali, chiaveRif } from './token.js';
+import { postiDi, ingombroOrientato } from './veicoli-mappa.js';
 
 /** Immagine del nemico sul token (A.131): la copia ridotta in mappe/, se c'è; altrimenti le iniziali. */
 export const urlImmagineNemico = (immagine) => (immagine?.file ? `api/mappe/${encodeURIComponent(immagine.ridotta ?? immagine.file)}` : null);
@@ -125,7 +126,11 @@ export function pezziDellaScena({ scontro = null, bozza = null, alTavolo = [], v
     const guida = scontro ? partecipanteConducente(rec, scontro) : null;
     pezzi.push({
       chiave: chiaveRif({ tipo: 'veicolo', id: rec.id }), rif: { tipo: 'veicolo', id: rec.id }, tipo: 'veicolo', nome,
-      lato: 'pg', ingombro: ingombroVeicolo(profilo, dati), iniziali: iniziali(nome), ritratto: null, pv: null, aZero: false,
+      // il mezzo entra in mappa con il muso in basso, come l'immagine (fase 2, lotto 5): ingombro verticale
+      lato: 'pg', ingombro: ingombroOrientato(ingombroVeicolo(profilo, dati), 's'), iniziali: iniziali(nome), ritratto: null, pv: null, aZero: false,
+      // fase 2, lotto 5: immagine del token (con il muso), posti a bordo, conducente del registro (A.91)
+      immagine: profilo?.mappa?.immagine ?? null, musoImmagine: profilo?.mappa?.muso_immagine ?? 's', posti: postiDi(profilo),
+      conducenteChiave: rec.conducente?.chiave ?? null,
       stati: [], ferite: null, conducente: rec.conducente?.nome ?? null,
       // colore del bordo (src/mappa/colori.js): quello del PG proprietario
       proprietario: rec.proprietario?.tipo === 'gruppo' ? null : rec.proprietario?.chiave ?? null,
@@ -148,12 +153,13 @@ export function tokenOrfani(scena, pezzi) {
 
 /** Pezzi che non hanno ancora un token sulla mappa. */
 export function pezziSenzaToken(scena, pezzi) {
-  const sulla = new Set((scena?.token ?? []).map((t) => chiaveRif(t.rif)));
+  // chi è a bordo di un veicolo ha il suo token, dentro il mezzo (fase 2, lotto 5)
+  const sulla = new Set((scena?.token ?? []).flatMap((t) => [chiaveRif(t.rif), ...(t.passeggeri ?? []).map((p) => chiaveRif(p.rif))]));
   return pezzi.filter((p) => !sulla.has(p.chiave));
 }
 
 /** Nuovo token per un pezzo, in q: id stabile dal riferimento. */
 export function tokenPerPezzo(pezzo, q) {
   const id = `t-${pezzo.chiave.replace(/[^A-Za-z0-9_.-]+/g, '-')}`.slice(0, 120);
-  return { id, rif: { ...pezzo.rif }, q, ingombro: Array.isArray(pezzo.ingombro) ? [...pezzo.ingombro] : pezzo.ingombro, nascosto: false };
+  return { id, rif: { ...pezzo.rif }, q, ingombro: Array.isArray(pezzo.ingombro) ? [...pezzo.ingombro] : pezzo.ingombro, nascosto: false, ...(pezzo.tipo === 'veicolo' ? { direzione: 's' } : {}) };
 }

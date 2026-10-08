@@ -2492,6 +2492,14 @@ function validaVeicoli(dati, err) {
   if (!(dati.abilita?.abilita ?? []).some((a) => a.nome === 'Pilotare' && a.caratteristica === v.pilotare?.caratteristica)) {
     err(F, 'pilotare.caratteristica', `l’Abilità Pilotare di abilita.json non usa ${v.pilotare?.caratteristica} (§1.2: INT)`);
   }
+  // mappa di battaglia (fase 2, lotto 5): immagine e muso del token, rotazione a 90°, posti dal profilo
+  if (v.mappa?.rotazione_gradi !== 90) err(F, 'mappa.rotazione_gradi', '90 atteso (i veicoli si girano a passi di 90°)');
+  for (const k of ['salire_azioni', 'scendere_azioni']) if (v.mappa?.[k] !== null && !(Number.isInteger(v.mappa?.[k]) && v.mappa[k] >= 0)) err(F, `mappa.${k}`, 'null (A.145, da definire) o un numero di Azioni');
+  for (const [i, p] of (v.profili ?? []).entries()) {
+    if (p.mappa === undefined) continue;
+    if (!/^img\/[\w./-]+\.(png|webp|jpg)$/.test(p.mappa?.immagine ?? '')) err(F, `profili[${i}].mappa.immagine`, 'percorso di un’immagine in img/ (png, webp o jpg)');
+    if (!['s', 'o', 'n', 'e'].includes(p.mappa?.muso_immagine)) err(F, `profili[${i}].mappa.muso_immagine`, 's, o, n o e (dove punta il muso nell’immagine)');
+  }
   // §1.4: MAN da −2 a +2, una fascia per valore
   const man = v.manovrabilita;
   if (!Array.isArray(man?.fasce) || man.fasce.length !== 5) err(F, 'manovrabilita.fasce', 'cinque fasce da +2 a −2 attese (§1.4)');
@@ -2701,8 +2709,31 @@ function validaMappa(dati, err) {
     for (const k of ['colore', 'traccia']) if (!/^#[0-9a-f]{6}([0-9a-f]{2})?$/i.test(PT[k] ?? '')) err(F, `pv_token.${k}`, 'colore #rrggbb o #rrggbbaa');
     for (const k of ['rispetto_al_bordo', 'spessore_minimo_px', 'mini_token_px']) if (!positivo(PT[k])) err(F, `pv_token.${k}`, 'numero positivo');
   }
+  // icone a 0 PV sui token (07/10): immagini in img/, lato rispetto al token
+  const PZ = m.pv_zero;
+  if (!isOggetto(PZ)) err(F, 'pv_zero', 'oggetto mancante');
+  else {
+    for (const k of ['nemico', 'pg']) if (!/^img\/[\w./-]+\.(png|webp|svg)$/.test(PZ[k] ?? '')) err(F, `pv_zero.${k}`, 'percorso di un’immagine in img/ (png, webp o svg)');
+    if (!(typeof PZ.quota_token === 'number' && PZ.quota_token >= 0.2 && PZ.quota_token <= 1)) err(F, 'pv_zero.quota_token', 'numero da 0.2 a 1');
+  }
+  // suoni della mappa (07/10, src/mappa/audio.js): evento → file, musica di fondo, volumi predefiniti
+  const AU = m.audio;
+  if (!isOggetto(AU)) err(F, 'audio', 'oggetto mancante');
+  else {
+    const NOTI = ['nuovo_round', 'attacco_opportunita', 'template_scaduto'];
+    if (!isOggetto(AU.effetti)) err(F, 'audio.effetti', 'oggetto evento → file mancante');
+    else for (const [k, v] of Object.entries(AU.effetti)) {
+      if (!NOTI.includes(k)) err(F, `audio.effetti.${k}`, `evento sconosciuto (noti: ${NOTI.join(', ')})`);
+      else if (v !== null && !/^[\w/.-]+\.(mp3|ogg|wav|m4a|aac)$/i.test(v)) err(F, `audio.effetti.${k}`, 'null oppure il percorso di un file audio del progetto (mp3, ogg, wav, m4a, aac)');
+    }
+    if (!/^[a-z0-9-]+$/.test(AU.musica?.cartella ?? '')) err(F, 'audio.musica.cartella', 'nome semplice di una cartella');
+    if (!Array.isArray(AU.musica?.formati) || !AU.musica.formati.length || AU.musica.formati.some((x) => !['mp3', 'ogg', 'wav', 'm4a', 'aac', 'opus', 'flac', 'webm'].includes(x))) err(F, 'audio.musica.formati', 'elenco di formati audio noti');
+    for (const k of ['musica', 'effetti']) if (!(typeof AU.volume_predefinito?.[k] === 'number' && AU.volume_predefinito[k] >= 0 && AU.volume_predefinito[k] <= 1)) err(F, `audio.volume_predefinito.${k}`, 'numero da 0 a 1');
+    if (typeof AU.giocatori_predefinito !== 'boolean') err(F, 'audio.giocatori_predefinito', 'true o false');
+  }
   // «Indietro» nell'Iniziativa (07/10, src/scontro.js → indietro): quanti «Avanti» si possono annullare
   if (!isIntero(m.iniziativa?.indietro_max) || m.iniziativa.indietro_max < 1) err(F, 'iniziativa.indietro_max', 'intero da 1 in su');
+  if (!isIntero(m.iniziativa?.centra_px_per_q) || m.iniziativa.centra_px_per_q < 8 || m.iniziativa.centra_px_per_q > 400) err(F, 'iniziativa.centra_px_per_q', 'intero da 8 a 400 (pixel di schermo per Q dopo «Centra»)');
   // fase 2, lotto 4: luci semplici (src/mappa/luce.js): categorie di regole.json → illuminazione, raggi di scoperta
   {
     const LU = m.luci;

@@ -48,11 +48,13 @@ function dallaMappa(ctx, a, salvate) {
   if (!p || !nome || String(p.nome).trim().toUpperCase() !== String(nome).trim().toUpperCase() || Date.now() - p.quando > 10 * 60 * 1000) return salvate;
   try { sessionStorage.removeItem(CHIAVE_DALLA_MAPPA); } catch { /* resta */ }
   // fase 2, lotto 4: anche la luce della zona del bersaglio, proposta in «Luce sul bersaglio» (modificabile)
-  const v = { ...salvate, distanza: p.distanza, bersaglio: { ...(salvate.bersaglio ?? {}), copertura: p.copertura, distanza: p.distanza, ...(p.protetto ? { impegnato: true } : {}) }, ...(p.luceMappa ? { luceMappa: p.luceMappa } : {}) };
+  // ritocchi del 07/10: anche l'id del bersaglio nello scontro, proposto in «Contro un nemico dello scontro»; dal menu del
+  // token senza linea di tiro solo quello (soloBersaglio)
+  const v = { ...salvate, ...(p.soloBersaglio ? {} : { distanza: p.distanza, bersaglio: { ...(salvate.bersaglio ?? {}), copertura: p.copertura, distanza: p.distanza, ...(p.protetto ? { impegnato: true } : {}) } }), ...(p.luceMappa ? { luceMappa: p.luceMappa } : {}), ...(p.bersaglioId ? { bersaglioScontro: p.bersaglioId } : {}) };
   queueMicrotask(() => {
     ctx.azioni.ricordaAttacco?.(a.uid, v);
     if (p.luce && p.luce !== ctx.sessione?.luce) ctx.azioni.imposta?.('luce', p.luce);
-    avviso(`Dalla mappa: bersaglio ${p.bersaglio ?? ''} a ${p.distanza} Q, Copertura ${p.copertura}${p.luceMappa ? `, ${p.luceMappa}` : ''}.`);
+    avviso(p.soloBersaglio ? `Dalla mappa: bersaglio ${p.bersaglio ?? ''}.` : `Dalla mappa: bersaglio ${p.bersaglio ?? ''} a ${p.distanza} Q, Copertura ${p.copertura}${p.luceMappa ? `, ${p.luceMappa}` : ''}.`);
   });
   return v;
 }
@@ -197,6 +199,8 @@ function risultatoRavvicinato(ctx, a, r) {
           onclick: () => ctx.azioni.ricordaAttacco(a.uid, { ...(ctx.sessione.attacchi?.[a.uid] ?? {}), ultima: { manovra: r.manovra.id, nome: r.manovra.nome } }),
         }, 'Attacca'),
         h('small', { class: 'nota' }, ultima ? `Ultima Manovra con quest’arma: ${ultima.nome}. ` : '', 'Tira 1d20 al tavolo. «Attacca» non consuma nulla: registra la Manovra usata.'))),
+      // ritocchi del 07/10: con il PG in uno scontro aperto, il bersaglio fra i nemici e «Applica il danno» (src/ui/attacco-pg.js)
+      ctx.azioni.finale ? null : ctx.azioni.controNemico?.(ctx, a, r) ?? null,
   ];
 }
 
@@ -373,5 +377,7 @@ function risultato(ctx, a, r, colpi, imposta) {
           title: r.impossibile?.motivo ?? null, onclick: spara,
         }, `Spara (−${r.munizioni} ${r.munizioni === 1 ? 'munizione' : 'munizioni'})`),
         h('small', { class: 'nota' }, 'Tira 1d20 al tavolo. «Annulla» nell’intestazione annulla lo sparo; il pannello resta aperto per il prossimo tiro.'))),
+      // ritocchi del 07/10: con il PG in uno scontro aperto, il bersaglio fra i nemici e «Applica il danno» (src/ui/attacco-pg.js)
+      ctx.azioni.finale ? null : ctx.azioni.controNemico?.(ctx, a, r) ?? null,
   ];
 }

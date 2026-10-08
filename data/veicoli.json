@@ -12,6 +12,16 @@
     "_nota": "Scheda digitale, tab Veicoli: «Aggiungi veicolo» dal catalogo (profili) o scritto a mano, più veicoli per personaggio, «Colpito», «Ripara», PI a mano. Il veicolo non pesa sul carico del personaggio. Nel file: scelte.veicoli, scritto solo se non vuoto (src/character.js)."
   },
 
+  "mappa": {
+    "_nota": "Veicoli sulla mappa di battaglia (fase 2, lotto 5; richiesta di Marcello del 07/10/2026; src/mappa/veicoli-mappa.js). Ingombro dal profilo (dimensioni.ingombro_q, «lunghezza × larghezza» in Q); immagine del token nel profilo (mappa.immagine, con il muso verso muso_immagine: s, o, n, e) e ruotata con il mezzo a passi di 90°. A bordo: un conducente (un PG: diventa il conducente del registro, A.91) e passeggeri fino ai posti del profilo (equipaggio.posti); chi è a bordo resta nell'Iniziativa e si muove con il mezzo (Veicoli §1.3: essere trasportati non consuma l'AzM).",
+    "rotazione_gradi": 90,
+    "salire_azioni": null,
+    "scendere_azioni": null,
+    "TODO(Davide)": "A.145: quante Azioni costano salire su un veicolo e scenderne (il Manuale dei Veicoli 0.2 non lo dice)? Per ora la mappa non le conta: il master le applica a voce.",
+    "attacchi_di_opportunita": null,
+    "TODO(Davide) opportunita": "A.146: un veicolo che esce dalla zona di controllo di un avversario provoca un Attacco di Opportunità (contro il mezzo o contro chi è a bordo)? E un avversario a bordo minaccia la zona attorno al mezzo? Per ora i veicoli non provocano e non controllano zone (come prima)."
+  },
+
   "misure": {
     "paragrafo": "§1.1",
     "round_secondi": 6,
@@ -488,6 +498,7 @@
       "descrizione": "Ricognitore della Neverlost preparato da Petra. Quattro grandi ruote rinforzate, carrozzeria corazzata a pannelli modulari, cabina chiusa con vetri rinforzati e mitragliatore leggero su rotaia presso la botola superiore.",
       "equipaggio": { "conducente": 1, "passeggeri": 7, "posti": 8, "minimo": 1 },
       "dimensioni": { "lunghezza_m": 6, "larghezza_m": 2.6, "ingombro_q": "4 × 2" },
+      "mappa": { "immagine": "img/Tokens/ASAScout-mappa.png", "muso_immagine": "s" },
       "carico_kg": 1500,
       "mov_q": 30,
       "man": 0,

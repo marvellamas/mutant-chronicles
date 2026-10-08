@@ -26,6 +26,7 @@ import { chiaveRif } from './token.js';
 import { annullaRipristino } from './iniziale.js';
 import { annullaLuce } from './luce.js';
 import { annullaGruppo } from './gruppo.js';
+import { annullaBordo } from './veicoli-mappa.js';
 
 const conVoce = (scena, voce, dati) => ({ ...scena, annulla: [...scena.annulla, voce].slice(-dati.mappa.scena.annulla_max) });
 
@@ -207,6 +208,8 @@ export function annullaUltima(scena, { chiaviPresenti = null } = {}) {
     }
     case 'gruppo':
       return { scena: annullaGruppo(senza, voce), voce, testo: `spostamento di ${voce.prima.length} token` };
+    case 'bordo':
+      return { scena: annullaBordo(senza, voce), voce, testo: voce.testo ?? 'a bordo' };
     case 'luce':
       return { scena: annullaLuce(senza, voce), voce, testo: 'luci' };
     case 'template-scaduti': {

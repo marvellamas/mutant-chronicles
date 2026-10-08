@@ -120,7 +120,7 @@ test('pezzi dallo scontro: lato, Taglia, PV e Stati letti, turno, veicoli del gr
   assert.deepEqual(pezzi.map((p) => [p.chiave, p.lato, p.ingombro]), [
     ['partecipante:pg:Lucas', 'pg', 1], ['partecipante:pg:Nadia-Ferro', 'pg', 1],
     ['partecipante:nem:predone:1', 'avversario', 1], ['partecipante:nem:predone:2', 'avversario', 1],
-    ['partecipante:nem:nepharita:1', 'avversario', 2], ['veicolo:vei-scout', 'pg', [4, 2]],
+    ['partecipante:nem:nepharita:1', 'avversario', 2], ['veicolo:vei-scout', 'pg', [2, 4]],
   ]);
   const [lucas, nadia, predone1] = pezzi;
   assert.equal(lucas.ritratto, 'data:image/png;base64,AAAA', 'chiave del file confrontata come la plancia');
@@ -162,7 +162,7 @@ test('coerenza: orfani e senza token; token nuovo valido nella scena e nella vis
   const pezzi = pezziDellaScena({ scontro: s, viste: new Map(), veicoli: [scout] }, dati);
   const conToken = { ...scena, token: [tokenPerPezzo(pezzi[0], [1, 1]), tokenPerPezzo(pezzi[4], [4, 4]), tokenPerPezzo(pezzi[5], [6, 0]), { id: 'cassa', rif: { tipo: 'segnaposto' }, nome: 'Cassa', q: [0, 7], ingombro: 1, nascosto: false }] };
   assert.equal(validaScena(conToken, dati), null);
-  assert.deepEqual(conToken.token[2].ingombro, [4, 2]);
+  assert.deepEqual([conToken.token[2].ingombro, conToken.token[2].direzione], [[2, 4], 's'], 'il veicolo entra con il muso in basso, verticale (fase 2, lotto 5)');
   assert.deepEqual(pezziSenzaToken(conToken, pezzi).map((p) => p.chiave), ['partecipante:pg:Nadia-Ferro', 'partecipante:nem:predone:1', 'partecipante:nem:predone:2']);
   // la Nepharita esce dallo scontro: il suo token è orfano; il segnaposto non lo è mai
   const senza = togliPartecipante(s, 'nem:nepharita:1');

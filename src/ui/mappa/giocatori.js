@@ -20,6 +20,7 @@ import { creaTela } from './canvas.js';
 import { creaGesti } from './gesti.js';
 import { disegnaToken, coloriMappa, creaImmagini } from './disegno-token.js';
 import { barraIniziativaEl } from './barra-iniziativa.js';
+import { creaAudio } from './audio.js';
 import { disegnaArea, disegnaZoc, disegnaPercorso, coloriAree, disegnaTemplate, disegnaPorte, disegnaMuri, disegnaLineaTiro, disegnaLuci } from './disegno-aree.js';
 import { celleDaMaschera, templateVisibili, ostacoliVisibili } from '../../mappa/template.js';
 import { celleDellaDiretta, zocDellaDiretta, avversariDellaDiretta, trattiPercorso } from '../../mappa/diretta.js';
@@ -118,7 +119,7 @@ export function renderGiocatori(radice, ctx) {
       if (!s) return;
       const pezzi = new Map(s.token.filter((t) => t.info).map((t) => [chiaveRif(t.rif), { ...t.info, ritratto: t.info.immagine, pv: t.info.pv === null ? null : { attuali: t.info.pv, massimo: 1 }, stati: [] }]));
       const d = direttaAttuale();
-      disegnaToken(c, { scena: s, cam: st.cam, pezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: d?.token ?? null, bordo: (p) => p.bordo ?? null, alone: ctx.dati.mappa.colori.alone_turno, ritrattoVerticale: ctx.dati.mappa.token.ritratto_verticale, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => true } });
+      disegnaToken(c, { scena: s, cam: st.cam, pezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: d?.token ?? null, bordo: (p) => p.bordo ?? null, alone: ctx.dati.mappa.colori.alone_turno, ritrattoVerticale: ctx.dati.mappa.token.ritratto_verticale, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => true }, zero: ctx.dati.mappa.pv_zero });
       // fase 2, lotto 3: la linea di tiro del master (già filtrata dal server)
       if (d?.linea) disegnaLineaTiro(c, { scena: s, cam: st.cam, da: d.linea.da, a: d.linea.a, copertura: d.linea.copertura, etichetta: d.linea.testo ?? `${d.linea.distanza} Q · ${{ nessuna: 'nessuna Copertura', leggera: 'Copertura Leggera', media: 'Copertura Media', totale: 'Copertura Totale' }[d.linea.copertura] ?? ''}`, colori: ctx.dati.mappa.visuale.colori });
       // percorso del master, a tratti fra le interruzioni della nebbia; il costo all'ultimo tratto
@@ -242,9 +243,17 @@ export function renderGiocatori(radice, ctx) {
   };
   window.addEventListener('keydown', suTasto);
 
+  // suoni della vista giocatori: spenti finché il master non accende «suona anche nella vista giocatori» (scena → audio)
+  const audio = creaAudio(ctx.dati, { attivo: () => !!st.vista?.audio?.giocatori });
   const messaggio = (t) => { el.messaggio.textContent = t ?? ''; el.messaggio.hidden = !t; };
   async function usa(corpo) {
+    const roundPrima = st.vista?.collegamento?.scontro ? { id: st.vista.collegamento.scontro, round: st.vista.turno?.round ?? null } : null;
     st.vista = corpo.scena;
+    // suoni (07/10): solo con «suona anche nella vista giocatori» acceso dal master; campanella al nuovo Round, musica
+    audio.riprova();
+    audio.musica(st.vista?.audio?.musica ?? null);
+    const r = st.vista?.turno?.round ?? null;
+    if (roundPrima && roundPrima.id === st.vista?.collegamento?.scontro && Number.isInteger(r) && Number.isInteger(roundPrima.round) && r > roundPrima.round) audio.effetto('nuovo_round');
     // ZoC (07/10): gli Attacchi di Opportunità nuovi diventano un avviso anche qui (la prima lettura non li ripete)
     const primaLettura = !st.opportunitaViste;
     st.opportunitaViste ??= new Set();
@@ -256,7 +265,7 @@ export function renderGiocatori(radice, ctx) {
     }
     const barra = corpo.scena?.iniziativa ?? null;
     el.iniziativa.hidden = !barra;
-    svuota(el.iniziativa, barra ? barraIniziativaEl(barra, { pxPerPunto: V.barra.iniziativa_px_per_punto }) : null);
+    svuota(el.iniziativa, barra ? barraIniziativaEl(barra, { pxPerPunto: V.barra.iniziativa_px_per_punto, zero: ctx.dati.mappa.pv_zero }) : null);
     if (!st.vista) {
       el.titolo.textContent = 'Mappa';
       el.turno.textContent = '';
@@ -341,6 +350,7 @@ export function renderGiocatori(radice, ctx) {
 
   return () => {
     st.chiusa = true;
+    audio.chiudi();
     clearInterval(giro);
     clearInterval(giroVersione);
     flusso?.close();

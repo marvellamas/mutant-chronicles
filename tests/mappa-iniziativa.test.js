@@ -195,3 +195,30 @@ test('barretta dei PV sui mini-token: i giocatori vedono la quota dei PG; dei ne
   assert.equal(voce(v, 'nem:predone:1').pv, null, 'nemico: nascosta per i giocatori');
   assert.deepEqual(voce(vistaGiocatori({ ...scena, pvNemiciGiocatori: true }, { pezzi, round: 2, scontro: s0 }), 'nem:predone:1').pv, { attuali: 0.25, massimo: 1 });
 });
+
+test('icone a 0 PV (07/10): dati validati, immagini leggere in git; la barra porta aZero, ai giocatori solo dei visibili', async () => {
+  const { statSync } = await import('node:fs');
+  const { validaDati } = await import('../src/validate.js');
+  const { copia } = await import('./helpers.js');
+  const PZ = dati.mappa.pv_zero;
+  for (const k of ['nemico', 'pg']) {
+    const f = statSync(new URL(`../${PZ[k]}`, import.meta.url));
+    assert.ok(f.size < 16 * 1024, `${PZ[k]} leggera (${f.size} byte)`);
+  }
+  const d = copia(dati);
+  d.mappa.pv_zero.nemico = 'teschio.png';
+  assert.ok(validaDati(d).some((e) => e.file === 'mappa.json' && e.chiave === 'pv_zero.nemico'));
+  const s = scontroProva();
+  const scena = { token: [
+    { id: 't1', rif: { tipo: 'partecipante', id: 'nem:predone:1' }, q: [1, 1], ingombro: 1, nascosto: false },
+    { id: 't2', rif: { tipo: 'partecipante', id: 'nem:predone:2' }, q: [2, 1], ingombro: 1, nascosto: true },
+    { id: 't3', rif: { tipo: 'partecipante', id: 'pg:OSHI' }, q: [3, 1], ingombro: 1, nascosto: false },
+  ] };
+  const zero = { pv: { attuali: 0, massimo: 10 }, aZero: true };
+  const b = barraIniziativa({ scontro: s, pezzi: [pezzo('nem:predone:1', 'avversario', zero), pezzo('nem:predone:2', 'avversario', zero), pezzo('pg:OSHI', 'pg', zero), pezzo('pg:LUCAS', 'pg')], scena });
+  assert.deepEqual(b.voci.filter((v) => v.aZero).map((v) => v.id).sort(), ['nem:predone:1', 'nem:predone:2', 'pg:OSHI']);
+  // ai giocatori: il Predone 2 è nascosto, quindi niente voce (e niente teschio); Predone 1 e Oshi sì
+  const g = barraPerGiocatori(b, new Set(['partecipante:nem:predone:1', 'partecipante:pg:OSHI']));
+  assert.deepEqual(g.voci.filter((v) => v.aZero).map((v) => v.chiave).sort(), ['partecipante:nem:predone:1', 'partecipante:pg:OSHI']);
+  assert.ok(!g.voci.some((v) => v.chiave === 'partecipante:nem:predone:2'));
+});

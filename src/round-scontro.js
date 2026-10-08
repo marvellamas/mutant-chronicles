@@ -88,7 +88,9 @@ export function collegamentoScontro(scontro, chiave) {
   const periodici = lista(scontro.periodici).filter((p) => p.bersaglio === id)
     .map((p) => ({ stato: p.stato, valore: p.valore ?? null, formula: p.formula ?? null, fonte: p.fonteNome ?? null, ultimo: p.ultimo ?? p.dal }));
   const effetti = effettiSu(scontro, id);
-  const partecipanti = lista(scontro.partecipanti).filter((p) => p.id !== id).map((p) => ({ id: p.id, nome: p.nome, tipo: p.tipo }));
+  // ritocchi del 07/10: dei nemici anche lato, PV, Difese e AR, per il bersaglio di «Attacca!» dalla scheda
+  const partecipanti = lista(scontro.partecipanti).filter((p) => p.id !== id).map((p) => ({ id: p.id, nome: p.nome, tipo: p.tipo,
+    ...(p.tipo === 'nemico' ? { lato: p.lato, pv: { attuali: p.pv?.attuali, massimo: p.pv?.massimo }, difese: p.scheda?.difese ?? null, ar: p.scheda?.ar?.totale ?? null } : {}) }));
   return { id: scontro.id, nome: scontro.nome, round: scontro.round, durate, periodici, effetti, partecipanti };
 }
 

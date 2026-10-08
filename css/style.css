@@ -1585,6 +1585,18 @@ body.con-sfondo::before {
 .scontro-testa { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem; }
 .scontro-testa h2 { margin: 0; }
 .di-turno-testo { margin: 0.4rem 0; font-size: 1.05rem; }
+/* «Reimposta Iniziativa» (07/10): il nome nella tabella dell'ordine apre la reimpostazione di quel partecipante */
+.btn-nome-scontro { font: inherit; font-weight: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-align: left; text-decoration: underline dotted; text-underline-offset: 3px; }
+.btn-nome-scontro:hover, .btn-nome-scontro:focus-visible { text-decoration-style: solid; }
+.btn-centra { margin-left: 0.3rem; padding: 0 0.35rem; line-height: 1.4; }
+.reimposta-elenco { list-style: none; padding: 0; margin: 0 0 0.6rem; display: flex; flex-wrap: wrap; gap: 0.3rem; }
+/* finestra «Iniziativa» all'avvio dello scontro (difetto del test del 07/10, src/ui/scontro.js → chiediIniziativa) */
+.finestrella.chiedi-iniziativa { max-width: min(44rem, calc(100vw - 2rem)); }
+.iniziativa-righe { display: flex; flex-direction: column; gap: 0.35rem; margin: 0.6rem 0; max-height: 60vh; overflow-y: auto; }
+.iniziativa-riga { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem 0.6rem; padding: 0.3rem 0.4rem; border-left: 3px solid var(--pe); }
+.iniziativa-riga.vuota { border-left-color: var(--tenue); }
+.iniziativa-nome { min-width: 12rem; flex: 1 1 12rem; }
+.iniziativa-totale { min-width: 6rem; font-weight: 600; }
 .ordine-iniziativa tr.di-turno { background: var(--accento-tenue); }
 .ordine-iniziativa tr.di-turno th, .ordine-iniziativa tr.di-turno .pos-scontro { color: var(--accento); }
 .ordine-iniziativa tr.provvisorio th { font-style: italic; }
@@ -1647,6 +1659,10 @@ body.con-sfondo::before {
 .scelta-pulsanti.scelta-colonna { flex-direction: column; align-items: stretch; }
 .scelta-colonna .scelta-btn { text-align: left; }
 .tiro-colpire { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem 0.5rem; margin: 0.3rem 0; }
+/* ritocchi del 07/10: un PG attacca un nemico dello scontro dal pannello «Attacca!» (src/ui/attacco-pg.js) */
+.contro-nemico { margin-top: 0.8rem; }
+.contro-nemico-titolo { margin: 0 0 0.4rem; font-size: 1rem; }
+.contro-nemico .scelta-btn.a-zero { opacity: 0.6; }
 .esito-attacco { margin: 0.4rem 0; padding: 0.3rem 0.6rem; border-radius: var(--raggio); border-left: 4px solid var(--bordo); }
 .esito-attacco.esito-successo, .esito-attacco.esito-magistrale, .esito-attacco.esito-automatico { border-left-color: var(--pe); background: var(--pe-tenue); color: var(--testo); }
 .esito-attacco.esito-fallimento, .esito-attacco.esito-maldestro, .esito-attacco.esito-impossibile { border-left-color: var(--pv); background: var(--pv-tenue); color: var(--testo); }
@@ -1971,7 +1987,7 @@ body:has(.mappa-pagina) .piede { display: none; }
 .ridotta-voce { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; background: none; border: 2px solid transparent; border-radius: var(--raggio); padding: 0.2rem; cursor: pointer; color: inherit; }
 .ridotta-voce.di-turno { border-color: var(--mappa-turno); }
 .ridotta-voce.scelto { background: var(--accento-tenue); }
-.ridotta-voce .mini-token { position: static; transform: none; width: 40px; height: 40px; }
+.ridotta-voce .mini-token { position: relative; transform: none; width: 40px; height: 40px; }
 .pv-mini { display: block; width: 44px; height: 5px; border-radius: 3px; background: linear-gradient(to right, var(--pv) calc(var(--quota) * 100%), var(--bordo) 0); }
 /* barra dell'Iniziativa: il valore più alto a sinistra; i pari merito impilati nell'ordine della plancia */
 .mappa-iniziativa-posto[hidden] { display: none; }
@@ -2024,6 +2040,8 @@ button.mini-token { cursor: pointer; }
 /* 07/10: il bordo colorato è l'unica cornice (nessun filo di contorno attorno al mini-token); il ritratto lo riempie */
 .mini-token.con-bordo { border-color: var(--bordo); }
 .mini-token img { border-radius: 50%; object-position: 50% var(--ritratto-y, 20%); }
+/* icona a 0 PV sul mini-token (07/10; data/mappa.json → pv_zero): teschio o croce rossa, sopra il ritratto */
+.mini-token img.icona-zero { position: absolute; left: 15%; top: 15%; width: 70%; height: 70%; object-fit: contain; border-radius: 0; pointer-events: none; }
 .mini-token.con-bordo.tratteggio { border-style: dashed; background-color: var(--alterno); }
 .mini-token.con-bordo.doppio { border-style: double; border-width: 4px; }
 .mini-token.con-bordo.scelto { outline: 2px solid var(--mappa-selezione); outline-offset: 2px; }
@@ -2134,3 +2152,16 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 /* 07/10: l'interruttore della nebbia automatica, in cima alla sezione Nebbia, ben visibile */
 .interruttore-mappa.interruttore-evidente { font-weight: 700; padding: 0.35rem 0.6rem; border: 2px solid var(--bordo); border-radius: var(--raggio); }
 .interruttore-mappa.interruttore-evidente.acceso { border-color: var(--accento); }
+
+/* suoni della mappa (07/10, src/ui/mappa/audio.js): musica di fondo, muto e volumi nella barra in alto */
+.mappa-audio { display: inline-flex; align-items: center; gap: 0.25rem; }
+.mappa-audio .btn.acceso { border-color: var(--pe); }
+.finestrella.scegli-musica .scelta-colonna { max-height: 50vh; overflow-y: auto; }
+.cursore-audio { display: inline-flex; align-items: center; gap: 0.2rem; font-size: 0.85rem; }
+.cursore-audio input[type=range] { width: 4.5rem; }
+.cursore-audio.spento { opacity: 0.5; }
+
+/* veicoli sulla mappa (fase 2, lotto 5): elenco «A bordo» nel pannello del token */
+.mappa-a-bordo h3 { margin: 0.5rem 0 0.25rem; font-size: 0.95rem; }
+.mappa-a-bordo ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.25rem; }
+.mappa-a-bordo li { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem; }

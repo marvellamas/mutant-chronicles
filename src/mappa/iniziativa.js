@@ -12,7 +12,7 @@ import { chiaveRif, iniziali } from './token.js';
  * @param pezzi pezzi della scena (src/mappa/partecipanti.js): ritratto, lato, iniziali, PV
  * @param scena la scena: token e loro «nascosto»
  * @returns null oppure { round, diTurno: id | null, minimo, massimo, pile, voci: [{ id, chiave, nome, iniziali, lato,
- *   ritratto, pv, valore, ordine, pila, diTurno, token, nascosto }] }
+ *   ritratto, pv, valore, ordine, pila, diTurno, token, nascosto, aZero }] }
  */
 export function barraIniziativa({ scontro, pezzi = [], scena = null, bordoDi = () => null }) {
   if (!scontro || scontro.stato !== 'aperto') return null;
@@ -27,7 +27,7 @@ export function barraIniziativa({ scontro, pezzi = [], scena = null, bordoDi = (
     return {
       id: p.id, chiave, nome: pz?.nome ?? p.nome, iniziali: pz?.iniziali ?? iniziali(p.nome), lato: pz?.lato ?? p.lato ?? null,
       ritratto: pz?.ritratto ?? null, pv: pz?.pv ?? null, valore: p.base + p.d10.valore, ordine, bordo: pz ? bordoDi(pz) : null,
-      pila: 0, diTurno: p.id === turno, token: t?.id ?? null, nascosto: !!t?.nascosto,
+      pila: 0, diTurno: p.id === turno, token: t?.id ?? null, nascosto: !!t?.nascosto, aZero: !!pz?.aZero,
     };
   });
   return conPile({ round: scontro.round, diTurno: turno, voci });
@@ -49,7 +49,7 @@ function conPile(barra) {
 /**
  * La barra per i giocatori: restano i partecipanti il cui token si vede (`visibili`: chiavi dei token rimasti nella
  * vista filtrata) e i PG, anche sotto la nebbia o senza token in mappa; via i token nascosti dal master e gli altri
- * sotto la nebbia. Niente PV, niente id dei token; il ritratto è l'indirizzo per i giocatori (`immagineDi(chiave)`).
+ * sotto la nebbia. Niente PV (salvo la quota mostrata e l'icona a 0 PV, 07/10), niente id dei token; il ritratto è l'indirizzo per i giocatori (`immagineDi(chiave)`).
  * Chi è di turno resta solo se è nella barra.
  */
 export function barraPerGiocatori(barra, visibili, immagineDi = () => null, pvDi = () => null) {
@@ -59,7 +59,7 @@ export function barraPerGiocatori(barra, visibili, immagineDi = () => null, pvDi
     .map((v) => {
       // 07/10: la quota dei PV (da 0 a 1) solo dove la vista giocatori la mostra (PG sempre, nemici a scelta del master)
       const q = pvDi(v.chiave);
-      return { chiave: v.chiave, nome: v.nome, iniziali: v.iniziali, lato: v.lato, ritratto: immagineDi(v.chiave), valore: v.valore, ordine: v.ordine, diTurno: v.diTurno, bordo: v.bordo ?? null, pv: q === null || q === undefined ? null : { attuali: q, massimo: 1 } };
+      return { chiave: v.chiave, nome: v.nome, iniziali: v.iniziali, lato: v.lato, ritratto: immagineDi(v.chiave), valore: v.valore, ordine: v.ordine, diTurno: v.diTurno, bordo: v.bordo ?? null, pv: q === null || q === undefined ? null : { attuali: q, massimo: 1 }, aZero: !!v.aZero };
     });
   const turno = voci.some((v) => v.diTurno) ? barra.diTurno : null;
   return conPile({ round: barra.round, diTurno: turno, voci });

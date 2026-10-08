@@ -4,7 +4,7 @@
 // accanto agli scontri: gli scontri aperti la ignorano (src/ui/scontro.js → leggiScontroAperto). «Inizia» la
 // trasforma in uno scontro vero con src/scontro.js: Iniziativa tirata dall'app per tutti e Round 1.
 // La difficoltà per 7 PG (src/crea-nemico.js → difficolta) è solo informativa.
-import { FORMATO_SCONTRO, VERSIONE_SCONTRO, nuovoScontro, aggiungiNemici, registraTiro, registraRiga } from './scontro.js';
+import { FORMATO_SCONTRO, VERSIONE_SCONTRO, nuovoScontro, aggiungiNemici, registraRiga } from './scontro.js';
 
 export const STATO_BOZZA = 'bozza';
 /** Una bozza eliminata: il server la sposta in scontri/archivio/ (non cancella mai). */
@@ -38,6 +38,8 @@ export function validaBozza(b) {
   if (typeof (b.note ?? '') !== 'string') return 'note non valide';
   if (!Array.isArray(b.pg) || !b.pg.every((k) => typeof k === 'string')) return 'PG non validi';
   if (b.livello !== null && b.livello !== undefined && !(Number.isInteger(b.livello) && b.livello >= 1 && b.livello <= 20)) return 'livello dei PG fra 1 e 20';
+  // musica di fondo (07/10): il nome di un file della cartella musica/, facoltativo
+  if (b.musica !== undefined && b.musica !== null && !(typeof b.musica === 'string' && /^[^/\\]{1,200}$/.test(b.musica))) return 'musica di fondo non valida';
   if (!Array.isArray(b.nemici)) return 'elenco dei nemici mancante';
   for (const [i, v] of b.nemici.entries()) {
     const n = v?.nemico;
@@ -81,6 +83,7 @@ export function cambiaBozza(b, campi, adesso) {
   const c = { ...campi };
   if ('nome' in c) c.nome = String(c.nome ?? '').trim() || b.nome;
   if ('livello' in c) c.livello = c.livello === '' || c.livello === null ? null : Number(c.livello);
+  if ('musica' in c && !c.musica) c.musica = null;
   return tocca({ ...b, ...c }, adesso);
 }
 
@@ -101,18 +104,20 @@ export function pgDellaBozza(b, alTavolo) {
 
 /**
  * «Inizia»: dalla bozza uno scontro vero, aperto. I PG (vista della plancia: { chiave, nome, iniziativa, des, int })
- * entrano con l'Iniziativa della scheda; i nemici con le loro copie numerate; il dado d'Iniziativa si tira con
- * l'app per tutti (`tiro()` → { valore, origine: 'app' }); lo scontro parte dal Round 1.
+ * entrano con l'Iniziativa della scheda; i nemici con le loro copie numerate; lo scontro parte dal Round 1.
+ * Il dado d'Iniziativa non si tira qui (difetto del test di Marcello del 07/10): tutti partono «da tirare» e la plancia
+ * chiede i valori con la finestra «Iniziativa» (src/ui/scontro.js → chiediIniziativa; src/scontro.js → registraIniziative).
  */
-export function iniziaBozza(b, { id, pg, dati, tiro, adesso = new Date() }) {
+export function iniziaBozza(b, { id, pg, adesso = new Date() }) {
   const errore = validaBozza(b);
   if (errore) throw new Error(errore);
   if (!b.nemici.length && !pg.length) throw new Error('la bozza non ha partecipanti');
   let s = nuovoScontro({ id, nome: b.nome, pg, adesso });
   if (b.note?.trim()) s = { ...s, note: b.note };
+  // la musica di fondo scelta nella preparazione passa allo scontro (07/10)
+  if (b.musica) s = { ...s, musica: b.musica };
   s = registraRiga(s, `Dalla preparazione «${b.nome}».`, adesso);
   for (const v of b.nemici) s = aggiungiNemici(s, v.nemico, v.quanti, { lato: v.lato }, adesso);
-  for (const p of s.partecipanti) s = registraTiro(s, p.id, 'd10', tiro(), dati, adesso);
   return s;
 }
 

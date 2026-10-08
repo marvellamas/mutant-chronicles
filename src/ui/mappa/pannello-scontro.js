@@ -75,6 +75,16 @@ export function sezioneToken(t, p, dati, a) {
         dati.mappa.token.ingombri_ammessi.map((n) => h('option', { value: String(n), selected: t.ingombro === n }, `${n} × ${n} Q${n === p?.ingombro ? ' (dalla Taglia)' : ''}`))),
       h('small', { class: 'nota' }, 'Il 3 × 3 solo se indicato (A.126).'))
       : h('p', { class: 'nota' }, `Ingombro ${testoIngombro(t.ingombro)} dal profilo del veicolo.`),
+    // fase 2, lotto 5: girare il mezzo e chi è a bordo (conducente e passeggeri), con «Scendi» e la linea di tiro
+    creatura ? null : h('div', { class: 'mappa-azioni-token' },
+      h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Gira il veicolo di 90° in senso antiorario (←)', onclick: () => a.ruota(-1) }, '↺ Ruota'),
+      h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Gira il veicolo di 90° in senso orario (→)', onclick: () => a.ruota(1) }, 'Ruota ↻')),
+    creatura ? null : h('div', { class: 'mappa-a-bordo' },
+      h('h3', {}, `A bordo (${a.aBordo.length}${p?.posti ? ` su ${p.posti.conducente + p.posti.passeggeri} posti` : ''})`),
+      a.aBordo.length ? h('ul', {}, a.aBordo.map((x) => h('li', {}, h('span', {}, x.nome, x.ruolo === 'conducente' ? h('small', { class: 'nota' }, ' · conducente') : null),
+        ' ', h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Scegli un quadretto libero accanto al veicolo', onclick: () => a.scendi(x.id) }, 'Scendi…'),
+        ' ', h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Linea di tiro dal veicolo (dal suo quadretto più favorevole)', onclick: () => a.lineaPasseggero(x.id) }, 'Linea di tiro'))))
+        : h('p', { class: 'nota' }, 'Nessuno: clic destro su un PG o un nemico accanto al veicolo → «Sali».')),
     sezioneMovimento(a.mov, a),
     h('div', { class: 'mappa-azioni-token' },
       h('button', { type: 'button', class: 'btn btn-piccolo', title: t.nascosto ? 'I giocatori lo vedranno' : 'Solo il master lo vede', onclick: a.nascondi }, t.nascosto ? 'Mostra' : 'Nascondi'),

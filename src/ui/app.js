@@ -26,7 +26,8 @@ import { renderGiocatori } from './mappa/giocatori.js';
 import { renderGuidaMappa } from './guida.js';
 import { avviso, avvisoErrore } from './avvisi.js';
 import { controlloInUso } from './ridisegno.js';
-import { alRound, collegamentoScontro, tecnicheScadute, statiScaduti, durateCarta, testoDurata } from '../round-scontro.js';
+import { alRound, collegamentoScontro, tecnicheScadute, statiScaduti, durateCarta, testoDurata, idPg } from '../round-scontro.js';
+import { bloccoControNemico } from './attacco-pg.js';
 import { registraIncantesimo, terminaIncantesimo, concentrazioniInterrotte } from '../durate-incantesimi.js';
 import { segnaDalTavolo, arrivoDalTavolo, tornaAlTavolo, scorrimentoDaRimettere, dimenticaTavolo, segnaDallaMappa, arrivoDallaMappa, tornaAllaMappa, dimenticaMappa } from './ritorno.js';
 import { PASSI, passoVisibile, requisitoPasso } from './passi.js';
@@ -1426,6 +1427,13 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       },
       // granate da lancio: il colpo si scala dalla voce (Armamenti §7.20.3, src/sessione.js → consumaColpi)
       spara: (uid, munizioni) => cambiaSessione(consumaColpi(stato.sessione, uid, munizioni, massimi)),
+      // ritocchi del 07/10: nello scontro aperto, «Attacca!» contro un nemico dello scontro con «Applica il danno»
+      // (src/ui/attacco-pg.js); il bersaglio proposto dalla linea di tiro della mappa, se c'è
+      controNemico: stato.scontroPg && stato.cartella ? (c, a, r) => bloccoControNemico(c, a, r, {
+        scontro: stato.scontroPg, pg: { id: idPg(chiaveCartellaAperta()), nome: stato.scelte.nome.trim() || 'PG' },
+        bersaglio: stato.sessione?.attacchi?.[a.uid]?.bersaglioScontro ?? null,
+        aggiorna: () => aggiornaRoundScontro(),
+      }) : null,
       // pannello «Lancia!»: come per l'attacco, le scelte si ricordano senza diventare l'ultima modifica
       ricordaLancio: (nome, scelte) => {
         stato.sessione = modificaSessione(stato.sessione, { lanci: { ...(stato.sessione?.lanci ?? {}), [nome]: scelte } }, massimi);
