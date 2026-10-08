@@ -367,3 +367,21 @@ test('«Tocca a te» dal server: salvando lo scontro, al PG che diventa di turno
     sb.chiudi();
   }
 });
+
+test('«Fine scontro» (stesso effetto della plancia): lo scontro va in archivio, il tablet aperto dalla scheda lo sa e torna alla scheda', async () => {
+  const { chiudi } = await import('../src/scontro.js');
+  const prima = JSON.parse(readFileSync(SCONTRO, 'utf8'));
+  try {
+    assert.equal((await (await fetch(`${base}/api/vista-giocatori?pg=Akira&scontro=scontro-prova`)).json()).scontroAperto, true);
+    const r = await fetch(`${base}/api/scontri/scontro-prova`, { method: 'PUT', body: JSON.stringify(chiudi(prima)) });
+    assert.equal(r.status, 200);
+    assert.ok(readFileSync(join(radice, 'scontri', 'archivio', 'scontro-prova.json'), 'utf8').includes('"chiuso"'));
+    const v = await (await fetch(`${base}/api/vista-giocatori?pg=Akira&scontro=scontro-prova`)).json();
+    assert.equal(v.scontroAperto, false, 'il tablet torna alla scheda');
+    // e il movimento non si può più fare
+    assert.equal((await muovi({ pg: 'Akira', a: [1, 2], scontro: 'scontro-prova' })).stato >= 400, true);
+  } finally {
+    writeFileSync(SCONTRO, JSON.stringify(prima));
+    rmSync(join(radice, 'scontri', 'archivio'), { recursive: true, force: true });
+  }
+});

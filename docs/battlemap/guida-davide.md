@@ -120,4 +120,4 @@ L'indirizzo è fatto così: `http://`, l'**indirizzo IP del PC del master** (qua
 
 Scegliendo un token, in rosso compaiono le zone di controllo degli avversari: la fascia entro la portata delle loro armi ravvicinate (di solito 1 Q). Chi ne esce con il proprio movimento provoca un Attacco di Opportunità (Giocatore §5.3): compare un avviso, anche sullo schermo dei giocatori, con «Attacca!» per l'avversario. Entrare o muoversi dentro la zona non provoca nulla; «Libero» non segnala. Il tasto Z mostra o nasconde le zone.
 
-Il tasto «?» in alto elenca tutte le scorciatoie. Alla fine, «Fine scontro» nel gruppo «Iniziativa».
+Il tasto «?» in alto elenca tutte le scorciatoie. Alla fine, **«⏹ Fine scontro»** nella barra dell’Iniziativa in alto (o nel gruppo «Iniziativa»): chiede conferma, chiude lo scontro come nella plancia, ferma la musica e riporta alla scheda i tablet aperti dalla scheda.

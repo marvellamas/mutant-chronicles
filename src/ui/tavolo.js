@@ -22,7 +22,7 @@ import { colpoSuNemico } from '../colpo-nemico.js';
 import { perditeDovute, applicaPerdita, registraPeriodico, togliPeriodici, allineaPeriodici, periodicoDi, pvDopoPerdita } from '../periodici.js';
 import { pannelloScontro, leggiScontroAperto, leggiScontro, salvaScontro, scegliReimposta, chiediIniziativa } from './scontro.js';
 import { pannelloBestiario, elencoNemici, cartaNemico } from './nemici.js';
-import { cambiaMusica, diTurno, ordineIniziativa, registraIniziative, senzaIniziativaNuovi, avanti, indietro, anteprimaIndietro, reimpostaIniziativa, reimpostaIniziativaDi, dadoIniziativa, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico, confermaRegimeNemico, aggiungiNemici, registraRiga, cambiaStatoNemico } from '../scontro.js';
+import { chiudi as chiudiScontro, cambiaMusica, diTurno, ordineIniziativa, registraIniziative, senzaIniziativaNuovi, avanti, indietro, anteprimaIndietro, reimpostaIniziativa, reimpostaIniziativaDi, dadoIniziativa, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico, confermaRegimeNemico, aggiungiNemici, registraRiga, cambiaStatoNemico } from '../scontro.js';
 import { vociBestiario } from '../nemici.js';
 import { creaCustode } from './ridisegno.js';
 import { avviso, avvisoErrore } from './avvisi.js';
@@ -905,6 +905,8 @@ export function renderTavolo(radice, ctx) {
   ferma.puoIndietro = () => anteprimaIndietro(stato.scontro);
   // «Reimposta Iniziativa» (07/10): la stessa della plancia, per la barra dell'Iniziativa della mappa
   ferma.reimposta = (id = null) => reimpostaUi(id);
+  // 08/10: «Fine scontro» dalla mappa, lo stesso della plancia (lo scontro passa in scontri/archivio/)
+  ferma.fine = async () => { await aggiorna(); return modifica((x) => chiudiScontro(x)); };
   // la finestra «Iniziativa» per chi è ancora senza (pulsante «Iniziativa…» della barra)
   ferma.chiediIniziativa = () => iniziativaUi(null);
   // musica di fondo dello scontro (07/10), dalla barra della mappa

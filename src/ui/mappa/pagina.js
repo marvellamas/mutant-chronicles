@@ -1106,6 +1106,7 @@ export function renderMappa(radice, ctx) {
       ['Mappa collegata a una bozza', 'gruppo «Iniziativa» → «Inizia scontro»: come «Inizia» della bozza, poi la finestra «Iniziativa»'],
       ['Tablet dei giocatori', 'aprono la vista giocatori (Strumenti → «Collega i tablet»), toccano «Sono…» e muovono il proprio PG: tocco sul quadretto, poi «Conferma». Il server controlla ogni movimento; tu lo vedi in diretta e lo annulli con Ctrl+Z'],
       ['📱 e «🔔 Chiedi di muovere» nell’elenco dell’Iniziativa', '📱 pieno: il tablet del PG è collegato (scheda o mappa aperta); «Chiedi di muovere» manda al suo tablet l’avviso grande con suono, vibrazione e «Muovi il PG sulla mappa»'],
+      ['⏹ Fine scontro (barra dell’Iniziativa)', 'chiude lo scontro con conferma, come nella plancia: la musica si ferma, i tablet aperti dalla scheda tornano alla scheda'],
       ['Strumenti → Tablet dei giocatori', 'blocca i movimenti, «solo al proprio turno» o «sempre», avviso automatico «Tocca a te»'],
       ['Strumenti (in alto)', 'sette categorie: Preparazione mappa, Scena, In gioco, Vista giocatori, Tablet dei giocatori, Suoni, Pulizia; scorciatoia a destra, le voci spente dicono perché'],
       ['M', 'mostra o nasconde l’area di movimento'],
@@ -3020,6 +3021,7 @@ export function renderMappa(radice, ctx) {
         pv: st.mostraPv,
         zero: ctx.dati.mappa.pv_zero,
         avanti: () => avantiDallaMappa(),
+        fine: st.planciaBarra?.fine ? () => fineDallaMappa() : null,
         indietro: st.planciaBarra?.indietro ? () => indietroDallaMappa() : null,
         puoIndietro: st.planciaBarra?.puoIndietro?.() ?? null,
         reimposta: st.planciaBarra?.reimposta ? () => reimpostaDallaMappa() : null,
@@ -3056,6 +3058,14 @@ export function renderMappa(radice, ctx) {
     apriCartaChiave(v.chiave);
   }
   /** «Avanti» della barra dell'Iniziativa: lo stesso della plancia (stessa coda e stessa revisione dello scontro). */
+  /** «Fine scontro» dalla mappa (08/10): lo stesso della plancia, con conferma. */
+  async function fineDallaMappa() {
+    const s = st.fonti?.scontro;
+    if (!s || !st.planciaBarra?.fine) return;
+    if (!(await chiedi({ titolo: `Chiudere lo scontro «${s.nome}»?`, testo: 'Il file passa in scontri/archivio/. La musica si ferma e i tablet aperti dalla scheda tornano alla scheda.', si: 'Fine scontro', pericolo: true }))) return;
+    try { await st.planciaBarra.fine(); avviso(`Scontro «${s.nome}» chiuso.`, { chiave: 'fine-scontro' }); } catch (e) { avvisoErrore(`Scontro non chiuso: ${e.message}`); }
+    await aggiornaFonti();
+  }
   async function avantiDallaMappa() {
     if (!st.planciaBarra?.avanti) return;
     await st.planciaBarra.avanti();
