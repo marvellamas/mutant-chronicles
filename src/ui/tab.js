@@ -28,6 +28,7 @@ import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 import { pannelloAttacco } from './attacco.js';
 import { pugniPotenziati, profiloSenzArmi, profiloOndaInteriore, senzArmiDisponibile, SENZ_ARMI, ONDA, talentiAttacco, valoriDisciplina } from '../attacco.js';
 import { pannelloLancio } from './lancio.js';
+import { pulsanteMuovi } from '../round-scontro.js';
 import { riquadroIncantesimiInCorso } from './incantesimi-in-corso.js';
 import { sezioneRisorseInteriori, pannelloTecnica } from './tecniche.js';
 import { tecnicaDi, testoFine } from '../tecniche.js';
@@ -90,6 +91,22 @@ export function tabFissi(elenco) {
  *     commutaStato(id), convertiDistintivi, puntiEsperienza(v), note(v), posizione(v) },
  *   passi: { background, equipaggiamento }, ui }
  */
+/**
+ * «Scontro in corso» (08/10, tablet dei giocatori): con il server e il PG in uno scontro aperto, il pulsante per
+ * muoverlo sulla mappa, attivo solo al suo turno; fuori turno dice chi è di turno.
+ */
+function riquadroScontro(ctx) {
+  const s = ctx.roundScontro;
+  const p = pulsanteMuovi(s);
+  if (!p || !ctx.azioni.muoviSullaMappa) return null;
+  return h('section', { class: `riquadro scontro-in-corso${s.diTurno ? ' tuo-turno' : ''}`, 'aria-label': 'Scontro in corso' },
+    h('p', { class: 'scontro-in-corso-testo' }, h('strong', {}, 'Scontro in corso'), ` · ${s.nome} · Round ${s.round}`,
+      h('br'), h('span', { class: p.attivo ? 'tuo-turno-testo' : 'nota' }, p.testo)),
+    h('button', { type: 'button', class: 'btn primario btn-muovi-mappa', disabled: !p.attivo,
+      title: s.diTurno ? 'Apre la mappa dello scontro con il tuo PG scelto: tocca il quadretto di arrivo, poi «Conferma»' : `Si attiva al tuo turno (ora tocca a ${s.turnoDi ?? '…'})`,
+      onclick: () => ctx.azioni.muoviSullaMappa() }, '🗺 Muovi il PG sulla mappa'));
+}
+
 export function renderTab(ctx) {
   const { tab, attiva, azioni } = ctx;
   const corrente = tab.tab.find((t) => t.id === attiva) ?? tab.tab[0];
@@ -166,6 +183,7 @@ export function renderTab(ctx) {
     badge ? h('div', { class: 'titolo-tab' }, badge, h('h2', {}, corrente.titolo)) : null,
     ctx.messaggio ? h('p', { class: `riquadro ${ctx.messaggio.tipo}`, role: 'status' }, ctx.messaggio.testo) : null,
     avvisoMaster(ctx.avvisoMaster),
+    riquadroScontro(ctx),
     // punti liberi in eccesso: nella tab Abilità l'avviso sta sopra la tabella, con le Abilità segnate
     avvisoRegoleAggiornate(ctx, tab.scheda, { eccesso: corrente.id !== 'abilita' }),
     tab.errori?.length ? h('div', { class: 'riquadro attenzione' },

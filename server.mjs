@@ -732,9 +732,12 @@ async function apiVistaGiocatori(req, res, percorso, cartelle) {
   if (percorso !== '/api/vista-giocatori' || req.method !== 'GET') return json(res, 405, { errore: 'metodo non ammesso' });
   const parametri = new URL(req.url, 'http://x').searchParams;
   const pg = parametri.get('pg') || null;
-  const { scelta, scena, motivo } = await scenaInGioco(cartelle, { scontro: parametri.get('scontro') || null });
+  const chiesto = parametri.get('scontro') || null;
+  const { scelta, scena, motivo, scontri: aperti } = await scenaInGioco(cartelle, { scontro: chiesto });
   const contesto = scena ? await contestoScena(scena, cartelle) : null;
-  const corpo = { scelta, scena: scena ? vistaGiocatori(scena, contesto) : null, ...(motivo ? { motivo } : {}) };
+  const corpo = { scelta, scena: scena ? vistaGiocatori(scena, contesto) : null, ...(motivo ? { motivo } : {}),
+    // 08/10: il tablet aperto dalla scheda sa se il suo scontro è ancora aperto (alla fine torna alla scheda)
+    ...(chiesto ? { scontroAperto: (aperti ?? []).includes(chiesto) } : {}) };
   // fase 2, lotto 7: i PG della scena per «Sono…» e, con ?pg=, il blocco del tablet di quel giocatore
   if (contesto) corpo.pgs = pgDellaScena(contesto.pezzi).map(({ chiave, nome }) => ({ chiave, nome }));
   if (pg) {

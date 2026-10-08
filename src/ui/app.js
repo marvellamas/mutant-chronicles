@@ -26,7 +26,7 @@ import { renderGiocatori } from './mappa/giocatori.js';
 import { renderGuidaMappa } from './guida.js';
 import { avviso, avvisoErrore } from './avvisi.js';
 import { controlloInUso } from './ridisegno.js';
-import { alRound, collegamentoScontro, tecnicheScadute, statiScaduti, durateCarta, testoDurata, idPg } from '../round-scontro.js';
+import { urlMuovi, alRound, collegamentoScontro, tecnicheScadute, statiScaduti, durateCarta, testoDurata, idPg } from '../round-scontro.js';
 import { bloccoControNemico } from './attacco-pg.js';
 import { registraIncantesimo, terminaIncantesimo, concentrazioniInterrotte } from '../durate-incantesimi.js';
 import { segnaDalTavolo, arrivoDalTavolo, tornaAlTavolo, scorrimentoDaRimettere, dimenticaTavolo, segnaDallaMappa, arrivoDallaMappa, tornaAllaMappa, dimenticaMappa } from './ritorno.js';
@@ -190,7 +190,9 @@ function daIndirizzo() {
     return;
   }
   // Mappa di battaglia, lotto 4: vista giocatori (televisore, proiettore, tablet), solo lettura, solo con il server
-  if (location.hash === '#/mappa/giocatori') {
+  // 08/10: dalla scheda del PG, #/mappa/giocatori?pg=<chiave>&scontro=<id>&scheda=<id>: il PG già scelto, «Torna alla scheda»
+  const vistaGiocatori = location.hash.match(/^#\/mappa\/giocatori(?:\?(.*))?$/);
+  if (vistaGiocatori) {
     stato.id = null;
     stato.scelte = null;
     stato.livelli = [];
@@ -199,7 +201,8 @@ function daIndirizzo() {
       return vai('#/');
     }
     document.title = 'Giocatori · Mappa · Mutant';
-    stato.fermaTavolo = renderGiocatori(radice, { dati: stato.dati });
+    const p = new URLSearchParams(vistaGiocatori[1] ?? '');
+    stato.fermaTavolo = renderGiocatori(radice, { dati: stato.dati, pg: p.get('pg'), scontro: p.get('scontro'), scheda: p.get('scheda'), tornaAllaScheda: (id) => vai(`#/p/${id}`) });
     return;
   }
   // Mappa di battaglia (lotto 2, docs/battlemap/piano.md): la scena nella vista master, solo con il server
@@ -535,7 +538,7 @@ async function aggiornaRoundScontro() {
     const ancora = durateCarta(alRound(stato.sessione, prima.round), null, dati);
     avviso([`Lo scontro «${prima.nome}» è finito: il contatore dei Round torna alla scheda (Round ${prima.round}).`,
       ancora.length ? `Durate ancora attive, con i Round che restano: ${ancora.map(testoDurata).join(', ')}.` : null].filter(Boolean), { tipo: 'info', durata: 9000, chiave: 'round-scontro' });
-  } else if (!(prima && coll && JSON.stringify([prima.durate, prima.effetti]) !== JSON.stringify([coll.durate, coll.effetti]))) return;
+  } else if (!(prima && coll && JSON.stringify([prima.durate, prima.effetti, prima.diTurno, prima.turnoDi]) !== JSON.stringify([coll.durate, coll.effetti, coll.diTurno, coll.turnoDi]))) return;
   ridisegnaSchedaQuandoLibera();
 }
 
@@ -1375,6 +1378,8 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
     ui: stato.ui,
     azioni: {
       vaiTab,
+      // 08/10: «Muovi il PG sulla mappa» (riquadro «Scontro in corso»): la vista tablet della scena dello scontro, con il PG
+      muoviSullaMappa: stato.scontroPg && chiaveCartellaAperta() ? () => vai(urlMuovi(chiaveCartellaAperta(), stato.scontroPg.id, stato.id)) : null,
       sali: saliDiLivello,
       completaPunti: () => vai(`#/p/${stato.id}/completa`),
       togliPunti: () => vai(`#/p/${stato.id}/togli`),

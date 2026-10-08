@@ -59,7 +59,8 @@ export function renderGiocatori(radice, ctx) {
   for (const [k, v] of [['--pv-colore', ctx.dati.mappa.pv_token.colore], ['--pv-traccia', ctx.dati.mappa.pv_token.traccia], ['--pv-mini-alto', `${ctx.dati.mappa.pv_token.mini_token_px}px`]]) document.documentElement.style.setProperty(k, v);
   const st = { vista: null, firma: null, cam: cameraIniziale(), immagine: null, fileImmagine: null, chiusa: false, errore: null, adattata: null, toccata: false, trascina: null, diretta: null, celle: { area: null, zoc: null },
     // fase 2, lotto 7: tablet del giocatore
-    pg: leggiPg(), pgs: [], io: null, fascia: 1, prova: null, inVolo: false, turnoPrima: null, celleMie: null };
+    // 08/10: dalla scheda del PG il PG arriva già scelto (ctx.pg), con lo scontro e la scheda a cui tornare
+    pg: ctx.pg || leggiPg(), daScheda: !!(ctx.pg && ctx.scheda), centrato: false, mosso: false, pgs: [], io: null, fascia: 1, prova: null, inVolo: false, turnoPrima: null, celleMie: null };
   const T = ctx.dati.mappa.tablet;
   const el = {};
   el.titolo = h('strong', { class: 'giocatori-titolo' }, 'Mappa');
@@ -76,12 +77,13 @@ export function renderGiocatori(radice, ctx) {
   el.adatta = h('button', { type: 'button', class: 'btn giocatori-adatta', title: 'Adatta allo schermo: tutta la parte di mappa scoperta (tasto A, doppio tocco)', 'aria-label': 'Adatta allo schermo', onclick: () => adattaSchermo() }, h('span', { 'aria-hidden': 'true' }, '⤢'), ' Adatta');
   // fase 2, lotto 7: «Sono…», pannello del tablet, avviso grande, sblocco dell'audio
   el.sono = h('button', { type: 'button', class: 'btn btn-piccolo tablet-sono', hidden: true, onclick: () => scegliPg() }, 'Sono…');
+  el.torna = h('button', { type: 'button', class: 'btn tablet-torna', hidden: !(ctx.pg && ctx.scheda), onclick: () => tornaAllaScheda() }, '← Torna alla scheda');
   el.tablet = h('section', { class: 'tablet-pannello', hidden: true, 'aria-label': 'Il tuo PG' });
   el.allarme = h('div', { class: 'tablet-allarme', hidden: true, role: 'alertdialog', 'aria-live': 'assertive', onclick: () => chiudiAllarme() });
   el.audioSblocca = h('button', { type: 'button', class: 'btn tablet-audio', hidden: true, onclick: () => sbloccaAudio() }, '🔈 Tocca per attivare l’audio');
   el.riquadro.append(el.messaggio, el.movimento, el.adatta);
   svuota(radice, h('section', { class: 'mappa-pagina giocatori-pagina' },
-    h('header', { class: 'giocatori-barra' }, el.titolo, el.turno, el.sono, el.stato, el.schermo), el.iniziativa,
+    h('header', { class: 'giocatori-barra' }, el.torna, el.titolo, el.turno, el.sono, el.stato, el.schermo), el.iniziativa,
     // la mappa e, sul tablet del giocatore, il suo pannello: sotto in verticale, a destra in orizzontale
     h('div', { class: 'giocatori-corpo' }, el.riquadro, el.tablet), el.audioSblocca, el.allarme));
 
@@ -393,7 +395,15 @@ export function renderGiocatori(radice, ctx) {
   }
 
   /** Il blocco `io` e l'elenco dei PG dalla vista; «Tocca a te» al cambio di turno, se il master lo ha acceso. */
+  /** «← Torna alla scheda» (vista aperta dalla scheda del PG). */
+  function tornaAllaScheda() { if (ctx.scheda && ctx.tornaAllaScheda) ctx.tornaAllaScheda(ctx.scheda); }
   function usaTablet(corpo) {
+    // 08/10: aperta dalla scheda, lo scontro è finito («Fine scontro» del master): si torna alla scheda
+    if (st.daScheda && corpo.scontroAperto === false) {
+      avviso('Lo scontro è finito: torni alla scheda.', { tipo: 'info', chiave: 'tablet-fine' });
+      tornaAllaScheda();
+      return;
+    }
     st.pgs = corpo.pgs ?? [];
     const prima = st.io;
     st.io = st.pg ? corpo.io ?? null : null;
@@ -405,6 +415,8 @@ export function renderGiocatori(radice, ctx) {
     // il permesso è cambiato o il token si è mosso: la prova non vale più
     if (st.prova && (!st.io?.permesso?.puo || prima?.area?.usato !== st.io?.area?.usato)) st.prova = null;
     aggiornaTablet();
+    // dalla scheda: la mappa si apre centrata sul PG (una volta; poi la vista la muove il giocatore)
+    if (st.daScheda && !st.centrato && st.io?.token && st.vista?.token.some((t) => t.id === st.io.token)) { st.centrato = true; queueMicrotask(() => centraSuDiMe()); }
   }
 
   /** Celle dell'area del proprio PG fino alla fascia scelta (1 Passo, 2 Corsa, 3 Scatto), o null. */
@@ -447,7 +459,7 @@ export function renderGiocatori(radice, ctx) {
   }
 
   const chiama = async (corpo) => {
-    const r = await fetch('api/vista-giocatori/movimento', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ scena: st.vista.id, pg: st.pg, fascia: st.fascia, ...corpo }) });
+    const r = await fetch('api/vista-giocatori/movimento', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ scena: st.vista.id, pg: st.pg, fascia: st.fascia, ...(ctx.scontro ? { scontro: ctx.scontro } : {}), ...corpo }) });
     const j = await r.json().catch(() => ({}));
     return { ok: r.ok && j.ok !== false, ...j };
   };
@@ -471,7 +483,9 @@ export function renderGiocatori(radice, ctx) {
       if (!r.ok) avviso(r.errore ?? 'Movimento non riuscito.', { tipo: 'errore', chiave: 'tablet-prova' });
       else {
         const ao = (r.opportunita ?? []).map((o) => `Attacco di Opportunità di ${o.nome}!`);
-        avviso([`Ti sei mosso: ${numeroQ(r.costo)} Q (${NOMI_MODI[r.fascia] ?? r.fascia}).`, ...ao, r.blocco ? 'Corsa e Scatto sono un blocco unico: movimento del Round finito.' : null].filter(Boolean), { tipo: ao.length ? 'info' : 'ok', chiave: 'tablet-mosso', durata: ao.length ? 12000 : 5000 });
+        st.mosso = true;
+        avviso([`Ti sei mosso: ${numeroQ(r.costo)} Q (${NOMI_MODI[r.fascia] ?? r.fascia}).`, ...ao, r.blocco ? 'Corsa e Scatto sono un blocco unico: movimento del Round finito.' : null].filter(Boolean), { tipo: ao.length ? 'info' : 'ok', chiave: 'tablet-mosso', durata: ao.length ? 12000 : 5000,
+          azioni: st.daScheda ? [{ testo: '← Torna alla scheda', fai: () => tornaAllaScheda() }] : [] });
       }
     } catch { avviso('Collegamento con il master perso: riprova.', { tipo: 'errore', chiave: 'tablet-prova' }); } finally { st.inVolo = false; }
     st.prova = null;
@@ -499,7 +513,7 @@ export function renderGiocatori(radice, ctx) {
   /** Il pannello del tablet: mini-scheda, stato del movimento, fasce, conferma. */
   function aggiornaTablet() {
     const pgs = st.pgs ?? [];
-    el.sono.hidden = !st.pg && !pgs.length;
+    el.sono.hidden = st.daScheda || (!st.pg && !pgs.length);
     el.sono.textContent = st.pg ? `Tu: ${st.io?.nome ?? st.pg} ▾` : 'Sono…';
     el.sono.title = st.pg ? 'Cambia PG o torna a guardare soltanto' : 'Scegli il tuo PG per muoverlo da questo tablet';
     el.tablet.hidden = !st.pg;
@@ -532,9 +546,11 @@ export function renderGiocatori(radice, ctx) {
       h('div', { class: 'riga-azioni' },
         h('button', { type: 'button', class: 'btn', onclick: () => { st.prova = null; aggiornaTablet(); tela.richiedi(['sopra']); } }, 'Annulla'),
         h('button', { type: 'button', class: 'btn primario', disabled: st.inVolo, onclick: () => conferma() }, 'Conferma'))) : null;
+    el.torna.className = `btn tablet-torna${st.mosso ? ' primario' : ''}`;
     svuota(el.tablet, mini, stato, fasce, conf,
       h('div', { class: 'riga-azioni tablet-comandi' },
-        h('button', { type: 'button', class: 'btn', onclick: () => centraSuDiMe() }, '⌖ Centra su di me')));
+        h('button', { type: 'button', class: 'btn', onclick: () => centraSuDiMe() }, '⌖ Centra su di me'),
+        st.daScheda ? h('button', { type: 'button', class: `btn${st.mosso ? ' primario' : ''}`, onclick: () => tornaAllaScheda() }, '← Torna alla scheda') : null));
   }
 
   let inCorso = false;
@@ -545,6 +561,7 @@ export function renderGiocatori(radice, ctx) {
       const q = new URLSearchParams();
       if (st.firma) q.set('firma', st.firma);
       if (st.pg) q.set('pg', st.pg);
+      if (ctx.scontro) q.set('scontro', ctx.scontro);
       const r = await fetch(`api/vista-giocatori${q.size ? `?${q}` : ''}`, { cache: 'no-store' });
       if (!r.ok) throw new Error(`errore ${r.status}`);
       const corpo = await r.json();

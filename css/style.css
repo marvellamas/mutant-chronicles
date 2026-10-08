@@ -2272,3 +2272,10 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 /* 08/10: la scena che vedono i giocatori, accanto al nome della scena */
 .indicatore-giocatori { white-space: nowrap; opacity: .7; }
 .indicatore-giocatori.mostrata { opacity: 1; border-color: var(--pe, #1b7a3a); color: var(--pe, #1b7a3a); font-weight: 700; }
+
+/* 08/10: «Scontro in corso» nella scheda del PG, con «Muovi il PG sulla mappa» (tablet dei giocatori) */
+.scontro-in-corso { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; justify-content: space-between; }
+.scontro-in-corso-testo { margin: 0; }
+.scontro-in-corso.tuo-turno { border-color: var(--pe, #1b7a3a); }
+.tuo-turno-testo { color: var(--pe, #1b7a3a); font-weight: 700; }
+.btn-muovi-mappa { min-height: 3rem; font-size: 1.1rem; }

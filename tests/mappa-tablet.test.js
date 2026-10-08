@@ -296,3 +296,23 @@ test('fondiMovimentiTablet: solo posizione, movimento e voce di quel token; nien
   assert.equal(fondiMovimentiTablet(f, server, ['m1'], dati), f, 'già fuso: niente da fare');
   assert.equal(fondiMovimentiTablet({ ...locale, token: [locale.token[1]] }, server, ['m1'], dati).movimenti.length, 0, 'token tolto dal master');
 });
+
+test('scheda del PG: «Muovi il PG sulla mappa» solo al proprio turno, con chi è di turno; indirizzo della vista tablet', async () => {
+  const { collegamentoScontro, pulsanteMuovi, urlMuovi } = await import('../src/round-scontro.js');
+  const sc = JSON.parse(readFileSync(SCONTRO, 'utf8'));
+  // di turno Akira (primo nell'ordine): attivo per lui, spento per Bea con «tocca a Akira»
+  const akira = collegamentoScontro({ ...sc, turno: 0 }, 'Akira');
+  const bea = collegamentoScontro({ ...sc, turno: 0 }, 'Bea');
+  assert.deepEqual(pulsanteMuovi(akira), { attivo: true, testo: 'È il tuo turno' });
+  assert.deepEqual(pulsanteMuovi(bea), { attivo: false, testo: 'Non è il tuo turno · tocca a Akira' });
+  assert.equal(pulsanteMuovi(collegamentoScontro({ ...sc, turno: 1 }, 'Bea')).attivo, true);
+  // fuori dallo scontro (o scontro chiuso): nessun riquadro
+  assert.equal(pulsanteMuovi(collegamentoScontro({ ...sc, stato: 'chiuso' }, 'Akira')), null);
+  assert.equal(pulsanteMuovi(collegamentoScontro(sc, 'Carlo')), null);
+  assert.equal(urlMuovi('Pablo Zaion', 'scontro-1', 'abc'), '#/mappa/giocatori?pg=Pablo+Zaion&scontro=scontro-1&scheda=abc');
+  // la vista con ?scontro= dice se lo scontro è ancora aperto (alla fine il tablet torna alla scheda)
+  const v = await (await fetch(`${base}/api/vista-giocatori?pg=Akira&scontro=scontro-prova`)).json();
+  assert.equal(v.scontroAperto, true);
+  assert.equal(v.scena.id, 'cripta');
+  assert.equal((await (await fetch(`${base}/api/vista-giocatori?pg=Akira&scontro=finito`)).json()).scontroAperto, false);
+});

@@ -73,11 +73,13 @@ Si preparano in pochi secondi e durante il gioco non si toccano più.
 
 Ogni giocatore può guardare la mappa dal suo tablet (o telefono) e muovere da sé il proprio PG. Serve `avvia-server.bat` acceso sul PC del master e i tablet sulla **stessa rete Wi-Fi** di casa. Nessuna password: si gioca in casa, e chiunque sia sulla rete può scegliere un PG.
 
-**Come si collega un tablet (da leggere ai giocatori):**
+**Come si collega un giocatore (via principale: dalla sua scheda):**
 
-1. Collega il tablet al Wi-Fi di casa, lo stesso del PC del master.
-2. Apri il browser (Chrome, Safari…) e scrivi l'indirizzo che ti dà il master, per esempio `http://192.168.1.20:3000/#/mappa/giocatori`, oppure inquadra il QR.
-3. Tocca **«Sono…»** in alto e scegli il tuo PG: il tablet lo ricorda per le volte successive.
+1. Sul tablet il giocatore apre Mutant dall'indirizzo del PC del master (per esempio `http://192.168.1.20:3000`, vedi sotto) e la **scheda del suo PG**, come fa già per giocare.
+2. Quando il suo PG è in uno scontro aperto, in cima alla scheda compare il riquadro **«Scontro in corso»** con **«🗺 Muovi il PG sulla mappa»**: si accende al suo turno (fuori turno è spento e dice «Non è il tuo turno · tocca a …»).
+3. Il pulsante apre la mappa dello scontro con il PG già scelto e centrata su di lui: tocca il quadretto di arrivo, poi «Conferma», poi **«← Torna alla scheda»**. Quando chiudi lo scontro, il tablet torna da solo alla scheda.
+
+**Riserva (secondo schermo, o un tablet senza la scheda):** l'indirizzo diretto della vista giocatori, per esempio `http://192.168.1.20:3000/#/mappa/giocatori` (o il QR), e «Sono…» per scegliere il PG, che il tablet ricorda.
 
 **Dove trovi l'indirizzo (master):**
 
