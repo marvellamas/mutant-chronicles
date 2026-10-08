@@ -20,7 +20,7 @@ export const VOCI_STRUMENTI = [
   'immagine', 'griglia', 'muri', 'porte', 'luci', 'nebbia', 'nebbia_automatica',
   'scene', 'collegamento', 'salva_iniziale', 'ripristina_iniziale',
   'linea', 'dettaglio_linea', 'template', 'mostra_area', 'mostra_zoc', 'seleziona_pg', 'seleziona_nemici', 'seleziona_tutti',
-  'vista_giocatori', 'adatta_giocatori', 'pv_nemici', 'sovrapposizioni_giocatori', 'suoni_giocatori', 'blocco_giocatori',
+  'mostra_giocatori', 'vista_giocatori', 'adatta_giocatori', 'pv_nemici', 'sovrapposizioni_giocatori', 'suoni_giocatori', 'blocco_giocatori',
   'movimento_tablet', 'avviso_turno_tablet', 'collega_tablet',
   'musica', 'muto', 'cancella_temporanei', 'cancella_tutti',
 ];

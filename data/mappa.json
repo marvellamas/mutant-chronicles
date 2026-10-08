@@ -427,7 +427,7 @@
       { "titolo": "Preparazione mappa", "icona": "🗺", "voci": ["immagine", "griglia", "muri", "porte", "luci", "nebbia", "nebbia_automatica"] },
       { "titolo": "Scena", "icona": "🎬", "voci": ["scene", "collegamento", "salva_iniziale", "ripristina_iniziale"] },
       { "titolo": "In gioco", "icona": "⚔", "voci": ["linea", "dettaglio_linea", "template", "mostra_area", "mostra_zoc", "seleziona_pg", "seleziona_nemici", "seleziona_tutti"] },
-      { "titolo": "Vista giocatori", "icona": "📺", "voci": ["vista_giocatori", "adatta_giocatori", "pv_nemici", "sovrapposizioni_giocatori", "suoni_giocatori"] },
+      { "titolo": "Vista giocatori", "icona": "📺", "voci": ["mostra_giocatori", "vista_giocatori", "adatta_giocatori", "pv_nemici", "sovrapposizioni_giocatori", "suoni_giocatori"] },
       { "titolo": "Tablet dei giocatori", "icona": "📱", "voci": ["blocco_giocatori", "movimento_tablet", "avviso_turno_tablet", "collega_tablet"] },
       { "titolo": "Suoni", "icona": "♫", "voci": ["musica", "muto"] },
       { "titolo": "Pulizia", "icona": "🧹", "voci": ["cancella_temporanei", "cancella_tutti"] }

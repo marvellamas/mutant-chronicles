@@ -2268,3 +2268,7 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
   .giocatori-corpo > .tablet-pannello .tablet-fasce .btn { flex: 1 1 100%; justify-content: space-between; }
   .giocatori-corpo > .tablet-pannello .tablet-conferma { flex: none; }
 }
+
+/* 08/10: la scena che vedono i giocatori, accanto al nome della scena */
+.indicatore-giocatori { white-space: nowrap; opacity: .7; }
+.indicatore-giocatori.mostrata { opacity: 1; border-color: var(--pe, #1b7a3a); color: var(--pe, #1b7a3a); font-weight: 700; }

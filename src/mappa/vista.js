@@ -93,7 +93,9 @@ export function vistaGiocatori(s, contesto = null, regoleTemplate = contesto?.re
       return { ...x, ...(p ? { info: { lato: p.lato, nome: p.nome, iniziali: p.iniziali, immagine: contesto.immagineDi?.(p) ?? null, bordo: contesto.bordoDi?.(p) ?? null } } : {}) };
     }) };
   };
-  const token = s.token.filter((t) => !t.nascosto && visibile(t)).map(({ nascosto, passeggeri: _p, ...t }) => ({ ...t, ...info(t), ...passeggeri({ ...t, passeggeri: _p }) }));
+  // 08/10: con il contesto, un token senza partecipante (orfano) non arriva: sarebbe un «?» senza nome
+  const conPezzo = (t) => !contesto?.completo || t.rif?.tipo === 'segnaposto' || pezzi.has(chiaveRif(t.rif));
+  const token = s.token.filter((t) => !t.nascosto && visibile(t) && conPezzo(t)).map(({ nascosto, passeggeri: _p, ...t }) => ({ ...t, ...info(t), ...passeggeri({ ...t, passeggeri: _p }) }));
   const vista = {
     formato: s.formato,
     versione: s.versione,

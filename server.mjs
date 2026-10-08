@@ -534,15 +534,25 @@ async function contestoScena(scena, { cartella, tavolo, scontri, veicoli, radice
   const c = scena.collegamento ?? {};
   let scontro = null, bozza = null, alTavolo = [];
   const id = c.scontro ?? c.bozza ?? null;
+  let chiuso = null;
   if (id && ID_SCONTRO.test(id)) {
-    try {
-      const x = await leggiJson(join(scontri, `${id}.json`));
-      if (c.scontro && x.stato === 'aperto') scontro = x;
-      else if (c.bozza && x.stato === 'bozza') bozza = x;
-    } catch { /* chiuso o mancante: nessun contesto */ }
+    let x = null;
+    try { x = await leggiJson(join(scontri, `${id}.json`)); } catch {
+      // 08/10: uno scontro finito passa in scontri/archivio/: i suoi partecipanti servono ancora per nomi e immagini
+      try { x = await leggiJson(join(scontri, 'archivio', `${id}.json`)); } catch { /* mancante: nessun contesto */ }
+    }
+    if (x && c.scontro && x.stato === 'aperto') scontro = x;
+    else if (x && c.scontro && Array.isArray(x.partecipanti)) chiuso = x;
+    else if (x && c.bozza && x.stato === 'bozza') bozza = x;
   }
   if (bozza && !bozza.pg?.length) { try { alTavolo = selezione(await leggiJson(join(tavolo, 'sessione.json'))).personaggi; } catch { /* nessuno al tavolo */ } }
-  const chiavi = scontro ? scontro.partecipanti.filter((p) => p.tipo === 'pg').map((p) => p.chiave) : bozza ? (bozza.pg?.length ? bozza.pg : alTavolo) : [];
+  // 08/10: scena senza scontro né bozza: i PG dai loro token (nome e ritratto dalla scheda), niente «?»
+  if (!scontro && !chiuso && !bozza) {
+    const pg = [...new Set((scena.token ?? []).map((t) => /^pg:(.+)$/.exec(t.rif?.id ?? '')?.[1]).filter(Boolean))];
+    if (pg.length) bozza = { pg, nemici: [] };
+  }
+  const fonte = scontro ?? chiuso;
+  const chiavi = fonte ? fonte.partecipanti.filter((p) => p.tipo === 'pg').map((p) => p.chiave) : bozza ? (bozza.pg?.length ? bozza.pg : alTavolo) : [];
   const viste = await vistePg(chiavi, cartella, dati, scontro?.round ?? null);
   const registro = [];
   try {
@@ -550,36 +560,55 @@ async function contestoScena(scena, { cartella, tavolo, scontri, veicoli, radice
       try { registro.push(await leggiJson(join(veicoli, f))); } catch { /* file rovinato */ }
     }
   } catch { /* nessun registro */ }
-  const pezzi = pezziDellaScena({ scontro, bozza, alTavolo, viste, veicoli: registro }, dati);
+  // scontro chiuso: gli stessi pezzi, senza turno (i token hanno nome e immagine, non «?»)
+  const pezzi = chiuso ? pezziDellaScena({ scontro: chiuso, viste, veicoli: registro }, dati).map((p) => ({ ...p, diTurno: false })) : pezziDellaScena({ scontro, bozza, alTavolo, viste, veicoli: registro }, dati);
   const immagineDi = (p) => (p.tipo === 'pg' ? (p.ritratto ? `api/ritratti/${encodeURIComponent(p.pg)}?v=${impronta(p.ritratto)}` : null) : p.ritratto);
   // colori dei bordi dei token (src/mappa/colori.js): gli stessi della vista master
-  return { pezzi, round: scontro?.round ?? null, immagineDi, scontro, bordoDi: (p) => bordoToken(p, scena.colori, dati), regoleTemplate: dati.mappa.template, regoleMappa: dati.mappa };
+  // completo: c'è uno scontro (aperto o chiuso) o una bozza vera, quindi un token senza partecipante è un orfano
+  return { pezzi, completo: !!(scontro || chiuso || (bozza && (c.scontro || c.bozza))), round: scontro?.round ?? null, immagineDi, scontro, bordoDi: (p) => bordoToken(p, scena.colori, dati), regoleTemplate: dati.mappa.template, regoleMappa: dati.mappa };
 }
 
-/** Scena mostrata ai giocatori: quella scelta dal master (tavolo/mappa-giocatori.json) o la più recente dello scontro aperto. */
-async function scenaInGioco({ tavolo, scontri, scene }) {
+/**
+ * Scena mostrata ai giocatori (secondo schermo e tablet; test di Marcello dell'08/10: prima vinceva sempre la scena
+ * «scelta» in tavolo/mappa-giocatori.json, anche se vecchia e con lo scontro chiuso). Una regola sola:
+ *   1. con un solo scontro aperto (o quello chiesto, `scontro`, se è aperto), la sua scena: fra più scene collegate
+ *      quella segnata dal master, altrimenti la più recente;
+ *   2. con nessuno o più scontri aperti, la scena che il master ha segnato «mostrata ai giocatori» (se c'è ancora);
+ *   3. altrimenti nessuna: «Il master non ha ancora aperto una mappa». Mai una scena a caso.
+ * @returns { scelta: la scena segnata o null, scena | null, motivo?, scontri: id degli scontri aperti }
+ */
+async function scenaInGioco({ tavolo, scontri, scene }, { scontro: chiesto = null } = {}) {
   let scelta = null;
-  try { scelta = (await leggiJson(join(tavolo, 'mappa-giocatori.json'))).scena ?? null; } catch { /* automatica */ }
-  if (scelta && ID_SCENA.test(scelta)) {
-    try { return { scelta, scena: await leggiJson(join(scene, `${scelta}.json`)) }; } catch { return { scelta, scena: null, motivo: 'La scena scelta dal master non c’è più.' }; }
-  }
-  let aperto = null;
+  try { scelta = (await leggiJson(join(tavolo, 'mappa-giocatori.json'))).scena ?? null; } catch { /* nessuna */ }
+  if (!(typeof scelta === 'string' && ID_SCENA.test(scelta))) scelta = null;
+  const aperti = [];
   try {
     for (const f of (await readdir(scontri)).filter((x) => x.endsWith('.json'))) {
-      try { const x = await leggiJson(join(scontri, f)); if (x.stato === 'aperto') { aperto = x.id; break; } } catch { /* rovinato */ }
+      try { const x = await leggiJson(join(scontri, f)); if (x.stato === 'aperto') aperti.push(x.id); } catch { /* rovinato */ }
     }
   } catch { /* nessuno scontro */ }
-  if (!aperto) return { scelta: null, scena: null, motivo: 'Nessuno scontro aperto e nessuna scena scelta dal master.' };
-  let migliore = null;
-  try {
-    for (const f of (await readdir(scene)).filter((x) => x.endsWith('.json') && ID_SCENA.test(x.slice(0, -5)))) {
-      try {
-        const x = await leggiJson(join(scene, f));
-        if (x.collegamento?.scontro === aperto && (!migliore || String(x.aggiornato ?? '') > String(migliore.aggiornato ?? ''))) migliore = x;
-      } catch { /* rovinata */ }
-    }
-  } catch { /* nessuna scena */ }
-  return migliore ? { scelta: null, scena: migliore } : { scelta: null, scena: null, motivo: 'Nessuna scena collegata allo scontro aperto.' };
+  const scontro = chiesto && aperti.includes(chiesto) ? chiesto : aperti.length === 1 ? aperti[0] : null;
+  if (scontro) {
+    let migliore = null;
+    try {
+      for (const f of (await readdir(scene)).filter((x) => x.endsWith('.json') && ID_SCENA.test(x.slice(0, -5)))) {
+        try {
+          const x = await leggiJson(join(scene, f));
+          if (x.collegamento?.scontro !== scontro || x.archiviata) continue;
+          if (x.id === scelta) { migliore = x; break; }
+          if (!migliore || String(x.aggiornato ?? '') > String(migliore.aggiornato ?? '')) migliore = x;
+        } catch { /* rovinata */ }
+      }
+    } catch { /* nessuna scena */ }
+    if (migliore) return { scelta, scena: migliore, scontri: aperti };
+  }
+  if (scelta) {
+    try {
+      const x = await leggiJson(join(scene, `${scelta}.json`));
+      if (!x.archiviata) return { scelta, scena: x, scontri: aperti };
+    } catch { /* non c'è più (archiviata o tolta) */ }
+  }
+  return { scelta, scena: null, scontri: aperti, motivo: 'Il master non ha ancora aperto una mappa.' };
 }
 
 /**
@@ -667,7 +696,9 @@ async function apiVistaGiocatori(req, res, percorso, cartelle) {
   const doveScelta = join(cartelle.tavolo, 'mappa-giocatori.json');
   if (percorso === '/api/vista-giocatori/scelta') {
     if (req.method === 'GET') {
-      try { return json(res, 200, { scena: (await leggiJson(doveScelta)).scena ?? null }); } catch { return json(res, 200, { scena: null }); }
+      // 08/10: anche la scena che i giocatori vedono davvero (regola di scenaInGioco), per l'indicatore del master
+      const { scelta, scena } = await scenaInGioco(cartelle);
+      return json(res, 200, { scena: scelta, inGioco: scena?.id ?? null });
     }
     if (req.method !== 'PUT') return json(res, 405, { errore: 'metodo non ammesso' });
     let v;
@@ -690,7 +721,7 @@ async function apiVistaGiocatori(req, res, percorso, cartelle) {
   if (percorso !== '/api/vista-giocatori' || req.method !== 'GET') return json(res, 405, { errore: 'metodo non ammesso' });
   const parametri = new URL(req.url, 'http://x').searchParams;
   const pg = parametri.get('pg') || null;
-  const { scelta, scena, motivo } = await scenaInGioco(cartelle);
+  const { scelta, scena, motivo } = await scenaInGioco(cartelle, { scontro: parametri.get('scontro') || null });
   const contesto = scena ? await contestoScena(scena, cartelle) : null;
   const corpo = { scelta, scena: scena ? vistaGiocatori(scena, contesto) : null, ...(motivo ? { motivo } : {}) };
   // fase 2, lotto 7: i PG della scena per «Sono…» e, con ?pg=, il blocco del tablet di quel giocatore
@@ -736,7 +767,7 @@ async function movimentoDalTablet(req, res, cartelle) {
   try { d = JSON.parse((await leggiCorpo(req, 64 * 1024)).toString('utf8')); } catch (e) { return json(res, 400, { errore: `contenuto non valido: ${e.message}` }); }
   if (typeof d?.pg !== 'string' || !d.pg || typeof d.scena !== 'string' || !ID_SCENA.test(d.scena)) return json(res, 400, { errore: 'pg e scena attesi' });
   const { dati } = await datiDelServer(cartelle.radice);
-  const { scena: inGioco } = await scenaInGioco(cartelle);
+  const { scena: inGioco } = await scenaInGioco(cartelle, { scontro: typeof d.scontro === 'string' ? d.scontro : null });
   if (!inGioco || inGioco.id !== d.scena) return json(res, 409, { errore: 'La mappa in gioco è cambiata: attendi un momento.' });
   const dove = join(cartelle.scene, `${d.scena}.json`);
   const perTablet = (p) => ({ costo: p.costo, fascia: p.fascia, percorso: p.percorso, blocco: !!p.blocco, persi: p.persi ?? 0,

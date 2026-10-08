@@ -129,6 +129,7 @@ export function renderMappa(radice, ctx) {
     // lotto 4: strumenti della nebbia e scena scelta per i giocatori (null = automatica)
     nebbia: { strumento: null, modo: 'rivela', lato: 3 },
     sceltaGiocatori: null,
+    inGioco: null,
     // lotto 5: strumenti dei muri, fascia mostrata (1 Passo, 2 Corri, 3 Scatta), area del token scelto, percorso
     // fase 2, lotto 4: zone di luce a pennello (come il terreno difficile)
     luci: { strumento: null, modo: 'buio', lato: 3 },
@@ -178,6 +179,8 @@ export function renderMappa(radice, ctx) {
   const el = {};
   el.scegliFile = h('input', { type: 'file', accept: '.jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp', hidden: true, onchange: (e) => { const f = e.target.files?.[0]; e.target.value = ''; if (f) caricaDaFile(f); } });
   el.titolo = h('h1', { class: 'mappa-titolo' }, 'Mappa');
+  // 08/10: se i giocatori (secondo schermo e tablet) vedono questa scena; un clic la mostra a loro
+  el.aiGiocatori = h('button', { type: 'button', class: 'btn btn-piccolo indicatore-giocatori', onclick: () => { if (st.inGioco !== ctx.id) scegliPerGiocatori(ctx.id); else apriStrumento(el.pGiocatori); } });
   el.zoom = h('span', { class: 'mappa-zoom', title: 'Zoom (rotella, + e −)' }, '100 %');
   el.scala = h('span', { class: 'mappa-scala' });
   el.stato = h('span', { class: 'nota mappa-stato', 'aria-live': 'polite' });
@@ -196,7 +199,7 @@ export function renderMappa(radice, ctx) {
     h('span', { class: 'mappa-gruppo gruppo-app', role: 'group', 'aria-label': 'App' },
       h('a', { class: 'marchio marchio-in-linea', href: '#/', title: 'Elenco dei personaggi' }, 'Mutant'),
       h('button', { type: 'button', class: 'btn', title: 'Torna alla plancia del Tavolo del Master', 'aria-label': 'Torna al Tavolo', onclick: () => ctx.azioni.tavolo() }, conIcona('←', 'Tavolo')),
-      el.titolo),
+      el.titolo, el.aiGiocatori),
     h('span', { class: 'mappa-gruppo gruppo-vista', role: 'group', 'aria-label': 'Zoom e disposizione' },
       el.scegliFile,
       h('button', { type: 'button', class: 'btn tondo', title: 'Allontana (−)', 'aria-label': 'Allontana', onclick: () => zoomCentro(1 / V.passo_tasti) }, '−'),
@@ -1023,6 +1026,7 @@ export function renderMappa(radice, ctx) {
       seleziona_pg: { testo: 'Seleziona tutti i PG', titolo: 'Per spostarli insieme: trascinane uno, o le frecce', azione: () => selezionaTipo('pg') },
       seleziona_nemici: { testo: 'Seleziona tutti i nemici', titolo: 'Gli avversari in mappa', azione: () => selezionaTipo('nemici') },
       seleziona_tutti: { testo: 'Seleziona tutti', titolo: 'Tutti i token in mappa', azione: () => selezionaTipo('tutti') },
+      mostra_giocatori: { testo: st.inGioco === ctx.id ? 'Mostrata ai giocatori ✓' : 'Mostra questa ai giocatori', titolo: 'Segna questa scena per lo schermo dei giocatori e i tablet (con uno scontro aperto vedono comunque la sua scena)', azione: () => scegliPerGiocatori(ctx.id) },
       vista_giocatori: { testo: 'Vista giocatori: scena, QR, apri…', titolo: 'Quale scena vedono, il QR, «Apri vista giocatori»', azione: () => apriStrumento(el.pGiocatori) },
       adatta_giocatori: { testo: 'Adatta lo schermo dei giocatori', titolo: 'Lo schermo dei giocatori inquadra tutta la parte scoperta', azione: () => adattaGiocatori() },
       pv_nemici: { testo: `PV dei nemici ai giocatori: ${sn(sc?.pvNemiciGiocatori)}`, titolo: 'La barretta dei PV dei nemici nella vista giocatori (quella dei PG si vede sempre)', azione: () => cambiaPvNemiciGiocatori() },
@@ -3156,14 +3160,27 @@ export function renderMappa(radice, ctx) {
     return `${base.replace(/\/?$/, '/')}#/mappa/giocatori`;
   };
   async function leggiScelta() {
-    try { const r = await fetch('api/vista-giocatori/scelta', { cache: 'no-store' }); if (r.ok) st.sceltaGiocatori = (await r.json()).scena ?? null; } catch { /* resta quella di prima */ }
+    try {
+      const r = await fetch('api/vista-giocatori/scelta', { cache: 'no-store' });
+      if (r.ok) { const j = await r.json(); st.sceltaGiocatori = j.scena ?? null; st.inGioco = j.inGioco ?? null; }
+    } catch { /* resta quella di prima */ }
+    aggiornaIndicatoreGiocatori();
+  }
+  /** L'indicatore accanto al nome: i giocatori vedono questa scena? (regola del server: scenaInGioco) */
+  function aggiornaIndicatoreGiocatori() {
+    const mostrata = st.inGioco === ctx.id;
+    el.aiGiocatori.className = `btn btn-piccolo indicatore-giocatori${mostrata ? ' mostrata' : ''}`;
+    el.aiGiocatori.textContent = mostrata ? '📺 ai giocatori' : '📺 non mostrata';
+    el.aiGiocatori.title = mostrata ? 'I giocatori (secondo schermo e tablet) vedono questa scena' : `I giocatori ${st.inGioco ? 'vedono un’altra scena' : 'non vedono nessuna mappa'}: clic per mostrare questa`;
   }
   async function scegliPerGiocatori(scena) {
     try {
       const r = await fetch('api/vista-giocatori/scelta', { method: 'PUT', body: JSON.stringify({ scena }), headers: { 'Content-Type': 'application/json' } });
       if (!r.ok) throw new Error((await r.json().catch(() => ({}))).errore ?? `errore ${r.status}`);
       st.sceltaGiocatori = scena;
-      avviso(scena ? 'I giocatori vedono questa scena.' : 'Vista giocatori automatica: la scena collegata allo scontro aperto.');
+      await leggiScelta();
+      // 08/10: con uno scontro aperto i giocatori vedono la sua scena; la scena segnata vale senza scontro (o con più scontri)
+      avviso(st.inGioco === ctx.id ? 'I giocatori vedono questa scena.' : scena ? 'Segnata per i giocatori: la vedranno quando non c’è uno scontro aperto con un’altra scena.' : 'Nessuna scena segnata: i giocatori vedono la scena dello scontro aperto.');
     } catch (e) { avvisoErrore(`Scelta non salvata: ${e.message}`); }
     disegnaPannelloGiocatori();
   }
@@ -3173,15 +3190,17 @@ export function renderMappa(radice, ctx) {
     const url = indirizzoGiocatori();
     const qr = h('span', { class: 'qr-collega' });
     qr.innerHTML = svgQR(url, { pixel: 3 }); // SVG generato qui, dal solo indirizzo
-    const testo = s === st.scena.id ? 'I giocatori vedono questa scena (scelta da te).'
-      : s ? 'I giocatori vedono un’altra scena, scelta da te.'
-        : `Automatica: i giocatori vedono la scena collegata allo scontro aperto${st.scena.collegamento?.scontro && st.fonti?.scontro ? ' (questa, se è la più recente)' : ''}.`;
+    // 08/10: una regola sola (server.mjs → scenaInGioco): la scena dello scontro aperto; senza scontro (o con più
+    // scontri) quella segnata «mostrata ai giocatori»; altrimenti nessuna
+    const testo = [st.inGioco === st.scena.id ? 'I giocatori vedono questa scena.' : st.inGioco ? 'I giocatori vedono un’altra scena.' : 'I giocatori non vedono nessuna mappa.',
+      s === st.scena.id ? 'È segnata «mostrata ai giocatori».' : s ? 'È segnata un’altra scena.' : 'Nessuna scena segnata.',
+      'Con uno scontro aperto vedono la sua scena; altrimenti quella segnata.'].join(' ');
     svuota(el.pGiocatori,
       h('summary', {}, h('strong', {}, 'Vista giocatori')),
       h('p', { class: 'nota' }, testo),
       h('div', { class: 'mappa-azioni-token' },
-        s !== st.scena.id ? h('button', { type: 'button', class: 'btn btn-piccolo primario', onclick: () => scegliPerGiocatori(st.scena.id) }, 'Mostra questa scena') : null,
-        s ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => scegliPerGiocatori(null) }, 'Automatica') : null,
+        s !== st.scena.id ? h('button', { type: 'button', class: 'btn btn-piccolo primario', onclick: () => scegliPerGiocatori(st.scena.id) }, 'Mostra questa ai giocatori') : null,
+        s ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Toglie il segno: senza scontro aperto i giocatori non vedono nessuna mappa', onclick: () => scegliPerGiocatori(null) }, 'Togli il segno') : null,
         h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Una finestra a parte, da trascinare sul secondo schermo e mettere a schermo intero (F11)', onclick: () => window.open('#/mappa/giocatori', 'mutant-giocatori', 'popup,width=1280,height=800') }, 'Apri vista giocatori'),
         // ritocchi del 07/10: lo schermo dei giocatori inquadra di nuovo tutta la parte scoperta
         h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Lo schermo dei giocatori inquadra tutta la parte di mappa scoperta', onclick: () => adattaGiocatori() }, 'Adatta lo schermo dei giocatori')),
@@ -3259,9 +3278,9 @@ export function renderMappa(radice, ctx) {
   const giroRevisione = setInterval(() => controllaRevisione(), 1000);
   const giro = setInterval(async () => {
     aggiornaFonti();
-    const prima = st.sceltaGiocatori;
+    const prima = [st.sceltaGiocatori, st.inGioco].join();
     await leggiScelta();
-    if (st.sceltaGiocatori !== prima) disegnaPannelloGiocatori();
+    if ([st.sceltaGiocatori, st.inGioco].join() !== prima) disegnaPannelloGiocatori();
   }, INTERVALLO_FONTI_MS);
 
   // verifica della persistenza (07/10): la finestra va in secondo piano o si chiude: le modifiche non ancora salvate
