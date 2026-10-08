@@ -136,6 +136,7 @@ function sezioneMovimento(m, a) {
     mov ? h('button', { type: 'button', role: 'switch', 'aria-checked': String(!!m.mostraZoc), class: `interruttore-mappa${m.mostraZoc ? ' acceso' : ''}`, title: 'Zone di controllo degli avversari (tasto Z): uscendone si provoca un Attacco di Opportunità (Giocatore §5.3)', onclick: a.mostraZoc },
       h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `Mostra ZoC: ${m.mostraZoc ? 'sì' : 'no'}`) : null,
     h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Area raggiungibile' },
+      m.veicolo && a.rigaAndature ? a.rigaAndature() : null,
       mov && !m.veicolo ? fasce.map(([testo, n, v, f]) => h('button', {
         type: 'button', class: `btn btn-piccolo fascia-${n}${m.fascia === n ? ' scelto' : ''}`, 'aria-pressed': String(m.fascia === n),
         disabled: !Number.isFinite(v) || spenta(f),

@@ -144,16 +144,26 @@ export function annullaBordo(scena, voce) {
 }
 
 /**
- * Dove disegnare chi è a bordo sul veicolo (ritocchi del 08/10): cerchietti grandi due terzi di un token normale
- * (`quota` del lato di un Q), in griglia dall'alto a sinistra, il conducente per primo; se non ci stanno tutti
- * nell'ingombro le righe continuano sotto il mezzo. @returns [{ x, y, lato }] in pixel di schermo, uno per persona
+ * Dove disegnare chi è a bordo sul veicolo (ritocchi del 08/10, seconda tornata): sempre dentro l'ingombro, lontano
+ * dal bordo del mezzo (`margine`, in pixel), in una griglia centrata; il lato parte da due terzi di un token normale e
+ * scende fino a metà se serve per farli stare tutti. Solo se nemmeno a metà ci stanno le righe in più escono dal mezzo.
+ * Il conducente è il primo (in alto a sinistra). @returns [{ x, y, lato }] in pixel di schermo, uno per persona
  */
-export function postiCerchietti(n, box, qs, quota = 2 / 3) {
-  const lato = qs * quota;
-  const colonne = Math.max(1, Math.floor((box.w + 0.5) / lato));
+export function postiCerchietti(n, box, qs, { massimo = 2 / 3, minimo = 1 / 2, margine = 0 } = {}) {
+  if (!n) return [];
+  const W = Math.max(1, box.w - 2 * margine), H = Math.max(1, box.h - 2 * margine);
+  const prova = (lato) => { const colonne = Math.max(1, Math.floor((W + 0.01) / lato)); return { lato, colonne, righe: Math.ceil(n / colonne) }; };
+  let scelta = null;
+  for (let q = massimo; q >= minimo - 1e-9; q -= 0.02) {
+    const g = prova(qs * q);
+    if (g.righe * g.lato <= H + 0.01) { scelta = g; break; }
+  }
+  scelta ??= prova(qs * minimo);
+  const { lato, colonne, righe } = scelta;
   const usate = Math.min(colonne, n);
-  const x0 = box.x + (box.w - usate * lato) / 2;
-  return Array.from({ length: n }, (_, i) => ({ x: x0 + (i % colonne) * lato, y: box.y + Math.floor(i / colonne) * lato, lato }));
+  const x0 = box.x + margine + (W - usate * lato) / 2;
+  const y0 = box.y + margine + Math.max(0, (H - righe * lato) / 2);
+  return Array.from({ length: n }, (_, i) => ({ x: x0 + (i % colonne) * lato, y: y0 + Math.floor(i / colonne) * lato, lato }));
 }
 
 /**
@@ -169,6 +179,8 @@ export function veicoloFermo(rec, scontro, stato) {
   if (!rec?.conducente) return { motivo: `Nessun conducente a bordo: fai salire un PG come conducente, ${libero}`, nota: null };
   if (!stato?.conducente) return { motivo: `${rec.conducente.nome} (il conducente) non è nello scontro: fallo entrare o cambia conducente, ${libero}`, nota: null };
   if (stato.mosso) return { motivo: `${stato.motivo}: un solo movimento per Round (A.105); ${libero}`, nota: null };
+  // ritocchi del 08/10: andatura Fermo (0 Q), la causa del veicolo che «non si muove»
+  if (stato.fermo) return { motivo: stato.motivo.replace(/^andatura/, 'Andatura'), nota: null, andatura: true };
   return { motivo: null, nota: stato.fuori ? `Fuori dal turno di ${rec.conducente.nome}: il master lo muove comunque, una volta per Round` : null };
 }
 

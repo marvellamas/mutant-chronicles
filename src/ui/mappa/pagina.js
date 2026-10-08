@@ -52,13 +52,14 @@ import { apriMenuTemplate, sezioneTemplate, etichettaTemplate, testoMisure } fro
 import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
 import { componiMenu, unisciMenu } from '../../mappa/menu.js';
 import { diTurno, ordineIniziativa } from '../../scontro.js';
-import { statoMovimento, muoviVeicolo, cambiaConducente } from '../../veicoli-registro.js';
+import { statoMovimento, muoviVeicolo, cambiaConducente, scegliAndatura } from '../../veicoli-registro.js';
 import { DIREZIONI, NOMI_DIREZIONI, ingombroOrientato, ruotaSeLibero, sali, scendi, qPerScendere, veicoliVicini, aBordo, veicoloDi, veicoloFermo } from '../../mappa/veicoli-mappa.js';
 import { rigaMovimentoLibero, rigaOpportunita, senzaOpportunitaDelMovimento, rigaPorta, rigaTemplateTolti, rigaGruppo, registraRiga } from '../../scontro.js';
 import { tokenNelRettangolo, alternaSelezione, spostaGruppo } from '../../mappa/gruppo.js';
 import { aggiornaInScontri } from '../immagine-nemico.js';
 import { linkGuidaMappa } from '../guida.js';
 import { aggiornaVeicolo } from '../veicoli-registro.js';
+import { rigaAndature } from '../veicoli.js';
 import { creaGesti } from './gesti.js';
 import { svgQR } from '../../qr.js';
 import { leggiRete } from '../collega.js';
@@ -758,6 +759,7 @@ export function renderMappa(radice, ctx) {
       ingombro: (n) => cambiaToken(scelto.id, (x) => ({ ...x, ingombro: n, q: agganciaQ(st.scena.griglia, centroToken(st.scena.griglia, x).x, centroToken(st.scena.griglia, x).y, n) }), { controllaSovrapposti: true }),
       togli: () => togliToken(scelto.id),
       // fase 2, lotto 5: veicolo
+      rigaAndature: () => (recordVeicolo(scelto) ? rigaAndature(ctx.dati, recordVeicolo(scelto).mezzo, (id) => andaturaUi(scelto, id), { classe: 'mappa-andature' }) : null),
       ruota: (verso) => ruotaVeicoloUi(scelto.id, verso),
       aBordo: aBordo(scelto).map((x) => ({ id: x.id, nome: nomeTok(x), ruolo: x.ruolo })),
       scendi: (id) => iniziaScendi(scelto.id, id),
@@ -1019,6 +1021,8 @@ export function renderMappa(radice, ctx) {
       ['🔊 e cursori Musica / Effetti', 'muto generale e volumi su questo PC (ricordati); la campanella suona a ogni nuovo Round. Strumenti → «Suoni anche nella vista giocatori» per il televisore con le casse'],
       ['Avviso «clic per attivare l’audio»', 'il browser blocca i suoni finché non tocchi la pagina: un clic qualunque li sblocca'],
       ['Veicolo da mettere o scelto: ← →', 'gira il veicolo di 90° (anche clic destro → «Ruota»); Ctrl+Z annulla'],
+      ['Veicolo scelto: riga «Andatura» del pannello (o clic destro → «Movimento»)', 'Fermo, Controllata, Veloce, Massima con i Q del Round; l’area si aggiorna subito. Nello scontro una fascia per Round (Veicoli §2.1): il resto resta scelto per i Round dopo. Con l’andatura Fermo il veicolo non si muove e un avviso lo dice, con le andature come pulsanti'],
+      ['Veicolo: muoverlo', 'trascinalo o clic sul quadretto di arrivo, come un token; una volta per Round'],
       ['Clic destro su un PG o un nemico accanto a un veicolo', '«Sali su … come conducente» (un PG) o «come passeggero»: il token va a bordo e si muove con il mezzo'],
       ['Pannello del veicolo → «A bordo» (o clic destro sul veicolo)', 'gruppo «Scendi»: il nome, poi clic su un quadretto evidenziato accanto; gruppo «Linea di tiro»: la linea di chi è a bordo, dal veicolo'],
       ['Mappa collegata a una bozza', 'gruppo «Iniziativa» → «Inizia scontro»: come «Inizia» della bozza, poi la finestra «Iniziativa»'],
@@ -1077,7 +1081,7 @@ export function renderMappa(radice, ctx) {
     const t = nuovo && id ? st.scena?.token.find((x) => x.id === id) : null;
     if (t?.rif.tipo === 'veicolo' && st.fascia !== LIBERO) {
       const info = infoArea(t);
-      if (!info.area && info.motivo) avviso(`${pezzoDi(t)?.nome ?? 'Veicolo'}: ${info.motivo}.`, { tipo: 'info', chiave: 'veicolo-fermo', durata: 9000 });
+      if (!info.area && info.motivo) avviso(info.fermoAndatura ? `${info.motivo}.` : `${pezzoDi(t)?.nome ?? 'Veicolo'}: ${info.motivo}.`, { tipo: 'info', chiave: 'veicolo-fermo', durata: 12000, azioni: info.fermoAndatura ? azioniAndatura(t) : [] });
     }
   }
 
@@ -1150,6 +1154,24 @@ export function renderMappa(radice, ctx) {
   // ── Veicoli sulla mappa (fase 2, lotto 5; src/mappa/veicoli-mappa.js): girare, salire, scendere, linea dei passeggeri ──
   const muroQ = () => { const muri = muriEffettivi(st.scena); const g = st.scena.griglia; return (x, y) => cella(muri, g.colonne, g.righe, x, y); };
   const nomeTok = (t) => pezzoDi(t)?.nome ?? t?.nome ?? t?.id ?? '—';
+  /** Andatura del veicolo dalla mappa (ritocchi del 08/10): nel registro unico, poi area ricalcolata subito. */
+  async function andaturaUi(t, id) {
+    const rec = recordVeicolo(t);
+    if (!rec) { avvisoErrore('Registro del veicolo non trovato: l’andatura si cambia dalla sua scheda.'); return; }
+    let r;
+    try { r = scegliAndatura(rec, id, st.fonti?.scontro ?? null, ctx.dati); } catch (e) { avvisoErrore(e.message); return; }
+    try {
+      const { record } = await aggiornaVeicolo(rec, r.rec);
+      if (st.fonti) st.fonti.veicoli = st.fonti.veicoli.map((x) => (x.id === record.id ? record : x));
+      avviso(r.testo, { tipo: 'info', chiave: 'andatura' });
+      await aggiornaFonti();
+      invalidaArea();
+      disegnaPannelli();
+      ridisegna(['aree', 'sopra']);
+    } catch (e) { avvisoErrore(`Andatura non salvata: ${e.message}`); }
+  }
+  /** Le andature come pulsanti di un avviso (veicolo fermo). */
+  const azioniAndatura = (t) => ctx.dati.veicoli.andature.elenco.filter((a) => a.moltiplicatore > 0).map((a) => ({ testo: a.nome, fai: () => andaturaUi(t, a.id) }));
   /** Gira il veicolo di 90° attorno al suo centro (Ctrl+Z annulla); non su muri o altri token. */
   function ruotaVeicoloUi(id, verso) {
     const prima = st.scena.token.find((t) => t.id === id);
@@ -1611,10 +1633,10 @@ export function renderMappa(radice, ctx) {
     let notaVeicolo = null;
     if (pz.tipo === 'veicolo') {
       const rec = recordVeicolo(t);
-      const sv = rec && scontro ? statoMovimento(rec, scontro, diTurno(scontro), { fuoriTurno: true }) : null;
+      const sv = rec && scontro ? statoMovimento(rec, scontro, diTurno(scontro), { fuoriTurno: true, dati: ctx.dati }) : null;
       const mosso = scontro ? mossoNelRound(st.scena, t.id, scontro.id, scontro.round) || !!sv?.mosso : false;
       const f = veicoloFermo(rec, scontro, sv ? { ...sv, mosso, motivo: mosso ? `già mosso nel Round ${scontro.round}` : sv.motivo } : null);
-      if (rec && f.motivo) return { ...base, usato: mosso ? pz.movimento.passo : 0, motivo: f.motivo };
+      if (rec && f.motivo) return { ...base, usato: mosso ? pz.movimento.passo : 0, motivo: f.motivo, fermoAndatura: !!f.andatura };
       notaVeicolo = f.nota;
       usato = 0;
     }
@@ -2348,7 +2370,7 @@ export function renderMappa(radice, ctx) {
     const rec = recordVeicolo(t);
     if (rec && scontro && !libero) {
       try {
-        aggiornaVeicolo(rec, muoviVeicolo(rec, scontro, diTurno(scontro), { fuoriTurno: true })).then(({ record }) => {
+        aggiornaVeicolo(rec, muoviVeicolo(rec, scontro, diTurno(scontro), { fuoriTurno: true, dati: ctx.dati })).then(({ record }) => {
           if (st.fonti) st.fonti.veicoli = st.fonti.veicoli.map((x) => (x.id === record.id ? record : x));
         }).catch((e) => avvisoErrore(`Movimento del veicolo non registrato: ${e.message}`));
       } catch (e) { avvisoErrore(`Movimento del veicolo non registrato: ${e.message}`); }
@@ -2708,6 +2730,11 @@ export function renderMappa(radice, ctx) {
           ].filter(Boolean);
         });
         return voci.length ? voci : null;
+      },
+      andature: () => {
+        const rec = tok.rif.tipo === 'veicolo' ? recordVeicolo(tok) : null;
+        if (!rec) return null;
+        return ctx.dati.veicoli.andature.elenco.map((a) => ({ testo: `Andatura ${a.nome}`, chiave: `andatura:${a.id}`, scelta: rec.mezzo?.andatura === a.id, titolo: rec.mezzo?.andatura === a.id ? 'Andatura attuale' : 'Nello scontro: una fascia per Round (Veicoli §2.1)', azione: () => andaturaUi(tok, a.id) }));
       },
       ruota_veicolo: () => (tok.rif.tipo === 'veicolo' ? [
         { testo: 'Ruota a sinistra', tasto: '←', chiave: 'ruota:-1', azione: () => ruotaVeicoloUi(tok.id, -1) },

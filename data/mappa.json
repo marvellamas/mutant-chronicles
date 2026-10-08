@@ -438,7 +438,7 @@
     "token": {
       "rapida": ["passo", "corsa", "scatto", "libero"],
       "gruppi": [
-        { "titolo": "Movimento", "voci": ["annulla_movimento", "nuovo_turno"] },
+        { "titolo": "Movimento", "voci": ["andature", "annulla_movimento", "nuovo_turno"] },
         { "titolo": "Azioni", "voci": ["attacca", "porta_token"] },
         { "titolo": "Veicolo", "voci": ["sali", "ruota_veicolo"] },
         { "titolo": "Scendi", "voci": ["scendi_bordo"] },

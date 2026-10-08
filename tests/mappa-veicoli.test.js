@@ -162,19 +162,27 @@ test('vista giocatori: veicolo con muso e immagine, passeggeri visibili sì, nas
   assert.equal(vuoto.token[0].passeggeri, undefined);
 });
 
-test('cerchietti di chi è a bordo: due terzi di un Q, in griglia sull’ingombro (ritocchi del 08/10)', async () => {
+test('chi è a bordo sta dentro l’ingombro, lontano dal bordo: lato da due terzi a metà di un token (ritocchi del 08/10)', async () => {
   const { postiCerchietti } = await import('../src/mappa/veicoli-mappa.js');
-  const qs = 60;
-  // Scout verticale 2 × 4 Q: tre per riga, otto persone in tre righe, dentro il mezzo
-  const p = postiCerchietti(8, { x: 0, y: 0, w: 2 * qs, h: 4 * qs }, qs);
+  const qs = 60, margine = 10;
+  const dentro = (p, box) => p.every((x) => x.x >= box.x + margine - 1e-9 && x.y >= box.y + margine - 1e-9 && x.x + x.lato <= box.x + box.w - margine + 1e-9 && x.y + x.lato <= box.y + box.h - margine + 1e-9);
+  // Scout orizzontale 4 × 2 con conducente e 6 passeggeri: due righe dentro il mezzo, lato due terzi
+  const oriz = { x: 0, y: 0, w: 4 * qs, h: 2 * qs };
+  const p = postiCerchietti(7, oriz, qs, { margine });
+  assert.ok(dentro(p, oriz), 'non coprono il bordo');
   assert.ok(p.every((x) => Math.abs(x.lato - qs * 2 / 3) < 1e-9));
-  assert.deepEqual([...new Set(p.map((x) => Math.round(x.y)))], [0, 40, 80]);
-  assert.ok(p.every((x) => x.x >= 0 && x.x + x.lato <= 2 * qs + 1e-9 && x.y + x.lato <= 4 * qs));
-  // orizzontale 4 × 2: sei per riga
-  assert.equal(new Set(postiCerchietti(8, { x: 0, y: 0, w: 4 * qs, h: 2 * qs }, qs).map((x) => x.y)).size, 2);
-  // uno solo: centrato in alto
-  const [u] = postiCerchietti(1, { x: 0, y: 0, w: 2 * qs, h: 4 * qs }, qs);
-  assert.equal(u.x, (2 * qs - u.lato) / 2);
+  // Scout verticale 2 × 4 con otto persone: dentro anche lui
+  const vert = { x: 0, y: 0, w: 2 * qs, h: 4 * qs };
+  const v = postiCerchietti(8, vert, qs, { margine });
+  assert.ok(dentro(v, vert));
+  assert.ok(v[0].lato >= qs / 2 - 1e-9);
+  // un mezzo piccolo (2 × 1) con quattro persone: il lato scende, mai sotto metà token
+  const piccolo = { x: 0, y: 0, w: 2 * qs, h: qs };
+  const s = postiCerchietti(4, piccolo, qs, { margine: 4 });
+  assert.ok(s[0].lato < qs * 2 / 3 && s[0].lato >= qs / 2 - 1e-9);
+  // uno solo: al centro
+  const [u] = postiCerchietti(1, vert, qs, { margine });
+  assert.ok(Math.abs(u.x + u.lato / 2 - qs) < 1e-9 && Math.abs(u.y + u.lato / 2 - 2 * qs) < 1e-9);
 });
 
 test('veicolo che si muove (ritocchi del 08/10): area con il conducente anche fuori dal suo turno; motivi chiari altrimenti', async () => {
@@ -215,4 +223,36 @@ test('area del veicolo sull’ingombro intero, anche ruotato di 90°', async () 
   assert.equal(costoVerso(a([2, 4]), [14, 8]), Infinity);
   // il veicolo ruotato occupa i suoi Q: la prima cella oltre il bordo destro si raggiunge in 1 Q
   assert.equal(costoVerso(a([4, 2]), [5, 8]), 1);
+});
+
+test('andatura Fermo: 0 Q e avviso chiaro; cambio dalla mappa una fascia per Round nello scontro (Veicoli §2.1, A.104)', async () => {
+  const { statoMovimento, scegliAndatura, normalizzaRecord } = await import('../src/veicoli-registro.js');
+  const { veicoloFermo } = await import('../src/mappa/veicoli-mappa.js');
+  const scontro = { id: 'sc', stato: 'aperto', round: 3, partecipanti: [{ id: 'pg:pablo', tipo: 'pg', chiave: 'Pablo-Zaion' }] };
+  const turno = { id: 'pg:pablo' };
+  const rec = (andatura) => ({ id: 'veiscout', conducente: { chiave: 'Pablo-Zaion', nome: 'Pablo Zaion' }, movimento: null, mezzo: { uid: 'veiscout', profilo: 'asa-scout-mk4', nome: 'Scout', andatura } });
+  // la causa del veicolo fermo: andatura Fermo, moltiplicatore 0
+  const f = statoMovimento(rec('fermo'), scontro, turno, { fuoriTurno: true, dati });
+  assert.deepEqual([f.puo, f.fermo], [false, true]);
+  assert.equal(veicoloFermo(rec('fermo'), scontro, f).motivo, 'Andatura Fermo: scegli un’andatura per muovere Scout');
+  assert.equal(veicoloFermo(rec('fermo'), scontro, f).andatura, true);
+  assert.equal(statoMovimento(rec('controllata'), scontro, turno, { fuoriTurno: true, dati }).puo, true);
+  // il pezzo della mappa: 0 Q da fermo, MOV × andatura dopo il cambio (l'area si ricalcola dal pezzo)
+  const pezzo = (r) => pezziDellaScena({ scontro: { ...scontro, partecipanti: [{ ...scontro.partecipanti[0], nome: 'Pablo', lato: 'alleato', base: 3, d10: { valore: 5 } }], ordineAlleati: [], turno: 0 }, veicoli: [{ ...r, proprietario: { tipo: 'gruppo' } }] }, dati).find((p) => p.tipo === 'veicolo');
+  assert.equal(pezzo(rec('fermo')).movimento.passo, 0);
+  assert.equal(pezzo(rec('controllata')).movimento.passo, 30);
+  // fuori dallo scontro: subito
+  assert.equal(scegliAndatura(rec('fermo'), 'veloce', null, dati).rec.mezzo.andatura, 'veloce');
+  // nello scontro: da Fermo a Veloce si passa a Controllata, Veloce resta scelta; un secondo cambio nel Round: solo la scelta
+  const a = scegliAndatura(rec('fermo'), 'veloce', scontro, dati);
+  assert.deepEqual([a.rec.mezzo.andatura, a.rec.mezzo.andatura_scelta, a.rec.cambio], ['controllata', 'veloce', { scontro: 'sc', round: 3 }]);
+  assert.match(a.testo, /andatura Controllata \(1 AzM di conduzione\)\. Veloce resta scelta/);
+  const b = scegliAndatura(a.rec, 'massima', scontro, dati);
+  assert.deepEqual([b.rec.mezzo.andatura, b.rec.mezzo.andatura_scelta], ['controllata', 'massima']);
+  assert.match(b.testo, /già cambiata in questo Round/);
+  // al Round dopo il cambio si può di nuovo
+  assert.equal(scegliAndatura(b.rec, 'massima', { ...scontro, round: 4 }, dati).rec.mezzo.andatura, 'veloce');
+  assert.throws(() => scegliAndatura(rec('fermo'), 'turbo', scontro, dati), /sconosciuta/);
+  // il cambio del Round resta nel registro
+  assert.deepEqual(normalizzaRecord({ formato: 'mutant-veicolo', id: 'veiscout', revisione: 0, proprietario: { tipo: 'gruppo' }, mezzo: a.rec.mezzo, cambio: a.rec.cambio }, dati).cambio, { scontro: 'sc', round: 3 });
 });

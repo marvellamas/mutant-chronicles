@@ -59,7 +59,8 @@ export function disegnaToken(c, { scena, cam, pezzi, colori, immagine, seleziona
     // conducente per primo con un anello del colore della selezione (pezzi della mappa o info della vista giocatori)
     const bordo_ = [...(t.passeggeri ?? [])].sort((a, x) => (x.ruolo === 'conducente') - (a.ruolo === 'conducente'));
     if (bordo_.length) {
-      const posti = postiCerchietti(bordo_.length, box, qs);
+      // dentro l'ingombro, lontano dal bordo del mezzo (lo spessore del bordo e il margine della sua forma)
+      const posti = postiCerchietti(bordo_.length, box, qs, { margine: Math.min(box.w, box.h) * 0.06 + Math.max(2, Math.min(6, Math.min(box.w, box.h) * 0.06)) + 1 });
       bordo_.forEach((x, i) => {
         const pz = pezzi.get(chiaveRif(x.rif)) ?? (x.info ? { ...x.info, ritratto: x.info.immagine } : null);
         const pb = { x: posti[i].x, y: posti[i].y, w: posti[i].lato, h: posti[i].lato };

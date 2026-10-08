@@ -9,9 +9,9 @@ import { rigaScelte } from './pannello-passi.js';
 import {
   nuovoVeicolo, vistaVeicoloPersonaggio, pilotareDelPersonaggio, colpisciVeicolo, applicaRiparazione, conPi,
   montaRicambio, struttureVeicolo, profiloDi, consumaRisorse, installaRicambioEnergia, munizioniArmaVeicolo,
-  sollecitazioneFallita, eseguiCambioAndatura,
+  sollecitazioneFallita, eseguiCambioAndatura, movimentoMassimo, profiloVeicolo as profiloDelCatalogo,
 } from '../veicoli.js';
-import { migraVeicoli, nuovoRecord, riferimento, vede, eRiferimento, statoMovimento, muoviVeicolo, cambiaConducente, movimentoResiduo, stessaChiave } from '../veicoli-registro.js';
+import { migraVeicoli, nuovoRecord, riferimento, vede, eRiferimento, statoMovimento, muoviVeicolo, cambiaConducente, movimentoResiduo, stessaChiave, scegliAndatura } from '../veicoli-registro.js';
 import { elencoVeicoli, scriviVeicolo, aggiornaVeicolo } from './veicoli-registro.js';
 
 const numero = (n) => (Number.isInteger(n) ? n.toLocaleString('it-IT') : '—');
@@ -461,12 +461,29 @@ export { struttureVeicolo };
  * @param ctx { dati, ui, azioni: { ridisegna } }
  * @param o { scontro, diTurno, persone: [{ pg?, chiave, nome }], incapace(chiave) → bool, scrivi(nuovoRecord, messaggio) }
  */
+/**
+ * Riga rapida delle andature (ritocchi del 08/10; Veicoli §2.1): Fermo, Controllata, Veloce, Massima, con i Q del
+ * Round; quella attuale evidenziata, quella scelta per dopo (A.104) segnata. Nella carta della plancia e nella mappa.
+ */
+export function rigaAndature(dati, mezzo, scegli, { classe = '' } = {}) {
+  const p = profiloDelCatalogo(mezzo?.profilo, dati) ?? mezzo?.scheda ?? null;
+  return h('div', { class: `riga-andature ${classe}`.trim(), role: 'group', 'aria-label': 'Andatura' },
+    dati.veicoli.andature.elenco.map((a) => {
+      const q = p ? movimentoMassimo(p, a.id, dati).q : null;
+      const attuale = mezzo?.andatura === a.id, dopo = mezzo?.andatura_scelta === a.id;
+      return h('button', { type: 'button', class: `btn btn-piccolo${attuale ? ' scelto' : ''}`, 'aria-pressed': String(attuale),
+        title: `${a.nome}${q !== null ? `: ${q} Q per Round` : ''}${a.pilotare ? `, Pilotare ${a.pilotare}` : ''}${dopo ? ' (scelta per i prossimi Round)' : ''}`,
+        onclick: () => scegli(a.id) }, a.nome, q !== null ? h('small', {}, ` ${q} Q`) : null, dopo ? h('small', {}, ' ⟶') : null);
+    }));
+}
+
 export function cartaVeicoloPlancia(ctx, rec, o) {
   const d = ctx.dati;
   const mezzo = { ...rec.mezzo, conducente: false, gruppo: rec.proprietario?.tipo === 'gruppo' };
   const v = vistaVeicoloPersonaggio(mezzo, d);
   if (!v) return h('article', { class: 'carta-plancia' }, h('h2', {}, rec.mezzo?.nome ?? rec.id), h('p', { class: 'riquadro attenzione' }, 'Profilo non più nel catalogo dei veicoli.'));
-  const st = statoMovimento(rec, o.scontro, o.diTurno);
+  // ritocchi del 08/10: con l'andatura Fermo «Muovi» è spento, con il motivo
+  const st = statoMovimento(rec, o.scontro, o.diTurno, { dati: d });
   const persona = (k) => o.persone.find((x) => stessaChiave(x.chiave, k)) ?? null;
   const scelta = (etichetta, attuale, cambia) => h('label', { class: 'campo-veicolo' }, `${etichetta} `,
     h('select', { onchange: (e) => cambia(persona(e.target.value)) },
@@ -488,6 +505,8 @@ export function cartaVeicoloPlancia(ctx, rec, o) {
     h('p', {},
       scelta('Conducente', rec.conducente, (p) => o.scrivi(cambiaConducente(rec, p), p ? `${v.nome}: alla guida ${p.nome}${st.mosso ? ' (il mezzo si è già mosso in questo Round)' : ''}.` : `${v.nome}: nessun conducente.`)), ' ',
       scelta('Mitragliere', rec.mitragliere, (p) => o.scrivi({ ...rec, mitragliere: p ? { ...(p.pg ? { pg: p.pg } : {}), chiave: p.chiave, nome: p.nome } : null }, null))),
+    // ritocchi del 08/10: andatura scelta dalla carta, una fascia per Round nello scontro (Veicoli §2.1, A.104)
+    rigaAndature(d, rec.mezzo, (id) => { const r = scegliAndatura(rec, id, o.scontro, d); o.scrivi(r.rec, r.testo); }),
     o.scontro ? h('p', { class: 'movimento-veicolo' },
       h('strong', {}, st.mosso ? `Movimento già eseguito nel Round ${o.scontro.round}` : 'Movimento del Round non ancora eseguito'), ' ',
       h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !st.puo, title: st.motivo ?? 'Il mezzo si muove adesso, all’Iniziativa del conducente', onclick: () => o.scrivi(muoviVeicolo(rec, o.scontro, o.diTurno), `${v.nome} si muove all’Iniziativa di ${rec.conducente.nome}.`) }, 'Muovi'),
