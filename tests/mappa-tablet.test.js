@@ -385,3 +385,37 @@ test('«Fine scontro» (stesso effetto della plancia): lo scontro va in archivio
     rmSync(join(radice, 'scontri', 'archivio'), { recursive: true, force: true });
   }
 });
+
+test('linea di tiro dal tablet: solo quello che il giocatore vede, anche fuori turno, senza scrivere nulla', async () => {
+  const { lineaPerTablet } = await import('../src/mappa/tablet.js');
+  const s = leggiScena();
+  // Bea (fuori turno) verso il predone visibile, con il predone nascosto esattamente in mezzo
+  const scena = { ...s, token: s.token.map((t) => (t.id === 't-bea' ? { ...t, q: [1, 4] } : t.id === 't-p1' ? { ...t, q: [3, 4] } : t.id === 't-p2' ? { ...t, q: [5, 4] } : t)) };
+  const pezzi = [
+    { chiave: 'partecipante:pg:Bea', rif: { tipo: 'partecipante', id: 'pg:Bea' }, tipo: 'pg', pg: 'Bea', lato: 'pg', nome: 'Bea' },
+    { chiave: 'partecipante:nem:predone-delle-lande:1', lato: 'avversario', nome: 'Predone 1' },
+    { chiave: 'partecipante:nem:predone-delle-lande:2', lato: 'avversario', nome: 'Predone 2' },
+  ];
+  const tutti = new Set(scena.token.map((t) => t.id));
+  const visibili = new Set([...tutti].filter((id) => id !== 't-p1'));
+  const master = lineaPerTablet({ scena, pezzi, chiavePg: 'Bea', verso: { token: 't-p2' }, visibili: tutti, dati });
+  assert.equal(master.protetto, true, 'con tutti i token il nascosto in mezzo protegge');
+  const r = lineaPerTablet({ scena, pezzi, chiavePg: 'Bea', verso: { token: 't-p2' }, visibili, dati });
+  assert.equal(r.ok, true);
+  assert.equal(r.distanza, 4);
+  assert.equal(r.protetto, false, 'il nascosto non conta per il giocatore');
+  assert.equal(r.nome, 'Predone 2');
+  assert.ok(!JSON.stringify(r).includes('p1') && !JSON.stringify(r).includes('Predone 1'));
+  // bersagli che non vede: rifiutati
+  assert.match(lineaPerTablet({ scena, pezzi, chiavePg: 'Bea', verso: { token: 't-p1' }, visibili, dati }).errore, /non lo vedi/);
+  assert.match(lineaPerTablet({ scena, pezzi, chiavePg: 'Bea', verso: { q: [8, 1] }, visibili, dati }).errore, /nebbia/);
+  assert.equal(lineaPerTablet({ scena, pezzi, chiavePg: 'Bea', verso: { q: [5, 2] }, visibili, dati }).ok, true, 'verso un quadretto visibile');
+  // dal server: fuori turno va, e non scrive la scena
+  const rev = leggiScena().revisione;
+  const sr = await (await fetch(`${base}/api/vista-giocatori/linea`, { method: 'POST', body: JSON.stringify({ scena: 'cripta', pg: 'Bea', q: [5, 1] }) })).json();
+  assert.equal(sr.ok, true);
+  assert.ok(Number.isInteger(sr.distanza) && typeof sr.testo === 'string');
+  assert.equal(leggiScena().revisione, rev, 'nessuna scrittura');
+  const nascosto = await fetch(`${base}/api/vista-giocatori/linea`, { method: 'POST', body: JSON.stringify({ scena: 'cripta', pg: 'Bea', token: 't-p1' }) });
+  assert.equal(nascosto.status, 422);
+});

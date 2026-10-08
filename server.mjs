@@ -64,6 +64,8 @@
 //                                      al proprio turno (o sempre, scena.tablet.movimento), non con il blocco del master;
 //                                      con prova: true solo il percorso e il costo; altrimenti scrive la scena (revisione
 //                                      +1, voce per Ctrl+Z del master) e gli Attacchi di Opportunità nel registro
+//   POST /api/vista-giocatori/linea    { scena, pg, token | q }: la linea di tiro dal PG del tablet (08/10), con i soli
+//                                      token che il giocatore vede; distanza, Copertura, protetto, luce. Non scrive nulla
 //   GET /api/vista-giocatori/diretta?pg=<chiave>  il flusso di eventi di un tablet: in più «avviso» (campanellino)
 //   GET /api/tablet                    { collegati: [chiavi dei PG con un tablet collegato] } per il master
 //   POST /api/tablet/avviso            { pg, nome, tipo: muovi | turno }: «Il master ti chiede di muovere <PG>» (o «Tocca a
@@ -109,7 +111,7 @@ import { avversariZoc } from './src/mappa/zoc.js';
 import { dimensioniImmagine } from './src/mappa/immagine.js';
 import { pezziDellaScena } from './src/mappa/partecipanti.js';
 import { vistaPlancia } from './src/tavolo.js';
-import { pgDellaScena, pezzoDelPg, areaPerTablet, provaMovimento, eseguiMovimentoGiocatore, impostazioniTablet, miniScheda, fondiMovimentiTablet } from './src/mappa/tablet.js';
+import { pgDellaScena, pezzoDelPg, areaPerTablet, provaMovimento, eseguiMovimentoGiocatore, impostazioniTablet, miniScheda, fondiMovimentiTablet, lineaPerTablet } from './src/mappa/tablet.js';
 
 const RADICE = fileURLToPath(new URL('.', import.meta.url));
 const CARTELLA = 'personaggi';
@@ -744,6 +746,7 @@ async function apiVistaGiocatori(req, res, percorso, cartelle) {
     return json(res, 200, { giocatori: cartelle.canale.adatta() });
   }
   if (percorso === '/api/vista-giocatori/movimento') return movimentoDalTablet(req, res, cartelle);
+  if (percorso === '/api/vista-giocatori/linea') return lineaDalTablet(req, res, cartelle);
   if (percorso !== '/api/vista-giocatori' || req.method !== 'GET') return json(res, 405, { errore: 'metodo non ammesso' });
   const parametri = new URL(req.url, 'http://x').searchParams;
   const pg = parametri.get('pg') || null;
@@ -829,6 +832,24 @@ async function movimentoDalTablet(req, res, cartelle) {
   }
   if (esito.stato === 200) cartelle.canale?.cambiata();
   return json(res, esito.stato, esito.corpo);
+}
+
+/**
+ * Linea di tiro dal tablet (08/10): POST /api/vista-giocatori/linea { scena, pg, token | q, scontro? }. Calcolata qui sulla
+ * scena completa con i soli token che il giocatore vede (src/mappa/vista.js → vistaGiocatori); non scrive nulla.
+ */
+async function lineaDalTablet(req, res, cartelle) {
+  if (req.method !== 'POST') return json(res, 405, { errore: 'metodo non ammesso' });
+  let d;
+  try { d = JSON.parse((await leggiCorpo(req, 16 * 1024)).toString('utf8')); } catch (e) { return json(res, 400, { errore: `contenuto non valido: ${e.message}` }); }
+  if (typeof d?.pg !== 'string' || !d.pg || typeof d.scena !== 'string' || !ID_SCENA.test(d.scena)) return json(res, 400, { errore: 'pg e scena attesi' });
+  const { dati } = await datiDelServer(cartelle.radice);
+  const { scena } = await scenaInGioco(cartelle, { scontro: typeof d.scontro === 'string' ? d.scontro : null });
+  if (!scena || scena.id !== d.scena) return json(res, 409, { errore: 'La mappa in gioco è cambiata: attendi un momento.' });
+  const contesto = await contestoScena(scena, cartelle);
+  const visibili = new Set(vistaGiocatori(scena, contesto).token.map((t) => t.id));
+  const r = lineaPerTablet({ scena, pezzi: contesto.pezzi, chiavePg: d.pg, verso: typeof d.token === 'string' ? { token: d.token } : { q: d.q }, visibili, dati });
+  return json(res, r.ok ? 200 : 422, r);
 }
 
 /** Le righe degli Attacchi di Opportunità di un movimento dal tablet, nel registro dello scontro (revisione +1). */

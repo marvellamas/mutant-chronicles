@@ -18,6 +18,8 @@ import { visibileAiGiocatori, statoDiretta } from './diretta.js';
 import { diTurno } from '../scontro.js';
 import { stessaChiave } from '../veicoli-registro.js';
 import { inVolo, movimentoInVolo, regoleMovimento } from './volo.js';
+import { lineaDiTiro, ostacoliVista, testoCopertura } from './visuale.js';
+import { luceIngombro, testoLuceBersaglio } from './luce.js';
 
 export const FASCE = ['passo', 'corsa', 'scatto'];
 export const MODI_MOVIMENTO = ['turno', 'sempre'];
@@ -209,4 +211,50 @@ export function fondiMovimentiTablet(locale, server, ids, dati) {
     };
   }
   return s;
+}
+
+/**
+ * Linea di tiro dal tablet del giocatore (08/10): dal suo PG verso un token o un Q che vede, con distanza, Copertura
+ * (e causa), «protetto» (§5.10) e luce della zona del bersaglio, come nella mappa del master. Segreti (§3): contano solo
+ * i token che il giocatore vede (`visibili`: id dei token della vista giocatori filtrata dal server), le porte segrete
+ * sono muro, un Q sotto la nebbia non si può scegliere. Anche fuori turno (serve a pianificare); non cambia la scena.
+ * @param verso { token: id } oppure { q: [x, y] }
+ * @returns { ok: true, distanza, copertura, testo, protetto, vista, inVolo, luce, da, a, nome } oppure { ok: false, errore }
+ */
+export function lineaPerTablet({ scena, pezzi, chiavePg, verso, visibili, dati }) {
+  const pezzo = pezzoDelPg(pezzi, chiavePg);
+  if (!pezzo) return { ok: false, errore: 'Il tuo PG non è in questa scena.' };
+  const da = scena.token.find((t) => chiaveRif(t.rif) === pezzo.chiave) ?? null;
+  if (!da) {
+    const aBordo = scena.token.some((t) => (t.passeggeri ?? []).some((x) => chiaveRif(x.rif) === pezzo.chiave));
+    return { ok: false, errore: aBordo ? 'Sei a bordo di un veicolo: la linea dal mezzo la traccia il master.' : 'Il tuo PG non è sulla mappa.' };
+  }
+  const { colonne: C, righe: R } = scena.griglia;
+  let a = null, nome = null;
+  if (verso?.token) {
+    const t = scena.token.find((x) => x.id === verso.token);
+    if (!t || !visibili.has(t.id)) return { ok: false, errore: 'Quel bersaglio non lo vedi.' };
+    if (t.id === da.id) return { ok: false, errore: 'Scegli un bersaglio diverso dal tuo PG.' };
+    a = t;
+    nome = (pezzi ?? []).find((p) => p.chiave === chiaveRif(t.rif))?.nome ?? t.nome ?? null;
+  } else if (Array.isArray(verso?.q) && verso.q.length === 2 && verso.q.every(Number.isInteger)) {
+    const [x, y] = verso.q;
+    if (x < 0 || y < 0 || x >= C || y >= R) return { ok: false, errore: 'Quel quadretto è fuori dalla mappa.' };
+    if (cella(daBase64(scena.nebbia.coperti), C, R, x, y)) return { ok: false, errore: 'Quel quadretto è sotto la nebbia: scegline uno che vedi.' };
+    a = { id: null, q: [x, y], ingombro: 1 };
+  } else return { ok: false, errore: 'Tocca un token o un quadretto.' };
+  const perChiave = new Map((pezzi ?? []).map((p) => [p.chiave, p]));
+  // come nel master (A.141, A.144): non contano i token a 0 PV o A Terra; per i giocatori solo quelli che vedono
+  const contaToken = (t) => {
+    if (!visibili.has(t.id)) return false;
+    const p = perChiave.get(chiaveRif(t.rif));
+    return !p?.aZero && !(p?.stati ?? []).some((x) => (x?.id ?? x) === 'a-terra');
+  };
+  const ost = ostacoliVista(scena, dati.mappa.porte, { perGiocatori: true });
+  const r = lineaDiTiro(scena, da, a.id ? a : a.q, ost, dati.mappa.visuale, { contaToken, volo: dati.mappa.volo.linea_di_tiro });
+  const luce = testoLuceBersaglio(luceIngombro(scena, a, dati), dati);
+  return {
+    ok: true, distanza: r.distanza, copertura: r.copertura, testo: testoCopertura(r), protetto: !!r.protetto, vista: r.vista, inVolo: !!r.inVolo,
+    luce, nome, da: { q: [...da.q], ingombro: da.ingombro }, a: { q: [...a.q], ingombro: a.ingombro },
+  };
 }

@@ -34,7 +34,7 @@ import { passiInZoc } from '../../mappa/zoc.js';
 import { avviso } from '../avvisi.js';
 import { leggiVersione, serveAggiornamento, urlRicarica } from '../../versione.js';
 import { mappaDaSchermo } from '../../mappa/camera.js';
-import { dimensioni, centroToken } from '../../mappa/token.js';
+import { dimensioni, centroToken, celleToken } from '../../mappa/token.js';
 import { apri as apriFinestrella } from '../finestrella.js';
 import { creaAllarme } from '../allarme.js';
 
@@ -157,6 +157,8 @@ export function renderGiocatori(radice, ctx) {
       disegnaToken(c, { scena: s, cam: st.cam, pezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: (mio ? st.io.token : d?.token) ?? st.io?.token ?? null, bordo: (p) => p.bordo ?? null, alone: ctx.dati.mappa.colori.alone_turno, ritrattoVerticale: ctx.dati.mappa.token.ritratto_verticale, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => true }, zero: ctx.dati.mappa.pv_zero, volo: ctx.dati.mappa.volo });
       // fase 2, lotto 3: la linea di tiro del master (già filtrata dal server)
       if (d?.linea) disegnaLineaTiro(c, { scena: s, cam: st.cam, da: d.linea.da, a: d.linea.a, copertura: d.linea.copertura, etichetta: d.linea.testo ?? `${d.linea.distanza} Q · ${{ nessuna: 'nessuna Copertura', leggera: 'Copertura Leggera', media: 'Copertura Media', totale: 'Copertura Totale' }[d.linea.copertura] ?? ''}`, colori: ctx.dati.mappa.visuale.colori });
+      // 08/10: la linea di tiro del giocatore (dal tablet), al posto di quella del master
+      if (st.linea) disegnaLineaTiro(c, { scena: s, cam: st.cam, da: st.linea.da, a: st.linea.a, copertura: st.linea.copertura, etichetta: `${st.linea.distanza} Q · ${st.linea.testo}${st.linea.protetto ? ' · protetto' : ''}`, colori: ctx.dati.mappa.visuale.colori });
       // fase 2, lotto 7: il percorso provato dal tablet, in attesa di «Conferma»
       if (st.prova && st.io?.token) {
         const mio = s.token.find((t) => t.id === st.io.token);
@@ -435,6 +437,8 @@ export function renderGiocatori(radice, ctx) {
   /** Un tocco sulla mappa: con il permesso di muovere, la prova del movimento verso quel quadretto. */
   function tocco(p) {
     if (!st.pg || !st.vista || !st.io) return false;
+    // 08/10: «Linea di tiro» attiva: il tocco sceglie il bersaglio, un token o un quadretto (anche fuori turno)
+    if (st.lineaModo) { lineaVerso(p); return true; }
     if (!st.io.permesso?.puo) {
       if (st.io.permesso?.motivo) avviso(st.io.permesso.motivo, { tipo: 'info', chiave: 'tablet-fermo' });
       return true;
@@ -445,6 +449,31 @@ export function renderGiocatori(radice, ctx) {
     provaVerso(a);
     return true;
   }
+
+  /** «Linea di tiro» dal tablet (08/10): dal proprio PG al token o al quadretto toccato; la calcola il server. */
+  function cambiaLineaModo(v = !st.lineaModo) {
+    st.lineaModo = v;
+    if (!v) st.linea = null;
+    st.prova = null;
+    aggiornaTablet();
+    tela.richiedi(['sopra']);
+  }
+  async function lineaVerso(p) {
+    const g = st.vista.griglia;
+    const m = mappaDaSchermo(st.cam, p.x, p.y);
+    const q = [Math.floor((m.x - g.scosto_x) / g.q_px), Math.floor((m.y - g.scosto_y) / g.q_px)];
+    // un token che il giocatore vede in quel quadretto (il più in alto), altrimenti il quadretto
+    const t = [...st.vista.token].reverse().find((x) => x.id !== st.io.token && celleToken(x).some(([a, b]) => a === q[0] && b === q[1]));
+    try {
+      const r = await fetch('api/vista-giocatori/linea', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ scena: st.vista.id, pg: st.pg, ...(ctx.scontro ? { scontro: ctx.scontro } : {}), ...(t ? { token: t.id } : { q }) }) });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || j.ok === false) { avviso(j.errore ?? 'Linea di tiro non disponibile.', { tipo: 'info', chiave: 'tablet-linea' }); return; }
+      st.linea = { ...j, nome: j.nome ?? t?.info?.nome ?? null };
+    } catch { avviso('Collegamento con il master perso: riprova.', { tipo: 'errore', chiave: 'tablet-linea' }); }
+    aggiornaTablet();
+    tela.richiedi(['sopra']);
+  }
+  const testoLinea = (l) => [`${l.distanza} Q`, l.testo, l.protetto ? 'bersaglio protetto (−4 VA, §5.10)' : null, l.luce ? `luce: ${l.luce}` : null, l.inVolo ? 'in volo' : null].filter(Boolean).join(' · ');
 
   const chiama = async (corpo) => {
     const r = await fetch('api/vista-giocatori/movimento', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ scena: st.vista.id, pg: st.pg, fascia: st.fascia, ...(ctx.scontro ? { scontro: ctx.scontro } : {}), ...corpo }) });
@@ -535,8 +564,10 @@ export function renderGiocatori(radice, ctx) {
         h('button', { type: 'button', class: 'btn', onclick: () => { st.prova = null; aggiornaTablet(); tela.richiedi(['sopra']); } }, 'Annulla'),
         h('button', { type: 'button', class: 'btn primario', disabled: st.inVolo, onclick: () => conferma() }, 'Conferma'))) : null;
     el.torna.className = `btn tablet-torna${st.mosso ? ' primario' : ''}`;
-    svuota(el.tablet, mini, stato, fasce, conf,
+    const linea = st.linea ? h('div', { class: 'tablet-conferma tablet-linea' }, h('p', {}, `🎯 ${st.linea.nome ? `${st.linea.nome}: ` : ''}${testoLinea(st.linea)}`), st.linea.copertura === 'totale' ? h('p', { class: 'tablet-zoc' }, 'Copertura Totale: non si può attaccare direttamente (§5.8).') : null) : null;
+    svuota(el.tablet, mini, stato, fasce, conf, linea,
       h('div', { class: 'riga-azioni tablet-comandi' },
+        h('button', { type: 'button', class: `btn${st.lineaModo ? ' scelto' : ''}`, 'aria-pressed': String(!!st.lineaModo), title: 'Dal tuo PG verso un token o un quadretto che vedi: distanza, Copertura, protetto, luce. Anche fuori turno; non cambia nulla', onclick: () => cambiaLineaModo() }, st.lineaModo ? '🎯 Linea di tiro: tocca il bersaglio (chiudi)' : '🎯 Linea di tiro'),
         h('button', { type: 'button', class: 'btn', onclick: () => centraSuDiMe() }, '⌖ Centra su di me'),
         st.daScheda ? h('button', { type: 'button', class: `btn${st.mosso ? ' primario' : ''}`, onclick: () => tornaAllaScheda() }, '← Torna alla scheda') : null));
   }
