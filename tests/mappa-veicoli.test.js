@@ -59,9 +59,9 @@ test('orientamento: ingombro e immagine ruotano insieme a passi di 90°, attorno
   assert.deepEqual(ruotaVeicolo(veicolo([0, 0]), 1, { colonne: 20, righe: 20 }).q, [0, 1]);
   // un token in mezzo o un muro impediscono la rotazione
   const s = scena([v, tok('pg:a', [7, 7])]);
-  assert.match(ruotaSeLibero(s, 'tv', 1).errore, /altro token/);
-  assert.ok(ruotaSeLibero(scena([v]), 'tv', 1).token);
-  assert.match(ruotaSeLibero(scena([v]), 'tv', 1, (xx, yy) => xx === 4 && yy === 6).errore, /muro/);
+  assert.match(ruotaSeLibero(s, 'tv', 90).errore, /altro token/);
+  assert.ok(ruotaSeLibero(scena([v]), 'tv', 90).token);
+  assert.match(ruotaSeLibero(scena([v]), 'tv', 90, (xx, yy) => xx === 4 && yy === 6).errore, /muro/);
 });
 
 test('salire: accanto al mezzo, posti e un solo conducente; il token esce dalla mappa e va a bordo; Ctrl+Z', () => {

@@ -99,6 +99,12 @@
       3
     ],
     "veicolo_ingombro_max": 12,
+    "rotazione_veicoli": {
+      "_nota": "Orientamento libero dei veicoli (richiesta di Marcello dell’08/10/2026; src/mappa/forma.js): ← → girano il veicolo di passo_gradi (durante il piazzamento e con il veicolo scelto), Maiusc+← → di passo_rapido_gradi. Con angoli non retti i quadretti occupati sono quelli coperti per almeno metà dal rettangolo ruotato, come i template (template.campioni_per_lato). Girare non consuma movimento (Veicoli §1.3: «Curve ordinarie e normali regolazioni dell’andatura sono comprese nella conduzione»); A.147 per sterzate strette e inversioni.",
+      "TODO(Davide)": "A.147: girare il veicolo sulla griglia consuma Q di movimento? Da quanti gradi una curva non è più «ordinaria» (Veicoli §1.3) e diventa Sterzata stretta o Inversione rapida (§2.4, 1 AzP e Prova)? Si può girare sul posto da fermo? Provvisorio: rotazione libera prima e dopo lo spostamento, senza costo; le manovre le applica il master a voce.",
+      "passo_gradi": 10,
+      "passo_rapido_gradi": 45
+    },
     "veicolo_predefinito": [
       3,
       2

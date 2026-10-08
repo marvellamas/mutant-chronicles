@@ -23,6 +23,7 @@
 //     penombra, buio) entreranno con `luce`, una funzione del Q che potrà ridurre il raggio o togliere Q.
 import { daBase64, cella, impostaCella } from './celle.js';
 import { dimensioni, celleToken } from './token.js';
+import { formaDi } from './forma.js';
 import { distanzaIngombri } from './zoc.js';
 import { raggiScoperta } from './luce.js';
 
@@ -59,9 +60,10 @@ export function segmentoBloccato(ost, C, R, a, b, campioni = 10, bordo = 0.02) {
 }
 
 /** Angoli dell'ingombro del token (in Q). */
-const angoli = (t) => { const [w, h] = dimensioni(t.ingombro); const [x, y] = t.q; return [[x, y], [x + w, y], [x, y + h], [x + w, y + h]]; };
+// veicolo ruotato (08/10, src/mappa/forma.js): i quattro angoli veri del mezzo e il suo centro
+const angoli = (t) => { const f = formaDi(t); if (f) return f.vertici.map(([x, y]) => [t.q[0] + x, t.q[1] + y]); const [w, h] = dimensioni(t.ingombro); const [x, y] = t.q; return [[x, y], [x + w, y], [x, y + h], [x + w, y + h]]; };
 /** Centro dell'ingombro (in Q). */
-export const centro = (t) => { const [w, h] = dimensioni(t.ingombro); return [t.q[0] + w / 2, t.q[1] + h / 2]; };
+export const centro = (t) => { const f = formaDi(t); if (f) return [t.q[0] + f.centro[0], t.q[1] + f.centro[1]]; const [w, h] = dimensioni(t.ingombro); return [t.q[0] + w / 2, t.q[1] + h / 2]; };
 
 /** Centri dei Q dell'ingombro (in Q): i punti da cui può tirare un token grande. */
 export const centriQ = (t) => celleToken(t).map(([x, y]) => [x + 0.5, y + 0.5]);

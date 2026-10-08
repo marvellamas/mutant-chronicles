@@ -8,6 +8,7 @@
 import { schermoDaMappa } from '../../mappa/camera.js';
 import { dimensioni, chiaveRif } from '../../mappa/token.js';
 import { direzioneDi, angoloImmagine, postiCerchietti } from '../../mappa/veicoli-mappa.js';
+import { angoloDi, formaDi, baseDaIngombro } from '../../mappa/forma.js';
 
 const SOGLIA_TESTO_PX = 16; // sotto questo lato in pixel di schermo niente testo né sigle
 
@@ -50,6 +51,8 @@ export function disegnaToken(c, { scena, cam, pezzi, colori, immagine, seleziona
   const ordinati = [...scena.token].sort((a, b) => (a.id === selezionato) - (b.id === selezionato) || (a.id === trascina?.id) - (b.id === trascina?.id));
   for (const t of ordinati) {
     const q = trascina?.id === t.id ? trascina.q : t.q;
+    // 08/10: il veicolo si disegna nel suo riferimento, ruotato liscio verso il muso, con il triangolino del muso
+    if (t.rif.tipo === 'veicolo') { disegnaVeicolo(c, { t, q, g, cam, qs, pezzi, colori, immagine, scelto: t.id === selezionato, inMano: trascina?.id === t.id, bordo, alone, pv, ritrattoVerticale, zero }); continue; }
     const [w, h] = dimensioni(t.ingombro);
     const a = schermoDaMappa(cam, g.scosto_x + q[0] * g.q_px, g.scosto_y + q[1] * g.q_px);
     const box = { x: a.x, y: a.y, w: w * qs, h: h * qs };
@@ -75,6 +78,80 @@ export function disegnaToken(c, { scena, cam, pezzi, colori, immagine, seleziona
       });
     }
   }
+}
+
+/**
+ * Veicolo (08/10, orientamento libero; src/mappa/forma.js): il rettangolo lungo × largo con il muso verso angoloDi(t)
+ * (0° in alto, senso orario), disegnato in un riferimento ruotato attorno al suo centro; l'immagine ruota liscia, i
+ * quadretti occupati seguono la regola «almeno metà». Scelto: i quadretti occupati con un contorno leggero. Il
+ * triangolino sul lato anteriore, nel colore del proprietario, dice dove punta il muso. Chi è a bordo resta dritto.
+ */
+function disegnaVeicolo(c, { t, q, g, cam, qs, pezzi, colori, immagine, scelto, inMano, bordo, alone, pv, ritrattoVerticale, zero }) {
+  const p = pezzi.get(chiaveRif(t.rif)) ?? null;
+  const b = p ? bordo(p) : null;
+  const f = formaDi(t);
+  const [w, h] = dimensioni(t.ingombro);
+  const centro = f ? [q[0] + f.centro[0], q[1] + f.centro[1]] : [q[0] + w / 2, q[1] + h / 2];
+  const s = schermoDaMappa(cam, g.scosto_x + centro[0] * g.q_px, g.scosto_y + centro[1] * g.q_px);
+  const [L, W] = Array.isArray(t.base) ? t.base : baseDaIngombro(t.ingombro);
+  const ang = ((angoloDi(t) - 180) * Math.PI) / 180;
+  // quadretti occupati (veicolo scelto): contorno leggero
+  if (scelto) {
+    const celle = f ? f.celle.map(([dx, dy]) => [q[0] + dx, q[1] + dy]) : null;
+    c.save();
+    c.strokeStyle = colori.selezione;
+    c.fillStyle = colori.selezione;
+    c.lineWidth = 1.5;
+    c.setLineDash([4, 3]);
+    for (const [x, y] of celle ?? Array.from({ length: w * h }, (_, i) => [q[0] + (i % w), q[1] + Math.floor(i / w)])) {
+      const a = schermoDaMappa(cam, g.scosto_x + x * g.q_px, g.scosto_y + y * g.q_px);
+      c.globalAlpha = 0.14;
+      c.fillRect(Math.round(a.x) + 1, Math.round(a.y) + 1, qs - 2, qs - 2);
+      c.globalAlpha = 0.8;
+      c.strokeRect(Math.round(a.x) + 1.5, Math.round(a.y) + 1.5, qs - 3, qs - 3);
+    }
+    c.restore();
+  }
+  // nel riferimento del veicolo il muso è in basso (180°): box verticale largo × lungo, centrato
+  const box = { x: -(W * qs) / 2, y: -(L * qs) / 2, w: W * qs, h: L * qs };
+  c.save();
+  c.translate(s.x, s.y);
+  c.rotate(ang);
+  disegnaUno(c, { t: { ...t, direzione: 's' }, p, box, colori, immagine, qs, scelto, inMano, b, alone, pv, ritrattoVerticale, zero });
+  // muso: triangolino sul lato anteriore, nel colore del proprietario, con il contorno per il contrasto
+  const lato = Math.max(8, Math.min(box.w * 0.42, qs * 0.5));
+  const y0 = box.y + box.h - Math.max(2, Math.min(6, Math.min(box.w, box.h) * 0.06)) * 0.5;
+  c.beginPath();
+  c.moveTo(-lato / 2, y0 - lato * 0.15);
+  c.lineTo(lato / 2, y0 - lato * 0.15);
+  c.lineTo(0, y0 + lato * 0.55);
+  c.closePath();
+  c.fillStyle = b?.colore ?? colori.selezione;
+  c.globalAlpha = t.nascosto ? 0.45 : 1;
+  c.fill();
+  c.lineWidth = Math.max(1.5, lato * 0.1);
+  c.strokeStyle = b?.contorno ?? '#000000';
+  c.stroke();
+  c.restore();
+  // chi è a bordo: le posizioni nel riferimento del veicolo, i cerchietti dritti sullo schermo
+  const bordo_ = [...(t.passeggeri ?? [])].sort((a, x) => (x.ruolo === 'conducente') - (a.ruolo === 'conducente'));
+  if (!bordo_.length) return;
+  const posti = postiCerchietti(bordo_.length, box, qs, { margine: Math.min(box.w, box.h) * 0.06 + Math.max(2, Math.min(6, Math.min(box.w, box.h) * 0.06)) + 1 });
+  const cos = Math.cos(ang), sin = Math.sin(ang);
+  bordo_.forEach((x, i) => {
+    const pz = pezzi.get(chiaveRif(x.rif)) ?? (x.info ? { ...x.info, ritratto: x.info.immagine } : null);
+    const lx = posti[i].x + posti[i].lato / 2, ly = posti[i].y + posti[i].lato / 2;
+    const cx = s.x + lx * cos - ly * sin, cy = s.y + lx * sin + ly * cos;
+    const pb = { x: cx - posti[i].lato / 2, y: cy - posti[i].lato / 2, w: posti[i].lato, h: posti[i].lato };
+    disegnaUno(c, { t: { ...x, nascosto: t.nascosto || x.nascosto }, p: pz, box: pb, colori, immagine, qs: posti[i].lato, scelto: false, inMano: false, b: pz ? bordo(pz) : null, alone, pv, ritrattoVerticale, zero });
+    if (x.ruolo === 'conducente') {
+      c.save();
+      c.strokeStyle = colori.selezione;
+      c.lineWidth = Math.max(2, pb.w * 0.07);
+      c.beginPath(); c.arc(pb.x + pb.w / 2, pb.y + pb.h / 2, pb.w / 2 - c.lineWidth / 2, 0, Math.PI * 2); c.stroke();
+      c.restore();
+    }
+  });
 }
 
 function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alone, pv, ritrattoVerticale, zero }) {

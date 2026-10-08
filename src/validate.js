@@ -2731,6 +2731,11 @@ function validaMappa(dati, err) {
     for (const k of ['musica', 'effetti']) if (!(typeof AU.volume_predefinito?.[k] === 'number' && AU.volume_predefinito[k] >= 0 && AU.volume_predefinito[k] <= 1)) err(F, `audio.volume_predefinito.${k}`, 'numero da 0 a 1');
     if (typeof AU.giocatori_predefinito !== 'boolean') err(F, 'audio.giocatori_predefinito', 'true o false');
   }
+  // veicoli ruotati (08/10, src/mappa/forma.js): passi di rotazione in gradi
+  {
+    const RV = m.token?.rotazione_veicoli;
+    for (const k of ['passo_gradi', 'passo_rapido_gradi']) if (!isIntero(RV?.[k]) || RV[k] < 1 || RV[k] > 180 || 360 % RV[k] !== 0) err(F, `token.rotazione_veicoli.${k}`, 'intero da 1 a 180 che divide 360 (gradi)');
+  }
   // tablet dei giocatori (fase 2, lotto 7; src/mappa/tablet.js): movimento al turno o sempre, avviso «Tocca a te»
   {
     const T = m.tablet;

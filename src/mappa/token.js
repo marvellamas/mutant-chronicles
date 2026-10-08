@@ -3,8 +3,10 @@
 // registro dei veicoli a ogni disegno (src/mappa/partecipanti.js). Nel file della scena restano il riferimento
 // (rif: { tipo: 'partecipante' | 'veicolo' | 'segnaposto', id }), la posizione (q: il Q in alto a sinistra
 // dell'ingombro), l'ingombro in Q e il «nascosto» del master.
-// Ingombro: un intero (lato di un quadrato: creature) oppure [colonne, righe] (veicoli, rettangolari).
+// Ingombro: un intero (lato di un quadrato: creature) oppure [colonne, righe] (veicoli, rettangolari). Un veicolo
+// ruotato (08/10, src/mappa/forma.js: angolo e base) occupa solo i quadretti della sua forma, dentro quel rettangolo.
 // Funzioni pure.
+import { formaDi } from './forma.js';
 
 /**
  * Lato del token in Q dalla Taglia (data/mappa.json → token.ingombro_per_taglia; data/formato_nemici.json → taglia).
@@ -34,10 +36,12 @@ export function ingombroVeicolo(profilo, dati) {
 /** Ingombro come [colonne, righe]. */
 export const dimensioni = (ingombro) => (Array.isArray(ingombro) ? [ingombro[0], ingombro[1]] : [ingombro ?? 1, ingombro ?? 1]);
 
-/** Q occupati dal token: [[x, y], …]. */
+/** Q occupati dal token: [[x, y], …] (per un veicolo ruotato, i quadretti della sua forma). */
 export function celleToken(t) {
-  const [w, h] = dimensioni(t?.ingombro);
   const [x0, y0] = t.q;
+  const f = formaDi(t);
+  if (f) return f.celle.map(([dx, dy]) => [x0 + dx, y0 + dy]);
+  const [w, h] = dimensioni(t?.ingombro);
   const r = [];
   for (let y = y0; y < y0 + h; y++) for (let x = x0; x < x0 + w; x++) r.push([x, y]);
   return r;
@@ -65,12 +69,24 @@ export function agganciaQ(griglia, mx, my, ingombro) {
 
 /** Centro del token in pixel della mappa. */
 export function centroToken(griglia, t) {
+  const f = formaDi(t);
+  if (f) return { x: griglia.scosto_x + (t.q[0] + f.centro[0]) * griglia.q_px, y: griglia.scosto_y + (t.q[1] + f.centro[1]) * griglia.q_px };
   const [w, h] = dimensioni(t.ingombro);
   return { x: griglia.scosto_x + (t.q[0] + w / 2) * griglia.q_px, y: griglia.scosto_y + (t.q[1] + h / 2) * griglia.q_px };
 }
 
 /** Il punto (mx, my) della mappa cade dentro l'ingombro del token? */
 export function tokenSottoPunto(griglia, t, mx, my) {
+  // veicolo ruotato: il punto deve cadere nel mezzo disegnato (il rettangolo ruotato) o in uno dei suoi quadretti, non
+  // negli angoli vuoti del rettangolo che lo contiene
+  const f = formaDi(t);
+  if (f) {
+    const px = (mx - griglia.scosto_x) / griglia.q_px - t.q[0] - f.centro[0], py = (my - griglia.scosto_y) / griglia.q_px - t.q[1] - f.centro[1];
+    const rad = (t.angolo * Math.PI) / 180;
+    if (Math.abs(px * Math.sin(rad) - py * Math.cos(rad)) <= t.base[0] / 2 && Math.abs(px * Math.cos(rad) + py * Math.sin(rad)) <= t.base[1] / 2) return true;
+    const qx = Math.floor((mx - griglia.scosto_x) / griglia.q_px), qy = Math.floor((my - griglia.scosto_y) / griglia.q_px);
+    return celleToken(t).some(([x, y]) => x === qx && y === qy);
+  }
   const [w, h] = dimensioni(t.ingombro);
   const x0 = griglia.scosto_x + t.q[0] * griglia.q_px, y0 = griglia.scosto_y + t.q[1] * griglia.q_px;
   return mx >= x0 && my >= y0 && mx < x0 + w * griglia.q_px && my < y0 + h * griglia.q_px;
@@ -98,8 +114,9 @@ export function sovrapposti(token) {
 }
 
 /** I Q dove un token di questo ingombro, in q, starebbe sopra un altro token (escluso `tranne`) o su un muro. */
-export function liberoPer(q, ingombro, { token = [], tranne = null, muro = () => false, colonne, righe }) {
-  const t = { q, ingombro };
+export function liberoPer(q, ingombro, { token = [], tranne = null, muro = () => false, colonne, righe, come = null }) {
+  // come (08/10): il token di cui si prova la posizione, per la forma di un veicolo ruotato (angolo e base)
+  const t = { ...(come ? { angolo: come.angolo, base: come.base } : {}), q, ingombro };
   if (!tokenDentro(t, colonne, righe)) return false;
   const occupate = new Set(token.filter((x) => x.id !== tranne).flatMap((x) => celleToken(x).map(([a, b]) => `${a},${b}`)));
   return celleToken(t).every(([x, y]) => !occupate.has(`${x},${y}`) && !muro(x, y));

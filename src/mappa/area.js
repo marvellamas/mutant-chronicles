@@ -10,7 +10,8 @@
 //     di un muro (uno dei due Q ai lati murato), non fra due muri a spigolo (entrambi murati: la diagonale li
 //     attraverserebbe); «vietata», servono liberi entrambi; «libera», i lati non contano. Le porte chiuse sono muri.
 // Funzioni pure. Con griglie da 300 × 300 Q e 300 token resta sotto i 50 ms (tests/mappa-area.test.js).
-import { dimensioni } from './token.js';
+import { dimensioni, celleToken } from './token.js';
+import { formaDi } from './forma.js';
 
 /** Somme prefisse 2D di una maschera di Q (Uint8Array 0/1, un byte per Q): conteggio in un rettangolo in O(1). */
 function prefisse(valori, C, R) {
@@ -77,7 +78,9 @@ export const stessaParte = (a, b) => (a === 'avversario') === (b === 'avversario
 /**
  * Area raggiungibile del token `chi` entro `massimo` Q.
  * @param o { colonne, righe, muri, terreno (maschere di bit), token: [{ id, q, ingombro, lato }],
- *   chi: { id, q, ingombro, lato }, massimo, regole: data/mappa.json → movimento }
+ *   chi: { id, q, ingombro, lato, angolo?, base? }, massimo, regole: data/mappa.json → movimento }
+ *   angolo e base (08/10, src/mappa/forma.js): un veicolo ruotato occupa solo i quadretti della sua forma, in ogni
+ *   posizione; gli altri token con angolo e base fanno ostacolo solo con i loro quadretti
  *   lato: 'pg' | 'alleato' | 'avversario' | null (segnaposto: come un alleato di tutti)
  * @returns {{ colonne, righe, w, h, partenza, massimo, costo: Float64Array, fermabile: Uint8Array, migliore, precStato }}
  *   costo e fermabile indicizzati per posizione (y × colonne + x del Q in alto a sinistra), costo Infinity se non
@@ -91,20 +94,23 @@ export function areaRaggiungibile({ colonne: C, righe: R, muri, terreno, token, 
   const all = new Uint8Array(C * R);
   for (const t of token) {
     if (t.id === chi.id) continue;
-    const [tw, th] = dimensioni(t.ingombro);
     const nemico = t.lato && chi.lato ? !stessaParte(t.lato, chi.lato) : false;
-    for (let y = t.q[1]; y < t.q[1] + th; y++) for (let x = t.q[0]; x < t.q[0] + tw; x++) {
+    for (const [x, y] of celleToken(t)) {
       if (x < 0 || y < 0 || x >= C || y >= R) continue;
       if (nemico) avv[y * C + x] = 1; else all[y * C + x] = 1;
     }
   }
   const nMuro = prefisse(muro, C, R), nTerr = prefisse(terr, C, R), nAvv = prefisse(avv, C, R), nAll = prefisse(all, C, R);
   const dentro = (x, y) => x >= 0 && y >= 0 && x + w <= C && y + h <= R;
+  // veicolo ruotato (08/10): i conteggi si fanno sui soli quadretti della forma, non su tutto il rettangolo
+  const forma = formaDi(chi)?.celle ?? null;
+  const contaIn = (m, n) => (forma ? (x, y) => { let k = 0; for (const [dx, dy] of forma) k += m[(y + dy) * C + x + dx]; return k; } : (x, y) => n(x, y, w, h));
+  const inMuro = contaIn(muro, nMuro), inTerr = contaIn(terr, nTerr), inAvv = contaIn(avv, nAvv), inAll = contaIn(all, nAll);
   // posizione attraversabile: niente muri; avversari e alleati secondo le regole
-  const passa = (x, y) => dentro(x, y) && nMuro(x, y, w, h) === 0
-    && (regole.attraversa_avversari || nAvv(x, y, w, h) === 0)
-    && (regole.attraversa_alleati || nAll(x, y, w, h) === 0);
-  const ferma = (x, y) => nAvv(x, y, w, h) === 0 && (regole.fermarsi_su_alleato || nAll(x, y, w, h) === 0);
+  const passa = (x, y) => dentro(x, y) && inMuro(x, y) === 0
+    && (regole.attraversa_avversari || inAvv(x, y) === 0)
+    && (regole.attraversa_alleati || inAll(x, y) === 0);
+  const ferma = (x, y) => inAvv(x, y) === 0 && (regole.fermarsi_su_alleato || inAll(x, y) === 0);
   const N = C * R;
   const alterne = !!regole.diagonali_alterne;
   // stato = posizione × 2 + parità delle diagonali già fatte (solo con le diagonali alterne)
@@ -126,12 +132,12 @@ export function areaRaggiungibile({ colonne: C, righe: R, muri, terreno, token, 
       const diagonale = dx !== 0 && dy !== 0;
       if (diagonale && regole.diagonale_spigolo !== 'libera') {
         // i due Q (posizioni) ai lati della diagonale: murati o fuori dalla griglia
-        const latoA = !dentro(nx, y) || nMuro(nx, y, w, h) !== 0;
-        const latoB = !dentro(x, ny) || nMuro(x, ny, w, h) !== 0;
+        const latoA = !dentro(nx, y) || inMuro(nx, y) !== 0;
+        const latoB = !dentro(x, ny) || inMuro(x, ny) !== 0;
         if (regole.diagonale_spigolo === 'vietata' ? latoA || latoB : latoA && latoB) continue;
       }
       let passo = diagonale ? (alterne && parita ? 2 * regole.costo_diagonale : regole.costo_diagonale) : regole.costo_ortogonale;
-      if (nTerr(nx, ny, w, h) > 0) passo *= regole.terreno_difficile_moltiplicatore;
+      if (inTerr(nx, ny) > 0) passo *= regole.terreno_difficile_moltiplicatore;
       const nc = c + passo;
       if (nc > massimo) continue;
       const nuovo = (ny * C + nx) * 2 + (alterne && diagonale ? 1 - parita : parita);
@@ -151,7 +157,7 @@ export function areaRaggiungibile({ colonne: C, righe: R, muri, terreno, token, 
     const x = p % C, y = (p - x) / C;
     fermabile[p] = p === partenza || ferma(x, y) ? 1 : 0;
   }
-  return { colonne: C, righe: R, w, h, partenza, massimo, costo, fermabile, migliore, precStato };
+  return { colonne: C, righe: R, w, h, forma, partenza, massimo, costo, fermabile, migliore, precStato };
 }
 
 /** Costo per arrivare nella posizione [x, y] (Infinity se fuori area o se lì non ci si può fermare). */
@@ -238,6 +244,10 @@ export function celleArea(area, rimaste, fino = 1) {
     const k = f ? ordine.indexOf(f) + 1 : 0;
     if (!k || k > fino) continue;
     const x0 = p % C, y0 = (p - x0) / C;
+    if (area.forma) {
+      for (const [dx, dy] of area.forma) { const x = x0 + dx, y = y0 + dy; if (x >= C || y >= R) continue; const i = y * C + x; if (!r[i] || k < r[i]) r[i] = k; }
+      continue;
+    }
     for (let y = y0; y < y0 + h && y < R; y++) for (let x = x0; x < x0 + w && x < C; x++) {
       const i = y * C + x;
       if (!r[i] || k < r[i]) r[i] = k;

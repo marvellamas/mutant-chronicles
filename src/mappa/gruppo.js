@@ -42,7 +42,8 @@ export function spostaGruppo(scena, ids, delta, ostacoli, dati, adesso = new Dat
   const libera = (t, q) => {
     const [w, h] = dimensioni(t.ingombro);
     if (q[0] < 0 || q[1] < 0 || q[0] + w > C || q[1] + h > R) return false;
-    for (let y = q[1]; y < q[1] + h; y++) for (let x = q[0]; x < q[0] + w; x++) if (occupati.has(`${x},${y}`) || cella(ostacoli, C, R, x, y)) return false;
+    // i quadretti veri (anche di un veicolo ruotato, 08/10)
+    for (const [x, y] of celleToken({ ...t, q })) if (occupati.has(`${x},${y}`) || cella(ostacoli, C, R, x, y)) return false;
     return true;
   };
   // il quadretto libero più vicino a quello voluto: anelli crescenti (diagonale 1 Q), a parità il più vicino in linea retta
@@ -68,8 +69,7 @@ export function spostaGruppo(scena, ids, delta, ostacoli, dati, adesso = new Dat
     if (!a) { a = t.q; fermi.push(t.id); }
     else if (a !== voluto) aggiustati.push({ id: t.id, voluto, a });
     nuove.set(t.id, a);
-    const [w, h] = dimensioni(t.ingombro);
-    for (let y = a[1]; y < a[1] + h; y++) for (let x = a[0]; x < a[0] + w; x++) occupati.add(`${x},${y}`);
+    for (const [x, y] of celleToken({ ...t, q: a })) occupati.add(`${x},${y}`);
     if (a[0] !== t.q[0] || a[1] !== t.q[1]) mossi.push({ id: t.id, da: [...t.q], a: [...a] });
   }
   if (!mossi.length) return { scena, mossi, aggiustati, fermi };
