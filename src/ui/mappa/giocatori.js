@@ -26,6 +26,7 @@ import { creaGesti } from './gesti.js';
 import { disegnaToken, coloriMappa, creaImmagini } from './disegno-token.js';
 import { barraIniziativaEl } from './barra-iniziativa.js';
 import { creaAudio } from './audio.js';
+import { campanellaVista } from '../../mappa/audio.js';
 import { disegnaArea, disegnaZoc, disegnaPercorso, coloriAree, disegnaTemplate, disegnaPorte, disegnaMuri, disegnaLineaTiro, disegnaLuci } from './disegno-aree.js';
 import { celleDaMaschera, templateVisibili, ostacoliVisibili } from '../../mappa/template.js';
 import { celleDellaDiretta, zocDellaDiretta, avversariDellaDiretta, trattiPercorso } from '../../mappa/diretta.js';
@@ -299,13 +300,18 @@ export function renderGiocatori(radice, ctx) {
   const messaggio = (t) => { el.messaggio.textContent = t ?? ''; el.messaggio.hidden = !t; };
   async function usa(corpo) {
     usaTablet(corpo);
-    const roundPrima = st.vista?.collegamento?.scontro ? { id: st.vista.collegamento.scontro, round: st.vista.turno?.round ?? null } : null;
+    // 08/10: la lettura precedente (scontro, Round, quando) per la campanella (src/mappa/audio.js → campanellaVista)
+    const lettura = (v) => (v?.collegamento?.scontro ? { scontro: v.collegamento.scontro, round: v.turno?.round ?? null, quando: Date.now() } : null);
+    const letturaPrima = st.ultimaLettura ?? null;
     st.vista = corpo.scena;
     // suoni (07/10): solo con «suona anche nella vista giocatori» acceso dal master; campanella al nuovo Round, musica
     audio.riprova();
-    audio.musica(st.vista?.audio?.musica ?? null);
-    const r = st.vista?.turno?.round ?? null;
-    if (roundPrima && roundPrima.id === st.vista?.collegamento?.scontro && Number.isInteger(r) && Number.isInteger(roundPrima.round) && r > roundPrima.round) audio.effetto('nuovo_round');
+    // la musica di fondo solo sullo schermo del tavolo, non sui tablet dei giocatori (08/10)
+    audio.musica(st.pg ? null : st.vista?.audio?.musica ?? null);
+    st.ultimaLettura = lettura(st.vista);
+    const campanella = campanellaVista(letturaPrima, st.ultimaLettura, ctx.dati.mappa.audio.campanella_vista_pausa_max_ms);
+    // ogni suono con il suo avviso scritto, così si capisce che cosa è suonato
+    if (campanella && audio.effetto('nuovo_round')) avviso(`🔔 Nuovo Round ${campanella.round}`, { tipo: 'info', chiave: 'nuovo-round', durata: 5000 });
     // ZoC (07/10): gli Attacchi di Opportunità nuovi diventano un avviso anche qui (la prima lettura non li ripete)
     const primaLettura = !st.opportunitaViste;
     st.opportunitaViste ??= new Set();
@@ -550,6 +556,8 @@ export function renderGiocatori(radice, ctx) {
       st.errore = null;
       el.stato.textContent = '';
       if (!corpo.invariata) { st.firma = corpo.firma; await usa(corpo); }
+      // la lettura è riuscita anche se nulla è cambiato: per la campanella conta il tempo dall'ultima lettura riuscita
+      else if (st.ultimaLettura) st.ultimaLettura.quando = Date.now();
     } catch (e) {
       // collegamento perso: la mappa resta com'era, con l'avviso (§13)
       st.errore = e.message;

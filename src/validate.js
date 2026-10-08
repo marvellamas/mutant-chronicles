@@ -2720,7 +2720,7 @@ function validaMappa(dati, err) {
   const AU = m.audio;
   if (!isOggetto(AU)) err(F, 'audio', 'oggetto mancante');
   else {
-    const NOTI = ['nuovo_round', 'attacco_opportunita', 'template_scaduto', 'avviso_giocatore'];
+    const NOTI = ['nuovo_round', 'tocca_a_te', 'chiedi_di_muovere', 'attacco_opportunita', 'template_scaduto'];
     if (!isOggetto(AU.effetti)) err(F, 'audio.effetti', 'oggetto evento → file mancante');
     else for (const [k, v] of Object.entries(AU.effetti)) {
       if (!NOTI.includes(k)) err(F, `audio.effetti.${k}`, `evento sconosciuto (noti: ${NOTI.join(', ')})`);
@@ -2730,6 +2730,7 @@ function validaMappa(dati, err) {
     if (!Array.isArray(AU.musica?.formati) || !AU.musica.formati.length || AU.musica.formati.some((x) => !['mp3', 'ogg', 'wav', 'm4a', 'aac', 'opus', 'flac', 'webm'].includes(x))) err(F, 'audio.musica.formati', 'elenco di formati audio noti');
     for (const k of ['musica', 'effetti']) if (!(typeof AU.volume_predefinito?.[k] === 'number' && AU.volume_predefinito[k] >= 0 && AU.volume_predefinito[k] <= 1)) err(F, `audio.volume_predefinito.${k}`, 'numero da 0 a 1');
     if (typeof AU.giocatori_predefinito !== 'boolean') err(F, 'audio.giocatori_predefinito', 'true o false');
+    if (!isIntero(AU.campanella_vista_pausa_max_ms) || AU.campanella_vista_pausa_max_ms < 1000) err(F, 'audio.campanella_vista_pausa_max_ms', 'intero da 1000 in su (ms)');
   }
   // token in volo (08/10, src/mappa/volo.js): icona, movimento del Giocatore §5.2.3, regole di area e linea di tiro
   {

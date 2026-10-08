@@ -123,6 +123,17 @@ L'indirizzo è fatto così: `http://`, l'**indirizzo IP del PC del master** (qua
 - **Volume:** in alto 🔊 spegne tutto, i due cursori regolano Musica ed Effetti. Il PC se li ricorda.
 - **Televisore con le casse:** Strumenti → «Suoni anche nella vista giocatori». Sullo schermo dei giocatori serve un primo clic per sbloccare l'audio (lo chiede un avviso); lo stesso vale per la mappa del master se il browser blocca l'audio.
 
+**Suoni: evento → file → dove suona** (i file si cambiano in `data/mappa.json` → audio.effetti)
+
+| Evento | File | Dove suona | Quando |
+|---|---|---|---|
+| Nuovo Round (`nuovo_round`) | `Sounds/Effects/RoundBell.mp3` | PC della mappa del master; schermo dei giocatori e tablet **solo** con «Suoni anche nella vista giocatori» acceso | quando un «Avanti» fa salire il Round (non con «Indietro»); sullo schermo dei giocatori e sui tablet con l’avviso «🔔 Nuovo Round N». Mai all’apertura, al ricaricamento o quando il collegamento torna dopo un buco |
+| Tocca a te (`tocca_a_te`) | `Sounds/Effects/PlayerAlert.mp3` | solo il tablet di quel PG (scheda o mappa aperta) | quando il turno passa al PG, se hai acceso «Avviso «Tocca a te» ai tablet»; con l’avviso grande «Tocca a te, <PG>!» |
+| Chiedi di muovere (`chiedi_di_muovere`) | `Sounds/Effects/PlayerAlert.mp3` | solo il tablet di quel PG (scheda o mappa aperta) | quando tocchi «🔔 Chiedi di muovere» accanto al PG; con l’avviso grande «Il master ti chiede di muovere <PG>» |
+| Musica di fondo | il file scelto in `musica/` | PC del master; schermo dei giocatori con «Suoni anche nella vista giocatori»; **mai** sui tablet dei giocatori | dall’inizio alla fine dello scontro |
+
+Non c’è nessun sollecito automatico se un PG non si muove: il tablet suona solo per questi eventi. Il suono «da fine Round» che si sente sul tablet proprio al proprio turno è la campanella del nuovo Round (con «Suoni anche nella vista giocatori» acceso): ora arriva con la scritta «🔔 Nuovo Round N».
+
 ## Zone di controllo
 
 Scegliendo un token, in rosso compaiono le zone di controllo degli avversari: la fascia entro la portata delle loro armi ravvicinate (di solito 1 Q). Chi ne esce con il proprio movimento provoca un Attacco di Opportunità (Giocatore §5.3): compare un avviso, anche sullo schermo dei giocatori, con «Attacca!» per l'avversario. Entrare o muoversi dentro la zona non provoca nulla; «Libero» non segnala. Il tasto Z mostra o nasconde le zone.

@@ -1,10 +1,11 @@
 // Avviso grande sul tablet del giocatore (fase 2, lotto 7; 08/10): testo a tutto schermo, suono
-// (data/mappa.json → audio.effetti.avviso_giocatore, Sounds/Effects/PlayerAlert.mp3) e vibrazione dove il tablet la
+// (data/mappa.json → audio.effetti: tocca_a_te o chiedi_di_muovere, per ora Sounds/Effects/PlayerAlert.mp3) e vibrazione dove il tablet la
 // supporta (data/mappa.json → tablet.vibrazione_ms), con i pulsanti dell'avviso (per esempio «Muovi il PG sulla mappa»).
 // Lo usano la vista tablet (src/ui/mappa/giocatori.js) e la scheda del PG (src/ui/app.js).
 // I browser suonano solo dopo un primo tocco sulla pagina: se il suono viene rifiutato compare «🔈 Tocca per attivare
 // l'audio»; il primo tocco qualunque sblocca (un suono a volume zero, che serve a Safari).
 import { h, svuota } from './dom.js';
+import { effettoDi, eventoAvviso } from '../mappa/audio.js';
 
 /**
  * @param dati i dati delle regole (dati.mappa.tablet, dati.mappa.audio)
@@ -12,7 +13,8 @@ import { h, svuota } from './dom.js';
  */
 export function creaAllarme(dati) {
   const T = dati.mappa.tablet;
-  const file = dati.mappa.audio.effetti.avviso_giocatore ?? null;
+  const fileDi = (tipo) => effettoDi(eventoAvviso(tipo), dati);
+  const file = fileDi('muovi') ?? fileDi('turno');
   let timer = null;
   let sbloccato = false;
   const el = h('div', { class: 'tablet-allarme', hidden: true, role: 'alertdialog', 'aria-live': 'assertive', onclick: (e) => { if (!e.target.closest('button')) chiudi(); } });
@@ -27,9 +29,10 @@ export function creaAllarme(dati) {
   }
   const alTocco = () => { sblocca(); document.removeEventListener('pointerdown', alTocco, true); };
   document.addEventListener('pointerdown', alTocco, true);
-  function suona() {
-    if (!file) return;
-    const a = new Audio(file);
+  function suona(tipo) {
+    const f = fileDi(tipo);
+    if (!f) return;
+    const a = new Audio(f);
     a.play().then(() => { sbloccato = true; }).catch((e) => { if (e?.name === 'NotAllowedError') audioBtn.hidden = false; });
   }
   function chiudi() { clearTimeout(timer); el.hidden = true; }
@@ -41,7 +44,7 @@ export function creaAllarme(dati) {
       h('p', { class: 'tablet-allarme-nota' }, 'Tocca per chiudere'));
     el.className = `tablet-allarme tipo-${tipo}`;
     el.hidden = false;
-    suona();
+    suona(tipo);
     try { navigator.vibrate?.(T.vibrazione_ms); } catch { /* niente vibrazione */ }
     timer = setTimeout(chiudi, T.avviso_durata_ms);
   }

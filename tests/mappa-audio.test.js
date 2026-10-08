@@ -11,9 +11,11 @@ import { datiReali, copia } from './helpers.js';
 const { dati } = await datiReali();
 const AU = dati.mappa.audio;
 
-test('dati: evento → file; per ora suonano il nuovo Round e l’avviso del tablet; file leggeri e tracciati in git; validatore', () => {
+test('dati: un file per evento (Round, Tocca a te, Chiedi di muovere); file leggeri e tracciati in git; validatore', () => {
   assert.equal(effettoDi('nuovo_round', dati), 'Sounds/Effects/RoundBell.mp3');
-  assert.equal(effettoDi('avviso_giocatore', dati), 'Sounds/Effects/PlayerAlert.mp3');
+  assert.equal(effettoDi('tocca_a_te', dati), 'Sounds/Effects/PlayerAlert.mp3');
+  assert.equal(effettoDi('chiedi_di_muovere', dati), 'Sounds/Effects/PlayerAlert.mp3');
+  assert.equal(effettoDi('avviso_giocatore', dati), null, 'l’evento unico di prima non c’è più');
   assert.equal(effettoDi('attacco_opportunita', dati), null);
   assert.equal(effettoDi('inventato', dati), null);
   assert.deepEqual(Object.keys(AU.effetti).sort(), [...EVENTI_AUDIO].sort());
@@ -67,4 +69,24 @@ test('vista giocatori: suoni solo con «suona anche nella vista giocatori» (spe
   assert.deepEqual(vistaGiocatori(accesa, contesto).audio, { giocatori: true, musica: 'Tema.ogg' });
   assert.deepEqual(vistaGiocatori(accesa, { ...contesto, scontro: { ...scontro, musica: null } }).audio, { giocatori: true, musica: null });
   assert.match(validaScena({ ...base, audio: { giocatori: 'sì' } }, dati), /^audio/);
+});
+
+test('campanella della vista giocatori: una volta sola quando il Round sale; mai alla prima lettura, al ricaricamento o alla riconnessione', async () => {
+  const { campanellaVista, eventoAvviso } = await import('../src/mappa/audio.js');
+  const P = dati.mappa.audio.campanella_vista_pausa_max_ms;
+  const l = (round, quando, scontro = 'sc') => ({ scontro, round, quando });
+  assert.deepEqual(campanellaVista(l(2, 1000), l(3, 2000), P), { evento: 'nuovo_round', round: 3 });
+  // la lettura dopo, con lo stesso Round: niente (non suona due volte)
+  assert.equal(campanellaVista(l(3, 2000), l(3, 3000), P), null);
+  // prima lettura (apertura, ricaricamento, mappa aperta dalla scheda): niente
+  assert.equal(campanellaVista(null, l(3, 1000), P), null);
+  // riconnessione dopo un buco più lungo della pausa massima: niente, anche se il Round è salito
+  assert.equal(campanellaVista(l(2, 1000), l(3, 1000 + P + 1), P), null);
+  // «Indietro», altro scontro, nessuno scontro: niente
+  assert.equal(campanellaVista(l(3, 1000), l(2, 1500), P), null);
+  assert.equal(campanellaVista(l(2, 1000, 'a'), l(3, 1500, 'b'), P), null);
+  assert.equal(campanellaVista({ scontro: null, round: null, quando: 1 }, l(3, 2), P), null);
+  // gli avvisi al tablet: un evento audio per tipo
+  assert.equal(eventoAvviso('turno'), 'tocca_a_te');
+  assert.equal(eventoAvviso('muovi'), 'chiedi_di_muovere');
 });

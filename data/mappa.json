@@ -602,13 +602,15 @@
     "TODO(Davide)": "A.148: verso e da un token in volo valgono la Copertura Leggera e Media e il bersaglio protetto (§5.8, §5.10)? Provvisorio (indicazione di Marcello): no, un muro pieno blocca comunque. A.149: la quota conta per la portata delle armi ravvicinate? Provvisorio: sì, distanza = la maggiore fra griglia e quota. A.150: un token in volo si vede da lontano anche sotto la nebbia, con una linea di vista senza muri? Provvisorio: sì (indicazione di Marcello)."
   },
   "audio": {
-    "_nota": "Suoni della mappa (richiesta di Marcello del 07/10/2026; src/mappa/audio.js, src/ui/mappa/audio.js). effetti: evento → file (percorso nel progetto, servito come gli altri file statici); un evento senza file non suona. Per ora nuovo_round e avviso_giocatore (il campanellino del master e «Tocca a te» sul tablet del giocatore, fase 2, lotto 7: suona sempre sul tablet, anche senza «suona anche nella vista giocatori»); gli altri eventi previsti (attacco_opportunita, template_scaduto) restano null finché non si sceglie un file. musica: la cartella reale del server con la musica di fondo (fuori da git, come mappe/) e i formati che tutti i browser leggono. volume_predefinito: Musica ed Effetti da 0 a 1, prima che il master li cambi (poi si ricordano su quel PC). giocatori_predefinito: «suona anche nella vista giocatori», spento.",
+    "_nota": "Suoni della mappa (richiesta di Marcello del 07/10/2026; src/mappa/audio.js, src/ui/mappa/audio.js). effetti: evento → file (percorso nel progetto, servito come gli altri file statici); un evento senza file non suona. Un file per evento (08/10): nuovo_round (campanella del Round: PC del master; schermo dei giocatori e tablet solo con «Suoni anche nella vista giocatori», e sui tablet con l’avviso «🔔 Nuovo Round N»), tocca_a_te («Tocca a te» automatico al cambio di turno, se acceso dal master) e chiedi_di_muovere («🔔 Chiedi di muovere» del master), entrambi sul solo tablet del giocatore, sempre con l’avviso grande scritto. campanella_vista_pausa_max_ms: la vista giocatori suona la campanella solo se la lettura precedente è di meno di questo tempo prima (niente campanella alla riconnessione o al ricaricamento). La musica di fondo non suona sui tablet dei giocatori (solo sullo schermo del tavolo); gli altri eventi previsti (attacco_opportunita, template_scaduto) restano null finché non si sceglie un file. musica: la cartella reale del server con la musica di fondo (fuori da git, come mappe/) e i formati che tutti i browser leggono. volume_predefinito: Musica ed Effetti da 0 a 1, prima che il master li cambi (poi si ricordano su quel PC). giocatori_predefinito: «suona anche nella vista giocatori», spento.",
     "effetti": {
       "nuovo_round": "Sounds/Effects/RoundBell.mp3",
+      "tocca_a_te": "Sounds/Effects/PlayerAlert.mp3",
+      "chiedi_di_muovere": "Sounds/Effects/PlayerAlert.mp3",
       "attacco_opportunita": null,
-      "template_scaduto": null,
-      "avviso_giocatore": "Sounds/Effects/PlayerAlert.mp3"
+      "template_scaduto": null
     },
+    "campanella_vista_pausa_max_ms": 4000,
     "musica": {
       "cartella": "musica",
       "formati": ["mp3", "ogg", "wav", "m4a", "aac"]

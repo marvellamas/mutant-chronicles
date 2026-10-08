@@ -6,9 +6,16 @@
 /** Chiave in localStorage delle impostazioni audio di questo PC (muto, volumi). */
 export const CHIAVE_AUDIO = 'mutant-audio';
 
-/** Eventi audio previsti (data/mappa.json → audio.effetti); per ora suona solo nuovo_round. */
-// avviso_giocatore (fase 2, lotto 7): il campanellino del master e «Tocca a te», sul tablet del giocatore
-export const EVENTI_AUDIO = ['nuovo_round', 'attacco_opportunita', 'template_scaduto', 'avviso_giocatore'];
+/**
+ * Eventi audio previsti (data/mappa.json → audio.effetti), uno per evento (08/10): nuovo_round (campanella del Round,
+ * sul PC del master e, con «Suoni anche nella vista giocatori», sullo schermo dei giocatori e sui tablet); tocca_a_te
+ * («Tocca a te», mandato dal server al cambio di turno se il master l'ha acceso) e chiedi_di_muovere (🔔 del master),
+ * sul tablet del giocatore; attacco_opportunita e template_scaduto previsti, senza file.
+ */
+export const EVENTI_AUDIO = ['nuovo_round', 'tocca_a_te', 'chiedi_di_muovere', 'attacco_opportunita', 'template_scaduto'];
+
+/** L'evento audio di un avviso al tablet (server.mjs → /api/tablet/avviso, tipo turno o muovi). */
+export const eventoAvviso = (tipo) => (tipo === 'turno' ? 'tocca_a_te' : 'chiedi_di_muovere');
 
 /** File dell'effetto per un evento, o null (evento senza suono). */
 export function effettoDi(evento, dati) {
@@ -23,6 +30,21 @@ export function effettoDi(evento, dati) {
 export function eventiScontro(prima, dopo) {
   if (!prima || !dopo || prima.id !== dopo.id || dopo.stato !== 'aperto') return [];
   return Number.isInteger(prima.round) && Number.isInteger(dopo.round) && dopo.round > prima.round ? ['nuovo_round'] : [];
+}
+
+/**
+ * La campanella del Round nella vista giocatori (08/10, domanda di Marcello: un suono «casuale» sul tablet): suona solo
+ * quando, fra due letture consecutive e ravvicinate della stessa scena dello stesso scontro, il Round sale. Mai alla
+ * prima lettura (apertura, ricaricamento, mappa aperta dalla scheda), mai dopo un buco nel collegamento più lungo di
+ * `maxPausaMs` (riconnessione: il Round può essere salito da un pezzo), mai con «Indietro».
+ * @param prima { scontro, round, quando } della lettura precedente (o null); dopo: la lettura nuova
+ * @returns null oppure { evento: 'nuovo_round', round }
+ */
+export function campanellaVista(prima, dopo, maxPausaMs) {
+  if (!prima || !dopo || !prima.scontro || prima.scontro !== dopo.scontro) return null;
+  if (!Number.isInteger(prima.round) || !Number.isInteger(dopo.round) || dopo.round <= prima.round) return null;
+  if (!(dopo.quando - prima.quando <= maxPausaMs)) return null;
+  return { evento: 'nuovo_round', round: dopo.round };
 }
 
 const quota = (v, d) => (typeof v === 'number' && Number.isFinite(v) ? Math.max(0, Math.min(1, v)) : d);
