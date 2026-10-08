@@ -140,6 +140,16 @@ Molti hanno già la scala scritta (per esempio 9, 12, 18, 27, 29): in quei casi 
 
 **A.143 — Visione notturna e nebbia della mappa.** La Visione notturna (80 Q), la visione termica (40 Q) e la Vista Felina (20 Q) tolgono le penalità di Penombra e Luce molto scarsa entro la loro portata. Sulla mappa devono anche far vedere più lontano al PG che le ha, cioè aprire la nebbia come se ci fosse Luce entro la portata? *Nel frattempo:* no, la nebbia segue solo la luce della zona; le penalità nell’attacco restano quelle della scheda.
 
+**A.145 — Salire e scendere da un veicolo: quante Azioni?****  
+** Il Manuale dei Veicoli non lo dice. Quante Azioni costa salire su un mezzo, e quante scenderne, come conducente e come passeggero?  
+ *Nel frattempo:* la mappa non le conta; il master le applica a voce.
+
+**A.146 — Veicoli e Attacchi di Opportunità.****  
+** Un veicolo che esce dalla zona di controllo di un nemico provoca un Attacco di Opportunità? E chi è a bordo controlla una zona attorno al mezzo?  
+ *Nel frattempo:* no, in nessuno dei due casi.
+
+  
+
 -----
 
 ## **3. Risposte ricevute, in implementazione**
