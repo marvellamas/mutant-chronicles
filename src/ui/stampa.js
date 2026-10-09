@@ -918,8 +918,21 @@ function foglioInventario(d) {
     const el = sezioneInventario(d, s);
     if (s === primaDestra) el.classList.add('inv-inizio-destra');
     return el;
-  }))];
+  }), d.consumabili?.length ? boxConsumabili(d.consumabili) : null)];
 }
+
+/**
+ * Consumabili mistici (Magia §27.4): uno per riga con Incantesimo e versione, Grado, PM sigillati, attivazione e gli
+ * esemplari a quadratini, da annerire a ogni attivazione completata (un'attivazione interrotta non consuma).
+ */
+const boxConsumabili = (lista) => box({ titolo: `Consumabili mistici (${lista.length})`, classe: 'inv-sezione inv-consumabili tinta-cat-artefatti' },
+  h('table', { class: 'tabella-stampa consumabili-stampa' },
+    h('thead', {}, h('tr', {}, ['Consumabile', 'Incantesimo', 'Gr.', 'PM', 'Attivazione', 'Esemplari'].map((c) => h('th', {}, c)))),
+    h('tbody', {}, lista.map((x) => h('tr', {},
+      h('th', { scope: 'row' }, x.nome, x.deposito ? h('span', { class: 'sigla' }, ' deposito') : null),
+      h('td', {}, x.incantesimo), h('td', {}, x.grado), h('td', {}, String(x.pm)), h('td', {}, x.attivazione),
+      h('td', {}, quadratini(x.esemplari, { compatto: true })))))),
+  h('p', { class: 'sigla' }, 'SnT 0, PM sigillati (non una riserva). Si annerisce un quadratino ad attivazione completata (Magia §27.1).'));
 
 /**
  * Impagina il foglio Inventario: le sezioni entrano nelle due colonne della pagina nell'ordine della

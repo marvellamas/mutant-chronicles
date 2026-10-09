@@ -22,6 +22,7 @@ import { attivazioneInfusa } from './lancio.js';
 import { gruppoTecnica, ordineGruppo, tecnicaDi, sintesiTecnica } from './tecniche.js';
 import { vistaVeicoloPersonaggio, pilotareDelPersonaggio } from './veicoli.js';
 import { eRiferimento, stessaChiave } from './veicoli-registro.js';
+import { consumabiliMistici } from './consumabili-mistici.js';
 
 /** Limiti di impaginazione (non regole di gioco): lunghezze massime dei testi stampati. */
 export const LIMITI_STAMPA = {
@@ -959,6 +960,11 @@ export function inventarioStampa(s, dati, creditiIniziali = null) {
       id: x.id, titolo: x.titolo, colore: x.colore, colonna: x.colonna ?? 'destra', righe: righe.filter((r) => r.sezione === x.id),
       sottosezioni: SEZIONI_INVENTARIO.filter((y) => y.sottosezioneDi === x.id).map((y) => ({ id: y.id, titolo: y.titolo, righe: righe.filter((r) => r.sezione === y.id) })).filter((y) => y.righe.length),
     })).filter((x) => x.righe.length || x.sottosezioni.length),
+    // Magia §27.4: i Consumabili con Incantesimo, versione, attivazione ed esemplari (quadratini da annerire all'uso)
+    consumabili: consumabiliMistici((eq?.oggetti ?? []).map((o) => o.voce), dati).map((x) => ({
+      uid: x.uid, nome: x.nome, incantesimo: `${x.consumabile.incantesimo} ${x.consumabile.livello}`, grado: x.consumabile.grado,
+      pm: x.consumabile.pm_sigillati, attivazione: x.attivazione.testo, esemplari: x.quantita, deposito: !!x.deposito, creato: !!x.creato,
+    })),
   };
 }
 
