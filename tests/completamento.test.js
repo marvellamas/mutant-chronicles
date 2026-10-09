@@ -171,7 +171,7 @@ test('PG salvato con 5 punti per Grado: 2 punti da assegnare per evento, con «A
   assert.deepEqual([s2.completamenti, s2.errori, s2.avvisoPunti], [[], [], null]);
 });
 
-test('PG salvato con la regola vecchia (10 per Grado): avviso con il numero esatto e le Abilità, scheda utilizzabile', () => {
+test('PG salvato con la regola vecchia (10 per Grado): avviso con il numero esatto e le Abilità, scheda utilizzabile, salita bloccata (A.108)', () => {
   const p = caricaDieci();
   // nulla tolto al caricamento: i punti liberi sono nel file, separati dai +1 di Classe
   assert.equal(Object.values(p.creazione.puntiAbilitaLiberi).reduce((t, v) => t + v, 0), 10);
@@ -183,9 +183,12 @@ test('PG salvato con la regola vecchia (10 per Grado): avviso con il numero esat
   assert.equal(a.testo, 'Con la regola aggiornata di Davide hai 6 punti Abilità liberi in più del consentito: togline 6');
   assert.deepEqual(a.eventi[0].abilita, { 'Percezione': 2, 'Tecnologia': 2, 'Cultura': 2, 'Raggirare': 4 });
   assert.equal(a.eventi[1].testo, '4° livello: 10 punti liberi su 7 consentiti, 3 da togliere (punti liberi a Medicina 1, Sopravvivenza 3, Atletica 3, Tecnologia 3)');
-  // la scheda resta utilizzabile: nessun errore, nessun completamento, si sale di livello, si stampa
+  // la scheda resta utilizzabile (nessun errore, nessun completamento, si stampa), ma la salita di livello è bloccata
+  // finché la scheda non è riconciliata (A.108, E&L del 05/10/2026)
   assert.deepEqual([s.errori, s.completamenti], [[], []]);
-  assert.deepEqual(validaLivello(p, { caratteristiche: { FOR: 1, COS: 1 } }, reali), []);
+  const blocco = validaLivello(p, { caratteristiche: { FOR: 1, COS: 1 } }, reali);
+  assert.equal(blocco.length, 1);
+  assert.match(blocco[0].problema, /Punti Abilità in eccesso \(A\.108\): prima di salire di livello togli 6 punti \(3 della creazione, 3 del 4° livello\)/);
   const st = preparaStampa(p, reali);
   assert.equal(st.avvisoPunti.totale, 6);
   assert.equal(st.fogli.find((f) => f.id === 'abilita').dati.avvisoPunti.testo, a.testo);
@@ -195,9 +198,13 @@ test('PG salvato con la regola vecchia (10 per Grado): avviso con il numero esat
   assert.equal(sc.completa, true);
 });
 
-test('«Togli»: un evento alla volta dal più vecchio, solo punti liberi di quell’evento, esattamente l’eccesso', () => {
+test('«Togli»: l’evento lo sceglie il giocatore (A.108), solo punti liberi di quell’evento, esattamente l’eccesso', () => {
   let p = caricaDieci();
-  assert.match(validaRimozione(p, 4, { 'Atletica': 3, 'Sopravvivenza': 2 }, reali)[0].problema, /prima la creazione/);
+  // qualunque ordine: anche il 4° livello prima della creazione; un evento senza eccesso no
+  assert.deepEqual(validaRimozione(p, 4, { 'Atletica': 3 }, reali), []);
+  assert.equal(statoRimozione(p, {}, reali, 4).livello, 4);
+  assert.deepEqual(statoRimozione(p, {}, reali).eventi.map((e) => [e.livello, e.eccesso]), [[1, 3], [4, 3]]);
+  assert.match(validaRimozione(p, 2, { 'Atletica': 1 }, reali)[0].problema, /non ha punti in eccesso/);
   assert.match(validaRimozione(p, 1, { 'Medicina': 1 }, reali)[0].problema, /Medicina ha 0 punti liberi della creazione/);
   assert.deepEqual(validaRimozione(p, 1, { 'Raggirare': 2 }, reali).map((e) => e.tipo), ['incompleto']);
   assert.match(validaRimozione(p, 1, { 'Raggirare': 4, 'Cultura': 2 }, reali)[0].problema, /ne bastano 3/);

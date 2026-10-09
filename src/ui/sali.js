@@ -46,7 +46,9 @@ export function renderSali(ctx) {
   const passi = struttura.passi;
   const i = Math.min(ctx.passo, passi.length - 1);
   const passo = passi[i];
-  const errori = validaLivello(personaggio, voce, dati);
+  // A.107: in correzione valgono le regole di quel livello e il controllo dei livelli dopo (validaCorrezione)
+  const corr = ctx.correzione ?? null;
+  const errori = corr ? corr.valida(voce) : validaLivello(personaggio, voce, dati);
   const c = {
     ...ctx, struttura, errori,
     prossimo: prossimoLivello(personaggio, dati),
@@ -81,7 +83,7 @@ export function renderSali(ctx) {
     indietro: i > 0 ? { etichetta: '← Indietro', onclick: () => ctx.vaiPasso(i - 1) } : { etichetta: '← Esci senza salvare', onclick: ctx.esci },
     avanti: !ultimo
       ? { etichetta: `${passi[i + 1].titolo} →`, corta: 'Avanti →', onclick: () => ctx.vaiPasso(i + 1) }
-      : { etichetta: `Conferma il livello ${struttura.livello}`, corta: 'Conferma', disabilitato: errori.length > 0,
+      : { etichetta: corr ? `Conferma la correzione del livello ${struttura.livello}` : `Conferma il livello ${struttura.livello}`, corta: 'Conferma', disabilitato: errori.length > 0,
         motivo: errori.length ? `${errori.length} ${errori.length === 1 ? 'problema' : 'problemi'} da risolvere` : null, onclick: ctx.conferma },
     extra: i > 0 ? { etichetta: 'Esci senza salvare', corta: 'Esci', onclick: ctx.esci } : null,
   });
@@ -89,7 +91,7 @@ export function renderSali(ctx) {
     nav,
     h('section', { class: 'passo', 'aria-labelledby': 'titolo-passo' },
       h('header', { class: 'passo-testa' },
-        h('p', { class: 'sopratitolo' }, `Sali al livello ${struttura.livello} · passo ${i + 1} di ${passi.length} · ${passo.rif}`),
+        h('p', { class: 'sopratitolo' }, `${corr ? `Correggi il livello ${struttura.livello} (A.107)` : `Sali al livello ${struttura.livello}`} · passo ${i + 1} di ${passi.length} · ${passo.rif}`),
         h('h1', { id: 'titolo-passo' }, passo.titolo)),
       barra('cima'),
       struttura.informazioni.length ? h('div', { class: 'riquadro ok' },
@@ -481,6 +483,21 @@ function passoRiepilogo(c) {
     errori.length
       ? h('div', { class: 'riquadro attenzione' }, h('p', {}, h('strong', {}, 'Prima di confermare:')),
         h('ul', {}, errori.map((e) => h('li', {}, e.problema))))
-      : h('p', { class: 'riquadro ok' }, 'Tutto a posto: con «Conferma» il livello viene aggiunto al personaggio e salvato. Si potrà annullare solo l’ultimo livello.'),
+      : h('p', { class: 'riquadro ok' }, c.correzione
+        ? 'Tutto a posto: con «Conferma» il livello viene corretto e i livelli successivi si ricalcolano in ordine (A.107).'
+        : 'Tutto a posto: con «Conferma» il livello viene aggiunto al personaggio e salvato. Si potrà annullare solo l’ultimo livello.'),
+    c.correzione ? conseguenze(c.correzione.conseguenze(voce)) : null,
   ];
+}
+
+/** A.107: i punti liberi dei livelli dopo che con la correzione non aumentano più il VA, da riassegnare. */
+function conseguenze(lista) {
+  const elenco = (o) => Object.entries(o).map(([n, v]) => `${n} ${v}`).join(', ');
+  const da = lista.filter((e) => Object.keys(e.abilita).length);
+  const tornano = lista.filter((e) => Object.keys(e.tornano ?? {}).length);
+  const notaTornano = tornano.length ? h('p', { class: 'nota' }, `Tornano validi (non vanno più riassegnati): ${tornano.map((e) => `${e.evento}: ${elenco(e.tornano)}`).join('; ')}.`) : null;
+  if (!da.length) return notaTornano ?? h('p', { class: 'nota' }, 'I livelli successivi non cambiano: nessun punto da riassegnare.');
+  return h('div', { class: 'riquadro attenzione' },
+    h('p', {}, h('strong', {}, 'Dopo la correzione: '), 'questi punti liberi non aumentano più il VA. Restano nel loro livello e vanno riassegnati con «Assegna», nello stesso livello e con i limiti di allora; finché non lo fai non puoi salire di livello.'),
+    h('ul', {}, da.map((e) => h('li', {}, `${e.evento}: ${elenco(e.abilita)}`))), notaTornano);
 }

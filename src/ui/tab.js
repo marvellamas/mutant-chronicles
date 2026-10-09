@@ -250,9 +250,10 @@ function avvisoRegoleAggiornate(ctx, scheda, { eccesso = true } = {}) {
 function avvisoPuntiEccesso(ctx, a) {
   return h('div', { class: 'riquadro errore avviso-eccesso', role: 'alert' },
     h('p', {}, h('strong', {}, a.testo), ' ',
-      ctx.azioni.togliPunti ? h('button', { type: 'button', class: 'btn primario', onclick: ctx.azioni.togliPunti }, 'Togli') : null),
-    h('ul', {}, a.eventi.map((e) => h('li', {}, e.testo))),
-    h('p', { class: 'nota' }, 'Finché non li togli, i punti contano ancora nei VA della scheda.'));
+      ctx.azioni.togliPunti ? h('button', { type: 'button', class: 'btn primario', onclick: () => ctx.azioni.togliPunti() }, 'Togli') : null),
+    h('ul', {}, a.eventi.map((e) => h('li', {}, e.testo, ' ',
+      ctx.azioni.togliPunti && a.eventi.length > 1 ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => ctx.azioni.togliPunti(e.livello) }, 'Togli da qui') : null))),
+    h('p', { class: 'nota' }, 'Scegli tu da quali Abilità togliere: i punti si eliminano, non si riassegnano. Finché non li togli contano ancora nei VA della scheda, ma non puoi salire di livello (A.108).'));
 }
 
 /** Punti liberi degli eventi in eccesso ricevuti da un'Abilità: «creazione 2, 4° livello 1», o null. */
@@ -1091,7 +1092,9 @@ function tabIdentita(ctx, d) {
         h('thead', {}, h('tr', {}, h('th', {}, 'Livello'), h('th', {}, 'Scelte'))),
         h('tbody', {}, d.progressione.map((r) => h('tr', {},
           h('th', { scope: 'row' }, `${r.livello}°`),
-          h('td', {}, r.righe.length ? h('ul', { class: 'righe-livello' }, r.righe.map((x) => h('li', {}, x))) : '—')))))),
+          h('td', {}, r.righe.length ? h('ul', { class: 'righe-livello' }, r.righe.map((x) => h('li', {}, x))) : '—',
+            // A.107: un livello passato si corregge; i livelli dopo si ricalcolano
+            r.livello >= 2 && ctx.azioni.correggiLivello ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Correggi le scelte di questo livello: i livelli successivi si ricalcolano in ordine (A.107)', onclick: () => ctx.azioni.correggiLivello(r.livello) }, 'Correggi') : null)))))),
 
     h('details', { class: 'sezione-tab' },
       h('summary', {}, `Controllo della creazione (§2.17): ${d.checklist.filter((v) => v.ok || v.nonApplicabile).length} / ${d.checklist.length}`),

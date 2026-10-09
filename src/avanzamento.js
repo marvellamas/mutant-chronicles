@@ -831,6 +831,17 @@ export function motivoCompletamento(completamenti) {
   return `Regole aggiornate: prima di salire di livello ${verbo} ${n} Punti Abilità (${dove}) con «Assegna» in cima alla scheda.`;
 }
 
+/**
+ * Perché non si sale di livello con punti in eccesso (A.108, E&L del 05/10/2026): vanno tolti prima, dalle assegnazioni
+ * che sceglie il giocatore; i punti tolti non si riassegnano.
+ */
+export function motivoEccesso(eccessi) {
+  const lista = (eccessi ?? []).filter((e) => e.eccesso > 0);
+  const n = lista.reduce((s, e) => s + e.eccesso, 0);
+  const dove = lista.map((e) => `${e.eccesso} ${e.livello === 1 ? 'della creazione' : conOrdinale('del', e.livello) + ' livello'}`).join(', ');
+  return `Punti Abilità in eccesso (A.108): prima di salire di livello togli ${n} ${n === 1 ? 'punto' : 'punti'} (${dove}) con «Togli» in cima alla scheda, scegliendo tu da quali Abilità.`;
+}
+
 // ---------------------------------------------------------------------------
 // Punti Abilità Liberi in eccesso (7 a ogni Grado, compreso il primo: Giocatore del 03/10/2026 sera, confermato
 // da Davide il 04/10, A.90; prima 10, poi 5). Un evento già registrato con più punti liberi di quelli previsti dalle regole
@@ -873,9 +884,10 @@ export function validaRimozione(personaggio, livello, togli, dati) {
   const errori = [];
   const err = (campo, problema, tipo = 'violazione') => errori.push({ campo, problema, tipo });
   const prima = ricalcola(personaggio, dati);
-  const ev = prima.eccessi[0];
-  if (!ev) return [{ campo: 'puntiAbilita', problema: 'nessun Punto Abilità Libero in eccesso', tipo: 'violazione' }];
-  if (ev.livello !== livello) return [{ campo: 'puntiAbilita', problema: `si tolgono un evento alla volta, dal più vecchio: prima ${ev.livello === 1 ? 'la creazione' : `il ${ev.evento}`}`, tipo: 'violazione' }];
+  if (!prima.eccessi.length) return [{ campo: 'puntiAbilita', problema: 'nessun Punto Abilità Libero in eccesso', tipo: 'violazione' }];
+  // A.108: l'evento (e le assegnazioni) li sceglie il giocatore, in qualunque ordine
+  const ev = prima.eccessi.find((e) => e.livello === livello);
+  if (!ev) return [{ campo: 'puntiAbilita', problema: `${livello === 1 ? 'la creazione' : `il ${nomeEvento(livello)}`} non ha punti in eccesso`, tipo: 'violazione' }];
   const t = isOggetto(togli) ? togli : {};
   for (const [a, x] of Object.entries(t)) {
     if (!Number.isInteger(x) || x < 0) err(`puntiAbilita.${a}`, 'i punti devono essere interi ≥ 0');
@@ -898,19 +910,95 @@ export function validaRimozione(personaggio, livello, togli, dati) {
  * Dati del pannello «Togli» per il primo evento in eccesso, con la bozza dei punti da togliere.
  * @returns {null|{ livello, evento, previsti, assegnati, eccesso, rimasti, errori, abilita: { nome, punti, togli, motivoPiu }[] }}
  */
-export function statoRimozione(personaggio, bozza, dati) {
+export function statoRimozione(personaggio, bozza, dati, livello = null) {
   const p = migraPersonaggio(personaggio);
-  const ev = ricalcola(p, dati).eccessi[0];
+  const tutti = ricalcola(p, dati).eccessi;
+  // A.108: l'evento da cui togliere lo sceglie il giocatore (di norma il primo)
+  const ev = tutti.find((e) => e.livello === livello) ?? tutti[0];
   if (!ev) return null;
   const t = isOggetto(bozza) ? bozza : {};
   const rimasti = ev.eccesso - somma(t);
+  // punti di questo evento che già non aumentano il VA (§8.3): togliendoli il VA della scheda non cambia (solo un'indicazione:
+  // la scelta resta al giocatore, A.108)
+  const inattivi = Object.fromEntries((ricalcola(p, dati).stato?.inattivi ?? []).filter((x) => x.livello === ev.livello).map((x) => [x.abilita, x.punti]));
   const abilita = Object.entries(ev.abilita).map(([nome, punti]) => {
     const togli = t[nome] ?? 0;
     const motivoPiu = rimasti <= 0 ? 'Hai già scelto tutti i punti da togliere.' : togli >= punti ? 'Nessun altro punto libero di questo evento.'
       : validaRimozione(p, ev.livello, { ...t, [nome]: togli + 1 }, dati).find((e) => e.tipo === 'violazione')?.problema ?? null;
-    return { nome, punti, togli, motivoPiu };
+    return { nome, punti, togli, motivoPiu, inattivi: inattivi[nome] ?? 0 };
   });
-  return { ...ev, rimasti, errori: validaRimozione(p, ev.livello, t, dati), abilita };
+  return { ...ev, rimasti, errori: validaRimozione(p, ev.livello, t, dati), abilita, eventi: tutti.map((e) => ({ livello: e.livello, evento: e.evento, eccesso: e.eccesso })) };
+}
+
+// ---------------------------------------------------------------------------
+// Correzione di un livello passato (A.107, E&L del 05/10/2026): la voce del livello si sostituisce e i livelli
+// successivi si ricalcolano in ordine. I punti liberi successivi che nella cronologia corretta non aumentano più il VA
+// al momento della loro assegnazione diventano inattivi e si riassegnano nello stesso evento («Assegna», con i limiti di
+// allora: statoCompletamento); le altre assegnazioni restano. Finché mancano, la salita di livello è bloccata
+// (validaLivello). Un punto legittimo non si restituisce per un aumento automatico successivo (+1 di Classe,
+// Caratteristica): applicaVoce valuta ogni punto quando viene assegnato.
+
+/** Il personaggio fino al livello prima di `livello` (2…): la base della procedura di correzione. */
+export function personaggioPrimaDi(personaggio, livello) {
+  const p = migraPersonaggio(personaggio);
+  return { ...p, livelli: p.livelli.slice(0, Math.max(0, livello - 2)) };
+}
+
+/** A.107: sostituisce la voce del livello `livello` (2…); i livelli successivi restano com'erano e si ricalcolano. */
+export function applicaCorrezione(personaggio, livello, voce) {
+  const p = migraPersonaggio(personaggio);
+  return { ...p, livelli: p.livelli.map((v, j) => (j === livello - 2 ? { ...voce, livello } : v)) };
+}
+
+/** Punti inattivi per evento e Abilità: «livello|Abilità» → punti. */
+const mappaInattivi = (stato) => {
+  const m = new Map();
+  for (const x of stato?.inattivi ?? []) m.set(`${x.livello}|${x.abilita}`, (m.get(`${x.livello}|${x.abilita}`) ?? 0) + x.punti);
+  return m;
+};
+
+/**
+ * A.107: conseguenze della correzione sui livelli successivi, per evento: i punti liberi che diventano da riassegnare
+ * (abilita) e quelli già da riassegnare che tornano validi (tornano).
+ * @returns {{ livello, evento, abilita: { [nome]: punti }, tornano: { [nome]: punti } }[]}
+ */
+export function conseguenzeCorrezione(personaggio, livello, voce, dati) {
+  const prima = mappaInattivi(ricalcola(personaggio, dati).stato);
+  const dopo = mappaInattivi(ricalcola(applicaCorrezione(personaggio, livello, voce), dati).stato);
+  const out = new Map();
+  const evento = (lv) => out.get(lv) ?? out.set(lv, { livello: lv, evento: nomeEvento(lv), abilita: {}, tornano: {} }).get(lv);
+  for (const k of new Set([...prima.keys(), ...dopo.keys()])) {
+    const [l, a] = k.split('|');
+    const lv = Number(l);
+    const diff = (dopo.get(k) ?? 0) - (prima.get(k) ?? 0);
+    if (lv <= livello || !diff) continue;
+    // diff > 0: da riassegnare; diff < 0: punti già da riassegnare che con la correzione tornano validi
+    if (diff > 0) evento(lv).abilita[a] = diff;
+    else evento(lv).tornano[a] = -diff;
+  }
+  return [...out.values()].sort((x, y) => x.livello - y.livello);
+}
+
+/**
+ * A.107: errori della correzione del livello `livello` con la voce nuova. Valgono le regole di quel livello (le stesse
+ * di «Sali di livello», con i 7 Punti Abilità della A.108: niente eccesso); i livelli successivi non devono diventare
+ * irregolari, salvo i punti liberi da riassegnare (conseguenzeCorrezione), che non sono errori.
+ * @returns {{campo, problema, tipo: 'violazione'|'incompleto'}[]}
+ */
+export function validaCorrezione(personaggio, livello, voce, dati) {
+  const p = migraPersonaggio(personaggio);
+  if (!Number.isInteger(livello) || livello < 2 || livello > p.livelli.length + 1) return [{ campo: 'livello', problema: `non c'è un ${livello}° livello da correggere`, tipo: 'violazione' }];
+  const base = ricalcola(p, dati, livello - 2);
+  if (!base.stato) return [{ campo: 'creazione', problema: 'la creazione non si può calcolare: correggila prima', tipo: 'violazione' }];
+  const v = isOggetto(voce) ? { ...voce, livello } : { livello };
+  const errori = controllaVoce(base.stato, v, dati).map((e) => (e.tipo === 'eccesso' ? { ...e, tipo: 'violazione' } : e));
+  const chiave = (e) => `${e.campo}|${e.problema}`;
+  const primaErr = new Set(ricalcola(p, dati).errori.filter((e) => e.livello > livello).map(chiave));
+  for (const e of ricalcola(applicaCorrezione(p, livello, v), dati).errori) {
+    if (e.livello <= livello || e.tipo !== 'violazione' || primaErr.has(chiave(e))) continue;
+    errori.push({ campo: 'livelli', problema: `il ${nomeEvento(e.livello)} diventerebbe irregolare: ${e.problema}`, tipo: 'violazione' });
+  }
+  return errori;
 }
 
 /**
@@ -920,7 +1008,9 @@ export function statoRimozione(personaggio, bozza, dati) {
 export function validaLivello(personaggio, scelte, dati) {
   const { stato, errori } = ricalcola(personaggio, dati);
   if (!stato) return [{ campo: 'creazione', problema: 'la creazione non si può calcolare: correggila prima di salire di livello', tipo: 'violazione' }];
-  const { completamenti } = ricalcola(personaggio, dati);
+  const { completamenti, eccessi } = ricalcola(personaggio, dati);
+  // A.108 (E&L del 05/10/2026): i punti in eccesso bloccano la salita finché la scheda non è riconciliata
+  if (eccessi.length) return [{ campo: 'livelli', problema: motivoEccesso(eccessi), tipo: 'violazione' }];
   if (completamenti.length) return [{ campo: 'livelli', problema: motivoCompletamento(completamenti), tipo: 'violazione' }];
   const bloccanti = errori.filter((e) => e.tipo === 'violazione');
   if (bloccanti.length) {

@@ -59,14 +59,14 @@ export function renderCompleta(ctx) {
 }
 
 /**
- * Punti Abilità Liberi in eccesso (correzione di Davide del 03/10/2026, E&L: 5 per Grado anziché 10): si
- * tolgono dall'evento a cui appartengono, uno alla volta dal più vecchio, scegliendo fra le Abilità che vi
- * hanno ricevuto punti liberi. Controlli: statoRimozione() e validaRimozione() del motore.
- * Contesto: { dati, personaggio, bozza, testoAvviso, aggiornaBozza(punti), conferma(), esci() }
+ * Punti Abilità Liberi in eccesso (A.108, E&L del 05/10/2026: 7 a ogni Grado): si tolgono dall'evento a cui
+ * appartengono, scegliendo il giocatore l'evento e le Abilità che vi hanno ricevuto punti liberi (l'app non sceglie da
+ * sola); i punti tolti non si riassegnano. Controlli: statoRimozione() e validaRimozione() del motore.
+ * Contesto: { dati, personaggio, bozza, livello, testoAvviso, aggiornaBozza(punti), scegliEvento(livello), conferma(), esci() }
  */
 export function renderTogli(ctx) {
   const { dati, personaggio, bozza } = ctx;
-  const st = statoRimozione(personaggio, bozza, dati);
+  const st = statoRimozione(personaggio, bozza, dati, ctx.livello ?? null);
   if (!st) {
     return [h('section', { class: 'passo' }, h('h1', {}, 'Punti Abilità in eccesso'),
       h('p', { class: 'riquadro ok' }, 'Nessun Punto Abilità Libero in eccesso: il personaggio è in regola.'),
@@ -91,14 +91,22 @@ export function renderTogli(ctx) {
         h('p', { class: 'sopratitolo' }, ctx.testoAvviso),
         h('h1', { id: 'titolo-passo' }, `Punti Abilità in eccesso ${dell}`)),
       barra('cima'),
-      h('p', { class: 'guida' }, `Le regole correnti prevedono ${st.previsti} Punti Abilità Liberi ${dell} (5 a ogni Grado, correzione di Davide del 03/10/2026): ne erano stati assegnati ${st.assegnati}. `
-        + `Scegli i ${st.eccesso} punti da togliere fra le Abilità che li hanno ricevuti; i +1 di Classe e le altre scelte non cambiano.`),
+      // A.108: con più eventi in eccesso il giocatore sceglie da quale cominciare
+      st.eventi.length > 1 ? h('div', { class: 'scelta-attacco scelta-gruppo', role: 'group', 'aria-label': 'Evento' },
+        h('p', { class: 'scelta-titolo' }, 'Da quale evento togli'),
+        h('div', { class: 'scelta-pulsanti' }, st.eventi.map((e) => h('button', {
+          type: 'button', class: `btn scelta-btn${e.livello === st.livello ? ' scelta' : ''}`, 'aria-pressed': String(e.livello === st.livello), onclick: () => ctx.scegliEvento(e.livello),
+        }, `${e.livello === 1 ? 'Creazione' : `${e.livello}° livello`} · ${e.eccesso} da togliere`)))) : null,
+      h('p', { class: 'guida' }, `Le regole correnti prevedono ${st.previsti} Punti Abilità Liberi ${dell} (7 a ogni Grado, A.108): ne erano stati assegnati ${st.assegnati}. `
+        + `Scegli tu i ${st.eccesso} punti da togliere fra le Abilità che li hanno ricevuti: si eliminano, non si riassegnano; i +1 di Classe e le altre scelte non cambiano. Finché non li togli non puoi salire di livello.`),
       h('p', { class: `contatore ${st.rimasti === 0 ? 'ok' : st.rimasti < 0 ? 'errore' : 'attenzione'}`, role: 'status' },
         h('strong', {}, String(st.rimasti)), ` punti ancora da togliere su ${st.eccesso}`),
       h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella abilita' },
         h('thead', {}, h('tr', {}, h('th', {}, 'Abilità'), h('th', {}, 'Punti liberi'), h('th', {}, 'Restano'), h('th', {}, 'Da togliere'))),
         h('tbody', {}, st.abilita.map((a) => h('tr', {},
-          h('th', { scope: 'row' }, a.nome, a.motivoPiu && a.togli < a.punti && st.rimasti > 0 ? h('small', { class: 'motivo' }, ` ${a.motivoPiu}`) : null),
+          h('th', { scope: 'row' }, a.nome,
+            a.inattivi ? h('small', { class: 'nota' }, ` ${a.inattivi === 1 ? '1 punto non aumenta' : `${a.inattivi} punti non aumentano`} già il VA: toglierl${a.inattivi === 1 ? 'o' : 'i'} non cambia la scheda.`) : null,
+            a.motivoPiu && a.togli < a.punti && st.rimasti > 0 ? h('small', { class: 'motivo' }, ` ${a.motivoPiu}`) : null),
           h('td', {}, String(a.punti)),
           h('td', { class: 'forte' }, String(a.punti - a.togli)),
           h('td', {}, stepper(a.togli, {

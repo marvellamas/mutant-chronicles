@@ -36,7 +36,7 @@ import { inizializzaTooltip, nascondiTooltip } from './tooltip.js';
 import { renderRiepilogo } from './riepilogo.js';
 import { renderSali } from './sali.js';
 import { renderCompleta, renderTogli } from './completa.js';
-import { validaCompletamento, applicaCompletamento, puntiDaCompletare, motivoCompletamento, statoRimozione, validaRimozione, applicaRimozione } from '../avanzamento.js';
+import { validaCompletamento, applicaCompletamento, puntiDaCompletare, motivoCompletamento, statoRimozione, validaRimozione, applicaRimozione, motivoEccesso, personaggioPrimaDi, validaCorrezione, conseguenzeCorrezione, applicaCorrezione } from '../avanzamento.js';
 import { renderStampa, esciDallaStampa } from './stampa.js';
 import { barraPassi, barraFondoSeServe } from './navigazione.js';
 import { cercaSfondi, applicaSfondo } from './sfondi.js';
@@ -153,7 +153,7 @@ function vai(indirizzo) {
   else location.hash = indirizzo;
 }
 
-const bozzaModificata = () => !!stato.sali && Object.keys(stato.sali.voce).length > 0;
+const bozzaModificata = () => !!stato.sali && (stato.sali.correzione ? JSON.stringify(stato.sali.voce) !== stato.sali.iniziale : Object.keys(stato.sali.voce).length > 0);
 const MSG_USCITA = 'Uscire da «Sali di livello»? Le scelte di questo livello non sono salvate e andranno perse.';
 let hashDaIgnorare = null;
 
@@ -940,7 +940,8 @@ function contesto() {
     scheda,
     schedaPersonaggio,
     livelli: stato.livelli,
-    motivoNoSalita: schedaPersonaggio.completamenti?.length ? motivoCompletamento(schedaPersonaggio.completamenti)
+    motivoNoSalita: schedaPersonaggio.eccessi?.length ? motivoEccesso(schedaPersonaggio.eccessi)
+      : schedaPersonaggio.completamenti?.length ? motivoCompletamento(schedaPersonaggio.completamenti)
       : !scheda.completa ? 'Completa la creazione (passi precedenti) prima di salire di livello.'
         : schedaPersonaggio.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
     saliDiLivello,
@@ -1076,6 +1077,18 @@ function saliDiLivello() {
   vai(`#/p/${stato.id}/sali/0`);
 }
 
+/**
+ * A.107 (E&L del 05/10/2026): correzione di un livello passato. Si riapre la procedura di «Sali di livello» con le
+ * scelte di allora; con «Conferma» la voce si sostituisce e i livelli successivi si ricalcolano in ordine: i punti
+ * liberi che non aumentano più il VA si riassegnano poi con «Assegna» nello stesso evento.
+ */
+function correggiLivello(livello) {
+  const voce = structuredClone(stato.livelli[livello - 2] ?? {});
+  delete voce.livello;
+  stato.sali = { voce, passo: 0, ui: { aperti: new Set(), filtroTalenti: null }, correzione: livello, iniziale: JSON.stringify(voce) };
+  vai(`#/p/${stato.id}/sali/0`);
+}
+
 /** Massimi di sessione del personaggio attuale (null se la scheda non si calcola). */
 function massimiAttuali() {
   const scheda = calcolaScheda(personaggio(), stato.dati);
@@ -1149,7 +1162,7 @@ function renderCompletaPagina() {
 // Punti Abilità Liberi in eccesso (correzione di Davide del 03/10/2026, E&L: 5 per Grado anziché 10): bozza
 // in memoria, tolta dall'evento a cui appartiene solo con «Conferma»
 function apriTogli() {
-  if (!stato.completa) stato.completa = { modo: 'togli', punti: {} };
+  if (!stato.completa) stato.completa = { modo: 'togli', punti: {}, livello: null };
   renderTogliPagina();
   window.scrollTo(0, 0);
 }
@@ -1164,13 +1177,20 @@ function renderTogliPagina() {
     dati,
     personaggio: personaggio(),
     bozza: bozza.punti,
+    livello: bozza.livello ?? null,
+    // A.108: l'evento lo sceglie il giocatore; cambiando evento la bozza riparte vuota
+    scegliEvento(livello) {
+      bozza.livello = livello;
+      bozza.punti = {};
+      renderTogliPagina();
+    },
     testoAvviso: avviso?.testo ?? (dati.regole.regole_aggiornate?.punti_abilita ?? 'Regole aggiornate'),
     aggiornaBozza(punti) {
       bozza.punti = punti;
       renderTogliPagina();
     },
     conferma() {
-      const ev = statoRimozione(personaggio(), {}, dati);
+      const ev = statoRimozione(personaggio(), {}, dati, bozza.livello ?? null);
       if (!ev || validaRimozione(personaggio(), ev.livello, bozza.punti, dati).length) return renderTogliPagina();
       const p = applicaRimozione(personaggio(), ev.livello, bozza.punti);
       stato.scelte = p.creazione;
@@ -1202,10 +1222,17 @@ function renderSaliPagina() {
   nascondiTooltip();
   const { dati } = stato;
   const bozza = stato.sali;
-  document.title = `${stato.scelte.nome.trim() || 'Personaggio'} — Sali al livello ${2 + stato.livelli.length} · Mutant`;
+  const L = bozza.correzione ?? null;
+  document.title = `${stato.scelte.nome.trim() || 'Personaggio'} — ${L ? `Correggi il livello ${L}` : `Sali al livello ${2 + stato.livelli.length}`} · Mutant`;
   svuota(radice, ...renderSali({
     dati,
-    personaggio: personaggio(),
+    // A.107: in correzione la procedura parte dal personaggio fino al livello prima, con le regole di allora
+    personaggio: L ? personaggioPrimaDi(personaggio(), L) : personaggio(),
+    correzione: L ? {
+      livello: L,
+      valida: (voce) => validaCorrezione(personaggio(), L, voce, dati),
+      conseguenze: (voce) => conseguenzeCorrezione(personaggio(), L, voce, dati),
+    } : null,
     voce: bozza.voce,
     passo: bozza.passo,
     ui: bozza.ui,
@@ -1220,6 +1247,17 @@ function renderSaliPagina() {
     },
     vaiPasso: (i) => vai(`#/p/${stato.id}/sali/${i}`),
     conferma() {
+      if (L) {
+        if (validaCorrezione(personaggio(), L, bozza.voce, dati).length) return renderSaliPagina();
+        const dopo = conseguenzeCorrezione(personaggio(), L, bozza.voce, dati);
+        cambiaLivelli(applicaCorrezione(personaggio(), L, bozza.voce).livelli);
+        stato.sali = null;
+        persisti();
+        const n = dopo.reduce((s, c) => s + Object.values(c.abilita).reduce((t, v) => t + v, 0), 0);
+        stato.messaggioScheda = { tipo: n ? 'attenzione' : 'ok', testo: `${L}° livello corretto.${n ? ` ${n === 1 ? 'Un punto libero dei livelli dopo non aumenta più il VA: va riassegnato' : `${n} punti liberi dei livelli dopo non aumentano più il VA: vanno riassegnati`} con «Assegna», nello stesso livello (A.107).` : ''}` };
+        if (!stato.salvataggioOk) alert(`Correzione fatta, ma non salvata nel browser. ${testoSalvataggioFallito()}`);
+        return vai(`#/p/${stato.id}`);
+      }
       if (validaLivello(personaggio(), bozza.voce, dati).length) return renderSaliPagina();
       cambiaLivelli(applicaLivello(personaggio(), bozza.voce).livelli);
       stato.sali = null;
@@ -1389,7 +1427,9 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
     // bersagli di un incantesimo con durata, nel pannello «Lancia!»: gli altri partecipanti dello scontro
     partecipanti: stato.scontroPg?.partecipanti ?? [],
     spazioQuasiEsaurito: archivio.spazioQuasiEsaurito(),
-    motivoNoSalita: tab.scheda.completamenti?.length ? motivoCompletamento(tab.scheda.completamenti)
+    // A.108: i punti in eccesso bloccano la salita prima di tutto (si tolgono, poi si riassegna)
+    motivoNoSalita: tab.scheda.eccessi?.length ? motivoEccesso(tab.scheda.eccessi)
+      : tab.scheda.completamenti?.length ? motivoCompletamento(tab.scheda.completamenti)
       : !schedaCreazione.completa ? 'Completa la creazione prima di salire di livello.'
         : tab.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
     // regole aggiornate (regole.json → regole_aggiornate): punti da completare e in eccesso
@@ -1409,7 +1449,10 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       movimentoMappa: stato.scontroPg && chiaveCartellaAperta() ? () => leggiMovimentoRound(stato.scontroPg.id, idPg(chiaveCartellaAperta())) : null,
       sali: saliDiLivello,
       completaPunti: () => vai(`#/p/${stato.id}/completa`),
-      togliPunti: () => vai(`#/p/${stato.id}/togli`),
+      // A.108: «Togli» dell'evento scelto (di norma il primo in eccesso)
+      togliPunti: (livello = null) => { stato.completa = { modo: 'togli', punti: {}, livello }; vai(`#/p/${stato.id}/togli`); },
+      // A.107: correzione di un livello passato con la procedura di «Sali di livello»
+      correggiLivello,
       annullaLivello,
       stampa: () => vai(`#/p/${stato.id}/stampa`),
       esporta: () => esporta(stato.scelte, stato.livelli, stato.sessione, stato.calendario, assicuraPg(stato.id)),
