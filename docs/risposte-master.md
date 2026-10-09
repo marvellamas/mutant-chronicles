@@ -1275,13 +1275,21 @@ Fonte: E&L dell'08/10/2026, 21:10 UTC, blocco «Aggiornamento cumulativo — ris
     dell'Anticipazione. I 32 `TODO(Davide)` A.109 sono tolti.
 155. **Conferme e rinvii.** Davide dà per già approvate A.20 (il Chroma bianco resta riservato a chi ha accesso alla
     magia; non basta essere coscienti) e A.35 (l'eccedenza del valore degli armamenti ceduti viene restituita in crediti).
-    **A.35 cambia** l'ipotesi dell'app (eccedenza persa, `TODO(Davide)` in `src/dotazioni.js`): da implementare (lotto
-    «altro»). **A.20** verificata il 09/10 (lotto «magia»): l'app non permetteva il prelievo a chi non ha accesso alla
+    **A.35 cambia** l'ipotesi dell'app (eccedenza persa, `TODO(Davide)` in `src/dotazioni.js`). **A.35 applicata** il 09/10
+    (lotto «equipaggiamento»): `dotazioni.json` → `scambio.eccedenza` «restituita» con la decisione; `contiDotazione` mette
+    l'eccedenza nel saldo («restituito»), la procedura di acquisto mostra «Eccedenza restituita: +N cr», anche rifacendo gli
+    acquisti con «Modifica creazione»; via il `TODO(Davide)`. Nessun PG reale aveva un'eccedenza. **A.20** verificata il 09/10 (lotto «magia»): l'app non permetteva il prelievo a chi non ha accesso alla
     magia (nessuna azione di prelievo; la nota del Bianco 2:1 solo al Taumaturgo); la regola sta ora in `regole.json` →
     `chroma.conversione.prelievo` (accesso alla magia: Addestramento, Gradi taumaturgici o Talenti) e la SD la mostra a chi
     ha l'accesso senza essere Taumaturgo. **Rinviate:** A.113, A.115, parte dei veicoli di A.125,
     A.126, A.133, A.145–A.147, la tabella per tipo e altezza degli ostacoli di A.140; malattie e cure al Manuale del
     Direttore. I loro `TODO(Davide)` restano.
+
+**Nuova** (09/10/2026, lotto Equipaggiamento 0.6):
+
+- **A.154 — Peso della cartuccia del decontaminante** (Equipaggiamento 0.6, §3.5.1). Nella tabella il peso della «Cartuccia
+  di ricambio» (5 dosi, 500 cr, NC) è «—»: è trascurabile (0 kg) o manca il dato? Provvisorio: peso vuoto, non pesa sul carico
+  (`esplorazione.json` → `cartuccia-di-decontaminante`, `TODO(Davide)`).
 
 **Nuova** (09/10/2026, lotto Stati):
 
