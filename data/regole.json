@@ -589,6 +589,13 @@
     "_nota": "Manuale del Giocatore §5.10: per ogni sigla usata nel catalogo (campo modalita delle armi) nome, colpi consumati, Azioni Principali, modificatore al VA, colpi a segno, testo della regola e note dal manuale. «migliorata»: il Talento che la modifica. Il validatore controlla che ogni sigla del catalogo abbia la sua voce."
   },
   "attacco_distanza": {
+    "a_terra": {
+      "paragrafo": "Giocatore §5.5; sintesi A Terra del 05/10/2026",
+      "bersaglio": -2,
+      "stato": "a-terra",
+      "decisione": "Sintesi 1/11 (05/10/2026): chi attacca un personaggio A Terra a distanza subisce −2 VA; nessun modificatore per gli attacchi ad Area.",
+      "TODO(Davide)": "A.153: il −2 a distanza contro un bersaglio A Terra si somma alla Copertura del bersaglio (−2 Leggera, −4 Media)? Le sintesi non lo dicono; intanto l’app li somma, come due modificatori distinti."
+    },
     "_nota": "Utility «Attacco a distanza» (src/attacco.js). Valori e regole del Manuale del Giocatore §5.2, §5.8, §5.10, §5.11; «frasi» sono copiate dal manuale (anche righe di tabella) e verificate da tools/verifica_frasi.mjs. Le modalità di fuoco (VA, munizioni, Azioni) stanno in «modalita_di_fuoco»; i mirini (riduzione, distanza massima, Azioni minime) nel catalogo (accessori_armi → mirino, Armamenti §7.3); i Talenti che modificano l’attacco hanno effetti.attacco_distanza in talenti_liberi.json e classi.json.",
     "movimento": {
       "paragrafo": "Giocatore §5.2",
@@ -1877,57 +1884,147 @@
       {
         "id": "a-terra",
         "nome": "A Terra",
-        "durata": "fino a quando si rialza",
-        "promemoria": "−4 VA ad azioni fisiche ravvicinate, di equilibrio e alle Difese; niente Corsa o Scatto; contro di lui +2 VA in ravvicinato, −2 VA a distanza (§5.5).",
-        "movimento": { "solo_passo": true, "fonte": "§5.5: niente Corsa o Scatto" },
+        "durata": "finché si rialza",
+        "promemoria": "−4 VA ad attacchi ravvicinati, Difese e Prove di equilibrio (non agli attacchi a distanza); chi lo attacca +2 VA in ravvicinato, −2 VA a distanza, niente per le Aree; niente Corsa o Scatto, striscia 3 Q con un’AzM; buttarsi o rialzarsi: AzM o AzP.",
+        "movimento": {
+          "solo_passo": true,
+          "passo_q": 3,
+          "fonte": "Sintesi A Terra: niente Corsa o Scatto; striscia 3 Q con un’AzM"
+        },
         "riassunto": true,
         "effetti": [
-          {"tipo": "va", "prove": "fisiche_ravvicinate", "valore": -4, "ambito": "generale", "condizione": "Subisce −4 VA alle azioni fisiche ravvicinate, di equilibrio e alle Difese; può usare normalmente armi a distanza se la posizione lo permette.", "fonte": "Giocatore §5.5"},
-          {"tipo": "va", "abilita": "Atletica", "valore": -4, "ambito": "uso_specifico", "uso": "equilibrio", "condizione": "Subisce −4 VA alle azioni fisiche ravvicinate, di equilibrio e alle Difese; può usare normalmente armi a distanza se la posizione lo permette.", "fonte": "Giocatore §5.5"}
-        ]
+          {
+            "tipo": "va",
+            "prove": "fisiche_ravvicinate",
+            "valore": -4,
+            "ambito": "generale",
+            "condizione": "Subisce −4 VA alle azioni fisiche ravvicinate, di equilibrio e alle Difese; può usare normalmente armi a distanza se la posizione lo permette.",
+            "fonte": "Giocatore §5.5"
+          },
+          {
+            "tipo": "va",
+            "abilita": "Atletica",
+            "valore": -4,
+            "ambito": "uso_specifico",
+            "uso": "equilibrio",
+            "condizione": "Subisce −4 VA alle azioni fisiche ravvicinate, di equilibrio e alle Difese; può usare normalmente armi a distanza se la posizione lo permette.",
+            "fonte": "Giocatore §5.5"
+          }
+        ],
+        "sintesi": [
+          "−4 VA agli attacchi ravvicinati, alle Difese e alle prove che richiedono equilibrio. La penalità non si estende automaticamente a tutte le attività fisiche.",
+          "Può usare attacchi a distanza senza penalità propria dello Stato, se la posizione lo consente.",
+          "Chi lo attacca ottiene +2 VA in Ravvicinato e subisce −2 VA a Distanza. Nessun modificatore per gli attacchi ad Area.",
+          "Non può Correre o Scattare; può strisciare di 3 Q con un’AzM. Buttarsi a terra o rialzarsi richiede un’AzM oppure un’AzP.",
+          "Dura finché si rialza: non si applica la durata generica di 1+1d3 Round."
+        ],
+        "sintesi_fonte": "Sintesi operativa approvata da Davide il 05/10/2026 (per-davide.md, sezione 7, «Stati — Sintesi operative approvate per l’app»; decisione 126 di docs/risposte-master.md)"
       },
       {
         "id": "accecato",
         "nome": "Accecato",
-        "durata": "1+1d3 Round",
-        "promemoria": "−8 VA alle Prove che richiedono la vista (attacchi, Difese, Pilotare); niente Tiro o Colpo Mirato; i nemici non percepiti hanno +4 VA. Un’azione esclusivamente visiva fallisce automaticamente: Percezione non ha una penalità generale (A.51).",
+        "durata": "1+1d3 Round, salvo la fonte (nel buio totale: finché dura il buio)",
+        "promemoria": "−8 VA alle Prove che richiedono la vista (attacchi e Difese compresi); le attività solo visive falliscono; niente Tiro o Colpo Mirato; chi non riesce a percepire ha +4 VA contro di lui. Nel buio totale dura quanto il buio.",
         "riassunto": true,
         "effetti": [
-          {"tipo": "va", "prove": "vista", "valore": -8, "ambito": "generale", "condizione": "Il personaggio subisce −8 VA alle Prove che richiedono la vista, comprese Difese e attacchi contro bersagli non percepiti, e fallisce automaticamente le azioni puramente visive.", "fonte": "Giocatore §5.18"}
+          {
+            "tipo": "va",
+            "prove": "vista",
+            "valore": -8,
+            "ambito": "generale",
+            "condizione": "Il personaggio subisce −8 VA alle Prove che richiedono la vista, comprese Difese e attacchi contro bersagli non percepiti, e fallisce automaticamente le azioni puramente visive.",
+            "fonte": "Giocatore §5.18"
+          }
         ],
-        "limiti": { "manovre_vietate": ["mirato"], "testo": "Non può usare Tiro o Colpo Mirato.", "fonte": "Giocatore §5.18" }
+        "limiti": {
+          "manovre_vietate": [
+            "mirato"
+          ],
+          "testo": "Non può usare Tiro o Colpo Mirato.",
+          "fonte": "Giocatore §5.18"
+        },
+        "sintesi": [
+          "−8 VA alle prove che richiedono la vista, compresi attacchi e Difese contro avversari non percepiti. Le attività esclusivamente visive falliscono automaticamente.",
+          "Non può effettuare Tiro Mirato o Colpo Mirato. Può attaccare soltanto conoscendo almeno la posizione approssimativa del bersaglio.",
+          "Gli avversari che non riesce a percepire ottengono +4 VA contro di lui. Le attività basate soltanto su altri sensi disponibili non ricevono automaticamente la penalità; sensi speciali, Talenti e strumenti seguono le proprie regole.",
+          "Durata ordinaria 1+1d3 Round, salvo la fonte. Solo quando la fonte consente una PS Riflessi, il successo dimezza la durata per eccesso; il fallimento conserva la durata intera.",
+          "Quando l’impossibilità di vedere dipende dal buio totale, dura finché permane la condizione ambientale: non si tira una durata casuale."
+        ],
+        "sintesi_fonte": "Sintesi operativa approvata da Davide il 05/10/2026 (per-davide.md, sezione 7, «Stati — Sintesi operative approvate per l’app»; decisione 126 di docs/risposte-master.md)"
       },
       {
         "id": "ammalato",
         "nome": "Ammalato",
-        "durata": "da definire",
-        "promemoria": "In attesa dei dettagli di Davide: per ora nessun effetto sui valori, è solo un segno sulla scheda.",
+        "durata": "secondo la malattia (Manuale del Direttore)",
+        "promemoria": "Penalità a tutte le Prove di Abilità, attacchi e Difese compresi, non alle Prove Salvezza, secondo l’intensità (1–6); cambiare intensità sostituisce la penalità; contagio, progressione e cure al Manuale del Direttore.",
         "riassunto": true,
-        "TODO(Davide)": "A.119: risposta del 06/10/2026 (decisione 127), da implementare: sei intensità con penalità −1, −2, −4, −6, −8, −10 a tutte le Prove di Abilità (attacchi e Difese compresi, non le Prove Salvezza), una sola alla volta, senza durata generica; contagio e cure nel futuro Manuale del Direttore. Intanto si segna senza effetti."
+        "sintesi": [
+          "Ammalato ha sei intensità selezionabili nell’app, con penalità rispettivamente −1, −2, −4, −6, −8 e −10.",
+          "La penalità si applica a tutte le prove di Abilità, compresi attacchi e Difese; sono escluse le Prove Salvezza. Eventuali eccezioni specifiche potranno essere definite nelle singole malattie.",
+          "L’app applica automaticamente il modificatore e mostra intensità ed effetto, per esempio «Ammalato 3 — penalità −4». Cambiare intensità sostituisce la penalità precedente, senza sommarla.",
+          "Gli effetti possono manifestarsi immediatamente quando la fonte lo prevede, come la febbre dell’incontro già giocato. Non si applica la durata generica di 1+1d3 Round.",
+          "Contagio, incubazione, progressione, durata e guarigione saranno definiti nel Manuale del Direttore. Non si introducono ora frequenze, tiri o cure automatiche aggiuntive.",
+          "È superata la proposta di lasciare Ammalato come semplice indicatore privo di effetti, così come il comportamento provvisorio dell’app che lo segnava senza applicare penalità."
+        ],
+        "sintesi_fonte": "A.119, risposta approvata da Davide il 06/10/2026 (per-davide.md, sezione 7; decisione 127 di docs/risposte-master.md)",
+        "intensita": {
+          "valori": [
+            -1,
+            -2,
+            -4,
+            -6,
+            -8,
+            -10
+          ],
+          "prove": "tutte",
+          "etichetta": "Ammalato {n} — penalità {v}",
+          "fonte": "A.119 (06/10/2026)"
+        }
       },
       {
         "id": "assordato",
         "nome": "Assordato",
-        "durata": "1+1d3 Round",
-        "promemoria": "Un’azione esclusivamente uditiva fallisce automaticamente; −4 VA a Percezione e Intrattenere solo quando l’udito conta (valore a parte), nessuna penalità generale (A.51).",
+        "durata": "1+1d3 Round, salvo la fonte",
+        "promemoria": "Le Prove solo uditive falliscono; −4 VA dove l’udito conta ma non è indispensabile (valore a parte, non a tutti gli attacchi e Difese); non riceve ordini a voce; immune agli effetti che vanno uditi.",
         "riassunto": true,
         "effetti": [
-          {"tipo": "va", "prove": "udito", "valore": -4, "ambito": "uso_specifico", "uso": "quando l’udito è importante", "condizione": "Fallisce automaticamente le azioni basate soltanto sull’udito e subisce −4 VA quando l’udito è importante ma non essenziale.", "fonte": "Giocatore §5.18"}
-        ]
+          {
+            "tipo": "va",
+            "prove": "udito",
+            "valore": -4,
+            "ambito": "uso_specifico",
+            "uso": "quando l’udito è importante",
+            "condizione": "Fallisce automaticamente le azioni basate soltanto sull’udito e subisce −4 VA quando l’udito è importante ma non essenziale.",
+            "fonte": "Giocatore §5.18"
+          }
+        ],
+        "sintesi": [
+          "Le prove basate esclusivamente sull’udito falliscono automaticamente. −4 VA alle prove in cui l’udito è importante ma non indispensabile.",
+          "Non riceve ordini, avvertimenti o informazioni trasmessi soltanto a voce. Può parlare, ma controlla male il volume.",
+          "Le attività basate su vista o altri sensi disponibili non ricevono automaticamente penalità. È immune agli effetti che richiedono di essere uditi.",
+          "Durata ordinaria 1+1d3 Round, salvo la fonte. Nessuna PS generale: si effettua soltanto se la fonte la consente.",
+          "Il −4 non si applica automaticamente a tutti gli attacchi e alle Difese: conta quanto l’azione dipende dall’udito."
+        ],
+        "sintesi_fonte": "Sintesi operativa approvata da Davide il 05/10/2026 (per-davide.md, sezione 7, «Stati — Sintesi operative approvate per l’app»; decisione 126 di docs/risposte-master.md)"
       },
       {
         "id": "avvelenato",
         "nome": "Avvelenato",
         "durata": "1+1d3 Round, salvo la fonte",
-        "promemoria": "Effetti, danno e frequenza indicati dal veleno; l’antidoto adeguato lo termina.",
+        "promemoria": "PS Tempra all’esposizione (il successo dimezza il danno periodico, o la durata se il veleno non fa danni); danno, frequenza, penalità e durata dal veleno; il danno ignora AR; l’antidoto lo interrompe.",
         "riassunto": true,
         "periodico": {
           "paragrafo": "Giocatore §5.18 («Avvelenato»)",
           "danno": "dalla_fonte",
-          "ignora": ["armatura"],
+          "ignora": [
+            "armatura"
+          ],
           "non_sotto_zero": true,
           "ferita_quando_azzera": false,
-          "a_zero_pv": { "salvezza": "Tempra", "testo": "Già a 0 PV: PS di Tempra e nuove Ferite per fascia di danno (§5.14; «a 0 PV applica normalmente le fasce delle Ferite»)." },
+          "a_zero_pv": {
+            "salvezza": "Tempra",
+            "testo": "Già a 0 PV: PS di Tempra e nuove Ferite per fascia di danno (§5.14; «a 0 PV applica normalmente le fasce delle Ferite»)."
+          },
           "non_si_somma": "nuove esposizioni allo stesso veleno rinnovano la durata senza sommare il danno; veleni differenti coesistono",
           "fine": "alla fine della durata del veleno, oppure con un antidoto adeguato",
           "_nota": "Danno e frequenza li indica il veleno: la perdita si registra scrivendo il valore o la formula (per esempio «1d4», il veleno delle creature del Bestiario: data/bestiario.json → moduli.mutazioni, «veleno», effetti.veleno per grado). Senza un valore resta un promemoria.",
@@ -1935,35 +2032,73 @@
             "Il veleno indica modificatore, danno e frequenza, durata, penalità o Stati e antidoto.",
             "Il veleno ignora l’Armatura; a 0 PV applica normalmente le fasce delle Ferite."
           ]
-        }
+        },
+        "sintesi": [
+          "All’esposizione si effettua PS Tempra con il modificatore del veleno. Il successo dimezza per eccesso ciascun danno periodico; se il veleno non provoca danni, dimezza invece la durata, salvo la fonte.",
+          "Danni, frequenza, penalità, altri Stati e durata dipendono dal veleno. Non esiste una penalità generale comune a tutti i veleni.",
+          "Il danno ignora AR; a 0 PV si applicano le normali regole delle Ferite. Per un effetto temporaneo senza durata specifica si usa 1+1d3 Round.",
+          "Una nuova esposizione allo stesso veleno rinnova la durata senza sommare i danni periodici. Veleni diversi possono coesistere.",
+          "L’antidoto appropriato interrompe immediatamente l’effetto. Medicina permette di identificarlo e trattarne i sintomi, ma non elimina automaticamente lo Stato."
+        ],
+        "sintesi_fonte": "Sintesi operativa approvata da Davide il 05/10/2026 (per-davide.md, sezione 7, «Stati — Sintesi operative approvate per l’app»; decisione 126 di docs/risposte-master.md)"
       },
       {
         "id": "immobilizzato",
         "nome": "Immobilizzato",
-        "durata": "1+1d3 Round o fino alla liberazione",
-        "promemoria": "Non può muoversi né usare Corsa o Scatto; −4 VA alle azioni fisiche.",
-        "movimento": { "nessuno": true, "fonte": "§5.18: non può muoversi né usare Corsa o Scatto" },
+        "durata": "1+1d3 Round, salvo la fonte (una presa: finché spezzata o rilasciata)",
+        "promemoria": "Non si sposta, niente Corsa o Scatto; −4 VA alle azioni fisiche ancora possibili (non PS né attività mentali); liberarsi secondo la fonte (Immobilizzare: 1 AzP e Prova contrapposta).",
+        "movimento": {
+          "nessuno": true,
+          "fonte": "§5.18: non può muoversi né usare Corsa o Scatto"
+        },
         "riassunto": true,
         "effetti": [
-          {"tipo": "va", "prove": "fisiche", "valore": -4, "ambito": "generale", "condizione": "Non può muoversi, usare Corsa o Scatto e subisce −4 VA alle azioni fisiche.", "fonte": "Giocatore §5.18"}
-        ]
+          {
+            "tipo": "va",
+            "prove": "fisiche",
+            "valore": -4,
+            "ambito": "generale",
+            "condizione": "Non può muoversi, usare Corsa o Scatto e subisce −4 VA alle azioni fisiche.",
+            "fonte": "Giocatore §5.18"
+          }
+        ],
+        "sintesi": [
+          "Non può spostarsi, Correre o Scattare. Subisce −4 VA alle azioni fisiche ancora possibili; gli arti bloccati non possono essere utilizzati.",
+          "Liberarsi segue la fonte. Per la manovra Immobilizzare, il tentativo richiede 1 AzP e una Prova contrapposta.",
+          "Gli effetti temporanei durano normalmente 1+1d3 Round, salvo la fonte; una presa permane finché spezzata o rilasciata.",
+          "Mantenere una presa non costa Azioni, ma impegna le mani utilizzate. Chi la mantiene può spendere 1 AzP ed effettuare una nuova Prova contrapposta per infliggere il proprio danno senz’armi; il fallimento non interrompe la presa.",
+          "Il −4 non si applica automaticamente alle PS o alle attività mentali."
+        ],
+        "sintesi_fonte": "Sintesi operativa approvata da Davide il 05/10/2026 (per-davide.md, sezione 7, «Stati — Sintesi operative approvate per l’app»; decisione 126 di docs/risposte-master.md)"
       },
       {
         "id": "incendiato",
         "nome": "Incendiato",
-        "durata": "1+1d3 Round",
-        "promemoria": "1d4 danni da fuoco ai PV ogni Round, ignorando l’Armatura; −2 VA; 1 AzP e Riflessi per spegnersi.",
+        "durata": "1+1d3 Round, salvo la fonte",
+        "promemoria": "1d4 PV da fuoco subito, poi all’Iniziativa della fonte (una volta per Round), ignorando l’AR generica non magica; −2 VA alle Prove di Abilità, non alle PS; spegnersi: 1 AzP e PS Riflessi, o 1 AzP con un mezzo adeguato.",
         "riassunto": true,
         "effetti": [
-          {"tipo": "va", "prove": "tutte", "valore": -2, "ambito": "generale", "condizione": "Subisce immediatamente 1d4 danni da fuoco ai PV ignorando l’Armatura ordinaria e −2 VA alle Prove di Abilità, non alle Prove Salvezza.", "fonte": "Giocatore §5.18"}
+          {
+            "tipo": "va",
+            "prove": "tutte",
+            "valore": -2,
+            "ambito": "generale",
+            "condizione": "Subisce immediatamente 1d4 danni da fuoco ai PV ignorando l’Armatura ordinaria e −2 VA alle Prove di Abilità, non alle Prove Salvezza.",
+            "fonte": "Giocatore §5.18"
+          }
         ],
         "periodico": {
           "paragrafo": "Giocatore §5.18 («Incendiato»)",
           "danno": "1d4",
-          "ignora": ["armatura_non_magica"],
+          "ignora": [
+            "armatura_non_magica"
+          ],
           "non_sotto_zero": true,
           "ferita_quando_azzera": false,
-          "a_zero_pv": { "salvezza": "Tempra", "testo": "Già a 0 PV: PS di Tempra e nuove Ferite per fascia di danno (§5.14)." },
+          "a_zero_pv": {
+            "salvezza": "Tempra",
+            "testo": "Già a 0 PV: PS di Tempra e nuove Ferite per fascia di danno (§5.14)."
+          },
           "non_si_somma": "nuove applicazioni non sommano il danno e mantengono la durata maggiore",
           "fine": "alla fine della durata, oppure spegnendosi (1 AzP e PS di Riflessi, o un mezzo adeguato)",
           "frasi": [
@@ -1972,32 +2107,70 @@
             "Il danno immediato e quello periodico di Incendiato ignorano tutta l’AR non magica generica, comprese Pelle Corazzata e Scudo.",
             "L’AR magica pertinente lo riduce fino a 0, come le protezioni specifiche contro il fuoco secondo la propria scheda."
           ]
-        }
+        },
+        "sintesi": [
+          "PS Riflessi iniziale, salvo esplicita eccezione della fonte: il successo evita lo Stato. Durata ordinaria 1+1d3 Round, salvo la fonte.",
+          "Infligge immediatamente 1d4 PV da fuoco, poi all’Iniziativa della fonte nei Round successivi, al massimo una volta per Round. Il danno iniziale non viene ripetuto nello stesso Round.",
+          "Per tutta la durata: −2 VA a tutte le prove di Abilità, non alle PS.",
+          "Spegnersi richiede 1 AzP e PS Riflessi. Con mezzi adeguati, come acqua, sabbia o coperta antifiamma, basta 1 AzP senza prova; può intervenire un alleato.",
+          "Applicazioni ripetute non sommano i danni; si mantiene la durata maggiore.",
+          "Il danno ignora AR generica non magica. AR magica pertinente può ridurlo a 0; protezioni specifiche contro il Fuoco seguono la propria descrizione. Ignifugo X è una contromisura preventiva e non si sottrae al danno.",
+          "Ridurre il danno a 0 non spegne le fiamme e non elimina il −2 VA. Restano le precisazioni della A.50 su natura dell’AR e protezioni contro il Fuoco."
+        ],
+        "sintesi_fonte": "Sintesi operativa approvata da Davide il 05/10/2026 (per-davide.md, sezione 7, «Stati — Sintesi operative approvate per l’app»; decisione 126 di docs/risposte-master.md)"
       },
       {
         "id": "rallentato",
         "nome": "Rallentato",
-        "durata": "1+1d3 Round",
-        "promemoria": "Passo 3 Q, niente Corsa o Scatto; −2 VA alle Prove fisiche e alle Difese.",
-        "movimento": { "passo_q": 3, "solo_passo": true, "fonte": "§5.18: Passo 3 Q, niente Corsa o Scatto" },
+        "durata": "1+1d3 Round, salvo la fonte",
+        "promemoria": "Passo 3 Q, niente Corsa o Scatto (vale il limite più restrittivo); −2 VA alle Prove fisiche e alle Difese, non alle PS né alle attività mentali.",
+        "movimento": {
+          "passo_q": 3,
+          "solo_passo": true,
+          "fonte": "§5.18: Passo 3 Q, niente Corsa o Scatto"
+        },
         "riassunto": true,
         "effetti": [
-          {"tipo": "va", "prove": "fisiche", "valore": -2, "ambito": "generale", "condizione": "Il Passo è ridotto a 3 Q, non può usare Corsa o Scatto e subisce −2 VA alle Prove fisiche e alle Difese.", "fonte": "Giocatore §5.18"}
-        ]
+          {
+            "tipo": "va",
+            "prove": "fisiche",
+            "valore": -2,
+            "ambito": "generale",
+            "condizione": "Il Passo è ridotto a 3 Q, non può usare Corsa o Scatto e subisce −2 VA alle Prove fisiche e alle Difese.",
+            "fonte": "Giocatore §5.18"
+          }
+        ],
+        "sintesi": [
+          "Passo ridotto a 3 Q; non può Correre o Scattare. Se un altro effetto impone movimento inferiore, prevale il limite più restrittivo.",
+          "−2 VA alle prove fisiche e alle Difese; non si applica automaticamente ad attività mentali o PS.",
+          "Solo quando la fonte consente PS Tempra o Riflessi, il successo evita lo Stato.",
+          "Durata ordinaria 1+1d3 Round, salvo la fonte. Applicazioni ripetute non sommano le penalità; si mantiene la durata maggiore.",
+          "Continuano ad applicarsi i normali costi di terreno e modalità di movimento, compreso il Nuoto."
+        ],
+        "sintesi_fonte": "Sintesi operativa approvata da Davide il 05/10/2026 (per-davide.md, sezione 7, «Stati — Sintesi operative approvate per l’app»; decisione 126 di docs/risposte-master.md)"
       },
       {
         "id": "sanguinamento",
         "nome": "Sanguinamento",
         "durata": "fino a quando viene fermato",
-        "promemoria": "Perde PV secondo il §5.15, all’Iniziativa della fonte, finché non viene fermato.",
+        "promemoria": "Perde X PV subito e all’Iniziativa della fonte (una volta per Round), ignorando AR, Parata e Schivata; non sotto 0 PV; vale il valore più alto; finché è attivo non recupera PV né Ferite; si arresta con Medicina (kit, 10 Round).",
         "riassunto": true,
         "periodico": {
           "paragrafo": "Giocatore §5.15",
           "danno": "valore",
-          "ignora": ["armatura", "parata", "schivata"],
+          "ignora": [
+            "armatura",
+            "parata",
+            "schivata"
+          ],
           "non_sotto_zero": true,
           "ferita_quando_azzera": false,
-          "a_zero_pv": { "salvezza": "Tempra", "successo": "nessuna nuova Ferita", "fallimento": "1 Ferita diretta", "testo": "Già a 0 PV: PS di Tempra. Con successo nessuna nuova Ferita, con fallimento 1 Ferita diretta (§5.15)." },
+          "a_zero_pv": {
+            "salvezza": "Tempra",
+            "successo": "nessuna nuova Ferita",
+            "fallimento": "1 Ferita diretta",
+            "testo": "Già a 0 PV: PS di Tempra. Con successo nessuna nuova Ferita, con fallimento 1 Ferita diretta (§5.15)."
+          },
           "non_si_somma": "si usa il valore più alto",
           "richiede_penetrazione": true,
           "iniziale_una_per_attacco": true,
@@ -2010,37 +2183,108 @@
             "Più Sanguinamenti non si sommano: si usa il valore più alto.",
             "Sanguinamento non ha una scadenza automatica in Round e termina con le procedure previste per fermarlo."
           ]
-        }
+        },
+        "sintesi": [
+          "Possiede un valore X indicato dalla fonte. Perde subito X PV ignorando Armatura, Parata e Schivata; la perdita si ripete all’Iniziativa della fonte, al massimo una volta per Round, contando l’applicazione iniziale.",
+          "La perdita non porta sotto 0 PV. Quella che porta a 0 non provoca immediatamente una Ferita. Se il personaggio è già a 0 PV, effettua PS Tempra: successo, nessuna nuova Ferita; fallimento, 1 Ferita.",
+          "Il Magistrale rende automaticamente riuscita la successiva Tempra contro lo stesso Sanguinamento. Il Maldestro provoca 1 Ferita e −4 alla prossima Tempra contro lo stesso Sanguinamento.",
+          "Più Sanguinamenti non si sommano: si usa il valore più alto. Persiste finché arrestato, senza durata generica di 1+1d3 Round. Un Sanguinamento attivo impedisce il recupero di PV e Ferite.",
+          "Arrestarlo con Medicina richiede un kit utilizzabile, accesso al paziente e 10 Round continuativi. Un’applicazione si consuma all’inizio. Il soccorritore resta adiacente e spende 1 AzP ogni Round; può soltanto effettuare Passo, mentre il paziente non può Correre o Scattare. Durante il trattamento il Sanguinamento è sospeso.",
+          "Prova finale: +2 VA per X=1; nessun modificatore per X=2; −2 VA per X≥3, oltre a strumenti e Talenti pertinenti.",
+          "Kit Improvvisato: successo, sospende per 10 Round; Magistrale, arresta.",
+          "Kit Standard: successo, arresta; Magistrale, arresta e recupera 1d4 PV.",
+          "Kit Professionale: successo, arresta e recupera 1d4 PV; Magistrale, arresta e recupera il doppio del risultato di un unico 1d4. Non si superano i PV massimi.",
+          "Interruzione o fallimento fanno riprendere il Sanguinamento; l’interruzione non concede prova finale né restituisce materiali. Con Maldestro il paziente perde anche 1d4 PV, senza scendere sotto 0 né subire una Ferita diretta.",
+          "Ripresa e sospensione rispettano il limite di una perdita periodica per Round. Restano le condizioni di applicazione della proprietà e gli altri chiarimenti della A.76."
+        ],
+        "sintesi_fonte": "Sintesi operativa approvata da Davide il 05/10/2026 (per-davide.md, sezione 7, «Stati — Sintesi operative approvate per l’app»; decisione 126 di docs/risposte-master.md)"
       },
       {
         "id": "stordito",
         "nome": "Stordito",
-        "durata": "1+1d3 Round",
-        "promemoria": "Solo Passo, nessuna Azione Principale; niente Difese che consumano Azioni.",
-        "movimento": { "solo_passo": true, "fonte": "§5.18: solo Passo" },
-        "azioni": { "principali": 0, "fonte": "§5.18: nessuna Azione Principale" },
-        "riassunto": true
+        "durata": "1+1d3 Round, salvo la fonte",
+        "promemoria": "Solo Passo, nessuna Azione Principale, niente Difese che richiedono Azioni; quando diventa Stordito: PS Volontà per la Concentrazione e Prova di Potere per la Focalizzazione.",
+        "movimento": {
+          "solo_passo": true,
+          "fonte": "§5.18: solo Passo"
+        },
+        "azioni": {
+          "principali": 0,
+          "fonte": "§5.18: nessuna Azione Principale"
+        },
+        "riassunto": true,
+        "sintesi": [
+          "Può effettuare soltanto Passo; non può compiere Azioni Principali. Conserva PS e Prove contrapposte passive, ma non può utilizzare Difese che richiedono Azioni.",
+          "Durata ordinaria 1+1d3 Round, salvo la fonte. Applicazioni ripetute non si sommano; si mantiene la durata maggiore.",
+          "Quando diventa Stordito, effettua immediatamente PS Volontà per mantenere la Concentrazione e Prova di Potere per mantenere la Focalizzazione, se pertinenti. Le prove sono senza costo in Azioni: il successo mantiene l’effetto, il fallimento lo interrompe.",
+          "Queste verifiche sono richieste anche senza danni e non si ripetono ogni Round per la sola permanenza dello Stato."
+        ],
+        "sintesi_fonte": "Sintesi operativa approvata da Davide il 05/10/2026 (per-davide.md, sezione 7, «Stati — Sintesi operative approvate per l’app»; decisione 126 di docs/risposte-master.md)"
       },
       {
         "id": "svenuto",
         "nome": "Svenuto",
-        "durata": "1+1d3 Round, salvo la fonte",
-        "promemoria": "Nessuna Azione né Movimento, cade A Terra, niente Difese attive; perde la Concentrazione.",
-        "movimento": { "nessuno": true, "fonte": "§5.18: nessun Movimento" },
-        "azioni": { "principali": 0, "movimento": 0, "fonte": "§5.18: nessuna Azione né Movimento" },
-        "riassunto": true
+        "durata": "1+1d3 Round, salvo la causa (a 0 PM: finché recupera 1 PM)",
+        "promemoria": "Nessuna Azione né movimento, cade A Terra, niente Difese attive, non percepisce; perde Concentrazione e Focalizzazioni; a 0 PM resta svenuto finché non recupera 1 PM.",
+        "movimento": {
+          "nessuno": true,
+          "fonte": "§5.18: nessun Movimento"
+        },
+        "azioni": {
+          "principali": 0,
+          "movimento": 0,
+          "fonte": "§5.18: nessuna Azione né Movimento"
+        },
+        "riassunto": true,
+        "sintesi": [
+          "Non può compiere Azioni né muoversi e cade A Terra. Non può usare Difese attive e normalmente non percepisce l’ambiente; è incapace di reagire per le regole che richiedono questa condizione.",
+          "Perde immediatamente Concentrazione e tutte le Focalizzazioni, senza prove per mantenerle.",
+          "La durata dipende dalla causa. Per un effetto temporaneo senza durata specifica si usa 1+1d3 Round.",
+          "A 0 PM lo svenimento permane finché recupera almeno 1 PM: non termina per la semplice scadenza di Round.",
+          "Se sta volando o nuotando si applicano le conseguenze delle rispettive regole di movimento."
+        ],
+        "sintesi_fonte": "Sintesi operativa approvata da Davide il 05/10/2026 (per-davide.md, sezione 7, «Stati — Sintesi operative approvate per l’app»; decisione 126 di docs/risposte-master.md)",
+        "implica": [
+          "a-terra"
+        ]
       },
       {
         "id": "terrorizzato",
         "nome": "Terrorizzato",
-        "durata": "1+1d3 Round",
-        "promemoria": "−4 VA a tutte le Prove; deve allontanarsi dalla fonte e non può attaccarla.",
+        "durata": "1+1d3 Round, salvo la fonte",
+        "promemoria": "−4 a tutte le Prove, PS comprese (non alla PS iniziale); deve fuggire dalla fonte e non la attacca; le AzP solo per difendersi, nascondersi, fuggire o togliersi lo Stato; un alleato adiacente con 1 AzP e Oratoria lo fa finire.",
         "riassunto": true,
         "effetti": [
-          {"tipo": "va", "prove": "tutte", "valore": -4, "ambito": "generale", "condizione": "Subisce −4 a tutte le Prove, comprese le Prove Salvezza effettuate mentre lo Stato è attivo; la penalità non modifica la Salvezza iniziale per evitarlo.", "fonte": "Giocatore §5.18"},
-          {"tipo": "salvezza", "salvezza": "tutte", "valore": -4, "ambito": "generale", "condizione": "Subisce −4 a tutte le Prove, comprese le Prove Salvezza effettuate mentre lo Stato è attivo; la penalità non modifica la Salvezza iniziale per evitarlo.", "fonte": "Giocatore §5.18 (Doc del 28/09: Prove Salvezza comprese, chiude A.17)"}
+          {
+            "tipo": "va",
+            "prove": "tutte",
+            "valore": -4,
+            "ambito": "generale",
+            "condizione": "Subisce −4 a tutte le Prove, comprese le Prove Salvezza effettuate mentre lo Stato è attivo; la penalità non modifica la Salvezza iniziale per evitarlo.",
+            "fonte": "Giocatore §5.18"
+          },
+          {
+            "tipo": "salvezza",
+            "salvezza": "tutte",
+            "valore": -4,
+            "ambito": "generale",
+            "condizione": "Subisce −4 a tutte le Prove, comprese le Prove Salvezza effettuate mentre lo Stato è attivo; la penalità non modifica la Salvezza iniziale per evitarlo.",
+            "fonte": "Giocatore §5.18 (Doc del 28/09: Prove Salvezza comprese, chiude A.17)"
+          }
         ],
-        "limiti": { "solo_azioni_difensive": true, "testo": "Le Azioni Principali possono essere usate soltanto per difendersi, nascondersi, aiutare la fuga o rimuovere lo Stato.", "fonte": "Giocatore §5.18" }
+        "limiti": {
+          "solo_azioni_difensive": true,
+          "testo": "Le Azioni Principali possono essere usate soltanto per difendersi, nascondersi, aiutare la fuga o rimuovere lo Stato.",
+          "fonte": "Giocatore §5.18"
+        },
+        "sintesi": [
+          "Una PS Volontà iniziale riuscita evita lo Stato. Durante lo Stato: −4 a tutte le prove, comprese le PS. Il −4 non si applica alla PS iniziale per evitarlo.",
+          "Non può avvicinarsi volontariamente alla fonte della paura e deve usare il Movimento per fuggire lungo il percorso ragionevolmente più sicuro.",
+          "Le AzP possono essere usate soltanto per difendersi, nascondersi, agevolare la fuga o rimuovere lo Stato. Se fuggire è impossibile, può effettuare Passo o cercare Copertura, ma non compiere azioni offensive contro la fonte.",
+          "Durata ordinaria 1+1d3 Round, salvo la fonte. Applicazioni ripetute non sommano le penalità; si mantiene la durata maggiore.",
+          "Un alleato adiacente può spendere 1 AzP ed effettuare Oratoria: con successo lo Stato termina. Termina immediatamente anche quando la scomparsa della fonte della paura è evidente al personaggio."
+        ],
+        "sintesi_fonte": "Sintesi operativa approvata da Davide il 05/10/2026 (per-davide.md, sezione 7, «Stati — Sintesi operative approvate per l’app»; decisione 126 di docs/risposte-master.md)"
       }
     ],
     "periodici": {

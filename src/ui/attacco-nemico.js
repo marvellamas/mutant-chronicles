@@ -6,7 +6,7 @@
 // Il pannello sta fuori dalla plancia (che si ridisegna ogni pochi secondi), come «Colpito».
 import { h } from './dom.js';
 import { pannelloAttacco, pillola } from './attacco.js';
-import { attacchiDi, armaDaAttacco, attaccanteDa, conLuceNemico, propostaColpo } from '../nemico-attacco.js';
+import { attacchiDi, armaDaAttacco, attaccanteDa, conLuceNemico, propostaColpo, conStatiNemico } from '../nemico-attacco.js';
 import { esitoProva } from '../prova.js';
 import { specTiro, tira } from '../tiri.js';
 
@@ -114,7 +114,11 @@ export function apriAttaccoNemico(ctx, p, { bersagli, registra, dichiarazione = 
         }, b.nome, b.descrizione ? h('small', { class: 'nota' }, ` · ${b.descrizione}`) : null)))
           : h('p', { class: 'nota' }, 'Nessun bersaglio: servono PG al tavolo o altri nemici nello scontro.')),
       h('div', { class: 'attacco-azioni' },
-        h('button', { type: 'button', class: 'btn primario btn-grande', disabled: !attacchi[st.indice] || !st.bersaglio, onclick: () => { st.fase = 'pannello'; st.dichiarazione = { ...dichiarazione }; st.ui = {}; st.tiri = []; disegna(); } }, 'Avanti: «Attacca!» →'))));
+        h('button', { type: 'button', class: 'btn primario btn-grande', disabled: !attacchi[st.indice] || !st.bersaglio, onclick: () => {
+          // sintesi A Terra: con il bersaglio A Terra (o Svenuto) la casella «Bersaglio A Terra» parte accesa
+          const b = bersagli.find((x) => x.id === st.bersaglio);
+          st.fase = 'pannello'; st.dichiarazione = { ...dichiarazione, ...(b?.aTerra ? { bersaglio: { ...(dichiarazione.bersaglio ?? {}), aTerra: true } } : {}) }; st.ui = {}; st.tiri = []; disegna();
+        } }, 'Avanti: «Attacca!» →'))));
 
   // riga finale del pannello: bersaglio, tiri per colpire, esito, registro e «Applica danno»
   const finale = (attacco, arma, b) => (r) => {
@@ -153,7 +157,8 @@ export function apriAttaccoNemico(ctx, p, { bersagli, registra, dichiarazione = 
     const attacco = attacchi[st.indice];
     const b = bersagli.find((x) => x.id === st.bersaglio);
     // fase 2, lotto 4: la luce sul bersaglio (proposta dalla mappa, modificabile) entra nel VA del nemico
-    const { arma, chi } = conLuceNemico(armaDaAttacco(attacco, `${p.id}:${st.indice}`, ctx.dati), attaccanteDa(p, ctx.dati), st.luce, ctx.dati, { visione: st.luceVisione === true });
+    // sintesi degli Stati (05/10/2026) e A.119: gli Stati del nemico nel VA del suo attacco
+    const { arma, chi } = conLuceNemico(conStatiNemico(armaDaAttacco(attacco, `${p.id}:${st.indice}`, ctx.dati), p, ctx.dati), attaccanteDa(p, ctx.dati), st.luce, ctx.dati, { visione: st.luceVisione === true });
     // il pannello chiude mettendo ctx.ui.attacco a null
     if (st.ui.aperto && st.ui.attacco === null) { chiudi(); return; }
     st.ui.aperto = true;

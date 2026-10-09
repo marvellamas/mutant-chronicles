@@ -531,6 +531,17 @@ function validaRegole(r, err, dati = {}) {
       else ids.add(x.id);
       // i promemoria sono riassunti nostri, non testo del manuale: va dichiarato
       if (x?.promemoria !== undefined && x.riassunto !== true) err(F, `stati.elenco[${i}].riassunto`, 'il promemoria è un riassunto: serve "riassunto": true');
+      // sintesi approvate da Davide (05/10/2026) e A.119: testo per paragrafi, con la fonte
+      if (x?.sintesi !== undefined && (!Array.isArray(x.sintesi) || !x.sintesi.length || !x.sintesi.every(isTesto) || !isTesto(x.sintesi_fonte))) err(F, `stati.elenco[${i}].sintesi`, 'elenco di paragrafi e «sintesi_fonte» attesi');
+      // Stati implicati (Svenuto cade A Terra): devono esistere
+      for (const k of x?.implica ?? []) if (!st.some((y) => y.id === k)) err(F, `stati.elenco[${i}].implica`, `"${k}" non è uno Stato`);
+      // A.119: intensità selezionabili (penalità sostitutive, non cumulative)
+      if (x?.intensita !== undefined) {
+        const I = x.intensita;
+        if (!Array.isArray(I?.valori) || !I.valori.length || !I.valori.every((v) => isIntero(v) && v < 0)) err(F, `stati.elenco[${i}].intensita.valori`, 'penalità intere negative, una per intensità');
+        if (!isTesto(I?.prove) || (I.prove !== 'tutte' && !r.categorie_prove?.[I.prove])) err(F, `stati.elenco[${i}].intensita.prove`, '«tutte» o una categoria di categorie_prove');
+        if (!isTesto(I?.etichetta) || !I.etichetta.includes('{n}') || !I.etichetta.includes('{v}')) err(F, `stati.elenco[${i}].intensita.etichetta`, 'testo con {n} (intensità) e {v} (penalità)');
+      }
       // §5.15, §5.18: Stati con una perdita periodica di PV (src/periodici.js)
       if (x?.periodico !== undefined) {
         const P = `stati.elenco[${i}] (${x?.nome}).periodico`;

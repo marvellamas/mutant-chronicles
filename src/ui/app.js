@@ -17,6 +17,7 @@ import { elencoVeicoli, migraNelRegistro } from './veicoli-registro.js';
 import { eRiferimento } from '../veicoli-registro.js';
 import { serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella } from './cartella.js';
 import { statoSalvataggioMaster, controllaRemoto, revisioneDaScrivere, differenzeSessione, testoScelta, indicatoreCollegamento, impronta } from '../collegamento.js';
+import { difeseNemico } from '../nemico-attacco.js';
 import { leggiScontroAperto, leggiScontro, salvaScontro, leggiMovimentoRound } from './scontro.js';
 import { registraRiga } from '../scontro.js';
 import { elencoUnito, confronta, chiaveDaFile, chiavePersonaggio, messaggioSalvataggio, attesaRitentativo, nomeFileLibero, haNome, fileProvvisorio } from '../cartella.js';
@@ -543,7 +544,7 @@ async function aggiornaRoundScontro() {
       if (ultimoScontroLetto?.id !== aperto.id || ultimoScontroLetto?.revisione !== aperto.revisione) {
         ultimoScontroLetto = { ...aperto, scontro: await leggiScontro(aperto.id) };
       }
-      coll = collegamentoScontro(ultimoScontroLetto.scontro, chiave);
+      coll = collegamentoScontro(ultimoScontroLetto.scontro, chiave, (p) => difeseNemico(p, stato.dati).valore);
     }
   } catch {
     return; // server spento: resta quello che c'era, l'indicatore del collegamento lo dice

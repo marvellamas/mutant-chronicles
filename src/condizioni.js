@@ -44,12 +44,36 @@ export function abilitaVista(sessione, dati) {
   });
 }
 
-/** Stati attivi, più quello imposto dalla luce (buio totale: Accecato, senza sommarli, A.106). */
+/**
+ * Stati attivi, più quello imposto dalla luce (buio totale: Accecato, senza sommarli, A.106) e quelli implicati
+ * (sintesi Svenuto del 05/10/2026: cade A Terra; regole.json → stati.elenco[].implica).
+ */
 export function statiEffettivi(sessione, dati) {
   const s = new Set(isOggetto(sessione) && Array.isArray(sessione.statiAttivi) ? sessione.statiAttivi : []);
   const l = luceAttiva(sessione, dati);
   if (l?.stato) s.add(l.stato);
+  for (const st of dati.regole.stati?.elenco ?? []) if (s.has(st.id)) for (const k of st.implica ?? []) s.add(k);
   return s;
+}
+
+/**
+ * A.119: intensità di uno Stato che ne ha (Ammalato 1–6), dalla sessione (sessione.intensitaStati) o la prima;
+ * { livello, valore, etichetta } o null. Cambiare intensità sostituisce la penalità, non la somma.
+ */
+export function intensitaStato(stato, intensitaStati, dati = null) {
+  const I = stato?.intensita;
+  if (!I?.valori?.length) return null;
+  const n = Number(intensitaStati?.[stato.id]);
+  const livello = Number.isInteger(n) && n >= 1 && n <= I.valori.length ? n : 1;
+  const valore = I.valori[livello - 1];
+  const etichetta = I.etichetta.replace('{n}', String(livello)).replace('{v}', valore < 0 ? `−${-valore}` : String(valore));
+  return { livello, valore, etichetta };
+}
+
+/** Effetto di uno Stato con intensità: una penalità alle Prove della categoria (A.119: tutte le Prove di Abilità). */
+export function effettoIntensita(stato, intensitaStati) {
+  const i = intensitaStato(stato, intensitaStati);
+  return i ? { ...i, effetti: [{ tipo: 'va', prove: stato.intensita.prove, valore: i.valore, ambito: 'generale', condizione: i.etichetta, fonte: stato.intensita.fonte }] } : null;
 }
 
 /**
@@ -85,10 +109,13 @@ export function condizioniAttive(sessione, dati, scheda = null) {
   const riduzioni = scheda && bonusTalentiAccesi(sessione) ? effettiTalenti(scheda, dati)
     .filter((e) => e.tipo === 'riduzione_stato' && (e.ambito === 'generale' || (e.ambito === 'situazionale' && accesiT.has(e.chiave)))) : [];
   for (const s of r.stati.elenco) {
-    if (!attivi.has(s.id) || !s.effetti?.length) continue;
+    // A.119: gli Stati con intensità (Ammalato) hanno la penalità dell'intensità scelta
+    const conIntensita = attivi.has(s.id) ? effettoIntensita(s, sessione.intensitaStati) : null;
+    const effetti = conIntensita?.effetti ?? s.effetti;
+    if (!attivi.has(s.id) || !effetti?.length) continue;
     // anche con soli usi specifici (Assordato): il VA generale non cambia, il valore d'uso sì
-    const effetto = effettoDaEffetti(s.effetti);
-    out.push({ etichetta: s.nome, fonte: 'stato', effetto, usi: s.effetti.filter((e) => e.ambito === 'uso_specifico') });
+    const effetto = effettoDaEffetti(effetti);
+    out.push({ etichetta: conIntensita?.etichetta ?? s.nome, fonte: 'stato', effetto, usi: effetti.filter((e) => e.ambito === 'uso_specifico') });
     for (const t of riduzioni.filter((x) => x.stato === s.id)) {
       // solo le penalità al VA (non le Prove Salvezza), ciascuna ridotta al più di «valore» e non oltre 0;
       // con «prove» solo le Abilità di quel gruppo (Combattere alla Cieca: attaccare o difendersi)
@@ -109,7 +136,10 @@ export function condizioniAttive(sessione, dati, scheda = null) {
   // A.106: penombra e luce molto scarsa (il buio è Accecato, sopra); la visione che copre il bersaglio le elimina;
   // Visione Perfetta riduce di 3, fino a 0, la penalità alla Percezione visiva
   const luce = luceAttiva(sessione, dati);
-  if (luce?.effetti?.length && !(sessione.luceVisione === true && (r.illuminazione.visione?.elimina ?? []).includes(luce.id))) {
+  // sintesi Accecato e A.116: chi è già Accecato non riceve anche la penalità di luce (la stessa impossibilità di vedere,
+  // una volta sola)
+  const cieco = attivi.has('accecato');
+  if (!cieco && luce?.effetti?.length && !(sessione.luceVisione === true && (r.illuminazione.visione?.elimina ?? []).includes(luce.id))) {
     const VP = r.illuminazione.visione_perfetta;
     const perfetta = VP && scheda && (scheda.talentiLiberi ?? []).some((t) => (t.id ?? t) === VP.talento);
     const usi = luce.effetti.filter((e) => e.ambito === 'uso_specifico')
@@ -120,15 +150,17 @@ export function condizioniAttive(sessione, dati, scheda = null) {
   // A.116: le Prove il cui uso «richiede la vista» ricevono la penalità di luce una volta sola (penombra −2, luce molto
   // scarsa −4; con una visione che copre il bersaglio nulla); nel buio −8 come Accecato, salvo le Abilità che Accecato
   // penalizza già (categorie_prove.vista)
-  const vista = luce ? abilitaVista(sessione, dati).filter((x) => x.attiva) : [];
+  const vista = luce || cieco ? abilitaVista(sessione, dati).filter((x) => x.attiva) : [];
   if (vista.length) {
     const RV = r.illuminazione.richiede_vista;
-    const coperta = sessione.luceVisione === true && (r.illuminazione.visione?.elimina ?? []).includes(luce.id);
-    const gen = (luce.effetti ?? []).find((e) => e.ambito === 'generale' && e.prove === 'luce')?.valore ?? 0;
+    const coperta = !!luce && sessione.luceVisione === true && (r.illuminazione.visione?.elimina ?? []).includes(luce.id);
+    const gen = (luce?.effetti ?? []).find((e) => e.ambito === 'generale' && e.prove === 'luce')?.valore ?? 0;
+    // Accecato (Stato o buio) penalizza già le Prove della categoria «vista»: le altre con la casella ricevono il suo −8
     const giaAccecato = new Set(r.categorie_prove?.vista ?? []);
-    const valore = luce.stato ? RV.buio_va : coperta ? 0 : gen;
-    const nomi = vista.map((x) => x.nome).filter((n) => !(luce.stato && giaAccecato.has(n)));
-    if (valore && nomi.length) out.push({ etichetta: `Luce: ${luce.nome} (richiede la vista)`, fonte: 'stato', effetto: { va_abilita: Object.fromEntries(nomi.map((n) => [n, valore])) } });
+    const valore = cieco ? RV.buio_va : coperta ? 0 : gen;
+    const nomi = vista.map((x) => x.nome).filter((n) => !(cieco && giaAccecato.has(n)));
+    const etichetta = cieco ? (luce?.stato ? `Luce: ${luce.nome} (richiede la vista)` : 'Accecato (richiede la vista)') : `Luce: ${luce.nome} (richiede la vista)`;
+    if (valore && nomi.length) out.push({ etichetta, fonte: 'stato', effetto: { va_abilita: Object.fromEntries(nomi.map((n) => [n, valore])) } });
   }
   // circostanze del Direttore (Giocatore §1.4; src/circostanze.js): una condizione per riga
   out.push(...condizioniCircostanza(sessione, dati));
@@ -201,6 +233,22 @@ export function effettoSuAbilita(effetto, abilita, dati) {
 
 const voce = (etichetta, valore, fonte) => ({ etichetta, valore, fonte });
 const somma = (voci) => voci.reduce((s, x) => s + x.valore, 0);
+
+/**
+ * Penalità degli Stati su una Prova di Abilità per un partecipante senza scheda completa (nemico dello scontro): gli stessi
+ * effetti dei PG (regole.json → stati, intensità di Ammalato, Stati implicati come Svenuto → A Terra), senza Ferite,
+ * Affaticamento o luce. { totale, voci: [{ etichetta, valore }] }.
+ * @param stati id degli Stati del partecipante; intensita { idStato: livello } (A.119)
+ */
+export function penalitaStatiAbilita(stati, intensita, nomeAbilita, dati) {
+  const ab = (dati.abilita?.abilita ?? []).find((a) => a.nome === nomeAbilita) ?? { nome: nomeAbilita };
+  const voci = condizioniAttive({ statiAttivi: Array.isArray(stati) ? stati : [], intensitaStati: intensita ?? {} }, dati)
+    .map((c) => ({ etichetta: c.etichetta, valore: effettoSuAbilita(c.effetto, ab, dati) })).filter((x) => x.valore);
+  return { totale: somma(voci), voci };
+}
+
+/** Gli Stati di un partecipante con quelli implicati (Svenuto → A Terra): per proporre «Bersaglio A Terra». */
+export const statiConImplicati = (stati, dati) => [...statiEffettivi({ statiAttivi: Array.isArray(stati) ? stati : [] }, dati)];
 /** Parte «da regole» di una scomposizione: il riferimento per colore e segno ▼/▲ nella scheda. */
 const daRegole = (voci) => somma(voci.filter((x) => x.fonte === 'regole'));
 

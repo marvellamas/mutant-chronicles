@@ -182,7 +182,8 @@ test('fasce: Passo, Corsa, Scatto con il movimento già usato; Q colorati', () =
 test('movimento dei nemici: profilo, moltiplicatori, «non_consentito» e Stati', () => {
   assert.deepEqual(movimentoNemico({ movimento: { passo: 6 } }, [], dati), { passo: 6, corsa: 12, scatto: 18 });
   assert.deepEqual(movimentoNemico({ movimento: { passo: 4, corsa: 10, scatto: 'non_consentito' } }, [], dati), { passo: 4, corsa: 10, scatto: null });
-  assert.deepEqual(movimentoNemico({ movimento: { passo: 6 } }, ['a-terra'], dati), { passo: 6, corsa: null, scatto: null });
+  // sintesi A Terra (05/10/2026): niente Corsa o Scatto, striscia 3 Q con un’AzM
+  assert.deepEqual(movimentoNemico({ movimento: { passo: 6 } }, ['a-terra'], dati), { passo: 3, corsa: null, scatto: null });
   assert.deepEqual(movimentoNemico({ movimento: { passo: 6 } }, ['rallentato'], dati), { passo: 3, corsa: null, scatto: null });
   assert.deepEqual(movimentoNemico({ movimento: { passo: 6 } }, ['immobilizzato'], dati), { passo: 0, corsa: null, scatto: null });
 });

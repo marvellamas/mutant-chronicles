@@ -12,7 +12,7 @@ import { normalizzaCircostanze, aggiungiCircostanza, variaCircostanza, commutaCa
 import { info, infoValore, etichettaMacro, pallini } from './tooltip.js';
 import { stemma, iconaPagina } from './immagini.js';
 import { classeMacrofamiglia } from '../palette.js';
-import { formulaScomposizione, visioniPersonaggio, abilitaVista } from '../condizioni.js';
+import { formulaScomposizione, visioniPersonaggio, abilitaVista, intensitaStato, statiConImplicati } from '../condizioni.js';
 import { rigaScelte } from './pannello-passi.js';
 import { colore, riempimento, condizioniAttiveAbilita } from '../interfaccia.js';
 import { descriviFerite } from '../sessione.js';
@@ -1539,6 +1539,10 @@ function condizioniModificabili(ctx, d) {
             h('span', { class: `grado-attuale${s.statiAttivi.length ? ' con-penalita' : ''}` }, s.statiAttivi.length ? `${s.statiAttivi.length} attiv${s.statiAttivi.length === 1 ? 'o' : 'i'}` : 'nessuno')),
           h('ul', { class: 'stati-compatti' }, d.stati.map((st) => {
             const attivo = s.statiAttivi.includes(st.id);
+            // sintesi Svenuto (05/10/2026): cade A Terra; lo Stato implicato si vede, non si spunta a mano
+            const implicato = !attivo && statiConImplicati(s.statiAttivi, ctx.dati).includes(st.id);
+            // A.119: Ammalato con l'intensità (1–6), che sostituisce la penalità
+            const int = attivo ? intensitaStato(st, s.intensitaStati) : null;
             // durata registrata nella plancia dello scontro (src/round-scontro.js)
             const durata = attivo ? ctx.roundScontro?.durate?.find((d) => d.stato === st.id) : null;
             // perdita di PV a ogni Round registrata nella plancia (§5.15, §5.18): valore e fonte
@@ -1546,9 +1550,16 @@ function condizioniModificabili(ctx, d) {
             return h('li', {}, h('label', { class: `stato-compatto${attivo ? ' attivo' : ''}` },
               h('input', { type: 'checkbox', checked: attivo, onchange: () => ctx.azioni.commutaStato(st.id) }),
               h('span', {}, st.nome),
+              implicato ? h('small', { class: 'nota' }, ' · da Svenuto') : null,
+              int ? h('select', { class: 'intensita-stato', 'aria-label': `Intensità di ${st.nome}`, title: int.etichetta,
+                onclick: (e) => e.preventDefault(), onchange: (e) => ctx.azioni.imposta('intensitaStati', { ...(s.intensitaStati ?? {}), [st.id]: Number(e.target.value) }) },
+                st.intensita.valori.map((v, k) => h('option', { value: k + 1, selected: k + 1 === int.livello }, st.intensita.etichetta.replace('{n}', String(k + 1)).replace('{v}', `−${-v}`)))) : null,
               perdita ? h('small', { class: 'nota motivo', title: `${st.periodico?.paragrafo ?? '§5.18'}: la perdita la applica la plancia all’Iniziativa della fonte${perdita.fonte ? ` (${perdita.fonte})` : ' (alla fine del Round)'}, una volta per Round` }, ` · ${perdita.valore ?? perdita.formula} PV per Round`) : null,
               durata ? h('small', { class: 'nota', title: `fino alla fine del Round ${durata.al}, dallo scontro` }, ` · ${durata.rimasti} Round`) : null),
-            infoValore('?', { titolo: st.nome, sottotitolo: st.durata, sezioni: [{ testo: `${st.promemoria}${st.riassunto ? ' (riassunto, non testo del manuale)' : ''}` }] }, { classe: 'info-gradi' }));
+            // sintesi approvata da Davide (05/10/2026; Ammalato: A.119), con il promemoria breve
+            infoValore('?', { titolo: st.nome, sottotitolo: st.durata, sezioni: st.sintesi?.length
+              ? [{ testo: st.promemoria }, { etichetta: 'Sintesi approvata', testo: st.sintesi.join('\n') }, { testo: st.sintesi_fonte }]
+              : [{ testo: `${st.promemoria}${st.riassunto ? ' (riassunto, non testo del manuale)' : ''}` }] }, { classe: 'info-gradi' }));
           }))),
   ];
 }

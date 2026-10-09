@@ -7,7 +7,9 @@ import { h } from './dom.js';
 import { riempimento } from '../interfaccia.js';
 import { validaNemico, formattaErrore, sorgentiNemico } from '../validate.js';
 import { nemicoVuoto, voceVuota, pulisciNemico, idDaNome, testoMovimento } from '../nemici.js';
-import { variaPvNemico, variaPmNemico, cambiaStatoNemico } from '../scontro.js';
+import { variaPvNemico, variaPmNemico, cambiaStatoNemico, cambiaIntensitaNemico } from '../scontro.js';
+import { difeseNemico } from '../nemico-attacco.js';
+import { intensitaStato } from '../condizioni.js';
 import { statoIncantesimoNemico, regimeProposto, NOMI_REGIMI } from '../nemico-lancio.js';
 import { nomeFerita } from '../danno.js';
 import { nemicoDaPg } from '../nemico-da-pg.js';
@@ -326,7 +328,8 @@ export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false,
     h('p', { class: 'plancia-valori' },
       h('span', {}, 'AR ', h('strong', { class: 'pillola-plancia pillola-ar' }, String(n.ar.totale)),
         n.ar.magica !== n.ar.totale ? h('small', { class: 'nota' }, ' · contro Etereo ', h('strong', { class: 'pillola-plancia' }, String(n.ar.magica))) : null),
-      h('span', {}, ' · Difese ', h('strong', { class: 'pillola-plancia' }, numero(n.difese))),
+      // Difese con le penalità degli Stati del nemico (sintesi del 05/10/2026, A.119)
+      (() => { const d = difeseNemico(p, dati); return h('span', { title: d.voci.length ? `Difese ${numero(d.base)} ${d.voci.map((v) => `${numero(v.valore)} ${v.etichetta}`).join(', ')}` : null }, ' · Difese ', h('strong', { class: `pillola-plancia${d.voci.length ? ' con-penalita' : ''}` }, numero(d.valore))); })(),
       h('span', {}, ' · Iniziativa ', h('strong', { class: 'pillola-plancia' }, numero(n.iniziativa)))),
     // Bestiario §3.1.1: volo e taglia Grande, con la regola nel suggerimento (data/formato_nemici.json)
     n.movimento?.volo || n.taglia === 'grande' ? h('p', { class: 'plancia-condizioni tratti-nemico' },
@@ -338,7 +341,14 @@ export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false,
     n.azioni ? h('p', { class: 'nota azioni-nemico' }, `Azioni per Round: ${testoAzioni(n.azioni)}`) : null,
     h('p', { class: 'nota' }, `Salvezze: ${salvezze} · ${testoMovimento(n, dati)}`),
     h('p', { class: 'plancia-stati' },
-      p.stati.map((id) => h('span', { class: 'etichetta stato-plancia' }, nomeStato(id), ' ',
+      p.stati.map((id) => h('span', { class: 'etichetta stato-plancia' }, (() => {
+        // A.119: Ammalato con l'intensità (1–6), che sostituisce la penalità
+        const def = stati.find((s) => s.id === id);
+        const i = intensitaStato(def, p.intensita);
+        return i ? h('select', { class: 'intensita-stato', 'aria-label': `Intensità di ${def.nome} di ${p.nome}`, title: i.etichetta,
+          onchange: (e) => modifica((x) => cambiaIntensitaNemico(x, p.id, def, Number(e.target.value))) },
+          def.intensita.valori.map((v, k) => h('option', { value: k + 1, selected: k + 1 === i.livello }, def.intensita.etichetta.replace('{n}', String(k + 1)).replace('{v}', `−${-v}`)))) : nomeStato(id);
+      })(), ' ',
         h('button', { type: 'button', class: 'btn-link', 'aria-label': `Togli ${nomeStato(id)} a ${p.nome}`, onclick: () => modifica((x) => cambiaStatoNemico(x, p.id, stati.find((s) => s.id === id), false)) }, '×'))),
       aggiungibili.length ? h('select', { class: 'aggiungi-stato', 'aria-label': `Aggiungi uno Stato a ${p.nome}`, onchange: (e) => {
         const s = stati.find((x) => x.id === e.target.value);

@@ -92,7 +92,7 @@ export const idPg = (chiave) => `pg:${chiave}`;
  * incantesimi lanciati dai nemici su di lui (scontro → effetti); partecipanti: gli altri, per i bersagli di un lancio.
  * 08/10 (tablet dei giocatori): diTurno, vero se è il turno del PG; turnoDi, il nome di chi è di turno.
  */
-export function collegamentoScontro(scontro, chiave) {
+export function collegamentoScontro(scontro, chiave, difese = null) {
   if (!scontro || scontro.stato !== 'aperto' || !chiave) return null;
   const id = idPg(chiave);
   if (!lista(scontro.partecipanti).some((p) => p.id === id)) return null;
@@ -105,7 +105,8 @@ export function collegamentoScontro(scontro, chiave) {
   const effetti = effettiSu(scontro, id);
   // ritocchi del 07/10: dei nemici anche lato, PV, Difese e AR, per il bersaglio di «Attacca!» dalla scheda
   const partecipanti = lista(scontro.partecipanti).filter((p) => p.id !== id).map((p) => ({ id: p.id, nome: p.nome, tipo: p.tipo,
-    ...(p.tipo === 'nemico' ? { lato: p.lato, pv: { attuali: p.pv?.attuali, massimo: p.pv?.massimo }, difese: p.scheda?.difese ?? null, ar: p.scheda?.ar?.totale ?? null } : {}) }));
+    // Difese del nemico con i suoi Stati (sintesi del 05/10/2026, A.119): quelle che il PG deve superare
+    ...(p.tipo === 'nemico' ? { lato: p.lato, pv: { attuali: p.pv?.attuali, massimo: p.pv?.massimo }, difese: difese ? difese(p) : p.scheda?.difese ?? null, ar: p.scheda?.ar?.totale ?? null } : {}) }));
   const t = chiDiTurno(scontro);
   return { id: scontro.id, nome: scontro.nome, round: scontro.round, durate, periodici, effetti, partecipanti, diTurno: t?.id === id, turnoDi: t?.nome ?? null };
 }

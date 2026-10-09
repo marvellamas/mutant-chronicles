@@ -16,7 +16,8 @@ import { apriColpo, specDaFormula } from './colpo.js';
 import { tira } from '../tiri.js';
 import { apriAttaccoNemico } from './attacco-nemico.js';
 import { apriLancioNemico } from './lancio-nemico.js';
-import { attacchiDi } from '../nemico-attacco.js';
+import { attacchiDi, difeseNemico } from '../nemico-attacco.js';
+import { statiConImplicati } from '../condizioni.js';
 import { testoColpo } from '../danno.js';
 import { colpoSuNemico } from '../colpo-nemico.js';
 import { perditeDovute, applicaPerdita, registraPeriodico, togliPeriodici, allineaPeriodici, periodicoDi, pvDopoPerdita } from '../periodici.js';
@@ -572,10 +573,10 @@ export function renderTavolo(radice, ctx) {
   const bersagliPer = (p, alTavolo) => {
     const pg = alTavolo.filter((r) => !r.mancante && stato.viste.get(r.file)?.completa).map((r) => {
       const v = stato.viste.get(r.file);
-      return { id: `pg:${v.chiaveCartella}`, nome: v.nome, descrizione: `PG · PV ${v.pv.attuali}/${v.pv.massimo}${v.difese ? ` · Difese ${v.difese.valore}` : ''} · AR ${v.ar?.valori[0]?.valore ?? 0}`, colpito: (proposta) => colpitoPg(v, r, proposta) };
+      return { id: `pg:${v.chiaveCartella}`, nome: v.nome, aTerra: statiConImplicati((v.stati ?? []).map((s) => s.id), ctx.dati).includes('a-terra'), descrizione: `PG · PV ${v.pv.attuali}/${v.pv.massimo}${v.difese ? ` · Difese ${v.difese.valore}` : ''} · AR ${v.ar?.valori[0]?.valore ?? 0}`, colpito: (proposta) => colpitoPg(v, r, proposta) };
     });
     const nemici = nemiciInScontro().filter((q) => q.id !== p.id).map((q) => ({
-      id: q.id, nome: q.nome, descrizione: `${q.lato} · PV ${q.pv.attuali}/${q.pv.massimo} · Difese ${q.scheda.difese} · AR ${q.scheda.ar.totale}`, colpito: (proposta) => colpitoNemico(q, proposta),
+      id: q.id, nome: q.nome, aTerra: statiConImplicati(q.stati, ctx.dati).includes('a-terra'), descrizione: `${q.lato} · PV ${q.pv.attuali}/${q.pv.massimo} · Difese ${difeseNemico(q, ctx.dati).valore} · AR ${q.scheda.ar.totale}`, colpito: (proposta) => colpitoNemico(q, proposta),
     }));
     return [...pg, ...nemici];
   };

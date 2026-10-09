@@ -102,8 +102,10 @@ test('Affaticamento e Stati: solo gli effetti numerici del §5.18, dove il manua
   assert.equal(delta(rallentato, 'Difese'), -2);
   assert.equal(delta(rallentato, 'Medicina'), 0);
 
-  // Stati senza effetti numerici: restano promemoria (Stordito e Svenuto hanno solo Movimento e Azioni)
-  assert.deepEqual(condizioniAttive(sessione({ statiAttivi: ['avvelenato', 'sanguinamento', 'stordito', 'svenuto'] }), dati), []);
+  // Stati senza effetti numerici: restano promemoria (Stordito ha solo Movimento e Azioni)
+  assert.deepEqual(condizioniAttive(sessione({ statiAttivi: ['avvelenato', 'sanguinamento', 'stordito'] }), dati), []);
+  // sintesi Svenuto (05/10/2026): cade A Terra, con i suoi effetti
+  assert.deepEqual(condizioniAttive(sessione({ statiAttivi: ['svenuto'] }), dati).map((c) => c.etichetta), ['A Terra']);
   // le condizioni si sommano
   const tutte = scheda(sessione({ ferite: 1, statiAttivi: ['a-terra', 'rallentato'] }));
   assert.equal(delta(tutte, 'Difese'), -1 - 4 - 2);

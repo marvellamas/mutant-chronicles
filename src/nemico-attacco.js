@@ -6,6 +6,7 @@
 // formato (data/formato_nemici.json): VA e danno «già fatti», senza bonus di Caratteristica aggiunti.
 import { calcolaAttaccoDistanza, calcolaAttaccoRavvicinato, dichiarazioneDistanza, dichiarazioneRavvicinato, voce } from './attacco.js';
 import { catalogo } from './equipaggiamento.js';
+import { penalitaStatiAbilita } from './condizioni.js';
 
 /** Attacchi di un partecipante dello scontro: quelli del tipo di nemico, o quello scritto a mano. */
 export function attacchiDi(p) {
@@ -79,6 +80,8 @@ export function conLuceNemico(arma, chi, luce, dati, { visione = false } = {}) {
   const L = dati.regole.illuminazione;
   const liv = L?.livelli?.find((x) => x.id === luce && !x.base);
   if (!liv) return { arma, chi };
+  // sintesi Accecato e A.116: chi è già Accecato non riceve anche la penalità di luce
+  if ((chi.sessione.statiAttivi ?? []).includes('accecato')) return { arma, chi };
   const conVa = (v, testo) => ({ ...arma, va: arma.va + v, vaEffettivo: (arma.vaEffettivo ?? arma.va) + v, scomposizione: [...(arma.scomposizione ?? []), voce(testo, v, 'stato')] });
   if (liv.stato) {
     if ((chi.sessione.statiAttivi ?? []).includes(liv.stato)) return { arma, chi };
@@ -91,11 +94,30 @@ export function conLuceNemico(arma, chi, luce, dati, { visione = false } = {}) {
   return v ? { arma: conVa(v, `Luce: ${liv.nome}`), chi } : { arma, chi };
 }
 
+/**
+ * Gli Stati del nemico nel VA del suo attacco (sintesi del 05/10/2026, A.119): le stesse penalità dei PG sull'Abilità
+ * dell'arma (dal catalogo, o Armi da mischia / Armi leggere per gli attacchi naturali), una riga per Stato.
+ */
+export function conStatiNemico(arma, p, dati) {
+  const abilita = arma.abilita ?? (arma.tipo === 'arma_distanza' ? 'Armi leggere' : 'Armi da mischia');
+  const { totale, voci } = penalitaStatiAbilita(p?.stati ?? [], p?.intensita ?? {}, abilita, dati);
+  if (!totale) return arma;
+  return { ...arma, va: arma.va + totale, vaEffettivo: (arma.vaEffettivo ?? arma.va) + totale, scomposizione: [...(arma.scomposizione ?? []), ...voci.map((x) => voce(x.etichetta, x.valore, 'stato'))] };
+}
+
+/** Difese del nemico con le penalità dei suoi Stati (A Terra −4, Rallentato −2, Ammalato…): { valore, base, voci }. */
+export function difeseNemico(p, dati) {
+  const base = p?.scheda?.difese ?? null;
+  if (!Number.isFinite(base)) return { valore: base, base, voci: [] };
+  const { totale, voci } = penalitaStatiAbilita(p?.stati ?? [], p?.intensita ?? {}, 'Difese', dati);
+  return { valore: base + totale, base, voci };
+}
+
 /** VA finale e danno dell'attacco con la dichiarazione di «Attacca!» (src/attacco.js, stesso contratto dei PG). */
 export function calcolaAttaccoNemico(p, indice, dichiarazione, dati) {
   const attacco = attacchiDi(p)[indice];
   if (!attacco) return null;
-  const arma = armaDaAttacco(attacco, `${p.id}:${indice}`, dati);
+  const arma = conStatiNemico(armaDaAttacco(attacco, `${p.id}:${indice}`, dati), p, dati);
   const chi = attaccanteDa(p, dati);
   const r = arma.tipo === 'arma_distanza'
     ? calcolaAttaccoDistanza(chi, arma, dichiarazioneDistanza(dichiarazione), dati)

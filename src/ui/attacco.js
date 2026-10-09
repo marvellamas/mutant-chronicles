@@ -361,6 +361,8 @@ function corpoDistanza(ctx, a, intestazione) {
       ], d.bersaglio.copertura, (x) => b({ copertura: x })),
       interruttore('Impegnato in Ravvicinato, protetto da un alleato o con un ostaggio', d.bersaglio.impegnato, (x) => b({ impegnato: x }), { mod: `${numero(MD.impegnato)}${conTal(MD.talenti.impegnato)}` }),
       // A.141 e A.144 (decisione 145): −2 una volta sola, senza seconda Prova
+      // sintesi A Terra (05/10/2026): a distanza −2 a chi lo attacca
+      R.a_terra ? interruttore('Bersaglio A Terra', d.bersaglio.aTerra, (x) => b({ aTerra: x }), { mod: numero(R.a_terra.bersaglio) }) : null,
       R.interposta ? interruttore('Creatura interposta sulla linea di tiro (una o più, non quella già contata come impegnato)', d.bersaglio.interposta, (x) => b({ interposta: x }), { mod: numero(R.interposta.va) }) : null,
       interruttore('Ignaro, immobilizzato o incapace di reagire', d.bersaglio.ignaro, (x) => b({ ignaro: x }), { mod: M.bruciapelo.nome.replace('Tiro a ', '') }),
       interruttore('Ti impegna in Ravvicinato', d.bersaglio.tiImpegna, (x) => b({ tiImpegna: x }), { mod: `${M.ravvicinato.nome.replace('Tiro ', '')} obbligatorio` }),

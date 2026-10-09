@@ -189,12 +189,30 @@ export function cambiaStatoNemico(s, id, stato, attivo, adesso) {
   if (attivo && (p.scheda?.immunita ?? []).includes(stato.id)) throw new Error(`${p.nome} è immune a ${stato.nome}`);
   if (attivo === p.stati.includes(stato.id)) return s;
   const stati = attivo ? [...p.stati, stato.id] : p.stati.filter((x) => x !== stato.id);
+  // spegnendolo si toglie anche la sua intensità (A.119)
+  const intensita = attivo ? p.intensita : Object.fromEntries(Object.entries(p.intensita ?? {}).filter(([k]) => k !== stato.id));
   const t = {
     ...s,
-    partecipanti: s.partecipanti.map((x) => (x.id === id ? { ...x, stati } : x)),
+    partecipanti: s.partecipanti.map((x) => (x.id === id ? { ...x, stati, ...(intensita && Object.keys(intensita).length ? { intensita } : {}), ...(!attivo && x.intensita && !Object.keys(intensita).length ? { intensita: undefined } : {}) } : x)),
     durate: attivo ? s.durate : s.durate.filter((d) => !(d.partecipante === id && d.stato === stato.id)),
   };
   return conRiga(t, `${p.nome}: ${stato.nome} ${attivo ? 'attivo' : 'tolto'}.`, adesso);
+}
+
+/**
+ * A.119: intensità di uno Stato del nemico (Ammalato 1–6); sostituisce quella di prima, non la somma. Lo Stato deve
+ * essere attivo; il registro dice la penalità nuova.
+ */
+export function cambiaIntensitaNemico(s, id, stato, livello, adesso) {
+  const p = s.partecipanti.find((x) => x.id === id);
+  if (p?.tipo !== 'nemico') throw new Error('partecipante non trovato fra i nemici');
+  const valori = stato?.intensita?.valori ?? [];
+  if (!p.stati.includes(stato.id)) throw new Error(`${p.nome} non è ${stato.nome}`);
+  if (!Number.isInteger(livello) || livello < 1 || livello > valori.length) throw new Error(`intensità da 1 a ${valori.length}`);
+  if ((p.intensita?.[stato.id] ?? 1) === livello) return s;
+  const t = { ...s, partecipanti: s.partecipanti.map((x) => (x.id === id ? { ...x, intensita: { ...(x.intensita ?? {}), [stato.id]: livello } } : x)) };
+  const v = valori[livello - 1];
+  return conRiga(t, `${p.nome}: ${stato.intensita.etichetta.replace('{n}', String(livello)).replace('{v}', `−${-v}`)}.`, adesso);
 }
 
 /** Toglie un partecipante scritto a mano o un nemico (i PG escono togliendoli dal tavolo). */
