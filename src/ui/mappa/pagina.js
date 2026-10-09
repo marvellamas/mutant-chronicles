@@ -468,6 +468,7 @@ export function renderMappa(radice, ctx) {
     const g = st.scena?.griglia;
     el.scala.textContent = g ? `${testoScala(ctx.dati)} · ${numero(g.q_px)} px per Q · ${g.colonne} × ${g.righe} Q` : testoScala(ctx.dati);
     el.stato.textContent = st.salvataggio.testo;
+    el.stato.title = st.salvataggio.testo ?? '';
   };
   const ridisegna = (livelli) => { tela.richiedi(livelli); aggiornaBarra(); programmaDiretta(); };
   // anche il livello della nebbia segue zoom e spostamenti (nel lotto 4 restava fermo); data-zoom e data-origine

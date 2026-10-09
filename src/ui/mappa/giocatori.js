@@ -262,6 +262,7 @@ export function renderGiocatori(radice, ctx) {
     // la parte fuori dalla nebbia (tutta la mappa se è tutta scoperta o tutta coperta)
     const r = rettangoloScoperto(daBase64(st.vista.nebbia.coperti), st.vista.griglia);
     st.cam = r ? adattaRettangolo(r, d.larghezza, d.altezza, V) : adatta(larghezza, altezza, d.larghezza, d.altezza, V);
+    st.misuraAdattata = { larghezza: d.larghezza, altezza: d.altezza };
     segnaCamera();
     st.toccata = false;
     tela.richiedi();
@@ -288,8 +289,16 @@ export function renderGiocatori(radice, ctx) {
   const suMisura = () => { if (!st.toccata) adattaSchermo(); };
   window.addEventListener('resize', suMisura);
   // anche quando cambia solo il riquadro (barra dell'Iniziativa, scheda tornata visibile: prima l'adattamento poteva
-  // essere calcolato con il riquadro a misura zero e la mappa restava ingrandita)
-  const osservatore = typeof ResizeObserver === 'function' ? new ResizeObserver(() => suMisura()) : null;
+  // essere calcolato con il riquadro a misura zero e la mappa restava ingrandita). Ma mai per pochi pixel (09/10, la
+  // mappa che «sobbalza»: un pannello o una riga che cambiano altezza riadattavano lo zoom a ogni azione)
+  const suRiquadro = () => {
+    if (st.toccata) return;
+    const d = tela.dimensioni();
+    const m = st.misuraAdattata;
+    const cambio = (a, b) => !b || Math.abs(a - b) / b > V.riadatta_oltre;
+    if (!m || cambio(d.larghezza, m.larghezza) || cambio(d.altezza, m.altezza)) adattaSchermo();
+  };
+  const osservatore = typeof ResizeObserver === 'function' ? new ResizeObserver(() => suRiquadro()) : null;
   osservatore?.observe(el.riquadro);
   const suTasto = (e) => {
     if (e.ctrlKey || e.metaKey || e.altKey || /^(INPUT|TEXTAREA|SELECT)$/.test(e.target?.tagName ?? '')) return;

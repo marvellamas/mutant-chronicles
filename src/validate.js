@@ -2694,6 +2694,8 @@ function validaMappa(dati, err) {
   if (!(V?.passo_tasti > 1)) err(F, 'vista.passo_tasti', 'numero maggiore di 1');
   if (!(V?.passo_rotella > 1 && V?.passo_rotella < 1.1)) err(F, 'vista.passo_rotella', 'numero fra 1 e 1,1 (si eleva al deltaY della rotella)');
   if (!(V?.margine_adatta_px >= 0)) err(F, 'vista.margine_adatta_px', 'numero da 0 in su');
+  // 09/10: la vista giocatori si riadatta da sola solo per cambi del riquadro oltre questa frazione
+  if (!(V?.riadatta_oltre > 0 && V.riadatta_oltre < 1)) err(F, 'vista.riadatta_oltre', 'frazione fra 0 e 1 (per esempio 0,15)');
   if (!positivo(V?.griglia_px_schermo_minimi)) err(F, 'vista.griglia_px_schermo_minimi', 'numero positivo');
   // ritocchi del 06/10: area raggiungibile leggera (src/ui/mappa/disegno-aree.js)
   const A = V?.area;

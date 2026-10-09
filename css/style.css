@@ -2335,3 +2335,18 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .plancia-gruppo a.btn { text-decoration: none; }
 .plancia-gruppo.gruppo-sessione { margin-left: auto; }
 @media (max-width: 40rem) { .plancia-gruppo { flex-wrap: wrap; } .plancia-gruppo.gruppo-sessione { margin-left: 0; } }
+
+/* 09/10: la mappa che «sobbalza». Le barre attorno alla mappa non cambiano altezza a ogni azione:
+   - pagina del master: la scritta di stato («Salvataggio…», «Salvato alle 12:22») ha una larghezza fissa, così il gruppo
+     di destra non va a capo e non accorcia la mappa (il testo intero è nel suggerimento);
+   - vista giocatori: la barra in alto su una riga sola, i testi lunghi con i puntini; sul tablet in verticale il
+     pannello del PG ha un'altezza fissa e scorre dentro; il posto della barra dell'Iniziativa tiene la sua altezza. */
+.mappa-gruppo.gruppo-suoni .mappa-stato { width: 8.5rem; max-width: none; flex: none; }
+.giocatori-barra { flex-wrap: nowrap; min-width: 0; }
+.giocatori-barra > * { flex: none; }
+.giocatori-barra > .giocatori-titolo, .giocatori-barra > .giocatori-turno, .giocatori-barra > .giocatori-stato { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.giocatori-corpo > .tablet-pannello:not([hidden]) { flex: 0 0 auto; height: 14rem; overflow-y: auto; }
+@media (orientation: landscape) and (min-width: 50rem) {
+  .giocatori-corpo > .tablet-pannello:not([hidden]) { flex: 0 0 18rem; height: auto; }
+}
+.mappa-iniziativa-posto:not([hidden]) { min-height: 3.5rem; }

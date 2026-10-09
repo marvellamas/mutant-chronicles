@@ -62,6 +62,8 @@
     }
   },
   "vista": {
+    "riadatta_oltre": 0.15,
+    "_nota_riadatta": "Vista giocatori (09/10, la mappa che «sobbalzava»): finché nessuno ha toccato la vista, «Adatta allo schermo» si rifà da solo all’apertura, quando cambia la finestra o quando il riquadro della mappa cambia di più di questa frazione (0,15 = 15 %), mai per pochi pixel.",
     "_nota": "§4 e §12 della specifica: zoom con la rotella verso il puntatore e con + e −; «Adatta allo schermo» lascia un margine. La griglia non si disegna sotto griglia_px_schermo_minimi pixel per Q sullo schermo (troppo fitta per servire).",
     "zoom_min": 0.05,
     "zoom_max": 8,
