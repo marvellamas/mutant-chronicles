@@ -1059,46 +1059,46 @@ Fonte: E&L del 06/10/2026, 17:23 UTC, blocco «Risposte approvate — regole tec
     rapporto, nel branch della mappa. **Applicata** il 07/10 (branch `battlemap`): `data/mappa.json` → movimento.divisibili
     ["passo"]; il caso «Corsa dopo un Passo cominciato» è la A.136.
 
-**Sospese** (E&L del 06/10, «Quesiti sospesi»): A.109 (Davide chiede l'elenco con il nome dell'incantesimo e
+**Sospese** (E&L del 06/10, «Quesiti sospesi»; risposte dell'08/10 per A.109, A.111, A.112 e A.122: decisioni 151–154): A.109 (Davide chiede l'elenco con il nome dell'incantesimo e
 dell'aspetto: nel pacchetto del 07/10), A.111 (solo Pablo Zaion), A.112, A.113, A.115, A.122 («Aiuto-master»), A.125
 (vecchie etichette delle luci; i veicoli hanno la decisione 136), A.126.
 
 **Nuova** (07/10/2026):
 
-- **A.135 — Ricarica dei fucili a pallini semiautomatici e automatici** (Armamenti 0.59, §7.7). La famiglia distingue i
+- (risposta dell'08/10: **decisione 139**) **A.135 — Ricarica dei fucili a pallini semiautomatici e automatici** (Armamenti 0.59, §7.7). La famiglia distingue i
   modelli a pompa (solo Colpo Singolo) dai semiautomatici (HD14M, SA SG2001, Airbrush) e dagli automatici (Mandible),
   ma non dice come si ricaricano: una cartuccia per operazione come i fucili a pompa, o un caricatore che si sostituisce?
   Provvisorio: come prima (HD14M una cartuccia per operazione, SA SG2001 a caricatore per la A.37, Mandible e Airbrush a
   caricatore); `TODO(Davide)` in `munizioni.json` → `ricarica.inserimento_singolo`.
-- **A.136 — Corsa o Scatto dopo un Passo già cominciato** (07/10/2026, lotto R6 della mappa). La A.129 dice che solo il
+- (risposta dell'08/10: **decisione 140**) **A.136 — Corsa o Scatto dopo un Passo già cominciato** (07/10/2026, lotto R6 della mappa). La A.129 dice che solo il
   Passo si divide e che Corsa e Scatto sono un blocco unico da completare prima delle AzP, tutti al costo dell'unica AzM.
   Un personaggio che ha già percorso una parte del Passo (per esempio 2 Q, prima di ogni AzP) può trasformare l'AzM in
   Corsa o Scatto, con i Q già fatti contati nel blocco (2 + 10 = 12)? Provvisorio: no, Corsa e Scatto partono solo da
   fermi; il master annulla il movimento e lo rifà come Corsa, o usa «Libero» (`data/mappa.json` →
   movimento.blocco_dopo_passo false, con il `TODO(Davide)`).
-- **A.137 — Raggio di un'Area sulla griglia** (07/10/2026, template ad area della mappa, fase 2). Magia, «Gittate e
+- (risposta dell'08/10: **decisione 141**) **A.137 — Raggio di un'Area sulla griglia** (07/10/2026, template ad area della mappa, fase 2). Magia, «Gittate e
   geometria»: il Raggio è la «distanza dal centro al limite» e «un Q rientra nell'Area se è incluso per almeno metà»;
   il Giocatore (§5.10, Scarto) e la A.124 contano la diagonale come 1 Q. Il raggio si misura a quadretti (raggio 2 Q =
   quadrato di 5 × 5 Q, granata con RS 1 Q = il Q e gli otto attorno) o è un cerchio vero, con i Q coperti per metà?
   Provvisorio: a quadretti, anche la lunghezza di coni e linee in diagonale (`data/mappa.json` →
   template.metrica_raggio «quadretti»; «euclidea» per il cerchio vero).
-- **A.138 — Forma del Cono** (07/10/2026, template ad area). Il Cono è «lunghezza × larghezza finale, con apertura
+- (risposta dell'08/10: **decisione 142**) **A.138 — Forma del Cono** (07/10/2026, template ad area). Il Cono è «lunghezza × larghezza finale, con apertura
   progressiva» e «parte dal bordo dello spazio del Taumaturgo» (Cono Elementale, da 3 × 2 a 18 × 9 Q), ma non dice quanto
   è largo all'inizio né come si contano le larghezze finali pari (3 × 2, 12 × 6) quando il cono è dritto su una fila.
   Provvisorio: largo 1 Q al bordo del lanciatore, poi si allarga in modo uniforme; con la larghezza pari i Q di bordo
   coperti per meno di metà restano fuori (`data/mappa.json` → template.cono_larghezza_iniziale 1).
-- **A.139 — Porta «adiacente» in diagonale** (07/10/2026, porte della mappa, fase 2). La A.125 chiede di essere
+- (risposta dell'08/10: **decisione 143**) **A.139 — Porta «adiacente» in diagonale** (07/10/2026, porte della mappa, fase 2). La A.125 chiede di essere
   adiacenti alla porta per aprirla o chiuderla (1 AzP). Basta essere in diagonale rispetto al Q della porta? Provvisorio:
   sì, come la portata di 1 Q (`data/mappa.json` → porte, `TODO(Davide)`). La mano libera l'app non la controlla.
-- **A.140 — Copertura sulla griglia** (07/10/2026, linea di tiro della mappa, fase 2). Il §5.8 dà gli effetti della
+- (risposta dell'08/10: **decisione 144**) **A.140 — Copertura sulla griglia** (07/10/2026, linea di tiro della mappa, fase 2). Il §5.8 dà gli effetti della
   Copertura (Leggera −2, Media −4, Totale) ma non dice come si stabilisce dalla posizione sulla mappa. Provvisorio «dal
   centro» (punto di partenza deciso da Marcello il 07/10, decisione 137): dal centro del Q di chi tira cinque linee verso
   i quattro angoli e il centro del bersaglio; linee bloccate da muri o porte chiuse 0 = nessuna, 1–2 = Leggera,
   3–4 = Media, 5 = Totale (`data/mappa.json` → visuale.copertura_linee). Va bene la tabella?
-- **A.141 — Token fra chi tira e il bersaglio** (07/10/2026). Danno Copertura? Provvisorio: no, il §5.8 parla di
+- (risposta dell'08/10: **decisione 145**) **A.141 — Token fra chi tira e il bersaglio** (07/10/2026). Danno Copertura? Provvisorio: no, il §5.8 parla di
   ostacoli; vale il «bersaglio impegnato o protetto» del §5.10 (−4 VA e seconda Prova), che dal 07/10 la linea di tiro
   propone in «Attacca!» (`data/mappa.json` → visuale.token_in_mezzo «protetto»).
-- **A.144 — Creature in mezzo: Copertura o «bersaglio protetto»?** (07/10/2026, richiesta di Marcello di contare i token
+- (risposta dell'08/10: **decisione 145**) **A.144 — Creature in mezzo: Copertura o «bersaglio protetto»?** (07/10/2026, richiesta di Marcello di contare i token
   come ostacoli). Il Giocatore §5.10 dà per chi spara «contro un nemico impegnato in Ravvicinato, protetto da un alleato o
   che usa un ostaggio» −4 VA e una seconda Prova a −4 (con successo manca tutti, altrimenti colpisce il bersaglio
   secondario); il §5.8 dà la Copertura degli ostacoli. Una creatura fra chi tira e il bersaglio (anche un alleato di chi
@@ -1106,10 +1106,10 @@ dell'aspetto: nel pacchetto del 07/10), A.111 (solo Pablo Zaion), A.112, A.113, 
   o vale solo il §5.10? Provvisorio: solo §5.10, come dice il manuale; l'app ha anche il valore «copertura» (i token come
   ostacoli, proposta di Marcello), da scegliere in `data/mappa.json` → visuale.token_in_mezzo. Non contano i token a 0 PV o
   A Terra; per i giocatori nemmeno i nascosti.
-- **A.142 — Fin dove vedono i PG** (07/10/2026, nebbia automatica). Con luce sufficiente, entro quanti Q la nebbia si
+- (risposta dell'08/10: **decisione 146**) **A.142 — Fin dove vedono i PG** (07/10/2026, nebbia automatica). Con luce sufficiente, entro quanti Q la nebbia si
   apre da sola? Provvisorio: 30 Q (45 m), contati a quadretti; con le luci (lotto 4, decisione 138) Penombra 6 Q, Luce
   scarsa 3 Q, Buio solo il Q accanto.
-- **A.143 — Visione notturna e nebbia automatica** (07/10/2026, luci della mappa, fase 2, lotto 4). La Visione notturna
+- (risposta dell'08/10: **decisione 147**) **A.143 — Visione notturna e nebbia automatica** (07/10/2026, luci della mappa, fase 2, lotto 4). La Visione notturna
   (80 Q), la visione termica (40 Q) e la Vista Felina (20 Q) eliminano le penalità di Penombra e Luce molto scarsa entro
   la portata (A.106; `regole.json` → illuminazione.visione). Sulla mappa devono anche allargare la nebbia automatica
   per il PG che le ha (per esempio Penombra e Luce scarsa come Luce entro la portata)? Provvisorio: no, la nebbia usa
@@ -1150,6 +1150,95 @@ Marcello»: Davide può rivederle (nel pacchetto per il Doc vanno fra le Risolte
     vecchie etichette numeriche delle luci dell'app di Davide non si usano: la parte aperta della A.125 è **superata**.
     **Applicata** il 07/10 (branch `battlemap`, fase 2, lotto 4): `src/mappa/luce.js`, `data/mappa.json` → luci;
     domanda nuova A.143 (visione notturna e nebbia).
+
+## 9 ottobre 2026 — Aggiornamento cumulativo di Davide (E&L e «per-davide.md» dell'08/10 sera)
+
+Fonte: E&L dell'08/10/2026, 21:10 UTC, blocco «Aggiornamento cumulativo — risposte tecniche approvate» (testo in
+`docs/risposte-master-2026-09-26.md`), riportato tale e quale in coda alla sezione 7 del Doc «per-davide.md» (21:10).
+«Approvato» non significa «già implementato»: lo stato di ogni decisione è in fondo alla voce. Lotti e stime in
+`docs/diff-davide-2026-10-08.md`.
+
+139. **Ricarica delle armi a caricamento diretto e carichini** (A.135). Ogni arma caricata direttamente, con tamburo o
+    serbatoio interno (anche revolver e doppiette), inserisce fino a 2 cartucce in 1 AzP, fino a 4 con Ricarica
+    Migliorata, senza superare la capacità. **Supera** il tamburo completo in 1 AzP (risposta 19 del 29/09) e le 3
+    cartucce di Ricarica Migliorata. Carichini rapidi riutilizzabili: Ricarica per Tamburo, 6 colpi, 100 cr a vuoto;
+    Ricarica per Serbatoio, 6 colpi, 150 cr a vuoto; trasferiscono fino a 6 colpi in 1 AzP (Ricarica Migliorata non lo
+    aumenta), i colpi non trasferiti restano nel carichino; prepararli costa 1 minuto ogni 50 colpi o frazione. Cambio di
+    caricatore o cella: 1 AzP. Ricarica Rapida: una sola ricarica gratuita per Round, alla propria Iniziativa (2, 4 con
+    Ricarica Migliorata, fino a 6 col carichino, o un cambio di caricatore/cella). Modelli: HD14M a serbatoio interno; SA
+    SG2001, Airbrush e Mandible a caricatore. Peso, Qualità, Integrità e Reperibilità dei carichini non sono definiti:
+    domanda nuova A.151. **Da implementare** (lotto «armi» di `docs/diff-davide-2026-10-08.md`).
+140. **Corsa o Scatto dopo un Passo già cominciato e Prova facoltativa di Atletica** (A.136). Prima di ogni AzP, a
+    movimento in corso, il Passo si trasforma in Corsa o Scatto: i Q fatti si sottraggono al nuovo totale, una sola AzM,
+    il resto in un blocco prima delle AzP. **Cambia** il provvisorio (no). Prova di Atletica facoltativa, dichiarata prima
+    di tirare (0 Corsa, −2 Scatto su terra); i Q non cambiano con l'esito (12 e 18). Penalità personale / agli attacchi
+    contro, fino alla propria Iniziativa successiva: senza Prova Corsa −2/−2, Scatto −6/−4; Magistrale 0/−6 e −2/−8;
+    Successo 0/−4 e −4/−6; Fallimento −4/0 e −8/−2; Maldestro −6/0 e −10/0. Superati gli aumenti o riduzioni dei Q per
+    esito e il +4/−4 alla Prova successiva. **Lotto mappa:** `data/mappa.json` → movimento.blocco_dopo_passo. **Da
+    implementare** la tabella della Prova facoltativa in «Attacca!» (lotto «combattimento»).
+141. **Aree con raggio in quadretti** (A.137). Diagonale 1 Q: raggio 1 = 3 × 3 Q, 2 = 5 × 5, 3 = 7 × 7; non cambia i
+    coni. Conferma il provvisorio (`data/mappa.json` → template.metrica_raggio «quadretti»). **Lotto mappa** (via il
+    `TODO(Davide)`).
+142. **Cono** (A.138). Vertice al centro del Q di chi usa il template; si sceglie direzione, distanza e ampiezza finale;
+    si allarga in modo lineare da zero all'ampiezza finale; un Q è colpito se coperto per almeno metà; il Q d'origine è
+    escluso; niente file a larghezza prefissata. **Cambia** il provvisorio (largo 1 Q al bordo del lanciatore). Resta
+    da raccordare l'origine delle creature grandi (con le taglie, A.126 e A.133). **Lotto mappa.**
+143. **Porte** (A.139). Anche dalla diagonale, se la porta è raggiungibile dal proprio lato; 1 AzP e una mano libera;
+    non attraverso una parete; attraversarla è movimento a parte; serrature prima. Conferma il provvisorio. **Lotto
+    mappa** (via il `TODO(Davide)`).
+144. **Copertura** (A.140). Cinque linee dal centro del Q di chi attacca al centro e ai quattro angoli del bersaglio: 0
+    nessuna, 1–2 Leggera −2, 3–4 Media −4, 5 Totale; il solo contatto con un angolo non blocca; il Direttore corregge per
+    altezza, postura e situazione. Conferma la decisione 137. **Rinviata** la tabella automatica per tipo e altezza
+    dell'ostacolo (anche se blocca una sola linea, con la postura). **Lotto mappa** (via il `TODO(Davide)`).
+145. **Bersaglio ingaggiato e creature interposte** (A.141, A.144). Il bersaglio ingaggiato resta al §5.10 (−4 e seconda
+    Prova). Una creatura che interferisce con la linea di tiro dà solo −2, cumulabile con le altre penalità, una volta
+    sola qualunque sia il numero, senza seconda Prova; la creatura già contata nell'ingaggio non aggiunge il −2, un'altra
+    sì. Ostaggi invariati. **Cambia** il provvisorio della mappa («bersaglio protetto», −4 e seconda Prova, per ogni
+    token in mezzo) e la proposta di Marcello del 07/10 (i token come ostacoli della Copertura). **Lotto mappa.**
+146. **Illuminazione e visibilità ordinaria** (A.142). Piena luce: nessun limite fisso in Q; Penombra 10 Q; Luce scarsa
+    5 Q; Buio completo nessun Q (resta visibile la propria pedina, nessun Q adiacente). Conta la luce della zona
+    osservata. **Cambia** il provvisorio (30 / 6 / 3 / 1, decisione 138). **Lotto mappa.**
+147. **Sensi speciali** (A.143). Visione notturna 80 Q (penombra e luce scarsa, non al buio); visione termica 40 Q (anche
+    al buio naturale, solo contrasto termico); Vista Felina 20 Q nel buio naturale (forme, non colori). Quando attivi
+    rivelano la mappa entro la portata; pareti e porte chiuse li bloccano; non accorciano la vista in piena luce.
+    **Cambia** il provvisorio (la nebbia usa solo la luce). **Lotto mappa.**
+148. **Volo e Copertura** (A.148). La Copertura dipende dalla traiettoria reale (quote e altezza degli ostacoli);
+    Leggera, Media e Totale valgono anche in volo quando proteggono davvero; una creatura interposta dà −2 solo se
+    interferisce davvero; il volo da solo non dà un −2 universale. Finché non ci sono le altezze il Direttore conferma o
+    corregge; «in volo» non deve spegnere tutte le Coperture. **Cambia** l'indicazione di Marcello dell'08/10 (in volo
+    niente Leggera e Media, niente token in mezzo). **Lotto mappa.**
+149. **Distanza verticale** (A.149). Distanza = maggiore fra orizzontale e differenza di quota, diagonale 1 Q; salire da
+    dentro a fuori portata può provocare un Attacco di Opportunità, chi era già fuori no. Conferma il provvisorio
+    (`data/mappa.json` → volo.zoc_quota). **Lotto mappa** (via il `TODO(Davide)`).
+150. **Visibilità dei bersagli in volo** (A.150). Stesse regole dei bersagli a terra (luce, sensi, occlusione,
+    occultamento); il volo non rivela; il Direttore può rivelare a mano. **Cambia** l'indicazione di Marcello (in volo
+    visibile oltre la nebbia). **Lotto mappa.**
+151. **Aiuto-master** (A.122). Ruolo facoltativo, assegnato e revocato dal Direttore, senza pagina separata: muove il PG
+    del turno attivo entro i limiti ordinari di movimento e ostacoli; vede la vista giocatori, senza segreti; non
+    modifica schede, risorse, Iniziativa o scena; gli spostamenti eccezionali restano al Direttore. **Da implementare**
+    (lotto «altro»: tablet e permessi del server).
+152. **Pablo Zaion** (A.111). Pablo non ha mai avuto Interfacce neurali: la perdita di 2 UMN del file viene dalle prove
+    dell'app e va eliminata, ricalcolando l'Umanità e conservando una nota; niente rimozioni o recuperi fittizi. Resta la
+    regola dei recuperi pregressi (decisione 123). **Da fare sulla copia del file di Pablo** (cartelle reali e PG reali
+    intoccabili: a cura di Marcello o di Davide); il `TODO(Davide)` di `regole.json` perde il caso di Pablo.
+153. **Riserve di Lucas e Dimitri** (A.112). Confermati i valori dei file: Guanti 10, Pietra della Vigilanza 10, due
+    Batterie Matrice da 10, quattro Schegge da 5; artefatti carichi, nessuna correzione. **Nessuna azione.**
+154. **Anticipazione: regola comune e 32 aspetti** (A.109). Un solo aspetto per lancio, di un solo gradino; si parte da
+    una versione accessibile; PM base raddoppiati; Prova di Potere obbligatoria, di una categoria più difficile (salvo i
+    Talenti); il resto invariato; mai due aspetti insieme. Poi i 32 punti con i gradini (elementi +1 fino a 3; Mod. PS di
+    Armatura Elementale e Devastazione fino a −6; Catene di Forza 0 → −2 → −4 → −6 su tutte e tre le PS; e gli altri:
+    testo completo nell'E&L). **Da implementare** (lotto «magia»: i 32 `TODO(Davide)` A.109 di `incantesimi.json`).
+155. **Conferme e rinvii.** Confermate A.20 (Chroma bianco solo a chi ha accesso alla magia) e A.35 (eccedenza degli
+    armamenti ceduti restituita in crediti), già approvate. **Rinviate:** A.113, A.115, parte dei veicoli di A.125,
+    A.126, A.133, A.145–A.147, la tabella per tipo e altezza degli ostacoli di A.140; malattie e cure al Manuale del
+    Direttore. I loro `TODO(Davide)` restano.
+
+**Nuova** (09/10/2026):
+
+- **A.151 — Dati dei carichini** (A.135). La risposta definisce Ricarica per Tamburo (6 colpi, 100 cr a vuoto) e
+  Ricarica per Serbatoio (6 colpi, 150 cr a vuoto), ma dice che «Peso, Qualità, Integrità e Reperibilità dei nuovi
+  accessori non sono stati definiti». Quali sono? Provvisorio per il lotto «armi»: nel catalogo con quei valori a `null` e il
+  `TODO(Davide)`; carico e PI non li contano.
 
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 
@@ -1198,18 +1287,18 @@ questi punti, con un `TODO(Davide)` dove serve; nel pacchetto per il Doc «per-d
 
 ## Domande aperte sui token in volo (08/10/2026, fase 2 della mappa)
 
-- **A.148 — Copertura verso e da un token in volo.** Il Giocatore §5.8 dice che «La Copertura è direzionale» e che vale
+- (risposta dell'08/10: **decisione 148**) **A.148 — Copertura verso e da un token in volo.** Il Giocatore §5.8 dice che «La Copertura è direzionale» e che vale
   «quando l’ostacolo protegge realmente dalla direzione dell’attacco», senza parlare dell’altezza; Mostri §4.5: «Essere in
   volo non impone un nuovo −2 universale a chi attacca». Indicazione di Marcello: un nemico in volo «non ha coperture».
   Provvisorio: verso e da un token in volo non contano i token in mezzo (§5.10, bersaglio protetto) né la Copertura
   Leggera e Media; un muro pieno blocca comunque (Copertura Totale). Va bene, o conta l’altezza rispetto all’ostacolo?
   (`mappa.json` → volo.linea_di_tiro, `TODO(Davide)`.)
-- **A.149 — La quota conta per la portata delle armi ravvicinate?** Il Giocatore §5.2.3 dice che «Uscire
+- (risposta dell'08/10: **decisione 149**) **A.149 — La quota conta per la portata delle armi ravvicinate?** Il Giocatore §5.2.3 dice che «Uscire
   volontariamente dalla portata di un avversario, anche salendo, può provocare Attacchi di Opportunità», ma non come si
   misura la portata in altezza. Provvisorio: ZoC e Attacchi di Opportunità come a terra, con la distanza pari alla maggiore fra quella
   sulla griglia e la differenza di quota (diagonale 1 Q, A.124): chi vola più in alto della portata non è nella ZoC.
   (`mappa.json` → volo.zoc_quota.)
-- **A.150 — Un token in volo si vede da lontano?** Indicazione di Marcello: «un nemico in volo in generale è sempre
+- (risposta dell'08/10: **decisione 150**) **A.150 — Un token in volo si vede da lontano?** Indicazione di Marcello: «un nemico in volo in generale è sempre
   visibile». Provvisorio: un token in volo non nascosto dal master si vede nella vista giocatori anche sotto la nebbia,
   manuale o automatica, se dal centro di almeno un PG in mappa c’è una linea di vista senza muri né porte chiuse; il
   master può sempre nasconderlo. Vale anche al buio (Accecato e luce non cambiano la mappa)? (`mappa.json` →

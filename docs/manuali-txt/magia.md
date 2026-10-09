@@ -86,6 +86,8 @@ Sezioni e pagine di consultazione
 
 [**25 Rigenerazione: rituale e artefatti	165**](#25-rigenerazione:-rituale-e-artefatti)
 
+[**27 Artefatti consumabili**](#27-artefatti-consumabili)
+
 # **1 Motore del lancio e accesso alla magia**
 
 Potere è l’Abilità usata per lanciare gli incantesimi e si basa su Saggezza. Le famiglie magiche non costituiscono Abilità separate. Per la risoluzione delle Prove e il calcolo del VA, consultare il Manuale del Giocatore, §§1.2 e 4.2; per l’Abilità Potere, §4.4, «Mistiche».
@@ -5288,7 +5290,7 @@ Si parte dagli incantesimi esistenti: ciascuna proprietà riproduce una versione
 
 Grado delle proprietà \= Grado della proprietà più elevata \+ 1 per ogni ulteriore proprietà. Una proprietà permanente sul supporto e una funzione separatamente attivabile, anche derivate dallo stesso incantesimo, contano come due proprietà. Il Grado finale dell’artefatto è il maggiore fra Grado delle proprietà e Grado della riserva. Le configurazioni superiori al VI richiedono una ricetta eccezionale: non vengono ricondotte automaticamente al VI.
 
-SnT indica il costo di Sintonizzazione ed è distinta da SIN, Sistema di Interfaccia Neurale. Un manufatto con sole proprietà passive ha SnT 0\. Se possiede almeno una proprietà attiva, la SnT è pari al Grado finale, comprendendo l’eventuale riserva. Una batteria autonoma ha SnT pari al proprio Grado. Le proprietà passive di un artefatto misto restano utilizzabili secondo i propri requisiti anche senza sintonizzazione.
+SnT indica il costo di Sintonizzazione ed è distinta da SIN, Sistema di Interfaccia Neurale. Un manufatto con sole proprietà passive ha SnT 0\. Se possiede almeno una proprietà attiva, la SnT è pari al Grado finale, comprendendo l’eventuale riserva. Fanno eccezione gli Artefatti consumabili monouso del §27, che hanno SnT 0\. Una batteria autonoma ha SnT pari al proprio Grado. Le proprietà passive di un artefatto misto restano utilizzabili secondo i propri requisiti anche senza sintonizzazione.
 
 Una proprietà ad attivazione conserva effetti, PM, tempo di esecuzione, gittata, bersagli, durata, Concentrazione, Prove Salvezza, cumuli e limitazioni della versione infusa. Dopo la Sintonizzazione l’attivazione è automatica e non richiede Potere né Componenti, salvo un’eccezione espressamente prevista dalla specifica proprietà. Restano le eventuali Prove per colpire, Difese e Salvezze. L’utilizzatore non deve conoscere l’incantesimo. Per Rigenerazione infusa si applica il §25.4.
 
@@ -5362,7 +5364,7 @@ Per una batteria mistica autonoma i reagenti costano invece 50 cr per Grado. Res
 
 Successo: infusione completata. Successo Magistrale: si consumano metà dei PM totali e metà dei reagenti, arrotondando per eccesso. Fallimento: PM e reagenti sono consumati; il supporto può essere riutilizzato. Fallimento Maldestro: stesso consumo, inoltre il supporto perde 1 PI e deve essere riparato prima di ritentare. Se la procedura viene interrotta prima della Prova finale, si consumano i reagenti ma non i PM finali; il tentativo va ricominciato.
 
-La riserva di un manufatto appena creato è vuota e deve essere caricata separatamente. Una batteria acquistata è normalmente carica; per gli oggetti trovati il Direttore stabilisce i PM presenti.
+La riserva di un manufatto appena creato è vuota e deve essere caricata separatamente. Fanno eccezione le Cariche sigillate dei Consumabili (§27), alimentate durante la creazione. Una batteria acquistata è normalmente carica; per gli oggetti trovati il Direttore stabilisce i PM presenti.
 
 ## **24.6 Officiante e Canali**
 
@@ -5413,7 +5415,7 @@ Aggiungere o potenziare una proprietà, oppure aumentare la capacità della rise
 
 ## **24.9 Scheda del manufatto**
 
-La scheda riporta nome e natura del supporto; progetto e sua qualità; proprietà con riferimento all’incantesimo e versione; impiego permanente o attivo; Grado delle proprietà, Grado della riserva e Grado finale; SnT; Chroma, capacità e PM presenti; tipo di riserva Batteria o Cariche e alimentazione Esclusiva o Universale di ogni proprietà; eventuale Matrice d’origine; tempi, costi e condizioni d’attivazione; effetti e limitazioni; valore fisico rilevante per le riparazioni; PI e componenti da preservare. I dati derivano dalle scelte del progetto e dalle normali schede di incantesimi e oggetti.
+La scheda riporta nome e natura del supporto; funzionamento Riutilizzabile o Consumabile; progetto e sua qualità; proprietà con riferimento all’incantesimo e versione; impiego permanente o attivo; Grado delle proprietà, Grado della riserva e Grado finale; SnT; Chroma, capacità e PM presenti; tipo di riserva Batteria o Cariche e alimentazione Esclusiva o Universale di ogni proprietà; eventuale Matrice d’origine; tempi, costi e condizioni d’attivazione; effetti e limitazioni; valore fisico rilevante per le riparazioni; PI e componenti da preservare. I dati derivano dalle scelte del progetto e dalle normali schede di incantesimi e oggetti.
 
 Esempio: una spada con Arma Mistica 3 permanente riceve danno Magico, \+1 VA agli attacchi e \+1 danno come un’unica proprietà di Grado I, con SnT 0 e nessuna riserva. Con supporto e progetto già disponibili, l’adattamento esemplificativo di 200 cr e i reagenti di 250 cr danno 450 cr di creazione; sviluppare il progetto aggiunge 100 cr. Se si aggiunge una funzione separata di Cura Ferite 3, il Grado delle proprietà diventa II; una riserva Verde da 5 PM è di Grado I e il manufatto finale ha Grado II e SnT 2\.
 
@@ -5482,7 +5484,7 @@ La capacità complessiva dipende dai Gradi complessivi del personaggio ed è ugu
 | V | 12 | 14 |
 | VI | 13 | 15 |
 
-Il costo SnT del singolo oggetto non cambia: è pari al suo Grado quando occorre sintonizzarsi per usarne le funzioni attive; un oggetto soltanto passivo ha SnT 0\. Le proprietà passive restano utilizzabili senza sintonizzazione anche negli oggetti che possiedono proprietà attive. La somma degli SnT degli oggetti sintonizzati non può superare la capacità effettiva. Non occorre possedere il medesimo Grado dell’oggetto: anche un personaggio di basso Grado può usare un Artefatto potente se ne soddisfa i requisiti e dispone di sufficiente capacità.
+Il costo SnT del singolo oggetto non cambia: è pari al suo Grado quando occorre sintonizzarsi per usarne le funzioni attive; un oggetto soltanto passivo ha SnT 0\. Anche gli Artefatti consumabili monouso del §27 hanno SnT 0 e non richiedono sintonizzazione. Le proprietà passive restano utilizzabili senza sintonizzazione anche negli oggetti che possiedono proprietà attive. La somma degli SnT degli oggetti sintonizzati non può superare la capacità effettiva. Non occorre possedere il medesimo Grado dell’oggetto: anche un personaggio di basso Grado può usare un Artefatto potente se ne soddisfa i requisiti e dispone di sufficiente capacità.
 
 La sintonizzazione richiede un minuto a contatto e una Prova di Artefatti; Architetto TecnoMistico rende automatica la Prova, non elimina il tempo né il limite. Una Batteria Matrice Rossa da 10 PM (SnT 3), la Pietra della Vigilanza (SnT 3\) e i Guanti da Combattimento Mistico (SnT 2\) occupano insieme 8 punti: sono utilizzabili contemporaneamente al I Grado, in assenza di riduzioni della capacità.
 
@@ -5504,7 +5506,7 @@ Sia Batterie sia Cariche si misurano in PM. Si registra sempre una sola coppia P
 
 Universale descrive l’accesso alle fonti, non un cambiamento di colore: Rosso per energia Fisica, Blu per Mentale, Verde per Spirituale; Bianco e PM personali sono universali. In un singolo lancio o attivazione si usa al massimo una riserva esterna, eventualmente integrata con PM personali. La riserva dell’Artefatto è esterna rispetto al personaggio: non può essere sommata a un’altra Batteria nello stesso pagamento.
 
-L’Artefatto resta necessario e deve essere sintonizzato per la sua proprietà attiva. L’attivazione ordinaria è automatica e non richiede conoscenza dell’Incantesimo né una Prova di Potere. Restano i requisiti della fonte: una Batteria esterna deve essere sintonizzata e una Scheggia instabile richiede la Prova di estrazione. Dopo un’estrazione riuscita si attiva normalmente la proprietà; non si aggiunge una Prova di lancio all’attivazione automatica dell’Artefatto.
+L’Artefatto resta necessario e deve essere sintonizzato per la sua proprietà attiva, salvo i Consumabili monouso del §27. L’attivazione ordinaria è automatica e non richiede conoscenza dell’Incantesimo né una Prova di Potere. Restano i requisiti della fonte: una Batteria esterna deve essere sintonizzata e una Scheggia instabile richiede la Prova di estrazione. Dopo un’estrazione riuscita si attiva normalmente la proprietà; non si aggiunge una Prova di lancio all’attivazione automatica dell’Artefatto.
 
 Le schede anteriori a questa distinzione che prevedono una riserva utilizzabile soltanto dall’oggetto conservano quel funzionamento: si registrano come Cariche e le relative proprietà come Esclusive, finché una scheda specifica dispone diversamente. La Pietra della Vigilanza è espressamente una Batteria con proprietà Universali; i Guanti usano Cariche e una proprietà Esclusiva.
 
@@ -5628,4 +5630,92 @@ Il gruppo possiede due Batterie Matrice Rosse da 10 PM, create con le schegge de
 Il gruppo possiede inoltre quattro Schegge instabili Verdi da 5 PM ciascuna: SnT 0 e capacità complessiva 20 PM, distribuita in quattro oggetti separati. Il totale non permette di prelevare 20 PM da una singola fonte. I PM attuali delle Batterie, delle Schegge e degli Artefatti posseduti si registrano secondo lo stato effettivo in campagna, senza presumere che siano pieni.
 
 Ogni oggetto ha un’unica scheda e un’unica istanza nell’inventario. La stessa voce può apparire nelle categorie Armamenti, Artefatti e Batterie secondo le sue funzioni. Quantità, peso, PM e SnT si conteggiano una sola volta; una coppia di Guanti costituisce un solo oggetto. Il catalogo completo è nel Manuale dell’Equipaggiamento, capitolo 10; la scheda di combattimento dei Guanti è nel Manuale degli Armamenti, §7.24.
+
+# **27 Artefatti consumabili** {#27-artefatti-consumabili}
+
+Un Artefatto consumabile contiene una versione definita di un Incantesimo e si dissolve dopo un solo utilizzo. Le pergamene sono un esempio di supporto: la regola può essere applicata ad altri oggetti progettati per consumarsi. La distinzione Riutilizzabile o Consumabile è indipendente dalla natura Mistica o TecnoMistica, che continua a dipendere dalla costruzione.
+
+## **27.1 Impiego e consumo**
+
+Il progetto stabilisce l’Incantesimo e la versione completa infusa. Il Grado deriva dalla normale classificazione della versione (§24.2); tutti i Consumabili qui descritti hanno SnT 0 e non richiedono sintonizzazione, anche se producono un effetto attivo.
+
+L’energia è contenuta in Cariche Esclusive sigillate, esattamente sufficienti all’unico impiego. Non si può estrarla, trasferirla, ricaricarla o sostituirla con PM personali o altre fonti. Il supporto non funziona come Batteria per il personaggio e non lascia una riserva riutilizzabile dopo il consumo.
+
+Per attivarlo si compie l’atto previsto dalla scheda, per esempio leggere la formula di una pergamena o attivare il suo sigillo. L’utilizzatore non deve conoscere l’Incantesimo né essere un Ritualista. L’attivazione è automatica e non richiede Prove di Potere o Rituali, salvo un’eccezione espressa dell’oggetto.
+
+Restano quelli dell’Incantesimo infuso il tempo di esecuzione, la gittata, i bersagli, la durata, la Concentrazione, le eventuali Prove per colpire, le Difese, le Salvezze, i cumuli e gli altri limiti. Un supporto monouso non rende istantaneo un effetto che richiede minuti oppure ore.
+
+Il supporto si dissolve al completamento dell’attivazione. Se questa viene interrotta prima del completamento, non si produce l’effetto e l’oggetto resta disponibile. Dopo il completamento l’oggetto è consumato anche se l’attacco manca o il bersaglio supera la Salvezza. Un effetto a durata prosegue dopo la dissoluzione del supporto; l’utilizzatore mantiene la Concentrazione quando richiesta.
+
+Per Esorcizzare Corruzione su pergamena si applica questa regola specifica di consumo al completamento. Il pagamento iniziale previsto per il lancio ordinario e per la Pietra della Vigilanza non anticipa la distruzione del Consumabile.
+
+## **27.2 Creazione e risorse**
+
+Restano le tre fasi del §24: Artefatti per il progetto obbligatorio, Tecnologia per il supporto, Rituali per l’infusione. Possono intervenire persone diverse. Il progetto usa requisiti, costi, tempi e Prove ordinari del proprio Grado: è permanente, riutilizzabile e vendibile. Un progetto Magistrale conserva il \+2 a Tecnologia anche per gli esemplari successivi.
+
+Il supporto di una pergamena standard costa 25 cr. La costruzione è Semplice: Tecnologia senza penalità e 4 ore di lavoro. La complessità e il costo di un supporto diverso dipendono dalla sua costruzione effettiva; non si presume che ogni altro oggetto costi 25 cr.
+
+L’infusione mantiene accesso, penalità, durata, partecipazione dei Canali e aiuti al VA finale del §24. I reagenti costano un quinto di quelli di un Artefatto ordinario dello stesso Grado. Comprendono il Chroma preparato per consumarsi, per esempio polvere dispersa negli inchiostri rituali: non si aggiunge il prezzo di un cristallo integro o di una Batteria riutilizzabile.
+
+| Grado | Reagenti cr | Creazione cr | Vendita cr | REP |
+| :---- | :---- | :---- | :---- | :---- |
+| I | 50 | 75 | 150 | Molto Rara |
+| II | 100 | 125 | 250 | Molto Rara |
+| III | 200 | 225 | 450 | Molto Rara |
+| IV | 400 | 425 | 850 | Leggendaria |
+| V | 800 | 825 | 1650 | Leggendaria |
+| VI | 1600 | 1625 | 3250 | Leggendaria |
+
+Creazione \= 25 cr di supporto \+ reagenti, con progetto già disponibile e senza compensi per manodopera esterna. Vendita \= doppio di tale costo: prezzo indicativo da playtest, distinto dal valore di rivendita e dalla possibilità concreta di trovare un’offerta. La reperibilità è Molto Rara ai Gradi I–III e Leggendaria ai Gradi IV–VI.
+
+I PM richiesti per creare il Consumabile sono 3 × Grado per il lavoro d’infusione, più l’intero costo base in PM della versione da sigillare. Le quote dei partecipanti seguono le normali regole rituali. Questi PM vengono forniti durante la creazione: il Consumabile completato è pronto all’uso e costituisce un’eccezione alle riserve appena costruite normalmente vuote.
+
+Con un Successo Magistrale si dimezzano, arrotondando per eccesso, i PM di lavoro e i reagenti; i PM sigillati dell’Incantesimo restano interi. Il supporto da 25 cr e il progetto non ricevono questo sconto. Fallimenti, Maldestri e interruzioni dell’infusione seguono gli esiti ordinari del §24.5; sono distinti dall’interruzione dell’attivazione di un Consumabile già pronto.
+
+Esempio: una pergamena di Cura Ferite 3 è di Grado I. Con progetto disponibile costa 25 \+ 50 \= 75 cr, richiede 4 ore di costruzione e 1 ora d’infusione. I PM totali sono 3 per il lavoro \+ 3 sigillati \= 6\. Con infusione Magistrale il lavoro costa 2 PM, i reagenti 25 cr e i 3 PM sigillati restano necessari: totale 5 PM e 50 cr di materiali.
+
+## **27.3 Campionario di pergamene**
+
+Artefatti Mistici consumabili, monouso, con SnT 0 e Cariche Esclusive sigillate Verdi. I PM sono già inclusi nell’oggetto: l’utilizzatore non deve fornirli, conoscere l’Incantesimo o possedere Ritualista. L’attivazione è automatica, salvo eccezioni espresse; restano eventuali Prove per colpire, Difese e Salvezze.
+
+| Pergamena | Grado | PM | Attivazione | Creazione cr | Vendita cr |
+| :---- | :---- | :---- | :---- | :---- | :---- |
+| Cura Ferite 3 | I | 3 | 1 AP | 75 | 150 |
+| Arma Mistica 3 | I | 3 | 1 AP | 75 | 150 |
+| Armatura Mistica 3 | I | 3 | 1 AP | 75 | 150 |
+| Individuare 6 | II | 6 | 1 AP | 125 | 250 |
+| Esorcizzare Corruzione 6 | II | 6 | 10 minuti | 125 | 250 |
+| Rigenerazione 9 | III | 9 | 3 ore continuative | 225 | 450 |
+
+Tutti i sei esemplari sono di REP Molto Rara. I costi di creazione presuppongono il progetto già disponibile. I PM della tabella sono sigillati, non un costo personale di attivazione. Restano validi tutti i limiti delle schede originali.
+
+### **27.3.1 Pergamena di Cura Ferite 3**
+
+A contatto, restituisce 1d4+2 PV a una creatura vivente consenziente, oppure incosciente soccorsa. Ogni 2 punti di guarigione possono invece ridurre il Sanguinamento di 1; i punti rimanenti restituiscono PV. Effetto istantaneo. Non cura Ferite o Menomazioni e conserva gli altri limiti di Cura Ferite. Riferimento: scheda 21.1.
+
+### **27.3.2 Pergamena di Arma Mistica 3**
+
+Incanta un’arma toccata per 5 RND, senza Concentrazione. I danni diventano Magici; conferisce \+1 al VA degli attacchi e \+1 al danno. Il bonus al VA non si applica alla Parata. Restano i limiti di cumulo della scheda; ripetere l’effetto non somma i bonus. Riferimento: scheda 22.1.
+
+### **27.3.3 Pergamena di Armatura Mistica 3**
+
+Incanta un’armatura fisica indossata e toccata per 5 RND, senza Concentrazione. Converte la sua AR in Magica e aggiunge \+1 AR. Non ripara l’armatura. Sono esclusi scudi, pelle naturale e protezioni generate da Incantesimi; restano i normali limiti di cumulo. Riferimento: scheda 22.2.
+
+### **27.3.4 Pergamena di Individuare 6**
+
+Potere di Rilevazione 6\. Permette la percezione delle emanazioni entro 10 Q (15 m), oppure l’analisi di un’area totale di 1 Q entro la stessa gittata. Una sola modalità alla volta. Si sceglie Concentrazione fino a 10 minuti oppure durata fissa di 5 RND. Percezione, analisi, cambi di modalità e occultamenti seguono la scheda. Riconosce l’impronta dell’Oscura Simmetria, ma non certifica la Corruzione personale di una creatura. Riferimento: scheda 23.9.
+
+### **27.3.5 Pergamena di Esorcizzare Corruzione 6**
+
+Fuori dal combattimento, richiede Concentrazione e contatto per tutta l’attivazione con una creatura vivente consenziente, oppure incosciente soccorsa. Riduce di uno Stato la Corruzione; lo Stato iniziale non può superare Corrotto. Un solo trattamento efficace ogni 24 ore per beneficiario, considerando insieme pergamene, altri Artefatti e lanci diretti. Non cura Oscuro, non rimuove automaticamente mutazioni permanenti e non espelle possessioni. Riferimento: scheda 21.5.
+
+### **27.3.6 Pergamena di Rigenerazione 9**
+
+Mantenendo contatto e condizioni della versione per tre ore, avvia la riparazione di una Menomazione permanente in un beneficiario vivente consenziente, oppure incosciente soccorso, purché la parte anatomica sia ancora presente. Il processo si completa nei cinque giorni successivi, senza ulteriore contatto o Concentrazione. Una sola Rigenerazione attiva per beneficiario. Non ricrea un arto mancante a questo livello, non resuscita e non recupera automaticamente Umanità. Le nuove lesioni non entrano nel processo già avviato. Riferimento: scheda 21.10; 25.3–25.4.
+
+## **27.4 Inventario e catalogazione**
+
+Ogni Consumabile ha un’unica scheda, consultabile sia fra gli Artefatti, sottocategoria Consumabili, sia fra i Consumabili dell’equipaggiamento. Si registra la quantità posseduta e se ne sottrae una solo al completamento dell’attivazione. Le due viste non duplicano gli oggetti.
+
+I PM sigillati sono una proprietà del Consumabile: non entrano nelle riserve utilizzabili dal PG e non si mostrano come una Batteria ricaricabile. Non si apre una sintonizzazione e non si occupa capacità SnT. I sei profili costituiscono un campionario di catalogo, non una nuova assegnazione automatica ai personaggi.
 

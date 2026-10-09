@@ -1,6 +1,6 @@
 # E&L – Risposte e correzioni approvate
 
-Copia del Google Doc del master «E&L – Risposte e correzioni approvate» (Davide), letta il 26 settembre 2026 e riletta alle versioni del 27/09, del 01/10 07:25:47 UTC e, il 2 ottobre 2026, alle versioni del 01/10 alle 21:38:42 UTC e del 02/10 alle 15:52:58 UTC, e il 3 ottobre 2026 alla versione del 03/10 alle 14:13:17 UTC («Risposte approvate ai 6 nuovi quesiti dell’app e punti Abilità liberi»), il 5 ottobre 2026 alla versione del 05/10 alle 01:07:32 UTC («Risposte approvate — aggiornamento dei quesiti aperti») e il 7 ottobre 2026 alla versione del 06/10 alle 17:23:09 UTC. Testo del documento, non riscritto: è la fonte delle decisioni registrate in `docs/risposte-master.md`.
+Copia del Google Doc del master «E&L – Risposte e correzioni approvate» (Davide), letta il 26 settembre 2026 e riletta alle versioni del 27/09, del 01/10 07:25:47 UTC e, il 2 ottobre 2026, alle versioni del 01/10 alle 21:38:42 UTC e del 02/10 alle 15:52:58 UTC, e il 3 ottobre 2026 alla versione del 03/10 alle 14:13:17 UTC («Risposte approvate ai 6 nuovi quesiti dell’app e punti Abilità liberi»), il 5 ottobre 2026 alla versione del 05/10 alle 01:07:32 UTC («Risposte approvate — aggiornamento dei quesiti aperti»), il 7 ottobre 2026 alla versione del 06/10 alle 17:23:09 UTC e il 9 ottobre 2026 alla versione del 08/10 alle 21:10:32 UTC. Testo del documento, non riscritto: è la fonte delle decisioni registrate in `docs/risposte-master.md`.
 
 # E\&L – Risposte e correzioni approvate
 
@@ -2408,4 +2408,418 @@ A.126 — Ingombro delle creature da 3×3 Q: rimandata con il bestiario.
 Le regole dettagliate di malattie e cure della A.119 sono destinate al Manuale del Direttore. Ammalato ha già la scala operativa approvata per l’app.
 
 Questo aggiornamento registra le risposte approvate; non dichiara completati il recepimento nei manuali o l’implementazione nell’app. Le domande del collaboratore non sono state spostate o cancellate.
+
+# **Aggiornamento cumulativo — risposte tecniche approvate**
+
+Approvato il ott 8, 2026
+
+Risposte approvate in conversazione e destinate al recepimento nell’app e nei manuali. Questo aggiornamento supera, per i punti trattati, le precedenti ipotesi provvisorie e le annotazioni di quesito ancora aperto. Le domande originali sono conservate per tracciabilità. «Approvato» non significa «già implementato»: il recepimento nell’app deve essere verificato separatamente.
+
+## **A.135 — Ricarica delle armi, revolver e accessori**
+
+Approvato il ott 8, 2026
+
+Qualunque arma caricata direttamente, con tamburo o serbatoio interno, inserisce fino a 2 cartucce in 1 AzP; con Ricarica Migliorata fino a 4 cartucce in 1 AzP. La regola comprende revolver e doppiette e non permette di superare la capacità dell’arma. Sostituisce le precedenti regole del tamburo completo in 1 AzP e delle 3 cartucce con Ricarica Migliorata.
+
+Sono disponibili carichini rapidi riutilizzabili, compatibili con il modello d’arma: Ricarica per Tamburo, 6 colpi, 100 crediti a vuoto; Ricarica per Serbatoio, 6 colpi, 150 crediti a vuoto. Le munizioni si acquistano separatamente.
+
+Un carichino già preparato e accessibile trasferisce fino a 6 colpi in 1 AzP, entro gli spazi liberi dell’arma. I colpi non trasferiti restano nel carichino e vanno registrati. Ricarica Migliorata non aumenta questo limite. Preparare i dispositivi richiede 1 minuto ogni 50 colpi o frazione.
+
+La sostituzione di un caricatore o di una cella già pronti continua a costare 1 AzP. Ricarica Rapida permette una sola operazione di ricarica gratuita per Round, alla propria Iniziativa: 2 cartucce, 4 con Ricarica Migliorata, fino a 6 con dispositivo preparato, oppure il normale cambio di caricatore/cella. Restano necessari mani disponibili e accessibilità.
+
+Esempio: un revolver da 6 colpi vuoto richiede 3 AzP normalmente, 2 AzP con Ricarica Migliorata, 1 AzP con carichino preparato oppure 0 AzP usando carichino e Ricarica Rapida.
+
+Modelli confermati: HD14M con serbatoio interno; SA SG2001, Airbrush e Mandible con caricatore amovibile. Peso, Qualità, Integrità e Reperibilità dei nuovi accessori non sono stati definiti da questa decisione.
+
+## **A.136 — Passaggio a Corsa/Scatto e Prova facoltativa di Atletica**
+
+Approvato il ott 8, 2026
+
+Prima di aver compiuto qualsiasi AzP nel proprio turno, mentre il movimento è ancora in corso, è possibile trasformare il Passo già iniziato in Corsa o Scatto. I Q già percorsi si sottraggono al nuovo totale; si usa sempre una sola AzM. Il movimento restante si completa in un unico blocco prima delle AzP: non è possibile muoversi, attaccare e poi trasformare quel movimento in Corsa.
+
+Normalmente non serve alcuna Prova di Atletica: si applicano distanze, penalità e vantaggi standard. Chi vuole migliorare l’efficacia del movimento può dichiarare la Prova facoltativa prima di tirare, senza Azioni aggiuntive: Atletica a 0 per Corsa e a −2 per Scatto su terra.
+
+I Q percorsi non cambiano in base all’esito: normalmente 12 Q in Corsa e 18 Q in Scatto, prima degli altri modificatori. Gli effetti sotto riportati durano fino alla successiva propria Iniziativa. «Penalità personale» riguarda chi si muove; «penalità per essere colpito» è quella applicata agli attacchi contro di lui. Le riduzioni si fermano a zero e non diventano bonus.
+
+Senza Prova: Corsa −2 personale / −2 agli attacchi contro; Scatto −6 personale / −4 agli attacchi contro.
+
+Successo Magistrale: Corsa 0 / −6; Scatto −2 / −8.
+
+Successo: Corsa 0 / −4; Scatto −4 / −6.
+
+Fallimento: Corsa −4 / 0; Scatto −8 / −2.
+
+Maldestro: Corsa −6 / 0; Scatto −10 / 0\.
+
+Sono superati i precedenti aumenti o riduzioni dei Q legati all’esito e i modificatori \+4/−4 alla Prova successiva. Questa decisione non introduce nuovi modificatori specifici per nuoto, volo o altre manovre.
+
+## **A.137 — Aree con raggio in quadratini**
+
+Approvato il ott 8, 2026
+
+Si usa la distanza sulla griglia con diagonale pari a 1 Q. Un raggio di 1 Q comprende un’area 3×3 Q centrata sul Q di origine; raggio 2 Q corrisponde a 5×5 Q; raggio 3 Q a 7×7 Q. Le aree di raggio risultano quindi quadrate sulla griglia. Restano le regole di ostacoli e propagazione dell’effetto. Questa regola non modifica i coni.
+
+## **A.138 — Template a cono lineare**
+
+Approvato il ott 8, 2026
+
+Il vertice parte dal centro del Q occupato da chi usa il template. Si scelgono direzione, distanza e ampiezza finale, espresse in Q. Il cono si allarga linearmente da zero fino all’ampiezza finale.
+
+Un Q è colpito quando almeno metà della sua superficie è attraversata dal template. Il Q di origine è escluso dal proprio cono, salvo eccezione espressa. Non si usano file a larghezza prefissata né una preferenza automatica verso destra o sinistra. L’origine per creature di ingombro maggiore resta da raccordare alle regole sulle taglie.
+
+## **A.139 — Apertura e chiusura delle porte**
+
+Approvato il ott 8, 2026
+
+Una porta può essere aperta o chiusa anche da un Q adiacente in diagonale, purché sia fisicamente raggiungibile dal proprio lato. Una normale porta non bloccata richiede 1 AzP e una mano libera. Non si può interagire attraverso una parete. Attraversare la porta è movimento distinto; serrature e altri blocchi richiedono prima la relativa procedura.
+
+## **A.140 — Copertura e ostacoli**
+
+Approvato il ott 8, 2026
+
+Si tracciano cinque linee dal centro del Q dell’attaccante verso il centro e i quattro angoli del Q del bersaglio. Nessuna linea bloccata: nessuna Copertura; 1–2 linee bloccate: Copertura Leggera, −2; 3–4: Media, −4; 5: Totale, che impedisce l’attacco diretto.
+
+Una linea conta come bloccata solo se attraversa effettivamente l’ostacolo: il semplice contatto con un angolo non basta. Il Direttore può correggere il risultato in base ad altezza, postura e situazione reale. L’interposizione di creature segue separatamente A.144.
+
+Sviluppo successivo richiesto: definire valori automatici di Copertura per tipo e altezza dell’ostacolo, anche se blocca una sola linea, tenendo conto della postura del bersaglio; esempio, un ostacolo alto circa 1 metro. La tabella specifica resta rinviata.
+
+## **A.142 — Illuminazione e visibilità ordinaria**
+
+Approvato il ott 8, 2026
+
+Piena luce: nessun limite fisso in Q. Penombra: 10 Q. Luce scarsa: 5 Q. Buio completo: nessun Q rivelato dalla visione ordinaria; resta visibile la propria pedina, senza rivelazione automatica dei Q adiacenti.
+
+Conta l’illuminazione della zona osservata: chi è al buio può vedere una stanza illuminata oltre un corridoio oscuro, senza che questo renda visibile il corridoio. Pareti, porte chiuse e altre occlusioni restano efficaci; la visibilità non rivela automaticamente creature nascoste. I sensi speciali seguono A.143.
+
+## **A.143 — Sensi speciali e rivelazione della mappa**
+
+Approvato il ott 8, 2026
+
+Visione notturna: 80 Q, utilizzabile in penombra e luce scarsa; richiede luce residua e non funziona nel buio completo.
+
+Visione termica: 40 Q; permette di distinguere bersagli o superfici con contrasto termico, anche nel buio naturale. Non rivela automaticamente scritte, colori o bersagli privi di contrasto termico distinguibile.
+
+Vista Felina: 20 Q nel buio naturale, con percezione delle forme e della profondità ma non dei colori.
+
+Quando attivi, questi sensi rivelano automaticamente solo le parti della mappa effettivamente percepite entro il rispettivo limite. Pareti e porte chiuse li bloccano; le creature nascoste richiedono le normali verifiche. Le portate dei sensi non accorciano la normale visione in piena luce. Attivazione, costo, durata e interazioni con nebbia, fumo e oscurità soprannaturale seguono le rispettive schede.
+
+## **A.144 / A.141 — Bersaglio ingaggiato e creature interposte**
+
+Approvato il ott 8, 2026
+
+Il bersaglio ingaggiato conserva la regola esistente del §5.10: −4 e seconda Prova dopo un mancato colpo, con i Talenti pertinenti.
+
+Una creatura che interferisce con la linea di tiro applica invece soltanto −2, cumulabile con le altre penalità di circostanza. Per questa sola interposizione non si esegue una seconda Prova per colpire accidentalmente la creatura. Il −2 si applica una sola volta, indipendentemente dal numero di creature interposte.
+
+La stessa creatura già considerata nella penalità per bersaglio ingaggiato non produce anche un ulteriore −2. Una diversa creatura interposta può aggiungerlo. Esempio: interposizione −2 e Copertura Leggera −2 danno −4 totale. Le regole specifiche degli ostaggi non sono modificate da questa risposta.
+
+## **A.148 — Volo e Copertura**
+
+Approvato il ott 8, 2026
+
+La Copertura dipende dalla traiettoria reale, considerando quota dell’attaccante, quota del bersaglio e altezza degli ostacoli. Leggera −2, Media −4 e Totale continuano ad applicarsi quando proteggono effettivamente il bersaglio.
+
+Una creatura interposta dà −2 solo se interferisce davvero con la traiettoria: l’allineamento sulla mappa vista dall’alto non basta. Se esiste un vero ingaggio, vale la relativa regola anche in volo. Volare, da solo, non impone un −2 universale per essere colpiti.
+
+Finché non sono definiti gli automatismi sulle altezze, il Direttore può confermare o correggere la Copertura. Il contrassegno «in volo» non deve disattivare tutte le Coperture.
+
+## **A.149 — Distanza verticale, portata e attacchi di opportunità**
+
+Approvato il ott 8, 2026
+
+La distanza in Q è il maggiore fra distanza orizzontale sulla griglia e differenza assoluta di quota. La diagonale continua a valere 1 Q. Esempi: 1 Q orizzontale e 1 verticale valgono 1 Q; 1 orizzontale e 2 verticali valgono 2 Q; direttamente 3 Q sopra valgono 3 Q.
+
+Salire volontariamente da una posizione entro portata a una fuori portata può provocare un attacco di opportunità prima di uscire, secondo le normali condizioni. Chi era già fuori portata non lo provoca soltanto allontanandosi ulteriormente.
+
+## **A.150 — Visibilità dei bersagli in volo**
+
+Approvato il ott 8, 2026
+
+Si applicano le stesse regole di illuminazione, sensi, occlusione e occultamento dei bersagli a terra. Essere in volo non rivela automaticamente una creatura nelle zone non visibili della mappa.
+
+Un osservatore al buio può vedere un bersaglio in volo sopra una zona illuminata; non vede automaticamente un bersaglio non illuminato solo perché è in aria. Il Direttore può rivelarlo manualmente quando le circostanze lo giustificano, per esempio una sagoma contro un cielo luminoso.
+
+## **A.122 — Funzioni dell’Aiuto-master**
+
+Approvato il ott 8, 2026
+
+Si mantiene il ruolo opzionale di Aiuto-master, assegnabile e revocabile dal Direttore; non è necessaria una pagina separata. Può muovere il personaggio del turno attivo entro i limiti ordinari di movimento e degli ostacoli.
+
+Vede la mappa nella visuale dei giocatori, senza informazioni segrete del Direttore. Non può modificare schede, risorse, Iniziativa o configurazione della scena. Gli spostamenti eccezionali oltre i limiti restano riservati al Direttore.
+
+## **A.111 — Pablo Zaion: annullamento di una perdita di Umanità inserita per prova**
+
+Approvato il ott 8, 2026
+
+Pablo non possiede e non ha mai posseduto Interfacce neurali. La perdita di 2 UMN rimasta nel file deriva esclusivamente da prove dell’app.
+
+Correzione richiesta al collaboratore: eliminare la registrazione errata della perdita di 2 UMN e ricalcolare l’Umanità, conservando una nota della correzione. Non registrare rimozioni di impianti né recuperi o riabilitazioni fittizi. Il caso concreto è chiarito; resta valida la regola generale già approvata per i veri recuperi pregressi.
+
+## **A.112 — Riserve effettive degli artefatti di Lucas e Dimitri**
+
+Approvato il ott 8, 2026
+
+Confermati come riserve effettive i valori già presenti nei file: Guanti 10; Pietra della Vigilanza 10; due Batterie Matrice da 10 ciascuna; quattro Schegge da 5 ciascuna. Gli artefatti risultano completamente carichi. Mantenere questi valori senza correzioni: non sono semplici valori iniziali in attesa di ricostruire i consumi.
+
+## **A.109 — Anticipazione: regola comune ai 32 aspetti**
+
+Approvato il ott 8, 2026
+
+Tutti i 32 aspetti elencati di seguito sono definiti. È superata la sospensione per mancanza dell’allegato.
+
+Per ogni lancio si anticipa un solo aspetto di un solo gradino consentito. Si parte da una versione accessibile dell’incantesimo; i PM base raddoppiano e la Prova di Potere è obbligatoria, con difficoltà di una categoria superiore, fatte salve le eccezioni dei Talenti. Il livello dichiarato e tutti i parametri non espressamente anticipati restano invariati. Non si combinano due aspetti nello stesso lancio.
+
+### **A.109 — Punto 1/32: Muro Elementale, numero di elementi (§13.3)**
+
+Approvato il ott 8, 2026
+
+Anticipazione: \+1 elemento, da 1 a 2 oppure da 2 a 3; massimo 3\. Non è possibile passare direttamente da 1 a 3\. L’elemento primario determina struttura e natura del danno; gli altri apportano gli effetti secondari previsti. Gli altri parametri non cambiano.
+
+### **A.109 — Punto 2/32: Armatura Elementale, numero di elementi (§13.5)**
+
+Approvato il ott 8, 2026
+
+Anticipazione: \+1 elemento, 1→2 oppure 2→3, massimo 3\. Tutti gli elementi scelti forniscono la protezione elementale prevista dalla scheda; il primario determina il danno reattivo e gli altri gli effetti secondari. Non aumenta contemporaneamente il Mod. PS.
+
+### **A.109 — Punto 3/32: Armatura Elementale, Mod. PS (§13.5)**
+
+Approvato il ott 8, 2026
+
+Si peggiora di un gradino di −2 il Mod. PS previsto dalla versione: livelli 3 e 6, da 0 a −2; livelli 9 e 12, da −2 a −4; livelli 15 e 18, da −4 a −6. Il limite della tabella è −6. Gli effetti automatici che non prevedono PS restano automatici; non se ne aggiunge una.
+
+### **A.109 — Punto 4/32: Esplosione Elementale, numero di elementi (§13.6)**
+
+Approvato il ott 8, 2026
+
+Anticipazione: \+1 elemento, 1→2 oppure 2→3, massimo 3\. Non modifica contemporaneamente danno, area, Mod. PS o altri parametri.
+
+### **A.109 — Punto 5/32: Cono Elementale, numero di elementi (§13.7)**
+
+Approvato il ott 8, 2026
+
+Anticipazione: \+1 elemento, 1→2 oppure 2→3, massimo 3\. Dimensioni e geometria del cono non cambiano; per il template si applica la A.138.
+
+### **A.109 — Punto 6/32: Devastazione Elementale, elemento aggiuntivo (§13.10)**
+
+Approvato il ott 8, 2026
+
+Anticipazione: \+1 elemento, fino al massimo di 3, con un solo passaggio 1→2 oppure 2→3. Non si anticipa nello stesso lancio anche il Mod. PS.
+
+### **A.109 — Punto 7/32: Devastazione Elementale, Mod. PS (§13.10)**
+
+Approvato il ott 8, 2026
+
+Un solo gradino: da −2 a −4 oppure da −4 a −6. Il massimo è −6; non è consentito un ulteriore passaggio a −8.
+
+### **A.109 — Punto 8/32: Catene di Forza, Salvezze (§17.6)**
+
+Approvato il ott 8, 2026
+
+Un solo gradino lungo la scala 0→−2→−4→−6. Il nuovo modificatore si applica alla Tempra iniziale, alla Tempra per liberarsi e ai Riflessi per mantenere l’equilibrio: costituiscono un unico aspetto anticipato. Stato inflitto, durata e altri parametri restano invariati.
+
+### **A.109 — Punto 9/32: Piattaforma Levitante, dimensioni (§17.7)**
+
+Approvato il ott 8, 2026
+
+Si passa alla dimensione successiva: livello 3, 1×1→2×1 Q; livello 6, 2×1→2×2 Q; livelli 9 e 12, 2×2→3×2 Q; livello 15, 3×2→3×3 Q; livello 18, 3×3→4×3 Q.
+
+La portata in peso è un aspetto distinto e non cambia: per esempio, al livello 9 resta 400 kg anche con piattaforma 3×2 Q. Movimento, durata e stabilità rimangono quelli della versione scelta.
+
+### **A.109 — Punto 10/32: Alterare Immagine, capacità (§19.1)**
+
+Approvato il ott 8, 2026
+
+Le capacità sono cumulative: volto generico → identità precisa → voce e postura → equipaggiamento. La versione di livello 1 può anticipare l’identità precisa; quella di livello 3 voce e postura; quella di livello 6 l’equipaggiamento. Dal livello 9 la capacità è già massima.
+
+L’identità deve essere conosciuta o adeguatamente osservata; per riprodurre precisamente una voce bisogna averla udita. L’equipaggiamento mantiene forma e volume. Non si acquisiscono ricordi o conoscenze della persona imitata.
+
+### **A.109 — Punto 11/32: Terrore, PS della modalità (§19.7)**
+
+Approvato il ott 8, 2026
+
+Si applica un ulteriore −2 alla PS Volontà della modalità scelta. Livelli 3 e 6: mirata −2→−4, aura 0→−2. Livelli 9 e 12: mirata −4→−6, aura −2→−4. Livelli 15 e 18: mirata −6→−8, aura −4→−6.
+
+Massimo −8 per la modalità mirata e −6 per l’aura. Il −4 proprio dello Stato Terrorizzato rimane invariato, così come durata, raggio e bersagli.
+
+### **A.109 — Punto 12/32: Presenza, precisione del conteggio (§20.3)**
+
+Approvato il ott 8, 2026
+
+Un solo gradino lungo la scala Approssimata → Generica → Precisa → Esatta.
+
+Approssimata: nessuna mente, una, 2–5, 6 o più. Generica: nessuna, una, 2–5, 6–10, 11–20, oltre 20\. Precisa: numero esatto fino a 10, poi fasce di 5\. Esatta: numero esatto di tutte le menti rilevabili.
+
+Esatta è il massimo. Non aumentano informazioni individuali, portata o durata. Le menti protette e non rilevabili non entrano automaticamente nel conteggio.
+
+### **A.109 — Punto 13/32: Presenza, informazioni individuali (§20.3)**
+
+Approvato il ott 8, 2026
+
+Si anticipa la riga informativa successiva, cumulativamente: versione di livello 1 → livello in fasce di 5; livello 3 → Addestramento iniziale; livello 6 → livello in fasce di 2; livello 9 → Classe predominante; livello 12 → livello esatto; livello 15 → tutte le Classi con i rispettivi Gradi; livello 18 già al massimo.
+
+Per creature senza Classe o Addestramento valgono le alternative Domestico/Selvatico e Predatore/Preda previste dalla scheda. La precisione del conteggio resta quella della versione: per esempio, al livello 6 rimane Precisa.
+
+### **A.109 — Punto 14/32: Psicometria, numero di impressioni (§20.7)**
+
+Approvato il ott 8, 2026
+
+Si aggiunge 1 impressione per lancio, fino a un massimo di 11; non si passa direttamente alla riga successiva della tabella. Esempi: livello 15, 8→9; livello 18, 10→11.
+
+Il numero è un massimo, non garantisce l’esistenza di altre tracce. Periodo retrospettivo e tempo di lettura non cambiano.
+
+### **A.109 — Punto 15/32: Marchio Psichico, entrambe le modalità (§20.8)**
+
+Approvato il ott 8, 2026
+
+Un unico gradino permette di attivare insieme Tracciamento e Combattimento; ciascuna modalità conserva la propria durata ordinaria.
+
+Esempio al livello 6: Tracciamento entro 1 km per 1 ora e Combattimento con \+1 VA e \+1 danno per 5 Round. Terminato il Combattimento, il Tracciamento continua per la durata restante. Non si aumentano altri parametri e non si combina l’assegnazione a un alleato.
+
+### **A.109 — Punto 16/32: Marchio Psichico, alleato beneficiario (§20.8)**
+
+Approvato il ott 8, 2026
+
+Si può scegliere al lancio un alleato consenziente, visibile ed entro portata come beneficiario al posto dell’incantatore. Non aumenta il numero di bersagli marchiati. Si sceglie una sola modalità; nel Tracciamento la distanza si misura dall’alleato beneficiario.
+
+L’incantatore paga i PM ed effettua la Prova di Potere, ma non riceve i benefici. Il beneficiario resta lo stesso per tutto il lancio. Questo usa l’intera Anticipazione e non permette anche entrambe le modalità. Esempio: al livello 9, l’alleato riceve \+2 VA e \+2 danni contro il marchiato per 5 Round.
+
+### **A.109 — Punto 17/32: Sesto Senso, Difese automatiche (§20.9)**
+
+Approvato il ott 8, 2026
+
+Si aggiunge 1 Difesa automatica alla riserva totale dell’intera durata, non una per Round. Livelli 6 e 9: 1→2; livelli 12 e 15: 2→3; livello 18: 3→4.
+
+Rimane il limite di una per Round anche con più lanci. Restano le condizioni richieste per Parata o Schivata. Durata, Iniziativa ed Elusione non cambiano.
+
+### **A.109 — Punto 18/32: Cura Malattie, pericolosità (§21.2)**
+
+Approvato il ott 8, 2026
+
+Si aumenta di un solo grado la pericolosità trattabile lungo I→II→III→IV→V→VI; VI è il massimo.
+
+L’origine è distinta dalla pericolosità: per esempio, la versione di livello 3 passa da III a IV, ma continua a trattare malattie naturali o artificiali, senza acquisire quelle mistiche. Numero di malattie, beneficiari e portata non cambiano; il lancio resta di 10 minuti.
+
+### **A.109 — Punto 19/32: Cura Avvelenamenti, pericolosità (§21.3)**
+
+Approvato il ott 8, 2026
+
+Si aumenta di un solo grado la pericolosità trattabile lungo I→II→III→IV→V→VI; VI è il massimo. L’origine ammessa resta invariata: per esempio, al livello 5 si passa da IV a V, mantenendo veleni naturali o artificiali. Numero, beneficiari e portata non cambiano; il lancio resta di 1 AzP.
+
+### **A.109 — Punto 20/32: Cura Spirituale, Stati trattabili (§21.4)**
+
+Approvato il ott 8, 2026
+
+Si anticipa il gruppo di capacità successivo, cumulativamente, lungo le soglie di livello 1→3→6. La versione di livello 1 aggiunge Accecato e Assordato; la versione di livello 3 aggiunge Stordito, Svenuto e Paralizzato temporaneo, compreso il sonno magico. Dal livello 6 le capacità sono già massime.
+
+Il numero di Stati rimossi non cambia: al livello 3 resta uno Stato su un beneficiario entro 3 Q. Restano i limiti relativi a cause persistenti e menomazioni.
+
+### **A.109 — Punto 21/32: Recupero Rapido, numero di menomazioni (§21.7)**
+
+Approvato il ott 8, 2026
+
+Si anticipa il numero di menomazioni temporanee trattate per beneficiario: 1→2→3→tutte. Livelli 3 e 6: 1→2; livello 9: 2→3; livello 12: 3→tutte; livelli 15 e 18 già al massimo.
+
+I gradini di recupero per ciascuna menomazione non aumentano: per esempio, al livello 3 si trattano due menomazioni di un gradino ciascuna. Le permanenti restano escluse, salvo conversione in temporanee. Lancio di 10 minuti e massimo di un’applicazione efficace ogni 24 ore per beneficiario invariati.
+
+### **A.109 — Punto 22/32: Sigillo, numero di sigilli (§22.3)**
+
+Approvato il ott 8, 2026
+
+Si aggiunge 1 sigillo per lancio: livelli 1, 3 e 6, 1→2; livelli 9 e 12, 2→3; livelli 15 e 18, 3→4.
+
+Il costo del singolo lancio anticipato comprende tutti i sigilli. La preparazione resta 1 minuto complessivo e tutti i punti da sigillare devono essere toccati durante quel tempo. Gli altri parametri non cambiano.
+
+### **A.109 — Punto 23/32: Sigillo, Avviso e Blocco prima del livello 6 (§22.3)**
+
+Approvato il ott 8, 2026
+
+Alle versioni di livello 1 e 3 l’Anticipazione permette di avere contemporaneamente Avviso e Blocco. Il primo tentativo non autorizzato di apertura o forzatura attiva l’Avviso anche se fallisce; l’Avviso è consumato, mentre il Blocco resta finché viene superato, rimosso o scade.
+
+Il Blocco richiede una chiusura fisica; un passaggio aperto permette soltanto Avviso. Dal livello 6 la combinazione è già ordinaria e non offre un ulteriore gradino.
+
+### **A.109 — Punto 24/32: Trappola Mistica, numero di trappole (§22.4)**
+
+Approvato il ott 8, 2026
+
+Si aggiunge 1 trappola al lancio: 1→2, 2→3 oppure 3→4. Il totale delle trappole attive attraverso tutti i lanci non può superare il valore di SAG; se necessario, occorre terminare trappole precedenti. Si mantiene un solo effetto per Q.
+
+La preparazione costa 1 minuto per ogni trappola, compresa quella aggiuntiva. Il costo del lancio anticipato di Trappola Mistica copre tutte le trappole, ma l’eventuale incantesimo caricato va pagato separatamente per ciascuna. Gli altri parametri non cambiano.
+
+### **A.109 — Punto 25/32: Trappola Mistica, danno della Scarica (§22.4)**
+
+Approvato il ott 8, 2026
+
+Si anticipa la riga successiva del danno della Scarica propria della trappola: livello 1, 1d6→1d6+2; livello 3, 1d6+2→2d6+2; livello 6, 2d6+2→3d6+3; livello 9, 3d6+3→4d6+4; livello 12, 4d6+4→5d6+5; livello 15, 5d6+5→6d6+6. Al livello 18 il massimo è già 6d6+6 di danno base Magico.
+
+Non aumenta il danno dell’incantesimo eventualmente caricato. Numero di trappole e Mod. PS restano invariati.
+
+### **A.109 — Punto 26/32: Trappola Mistica, Interferenza (§22.4)**
+
+Approvato il ott 8, 2026
+
+La penalità peggiora di 1, fino a −5: livelli 1, 3 e 6, −2→−3; livelli 9 e 12, −3→−4; livelli 15 e 18, −4→−5.
+
+Dopo una PS Magia fallita, la penalità riguarda le prove di Abilità, compresi attacchi, Difese e Potere. Non modifica PS, prove di Caratteristica, danni o movimento. Durata e modificatore della PS restano invariati.
+
+### **A.109 — Punto 27/32: Trappola Mistica, livello massimo caricato (§22.4)**
+
+Approvato il ott 8, 2026
+
+L’aspetto è disponibile dalla versione di livello 6 di Trappola Mistica: livello 6, massimo caricabile 3→6; livello 9, 6→9; livello 12, 9→12; livello 15, 12→15; livello 18, 15→18.
+
+Le versioni 1 e 3 non acquisiscono la capacità di caricare incantesimi tramite Anticipazione. L’incantesimo deve essere conosciuto e rispettare i suoi requisiti; quello caricato non può essere a sua volta anticipato.
+
+Il raddoppio dei PM riguarda soltanto Trappola Mistica. Ogni incantesimo caricato si paga separatamente e produce la singola applicazione istantanea prevista dalle regole di caricamento. Numero di trappole e altri parametri restano invariati.
+
+### **A.109 — Punto 28/32: Luce Mistica, sorgente su oggetto (§23.2)**
+
+Approvato il ott 8, 2026
+
+Un unico gradino permette di ancorare la sorgente a un oggetto toccato al lancio invece che all’incantatore. L’aura è centrata sull’oggetto e lo segue; l’oggetto può essere trasportato da un alleato o lasciato sul posto. L’ancoraggio resta fisso per tutta la durata del lancio.
+
+Raggio, durata, penalità e PS non cambiano. Una copertura opaca blocca luce ed effetto. Questo impiega l’intera Anticipazione.
+
+### **A.109 — Punto 29/32: Nascondere Aura, Potenza di Occultamento (§23.7)**
+
+Approvato il ott 8, 2026
+
+Si avanza di un solo gradino lungo 3→6→9→12→15→18→21. La versione di livello 18 può quindi arrivare a Potenza di Occultamento 21, che è il massimo.
+
+Il miglioramento vale soltanto nei confronti di rilevazione pertinenti, come Presenza. Il livello dichiarato dell’incantesimo non cambia, anche ai fini di Negare Potere. Gli altri parametri restano invariati.
+
+### **A.109 — Punto 30/32: Premonizione, numero di usi (§23.8)**
+
+Approvato il ott 8, 2026
+
+Si aggiunge 1 uso alla riserva totale, massimo 7: livello 6, 3→4; livelli 9 e 12, 4→5; livello 15, 5→6; livello 18, 6→7.
+
+Rimane il massimo di un uso per Round, anche effettuando nuovi lanci, e di un solo rilancio sullo stesso evento anche in presenza di altre capacità. Non migliora la scelta del risultato da tenere; durata e portata non cambiano. Gli usi rimasti si perdono alla scadenza.
+
+### **A.109 — Punto 31/32: Premonizione, scelta del risultato prima del livello 12 (§23.8)**
+
+Approvato il ott 8, 2026
+
+Alle versioni di livello 6 e 9 un unico gradino consente di scegliere il risultato preferito fra il tiro originario e il rilancio per tutti gli usi di quel lancio. Si sceglie uno dei due risultati completi, senza combinare dadi dei due tiri.
+
+La riserva resta 3 usi al livello 6 e 4 al livello 9, con durata 5 Round, massimo un uso per Round e un solo rilancio per tiro. Dal livello 12 la scelta è già ordinaria e non offre un ulteriore gradino.
+
+### **A.109 — Punto 32/32: Individuare, informazioni approfondite (§23.9)**
+
+Approvato il ott 8, 2026
+
+Al lancio si sceglie una sola categoria: Aura, Incantesimi oppure Artefatti. Soltanto quella categoria acquisisce cumulativamente le informazioni della soglia successiva: versioni 6–8→soglia 9; 9–11→12; 12–14→15; 15–17→18; versione 18 già al massimo.
+
+Le altre categorie mantengono la soglia originaria. Esempio: una versione di livello 9 che anticipa Incantesimi ne rileva il livello esatto previsto alla soglia 12, mentre Aura e Artefatti restano alla soglia 9\.
+
+Non aumentano Potenza di Individuazione, raggio, portata, area o durata. Resta l’analisi di una sola fonte e di una sola categoria per Round.
+
+## **Conferme già definite e argomenti rinviati**
+
+Approvato il ott 8, 2026
+
+A.20: l’uso del Chroma bianco resta riservato a chi ha accesso alla magia; non basta essere coscienti. A.35: l’eccedenza del valore degli armamenti ceduti viene restituita in crediti. Queste decisioni erano già approvate e non costituiscono nuovi quesiti.
+
+Restano rinviati i temi relativi a bestiario e veicoli: A.113, A.115, parte veicoli della A.125, A.126, A.133 e A.145–A.147. Resta da sviluppare la tabella automatica per tipo/altezza degli ostacoli e postura del bersaglio indicata nella A.140.
+
+Le regole dettagliate delle malattie e delle cure restano destinate al Manuale del Direttore; non sono introdotte qui nuove procedure. Le altre regole già approvate conservano validità dove non espressamente superate da questo aggiornamento.
 

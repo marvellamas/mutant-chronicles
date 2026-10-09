@@ -4,7 +4,7 @@
 
 ## Strumenti dotazioni e regole di impiego
 
-**EDIZIONE 0.5**
+**EDIZIONE 0.6**
 
 Ottobre 2026
 
@@ -332,6 +332,16 @@ Preparare una linea su un ancoraggio adatto richiede 1 minuto; crearne uno nuovo
 
 Vale il migliore bonus degli strumenti: abiti da viaggio \+1 e assalto verticale \+2 danno \+2 ad Atletica. Talenti, circostanze e proprietà delle armature mantengono le proprie regole.
 
+### **3.3.1 Navigatore inerziale**
+
+Un dispositivo palmare registra gli spostamenti mediante sensori interni. Sullo schermo mostra il percorso seguito, la direzione del punto di partenza e la distanza dai riferimenti memorizzati. Funziona anche sottoterra e in assenza di rete o satelliti.
+
+Permette di ritrovare un punto registrato e ripercorrere un itinerario memorizzato senza una Prova di orientamento, finché il percorso rimane riconoscibile e praticabile. Registrare il punto in cui ci si trova o consultare un riferimento richiede 1 AzP e una mano. La registrazione degli spostamenti è automatica mentre il dispositivo è acceso; può mostrare il percorso su mappe compatibili disponibili.
+
+Non rileva ostacoli, pericoli o passaggi sconosciuti. Se il percorso è interrotto, trovare una deviazione richiede le normali Prove. Tratti percorsi con il dispositivo spento e teletrasporti interrompono la continuità della registrazione: occorre ristabilire un riferimento noto.
+
+Peso 0,3 kg; costo 600 cr; REP NC; Qualità Comune, PS Integrità 10, 2 PI. Comprende NEC Verde compatto carico da 100 Lx, cavo e alimentatore: consumo 2 Lx/h, autonomia 50 ore. Ricambio carico 10 cr; sostituzione 1 AzP; ricarica completa un’ora e 1 cr con fonte adeguata (§5.4).
+
 ## **3.4 Corredo di sopravvivenza ambientale**
 
 Peso 4 kg, costo 1.500, Reperibilità Non comune; 4 PI, Qualità Non comune e PS Integrità 12\. Comprende attrezzatura riutilizzabile per orientamento, raccolta di risorse e riparo individuale. All’acquisto si sceglie uno dei sette ambienti del Manuale del Giocatore, §8.8.3.
@@ -373,6 +383,22 @@ La maschera riprende il Filtro respiratorio 2 del Manuale degli Armamenti: non f
 
 La tuta protegge dal contatto contaminante, ma non concede AR e non protegge automaticamente da acidi corrosivi, radiazioni, Fuoco o Gelo. Si conta soltanto l’autonomia delle bombole; la sostituzione ordinaria dei filtri rientra nella manutenzione. Maschere e tute devono essere integre e correttamente indossate.
 
+### **3.5.1 Decontaminazione dell’equipaggiamento**
+
+Un erogatore applica una soluzione che raccoglie o neutralizza contaminanti superficiali compatibili con il prodotto. Si impiega su tute sigillate, attrezzi e contenitori prima di introdurli in veicoli, rifugi e infermerie.
+
+Una dose permette di decontaminare l’esterno della tuta e dell’equipaggiamento indossato da una persona, oppure una quantità equivalente di oggetti. L’operazione richiede un minuto e due mani. Su contaminanti ordinari riconosciuti e superfici accessibili riesce senza Prova.
+
+Il trattamento rimuove il rischio dovuto ai residui trattati. Non cura avvelenamenti, infezioni o danni già subiti, non ripulisce automaticamente l’interno di apparecchi chiusi e non protegge dalle radiazioni di una fonte esterna. Non elimina Corruzione o contaminazioni soprannaturali. Per sostanze sconosciute occorre individuare un trattamento adatto mediante Scienza; un rilevatore appropriato può verificare eventuali residui.
+
+| Oggetto | Dotazione | Peso | Costo cr | REP |
+| :---- | :---: | :---: | :---: | :---: |
+| Decontaminante personale | 1 dose monouso | 0,5 kg | 200 | NC |
+| Erogatore ricaricabile | 5 dosi | 2,5 kg | 800 | NC |
+| Cartuccia di ricambio | 5 dosi | — | 500 | NC |
+
+Il monouso ha Qualità Comune, PS Integrità 10 e 2 PI; l’erogatore ha Qualità Comune, PS Integrità 10 e 4 PI. Cambiare la cartuccia richiede un minuto e due mani. Nessun NEC; le dosi residue sono separate dai PI.
+
 ## **3.6 Mobilità e recupero**
 
 Le dotazioni seguenti sostengono fino a 200 kg, compreso l’equipaggiamento della persona trasportata. Entro tale portata e in condizioni ordinarie non richiedono PS Integrità. Occorrono appoggi o ancoraggi adeguati; il carico effettivo continua a seguire il §1.6.
@@ -394,6 +420,112 @@ Il verricello comprende cavo, imbracatura, gancio, comando, NEC Rosso standard c
 | Passerella pieghevole | Comune | 10 | 6 |
 | Verricello portatile Chroma | Non comune | 12 | 6 |
 | Barella pieghevole | Comune | 10 | 4 |
+
+## **3.7 Emergenze e ripristini provvisori**
+
+Queste dotazioni consentono di spegnere piccoli incendi, fissare componenti e chiudere aperture. Tamponare un danno può ripristinare una funzione specifica; il recupero dei PI richiede la normale riparazione del §1.7. Prezzi e pesi comprendono le scorte dichiarate.
+
+### **Estintore compatto**
+
+Un erogatore pressurizzato spruzza una schiuma antifiamma su abiti, attrezzature e piccoli focolai. Il modello personale si porta alla cintura; quello ricaricabile è comune su veicoli, navi e postazioni di lavoro.
+
+Con 1 AzP, una mano e una dose termina automaticamente Incendiato su sé stessi o su una persona entro 2 Q raggiungibile dal getto; in alternativa spegne un piccolo focolaio circoscritto entro 1 Q di superficie, alla stessa distanza. Si sceglie un solo impiego per dose. Non richiede una nuova PS e non recupera i danni subiti. Una fonte ancora attiva può provocare una nuova accensione; incendi estesi o sostanze che richiedono trattamenti particolari non sono risolti da una singola dose.
+
+Il monouso viene scartato dopo l’impiego. Sostituire la cartuccia del ricaricabile richiede un minuto e due mani. Nessun NEC.
+
+### **Nastro tecnico e toppe di emergenza**
+
+Il nastro tecnico contiene fibre di rinforzo e un adesivo resistente all’umidità. Le toppe pressurizzate sono placche flessibili autoadesive, confezionate singolarmente, destinate alle piccole lacerazioni di tute e involucri ermetici.
+
+Nastro tecnico. Un’applicazione richiede un minuto e due mani. Permette di fissare un componente leggero, riunire cavi, richiudere un contenitore o tamponare una lacerazione di zaino, abito o tenda. L’impiego ordinario non richiede Prove. Non sostiene il peso di una persona, non ripristina circuiti e non garantisce la tenuta di una tuta nel vuoto.
+
+Toppa pressurizzata. Con 1 AzP e due mani, una toppa chiude un foro o taglio accessibile fino a 20 cm, ripristinando la tenuta in quel punto. Si applica sulla propria tuta o su quella di un compagno adiacente; in condizioni ordinarie non richiede Prove. Rimane efficace finché integra e aderente. Non sostituisce parti mancanti, raccordi rotti o un intero visore, né reintegra l’aria perduta.
+
+Entrambi i materiali lasciano invariati i PI dell’oggetto trattato e non rendono utilizzabile un oggetto Rotto a 0 PI. Nessun NEC.
+
+### **Schiuma strutturale espandente**
+
+Un applicatore miscela ed eroga due componenti che si espandono formando una massa rigida e leggera. Tecnici e soccorritori la usano per chiudere aperture, riempire cavità e ostacolare accessi danneggiati.
+
+Una dose e un minuto di lavoro, con due mani, chiudono un’apertura fino a 1 Q × 1 Q, purché esistano bordi o un supporto a cui il materiale possa aderire. Il minuto comprende l’indurimento; un’applicazione ordinaria non richiede Prove. La chiusura è opaca, impedisce di vedere attraverso l’apertura e costituisce un ostacolo con 4 PI e PS Integrità 10\. Deve essere rimossa o distrutta per liberare completamente il passaggio.
+
+Più dosi chiudono aperture maggiori: ogni tratto di 1 Q × 1 Q conserva i propri 4 PI. Sovrapporre dosi sullo stesso tratto non aumenta i PI. La schiuma non è portante: non costruisce ponti, non sostiene macchinari e non ripristina strutture di veicoli. Non garantisce tenuta pressurizzata; il tempo di indurimento non permette di immobilizzare automaticamente una creatura in movimento.
+
+Sostituire la cartuccia richiede un minuto e due mani. L’erogazione è meccanica e non richiede NEC.
+
+| Oggetto | Dotazione | Peso pieno | Costo cr | REP |
+| :---- | :---: | :---: | :---: | :---: |
+| Estintore personale | 1 dose monouso | 0,3 kg | 100 | CO |
+| Estintore ricaricabile | 5 dosi | 1,5 kg | 400 | CO |
+| Ricambio estintore | 5 dosi | 0,5 kg | 100 | CO |
+| Nastro tecnico | 5 applicazioni | 0,2 kg | 50 | CO |
+| Toppe pressurizzate | 5 toppe | 0,25 kg | 250 | NC |
+| Applicatore di schiuma | 5 dosi | 2 kg | 600 | NC |
+| Ricambio schiuma | 5 dosi | 1 kg | 200 | NC |
+
+| Oggetto | Qualità | PS Integrità | PI |
+| :---- | :---: | :---: | :---: |
+| Estintore monouso | Comune | 10 | 2 |
+| Estintore ricaricabile | Comune | 10 | 4 |
+| Rotolo di nastro tecnico | Comune | 10 | 2 |
+| Singola toppa applicata | Comune | 10 | 1 |
+| Applicatore di schiuma | Comune | 10 | 4 |
+
+Le dosi residue sono separate dai PI: ricaricare un contenitore non lo ripara. Le PS Integrità si effettuano solo quando richieste dalle normali regole, senza aggiungere un tiro a ogni utilizzo.
+
+## **3.8 Attività extraveicolari**
+
+Queste dotazioni specialistiche si acquistano separatamente dalla dotazione iniziale comune. I nuovi sistemi comprendono attacchi compatibili con le bombole del §3.5: ciascuna offre 2 ore d’aria per persona, pesa 2 kg carica e costa 100 cr. Il normale respiratore mantiene i propri limiti; sono i sistemi seguenti a consentire l’impiego nel vuoto.
+
+### **3.8.1 Tuta da lavoro extraveicolare**
+
+Tuta pressurizzata con casco rigido, guanti, sovrastivali e supporto vitale dorsale. Il visore mostra aria disponibile e carica del NEC; anelli di sicurezza consentono il collegamento a una cima durante i lavori all’esterno della nave.
+
+Mentre è integra, chiusa e rifornita, permette di operare nel vuoto o in atmosfere irrespirabili. Isola il corpo dai contaminanti esterni trasmessi per inalazione o contatto. Comprende due bombole per 4 ore complessive d’aria, climatizzazione e controllo della pressione, comunicatore personale da 1 km, lampada frontale da 6 Q, indicatori e allarme di perdita, cinque toppe pressurizzate del §3.7 e anelli di ancoraggio. La cima si acquista separatamente.
+
+Indossarla e controllarne la chiusura richiede 5 minuti. Se già indossata e predisposta, chiudere il casco e attivare il supporto vitale richiede 1 AzP e due mani. La climatizzazione concede \+2 alle PS di Tempra contro caldo e freddo ambientali, quando richieste; si applica un solo beneficio dell’equipaggiamento contro lo stesso pericolo.
+
+Un NEC Verde standard da 1.000 Lx alimenta tutte le funzioni a 25 Lx/h, per 40 ore. Non si ricalcola il consumo spegnendo una singola funzione. Aria ed energia si annotano separatamente: 40 ore di batteria non aumentano le 4 ore d’aria. A NEC esaurito cessano climatizzazione, lampada, comunicazioni e indicatori; la tenuta passiva e l’erogazione meccanica dell’aria rimangono disponibili finché tuta e bombole sono integre.
+
+Non concede AR e non protegge automaticamente da radiazioni, sostanze corrosive o attacchi di Fuoco e Gelo. Le toppe ripristinano la tenuta delle piccole lacerazioni compatibili senza recuperare PI.
+
+### **3.8.2 Riparo pressurizzato portatile**
+
+Un involucro ripiegabile si tende su un’intelaiatura leggera formando un ambiente ermetico. Una breve anticamera permette il passaggio senza aprire direttamente il vano abitabile all’esterno. Ospita due persone con il normale equipaggiamento personale: consente di togliere il casco, riposare, mangiare o assistere un compagno in un ambiente privo d’aria respirabile.
+
+Comprende involucro, telaio, pavimento isolante, ancoraggi, anticamera per una persona alla volta, regolazione dell’aria, climatizzazione, luce interna, quattro bombole, un NEC Verde standard carico e cinque toppe pressurizzate. Le bombole forniscono 8 ore-persona: 8 ore per un occupante oppure 4 ore per due occupanti.
+
+Una persona impiega 10 minuti per montarlo o smontarlo. Occorrono una superficie adatta, ancoraggi utilizzabili e uno spazio di 2 × 2 Q; in condizioni ordinarie non serve una Prova. Entrare o uscire dall’anticamera richiede un minuto. Pressurizzazione iniziale e normali passaggi sono compresi nell’autonomia dichiarata.
+
+Il NEC Verde standard da 1.000 Lx alimenta il riparo a 50 Lx/h, per 20 ore indipendentemente dal numero degli occupanti. La climatizzazione concede \+2 alle PS di Tempra contro caldo e freddo ambientali all’interno. A batteria esaurita cessano le funzioni elettriche; l’involucro mantiene la tenuta e le bombole forniscono aria tramite il regolatore meccanico.
+
+Offre condizioni adatte al riposo, ma non accelera il recupero e non costituisce una postazione medica. Protezione dalle radiazioni, difesa balistica e resistenza agli agenti corrosivi richiedono dotazioni specifiche.
+
+### **3.8.3 Calzature ad aderenza magnetica**
+
+Una coppia di sovrastivali incorpora magneti permanenti con sgancio comandato dal piede. In assenza di gravità permette di camminare lungo superfici ferromagnetiche e lavorare restando ancorati, con entrambe le mani libere.
+
+Indossare o togliere la coppia richiede un minuto; attivare o disattivare l’aderenza richiede 1 AzP. Ogni Q percorso costa 2 Q di Movimento. Lo spostamento ordinario su una superficie adatta non richiede Prove. La portata è di 200 kg complessivi, compresi utilizzatore ed equipaggiamento.
+
+Manovre difficili, urti e spinte mantengono le normali Prove: l’aderenza non rende immuni agli spostamenti forzati. Funzionano soltanto su materiali ferromagnetici; in gravità normale non consentono di camminare su pareti e soffitti. Nessun NEC: magneti e sgancio sono passivi.
+
+### **3.8.4 Catalogo e rifornimenti**
+
+| Oggetto | Peso completo | Costo cr | REP |
+| :---- | :---: | :---: | :---: |
+| Tuta extraveicolare con 2 bombole | 12 kg | 8.000 | NC |
+| Riparo pressurizzato con 4 bombole | 26 kg | 12.000 | RA |
+| Calzature magnetiche coppia | 1,5 kg | 600 | NC |
+
+| Oggetto | Qualità | PS Integrità | PI |
+| :---- | :---: | :---: | :---: |
+| Tuta extraveicolare | Non comune | 12 | 6 |
+| Riparo pressurizzato | Non comune | 12 | 8 |
+| Calzature magnetiche coppia | Comune | 10 | 4 |
+
+Pesi e prezzi comprendono tutti i componenti dichiarati, NEC carichi e alimentatori. Ricambi: bombola carica da 2 ore-persona 100 cr; NEC Verde standard carico 100 cr; cinque toppe pressurizzate 250 cr.
+
+Sostituire una bombola richiede un minuto e due mani. Questi sistemi mantengono l’erogazione durante il cambio se almeno un’altra bombola collegata contiene aria; occorre raggiungere gli alloggiamenti senza esporsi all’ambiente esterno. Sostituire un NEC accessibile richiede 1 AzP; la ricarica completa richiede un’ora e 10 cr con fonte adeguata (§5.4).
 
 # **4 Comunicazione e rilevamento**
 
@@ -421,7 +553,7 @@ Accendere, spegnere o cambiare canale richiede 1 AzP. Una volta attivo, ascoltar
 
 ### **Alimentazione e riservatezza**
 
-Il personale usa un Verde compatto: 1 Lx/h e 100 ore. Quello da squadra usa un Verde standard: 5 Lx/h e 200 ore. La stazione radio usa un Verde standard: 25 Lx/h e 40 ore. Il consumo comprende ascolto e trasmissione. Ricarica e ricambi seguono il §5.4; sostituzione in 1 AzP. Le comunicazioni ordinarie sono ascoltabili da ricevitori compatibili sul canale; cifratura, intercettazione specialistica e disturbo intenzionale sono esclusi.
+Il personale usa un Verde compatto: 1 Lx/h e 100 ore. Quello da squadra usa un Verde standard: 5 Lx/h e 200 ore. La stazione radio usa un Verde standard: 25 Lx/h e 40 ore. Il consumo comprende ascolto e trasmissione. Ricarica e ricambi seguono il §5.4; sostituzione in 1 AzP. Le comunicazioni ordinarie sono ascoltabili da ricevitori compatibili sul canale; la cifratura richiede il modulo del §4.4. Intercettazione specialistica e disturbo intenzionale non sono funzioni dei comunicatori ordinari.
 
 ## **4.2 Strumenti ottici e visori**
 
@@ -478,6 +610,36 @@ Una lettura richiede 1 AzP, senza Prova per comprendere gli avvisi ordinari. Lo 
 ### **Alimentazione e collegamenti**
 
 Registratore e Rilevatore ambientale usano un Verde compatto: 2 Lx/h e 50 ore. La videosorveglianza usa due Verdi compatti, uno per componente: ciascuno 2 Lx/h e 50 ore. L’allarme usa un Verde compatto per sensore e uno per avvisatore: ciascuno 1 Lx/h e 100 ore. Sono compresi NEC carichi, cavi e alimentatori. Ricarica: §5.4; sostituzione in 1 AzP. Ostacoli e interferenze possono interrompere i collegamenti remoti.
+
+## **4.4 Comunicazioni protette e controsorveglianza**
+
+### **Modulo di cifratura per comunicatori**
+
+Un piccolo accessorio collegato al comunicatore codifica voce e dati mediante una chiave condivisa. I dispositivi autorizzati ricostruiscono automaticamente il messaggio. Chi ascolta il canale con un normale ricevitore privo della chiave non comprende le comunicazioni.
+
+Ogni comunicatore coinvolto deve possedere un modulo compatibile e la stessa chiave. Installazione e configurazione richiedono un minuto per apparecchio, senza Prova in condizioni ordinarie. Dopo la configurazione il modulo funziona automaticamente. Non nasconde la trasmissione, non aumenta la portata e non impedisce il disturbo radio. Un apparecchio autorizzato catturato permette di ascoltare finché il gruppo non cambia la chiave.
+
+Forzare la cifratura è un’attività specialistica di Tecnologia: richiede una registrazione del segnale e strumenti informatici adeguati, secondo le normali regole delle Prove e dei nuovi tentativi. Il modulo riceve energia dal comunicatore; il consumo è compreso nel suo profilo operativo, senza una seconda riserva da annotare.
+
+### **Rilevatore di sorveglianza elettronica**
+
+Uno strumento palmare con antenna orientabile e sonda ravvicinata cerca emissioni e segnali caratteristici dei dispositivi di sorveglianza. Segnala le sorgenti sospette e guida l’operatore verso il punto da controllare. Consente una ricerca specialistica di microspie e apparati attivi, con \+2 a Tecnologia degli strumenti.
+
+Un’ispezione richiede 10 minuti per un locale fino a 4 × 4 Q, accesso alle superfici da controllare e una Prova. La difficoltà dipende dall’occultamento e dalle eventuali schermature. Con successo individua i dispositivi rilevabili nell’area effettivamente esaminata; un fallimento non garantisce che il locale sia sicuro.
+
+Non scopre automaticamente dispositivi spenti, osservatori esterni, strumenti puramente ottici o sorveglianza magica. Localizzare una microspia non la disattiva: rimozione o manomissione sono interventi separati. Il bonus non si somma a quello di altri strumenti sulla stessa Prova.
+
+Comprende NEC Verde standard carico, cavo e alimentatore: 1.000 Lx, 25 Lx/h e 40 ore effettive. Ricambio carico 100 cr; sostituzione 1 AzP; ricarica completa un’ora e 10 cr con fonte adeguata (§5.4).
+
+| Oggetto | Peso | Costo cr | REP |
+| :---- | :---: | :---: | :---: |
+| Modulo di cifratura | 0,1 kg | 500 | NC |
+| Rilevatore di sorveglianza | 1 kg | 2.000 | NC |
+
+| Oggetto | Qualità | PS Integrità | PI |
+| :---- | :---: | :---: | :---: |
+| Modulo di cifratura | Non comune | 12 | 2 |
+| Rilevatore di sorveglianza | Non comune | 12 | 4 |
 
 # **5 Strumenti professionali**
 
@@ -703,10 +865,19 @@ I formati d’arma fino a 750 Lx si ricaricano in un’ora con caricatore portat
 | Drone leggero di riferimento | Rosso standard | 500 Lx | 100 Lx/h | 5 ore |
 | Postazione medica da campo | Modulo di 10 Rossi standard, oppure rete adeguata | 5.000 Lx nel modulo | 1.000 Lx/h | 5 ore con modulo |
 | Spada CSA 404 e altre armi con cella ravvicinata comune | Blu standard, formato ravvicinato | 250 Lx | 50 Lx per attivazione | 5 attivazioni |
+| Navigatore inerziale | Verde compatto | 100 Lx | 2 Lx/h | 50 ore |
+| Analizzatore alimentare portatile | Verde standard | 1.000 Lx | 25 Lx/h | 40 ore di uso |
+| Rilevatore di sorveglianza | Verde standard | 1.000 Lx | 25 Lx/h | 40 ore di uso |
+| Utensile laser da taglio e saldatura | Rosso standard | 500 Lx | 100 Lx/h | 5 ore di uso |
+| Tuta extraveicolare | Verde standard | 1.000 Lx | 25 Lx/h complessivi | 40 ore elettriche; aria separata |
+| Riparo pressurizzato | Verde standard | 1.000 Lx | 50 Lx/h complessivi | 20 ore elettriche; aria separata |
+| Modulo di cifratura | NEC del comunicatore | Condivisa | Compreso nel comunicatore | Quella del comunicatore |
 
 La Torcia tattica da 20 Q usa un Verde compatto, 2 Lx/h e 50 ore; i moduli di visione da arma seguono i visori autonomi. Diagnostica del Corredo di manutenzione, Corredo di analisi e Valigetta ASA usano ciascuno un Verde standard, 25 Lx/h e 40 ore. Postazione tecnica e Laboratorio da campo consumano 1.000 Lx/h: un Modulo Rosso esterno offre cinque ore. Il fornello del §3.2 usa un Rosso standard da dieci preparazioni.
 
 I comunicatori hanno un unico consumo operativo comprendente ascolto e trasmissione, senza contare le frasi. I kit con due componenti hanno una cella per componente. Il drone è un profilo leggero di riferimento: i robot già descritti conservano l’autonomia propria. I moduli esterni per le postazioni di questo paragrafo non sono compresi nel prezzo. Le postazioni medicochirurgiche del §6.8 includono invece i NEC dichiarati e seguono le proprie riserve per operazioni e giorni.
+
+Estintori, nastro tecnico, toppe, schiuma strutturale, decontaminanti e calzature magnetiche non richiedono NEC. I nuovi dispositivi seguono i profili della tabella; aria, test e cartucce materiali restano risorse separate dall’energia. Il modulo di cifratura condivide il consumo del comunicatore, senza una seconda riserva da annotare.
 
 ### **5.4.8 Elmetto Recon e spada CSA 404**
 
@@ -838,6 +1009,26 @@ Il terminale di ciascun Corredo di ricerca o amministrativo, il Terminale per pr
 Ricambio Verde compatto carico: 10 cr, REP CO. Sostituzione con ricambio accessibile: 1 AzP. Ricarica completa: un’ora e 1 cr con fonte e alimentatore adeguati, secondo il §5.4. Gli altri oggetti di questo paragrafo non richiedono NEC.
 
 Preparazione e utilizzo seguono il §1.4 e i tempi dell’attività svolta. Scrittura, ricerca, esecuzione artistica e Rituali mantengono le normali Prove quando l’esito è incerto. Cancelleria, trucco e materiali ordinari si reintegrano durante il normale rifornimento, senza registrare ogni singolo impiego; materiali speciali e componenti dei Rituali restano separati.
+
+## **5.9 Utensile laser da taglio e saldatura**
+
+Un utensile con impugnatura isolata, protezione della zona di lavoro e testina regolabile concentra l’energia su un punto ravvicinato. La modalità di taglio separa lamiere e componenti; quella di saldatura unisce parti metalliche compatibili. Richiede due mani, accesso diretto e un pezzo fermo. Comprende gli occhiali di protezione necessari all’impiego ordinario.
+
+Taglio. Taglia metalli ordinari fino a 1 cm di spessore con 10 minuti di lavoro per un tratto fino a 1 Q. Un taglio semplice in condizioni adatte riesce senza Prova; lavori di precisione o condizioni difficili usano Tecnologia. Materiali speciali, corazzature e strutture più spesse richiedono una valutazione specifica: il profilo non permette di aprire automaticamente qualsiasi paratia.
+
+Saldatura. Fornisce lo strumento necessario ai lavori compatibili. Quando ripara un oggetto, si applicano Prova di Tecnologia, tempi, materiali e recupero dei PI ordinari. È uno strumento Standard, senza bonus aggiuntivo. La testina richiede di mantenere il fascio sullo stesso punto e non concede un profilo d’arma laser.
+
+Peso completo 2 kg; costo 1.500 cr; REP NC; Qualità Non comune, PS Integrità 12, 4 PI. Comprende NEC Rosso standard carico, cavo e alimentatore: 500 Lx, consumo 100 Lx/h, 5 ore effettive di lavoro anche non consecutive. Si annota l’autonomia residua. Ricambio carico 50 cr; sostituzione con ricambio accessibile 1 AzP; ricarica completa un’ora e 5 cr con fonte adeguata (§5.4).
+
+## **5.10 Analizzatore alimentare portatile**
+
+Una piccola valigetta contiene un vano per campioni, sensori biochimici e un archivio di sostanze conosciute. Gli esploratori la usano per controllare acqua, alimenti raccolti e scorte che potrebbero essersi deteriorate. Permette di cercare contaminanti, tossine e segni di deterioramento compatibili con i test disponibili, concedendo \+2 a Scienza per l’analisi.
+
+Un esame richiede un campione, 10 minuti, una superficie di appoggio e un test monouso, consumato anche se la Prova fallisce. Con successo si ottengono le informazioni ricavabili dall’apparecchio; un fallimento dà un risultato inconcludente. Il risultato riguarda il campione esaminato. Sostanze sconosciute possono richiedere un laboratorio; l’assenza di contaminanti riconosciuti non certifica automaticamente la commestibilità di una specie aliena.
+
+Il \+2 è un bonus degli strumenti e non si somma a quello di un altro corredo nella stessa analisi. La dotazione comprende dieci test; una confezione di dieci ricambi costa 100 cr. Inserire il test è compreso nei dieci minuti dell’esame.
+
+Peso completo 1 kg; costo 1.200 cr; REP NC; Qualità Non comune, PS Integrità 12, 4 PI. Comprende NEC Verde standard carico, cavo e alimentatore: 1.000 Lx, consumo 25 Lx/h, autonomia 40 ore effettive. Ricambio carico 100 cr; sostituzione 1 AzP; ricarica completa un’ora e 10 cr con fonte adeguata (§5.4). Si annotano ore residue e test disponibili separatamente.
 
 # **6 Equipaggiamento sanitario**
 
