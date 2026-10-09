@@ -1285,6 +1285,17 @@ Fonte: E&L dell'08/10/2026, 21:10 UTC, blocco «Aggiornamento cumulativo — ris
     A.126, A.133, A.145–A.147, la tabella per tipo e altezza degli ostacoli di A.140; malattie e cure al Manuale del
     Direttore. I loro `TODO(Davide)` restano.
 
+**Nuove** (09/10/2026, lotto Magia §27, parte 2: «Crea consumabile»):
+
+- **A.156 — PM consumati dall'infusione fallita di un Consumabile** (Magia §27.2, §24.5). Con un Fallimento o un
+  Maldestro dell'infusione il §24.5 consuma «PM e reagenti»; per un Consumabile i PM sono quelli di lavoro (3 × Grado) più
+  quelli da sigillare. Si perdono tutti, o solo quelli di lavoro? Provvisorio: tutti (`artefatti.json` →
+  `consumabili.creazione.infusione`, `TODO(Davide)`).
+- **A.157 — Schede «Rituale: non consentito» nei Consumabili** (Magia §27; schede 13.1, 13.7, 17.4, 18.4, 18.9, 21.8 e
+  23.5). L’intestazione di sette schede dice «Rituale: non consentito». Vale anche per l'infusione in un Consumabile (e in
+  un Artefatto)? Provvisorio: l'infusione è permessa, con un avviso nel modulo (`artefatti.json` →
+  `consumabili.creazione`, `TODO(Davide)`).
+
 **Nuova** (09/10/2026, lotto Magia §27, parte 1):
 
 - **A.155 — Dati fisici delle pergamene** (Magia §27.3). Il campionario dà Grado, PM, attivazione, costi e REP, ma non peso,
