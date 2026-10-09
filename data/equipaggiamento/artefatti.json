@@ -3,7 +3,10 @@
   "fonte": "Manuale degli Armamenti v0.50, §7.5 Artefatti (pp. 30–31) e §7.10 Artefatti e sintonizzazione (pp. 58–60); lotto 12; prezzi delle batterie e SnT dei soli passivi dal Doc del 01/10/2026 sera (Armamenti §7.5, §7.10; Magia §24.2, §24.7; docs/diff-manuali-2026-10-02.md, lotto 2); capitolo 10 dell'Equipaggiamento 0.5 e Magia §26 (Doc del 02/10/2026; tools/lotti/lotto_artefatti_cap10.mjs)",
   "_nota": "Generato da tools/lotti/lotto12_artefatti.mjs; da qui in poi si modifica questo file. «sintonizzazione» contiene le regole del §7.10: capacità per Gradi complessivi (indice 0 = Grado I), bonus del Talento, costo per potenza. «artefatti_catalogo» dà tipologia e potenza agli Artefatti già presenti in altri file. «contenitore» descrive la riserva di Chroma (Magia sez. 6): energia (colore di regole.json → chroma.colori), capacita_pm; «integrato»: true quando la riserva è dentro l'oggetto (§7.5.1: Bordone Templare, Spade Vindicator e Deliverer, Lancia Castigator, Lama Demontooth, Scudo delle Guardie Sacre), con un solo costo di sintonizzazione. «sintonizzabile»: le proprietà attive richiedono sintonizzazione (§7.10). Batterie da 5 PM: profilo della risposta di Davide A.14 (28/09/2026) con i prezzi indicativi del 01/10/2026 sera, 1.000 crediti le colorate e 5.000 la Bianca (Armamenti §7.5; Magia §24.7: 200 e 1.000 crediti per PM; E&L, «Regole consolidate»); i 10.000 e 50.000 di A.14 non valgono più. «proprieta_attive»: true se l’Artefatto ha almeno una proprietà attiva, e allora la SnT è quella della potenza (il Grado finale, Magia §24.2); false con sole proprietà passive, e allora SnT 0 e niente sintonizzazione (Armamenti §7.10). Controllo voce per voce del 02/10: tutte le voci del catalogo hanno proprietà attive (attivazione offensiva o Scudo Magico, §7.5.1) oppure sono batterie autonome (SnT pari al Grado).",
   "sintonizzazione": {
-    "deposito": { "interrompe": false, "decisione": "A.59 (E&L del 05/10/2026): depositare un Artefatto non interrompe la Sintonizzazione, che continua a occupare la capacità; si interrompe solo volontariamente per liberarla. Riprendere un oggetto ancora sintonizzato non richiede una nuova procedura; dopo l’interruzione servono 1 minuto di contatto e la Prova di Artefatti (l’Architetto evita la Prova, non il tempo). Una batteria depositata non alimenta a distanza gli Incantesimi: va portata con sé." },
+    "deposito": {
+      "interrompe": false,
+      "decisione": "A.59 (E&L del 05/10/2026): depositare un Artefatto non interrompe la Sintonizzazione, che continua a occupare la capacità; si interrompe solo volontariamente per liberarla. Riprendere un oggetto ancora sintonizzato non richiede una nuova procedura; dopo l’interruzione servono 1 minuto di contatto e la Prova di Artefatti (l’Architetto evita la Prova, non il tempo). Una batteria depositata non alimenta a distanza gli Incantesimi: va portata con sé."
+    },
     "capacita_per_gradi": [
       8,
       9,
@@ -28,7 +31,8 @@
       "Armi": "Armi Mistiche e TecnoMistiche.",
       "Protezioni": "Armature e scudi Mistici o TecnoMistici.",
       "Batterie e contenitori": "Oggetti che conservano PM nel Chroma, indipendentemente da forma e materiale.",
-      "Accessori": "Strumenti, dispositivi, impianti e altri oggetti Mistici o TecnoMistici."
+      "Accessori": "Strumenti, dispositivi, impianti e altri oggetti Mistici o TecnoMistici.",
+      "Consumabili": "Artefatti consumabili monouso del Manuale della Magia, §27: SnT 0, Cariche Esclusive sigillate, si dissolvono dopo un solo utilizzo."
     },
     "regola": "La capacità di sintonizzazione è un unico budget del personaggio, non un numero fisso di oggetti né un limite separato per ciascuna Classe. Parte da 8 al I Grado complessivo e aumenta di 1 per ogni Grado complessivo successivo, fino a 13 al VI. L’Addestramento Taumaturgo segue la medesima progressione. Architetto TecnoMistico aggiunge +2 una sola volta: da 10 al I Grado complessivo a 15 al VI. Il Tecnomante non possiede più una capacità illimitata. I valori della tabella precedono l’eventuale riduzione dovuta all’Umanità (§5.21), applicata dopo i bonus e fino a un minimo di 0. Si sommano i costi di sintonizzazione degli Artefatti attualmente sintonizzati: la somma non può superare la capacità del personaggio. La potenza non impone da sola un livello minimo; un Tecnomante con capacità 6 può quindi sintonizzarsi con un Artefatto Leggendario da costo 6, se lo possiede e ne rispetta i requisiti. Disponibilità e ritrovamento degli oggetti potenti dipendono dall’ambientazione e dal Direttore. Se l’Umanità diminuisce e i costi degli Artefatti già sintonizzati superano la nuova capacità, il personaggio sceglie immediatamente quali sintonizzazioni interrompere per rispettare il limite. Quando la capacità aumenta, gli eventuali legami interrotti si ristabiliscono seguendo la procedura ordinaria.",
     "solo_passive": {
@@ -2207,6 +2211,223 @@
       "ps_int": 12,
       "pi": 4,
       "peso": 0.5
+    },
+    {
+      "id": "pergamena-di-cura-ferite-3",
+      "nome": "Pergamena di Cura Ferite 3",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Consumabili",
+      "nomi_alternativi": [],
+      "note_manuale": "Artefatto Mistico consumabile, monouso, con SnT 0 e Cariche Esclusive sigillate Verdi. I PM sono già inclusi nell’oggetto: l’utilizzatore non deve fornirli, conoscere l’Incantesimo o possedere Ritualista. L’attivazione è automatica, salvo eccezioni espresse; restano eventuali Prove per colpire, Difese e Salvezze. I costi di creazione presuppongono il progetto già disponibile. A contatto, restituisce 1d4+2 PV a una creatura vivente consenziente, oppure incosciente soccorsa. Ogni 2 punti di guarigione possono invece ridurre il Sanguinamento di 1; i punti rimanenti restituiscono PV. Effetto istantaneo. Non cura Ferite o Menomazioni e conserva gli altri limiti di Cura Ferite. Riferimento: scheda 21.1.",
+      "paragrafo": "Magia §27.3.1",
+      "versione_manuale": "Magia (Google Doc dell’08/10/2026, 21:33 UTC)",
+      "costo": 150,
+      "artefatto": {
+        "tipologia": "Consumabili",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "consumabile": {
+          "grado": "I",
+          "incantesimo": "Cura Ferite",
+          "livello": 3,
+          "pm_sigillati": 3,
+          "energia": "Verde",
+          "attivazione": {
+            "azp": 1,
+            "testo": "1 AzP"
+          },
+          "scheda": "21.1",
+          "effetto": "A contatto, restituisce 1d4+2 PV a una creatura vivente consenziente, oppure incosciente soccorsa. Ogni 2 punti di guarigione possono invece ridurre il Sanguinamento di 1; i punti rimanenti restituiscono PV. Effetto istantaneo. Non cura Ferite o Menomazioni e conserva gli altri limiti di Cura Ferite. Riferimento: scheda 21.1."
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "peso": null,
+      "creazione_cr": 75,
+      "TODO(Davide)": "A.155: il §27.3 non dà peso, Qualità, PS Integrità e PI delle pergamene. Intanto il peso resta vuoto (non pesa sul carico) e la pergamena non ha PI."
+    },
+    {
+      "id": "pergamena-di-arma-mistica-3",
+      "nome": "Pergamena di Arma Mistica 3",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Consumabili",
+      "nomi_alternativi": [],
+      "note_manuale": "Artefatto Mistico consumabile, monouso, con SnT 0 e Cariche Esclusive sigillate Verdi. I PM sono già inclusi nell’oggetto: l’utilizzatore non deve fornirli, conoscere l’Incantesimo o possedere Ritualista. L’attivazione è automatica, salvo eccezioni espresse; restano eventuali Prove per colpire, Difese e Salvezze. I costi di creazione presuppongono il progetto già disponibile. Incanta un’arma toccata per 5 RND, senza Concentrazione. I danni diventano Magici; conferisce +1 al VA degli attacchi e +1 al danno. Il bonus al VA non si applica alla Parata. Restano i limiti di cumulo della scheda; ripetere l’effetto non somma i bonus. Riferimento: scheda 22.1.",
+      "paragrafo": "Magia §27.3.2",
+      "versione_manuale": "Magia (Google Doc dell’08/10/2026, 21:33 UTC)",
+      "costo": 150,
+      "artefatto": {
+        "tipologia": "Consumabili",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "consumabile": {
+          "grado": "I",
+          "incantesimo": "Arma Mistica",
+          "livello": 3,
+          "pm_sigillati": 3,
+          "energia": "Verde",
+          "attivazione": {
+            "azp": 1,
+            "testo": "1 AzP"
+          },
+          "scheda": "22.1",
+          "effetto": "Incanta un’arma toccata per 5 RND, senza Concentrazione. I danni diventano Magici; conferisce +1 al VA degli attacchi e +1 al danno. Il bonus al VA non si applica alla Parata. Restano i limiti di cumulo della scheda; ripetere l’effetto non somma i bonus. Riferimento: scheda 22.1."
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "peso": null,
+      "creazione_cr": 75,
+      "TODO(Davide)": "A.155: il §27.3 non dà peso, Qualità, PS Integrità e PI delle pergamene. Intanto il peso resta vuoto (non pesa sul carico) e la pergamena non ha PI."
+    },
+    {
+      "id": "pergamena-di-armatura-mistica-3",
+      "nome": "Pergamena di Armatura Mistica 3",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Consumabili",
+      "nomi_alternativi": [],
+      "note_manuale": "Artefatto Mistico consumabile, monouso, con SnT 0 e Cariche Esclusive sigillate Verdi. I PM sono già inclusi nell’oggetto: l’utilizzatore non deve fornirli, conoscere l’Incantesimo o possedere Ritualista. L’attivazione è automatica, salvo eccezioni espresse; restano eventuali Prove per colpire, Difese e Salvezze. I costi di creazione presuppongono il progetto già disponibile. Incanta un’armatura fisica indossata e toccata per 5 RND, senza Concentrazione. Converte la sua AR in Magica e aggiunge +1 AR. Non ripara l’armatura. Sono esclusi scudi, pelle naturale e protezioni generate da Incantesimi; restano i normali limiti di cumulo. Riferimento: scheda 22.2.",
+      "paragrafo": "Magia §27.3.3",
+      "versione_manuale": "Magia (Google Doc dell’08/10/2026, 21:33 UTC)",
+      "costo": 150,
+      "artefatto": {
+        "tipologia": "Consumabili",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "consumabile": {
+          "grado": "I",
+          "incantesimo": "Armatura Mistica",
+          "livello": 3,
+          "pm_sigillati": 3,
+          "energia": "Verde",
+          "attivazione": {
+            "azp": 1,
+            "testo": "1 AzP"
+          },
+          "scheda": "22.2",
+          "effetto": "Incanta un’armatura fisica indossata e toccata per 5 RND, senza Concentrazione. Converte la sua AR in Magica e aggiunge +1 AR. Non ripara l’armatura. Sono esclusi scudi, pelle naturale e protezioni generate da Incantesimi; restano i normali limiti di cumulo. Riferimento: scheda 22.2."
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "peso": null,
+      "creazione_cr": 75,
+      "TODO(Davide)": "A.155: il §27.3 non dà peso, Qualità, PS Integrità e PI delle pergamene. Intanto il peso resta vuoto (non pesa sul carico) e la pergamena non ha PI."
+    },
+    {
+      "id": "pergamena-di-individuare-6",
+      "nome": "Pergamena di Individuare 6",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Consumabili",
+      "nomi_alternativi": [],
+      "note_manuale": "Artefatto Mistico consumabile, monouso, con SnT 0 e Cariche Esclusive sigillate Verdi. I PM sono già inclusi nell’oggetto: l’utilizzatore non deve fornirli, conoscere l’Incantesimo o possedere Ritualista. L’attivazione è automatica, salvo eccezioni espresse; restano eventuali Prove per colpire, Difese e Salvezze. I costi di creazione presuppongono il progetto già disponibile. Potere di Rilevazione 6. Permette la percezione delle emanazioni entro 10 Q (15 m), oppure l’analisi di un’area totale di 1 Q entro la stessa gittata. Una sola modalità alla volta. Si sceglie Concentrazione fino a 10 minuti oppure durata fissa di 5 RND. Percezione, analisi, cambi di modalità e occultamenti seguono la scheda. Riconosce l’impronta dell’Oscura Simmetria, ma non certifica la Corruzione personale di una creatura. Riferimento: scheda 23.9.",
+      "paragrafo": "Magia §27.3.4",
+      "versione_manuale": "Magia (Google Doc dell’08/10/2026, 21:33 UTC)",
+      "costo": 250,
+      "artefatto": {
+        "tipologia": "Consumabili",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "consumabile": {
+          "grado": "II",
+          "incantesimo": "Individuare",
+          "livello": 6,
+          "pm_sigillati": 6,
+          "energia": "Verde",
+          "attivazione": {
+            "azp": 1,
+            "testo": "1 AzP"
+          },
+          "scheda": "23.9",
+          "effetto": "Potere di Rilevazione 6. Permette la percezione delle emanazioni entro 10 Q (15 m), oppure l’analisi di un’area totale di 1 Q entro la stessa gittata. Una sola modalità alla volta. Si sceglie Concentrazione fino a 10 minuti oppure durata fissa di 5 RND. Percezione, analisi, cambi di modalità e occultamenti seguono la scheda. Riconosce l’impronta dell’Oscura Simmetria, ma non certifica la Corruzione personale di una creatura. Riferimento: scheda 23.9."
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "peso": null,
+      "creazione_cr": 125,
+      "TODO(Davide)": "A.155: il §27.3 non dà peso, Qualità, PS Integrità e PI delle pergamene. Intanto il peso resta vuoto (non pesa sul carico) e la pergamena non ha PI."
+    },
+    {
+      "id": "pergamena-di-esorcizzare-corruzione-6",
+      "nome": "Pergamena di Esorcizzare Corruzione 6",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Consumabili",
+      "nomi_alternativi": [],
+      "note_manuale": "Artefatto Mistico consumabile, monouso, con SnT 0 e Cariche Esclusive sigillate Verdi. I PM sono già inclusi nell’oggetto: l’utilizzatore non deve fornirli, conoscere l’Incantesimo o possedere Ritualista. L’attivazione è automatica, salvo eccezioni espresse; restano eventuali Prove per colpire, Difese e Salvezze. I costi di creazione presuppongono il progetto già disponibile. Fuori dal combattimento, richiede Concentrazione e contatto per tutta l’attivazione con una creatura vivente consenziente, oppure incosciente soccorsa. Riduce di uno Stato la Corruzione; lo Stato iniziale non può superare Corrotto. Un solo trattamento efficace ogni 24 ore per beneficiario, considerando insieme pergamene, altri Artefatti e lanci diretti. Non cura Oscuro, non rimuove automaticamente mutazioni permanenti e non espelle possessioni. Riferimento: scheda 21.5.",
+      "paragrafo": "Magia §27.3.5",
+      "versione_manuale": "Magia (Google Doc dell’08/10/2026, 21:33 UTC)",
+      "costo": 250,
+      "artefatto": {
+        "tipologia": "Consumabili",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "consumabile": {
+          "grado": "II",
+          "incantesimo": "Esorcizzare Corruzione",
+          "livello": 6,
+          "pm_sigillati": 6,
+          "energia": "Verde",
+          "attivazione": {
+            "minuti": 10,
+            "testo": "10 minuti",
+            "fuori_combattimento": true
+          },
+          "scheda": "21.5",
+          "effetto": "Fuori dal combattimento, richiede Concentrazione e contatto per tutta l’attivazione con una creatura vivente consenziente, oppure incosciente soccorsa. Riduce di uno Stato la Corruzione; lo Stato iniziale non può superare Corrotto. Un solo trattamento efficace ogni 24 ore per beneficiario, considerando insieme pergamene, altri Artefatti e lanci diretti. Non cura Oscuro, non rimuove automaticamente mutazioni permanenti e non espelle possessioni. Riferimento: scheda 21.5."
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "peso": null,
+      "creazione_cr": 125,
+      "TODO(Davide)": "A.155: il §27.3 non dà peso, Qualità, PS Integrità e PI delle pergamene. Intanto il peso resta vuoto (non pesa sul carico) e la pergamena non ha PI."
+    },
+    {
+      "id": "pergamena-di-rigenerazione-9",
+      "nome": "Pergamena di Rigenerazione 9",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Consumabili",
+      "nomi_alternativi": [],
+      "note_manuale": "Artefatto Mistico consumabile, monouso, con SnT 0 e Cariche Esclusive sigillate Verdi. I PM sono già inclusi nell’oggetto: l’utilizzatore non deve fornirli, conoscere l’Incantesimo o possedere Ritualista. L’attivazione è automatica, salvo eccezioni espresse; restano eventuali Prove per colpire, Difese e Salvezze. I costi di creazione presuppongono il progetto già disponibile. Mantenendo contatto e condizioni della versione per tre ore, avvia la riparazione di una Menomazione permanente in un beneficiario vivente consenziente, oppure incosciente soccorso, purché la parte anatomica sia ancora presente. Il processo si completa nei cinque giorni successivi, senza ulteriore contatto o Concentrazione. Una sola Rigenerazione attiva per beneficiario. Non ricrea un arto mancante a questo livello, non resuscita e non recupera automaticamente Umanità. Le nuove lesioni non entrano nel processo già avviato. Riferimento: scheda 21.10; 25.3–25.4.",
+      "paragrafo": "Magia §27.3.6",
+      "versione_manuale": "Magia (Google Doc dell’08/10/2026, 21:33 UTC)",
+      "costo": 450,
+      "artefatto": {
+        "tipologia": "Consumabili",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "consumabile": {
+          "grado": "III",
+          "incantesimo": "Rigenerazione",
+          "livello": 9,
+          "pm_sigillati": 9,
+          "energia": "Verde",
+          "attivazione": {
+            "ore": 3,
+            "testo": "3 ore continuative"
+          },
+          "scheda": "21.10",
+          "effetto": "Mantenendo contatto e condizioni della versione per tre ore, avvia la riparazione di una Menomazione permanente in un beneficiario vivente consenziente, oppure incosciente soccorso, purché la parte anatomica sia ancora presente. Il processo si completa nei cinque giorni successivi, senza ulteriore contatto o Concentrazione. Una sola Rigenerazione attiva per beneficiario. Non ricrea un arto mancante a questo livello, non resuscita e non recupera automaticamente Umanità. Le nuove lesioni non entrano nel processo già avviato. Riferimento: scheda 21.10; 25.3–25.4."
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "peso": null,
+      "creazione_cr": 225,
+      "TODO(Davide)": "A.155: il §27.3 non dà peso, Qualità, PS Integrità e PI delle pergamene. Intanto il peso resta vuoto (non pesa sul carico) e la pergamena non ha PI."
     }
   ],
   "fuori_scala": {
@@ -2253,5 +2474,115 @@
         "reperibilita": "Eccezionale"
       }
     ]
+  },
+  "consumabili": {
+    "versione_manuale": "Magia (Google Doc dell’08/10/2026, 21:33 UTC)",
+    "fonte": "Magia §27 (Artefatti consumabili); livelli della versione e Grado dal §24.2",
+    "snt": 0,
+    "riserva": {
+      "tipo": "cariche",
+      "alimentazione": "esclusiva",
+      "sigillata": true
+    },
+    "consumo": "completamento",
+    "supporto": {
+      "nome": "pergamena standard",
+      "costo": 25,
+      "costruzione": "Semplice",
+      "ore": 4
+    },
+    "pm_lavoro_per_grado": 3,
+    "vendita_moltiplicatore": 2,
+    "magistrale": {
+      "dimezza": [
+        "pm_lavoro",
+        "reagenti"
+      ],
+      "arrotondamento": "eccesso"
+    },
+    "gradi": [
+      {
+        "grado": "I",
+        "livelli": [
+          1,
+          3
+        ],
+        "reagenti": 50,
+        "creazione": 75,
+        "vendita": 150,
+        "reperibilita": "MR"
+      },
+      {
+        "grado": "II",
+        "livelli": [
+          4,
+          8
+        ],
+        "reagenti": 100,
+        "creazione": 125,
+        "vendita": 250,
+        "reperibilita": "MR"
+      },
+      {
+        "grado": "III",
+        "livelli": [
+          9,
+          11
+        ],
+        "reagenti": 200,
+        "creazione": 225,
+        "vendita": 450,
+        "reperibilita": "MR"
+      },
+      {
+        "grado": "IV",
+        "livelli": [
+          12,
+          14
+        ],
+        "reagenti": 400,
+        "creazione": 425,
+        "vendita": 850,
+        "reperibilita": "LE"
+      },
+      {
+        "grado": "V",
+        "livelli": [
+          15,
+          17
+        ],
+        "reagenti": 800,
+        "creazione": 825,
+        "vendita": 1650,
+        "reperibilita": "LE"
+      },
+      {
+        "grado": "VI",
+        "livelli": [
+          18,
+          18
+        ],
+        "reagenti": 1600,
+        "creazione": 1625,
+        "vendita": 3250,
+        "reperibilita": "LE"
+      }
+    ],
+    "frasi": {
+      "snt": "tutti i Consumabili qui descritti hanno SnT 0 e non richiedono sintonizzazione, anche se producono un effetto attivo.",
+      "cariche": "Non si può estrarla, trasferirla, ricaricarla o sostituirla con PM personali o altre fonti.",
+      "utilizzatore": "L’utilizzatore non deve conoscere l’Incantesimo né essere un Ritualista.",
+      "attivazione": "L’attivazione è automatica e non richiede Prove di Potere o Rituali, salvo un’eccezione espressa dell’oggetto.",
+      "restano": "Restano quelli dell’Incantesimo infuso il tempo di esecuzione, la gittata, i bersagli, la durata, la Concentrazione, le eventuali Prove per colpire, le Difese, le Salvezze, i cumuli e gli altri limiti.",
+      "interruzione": "Se questa viene interrotta prima del completamento, non si produce l’effetto e l’oggetto resta disponibile.",
+      "consumo": "Dopo il completamento l’oggetto è consumato anche se l’attacco manca o il bersaglio supera la Salvezza.",
+      "durata": "Un effetto a durata prosegue dopo la dissoluzione del supporto; l’utilizzatore mantiene la Concentrazione quando richiesta.",
+      "supporto": "La complessità e il costo di un supporto diverso dipendono dalla sua costruzione effettiva; non si presume che ogni altro oggetto costi 25 cr.",
+      "pm": "I PM richiesti per creare il Consumabile sono 3 × Grado per il lavoro d’infusione, più l’intero costo base in PM della versione da sigillare.",
+      "magistrale": "Con un Successo Magistrale si dimezzano, arrotondando per eccesso, i PM di lavoro e i reagenti; i PM sigillati dell’Incantesimo restano interi.",
+      "vendita": "Vendita = doppio di tale costo: prezzo indicativo da playtest, distinto dal valore di rivendita e dalla possibilità concreta di trovare un’offerta.",
+      "inventario": "Si registra la quantità posseduta e se ne sottrae una solo al completamento dell’attivazione.",
+      "campionario": "I sei profili costituiscono un campionario di catalogo, non una nuova assegnazione automatica ai personaggi."
+    }
   }
 }

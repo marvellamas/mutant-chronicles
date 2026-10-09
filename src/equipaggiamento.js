@@ -1314,7 +1314,8 @@ export function calcolaEquipaggiamento(base, voci, dati) {
 
   // §7.10: la somma dei costi degli Artefatti sintonizzati non supera la capacità del personaggio
   const rs = regoleSintonizzazione(dati);
-  const artefatti = oggetti.filter((o) => !o.fuoriCatalogo).map((o) => ({ o, a: infoArtefattoVoce(o, dati) })).filter((x) => x.a);
+  // Magia §27.1: i Consumabili (SnT 0, niente sintonizzazione) non entrano nel budget: hanno la loro sezione (src/consumabili-mistici.js)
+  const artefatti = oggetti.filter((o) => !o.fuoriCatalogo).map((o) => ({ o, a: infoArtefattoVoce(o, dati) })).filter((x) => x.a && !x.a.consumabile);
   let sintonizzazione = null;
   if (rs && artefatti.length) {
     const gradi = Math.min(Math.max(base.gradiComplessivi ?? 1, 1), rs.capacita_per_gradi.length);

@@ -67,6 +67,7 @@ export function validaDati(dati) {
   validaEquipaggiamento(dati.equipaggiamento, [...nomiAbilita], [...(idSpec ?? [])], err, Object.keys(dati.regole?.chroma?.colori ?? {}).filter((c) => !dati.regole.chroma.colori[c]?.esausto && dati.regole.chroma.colori[c]?.contenitore !== false), Object.keys(dati.regole?.corruzione ?? {}));
   if (dati.regole?.chroma !== undefined) validaChroma(dati, err);
   if (dati.equipaggiamento?.file) validaNec(dati, err);
+  if (dati.equipaggiamento?.file?.artefatti?.consumabili !== undefined) validaConsumabili(dati, err);
   if (dati.equipaggiamento?.file) validaUmanita(dati, err);
   if (dati.regole) validaSchedaDigitale(dati, err);
   if (isOggetto(dati.dotazioni)) validaDotazioni(dati, err);
@@ -1569,6 +1570,11 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
       if (!isOggetto(a.contenitore) || !coloriChroma.includes(a.contenitore.energia) || !isIntero(a.contenitore.capacita_pm) || a.contenitore.integrato) err(F, `${k}.contenitore`, 'serve { energia, capacita_pm }, non integrato');
       continue;
     }
+    // Magia §27: Artefatto consumabile, SnT 0, senza sintonizzazione né riserva del PG (validaConsumabili)
+    if (isOggetto(a) && a.consumabile !== undefined) {
+      if (a.sintonizzazione !== 0 || a.sintonizzabile !== false || a.potenza !== undefined || a.contenitore !== undefined) err(F, k, 'un Artefatto consumabile ha SnT 0, non è sintonizzabile, non ha potenza né riserva: le Cariche sono sigillate (Magia §27.1)');
+      continue;
+    }
     if (!isOggetto(a) || !isTesto(a.tipologia) || !isTesto(a.potenza) || !isIntero(a.sintonizzazione)) { err(F, k, 'serve { tipologia, potenza, sintonizzazione, sintonizzabile, contenitore? }'); continue; }
     // Magia §24.2: proprietà infuse di un Artefatto del catalogo (Pietra della Vigilanza): incantesimo e livello
     if (a.infusi !== undefined && !(Array.isArray(a.infusi) && a.infusi.every((x) => isOggetto(x) && isTesto(x.incantesimo) && isIntero(x.livello)))) err(F, `${k}.infusi`, 'serve [{ incantesimo, livello }]');
@@ -1734,6 +1740,60 @@ function validaCura(F, k, c, err) {
 // Equipaggiamento iniziale (data/dotazioni.json, Giocatore §2.16, E&L A.5–A.5.29)
 
 // Giocatore §5.21 e Equipaggiamento §7.1: Umanità, fasce e impianti; rif_sostituiti dell'indice
+/**
+ * Artefatti consumabili (Magia §27): la tabella per Grado (creazione = supporto + reagenti, vendita = doppio, livelli
+ * della versione del §24.2 contigui da 1 a 18) e le schede del catalogo con un «consumabile»: Grado coerente con il
+ * livello, Incantesimo e versione esistenti, PM sigillati della versione, prezzo, creazione e reperibilità del Grado.
+ */
+function validaConsumabili(dati, err) {
+  const F = 'equipaggiamento/artefatti';
+  const R = dati.equipaggiamento.file.artefatti.consumabili;
+  if (!isOggetto(R)) { err(F, 'consumabili', 'deve essere un oggetto'); return; }
+  if (R.snt !== 0) err(F, 'consumabili.snt', 'i Consumabili hanno SnT 0 (Magia §27.1)');
+  if (!isOggetto(R.supporto) || !isIntero(R.supporto.costo) || !isIntero(R.supporto.ore)) err(F, 'consumabili.supporto', 'serve { nome, costo, costruzione, ore }');
+  if (!isIntero(R.pm_lavoro_per_grado) || !isIntero(R.vendita_moltiplicatore)) err(F, 'consumabili', 'servono pm_lavoro_per_grado e vendita_moltiplicatore interi');
+  if (!isOggetto(R.magistrale) || !Array.isArray(R.magistrale.dimezza) || R.magistrale.dimezza.some((x) => !['pm_lavoro', 'reagenti'].includes(x))) err(F, 'consumabili.magistrale.dimezza', 'elenco fra pm_lavoro e reagenti');
+  const romani = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+  const gradi = Array.isArray(R.gradi) ? R.gradi : [];
+  if (gradi.length !== 6) err(F, 'consumabili.gradi', 'sei righe, Gradi I–VI (Magia §27.2)');
+  let atteso = 1;
+  gradi.forEach((g, i) => {
+    const k = `consumabili.gradi[${i}]`;
+    if (g?.grado !== romani[i]) err(F, `${k}.grado`, `atteso "${romani[i]}"`);
+    if (!Array.isArray(g?.livelli) || g.livelli.length !== 2 || g.livelli[0] !== atteso || !(g.livelli[1] >= g.livelli[0])) err(F, `${k}.livelli`, `[da, a] con da = ${atteso} (livelli della versione contigui, Magia §24.2)`);
+    else atteso = g.livelli[1] + 1;
+    if (isIntero(R.supporto?.costo) && g?.creazione !== R.supporto.costo + g?.reagenti) err(F, `${k}.creazione`, `deve valere supporto + reagenti = ${R.supporto.costo + g?.reagenti} (§27.2), trovato ${g?.creazione}`);
+    if (g?.vendita !== g?.creazione * R.vendita_moltiplicatore) err(F, `${k}.vendita`, `deve valere ${R.vendita_moltiplicatore} × creazione = ${g?.creazione * R.vendita_moltiplicatore} (§27.2), trovato ${g?.vendita}`);
+    if (!['MR', 'LE'].includes(g?.reperibilita)) err(F, `${k}.reperibilita`, 'MR o LE (§27.2)');
+  });
+  if (gradi.length && atteso !== 19) err(F, 'consumabili.gradi', 'i livelli devono arrivare a 18');
+  const incantesimi = dati.incantesimi?.incantesimi ?? [];
+  const colori = Object.keys(dati.regole?.chroma?.colori ?? {});
+  const livello = (v) => parseInt(String(v?.Livello ?? v?.['Livello e PM'] ?? '').replace(/[^\d]/g, ''), 10);
+  (dati.equipaggiamento.file.artefatti.oggetti ?? []).forEach((o, i) => {
+    const c = o?.artefatto?.consumabile;
+    if (c === undefined) return;
+    const k = `oggetti[${i}] (${o.id}).artefatto.consumabile`;
+    const g = gradi.find((x) => x.grado === c?.grado);
+    if (!g) { err(F, `${k}.grado`, `"${c?.grado}" non è un Grado della tabella`); return; }
+    if (!isIntero(c.livello) || c.livello < g.livelli[0] || c.livello > g.livelli[1]) err(F, `${k}.livello`, `il livello ${c.livello} non è del Grado ${g.grado} (Magia §24.2)`);
+    const inc = incantesimi.find((x) => x.nome === c.incantesimo);
+    const v = inc?.versioni?.find((x) => livello(x) === c.livello);
+    if (!inc) err(F, `${k}.incantesimo`, `Incantesimo "${c.incantesimo}" inesistente in incantesimi.json`);
+    else if (!v) err(F, `${k}.livello`, `${c.incantesimo} non ha la versione di livello ${c.livello}`);
+    else if (v.PM !== undefined && v.PM !== null && Number(v.PM) !== c.pm_sigillati) err(F, `${k}.pm_sigillati`, `la versione ha ${v.PM} PM, trovato ${c.pm_sigillati}`);
+    if (!isIntero(c.pm_sigillati) || c.pm_sigillati < 1) err(F, `${k}.pm_sigillati`, 'intero ≥ 1');
+    if (colori.length && !colori.includes(c.energia)) err(F, `${k}.energia`, `"${c.energia}" non è un colore del Chroma`);
+    const a = c.attivazione;
+    const modi = isOggetto(a) ? ['azp', 'minuti', 'ore'].filter((x) => a[x] !== undefined) : [];
+    if (modi.length !== 1 || !isIntero(a[modi[0]]) || a[modi[0]] < 1 || !isTesto(a.testo)) err(F, `${k}.attivazione`, 'serve { testo } con uno solo fra azp, minuti, ore (intero ≥ 1)');
+    if (!isTesto(c.effetto)) err(F, `${k}.effetto`, 'testo dell’effetto mancante');
+    if (o.costo !== g.vendita) err(F, `oggetti[${i}] (${o.id}).costo`, `prezzo di vendita del Grado ${g.grado}: ${g.vendita} (§27.2), trovato ${o.costo}`);
+    if (o.creazione_cr !== g.creazione) err(F, `oggetti[${i}] (${o.id}).creazione_cr`, `creazione del Grado ${g.grado}: ${g.creazione} (§27.2), trovato ${o.creazione_cr}`);
+    if (o.reperibilita !== g.reperibilita) err(F, `oggetti[${i}] (${o.id}).reperibilita`, `reperibilità del Grado ${g.grado}: ${g.reperibilita} (§27.2)`);
+  });
+}
+
 function validaUmanita(dati, err) {
   const FR = 'regole';
   const conImpianti = Object.values(dati.equipaggiamento.file).some((f) => (f?.oggetti ?? []).some((o) => o?.tipo === 'impianto'));

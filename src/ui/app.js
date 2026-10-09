@@ -31,6 +31,7 @@ import { controlloInUso } from './ridisegno.js';
 import { urlMuovi, alRound, collegamentoScontro, tecnicheScadute, statiScaduti, durateCarta, testoDurata, idPg } from '../round-scontro.js';
 import { bloccoControNemico } from './attacco-pg.js';
 import { registraIncantesimo, terminaIncantesimo, concentrazioniInterrotte } from '../durate-incantesimi.js';
+import { usaConsumabile, consumabiliMistici } from '../consumabili-mistici.js';
 import { segnaDalTavolo, arrivoDalTavolo, tornaAlTavolo, scorrimentoDaRimettere, dimenticaTavolo, segnaDallaMappa, arrivoDallaMappa, tornaAllaMappa, dimenticaMappa } from './ritorno.js';
 import { PASSI, passoVisibile, requisitoPasso } from './passi.js';
 import { inizializzaTooltip, nascondiTooltip } from './tooltip.js';
@@ -1529,6 +1530,27 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
           nuova = modificaSessione(con, {}, massimi);
         }
         cambiaSessione(nuova);
+      },
+      // Magia §27: «Usa» di un Consumabile completato: un esemplare in meno nell'Inventario (§27.4) e, se l'effetto ha
+      // una durata, fra gli incantesimi in corso come un lancio; in uno scontro solo le attivazioni in AzP
+      usaConsumabile: async (uid, registrazione = null) => {
+        if (stato.scontroPg && registrazione) { await aggiornaRoundScontro(); stato.sessione = sessioneVista(); }
+        const nome = consumabiliMistici(stato.scelte.equipaggiamento, dati).find((x) => x.uid === uid)?.nome ?? 'consumabile';
+        const esito = usaConsumabile(stato.scelte.equipaggiamento, uid, dati, { inScontro: !!stato.scontroPg });
+        if (!esito) { avvisoErrore('Consumabile non utilizzabile ora (nel deposito comune, oppure non si attiva in un Round).'); renderScheda({ mantieniScorrimento: true }); return; }
+        const { scelte, avvisi } = applicaModifica(stato.scelte, { equipaggiamento: esito.voci }, dati);
+        stato.scelte = scelte;
+        if (registrazione) {
+          const quando = calendarioAttivo(stato.calendario) ? momentoCalendario(stato.calendario, dati) : null;
+          const con = registraIncantesimo(stato.sessione, { ...registrazione, ...(quando ? { quando } : {}) }, dati);
+          const interrotte = concentrazioniInterrotte(stato.sessione, con);
+          if (interrotte.length) avviso(`Concentrazione interrotta: ${interrotte.join(', ')} (si mantiene un solo incantesimo).`, { tipo: 'info' });
+          stato.sessione = con;
+        }
+        stato.messaggioScheda = avvisi.length ? { tipo: 'attenzione', testo: avvisi.join(' ') }
+          : { tipo: 'ok', testo: `Usato: ${nome}. ${esito.esaurito ? 'Era l’ultimo: esaurito.' : `Ne restano ${esito.rimasti}.`}` };
+        persisti();
+        renderScheda({ mantieniScorrimento: true });
       },
       terminaIncantesimo: (uid) => cambiaSessione(modificaSessione(terminaIncantesimo(stato.sessione, uid), {}, massimi)),
       // Batteria Matrice (Magia §26.4) e Artefatti con attivazione a durata (Armamenti §7.24): modifiche annullabili

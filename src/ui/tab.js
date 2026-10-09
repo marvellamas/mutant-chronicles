@@ -41,6 +41,8 @@ import { regoleRiparazione, esitoRiparazione, vaRiparazione, riparabile } from '
 import { annullaPerdita, togliRecupero, preventivoIntervento, riabilitazione } from '../umanita.js';
 import { impiantiAttivabili, cartucceDi, impostaCartucce, somministra, statoProcessore, attivaChip, terminaChip, nuovoIntervalloChip } from '../impianti.js';
 import { tabVeicoli, promemoriaConducente } from './veicoli.js';
+import { consumabiliScheda, schedaConsumabile, rigaConsumabile } from './consumabili.js';
+import { incantesimiInCorso } from '../durate-incantesimi.js';
 
 export const POSIZIONI_TAB = [
   { id: 'alto', etichetta: 'In alto, con Punti Eroe, PV e PM a sinistra (predefinita)' },
@@ -586,6 +588,9 @@ function tavoloRigaInventario(ctx, r) {
   }
   // NEC (Equipaggiamento 0.5, §5.4): riserva attuale come i PM dei contenitori, con − e + e la provenienza
   for (const x of riserveNec([r.voce], ctx.dati)) nodi.push(rigaNec(ctx, r, x));
+  // Magia §27.4: un Consumabile si vede anche fra i Consumabili dell'equipaggiamento, con lo stesso «Usa»
+  const pergamena = r.def?.artefatto?.consumabile ? consumabiliScheda(ctx).find((x) => x.uid === r.uid) : null;
+  if (pergamena) nodi.push(rigaConsumabile(ctx, pergamena));
   const kit = consumabili([r.voce], ctx.dati)[0];
   if (kit) {
     nodi.push(pannelloMunizioni(ctx, { uid: kit.uid, nome: kit.nome, munizioni: { capacita: kit.capacita, unita: kit.unita, ricarica: kit.ricarica ? `${kit.ricarica.applicazioni} ${kit.unita} costano ${kit.ricarica.costo.toLocaleString('it-IT')}` : null } }));
@@ -1503,6 +1508,8 @@ function tabCombattimento(ctx, d) {
       // §7.10: sintonizzazione e riserve stanno nella tab Artefatti (docs/layout-sd.md, pezzo 4)
       ctx.tab.scheda.equipaggiamento?.sintonizzazione ? h('p', { class: 'nota' }, 'Artefatti: sintonizzazione, attivazioni e riserve di Chroma nella tab Artefatti; qui le armi e le protezioni Artefatto mostrano già i loro effetti nei valori.') : null,
 
+        // Magia §27: Consumabili con attivazione in AzP (pergamene), con «Usa»; gli altri nella tab Artefatti
+        consumabiliCombattimento(ctx),
         sanitari.length ? h('p', { class: 'nota' }, `Kit e dispositivi sanitari (${sanitari.map((c) => c.nome).join(', ')}): le applicazioni si contano nella tab Inventario (§7.19).`) : null),
 
       h('aside', { class: 'colonna-stati', 'aria-label': 'Ferite, Affaticamento, Corruzione e Stati' },
@@ -2112,6 +2119,8 @@ function sezioneDaArtefatti(ctx) {
 function tabArtefatti(ctx) {
   const eq = ctx.tab.scheda.equipaggiamento;
   const st = eq?.sintonizzazione;
+  const cons = consumabiliScheda(ctx);
+  if (!st && cons.length) return [sezioneConsumabili(ctx, cons)];
   if (!st) {
     return [h('section', { class: 'riquadro nessun-potere' }, h('h2', {}, 'Nessun Artefatto'),
       h('p', { class: 'nota' }, 'Gli Artefatti Mistici si acquistano e si tengono nella tab Inventario (sezione «Artefatti, cristalli e contenitori di Chroma»); qui si gestiscono sintonizzazione, attivazioni e riserve (Armamenti §7.5, §7.10).'))];
@@ -2169,7 +2178,29 @@ function tabArtefatti(ctx) {
     esterni.length ? sezione('Riserve di Chroma',
       h('p', { class: 'nota' }, 'Cristalli, batterie e contenitori: i PM si modificano anche nel riquadro Punti Magia. Un contenitore alimenta un lancio se trasportato, sintonizzato e compatibile (Magia sez. 6).'),
       h('div', { class: 'armi-tab' }, esterni.map((c) => schedaContenitore(ctx, c)))) : null,
+    cons.length ? sezioneConsumabili(ctx, cons) : null,
   ];
+}
+
+/**
+ * Sottocategoria «Consumabili» della tab Artefatti (Magia §27.4): una scheda per voce con quantità, effetto e «Usa»;
+ * gli effetti a durata si seguono negli «Incantesimi in corso», mostrati qui anche a chi non ha la magia.
+ */
+function sezioneConsumabili(ctx, cons) {
+  const inCorso = incantesimiInCorso(ctx.sessione).length > 0;
+  return sezione('Consumabili',
+    h('p', { class: 'nota' }, 'Artefatti monouso (Magia §27): SnT 0, niente sintonizzazione; i PM sono sigillati nell’oggetto e non si estraggono. Si consumano solo quando l’attivazione è completata, anche se l’attacco manca o il bersaglio supera la Salvezza; un’attivazione interrotta non consuma nulla.'),
+    h('div', { class: 'armi-tab' }, cons.map((x) => schedaConsumabile(ctx, x))),
+    inCorso ? riquadroIncantesimiInCorso(ctx) : null);
+}
+
+/** Tab Combattimento: i Consumabili che si attivano in un Round (1 AzP), con «Usa». */
+function consumabiliCombattimento(ctx) {
+  const lista = consumabiliScheda(ctx).filter((x) => x.attivazione.inRound && !x.deposito);
+  if (!lista.length) return null;
+  return h('div', { class: 'consumabili-combattimento' }, h('h3', {}, 'Consumabili'),
+    lista.map((x) => h('div', {}, h('strong', {}, x.nome), ' ', rigaConsumabile(ctx, x))),
+    h('p', { class: 'nota' }, 'Attivazione in Azione Principale, senza Prove di Potere; restano Prove per colpire, Difese e Salvezze dell’Incantesimo (Magia §27.1). Gli altri Consumabili nella tab Artefatti.'));
 }
 
 /**

@@ -171,7 +171,9 @@ function voceEquip(ctx, r, risolte, cambia) {
         title: st === 'deposito' ? 'Resta del personaggio, ma fuori dal carico e senza effetti; non disponibile al tavolo.' : null,
       }, st === null ? 'Con sé' : NOMI_STATI[st]))) : null,
     ctx.rigaExtra ? ctx.rigaExtra(r) : null,
-    art && ctx.inventario ? h('p', { class: 'nota' }, `${v.sintonizzato === true && !r.deposito ? 'Sintonizzato' : 'Non sintonizzato'} (SnT ${art.sintonizzazione}, §7.10): si gestisce nella tab Artefatti.`)
+    // Magia §27.1: un Consumabile non si sintonizza; «Usa» nella riga del tavolo e nella tab Artefatti
+    art?.consumabile ? h('p', { class: 'nota' }, `Consumabile monouso: SnT 0, non si sintonizza; ${art.consumabile.pm_sigillati} PM sigillati, non utilizzabili come riserva (Magia §27.1).`)
+      : art && ctx.inventario ? h('p', { class: 'nota' }, `${v.sintonizzato === true && !r.deposito ? 'Sintonizzato' : 'Non sintonizzato'} (SnT ${art.sintonizzazione}, §7.10): si gestisce nella tab Artefatti.`)
       : art ? h('label', { class: 'campo-inline' },
         h('input', { type: 'checkbox', checked: v.sintonizzato === true, onchange: (e) => cambia(v.uid, { sintonizzato: e.target.checked || undefined }) }),
         ` Sintonizzato (SnT ${art.sintonizzazione}, §7.10)`) : null,

@@ -1,5 +1,6 @@
 // Contenuto dei tooltip e della scheda completa degli incantesimi, ricavato solo dai dati.
 // Funzioni pure: la UI (src/ui/tooltip.js) trasforma il risultato in DOM.
+import { costiCreazione } from './consumabili-mistici.js';
 import { catalogo, NOMI_TIPI, moduliDi, munizioneDiRiferimento, tabellaSin, tabellaMunizioniArmi, NOMI_FAMIGLIE_MUNIZIONI, infoArtefatto, testoCura, testoProvaPostazione } from './equipaggiamento.js';
 
 const trova = (lista, nome) => lista.find((x) => x.nome === nome);
@@ -154,7 +155,14 @@ function tooltipOggetto(rif, dati) {
   if (o.confezione) riga.Confezione = `${o.confezione.quantita} × ${o.confezione.costo.toLocaleString('it-IT')}`;
   if (o.cella) sezioni.push({ etichetta: 'Capacità', testo: `${o.cella.capacita} ${o.cella.unita}; riempirla o ricaricarla costa ${o.cella.ricarica_costo.toLocaleString('it-IT')}` });
   const art = infoArtefatto(o, dati);
-  if (art) sezioni.push({ etichetta: 'Artefatto', testo: `${art.tipologia}; potenza ${art.potenza}, SnT ${art.sintonizzazione} (costo di Sintonizzazione)${art.contenitore ? `; ${art.contenitore.integrato ? 'riserva integrata' : 'contenitore'} di ${art.contenitore.capacita_pm} PM (Chroma ${art.contenitore.energia})` : ''} (§7.10).` });
+  // Magia §27: Artefatto consumabile, con i costi di creazione del §27.2
+  const cons = art?.consumabile ? costiCreazione({ grado: art.consumabile.grado, pmSigillati: art.consumabile.pm_sigillati }, dati) : null;
+  if (art?.consumabile) {
+    const c = art.consumabile;
+    sezioni.push({ etichetta: 'Consumabile', testo: `${c.incantesimo} ${c.livello}, Grado ${c.grado}: ${c.pm_sigillati} PM sigillati in Cariche Esclusive di Chroma ${c.energia} (non una riserva del personaggio); SnT 0, nessuna sintonizzazione. Attivazione: ${c.attivazione.testo}, senza Prove di Potere; si consuma al completamento (Magia §27.1).` },
+      { etichetta: 'Effetto', testo: c.effetto });
+    if (cons) sezioni.push({ etichetta: 'Creazione', testo: `Con il progetto disponibile: ${cons.creazione.toLocaleString('it-IT')} cr (supporto ${cons.supporto} + reagenti ${cons.reagenti}), ${cons.ore} ore di costruzione, ${cons.pmTotali} PM (${cons.pmLavoro} di lavoro + ${cons.pmSigillati} sigillati); vendita indicativa ${cons.vendita.toLocaleString('it-IT')} cr (Magia §27.2).` });
+  } else if (art) sezioni.push({ etichetta: 'Artefatto', testo: `${art.tipologia}; potenza ${art.potenza}, SnT ${art.sintonizzazione} (costo di Sintonizzazione)${art.contenitore ? `; ${art.contenitore.integrato ? 'riserva integrata' : 'contenitore'} di ${art.contenitore.capacita_pm} PM (Chroma ${art.contenitore.energia})` : ''} (§7.10).` });
   // risposta A.21: fonte di Corruzione passiva (regole.json → corruzione)
   const cp = o.corruzione_passiva ? dati.regole?.corruzione?.[o.corruzione_passiva] : null;
   if (cp) {
