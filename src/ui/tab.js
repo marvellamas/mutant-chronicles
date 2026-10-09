@@ -41,7 +41,7 @@ import { regoleRiparazione, esitoRiparazione, vaRiparazione, riparabile } from '
 import { annullaPerdita, togliRecupero, preventivoIntervento, riabilitazione } from '../umanita.js';
 import { impiantiAttivabili, cartucceDi, impostaCartucce, somministra, statoProcessore, attivaChip, terminaChip, nuovoIntervalloChip } from '../impianti.js';
 import { tabVeicoli, promemoriaConducente } from './veicoli.js';
-import { consumabiliScheda, schedaConsumabile, rigaConsumabile } from './consumabili.js';
+import { consumabiliScheda, schedaConsumabile, rigaConsumabile, pannelloCreaConsumabile } from './consumabili.js';
 import { incantesimiInCorso } from '../durate-incantesimi.js';
 
 export const POSIZIONI_TAB = [
@@ -589,7 +589,7 @@ function tavoloRigaInventario(ctx, r) {
   // NEC (Equipaggiamento 0.5, §5.4): riserva attuale come i PM dei contenitori, con − e + e la provenienza
   for (const x of riserveNec([r.voce], ctx.dati)) nodi.push(rigaNec(ctx, r, x));
   // Magia §27.4: un Consumabile si vede anche fra i Consumabili dell'equipaggiamento, con lo stesso «Usa»
-  const pergamena = r.def?.artefatto?.consumabile ? consumabiliScheda(ctx).find((x) => x.uid === r.uid) : null;
+  const pergamena = r.tipo === 'artefatto' ? consumabiliScheda(ctx).find((x) => x.uid === r.uid) : null;
   if (pergamena) nodi.push(rigaConsumabile(ctx, pergamena));
   const kit = consumabili([r.voce], ctx.dati)[0];
   if (kit) {
@@ -2120,10 +2120,11 @@ function tabArtefatti(ctx) {
   const eq = ctx.tab.scheda.equipaggiamento;
   const st = eq?.sintonizzazione;
   const cons = consumabiliScheda(ctx);
-  if (!st && cons.length) return [sezioneConsumabili(ctx, cons)];
   if (!st) {
-    return [h('section', { class: 'riquadro nessun-potere' }, h('h2', {}, 'Nessun Artefatto'),
-      h('p', { class: 'nota' }, 'Gli Artefatti Mistici si acquistano e si tengono nella tab Inventario (sezione «Artefatti, cristalli e contenitori di Chroma»); qui si gestiscono sintonizzazione, attivazioni e riserve (Armamenti §7.5, §7.10).'))];
+    // Magia §27: i Consumabili (e «Crea consumabile») ci sono anche senza Artefatti da sintonizzare
+    return [cons.length ? null : h('section', { class: 'riquadro nessun-potere' }, h('h2', {}, 'Nessun Artefatto'),
+      h('p', { class: 'nota' }, 'Gli Artefatti Mistici si acquistano e si tengono nella tab Inventario (sezione «Artefatti, cristalli e contenitori di Chroma»); qui si gestiscono sintonizzazione, attivazioni e riserve (Armamenti §7.5, §7.10).')),
+      sezioneConsumabili(ctx, cons)];
   }
   const rs = regoleSintonizzazione(ctx.dati);
   const cat = catalogo(ctx.dati);
@@ -2178,7 +2179,7 @@ function tabArtefatti(ctx) {
     esterni.length ? sezione('Riserve di Chroma',
       h('p', { class: 'nota' }, 'Cristalli, batterie e contenitori: i PM si modificano anche nel riquadro Punti Magia. Un contenitore alimenta un lancio se trasportato, sintonizzato e compatibile (Magia sez. 6).'),
       h('div', { class: 'armi-tab' }, esterni.map((c) => schedaContenitore(ctx, c)))) : null,
-    cons.length ? sezioneConsumabili(ctx, cons) : null,
+    sezioneConsumabili(ctx, cons),
   ];
 }
 
@@ -2190,7 +2191,8 @@ function sezioneConsumabili(ctx, cons) {
   const inCorso = incantesimiInCorso(ctx.sessione).length > 0;
   return sezione('Consumabili',
     h('p', { class: 'nota' }, 'Artefatti monouso (Magia §27): SnT 0, niente sintonizzazione; i PM sono sigillati nell’oggetto e non si estraggono. Si consumano solo quando l’attivazione è completata, anche se l’attacco manca o il bersaglio supera la Salvezza; un’attivazione interrotta non consuma nulla.'),
-    h('div', { class: 'armi-tab' }, cons.map((x) => schedaConsumabile(ctx, x))),
+    cons.length ? h('div', { class: 'armi-tab' }, cons.map((x) => schedaConsumabile(ctx, x))) : h('p', { class: 'vuoto' }, 'Nessun Consumabile: si comprano nell’Inventario (Artefatti, famiglia «Consumabili») o si creano qui sotto.'),
+    pannelloCreaConsumabile(ctx),
     inCorso ? riquadroIncantesimiInCorso(ctx) : null);
 }
 

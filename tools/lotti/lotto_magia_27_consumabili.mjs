@@ -34,6 +34,52 @@ j.consumabili = {
     { grado: 'V', livelli: [15, 17], reagenti: 800, creazione: 825, vendita: 1650, reperibilita: 'LE' },
     { grado: 'VI', livelli: [18, 18], reagenti: 1600, creazione: 1625, vendita: 3250, reperibilita: 'LE' },
   ],
+  // Parte 2 (prompt 9): «Crea consumabile». Il §27.2 richiama le tre fasi del §24 con requisiti, penalità, tempi ed esiti
+  // ordinari: progetto (Artefatti, §24.3), supporto (Tecnologia, §24.4), infusione (Rituali, §24.5–24.6); i reagenti e i PM
+  // sono quelli del §27.2 (tabella «gradi» e pm_lavoro_per_grado). L'Officiante ha l'accesso di regole.json → rituali.
+  supporti: [
+    { id: 'pergamena', nome: 'Pergamena standard', costo: 25, complessita: 'Semplice' },
+    { id: 'altro', nome: 'Altro supporto', costo: null, complessita: null, nota: 'Costo e complessità dipendono dalla costruzione effettiva (§27.2): li dà la ricetta o il preventivo di lavorazione (§24.4).' },
+  ],
+  creazione: {
+    progetto: {
+      abilita: 'Artefatti',
+      gradi: [
+        { grado: 'I', va: 0, ore: 4, risorse: 100 }, { grado: 'II', va: -2, ore: 8, risorse: 200 }, { grado: 'III', va: -4, ore: 16, risorse: 400 },
+        { grado: 'IV', va: -6, ore: 32, risorse: 800 }, { grado: 'V', va: -8, ore: 64, risorse: 1600 }, { grado: 'VI', va: -10, ore: 128, risorse: 3200 },
+      ],
+      ore_al_giorno: 8,
+      bonus_magistrale_tecnologia: 2,
+      ritentare: { fallimento: { ore: 0.5, risorse: 1 }, maldestro: { ore: 1, risorse: 1 } },
+      frase: 'Le risorse indicate vengono consumate anche se il progetto fallisce; non comprendono il supporto fisico, il Chroma o i reagenti d’infusione.',
+      fonte: 'Magia §24.3',
+    },
+    costruzione: {
+      abilita: 'Tecnologia',
+      complessita: [
+        { nome: 'Semplice', va: 0, ore: 4 }, { nome: 'Ordinaria', va: -2, ore: 8 },
+        { nome: 'Complessa', va: -4, ore: 16 }, { nome: 'Molto complessa', va: -6, ore: 32 },
+      ],
+      bonus_magistrale_rituali: 2,
+      ritentare: { fallimento: { ore: 0.5, materiali: 0.25 }, maldestro: { ore: 1, materiali: 1 } },
+      fonte: 'Magia §24.4',
+    },
+    infusione: {
+      abilita: 'Rituali',
+      gradi: [
+        { grado: 'I', va: 0, ore: 1 }, { grado: 'II', va: -2, ore: 2 }, { grado: 'III', va: -4, ore: 3 },
+        { grado: 'IV', va: -6, ore: 4 }, { grado: 'V', va: -8, ore: 6 }, { grado: 'VI', va: -10, ore: 8 },
+      ],
+      esiti: {
+        fallimento: { reagenti: true, pm: true, supporto: 'riutilizzabile' },
+        maldestro: { reagenti: true, pm: true, supporto: 'perde 1 PI e va riparato prima di ritentare' },
+        interrotta: { reagenti: true, pm: false, supporto: 'riutilizzabile' },
+      },
+      'TODO(Davide)': 'A.156: con un Fallimento o un Maldestro dell’infusione di un Consumabile i «PM consumati» del §24.5 sono tutti, compresi quelli che sarebbero stati sigillati, oppure solo i PM di lavoro (3 × Grado)? Intanto: tutti.',
+      fonte: 'Magia §24.5, §24.6; §27.2',
+    },
+    'TODO(Davide)': 'A.157: le schede con «Rituale: non consentito» (Colpo Elementale, Cono Elementale e altre cinque) si possono infondere in un Consumabile? Intanto sì, con un avviso nel modulo.',
+  },
   frasi: {
     snt: 'tutti i Consumabili qui descritti hanno SnT 0 e non richiedono sintonizzazione, anche se producono un effetto attivo.',
     cariche: 'Non si può estrarla, trasferirla, ricaricarla o sostituirla con PM personali o altre fonti.',

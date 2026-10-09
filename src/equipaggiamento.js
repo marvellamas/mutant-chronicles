@@ -225,6 +225,8 @@ export function infoArtefatto(def, dati) {
 export function infoArtefattoVoce(r, dati) {
   if (r.def) return infoArtefatto(r.def, dati);
   const p = r.voce?.personalizzato;
+  // Magia §27: Consumabile creato dal giocatore («Crea consumabile», src/consumabili-mistici.js)
+  if (p?.tipo === 'artefatto' && p.consumabile) return consumabileCreato(p.consumabile, dati);
   if (!p || p.tipo !== 'artefatto' || !p.potenza) return null;
   const rs = regoleSintonizzazione(dati);
   if (!Number.isInteger(rs?.potenze?.[p.potenza])) return null;
@@ -241,6 +243,54 @@ export function infoArtefattoVoce(r, dati) {
   }
   const contenitore = p.energia && Number.isInteger(p.capacita_pm) ? { energia: p.energia, capacita_pm: p.capacita_pm } : undefined;
   return { tipologia: contenitore ? 'Batterie e contenitori' : 'Accessori', potenza: p.potenza, sintonizzazione: costo, sintonizzabile: true, proprieta_attive: true, ...(contenitore ? { contenitore } : {}) };
+}
+
+// numero in testa a un testo («6», «9 PM»), come src/lancio.js
+const numeroIn = (v) => { const n = parseInt(String(v ?? '').replace(/[^\d]/g, ''), 10); return Number.isFinite(n) ? n : null; };
+
+/**
+ * Attivazione di un Consumabile dal tempo di esecuzione dell'Incantesimo infuso (Magia §27.1: «Restano quelli
+ * dell’Incantesimo infuso il tempo di esecuzione…»): «1 AP» → 1 AzP; minuti e ore; le procedure fuori dal combattimento
+ * restano in parole. Rigenerazione (Rituale della sez. 25) ha le ore della sua tabella.
+ */
+export function attivazioneDaIncantesimo(inc, livello) {
+  const pr = inc?.meccanica?.procedura_rituale?.versioni?.find((x) => x.livello === livello);
+  if (pr?.ore) return { ore: pr.ore, testo: `${pr.ore} ore continuative` };
+  const t = (/^Lancio:\s*([^;.]*)/.exec(inc?.lancio ?? '')?.[1] ?? '').trim();
+  const fuori = /fuori dal combattimento/i.test(t) ? { fuori_combattimento: true } : {};
+  let m = /^(\d+)\s*AP\b/.exec(t);
+  if (m) return { azp: Number(m[1]), testo: `${m[1]} AzP` };
+  m = /^(\d+)\s*minut/.exec(t);
+  if (m) return { minuti: Number(m[1]), testo: `${m[1]} minut${m[1] === '1' ? 'o' : 'i'}`, ...fuori };
+  m = /^(\d+)\s*or[ae]\b/.exec(t);
+  if (m) return { ore: Number(m[1]), testo: `${m[1]} or${m[1] === '1' ? 'a' : 'e'}`, ...fuori };
+  return { testo: t || 'secondo la scheda', ...fuori, fuori_combattimento: true };
+}
+
+/**
+ * Dati di Artefatto di un Consumabile creato (Magia §27): Grado della versione (§24.2, tabella di artefatti.json →
+ * consumabili.gradi), PM sigillati = costo base della versione, Chroma della macrofamiglia (regole.json → chroma.colori,
+ * il colore che alimenta solo quella), attivazione dall'Incantesimo, effetto dalla scheda. null se mancano i dati.
+ */
+export function consumabileCreato(c, dati) {
+  const R = dati?.equipaggiamento?.file?.artefatti?.consumabili;
+  const inc = (dati?.incantesimi?.incantesimi ?? []).find((i) => i.nome === c?.incantesimo);
+  const riga = (inc?.versioni ?? []).find((v) => numeroIn(v.Livello ?? v['Livello e PM']) === c?.livello);
+  const g = (R?.gradi ?? []).find((x) => c?.livello >= x.livelli[0] && c?.livello <= x.livelli[1]);
+  if (!R || !inc || !riga || !g) return null;
+  const pr = inc.meccanica?.procedura_rituale?.versioni?.find((x) => x.livello === c.livello);
+  const pm = pr?.pm ?? numeroIn(riga.PM ?? riga['Livello e PM']) ?? c.livello;
+  const energia = Object.entries(dati.regole?.chroma?.colori ?? {}).find(([, x]) => x.macrofamiglie?.length === 1 && x.macrofamiglie[0] === inc.macrofamiglia)?.[0] ?? null;
+  const versione = Object.entries(riga).filter(([k]) => !['Livello', 'PM', 'Livello e PM'].includes(k)).map(([k, v]) => `${k} ${v}`).join(' · ');
+  return {
+    tipologia: 'Consumabili', sintonizzazione: R.snt, sintonizzabile: false, proprieta_attive: true, creato: true,
+    consumabile: {
+      grado: g.grado, incantesimo: inc.nome, livello: c.livello, pm_sigillati: pm, energia,
+      attivazione: attivazioneDaIncantesimo(inc, c.livello), scheda: inc.scheda,
+      effetto: `${inc.descrizione}${versione ? ` Versione ${c.livello}: ${versione}.` : ''} Riferimento: scheda ${inc.scheda}.`,
+      supporto: c.supporto ?? 'pergamena', ...(c.magistrale ? { magistrale: true } : {}),
+    },
+  };
 }
 
 /** Colori del Chroma (regole.json → chroma.colori), con il loro nome. */
@@ -573,6 +623,9 @@ export function normalizzaEquipaggiamento(valore) {
         // Artefatto personalizzato (§7.5, §7.10): potenza → costo di sintonizzazione; contenitore di Chroma
         ...(testo(p.potenza) ? { potenza: p.potenza } : {}),
         ...(p.solo_passive === true ? { solo_passive: true } : {}), // §7.10: SnT 0
+        // Magia §27: Consumabile creato (Incantesimo, versione, supporto)
+        ...(isOggetto(p.consumabile) && testo(p.consumabile.incantesimo) && Number.isInteger(p.consumabile.livello)
+          ? { consumabile: { incantesimo: p.consumabile.incantesimo, livello: p.consumabile.livello, ...(testo(p.consumabile.supporto) ? { supporto: p.consumabile.supporto } : {}), ...(p.consumabile.magistrale === true ? { magistrale: true } : {}) } } : {}),
         // Magia §24.2, §25.4: incantesimo infuso (proprietà attiva), pagato dalla riserva integrata
         ...(isOggetto(p.infuso) && testo(p.infuso.incantesimo) && Number.isInteger(p.infuso.livello) ? { infuso: { incantesimo: p.infuso.incantesimo, livello: p.infuso.livello } } : {}),
         ...(testo(p.energia) ? { energia: p.energia } : {}),

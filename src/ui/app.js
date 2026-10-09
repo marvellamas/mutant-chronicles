@@ -31,7 +31,7 @@ import { controlloInUso } from './ridisegno.js';
 import { urlMuovi, alRound, collegamentoScontro, tecnicheScadute, statiScaduti, durateCarta, testoDurata, idPg } from '../round-scontro.js';
 import { bloccoControNemico } from './attacco-pg.js';
 import { registraIncantesimo, terminaIncantesimo, concentrazioniInterrotte } from '../durate-incantesimi.js';
-import { usaConsumabile, consumabiliMistici } from '../consumabili-mistici.js';
+import { usaConsumabile, consumabiliMistici, applicaCreazione } from '../consumabili-mistici.js';
 import { segnaDalTavolo, arrivoDalTavolo, tornaAlTavolo, scorrimentoDaRimettere, dimenticaTavolo, segnaDallaMappa, arrivoDallaMappa, tornaAllaMappa, dimenticaMappa } from './ritorno.js';
 import { PASSI, passoVisibile, requisitoPasso } from './passi.js';
 import { inizializzaTooltip, nascondiTooltip } from './tooltip.js';
@@ -1533,6 +1533,19 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       },
       // Magia §27: «Usa» di un Consumabile completato: un esemplare in meno nell'Inventario (§27.4) e, se l'effetto ha
       // una durata, fra gli incantesimi in corso come un lancio; in uno scontro solo le attivazioni in AzP
+      // Magia §27.2: «Crea consumabile» registrato: crediti e PM personali scalati, il Consumabile creato nell'Inventario
+      creaConsumabile: (piano) => {
+        const uid = `e${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
+        const esito = applicaCreazione({ voci: stato.scelte.equipaggiamento, sessione: stato.sessione }, piano, massimi, uid);
+        if (!esito) { avvisoErrore('Creazione non registrata: il piano ha ancora dei problemi.'); renderScheda({ mantieniScorrimento: true }); return; }
+        const { scelte, avvisi } = applicaModifica(stato.scelte, { equipaggiamento: esito.voci }, dati);
+        stato.scelte = scelte;
+        stato.sessione = esito.sessione;
+        stato.messaggioScheda = avvisi.length ? { tipo: 'attenzione', testo: avvisi.join(' ') }
+          : { tipo: 'ok', testo: `${piano.creato ? `Creato: ${piano.voce.personalizzato.nome}.` : 'Nessun Consumabile creato.'} Spesi ${piano.crediti.toLocaleString('it-IT')} cr e ${piano.pm} PM; ${piano.ore} ore di lavoro.` };
+        persisti();
+        renderScheda({ mantieniScorrimento: true });
+      },
       usaConsumabile: async (uid, registrazione = null) => {
         if (stato.scontroPg && registrazione) { await aggiornaRoundScontro(); stato.sessione = sessioneVista(); }
         const nome = consumabiliMistici(stato.scelte.equipaggiamento, dati).find((x) => x.uid === uid)?.nome ?? 'consumabile';

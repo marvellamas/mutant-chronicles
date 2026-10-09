@@ -1767,6 +1767,28 @@ function validaConsumabili(dati, err) {
     if (!['MR', 'LE'].includes(g?.reperibilita)) err(F, `${k}.reperibilita`, 'MR o LE (§27.2)');
   });
   if (gradi.length && atteso !== 19) err(F, 'consumabili.gradi', 'i livelli devono arrivare a 18');
+  // «Crea consumabile» (§27.2 con il §24): supporti, tre fasi con le tabelle per Grado e la scala della complessità
+  const C = R.creazione;
+  if (C !== undefined) {
+    const complessita = Array.isArray(C?.costruzione?.complessita) ? C.costruzione.complessita : [];
+    if (!complessita.length || complessita.some((k) => !isTesto(k?.nome) || !isIntero(k?.va) || !isIntero(k?.ore) || k.ore < 1)) err(F, 'consumabili.creazione.costruzione.complessita', 'serve [{ nome, va, ore }] (§24.4)');
+    const supporti = Array.isArray(R.supporti) ? R.supporti : [];
+    const perg = supporti.find((x) => x?.id === 'pergamena');
+    if (!perg) err(F, 'consumabili.supporti', 'manca la pergamena standard');
+    else if (perg.costo !== R.supporto?.costo || perg.complessita !== R.supporto?.costruzione) err(F, 'consumabili.supporti', 'la pergamena deve avere costo e costruzione di consumabili.supporto (§27.2)');
+    supporti.forEach((x, i) => { if (x?.complessita !== null && x?.complessita !== undefined && !complessita.some((k) => k.nome === x.complessita)) err(F, `consumabili.supporti[${i}].complessita`, `"${x.complessita}" non è nella scala del §24.4`); });
+    for (const fase of ['progetto', 'infusione']) {
+      const g = C?.[fase]?.gradi;
+      if (!Array.isArray(g) || g.length !== 6 || g.some((x, i) => x?.grado !== romani[i] || !isIntero(x?.va) || !(x?.ore > 0) || (fase === 'progetto' && !isIntero(x?.risorse)))) err(F, `consumabili.creazione.${fase}.gradi`, `sei righe I–VI con va e ore${fase === 'progetto' ? ' e risorse' : ''} (§24.3, §24.5)`);
+      if (!isTesto(C?.[fase]?.abilita) || !(dati.abilita?.abilita ?? []).some((a) => a.nome === C[fase].abilita)) err(F, `consumabili.creazione.${fase}.abilita`, 'Abilità esistente');
+    }
+    for (const fase of ['progetto', 'costruzione']) {
+      const t = C?.[fase]?.ritentare;
+      if (!isOggetto(t?.fallimento) || !isOggetto(t?.maldestro)) err(F, `consumabili.creazione.${fase}.ritentare`, 'servono fallimento e maldestro (§24.3, §24.4)');
+    }
+    const es = C?.infusione?.esiti;
+    if (!isOggetto(es) || ['fallimento', 'maldestro', 'interrotta'].some((k) => !isOggetto(es[k]) || typeof es[k].pm !== 'boolean' || typeof es[k].reagenti !== 'boolean')) err(F, 'consumabili.creazione.infusione.esiti', 'fallimento, maldestro e interrotta con pm e reagenti (§24.5)');
+  }
   const incantesimi = dati.incantesimi?.incantesimi ?? [];
   const colori = Object.keys(dati.regole?.chroma?.colori ?? {});
   const livello = (v) => parseInt(String(v?.Livello ?? v?.['Livello e PM'] ?? '').replace(/[^\d]/g, ''), 10);
