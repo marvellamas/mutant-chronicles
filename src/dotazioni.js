@@ -139,14 +139,18 @@ export function acquistabili(corporazione, dati, cat = catalogo(dati)) {
 
 /**
  * Conti del §2.16.28–29: crediti iniziali, un conguaglio per acquisto (prezzo − valore dei ceduti,
- * mai negativo) e saldo. `errori`: acquisti non validi (oggetto inesistente o senza prezzo,
- * armamento ceduto due volte o non cedibile); `saldo < 0` blocca la conferma.
+ * mai negativo) e saldo. A.35 (decisione 155): l'eccedenza del valore ceduto sul prezzo torna in crediti
+ * (dotazioni.json → scambio.eccedenza «restituita»): `restituito` per acquisto e in totale, già nel saldo.
+ * `errori`: acquisti non validi (oggetto inesistente o senza prezzo, armamento ceduto due volte o non
+ * cedibile); `saldo < 0` blocca la conferma.
  */
 export function contiDotazione(dotazione, classe, corporazione, dati, cat = catalogo(dati)) {
   const iniziali = creditiIniziali(dotazione?.crediti, dati);
   const cedibili = new Map(armamentiCedibili(dotazione, classe, corporazione, dati, cat).map((x) => [x.gruppo, x]));
   const ceduti = new Set();
   const errori = [];
+  // A.35: l'eccedenza del valore ceduto torna in crediti
+  const restituisce = dati.dotazioni.scambio?.eccedenza === 'restituita';
   const acquisti = (Array.isArray(dotazione?.acquisti) ? dotazione.acquisti : []).map((a, i) => {
     const def = cat.perRif.get(a?.rif);
     const cede = (a?.cede ?? []).filter((g) => {
@@ -158,11 +162,12 @@ export function contiDotazione(dotazione, classe, corporazione, dati, cat = cata
     if (!def || !Number.isFinite(def.costo)) errori.push(`Acquisto ${i + 1}: ${def ? `${def.nome} non ha un prezzo` : `«${a?.rif}» non è nel catalogo`}.`);
     const prezzo = def?.costo ?? 0;
     const valoreCeduto = cede.reduce((s, g) => s + cedibili.get(g).valore, 0);
-    // TODO(Davide): valore ceduto oltre il prezzo, resto in crediti o perso? Ipotesi: perso (per-davide A.35)
-    return { rif: a?.rif, nome: def?.nome ?? a?.rif, prezzo, cede, valoreCeduto, conguaglio: Math.max(0, prezzo - valoreCeduto), eccedenza: Math.max(0, valoreCeduto - prezzo) };
+    const eccedenza = Math.max(0, valoreCeduto - prezzo);
+    return { rif: a?.rif, nome: def?.nome ?? a?.rif, prezzo, cede, valoreCeduto, conguaglio: Math.max(0, prezzo - valoreCeduto), eccedenza, restituito: restituisce ? eccedenza : 0 };
   });
-  const speso = acquisti.reduce((s, a) => s + a.conguaglio, 0);
-  return { iniziali, acquisti, speso, saldo: iniziali === null ? null : iniziali - speso, errori };
+  const restituito = acquisti.reduce((s, a) => s + a.restituito, 0);
+  const speso = acquisti.reduce((s, a) => s + a.conguaglio, 0) - restituito;
+  return { iniziali, acquisti, speso, restituito, saldo: iniziali === null ? null : iniziali - speso, errori };
 }
 
 /** Cosa manca per confermare: gruppi senza scelta, sotto-scelte vuote, tiro dei crediti, saldo. */

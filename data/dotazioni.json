@@ -4184,6 +4184,8 @@
       "Medico e Paramedico mantengono le dotazioni elencate ai §§2.16.20 e 2.16.6. Naniti e postazioni medicochirurgiche sono acquisti o dotazioni di missione e non vengono assegnati gratuitamente come parte della dotazione personale iniziale."
     ],
     "valutazione_cessione": 1,
+    "eccedenza": "restituita",
+    "decisione": "A.35 (confermata da Davide l’08/10/2026, decisione 155 di docs/risposte-master.md): l’eccedenza del valore degli armamenti ceduti sul prezzo di ciò che si prende viene restituita in crediti.",
     "_nota": "§2.16.29: gli armamenti di base ceduti valgono il 100 % del prezzo di catalogo del modello assegnato; conguaglio = prezzo del nuovo − valore dei ceduti; solo alla creazione."
   },
   "crediti": {

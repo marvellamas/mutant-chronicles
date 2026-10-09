@@ -160,7 +160,10 @@ function acquisti(ctx, d, imposta, conti, cat) {
   const cedeBozza = bozza.cede.filter((g) => cedibili.some((c) => c.gruppo === g) && !giaCeduti.has(g));
   const valoreBozza = cedeBozza.reduce((s, g) => s + cedibili.find((c) => c.gruppo === g).valore, 0);
   const conguaglio = scelto ? Math.max(0, scelto.costo - valoreBozza) : 0;
-  const saldoDopo = conti.saldo === null ? null : conti.saldo - conguaglio;
+  // A.35: l'eccedenza del valore ceduto torna in crediti
+  const restituisce = dati.dotazioni.scambio?.eccedenza === 'restituita';
+  const eccedenza = scelto && restituisce ? Math.max(0, valoreBozza - scelto.costo) : 0;
+  const saldoDopo = conti.saldo === null ? null : conti.saldo - conguaglio + eccedenza;
   const motivo = !scelto ? 'Scegli un oggetto.' : conti.saldo === null ? 'Tira prima i crediti iniziali.'
     : saldoDopo < 0 ? `Crediti insufficienti: servono ${crediti(conguaglio)}, ne restano ${crediti(conti.saldo)}.` : null;
   const perTipo = TIPI.map((t) => [t, lista.filter((o) => o.tipo === t)]).filter(([, l]) => l.length);
@@ -175,7 +178,8 @@ function acquisti(ctx, d, imposta, conti, cat) {
       h('span', {}, h('strong', {}, a.nome), ` ${crediti(a.prezzo)}`,
         a.cede.length ? ` − ceduto ${a.cede.map((g) => cedibili.find((c) => c.gruppo === g)?.nome ?? g).join(', ')} (${crediti(a.valoreCeduto)})` : '',
         ` → conguaglio ${crediti(a.conguaglio)}`,
-        a.eccedenza ? h('small', { class: 'motivo' }, ` Il valore ceduto supera il prezzo di ${crediti(a.eccedenza)}: il §2.16.29 non prevede il resto.`) : null),
+        a.restituito ? h('strong', { class: 'eccedenza-restituita' }, ` · Eccedenza restituita: +${crediti(a.restituito)}`) : null,
+        a.eccedenza && !a.restituito ? h('small', { class: 'motivo' }, ` Il valore ceduto supera il prezzo di ${crediti(a.eccedenza)}: il resto non torna.`) : null),
       h('button', { type: 'button', class: 'btn piccolo', onclick: () => imposta({ acquisti: d.acquisti.filter((_, j) => j !== i) }) }, 'Togli')))) : null,
     h('div', { class: 'nuovo-acquisto' },
       h('p', { class: 'campo' },
@@ -191,7 +195,7 @@ function acquisti(ctx, d, imposta, conti, cat) {
             onchange: (e) => { bozza.cede = e.target.checked ? [...cedeBozza, c.gruppo] : cedeBozza.filter((g) => g !== c.gruppo); ridisegna(); },
           }),
           ` ${c.nome} (${c.etichetta.toLowerCase()}) · ${crediti(c.valore)}${giaCeduti.has(c.gruppo) ? ' · già ceduto' : ''}`))) : null,
-      scelto ? h('p', { class: 'nota' }, `Conguaglio ${crediti(conguaglio)}`, saldoDopo !== null ? ` · saldo dopo l’acquisto ${crediti(saldoDopo)}` : '') : null,
+      scelto ? h('p', { class: 'nota' }, `Conguaglio ${crediti(conguaglio)}`, eccedenza ? h('strong', {}, ` · Eccedenza restituita: +${crediti(eccedenza)}`) : null, saldoDopo !== null ? ` · saldo dopo l’acquisto ${crediti(saldoDopo)}` : '') : null,
       motivo && scelto ? h('p', { class: 'motivo', role: 'alert' }, motivo) : null,
       h('button', {
         type: 'button', class: 'btn', disabled: !!motivo,

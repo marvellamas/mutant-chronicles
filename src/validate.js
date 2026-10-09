@@ -1894,6 +1894,8 @@ function validaDotazioni(dati, err) {
   }
   const v = d.scambio?.valutazione_cessione;
   if (typeof v !== 'number' || v < 0 || v > 1) err(F, 'scambio.valutazione_cessione', 'frazione del prezzo fra 0 e 1 attesa (§2.16.29)');
+  // A.35: l'eccedenza del valore ceduto («restituita» in crediti o «persa»)
+  if (d.scambio?.eccedenza !== undefined && !['restituita', 'persa'].includes(d.scambio.eccedenza)) err(F, 'scambio.eccedenza', '«restituita» o «persa» atteso (A.35)');
 }
 
 // Effetti degli oggetti (docs/effetti-oggetti.md): catalogo e oggetti di dotazione. Tipi: va

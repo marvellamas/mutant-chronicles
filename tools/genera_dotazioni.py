@@ -470,7 +470,9 @@ risultato = {
         'paragrafo': '2.16.29',
         'testo': sezioni['2.16.29']['paragrafi'],
         'valutazione_cessione': 1,
-        '_nota': '§2.16.29: gli armamenti di base ceduti valgono il 100 % del prezzo di catalogo del modello assegnato; conguaglio = prezzo del nuovo − valore dei ceduti; solo alla creazione.',
+        'eccedenza': 'restituita',
+        'decisione': 'A.35 (confermata da Davide l’08/10/2026, decisione 155 di docs/risposte-master.md): l’eccedenza del valore degli armamenti ceduti sul prezzo di ciò che si prende viene restituita in crediti.',
+        '_nota': '§2.16.29: gli armamenti di base ceduti valgono il 100 % del prezzo di catalogo del modello assegnato; conguaglio = prezzo del nuovo − valore dei ceduti; solo alla creazione. «eccedenza»: «restituita» (A.35) aggiunge ai crediti il valore ceduto oltre il prezzo.',
     },
     'crediti': {'paragrafo': '2.16.28', 'testo': sezioni['2.16.28']['paragrafi']},
 }

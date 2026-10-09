@@ -1397,7 +1397,7 @@ export function progressione(personaggio, dati) {
   // §2.16.28–29: crediti iniziali, conguagli e saldo, se la dotazione iniziale è nell'inventario
   if (dati.dotazioni && saldoIniziale(c, dati) !== null) {
     const k = contiDotazione(c.dotazione, c.classe, c.corporazione, dati);
-    out[0].righe.push(`Crediti iniziali ${crediti(k.iniziali)} (2d6 = ${valoreTiro(c.dotazione.crediti)})${k.speso ? `, conguagli ${crediti(k.speso)}` : ''}: saldo iniziale ${crediti(k.saldo)}`);
+    out[0].righe.push(`Crediti iniziali ${crediti(k.iniziali)} (2d6 = ${valoreTiro(c.dotazione.crediti)})${k.speso + k.restituito ? `, conguagli ${crediti(k.speso + k.restituito)}` : ''}${k.restituito ? `, eccedenze restituite ${crediti(k.restituito)} (A.35)` : ''}: saldo iniziale ${crediti(k.saldo)}`);
   }
   const gradi = c.classe ? { [c.classe]: 1 } : {};
   p.livelli.forEach((voce, i) => {
