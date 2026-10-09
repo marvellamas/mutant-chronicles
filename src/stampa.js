@@ -554,7 +554,13 @@ export function armiStampa(s, creazione, dati) {
       const r = modoRicarica(def, dati, cat);
       // lanciagranate del formato standard (§7.20.3): due file «car.» come prima delle granate in catalogo
       const granate = def?.danno_da_munizione && cat.oggetti.some((o) => eGranata(o) && o.compatibile_con.includes(def.rif));
-      if (r.modo === 'inserimento' && !granate) colpi = { modo: 'inserimento', capacita: cap, file: 1 };
+      // A.135: le armi caricate direttamente (revolver compresi) hanno una fila sola; i carichini del loro tipo una fila
+      // ciascuno, con i colpi del carichino (munizioni.json → ricarica.carichini)
+      if (r.modo === 'inserimento' && !granate) {
+        const tipoC = r.carichino ? dati.equipaggiamento.file.munizioni.ricarica?.carichini?.tipi?.[r.carichino] : null;
+        const nCarichini = tipoC ? quantita(tipoC.rif) : 0;
+        colpi = { modo: 'inserimento', capacita: cap, file: 1, ...(nCarichini ? { carichini: { n: nCarichini, colpi: dati.equipaggiamento.file.munizioni.ricarica.carichini.colpi ?? 6 } } : {}) };
+      }
       else if (granate) colpi = { modo: 'caricatore', capacita: cap, file: 2 };
       else if (r.modo === 'cella') colpi = { modo: 'cella', capacita: cap, file: 2 };
       else colpi = { modo: 'caricatore', capacita: cap, file: Math.max(2, 1 + (r.vuoto ? quantita(r.vuoto.rif) : 0)) };

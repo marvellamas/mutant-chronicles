@@ -18,14 +18,16 @@ const prepara = (voci) => {
 };
 const stato = (s, m, uid) => statoRicarica(m.ricarica[uid], s.munizioni[uid], s.scorte);
 
-test('modo di ricarica dai dati: caricatore, inserimento, tamburo, cella, nessun dato', () => {
+test('modo di ricarica dai dati: caricatore, inserimento (anche i revolver, A.135), cella, nessun dato', () => {
   const cat = catalogo(dati);
   const modo = (rif) => modoRicarica(cat.perRif.get(rif), dati, cat).modo;
   assert.equal(modo('armi_distanza:pistola-semiautomatica'), 'caricatore');
-  // E&L 19: il revolver usa il tamburo; pompa e doppiette una cartuccia per operazione
-  assert.equal(modo('armi_distanza:revolver'), 'tamburo');
+  // A.135: revolver, pompa e doppiette si caricano direttamente, 2 cartucce per operazione
+  assert.equal(modo('armi_distanza:revolver'), 'inserimento');
   assert.equal(modo('armi_distanza:fucile-a-pompa'), 'inserimento');
-  assert.equal(modo('armi_distanza_corporative:jemson-45'), 'tamburo'); // famiglia «Revolver»
+  assert.equal(modo('armi_distanza_corporative:jemson-45'), 'inserimento'); // famiglia «Revolver»
+  assert.equal(modo('armi_distanza_corporative:hd14m'), 'inserimento', 'A.135: HD14M a serbatoio interno');
+  for (const r of ['mandible', 'airbrush']) assert.equal(modo(`armi_distanza_corporative:${r}`), 'caricatore', `A.135: ${r} a caricatore`);
   // M310 e SA SG2001: caricatore amovibile specifico
   assert.equal(modo('armi_distanza_corporative:m310'), 'caricatore');
   assert.equal(modo('armi_distanza_corporative:sa-sg2001'), 'caricatore');
@@ -71,10 +73,12 @@ test('caricatore parziale: il caricatore tolto resta con i suoi colpi e si può 
   assert.equal(stato(s, m, 'p').motivo, 'nessun caricatore compatibile');
 });
 
-test('munizioni sciolte (revolver): si inseriscono fino alla capacità, la scorta scende della quantità inserita', () => {
+test('munizioni sciolte (revolver, A.135): 2 per operazione fino alla capacità, la scorta scende della quantità inserita', () => {
   let { m, s } = prepara([voce('r', 'armi_distanza:revolver', 'impugnata'), voce('m', 'munizioni:proiettili-da-pistola', null, 5)]);
   assert.deepEqual(m.ricarica.r.scorte, [{ uid: 'm', nome: 'Proiettili da pistola', quantita: 5, rif: 'munizioni:proiettili-da-pistola' }]);
   s = variaMunizioni(s, 'r', 'colpi', -4, m); // 2 nel tamburo
+  s = ricaricaArma(s, 'r', m);
+  assert.equal(s.munizioni.r.colpi, 4, 'A.135: 2 cartucce per operazione');
   s = ricaricaArma(s, 'r', m);
   assert.equal(s.munizioni.r.colpi, 6);
   assert.deepEqual(s.scorte, { m: 4 });

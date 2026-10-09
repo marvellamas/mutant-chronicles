@@ -417,6 +417,9 @@ function fileColpi(c, pi = []) {
   return h('div', { class: 'file-colpi' },
     c ? Array.from({ length: c.file }, (_, k) => h('div', { class: 'caricatore' },
       h('span', { class: 'etichetta-colpi' }, etichetta(k + 1)), quadratini(c.capacita, { compatto: true }))) : null,
+    // A.135: una fila per carichino rapido posseduto, con i suoi colpi
+    c?.carichini ? Array.from({ length: c.carichini.n }, (_, k) => h('div', { class: 'caricatore' },
+      h('span', { class: 'etichetta-colpi' }, `carich. ${k + 1}`), quadratini(c.carichini.colpi, { compatto: true }))) : null,
     pi.map(gruppoPI));
 }
 

@@ -45,7 +45,7 @@ import { preparaStampa, preparaTab, normalizzaOpzioniStampa, versioniCompatte } 
 import { renderTab, tabFissi, ALIAS_TAB } from './tab.js';
 import {
   massimiSessione, allineaSessione, variaSessione, modificaSessione, commutaStato, commutaCondizioneOggetto, commutaTalento, commutaBonusTalenti, impostaCondizioneArma, riparaOggetto, spendiPmLancio, ricaricaMatrice, attivaArtefatto, attivaTecnicaSessione, nuovoRoundSessione, terminaTecnicaSessione, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
-  penalitaSessione, variaMunizioni, consumaColpi, scegliGranata, granateDiPartenza, ricaricaArma, variaChroma, variaIntegrita, variaNec,
+  penalitaSessione, variaMunizioni, consumaColpi, scegliGranata, granateDiPartenza, ricaricaArma, caricaDaCarichino, preparaCarichino, variaChroma, variaIntegrita, variaNec,
 } from '../sessione.js';
 import { conOrdinale } from '../lingua.js';
 import { normalizzaCalendario, calendarioAttivo, attivaCalendario, disattivaCalendario, contaNote, fileCalendario, leggiFileCalendario, momentoCalendario } from '../calendario.js';
@@ -1612,6 +1612,9 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       },
       munizioni: (uid, campo, delta) => cambiaSessione(variaMunizioni(stato.sessione, uid, campo, delta, massimi)),
       ricarica: (uid) => cambiaSessione(ricaricaArma(stato.sessione, uid, massimi)),
+      // A.135: carichini rapidi
+      usaCarichino: (uid) => cambiaSessione(caricaDaCarichino(stato.sessione, uid, massimi)),
+      preparaCarichino: (uid) => cambiaSessione(preparaCarichino(stato.sessione, uid, massimi)),
       // §7.20.3: granata da caricare in un lanciagranate (un tipo alla volta)
       // le granate della carica di partenza tornano nell'Inventario come munizione di riferimento (§7.8)
       scegliGranata: (uid, voceUid) => {

@@ -400,6 +400,58 @@
         "autonomia_ore": 100,
         "paragrafo": "§5.4.7"
       }
+    },
+    {
+      "id": "ricarica-per-tamburo",
+      "nome": "Ricarica per Tamburo",
+      "tipo": "altro",
+      "catalogo": "Commerciale",
+      "famiglia": "Ricarica rapida",
+      "nomi_alternativi": [
+        "Carichino"
+      ],
+      "note_manuale": "Carichino rapido riutilizzabile, compatibile con il modello d’arma: Ricarica per Tamburo, 6 colpi, 100 crediti a vuoto; le munizioni si acquistano separatamente. Un carichino già preparato e accessibile trasferisce fino a 6 colpi in 1 AzP, entro gli spazi liberi dell’arma; i colpi non trasferiti restano nel carichino. Ricarica Migliorata non aumenta questo limite. Preparare i dispositivi richiede 1 minuto ogni 50 colpi o frazione.",
+      "paragrafo": "E&L A.135",
+      "versione_manuale": "E&L 08/10",
+      "pi": null,
+      "qualita": null,
+      "ps_int": null,
+      "reperibilita": null,
+      "peso": null,
+      "costo": 100,
+      "carichino": {
+        "tipo": "tamburo",
+        "colpi": 6
+      },
+      "TODO(Davide)": "A.151: peso, Qualità, Integrità e Reperibilità dei carichini non sono definiti dalla A.135. Intanto restano vuoti: non pesano sul carico e non hanno PI.",
+      "proprieta": [],
+      "effetto_breve": "6 colpi in 1 AzP entro gli spazi liberi; si prepara fuori combattimento (1 minuto ogni 50 colpi)."
+    },
+    {
+      "id": "ricarica-per-serbatoio",
+      "nome": "Ricarica per Serbatoio",
+      "tipo": "altro",
+      "catalogo": "Commerciale",
+      "famiglia": "Ricarica rapida",
+      "nomi_alternativi": [
+        "Carichino"
+      ],
+      "note_manuale": "Carichino rapido riutilizzabile, compatibile con il modello d’arma: Ricarica per Serbatoio, 6 colpi, 150 crediti a vuoto; le munizioni si acquistano separatamente. Un carichino già preparato e accessibile trasferisce fino a 6 colpi in 1 AzP, entro gli spazi liberi dell’arma; i colpi non trasferiti restano nel carichino. Ricarica Migliorata non aumenta questo limite. Preparare i dispositivi richiede 1 minuto ogni 50 colpi o frazione.",
+      "paragrafo": "E&L A.135",
+      "versione_manuale": "E&L 08/10",
+      "pi": null,
+      "qualita": null,
+      "ps_int": null,
+      "reperibilita": null,
+      "peso": null,
+      "costo": 150,
+      "carichino": {
+        "tipo": "serbatoio",
+        "colpi": 6
+      },
+      "TODO(Davide)": "A.151: peso, Qualità, Integrità e Reperibilità dei carichini non sono definiti dalla A.135. Intanto restano vuoti: non pesano sul carico e non hanno PI.",
+      "proprieta": [],
+      "effetto_breve": "6 colpi in 1 AzP entro gli spazi liberi; si prepara fuori combattimento (1 minuto ogni 50 colpi)."
     }
   ]
 }

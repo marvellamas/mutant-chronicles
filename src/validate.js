@@ -1374,7 +1374,7 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
           if (o.compatibile_con && !o.compatibile_con.includes(r)) err(F, `${k}.abbinamento_ottimizzato[${j}]`, `"${r}" non è fra le armature compatibili del rinforzo`);
         });
       }
-      if (o.reperibilita !== undefined && !(modulo && o.reperibilita === null) && !rep.includes(o.reperibilita)) err(F, `${k}.reperibilita`, `sigla "${o.reperibilita}" non in index.json (${rep.join(', ')})`);
+      if (o.reperibilita !== undefined && !(o.reperibilita === null && (modulo || isTesto(o['TODO(Davide)']))) && !rep.includes(o.reperibilita)) err(F, `${k}.reperibilita`, `sigla "${o.reperibilita}" non in index.json (${rep.join(', ')})`);
       if (o.proprieta !== undefined) {
         if (!Array.isArray(o.proprieta)) err(F, `${k}.proprieta`, 'deve essere un elenco');
         else o.proprieta.forEach((p, j) => {
@@ -1974,8 +1974,17 @@ function validaRicarica(dati, err) {
   for (const a of ins.caricatore_amovibile ?? []) if (!rif.has(a)) err(F, 'ricarica.inserimento_singolo.caricatore_amovibile', `"${a}" non esiste nel catalogo`);
   if (ins.per_operazione !== undefined && !(isIntero(ins.per_operazione) && ins.per_operazione >= 1)) err(F, 'ricarica.inserimento_singolo.per_operazione', 'intero ≥ 1 atteso');
   if (ins.migliorata !== undefined && !(isOggetto(ins.migliorata) && isIntero(ins.migliorata.per_operazione) && (dati.talenti_liberi?.talenti ?? []).some((t) => t.id === ins.migliorata.talento))) err(F, 'ricarica.inserimento_singolo.migliorata', 'serve { talento (id di talenti_liberi.json), per_operazione }');
-  for (const f of r.tamburo?.famiglie ?? []) if (!famiglie.has(f)) err(F, 'ricarica.tamburo.famiglie', `"${f}" non è una famiglia del catalogo`);
-  for (const a of r.tamburo?.armi ?? []) if (!rif.has(a)) err(F, 'ricarica.tamburo.armi', `"${a}" non esiste nel catalogo`);
+  // A.135: carichini rapidi (tipo → oggetto del catalogo con «carichino», famiglie e armi a inserimento)
+  const CR = r.carichini;
+  if (CR !== undefined) {
+    if (!(isIntero(CR.colpi) && CR.colpi >= 1) || !(isIntero(CR.per_operazione) && CR.per_operazione >= 1)) err(F, 'ricarica.carichini', 'colpi e per_operazione interi ≥ 1');
+    for (const [t, x] of Object.entries(CR.tipi ?? {})) {
+      const o = tutti.find((y) => y.rif === x?.rif) ?? null;
+      if (!o || o.carichino?.tipo !== t) err(F, `ricarica.carichini.tipi.${t}.rif`, `serve un oggetto del catalogo con carichino.tipo «${t}»`);
+      for (const f of x?.famiglie ?? []) if (!famiglie.has(f)) err(F, `ricarica.carichini.tipi.${t}.famiglie`, `"${f}" non è una famiglia del catalogo`);
+      for (const a of x?.armi ?? []) if (!rif.has(a)) err(F, `ricarica.carichini.tipi.${t}.armi`, `"${a}" non esiste nel catalogo`);
+    }
+  }
   for (const f of r.famiglie_celle ?? []) if (!famiglie.has(f)) err(F, 'ricarica.famiglie_celle', `"${f}" non è una famiglia del catalogo`);
   for (const [abilita, x] of Object.entries(r.caricatori_vuoti ?? {})) if (!rif.has(x)) err(F, `ricarica.caricatori_vuoti.${abilita}`, `"${x}" non esiste nel catalogo`);
 }

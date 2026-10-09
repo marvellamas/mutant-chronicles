@@ -211,33 +211,35 @@ const preparaRicarica = (voci, livelli = []) => {
   return { m, s: inizializzaSessione(m) };
 };
 
-test('E&L 19: fucile a pompa, 1 cartuccia per operazione; 3 con Ricarica Migliorata; revolver a tamburo pieno (A.37)', () => {
+test('A.135 (supera E&L 19): fucile a pompa e revolver, 2 cartucce per operazione, 4 con Ricarica Migliorata', () => {
   const equip = [voce('f', 'armi_distanza:fucile-a-pompa', 'impugnata'), { ...voce('c', 'munizioni:cartucce-a-pallini', null), quantita: 20 }];
   let { m, s } = preparaRicarica(equip);
   const cap = m.caricatori.f;
-  assert.deepEqual([m.ricarica.f.modo, m.ricarica.f.singolo, m.ricarica.f.perOperazione], ['inserimento', true, 1]);
+  assert.deepEqual([m.ricarica.f.modo, m.ricarica.f.singolo, m.ricarica.f.perOperazione], ['inserimento', true, 2]);
   s = variaMunizioni(s, 'f', 'colpi', -cap, m);
   s = ricaricaArma(s, 'f', m);
-  assert.equal(s.munizioni.f.colpi, 1);
-  // con Ricarica Migliorata: fino a 3 per operazione, senza superare la capacità
+  assert.equal(s.munizioni.f.colpi, 2);
+  // con Ricarica Migliorata: fino a 4 per operazione, senza superare la capacità
   const livelli = [{ livello: 2, caratteristiche: { DES: 2 } }, { livello: 3, talentoLibero: { id: 'ricarica-migliorata' } }];
   ({ m, s } = preparaRicarica(equip, livelli));
-  assert.equal(m.ricarica.f.perOperazione, 3);
+  assert.equal(m.ricarica.f.perOperazione, 4);
   s = variaMunizioni(s, 'f', 'colpi', -cap, m);
   s = ricaricaArma(s, 'f', m);
-  assert.equal(s.munizioni.f.colpi, 3);
+  assert.equal(s.munizioni.f.colpi, 4);
   s = variaMunizioni(s, 'f', 'colpi', cap, m); // pieno meno niente: capacità
   s = variaMunizioni(s, 'f', 'colpi', -1, m);
   s = ricaricaArma(s, 'f', m);
   assert.equal(s.munizioni.f.colpi, cap); // una sola munizione mancante
-  // revolver: una operazione riempie il tamburo
+  // revolver vuoto (esempio di Davide): 3 AzP normalmente, 2 con Ricarica Migliorata
   ({ m, s } = preparaRicarica([voce('r', 'armi_distanza:revolver', 'impugnata'), { ...voce('p', 'munizioni:proiettili-da-pistola', null), quantita: 12 }]));
-  assert.equal(m.ricarica.r.modo, 'tamburo');
+  assert.equal(m.ricarica.r.modo, 'inserimento');
   s = variaMunizioni(s, 'r', 'colpi', -6, m);
-  s = ricaricaArma(s, 'r', m);
-  assert.equal(s.munizioni.r.colpi, 6);
-  // la domanda della A.37 è chiusa; resta solo quella nuova sui fucili a pallini semiautomatici e automatici (07/10)
-  assert.match(dati.equipaggiamento.file.munizioni.ricarica.inserimento_singolo['TODO(Davide)'] ?? 'A.135', /^A\.135/);
+  for (const atteso of [2, 4, 6]) { s = ricaricaArma(s, 'r', m); assert.equal(s.munizioni.r.colpi, atteso); }
+  ({ m, s } = preparaRicarica([voce('r', 'armi_distanza:revolver', 'impugnata'), { ...voce('p', 'munizioni:proiettili-da-pistola', null), quantita: 12 }], livelli));
+  s = variaMunizioni(s, 'r', 'colpi', -6, m);
+  for (const atteso of [4, 6]) { s = ricaricaArma(s, 'r', m); assert.equal(s.munizioni.r.colpi, atteso); }
+  // A.135 risolta: niente più TODO(Davide)
+  assert.equal(dati.equipaggiamento.file.munizioni.ricarica.inserimento_singolo['TODO(Davide)'], undefined);
 });
 
 // --- 1, 2, 17, 18. Magia ---------------------------------------------------------------------------

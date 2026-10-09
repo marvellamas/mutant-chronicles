@@ -43,7 +43,7 @@ import { normalizzaTemporanei } from './temporanei.js';
 import { valoreTiro } from './tiri.js';
 import { SENZ_ARMI } from './attacco.js';
 import { saldoIniziale } from './dotazioni.js';
-import { infoRicarica, eseguiRicarica, perOperazione } from './ricarica.js';
+import { infoRicarica, eseguiRicarica, perOperazione, allineaCarichini, usaCarichino, riempiCarichino } from './ricarica.js';
 import { caricatori, contenitori, normalizzaEquipaggiamento, catalogo, risolvi, riserveNec, granateDaLancio } from './equipaggiamento.js';
 import { oggettiConPi } from './protezione.js';
 import { attivaTecnica, nuovoRound, terminaTecnica, allineaTecnicheAttive, tecnicaDi } from './tecniche.js';
@@ -82,9 +82,12 @@ export function massimiSessione(scheda, creazione, dati) {
     // capacità del caricatore di ogni arma a distanza della lista (uid → numero o null)
     caricatori: caricatori(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati),
     // modo di ricarica e scorte compatibili di ogni arma a distanza (Giocatore §5.1.1, Armamenti §7.20.2)
-    // inserimento singolo: 1 munizione per operazione, 3 con Ricarica Migliorata (E&L 19)
+    // armi caricate direttamente: 2 munizioni per operazione, 4 con Ricarica Migliorata (A.135)
     ricarica: dati.equipaggiamento ? Object.fromEntries(Object.entries(infoRicarica(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati))
       .map(([uid, x]) => [uid, x.singolo ? { ...x, perOperazione: perOperazione(x, (scheda?.talentiLiberi ?? []).map((t) => t.id), dati) } : x])) : {},
+    // carichini della lista (A.135): uid della voce → quantità; colpi di ogni carichino
+    carichini: dati.equipaggiamento ? quantitaCarichini(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati) : {},
+    colpiCarichino: dati.equipaggiamento?.file?.munizioni?.ricarica?.carichini?.colpi ?? 6,
     // granate da lancio della lista (uid → quantità): un lancio a mano consuma una granata (Armamenti §7.20.3)
     granate: dati.equipaggiamento ? granateDaLancio(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati) : {},
     // capacità di ogni contenitore di Chroma (uid → PM)
@@ -251,6 +254,17 @@ function voceMunizioni(v) {
   return out;
 }
 
+/** Carichini della lista (A.135): uid della voce → quantità (fuori dal deposito comune). */
+function quantitaCarichini(voci, dati) {
+  const cat = catalogo(dati);
+  const out = {};
+  for (const v of voci ?? []) {
+    const x = risolvi(v, cat);
+    if (x.def?.carichino && !x.deposito) out[v.uid] = v.quantita ?? 1;
+  }
+  return out;
+}
+
 /** Munizioni sciolte consumate: solo le voci ancora compatibili con un'arma, entro la loro quantità. */
 function allineaScorte(v, m) {
   const src = isOggetto(v) ? v : {};
@@ -357,6 +371,8 @@ export function allineaSessione(sessione, m) {
     ...(() => { const inc = allineaIncantesimiAttivi(sessione.incantesimiAttivi); return inc.length ? { incantesimiAttivi: inc } : {}; })(),
     // impianti attivabili (src/impianti.js): cartucce degli iniettori e Processore; la chiave c'è solo se serve
     ...(() => { const imp = allineaImpianti(sessione.impianti, m.oggetti ?? null); return imp ? { impianti: imp } : {}; })(),
+    // carichini (A.135): colpi di ogni carichino preparato; la chiave c'è solo se qualcuno ha dei colpi
+    ...(() => { const c = allineaCarichini(sessione.carichini, m.carichini ?? {}, m.colpiCarichino); return Object.keys(c).length ? { carichini: c } : {}; })(),
     // A.106: luce della scena (regole.json → illuminazione) e visione che copre il bersaglio; solo se servono
     ...(typeof sessione.luce === 'string' && sessione.luce && sessione.luce !== 'sufficiente' ? { luce: sessione.luce } : {}),
     ...(sessione.luceVisione === true ? { luceVisione: true } : {}),
@@ -453,6 +469,26 @@ export function variaChroma(sessione, uid, delta, m) {
  * Le riserve di Chroma non sono caricatori e non si toccano: si ricaricano solo convertendo PM
  * (Magia sez. 6, §7.5.1).
  */
+/**
+ * «Usa carichino» (A.135): un carichino preparato trasferisce fino a 6 colpi in 1 AzP entro gli spazi liberi dell'arma; i
+ * colpi non trasferiti restano nel carichino. La sessione non cambia se non si può.
+ */
+export function caricaDaCarichino(sessione, uid, m) {
+  const s = allineaSessione(sessione, m);
+  const r = usaCarichino(m.ricarica?.[uid], s.munizioni[uid], s.carichini ?? {});
+  return r ? modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: r.munizione }, carichini: r.carichini }, m) : s;
+}
+
+/**
+ * «Prepara carichino» (A.135: fuori dal combattimento, 1 minuto ogni 50 colpi o frazione): riempie un carichino con le
+ * munizioni sciolte compatibili dell'arma `uid`, che si contano come consumate.
+ */
+export function preparaCarichino(sessione, uid, m) {
+  const s = allineaSessione(sessione, m);
+  const r = riempiCarichino(m.ricarica?.[uid], s.carichini ?? {}, s.scorte);
+  return r ? modificaSessione(s, { carichini: r.carichini, scorte: r.consumi }, m) : s;
+}
+
 export function ricaricaArma(sessione, uid, m) {
   const s = allineaSessione(sessione, m);
   const capacita = m.caricatori?.[uid];

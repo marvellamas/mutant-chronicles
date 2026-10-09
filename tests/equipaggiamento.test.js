@@ -680,7 +680,8 @@ test('validatore di corredi e dispositivi: SIN, compatibilità, tabelle, scudo i
 // --- Lotto 8: accessori delle armi (§7.3) -------------------------------------------------
 
 test('lotto 8: 14 accessori delle armi dal §7.3, con le versioni rinforzate dei silenziatori (i NEC di ricambio sono nel catalogo NEC)', () => {
-  const tutti = catalogo(dati).oggetti.filter((o) => o.file === 'accessori_armi');
+  // i due carichini della A.135 (09/10) stanno nello stesso file ma non vengono dal §7.3
+  const tutti = catalogo(dati).oggetti.filter((o) => o.file === 'accessori_armi' && !o.carichino);
   assert.equal(tutti.length, 14); // §7.3.4 (0.58): la Batteria di servizio è il NEC Verde compatto di nec.json (Equipaggiamento §5.4.4)
   const r = (id) => catalogo(dati).perRif.get(`accessori_armi:${id}`);
   assert.deepEqual(r('mirino-ottico').mirino, { riduzione: 4, distanza_max_q: 500, azp_minime: 2, testo: 'Fino a 500 Q; almeno 2 Azioni Principali complessive.' });

@@ -5,9 +5,12 @@
 // Modi:
 // - caricatore: si sostituisce un caricatore pieno di riserva (sessione → munizioni[uid].riserve)
 //   oppure, se non ce ne sono, il parziale più carico; quello tolto resta come parziale o vuoto;
-// - inserimento: una operazione inserisce 1 munizione sciolta compatibile, 3 con Ricarica Migliorata
-//   (doppiette, fucili a pompa, archi e balestre: E&L 19, A.37; Giocatore §8.6.4);
-// - tamburo: una operazione riempie il tamburo con munizioni pronte (revolver: E&L 19);
+// - inserimento: armi caricate direttamente, con tamburo o serbatoio interno (revolver, doppiette, fucili a pompa e a
+//   pallini a serbatoio interno, archi e balestre): una operazione (1 AzP) inserisce fino a 2 cartucce, fino a 4 con
+//   Ricarica Migliorata, entro la capacità (A.135, decisione 139: supera il tamburo pieno in 1 AzP e le 3 cartucce);
+// - carichini (A.135): Ricarica per Tamburo e per Serbatoio, 6 colpi; un carichino preparato trasferisce fino a 6 colpi
+//   in 1 AzP entro gli spazi liberi, i colpi non trasferiti restano nel carichino; si prepara dalle munizioni sciolte
+//   compatibili (sessione → carichini: { uid voce: [colpi di ogni carichino] });
 // - (anche «inserimento» senza elenco: razzi, dardi chimici, combustibile compatibili fino alla capacità);
 // - cella: una cella piena compatibile sostituisce quella esaurita;
 // - null: nessun dato di compatibilità, la ricarica resta libera (con un avviso).
@@ -33,11 +36,9 @@ export function modoRicarica(def, dati, cat = catalogo(dati)) {
   const r = regole(dati) ?? {};
   const famiglia = tabellaMunizioniArmi(dati).get(def.rif) ?? null;
   const ins = r.inserimento_singolo ?? {};
-  const tamburo = r.tamburo ?? {};
   const compatibili = cat.oggetti.filter((o) => eScorta(o) && !eVuoto(o) && o.compatibile_con?.includes(def.rif));
   const amovibile = (ins.caricatore_amovibile ?? []).includes(def.rif);
-  if ((tamburo.armi ?? []).includes(def.rif) || (tamburo.famiglie ?? []).includes(def.famiglia)) return { modo: 'tamburo', famiglia, vuoto: null };
-  if (!amovibile && ((ins.armi ?? []).includes(def.rif) || (ins.famiglie ?? []).includes(def.famiglia))) return { modo: 'inserimento', famiglia, vuoto: null, singolo: true };
+  if (!amovibile && ((ins.armi ?? []).includes(def.rif) || (ins.famiglie ?? []).includes(def.famiglia))) return { modo: 'inserimento', famiglia, vuoto: null, singolo: true, carichino: tipoCarichino(def, r) };
   if (famiglia) {
     // caricatore vuoto: il contenitore dedicato dell'arma (Nimrod), altrimenti quello della categoria
     const dedicato = cat.oggetti.find((o) => eVuoto(o) && o.compatibile_con?.includes(def.rif));
@@ -48,6 +49,12 @@ export function modoRicarica(def, dati, cat = catalogo(dati)) {
   if (compatibili.some((o) => (r.famiglie_celle ?? []).includes(o.famiglia) || (o.cella && o.tipo !== 'munizioni'))) return { modo: 'cella', famiglia: null, vuoto: null };
   if (compatibili.length) return { modo: 'inserimento', famiglia: null, vuoto: null };
   return { modo: null, famiglia: null, vuoto: null };
+}
+
+/** A.135: tipo di carichino di un'arma a inserimento («tamburo», «serbatoio») o null (munizioni.json → ricarica.carichini). */
+function tipoCarichino(def, r) {
+  for (const [t, x] of Object.entries(r.carichini?.tipi ?? {})) if ((x.armi ?? []).includes(def.rif) || (x.famiglie ?? []).includes(def.famiglia)) return t;
+  return null;
 }
 
 /**
@@ -74,7 +81,10 @@ export function infoRicarica(voci, dati) {
       .map((m) => ({ uid: m.uid, nome: m.nome, quantita: m.voce.quantita, rif: m.def.rif, ...(eGranata(m.def) || m.def.esplosivo ? { granata: true } : {}), ...(riferimento(m) ? { riferimento: true } : {}) }));
     // §7.8: la munizione di riferimento nel catalogo (le granate caricate in partenza sono quella munizione)
     const rifRiferimento = def.munizioni?.riferimento ? cat.oggetti.find((o) => eScorta(o) && [o.nome, ...(o.nomi_alternativi ?? [])].includes(def.munizioni.riferimento))?.rif ?? null : null;
-    out[uid] = { ...info, capacita: def.munizioni?.capacita ?? null, scorte, ...(scorte.some((x) => x.granata) || (rifRiferimento && eGranata(cat.perRif.get(rifRiferimento))) ? { granate: true, rifRiferimento } : {}) };
+    // A.135: i carichini del tipo dell'arma (non quelli del deposito comune)
+    const tipoC = info.carichino ? r.carichini?.tipi?.[info.carichino] : null;
+    const carichini = tipoC ? risolte.filter((x) => x.def?.rif === tipoC.rif && !x.deposito).map((x) => ({ uid: x.uid, nome: x.nome, quantita: x.voce.quantita ?? 1 })) : [];
+    out[uid] = { ...info, capacita: def.munizioni?.capacita ?? null, scorte, ...(tipoC ? { carichini, colpiCarichino: r.carichini.colpi ?? 6 } : {}), ...(scorte.some((x) => x.granata) || (rifRiferimento && eGranata(cat.perRif.get(rifRiferimento))) ? { granate: true, rifRiferimento } : {}) };
   };
   // le granate da lancio non hanno caricatore: si lanciano dalla quantità della voce (src/sessione.js → consumaColpi)
   for (const a of risolte.filter((x) => x.tipo === 'arma_distanza' && x.def && !eGranata(x.def))) perArma(a.uid, a.def);
@@ -111,8 +121,8 @@ export function statoRicarica(info0, munizione, consumi = {}) {
 }
 
 /**
- * Munizioni inserite da una operazione di ricarica a inserimento singolo (E&L 19; Giocatore §8.6.4):
- * 1, oppure quelle di Ricarica Migliorata se il personaggio la possiede. null per gli altri modi.
+ * Munizioni inserite da una operazione di ricarica a inserimento (A.135): 2, oppure quelle di Ricarica Migliorata (4)
+ * se il personaggio la possiede. null per gli altri modi.
  */
 export function perOperazione(info, idTalenti, dati) {
   if (!info?.singolo) return null;
@@ -163,8 +173,8 @@ export function eseguiRicarica(info0, munizione, consumi = {}) {
     c[s.uid] = (c[s.uid] ?? 0) + 1;
     return { munizione: { ...m, colpi: info.capacita }, consumi: c };
   }
-  // inserimento (e tamburo): munizioni sciolte fino alla capacità, dalla prima scorta disponibile;
-  // l'inserimento singolo si ferma a 1 munizione per operazione (3 con Ricarica Migliorata)
+  // inserimento: munizioni sciolte fino alla capacità, dalla prima scorta disponibile; le armi caricate direttamente si
+  // fermano a 2 munizioni per operazione (4 con Ricarica Migliorata, A.135)
   let manca = Math.min(info.capacita - m.colpi, info.singolo ? info.perOperazione ?? 1 : Infinity);
   for (const s of info.scorte) {
     const n = Math.min(manca, disponibili(s, c));
@@ -177,4 +187,76 @@ export function eseguiRicarica(info0, munizione, consumi = {}) {
     if (!manca) break;
   }
   return { munizione: m, consumi: c, inserite: m.colpi - (munizione?.colpi ?? 0) };
+}
+
+// ── Carichini (A.135, decisione 139) ──
+
+/** Colpi di ogni carichino di una voce (sessione → carichini[uid]), lunghi quanto la quantità; i nuovi sono vuoti. */
+export function carichiniDi(carichini, uid, quantita, colpi = 6) {
+  const src = Array.isArray(carichini?.[uid]) ? carichini[uid] : [];
+  return Array.from({ length: Math.max(0, quantita) }, (_, i) => Math.max(0, Math.min(colpi, Number.isInteger(src[i]) ? src[i] : 0)));
+}
+
+/** Carichini della sessione allineati alle voci della lista: { uid: quantità } (le voci tolte spariscono; tutti vuoti non si scrivono). */
+export function allineaCarichini(carichini, quantita, colpi = 6) {
+  const out = {};
+  for (const [uid, q] of Object.entries(quantita ?? {})) {
+    const c = carichiniDi(carichini, uid, q, colpi);
+    if (c.some((n) => n > 0)) out[uid] = c;
+  }
+  return out;
+}
+
+/**
+ * Usa un carichino preparato (A.135): trasferisce fino a 6 colpi in 1 AzP, entro gli spazi liberi dell'arma; i colpi non
+ * trasferiti restano nel carichino. Si usa il carichino più pieno fra quelli dell'arma. Le munizioni sono già state
+ * contate quando il carichino è stato preparato. null se non si può (arma piena, nessun carichino pieno).
+ * @returns {{ munizione, carichini, trasferiti, voce }}
+ */
+export function usaCarichino(info, munizione, carichini = {}) {
+  if (!info?.carichini?.length || info.capacita === null) return null;
+  const m = { colpi: 0, riserve: 0, ...munizione };
+  const spazi = info.capacita - m.colpi;
+  if (spazi <= 0) return null;
+  let migliore = null;
+  for (const c of info.carichini) {
+    const stato = carichiniDi(carichini, c.uid, c.quantita, info.colpiCarichino);
+    stato.forEach((n, i) => { if (n > 0 && (!migliore || n > migliore.n)) migliore = { uid: c.uid, i, n, stato }; });
+  }
+  if (!migliore) return null;
+  const trasferiti = Math.min(spazi, migliore.n, info.colpiCarichino);
+  const stato = [...migliore.stato];
+  stato[migliore.i] -= trasferiti;
+  return { munizione: { ...m, colpi: m.colpi + trasferiti }, carichini: { ...carichini, [migliore.uid]: stato }, trasferiti, voce: migliore.uid };
+}
+
+/**
+ * Prepara un carichino (A.135: fuori dal combattimento, 1 minuto ogni 50 colpi o frazione): riempie il primo carichino
+ * non pieno della voce `uid` (o di tutte) con le munizioni sciolte compatibili dell'arma, contandole come consumate.
+ * null se non c'è un carichino da riempire o mancano munizioni.
+ * @returns {{ carichini, consumi, inseriti, voce }}
+ */
+export function riempiCarichino(info, carichini = {}, consumi = {}, uid = null) {
+  if (!info?.carichini?.length) return null;
+  const voci = info.carichini.filter((c) => !uid || c.uid === uid);
+  for (const c of voci) {
+    const stato = carichiniDi(carichini, c.uid, c.quantita, info.colpiCarichino);
+    const i = stato.findIndex((n) => n < info.colpiCarichino);
+    if (i < 0) continue;
+    const cons = { ...consumi };
+    let manca = info.colpiCarichino - stato[i];
+    for (const s of info.scorte ?? []) {
+      const n = Math.min(manca, disponibili(s, cons));
+      if (!n) continue;
+      cons[s.uid] = (cons[s.uid] ?? 0) + n;
+      manca -= n;
+      if (!manca) break;
+    }
+    const inseriti = info.colpiCarichino - stato[i] - manca;
+    if (!inseriti) return null;
+    const nuovo = [...stato];
+    nuovo[i] += inseriti;
+    return { carichini: { ...carichini, [c.uid]: nuovo }, consumi: cons, inseriti, voce: c.uid };
+  }
+  return null;
 }

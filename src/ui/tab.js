@@ -23,7 +23,7 @@ import { dotazioneApplicata, crediti } from '../dotazioni.js';
 import { provenienzaCarico } from '../carico.js';
 import { talentiSituazionali } from '../talenti.js';
 import { gradiTaumaturgici } from '../incantesimi.js';
-import { statoRicarica, disponibili } from '../ricarica.js';
+import { statoRicarica, disponibili, carichiniDi } from '../ricarica.js';
 import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 import { pannelloAttacco } from './attacco.js';
 import { pugniPotenziati, profiloSenzArmi, profiloOndaInteriore, senzArmiDisponibile, SENZ_ARMI, ONDA, talentiAttacco, valoriDisciplina } from '../attacco.js';
@@ -1744,10 +1744,26 @@ const SANITARI = ['applicazioni', 'dosi', 'set'];
 const MODI_RICARICA = {
   caricatore: 'si sostituisce un caricatore pieno di riserva; quello tolto resta, vuoto o parziale (§7.20.2)',
   inserimento: 'si inseriscono munizioni sciolte compatibili fino alla capacità',
-  singolo: 'una munizione per operazione, 1 AzP (E&L 19; §5.1.1)',
-  tamburo: 'una operazione riempie il tamburo con munizioni pronte, 1 AzP (E&L 19; §5.1.1)',
+  // armi caricate direttamente (A.135): il testo sta nei dati (munizioni.json → ricarica.inserimento_singolo.testo)
+  singolo: 'fino a 2 cartucce per operazione, 1 AzP (A.135)',
   cella: 'una cella piena compatibile sostituisce quella esaurita',
 };
+
+/** Riga dei carichini di un'arma (A.135): colpi di ogni carichino, «Usa carichino» e «Prepara». */
+function rigaCarichini(ctx, a, info, m, capacita) {
+  const C = ctx.dati.equipaggiamento.file.munizioni.ricarica.carichini;
+  const stati = info.carichini.flatMap((c) => carichiniDi(ctx.sessione.carichini, c.uid, c.quantita, info.colpiCarichino));
+  const pieni = stati.filter((n) => n > 0);
+  const spazi = capacita === null ? 0 : capacita - m.colpi;
+  const daRiempire = stati.some((n) => n < info.colpiCarichino) && info.scorte.some((s) => disponibili(s, ctx.sessione.scorte) > 0);
+  const nome = info.carichini[0].nome;
+  return h('div', { class: 'riga-munizioni carichini-tavolo' },
+    h('span', {}, `${nome}: `, stati.map((n, i) => h('span', { class: `carichino${n ? '' : ' vuoto'}`, title: n ? `${n} colpi` : 'vuoto' }, `${i ? ' · ' : ''}${n}/${info.colpiCarichino}`))),
+    h('button', { type: 'button', class: 'btn', disabled: !pieni.length || spazi <= 0, title: !pieni.length ? 'Nessun carichino preparato' : spazi <= 0 ? 'Arma già piena' : `Trasferisce fino a ${C?.per_operazione ?? 6} colpi in 1 AzP, entro gli spazi liberi; il resto rimane nel carichino (A.135)`,
+      onclick: () => ctx.azioni.usaCarichino(a.uid) }, `Usa carichino +${Math.min(spazi, Math.max(0, ...pieni)) || 0}`),
+    h('button', { type: 'button', class: 'btn', disabled: !daRiempire, title: daRiempire ? `Riempie un carichino con le munizioni sciolte compatibili: ${C?.preparazione ?? 'fuori dal combattimento'} (A.135)` : 'Nessun carichino da riempire o nessuna munizione compatibile',
+      onclick: () => ctx.azioni.preparaCarichino(a.uid) }, 'Prepara'));
+}
 
 /**
  * Modalità tavolo: colpi nel caricatore e, per le armi a distanza, ricarica dalle riserve
@@ -1789,6 +1805,9 @@ function pannelloMunizioni(ctx, a, { riserveModificabili = true } = {}) {
       m.parziali?.length ? `Caricatori parziali: ${m.parziali.map((n) => `${n} colpi`).join(', ')}` : null,
       m.parziali?.length && m.vuoti ? ' · ' : null,
       m.vuoti ? `${info.vuoto?.nome ?? 'Caricatori vuoti'}: ×${m.vuoti}` : null) : null,
+    // A.135: carichini rapidi del tipo dell'arma, con i colpi di ciascuno; «Usa carichino» (1 AzP, fino a 6 colpi entro gli
+    // spazi liberi) e «Prepara» (fuori dal combattimento, dalle munizioni sciolte compatibili)
+    info?.carichini?.length ? rigaCarichini(ctx, a, info, m, capacita) : null,
     // §7.20.3: un lanciagranate tiene un tipo di granata alla volta; cambiare tipo lo scarica (le granate tornano nell’Inventario)
     info?.granate && info.scorte.length ? h('label', { class: 'riga-munizioni campo-inline' }, h('span', {}, 'Granata caricata '),
       h('select', { 'aria-label': `Granata caricata in ${a.nome}`, onchange: (e) => ctx.azioni.scegliGranata(a.uid, e.target.value) },
@@ -1799,7 +1818,7 @@ function pannelloMunizioni(ctx, a, { riserveModificabili = true } = {}) {
       info.scorte.length ? `${info.modo === 'cella' ? 'Celle' : 'Munizioni sciolte'}: ${info.scorte.map((x) => `${x.nome} ×${disponibili(x, ctx.sessione.scorte)}`).join(', ')}`
         : `Nessuna ${info.modo === 'cella' ? 'cella' : 'munizione'} compatibile nell’inventario.`) : null,
     h('small', { class: 'nota' }, [
-      info?.modo ? `Ricarica: ${MODI_RICARICA[info.singolo ? 'singolo' : info.modo]}${info.singolo && info.perOperazione > 1 ? `; ${info.perOperazione} con Ricarica Migliorata` : ''}.` : null,
+      info?.modo ? `Ricarica: ${info.singolo ? ctx.dati.equipaggiamento.file.munizioni.ricarica.inserimento_singolo?.testo ?? MODI_RICARICA.singolo : MODI_RICARICA[info.modo]}${info.singolo && info.perOperazione > 2 ? ` (tu: ${info.perOperazione}, Ricarica Migliorata)` : ''}.` : null,
       // Ricarica Rapida (Giocatore §8.6.4): una operazione gratuita per Round
       info?.modo && (ctx.tab.scheda.talentiLiberi ?? []).some((t) => t.id === ctx.dati.equipaggiamento.file.munizioni.ricarica.ricarica_rapida?.talento) ? ctx.dati.equipaggiamento.file.munizioni.ricarica.ricarica_rapida.promemoria : null,
       capacita === null ? 'Nessun caricatore nella scheda dell’arma: contatore libero.' : null,

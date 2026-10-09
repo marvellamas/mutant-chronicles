@@ -252,8 +252,8 @@ test('Corazza Potenziata: +1 AR magica con una protezione Artefatto', () => {
   const eq = { protezioni: [{ uid: 'a', nome: 'Armatura', tipo: 'armatura', ar: { totale: 5, magica: 1 }, artefatto: true }], effettiOggetti: [] };
   assert.deepEqual([calcolaAR(eq, dati).totale, calcolaAR(eq, dati, { talenti: ['Corazza Potenziata'] }).totale], [5, 6]);
 });
-test('Ricarica Migliorata: 3 cartucce per operazione invece di 1', () => {
-  assert.deepEqual([perOperazione({ singolo: true }, [], dati), perOperazione({ singolo: true }, ['ricarica-migliorata'], dati)], [1, 3]);
+test('Ricarica Migliorata (A.135): 4 cartucce per operazione invece di 2', () => {
+  assert.deepEqual([perOperazione({ singolo: true }, [], dati), perOperazione({ singolo: true }, ['ricarica-migliorata'], dati)], [2, 4]);
 });
 test('Ricarica Efficiente e Conversione Migliorata: Convertire Potere 3:1 → 2:1 → 1:1; Bianco 2:1; solo Taumaturgo', () => {
   const s = (liberi = [], classi = [], addestramento = 'Taumaturgo') => ({
