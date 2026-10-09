@@ -6,6 +6,7 @@
 // Le penalità di Ferite, Affaticamento e Stati sono solo promemoria: i VA mostrati non le
 // includono (le regole del cap. 5 sono situazionali).
 import { h, segno } from './dom.js';
+import { avviso } from './avvisi.js';
 import { normalizzaTemporanei, variaTemporaneo, durataTemporaneo, togliTemporaneo, derivatiDi } from '../temporanei.js';
 import { normalizzaCircostanze, aggiungiCircostanza, variaCircostanza, commutaCategoria, notaCircostanza, togliCircostanza, tutteSpuntate, TUTTO } from '../circostanze.js';
 import { info, infoValore, etichettaMacro, pallini } from './tooltip.js';
@@ -18,7 +19,7 @@ import { descriviFerite } from '../sessione.js';
 import { statoIntegrita } from '../protezione.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
 import { testoDanno } from '../stampa.js';
-import { assegnaMani, legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto, catalogo, risolvi, infoArtefattoVoce, infusiDi, regoleSintonizzazione, rapportoConversione, riserveNec } from '../equipaggiamento.js';
+import { assegnaMani, legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto, catalogo, risolvi, infoArtefattoVoce, infusiDi, regoleSintonizzazione, rapportoConversione, riserveNec, tempiProtezione, cambioProtezione } from '../equipaggiamento.js';
 import { dotazioneApplicata, crediti } from '../dotazioni.js';
 import { provenienzaCarico } from '../carico.js';
 import { talentiSituazionali } from '../talenti.js';
@@ -1465,7 +1466,7 @@ function tabCombattimento(ctx, d) {
 
       sezione('Protezioni',
         vistaRapidaProtezioni(ctx, d),
-        oggettiDisponibili(ctx, ['armatura', 'scudo', 'elmetto'], { verbo: (r) => (r.tipo === 'scudo' ? 'Imbraccia' : 'Indossa'), statoAttivo: (r) => ['indossata', 'imbracciato'].find((x) => r.stati.includes(x)) ?? null }),
+        protezioniDisponibili(ctx),
         d.protezioniCalcolate.length
         ? h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
           h('thead', {}, h('tr', {}, ['Protezione', 'AR', 'Categoria o taglia', 'Parata', 'Penalità', 'FOR'].map((c) => h('th', {}, c)))),
@@ -1551,28 +1552,62 @@ function condizioniModificabili(ctx, d) {
   ];
 }
 
-/** Costo per indossare o togliere (A.60): elmetto da regole.json → elmetti (§7.21.1); gli altri A.110. */
-function costoIndossare(x, regole) {
-  const n = x.azioni === 'elmetti' ? regole.elmetti?.azioni_indossare : x.azioni;
-  return Number.isInteger(n) ? `${n} AzP${x.condizione ? `, ${x.condizione}` : ''}` : 'costo da definire (A.110)';
+/** Voci risolte delle protezioni del personaggio (non in deposito): armature, scudi, elmetti, rinforzi. */
+function protezioniDelPg(ctx) {
+  const cat = catalogo(ctx.dati);
+  return (ctx.scelte.equipaggiamento ?? []).map((v) => risolvi(v, cat))
+    .filter((r) => ['armatura', 'scudo', 'elmetto', 'rinforzo'].includes(r.tipo) && !r.deposito && !r.fuoriCatalogo);
 }
 
 /**
- * A.60: vista rapida di armatura, rinforzi, scudo ed elmetto indossati, con il costo per indossare o togliere
- * dove i dati lo danno (elmetto 1 AzP); per armatura, rinforzi e scudo il costo è ancora da definire (TODO(Davide)
- * A.110, regole.json → protezioni_rapide).
+ * A.60 e A.110: vista rapida di armatura, rinforzi, scudo ed elmetto addosso, con i tempi per indossarli o toglierli
+ * (regole.json → protezioni_rapide.tempi, src/equipaggiamento.js → tempiProtezione).
  */
 function vistaRapidaProtezioni(ctx, d) {
   const P = ctx.dati.regole.protezioni_rapide;
   if (!P) return null;
+  const voci = protezioniDelPg(ctx).filter((r) => r.attivo);
+  const tempo = (r) => tempiProtezione(r, ctx.dati)?.testo ?? null;
   const righe = P.voci.map((x) => {
-    const presenti = d.protezioniCalcolate.filter((p) => p.tipo === x.tipo && !p.rinforzo);
-    const rinforzi = x.tipo === 'armatura' ? d.protezioniCalcolate.filter((p) => p.rinforzo).map((p) => p.rinforzo.nome) : [];
-    const testo = presenti.length ? presenti.map((p) => `${p.nome}${p.tipo !== 'elmetto' && p.ar ? ` (AR ${testoAr(p.ar)})` : ''}`).join(', ') : x.vuoto ?? '—';
-    return h('li', {}, h('strong', {}, `${x.nome}: `), testo, rinforzi.length ? h('span', { class: 'nota' }, ` · rinforzi: ${rinforzi.join(', ')}`) : null,
-      h('small', { class: 'nota' }, ` · indossare o togliere: ${costoIndossare(x, ctx.dati.regole)}`));
+    const presenti = voci.filter((r) => r.tipo === x.tipo);
+    const calcolata = (r) => d.protezioniCalcolate.find((p) => p.nome === r.nome && !p.rinforzo);
+    // rinforzi montati sull'armatura e indossati da soli (soprabiti, mantelli, Tabardo, Sottogiacca)
+    const rinforzi = x.tipo === 'armatura' ? voci.filter((r) => r.tipo === 'rinforzo') : [];
+    return h('li', {}, h('strong', {}, `${x.nome}: `),
+      presenti.length ? presenti.map((r, k) => [k ? '; ' : '', r.nome, calcolata(r)?.ar && x.tipo !== 'elmetto' ? ` (AR ${testoAr(calcolata(r).ar)})` : '',
+        tempo(r) ? h('small', { class: 'nota' }, ` · ${tempo(r)}`) : null]) : x.vuoto ?? '—',
+      rinforzi.length ? h('span', { class: 'nota' }, ' · rinforzi: ', rinforzi.map((r, k) => [k ? ', ' : '', r.nome, tempo(r) ? ` (${tempo(r)})` : ''])) : null);
   });
-  return h('div', { class: 'riquadro vista-protezioni' }, h('h3', {}, 'Protezioni addosso'), h('ul', {}, righe));
+  return h('div', { class: 'riquadro vista-protezioni' }, h('h3', {}, 'Protezioni addosso'), h('ul', {}, righe),
+    ctx.roundScontro ? h('p', { class: 'nota' }, P.round) : null);
+}
+
+/**
+ * A.110: «Indossa» / «Togli» (scudo: «Imbraccia» / «Riponi») con i tempi. Nel Round (scontro aperto) le protezioni in AzP
+ * spendono l'Azione, armature e rinforzi strutturali no (servono minuti); la Sottogiacca IES sotto un'armatura no.
+ * I rinforzi strutturali si montano dall'Inventario («Montata su:»).
+ */
+function protezioniDisponibili(ctx) {
+  const voci = protezioniDelPg(ctx).filter((r) => r.tipo !== 'rinforzo' || r.def?.indossabile_da_solo);
+  if (!voci.length) return null;
+  const armaturaIndossata = voci.some((r) => r.tipo === 'armatura' && r.attivo);
+  const inRound = !!ctx.roundScontro;
+  const prova = (r, verso, stato) => {
+    const c = cambioProtezione(r, verso, { inRound, armaturaIndossata: armaturaIndossata && !(r.tipo === 'armatura') }, ctx.dati);
+    if (!c.ammesso) { avviso(`${r.nome}: ${c.motivo}.`, { tipo: 'errore' }); return; }
+    cambiaStato(ctx, r.uid, stato);
+    if (c.testo) avviso(`${r.nome}: ${c.testo}`, { tipo: c.azp ? 'info' : 'ok' });
+  };
+  return h('ul', { class: 'elenco-disponibili' }, voci.map((r) => {
+    const t = tempiProtezione(r, ctx.dati);
+    const attivo = ['indossata', 'imbracciato'].find((x) => r.stati.includes(x)) ?? null;
+    return h('li', { class: r.attivo ? 'attivo' : null },
+      h('span', {}, h('strong', {}, r.nome), h('small', { class: 'sigla' }, ` · ${NOMI_STATI[r.voce.stato] ?? 'Con sé'}`),
+        t ? h('small', { class: 'nota', title: t.condizione ?? null }, ` · ${t.testo}`) : null),
+      r.attivo
+        ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => prova(r, 'togli', statoRiposto(r.stati)) }, r.tipo === 'scudo' ? 'Riponi' : 'Togli')
+        : attivo ? h('button', { type: 'button', class: 'btn btn-piccolo primario', onclick: () => prova(r, 'indossa', attivo) }, r.tipo === 'scudo' ? 'Imbraccia' : 'Indossa') : null);
+  }));
 }
 
 /**

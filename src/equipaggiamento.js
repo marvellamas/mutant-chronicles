@@ -1389,3 +1389,67 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     avvisi,
   };
 }
+
+// ---------------------------------------------------------------------------
+// Indossare e togliere le protezioni (A.110, E&L del 05/10/2026, decisione 120; regole.json → protezioni_rapide.tempi)
+
+const minuti = (n) => `${n} ${n === 1 ? 'minuto' : 'minuti'}`;
+const quanto = (n, unita) => (unita === 'AzP' ? `${n} AzP` : minuti(n));
+
+/**
+ * Tempi per indossare e togliere una protezione (voce risolta: { tipo, def, voce }). Scudo, elmetto, soprabiti, mantelli,
+ * Tabardo consacrato e Sottogiacca IES in AzP; armature per categoria e rinforzi strutturali per kit in minuti; per
+ * esoscheletri e servoassistite la procedura della scheda. null se la voce non è una protezione con tempi.
+ * @returns {{ gruppo, unita: 'AzP'|'min'|null, indossare, togliere, verbi: [string, string], condizione, scheda: boolean,
+ *   copertaDaArmatura: boolean, testo } | null}
+ */
+export function tempiProtezione(r, dati) {
+  const T = dati.regole.protezioni_rapide?.tempi;
+  if (!T || !r) return null;
+  const rif = r.voce?.rif ?? r.rif ?? null;
+  const fai = (gruppo, unita, indossare, togliere, condizione, extra = {}) => {
+    const verbi = gruppo === 'rinforzo_strutturale' ? ['montare', 'smontare'] : gruppo === 'scudo' ? ['impugnare', 'riporre'] : ['indossare', 'togliere'];
+    const testo = indossare === togliere ? `${quanto(indossare, unita)} per ${verbi[0]} o ${verbi[1]}` : `${verbi[0]} ${quanto(indossare, unita)}, ${verbi[1]} ${quanto(togliere, unita)}`;
+    return { gruppo, unita, indossare, togliere, verbi, condizione: condizione ?? null, scheda: false, copertaDaArmatura: false, testo, ...extra };
+  };
+  const azp = (gruppo, x, extra) => fai(gruppo, 'AzP', x.indossare_azp, x.togliere_azp, x.condizione, extra);
+  if (r.tipo === 'scudo' && T.scudo) return azp('scudo', T.scudo);
+  if (r.tipo === 'elmetto' && T.elmetto) return azp('elmetto', T.elmetto);
+  if (r.tipo === 'armatura') {
+    const ps = T.procedura_scheda;
+    if (ps && ((ps.famiglie ?? []).includes(r.def?.famiglia) || (ps.categorie ?? []).includes(r.def?.categoria))) {
+      return { gruppo: 'armatura', unita: null, indossare: null, togliere: null, verbi: ['indossare', 'togliere'], condizione: null, scheda: true, copertaDaArmatura: false, testo: ps.testo };
+    }
+    const x = T.armatura?.[r.def?.categoria];
+    return x ? fai('armatura', 'min', x.indossare_min, x.togliere_min, T.armatura.condizione) : null;
+  }
+  if (r.tipo === 'rinforzo') {
+    if (T.sottogiacca_ies && (T.sottogiacca_ies.rif ?? []).includes(rif)) return azp('sottogiacca_ies', T.sottogiacca_ies, { copertaDaArmatura: !!T.sottogiacca_ies.coperta_da_armatura });
+    if (r.def?.indossabile_da_solo && T.soprabiti_mantelli_tabardo) return azp('soprabiti_mantelli_tabardo', T.soprabiti_mantelli_tabardo);
+    const x = T.rinforzo_strutturale?.[String(r.def?.rinforzo?.kit ?? '').toLowerCase()];
+    return x ? fai('rinforzo_strutturale', 'min', x.montare_min, x.smontare_min, T.rinforzo_strutturale.condizione) : null;
+  }
+  return null;
+}
+
+/**
+ * «Indossa» o «Togli» una protezione (A.110). Nel Round (personaggio in uno scontro aperto) si cambiano solo le
+ * protezioni in AzP, che spendono l'Azione; armature, rinforzi strutturali e procedure delle schede richiedono minuti.
+ * La Sottogiacca IES si cambia solo senza un'armatura indossata sopra; i rinforzi strutturali sull'armatura tolta.
+ * @param verso 'indossa' | 'togli'
+ * @param opzioni { inRound, armaturaIndossata }
+ * @returns {{ ammesso: boolean, motivo: string|null, azp: number, testo: string|null }}
+ */
+export function cambioProtezione(r, verso, { inRound = false, armaturaIndossata = false } = {}, dati) {
+  const t = tempiProtezione(r, dati);
+  const no = (motivo) => ({ ammesso: false, motivo, azp: 0, testo: null });
+  if (!t) return { ammesso: true, motivo: null, azp: 0, testo: null };
+  if (t.copertaDaArmatura && armaturaIndossata) return no('prima si toglie l’armatura che copre la sottogiacca (A.110)');
+  if (t.gruppo === 'rinforzo_strutturale' && armaturaIndossata) return no('i rinforzi strutturali si montano e smontano sull’armatura tolta, con gli strumenti (A.110)');
+  const verbo = verso === 'indossa' ? t.verbi[0] : t.verbi[1];
+  if (t.scheda) return inRound ? no(`${t.testo} (A.110)`) : { ammesso: true, motivo: null, azp: 0, testo: `Per ${verbo} segui la procedura della scheda.` };
+  const n = verso === 'indossa' ? t.indossare : t.togliere;
+  if (t.unita === 'AzP') return { ammesso: true, motivo: null, azp: inRound ? n : 0, testo: inRound ? `${n} AzP del tuo turno per ${verbo} (A.110).` : null };
+  if (inRound) return no(`per ${verbo} servono ${minuti(n)}: non si fa durante il Round (A.110)`);
+  return { ammesso: true, motivo: null, azp: 0, testo: `${verbo[0].toUpperCase()}${verbo.slice(1)} richiede ${minuti(n)}${t.condizione ? ` (${t.condizione})` : ''}; i benefici valgono a protezione interamente indossata.` };
+}

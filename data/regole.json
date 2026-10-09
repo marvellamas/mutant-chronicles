@@ -3042,18 +3042,87 @@
     ]
   },
   "protezioni_rapide": {
-    "_nota": "A.60 (E&L del 05/10/2026): vista rapida nella tab Combattimento di armatura (con i rinforzi montati), scudo ed elmetto, con il costo in Azioni per indossarli o toglierli. L'elmetto prende il costo da elmetti.azioni_indossare (Armamenti §7.21.1); lo scudo 1 AzP (A.110).",
-    "decisione": "A.110 (E&L del 06/10/2026; decisione 120 in docs/risposte-master.md): scudo accessibile 1 AzP per prepararlo e impugnarlo, 1 AzP per riporlo; elmetto 1 AzP per indossarlo e 1 per toglierlo, a mani libere; armature e rinforzi in minuti (tempi qui sotto, per chi opera da solo con la protezione accessibile, senza Prova; i benefici solo a protezione interamente indossata). La vista rapida usa ancora solo «azioni»: armatura e rinforzi restano «costo da definire» finché non legge «tempi» (docs/diff-manuali-2026-10-07.md).",
+    "_nota": "A.60 e A.110: vista delle protezioni nella tab Combattimento («Protezioni addosso» e «Indossa»/«Togli»), con i tempi per indossarle o toglierle (src/equipaggiamento.js → tempiProtezione, cambioProtezione). «voci»: le righe della vista rapida.",
+    "decisione": "A.110 (E&L del 05/10/2026, decisione 120 in docs/risposte-master.md): «Combattimento con armatura» è la gestione delle protezioni nella vista di Combattimento, non una manovra. Scudo accessibile 1 AzP per prepararlo e impugnarlo, 1 AzP per riporlo, nella mano della scheda; elmetto 1 AzP / 1 AzP a mani libere; armature Leggera 1 / 1 minuto, Media 5 / 1, Pesante 10 / 5 (da soli, a mani libere, protezione accessibile, senza Prova; benefici solo a protezione interamente indossata e fissata; prevalgono le procedure delle schede, servoassistite comprese); soprabiti, mantelli e Tabardo consacrato 1 AzP / 1 AzP; Sottogiacca IES 1 AzP / 1 AzP, togliendo prima l’armatura che la copre; rinforzi strutturali leggero 1 / 1 minuto, pesante 5 / 5, sull’armatura tolta con gli strumenti (un rinforzo già montato non aggiunge tempo). Restano il limite di un rinforzo, le compatibilità e i profili autonomi della A.80.",
+    "round": "Durante il Round (personaggio in uno scontro aperto) si cambiano solo le protezioni in AzP, che spendono l’Azione; armature e rinforzi strutturali richiedono minuti e non si cambiano nel Round.",
     "tempi": {
-      "armatura": { "Leggera": { "indossare_min": 1, "togliere_min": 1 }, "Media": { "indossare_min": 5, "togliere_min": 1 }, "Pesante": { "indossare_min": 10, "togliere_min": 5 } },
-      "rinforzo_strutturale": { "leggero": { "montare_min": 1, "smontare_min": 1 }, "pesante": { "montare_min": 5, "smontare_min": 5 }, "_nota": "Sull’armatura tolta, con gli strumenti appropriati; i tempi per togliere e rimettere l’armatura si contano a parte; un rinforzo già montato non aggiunge tempo." },
-      "soprabiti_mantelli_tabardo": { "indossare_azp": 1, "togliere_azp": 1, "condizione": "accessibili, fissati, entrambe le mani libere" },
-      "sottogiacca_ies": { "indossare_azp": 1, "togliere_azp": 1, "condizione": "entrambe le mani libere; se un’armatura la copre, prima si toglie l’armatura" }
+      "scudo": {
+        "indossare_azp": 1,
+        "togliere_azp": 1,
+        "condizione": "scudo accessibile; occupa la mano richiesta dalla scheda"
+      },
+      "elmetto": {
+        "indossare_azp": 1,
+        "togliere_azp": 1,
+        "condizione": "entrambe le mani libere; connessioni e procedure speciali secondo la scheda"
+      },
+      "armatura": {
+        "Leggera": {
+          "indossare_min": 1,
+          "togliere_min": 1
+        },
+        "Media": {
+          "indossare_min": 5,
+          "togliere_min": 1
+        },
+        "Pesante": {
+          "indossare_min": 10,
+          "togliere_min": 5
+        },
+        "condizione": "da soli, a mani libere, con l’armatura accessibile; senza Prova"
+      },
+      "procedura_scheda": {
+        "famiglie": [
+          "Esoscheletri"
+        ],
+        "categorie": [
+          "Esoscheletro",
+          "Pesante servoassistita"
+        ],
+        "testo": "procedura della scheda (servoassistite ed esoscheletri): non si cambia durante il Round"
+      },
+      "soprabiti_mantelli_tabardo": {
+        "indossare_azp": 1,
+        "togliere_azp": 1,
+        "condizione": "accessibili, fissati, entrambe le mani libere; su un’armatura compatibile non si aggiunge un montaggio"
+      },
+      "sottogiacca_ies": {
+        "rif": [
+          "rinforzi:sottogiacca-protettiva-ies"
+        ],
+        "indossare_azp": 1,
+        "togliere_azp": 1,
+        "coperta_da_armatura": true,
+        "condizione": "entrambe le mani libere; se un’armatura la copre, prima si toglie l’armatura"
+      },
+      "rinforzo_strutturale": {
+        "leggero": {
+          "montare_min": 1,
+          "smontare_min": 1
+        },
+        "pesante": {
+          "montare_min": 5,
+          "smontare_min": 5
+        },
+        "condizione": "sull’armatura tolta, con gli strumenti appropriati; un rinforzo già montato non aggiunge tempo all’armatura"
+      }
     },
     "voci": [
-      { "tipo": "armatura", "nome": "Armatura", "vuoto": "nessuna", "azioni": null },
-      { "tipo": "scudo", "nome": "Scudo", "vuoto": "nessuno", "azioni": 1, "condizione": "occupa la mano richiesta dalla scheda" },
-      { "tipo": "elmetto", "nome": "Elmetto", "vuoto": "nessuno", "azioni": "elmetti", "condizione": "entrambe le mani libere" }
+      {
+        "tipo": "armatura",
+        "nome": "Armatura",
+        "vuoto": "nessuna"
+      },
+      {
+        "tipo": "scudo",
+        "nome": "Scudo",
+        "vuoto": "nessuno"
+      },
+      {
+        "tipo": "elmetto",
+        "nome": "Elmetto",
+        "vuoto": "nessuno"
+      }
     ]
   },
   "calendario": {

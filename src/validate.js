@@ -72,6 +72,7 @@ export function validaDati(dati) {
   if (isOggetto(dati.dotazioni)) validaDotazioni(dati, err);
   if (dati.equipaggiamento?.file?.munizioni?.ricarica !== undefined) validaRicarica(dati, err);
   if (dati.regole?.attacco_distanza !== undefined) validaAttaccoDistanza(dati, err);
+  if (dati.regole?.protezioni_rapide !== undefined) validaProtezioniRapide(dati, err);
   if (dati.regole?.attacco_ravvicinato !== undefined) validaAttaccoRavvicinato(dati, err);
   if (dati.incantesimi?.incantesimi?.some((i) => i.meccanica)) validaMeccanicaIncantesimi(dati, err);
   if (isOggetto(dati.formato_nemici)) validaFormatoNemici(dati, err);
@@ -2001,6 +2002,23 @@ function validaRicarica(dati, err) {
 const EFFETTI_ATTACCO = ['modalita', 'mirato', 'impegnato', 'ravvicinato', 'bruciapelo', 'distanza', 'azioni_distanza', 'copertura_propria',
   'movimento_proprio', 'imbracciatura', 'promemoria', 'mira_selettiva', 'analisi_rapida', 'postura_assedio', 'silenzioso',
   'primo_attacco', 'mirato_dopo_armatura', 'preparazione', 'nascosto'];
+// A.110: tempi per indossare e togliere le protezioni (regole.json → protezioni_rapide.tempi)
+function validaProtezioniRapide(dati, err) {
+  const F = 'regole';
+  const T = dati.regole.protezioni_rapide?.tempi;
+  if (!isOggetto(T)) return err(F, 'protezioni_rapide.tempi', 'oggetto atteso');
+  const positivo = (v) => isIntero(v) && v >= 1;
+  for (const k of ['scudo', 'elmetto', 'soprabiti_mantelli_tabardo', 'sottogiacca_ies']) {
+    if (!positivo(T[k]?.indossare_azp) || !positivo(T[k]?.togliere_azp)) err(F, `protezioni_rapide.tempi.${k}`, 'servono indossare_azp e togliere_azp interi ≥ 1');
+  }
+  if (dati.regole.elmetti?.azioni_indossare !== undefined && T.elmetto?.indossare_azp !== dati.regole.elmetti.azioni_indossare) err(F, 'protezioni_rapide.tempi.elmetto.indossare_azp', `diverso da elmetti.azioni_indossare (${dati.regole.elmetti.azioni_indossare})`);
+  for (const c of ['Leggera', 'Media', 'Pesante']) if (!positivo(T.armatura?.[c]?.indossare_min) || !positivo(T.armatura?.[c]?.togliere_min)) err(F, `protezioni_rapide.tempi.armatura.${c}`, 'servono indossare_min e togliere_min interi ≥ 1');
+  for (const k of ['leggero', 'pesante']) if (!positivo(T.rinforzo_strutturale?.[k]?.montare_min) || !positivo(T.rinforzo_strutturale?.[k]?.smontare_min)) err(F, `protezioni_rapide.tempi.rinforzo_strutturale.${k}`, 'servono montare_min e smontare_min interi ≥ 1');
+  const rif = new Set(Object.entries(dati.equipaggiamento?.file ?? {}).flatMap(([id, f]) => (f.oggetti ?? []).map((o) => `${id}:${o.id}`)));
+  for (const r of T.sottogiacca_ies?.rif ?? []) if (rif.size && !rif.has(r)) err(F, 'protezioni_rapide.tempi.sottogiacca_ies.rif', `"${r}" non esiste nel catalogo`);
+  if (!Array.isArray(T.procedura_scheda?.famiglie) || !Array.isArray(T.procedura_scheda?.categorie)) err(F, 'protezioni_rapide.tempi.procedura_scheda', 'servono «famiglie» e «categorie»');
+}
+
 function validaAttaccoDistanza(dati, err) {
   const F = 'regole';
   const a = dati.regole.attacco_distanza;
