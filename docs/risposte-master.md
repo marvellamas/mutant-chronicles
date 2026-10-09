@@ -1174,7 +1174,7 @@ Fonte: E&L dell'08/10/2026, 21:10 UTC, blocco «Aggiornamento cumulativo — ris
     di tirare (0 Corsa, −2 Scatto su terra); i Q non cambiano con l'esito (12 e 18). Penalità personale / agli attacchi
     contro, fino alla propria Iniziativa successiva: senza Prova Corsa −2/−2, Scatto −6/−4; Magistrale 0/−6 e −2/−8;
     Successo 0/−4 e −4/−6; Fallimento −4/0 e −8/−2; Maldestro −6/0 e −10/0. Superati gli aumenti o riduzioni dei Q per
-    esito e il +4/−4 alla Prova successiva. **Lotto mappa:** `data/mappa.json` → movimento.blocco_dopo_passo. **Da
+    esito e il +4/−4 alla Prova successiva. **Applicata** il 09/10 per la mappa: `data/mappa.json` → movimento.blocco_dopo_passo true, via il `TODO(Davide)`. **Da implementare** la tabella della Prova facoltativa in «Attacca!» (lotto «combattimento»). `data/mappa.json` → movimento.blocco_dopo_passo. **Da
     implementare** la tabella della Prova facoltativa in «Attacca!» (lotto «combattimento»).
 141. **Aree con raggio in quadretti** (A.137). Diagonale 1 Q: raggio 1 = 3 × 3 Q, 2 = 5 × 5, 3 = 7 × 7; non cambia i
     coni. Conferma il provvisorio (`data/mappa.json` → template.metrica_raggio «quadretti»). **Lotto mappa** (via il

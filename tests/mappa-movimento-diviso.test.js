@@ -1,6 +1,6 @@
 // Mappa di battaglia, lotto R6 (docs/diff-manuali-2026-10-07.md): movimento diviso solo al Passo, Corsa e Scatto in un
-// blocco unico con i Q non usati persi (A.129, decisione 133); con il Passo cominciato Corsa e Scatto non si scelgono
-// più (TODO(Davide) A.136, provvisorio).
+// blocco unico con i Q non usati persi (A.129, decisione 133); con il Passo cominciato Corsa e Scatto restano, con i Q
+// già fatti contati nel blocco (A.136, decisione 140: risposta di Davide dell'08/10).
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali, copia } from './helpers.js';
@@ -20,17 +20,19 @@ function scena() {
 const muovi = (s, costo, fascia, extra = {}) => muoviToken(s, 'a', { a: [1 + costo, 1], costo, fascia, scontro: 'sc', round: 1, ...extra }, dati);
 const stato = (s) => statoFasce(MOV, usatoNelRound(s, 'a', 'sc', 1), fasceNelRound(s, 'a', 'sc', 1), REG);
 
-test('dati: solo il Passo si divide; il blocco dopo il Passo è il TODO A.136', () => {
+test('dati: solo il Passo si divide; il Passo cominciato diventa Corsa o Scatto (A.136, decisione 140)', () => {
   assert.deepEqual(REG.divisibili, ['passo']);
-  assert.equal(REG.blocco_dopo_passo, false);
-  assert.match(REG['TODO(Davide) blocco dopo il Passo'], /^A\.136/);
+  assert.equal(REG.blocco_dopo_passo, true);
+  assert.equal(REG['TODO(Davide) blocco dopo il Passo'], undefined);
+  assert.match(REG._nota_blocco_dopo_passo, /^A\.136/);
   assert.equal(REG.movimento_diviso, undefined);
   const d = copia(dati);
   d.mappa.movimento.divisibili = ['volo'];
   assert.ok(validaDati(d).some((e) => e.file === 'mappa.json' && e.chiave === 'movimento.divisibili'));
 });
 
-test('Passo diviso: 2 Q, poi 3 Q, poi 1 Q; Corsa e Scatto spariscono appena il Passo comincia', () => {
+test('Passo diviso: 2 Q, poi 3 Q, poi 1 Q; con il provvisorio di prima (blocco_dopo_passo false) Corsa e Scatto sparivano', () => {
+  const stato = (s) => statoFasce(MOV, usatoNelRound(s, 'a', 'sc', 1), fasceNelRound(s, 'a', 'sc', 1), { ...REG, blocco_dopo_passo: false });
   let s = scena();
   assert.deepEqual(stato(s).rimaste, { passo: 6, corsa: 12, scatto: 18 }, 'da fermi tutte le fasce');
   s = muovi(s, 2, 'passo');
@@ -77,8 +79,14 @@ test('fascia decisa dal costo: da fermi 5 Q sono Passo (divisibile), 9 Q Corsa, 
   assert.equal(fasciaDi(14, r), 'scatto');
 });
 
-test('con blocco_dopo_passo (risposta di A.136 diversa) il Passo cominciato si trasforma in Corsa', () => {
-  const regole = { ...REG, blocco_dopo_passo: true };
+test('A.136: il Passo cominciato si trasforma in Corsa o Scatto; i Q fatti contano nel blocco', () => {
+  const regole = REG;
+  let s = muovi(scena(), 2, 'passo');
+  assert.deepEqual(stato(s).rimaste, { passo: 4, corsa: 10, scatto: 16 });
+  s = muovi(s, 7, 'corsa');
+  assert.equal(stato(s).chiusa, 'corsa');
+  assert.equal(stato(s).persi, 3, '12 Q di Corsa: 2 di Passo + 7, ne restano 3 persi');
+  assert.deepEqual(stato(s).rimaste, { passo: 0, corsa: 0, scatto: 0 });
   const st = statoFasce(MOV, 2, ['passo'], regole);
   assert.deepEqual(st.rimaste, { passo: 4, corsa: 10, scatto: 16 });
   assert.deepEqual(st.escluse, []);

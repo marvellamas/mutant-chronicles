@@ -136,8 +136,8 @@
       "passo"
     ],
     "_nota_divisibili": "A.129 (decisione 133 del 06/10/2026): solo il Passo si divide prima, fra e dopo le AzP, entro la disponibilità complessiva; Corsa e Scatto (1 AzM, nessuna AzP in più) sono un blocco unico da completare prima delle AzP: una sola mossa, i Q non usati si perdono. Passo, Corsa e Scatto costano l'unica AzM: dopo un blocco il movimento del Round è finito.",
-    "blocco_dopo_passo": false,
-    "TODO(Davide) blocco dopo il Passo": "A.136: un token che ha già percorso una parte del Passo (prima di ogni AzP) può trasformare l'AzM in Corsa o Scatto, con il movimento già fatto contato nel blocco? Provvisorio: no, Corsa e Scatto partono solo da fermi; il master annulla il movimento e lo rifà come Corsa (o usa Libero).",
+    "blocco_dopo_passo": true,
+    "_nota_blocco_dopo_passo": "A.136 (risposta di Davide dell’08/10/2026, decisione 140): prima di aver compiuto qualsiasi AzP, mentre il movimento è in corso, il Passo già iniziato si trasforma in Corsa o Scatto; i Q già percorsi si sottraggono al nuovo totale, si usa una sola AzM e il resto si completa in un unico blocco prima delle AzP. La mappa non sa se il token ha già fatto un’AzP: lo controlla il master (con «Libero» se serve). La Prova facoltativa di Atletica e le sue penalità per esito sono nella scheda («Attacca!»), non sulla mappa.",
     "fasce": [
       "passo",
       "corsa",

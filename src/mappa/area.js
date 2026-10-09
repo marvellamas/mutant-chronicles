@@ -199,7 +199,7 @@ export function fasceRimaste(movimento, usato = 0) {
  * Fasce ancora disponibili nel Round (A.129, decisione 133): solo le fasce `regole.divisibili` (il Passo) si spendono
  * a pezzi, prima, fra e dopo le AzP; Corsa e Scatto sono un blocco unico (una sola mossa, i Q non usati si perdono).
  * Tutte costano l'unica AzM: dopo un blocco il movimento del Round è finito; con un Passo già cominciato Corsa e Scatto
- * restano solo se `regole.blocco_dopo_passo` (TODO(Davide) A.136, provvisorio no).
+ * restano solo se `regole.blocco_dopo_passo` (A.136, decisione 140: sì, prima di ogni AzP; i Q fatti contano nel blocco).
  * @param movimento { passo, corsa, scatto } in Q (null: non disponibile)
  * @param usato Q già spesi nel Round
  * @param fatte fasce dei movimenti già fatti nel Round (src/mappa/annulla.js → fasceNelRound)
