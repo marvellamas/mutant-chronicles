@@ -4,6 +4,8 @@ rem I personaggi si salvano anche come file in personaggi, oltre che nel browser
 rem Niente lettere accentate: la console di Windows non e' in UTF-8.
 title Mutant con la cartella personaggi - chiudi questa finestra per spegnere
 cd /d "%~dp0"
+rem PORTA e MUTANT_SENZA_BROWSER solo per le prove (server.mjs legge PORTA; di norma 3000 e il browser si apre)
+if not defined PORTA set "PORTA=3000"
 
 where node >nul 2>nul
 if errorlevel 1 (
@@ -23,8 +25,8 @@ rem Versione dell'app e indirizzi dei moduli con ?v= (docs/cache.md): dopo un ag
 rem browser prende i file nuovi senza Ctrl+F5. Se non riesce si prosegue: l'app funziona lo stesso.
 node tools\versione.mjs
 echo.
-echo  Mutant e' acceso con la cartella personaggi: il browser si apre su http://localhost:3000
-echo  I personaggi si salvano anche in %~dp0personaggi
+echo  Mutant e' acceso con la cartella personaggi: il browser si apre su http://localhost:%PORTA%
+for %%A in ("%~dp0personaggi") do echo  I personaggi si salvano anche in %%~A
 echo  Se la pagina resta vuota, aspetta qualche secondo e premi F5.
 echo  Gli indirizzi per i giocatori (telefoni e PC sulla stessa Wi-Fi) compaiono qui sotto,
 echo  fra le righe di uguali, e nella plancia nel riquadro "Collega i giocatori".
@@ -34,7 +36,7 @@ echo  Salvataggio automatico ogni 5 minuti nella cartella autosave.
 echo  Per spegnere a fine serata: "Spegni Mutant" nel Tavolo del Master (salva, manda la copia
 echo  e chiude questa finestra). Chiudendo questa finestra con la X Mutant prova comunque a salvare.
 echo.
-start "" http://localhost:3000
+if not defined MUTANT_SENZA_BROWSER start "" http://localhost:%PORTA%
 node server.mjs
 rem 42 = spento da "Spegni Mutant" (server.mjs, 08/10): la sessione e' gia' salvata, la finestra si chiude
 if "%errorlevel%"=="42" exit

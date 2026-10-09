@@ -28,10 +28,12 @@ if not exist "avvisi\avvisi.json" if exist "avvisi\avvisi.esempio.json" copy /y 
 call :avviso aggiornato
 rem Salvataggi (salvataggi\LEGGIMI.txt, 08/10): la prima volta la configurazione si crea dall'esempio
 if not exist "config-salvataggi.json" if exist "config-salvataggi.esempio.json" copy /y "config-salvataggi.esempio.json" "config-salvataggi.json" >nul 2>nul
+rem File dell'app spariti (per esempio messi in quarantena dall'antivirus, 09/10): si rimettono dalla copia di Git
+for %%F in (Mutant.bat avvia-server.bat salva-sessione.bat crea-collegamento.bat avvia.bat server.mjs) do if not exist "%%F" git checkout -- "%%F" >nul 2>nul && echo  Rimesso il file mancante %%F
 
 echo.
-echo  Fatto: Mutant e' aggiornato. Adesso fai doppio clic su avvia.bat
-echo  (se era gia' acceso, chiudi la sua finestra nera e riaprilo).
+echo  Fatto: Mutant e' aggiornato. Adesso apri Mutant.bat (o il collegamento Mutant del desktop)
+echo  e scegli 1; se il server era gia' acceso, chiudi la sua finestra nera e riaccendilo.
 echo.
 pause
 exit /b 0

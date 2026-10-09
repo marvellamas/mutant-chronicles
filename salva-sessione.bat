@@ -22,7 +22,7 @@ echo  Salvataggio della sessione in corso...
 echo.
 node tools\salva-sessione.mjs
 echo.
-echo  Fatto. I salvataggi sono nella cartella %~dp0salvataggi
+for %%A in ("%~dp0salvataggi") do echo  Fatto. I salvataggi sono nella cartella %%~A
 echo  e non vengono mai cancellati ne' sovrascritti.
 echo.
 pause
