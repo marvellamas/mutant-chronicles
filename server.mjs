@@ -100,14 +100,14 @@ import { readFile, writeFile, readdir, stat, mkdir, rename, copyFile, unlink, co
 import { extname, join, normalize, sep, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { networkInterfaces } from 'node:os';
-import { createHash } from 'node:crypto';
+import { createHash, randomBytes } from 'node:crypto';
 import { createInterface } from 'node:readline/promises';
 import { chiOccupa, testoDomanda, risposteSi, fermaMutant, sorvegliaFinestra } from './src/porta-occupata.js';
 import { indirizziRete, testoAvvio } from './src/rete.js';
 import { avvisa, registraErrore } from './tools/avvisi.mjs';
 import { creaGestore, leggiConfig } from './tools/salva-sessione.mjs';
 import { bordoToken } from './src/mappa/colori.js';
-import { validaScontro, rigaOpportunita, diTurno } from './src/scontro.js';
+import { validaScontro, rigaOpportunita, rigaAiutoMaster, diTurno } from './src/scontro.js';
 import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
 import { NOME_FILE, fileProvvisorio, ultimiPerPersonaggio, chiaveDaFile, chiavePersonaggio } from './src/cartella.js';
 import { validaRecord, ID_VEICOLO, migraVeicoli, eRiferimento, stessaChiave } from './src/veicoli-registro.js';
@@ -122,6 +122,7 @@ import { avversariZoc } from './src/mappa/zoc.js';
 import { dimensioniImmagine } from './src/mappa/immagine.js';
 import { pezziDellaScena } from './src/mappa/partecipanti.js';
 import { vistaPlancia } from './src/tavolo.js';
+import { INTESTAZIONE as INTESTAZIONE_AIUTO, rifiutoAiuto, assegnaAiuto, ruoloValido, ruoloDopoScontro, eAiuto, pgDaMuovere, ruoloPubblico } from './src/mappa/aiuto-master.js';
 import { pgDellaScena, pezzoDelPg, areaPerTablet, provaMovimento, eseguiMovimentoGiocatore, impostazioniTablet, miniScheda, fondiMovimentiTablet, lineaPerTablet } from './src/mappa/tablet.js';
 
 const RADICE = fileURLToPath(new URL('.', import.meta.url));
@@ -750,6 +751,8 @@ function creaCanaleDiretta(cartelle) {
       for (const [k, t] of letture) if (Date.now() - t <= secondi * 1000) r.add(k); else letture.delete(k);
       return [...r];
     },
+    /** A.122: il ruolo di Aiuto-master (uno solo, in memoria: si perde al riavvio del server). */
+    ruoloAiuto: null,
     /** «Adatta allo schermo» sulle viste giocatori aperte; restituisce quante sono. */
     adatta() { tutti('adatta', {}); return clienti.size; },
     chiudi() { clearInterval(battito); for (const r of clienti) { try { r.end(); } catch { /* già chiuso */ } } clienti.clear(); for (const r of soloAvvisi) { try { r.end(); } catch { /* già chiuso */ } } soloAvvisi.clear(); tablet.clear(); },
@@ -798,6 +801,9 @@ async function apiVistaGiocatori(req, res, percorso, cartelle) {
   if (pg) {
     cartelle.canale?.letta(pg);
     if (scena) corpo.io = await perIlTablet(scena, contesto, pg, cartelle);
+    // A.122: il tablet dell'Aiuto-master riceve il ruolo (gettone) e il PG di turno da muovere, con la stessa vista dei giocatori
+    const ruolo = await ruoloAttuale(cartelle);
+    if (ruolo && stessaChiave(ruolo.chiave, pg)) corpo.aiutoMaster = await bloccoAiuto(ruolo, scena, contesto, cartelle);
   }
   const firma = impronta(JSON.stringify(corpo));
   if (parametri.get('firma') === firma) return json(res, 200, { firma, invariata: true });
@@ -836,6 +842,17 @@ async function movimentoDalTablet(req, res, cartelle) {
   try { d = JSON.parse((await leggiCorpo(req, 64 * 1024)).toString('utf8')); } catch (e) { return json(res, 400, { errore: `contenuto non valido: ${e.message}` }); }
   if (typeof d?.pg !== 'string' || !d.pg || typeof d.scena !== 'string' || !ID_SCENA.test(d.scena)) return json(res, 400, { errore: 'pg e scena attesi' });
   const { dati } = await datiDelServer(cartelle.radice);
+  // A.122: con il gettone dell'Aiuto-master si muove il PG del turno attivo (non il proprio), con gli stessi controlli
+  let aiuto = null;
+  if (d.aiuto !== undefined || req.headers[INTESTAZIONE_AIUTO]) {
+    const ruolo = await ruoloAttuale(cartelle);
+    if (!eAiuto(ruolo, d.pg, d.aiuto ?? req.headers[INTESTAZIONE_AIUTO])) return json(res, 403, { ok: false, errore: 'Non sei Aiuto-master: il Direttore ha revocato il ruolo o lo ha dato a un altro tablet.' });
+    const turno = pgDaMuovere(ruolo, await scontroDaFile(cartelle, ruolo.scontro), typeof d.bersaglio === 'string' ? d.bersaglio : null);
+    if (!turno.ok) return json(res, turno.stato, { ok: false, errore: turno.errore });
+    aiuto = { ruolo, chiave: turno.chiave, nome: turno.nome };
+    d.scontro = ruolo.scontro;
+  }
+  const chiavePg = aiuto ? aiuto.chiave : d.pg;
   const { scena: inGioco } = await scenaInGioco(cartelle, { scontro: typeof d.scontro === 'string' ? d.scontro : null });
   if (!inGioco || inGioco.id !== d.scena) return json(res, 409, { errore: 'La mappa in gioco è cambiata: attendi un momento.' });
   const dove = join(cartelle.scene, `${d.scena}.json`);
@@ -844,14 +861,16 @@ async function movimentoDalTablet(req, res, cartelle) {
     opportunita: p.opportunita.filter((o) => o.visibile).map((o) => ({ nome: o.nomeDa })) });
   if (d.prova) {
     const contesto = await contestoScena(inGioco, cartelle);
-    const p = provaMovimento({ scena: inGioco, pezzi: contesto.pezzi, scontro: contesto.scontro, chiavePg: d.pg, a: d.a, fascia: d.fascia, dati });
+    if (aiuto && contesto.scontro?.id !== aiuto.ruolo.scontro) return json(res, 409, { ok: false, errore: 'La mappa in gioco non è quella dello scontro dell’Aiuto-master.' });
+    const p = provaMovimento({ scena: inGioco, pezzi: contesto.pezzi, scontro: contesto.scontro, chiavePg, a: d.a, fascia: d.fascia, dati });
     return p.ok ? json(res, 200, { ok: true, prova: true, ...perTablet(p) }) : json(res, 422, { ok: false, errore: p.errore });
   }
   const esito = await inCoda(dove, async () => {
     let scena;
     try { scena = await leggiJson(dove); } catch { return { stato: 404, corpo: { errore: 'scena non trovata' } }; }
     const contesto = await contestoScena(scena, cartelle);
-    const r = eseguiMovimentoGiocatore({ scena, pezzi: contesto.pezzi, scontro: contesto.scontro, chiavePg: d.pg, a: d.a, fascia: d.fascia, dati });
+    if (aiuto && contesto.scontro?.id !== aiuto.ruolo.scontro) return { stato: 409, corpo: { ok: false, errore: 'La mappa in gioco non è quella dello scontro dell’Aiuto-master.' } };
+    const r = eseguiMovimentoGiocatore({ scena, pezzi: contesto.pezzi, scontro: contesto.scontro, chiavePg, a: d.a, fascia: d.fascia, dati });
     if (!r.ok) return { stato: 422, corpo: { ok: false, errore: r.errore } };
     const nuova = { ...r.scena, revisione: scena.revisione + 1, aggiornato: new Date().toISOString() };
     const errore = validaScena(nuova, dati);
@@ -866,6 +885,10 @@ async function movimentoDalTablet(req, res, cartelle) {
   // Attacchi di Opportunità nel registro dello scontro (Giocatore §5.3: uno per Round per avversario), come fa il master
   if (esito.stato === 200 && esito.scontro && esito.prova.opportunita.length) {
     try { await opportunitaNelRegistro(cartelle.scontri, esito.scontro.id, esito.prova, esito.movimento.id); } catch { /* il movimento resta; il master vede l'avviso sulla mappa */ }
+  }
+  // A.122: «mosso da Aiuto-master (tablet di …)» nel registro dello scontro
+  if (esito.stato === 200 && aiuto) {
+    try { await rigaAiutoNelRegistro(cartelle.scontri, aiuto.ruolo.scontro, { nome: esito.prova.nome ?? aiuto.nome, aiuto: aiuto.ruolo.nome, costo: esito.prova.costo, modo: NOMI_FASCE[esito.prova.fascia] ?? null, movimento: esito.movimento.id }); } catch { /* il movimento resta */ }
   }
   if (esito.stato === 200) cartelle.canale?.cambiata();
   return json(res, esito.stato, esito.corpo);
@@ -889,6 +912,47 @@ async function lineaDalTablet(req, res, cartelle) {
   return json(res, r.ok ? 200 : 422, r);
 }
 
+const NOMI_FASCE = { 1: 'Passo', 2: 'Corsa', 3: 'Scatto', passo: 'Passo', corsa: 'Corsa', scatto: 'Scatto' };
+
+/** Uno scontro dal suo file, o null. */
+async function scontroDaFile(cartelle, id) {
+  if (!id || !ID_SCONTRO.test(id)) return null;
+  try { return await leggiJson(join(cartelle.scontri, `${id}.json`)); } catch { return null; }
+}
+
+/** A.122: il ruolo di Aiuto-master se vale ancora (scontro aperto); altrimenti lo toglie e restituisce null. */
+async function ruoloAttuale(cartelle) {
+  const c = cartelle.canale;
+  if (!c?.ruoloAiuto) return null;
+  if (!ruoloValido(c.ruoloAiuto, await scontroDaFile(cartelle, c.ruoloAiuto.scontro))) c.ruoloAiuto = null;
+  return c.ruoloAiuto;
+}
+
+/**
+ * A.122: il blocco della vista per il tablet dell'Aiuto-master: il gettone e il PG del turno attivo con permesso, area e
+ * ZoC calcolati come per il tablet di quel giocatore (stessi filtri: niente nascosti, niente sotto la nebbia), senza la
+ * sua mini-scheda.
+ */
+async function bloccoAiuto(ruolo, scena, contesto, cartelle) {
+  const base = { gettone: ruolo.gettone, nome: ruolo.nome, scontro: ruolo.scontro };
+  const t = pgDaMuovere(ruolo, await scontroDaFile(cartelle, ruolo.scontro));
+  if (!t.ok) return { ...base, turno: null, motivo: t.errore };
+  if (!scena || contesto?.scontro?.id !== ruolo.scontro) return { ...base, turno: null, motivo: 'La mappa in gioco non è quella dello scontro: aspetta il Direttore.' };
+  const { mini: _mini, ...turno } = await perIlTablet(scena, contesto, t.chiave, cartelle);
+  return { ...base, turno: { ...turno, nome: turno.nome ?? t.nome } };
+}
+
+/** A.122: la riga «mosso da Aiuto-master» nel registro dello scontro (revisione +1). */
+async function rigaAiutoNelRegistro(scontri, id, riga) {
+  if (!ID_SCONTRO.test(id)) return;
+  const dove = join(scontri, `${id}.json`);
+  await inCoda(dove, async () => {
+    const s = await leggiJson(dove);
+    if (s.stato !== 'aperto') return;
+    await scriviJson(dove, { ...rigaAiutoMaster(s, riga, new Date()), revisione: s.revisione + 1 });
+  });
+}
+
 /** Le righe degli Attacchi di Opportunità di un movimento dal tablet, nel registro dello scontro (revisione +1). */
 async function opportunitaNelRegistro(scontri, id, prova, movimento) {
   if (!ID_SCONTRO.test(id)) return;
@@ -909,7 +973,22 @@ async function opportunitaNelRegistro(scontri, id, prova, movimento) {
  */
 async function apiTablet(req, res, percorso, cartelle) {
   const { dati } = await datiDelServer(cartelle.radice);
-  if (percorso === '/api/tablet' && req.method === 'GET') return json(res, 200, { collegati: cartelle.canale?.collegati(dati.mappa.tablet.collegato_s) ?? [] });
+  if (percorso === '/api/tablet' && req.method === 'GET') return json(res, 200, { collegati: cartelle.canale?.collegati(dati.mappa.tablet.collegato_s) ?? [], aiutoMaster: ruoloPubblico(await ruoloAttuale(cartelle)) });
+  // A.122: «Rendi Aiuto-master» / «Revoca» dalla lista «Tablet collegati» del Direttore (uno alla volta)
+  if (percorso === '/api/tablet/aiuto-master') {
+    if (!cartelle.canale) return json(res, 503, { errore: 'tablet non disponibili' });
+    if (req.method === 'DELETE') { cartelle.canale.ruoloAiuto = null; cartelle.canale.cambiata(); return json(res, 200, { aiutoMaster: null }); }
+    if (req.method !== 'POST') return json(res, 405, { errore: 'metodo non ammesso' });
+    let d;
+    try { d = JSON.parse((await leggiCorpo(req, 16 * 1024)).toString('utf8')); } catch (e) { return json(res, 400, { errore: `contenuto non valido: ${e.message}` }); }
+    if (typeof d?.pg !== 'string' || !d.pg) return json(res, 400, { errore: 'pg atteso (il tablet a cui dare il ruolo)' });
+    const scontro = await scontroDaFile(cartelle, typeof d.scontro === 'string' ? d.scontro : null);
+    if (!scontro || scontro.stato !== 'aperto') return json(res, 409, { errore: 'Serve uno scontro aperto: il ruolo di Aiuto-master vale per lo scontro in corso.' });
+    const nome = typeof d.nome === 'string' && d.nome.trim() ? d.nome.trim().slice(0, 80) : d.pg;
+    cartelle.canale.ruoloAiuto = assegnaAiuto({ chiave: d.pg, nome, scontro: scontro.id }, randomBytes(16).toString('hex'));
+    cartelle.canale.cambiata();
+    return json(res, 200, { aiutoMaster: ruoloPubblico(cartelle.canale.ruoloAiuto) });
+  }
   if (percorso === '/api/tablet/eventi' && req.method === 'GET') {
     const pg = new URL(req.url, 'http://x').searchParams.get('pg');
     if (!pg || !cartelle.canale) return json(res, 400, { errore: 'pg atteso' });
@@ -1079,6 +1158,11 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
   const cartelle = { cartella, tavolo, scontri, veicoli, scene, radice, canale, avvisi };
   // diretta (07/10): dopo una scrittura riuscita di scena o scontro la vista giocatori si rilegge subito
   const segnala = (r) => { if (req.method !== 'GET' && res.statusCode < 300) canale?.cambiata(); return r; };
+  // A.122: le richieste del tablet dell'Aiuto-master (intestazione del ruolo) possono solo leggere e muovere il PG di turno
+  if (req.headers[INTESTAZIONE_AIUTO]) {
+    const no = rifiutoAiuto(req.method, percorso);
+    if (no) return json(res, no.stato, { errore: no.errore });
+  }
   if (percorso === '/api/scene' || percorso.startsWith('/api/scene/')) return segnala(await apiScene(req, res, percorso, scene, mappe, radice, cartelle));
   if (percorso === '/api/movimento-round') return apiMovimentoRound(req, res, scene, scontri);
   if (percorso === '/api/vista-giocatori' || percorso.startsWith('/api/vista-giocatori/')) return apiVistaGiocatori(req, res, percorso, cartelle);
@@ -1093,7 +1177,7 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
   }
   if (percorso === '/api/esempi') return req.method === 'POST' ? json(res, 200, await caricaEsempi(radice, cartella, nemici)) : json(res, 405, { errore: 'metodo non ammesso' });
   if (percorso === '/api/nemici' || percorso.startsWith('/api/nemici/')) return apiNemici(req, res, percorso, nemici, radice);
-  if (percorso === '/api/scontri' || percorso.startsWith('/api/scontri/')) return segnala(await apiScontri(req, res, percorso, scontri, (prima, dopo) => { avvisoTurnoTablet(prima, dopo, cartelle).catch(() => {}); }));
+  if (percorso === '/api/scontri' || percorso.startsWith('/api/scontri/')) return segnala(await apiScontri(req, res, percorso, scontri, (prima, dopo) => { if (canale) canale.ruoloAiuto = ruoloDopoScontro(canale.ruoloAiuto, dopo); avvisoTurnoTablet(prima, dopo, cartelle).catch(() => {}); }));
   if (percorso === '/api/tavolo') {
     const dove = join(tavolo, 'sessione.json');
     if (req.method === 'GET') {
@@ -1266,6 +1350,11 @@ export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA),
     try {
       const percorso = decodeURI(new URL(req.url, 'http://x').pathname);
       if (percorso === '/api/ping') return json(res, 200, { ok: true, app: 'mutant', cartella: CARTELLA, ...identita });
+      // A.122: il tablet dell'Aiuto-master non salva, non spegne e non scrive nulla fuori dal movimento del PG di turno
+      if (req.headers[INTESTAZIONE_AIUTO] && percorso.startsWith('/api/')) {
+        const no = rifiutoAiuto(req.method, percorso);
+        if (no) return json(res, no.stato, { errore: no.errore });
+      }
       if (percorso === '/api/salvataggi' || percorso === '/api/salva-sessione' || percorso === '/api/spegni') return await apiSalvataggi(req, res, percorso, salvataggi);
       if (percorso.startsWith('/api/')) return await api(req, res, percorso, cartella, tavolo, scontri, nemici, base, soloLocale, veicoli, migraIn, scene, mappe, canale, musica, avvisi);
       return await statico(req, res, percorso, base, versioneAvvio);

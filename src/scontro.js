@@ -712,9 +712,19 @@ export function rigaOpportunita(s, { da, nomeDa, contro, nomeContro, movimento =
 /** L'avversario `da` ha già avuto un Attacco di Opportunità segnalato in questo Round? */
 export const opportunitaNelRound = (s, da) => (s?.registro ?? []).some((r) => r.round === s.round && r.opportunita?.da === da);
 
-/** «Annulla ultimo movimento» o Ctrl+Z sulla mappa: via le righe degli Attacchi di Opportunità di quel movimento. */
+/**
+ * Movimento fatto dall'Aiuto-master (A.122, 08/10): una riga nel registro, «mosso da Aiuto-master (tablet di …)», con il
+ * movimento della mappa (Ctrl+Z del master la toglie insieme al movimento).
+ */
+export function rigaAiutoMaster(s, { nome, aiuto, costo, modo, movimento = null }, adesso) {
+  const t = conRiga(s, `Mappa: ${nome} mosso da Aiuto-master (tablet di ${aiuto})${Number.isFinite(costo) ? `: ${String(costo).replace('.', ',')} Q${modo ? ` (${modo})` : ''}` : ''}.`, adesso);
+  t.registro[t.registro.length - 1].aiutoMaster = { aiuto, ...(movimento ? { movimento } : {}) };
+  return t;
+}
+
+/** «Annulla ultimo movimento» o Ctrl+Z sulla mappa: via le righe degli Attacchi di Opportunità (e dell'Aiuto-master) di quel movimento. */
 export function senzaOpportunitaDelMovimento(s, movimento) {
-  const registro = (s.registro ?? []).filter((r) => r.opportunita?.movimento !== movimento);
+  const registro = (s.registro ?? []).filter((r) => r.opportunita?.movimento !== movimento && r.aiutoMaster?.movimento !== movimento);
   return registro.length === (s.registro ?? []).length ? s : { ...s, registro };
 }
 
