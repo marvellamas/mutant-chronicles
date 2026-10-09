@@ -73,7 +73,7 @@ Si preparano in pochi secondi e durante il gioco non si toccano più.
 
 - **Metterlo in volo:** clic destro sul token → gruppo «Movimento» → **«In volo»** (o l’interruttore nel pannello del token e nella sua carta). Un nemico che sa volare te lo propone quando lo metti in mappa. **«Quota…»** scrive l’altezza in Q accanto all’icona. Ctrl+Z annulla.
 - **Come si vede:** l’ala sopra il token e un’ombra leggera sotto, anche sullo schermo dei giocatori e sul mini-token della barra dell’Iniziativa.
-- **Cosa cambia:** si muove con il volo (6/12/18 Q, o il Passo in volo del profilo), passa sopra terreno difficile e token (non si ferma su un altro token), ma non attraversa muri e porte chiuse. Verso di lui e da lui niente token in mezzo né Copertura Leggera o Media; un muro pieno blocca. I giocatori lo vedono anche sotto la nebbia se un PG ha una linea senza muri: se vuoi che resti nascosto, nascondilo. Più alto della portata delle armi ravvicinate (con la quota) è fuori dalle zone di controllo.
+- **Cosa cambia:** si muove con il volo (6/12/18 Q, o il Passo in volo del profilo), passa sopra terreno difficile e token (non si ferma su un altro token), ma non attraversa muri e porte chiuse. Copertura e creature interposte contano come a terra, se proteggono davvero dalla traiettoria: le quote e l’altezza degli ostacoli le valuti tu, correggendo la proposta (A.148). I giocatori lo vedono anche sotto la nebbia se un PG ha una linea senza muri: se vuoi che resti nascosto, nascondilo. Più alto della portata delle armi ravvicinate (con la quota) è fuori dalle zone di controllo.
 - Domande per te: A.148 (Copertura e volo), A.149 (quota e portata delle armi ravvicinate), A.150 (visto da lontano).
 
 ## Tablet dei giocatori

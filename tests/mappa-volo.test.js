@@ -56,7 +56,7 @@ test('area in volo: sopra il terreno difficile (costo 1) e sopra i token senza f
   assert.equal(costoVerso(inAria, [6, 4]), Infinity, 'dentro il muro no');
 });
 
-test('linea di tiro: da e verso un token in volo niente token in mezzo né Copertura Leggera o Media; il muro pieno blocca', () => {
+test('linea di tiro (A.148, decisione 148): in volo valgono Copertura e creatura interposta come a terra; con i valori di prima no', () => {
   const s = { ...nuovaScena({ id: 'x', nome: 'X', colonne: C, righe: R, nebbia: 'scoperta', dati }) };
   const RV = dati.mappa.visuale, volo = dati.mappa.volo.linea_di_tiro;
   const da = { id: 'a', rif: { tipo: 'partecipante', id: 'pg:A' }, q: [0, 3], ingombro: 1 };
@@ -69,13 +69,18 @@ test('linea di tiro: da e verso un token in volo niente token in mezzo né Coper
   const ost = ostacoliVista(scena, dati.mappa.porte);
   const terra = lineaDiTiro(scena, da, bers, ost, RV, { volo });
   assert.ok(['leggera', 'media', 'totale'].includes(terra.copertura) || terra.inMezzo.length, 'a terra c’è qualcosa in mezzo');
+  assert.deepEqual([volo.ignora_token, volo.coperture_annullate], [false, []]);
   const aria = lineaDiTiro(scena, da, { ...bers, volo: true }, ost, RV, { volo });
-  if (terra.copertura !== 'totale') assert.equal(aria.copertura, 'nessuna');
-  assert.deepEqual(aria.inMezzo, [], 'nessun token in mezzo');
-  assert.equal(aria.protetto, false);
+  assert.equal(aria.copertura, terra.copertura, 'la stessa Copertura che a terra (il master corregge per le quote)');
+  assert.deepEqual(aria.inMezzo.map((t) => t.id), terra.inMezzo.map((t) => t.id), 'la creatura interposta conta anche in volo');
+  assert.equal(aria.interposta, terra.interposta);
   assert.equal(aria.inVolo, true);
-  // anche da chi vola verso terra
-  assert.deepEqual(lineaDiTiro(scena, { ...da, volo: true }, bers, ost, RV, { volo }).inMezzo, []);
+  // con i valori di prima (indicazione dell'08/10, superata) in volo niente token in mezzo né Leggera e Media
+  const prima = { ignora_token: true, coperture_annullate: ['leggera', 'media'] };
+  const ariaPrima = lineaDiTiro(scena, da, { ...bers, volo: true }, ost, RV, { volo: prima });
+  if (terra.copertura !== 'totale') assert.equal(ariaPrima.copertura, 'nessuna');
+  assert.deepEqual(ariaPrima.inMezzo, []);
+  assert.deepEqual(lineaDiTiro(scena, { ...da, volo: true }, bers, ost, RV, { volo: prima }).inMezzo, []);
   // un muro pieno dietro cui sta tutto il bersaglio: Copertura Totale comunque
   const pieno = nuovaMaschera(C, R);
   for (let y = 0; y < R; y++) bit(pieno, 6, y);

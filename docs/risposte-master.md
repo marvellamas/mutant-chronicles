@@ -1205,7 +1205,7 @@ Fonte: E&L dell'08/10/2026, 21:10 UTC, blocco «Aggiornamento cumulativo — ris
     Leggera, Media e Totale valgono anche in volo quando proteggono davvero; una creatura interposta dà −2 solo se
     interferisce davvero; il volo da solo non dà un −2 universale. Finché non ci sono le altezze il Direttore conferma o
     corregge; «in volo» non deve spegnere tutte le Coperture. **Cambia** l'indicazione di Marcello dell'08/10 (in volo
-    niente Leggera e Media, niente token in mezzo). **Lotto mappa.**
+    niente Leggera e Media, niente token in mezzo). **Applicata** il 09/10: `data/mappa.json` → volo.linea_di_tiro (ignora_token false, coperture_annullate vuoto), via il `TODO(Davide)`; la linea di tiro dice «in volo: il master corregge per le quote».
 149. **Distanza verticale** (A.149). Distanza = maggiore fra orizzontale e differenza di quota, diagonale 1 Q; salire da
     dentro a fuori portata può provocare un Attacco di Opportunità, chi era già fuori no. Conferma il provvisorio
     (`data/mappa.json` → volo.zoc_quota). **Applicata** il 09/10: era già così; nota della decisione in `volo._nota_zoc` (il `TODO(Davide)` comune ad A.148 e A.149 si toglie con la A.148).

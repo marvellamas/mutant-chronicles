@@ -850,7 +850,7 @@ export function renderMappa(radice, ctx) {
     cambiaToken(id, (x) => conVolo(x, nuovo, nuovo ? x.quota ?? null : null));
     const pz = pezzoDi(t);
     const m = nuovo ? movimentoInVolo(pz ?? {}, ctx.dati) : null;
-    avviso(nuovo ? `${pz?.nome ?? 'Token'} in volo: sopra terreno difficile e token, niente Copertura Leggera o Media (Passo ${m.passo} Q). Ctrl+Z annulla.` : `${pz?.nome ?? 'Token'} è atterrato.`, { tipo: 'info', chiave: 'volo' });
+    avviso(nuovo ? `${pz?.nome ?? 'Token'} in volo: sopra terreno difficile e token (Passo ${m.passo} Q); Copertura e creature interposte come a terra, le correggi tu per le quote (A.148). Ctrl+Z annulla.` : `${pz?.nome ?? 'Token'} è atterrato.`, { tipo: 'info', chiave: 'volo' });
   }
   /** «Quota…»: l'altezza in Q del token in volo, come etichetta (e per la portata ravvicinata, A.149). */
   async function quotaVoloUi(id) {
@@ -2191,6 +2191,8 @@ export function renderMappa(radice, ctx) {
       r.protetto ? `In mezzo: ${r.inMezzo.map((x) => pezzoDi(x)?.nome ?? x.nome ?? x.id).join(', ')}: bersaglio protetto (§5.10), −4 VA; se il tiro fallisce, seconda Prova a −4: con successo manca tutti, altrimenti colpisce chi sta in mezzo. Proposto in «Attacca!».` : null,
       r.causa?.token?.length ? `Copertura data da: ${r.causa.token.map((x) => pezzoDi(x)?.nome ?? x.nome ?? x.id).join(', ')}${r.causa.muro ? ' e da muri o porte' : ''}.` : null,
       'Copertura dalle cinque linee (A.140): il master la corregge per altezza, postura e situazione.',
+      // A.148 (decisione 148): in volo Copertura e creatura interposta valgono come a terra, se proteggono davvero
+      r.inVolo ? 'In volo: Copertura e creatura interposta contano solo se proteggono davvero dalla traiettoria (quote e altezza degli ostacoli, A.148): correggi tu.' : null,
     ];
     const azioni = [];
     // fase 2, lotto 4: la luce della zona del bersaglio, proposta in «Attacca!» (modificabile), con la sua riga

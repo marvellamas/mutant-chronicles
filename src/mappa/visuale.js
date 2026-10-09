@@ -121,8 +121,8 @@ function unione(a, b) { const m = new Uint8Array(a.length); for (let i = 0; i < 
  * Copertura con la causa, token in mezzo. Verso un Q vuoto: il Q come bersaglio di 1 × 1.
  * @param o { contaToken(t): il token conta (in mezzo o come ostacolo)? } — di norma tutti tranne 0 PV e A Terra; per i
  *   giocatori anche i nascosti esclusi, così la linea che vedono non tradisce un token che non vedono;
- *   volo: data/mappa.json → volo.linea_di_tiro (08/10): da o verso un token in volo niente token in mezzo e niente
- *   Copertura Leggera o Media; un muro pieno blocca comunque (A.148)
+ *   volo: data/mappa.json → volo.linea_di_tiro: con A.148 (decisione 148) in volo valgono Copertura e creatura interposta
+ *   come a terra (nessuna copertura annullata, nessun token ignorato); il master corregge per le quote
  * @returns { distanza, copertura, bloccate, linee, origine, vista, inMezzo: [token], causa: { muro, token: [token] },
  *   interposta: vero se si propone la «Creatura interposta» (A.144, −2), protetto: vero se si propone il «bersaglio
  *   impegnato o protetto» (§5.10, solo con token_in_mezzo «protetto») }
