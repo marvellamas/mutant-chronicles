@@ -1256,8 +1256,12 @@ Fonte: E&L dell'08/10/2026, 21:10 UTC, blocco «Aggiornamento cumulativo — ris
     visibile oltre la nebbia). **Applicata** il 09/10: `data/mappa.json` → volo.visibile_oltre_nebbia false, nota della decisione; `src/mappa/vista.js` (filtro della vista giocatori sul server) invariato nel codice, cambia il dato.
 151. **Aiuto-master** (A.122). Ruolo facoltativo, assegnato e revocato dal Direttore, senza pagina separata: muove il PG
     del turno attivo entro i limiti ordinari di movimento e ostacoli; vede la vista giocatori, senza segreti; non
-    modifica schede, risorse, Iniziativa o scena; gli spostamenti eccezionali restano al Direttore. **Da implementare**
-    (lotto «altro»: tablet e permessi del server).
+    modifica schede, risorse, Iniziativa o scena; gli spostamenti eccezionali restano al Direttore. **Applicata** il 09/10
+    (lotto 7): «Rendi Aiuto-master» / «Revoca» nella lista «Tablet collegati» del Direttore, uno alla volta, per lo scontro
+    aperto (si perde alla sua chiusura o al riavvio del server); il tablet vede «Sei Aiuto-master» e «Muovi <PG di turno>»;
+    il server muove solo il PG del turno attivo con gli stessi controlli del tablet del giocatore e rifiuta ogni altra
+    scrittura del ruolo (403 con il motivo); la vista è quella dei giocatori; ogni movimento lascia nel registro «mosso da
+    Aiuto-master (tablet di …)» (`src/mappa/aiuto-master.js`, `server.mjs`, `tests/mappa-aiuto-master.test.js`).
 152. **Pablo Zaion** (A.111). Pablo non ha mai avuto Interfacce neurali: la perdita di 2 UMN del file viene dalle prove
     dell'app e va eliminata, ricalcolando l'Umanità e conservando una nota; niente rimozioni o recuperi fittizi. Resta la
     regola dei recuperi pregressi (decisione 123). **Da fare sulla copia del file di Pablo** (cartelle reali e PG reali

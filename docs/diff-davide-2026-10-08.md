@@ -19,7 +19,7 @@ Le stime sono in prompt di lavoro, cioè sessioni come questa, comprese prove e 
 | 4. Magia: Anticipazione | A.109: regola comune (un aspetto, un gradino, PM base ×2, Prova di Potere obbligatoria di una categoria più difficile) e i 32 aspetti con i gradini al posto dei 32 `TODO(Davide)` di `incantesimi.json`; riquadro dell'Anticipazione in «Lancia!»; verifica di A.20 (Chroma bianco solo a chi ha accesso alla magia) | **fatto il 09/10** (`tools/anticipazione_approvate.json`, `regole.json` → `chroma.conversione.prelievo`; pacchetto `docs/pacchetto-per-davide-2026-10-09-anticipazione.md`) | — |
 | 5. Magia §27: Artefatti consumabili | campo Riutilizzabile/Consumabile, SnT 0 e niente sintonizzazione, Cariche sigillate, quantità e «Usa» (una scheda in due viste: Artefatti e Consumabili), tabella dei costi per Grado I–VI, PM = 3 × Grado + costo base, 6 pergamene del campionario; tab Artefatti, Inventario, SS | **fatto il 09/10** (parte 1, dati e scheda: `tools/lotti/lotto_magia_27_consumabili.mjs`, `src/consumabili-mistici.js`, `src/ui/consumabili.js`, A.155, pacchetto `docs/pacchetto-per-davide-2026-10-09-magia27.md`; parte 2, «Crea consumabile» e SS: A.156, A.157, pacchetto `docs/pacchetto-per-davide-2026-10-09-magia27-parte2.md`) | — |
 | 6. Equipaggiamento 0.6 | circa 20 voci nuove (navigatore inerziale, decontaminanti, estintori, nastro, toppe, schiuma, tuta extraveicolare, riparo pressurizzato, calzature magnetiche, modulo di cifratura, rilevatore di sorveglianza, utensile laser, analizzatore alimentare), 7 righe della tabella NEC, dosi e bombole come risorse separate, effetti con le frasi del manuale, testo del §4.1 | **fatto il 09/10** (`tools/lotti/lotto_equipaggiamento_edizione06.mjs`: 18 voci, A.154; pacchetto `docs/pacchetto-per-davide-2026-10-09-equipaggiamento.md`) | — |
-| 7. Altro | A.122 Aiuto-master (permessi sul server, tablet: muovere il PG del turno attivo, vista giocatori); A.111 Pablo (la perdita di 2 UMN si toglie sulla copia del suo file: a mano, PG reali intoccabili; testo del `TODO(Davide)` di `regole.json`); A.112 nessuna azione; A.35 (l'eccedenza degli armamenti ceduti torna in crediti: **fatta il 09/10** nel lotto «equipaggiamento») | da fare | 1 |
+| 7. Altro | A.122 Aiuto-master (permessi sul server, tablet: muovere il PG del turno attivo, vista giocatori: **fatta il 09/10**, pacchetto `docs/pacchetto-per-davide-2026-10-09-aiuto-master.md`); A.111 Pablo (la perdita di 2 UMN si toglie sulla copia del suo file: a mano, PG reali intoccabili; testo del `TODO(Davide)` di `regole.json`); A.112 nessuna azione; A.35 (l'eccedenza degli armamenti ceduti torna in crediti: **fatta il 09/10** nel lotto «equipaggiamento») | da fare | 1 |
 
 **Rinviati da Davide** (i `TODO(Davide)` restano):
 - A.113, A.115;
@@ -83,3 +83,22 @@ Pacchetto per il Doc: `docs/pacchetto-per-davide-2026-10-09.md`.
   - **SS**: riquadro «Consumabili mistici» nel foglio Inventario (Incantesimo e versione, Grado, PM, attivazione,
     esemplari a quadratini).
   - Domande: A.156 (PM consumati dall'infusione fallita), A.157 (schede «Rituale: non consentito»).
+
+## Lotto 7, A.122 Aiuto-master: com'è stato applicato (09/10)
+
+- **Assegnazione:** nella lista «Tablet collegati» della plancia, accanto a ogni tablet collegato, «Rendi Aiuto-master»
+  (con uno scontro aperto) e «Revoca». Il server ne tiene uno solo, in memoria: assegnarlo a un altro lo toglie al
+  precedente; vale per lo scontro in cui è stato dato e si perde alla sua chiusura o al riavvio del server. La lista c'è
+  anche con il server in --solo-locale.
+- **Permessi sul server** (`src/mappa/aiuto-master.js`, `server.mjs`): il tablet dell'Aiuto-master firma le richieste con
+  il gettone del ruolo; il server ammette le letture, la linea di tiro e il movimento del PG del turno attivo, rifatto con
+  gli stessi controlli del tablet del giocatore (area, Q, muri, porte, quadretti occupati, nebbia, blocco del master);
+  ogni altra scrittura (schede, scontro e Iniziativa, scena, nebbia, luci, nemici, veicoli, ruoli, salvataggi) riceve 403
+  con «L’Aiuto-master può soltanto muovere il PG del turno attivo: modificare … spetta al Direttore». Un PG non di turno
+  o un nemico di turno: rifiuto. Il tablet del giocatore di turno continua a muovere il proprio PG.
+- **Vista:** la vista dei giocatori (niente nascosti, niente sotto la nebbia, niente note del Direttore); in più il blocco
+  del PG di turno (permesso, area e ZoC filtrate, senza la sua mini-scheda) e il pulsante «Muovi <PG>» / «Torna al mio PG».
+- **Registro:** «Mappa: <PG> mosso da Aiuto-master (tablet di <nome>): N Q (Passo)»; il Ctrl+Z del master lo toglie con il
+  movimento.
+- Restano nel lotto 7: A.111 (Pablo, a mano sulla copia del file) e A.112 (nessuna azione).
+
