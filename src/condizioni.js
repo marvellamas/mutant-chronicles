@@ -26,6 +26,24 @@ export function luceAttiva(sessione, dati) {
   return dati.regole.illuminazione?.livelli?.find((x) => x.id === sessione?.luce && !x.base) ?? null;
 }
 
+/**
+ * A.116 (E&L del 05/10/2026): Abilità che possono ricevere la penalità di luce perché l'uso «richiede la vista», con lo
+ * stato della casella: predefinita dai dati (regole.json → illuminazione.richiede_vista.predefinite), corretta dal
+ * Direttore nella sessione (sessione.vistaAbilita: { nome: true|false }). Escluse Potere e Percezione (che ha il suo valore
+ * visivo) e le Abilità che la ricevono già sempre (attacchi e Difese, categorie_prove.luce).
+ * @returns {{ nome, attiva, predefinita, uso: string|null }[]}
+ */
+export function abilitaVista(sessione, dati) {
+  const RV = dati.regole.illuminazione?.richiede_vista;
+  if (!RV) return [];
+  const sempre = new Set([...(RV.escluse ?? []), ...(dati.regole.categorie_prove?.luce ?? [])]);
+  const scelte = isOggetto(sessione?.vistaAbilita) ? sessione.vistaAbilita : {};
+  return (dati.abilita?.abilita ?? []).filter((a) => !sempre.has(a.nome)).map((a) => {
+    const predefinita = Object.hasOwn(RV.predefinite ?? {}, a.nome);
+    return { nome: a.nome, predefinita, attiva: typeof scelte[a.nome] === 'boolean' ? scelte[a.nome] : predefinita, uso: RV.predefinite?.[a.nome] ?? null };
+  });
+}
+
 /** Stati attivi, più quello imposto dalla luce (buio totale: Accecato, senza sommarli, A.106). */
 export function statiEffettivi(sessione, dati) {
   const s = new Set(isOggetto(sessione) && Array.isArray(sessione.statiAttivi) ? sessione.statiAttivi : []);
@@ -98,6 +116,19 @@ export function condizioniAttive(sessione, dati, scheda = null) {
       .map((e) => (perfetta && e.uso === VP.uso ? { ...e, valore: Math.min(0, e.valore + VP.riduzione), condizione: `${e.condizione} Visione Perfetta: −${VP.riduzione} alla penalità.` } : e))
       .filter((e) => e.valore < 0);
     out.push({ etichetta: `Luce: ${luce.nome}`, fonte: 'stato', effetto: effettoDaEffetti(luce.effetti), usi });
+  }
+  // A.116: le Prove il cui uso «richiede la vista» ricevono la penalità di luce una volta sola (penombra −2, luce molto
+  // scarsa −4; con una visione che copre il bersaglio nulla); nel buio −8 come Accecato, salvo le Abilità che Accecato
+  // penalizza già (categorie_prove.vista)
+  const vista = luce ? abilitaVista(sessione, dati).filter((x) => x.attiva) : [];
+  if (vista.length) {
+    const RV = r.illuminazione.richiede_vista;
+    const coperta = sessione.luceVisione === true && (r.illuminazione.visione?.elimina ?? []).includes(luce.id);
+    const gen = (luce.effetti ?? []).find((e) => e.ambito === 'generale' && e.prove === 'luce')?.valore ?? 0;
+    const giaAccecato = new Set(r.categorie_prove?.vista ?? []);
+    const valore = luce.stato ? RV.buio_va : coperta ? 0 : gen;
+    const nomi = vista.map((x) => x.nome).filter((n) => !(luce.stato && giaAccecato.has(n)));
+    if (valore && nomi.length) out.push({ etichetta: `Luce: ${luce.nome} (richiede la vista)`, fonte: 'stato', effetto: { va_abilita: Object.fromEntries(nomi.map((n) => [n, valore])) } });
   }
   // circostanze del Direttore (Giocatore §1.4; src/circostanze.js): una condizione per riga
   out.push(...condizioniCircostanza(sessione, dati));

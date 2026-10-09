@@ -73,6 +73,14 @@ export function validaDati(dati) {
   if (dati.equipaggiamento?.file?.munizioni?.ricarica !== undefined) validaRicarica(dati, err);
   if (dati.regole?.attacco_distanza !== undefined) validaAttaccoDistanza(dati, err);
   if (dati.regole?.protezioni_rapide !== undefined) validaProtezioniRapide(dati, err);
+  // A.116: «richiede la vista» per Abilità (regole.json → illuminazione.richiede_vista)
+  const RV = dati.regole?.illuminazione?.richiede_vista;
+  if (RV !== undefined) {
+    const nomi = new Set((dati.abilita?.abilita ?? []).map((x) => x.nome));
+    for (const n of [...Object.keys(RV.predefinite ?? {}), ...(RV.escluse ?? [])]) if (nomi.size && !nomi.has(n)) err('regole', 'illuminazione.richiede_vista', `"${n}" non è un'Abilità`);
+    if (!isIntero(RV.buio_va) || RV.buio_va >= 0) err('regole', 'illuminazione.richiede_vista.buio_va', 'intero negativo atteso (Accecato)');
+    for (const n of Object.keys(RV.predefinite ?? {})) if ((RV.escluse ?? []).includes(n)) err('regole', 'illuminazione.richiede_vista', `"${n}" è sia predefinita sia esclusa`);
+  }
   if (dati.regole?.attacco_ravvicinato !== undefined) validaAttaccoRavvicinato(dati, err);
   if (dati.incantesimi?.incantesimi?.some((i) => i.meccanica)) validaMeccanicaIncantesimi(dati, err);
   if (isOggetto(dati.formato_nemici)) validaFormatoNemici(dati, err);

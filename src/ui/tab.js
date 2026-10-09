@@ -12,7 +12,7 @@ import { normalizzaCircostanze, aggiungiCircostanza, variaCircostanza, commutaCa
 import { info, infoValore, etichettaMacro, pallini } from './tooltip.js';
 import { stemma, iconaPagina } from './immagini.js';
 import { classeMacrofamiglia } from '../palette.js';
-import { formulaScomposizione, visioniPersonaggio } from '../condizioni.js';
+import { formulaScomposizione, visioniPersonaggio, abilitaVista } from '../condizioni.js';
 import { rigaScelte } from './pannello-passi.js';
 import { colore, riempimento, condizioniAttiveAbilita } from '../interfaccia.js';
 import { descriviFerite } from '../sessione.js';
@@ -1154,6 +1154,7 @@ function tabAbilita(ctx, d) {
           usi.length ? h('ul', { class: 'usi-specifici', 'aria-label': 'Solo per un uso specifico' }, usi.map(rigaCondizione)) : null),
         riquadroCircostanze(ctx),
         selettoreLuce(ctx),
+        caselleVista(ctx),
         // A.60: Ferite, Affaticamento, Corruzione e Stati modificabili anche qui, come nel Combattimento
         ...(() => { const dc = ctx.tab.tab.find((x) => x.id === 'combattimento')?.dati; return dc ? condizioniModificabili(ctx, dc) : []; })(),
         condizioniOggetti(ctx),
@@ -1630,6 +1631,27 @@ export function selettoreLuce(ctx, { compatto = false } = {}) {
         ` La tua visione copre il bersaglio (entro ${visioni.map((v) => `${v.portata_q} Q`).join(' o ')}): nessuna penalità`) : null,
   ];
   return compatto ? h('div', { class: 'scelta-luce' }, contenuto) : h('section', { class: 'riquadro riquadro-luce', 'aria-label': 'Luce' }, contenuto);
+}
+
+/**
+ * A.116: con luce non sufficiente, «Richiede la vista» per le Abilità il cui uso dipende dalla vista: predefinite dagli
+ * esempi della risposta (regole.json → illuminazione.richiede_vista), correggibili dal Direttore. Attacchi e Difese la
+ * ricevono sempre, Percezione ha il suo valore visivo, Potere e Prove Salvezza mai.
+ */
+function caselleVista(ctx) {
+  const L = ctx.dati.regole.illuminazione;
+  const s = ctx.sessione ?? {};
+  if (!L?.richiede_vista || !L.livelli.some((x) => x.id === s.luce && !x.base)) return null;
+  const lista = abilitaVista(s, ctx.dati);
+  const scelte = s.vistaAbilita ?? {};
+  return h('div', { class: 'scelta-attacco scelta-gruppo caselle-vista', role: 'group', 'aria-label': 'Prove che richiedono la vista' },
+    h('p', { class: 'scelta-titolo' }, 'Richiede la vista (A.116): la penalità di luce vale per queste Prove'),
+    h('div', { class: 'scelta-pulsanti' }, lista.map((x) => h('button', {
+      type: 'button', class: `btn scelta-btn${x.attiva ? ' scelta' : ''}`, 'aria-pressed': String(x.attiva),
+      title: x.uso ? `Di solito sì: ${x.uso}. Il Direttore può correggere.` : 'Di solito no (conoscenze, ascolto): il Direttore può correggere.',
+      onclick: () => ctx.azioni.imposta('vistaAbilita', { ...scelte, [x.nome]: !x.attiva }),
+    }, x.nome))),
+    h('small', { class: 'nota' }, `Attacchi e Difese la ricevono sempre; Percezione ha il suo valore visivo; mai Potere e Prove Salvezza. Nel buio: ${L.richiede_vista.testo_buio}.`));
 }
 
 function testoPenalitaTab(pen = {}) {

@@ -376,6 +376,8 @@ export function allineaSessione(sessione, m) {
     // A.106: luce della scena (regole.json → illuminazione) e visione che copre il bersaglio; solo se servono
     ...(typeof sessione.luce === 'string' && sessione.luce && sessione.luce !== 'sufficiente' ? { luce: sessione.luce } : {}),
     ...(sessione.luceVisione === true ? { luceVisione: true } : {}),
+    // A.116: correzioni del Direttore a «Richiede la vista» per Abilità (src/condizioni.js → abilitaVista); solo se ce ne sono
+    ...(() => { const v = isOggetto(sessione.vistaAbilita) ? Object.fromEntries(Object.entries(sessione.vistaAbilita).filter(([k, x]) => typeof k === 'string' && typeof x === 'boolean')) : {}; return Object.keys(v).length ? { vistaAbilita: v } : {}; })(),
     // circostanze del Direttore (src/circostanze.js): la chiave c'è solo se ce ne sono
     ...(() => { const c = normalizzaCircostanze(sessione.circostanze, m.circostanza); return c.length ? { circostanze: c } : {}; })(),
     ...(() => { const t = normalizzaTemporanei(sessione.caratteristicheTemporanee, m.temporanei, m.sigle); return t.length ? { caratteristicheTemporanee: t } : {}; })(),
