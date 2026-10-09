@@ -23,7 +23,10 @@ test('dati: forme dei manuali, regola «almeno metà», misure proposte; le ambi
   assert.equal(RT['TODO(Davide) metrica'], undefined);
   assert.match(RT._nota_metrica, /^A\.137/);
   assert.equal(RT.metrica_raggio, 'quadretti', 'A.137, decisione 141: raggio a quadretti');
-  assert.match(RT['TODO(Davide) cono'], /^A\.138/);
+  assert.equal(RT['TODO(Davide) cono'], undefined);
+  assert.match(RT._nota_cono, /^A\.138/);
+  assert.equal(RT.cono_larghezza_iniziale, 0);
+  assert.equal(RT.cono_vertice, 'centro');
   assert.deepEqual(RT.misure_proposte.cono.at(-1), { lunghezza: 18, larghezza: 9 }, 'Cono Elementale al livello 18');
   const d = copia(dati);
   d.mappa.template.metrica_raggio = 'manhattan';
@@ -51,14 +54,20 @@ test('quadrato centrato (Fuoco di Soppressione 3 × 3 Q) e rettangolo dal Q d’
   assert.ok(r[15 * 30 + 18] && r[16 * 30 + 15] && !r[15 * 30 + 14]);
 });
 
-test('cono e linea: dal bordo del Q di chi lancia, il suo Q escluso; diagonale a quadretti', () => {
+test('cono (A.138) dal centro del Q di chi lancia, largo zero al vertice; linea dal bordo; il Q d’origine escluso', () => {
   const cono = tpl('cono', { lunghezza: 6, larghezza: 3 }, { direzione: 0 });
   const c = celleTemplate(cono, G, RT);
   assert.ok(!c[15 * 30 + 15], 'il Q del lanciatore non è incluso');
+  // dal centro (15,5) a 6 Q: arriva al centro del Q 21, che è coperto per metà (dentro); il 22 no
   for (let x = 16; x <= 21; x++) assert.ok(c[15 * 30 + x], `asse, Q ${x}`);
-  assert.ok(!c[15 * 30 + 22], 'non oltre 6 Q');
-  assert.ok(c[14 * 30 + 21] && c[16 * 30 + 21], 'larghezza 3 in fondo');
-  assert.ok(!c[14 * 30 + 16], 'stretto all’inizio (larghezza iniziale 1 Q, A.138)');
+  assert.ok(!c[15 * 30 + 22], 'non oltre 6 Q dal vertice');
+  assert.ok(!c[14 * 30 + 16] && !c[16 * 30 + 16], 'stretto all’inizio: largo zero al vertice');
+  assert.ok(c[14 * 30 + 20] || c[16 * 30 + 20] || c[14 * 30 + 21], 'si allarga verso la fine');
+  // simmetrico: nessuna preferenza verso destra o sinistra
+  for (let x = 16; x <= 22; x++) assert.equal(c[14 * 30 + x], c[16 * 30 + x], `simmetria, colonna ${x}`);
+  // il provvisorio di prima (dal bordo, largo 1 Q) resta possibile come dato
+  const prima = celleTemplate(cono, G, { ...RT, cono_vertice: 'bordo', cono_larghezza_iniziale: 1 });
+  assert.ok(prima[15 * 30 + 21] && prima[14 * 30 + 21] && prima[16 * 30 + 21], 'dal bordo: larghezza 3 in fondo');
   const giu = celleTemplate({ ...cono, direzione: 90 }, G, RT);
   assert.equal(conta(giu), conta(c), 'ruotato di 90° copre lo stesso numero di Q');
   const diag = celleTemplate({ ...cono, direzione: 45 }, G, RT);

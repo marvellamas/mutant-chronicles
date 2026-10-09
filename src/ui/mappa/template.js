@@ -46,7 +46,7 @@ export function apriMenuTemplate({ regole, bozza }) {
           })),
         h('div', { class: 'riga-scelte' }, MISURE_FORMA[st.forma].map((k) => h('label', { class: 'campo-misura' }, `${NOMI_MISURE[k]} (Q) `,
           h('input', { type: 'number', min: 1, max: regole.misura_max_q, step: 1, value: String(st.misure[k] ?? 1), onchange: (e) => { st.misure[k] = Math.max(1, Math.min(regole.misura_max_q, Math.round(Number(e.target.value) || 1))); disegna(); } })))),
-        ORIENTABILI.includes(st.forma) ? h('p', { class: 'nota' }, 'Parte dal bordo del Q di chi lo lancia (il suo Q non è incluso): con un token scelto si orienta verso il mouse, altrimenti con la rotella.') : null,
+        ORIENTABILI.includes(st.forma) ? h('p', { class: 'nota' }, st.forma === 'cono' ? 'Il cono parte dal centro del Q di chi lo lancia e si allarga da zero (A.138); il suo Q non è incluso. Con un token scelto si orienta verso il mouse, altrimenti con la rotella.' : 'Parte dal bordo del Q di chi lo lancia (il suo Q non è incluso): con un token scelto si orienta verso il mouse, altrimenti con la rotella.') : null,
         h('div', { class: 'riga-scelte campioni', role: 'group', 'aria-label': 'Colore' }, h('span', { class: 'etichetta' }, 'Colore'),
           regole.colori.map((c) => h('button', { type: 'button', class: `campione${st.colore === c.valore ? ' scelto' : ''}`, 'aria-pressed': String(st.colore === c.valore), title: c.nome, onclick: () => { st.colore = c.valore; disegna(); } },
             h('span', { class: 'campione-colore', style: `background: ${c.valore}`, 'aria-hidden': 'true' }), c.nome))),

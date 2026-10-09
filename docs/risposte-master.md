@@ -1182,7 +1182,7 @@ Fonte: E&L dell'08/10/2026, 21:10 UTC, blocco «Aggiornamento cumulativo — ris
 142. **Cono** (A.138). Vertice al centro del Q di chi usa il template; si sceglie direzione, distanza e ampiezza finale;
     si allarga in modo lineare da zero all'ampiezza finale; un Q è colpito se coperto per almeno metà; il Q d'origine è
     escluso; niente file a larghezza prefissata. **Cambia** il provvisorio (largo 1 Q al bordo del lanciatore). Resta
-    da raccordare l'origine delle creature grandi (con le taglie, A.126 e A.133). **Lotto mappa.**
+    da raccordare l'origine delle creature grandi (con le taglie, A.126 e A.133). **Applicata** il 09/10: `data/mappa.json` → template.cono_vertice «centro», cono_larghezza_iniziale 0, via il `TODO(Davide)`; `src/mappa/template.js`. Resta da raccordare l'origine per le creature grandi (A.126, A.133).
 143. **Porte** (A.139). Anche dalla diagonale, se la porta è raggiungibile dal proprio lato; 1 AzP e una mano libera;
     non attraverso una parete; attraversarla è movimento a parte; serrature prima. Conferma il provvisorio. **Applicata** il 09/10: era già così; via il `TODO(Davide)` (`porte._nota_adiacenza`).
 144. **Copertura** (A.140). Cinque linee dal centro del Q di chi attacca al centro e ai quattro angoli del bersaglio: 0

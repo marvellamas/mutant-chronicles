@@ -5,7 +5,8 @@
 // Magia, «Gittate e geometria»: Raggio «distanza dal centro al limite»; Linea «lunghezza × larghezza, normalmente
 // 1 Q»; Cono «lunghezza × larghezza finale, con apertura progressiva»; «un Q rientra nell'Area se è incluso per almeno
 // metà»; «Linee e Coni originati dal lanciatore non includono automaticamente il suo Q». Cono Elementale: il cono
-// «parte dal bordo dello spazio del Taumaturgo nella direzione dichiarata».
+// «parte dal bordo dello spazio del Taumaturgo nella direzione dichiarata»; A.138 (decisione 142, risposta di Davide
+// dell'08/10): il vertice è al centro del Q di chi lo usa e la larghezza parte da zero (template.cono_vertice «centro»).
 //
 // Coordinate in Q: il Q (x, y) va da x a x + 1; il suo centro è (x + 0,5, y + 0,5). Un template ha un'origine (un Q)
 // e, per cono e linea, una direzione in gradi (0 = verso destra, 90 = verso il basso, come lo schermo).
@@ -15,8 +16,8 @@
 //   quadrato   { lato }                 centrato sul Q d'origine (lato pari: il Q d'origine è in alto a sinistra fra i
 //                                       quattro centrali); Fuoco di Soppressione 3 × 3 Q, Campo di Forza
 //   rettangolo { larghezza, altezza }   dal Q d'origine verso destra e verso il basso (area libera)
-//   cono       { lunghezza, larghezza } dal bordo del Q d'origine; si allarga da cono_larghezza_iniziale alla larghezza
-//                                       finale (trapezio) — TODO(Davide) A.138
+//   cono       { lunghezza, larghezza } dal centro del Q d'origine (cono_vertice «centro», A.138; «bordo»: dal bordo)
+//                                       si allarga da cono_larghezza_iniziale (0, A.138) alla larghezza finale
 //   linea      { lunghezza, larghezza } dal bordo del Q d'origine, larga linea_larghezza se non indicato
 // Quadretti coperti: «almeno metà» del Q dentro l'area, misurata su campioni_per_lato² punti del Q; le forme a
 // quadretti (cerchio a quadretti, quadrato, rettangolo) coprono Q interi. Cono e linea non coprono il Q d'origine.
@@ -48,11 +49,12 @@ function puntoDentro(t, px, py, regole) {
   // diagonale; il bordo del Q d'origine è allora sempre a 0,5 Q dal centro
   const k = regole.metrica_raggio === 'quadretti' ? Math.max(Math.abs(c), Math.abs(s)) : 1;
   const bordo = 0.5 / Math.max(Math.abs(c), Math.abs(s)) * k;
-  const lungo = (dx * c + dy * s) * k - bordo;
+  // A.138: il cono ha il vertice al centro del Q d'origine (template.cono_vertice «centro»); la linea parte dal bordo
+  const lungo = (dx * c + dy * s) * k - (t.forma === 'cono' && regole.cono_vertice === 'centro' ? 0 : bordo);
   const lato = Math.abs(-dx * s + dy * c);
   if (lungo <= EPS || lungo > m.lunghezza + EPS) return false;
   if (t.forma === 'linea') return lato <= (m.larghezza ?? regole.linea_larghezza) / 2 + EPS;
-  // cono: da cono_larghezza_iniziale (al bordo del lanciatore) alla larghezza finale, apertura progressiva
+  // cono: da cono_larghezza_iniziale (al vertice) alla larghezza finale, apertura lineare
   const w0 = regole.cono_larghezza_iniziale;
   return lato <= (w0 + (m.larghezza - w0) * (lungo / m.lunghezza)) / 2 + EPS;
 }

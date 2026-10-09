@@ -2909,7 +2909,10 @@ function validaMappa(dati, err) {
   if (!['quadretti', 'euclidea'].includes(TT.metrica_raggio)) err(F, 'template.metrica_raggio', 'quadretti o euclidea');
   if (TT.regola_copertura !== 'almeno_meta') err(F, 'template.regola_copertura', 'almeno_meta (Magia, «Gittate e geometria»)');
   if (!isIntero(TT.campioni_per_lato) || TT.campioni_per_lato < 2 || TT.campioni_per_lato > 32) err(F, 'template.campioni_per_lato', 'intero da 2 a 32');
-  for (const k of ['cono_larghezza_iniziale', 'linea_larghezza', 'misura_max_q']) if (!positivo(TT[k])) err(F, `template.${k}`, 'numero positivo');
+  for (const k of ['linea_larghezza', 'misura_max_q']) if (!positivo(TT[k])) err(F, `template.${k}`, 'numero positivo');
+  // A.138: il cono parte largo zero dal centro del Q d'origine
+  if (!(typeof TT.cono_larghezza_iniziale === 'number' && TT.cono_larghezza_iniziale >= 0)) err(F, 'template.cono_larghezza_iniziale', 'numero da 0 in su (Q)');
+  if (!['centro', 'bordo'].includes(TT.cono_vertice)) err(F, 'template.cono_vertice', 'centro (A.138) o bordo');
   for (const f of TT.forme ?? []) {
     const lista = TT.misure_proposte?.[f];
     if (!Array.isArray(lista) || !lista.length || !lista.every((x) => x && Object.values(x).every((v) => positivo(v) && v <= TT.misura_max_q))) err(F, `template.misure_proposte.${f}`, 'elenco di misure in Q');
