@@ -1167,7 +1167,12 @@ Fonte: E&L dell'08/10/2026, 21:10 UTC, blocco «Aggiornamento cumulativo — ris
     caricatore o cella: 1 AzP. Ricarica Rapida: una sola ricarica gratuita per Round, alla propria Iniziativa (2, 4 con
     Ricarica Migliorata, fino a 6 col carichino, o un cambio di caricatore/cella). Modelli: HD14M a serbatoio interno; SA
     SG2001, Airbrush e Mandible a caricatore. Peso, Qualità, Integrità e Reperibilità dei carichini non sono definiti:
-    domanda nuova A.151. **Da implementare** (lotto «armi» di `docs/diff-davide-2026-10-08.md`).
+    domanda nuova A.151. **Applicata** il 09/10 (lotto «armi», `tools/lotti/lotto_ricarica_a135.mjs`): `munizioni.json` →
+    `ricarica.inserimento_singolo` (2 / 4, revolver compresi; via il tamburo pieno e il `TODO(Davide)`), `ricarica.carichini`
+    e `ricarica_rapida`; carichini nel catalogo (`accessori_armi.json`, peso, Qualità, PI e Reperibilità `null` con il
+    `TODO(Davide)` A.151); `src/ricarica.js` (usaCarichino, riempiCarichino), sessione `carichini`, «Usa carichino» e
+    «Prepara» nella tab Combattimento, una fila per carichino nella SS. Un carichino si usa con le armi della sua famiglia
+    (tamburo: revolver; serbatoio: pompa e pallini a serbatoio interno): che sia del modello giusto lo verifica il master.
 140. **Corsa o Scatto dopo un Passo già cominciato e Prova facoltativa di Atletica** (A.136). Prima di ogni AzP, a
     movimento in corso, il Passo si trasforma in Corsa o Scatto: i Q fatti si sottraggono al nuovo totale, una sola AzM,
     il resto in un blocco prima delle AzP. **Cambia** il provvisorio (no). Prova di Atletica facoltativa, dichiarata prima
