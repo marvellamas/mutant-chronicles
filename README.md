@@ -22,7 +22,21 @@ clic, senza terminale, Git o Node già installati:
 Il file 1 scarica senza autenticazione, quindi funziona solo se il repository GitHub è
 pubblico.
 
-### Per Davide: avvia.bat e avvia-server.bat
+### Per Davide: d'ora in poi basta `Mutant.bat`
+
+Doppio clic su **`Mutant.bat`** nella cartella di Mutant: si apre una finestra nera con la versione installata, lo stato del server (acceso o spento) e un menu. Si preme il numero:
+
+1. **Avvia Mutant**: accende il server nella sua finestra e apre il browser (come `avvia-server.bat`);
+2. **Aggiorna Mutant**: come `aggiorna.bat`, poi la console si riapre già aggiornata;
+3. **Salva sessione**: zip in `salvataggi`, copia su Google Drive, notifica a Marcello (come `salva-sessione.bat`);
+4. **Ripristina un salvataggio**: scegli dall'elenco; se Mutant è acceso lo spegne (dopo averlo chiesto), fa una copia di sicurezza di com'è adesso e rimette le cartelle del salvataggio;
+5. **Apri la cartella dei salvataggi**;
+6. **Impostazioni**: apre nel Blocco note `config-salvataggi.json` e `avvisi/avvisi.json` (se mancano li crea);
+7. **Esci**.
+
+Dopo ogni voce si torna al menu. Per averlo sul desktop: doppio clic, una volta, su **`crea-collegamento.bat`** (collegamento «Mutant» con l'icona). I vecchi file restano e funzionano come prima: `avvia-server.bat`, `aggiorna.bat`, `salva-sessione.bat` e `avvia.bat`.
+
+### avvia.bat e avvia-server.bat
 
 - **`avvia.bat`**: l'app come prima, i personaggi salvati nel browser.
 - **`avvia-server.bat`**: l'app con il Tavolo del Master (plancia, scontri, nemici): i personaggi stanno nella cartella `personaggi/` del PC che fa da server.

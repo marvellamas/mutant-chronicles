@@ -42,6 +42,14 @@ Rimettere a posto una sessione (ripristino)
 -------------------------------------------
 Si puo' ripartire da un salvataggio di questa cartella, da autosave\autosave.zip (l'ultimo
 automatico) o da autosave\autosave-precedente.zip (quello prima).
+
+Il modo semplice: Mutant.bat, voce 4 «Ripristina un salvataggio». Elenca i salvataggi con data e
+dimensione; scelto uno, se Mutant e' acceso chiede di spegnerlo (con «Spegni Mutant»), fa la copia
+di sicurezza di com'e' adesso (prima-del-ripristino_AAAA-MM-GG_hhmm.zip, in questa cartella: si
+puo' ripristinare anche quella, per tornare indietro) e rimette le cartelle del salvataggio. Le
+cartelle che il salvataggio non contiene restano come sono.
+
+A mano, se servisse:
 1. Spegni Mutant («Spegni Mutant» o chiudi la finestra nera).
 2. Fai doppio clic su salva-sessione.bat: e' la copia di sicurezza di come sono le cose adesso,
    se poi volessi tornare indietro.
