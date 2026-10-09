@@ -267,6 +267,19 @@ test('Ricarica Efficiente e Conversione Migliorata: Convertire Potere 3:1 → 2:
   assert.equal(rapportoConversione(s([], [], 'Combattente'), dati).disponibile, false);
   assert.equal(rapportoConversione({ ...s(['conversione-migliorata']), bonusTalenti: false }, dati).rapporto, 3);
 });
+test('A.20: prelievo dal Chroma Bianco solo con l’accesso alla magia (non basta essere coscienti)', () => {
+  const s = (addestramento, scalaPotere) => ({ addestramento, talentiLiberi: [], classi: [], incantesimi: { scalaPotere } });
+  assert.match(dati.regole.chroma.conversione.prelievo.decisione, /^A\.20/);
+  const taum = rapportoConversione(s('Taumaturgo', 'taumaturgo'), dati);
+  assert.deepEqual([taum.disponibile, taum.prelievo.disponibile, taum.prelievo.rapporto], [true, true, { Bianco: 2 }]);
+  // Usufruitore di Magia (Talento) senza Addestramento Taumaturgo: preleva, non ricarica né converte
+  const usuf = rapportoConversione(s('Combattente', 'altri_utilizzatori'), dati);
+  assert.deepEqual([usuf.disponibile, usuf.prelievo.disponibile], [false, true]);
+  // nessun accesso alla magia: niente prelievo
+  const nessuno = rapportoConversione(s('Combattente', null), dati);
+  assert.deepEqual([nessuno.disponibile, nessuno.prelievo.disponibile], [false, false]);
+  assert.equal(rapportoConversione({ addestramento: 'Combattente', talentiLiberi: [], classi: [] }, dati).prelievo.disponibile, false);
+});
 
 // ---------------------------------------------------------------------------
 // «Lancia!»: Talenti di lancio già letti dal motore (effetti.lancio); gli altri in tests/talenti-lancio.test.js

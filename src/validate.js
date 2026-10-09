@@ -1091,6 +1091,14 @@ function validaChroma(dati, err) {
     err(F, 'chroma.conversione.rapporto_per_talenti', 'un rapporto per 0, 1, … Talenti: il primo è quello ordinario, poi non crescente, interi ≥ 1');
   }
   if (!(dati.addestramenti?.addestramenti ?? []).some((a) => a.nome === cv.addestramento_richiesto)) err(F, 'chroma.conversione.addestramento_richiesto', `"${cv.addestramento_richiesto}" non è un Addestramento`);
+  // A.20: prelievo dal Chroma Bianco con il solo accesso alla magia
+  if (cv.prelievo !== undefined) {
+    if (!isOggetto(cv.prelievo) || !Array.isArray(cv.prelievo.colori) || !cv.prelievo.colori.length) err(F, 'chroma.conversione.prelievo', 'serve { colori: [...], richiede }');
+    else {
+      for (const nome of cv.prelievo.colori) if (!c.colori?.[nome]) err(F, `chroma.conversione.prelievo.colori`, `"${nome}" non è un colore`);
+      if (cv.prelievo.richiede !== 'accesso_magia') err(F, 'chroma.conversione.prelievo.richiede', 'valore atteso: "accesso_magia"');
+    }
+  }
   const pg = cv.prova_gruppi;
   if (!isOggetto(pg) || !isIntero(pg.automatici) || pg.automatici < 1 || !isOggetto(pg.penalita) || !isIntero(pg.per_gruppo_oltre)) {
     err(F, 'chroma.conversione.prova_gruppi', 'serve { automatici ≥ 1, penalita: {gruppi: VA}, per_gruppo_oltre }');

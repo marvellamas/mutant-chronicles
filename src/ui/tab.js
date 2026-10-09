@@ -730,7 +730,10 @@ function riquadroPM(ctx) {
   const cv = rapportoConversione(ctx.tab.scheda, ctx.dati);
   const notaConversione = cv?.disponibile ? h('p', { class: 'nota' }, `Convertire Potere e ricaricare: ${cv.rapporto}:1`,
     cv.talenti.length ? ` (${cv.talenti.join(' e ')})` : '',
-    Object.keys(cv.fissi).length ? `; ${Object.entries(cv.fissi).map(([c, n]) => `${c} ${n}:1`).join(', ')} in entrambi i sensi` : '', '.') : null;
+    Object.keys(cv.fissi).length ? `; ${Object.entries(cv.fissi).map(([c, n]) => `${c} ${n}:1`).join(', ')} in entrambi i sensi` : '', '.')
+    // A.20: senza l'Addestramento Taumaturgo, con l'accesso alla magia, si può soltanto prelevare dal Bianco
+    : cv?.prelievo?.disponibile ? h('p', { class: 'nota' }, `Prelievo dal Chroma ${Object.entries(cv.prelievo.rapporto).map(([c, n]) => `${c} ${n}:1`).join(', ')} nella riserva personale (contenitore sintonizzato, con contatto); ricaricarlo richiede l’Addestramento Taumaturgo.`)
+    : null;
   return contatoreTavolo(ctx, {
     titolo: 'Punti Magia', campo: 'pmAttuali', attuale: s.pmAttuali, massimo: ctx.massimi.pm, barra: true, classe: 'riquadro-pm',
     nota: med ? `Recupero PM con Meditazione: ${med.pmPerOra} PM/ora, ${med.orePerGiorno} ${med.orePerGiorno === 1 ? 'ora' : 'ore'}/giorno` : null,

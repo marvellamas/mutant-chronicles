@@ -130,7 +130,11 @@ export function testoEffettoOggetto(e) {
  * quelli elencati (Ricarica Efficiente, Conversione Migliorata: 2:1, entrambi 1:1); il Bianco resta
  * 2:1 (rapporti_fissi). Serve l'Addestramento Taumaturgo. Con «Bonus dei Talenti» spento, il
  * rapporto ordinario.
- * @returns {{ rapporto, talenti: string[], fissi: {colore: n}, disponibile: boolean, addestramento } | null}
+ * Prelievo dal Bianco (Magia sez. 6; A.20, confermata l'08/10/2026): PM da un contenitore Bianco sintonizzato alla
+ * riserva personale, al rapporto fisso del colore; basta l'accesso alla magia (Addestramento Taumaturgo, Gradi
+ * taumaturgici o Talenti come Usufruitore di Magia), non basta essere coscienti (chroma.conversione.prelievo).
+ * @returns {{ rapporto, talenti: string[], fissi: {colore: n}, disponibile: boolean, addestramento,
+ *   prelievo: { colori: string[], rapporto: {colore: n}, disponibile: boolean } | null } | null}
  */
 export function rapportoConversione(scheda, dati) {
   const cv = dati.regole.chroma?.conversione;
@@ -145,7 +149,20 @@ export function rapportoConversione(scheda, dati) {
   return {
     rapporto: cv.rapporto_per_talenti[talenti.length], talenti, fissi: cv.rapporti_fissi ?? {},
     disponibile: addestramento === cv.addestramento_richiesto, addestramento: cv.addestramento_richiesto,
+    prelievo: cv.prelievo ? {
+      colori: cv.prelievo.colori,
+      rapporto: Object.fromEntries(cv.prelievo.colori.map((c) => [c, cv.rapporti_fissi?.[c] ?? cv.rapporto_ordinario])),
+      disponibile: cv.prelievo.richiede === 'accesso_magia' ? accessoMagia(scheda) : false,
+    } : null,
   };
+}
+
+/**
+ * Accesso alla magia della scheda calcolata (Magia sez. 1; src/avanzamento.js → quote degli incantesimi): Addestramento
+ * Taumaturgo, Gradi taumaturgici o Talenti con accessoMagia. La scala della Prova di Potere c'è solo con l'accesso.
+ */
+export function accessoMagia(scheda) {
+  return !!scheda?.incantesimi?.scalaPotere;
 }
 
 /** Effetti di un personaggio personalizzato, ripuliti (l'Abilità si controlla al calcolo). */
