@@ -29,11 +29,10 @@ Impostare la copia su Google Drive (una volta sola)
    account Google. In Esplora file compare un disco «Google Drive» (di solito G:) con «Il mio Drive».
 2. Dentro «Il mio Drive» crea la cartella «Mutant salvataggi» e condividila con Marcello
    (dal sito drive.google.com: tasto destro sulla cartella > Condividi).
-3. Apri con il Blocco note il file config-salvataggi.json nella cartella di Mutant (se non c'e',
-   lancia aggiorna.bat: lo crea lui) e scrivi il percorso della cartella, con le barre / :
-       "cartella_drive": "G:/Il mio Drive/Mutant salvataggi",
-   Il percorso giusto si copia dalla barra dell'indirizzo di Esplora file, dentro la cartella;
-   poi si cambiano le \ in /.
+3. Apri Mutant.bat, voce 6 «Impostazioni», poi 2 «Cartella Drive per i backup»: la console propone
+   le posizioni di Google Drive che trova (per esempio G:\Il mio Drive\Mutant salvataggi), controlla
+   che la cartella esista e, se manca, la crea. Si puo' anche scrivere il percorso a mano.
+   (La console lo scrive in config-salvataggi.json, "cartella_drive": non serve aprire il file.)
 4. Fai doppio clic su salva-sessione.bat: deve dire «Drive ✓». Lo zip compare nella cartella di
    Drive e, dopo qualche minuto, anche sul Drive di Marcello.
 

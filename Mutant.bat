@@ -48,6 +48,9 @@ if not exist "%QUI%tools\console.mjs" (
   exit /b 1
 )
 
+rem all'apertura: impostazioni mancanti (installazione nuova) e invii non riusciti (avvisi\registro.txt)
+node "%QUI%tools\console.mjs" avvio
+
 :menu
 cd /d "%QUI%."
 cls
@@ -128,17 +131,8 @@ start "" explorer "%QUI%salvataggi"
 goto menu
 
 :impostazioni
+rem schermata guidata (tools\impostazioni.mjs): avvisi ntfy, cartella di Google Drive, notifica di prova
 node "%QUI%tools\console.mjs" impostazioni
-echo.
-echo  Si aprono nel Blocco note:
-echo   - config-salvataggi.json: salvataggio automatico, cartella di Google Drive, notifica a Marcello
-echo   - avvisi\avvisi.json: avvisi a Marcello quando aggiorni o accendi
-echo  Dopo una modifica salva il file (Ctrl+S); vale dalla prossima accensione di Mutant.
-echo  Spiegazioni: salvataggi\LEGGIMI.txt e avvisi\LEGGIMI.txt
-start "" notepad "%QUI%config-salvataggi.json"
-start "" notepad "%QUI%avvisi\avvisi.json"
-echo.
-pause
 goto menu
 
 rem Un file atteso manca davvero: dove lo si cercava e cosa fare
