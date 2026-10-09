@@ -16,10 +16,10 @@ Le stime sono in prompt di lavoro, cioè sessioni come questa, comprese prove e 
 | 1. Mappa | A.136 (Passo → Corsa/Scatto sulla mappa), A.137, A.138, A.139, A.140, A.141/A.144, A.142, A.143, A.148, A.149, A.150 | **fatto il 09/10** (un commit per risposta) | — |
 | 2. Combattimento | A.136: tabella della Prova facoltativa di Atletica (penalità personale e agli attacchi contro, per esito) in «Attacca!» e nella tab Combattimento, al posto delle penalità fisse di Corsa e Scatto | da fare | 1 |
 | 3. Armi | A.135: 2 cartucce per AzP (4 con Ricarica Migliorata) per tamburi e serbatoi interni; carichini da 6 colpi (2 voci nuove, dati mancanti → A.151); Ricarica Rapida (una ricarica gratuita per Round); modelli HD14M, SA SG2001, Airbrush, Mandible | da fare | 1 |
-| 4. Magia: Anticipazione | A.109: regola comune (un aspetto, un gradino, PM base ×2, Prova di Potere obbligatoria di una categoria più difficile) e i 32 aspetti con i gradini al posto dei 32 `TODO(Davide)` di `incantesimi.json`; riquadro dell'Anticipazione in «Lancia!» | da fare | 1–2 |
+| 4. Magia: Anticipazione | A.109: regola comune (un aspetto, un gradino, PM base ×2, Prova di Potere obbligatoria di una categoria più difficile) e i 32 aspetti con i gradini al posto dei 32 `TODO(Davide)` di `incantesimi.json`; riquadro dell'Anticipazione in «Lancia!»; verifica di A.20 (Chroma bianco solo a chi ha accesso alla magia) | da fare | 1–2 |
 | 5. Magia §27: Artefatti consumabili | campo Riutilizzabile/Consumabile, SnT 0 e niente sintonizzazione, Cariche sigillate, quantità e «Usa» (una scheda in due viste: Artefatti e Consumabili), tabella dei costi per Grado I–VI, PM = 3 × Grado + costo base, 6 pergamene del campionario; tab Artefatti, Inventario, SS | da fare | 2 |
 | 6. Equipaggiamento 0.6 | circa 20 voci nuove (navigatore inerziale, decontaminanti, estintori, nastro, toppe, schiuma, tuta extraveicolare, riparo pressurizzato, calzature magnetiche, modulo di cifratura, rilevatore di sorveglianza, utensile laser, analizzatore alimentare), 7 righe della tabella NEC, dosi e bombole come risorse separate, effetti con le frasi del manuale, testo del §4.1 | da fare | 1–2 |
-| 7. Altro | A.122 Aiuto-master (permessi sul server, tablet: muovere il PG del turno attivo, vista giocatori); A.111 Pablo (la perdita di 2 UMN si toglie sulla copia del suo file: a mano, PG reali intoccabili; testo del `TODO(Davide)` di `regole.json`); A.112 nessuna azione | da fare | 1 |
+| 7. Altro | A.122 Aiuto-master (permessi sul server, tablet: muovere il PG del turno attivo, vista giocatori); A.111 Pablo (la perdita di 2 UMN si toglie sulla copia del suo file: a mano, PG reali intoccabili; testo del `TODO(Davide)` di `regole.json`); A.112 nessuna azione; A.35 (l'eccedenza degli armamenti ceduti torna in crediti, oggi persa: `src/dotazioni.js`) | da fare | 1 |
 
 **Rinviati da Davide** (i `TODO(Davide)` restano):
 - A.113, A.115;
@@ -42,3 +42,6 @@ Ogni risposta ha il suo commit. I valori stanno in `data/mappa.json`, dove i `TO
 - **A.143 (decisione 147):** sensi speciali sui token dei PG (`luci.sensi`). Quando sono accesi dal menu del token, allargano la nebbia automatica entro la portata, nelle luci in cui funzionano; muri e porte chiuse li fermano.
 - **A.148 (decisione 148):** in volo valgono Copertura e creatura interposta come a terra (`volo.linea_di_tiro`: niente coperture annullate, nessun token ignorato). Il master corregge per le quote.
 - **A.150 (decisione 150):** `volo.visibile_oltre_nebbia` vale false: un token in volo si vede con le stesse regole di quelli a terra.
+- **A.122 (Aiuto-master)** riguarda anche la mappa ma è una funzione nuova (permessi sul server, tablet che muove il PG del turno attivo): lotto 7.
+
+Pacchetto per il Doc: `docs/pacchetto-per-davide-2026-10-09.md`.

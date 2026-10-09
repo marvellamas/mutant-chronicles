@@ -1227,8 +1227,10 @@ Fonte: E&L dell'08/10/2026, 21:10 UTC, blocco «Aggiornamento cumulativo — ris
     Talenti); il resto invariato; mai due aspetti insieme. Poi i 32 punti con i gradini (elementi +1 fino a 3; Mod. PS di
     Armatura Elementale e Devastazione fino a −6; Catene di Forza 0 → −2 → −4 → −6 su tutte e tre le PS; e gli altri:
     testo completo nell'E&L). **Da implementare** (lotto «magia»: i 32 `TODO(Davide)` A.109 di `incantesimi.json`).
-155. **Conferme e rinvii.** Confermate A.20 (Chroma bianco solo a chi ha accesso alla magia) e A.35 (eccedenza degli
-    armamenti ceduti restituita in crediti), già approvate. **Rinviate:** A.113, A.115, parte dei veicoli di A.125,
+155. **Conferme e rinvii.** Davide dà per già approvate A.20 (il Chroma bianco resta riservato a chi ha accesso alla
+    magia; non basta essere coscienti) e A.35 (l'eccedenza del valore degli armamenti ceduti viene restituita in crediti).
+    **A.35 cambia** l'ipotesi dell'app (eccedenza persa, `TODO(Davide)` in `src/dotazioni.js`): da implementare (lotto
+    «altro»). **A.20** da verificare nel lotto «magia» (prelievo dal Chroma bianco). **Rinviate:** A.113, A.115, parte dei veicoli di A.125,
     A.126, A.133, A.145–A.147, la tabella per tipo e altezza degli ostacoli di A.140; malattie e cure al Manuale del
     Direttore. I loro `TODO(Davide)` restano.
 
