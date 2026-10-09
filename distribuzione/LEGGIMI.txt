@@ -159,6 +159,16 @@ Quando Marcello ti dice che c'è una versione nuova:
 
 I personaggi non si toccano: stanno nel browser, non nella cartella.
 
+Se usi anche il server di Mutant (Mutant.bat, avvia-server.bat), i suoi dati stanno nella
+cartella "mutant": personaggi, tavolo, scontri, nemici, veicoli, scene, mappe, musica,
+salvataggi, autosave, avvisi e config-salvataggi.json. L'aggiornamento non li cancella mai:
+cambia solo i file dell'app. Prima di aggiornare ne fa comunque una copia zip in
+"mutant\backup-prima-aggiornamento" (tiene le ultime 5). Se lo scaricamento non riesce o il
+file scaricato è incompleto, la finestra lo dice e non tocca nulla.
+
+ATTENZIONE: questo vale dal 09/10/2026. Se il tuo 1_scarica_o_aggiorna_app.bat è più vecchio,
+chiedi a Marcello quello nuovo prima di aggiornare: il vecchio cancellava anche quei dati.
+
 Se avevi modificato i file delle regole (la cartella "data" dentro "mutant"),
 l'aggiornamento li sostituisce con quelli nuovi. La tua versione non si perde:
 viene copiata nella cartella "backup_dati", accanto ai file .bat, con la data

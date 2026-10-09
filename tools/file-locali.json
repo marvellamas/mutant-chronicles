@@ -1,0 +1,42 @@
+{
+  "_nota": "File e cartelle di questo PC che non stanno su GitHub: l'aggiornamento da zip (distribuzione/aggiorna-da-zip.ps1, chiamato da distribuzione/1_scarica_o_aggiorna_app.bat) non li cancella mai e ne fa prima una copia zip in «cartella_backup» (le ultime «backup_da_tenere»). L'aggiornamento con Git (aggiorna.bat) non li tocca da sé: git pull non cancella i file non tracciati (.gitignore). «cartelle» e «file»: in cima alla cartella dell'app; «annidati»: dentro cartelle dell'app (con * per i nomi), si rimettono dopo l'aggiornamento senza sovrascrivere i file nuovi; «backup_esclusi»: conservati ma non copiati nello zip di sicurezza (ricostruibili o troppo grandi); «controllo_zip»: ciò che deve esserci nello zip scaricato, altrimenti non si tocca nulla.",
+  "cartelle": [
+    "personaggi",
+    "tavolo",
+    "scontri",
+    "nemici",
+    "veicoli",
+    "scene",
+    "mappe",
+    "musica",
+    "autosave",
+    "salvataggi",
+    "avvisi",
+    "node_modules",
+    "backup-prima-aggiornamento"
+  ],
+  "file": [
+    "config-salvataggi.json",
+    ".versione"
+  ],
+  "annidati": [
+    "img/originali",
+    "img/sfondi/*.jpg"
+  ],
+  "backup_esclusi": [
+    "node_modules",
+    "backup-prima-aggiornamento"
+  ],
+  "cartella_backup": "backup-prima-aggiornamento",
+  "backup_da_tenere": 5,
+  "controllo_zip": [
+    "index.html",
+    "server.mjs",
+    "versione.json",
+    "package.json",
+    "src",
+    "data",
+    "tools/file-locali.json",
+    "distribuzione/aggiorna-da-zip.ps1"
+  ]
+}

@@ -12,8 +12,13 @@ comprime in uno zip e la manda. Dentro c'è la guida passo per passo,
 clic, senza terminale, Git o Node già installati:
 
 1. `1_scarica_o_aggiorna_app.bat`: scarica l'app da GitHub nella cartella `mutant` accanto a
-   sé, oppure la aggiorna se c'è un commit nuovo su `main`. Conserva `node_modules` e salva in
-   `backup_dati` una copia della cartella `data` se il master l'aveva modificata.
+   sé, oppure la aggiorna se c'è un commit nuovo su `main`. Cambia solo i file dell'app: i dati di quel
+   PC (cartelle del server, `avvisi/`, `config-salvataggi.json`, `node_modules`…: elenco unico in
+   [`tools/file-locali.json`](tools/file-locali.json)) non si cancellano mai e prima se ne fa una copia zip in
+   `mutant/backup-prima-aggiornamento/` (le ultime 5). La copia la fa
+   [`distribuzione/aggiorna-da-zip.ps1`](distribuzione/aggiorna-da-zip.ps1) della versione scaricata; con uno zip
+   incompleto non si tocca nulla. Salva anche in `backup_dati` una copia della cartella `data` se il master l'aveva
+   modificata.
 2. `2_installa_node.bat`: installa Node.js 22 LTS dal sito ufficiale, controllando
    l'impronta SHA-256 dell'installer.
 3. `3_avvia.bat`: accende l'app su <http://localhost:3000> e mostra l'indirizzo per il

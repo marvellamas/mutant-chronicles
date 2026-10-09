@@ -71,13 +71,21 @@ echo  [4/5] Estraggo i file...
 %PSC% "%PRE% try { Expand-Archive -LiteralPath (Join-Path $env:LAVORO 'mutant.zip') -DestinationPath (Join-Path $env:LAVORO 'estratto') -Force; exit 0 } catch { exit 1 }"
 if errorlevel 1 goto errore_zip
 
-echo  [5/5] Copio i file nella cartella "mutant"...
-rem Si conserva node_modules (i componenti gia' installati), a meno che package.json sia cambiato:
-rem in quel caso si cancella e il file 3 li reinstalla.
-rem Prima di sostituire, la cartella data (regole che il master puo' aver modificato) si copia in
-rem backup_dati\data-e-ora; la copia si tiene solo se diversa dalla versione nuova.
-rem Gli sfondi messi a mano in img\sfondi (*.jpg, vedi README) si rimettono al loro posto dopo la copia.
-%PSC% "%PRE% try { $src = (Get-ChildItem -Directory (Join-Path $env:LAVORO 'estratto') | Select-Object -First 1).FullName; if (-not $src) { exit 1 }; $dest = $env:DEST; if (-not (Test-Path $dest)) { New-Item -ItemType Directory $dest | Out-Null }; $pkg = Join-Path $dest 'package.json'; $vecchio = if (Test-Path $pkg) { Get-Content -Raw $pkg } else { '' }; $dati = Join-Path $dest 'data'; $copia = ''; if (Test-Path $dati) { $copia = Join-Path $env:BACKUP (Get-Date -Format 'yyyy-MM-dd_HH-mm-ss'); New-Item -ItemType Directory -Force $copia | Out-Null; Copy-Item -Recurse $dati $copia }; $sf = Join-Path $dest 'img\sfondi'; $sfTmp = Join-Path $env:LAVORO 'sfondi'; if (Test-Path $sf) { New-Item -ItemType Directory -Force $sfTmp | Out-Null; Get-ChildItem -File $sf -Filter '*.jpg' | Copy-Item -Destination $sfTmp }; Get-ChildItem -Force $dest | Where-Object { $_.Name -ne 'node_modules' } | Remove-Item -Recurse -Force; Get-ChildItem -Force $src | Move-Item -Destination $dest; if (Test-Path $sfTmp) { New-Item -ItemType Directory -Force $sf | Out-Null; Get-ChildItem -File $sfTmp | Where-Object { -not (Test-Path (Join-Path $sf $_.Name)) } | Copy-Item -Destination $sf }; if ($vecchio -and ((Get-Content -Raw $pkg) -ne $vecchio) -and (Test-Path (Join-Path $dest 'node_modules'))) { Remove-Item -Recurse -Force (Join-Path $dest 'node_modules'); Write-Host '       Componenti da reinstallare: ci pensa il file 3 al prossimo avvio.' }; if ($copia) { $h = { param($c) Get-ChildItem -Recurse -File $c | ForEach-Object { $_.FullName.Substring($c.Length) + (Get-FileHash $_.FullName).Hash } }; if (((& $h (Join-Path $copia 'data')) -join ';') -eq ((& $h $dati) -join ';')) { Remove-Item -Recurse -Force $copia; if (-not (Get-ChildItem -Force $env:BACKUP)) { Remove-Item -Force $env:BACKUP } } else { Write-Host ('       I file delle regole (cartella data) erano diversi: copia salvata in ' + $copia) } }; exit 0 } catch { Write-Host $_; exit 1 }"
+echo  [5/5] Aggiorno i file dell'app nella cartella "mutant" (i dati di questo PC restano)...
+rem Dal 09/10/2026 la copia la fa distribuzione\aggiorna-da-zip.ps1 della versione appena scaricata, con l'elenco
+rem dei file locali in tools\file-locali.json: personaggi, tavolo, scontri, nemici, veicoli, scene, mappe, musica,
+rem autosave, salvataggi, avvisi, config-salvataggi.json, node_modules... non si cancellano mai. Prima fa una copia
+rem zip dei dati locali in mutant\backup-prima-aggiornamento (le ultime 5). Se lo zip e' incompleto non tocca nulla.
+rem Come prima: copia di data in backup_dati se il master l'aveva modificata, sfondi .jpg rimessi, node_modules
+rem cancellato solo se package.json cambia.
+set "SRC="
+for /d %%D in ("%LAVORO%\estratto\*") do if not defined SRC set "SRC=%%~fD"
+if not defined SRC goto zip_incompleto
+if not exist "%SRC%\distribuzione\aggiorna-da-zip.ps1" goto zip_incompleto
+powershell -NoProfile -ExecutionPolicy Bypass -File "%SRC%\distribuzione\aggiorna-da-zip.ps1" -Sorgente "%SRC%" -Destinazione "%DEST%" -BackupDati "%BACKUP%" -Lavoro "%LAVORO%\aggiornamento"
+if errorlevel 5 goto errore_copia
+if errorlevel 4 goto errore_backup
+if errorlevel 3 goto zip_incompleto
 if errorlevel 1 goto errore_copia
 
 if defined ULTIMA (echo %ULTIMA%)>"%DEST%\.versione"
@@ -124,9 +132,24 @@ echo.
 echo  ERRORE: il file scaricato non e' uno zip valido. Riprova tra qualche minuto.
 goto fine_errore
 
+:zip_incompleto
+echo.
+echo  ERRORE: il file scaricato e' incompleto o non e' quello di Mutant.
+echo  Non ho toccato nulla: l'app e i dati di questo PC sono come prima.
+echo  Riprova tra qualche minuto; se succede ancora, avvisa Marcello.
+goto fine_errore
+
+:errore_backup
+echo.
+echo  ERRORE: non riesco a fare la copia di sicurezza dei dati di questo PC
+echo  (cartella mutant\backup-prima-aggiornamento). Non ho aggiornato nulla.
+echo  Controlla che ci sia spazio sul disco e che l'app sia spenta, poi riprova.
+goto fine_errore
+
 :errore_copia
 echo.
 echo  ERRORE: non riesco a copiare i file nella cartella "mutant".
+echo  I dati di questo PC non sono stati toccati (copia anche in mutant\backup-prima-aggiornamento).
 echo  Se l'app e' accesa, chiudi la finestra nera di 3_avvia.bat e riprova.
 goto fine_errore
 

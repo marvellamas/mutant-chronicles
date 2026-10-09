@@ -73,3 +73,6 @@ musica/*
 avvisi/avvisi.json
 avvisi/stato.json
 avvisi/registro.txt
+
+# Copie di sicurezza dei dati locali fatte dall'aggiornamento da zip (distribuzione/aggiorna-da-zip.ps1, 09/10)
+backup-prima-aggiornamento/
