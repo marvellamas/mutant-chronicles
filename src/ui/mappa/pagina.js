@@ -2121,7 +2121,7 @@ export function renderMappa(radice, ctx) {
     const p = pezzoDi(t);
     return !p?.aZero && !(p?.stati ?? []).some((x) => (x?.id ?? x) === 'a-terra');
   }
-  const testoLinea = (r) => `${r.distanza} Q · ${testoCopertura(r)}${r.protetto ? ' · protetto' : ''}`;
+  const testoLinea = (r) => `${r.distanza} Q · ${testoCopertura(r)}${r.interposta ? ' · creatura interposta' : ''}${r.protetto ? ' · protetto' : ''}`;
   function disegnaLineaScelta(c) {
     if (!st.linea || !st.scena) return;
     const r = calcolaLinea();
@@ -2145,7 +2145,7 @@ export function renderMappa(radice, ctx) {
     // 07/10: per i giocatori la linea si ricalcola con quello che vedono: porte segrete come muro, niente token nascosti
     // (né come ostacolo né in mezzo), così la Copertura non tradisce un token che non vedono
     const g = lineaDiTiro(st.scena, r.da, r.a.id ? r.a : r.a.q, ostacoliVista(st.scena, RP, { perGiocatori: true }), RV, { contaToken: (t) => !t.nascosto && contaInLinea(t), volo: ctx.dati.mappa.volo.linea_di_tiro });
-    return { da: st.linea.da, a: st.linea.a, punto: st.linea.a ? null : st.linea.punto, distanza: g.distanza, copertura: g.copertura, vista: g.vista, testo: `${g.distanza} Q · ${testoCopertura(g)}${g.protetto ? ' · protetto' : ''}` };
+    return { da: st.linea.da, a: st.linea.a, punto: st.linea.a ? null : st.linea.punto, distanza: g.distanza, copertura: g.copertura, vista: g.vista, testo: `${g.distanza} Q · ${testoCopertura(g)}${g.interposta ? ' · creatura interposta' : ''}${g.protetto ? ' · protetto' : ''}` };
   }
   /** Clic con la linea attiva: fissa il bersaglio e dice distanza, gittata, vista, Copertura; «Attacca!» con quei valori. */
   function fissaLinea(m) {
@@ -2166,7 +2166,9 @@ export function renderMappa(radice, ctx) {
     const righe = [
       `${nomeDa} → ${nomeA}: ${r.distanza} Q (gittata ${gittata ? `${gittata} VA` : '0'}), vista ${r.vista}, ${testoCopertura(r)}${pen ? ` (${pen} VA)` : ''}.`,
       r.copertura === 'totale' ? 'Il bersaglio non può essere attaccato direttamente (§5.8).' : null,
-      // 07/10: token in mezzo (Giocatore §5.10, A.141, A.144): «bersaglio impegnato o protetto» proposto in «Attacca!»
+      // token in mezzo: A.141 e A.144 (decisione 145) «Creatura interposta» −2 proposta in «Attacca!»; con il valore di
+      // prima «protetto» il «bersaglio impegnato o protetto» del §5.10
+      r.interposta ? `In mezzo: ${r.inMezzo.map((x) => pezzoDi(x)?.nome ?? x.nome ?? x.id).join(', ')}: creatura interposta, ${ctx.dati.regole.attacco_distanza.interposta?.va ?? -2} VA una volta sola, senza seconda Prova (A.144). Se il bersaglio è ingaggiato in Ravvicinato vale invece il §5.10 (−4 e seconda Prova) e la stessa creatura non conta due volte.` : null,
       r.protetto ? `In mezzo: ${r.inMezzo.map((x) => pezzoDi(x)?.nome ?? x.nome ?? x.id).join(', ')}: bersaglio protetto (§5.10), −4 VA; se il tiro fallisce, seconda Prova a −4: con successo manca tutti, altrimenti colpisce chi sta in mezzo. Proposto in «Attacca!».` : null,
       r.causa?.token?.length ? `Copertura data da: ${r.causa.token.map((x) => pezzoDi(x)?.nome ?? x.nome ?? x.id).join(', ')}${r.causa.muro ? ' e da muri o porte' : ''}.` : null,
       'Copertura dalle cinque linee (A.140): il master la corregge per altezza, postura e situazione.',
@@ -2176,13 +2178,13 @@ export function renderMappa(radice, ctx) {
     const luceB = luceIngombro(st.scena, aTok ?? { q: st.linea.punto, ingombro: 1 }, ctx.dati);
     const rigaLuce = testoLuceBersaglio(luceB, ctx.dati);
     if (rigaLuce) righe.splice(1, 0, `Luce: ${rigaLuce}.`);
-    const preset = { distanza: r.distanza, bersaglio: { copertura: r.copertura, distanza: r.distanza, ...(r.protetto ? { impegnato: true } : {}) }, luce: luceB, ...(rigaLuce ? { luceMappa: rigaLuce } : {}) };
+    const preset = { distanza: r.distanza, bersaglio: { copertura: r.copertura, distanza: r.distanza, ...(r.protetto ? { impegnato: true } : {}), ...(r.interposta ? { interposta: true } : {}) }, luce: luceB, ...(rigaLuce ? { luceMappa: rigaLuce } : {}) };
     if (aTok && r.copertura !== 'totale') {
       const pzDa = pezzoDi(daTok);
       const idDa = daTok.rif?.id, idA = aTok.rif?.id;
       if (st.fonti?.scontro && st.planciaBarra?.puoAttaccare?.(idDa)) azioni.push({ testo: `Attacca! (${nomeDa} → ${nomeA})`, fai: () => st.planciaBarra.attaccaContro(idDa, idA, preset) });
       else if (pzDa?.tipo === 'pg' && recordPg(pzDa)) azioni.push({ testo: `Apri la scheda di ${nomeDa} per «Attacca!»`, fai: () => {
-        try { sessionStorage.setItem(CHIAVE_DALLA_MAPPA, JSON.stringify({ nome: pzDa.nome, distanza: r.distanza, copertura: r.copertura, protetto: r.protetto, bersaglio: nomeA, bersaglioId: idA ?? null, luce: luceB, luceMappa: rigaLuce, quando: Date.now() })); } catch { /* senza: valori a mano */ }
+        try { sessionStorage.setItem(CHIAVE_DALLA_MAPPA, JSON.stringify({ nome: pzDa.nome, distanza: r.distanza, copertura: r.copertura, protetto: r.protetto, interposta: r.interposta, bersaglio: nomeA, bersaglioId: idA ?? null, luce: luceB, luceMappa: rigaLuce, quando: Date.now() })); } catch { /* senza: valori a mano */ }
         apriSchedaToken(daTok);
       } });
     }

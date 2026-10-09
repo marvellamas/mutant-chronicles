@@ -158,7 +158,7 @@ export function renderGiocatori(radice, ctx) {
       // fase 2, lotto 3: la linea di tiro del master (già filtrata dal server)
       if (d?.linea) disegnaLineaTiro(c, { scena: s, cam: st.cam, da: d.linea.da, a: d.linea.a, copertura: d.linea.copertura, etichetta: d.linea.testo ?? `${d.linea.distanza} Q · ${{ nessuna: 'nessuna Copertura', leggera: 'Copertura Leggera', media: 'Copertura Media', totale: 'Copertura Totale' }[d.linea.copertura] ?? ''}`, colori: ctx.dati.mappa.visuale.colori });
       // 08/10: la linea di tiro del giocatore (dal tablet), al posto di quella del master
-      if (st.linea) disegnaLineaTiro(c, { scena: s, cam: st.cam, da: st.linea.da, a: st.linea.a, copertura: st.linea.copertura, etichetta: `${st.linea.distanza} Q · ${st.linea.testo}${st.linea.protetto ? ' · protetto' : ''}`, colori: ctx.dati.mappa.visuale.colori });
+      if (st.linea) disegnaLineaTiro(c, { scena: s, cam: st.cam, da: st.linea.da, a: st.linea.a, copertura: st.linea.copertura, etichetta: `${st.linea.distanza} Q · ${st.linea.testo}${st.linea.interposta ? ' · creatura interposta' : ''}${st.linea.protetto ? ' · protetto' : ''}`, colori: ctx.dati.mappa.visuale.colori });
       // fase 2, lotto 7: il percorso provato dal tablet, in attesa di «Conferma»
       if (st.prova && st.io?.token) {
         const mio = s.token.find((t) => t.id === st.io.token);
@@ -473,7 +473,7 @@ export function renderGiocatori(radice, ctx) {
     aggiornaTablet();
     tela.richiedi(['sopra']);
   }
-  const testoLinea = (l) => [`${l.distanza} Q`, l.testo, l.protetto ? 'bersaglio protetto (−4 VA, §5.10)' : null, l.luce ? `luce: ${l.luce}` : null, l.inVolo ? 'in volo' : null].filter(Boolean).join(' · ');
+  const testoLinea = (l) => [`${l.distanza} Q`, l.testo, l.interposta ? `creatura interposta (${ctx.dati.regole.attacco_distanza.interposta?.va ?? -2} VA, A.144)` : null, l.protetto ? 'bersaglio protetto (−4 VA, §5.10)' : null, l.luce ? `luce: ${l.luce}` : null, l.inVolo ? 'in volo' : null].filter(Boolean).join(' · ');
 
   const chiama = async (corpo) => {
     const r = await fetch('api/vista-giocatori/movimento', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ scena: st.vista.id, pg: st.pg, fascia: st.fascia, ...(ctx.scontro ? { scontro: ctx.scontro } : {}), ...corpo }) });

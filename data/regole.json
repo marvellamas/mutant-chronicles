@@ -684,6 +684,12 @@
       "va": -4,
       "seconda_prova": -4
     },
+    "interposta": {
+      "paragrafo": "E&L A.144 (08/10/2026)",
+      "testo": "Una creatura che interferisce con la linea di tiro applica soltanto −2, cumulabile con le altre penalità di circostanza, senza seconda Prova per colpirla accidentalmente; il −2 si applica una sola volta, indipendentemente dal numero di creature interposte. La creatura già considerata nella penalità per bersaglio ingaggiato non produce anche un ulteriore −2; una diversa sì.",
+      "va": -2,
+      "decisione": "A.141 e A.144 (risposta di Davide dell’08/10/2026, decisione 145 di docs/risposte-master.md): il bersaglio ingaggiato resta al §5.10 (bersaglio_impegnato, −4 e seconda Prova); la creatura interposta dà solo questo −2."
+    },
     "distanza": {
       "paragrafo": "Giocatore §5.11",
       "frasi": [

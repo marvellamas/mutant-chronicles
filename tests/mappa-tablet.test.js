@@ -399,11 +399,11 @@ test('linea di tiro dal tablet: solo quello che il giocatore vede, anche fuori t
   const tutti = new Set(scena.token.map((t) => t.id));
   const visibili = new Set([...tutti].filter((id) => id !== 't-p1'));
   const master = lineaPerTablet({ scena, pezzi, chiavePg: 'Bea', verso: { token: 't-p2' }, visibili: tutti, dati });
-  assert.equal(master.protetto, true, 'con tutti i token il nascosto in mezzo protegge');
+  assert.equal(master.interposta, true, 'con tutti i token il nascosto in mezzo è una creatura interposta (A.144)');
   const r = lineaPerTablet({ scena, pezzi, chiavePg: 'Bea', verso: { token: 't-p2' }, visibili, dati });
   assert.equal(r.ok, true);
   assert.equal(r.distanza, 4);
-  assert.equal(r.protetto, false, 'il nascosto non conta per il giocatore');
+  assert.equal(r.interposta, false, 'il nascosto non conta per il giocatore');
   assert.equal(r.nome, 'Predone 2');
   assert.ok(!JSON.stringify(r).includes('p1') && !JSON.stringify(r).includes('Predone 1'));
   // bersagli che non vede: rifiutati

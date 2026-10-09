@@ -254,7 +254,7 @@ export function lineaPerTablet({ scena, pezzi, chiavePg, verso, visibili, dati }
   const r = lineaDiTiro(scena, da, a.id ? a : a.q, ost, dati.mappa.visuale, { contaToken, volo: dati.mappa.volo.linea_di_tiro });
   const luce = testoLuceBersaglio(luceIngombro(scena, a, dati), dati);
   return {
-    ok: true, distanza: r.distanza, copertura: r.copertura, testo: testoCopertura(r), protetto: !!r.protetto, vista: r.vista, inVolo: !!r.inVolo,
+    ok: true, distanza: r.distanza, copertura: r.copertura, testo: testoCopertura(r), protetto: !!r.protetto, interposta: !!r.interposta, vista: r.vista, inVolo: !!r.inVolo,
     luce, nome, da: { q: [...da.q], ingombro: da.ingombro }, a: { q: [...a.q], ingombro: a.ingombro },
   };
 }

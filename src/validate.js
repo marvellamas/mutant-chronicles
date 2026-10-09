@@ -2888,7 +2888,9 @@ function validaMappa(dati, err) {
   if (!Array.isArray(VV.copertura_linee) || VV.copertura_linee.length !== 6 || !VV.copertura_linee.every((x) => LIVELLI.includes(x)) || VV.copertura_linee[0] !== 'nessuna' || VV.copertura_linee[5] !== 'totale') err(F, 'visuale.copertura_linee', 'sei livelli (0–5 linee bloccate), il primo «nessuna» e l’ultimo «totale» (§5.8)');
   if (!isIntero(VV.campioni_per_q) || VV.campioni_per_q < 2 || VV.campioni_per_q > 50) err(F, 'visuale.campioni_per_q', 'intero da 2 a 50');
   // 07/10: token in mezzo alla linea di tiro (A.141, A.144): «protetto» (§5.10) o «copertura» (ostacolo)
-  if (!['protetto', 'copertura'].includes(VV.token_in_mezzo)) err(F, 'visuale.token_in_mezzo', 'protetto o copertura');
+  if (!['interposta', 'protetto', 'copertura'].includes(VV.token_in_mezzo)) err(F, 'visuale.token_in_mezzo', 'interposta (A.144), protetto o copertura');
+  const RI = dati.regole?.attacco_distanza?.interposta;
+  if (RI && !(Number.isInteger(RI.va) && RI.va <= 0)) err('regole.json', 'attacco_distanza.interposta.va', 'intero da 0 in giù (VA)');
   if (!positivo(VV.raggio_q)) err(F, 'visuale.raggio_q', 'numero positivo (Q)');
   if (!['quadretti', 'euclidea'].includes(VV.metrica)) err(F, 'visuale.metrica', 'quadretti o euclidea');
   if (typeof VV.automatica_predefinita !== 'boolean') err(F, 'visuale.automatica_predefinita', 'vero o falso');

@@ -86,6 +86,7 @@ export function dichiarazioneDistanza(d = {}) {
       copertura: ['leggera', 'media', 'totale'].includes(b.copertura) ? b.copertura : 'nessuna',
       coperturaMigliorata: !!b.coperturaMigliorata,
       impegnato: !!b.impegnato,
+      interposta: !!b.interposta,
       ignaro: !!b.ignaro,
       tiImpegna: !!b.tiImpegna,
     },
@@ -484,6 +485,10 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
       secondaProva = { va: (arma.vaEffettivo ?? arma.va) + seconda, modificatore: seconda, testo: I.frasi[1] };
     }
   }
+
+  // A.141 e A.144 (decisione 145): una o più creature interposte sulla linea di tiro, −2 una volta sola, senza seconda
+  // Prova; la creatura già contata come «impegnato» non lo aggiunge (lo decide chi compila: è un interruttore a parte)
+  if (b.interposta && A.interposta) aggiungi('Creatura interposta sulla linea di tiro (una volta sola)', A.interposta.va, 'bersaglio', A.interposta.paragrafo);
 
   // 5. distanza, mirino e Tiro a Lunga Distanza (§5.11)
   const D = A.distanza;

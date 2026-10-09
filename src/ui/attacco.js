@@ -50,7 +50,7 @@ function dallaMappa(ctx, a, salvate) {
   // fase 2, lotto 4: anche la luce della zona del bersaglio, proposta in «Luce sul bersaglio» (modificabile)
   // ritocchi del 07/10: anche l'id del bersaglio nello scontro, proposto in «Contro un nemico dello scontro»; dal menu del
   // token senza linea di tiro solo quello (soloBersaglio)
-  const v = { ...salvate, ...(p.soloBersaglio ? {} : { distanza: p.distanza, bersaglio: { ...(salvate.bersaglio ?? {}), copertura: p.copertura, distanza: p.distanza, ...(p.protetto ? { impegnato: true } : {}) } }), ...(p.luceMappa ? { luceMappa: p.luceMappa } : {}), ...(p.bersaglioId ? { bersaglioScontro: p.bersaglioId } : {}) };
+  const v = { ...salvate, ...(p.soloBersaglio ? {} : { distanza: p.distanza, bersaglio: { ...(salvate.bersaglio ?? {}), copertura: p.copertura, distanza: p.distanza, ...(p.protetto ? { impegnato: true } : {}), ...(p.interposta ? { interposta: true } : {}) } }), ...(p.luceMappa ? { luceMappa: p.luceMappa } : {}), ...(p.bersaglioId ? { bersaglioScontro: p.bersaglioId } : {}) };
   queueMicrotask(() => {
     ctx.azioni.ricordaAttacco?.(a.uid, v);
     if (p.luce && p.luce !== ctx.sessione?.luce) ctx.azioni.imposta?.('luce', p.luce);
@@ -271,6 +271,8 @@ function corpoDistanza(ctx, a, intestazione) {
         { valore: 'media', etichetta: `Media ${numero(R.copertura.bersaglio.media)}` }, { valore: 'totale', etichetta: 'Totale' },
       ], d.bersaglio.copertura, (x) => b({ copertura: x })),
       interruttore('Impegnato in Ravvicinato, protetto da un alleato o con un ostaggio', d.bersaglio.impegnato, (x) => b({ impegnato: x }), { mod: `${numero(MD.impegnato)}${conTal(MD.talenti.impegnato)}` }),
+      // A.141 e A.144 (decisione 145): −2 una volta sola, senza seconda Prova
+      R.interposta ? interruttore('Creatura interposta sulla linea di tiro (una o più, non quella già contata come impegnato)', d.bersaglio.interposta, (x) => b({ interposta: x }), { mod: numero(R.interposta.va) }) : null,
       interruttore('Ignaro, immobilizzato o incapace di reagire', d.bersaglio.ignaro, (x) => b({ ignaro: x }), { mod: M.bruciapelo.nome.replace('Tiro a ', '') }),
       interruttore('Ti impegna in Ravvicinato', d.bersaglio.tiImpegna, (x) => b({ tiImpegna: x }), { mod: `${M.ravvicinato.nome.replace('Tiro ', '')} obbligatorio` }),
       analisi ? interruttore('Analisi Rapida (una volta)', d.analisiRapida, (x) => imposta({ analisiRapida: x }), { mod: segno(analisi.e.analisi_rapida.va) }) : null,

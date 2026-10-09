@@ -149,6 +149,16 @@ test('bersaglio impegnato: −4 e seconda Prova a −4; Fuoco di Precisione −2
   assert.deepEqual([c.va_finale, c.seconda_prova], [18, null]);
 });
 
+test('creatura interposta (A.144, decisione 145): −2 una volta sola, senza seconda Prova; si somma alla Copertura e all’impegnato', () => {
+  const r = attacca(pg(), arma(), { distanza: 5, bersaglio: { interposta: true } });
+  assert.equal(r.va_finale, 16);
+  assert.equal(r.seconda_prova, null);
+  const c = attacca(pg(), arma(), { distanza: 5, bersaglio: { interposta: true, copertura: 'leggera' } });
+  assert.equal(c.va_finale, 14, 'interposta −2 e Copertura Leggera −2: −4 (esempio di Davide)');
+  const i = attacca(pg(), arma(), { distanza: 5, bersaglio: { interposta: true, impegnato: true } });
+  assert.equal(i.va_finale, 12, 'un’altra creatura interposta si aggiunge all’impegnato');
+});
+
 test('movimento: proprio ed evasivo (§5.2), Movimento Tattico; Copertura propria e Copertura Tattica (§5.8)', () => {
   const s = attacca(pg(), arma(), { distanza: 5, movimento: 'scatto' });
   assert.deepEqual([s.va_finale, s.azioni_movimento], [12, 1]);

@@ -29,7 +29,9 @@ test('dati: le regole del manuale e le provvisorie A.140, A.141, A.142', () => {
   assert.match(RV._nota, /direzionale/);
   // 07/10, «dal centro»: cinque linee, sei livelli (0 nessuna, 1–2 Leggera, 3–4 Media, 5 Totale)
   assert.deepEqual(RV.copertura_linee, ['nessuna', 'leggera', 'leggera', 'media', 'media', 'totale']);
-  for (const [k, n] of [['token in mezzo', 141], ['raggio', 142]]) assert.match(RV[`TODO(Davide) ${k}`], new RegExp(`^A\\.${n}`));
+  for (const [k, n] of [['raggio', 142]]) assert.match(RV[`TODO(Davide) ${k}`], new RegExp(`^A\\.${n}`));
+  assert.equal(RV['TODO(Davide) token in mezzo'], undefined);
+  assert.match(RV._nota_token_in_mezzo, /A\.144/);
   assert.equal(RV['TODO(Davide) copertura'], undefined);
   assert.match(RV._nota_a140, /^A\.140/);
   const d = copia(dati);
@@ -194,22 +196,29 @@ test('diretta: la linea di tiro arriva ai giocatori solo fra token visibili; ver
   assert.ok(direttaPerGiocatori(linea(null, [12, 3]), s, dati.mappa.template).linea);
 });
 
-test('token in mezzo (07/10, A.141, A.144): dal manuale «bersaglio protetto» (§5.10), con «copertura» un ostacolo; causa nell’etichetta', async () => {
+test('token in mezzo: A.144 «creatura interposta» (decisione 145); i valori di prima «protetto» (§5.10) e «copertura» (ostacolo); causa nell’etichetta', async () => {
   const { lineaDiTiro, testoCopertura } = await import('../src/mappa/visuale.js');
   const s = { ...nuovaScena({ id: 't', nome: 'T', colonne: C, righe: R, dati }), revisione: 0 };
   const chi = tok('a', [2, 5]), bers = tok('b', [9, 5]), mezzo = tok('c', [5, 5]);
   s.token = [chi, bers, mezzo];
   const ost = ostacoliVista(s, RP);
-  // predefinito «protetto»: nessuna Copertura, il token è in mezzo e si propone il bersaglio protetto
-  assert.equal(RV.token_in_mezzo, 'protetto');
-  const p = lineaDiTiro(s, chi, bers, ost, RV);
-  assert.deepEqual([p.copertura, p.protetto, p.inMezzo.map((t) => t.id)], ['nessuna', true, ['c']]);
+  // predefinito «interposta» (A.144): nessuna Copertura, il token è in mezzo e si propone la creatura interposta (−2)
+  assert.equal(RV.token_in_mezzo, 'interposta');
+  const i = lineaDiTiro(s, chi, bers, ost, RV);
+  assert.deepEqual([i.copertura, i.interposta, i.protetto, i.inMezzo.map((t) => t.id)], ['nessuna', true, false, ['c']]);
+  // due creature in mezzo: sempre una sola proposta (il −2 vale una volta)
+  const due = { ...s, token: [...s.token, tok('d', [7, 5])] };
+  const i2 = lineaDiTiro(due, chi, bers, ostacoliVista(due, RP), RV);
+  assert.deepEqual([i2.interposta, i2.inMezzo.length], [true, 2]);
   // un token a 0 PV o A Terra non conta (contaToken)
-  assert.equal(lineaDiTiro(s, chi, bers, ost, RV, { contaToken: (t) => t.id !== 'c' }).protetto, false);
+  assert.equal(lineaDiTiro(s, chi, bers, ost, RV, { contaToken: (t) => t.id !== 'c' }).interposta, false);
+  // il valore di prima «protetto»: si proponeva il bersaglio protetto del §5.10
+  const p = lineaDiTiro(s, chi, bers, ost, { ...RV, token_in_mezzo: 'protetto' });
+  assert.deepEqual([p.copertura, p.protetto, p.interposta], ['nessuna', true, false]);
   // «copertura»: il token blocca le cinque linee (sulla stessa riga, dal centro: Totale), causa «1 token»
   const RC = { ...RV, token_in_mezzo: 'copertura' };
   const c = lineaDiTiro(s, chi, bers, ost, RC);
-  assert.deepEqual([c.copertura, c.protetto, c.causa.muro, c.causa.token.map((t) => t.id)], ['totale', false, 0, ['c']]);
+  assert.deepEqual([c.copertura, c.protetto, c.interposta, c.causa.muro, c.causa.token.map((t) => t.id)], ['totale', false, false, 0, ['c']]);
   assert.equal(testoCopertura(c), 'Copertura Totale (1 token)');
   // muro e token insieme: «muro + 1 token»; il token più in basso copre solo una parte
   s.muri = inBase64(rettangolo(nuovaMaschera(C, R), C, R, 6, 2, 6, 4, true));

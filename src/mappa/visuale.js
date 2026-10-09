@@ -10,12 +10,12 @@
 //     che attraversano un Q ostacolo (sfiorarne il bordo non conta); il numero di linee bloccate (0–5) dà il livello
 //     (visuale.copertura_linee). Chi tira con un ingombro grande (2 × 2, 3 × 3, veicoli) parte dal centro del suo Q più
 //     favorevole (quello con meno linee bloccate): come sporgersi dal proprio spazio;
-//   - i token in mezzo (07/10, A.141 e A.144): per il Giocatore §5.10 «Sparare contro un nemico impegnato in
-//     Ravvicinato, protetto da un alleato o che usa un ostaggio impone −4 VA» con la seconda Prova per il bersaglio
-//     secondario; il §5.8 parla di ostacoli. Con visuale.token_in_mezzo «protetto» (predefinito, dal manuale) un token
-//     attraversato dalla linea fra i centri propone il «bersaglio impegnato o protetto» in «Attacca!», senza Copertura;
-//     con «copertura» (proposta di Marcello del 07/10) i token contano come ostacoli nelle cinque linee, con la stessa
-//     tabella. Non contano i token a 0 PV o A Terra (sotto la linea) e, per i giocatori, quelli nascosti (contaToken);
+//   - i token in mezzo: A.141 e A.144 (decisione 145, risposta di Davide dell'08/10): con visuale.token_in_mezzo
+//     «interposta» (predefinito) un token attraversato dalla linea fra i centri propone in «Attacca!» la «Creatura
+//     interposta», −2 una sola volta, senza seconda Prova e senza Copertura; il bersaglio ingaggiato (§5.10, −4 e
+//     seconda Prova) resta un interruttore a mano. Valori di prima, lasciati come dati: «protetto» (§5.10 per ogni token
+//     in mezzo) e «copertura» (i token come ostacoli nelle cinque linee). Non contano i token a 0 PV o A Terra (sotto la
+//     linea) e, per i giocatori, quelli nascosti (contaToken);
 //   - distanza fra gli ingombri con la diagonale da 1 Q;
 //   - visuale dei PG (nebbia automatica, motore a parte ma stesso punto di partenza): raggi dal centro del Q del PG
 //     (di ogni Q, per un ingombro grande) verso il centro di ogni Q entro il raggio, attraversando la griglia
@@ -124,7 +124,8 @@ function unione(a, b) { const m = new Uint8Array(a.length); for (let i = 0; i < 
  *   volo: data/mappa.json → volo.linea_di_tiro (08/10): da o verso un token in volo niente token in mezzo e niente
  *   Copertura Leggera o Media; un muro pieno blocca comunque (A.148)
  * @returns { distanza, copertura, bloccate, linee, origine, vista, inMezzo: [token], causa: { muro, token: [token] },
- *   protetto: vero se si propone il «bersaglio impegnato o protetto» (§5.10) }
+ *   interposta: vero se si propone la «Creatura interposta» (A.144, −2), protetto: vero se si propone il «bersaglio
+ *   impegnato o protetto» (§5.10, solo con token_in_mezzo «protetto») }
  */
 export function lineaDiTiro(scena, da, verso, ost, regole, { contaToken = () => true, volo = null } = {}) {
   const a = verso.q ? verso : { id: null, q: verso, ingombro: 1 };
@@ -151,7 +152,8 @@ export function lineaDiTiro(scena, da, verso, ost, regole, { contaToken = () => 
     vista: cop.livello === 'totale' ? 'bloccata' : cop.livello === 'nessuna' ? 'libera' : 'parziale',
     inMezzo,
     causa: { muro, token: [...tokCausa] },
-    protetto: !comeOstacolo && inMezzo.length > 0,
+    interposta: regole.token_in_mezzo === 'interposta' && inMezzo.length > 0,
+    protetto: regole.token_in_mezzo === 'protetto' && inMezzo.length > 0,
     ...(inAria ? { inVolo: true } : {}),
   };
 }

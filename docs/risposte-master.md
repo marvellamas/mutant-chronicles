@@ -1193,7 +1193,7 @@ Fonte: E&L dell'08/10/2026, 21:10 UTC, blocco «Aggiornamento cumulativo — ris
     Prova). Una creatura che interferisce con la linea di tiro dà solo −2, cumulabile con le altre penalità, una volta
     sola qualunque sia il numero, senza seconda Prova; la creatura già contata nell'ingaggio non aggiunge il −2, un'altra
     sì. Ostaggi invariati. **Cambia** il provvisorio della mappa («bersaglio protetto», −4 e seconda Prova, per ogni
-    token in mezzo) e la proposta di Marcello del 07/10 (i token come ostacoli della Copertura). **Lotto mappa.**
+    token in mezzo) e la proposta di Marcello del 07/10 (i token come ostacoli della Copertura). **Applicata** il 09/10: `data/mappa.json` → visuale.token_in_mezzo «interposta», via il `TODO(Davide)`; `regole.json` → attacco_distanza.interposta (−2); «Creatura interposta» in «Attacca!» (proposta dalla linea di tiro della mappa e del tablet); «impegnato» resta a mano.
 146. **Illuminazione e visibilità ordinaria** (A.142). Piena luce: nessun limite fisso in Q; Penombra 10 Q; Luce scarsa
     5 Q; Buio completo nessun Q (resta visibile la propria pedina, nessun Q adiacente). Conta la luce della zona
     osservata. **Cambia** il provvisorio (30 / 6 / 3 / 1, decisione 138). **Lotto mappa.**
