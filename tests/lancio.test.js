@@ -61,6 +61,18 @@ test('livello 6 con Anticipazione: 12 PM, Potere −2; con Architetto Arcano 0 (
   assert.deepEqual([m.va_potere_finale, m.pm_costo, m.prova_richiesta], [10, 6, true]);
 });
 
+test('A.109, regola comune: un solo aspetto, PM base ×2, Prova obbligatoria e più difficile di una categoria (anche dove sarebbe automatica)', () => {
+  assert.match(dati.regole.lancio.anticipazione.decisione, /^A\.109/);
+  // livello 3: senza Anticipazione automatico; con Anticipazione Prova obbligatoria, colonna «Prova necessaria, 0»
+  const senza = lancia(pg(), 'Irrobustire', { versione: 3 });
+  const con = lancia(pg(), 'Irrobustire', { versione: 3, anticipazione: 0 });
+  assert.equal(senza.prova_richiesta, false);
+  assert.deepEqual([con.prova_richiesta, con.pm_costo, con.va_potere_finale], [true, 6, 10]);
+  // livello 9: Taumaturgo −2 → −4; senza Taumaturgo colonna «altri» dell'Anticipazione (−4) con l'ulteriore −2 della A.39.1: −6
+  assert.equal(lancia(pg(), 'Irrobustire', { versione: 9, anticipazione: 0 }).va_potere_finale, 6);
+  assert.equal(lancia(pg({ scala: 'altri_utilizzatori' }), 'Irrobustire', { versione: 9, anticipazione: 0 }).va_potere_finale, 4);
+});
+
 test('Usufruitore di Magia, livello 2: Prova richiesta, scala «altri utilizzatori»', () => {
   const r = lancia(pg({ scala: 'altri_utilizzatori', max: 3 }), 'Irrobustire', { versione: 2 });
   assert.equal(r.prova_richiesta, true);
