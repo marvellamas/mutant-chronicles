@@ -1047,11 +1047,19 @@ Fonte: E&L del 06/10/2026, 17:23 UTC, blocco «Risposte approvate — regole tec
     senz'armi con 1 AzP); Incendiato spento con 1 AzP e Riflessi o senza Prova con un mezzo adeguato; Sanguinamento con
     la procedura di Medicina in 10 Round e gli esiti per kit; Stordito con PS Volontà e Prova di Potere subito per
     Concentrazione e Focalizzazione; Svenuto a 0 PM fino a 1 PM; Terrorizzato terminato da Oratoria di un alleato
-    adiacente. Nessun valore numerico già nei dati cambia. **Da implementare** (lotto R5: testi e promemoria).
+    adiacente. Nessun valore numerico già nei dati cambia. **Applicata** il 09/10 (lotto R5): `regole.json` → `stati.elenco[].sintesi`
+    (testo approvato, per paragrafi, nel tooltip della SD) e promemoria rifatti sulle sintesi; allineati A Terra (striscia
+    3 Q: `movimento.passo_q` 3; a distanza −2 a chi lo attacca: `attacco_distanza.a_terra`, casella «Bersaglio A Terra»),
+    Svenuto (cade A Terra: `implica`), Accecato (niente penalità di luce in più, il −8 anche alle Abilità con «Richiede la
+    vista»), durate scritte come nelle sintesi. Gli Stati dei nemici entrano nel VA dei loro attacchi e nelle loro Difese
+    (`src/nemico-attacco.js` → `conStatiNemico`, `difeseNemico`); il bersaglio A Terra si propone da solo. Cumulo A Terra e
+    Copertura a distanza: domanda A.153.
 127. **Ammalato** (A.119). Sei intensità selezionabili con penalità −1, −2, −4, −6, −8, −10 a tutte le Prove di Abilità,
     compresi attacchi e Difese, non alle Prove Salvezza; si mostra «Ammalato 3 — penalità −4»; cambiare intensità
     sostituisce la penalità; niente durata generica 1+1d3; contagio, incubazione, durata e cure nel futuro Manuale del
-    Direttore. **Da implementare** (lotto R5); `TODO(Davide)` A.119 riscritto con la risposta.
+    Direttore. **Applicata** il 09/10 (lotto R5): `regole.json` → `stati` (Ammalato con `intensita`, via il `TODO(Davide)`),
+    `src/condizioni.js` → `intensitaStato`, sessione `intensitaStati`, menu dell'intensità nella SD e nella plancia
+    (`src/scontro.js` → `cambiaIntensitaNemico`), penalità anche negli attacchi e nelle Difese dei nemici.
 128. **Priorità delle funzioni della mappa** (A.122). Indispensabili: immagine e griglia in Q; pedine con dimensioni e
     rotazione; Iniziativa e turno; misura di distanze e movimento; muri e porte; nebbia ed esplorazione; luci e linea di
     vista; template delle aree. Aggiuntive: mappe video (sfondi animati, senza effetti di regola) e costruttore di
@@ -1274,6 +1282,12 @@ Fonte: E&L dell'08/10/2026, 21:10 UTC, blocco «Aggiornamento cumulativo — ris
     ha l'accesso senza essere Taumaturgo. **Rinviate:** A.113, A.115, parte dei veicoli di A.125,
     A.126, A.133, A.145–A.147, la tabella per tipo e altezza degli ostacoli di A.140; malattie e cure al Manuale del
     Direttore. I loro `TODO(Davide)` restano.
+
+**Nuova** (09/10/2026, lotto Stati):
+
+- **A.153 — A Terra e Copertura a distanza** (sintesi A Terra del 05/10). Chi attacca a distanza un personaggio A Terra
+  subisce −2 VA. Se il bersaglio è anche in Copertura (−2 Leggera, −4 Media), le due penalità si sommano? La sintesi non lo
+  dice. Provvisorio: si sommano, come due modificatori distinti (`regole.json` → `attacco_distanza.a_terra`, `TODO(Davide)`).
 
 **Nuova** (09/10/2026):
 
