@@ -5,15 +5,24 @@ Quando aggiorni Mutant (aggiorna.bat) o lo avvii con avvia-server.bat, a Marcell
 telefono un avviso con il nome di questo PC e la versione dell'app: serve a sapere se stai provando
 l'ultima. Non parte nient'altro: nessun personaggio, nessuna scena, nessuno scontro.
 
-- avvisi.json: la configurazione di questo PC. aggiorna.bat la crea da avvisi.esempio.json se manca.
+- avvisi.json: la configurazione di questo PC. Si imposta da Mutant.bat, voce 6 «Impostazioni»
+  (avvisi accesi o spenti, argomento ntfy del gruppo, nome di questo PC nelle notifiche, per esempio
+  «PC di Davide»), con «Manda una notifica di prova». aggiorna.bat la crea da avvisi.esempio.json se
+  manca e non la sovrascrive mai. Le chiavi:
     "attivo": true      avvisi accesi
     "attivo": false     avvisi spenti (non parte nulla)
-    "ntfy_argomento"    il canale su ntfy.sh a cui Marcello e' iscritto: non cambiarlo
+    "ntfy_argomento"    il canale su ntfy.sh a cui e' iscritto chi riceve: quello del gruppo
+    "nome_pc"           il nome di questo PC nelle notifiche (se manca, il nome di Windows)
+- registro.txt: una riga per ogni invio non riuscito (avvisi, notifica «Sessione salvata», copia su
+  Google Drive) con il motivo. All'apertura, Mutant.bat dice se ce ne sono di nuovi. Si puo' cancellare.
+- Chi riceve gli avvisi installa l'app ntfy sul telefono e si iscrive all'argomento; sul PC che li
+  manda non serve installare nulla.
 - stato.json: quando e' partito l'ultimo avviso di avvio (al massimo uno ogni 6 ore) e di
   «Mappa aperta» (al massimo uno al giorno). Si puo' cancellare.
 - Eccezione voluta (08/10): il salvataggio della sessione («Salva sessione», «Spegni Mutant»,
   salva-sessione.bat) manda sullo stesso canale la notifica «Sessione salvata» con allegati i dati
   di gioco (personaggi, scontri, scene...; non le immagini delle mappe). Si spegne con "ntfy": false
   in config-salvataggi.json. L'allegato resta scaricabile su ntfy.sh per qualche ora.
-- Senza rete o se l'invio non riesce, Mutant funziona lo stesso: l'avviso semplicemente non parte.
+- Senza rete o se l'invio non riesce, Mutant funziona lo stesso: l'avviso non parte e il motivo va in
+  registro.txt.
 - avvisi.json e stato.json non vanno su GitHub (.gitignore).

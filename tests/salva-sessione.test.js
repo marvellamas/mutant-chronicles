@@ -291,7 +291,7 @@ test('configurazione: minuti dell’autosave, cartella di Drive, argomento ntfy;
   assert.equal(cartellaDrive({ copia_in: 'G:/Drive' }), 'G:/Drive');
   assert.equal(cartellaDrive({ cartella_drive: 'G:/Il mio Drive/Mutant', copia_in: 'X:/' }), 'G:/Il mio Drive/Mutant');
   const avvisi = { attivo: true, ntfy_argomento: 'mutant-bwx2nydllq122yww' };
-  assert.deepEqual(confNtfy({}, avvisi), { argomento: 'mutant-bwx2nydllq122yww', server: 'https://ntfy.sh' });
+  assert.deepEqual(confNtfy({}, avvisi), { argomento: 'mutant-bwx2nydllq122yww', server: 'https://ntfy.sh', nomePc: null });
   assert.equal(confNtfy({ ntfy: false }, avvisi), null);
   assert.equal(confNtfy({}, { attivo: false, ntfy_argomento: 'mutant-bwx2nydllq122yww' }), null);
   assert.equal(confNtfy({}, null), null);

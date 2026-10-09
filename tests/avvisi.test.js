@@ -23,7 +23,7 @@ test('configurazione: assente, spenta, rovinata o con un argomento corto: nessun
   assert.equal(configurazione({ attivo: 'sì', ntfy_argomento: 'mutant-abcdefghijklmnop' }), null);
   assert.equal(configurazione({ attivo: true, ntfy_argomento: 'corto' }), null);
   assert.equal(configurazione({ attivo: true, ntfy_argomento: 'mutant-ABC/../x' }), null);
-  assert.deepEqual(configurazione({ attivo: true, ntfy_argomento: 'mutant-abcdefghijklmnop' }), { argomento: 'mutant-abcdefghijklmnop', server: 'https://ntfy.sh' });
+  assert.deepEqual(configurazione({ attivo: true, ntfy_argomento: 'mutant-abcdefghijklmnop' }), { argomento: 'mutant-abcdefghijklmnop', server: 'https://ntfy.sh', nomePc: null });
   // l'esempio tracciato è valido e acceso (aggiorna.bat lo copia in avvisi.json se manca)
   const esempio = JSON.parse(readFileSync(new URL('../avvisi/avvisi.esempio.json', import.meta.url), 'utf8'));
   assert.match(esempio.ntfy_argomento, /^mutant-[a-z0-9]{16}$/);

@@ -104,7 +104,7 @@ import { createHash } from 'node:crypto';
 import { createInterface } from 'node:readline/promises';
 import { chiOccupa, testoDomanda, risposteSi, fermaMutant, sorvegliaFinestra } from './src/porta-occupata.js';
 import { indirizziRete, testoAvvio } from './src/rete.js';
-import { avvisa } from './tools/avvisi.mjs';
+import { avvisa, registraErrore } from './tools/avvisi.mjs';
 import { creaGestore, leggiConfig } from './tools/salva-sessione.mjs';
 import { bordoToken } from './src/mappa/colori.js';
 import { validaScontro, rigaOpportunita, diTurno } from './src/scontro.js';
@@ -1316,6 +1316,8 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
     autosave: dirAutosave,
     config: () => { try { return leggiConfig(fileConfig); } catch (e) { console.log(`Attenzione: ${e.message}`); return {}; } },
     avvisi: () => { if (senzaAvvisi) return null; try { return JSON.parse(readFileSync(join(RADICE, 'avvisi', 'avvisi.json'), 'utf8')); } catch { return null; } },
+    // backup su Drive o notifica non riusciti: nel registro (avvisi/registro.txt) che la console mostra all'avvio
+    registra: (x) => registraErrore(baseSalvataggi, x),
   });
   const minuti = gestore.minuti();
   // autosave ogni N minuti, solo se qualcosa è cambiato; resta sul PC

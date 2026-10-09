@@ -28,7 +28,7 @@ import { hostname } from 'node:os';
 import { createHash } from 'node:crypto';
 import { deflateRawSync, inflateRawSync, crc32 } from 'node:zlib';
 import { execFile } from 'node:child_process';
-import { configurazione as confAvvisi, dataOra } from './avvisi.mjs';
+import { configurazione as confAvvisi, dataOra, registraErrore } from './avvisi.mjs';
 
 export const CARTELLE = ['personaggi', 'veicoli', 'scontri', 'nemici', 'tavolo', 'scene', 'mappe'];
 /** Lo zip «dati» per la rete: tutto tranne le immagini delle mappe (pochi KB). */
@@ -284,7 +284,7 @@ export function rigaEsito(e) {
  * github, messaggi, riga } con drive/ntfy/github = { stato: 'ok' | 'errore' | 'spento', messaggio }.
  * @param veloce chiusura della finestra (Windows concede pochi secondi): ntfy con un tempo breve, GitHub saltato
  */
-export async function salvataggioCompleto({ cartelle, salvataggi, config = {}, avvisi = null, origine = 'a mano', adesso = new Date(), pc = hostname(), veloce = false, fetchFn = fetch, improntaPrecedente = null } = {}) {
+export async function salvataggioCompleto({ cartelle, salvataggi, config = {}, avvisi = null, origine = 'a mano', adesso = new Date(), pc = hostname(), veloce = false, fetchFn = fetch, improntaPrecedente = null, registra = null } = {}) {
   const messaggi = [];
   let lista, archivio, nome, pieno, dati, impronta;
   try {
@@ -321,6 +321,8 @@ export async function salvataggioCompleto({ cartelle, salvataggi, config = {}, a
     }
   }
   messaggi.push(drive.messaggio);
+  // registro degli invii non riusciti (avvisi/registro.txt, 09/10): la console lo mostra all'avvio
+  if (drive.stato === 'errore') registra?.({ tipo: 'backup su Drive', testo: `salvataggio ${nome} (${origine})`, errore: drive.messaggio });
 
   // ntfy: notifica a Marcello con lo zip «dati» (senza immagini), se sta nel limite del servizio
   let ntfy;
@@ -330,7 +332,7 @@ export async function salvataggioCompleto({ cartelle, salvataggi, config = {}, a
     const massimo = (Number(config.ntfy_allegato_max_mb) > 0 ? Number(config.ntfy_allegato_max_mb) : PREDEFINITI.ntfy_allegato_max_mb) * 1024 * 1024;
     const conAllegato = dati.length <= massimo;
     const nomeDati = nome.replace(/\.zip$/, '_dati.zip');
-    const testo = `${pc}, ${dataOra(adesso)} (${origine}): zip ${dimensione(pieno.length)}, dati ${dimensione(dati.length)}; Drive ${drive.stato === 'ok' ? '✓' : drive.stato === 'errore' ? '✗ (errore)' : 'non impostato'}.${conAllegato ? ' In allegato i dati (senza le immagini delle mappe).' : ' Dati troppo grandi per l’allegato.'}`;
+    const testo = `${cNtfy.nomePc ?? pc}, ${dataOra(adesso)} (${origine}): zip ${dimensione(pieno.length)}, dati ${dimensione(dati.length)}; Drive ${drive.stato === 'ok' ? '✓' : drive.stato === 'errore' ? '✗ (errore)' : 'non impostato'}.${conAllegato ? ' In allegato i dati (senza le immagini delle mappe).' : ' Dati troppo grandi per l’allegato.'}`;
     const opz = { timeoutMs: veloce ? 3000 : 20000, fetchFn };
     let r = await inviaNtfy(cNtfy, { titolo: 'Mutant: sessione salvata', testo, allegato: conAllegato ? dati : null, nomeFile: nomeDati }, opz);
     // allegato rifiutato (limite o quota del servizio, risposte 4xx): almeno la notifica, senza allegato
@@ -343,6 +345,7 @@ export async function salvataggioCompleto({ cartelle, salvataggi, config = {}, a
       : { stato: 'errore', messaggio: `Notifica ntfy non inviata: ${r.errore}. Lo zip è comunque in ${salvataggi}.` };
   }
   messaggi.push(ntfy.messaggio);
+  if (ntfy.stato === 'errore') registra?.({ tipo: 'notifica «Sessione salvata»', testo: `salvataggio ${nome} (${origine})`, errore: ntfy.messaggio });
 
   // GitHub (facoltativo, 06/10): non alla chiusura della finestra, che non dà il tempo
   let github;
@@ -365,13 +368,13 @@ export async function salvataggioCompleto({ cartelle, salvataggi, config = {}, a
  * Mutant» e la chiusura della finestra: la stessa procedura di salva-sessione.bat (salvataggioCompleto).
  * @param config, avvisi funzioni che rileggono la configurazione a ogni salvataggio (si cambia senza riavviare)
  */
-export function creaGestore({ cartelle, salvataggi, autosave: dirAutosave, config = () => ({}), avvisi = () => null, log = console.log, fetchFn = fetch }) {
+export function creaGestore({ cartelle, salvataggi, autosave: dirAutosave, config = () => ({}), avvisi = () => null, log = console.log, fetchFn = fetch, registra = null }) {
   const ora = () => new Date().toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });
   let coda = Promise.resolve();
   let ultimo = null; // { quando, riga, impronta }
   let inAutosave = false;
   const salva = (origine, { seCambiato = false, veloce = false } = {}) => (coda = coda.then(async () => {
-    const e = await salvataggioCompleto({ cartelle, salvataggi, config: config(), avvisi: avvisi(), origine, veloce, fetchFn, improntaPrecedente: seCambiato ? ultimo?.impronta : null });
+    const e = await salvataggioCompleto({ cartelle, salvataggi, config: config(), avvisi: avvisi(), origine, veloce, fetchFn, improntaPrecedente: seCambiato ? ultimo?.impronta : null, registra });
     log(perConsole(`[${ora()}] ${e.riga}`));
     for (const m of [e.drive, e.ntfy, e.github]) if (m?.stato === 'errore') log(`  ${m.messaggio}`);
     if (e.ok && !e.saltato) ultimo = { quando: new Date().toISOString(), riga: e.riga, impronta: e.impronta };
@@ -416,7 +419,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const radice = arg('radice') ?? RADICE;
   try {
     const imp = impostazioniDi(radice, arg('config') ? { config: arg('config') } : {});
-    const r = await salvataggioCompleto({ ...imp, origine: 'salva-sessione.bat' });
+    const r = await salvataggioCompleto({ ...imp, origine: 'salva-sessione.bat', registra: (x) => registraErrore(radice, x) });
     console.log(` ${perConsole(r.riga)}`);
     console.log('');
     for (const m of r.messaggi) console.log(` ${m}`);

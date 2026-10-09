@@ -72,3 +72,4 @@ musica/*
 # Avvisi a Marcello con ntfy.sh (tools/avvisi.mjs): configurazione e stato di ogni PC; si tracciano LEGGIMI ed esempio
 avvisi/avvisi.json
 avvisi/stato.json
+avvisi/registro.txt
