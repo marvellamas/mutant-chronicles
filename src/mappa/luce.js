@@ -84,7 +84,7 @@ export function raggiScoperta(scena, dati, mappa = luceQ(scena, dati)) {
   const { colonne: C } = scena.griglia;
   const cat = dati.mappa.luci.categorie;
   const raggi = cat.map((id) => dati.mappa.luci.raggio_scoperta_q[id] ?? Infinity);
-  return { raggio: (x, y) => raggi[mappa[y * C + x]], massimo: Math.max(...raggi) };
+  return { raggio: (x, y) => raggi[mappa[y * C + x]], massimo: Math.max(...raggi), categoria: (x, y) => cat[mappa[y * C + x]] };
 }
 
 // ── Zone a pennello (come il terreno difficile): una maschera per categoria, «gomma» le toglie tutte ──
@@ -158,6 +158,19 @@ export function erroreLuce(luce, dati, mascheraValida) {
       if (!mascheraValida(z)) return `zone.${id}: maschera della griglia`;
     }
   }
+  return null;
+}
+
+/**
+ * Sensi speciali accesi su un token (A.143, decisione 147; data/mappa.json → luci.sensi): [{ id, portata_q, luci }].
+ */
+export const sensiToken = (t, dati) => (Array.isArray(t?.sensi) ? (dati.mappa.luci.sensi ?? []).filter((s) => t.sensi.includes(s.id)) : []);
+
+/** Errore dei sensi di un token (null se va bene): elenco di id di luci.sensi, senza ripetizioni. */
+export function erroreSensiToken(v, dati) {
+  if (v === undefined) return null;
+  const ids = (dati.mappa.luci.sensi ?? []).map((s) => s.id);
+  if (!Array.isArray(v) || !v.length || !v.every((x) => ids.includes(x)) || new Set(v).size !== v.length) return `sensi: elenco di ${ids.join(', ')} (senza ripetizioni)`;
   return null;
 }
 

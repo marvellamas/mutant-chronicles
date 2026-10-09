@@ -32,7 +32,7 @@ import { tokenDentro } from './token.js';
 import { erroreTemplate } from './template.js';
 import { errorePorta } from './porte.js';
 import { erroreIniziale } from './iniziale.js';
-import { erroreLuce, erroreLuceToken } from './luce.js';
+import { erroreLuce, erroreLuceToken, erroreSensiToken } from './luce.js';
 import { erroreBordo } from './veicoli-mappa.js';
 import { erroreVolo } from './volo.js';
 
@@ -188,6 +188,8 @@ export function validaScena(s, dati) {
     if (!isQ(t.q) || !tokenDentro(t, colonne, righe)) return `${k}.q: il token deve stare tutto dentro la griglia`;
     if (typeof t.nascosto !== 'boolean') return `${k}.nascosto: vero o falso`;
     { const e = erroreLuceToken(t.luce, dati); if (e) return `${k}.${e}`; }
+    // A.143: sensi speciali accesi dal master (visione notturna, termica, Vista Felina)
+    { const e = erroreSensiToken(t.sensi, dati); if (e) return `${k}.${e}`; }
     // veicoli (fase 2, lotto 5): muso e chi è a bordo; un partecipante a bordo non ha anche un token in mappa
     { const e = erroreBordo(t, D); if (e) return `${k}.${e}`; }
     // 08/10: token in volo (src/mappa/volo.js)

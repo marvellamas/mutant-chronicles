@@ -1200,7 +1200,7 @@ Fonte: E&L dell'08/10/2026, 21:10 UTC, blocco «Aggiornamento cumulativo — ris
 147. **Sensi speciali** (A.143). Visione notturna 80 Q (penombra e luce scarsa, non al buio); visione termica 40 Q (anche
     al buio naturale, solo contrasto termico); Vista Felina 20 Q nel buio naturale (forme, non colori). Quando attivi
     rivelano la mappa entro la portata; pareti e porte chiuse li bloccano; non accorciano la vista in piena luce.
-    **Cambia** il provvisorio (la nebbia usa solo la luce). **Lotto mappa.**
+    **Cambia** il provvisorio (la nebbia usa solo la luce). **Applicata** il 09/10: `data/mappa.json` → luci.sensi (portata e luci di ogni senso), via il `TODO(Davide)`; il master li accende sul token del PG («Sensi speciali…» nel menu del token, campo `sensi`); `src/mappa/visuale.js` allarga la nebbia automatica per quel token.
 148. **Volo e Copertura** (A.148). La Copertura dipende dalla traiettoria reale (quote e altezza degli ostacoli);
     Leggera, Media e Totale valgono anche in volo quando proteggono davvero; una creatura interposta dà −2 solo se
     interferisce davvero; il volo da solo non dà un −2 universale. Finché non ci sono le altezze il Direttore conferma o

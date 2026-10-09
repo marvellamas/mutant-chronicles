@@ -1579,6 +1579,25 @@ export function renderMappa(radice, ctx) {
     avviso(scelta > 0 ? `${nome} porta una luce: ${scelta} Q attorno a sé.` : `${nome}: luce spenta.`, { chiave: 'luce' });
     disegnaPannelloLuci();
   }
+  /** «Sensi speciali…» dal menu del token di un PG (A.143, decisione 147; data/mappa.json → luci.sensi): accesi o spenti. */
+  async function sensiTokenUi(tok) {
+    const LU = ctx.dati.mappa.luci;
+    const nome = pezzoDi(tok)?.nome ?? tok.nome ?? tok.id;
+    const accesi = new Set(tok.sensi ?? []);
+    const scelta = await apriFinestrella('scegli-sensi', `Sensi speciali di ${nome}`, (fine) => [
+      h('p', { class: 'nota' }, 'Accendi i sensi attivi adesso (impianti, Tecnica Vista Felina): con la nebbia automatica aprono la mappa entro la loro portata, nelle luci in cui funzionano; muri e porte chiuse li fermano. Costo e durata seguono la scheda.'),
+      h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Sensi' },
+        (LU.sensi ?? []).map((x) => h('label', { class: 'interruttore-senso', title: x.nota ?? '' }, h('input', { type: 'checkbox', checked: accesi.has(x.id), onchange: (e) => { if (e.target.checked) accesi.add(x.id); else accesi.delete(x.id); } }), ` ${x.nome} · ${x.portata_q} Q`))),
+      h('div', { class: 'riga-azioni finestrella-azioni' },
+        h('button', { type: 'button', class: 'btn', onclick: () => fine(null) }, 'Annulla'),
+        h('button', { type: 'button', class: 'btn primario', onclick: () => fine([...accesi]) }, 'Applica')),
+    ]);
+    if (!scelta) return;
+    const ordine = (LU.sensi ?? []).map((x) => x.id).filter((id) => scelta.includes(id));
+    cambiaToken(tok.id, (x) => { const { sensi: _, ...senza } = x; return ordine.length ? { ...senza, sensi: ordine } : senza; });
+    avviso(ordine.length ? `${nome}: ${ordine.map((id) => LU.sensi.find((s) => s.id === id).nome).join(', ')}.` : `${nome}: nessun senso speciale.`, { chiave: 'sensi' });
+    aggiornaVisuale();
+  }
   function dopoStrumento() {
     if (disegnoAttivo() && st.strumento === 'calibra') impostaStrumento('sposta');
     el.riquadro.classList.toggle('nebbia', !!disegnoAttivo());
@@ -2909,6 +2928,8 @@ export function renderMappa(radice, ctx) {
       colore_bordo: () => (pz ? { testo: 'Colore del bordo…', azione: () => coloreBordo(tok.id) } : null),
       selezione_token: () => ({ testo: st.gruppo.has(tok.id) ? 'Togli dalla selezione' : 'Aggiungi alla selezione', tasto: 'Maiusc+clic', titolo: 'Selezione multipla: trascinando uno dei selezionati si spostano tutti, liberi e in formazione', azione: () => cambiaGruppo(alternaSelezione(!st.gruppo.size && st.selezionato && st.selezionato !== tok.id ? new Set([st.selezionato]) : st.gruppo, tok.id)) }),
       luce_token: () => ({ testo: tok.luce ? `Luce portata: ${tok.luce} Q…` : 'Porta una luce…', titolo: 'Torcia, lanterna…: la zona attorno al token diventa Luce e lo segue', azione: () => luceToken(tok) }),
+      // A.143: i sensi speciali del PG (visione notturna, termica, Vista Felina) allargano la nebbia automatica
+      sensi_token: () => (pg ? { testo: tok.sensi?.length ? `Sensi speciali: ${tok.sensi.length}…` : 'Sensi speciali…', titolo: 'Visione notturna, termica, Vista Felina: quando sono attivi aprono la nebbia automatica entro la loro portata (A.143)', azione: () => sensiTokenUi(tok) } : null),
       togli_token: () => ({ testo: 'Togli dalla mappa…', pericolo: true, titolo: 'Con conferma; resta nello scontro', azione: async () => {
         if (await chiedi({ titolo: `Togliere ${nome} dalla mappa?`, testo: 'Resta nello scontro: lo rimetti dai «senza token» del gruppo «Mappa». Ctrl+Z lo riporta qui.', si: 'Togli', pericolo: true })) togliToken(tok.id);
       } }),

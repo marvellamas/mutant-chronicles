@@ -455,7 +455,7 @@
         { "titolo": "Scheda", "voci": ["mini_scheda", "scheda_completa"] },
         { "titolo": "Selezione", "voci": ["selezione_token"] }
       ],
-      "opzioni": ["nascondi", "luce_token", "colore_bordo", "togli_token"]
+      "opzioni": ["nascondi", "luce_token", "sensi_token", "colore_bordo", "togli_token"]
     },
     "porta": {
       "gruppi": [
@@ -482,7 +482,12 @@
     "predefinita": "sufficiente",
     "raggio_scoperta_q": { "sufficiente": null, "penombra": 10, "scarsa": 5, "buio": 0 },
     "_nota_scoperta": "Nebbia automatica: un Q si scopre se il PG lo vede (muri e porte chiuse lo fermano) entro il raggio della luce di quel Q, non di quello del PG. A.142 (risposta di Davide dell’08/10/2026, decisione 146): piena luce nessun limite fisso (null: tutta la griglia), Penombra 10 Q, Luce scarsa 5 Q, Buio completo 0 (resta visibile la propria pedina, senza i Q adiacenti). Conta la luce della zona osservata: dal buio si vede una stanza illuminata oltre un corridoio oscuro, senza vedere il corridoio. Una luce portata rende Luce la zona attorno a sé, quindi si vede fin dove arriva. I sensi speciali seguono A.143 (sensi).",
-    "TODO(Davide) visione": "A.143: la visione notturna e le capacità simili (Visione notturna 80 Q, termica 40 Q, Vista Felina 20 Q: regole.json → illuminazione.visione) devono allargare la nebbia automatica della mappa per il PG che le ha (per esempio Penombra e Luce scarsa come Luce entro la portata)? Provvisorio: no, la nebbia usa solo la luce della zona; le penalità nell'attacco restano quelle della scheda.",
+    "sensi": [
+      { "id": "notturna", "nome": "Visione notturna", "portata_q": 80, "luci": ["penombra", "scarsa"], "nota": "in penombra e luce scarsa; richiede luce residua, non funziona nel buio completo" },
+      { "id": "termica", "nome": "Visione termica", "portata_q": 40, "luci": ["sufficiente", "penombra", "scarsa", "buio"], "nota": "anche nel buio naturale; distingue solo bersagli e superfici con contrasto termico, non scritte né colori" },
+      { "id": "felina", "nome": "Vista Felina", "portata_q": 20, "luci": ["buio"], "nota": "nel buio naturale: forme e profondità, non i colori" }
+    ],
+    "_nota_sensi": "A.143 (risposta di Davide dell’08/10/2026, decisione 147): Visione notturna 80 Q in penombra e luce scarsa (non al buio completo); Visione termica 40 Q, anche nel buio naturale; Vista Felina 20 Q nel buio naturale. Quando attivi rivelano automaticamente solo le parti della mappa percepite entro il loro limite; pareti e porte chiuse li bloccano; le creature nascoste richiedono le normali verifiche; non accorciano la vista normale in piena luce. Sulla mappa il master li accende sul token del PG (menu del token → «Sensi speciali…», campo sensi del token): un Q si vede se è entro la vista normale per la sua luce (raggio_scoperta_q) oppure entro la portata di un senso acceso che funziona in quella luce. Attivazione, costo e durata seguono le schede (impianti, Tecnica Vista Felina): la mappa non li controlla. Fonti nella scheda: regole.json → illuminazione.visione.",
     "sorgenti": [
       { "id": "bastoncino", "nome": "Bastoncino luminoso", "raggio_q": 2, "rif": "dotazioni_personali:bastoncino-luminoso" },
       { "id": "lanterna", "nome": "Lanterna elettrica", "raggio_q": 6, "rif": "dotazioni_personali:lanterna-elettrica" },

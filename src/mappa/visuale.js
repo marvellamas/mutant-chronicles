@@ -25,7 +25,7 @@ import { daBase64, cella, impostaCella } from './celle.js';
 import { dimensioni, celleToken } from './token.js';
 import { formaDi } from './forma.js';
 import { distanzaIngombri } from './zoc.js';
-import { raggiScoperta } from './luce.js';
+import { raggiScoperta, sensiToken } from './luce.js';
 import { inVolo } from './volo.js';
 
 /** Ostacoli alla vista: muri disegnati, porte che bloccano la vista; `perGiocatori`: le porte segrete sono muro. */
@@ -226,7 +226,17 @@ export function visuale(scena, origini, ost, regole, fuori = null, mappa = null)
   const limite = regole.raggio_q ?? Infinity;
   const raggioDi = l ? (x, y) => Math.min(limite, l.raggio(x, y)) : null;
   const raggio = Math.min(limite, l ? l.massimo : Infinity, Math.max(C, R));
-  for (const t of origini) for (const q of celleToken(t)) qVisti(ost, C, R, q, raggio, regole.metrica, visti, fuori, raggioDi);
+  for (const t of origini) {
+    // A.143 (decisione 147): i sensi speciali accesi sul token allargano la vista entro la loro portata, nelle luci in
+    // cui funzionano; muri e porte chiuse li fermano come la vista normale
+    const sensi = l ? sensiToken(t, { mappa }) : [];
+    const conSensi = sensi.length ? (x, y) => {
+      const c = l.categoria(x, y);
+      return Math.max(raggioDi(x, y), ...sensi.filter((s) => s.luci.includes(c)).map((s) => Math.min(limite, s.portata_q)));
+    } : raggioDi;
+    const r = sensi.length ? Math.min(Math.max(raggio, ...sensi.map((s) => Math.min(limite, s.portata_q))), Math.max(C, R)) : raggio;
+    for (const q of celleToken(t)) qVisti(ost, C, R, q, r, regole.metrica, visti, fuori, conSensi);
+  }
   return visti;
 }
 

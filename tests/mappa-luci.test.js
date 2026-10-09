@@ -29,7 +29,8 @@ test('dati: le categorie di A.106 con nomi e penalità della regola; raggi di sc
   assert.deepEqual(LU.raggio_scoperta_q, { sufficiente: null, penombra: 10, scarsa: 5, buio: 0 });
   assert.equal(dati.mappa.visuale.raggio_q, null);
   assert.deepEqual(LU.sorgenti.map((x) => x.raggio_q), [2, 6, 6, 10]);
-  assert.match(LU['TODO(Davide) visione'], /^A\.143/);
+  assert.equal(LU['TODO(Davide) visione'], undefined);
+  assert.deepEqual(LU.sensi.map((x) => [x.id, x.portata_q, x.luci]), [['notturna', 80, ['penombra', 'scarsa']], ['termica', 40, ['sufficiente', 'penombra', 'scarsa', 'buio']], ['felina', 20, ['buio']]]);
   const d = copia(dati);
   d.mappa.luci.categorie = ['sufficiente', 'tenebra'];
   assert.ok(validaDati(d).some((e) => e.file === 'mappa.json' && e.chiave === 'luci.categorie'));
@@ -102,6 +103,37 @@ test('nebbia automatica (A.142): il raggio dipende dalla luce del Q visto (Luce 
   // raggi per Q
   const r = raggiScoperta(s, dati);
   assert.deepEqual([r.raggio(21, 5), r.raggio(10, 5), r.massimo], [Infinity, 0, Infinity]);
+});
+
+test('sensi speciali (A.143, decisione 147): aprono la nebbia entro la portata, nelle luci in cui funzionano; i muri li fermano', () => {
+  const vede = (ambiente, sensi, o = {}) => {
+    const pg = tok('pg:a', [1, 5], sensi ? { sensi } : {});
+    const s = scena({ luce: { ambiente }, token: [pg], ...o });
+    const v = visuale(s, s.token, ostacoliVista(s, dati.mappa.porte), dati.mappa.visuale, null, dati.mappa);
+    let max = 0;
+    for (let x = 0; x < C; x++) if (v[5 * C + x]) max = Math.max(max, Math.abs(x - 1));
+    return max;
+  };
+  // la griglia è larga 40: dalla colonna 1 si arriva al massimo a 38 Q
+  assert.equal(vede('penombra', ['notturna']), 38, 'visione notturna 80 Q in penombra (la griglia finisce prima)');
+  assert.equal(vede('scarsa', ['notturna']), 38);
+  assert.equal(vede('buio', ['notturna']), 0, 'non al buio completo');
+  assert.equal(vede('buio', ['termica']), 38, 'termica anche al buio (40 Q)');
+  assert.equal(vede('buio', ['felina']), 20, 'Vista Felina 20 Q al buio');
+  assert.equal(vede('penombra', ['felina']), 10, 'in penombra la Vista Felina non cambia nulla: resta la vista normale');
+  assert.equal(vede('buio', ['felina', 'notturna']), 20);
+  assert.equal(vede('buio'), 0, 'senza sensi al buio solo la propria pedina');
+  // un muro ferma i sensi come la vista
+  const muro = { muri: inBase64(rettangolo(nuovaMaschera(C, R), C, R, 8, 0, 8, R - 1, true)) };
+  assert.equal(vede('buio', ['termica'], muro), 7, 'si vede il muro, non oltre');
+  // dati e scena: i sensi sono id di luci.sensi, senza ripetizioni
+  const s = scena({ token: [tok('pg:a', [1, 5], { sensi: ['notturna'] })] });
+  assert.equal(validaScena(s, dati), null);
+  assert.match(validaScena(scena({ token: [tok('pg:a', [1, 5], { sensi: ['raggi-x'] })] }), dati), /sensi/);
+  assert.match(validaScena(scena({ token: [tok('pg:a', [1, 5], { sensi: ['notturna', 'notturna'] })] }), dati), /sensi/);
+  const d = copia(dati);
+  d.mappa.luci.sensi[0].luci = ['crepuscolo'];
+  assert.ok(validaDati(d).some((e) => e.file === 'mappa.json' && e.chiave === 'luci.sensi'));
 });
 
 test('«Attacca!» dalla mappa: la luce della zona del bersaglio, con la riga, e la sua penalità nel calcolo', () => {

@@ -2783,6 +2783,8 @@ function validaMappa(dati, err) {
         for (const k of ['oscurita', 'oscurita_giocatori']) for (const id of LU.categorie) if (id !== LU.predefinita && !(LU[k]?.[id] >= 0 && LU[k][id] <= 1)) err(F, `luci.${k}.${id}`, 'opacità da 0 a 1');
       }
       if (!isIntero(LU.raggio_max_q) || LU.raggio_max_q < 1) err(F, 'luci.raggio_max_q', 'intero da 1 in su');
+      // A.143: sensi speciali (id, nome, portata in Q, luci in cui funzionano)
+      if (LU.sensi !== undefined && (!Array.isArray(LU.sensi) || !LU.sensi.every((s) => isTesto(s?.id) && isTesto(s.nome) && isIntero(s.portata_q) && s.portata_q >= 1 && Array.isArray(s.luci) && s.luci.length && s.luci.every((x) => (LU.categorie ?? []).includes(x))) || new Set(LU.sensi.map((s) => s.id)).size !== LU.sensi.length)) err(F, 'luci.sensi', '{ id, nome, portata_q, luci: [categorie] } con id distinti');
       if (!Array.isArray(LU.sorgenti) || !LU.sorgenti.length || !LU.sorgenti.every((x) => isTesto(x.id) && isTesto(x.nome) && isIntero(x.raggio_q) && x.raggio_q >= 1 && x.raggio_q <= (LU.raggio_max_q ?? 0))) err(F, 'luci.sorgenti', '{ id, nome, raggio_q } con raggio da 1 a raggio_max_q');
     }
   }
