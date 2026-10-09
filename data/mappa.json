@@ -522,7 +522,7 @@
     },
     "stato_predefinito": "chiusa",
     "costo_azp": 1,
-    "TODO(Davide) adiacenza": "A.139: «adiacenti» (A.125) comprende anche la diagonale? Provvisorio: sì, come la portata di 1 Q (un Q del token a distanza 1, anche in diagonale). La mano libera l’app non la controlla: la verifica il master.",
+    "_nota_adiacenza": "A.139 (risposta di Davide dell’08/10/2026, decisione 143): una porta si apre o si chiude anche da un Q adiacente in diagonale, purché sia raggiungibile dal proprio lato; 1 AzP e una mano libera (la mano la verifica il master); non attraverso una parete; attraversarla è movimento a parte; serrature e blocchi prima con la loro procedura.",
     "porte_max": 300,
     "azioni_max": 500,
     "bloccano_vista": [

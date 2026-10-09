@@ -1184,8 +1184,7 @@ Fonte: E&L dell'08/10/2026, 21:10 UTC, blocco «Aggiornamento cumulativo — ris
     escluso; niente file a larghezza prefissata. **Cambia** il provvisorio (largo 1 Q al bordo del lanciatore). Resta
     da raccordare l'origine delle creature grandi (con le taglie, A.126 e A.133). **Lotto mappa.**
 143. **Porte** (A.139). Anche dalla diagonale, se la porta è raggiungibile dal proprio lato; 1 AzP e una mano libera;
-    non attraverso una parete; attraversarla è movimento a parte; serrature prima. Conferma il provvisorio. **Lotto
-    mappa** (via il `TODO(Davide)`).
+    non attraverso una parete; attraversarla è movimento a parte; serrature prima. Conferma il provvisorio. **Applicata** il 09/10: era già così; via il `TODO(Davide)` (`porte._nota_adiacenza`).
 144. **Copertura** (A.140). Cinque linee dal centro del Q di chi attacca al centro e ai quattro angoli del bersaglio: 0
     nessuna, 1–2 Leggera −2, 3–4 Media −4, 5 Totale; il solo contatto con un angolo non blocca; il Direttore corregge per
     altezza, postura e situazione. Conferma la decisione 137. **Rinviata** la tabella automatica per tipo e altezza
