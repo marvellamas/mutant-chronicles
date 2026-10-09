@@ -14,6 +14,8 @@
 // - per_versione { versioni: { <livello>: { da, a|null } } }: il gradino scritto per ogni versione (a null: massimo);
 // - scelta { parti: [{ nome, scala }] }: più scale alternative (es. Concentrazione oppure durata fissa), se ne
 //   anticipa una sola.
+// A.109 (08/10/2026): i 32 aspetti che restavano senza scala, con «approvata»: «A.109» e una «nota» facoltativa con le
+// condizioni della risposta (massimo, limiti), mostrata accanto al gradino.
 // Senza scala (null) l'aspetto resta «valore da definire al tavolo», con il motivo.
 import { aggiungiDanno } from './equipaggiamento.js';
 
@@ -55,6 +57,14 @@ export function incrementaValore(valore, passo) {
  * @returns {{ righe: { colonna, da, a, nota? }[], daDefinire: string|null }}
  */
 export function valoreAnticipato(aspetto, versione, righe = []) {
+  const r = valoreAnticipatoSenzaNota(aspetto, versione, righe);
+  // A.109: le condizioni della risposta di Davide (scala.nota) accanto al gradino
+  const nota = aspetto?.scala?.nota;
+  if (!nota || r.daDefinire) return r;
+  return { ...r, righe: r.righe.map((x) => (x.nota?.includes(nota) ? x : { ...x, nota: [x.nota, nota].filter(Boolean).join('; ') })) };
+}
+
+function valoreAnticipatoSenzaNota(aspetto, versione, righe = []) {
   const sc = aspetto?.scala ?? null;
   const daDefinire = (motivo) => ({ righe: [], daDefinire: motivo });
   if (!sc) return daDefinire(aspetto?.scala_motivo ?? 'la scheda non dà una scala leggibile');

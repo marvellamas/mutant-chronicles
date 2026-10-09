@@ -753,14 +753,14 @@
               "categoria": "altro",
               "nome": "Natura del danno",
               "scala": {
+                "approvata": "A.72",
                 "tipo": "sequenza",
                 "colonna": "Natura",
                 "valori": [
                   "Naturale",
                   "Magico",
                   "Etereo"
-                ],
-                "approvata": "A.72"
+                ]
               }
             },
             {
@@ -768,9 +768,14 @@
               "gradino": "numero di elementi fino a 3",
               "categoria": "altro",
               "nome": "Numero di elementi",
-              "scala": null,
-              "scala_motivo": "la scheda nomina l’aspetto senza scrivere la scala dei gradini",
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "incremento",
+                "colonna": "Elementi max",
+                "passo": 1,
+                "massimo": 3,
+                "nota": "un elemento in più, mai da 1 a 3 in un colpo; il primario dà struttura e natura del danno, gli altri gli effetti secondari"
+              }
             },
             {
               "etichetta": "modificatore delle sole PS secondarie di un gradino",
@@ -1097,14 +1102,14 @@
               "categoria": "altro",
               "nome": "Natura del danno reattivo",
               "scala": {
+                "approvata": "A.72",
                 "tipo": "sequenza",
                 "colonna": null,
                 "valori": [
                   "Naturale",
                   "Magico",
                   "Etereo"
-                ],
-                "approvata": "A.72"
+                ]
               }
             },
             {
@@ -1112,18 +1117,54 @@
               "gradino": "numero di elementi fino a 3",
               "categoria": "altro",
               "nome": "Numero di elementi",
-              "scala": null,
-              "scala_motivo": "la scheda nomina l’aspetto senza scrivere la scala dei gradini",
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "sequenza",
+                "colonna": null,
+                "valori": [
+                  "1",
+                  "2",
+                  "3"
+                ],
+                "nota": "+1 elemento, massimo 3; tutti danno la protezione elementale, il primario il danno reattivo; non aumenta anche il Mod. PS"
+              }
             },
             {
               "etichetta": "modificatore PS di un gradino",
               "gradino": "modificatore PS di un gradino −2",
               "categoria": "altro",
               "nome": "Mod. PS",
-              "scala": null,
-              "scala_motivo": "nessuna colonna numerica della tabella corrisponde all’aspetto",
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "per_versione",
+                "versioni": {
+                  "3": {
+                    "da": "0",
+                    "a": "−2"
+                  },
+                  "6": {
+                    "da": "0",
+                    "a": "−2"
+                  },
+                  "9": {
+                    "da": "−2",
+                    "a": "−4"
+                  },
+                  "12": {
+                    "da": "−2",
+                    "a": "−4"
+                  },
+                  "15": {
+                    "da": "−4",
+                    "a": "−6"
+                  },
+                  "18": {
+                    "da": "−4",
+                    "a": "−6"
+                  }
+                },
+                "nota": "limite −6; gli effetti automatici senza PS restano automatici"
+              }
             },
             {
               "etichetta": "durata al gradino successivo",
@@ -1293,14 +1334,14 @@
               "categoria": "altro",
               "nome": "Natura del danno",
               "scala": {
+                "approvata": "A.72",
                 "tipo": "sequenza",
                 "colonna": "Natura",
                 "valori": [
                   "Naturale",
                   "Magico",
                   "Etereo"
-                ],
-                "approvata": "A.72"
+                ]
               }
             },
             {
@@ -1308,9 +1349,14 @@
               "gradino": "numero di elementi fino a 3",
               "categoria": "altro",
               "nome": "Numero di elementi",
-              "scala": null,
-              "scala_motivo": "la scheda nomina l’aspetto senza scrivere la scala dei gradini",
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "incremento",
+                "colonna": "Elementi max",
+                "passo": 1,
+                "massimo": 3,
+                "nota": "non cambia danno, area, Mod. PS né altro"
+              }
             },
             {
               "etichetta": "modificatore PS di un gradino",
@@ -1468,14 +1514,14 @@
               "categoria": "altro",
               "nome": "Natura del danno",
               "scala": {
+                "approvata": "A.72",
                 "tipo": "sequenza",
                 "colonna": "Natura",
                 "valori": [
                   "Naturale",
                   "Magico",
                   "Etereo"
-                ],
-                "approvata": "A.72"
+                ]
               }
             },
             {
@@ -1483,9 +1529,14 @@
               "gradino": "numero di elementi fino a 3",
               "categoria": "altro",
               "nome": "Numero di elementi",
-              "scala": null,
-              "scala_motivo": "la scheda nomina l’aspetto senza scrivere la scala dei gradini",
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "incremento",
+                "colonna": "Elementi max",
+                "passo": 1,
+                "massimo": 3,
+                "nota": "dimensioni e geometria del cono invariate (template A.138)"
+              }
             },
             {
               "etichetta": "modificatore PS di un gradino",
@@ -1968,18 +2019,34 @@
               "gradino": "+1 elemento fino a 3",
               "categoria": "altro",
               "nome": "Elemento +1",
-              "scala": null,
-              "scala_motivo": "nessuna colonna numerica della tabella corrisponde all’aspetto",
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "sequenza",
+                "colonna": null,
+                "valori": [
+                  "1",
+                  "2",
+                  "3"
+                ],
+                "nota": "un solo passaggio, massimo 3; non anche il Mod. PS nello stesso lancio"
+              }
             },
             {
               "etichetta": "modificatore PS",
               "gradino": "modificatore PS da −2 a −4, da −4 a −6",
               "categoria": "altro",
               "nome": "Mod. PS",
-              "scala": null,
-              "scala_motivo": "i valori della tabella non compaiono nella scala della scheda",
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "sequenza",
+                "colonna": null,
+                "valori": [
+                  "−2",
+                  "−4",
+                  "−6"
+                ],
+                "nota": "un solo gradino, massimo −6 (niente −8)"
+              }
             },
             {
               "etichetta": "durata",
@@ -2148,6 +2215,7 @@
               "categoria": "valori",
               "nome": "PV temporanei",
               "scala": {
+                "approvata": "A.72",
                 "tipo": "sequenza",
                 "colonna": "PV temporanei ciascuno",
                 "valori": [
@@ -2164,8 +2232,7 @@
                   "20",
                   "24",
                   "28"
-                ],
-                "approvata": "A.72"
+                ]
               }
             },
             {
@@ -2174,6 +2241,7 @@
               "categoria": "durata",
               "nome": "Durata",
               "scala": {
+                "approvata": "A.72",
                 "tipo": "sequenza",
                 "colonna": "Durata",
                 "valori": [
@@ -2185,8 +2253,7 @@
                   "1 ora",
                   "2 ore",
                   "4 ore"
-                ],
-                "approvata": "A.72"
+                ]
               }
             }
           ],
@@ -2456,6 +2523,7 @@
               "categoria": "valori",
               "nome": "Bonus Tempra +1",
               "scala": {
+                "approvata": "A.72",
                 "tipo": "scelta",
                 "parti": [
                   {
@@ -2476,8 +2544,7 @@
                       "parte": 1
                     }
                   }
-                ],
-                "approvata": "A.72"
+                ]
               }
             },
             {
@@ -2747,12 +2814,12 @@
               "categoria": "valori",
               "nome": "VA degli attacchi +1",
               "scala": {
+                "approvata": "A.72",
                 "tipo": "incremento",
                 "colonna": "Attacco e danno B",
                 "passo": 1,
                 "parte": 0,
-                "nota": "modalità B: solo il VA; la durata non aumenta",
-                "approvata": "A.72"
+                "nota": "modalità B: solo il VA; la durata non aumenta"
               }
             },
             {
@@ -2761,12 +2828,12 @@
               "categoria": "valori",
               "nome": "Danno +1",
               "scala": {
+                "approvata": "A.72",
                 "tipo": "incremento",
                 "colonna": "Attacco e danno B",
                 "passo": 1,
                 "parte": 1,
-                "nota": "modalità B: solo il danno; la durata non aumenta",
-                "approvata": "A.72"
+                "nota": "modalità B: solo il danno; la durata non aumenta"
               }
             },
             {
@@ -3625,6 +3692,7 @@
               "categoria": "durata",
               "nome": "Durata",
               "scala": {
+                "approvata": "A.72",
                 "tipo": "scelta",
                 "parti": [
                   {
@@ -3661,8 +3729,7 @@
                       ]
                     }
                   }
-                ],
-                "approvata": "A.72"
+                ]
               },
               "conseguenze": [
                 "Si usa il valore distinto successivo; oltre 12 ore in Concentrazione si arriva a 24 ore, oltre 2 ore a durata fissa a 4 ore."
@@ -4430,9 +4497,14 @@
               "gradino": "Tempra per liberarsi e Riflessi per mantenere l’equilibrio",
               "categoria": "altro",
               "nome": "Tempra per liberarsi e Riflessi per mantenere l’equilibrio",
-              "scala": null,
-              "scala_motivo": "la scheda nomina l’aspetto senza scrivere la scala dei gradini",
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "incremento",
+                "colonna": "Mod. PS",
+                "passo": -2,
+                "massimo": -6,
+                "nota": "lo stesso modificatore alla Tempra iniziale, alla Tempra per liberarsi e ai Riflessi per l’equilibrio; Stato e durata invariati"
+              }
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie lo Stato da Rallentato a Immobilizzato, la durata (3 → 5 → 10 → 20 → 30 RND) oppure il modificatore PS (0 → −2 → −4 → −6), applicato a Tempra iniziale, Tempra per liberarsi e Riflessi per mantenere l’equilibrio."
@@ -4566,12 +4638,40 @@
               "gradino": "dimensioni (1 × 1 → 2 × 1 → 2 × 2 → 3 × 2 → 3 × 3 → 4 × 3 Q)",
               "categoria": "area",
               "nome": "Dimensioni",
-              "scala": null,
-              "scala_motivo": "i valori della tabella non compaiono nella scala della scheda",
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "per_versione",
+                "versioni": {
+                  "3": {
+                    "da": "1×1 Q",
+                    "a": "2×1 Q"
+                  },
+                  "6": {
+                    "da": "2×1 Q",
+                    "a": "2×2 Q"
+                  },
+                  "9": {
+                    "da": "2×2 Q",
+                    "a": "3×2 Q"
+                  },
+                  "12": {
+                    "da": "2×2 Q",
+                    "a": "3×2 Q"
+                  },
+                  "15": {
+                    "da": "3×2 Q",
+                    "a": "3×3 Q"
+                  },
+                  "18": {
+                    "da": "3×3 Q",
+                    "a": "4×3 Q"
+                  }
+                },
+                "nota": "il carico massimo è un aspetto distinto e non cambia; movimento, durata e stabilità invariati"
+              },
               "conseguenze": [
                 "Il movimento verticale costa sempre 2; dimensioni e carico restano aspetti distinti."
-              ],
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              ]
             },
             {
               "etichetta": "budget di movimento",
@@ -6589,6 +6689,7 @@
               "categoria": "gittata",
               "nome": "Distanza dal corpo",
               "scala": {
+                "approvata": "A.72",
                 "tipo": "sequenza",
                 "colonna": "Distanza max dal corpo",
                 "valori": [
@@ -6596,8 +6697,7 @@
                   "3 km",
                   "6 km",
                   "10 km"
-                ],
-                "approvata": "A.72"
+                ]
               }
             },
             {
@@ -6795,9 +6895,45 @@
               "gradino": "capacità volto generico → identità precisa → voce e postura → equipaggiamento",
               "categoria": "altro",
               "nome": "Capacità volto generico → identità precisa → voce e postura → equipaggiamento",
-              "scala": null,
-              "scala_motivo": "i valori della tabella non compaiono nella scala della scheda",
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "per_versione",
+                "versioni": {
+                  "1": {
+                    "da": "volto generico",
+                    "a": "identità precisa"
+                  },
+                  "3": {
+                    "da": "identità precisa",
+                    "a": "voce e postura"
+                  },
+                  "6": {
+                    "da": "voce e postura",
+                    "a": "equipaggiamento"
+                  },
+                  "9": {
+                    "da": "capacità massima",
+                    "a": null,
+                    "nota": "dal livello 9 la capacità è già massima"
+                  },
+                  "12": {
+                    "da": "capacità massima",
+                    "a": null,
+                    "nota": "dal livello 9 la capacità è già massima"
+                  },
+                  "15": {
+                    "da": "capacità massima",
+                    "a": null,
+                    "nota": "dal livello 9 la capacità è già massima"
+                  },
+                  "18": {
+                    "da": "capacità massima",
+                    "a": null,
+                    "nota": "dal livello 9 la capacità è già massima"
+                  }
+                },
+                "nota": "capacità cumulative; identità conosciuta o osservata, voce udita; nessun ricordo della persona imitata"
+              }
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie durata 10 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore; beneficiari 1 → 2 → 3 → 4; Mod. PS 0 → −2 → −4 → −6; oppure capacità volto generico → identità precisa → voce e postura → equipaggiamento."
@@ -7362,6 +7498,7 @@
               "categoria": "altro",
               "nome": "Complessità",
               "scala": {
+                "approvata": "A.72",
                 "tipo": "per_versione",
                 "versioni": {
                   "1": {
@@ -7392,8 +7529,7 @@
                     "da": "immagine animata",
                     "a": null
                   }
-                },
-                "approvata": "A.72"
+                }
               }
             }
           ],
@@ -7954,9 +8090,31 @@
               "gradino": "ulteriore −2 alla PS della modalità scelta, fino a −8 per la mirata o −6 per l’aura",
               "categoria": "altro",
               "nome": "PS della modalità −2",
-              "scala": null,
-              "scala_motivo": "più colonne possibili (Mod. PS mirata, Mod. PS aura)",
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "scelta",
+                "parti": [
+                  {
+                    "nome": "Mod. PS mirata",
+                    "scala": {
+                      "tipo": "incremento",
+                      "colonna": "Mod. PS mirata",
+                      "passo": -2,
+                      "massimo": -8
+                    }
+                  },
+                  {
+                    "nome": "Mod. PS aura",
+                    "scala": {
+                      "tipo": "incremento",
+                      "colonna": "Mod. PS aura",
+                      "passo": -2,
+                      "massimo": -6
+                    }
+                  }
+                ],
+                "nota": "il −4 di Terrorizzato, durata, raggio e bersagli invariati"
+              }
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie bersagli mirati 1 → 2 → 3 → 4; raggio aura 1 → 2 → 3 → 4 → 5 → 6 Q; durata 1 → 3 → 5 → 7 → 10 RND; oppure un ulteriore −2 alla PS della modalità scelta, fino a −8 per la mirata o −6 per l’aura. La penalità dello stato resta −4 e non può essere anticipata."
@@ -9081,21 +9239,63 @@
               "gradino": "precisione del numero Approssimata → Generica → Precisa → Esatta",
               "categoria": "altro",
               "nome": "Precisione del numero",
-              "scala": null,
-              "scala_motivo": "i valori della tabella non compaiono nella scala della scheda",
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "sequenza",
+                "colonna": null,
+                "valori": [
+                  "Approssimata",
+                  "Generica",
+                  "Precisa",
+                  "Esatta"
+                ],
+                "nota": "Esatta è il massimo; informazioni individuali, portata e durata invariate"
+              }
             },
             {
               "etichetta": "profondità delle informazioni individuali alla riga successi",
               "gradino": "profondità delle informazioni individuali alla riga successiva, mantenendo quelle già accessibili",
               "categoria": "altro",
               "nome": "Profondità delle informazioni",
-              "scala": null,
-              "scala_motivo": "nessuna colonna della tabella corrisponde all’aspetto",
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "per_versione",
+                "versioni": {
+                  "1": {
+                    "da": "informazioni del livello 1",
+                    "a": "+ livello in fasce di 5"
+                  },
+                  "3": {
+                    "da": "informazioni del livello 3",
+                    "a": "+ Addestramento iniziale"
+                  },
+                  "6": {
+                    "da": "informazioni del livello 6",
+                    "a": "+ livello in fasce di 2"
+                  },
+                  "9": {
+                    "da": "informazioni del livello 9",
+                    "a": "+ Classe predominante"
+                  },
+                  "12": {
+                    "da": "informazioni del livello 12",
+                    "a": "+ livello esatto"
+                  },
+                  "15": {
+                    "da": "informazioni del livello 15",
+                    "a": "+ tutte le Classi con i rispettivi Gradi"
+                  },
+                  "18": {
+                    "da": "informazioni del livello 18",
+                    "a": null,
+                    "nota": "già al massimo"
+                  }
+                },
+                "nota": "cumulative; per creature senza Classe valgono le alternative della scheda; la precisione del conteggio resta quella della versione"
+              },
               "conseguenze": [
                 "Il conteggio esatto e le informazioni individuali del livello 18 sono i rispettivi limiti."
-              ],
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              ]
             },
             {
               "etichetta": "durata a Concentrazione",
@@ -9800,9 +10000,14 @@
               "gradino": "un’impressione massima aggiuntiva, fino a 11",
               "categoria": "altro",
               "nome": "Impressioni +1",
-              "scala": null,
-              "scala_motivo": "la scheda nomina l’aspetto senza scrivere la scala dei gradini",
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "incremento",
+                "colonna": "Impressioni max",
+                "passo": 1,
+                "massimo": 11,
+                "nota": "un’impressione in più per lancio, non la riga successiva; periodo e tempo di lettura invariati"
+              }
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie passato massimo alla riga successiva, senza superare 1 anno, oppure un’impressione massima aggiuntiva, fino a 11. Il tempo di lettura rimane quello della versione effettivamente lanciata. Non si anticipano raggio o velocità di lettura. Esempio: livello 8 con passato anticipato costa 16 PM, richiede 10 RND ed esplora gli ultimi 7 giorni per un massimo di 5 impressioni."
@@ -10014,18 +10219,66 @@
               "gradino": "entrambe le modalità contemporaneamente",
               "categoria": "altro",
               "nome": "Entrambe le modalità",
-              "scala": null,
-              "scala_motivo": "la scheda nomina l’aspetto senza scrivere la scala dei gradini",
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "per_versione",
+                "versioni": {
+                  "6": {
+                    "da": "una modalità",
+                    "a": "Tracciamento e Combattimento insieme"
+                  },
+                  "9": {
+                    "da": "una modalità",
+                    "a": "Tracciamento e Combattimento insieme"
+                  },
+                  "12": {
+                    "da": "una modalità",
+                    "a": "Tracciamento e Combattimento insieme"
+                  },
+                  "15": {
+                    "da": "una modalità",
+                    "a": "Tracciamento e Combattimento insieme"
+                  },
+                  "18": {
+                    "da": "una modalità",
+                    "a": "Tracciamento e Combattimento insieme"
+                  }
+                },
+                "nota": "ciascuna con la sua durata; non con l’alleato beneficiario"
+              }
             },
             {
               "etichetta": "alleato come beneficiario al posto del Taumaturgo",
               "gradino": "alleato come beneficiario al posto del Taumaturgo",
               "categoria": "bersagli",
               "nome": "Beneficiario: un alleato",
-              "scala": null,
-              "scala_motivo": "la scheda nomina l’aspetto senza scrivere la scala dei gradini",
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "per_versione",
+                "versioni": {
+                  "6": {
+                    "da": "il Taumaturgo",
+                    "a": "un alleato consenziente, visibile ed entro portata"
+                  },
+                  "9": {
+                    "da": "il Taumaturgo",
+                    "a": "un alleato consenziente, visibile ed entro portata"
+                  },
+                  "12": {
+                    "da": "il Taumaturgo",
+                    "a": "un alleato consenziente, visibile ed entro portata"
+                  },
+                  "15": {
+                    "da": "il Taumaturgo",
+                    "a": "un alleato consenziente, visibile ed entro portata"
+                  },
+                  "18": {
+                    "da": "il Taumaturgo",
+                    "a": "un alleato consenziente, visibile ed entro portata"
+                  }
+                },
+                "nota": "una sola modalità; il Taumaturgo paga PM e Prova ma non riceve i benefici; non con entrambe le modalità"
+              }
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie bersagli 1 → 2 → 3 → 4; durata di inseguimento 1 → 2 → 4 → 8 → 24 → 48 ore; durata di combattimento 5 → 7 → 10 → 15 RND; Mod. PS 0 → −2 → −4 → −6; entrambe le modalità contemporaneamente; oppure un alleato come beneficiario al posto del Taumaturgo."
@@ -10144,12 +10397,16 @@
               "gradino": "difesa automatica totale aggiuntiva",
               "categoria": "altro",
               "nome": "Difesa automatica totale +1",
-              "scala": null,
-              "scala_motivo": "la scheda nomina l’aspetto senza scrivere la scala dei gradini",
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "incremento",
+                "colonna": "Difese automatiche totali",
+                "passo": 1,
+                "nota": "alla riserva dell’intera durata, sempre una per Round; durata, Iniziativa ed Elusione invariate"
+              },
               "conseguenze": [
                 "Il limite di una difesa automatica per RND e il bonus fisso +2 a Elusione rimangono invariati."
-              ],
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              ]
             },
             {
               "etichetta": "durata",
@@ -10608,9 +10865,20 @@
               "gradino": "Pericolosità I → II → III → IV → V → VI",
               "categoria": "altro",
               "nome": "Pericolosità",
-              "scala": null,
-              "scala_motivo": "i valori della tabella non compaiono nella scala della scheda",
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "sequenza",
+                "colonna": "Pericolosità massima",
+                "valori": [
+                  "I • Superficiale",
+                  "II • Importante",
+                  "III • Profonda",
+                  "IV • Seria",
+                  "V • Grave",
+                  "VI • Mortale"
+                ],
+                "nota": "le origini curabili restano quelle della versione; numero, beneficiari e portata invariati"
+              }
             },
             {
               "etichetta": "origini naturale → naturale e artificiale → naturale",
@@ -10779,9 +11047,20 @@
               "gradino": "Pericolosità I → II → III → IV → V → VI",
               "categoria": "altro",
               "nome": "Pericolosità",
-              "scala": null,
-              "scala_motivo": "i valori della tabella non compaiono nella scala della scheda",
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "sequenza",
+                "colonna": "Pericolosità massima",
+                "valori": [
+                  "I • Superficiale",
+                  "II • Importante",
+                  "III • Profonda",
+                  "IV • Seria",
+                  "V • Grave",
+                  "VI • Mortale"
+                ],
+                "nota": "le origini curabili restano quelle della versione; numero, beneficiari e portata invariati"
+              }
             },
             {
               "etichetta": "origini naturale → naturale e artificiale → naturale",
@@ -11019,9 +11298,46 @@
               "gradino": "gruppo di capacità livello 1 → livello 3 → livello 6",
               "categoria": "altro",
               "nome": "Gruppo di capacità",
-              "scala": null,
-              "scala_motivo": "i valori della tabella non compaiono nella scala della scheda",
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "per_versione",
+                "versioni": {
+                  "1": {
+                    "da": "capacità del livello 1",
+                    "a": "+ Accecato e Assordato"
+                  },
+                  "3": {
+                    "da": "capacità del livello 3",
+                    "a": "+ Stordito, Svenuto e Paralizzato temporaneo (anche il sonno magico)"
+                  },
+                  "6": {
+                    "da": "capacità massime",
+                    "a": null,
+                    "nota": "dal livello 6 le capacità sono già massime"
+                  },
+                  "9": {
+                    "da": "capacità massime",
+                    "a": null,
+                    "nota": "dal livello 6 le capacità sono già massime"
+                  },
+                  "12": {
+                    "da": "capacità massime",
+                    "a": null,
+                    "nota": "dal livello 6 le capacità sono già massime"
+                  },
+                  "15": {
+                    "da": "capacità massime",
+                    "a": null,
+                    "nota": "dal livello 6 le capacità sono già massime"
+                  },
+                  "18": {
+                    "da": "capacità massime",
+                    "a": null,
+                    "nota": "dal livello 6 le capacità sono già massime"
+                  }
+                },
+                "nota": "il numero di Stati rimossi non cambia"
+              }
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e gli altri parametri rimangono invariati. Si sceglie beneficiari 1 → 2 → 4 → 6 → 8 (massimo 8); numero di Stati 1 → 2 → 3 → tutti consentiti; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 → 30 Q; oppure gruppo di capacità livello 1 → livello 3 → livello 6. Aumentare il numero non sblocca contemporaneamente nuovi tipi di Stato."
@@ -11427,9 +11743,18 @@
               "gradino": "Menomazioni trattate 1 → 2 → 3 → tutte temporanee",
               "categoria": "altro",
               "nome": "Menomazioni trattate",
-              "scala": null,
-              "scala_motivo": "la scala vale per più colonne (Menomazioni ciascuno, Passaggi per Menomazione): si sceglie al tavolo",
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "sequenza",
+                "colonna": "Menomazioni ciascuno",
+                "valori": [
+                  "1",
+                  "2",
+                  "3",
+                  "Tutte temporanee"
+                ],
+                "nota": "i gradini di recupero per menomazione non aumentano; le permanenti restano escluse"
+              }
             },
             {
               "etichetta": "beneficiari",
@@ -12505,9 +12830,13 @@
               "gradino": "sigillo aggiuntivo",
               "categoria": "altro",
               "nome": "Sigilli +1",
-              "scala": null,
-              "scala_motivo": "la scheda nomina l’aspetto senza scrivere la scala dei gradini",
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "incremento",
+                "colonna": "Sigilli",
+                "passo": 1,
+                "nota": "il costo del lancio anticipato comprende tutti i sigilli; preparazione 1 minuto complessivo"
+              }
             },
             {
               "etichetta": "durata",
@@ -12554,9 +12883,46 @@
               "gradino": "combinazione Avviso e Blocco prima del livello 6",
               "categoria": "altro",
               "nome": "Avviso e Blocco insieme",
-              "scala": null,
-              "scala_motivo": "la scheda nomina l’aspetto senza scrivere la scala dei gradini",
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "per_versione",
+                "versioni": {
+                  "1": {
+                    "da": "Avviso o Blocco",
+                    "a": "Avviso e Blocco insieme"
+                  },
+                  "3": {
+                    "da": "Avviso o Blocco",
+                    "a": "Avviso e Blocco insieme"
+                  },
+                  "6": {
+                    "da": "Avviso e Blocco insieme",
+                    "a": null,
+                    "nota": "dal livello 6 la combinazione è già ordinaria"
+                  },
+                  "9": {
+                    "da": "Avviso e Blocco insieme",
+                    "a": null,
+                    "nota": "dal livello 6 la combinazione è già ordinaria"
+                  },
+                  "12": {
+                    "da": "Avviso e Blocco insieme",
+                    "a": null,
+                    "nota": "dal livello 6 la combinazione è già ordinaria"
+                  },
+                  "15": {
+                    "da": "Avviso e Blocco insieme",
+                    "a": null,
+                    "nota": "dal livello 6 la combinazione è già ordinaria"
+                  },
+                  "18": {
+                    "da": "Avviso e Blocco insieme",
+                    "a": null,
+                    "nota": "dal livello 6 la combinazione è già ordinaria"
+                  }
+                },
+                "nota": "il Blocco richiede una chiusura fisica"
+              }
             },
             {
               "etichetta": "portata",
@@ -12722,12 +13088,16 @@
               "gradino": "trappola aggiuntiva entro il limite SAG",
               "categoria": "altro",
               "nome": "Trappole +1",
-              "scala": null,
-              "scala_motivo": "la scheda nomina l’aspetto senza scrivere la scala dei gradini",
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "incremento",
+                "colonna": "Trappole",
+                "passo": 1,
+                "nota": "trappole attive in totale non oltre la SAG; 1 minuto per trappola; l’incantesimo caricato si paga per ciascuna"
+              },
               "conseguenze": [
                 "Il raddoppio riguarda soltanto il costo della trappola; il caricamento si paga separatamente."
-              ],
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              ]
             },
             {
               "etichetta": "attesa al gradino successivo",
@@ -12746,18 +13116,28 @@
               "gradino": "danno proprio alla riga successiva, massimo il valore di livello 18",
               "categoria": "valori",
               "nome": "Danno proprio",
-              "scala": null,
-              "scala_motivo": "nessuna colonna della tabella corrisponde all’aspetto",
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "riga_successiva",
+                "colonne": [
+                  "Scarica Magica"
+                ],
+                "nota": "non aumenta il danno dell’incantesimo caricato"
+              }
             },
             {
               "etichetta": "penalità di Interferenza peggiorata",
               "gradino": "penalità di Interferenza peggiorata di 1, massimo −5",
               "categoria": "altro",
               "nome": "Interferenza −1",
-              "scala": null,
-              "scala_motivo": "più colonne possibili (Interferenza VA, Durata interfer.)",
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "incremento",
+                "colonna": "Interferenza VA",
+                "passo": -1,
+                "massimo": -5,
+                "nota": "durata e Mod. PS invariati"
+              }
             },
             {
               "etichetta": "durata di Interferenza",
@@ -12797,12 +13177,46 @@
               "gradino": "livello massimo caricabile 3 → 6 → 9 → 12 → 15 → 18",
               "categoria": "altro",
               "nome": "Livello massimo caricabile",
-              "scala": null,
-              "scala_motivo": "i valori della tabella non compaiono nella scala della scheda",
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "per_versione",
+                "versioni": {
+                  "1": {
+                    "da": "nessun incantesimo caricabile",
+                    "a": null,
+                    "nota": "le versioni 1 e 3 non acquisiscono la capacità di caricare incantesimi"
+                  },
+                  "3": {
+                    "da": "nessun incantesimo caricabile",
+                    "a": null,
+                    "nota": "le versioni 1 e 3 non acquisiscono la capacità di caricare incantesimi"
+                  },
+                  "6": {
+                    "da": "livello 3",
+                    "a": "livello 6"
+                  },
+                  "9": {
+                    "da": "livello 6",
+                    "a": "livello 9"
+                  },
+                  "12": {
+                    "da": "livello 9",
+                    "a": "livello 12"
+                  },
+                  "15": {
+                    "da": "livello 12",
+                    "a": "livello 15"
+                  },
+                  "18": {
+                    "da": "livello 15",
+                    "a": "livello 18"
+                  }
+                },
+                "nota": "il raddoppio dei PM riguarda solo Trappola Mistica; ogni incantesimo caricato si paga a parte e non si anticipa"
+              },
               "conseguenze": [
                 "Il raddoppio riguarda soltanto il costo della trappola; il caricamento si paga separatamente."
-              ],
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              ]
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie una trappola aggiuntiva entro il limite SAG; attesa al gradino successivo fino a 180 giorni; danno proprio alla riga successiva, massimo il valore di livello 18; penalità di Interferenza peggiorata di 1, massimo −5; durata di Interferenza 3 → 5 → 7 → 10 → 15 RND; Mod. PS 0 → −2 → −4 → −6; oppure, dal livello 6, livello massimo caricabile 3 → 6 → 9 → 12 → 15 → 18. Il raddoppio riguarda soltanto il costo della trappola; il caricamento si paga separatamente."
@@ -14189,9 +14603,41 @@
               "gradino": "sorgente su un oggetto toccato, anziché sul Taumaturgo",
               "categoria": "altro",
               "nome": "Sorgente su un oggetto",
-              "scala": null,
-              "scala_motivo": "la scheda nomina l’aspetto senza scrivere la scala dei gradini",
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "per_versione",
+                "versioni": {
+                  "1": {
+                    "da": "sorgente sul Taumaturgo",
+                    "a": "sorgente su un oggetto toccato al lancio"
+                  },
+                  "3": {
+                    "da": "sorgente sul Taumaturgo",
+                    "a": "sorgente su un oggetto toccato al lancio"
+                  },
+                  "6": {
+                    "da": "sorgente sul Taumaturgo",
+                    "a": "sorgente su un oggetto toccato al lancio"
+                  },
+                  "9": {
+                    "da": "sorgente sul Taumaturgo",
+                    "a": "sorgente su un oggetto toccato al lancio"
+                  },
+                  "12": {
+                    "da": "sorgente sul Taumaturgo",
+                    "a": "sorgente su un oggetto toccato al lancio"
+                  },
+                  "15": {
+                    "da": "sorgente sul Taumaturgo",
+                    "a": "sorgente su un oggetto toccato al lancio"
+                  },
+                  "18": {
+                    "da": "sorgente sul Taumaturgo",
+                    "a": "sorgente su un oggetto toccato al lancio"
+                  }
+                },
+                "nota": "raggio, durata, penalità e PS invariati; l’ancoraggio resta per tutta la durata"
+              }
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie raggio 3 → 4 → 5 → 6 → 7 Q; penalità −1 → −2 → −3 → −4 → −5; Mod. PS 0 → −2 → −4 → −6; durata al gradino successivo fino a 4 ore; oppure sorgente su un oggetto toccato, anziché sul Taumaturgo."
@@ -15155,12 +15601,40 @@
               "gradino": "Potere di Occultamento 3 → 6 → 9 → 12 → 15 → 18 → 21",
               "categoria": "altro",
               "nome": "Potere di Occultamento",
-              "scala": null,
-              "scala_motivo": "i valori della tabella non compaiono nella scala della scheda",
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "per_versione",
+                "versioni": {
+                  "3": {
+                    "da": "3",
+                    "a": "6"
+                  },
+                  "6": {
+                    "da": "6",
+                    "a": "9"
+                  },
+                  "9": {
+                    "da": "9",
+                    "a": "12"
+                  },
+                  "12": {
+                    "da": "12",
+                    "a": "15"
+                  },
+                  "15": {
+                    "da": "15",
+                    "a": "18"
+                  },
+                  "18": {
+                    "da": "18",
+                    "a": "21"
+                  }
+                },
+                "nota": "vale solo contro le rilevazioni pertinenti (Presenza); il livello dichiarato non cambia, anche per Negare Potere"
+              },
               "conseguenze": [
                 "Quest’ultimo modifica soltanto il confronto con le rilevazioni, non il livello contro Negare Potere."
-              ],
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              ]
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie beneficiari 1 → 2 → 3 → 4 → 6 → 8 → 10; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 Q; Concentrazione 10 minuti → 30 minuti → 1 → 2 → 4 → 8 → 12 ore; durata fissa 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore; oppure Potere di Occultamento 3 → 6 → 9 → 12 → 15 → 18 → 21. Quest’ultimo modifica soltanto il confronto con le rilevazioni, non il livello contro Negare Potere."
@@ -15255,12 +15729,17 @@
               "gradino": "utilizzo aggiuntivo, massimo 7",
               "categoria": "altro",
               "nome": "Utilizzi +1",
-              "scala": null,
-              "scala_motivo": "la scheda nomina l’aspetto senza scrivere la scala dei gradini",
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "incremento",
+                "colonna": "Utilizzi",
+                "passo": 1,
+                "massimo": 7,
+                "nota": "sempre un uso per Round e un solo rilancio per evento"
+              },
               "conseguenze": [
                 "Non aumenta mai il limite di un utilizzo per RND."
-              ],
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              ]
             },
             {
               "etichetta": "durata",
@@ -15283,9 +15762,36 @@
               "gradino": "possibilità di scegliere il risultato preferito già ai livelli 6 o 9",
               "categoria": "altro",
               "nome": "Possibilità di scegliere il risultato preferito già ai livelli 6 o 9",
-              "scala": null,
-              "scala_motivo": "la scheda nomina l’aspetto senza scrivere la scala dei gradini",
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "per_versione",
+                "versioni": {
+                  "6": {
+                    "da": "il risultato del ritiro",
+                    "a": "a scelta fra i due risultati"
+                  },
+                  "9": {
+                    "da": "il risultato del ritiro",
+                    "a": "a scelta fra i due risultati"
+                  },
+                  "12": {
+                    "da": "a scelta fra i due risultati",
+                    "a": null,
+                    "nota": "dal livello 12 la scelta è già ordinaria"
+                  },
+                  "15": {
+                    "da": "a scelta fra i due risultati",
+                    "a": null,
+                    "nota": "dal livello 12 la scelta è già ordinaria"
+                  },
+                  "18": {
+                    "da": "a scelta fra i due risultati",
+                    "a": null,
+                    "nota": "dal livello 12 la scelta è già ordinaria"
+                  }
+                },
+                "nota": "si sceglie un risultato completo, senza combinare i dadi; usi e durata invariati"
+              }
             },
             {
               "etichetta": "gittata Personale → Contatto",
@@ -15536,12 +16042,69 @@
               "gradino": "informazioni della soglia successiva in una sola categoria scelta, fino al livello 18",
               "categoria": "altro",
               "nome": "Informazioni della soglia successiva",
-              "scala": null,
-              "scala_motivo": "nessuna colonna della tabella corrisponde all’aspetto",
+              "scala": {
+                "approvata": "A.109",
+                "tipo": "per_versione",
+                "versioni": {
+                  "6": {
+                    "da": "soglia 6",
+                    "a": "soglia 9 in una sola categoria scelta"
+                  },
+                  "7": {
+                    "da": "soglia 6",
+                    "a": "soglia 9 in una sola categoria scelta"
+                  },
+                  "8": {
+                    "da": "soglia 6",
+                    "a": "soglia 9 in una sola categoria scelta"
+                  },
+                  "9": {
+                    "da": "soglia 9",
+                    "a": "soglia 12 in una sola categoria scelta"
+                  },
+                  "10": {
+                    "da": "soglia 9",
+                    "a": "soglia 12 in una sola categoria scelta"
+                  },
+                  "11": {
+                    "da": "soglia 9",
+                    "a": "soglia 12 in una sola categoria scelta"
+                  },
+                  "12": {
+                    "da": "soglia 12",
+                    "a": "soglia 15 in una sola categoria scelta"
+                  },
+                  "13": {
+                    "da": "soglia 12",
+                    "a": "soglia 15 in una sola categoria scelta"
+                  },
+                  "14": {
+                    "da": "soglia 12",
+                    "a": "soglia 15 in una sola categoria scelta"
+                  },
+                  "15": {
+                    "da": "soglia 15",
+                    "a": "soglia 18 in una sola categoria scelta"
+                  },
+                  "16": {
+                    "da": "soglia 15",
+                    "a": "soglia 18 in una sola categoria scelta"
+                  },
+                  "17": {
+                    "da": "soglia 15",
+                    "a": "soglia 18 in una sola categoria scelta"
+                  },
+                  "18": {
+                    "da": "soglia 18",
+                    "a": null,
+                    "nota": "già al massimo"
+                  }
+                },
+                "nota": "Aura, Incantesimi oppure Artefatti: le altre categorie restano alla loro soglia; Potenza, raggio, portata, area e durata invariati"
+              },
               "conseguenze": [
                 "Raggio, gittata, area, informazioni e potere di confronto sono aspetti distinti."
-              ],
-              "TODO(Davide)": "A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo»."
+              ]
             },
             {
               "etichetta": "Concentrazione",
