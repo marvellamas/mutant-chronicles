@@ -17,7 +17,7 @@ Le stime sono in prompt di lavoro, cioè sessioni come questa, comprese prove e 
 | 2. Combattimento | A.136: tabella della Prova facoltativa di Atletica (penalità personale e agli attacchi contro, per esito) in «Attacca!» e nella tab Combattimento, al posto delle penalità fisse di Corsa e Scatto | **fatto il 09/10** (`regole.json` → `attacco_distanza.movimento.prova_atletica`, `/api/movimento-round`; pacchetto `docs/pacchetto-per-davide-2026-10-09-combattimento.md`) | — |
 | 3. Armi | A.135: 2 cartucce per AzP (4 con Ricarica Migliorata) per tamburi e serbatoi interni; carichini da 6 colpi (2 voci nuove, dati mancanti → A.151); Ricarica Rapida (una ricarica gratuita per Round); modelli HD14M, SA SG2001, Airbrush, Mandible | **fatto il 09/10** (`tools/lotti/lotto_ricarica_a135.mjs`; pacchetto `docs/pacchetto-per-davide-2026-10-09-armi.md`) | — |
 | 4. Magia: Anticipazione | A.109: regola comune (un aspetto, un gradino, PM base ×2, Prova di Potere obbligatoria di una categoria più difficile) e i 32 aspetti con i gradini al posto dei 32 `TODO(Davide)` di `incantesimi.json`; riquadro dell'Anticipazione in «Lancia!»; verifica di A.20 (Chroma bianco solo a chi ha accesso alla magia) | **fatto il 09/10** (`tools/anticipazione_approvate.json`, `regole.json` → `chroma.conversione.prelievo`; pacchetto `docs/pacchetto-per-davide-2026-10-09-anticipazione.md`) | — |
-| 5. Magia §27: Artefatti consumabili | campo Riutilizzabile/Consumabile, SnT 0 e niente sintonizzazione, Cariche sigillate, quantità e «Usa» (una scheda in due viste: Artefatti e Consumabili), tabella dei costi per Grado I–VI, PM = 3 × Grado + costo base, 6 pergamene del campionario; tab Artefatti, Inventario, SS | da fare | 2 |
+| 5. Magia §27: Artefatti consumabili | campo Riutilizzabile/Consumabile, SnT 0 e niente sintonizzazione, Cariche sigillate, quantità e «Usa» (una scheda in due viste: Artefatti e Consumabili), tabella dei costi per Grado I–VI, PM = 3 × Grado + costo base, 6 pergamene del campionario; tab Artefatti, Inventario, SS | **parte 1 fatta il 09/10** (dati e scheda: `tools/lotti/lotto_magia_27_consumabili.mjs`, `src/consumabili-mistici.js`, `src/ui/consumabili.js`; A.155; pacchetto `docs/pacchetto-per-davide-2026-10-09-magia27.md`); **resta la parte 2**: Consumabili personalizzati (altri Incantesimi e supporti, con i costi del §27.2) e SS | 1 |
 | 6. Equipaggiamento 0.6 | circa 20 voci nuove (navigatore inerziale, decontaminanti, estintori, nastro, toppe, schiuma, tuta extraveicolare, riparo pressurizzato, calzature magnetiche, modulo di cifratura, rilevatore di sorveglianza, utensile laser, analizzatore alimentare), 7 righe della tabella NEC, dosi e bombole come risorse separate, effetti con le frasi del manuale, testo del §4.1 | **fatto il 09/10** (`tools/lotti/lotto_equipaggiamento_edizione06.mjs`: 18 voci, A.154; pacchetto `docs/pacchetto-per-davide-2026-10-09-equipaggiamento.md`) | — |
 | 7. Altro | A.122 Aiuto-master (permessi sul server, tablet: muovere il PG del turno attivo, vista giocatori); A.111 Pablo (la perdita di 2 UMN si toglie sulla copia del suo file: a mano, PG reali intoccabili; testo del `TODO(Davide)` di `regole.json`); A.112 nessuna azione; A.35 (l'eccedenza degli armamenti ceduti torna in crediti: **fatta il 09/10** nel lotto «equipaggiamento») | da fare | 1 |
 
@@ -45,3 +45,25 @@ Ogni risposta ha il suo commit. I valori stanno in `data/mappa.json`, dove i `TO
 - **A.122 (Aiuto-master)** riguarda anche la mappa ma è una funzione nuova (permessi sul server, tablet che muove il PG del turno attivo): lotto 7.
 
 Pacchetto per il Doc: `docs/pacchetto-per-davide-2026-10-09.md`.
+
+## Lotto 5, Magia §27: com'è stato applicato (parte 1, 09/10)
+
+- **Dati** (`data/equipaggiamento/artefatti.json`, lotto `tools/lotti/lotto_magia_27_consumabili.mjs`):
+  - `consumabili`: SnT 0, Cariche Esclusive sigillate, consumo al completamento, supporto standard (25 cr, Semplice, 4 ore),
+    PM = 3 × Grado di lavoro + PM sigillati, Magistrale (dimezza per eccesso PM di lavoro e reagenti), tabella del §27.2 con
+    i livelli della versione del §24.2;
+  - le sei pergamene del §27.3, tipo «artefatto», famiglia e tipologia «Consumabili», catalogo Commerciale, prezzo di vendita
+    della tabella, creazione in `creazione_cr`; peso vuoto con `TODO(Davide)` A.155.
+- **Motore** (`src/consumabili-mistici.js`): costi di creazione (esempio di Cura Ferite 3 come test), attivazione (1 AzP in
+  un Round; 10 minuti e 3 ore fuori dal combattimento), «Usa» che toglie un esemplare dalla quantità dell'Inventario e
+  toglie la voce con l'ultimo. I Consumabili non entrano nella sintonizzazione né fra i contenitori di Chroma: i PM
+  sigillati non sono una riserva del PG (A.20 e A.112 invariate).
+- **Scheda** (`src/ui/consumabili.js`): sottocategoria «Consumabili» nella tab Artefatti (effetto, PM sigillati, costi di
+  creazione, «Usa»); «Usa» anche nella riga dell'Inventario e, per le attivazioni in AzP, nella tab Combattimento.
+  «Attivazione completata» consuma e registra l'effetto a durata fra gli «Incantesimi in corso» (Arma e Armatura Mistica
+  5 RND; Individuare a scelta 5 RND o Concentrazione fino a 10 minuti); «Interrotta» non consuma.
+- **Validatore**: tabella coerente (creazione = supporto + reagenti, vendita = doppio, livelli contigui 1–18), Grado
+  coerente con il livello, Incantesimo e versione esistenti, PM sigillati della versione, prezzo, creazione e REP del Grado,
+  SnT 0 senza riserva.
+- **Parte 2** (un prompt): Consumabili personalizzati (un Incantesimo e una versione qualsiasi, supporti diversi dalla
+  pergamena, costi e Magistrale nel modulo dell'Inventario); foglio Artefatti della SS con i Consumabili.

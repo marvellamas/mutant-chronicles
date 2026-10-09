@@ -1285,6 +1285,13 @@ Fonte: E&L dell'08/10/2026, 21:10 UTC, blocco «Aggiornamento cumulativo — ris
     A.126, A.133, A.145–A.147, la tabella per tipo e altezza degli ostacoli di A.140; malattie e cure al Manuale del
     Direttore. I loro `TODO(Davide)` restano.
 
+**Nuova** (09/10/2026, lotto Magia §27, parte 1):
+
+- **A.155 — Dati fisici delle pergamene** (Magia §27.3). Il campionario dà Grado, PM, attivazione, costi e REP, ma non peso,
+  Qualità, PS Integrità e PI delle pergamene. Quanto pesa una pergamena, e ha PI come gli altri oggetti? Provvisorio: peso
+  vuoto (non pesa sul carico), nessun PI (`artefatti.json` → `pergamena-di-*`, `TODO(Davide)`). Il §27 è applicato nei
+  dati e nella scheda il 09/10 (lotto 5 di `docs/diff-davide-2026-10-08.md`, parte 1).
+
 **Nuova** (09/10/2026, lotto Equipaggiamento 0.6):
 
 - **A.154 — Peso della cartuccia del decontaminante** (Equipaggiamento 0.6, §3.5.1). Nella tabella il peso della «Cartuccia
