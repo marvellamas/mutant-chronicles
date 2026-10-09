@@ -2169,7 +2169,7 @@ export function renderMappa(radice, ctx) {
       // 07/10: token in mezzo (Giocatore §5.10, A.141, A.144): «bersaglio impegnato o protetto» proposto in «Attacca!»
       r.protetto ? `In mezzo: ${r.inMezzo.map((x) => pezzoDi(x)?.nome ?? x.nome ?? x.id).join(', ')}: bersaglio protetto (§5.10), −4 VA; se il tiro fallisce, seconda Prova a −4: con successo manca tutti, altrimenti colpisce chi sta in mezzo. Proposto in «Attacca!».` : null,
       r.causa?.token?.length ? `Copertura data da: ${r.causa.token.map((x) => pezzoDi(x)?.nome ?? x.nome ?? x.id).join(', ')}${r.causa.muro ? ' e da muri o porte' : ''}.` : null,
-      'Regola della Copertura sulla griglia provvisoria (A.140).',
+      'Copertura dalle cinque linee (A.140): il master la corregge per altezza, postura e situazione.',
     ];
     const azioni = [];
     // fase 2, lotto 4: la luce della zona del bersaglio, proposta in «Attacca!» (modificabile), con la sua riga

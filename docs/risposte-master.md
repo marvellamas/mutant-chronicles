@@ -1188,7 +1188,7 @@ Fonte: E&L dell'08/10/2026, 21:10 UTC, blocco «Aggiornamento cumulativo — ris
 144. **Copertura** (A.140). Cinque linee dal centro del Q di chi attacca al centro e ai quattro angoli del bersaglio: 0
     nessuna, 1–2 Leggera −2, 3–4 Media −4, 5 Totale; il solo contatto con un angolo non blocca; il Direttore corregge per
     altezza, postura e situazione. Conferma la decisione 137. **Rinviata** la tabella automatica per tipo e altezza
-    dell'ostacolo (anche se blocca una sola linea, con la postura). **Lotto mappa** (via il `TODO(Davide)`).
+    dell'ostacolo (anche se blocca una sola linea, con la postura). **Applicata** il 09/10: era già così (decisione 137); via il `TODO(Davide)` (`visuale._nota_a140`), testo dell'avviso della linea di tiro. La tabella per tipo e altezza dell'ostacolo resta rinviata.
 145. **Bersaglio ingaggiato e creature interposte** (A.141, A.144). Il bersaglio ingaggiato resta al §5.10 (−4 e seconda
     Prova). Una creatura che interferisce con la linea di tiro dà solo −2, cumulabile con le altre penalità, una volta
     sola qualunque sia il numero, senza seconda Prova; la creatura già contata nell'ingaggio non aggiunge il −2, un'altra

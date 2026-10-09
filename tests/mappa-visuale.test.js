@@ -29,7 +29,9 @@ test('dati: le regole del manuale e le provvisorie A.140, A.141, A.142', () => {
   assert.match(RV._nota, /direzionale/);
   // 07/10, «dal centro»: cinque linee, sei livelli (0 nessuna, 1–2 Leggera, 3–4 Media, 5 Totale)
   assert.deepEqual(RV.copertura_linee, ['nessuna', 'leggera', 'leggera', 'media', 'media', 'totale']);
-  for (const [k, n] of [['copertura', 140], ['token in mezzo', 141], ['raggio', 142]]) assert.match(RV[`TODO(Davide) ${k}`], new RegExp(`^A\\.${n}`));
+  for (const [k, n] of [['token in mezzo', 141], ['raggio', 142]]) assert.match(RV[`TODO(Davide) ${k}`], new RegExp(`^A\\.${n}`));
+  assert.equal(RV['TODO(Davide) copertura'], undefined);
+  assert.match(RV._nota_a140, /^A\.140/);
   const d = copia(dati);
   d.mappa.visuale.copertura_linee = ['nessuna', 'leggera', 'leggera', 'media', 'totale'];
   assert.ok(validaDati(d).some((e) => e.file === 'mappa.json' && e.chiave === 'visuale.copertura_linee'));

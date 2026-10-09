@@ -3,7 +3,7 @@
 // I manuali non danno una regola geometrica per la linea di vista: il Giocatore dà gli effetti della Copertura (§5.8:
 // Leggera −2 VA, Media −4 VA, Totale «il bersaglio non può essere attaccato direttamente»; «la Copertura è
 // direzionale»), la gittata (§5.11, fasce dei 10, 20, 40… Q) e la diagonale da 1 Q (§5.10, Scarto; A.124). La regola
-// sulla griglia è quindi provvisoria e sta nei dati (data/mappa.json → visuale, TODO(Davide) A.140 e A.141):
+// sulla griglia sta nei dati (data/mappa.json → visuale; A.140, decisione 144, risposta di Davide dell'08/10):
 //   - ostacoli alla vista: i muri e le porte negli stati che bloccano la vista (porte.bloccano_vista; aperte libere);
 //   - Copertura «dal centro» (decisione di Marcello del 07/10/2026, al posto di «dagli angoli»): dal centro del Q di chi
 //     tira si tracciano cinque linee, verso i quattro angoli e il centro dell'ingombro del bersaglio, e si contano quelle
