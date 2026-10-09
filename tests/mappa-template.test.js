@@ -20,7 +20,9 @@ test('dati: forme dei manuali, regola «almeno metà», misure proposte; le ambi
   assert.deepEqual(RT.forme, ['cerchio', 'cono', 'linea', 'quadrato', 'rettangolo']);
   assert.equal(RT.regola_copertura, 'almeno_meta');
   assert.match(RT._nota, /incluso per almeno metà/);
-  assert.match(RT['TODO(Davide) metrica'], /^A\.137/);
+  assert.equal(RT['TODO(Davide) metrica'], undefined);
+  assert.match(RT._nota_metrica, /^A\.137/);
+  assert.equal(RT.metrica_raggio, 'quadretti', 'A.137, decisione 141: raggio a quadretti');
   assert.match(RT['TODO(Davide) cono'], /^A\.138/);
   assert.deepEqual(RT.misure_proposte.cono.at(-1), { lunghezza: 18, larghezza: 9 }, 'Cono Elementale al livello 18');
   const d = copia(dati);

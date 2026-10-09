@@ -163,7 +163,7 @@
     "regola_copertura": "almeno_meta",
     "campioni_per_lato": 8,
     "metrica_raggio": "quadretti",
-    "TODO(Davide) metrica": "A.137: il raggio di un’Area (esplosioni, granate, incantesimi) si misura a quadretti, con la diagonale a 1 Q come il movimento (A.124), così un raggio di 2 Q è un quadrato di 5 × 5 Q? Oppure è un cerchio vero, con i Q coperti per almeno metà (Magia, «Gittate e geometria»)? Provvisorio: a quadretti (anche lunghezza di coni e linee in diagonale); «euclidea» per il cerchio vero.",
+    "_nota_metrica": "A.137 (risposta di Davide dell’08/10/2026, decisione 141): distanza sulla griglia con la diagonale a 1 Q; raggio 1 Q = 3 × 3 Q centrato sul Q d’origine, 2 Q = 5 × 5, 3 Q = 7 × 7: le aree di raggio sono quadrate. Restano le regole di ostacoli e propagazione; non cambia i coni. «euclidea» resta possibile come scelta dei dati.",
     "cono_larghezza_iniziale": 1,
     "TODO(Davide) cono": "A.138: il Cono («lunghezza × larghezza finale, con apertura progressiva») quanto è largo all’inizio, al bordo del lanciatore? Provvisorio: 1 Q, poi si allarga in modo uniforme fino alla larghezza finale. Con una larghezza finale pari (Cono Elementale 3 × 2, 12 × 6) e il cono dritto su una fila, i Q di bordo restano coperti per meno di metà: va bene così o la larghezza finale si conta in Q interi da un lato?",
     "linea_larghezza": 1,

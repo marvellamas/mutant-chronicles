@@ -11,7 +11,7 @@
 // e, per cono e linea, una direzione in gradi (0 = verso destra, 90 = verso il basso, come lo schermo).
 //   cerchio    { raggio }               dal centro del Q d'origine; metrica in data/mappa.json → template.metrica_raggio
 //                                       («quadretti»: diagonale 1 Q come il movimento, A.124, il raggio è un quadrato
-//                                       di 2r + 1 Q; «euclidea»: cerchio vero) — TODO(Davide) A.137
+//                                       di 2r + 1 Q, A.137, decisione 141; «euclidea»: cerchio vero)
 //   quadrato   { lato }                 centrato sul Q d'origine (lato pari: il Q d'origine è in alto a sinistra fra i
 //                                       quattro centrali); Fuoco di Soppressione 3 × 3 Q, Campo di Forza
 //   rettangolo { larghezza, altezza }   dal Q d'origine verso destra e verso il basso (area libera)

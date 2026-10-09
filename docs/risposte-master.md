@@ -1177,7 +1177,7 @@ Fonte: E&L dell'08/10/2026, 21:10 UTC, blocco «Aggiornamento cumulativo — ris
     esito e il +4/−4 alla Prova successiva. **Applicata** il 09/10 per la mappa: `data/mappa.json` → movimento.blocco_dopo_passo true, via il `TODO(Davide)`. **Da implementare** la tabella della Prova facoltativa in «Attacca!» (lotto «combattimento»). `data/mappa.json` → movimento.blocco_dopo_passo. **Da
     implementare** la tabella della Prova facoltativa in «Attacca!» (lotto «combattimento»).
 141. **Aree con raggio in quadretti** (A.137). Diagonale 1 Q: raggio 1 = 3 × 3 Q, 2 = 5 × 5, 3 = 7 × 7; non cambia i
-    coni. Conferma il provvisorio (`data/mappa.json` → template.metrica_raggio «quadretti»). **Lotto mappa** (via il
+    coni. Conferma il provvisorio (`data/mappa.json` → template.metrica_raggio «quadretti»). **Applicata** il 09/10: era già così; via il `TODO(Davide)` (`template._nota_metrica`). (via il
     `TODO(Davide)`).
 142. **Cono** (A.138). Vertice al centro del Q di chi usa il template; si sceglie direzione, distanza e ampiezza finale;
     si allarga in modo lineare da zero all'ampiezza finale; un Q è colpito se coperto per almeno metà; il Q d'origine è
