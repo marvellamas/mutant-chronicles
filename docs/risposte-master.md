@@ -1179,8 +1179,15 @@ Fonte: E&L dell'08/10/2026, 21:10 UTC, blocco «Aggiornamento cumulativo — ris
     di tirare (0 Corsa, −2 Scatto su terra); i Q non cambiano con l'esito (12 e 18). Penalità personale / agli attacchi
     contro, fino alla propria Iniziativa successiva: senza Prova Corsa −2/−2, Scatto −6/−4; Magistrale 0/−6 e −2/−8;
     Successo 0/−4 e −4/−6; Fallimento −4/0 e −8/−2; Maldestro −6/0 e −10/0. Superati gli aumenti o riduzioni dei Q per
-    esito e il +4/−4 alla Prova successiva. **Applicata** il 09/10 per la mappa: `data/mappa.json` → movimento.blocco_dopo_passo true, via il `TODO(Davide)`. **Da implementare** la tabella della Prova facoltativa in «Attacca!» (lotto «combattimento»). `data/mappa.json` → movimento.blocco_dopo_passo. **Da
-    implementare** la tabella della Prova facoltativa in «Attacca!» (lotto «combattimento»).
+    esito e il +4/−4 alla Prova successiva. **Applicata** il 09/10 per la mappa: `data/mappa.json` → movimento.blocco_dopo_passo
+    true, via il `TODO(Davide)`. **Applicata** il 09/10 in «Attacca!» (lotto «combattimento»): tabella in `regole.json` →
+    `attacco_distanza.movimento.prova_atletica` (Atletica, 0 Corsa / −2 Scatto, quattro esiti con penalità propria e per
+    colpirlo; validatore), motore `src/attacco.js` → `penalitaMovimento`, `esitoAtletica` (d20 dal vivo o dall'app; il
+    successo automatico vale Successo). A distanza la Prova di chi attacca e quella del bersaglio in Corsa o Scatto; in
+    mischia la penalità personale dopo Corsa o Scatto (fissa o dell'esito; non con la Carica, che ha le sue). PG e nemici
+    (pannello comune). Dalla mappa: `src/mappa/annulla.js` → `movimentoDelRound` e `server.mjs` → `/api/movimento-round`
+    (fascia del Round, Passo diventato Corsa o Scatto, Q): «Attacca!» imposta il movimento e propone la Prova. Nessun
+    `TODO(Davide)` da togliere in «Attacca!» (c'era solo quello della mappa).
 141. **Aree con raggio in quadretti** (A.137). Diagonale 1 Q: raggio 1 = 3 × 3 Q, 2 = 5 × 5, 3 = 7 × 7; non cambia i
     coni. Conferma il provvisorio (`data/mappa.json` → template.metrica_raggio «quadretti»). **Applicata** il 09/10: era già così; via il `TODO(Davide)` (`template._nota_metrica`). (via il
     `TODO(Davide)`).
