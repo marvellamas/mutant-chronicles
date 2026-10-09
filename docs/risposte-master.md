@@ -1231,11 +1231,18 @@ Fonte: E&L dell'08/10/2026, 21:10 UTC, blocco «Aggiornamento cumulativo — ris
     una versione accessibile; PM base raddoppiati; Prova di Potere obbligatoria, di una categoria più difficile (salvo i
     Talenti); il resto invariato; mai due aspetti insieme. Poi i 32 punti con i gradini (elementi +1 fino a 3; Mod. PS di
     Armatura Elementale e Devastazione fino a −6; Catene di Forza 0 → −2 → −4 → −6 su tutte e tre le PS; e gli altri:
-    testo completo nell'E&L). **Da implementare** (lotto «magia»: i 32 `TODO(Davide)` A.109 di `incantesimi.json`).
+    testo completo nell'E&L). **Applicata** il 09/10 (lotto «magia»): regola comune in `regole.json` → `lancio.anticipazione.decisione`
+    (il motore di «Lancia!» la seguiva già: test in `tests/lancio.test.js`); i 32 gradini in `tools/anticipazione_approvate.json`
+    con `approvata: "A.109"` e una `nota` con le condizioni della risposta, applicati da `tools/scale_anticipazione.mjs --scrivi`
+    (319 aspetti su 319 con la scala, nessuno «da definire al tavolo»); la nota compare accanto al gradino nel riquadro
+    dell'Anticipazione. I 32 `TODO(Davide)` A.109 sono tolti.
 155. **Conferme e rinvii.** Davide dà per già approvate A.20 (il Chroma bianco resta riservato a chi ha accesso alla
     magia; non basta essere coscienti) e A.35 (l'eccedenza del valore degli armamenti ceduti viene restituita in crediti).
     **A.35 cambia** l'ipotesi dell'app (eccedenza persa, `TODO(Davide)` in `src/dotazioni.js`): da implementare (lotto
-    «altro»). **A.20** da verificare nel lotto «magia» (prelievo dal Chroma bianco). **Rinviate:** A.113, A.115, parte dei veicoli di A.125,
+    «altro»). **A.20** verificata il 09/10 (lotto «magia»): l'app non permetteva il prelievo a chi non ha accesso alla
+    magia (nessuna azione di prelievo; la nota del Bianco 2:1 solo al Taumaturgo); la regola sta ora in `regole.json` →
+    `chroma.conversione.prelievo` (accesso alla magia: Addestramento, Gradi taumaturgici o Talenti) e la SD la mostra a chi
+    ha l'accesso senza essere Taumaturgo. **Rinviate:** A.113, A.115, parte dei veicoli di A.125,
     A.126, A.133, A.145–A.147, la tabella per tipo e altezza degli ostacoli di A.140; malattie e cure al Manuale del
     Direttore. I loro `TODO(Davide)` restano.
 
