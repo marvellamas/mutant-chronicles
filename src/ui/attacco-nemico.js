@@ -90,7 +90,7 @@ export const tiriPerRegistro = (tiri, st, e) => tiri.map((t, i) => ({ valore: st
  * @param bersagli [{ id, nome, descrizione, colpito: (proposta) → apre «Colpito» }] (l'attaccante escluso)
  * @param registra async ({ attaccante, bersaglio, arma, va, tiri, esito }) → true se scritto nel registro
  */
-export function apriAttaccoNemico(ctx, p, { bersagli, registra, dichiarazione = {} }) {
+export function apriAttaccoNemico(ctx, p, { bersagli, registra, dichiarazione = {}, movimentoMappa = null }) {
   const attacchi = attacchiDi(p);
   const contenitore = h('div', { class: 'attacco-nemico' });
   document.body.append(contenitore);
@@ -168,6 +168,8 @@ export function apriAttaccoNemico(ctx, p, { bersagli, registra, dichiarazione = 
         // «Luce sul bersaglio» del pannello: vale per questo attacco
         imposta: (k, v) => { if (k === 'luce' || k === 'luceVisione') { st[k] = v; st.tiri = []; disegna(); } },
         spara: () => {},
+        // A.136: la Corsa o lo Scatto del nemico nel Round, dalla scena dello scontro
+        movimentoMappa,
         finale: finale(attacco, arma, b),
       },
     };

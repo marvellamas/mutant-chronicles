@@ -2014,6 +2014,22 @@ function validaAttaccoDistanza(dati, err) {
   for (const [id, m] of Object.entries(a.manovre ?? {})) {
     for (const x of m.incompatibili ?? []) if (!a.manovre[x]) err(F, `attacco_distanza.manovre.${id}.incompatibili`, `"${x}" non è una manovra`);
   }
+  // A.136: Prova facoltativa di Atletica in Corsa e Scatto, un esito per riga con la penalità propria e per colpirlo
+  const PA = a.movimento?.prova_atletica;
+  if (PA !== undefined) {
+    const K = 'attacco_distanza.movimento.prova_atletica';
+    if (!(dati.abilita?.abilita ?? []).some((x) => x.nome === PA.abilita)) err(F, `${K}.abilita`, `"${PA.abilita}" non è un'Abilità`);
+    const fasce = Array.isArray(PA.fasce) ? PA.fasce : [];
+    if (!fasce.length || fasce.some((x) => a.movimento?.proprio?.[x] === undefined)) err(F, `${K}.fasce`, 'fasce di movimento di «proprio» attese (corsa, scatto)');
+    for (const x of fasce) if (!isIntero(PA.modificatore?.[x])) err(F, `${K}.modificatore.${x}`, 'intero atteso');
+    for (const e of ['magistrale', 'successo', 'fallimento', 'maldestro']) {
+      const x = PA.esiti?.[e];
+      if (!isOggetto(x) || typeof x.nome !== 'string') { err(F, `${K}.esiti.${e}`, 'serve { nome, proprio, bersaglio }'); continue; }
+      for (const lato of ['proprio', 'bersaglio']) for (const f of fasce) {
+        if (!isIntero(x[lato]?.[f]) || x[lato][f] > 0) err(F, `${K}.esiti.${e}.${lato}.${f}`, 'intero ≤ 0 atteso: le riduzioni si fermano a zero');
+      }
+    }
+  }
   const rif = new Set(Object.entries(dati.equipaggiamento?.file ?? {}).flatMap(([id, f]) => (f.oggetti ?? []).map((o) => `${id}:${o.id}`)));
   for (const r of a.imbracciatura?.armi ?? []) if (!rif.has(r)) err(F, 'attacco_distanza.imbracciatura.armi', `"${r}" non esiste nel catalogo`);
   // effetti.valori dei Talenti (Liberi e di Classe): lo schema degli effetti degli oggetti (docs/censimento-talenti.md)

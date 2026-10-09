@@ -159,6 +159,20 @@ export function fasceNelRound(scena, idToken, scontro, round) {
   return scena.movimenti.filter((x) => x.token === idToken && !x.libero && delTurno(x)).map((x) => x.fascia ?? null);
 }
 
+/**
+ * Movimento del Round di un partecipante dello scontro, per «Attacca!» (A.136, decisione 140): la fascia che ha chiuso
+ * il movimento (Scatto prima di Corsa, poi Passo), se un Passo già cominciato è diventato Corsa o Scatto e i Q contati.
+ * I movimenti liberi del master non contano. null se il partecipante non ha un token nella scena.
+ * @returns {{ fascia: 'passo'|'corsa'|'scatto'|null, daPasso: boolean, q: number } | null}
+ */
+export function movimentoDelRound(scena, idPartecipante, scontro, round) {
+  const t = (scena?.token ?? []).find((x) => x.rif?.tipo === 'partecipante' && x.rif.id === idPartecipante);
+  if (!t) return null;
+  const fasce = fasceNelRound(scena, t.id, scontro, round).filter(Boolean);
+  const fascia = ['scatto', 'corsa', 'passo'].find((f) => fasce.includes(f)) ?? null;
+  return { fascia, daPasso: fasce[0] === 'passo' && fascia !== null && fascia !== 'passo', q: usatoNelRound(scena, t.id, scontro, round) };
+}
+
 /** Il token ha già fatto un movimento in questo Round? (veicoli: uno solo per Round, A.105) */
 export const mossoNelRound = (scena, idToken, scontro, round) => !!scontro && scena.movimenti.some((x) => x.token === idToken && x.scontro === scontro && x.round === round);
 

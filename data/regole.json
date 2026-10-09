@@ -615,6 +615,64 @@
         "passo": 1,
         "corsa": 1,
         "scatto": 1
+      },
+      "prova_atletica": {
+        "decisione": "A.136 (risposta di Davide dell’08/10/2026, decisione 140 di docs/risposte-master.md): normalmente non serve alcuna Prova di Atletica e valgono le penalità del §5.2 (proprio e bersaglio qui sopra). Chi vuole migliorare l’efficacia del movimento dichiara la Prova facoltativa prima di tirare, senza Azioni aggiuntive: Atletica a 0 per Corsa e a −2 per Scatto su terra. I Q percorsi non cambiano con l’esito (12 e 18 prima degli altri modificatori). Gli effetti durano fino alla successiva propria Iniziativa: «proprio» è la penalità personale di chi si muove, «bersaglio» quella degli attacchi contro di lui. Le riduzioni si fermano a zero e non diventano bonus. Superati gli aumenti o riduzioni dei Q per esito e il +4/−4 alla Prova successiva; nessun modificatore nuovo per nuoto, volo o altre manovre.",
+        "abilita": "Atletica",
+        "fasce": [
+          "corsa",
+          "scatto"
+        ],
+        "modificatore": {
+          "corsa": 0,
+          "scatto": -2
+        },
+        "esiti": {
+          "magistrale": {
+            "nome": "Successo Magistrale",
+            "proprio": {
+              "corsa": 0,
+              "scatto": -2
+            },
+            "bersaglio": {
+              "corsa": -6,
+              "scatto": -8
+            }
+          },
+          "successo": {
+            "nome": "Successo",
+            "proprio": {
+              "corsa": 0,
+              "scatto": -4
+            },
+            "bersaglio": {
+              "corsa": -4,
+              "scatto": -6
+            }
+          },
+          "fallimento": {
+            "nome": "Fallimento",
+            "proprio": {
+              "corsa": -4,
+              "scatto": -8
+            },
+            "bersaglio": {
+              "corsa": 0,
+              "scatto": -2
+            }
+          },
+          "maldestro": {
+            "nome": "Fallimento Maldestro",
+            "proprio": {
+              "corsa": -6,
+              "scatto": -10
+            },
+            "bersaglio": {
+              "corsa": 0,
+              "scatto": 0
+            }
+          }
+        }
       }
     },
     "movimento_evasivo": {

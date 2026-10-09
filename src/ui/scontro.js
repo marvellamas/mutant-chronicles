@@ -32,6 +32,21 @@ export async function leggiScontro(id) {
   return r.json();
 }
 
+/**
+ * Movimento del Round di un partecipante, dalla scena collegata allo scontro (A.136; server.mjs → /api/movimento-round):
+ * { fascia, daPasso, q, round } oppure null (server spento, nessuna scena, nessun token).
+ */
+export async function leggiMovimentoRound(scontro, partecipante) {
+  try {
+    const r = await fetch(`api/movimento-round?${new URLSearchParams({ scontro, partecipante })}`, { cache: 'no-store' });
+    if (!r.ok) return null;
+    const j = await r.json();
+    return j?.fascia ? j : null;
+  } catch {
+    return null;
+  }
+}
+
 /** Salva: { scontro } se riesce, { conflitto: scontro attuale } se un'altra finestra l'ha cambiato. */
 export async function salvaScontro(s) {
   const r = await fetch(`api/scontri/${encodeURIComponent(s.id)}`, { method: 'PUT', body: JSON.stringify(s), headers: { 'Content-Type': 'application/json' } });

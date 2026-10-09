@@ -115,6 +115,7 @@ import { normalizzaVeicoli } from './src/veicoli.js';
 import { caricaDati } from './src/rules.js';
 import { validaNemico, formattaErrore } from './src/validate.js';
 import { validaScena, riassuntoScena, ID_SCENA, FILE_MAPPA } from './src/mappa/scena.js';
+import { movimentoDelRound } from './src/mappa/annulla.js';
 import { vistaGiocatori } from './src/mappa/vista.js';
 import { validaDiretta, direttaPerGiocatori, visibileAiGiocatori } from './src/mappa/diretta.js';
 import { avversariZoc } from './src/mappa/zoc.js';
@@ -449,6 +450,32 @@ async function apiNemici(req, res, percorso, nemici, radice) {
   await mkdir(nemici, { recursive: true });
   await inCoda(join(nemici, `${id}.json`), () => scriviJson(join(nemici, `${id}.json`), n));
   return json(res, 200, { file: `${id}.json`, mtime: (await stat(join(nemici, `${id}.json`))).mtimeMs, nemico: n });
+}
+
+/**
+ * Movimento del Round di un partecipante, letto dalla scena collegata allo scontro (A.136, decisione 140): «Attacca!»
+ * sa se l'attaccante ha corso o scattato (anche da un Passo già cominciato) e propone la Prova facoltativa di
+ * Atletica. Risponde solo con fascia, Passo diventato blocco e Q: nient'altro della scena.
+ * GET /api/movimento-round?scontro=<id>&partecipante=<id> → { fascia, daPasso, q, round, scena } o { fascia: null }
+ */
+async function apiMovimentoRound(req, res, scene, scontri) {
+  if (req.method !== 'GET') return json(res, 405, { errore: 'metodo non ammesso' });
+  const p = new URL(req.url, 'http://x').searchParams;
+  const idScontro = p.get('scontro') ?? '';
+  const partecipante = p.get('partecipante') ?? '';
+  if (!ID_SCONTRO.test(idScontro) || !partecipante) return json(res, 400, { errore: 'servono scontro e partecipante' });
+  let scontro;
+  try { scontro = await leggiJson(join(scontri, `${idScontro}.json`)); } catch { return json(res, 404, { errore: 'scontro non trovato' }); }
+  let nomi = [];
+  try { nomi = (await readdir(scene)).filter((x) => x.endsWith('.json') && ID_SCENA.test(x.slice(0, -5))); } catch { /* nessuna scena */ }
+  for (const f of nomi) {
+    let s;
+    try { s = await leggiJson(join(scene, f)); } catch { continue; }
+    if (s?.collegamento?.scontro !== idScontro) continue;
+    const m = movimentoDelRound(s, partecipante, idScontro, scontro.round);
+    if (m) return json(res, 200, { ...m, round: scontro.round, scena: s.id });
+  }
+  return json(res, 200, { fascia: null, daPasso: false, q: 0, round: scontro.round, scena: null });
 }
 
 /**
@@ -1053,6 +1080,7 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
   // diretta (07/10): dopo una scrittura riuscita di scena o scontro la vista giocatori si rilegge subito
   const segnala = (r) => { if (req.method !== 'GET' && res.statusCode < 300) canale?.cambiata(); return r; };
   if (percorso === '/api/scene' || percorso.startsWith('/api/scene/')) return segnala(await apiScene(req, res, percorso, scene, mappe, radice, cartelle));
+  if (percorso === '/api/movimento-round') return apiMovimentoRound(req, res, scene, scontri);
   if (percorso === '/api/vista-giocatori' || percorso.startsWith('/api/vista-giocatori/')) return apiVistaGiocatori(req, res, percorso, cartelle);
   if (percorso.startsWith('/api/ritratti/')) return apiRitratto(req, res, percorso, cartelle);
   if (percorso === '/api/tablet' || percorso.startsWith('/api/tablet/')) return apiTablet(req, res, percorso, cartelle);

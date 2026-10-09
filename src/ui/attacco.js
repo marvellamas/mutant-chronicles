@@ -10,7 +10,9 @@ import {
   calcolaAttaccoDistanza, vincoliDistanza, dichiarazioneDistanza, richiedeImbracciatura, talentiAttacco, descriviModalita, descriviManovraDistanza,
   calcolaAttaccoRavvicinato, vincoliRavvicinato, dichiarazioneRavvicinato, manovreRavvicinate, descriviManovraRavvicinata,
   modificatoriDistanza, vaDueArmi, effettiSituazionaliAttacco, fasciaCarica,
+  ESITI_ATLETICA, conProvaAtletica, penalitaMovimento, esitoAtletica,
 } from '../attacco.js';
+import { specTiro, tira } from '../tiri.js';
 import { riquadroDanno, rigaScelte, interruttore, pannelloPassi } from './pannello-passi.js';
 import { selettoreLuce } from './tab.js';
 import { avviso } from './avvisi.js';
@@ -59,6 +61,86 @@ function dallaMappa(ctx, a, salvate) {
   return v;
 }
 
+const D20 = specTiro({ dadi: 1, facce: 20, fisso: 0 });
+const NOME_FASCIA = { passo: 'Passo', corsa: 'Corsa', scatto: 'Scatto' };
+
+/**
+ * A.136: alla prima apertura del pannello si chiede alla scena dello scontro il movimento dell'attaccante nel Round
+ * (ctx.azioni.movimentoMappa, solo con il server e uno scontro aperto); con una Corsa o uno Scatto il movimento si
+ * imposta da sé e il passo propone la Prova facoltativa di Atletica.
+ */
+function movimentoDallaMappa(ctx, a, stato, salvate) {
+  if (!ctx.azioni.movimentoMappa || stato.mappa !== undefined) return;
+  stato.mappa = null;
+  Promise.resolve(ctx.azioni.movimentoMappa()).then((m) => {
+    if (!m?.fascia || ctx.ui.attacco !== stato) return;
+    stato.mappa = m;
+    if (conProvaAtletica(m.fascia, ctx.dati) && salvate.movimento !== m.fascia) {
+      ctx.azioni.ricordaAttacco(a.uid, { ...salvate, movimento: m.fascia, atletica: null, atleticaTiro: null, evasivo: false, carica: false });
+      avviso(`Dalla mappa: ${NOME_FASCIA[m.fascia]} in questo Round${m.daPasso ? ' (un Passo già cominciato diventato ' + NOME_FASCIA[m.fascia] + ')' : ''}. Puoi dichiarare la Prova facoltativa di Atletica.`);
+    } else ctx.azioni.ridisegna();
+  }).catch(() => {});
+}
+
+/** Riga «Dalla mappa» sotto il movimento: fascia del Round, Passo diventato blocco, Q contati. */
+function notaMappa(stato) {
+  const m = stato.mappa;
+  if (!m?.fascia) return null;
+  return h('p', { class: 'nota luce-mappa' }, `Dalla mappa (Round ${m.round}): ${NOME_FASCIA[m.fascia]}${m.daPasso ? ', da un Passo già cominciato' : ''}, ${m.q} Q.`);
+}
+
+/**
+ * Prova facoltativa di Atletica di chi attacca (A.136): esito a scelta, oppure dal d20 dal vivo o tirato dall'app sul
+ * VA di Atletica (quello della scheda, modificabile: per i nemici si scrive) con 0 in Corsa e −2 in Scatto.
+ */
+function provaAtletica(ctx, d, stato, imposta) {
+  const P = ctx.dati.regole.attacco_distanza.movimento.prova_atletica;
+  if (!P || !conProvaAtletica(d.movimento, ctx.dati)) return null;
+  const senza = penalitaMovimento(d.movimento, null, ctx.dati);
+  const abil = (ctx.tab.scheda?.abilita ?? []).find((x) => x.nome === P.abilita);
+  const vaScheda = abil ? abil.effettivo ?? abil.va ?? null : null;
+  stato.vaAtletica ??= Number.isInteger(vaScheda) ? vaScheda : null;
+  const mod = P.modificatore[d.movimento] ?? 0;
+  const tiro = (valore, origine) => {
+    if (!Number.isInteger(stato.vaAtletica)) { avviso(`Scrivi il VA di ${P.abilita}.`, { tipo: 'errore' }); return; }
+    const e = esitoAtletica(stato.vaAtletica, d.movimento, valore, ctx.dati);
+    if (!e.esito) { avviso(`${e.testo} Restano le penalità senza Prova.`, { tipo: 'errore' }); imposta({ atletica: null, atleticaTiro: null }); return; }
+    imposta({ atletica: e.esito, atleticaTiro: { valore, origine, va: e.va, testo: e.testo } });
+  };
+  const input = h('input', { type: 'number', min: 1, max: 20, step: 1, class: 'input-d10', 'aria-label': 'd20 dal vivo' });
+  const t = d.atletica && d.atleticaTiro ? d.atleticaTiro : null;
+  return [
+    rigaScelte(`Prova facoltativa di ${P.abilita} (A.136)`, [
+      { valore: 'no', etichetta: `Senza Prova ${numero(senza.proprio)}`, riga: `contro di te ${numero(senza.bersaglio)}` },
+      ...ESITI_ATLETICA.map((e) => ({ valore: e, etichetta: `${P.esiti[e].nome} ${numero(P.esiti[e].proprio[d.movimento])}`, riga: `contro di te ${numero(P.esiti[e].bersaglio[d.movimento])}` })),
+    ], d.atletica ?? 'no', (x) => imposta({ atletica: x === 'no' ? null : x, atleticaTiro: null })),
+    h('div', { class: 'scelta-attacco scelta-distanza' },
+      h('p', { class: 'scelta-titolo' }, `Tiro della Prova (dichiarala prima di tirare): ${P.abilita} ${numero(mod)} in ${NOME_FASCIA[d.movimento]}`),
+      h('div', { class: 'distanza-riga' },
+        h('label', {}, `VA ${P.abilita} `, h('input', { type: 'number', step: 1, class: 'input-d10', value: stato.vaAtletica ?? '', 'aria-label': `VA di ${P.abilita}`, onchange: (e) => { const n = Number(e.target.value); stato.vaAtletica = e.target.value === '' || !Number.isInteger(n) ? null : n; } })),
+        input,
+        h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => {
+          const v = Number(input.value);
+          if (!Number.isInteger(v) || v < 1 || v > 20) { avviso('Il d20 dal vivo va da 1 a 20.', { tipo: 'errore' }); return; }
+          tiro(v, 'vivo');
+        } }, 'Inserisci'),
+        h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => tiro(tira(D20).tiro.valore, 'app') }, 'Tira 1d20 con l’app')),
+      t ? h('small', { class: 'nota' }, `d20 ${t.origine === 'app' ? 'tirato dall’app' : 'dal vivo'}: ${t.testo}`) : null,
+      h('small', { class: 'nota' }, 'I Q percorsi non cambiano con l’esito; gli effetti durano fino alla tua Iniziativa successiva.')),
+  ];
+}
+
+/** Esito della Prova di Atletica del bersaglio in Corsa o Scatto (A.136): cambia la penalità per colpirlo. */
+function provaAtleticaBersaglio(ctx, bers, b) {
+  const P = ctx.dati.regole.attacco_distanza.movimento.prova_atletica;
+  if (!P || bers.evasivo || !conProvaAtletica(bers.movimento, ctx.dati)) return null;
+  const senza = penalitaMovimento(bers.movimento, null, ctx.dati);
+  return rigaScelte(`Prova di ${P.abilita} del bersaglio (A.136)`, [
+    { valore: 'no', etichetta: `Senza Prova ${numero(senza.bersaglio)}` },
+    ...ESITI_ATLETICA.map((e) => ({ valore: e, etichetta: `${P.esiti[e].nome} ${numero(P.esiti[e].bersaglio[bers.movimento])}` })),
+  ], bers.atletica ?? 'no', (x) => b({ atletica: x === 'no' ? null : x }));
+}
+
 export function pannelloAttacco(ctx, a) {
   const chiudi = () => { ctx.ui.attacco = null; ctx.azioni.ridisegna(); };
   const intestazione = { etichetta: `Attacco con ${a.nome}`, titolo: `Attacca! · ${a.nome}`, chiudi, etichettaNav: 'Passi dell’attacco' };
@@ -79,6 +161,7 @@ function corpoRavvicinato(ctx, a, intestazione) {
   const ha = (k) => T.find((t) => t.e[k] !== undefined) ?? null;
   const r = calcolaAttaccoRavvicinato(personaggio, a, d, ctx.dati);
   const stato = (ctx.ui.attacco ??= { uid: a.uid, passo: 0 });
+  movimentoDallaMappa(ctx, a, stato, salvate);
   const manovraScelta = d.manovra[0];
   const statoATerra = (ctx.sessione.statiAttivi ?? []).includes(R.a_terra.stato);
   const carica = fasciaCarica(d.percorsoQ, R.carica);
@@ -97,7 +180,9 @@ function corpoRavvicinato(ctx, a, intestazione) {
     { titolo: 'Il tuo movimento', contenuto: [
       rigaScelte('Movimento', [
         { valore: 'fermo', etichetta: 'Fermo' }, { valore: 'passo', etichetta: 'Passo' }, { valore: 'corsa', etichetta: 'Corsa' }, { valore: 'scatto', etichetta: 'Scatto' },
-      ], d.movimento, (x) => imposta({ movimento: x })),
+      ], d.movimento, (x) => imposta({ movimento: x, atletica: null, atleticaTiro: null })),
+      notaMappa(stato),
+      d.carica ? null : provaAtletica(ctx, d, stato, imposta),
       interruttore('Carica', d.carica, (x) => imposta({ carica: x, ...(x ? { controcarica: false, manovra: 'normale' } : {}) }),
         { motivo: d.carica ? v.carica : null, mod: `${carica ? numero(carica.va) : R.carica.fasce.map((f) => numero(f.va)).join('/')} · danno ×${molt}`, info: infoRegola('Carica', R.carica) }),
       d.carica ? h('div', { class: 'scelta-attacco scelta-distanza' },
@@ -222,6 +307,7 @@ function corpoDistanza(ctx, a, intestazione) {
   // granate da lancio (§7.20.3): quelle rimaste nella voce dell’Inventario
   const colpi = a.granata ? a.granata.disponibili ?? null : ctx.sessione.munizioni?.[a.uid]?.colpi ?? null;
   const stato = (ctx.ui.attacco ??= { uid: a.uid, passo: 0 });
+  movimentoDallaMappa(ctx, a, stato, salvate);
   const R = ctx.dati.regole.attacco_distanza;
   const M = R.manovre;
   const evasivoProprio = R.movimento_evasivo.proprio[d.movimento];
@@ -243,7 +329,9 @@ function corpoDistanza(ctx, a, intestazione) {
       rigaScelte('Movimento', [
         { valore: 'fermo', etichetta: 'Fermo' }, { valore: 'passo', etichetta: 'Passo' },
         { valore: 'corsa', etichetta: `Corsa ${numero(MD.movimento.corsa)}${conTal(MD.talenti.movimento)}` }, { valore: 'scatto', etichetta: `Scatto ${numero(MD.movimento.scatto)}${conTal(MD.talenti.movimento)}` },
-      ], d.movimento, (x) => imposta({ movimento: x, ...(x === 'fermo' ? { evasivo: false } : {}), ...(!['fermo', 'passo'].includes(x) ? { coperturaPropria: 'nessuna' } : {}) })),
+      ], d.movimento, (x) => imposta({ movimento: x, atletica: null, atleticaTiro: null, ...(x === 'fermo' ? { evasivo: false } : {}), ...(!['fermo', 'passo'].includes(x) ? { coperturaPropria: 'nessuna' } : {}) })),
+      notaMappa(stato),
+      d.evasivo ? null : provaAtletica(ctx, d, stato, imposta),
       interruttore('Movimento Evasivo', d.evasivo, (x) => imposta({ evasivo: x }), { motivo: v.evasivo, mod: `AzM + AzP${evasivoProprio ? ` · ${numero(evasivoProprio)}` : ''}` }),
       rigaScelte('Attacco dalla Copertura (AzM)', [
         { valore: 'nessuna', etichetta: 'Nessuna' },
@@ -262,7 +350,8 @@ function corpoDistanza(ctx, a, intestazione) {
       salvate.luceMappa ? h('p', { class: 'nota luce-mappa' }, salvate.luceMappa) : null,
       rigaScelte('Movimento del bersaglio', [
         { valore: 'fermo', etichetta: 'Fermo' }, { valore: 'passo', etichetta: 'Passo' }, { valore: 'corsa', etichetta: `Corsa ${numero(R.movimento.bersaglio.corsa)}` }, { valore: 'scatto', etichetta: `Scatto ${numero(R.movimento.bersaglio.scatto)}` },
-      ], d.bersaglio.movimento, (x) => b({ movimento: x })),
+      ], d.bersaglio.movimento, (x) => b({ movimento: x, atletica: null })),
+      provaAtleticaBersaglio(ctx, d.bersaglio, b),
       rigaScelte('Movimento Evasivo del bersaglio', [
         { valore: 'no', etichetta: 'No' }, { valore: 'si', etichetta: 'Sì' }, { valore: 'migliorato', etichetta: 'Sì, Migliorato' },
       ], d.bersaglio.evasivoMigliorato ? 'migliorato' : d.bersaglio.evasivo ? 'si' : 'no', (x) => b({ evasivo: x !== 'no', evasivoMigliorato: x === 'migliorato' })),

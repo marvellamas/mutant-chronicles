@@ -15,7 +15,7 @@ import { bonusDannoCaratteristica } from './calc.js';
 import { avvisiStati, limitiStati } from './condizioni.js';
 import { riga, provenienza, righeDaScomposizione, righeBase, rigaConDettaglio, rigaBonusCaratteristica } from './provenienza.js';
 import { tecnicheAttacco, tecnicheInCorso, mezzoAmmesso } from './tecniche.js';
-import { limiteMagistrale } from './prova.js';
+import { limiteMagistrale, esitoProva } from './prova.js';
 import { moltiplicatoreMagistrale } from './danno.js';
 
 export const voce = (etichetta, valore, fonte, paragrafo = null) => ({ etichetta, valore, fonte, paragrafo });
@@ -70,6 +70,52 @@ export function attaccoBase(arma) {
 }
 
 // ---------------------------------------------------------------------------
+// Corsa e Scatto con la Prova facoltativa di Atletica (A.136, decisione 140; regole.json →
+// attacco_distanza.movimento.prova_atletica): senza Prova le penalità del §5.2, con la Prova quelle dell'esito,
+// proprie e per colpirlo, fino alla successiva propria Iniziativa. I Q percorsi non cambiano.
+
+export const ESITI_ATLETICA = ['magistrale', 'successo', 'fallimento', 'maldestro'];
+
+/**
+ * Penalità di un movimento: { proprio, bersaglio, esito, nome } (esito null senza Prova o fuori da Corsa e Scatto).
+ */
+export function penalitaMovimento(movimento, esito, dati) {
+  const M = dati.regole.attacco_distanza.movimento;
+  const P = M.prova_atletica;
+  if (P && ESITI_ATLETICA.includes(esito) && (P.fasce ?? []).includes(movimento)) {
+    const x = P.esiti[esito];
+    return { proprio: x.proprio[movimento], bersaglio: x.bersaglio[movimento], esito, nome: x.nome };
+  }
+  return { proprio: M.proprio[movimento] ?? 0, bersaglio: M.bersaglio[movimento] ?? 0, esito: null, nome: null };
+}
+
+/** La fascia ha la Prova facoltativa di Atletica? (Corsa e Scatto su terra) */
+export const conProvaAtletica = (movimento, dati) => (dati.regole.attacco_distanza.movimento.prova_atletica?.fasce ?? []).includes(movimento);
+
+/**
+ * Esito della Prova facoltativa dal d20, dal vivo o tirato dall'app: VA di Atletica più il modificatore della fascia
+ * (0 Corsa, −2 Scatto). Il successo automatico (VA 20 o più senza tiro, §1.7) vale come Successo; con la Prova
+ * impossibile non si fa, e restano le penalità senza Prova.
+ * @returns {{ esito: 'magistrale'|'successo'|'fallimento'|'maldestro'|null, va, testo }}
+ */
+export function esitoAtletica(vaAtletica, movimento, d20, dati) {
+  const P = dati.regole.attacco_distanza.movimento.prova_atletica;
+  const va = vaAtletica + (P?.modificatore?.[movimento] ?? 0);
+  const e = esitoProva(va, d20, dati, { abilita: true });
+  const esito = e.esito === 'automatico' ? 'successo' : ESITI_ATLETICA.includes(e.esito) ? e.esito : null;
+  return { esito, va, testo: e.testo };
+}
+
+/** Promemoria di Corsa e Scatto: chi ti attacca, fino alla tua Iniziativa successiva (A.136). */
+function testoAtletica(movimento, pm) {
+  const nome = movimento === 'scatto' ? 'Scatto' : 'Corsa';
+  const contro = pm.bersaglio ? `chi ti attacca ha ${pm.bersaglio < 0 ? `−${-pm.bersaglio}` : pm.bersaglio} VA` : 'chi ti attacca non ha penalità';
+  return pm.esito
+    ? `${nome} con la Prova di Atletica (${pm.nome}): ${contro} fino alla tua Iniziativa successiva (A.136).`
+    : `${nome} senza Prova di Atletica: ${contro} fino alla tua Iniziativa successiva; la Prova facoltativa si dichiara prima di tirare (A.136).`;
+}
+
+// ---------------------------------------------------------------------------
 // Attacco a distanza
 
 /** Dichiarazione completa, con i valori predefiniti (niente movimento, niente copertura, Tiro Singolo). */
@@ -77,10 +123,13 @@ export function dichiarazioneDistanza(d = {}) {
   const b = d.bersaglio ?? {};
   return {
     movimento: ['fermo', 'passo', 'corsa', 'scatto'].includes(d.movimento) ? d.movimento : 'fermo',
+    atletica: ESITI_ATLETICA.includes(d.atletica) ? d.atletica : null, // A.136: esito della Prova facoltativa
+    atleticaTiro: ESITI_ATLETICA.includes(d.atletica) && d.atleticaTiro && typeof d.atleticaTiro === 'object' ? d.atleticaTiro : null,
     evasivo: !!d.evasivo,
     coperturaPropria: ['leggera', 'media'].includes(d.coperturaPropria) ? d.coperturaPropria : 'nessuna',
     bersaglio: {
       movimento: ['fermo', 'passo', 'corsa', 'scatto'].includes(b.movimento) ? b.movimento : 'fermo',
+      atletica: ESITI_ATLETICA.includes(b.atletica) ? b.atletica : null,
       evasivo: !!b.evasivo,
       evasivoMigliorato: !!b.evasivoMigliorato,
       copertura: ['leggera', 'media', 'totale'].includes(b.copertura) ? b.copertura : 'nessuna',
@@ -432,8 +481,11 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
   const EV = A.movimento_evasivo;
   let azioniMovimento = A.movimento.azioni_movimento[d.movimento];
   if (d.evasivo && vincoli.evasivo) blocca(`Movimento Evasivo non possibile: ${vincoli.evasivo}.`);
-  const penMov = d.evasivo ? EV.proprio[d.movimento] ?? 0 : A.movimento.proprio[d.movimento];
-  aggiungi(`Tuo movimento: ${d.movimento}${d.evasivo ? ' evasivo' : ''}`, penMov, 'movimento', d.evasivo ? EV.paragrafo : A.movimento.paragrafo);
+  // A.136: con la Prova facoltativa di Atletica l'esito sostituisce le penalità di Corsa e Scatto
+  const pm = penalitaMovimento(d.movimento, d.evasivo ? null : d.atletica, dati);
+  const penMov = d.evasivo ? EV.proprio[d.movimento] ?? 0 : pm.proprio;
+  aggiungi(`Tuo movimento: ${d.movimento}${d.evasivo ? ' evasivo' : ''}${pm.esito ? `, Prova di Atletica: ${pm.nome}` : ''}`, penMov, 'movimento', d.evasivo ? EV.paragrafo : pm.esito ? 'A.136' : A.movimento.paragrafo);
+  if (!d.evasivo && conProvaAtletica(d.movimento, dati)) promemoria.push(testoAtletica(d.movimento, pm));
   // A.38 (E&L del 05/10/2026): Movimento Tattico e Movimento Fluido si sommano, fino ad annullare la penalità
   const ridMovT = con('movimento_proprio');
   const ridMovTot = ridMovT.reduce((n, t) => n + (t.e.movimento_proprio.riduzione ?? 0), 0);
@@ -458,7 +510,8 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
     aggiungi(`Bersaglio in Movimento Evasivo${b.evasivoMigliorato ? ' Migliorato' : ''} (${b.movimento})`, tab[b.movimento], 'bersaglio', EV.paragrafo);
   } else {
     if (b.evasivo) promemoria.push('Movimento Evasivo del bersaglio ignorato: richiede almeno 1 Q percorso, non è compatibile con «Fermo» (A.38).');
-    aggiungi(`Bersaglio in ${b.movimento}`, A.movimento.bersaglio[b.movimento], 'bersaglio', A.movimento.paragrafo);
+    const pb = penalitaMovimento(b.movimento, b.atletica, dati);
+    aggiungi(`Bersaglio in ${b.movimento}${pb.esito ? `, Prova di Atletica: ${pb.nome}` : ''}`, pb.bersaglio, 'bersaglio', pb.esito ? 'A.136' : A.movimento.paragrafo);
   }
   let penCopertura = 0;
   if (b.copertura === 'totale') blocca('Il bersaglio in Copertura Totale non può essere attaccato direttamente (§5.8).');
@@ -782,6 +835,8 @@ export function dichiarazioneRavvicinato(d = {}) {
   const manovra = Array.isArray(d.manovra) ? d.manovra.filter((x) => typeof x === 'string') : typeof d.manovra === 'string' ? [d.manovra] : ['normale'];
   return {
     movimento: ['fermo', 'passo', 'corsa', 'scatto'].includes(d.movimento) ? d.movimento : 'fermo',
+    atletica: ESITI_ATLETICA.includes(d.atletica) ? d.atletica : null, // A.136: esito della Prova facoltativa
+    atleticaTiro: ESITI_ATLETICA.includes(d.atletica) && d.atleticaTiro && typeof d.atleticaTiro === 'object' ? d.atleticaTiro : null,
     carica: !!d.carica,
     percorsoQ: Number.isFinite(d.percorsoQ) && d.percorsoQ >= 0 ? Math.round(d.percorsoQ) : 3,
     controcarica: !!d.controcarica,
@@ -1047,6 +1102,19 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
     moltiplicatore = Math.max(moltiplicatore, cm ? cm.e.carica.moltiplicatore : C.moltiplicatore);
     azioniMovimento = Math.max(azioniMovimento, 1);
     promemoria.push(C.frasi[0]);
+  }
+
+  // A.136 e §5.2: dopo una Corsa o uno Scatto (non la Carica, che ha le sue penalità) la penalità personale vale anche
+  // in mischia, fino alla successiva propria Iniziativa; con la Prova facoltativa di Atletica quella dell'esito
+  if (!d.carica && conProvaAtletica(d.movimento, dati)) {
+    const pm = penalitaMovimento(d.movimento, d.atletica, dati);
+    const MOV = dati.regole.attacco_distanza.movimento;
+    aggiungi(situazione, `Tuo movimento: ${d.movimento}${pm.esito ? `, Prova di Atletica: ${pm.nome}` : ''}`, pm.proprio, 'movimento', pm.esito ? 'A.136' : MOV.paragrafo);
+    // Movimento Fluido e Movimento Tattico (A.38), come a distanza: fino ad annullare la penalità, mai un bonus
+    const rid = talentiAttacco(personaggio.scheda, dati).filter((t) => t.e.movimento_proprio !== undefined);
+    const tot = rid.reduce((n, t) => n + (t.e.movimento_proprio.riduzione ?? 0), 0);
+    if (pm.proprio < 0 && tot) aggiungi(situazione, rid.map((t) => t.nome).join(' + '), Math.min(tot, -pm.proprio), 'talento', MOV.paragrafo);
+    promemoria.push(testoAtletica(d.movimento, pm));
   }
 
   // 5. situazione propria e del bersaglio

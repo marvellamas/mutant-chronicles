@@ -17,7 +17,7 @@ import { elencoVeicoli, migraNelRegistro } from './veicoli-registro.js';
 import { eRiferimento } from '../veicoli-registro.js';
 import { serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella } from './cartella.js';
 import { statoSalvataggioMaster, controllaRemoto, revisioneDaScrivere, differenzeSessione, testoScelta, indicatoreCollegamento, impronta } from '../collegamento.js';
-import { leggiScontroAperto, leggiScontro, salvaScontro } from './scontro.js';
+import { leggiScontroAperto, leggiScontro, salvaScontro, leggiMovimentoRound } from './scontro.js';
 import { registraRiga } from '../scontro.js';
 import { elencoUnito, confronta, chiaveDaFile, chiavePersonaggio, messaggioSalvataggio, attesaRitentativo, nomeFileLibero, haNome, fileProvvisorio } from '../cartella.js';
 import { renderTavolo } from './tavolo.js';
@@ -1405,6 +1405,8 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       vaiTab,
       // 08/10: «Muovi il PG sulla mappa» (riquadro «Scontro in corso»): la vista tablet della scena dello scontro, con il PG
       muoviSullaMappa: stato.scontroPg && chiaveCartellaAperta() ? () => vai(urlMuovi(chiaveCartellaAperta(), stato.scontroPg.id, stato.id)) : null,
+      // A.136: in «Attacca!» la Corsa o lo Scatto del PG nel Round, dalla scena dello scontro
+      movimentoMappa: stato.scontroPg && chiaveCartellaAperta() ? () => leggiMovimentoRound(stato.scontroPg.id, idPg(chiaveCartellaAperta())) : null,
       sali: saliDiLivello,
       completaPunti: () => vai(`#/p/${stato.id}/completa`),
       togliPunti: () => vai(`#/p/${stato.id}/togli`),

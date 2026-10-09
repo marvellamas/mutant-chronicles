@@ -20,7 +20,7 @@ import { attacchiDi } from '../nemico-attacco.js';
 import { testoColpo } from '../danno.js';
 import { colpoSuNemico } from '../colpo-nemico.js';
 import { perditeDovute, applicaPerdita, registraPeriodico, togliPeriodici, allineaPeriodici, periodicoDi, pvDopoPerdita } from '../periodici.js';
-import { pannelloScontro, leggiScontroAperto, leggiScontro, salvaScontro, scegliReimposta, chiediIniziativa } from './scontro.js';
+import { pannelloScontro, leggiScontroAperto, leggiScontro, salvaScontro, scegliReimposta, chiediIniziativa, leggiMovimentoRound } from './scontro.js';
 import { pannelloBestiario, elencoNemici, cartaNemico } from './nemici.js';
 import { chiudi as chiudiScontro, cambiaMusica, diTurno, ordineIniziativa, registraIniziative, senzaIniziativaNuovi, avanti, indietro, anteprimaIndietro, reimpostaIniziativa, reimpostaIniziativaDi, dadoIniziativa, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico, confermaRegimeNemico, aggiungiNemici, registraRiga, cambiaStatoNemico } from '../scontro.js';
 import { vociBestiario } from '../nemici.js';
@@ -581,7 +581,7 @@ export function renderTavolo(radice, ctx) {
   };
   const attacca = (p, alTavolo) => {
     if (!stato.scontro) return;
-    apriAttaccoNemico(ctx, p, { bersagli: bersagliPer(p, alTavolo), registra: (a) => modifica((x) => registraAttacco(x, a)) });
+    apriAttaccoNemico(ctx, p, { bersagli: bersagliPer(p, alTavolo), registra: (a) => modifica((x) => registraAttacco(x, a)), movimentoMappa: () => leggiMovimentoRound(stato.scontro.id, p.id) });
   };
   // Lotto 8 (A.73, decisione 8): «Lancia!» di un nemico con un incantesimo completo; i PM si scalano nello scontro
   // dopo il lancio di un incantesimo con danno si sceglie il bersaglio e si apre «Colpito», come per «Attacca»
@@ -974,7 +974,7 @@ export function renderTavolo(radice, ctx) {
     const alTavolo = stato.selezione.map((k) => ultimi.get(k) ?? { mancante: k });
     const bersagli = bersagliPer(p, alTavolo);
     bersagli.sort((a, b) => (b.id === idContro) - (a.id === idContro));
-    apriAttaccoNemico(ctx, p, { bersagli, registra: (a) => modifica((x) => registraAttacco(x, a)), dichiarazione });
+    apriAttaccoNemico(ctx, p, { bersagli, registra: (a) => modifica((x) => registraAttacco(x, a)), dichiarazione, movimentoMappa: () => leggiMovimentoRound(stato.scontro.id, p.id) });
     return true;
   };
   ferma.puoAttaccare = (idDa) => { const p = (stato.scontro?.partecipanti ?? []).find((x) => x.id === idDa); return !!p && p.tipo !== 'pg' && attacchiDi(p).length > 0; };
