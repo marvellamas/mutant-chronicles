@@ -996,13 +996,24 @@ Fonte: E&L del 06/10/2026, 17:23 UTC, blocco «Risposte approvate — regole tec
     tutti gli eventi successivi; un punto libero successivo che nella cronologia corretta non aumenta più il VA si
     riassegna nello stesso avanzamento, con i limiti di allora; le altre assegnazioni restano; la salita di livello è
     bloccata finché ricostruzione e riassegnazioni non sono finite. Un punto legittimo non si restituisce perché un aumento
-    automatico successivo supera il limite. Sostituisce il divieto provvisorio. **Da implementare** (lotto R1).
+    automatico successivo supera il limite. Sostituisce il divieto provvisorio. **Applicata** il 09/10 (lotto R1): «Correggi»
+    accanto a ogni livello nella Progressione (tab Identità) riapre la procedura di «Sali di livello» con le scelte di
+    allora; `src/avanzamento.js` → `validaCorrezione` (regole di quel livello, 7 punti, livelli dopo che non devono
+    diventare irregolari), `conseguenzeCorrezione` (punti da riassegnare e punti che tornano validi, per evento),
+    `applicaCorrezione`, `personaggioPrimaDi`. Il ricalcolo in ordine e la riassegnazione nello stesso evento con i limiti
+    di allora c'erano già (`ricalcola`, punti inattivi valutati all'assegnazione, «Assegna»); idem il blocco della salita
+    e il punto legittimo che resta dopo un aumento automatico (test in `tests/avanzamento-a107-a108.test.js`).
 122. **Punti Abilità liberi in eccesso** (A.108). Confermati 7 punti a ogni Grado, compreso il primo. I punti residui dei
     10 per Grado vanno eliminati e **bloccano** la salita di livello finché la scheda non è riconciliata; se l'eccesso è
     stato speso il giocatore sceglie quali assegnazioni togliere (l'app non sceglie da sola); i punti eccedenti si
     eliminano, non si riassegnano; poi la cronologia si ricalcola come A.107. Punti non assegnati in eccesso: si eliminano
-    senza toccare le Abilità. Oggi «Togli» funziona ma l'eccesso dà solo l'avviso e «Togli» procede dal più vecchio.
-    **Da implementare** (lotto R1).
+    senza toccare le Abilità. **Applicata** il 09/10 (lotto R1): l'eccesso blocca la salita (`validaLivello` →
+    `motivoEccesso`, «Sali di livello» disattivato con il motivo); «Togli» con l'evento scelto dal giocatore («Togli da
+    qui» per evento, `statoRimozione(…, livello)`) e le Abilità scelte da lui, nessuna scelta automatica; i punti tolti non
+    si riassegnano; in «Togli» l'indicazione dei punti che già non aumentano il VA. I punti non assegnati della vecchia
+    regola non sono nei file: nulla da togliere. PG reali (`personaggi/`, `PersonaggiBackup/`, ultima versione di ognuno):
+    nessuno da riconciliare, tutti a 7 + 7. **A.57** (ricostruzione dei punti) è ora coperta: ricostruzione evento per
+    evento con i limiti del momento, punti legali non rimborsati, salita bloccata finché manca qualcosa.
 123. **Recuperi di Umanità pregressi** (A.111). I recuperi pregressi concessi e confermati dal Direttore restano nel
     calcolo come «Recupero straordinario di Umanità — concessione del Direttore», distinti dalla Riabilitazione; dopo la
     conferma l'avviso diventa una nota nello storico; nessuna rimozione inventata, nessun doppio conteggio. Quelli di

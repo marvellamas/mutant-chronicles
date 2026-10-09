@@ -57,8 +57,8 @@ Lo stesso testo è nella sezione 7 di «per-davide.md» del 07/10. Due righe dei
 
 | Voce | Classe | Decisione | Stato nell'app |
 |---|---|---|---|
-| A.107 Correzioni retroattive | regola | 121 | da implementare: lotto R1 |
-| A.108 Punti in eccesso | regola | 122 | da implementare: lotto R1 |
+| A.107 Correzioni retroattive | regola | 121 | **fatto il 09/10** (lotto R1) |
+| A.108 Punti in eccesso | regola | 122 | **fatto il 09/10** (lotto R1) |
 | A.110 Indossare e togliere | regola | 120 | in parte: scudo 1 AzP e tempi nei dati; lotto R3 |
 | A.111 Recuperi di Umanità | regola | 123 | da implementare: lotto R2; resta il caso di Pablo Zaion |
 | A.114 Chip e strumenti | regola | 124 | da implementare: lotto R2 |
@@ -88,7 +88,7 @@ A.111 (Pablo Zaion), A.112, A.113, A.115, A.122 («Aiuto-master»), A.125 (veico
 
 | Lotto | Cosa | Dove | Stima |
 |---|---|---|---|
-| **R1** Avanzamento (A.107, A.108) | Correzione di un evento vecchio con ricalcolo in ordine e riassegnazione nello stesso evento dei punti che non aumentano più il VA (oggi la correzione è vietata); l'eccesso di punti **blocca** la salita di livello; «Togli» con scelta del giocatore delle assegnazioni da togliere (oggi dal più vecchio, un evento alla volta); i punti in eccesso non assegnati si eliminano senza toccare le Abilità. | `src/avanzamento.js` (`avvisoPuntiEccesso`, `statoRimozione`, `applicaRimozione`, blocco come `statoCompletamento`), `src/ui/completa.js`, test | 1 giorno |
+| **R1** Avanzamento (A.107, A.108) · **fatto il 09/10** (pacchetto `docs/pacchetto-per-davide-2026-10-09-avanzamento.md`) | Correzione di un evento vecchio con ricalcolo in ordine e riassegnazione nello stesso evento dei punti che non aumentano più il VA (oggi la correzione è vietata); l'eccesso di punti **blocca** la salita di livello; «Togli» con scelta del giocatore delle assegnazioni da togliere (oggi dal più vecchio, un evento alla volta); i punti in eccesso non assegnati si eliminano senza toccare le Abilità. | `src/avanzamento.js` (`avvisoPuntiEccesso`, `statoRimozione`, `applicaRimozione`, blocco come `statoCompletamento`), `src/ui/completa.js`, test | 1 giorno |
 | **R2** Umanità e chip (A.111, A.114) | Recuperi pregressi come «Recupero straordinario di Umanità — concessione del Direttore» con «Conferma» del master (avviso → nota nello storico) e «da verificare» con UMN provvisoria; il chip del Processore si somma al miglior modificatore degli strumenti, senza contare come strumento. | `src/umanita.js`, tab Cibernetica in `src/ui/tab.js`; `src/condizioni.js` (usi specifici, righe 212–219) | 3–4 ore |
 | **R3** Protezioni (A.110) | La vista rapida legge `protezioni_rapide.tempi`: armatura per categoria (Leggera 1/1 min, Media 5/1, Pesante 10/5; servoassistite ed esoscheletri «procedura della scheda»), soprabiti/mantelli/Tabardo e Sottogiacca IES 1 AzP, rinforzi strutturali 1 o 5 minuti secondo `rinforzo.kit` (Leggero/Pesante); quelli con `indossabile_da_solo` (soprabiti, mantelli, Tabardo, Sottogiacca) con i tempi in AzP. | `src/ui/tab.js` (`costoIndossare`) | 2 ore |
 | **R4** Luce per uso (A.116) | Casella «richiede la vista» sul singolo uso (tab Abilità, tiri), con le Abilità d'esempio come suggerimento e correzione del Direttore; la penalità di luce una sola volta. | `regole.json` → `categorie_prove.luce`, `src/condizioni.js`, `src/ui/tab.js` | 4–5 ore |
