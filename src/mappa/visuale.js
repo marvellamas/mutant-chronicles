@@ -216,15 +216,16 @@ function raggioLibero(ost, C, R, x0, y0, x1, y1) {
 /**
  * Visuale dei PG (nebbia automatica): i Q visti da almeno un Q di uno dei token `origini`, con gli ostacoli `ost`.
  * Con `mappa` (data/mappa.json, fase 2, lotto 4) il raggio dipende dalla luce del Q visto (luci.raggio_scoperta_q:
- * Luce fino a visuale.raggio_q, Penombra 6, Luce scarsa 3, Buio 1), non da quella del PG.
- * @param regole data/mappa.json → visuale ({ raggio_q, metrica })
+ * A.142, decisione 146: Luce senza limite, Penombra 10, Luce scarsa 5, Buio 0), non da quella del PG.
+ * @param regole data/mappa.json → visuale ({ raggio_q, metrica }); raggio_q null: nessun limite (tutta la griglia)
  */
 export function visuale(scena, origini, ost, regole, fuori = null, mappa = null) {
   const { colonne: C, righe: R } = scena.griglia;
   const visti = new Uint8Array(C * R);
   const l = mappa?.luci ? raggiScoperta(scena, { mappa }) : null;
-  const raggioDi = l ? (x, y) => Math.min(regole.raggio_q, l.raggio(x, y)) : null;
-  const raggio = l ? Math.min(regole.raggio_q, l.massimo) : regole.raggio_q;
+  const limite = regole.raggio_q ?? Infinity;
+  const raggioDi = l ? (x, y) => Math.min(limite, l.raggio(x, y)) : null;
+  const raggio = Math.min(limite, l ? l.massimo : Infinity, Math.max(C, R));
   for (const t of origini) for (const q of celleToken(t)) qVisti(ost, C, R, q, raggio, regole.metrica, visti, fuori, raggioDi);
   return visti;
 }

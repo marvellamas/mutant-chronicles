@@ -24,12 +24,14 @@ function scena(stato = 'chiusa') {
 }
 const tok = (id, q, o = {}) => ({ id, q, ingombro: 1, nascosto: false, rif: { tipo: 'partecipante', id }, ...o });
 
-test('dati: le regole del manuale e le provvisorie A.140, A.141, A.142', () => {
+test('dati: le regole del manuale e le risposte A.140, A.144, A.142 (decisioni 144–146)', () => {
   assert.match(RV._nota, /Leggera −2 VA/);
   assert.match(RV._nota, /direzionale/);
   // 07/10, «dal centro»: cinque linee, sei livelli (0 nessuna, 1–2 Leggera, 3–4 Media, 5 Totale)
   assert.deepEqual(RV.copertura_linee, ['nessuna', 'leggera', 'leggera', 'media', 'media', 'totale']);
-  for (const [k, n] of [['raggio', 142]]) assert.match(RV[`TODO(Davide) ${k}`], new RegExp(`^A\\.${n}`));
+  assert.equal(RV['TODO(Davide) raggio'], undefined);
+  assert.match(RV._nota_raggio, /^A.142/);
+  assert.equal(RV.raggio_q, null, 'A.142: in piena luce nessun limite fisso');
   assert.equal(RV['TODO(Davide) token in mezzo'], undefined);
   assert.match(RV._nota_token_in_mezzo, /A\.144/);
   assert.equal(RV['TODO(Davide) copertura'], undefined);

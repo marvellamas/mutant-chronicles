@@ -25,7 +25,9 @@ const cat = (s, q) => luceDi(s, q, dati);
 
 test('dati: le categorie di A.106 con nomi e penalità della regola; raggi di scoperta; sorgenti dal catalogo', () => {
   assert.deepEqual(categorieLuce(dati).map((c) => [c.id, c.riga]), [['sufficiente', 'nessuna penalità'], ['penombra', '−2 VA'], ['scarsa', '−4 VA'], ['buio', 'come Accecato']]);
-  assert.deepEqual(LU.raggio_scoperta_q, { sufficiente: 30, penombra: 6, scarsa: 3, buio: 1 });
+  // A.142 (decisione 146): piena luce senza limite, Penombra 10, Luce scarsa 5, Buio 0
+  assert.deepEqual(LU.raggio_scoperta_q, { sufficiente: null, penombra: 10, scarsa: 5, buio: 0 });
+  assert.equal(dati.mappa.visuale.raggio_q, null);
   assert.deepEqual(LU.sorgenti.map((x) => x.raggio_q), [2, 6, 6, 10]);
   assert.match(LU['TODO(Davide) visione'], /^A\.143/);
   const d = copia(dati);
@@ -77,7 +79,7 @@ test('luce portata da un token: Luce entro il raggio, segue il token; i muri non
   assert.match(validaScena({ ...s, token: [{ ...s.token[0], luce: LU.raggio_max_q + 1 }] }, dati), /luce: raggio/);
 });
 
-test('nebbia automatica: il raggio dipende dalla luce del Q visto (Luce 30, Penombra 6, Luce scarsa 3, Buio 1)', () => {
+test('nebbia automatica (A.142): il raggio dipende dalla luce del Q visto (Luce senza limite, Penombra 10, Luce scarsa 5, Buio 0)', () => {
   const vede = (ambiente, pg = tok('pg:a', [1, 5]), extra = {}) => {
     const s = scena({ luce: { ambiente }, token: [pg], ...extra });
     const v = visuale(s, s.token, ostacoliVista(s, dati.mappa.porte), dati.mappa.visuale, null, dati.mappa);
@@ -86,17 +88,20 @@ test('nebbia automatica: il raggio dipende dalla luce del Q visto (Luce 30, Peno
     for (let x = 0; x < C; x++) if (v[5 * C + x]) max = Math.max(max, Math.abs(x - pg.q[0]));
     return max;
   };
-  assert.deepEqual(['sufficiente', 'penombra', 'scarsa', 'buio'].map((a) => vede(a)), [30, 6, 3, 1]);
-  // al buio con una torcia di 6 Q: si vede fin dove arriva la luce, non oltre (il Q buio dopo è a più di 1 Q)
+  // la griglia è larga 40: in piena luce si vede fino al bordo (38 Q dalla colonna 1); al buio solo la propria pedina
+  assert.deepEqual(['sufficiente', 'penombra', 'scarsa', 'buio'].map((a) => vede(a)), [38, 10, 5, 0]);
+  // un limite fisso nei dati resta possibile (visuale.raggio_q)
+  assert.equal(vede('sufficiente', tok('pg:a', [1, 5]), {}), 38);
+  // al buio con una torcia di 6 Q: si vede fin dove arriva la luce, non oltre
   assert.equal(vede('buio', tok('pg:a', [1, 5], { luce: 6 })), 6);
   // il raggio è quello del Q visto: una stanza illuminata lontano si vede dal buio
   const stanza = { luce: { ambiente: 'buio', zone: { sufficiente: inBase64(rettangolo(nuovaMaschera(C, R), C, R, 20, 4, 22, 6, true)) } } };
   const s = scena({ ...stanza, token: [tok('pg:a', [1, 5])] });
   const v = visuale(s, s.token, ostacoliVista(s, dati.mappa.porte), dati.mappa.visuale, null, dati.mappa);
-  assert.deepEqual([v[5 * C + 21], v[5 * C + 10], v[5 * C + 2]], [1, 0, 1]);
+  assert.deepEqual([v[5 * C + 21], v[5 * C + 10], v[5 * C + 2], v[5 * C + 1]], [1, 0, 0, 1], 'la stanza sì, il corridoio buio no (nemmeno il Q accanto), la propria pedina sì');
   // raggi per Q
   const r = raggiScoperta(s, dati);
-  assert.deepEqual([r.raggio(21, 5), r.raggio(10, 5), r.massimo], [30, 1, 30]);
+  assert.deepEqual([r.raggio(21, 5), r.raggio(10, 5), r.massimo], [Infinity, 0, Infinity]);
 });
 
 test('«Attacca!» dalla mappa: la luce della zona del bersaglio, con la riga, e la sua penalità nel calcolo', () => {

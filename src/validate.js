@@ -2777,8 +2777,9 @@ function validaMappa(dati, err) {
       if (!Array.isArray(LU.categorie) || LU.categorie.length < 2 || !LU.categorie.every((x) => livelli.includes(x))) err(F, 'luci.categorie', `categorie di regole.json → illuminazione.livelli (${livelli.join(', ')})`);
       else {
         if (!LU.categorie.includes(LU.predefinita)) err(F, 'luci.predefinita', 'una delle categorie');
-        for (const id of LU.categorie) if (!isIntero(LU.raggio_scoperta_q?.[id]) || LU.raggio_scoperta_q[id] < 1) err(F, `luci.raggio_scoperta_q.${id}`, 'intero da 1 in su (Q)');
-        if (isIntero(LU.raggio_scoperta_q?.[LU.predefinita]) && m.visuale && LU.raggio_scoperta_q[LU.predefinita] > m.visuale.raggio_q) err(F, `luci.raggio_scoperta_q.${LU.predefinita}`, 'non oltre visuale.raggio_q');
+        // A.142: null = nessun limite (piena luce), 0 = solo la propria pedina (buio)
+        for (const id of LU.categorie) if (!(LU.raggio_scoperta_q?.[id] === null || (isIntero(LU.raggio_scoperta_q?.[id]) && LU.raggio_scoperta_q[id] >= 0))) err(F, `luci.raggio_scoperta_q.${id}`, 'intero da 0 in su (Q) o null (nessun limite)');
+        if (isIntero(LU.raggio_scoperta_q?.[LU.predefinita]) && isIntero(m.visuale?.raggio_q) && LU.raggio_scoperta_q[LU.predefinita] > m.visuale.raggio_q) err(F, `luci.raggio_scoperta_q.${LU.predefinita}`, 'non oltre visuale.raggio_q');
         for (const k of ['oscurita', 'oscurita_giocatori']) for (const id of LU.categorie) if (id !== LU.predefinita && !(LU[k]?.[id] >= 0 && LU[k][id] <= 1)) err(F, `luci.${k}.${id}`, 'opacità da 0 a 1');
       }
       if (!isIntero(LU.raggio_max_q) || LU.raggio_max_q < 1) err(F, 'luci.raggio_max_q', 'intero da 1 in su');
@@ -2891,7 +2892,7 @@ function validaMappa(dati, err) {
   if (!['interposta', 'protetto', 'copertura'].includes(VV.token_in_mezzo)) err(F, 'visuale.token_in_mezzo', 'interposta (A.144), protetto o copertura');
   const RI = dati.regole?.attacco_distanza?.interposta;
   if (RI && !(Number.isInteger(RI.va) && RI.va <= 0)) err('regole.json', 'attacco_distanza.interposta.va', 'intero da 0 in giù (VA)');
-  if (!positivo(VV.raggio_q)) err(F, 'visuale.raggio_q', 'numero positivo (Q)');
+  if (VV.raggio_q !== null && !positivo(VV.raggio_q)) err(F, 'visuale.raggio_q', 'numero positivo (Q) o null (nessun limite, A.142)');
   if (!['quadretti', 'euclidea'].includes(VV.metrica)) err(F, 'visuale.metrica', 'quadretti o euclidea');
   if (typeof VV.automatica_predefinita !== 'boolean') err(F, 'visuale.automatica_predefinita', 'vero o falso');
   if (!(VV.opacita_esplorate >= 0 && VV.opacita_esplorate <= 1)) err(F, 'visuale.opacita_esplorate', 'da 0 a 1');

@@ -55,7 +55,7 @@ Si preparano in pochi secondi e durante il gioco non si toccano più.
 1. «Strumenti» → «Luci»: scegli la **luce della scena** (Luce, Penombra −2, Luce scarsa −4, Buio come Accecato). Per quasi tutte le scene basta questo.
 2. Se serve, con il pennello o il rettangolo dipingi una **zona** diversa (una stanza buia, un corridoio in penombra, una sala illuminata); «Gomma» la toglie.
 3. Le **torce**: clic destro sul token → Opzioni → «Porta una luce…» (bastoncino 2 Q, lanterna 6, torcia 10, o un altro raggio). La luce segue il token. **I muri non fermano la luce**: niente ombre, per semplicità.
-4. Con la **nebbia automatica** (interruttore in cima alla sezione Nebbia, o «Strumenti» → «Nebbia automatica») i PG vedono lontano dove c'è Luce (30 Q), poco in Penombra (6 Q) e con Luce scarsa (3 Q), al Buio solo il quadretto accanto o fin dove arriva una torcia. **All'aperto di giorno spegni pure la nebbia.**
+4. Con la **nebbia automatica** (interruttore in cima alla sezione Nebbia, o «Strumenti» → «Nebbia automatica») i PG vedono senza limite dove c'è Luce, fino a 10 Q in Penombra e 5 Q con Luce scarsa; al Buio non vedono nulla oltre la propria pedina, salvo fin dove arriva una torcia (A.142). Una stanza illuminata si vede anche dal buio, il corridoio buio in mezzo no. **All'aperto di giorno spegni pure la nebbia.**
 5. La linea di tiro e «Attacca!» propongono la penalità della zona del bersaglio (per esempio «Penombra −2»); puoi cambiarla. Ai giocatori le zone scure arrivano più scure, ma la mappa resta leggibile.
 
 ## Veicoli

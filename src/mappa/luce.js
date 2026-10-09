@@ -77,12 +77,13 @@ export function testoLuceBersaglio(id, dati) {
 
 /**
  * Raggio di scoperta della nebbia automatica per ogni Q (data/mappa.json → luci.raggio_scoperta_q): dipende dalla luce
- * del Q visto, non da quella del PG. Restituisce la funzione (x, y) → raggio in Q e il raggio massimo.
+ * del Q visto, non da quella del PG. Restituisce la funzione (x, y) → raggio in Q e il raggio massimo. A.142: null = nessun
+ * limite (Infinity), 0 = nessun Q oltre la propria pedina.
  */
 export function raggiScoperta(scena, dati, mappa = luceQ(scena, dati)) {
   const { colonne: C } = scena.griglia;
   const cat = dati.mappa.luci.categorie;
-  const raggi = cat.map((id) => dati.mappa.luci.raggio_scoperta_q[id]);
+  const raggi = cat.map((id) => dati.mappa.luci.raggio_scoperta_q[id] ?? Infinity);
   return { raggio: (x, y) => raggi[mappa[y * C + x]], massimo: Math.max(...raggi) };
 }
 

@@ -1196,7 +1196,7 @@ Fonte: E&L dell'08/10/2026, 21:10 UTC, blocco «Aggiornamento cumulativo — ris
     token in mezzo) e la proposta di Marcello del 07/10 (i token come ostacoli della Copertura). **Applicata** il 09/10: `data/mappa.json` → visuale.token_in_mezzo «interposta», via il `TODO(Davide)`; `regole.json` → attacco_distanza.interposta (−2); «Creatura interposta» in «Attacca!» (proposta dalla linea di tiro della mappa e del tablet); «impegnato» resta a mano.
 146. **Illuminazione e visibilità ordinaria** (A.142). Piena luce: nessun limite fisso in Q; Penombra 10 Q; Luce scarsa
     5 Q; Buio completo nessun Q (resta visibile la propria pedina, nessun Q adiacente). Conta la luce della zona
-    osservata. **Cambia** il provvisorio (30 / 6 / 3 / 1, decisione 138). **Lotto mappa.**
+    osservata. **Cambia** il provvisorio (30 / 6 / 3 / 1, decisione 138). **Applicata** il 09/10: `data/mappa.json` → luci.raggio_scoperta_q { sufficiente: null, penombra 10, scarsa 5, buio 0 } e visuale.raggio_q null (nessun limite), via il `TODO(Davide)`; `src/mappa/luce.js`, `src/mappa/visuale.js`, validatore.
 147. **Sensi speciali** (A.143). Visione notturna 80 Q (penombra e luce scarsa, non al buio); visione termica 40 Q (anche
     al buio naturale, solo contrasto termico); Vista Felina 20 Q nel buio naturale (forme, non colori). Quando attivi
     rivelano la mappa entro la portata; pareti e porte chiuse li bloccano; non accorciano la vista in piena luce.
