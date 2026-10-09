@@ -68,8 +68,8 @@ export function vistaGiocatori(s, contesto = null, regoleTemplate = contesto?.re
   const auto = s.visuale?.automatica && regoleMappa?.visuale && regoleMappa?.porte;
   const visti = auto ? visualePg(s, tokenPg(s), ostacoliVista(s, regoleMappa.porte, { perGiocatori: true }), regoleMappa.visuale, null, regoleMappa) : null;
   const pg = (t) => t.rif?.tipo === 'partecipante' && String(t.rif.id).startsWith('pg:');
-  // token in volo (08/10, data/mappa.json → volo.visibile_oltre_nebbia; A.150): si vede anche sotto la nebbia se dal
-  // centro di almeno un PG in mappa c'è una linea di vista senza muri né porte chiuse; il master può sempre nasconderlo
+  // token in volo (data/mappa.json → volo.visibile_oltre_nebbia): A.150 (decisione 150) false, il volo non rivela; con
+  // true (la regola di prima) si vede anche sotto la nebbia se da almeno un PG c'è una linea di vista senza muri
   const voloVisto = (() => {
     if (!regoleMappa?.volo?.visibile_oltre_nebbia || !regoleMappa?.porte || !regoleMappa?.visuale || !s.token.some(inVolo)) return () => false;
     const ost = ostacoliVista(s, regoleMappa.porte, { perGiocatori: true });

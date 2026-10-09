@@ -1211,7 +1211,7 @@ Fonte: E&L dell'08/10/2026, 21:10 UTC, blocco «Aggiornamento cumulativo — ris
     (`data/mappa.json` → volo.zoc_quota). **Applicata** il 09/10: era già così; nota della decisione in `volo._nota_zoc` (il `TODO(Davide)` comune ad A.148 e A.149 si toglie con la A.148).
 150. **Visibilità dei bersagli in volo** (A.150). Stesse regole dei bersagli a terra (luce, sensi, occlusione,
     occultamento); il volo non rivela; il Direttore può rivelare a mano. **Cambia** l'indicazione di Marcello (in volo
-    visibile oltre la nebbia). **Lotto mappa.**
+    visibile oltre la nebbia). **Applicata** il 09/10: `data/mappa.json` → volo.visibile_oltre_nebbia false, nota della decisione; `src/mappa/vista.js` (filtro della vista giocatori sul server) invariato nel codice, cambia il dato.
 151. **Aiuto-master** (A.122). Ruolo facoltativo, assegnato e revocato dal Direttore, senza pagina separata: muove il PG
     del turno attivo entro i limiti ordinari di movimento e ostacoli; vede la vista giocatori, senza segreti; non
     modifica schede, risorse, Iniziativa o scena; gli spostamenti eccezionali restano al Direttore. **Da implementare**

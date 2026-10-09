@@ -88,17 +88,24 @@ test('linea di tiro (A.148, decisione 148): in volo valgono Copertura e creatura
   assert.equal(lineaDiTiro(sp, da, { ...bers, volo: true }, ostacoliVista(sp, dati.mappa.porte), RV, { volo }).copertura, 'totale');
 });
 
-test('visibilità: un token in volo si vede sotto la nebbia con una linea di vista senza muri; dietro un muro o nascosto no', () => {
+test('visibilità (A.150, decisione 150): in volo come a terra, sotto la nebbia non si vede; con la regola di prima sì, con una linea senza muri', () => {
   const s = nuovaScena({ id: 'v', nome: 'V', colonne: C, righe: R, nebbia: 'scoperta', dati });
   // nebbia sulla metà destra
   s.nebbia.coperti = inBase64(rettangolo(daBase64(s.nebbia.coperti), C, R, 6, 0, 11, 7, true));
   const pg = { id: 'p', rif: { tipo: 'partecipante', id: 'pg:A' }, q: [1, 1], ingombro: 1, nascosto: false };
   const drago = { id: 'd', rif: { tipo: 'partecipante', id: 'nem:drago:1' }, q: [9, 1], ingombro: 1, nascosto: false, volo: true, quota: 4 };
   const lupo = { id: 'l', rif: { tipo: 'partecipante', id: 'nem:lupo:1' }, q: [9, 4], ingombro: 1, nascosto: false };
-  const vede = (scena) => vistaGiocatori(scena, null, null, dati.mappa).token.map((t) => t.id);
+  assert.equal(dati.mappa.volo.visibile_oltre_nebbia, false);
   const base = { ...s, token: [pg, drago, lupo] };
-  assert.deepEqual(vede(base), ['p', 'd'], 'il drago in volo sotto la nebbia si vede, il lupo a terra no');
-  const v = vistaGiocatori(base, null, null, dati.mappa).token.find((t) => t.id === 'd');
+  assert.deepEqual(vistaGiocatori(base, null, null, dati.mappa).token.map((t) => t.id), ['p'], 'A.150: il drago in volo sotto la nebbia non si vede, come il lupo');
+  // fuori dalla nebbia il drago in volo si vede, come chiunque
+  const fuori = { ...base, token: [pg, { ...drago, q: [3, 1] }, lupo] };
+  assert.deepEqual(vistaGiocatori(fuori, null, null, dati.mappa).token.map((t) => t.id), ['p', 'd']);
+  // la regola di prima (volo.visibile_oltre_nebbia true) resta possibile come dato
+  const mappaPrima = { ...dati.mappa, volo: { ...dati.mappa.volo, visibile_oltre_nebbia: true } };
+  const vede = (scena) => vistaGiocatori(scena, null, null, mappaPrima).token.map((t) => t.id);
+  assert.deepEqual(vede(base), ['p', 'd'], 'con la regola di prima il drago in volo sotto la nebbia si vede, il lupo a terra no');
+  const v = vistaGiocatori(base, null, null, mappaPrima).token.find((t) => t.id === 'd');
   assert.equal(v.volo, true);
   assert.equal(v.quota, 4);
   // un muro fra il PG e il drago: non si vede

@@ -597,8 +597,8 @@
       "ignora_token": false,
       "coperture_annullate": []
     },
-    "visibile_oltre_nebbia": true,
-    "_nota_visibile": "Indicazione di Marcello: «un nemico in volo in generale è sempre visibile». Regola proposta (la più semplice): un token in volo non nascosto dal master si vede nella vista giocatori anche sotto la nebbia (manuale o automatica), se c’è una linea di vista senza muri né porte chiuse dal centro di almeno un PG in mappa. Il master può sempre nasconderlo. TODO(Davide) A.150.",
+    "visibile_oltre_nebbia": false,
+    "_nota_visibile": "A.150 (risposta di Davide dell’08/10/2026, decisione 150): per i bersagli in volo valgono le stesse regole di illuminazione, sensi, occlusione e occultamento dei bersagli a terra; essere in volo non rivela una creatura nelle zone non visibili della mappa (dal buio si vede un bersaglio in volo sopra una zona illuminata, non uno non illuminato solo perché è in aria). Il Direttore può rivelarlo a mano (nebbia, «Mostra ai giocatori»), per esempio una sagoma contro un cielo luminoso. Prima (indicazione di Marcello): un token in volo si vedeva anche sotto la nebbia con una linea di vista libera da un PG; con true si torna a quella regola.",
     "zoc_quota": true,
     "_nota_zoc": "ZoC e Attacchi di Opportunità come a terra (Giocatore §5.2.3); con la quota la distanza è la maggiore fra quella sulla griglia e la differenza di quota (diagonale 1 Q, A.124): un token in volo più alto della portata ravvicinata non è nella ZoC e non provoca uscendo. A.149 (risposta di Davide dell’08/10/2026, decisione 149): confermato; salire volontariamente da dentro a fuori portata può provocare un Attacco di Opportunità prima di uscire, chi era già fuori portata no."
   },
