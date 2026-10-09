@@ -337,26 +337,37 @@ export function renderTavolo(radice, ctx) {
     }
     const ritorno = scenaDiRitorno();
     // i pezzi della plancia, gli stessi a pagina intera e nella barra della mappa (ritocchi del 06/10: a gruppi)
+    const aggiornato = h('span', { class: 'nota plancia-aggiornato', 'aria-live': 'polite' }, stato.errore ?? testoAggiornato(stato.ultimo));
+    const btnChi = h('button', { type: 'button', class: `btn${stato.sceltaAperta ? ' primario' : ''}`, 'aria-expanded': String(stato.sceltaAperta), onclick: () => { stato.sceltaAperta = !stato.sceltaAperta; disegna(); } }, 'Chi è al tavolo');
+    const btnAggiungi = h('button', { type: 'button', class: 'btn', title: 'Sceglie uno o più file JSON di «SALVA PG», li controlla come «Importa», li scrive in personaggi/ senza mai sovrascrivere e li mette al tavolo', onclick: () => sceltaFile.click() }, 'Aggiungi PG al tavolo');
+    const btnEsempi = h('button', { type: 'button', class: 'btn', title: 'Copia i personaggi e i nemici d’esempio del repo (esempi/) nelle cartelle del server; non sovrascrive mai un file già presente', onclick: caricaEsempi }, 'Carica esempi');
+    // richiesta di Marcello del 03/10: bozze di scontro e nemici dal Bestiario, anche senza scontro aperto
+    const btnPrepara = h('button', { type: 'button', class: 'btn', title: 'Bozze di scontro: nemici, quanti, note, difficoltà; «Inizia» le apre e chiede l’Iniziativa', onclick: preparaScontro }, 'Prepara scontro');
+    const btnCrea = h('button', { type: 'button', class: 'btn', title: 'Procedura guidata dal Bestiario (base, grado, moduli), oppure tutto a caso', onclick: () => creaNemico() }, 'Crea nemico');
+    const btnPersonaggi = h('button', { type: 'button', class: 'btn', title: 'L’elenco dei personaggi', onclick: () => ctx.azioni.personaggi() }, 'Personaggi');
+    // i pezzi della plancia nella barra della mappa (ritocchi del 06/10: a gruppi; lì le scene stanno già nel gruppo
+    // «Mappa» e la guida nel pannello «?»)
     const azioniPlancia = h('div', { class: 'riga-azioni' },
       // lotto 6: la plancia a pagina intera resta, con «Torna alla mappa»
       ctx.inMappa ? h('button', { type: 'button', class: 'btn', title: 'La plancia a pagina intera, con «Torna alla mappa»', onclick: () => ctx.azioni.planciaIntera() }, 'Plancia intera') : null,
-      h('span', { class: 'nota plancia-aggiornato', 'aria-live': 'polite' }, stato.errore ?? testoAggiornato(stato.ultimo)),
-      h('button', { type: 'button', class: `btn${stato.sceltaAperta ? ' primario' : ''}`, 'aria-expanded': String(stato.sceltaAperta), onclick: () => { stato.sceltaAperta = !stato.sceltaAperta; disegna(); } }, 'Chi è al tavolo'),
-      h('button', { type: 'button', class: 'btn', title: 'Sceglie uno o più file JSON di «SALVA PG», li controlla come «Importa», li scrive in personaggi/ senza mai sovrascrivere e li mette al tavolo', onclick: () => sceltaFile.click() }, 'Aggiungi PG al tavolo'),
-      sceltaFile,
-      h('button', { type: 'button', class: 'btn', title: 'Copia i personaggi e i nemici d’esempio del repo (esempi/) nelle cartelle del server; non sovrascrive mai un file già presente', onclick: caricaEsempi }, 'Carica esempi'),
-      // richiesta di Marcello del 03/10: bozze di scontro e nemici dal Bestiario, anche senza scontro aperto
-      h('button', { type: 'button', class: 'btn', title: 'Bozze di scontro: nemici, quanti, note, difficoltà; «Inizia» le apre e chiede l’Iniziativa', onclick: preparaScontro }, 'Prepara scontro'),
-      h('button', { type: 'button', class: 'btn', title: 'Procedura guidata dal Bestiario (base, grado, moduli), oppure tutto a caso', onclick: () => creaNemico() }, 'Crea nemico'),
-      // nella mappa le scene stanno già nel gruppo «Mappa»: niente doppione
-      ctx.inMappa ? null : h('button', { type: 'button', class: 'btn', title: 'Scene della mappa di battaglia: nuova, apri, rinomina, duplica, archivia', onclick: () => apriElencoScene(stato.scene, disegna) }, 'Mappa'),
-      // la guida della mappa per il master (docs/battlemap/guida-davide.md), in una scheda nuova
-      ctx.inMappa || ctx.soloCarta ? null : linkGuidaMappa('Guida della mappa'),
-      h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.personaggi() }, 'Personaggi'),
-      // 08/10: salvataggio completo (zip, Drive, ntfy), anche dalla mappa (gruppo «Scontro»); «Spegni Mutant» solo qui,
-      // a pagina intera (posto definitivo da decidere)
-      pulsanteSalvaSessione(),
-      ctx.inMappa || ctx.soloCarta ? null : pulsanteSpegni());
+      aggiornato, btnChi, btnAggiungi, sceltaFile, btnEsempi, btnPrepara, btnCrea, btnPersonaggi,
+      // 08/10: salvataggio completo (zip, Drive, ntfy), anche dalla mappa
+      pulsanteSalvaSessione());
+    /**
+     * Testata della pagina del Tavolo (09/10, Marcello): pulsanti in gruppi con un'etichetta piccola, come la barra
+     * della mappa; ogni gruppo non si spezza, i gruppi vanno a capo interi; «Sessione» in fondo a destra.
+     */
+    const gruppoTesta = (etichetta, classe, ...pulsanti) => h('div', { class: `plancia-gruppo ${classe}`, role: 'group', 'aria-label': etichetta },
+      h('span', { class: 'plancia-gruppo-etichetta' }, etichetta), ...pulsanti);
+    const guida = linkGuidaMappa('Guida della mappa');
+    guida.className = 'btn'; // un pulsante come gli altri (apre la guida in una scheda nuova)
+    const testataGruppi = () => h('div', { class: 'plancia-gruppi' },
+      gruppoTesta('Tavolo', 'gruppo-tavolo', btnChi, btnAggiungi, sceltaFile, btnPersonaggi),
+      gruppoTesta('Gioco', 'gruppo-gioco', btnPrepara,
+        h('button', { type: 'button', class: 'btn', title: 'Scene della mappa di battaglia: nuova, apri, rinomina, duplica, archivia', onclick: () => apriElencoScene(stato.scene, disegna) }, 'Mappa'),
+        guida),
+      gruppoTesta('Nemici', 'gruppo-nemici', btnCrea, btnEsempi),
+      gruppoTesta('Sessione', 'gruppo-sessione', pulsanteSalvaSessione(), pulsanteSpegni()));
     const esitoEsempi = stato.esitoEsempi ? h('p', { class: 'riquadro attenzione', role: 'status' }, stato.esitoEsempi) : null;
     // 08/10: nel riquadro anche l'elenco «Tablet collegati» dei PG al tavolo (stesso dato dell'elenco dell'Iniziativa)
     const iniz = (n) => String(n ?? '?').split(/\s+/).filter(Boolean).map((x) => x[0]).join('').slice(0, 2).toUpperCase();
@@ -376,7 +387,7 @@ export function renderTavolo(radice, ctx) {
       await aggiorna(true);
     }) : null;
     const stScontro = Object.assign(stato, { pgAlTavolo: alTavolo.map((r) => stato.viste.get(r.file)).filter((v) => v?.completa) });
-    const azScontro = { modifica, crea: (s) => salva(s), ridisegna: disegna, annullaColpo, indietro: indietroUi, reimposta: (id) => reimpostaUi(id), chiediIniziativa: () => iniziativaUi(null), centra: ctx.inMappa?.centra ? (p) => ctx.inMappa.centra(`partecipante:${p.id}`, ctx.inMappa?.volo ?? ctx.volo) : null, attacca: (p) => attacca(p, alTavolo),
+    const azScontro = { modifica, crea: (s) => salva(s), prepara: () => preparaScontro(), ridisegna: disegna, annullaColpo, indietro: indietroUi, reimposta: (id) => reimpostaUi(id), chiediIniziativa: () => iniziativaUi(null), centra: ctx.inMappa?.centra ? (p) => ctx.inMappa.centra(`partecipante:${p.id}`, ctx.inMappa?.volo ?? ctx.volo) : null, attacca: (p) => attacca(p, alTavolo),
       // fase 2, lotto 7: tablet dei giocatori collegati e campanellino
       tablet: { collegati: stato.tablet ?? [], chiama: (p) => chiamaTablet(p) } };
     const cartePg = alTavolo.length
@@ -419,10 +430,12 @@ export function renderTavolo(radice, ctx) {
     svuota(radice, h('section', { class: `plancia${ctx.inMappa ? ' plancia-in-mappa' : ''}` },
       // aperta dalla mappa: un pulsante grande per tornare alla scena, allo zoom e alla posizione di prima
       ritorno ? h('button', { type: 'button', class: 'btn primario btn-torna-mappa', onclick: () => { tornaAllaMappa(sessionStorage); ctx.azioni.mappa(ritorno); } }, '← Torna alla mappa') : null,
-      h('header', { class: 'plancia-testa' },
-        ctx.inMappa ? null : h('div', { class: 'riga-titolo' }, h('a', { class: 'marchio marchio-in-linea', href: '#/', title: 'Elenco dei personaggi' }, 'Mutant'),
-          h('h1', { class: 'titolo-con-stemma' }, iconaPagina('combattimento', '96', { classe: 'badge-pagina', lato: 40 }), 'Tavolo del Master')),
-        azioniPlancia),
+      ctx.inMappa ? h('header', { class: 'plancia-testa' }, azioniPlancia)
+        : h('header', { class: 'plancia-testa plancia-testa-gruppi' },
+          h('div', { class: 'riga-titolo' }, h('a', { class: 'marchio marchio-in-linea', href: '#/', title: 'Elenco dei personaggi' }, 'Mutant'),
+            h('h1', { class: 'titolo-con-stemma' }, iconaPagina('combattimento', '96', { classe: 'badge-pagina', lato: 40 }), 'Tavolo del Master'),
+            aggiornato),
+          testataGruppi()),
       esitoEsempi,
       ctx.inMappa ? null : h('p', { class: 'nota' }, 'Sola lettura: i valori sono quelli delle schede in personaggi/, ricalcolati con le regole attuali. Per cambiarli si apre il personaggio (clic sulla mini-scheda).'),
       scelta,

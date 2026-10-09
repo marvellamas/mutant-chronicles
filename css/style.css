@@ -2322,3 +2322,16 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 /* 08/10: pagina dopo «Spegni Mutant» (src/ui/salvataggio.js) */
 .pagina-spento { max-width: 40rem; margin: 3rem auto; padding: 0 1rem; }
 .pagina-spento h1 { margin-bottom: 1rem; }
+
+/* 09/10: testata del Tavolo del Master a gruppi con etichetta (come la barra della mappa); la pagina del Tavolo usa
+   la larghezza della plancia (1880px), così a 1920 i gruppi stanno su una riga */
+main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
+.plancia-testa-gruppi { flex-direction: column; align-items: stretch; gap: 0.4rem; }
+.plancia-testa-gruppi .riga-titolo { gap: 0.8rem; }
+.plancia-testa-gruppi .plancia-aggiornato { min-width: 0; font-size: 0.85rem; }
+.plancia-gruppi { display: flex; flex-wrap: wrap; align-items: stretch; gap: 0.5rem; }
+.plancia-gruppo { display: inline-flex; flex-wrap: nowrap; align-items: center; gap: 0.35rem; padding: 0.25rem 0.5rem; border: 1px solid var(--bordo); border-radius: var(--raggio); background: var(--superficie); min-width: 0; }
+.plancia-gruppo-etichetta { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--tenue); margin-right: 0.15rem; }
+.plancia-gruppo a.btn { text-decoration: none; }
+.plancia-gruppo.gruppo-sessione { margin-left: auto; }
+@media (max-width: 40rem) { .plancia-gruppo { flex-wrap: wrap; } .plancia-gruppo.gruppo-sessione { margin-left: 0; } }

@@ -58,18 +58,21 @@ export const idNuovo = (d = new Date()) => {
  * @param tablet (fase 2, lotto 7) { collegati: [chiavi dei PG con il tablet collegato], chiama(p) }: accanto a ogni PG
  *   l'indicatore del tablet e, se è collegato, il campanellino
  */
-export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaColpo = null, attacca = null, indietro: indietroUi = null, reimposta = null, centra = null, chiediIniziativa: chiediUi = null, tablet = null }, parte = 'tutto') {
+export function pannelloScontro(ctx, st, { modifica, crea, prepara = null, ridisegna, annullaColpo = null, attacca = null, indietro: indietroUi = null, reimposta = null, centra = null, chiediIniziativa: chiediUi = null, tablet = null }, parte = 'tutto') {
   const s = st.scontro;
   const dado = dadoIniziativa(ctx.dati);
   if (!s) {
     if (parte === 'gestione') return null;
     return h('section', { class: 'riquadro scontro-pannello' },
       h('h2', {}, 'Scontro'),
-      h('p', { class: 'nota' }, `Nessuno scontro aperto. «Nuovo scontro» parte con i PG al tavolo; l’Iniziativa di ciascuno è quella della scheda più ${dado.formula}, tirato dal vivo o dall’app (Giocatore §2.14, §5.1).`),
-      h('button', {
-        type: 'button', class: 'btn primario', disabled: !st.pgAlTavolo.length, title: st.pgAlTavolo.length ? null : 'Prima scegli chi è al tavolo',
-        onclick: () => crea(nuovoScontro({ id: idNuovo(), pg: st.pgAlTavolo.map(pgDaVista) })),
-      }, 'Nuovo scontro'));
+      h('p', { class: 'nota' }, `Nessuno scontro aperto. «Nuovo scontro al volo» parte subito con i PG al tavolo (i nemici si aggiungono dopo); «Prepara scontro» apre le bozze con i nemici già scelti. L’Iniziativa di ciascuno è quella della scheda più ${dado.formula}, tirato dal vivo o dall’app (Giocatore §2.14, §5.1).`),
+      h('div', { class: 'riga-azioni' },
+        h('button', {
+          type: 'button', class: 'btn primario', disabled: !st.pgAlTavolo.length, title: st.pgAlTavolo.length ? 'Apre subito uno scontro con i PG al tavolo; i nemici si aggiungono dopo' : 'Prima scegli chi è al tavolo',
+          onclick: () => crea(nuovoScontro({ id: idNuovo(), pg: st.pgAlTavolo.map(pgDaVista) })),
+        }, 'Nuovo scontro al volo'),
+        // 09/10 (Marcello): accanto, la preparazione (bozze con i nemici, «Inizia»)
+        prepara ? h('button', { type: 'button', class: 'btn', title: 'Bozze di scontro: nemici, quanti, note, difficoltà; «Inizia» le apre e chiede l’Iniziativa', onclick: prepara }, 'Prepara scontro') : null));
   }
   const { ordinati, daTirare, spareggi, scelteAlleati } = ordineIniziativa(s);
   const diT = diTurno(s);
