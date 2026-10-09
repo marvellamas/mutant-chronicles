@@ -1208,7 +1208,7 @@ Fonte: E&L dell'08/10/2026, 21:10 UTC, blocco «Aggiornamento cumulativo — ris
     niente Leggera e Media, niente token in mezzo). **Lotto mappa.**
 149. **Distanza verticale** (A.149). Distanza = maggiore fra orizzontale e differenza di quota, diagonale 1 Q; salire da
     dentro a fuori portata può provocare un Attacco di Opportunità, chi era già fuori no. Conferma il provvisorio
-    (`data/mappa.json` → volo.zoc_quota). **Lotto mappa** (via il `TODO(Davide)`).
+    (`data/mappa.json` → volo.zoc_quota). **Applicata** il 09/10: era già così; nota della decisione in `volo._nota_zoc` (il `TODO(Davide)` comune ad A.148 e A.149 si toglie con la A.148).
 150. **Visibilità dei bersagli in volo** (A.150). Stesse regole dei bersagli a terra (luce, sensi, occlusione,
     occultamento); il volo non rivela; il Direttore può rivelare a mano. **Cambia** l'indicazione di Marcello (in volo
     visibile oltre la nebbia). **Lotto mappa.**

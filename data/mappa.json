@@ -598,7 +598,7 @@
     "visibile_oltre_nebbia": true,
     "_nota_visibile": "Indicazione di Marcello: «un nemico in volo in generale è sempre visibile». Regola proposta (la più semplice): un token in volo non nascosto dal master si vede nella vista giocatori anche sotto la nebbia (manuale o automatica), se c’è una linea di vista senza muri né porte chiuse dal centro di almeno un PG in mappa. Il master può sempre nasconderlo. TODO(Davide) A.150.",
     "zoc_quota": true,
-    "_nota_zoc": "ZoC e Attacchi di Opportunità come a terra (Giocatore §5.2.3); con la quota la distanza è la maggiore fra quella sulla griglia e la differenza di quota (diagonale 1 Q, A.124): un token in volo più alto della portata ravvicinata non è nella ZoC e non provoca uscendo. TODO(Davide) A.149.",
+    "_nota_zoc": "ZoC e Attacchi di Opportunità come a terra (Giocatore §5.2.3); con la quota la distanza è la maggiore fra quella sulla griglia e la differenza di quota (diagonale 1 Q, A.124): un token in volo più alto della portata ravvicinata non è nella ZoC e non provoca uscendo. A.149 (risposta di Davide dell’08/10/2026, decisione 149): confermato; salire volontariamente da dentro a fuori portata può provocare un Attacco di Opportunità prima di uscire, chi era già fuori portata no.",
     "TODO(Davide)": "A.148: verso e da un token in volo valgono la Copertura Leggera e Media e il bersaglio protetto (§5.8, §5.10)? Provvisorio (indicazione di Marcello): no, un muro pieno blocca comunque. A.149: la quota conta per la portata delle armi ravvicinate? Provvisorio: sì, distanza = la maggiore fra griglia e quota. A.150: un token in volo si vede da lontano anche sotto la nebbia, con una linea di vista senza muri? Provvisorio: sì (indicazione di Marcello)."
   },
   "audio": {
