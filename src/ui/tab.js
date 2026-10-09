@@ -1571,7 +1571,7 @@ function vistaRapidaProtezioni(ctx, d) {
   const tempo = (r) => tempiProtezione(r, ctx.dati)?.testo ?? null;
   const righe = P.voci.map((x) => {
     const presenti = voci.filter((r) => r.tipo === x.tipo);
-    const calcolata = (r) => d.protezioniCalcolate.find((p) => p.nome === r.nome && !p.rinforzo);
+    const calcolata = (r) => d.protezioniCalcolate.find((p) => p.nome === r.nome);
     // rinforzi montati sull'armatura e indossati da soli (soprabiti, mantelli, Tabardo, Sottogiacca)
     const rinforzi = x.tipo === 'armatura' ? voci.filter((r) => r.tipo === 'rinforzo') : [];
     return h('li', {}, h('strong', {}, `${x.nome}: `),
@@ -1596,7 +1596,12 @@ function protezioniDisponibili(ctx) {
   const prova = (r, verso, stato) => {
     const c = cambioProtezione(r, verso, { inRound, armaturaIndossata: armaturaIndossata && !(r.tipo === 'armatura') }, ctx.dati);
     if (!c.ammesso) { avviso(`${r.nome}: ${c.motivo}.`, { tipo: 'errore' }); return; }
-    cambiaStato(ctx, r.uid, stato);
+    // soprabiti, mantelli e Tabardo con un'armatura addosso: si fissano su di lei («Montata su:»), senza un montaggio in
+    // più (A.110); da soli si indossano
+    const armatura = voci.find((x) => x.tipo === 'armatura' && x.attivo);
+    if (verso === 'indossa' && r.tipo === 'rinforzo' && armatura && r.stati.includes('in_uso')) {
+      ctx.azioni.equipaggiamento((ctx.scelte.equipaggiamento ?? []).map((v) => (v.uid === r.uid ? { ...v, stato: 'in_uso', montato_su: armatura.uid } : v)));
+    } else cambiaStato(ctx, r.uid, stato);
     if (c.testo) avviso(`${r.nome}: ${c.testo}`, { tipo: c.azp ? 'info' : 'ok' });
   };
   return h('ul', { class: 'elenco-disponibili' }, voci.map((r) => {

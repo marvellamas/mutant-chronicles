@@ -1451,6 +1451,6 @@ export function cambioProtezione(r, verso, { inRound = false, armaturaIndossata 
   if (t.scheda) return inRound ? no(`${t.testo} (A.110)`) : { ammesso: true, motivo: null, azp: 0, testo: `Per ${verbo} segui la procedura della scheda.` };
   const n = verso === 'indossa' ? t.indossare : t.togliere;
   if (t.unita === 'AzP') return { ammesso: true, motivo: null, azp: inRound ? n : 0, testo: inRound ? `${n} AzP del tuo turno per ${verbo} (A.110).` : null };
-  if (inRound) return no(`per ${verbo} servono ${minuti(n)}: non si fa durante il Round (A.110)`);
+  if (inRound) return no(`per ${verbo} ${n === 1 ? 'serve' : 'servono'} ${minuti(n)}: non si fa durante il Round (A.110)`);
   return { ammesso: true, motivo: null, azp: 0, testo: `${verbo[0].toUpperCase()}${verbo.slice(1)} richiede ${minuti(n)}${t.condizione ? ` (${t.condizione})` : ''}; i benefici valgono a protezione interamente indossata.` };
 }

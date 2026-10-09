@@ -40,7 +40,7 @@ test('A.110 nel Round: le protezioni in AzP spendono l’Azione, armature e rinf
   assert.equal(cambioProtezione(r('rinforzi:soprabito-trenchcoat'), 'indossa', round, dati).azp, 1);
   const a = cambioProtezione(r('armature:armatura-civile-pesante'), 'indossa', round, dati);
   assert.deepEqual([a.ammesso, a.motivo], [false, 'per indossare servono 10 minuti: non si fa durante il Round (A.110)']);
-  assert.match(cambioProtezione(r('armature:armatura-civile-media', 'indossata'), 'togli', round, dati).motivo, /servono 1 minuto/);
+  assert.match(cambioProtezione(r('armature:armatura-civile-media', 'indossata'), 'togli', round, dati).motivo, /per togliere serve 1 minuto/);
   assert.equal(cambioProtezione(r('armature_corporative:vulkan'), 'indossa', round, dati).ammesso, false);
   // fuori dal Round: si fa, con il tempo da contare
   const fuori = cambioProtezione(r('armature:armatura-civile-media'), 'indossa', {}, dati);
