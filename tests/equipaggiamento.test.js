@@ -915,7 +915,7 @@ test('modalità tavolo: applicazioni di kit e Spray con il contatore; una sola U
 test('validatore del sanitario', () => {
   const e = (modifica) => { const d = copia(dati); modifica(d); return validaDati(d).map((x) => `${x.chiave}: ${x.problema}`).join('\n'); };
   const o = (d, id) => d.equipaggiamento.file.sanitario.oggetti.find((x) => x.id === id);
-  assert.match(e((d) => { o(d, 'spray-rimarginante').nome_applicazioni = 'litri'; }), /applicazioni, dosi, set o cartucce chirurgiche/);
+  assert.match(e((d) => { o(d, 'spray-rimarginante').nome_applicazioni = 'litri'; }), /applicazioni, dosi, set, cartucce chirurgiche, toppe, test/);
   assert.match(e((d) => { o(d, 'kit-chirurgico-da-campo').strumenti = { va: 2 }; }), /strumenti: serve/);
   assert.match(e((d) => { o(d, 'kit-di-pronto-soccorso-standard').esiti = { successo: 'x' }; }), /esiti: serve/);
   assert.match(e((d) => { o(d, 'umc-passiva').capacita_cartucce = 0; }), /capacita_cartucce: intero/);

@@ -1331,8 +1331,9 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
         && Number.isFinite(o.cella.ricarica_costo) && o.cella.ricarica_costo >= 0 && (o.cella.riserva_lx === undefined || (isIntero(o.cella.riserva_lx) && o.cella.riserva_lx >= 1)))) {
         err(F, `${k}.cella`, 'serve { capacita ≥ 1, unita: cariche|colpi|getti, ricarica_costo ≥ 0, riserva_lx? intero ≥ 1 }');
       }
-      // §7.19: equipaggiamento sanitario
-      if (o.nome_applicazioni !== undefined && !['applicazioni', 'dosi', 'set', 'cartucce chirurgiche'].includes(o.nome_applicazioni)) err(F, `${k}.nome_applicazioni`, 'applicazioni, dosi, set o cartucce chirurgiche');
+      // §7.19: equipaggiamento sanitario; Equipaggiamento 0.6: toppe, test e aria delle bombole (risorse separate dai PI)
+      const UNITA_APPLICAZIONI = ['applicazioni', 'dosi', 'set', 'cartucce chirurgiche', 'toppe', 'test', 'ore d’aria', 'ore-persona d’aria'];
+      if (o.nome_applicazioni !== undefined && !UNITA_APPLICAZIONI.includes(o.nome_applicazioni)) err(F, `${k}.nome_applicazioni`, UNITA_APPLICAZIONI.join(', '));
       // Equipaggiamento 0.5, cap. 6: numeri delle cure (src/equipaggiamento.js → testoCura)
       if (o.cura !== undefined) validaCura(F, `${k}.cura`, o.cura, err);
       // §6.8: postazioni medicochirurgiche

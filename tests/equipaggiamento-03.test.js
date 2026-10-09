@@ -66,7 +66,8 @@ test('acquistabili alla creazione: le voci del catalogo Commerciale con prezzo (
 });
 
 test('cap. 3 (0.5): 24 voci (−1 cartuccia, ora NEC Rosso; +4 del §3.6); PI e Qualità solo dove la scheda li dà; effetti di sopravvivenza e protezione', () => {
-  const tutte = deiFile('esplorazione');
+  // le voci dell'edizione 0.6 (§3.3.1, §3.5.1, §3.7, §3.8) hanno il loro test (tests/equipaggiamento-06.test.js)
+  const tutte = deiFile('esplorazione').filter((o) => !['§3.3.1', '§3.5.1', '§3.7', '§3.8.1', '§3.8.2', '§3.8.3'].includes(o.paragrafo));
   assert.equal(tutte.length, 24);
   assert.deepEqual(tutte.filter((o) => o.pi !== undefined).map((o) => [o.id, o.pi, o.ps_int]), [['corredo-da-assalto-verticale', 6, 12], ['corredo-di-sopravvivenza-ambientale', 4, 12],
     ['scala-telescopica', 4, 10], ['passerella-pieghevole', 6, 10], ['verricello-portatile-chroma', 6, 12], ['barella-pieghevole', 4, 10]]);
@@ -95,7 +96,7 @@ test('cap. 3: le voci di dotazione trovano la scheda (sacco a pelo, razione, ten
 });
 
 test('cap. 4: 11 voci con REP propria; Binocolo +1 Percezione per un uso (vale la scheda, non il «situazionale» del §2.16.7)', () => {
-  const tutte = deiFile('comunicazione');
+  const tutte = deiFile('comunicazione').filter((o) => o.paragrafo !== '§4.4'); // §4.4: edizione 0.6
   assert.equal(tutte.length, 11);
   assert.deepEqual(['CO', 'NC', 'NC'], ['comunicatore-personale', 'comunicatore-da-squadra', 'stazione-radio-portatile'].map((id) => r(`comunicazione:${id}`).reperibilita));
   assert.equal(r('comunicazione:visore-termico').reperibilita, 'MR');

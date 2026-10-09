@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Equipaggiamento 0.5",
+  "versione_manuale": "Equipaggiamento 0.6",
   "fonte": "Manuale dell’Equipaggiamento 0.5, cap. 5 Strumenti professionali, §§5.1–5.3 e 5.5–5.8 (Google Doc del 01/10/2026)",
   "_nota": "Generato da tools/lotti/lotto_equipaggiamento_05.mjs --parte strumenti (docs/equipaggiamento-lotti.md). Solo i campi che la scheda dà: un dato mancante è assente, mai 0 (§1.11). Gli effetti numerici seguono docs/effetti-oggetti.md (uso specifico: il valore compare accanto all’Abilità); «Si applica un solo modificatore degli strumenti» (§5.1, §5.2). Corredo di manutenzione da campo e Valigetta investigativa ASA restano le schede degli Armamenti (corredi_dispositivi.json). NEC e consumi nel campo «alimentazione» (§5.4.7).",
   "oggetti": [
@@ -762,6 +762,72 @@
       "ps_int": 10,
       "reperibilita": "CO",
       "costo": 50,
+      "proprieta": []
+    },
+    {
+      "id": "utensile-laser-da-taglio-e-saldatura",
+      "nome": "Utensile laser da taglio e saldatura",
+      "tipo": "altro",
+      "catalogo": "Commerciale",
+      "famiglia": "Strumenti tecnici e artigianali",
+      "nomi_alternativi": [],
+      "note_manuale": "Taglio. Taglia metalli ordinari fino a 1 cm di spessore con 10 minuti di lavoro per un tratto fino a 1 Q. Un taglio semplice in condizioni adatte riesce senza Prova; lavori di precisione o condizioni difficili usano Tecnologia. Saldatura. Fornisce lo strumento necessario ai lavori compatibili. Quando ripara un oggetto, si applicano Prova di Tecnologia, tempi, materiali e recupero dei PI ordinari. È uno strumento Standard, senza bonus aggiuntivo. Richiede due mani, accesso diretto e un pezzo fermo. Comprende NEC Rosso standard carico, cavo e alimentatore: 500 Lx, consumo 100 Lx/h, 5 ore effettive di lavoro anche non consecutive. Ricambio carico 50 cr; sostituzione con ricambio accessibile 1 AzP; ricarica completa un’ora e 5 cr con fonte adeguata (§5.4).",
+      "paragrafo": "§5.9",
+      "versione_manuale": "Equipaggiamento 0.6",
+      "peso": 2,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "pi": 4,
+      "reperibilita": "NC",
+      "costo": 1500,
+      "alimentazione": {
+        "nec": "nec:rosso-standard",
+        "consumo_lxh": 100,
+        "autonomia_ore": 5,
+        "paragrafo": "§5.9"
+      },
+      "effetto_breve": "Taglia metalli fino a 1 cm (10 minuti per 1 Q) e salda: strumento Standard, senza bonus.",
+      "proprieta": []
+    },
+    {
+      "id": "analizzatore-alimentare-portatile",
+      "nome": "Analizzatore alimentare portatile",
+      "tipo": "altro",
+      "catalogo": "Commerciale",
+      "famiglia": "Strumenti tecnici e artigianali",
+      "nomi_alternativi": [],
+      "note_manuale": "Una piccola valigetta contiene un vano per campioni, sensori biochimici e un archivio di sostanze conosciute. Un esame richiede un campione, 10 minuti, una superficie di appoggio e un test monouso, consumato anche se la Prova fallisce. Con successo si ottengono le informazioni ricavabili dall’apparecchio; un fallimento dà un risultato inconcludente. Il +2 è un bonus degli strumenti e non si somma a quello di un altro corredo nella stessa analisi. La dotazione comprende dieci test; una confezione di dieci ricambi costa 100 cr. Comprende NEC Verde standard carico, cavo e alimentatore: 1.000 Lx, consumo 25 Lx/h, autonomia 40 ore effettive. Si annotano ore residue e test disponibili separatamente.",
+      "paragrafo": "§5.10",
+      "versione_manuale": "Equipaggiamento 0.6",
+      "peso": 1,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "pi": 4,
+      "reperibilita": "NC",
+      "costo": 1200,
+      "alimentazione": {
+        "nec": "nec:verde-standard",
+        "consumo_lxh": 25,
+        "autonomia_ore": 40,
+        "paragrafo": "§5.10"
+      },
+      "applicazioni": 10,
+      "nome_applicazioni": "test",
+      "ricarica": {
+        "applicazioni": 10,
+        "costo": 100
+      },
+      "effetto_breve": "+2 a Scienza per analizzare acqua, alimenti e scorte (10 minuti e un test).",
+      "effetti": [
+        {
+          "abilita": "Scienza",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "analisi di acqua, alimenti e scorte",
+          "condizione": "Permette di cercare contaminanti, tossine e segni di deterioramento compatibili con i test disponibili, concedendo +2 a Scienza per l’analisi.",
+          "fonte": "Equipaggiamento §5.10"
+        }
+      ],
       "proprieta": []
     }
   ]

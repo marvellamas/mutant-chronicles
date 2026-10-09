@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Equipaggiamento 0.5",
+  "versione_manuale": "Equipaggiamento 0.6",
   "fonte": "Manuale dell’Equipaggiamento 0.5, cap. 4 (Google Doc del 01/10/2026)",
   "_nota": "Generato da tools/lotti/lotto_equipaggiamento_03.mjs (docs/equipaggiamento-lotti.md). Solo i campi che la scheda dà: un dato mancante è assente, mai 0 (Equipaggiamento §1.11). Catalogo Commerciale. Gli effetti numerici seguono docs/effetti-oggetti.md; il resto è testo in «note_manuale». «alimentazione»: NEC del catalogo (nec.json), consumo e autonomia o usi (Equipaggiamento 0.5, §5.4.7).",
   "oggetti": [
@@ -10,9 +10,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Comunicatori",
       "nomi_alternativi": [],
-      "note_manuale": "Portata 1 km. Comunicazioni vocali fra dispositivi sullo stesso canale; bidirezionale entro la portata del dispositivo più debole. Accendere, spegnere o cambiare canale 1 AzP. Le comunicazioni ordinarie sono ascoltabili da ricevitori compatibili sul canale; cifratura, intercettazione specialistica e disturbo intenzionale sono esclusi. NEC Verde compatto (§4.1): 1 Lx/h e 100 ore; ricarica in un’ora (0,01 cr/Lx), sostituzione 1 AzP (§5.4).",
+      "note_manuale": "Portata 1 km. Comunicazioni vocali fra dispositivi sullo stesso canale; bidirezionale entro la portata del dispositivo più debole. Accendere, spegnere o cambiare canale 1 AzP. Le comunicazioni ordinarie sono ascoltabili da ricevitori compatibili sul canale; la cifratura richiede il modulo del §4.4. Intercettazione specialistica e disturbo intenzionale non sono funzioni dei comunicatori ordinari. NEC Verde compatto (§4.1): 1 Lx/h e 100 ore; ricarica in un’ora (0,01 cr/Lx), sostituzione 1 AzP (§5.4).",
       "paragrafo": "§4.1",
-      "versione_manuale": "Equipaggiamento 0.5",
+      "versione_manuale": "Equipaggiamento 0.6",
       "peso": 0.1,
       "reperibilita": "CO",
       "costo": 200,
@@ -31,9 +31,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Comunicatori",
       "nomi_alternativi": [],
-      "note_manuale": "Portata 10 km, costruzione adatta all’impiego sul campo. Comunicazioni vocali fra dispositivi sullo stesso canale; bidirezionale entro la portata del dispositivo più debole. Accendere, spegnere o cambiare canale 1 AzP. Le comunicazioni ordinarie sono ascoltabili da ricevitori compatibili sul canale; cifratura, intercettazione specialistica e disturbo intenzionale sono esclusi. NEC Verde standard (§4.1): 5 Lx/h e 200 ore; ricarica in un’ora (0,01 cr/Lx), sostituzione 1 AzP (§5.4).",
+      "note_manuale": "Portata 10 km, costruzione adatta all’impiego sul campo. Comunicazioni vocali fra dispositivi sullo stesso canale; bidirezionale entro la portata del dispositivo più debole. Accendere, spegnere o cambiare canale 1 AzP. Le comunicazioni ordinarie sono ascoltabili da ricevitori compatibili sul canale; la cifratura richiede il modulo del §4.4. Intercettazione specialistica e disturbo intenzionale non sono funzioni dei comunicatori ordinari. NEC Verde standard (§4.1): 5 Lx/h e 200 ore; ricarica in un’ora (0,01 cr/Lx), sostituzione 1 AzP (§5.4).",
       "paragrafo": "§4.1",
-      "versione_manuale": "Equipaggiamento 0.5",
+      "versione_manuale": "Equipaggiamento 0.6",
       "peso": 0.3,
       "reperibilita": "NC",
       "costo": 1000,
@@ -52,9 +52,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Comunicatori",
       "nomi_alternativi": [],
-      "note_manuale": "Portata 50 km, mantenuta solo mentre l’antenna è predisposta nella postazione (1 minuto). Comunicazioni vocali fra dispositivi sullo stesso canale; bidirezionale entro la portata del dispositivo più debole. Accendere, spegnere o cambiare canale 1 AzP. Le comunicazioni ordinarie sono ascoltabili da ricevitori compatibili sul canale; cifratura, intercettazione specialistica e disturbo intenzionale sono esclusi. NEC Verde standard (§4.1): 25 Lx/h e 40 ore; ricarica in un’ora (0,01 cr/Lx), sostituzione 1 AzP (§5.4).",
+      "note_manuale": "Portata 50 km, mantenuta solo mentre l’antenna è predisposta nella postazione (1 minuto). Comunicazioni vocali fra dispositivi sullo stesso canale; bidirezionale entro la portata del dispositivo più debole. Accendere, spegnere o cambiare canale 1 AzP. Le comunicazioni ordinarie sono ascoltabili da ricevitori compatibili sul canale; la cifratura richiede il modulo del §4.4. Intercettazione specialistica e disturbo intenzionale non sono funzioni dei comunicatori ordinari. NEC Verde standard (§4.1): 25 Lx/h e 40 ore; ricarica in un’ora (0,01 cr/Lx), sostituzione 1 AzP (§5.4).",
       "paragrafo": "§4.1",
-      "versione_manuale": "Equipaggiamento 0.5",
+      "versione_manuale": "Equipaggiamento 0.6",
       "peso": 2,
       "reperibilita": "NC",
       "costo": 3000,
@@ -239,6 +239,60 @@
         "autonomia_ore": 50,
         "paragrafo": "§4.3"
       },
+      "proprieta": []
+    },
+    {
+      "id": "modulo-di-cifratura",
+      "nome": "Modulo di cifratura per comunicatori",
+      "tipo": "altro",
+      "catalogo": "Commerciale",
+      "famiglia": "Comunicazioni protette e controsorveglianza",
+      "nomi_alternativi": [],
+      "note_manuale": "Un piccolo accessorio collegato al comunicatore codifica voce e dati mediante una chiave condivisa. I dispositivi autorizzati ricostruiscono automaticamente il messaggio. Chi ascolta il canale con un normale ricevitore privo della chiave non comprende le comunicazioni. Ogni comunicatore coinvolto deve possedere un modulo compatibile e la stessa chiave. Installazione e configurazione richiedono un minuto per apparecchio, senza Prova in condizioni ordinarie. Non nasconde la trasmissione, non aumenta la portata e non impedisce il disturbo radio. Il modulo riceve energia dal comunicatore; il consumo è compreso nel suo profilo operativo, senza una seconda riserva da annotare.",
+      "paragrafo": "§4.4",
+      "versione_manuale": "Equipaggiamento 0.6",
+      "peso": 0.1,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "pi": 2,
+      "reperibilita": "NC",
+      "costo": 500,
+      "effetto_breve": "Cifra voce e dati del comunicatore: chi non ha la chiave non comprende.",
+      "proprieta": []
+    },
+    {
+      "id": "rilevatore-di-sorveglianza",
+      "nome": "Rilevatore di sorveglianza elettronica",
+      "tipo": "altro",
+      "catalogo": "Commerciale",
+      "famiglia": "Comunicazioni protette e controsorveglianza",
+      "nomi_alternativi": [],
+      "note_manuale": "Uno strumento palmare con antenna orientabile e sonda ravvicinata cerca emissioni e segnali caratteristici dei dispositivi di sorveglianza. Un’ispezione richiede 10 minuti per un locale fino a 4 × 4 Q, accesso alle superfici da controllare e una Prova. Con successo individua i dispositivi rilevabili nell’area effettivamente esaminata; un fallimento non garantisce che il locale sia sicuro. Non scopre automaticamente dispositivi spenti, osservatori esterni, strumenti puramente ottici o sorveglianza magica. Il bonus non si somma a quello di altri strumenti sulla stessa Prova. Comprende NEC Verde standard carico, cavo e alimentatore: 1.000 Lx, 25 Lx/h e 40 ore effettive.",
+      "paragrafo": "§4.4",
+      "versione_manuale": "Equipaggiamento 0.6",
+      "peso": 1,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "pi": 4,
+      "reperibilita": "NC",
+      "costo": 2000,
+      "alimentazione": {
+        "nec": "nec:verde-standard",
+        "consumo_lxh": 25,
+        "autonomia_ore": 40,
+        "paragrafo": "§4.4"
+      },
+      "effetto_breve": "+2 a Tecnologia per cercare microspie e apparati attivi (10 minuti per un locale fino a 4 × 4 Q).",
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "ricerca di microspie e apparati attivi",
+          "condizione": "Consente una ricerca specialistica di microspie e apparati attivi, con +2 a Tecnologia degli strumenti.",
+          "fonte": "Equipaggiamento §4.4"
+        }
+      ],
       "proprieta": []
     }
   ]
