@@ -990,6 +990,11 @@ Fonte: E&L del 06/10/2026, 17:23 UTC, blocco «Risposte approvate — regole tec
     IES 1 AzP / 1 AzP, togliendo prima l'armatura che la copre. Rinforzi strutturali sull'armatura tolta, con gli
     strumenti: leggero 1 minuto / 1 minuto, pesante 5 / 5; un rinforzo già montato non aggiunge tempo. → `regole.json` →
     `protezioni_rapide` (scudo `azioni: 1`; `tempi` per armature, rinforzi, soprabiti e sottogiacca; `decisione`).
+    **Applicata** il 09/10 (lotto R3): `protezioni_rapide.tempi` con scudo, elmetto, armature per categoria, soprabiti,
+    Sottogiacca IES, rinforzi strutturali e `procedura_scheda` (esoscheletri e servoassistite); `src/equipaggiamento.js` →
+    `tempiProtezione`, `cambioProtezione`; tab Combattimento: vista rapida con i tempi e «Indossa»/«Togli» (nel Round, PG in
+    uno scontro aperto, solo le protezioni in AzP, con l'avviso dell'AzP; armature e rinforzi no; Sottogiacca sotto
+    l'armatura no; soprabiti con l'armatura addosso «Montata su:»). Benefici solo a protezione indossata (già così).
     **In parte:** la vista rapida mostra scudo ed elmetto; per armatura e rinforzi deve leggere `tempi` (lotto R3 del
     rapporto).
 121. **Correzioni retroattive dell'avanzamento** (A.107). Si può correggere un evento vecchio: l'app ricalcola in ordine
@@ -1023,12 +1028,18 @@ Fonte: E&L del 06/10/2026, 17:23 UTC, blocco «Risposte approvate — regole tec
 124. **Chip del Processore e strumenti** (A.114). Il bonus del chip si somma al modificatore degli strumenti (non è un
     secondo strumento); resta un solo modificatore complessivo degli strumenti (§1.4.1); benefici tecnologici equivalenti
     al chip non si sommano (Equipaggiamento §7.1). Esempio: Medicina 10, chip +2, Kit trauma Professionale +2 → VA 14.
-    Superata l'ipotesi «vale il maggiore» (`src/condizioni.js`, usi specifici). **Da implementare** (lotto R2).
+    Superata l'ipotesi «vale il maggiore» (`src/condizioni.js`, usi specifici). **Applicata** il 09/10 (lotto R2, parte A.114):
+    `regole.json` → `impianti.chip.strumenti` «si_somma» ed `equivalenti` (impianti, elmetti, esoscheletri: Equipaggiamento
+    §7.1, «Cumulo»); `src/condizioni.js` → `effettiOggettiAbilita`: il chip si somma al migliore degli strumenti e fa il
+    maggiore con i benefici tecnologici equivalenti, anche con un bonus generale già nel VA. Restano i limiti del Processore.
 125. **Luce e attività pratiche visive** (A.116). La penalità di luce dipende dall'impiego concreto, non dall'Abilità:
     esempi Pilotare a vista, Tecnologia su componenti, Medicina per esami visivi, Scienza su campioni, Sopravvivenza su
     tracce, Atletica su appigli; non conoscenze, ascolto, Potere, Prove Salvezza. −2 / −4 / Accecato (−8, impossibili le
     attività solo visive). L'app deve poter segnare il singolo uso come «richiede la vista», con correzione del Direttore,
-    una sola volta. **Da implementare** (lotto R4); `TODO(Davide)` A.116 riscritto con la risposta.
+    una sola volta. **Applicata** il 09/10 (lotto R4): `regole.json` → `illuminazione.richiede_vista` (predefinite le Abilità
+    degli esempi, escluse Potere e Percezione, −8 nel buio) al posto del `TODO(Davide)`; `src/condizioni.js` → `abilitaVista`
+    e la penalità una volta sola (niente doppioni con attacchi e Difese o con Accecato); sessione `vistaAbilita` con le
+    correzioni del Direttore; caselle «Richiede la vista» nella tab Abilità sotto la luce (dalla mappa o scelta a mano).
 126. **Stati: sintesi operative approvate** (E&L del 06/10, «Stato 1/11»–«11/11»). Undici sintesi da usare nell'app al
     posto dei promemoria; nuovi rispetto ai nostri: A Terra striscia 3 Q con un'AzM, buttarsi o rialzarsi AzM o AzP;
     Accecato con PS Riflessi dimezza la durata e dura quanto il buio; Avvelenato con PS Tempra che dimezza il danno
