@@ -225,5 +225,5 @@ Rinviata da te l’08/10 (con bestiario e veicoli): resta aperta, l’app tiene 
 *** AZIONE: aggiungi in fondo alla sezione 2
 
 --- TESTO ---
-A.151 — Dati dei carichini (A.135). La tua risposta definisce la Ricarica per Tamburo (6 colpi, 100 crediti a vuoto) e la Ricarica per Serbatoio (6 colpi, 150 crediti a vuoto), ma dice che peso, Qualità, Integrità e Reperibilità non sono stati definiti. Quali sono? Nel frattempo l’app li mette nel catalogo senza quei valori: non pesano sul carico e non hanno punti Integrità.
+A.151 — Dati dei carichini (A.135). La tua risposta definisce la Ricarica per Tamburo (6 colpi, 100 crediti a vuoto) e la Ricarica per Serbatoio (6 colpi, 150 crediti a vuoto), ma dice che peso, Qualità, Integrità e Reperibilità non sono stati definiti. Quali sono? Finché non li definisci, quando arriveranno nel catalogo dell’app saranno senza quei valori: non peseranno sul carico e non avranno punti Integrità.
 ```
