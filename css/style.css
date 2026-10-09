@@ -2350,3 +2350,9 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
   .giocatori-corpo > .tablet-pannello:not([hidden]) { flex: 0 0 18rem; height: auto; }
 }
 .mappa-iniziativa-posto:not([hidden]) { min-height: 3.5rem; }
+
+/* 09/10: stato dello scontro accanto a ogni scena dell'elenco delle mappe (src/mappa/stato-scene.js) */
+.etichetta-scena { display: inline-block; margin-left: 0.4rem; padding: 0.05rem 0.45rem; border-radius: 999px; border: 1px solid var(--bordo); font-size: 0.8rem; white-space: nowrap; vertical-align: middle; }
+.etichetta-scena.in-corso { background: var(--accento); border-color: var(--accento); color: var(--accento-testo); font-weight: 700; }
+.etichetta-scena.terminato { opacity: 0.6; }
+.etichetta-scena.bozza { border-style: dashed; }

@@ -6,6 +6,7 @@ import { avviso, avvisoErrore } from '../avvisi.js';
 import { nuovaScena, idScena, duplicaScena } from '../../mappa/scena.js';
 import { elencoScene, leggiScena, salvaScena } from './api.js';
 import { chiediTesto, chiedi } from '../finestrella.js';
+import { sceneConStato, ETICHETTE_SCENA } from '../../mappa/stato-scene.js';
 
 const ID_PANNELLO = 'plancia-scene-mappa';
 
@@ -14,12 +15,15 @@ const ID_PANNELLO = 'plancia-scene-mappa';
  * `ridisegna` ridisegna la plancia; `apri(id)` va alla pagina della scena.
  */
 export function statoScene({ aperto = false } = {}) {
-  return { aperto, elenco: null, errore: null, occupato: false };
+  return { aperto, elenco: null, scontri: [], errore: null, occupato: false };
 }
 
 async function ricarica(st, ridisegna) {
   try {
-    st.elenco = await elencoScene();
+    // 09/10: anche gli scontri, per lo stato accanto a ogni scena (In corso, Scontro terminato, Bozza)
+    const [scene, scontri] = await Promise.all([elencoScene(), fetch('api/scontri', { cache: 'no-store' }).then((r) => (r.ok ? r.json() : [])).catch(() => [])]);
+    st.elenco = scene;
+    st.scontri = Array.isArray(scontri) ? scontri : [];
     st.errore = null;
   } catch (e) {
     st.errore = `Scene non lette: ${e.message}`;
@@ -63,7 +67,10 @@ async function salvaOAvvisa(s, cosa) {
 /** Nome con una finestrella dentro la pagina (non prompt del browser: tablet e prove). */
 const chiediNome = async (titolo, attuale, conferma = 'OK') => (await chiediTesto({ titolo, etichetta: 'Nome', valore: attuale, conferma }))?.slice(0, 120) ?? null;
 
-export function pannelloScene(ctx, st, { ridisegna, apri }) {
+/**
+ * @param scontroAperto id dello scontro aperto (dalla plancia, sempre aggiornato) per l'etichetta «In corso»
+ */
+export function pannelloScene(ctx, st, { ridisegna, apri, scontroAperto = undefined }) {
   const azioni = {
     nuova: async () => {
       const nome = await chiediNome('Nuova scena (per esempio «Cripta di Mishima»)', '', 'Crea');
@@ -97,7 +104,8 @@ export function pannelloScene(ctx, st, { ridisegna, apri }) {
       });
     },
   };
-  const elenco = st.elenco ?? [];
+  // 09/10: prima le scene dello scontro in corso, con l'etichetta dello stato
+  const elenco = sceneConStato(st.elenco ?? [], st.scontri, scontroAperto);
   // 08/10: aperto di partenza (pagina del Tavolo): l'elenco si legge alla prima apertura, una volta
   if (st.aperto && st.elenco === null && !st.lettaAllApertura) { st.lettaAllApertura = true; ricarica(st, ridisegna); }
   return h('details', {
@@ -115,6 +123,7 @@ export function pannelloScene(ctx, st, { ridisegna, apri }) {
   st.elenco === null ? h('p', { class: 'vuoto' }, 'Lettura delle scene…')
     : elenco.length ? h('ul', { class: 'scene-elenco' }, elenco.map((v) => h('li', {},
       h('button', { type: 'button', class: 'nome-scena', title: 'Apre la mappa di questa scena', onclick: () => apri(v.id) }, v.nome),
+      v.statoScontro ? h('span', { class: `etichetta-scena ${v.statoScontro}`, title: ETICHETTE_SCENA[v.statoScontro].titolo }, ETICHETTE_SCENA[v.statoScontro].testo) : null,
       h('small', { class: 'nota' }, ` ${v.colonne} × ${v.righe} Q · ${v.mappa ? 'con immagine' : 'senza immagine'} · rev. ${v.revisione}`),
       h('span', { class: 'scene-azioni' },
         h('button', { type: 'button', class: 'btn btn-piccolo primario', disabled: st.occupato, onclick: () => apri(v.id) }, 'Apri'),
