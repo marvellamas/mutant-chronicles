@@ -379,7 +379,7 @@ export function renderTavolo(radice, ctx) {
       return { chiave, nome, ritratto: v?.ritratto ?? null, iniziali: iniz(nome), collegato: (stato.tablet ?? []).some((k) => stessaChiave(k, chiave)),
         nelloScontro: (stato.scontro?.partecipanti ?? []).some((p) => p.tipo === 'pg' && stessaChiave(p.chiave, chiave)) };
     });
-    const collega = riquadroCollega(stato.rete, { aperto: stato.collegaAperto, onToggle: (v) => { stato.collegaAperto = v; }, tablet: { pg: tabletPg, chiama: stato.scontro ? (p) => chiamaTablet(p) : null } });
+    const collega = riquadroCollega(stato.rete, { aperto: stato.collegaAperto, onToggle: (v) => { stato.collegaAperto = v; }, tablet: { pg: tabletPg, chiama: stato.scontro ? (p) => chiamaTablet(p) : null, aiuto: { attuale: stato.aiutoMaster?.chiave ?? null, rendi: stato.scontro?.stato === 'aperto' ? (p) => rendiAiuto(p) : null, revoca: (p) => revocaAiuto(p) } } });
     const scelta = stato.sceltaAperta ? sceltaAlTavolo(stato, ultimi, async (nuova) => {
       try {
         stato.selezione = await scriviSelezione(nuova);
@@ -862,11 +862,35 @@ export function renderTavolo(radice, ctx) {
   const aggiornaTablet = async () => {
     const r = await fetch('api/tablet', { cache: 'no-store' });
     if (!r.ok) return false;
-    const collegati = ((await r.json()).collegati ?? []).slice().sort();
-    if (JSON.stringify(collegati) === JSON.stringify(stato.tablet ?? [])) return false;
+    const corpo = await r.json();
+    const collegati = (corpo.collegati ?? []).slice().sort();
+    // A.122: chi è Aiuto-master (si perde a fine scontro o al riavvio del server)
+    const aiuto = corpo.aiutoMaster ?? null;
+    if (JSON.stringify(collegati) === JSON.stringify(stato.tablet ?? []) && JSON.stringify(aiuto) === JSON.stringify(stato.aiutoMaster ?? null)) return false;
     stato.tablet = collegati;
+    stato.aiutoMaster = aiuto;
     return true;
   };
+  // A.122: «Rendi Aiuto-master» / «Revoca» (il server ne tiene uno solo)
+  async function rendiAiuto(p) {
+    try {
+      const r = await fetch('api/tablet/aiuto-master', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ pg: p.chiave, nome: p.nome, scontro: stato.scontro?.id ?? null }) });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok) { avvisoErrore(`Aiuto-master non assegnato: ${j.errore ?? r.status}`, { chiave: 'aiuto-master' }); return; }
+      stato.aiutoMaster = j.aiutoMaster;
+      avviso(`🛡 ${p.nome} è Aiuto-master: dal suo tablet muove il PG del turno attivo, per questo scontro.`, { chiave: 'aiuto-master' });
+    } catch (e) { avvisoErrore(`Aiuto-master non assegnato: ${e.message}`, { chiave: 'aiuto-master' }); }
+    disegna();
+  }
+  async function revocaAiuto(p) {
+    try {
+      const r = await fetch('api/tablet/aiuto-master', { method: 'DELETE' });
+      if (!r.ok) throw new Error(`errore ${r.status}`);
+      stato.aiutoMaster = null;
+      avviso(`Revocato: ${p.nome} non è più Aiuto-master.`, { chiave: 'aiuto-master' });
+    } catch (e) { avvisoErrore(`Revoca non riuscita: ${e.message}`, { chiave: 'aiuto-master' }); }
+    disegna();
+  }
   async function chiamaTablet(p) {
     try {
       const r = await fetch('api/tablet/avviso', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ pg: p.chiave, nome: p.nome, tipo: 'muovi', scontro: stato.scontro?.id ?? null }) });

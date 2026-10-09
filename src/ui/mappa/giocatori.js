@@ -37,6 +37,7 @@ import { mappaDaSchermo } from '../../mappa/camera.js';
 import { dimensioni, centroToken, celleToken } from '../../mappa/token.js';
 import { apri as apriFinestrella } from '../finestrella.js';
 import { creaAllarme } from '../allarme.js';
+import { INTESTAZIONE as INTESTAZIONE_AIUTO } from '../../mappa/aiuto-master.js';
 
 // fase 2, lotto 7: il PG scelto con «Sono…», ricordato su questo tablet
 const CHIAVE_PG = 'mutant.tablet.pg';
@@ -62,7 +63,9 @@ export function renderGiocatori(radice, ctx) {
   const st = { vista: null, firma: null, cam: cameraIniziale(), immagine: null, fileImmagine: null, chiusa: false, errore: null, adattata: null, toccata: false, trascina: null, diretta: null, celle: { area: null, zoc: null },
     // fase 2, lotto 7: tablet del giocatore
     // 08/10: dalla scheda del PG il PG arriva già scelto (ctx.pg), con lo scontro e la scheda a cui tornare
-    pg: ctx.pg || leggiPg(), daScheda: !!(ctx.pg && ctx.scheda), centrato: false, mosso: false, pgs: [], io: null, fascia: 1, prova: null, inVolo: false, turnoPrima: null, celleMie: null };
+    pg: ctx.pg || leggiPg(), daScheda: !!(ctx.pg && ctx.scheda), centrato: false, mosso: false, pgs: [], io: null, fascia: 1, prova: null, inVolo: false, turnoPrima: null, celleMie: null,
+    // A.122: ruolo di Aiuto-master (dal server, con il gettone), modo «muovi il PG di turno», ultima vista letta
+    aiuto: null, aiutoModo: false, ultimoCorpo: null, mioNome: null };
   const T = ctx.dati.mappa.tablet;
   const el = {};
   el.titolo = h('strong', { class: 'giocatori-titolo' }, 'Mappa');
@@ -407,7 +410,16 @@ export function renderGiocatori(radice, ctx) {
     }
     st.pgs = corpo.pgs ?? [];
     const prima = st.io;
-    st.io = st.pg ? corpo.io ?? null : null;
+    // A.122: Aiuto-master. Il server dà il ruolo solo al tablet scelto dal Direttore; nel modo «muovi il PG di turno» il
+    // blocco del tablet diventa quello del PG del turno attivo (permesso, area e ZoC calcolati come per il suo tablet)
+    const primaAiuto = st.aiuto;
+    st.ultimoCorpo = corpo;
+    st.aiuto = st.pg ? corpo.aiutoMaster ?? null : null;
+    if (!st.aiuto?.turno) st.aiutoModo = false;
+    if (st.aiuto && !primaAiuto) avviso('🛡 Sei Aiuto-master: puoi muovere il PG del turno attivo, con i normali limiti di movimento.', { tipo: 'info', chiave: 'aiuto-master', durata: 8000 });
+    if (!st.aiuto && primaAiuto) avviso('Non sei più Aiuto-master.', { tipo: 'info', chiave: 'aiuto-master' });
+    st.mioNome = corpo.io?.nome ?? null;
+    st.io = st.pg ? (st.aiutoModo && st.aiuto?.turno ? { ...st.aiuto.turno, trovato: true, aiuto: true, impostazioni: st.aiuto.turno.impostazioni ?? corpo.io?.impostazioni } : corpo.io ?? null) : null;
     st.celleMie = null;
     if (st.io?.permesso?.puo) el.movimento.hidden = true;
     const turno = !!st.io?.mini?.diTurno;
@@ -485,7 +497,9 @@ export function renderGiocatori(radice, ctx) {
   const testoLinea = (l) => [`${l.distanza} Q`, l.testo, l.interposta ? `creatura interposta (${ctx.dati.regole.attacco_distanza.interposta?.va ?? -2} VA, A.144)` : null, l.protetto ? 'bersaglio protetto (−4 VA, §5.10)' : null, l.luce ? `luce: ${l.luce}` : null, l.inVolo ? 'in volo' : null].filter(Boolean).join(' · ');
 
   const chiama = async (corpo) => {
-    const r = await fetch('api/vista-giocatori/movimento', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ scena: st.vista.id, pg: st.pg, fascia: st.fascia, ...(ctx.scontro ? { scontro: ctx.scontro } : {}), ...corpo }) });
+    // A.122: il movimento dell'Aiuto-master porta il gettone del ruolo e il PG che crede di muovere (il server ricontrolla)
+    const aiuto = st.io?.aiuto && st.aiuto ? { aiuto: st.aiuto.gettone, bersaglio: st.io.pg } : {};
+    const r = await fetch('api/vista-giocatori/movimento', { method: 'POST', headers: { 'Content-Type': 'application/json', ...(aiuto.aiuto ? { [INTESTAZIONE_AIUTO]: aiuto.aiuto } : {}) }, body: JSON.stringify({ scena: st.vista.id, pg: st.pg, fascia: st.fascia, ...(ctx.scontro ? { scontro: ctx.scontro } : {}), ...aiuto, ...corpo }) });
     const j = await r.json().catch(() => ({}));
     return { ok: r.ok && j.ok !== false, ...j };
   };
@@ -510,7 +524,7 @@ export function renderGiocatori(radice, ctx) {
       else {
         const ao = (r.opportunita ?? []).map((o) => `Attacco di Opportunità di ${o.nome}!`);
         st.mosso = true;
-        avviso([`Ti sei mosso: ${numeroQ(r.costo)} Q (${NOMI_MODI[r.fascia] ?? r.fascia}).`, ...ao, r.blocco ? 'Corsa e Scatto sono un blocco unico: movimento del Round finito.' : null].filter(Boolean), { tipo: ao.length ? 'info' : 'ok', chiave: 'tablet-mosso', durata: ao.length ? 12000 : 5000,
+        avviso([st.io?.aiuto ? `Hai mosso ${st.io.nome} (Aiuto-master): ${numeroQ(r.costo)} Q (${NOMI_MODI[r.fascia] ?? r.fascia}).` : `Ti sei mosso: ${numeroQ(r.costo)} Q (${NOMI_MODI[r.fascia] ?? r.fascia}).`, ...ao, r.blocco ? 'Corsa e Scatto sono un blocco unico: movimento del Round finito.' : null].filter(Boolean), { tipo: ao.length ? 'info' : 'ok', chiave: 'tablet-mosso', durata: ao.length ? 12000 : 5000,
           azioni: st.daScheda ? [{ testo: '← Torna alla scheda', fai: () => tornaAllaScheda() }] : [] });
       }
     } catch { avviso('Collegamento con il master perso: riprova.', { tipo: 'errore', chiave: 'tablet-prova' }); } finally { st.inVolo = false; }
@@ -518,6 +532,15 @@ export function renderGiocatori(radice, ctx) {
     st.firma = null;
     await aggiorna();
     aggiornaTablet();
+    tela.richiedi(['aree', 'sopra']);
+  }
+  /** A.122: «Muovi il PG di turno» / «Torna al mio PG» per l'Aiuto-master. */
+  function cambiaAiutoModo(v = !st.aiutoModo) {
+    st.aiutoModo = v && !!st.aiuto?.turno;
+    st.prova = null;
+    st.celleMie = null;
+    if (st.ultimoCorpo) usaTablet(st.ultimoCorpo);
+    if (st.aiutoModo) centraSuDiMe();
     tela.richiedi(['aree', 'sopra']);
   }
   function cambiaFascia(n) {
@@ -540,7 +563,7 @@ export function renderGiocatori(radice, ctx) {
   function aggiornaTablet() {
     const pgs = st.pgs ?? [];
     el.sono.hidden = st.daScheda || (!st.pg && !pgs.length);
-    el.sono.textContent = st.pg ? `Tu: ${st.io?.nome ?? st.pg} ▾` : 'Sono…';
+    el.sono.textContent = st.pg ? `Tu: ${st.mioNome ?? st.io?.nome ?? st.pg} ▾` : 'Sono…';
     el.sono.title = st.pg ? 'Cambia PG o torna a guardare soltanto' : 'Scegli il tuo PG per muoverlo da questo tablet';
     el.tablet.hidden = !st.pg;
     if (!st.pg) { svuota(el.tablet); return; }
@@ -574,7 +597,11 @@ export function renderGiocatori(radice, ctx) {
         h('button', { type: 'button', class: 'btn primario', disabled: st.inVolo, onclick: () => conferma() }, 'Conferma'))) : null;
     el.torna.className = `btn tablet-torna${st.mosso ? ' primario' : ''}`;
     const linea = st.linea ? h('div', { class: 'tablet-conferma tablet-linea' }, h('p', {}, `🎯 ${st.linea.nome ? `${st.linea.nome}: ` : ''}${testoLinea(st.linea)}`), st.linea.copertura === 'totale' ? h('p', { class: 'tablet-zoc' }, 'Copertura Totale: non si può attaccare direttamente (§5.8).') : null) : null;
-    svuota(el.tablet, mini, stato, fasce, conf, linea,
+    // A.122: «Sei Aiuto-master» e il pulsante per muovere il PG del turno attivo
+    const aiuto = st.aiuto ? h('div', { class: `tablet-aiuto${st.aiutoModo ? ' attivo' : ''}`, role: 'status' },
+      h('p', {}, h('strong', {}, '🛡 Sei Aiuto-master'), st.aiutoModo ? `: stai muovendo ${io.nome}, il PG del turno attivo.` : st.aiuto.turno ? `: puoi muovere ${st.aiuto.turno.nome}, il PG del turno attivo.` : `. ${st.aiuto.motivo ?? ''}`),
+      st.aiuto.turno || st.aiutoModo ? h('button', { type: 'button', class: `btn${st.aiutoModo ? '' : ' primario'}`, onclick: () => cambiaAiutoModo() }, st.aiutoModo ? '← Torna al mio PG' : `🛡 Muovi ${st.aiuto.turno.nome}`) : null) : null;
+    svuota(el.tablet, aiuto, st.io?.aiuto ? h('p', { class: 'tablet-nome' }, h('strong', {}, io.nome), ' · turno attivo') : mini, stato, fasce, conf, linea,
       h('div', { class: 'riga-azioni tablet-comandi' },
         h('button', { type: 'button', class: `btn${st.lineaModo ? ' scelto' : ''}`, 'aria-pressed': String(!!st.lineaModo), title: 'Dal tuo PG verso un token o un quadretto che vedi: distanza, Copertura, protetto, luce. Anche fuori turno; non cambia nulla', onclick: () => cambiaLineaModo() }, st.lineaModo ? '🎯 Linea di tiro: tocca il bersaglio (chiudi)' : '🎯 Linea di tiro'),
         h('button', { type: 'button', class: 'btn', onclick: () => centraSuDiMe() }, '⌖ Centra su di me'),

@@ -2236,6 +2236,11 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 .tablet-mini { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem 1rem; flex: 1 1 100%; }
 .tablet-nome { font-size: 1.2rem; }
 .tablet-tuo-turno { color: var(--pe, #1b7a3a); }
+/* A.122: Aiuto-master, il riquadro del ruolo sul tablet e l'etichetta nella lista del Direttore */
+.tablet-aiuto { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem 1rem; flex: 1 1 100%; padding: .4rem .6rem; border-radius: .4rem; border: 2px solid var(--accento, #6a4c93); background: var(--accento-tenue, #efe8f6); }
+.tablet-aiuto p { margin: 0; }
+.tablet-aiuto.attivo { border-style: dashed; }
+.etichetta.aiuto-master { font-size: .75rem; }
 .tablet-valore { display: inline-flex; align-items: center; gap: .35rem; font-variant-numeric: tabular-nums; }
 .tablet-barra { display: inline-block; width: 6rem; height: .6rem; border-radius: .3rem; background: #8884; overflow: hidden; }
 .tablet-barra > span { display: block; height: 100%; }

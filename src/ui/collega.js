@@ -4,6 +4,7 @@
 import { h } from './dom.js';
 import { avviso, avvisoErrore } from './avvisi.js';
 import { svgQR } from '../qr.js';
+import { stessaChiave } from '../veicoli-registro.js';
 
 /** Indirizzi dal server: { porta, soloLocale, indirizzi, altri, tuttiPerDubbio }, o null se non risponde. */
 export async function leggiRete() {
@@ -35,7 +36,7 @@ const qr = (url) => {
 };
 
 /** «Tablet collegati»: una riga per PG del tavolo con ritratto o iniziali, nome, 📱 e, nello scontro, «🔔 Chiedi di muovere». */
-function elencoTablet({ pg, chiama }) {
+function elencoTablet({ pg, chiama, aiuto = null }) {
   const quanti = pg.filter((p) => p.collegato).length;
   return h('section', { class: 'collega-tablet', 'aria-label': 'Tablet collegati' },
     h('h3', {}, `Tablet collegati `, h('small', { class: 'nota' }, `${quanti} su ${pg.length}`)),
@@ -44,13 +45,18 @@ function elencoTablet({ pg, chiama }) {
       h('span', { class: 'collega-tablet-nome' }, p.nome),
       h('span', { class: `tablet-indicatore ${p.collegato ? 'collegato' : 'scollegato'}`, role: 'img', 'aria-label': p.collegato ? 'tablet collegato' : 'tablet non collegato', title: p.collegato ? 'Tablet collegato (scheda o mappa aperta)' : 'Tablet non collegato' }, '📱'),
       h('small', { class: 'nota' }, p.collegato ? 'collegato' : 'non collegato'),
-      chiama && p.collegato && p.nelloScontro ? h('button', { type: 'button', class: 'btn btn-piccolo btn-campanello', title: `Chiedi a ${p.nome} di muovere: avviso grande, suono e vibrazione sul suo tablet`, onclick: () => chiama(p) }, '🔔 Chiedi di muovere') : null))));
+      chiama && p.collegato && p.nelloScontro ? h('button', { type: 'button', class: 'btn btn-piccolo btn-campanello', title: `Chiedi a ${p.nome} di muovere: avviso grande, suono e vibrazione sul suo tablet`, onclick: () => chiama(p) }, '🔔 Chiedi di muovere') : null,
+      // A.122: Aiuto-master, uno alla volta, per lo scontro aperto
+      aiuto && stessaChiave(aiuto.attuale, p.chiave) ? [h('span', { class: 'etichetta aiuto-master', title: 'Muove il PG del turno attivo dal suo tablet, con i normali limiti; non modifica schede, Iniziativa o scena (A.122)' }, '🛡 Aiuto-master'),
+        h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => aiuto.revoca(p) }, 'Revoca')]
+        : aiuto?.rendi && p.collegato ? h('button', { type: 'button', class: 'btn btn-piccolo', title: `${p.nome} potrà muovere il PG del turno attivo dal suo tablet, per questo scontro${aiuto.attuale ? ' (lo toglie al tablet che lo ha ora)' : ''}`, onclick: () => aiuto.rendi(p) }, 'Rendi Aiuto-master') : null))));
 }
 
 /**
  * @param rete risposta di /api/rete (null finché non arriva)
  * @param opzioni { aperto, onToggle, tablet? }: tablet (08/10) = { pg: [{ chiave, nome, ritratto, iniziali, collegato }],
- *   chiama(p) | null }: l'elenco «Tablet collegati» dei PG al tavolo, con «🔔 Chiedi di muovere» se c'è uno scontro aperto
+ *   chiama(p) | null, aiuto? { attuale: chiave | null, rendi(p) | null, revoca(p) } }: l'elenco «Tablet collegati» dei PG al
+ *   tavolo, con «🔔 Chiedi di muovere» e «Rendi Aiuto-master» (A.122) se c'è uno scontro aperto
  */
 export function riquadroCollega(rete, { aperto, onToggle, tablet = null }) {
   if (!rete) return null;
@@ -70,11 +76,12 @@ export function riquadroCollega(rete, { aperto, onToggle, tablet = null }) {
               h('span', { class: 'collega-azioni' },
                 h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-label': `Copia ${v.url}`, onclick: () => copia(v.url) }, 'Copia'),
                 indirizzi.length > 1 || tuttiPerDubbio ? h('small', { class: 'nota' }, v.nome) : null))))),
-          // 08/10: chi ha il tablet collegato (scheda o mappa aperta), lo stesso dato dell'elenco dell'Iniziativa
-          tablet?.pg?.length ? elencoTablet(tablet) : null,
           h('details', { class: 'collega-aiuto' }, h('summary', {}, 'Non si collegano?'),
             h('p', { class: 'nota' }, 'In Windows la rete Wi-Fi deve essere «privata», non «pubblica», e il firewall deve consentire Node.js (alla prima accensione Windows lo chiede: «reti private»).'),
             tuttiPerDubbio ? h('p', { class: 'nota' }, 'Non so quale sia la rete Wi-Fi: provate gli indirizzi uno alla volta.') : null,
             altri.length ? h('p', { class: 'nota' }, `Reti virtuali escluse: ${altri.map((v) => `${v.indirizzo} (${v.nome})`).join(', ')}.`) : null),
-        ]);
+        ],
+    // 08/10: chi ha il tablet collegato (scheda o mappa aperta), lo stesso dato dell'elenco dell'Iniziativa; con «Rendi
+    // Aiuto-master» (A.122). Anche con --solo-locale, per un secondo schermo o una finestra su questo computer
+    tablet?.pg?.length ? elencoTablet(tablet) : null);
 }
