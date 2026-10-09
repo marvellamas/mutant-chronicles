@@ -1012,7 +1012,8 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     else if (tipo === 'iniziativa') iniziativaEquip.push({ etichetta: o.nome, valore: e.valore });
     // Equipaggiamento §7.5: Q in più al Movimento (gambe potenziate)
     else if (tipo === 'movimento') movimentoEquip.push({ etichetta: o.nome, valore: e.valore });
-    effettiOggetti.push({ uid: o.uid, oggetto: o.nome, ...e });
+    // tipo e famiglia dell'oggetto: servono al cumulo dei benefici tecnologici (A.114, Equipaggiamento §7.1)
+    effettiOggetti.push({ uid: o.uid, oggetto: o.nome, tipoOggetto: o.tipo, famiglia: o.def?.famiglia ?? null, ...e });
   }
   // effetti e promemoria per protezione (SD, sezione Protezioni): le proprietà senza effetto e non
   // già gestite dalle penalità del modello restano promemoria (docs/proprieta-armature.md)

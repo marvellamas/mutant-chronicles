@@ -1817,6 +1817,9 @@
       "durata_minuti": 30,
       "intervallo_ore": 24,
       "attivi_massimo": 1,
+      "strumenti": "si_somma",
+      "equivalenti": { "tipi": ["impianto", "elmetto"], "famiglie": ["Esoscheletri"] },
+      "decisione": "A.114 (E&L del 05/10/2026, decisione 124 di docs/risposte-master.md): il bonus pertinente del chip si somma al modificatore degli strumenti, di cui non è un secondo; resta un solo modificatore complessivo degli strumenti (Giocatore §1.4.1). Benefici tecnologici equivalenti al chip sulla stessa Prova non si sommano: vale il maggiore, anche con elmetti ed esoscheletri (Equipaggiamento §7.1, «Cumulo»: «equivalenti» = effetti degli oggetti di questi tipi e famiglie). Esempio: Medicina 10, chip +2, Kit trauma Professionale +2 → VA 14. Restano un chip attivo, 30 minuti, un'attivazione ogni 24 ore, niente su attacchi, Difese, manovre e magia. Superata l'ipotesi del maggiore fra chip e strumenti.",
       "innesto": "processore",
       "abilita": [
         "Atletica",

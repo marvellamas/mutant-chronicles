@@ -193,16 +193,29 @@ export function formulaScomposizione(nome, voci) {
  * - usi specifici: il VA generale non cambia; per ogni uso un valore a parte.
  * Giocatore §1.4.1: «Si applica un solo modificatore complessivo per la qualità degli strumenti
  * impiegati»: fra i bonus degli oggetti per la stessa Prova vale il maggiore; le penalità si sommano.
+ * A.114 (E&L del 05/10/2026): il chip del Processore non è uno strumento e si somma al migliore degli strumenti;
+ * con i benefici tecnologici equivalenti (impianti, elmetti, esoscheletri: regole.json → impianti.chip.equivalenti,
+ * Equipaggiamento §7.1) vale il maggiore, anche contro i bonus generali già nel VA.
  */
-function effettiOggettiAbilita(effetti, accesi, a) {
+function effettiOggettiAbilita(effetti, accesi, a, dati = null) {
+  const EQ = dati?.regole?.impianti?.chip?.equivalenti ?? null;
+  const chip = (e) => e.beneficio === 'chip_processore';
+  const tecnologico = (e) => chip(e) || (!!EQ && ((EQ.tipi ?? []).includes(e.tipoOggetto) || (EQ.famiglie ?? []).includes(e.famiglia)));
+  const separaChip = !!EQ && dati?.regole?.impianti?.chip?.strumenti === 'si_somma';
   const miei = effetti.filter((e) => e.abilita === a.nome && e.ambito !== 'generale');
   const situ = miei.filter((e) => e.ambito === 'situazionale');
   const on = situ.filter((e) => accesi.has(e.uid));
   const migliore = (lista) => lista.filter((e) => e.valore > 0).reduce((m, e) => (!m || e.valore > m.valore ? e : m), null);
-  const bonusOn = migliore(on);
+  // strumenti (§1.4.1) da una parte, benefici tecnologici con il chip dall'altra (§7.1)
+  const bonusOn = migliore(separaChip ? on.filter((e) => !tecnologico(e)) : on);
+  const tecOn = separaChip ? migliore(on.filter(tecnologico)) : null;
+  // bonus tecnologico generale già nel VA per questa Abilità (impianto, elmetto, esoscheletro): il chip lo supera soltanto
+  const tecGen = separaChip ? effetti.filter((e) => e.abilita === a.nome && e.ambito === 'generale' && e.valore > 0 && tecnologico(e)).reduce((m, e) => Math.max(m, e.valore), 0) : 0;
   const penalitaOn = on.filter((e) => e.valore < 0);
   const voci = [...(bonusOn ? [bonusOn] : []), ...penalitaOn].map((e) => voce(`${e.oggetto} (condizione attiva)`, e.valore, 'oggetto'));
-  const nonCumulati = on.filter((e) => e.valore > 0 && e !== bonusOn);
+  if (tecOn && tecOn.valore > tecGen) voci.push(voce(`${tecOn.oggetto} (${chip(tecOn) ? 'chip attivo' : 'condizione attiva'}${tecGen ? `, oltre il +${tecGen} tecnologico già nel VA` : ''})`, tecOn.valore - tecGen, 'oggetto'));
+  const nonCumulati = on.filter((e) => (e.valore > 0 && e !== bonusOn && e !== tecOn) || (e === tecOn && tecOn.valore <= tecGen))
+    .map((e) => ({ ...e, motivoNonCumulato: separaChip && tecnologico(e) ? 'non si somma: fra benefici tecnologici equivalenti vale il maggiore (Equipaggiamento §7.1, A.114)' : null }));
   const disponibili = situ.filter((e) => !accesi.has(e.uid));
   const usi = new Map();
   for (const e of miei.filter((x) => x.ambito === 'uso_specifico')) (usi.get(e.uso) ?? usi.set(e.uso, []).get(e.uso)).push(e);
@@ -293,7 +306,7 @@ export function applicaCondizioni(scheda, sessione, dati) {
   const spento = (e, etichetta = e.talento) => ({ ...riga(etichetta, e.valore, 'Talenti spenti: non conta'), escluso: true, barrato: true });
   scheda.abilita = scheda.abilita.map((a) => {
     const cond = vociCondizioniAbilita(condizioni, a, dati);
-    const ogg = effettiOggettiAbilita(effettiOggetti, accesi, a);
+    const ogg = effettiOggettiAbilita(effettiOggetti, accesi, a, dati);
     const tal = talentiAbilita(effV, talAccesi, vale, a);
     for (const e of tal.usi) (ogg.usi.get(e.uso) ?? ogg.usi.set(e.uso, []).get(e.uso)).push({ oggetto: e.talento, valore: e.valore, uso: e.uso, condizione: e.condizione, fonte: e.fonte, talento: true });
     // usi specifici degli Stati (A Terra: equilibrio; Assordato: udito): valore a parte, VA generale invariato
@@ -319,7 +332,7 @@ export function applicaCondizioni(scheda, sessione, dati) {
         : riga(c.etichetta, c.valore, c.effetto ? 'effetto dell’oggetto' : 'equipaggiamento'))),
       ...(scheda.equipaggiamento?.zeriEquip?.[a.nome] ?? []).map((z) => riga(z.etichetta, z.valore, z.nota)),
       ...righeDaScomposizione(ogg.voci),
-      ...ogg.nonCumulati.map((e) => ({ ...riga(`${e.oggetto} (condizione attiva)`, e.valore, 'non si somma: un solo modificatore degli strumenti per Prova (§1.4.1)'), escluso: true })),
+      ...ogg.nonCumulati.map((e) => ({ ...riga(`${e.oggetto} (condizione attiva)`, e.valore, e.motivoNonCumulato ?? 'non si somma: un solo modificatore degli strumenti per Prova (§1.4.1)'), escluso: true })),
       ...righeDaScomposizione(tal.voci),
       ...tal.spenti,
       ...righeDaScomposizione(cond),
