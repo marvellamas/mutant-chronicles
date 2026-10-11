@@ -21,15 +21,15 @@ Drive si usa **in sola lettura**: mai scrivere nei Doc di Davide, nemmeno commen
 
 ## Glossario
 
-- **SD** = scheda digitale: la scheda a tab dell'app, con la modalità tavolo (`src/ui/tab.js`). Otto tab in una riga in alto (branch `layout-sd`, esito in `docs/layout-sd.md`), con Punti Eroe, PV e PM nella colonna di sinistra:
-  - **Identità:** anagrafica, Caratteristiche, Prove Salvezza, Distintivi, vantaggio, note;
-  - **Abilità:** tabella compatta, colonna Condizioni attive, Talenti, Specializzazioni; per le Tecniche Interiori solo il rimando a Poteri;
-  - **Combattimento:** valori e Prove Salvezza, armi in mano per mano («Attacca!», «Ricarica»), armi disponibili, Protezioni; a destra Ferite, Affaticamento, Corruzione, Stati;
+- **SD** = scheda digitale: la scheda a tab dell'app, con la modalità tavolo (`src/ui/tab.js`). Otto tab in una riga in alto (branch `layout-sd`, esito in `docs/layout-sd.md`; ritocchi dell'11/10, S4–S32, funzioni pure in `src/scheda-vista.js`). Accanto al titolo di ogni tab la testata con Punti Eroe (valore e «−»), Distintivi e Crediti; nella colonna di sinistra PV, Ferite e PM e, sotto, gli Stati attivi in sola lettura (in Combattimento Affaticamento e Corruzione; nell'Inventario il Carico sopra i PV):
+  - **Identità:** anagrafica, Caratteristiche, Prove Salvezza, vantaggio, note;
+  - **Abilità:** per riga nome e VA grande con bonus e malus attivi e le spunte «a condizione», «Calcolo» (finestrella con il conto del VA); a destra il solo riquadro «Condizioni attive» con Stati e bonus di circostanza; Talenti, Specializzazioni; per le Tecniche Interiori solo il rimando a Poteri;
+  - **Combattimento:** in alto Stati e bonus di circostanza; al centro valori, Prove Salvezza e i riquadri Mano destra e Mano sinistra (uno solo con un'arma a due mani; «Attacca!», «Ricarica»); a destra Protezioni e Armi (sintesi, possedute, dettagli nel «?»);
   - **Poteri:** la Magia («Lancia!», PM, cristalli); Risorse Interiori (le Tecniche Interiori come gli incantesimi, «Attiva», Round e Tecniche attive); «Nessun potere» senza l'una e l'altra; «Da artefatti»;
-  - **Artefatti:** sintonizzazione, schede degli Artefatti, riserve di Chroma;
+  - **Artefatti:** Sintonizzazione in una riga con «?», schede degli Artefatti e riserve di Chroma in due colonne («Addosso», «Zaino e Deposito»), Consumabili;
   - **Cibernetica:** Umanità con la provenienza e gli effetti della fascia, impianti installati per famiglia, chip, perdite e recuperi;
   - **Veicoli:** i veicoli del PG (`src/ui/veicoli.js`): «Aggiungi veicolo», profilo, Pilotare del conducente, andature, Corpo, Propulsione e Motore con PI e stato, rinforzi, NEC, «Colpito», «Ripara»;
-  - **Inventario:** Carico e Crediti, Integrità, oggetti per sezione con stato (anche deposito comune), PI e Ripara, condizione delle armi, caricatori di riserva, applicazioni sanitarie, catalogo con «Compra»;
+  - **Inventario:** oggetti in due colonne («Addosso», «Zaino e Deposito») per categoria, riducibili, con stato (anche deposito comune), PI e Ripara, condizione delle armi, caricatori di riserva, applicazioni sanitarie, «Aggiungi» per categoria, catalogo con «Compra»; Integrità in basso;
   - Calendario in coda, se attivo.
 - **SS** = scheda da stampare: la vista di stampa A4 orizzontale (`#/p/<id>/stampa`, `src/ui/stampa.js`, `css/stampa.css`). Fogli come i tab della SD (branch `layout-ss`, esito in `docs/layout-ss.md`):
   - 1 Identità, 2 Abilità, 3 Combattimento (due pagine fisse: Armi; Condizione ed equipaggiamento indossato), 4 Inventario sempre;

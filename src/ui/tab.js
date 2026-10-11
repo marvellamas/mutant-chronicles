@@ -1229,7 +1229,7 @@ function tabAbilita(ctx, d) {
           h('h2', {}, 'Condizioni attive'),
           stati.length ? h('p', { class: 'stati-condizioni' }, h('strong', {}, 'Stati: '),
             stati.map((x) => h('span', { class: 'stato-attivo-pillola', title: x.promemoria ?? null }, x.nome, x.implicato ? h('small', {}, ' (da Svenuto)') : null))) : null,
-          condizioni.length ? h('ul', {}, condizioni.map(rigaCondizione)) : stati.length ? null : h('p', { class: 'nota' }, 'Nessuna. Ferite e Stati si segnano nel Combattimento e nella colonna di sinistra, il carico nell’Inventario.'),
+          condizioni.length ? h('ul', {}, condizioni.map(rigaCondizione)) : stati.length || usi.length ? null : h('p', { class: 'nota' }, 'Nessuna. Ferite e Stati si segnano nel Combattimento e nella colonna di sinistra, il carico nell’Inventario.'),
           usi.length ? h('ul', { class: 'usi-specifici', 'aria-label': 'Solo per un uso specifico' }, usi.map(rigaCondizione)) : null,
           riquadroCircostanze(ctx)))),
     h('div', { class: 'colonne-larghe' },

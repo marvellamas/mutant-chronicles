@@ -528,3 +528,18 @@ test('la scheda stampata non dipende dai riquadri tolti: stessi fogli e stessi d
     assert.ok(dopo.fogli.find((x) => x.id === 'identita').dati.movimento, `${f}: Movimento nel foglio 1`);
   }
 });
+
+test('S32: arrivati da «Aggiungi» di una categoria, «Aggiungi oggetto» sale sopra gli oggetti finché non lo si chiude', () => {
+  const ctx = contesto(TORVALD, { attiva: 'inventario' });
+  const posizioni = (r) => ['aggiungi-equip', 'inventario-colonne'].map((k) => r.tutti.indexOf(r.classe(k)[0]));
+  let [pannello, oggetti] = posizioni(resa(ctx));
+  assert.ok(pannello > oggetti, 'di solito sta sotto gli oggetti');
+  clic(resa(ctx).classe('btn-aggiungi-categoria')[0]);
+  const sopra = resa(ctx);
+  [pannello, oggetti] = posizioni(sopra);
+  assert.ok(pannello < oggetti, 'dopo «Aggiungi» sta sopra');
+  clic(sopra.classe('btn-chiudi-aggiungi')[0]);
+  assert.equal(ctx.ui.equip.daCategoria, false);
+  [pannello, oggetti] = posizioni(resa(ctx));
+  assert.ok(pannello > oggetti, '«Chiudi» lo rimette sotto');
+});

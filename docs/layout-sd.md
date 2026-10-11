@@ -180,3 +180,16 @@ Due personaggi (b, Arcanista con magia e Artefatti; a, Assaltatore senza), a 128
 ### SS
 
 PDF di prova in `docs/esempi-stampa/` (`a_imperiale_assaltatore_l8-layout.pdf`, 3 pagine; `b_fratellanza_arcanista_l12-layout.pdf`, 5 pagine), con uno scudo (a) e una batteria (b) nel deposito comune e un grado di Corruzione nella sessione: i fogli 1–3 non superano la pagina. Il deposito e la Corruzione non compaiono nei fogli: il piano non li prevede nella SS; l'oggetto nel deposito resta fra gli oggetti del foglio 3, il carico stampato lo esclude.
+
+## Ritocchi dell'11/10/2026 (richieste di Davide approvate da Marcello, S4–S32)
+
+Solo disposizione e presentazione: nessuna regola e nessun valore calcolato cambia (`tests/scheda-ritocchi.test.js`). Le funzioni pure sono in `src/scheda-vista.js`.
+
+- **Testata comune (S4):** accanto al titolo di ogni tab Punti Eroe (valore e «−», senza «+»), Distintivi (− / + e «5 → 1 PE») e Crediti (il totale si scrive; i tasti da ±1 a ±1000 sotto «±»). Tolti da Identità, dalla colonna di sinistra e dall'Inventario.
+- **Colonna di sinistra (S5):** PV, Ferite e PM in ogni tab; sotto, gli Stati attivi in sola lettura (un tocco porta al Combattimento; nessuno Stato, nessuna riga). In Combattimento, al loro posto, Affaticamento e Corruzione (S13). Nell'Inventario il Carico sopra i PV (S28). Se è più alta dello schermo scorre per conto suo.
+- **Identità (S6):** via i Distintivi e «Combattimento e movimento».
+- **Abilità (S7, S8):** per riga nome e VA grande, con accanto bonus e malus attivi e le spunte «a condizione»; Mod, Base, Corp, Avanz ed Equip nel «Calcolo» (finestrella con il conto del VA, gli usi specifici e, con luce scarsa, «Richiede la vista» di A.116). A destra un solo riquadro «Condizioni attive»: Stati attivi, ciò che pesa sui VA, bonus di circostanza modificabili. Luce sul bersaglio e interruttori di Talenti e oggetti restano in Combattimento (quelli sulle Abilità sono le spunte accanto al VA).
+- **Combattimento (S12, S14, S16):** in alto gli Stati e, sotto, i bonus di circostanza; al centro Mano destra e Mano sinistra (anche libere; un riquadro solo con un'arma a due mani); a destra Protezioni («Nessuna» se non c'è niente) e Armi, con la sintesi, l'elenco di ciò che si possiede e i dettagli della vecchia tabella nel «?».
+- **Artefatti (S24, S25):** «Sintonizzazione 8 / 9» in una riga, con «?» che elenca gli Artefatti che impegnano i punti; Artefatti posseduti e riserve di Chroma in due colonne, «Addosso» e «Zaino e Deposito».
+- **Inventario (S27–S32):** due colonne, «Addosso» (indossato, impugnato, portato: anche gli oggetti «con sé» senza stati) e «Zaino e Deposito», ognuna con le categorie dell'Inventario; colonne e categorie si riducono con la freccia; scorre la pagina, non le colonne. «Aggiungi» accanto a ogni categoria apre «Aggiungi oggetto» sopra gli oggetti con il Tipo già scelto (le categorie di un capitolo mostrano solo i loro oggetti); le categorie vuote hanno il tasto sotto le colonne. Integrità in basso.
+- **Stampa:** non cambia (non leggeva dai riquadri tolti).

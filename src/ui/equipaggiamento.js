@@ -28,7 +28,9 @@ const armiTipi = ['arma_ravvicinata', 'arma_distanza'];
  * @returns {Node[]}
  */
 export function renderEquipaggiamento(ctx) {
-  return [elencoVoci(ctx), pannelloAggiungi(ctx)];
+  // S32: aperto da «Aggiungi» di una categoria, «Aggiungi oggetto» sale sopra gli oggetti finché non lo si chiude
+  // (in fondo a una pagina lunga non si vedrebbe)
+  return ctx.inventario && ctx.ui?.equip?.daCategoria ? [pannelloAggiungi(ctx), elencoVoci(ctx)] : [elencoVoci(ctx), pannelloAggiungi(ctx)];
 }
 
 // ---------------------------------------------------------------------------
@@ -52,9 +54,10 @@ function bottoneAggiungiCategoria(ctx, idSezione, etichetta = 'Aggiungi') {
     onclick: (e) => {
       // dentro il <summary>: il tocco non deve aprire o chiudere il gruppo
       e.preventDefault(); e.stopPropagation?.();
-      Object.assign(statoAggiungi(ctx.ui), { tipo: p.tipo, catalogo: null, famiglia: null, rif: null, cerca: '', cataloghiRif: p.cataloghi, sezione: p.titolo });
+      Object.assign(statoAggiungi(ctx.ui), { tipo: p.tipo, catalogo: null, famiglia: null, rif: null, cerca: '', cataloghiRif: p.cataloghi, sezione: p.titolo, daCategoria: true });
       ctx.ridisegna?.();
-      globalThis.setTimeout?.(() => globalThis.document?.querySelector?.('.aggiungi-equip')?.scrollIntoView?.({ behavior: 'smooth', block: 'start' }), 0);
+      // dopo il ridisegno (che rimette la pagina dov'era) si porta in vista il pannello
+      globalThis.setTimeout?.(() => globalThis.document?.querySelector?.('.aggiungi-equip')?.scrollIntoView?.({ block: 'center' }), 30);
     },
   }, etichetta);
 }
@@ -375,8 +378,9 @@ function pannelloAggiungi(ctx) {
   const colori = Object.entries(coloriChroma(dati)).filter(([, x]) => !x.esausto && x.contenitore !== false).map(([nome]) => nome);
   const difese = dati.equipaggiamento?.file?.armature?.abilita_difese;
   const abilitaArmi = dati.abilita.abilita.filter((a) => ['Distanza', 'Ravvicinato'].includes(a.categoria) && a.nome !== difese).map((a) => a.nome);
-  return h('section', { class: 'aggiungi-equip' },
-    h('h3', {}, 'Aggiungi oggetto'),
+  return h('section', { class: `aggiungi-equip${s.daCategoria ? ' da-categoria' : ''}` },
+    h('h3', {}, 'Aggiungi oggetto',
+      s.daCategoria ? h('button', { type: 'button', class: 'btn btn-piccolo btn-chiudi-aggiungi', title: 'Rimette «Aggiungi oggetto» sotto gli oggetti', onclick: () => imposta({ daCategoria: false, cataloghiRif: null, sezione: null }) }, '✕ Chiudi') : null),
     h('label', { class: 'campo' }, h('span', {}, 'Cerca per nome'),
       h('input', { type: 'search', value: s.cerca, placeholder: 'es. spada, alabarda, armatura', oninput: (e) => { s.cerca = e.target.value; mostraRisultati(); } })),
     risultati,
