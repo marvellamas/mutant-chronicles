@@ -33,3 +33,20 @@ export function sceneConStato(elenco, scontri = [], aperto = undefined) {
   const voci = (elenco ?? []).map((v, i) => ({ ...v, statoScontro: statoScontroScena(v.collegamento, scontri, aperto), ordine: i }));
   return voci.sort((a, b) => (b.statoScontro === 'in-corso') - (a.statoScontro === 'in-corso') || a.ordine - b.ordine).map(({ ordine, ...v }) => v);
 }
+
+/**
+ * Scontri in corso per la testa del Tavolo del Master (richiesta di Marcello del 12/10/2026): ogni scontro aperto con
+ * la scena collegata da aprire («Apri la mappa e continua lo scontro»), la più recente se sono più d'una; senza scena
+ * collegata `scena` è null (il pulsante propone di collegarne una). Nell'ordine dell'elenco degli scontri.
+ * @param scontri elenco di /api/scontri: [{ id, nome, stato, round }]
+ * @param scene elenco di /api/scene: [{ id, nome, collegamento, mtime }]
+ * @returns [{ id, nome, round, scena: { id, nome } | null, altreScene: number }]
+ */
+export function scontriInCorso(scontri, scene) {
+  const aperti = (Array.isArray(scontri) ? scontri : []).filter((x) => x?.stato === 'aperto');
+  const lista = Array.isArray(scene) ? scene : [];
+  return aperti.map((s) => {
+    const sue = lista.filter((v) => v?.collegamento?.scontro === s.id).sort((a, b) => (b.mtime ?? 0) - (a.mtime ?? 0));
+    return { id: s.id, nome: s.nome ?? s.id, round: s.round ?? null, scena: sue[0] ? { id: sue[0].id, nome: sue[0].nome } : null, altreScene: Math.max(0, sue.length - 1) };
+  });
+}

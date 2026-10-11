@@ -2390,3 +2390,9 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 /* 12/10: «Cosa si vede», colonna «Entrambi» con lo stato misto (trattino) */
 .interruttore-mappa.misto { border-style: dashed; opacity: .85; }
 .interruttore-mappa.misto .interruttore-mappa-pallino { transform: none; margin-left: .45rem; }
+/* 12/10: scontro in corso in cima al Tavolo del Master */
+.scontri-in-corso { border: 2px solid var(--accento); display: flex; flex-direction: column; gap: .6rem; }
+.scontro-in-corso { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem 1rem; }
+.scontro-in-corso-testo { font-size: 1.1rem; }
+/* 12/10: menu «Vista» della barra della mappa */
+.menu-vista > summary { white-space: nowrap; }

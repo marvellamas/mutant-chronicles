@@ -35,6 +35,11 @@ import { cartaVeicoloPlancia } from './veicoli.js';
 import { stessaChiave } from '../veicoli-registro.js';
 import { elencoVeicoli, aggiornaVeicolo } from './veicoli-registro.js';
 import { statoScene, pannelloScene, apriElencoScene } from './mappa/scene.js';
+import { scontriInCorso } from '../mappa/stato-scene.js';
+import { elencoScene, leggiScena, salvaScena } from './mappa/api.js';
+import { nuovaScena, idScena, collegaAScontro } from '../mappa/scena.js';
+import { semplicePredefinita } from '../mappa/semplice.js';
+import { apri as apriFinestrella } from './finestrella.js';
 import { mostraCarta } from './mappa/canale.js';
 import { linkGuidaMappa } from './guida.js';
 import { cartaDallaMappa, arrivoDallaMappa, tornaAllaMappa } from './ritorno.js';
@@ -438,6 +443,8 @@ export function renderTavolo(radice, ctx) {
             h('h1', { class: 'titolo-con-stemma' }, iconaPagina('combattimento', '96', { classe: 'badge-pagina', lato: 40 }), 'Tavolo del Master'),
             aggiornato),
           testataGruppi()),
+      // 12/10: lo scontro in corso in cima, ben visibile, con «Apri la mappa e continua lo scontro»
+      ctx.inMappa ? null : testaInCorso(),
       esitoEsempi,
       ctx.inMappa ? null : h('p', { class: 'nota' }, 'Sola lettura: i valori sono quelli delle schede in personaggi/, ricalcolati con le regole attuali. Per cambiarli si apre il personaggio (clic sulla mini-scheda).'),
       scelta,
@@ -859,6 +866,53 @@ export function renderTavolo(radice, ctx) {
     return !!t && t.tipo === 'pg' && t.chiave === chiaveDaFile(r.file);
   };
 
+  // 12/10 (Marcello): aprendo il Tavolo, lo scontro in corso sta in cima con «Apri la mappa e continua lo scontro»
+  const aggiornaInCorso = async () => {
+    const [scontri, scene] = await Promise.all([fetch('api/scontri', { cache: 'no-store' }).then((r) => (r.ok ? r.json() : [])), elencoScene().catch(() => [])]);
+    const lista = scontriInCorso(scontri, scene);
+    if (JSON.stringify(lista) === JSON.stringify(stato.inCorso ?? [])) return false;
+    stato.inCorso = lista;
+    return true;
+  };
+  /** Scontro senza scena: si propone di collegarne una (fra quelle che ci sono, o una nuova) e si apre la mappa. */
+  async function collegaScenaUi(sc) {
+    let scene = [];
+    try { scene = await elencoScene(); } catch (e) { avvisoErrore(`Scene non lette: ${e.message}`); return; }
+    const scelta = await apriFinestrella('collega-scena', `Collega una scena a «${sc.nome}»`, (fine) => {
+      const sel = h('select', { 'aria-label': 'Scena' },
+        h('option', { value: '' }, `Nuova scena «${sc.nome}»`),
+        scene.map((v) => h('option', { value: v.id }, `${v.nome}${v.collegamento?.scontro || v.collegamento?.bozza ? ' (già collegata: cambierà collegamento)' : ''}`)));
+      return [
+        h('p', {}, 'Lo scontro non ha una mappa. Scegli la scena da collegare: si apre con lo scontro già attivo (Round e turno come sono).'),
+        h('label', { class: 'finestrella-campo' }, h('span', {}, 'Scena'), sel),
+        h('div', { class: 'riga-azioni finestrella-azioni' },
+          h('button', { type: 'button', class: 'btn', onclick: () => fine(null) }, 'Annulla'),
+          h('button', { type: 'button', class: 'btn primario', onclick: () => fine({ id: sel.value }) }, 'Collega e apri la mappa')),
+      ];
+    });
+    if (!scelta) return;
+    try {
+      const base = scelta.id ? await leggiScena(scelta.id) : nuovaScena({ id: idScena(sc.nome), nome: String(sc.nome).slice(0, 120), dati: ctx.dati, semplice: semplicePredefinita(ctx.dati), nebbiaConPg: ctx.dati.mappa.visuale.automatica_predefinita });
+      const esito = await salvaScena(collegaAScontro(base, sc.id));
+      if (esito.conflitto) { avvisoErrore('La scena è stata cambiata in un’altra finestra: riprova.'); return; }
+      ctx.azioni.mappa(esito.scena.id);
+    } catch (e) { avvisoErrore(`Scena non collegata: ${e.message}`); }
+  }
+  /** La testa «Scontro in corso»: uno per scontro aperto, ognuno con il suo pulsante. */
+  const testaInCorso = () => {
+    const lista = stato.inCorso ?? [];
+    if (!lista.length) return null;
+    return h('section', { class: 'riquadro scontri-in-corso', 'aria-label': 'Scontri in corso' }, lista.map((sc) => {
+      const turno = stato.scontro?.id === sc.id ? diTurno(stato.scontro)?.nome ?? null : null;
+      return h('div', { class: 'scontro-in-corso' },
+        h('div', { class: 'scontro-in-corso-testo' },
+          h('strong', {}, '⚔ Scontro in corso: ', sc.nome),
+          h('span', { class: 'nota' }, ` · Round ${sc.round ?? '—'}${turno ? ` · di turno ${turno}` : ''}${sc.scena ? ` · mappa «${sc.scena.nome}»${sc.altreScene ? ` (e altre ${sc.altreScene})` : ''}` : ' · nessuna mappa collegata'}`)),
+        sc.scena
+          ? h('button', { type: 'button', class: 'btn primario btn-grande', title: 'Apre la mappa della scena collegata, con lo scontro già attivo: Round, turno e pedine come erano', onclick: () => ctx.azioni.mappa(sc.scena.id) }, '🗺 Apri la mappa e continua lo scontro')
+          : h('button', { type: 'button', class: 'btn primario btn-grande', title: 'Lo scontro non ha una scena: qui sotto c’è lo scontro nella plancia; il pulsante propone di collegare una scena', onclick: () => { document.querySelector('.scontro-pannello')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); collegaScenaUi(sc); } }, 'Apri lo scontro e collega una scena'));
+    }));
+  };
   // fase 2, lotto 7: chi ha il tablet collegato (server.mjs → /api/tablet) e il campanellino
   const aggiornaTablet = async () => {
     const r = await fetch('api/tablet', { cache: 'no-store' });
@@ -942,6 +996,10 @@ export function renderTavolo(radice, ctx) {
     try {
       if (await aggiornaTablet()) cambiato = true;
     } catch { /* senza server dei tablet: nessun indicatore */ }
+    // 12/10: scontri in corso con la loro scena, per la testa del Tavolo («Apri la mappa e continua lo scontro»)
+    try {
+      if (!ctx.inMappa && await aggiornaInCorso()) cambiato = true;
+    } catch { /* senza elenco: la testa non compare */ }
     // scontro aperto: si rilegge quando cambia la revisione (un'altra finestra, un altro PC)
     try {
       const aperto = await leggiScontroAperto();
