@@ -8,7 +8,7 @@ import { tmpdir, networkInterfaces } from 'node:os';
 import { join } from 'node:path';
 import { readFileSync } from 'node:fs';
 import { creaServer, daQuestoPc } from '../server.mjs';
-import { statoContestoMaster, RIGA_CARTA_NON_MASTER } from '../src/correzioni-master.js';
+import { statoContestoMaster, RIGA_CARTA_NON_MASTER, nuovaCorrezione, registro } from '../src/correzioni-master.js';
 import { serveAggiornamento, urlRicarica, serverDaRiavviare } from '../src/versione.js';
 
 const RETE = { Ethernet: [{ address: '192.168.1.57', family: 'IPv4', internal: false }, { address: 'fe80::dbbc:6fc2:3e8c:ef71', family: 'IPv6', internal: false }], Loopback: [{ address: '127.0.0.1', family: 'IPv4', internal: true }] };
@@ -121,4 +121,30 @@ test('cache: i file serviti hanno Cache-Control no-cache, così dopo l’aggiorn
   assert.equal((await r.json()).versione, versioneFile, 'il server serve il versione.json del disco, aggiornato');
   assert.equal(r.headers.get('X-Mutant-Versione-Server'), versioneFile, 'server appena acceso: stessa versione, nessuna barra');
   assert.equal(serverDaRiavviare(r.headers.get('X-Mutant-Versione-Server'), versioneFile), false);
+});
+
+// ---------------------------------------------------------------------------
+// «Annulla (errore)» con il motivo nel registro (punto 5)
+
+test('«Annulla (errore)» in modalità master: chiede il motivo e lo scrive nel registro', () => {
+  const master = readFileSync(new URL('../src/ui/master.js', import.meta.url), 'utf8');
+  // la finestrella con il motivo facoltativo, poi l'azione
+  assert.match(master, /export async function conMotivoMaster\(ctx, \{ titolo, testo, conferma = 'Conferma' \}, fai\)/);
+  assert.match(master, /ctx\.master\.motivoProssima\(motivo\.motivo\);\s*\n\s*fai\(\);/);
+  assert.match(master, /Motivo \(facoltativo\)/);
+  // fuori dalla modalità master resta la conferma di sempre
+  assert.match(master, /if \(!ctx\.master\) \{ if \(globalThis\.confirm\?\.\(`\$\{titolo\} \$\{testo\}`\)\) fai\(\); return; \}/);
+  const tab = readFileSync(new URL('../src/ui/tab.js', import.meta.url), 'utf8');
+  // Umanità: «Annulla (errore)» della perdita e «Togli» del recupero
+  assert.match(tab, /onclick: \(\) => conMotivoMaster\(ctx, \{ titolo: `Annullare la perdita di \$\{p\.umn\} UMN[^]*annullaPerdita\(blocco, p\.uid\)\)/);
+  assert.match(tab, /conMotivoMaster\(ctx, \{ titolo: `Togliere il recupero di \$\{x\.punti\} UMN\?`[^]*togliRecupero\(blocco, i\)\)/);
+  assert.doesNotMatch(tab, /confirm\(`Annullare la perdita/, 'niente più confirm() del browser');
+  // il motivo finisce nella riga «scelta» del registro (l'Umanità sta nelle scelte)
+  const app = readFileSync(new URL('../src/ui/app.js', import.meta.url), 'utf8');
+  assert.match(app, /const motivoOra = stato\.masterMotivo \?\? '';/);
+  assert.match(app, /nuovaCorrezione\(\{ chiave: 'scelte', etichetta: descr, tipo: 'scelta', motivo: motivoOra \}\)/);
+  assert.match(app, /motivoProssima: \(motivo\) => \{ stato\.masterMotivo = motivo \|\| null; \}/);
+  // la riga che ne esce, con il motivo, si legge nel registro
+  const riga = nuovaCorrezione({ chiave: 'scelte', etichetta: 'Creazione: Umanità', tipo: 'scelta', motivo: 'A.111' });
+  assert.deepEqual([registro([riga])[0].cosa, registro([riga])[0].motivo], ['Creazione: Umanità', 'A.111']);
 });

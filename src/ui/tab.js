@@ -8,7 +8,7 @@
 import { allineaStorico } from '../storico.js';
 import { datiTestata, statiAttiviVista, contoVa, modificatoriAttivi, sintesiMani, sintesiProtezioni, sintesiSintonizzazione, inColonne } from '../scheda-vista.js';
 import { informa } from './finestrella.js';
-import { fasciaMaster, toccoMaster, notaCorrezione, sezioneRegistro } from './master.js';
+import { fasciaMaster, toccoMaster, notaCorrezione, sezioneRegistro, conMotivoMaster } from './master.js';
 import { circostanzeMasterAttive } from '../correzioni-master.js';
 import { conAvviso } from './procedi.js';
 import { h, segno } from './dom.js';
@@ -2517,12 +2517,15 @@ function tabCibernetica(ctx) {
     pannelloRiabilitazione(p),
     p.stato !== 'installato' ? h('button', {
       type: 'button', class: 'btn btn-piccolo', title: 'Solo per un impianto segnato «Installato» per errore: §7.1, la rimozione non restituisce Umanità.',
-      onclick: () => { if (confirm(`Annullare la perdita di ${p.umn} UMN per «${p.nome}»? Solo se l’impianto era stato segnato installato per errore.`)) ctx.azioni.umanita(annullaPerdita(blocco, p.uid)); },
+      // 13/10: in modalità master si scrive il motivo (A.111), che va nel registro «Modifiche del master»
+      onclick: () => conMotivoMaster(ctx, { titolo: `Annullare la perdita di ${p.umn} UMN per «${p.nome}»?`, testo: 'Solo se l’impianto era stato segnato installato per errore: la rimozione, da sola, non restituisce Umanità (§7.1).', conferma: 'Annulla la perdita' },
+        () => ctx.azioni.umanita(annullaPerdita(blocco, p.uid))),
     }, 'Annulla (errore)') : null))) : h('p', { class: 'vuoto' }, 'Nessuna perdita registrata.');
   const recuperi = h('div', { class: 'recuperi-umanita' },
     u.avvisi?.length ? h('p', { class: 'riquadro attenzione' }, u.avvisi.join(' ')) : null,
     u.recuperi.length ? h('ul', {}, u.recuperi.map((x, i) => h('li', {}, h('strong', {}, `+${x.punti}`), x.legacy ? ` ${x.nota || 'recupero concesso dal Direttore'} (prima della procedura, A.111)` : ` Riabilitazione (${x.nota})${x.riconsumato ? ': riconsumato, impianto reinstallato (A.69)' : ''}`,
-      h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Toglie il recupero registrato per errore', onclick: () => ctx.azioni.umanita(togliRecupero(blocco, i)) }, 'Togli')))) : null,
+      h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Toglie il recupero registrato per errore',
+        onclick: () => conMotivoMaster(ctx, { titolo: `Togliere il recupero di ${x.punti} UMN?`, testo: 'Solo se era stato registrato per errore.', conferma: 'Togli il recupero' }, () => ctx.azioni.umanita(togliRecupero(blocco, i))) }, 'Togli')))) : null,
     h('p', { class: 'nota' }, 'L’Umanità si recupera soltanto con la Riabilitazione, dopo la rimozione di un impianto: una volta per perdita, fino a UMN 20 (A.70, A.92).'));
 
   return [

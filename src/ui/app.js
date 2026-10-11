@@ -1432,16 +1432,18 @@ function registraModificheMaster() {
   };
   const cat = catalogo(dati);
   const dirette = [...differenzeDirette(prima.sessione, stato.sessione, nomi), ...differenzeOggetti(prima.equip, stato.scelte.equipaggiamento, (v) => risolvi(v, cat).nome)];
+  const motivoOra = stato.masterMotivo ?? '';
   const scelteOra = JSON.stringify(soloSenzaOggetti());
   const scelteCambiate = scelteOra !== prima.scelte;
   if (!dirette.length && !scelteCambiate) return;
   let lista = correzioniAttuali();
-  for (const d of dirette) lista = registraDiretta(lista, d, { motivo: stato.masterMotivo ?? '' });
+  for (const d of dirette) lista = registraDiretta(lista, d, { motivo: motivoOra });
   stato.masterMotivo = null;
   let attesa = null;
   if (scelteCambiate) {
     const descr = descriviScelte(soloSenzaOggetti(prima.personaggio), soloSenzaOggetti(), (v) => { try { return [descriviVoce(v, dati)].flat().map(String); } catch { return ['scelte del livello']; } }) ?? 'Scelte del personaggio';
-    const riga = nuovaCorrezione({ chiave: 'scelte', etichetta: descr, tipo: 'scelta' });
+    // 13/10: il motivo scritto nella finestrella dell'azione («Annulla (errore)» dell'Umanità, A.111) finisce qui
+    const riga = nuovaCorrezione({ chiave: 'scelte', etichetta: descr, tipo: 'scelta', motivo: motivoOra });
     lista = aggiungiCorrezione(lista, riga);
     // la copia del file com'era prima: «Annulla» rimette le scelte da lì
     attesa = { id: stato.id, riga: riga.id, nome: stato.scelte.nome, testo: prima.testo };
@@ -1533,6 +1535,8 @@ function azioniMaster() {
       persisti();
       ridisegna();
     },
+    // 13/10: il motivo scritto in una finestrella vale per la prossima modifica registrata (anche una scelta)
+    motivoProssima: (motivo) => { stato.masterMotivo = motivo || null; },
     esci: () => { esciModalitaMaster(sessionStorage); stato.masterVisto = null; ridisegna(); },
   };
 }

@@ -4,6 +4,7 @@
 // ctx.master (solo in modalità master, src/ui/app.js): { correggi, diretta, annulla, esci, togliCircostanza }.
 import { h, segno } from './dom.js';
 import { apri } from './finestrella.js';
+
 import { applicaCorrezioni, correzioniDi } from '../correzioni-master.js';
 
 /** Fascia ben visibile in alto: «Modalità master — ogni modifica viene registrata» e «Esci». */
@@ -142,4 +143,29 @@ export function chiediCircostanza({ nome, R, scontro = null }) {
     disegna();
     return [corpo];
   });
+}
+
+/**
+ * Azione del master che non è una correzione numerica («Annulla (errore)» dell'Umanità, «Togli» di un recupero…):
+ * prima si conferma e si scrive il motivo facoltativo, poi l'azione parte e il motivo finisce nella riga del registro
+ * «Modifiche del master» (13/10/2026: serve per la A.111 di Pablo). Fuori dalla modalità master resta la conferma di
+ * sempre, senza registro.
+ * @param ctx contesto della scheda @param azione { titolo, testo, conferma } @param fai () => void
+ */
+export async function conMotivoMaster(ctx, { titolo, testo, conferma = 'Conferma' }, fai) {
+  if (!ctx.master) { if (globalThis.confirm?.(`${titolo} ${testo}`)) fai(); return; }
+  const motivo = await apri('finestrella-master', titolo, (fine) => {
+    const campo = h('input', { type: 'text', maxlength: 200, placeholder: 'es. A.111, inserito per prova…', 'aria-label': 'Motivo' });
+    return [
+      h('p', {}, testo),
+      h('label', { class: 'finestrella-campo' }, h('span', {}, 'Motivo (facoltativo)'), campo),
+      h('p', { class: 'nota' }, 'La modifica va nel registro «Modifiche del master» della tab Identità, con il motivo; da lì si annulla.'),
+      h('div', { class: 'riga-azioni finestrella-azioni' },
+        h('button', { type: 'button', class: 'btn', onclick: () => fine(null) }, 'Annulla'),
+        h('button', { type: 'button', class: 'btn primario', onclick: () => fine({ motivo: campo.value.trim() }) }, conferma)),
+    ];
+  });
+  if (!motivo) return;
+  ctx.master.motivoProssima(motivo.motivo);
+  fai();
 }
