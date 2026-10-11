@@ -22,8 +22,9 @@ const infoOpzione = (nome, contenuto) => (contenuto ? infoValore('ⓘ', contenut
 export function rigaScelte(titolo, opzioni, attuale, scegli) {
   const motivi = opzioni.filter((o) => o.motivo && o.valore !== attuale).map((o) => `${o.etichetta}: ${o.motivo}`);
   const pulsante = (o) => h('button', {
-    type: 'button', class: `btn scelta-btn${o.valore === attuale ? ' scelta' : ''}${o.riga ? ' con-riga' : ''}`, 'aria-pressed': String(o.valore === attuale),
-    disabled: !!o.motivo && o.valore !== attuale, title: o.motivo ?? o.titolo ?? null, onclick: () => scegli(o.valore),
+    // N2 (l'app avvisa, non blocca): una scelta sconsigliata dalla regola resta selezionabile, segnata, con il motivo sotto
+    type: 'button', class: `btn scelta-btn${o.valore === attuale ? ' scelta' : ''}${o.riga ? ' con-riga' : ''}${o.motivo ? ' con-avviso' : ''}`, 'aria-pressed': String(o.valore === attuale),
+    title: o.motivo ?? o.titolo ?? null, onclick: () => scegli(o.valore),
   }, o.riga ? [h('span', { class: 'scelta-etichetta' }, o.etichetta), h('small', { class: 'riga-opzione' }, o.riga)] : o.etichetta);
   return h('div', { class: 'scelta-attacco scelta-gruppo', role: 'group', 'aria-label': titolo },
     h('p', { class: 'scelta-titolo' }, titolo),
@@ -41,8 +42,8 @@ export function interruttore(titolo, attivo, scegli, { motivo = null, mod = null
   const bloccato = !!motivo && !attivo;
   return h('div', { class: `interruttore-cella${info ? ' con-info' : ''}` },
     h('button', {
-      type: 'button', role: 'switch', class: `interruttore${attivo ? ' acceso' : ''}`, 'aria-checked': String(!!attivo),
-      disabled: bloccato, title: motivo, onclick: () => scegli(!attivo),
+      type: 'button', role: 'switch', class: `interruttore${attivo ? ' acceso' : ''}${motivo ? ' con-avviso' : ''}`, 'aria-checked': String(!!attivo),
+      title: motivo, onclick: () => scegli(!attivo),
     },
     h('span', { class: 'interruttore-testo' }, titolo, mod ? h('span', { class: 'interruttore-mod' }, ` · ${mod}`) : null),
     h('span', { class: 'levetta', 'aria-hidden': 'true' }, h('span', { class: 'levetta-pomello' }), attivo ? 'Sì' : 'No')),

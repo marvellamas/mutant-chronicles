@@ -2176,6 +2176,9 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 .mappa-badge[hidden] { display: none; }
 .mappa-badge-libero { top: 0.6rem; border-color: var(--accento); font-weight: 700; }
 .mappa-badge-gruppo { bottom: 0.6rem; border-color: #22b8cf; }
+/* «Mappa semplice» (N3): interruttore sempre visibile sulla mappa, in alto a destra */
+.mappa-badge-semplice { top: 0.6rem; left: auto; right: 0.6rem; cursor: pointer; font-weight: 600; }
+.mappa-badge-semplice.acceso { border-color: var(--accento); }
 
 /* 07/10: l'interruttore della nebbia automatica, in cima alla sezione Nebbia, ben visibile */
 .interruttore-mappa.interruttore-evidente { font-weight: 700; padding: 0.35rem 0.6rem; border: 2px solid var(--bordo); border-radius: var(--raggio); }
@@ -2376,3 +2379,11 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .etichetta-scena.in-corso { background: var(--accento); border-color: var(--accento); color: var(--accento-testo); font-weight: 700; }
 .etichetta-scena.terminato { opacity: 0.6; }
 .etichetta-scena.bozza { border-style: dashed; }
+
+/* N2 (l'app avvisa, non blocca): un pulsante o una scelta che la regola sconsiglia resta utilizzabile, con il bordo d'avviso */
+.btn.con-avviso, .interruttore.con-avviso { border-style: dashed; border-color: var(--attenzione, #b7791f); }
+.btn.con-avviso::after { content: ' ⚠'; }
+.storico-pg ul, .plancia-storico ul { margin: .3rem 0 0; padding-left: 1.1rem; font-size: .9rem; }
+/* S22: valori di «Attacca!» arrivati dalla mappa, con «✕» per toglierli */
+.dalla-mappa { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .4rem; }
+.etichetta-mappa { cursor: pointer; border: 1px solid var(--accento); margin-left: 0; font-size: .8rem; padding: .15rem .5rem; }

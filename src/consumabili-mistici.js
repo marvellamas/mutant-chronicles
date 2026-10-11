@@ -93,7 +93,8 @@ export function motivoNonUsabile(x, { inScontro = false } = {}) {
 export function usaConsumabile(voci, uid, dati, opz = {}) {
   const lista = normalizzaEquipaggiamento(voci);
   const x = consumabiliMistici(lista, dati).find((c) => c.uid === uid);
-  if (!x || motivoNonUsabile(x, opz)) return null;
+  // N2: con `opz.forza` il master ha deciso di procedere (deposito, attivazione lunga in un Round)
+  if (!x || (motivoNonUsabile(x, opz) && !opz.forza)) return null;
   const rimasti = x.quantita - 1;
   return {
     voci: rimasti > 0 ? lista.map((v) => (v.uid === uid ? { ...v, quantita: rimasti } : v)) : lista.filter((v) => v.uid !== uid),
@@ -171,20 +172,22 @@ export function pianoCreazione(scelta, { scheda = null, crediti = Infinity, pmAt
   const C = R?.creazione;
   const errori = [];
   const avvisi = [];
+  // N2 (l'app avvisa, non blocca): le regole non rispettate; il piano si registra lo stesso con «Procedi comunque»
+  const irregolari = [];
   const inc = incantesimoDi({ incantesimo: scelta?.incantesimo }, dati);
   const livello = scelta?.livello;
   const grado = Number.isInteger(livello) ? gradoVersione(livello, dati) : null;
   if (!C || !inc || !grado || !(inc.versioni ?? []).some((r) => livelloRiga(r) === livello)) {
-    return { errori: ['scegli un Incantesimo e una sua versione'], avvisi, fasi: [], ore: 0, crediti: 0, pm: 0, pmCanali: 0, creato: false, voce: null };
+    return { errori: ['scegli un Incantesimo e una sua versione'], avvisi, irregolari, fasi: [], ore: 0, crediti: 0, pm: 0, pmCanali: 0, creato: false, voce: null };
   }
   const n = NUMERI_ROMANI.indexOf(grado) + 1;
   const pmSigillati = pmVersione(inc, livello);
   // §24.1: Officiante con il Talento del Grado; versione conosciuta da chi è presente
   const acc = accessoOfficiante(n, scheda, dati);
-  if (acc) errori.push(acc);
+  if (acc) irregolari.push(acc);
   const noti = new Set((scheda?.incantesimi?.conosciuti ?? []).map((i) => i.nome ?? i));
   if (!scelta.conosciutaDaAltri && !(noti.has(inc.nome) && livello <= (scheda?.incantesimi?.livelloMassimo ?? 0))) {
-    errori.push(`non conosci ${inc.nome} ${livello}: all’infusione deve essere presente chi la conosce e può usarla (Magia §24.1)`);
+    irregolari.push(`non conosci ${inc.nome} ${livello}: all’infusione deve essere presente chi la conosce e può usarla (Magia §24.1)`);
   }
   if (/Rituale: non consentito/.test(inc.intestazione ?? '')) avvisi.push(`La scheda di ${inc.nome} dice «Rituale: non consentito»: non è chiaro se si possa infondere in un Consumabile (domanda A.157); l’app lo permette.`);
   // supporto: la pergamena standard o un altro, con costo e complessità della costruzione effettiva (§27.2)
@@ -238,7 +241,7 @@ export function pianoCreazione(scelta, { scheda = null, crediti = Infinity, pmAt
     pm = pmSpesi - pmCanali;
     // §24.6: l'Officiante versa almeno il Grado (metà per eccesso dopo un Magistrale)
     const minimo = esito === 'magistrale' ? Math.ceil(n / 2) : n;
-    if (pmSpesi && pm < minimo) errori.push(`l’Officiante versa almeno ${minimo} PM (Magia §24.6): i Canali ne possono dare al massimo ${pmSpesi - minimo}`);
+    if (pmSpesi && pm < minimo) irregolari.push(`l’Officiante versa almeno ${minimo} PM (Magia §24.6): i Canali ne possono dare al massimo ${pmSpesi - minimo}`);
     const f = { fase: 'infusione', abilita: C.infusione.abilita, va: vaAbilita(scheda, C.infusione.abilita),
       modificatori: [{ nome: `Grado ${grado}`, valore: gi.va }, ...(aiuto ? [{ nome: 'aiuto dei Canali', valore: aiuto }] : []), ...(supportoMagistrale ? [{ nome: 'supporto magistrale', valore: C.costruzione.bonus_magistrale_rituali }] : [])],
       esito, ore: gi.ore, crediti: regola.reagenti ? costi.reagenti : 0, pm: pmSpesi, pmLavoro: costi.pmLavoro, pmSigillati, supporto: regola.supporto ?? null };
@@ -247,19 +250,20 @@ export function pianoCreazione(scelta, { scheda = null, crediti = Infinity, pmAt
     creato = riesce(esito);
   }
   for (const f of fasi) f.totale = f.va + f.modificatori.reduce((s, m) => s + m.valore, 0);
-  if (spesa > crediti) errori.push(`servono ${spesa} cr, ne hai ${crediti}`);
-  if (pm > pmAttuali) errori.push(`servono ${pm} PM personali, ne hai ${pmAttuali}`);
+  if (spesa > crediti) irregolari.push(`servono ${spesa} cr, ne hai ${crediti}`);
+  if (pm > pmAttuali) irregolari.push(`servono ${pm} PM personali, ne hai ${pmAttuali}`);
   const nomeSupporto = S.id === 'pergamena' ? 'Pergamena' : (scelta.supporto?.nome?.trim() || 'Consumabile');
   const voce = creato ? { rif: null, personalizzato: { nome: `${nomeSupporto} di ${inc.nome} ${livello}`, tipo: 'artefatto', consumabile: { incantesimo: inc.nome, livello, supporto: S.id === 'pergamena' ? 'pergamena' : nomeSupporto } }, stato: null, quantita: 1, note: '' } : null;
-  return { grado, incantesimo: inc.nome, livello, pmSigillati, fasi, ore, crediti: spesa, pm, pmCanali, creato, voce, errori, avvisi };
+  return { grado, incantesimo: inc.nome, livello, pmSigillati, fasi, ore, crediti: spesa, pm, pmCanali, creato, voce, errori, avvisi, irregolari };
 }
 
 /**
  * Applica un piano confermato: crediti e PM personali scalati nella sessione (src/sessione.js, entro i limiti), il
  * Consumabile creato aggiunto all'Inventario con `uid`. null se il piano ha errori.
  */
-export function applicaCreazione({ voci, sessione }, piano, m, uid) {
-  if (!piano || piano.errori?.length) return null;
+export function applicaCreazione({ voci, sessione }, piano, m, uid, { forza = false } = {}) {
+  // gli errori (dati mancanti) fermano; le regole non rispettate chiedono `forza` («Procedi comunque»)
+  if (!piano || piano.errori?.length || (piano.irregolari?.length && !forza)) return null;
   let s = variaSessione(sessione, 'crediti', -piano.crediti, m);
   s = variaSessione(s, 'pmAttuali', -piano.pm, m);
   const lista = normalizzaEquipaggiamento(voci);

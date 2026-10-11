@@ -48,7 +48,9 @@ export function renderSali(ctx) {
   const passo = passi[i];
   // A.107: in correzione valgono le regole di quel livello e il controllo dei livelli dopo (validaCorrezione)
   const corr = ctx.correzione ?? null;
-  const errori = corr ? corr.valida(voce) : validaLivello(personaggio, voce, dati);
+  // N2: con «Procedi comunque» (ctx.procedi) punti in eccesso e riassegnazioni in sospeso non fermano la salita
+  const errori = corr ? corr.valida(voce) : validaLivello(personaggio, voce, dati, { procedi: !!ctx.procedi });
+  const bloccanti = errori.filter((e) => !e.procedibile);
   const c = {
     ...ctx, struttura, errori,
     prossimo: prossimoLivello(personaggio, dati),
@@ -83,8 +85,9 @@ export function renderSali(ctx) {
     indietro: i > 0 ? { etichetta: '← Indietro', onclick: () => ctx.vaiPasso(i - 1) } : { etichetta: '← Esci senza salvare', onclick: ctx.esci },
     avanti: !ultimo
       ? { etichetta: `${passi[i + 1].titolo} →`, corta: 'Avanti →', onclick: () => ctx.vaiPasso(i + 1) }
-      : { etichetta: corr ? `Conferma la correzione del livello ${struttura.livello}` : `Conferma il livello ${struttura.livello}`, corta: 'Conferma', disabilitato: errori.length > 0,
-        motivo: errori.length ? `${errori.length} ${errori.length === 1 ? 'problema' : 'problemi'} da risolvere` : null, onclick: ctx.conferma },
+      : { etichetta: corr ? `Conferma la correzione del livello ${struttura.livello}` : `Conferma il livello ${struttura.livello}`, corta: 'Conferma', disabilitato: bloccanti.length > 0,
+        // N2: gli avvisi (un livello dopo che diventerebbe irregolare) non fermano: «Conferma» chiede «Procedi comunque»
+        motivo: bloccanti.length ? `${bloccanti.length} ${bloccanti.length === 1 ? 'problema' : 'problemi'} da risolvere` : errori.length ? `${errori.length} ${errori.length === 1 ? 'avviso' : 'avvisi'}: alla conferma puoi procedere comunque` : null, onclick: ctx.conferma },
     extra: i > 0 ? { etichetta: 'Esci senza salvare', corta: 'Esci', onclick: ctx.esci } : null,
   });
   return [h('div', { class: 'wizard sali' },

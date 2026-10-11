@@ -109,7 +109,8 @@ export function statoAttivazione(scheda, sessione, t, dati, { opzione = 0, silen
  */
 export function attivaTecnica(scheda, sessione, t, dati, opz = {}) {
   const st = statoAttivazione(scheda, sessione, t, dati, opz);
-  if (!st.possibile) return null;
+  // N2 (l'app avvisa, non blocca): con `opz.forza` il master ha deciso di procedere lo stesso; i PM non scendono sotto 0
+  if (!st.possibile && !opz.forza) return null;
   const round = st.round;
   const attive = (Array.isArray(sessione?.tecnicheAttive) ? sessione.tecnicheAttive : []).filter((x) => x.id !== t.id);
   // più applicazioni della stessa Tecnica non si sommano: la nuova sostituisce quella in corso.
@@ -123,7 +124,7 @@ export function attivaTecnica(scheda, sessione, t, dati, opz = {}) {
   const stati = Array.isArray(dopo?.statiAttivi) ? dopo.statiAttivi : [];
   return {
     ...dopo,
-    pmAttuali: st.pmDopo,
+    pmAttuali: Math.max(0, st.pmDopo),
     ultimaTecnica: { id: t.id, round },
     tecnicheAttive: attive,
     ...(st.svenimento && stato && !stati.includes(stato) ? { statiAttivi: [...stati, stato] } : {}),

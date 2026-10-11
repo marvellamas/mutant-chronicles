@@ -182,6 +182,7 @@ Fuori perimetro per ora: tiri automatici fuori dalla plancia; manovre, inseguime
 
 Valgono per ogni prompt, anche quando il prompt non le ripete.
 
+- **Principio deciso da Marcello e Davide: l'app aiuta il tavolo e non lo rallenta.** Propone, non obbliga; avvisa, non blocca; l'ultima parola è del master. Ogni azione del Round si deve poter fare a mano in uno o due tocchi; nessuna automazione nuova che obblighi a passaggi.
 - Rispondere sempre in italiano.
 - Un ambito per prompt: niente lavori fuori da quello chiesto (le cose notate si segnalano nel riepilogo).
 - Le regole stanno in `data/`, non nel codice.

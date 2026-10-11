@@ -4,6 +4,7 @@
 // esemplare (§27.4) e registra l'effetto a durata fra gli «Incantesimi in corso»; «Interrotta» non consuma (§27.1).
 import { h } from './dom.js';
 import { chiedi } from './finestrella.js';
+import { conAvviso } from './procedi.js';
 import { info } from './tooltip.js';
 import { consumabiliMistici, motivoNonUsabile, incantesimoDi, regoleConsumabili, costiCreazione, versioniCreabili, pianoCreazione, ESITI, ESITI_INFUSIONE, NOMI_ESITI } from '../consumabili-mistici.js';
 import { durataLancio, opzioniDurata } from '../durate-incantesimi.js';
@@ -17,7 +18,7 @@ function registrazione(x, inc, concentrazione) {
   return ['round', 'tempo'].includes(d.tipo) ? { nome: `${x.consumabile.incantesimo} (${x.nome})`, livello: x.consumabile.livello, durata: d, bersagli: [] } : null;
 }
 
-async function usa(ctx, x, { concentrazione = false } = {}) {
+async function usa(ctx, x, { concentrazione = false, motivo = null } = {}) {
   const R = regoleConsumabili(ctx.dati);
   const inc = incantesimoDi(x.consumabile, ctx.dati);
   const reg = inc ? registrazione(x, inc, concentrazione) : null;
@@ -26,14 +27,15 @@ async function usa(ctx, x, { concentrazione = false } = {}) {
     testo: `${x.attivazione.testo}${x.attivazione.inRound ? ' (Azione Principale)' : ''}. ${x.consumabile.effetto} ${R?.frasi?.consumo ?? ''} Se l’attivazione si interrompe prima del completamento, l’effetto non si produce e l’oggetto resta disponibile (Magia §27.1).${reg ? ` Durata: ${reg.durata.testo}${reg.durata.concentrazione ? ', con Concentrazione' : ''}; l’effetto va fra gli «Incantesimi in corso».` : ''}`,
     si: 'Attivazione completata', no: 'Interrotta / annulla',
   });
-  if (ok) ctx.azioni.usaConsumabile(x.uid, reg);
+  if (ok) await conAvviso(ctx.azioni.storico, { azione: `usare ${x.nome}`, motivo: motivo ? `${x.nome}: ${motivo}` : null, fai: (forza) => ctx.azioni.usaConsumabile(x.uid, reg, forza) });
 }
 
 /** Pulsanti «Usa» (due per le versioni con la Concentrazione a scelta, come Individuare). */
 function pulsantiUsa(ctx, x, motivo) {
   const inc = incantesimoDi(x.consumabile, ctx.dati);
   const scelta = inc && opzioniDurata(inc).concentrazioneAScelta;
-  const b = (testo, opz, titolo) => h('button', { type: 'button', class: 'btn primario btn-piccolo', disabled: !!motivo, title: motivo ?? titolo, onclick: () => usa(ctx, x, opz) }, testo);
+  // N2: deposito comune e attivazione lunga in un Round avvisano; «Procedi comunque» lascia la riga nello storico
+  const b = (testo, opz, titolo) => h('button', { type: 'button', class: `btn primario btn-piccolo${motivo ? ' con-avviso' : ''}`, title: motivo ?? titolo, onclick: () => usa(ctx, x, { ...opz, motivo }) }, testo);
   return scelta
     ? [b(`Usa, durata fissa (${x.attivazione.testo})`, { concentrazione: false }, 'Durata fissa, senza Concentrazione'), ' ', b(`Usa, Concentrazione (${x.attivazione.testo})`, { concentrazione: true }, 'Con Concentrazione')]
     : b(`Usa (${x.attivazione.testo})`, {}, 'Si consuma al completamento dell’attivazione (Magia §27.1)');
@@ -51,7 +53,7 @@ export function schedaConsumabile(ctx, x) {
     h('p', { class: 'nota' }, `${c.incantesimo} ${c.livello} · ${c.pm_sigillati} PM sigillati (Cariche Esclusive${c.energia ? ` di Chroma ${c.energia}` : ''}: non sono una riserva del personaggio) · SnT 0, non si sintonizza · attivazione ${c.attivazione.testo}, senza Prove di Potere; chiunque può usarla.`),
     h('p', {}, c.effetto),
     h('p', { class: 'riga-azioni' }, pulsantiUsa(ctx, x, motivo)),
-    motivo ? h('p', { class: 'nota motivo' }, `Non utilizzabile ora: ${motivo}.`) : null,
+    motivo ? h('p', { class: 'nota motivo' }, `Avviso: ${motivo}. Si può usare comunque.`) : null,
     costi ? h('p', { class: 'nota' }, `Creazione (§27.2): ${costi.creazione} cr con il progetto, ${costi.ore} ore di costruzione e ${costi.pmTotali} PM (${costi.pmLavoro} di lavoro + ${costi.pmSigillati} sigillati); vendita indicativa ${costi.vendita.toLocaleString('it-IT')} cr.`) : null);
 }
 
@@ -116,7 +118,7 @@ export function pannelloCreaConsumabile(ctx) {
       casella('La versione la conosce un altro partecipante presente', scelta.conosciutaDaAltri, (v) => { scelta.conosciutaDaAltri = v; }, 'Magia §24.1: all’infusione deve essere presente chi conosce e può usare la versione; può essere diverso dall’Officiante'),
       elenco.length ? h('div', { class: 'riga-campi' },
         select('Incantesimo', scelta.incantesimo, elenco.map((x) => ({ valore: x.incantesimo, testo: `${x.incantesimo}${x.ritualeNonConsentito ? ' (Rituale: non consentito)' : ''}` })), (v) => { scelta.incantesimo = v; scelta.livello = null; }),
-        inc ? select('Versione', scelta.livello, inc.versioni.map((v) => ({ valore: v.livello, testo: `${v.livello} · Grado ${v.grado} · ${v.pm} PM`, disabilitata: !!v.motivo, titolo: v.motivo })), (v) => { scelta.livello = Number(v); }) : null)
+        inc ? select('Versione', scelta.livello, inc.versioni.map((v) => ({ valore: v.livello, testo: `${v.livello} · Grado ${v.grado} · ${v.pm} PM${v.motivo ? ' ⚠' : ''}`, titolo: v.motivo })), (v) => { scelta.livello = Number(v); }) : null)
         : h('p', { class: 'nota motivo' }, 'Nessun Incantesimo conosciuto: spunta la casella se la versione la conosce un altro partecipante.'),
       h('fieldset', { class: 'fase-crea' }, h('legend', {}, 'Supporto'),
         select('Tipo', scelta.supporto.id, R.supporti.map((x) => ({ valore: x.id, testo: x.id === 'pergamena' ? `${x.nome} (${x.costo} cr, ${x.complessita})` : x.nome })), (v) => { scelta.supporto.id = v; }),
@@ -144,12 +146,16 @@ export function pannelloCreaConsumabile(ctx) {
             piano.creato ? ` Risultato: ${piano.voce.personalizzato.nome}, Grado ${piano.grado}, con ${piano.pmSigillati} PM sigillati.` : ' Risultato: nessun Consumabile.'),
         ] : null,
         piano.avvisi.map((a) => h('p', { class: 'nota' }, a)),
-        piano.errori.map((e) => h('p', { class: 'nota motivo' }, `Non si può: ${e}.`)),
-        h('button', { type: 'button', class: 'btn primario', disabled: !!piano.errori.length,
+        piano.errori.map((e) => h('p', { class: 'nota motivo' }, `Manca un dato: ${e}.`)),
+        // N2: le regole non rispettate avvisano; «Registra comunque» chiede conferma e lascia la riga nello storico
+        (piano.irregolari ?? []).map((e) => h('p', { class: 'nota motivo' }, `Avviso: ${e}.`)),
+        h('button', { type: 'button', class: `btn primario${piano.irregolari?.length ? ' con-avviso' : ''}`, disabled: !!piano.errori.length,
           onclick: async () => {
             const ok = await chiedi({ titolo: 'Registra la creazione', testo: `Si scalano ${piano.crediti.toLocaleString('it-IT')} cr e ${piano.pm} PM personali.${piano.creato ? ` Nell’Inventario entra «${piano.voce.personalizzato.nome}».` : ' Nessun Consumabile creato.'}`, si: 'Registra' });
-            if (ok) ctx.azioni.creaConsumabile(pianoCreazione(scelta, contesto(), ctx.dati));
-          } }, 'Registra la creazione')));
+            if (!ok) return;
+            const p = pianoCreazione(scelta, contesto(), ctx.dati);
+            await conAvviso(ctx.azioni.storico, { azione: `creare ${p.incantesimo ?? 'un consumabile'} ${p.livello ?? ''}`.trim(), motivo: p.irregolari?.length ? p.irregolari.join('; ') : null, fai: (forza) => ctx.azioni.creaConsumabile(p, forza) });
+          } }, piano.irregolari?.length ? 'Registra comunque' : 'Registra la creazione')));
   }
   disegna();
   return h('details', { class: 'crea-consumabile' }, h('summary', {}, 'Crea consumabile (Magia §27.2)'), corpo);

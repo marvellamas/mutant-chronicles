@@ -32,6 +32,9 @@ import { urlMuovi, alRound, collegamentoScontro, tecnicheScadute, statiScaduti, 
 import { bloccoControNemico } from './attacco-pg.js';
 import { registraIncantesimo, terminaIncantesimo, concentrazioniInterrotte } from '../durate-incantesimi.js';
 import { usaConsumabile, consumabiliMistici, applicaCreazione } from '../consumabili-mistici.js';
+import { rigaStorico, testoProcedi } from '../storico.js';
+import { conAvviso } from './procedi.js';
+import { chiedi } from './finestrella.js';
 import { segnaDalTavolo, arrivoDalTavolo, tornaAlTavolo, scorrimentoDaRimettere, dimenticaTavolo, segnaDallaMappa, arrivoDallaMappa, tornaAllaMappa, dimenticaMappa } from './ritorno.js';
 import { PASSI, passoVisibile, requisitoPasso } from './passi.js';
 import { inizializzaTooltip, nascondiTooltip } from './tooltip.js';
@@ -942,9 +945,10 @@ function contesto() {
     scheda,
     schedaPersonaggio,
     livelli: stato.livelli,
-    motivoNoSalita: schedaPersonaggio.eccessi?.length ? motivoEccesso(schedaPersonaggio.eccessi)
-      : schedaPersonaggio.completamenti?.length ? motivoCompletamento(schedaPersonaggio.completamenti)
-      : !scheda.completa ? 'Completa la creazione (passi precedenti) prima di salire di livello.'
+    // N2: eccessi e riassegnazioni in sospeso avvisano («Procedi comunque»); creazione incompleta ed errori dei livelli fermano
+    avvisoSalita: schedaPersonaggio.eccessi?.length ? motivoEccesso(schedaPersonaggio.eccessi)
+      : schedaPersonaggio.completamenti?.length ? motivoCompletamento(schedaPersonaggio.completamenti) : null,
+    motivoNoSalita: !scheda.completa ? 'Completa la creazione (passi precedenti) prima di salire di livello.'
         : schedaPersonaggio.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
     saliDiLivello,
     stampa: () => vai(`#/p/${stato.id}/stampa`),
@@ -1074,9 +1078,23 @@ function renderWizard() {
 // ---------------------------------------------------------------------------
 // Sali di livello (cap. 8): bozza in memoria, salvata solo con "Conferma"
 
-function saliDiLivello() {
-  stato.sali = { voce: {}, passo: 0, ui: { aperti: new Set(), filtroTalenti: null } };
-  vai(`#/p/${stato.id}/sali/0`);
+/** Riga nello storico del personaggio aperto (src/storico.js): «procedi comunque: …». */
+function registraStorico(testo) {
+  stato.sessione = rigaStorico(stato.sessione, testo);
+  persisti();
+}
+
+/**
+ * «Sali al livello N». N2: con punti in eccesso (A.108) o riassegnazioni in sospeso (A.107) l'app avvisa e chiede;
+ * con «Procedi comunque» la salita si apre lo stesso e nello storico resta la riga.
+ */
+async function saliDiLivello() {
+  const sp = calcolaScheda({ creazione: stato.scelte, livelli: stato.livelli }, stato.dati);
+  const motivo = sp.eccessi?.length ? motivoEccesso(sp.eccessi) : sp.completamenti?.length ? motivoCompletamento(sp.completamenti) : null;
+  await conAvviso(registraStorico, { azione: `Sali al livello ${2 + stato.livelli.length}`, motivo, fai: (forza) => {
+    stato.sali = { voce: {}, passo: 0, ui: { aperti: new Set(), filtroTalenti: null }, ...(forza ? { procedi: true } : {}) };
+    vai(`#/p/${stato.id}/sali/0`);
+  } });
 }
 
 /**
@@ -1236,6 +1254,7 @@ function renderSaliPagina() {
       conseguenze: (voce) => conseguenzeCorrezione(personaggio(), L, voce, dati),
     } : null,
     voce: bozza.voce,
+    procedi: !!bozza.procedi,
     passo: bozza.passo,
     ui: bozza.ui,
     aggiornaVoce(modifica) {
@@ -1248,9 +1267,16 @@ function renderSaliPagina() {
       renderSaliPagina();
     },
     vaiPasso: (i) => vai(`#/p/${stato.id}/sali/${i}`),
-    conferma() {
+    async conferma() {
       if (L) {
-        if (validaCorrezione(personaggio(), L, bozza.voce, dati).length) return renderSaliPagina();
+        // N2: un livello dopo che diventerebbe irregolare è un avviso; gli altri errori fermano
+        const err = validaCorrezione(personaggio(), L, bozza.voce, dati);
+        if (err.some((e) => !e.procedibile)) return renderSaliPagina();
+        if (err.length) {
+          const ok = await chiedi({ titolo: `Avviso: correzione del ${L}° livello`, testo: `${err.map((e) => e.problema).join('; ')}. L’app avvisa e non blocca: se il master è d’accordo puoi procedere; resta una riga nello storico del personaggio.`, si: 'Procedi comunque' });
+          if (!ok) return undefined;
+          registraStorico(testoProcedi(`correzione del ${L}° livello`, err.map((e) => e.problema).join('; ')));
+        }
         const dopo = conseguenzeCorrezione(personaggio(), L, bozza.voce, dati);
         cambiaLivelli(applicaCorrezione(personaggio(), L, bozza.voce).livelli);
         stato.sali = null;
@@ -1260,7 +1286,7 @@ function renderSaliPagina() {
         if (!stato.salvataggioOk) alert(`Correzione fatta, ma non salvata nel browser. ${testoSalvataggioFallito()}`);
         return vai(`#/p/${stato.id}`);
       }
-      if (validaLivello(personaggio(), bozza.voce, dati).length) return renderSaliPagina();
+      if (validaLivello(personaggio(), bozza.voce, dati, { procedi: !!bozza.procedi }).length) return renderSaliPagina();
       cambiaLivelli(applicaLivello(personaggio(), bozza.voce).livelli);
       stato.sali = null;
       stato.passo = PASSO_SCHEDA;
@@ -1430,9 +1456,10 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
     partecipanti: stato.scontroPg?.partecipanti ?? [],
     spazioQuasiEsaurito: archivio.spazioQuasiEsaurito(),
     // A.108: i punti in eccesso bloccano la salita prima di tutto (si tolgono, poi si riassegna)
-    motivoNoSalita: tab.scheda.eccessi?.length ? motivoEccesso(tab.scheda.eccessi)
-      : tab.scheda.completamenti?.length ? motivoCompletamento(tab.scheda.completamenti)
-      : !schedaCreazione.completa ? 'Completa la creazione prima di salire di livello.'
+    // N2: avviso con «Procedi comunque» (riga nello storico); restano fermi creazione incompleta ed errori dei livelli
+    avvisoSalita: tab.scheda.eccessi?.length ? motivoEccesso(tab.scheda.eccessi)
+      : tab.scheda.completamenti?.length ? motivoCompletamento(tab.scheda.completamenti) : null,
+    motivoNoSalita: !schedaCreazione.completa ? 'Completa la creazione prima di salire di livello.'
         : tab.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
     // regole aggiornate (regole.json → regole_aggiornate): punti da completare e in eccesso
     avvisoRegole: dati.regole.regole_aggiornate?.punti_abilita ?? 'Regole aggiornate',
@@ -1519,9 +1546,9 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       },
       // «Lancia!»: PM spesi e, se l'incantesimo ha una durata, fra gli incantesimi in corso (src/durate-incantesimi.js); in
       // uno scontro il Round è quello del server al momento del lancio
-      lancia: async (fonte, registrazione = null) => {
+      lancia: async (fonte, registrazione = null, forza = false) => {
         if (stato.scontroPg && registrazione) { await aggiornaRoundScontro(); stato.sessione = sessioneVista(); }
-        let nuova = spendiPmLancio(stato.sessione, fonte, massimi);
+        let nuova = spendiPmLancio(stato.sessione, fonte, massimi, { forza });
         if (nuova && registrazione) {
           const quando = calendarioAttivo(stato.calendario) ? momentoCalendario(stato.calendario, dati) : null;
           const con = registraIncantesimo(nuova, { ...registrazione, ...(quando ? { quando } : {}) }, dati);
@@ -1534,9 +1561,9 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       // Magia §27: «Usa» di un Consumabile completato: un esemplare in meno nell'Inventario (§27.4) e, se l'effetto ha
       // una durata, fra gli incantesimi in corso come un lancio; in uno scontro solo le attivazioni in AzP
       // Magia §27.2: «Crea consumabile» registrato: crediti e PM personali scalati, il Consumabile creato nell'Inventario
-      creaConsumabile: (piano) => {
+      creaConsumabile: (piano, forza = false) => {
         const uid = `e${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
-        const esito = applicaCreazione({ voci: stato.scelte.equipaggiamento, sessione: stato.sessione }, piano, massimi, uid);
+        const esito = applicaCreazione({ voci: stato.scelte.equipaggiamento, sessione: stato.sessione }, piano, massimi, uid, { forza });
         if (!esito) { avvisoErrore('Creazione non registrata: il piano ha ancora dei problemi.'); renderScheda({ mantieniScorrimento: true }); return; }
         const { scelte, avvisi } = applicaModifica(stato.scelte, { equipaggiamento: esito.voci }, dati);
         stato.scelte = scelte;
@@ -1546,10 +1573,10 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
         persisti();
         renderScheda({ mantieniScorrimento: true });
       },
-      usaConsumabile: async (uid, registrazione = null) => {
+      usaConsumabile: async (uid, registrazione = null, forza = false) => {
         if (stato.scontroPg && registrazione) { await aggiornaRoundScontro(); stato.sessione = sessioneVista(); }
         const nome = consumabiliMistici(stato.scelte.equipaggiamento, dati).find((x) => x.uid === uid)?.nome ?? 'consumabile';
-        const esito = usaConsumabile(stato.scelte.equipaggiamento, uid, dati, { inScontro: !!stato.scontroPg });
+        const esito = usaConsumabile(stato.scelte.equipaggiamento, uid, dati, { inScontro: !!stato.scontroPg, forza });
         if (!esito) { avvisoErrore('Consumabile non utilizzabile ora (nel deposito comune, oppure non si attiva in un Round).'); renderScheda({ mantieniScorrimento: true }); return; }
         const { scelte, avvisi } = applicaModifica(stato.scelte, { equipaggiamento: esito.voci }, dati);
         stato.scelte = scelte;
@@ -1565,10 +1592,12 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
         persisti();
         renderScheda({ mantieniScorrimento: true });
       },
+      // N2: riga nello storico del personaggio («procedi comunque: …», src/storico.js)
+      storico: (testo) => { stato.sessione = rigaStorico(stato.sessione, testo); persisti(); renderScheda({ mantieniScorrimento: true }); },
       terminaIncantesimo: (uid) => cambiaSessione(modificaSessione(terminaIncantesimo(stato.sessione, uid), {}, massimi)),
       // Batteria Matrice (Magia §26.4) e Artefatti con attivazione a durata (Armamenti §7.24): modifiche annullabili
       ricaricaMatrice: (uid, ore, presso) => cambiaSessione(ricaricaMatrice(stato.sessione, uid, ore, presso, dati, massimi)),
-      attivaArtefatto: (uid, pm) => cambiaSessione(attivaArtefatto(stato.sessione, uid, pm, massimi)),
+      attivaArtefatto: (uid, pm, forza = false) => cambiaSessione(attivaArtefatto(stato.sessione, uid, pm, massimi, { forza })),
       // Tecniche Interiori (Giocatore §8.9.1, src/tecniche.js): ogni passo è una modifica annullabile
       // in uno scontro il Round è quello del server al momento dell'attivazione: si rilegge prima (vale l'ordine del server)
       attivaTecnica: async (id, opz) => {

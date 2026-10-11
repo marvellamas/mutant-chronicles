@@ -3,6 +3,7 @@
 // personaggi/ sono «al tavolo» (selezione salvata sul server, tavolo/sessione.json); per ognuno conta il
 // file più recente. Le schede si rileggono ogni pochi secondi, solo se il file è cambiato; i valori e
 // le provenienze sono quelli di calcolaScheda (src/tavolo.js → vistaPlancia).
+import { procediComunque } from '../storico.js';
 import { h, svuota } from './dom.js';
 import { infoValore, nascondiTooltip } from './tooltip.js';
 import { iconaPagina } from './immagini.js';
@@ -1073,6 +1074,8 @@ function cartaPg(ctx, v, r, diTurnoOra = false, colpito = null, durate = []) {
       })) : null,
       // modificatori temporanei e circostanze segnati nella scheda (src/temporanei.js, src/circostanze.js)
       v.modificatori?.length ? h('p', { class: 'plancia-modificatori' }, h('small', { class: 'nota' }, 'Modificatori: '), v.modificatori.map((x) => h('span', { class: 'etichetta' }, x))) : null,
+      // N2: le volte in cui il giocatore ha proceduto nonostante un avviso (src/storico.js), per il master
+      (() => { const righe = procediComunque(v.sessione); return righe.length ? h('details', { class: 'plancia-storico' }, h('summary', {}, `⚠ Procedi comunque (${righe.length})`), h('ul', {}, righe.slice(0, 10).map((x) => h('li', {}, h('small', { class: 'nota' }, `${new Date(x.quando).toLocaleString('it-IT', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })} · `), x.testo.replace(/^procedi comunque: /, ''))))) : null; })(),
       // durate di Tecniche e incantesimi attivati dalla scheda, incantesimi subiti, con i Round che restano (src/round-scontro.js)
       rigaDurate(durate, 'tecnica', 'Tecniche in corso'),
       rigaDurate(durate, 'incantesimo', 'Incantesimi in corso'),

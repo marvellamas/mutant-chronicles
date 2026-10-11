@@ -38,6 +38,7 @@
 // crediti: crediti attuali (§2.16.28), null finché la dotazione iniziale non è nell'inventario.
 // creditiIniziali: l'ultimo saldo iniziale visto; se il saldo cambia (dotazione rifatta, tabella
 // modificata) i crediti attuali si spostano della stessa differenza, così le spese restano.
+import { allineaStorico } from './storico.js';
 import { normalizzaCircostanze } from './circostanze.js';
 import { normalizzaTemporanei } from './temporanei.js';
 import { valoreTiro } from './tiri.js';
@@ -383,6 +384,8 @@ export function allineaSessione(sessione, m) {
     // circostanze del Direttore (src/circostanze.js): la chiave c'è solo se ce ne sono
     ...(() => { const c = normalizzaCircostanze(sessione.circostanze, m.circostanza); return c.length ? { circostanze: c } : {}; })(),
     ...(() => { const t = normalizzaTemporanei(sessione.caratteristicheTemporanee, m.temporanei, m.sigle); return t.length ? { caratteristicheTemporanee: t } : {}; })(),
+    // N2: storico del personaggio («procedi comunque: …», src/storico.js); la chiave c'è solo se ci sono righe
+    ...(() => { const st = allineaStorico(sessione.storico); return st.length ? { storico: st } : {}; })(),
     note: typeof sessione.note === 'string' ? sessione.note : '',
   };
 }
@@ -509,16 +512,17 @@ export function ricaricaArma(sessione, uid, m) {
  * «Lancia!»: spende i PM di un lancio (Magia sez. 6), personali e/o da un solo contenitore, in una
  * sola modifica di sessione (così «Annulla» la copre tutta). null se i PM non bastano.
  */
-export function spendiPmLancio(sessione, { personali = 0, contenitore = null }, m) {
+export function spendiPmLancio(sessione, { personali = 0, contenitore = null }, m, { forza = false } = {}) {
   const s = allineaSessione(sessione, m);
-  if (personali > s.pmAttuali) return null;
+  // N2: con `forza` («Procedi comunque») i PM che non bastano scendono a 0, non sotto
+  if (personali > s.pmAttuali && !forza) return null;
   const chroma = { ...s.chroma };
   if (contenitore) {
     const c = chroma[contenitore.uid];
-    if (!c || contenitore.pm > c.pmAttuali) return null;
-    chroma[contenitore.uid] = { ...c, pmAttuali: c.pmAttuali - contenitore.pm };
+    if (!c || (contenitore.pm > c.pmAttuali && !forza)) return null;
+    chroma[contenitore.uid] = { ...c, pmAttuali: Math.max(0, c.pmAttuali - contenitore.pm) };
   }
-  return modificaSessione(s, { pmAttuali: s.pmAttuali - personali, chroma }, m);
+  return modificaSessione(s, { pmAttuali: Math.max(0, s.pmAttuali - personali), chroma }, m);
 }
 
 /** Attiva o disattiva uno Stato. */
@@ -554,12 +558,13 @@ export function ricaricaMatrice(sessione, uid, ore, presso, dati, m) {
  * interna (proprietà Esclusiva) e la condizione «attivazione:<uid>» accesa, in una modifica sola. null se la
  * riserva non basta. Si termina spegnendo la condizione.
  */
-export function attivaArtefatto(sessione, uid, pm, m) {
+export function attivaArtefatto(sessione, uid, pm, m, { forza = false } = {}) {
   const s = allineaSessione(sessione, m);
   const c = s.chroma[uid];
-  if (!c || c.pmAttuali < pm) return null;
+  // N2: con `forza` («Procedi comunque») si attiva lo stesso; la riserva scende a 0, non sotto
+  if (!c || (c.pmAttuali < pm && !forza)) return null;
   const chiave = `attivazione:${uid}`;
-  return modificaSessione(s, { chroma: { ...s.chroma, [uid]: { ...c, pmAttuali: c.pmAttuali - pm } }, condizioniOggetti: [...new Set([...s.condizioniOggetti, chiave])] }, m);
+  return modificaSessione(s, { chroma: { ...s.chroma, [uid]: { ...c, pmAttuali: Math.max(0, c.pmAttuali - pm) } }, condizioniOggetti: [...new Set([...s.condizioniOggetti, chiave])] }, m);
 }
 
 export function nuovaSessione(sessione, m) {

@@ -181,7 +181,8 @@ export function scegliAndatura(rec, id, scontro, dati) {
 /** Il movimento del Round, all'Iniziativa del conducente. Errore se non si può. */
 export function muoviVeicolo(rec, scontro, diTurno, opzioni = {}) {
   const st = statoMovimento(rec, scontro, diTurno, opzioni);
-  if (!st.puo) throw new Error(st.motivo);
+  // N2: con `opzioni.forza` il master muove lo stesso (fuori turno, già mosso, andatura Fermo); servono scontro e conducente
+  if (!st.puo && !(opzioni.forza && scontro && rec.conducente)) throw new Error(st.motivo);
   return { ...rec, movimento: { scontro: scontro.id, round: scontro.round, da: rec.conducente.nome } };
 }
 

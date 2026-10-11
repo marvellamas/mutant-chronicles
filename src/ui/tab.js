@@ -5,6 +5,8 @@
 // tavolo: i valori attuali della sessione (src/sessione.js), che non si ricalcolano.
 // Le penalità di Ferite, Affaticamento e Stati sono solo promemoria: i VA mostrati non le
 // includono (le regole del cap. 5 sono situazionali).
+import { allineaStorico } from '../storico.js';
+import { conAvviso } from './procedi.js';
 import { h, segno } from './dom.js';
 import { avviso } from './avvisi.js';
 import { normalizzaTemporanei, variaTemporaneo, durataTemporaneo, togliTemporaneo, derivatiDi } from '../temporanei.js';
@@ -147,7 +149,8 @@ export function renderTab(ctx) {
         `Round ${ctx.roundScontro.round} · dallo scontro`) : null,
       ctx.puoAnnullareSessione ? h('button', { type: 'button', class: 'btn', onclick: azioni.annullaSessione, title: 'Annulla l’ultima modifica ai valori di sessione o al calendario' }, '↶ Annulla') : null,
       id.livello < livelloMax
-        ? h('button', { type: 'button', class: 'btn primario', disabled: !!ctx.motivoNoSalita, title: ctx.motivoNoSalita, onclick: azioni.sali }, `Sali al livello ${id.livello + 1}`)
+        // N2: punti in eccesso (A.108) e riassegnazioni in sospeso (A.107) sono un avviso con «Procedi comunque»
+        ? h('button', { type: 'button', class: `btn primario${ctx.avvisoSalita ? ' con-avviso' : ''}`, disabled: !!ctx.motivoNoSalita, title: ctx.motivoNoSalita ?? ctx.avvisoSalita, onclick: azioni.sali }, `Sali al livello ${id.livello + 1}`)
         : null,
       menuAzioni(ctx),
       menuImpostazioni(ctx)));
@@ -280,7 +283,7 @@ function menuAzioni(ctx) {
       h('hr', {}),
       voce('Nuova sessione', azioni.nuovaSessione, { titolo: 'PV e PM ai massimi, Stati, Ferite e Affaticamento a zero' }),
       voce('Annulla ultima modifica', azioni.annullaSessione, { disabilitato: !ctx.puoAnnullareSessione, titolo: 'Valori di sessione o calendario' }),
-      ctx.motivoNoSalita ? h('p', { class: 'nota' }, ctx.motivoNoSalita) : null));
+      ctx.motivoNoSalita ?? ctx.avvisoSalita ? h('p', { class: 'nota' }, ctx.motivoNoSalita ?? ctx.avvisoSalita) : null));
 }
 
 function menuImpostazioni(ctx) {
@@ -678,7 +681,7 @@ function tabInventario(ctx) {
         dati: ctx.dati, voci: ctx.scelte.equipaggiamento, ui: ctx.ui,
         aggiorna: ctx.azioni.equipaggiamento, ridisegna: ctx.azioni.ridisegna,
         inventario: true, rigaExtra: (r) => [piRigaInventario(ctx, r), tavoloRigaInventario(ctx, r)],
-        compra: ctx.azioni.compra, crediti: ctx.sessione.crediti,
+        compra: ctx.azioni.compra, crediti: ctx.sessione.crediti, storico: ctx.azioni.storico,
       })),
   ];
 }
@@ -1092,6 +1095,10 @@ function tabIdentita(ctx, d) {
       })),
 
     d.annotazioni.length ? sezione('Note della scheda', h('ul', {}, d.annotazioni.map((a) => h('li', {}, a)))) : null,
+
+    // N2: storico del personaggio (src/storico.js): le volte in cui si è proceduto nonostante un avviso
+    (() => { const righe = allineaStorico(ctx.sessione.storico).slice().reverse(); return righe.length ? h('details', { class: 'sezione-tab storico-pg' }, h('summary', {}, `Storico (${righe.length})`),
+      h('ul', {}, righe.map((x) => h('li', {}, h('small', { class: 'nota' }, `${new Date(x.quando).toLocaleString('it-IT', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })} · `), x.testo)))) : null; })(),
 
     sezione('Progressione',
       h('table', { class: 'tabella compatta' },
@@ -1613,14 +1620,17 @@ function protezioniDisponibili(ctx) {
   const inRound = !!ctx.roundScontro;
   const prova = (r, verso, stato) => {
     const c = cambioProtezione(r, verso, { inRound, armaturaIndossata: armaturaIndossata && !(r.tipo === 'armatura') }, ctx.dati);
-    if (!c.ammesso) { avviso(`${r.nome}: ${c.motivo}.`, { tipo: 'errore' }); return; }
+    // N2: la regola (tempi di A.110, rinforzi, sottogiacca) avvisa; con «Procedi comunque» si cambia lo stesso
+    conAvviso(ctx.azioni.storico, { azione: `${verso === 'indossa' ? 'indossare o imbracciare' : 'togliere o riporre'} ${r.nome}`, motivo: c.ammesso ? null : c.motivo, fai: () => cambia(r, verso, stato, c) });
+  };
+  const cambia = (r, verso, stato, c) => {
     // soprabiti, mantelli e Tabardo con un'armatura addosso: si fissano su di lei («Montata su:»), senza un montaggio in
     // più (A.110); da soli si indossano
     const armatura = voci.find((x) => x.tipo === 'armatura' && x.attivo);
     if (verso === 'indossa' && r.tipo === 'rinforzo' && armatura && r.stati.includes('in_uso')) {
       ctx.azioni.equipaggiamento((ctx.scelte.equipaggiamento ?? []).map((v) => (v.uid === r.uid ? { ...v, stato: 'in_uso', montato_su: armatura.uid } : v)));
     } else cambiaStato(ctx, r.uid, stato);
-    if (c.testo) avviso(`${r.nome}: ${c.testo}`, { tipo: c.azp ? 'info' : 'ok' });
+    if (c.ammesso && c.testo) avviso(`${r.nome}: ${c.testo}`, { tipo: c.azp ? 'info' : 'ok' });
   };
   return h('ul', { class: 'elenco-disponibili' }, voci.map((r) => {
     const t = tempiProtezione(r, ctx.dati);
@@ -1775,9 +1785,12 @@ function schedaArma(ctx, a) {
     h('div', { class: 'arma-testa' },
       h('h3', {}, a.nome, h('small', { class: 'sigla' }, ` · ${a.abilita ?? 'Abilità non indicata'}`)),
       // A.44: un’arma o uno scudo Rotti (0 PI) non possono attaccare finché non vengono riparati
-      a.va !== null ? h('button', { type: 'button', class: 'btn primario btn-attacca', disabled: !!a.rotta || a.condizioneArma?.utilizzabile === false,
-        title: a.rotta ? 'Rotto (0 PI): non può attaccare finché non viene riparato (§7.2.1, A.44).' : a.condizioneArma?.utilizzabile === false ? `${a.condizioneArma.nome}: ${a.condizioneArma.testo}` : null,
-        onclick: () => { ctx.ui.attacco = { uid: a.uid, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Attacca!') : null),
+      // N2: l'arma Rotta o inutilizzabile avvisa; con «Procedi comunque» il pannello si apre lo stesso
+      a.va !== null ? (() => {
+        const motivo = a.rotta ? 'Rotto (0 PI): non può attaccare finché non viene riparato (§7.2.1, A.44)' : a.condizioneArma?.utilizzabile === false ? `${a.condizioneArma.nome}: ${a.condizioneArma.testo}` : null;
+        return h('button', { type: 'button', class: `btn primario btn-attacca${motivo ? ' con-avviso' : ''}`, title: motivo,
+          onclick: () => conAvviso(ctx.azioni.storico, { azione: `attaccare con ${a.nome}`, motivo, fai: () => { ctx.ui.attacco = { uid: a.uid, passo: 0 }; ctx.azioni.ridisegna(); } }) }, 'Attacca!');
+      })() : null),
     // A.49: condizione dell'arma al tavolo (Giocatore §5.17), distinta dai PI: qui si legge, si cambia
     // nell'Inventario (docs/layout-sd.md, pezzo 3)
     a.condizioneArma && a.condizioneArma.id !== 'integra' ? h('p', { class: 'condizione-arma motivo', title: a.condizioneArma.testo }, h('span', { class: 'sigla' }, 'Condizione '), h('strong', {}, a.condizioneArma.nome)) : null,
@@ -1987,9 +2000,9 @@ function attivazioneArtefattoUi(ctx, x, r, riserva) {
     h('p', {}, h('strong', {}, 'Attivazione: '), `${at.pm} PM dalla riserva interna, ${at.azione}, ${at.durata}: danni dei pugni di natura ${at.natura} e +${at.danno} al danno (${at.fonte}).`),
     accesa ? h('p', { class: 'nota' }, h('strong', {}, 'Attiva'), ` · vale in «Attacca!» senz’armi; dura ${at.durata}. `,
       h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => ctx.azioni.condizioneOggetto(chiave) }, 'Termina')) : null,
-    motivo && !accesa ? h('p', { class: 'nota motivo' }, `Non attivabile ora: ${motivo}.`) : null,
-    h('button', { type: 'button', class: 'btn', disabled: !!motivo, title: motivo ?? `Scala ${at.pm} PM dalla riserva e accende l’effetto; una nuova attivazione rinnova la durata`,
-      onclick: () => ctx.azioni.attivaArtefatto(x.uid, at.pm) }, accesa ? `Rinnova (−${at.pm} PM)` : `Attiva (−${at.pm} PM)`));
+    motivo && !accesa ? h('p', { class: 'nota motivo' }, `Avviso: ${motivo}. Si può attivare comunque.`) : null,
+    h('button', { type: 'button', class: `btn${motivo ? ' con-avviso' : ''}`, title: motivo ?? `Scala ${at.pm} PM dalla riserva e accende l’effetto; una nuova attivazione rinnova la durata`,
+      onclick: () => conAvviso(ctx.azioni.storico, { azione: `attivare ${x.nome}`, motivo, fai: (forza) => ctx.azioni.attivaArtefatto(x.uid, at.pm, forza) }) }, accesa ? `Rinnova (−${at.pm} PM)` : `Attiva (−${at.pm} PM)`));
 }
 
 /**
@@ -2240,7 +2253,8 @@ function attivabile(ctx, imp, mieiChip = []) {
         nomi.get(c.uid)?.def ? info('oggetto', nomi.get(c.uid).def.rif, c.nome) : c.nome,
         ` · ${c.acceso ? 'attivo' : c.inserito ? 'inserito' : NOMI_STATI[nomi.get(c.uid)?.voce.stato] ?? 'con sé'}`, ' ',
         c.acceso ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Interrompe l’effetto: il conteggio delle 24 ore resta (§7.10).', onclick: () => ctx.azioni.impianto((s) => terminaChip(s, imp)) }, 'Termina')
-          : h('button', { type: 'button', class: 'btn btn-piccolo primario', disabled: !!c.motivo, title: c.motivo ?? frasi, onclick: () => ctx.azioni.impianto((s) => attivaChip(s, imp, c.uid, ctx.dati), c.motivo) }, `Attiva (${imp.azione})`),
+          // N2: chip non inserito o già usato nelle 24 ore: avviso con «Procedi comunque»
+          : h('button', { type: 'button', class: `btn btn-piccolo primario${c.motivo ? ' con-avviso' : ''}`, title: c.motivo ?? frasi, onclick: () => conAvviso(ctx.azioni.storico, { azione: `attivare il chip ${c.nome}`, motivo: c.motivo, fai: (forza) => ctx.azioni.impianto((s) => attivaChip(s, imp, c.uid, ctx.dati, { forza }), c.motivo) }) }, `Attiva (${imp.azione})`),
         c.motivo && c.inserito ? h('small', { class: 'motivo' }, ` ${c.motivo}`) : null)))
         : h('p', { class: 'nota' }, 'Nessun chip: si comprano nell’Inventario.'),
       st.attivo ? h('p', { class: 'nota' }, `Chip attivo per ${st.durataMinuti} minuti consecutivi: il bonus è nel VA dell’Abilità. Terminalo a mano quando la durata finisce.`) : null,
@@ -2454,7 +2468,8 @@ function tabMagia(ctx, d) {
               // senza versioni accessibili il pulsante resta, disabilitato con il motivo (mai un pulsante muto)
               const inc = ctx.dati.incantesimi.incantesimi.find((x) => x.nome === i.nome);
               const st = inc ? statoPulsanteLancio(inc, ctx.tab.scheda, ctx.dati) : { disabilitato: true, motivo: 'incantesimo non più nel catalogo' };
-              return h('button', { type: 'button', class: 'btn primario btn-attacca', disabled: st.disabilitato, title: st.motivo,
+              // N2: senza versioni accessibili (livello, Ritualista) il pannello si apre lo stesso, con l'avviso; fermo solo senza dati
+              return h('button', { type: 'button', class: `btn primario btn-attacca${st.disabilitato ? ' con-avviso' : ''}`, disabled: !inc || !(inc.versioni ?? []).length, title: st.motivo,
                 onclick: () => { ctx.ui.lancio = { nome: i.nome, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Lancia!');
             })()),
           i.intestazione ? h('p', { class: 'piccolo' }, i.intestazione) : null,
@@ -2489,11 +2504,11 @@ function attivazioneInfusaRiga(ctx, x, infuso, riserva, { conPulsante }) {
   const quote = a.pagamento && universale && a.pagamento.personali ? `${a.pagamento.interna} dalla riserva e ${a.pagamento.personali} personali` : `${a.pm} PM dalla riserva dell’Artefatto`;
   return h('div', { class: 'attivazione-infusa' },
     h('p', {}, h('strong', {}, `${a.incantesimo} ${a.livello}: `), `${quote} · ${a.tempo} · nessuna Prova (Magia §24.2${a.energie ? ', §25.4' : ''}) · proprietà ${nomeAlimentazione(a.alimentazione, ctx.dati)} (§26.2).`),
-    a.motivo ? h('p', { class: 'nota motivo' }, `Non attivabile ora: ${a.motivo}.`) : null,
-    conPulsante ? h('button', { type: 'button', class: 'btn', disabled: !!a.motivo, title: a.motivo ?? 'Scala i PM; «Annulla» li restituisce',
-      onclick: () => (universale && a.pagamento?.personali
-        ? ctx.azioni.lancia({ personali: a.pagamento.personali, contenitore: riserva && a.pagamento.interna ? { uid: riserva.uid, pm: a.pagamento.interna } : null })
-        : ctx.azioni.chroma(riserva.uid, -a.pm)) }, `Attiva (−${a.pm} PM)`) : null);
+    a.motivo ? h('p', { class: 'nota motivo' }, `Avviso: ${a.motivo}. Si può attivare comunque.`) : null,
+    conPulsante ? h('button', { type: 'button', class: `btn${a.motivo ? ' con-avviso' : ''}`, title: a.motivo ?? 'Scala i PM; «Annulla» li restituisce',
+      onclick: () => conAvviso(ctx.azioni.storico, { azione: `attivare ${a.incantesimo} di ${x.nome}`, motivo: a.motivo, fai: (forza) => (universale && a.pagamento?.personali
+        ? ctx.azioni.lancia({ personali: a.pagamento.personali, contenitore: riserva && a.pagamento.interna ? { uid: riserva.uid, pm: a.pagamento.interna } : null }, null, forza)
+        : riserva ? ctx.azioni.chroma(riserva.uid, -a.pm) : null) }) }, `Attiva (−${a.pm} PM)`) : null);
 }
 
 /**

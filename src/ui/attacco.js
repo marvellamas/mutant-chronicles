@@ -4,6 +4,7 @@
 // si ricordano per ogni arma nella sessione (sessione → attacchi). Impianto del pannello e
 // componenti comuni in src/ui/pannello-passi.js (telefono: un passo per schermata; da 800 px le
 // scelte a sinistra e il risultato a destra).
+import { conAvviso } from './procedi.js';
 import { h, segno } from './dom.js';
 import { infoValore, listaProvenienza } from './tooltip.js';
 import {
@@ -280,9 +281,9 @@ function risultatoRavvicinato(ctx, a, r) {
       // Tavolo del Master (pezzo 5): un attaccante esterno sostituisce la riga finale con tiro per colpire ed esito
       ctx.azioni.finale ? ctx.azioni.finale(r) : h('div', { class: 'attacco-azioni' },
         h('button', {
-          type: 'button', class: 'btn primario btn-grande', disabled: !!r.impossibile, title: r.impossibile?.motivo ?? null,
-          onclick: () => ctx.azioni.ricordaAttacco(a.uid, { ...(ctx.sessione.attacchi?.[a.uid] ?? {}), ultima: { manovra: r.manovra.id, nome: r.manovra.nome } }),
-        }, 'Attacca'),
+          type: 'button', class: `btn primario btn-grande${r.impossibile ? ' con-avviso' : ''}`, title: r.impossibile?.motivo ?? null,
+          onclick: () => conAvviso(ctx.azioni.storico, { azione: `attaccare con ${a.nome}`, motivo: r.impossibile?.motivo ?? null, fai: () => ctx.azioni.ricordaAttacco(a.uid, { ...(ctx.sessione.attacchi?.[a.uid] ?? {}), ultima: { manovra: r.manovra?.id ?? null, nome: r.manovra?.nome ?? null } }) }),
+        }, r.impossibile ? 'Attacca comunque' : 'Attacca'),
         h('small', { class: 'nota' }, ultima ? `Ultima Manovra con quest’arma: ${ultima.nome}. ` : '', 'Tira 1d20 al tavolo. «Attacca» non consuma nulla: registra la Manovra usata.'))),
       // ritocchi del 07/10: con il PG in uno scontro aperto, il bersaglio fra i nemici e «Applica il danno» (src/ui/attacco-pg.js)
       ctx.azioni.finale ? null : ctx.azioni.controNemico?.(ctx, a, r) ?? null,
@@ -442,9 +443,10 @@ function risultato(ctx, a, r, colpi, imposta) {
     const conto = colpi !== null ? ` ${a.granata ? 'Granate' : 'Colpi'}: ${colpi} → ${Math.max(0, colpi - r.munizioni)}.` : ` ${r.munizioni} ${r.munizioni === 1 ? 'munizione' : 'munizioni'}.`;
     avviso(`Colpo effettuato: ${chi}${a.nome}.${conto}`);
   };
+  const motivoSparo = r.impossibile?.motivo ?? (colpi !== null && colpi < r.munizioni ? `nel caricatore ${colpi} ${colpi === 1 ? 'colpo' : 'colpi'}, ne servono ${r.munizioni}` : null);
   return [
-    r.impossibile ? h('div', { class: 'riquadro errore', role: 'alert' },
-      h('p', {}, h('strong', {}, 'Attacco non possibile. '), r.impossibile.motivo),
+    r.impossibile ? h('div', { class: 'riquadro attenzione', role: 'alert' },
+      h('p', {}, h('strong', {}, 'Avviso: per le regole l’attacco non è possibile. '), r.impossibile.motivo, ' Il master può procedere comunque.'),
       r.impossibile.proposta ? h('button', { type: 'button', class: 'btn', onclick: () => imposta({ modalita: r.impossibile.proposta.modalita }) }, `Usa ${r.impossibile.proposta.nome}`) : null) : null,
     r.avvisi?.length ? h('div', { class: 'riquadro attenzione' }, r.avvisi.map((x) => h('p', {}, x))) : null,
     h('div', { class: 'attacco-risultato' },
@@ -466,9 +468,10 @@ function risultato(ctx, a, r, colpi, imposta) {
       // Tavolo del Master (pezzo 5): un attaccante esterno sostituisce la riga finale con tiro per colpire ed esito
       ctx.azioni.finale ? ctx.azioni.finale(r) : h('div', { class: 'attacco-azioni' },
         h('button', {
-          type: 'button', class: 'btn primario btn-grande', disabled: !!r.impossibile || (colpi !== null && colpi < r.munizioni),
-          title: r.impossibile?.motivo ?? null, onclick: spara,
-        }, `Spara (−${r.munizioni} ${r.munizioni === 1 ? 'munizione' : 'munizioni'})`),
+          // N2: «Spara comunque» chiede conferma e lascia la riga nello storico; i colpi non scendono sotto 0
+          type: 'button', class: `btn primario btn-grande${motivoSparo ? ' con-avviso' : ''}`,
+          title: motivoSparo, onclick: () => conAvviso(ctx.azioni.storico, { azione: `sparare con ${a.nome}`, motivo: motivoSparo, fai: spara }),
+        }, `${motivoSparo ? 'Spara comunque' : 'Spara'} (−${r.munizioni} ${r.munizioni === 1 ? 'munizione' : 'munizioni'})`),
         h('small', { class: 'nota' }, 'Tira 1d20 al tavolo. «Annulla» nell’intestazione annulla lo sparo; il pannello resta aperto per il prossimo tiro.'))),
       // ritocchi del 07/10: con il PG in uno scontro aperto, il bersaglio fra i nemici e «Applica il danno» (src/ui/attacco-pg.js)
       ctx.azioni.finale ? null : ctx.azioni.controNemico?.(ctx, a, r) ?? null,

@@ -23,7 +23,8 @@ export function descriviAttacco(a) {
  * attacco delle Manovre con più attacchi in mischia; ciascuno con il suo VA.
  */
 export function tiriRichiesti(arma, r) {
-  if (r.impossibile || r.va_finale === null || r.va_finale === undefined) return [];
+  // N2: un attacco «non possibile» per le regole è un avviso (il riquadro lo dice): il master può tirare lo stesso
+  if (r.va_finale === null || r.va_finale === undefined) return [];
   if (arma.tipo === 'arma_distanza') return Array.from({ length: Math.max(1, r.tiri ?? 1) }, (_, i) => ({ etichetta: r.tiri > 1 ? `Tiro ${i + 1}` : 'Tiro per colpire', va: r.va_finale }));
   if (r.attacchi?.length > 1) return r.attacchi.map((x) => ({ etichetta: x.etichetta, va: x.va }));
   // §1.6: nelle Prove contrapposte si tira anche con valore 20 o più (nessun successo automatico)

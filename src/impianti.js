@@ -82,10 +82,11 @@ export function statoProcessore(sessione, imp, dati) {
 }
 
 /** «Attiva» un chip (§7.10): un solo chip acceso, il bonus nelle condizioni accese. null se non si può. */
-export function attivaChip(sessione, imp, uid, dati) {
+export function attivaChip(sessione, imp, uid, dati, { forza = false } = {}) {
   const st = statoProcessore(sessione, imp, dati);
   const c = st.chip.find((x) => x.uid === uid);
-  if (!c || c.motivo || c.acceso) return null;
+  // N2: con `forza` («Procedi comunque») il chip si attiva anche non inserito o dentro le 24 ore
+  if (!c || c.acceso || (c.motivo && !forza)) return null;
   const altri = new Set(imp.chip.map((x) => x.uid));
   const condizioni = [...(sessione.condizioniOggetti ?? []).filter((x) => !altri.has(x)), uid];
   return conBlocco({ ...sessione, condizioniOggetti: condizioni }, { ...blocco(sessione), processore: { attivo: uid, usato: true } });

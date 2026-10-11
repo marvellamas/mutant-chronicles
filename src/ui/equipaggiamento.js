@@ -5,6 +5,7 @@
 // Modalità Inventario (docs/layout-sd.md, pezzo 2; ctx.inventario): sezioni per famiglia
 // (SEZIONI_INVENTARIO), stato con il deposito comune, costo / Qualità / reperibilità / peso nella
 // riga, contenuto aggiunto dalla tab (ctx.rigaExtra: PI e Ripara) e «Compra» (ctx.compra).
+import { conAvviso } from './procedi.js';
 import { h } from './dom.js';
 import { info } from './tooltip.js';
 import {
@@ -441,10 +442,12 @@ function bottoneCompra(ctx, scelto, nuovaVoce, etichetta = 'Compra') {
   const costo = Number.isFinite(scelto.costo) ? scelto.costo : null;
   const motivo = costo === null ? 'Prezzo di catalogo assente: aggiungi l’oggetto e scala i crediti a mano.'
     : !Number.isInteger(ctx.crediti) ? 'Crediti non tracciati: applica prima la dotazione iniziale, oppure aggiungi l’oggetto e annota la spesa a mano.'
-      : ctx.crediti < costo ? `Crediti insufficienti (${ctx.crediti.toLocaleString('it-IT')}).` : null;
+      : null;
+  // N2: i crediti che non bastano avvisano; con «Procedi comunque» l'oggetto si compra e i crediti vanno a 0
+  const avvisoCrediti = !motivo && ctx.crediti < costo ? `Crediti insufficienti: ne hai ${ctx.crediti.toLocaleString('it-IT')}, ne servono ${costo.toLocaleString('it-IT')}` : null;
   return h('button', {
-    type: 'button', class: 'btn', disabled: !!motivo, title: motivo,
-    onclick: () => ctx.compra(nuovaVoce(), costo),
+    type: 'button', class: `btn${avvisoCrediti ? ' con-avviso' : ''}`, disabled: !!motivo, title: motivo ?? avvisoCrediti,
+    onclick: () => conAvviso(ctx.storico ?? null, { azione: `comprare ${scelto.nome ?? 'un oggetto'}`, motivo: avvisoCrediti, fai: () => ctx.compra(nuovaVoce(), costo) }),
   }, costo === null ? etichetta : `${etichetta} (−${costo.toLocaleString('it-IT')} crediti)`);
 }
 

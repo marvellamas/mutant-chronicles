@@ -985,7 +985,7 @@ export function conseguenzeCorrezione(personaggio, livello, voce, dati) {
  * irregolari, salvo i punti liberi da riassegnare (conseguenzeCorrezione), che non sono errori.
  * @returns {{campo, problema, tipo: 'violazione'|'incompleto'}[]}
  */
-export function validaCorrezione(personaggio, livello, voce, dati) {
+export function validaCorrezione(personaggio, livello, voce, dati, { procedi = false } = {}) {
   const p = migraPersonaggio(personaggio);
   if (!Number.isInteger(livello) || livello < 2 || livello > p.livelli.length + 1) return [{ campo: 'livello', problema: `non c'è un ${livello}° livello da correggere`, tipo: 'violazione' }];
   const base = ricalcola(p, dati, livello - 2);
@@ -996,7 +996,8 @@ export function validaCorrezione(personaggio, livello, voce, dati) {
   const primaErr = new Set(ricalcola(p, dati).errori.filter((e) => e.livello > livello).map(chiave));
   for (const e of ricalcola(applicaCorrezione(p, livello, v), dati).errori) {
     if (e.livello <= livello || e.tipo !== 'violazione' || primaErr.has(chiave(e))) continue;
-    errori.push({ campo: 'livelli', problema: `il ${nomeEvento(e.livello)} diventerebbe irregolare: ${e.problema}`, tipo: 'violazione' });
+    // N2: un livello dopo che diventerebbe irregolare è un avviso: con `procedi` la correzione si fa lo stesso
+    if (!procedi) errori.push({ campo: 'livelli', problema: `il ${nomeEvento(e.livello)} diventerebbe irregolare: ${e.problema}`, tipo: 'violazione', procedibile: true });
   }
   return errori;
 }
@@ -1005,13 +1006,14 @@ export function validaCorrezione(personaggio, livello, voce, dati) {
  * Valida le scelte del prossimo livello del personaggio.
  * @returns {{campo, problema, tipo: 'violazione'|'incompleto'}[]}
  */
-export function validaLivello(personaggio, scelte, dati) {
+export function validaLivello(personaggio, scelte, dati, { procedi = false } = {}) {
   const { stato, errori } = ricalcola(personaggio, dati);
   if (!stato) return [{ campo: 'creazione', problema: 'la creazione non si può calcolare: correggila prima di salire di livello', tipo: 'violazione' }];
   const { completamenti, eccessi } = ricalcola(personaggio, dati);
   // A.108 (E&L del 05/10/2026): i punti in eccesso bloccano la salita finché la scheda non è riconciliata
-  if (eccessi.length) return [{ campo: 'livelli', problema: motivoEccesso(eccessi), tipo: 'violazione' }];
-  if (completamenti.length) return [{ campo: 'livelli', problema: motivoCompletamento(completamenti), tipo: 'violazione' }];
+  // N2 (l'app avvisa, non blocca): con `procedi` il master ha deciso di salire lo stesso («Procedi comunque», riga nello storico)
+  if (eccessi.length && !procedi) return [{ campo: 'livelli', problema: motivoEccesso(eccessi), tipo: 'violazione', procedibile: true }];
+  if (completamenti.length && !procedi) return [{ campo: 'livelli', problema: motivoCompletamento(completamenti), tipo: 'violazione', procedibile: true }];
   const bloccanti = errori.filter((e) => e.tipo === 'violazione');
   if (bloccanti.length) {
     return [{ campo: 'livelli', problema: `i livelli già acquisiti contengono errori (${bloccanti[0].problema}): annulla l’ultimo livello e correggilo`, tipo: 'violazione' }];

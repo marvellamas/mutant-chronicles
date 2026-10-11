@@ -3,6 +3,7 @@
 // il contatore dei Round con «Nuovo Round» e il riquadro delle Tecniche attive. Le regole stanno in
 // src/tecniche.js; qui solo la presentazione. Il pannello «Attiva» usa lo stesso impianto di
 // «Lancia!» (src/ui/pannello-passi.js), con due passi.
+import { conAvviso } from './procedi.js';
 import { h } from './dom.js';
 import { info } from './tooltip.js';
 import { rigaScelte, interruttore, pannelloPassi } from './pannello-passi.js';
@@ -77,10 +78,10 @@ function schedaTecnica(ctx, t) {
     h('div', { class: 'arma-testa' },
       h('h4', {}, info('tecnica', t.id, t.nome), ' ', etichettaTecnica(t.gruppo), h('span', { class: 'sigla' }, ` · ${testoCosto(t)}`)),
       h('button', {
-        type: 'button', class: 'btn primario btn-attacca', disabled: !st.possibile, title: ctx.roundScontro && st.motivo ? st.motivo.replace('«Nuovo Round» per la prossima', 'la prossima quando il master passa al Round dopo, dalla plancia') : st.motivo,
+        type: 'button', class: `btn primario btn-attacca${st.possibile ? '' : ' con-avviso'}`, title: ctx.roundScontro && st.motivo ? st.motivo.replace('«Nuovo Round» per la prossima', 'la prossima quando il master passa al Round dopo, dalla plancia') : st.motivo,
         onclick: () => { ctx.ui.tecnica = { id: t.id, passo: 0, opzione: minima, silenzio: false, conferma: false }; ctx.azioni.ridisegna(); },
       }, 'Attiva')),
-    st.motivo ? h('p', { class: 'nota motivo' }, `Non attivabile ora: ${st.motivo}.`) : null,
+    st.motivo ? h('p', { class: 'nota motivo' }, `Avviso: ${st.motivo}. Si può attivare comunque.`) : null,
     h('dl', { class: 'voci griglia-voci voci-tecnica' },
       [['Costo', t.costo], ['Azione', t.azione], ['Bersaglio', t.bersaglio], ['Durata', t.durata]]
         .map(([k, v]) => h('div', {}, h('dt', {}, k), h('dd', {}, v)))),
@@ -102,7 +103,9 @@ export function pannelloTecnica(ctx, t) {
   const breve = sintesiTecnica(t);
   const fine = cura ? (cura.al ? `Sanguinamento sospeso fino alla fine del Round ${cura.al}` : t.durata) : t.durata_tipo === 'round' ? `fino alla fine del Round ${st.round + (t.durata_round ?? 0)} (Round ${st.round} + ${t.durata_round ?? 0})`
     : t.durata_tipo === 'tempo' ? `${t.durata}: resta attiva finché non la termini` : `${t.durata}: in corso fino alla fine del Round ${st.round}, per il colpo o la reazione`;
-  const bloccato = !st.possibile || (st.conferma && !u.conferma) || (cura && !cura.pronto);
+  // N2: la regola (una per Round, Umanità 0, PM) avvisa e chiede «Procedi comunque»; fermano solo la conferma dello
+  // svenimento e il dado della cura non ancora scritto
+  const bloccato = (st.possibile && st.conferma && !u.conferma) || (cura && !cura.pronto);
   const passi = [
     {
       titolo: 'Tecnica',
@@ -145,8 +148,8 @@ export function pannelloTecnica(ctx, t) {
             h('button', {
               type: 'button', class: 'btn primario btn-grande', disabled: bloccato,
               title: !st.possibile ? st.motivo : bloccato ? 'Serve la conferma qui sopra' : null,
-              onclick: () => { ctx.ui.tecnica = null; ctx.azioni.attivaTecnica(t.id, { opzione: u.opzione, silenzioMentale: u.silenzio, cura: { bersaglio: u.bersaglio ?? 'se', dado: u.dado ?? null } }); },
-            }, `Attiva (−${st.costo} PM)`),
+              onclick: () => conAvviso(ctx.azioni.storico, { azione: `Attiva ${t.nome}`, motivo: st.possibile ? null : st.motivo, fai: (forza) => { ctx.ui.tecnica = null; return ctx.azioni.attivaTecnica(t.id, { opzione: u.opzione, silenzioMentale: u.silenzio, cura: { bersaglio: u.bersaglio ?? 'se', dado: u.dado ?? null }, ...(forza ? { forza: true } : {}) }); } }),
+            }, st.possibile ? `Attiva (−${st.costo} PM)` : `Attiva comunque (−${Math.min(st.costo, st.pm)} PM)`),
             h('small', { class: 'nota' }, 'Una sola Tecnica per Round (§8.9.1). «Annulla» nell’intestazione annulla l’attivazione e restituisce i PM.'))),
       ],
     },

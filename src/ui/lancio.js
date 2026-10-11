@@ -2,6 +2,7 @@
 // presentazione, con lo stesso impianto del pannello «Attacca!» (src/ui/pannello-passi.js): passi con
 // gruppi di pulsanti e interruttori, risultato con la provenienza del VA di Potere, «Lancia» che scala i PM ed è annullabile. Nessun
 // tiro di dado. Le scelte si ricordano per incantesimo nella sessione (sessione → lanci).
+import { conAvviso } from './procedi.js';
 import { h } from './dom.js';
 import { pillola } from './attacco.js';
 import { listaProvenienza } from './tooltip.js';
@@ -12,9 +13,9 @@ import { avviso } from './avvisi.js';
 import { durataLancio, opzioniDurata, arIncantesimo } from '../durate-incantesimi.js';
 
 // conferma visibile del lancio (src/ui/avvisi.js); i nemici (ctx.calcola) la hanno dal registro dello scontro
-function lanciaConAvviso(ctx, nome, fonte, registrazione = null) {
+function lanciaConAvviso(ctx, nome, fonte, registrazione = null, forza = false) {
   const prima = ctx.sessione.pmAttuali;
-  ctx.azioni.lancia(fonte, registrazione);
+  ctx.azioni.lancia(fonte, registrazione, forza);
   if (ctx.calcola || !Number.isInteger(prima)) return;
   const dove = fonte.contenitore ? `; ${fonte.contenitore.pm} PM da ${fonte.contenitore.nome}` : '';
   avviso(`Incantesimo lanciato: ${nome} (PM ${prima} → ${Math.max(0, prima - (fonte.personali ?? 0))}${dove}).`);
@@ -38,7 +39,8 @@ function corpo(ctx, inc, intestazione) {
   const personaggio = { scheda: ctx.tab.scheda, sessione: ctx.sessione };
   const d = dichiarazioneLancio(ctx.sessione.lanci?.[inc.nome] ?? {});
   const versioni = versioniLancio(inc, ctx.tab.scheda, ctx.dati);
-  if (d.versione === null || !versioni.some((v) => v.livello === d.versione && !v.motivo)) d.versione = [...versioni].reverse().find((v) => !v.motivo)?.livello ?? versioni[0]?.livello ?? null;
+  // N2: una versione sconsigliata (oltre il livello massimo, senza Ritualista) si può scegliere: resta se è stata scelta
+  if (d.versione === null || !versioni.some((v) => v.livello === d.versione)) d.versione = [...versioni].reverse().find((v) => !v.motivo)?.livello ?? versioni[0]?.livello ?? null;
   const imposta = (modifica) => ctx.azioni.ricordaLancio(inc.nome, { ...d, ...modifica });
   // ctx.calcola: un lanciatore esterno (i nemici del Tavolo del Master, src/nemico-lancio.js) con il suo adattatore
   const r = ctx.calcola ? ctx.calcola(d) : calcolaLancio(personaggio, inc, d, ctx.dati);
@@ -61,9 +63,9 @@ function corpo(ctx, inc, intestazione) {
     Versione: [
       h('div', { class: 'scelta-pulsanti versioni-lancio', role: 'group', 'aria-label': 'Versione' }, versioni.map((v) => h('button', {
         type: 'button', class: `btn scelta-btn${v.livello === d.versione ? ' scelta' : ''}`, 'aria-pressed': String(v.livello === d.versione),
-        disabled: !!v.motivo, title: v.motivo ?? null, onclick: () => imposta({ versione: v.livello }),
-      }, `Livello ${v.livello} · ${v.pm} PM`))),
-      versioni.some((v) => v.motivo) ? h('small', { class: 'motivo' }, `In grigio: ${versioni.find((v) => v.motivo).motivo}.`) : null,
+        title: v.motivo ?? null, onclick: () => imposta({ versione: v.livello }),
+      }, `Livello ${v.livello} · ${v.pm} PM${v.motivo ? ' ⚠' : ''}`))),
+      versioni.some((v) => v.motivo) ? h('small', { class: 'motivo' }, `Con ⚠: ${versioni.find((v) => v.motivo).motivo}; si può scegliere comunque.`) : null,
       (() => {
         const v = versioni.find((x) => x.livello === d.versione);
         return v ? h('dl', { class: 'voci griglia-voci riga-versione' }, Object.entries(v.riga).map(([k, x]) => h('div', {}, h('dt', {}, k), h('dd', {}, x)))) : null;
@@ -158,7 +160,7 @@ function risultato(ctx, inc, r) {
   const azioni = r.azioni.azioni_principali ? `${r.azioni.azioni_principali} ${r.azioni.azioni_principali === 1 ? 'Azione Principale' : 'Azioni Principali'}` : r.azioni.tempo;
   const durataEBersagli = bloccoDurata(ctx, inc, r);
   return [
-    r.impossibile ? h('div', { class: 'riquadro errore', role: 'alert' }, h('p', {}, h('strong', {}, 'Lancio non possibile. '), r.impossibile.motivo)) : null,
+    r.impossibile ? h('div', { class: 'riquadro attenzione', role: 'alert' }, h('p', {}, h('strong', {}, 'Avviso: per le regole il lancio non è possibile. '), r.impossibile.motivo, ' Il master può procedere comunque.')) : null,
     r.avvisi?.length ? h('div', { class: 'riquadro attenzione' }, r.avvisi.map((x) => h('p', {}, x))) : null,
     h('div', { class: 'attacco-risultato' },
       // danno (e cura) da tirare in evidenza in cima: una riga per colonna della scheda, con la provenienza piccola
@@ -195,9 +197,10 @@ function risultato(ctx, inc, r) {
       durataEBersagli.elemento,
       h('div', { class: 'attacco-azioni' },
         h('button', {
-          type: 'button', class: 'btn primario btn-grande', disabled: !!r.impossibile, title: r.impossibile?.motivo ?? null,
-          onclick: () => lanciaConAvviso(ctx, inc.nome, { personali: f.personali, contenitore: f.contenitore }, durataEBersagli.registrazione()),
-        }, `Lancia (−${r.pm_costo} PM)`),
+          type: 'button', class: `btn primario btn-grande${r.impossibile ? ' con-avviso' : ''}`, title: r.impossibile?.motivo ?? null,
+          // N2: «Lancia comunque» chiede conferma e lascia la riga nello storico (i nemici del master: senza storico)
+          onclick: () => conAvviso(ctx.azioni.storico, { azione: `lanciare ${inc.nome}`, motivo: r.impossibile?.motivo ?? null, fai: (forza) => lanciaConAvviso(ctx, inc.nome, { personali: f.personali ?? r.pm_costo, contenitore: f.contenitore ?? null }, durataEBersagli.registrazione(), forza) }),
+        }, r.impossibile ? `Lancia comunque (−${r.pm_costo} PM)` : `Lancia (−${r.pm_costo} PM)`),
         h('small', { class: 'nota' }, ctx.calcola
           ? 'Tira 1d20 al tavolo, se serve la Prova. Il lancio va nel registro dello scontro; i PM si correggono con − e + sulla mini-scheda.'
           : 'Tira 1d20 al tavolo, se serve la Prova. «Annulla» nell’intestazione annulla la spesa; il pannello resta aperto per rilanciare.'))),
@@ -306,12 +309,12 @@ function risultatoRituale(ctx, inc, r, d, imposta) {
       r.promemoria.length ? h('ul', { class: 'promemoria-attacco' }, r.promemoria.map((p) => h('li', {}, p))) : null,
       h('div', { class: 'attacco-azioni' },
         h('button', {
-          type: 'button', class: 'btn primario btn-grande', disabled: !!r.impossibile, title: r.impossibile?.motivo ?? 'Successo o fallimento: i PM si consumano comunque',
-          onclick: () => lanciaConAvviso(ctx, inc.nome, { personali: R.officiante, contenitore: null }),
+          type: 'button', class: `btn primario btn-grande${r.impossibile ? ' con-avviso' : ''}`, title: r.impossibile?.motivo ?? 'Successo o fallimento: i PM si consumano comunque',
+          onclick: () => conAvviso(ctx.azioni.storico, { azione: `Rituale di ${inc.nome}`, motivo: r.impossibile?.motivo ?? null, fai: (forza) => lanciaConAvviso(ctx, inc.nome, { personali: R.officiante, contenitore: null }, null, forza) }),
         }, `Rituale concluso (−${R.officiante} PM)`),
         h('button', {
-          type: 'button', class: 'btn btn-grande', disabled: !!r.impossibile || M.errori.length > 0, title: M.errori[0] ?? null,
-          onclick: () => lanciaConAvviso(ctx, inc.nome, { personali: M.officiante, contenitore: null }),
+          type: 'button', class: `btn btn-grande${r.impossibile || M.errori.length ? ' con-avviso' : ''}`, title: M.errori[0] ?? r.impossibile?.motivo ?? null,
+          onclick: () => conAvviso(ctx.azioni.storico, { azione: `Rituale di ${inc.nome} (Magistrale)`, motivo: r.impossibile?.motivo ?? M.errori[0] ?? null, fai: (forza) => lanciaConAvviso(ctx, inc.nome, { personali: M.officiante, contenitore: null }, null, forza) }),
         }, `Con Successo Magistrale (−${M.officiante} PM)`),
         h('small', { class: 'nota' }, 'Tira 1d20 al tavolo alla fine della celebrazione. Successo o fallimento consumano i PM; se la celebrazione si interrompe prima della Prova non si spendono. «Annulla» nell’intestazione annulla la spesa.'))),
   ];

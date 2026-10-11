@@ -3,6 +3,7 @@
 // personaggio); regole e calcoli in src/veicoli.js, qui solo l'interfaccia: aggiungi dal catalogo o scritto a
 // mano, profilo, Pilotare del conducente con la provenienza, andature, tre strutture con PI, soglie e stato,
 // rinforzi, NEC, «Colpito», «Ripara», PI a mano, «Rimuovi». Più il promemoria del conducente per Combattimento.
+import { conAvviso } from './procedi.js';
 import { h, segno } from './dom.js';
 import { infoValore } from './tooltip.js';
 import { rigaScelte } from './pannello-passi.js';
@@ -509,7 +510,8 @@ export function cartaVeicoloPlancia(ctx, rec, o) {
     rigaAndature(d, rec.mezzo, (id) => { const r = scegliAndatura(rec, id, o.scontro, d); o.scrivi(r.rec, r.testo); }),
     o.scontro ? h('p', { class: 'movimento-veicolo' },
       h('strong', {}, st.mosso ? `Movimento già eseguito nel Round ${o.scontro.round}` : 'Movimento del Round non ancora eseguito'), ' ',
-      h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !st.puo, title: st.motivo ?? 'Il mezzo si muove adesso, all’Iniziativa del conducente', onclick: () => o.scrivi(muoviVeicolo(rec, o.scontro, o.diTurno), `${v.nome} si muove all’Iniziativa di ${rec.conducente.nome}.`) }, 'Muovi'),
+      // N2: fuori turno, già mosso o andatura Fermo avvisano; il master può muovere lo stesso
+      h('button', { type: 'button', class: `btn btn-piccolo${st.puo ? '' : ' con-avviso'}`, disabled: !rec.conducente, title: st.motivo ?? 'Il mezzo si muove adesso, all’Iniziativa del conducente', onclick: () => conAvviso(null, { azione: `muovere ${v.nome}`, motivo: st.puo ? null : st.motivo, fai: (forza) => o.scrivi(muoviVeicolo(rec, o.scontro, o.diTurno, forza ? { forza: true } : {}), forza ? `${v.nome} mosso dal master (procedi comunque: ${st.motivo}).` : `${v.nome} si muove all’Iniziativa di ${rec.conducente.nome}.`) }) }, 'Muovi'),
       st.motivo && !st.mosso ? h('small', { class: 'nota' }, ` ${st.motivo}`) : null) : h('p', { class: 'nota' }, 'Nessuno scontro aperto: il mezzo si muove all’Iniziativa del conducente quando c’è uno scontro.'),
     residuo ? h('p', { class: 'riquadro attenzione' }, `${rec.conducente.nome} non può guidare: il movimento residuo prosegue all’Iniziativa precedente finché un nuovo conducente interviene o il mezzo si arresta (§5.6); a terra l’andatura scende a ${residuo.andatura.nome}.${residuo.conseguenza ? ` ${residuo.conseguenza}` : ''}`) : null,
     h('p', { class: 'riga-azioni' }, h('button', { type: 'button', class: 'btn', onclick: () => { const u = statoUi(ctx); u.colpo[mezzo.uid] = u.colpo[mezzo.uid] ? null : { modo: 'd20', d20: 10, struttura: 'corpo', danni: '', natura: 'Naturale', magistrale: false, piAggiuntivi: 0, ps: 'fallita', esposti: true }; ctx.azioni.ridisegna(); } }, 'Colpito')),

@@ -67,13 +67,13 @@ test('supporti diversi, bonus magistrali e Canali', () => {
   assert.deepEqual(b.fasi.map((f) => f.totale), [14, 11 + 5 + 2]);
   // PM dei Canali: l'Officiante versa almeno il Grado
   assert.equal(piano({ incantesimo: 'Individuare', livello: 6, infusione: { pmCanali: 8 } }).pm, 4);
-  assert.ok(piano({ incantesimo: 'Individuare', livello: 6, infusione: { pmCanali: 11 } }).errori.some((e) => /almeno 2 PM/.test(e)));
+  assert.ok(piano({ incantesimo: 'Individuare', livello: 6, infusione: { pmCanali: 11 } }).irregolari.some((e) => /almeno 2 PM/.test(e)));
 });
 
 test('accesso: Ritualista per il Grado, versione conosciuta, «Rituale: non consentito» (A.157)', () => {
-  assert.ok(pianoCreazione({ incantesimo: 'Cura Ferite', livello: 3, progetto: { disponibile: true } }, { scheda: scheda([]) }, dati).errori.some((e) => /Ritualista Minore/.test(e)));
-  assert.ok(piano({ incantesimo: 'Arma Mistica', livello: 12, conosciutaDaAltri: true }).errori.some((e) => /Ritualista Maggiore/.test(e)));
-  assert.ok(piano({ incantesimo: 'Arma Mistica', livello: 9 }).errori.some((e) => /non conosci/.test(e)));
+  assert.ok(pianoCreazione({ incantesimo: 'Cura Ferite', livello: 3, progetto: { disponibile: true } }, { scheda: scheda([]) }, dati).irregolari.some((e) => /Ritualista Minore/.test(e)));
+  assert.ok(piano({ incantesimo: 'Arma Mistica', livello: 12, conosciutaDaAltri: true }).irregolari.some((e) => /Ritualista Maggiore/.test(e)));
+  assert.ok(piano({ incantesimo: 'Arma Mistica', livello: 9 }).irregolari.some((e) => /non conosci/.test(e)));
   assert.ok(piano({ incantesimo: 'Colpo Elementale', livello: 3 }).avvisi.some((a) => /A\.157/.test(a)));
   const el = versioniCreabili(scheda(), dati);
   assert.deepEqual(el.map((x) => x.incantesimo), ['Arma Mistica', 'Colpo Elementale', 'Cura Ferite', 'Individuare']);
@@ -111,8 +111,11 @@ test('registrare la creazione scala crediti e PM e mette il consumabile nell’I
   assert.deepEqual([f.sessione.crediti, f.voci.length], [925, 0]);
   // senza crediti o PM a sufficienza il piano non si registra
   const povero = piano({ incantesimo: 'Cura Ferite', livello: 3 }, { crediti: 50, pmAttuali: 3 });
-  assert.equal(povero.errori.length, 2);
+  // N2: crediti e PM che non bastano sono avvisi; senza «Procedi comunque» non si registra, con `forza` sì (a 0, non sotto)
+  assert.deepEqual([povero.errori.length, povero.irregolari.length], [0, 2]);
   assert.equal(applicaCreazione({ voci: [], sessione }, povero, m, 'y'), null);
+  const forzato = applicaCreazione({ voci: [], sessione: { ...sessione, crediti: 50, pmAttuali: 3 } }, povero, m, 'y', { forza: true });
+  assert.deepEqual([forzato.sessione.crediti, forzato.sessione.pmAttuali, forzato.voci.length], [0, 0, 1]);
 });
 
 test('validatore: supporti e tabelle delle tre fasi', () => {
