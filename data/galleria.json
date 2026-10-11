@@ -1,0 +1,35 @@
+{
+  "versione_manuale": "Galleria 1 (13/10/2026)",
+  "_nota": "Galleria (N1, idea di Marcello): le immagini che il master mostra ai giocatori con un tocco, fuori dal combattimento. Non è una regola di gioco: sono i parametri della cartella galleria/ e della tab del Tavolo del Master. L'originale resta sul PC del master; la copia ridotta e la miniatura le prepara il suo browser al caricamento (nessuna libreria nativa sul server), come per le mappe.",
+  "tipi": {
+    "jpeg": { "estensione": "jpg", "mime": "image/jpeg" },
+    "png": { "estensione": "png", "mime": "image/png" },
+    "webp": { "estensione": "webp", "mime": "image/webp" },
+    "gif": { "estensione": "gif", "mime": "image/gif" }
+  },
+  "massimo_mb": 30,
+  "ridotta": {
+    "_nota": "Copia per lo schermo dei giocatori e i tablet: l'originale non viaggia in rete.",
+    "lato_massimo_px": 1920,
+    "tipo": "webp",
+    "qualita": 0.85
+  },
+  "miniatura": {
+    "_nota": "Miniatura della griglia del master: si genera una volta e resta nella cartella.",
+    "lato_massimo_px": 320,
+    "tipo": "webp",
+    "qualita": 0.8
+  },
+  "categorie": [
+    { "id": "luoghi", "nome": "Luoghi" },
+    { "id": "png", "nome": "PNG" },
+    { "id": "oggetti", "nome": "Oggetti" },
+    { "id": "altro", "nome": "Altro" }
+  ],
+  "testi": {
+    "fascia": "Ai giocatori: {nome}",
+    "nascondi": "Nascondi a tutti",
+    "vuota": "Nessuna immagine: trascina qui i file, o usa «Aggiungi immagini». Vanno bene anche le immagini messe a mano nella cartella galleria/.",
+    "vuota_giocatori": "Nessuna immagine mostrata finora."
+  }
+}

@@ -1,0 +1,19 @@
+Galleria: le immagini da mostrare ai giocatori
+==============================================
+
+Qui stanno le immagini che il master mostra ai giocatori con un tocco, fuori dal combattimento:
+un luogo, un volto, un oggetto. Non serve la mappa.
+
+- Si caricano dalla tab "Galleria" del Tavolo del Master (avvia-server.bat, cioe' node
+  server.mjs), trascinandole nella pagina o con "Aggiungi immagini".
+- Si possono anche copiare a mano qui dentro: compaiono lo stesso, con il nome del file.
+  Non serve riavviare il server.
+- Formati: JPG, PNG, WEBP e GIF (data/galleria.json). Gli altri file non compaiono.
+- Accanto a ogni immagine il browser del master salva due copie: "-ridotta" (quella che
+  arriva allo schermo dei giocatori e ai tablet) e "-mini" (la miniatura della griglia).
+  Si rifanno da sole se si cancellano; l'originale non viene mai modificato.
+- Le schede (nome, categoria, quando e' stata mostrata) stanno in galleria.json, qui dentro.
+  Se lo si cancella, le immagini restano e le schede ripartono dai nomi dei file.
+
+Questa cartella non sta su GitHub (come personaggi/, scene/ e mappe/): e' roba del tavolo.
+Entra nelle copie di "Salva sessione".

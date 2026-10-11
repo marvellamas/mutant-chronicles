@@ -81,3 +81,7 @@ backup-prima-aggiornamento/
 # dati di gioco, con rotazione; si traccia solo il LEGGIMI
 backup-master/*
 !backup-master/LEGGIMI.txt
+
+# Galleria delle immagini da mostrare ai giocatori (server.mjs, N1): immagini del master; si traccia solo il LEGGIMI
+galleria/*
+!galleria/LEGGIMI.txt

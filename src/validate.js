@@ -23,7 +23,7 @@ const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v
 const isTodo = (v) => typeof v === 'string' && v.startsWith('TODO(');
 
 const FILE_VALIDATI = ['caratteristiche', 'abilita', 'corporazioni', 'addestramenti', 'classi', 'incantesimi', 'regole',
-  'talenti_liberi', 'specializzazioni', 'tecniche_interiori', 'dotazioni', 'formato_nemici', 'bestiario', 'mappa'];
+  'talenti_liberi', 'specializzazioni', 'tecniche_interiori', 'dotazioni', 'formato_nemici', 'bestiario', 'mappa', 'galleria'];
 
 /** Formatta un errore come riga leggibile. */
 export function formattaErrore(e) {
@@ -90,6 +90,7 @@ export function validaDati(dati) {
   if (isOggetto(dati.bestiario)) validaBestiario(dati, err);
   if (isOggetto(dati.veicoli)) validaVeicoli(dati, err);
   if (isOggetto(dati.mappa)) validaMappa(dati, err);
+  if (isOggetto(dati.galleria)) validaGalleria(dati, err);
   if (dati.incantesimi?.incantesimi?.length) validaDurateIncantesimi(dati, err);
   // durate in Round (Giocatore §8.9.1, §5.18): il Round di attivazione conta o no (src/tecniche.js → fineDurata)
   if (dati.regole?.durate_round !== undefined && typeof dati.regole.durate_round?.round_attivazione_conta !== 'boolean') err('regole', 'durate_round.round_attivazione_conta', 'vero o falso: il Round di attivazione conta nella durata?');
@@ -2824,6 +2825,47 @@ function validaVeicoli(dati, err) {
     });
   });
   if (!ids.has('autovettura-civile') || !ids.has('asa-scout-mk4')) err(F, 'profili', 'i due profili del manuale: autovettura-civile (§9) e asa-scout-mk4 (§10)');
+}
+
+/**
+ * Galleria (data/galleria.json, N1 del 13/10/2026): i parametri della cartella galleria/ e della tab del master.
+ * Un numero sbagliato qui farebbe rifiutare ogni immagine o manderebbe l'originale ai tablet.
+ */
+function validaGalleria(dati, err) {
+  const F = 'galleria';
+  const g = dati.galleria;
+  if (!isTesto(g.versione_manuale)) err(F, 'versione_manuale', 'testo mancante');
+  if (!isOggetto(g.tipi) || !Object.keys(g.tipi).length) err(F, 'tipi', 'almeno un tipo di immagine');
+  else {
+    for (const [k, t] of Object.entries(g.tipi)) {
+      if (!/^[a-z0-9]{2,8}$/.test(t?.estensione ?? '')) err(F, `tipi.${k}.estensione`, 'estensione del file (per esempio «jpg»)');
+      if (!/^image\/[a-z0-9.+-]+$/.test(t?.mime ?? '')) err(F, `tipi.${k}.mime`, 'tipo MIME dell’immagine');
+    }
+  }
+  if (!(typeof g.massimo_mb === 'number' && g.massimo_mb > 0)) err(F, 'massimo_mb', 'numero positivo (MB)');
+  for (const k of ['ridotta', 'miniatura']) {
+    const c = g[k];
+    if (!isOggetto(c)) { err(F, k, 'oggetto mancante'); continue; }
+    if (!isIntero(c.lato_massimo_px) || c.lato_massimo_px < 64) err(F, `${k}.lato_massimo_px`, 'intero da 64 in su');
+    if (!g.tipi?.[c.tipo]) err(F, `${k}.tipo`, 'uno dei tipi di galleria.json → tipi');
+    if (!(typeof c.qualita === 'number' && c.qualita > 0 && c.qualita <= 1)) err(F, `${k}.qualita`, 'numero fra 0 e 1');
+  }
+  // la miniatura non può essere più grande della copia ridotta: la griglia del master scaricherebbe di più
+  if (isIntero(g.miniatura?.lato_massimo_px) && isIntero(g.ridotta?.lato_massimo_px) && g.miniatura.lato_massimo_px > g.ridotta.lato_massimo_px) {
+    err(F, 'miniatura.lato_massimo_px', 'non più grande di ridotta.lato_massimo_px');
+  }
+  if (!Array.isArray(g.categorie) || !g.categorie.length) err(F, 'categorie', 'almeno una categoria (Luoghi, PNG, Oggetti, Altro)');
+  else {
+    const visti = new Set();
+    g.categorie.forEach((c, i) => {
+      if (!isTesto(c?.id)) err(F, `categorie[${i}].id`, 'testo mancante');
+      if (!isTesto(c?.nome)) err(F, `categorie[${i}].nome`, 'testo mancante');
+      if (visti.has(c?.id)) err(F, `categorie[${i}].id`, `«${c.id}» ripetuta`);
+      visti.add(c?.id);
+    });
+  }
+  for (const k of ['fascia', 'nascondi', 'vuota', 'vuota_giocatori']) if (!isTesto(g.testi?.[k])) err(F, `testi.${k}`, 'testo mancante');
+  if (isTesto(g.testi?.fascia) && !g.testi.fascia.includes('{nome}')) err(F, 'testi.fascia', '{nome} atteso (il nome dell’immagine mostrata)');
 }
 
 /**

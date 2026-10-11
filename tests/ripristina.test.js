@@ -64,7 +64,7 @@ test('ripristino: copia di sicurezza, cartelle del salvataggio rimesse per inter
   const e = await ripristina({ zip, cartelle: cartelleDi(r), salvataggi: join(r, 'salvataggi'), adesso, serverAcceso: spento });
   assert.equal(e.ok, true, e.motivo);
   assert.deepEqual(e.rimesse, [{ cartella: 'personaggi', file: 1 }, { cartella: 'scontri', file: 2 }, { cartella: 'tavolo', file: 1 }]);
-  assert.deepEqual(e.lasciate, ['veicoli', 'nemici', 'scene', 'mappe']);
+  assert.deepEqual(e.lasciate, ['veicoli', 'nemici', 'scene', 'mappe', 'galleria']);
   // le cartelle rimesse sono esattamente quelle del salvataggio (i file più nuovi non restano), più il LEGGIMI
   assert.deepEqual(readdirSync(join(r, 'personaggi')).sort(), ['LEGGIMI.txt', 'Lia_liv2_2026-10-06.json']);
   assert.equal(leggi(r, 'personaggi/LEGGIMI.txt'), 'leggimi dei personaggi');
