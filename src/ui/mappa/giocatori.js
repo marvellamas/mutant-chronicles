@@ -15,6 +15,8 @@
 // PM, Stati), «Centra su di me» e il movimento del proprio PG: Passo / Corsa / Scatto, tocco sul quadretto di arrivo
 // (il server prova percorso e costo), tocco su «Conferma». Il server rifà ogni controllo prima di scrivere. Il
 // campanellino del master e «Tocca a te» arrivano come avviso grande, con suono e vibrazione.
+import { presetDaLinea } from '../../dalla-mappa.js';
+import { CHIAVE_DALLA_MAPPA } from '../attacco.js';
 import { h, svuota } from '../dom.js';
 import { cameraIniziale, sposta, adatta, adattaRettangolo, schermoDaMappa, rettangoloVisibile } from '../../mappa/camera.js';
 import { dimensioniMappa, lineeVisibili } from '../../mappa/griglia.js';
@@ -484,6 +486,24 @@ export function renderGiocatori(radice, ctx) {
     aggiornaTablet();
     tela.richiedi(['sopra']);
   }
+  /**
+   * P4 (13/10/2026): dalla linea di tiro ad «Attacca!» in un tocco. Si apre la scheda del proprio PG con il pannello
+   * «Attacca!» già pronto: bersaglio della linea e distanza (con «Mappa semplice» solo la distanza). Vale al proprio
+   * turno, come «Muovi il PG»; fuori turno il pulsante resta spento, con il motivo.
+   */
+  function attaccaDallaLinea() {
+    const l = st.linea;
+    if (!l || !ctx.scheda) return;
+    const pre = presetDaLinea({ distanza: l.distanza, copertura: l.copertura, protetto: l.protetto, interposta: l.interposta, luceMappa: l.luce, semplice: !!l.semplice, bersaglioId: l.bersaglioId ?? null, bersaglio: l.nome ?? null });
+    try {
+      sessionStorage.setItem(CHIAVE_DALLA_MAPPA, JSON.stringify({
+        nome: st.io?.nome ?? st.mioNome ?? null, distanza: l.distanza, copertura: l.copertura, protetto: l.protetto, interposta: l.interposta,
+        ...(l.semplice ? { semplice: true } : { luceMappa: l.luce ?? null }), bersaglio: pre.bersaglio, bersaglioId: pre.bersaglioId, quando: Date.now(),
+      }));
+    } catch { /* senza memoria: il pannello si apre vuoto, il giocatore mette i valori a mano */ }
+    tornaAllaScheda();
+  }
+
   async function lineaVerso(p) {
     const g = st.vista.griglia;
     const m = mappaDaSchermo(st.cam, p.x, p.y);
@@ -601,7 +621,18 @@ export function renderGiocatori(radice, ctx) {
         h('button', { type: 'button', class: 'btn', onclick: () => { st.prova = null; aggiornaTablet(); tela.richiedi(['sopra']); } }, 'Annulla'),
         h('button', { type: 'button', class: 'btn primario', disabled: st.inVolo, onclick: () => conferma() }, 'Conferma'))) : null;
     el.torna.className = `btn tablet-torna${st.mosso ? ' primario' : ''}`;
-    const linea = st.linea ? h('div', { class: 'tablet-conferma tablet-linea' }, h('p', {}, `🎯 ${st.linea.nome ? `${st.linea.nome}: ` : ''}${testoLinea(st.linea)}`), st.linea.copertura === 'totale' ? h('p', { class: 'tablet-zoc' }, 'Copertura Totale: non si può attaccare direttamente (§5.8).') : null) : null;
+    // P4: sotto il risultato della linea, «Attacca questo bersaglio» (al proprio turno, come «Muovi il PG»)
+    const puoAttaccare = !!st.io?.permesso?.puo;
+    const motivoAttacco = st.linea?.copertura === 'totale' ? 'Copertura Totale: non si può attaccare direttamente (§5.8).' : st.io?.permesso?.motivo ?? 'Non è il tuo turno.';
+    const linea = st.linea ? h('div', { class: 'tablet-conferma tablet-linea' }, h('p', {}, `🎯 ${st.linea.nome ? `${st.linea.nome}: ` : ''}${testoLinea(st.linea)}`),
+      st.linea.copertura === 'totale' ? h('p', { class: 'tablet-zoc' }, 'Copertura Totale: non si può attaccare direttamente (§5.8).') : null,
+      ctx.scheda ? h('div', { class: 'riga-azioni' },
+        h('button', {
+          type: 'button', class: `btn${puoAttaccare && st.linea.copertura !== 'totale' ? ' primario' : ''}`,
+          disabled: !puoAttaccare || st.linea.copertura === 'totale', title: puoAttaccare && st.linea.copertura !== 'totale' ? 'Apre la tua scheda con «Attacca!» già pronto: bersaglio e distanza di questa linea' : motivoAttacco,
+          onclick: () => attaccaDallaLinea(),
+        }, '🎯 Attacca questo bersaglio'),
+        puoAttaccare && st.linea.copertura !== 'totale' ? null : h('small', { class: 'nota' }, motivoAttacco)) : null) : null;
     // A.122: «Sei Aiuto-master» e il pulsante per muovere il PG del turno attivo
     const aiuto = st.aiuto ? h('div', { class: `tablet-aiuto${st.aiutoModo ? ' attivo' : ''}`, role: 'status' },
       h('p', {}, h('strong', {}, '🛡 Sei Aiuto-master'), st.aiutoModo ? `: stai muovendo ${io.nome}, il PG del turno attivo.` : st.aiuto.turno ? `: puoi muovere ${st.aiuto.turno.nome}, il PG del turno attivo.` : `. ${st.aiuto.motivo ?? ''}`),
