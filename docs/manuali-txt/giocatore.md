@@ -4,9 +4,9 @@
 
 ## Personaggi e regole di gioco
 
-**EDIZIONE CONSULTABILE 0.46**
+**EDIZIONE CONSULTABILE 0.47**
 
-Settembre 2026
+Ottobre 2026
 
 **GIOCO DI RUOLO**
 
@@ -3800,6 +3800,10 @@ Prima della propria Iniziativa, un personaggio Sorpreso non può spendere Azioni
 
 Estrarre un’arma accessibile costa 1 AzP. Cambiare arma costa 1 AzP e comprende riporre quella utilizzata ed estrarre un’altra arma accessibile. Una normale operazione di ricarica costa 1 AzP, salvo quanto indicato dall’arma: le balestre conservano la ricarica in 1 AzM; sostituire una cella energetica costa 1 AzP. Imbracciare costa 1 AzM; sparare senza l’Imbracciatura richiesta impone −4 VA (§5.10).
 
+La ricarica manuale di un tamburo o serbatoio interno, comprese le doppiette, inserisce fino a 2 cartucce per 1 AzP, oppure fino a 4 con Ricarica Migliorata, entro la capacità dell’arma. Un carichino compatibile già preparato e accessibile trasferisce fino a 6 cartucce per 1 AzP, entro gli spazi liberi; quelle non trasferite restano nel carichino. Ricarica Migliorata non aumenta i sei colpi.
+
+Sostituire un caricatore amovibile o una cella già pronti costa 1 AzP. Ricarica Rapida rende gratuita una sola operazione per Round, alla propria Iniziativa, rispettando mani, accessibilità e requisiti. Preparare caricatori, nastri o carichini da munizioni sciolte richiede un minuto ogni 50 colpi o frazione in condizioni ordinarie. Catalogo e compatibilità: Manuale degli Armamenti, §7.20.2.
+
 Il personaggio può incorporare una sola operazione di estrazione, cambio arma o ricarica nell’AzP utilizzata per attaccare. In questo caso applica −4 VA a tutte le Prove per colpire di quell’attacco. L’operazione è completata anche se l’attacco fallisce. Non può incorporare procedure che richiedono più Azioni. Restano necessari accessibilità di arma e munizioni, mani libere e tutti gli altri requisiti della procedura.
 
 **L’eventuale −4 VA per assenza di Imbracciatura si somma:** estrarre incorporando l’operazione nell’attacco e sparare senza imbracciare un’arma che lo richiede comporta −8 VA. I Talenti di preparazione rapida (§8.6.4) permettono ciascuno un utilizzo gratuito per Round, durante la propria Iniziativa, alle condizioni della relativa descrizione.
@@ -3981,6 +3985,8 @@ Attaccare dalla Copertura consuma l’Azione di Movimento e un’Azione Principa
 
 Contro gli Incantesimi la Copertura modifica l’eventuale Prova per colpire, non Potere. Contro Aree fisicamente evitabili concede \+2 alla Salvezza di Riflessi se Leggera e \+4 se Media; Copertura Migliorata aumenta questi bonus di altri \+2. La Copertura Totale protegge quando blocca realmente la propagazione dell’effetto. Vedi Manuale della Magia
 
+**Scudo Punisher.** Con Carabina o Pistola Punisher utilizzata nel suo alloggiamento, concede Copertura Leggera contro il tiro diretto quando lo Scudo si interpone nella linea di tiro: −2 VA per colpire il portatore. Non si somma ad altre Coperture. Il tiro attraverso l’alloggiamento non subisce la penalità per attaccare dalla propria Copertura e non richiede i costi aggiuntivi per mettersi in Copertura o esporsi e rientrare. Restano AR passiva, Parate, normali Azioni di attacco e altri modificatori. La configurazione completa è nel Manuale degli Armamenti, §7.4.1.
+
 ## **5.9 Difese**
 
 Dopo essere stato colpito e prima del danno, il bersaglio può scegliere una sola Difesa. Se fallisce non può tentare una seconda Difesa contro lo stesso attacco.
@@ -4101,6 +4107,8 @@ L’Imbracciatura permane finché si mantengono posizione e impugnatura. Si perd
 
 Imbracciatura Rapida permette di imbracciare gratuitamente una volta per Round durante la propria Iniziativa, senza concedere il \+1 danno di Postura d’Assedio. Estrazione, cambio arma, ricarica e operazioni incorporate nell’attacco seguono il §5.1.1; i Talenti pertinenti sono nel §8.6.4.
 
+La Carabina Punisher utilizzata nell’alloggiamento dello Scudo Punisher è considerata Imbracciata finché la configurazione resta operativa. Si utilizza a una mano confrontando il requisito con la FOR intera, mentre l’altra mano mantiene lo Scudo. Il beneficio non concede il danno aggiuntivo di Postura d’Assedio e non elimina gli altri modificatori del tiro (Manuale degli Armamenti, §7.4.1).
+
 ## **5.11 Gittata, preparazione e mirini**
 
 | Distanza | Penalità |
@@ -4135,7 +4143,7 @@ Le Azioni possono essere distribuite fra più Round; l’ultima effettua il tiro
 | Ottico | 4 | Massimo 500 Q; richiede almeno 2 Azioni Principali totali. |
 | Di Precisione | 6 | Entro la gittata massima dell’arma; richiede almeno 2 Azioni Principali totali. |
 
-* Un mirino non può trasformare la penalità in un bonus positivo.  
+* Reflex, Ottico e Di precisione riducono soltanto la penalità di distanza, senza trasformarla in un bonus positivo. Il Mirino laser concede invece \+1 VA per colpire entro 20 Q, se il tiratore distingue il punto sul bersaglio, senza preparazione aggiuntiva. Per ogni attacco si applica un solo mirino. Compatibilità, alimentazione e limiti di cumulo seguono il Manuale degli Armamenti, §7.3.  
 * Tiro a Lunga Distanza riduce di 2 la penalità oltre 80 Q e si cumula con i mirini, senza produrre un bonus positivo.  
 * Mira Rapida riduce di 1, fino a un minimo di 1, le Azioni richieste da distanza e mirino. Non riduce l’Azione aggiuntiva del Tiro Mirato.
 
@@ -5214,11 +5222,11 @@ Non si applica a procedure che richiedono più Azioni, a conversioni di PM o a r
 
 *Passivo. Nessun prerequisito. Acquisibile una sola volta.*
 
-Quando una ricarica prevede l’inserimento di una munizione alla volta, può inserirne fino a tre con la stessa operazione, senza superare la capacità dell’arma. Il costo ordinario dell’operazione resta quello previsto dall’arma, normalmente 1 AzP.
+La ricarica manuale di tamburi e serbatoi interni, comprese le doppiette, inserisce fino a 4 cartucce per operazione invece delle normali 2, senza superare la capacità dell’arma. Il costo resta 1 AzP, salvo un’eccezione espressa della scheda.
 
-Con Ricarica Rapida può inserire fino a tre munizioni gratuitamente una volta per Round, durante la propria Iniziativa. Se incorpora la ricarica nell’attacco, può inserirne fino a tre applicando −4 VA a tutte le Prove per colpire di quell’attacco; resta il limite di una sola operazione incorporata.
+Con Ricarica Rapida può inserire fino a 4 cartucce gratuitamente una volta per Round, durante la propria Iniziativa. Se incorpora la ricarica nell’attacco, può inserirne fino a 4 applicando −4 VA a tutte le Prove per colpire di quell’attacco; resta il limite di una sola operazione incorporata.
 
-Non modifica la sostituzione di caricatori, celle o serbatoi completi, le ricariche di PM o le procedure che richiedono più Azioni per una singola munizione. Non concede attacchi aggiuntivi. Un’arma con capacità di sei munizioni da inserire singolarmente richiede due operazioni da tre.
+Non aumenta il limite di 6 colpi di un carichino preparato e non modifica la sostituzione di caricatori, celle o serbatoi completi, le ricariche di PM o le procedure che richiedono più Azioni per una singola munizione. Non concede attacchi aggiuntivi. Un tamburo vuoto da sei colpi richiede due operazioni manuali con il Talento: 4 cartucce e poi le 2 rimanenti; un carichino compatibile già preparato lo ricarica in una sola operazione.
 
 ### **8.6.5 Talenti di Combattimento a Distanza**
 

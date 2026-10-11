@@ -2823,3 +2823,89 @@ Restano rinviati i temi relativi a bestiario e veicoli: A.113, A.115, parte veic
 
 Le regole dettagliate delle malattie e delle cure restano destinate al Manuale del Direttore; non sono introdotte qui nuove procedure. Le altre regole già approvate conservano validità dove non espressamente superate da questo aggiornamento.
 
+## **A.151 — Carichini: peso, Qualità, Integrità e Reperibilità**
+
+Approvato il ott 9, 2026
+
+Ricarica per Tamburo: capacità 6 colpi; prezzo a vuoto 100 crediti; peso a vuoto 0,1 kg; Qualità Comune; PS Integrità 10; PI massimi 2; Reperibilità Comune (CO).
+
+Ricarica per Serbatoio: capacità 6 colpi; prezzo a vuoto 150 crediti; peso a vuoto 0,2 kg; Qualità Comune; PS Integrità 10; PI massimi 2; Reperibilità Comune (CO).
+
+Sono accessori meccanici riutilizzabili, compatibili con lo specifico modello d’arma e reperibili presso un venditore appropriato. Il peso delle munizioni contenute si aggiunge al peso a vuoto; ogni cartuccia si conta una sola volta nell’inventario. A 0 PI il carichino è inutilizzabile finché non viene riparato, secondo le normali regole.
+
+Restano validi capacità, costi, preparazione e funzionamento della A.135. Questi dati completano quelli allora lasciati da definire.
+
+## **A.152 — Colt Hammershot: munizioni e correzione della dotazione**
+
+Approvato il ott 9, 2026
+
+La Colt Hammershot utilizza proiettili da pistola, come già indicato nel Manuale degli Armamenti, §7.8 (Capitol, Revolver), con riferimento al §7.20.9. La definizione «revolver pesante» non cambia la famiglia delle munizioni. L’associazione nel catalogo dell’app è corretta.
+
+Correzione da applicare a cura del collaboratore nel file di Michele Giorgetti: sostituire i 6 «proiettili pesanti» destinati alla Colt con 6 «proiettili da pistola», mantenendo invariata la quantità.
+
+Nella scheda del manuale va sostituita la vecchia indicazione del tamburo completo in 1 AzP con la A.135: 2 cartucce per AzP, 4 con Ricarica Migliorata, oppure fino a 6 con carichino preparato e accessibile, entro gli spazi liberi. Restano necessarie le mani disponibili; Ricarica Rapida segue la A.135.
+
+Risposta approvata; la correzione del file del PG e l’eventuale aggiornamento dell’app restano da applicare e verificare dal collaboratore.
+
+# **Risposte approvate ai quesiti dell’app A.153–A.157 — 10 ottobre 2026**
+
+Le cinque risposte seguenti sono state approvate da Davide il 10 ottobre 2026\. Sostituiscono le corrispondenti ipotesi provvisorie «Nel frattempo». L’approvazione della regola è distinta dal suo recepimento nell’app, che deve essere verificato dal collaboratore.
+
+## **A.153 — A Terra e Copertura a distanza**
+
+Approvato il 10 ottobre 2026\.
+
+Il −2 al VA per attaccare a distanza un bersaglio A Terra si somma alla penalità della Copertura, perché postura e ostacolo costituiscono modificatori distinti.
+
+Penalità complessiva al VA: A Terra senza Copertura, −2; A Terra con Copertura Leggera, −4; A Terra con Copertura Media, −6.
+
+La Copertura deve essere effettivamente presente rispetto alla linea di tiro. Se l’ostacolo nasconde completamente il bersaglio, si applicano le normali regole che impediscono il tiro diretto.
+
+La risposta conferma il comportamento provvisorio dichiarato dall’app; il recepimento della risposta resta da verificare.
+
+## **A.154 — Peso della cartuccia del decontaminante**
+
+Approvato il 10 ottobre 2026\.
+
+La cartuccia di ricambio del decontaminante da 5 dosi, al prezzo già previsto di 500 crediti, pesa 0,5 kg quando piena. Nel Manuale dell’Equipaggiamento, §3.5.1, il trattino del peso va sostituito con 0,5 kg.
+
+Per semplicità, il peso conteggiato resta 0,5 kg finché la cartuccia rimane nell’inventario, senza ricalcolarlo a ogni dose utilizzata.
+
+Nell’app il campo del peso va valorizzato a 0,5 kg e incluso nel carico. Risposta approvata; aggiornamento dell’app da applicare e verificare.
+
+## **A.155 — Dati fisici delle pergamene standard**
+
+Approvato il 10 ottobre 2026\.
+
+Profilo di una pergamena standard: peso 0,1 kg; Qualità Comune; PS Integrità 10; PI massimi 1\.
+
+Il profilo vale per tutti i Gradi: la potenza dell’incantesimo non rende automaticamente più resistente il supporto. Eventuali supporti speciali avranno una propria scheda.
+
+A 0 PI la pergamena è inutilizzabile e non può essere attivata. La sua distruzione non libera automaticamente l’incantesimo.
+
+Questi dati completano il campionario del Manuale della Magia, §27.3. Nell’app peso e Integrità vanno registrati per ciascun esemplare. Risposta approvata; aggiornamento dell’app da applicare e verificare.
+
+## **A.156 — PM persi quando fallisce l’infusione di un Consumabile**
+
+Approvato il 10 ottobre 2026\.
+
+Con Fallimento o Fallimento Maldestro dell’infusione si perdono tutti i PM impegnati: i PM di lavoro, pari a 3 × Grado, più i PM da sigillare, pari al costo della versione dell’incantesimo. Anche i reagenti vengono consumati e il Consumabile non viene creato.
+
+Esempio: un Consumabile di Grado II con 4 PM da sigillare richiede 6 \+ 4 \= 10 PM; se l’infusione fallisce si perdono tutti e 10\.
+
+Gli eventuali effetti ulteriori del Fallimento Maldestro restano quelli previsti dalle regole d’infusione.
+
+La risposta chiarisce i §§27.2 e 24.5 del Manuale della Magia e conferma il comportamento provvisorio dichiarato dall’app; il recepimento della risposta resta da verificare.
+
+## **A.157 — «Rituale: non consentito» e infusione nei supporti**
+
+Approvato il 10 ottobre 2026\.
+
+L’indicazione «Rituale: non consentito» vieta soltanto il lancio dell’incantesimo come Rituale. L’incantesimo può comunque essere infuso in un Consumabile o in un Artefatto, rispettando i requisiti e i limiti previsti per la creazione.
+
+La procedura rituale di fabbricazione serve a infondere l’effetto nel supporto e non rende disponibile una versione rituale dell’incantesimo. Restano validi eventuali divieti specifici della scheda.
+
+Il chiarimento si applica anche alle sette schede citate nel quesito: §§13.1, 13.7, 17.4, 18.4, 18.9, 21.8 e 23.5 del Manuale della Magia.
+
+L’app può consentire l’infusione e sostituire l’avviso di dubbio nel modulo «Crea consumabile» con questa spiegazione. Risposta approvata; recepimento e aggiornamento dell’avviso da verificare.
+

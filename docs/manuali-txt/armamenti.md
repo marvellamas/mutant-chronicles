@@ -4,9 +4,9 @@
 
 ## Armi armature scudi e dotazioni operative
 
-**EDIZIONE 0.59**
+**EDIZIONE 0.60**
 
-Settembre 2026
+Ottobre 2026
 
 **GIOCO DI RUOLO**
 
@@ -270,7 +270,7 @@ Esempio: un fucile con requisito FOR 4 utilizzato a una mano da un personaggio c
 
 Il dimezzamento serve soltanto a verificare il requisito: non modifica la Caratteristica effettiva, il VA di base, il modificatore al danno, la capacità di carico o gli altri valori derivati. Le altre penalità pertinenti si applicano normalmente. Le armi già utilizzabili ordinariamente a una mano, comprese quelle Versatili, confrontano il requisito con la FOR intera; armature e scudi utilizzati secondo il proprio profilo mantengono i normali requisiti.
 
-La Forza non sostituisce operazioni che richiedono materialmente entrambe le mani, come tendere un arco. Ricarica, riarmo, Imbracciatura e altre procedure conservano i propri requisiti. L’impiego a una mano non cambia l’Abilità dell’arma né estende le categorie ammesse da Combattere con due armi (Manuale del Giocatore, §§5.1.1, 5.7 e 5.10).
+La Forza non sostituisce operazioni che richiedono materialmente entrambe le mani, come tendere un arco. Ricarica, riarmo, Imbracciatura e altre procedure conservano i propri requisiti. L’impiego a una mano non cambia l’Abilità dell’arma né estende le categorie ammesse da Combattere con due armi (Manuale del Giocatore, §§5.1.1, 5.7 e 5.10). Lo Scudo Punisher costituisce un’eccezione per la Carabina Punisher utilizzata dal suo alloggiamento: si confronta il requisito con la FOR intera (§7.4.1).
 
 ### **7.1.7 Compatibilità con le Manovre**
 
@@ -741,7 +741,7 @@ Un oggetto bloccato soltanto perché a 0 PI torna utilizzabile con almeno 1 PI, 
 | Ottico | 4 | Fino a 500 Q; almeno 2 Azioni Principali complessive. |
 | Di Precisione | 6 | Entro la gittata massima dell’arma; almeno 2 Azioni Principali complessive. |
 
-I mirini non producono un bonus positivo e non estendono la gittata massima dell’arma.
+Reflex, Ottico e Di precisione non producono un bonus positivo e non estendono la gittata massima dell’arma. Il Mirino laser concede invece il bonus descritto nella propria scheda.
 
 #### **Qualità Integrità e costi dei mirini**
 
@@ -755,11 +755,25 @@ I mirini sono accessori acquistabili separatamente. Tutti hanno PI 3, Qualità C
 
 Compatibilità. Sono utilizzabili sulle armi da fuoco a proiettile o a energia predisposte per un’ottica. Archi, balestre e lanciatori richiedono una compatibilità espressa. Montare o rimuovere un mirino compatibile richiede 1 AzP, entrambe le mani e nessuna Prova.
 
-Per ogni attacco si applica un solo mirino. La riduzione riguarda esclusivamente la penalità di distanza e si ferma a 0; non estende la gittata massima e non elimina penalità dovute a fumo, Copertura o altre condizioni. I limiti di distanza della tabella circoscrivono il beneficio del mirino.
+Per ogni attacco si applica un solo mirino: si sceglie fra Mirino laser, Reflex, Ottico e Di precisione. Per i tre modelli della tabella, la riduzione riguarda esclusivamente la penalità di distanza e si ferma a 0; non estende la gittata massima e non elimina penalità dovute a fumo, Copertura o altre condizioni. I limiti di distanza della tabella circoscrivono il beneficio.
 
 Preparazione. Le almeno 2 AzP richieste da Ottico e Di precisione sono complessive e comprendono il tiro ordinario. La distanza può richiedere più Azioni. Se si aggiunge Tiro Mirato, si spende un’ulteriore AzP; Mira Rapida e gli altri Talenti si applicano secondo il Manuale del Giocatore, §5.11. Esempio: a 40 Q, un tiro ordinario con Ottico richiede 2 AzP; con Tiro Mirato richiede 3 AzP, prima dei Talenti pertinenti.
 
 Il mirino ha Integrità separata dall’arma e non ne aumenta i PI. A 0 PI perde il beneficio; un’arma ancora integra rimane utilizzabile secondo il proprio profilo.
+
+#### **Mirino laser**
+
+Costo 500 crediti; Reperibilità Non comune (NC); Qualità Comune; PS Integrità 10; PI 3\.
+
+Concede \+1 VA alle Prove per colpire con l’arma entro 20 Q, purché il tiratore distingua il punto proiettato sul bersaglio. Non richiede preparazione aggiuntiva del tiro. Oltre 20 Q non concede il bonus e non estende la gittata massima dell’arma.
+
+Si monta sulle armi a proiettile o a energia predisposte per l’accessorio. Montarlo o rimuoverlo costa 1 AzP e richiede entrambe le mani. Accenderlo o spegnerlo costa 1 AzP; mantenerlo acceso non richiede Azioni. Il bonus non si somma ai benefici di un altro mirino nello stesso attacco.
+
+Non elimina penalità di distanza, Copertura o visibilità e non conferisce visione notturna. Se il punto non è distinguibile, il bonus non si applica. Il punto visibile può segnalare che il bersaglio è sotto mira.
+
+Include un NEC Verde compatto carico da 100 Lx, cavo e alimentatore: consumo 1 Lx/h, autonomia 100 ore effettive. Ricarica e ricambi seguono il §7.3.4. A 0 PI o a cella scarica perde il beneficio.
+
+Il bonus segue il limite delle assistenze tecnologiche offensive equivalenti (§7.21.1): sulla stessa Prova si usa il maggiore, senza sommarlo all’assistenza equivalente di elmetti o impianti. Si somma invece al \+1 VA della Pistola Punisher utilizzata nell’alloggiamento dello Scudo Punisher (§7.4.1).
 
 ### **7.3.1 Dispositivi di riduzione del rumore**
 
@@ -848,6 +862,8 @@ Gli accessori elettronici usano NEC Verdi ricaricabili. Ogni accessorio autonomo
 
 NEC carico, cavo e alimentatore sono compresi. Ricarica completa in un’ora con fonte adeguata, a 0,01 cr/Lx; un Verde compatto richiede 1 cr, uno standard 10 cr. Ricambio carico: 10 cr compatto, 100 cr standard, REP CO. Sostituire un NEC pronto richiede 1 AzP senza Prova. Il cavo non contiene una riserva.
 
+Il Mirino laser usa un NEC Verde compatto da 100 Lx a 1 Lx/h: 100 ore effettive. Ricarica completa 1 cr in un’ora; ricambio carico 10 cr, REP CO.
+
 Gli elmetti del §7.21 hanno un consumo complessivo unico. Catalogo, formati e ricarica dei NEC sono nel Manuale dell’Equipaggiamento, §5.4. Celle d’arma e pacchi dei lanciafiamme sono nel §7.20. Robot, propulsori ed esoscheletri mantengono le autonomie specifiche; le riserve mistiche restano in PM.
 
 ## **7.4 Scudi e protezioni**
@@ -860,7 +876,7 @@ Gli elmetti del §7.21 hanno un consumo complessivo unico. Catalogo, formati e r
 
 La protezione passiva dello Scudo si aggiunge all’AR dell’armatura mentre è impugnato e utilizzabile. La Parata attiva usa Difese e segue il Capitolo 5 del Manuale del Giocatore. Le proprietà del danno, le Contromisure e il loro ordine di applicazione sono nel §5.24 dello stesso manuale; le proprietà perforanti riducono l’AR soltanto quando lo dichiarano espressamente.
 
-Tutti gli scudi del catalogo richiedono una mano. Trasportare lo scudo sulla schiena non concede AR; una mano occupata non può essere usata contemporaneamente per l’impugnatura di un’arma a due mani. Due scudi non sommano la protezione: si utilizza soltanto il contributo maggiore. Nessun modello concede automaticamente Copertura o protezione agli alleati.
+Tutti gli scudi del catalogo richiedono una mano. Trasportare lo scudo sulla schiena non concede AR; una mano occupata non può essere usata contemporaneamente per l’impugnatura di un’arma a due mani, salvo una configurazione espressamente prevista dalla scheda. Due scudi non sommano la protezione: si utilizza soltanto il contributo maggiore. Nessun modello concede automaticamente Copertura o protezione agli alleati. Lo Scudo Punisher concede Copertura Leggera al portatore soltanto nella configurazione con alloggiamento descritta nel §7.4.1.
 
 Uno Scudo enorme impone −1 Q al MOV mentre è impugnato: la riduzione si applica a Passo, Corsa e Scatto e si somma alle penalità di armatura e arma. Soddisfare il requisito di FOR non la elimina. Gli altri scudi non impongono una penalità propria al MOV, salvo indicazione della scheda.
 
@@ -893,7 +909,21 @@ Le protezioni indicano AR totale ed eventuale componente magica separata. Per es
 
 Difensiva 1, ravvicinata e a distanza. Concede \+1 VA alle Parate effettuate con lo Scudo Punisher: \+1 VA ravvicinata e −3 VA complessivo a distanza, prima degli altri modificatori. Restano la normale Azione di Parata, il dimezzamento per eccesso del danno con successo ordinario e l’AR passiva \+2 mentre lo Scudo è impugnato e utilizzabile. Gli 8 PI sono il valore finale del profilo.
 
-**Attacco:** Armi da Guerra, una mano, 1d6+1 danni Naturali, portata 1 Q. Sono compatibili le Manovre generali pertinenti e Stordire. Lo Scudo non concede AR magica né Protezione occulta. Con Marte, il totale è AR 8, di cui 1 magica. Per usare la Carabina Punisher a due mani occorre prima riporre lo Scudo, pagando le normali Azioni.
+**Attacco:** Armi da Guerra, una mano, 1d6+1 danni Naturali, portata 1 Q. Sono compatibili le Manovre generali pertinenti e Stordire. Lo Scudo non concede AR magica né Protezione occulta. Con Marte, il totale è AR 8, di cui 1 magica.
+
+#### **Alloggiamento Punisher**
+
+Lo Scudo comprende un alloggiamento integrato per una sola Carabina Punisher oppure una sola Pistola Punisher alla volta. Agganciare o sganciare un’arma accessibile richiede 1 AzP, senza Prova. Il beneficio richiede lo Scudo impugnato e utilizzabile e l’arma utilizzata dall’alloggiamento.
+
+**Carabina Punisher.** Il portatore mantiene lo Scudo con una mano e utilizza la Carabina con l’altra. La Carabina è considerata Imbracciata finché viene utilizzata dall’alloggiamento. Questa configurazione confronta il requisito con la FOR intera, senza il dimezzamento previsto per l’uso a una mano di un’arma ordinariamente a due mani. Restano i requisiti di FOR dell’arma e dello Scudo. Non concede automaticamente bonus al VA o il danno aggiuntivo di Postura d’Assedio.
+
+**Pistola Punisher.** La Pistola utilizzata dall’alloggiamento concede \+1 VA alle Prove per colpire con quell’arma. Il bonus si somma a quello del Mirino laser, quando applicabile: \+2 VA complessivi entro 20 Q.
+
+**Copertura direzionale.** In entrambe le configurazioni il portatore beneficia di Copertura Leggera contro gli attacchi a tiro diretto quando lo Scudo si interpone nella linea di tiro: chi lo attacca subisce −2 VA per colpirlo. La protezione non si estende alle direzioni non schermate e non si somma ad altre Coperture. I Talenti pertinenti seguono le normali regole.
+
+Sparare attraverso l’alloggiamento non applica al portatore il −2 VA per attaccare dalla Copertura, né i costi aggiuntivi per mettersi in Copertura o esporsi e rientrare. Restano il normale costo dell’attacco, la preparazione richiesta da distanza o Tiro Mirato e gli altri modificatori pertinenti. L’AR passiva \+2 e le normali Parate dello Scudo continuano ad applicarsi.
+
+L’alloggiamento non ricarica l’arma: restano necessari munizioni accessibili, mani disponibili e le normali Azioni di ricarica. Sganciare l’arma o rendere lo Scudo inutilizzabile fa cessare i benefici della configurazione. Arma e Scudo conservano Integrità separata.
 
 Le armature, i rinforzi e le proprietà specialistiche delle protezioni sono raccolti nel §7.11. Le regole di Integrità del §7.2.1 restano applicabili a ogni oggetto separatamente.
 
@@ -1035,7 +1065,7 @@ Scudo Piccolo Ripiegabile. Aprire o richiudere lo Scudo già pronto richiede 1 A
 
 #### **Scudo Punisher**
 
-Modello Medio con 8 PI e Difensiva 1 ravvicinata e a distanza: Parata ravvicinata \+1 VA, a distanza −3 VA, AR passiva \+2. La scheda completa, compreso l’impiego offensivo, è nel §7.4.1. È acquistabile separatamente dalla combinazione Punisher e non richiede un’interfaccia per il proprio beneficio.
+Modello Medio con 8 PI e Difensiva 1 ravvicinata e a distanza: Parata ravvicinata \+1 VA, a distanza −3 VA, AR passiva \+2. La scheda completa, compreso l’impiego offensivo, è nel §7.4.1. È acquistabile separatamente dalla combinazione Punisher e non richiede un’interfaccia per il proprio beneficio. L’alloggiamento integrato permette la configurazione con Carabina Punisher a una mano e Imbracciata, oppure con Pistola Punisher a \+1 VA; entrambe concedono la Copertura Leggera direzionale descritta nel §7.4.1.
 
 #### **Scudo da sfondamento Bastion**
 
@@ -1712,7 +1742,7 @@ MP105GW. Carabina automatica; modello distinto dalla pistola MP105.
 | Jemson 45 | Comune | 10 | CO | 1.600 |
 | Colt Hammershot | Rara | 14 | RA | 3.500 |
 
-**Colt Hammershot.** Revolver pesante. Specializzazione: Pistole. Usa proiettili da pistola (§7.20.9) e un tamburo fisso da sei colpi. Ricaricare il tamburo con munizioni pronte richiede 1 AzP e la mano libera. Il prezzo comprende il tamburo, mentre le munizioni si acquistano separatamente. Non possiede proprietà aggiuntive.
+**Colt Hammershot.** Revolver pesante. Specializzazione: Pistole. Usa proiettili da pistola (§7.20.9) e un tamburo fisso da sei colpi. La ricarica manuale inserisce fino a 2 cartucce in 1 AzP, oppure fino a 4 con Ricarica Migliorata. Un carichino Ricarica per Tamburo compatibile, già preparato e accessibile, trasferisce fino a 6 colpi in 1 AzP, entro gli spazi liberi. È necessaria la mano libera; Ricarica Rapida permette una sola operazione di ricarica gratuita per Round, alla propria Iniziativa (§7.20.2). Il prezzo comprende il tamburo, mentre le munizioni si acquistano separatamente. Non possiede proprietà aggiuntive.
 
 #### **Pistole semiautomatiche e automatiche**
 
@@ -2898,7 +2928,7 @@ Gli Agenti Speciali dell’Alleanza svolgono intelligence, investigazione e cont
 
 L’armamento di ordinanza ASA comprende AXIS 227, Carabina Punisher e Pugnale di ordinanza. Il Soprabito è opzionale. Il Pugnale di ordinanza usa il profilo commerciale: Armi da Mischia, una mano, 1d4+1, FOR 2, PI 4, Qualità Comune, PS 10, REP CO e costo 150; per il lancio usa il profilo a distanza dello stesso oggetto.
 
-La combinazione Punisher comprende Carabina, Pistola, Spada e Scudo. Non concede bonus automatici di insieme. La disponibilità di tutti gli oggetti non consente di usarli contemporaneamente senza rispettare mani e Azioni. Il lanciagranate della Carabina è già incluso nel suo costo.
+La combinazione Punisher comprende Carabina, Pistola, Spada e Scudo. Il solo possesso degli oggetti non concede bonus automatici di insieme: i benefici richiedono l’impiego effettivo dell’alloggiamento dello Scudo con una sola Carabina o Pistola Punisher (§7.4.1), rispettando mani e Azioni. La configurazione concede Copertura Leggera direzionale; la Carabina è utilizzabile a una mano con FOR intera ed è considerata Imbracciata, mentre la Pistola ottiene \+1 VA. Il lanciagranate della Carabina è già incluso nel suo costo.
 
 | Componente | Costo |
 | :---- | :---- |
@@ -4543,6 +4573,18 @@ Preparare un caricatore o un nastro partendo da munizioni sciolte richiede un mi
 
 Le maglie dei nastri sono comprese nel prezzo delle munizioni e non vengono conteggiate singolarmente. Un contenitore di alimentazione vuoto compatibile costa 200; quello del Nimrod costa 500\. Il contenitore non comprende le munizioni.
 
+#### **Carichini rapidi per tamburi e serbatoi interni**
+
+Ricarica per Tamburo. Capacità 6 colpi; prezzo a vuoto 100 crediti; peso a vuoto 0,1 kg; Qualità Comune; PS Integrità 10; PI massimi 2; Reperibilità Comune (CO).
+
+Ricarica per Serbatoio. Capacità 6 colpi; prezzo a vuoto 150 crediti; peso a vuoto 0,2 kg; Qualità Comune; PS Integrità 10; PI massimi 2; Reperibilità Comune (CO).
+
+Sono accessori meccanici riutilizzabili, compatibili con lo specifico modello d’arma. Le munizioni si acquistano separatamente. Un carichino preparato e accessibile trasferisce fino a 6 colpi in 1 AzP, entro gli spazi liberi dell’arma; i colpi non trasferiti restano nel carichino e vanno registrati. Ricarica Migliorata non aumenta questo limite.
+
+Preparare i carichini richiede 1 minuto ogni 50 colpi o frazione. Il peso delle munizioni contenute si aggiunge a quello a vuoto: ogni cartuccia si conta una sola volta nell’inventario. A 0 PI il dispositivo è inutilizzabile finché non viene riparato, secondo le normali regole.
+
+La ricarica manuale delle armi con tamburo o serbatoio interno, compresi revolver e doppiette, inserisce fino a 2 cartucce per AzP, oppure fino a 4 con Ricarica Migliorata, senza superare la capacità dell’arma. Sostituire un caricatore amovibile o una cella già pronti costa 1 AzP. Ricarica Rapida permette una sola operazione di ricarica gratuita per Round, alla propria Iniziativa: ricarica manuale, uso di un carichino preparato oppure cambio di caricatore/cella. Restano necessarie le mani disponibili e l’accessibilità.
+
 ### **7.20.3 Granate**
 
 La granata standard si usa sia a mano sia nei lanciagranate standard compatibili. Quella pesante è riservata al modulo Deathlock Drum e non si lancia a mano. Sono tutte monouso; si acquistano singole o in confezioni da cinque, senza sconto.
@@ -4810,7 +4852,7 @@ Questi modelli non introducono requisiti FOR o penalità aggiuntive a Movimento,
 
 Le modifiche con funzioni diverse possono coesistere; copie dello stesso beneficio non si sommano, neppure quando una è integrata nell’elmetto corporativo. Per ciascun senso si usa un solo grado di Sensori, il maggiore. Il massimo fornito da un elmetto è \+1 Attacco, \+1 Difese/Elusione e \+1 Iniziativa: sono tre benefici distinti e possono essere presenti contemporaneamente.
 
-Sensori, protezioni e interfacce di pilotaggio non si sommano a effetti equivalenti di altra attrezzatura sulla stessa Prova: si usa il maggiore. I bonus di assistenza offensiva e difensiva dell’elmetto si aggiungono invece al normale VA del personaggio e ai modificatori nativi di armi o scudi, come Precisa e Difensiva, mantenendo le normali regole di Talenti, Incantesimi e Manovre. Due assistenze tecnologiche equivalenti esterne che concedono lo stesso bonus offensivo o difensivo non si sommano: si applica il maggiore. La riduzione delle penalità di distanza di un mirino svolge una funzione diversa e resta utilizzabile. Gli impianti di Coordinamento neurale seguono lo stesso limite per assistenze equivalenti (Manuale dell’Equipaggiamento, §7.7).
+Sensori, protezioni e interfacce di pilotaggio non si sommano a effetti equivalenti di altra attrezzatura sulla stessa Prova: si usa il maggiore. I bonus di assistenza offensiva e difensiva dell’elmetto si aggiungono invece al normale VA del personaggio e ai modificatori nativi di armi o scudi, come Precisa e Difensiva, mantenendo le normali regole di Talenti, Incantesimi e Manovre. Due assistenze tecnologiche equivalenti esterne che concedono lo stesso bonus offensivo o difensivo non si sommano: si applica il maggiore. La riduzione delle penalità di distanza di Reflex, Ottico o Di precisione svolge una funzione diversa e resta utilizzabile. Il \+1 VA del Mirino laser è invece un’assistenza tecnologica offensiva equivalente: sulla stessa Prova si applica il maggiore. Gli impianti di Coordinamento neurale seguono lo stesso limite per assistenze equivalenti (Manuale dell’Equipaggiamento, §7.7).
 
 Il SIN conserva la propria regola: è distinto dal bonus ordinario dello strumento, ma si applica un solo SIN pertinente, fino a \+2. I moduli neurali percettivi degli elmetti riguardano soltanto Percezione, non attacco o Difese. Il SIN di un’arma continua a funzionare secondo la sua scheda.
 
