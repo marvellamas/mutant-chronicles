@@ -91,3 +91,11 @@ test('la scheda ha «Galleria» come ultimo pulsante della barra, solo con il se
   assert.match(g, /galleria\?\.ascolta\(flusso\);/);
   assert.ok(dati.galleria.testi.vuota_giocatori, 'il testo dell’elenco vuoto sta nei dati');
 });
+
+test('l’immagine copre ogni barra, così la ✕ resta sempre raggiungibile', () => {
+  const css = readFileSync(new URL('../css/style.css', import.meta.url), 'utf8');
+  const piano = Number(/--z-galleria:\s*(\d+)/.exec(css)?.[1]);
+  const altri = [...css.matchAll(/z-index:\s*(\d+)/g)].map((m) => Number(m[1]));
+  assert.ok(piano > Math.max(...altri), `la sovrapposizione (${piano}) sta sopra ogni z-index fisso del foglio`);
+  assert.match(css, /\.galleria-sovrapposizione \{[^}]*z-index: var\(--z-galleria\)/);
+});

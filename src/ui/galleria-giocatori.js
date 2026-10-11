@@ -82,5 +82,5 @@ export async function apriGalleriaGiocatore(dati) {
       : h('p', { class: 'vuoto' }, dati?.galleria?.testi?.vuota_giocatori ?? 'Nessuna immagine mostrata finora.'),
     h('div', { class: 'riga-azioni finestrella-azioni' },
       h('button', { type: 'button', class: 'btn primario', onclick: () => fine(true) }, 'Chiudi')),
-  ]);
+  ].filter(Boolean));
 }
