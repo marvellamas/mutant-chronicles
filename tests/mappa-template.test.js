@@ -137,23 +137,73 @@ test('scena: template validati e salvati; Ctrl+Z annulla piazzamento, spostament
   assert.equal(s.template.length, 0);
 });
 
-test('«Mostra / nascondi template»: senza durata (e, a scelta, anche a durata); scelta del master e dei giocatori nella scena', async () => {
-  const { templateVisibili, ostacoliVisibili, permanente } = await import('../src/mappa/template.js');
+test('M1: template, muri, porte, terreno e luci hanno ciascuno il suo interruttore, per il master e per i giocatori', async () => {
+  const { templateVisibili, permanente } = await import('../src/mappa/template.js');
+  const { vistaGiocatori } = await import('../src/mappa/vista.js');
+  const { livelliDi, conLivello, conTuttiILivelli, siVede, idLivelli, nascosti } = await import('../src/mappa/sovrapposizioni.js');
+  const fisso = tpl('cerchio', { raggio: 1 }, { id: 'f', durata: null });
+  const aRound = tpl('cerchio', { raggio: 1 }, { id: 'r', durata: 2, fine_round: 4 });
+  assert.deepEqual(idLivelli(dati), ['template', 'templateDurata', 'muri', 'porte', 'terreno', 'luci']);
+  // i due livelli dei template sono indipendenti
+  assert.deepEqual(templateVisibili([fisso, aRound], undefined).map((t) => t.id), ['f', 'r']);
+  assert.deepEqual(templateVisibili([fisso, aRound], { template: false, templateDurata: true }).map((t) => t.id), ['r']);
+  assert.deepEqual(templateVisibili([fisso, aRound], { template: true, templateDurata: false }).map((t) => t.id), ['f']);
+  assert.deepEqual(templateVisibili([fisso, aRound], { template: false, templateDurata: false }), []);
+  assert.ok(permanente({}) && !permanente(aRound), 'senza durata = finché non lo tolgo');
+
+  const s0 = { ...nuovaScena({ id: 'p', nome: 'P', colonne: 30, righe: 30, nebbia: 'scoperta', dati }), revisione: 0, template: [fisso, aRound] };
+  // di base si vede tutto, su entrambi i lati
+  assert.ok(idLivelli(dati).every((id) => siVede(s0, 'master', id, dati) && siVede(s0, 'giocatori', id, dati)));
+  assert.equal(nascosti(s0, 'giocatori', dati), null);
+  // nascondere i muri non tocca i template (è la segnalazione M1 di Davide)
+  const s1 = conLivello(s0, 'master', 'muri', false, dati);
+  assert.equal(siVede(s1, 'master', 'muri', dati), false);
+  assert.ok(siVede(s1, 'master', 'template', dati) && siVede(s1, 'master', 'porte', dati) && siVede(s1, 'master', 'terreno', dati));
+  assert.deepEqual(templateVisibili(s1.template, livelliDi(s1, 'master', dati)).map((t) => t.id), ['f', 'r']);
+  assert.equal(nascosti(s1, 'master', dati), 'muri');
+  // e la scelta del master non tocca quella dei giocatori
+  assert.equal(siVede(s1, 'giocatori', 'muri', dati), true);
+  assert.equal(validaScena(s1, dati), null);
+  assert.match(validaScena({ ...s0, sovrapposizioni: { giocatori: { muri: 'sì' } } }, dati), /sovrapposizioni\.giocatori\.muri/);
+  assert.match(validaScena({ ...s0, sovrapposizioni: { giocatori: { fantasia: true } } }, dati), /livelli ammessi/);
+
+  // la vista giocatori manda i livelli dei giocatori, non quelli del master
+  const s2 = conLivello(conLivello(s1, 'giocatori', 'templateDurata', false, dati), 'giocatori', 'luci', false, dati);
+  const v = vistaGiocatori(s2, null, RT, dati.mappa);
+  assert.equal(v.sovrapposizioni.muri, true, 'il master li ha nascosti a sé, non ai giocatori');
+  assert.equal(v.sovrapposizioni.templateDurata, false);
+  assert.equal(v.sovrapposizioni.luci, false);
+  assert.deepEqual(v.template.map((t) => [t.id, t.permanente]), [['f', true], ['r', false]], 'i template arrivano: li filtra il disegno');
+  // «Mostra tutto» / «Nascondi tutto»
+  const tutti = conTuttiILivelli(s2, 'giocatori', false, dati);
+  assert.ok(idLivelli(dati).every((id) => !siVede(tutti, 'giocatori', id, dati)));
+  assert.equal(validaScena(tutti, dati), null);
+});
+
+test('M1: le scene salvate col formato di prima («nascoste», «anche a durata») si leggono e si convertono', async () => {
+  const { livelliDi, formatoVecchio } = await import('../src/mappa/sovrapposizioni.js');
+  const { templateVisibili } = await import('../src/mappa/template.js');
   const { vistaGiocatori } = await import('../src/mappa/vista.js');
   const fisso = tpl('cerchio', { raggio: 1 }, { id: 'f', durata: null });
   const aRound = tpl('cerchio', { raggio: 1 }, { id: 'r', durata: 2, fine_round: 4 });
-  assert.deepEqual(templateVisibili([fisso, aRound], undefined).map((t) => t.id), ['f', 'r']);
-  assert.deepEqual(templateVisibili([fisso, aRound], { nascoste: true, ancheDurata: false }).map((t) => t.id), ['r']);
-  assert.deepEqual(templateVisibili([fisso, aRound], { nascoste: true, ancheDurata: true }), []);
-  assert.ok(permanente({}) && !permanente(aRound), 'senza durata = finché non lo tolgo');
-  assert.ok(ostacoliVisibili(null) && !ostacoliVisibili({ nascoste: true }));
-  const s = { ...nuovaScena({ id: 'p', nome: 'P', colonne: 30, righe: 30, nebbia: 'scoperta', dati }), revisione: 0, template: [fisso, aRound] };
+  const s = { ...nuovaScena({ id: 'v', nome: 'V', colonne: 20, righe: 20, nebbia: 'scoperta', dati }), revisione: 0, template: [fisso, aRound] };
+  // una scena del 7–10 ottobre resta valida
   s.sovrapposizioni = { master: { nascoste: true, ancheDurata: false }, giocatori: { nascoste: true, ancheDurata: true } };
-  assert.equal(validaScena(s, dati), null);
-  assert.match(validaScena({ ...s, sovrapposizioni: { giocatori: { nascoste: 'sì' } } }, dati), /sovrapposizioni\.giocatori/);
-  const v = vistaGiocatori(s, null, RT);
-  assert.deepEqual(v.sovrapposizioni, { nascoste: true, ancheDurata: true }, 'la scelta dei giocatori, non quella del master');
-  assert.deepEqual(v.template.map((t) => [t.id, t.permanente]), [['f', true], ['r', false]]);
+  assert.ok(formatoVecchio(s.sovrapposizioni.master));
+  assert.equal(validaScena(s, dati), null, 'le mappe vecchie si caricano senza errori');
+  // stessa resa di prima: nascoste senza «anche a durata» = via i permanenti, muri, porte e terreno
+  const m = livelliDi(s, 'master', dati);
+  assert.deepEqual([m.template, m.templateDurata, m.muri, m.porte, m.terreno, m.luci], [false, true, false, false, false, true]);
+  assert.deepEqual(templateVisibili(s.template, m).map((t) => t.id), ['r']);
+  const g = livelliDi(s, 'giocatori', dati);
+  assert.deepEqual([g.template, g.templateDurata, g.muri], [false, false, false]);
+  assert.deepEqual(templateVisibili(s.template, g), []);
+  // e la vista giocatori manda già i livelli nuovi
+  const v = vistaGiocatori(s, null, RT, dati.mappa);
+  assert.equal(v.sovrapposizioni.nascoste, undefined);
+  assert.equal(v.sovrapposizioni.templateDurata, false);
+  // il formato di prima senza un campo è un errore, come prima
+  assert.match(validaScena({ ...s, sovrapposizioni: { giocatori: { nascoste: true } } }, dati), /nascoste, ancheDurata/);
 });
 
 test('frecce: cono e linea a 45° (agganciati alle 8 direzioni), rettangolo di 90°; ↑ ↓ fra le misure proposte', async () => {

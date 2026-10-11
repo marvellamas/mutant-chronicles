@@ -45,7 +45,9 @@ function motivo(c, tipo, colore) {
 export function disegnaMuri(c, { scena, cam, info, muri, terreno, colori }) {
   const g = scena.griglia;
   const v = visibili(g, cam, info);
+  // M1 (11/10): muri e terreno hanno due interruttori distinti, quindi una delle due maschere puo mancare
   for (const [maschera, tipo, colore] of [[terreno, 'puntinato', colori.terreno], [muri, 'retino', colori.muro]]) {
+    if (!maschera) continue;
     c.save();
     c.beginPath();
     let n = 0;

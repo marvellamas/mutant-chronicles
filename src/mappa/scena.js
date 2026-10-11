@@ -28,6 +28,7 @@
 //   zocGiocatori?: false,                                      ZoC nella diretta spente (07/10)
 //   tablet?: { movimento: turno | sempre, avvisoTurno } }      tablet dei giocatori (fase 2, lotto 7; src/mappa/tablet.js)
 import { nuovaMaschera, inBase64, mascheraValida } from './celle.js';
+import { erroreSovrapposizioni } from './sovrapposizioni.js';
 import { tokenDentro } from './token.js';
 import { erroreTemplate } from './template.js';
 import { errorePorta } from './porte.js';
@@ -223,15 +224,9 @@ export function validaScena(s, dati) {
   // fase 2, lotto 4: luci (facoltative; scene di prima: Luce sufficiente)
   if (s.luce !== undefined) { const e = erroreLuce(s.luce, dati, (m) => mascheraValida(m, colonne, righe)); if (e) return `luce.${e}`; }
   if (s.iniziale !== undefined) { const e = erroreIniziale(s.iniziale, (m) => mascheraValida(m, colonne, righe)); if (e) return `iniziale.${e}`; }
-  // «Mostra / nascondi template» (ritocchi del 07/10): due scelte, del master e dei giocatori
-  if (s.sovrapposizioni !== undefined) {
-    if (!isOggetto(s.sovrapposizioni)) return 'sovrapposizioni: { master, giocatori } atteso';
-    for (const k of ['master', 'giocatori']) {
-      const v = s.sovrapposizioni[k];
-      if (v === undefined) continue;
-      if (!isOggetto(v) || typeof v.nascoste !== 'boolean' || typeof v.ancheDurata !== 'boolean') return `sovrapposizioni.${k}: { nascoste, ancheDurata } vero o falso`;
-    }
-  }
+  // Cosa si vede sopra la mappa (M1 dell'11/10): un interruttore per livello e per lato; il formato di prima
+  // ({ nascoste, ancheDurata }) resta valido e si converte alla lettura (src/mappa/sovrapposizioni.js)
+  { const e = erroreSovrapposizioni(s.sovrapposizioni, dati); if (e) return e; }
   // porte (fase 2, lotto 2; A.125): un Q ciascuna, stato e segreta; le azioni dei token (AzP del Round)
   if (s.porte !== undefined) {
     if (!Array.isArray(s.porte) || s.porte.length > (D.porte?.porte_max ?? 0)) return `porte: elenco di al massimo ${D.porte?.porte_max}`;

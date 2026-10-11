@@ -21,6 +21,7 @@ import { celleToken, chiaveRif, iniziali } from './token.js';
 import { barraIniziativa, barraPerGiocatori } from './iniziativa.js';
 import { musicaDi } from './audio.js';
 import { templatePerGiocatori } from './template.js';
+import { livelliDi } from './sovrapposizioni.js';
 import { muriPerGiocatori, portePerGiocatori } from './porte.js';
 import { ostacoliVista, visuale as visualePg, tokenPg, segmentoBloccato, centro } from './visuale.js';
 import { inVolo } from './volo.js';
@@ -117,8 +118,10 @@ export function vistaGiocatori(s, contesto = null, regoleTemplate = contesto?.re
     // porte (fase 2, lotto 2): le segrete restano muro, le altre arrivano a parte con il loro stato
     muri: inBase64(senza(muriPerGiocatori(s), nebbia)),
     porte: portePerGiocatori(s),
-    // «Mostra / nascondi template» dei giocatori (07/10): la vista disegna o no muri, porte, terreno e template
-    sovrapposizioni: s.sovrapposizioni?.giocatori ?? { nascoste: false, ancheDurata: false },
+    // M1 (11/10): i livelli visibili dei giocatori, uno per uno (template, templateDurata, muri, porte, terreno,
+    // luci), già normalizzati: la vista disegna solo quelli accesi. Le scene salvate col formato di prima sono
+    // convertite da livelliDi.
+    sovrapposizioni: livelliDi(s, 'giocatori', { mappa: regoleMappa }),
     ...(visti ? { ombra: inBase64(ombraDi(nebbia, visti, colonne, righe)) } : {}),
     ...((l) => (l ? { luce: l } : {}))(lucePerGiocatori(s, nebbia, regoleMappa)),
     terreno: inBase64(senza(daBase64(s.terreno), nebbia)),

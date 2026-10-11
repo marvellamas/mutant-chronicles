@@ -28,7 +28,7 @@ import { barraIniziativaEl } from './barra-iniziativa.js';
 import { creaAudio } from './audio.js';
 import { campanellaVista } from '../../mappa/audio.js';
 import { disegnaArea, disegnaZoc, disegnaPercorso, coloriAree, disegnaTemplate, disegnaPorte, disegnaMuri, disegnaLineaTiro, disegnaLuci } from './disegno-aree.js';
-import { celleDaMaschera, templateVisibili, ostacoliVisibili } from '../../mappa/template.js';
+import { celleDaMaschera, templateVisibili } from '../../mappa/template.js';
 import { celleDellaDiretta, zocDellaDiretta, avversariDellaDiretta, trattiPercorso } from '../../mappa/diretta.js';
 import { passiInZoc } from '../../mappa/zoc.js';
 import { avviso } from '../avvisi.js';
@@ -125,11 +125,13 @@ export function renderGiocatori(radice, ctx) {
       // già filtrati dal server (solo i Q fuori dalla nebbia, niente nascosti)
       // ritocchi del 07/10: «Mostra / nascondi template» scelto dal master per i giocatori (template senza durata, muri,
       // porte e terreno; con «anche a durata» anche gli altri); l'anteprima di chi piazza resta
-      const sov = st.vista?.sovrapposizioni;
-      if (st.vista && ostacoliVisibili(sov)) disegnaMuri(c, { scena: st.vista, cam: st.cam, info, muri: daBase64(st.vista.muri), terreno: daBase64(st.vista.terreno), colori: coloriAree(el.riquadro) });
+      // M1 (11/10): i livelli arrivano già normalizzati dal server (src/mappa/vista.js), uno per uno
+      const sov = st.vista?.sovrapposizioni ?? {};
+      const vede = (id) => sov[id] !== false;
+      if (st.vista && (vede('muri') || vede('terreno'))) disegnaMuri(c, { scena: st.vista, cam: st.cam, info, muri: vede('muri') ? daBase64(st.vista.muri) : null, terreno: vede('terreno') ? daBase64(st.vista.terreno) : null, colori: coloriAree(el.riquadro) });
       if (st.vista) for (const t of [...templateVisibili(st.vista.template ?? [], sov), ...(direttaAttuale()?.template ?? [])]) disegnaTemplateGiocatori(c, info, t);
       // porte (fase 2, lotto 2): già filtrate dal server (niente segrete non rivelate, niente sotto la nebbia)
-      if (st.vista?.porte?.length && ostacoliVisibili(sov)) disegnaPorte(c, { scena: st.vista, cam: st.cam, info, porte: st.vista.porte, colori: ctx.dati.mappa.porte.colori });
+      if (st.vista?.porte?.length && vede('porte')) disegnaPorte(c, { scena: st.vista, cam: st.cam, info, porte: st.vista.porte, colori: ctx.dati.mappa.porte.colori });
       const d = direttaAttuale();
       // fase 2, lotto 7: l'area del proprio PG (dal server, senza i Q sotto la nebbia) fino alla fascia scelta, se il
       // master non sta mostrando un movimento

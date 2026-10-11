@@ -46,7 +46,8 @@ import { salvaIniziale, ripristinaIniziale } from '../../mappa/iniziale.js';
 import { muoviToken, usatoNelRound, fasceNelRound, mossoNelRound, annullaUltima, annullaUltimoMovimento, cambiaTokenAnnullabile, cambiaTemplateAnnullabile, cambiaPortaAnnullabile, togliTemplateAnnullabile, scadiTemplateAnnullabile, rimettiScaduti, nuovoTurno, turnoDi } from '../../mappa/annulla.js';
 import { disegnaMuri, disegnaArea, disegnaPercorso, disegnaZoc, coloriAree, disegnaTemplate, disegnaPorte, disegnaLineaTiro, disegnaLuci } from './disegno-aree.js';
 import { luceQ, luceIngombro, testoLuceBersaglio, categorieLuce, ambienteDi, trattoLuce, rettangoloLuce, conVoceLuce, cambiaAmbiente } from '../../mappa/luce.js';
-import { celleTemplate, tokenDentro as tokenNelTemplate, nuovoTemplate, scaduto, direzioneVerso, ORIENTABILI, templateVisibili, ostacoliVisibili, ruota, cambiaMisura, permanente } from '../../mappa/template.js';
+import { celleTemplate, tokenDentro as tokenNelTemplate, nuovoTemplate, scaduto, direzioneVerso, ORIENTABILI, templateVisibili, ruota, cambiaMisura, permanente } from '../../mappa/template.js';
+import { livelliDi, livelliDati, conLivello, conTuttiILivelli, nascosti as livelliNascosti } from '../../mappa/sovrapposizioni.js';
 import { portaA, muriEffettivi, porteVicine, apriChiudi, nuovaPorta, conAzione, azpNelRound, orientamento, orientamentoPorta, ruotaPorta, opposto } from '../../mappa/porte.js';
 import { apriMenuTemplate, sezioneTemplate, etichettaTemplate, testoMisure } from './template.js';
 import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
@@ -209,10 +210,12 @@ export function renderMappa(radice, ctx) {
       h('button', { type: 'button', class: 'btn tondo', title: 'Avvicina (+)', 'aria-label': 'Avvicina', onclick: () => zoomCentro(V.passo_tasti) }, '+'),
       h('button', { type: 'button', class: 'btn', title: 'Adatta allo schermo: tutta la mappa nel riquadro (tasto A, anche doppio clic su un punto vuoto)', 'aria-label': 'Adatta allo schermo', onclick: () => adattaSchermo() }, conIcona('⤢', 'Adatta')),
       el.btnGriglia),
-    // ritocchi del 07/10: «Mostra / nascondi template» (Maiusc+T), con «anche i template a durata»
+    // M1 (11/10): due pulsanti rapidi distinti — i template (Maiusc+T) e i muri con porte e terreno (Maiusc+M) —
+    // e «Cosa si vede…» per i sei livelli, miei e dei giocatori
     el.sovrapposizioni = h('span', { class: 'mappa-sovrapposizioni mappa-gruppo gruppo-sovr', role: 'group', 'aria-label': 'Sovrapposizioni' },
-        el.btnSovr = h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-pressed': 'true', title: 'Mostra o nasconde i template senza durata, i muri, le porte e il terreno difficile (Maiusc+T); per il movimento valgono sempre', onclick: () => cambiaSovrapposizioni('master', 'nascoste') }, conIcona('◫', 'Template')),
-        el.ancheDurata = h('label', { class: 'casella-sovr', title: 'Il pulsante nasconde e mostra anche i template con durata in Round' }, h('input', { type: 'checkbox', onchange: () => cambiaSovrapposizioni('master', 'ancheDurata') }), h('span', { class: 'lungo' }, ' anche a durata')),
+        el.btnSovr = h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-pressed': 'true', title: 'Mostra o nasconde i template, compresi quelli a durata (Maiusc+T)', onclick: () => commutaGruppo('master', 'template') }, conIcona('◫', 'Template')),
+        el.btnMuriVista = h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-pressed': 'true', title: 'Mostra o nasconde muri, porte e terreno difficile (Maiusc+M); per movimento, linea di tiro e nebbia valgono sempre', onclick: () => commutaGruppo('master', 'ostacoli') }, conIcona('▦', 'Muri')),
+        h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Cosa si vede: un interruttore per livello (template, muri, porte, terreno, luci), per me e per i giocatori', onclick: () => apriLivelliUi() }, conIcona('👁', 'Cosa si vede…')),
         // ritocchi del 07/10: toglie in un colpo i template a durata (quelli dello scontro)
         h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Cancella template temporanei: toglie tutti i template a durata in Round; quelli senza durata, muri, porte e terreno restano (Ctrl+Z li rimette)', 'aria-label': 'Cancella template temporanei', onclick: () => cancellaTemplate({ tutti: false }) }, conIcona('🧹', 'Temporanei'))),
     h('span', { class: 'mappa-gruppo gruppo-strumenti', role: 'group', 'aria-label': 'Strumenti' },
@@ -256,6 +259,8 @@ export function renderMappa(radice, ctx) {
   el.pNebbia = h('details', { class: 'mappa-sezione mappa-nebbia', open: true });
   el.pMuri = h('details', { class: 'mappa-sezione mappa-muri' });
   el.pLuci = h('details', { class: 'mappa-sezione mappa-luci' });
+  // M1 (11/10): «Cosa si vede», un interruttore per livello, mio e dei giocatori
+  el.pLivelli = h('details', { class: 'mappa-sezione mappa-livelli' });
   el.pGiocatori = h('details', { class: 'mappa-sezione mappa-giocatori' });
   el.pTemplate = h('details', { class: 'mappa-sezione mappa-template', open: true });
   // lotto 6: barra dell'Iniziativa in cima; a destra della mappa il bordo da trascinare e la barra (§11)
@@ -321,16 +326,17 @@ export function renderMappa(radice, ctx) {
       const g = s.griglia;
       const colori = coloriAree(el.riquadro);
       // lotto 5: muri (retino) e terreno difficile (puntinato), solo per il master
-      // ritocchi del 07/10: muri, porte e terreno si possono nascondere («Mostra / nascondi template»); valgono comunque
-      const ostacoli = ostacoliVisibili(sovrapposizioni('master'));
-      if (ostacoli) disegnaMuri(c, { scena: s, cam: st.cam, info, muri: daBase64(s.muri), terreno: daBase64(s.terreno), colori });
+      // M1 (11/10): un interruttore per livello (muri, porte, terreno, template, luci); valgono comunque per
+      // movimento, linea di tiro e nebbia (src/mappa/sovrapposizioni.js)
+      const liv = sovrapposizioni('master');
+      if (liv.muri || liv.terreno) disegnaMuri(c, { scena: s, cam: st.cam, info, muri: liv.muri ? daBase64(s.muri) : null, terreno: liv.terreno ? daBase64(s.terreno) : null, colori });
       // fase 2, lotto 2: le porte, ciascuna con il suo stato (le segrete con la «S»)
-      if (ostacoli && s.porte?.length) disegnaPorte(c, { scena: s, cam: st.cam, info, porte: s.porte.map((p) => ({ ...p, orientamento: orientamentoPorta(s, p) })), colori: ctx.dati.mappa.porte.colori });
+      if (liv.porte && s.porte?.length) disegnaPorte(c, { scena: s, cam: st.cam, info, porte: s.porte.map((p) => ({ ...p, orientamento: orientamentoPorta(s, p) })), colori: ctx.dati.mappa.porte.colori });
       // 07/10: anteprima della porta da mettere sotto il puntatore, con l'orientamento (← → per girarla)
       const ap = st.muri.strumento === 'porta' ? anteprimaPorta() : null;
       if (ap) { c.save(); c.globalAlpha = 0.6; disegnaPorte(c, { scena: s, cam: st.cam, info, porte: [ap], colori: ctx.dati.mappa.porte.colori }); c.restore(); }
       // fase 2, lotto 4: zone in Penombra, Luce scarsa e Buio, più scure (sotto i token)
-      const lm = maschereLuce();
+      const lm = liv.luci ? maschereLuce() : null;
       if (lm) disegnaLuci(c, { scena: s, cam: st.cam, info, maschere: lm, opacita: ctx.dati.mappa.luci.oscurita });
       const r = rettangoloVisibile(st.cam, info.larghezza, info.altezza);
       const q = g.q_px;
@@ -626,7 +632,8 @@ export function renderMappa(radice, ctx) {
   el.blocca = h('button', { type: 'button', class: 'btn', onclick: () => bloccaGriglia() });
   el.info = h('p', { class: 'nota mappa-info' });
   el.notaBlocco = h('p', { class: 'riquadro attenzione mappa-nota-blocco', hidden: true }, 'Griglia bloccata: dimensione e scostamento non cambiano, così nebbia, muri e token restano allineati. Colore e opacità sì.');
-  svuota(el.pannello, el.secScontro, el.pTemplate, el.pMuri, el.pNebbia, el.pLuci, el.pGiocatori, el.pGriglia);
+  svuota(el.pannello, el.secScontro, el.pTemplate, el.pMuri, el.pNebbia, el.pLuci, el.pLivelli, el.pGiocatori, el.pGriglia);
+  svuota(el.pLivelli, h('summary', { class: 'mappa-sezione-testa' }, 'Cosa si vede'), el.vociLivelli = h('div', { class: 'mappa-sezione-corpo' }));
   svuota(el.pGriglia,
     h('summary', {}, h('strong', {}, 'Griglia')),
     h('p', { class: 'nota' }, 'Calibra tracciando sull’immagine un quadretto (o un riquadro di più quadretti) oppure inserendo i valori. Poi blocca la griglia.'),
@@ -1016,28 +1023,84 @@ export function renderMappa(radice, ctx) {
       r.ignorati.length ? `Non più nello scontro, ignorati: ${r.ignorati.map((t) => t.nome ?? t.rif?.id ?? t.id).join(', ')}.` : null,
       r.nuovi.length ? `Nuovi, restano dove sono: ${r.nuovi.map((t) => pezzoDi(t)?.nome ?? t.nome ?? t.id).join(', ')}.` : null], { chiave: 'iniziale', durata: 10000 });
   }
-  // ── «Mostra / nascondi template» (ritocchi del 07/10): scelte memorizzate nella scena, del master e dei giocatori ──
-  const sovrapposizioni = (chi) => ({ nascoste: false, ancheDurata: false, ...(st.scena?.sovrapposizioni?.[chi] ?? {}) });
-  function cambiaSovrapposizioni(chi, campo) {
+  // ── Cosa si vede sopra la mappa (M1 dell'11/10): un livello per volta, mio e dei giocatori ──
+  // src/mappa/sovrapposizioni.js tiene i livelli e converte le scene salvate col formato di prima
+  const sovrapposizioni = (chi) => livelliDi(st.scena, chi, ctx.dati);
+  /** I livelli di un gruppo rapido: i due dei template, oppure muri + porte + terreno. */
+  const GRUPPI_LIVELLI = { template: ['template', 'templateDurata'], ostacoli: ['muri', 'porte', 'terreno'] };
+  function cambiaLivello(chi, id, valore) {
     if (!st.scena) return;
-    const v = sovrapposizioni(chi);
-    v[campo] = !v[campo];
-    st.scena = { ...st.scena, sovrapposizioni: { ...(st.scena.sovrapposizioni ?? {}), [chi]: v } };
+    st.scena = conLivello(st.scena, chi, id, valore, ctx.dati);
+    dopoLivelli(chi);
+  }
+  /** Il gruppo rapido: se ne è acceso almeno uno li spegne tutti, altrimenti li accende tutti. */
+  function commutaGruppo(chi, gruppo) {
+    if (!st.scena) return;
+    const ids = GRUPPI_LIVELLI[gruppo];
+    const liv = sovrapposizioni(chi);
+    const acceso = ids.some((id) => liv[id]);
+    for (const id of ids) st.scena = conLivello(st.scena, chi, id, !acceso, ctx.dati);
+    dopoLivelli(chi, gruppo, !acceso);
+  }
+  function tuttiILivelli(chi, valore) {
+    if (!st.scena) return;
+    st.scena = conTuttiILivelli(st.scena, chi, valore, ctx.dati);
+    dopoLivelli(chi);
+  }
+  function dopoLivelli(chi, gruppo = null, acceso = null) {
     salvaPresto();
     aggiornaSovrapposizioni();
     disegnaPannelloGiocatori();
-    if (chi === 'master') {
-      if (campo === 'nascoste') avviso(v.nascoste ? `Nascosti: template senza durata${v.ancheDurata ? ' e a durata' : ''}, muri, porte e terreno (valgono comunque). Maiusc+T per mostrarli.` : 'Template, muri, porte e terreno mostrati.', { chiave: 'sovrapposizioni' });
-      ridisegna(['aree']);
-    } else avviso(v.nascoste ? 'Ai giocatori: template e muri nascosti.' : 'Ai giocatori: template e muri mostrati.', { chiave: 'sovrapposizioni' });
+    if (el.pLivelli?.open) disegnaLivelli();
+    const nasc = livelliNascosti(st.scena, chi, ctx.dati);
+    const dove = chi === 'master' ? 'Sulla tua mappa' : 'Ai giocatori';
+    if (gruppo) {
+      const nome = gruppo === 'template' ? 'Template' : 'Muri, porte e terreno';
+      avviso(`${dove}: ${nome} ${acceso ? 'mostrati' : 'nascosti'}${acceso ? '' : ' (valgono comunque)'}.`, { chiave: 'sovrapposizioni' });
+    } else avviso(nasc ? `${dove} restano nascosti: ${nasc}. Valgono comunque per movimento, linea di tiro e nebbia.` : `${dove}: si vede tutto.`, { chiave: 'sovrapposizioni' });
+    if (chi === 'master') ridisegna(['aree']);
   }
   function aggiornaSovrapposizioni() {
     const v = sovrapposizioni('master');
-    el.btnSovr.setAttribute('aria-pressed', String(!v.nascoste));
-    el.btnSovr.classList.toggle('spento', v.nascoste);
-    el.btnSovr.title = `${v.nascoste ? 'Nascosti' : 'Mostrati'}: template senza durata${v.ancheDurata ? ' e a durata' : ''}, muri, porte e terreno difficile (Maiusc+T). Per il movimento valgono sempre.`;
-    el.btnSovr.querySelector('.lungo').textContent = ` Template: ${v.nascoste ? 'no' : 'sì'}`;
-    el.ancheDurata.querySelector('input').checked = v.ancheDurata;
+    const segna = (btn, acceso, testo, titolo) => {
+      if (!btn) return;
+      btn.setAttribute('aria-pressed', String(acceso));
+      btn.classList.toggle('spento', !acceso);
+      btn.title = titolo;
+      const l = btn.querySelector('.lungo');
+      if (l) l.textContent = ` ${testo}: ${acceso ? 'sì' : 'no'}`;
+    };
+    const tpl = v.template || v.templateDurata;
+    segna(el.btnSovr, tpl, 'Template', `Template ${tpl ? 'mostrati' : 'nascosti'}${v.template !== v.templateDurata ? ` (solo ${v.template ? 'senza' : 'con'} durata)` : ''} (Maiusc+T).`);
+    const ost = v.muri || v.porte || v.terreno;
+    segna(el.btnMuriVista, ost, 'Muri', `Muri, porte e terreno difficile ${ost ? 'mostrati' : 'nascosti'} (Maiusc+M). Per movimento, linea di tiro e nebbia valgono sempre.`);
+  }
+  /** «Cosa si vede…»: una riga per livello, due interruttori (io / i giocatori). */
+  function disegnaLivelli() {
+    if (!el.vociLivelli) return;
+    const righe = livelliDati(ctx.dati).map((l) => {
+      const cella = (chi) => {
+        const acceso = sovrapposizioni(chi)[l.id] === true;
+        return h('td', {}, h('button', {
+          type: 'button', role: 'switch', 'aria-checked': String(acceso), class: `interruttore-mappa${acceso ? ' acceso' : ''}`,
+          title: `${l.titolo} — ${chi === 'master' ? 'sulla tua mappa' : 'sullo schermo dei giocatori e sui tablet'}`,
+          onclick: () => cambiaLivello(chi, l.id),
+        }, h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), acceso ? 'sì' : 'no'));
+      };
+      return h('tr', {}, h('th', { scope: 'row', title: l.titolo }, l.nome), cella('master'), cella('giocatori'));
+    });
+    svuota(el.vociLivelli,
+      h('p', { class: 'nota' }, 'Muri, porte e terreno valgono sempre per movimento, linea di tiro e nebbia: qui si decide soltanto che cosa si disegna.'),
+      h('table', { class: 'tabella compatta tabella-livelli' },
+        h('thead', {}, h('tr', {}, h('th', {}, 'Livello'), h('th', {}, 'Io'), h('th', {}, 'Giocatori'))),
+        h('tbody', {}, righe)),
+      h('div', { class: 'riga-azioni' },
+        h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => tuttiILivelli('master', true) }, 'Io: mostra tutto'),
+        h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => tuttiILivelli('giocatori', true) }, 'Giocatori: mostra tutto')));
+  }
+  function apriLivelliUi() {
+    disegnaLivelli();
+    apriStrumento(el.pLivelli);
   }
   function aggiornaBlocco() {
     if (el.strumenti?.open) disegnaMenuStrumenti();
@@ -1076,7 +1139,7 @@ export function renderMappa(radice, ctx) {
       vista_giocatori: { testo: 'Vista giocatori: scena, QR, apri…', titolo: 'Quale scena vedono, il QR, «Apri vista giocatori»', azione: () => apriStrumento(el.pGiocatori) },
       adatta_giocatori: { testo: 'Adatta lo schermo dei giocatori', titolo: 'Lo schermo dei giocatori inquadra tutta la parte scoperta', azione: () => adattaGiocatori() },
       pv_nemici: { testo: `PV dei nemici ai giocatori: ${sn(sc?.pvNemiciGiocatori)}`, titolo: 'La barretta dei PV dei nemici nella vista giocatori (quella dei PG si vede sempre)', azione: () => cambiaPvNemiciGiocatori() },
-      sovrapposizioni_giocatori: { testo: `Template e muri ai giocatori: ${sn(!g.nascoste)}`, titolo: 'Template senza durata, muri, porte e terreno sullo schermo dei giocatori', azione: () => cambiaSovrapposizioni('giocatori', 'nascoste') },
+      sovrapposizioni_giocatori: { testo: `Cosa si vede: ${livelliNascosti(sc, 'giocatori', ctx.dati) ? 'ai giocatori manca qualcosa' : 'tutto'}…`, titolo: 'Un interruttore per livello (template, muri, porte, terreno, luci), per te e per i giocatori', azione: () => apriLivelliUi() },
       suoni_giocatori: { testo: `Suoni anche ai giocatori: ${sn(sc?.audio?.giocatori)}`, titolo: 'Campanella e musica anche sullo schermo dei giocatori (televisore con le casse)', azione: () => cambiaAudioGiocatori() },
       blocco_giocatori: { testo: `Blocca movimenti dei giocatori: ${sn(sc?.bloccaGiocatori)}`, titolo: 'I tablet dei giocatori vedono la mappa ma non muovono (lo dice anche il tablet)', azione: () => cambiaBloccoGiocatori() },
       // fase 2, lotto 7: tablet dei giocatori (src/mappa/tablet.js)
@@ -1123,7 +1186,8 @@ export function renderMappa(radice, ctx) {
       ['Clic destro su un punto vuoto', 'Nuovo template qui; con un token scelto, Linea di tiro fin qui'],
       ['Strumenti → «Salva posizione iniziale» / «Ripristina posizione iniziale»', 'token, porte, template e nebbia della scena, per rigiocarla; PV, Stati e registro dello scontro non cambiano; Ctrl+Z annulla il ripristino'],
       ['Pulsante «🧹 Temporanei» (o Strumenti → «Cancella template temporanei»)', 'toglie in un colpo i template a durata (con conferma e il numero); quelli senza durata restano; Ctrl+Z li rimette'],
-      ['Maiusc+T (pulsante «◫ Template»)', 'mostra o nasconde i template senza durata, muri, porte e terreno (per il movimento valgono sempre); con «anche a durata» anche i template a Round'],
+      ['Maiusc+T (pulsante «◫ Template»)', 'mostra o nasconde i template, compresi quelli a durata in Round'],
+      ['Maiusc+M (pulsante «▦ Muri»)', 'mostra o nasconde muri, porte e terreno difficile; valgono comunque per movimento, linea di tiro e nebbia. «Cosa si vede…» ha un interruttore per livello, anche per i giocatori'],
       ['Strumenti → Muri e terreno → «Porta»', 'clic su un Q di muro: porta (aperta, chiusa o bloccata; segreta); clic su una porta: la toglie'],
       ['Clic su una porta', 'il master la apre o la chiude (bloccata: no); clic destro: il token scelto vicino la apre (1 AzP); Apri / Chiudi, Blocca / Sblocca; «Opzioni ▸»: Ruota, Rivela / Rendi segreta, Togli'],
       ['L (o clic destro → «Linea di tiro»)', 'dal token scelto verso il mouse o un token: distanza (diagonale 1 Q), vista, Copertura (§5.8) con la causa, token in mezzo come «bersaglio protetto» (§5.10); clic per fissarla: «Attacca!» con distanza e Copertura; Esc per chiudere'],
@@ -2966,7 +3030,9 @@ export function renderMappa(radice, ctx) {
       return;
     }
     if (e.key === 'Escape' && st.gruppo.size && !menuAperto()) { e.preventDefault(); cambiaGruppo(new Set()); return; }
-    if (e.shiftKey && e.key.toLowerCase() === ctx.dati.mappa.template.tasto && st.scena) { e.preventDefault(); cambiaSovrapposizioni('master', 'nascoste'); return; }
+    if (e.shiftKey && e.key.toLowerCase() === ctx.dati.mappa.template.tasto && st.scena) { e.preventDefault(); commutaGruppo('master', 'template'); return; }
+    // M1 (11/10): Maiusc+M per muri, porte e terreno difficile (il disegno; valgono comunque)
+    if (e.shiftKey && e.key.toLowerCase() === 'm' && st.scena) { e.preventDefault(); commutaGruppo('master', 'ostacoli'); return; }
     if (e.key.toLowerCase() === ctx.dati.mappa.template.tasto && st.scena && !st.tpl.anteprima) { e.preventDefault(); nuovoTemplateUi(); return; }
     if (e.key === 'Escape' && st.tpl.anteprima) { e.preventDefault(); annullaPiazzamento(); return; }
     if (e.key === 'Escape' && st.linea) { e.preventDefault(); chiudiLinea(); return; }
@@ -3319,13 +3385,14 @@ export function renderMappa(radice, ctx) {
         return h('button', { type: 'button', role: 'switch', 'aria-checked': String(acceso), class: `interruttore-mappa${acceso ? ' acceso' : ''}`, title: titolo, disabled: campo === 'zocGiocatori' && st.scena.movimentoGiocatori === false, onclick: () => cambiaDirettaGiocatori(campo) },
           h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `${testo}: ${acceso ? 'sì' : 'no'}`);
       }),
-      // ritocchi del 07/10: la stessa scelta, separata, per lo schermo dei giocatori
+      // M1 (11/10): un interruttore per livello, anche per lo schermo dei giocatori
       (() => {
         const g = sovrapposizioni('giocatori');
-        return h('div', { class: 'mappa-azioni-token' },
-          h('button', { type: 'button', role: 'switch', 'aria-checked': String(!g.nascoste), class: `interruttore-mappa${!g.nascoste ? ' acceso' : ''}`, title: 'Template senza durata, muri, porte e terreno difficile sullo schermo dei giocatori', onclick: () => cambiaSovrapposizioni('giocatori', 'nascoste') },
-            h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `Template e muri ai giocatori: ${g.nascoste ? 'nascosti' : 'mostrati'}`),
-          h('label', { title: 'Nasconde ai giocatori anche i template con durata in Round' }, h('input', { type: 'checkbox', checked: g.ancheDurata, onchange: () => cambiaSovrapposizioni('giocatori', 'ancheDurata') }), ' anche a durata'));
+        return h('div', { class: 'mappa-azioni-token' }, livelliDati(ctx.dati).map((l) => {
+          const acceso = g[l.id] === true;
+          return h('button', { type: 'button', role: 'switch', 'aria-checked': String(acceso), class: `interruttore-mappa${acceso ? ' acceso' : ''}`, title: `${l.titolo} — sullo schermo dei giocatori e sui tablet`, onclick: () => cambiaLivello('giocatori', l.id) },
+            h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `${l.nome}: ${acceso ? 'sì' : 'no'}`);
+        }));
       })(),
       h('div', { class: 'mappa-qr' }, qr, h('small', { class: 'nota' }, url)),
       // fase 2, lotto 7: i tablet dei giocatori aprono lo stesso indirizzo e scelgono «Sono…»

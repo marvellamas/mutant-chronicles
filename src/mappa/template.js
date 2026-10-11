@@ -160,19 +160,20 @@ export function cambiaMisura(t, verso, regole) {
   return { ...t, misure: m };
 }
 
-/** Template senza durata («finché non lo tolgo»): quelli che «Mostra / nascondi template» toglie sempre. */
+/** Template senza durata («finché non lo tolgo»). */
 export const permanente = (t) => t.durata === null || t.durata === undefined || t.permanente === true;
 /**
- * Template da disegnare secondo la scelta «Mostra / nascondi template» (ritocchi del 07/10): `sov` =
- * scena.sovrapposizioni.master o .giocatori, { nascoste, ancheDurata }. Nascoste: via i template senza durata e, con
- * «anche i template a durata», anche gli altri. Le stesse sovrapposizioni nascoste sono muri, porte e terreno.
+ * Template da disegnare secondo i livelli visibili di quel lato (M1 dell'11/10: src/mappa/sovrapposizioni.js →
+ * livelliDi): `template` sono quelli senza durata, `templateDurata` quelli con durata in Round, due interruttori
+ * distinti. Muri, porte, terreno e luci hanno i loro livelli e non c'entrano più con i template.
+ * Accetta anche il formato di prima ({ nascoste, ancheDurata }) delle scene salvate.
  */
-export function templateVisibili(lista, sov) {
-  if (!sov?.nascoste) return lista ?? [];
-  return sov.ancheDurata ? [] : (lista ?? []).filter((t) => !permanente(t));
+export function templateVisibili(lista, liv) {
+  const l = liv && typeof liv.nascoste === 'boolean'
+    ? { template: !liv.nascoste, templateDurata: !liv.nascoste || !liv.ancheDurata }
+    : { template: liv?.template !== false, templateDurata: liv?.templateDurata !== false };
+  return (lista ?? []).filter((t) => (permanente(t) ? l.template : l.templateDurata));
 }
-/** Ostacoli (muri, porte, terreno difficile) disegnati? Valgono comunque per il movimento. */
-export const ostacoliVisibili = (sov) => !sov?.nascoste;
 
 /** Errore di forma di un template della scena (null se va bene); \`regole\`: data/mappa.json → template. */
 export function erroreTemplate(t, regole) {

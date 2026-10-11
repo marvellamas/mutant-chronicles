@@ -442,6 +442,17 @@
       { "titolo": "Pulizia", "icona": "🧹", "voci": ["cancella_temporanei", "cancella_tutti"] }
     ]
   },
+  "sovrapposizioni": {
+    "_nota": "Che cosa si disegna sopra la mappa, con un interruttore per livello e per lato (segnalazione M1 di Davide dell'11/10/2026: l'unico interruttore di prima nascondeva insieme muri, porte, terreno e template). «master» è quello che vede il Direttore sulla sua mappa, «giocatori» quello che arriva allo schermo dei giocatori e ai tablet (src/mappa/sovrapposizioni.js; scena.sovrapposizioni). I livelli valgono solo per il disegno: muri, porte e terreno contano sempre per movimento, linea di tiro e nebbia. Le scene salvate col formato di prima ({ nascoste, ancheDurata }) si leggono e si convertono da sé.",
+    "livelli": [
+      { "id": "template", "nome": "Template", "titolo": "I template ad area senza durata (quelli che restano finché non li togli)", "master": true, "giocatori": true },
+      { "id": "templateDurata", "nome": "Template a durata", "titolo": "I template con una durata in Round (quelli dello scontro)", "master": true, "giocatori": true },
+      { "id": "muri", "nome": "Muri", "titolo": "I muri, a quadretto e disegnati; valgono comunque per movimento, linea di tiro e nebbia", "master": true, "giocatori": true },
+      { "id": "porte", "nome": "Porte", "titolo": "Le porte, con il loro stato; valgono comunque per movimento e linea di tiro", "master": true, "giocatori": true },
+      { "id": "terreno", "nome": "Terreno difficile", "titolo": "I quadretti di terreno difficile; valgono comunque per il movimento", "master": true, "giocatori": true },
+      { "id": "luci", "nome": "Luci e ombre", "titolo": "Le zone di penombra, luce scarsa e buio, e l'ombra della nebbia automatica", "master": true, "giocatori": true }
+    ]
+  },
   "menu": {
     "_nota": "Menu del clic destro sulla mappa (richiesta di Marcello del 07/10/2026; src/mappa/menu.js): per contesto (token, porta, template, punto vuoto) la riga rapida, i gruppi con intestazione e le «Opzioni» (sottomenu), con gli id delle voci nell'ordine in cui compaiono. Si mostrano solo le voci utilizzabili in quel momento (la riga rapida anche spenta, con il motivo); i gruppi vuoti non si mostrano. «{nome}» nel titolo di un gruppo diventa il nome del template. altezza_voce_px: altezza minima di una voce, per il dito sul tablet.",
     "altezza_voce_px": 40,
