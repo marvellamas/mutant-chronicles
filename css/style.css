@@ -2396,3 +2396,29 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .scontro-in-corso-testo { font-size: 1.1rem; }
 /* 12/10: menu «Vista» della barra della mappa */
 .menu-vista > summary { white-space: nowrap; }
+
+/* ---------------------------------------------------------------- ritocchi della scheda (11/10/2026, S4–S32) */
+/* S4: testata comune accanto al titolo della tab: Punti Eroe, Distintivi, Crediti */
+.titolo-tab { flex-wrap: wrap; }
+.testata-comune { margin-left: auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 0.3rem 0.6rem; }
+.voce-testata { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.15rem 0.45rem; border: 1px solid var(--bordo); border-radius: var(--raggio); background: var(--superficie); min-height: 38px; }
+.voce-testata strong { font-size: 1.25rem; min-width: 1.2rem; text-align: center; }
+.etichetta-testata { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--testo-tenue, inherit); }
+.voce-pe { border-left: 4px solid var(--pe); }
+.voce-pe .etichetta-testata { color: var(--pe); }
+.voce-testata .input-crediti { width: 6.5rem; max-width: 6.5rem; font-size: 1.1rem; min-height: 30px; }
+.tasti-crediti { position: relative; }
+.tasti-crediti > summary { list-style: none; cursor: pointer; }
+.tasti-crediti > summary::-webkit-details-marker { display: none; }
+.tasti-crediti-voci { position: absolute; right: 0; top: calc(100% + 0.3rem); z-index: 20; width: min(26rem, 92vw); padding: 0.5rem; background: var(--superficie); border: 1px solid var(--bordo); border-radius: var(--raggio); box-shadow: 0 6px 18px rgb(0 0 0 / 0.25); }
+.tasti-crediti-voci .nota { margin: 0.3rem 0 0; }
+/* S5: Stati attivi in sola lettura sotto PV, Ferite e PM */
+.stati-attivi-colonna { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem; width: 100%; padding: 0.4rem 0.5rem; text-align: left; font: inherit; color: inherit; cursor: pointer; background: var(--superficie); border: 1px solid var(--attenzione); border-radius: var(--raggio); }
+.stati-attivi-colonna .etichetta-testata { flex-basis: 100%; }
+.stato-attivo-pillola { padding: 0 0.4rem; border-radius: 4px; font-size: 0.82rem; font-weight: 700; color: var(--attenzione); border: 1px solid var(--attenzione); }
+.stato-attivo-pillola small { font-weight: 400; }
+.colonna-risorse .riquadro-gradi h3, .risorse-laterali .riquadro-gradi h3 { font-size: 0.8rem; }
+@media (max-width: 600px) {
+  .testata-comune { margin-left: 0; justify-content: flex-start; }
+  .tasti-crediti-voci { right: auto; left: -8rem; }
+}

@@ -6,6 +6,7 @@
 // Le penalità di Ferite, Affaticamento e Stati sono solo promemoria: i VA mostrati non le
 // includono (le regole del cap. 5 sono situazionali).
 import { allineaStorico } from '../storico.js';
+import { datiTestata, statiAttiviVista } from '../scheda-vista.js';
 import { conAvviso } from './procedi.js';
 import { h, segno } from './dom.js';
 import { avviso } from './avvisi.js';
@@ -168,8 +169,8 @@ export function renderTab(ctx) {
       h('span', { class: 'tab-etichetta' }, t.etichetta ?? t.titolo, t.contatore ? h('small', { class: 'tab-contatore' }, t.contatore) : null)))),
       // Punti Eroe, PV e PM sotto le tab quando stanno a sinistra (da 900 px: css/style.css);
       // su telefono e tablet con le tab in basso restano nella tab Identità
-      inAlto ? null : h('div', { class: 'risorse-laterali', 'aria-label': 'Punti Eroe, Punti Vita e Punti Magia' }, colonnaRisorse(ctx, { ferite: corrente.id === 'identita' }))));
-  const lato = inAlto ? h('aside', { class: 'colonna-risorse', 'aria-label': 'Punti Eroe, Punti Vita e Punti Magia' }, colonnaRisorse(ctx, { ferite: corrente.id === 'identita' })) : null;
+      inAlto ? null : h('div', { class: 'risorse-laterali', 'aria-label': 'Punti Vita, Ferite e Punti Magia' }, colonnaRisorse(ctx, { tab: corrente.id }))));
+  const lato = inAlto ? h('aside', { class: 'colonna-risorse', 'aria-label': 'Punti Vita, Ferite e Punti Magia' }, colonnaRisorse(ctx, { tab: corrente.id })) : null;
 
   const contenuti = {
     identita: tabIdentita, abilita: tabAbilita, combattimento: tabCombattimento, calendario: tabCalendario,
@@ -186,7 +187,8 @@ export function renderTab(ctx) {
   const filigrana = corrente.id === 'identita' && ctx.filigrana !== false ? stemma(id.corporazione, '512-grigio', { classe: 'filigrana', alt: '' }) : null;
   const pannello = h('section', { class: `tab-pannello${filigrana ? ' con-filigrana' : ''}`, id: 'pannello-tab', role: 'tabpanel', 'aria-labelledby': `tab-${corrente.id}` },
     filigrana ? h('div', { class: 'filigrana-contenitore', 'aria-hidden': 'true' }, filigrana) : null,
-    badge ? h('div', { class: 'titolo-tab' }, badge, h('h2', {}, corrente.titolo)) : null,
+    // S4 (11/10/2026): accanto al titolo di ogni tab Punti Eroe, Distintivi e Crediti
+    h('div', { class: 'titolo-tab' }, badge, h('h2', {}, corrente.titolo), testataComune(ctx)),
     ctx.messaggio ? h('p', { class: `riquadro ${ctx.messaggio.tipo}`, role: 'status' }, ctx.messaggio.testo) : null,
     avvisoMaster(ctx.avvisoMaster),
     riquadroScontro(ctx),
@@ -369,14 +371,73 @@ function contatoreTavolo(ctx, { titolo, campo, attuale, massimo, passi = [1, 5],
  * Riquadri dei Punti Vita e dei Punti Magia con barra, bordo colorato e +/−. Compatti nella colonna
  * di sinistra (senza l'elenco dei cristalli, che resta nella tab Magia).
  */
-/** Colonna di sinistra, uguale in ogni tab: Punti Eroe sopra i PV, poi PV e PM (docs/layout-sd.md). */
-function colonnaRisorse(ctx, { ferite = false } = {}) {
+/**
+ * Testata comune (S4, 11/10/2026): accanto al titolo di ogni tab i Punti Eroe (solo il valore e «−»: si spendono; si
+ * riottengono convertendo i Distintivi), i Distintivi (− / + e la conversione del §1.8.3) e i Crediti (il totale si
+ * scrive, i tasti stanno sotto «±»). Prima stavano in Identità, nella colonna di sinistra e nell'Inventario.
+ */
+function testataComune(ctx) {
+  const t = datiTestata(ctx.sessione, ctx.massimi);
   const s = ctx.sessione;
-  const m = ctx.massimi;
+  const tasto = (campo, delta, disabilitato, etichetta) => h('button', {
+    type: 'button', class: 'btn-tavolo btn-mini', disabled: disabilitato, 'aria-label': etichetta, title: etichetta, onclick: () => ctx.azioni.varia(campo, delta),
+  }, delta > 0 ? '+' : '−');
+  // pulsanti da 1 a 1000, meno sopra e più sotto, come nel riquadro di prima
+  const PASSI_CREDITI = [1, 5, 10, 50, 100, 500, 1000];
+  const bc = (delta) => h('button', {
+    type: 'button', class: 'btn-tavolo btn-crediti', onclick: () => ctx.azioni.varia('crediti', delta), disabled: delta < 0 && s.crediti + delta < 0,
+    'aria-label': `${delta > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(delta)} crediti`,
+  }, delta > 0 ? `+${delta}` : `−${-delta}`);
+  return h('div', { class: 'testata-comune', role: 'group', 'aria-label': 'Punti Eroe, Distintivi e Crediti' },
+    h('span', { class: 'voce-testata voce-pe', title: `Punti Eroe: ${t.puntiEroe.valore} su ${t.puntiEroe.massimo ?? '—'}. «−» ne spende uno; si riottengono convertendo i Distintivi (§1.8.3).` },
+      h('span', { class: 'etichetta-testata' }, 'Punti Eroe'), h('strong', { 'aria-live': 'polite' }, String(t.puntiEroe.valore)),
+      tasto('puntiEroe', -1, !t.puntiEroe.puoTogliere, 'Spendi 1 Punto Eroe')),
+    h('span', { class: 'voce-testata voce-distintivi' },
+      h('span', { class: 'etichetta-testata' }, 'Distintivi'), h('strong', { 'aria-live': 'polite' }, String(t.distintivi.valore)),
+      tasto('distintivi', -1, !t.distintivi.puoTogliere, 'Togli 1 Distintivo'), tasto('distintivi', 1, false, 'Aggiungi 1 Distintivo'),
+      h('button', { type: 'button', class: 'btn btn-piccolo', onclick: ctx.azioni.convertiDistintivi, disabled: !t.distintivi.puoConvertire,
+        title: `Converti ${t.distintivi.perPuntoEroe} Distintivi in 1 Punto Eroe (§1.8.3: facoltativo, senza superare la riserva massima)` }, `${t.distintivi.perPuntoEroe} → 1 PE`)),
+    t.crediti
+      ? h('span', { class: 'voce-testata voce-crediti' },
+        h('label', { class: 'etichetta-testata', for: 'crediti-testata' }, 'Crediti'),
+        // il totale si può anche scrivere: si registra come variazione rispetto al valore attuale
+        h('input', { id: 'crediti-testata', type: 'number', min: 0, step: 1, inputmode: 'numeric', class: 'input-crediti', value: s.crediti, 'aria-label': 'Crediti attuali',
+          onchange: (e) => { const n = Math.round(Number(e.target.value)); if (Number.isFinite(n) && n >= 0 && n !== s.crediti) ctx.azioni.varia('crediti', n - s.crediti); } }),
+        h('details', { class: 'tasti-crediti', open: !!ctx.ui?.tastiCrediti || null, ontoggle: (e) => { if (ctx.ui) ctx.ui.tastiCrediti = e.target.open; } },
+          h('summary', { class: 'btn btn-piccolo', title: 'Tasti dei crediti: da ±1 a ±1000', 'aria-label': 'Tasti dei crediti' }, '±'),
+          h('div', { class: 'tasti-crediti-voci' },
+            h('div', { class: 'pulsanti-crediti' },
+              h('div', { class: 'fila-crediti' }, [...PASSI_CREDITI].reverse().map((p) => bc(-p))),
+              h('div', { class: 'fila-crediti' }, PASSI_CREDITI.map((p) => bc(p)))),
+            t.crediti.iniziali !== null ? h('p', { class: 'nota' }, `Saldo iniziale ${crediti(t.crediti.iniziali)} (§2.16.28–29)`) : null)))
+      // senza dotazione iniziale (personaggi creati prima del passo guidato): si propone di applicarla
+      : h('span', { class: 'voce-testata voce-crediti', title: 'Nessuna dotazione iniziale: crediti e oggetti del §2.16 non sono ancora registrati.' },
+        h('span', { class: 'etichetta-testata' }, 'Crediti'), h('strong', {}, '—'),
+        h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => ctx.azioni.modificaCreazione(ctx.passi.equipaggiamento) }, 'Applica la dotazione iniziale')));
+}
+
+/**
+ * Colonna di sinistra (S5, 11/10/2026): PV, Ferite e PM in ogni tab; sotto, gli Stati attivi in sola lettura (un tocco
+ * porta al Combattimento, dove si impostano; nessuno Stato, nessuna riga). In Combattimento, al posto degli Stati (che
+ * lì stanno in alto), Affaticamento e Corruzione sotto i PM (S13). Nell'Inventario il Carico sopra i PV (S28).
+ */
+function colonnaRisorse(ctx, { tab = 'identita' } = {}) {
+  const dc = ctx.tab.tab.find((x) => x.id === 'combattimento')?.dati ?? null;
   return [
-    contatoreTavolo(ctx, { titolo: 'Punti Eroe', campo: 'puntiEroe', attuale: s.puntiEroe, massimo: m.puntiEroe, passi: [1], classe: 'riquadro-pe compatto' }),
-    ...riquadriPvPm(ctx, { compatti: true, ferite }),
+    ...riquadriPvPm(ctx, { compatti: true, ferite: true }),
+    tab === 'combattimento'
+      ? (dc ? h('div', { class: 'ferite-sotto-pv' }, affaticamentoCorruzione(ctx, dc)) : null)
+      : statiAttiviColonna(ctx),
   ];
+}
+
+/** Stati attivi in sola lettura (S5): un tocco porta alla tab Combattimento. Senza Stati attivi non c'è. */
+function statiAttiviColonna(ctx) {
+  const lista = statiAttiviVista(ctx.sessione, ctx.dati);
+  if (!lista.length) return null;
+  return h('button', { type: 'button', class: 'stati-attivi-colonna', title: 'Stati attivi: si impostano nella tab Combattimento (un tocco porta lì)', onclick: () => ctx.azioni.vaiTab('combattimento') },
+    h('span', { class: 'etichetta-testata' }, 'Stati attivi'),
+    lista.map((x) => h('span', { class: 'stato-attivo-pillola', title: x.promemoria ?? null }, x.nome, x.implicato ? h('small', {}, ' (da Svenuto)') : null)));
 }
 
 /** PV e PM; con `ferite` (tab Identità, playtest del 05/10/2026) il riquadro delle Ferite subito sotto i PV. */
@@ -668,7 +729,8 @@ function tabInventario(ctx) {
   const d = ctx.tab.tab.find((t) => t.id === 'combattimento')?.dati ?? null;
   const applicata = dotazioneApplicata(ctx.scelte.equipaggiamento);
   return [
-    h('div', { class: 'griglia-tavolo testa-inventario' }, riquadroCarico(ctx), riquadroCrediti(ctx)),
+    // S27 (11/10/2026): i Crediti stanno nella testata, accanto al titolo
+    h('div', { class: 'griglia-tavolo testa-inventario' }, riquadroCarico(ctx)),
     d?.avvisiEquipaggiamento?.length ? h('div', { class: 'riquadro attenzione' },
       h('p', {}, h('strong', {}, 'Equipaggiamento da controllare (avvisi, non blocchi: decide il master):')),
       h('ul', {}, d.avvisiEquipaggiamento.map((a) => h('li', {}, a)))) : null,
@@ -676,7 +738,7 @@ function tabInventario(ctx) {
     sezione('Oggetti',
       h('p', { class: 'nota' }, 'Solo gli oggetti impugnati, imbracciati o indossati cambiano i valori. Il deposito comune tiene l’oggetto fuori dal carico e fuori dal tavolo.',
         applicata ? ' La dotazione iniziale (§2.16) si cambia dal passo Equipaggiamento della creazione.' : null),
-      // senza dotazione iniziale il pulsante per applicarla sta nel riquadro Crediti, qui sopra
+      // senza dotazione iniziale il pulsante per applicarla sta nella testata, accanto ai Crediti
       renderEquipaggiamento({
         dati: ctx.dati, voci: ctx.scelte.equipaggiamento, ui: ctx.ui,
         aggiorna: ctx.azioni.equipaggiamento, ridisegna: ctx.azioni.ridisegna,
@@ -684,45 +746,6 @@ function tabInventario(ctx) {
         compra: ctx.azioni.compra, crediti: ctx.sessione.crediti, storico: ctx.azioni.storico,
       })),
   ];
-}
-
-/**
- * Crediti attuali (§2.16.28, valore di sessione): +/− al tavolo. Senza dotazione iniziale
- * nell'inventario (personaggi creati prima del passo guidato) propone di applicarla.
- */
-function riquadroCrediti(ctx) {
-  const s = ctx.sessione;
-  if (s.crediti === null) {
-    return h('div', { class: 'contatore-tavolo riquadro-crediti' },
-      h('h3', {}, 'Crediti'),
-      h('p', { class: 'nota' }, 'Nessuna dotazione iniziale: crediti e oggetti del §2.16 non sono ancora registrati.'),
-      bottoneDotazione(ctx));
-  }
-  // pulsanti da 1 a 1000, meno sopra e più sotto; ±500 e ±1000 («grande») spariscono per primi se
-  // il riquadro è stretto (si fanno con il campo del totale), i piccoli restano sempre
-  const PASSI_CREDITI = [1, 5, 10, 50, 100, 500, 1000];
-  const b = (delta) => h('button', {
-    type: 'button', class: `btn-tavolo btn-crediti${Math.abs(delta) >= 500 ? ' grande' : ''}`,
-    onclick: () => ctx.azioni.varia('crediti', delta), disabled: delta < 0 && s.crediti + delta < 0,
-    'aria-label': `${delta > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(delta)} crediti`,
-  }, delta > 0 ? `+${delta}` : `−${-delta}`);
-  return h('div', { class: 'contatore-tavolo riquadro-crediti' },
-    h('h3', {}, 'Crediti'),
-    // il totale si può anche scrivere: si registra come variazione rispetto al valore attuale
-    h('p', { class: 'valore-tavolo' }, h('input', {
-      type: 'number', min: 0, step: 1, inputmode: 'numeric', class: 'input-crediti', value: s.crediti, 'aria-label': 'Crediti attuali',
-      onchange: (e) => { const n = Math.round(Number(e.target.value)); if (Number.isFinite(n) && n >= 0 && n !== s.crediti) ctx.azioni.varia('crediti', n - s.crediti); },
-    })),
-    h('div', { class: 'pulsanti-crediti' },
-      h('div', { class: 'fila-crediti' }, [...PASSI_CREDITI].reverse().map((p) => b(-p))),
-      h('div', { class: 'fila-crediti' }, PASSI_CREDITI.map((p) => b(p)))),
-    Number.isInteger(s.creditiIniziali) ? h('p', { class: 'nota' }, `Saldo iniziale ${crediti(s.creditiIniziali)} (§2.16.28–29)`) : null);
-}
-
-/** Porta al passo Equipaggiamento del wizard, dove si sceglie e si applica la dotazione iniziale. */
-function bottoneDotazione(ctx) {
-  return h('button', { type: 'button', class: 'btn primario', onclick: () => ctx.azioni.modificaCreazione(ctx.passi.equipaggiamento) },
-    'Applica la dotazione iniziale');
 }
 
 /**
@@ -1063,17 +1086,7 @@ function tabIdentita(ctx, d) {
         d.salvezze.some((x) => x.effettivo !== x.totale) ? h('p', { class: 'nota' }, 'Con le condizioni della sessione (Ferite, Affaticamento, Corruzione, Stati).') : null,
         usiSalvezze(ctx, d.salvezze))),
 
-    h('div', { class: 'griglia-tre' },
-      // Punti Eroe: nella colonna di sinistra; qui solo dove la colonna non si vede (css/style.css)
-      contatoreTavolo(ctx, { titolo: 'Punti Eroe', campo: 'puntiEroe', attuale: s.puntiEroe, massimo: m.puntiEroe, passi: [1], classe: 'riquadro-pe pe-identita' }),
-      contatoreTavolo(ctx, {
-        titolo: 'Distintivi', campo: 'distintivi', attuale: s.distintivi, massimo: null, passi: [1],
-        extra: h('button', {
-          type: 'button', class: 'btn', onclick: ctx.azioni.convertiDistintivi,
-          disabled: s.distintivi < m.distintiviPerPuntoEroe || s.puntiEroe >= m.puntiEroe,
-          title: '§1.8.3: facoltativo, senza superare la riserva massima',
-        }, `Converti ${m.distintiviPerPuntoEroe} in 1 Punto Eroe`),
-      })),
+    // S4 (11/10/2026): Punti Eroe e Distintivi stanno nella testata, accanto al titolo di ogni tab
 
     sezione('Combattimento e movimento',
       ctx.tab.scheda.tavolo
@@ -1539,15 +1552,23 @@ function riquadroFerite(ctx) {
     nota: 'Ogni nuova Ferita fa avanzare di un gradino. La penalità è cumulativa a VA e Prove Salvezza.' });
 }
 
+/** Affaticamento (§5.19) e Corruzione (§5.20), modificabili: sotto i PM nella colonna di sinistra del Combattimento (S13). */
+function affaticamentoCorruzione(ctx, d) {
+  const s = ctx.sessione;
+  return [
+    gradiCompatti(ctx, { titolo: 'Affaticamento (§5.19)', campo: 'affaticamento', attuale: s.affaticamento, gradi: d.affaticamento,
+      nota: 'Si applica solo la penalità dello Stato attuale, a tutte le Prove di Caratteristica, Abilità e Salvezza.' }),
+    d.corruzione?.length ? gradiCompatti(ctx, { titolo: 'Corruzione (§5.20)', campo: 'corruzione', attuale: s.corruzione ?? 0,
+      gradi: d.corruzione.map((x) => ({ nome: x.nome, penalita: x.penalita, descrizione: x.manifestazioni })),
+      nota: 'Corruzione Oscura (CROS): si applica solo la penalità dello Stato attuale, a tutte le Prove di Caratteristica, Abilità e Salvezza, comprese quelle contro ulteriori esposizioni. Non cambia Iniziativa, Movimento, Azioni, danni, Armatura, PV e PM. Oscuro: il personaggio diventa un PNG. «Nuova sessione» non la azzera.' }) : null,
+  ];
+}
+
 function condizioniModificabili(ctx, d) {
   const s = ctx.sessione;
   return [
         riquadroFerite(ctx),
-        gradiCompatti(ctx, { titolo: 'Affaticamento (§5.19)', campo: 'affaticamento', attuale: s.affaticamento, gradi: d.affaticamento,
-          nota: 'Si applica solo la penalità dello Stato attuale, a tutte le Prove di Caratteristica, Abilità e Salvezza.' }),
-        d.corruzione?.length ? gradiCompatti(ctx, { titolo: 'Corruzione (§5.20)', campo: 'corruzione', attuale: s.corruzione ?? 0,
-          gradi: d.corruzione.map((x) => ({ nome: x.nome, penalita: x.penalita, descrizione: x.manifestazioni })),
-          nota: 'Corruzione Oscura (CROS): si applica solo la penalità dello Stato attuale, a tutte le Prove di Caratteristica, Abilità e Salvezza, comprese quelle contro ulteriori esposizioni. Non cambia Iniziativa, Movimento, Azioni, danni, Armatura, PV e PM. Oscuro: il personaggio diventa un PNG. «Nuova sessione» non la azzera.' }) : null,
+        ...affaticamentoCorruzione(ctx, d),
         h('section', { class: 'riquadro riquadro-gradi', 'aria-label': 'Stati attivi' },
           h('header', { class: 'testa-gradi' }, h('h3', {}, 'Stati (§5.18)'),
             h('span', { class: `grado-attuale${s.statiAttivi.length ? ' con-penalita' : ''}` }, s.statiAttivi.length ? `${s.statiAttivi.length} attiv${s.statiAttivi.length === 1 ? 'o' : 'i'}` : 'nessuno')),

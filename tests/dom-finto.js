@@ -21,6 +21,7 @@ class Elemento extends Nodo {
   getAttribute(k) { return this.attributi[k] ?? null; }
   addEventListener(tipo, fn) { (this.ascolti[tipo] ??= []).push(fn); }
   append(...figli) { for (const f of figli) this.aggiungi(f, false); }
+  replaceChildren(...figli) { for (const c of [...this.children]) c.remove(); this.testo = ''; this.append(...figli); }
   prepend(...figli) { for (const f of figli.reverse()) this.aggiungi(f, true); }
   aggiungi(f, inTesta) {
     if (!(f instanceof Elemento)) { this.testo += String(f); return; }
