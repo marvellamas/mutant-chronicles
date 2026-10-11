@@ -26,6 +26,8 @@ import { leggiScontroAperto, leggiScontro, salvaScontro, leggiMovimentoRound } f
 import { registraRiga } from '../scontro.js';
 import { elencoUnito, confronta, chiaveDaFile, chiavePersonaggio, messaggioSalvataggio, attesaRitentativo, nomeFileLibero, haNome, fileProvvisorio } from '../cartella.js';
 import { renderTavolo } from './tavolo.js';
+// Galleria (N1, 13/10/2026): l'immagine che il master mostra, sopra la scheda, con la ✕ per chiuderla da soli
+import { collegaGalleria } from './galleria-giocatori.js';
 import { renderMappa } from './mappa/pagina.js';
 import { renderGiocatori } from './mappa/giocatori.js';
 import { creaAllarme } from './allarme.js';
@@ -514,15 +516,20 @@ async function controllaScheda() {
 
 // 08/10: avvisi del master alla scheda del PG aperta sul tablet («Chiedi di muovere», «Tocca a te»): un flusso di
 // eventi (server.mjs → /api/tablet/eventi) finché il PG è in uno scontro aperto e la scheda è aperta
+// N1: il flusso resta aperto anche fuori da uno scontro, perché la Galleria arrivi comunque (punto 5)
 let flussoAvvisi = null; // { pg, es }
 let allarmeScheda = null;
-function flussoAvvisiScheda(chiave, coll) {
-  const vuole = coll && chiave && inScheda() ? chiave : null;
+let galleriaScheda = null;
+function flussoAvvisiScheda(chiave) {
+  const vuole = chiave && inScheda() ? chiave : null;
   if (flussoAvvisi?.pg === vuole) return;
   flussoAvvisi?.es.close();
   flussoAvvisi = null;
+  galleriaScheda?.chiudi();
+  galleriaScheda = null;
   if (!vuole || typeof EventSource !== 'function') return;
   const es = new EventSource(`api/tablet/eventi?pg=${encodeURIComponent(vuole)}`);
+  galleriaScheda = collegaGalleria(es);
   es.addEventListener('avviso', (e) => {
     let a;
     try { a = JSON.parse(e.data); } catch { return; }
@@ -533,7 +540,7 @@ function flussoAvvisiScheda(chiave, coll) {
   });
   flussoAvvisi = { pg: vuole, es };
 }
-window.addEventListener('hashchange', () => { if (!inScheda()) { flussoAvvisiScheda(null, null); allarmeScheda?.chiudi(); } });
+window.addEventListener('hashchange', () => { if (!inScheda()) { flussoAvvisiScheda(null); allarmeScheda?.chiudi(); } });
 
 /** Chiave del personaggio aperto nella cartella del server (src/cartella.js), o null se non c'è. */
 function chiaveCartellaAperta() {
@@ -568,7 +575,7 @@ async function aggiornaRoundScontro() {
   }
   const prima = stato.scontroPg;
   stato.scontroPg = coll;
-  flussoAvvisiScheda(chiave, coll);
+  flussoAvvisiScheda(chiave);
   const dati = stato.dati;
   if (!prima && coll) {
     stato.roundFinale = null;

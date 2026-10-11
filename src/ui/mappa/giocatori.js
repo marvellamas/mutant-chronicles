@@ -18,6 +18,8 @@
 import { presetDaLinea } from '../../dalla-mappa.js';
 import { CHIAVE_DALLA_MAPPA } from '../attacco.js';
 import { h, svuota } from '../dom.js';
+// Galleria (N1, 13/10/2026): l'immagine che il master mostra, sopra la mappa, con la ✕ per chiuderla da soli
+import { collegaGalleria } from '../galleria-giocatori.js';
 import { cameraIniziale, sposta, adatta, adattaRettangolo, schermoDaMappa, rettangoloVisibile } from '../../mappa/camera.js';
 import { dimensioniMappa, lineeVisibili } from '../../mappa/griglia.js';
 import { daBase64 } from '../../mappa/celle.js';
@@ -681,6 +683,8 @@ export function renderGiocatori(radice, ctx) {
     // il master chiede «Adatta allo schermo» (sezione «Vista giocatori»)
     flusso?.addEventListener('adatta', () => adattaSchermo());
     flusso?.addEventListener('avviso', (e) => { try { const a = JSON.parse(e.data); mostraAllarme(a.testo, a.tipo); } catch { /* evento rovinato */ } });
+    // N1: «Mostra ai giocatori» e «Nascondi a tutti» del master
+    galleria?.ascolta(flusso);
   }
   // ritocchi del 07/10: la vista giocatori si aggiorna da sola a una versione nuova dell'app (a schermo intero la barra
   // «Nuova versione» non si vede, e una finestra aperta prima dell'aggiornamento restava sul codice vecchio): controllo
@@ -694,6 +698,8 @@ export function renderGiocatori(radice, ctx) {
       if (v && serveAggiornamento(caricata, v.versione)) location.href = urlRicarica(location.href, v.versione);
     } catch { /* senza rete: si riprova al prossimo giro */ }
   };
+  // N1: la Galleria. Un evento del flusso apre o chiude l'immagine; la ✕ la chiude solo su questo schermo
+  const galleria = collegaGalleria(null);
   const giroVersione = setInterval(controllaVersione, CONTROLLO_VERSIONE_MS);
   apriFlusso();
   // a schermo intero (pulsante o F11, anche sul secondo monitor) solo mappa e barra dell'Iniziativa: niente testata,
@@ -713,6 +719,7 @@ export function renderGiocatori(radice, ctx) {
 
   return () => {
     st.chiusa = true;
+    galleria.chiudi();
     audio.chiudi();
     allarme.distruggi();
     clearInterval(giro);

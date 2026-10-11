@@ -34,6 +34,8 @@ import { gradiTaumaturgici } from '../incantesimi.js';
 import { statoRicarica, disponibili, carichiniDi } from '../ricarica.js';
 import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 import { pannelloAttacco, presetInAttesa } from './attacco.js';
+// Galleria (N1, 13/10/2026): le immagini già mostrate dal master in questa campagna
+import { apriGalleriaGiocatore } from './galleria-giocatori.js';
 import { pugniPotenziati, profiloSenzArmi, profiloOndaInteriore, senzArmiDisponibile, SENZ_ARMI, ONDA, talentiAttacco, valoriDisciplina } from '../attacco.js';
 import { pannelloLancio } from './lancio.js';
 import { pulsanteMuovi } from '../round-scontro.js';
@@ -160,7 +162,9 @@ export function renderTab(ctx) {
         ? h('button', { type: 'button', class: `btn primario${ctx.avvisoSalita ? ' con-avviso' : ''}`, disabled: !!ctx.motivoNoSalita, title: ctx.motivoNoSalita ?? ctx.avvisoSalita, onclick: azioni.sali }, `Sali al livello ${id.livello + 1}`)
         : null,
       menuAzioni(ctx),
-      menuImpostazioni(ctx)));
+      menuImpostazioni(ctx),
+      // N1: ultimo pulsante della barra, solo con il server (le immagini stanno sul PC del master)
+      ctx.server ? h('button', { type: 'button', class: 'btn btn-galleria', title: 'Le immagini che il master ha mostrato in questa campagna: un tocco le apre grandi', onclick: () => apriGalleriaGiocatore(ctx.dati) }, '🖼 Galleria') : null));
 
   // riga in alto (predefinita) o colonna: con i tab in alto la colonna di sinistra con Punti Eroe, PV
   // e PM è un elemento a sé (colonna-risorse), visibile in ogni tab (docs/layout-sd.md, pezzo 1)
