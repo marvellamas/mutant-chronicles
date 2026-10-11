@@ -852,7 +852,7 @@
         "| Reflex | 2 | Massimo 80 Q; nessuna Azione aggiuntiva. |",
         "| Ottico | 4 | Massimo 500 Q; richiede almeno 2 Azioni Principali totali. |",
         "| Di Precisione | 6 | Entro la gittata massima dell’arma; richiede almeno 2 Azioni Principali totali. |",
-        "Un mirino non può trasformare la penalità in un bonus positivo."
+        "Reflex, Ottico e Di precisione riducono soltanto la penalità di distanza, senza trasformarla in un bonus positivo."
       ],
       "_nota": "Riduzione, distanza massima e Azioni minime di ogni mirino sono nel catalogo (accessori_armi → mirino); qui la regola generale: la riduzione non supera la penalità di distanza."
     },
