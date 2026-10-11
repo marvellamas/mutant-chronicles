@@ -128,9 +128,9 @@ export function renderGiocatori(radice, ctx) {
       // M1 (11/10): i livelli arrivano già normalizzati dal server (src/mappa/vista.js), uno per uno
       const sov = st.vista?.sovrapposizioni ?? {};
       const vede = (id) => sov[id] !== false;
-      if (st.vista && (vede('muri') || vede('terreno'))) disegnaMuri(c, { scena: st.vista, cam: st.cam, info, muri: vede('muri') ? daBase64(st.vista.muri) : null, terreno: vede('terreno') ? daBase64(st.vista.terreno) : null, colori: coloriAree(el.riquadro) });
+      if (st.vista && (vede('muri') || vede('terreno'))) disegnaMuri(c, { scena: st.vista, cam: st.cam, info, muri: vede('muri') ? daBase64(st.vista.muri) : null, terreno: vede('terreno') ? daBase64(st.vista.terreno) : null, colori: coloriAree(el.riquadro), aspetto: ctx.dati.mappa.muri_linee.aspetto });
       // M2 (11/10): muri disegnati a mano libera, con lo stesso interruttore dei muri a quadretto
-      if (st.vista?.muriLinee?.length && vede('muri')) disegnaMuriLinee(c, { scena: st.vista, cam: st.cam, linee: st.vista.muriLinee, colore: coloriAree(el.riquadro).muro });
+      if (st.vista?.muriLinee?.length && vede('muri')) disegnaMuriLinee(c, { scena: st.vista, cam: st.cam, linee: st.vista.muriLinee, colore: coloriAree(el.riquadro).muro, aspetto: ctx.dati.mappa.muri_linee.aspetto });
       if (st.vista) for (const t of [...templateVisibili(st.vista.template ?? [], sov), ...(direttaAttuale()?.template ?? [])]) disegnaTemplateGiocatori(c, info, t);
       // porte (fase 2, lotto 2): già filtrate dal server (niente segrete non rivelate, niente sotto la nebbia)
       // M3 (11/10): le porte arrivano col loro aggancio (src/mappa/porte.js → portePerGiocatori) e si disegnano sul muro

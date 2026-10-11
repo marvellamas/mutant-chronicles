@@ -202,7 +202,8 @@ export function portePerGiocatori(scena, dati = null) {
   const nebbia = daBase64(scena.nebbia.coperti);
   return (scena.porte ?? []).filter((p) => !p.segreta && !cella(nebbia, C, R, p.q[0], p.q[1]))
     // M3 (11/10): anche l'aggancio al muro, così i giocatori la vedono dove la vede il master
-    .map((p) => ({ id: p.id, q: [...p.q], stato: p.stato, orientamento: orientamentoPorta(scena, p), ...(dati ? { aggancio: agganciaDiPorta(scena, p, dati) } : p.aggancio ? { aggancio: p.aggancio } : {}) }));
+    // 12/10: e la geometria già calcolata (centrata nello spessore del muro), la stessa del master
+    .map((p) => ({ id: p.id, q: [...p.q], stato: p.stato, orientamento: orientamentoPorta(scena, p), ...(dati ? { aggancio: agganciaDiPorta(scena, p, dati), geo: geometriaPorta(scena, p, dati) } : p.aggancio ? { aggancio: p.aggancio } : {}) }));
 }
 
 /**
@@ -241,3 +242,59 @@ export function errorePorta(p, colonne, righe) {
 }
 
 
+
+// ---------------------------------------------------------------------------
+// 12/10/2026 (prove di Marcello): la porta taglia il muro. Dove c'è una porta il muro si interrompe per la larghezza
+// della porta e al suo posto si disegna la porta, qualunque sia il suo stato; togliendola il muro si richiude (il
+// muro non viene mai modificato: il vano si calcola dalla porta). Per le regole non cambia nulla: chiusa o bloccata
+// blocca come il muro, aperta lascia passare (muriEffettivi, lineeEffettive).
+
+/**
+ * Dove e come disegnare una porta, in Q: { centro, direzione (unitaria), larghezza, spessore, spessoreMuro, su }.
+ *   su: 'disegnato' (agganciata a un muro disegnato), 'quadretto' (il suo Q è un quadretto di muro: al centro del Q,
+ *   lungo il muro), 'griglia' (sulla linea della griglia del lato dell'aggancio).
+ * Spessore: quello della porta (data/mappa.json → porte.spessore_q) se è più sottile del muro, e allora sta al centro
+ * dello spessore del muro; altrimenti lo spessore del muro. Vale anche per le porte salvate prima (si calcola qui).
+ */
+export function geometriaPorta(scena, p, dati) {
+  const R = dati?.mappa?.porte ?? dati?.porte ?? {};
+  const propria = R.spessore_q ?? 0.25;
+  const a = p.aggancio;
+  if (a?.muro && Array.isArray(a.punto)) {
+    const muro = lineeDi(scena).find((l) => l.id === a.muro) ?? null;
+    const spessoreMuro = muro?.spessore ?? a.spessore ?? propria;
+    const d = Array.isArray(a.da) && Array.isArray(a.a) ? [a.a[0] - a.da[0], a.a[1] - a.da[1]] : [1, 0];
+    const len = Math.hypot(d[0], d[1]) || 1;
+    return { centro: [...a.punto], direzione: [d[0] / len, d[1] / len], larghezza: a.larghezza ?? R.larghezza_q ?? 1, spessore: Math.min(propria, spessoreMuro), spessoreMuro, su: 'disegnato' };
+  }
+  const [x, y] = p.q;
+  const { colonne: C, righe: Rg } = scena.griglia;
+  const verticale = orientamentoPorta(scena, p) === 'verticale';
+  const direzione = verticale ? [0, 1] : [1, 0];
+  // un Q di muro (la maschera dei muri a quadretto): il muro è spesso un Q, la porta sta al centro
+  if (scena.muri && cella(daBase64(scena.muri), C, Rg, x, y)) {
+    return { centro: [x + 0.5, y + 0.5], direzione, larghezza: 1, spessore: Math.min(propria, 1), spessoreMuro: 1, su: 'quadretto' };
+  }
+  const lato = a?.lato && LATI.includes(a.lato) ? a.lato : verticale ? 'o' : 'n';
+  const centri = { n: [x + 0.5, y], s: [x + 0.5, y + 1], o: [x, y + 0.5], e: [x + 1, y + 0.5] };
+  return { centro: centri[lato], direzione: ASSE[lato] === 'verticale' ? [0, 1] : [1, 0], larghezza: R.larghezza_q ?? 1, spessore: a?.spessore ?? propria, spessoreMuro: null, su: 'griglia' };
+}
+
+/**
+ * I muri disegnati **da disegnare**: interrotti per la larghezza di ogni porta agganciata, aperta o chiusa (al posto
+ * del muro si disegna la porta). `perGiocatori`: una porta segreta non interrompe nulla (per loro è muro).
+ */
+export function lineePerDisegno(scena, dati = null, { perGiocatori = false } = {}) {
+  const linee = lineeDi(scena);
+  if (!linee.length) return linee;
+  const porte = (scena.porte ?? []).filter((p) => p.aggancio?.muro && !(perGiocatori && p.segreta));
+  return porte.length ? bucaConPorte(linee, porte, dati?.mappa?.porte?.larghezza_q ?? dati?.porte?.larghezza_q ?? 1) : linee;
+}
+
+/** La maschera dei muri a quadretto **da disegnare** per il master: senza i Q delle porte (lì si disegna la porta). */
+export function muriPerDisegno(scena) {
+  const { colonne: C, righe: R } = scena.griglia;
+  const m = daBase64(scena.muri);
+  for (const p of scena.porte ?? []) impostaCella(m, C, R, p.q[0], p.q[1], false);
+  return m;
+}

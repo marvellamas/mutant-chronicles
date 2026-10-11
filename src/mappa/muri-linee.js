@@ -135,11 +135,15 @@ export function aggancioSuLinea(linee, p, raggio) {
  */
 export function bucaConPorte(linee, porte, larghezzaPredefinita = 1) {
   const buchi = new Map();
+  const ids = new Set((linee ?? []).map((l) => l.id));
   for (const p of porte ?? []) {
     const a = p.aggancio;
     if (!a?.muro || !Array.isArray(a.punto)) continue;
-    if (!buchi.has(a.muro)) buchi.set(a.muro, []);
-    buchi.get(a.muro).push({ centro: a.punto, raggio: (a.larghezza ?? larghezzaPredefinita) / 2 });
+    // 12/10: se il muro della porta non c'è più con quell'id (tagliato dalla gomma, annullato), vale il muro che passa lì
+    const muro = ids.has(a.muro) ? a.muro : aggancioSuLinea(linee, a.punto, 0.2)?.muro;
+    if (!muro) continue;
+    if (!buchi.has(muro)) buchi.set(muro, []);
+    buchi.get(muro).push({ centro: a.punto, raggio: (a.larghezza ?? larghezzaPredefinita) / 2 });
   }
   if (!buchi.size) return linee ?? [];
   const out = [];
@@ -291,5 +295,144 @@ export function erroreDatiMuriLinee(M) {
     const v = M[k];
     if (!(typeof v === 'number' && v > min - 1e-9)) return { chiave: `muri_linee.${k}`, problema: `numero da ${min} in su` };
   }
+  // 12/10: «Raddrizza» e aspetto dei muri
+  const D = M.raddrizza;
+  if (!D || typeof D.predefinito !== 'boolean' || !(D.tolleranza_q > 0) || !(D.angolo_gradi > 0 && D.angolo_gradi <= 90) || !(D.soglia_gradi >= 0 && D.soglia_gradi <= D.angolo_gradi / 2)) return { chiave: 'muri_linee.raddrizza', problema: '{ predefinito, tolleranza_q > 0, angolo_gradi fino a 90, soglia_gradi fino a metà dell’angolo }' };
+  const A = M.aspetto;
+  const colore = (v) => typeof v === 'string' && /^#[0-9a-fA-F]{6}$/.test(v);
+  if (!A || !colore(A.colore) || !colore(A.bordo) || !colore(A.selezione) || !(A.bordo_px >= 0 && A.bordo_px <= 8) || !(A.quadretto_opacita > 0 && A.quadretto_opacita <= 1)) return { chiave: 'muri_linee.aspetto', problema: '{ colore, bordo, selezione: #rrggbb; bordo_px da 0 a 8; quadretto_opacita fra 0 e 1 }' };
   return null;
+}
+
+// ---------------------------------------------------------------------------
+// Correzioni dopo le prove di Marcello (12/10/2026): la gomma taglia il muro dove passa (il resto rimane); un muro si
+// seleziona e si elimina intero; il tratto a mano si raddrizza al rilascio (pochi vertici, angoli a multipli di 15°),
+// con Maiusc è una linea dritta, oppure si mette punto per punto.
+
+/** L'intervallo [t0, t1] del tratto a→b che sta nel rettangolo r = { x0, y0, x1, y1 } (Liang–Barsky), oppure null. */
+function intervalloNelRettangolo(a, b, r) {
+  let t0 = 0, t1 = 1;
+  const d = [b[0] - a[0], b[1] - a[1]];
+  for (const [p, q] of [[-d[0], a[0] - r.x0], [d[0], r.x1 - a[0]], [-d[1], a[1] - r.y0], [d[1], r.y1 - a[1]]]) {
+    if (Math.abs(p) < 1e-12) { if (q < 0) return null; continue; }
+    const t = q / p;
+    if (p < 0) { if (t > t1) return null; if (t > t0) t0 = t; } else { if (t < t0) return null; if (t < t1) t1 = t; }
+  }
+  return t1 > t0 ? [t0, t1] : null;
+}
+
+const dentroForma = (a, b, forma) => (forma.tipo === 'cerchio' ? intervalloNelCerchio(a, b, forma.centro, forma.raggio) : intervalloNelRettangolo(a, b, forma));
+const lunghezza = (punti) => punti.slice(1).reduce((s, p, i) => s + Math.hypot(p[0] - punti[i][0], p[1] - punti[i][1]), 0);
+
+/**
+ * La gomma: i muri disegnati tagliati dove passa la forma ({ tipo: 'rettangolo', x0, y0, x1, y1 } oppure
+ * { tipo: 'cerchio', centro, raggio }, in Q). La parte dentro la forma sparisce, il resto del muro rimane: un muro
+ * tagliato in mezzo diventa due muri (id nuovi), uno tagliato in fondo si accorcia. I pezzi più corti di `minimo` Q
+ * si buttano. I muri non toccati restano identici (stesso oggetto).
+ * @returns {{ linee, toccate: string[] }} toccate: gli id dei muri di partenza che la gomma ha preso
+ */
+export function tagliaLinee(linee, forma, { minimo = 0.1 } = {}) {
+  const out = [];
+  const toccate = [];
+  for (const l of linee ?? []) {
+    const r = riquadro(l);
+    const fuori = forma.tipo === 'cerchio'
+      ? !r || forma.centro[0] + forma.raggio < r.x0 || forma.centro[0] - forma.raggio > r.x1 || forma.centro[1] + forma.raggio < r.y0 || forma.centro[1] - forma.raggio > r.y1
+      : !r || forma.x1 < r.x0 || forma.x0 > r.x1 || forma.y1 < r.y0 || forma.y0 > r.y1;
+    if (fuori) { out.push(l); continue; }
+    const pezzi = [];
+    let corrente = null;
+    let tagliato = false;
+    const chiudi = () => { if (corrente && corrente.length >= 2) pezzi.push(corrente); corrente = null; };
+    for (const [a, b] of tratti(l)) {
+      const dentro = dentroForma(a, b, forma);
+      if (!dentro) { if (corrente) corrente.push(b); else corrente = [a, b]; continue; }
+      tagliato = true;
+      const punto = (t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
+      if (dentro[0] > 1e-6) { if (corrente) corrente.push(punto(dentro[0])); else corrente = [a, punto(dentro[0])]; }
+      chiudi();
+      if (dentro[1] < 1 - 1e-6) corrente = [punto(dentro[1]), b];
+    }
+    chiudi();
+    if (!tagliato) { out.push(l); continue; }
+    toccate.push(l.id);
+    const base = l.id.replace(/-t[0-9a-z]+$/, '').slice(0, 60);
+    let n = 0;
+    for (const p of pezzi) {
+      if (lunghezza(p) < minimo) continue;
+      out.push(nuovaLinea({ id: `${base}-t${(Date.now() % 1e6).toString(36)}${(contatoreTagli++).toString(36)}${n++}`, punti: p, spessore: l.spessore }));
+    }
+  }
+  return { linee: out, toccate };
+}
+let contatoreTagli = 0;
+
+/**
+ * La voce di «annulla» di una passata di gomma (o di qualunque cambio dei muri disegnati): da `iniziali` (i muri prima
+ * della passata) a quelli della scena adesso. Senza differenze la scena resta com'è.
+ */
+export function conVoceMuriLinee(scena, iniziali, dati, adesso = new Date()) {
+  const ora = lineeDi(scena);
+  const prima = Array.isArray(iniziali) ? iniziali : [];
+  const idOra = new Set(ora.map((l) => l.id));
+  const idPrima = new Set(prima.map((l) => l.id));
+  const tolte = prima.filter((l) => !idOra.has(l.id));
+  const aggiunte = ora.filter((l) => !idPrima.has(l.id));
+  if (!tolte.length && !aggiunte.length) return scena;
+  return conMuriLinee({ ...scena, muriLinee: prima }, { togli: tolte.map((l) => l.id), aggiungi: aggiunte }, dati, adesso);
+}
+
+/** Il muro disegnato sotto il punto p (entro `raggio` Q dal tratto, più mezzo spessore), o null: per selezionarlo. */
+export const lineaSotto = (linee, p, raggio = 0.3) => lineeVicine(linee, p, raggio)[0]?.linea ?? null;
+
+/** Semplifica una spezzata (Ramer–Douglas–Peucker): toglie i punti che distano meno di `tolleranza` Q dalla corda. */
+export function semplifica(punti, tolleranza) {
+  if (!Array.isArray(punti) || punti.length <= 2) return punti ?? [];
+  let massimo = 0, indice = 0;
+  const a = punti[0], b = punti[punti.length - 1];
+  for (let i = 1; i < punti.length - 1; i++) {
+    const d = distanzaPuntoSegmento(punti[i], a, b);
+    if (d > massimo) { massimo = d; indice = i; }
+  }
+  if (massimo <= tolleranza) return [a, b];
+  const sx = semplifica(punti.slice(0, indice + 1), tolleranza);
+  const dx = semplifica(punti.slice(indice), tolleranza);
+  return [...sx.slice(0, -1), ...dx];
+}
+
+/**
+ * Aggancia la direzione di ogni tratto al multiplo di `passo` gradi più vicino, se dista al massimo `soglia` gradi
+ * (altrimenti il tratto resta com'è). La lunghezza dei tratti non cambia; il primo punto resta fermo.
+ */
+export function agganciaAngoli(punti, passo = 15, soglia = 7) {
+  if (!Array.isArray(punti) || punti.length < 2) return punti ?? [];
+  const out = [[...punti[0]]];
+  for (let i = 1; i < punti.length; i++) {
+    const v = [punti[i][0] - punti[i - 1][0], punti[i][1] - punti[i - 1][1]];
+    const len = Math.hypot(v[0], v[1]);
+    const gradi = Math.atan2(v[1], v[0]) * 180 / Math.PI;
+    const vicino = Math.round(gradi / passo) * passo;
+    const ang = Math.abs(gradi - vicino) <= soglia ? vicino : gradi;
+    const rad = ang * Math.PI / 180;
+    const u = out[out.length - 1];
+    out.push([u[0] + len * Math.cos(rad), u[1] + len * Math.sin(rad)]);
+  }
+  return out;
+}
+
+/** Le regole di «Raddrizza» dai dati (data/mappa.json → muri_linee.raddrizza). */
+export const regoleRaddrizza = (dati) => dati?.mappa?.muri_linee?.raddrizza ?? dati?.muri_linee?.raddrizza ?? { predefinito: true, tolleranza_q: 0.3, angolo_gradi: 15, soglia_gradi: 5 };
+
+/**
+ * «Raddrizza»: il tratto fatto a mano diventa pochi segmenti dritti (via il tremolio; un tratto quasi dritto diventa
+ * un segmento solo), con gli angoli agganciati ai multipli di 15° quando ci sono vicini.
+ */
+export function raddrizza(punti, dati) {
+  const r = regoleRaddrizza(dati);
+  return agganciaAngoli(semplifica(punti, r.tolleranza_q), r.angolo_gradi, r.soglia_gradi);
+}
+
+/** Con Maiusc: una linea dritta dal punto di partenza al punto attuale (con «Raddrizza», l'angolo si aggancia). */
+export function trattoDritto(da, a, dati = null) {
+  return dati ? agganciaAngoli([da, a], regoleRaddrizza(dati).angolo_gradi, regoleRaddrizza(dati).soglia_gradi) : [[...da], [...a]];
 }

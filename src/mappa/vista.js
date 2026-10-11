@@ -17,6 +17,7 @@
 // i partecipanti il cui token si vede (e i PG senza token in mappa).
 // La nebbia arriva intera: i giocatori la vedono piena (§5). Limite accettato: i pixel dell'immagine di fondo arrivano
 // comunque al dispositivo (decisione 118, ex A.130).
+import { lineePerDisegno } from './porte.js';
 import { nebbiaAutomaticaAttiva, mappaSemplice } from './semplice.js';
 import { daBase64, inBase64, cella, senza } from './celle.js';
 import { celleToken, chiaveRif, iniziali } from './token.js';
@@ -124,7 +125,8 @@ export function vistaGiocatori(s, contesto = null, regoleTemplate = contesto?.re
     muri: inBase64(senza(muriPerGiocatori(s), nebbia)),
     // M2 (11/10): muri disegnati a mano libera, col vano delle porte aperte non segrete già aperto; quelli tutti sotto
     // la nebbia non si mandano (sarebbe la forma di una stanza non ancora vista)
-    ...((l) => (l.length ? { muriLinee: l } : {}))(lineeEffettive(s, { perGiocatori: true })
+    // 12/10: interrotti per la larghezza di ogni porta che i giocatori vedono (aperta o chiusa: al suo posto c'è la porta)
+    ...((l) => (l.length ? { muriLinee: l } : {}))(lineePerDisegno(s, regoleMappa ? { mappa: regoleMappa } : null, { perGiocatori: true })
       .filter((l) => l.punti.some(([x, y]) => !coperto(limita(Math.floor(x), colonne), limita(Math.floor(y), righe))))),
     porte: portePerGiocatori(s, regoleMappa ? { mappa: regoleMappa } : null),
     // M1 (11/10): i livelli visibili dei giocatori, uno per uno (template, templateDurata, muri, porte, terreno,

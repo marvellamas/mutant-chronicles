@@ -42,9 +42,11 @@ function motivo(c, tipo, colore) {
 }
 
 /** Muri (retino) e terreno difficile (puntinato) visibili al master. */
-export function disegnaMuri(c, { scena, cam, info, muri, terreno, colori }) {
+export function disegnaMuri(c, { scena, cam, info, muri, terreno, colori, aspetto = null }) {
   const g = scena.griglia;
   const v = visibili(g, cam, info);
+  // 12/10: i muri a quadretto come quelli disegnati, grigio scuro con bordo bianco (data/mappa.json → muri_linee.aspetto)
+  if (aspetto && muri) { disegnaMuriQuadretto(c, { g, cam, v, muri, aspetto }); muri = null; }
   // M1 (11/10): muri e terreno hanno due interruttori distinti, quindi una delle due maschere puo mancare
   for (const [maschera, tipo, colore] of [[terreno, 'puntinato', colori.terreno], [muri, 'retino', colori.muro]]) {
     if (!maschera) continue;
@@ -71,23 +73,60 @@ export function disegnaMuri(c, { scena, cam, info, muri, terreno, colori }) {
  * @param linee [{ id, punti, spessore }]
  * @param anteprima il tratto che si sta disegnando adesso (più chiaro, con i capi tondi)
  */
-export function disegnaMuriLinee(c, { scena, cam, linee, colore, anteprima = false }) {
+export function disegnaMuriLinee(c, { scena, cam, linee, colore, anteprima = false, aspetto = null, selezionato = null }) {
   if (!linee?.length) return;
   const g = scena.griglia;
   const px = (q) => Math.max(1, q * g.q_px * cam.scala); // uno spessore sotto il pixel resterebbe invisibile
-  c.save();
-  c.strokeStyle = colore;
-  c.lineCap = 'round';
-  c.lineJoin = 'round';
-  c.globalAlpha = anteprima ? 0.65 : 0.95;
-  for (const l of linee) {
-    if (!Array.isArray(l?.punti) || l.punti.length < 2) continue;
-    c.lineWidth = px(l.spessore ?? 0.25);
+  const traccia = (l) => {
     c.beginPath();
     l.punti.forEach(([x, y], i) => {
       const s = schermoDaMappa(cam, g.scosto_x + x * g.q_px, g.scosto_y + y * g.q_px);
       if (i === 0) c.moveTo(s.x, s.y); else c.lineTo(s.x, s.y);
     });
+    c.stroke();
+  };
+  const valide = linee.filter((l) => Array.isArray(l?.punti) && l.punti.length >= 2);
+  c.save();
+  // estremi squadrati: dove una porta interrompe il muro il taglio è netto
+  c.lineCap = 'butt';
+  c.lineJoin = 'round';
+  c.globalAlpha = anteprima ? 0.7 : 1;
+  // 12/10: prima il bordo (bianco, 2 px per lato), poi il muro grigio scuro: si vede anche su immagini molto scure
+  if (aspetto?.bordo_px) {
+    for (const l of valide) {
+      const scelto = selezionato && (l.id === selezionato || String(l.id).startsWith(`${selezionato}:`));
+      c.strokeStyle = scelto ? aspetto.selezione : aspetto.bordo;
+      c.lineWidth = px(l.spessore ?? 0.25) + 2 * aspetto.bordo_px * (scelto ? 2 : 1);
+      traccia(l);
+    }
+  }
+  c.strokeStyle = aspetto?.colore ?? colore;
+  for (const l of valide) { c.lineWidth = px(l.spessore ?? 0.25); traccia(l); }
+  c.restore();
+}
+
+/** Muri a quadretto: riempimento grigio scuro semitrasparente e bordo bianco sui lati che danno fuori dal muro. */
+function disegnaMuriQuadretto(c, { g, cam, v, muri, aspetto }) {
+  const muro = (x, y) => x >= 0 && y >= 0 && x < g.colonne && y < g.righe && ((muri[(y * g.colonne + x) >> 3] >> ((y * g.colonne + x) & 7)) & 1) === 1;
+  c.save();
+  c.beginPath();
+  const lati = [];
+  for (let y = v.y0; y < v.y1; y++) {
+    for (let x = v.x0; x < v.x1; x++) {
+      if (!muro(x, y)) continue;
+      const [rx, ry, rw, rh] = rettQ(g, cam, x, y);
+      c.rect(rx, ry, rw, rh);
+      if (!muro(x, y - 1)) lati.push([rx, ry, rx + rw, ry]);
+      if (!muro(x, y + 1)) lati.push([rx, ry + rh, rx + rw, ry + rh]);
+      if (!muro(x - 1, y)) lati.push([rx, ry, rx, ry + rh]);
+      if (!muro(x + 1, y)) lati.push([rx + rw, ry, rx + rw, ry + rh]);
+    }
+  }
+  c.globalAlpha = aspetto.quadretto_opacita ?? 0.6; c.fillStyle = aspetto.colore; c.fill();
+  if (aspetto.bordo_px && lati.length) {
+    c.globalAlpha = 1; c.strokeStyle = aspetto.bordo; c.lineWidth = aspetto.bordo_px; c.lineCap = 'square';
+    c.beginPath();
+    for (const [x0, y0, x1, y1] of lati) { c.moveTo(x0, y0); c.lineTo(x1, y1); }
     c.stroke();
   }
   c.restore();
@@ -249,15 +288,20 @@ export function disegnaPorte(c, { scena, cam, info, porte, colori, regole = null
     const bw = b.lunghezza, bh = b.spessore;
     const bx = -bw / 2, by = -bh / 2;
     if (p.stato === 'aperta') {
-      c.fillStyle = colore;
-      const stipite = Math.max(2, bw * 0.14);
-      c.fillRect(bx, by, stipite, bh);
-      c.fillRect(bx + bw - stipite, by, stipite, bh);
+      // 12/10: la linea tratteggiata verde resta; i due estremi (cardini) sono punti neri con bordo bianco
       c.strokeStyle = colore; c.lineWidth = 2; c.setLineDash([4, 3]);
       c.beginPath(); c.moveTo(bx, 0); c.lineTo(bx + bw, 0); c.stroke();
       c.setLineDash([]);
+      const r = Math.max(3, Math.min(8, Math.max(bh, 6) * 0.45));
+      for (const cx of [bx, bx + bw]) {
+        c.beginPath(); c.arc(cx, 0, r, 0, Math.PI * 2);
+        c.fillStyle = regole?.cardine?.colore ?? '#111111'; c.fill();
+        c.strokeStyle = regole?.cardine?.bordo ?? '#ffffff'; c.lineWidth = 2; c.stroke();
+      }
     } else {
+      // chiusa o bloccata: battente pieno con bordo bianco di 2 px (si vede su immagini scure) e filo scuro interno
       c.fillStyle = colore; c.fillRect(bx, by, bw, bh);
+      c.strokeStyle = '#ffffff'; c.lineWidth = 2; c.strokeRect(bx - 1, by - 1, bw + 2, bh + 2);
       c.strokeStyle = '#111'; c.lineWidth = 1; c.strokeRect(bx + 0.5, by + 0.5, bw - 1, bh - 1);
       if (p.stato === 'bloccata') {
         const r = Math.min(bw, Math.max(bh, 6)) * 0.3;
@@ -287,6 +331,12 @@ export function disegnaPorte(c, { scena, cam, info, porte, colori, regole = null
 function banda(g, cam, p, larghezzaQ, regole) {
   const sch = (qx, qy) => schermoDaMappa(cam, g.scosto_x + qx * g.q_px, g.scosto_y + qy * g.q_px);
   const px = (q) => q * g.q_px * cam.scala;
+  // 12/10: geometria già calcolata in Q (src/mappa/porte.js → geometriaPorta): al centro dello spessore del muro, con lo
+  // spessore della porta o quello del muro se la porta sarebbe più spessa
+  if (p.geo?.centro && p.geo?.direzione) {
+    const s = sch(p.geo.centro[0], p.geo.centro[1]);
+    return { cx: s.x, cy: s.y, angolo: Math.atan2(p.geo.direzione[1], p.geo.direzione[0]), lunghezza: Math.max(6, px(p.geo.larghezza ?? larghezzaQ)), spessore: Math.max(3, px(p.geo.spessore ?? 0.25)) };
+  }
   const [x, y] = p.q;
   const a = p.aggancio;
   const spessoreQ = a?.spessore ?? regole?.spessore_q ?? 0.28;

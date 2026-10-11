@@ -456,6 +456,10 @@
     "linee_max": 400,
     "punti_max": 400,
     "punto_minimo_q": 0.2,
+    "raddrizza": { "predefinito": true, "tolleranza_q": 0.3, "angolo_gradi": 15, "soglia_gradi": 5 },
+    "_nota_raddrizza": "12/10/2026 (prove di Marcello): al rilascio il tratto a mano si semplifica in segmenti dritti (i punti entro «tolleranza_q» dalla corda si tolgono) e la direzione di ogni tratto si aggancia al multiplo di «angolo_gradi» più vicino se dista al massimo «soglia_gradi». «predefinito»: la casella «Raddrizza» del pannello all'apertura.",
+    "aspetto": { "colore": "#3a3a40", "bordo": "#ffffff", "bordo_px": 2, "selezione": "#ffb000", "quadretto_opacita": 0.6 },
+    "_nota_aspetto": "Muri grigio scuro con bordo bianco di «bordo_px» pixel, sulla mappa del master e dei giocatori: si vedono anche su immagini molto scure. I muri a quadretto hanno lo stesso colore, semitrasparente («quadretto_opacita») per lasciar vedere l'immagine; il terreno difficile resta puntinato nel suo colore. «selezione»: il muro selezionato.",
     "gomma_raggio_q": 0.5,
     "margine_q": 2
   },
@@ -546,6 +550,7 @@
   },
   "porte": {
     "_nota": "Porte (fase 2, lotto 2; src/mappa/porte.js). A.125, decisione 130 (risposta di Davide del 06/10/2026): «Aprire o chiudere una normale porta accessibile e non bloccata costa 1 AzP, senza prova. Per azionarla manualmente occorre essere adiacenti e avere una mano libera. Attraversare la porta consuma il normale movimento, separatamente dall’apertura. Una porta bloccata richiede prima la procedura pertinente per sbloccarla, scassinarla o forzarla. Nell’app «chiusa» e «bloccata» sono condizioni distinte.» Per il movimento la porta aperta è un passaggio, chiusa o bloccata è muro. Le porte segrete sono muro per i giocatori finché il master non le rivela.",
+    "cardine": { "colore": "#111111", "bordo": "#ffffff" },
     "stati": [
       "aperta",
       "chiusa",
