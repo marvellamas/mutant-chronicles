@@ -36,7 +36,8 @@ function barra(v) {
   el.className = 'barra-aggiornamento';
   el.setAttribute('role', 'status');
   const testo = document.createElement('span');
-  testo.textContent = `Nuova versione disponibile${v.data ? ` (${v.data})` : ''}. I personaggi salvati restano.`;
+  // 13/10: la frase dice anche che cosa fare se «Ricarica» non bastasse (una pagina rimasta in cache)
+  testo.textContent = `È disponibile la versione nuova${v.data ? ` (${v.data})` : ''}: ricarica. I personaggi salvati restano; se qualcosa non cambia, Ctrl+F5.`;
   const b = document.createElement('button');
   b.type = 'button';
   b.className = 'btn primario';
@@ -53,9 +54,11 @@ function barraServer() {
   el.id = 'barra-server-vecchio';
   el.className = 'barra-aggiornamento barra-server-vecchio';
   el.setAttribute('role', 'alert');
+  // 13/10 (segnalazione di Marcello: «Modifica master» non si vedeva): si dice anche che le novità del Tavolo non
+  // funzionano finché il server non riparte, perché l'app nuova parla con il server vecchio
   el.textContent = 'Il server di Mutant è acceso da prima dell’ultimo aggiornamento dell’app e usa ancora il codice vecchio: '
-    + 'alcuni salvataggi (mappa, scontri, schede) potrebbero essere rifiutati. Chiudi la finestra di avvia-server.bat, '
-    + 'riaprila e ricarica questa pagina.';
+    + '«Modifica master» e i bonus di circostanza non compaiono, e alcuni salvataggi (mappa, scontri, schede) potrebbero '
+    + 'essere rifiutati. Chiudi la finestra di avvia-server.bat, riaprila e ricarica questa pagina (Ctrl+F5).';
   document.body.prepend(el);
 }
 

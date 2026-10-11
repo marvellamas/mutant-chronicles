@@ -9,6 +9,7 @@ import { join } from 'node:path';
 import { readFileSync } from 'node:fs';
 import { creaServer, daQuestoPc } from '../server.mjs';
 import { statoContestoMaster, RIGA_CARTA_NON_MASTER } from '../src/correzioni-master.js';
+import { serveAggiornamento, urlRicarica, serverDaRiavviare } from '../src/versione.js';
 
 const RETE = { Ethernet: [{ address: '192.168.1.57', family: 'IPv4', internal: false }, { address: 'fe80::dbbc:6fc2:3e8c:ef71', family: 'IPv6', internal: false }], Loopback: [{ address: '127.0.0.1', family: 'IPv4', internal: true }] };
 
@@ -89,4 +90,35 @@ test('riga di stato: nel Tavolo c’è sempre; senza master, nella carta del PG 
   const cartella = readFileSync(new URL('../src/ui/cartella.js', import.meta.url), 'utf8');
   assert.match(cartella, /pingMaster = disponibile \? j\.master : undefined;/);
   assert.match(cartella, /export const pingMasterQui = \(\) => pingMaster;/);
+});
+
+// ---------------------------------------------------------------------------
+// Cache e versione nuova (punto 4)
+
+test('versione nuova: l’app la vede e propone di ricaricare; con «Ricarica» la pagina riparte con ?v=', () => {
+  assert.equal(serveAggiornamento('aaaa1111', 'bbbb2222'), true, 'versione del server diversa da quella caricata');
+  assert.equal(serveAggiornamento('aaaa1111', 'aaaa1111'), false);
+  assert.equal(urlRicarica('http://localhost:3000/#/tavolo', 'bbbb2222'), '/?v=bbbb2222#/tavolo', 'la ricarica porta la versione nuova');
+  const agg = readFileSync(new URL('../src/ui/aggiornamento.js', import.meta.url), 'utf8');
+  assert.match(agg, /È disponibile la versione nuova/);
+  assert.match(agg, /Ctrl\+F5/);
+  // il server vecchio: la barra rossa dice anche che «Modifica master» non compare finché non si riavvia
+  assert.match(agg, /«Modifica master» e i bonus di circostanza non compaiono/);
+  assert.equal(serverDaRiavviare('vecchia', 'nuova'), true);
+  assert.equal(serverDaRiavviare('uguale', 'uguale'), false);
+  assert.equal(serverDaRiavviare(null, 'nuova', true), true, 'server di prima del 06/10, che non dice la sua versione');
+});
+
+test('cache: i file serviti hanno Cache-Control no-cache, così dopo l’aggiornamento arrivano quelli nuovi', async () => {
+  for (const f of ['/versione.json', '/index.html', '/src/ui/app.js', '/css/style.css']) {
+    const r = await fetch(`http://127.0.0.1:${porta}${f}`);
+    assert.equal(r.status, 200, f);
+    assert.equal(r.headers.get('cache-control'), 'no-cache', f);
+  }
+  // versione.json dice anche con quale versione è stato acceso il server (per la barra «riavvia»)
+  const r = await fetch(`http://127.0.0.1:${porta}/versione.json`);
+  const versioneFile = JSON.parse(readFileSync(new URL('../versione.json', import.meta.url), 'utf8')).versione;
+  assert.equal((await r.json()).versione, versioneFile, 'il server serve il versione.json del disco, aggiornato');
+  assert.equal(r.headers.get('X-Mutant-Versione-Server'), versioneFile, 'server appena acceso: stessa versione, nessuna barra');
+  assert.equal(serverDaRiavviare(r.headers.get('X-Mutant-Versione-Server'), versioneFile), false);
 });
