@@ -6,7 +6,7 @@ Questa guida si apre anche dall'app: nel Tavolo del Master «Guida della mappa»
 
 Quando aggiorni o avvii Mutant, a Marcello arriva un avviso con la versione: serve a sapere se stai provando l'ultima. Per disattivarlo: `avvisi.json` → `attivo: false`. Il file sta in `avvisi/avvisi.json`.
 
-**La barra in alto** ha cinque gruppi, da sinistra: «Mutant» e «← Tavolo» con il nome della scena; zoom, «Adatta» e le tre disposizioni; template e «🧹 Temporanei»; **«Strumenti»** (il menu più importante), «⋯» e «?»; musica, volumi e «Salvata alle…». Sugli schermi stretti i gruppi vanno a capo interi.
+**La barra in alto** ha cinque gruppi, da sinistra: «Mutant» e «← Tavolo» con il nome della scena; zoom, «Adatta» e le tre disposizioni; template e «🧹 Temporanei»; **«Strumenti»** (il menu più importante), «⋯» e «?»; musica, l’altoparlante (un clic apre i cursori di Musica ed Effetti e «Muto»; diventa 🔇 con l’audio muto) e l’icona del salvataggio (✓ salvata, ● modifiche da salvare, … in corso, ⚠ non salvata: l’orario compare passandoci sopra). La barra sta su una riga da 1024 px in su; solo sul telefono i gruppi vanno a capo.
 
 **Il menu «Strumenti»** ha sette categorie: 🗺 Preparazione mappa (immagine, griglia, muri e terreno, porte, luci, nebbia e nebbia automatica), 🎬 Scena (scene, collegamento e token, posizione iniziale), ⚔ In gioco (linea di tiro, template, area e ZoC, selezioni), 📺 Vista giocatori (apri, adatta, PV dei nemici, template e muri, suoni), 📱 Tablet dei giocatori (blocco, quando muovono, «Tocca a te», collegamento), ♫ Suoni (musica, audio muto), 🧹 Pulizia (cancella i template). A destra la scorciatoia; le voci che in quel momento non servono sono spente e dicono perché.
 

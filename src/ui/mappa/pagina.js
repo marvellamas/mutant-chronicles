@@ -20,6 +20,7 @@
 // chi è di turno (./barra-iniziativa.js, src/mappa/iniziativa.js, src/mappa/disposizione.js).
 // Logica pura in src/mappa/ (camera, griglia, token, partecipanti, nebbia, muri, area, annulla); disegno in ./canvas.js,
 // ./disegno-token.js e ./disegno-aree.js.
+import { iconaSalvataggio, pulsanteAudio, clicFuori } from '../../mappa/barra.js';
 import { conLineaDallaMappa } from '../../dalla-mappa.js';
 import { h, svuota } from '../dom.js';
 import { avviso, avvisoErrore } from '../avvisi.js';
@@ -198,7 +199,8 @@ export function renderMappa(radice, ctx) {
   el.aiGiocatori = h('button', { type: 'button', class: 'btn btn-piccolo indicatore-giocatori', onclick: () => { if (st.inGioco !== ctx.id) scegliPerGiocatori(ctx.id); else apriStrumento(el.pGiocatori); } });
   el.zoom = h('span', { class: 'mappa-zoom', title: 'Zoom (rotella, + e −)' }, '100 %');
   el.scala = h('span', { class: 'mappa-scala' });
-  el.stato = h('span', { class: 'nota mappa-stato', 'aria-live': 'polite' });
+  // 12/10: lo stato del salvataggio è un'icona a larghezza fissa (la scritta, con l'orario, è nel suggerimento)
+  el.stato = h('span', { class: 'mappa-stato icona-salvataggio', role: 'status', 'aria-live': 'polite', tabindex: '0' });
   // lotto 6 (§11.1): tre disposizioni, sempre visibili in alto (anche Tab e doppio clic sul bordo)
   // difetto 1 del collaudo del lotto 7: barra su una riga anche a 1366 × 768 e su tablet; icone con il suggerimento, le
   // parole solo sugli schermi larghi (.lungo in css/style.css)
@@ -484,15 +486,26 @@ export function renderMappa(radice, ctx) {
     h('span', { class: 'lungo' }, etichetta),
     h('input', { type: 'range', min: 0, max: 100, step: 5, value: Math.round(audio.impostazioni()[canale] * 100), 'aria-label': `Volume ${etichetta}`,
       oninput: (e) => { audio.imposta({ [canale]: Number(e.target.value) / 100 }); aggiornaControlliAudio(); } }));
-  el.audioMuto = h('button', { type: 'button', class: 'btn btn-piccolo tondo', onclick: () => { audio.imposta({ muto: !audio.impostazioni().muto }); aggiornaControlliAudio(); } });
+  // 12/10: i due cursori stanno in un menu sotto l'altoparlante (clic → si apre; clic fuori o Esc → si chiude); il
+  // pulsante mostra comunque se l'audio è muto, e «Muto» è la prima voce del menu
+  el.audioMuto = h('button', { type: 'button', class: 'btn btn-piccolo voce-muto', onclick: () => { audio.imposta({ muto: !audio.impostazioni().muto }); aggiornaControlliAudio(); } });
   el.audioMusica = h('span', { class: 'mappa-audio-musica' });
   el.audioCursori = [cursore('musica', 'Musica'), cursore('effetti', 'Effetti')];
+  el.audioAltoparlante = h('summary', { class: 'btn btn-piccolo tondo altoparlante' });
+  el.audioMenu = h('details', { class: 'menu-strumenti menu-audio' }, el.audioAltoparlante,
+    h('div', { class: 'menu-strumenti-voci menu-audio-voci', role: 'group', 'aria-label': 'Volumi su questo PC' }, ...el.audioCursori, el.audioMuto));
+  const suClicFuoriAudio = (e) => { if (clicFuori(el.audioMenu, e.target)) el.audioMenu.open = false; };
+  document.addEventListener('pointerdown', suClicFuoriAudio);
   function aggiornaControlliAudio() {
     const i = audio.impostazioni();
-    el.audioMuto.textContent = i.muto ? '🔇' : '🔊';
+    const p = pulsanteAudio(i);
+    el.audioAltoparlante.textContent = p.icona;
+    el.audioAltoparlante.title = p.titolo;
+    el.audioAltoparlante.setAttribute('aria-label', p.etichetta);
+    el.audioAltoparlante.classList.toggle('muto', p.muto);
+    el.audioMuto.textContent = i.muto ? '🔊 Riaccendi l’audio' : '🔇 Muto';
     el.audioMuto.title = i.muto ? 'Audio spento su questo PC: clic per riaccenderlo' : 'Spegne tutti i suoni su questo PC (musica ed effetti)';
     el.audioMuto.setAttribute('aria-pressed', String(i.muto));
-    el.audioMuto.setAttribute('aria-label', i.muto ? 'Riaccendi l’audio' : 'Audio muto');
     for (const [k, l] of [['musica', el.audioCursori[0]], ['effetti', el.audioCursori[1]]]) {
       const inp = l.querySelector('input');
       if (document.activeElement !== inp) inp.value = String(Math.round(i[k] * 100));
@@ -505,8 +518,11 @@ export function renderMappa(radice, ctx) {
     el.zoom.textContent = `${Math.round(st.cam.scala * 100)} %`;
     const g = st.scena?.griglia;
     el.scala.textContent = g ? `${testoScala(ctx.dati)} · ${numero(g.q_px)} px per Q · ${g.colonne} × ${g.righe} Q` : testoScala(ctx.dati);
-    el.stato.textContent = st.salvataggio.testo;
-    el.stato.title = st.salvataggio.testo ?? '';
+    const sv = iconaSalvataggio(st.salvataggio.testo, st.salvataggio.modificata);
+    el.stato.textContent = sv.icona;
+    el.stato.title = sv.titolo;
+    el.stato.setAttribute('aria-label', sv.titolo);
+    el.stato.dataset.stato = sv.stato;
   };
   const ridisegna = (livelli) => { tela.richiedi(livelli); aggiornaBarra(); programmaDiretta(); };
   // anche il livello della nebbia segue zoom e spostamenti (nel lotto 4 restava fermo); data-zoom e data-origine
@@ -1265,7 +1281,7 @@ export function renderMappa(radice, ctx) {
       ['Strumento «Porta»: ← →', 'gira la porta da mettere (verticale / orizzontale); di solito segue da sola i muri vicini. Sulla porta già messa: clic destro → «Ruota»'],
       ['Token scelto accanto a una porta', 'clic destro o pannello: «Apri porta» / «Chiudi porta», 1 AzP e una riga nel registro (A.125)'],
       ['♫ in alto', 'musica di fondo dello scontro (file della cartella musica/ del server): parte con lo scontro, si ripete, si ferma alla chiusura; ⏸ / ▶ la mette in pausa'],
-      ['🔊 e cursori Musica / Effetti', 'muto generale e volumi su questo PC (ricordati); la campanella suona a ogni nuovo Round. Strumenti → «Suoni anche nella vista giocatori» per il televisore con le casse'],
+      ['🔊 (clic: cursori Musica / Effetti e «Muto»)', 'volumi e muto generale su questo PC (ricordati); il pulsante diventa 🔇 con l’audio muto; la campanella suona a ogni nuovo Round. Strumenti → «Suoni anche nella vista giocatori» per il televisore con le casse'],
       ['Avviso «clic per attivare l’audio»', 'il browser blocca i suoni finché non tocchi la pagina: un clic qualunque li sblocca'],
       ['Clic destro → «In volo» (gruppo Movimento; anche pannello e carta)', 'icona e ombra sul token: passa sopra terreno difficile e token (senza fermarsi su un altro token), muri e porte chiuse restano; niente token in mezzo né Copertura Leggera o Media; i giocatori lo vedono anche sotto la nebbia se un PG ha una linea senza muri. «Quota…» per l’etichetta in Q. Un nemico che sa volare lo propone quando lo metti in mappa'],
       ['Veicolo da mettere o scelto: ← → (Maiusc: a 45°)', 'gira il veicolo di 10° (con Maiusc di 45°) attorno al centro; anche clic destro → «Ruota». Il triangolino indica il muso; girare non consuma movimento. Ctrl+Z annulla'],
@@ -3384,7 +3400,7 @@ export function renderMappa(radice, ctx) {
     if (e.key.toLowerCase() === ctx.dati.mappa.visuale.tasto && e.shiftKey && st.scena) { e.preventDefault(); cambiaDettaglioLinea(); return; }
     if (e.key.toLowerCase() === ctx.dati.mappa.visuale.tasto && !e.shiftKey && st.scena) { e.preventDefault(); if (st.linea) chiudiLinea(); else iniziaLinea(st.selezionato); return; }
     if (e.key === '?') { e.preventDefault(); apriAiuto(); return; }
-    if (e.key === 'Escape' && (el.strumenti.open || el.altro.open)) { el.strumenti.open = false; el.altro.open = false; return; }
+    if (e.key === 'Escape' && (el.strumenti.open || el.altro.open || el.audioMenu.open)) { el.strumenti.open = false; el.altro.open = false; el.audioMenu.open = false; return; }
     if (e.key === '+' || e.key === '=' || e.code === 'NumpadAdd') { e.preventDefault(); zoomCentro(V.passo_tasti); } else if (e.key === '-' || e.code === 'NumpadSubtract') { e.preventDefault(); zoomCentro(1 / V.passo_tasti); } else if (e.code === 'Space') {
       e.preventDefault(); // niente scorrimento della pagina
       if (!st.spazio) { st.spazio = true; el.riquadro.classList.add('spazio'); }
@@ -3603,7 +3619,7 @@ export function renderMappa(radice, ctx) {
   function disegnaAudio() {
     if (!el.audio) return;
     // la prima volta: muto e cursori, che poi restano (il ridisegno non interrompe il trascinamento)
-    if (!el.audio.childNodes.length) { el.audio.append(el.audioMusica, el.audioMuto, ...el.audioCursori); aggiornaControlliAudio(); }
+    if (!el.audio.childNodes.length) { el.audio.append(el.audioMusica, el.audioMenu); aggiornaControlliAudio(); }
     const f = st.fonti;
     const file = f?.scontro ? f.scontro.musica ?? null : f?.bozza ? f.bozza.musica ?? null : null;
     const m = audio.statoMusica();
@@ -3812,6 +3828,7 @@ export function renderMappa(radice, ctx) {
 
   return () => {
     document.removeEventListener('visibilitychange', suNascosta);
+    document.removeEventListener('pointerdown', suClicFuoriAudio);
     window.removeEventListener('pagehide', suChiusura);
     // la vista giocatori perde la diretta quando il master lascia la mappa
     if (st.diretta.chiave !== 'nessuna') { st.diretta.inVolo = false; mandaDiretta(null); }
