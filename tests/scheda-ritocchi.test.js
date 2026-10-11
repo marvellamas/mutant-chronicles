@@ -8,7 +8,7 @@ import { datiReali, copia } from './helpers.js';
 import { preparaTab } from '../src/stampa.js';
 import { deserializzaPersonaggio, normalizza } from '../src/character.js';
 import { massimiSessione, allineaSessione, penalitaSessione } from '../src/sessione.js';
-import { datiTestata, statiAttiviVista, contoVa, formulaVa, modificatoriAttivi, sintesiMani, sintesiProtezioni } from '../src/scheda-vista.js';
+import { datiTestata, statiAttiviVista, contoVa, formulaVa, modificatoriAttivi, sintesiMani, sintesiProtezioni, sintesiSintonizzazione, inColonne } from '../src/scheda-vista.js';
 
 installaDomFinto();
 globalThis.localStorage ??= { getItem: () => null, setItem: () => {}, removeItem: () => {} };
@@ -334,4 +334,50 @@ test('S13: Affaticamento e Corruzione stanno nella colonna di sinistra del Comba
   const grado = colonna.tutti().filter((n) => n.getAttribute('aria-label') === 'Affaticamento (§5.19)' && n.getAttribute('role') === 'radiogroup')[0].children[1];
   clic(grado);
   assert.deepEqual(ctx.chiamate.at(-1), ['imposta', 'affaticamento', 1]);
+});
+
+// ---------------------------------------------------------------------------
+// S24, S25: Artefatti
+
+/** Due Artefatti da sintonizzare: uno addosso e sintonizzato, uno nello zaino. */
+const conArtefatti = (c) => {
+  c.equipaggiamento = [
+    { uid: 'art-1', rif: 'artefatti:batteria-da-10-pm-chroma-rosso', stato: 'trasportato', quantita: 1, note: '', sintonizzato: true },
+    { uid: 'art-2', rif: 'artefatti:batteria-da-5-pm-chroma-blu', stato: 'zaino', quantita: 1, note: '' },
+  ];
+  return c;
+};
+
+test('S24: la Sintonizzazione sta in una riga («usata / capacità») e il «?» elenca gli Artefatti che impegnano i punti', () => {
+  const ctx = contesto(TORVALD, { attiva: 'artefatti', scelte: conArtefatti });
+  const st = ctx.tab.scheda.equipaggiamento.sintonizzazione;
+  assert.ok(st, 'il PG di prova ha Artefatti da sintonizzare');
+  const r = resa(ctx);
+  const riga = r.classe('riga-sintonizzazione');
+  assert.equal(riga.length, 1);
+  assert.equal(riga[0].tagName, 'P', 'una riga, non un riquadro');
+  assert.ok(riga[0].textContent.startsWith(`Sintonizzazione${st.usata} / ${st.capacita}`), riga[0].textContent);
+  assert.equal(riga[0].querySelectorAll('.voce-info').length, 1, 'il «?»');
+  assert.equal(r.classe('elenco-sintonie').length, 0, 'l’elenco non sta più nel riquadro');
+  const sn = sintesiSintonizzazione(st);
+  assert.equal(sn.testo, `${st.usata} / ${st.capacita}`);
+  assert.equal(sn.impegnano.reduce((s, x) => s + x.costo, 0), st.usata, 'i punti impegnati sono la somma degli Artefatti sintonizzati');
+  assert.deepEqual(sn.impegnano.map((x) => x.nome), st.artefatti.filter((x) => x.sintonizzato && x.costo > 0).map((x) => x.nome));
+  assert.deepEqual(sintesiSintonizzazione({ usata: 10, capacita: 9, artefatti: [{ nome: 'A', costo: 6, sintonizzato: true }, { nome: 'B', costo: 4, sintonizzato: true, deposito: true }, { nome: 'C', costo: 2, sintonizzato: false }] }),
+    { testo: '10 / 9', oltre: true, impegnano: [{ nome: 'A', costo: 6, deposito: false, testo: 'A: 6' }, { nome: 'B', costo: 4, deposito: true, testo: 'B: 4 (nel deposito comune)' }], liberi: [{ nome: 'C', costo: 2 }] });
+  assert.equal(sintesiSintonizzazione(null), null);
+});
+
+test('S25: gli Artefatti sono in due colonne, «Addosso» e «Zaino e Deposito», come gli oggetti dell’Inventario', () => {
+  const ctx = contesto(TORVALD, { attiva: 'artefatti', scelte: conArtefatti });
+  const r = resa(ctx);
+  const colonne = r.classe('artefatti-colonne')[0].children;
+  assert.deepEqual(colonne.map((n) => n.getAttribute('aria-label')), ['Addosso', 'Zaino e Deposito']);
+  const st = ctx.tab.scheda.equipaggiamento.sintonizzazione;
+  const nomi = (n) => n.querySelectorAll('.artefatto-scheda').map((x) => x.querySelectorAll('.arma-testa')[0].textContent);
+  assert.equal(nomi(colonne[0]).length + nomi(colonne[1]).length, st.artefatti.length, 'tutti gli Artefatti, una volta sola');
+  assert.equal(nomi(colonne[0]).length, 1);
+  assert.equal(nomi(colonne[1]).length, 1);
+  assert.deepEqual(inColonne([{ uid: 'a' }, { uid: 'b' }, { uid: 'c' }], (x) => ({ a: { voce: { stato: 'trasportato' } }, b: { voce: { stato: 'zaino' } }, c: { voce: { stato: 'deposito' }, deposito: true } })[x.uid]).map((c) => [c.id, c.voci.map((x) => x.uid)]),
+    [['addosso', ['a']], ['zaino', ['b', 'c']]]);
 });

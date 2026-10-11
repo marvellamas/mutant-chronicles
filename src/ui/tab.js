@@ -6,7 +6,7 @@
 // Le penalità di Ferite, Affaticamento e Stati sono solo promemoria: i VA mostrati non le
 // includono (le regole del cap. 5 sono situazionali).
 import { allineaStorico } from '../storico.js';
-import { datiTestata, statiAttiviVista, contoVa, modificatoriAttivi, sintesiMani, sintesiProtezioni } from '../scheda-vista.js';
+import { datiTestata, statiAttiviVista, contoVa, modificatoriAttivi, sintesiMani, sintesiProtezioni, sintesiSintonizzazione, inColonne } from '../scheda-vista.js';
 import { informa } from './finestrella.js';
 import { conAvviso } from './procedi.js';
 import { h, segno } from './dom.js';
@@ -2252,19 +2252,30 @@ function tabArtefatti(ctx) {
       attivazioneArtefattoUi(ctx, x, r, riserva),
       riserva ? pannelloChroma(ctx, riserva, { conPulsanti: true }) : null);
   };
+  // S24 (11/10/2026): la Sintonizzazione in una riga; il «?» dice quali Artefatti impegnano i punti e da dove viene la capacità
+  const sn = sintesiSintonizzazione(st);
+  const capacita = `Capacità per ${st.gradi} Grad${st.gradi === 1 ? 'o' : 'i'} complessiv${st.gradi === 1 ? 'o' : 'i'}: ${rs.capacita_per_gradi[st.gradi - 1]}${st.talento ? `, +${rs.talento.bonus} da ${st.talento}` : ''}${st.umanita ? `, ${segno(st.umanita)} per l’Umanità (tab Cibernetica)` : ''}.`;
+  // S25: gli oggetti in due colonne, «Addosso» e «Zaino e Deposito», come nell'Inventario
+  const dueColonne = (lista, rendi) => h('div', { class: 'artefatti-colonne' }, inColonne(lista, (x) => perUid.get(base(x.uid))).map((c) => h('div', { class: `colonna-artefatti ${c.id}`, 'aria-label': c.titolo },
+    h('h3', { class: 'titolo-colonna', title: c.nota }, c.titolo, h('small', { class: 'sigla' }, ` (${c.voci.length})`)),
+    c.voci.length ? c.voci.map(rendi) : h('p', { class: 'vuoto' }, 'Niente.'))));
   return [
-    h('div', { class: 'griglia-tavolo' },
-      h('div', { class: `contatore-tavolo${st.usata > st.capacita ? ' oltre' : ''}` }, h('h3', {}, 'Sintonizzazione (§7.10)'),
-        h('p', { class: `valore-tavolo${st.usata > st.capacita ? ' oltre' : ''}` }, h('strong', {}, String(st.usata)), h('span', {}, ` / ${st.capacita}`)),
-        h('p', { class: 'nota' }, `Capacità per ${st.gradi} Grad${st.gradi === 1 ? 'o' : 'i'} complessiv${st.gradi === 1 ? 'o' : 'i'}: ${rs.capacita_per_gradi[st.gradi - 1]}`,
-          st.talento ? `, +${rs.talento.bonus} da ${st.talento}` : null,
-          st.umanita ? [', ', infoValore(`${segno(st.umanita)} per l’Umanità`, { titolo: `Capacità di Sintonizzazione: ${st.capacita}`, sottotitolo: 'Armamenti §7.10, Giocatore §5.21', provenienza: st.provenienza }), ' (tab Cibernetica).'] : '.'),
-        st.usata > st.capacita ? h('p', { class: 'avviso-carico' }, `Oltre la capacità: il personaggio sceglie quali sintonizzazioni interrompere (§7.10).`) : null,
-        h('ul', { class: 'elenco-sintonie' }, st.artefatti.map((x) => h('li', {}, `${x.sintonizzato ? '✔' : '○'} ${x.nome} · SnT ${x.costo}${x.deposito ? ' · deposito comune' : ''}`))))),
-    sezione('Artefatti posseduti', h('div', { class: 'armi-tab' }, st.artefatti.map(scheda))),
+    h('p', { class: `riga-sintonizzazione${sn.oltre ? ' oltre' : ''}` },
+      h('span', { class: 'etichetta-testata' }, 'Sintonizzazione'), h('strong', {}, sn.testo),
+      infoValore('?', {
+        titolo: `Sintonizzazione: ${sn.testo}`, sottotitolo: 'Armamenti §7.10',
+        provenienza: st.provenienza ?? null,
+        sezioni: [
+          { etichetta: 'Impegnano i punti', testo: sn.impegnano.length ? sn.impegnano.map((x) => x.testo).join('\n') : 'Nessun Artefatto sintonizzato.' },
+          sn.liberi.length ? { etichetta: 'Non sintonizzati', testo: sn.liberi.map((x) => `${x.nome}: SnT ${x.costo}`).join('\n') } : null,
+          { testo: capacita },
+        ].filter(Boolean),
+      }, { classe: 'info-gradi' }),
+      sn.oltre ? h('span', { class: 'avviso-carico' }, ' Oltre la capacità: il personaggio sceglie quali sintonizzazioni interrompere (§7.10).') : null),
+    sezione('Artefatti posseduti', dueColonne(st.artefatti, scheda)),
     esterni.length ? sezione('Riserve di Chroma',
       h('p', { class: 'nota' }, 'Cristalli, batterie e contenitori: i PM si modificano anche nel riquadro Punti Magia. Un contenitore alimenta un lancio se trasportato, sintonizzato e compatibile (Magia sez. 6).'),
-      h('div', { class: 'armi-tab' }, esterni.map((c) => schedaContenitore(ctx, c)))) : null,
+      dueColonne(esterni, (c) => schedaContenitore(ctx, c))) : null,
     sezioneConsumabili(ctx, cons),
   ];
 }

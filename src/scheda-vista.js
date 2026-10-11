@@ -178,3 +178,13 @@ export function preselezioneAggiungi(idSezione) {
   if (!s) return null;
   return { sezione: s.id, titolo: s.titolo, tipo: s.tipi[0], cataloghi: s.cataloghi ? [...s.cataloghi] : null };
 }
+
+/**
+ * Gli oggetti di un elenco nelle due colonne dell'Inventario, «Addosso» e «Zaino e Deposito» (S25: gli Artefatti e le
+ * riserve di Chroma nella tab Artefatti, come gli oggetti nell'Inventario).
+ * @param lista elementi qualsiasi; `risoltaDi(x)` dà la voce risolta dell'elemento (per lo stato)
+ * @returns [{ id, titolo, nota, voci }]
+ */
+export function inColonne(lista, risoltaDi) {
+  return COLONNE_INVENTARIO.map((c) => ({ ...c, voci: (lista ?? []).filter((x) => colonnaInventario(risoltaDi(x)) === c.id) }));
+}
