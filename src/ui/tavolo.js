@@ -3,7 +3,7 @@
 // personaggi/ sono «al tavolo» (selezione salvata sul server, tavolo/sessione.json); per ognuno conta il
 // file più recente. Le schede si rileggono ogni pochi secondi, solo se il file è cambiato; i valori e
 // le provenienze sono quelli di calcolaScheda (src/tavolo.js → vistaPlancia).
-import { testoConBlocchiMaster, conCircostanzaMandata, senzaCircostanza, senzaCircostanzeDelloScontro } from '../correzioni-master.js';
+import { testoConBlocchiMaster, conCircostanzaMandata, senzaCircostanza, senzaCircostanzeDelloScontro, statoContestoMaster, RIGA_CARTA_NON_MASTER } from '../correzioni-master.js';
 import { chiediCircostanza } from './master.js';
 import { procediComunque } from '../storico.js';
 import { h, svuota } from './dom.js';
@@ -204,6 +204,8 @@ export function renderTavolo(radice, ctx) {
   };
   // S11: il master manda un bonus o malus di circostanza a un PG; lo toglie lui, o «Fine scontro» se è solo per lo scontro
   ctx.master = ctx.master === true;
+  // 13/10: la testata dice sempre se questo è il PC del master; se non lo è, perché e che cosa fare
+  ctx.statoMaster = ctx.statoMaster ?? statoContestoMaster({ server: true, daQuestoPc: ctx.master, pingMaster: ctx.master });
   ctx.mandaCircostanza = async (v, r) => {
     const R = ctx.dati.regole.circostanza;
     if (!R) return;
@@ -477,6 +479,8 @@ export function renderTavolo(radice, ctx) {
             h('h1', { class: 'titolo-con-stemma' }, iconaPagina('combattimento', '96', { classe: 'badge-pagina', lato: 40 }), 'Tavolo del Master'),
             aggiornato),
           testataGruppi()),
+      // 13/10: la riga che dice sempre se questo è il PC del master (prima i pulsanti sparivano in silenzio)
+      ctx.inMappa ? null : rigaStatoMaster(),
       // 12/10: lo scontro in corso in cima, ben visibile, con «Apri la mappa e continua lo scontro»
       ctx.inMappa ? null : testaInCorso(),
       esitoEsempi,
@@ -932,6 +936,18 @@ export function renderTavolo(radice, ctx) {
       ctx.azioni.mappa(esito.scena.id);
     } catch (e) { avvisoErrore(`Scena non collegata: ${e.message}`); }
   }
+  /**
+   * 13/10 (segnalazione urgente di Marcello): «🛠 Questo PC è il master», oppure il motivo per cui non lo è e che cosa
+   * fare. Prima i pulsanti «Modifica master» e «± Bonus di circostanza» sparivano senza dire niente.
+   */
+  const rigaStatoMaster = () => {
+    const s = ctx.statoMaster;
+    if (!s) return null;
+    return h('p', { class: `riga-stato-master ${s.master ? 'si' : 'no'}`, role: 'status' },
+      h('strong', {}, s.master ? '🛠 Questo PC è il master' : s.testo),
+      s.motivo ? h('span', { class: 'nota' }, ` · Motivo: ${s.motivo}${s.cosaFare ? ` ${s.cosaFare}` : ''}`) : null);
+  };
+
   /** La testa «Scontro in corso»: uno per scontro aperto, ognuno con il suo pulsante. */
   const testaInCorso = () => {
     const lista = stato.inCorso ?? [];
@@ -1152,11 +1168,11 @@ function cartaPg(ctx, v, r, diTurnoOra = false, colpito = null, durate = []) {
         h('p', { class: 'nota' }, `${v.livello}° livello · ${v.completa ? [v.corporazione, v.classi.map((c) => `${c.nome} ${c.grado}`).join(', ')].filter(Boolean).join(' · ') : 'scheda incompleta'}`)),
       v.completa && colpito && ctx.scontroAperto?.() ? pulsanteColpito(ctx, () => colpito(v, r)) : null),
     // «Modifica master» (12/10/2026): solo sul PC del server; apre la scheda in modalità master
-    ctx.master === true ? h('p', { class: 'plancia-master' },
+    ctx.master !== true ? h('p', { class: 'plancia-master nota non-master', title: ctx.statoMaster?.motivo ?? null }, RIGA_CARTA_NON_MASTER) : h('p', { class: 'plancia-master' },
       ctx.azioni.modificaMaster ? h('button', { type: 'button', class: 'btn btn-piccolo btn-modifica-master', title: `Apre la scheda di ${v.nome} in modalità master: ogni valore si può correggere, ogni modifica viene registrata e si può annullare`, onclick: () => ctx.azioni.modificaMaster(r) }, '🛠 Modifica master') : null,
       v.completa && ctx.mandaCircostanza ? h('button', { type: 'button', class: 'btn btn-piccolo btn-bonus-master', title: `Manda a ${v.nome} un bonus o malus di circostanza: lo vede sulla scheda («dal master») e non lo può togliere`, onclick: () => ctx.mandaCircostanza(v, r) }, '± Bonus di circostanza') : null,
       ...(v.circostanzeMaster ?? []).map((x) => h('span', { class: 'etichetta etichetta-master', title: 'Bonus di circostanza mandato dal master' }, `${x.valore > 0 ? '+' : '−'}${Math.abs(x.valore)}${x.nota ? ` ${x.nota}` : ''}${x.scontro ? ' (scontro)' : ''} `,
-        ctx.togliCircostanzaMaster ? h('button', { type: 'button', class: 'btn-link', 'aria-label': 'Togli il bonus', title: 'Togli il bonus', onclick: () => ctx.togliCircostanzaMaster(v, r, x.id) }, '✕') : null))) : null,
+        ctx.togliCircostanzaMaster ? h('button', { type: 'button', class: 'btn-link', 'aria-label': 'Togli il bonus', title: 'Togli il bonus', onclick: () => ctx.togliCircostanzaMaster(v, r, x.id) }, '✕') : null))),
     v.completa ? [
       barra('risorsa-pv', 'PV', v.pv.attuali, v.pv.massimo),
       v.pm ? barra('risorsa-pm', 'PM', v.pm.attuali, v.pm.massimo) : null,

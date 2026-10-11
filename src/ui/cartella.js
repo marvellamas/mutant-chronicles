@@ -5,8 +5,12 @@
 let disponibile = null; // null: non ancora chiesto
 // «Modifica master» (12/10): la pagina è aperta sul PC dove gira il server? Lo dice il server in /api/ping («master»)
 let master = false;
+// che cosa ha risposto /api/ping nel campo «master»: undefined = server acceso prima del 13/10, che non lo dice
+let pingMaster;
 /** Contesto master: questa pagina è sul PC del server (mai un tablet in rete). Vale dopo serverCartella(). */
 export const contestoMasterQui = () => disponibile === true && master;
+/** Che cosa ha risposto il ping sul contesto master: true, false o undefined (server vecchio). Per la riga di stato. */
+export const pingMasterQui = () => pingMaster;
 
 /**
  * C'è il server della cartella? Prima una HEAD su versione.json, che c'è con qualunque server statico: solo
@@ -24,6 +28,7 @@ export async function serverCartella() {
     clearTimeout(t);
     const j = r.ok ? await r.json() : null;
     disponibile = j?.ok === true && j.app === 'mutant';
+    pingMaster = disponibile ? j.master : undefined;
     master = disponibile && j.master === true;
   } catch {
     disponibile = false;

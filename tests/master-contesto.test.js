@@ -6,7 +6,9 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir, networkInterfaces } from 'node:os';
 import { join } from 'node:path';
+import { readFileSync } from 'node:fs';
 import { creaServer, daQuestoPc } from '../server.mjs';
+import { statoContestoMaster, RIGA_CARTA_NON_MASTER } from '../src/correzioni-master.js';
 
 const RETE = { Ethernet: [{ address: '192.168.1.57', family: 'IPv4', internal: false }, { address: 'fe80::dbbc:6fc2:3e8c:ef71', family: 'IPv6', internal: false }], Loopback: [{ address: '127.0.0.1', family: 'IPv4', internal: true }] };
 
@@ -43,4 +45,48 @@ test('/api/ping dice «master» sia da localhost sia dall’indirizzo di rete de
   if (mio) assert.equal((await ping(mio)).master, true, mio);
   // un altro dispositivo: il server lo tratta da tablet (qui si prova la funzione, non si può fingere l'indirizzo)
   assert.equal(daQuestoPc('192.168.1.99', RETE), false);
+});
+
+// ---------------------------------------------------------------------------
+// La riga di stato nel Tavolo: mai pulsanti spariti in silenzio
+
+test('riga di stato: «Questo PC è il master», oppure il motivo e che cosa fare', () => {
+  const m = statoContestoMaster({ server: true, daQuestoPc: true, pingMaster: true });
+  assert.deepEqual([m.master, m.stato, m.testo, m.motivo], [true, 'master', 'Questo PC è il master', null]);
+  // un altro dispositivo (tablet, o il PC sbagliato)
+  const t = statoContestoMaster({ server: true, daQuestoPc: false, pingMaster: false });
+  assert.equal(t.master, false);
+  assert.equal(t.stato, 'altro_dispositivo');
+  assert.match(t.testo, /^Questo dispositivo non è il PC del master: Modifica master e bonus di circostanza si usano dal PC dove gira Mutant$/);
+  assert.match(t.motivo, /non riconosce questo dispositivo/);
+  assert.match(t.cosaFare, /PC dove gira Mutant/);
+  // server acceso prima dell'aggiornamento: non sa ancora dirlo
+  const v = statoContestoMaster({ server: true, daQuestoPc: false, pingMaster: undefined });
+  assert.equal(v.stato, 'server_vecchio');
+  assert.match(v.motivo, /acceso da prima dell’aggiornamento/);
+  assert.match(v.cosaFare, /avvia-server\.bat/);
+  assert.match(v.cosaFare, /Ctrl\+F5/);
+  // versione senza server
+  const s = statoContestoMaster({ server: false });
+  assert.equal(s.stato, 'senza_server');
+  assert.match(s.motivo, /senza server/);
+  assert.match(s.cosaFare, /avvia-server\.bat/);
+  // ogni caso che non è master ha sempre motivo e rimedio
+  for (const x of [t, v, s]) assert.ok(x.motivo && x.cosaFare, x.stato);
+});
+
+test('riga di stato: nel Tavolo c’è sempre; senza master, nella carta del PG il testo al posto dei pulsanti', () => {
+  const tavolo = readFileSync(new URL('../src/ui/tavolo.js', import.meta.url), 'utf8');
+  assert.match(tavolo, /ctx\.inMappa \? null : rigaStatoMaster\(\)/);
+  assert.match(tavolo, /🛠 Questo PC è il master/);
+  assert.match(tavolo, /ctx\.master !== true \? h\('p', \{ class: 'plancia-master nota non-master'[^}]*\}, RIGA_CARTA_NON_MASTER\)/);
+  assert.equal(RIGA_CARTA_NON_MASTER, 'Modifica master: dal PC del master');
+  // app.js passa lo stato al Tavolo, con quello che ha risposto il ping
+  const app = readFileSync(new URL('../src/ui/app.js', import.meta.url), 'utf8');
+  assert.match(app, /stato\.statoMaster = statoContestoMaster\(\{ server: stato\.cartella, daQuestoPc: stato\.master, pingMaster: pingMasterQui\(\)/);
+  assert.match(app, /statoMaster: stato\.statoMaster/);
+  // il client distingue «il server non lo dice» da «ha detto no»
+  const cartella = readFileSync(new URL('../src/ui/cartella.js', import.meta.url), 'utf8');
+  assert.match(cartella, /pingMaster = disponibile \? j\.master : undefined;/);
+  assert.match(cartella, /export const pingMasterQui = \(\) => pingMaster;/);
 });

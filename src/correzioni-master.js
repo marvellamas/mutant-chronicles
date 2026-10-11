@@ -371,3 +371,34 @@ export function senzaCircostanzeDelloScontro(blocchi, idScontro, adesso = new Da
   for (const x of blocchi.circostanze.filter((y) => y.scontro === idScontro)) b = senzaCircostanza(b, x.id, adesso);
   return b;
 }
+
+/**
+ * Stato del contesto master, da scrivere sempre nella testata del Tavolo (13/10/2026: prima i pulsanti sparivano in
+ * silenzio e Marcello non capiva perché). Dice se questo è il PC del master e, se non lo è, perché.
+ * @param opz { server: c'è il server di Mutant; daQuestoPc: il server dice che la pagina è sul suo PC;
+ *   pingMaster: che cosa ha risposto /api/ping nel campo «master» (undefined: server acceso prima del 13/10);
+ *   serverVecchio: il server gira con il codice di prima dell'aggiornamento (src/versione.js → serverDaRiavviare) }
+ * @returns {{ master, stato, testo, motivo, cosaFare }}
+ *   stato: 'master' | 'senza_server' | 'server_vecchio' | 'altro_dispositivo'
+ */
+export function statoContestoMaster({ server = false, daQuestoPc = false, pingMaster = undefined, serverVecchio = false } = {}) {
+  if (!server) {
+    return { master: false, stato: 'senza_server', testo: NON_MASTER,
+      motivo: 'questa è la versione senza server (avvia.bat, GitHub Pages o un server statico): non c’è il Tavolo del Master.',
+      cosaFare: 'Apri Mutant con avvia-server.bat sul PC del master (o con Mutant.bat → «Avvia»).' };
+  }
+  if (daQuestoPc) return { master: true, stato: 'master', testo: 'Questo PC è il master', motivo: null, cosaFare: null };
+  if (pingMaster === undefined) {
+    return { master: false, stato: 'server_vecchio', testo: NON_MASTER,
+      motivo: 'il server di Mutant è acceso da prima dell’aggiornamento e non sa ancora riconoscere il PC del master.',
+      cosaFare: 'Chiudi la finestra di avvia-server.bat, riaprila e ricarica questa pagina (Ctrl+F5).' };
+  }
+  return { master: false, stato: 'altro_dispositivo', testo: NON_MASTER,
+    motivo: 'il server non riconosce questo dispositivo come il PC dove gira Mutant (indirizzo diverso dal suo).',
+    cosaFare: 'Usa il PC dove gira Mutant: lì va bene sia http://localhost:3000 sia l’indirizzo di rete di quel PC.' };
+}
+
+const NON_MASTER = 'Questo dispositivo non è il PC del master: Modifica master e bonus di circostanza si usano dal PC dove gira Mutant';
+
+/** Il testo al posto dei due pulsanti nella carta del PG, quando non si è master. */
+export const RIGA_CARTA_NON_MASTER = 'Modifica master: dal PC del master';

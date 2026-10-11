@@ -16,8 +16,8 @@ import { h, svuota, scaricaFile } from './dom.js';
 import * as archivio from './storage.js';
 import { elencoVeicoli, migraNelRegistro } from './veicoli-registro.js';
 import { eRiferimento } from '../veicoli-registro.js';
-import { serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, contestoMasterQui, salvaBackupMaster, leggiBackupMaster } from './cartella.js';
-import { modalitaMaster, mostraMarchio, registro as registroMaster, nuovaCorrezione, aggiungiCorrezione, annullaCorrezione, avvisoAnnulla, registraDiretta, differenzeDirette, differenzeOggetti, ripristinoDiretta, descriviScelte, soloScelte, ripristinaScelte, masterDiverso, normalizzaCircostanzeMaster } from '../correzioni-master.js';
+import { serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, contestoMasterQui, pingMasterQui, salvaBackupMaster, leggiBackupMaster } from './cartella.js';
+import { modalitaMaster, mostraMarchio, statoContestoMaster, registro as registroMaster, nuovaCorrezione, aggiungiCorrezione, annullaCorrezione, avvisoAnnulla, registraDiretta, differenzeDirette, differenzeOggetti, ripristinoDiretta, descriviScelte, soloScelte, ripristinaScelte, masterDiverso, normalizzaCircostanzeMaster } from '../correzioni-master.js';
 import { descriviVoce } from '../avanzamento.js';
 import { segnaModalitaMaster, modalitaMasterDi, esciModalitaMaster } from './ritorno.js';
 import { statoSalvataggioMaster, controllaRemoto, revisioneDaScrivere, differenzeSessione, testoScelta, indicatoreCollegamento, impronta } from '../collegamento.js';
@@ -121,6 +121,8 @@ async function avvia() {
   stato.cartella = await serverCartella();
   // «Modifica master»: contesto master = pagina aperta sul PC del server; il tasto MUTANT (S1) solo lì
   stato.master = contestoMasterQui();
+  // 13/10: perché non si è master, per la riga di stato del Tavolo (il server vecchio non lo dice)
+  stato.statoMaster = statoContestoMaster({ server: stato.cartella, daQuestoPc: stato.master, pingMaster: pingMasterQui(), serverVecchio: document.getElementById('barra-server-vecchio') !== null });
   document.body.classList.toggle('senza-marchio', !mostraMarchio({ server: stato.cartella, daQuestoPc: stato.master }));
   // pezzo 6: con il server la scheda aperta controlla il proprio file (come la plancia, ogni 3 secondi)
   if (stato.cartella) setInterval(controllaScheda, INTERVALLO_COLLEGAMENTO_MS);
@@ -190,7 +192,7 @@ function daIndirizzo() {
     document.title = 'Tavolo del Master · Mutant';
     // «← Torna al tavolo» da una scheda: la plancia rimette lo scorrimento di prima (src/ui/ritorno.js)
     const scorrimento = scorrimentoDaRimettere(sessionStorage);
-    stato.fermaTavolo = renderTavolo(radice, { dati: stato.dati, scorrimento, master: stato.master, azioni: { personaggi: () => vai('#/'), apri: (r) => apriDaCartella(r, { dalTavolo: true }), modificaMaster: (r) => apriDaCartella(r, { dalTavolo: true, master: true }), mappa: (id) => vai(`#/mappa/${id}`) } });
+    stato.fermaTavolo = renderTavolo(radice, { dati: stato.dati, scorrimento, master: stato.master, statoMaster: stato.statoMaster, azioni: { personaggi: () => vai('#/'), apri: (r) => apriDaCartella(r, { dalTavolo: true }), modificaMaster: (r) => apriDaCartella(r, { dalTavolo: true, master: true }), mappa: (id) => vai(`#/mappa/${id}`) } });
     return;
   }
   // guida della mappa per il master (docs/battlemap/guida-davide.md): file statico, anche senza il server

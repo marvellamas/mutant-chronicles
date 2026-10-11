@@ -2586,3 +2586,11 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 @media (max-width: 799px) {
   .attacco-sintetico .attacco-passo:not(.corrente) { display: block; }
 }
+
+/* 13/10: la riga del Tavolo che dice se questo è il PC del master (prima i pulsanti sparivano in silenzio) */
+.riga-stato-master { margin: 0.3rem 0 0.5rem; padding: 0.35rem 0.6rem; border-radius: var(--raggio); border: 1px solid var(--bordo); }
+.riga-stato-master.si { border-color: var(--ok); color: var(--ok); }
+.riga-stato-master.no { border-color: var(--attenzione); background: var(--superficie); }
+.riga-stato-master.no strong { color: var(--attenzione); }
+.riga-stato-master .nota { color: inherit; opacity: 0.85; }
+.plancia-master.non-master { font-size: 0.82rem; opacity: 0.8; margin: 0.3rem 0; }
