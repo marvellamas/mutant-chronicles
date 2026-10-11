@@ -102,6 +102,7 @@ const GRUPPI_BARRA = [
   ['iniziativa', 'Iniziativa', 'Round, «Avanti», ordine d’Iniziativa, tiri da fare'],
   ['pg', 'PG', 'Le mini-schede dei PG al tavolo e i veicoli'],
   ['nemici', 'Nemici', 'Le mini-schede dei nemici nello scontro'],
+  ['galleria', 'Galleria', 'Le immagini da mostrare ai giocatori con un tocco (N1): caricale, mostrale, nascondile'],
   ['scontro', 'Scontro', 'Chi è al tavolo, bozze («Prepara scontro»), «Crea nemico», aggiungi nemici, durate, registro, bestiario'],
   ['mappa', 'Mappa', 'Collegamento, token da mettere, template, muri e porte, nebbia, luci, vista giocatori, griglia, scene'],
 ];
@@ -291,9 +292,9 @@ export function renderMappa(radice, ctx) {
   // scene del gruppo Mappa.
   el.gruppi = Object.fromEntries(GRUPPI_BARRA.map(([k, titolo]) => [k, h('section', { class: 'laterale-sezione', id: `laterale-${k}`, 'aria-label': titolo, dataset: { gruppo: k } },
     h('h2', { class: 'laterale-titolo' }, titolo))]));
-  el.slot = Object.fromEntries(['iniziativa', 'pg', 'nemici', 'scontro', 'mappa'].map((k) => [k, h('div', { class: `laterale-slot slot-${k}` })]));
+  el.slot = Object.fromEntries(['iniziativa', 'pg', 'nemici', 'galleria', 'scontro', 'mappa'].map((k) => [k, h('div', { class: `laterale-slot slot-${k}` })]));
   el.gruppi.scheda.append(el.carta, el.secToken);
-  for (const k of ['iniziativa', 'pg', 'nemici', 'scontro']) el.gruppi[k].append(el.slot[k]);
+  for (const k of ['iniziativa', 'pg', 'nemici', 'galleria', 'scontro']) el.gruppi[k].append(el.slot[k]);
   el.gruppi.mappa.append(el.pannello, el.slot.mappa);
   el.segnalibri = Object.fromEntries(GRUPPI_BARRA.map(([k, titolo, spiega]) => [k, h('button', { type: 'button', class: 'segnalibro', title: spiega, onclick: () => vaiAlGruppo(k) }, titolo)]));
   el.ridotta = h('div', { class: 'laterale-ridotta', 'aria-label': 'Mini-token: clic per la mini-scheda' });
@@ -3512,7 +3513,7 @@ export function renderMappa(radice, ctx) {
     if (st.planciaBarra) return;
     st.planciaBarra = renderTavolo(el.piena, {
       dati: ctx.dati,
-      inMappa: { sezioni: el.slot, volo: (chiave) => comandoVolo(st.scena?.token.find((x) => chiaveRif(x.rif) === chiave)), centra: (chiave) => centraSuPezzo(chiave), collegamento: () => (st.scena ? { ...st.scena.collegamento, nomeBozza: st.fonti?.bozza?.nome ?? null } : null) },
+      inMappa: { sezioni: el.slot, vaiAlGruppo, volo: (chiave) => comandoVolo(st.scena?.token.find((x) => chiaveRif(x.rif) === chiave)), centra: (chiave) => centraSuPezzo(chiave), collegamento: () => (st.scena ? { ...st.scena.collegamento, nomeBozza: st.fonti?.bozza?.nome ?? null } : null) },
       azioni: {
         personaggi: () => ctx.azioni.personaggi?.(),
         // «Prepara la mappa» sulla scena già aperta: si rilegge, con il nuovo collegamento

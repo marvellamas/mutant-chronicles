@@ -55,7 +55,7 @@ export function voceGalleria(v, file) {
  * @returns { versione, immagini: [voce], mostrata } con le immagini dalla più recente
  */
 export function indiceGalleria(file, salvato = null, adesso = Date.now()) {
-  const presenti = (file ?? []).filter((f) => FILE_GALLERIA.test(f));
+  const presenti = [...new Set((file ?? []).filter((f) => FILE_GALLERIA.test(f)))];
   const copie = new Set(presenti.filter((f) => COPIA_GALLERIA.test(f)));
   const immagini = presenti.filter((f) => !copie.has(f));
   const per = new Map((Array.isArray(salvato?.immagini) ? salvato.immagini : [])

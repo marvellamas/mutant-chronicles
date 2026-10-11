@@ -26,6 +26,8 @@ import { colpoSuNemico } from '../colpo-nemico.js';
 import { perditeDovute, applicaPerdita, registraPeriodico, togliPeriodici, allineaPeriodici, periodicoDi, pvDopoPerdita } from '../periodici.js';
 import { pannelloScontro, leggiScontroAperto, leggiScontro, salvaScontro, scegliReimposta, chiediIniziativa, leggiMovimentoRound } from './scontro.js';
 import { pannelloBestiario, elencoNemici, cartaNemico } from './nemici.js';
+// Galleria (N1, 13/10/2026): le immagini da mostrare ai giocatori con un tocco
+import { pannelloGalleria, fasciaGalleria, leggiGalleria, nascondiATutti } from './galleria.js';
 import { chiudi as chiudiScontro, cambiaMusica, diTurno, ordineIniziativa, registraIniziative, senzaIniziativaNuovi, avanti, indietro, anteprimaIndietro, reimpostaIniziativa, reimpostaIniziativaDi, dadoIniziativa, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico, confermaRegimeNemico, aggiungiNemici, registraRiga, cambiaStatoNemico } from '../scontro.js';
 import { vociBestiario } from '../nemici.js';
 import { creaCustode } from './ridisegno.js';
@@ -120,6 +122,10 @@ export function renderTavolo(radice, ctx) {
     // «Collega i giocatori»: indirizzi della rete (server.mjs → /api/rete), riquadro aperto finché non lo si chiude
     rete: null,
     collegaAperto: !ctx.inMappa,
+    // Galleria (N1): indice di galleria/ (schede e immagine mostrata), filtro e ricerca della tab
+    galleria: null,
+    firmaGalleria: null,
+    uiGalleria: { categoria: null, cerca: '', inCorso: false },
     // A.105: registro unico dei veicoli (veicoli/ sul server), stato dei pannelli «Colpito» delle carte
     veicoli: [],
     firmaVeicoli: null,
@@ -441,6 +447,11 @@ export function renderTavolo(radice, ctx) {
       ? h('div', { class: 'plancia-griglia' }, nemiciInCarta().map((p) => conPezzo(cartaNemico(ctx, p, { modifica, durate: durateNemico(p), diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p), onAttacca: attacchiDi(p).length ? () => attacca(p, alTavolo) : null, onLancia: (i) => lancia(p, i, alTavolo), onRiduci: (v) => modifica((x) => riduciNemico(x, p.id, v)), onRegime: (k, r) => modifica((x) => confermaRegimeNemico(x, p.id, k, r, new Date())), onImmagine: () => immagineNemico(p) }), `partecipante:${p.id}`, ctx.inMappa?.volo ?? ctx.volo)))
       : null;
     const scene = pannelloScene(ctx, stato.scene, { ridisegna: disegna, apri: (id) => ctx.azioni.mappa(id), scontroAperto: stato.ultimo ? (stato.scontro?.id ?? null) : undefined });
+    // Galleria (N1): la stessa tab nella barra della mappa e nella pagina del Tavolo
+    const galleria = pannelloGalleria(ctx, Object.assign(stato.uiGalleria, { indice: stato.galleria }), {
+      ridisegna: () => { stato.galleria = stato.uiGalleria.indice ?? stato.galleria; stato.firmaGalleria = null; disegna(); },
+    });
+    const fascia = fasciaGalleria(ctx, stato.galleria, { nascondi: nascondiGalleria, vai: () => (ctx.inMappa?.vaiAlGruppo ? ctx.inMappa.vaiAlGruppo('galleria') : document.querySelector('.galleria-pannello')?.scrollIntoView({ behavior: 'smooth', block: 'start' })) });
     const bestiario = pannelloBestiario(ctx, stato.bestiario, {
       aperto: stato.bestiarioAperto,
       onToggle: (v) => { stato.bestiarioAperto = v; },
@@ -463,6 +474,7 @@ export function renderTavolo(radice, ctx) {
               : pannelloScontro(ctx, stScontro, azScontro, 'iniziativa')));
       svuota(S.pg, h('div', { class: 'plancia plancia-in-mappa' }, cartePg, sezioneVeicoli()));
       svuota(S.nemici, h('div', { class: 'plancia plancia-in-mappa' }, carteNemici ?? h('p', { class: 'vuoto' }, stato.scontro ? 'Nessun nemico nello scontro: aggiungili da «Scontro».' : 'Nessuno scontro aperto.')));
+      if (S.galleria) svuota(S.galleria, h('div', { class: 'plancia plancia-in-mappa' }, galleria));
       svuota(S.scontro, h('div', { class: 'plancia plancia-in-mappa' },
         h('header', { class: 'plancia-testa' }, azioniPlancia), esitoEsempi, scelta,
         pannelloScontro(ctx, stScontro, azScontro, 'gestione'), barraDurate(alTavolo), barraPeriodici(alTavolo), collega, bestiario));
@@ -483,6 +495,8 @@ export function renderTavolo(radice, ctx) {
       ctx.inMappa ? null : rigaStatoMaster(),
       // 12/10: lo scontro in corso in cima, ben visibile, con «Apri la mappa e continua lo scontro»
       ctx.inMappa ? null : testaInCorso(),
+      // N1: quando un'immagine è ai giocatori, la fascia in testa al Tavolo
+      ctx.inMappa ? null : fascia,
       esitoEsempi,
       ctx.inMappa ? null : h('p', { class: 'nota' }, 'Sola lettura: i valori sono quelli delle schede in personaggi/, ricalcolati con le regole attuali. Per cambiarli si apre il personaggio (clic sulla mini-scheda).'),
       scelta,
@@ -492,6 +506,7 @@ export function renderTavolo(radice, ctx) {
       barraDurate(alTavolo),
       barraPeriodici(alTavolo),
       scene,
+      galleria,
       bestiario,
       // 08/10: anche i veicoli in un gruppo richiudibile, come le mini-schede
       stato.veicoli.length ? gruppoCarte('veicoli', `Mini-schede dei veicoli (${stato.veicoli.length})`, sezioneVeicoli().slice(1)) : null,
@@ -889,6 +904,24 @@ export function renderTavolo(radice, ctx) {
   // nella plancia i nemici a 0 PV vanno in fondo, dopo tutti gli altri (l'ordine dei turni non cambia)
   const nemiciInCarta = () => [...nemiciInScontro().filter((p) => p.pv.attuali > 0), ...nemiciInScontro().filter((p) => p.pv.attuali === 0)];
 
+  // Galleria (N1): l'indice di galleria/ a ogni giro; si ridisegna solo se è cambiato (immagini o immagine mostrata)
+  const aggiornaGalleria = async () => {
+    const indice = await leggiGalleria();
+    const firma = JSON.stringify([indice.mostrata, indice.immagini.map((v) => [v.file, v.nome, v.categoria, v.mini, v.ridotta, v.mostrata, v.daiGiocatori])]);
+    if (firma === stato.firmaGalleria) return false;
+    stato.firmaGalleria = firma;
+    stato.galleria = indice;
+    return true;
+  };
+  const nascondiGalleria = async () => {
+    try {
+      stato.galleria = (await nascondiATutti()).indice;
+      stato.firmaGalleria = null;
+      avviso('Immagine nascosta a tutti.', { chiave: 'galleria' });
+    } catch (e) { avvisoErrore(`Immagine non nascosta: ${e.message}`); }
+    disegna();
+  };
+
   // bestiario: si rilegge a ogni giro, si rivalida solo se un file è cambiato (nome e mtime)
   const aggiornaBestiario = async () => {
     const lista = await elencoNemici();
@@ -1043,6 +1076,9 @@ export function renderTavolo(radice, ctx) {
     } catch (e) {
       stato.errore = e.message;
     }
+    try {
+      if (await aggiornaGalleria()) cambiato = true;
+    } catch { /* senza server della galleria: la tab dice che non si legge */ }
     try {
       if (await aggiornaTablet()) cambiato = true;
     } catch { /* senza server dei tablet: nessun indicatore */ }

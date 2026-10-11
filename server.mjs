@@ -127,6 +127,7 @@ import { pezziDellaScena } from './src/mappa/partecipanti.js';
 import { vistaPlancia } from './src/tavolo.js';
 import { INTESTAZIONE as INTESTAZIONE_AIUTO, rifiutoAiuto, assegnaAiuto, ruoloValido, ruoloDopoScontro, eAiuto, pgDaMuovere, ruoloPubblico } from './src/mappa/aiuto-master.js';
 import { pgDellaScena, pezzoDelPg, areaPerTablet, provaMovimento, eseguiMovimentoGiocatore, impostazioniTablet, miniScheda, fondiMovimentiTablet, lineaPerTablet } from './src/mappa/tablet.js';
+import { indiceGalleria, nomeFileGalleria, conVoce, conMostrata, senzaMostrata, togliDaiGiocatori, senzaImmagine, galleriaGiocatori, immagineAiGiocatori, FILE_GALLERIA } from './src/galleria.js';
 
 const RADICE = fileURLToPath(new URL('.', import.meta.url));
 const CARTELLA = 'personaggi';
@@ -141,12 +142,13 @@ const VEICOLI = 'veicoli';
 const SCENE = 'scene';
 const MAPPE = 'mappe';
 const MUSICA = 'musica';
+const GALLERIA = 'galleria'; // N1: le immagini da mostrare ai giocatori
 const ID_NEMICO = /^[a-z0-9-]{1,60}$/;
 
 const TIPI = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8',
   '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8', '.svg': 'image/svg+xml',
-  '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.ico': 'image/x-icon',
+  '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.gif': 'image/gif', '.ico': 'image/x-icon',
   '.pdf': 'application/pdf', '.txt': 'text/plain; charset=utf-8', '.md': 'text/markdown; charset=utf-8',
   '.woff2': 'font/woff2', '.woff': 'font/woff',
   // suoni della mappa (07/10): effetti in Sounds/ e musica di fondo
@@ -824,6 +826,12 @@ function creaCanaleDiretta(cartelle) {
     },
     /** A.122: il ruolo di Aiuto-master (uno solo, in memoria: si perde al riavvio del server). */
     ruoloAiuto: null,
+    /** N1: un evento a tutti gli schermi collegati (vista giocatori, mappe e schede dei tablet): la Galleria. */
+    aTutti(evento, dati) {
+      let n = 0;
+      for (const r of [...clienti, ...soloAvvisi]) { manda(r, evento, dati); n++; }
+      return n;
+    },
     /** «Adatta allo schermo» sulle viste giocatori aperte; restituisce quante sono. */
     adatta() { tutti('adatta', {}); return clienti.size; },
     chiudi() { clearInterval(battito); for (const r of clienti) { try { r.end(); } catch { /* già chiuso */ } } clienti.clear(); for (const r of soloAvvisi) { try { r.end(); } catch { /* già chiuso */ } } soloAvvisi.clear(); tablet.clear(); },
@@ -1113,6 +1121,147 @@ async function apiRitratto(req, res, percorso, { cartella, radice }) {
   return res.end(corpo);
 }
 
+
+/**
+ * Galleria (N1, 13/10/2026): le immagini che il master mostra ai giocatori con un tocco, fuori dal combattimento.
+ * I file stanno in galleria/ (anche quelli copiati a mano: l'indice si rifà sempre sui file che ci sono davvero,
+ * src/galleria.js → indiceGalleria); le schede in galleria/galleria.json. L'originale resta qui: ai giocatori va la
+ * copia ridotta, preparata dal browser del master al caricamento (nessuna libreria nativa sul server), come le mappe.
+ */
+const INDICE_GALLERIA = 'galleria.json';
+
+async function leggiIndiceGalleria(galleria) {
+  await mkdir(galleria, { recursive: true });
+  let file = [];
+  try { file = await readdir(galleria); } catch { /* cartella appena creata */ }
+  let salvato = null;
+  try { salvato = await leggiJson(join(galleria, INDICE_GALLERIA)); } catch { /* prima volta, o indice cancellato */ }
+  return indiceGalleria(file, salvato);
+}
+
+/** Scrive l'indice (in coda sul file): le schede, non le immagini. */
+async function scriviIndiceGalleria(galleria, indice) {
+  const dove = join(galleria, INDICE_GALLERIA);
+  await mkdir(galleria, { recursive: true });
+  await inCoda(dove, () => scriviJson(dove, indice));
+  return indice;
+}
+
+/** Legge l'indice, lo cambia e lo riscrive senza che due richieste si sovrappongano. */
+function cambiaGalleria(galleria, fn) {
+  return inCoda(join(galleria, 'galleria.cambia'), async () => {
+    const indice = await leggiIndiceGalleria(galleria);
+    const nuovo = await fn(indice);
+    if (!nuovo) return indice;
+    await scriviIndiceGalleria(galleria, nuovo);
+    return nuovo;
+  });
+}
+
+async function apiGalleria(req, res, percorso, galleria, radice, canale) {
+  const { dati } = await datiDelServer(radice);
+  const G = dati.galleria;
+  // l'elenco per il master: schede, copie e quale immagine è mostrata adesso
+  if (percorso === '/api/galleria' && req.method === 'GET') {
+    return json(res, 200, await leggiIndiceGalleria(galleria));
+  }
+  // quello che possono vedere i giocatori: l'immagine mostrata e le sole immagini già mostrate (src/galleria.js)
+  if (percorso === '/api/galleria/giocatori' && req.method === 'GET') {
+    const indice = await leggiIndiceGalleria(galleria);
+    return json(res, 200, { mostrata: immagineAiGiocatori(indice), immagini: galleriaGiocatori(indice) });
+  }
+  if (percorso === '/api/galleria' && req.method === 'POST') {
+    let corpo;
+    try { corpo = await leggiCorpo(req, G.massimo_mb * 1024 * 1024); } catch (e) {
+      return json(res, e.codice ?? 400, { errore: e.codice === 413 ? `immagine troppo grande: al massimo ${G.massimo_mb} MB` : e.message });
+    }
+    const d = dimensioniImmagine(new Uint8Array(corpo.buffer, corpo.byteOffset, corpo.length));
+    const tipo = d?.tipo ?? (corpo.length > 6 && corpo.subarray(0, 3).toString('latin1') === 'GIF' ? 'gif' : null);
+    if (!tipo || !G.tipi[tipo]) return json(res, 415, { errore: 'immagine non riconosciuta: solo JPG, PNG, WEBP o GIF' });
+    const p = new URL(req.url, 'http://x').searchParams;
+    const variante = p.get('variante') === 'ridotta' ? 'ridotta' : p.get('variante') === 'mini' ? 'mini' : null;
+    const di = p.get('di');
+    if (variante && (!di || !FILE_GALLERIA.test(di))) return json(res, 400, { errore: 'di: il file dell’immagine a cui appartiene la copia' });
+    const impronta = createHash('sha256').update(corpo).digest('hex').slice(0, 12);
+    const file = variante
+      ? `${di.replace(/\.[^.]+$/, '')}-${variante === 'mini' ? 'mini' : 'ridotta'}.${G.tipi[tipo].estensione}`
+      : nomeFileGalleria(p.get('nome') ?? '', impronta, G.tipi[tipo].estensione);
+    const dove = join(galleria, file);
+    await mkdir(galleria, { recursive: true });
+    // stesso contenuto, stesso nome: non si duplica (l'impronta è nel nome); una copia si riscrive
+    await inCoda(dove, async () => { if (variante) return scriviAtomico(dove, corpo); try { await stat(dove); } catch { await scriviAtomico(dove, corpo); } });
+    const indice = await cambiaGalleria(galleria, (i) => {
+      const dentro = indiceGalleria([...i.immagini.flatMap((v) => [v.file, v.ridotta, v.mini].filter(Boolean)), file], i);
+      return variante ? conVoce(dentro, di, { [variante]: file }) : conVoce(dentro, file, { nome: p.get('nome') || undefined, categoria: p.get('categoria') || undefined });
+    });
+    return json(res, 200, { file, tipo, variante, larghezza: d?.larghezza ?? null, altezza: d?.altezza ?? null, indice });
+  }
+  // «Mostra ai giocatori» e «Nascondi a tutti»: gli schermi lo sanno subito (flusso della diretta)
+  if (percorso === '/api/galleria/mostra') {
+    if (req.method === 'POST') {
+      let d;
+      try { d = JSON.parse((await leggiCorpo(req, 16 * 1024)).toString('utf8')); } catch (e) { return json(res, 400, { errore: `contenuto non valido: ${e.message}` }); }
+      if (typeof d?.file !== 'string' || !FILE_GALLERIA.test(d.file)) return json(res, 400, { errore: 'file: il nome di un’immagine della galleria' });
+      let trovata = true;
+      const indice = await cambiaGalleria(galleria, (i) => {
+        trovata = i.immagini.some((v) => v.file === d.file);
+        return trovata ? conMostrata(i, d.file, Date.now()) : null;
+      });
+      if (!trovata) return json(res, 404, { errore: 'immagine non trovata nella galleria' });
+      const mostrata = immagineAiGiocatori(indice);
+      canale?.aTutti('galleria', mostrata);
+      return json(res, 200, { mostrata, indice });
+    }
+    if (req.method === 'DELETE') {
+      const indice = await cambiaGalleria(galleria, (i) => senzaMostrata(i));
+      canale?.aTutti('galleria', null);
+      return json(res, 200, { mostrata: null, indice });
+    }
+    return json(res, 405, { errore: 'metodo non ammesso' });
+  }
+  const v = /^\/api\/galleria\/voce\/([^/]+)$/.exec(percorso);
+  if (v) {
+    const file = decodeURIComponent(v[1]);
+    if (!FILE_GALLERIA.test(file)) return json(res, 400, { errore: 'nome di immagine non valido' });
+    if (req.method === 'PUT') {
+      let d;
+      try { d = JSON.parse((await leggiCorpo(req, 16 * 1024)).toString('utf8')); } catch (e) { return json(res, 400, { errore: `contenuto non valido: ${e.message}` }); }
+      let trovata = true;
+      const indice = await cambiaGalleria(galleria, (i) => {
+        trovata = i.immagini.some((x) => x.file === file);
+        if (!trovata) return null;
+        // «Togli dalla galleria dei giocatori»: l'immagine resta al master
+        return d?.daiGiocatori === false ? togliDaiGiocatori(i, file) : conVoce(i, file, { nome: d?.nome, categoria: d?.categoria ?? null, daiGiocatori: d?.daiGiocatori });
+      });
+      if (!trovata) return json(res, 404, { errore: 'immagine non trovata nella galleria' });
+      if (d?.daiGiocatori === false) canale?.aTutti('galleria', immagineAiGiocatori(indice));
+      return json(res, 200, indice);
+    }
+    if (req.method === 'DELETE') {
+      let via = [];
+      const indice = await cambiaGalleria(galleria, (i) => {
+        const r = senzaImmagine(i, file);
+        via = r.daCancellare;
+        return r.indice;
+      });
+      for (const f of via) await unlink(join(galleria, f)).catch(() => {});
+      if (!indice.mostrata) canale?.aTutti('galleria', null);
+      return json(res, 200, indice);
+    }
+    return json(res, 405, { errore: 'metodo non ammesso' });
+  }
+  const m = /^\/api\/galleria\/img\/([^/]+)$/.exec(percorso);
+  if (!m) return json(res, 404, { errore: 'non trovato' });
+  const file = decodeURIComponent(m[1]);
+  if (!FILE_GALLERIA.test(file)) return json(res, 400, { errore: 'nome di immagine non valido' });
+  if (req.method !== 'GET' && req.method !== 'HEAD') return json(res, 405, { errore: 'metodo non ammesso' });
+  let st;
+  try { st = await stat(join(galleria, file)); } catch { return json(res, 404, { errore: 'immagine non trovata' }); }
+  res.writeHead(200, { 'Content-Type': TIPI[extname(file).toLowerCase()] ?? 'application/octet-stream', 'Content-Length': st.size, 'Cache-Control': 'no-cache' });
+  if (req.method === 'HEAD') return res.end();
+  return res.end(await readFile(join(galleria, file)));
+}
+
 /**
  * Musica di fondo della mappa (richiesta di Marcello del 07/10/2026): i file audio che il master mette nella cartella
  * reale musica/ (fuori da git, come mappe/), con i formati di data/mappa.json → audio.musica.formati. Solo lettura:
@@ -1228,7 +1377,7 @@ async function caricaEsempi(radice, cartella, nemici) {
   return { copiati, saltati };
 }
 
-async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice, soloLocale, veicoli, migraIn = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), canale = null, musica = join(RADICE, MUSICA), avvisi = null) {
+async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice, soloLocale, veicoli, migraIn = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), canale = null, musica = join(RADICE, MUSICA), avvisi = null, galleria = join(RADICE, GALLERIA)) {
   const cartelle = { cartella, tavolo, scontri, veicoli, scene, radice, canale, avvisi };
   // diretta (07/10): dopo una scrittura riuscita di scena o scontro la vista giocatori si rilegge subito
   const segnala = (r) => { if (req.method !== 'GET' && res.statusCode < 300) canale?.cambiata(); return r; };
@@ -1244,6 +1393,7 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
   if (percorso === '/api/tablet' || percorso.startsWith('/api/tablet/')) return apiTablet(req, res, percorso, cartelle);
   if (percorso === '/api/mappe' || percorso.startsWith('/api/mappe/')) return apiMappe(req, res, percorso, mappe, radice);
   if (percorso === '/api/musica' || percorso.startsWith('/api/musica/')) return apiMusica(req, res, percorso, musica, radice);
+  if (percorso === '/api/galleria' || percorso.startsWith('/api/galleria/')) return apiGalleria(req, res, percorso, galleria, radice, canale);
   if (percorso === '/api/veicoli' || percorso.startsWith('/api/veicoli/')) return apiVeicoli(req, res, percorso, veicoli);
   if (percorso === '/api/rete') {
     const porta = req.socket.localPort;
@@ -1420,7 +1570,7 @@ async function apiSalvataggi(req, res, percorso, salvataggi) {
   return json(res, 200, { ...esito, spento: true });
 }
 
-export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA), tavolo = join(RADICE, TAVOLO), scontri = join(RADICE, SCONTRI), nemici = join(RADICE, NEMICI), veicoli: veicoliDati = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), musica = join(RADICE, MUSICA), soloLocale = false, avvisi = null, salvataggi = null, backupMaster = null, eMaster = (req) => daQuestoPc(req.socket.remoteAddress) } = {}) {
+export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA), tavolo = join(RADICE, TAVOLO), scontri = join(RADICE, SCONTRI), nemici = join(RADICE, NEMICI), veicoli: veicoliDati = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), musica = join(RADICE, MUSICA), galleria = join(RADICE, GALLERIA), soloLocale = false, avvisi = null, salvataggi = null, backupMaster = null, eMaster = (req) => daQuestoPc(req.socket.remoteAddress) } = {}) {
   // copie della «Modifica master»: accanto alla cartella dei personaggi (con cartelle di prova non si tocca il progetto)
   backupMaster ??= normalize(cartella) === normalize(join(RADICE, CARTELLA)) ? join(RADICE, BACKUP_MASTER) : join(dirname(cartella), BACKUP_MASTER);
   const veicoli = veicoliDati ?? join(RADICE, VEICOLI);
@@ -1449,7 +1599,7 @@ export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA),
         if (no) return json(res, no.stato, { errore: no.errore });
       }
       if (percorso === '/api/salvataggi' || percorso === '/api/salva-sessione' || percorso === '/api/spegni') return await apiSalvataggi(req, res, percorso, salvataggi);
-      if (percorso.startsWith('/api/')) return await api(req, res, percorso, cartella, tavolo, scontri, nemici, base, soloLocale, veicoli, migraIn, scene, mappe, canale, musica, avvisi);
+      if (percorso.startsWith('/api/')) return await api(req, res, percorso, cartella, tavolo, scontri, nemici, base, soloLocale, veicoli, migraIn, scene, mappe, canale, musica, avvisi, galleria);
       return await statico(req, res, percorso, base, versioneAvvio);
     } catch (e) {
       if (!res.headersSent) json(res, 500, { errore: e.message });
@@ -1480,6 +1630,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const scene = arg('scene') ? normalize(arg('scene')) : join(RADICE, SCENE);
   const mappe = arg('mappe') ? normalize(arg('mappe')) : join(RADICE, MAPPE);
   const musica = arg('musica') ? normalize(arg('musica')) : join(RADICE, MUSICA);
+  const galleria = arg('galleria') ? normalize(arg('galleria')) : join(RADICE, GALLERIA);
   // avvisi a Marcello (tools/avvisi.mjs, avvisi/LEGGIMI.txt): solo dal server avviato da qui, mai nei test né con cartelle
   // di prova (--cartella=…) o con --senza-avvisi; in silenzio
   const senzaAvvisi = process.argv.includes('--senza-avvisi') || !!arg('cartella');
@@ -1493,7 +1644,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const fileConfig = arg('config-salvataggi') ? normalize(arg('config-salvataggi')) : join(baseSalvataggi, 'config-salvataggi.json');
   // l'argomento ntfy degli avvisi a Marcello (avvisi/avvisi.json); con cartelle di prova solo quello del file di prova
   const gestore = creaGestore({
-    cartelle: { personaggi: cartella, veicoli, scontri, nemici, tavolo, scene, mappe },
+    cartelle: { personaggi: cartella, veicoli, scontri, nemici, tavolo, scene, mappe, galleria },
     salvataggi: dirSalvataggi,
     autosave: dirAutosave,
     config: () => { try { return leggiConfig(fileConfig); } catch (e) { console.log(`Attenzione: ${e.message}`); return {}; } },
@@ -1516,7 +1667,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
       setTimeout(() => process.exit(42), 300);
     },
   };
-  const server = creaServer({ cartella, tavolo, scontri, nemici, veicoli, scene, mappe, musica, soloLocale, avvisi, salvataggi });
+  const server = creaServer({ cartella, tavolo, scontri, nemici, veicoli, scene, mappe, musica, galleria, soloLocale, avvisi, salvataggi });
   // si spegne quando si chiude la finestra di avvia-server.bat (o con Ctrl+C), senza restare in ascolto da solo; prima
   // prova il salvataggio completo (08/10): Windows concede pochi secondi alla chiusura con la X, per questo ntfy ha un
   // tempo breve e GitHub si salta; l'autosave copre gli spegnimenti bruschi
