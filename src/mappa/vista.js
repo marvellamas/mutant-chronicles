@@ -124,7 +124,7 @@ export function vistaGiocatori(s, contesto = null, regoleTemplate = contesto?.re
     // la nebbia non si mandano (sarebbe la forma di una stanza non ancora vista)
     ...((l) => (l.length ? { muriLinee: l } : {}))(lineeEffettive(s, { perGiocatori: true })
       .filter((l) => l.punti.some(([x, y]) => !coperto(limita(Math.floor(x), colonne), limita(Math.floor(y), righe))))),
-    porte: portePerGiocatori(s),
+    porte: portePerGiocatori(s, regoleMappa ? { mappa: regoleMappa } : null),
     // M1 (11/10): i livelli visibili dei giocatori, uno per uno (template, templateDurata, muri, porte, terreno,
     // luci), già normalizzati: la vista disegna solo quelli accesi. Le scene salvate col formato di prima sono
     // convertite da livelliDi.

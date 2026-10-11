@@ -3070,6 +3070,9 @@ function validaMappa(dati, err) {
   for (const k of ['porte_max', 'azioni_max']) if (!isIntero(PP[k]) || PP[k] < 1) err(F, `porte.${k}`, 'intero da 1 in su');
   if (!Array.isArray(PP.bloccano_vista) || !PP.bloccano_vista.every((s) => PP.stati?.includes(s))) err(F, 'porte.bloccano_vista', 'stati delle porte');
   for (const s of [...(PP.stati ?? []), 'segreta']) if (!/^#[0-9a-fA-F]{6}$/.test(String(PP.colori?.[s]))) err(F, `porte.colori.${s}`, '#rrggbb');
+  // M3 (11/10): aggancio al muro (src/mappa/porte.js): lati del Q, spessore e vano del battente, raggio dell'aggancio
+  if (!Array.isArray(PP.lati) || PP.lati.join() !== 'n,e,s,o') err(F, 'porte.lati', 'n, e, s, o attesi (i lati del Q, nell’ordine di «Ruota»)');
+  for (const k of ['spessore_q', 'larghezza_q', 'aggancio_raggio_q']) if (!(typeof PP[k] === 'number' && PP[k] > 0 && PP[k] <= 4)) err(F, `porte.${k}`, 'numero di Q maggiore di 0');
   // fase 2, lotto 1: template ad area (src/mappa/template.js)
   const TT = m.template ?? {};
   const noteForme = ['cerchio', 'cono', 'linea', 'quadrato', 'rettangolo'];

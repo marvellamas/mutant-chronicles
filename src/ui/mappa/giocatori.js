@@ -133,7 +133,8 @@ export function renderGiocatori(radice, ctx) {
       if (st.vista?.muriLinee?.length && vede('muri')) disegnaMuriLinee(c, { scena: st.vista, cam: st.cam, linee: st.vista.muriLinee, colore: coloriAree(el.riquadro).muro });
       if (st.vista) for (const t of [...templateVisibili(st.vista.template ?? [], sov), ...(direttaAttuale()?.template ?? [])]) disegnaTemplateGiocatori(c, info, t);
       // porte (fase 2, lotto 2): già filtrate dal server (niente segrete non rivelate, niente sotto la nebbia)
-      if (st.vista?.porte?.length && vede('porte')) disegnaPorte(c, { scena: st.vista, cam: st.cam, info, porte: st.vista.porte, colori: ctx.dati.mappa.porte.colori });
+      // M3 (11/10): le porte arrivano col loro aggancio (src/mappa/porte.js → portePerGiocatori) e si disegnano sul muro
+      if (st.vista?.porte?.length && vede('porte')) disegnaPorte(c, { scena: st.vista, cam: st.cam, info, porte: st.vista.porte, colori: ctx.dati.mappa.porte.colori, regole: ctx.dati.mappa.porte });
       const d = direttaAttuale();
       // fase 2, lotto 7: l'area del proprio PG (dal server, senza i Q sotto la nebbia) fino alla fascia scelta, se il
       // master non sta mostrando un movimento

@@ -224,51 +224,90 @@ export function disegnaTemplate(c, { scena, cam, info, celle, colore, stile, eti
 }
 
 /**
- * Porte (fase 2, lotto 2; src/mappa/porte.js), disegnate lungo il muro: aperta = due stipiti e il varco tratteggiato
- * (verde), chiusa = battente pieno (marrone), bloccata = battente pieno rosso con la croce; segreta (solo il master) =
- * contorno tratteggiato viola con la «S».
- * @param porte [{ q, stato, segreta?, orientamento }]; colori: data/mappa.json → porte.colori
+ * Porte (fase 2, lotto 2; src/mappa/porte.js): aperta = due stipiti e il varco tratteggiato (verde), chiusa = battente
+ * pieno (marrone), bloccata = battente pieno rosso con la croce; segreta (solo il master) = contorno tratteggiato viola
+ * con la «S» sul Q.
+ * M3 (11/10): la porta si disegna dove è agganciata, non più al centro del Q (segnalazione di Davide): sulla linea
+ * della griglia del lato scelto (aggancio.lato), o sul tratto di un muro disegnato (aggancio.muro), con lo spessore di
+ * quel muro. Senza aggancio resta il disegno di prima, al centro del Q.
+ * @param porte [{ q, stato, segreta?, orientamento, aggancio? }]; colori: data/mappa.json → porte.colori
+ * @param regole data/mappa.json → porte (spessore_q, larghezza_q); senza, i valori di prima
  */
-export function disegnaPorte(c, { scena, cam, info, porte, colori }) {
+export function disegnaPorte(c, { scena, cam, info, porte, colori, regole = null }) {
   const g = scena.griglia;
   const v = visibili(g, cam, info);
+  const larghezzaQ = regole?.larghezza_q ?? 1;
   for (const p of porte) {
     const [x, y] = p.q;
-    if (x < v.x0 - 1 || x > v.x1 || y < v.y0 - 1 || y > v.y1) continue;
-    const [rx, ry, rw, rh] = rettQ(g, cam, x, y);
-    const oriz = p.orientamento !== 'verticale';
-    const spessore = Math.max(3, (oriz ? rh : rw) * 0.28);
+    if (x < v.x0 - 2 || x > v.x1 + 1 || y < v.y0 - 2 || y > v.y1 + 1) continue;
+    const b = banda(g, cam, p, larghezzaQ, regole);
     const colore = colori[p.stato] ?? colori.chiusa;
     c.save();
-    // il battente (o il varco) al centro del Q, lungo il muro
-    const bx = oriz ? rx : rx + rw / 2 - spessore / 2, by = oriz ? ry + rh / 2 - spessore / 2 : ry;
-    const bw = oriz ? rw : spessore, bh = oriz ? spessore : rh;
+    c.translate(b.cx, b.cy);
+    c.rotate(b.angolo);
+    // il battente (o il varco) lungo il muro: lunghezza = il vano, spessore = quello del muro
+    const bw = b.lunghezza, bh = b.spessore;
+    const bx = -bw / 2, by = -bh / 2;
     if (p.stato === 'aperta') {
       c.fillStyle = colore;
-      const stipite = Math.max(2, (oriz ? rw : rh) * 0.14);
-      if (oriz) { c.fillRect(bx, by, stipite, bh); c.fillRect(bx + bw - stipite, by, stipite, bh); } else { c.fillRect(bx, by, bw, stipite); c.fillRect(bx, by + bh - stipite, bw, stipite); }
+      const stipite = Math.max(2, bw * 0.14);
+      c.fillRect(bx, by, stipite, bh);
+      c.fillRect(bx + bw - stipite, by, stipite, bh);
       c.strokeStyle = colore; c.lineWidth = 2; c.setLineDash([4, 3]);
-      c.beginPath();
-      if (oriz) { c.moveTo(bx, by + bh / 2); c.lineTo(bx + bw, by + bh / 2); } else { c.moveTo(bx + bw / 2, by); c.lineTo(bx + bw / 2, by + bh); }
-      c.stroke();
+      c.beginPath(); c.moveTo(bx, 0); c.lineTo(bx + bw, 0); c.stroke();
+      c.setLineDash([]);
     } else {
       c.fillStyle = colore; c.fillRect(bx, by, bw, bh);
       c.strokeStyle = '#111'; c.lineWidth = 1; c.strokeRect(bx + 0.5, by + 0.5, bw - 1, bh - 1);
       if (p.stato === 'bloccata') {
-        const cx = rx + rw / 2, cy = ry + rh / 2, r = Math.min(rw, rh) * 0.18;
+        const r = Math.min(bw, Math.max(bh, 6)) * 0.3;
         c.strokeStyle = '#fff'; c.lineWidth = 2;
-        c.beginPath(); c.moveTo(cx - r, cy - r); c.lineTo(cx + r, cy + r); c.moveTo(cx + r, cy - r); c.lineTo(cx - r, cy + r); c.stroke();
+        c.beginPath(); c.moveTo(-r, -r); c.lineTo(r, r); c.moveTo(r, -r); c.lineTo(-r, r); c.stroke();
       }
     }
+    c.restore();
+    // la segreta resta segnata sul Q (solo il master): si trova a occhio anche se il battente è sottile
     if (p.segreta) {
+      const [rx, ry, rw, rh] = rettQ(g, cam, x, y);
+      c.save();
       c.strokeStyle = colori.segreta; c.lineWidth = 2; c.setLineDash([5, 4]);
       c.strokeRect(rx + 2, ry + 2, rw - 4, rh - 4);
       c.setLineDash([]);
       c.fillStyle = colori.segreta; c.font = `700 ${Math.max(9, Math.min(16, rh * 0.35))}px system-ui, sans-serif`;
       c.textAlign = 'left'; c.textBaseline = 'top'; c.fillText('S', rx + 4, ry + 3);
+      c.restore();
     }
-    c.restore();
   }
+}
+
+/**
+ * M3: dove disegnare il battente, in pixel dello schermo: { cx, cy, angolo, lunghezza, spessore }. Dall'aggancio della
+ * porta (lato della griglia o tratto del muro disegnato); senza aggancio, al centro del Q come prima.
+ */
+function banda(g, cam, p, larghezzaQ, regole) {
+  const sch = (qx, qy) => schermoDaMappa(cam, g.scosto_x + qx * g.q_px, g.scosto_y + qy * g.q_px);
+  const px = (q) => q * g.q_px * cam.scala;
+  const [x, y] = p.q;
+  const a = p.aggancio;
+  const spessoreQ = a?.spessore ?? regole?.spessore_q ?? 0.28;
+  if (a?.muro && Array.isArray(a.punto)) {
+    // sul tratto: centro nel punto agganciato, direzione del tratto (da → a)
+    const dir = Array.isArray(a.da) && Array.isArray(a.a) ? [a.a[0] - a.da[0], a.a[1] - a.da[1]] : [1, 0];
+    const s = sch(a.punto[0], a.punto[1]);
+    return { cx: s.x, cy: s.y, angolo: Math.atan2(dir[1], dir[0]), lunghezza: Math.max(6, px(a.larghezza ?? larghezzaQ)), spessore: Math.max(3, px(spessoreQ)) };
+  }
+  if (a?.lato) {
+    // sulla linea della griglia: il lato del Q, lungo un quadretto
+    const centri = { n: [x + 0.5, y], s: [x + 0.5, y + 1], o: [x, y + 0.5], e: [x + 1, y + 0.5] };
+    const [qx, qy] = centri[a.lato] ?? centri.n;
+    const s = sch(qx, qy);
+    const verticale = a.lato === 'o' || a.lato === 'e';
+    return { cx: s.x, cy: s.y, angolo: verticale ? Math.PI / 2 : 0, lunghezza: Math.max(6, px(larghezzaQ)), spessore: Math.max(3, px(spessoreQ)) };
+  }
+  // senza aggancio (porte salvate prima, lette da un server vecchio): al centro del Q, come prima di M3
+  const s = sch(x + 0.5, y + 0.5);
+  const verticale = p.orientamento === 'verticale';
+  return { cx: s.x, cy: s.y, angolo: verticale ? Math.PI / 2 : 0, lunghezza: Math.max(6, px(1)), spessore: Math.max(3, px(0.28)) };
 }
 
 /**

@@ -557,6 +557,16 @@
     "stato_predefinito": "chiusa",
     "costo_azp": 1,
     "_nota_adiacenza": "A.139 (risposta di Davide dell’08/10/2026, decisione 143): una porta si apre o si chiude anche da un Q adiacente in diagonale, purché sia raggiungibile dal proprio lato; 1 AzP e una mano libera (la mano la verifica il master); non attraverso una parete; attraversarla è movimento a parte; serrature e blocchi prima con la loro procedura.",
+    "_nota_aggancio": "Porte agganciate al muro (segnalazione M3 di Davide dell'11/10/2026): una porta non si disegna più al centro del quadretto, ma sul muro su cui si mette. Sui muri a quadretto si aggancia alla linea della griglia (il lato del Q più vicino al punto scelto: n, e, s, o) e si disegna con «spessore_q»; sui muri disegnati a mano libera (src/mappa/muri-linee.js) si aggancia al tratto, entro «aggancio_raggio_q», e prende lo spessore di quel muro. «larghezza_q» è il vano della porta lungo il muro. Apertura e chiusura non cambiano (A.139): per le regole la porta resta sul suo Q. Le porte salvate senza aggancio si convertono alla lettura, sulla linea della griglia più vicina (src/mappa/porte.js → agganciaDiPorta).",
+    "lati": [
+      "n",
+      "e",
+      "s",
+      "o"
+    ],
+    "spessore_q": 0.25,
+    "larghezza_q": 1,
+    "aggancio_raggio_q": 0.7,
     "porte_max": 300,
     "azioni_max": 500,
     "bloccano_vista": [

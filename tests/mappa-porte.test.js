@@ -4,7 +4,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali, copia } from './helpers.js';
-import { muriEffettivi, portaA, apriChiudi, nuovaPorta, conAzione, azpNelRound, adiacente, porteVicine, portePerGiocatori, muriPerGiocatori, orientamento, orientamentoPorta, ruotaPorta, bloccaVista } from '../src/mappa/porte.js';
+import { muriEffettivi, portaA, apriChiudi, nuovaPorta, conAzione, azpNelRound, adiacente, porteVicine, portePerGiocatori, muriPerGiocatori, orientamento, orientamentoPorta, ruotaPorta, bloccaVista, agganciaPorta, agganciaDiPorta, latoVicino } from '../src/mappa/porte.js';
+import { nuovaLinea, spessoreQ } from '../src/mappa/muri-linee.js';
 import { areaRaggiungibile, costoVerso } from '../src/mappa/area.js';
 import { cambiaPortaAnnullabile, annullaUltima } from '../src/mappa/annulla.js';
 import { nuovaScena, validaScena } from '../src/mappa/scena.js';
@@ -149,4 +150,82 @@ test('porte verticali (ritocchi del 07/10): orientamento dai muri vicini, salvat
   assert.equal(validaScena(salvata, dati), null);
   assert.equal(validaScena(s, dati), null);
   assert.match(validaScena({ ...s, porte: [{ ...s.porte[0], orientamento: 'obliquo' }] }, dati), /^porte\[0\]\.orientamento/);
+});
+
+test('M3 (11/10): la porta si aggancia al muro su cui si mette, non più al centro del Q', () => {
+  const s = scena('chiusa');
+  // muro a quadretto: si aggancia alla linea della griglia più vicina al punto scelto, lungo l'asse del muro
+  // (muro verticale sulla colonna 5: lato ovest o lato est del Q)
+  assert.equal(latoVicino(s, [5, 3], [5.2, 3.5]), 'o');
+  assert.equal(latoVicino(s, [5, 3], [5.9, 3.5]), 'e');
+  // con l'asse scelto a mano (← →) conta quello, non i muri vicini
+  assert.equal(latoVicino(s, [5, 3], [5.5, 3.1], 'orizzontale'), 'n');
+  assert.equal(latoVicino(s, [5, 3], [5.5, 3.9], 'orizzontale'), 's');
+  const a = agganciaPorta(s, [5, 3], [5.9, 3.5], dati);
+  assert.deepEqual(a, { lato: 'e', spessore: RP.spessore_q });
+  // l'orientamento esce dall'aggancio
+  const porta = nuovaPorta({ id: 'p', q: [5, 3], aggancio: a });
+  assert.equal(orientamentoPorta(s, porta), 'verticale');
+  assert.equal(validaScena({ ...s, porte: [porta] }, dati), null);
+  // «Ruota» passa al lato dopo (n → e → s → o): gira e si sposta sulla linea giusta
+  assert.equal(ruotaPorta(s, porta).aggancio.lato, 's');
+  assert.equal(ruotaPorta(s, porta).orientamento, 'orizzontale');
+  assert.equal(ruotaPorta(s, ruotaPorta(s, ruotaPorta(s, ruotaPorta(s, porta)))).aggancio.lato, 'e', 'quattro giri e torna');
+  // apertura e chiusura non cambiano (A.139), e per il movimento la porta resta il suo Q
+  assert.equal(apriChiudi(porta, 'apri').porta.stato, 'aperta');
+  assert.deepEqual(muriEffettivi({ ...s, porte: [porta] }), muriEffettivi(s));
+});
+
+test('M3: su un muro disegnato la porta prende il tratto e il suo spessore', () => {
+  const s = scena('chiusa');
+  const muro = nuovaLinea({ id: 'm1', punti: [[5, 0], [5, R]], spessore: spessoreQ('sottile', dati) });
+  const conMuro = { ...s, muriLinee: [muro] };
+  const a = agganciaPorta(conMuro, [5, 3], [5.1, 3.5], dati);
+  assert.equal(a.muro, 'm1', 'il tratto vicino vince sulla linea della griglia');
+  assert.deepEqual(a.punto, [5, 3.5], 'il punto si aggancia sul tratto');
+  assert.equal(a.spessore, spessoreQ('sottile', dati), 'lo stesso spessore del muro');
+  assert.deepEqual([a.da, a.a], [[5, 0], [5, 8]]);
+  // lontano dal tratto si torna alla linea della griglia
+  assert.equal(agganciaPorta(conMuro, [8, 3], [8.5, 3.5], dati).muro, undefined);
+  // una porta agganciata al tratto non si gira: la direzione la dà il muro
+  const porta = nuovaPorta({ id: 'p', q: [5, 3], aggancio: a });
+  assert.deepEqual(ruotaPorta(conMuro, porta), porta);
+  assert.equal(orientamentoPorta(conMuro, porta), 'verticale');
+  assert.equal(validaScena({ ...conMuro, porte: [porta] }, dati), null);
+  // un aggancio sbagliato si vede
+  assert.match(validaScena({ ...conMuro, porte: [{ ...porta, aggancio: { lato: 'su' } }] }, dati), /aggancio\.lato/);
+  assert.match(validaScena({ ...conMuro, porte: [{ ...porta, aggancio: { muro: 'm1' } }] }, dati), /aggancio\.punto/);
+  assert.match(validaScena({ ...conMuro, porte: [{ ...porta, aggancio: { lato: 'n', spessore: 0 } }] }, dati), /aggancio\.spessore/);
+});
+
+test('M3: le porte già salvate restano utilizzabili e si convertono alla linea più vicina', () => {
+  const s = scena('chiusa'); // porta del 07/10: nessun aggancio
+  assert.equal(s.porte[0].aggancio, undefined);
+  assert.equal(validaScena(s, dati), null, 'la scena di prima resta valida');
+  // conversione alla lettura: muro verticale → lato ovest, con lo spessore predefinito
+  const a = agganciaDiPorta(s, s.porte[0], dati);
+  assert.deepEqual(a, { lato: 'o', spessore: RP.spessore_q });
+  // una porta orizzontale salvata va sulla linea nord
+  const oriz = { ...s, porte: [nuovaPorta({ id: 'p1', q: [5, 3], orientamento: 'orizzontale' })] };
+  assert.equal(agganciaDiPorta(oriz, oriz.porte[0], dati).lato, 'n');
+  // l'aggancio salvato vince sempre sulla conversione
+  const mia = nuovaPorta({ id: 'p1', q: [5, 3], aggancio: { lato: 'e', spessore: 0.5 } });
+  assert.deepEqual(agganciaDiPorta(s, mia, dati), { lato: 'e', spessore: 0.5 });
+  // ai giocatori la porta arriva con l'aggancio (così la vedono dove la vede il master)
+  assert.deepEqual(portePerGiocatori(s, dati).map((p) => p.aggancio.lato), ['o']);
+  assert.equal(vistaGiocatori(s, null, dati.mappa.template, dati.mappa).porte[0].aggancio.lato, 'o');
+  // e aprire, chiudere e il movimento restano come prima della conversione
+  assert.equal(apriChiudi(s.porte[0], 'apri').porta.stato, 'aperta');
+  assert.ok(Number.isFinite(costoVerso(area({ ...s, porte: [nuovaPorta({ id: 'p1', q: [5, 3], stato: 'aperta' })] }), [7, 3])));
+});
+
+test('M3: dati del vano e dell’aggancio in data/mappa.json', () => {
+  assert.deepEqual(RP.lati, ['n', 'e', 's', 'o']);
+  assert.ok(RP.spessore_q > 0 && RP.spessore_q <= 1);
+  assert.equal(RP.larghezza_q, 1, 'il vano di una porta normale è un quadretto');
+  assert.ok(RP.aggancio_raggio_q > 0);
+  assert.match(RP._nota_aggancio, /^Porte agganciate al muro/);
+  const d = copia(dati);
+  d.mappa.porte.spessore_q = 0;
+  assert.match(validaDati(d).map((e) => e.chiave).join(' | '), /porte\.spessore_q/);
 });

@@ -11,14 +11,25 @@
 // diagonali, A.124 e A.134). Una porta segreta, per i giocatori, è muro finché il master non la rivela (segreta: false):
 // nei dati che il server manda ai giocatori resta un Q di muro, senza la porta. Per la linea di visuale (prossimo lotto)
 // una porta che non è aperta blocca la vista (data/mappa.json → porte.bloccano_vista).
+// M3 (11/10): una porta si disegna sul muro su cui si mette, non più al centro del Q (segnalazione di Davide dopo la
+// prova con la mappa della chiesa). Il campo «aggancio» dice dove:
+//   { lato: 'n' | 'e' | 's' | 'o', spessore }               sulla linea della griglia di quel lato del Q;
+//   { muro, punto, da, a, spessore, larghezza? }            sul tratto di un muro disegnato (src/mappa/muri-linee.js),
+//                                                           con lo stesso spessore di quel muro.
+// Per le regole non cambia nulla: la porta resta sul suo Q (apertura, chiusura, movimento, vista: A.139). Le porte
+// salvate prima non hanno l'aggancio e si convertono alla lettura (agganciaDiPorta), sulla linea della griglia più
+// vicina, tenendo l'orientamento che avevano.
 // Le azioni dei token (aprire, chiudere) si contano come AzP del Round in scena.azioni; il registro dello scontro ha
 // la sua riga (src/scontro.js → rigaPorta). Funzioni pure.
 import { daBase64, cella, impostaCella } from './celle.js';
 import { celleToken } from './token.js';
-import { lineeDi, bucaConPorte } from './muri-linee.js';
+import { lineeDi, bucaConPorte, aggancioSuLinea } from './muri-linee.js';
 
 export const STATI_PORTA = ['aperta', 'chiusa', 'bloccata'];
 export const ORIENTAMENTI = ['orizzontale', 'verticale'];
+/** M3: i lati del Q a cui una porta si può agganciare (nord, est, sud, ovest), nell'ordine di «Ruota». */
+export const LATI = ['n', 'e', 's', 'o'];
+const ASSE = { n: 'orizzontale', s: 'orizzontale', e: 'verticale', o: 'verticale' };
 export const opposto = (o) => (o === 'verticale' ? 'orizzontale' : 'verticale');
 
 const stessoQ = (a, b) => a[0] === b[0] && a[1] === b[1];
@@ -44,11 +55,11 @@ export function muriEffettivi(scena, { perGiocatori = false } = {}) {
  * Per il movimento conta lo stato: solo la porta aperta è un passaggio, chiusa e bloccata restano muro.
  * `perGiocatori`: una porta segreta resta muro anche se aperta (nessuna fuga di informazioni).
  */
-export function lineeEffettive(scena, { perGiocatori = false } = {}) {
+export function lineeEffettive(scena, { perGiocatori = false, larghezza = 1 } = {}) {
   const linee = lineeDi(scena);
   if (!linee.length) return linee;
   const aperte = (scena.porte ?? []).filter((p) => p.aggancio?.muro && p.stato === 'aperta' && !(perGiocatori && p.segreta));
-  return aperte.length ? bucaConPorte(linee, aperte) : linee;
+  return aperte.length ? bucaConPorte(linee, aperte, larghezza) : linee;
 }
 
 /** La porta blocca la linea di visuale? (prossimo lotto: data/mappa.json → porte.bloccano_vista) */
@@ -75,8 +86,52 @@ export function apriChiudi(porta, azione) {
   return { porta: { ...porta, stato: 'chiusa' } };
 }
 
-/** Nuova porta sul Q q (con l'orientamento, se dato). */
-export const nuovaPorta = ({ id, q, stato = 'chiusa', segreta = false, orientamento = null }) => ({ id, q: [...q], stato, segreta, ...(ORIENTAMENTI.includes(orientamento) ? { orientamento } : {}) });
+/** Nuova porta sul Q q (con l'orientamento e, da M3, l'aggancio al muro, se dati). */
+export const nuovaPorta = ({ id, q, stato = 'chiusa', segreta = false, orientamento = null, aggancio = null }) => ({
+  id, q: [...q], stato, segreta,
+  ...(ORIENTAMENTI.includes(orientamento) ? { orientamento } : {}),
+  ...(aggancio ? { aggancio } : {}),
+});
+
+/**
+ * M3: dove si aggancia una porta che si mette sul Q q, dal punto scelto (Q frazionari, il centro del Q se non c'è).
+ * Prima si cerca un muro disegnato entro `aggancio_raggio_q`: la porta va sul tratto, con il suo spessore. Senza
+ * muri disegnati vicini si prende la linea della griglia più vicina al punto, lungo l'asse del muro (o quello
+ * chiesto con ← →).
+ * @param dati data/mappa.json (o { mappa })
+ */
+export function agganciaPorta(scena, q, punto, dati, { verso = null } = {}) {
+  const R = dati?.mappa?.porte ?? {};
+  const p = punto ?? [q[0] + 0.5, q[1] + 0.5];
+  const linee = lineeDi(scena);
+  const su = linee.length ? aggancioSuLinea(linee, p, R.aggancio_raggio_q ?? 0.7) : null;
+  if (su) return { muro: su.muro, punto: arrotonda2(su.punto), da: arrotonda2(su.da), a: arrotonda2(su.a), spessore: su.spessore };
+  return { lato: latoVicino(scena, q, p, verso), spessore: R.spessore_q ?? 0.25 };
+}
+const arrotonda2 = (pt) => [Math.round(pt[0] * 100) / 100, Math.round(pt[1] * 100) / 100];
+
+/**
+ * M3: la linea della griglia più vicina al punto, fra i due lati del Q lungo l'asse del muro: per un muro che corre
+ * in orizzontale il lato nord o quello sud, per un muro verticale ovest o est. L'asse viene dai muri vicini, o da
+ * `verso` se il master l'ha scelto con ← →.
+ */
+export function latoVicino(scena, q, punto, verso = null) {
+  const asse = ORIENTAMENTI.includes(verso) ? verso : orientamento(scena, q);
+  const p = punto ?? [q[0] + 0.5, q[1] + 0.5];
+  if (asse === 'orizzontale') return p[1] - q[1] <= 0.5 ? 'n' : 's';
+  return p[0] - q[0] <= 0.5 ? 'o' : 'e';
+}
+
+/**
+ * M3: l'aggancio di una porta, quello salvato o, per le porte salvate prima, quello convertito: la linea della
+ * griglia più vicina, tenendo l'orientamento che la porta aveva (nord per le orizzontali, ovest per le verticali).
+ * La porta resta utilizzabile in ogni caso: l'aggancio serve solo a disegnarla.
+ */
+export function agganciaDiPorta(scena, p, dati) {
+  if (p.aggancio) return p.aggancio;
+  const o = orientamentoPorta(scena, p);
+  return { lato: o === 'verticale' ? 'o' : 'n', spessore: dati?.mappa?.porte?.spessore_q ?? 0.25 };
+}
 
 /**
  * Azione di un token su una porta, contata come AzP del Round (A.125: 1 AzP). Senza scontro si conta per turno, come
@@ -113,21 +168,41 @@ export function orientamento(scena, q) {
   return 'orizzontale';
 }
 
-/** Orientamento della porta: quello salvato, o quello automatico (scene di prima del 07/10). */
-export const orientamentoPorta = (scena, p) => (ORIENTAMENTI.includes(p.orientamento) ? p.orientamento : orientamento(scena, p.q));
+/**
+ * Orientamento della porta: dall'aggancio se c'è (M3), altrimenti quello salvato o quello automatico dai muri
+ * (scene di prima del 07/10). Per una porta agganciata a un muro disegnato conta la direzione del tratto.
+ */
+export function orientamentoPorta(scena, p) {
+  const a = p.aggancio;
+  if (a?.lato && LATI.includes(a.lato)) return ASSE[a.lato];
+  if (a?.da && a?.a) return Math.abs(a.a[0] - a.da[0]) >= Math.abs(a.a[1] - a.da[1]) ? 'orizzontale' : 'verticale';
+  return ORIENTAMENTI.includes(p.orientamento) ? p.orientamento : orientamento(scena, p.q);
+}
 
-/** «Ruota» (07/10): la porta girata di 90°, con l'orientamento salvato. */
-export const ruotaPorta = (scena, p) => ({ ...p, orientamento: opposto(orientamentoPorta(scena, p)) });
+/**
+ * «Ruota» (07/10): la porta girata di 90°. M3: una porta agganciata alla griglia passa al lato dopo (n → e → s → o),
+ * così si gira e si sposta sulla linea giusta con lo stesso comando; una agganciata a un muro disegnato non si gira
+ * (segue il tratto).
+ */
+export function ruotaPorta(scena, p) {
+  if (p.aggancio?.muro) return p;
+  if (p.aggancio?.lato && LATI.includes(p.aggancio.lato)) {
+    const lato = LATI[(LATI.indexOf(p.aggancio.lato) + 1) % LATI.length];
+    return { ...p, aggancio: { ...p.aggancio, lato }, orientamento: ASSE[lato] };
+  }
+  return { ...p, orientamento: opposto(orientamentoPorta(scena, p)) };
+}
 
 /**
  * Porte per i giocatori (vista e diretta): senza le segrete non rivelate (sono muro nella maschera dei muri) e senza
  * quelle sotto la nebbia; con l'orientamento per il disegno. [{ id, q, stato, orientamento }]
  */
-export function portePerGiocatori(scena) {
+export function portePerGiocatori(scena, dati = null) {
   const { colonne: C, righe: R } = scena.griglia;
   const nebbia = daBase64(scena.nebbia.coperti);
   return (scena.porte ?? []).filter((p) => !p.segreta && !cella(nebbia, C, R, p.q[0], p.q[1]))
-    .map((p) => ({ id: p.id, q: [...p.q], stato: p.stato, orientamento: orientamentoPorta(scena, p) }));
+    // M3 (11/10): anche l'aggancio al muro, così i giocatori la vedono dove la vede il master
+    .map((p) => ({ id: p.id, q: [...p.q], stato: p.stato, orientamento: orientamentoPorta(scena, p), ...(dati ? { aggancio: agganciaDiPorta(scena, p, dati) } : p.aggancio ? { aggancio: p.aggancio } : {}) }));
 }
 
 /**
@@ -148,6 +223,20 @@ export function errorePorta(p, colonne, righe) {
   if (!STATI_PORTA.includes(p.stato)) return `stato: ${STATI_PORTA.join(', ')}`;
   if (typeof p.segreta !== 'boolean') return 'segreta: vero o falso';
   if (p.orientamento !== undefined && !ORIENTAMENTI.includes(p.orientamento)) return `orientamento: ${ORIENTAMENTI.join(' o ')}`;
+  // M3 (11/10): aggancio al muro, facoltativo (le porte salvate prima non l'hanno)
+  if (p.aggancio !== undefined) {
+    const a = p.aggancio;
+    const coppia = (v) => Array.isArray(v) && v.length === 2 && v.every((x) => typeof x === 'number' && Number.isFinite(x));
+    const spessore = (v) => v === undefined || (typeof v === 'number' && v > 0 && v <= 2);
+    if (!a || typeof a !== 'object' || Array.isArray(a)) return 'aggancio: lato della griglia o muro disegnato';
+    if (a.muro !== undefined) {
+      if (typeof a.muro !== 'string' || !a.muro) return 'aggancio.muro: id del muro disegnato';
+      if (!coppia(a.punto)) return 'aggancio.punto: coppia di numeri in Q';
+      for (const k of ['da', 'a']) if (a[k] !== undefined && !coppia(a[k])) return `aggancio.${k}: coppia di numeri in Q`;
+      if (a.larghezza !== undefined && !(typeof a.larghezza === 'number' && a.larghezza > 0 && a.larghezza <= 4)) return 'aggancio.larghezza: vano in Q (al massimo 4)';
+    } else if (!LATI.includes(a.lato)) return `aggancio.lato: ${LATI.join(', ')}`;
+    if (!spessore(a.spessore)) return 'aggancio.spessore: spessore in Q (al massimo 2)';
+  }
   return null;
 }
 

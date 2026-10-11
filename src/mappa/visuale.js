@@ -53,7 +53,7 @@ export function lineeVista(scena, regolePorte) {
   const linee = lineeDi(scena);
   if (!linee.length) return linee;
   const aperte = (scena.porte ?? []).filter((p) => p.aggancio?.muro && !regolePorte.bloccano_vista.includes(p.stato) && !p.segreta);
-  return aperte.length ? bucaConPorte(linee, aperte) : linee;
+  return aperte.length ? bucaConPorte(linee, aperte, regolePorte.larghezza_q ?? 1) : linee;
 }
 
 /** La maschera dei Q di un oggetto ostacoli (o la maschera stessa, se arriva nuda). */

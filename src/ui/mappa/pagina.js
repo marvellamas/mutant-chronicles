@@ -50,7 +50,7 @@ import { disegnaMuri, disegnaMuriLinee, disegnaArea, disegnaPercorso, disegnaZoc
 import { luceQ, luceIngombro, testoLuceBersaglio, categorieLuce, ambienteDi, trattoLuce, rettangoloLuce, conVoceLuce, cambiaAmbiente } from '../../mappa/luce.js';
 import { celleTemplate, tokenDentro as tokenNelTemplate, nuovoTemplate, scaduto, direzioneVerso, ORIENTABILI, templateVisibili, ruota, cambiaMisura, permanente } from '../../mappa/template.js';
 import { livelliDi, livelliDati, conLivello, conTuttiILivelli, nascosti as livelliNascosti } from '../../mappa/sovrapposizioni.js';
-import { portaA, muriEffettivi, lineeEffettive, porteVicine, apriChiudi, nuovaPorta, conAzione, azpNelRound, orientamento, orientamentoPorta, ruotaPorta, opposto } from '../../mappa/porte.js';
+import { portaA, muriEffettivi, lineeEffettive, porteVicine, apriChiudi, nuovaPorta, conAzione, azpNelRound, orientamento, orientamentoPorta, ruotaPorta, opposto, agganciaPorta, agganciaDiPorta } from '../../mappa/porte.js';
 import { apriMenuTemplate, sezioneTemplate, etichettaTemplate, testoMisure } from './template.js';
 import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
 import { componiMenu, unisciMenu } from '../../mappa/menu.js';
@@ -336,10 +336,11 @@ export function renderMappa(radice, ctx) {
       // M2 (11/10): muri disegnati a mano libera, sotto lo stesso interruttore dei muri a quadretto
       if (liv.muri) disegnaMuriLinee(c, { scena: s, cam: st.cam, linee: lineeDi(s), colore: colori.muro });
       // fase 2, lotto 2: le porte, ciascuna con il suo stato (le segrete con la «S»)
-      if (liv.porte && s.porte?.length) disegnaPorte(c, { scena: s, cam: st.cam, info, porte: s.porte.map((p) => ({ ...p, orientamento: orientamentoPorta(s, p) })), colori: ctx.dati.mappa.porte.colori });
+      // M3 (11/10): ogni porta sul suo muro; quelle salvate prima si convertono alla lettura (agganciaDiPorta)
+      if (liv.porte && s.porte?.length) disegnaPorte(c, { scena: s, cam: st.cam, info, porte: s.porte.map((p) => ({ ...p, orientamento: orientamentoPorta(s, p), aggancio: agganciaDiPorta(s, p, ctx.dati) })), colori: RP.colori, regole: RP });
       // 07/10: anteprima della porta da mettere sotto il puntatore, con l'orientamento (← → per girarla)
       const ap = st.muri.strumento === 'porta' ? anteprimaPorta() : null;
-      if (ap) { c.save(); c.globalAlpha = 0.6; disegnaPorte(c, { scena: s, cam: st.cam, info, porte: [ap], colori: ctx.dati.mappa.porte.colori }); c.restore(); }
+      if (ap) { c.save(); c.globalAlpha = 0.6; disegnaPorte(c, { scena: s, cam: st.cam, info, porte: [ap], colori: RP.colori, regole: RP }); c.restore(); }
       // fase 2, lotto 4: zone in Penombra, Luce scarsa e Buio, più scure (sotto i token)
       const lm = liv.luci ? maschereLuce() : null;
       if (lm) disegnaLuci(c, { scena: s, cam: st.cam, info, maschere: lm, opacita: ctx.dati.mappa.luci.oscurita });
@@ -1891,7 +1892,7 @@ export function renderMappa(radice, ctx) {
     const scelta = sf.chiusa ?? [...FASCE.slice(0, st.fascia)].reverse().find((f) => rimaste[f] !== null);
     const g = st.scena.griglia;
     const area = areaRaggiungibile({
-      colonne: g.colonne, righe: g.righe, muri: muriEffettivi(st.scena), terreno: daBase64(st.scena.terreno), linee: lineeEffettive(st.scena),
+      colonne: g.colonne, righe: g.righe, muri: muriEffettivi(st.scena), terreno: daBase64(st.scena.terreno), linee: lineeEffettive(st.scena, { larghezza: RP.larghezza_q }),
       token: st.scena.token.map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: pezzoDi(x)?.lato ?? null })),
       chi: { id: t.id, q: t.q, ingombro: t.ingombro, angolo: t.angolo, base: t.base, lato: pz.lato }, massimo: Math.max(totale, portata), regole: regoleMovimento(t, ctx.dati),
     });
@@ -1977,7 +1978,7 @@ export function renderMappa(radice, ctx) {
         const g = s.griglia;
         const pz = pezzoDi(t);
         const areaG = areaRaggiungibile({
-          colonne: g.colonne, righe: g.righe, muri: muriEffettivi(s, { perGiocatori: true }), terreno: daBase64(s.terreno), linee: lineeEffettive(s, { perGiocatori: true }),
+          colonne: g.colonne, righe: g.righe, muri: muriEffettivi(s, { perGiocatori: true }), terreno: daBase64(s.terreno), linee: lineeEffettive(s, { perGiocatori: true, larghezza: RP.larghezza_q }),
           token: s.token.filter((x) => x.id === t.id || visibileAiGiocatori(x, s, nebbia)).map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: pezzoDi(x)?.lato ?? null })),
           chi: { id: t.id, q: t.q, ingombro: t.ingombro, angolo: t.angolo, base: t.base, lato: pz?.lato ?? null }, massimo: info.totale, regole: regoleMovimento(t, ctx.dati),
         });
@@ -2347,12 +2348,18 @@ export function renderMappa(radice, ctx) {
     ridisegna(['aree', 'sopra']);
   }
   /** Strumento «Porta»: clic su un Q mette una porta (stato e segreta dal pannello) o toglie quella che c'è. */
-  function mettiTogliPorta(q) {
+  /** M3: l'orientamento che viene dall'aggancio (per il campo salvato, che resta per compatibilità). */
+  const orientamentoDaAggancio = (a, q) => (a?.lato ? (a.lato === 'o' || a.lato === 'e' ? 'verticale' : 'orizzontale')
+    : a?.da && a?.a ? (Math.abs(a.a[0] - a.da[0]) >= Math.abs(a.a[1] - a.da[1]) ? 'orizzontale' : 'verticale')
+    : orientamento(st.scena, q));
+  function mettiTogliPorta(q, punto = null) {
     const c = portaA(st.scena, q);
     if (c) { st.scena = cambiaPortaAnnullabile(st.scena, c, null, ctx.dati); avviso('Porta tolta.', { chiave: 'porta' }); dopoPorta(); return; }
     if ((st.scena.porte?.length ?? 0) >= RP.porte_max) { avvisoErrore(`Al massimo ${RP.porte_max} porte.`); return; }
     // 07/10: l'orientamento si salva (automatico dai muri, o quello scelto con ← →)
-    const p = nuovaPorta({ id: `porta-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`, q, stato: M.porta.stato, segreta: M.porta.segreta, orientamento: M.porta.verso ?? orientamento(st.scena, q) });
+    // M3 (11/10): la porta si aggancia al muro su cui si mette (tratto disegnato o linea della griglia più vicina)
+    const aggancio = agganciaPorta(st.scena, q, punto ?? st.puntoPorta, ctx.dati, { verso: M.porta.verso });
+    const p = nuovaPorta({ id: `porta-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`, q, stato: M.porta.stato, segreta: M.porta.segreta, orientamento: M.porta.verso ?? orientamentoDaAggancio(aggancio, q), aggancio });
     st.scena = cambiaPortaAnnullabile({ ...st.scena, porte: st.scena.porte ?? [] }, null, p, ctx.dati);
     avviso(`Porta ${RP.nomi_stati[p.stato].toLowerCase()}${p.segreta ? ', segreta' : ''}.`, { chiave: 'porta' });
     dopoPorta();
@@ -2361,7 +2368,9 @@ export function renderMappa(radice, ctx) {
   function anteprimaPorta() {
     const q = st.portaSotto;
     if (!q || !st.scena || portaA(st.scena, q)) return null;
-    return { q, stato: M.porta.stato, segreta: M.porta.segreta, orientamento: M.porta.verso ?? orientamento(st.scena, q) };
+    // M3: si vede subito dove si attaccherà (sul tratto del muro disegnato, o sulla linea della griglia)
+    const aggancio = agganciaPorta(st.scena, q, st.puntoPorta, ctx.dati, { verso: M.porta.verso });
+    return { q, stato: M.porta.stato, segreta: M.porta.segreta, orientamento: M.porta.verso ?? orientamentoDaAggancio(aggancio, q), aggancio };
   }
   /** ← → con lo strumento «Porta» (07/10): gira la porta da mettere; la scelta resta per le porte successive. */
   function frecciaPorta(e) {
@@ -2699,7 +2708,7 @@ export function renderMappa(radice, ctx) {
     if (st.linea && !st.spazio) { fissaLinea(m); return; }
     const base = { id: e.pointerId, x: p.x, y: p.y, x0: p.x, y0: p.y, mosso: false };
     const d = disegnoAttivo();
-    if (d && d.forma === 'porta' && !st.spazio && st.strumento !== 'calibra') { mettiTogliPorta(qVicino(m)); return; }
+    if (d && d.forma === 'porta' && !st.spazio && st.strumento !== 'calibra') { mettiTogliPorta(qVicino(m), qFrazionario(m)); return; }
     // M2 (11/10): «Disegna muro», a mano libera in Q frazionari (anche fuori dalla griglia)
     if (d && d.forma === 'linea' && !st.spazio && st.strumento !== 'calibra') {
       st.trascina = { ...base, modo: 'disegno', gruppo: 'muri', forma: 'linea', punti: [qFrazionario(m)] };
@@ -2938,7 +2947,13 @@ export function renderMappa(radice, ctx) {
     const m = mappaDaSchermo(st.cam, p.x, p.y);
     aggiornaPercorso(m);
     // 07/10: il Q sotto il puntatore per l'anteprima della porta
-    if (M.strumento === 'porta') { const q = qVicino(m); if (q.join() !== st.portaSotto?.join()) { st.portaSotto = q; ridisegna(['aree']); } }
+    // M3 (11/10): conta anche il punto, non solo il Q: la porta si aggancia al muro più vicino a dove si clicca
+    if (M.strumento === 'porta') {
+      const q = qVicino(m);
+      const f = qFrazionario(m);
+      const cambiato = q.join() !== st.portaSotto?.join() || !st.puntoPorta || Math.hypot(f[0] - st.puntoPorta[0], f[1] - st.puntoPorta[1]) > 0.1;
+      if (cambiato) { st.portaSotto = q; st.puntoPorta = f; ridisegna(['aree']); }
+    }
     if (e.pointerType !== 'mouse') return nascondiSuggerimento();
     const t = tokenSotto(m);
     if (!t) return nascondiSuggerimento();
