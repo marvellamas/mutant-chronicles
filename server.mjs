@@ -1386,14 +1386,21 @@ async function statico(req, res, percorso, radice, versioneAvvio = null) {
  * cartella temporanea).
  */
 /**
- * La richiesta viene da questo PC? (08/10: «Spegni Mutant» solo dal PC del master) Indirizzo di loopback o uno degli
- * indirizzi delle schede di rete di questo PC.
+ * La richiesta viene da questo PC? (08/10: «Spegni Mutant» solo dal PC del master; 13/10: anche «Modifica master» e i
+ * bonus di circostanza). È questo PC se l'indirizzo di chi chiede è di loopback (localhost, 127.x, ::1) oppure uno
+ * degli indirizzi delle schede di rete di questo computer: così il master che apre Mutant con l'indirizzo di rete del
+ * suo PC (http://192.168.x.x:3000) è riconosciuto come gli altri. I tablet e gli altri dispositivi no.
+ * 13/10: l'indirizzo si confronta senza il prefisso ::ffff: (IPv4 dentro IPv6), senza la zona degli IPv6 locali
+ * (fe80::1%Ethernet) e senza maiuscole, perché Windows e Node le scrivono in modi diversi.
  */
+const normalizzaIndirizzo = (x) => String(x ?? '').trim().replace(/^\[|\]$/g, '').replace(/^::ffff:/i, '').replace(/%.*$/, '')
+  .toLowerCase();
+
 export function daQuestoPc(indirizzo, interfacce = networkInterfaces()) {
-  const a = String(indirizzo ?? '').replace(/^::ffff:/, '');
+  const a = normalizzaIndirizzo(indirizzo);
   if (!a) return false;
-  if (a === '::1' || a.startsWith('127.')) return true;
-  return Object.values(interfacce).flat().some((i) => i && String(i.address).replace(/^::ffff:/, '') === a);
+  if (a === '::1' || a === '0:0:0:0:0:0:0:1' || a.startsWith('127.')) return true;
+  return Object.values(interfacce).flat().some((i) => i && normalizzaIndirizzo(i.address) === a);
 }
 
 /** Salvataggi del server (08/10): GET /api/salvataggi, POST /api/salva-sessione, POST /api/spegni. */
