@@ -21,6 +21,10 @@ class Elemento extends Nodo {
   getAttribute(k) { return this.attributi[k] ?? null; }
   addEventListener(tipo, fn) { (this.ascolti[tipo] ??= []).push(fn); }
   append(...figli) { for (const f of figli) this.aggiungi(f, false); }
+  // <dialog> delle finestrelle (src/ui/finestrella.js): si apre e si chiude senza fare altro
+  showModal() { this.open = true; }
+  close() { this.open = false; }
+  focus() {}
   replaceChildren(...figli) { for (const c of [...this.children]) c.remove(); this.testo = ''; this.append(...figli); }
   prepend(...figli) { for (const f of figli.reverse()) this.aggiungi(f, true); }
   aggiungi(f, inTesta) {

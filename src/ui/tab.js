@@ -6,13 +6,14 @@
 // Le penalità di Ferite, Affaticamento e Stati sono solo promemoria: i VA mostrati non le
 // includono (le regole del cap. 5 sono situazionali).
 import { allineaStorico } from '../storico.js';
-import { datiTestata, statiAttiviVista } from '../scheda-vista.js';
+import { datiTestata, statiAttiviVista, contoVa, modificatoriAttivi } from '../scheda-vista.js';
+import { informa } from './finestrella.js';
 import { conAvviso } from './procedi.js';
 import { h, segno } from './dom.js';
 import { avviso } from './avvisi.js';
 import { normalizzaTemporanei, variaTemporaneo, durataTemporaneo, togliTemporaneo, derivatiDi } from '../temporanei.js';
 import { normalizzaCircostanze, aggiungiCircostanza, variaCircostanza, commutaCategoria, notaCircostanza, togliCircostanza, tutteSpuntate, TUTTO } from '../circostanze.js';
-import { info, infoValore, etichettaMacro, pallini } from './tooltip.js';
+import { info, infoValore, etichettaMacro, pallini, listaProvenienza } from './tooltip.js';
 import { stemma, iconaPagina } from './immagini.js';
 import { classeMacrofamiglia } from '../palette.js';
 import { formulaScomposizione, visioniPersonaggio, abilitaVista, intensitaStato, statiConImplicati } from '../condizioni.js';
@@ -1125,28 +1126,64 @@ function tabIdentita(ctx, d) {
 // ---------------------------------------------------------------------------
 // Abilità
 
+/**
+ * «Calcolo» (S8, 11/10/2026): finestrella con il conto del VA di un'Abilità. Le colonne che stavano nella riga (Mod,
+ * Base, Corp, Avanz, Equip), il limite della categoria, il valore da regole e le voci fino al VA mostrato (la
+ * provenienza del motore: gli stessi numeri del tooltip). In più, ciò che stava nella colonna destra e serve alla
+ * singola Prova: gli usi specifici e, con luce scarsa, «Richiede la vista» (A.116).
+ */
+function apriCalcolo(ctx, a) {
+  const c = contoVa(a);
+  const L = ctx.dati.regole.illuminazione;
+  const s = ctx.sessione ?? {};
+  const luceScarsa = !!L?.richiede_vista && L.livelli.some((x) => x.id === s.luce && !x.base);
+  const vista = luceScarsa ? abilitaVista(s, ctx.dati).find((x) => x.nome === a.nome) : null;
+  const contenuto = h('div', { class: 'calcolo-va' },
+    h('table', { class: 'tabella compatta calcolo-colonne' },
+      h('thead', {}, h('tr', {}, c.colonne.map((x) => h('th', { title: x.voce }, x.sigla)), h('th', { title: 'Equipaggiamento indossato (§7.11.1)' }, 'Equip'))),
+      h('tbody', {}, h('tr', {}, c.colonne.map((x) => h('td', {}, x.testo)), h('td', {}, c.equip ? segno(c.equip) : '0')))),
+    h('p', { class: 'nota' }, c.formula),
+    c.limitato ? h('p', {}, h('span', { class: 'al-limite' }, '⚑ '), `Mod + Base + Corp + Avanz fa ${c.grezzo}: oltre il limite ${c.limite} della categoria (§8.3), conta ${c.limite}.`) : null,
+    h('p', {}, 'Valore da regole: ', h('strong', {}, numero(c.daRegole))),
+    a.provenienza ? [h('p', { class: 'tooltip-etichetta' }, 'Conto del VA'), listaProvenienza(a.provenienza, 'VA')]
+      : c.condizioni.length ? h('ul', { class: 'tooltip-provenienza' }, c.condizioni.map((x) => h('li', {}, h('span', {}, x.voce), h('strong', {}, x.testo)))) : null,
+    h('p', { class: 'calcolo-totale' }, 'VA: ', h('strong', { class: 'pillola-va' }, numero(c.effettivo))),
+    (a.usiSpecifici ?? []).length ? h('div', {}, h('p', { class: 'tooltip-etichetta' }, 'Solo per un uso specifico (il VA non cambia)'),
+      h('ul', {}, a.usiSpecifici.map((u) => h('li', {}, h('strong', {}, `${u.uso}: ${numero(u.valore)}`), ` (${segno(u.modificatore)}${u.oggetti?.length ? `, ${u.oggetti.map((o) => o.oggetto).join(', ')}` : ''})`)))) : null,
+    (a.disponibili ?? []).length ? h('div', {}, h('p', { class: 'tooltip-etichetta' }, 'A condizione (spunta accanto al VA)'),
+      h('ul', {}, a.disponibili.map((e) => h('li', {}, `${segno(e.valore)} ${e.oggetto}${e.se ? ` se ${e.se}` : ''}${e.condizione ? `. ${e.condizione}` : ''}`)))) : null,
+    (a.nonCumulati ?? []).length && !a.provenienza ? h('ul', {}, a.nonCumulati.map((e) => h('li', { class: 'nota' }, `Non si somma: ${segno(e.valore)} ${e.oggetto} (un solo modificatore degli strumenti per Prova, Giocatore §1.4.1).`))) : null,
+    // A.116: con luce scarsa, se questa Prova richiede la vista riceve la penalità di luce (lo corregge il Direttore)
+    vista ? h('label', { class: 'casella-luce', title: vista.uso ? `Di solito sì: ${vista.uso}.` : 'Di solito no (conoscenze, ascolto).' },
+      h('input', { type: 'checkbox', checked: vista.attiva, onchange: (e) => ctx.azioni.imposta('vistaAbilita', { ...(ctx.sessione.vistaAbilita ?? {}), [a.nome]: e.target.checked }) }),
+      ' Questa Prova richiede la vista: riceve la penalità di luce (A.116)') : null);
+  return informa({ titolo: `Calcolo: ${a.nome}`, contenuto, classe: 'finestrella-calcolo' });
+}
+
 function tabAbilita(ctx, d) {
   const meta = Math.ceil(d.categorie.length / 2);
   const eccesso = ctx.tab.scheda?.avvisoPunti ?? null;
-  // sul telefono le colonne di dettaglio si nascondono e la formula va sotto il nome (come nel wizard)
-  const tabella = (categorie) => h('table', { class: 'tabella compatta abilita-tab' },
-    h('thead', {}, h('tr', {}, ['Abilità', 'Mod', 'Base', 'Corp', 'Avanz', 'Equip', 'VA'].map((c, i) => h('th', { class: i && i < 6 ? 'dettaglio' : null }, c)))),
+  // S8 (11/10/2026): nella riga solo il nome e il VA grande, con accanto bonus e malus attivi e le spunte «a
+  // condizione»; Mod, Base, Corp, Avanz ed Equip stanno nel «Calcolo» (finestrella con il conto del VA)
+  const tabella = (categorie) => h('table', { class: 'tabella compatta abilita-tab abilita-sintesi' },
+    h('thead', {}, h('tr', {}, h('th', {}, 'Abilità'), h('th', {}, 'VA'), h('th', {}, h('span', { class: 'sr' }, 'Calcolo')))),
     categorie.map((cat) => h('tbody', {},
-      h('tr', { class: 'categoria' }, h('th', { colspan: 7 }, cat.nome)),
+      h('tr', { class: 'categoria' }, h('th', { colspan: 3 }, cat.nome)),
       cat.abilita.map((a) => h('tr', { class: a.diClasse ? 'di-classe' : null },
         h('th', { scope: 'row' }, info('abilita', a.nome), h('span', { class: 'sigla' }, ` ${a.caratteristica}`),
           a.competenza ? h('span', { class: 'sigla', title: `Competenza ${a.competenza} (prima Classe, §2.3)` }, ` ${a.competenza}`) : null, a.diClasse ? ' •' : null,
           // §8.3: VA grezzo oltre il limite del VA personale
           a.limite !== null && a.grezzo > a.limite ? h('span', { class: 'al-limite', title: `VA grezzo ${a.grezzo} oltre il limite ${a.limite} (§8.3): conta ${a.limite}` }, ' ⚑') : null,
           // punti liberi ricevuti in un evento con punti in eccesso (E&L del 03/10/2026)
-          liberiInEccesso(eccesso, a.nome) ? h('span', { class: 'liberi-eccesso', title: `Punti liberi: ${liberiInEccesso(eccesso, a.nome)}. ${eccesso.testo}` }, ` ✱ liberi: ${liberiInEccesso(eccesso, a.nome)}`) : null,
-          h('small', { class: 'formula' }, `${segno(a.mod)} Mod + ${a.base} Base + ${a.corporazione} Corp + ${a.avanzamento} Avanz${a.limite !== null ? `, limite ${a.limite}` : ''}${a.equip ? ` ${segno(a.equip)} Equip` : ''}`)),
-        h('td', { class: 'dettaglio' }, segno(a.mod)), h('td', { class: 'dettaglio' }, String(a.base)), h('td', { class: 'dettaglio' }, String(a.corporazione)),
-        h('td', { class: 'dettaglio' }, String(a.avanzamento)), h('td', { class: 'dettaglio', title: a.equip ? 'Equipaggiamento indossato (§7.11.1)' : null }, a.equip ? segno(a.equip) : '0'),
+          liberiInEccesso(eccesso, a.nome) ? h('span', { class: 'liberi-eccesso', title: `Punti liberi: ${liberiInEccesso(eccesso, a.nome)}. ${eccesso.testo}` }, ` ✱ liberi: ${liberiInEccesso(eccesso, a.nome)}`) : null),
         h('td', { class: 'cella-va' }, h('span', { class: 'va-con-usi' }, valoreEffettivo(a.nome, a.effettivo, a.totale, a.scomposizione, {
           pillola: true, dettaglio: a.provenienza ? null : `${segno(a.mod)} Mod + ${a.base} Base + ${a.corporazione} Corp + ${a.avanzamento} Avanz = ${a.grezzo}${a.grezzo !== a.totale ? `, limite ${a.totale}` : ''}`,
           disponibili: a.disponibili, nonCumulati: a.nonCumulati, provenienza: a.provenienza,
-        }), valoriUso(a.nome, a.usiSpecifici), condizionaliValore(ctx, a.nome, a.disponibili))))))));
+        }),
+        // bonus e malus attivi accanto al VA (le voci dopo il valore da regole)
+        modificatoriAttivi(a).map((x) => h('span', { class: `modificatore-attivo ${x.verso}`, title: x.testo }, x.testo)),
+        valoriUso(a.nome, a.usiSpecifici), condizionaliValore(ctx, a.nome, a.disponibili))),
+        h('td', { class: 'cella-calcolo' }, h('button', { type: 'button', class: 'btn btn-piccolo btn-calcolo', title: `Il conto del VA di ${a.nome}: Mod, Base, Corp, Avanz, Equip e condizioni`, onclick: () => apriCalcolo(ctx, a) }, 'Calcolo')))))));
   const tutte = condizioniAttiveAbilita(ctx.tab.scheda, ctx.dati);
   const condizioni = tutte.filter((c) => c.fonte !== 'uso');
   const usi = tutte.filter((c) => c.fonte === 'uso');
@@ -1154,28 +1191,26 @@ function tabAbilita(ctx, d) {
     h('span', { class: `val-eff ${c.verso}` }, h('span', { class: 'segno-verso', 'aria-hidden': 'true' }, c.verso === 'malus' ? '▼' : '▲'), ' '),
     h('strong', {}, `${c.nome}: `), h('span', { class: `effetto-condizione ${c.verso}` }, c.testo),
     c.uso ? h('span', { class: 'nota' }, ` (solo per ${c.uso}: vedi ${c.vedi})`) : null);
-  // docs/layout-sd.md, pezzo 1: tabella compatta in alto; Condizioni attive (Ferite, Affaticamento,
-  // carico, Stati, bonus/malus condizionali degli oggetti) in una colonna a destra, sempre presente
+  const stati = statiAttiviVista(ctx.sessione, ctx.dati);
+  // S7 (11/10/2026): a destra un solo riquadro «Condizioni attive», con gli Stati attivi (sola lettura), ciò che pesa
+  // ora sui VA e i bonus di circostanza, che il giocatore continua a mettere qui. Luce, interruttori di oggetti e
+  // Talenti e i gradi di Ferite, Affaticamento e Corruzione non stanno più in questa colonna: le spunte «a condizione»
+  // sono accanto al VA, «Richiede la vista» (A.116) nel «Calcolo», il resto nel Combattimento e nella colonna sinistra.
   return [
     h('div', { class: 'abilita-layout' },
       h('div', { class: 'abilita-principale' },
         sezione('Abilità',
           eccesso ? avvisoPuntiEccesso(ctx, eccesso) : null,
           h('div', { class: 'abilita-affiancate' }, tabella(d.categorie.slice(0, meta)), tabella(d.categorie.slice(meta))),
-          h('p', { class: 'nota' }, `• Abilità di Classe. S / P / G / N: competenza nella prima Classe (§2.3). VA = Mod + Base + Corp + Avanz, al massimo il limite della categoria (⚑: oltre il limite, §8.3), + Equip (equipaggiamento indossato), più le condizioni della sessione (▼/▲ rispetto al valore da regole).${eccesso ? ' ✱: punti liberi ricevuti in un evento con punti in eccesso.' : ''}`))),
+          h('p', { class: 'nota' }, `• Abilità di Classe. S / P / G / N: competenza nella prima Classe (§2.3). ⚑: VA oltre il limite della categoria (§8.3). ▼/▲: il VA mostrato comprende le condizioni della sessione. «Calcolo» apre il conto del VA.${eccesso ? ' ✱: punti liberi ricevuti in un evento con punti in eccesso.' : ''}`))),
       h('aside', { class: 'colonna-condizioni', 'aria-label': 'Condizioni attive' },
         h('section', { class: 'riquadro condizioni-attive' },
           h('h2', {}, 'Condizioni attive'),
-          condizioni.length ? h('ul', {}, condizioni.map(rigaCondizione)) : h('p', { class: 'nota' }, 'Nessuna: Ferite, Affaticamento e Stati si segnano qui sotto o nel Combattimento, il carico nell’Inventario.'),
-          usi.length ? h('ul', { class: 'usi-specifici', 'aria-label': 'Solo per un uso specifico' }, usi.map(rigaCondizione)) : null),
-        riquadroCircostanze(ctx),
-        selettoreLuce(ctx),
-        caselleVista(ctx),
-        // A.60: Ferite, Affaticamento, Corruzione e Stati modificabili anche qui, come nel Combattimento
-        ...(() => { const dc = ctx.tab.tab.find((x) => x.id === 'combattimento')?.dati; return dc ? condizioniModificabili(ctx, dc) : []; })(),
-        condizioniOggetti(ctx),
-        condizioniTalenti(ctx),
-        promemoriaPenalita(ctx, { soloSenzaEffetto: true }))),
+          stati.length ? h('p', { class: 'stati-condizioni' }, h('strong', {}, 'Stati: '),
+            stati.map((x) => h('span', { class: 'stato-attivo-pillola', title: x.promemoria ?? null }, x.nome, x.implicato ? h('small', {}, ' (da Svenuto)') : null))) : null,
+          condizioni.length ? h('ul', {}, condizioni.map(rigaCondizione)) : stati.length ? null : h('p', { class: 'nota' }, 'Nessuna. Ferite e Stati si segnano nel Combattimento e nella colonna di sinistra, il carico nell’Inventario.'),
+          usi.length ? h('ul', { class: 'usi-specifici', 'aria-label': 'Solo per un uso specifico' }, usi.map(rigaCondizione)) : null,
+          riquadroCircostanze(ctx)))),
     h('div', { class: 'colonne-larghe' },
     sezione('Talenti di Classe', d.talentiClasse.map((t) => h('div', { class: 'talento' },
       h('h3', {}, t.nome, h('span', { class: 'sigla' }, ` · ${t.classe} ${t.grado}${t.scelto ? ', a scelta' : ''}`)),
@@ -1683,22 +1718,6 @@ export function selettoreLuce(ctx, { compatto = false } = {}) {
  * esempi della risposta (regole.json → illuminazione.richiede_vista), correggibili dal Direttore. Attacchi e Difese la
  * ricevono sempre, Percezione ha il suo valore visivo, Potere e Prove Salvezza mai.
  */
-function caselleVista(ctx) {
-  const L = ctx.dati.regole.illuminazione;
-  const s = ctx.sessione ?? {};
-  if (!L?.richiede_vista || !L.livelli.some((x) => x.id === s.luce && !x.base)) return null;
-  const lista = abilitaVista(s, ctx.dati);
-  const scelte = s.vistaAbilita ?? {};
-  return h('div', { class: 'scelta-attacco scelta-gruppo caselle-vista', role: 'group', 'aria-label': 'Prove che richiedono la vista' },
-    h('p', { class: 'scelta-titolo' }, 'Richiede la vista (A.116): la penalità di luce vale per queste Prove'),
-    h('div', { class: 'scelta-pulsanti' }, lista.map((x) => h('button', {
-      type: 'button', class: `btn scelta-btn${x.attiva ? ' scelta' : ''}`, 'aria-pressed': String(x.attiva),
-      title: x.uso ? `Di solito sì: ${x.uso}. Il Direttore può correggere.` : 'Di solito no (conoscenze, ascolto): il Direttore può correggere.',
-      onclick: () => ctx.azioni.imposta('vistaAbilita', { ...scelte, [x.nome]: !x.attiva }),
-    }, x.nome))),
-    h('small', { class: 'nota' }, `Attacchi e Difese la ricevono sempre; Percezione ha il suo valore visivo; mai Potere e Prove Salvezza. Nel buio: ${L.richiede_vista.testo_buio}.`));
-}
-
 function testoPenalitaTab(pen = {}) {
   const parti = [];
   if (pen.attacchi_ravvicinati) parti.push(`attacchi ravvicinati ${segno(pen.attacchi_ravvicinati)}`);

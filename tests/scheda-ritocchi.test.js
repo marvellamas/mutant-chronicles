@@ -8,7 +8,7 @@ import { datiReali, copia } from './helpers.js';
 import { preparaTab } from '../src/stampa.js';
 import { deserializzaPersonaggio, normalizza } from '../src/character.js';
 import { massimiSessione, allineaSessione, penalitaSessione } from '../src/sessione.js';
-import { datiTestata, statiAttiviVista } from '../src/scheda-vista.js';
+import { datiTestata, statiAttiviVista, contoVa, formulaVa, modificatoriAttivi } from '../src/scheda-vista.js';
 
 installaDomFinto();
 globalThis.localStorage ??= { getItem: () => null, setItem: () => {}, removeItem: () => {} };
@@ -149,4 +149,102 @@ test('S6: in Identità non ci sono più i Distintivi né «Combattimento e movim
   // Iniziativa, Movimento e Azioni restano nella tab Combattimento
   const c = resa(contesto(TORVALD, { attiva: 'combattimento' }));
   for (const t of ['Iniziativa', 'Movimento', 'Azioni']) assert.equal(c.tutti.filter((n) => n.tagName === 'H3' && n.textContent === t).length, 1, t);
+});
+
+// ---------------------------------------------------------------------------
+// S7, S8: Abilità
+
+const segno = (n) => (n > 0 ? `+${n}` : n < 0 ? `−${-n}` : '0');
+const numero = (n) => (n < 0 ? `−${-n}` : String(n));
+const righeAbilita = (ctx) => ctx.tab.tab.find((t) => t.id === 'abilita').dati.categorie.flatMap((c) => c.abilita);
+const conFerita = (s) => { s.ferite = 1; s.statiAttivi = ['a-terra']; };
+
+test('S8: ogni riga ha il nome, il VA di prima e «Calcolo»; niente più colonne Mod, Base, Corp, Avanz, Equip', () => {
+  for (const f of ESEMPI) {
+    for (const cambia of [null, conFerita]) {
+      const ctx = contesto(f, { attiva: 'abilita', cambia });
+      const r = resa(ctx);
+      const righe = r.tutti.filter((n) => n.tagName === 'TR' && n.querySelectorAll('.btn-calcolo').length === 1);
+      const abilita = righeAbilita(ctx);
+      assert.equal(abilita.length, 24);
+      assert.equal(righe.length, 24, `${f}: una riga con «Calcolo» per Abilità`);
+      assert.equal(r.classe('dettaglio').length, 0, 'nessuna colonna di dettaglio');
+      assert.equal(r.classe('formula').length, 0, 'nessuna formula sotto il nome');
+      for (const a of abilita) {
+        const riga = righe.find((n) => n.children[0].children[0].textContent === a.nome);
+        assert.ok(riga, `${f}: riga di ${a.nome}`);
+        assert.equal(riga.children.length, 3, 'nome, VA, Calcolo');
+        // il VA mostrato è quello calcolato, com'era
+        assert.ok(riga.querySelectorAll('.pillola-va')[0].textContent.startsWith(numero(a.effettivo)), `${f} ${a.nome}: VA ${a.effettivo}`);
+        // accanto, i bonus e i malus attivi
+        assert.deepEqual(riga.querySelectorAll('.modificatore-attivo').map((n) => n.textContent), modificatoriAttivi(a).map((x) => x.testo));
+        // e le spunte «a condizione», come prima
+        assert.equal(riga.querySelectorAll('.condizionale-valore').length >= (a.disponibili ?? []).length, true);
+      }
+    }
+  }
+});
+
+test('S8: il «Calcolo» fa lo stesso conto di prima (formula, colonne, valore da regole, VA) per ogni Abilità di ogni PG', () => {
+  for (const f of ESEMPI) {
+    for (const cambia of [null, conFerita]) {
+      for (const a of righeAbilita(contesto(f, { cambia }))) {
+        const prima = copia(a);
+        const c = contoVa(a);
+        assert.deepEqual(a, prima, 'il conto non tocca la riga');
+        // la formula scritta nella riga prima dell'11/10/2026
+        const vecchia = `${segno(a.mod)} Mod + ${a.base} Base + ${a.corporazione} Corp + ${a.avanzamento} Avanz${a.limite !== null ? `, limite ${a.limite}` : ''}${a.equip ? ` ${segno(a.equip)} Equip` : ''}`;
+        assert.equal(c.formula, vecchia);
+        assert.equal(formulaVa(a), vecchia);
+        assert.deepEqual(c.colonne.map((x) => [x.sigla, x.valore]), [['Mod', a.mod], ['Base', a.base], ['Corp', a.corporazione], ['Avanz', a.avanzamento]]);
+        assert.equal(c.equip, a.equip ?? 0);
+        assert.equal(c.colonne.reduce((s, x) => s + x.valore, 0), a.grezzo, `${f} ${a.nome}: Mod + Base + Corp + Avanz = grezzo`);
+        assert.equal(c.limitato, a.limite !== null && a.grezzo > a.limite);
+        assert.equal(c.daRegole, a.totale);
+        assert.equal(c.effettivo, a.effettivo);
+        assert.equal(c.daRegole + c.condizioni.reduce((s, x) => s + x.valore, 0), a.effettivo, `${f} ${a.nome}: valore da regole più le condizioni dà il VA`);
+        if (a.provenienza) assert.equal(a.provenienza.totale, a.effettivo);
+      }
+    }
+  }
+});
+
+test('S8: «Calcolo» apre la finestrella con le colonne, la formula e il conto fino al VA', () => {
+  const ctx = contesto(TORVALD, { attiva: 'abilita', cambia: conFerita });
+  const a = righeAbilita(ctx).find((x) => x.nome === 'Atletica');
+  const r = resa(ctx);
+  const riga = r.tutti.find((n) => n.tagName === 'TR' && n.children[0]?.children[0]?.textContent === 'Atletica');
+  clic(riga.querySelectorAll('.btn-calcolo')[0]);
+  const finestra = document.body.querySelectorAll('.finestrella-calcolo').at(-1);
+  assert.ok(finestra?.open, 'la finestrella è aperta');
+  const testo = finestra.textContent;
+  assert.match(testo, /^Calcolo: Atletica/);
+  assert.ok(testo.includes(formulaVa(a)), 'la formula di prima');
+  for (const x of ['Mod', 'Base', 'Corp', 'Avanz', 'Equip', 'Valore da regole: ', 'Conto del VA', 'Ferita Superficiale']) assert.ok(testo.includes(x), x);
+  assert.ok(testo.includes(`VA: ${numero(a.effettivo)}`));
+  for (const x of a.provenienza.righe) assert.ok(testo.includes(x.fonte), `riga della provenienza: ${x.fonte}`);
+  finestra.remove();
+});
+
+test('S7: a destra un solo riquadro «Condizioni attive», con gli Stati attivi e i bonus di circostanza modificabili', () => {
+  const ctx = contesto(TORVALD, { attiva: 'abilita', cambia: conFerita });
+  const r = resa(ctx);
+  const colonna = r.classe('colonna-condizioni')[0];
+  assert.deepEqual(colonna.children.map((n) => n.className), ['riquadro condizioni-attive'], 'un solo riquadro');
+  const testo = colonna.textContent;
+  assert.match(testo, /^Condizioni attive/);
+  assert.match(testo, /Stati: A Terra/);
+  assert.match(testo, /Ferita Superficiale/);
+  assert.match(testo, /Bonus di circostanza/);
+  // niente luce, gradi di Ferite/Affaticamento/Corruzione, elenco degli Stati da spuntare, interruttori
+  for (const c of ['riquadro-gradi', 'stati-compatti', 'caselle-vista', 'condizionali-oggetti', 'scelta-attacco']) assert.equal(colonna.querySelectorAll(`.${c}`).length, 0, c);
+  // il giocatore mette i suoi bonus come prima
+  const aggiungi = colonna.tutti().find((n) => n.tagName === 'BUTTON' && n.textContent === '+ Aggiungi');
+  clic(aggiungi);
+  assert.equal(ctx.chiamate.at(-1)[0], 'imposta');
+  assert.equal(ctx.chiamate.at(-1)[1], 'circostanze');
+  // senza condizioni: il riquadro resta, con i soli bonus di circostanza
+  const vuoto = resa(contesto(TORVALD, { attiva: 'abilita', scelte: (c) => { c.equipaggiamento = []; return c; } })).classe('colonna-condizioni')[0];
+  assert.match(vuoto.textContent, /Nessuna\./);
+  assert.match(vuoto.textContent, /Bonus di circostanza/);
 });

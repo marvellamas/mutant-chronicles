@@ -2422,3 +2422,19 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
   .testata-comune { margin-left: 0; justify-content: flex-start; }
   .tasti-crediti-voci { right: auto; left: -8rem; }
 }
+/* S7, S8: Abilità con nome, VA grande e «Calcolo»; a destra il solo riquadro «Condizioni attive» */
+.abilita-sintesi td.cella-va { text-align: left; white-space: normal; width: auto; }
+.abilita-sintesi .va-con-usi { display: flex; flex-wrap: wrap; align-items: center; gap: 0.2rem 0.4rem; }
+.abilita-sintesi .pillola-va { font-size: 1.25rem; min-width: 2.2rem; text-align: center; }
+.abilita-sintesi td.cella-calcolo { width: 1%; text-align: right; }
+.btn-calcolo { min-height: 30px; }
+.modificatore-attivo { font-size: 0.75rem; padding: 0 0.3rem; border-radius: 4px; border: 1px solid var(--bordo); white-space: nowrap; }
+.modificatore-attivo.malus { color: var(--errore); border-color: var(--errore); }
+.modificatore-attivo.bonus { color: var(--ok); border-color: var(--ok); }
+.abilita-affiancate:has(.abilita-sintesi) { grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr)); }
+.stati-condizioni { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem; margin: 0 0 0.4rem; }
+.colonna-condizioni .riquadro-circostanze { margin: 0.5rem 0 0; padding: 0.4rem 0 0; border: 0; border-top: 1px solid var(--bordo); border-radius: 0; background: none; }
+.finestrella.finestrella-calcolo { max-width: min(32rem, calc(100vw - 2rem)); }
+.calcolo-va .calcolo-colonne th, .calcolo-va .calcolo-colonne td { text-align: center; }
+.calcolo-va .tooltip-provenienza { margin: 0 0 0.6rem; }
+.calcolo-totale { font-size: 1.1rem; }
