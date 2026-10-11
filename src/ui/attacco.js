@@ -5,7 +5,7 @@
 // si ricordano per ogni arma nella sessione (sessione → attacchi). Impianto del pannello e
 // componenti comuni in src/ui/pannello-passi.js (telefono: un passo per schermata; da 800 px le
 // scelte a sinistra e il risultato a destra).
-import { conLineaDallaMappa, conMovimentoDallaMappa, vociDallaMappa, togliDallaMappa, segniDopoModifica } from '../dalla-mappa.js';
+import { conMovimentoDallaMappa, vociDallaMappa, togliDallaMappa, segniDopoModifica, presetDaLinea } from '../dalla-mappa.js';
 import { conAvviso } from './procedi.js';
 import { h, segno } from './dom.js';
 import { infoValore, listaProvenienza } from './tooltip.js';
@@ -58,11 +58,15 @@ function dallaMappa(ctx, a, salvate) {
   // ritocchi del 07/10: anche l'id del bersaglio nello scontro, proposto in «Contro un nemico dello scontro»; dal menu del
   // token senza linea di tiro solo quello (soloBersaglio)
   // S22: i valori arrivati dalla mappa portano il segno «dalla mappa» (src/dalla-mappa.js) e si tolgono con un tocco
-  const v = { ...(p.soloBersaglio ? salvate : conLineaDallaMappa(salvate, p)), ...(p.bersaglioId ? { bersaglioScontro: p.bersaglioId } : {}) };
+  // P4: dalla linea di tiro arrivano distanza e bersaglio (con «Mappa semplice» solo la distanza); dal menu del token
+  // senza linea solo il bersaglio
+  const v = p.soloBersaglio ? { ...salvate, ...(p.bersaglioId ? { bersaglioScontro: p.bersaglioId } : {}) } : presetDaLinea(p, salvate).scelte;
   queueMicrotask(() => {
     ctx.azioni.ricordaAttacco?.(a.uid, v);
     if (p.luce && p.luce !== ctx.sessione?.luce) ctx.azioni.imposta?.('luce', p.luce);
-    avviso(p.soloBersaglio ? `Dalla mappa: bersaglio ${p.bersaglio ?? ''}.` : `Dalla mappa: bersaglio ${p.bersaglio ?? ''} a ${p.distanza} Q, Copertura ${p.copertura}${p.luceMappa ? `, ${p.luceMappa}` : ''}.`);
+    avviso(p.soloBersaglio ? `Dalla mappa: bersaglio ${p.bersaglio ?? ''}.`
+      : p.semplice ? `Dalla mappa: bersaglio ${p.bersaglio ?? ''} a ${p.distanza} Q (Mappa semplice: Copertura e luce a mano).`
+        : `Dalla mappa: bersaglio ${p.bersaglio ?? ''} a ${p.distanza} Q, Copertura ${p.copertura}${p.luceMappa ? `, ${p.luceMappa}` : ''}.`);
   });
   return v;
 }

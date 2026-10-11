@@ -75,3 +75,27 @@ export function segniDopoModifica(scelte, modifica) {
   if ('interposta' in b) delete segni.interposta;
   return segni;
 }
+
+/**
+ * P4 (13/10/2026): «Attacca questo bersaglio» dalla linea di tiro. Le scelte da passare al pannello «Attacca!» e
+ * l'id del bersaglio nello scontro, in un tocco solo: distanza, Copertura, creatura interposta, bersaglio protetto e
+ * luce arrivano dalla linea già tracciata, ognuna con il segno «dalla mappa» e la sua ✕.
+ *
+ * Con «Mappa semplice» accesa (src/mappa/semplice.js) la linea dà soltanto la distanza: Copertura, creatura
+ * interposta e luce restano da mettere a mano al tavolo, come sempre con la mappa semplice (S22).
+ * @param linea { distanza, copertura?, protetto?, interposta?, luceMappa?, semplice?, bersaglioId?, bersaglio? }
+ * @returns {{ scelte, bersaglioId, bersaglio, semplice }} `scelte` è da passare a «Attacca!» (sessione.attacchi[uid])
+ */
+export function presetDaLinea(linea, base = {}) {
+  const semplice = !!linea?.semplice;
+  const dati = semplice
+    ? { distanza: linea?.distanza }
+    : { distanza: linea?.distanza, copertura: linea?.copertura, protetto: linea?.protetto, interposta: linea?.interposta, luceMappa: linea?.luceMappa };
+  const scelte = conLineaDallaMappa(base, dati);
+  return {
+    scelte: linea?.bersaglioId ? { ...scelte, bersaglioScontro: linea.bersaglioId } : scelte,
+    bersaglioId: linea?.bersaglioId ?? null,
+    bersaglio: linea?.bersaglio ?? null,
+    semplice,
+  };
+}

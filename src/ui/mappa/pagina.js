@@ -21,7 +21,7 @@
 // Logica pura in src/mappa/ (camera, griglia, token, partecipanti, nebbia, muri, area, annulla); disegno in ./canvas.js,
 // ./disegno-token.js e ./disegno-aree.js.
 import { iconaSalvataggio, pulsanteAudio, clicFuori } from '../../mappa/barra.js';
-import { conLineaDallaMappa } from '../../dalla-mappa.js';
+import { conLineaDallaMappa, presetDaLinea } from '../../dalla-mappa.js';
 import { h, svuota } from '../dom.js';
 import { avviso, avvisoErrore } from '../avvisi.js';
 import { cameraIniziale, zoomVerso, sposta, adatta, mappaDaSchermo, schermoDaMappa, rettangoloVisibile, mantieniCentro, riadattaCentro } from '../../mappa/camera.js';
@@ -2377,8 +2377,14 @@ export function renderMappa(radice, ctx) {
     if (r.semplice) {
       const az = [];
       const idDaS = daTok.rif?.id, idAS = aTok?.rif?.id;
-      if (aTok && st.fonti?.scontro && st.planciaBarra?.puoAttaccare?.(idDaS)) az.push({ testo: `Attacca! (${nomeDa} → ${nomeA})`, fai: () => st.planciaBarra.attaccaContro(idDaS, idAS, {}) });
-      else if (aTok && pezzoDi(daTok)?.tipo === 'pg' && recordPg(pezzoDi(daTok))) az.push({ testo: `Apri la scheda di ${nomeDa} per «Attacca!»`, fai: () => apriSchedaToken(daTok) });
+      // P4 (13/10/2026): un tocco dalla linea ad «Attacca!» già pronto. Con «Mappa semplice» la linea dà solo la
+      // distanza: Copertura, creatura interposta e luce restano da mettere a mano, come sempre con la mappa semplice
+      const presetS = presetDaLinea({ distanza: r.distanza, semplice: true, bersaglioId: idAS ?? null, bersaglio: nomeA });
+      if (aTok && st.fonti?.scontro && st.planciaBarra?.puoAttaccare?.(idDaS)) az.push({ testo: `Attacca questo bersaglio (${nomeDa} → ${nomeA})`, fai: () => st.planciaBarra.attaccaContro(idDaS, idAS, presetS.scelte) });
+      else if (aTok && pezzoDi(daTok)?.tipo === 'pg' && recordPg(pezzoDi(daTok))) az.push({ testo: `Attacca questo bersaglio (${nomeDa})`, fai: () => {
+        try { sessionStorage.setItem(CHIAVE_DALLA_MAPPA, JSON.stringify({ nome: pezzoDi(daTok).nome, distanza: r.distanza, semplice: true, bersaglio: nomeA, bersaglioId: idAS ?? null, quando: Date.now() })); } catch { /* senza memoria: il pannello si apre vuoto */ }
+        apriSchedaToken(daTok);
+      } });
       avviso([`${nomeDa} → ${nomeA}: ${r.distanza} Q.`, 'Mappa semplice: Copertura, creatura interposta e luce le decidi tu; in «Attacca!» si mettono a mano.'], { tipo: 'info', chiave: 'linea', durata: 12000, azioni: az });
       return;
     }
@@ -2406,8 +2412,8 @@ export function renderMappa(radice, ctx) {
     if (aTok && r.copertura !== 'totale') {
       const pzDa = pezzoDi(daTok);
       const idDa = daTok.rif?.id, idA = aTok.rif?.id;
-      if (st.fonti?.scontro && st.planciaBarra?.puoAttaccare?.(idDa)) azioni.push({ testo: `Attacca! (${nomeDa} → ${nomeA})`, fai: () => st.planciaBarra.attaccaContro(idDa, idA, preset) });
-      else if (pzDa?.tipo === 'pg' && recordPg(pzDa)) azioni.push({ testo: `Apri la scheda di ${nomeDa} per «Attacca!»`, fai: () => {
+      if (st.fonti?.scontro && st.planciaBarra?.puoAttaccare?.(idDa)) azioni.push({ testo: `Attacca questo bersaglio (${nomeDa} → ${nomeA})`, fai: () => st.planciaBarra.attaccaContro(idDa, idA, preset) });
+      else if (pzDa?.tipo === 'pg' && recordPg(pzDa)) azioni.push({ testo: `Attacca questo bersaglio (${nomeDa})`, fai: () => {
         try { sessionStorage.setItem(CHIAVE_DALLA_MAPPA, JSON.stringify({ nome: pzDa.nome, distanza: r.distanza, copertura: r.copertura, protetto: r.protetto, interposta: r.interposta, bersaglio: nomeA, bersaglioId: idA ?? null, luce: luceB, luceMappa: rigaLuce, quando: Date.now() })); } catch { /* senza: valori a mano */ }
         apriSchedaToken(daTok);
       } });
