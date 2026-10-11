@@ -73,6 +73,12 @@ import { creaAudio } from './audio.js';
 import { eventiScontro, musicaDi } from '../../mappa/audio.js';
 import { scegliMusica } from '../musica.js';
 import { leggiScontro, salvaScontro } from '../scontro.js';
+// M4 (11/10): «Aggiungi nemico» anche dalla mappa
+import { apriAggiungiNemico } from '../aggiungi-nemico.js';
+import { elencoNemici } from '../nemici.js';
+import { vociBestiario } from '../../nemici.js';
+import { aggiungiNemici } from '../../scontro.js';
+import { aggiungiVoce } from '../../preparazione.js';
 import { cambiaBozza } from '../../preparazione.js';
 import { sezioneScontro, sezioneToken, TIPO_TRASCINA } from './pannello-scontro.js';
 import { renderTavolo } from '../tavolo.js';
@@ -777,6 +783,8 @@ export function renderMappa(radice, ctx) {
       collegaAperto: (id) => collega({ scontro: id, bozza: null }),
       metti: (chiave) => { st.daPiazzare = st.daPiazzare === chiave ? null : chiave; el.riquadro.classList.toggle('piazza', !!st.daPiazzare); disegnaPannelli(); },
       mettiTutti,
+      // M4 (11/10): lo stesso «Aggiungi nemico» della plancia e della bozza, qui accanto ai pezzi da mettere
+      aggiungiNemico: f.scontro || f.bozza ? () => aggiungiNemicoUi(f) : null,
     }));
     svuota(el.secToken, sezioneToken(scelto, pz, ctx.dati, {
       mov: scelto ? movimentoPannello(scelto) : null,
@@ -806,6 +814,31 @@ export function renderMappa(radice, ctx) {
       immagine: async () => { const img = await scegliImmagineNemico(ctx.dati, pz?.nome); if (img) await immagineNemico(pz, img); },
       togliImmagine: () => immagineNemico(pz, null),
     }));
+  }
+
+  /**
+   * M4 (11/10): «Aggiungi nemico» dalla mappa. Il nemico entra nello scontro aperto collegato (scontri/<id>.json) o
+   * nella bozza collegata, come dalla plancia; poi i pezzi nuovi compaiono fra quelli «Senza token».
+   */
+  async function aggiungiNemicoUi(f) {
+    let voci = [];
+    try { voci = vociBestiario(await elencoNemici(), ctx.dati); } catch (e) { avvisoErrore(`Bestiario non leggibile: ${e.message}`); }
+    const dove = f.scontro ? `nello scontro «${f.scontro.nome}»` : `nella bozza «${f.bozza.nome}»`;
+    apriAggiungiNemico(ctx, {
+      voci, dove,
+      destinazione: { aggiungi: async (n, { quanti, lato, origine }) => {
+        try {
+          const id = (f.scontro ?? f.bozza).id;
+          const attuale = await leggiScontro(id);
+          const nuovo = f.scontro ? aggiungiNemici(attuale, n, quanti, { lato }) : aggiungiVoce(attuale, { nemico: n, quanti, lato, origine });
+          const r = await salvaScontro(nuovo);
+          if (r.conflitto) { avvisoErrore('Lo scontro è cambiato altrove: riapri e riprova.'); return false; }
+          await aggiornaFonti();
+          disegnaPannelli();
+          return true;
+        } catch (e) { avvisoErrore(`Nemico non aggiunto: ${e.message}`); return false; }
+      } },
+    });
   }
 
   /** A.131: immagine (o iniziali, con null) del tipo di nemico, nello scontro o nella bozza collegati e nel bestiario. */

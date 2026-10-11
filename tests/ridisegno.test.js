@@ -99,7 +99,10 @@ test('chiavi e controlli in uso: data-chiave, aria-label; fuori dalla radice non
   assert.equal(controlloInUso(radice([]), el), false);
   // la plancia dà una chiave stabile ai controlli senza aria-label
   const ui = readFileSync(new URL('../src/ui/scontro.js', import.meta.url), 'utf8');
-  for (const k of ['nemici-tipo', 'nemici-quanti', 'nemici-lato', 'manuale-lato', 'manuale-tipo', 'manuale-natura', 'manuale-${k}']) assert.ok(ui.includes(`chiave: '${k}'`) || ui.includes(`chiave: \`${k}\``), k);
+  // M4 (11/10): «Aggiungi nemico» non è più una riga della plancia (tipo, quanti, lato) ma una finestra che non si
+  // ridisegna da sola (src/ui/aggiungi-nemico.js): restano le chiavi del partecipante a mano
+  for (const k of ['manuale-lato', 'manuale-tipo', 'manuale-natura', 'manuale-${k}']) assert.ok(ui.includes(`chiave: '${k}'`) || ui.includes(`chiave: \`${k}\``), k);
+  for (const k of ['nemici-tipo', 'nemici-quanti', 'nemici-lato']) assert.ok(!ui.includes(`chiave: '${k}'`), `${k}: la riga vecchia non c'è più`);
 });
 
 const legionario = JSON.parse(readFileSync(new URL('./nemici/legionario-non-morto.json', import.meta.url), 'utf8'));

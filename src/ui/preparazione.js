@@ -10,7 +10,7 @@ import { h } from './dom.js';
 import { nascondiTooltip } from './tooltip.js';
 import { avviso, avvisoErrore } from './avvisi.js';
 import { apriEditorNemico } from './nemici.js';
-import { apriCreaNemico, caricaUmano, tendinaCreature } from './crea-nemico.js';
+import { apriAggiungiNemico } from './aggiungi-nemico.js';
 import { leggiScontro, salvaScontro, idNuovo, pgDaVista } from './scontro.js';
 import { elencoCartella, leggiCartella } from './cartella.js';
 import { ultimiPerPersonaggio } from '../cartella.js';
@@ -24,7 +24,7 @@ import { stessaChiave } from '../veicoli-registro.js';
 import {
   nuovaBozza, aggiungiVoce, cambiaVoce, togliVoce, cambiaBozza, duplicaBozza, eliminaBozza, iniziaBozza, pgDellaBozza, STATO_BOZZA,
 } from '../preparazione.js';
-import { profiloNemico, scelteCreatura, fileUmano, difficolta, infoBilancio } from '../crea-nemico.js';
+import { difficolta, infoBilancio } from '../crea-nemico.js';
 
 const virgola = (x) => String(x).replace('.', ',');
 
@@ -108,7 +108,7 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
   const BE = dati.bestiario;
   const st = { bozze: null, bozza: null, nuovoNome: '', errore: null, cartella: [], viste: new Map(), aperti: new Set(),
     salvataAlle: null, scene: null, scenaScelta: '',
-    daBestiario: { tipo: '', quanti: '1', lato: 'avversario' }, daCreatura: { id: BE.creature[0]?.id ?? '', grado: '', boss: false, quanti: '1', lato: 'avversario' } };
+ };
   const finestra = h('dialog', { class: 'pannello-scheda preparazione', 'aria-labelledby': 'preparazione-titolo' });
   finestra.addEventListener('close', () => { nascondiTooltip(); finestra.remove(); });
 
@@ -231,12 +231,6 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
     const b = st.bozza;
     const liv = livelloPg();
     const d = difficolta(b.nemici.map((v) => ({ nemico: v.nemico, quanti: v.quanti })), liv.valore, dati);
-    const voci = bestiario().filter((v) => v.nemico);
-    const dB = st.daBestiario;
-    if (!voci.some((v) => v.id === dB.tipo)) dB.tipo = voci[0]?.id ?? '';
-    const dC = st.daCreatura;
-    const creatura = BE.creature.find((c) => c.id === dC.id);
-    if (creatura && !creatura.gradi.includes(dC.grado)) dC.grado = creatura.gradi[0];
     const pgNomi = new Set(b.pg ?? []);
     const chiaviCartella = [...new Set([...st.cartella.map((r) => r.file.replace(/_liv\d+_.*$/, '')), ...alTavolo().map((v) => v.chiaveCartella)])].sort((x, y) => x.localeCompare(y, 'it'));
     // ritocchi del 08/10 (test di Marcello): quattro riquadri con titolo, nell'ordine Base, PG e veicoli, Nemici, Mappa;
@@ -272,34 +266,22 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
       riquadroDifficolta(b, d, liv),
       avvisoRari(b),
       b.nemici.length ? h('ul', { class: 'voci-bozza' }, b.nemici.map(voce)) : h('p', { class: 'vuoto' }, 'Nessun nemico: aggiungili qui sotto.'),
-      // 07/10 (test di Marcello): due blocchi distinti con la stessa struttura, la scelta sopra e sotto «Quanti», «Lato» e
-      // «Aggiungi» sempre nello stesso punto; una riga di separazione fra i blocchi
+      // M4 (11/10): un solo pulsante «Aggiungi nemico», lo stesso dello scontro aperto e della mappa: elenco con
+      // ricerca, dentro i nemici prestabiliti di nemici/ e le creature del Bestiario proposto, e «Crea nemico…»
+      // (prima erano tre blocchi diversi: Davide la seconda volta non aveva più trovato la strada)
       h('div', { class: 'aggiungi-nemici' },
         h('h3', {}, 'Aggiungi nemici'),
-        h('section', { class: 'blocco-aggiungi', 'aria-label': 'Dal bestiario' },
-          h('h4', {}, 'Dal bestiario'),
-          h('p', { class: 'nota' }, 'I tipi di nemico già salvati (nemici/).'),
-          voci.length ? [
-            h('div', { class: 'blocco-scelta' },
-              h('label', {}, h('span', {}, 'Tipo'), h('select', { 'aria-label': 'Tipo dal bestiario', onchange: (e) => { dB.tipo = e.target.value; } }, voci.map((v) => h('option', { value: v.id, selected: v.id === dB.tipo }, `${v.nemico.nome} (PV ${v.nemico.pv})`))))),
-            h('div', { class: 'blocco-quanti' }, quantiLato(dB),
-              h('button', { type: 'button', class: 'btn primario', onclick: () => { const n = voci.find((v) => v.id === dB.tipo)?.nemico; if (n) modifica((x) => aggiungiVoce(x, { nemico: n, quanti: Number(dB.quanti), lato: dB.lato, origine: 'bestiario' })); } }, 'Aggiungi')),
-          ] : h('p', { class: 'nota' }, 'Il bestiario è vuoto: usa «Creatura pronta» o «Crea nemico…».')),
-        h('section', { class: 'blocco-aggiungi', 'aria-label': 'Creatura pronta' },
-          h('h4', {}, 'Creatura pronta'),
-          h('p', { class: 'nota' }, 'Dal Bestiario proposto, con il Grado.'),
-          h('div', { class: 'blocco-scelta' },
-            h('label', {}, h('span', {}, 'Creatura'), tendinaCreature(BE, dC.id, (v) => { dC.id = v; dC.boss = false; disegna(); })),
-            h('label', {}, h('span', {}, 'Grado'), h('select', { 'aria-label': 'Grado della creatura', onchange: (e) => { dC.grado = e.target.value; } }, (creatura?.gradi ?? []).map((g) => h('option', { value: g, selected: g === dC.grado }, BE.gradi.find((x) => x.id === g).nome)))),
-            creatura?.boss ? h('label', { class: 'casella-boss' }, h('input', { type: 'checkbox', checked: dC.boss, onchange: (e) => { dC.boss = e.target.checked; } }), ` Boss (${BE.gradi.find((x) => x.id === creatura.boss.grado).nome})`) : null),
-          h('div', { class: 'blocco-quanti' }, quantiLato(dC),
-            h('button', { type: 'button', class: 'btn primario', onclick: () => aggiungiCreatura() }, 'Aggiungi'))),
-        h('section', { class: 'blocco-aggiungi blocco-crea', 'aria-label': 'Crea nemico' },
-          h('button', { type: 'button', class: 'btn', onclick: () => apriCreaNemico(ctx, {
-            voci: bestiario(), livello: liv.valore, salvato: salvatoBestiario,
-            destinazione: { etichetta: 'Aggiungi alla preparazione', aggiungi: async (n, { quanti, lato, origine }) => { await modifica((x) => aggiungiVoce(x, { nemico: n, quanti, lato, origine })); avviso(`${n.nome} ×${quanti} nella bozza «${st.bozza?.nome ?? ''}».`); return true; } },
-          }) }, 'Crea nemico…'),
-          h('span', { class: 'nota' }, ' un tipo nuovo: procedura guidata o tutto a caso, dal Bestiario'))),
+        h('div', { class: 'riga-aggiungi' },
+          h('button', {
+            type: 'button', class: 'btn primario',
+            title: 'Elenco con ricerca: i nemici già pronti del bestiario (nemici/) e le creature del Bestiario proposto; «Quanti» e «Lato»; la finestra resta aperta per il prossimo',
+            onclick: () => apriAggiungiNemico(ctx, {
+              voci: bestiario(), livello: liv.valore, dove: `nella bozza «${b.nome}»`, salvato: salvatoBestiario,
+              destinazione: { aggiungi: async (n, { quanti, lato, origine }) => { await modifica((x) => aggiungiVoce(x, { nemico: n, quanti, lato, origine })); return true; } },
+              ricarica: () => disegna(),
+            }),
+          }, '+ Aggiungi nemico'),
+          h('span', { class: 'nota' }, ' dal bestiario della campagna o dal Bestiario proposto; «Crea nemico…» è lì dentro.'))),
       ]),
       riquadroPrep('4', 'Mappa', 'La scena dello scontro, i token e la posizione iniziale.', [
         preparaMappa(b),
@@ -419,23 +401,6 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
       const m = BE.basi[base].massimo_per_scontro;
       return `${BE.basi[base].nome}: al massimo ${m.numero} per scontro sotto il grado ${BE.gradi.find((g) => g.id === m.sotto).nome} (Bestiario ${BE.basi[base].paragrafo}); qui ce ne sono ${n}.`;
     }).join(' ')) : null;
-  };
-  const quantiLato = (o) => [
-    h('label', {}, h('span', {}, 'Quanti'), h('input', { type: 'number', min: 1, max: 30, step: 1, class: 'input-d10', value: o.quanti, oninput: (e) => { o.quanti = e.target.value; } })),
-    h('label', {}, h('span', {}, 'Lato'), h('select', { onchange: (e) => { o.lato = e.target.value; } }, ['avversario', 'alleato'].map((x) => h('option', { value: x, selected: o.lato === x }, x)))),
-  ];
-  const aggiungiCreatura = async () => {
-    const dC = st.daCreatura;
-    const scelte = scelteCreatura(dC.id, dC.grado, { boss: dC.boss }, dati);
-    const umani = {};
-    if (BE.basi[scelte.base].umano) {
-      const id = fileUmano(scelte.tipoUmano, scelte.grado);
-      const u = id ? await caricaUmano(id) : null;
-      if (u) umani[id] = u;
-    }
-    const r = profiloNemico(scelte, dati, { umani });
-    if (!r.nemico) { avvisoErrore(r.errori.join(' ')); return; }
-    modifica((x) => aggiungiVoce(x, { nemico: r.nemico, quanti: Number(dC.quanti), lato: dC.lato, origine: 'creatura' }));
   };
   const voce = (v) => {
     const n = v.nemico;

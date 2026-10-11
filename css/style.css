@@ -1703,6 +1703,21 @@ body.con-sfondo::before {
 .carta-ridotta .riga-ridotta { display: block; width: 100%; text-align: left; color: inherit; text-decoration: none; }
 .ordine-iniziativa tr.a-zero { color: var(--tenue); opacity: 0.65; }
 
+/* «Aggiungi nemico» (M4 dell'11/10, src/ui/aggiungi-nemico.js): ricerca ed elenco unico, voce su tre righe */
+.pannello-scheda.aggiungi-nemico { width: min(760px, calc(100vw - 16px)); }
+.cerca-nemico { display: flex; align-items: center; gap: 0.5rem; margin: 0.4rem 0; }
+.cerca-nemico input { flex: 1; min-width: 8rem; }
+.elenco-nemici { list-style: none; margin: 0.3rem 0; padding: 0; max-height: 46vh; overflow: auto; display: flex; flex-direction: column; gap: 0.2rem; }
+.voce-nemico { display: grid; grid-template-columns: 1fr auto; gap: 0 0.6rem; width: 100%; text-align: left; padding: 0.35rem 0.55rem; border: 1px solid var(--bordo); border-radius: 6px; background: none; color: inherit; cursor: pointer; }
+.voce-nemico:hover { border-color: var(--accento); }
+.voce-nemico.scelta { border-color: var(--accento); background: color-mix(in srgb, var(--accento) 14%, transparent); }
+.voce-nemico-nome { font-weight: 600; }
+.voce-nemico-dati { color: var(--tenue); font-size: 0.9em; text-align: right; }
+.voce-nemico-origine { grid-column: 1 / -1; font-size: 0.85em; }
+.voce-nemico-grado { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; padding: 0.3rem 0.55rem 0.5rem; }
+.aggiungi-nemico-azioni { flex-wrap: wrap; align-items: center; gap: 0.5rem; border-top: 1px solid var(--bordo); padding-top: 0.5rem; }
+.aggiungi-nemico-azioni .scelto-nemico { flex: 1; min-width: 10rem; }
+
 /* «Crea nemico» e «Prepara scontro» (src/ui/crea-nemico.js, src/ui/preparazione.js): finestre più larghe */
 .pannello-scheda.crea-nemico, .pannello-scheda.preparazione { width: min(980px, calc(100vw - 16px)); }
 .passi-crea { display: flex; flex-wrap: wrap; gap: 0.3rem; margin: 0.2rem 0 0.5rem; }

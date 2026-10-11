@@ -15,7 +15,9 @@ const pallino = (lato) => h('span', { class: `mappa-pallino lato-${lato}`, 'aria
 /**
  * @param v { collegamento, candidati: { aperti, bozze }, scontro, bozza, mancante, errori, senzaToken: [pezzo],
  *   daPiazzare: chiave | null }
- * @param a { collega(valore), collegaAperto(id), metti(chiave), mettiTutti() }
+ * @param a { collega(valore), collegaAperto(id), metti(chiave), mettiTutti(), aggiungiNemico? () }
+ * M4 (11/10): «Aggiungi nemico» anche di qui, senza passare dalla plancia: il nemico entra nello scontro (o
+ * nella bozza) collegato e compare subito fra i pezzi «Senza token», pronto da mettere sulla mappa.
  */
 export function sezioneScontro(v, a) {
   const c = v.collegamento ?? {};
@@ -41,6 +43,8 @@ export function sezioneScontro(v, a) {
     h('label', { class: 'mappa-campo' }, h('span', {}, 'Collegata a'), scelta, fonte ? h('small', { class: 'nota' }, fonte) : null),
     avvisi,
     valore ? [
+      a.aggiungiNemico ? h('div', { class: 'riga-azioni' },
+        h('button', { type: 'button', class: 'btn btn-piccolo primario', title: 'Elenco con ricerca: i nemici già pronti del bestiario (nemici/) e le creature del Bestiario proposto; entrano nello scontro collegato e li metti in mappa da qui', onclick: () => a.aggiungiNemico() }, '+ Aggiungi nemico')) : null,
       h('div', { class: 'mappa-senza-testa' },
         h('h3', {}, `Senza token (${v.senzaToken.length})`),
         v.senzaToken.length ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Tutti in una fila libera vicino al centro della vista', onclick: () => a.mettiTutti() }, 'Metti tutti') : null),

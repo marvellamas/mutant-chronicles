@@ -12,8 +12,14 @@ import {
   diTurno, registraDurata, avanti, chiudi, dadoIniziativa, durataStato, aggiungiNemici,
 } from '../scontro.js';
 import { stessaChiave } from '../veicoli-registro.js';
+import { apriAggiungiNemico } from './aggiungi-nemico.js';
 
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
+/** M4 (11/10): livello medio dei PG al tavolo, per le tabelle di «Crea nemico…» (8 senza nessuno al tavolo). */
+const livelloPg = (st) => {
+  const l = (st.pgAlTavolo ?? []).map((v) => v.livello).filter((x) => typeof x === 'number');
+  return l.length ? Math.round(l.reduce((a, b) => a + b, 0) / l.length) : 8;
+};
 /** Tiro dal vivo: il valore scritto, controllato sull'intervallo del dado (src/tiri.js). */
 const dalVivo = (valore, spec) => { const r = tiroManuale(valore, spec); if (r.errore) throw new Error(r.errore); return r.tiro; };
 
@@ -166,24 +172,20 @@ export function pannelloScontro(ctx, st, { modifica, crea, prepara = null, ridis
   };
 
   const b = (st.bozza ??= { nome: '', base: '', lato: 'avversario', des: '', int: '', aNome: '', aTipo: 'ravvicinato', aVa: '', aDanno: '', aNatura: 'Naturale' });
-  // «Aggiungi nemici»: un tipo valido del bestiario e quante copie
-  const tipi = (st.bestiario ?? []).filter((v) => v.nemico);
-  const bn = (st.bozzaNemici ??= { tipo: '', quante: '1', lato: 'avversario' });
-  if (!tipi.some((v) => v.id === bn.tipo)) bn.tipo = tipi[0]?.id ?? '';
+  // M4 (11/10): un solo pulsante «Aggiungi nemico», lo stesso della bozza e della mappa: elenco con ricerca, dentro i
+  // nemici prestabiliti di nemici/ e le creature del Bestiario proposto (src/ui/aggiungi-nemico.js)
   const aggiungiNemiciRiga = h('div', { class: 'aggiungi-nemici' },
-    h('h3', {}, 'Aggiungi nemici'),
-    tipi.length ? h('div', { class: 'riga-aggiungi' },
-      // data-chiave: il ridisegno periodico rimette scelte e focus nel controllo giusto (src/ui/ridisegno.js)
-      h('label', {}, 'Tipo ', h('select', { dataset: { chiave: 'nemici-tipo' }, onchange: (e) => { bn.tipo = e.target.value; } },
-        tipi.map((v) => h('option', { value: v.id, selected: v.id === bn.tipo }, `${v.nemico.nome} (Iniziativa ${numero(v.nemico.iniziativa)}, PV ${v.nemico.pv})`)))),
-      h('label', {}, 'Quanti ', h('input', { type: 'number', min: 1, max: 30, step: 1, class: 'input-d10', value: bn.quante, dataset: { chiave: 'nemici-quanti' }, oninput: (e) => { bn.quante = e.target.value; } })),
-      h('label', {}, 'Lato ', h('select', { dataset: { chiave: 'nemici-lato' }, onchange: (e) => { bn.lato = e.target.value; } },
-        h('option', { value: 'avversario', selected: bn.lato === 'avversario' }, 'avversario'), h('option', { value: 'alleato', selected: bn.lato === 'alleato' }, 'alleato'))),
-      h('button', { type: 'button', class: 'btn', onclick: () => {
-        const tipo = tipi.find((v) => v.id === bn.tipo)?.nemico;
-        modifica((x) => aggiungiNemici(x, tipo, Number(bn.quante), { lato: bn.lato }));
-      } }, 'Aggiungi'))
-      : h('p', { class: 'nota' }, 'Nessun tipo valido nel bestiario: crealo con «Nuovo tipo» (riquadro Bestiario, in fondo alla plancia).'));
+    h('h3', {}, 'Nemici'),
+    h('div', { class: 'riga-aggiungi' },
+      h('button', {
+        type: 'button', class: 'btn primario', title: 'Elenco con ricerca: i nemici già pronti del bestiario (nemici/) e le creature del Bestiario proposto; «Quanti» e «Lato»; la finestra resta aperta per il prossimo',
+        onclick: () => apriAggiungiNemico(ctx, {
+          voci: st.bestiario ?? [], livello: livelloPg(st), dove: `nello scontro «${s.nome}»`,
+          destinazione: { aggiungi: (n, { quanti, lato }) => modifica((x) => aggiungiNemici(x, n, quanti, { lato })) },
+          ricarica: () => ridisegna?.(),
+        }),
+      }, '+ Aggiungi nemico'),
+      h('span', { class: 'nota' }, ' dal bestiario della campagna o dal Bestiario proposto; «Crea nemico…» è lì dentro.')));
   const campo = (k, attr) => h('input', { ...attr, value: b[k], dataset: { chiave: `manuale-${k}` }, oninput: (e) => { b[k] = e.target.value; } });
   const intero = (v) => (v === '' ? null : Number(v));
 
