@@ -51,7 +51,7 @@ import { muoviToken, usatoNelRound, fasceNelRound, mossoNelRound, annullaUltima,
 import { disegnaMuri, disegnaMuriLinee, disegnaArea, disegnaPercorso, disegnaZoc, coloriAree, disegnaTemplate, disegnaPorte, disegnaLineaTiro, disegnaLuci } from './disegno-aree.js';
 import { luceQ, luceIngombro, testoLuceBersaglio, categorieLuce, ambienteDi, trattoLuce, rettangoloLuce, conVoceLuce, cambiaAmbiente } from '../../mappa/luce.js';
 import { celleTemplate, tokenDentro as tokenNelTemplate, nuovoTemplate, scaduto, direzioneVerso, ORIENTABILI, templateVisibili, ruota, cambiaMisura, permanente } from '../../mappa/template.js';
-import { livelliDi, livelliDati, conLivello, conTuttiILivelli, nascosti as livelliNascosti } from '../../mappa/sovrapposizioni.js';
+import { livelliDi, livelliDati, conLivello, conTuttiILivelli, nascosti as livelliNascosti, statoEntrambi, conLivelloEntrambi } from '../../mappa/sovrapposizioni.js';
 import { portaA, muriEffettivi, lineeEffettive, porteVicine, apriChiudi, nuovaPorta, conAzione, azpNelRound, orientamento, orientamentoPorta, ruotaPorta, opposto, agganciaPorta, agganciaDiPorta, geometriaPorta, lineePerDisegno, muriPerDisegno } from '../../mappa/porte.js';
 import { apriMenuTemplate, sezioneTemplate, etichettaTemplate, testoMisure } from './template.js';
 import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
@@ -1143,12 +1143,19 @@ export function renderMappa(radice, ctx) {
           onclick: () => cambiaLivello(chi, l.id),
         }, h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), acceso ? 'sì' : 'no'));
       };
-      return h('tr', {}, h('th', { scope: 'row', title: l.titolo }, l.nome), cella('master'), cella('giocatori'));
+      // 12/10: «Entrambi», un clic accende o spegne il livello sui due schermi insieme; trattino se sono diversi
+      const tutti = statoEntrambi(st.scena, l.id, ctx.dati);
+      const entrambi = h('td', {}, h('button', {
+        type: 'button', role: 'switch', 'aria-checked': tutti === 'misto' ? 'mixed' : String(tutti === 'acceso'), class: `interruttore-mappa${tutti === 'acceso' ? ' acceso' : ''}${tutti === 'misto' ? ' misto' : ''}`,
+        title: `${l.titolo} — sulla tua mappa e sullo schermo dei giocatori insieme${tutti === 'misto' ? ' (ora sono diversi: un clic li accende tutti e due)' : ''}`,
+        onclick: () => { if (!st.scena) return; st.scena = conLivelloEntrambi(st.scena, l.id, ctx.dati); dopoLivelli('giocatori'); ridisegna(['aree']); },
+      }, h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), tutti === 'misto' ? '—' : tutti === 'acceso' ? 'sì' : 'no'));
+      return h('tr', {}, h('th', { scope: 'row', title: l.titolo }, l.nome), entrambi, cella('master'), cella('giocatori'));
     });
     svuota(el.vociLivelli,
       h('p', { class: 'nota' }, 'Muri, porte e terreno valgono sempre per movimento, linea di tiro e nebbia: qui si decide soltanto che cosa si disegna.'),
       h('table', { class: 'tabella compatta tabella-livelli' },
-        h('thead', {}, h('tr', {}, h('th', {}, 'Livello'), h('th', {}, 'Io'), h('th', {}, 'Giocatori'))),
+        h('thead', {}, h('tr', {}, h('th', {}, 'Livello'), h('th', {}, 'Entrambi'), h('th', {}, 'Io'), h('th', {}, 'Giocatori'))),
         h('tbody', {}, righe)),
       h('div', { class: 'riga-azioni' },
         h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => tuttiILivelli('master', true) }, 'Io: mostra tutto'),

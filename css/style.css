@@ -2387,3 +2387,6 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 /* S22: valori di «Attacca!» arrivati dalla mappa, con «✕» per toglierli */
 .dalla-mappa { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .4rem; }
 .etichetta-mappa { cursor: pointer; border: 1px solid var(--accento); margin-left: 0; font-size: .8rem; padding: .15rem .5rem; }
+/* 12/10: «Cosa si vede», colonna «Entrambi» con lo stato misto (trattino) */
+.interruttore-mappa.misto { border-style: dashed; opacity: .85; }
+.interruttore-mappa.misto .interruttore-mappa-pallino { transform: none; margin-left: .45rem; }

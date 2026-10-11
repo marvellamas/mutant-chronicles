@@ -130,3 +130,23 @@ export function erroreDatiSovrapposizioni(S) {
   for (const id of attesi) if (!visti.has(id)) return { chiave: 'sovrapposizioni.livelli', problema: `manca il livello «${id}»` };
   return null;
 }
+
+/**
+ * 12/10/2026: colonna «Entrambi» di «Cosa si vede». Lo stato di un livello sui due schermi insieme: 'acceso' (si vede
+ * sia dal master sia dai giocatori), 'spento' (da nessuno dei due), 'misto' (diversi: la casella mostra un trattino).
+ */
+export function statoEntrambi(scena, id, dati) {
+  const m = siVede(scena, 'master', id, dati);
+  const g = siVede(scena, 'giocatori', id, dati);
+  return m === g ? (m ? 'acceso' : 'spento') : 'misto';
+}
+
+/**
+ * Un clic su «Entrambi»: accende o spegne quel livello su tutti e due gli schermi insieme. Da acceso si spegne; da
+ * spento o misto si accende su tutti e due. Con `valore` si impone lo stato.
+ */
+export function conLivelloEntrambi(scena, id, dati, valore = undefined) {
+  if (!scena || !idLivelli(dati).includes(id)) return scena;
+  const acceso = valore === undefined ? statoEntrambi(scena, id, dati) !== 'acceso' : !!valore;
+  return conLivello(conLivello(scena, 'master', id, acceso, dati), 'giocatori', id, acceso, dati);
+}
