@@ -659,3 +659,17 @@ Davide ha risposto ad A.73 (E&L del 02/10, decisioni 5–9; `docs/risposte-maste
 - **R6. Telefono dei giocatori.** Polling e scritture ogni 1,5 secondi vanno bene in rete locale; con molti giocatori vanno contenuti (scrittura solo a riposo, già così).
 
 **Domande per Marcello:** tutte risposte, nella sezione «Deciso» in testa.
+
+## «Modifica master» (12/10/2026)
+
+Richiesta di Davide e Marcello: il DdG deve poter cambiare qualsiasi valore di un PG in pochi tocchi, anche se nessuna regola lo prevede (esempio guida: +10 PV permanenti). L'app aiuta il master e non lo blocca; ogni intervento resta tracciato e si può annullare.
+
+**Chi è il master.** L'app non aveva utenti né password: l'unica distinzione affidabile che esisteva era quella di «Spegni Mutant», cioè il server che guarda da quale indirizzo arriva la richiesta (`server.mjs` → `daQuestoPc`). Si usa quella: è *contesto master* la pagina aperta sul PC dove gira il server (`/api/ping` risponde `master: true`); un tablet in rete non lo è mai. La *modalità master* è la scheda di un PG aperta dal Tavolo con «Modifica master»: «Apri» la apre come sempre. Limite noto: un giocatore seduto al PC del server è in contesto master.
+
+**Correzioni separate dal calcolo.** La scheda ricalcola tutto dalle scelte, quindi le correzioni stanno in un elenco a parte (`correzioni_master` nel file) e il motore le applica dopo il calcolo da regole del valore toccato (`src/correzioni-master.js`, agganci in `src/avanzamento.js` → `schedaARiposo`, `src/umanita.js`, `src/protezione.js`). Una Caratteristica corretta si porta dietro tutto ciò che ne deriva; il VA corretto di un'Abilità entra in armi e Parata; i PV e PM massimi corretti sono i massimi della sessione. Sopravvivono a ricalcoli, salite di livello e correzioni di un livello passato (A.107).
+
+**Registro e annulla.** Tab Identità, «Modifiche del master»: data, cosa (prima → dopo), motivo. «Annulla» non cancella la riga: la segna annullata e toglie l'effetto. I valori «a mano» e le scelte cambiati in modalità master entrano nel registro da soli; per le scelte il server salva prima una copia del file in `backup-master/` (le 40 più recenti) e «Annulla» rimette le scelte da lì, con un avviso se dopo ci sono state altre modifiche.
+
+**Tablet aperti.** La scheda del giocatore controlla il suo file ogni 3 secondi: se è cambiato e lei non ha modifiche da scrivere, si ricarica da sola. Se ne ha, prima c'era la scelta «Aggiorna» / «Tieni la mia», e «Tieni la mia» riscriveva tutto il file. Ora, quando nel file ci sono modifiche del master che la scheda non ha, la scheda prende la versione del master senza chiedere; e il server, comunque, non lascia cambiare né cancellare i blocchi del master a una richiesta che non arriva dal suo PC (risponde `masterRipristinato` e la scheda si rilegge).
+
+**Fuori da questo lavoro.** Le copie di `backup-master/` non entrano negli zip di «Salva sessione». I cambi di stato degli oggetti (impugnato, nello zaino) non vanno nel registro: solo quantità, oggetti aggiunti e tolti.
