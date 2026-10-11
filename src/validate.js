@@ -416,6 +416,8 @@ function validaRegole(r, err, dati = {}) {
   }
   if (!isOggetto(r)) return;
   const F = 'regole';
+  // dado delle Prove (§1.6): l'app non inventa dadi, lo legge da qui (src/tiri-scheda.js → dadoProva)
+  if (!/^\d*d\d+$/.test(String(r?.prova?.dado ?? ''))) err(F, 'prova.dado', 'formula del dado delle Prove, per esempio «1d20» (Giocatore §1.6)');
   const interi = [
     'creazione.punti_caratteristica', 'creazione.massimo_caratteristica', 'creazione.punti_abilita_liberi',
     'creazione.va_minimo_per_punti_liberi', 'creazione.bonus_classe_per_grado',

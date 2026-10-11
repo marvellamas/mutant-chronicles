@@ -2594,3 +2594,27 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .riga-stato-master.no strong { color: var(--attenzione); }
 .riga-stato-master .nota { color: inherit; opacity: 0.85; }
 .plancia-master.non-master { font-size: 0.82rem; opacity: 0.8; margin: 0.3rem 0; }
+
+/* ---------------------------------------------------------------- dadi nell'app (13/10/2026, S9, S15, S18) */
+/* nessun pulsante nuovo: il valore stesso si tocca. Solo un segno leggero che è toccabile */
+.valore-tirabile { cursor: pointer; }
+.valore-tirabile:hover, .valore-tirabile:focus-visible { box-shadow: inset 0 -2px 0 0 var(--accento); }
+@media (hover: none) { .valore-tirabile:hover { box-shadow: none; } }
+.finestrella.finestrella-tiro { max-width: min(26rem, calc(100vw - 2rem)); }
+.corpo-tiro { display: grid; gap: 0.6rem; }
+.corpo-tiro p { margin: 0; }
+.note-tiro { font-size: 0.82rem; }
+.esito-tiro { border: 2px solid var(--bordo); border-radius: var(--raggio); padding: 0.5rem 0.75rem; text-align: center; }
+.esito-tiro.magistrale, .esito-tiro.successo { border-color: var(--ok); }
+.esito-tiro.fallimento { border-color: var(--attenzione); }
+.esito-tiro.maldestro { border-color: var(--errore); }
+.dado-tiro strong { font-size: 2.6rem; line-height: 1; }
+.nome-esito strong { font-size: 1.2rem; }
+.esito-tiro.magistrale .nome-esito strong, .esito-tiro.successo .nome-esito strong { color: var(--ok); }
+.esito-tiro.fallimento .nome-esito strong { color: var(--attenzione); }
+.esito-tiro.maldestro .nome-esito strong { color: var(--errore); }
+.scarto-tiro { opacity: 0.85; }
+.ultimi-tiri ul { list-style: none; margin: 0.3rem 0; padding: 0; display: grid; gap: 0.2rem; }
+.tiro-riga.magistrale, .tiro-riga.successo { color: var(--ok); }
+.tiro-riga.fallimento { color: var(--attenzione); }
+.tiro-riga.maldestro { color: var(--errore); }

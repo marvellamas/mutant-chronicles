@@ -2674,6 +2674,8 @@
     "_nota": "Giocatore del 29/09 (23:45). Si controlla il VA finale della singola Prova, dopo tutti i bonus e le penalità. «Attacca!» e «Lancia!» lo ricordano quando il VA finale raggiunge la soglia; Successo Magistrale Migliorato resta un promemoria del Talento."
   },
   "prova": {
+    "dado": "1d20",
+    "_nota_dado": "Giocatore §1.6: le Prove si tirano con un d20 e riescono con un risultato pari o inferiore al VA. Il dado sta qui perché l’app non inventi dadi: lo usa anche il tiro dalla scheda (toccando il valore, src/tiri-scheda.js).",
     "paragrafo": "Giocatore 0.45: §1.6 «Risultati naturali», §1.7 «Successi automatici e azioni impossibili»",
     "_nota": "Esito di una Prova con il d20 (src/prova.js → esitoProva), usato dal Tavolo del Master per il tiro per colpire dei nemici. Il 2 naturale Magistrale con VA finale almeno la soglia è in regole.json → magistrale_naturale. Con VA finale da «successo_automatico_da» in su il successo è automatico, senza tiro (§1.7), salvo una Prova resa obbligatoria da una regola (§1.7.1) e salvo attacchi e Difese attive, che si tirano sempre («tiro_sempre», A.78). «magistrale_migliorato»: naturali Magistrali con il Talento, per VA finale.",
     "naturale_magistrale": 1,

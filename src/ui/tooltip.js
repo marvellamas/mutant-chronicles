@@ -42,11 +42,22 @@ const contenutiValore = new WeakMap();
  * motore (src/provenienza.js); `provenienze` [{ etichetta, provenienza, totale? }] per più valori
  * nello stesso tooltip (Passo · Corsa · Scatto). Stesso comportamento dei nomi (tocco, tastiera).
  */
-export function infoValore(figli, contenuto, { classe = '' } = {}) {
-  const el = h('button', { type: 'button', class: `voce-info valore-info ${classe}`.trim(), dataset: { infoTipo: 'valore' } }, figli);
+export function infoValore(figli, contenuto, { classe = '', tira = null } = {}) {
+  // S9 (13/10/2026): un valore «tirabile» si tocca per tirare (il mouse mostra comunque la provenienza, il conto sta
+  // in «Calcolo»). Nessun pulsante nuovo: è il numero stesso.
+  const el = h('button', {
+    type: 'button', class: `voce-info valore-info ${tira ? 'valore-tirabile ' : ''}${classe}`.trim(), dataset: { infoTipo: 'valore' },
+    ...(tira ? { title: 'Tocca per tirare; il conto è in «Calcolo»' } : {}),
+  }, figli);
   contenutiValore.set(el, contenuto);
+  if (tira) tiriValore.set(el, tira);
   return el;
 }
+
+// i valori che si tirano toccandoli (S9): elemento → funzione che apre la finestrella del tiro
+const tiriValore = new WeakMap();
+/** Il tiro agganciato a un valore, o null. */
+export const tiroDi = (el) => tiriValore.get(el) ?? null;
 
 /**
  * Etichetta con il nome della macrofamiglia di un incantesimo (docs/palette.md): accompagna il
@@ -120,6 +131,9 @@ export function inizializzaTooltip(datiRegole) {
     const el = e.target.closest?.('.voce-info');
     if (!el) return;
     e.preventDefault(); // dentro un <label> non deve cambiare la casella
+    // S9: sul valore tirabile il tocco (e il clic) tirano; la provenienza resta al passaggio del mouse e in «Calcolo»
+    const tiro = tiriValore.get(el);
+    if (tiro) { nascondiTooltip(); tiro(); return; }
     const tipo = el.dataset.infoTipo;
     if (ultimoPuntatore === 'touch' || ultimoPuntatore === 'pen') {
       if (origine === el && !riquadro.hidden) nascondiTooltip();

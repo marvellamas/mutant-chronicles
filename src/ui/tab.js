@@ -9,6 +9,7 @@ import { allineaStorico } from '../storico.js';
 import { datiTestata, statiAttiviVista, contoVa, modificatoriAttivi, sintesiMani, sintesiProtezioni, sintesiSintonizzazione, inColonne } from '../scheda-vista.js';
 import { informa } from './finestrella.js';
 import { fasciaMaster, toccoMaster, notaCorrezione, sezioneRegistro, conMotivoMaster } from './master.js';
+import { apriTiro, sezioneTiri } from './tira-valore.js';
 import { circostanzeMasterAttive } from '../correzioni-master.js';
 import { conAvviso } from './procedi.js';
 import { h, segno } from './dom.js';
@@ -974,7 +975,7 @@ const FONTI = { regole: 'regole', equipaggiamento: 'equipaggiamento', oggetto: '
  * valore da regole: rosso ▼ (malus) o verde ▲ (bonus); il segno resta leggibile senza colore.
  * Con più di una voce, un tocco o il passaggio del mouse mostra la scomposizione.
  */
-function valoreEffettivo(nome, effettivo, daRegole, scomposizione = [], { pillola = false, dettaglio = null, disponibili = [], nonCumulati = [], provenienza = null } = {}) {
+function valoreEffettivo(nome, effettivo, daRegole, scomposizione = [], { pillola = false, dettaglio = null, disponibili = [], nonCumulati = [], provenienza = null, tira = null } = {}) {
   if (effettivo === null || effettivo === undefined) return '—';
   const diff = daRegole === null || daRegole === undefined ? 0 : effettivo - daRegole;
   const verso = diff < 0 ? 'malus' : diff > 0 ? 'bonus' : '';
@@ -983,7 +984,7 @@ function valoreEffettivo(nome, effettivo, daRegole, scomposizione = [], { pillol
     verso ? h('span', { class: 'sr' }, ` (${segno(diff)} rispetto al valore da regole ${numero(daRegole)})`) : null];
   // pillola: il VA finale in evidenza, sempre toccabile (anche con la sola voce «da regole»)
   const classe = `val-eff${pillola ? ' pillola-va' : ''} ${verso}`.trim();
-  if (scomposizione.length <= 1 && !pillola && !provenienza) return h('span', { class: classe }, figli);
+  if (scomposizione.length <= 1 && !pillola && !provenienza && !tira) return h('span', { class: classe }, figli);
   // con la provenienza del motore (src/provenienza.js) la lista sostituisce formula e tabella; i bonus
   // non cumulati sono già righe della lista
   return infoValore(figli, {
@@ -1001,7 +1002,17 @@ function valoreEffettivo(nome, effettivo, daRegole, scomposizione = [], { pillol
       titolo: 'Scomposizione', colonne: ['Voce', 'Valore', 'Fonte'],
       righe: scomposizione.map((x, i) => ({ Voce: x.etichetta, Valore: i ? segno(x.valore) : numero(x.valore), Fonte: FONTI[x.fonte] ?? x.fonte })),
     },
-  }, { classe });
+  }, { classe, tira });
+}
+
+/** S9: i bonus e i malus già compresi nel valore, in piccolo nella finestrella del tiro. */
+function noteScomposizione(scomposizione = []) {
+  return scomposizione.slice(1).filter((x) => x.valore).map((x) => `${x.valore > 0 ? '+' : '−'}${Math.abs(x.valore)} ${x.etichetta}`);
+}
+
+/** Come sopra per una riga di Abilità (comprese le spunte «a condizione» accese, che sono già nel VA). */
+function noteDelValore(a) {
+  return noteScomposizione(a.scomposizione);
 }
 
 /** Danno dell'arma con il tooltip della provenienza (motore: w.provenienzaDanno); senza, il testo del bonus. */
@@ -1111,7 +1122,7 @@ function tabIdentita(ctx, d) {
           h('tbody', {}, d.salvezze.map((x) => h('tr', {},
             h('th', { scope: 'row' }, x.nome), h('td', {}, x.caratteristica),
             h('td', { class: 'cella-va', title: x.limitato ? `Limitato a ${x.tetto} (§1.2.3)` : null },
-              valoreEffettivo(x.nome, x.effettivo, x.totale, x.scomposizione, { pillola: true, provenienza: x.provenienza }), x.limitato ? '*' : null,
+              valoreEffettivo(x.nome, x.effettivo, x.totale, x.scomposizione, { pillola: true, provenienza: x.provenienza, tira: () => apriTiro(ctx, { genere: 'prova', nome: `Prova Salvezza: ${x.nome}`, va: x.effettivo ?? x.totale, abilita: false, note: noteScomposizione(x.scomposizione) }) }), x.limitato ? '*' : null,
               toccoMaster(ctx, { chiave: `salvezza:${x.id}`, etichetta: `Prova Salvezza: ${x.nome}`, attuale: x.totale, calcolato: ctx.tab.scheda.salvezze?.[x.id]?.calcolato ?? x.totale })))))),
         d.salvezze.some((x) => x.effettivo !== x.totale) ? h('p', { class: 'nota' }, 'Con le condizioni della sessione (Ferite, Affaticamento, Corruzione, Stati).') : null,
         usiSalvezze(ctx, d.salvezze))),
@@ -1133,6 +1144,8 @@ function tabIdentita(ctx, d) {
 
     d.annotazioni.length ? sezione('Note della scheda', h('ul', {}, d.annotazioni.map((a) => h('li', {}, a)))) : null,
 
+    // S9: «Ultimi tiri» del personaggio (src/ui/tiro.js), richiudibile; non c'è finché non si tira
+    sezioneTiri(ctx),
     // «Modifiche del master» (12/10/2026): il registro, in sola lettura per i giocatori; in modalità master con «Annulla»
     sezioneRegistro(ctx, ctx.registroMaster ?? []),
     // N2: storico del personaggio (src/storico.js): le volte in cui si è proceduto nonostante un avviso
@@ -1213,6 +1226,8 @@ function tabAbilita(ctx, d) {
         h('td', { class: 'cella-va' }, h('span', { class: 'va-con-usi' }, valoreEffettivo(a.nome, a.effettivo, a.totale, a.scomposizione, {
           pillola: true, dettaglio: a.provenienza ? null : `${segno(a.mod)} Mod + ${a.base} Base + ${a.corporazione} Corp + ${a.avanzamento} Avanz = ${a.grezzo}${a.grezzo !== a.totale ? `, limite ${a.totale}` : ''}`,
           disponibili: a.disponibili, nonCumulati: a.nonCumulati, provenienza: a.provenienza,
+          // S9: il tocco sul VA tira la Prova (§1.6); la provenienza resta al mouse e nel «Calcolo»
+          tira: () => apriTiro(ctx, { genere: 'prova', nome: a.nome, va: a.effettivo, note: noteDelValore(a) }),
         }),
         // bonus e malus attivi accanto al VA (le voci dopo il valore da regole)
         modificatoriAttivi(a).map((x) => h('span', { class: `modificatore-attivo ${x.verso}`, title: x.testo }, x.testo)),
@@ -1266,7 +1281,7 @@ function tabAbilita(ctx, d) {
 // Iniziativa, Movimento e Azioni effettivi (scheda.tavolo, src/condizioni.js → valoriTavolo): stesse
 // pillole dei VA, con colore ▼/▲ rispetto ai valori da regole e la scomposizione nel tooltip.
 
-function pillolaTavolo(titolo, parti, formato = numero) {
+function pillolaTavolo(titolo, parti, formato = numero, tira = null) {
   const peggio = parti.some((p) => p.v.effettivo === null || p.v.effettivo < p.v.daRegole);
   const meglio = !peggio && parti.some((p) => p.v.effettivo > p.v.daRegole);
   const verso = peggio ? 'malus' : meglio ? 'bonus' : '';
@@ -1290,7 +1305,7 @@ function pillolaTavolo(titolo, parti, formato = numero) {
       titolo: 'Scomposizione', colonne: ['Voce', 'Valore', 'Fonte'],
       righe: parti[0].v.scomposizione.map((x, i) => ({ Voce: x.etichetta, Valore: i ? segno(x.valore) : formato(x.valore), Fonte: FONTI[x.fonte] ?? x.fonte })),
     } : undefined,
-  }, { classe: `val-eff pillola-va ${verso}`.trim() });
+  }, { classe: `val-eff pillola-va ${verso}`.trim(), tira });
 }
 
 function riquadriTavolo(ctx) {
@@ -1299,7 +1314,8 @@ function riquadriTavolo(ctx) {
   const u = t.movimento.unita;
   return [
     h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Iniziativa', toccoMaster(ctx, (() => { const sc = ctx.tab.scheda; const master = (sc.vociIniziativa ?? []).filter((v) => v.master).reduce((x, v) => x + v.valore, 0); return { chiave: 'iniziativa', etichetta: 'Iniziativa', attuale: sc.iniziativa, calcolato: sc.iniziativa - master }; })())),
-      h('p', { class: 'valore-tavolo' }, pillolaTavolo('Iniziativa', [{ nome: '', v: t.iniziativa }], segno), h('span', {}, ` + ${ctx.dati.regole.iniziativa.dado_in_combattimento}`)),
+      // S15: il tocco sull'Iniziativa tira il dado del combattimento (§2.14) e la somma al valore
+      h('p', { class: 'valore-tavolo' }, pillolaTavolo('Iniziativa', [{ nome: '', v: t.iniziativa }], segno, () => apriTiro(ctx, { genere: 'iniziativa', nome: 'Iniziativa', va: t.iniziativa.effettivo ?? t.iniziativa.daRegole })), h('span', {}, ` + ${ctx.dati.regole.iniziativa.dado_in_combattimento}`)),
       h('p', { class: 'nota' }, 'Mod DES + Mod INT e Talenti (§2.14)')),
     h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Movimento', toccoMaster(ctx, ['passo', 'corsa', 'scatto'].map((k) => { const mv = ctx.tab.scheda.movimento ?? {}; return { chiave: `movimento:${k}`, etichetta: `Movimento: ${k[0].toUpperCase()}${k.slice(1)} (Q)`, attuale: mv[k], calcolato: mv.correzioniMaster?.[k]?.calcolato ?? mv[k], limiti: { minimo: 0 } }; }))),
       h('p', { class: 'valore-tavolo' }, pillolaTavolo('Movimento', [{ nome: 'Passo', v: t.movimento.passo }, { nome: 'Corsa', v: t.movimento.corsa }, { nome: 'Scatto', v: t.movimento.scatto }]), h('span', {}, ` ${u}`)),
@@ -1542,7 +1558,9 @@ function tabCombattimento(ctx, d) {
           riquadroFerite(ctx), ...affaticamentoCorruzione(ctx, d)),
         h('div', { class: 'griglia-tavolo griglia-tavolo-compatta' },
           d.difese ? h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Difese', toccoMaster(ctx, { chiave: 'abilita:Difese', etichetta: 'VA di Difese', attuale: d.difese.totale, calcolato: (ctx.tab.scheda.abilita ?? []).find((x) => x.nome === 'Difese')?.calcolato ?? d.difese.totale })),
-            h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), valoreEffettivo('Difese', d.difese.effettivo, d.difese.totale, d.difese.scomposizione, { pillola: true, provenienza: d.difese.provenienza }),
+            h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), valoreEffettivo('Difese', d.difese.effettivo, d.difese.totale, d.difese.scomposizione, { pillola: true, provenienza: d.difese.provenienza,
+              // A.78: le Difese si tirano anche con VA 20 o più
+              tira: () => apriTiro(ctx, { genere: 'prova', nome: 'Difese', va: d.difese.effettivo, tipo: 'difesa', note: noteScomposizione(d.difese.scomposizione) }) }),
               condizionaliValore(ctx, 'Difese', (ctx.tab.scheda.abilita ?? []).find((x) => x.nome === 'Difese')?.disponibili ?? [])),
             // §3.5.5, Disciplina Guardia: bonus a Difese contro gli attacchi ravvicinati (con Padronanza
             // della Disciplina anche a distanza); Controllo con Padronanza: resistere alle Manovre
@@ -1553,7 +1571,7 @@ function tabCombattimento(ctx, d) {
           ...riquadriTavolo(ctx)),
         idt?.salvezze ? h('div', { class: 'contatore-tavolo salvezze-tavolo' }, h('h3', {}, 'Prove Salvezza'),
           h('p', { class: 'valore-tavolo pillole-salvezze' }, idt.salvezze.map((x) => h('span', { class: 'salvezza-pillola' }, h('small', { class: 'sigla' }, `${x.nome} `),
-            valoreEffettivo(x.nome, x.effettivo, x.totale, x.scomposizione, { pillola: true, provenienza: x.provenienza })))),
+            valoreEffettivo(x.nome, x.effettivo, x.totale, x.scomposizione, { pillola: true, provenienza: x.provenienza, tira: () => apriTiro(ctx, { genere: 'prova', nome: `Prova Salvezza: ${x.nome}`, va: x.effettivo ?? x.totale, abilita: false, note: noteScomposizione(x.scomposizione) }) })))),
           usiSalvezze(ctx, idt.salvezze)) : null,
 
         // S16: al centro Mano destra e Mano sinistra con l'arma impugnata; con un'arma a due mani un riquadro solo

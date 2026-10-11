@@ -37,6 +37,7 @@ import { bloccoControNemico } from './attacco-pg.js';
 import { registraIncantesimo, terminaIncantesimo, concentrazioniInterrotte } from '../durate-incantesimi.js';
 import { usaConsumabile, consumabiliMistici, applicaCreazione } from '../consumabili-mistici.js';
 import { rigaStorico, testoProcedi } from '../storico.js';
+import { aggiungiTiro } from '../tiri-scheda.js';
 import { conAvviso } from './procedi.js';
 import { chiedi } from './finestrella.js';
 import { segnaDalTavolo, arrivoDalTavolo, tornaAlTavolo, scorrimentoDaRimettere, dimenticaTavolo, segnaDallaMappa, arrivoDallaMappa, tornaAllaMappa, dimenticaMappa } from './ritorno.js';
@@ -1771,6 +1772,14 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
         stato.messaggioScheda = avvisi.length ? { tipo: 'attenzione', testo: avvisi.join(' ') }
           : { tipo: 'ok', testo: `Usato: ${nome}. ${esito.esaurito ? 'Era l’ultimo: esaurito.' : `Ne restano ${esito.rimasti}.`}` };
         persisti();
+        renderScheda({ mantieniScorrimento: true });
+      },
+      // S9: un tiro fatto dalla scheda (toccando un valore): va negli «Ultimi tiri» del personaggio e, in uno scontro,
+      // nel registro della plancia, così il master vede tutto (niente tiri nascosti)
+      tiro: (riga, testoScontro) => {
+        stato.sessione = aggiungiTiro(stato.sessione, riga);
+        persisti();
+        if (stato.scontroPg && testoScontro) rigaRegistro(testoScontro);
         renderScheda({ mantieniScorrimento: true });
       },
       // N2: riga nello storico del personaggio («procedi comunque: …», src/storico.js)
