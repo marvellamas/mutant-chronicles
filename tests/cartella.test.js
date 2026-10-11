@@ -24,7 +24,7 @@ after(() => { server.close(); rmSync(cartella, { recursive: true, force: true })
 test('server: ping, file dell’app con gli header di serve.json, niente uscite dalla cartella', async () => {
   const ping = await (await fetch(`${base}/api/ping`)).json();
   // dice anche chi è (versione, ora di avvio, pid): un nuovo avvio lo riconosce (src/porta-occupata.js)
-  assert.deepEqual({ ...ping, versione: undefined, avviato: undefined, pid: undefined }, { ok: true, app: 'mutant', cartella: 'personaggi', versione: undefined, avviato: undefined, pid: undefined });
+  assert.deepEqual({ ...ping, versione: undefined, avviato: undefined, pid: undefined }, { ok: true, app: 'mutant', cartella: 'personaggi', versione: undefined, avviato: undefined, pid: undefined, master: true });
   assert.equal(ping.pid, process.pid);
   assert.match(ping.avviato, /^\d{4}-\d\d-\d\dT/);
   const indice = await fetch(`${base}/`);

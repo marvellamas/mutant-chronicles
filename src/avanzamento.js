@@ -9,6 +9,7 @@
 //   grado: { classe: 'Agente' }, tiroPV: {valore, origine}, tiroPM: {valore, origine} | assente,
 //   talentoClasse: 'Reazione Operativa' (Gradi II, IV, VI), puntiAbilita: { Furtività: 2 }   "grado_classe"
 //   incantesimi: [nomi], tecniche: [id]                    quando una quota cresce
+import { applicaCorrezioni, sessioneConCircostanzeMaster } from './correzioni-master.js';
 import { modificatoriAttivi } from './temporanei.js';
 import {
   calcolaScheda, modOrdinario, modSalvezza, valoreAbilita, salvezza, iniziativa as sommaIniziativa,
@@ -1148,7 +1149,10 @@ function magiaDelPersonaggio(stato, caratteristiche, dati) {
  */
 export function calcolaSchedaPersonaggio(personaggio, dati) {
   const scheda = schedaARiposo(personaggio, dati);
-  return scheda.abilita ? applicaCondizioni(scheda, personaggio?.sessione ?? null, dati) : scheda;
+  // S11: i bonus di circostanza mandati dal master valgono al tavolo come quelli del giocatore («dal master»)
+  const creazione = migraPersonaggio(personaggio).creazione;
+  const sessione = sessioneConCircostanzeMaster(personaggio?.sessione ?? null, creazione?.circostanzeMaster, { scontroAperto: personaggio?.scontroAperto });
+  return scheda.abilita ? applicaCondizioni(scheda, sessione, dati) : scheda;
 }
 
 function schedaARiposo(personaggio, dati) {
@@ -1157,6 +1161,15 @@ function schedaARiposo(personaggio, dati) {
   // modificatori temporanei di Caratteristica al tavolo (src/temporanei.js): la Caratteristica cambia prima di tutto
   // ciò che ne deriva (Abilità, Difese, Prove Salvezza, Iniziativa, danno, carico); i PV e PM massimi restano quelli
   // della Caratteristica base salvo regole.json → caratteristiche_temporanee.massimi_pv_pm (false: A.120, E&L del 06/10/2026)
+  // «Modifica master» (src/correzioni-master.js): le correzioni del DdG si applicano dopo il calcolo da regole di ogni
+  // valore. Una Caratteristica corretta cambia, come quella scelta, tutto ciò che ne deriva (anche PV e PM massimi).
+  const cm = migraPersonaggio(personaggio).creazione?.correzioniMaster ?? [];
+  const corretto = (valore, chiave, limiti) => applicaCorrezioni(valore, cm, chiave, limiti);
+  const carMaster = {};
+  for (const s of Object.keys(stato.car)) {
+    const c = corretto(stato.car[s], `car:${s}`, { minimo: dati.caratteristiche.valore_minimo ?? 1, massimo: dati.caratteristiche.valore_massimo ?? Infinity });
+    if (c.righe.length) { carMaster[s] = c; stato.car[s] = c.valore; }
+  }
   const carBase = { ...stato.car };
   const temporanei = modificatoriAttivi(personaggio?.sessione, dati);
   for (const [s, v] of Object.entries(temporanei)) if (s in stato.car) stato.car[s] = Math.min(dati.caratteristiche.valore_massimo ?? Infinity, Math.max(dati.caratteristiche.valore_minimo ?? 1, stato.car[s] + v));
@@ -1171,7 +1184,8 @@ function schedaARiposo(personaggio, dati) {
   for (const { sigla, nome } of dati.caratteristiche.caratteristiche) {
     const valore = stato.car[sigla];
     caratteristiche[sigla] = { nome, valore, mod: modOrdinario(valore, tabOrd), modSalvezza: modSalvezza(valore, tabSal), massimo: massimoCaratteristica(n, dati),
-      ...(temporanei[sigla] ? { base: carBase[sigla], temporaneo: valore - carBase[sigla] } : {}) };
+      ...(temporanei[sigla] ? { base: carBase[sigla], temporaneo: valore - carBase[sigla] } : {}),
+      ...(carMaster[sigla] ? { calcolato: carMaster[sigla].calcolato, correzioniMaster: carMaster[sigla].righe } : {}) };
   }
   // §1.2.1, §2.3, §8.7 (29/09): base dalla prima Classe, limite dalle Classi possedute; `totale` è il VA
   // personale (grezzo limitato); equipaggiamento e condizioni si sommano dopo
@@ -1182,11 +1196,13 @@ function schedaARiposo(personaggio, dati) {
     const componenti = { mod: caratteristiche[caratteristica].mod, base: baseIniziale(prima, nome, dati.regole), corporazione: stato.corp.abilita_bonus.includes(nome) ? 1 : 0, avanzamento };
     const lim = limiteDi(stato, nome, dati);
     const grezzo = valoreAbilita(componenti);
+    const cmAbilita = corretto(vaPersonale(grezzo, lim.valore), `abilita:${nome}`);
     return {
       nome, categoria, caratteristica, ...componenti, daClasse: x.daClasse, liberi: x.liberi,
       ...(caratteristiche[caratteristica].temporaneo !== undefined ? { caratteristicaTemporanea: { sigla: caratteristica, valore: caratteristiche[caratteristica].valore, base: caratteristiche[caratteristica].base } } : {}),
       competenza: competenzaDi(prima, nome), competenzaDa: prima.nome, limite: lim.valore, limiteCategoria: lim.categoria, limiteDa: lim.classi,
-      grezzo, totale: vaPersonale(grezzo, lim.valore),
+      grezzo, totale: cmAbilita.valore,
+      ...(cmAbilita.righe.length ? { calcolato: cmAbilita.calcolato, correzioniMaster: cmAbilita.righe } : {}),
     };
   });
 
@@ -1203,6 +1219,7 @@ function schedaARiposo(personaggio, dati) {
     gradiComplessivi: stato.classi.reduce((s, c) => s + c.grado, 0),
     talenti: stato.classi.flatMap((c) => c.talenti.map((t) => t.nome)),
     umanita: umn,
+    correzioniMaster: cm,
   },
     normalizzaEquipaggiamento(creazione.equipaggiamento), dati);
   const abilitaEquip = abilita.map((a) => {
@@ -1221,6 +1238,15 @@ function schedaARiposo(personaggio, dati) {
     ...[...talenti, ...talentiClasseIniziativa].filter((t) => typeof t.effetti?.iniziativa === 'number').map((t) => ({ etichetta: t.parametroNome ? `${t.nome} (${t.parametroNome})` : t.nome, valore: t.effetti.iniziativa })),
   ];
   for (const t of talenti) for (const [k, v] of Object.entries(t.effetti?.movimento ?? {})) movimento[k] += v;
+  // correzioni del master su Iniziativa e Movimento
+  const cmIniziativa = corretto(sommaIniziativa(...vociIniziativa.map((v) => v.valore)), 'iniziativa');
+  for (const x of cmIniziativa.righe) vociIniziativa.push({ etichetta: `${x.fonte}${x.nota ? ` (${x.nota})` : ''}`, valore: x.valore, master: true });
+  const cmMovimento = {};
+  for (const k of ['passo', 'corsa', 'scatto']) {
+    const c = corretto(movimento[k], `movimento:${k}`, { minimo: 0 });
+    if (c.righe.length) { cmMovimento[k] = { calcolato: c.calcolato, righe: c.righe }; movimento[k] = c.valore; }
+  }
+  if (Object.keys(cmMovimento).length) movimento.correzioniMaster = cmMovimento;
 
   const q = statoQuote(stato, dati);
   const catalogoTec = dati.tecniche_interiori.tecniche;
@@ -1241,6 +1267,14 @@ function schedaARiposo(personaggio, dati) {
   // di Umanità (§5.21), non sotto 1
   const pmRegole = pmMancanti ? null : carMassimi.SAG + stato.contributiPM.reduce((s, c) => s + c.valore, 0) + effetto('pm');
   const pmUmn = pmConUmanita(pmRegole, umn);
+  // correzioni del master su PV e PM massimi e sulle Prove Salvezza (dopo tetti e Umanità: il master ha l'ultima parola)
+  const cmPv = corretto(carMassimi.COS + stato.contributiPV.reduce((s, c) => s + c.valore, 0) + effetto('pv'), 'pv', { minimo: 1 });
+  const cmPm = corretto(pmUmn.pm, 'pm', { minimo: 0 });
+  const salvezze = salvezzeDi(stato, dati);
+  for (const [id, x] of Object.entries(salvezze)) {
+    const c = corretto(x.totale, `salvezza:${id}`);
+    if (c.righe.length) Object.assign(x, { calcolato: c.calcolato, totale: c.valore, correzioniMaster: c.righe });
+  }
   return {
     livello: n,
     corporazione: stato.corp.nome,
@@ -1254,11 +1288,13 @@ function schedaARiposo(personaggio, dati) {
     caratteristiche,
     abilita: abilitaEquip,
     equipaggiamento,
-    salvezze: salvezzeDi(stato, dati),
-    pv: carMassimi.COS + stato.contributiPV.reduce((s, c) => s + c.valore, 0) + effetto('pv'),
+    salvezze,
+    pv: cmPv.valore,
+    // valori da regole e righe «Correzione del master» dei massimi, per il «Calcolo» e la finestrella del master
+    ...(cmPv.righe.length || cmPm.righe.length ? { correzioniMaster: { ...(cmPv.righe.length ? { pv: { calcolato: cmPv.calcolato, righe: cmPv.righe } } : {}), ...(cmPm.righe.length ? { pm: { calcolato: cmPm.calcolato, righe: cmPm.righe } } : {}) } } : {}),
     // modificatori temporanei di Caratteristica attivi: { sigla: valore } (plancia, scheda)
     ...(Object.keys(temporanei).length ? { caratteristicheTemporanee: temporanei } : {}),
-    pm: pmUmn.pm,
+    pm: cmPm.valore,
     // riduzione dei PM Massimi per l'Umanità (≤ 0), già compresa in `pm`
     pmUmanita: pmUmn.riduzione,
     umanita: umn,

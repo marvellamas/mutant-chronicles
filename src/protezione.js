@@ -11,6 +11,7 @@
 // e non si può usare finché non è riparato (Armamenti §7.2.1, Equipaggiamento §1.7): regole.json
 // → integrita.
 
+import { applicaCorrezioni } from './correzioni-master.js';
 import { riga, sommaRighe } from './provenienza.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
@@ -216,6 +217,13 @@ export function calcolaAR(equip, dati, { talenti = [], accesi = new Set(), rotti
     }
   }
 
+  // «Modifica master»: la correzione dell'AR è una voce in più (non magica), dopo tutto il resto
+  const arDaRegole = voci.reduce((s, v) => s + v.totale, 0);
+  const cmAr = applicaCorrezioni(arDaRegole, equip?.correzioniMaster, 'ar', { minimo: 0 });
+  for (const x of cmAr.righe) {
+    voci.push({ etichetta: x.fonte, totale: x.valore, magica: 0, fonte: 'master', uid: null });
+    righe.push(riga(x.fonte, x.valore, x.nota, { categoria: 'master' }));
+  }
   const totale = voci.reduce((s, v) => s + v.totale, 0);
   const magica = Math.min(totale, voci.reduce((s, v) => s + v.magica, 0));
 
@@ -254,7 +262,7 @@ export function calcolaAR(equip, dati, { talenti = [], accesi = new Set(), rotti
     { id: 'magica', etichetta: R.etichette?.magica ?? 'contro Etereo', valore: magica },
     ...contro.map((c) => ({ id: `contro:${c.contro}`, etichetta: `contro ${c.contro}`, valore: c.totale })),
   ].map((v) => ({ ...v, provenienza: { totale: v.valore, righe: (perValore.get(v.id) ?? []).map(pulisci) } }));
-  return { totale, magica, voci, contro, valori, esclusi };
+  return { totale, magica, voci, contro, valori, esclusi, ...(cmAr.righe.length ? { calcolato: arDaRegole, correzioniMaster: cmAr.righe } : {}) };
 }
 
 /** «Armatura X +3 · Scudo Y +2 (di cui 1 magica)»: provenienza dell'AR in una riga. */

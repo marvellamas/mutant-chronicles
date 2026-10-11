@@ -1,0 +1,6 @@
+Copie del file di un personaggio fatte dalla «Modifica master» del Tavolo del Master
+prima di cambiare le sue scelte (creazione o un livello).
+
+«Annulla» nel registro «Modifiche del master» della scheda rimette le scelte da qui.
+Il server tiene le 40 copie più recenti e toglie le più vecchie (server.mjs, /api/backup-master).
+I file non vanno su GitHub: sono dati di gioco.

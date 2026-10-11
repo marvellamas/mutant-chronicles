@@ -1410,7 +1410,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   for (const x of oggetti.filter((o) => o.fuoriCatalogo)) avvisi.push(`«${x.voce.rif}» non è più nel catalogo: resta in lista senza effetti.`);
 
   // AR a riposo (docs/ricognizione-ar-pi.md): al tavolo la ricalcola applicaCondizioni (src/condizioni.js)
-  const ar = calcolaAR({ protezioni, effettiOggetti, rinforziDaSoli }, dati, { talenti: base.talenti ?? [] });
+  const ar = calcolaAR({ protezioni, effettiOggetti, rinforziDaSoli, correzioniMaster: base.correzioniMaster ?? [] }, dati, { talenti: base.talenti ?? [] });
 
   return {
     oggetti,
@@ -1419,6 +1419,8 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     // rinforzi indossati senza armatura su cui montarli (regole.json → rinforzi.da_solo)
     rinforziDaSoli,
     ar,
+    // «Modifica master»: le correzioni dell'AR servono anche al ricalcolo al tavolo (src/condizioni.js)
+    ...(base.correzioniMaster?.length ? { correzioniMaster: base.correzioniMaster } : {}),
     // oggetti con Punti Integrità da tracciare (Armamenti §7.2.1)
     integrita: dati.regole?.integrita ? oggettiConPi(oggetti, dati) : [],
     // A.47: oggetti senza PI a catalogo, per il campo «PI (definito dal Direttore)»

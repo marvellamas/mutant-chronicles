@@ -8,6 +8,8 @@
 import { allineaStorico } from '../storico.js';
 import { datiTestata, statiAttiviVista, contoVa, modificatoriAttivi, sintesiMani, sintesiProtezioni, sintesiSintonizzazione, inColonne } from '../scheda-vista.js';
 import { informa } from './finestrella.js';
+import { fasciaMaster, toccoMaster, notaCorrezione, sezioneRegistro } from './master.js';
+import { circostanzeMasterAttive } from '../correzioni-master.js';
 import { conAvviso } from './procedi.js';
 import { h, segno } from './dom.js';
 import { avviso } from './avvisi.js';
@@ -128,7 +130,7 @@ export function renderTab(ctx) {
     h('div', { class: 'barra-titolo' },
       // stemma della Corporazione accanto al nome (img/corporazioni/<id>-96; senza file, niente)
       // playtest del 05/10/2026: il pulsante Mutant a sinistra del nome (la riga in alto non c'è più)
-      h('div', { class: 'riga-titolo' }, h('a', { class: 'marchio marchio-in-linea', href: '#/', title: 'Elenco dei personaggi' }, 'Mutant'),
+      h('div', { class: 'riga-titolo' }, ctx.marchio === false ? null : h('a', { class: 'marchio marchio-in-linea', href: '#/', title: 'Elenco dei personaggi' }, 'Mutant'),
         h('h1', { class: 'titolo-con-stemma' }, stemma(id.corporazione, '96', { classe: 'stemma-testa', alt: '', lato: 40 }), id.nome)),
       h('p', {}, h('strong', {}, `${id.livello}° livello`), ` · ${id.corporazione} · ${id.addestramento} · ${id.classi.map((c) => `${c.nome} ${c.grado}`).join(', ')}`),
       // riepilogo sempre visibile, in ogni tab: PV e PM attuali con la barra
@@ -213,7 +215,7 @@ export function renderTab(ctx) {
   // pannello «Attiva» della Tecnica Interiore scelta (src/ui/tecniche.js)
   const tecAttiva = ctx.ui?.tecnica ? tecnicaDi(ctx.ui.tecnica.id, ctx.dati) : null;
   if (ctx.ui?.tecnica && !tecAttiva) ctx.ui.tecnica = null;
-  return [h('div', { class: `scheda-tab pos-${ctx.posizione} larghezza-${ctx.larghezza ?? 'piena'}` }, barra, nav, lato, pannello),
+  return [fasciaMaster(ctx), h('div', { class: `scheda-tab pos-${ctx.posizione} larghezza-${ctx.larghezza ?? 'piena'}${ctx.master ? ' in-master' : ''}` }, barra, nav, lato, pannello),
     armaAttacco ? pannelloAttacco(ctx, armaAttacco) : null,
     incLancio ? (() => {
       // un errore nel pannello non deve lasciare il clic senza risposta: si mostra il motivo
@@ -350,7 +352,7 @@ function barraRisorsa(ctx, etichetta, attuale, massimo, { classe = '' } = {}) {
     h('span', { class: 'barra-numero' }, `${attuale} / ${massimo}`));
 }
 
-function contatoreTavolo(ctx, { titolo, campo, attuale, massimo, passi = [1, 5], nota = null, barra = false, extra = null, classe = '' }) {
+function contatoreTavolo(ctx, { titolo, campo, attuale, massimo, passi = [1, 5], nota = null, barra = false, extra = null, classe = '', accanto = null }) {
   const b = (delta) => h('button', {
     type: 'button', class: 'btn-tavolo', onclick: () => ctx.azioni.varia(campo, delta),
     disabled: (delta < 0 && attuale <= 0) || (massimo !== null && delta > 0 && attuale >= massimo),
@@ -359,7 +361,7 @@ function contatoreTavolo(ctx, { titolo, campo, attuale, massimo, passi = [1, 5],
   const meno = [...passi].reverse().map((p) => b(-p));
   const piu = passi.map((p) => b(p));
   return h('div', { class: `contatore-tavolo ${classe}`.trim() },
-    h('h3', {}, titolo),
+    h('h3', {}, titolo, accanto),
     h('p', { class: 'valore-tavolo', 'aria-live': 'polite' },
       h('strong', {}, String(attuale)), massimo !== null ? h('span', {}, ` / ${massimo}`) : null),
     barra && massimo ? barraRisorsa(ctx, '', attuale, massimo, { classe: 'grande' }) : null,
@@ -392,7 +394,8 @@ function testataComune(ctx) {
   return h('div', { class: 'testata-comune', role: 'group', 'aria-label': 'Punti Eroe, Distintivi e Crediti' },
     h('span', { class: 'voce-testata voce-pe', title: `Punti Eroe: ${t.puntiEroe.valore} su ${t.puntiEroe.massimo ?? '—'}. «−» ne spende uno; si riottengono convertendo i Distintivi (§1.8.3).` },
       h('span', { class: 'etichetta-testata' }, 'Punti Eroe'), h('strong', { 'aria-live': 'polite' }, String(t.puntiEroe.valore)),
-      tasto('puntiEroe', -1, !t.puntiEroe.puoTogliere, 'Spendi 1 Punto Eroe')),
+      tasto('puntiEroe', -1, !t.puntiEroe.puoTogliere, 'Spendi 1 Punto Eroe'),
+      toccoMaster(ctx, { chiave: 'sessione:puntiEroe', campo: 'puntiEroe', etichetta: 'Punti Eroe', attuale: t.puntiEroe.valore })),
     h('span', { class: 'voce-testata voce-distintivi' },
       h('span', { class: 'etichetta-testata' }, 'Distintivi'), h('strong', { 'aria-live': 'polite' }, String(t.distintivi.valore)),
       tasto('distintivi', -1, !t.distintivi.puoTogliere, 'Togli 1 Distintivo'), tasto('distintivi', 1, false, 'Aggiungi 1 Distintivo'),
@@ -447,11 +450,15 @@ function riquadriPvPm(ctx, { compatti = false, ferite = false } = {}) {
   const s = ctx.sessione;
   const m = ctx.massimi;
   const classe = compatti ? ' compatto' : '';
+  const cm = ctx.tab.scheda.correzioniMaster ?? {};
+  // «Modifica master»: il massimo si corregge con ✎; la riga «Correzione del master +10 (motivo)» resta sotto il valore
+  const toccoPv = toccoMaster(ctx, { chiave: 'pv', etichetta: 'Punti Vita massimi', attuale: m.pv, calcolato: cm.pv?.calcolato ?? m.pv, limiti: { minimo: 1 } });
+  const toccoPm = toccoMaster(ctx, { chiave: 'pm', etichetta: 'Punti Magia massimi', attuale: m.pm, calcolato: cm.pm?.calcolato ?? m.pm, limiti: { minimo: 0 } });
   return [
-    contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true, classe: `riquadro-pv${classe}`, extra: pilloleAR(ctx) }),
+    contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true, classe: `riquadro-pv${classe}`, extra: [notaCorrezione(cm.pv), pilloleAR(ctx)], accanto: toccoPv }),
     ferite ? h('div', { class: 'ferite-sotto-pv' }, riquadroFerite(ctx)) : null,
     compatti
-      ? (m.pm ? contatoreTavolo(ctx, { titolo: 'Punti Magia', campo: 'pmAttuali', attuale: s.pmAttuali, massimo: m.pm, barra: true, classe: `riquadro-pm${classe}` }) : null)
+      ? (m.pm || ctx.master ? contatoreTavolo(ctx, { titolo: 'Punti Magia', campo: 'pmAttuali', attuale: s.pmAttuali, massimo: m.pm, barra: true, classe: `riquadro-pm${classe}`, extra: notaCorrezione(cm.pm), accanto: toccoPm }) : null)
       : riquadroPM(ctx),
   ];
 }
@@ -482,6 +489,7 @@ function pilloleAR(ctx) {
         provenienza: v.provenienza,
         sezioni: v.id === 'totale' && R.promemoria_cumulo_magia ? [{ testo: R.promemoria_cumulo_magia }] : [],
       }, { classe: `pillola-ar${v.principale ? ' principale' : ''}` }))),
+    toccoMaster(ctx, { chiave: 'ar', etichetta: 'AR (Armatura)', attuale: eq.ar?.totale ?? ar.totale, calcolato: eq.ar?.calcolato ?? eq.ar?.totale ?? ar.totale, limiti: { minimo: 0 } }),
     tecniche.length ? h('div', { class: 'pillole-condizionali tecniche-ar' }, tecniche.map((t) => {
       const tec = tecnicaDi(t.tecnica, ctx.dati);
       const nome = tec?.nome ?? t.tecnica;
@@ -764,6 +772,8 @@ function tabInventario(ctx) {
         aggiorna: ctx.azioni.equipaggiamento, ridisegna: ctx.azioni.ridisegna,
         inventario: true, rigaExtra: (r) => [piRigaInventario(ctx, r), tavoloRigaInventario(ctx, r)],
         compra: ctx.azioni.compra, crediti: ctx.sessione.crediti, storico: ctx.azioni.storico,
+        // S33: in modalità master «gratis (dato dal DdG)»
+        gratis: ctx.master?.gratis ?? null,
       })),
     // S30: l'Integrità degli oggetti in basso
     sezioneIntegrita(ctx),
@@ -1101,7 +1111,8 @@ function tabIdentita(ctx, d) {
           h('tbody', {}, d.salvezze.map((x) => h('tr', {},
             h('th', { scope: 'row' }, x.nome), h('td', {}, x.caratteristica),
             h('td', { class: 'cella-va', title: x.limitato ? `Limitato a ${x.tetto} (§1.2.3)` : null },
-              valoreEffettivo(x.nome, x.effettivo, x.totale, x.scomposizione, { pillola: true, provenienza: x.provenienza }), x.limitato ? '*' : null))))),
+              valoreEffettivo(x.nome, x.effettivo, x.totale, x.scomposizione, { pillola: true, provenienza: x.provenienza }), x.limitato ? '*' : null,
+              toccoMaster(ctx, { chiave: `salvezza:${x.id}`, etichetta: `Prova Salvezza: ${x.nome}`, attuale: x.totale, calcolato: ctx.tab.scheda.salvezze?.[x.id]?.calcolato ?? x.totale })))))),
         d.salvezze.some((x) => x.effettivo !== x.totale) ? h('p', { class: 'nota' }, 'Con le condizioni della sessione (Ferite, Affaticamento, Corruzione, Stati).') : null,
         usiSalvezze(ctx, d.salvezze))),
 
@@ -1122,6 +1133,8 @@ function tabIdentita(ctx, d) {
 
     d.annotazioni.length ? sezione('Note della scheda', h('ul', {}, d.annotazioni.map((a) => h('li', {}, a)))) : null,
 
+    // «Modifiche del master» (12/10/2026): il registro, in sola lettura per i giocatori; in modalità master con «Annulla»
+    sezioneRegistro(ctx, ctx.registroMaster ?? []),
     // N2: storico del personaggio (src/storico.js): le volte in cui si è proceduto nonostante un avviso
     (() => { const righe = allineaStorico(ctx.sessione.storico).slice().reverse(); return righe.length ? h('details', { class: 'sezione-tab storico-pg' }, h('summary', {}, `Storico (${righe.length})`),
       h('ul', {}, righe.map((x) => h('li', {}, h('small', { class: 'nota' }, `${new Date(x.quando).toLocaleString('it-IT', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })} · `), x.testo)))) : null; })(),
@@ -1204,7 +1217,8 @@ function tabAbilita(ctx, d) {
         // bonus e malus attivi accanto al VA (le voci dopo il valore da regole)
         modificatoriAttivi(a).map((x) => h('span', { class: `modificatore-attivo ${x.verso}`, title: x.testo }, x.testo)),
         valoriUso(a.nome, a.usiSpecifici), condizionaliValore(ctx, a.nome, a.disponibili))),
-        h('td', { class: 'cella-calcolo' }, h('button', { type: 'button', class: 'btn btn-piccolo btn-calcolo', title: `Il conto del VA di ${a.nome}: Mod, Base, Corp, Avanz, Equip e condizioni`, onclick: () => apriCalcolo(ctx, a) }, 'Calcolo')))))));
+        h('td', { class: 'cella-calcolo' }, toccoMaster(ctx, { chiave: `abilita:${a.nome}`, etichetta: `VA di ${a.nome}`, attuale: a.totale, calcolato: (ctx.tab.scheda.abilita ?? []).find((x) => x.nome === a.nome)?.calcolato ?? a.totale }),
+          h('button', { type: 'button', class: 'btn btn-piccolo btn-calcolo', title: `Il conto del VA di ${a.nome}: Mod, Base, Corp, Avanz, Equip e condizioni`, onclick: () => apriCalcolo(ctx, a) }, 'Calcolo')))))));
   const tutte = condizioniAttiveAbilita(ctx.tab.scheda, ctx.dati);
   const condizioni = tutte.filter((c) => c.fonte !== 'uso');
   const usi = tutte.filter((c) => c.fonte === 'uso');
@@ -1284,10 +1298,10 @@ function riquadriTavolo(ctx) {
   if (!t) return [];
   const u = t.movimento.unita;
   return [
-    h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Iniziativa'),
+    h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Iniziativa', toccoMaster(ctx, (() => { const sc = ctx.tab.scheda; const master = (sc.vociIniziativa ?? []).filter((v) => v.master).reduce((x, v) => x + v.valore, 0); return { chiave: 'iniziativa', etichetta: 'Iniziativa', attuale: sc.iniziativa, calcolato: sc.iniziativa - master }; })())),
       h('p', { class: 'valore-tavolo' }, pillolaTavolo('Iniziativa', [{ nome: '', v: t.iniziativa }], segno), h('span', {}, ` + ${ctx.dati.regole.iniziativa.dado_in_combattimento}`)),
       h('p', { class: 'nota' }, 'Mod DES + Mod INT e Talenti (§2.14)')),
-    h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Movimento'),
+    h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Movimento', toccoMaster(ctx, ['passo', 'corsa', 'scatto'].map((k) => { const mv = ctx.tab.scheda.movimento ?? {}; return { chiave: `movimento:${k}`, etichetta: `Movimento: ${k[0].toUpperCase()}${k.slice(1)} (Q)`, attuale: mv[k], calcolato: mv.correzioniMaster?.[k]?.calcolato ?? mv[k], limiti: { minimo: 0 } }; }))),
       h('p', { class: 'valore-tavolo' }, pillolaTavolo('Movimento', [{ nome: 'Passo', v: t.movimento.passo }, { nome: 'Corsa', v: t.movimento.corsa }, { nome: 'Scatto', v: t.movimento.scatto }]), h('span', {}, ` ${u}`)),
       h('p', { class: 'nota' }, 'Passo · Corsa · Scatto (§5.2)')),
     ...(ctx.tab.scheda.sensi?.length ? [h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Sensi'),
@@ -1401,6 +1415,11 @@ function righeCaratteristica(ctx, c) {
     h('td', { class: 'forte' }, String(c.valore), c.temporaneo !== undefined ? h('small', { class: `nota val-eff ${c.temporaneo < 0 ? 'malus' : 'bonus'}` }, ` (base ${c.base}${c.valore === ctx.dati.caratteristiche.valore_massimo || c.valore === ctx.dati.caratteristiche.valore_minimo ? ', al limite della tabella' : ''})`) : null),
     h('td', {}, segno(c.mod)), h('td', {}, segno(c.modSalvezza)),
     R ? h('td', { class: 'col-temporaneo' }, controlloTemporaneo(ctx, c, R)) : null);
+  // «Modifica master»: la Caratteristica corretta (permanente) con la sua riga, e ✎ per correggerla
+  const sc = ctx.tab.scheda.caratteristiche?.[c.sigla] ?? {};
+  const permanente = c.base ?? c.valore;
+  riga.children[1]?.append(...[sc.correzioniMaster ? notaCorrezione({ calcolato: sc.calcolato, righe: sc.correzioniMaster }) : null,
+    toccoMaster(ctx, { chiave: `car:${c.sigla}`, etichetta: c.nome, attuale: permanente, calcolato: sc.calcolato ?? permanente, limiti: { minimo: ctx.dati.caratteristiche.valore_minimo ?? 1, massimo: ctx.dati.caratteristiche.valore_massimo ?? Infinity } })].filter(Boolean));
   if (!R) return [riga];
   const x = normalizzaTemporanei(ctx.sessione.caratteristicheTemporanee, R).find((y) => y.sigla === c.sigla);
   if (!x) return [riga];
@@ -1460,6 +1479,12 @@ function riquadroCircostanze(ctx) {
     h('header', { class: 'testa-gradi' }, h('h3', {}, `Bonus di circostanza (${R.paragrafo})`),
       infoValore('?', { titolo: 'Bonus di circostanza', sottotitolo: R.paragrafo, sezioni: [{ testo: `Il modificatore che dà il master, da ${R.minimo} a +${R.massimo}. Si somma ai VA mostrati, a «Attacca!», «Lancia!», Prove Salvezza e Iniziativa delle categorie spuntate (Derivate: Prove Salvezza e Iniziativa); i valori da regole e la stampa non cambiano. Più righe si sommano.` }] }, { classe: 'info-gradi' }),
       h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => salva(aggiungiCircostanza(lista, R)) }, '+ Aggiungi')),
+    // S11: quelli mandati dal master dal Tavolo, con «dal master»: sola lettura (li toglie il master)
+    circostanzeMasterAttive(ctx.scelte?.circostanzeMaster).map((x) => h('div', { class: 'riga-circostanza dal-master' },
+      h('strong', { class: `val-eff ${x.valore < 0 ? 'malus' : 'bonus'}` }, segno(x.valore)),
+      h('span', { class: 'etichetta etichetta-master' }, 'dal master'),
+      h('span', {}, ` ${x.nota || 'bonus di circostanza'} · ${tutteSpuntate(x, R) ? 'a tutto' : R.categorie.filter((c) => x.categorie.includes(c.id)).map((c) => c.nome).join(', ')}${x.scontro ? ' · solo per questo scontro' : ''}`),
+      ctx.master ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => ctx.master.togliCircostanza(x.id) }, 'Togli') : null)),
     lista.length ? lista.map(riga) : h('p', { class: 'nota' }, 'Nessuno: «+ Aggiungi» per segnare un bonus o malus del master.'));
 }
 
@@ -1516,7 +1541,7 @@ function tabCombattimento(ctx, d) {
           contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true, classe: 'riquadro-pv', extra: pilloleAR(ctx) }),
           riquadroFerite(ctx), ...affaticamentoCorruzione(ctx, d)),
         h('div', { class: 'griglia-tavolo griglia-tavolo-compatta' },
-          d.difese ? h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Difese'),
+          d.difese ? h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Difese', toccoMaster(ctx, { chiave: 'abilita:Difese', etichetta: 'VA di Difese', attuale: d.difese.totale, calcolato: (ctx.tab.scheda.abilita ?? []).find((x) => x.nome === 'Difese')?.calcolato ?? d.difese.totale })),
             h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), valoreEffettivo('Difese', d.difese.effettivo, d.difese.totale, d.difese.scomposizione, { pillola: true, provenienza: d.difese.provenienza }),
               condizionaliValore(ctx, 'Difese', (ctx.tab.scheda.abilita ?? []).find((x) => x.nome === 'Difese')?.disponibili ?? [])),
             // §3.5.5, Disciplina Guardia: bonus a Difese contro gli attacchi ravvicinati (con Padronanza
@@ -2386,6 +2411,7 @@ function tabCibernetica(ctx) {
   if (!u) return [h('section', { class: 'riquadro nessun-potere' }, h('h2', {}, 'Umanità non disponibile'), h('p', { class: 'nota' }, 'Mancano le regole dell’Umanità (regole.json → umanita).'))];
 
   // Umanità: valore con la provenienza, quadratini (neri = UMN perduta, docs/layout-ss.md), fascia
+  const toccoUmanita = toccoMaster(ctx, { chiave: 'umanita', etichetta: 'Umanità (UMN)', attuale: u.valore, calcolato: u.calcolato ?? u.valore, limiti: { minimo: u.minimo, massimo: u.massimo } }, { testo: '✎ Correggi l’Umanità' });
   const quadratini = h('div', { class: 'quadratini-umanita', role: 'img', 'aria-label': `Umanità ${u.valore} su ${u.massimo}: ${u.massimo - u.valore} perduti` },
     Array.from({ length: u.massimo }, (_, i) => h('span', { class: `casella${i >= u.valore ? ' persa' : ''}` })));
   const m = u.modificatori;
@@ -2403,7 +2429,7 @@ function tabCibernetica(ctx) {
       h('p', { class: 'valore-tavolo' }, infoValore(h('strong', {}, String(u.valore)), {
         titolo: `Umanità: ${u.valore}`, sottotitolo: `${u.condizione} · Giocatore §5.21, Equipaggiamento §7.1`, provenienza: u.provenienza,
       }), h('span', {}, ` / ${u.massimo}`)),
-      quadratini,
+      quadratini, toccoUmanita,
       h('p', { class: 'nota' }, h('strong', {}, u.condizione), ` (fascia ${u.fascia.min === u.fascia.max ? u.fascia.min : `${u.fascia.min}–${u.fascia.max}`}). Nessun recupero naturale: cure e riparazioni non restituiscono Umanità.`)),
     h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Effetti della fascia'), h('ul', { class: 'effetti-umanita' }, effetti)));
 

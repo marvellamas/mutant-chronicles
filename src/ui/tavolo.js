@@ -3,6 +3,8 @@
 // personaggi/ sono «al tavolo» (selezione salvata sul server, tavolo/sessione.json); per ognuno conta il
 // file più recente. Le schede si rileggono ogni pochi secondi, solo se il file è cambiato; i valori e
 // le provenienze sono quelli di calcolaScheda (src/tavolo.js → vistaPlancia).
+import { testoConBlocchiMaster, conCircostanzaMandata, senzaCircostanza, senzaCircostanzeDelloScontro } from '../correzioni-master.js';
+import { chiediCircostanza } from './master.js';
 import { procediComunque } from '../storico.js';
 import { h, svuota } from './dom.js';
 import { infoValore, nascondiTooltip } from './tooltip.js';
@@ -182,6 +184,36 @@ export function renderTavolo(radice, ctx) {
     avvisoErrore(`Scheda di ${chiave.replace(/-/g, ' ')} non aggiornata: è cambiata tre volte di fila. Riprova.`);
     return null;
   };
+  // «Modifica master» (12/10/2026): la plancia cambia i blocchi del master nel file di un PG (bonus di circostanza),
+  // con la revisione e un nuovo tentativo se il giocatore ha appena salvato
+  const aggiornaBlocchiMaster = async (chiave, fn) => {
+    const r = ultimiPerPersonaggio(stato.elenco).get(chiave);
+    if (!r) return false;
+    for (let tentativo = 0; tentativo < 3; tentativo++) {
+      try {
+        const { testo, mtime } = await leggiCartellaConRevisione(r.file);
+        const nuovo = testoConBlocchiMaster(testo, fn);
+        if (nuovo) await scriviCartella(r.file, nuovo, { mtime });
+        return !!nuovo;
+      } catch (e) {
+        if (!e.conflitto) { avvisoErrore(`Scheda di ${chiave.replace(/-/g, ' ')} non aggiornata: ${e.message}`); return false; }
+      }
+    }
+    avvisoErrore(`Scheda di ${chiave.replace(/-/g, ' ')} non aggiornata: è cambiata tre volte di fila. Riprova.`);
+    return false;
+  };
+  // S11: il master manda un bonus o malus di circostanza a un PG; lo toglie lui, o «Fine scontro» se è solo per lo scontro
+  ctx.master = ctx.master === true;
+  ctx.mandaCircostanza = async (v, r) => {
+    const R = ctx.dati.regole.circostanza;
+    if (!R) return;
+    const scontro = stato.scontro?.stato === 'aperto' ? { id: stato.scontro.id, nome: stato.scontro.nome } : null;
+    const scelta = await chiediCircostanza({ nome: v.nome, R, scontro });
+    if (!scelta) return;
+    const fatto = await aggiornaBlocchiMaster(chiaveDaFile(r.file), (b) => conCircostanzaMandata(b, { valore: scelta.valore, categorie: scelta.categorie, nota: scelta.nota, scontro: scelta.soloScontro ? scontro?.id ?? null : null }));
+    if (fatto) { avviso(`Bonus di circostanza mandato a ${v.nome}: lo vede nelle «Condizioni attive», con «dal master».`, { tipo: 'ok' }); await aggiorna(); }
+  };
+  ctx.togliCircostanzaMaster = async (v, r, id) => { if (await aggiornaBlocchiMaster(chiaveDaFile(r.file), (b) => senzaCircostanza(b, id))) await aggiorna(); };
   const seguiScontro = async (prima, dopo) => {
     const pg = (dopo?.partecipanti ?? []).filter((p) => p.tipo === 'pg');
     if (!pg.length) return;
@@ -189,6 +221,8 @@ export function renderTavolo(radice, ctx) {
     const fine = dopo.stato === 'chiuso' && prima?.stato === 'aperto';
     if (nuovo) for (const p of pg) await aggiornaPg(p.chiave, (x) => riallinea(x, dopo.round));
     else if (fine) {
+      // S11: i bonus del master «solo per questo scontro» si tolgono da soli
+      for (const p of pg) await aggiornaBlocchiMaster(p.chiave, (b) => senzaCircostanzeDelloScontro(b, dopo.id));
       // le durate rimaste si leggono dalle sessioni appena scritte nei file
       const ancora = [];
       for (const p of pg) {
@@ -1117,6 +1151,12 @@ function cartaPg(ctx, v, r, diTurnoOra = false, colpito = null, durate = []) {
         h('h2', {}, h('button', { type: 'button', class: 'btn-link nome-plancia', title: `Apri ${v.nome} (le modifiche si fanno nella sua scheda)`, onclick: apri }, v.nome)),
         h('p', { class: 'nota' }, `${v.livello}° livello · ${v.completa ? [v.corporazione, v.classi.map((c) => `${c.nome} ${c.grado}`).join(', ')].filter(Boolean).join(' · ') : 'scheda incompleta'}`)),
       v.completa && colpito && ctx.scontroAperto?.() ? pulsanteColpito(ctx, () => colpito(v, r)) : null),
+    // «Modifica master» (12/10/2026): solo sul PC del server; apre la scheda in modalità master
+    ctx.master === true ? h('p', { class: 'plancia-master' },
+      ctx.azioni.modificaMaster ? h('button', { type: 'button', class: 'btn btn-piccolo btn-modifica-master', title: `Apre la scheda di ${v.nome} in modalità master: ogni valore si può correggere, ogni modifica viene registrata e si può annullare`, onclick: () => ctx.azioni.modificaMaster(r) }, '🛠 Modifica master') : null,
+      v.completa && ctx.mandaCircostanza ? h('button', { type: 'button', class: 'btn btn-piccolo btn-bonus-master', title: `Manda a ${v.nome} un bonus o malus di circostanza: lo vede sulla scheda («dal master») e non lo può togliere`, onclick: () => ctx.mandaCircostanza(v, r) }, '± Bonus di circostanza') : null,
+      ...(v.circostanzeMaster ?? []).map((x) => h('span', { class: 'etichetta etichetta-master', title: 'Bonus di circostanza mandato dal master' }, `${x.valore > 0 ? '+' : '−'}${Math.abs(x.valore)}${x.nota ? ` ${x.nota}` : ''}${x.scontro ? ' (scontro)' : ''} `,
+        ctx.togliCircostanzaMaster ? h('button', { type: 'button', class: 'btn-link', 'aria-label': 'Togli il bonus', title: 'Togli il bonus', onclick: () => ctx.togliCircostanzaMaster(v, r, x.id) }, '✕') : null))) : null,
     v.completa ? [
       barra('risorsa-pv', 'PV', v.pv.attuali, v.pv.massimo),
       v.pm ? barra('risorsa-pm', 'PM', v.pm.attuali, v.pm.massimo) : null,

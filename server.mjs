@@ -94,6 +94,7 @@
 //   POST /api/spegni                   «Spegni Mutant», solo da questo PC (403 dagli altri): salvataggio completo,
 //                                      esito, poi il server si spegne (codice 42: avvia-server.bat chiude la finestra)
 // Nessuna cancellazione dal server: i file vecchi si tolgono a mano dalla cartella.
+import { proteggiBlocchiMaster } from './src/correzioni-master.js';
 import { createServer } from 'node:http';
 import { readFileSync, createReadStream } from 'node:fs';
 import { readFile, writeFile, readdir, stat, mkdir, rename, copyFile, unlink, constants } from 'node:fs/promises';
@@ -191,6 +192,72 @@ async function altroPersonaggio(cartella, file, pg) {
     if (diverso) return `il file ${x} contiene un altro personaggio${suo.nome ? ` (${suo.nome})` : ''}: non sovrascritto. Ricarica la pagina: il personaggio verrà salvato in un file con un altro nome.`;
   }
   return null;
+}
+
+/**
+ * «Modifica master» (12/10): il file attuale di un PG, per confrontare i blocchi del master con quelli di un
+ * salvataggio in arrivo: quello con lo stesso nome se c'è, altrimenti il più recente con lo stesso identificativo
+ * (nuovo giorno o nuovo livello: il nome del file cambia). null se il PG non ha ancora un file.
+ */
+async function fileAttualeDelPg(cartella, file, pg) {
+  const leggi = async (nome) => { try { return JSON.parse(await readFile(join(cartella, nome), 'utf8')); } catch { return null; } };
+  const stesso = await leggi(file);
+  if (stesso) return stesso;
+  if (!pg) return null;
+  let nomi;
+  try { nomi = await readdir(cartella); } catch { return null; }
+  let migliore = null;
+  for (const x of nomi.filter((n) => NOME_FILE.test(n))) {
+    const dove = join(cartella, x);
+    let st;
+    try { st = await stat(dove); } catch { continue; }
+    if ((await personaggioDelFile(dove, st)).pg !== pg) continue;
+    if (!migliore || st.mtimeMs > migliore.mtime) migliore = { nome: x, mtime: st.mtimeMs };
+  }
+  return migliore ? leggi(migliore.nome) : null;
+}
+
+// «Modifica master»: copie del file di un PG prima di una modifica alle sue scelte (cartella fuori da git, con rotazione)
+const BACKUP_MASTER = 'backup-master';
+const BACKUP_MASTER_MASSIMI = 40;
+const NOME_BACKUP = /^[\w .'’()\-]+_prima_\d{8}-\d{6}(?:-\d+)?\.json$/u;
+
+/**
+ * POST /api/backup-master { nome, testo } → { file }: salva la copia (solo dal PC del master) e tiene le ultime
+ * BACKUP_MASTER_MASSIMI. GET /api/backup-master/<file> → il testo della copia (solo dal PC del master).
+ */
+async function apiBackupMaster(req, res, percorso, dir, master) {
+  if (!master) return json(res, 403, { errore: 'Le copie della «Modifica master» si usano solo dal PC dove gira il server.' });
+  if (percorso === '/api/backup-master' && req.method === 'POST') {
+    let o;
+    try { o = JSON.parse((await leggiCorpo(req)).toString('utf8')); } catch (e) { return json(res, 400, { errore: `contenuto non valido: ${e.message}` }); }
+    let pg;
+    try { pg = JSON.parse(o?.testo ?? ''); if (pg?.formato !== 'mutant-personaggio') throw new Error('non è un personaggio di Mutant'); } catch (e) { return json(res, 400, { errore: `copia non valida: ${e.message}` }); }
+    const base = String(o.nome ?? pg.scelte?.nome ?? 'personaggio').trim().replace(/[^\p{L}\p{N} .'’()-]+/gu, '-').slice(0, 60) || 'personaggio';
+    const d = new Date();
+    const due = (n) => String(n).padStart(2, '0');
+    const quando = `${d.getFullYear()}${due(d.getMonth() + 1)}${due(d.getDate())}-${due(d.getHours())}${due(d.getMinutes())}${due(d.getSeconds())}`;
+    await mkdir(dir, { recursive: true });
+    let file = `${base}_prima_${quando}.json`;
+    for (let n = 2; await stat(join(dir, file)).then(() => true, () => false); n++) file = `${base}_prima_${quando}-${n}.json`;
+    await scriviAtomico(join(dir, file), Buffer.from(o.testo, 'utf8'));
+    // rotazione: restano le più recenti
+    const tutte = [];
+    for (const x of (await readdir(dir)).filter((n) => NOME_BACKUP.test(n))) tutte.push({ x, m: (await stat(join(dir, x))).mtimeMs });
+    tutte.sort((a, b) => b.m - a.m || b.x.localeCompare(a.x));
+    for (const { x } of tutte.slice(BACKUP_MASTER_MASSIMI)) if (x !== file) await unlink(join(dir, x)).catch(() => {});
+    return json(res, 200, { file });
+  }
+  if (percorso.startsWith('/api/backup-master/') && req.method === 'GET') {
+    const file = percorso.slice('/api/backup-master/'.length);
+    if (!NOME_BACKUP.test(file)) return json(res, 400, { errore: 'nome di copia non valido' });
+    try {
+      const testo = await readFile(join(dir, file));
+      res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-cache' });
+      return res.end(testo);
+    } catch { return json(res, 404, { errore: 'copia non trovata (forse tolta dalla rotazione)' }); }
+  }
+  return json(res, 405, { errore: 'metodo non ammesso' });
 }
 
 const json = (res, codice, corpo) => {
@@ -1261,6 +1328,13 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
         if (attuale !== attesa) return json(res, 409, { errore: 'il personaggio è stato cambiato altrove: rileggi', mtime: attuale });
       }
       await mkdir(cartella, { recursive: true });
+      // «Modifica master» (12/10): un salvataggio che non arriva dal PC del master (il tablet di un giocatore) non cambia
+      // né cancella le correzioni e i bonus del master: nel file restano quelli che ci sono già
+      let masterRipristinato = false;
+      if (!req.mutantMaster) {
+        const p = proteggiBlocchiMaster(o, await fileAttualeDelPg(cartella, file, typeof o.pg === 'string' ? o.pg : null));
+        if (p.ripristinato) { masterRipristinato = true; corpo = Buffer.from(JSON.stringify(p.file, null, 2), 'utf8'); }
+      }
       // scrittura atomica: un file temporaneo e poi la rinomina, così una lettura non vede mai mezzo file
       await scriviAtomico(dove, corpo);
       const s = await stat(dove);
@@ -1272,7 +1346,7 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
           try { await unlink(join(cartella, x)); cacheFile.delete(join(cartella, x)); rinominati.push(x); } catch { /* resta: niente di grave */ }
         }
       }
-      return json(res, 200, { file, mtime: s.mtimeMs, ...(rinominati.length ? { rinominati } : {}) });
+      return json(res, 200, { file, mtime: s.mtimeMs, ...(rinominati.length ? { rinominati } : {}), ...(masterRipristinato ? { masterRipristinato: true } : {}) });
     });
   }
   return json(res, 405, { errore: 'metodo non ammesso' });
@@ -1339,7 +1413,9 @@ async function apiSalvataggi(req, res, percorso, salvataggi) {
   return json(res, 200, { ...esito, spento: true });
 }
 
-export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA), tavolo = join(RADICE, TAVOLO), scontri = join(RADICE, SCONTRI), nemici = join(RADICE, NEMICI), veicoli: veicoliDati = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), musica = join(RADICE, MUSICA), soloLocale = false, avvisi = null, salvataggi = null } = {}) {
+export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA), tavolo = join(RADICE, TAVOLO), scontri = join(RADICE, SCONTRI), nemici = join(RADICE, NEMICI), veicoli: veicoliDati = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), musica = join(RADICE, MUSICA), soloLocale = false, avvisi = null, salvataggi = null, backupMaster = null, eMaster = (req) => daQuestoPc(req.socket.remoteAddress) } = {}) {
+  // copie della «Modifica master»: accanto alla cartella dei personaggi (con cartelle di prova non si tocca il progetto)
+  backupMaster ??= normalize(cartella) === normalize(join(RADICE, CARTELLA)) ? join(RADICE, BACKUP_MASTER) : join(dirname(cartella), BACKUP_MASTER);
   const veicoli = veicoliDati ?? join(RADICE, VEICOLI);
   // versione dell'app all'accensione (versione.json): il codice del server resta questo finché non lo si riavvia
   let versioneAvvio = null;
@@ -1356,7 +1432,10 @@ export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA),
   const server = createServer(async (req, res) => {
     try {
       const percorso = decodeURI(new URL(req.url, 'http://x').pathname);
-      if (percorso === '/api/ping') return json(res, 200, { ok: true, app: 'mutant', cartella: CARTELLA, ...identita });
+      // contesto master: la richiesta arriva dal PC dove gira il server (lo stesso controllo di «Spegni Mutant»)
+      req.mutantMaster = eMaster(req);
+      if (percorso === '/api/ping') return json(res, 200, { ok: true, app: 'mutant', cartella: CARTELLA, ...identita, master: req.mutantMaster });
+      if (percorso === '/api/backup-master' || percorso.startsWith('/api/backup-master/')) return await apiBackupMaster(req, res, percorso, backupMaster, req.mutantMaster);
       // A.122: il tablet dell'Aiuto-master non salva, non spegne e non scrive nulla fuori dal movimento del PG di turno
       if (req.headers[INTESTAZIONE_AIUTO] && percorso.startsWith('/api/')) {
         const no = rifiutoAiuto(req.method, percorso);

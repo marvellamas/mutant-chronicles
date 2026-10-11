@@ -2523,3 +2523,33 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .mappa-barra > .mappa-gruppo.gruppo-app { flex: 0 1 auto; min-width: 0; }
 .mappa-barra > .mappa-gruppo.gruppo-app .mappa-titolo { min-width: 2rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 @media (max-width: 46rem) { .mappa-barra { flex-wrap: wrap; } }
+
+/* ---------------------------------------------------------------- «Modifica master» (12/10/2026) */
+.fascia-master { position: sticky; top: 0; z-index: 40; display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.8rem; padding: 0.5rem 0.9rem; margin-bottom: 0.5rem; background: var(--attenzione); color: #1a1205; border-radius: var(--raggio); font-size: 1rem; }
+.fascia-master .nota { color: inherit; opacity: 0.85; flex: 1 1 14rem; }
+.fascia-master .btn-esci-master { margin-left: auto; font-weight: 700; }
+.scheda-tab.in-master { outline: 3px solid var(--attenzione); outline-offset: 4px; border-radius: var(--raggio); }
+.btn-tocco-master { font: inherit; font-size: 0.85rem; line-height: 1; min-width: 28px; min-height: 28px; margin-left: 0.3rem; padding: 0.1rem 0.35rem; cursor: pointer; color: #1a1205; background: var(--attenzione); border: 1px solid var(--attenzione); border-radius: 6px; vertical-align: middle; }
+.btn-tocco-master:hover, .btn-tocco-master:focus-visible { filter: brightness(1.15); }
+.nota-correzione-master { display: block; color: var(--attenzione); font-weight: 600; }
+.finestrella.finestrella-master { max-width: min(30rem, calc(100vw - 2rem)); }
+.corpo-master { display: grid; gap: 0.6rem; }
+.corpo-master p { margin: 0; }
+.scelta-master { display: flex; gap: 0.4rem; }
+.scelta-master .btn { flex: 1; }
+.numero-master { display: flex; align-items: center; justify-content: center; gap: 0.35rem; }
+.input-master { width: 6rem; font: inherit; font-size: 1.4rem; font-weight: 700; text-align: center; min-height: 44px; }
+.valore-master { font-size: 1.8rem; min-width: 4rem; text-align: center; }
+.anteprima-master strong { font-size: 1.2rem; }
+.registro-master { border-left: 4px solid var(--attenzione); padding-left: 0.6rem; }
+.righe-registro-master { list-style: none; margin: 0.4rem 0; padding: 0; display: grid; gap: 0.3rem; }
+.righe-registro-master li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.2rem 0.4rem; }
+.righe-registro-master li.annullata .cosa-registro, .righe-registro-master li.annullata .motivo-registro { text-decoration: line-through; opacity: 0.6; }
+.righe-registro-master .btn-annulla-master { margin-left: auto; }
+.riga-circostanza.dal-master { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem 0.5rem; padding: 0.3rem 0.4rem; border: 1px dashed var(--attenzione); border-radius: var(--raggio); }
+.etichetta-master { background: var(--attenzione); color: #1a1205; margin-left: 0; }
+.casella-gratis { display: block; margin: 0.4rem 0; font-weight: 600; }
+.plancia-master { display: flex; flex-wrap: wrap; gap: 0.3rem; margin: 0.3rem 0; }
+.plancia-master .etichetta-master { cursor: default; }
+/* S1: il tasto MUTANT con il server solo sul PC del master (src/correzioni-master.js → mostraMarchio) */
+.senza-marchio .marchio { display: none !important; }

@@ -96,3 +96,20 @@ export function vistaDaRimettere(storage, scena) {
 export function dimenticaMappa(storage) {
   scriviMappa(storage, null);
 }
+
+// «Modifica master» (12/10/2026): il Tavolo apre la scheda di un PG in modalità master. Il segno sta in sessionStorage
+// (per scheda del browser), come «Torna al tavolo»: resiste al ricaricamento, e «Esci» o la pagina iniziale lo tolgono.
+const CHIAVE_MASTER = 'mutant.modalitaMaster';
+
+/** Il Tavolo apre la scheda `id` con «Modifica master». */
+export function segnaModalitaMaster(storage, id) {
+  try { storage?.setItem(CHIAVE_MASTER, String(id)); } catch { /* storage non disponibile: niente modalità master */ }
+}
+/** La scheda aperta in modalità master (id), o null. */
+export function modalitaMasterDi(storage) {
+  try { return storage?.getItem(CHIAVE_MASTER) || null; } catch { return null; }
+}
+/** «Esci» dalla modalità master (e la pagina iniziale): la scheda torna quella di sempre. */
+export function esciModalitaMaster(storage) {
+  try { storage?.removeItem(CHIAVE_MASTER); } catch { /* niente */ }
+}

@@ -24,7 +24,8 @@ const armiTipi = ['arma_ravvicinata', 'arma_distanza'];
 
 /**
  * @param {object} ctx { dati, voci, ui (memoria fra i ridisegni), aggiorna(voci), ridisegna(),
- *   inventario?: true, rigaExtra?(r) → nodi, compra?(voce, costo), crediti?: numero | null }
+ *   inventario?: true, rigaExtra?(r) → nodi, compra?(voce, costo), crediti?: numero | null,
+ *   gratis?(voce, nome): solo in modalità master («gratis (dato dal DdG)», S33) }
  * @returns {Node[]}
  */
 export function renderEquipaggiamento(ctx) {
@@ -392,6 +393,7 @@ function pannelloAggiungi(ctx) {
       selettore('Catalogo', s.catalogo, op.cataloghi, (v) => imposta({ catalogo: v, famiglia: null, rif: null })),
       selettore('Famiglia', s.famiglia, op.famiglie, (v) => imposta({ famiglia: v, rif: null })),
       selettore('Profilo', s.rif, op.profili.map((o) => o.rif), (v) => imposta({ rif: v }), (r) => op.profili.find((o) => o.rif === r)?.nome ?? r)),
+    ctx.gratis && ctx.compra ? h('label', { class: 'casella-gratis' }, h('input', { type: 'checkbox', checked: !!s.gratis, onchange: (e) => imposta({ gratis: e.target.checked }) }), ' gratis (dato dal DdG): «Compra» non scala i crediti') : null,
     scelto ? h('div', { class: 'riquadro ok profilo-scelto' },
       h('p', {}, h('strong', {}, info('oggetto', scelto.rif, scelto.nome)), h('small', { class: 'sigla' }, ` · ${scelto.paragrafo}`)),
       h('p', { class: 'nota' }, riassuntoProfilo(scelto)),
@@ -501,6 +503,11 @@ function pannelloAggiungi(ctx) {
 
 /** «Compra (−N crediti)»: disabilitato, con il motivo, se il prezzo manca o i crediti non bastano. */
 function bottoneCompra(ctx, scelto, nuovaVoce, etichetta = 'Compra') {
+  // S33 (12/10): in modalità master, con «gratis (dato dal DdG)» l'oggetto entra senza scalare i crediti e va nel registro
+  if (ctx.gratis && ctx.ui?.equip?.gratis) {
+    return h('button', { type: 'button', class: 'btn primario btn-gratis', title: 'Dato dal DdG: nessun credito scalato; la riga va nel registro «Modifiche del master»',
+      onclick: () => { const voce = nuovaVoce(); ctx.gratis(voce, `${scelto.nome ?? 'oggetto'}${voce.quantita > 1 ? ` ×${voce.quantita}` : ''}`); } }, `${etichetta} gratis (dato dal DdG)`);
+  }
   const costo = Number.isFinite(scelto.costo) ? scelto.costo : null;
   const motivo = costo === null ? 'Prezzo di catalogo assente: aggiungi l’oggetto e scala i crediti a mano.'
     : !Number.isInteger(ctx.crediti) ? 'Crediti non tracciati: applica prima la dotazione iniziale, oppure aggiungi l’oggetto e annota la spesa a mano.'

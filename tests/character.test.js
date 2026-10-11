@@ -187,7 +187,7 @@ test('serializza → deserializza restituisce le stesse scelte', () => {
 test('il file contiene solo le scelte, mai valori calcolati', () => {
   const obj = JSON.parse(serializza({ ...MISHIMA_AGENTE, pv: 99, abilita: [] }));
   // il ritratto, la dotazione, i parametri dei Talenti, l'Umanità e i veicoli vuoti non si scrivono (i file di prima restano identici)
-  assert.deepEqual(Object.keys(obj.scelte).sort(), Object.keys(nuoveScelte()).filter((k) => !['ritratto', 'dotazione', 'parametriTalenti', 'umanita', 'veicoli'].includes(k)).sort());
+  assert.deepEqual(Object.keys(obj.scelte).sort(), Object.keys(nuoveScelte()).filter((k) => !['ritratto', 'dotazione', 'parametriTalenti', 'umanita', 'veicoli', 'correzioniMaster', 'circostanzeMaster'].includes(k)).sort());
 });
 
 test('deserializza: errori leggibili su file non validi', () => {

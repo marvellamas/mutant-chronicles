@@ -71,5 +71,5 @@ test('volumi: un clic fuori chiude il menu; un clic dentro (cursori, «Muto») n
 
 test('barra su una riga: i gruppi non vanno a capo (tranne sul telefono), il titolo si accorcia con i puntini', () => {
   assert.match(css, /\.mappa-barra \{ flex-wrap: nowrap; \}\n\.mappa-barra > \.mappa-gruppo \{ flex: none; \}\n\.mappa-barra > \.mappa-gruppo\.gruppo-app \{ flex: 0 1 auto; min-width: 0; \}/);
-  assert.match(css, /@media \(max-width: 46rem\) \{ \.mappa-barra \{ flex-wrap: wrap; \} \}\n$/);
+  assert.match(css, /@media \(max-width: 46rem\) \{ \.mappa-barra \{ flex-wrap: wrap; \} \}\n/);
 });

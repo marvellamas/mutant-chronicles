@@ -82,7 +82,11 @@ export function righeRegoleAbilita(a, scheda) {
     righe.push(riga(`Limite ${a.limiteCategoria ?? ''} ${a.limite}`.replace('  ', ' '), a.limite - a.grezzo,
       `VA grezzo ${a.grezzo} oltre il limite del VA personale${a.limiteDa?.length ? ` (${a.limiteDa.join(', ')})` : ''} (§8.3, §8.7)`));
   }
-  return righe.every((r) => Number.isInteger(r.valore)) && sommaRighe(righe) === a.totale ? righe : [riga('Valore da regole', a.totale)];
+  // «Modifica master»: il valore da regole è quello prima delle correzioni, che seguono una per riga
+  const master = a.correzioniMaster ?? [];
+  const daRegole = master.length ? a.calcolato : a.totale;
+  const base = righe.every((r) => Number.isInteger(r.valore)) && sommaRighe(righe) === daRegole ? righe : [riga('Valore da regole', daRegole)];
+  return [...base, ...master];
 }
 
 /** Salvezza da regole (§1.2.3): 8 + Mod specifico + Addestramento + Corporazione + Avanzamento, Talenti, tetto. */
@@ -96,8 +100,10 @@ export function righeRegoleSalvezza(s, scheda) {
     s.avanzamento ? riga('Avanzamento', s.avanzamento, `livello ${scheda.livello ?? 1} (§1.2.3)`) : null,
     s.talenti ? riga('Talenti', s.talenti) : null,
   ].filter(Boolean);
-  if (s.limitato) righe.push(riga(`Tetto ${s.tetto}`, s.totale - sommaRighe(righe), '§1.2.3'));
-  return sommaRighe(righe) === s.totale ? righe : [riga('Valore da regole', s.totale)];
+  const master = s.correzioniMaster ?? [];
+  const daRegole = master.length ? s.calcolato : s.totale;
+  if (s.limitato) righe.push(riga(`Tetto ${s.tetto}`, daRegole - sommaRighe(righe), '§1.2.3'));
+  return [...(sommaRighe(righe) === daRegole ? righe : [riga('Valore da regole', daRegole)]), ...master];
 }
 
 const segno = (n) => (typeof n !== 'number' ? String(n) : n < 0 ? `−${-n}` : `+${n}`);

@@ -6,7 +6,8 @@ import { caricaDati, versioniPersonaggio, FILE_SOLO_TAVOLO } from '../rules.js';
 import { impiantiAttivabili, statoProcessore, attivaChip, terminaChip } from '../impianti.js';
 import { formattaErrore, trovaTodo } from '../validate.js';
 import { calcolaScheda, validaLivello } from '../calc.js';
-import { separaEsemplare, restituisciGranate } from '../equipaggiamento.js';
+import { separaEsemplare, restituisciGranate, catalogo, risolvi } from '../equipaggiamento.js';
+import { descriviFerite } from '../sessione.js';
 import {
   nuoveScelte, normalizza, applicaModifica, anteprima, serializza, nomeFileEsportazione, nomeFileCalendario, deserializzaPersonaggio, applicaLivello, annullaUltimoLivello,
   CAMPI_ANAGRAFICA, nuovoPg,
@@ -15,7 +16,10 @@ import { h, svuota, scaricaFile } from './dom.js';
 import * as archivio from './storage.js';
 import { elencoVeicoli, migraNelRegistro } from './veicoli-registro.js';
 import { eRiferimento } from '../veicoli-registro.js';
-import { serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella } from './cartella.js';
+import { serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, contestoMasterQui, salvaBackupMaster, leggiBackupMaster } from './cartella.js';
+import { modalitaMaster, mostraMarchio, registro as registroMaster, nuovaCorrezione, aggiungiCorrezione, annullaCorrezione, avvisoAnnulla, registraDiretta, differenzeDirette, differenzeOggetti, ripristinoDiretta, descriviScelte, soloScelte, ripristinaScelte, masterDiverso, normalizzaCircostanzeMaster } from '../correzioni-master.js';
+import { descriviVoce } from '../avanzamento.js';
+import { segnaModalitaMaster, modalitaMasterDi, esciModalitaMaster } from './ritorno.js';
 import { statoSalvataggioMaster, controllaRemoto, revisioneDaScrivere, differenzeSessione, testoScelta, indicatoreCollegamento, impronta } from '../collegamento.js';
 import { difeseNemico } from '../nemico-attacco.js';
 import { leggiScontroAperto, leggiScontro, salvaScontro, leggiMovimentoRound } from './scontro.js';
@@ -115,6 +119,9 @@ async function avvia() {
   stato.sfondi = cercaSfondi(stato.dati.corporazioni.corporazioni);
   // cartella dei personaggi (server.mjs): se il server non c'è l'app resta com'era
   stato.cartella = await serverCartella();
+  // «Modifica master»: contesto master = pagina aperta sul PC del server; il tasto MUTANT (S1) solo lì
+  stato.master = contestoMasterQui();
+  document.body.classList.toggle('senza-marchio', !mostraMarchio({ server: stato.cartella, daQuestoPc: stato.master }));
   // pezzo 6: con il server la scheda aperta controlla il proprio file (come la plancia, ogni 3 secondi)
   if (stato.cartella) setInterval(controllaScheda, INTERVALLO_COLLEGAMENTO_MS);
   window.addEventListener('hashchange', daIndirizzo);
@@ -183,7 +190,7 @@ function daIndirizzo() {
     document.title = 'Tavolo del Master · Mutant';
     // «← Torna al tavolo» da una scheda: la plancia rimette lo scorrimento di prima (src/ui/ritorno.js)
     const scorrimento = scorrimentoDaRimettere(sessionStorage);
-    stato.fermaTavolo = renderTavolo(radice, { dati: stato.dati, scorrimento, azioni: { personaggi: () => vai('#/'), apri: (r) => apriDaCartella(r, { dalTavolo: true }), mappa: (id) => vai(`#/mappa/${id}`) } });
+    stato.fermaTavolo = renderTavolo(radice, { dati: stato.dati, scorrimento, master: stato.master, azioni: { personaggi: () => vai('#/'), apri: (r) => apriDaCartella(r, { dalTavolo: true }), modificaMaster: (r) => apriDaCartella(r, { dalTavolo: true, master: true }), mappa: (id) => vai(`#/mappa/${id}`) } });
     return;
   }
   // guida della mappa per il master (docs/battlemap/guida-davide.md): file statico, anche senza il server
@@ -252,6 +259,7 @@ function daIndirizzo() {
     // la pagina iniziale: le schede aperte da qui non hanno «Torna al tavolo»
     dimenticaTavolo(sessionStorage);
     dimenticaMappa(sessionStorage);
+    esciModalitaMaster(sessionStorage);
     return renderHome();
   }
   const [, id, passoTesto] = m;
@@ -432,6 +440,8 @@ async function scriviInCartella(id, { revisione = false, mtime = null } = {}) {
     }
     const r = await scriviCartella(file, testo, { mtime: rev });
     archivio.segnaCartella(id, { file: r.file, mtime: r.mtime, salvato: p.aggiornato, impronta: impronta(testo) });
+    // «Modifica master»: il server ha tenuto le correzioni del master al posto di quelle (vecchie) di questa scheda
+    if (r.masterRipristinato && id === stato.id) await ricaricaDaCartella();
     if (id === stato.id) aggiornaIndicatoreSalvataggio();
     // il server è tornato dopo un salvataggio fallito: lo si dice, e il ritentativo si ferma
     if (ritentativo.id === id) fineRitentativo(id);
@@ -598,6 +608,16 @@ function improntaLocale(id) {
   return impronta(fileEsportazione(normalizza(p.scelte, stato.dati).scelte, p.livelli ?? [], p.sessione ?? null, normalizzaCalendario(p.calendario, stato.dati), p.pg ?? null).testo);
 }
 
+/** «Modifica master»: nel file del server ci sono correzioni o bonus del master diversi da quelli di questa scheda? */
+function masterIntervenuto(id, testoRemoto) {
+  const p = archivio.carica(id);
+  if (!p) return false;
+  try {
+    const locale = fileEsportazione(normalizza(p.scelte, stato.dati).scelte, p.livelli ?? [], p.sessione ?? null, normalizzaCalendario(p.calendario, stato.dati), p.pg ?? null).testo;
+    return masterDiverso(JSON.parse(testoRemoto), JSON.parse(locale));
+  } catch { return false; }
+}
+
 /** Indicatore «Salvato sul PC del master alle hh:mm» della scheda aperta, o null senza server. */
 function indicatoreSalvataggio(id) {
   const p = id ? archivio.carica(id) : null;
@@ -656,6 +676,8 @@ async function ricaricaDaCartella(v = null) {
   stato.calendario = normalizzaCalendario(ora.calendario, stato.dati);
   // «Annulla» riporterebbe i valori di prima del master
   stato.precedenteTavolo = null;
+  // modalità master: ciò che arriva dalla cartella non è una modifica del master da registrare
+  stato.masterVisto = null;
   stato.collegamento.conflitto = null;
   const diff = differenzeSessione(prima, stato.sessione, nomeStato);
   stato.messaggioScheda = { tipo: 'ok', testo: `Il master ha aggiornato la tua scheda${diff.length ? `: ${diff.join('; ')}` : ''}.` };
@@ -676,6 +698,12 @@ async function apriConflitto() {
     return;
   }
   if (!v || id !== stato.id) return;
+  // «Modifica master» (12/10): se nel file ci sono modifiche del master che questa scheda non ha, non si sceglie: la
+  // scheda prende la versione del master (un tablet con dati vecchi non la sovrascrive)
+  if (masterIntervenuto(id, v.testo)) {
+    if (await ricaricaDaCartella(v)) { stato.messaggioScheda = { tipo: 'attenzione', testo: 'Il master ha modificato la tua scheda mentre la stavi cambiando: è stata aggiornata con la sua versione. Controlla i valori e rifai l’ultima modifica, se serve.' }; if (inScheda()) renderScheda({ mantieniScorrimento: true }); }
+    return;
+  }
   clearTimeout(attesaCartella.get(id));
   attesaCartella.delete(id);
   const c = stato.collegamento.conflitto;
@@ -882,7 +910,7 @@ function rigaPersonaggio(p, origine = 'browser') {
  * sincronizzano browser e cartella (vince il più recente), poi si apre la copia del browser; se il
  * personaggio è solo nella cartella lo si porta nel browser.
  */
-async function apriDaCartella(r, { dalTavolo = false, dallaMappa = null } = {}) {
+async function apriDaCartella(r, { dalTavolo = false, dallaMappa = null, master = false } = {}) {
   try {
     await sincronizzaCartella();
     const locale = elencoUnito(archivio.elenco(), [r]).find((x) => x.origine === 'entrambi')?.voce ?? null;
@@ -897,6 +925,8 @@ async function apriDaCartella(r, { dalTavolo = false, dallaMappa = null } = {}) 
     const p = archivio.carica(id);
     // aperta dalla plancia: la scheda mostra «← Torna al tavolo» (anche dopo F5)
     if (dalTavolo) segnaDalTavolo(sessionStorage, id, window.scrollY);
+    // «Modifica master» dal Tavolo: la scheda si apre in modalità master; «Apri» la apre come sempre
+    if (master && stato.master) segnaModalitaMaster(sessionStorage, id); else esciModalitaMaster(sessionStorage);
     // aperta dalla mappa di battaglia: «Torna alla mappa» riporta alla scena, allo zoom e alla posizione di prima
     if (dallaMappa) segnaDallaMappa(sessionStorage, { scena: dallaMappa.scena, id, vista: dallaMappa.vista });
     vai(p.passo === PASSO_SCHEDA ? `#/p/${id}` : `#/p/${id}/${p.passo ?? 0}`);
@@ -1368,6 +1398,143 @@ function vaiTab(id) {
   window.scrollTo(0, 0);
 }
 
+// ---------------------------------------------------------------------------
+// «Modifica master» (12/10/2026, src/correzioni-master.js)
+
+const istantaneaMaster = () => ({ id: stato.id, sessione: stato.sessione, equip: stato.scelte.equipaggiamento,
+  scelte: JSON.stringify(soloSenzaOggetti()), testo: fileEsportazione(stato.scelte, stato.livelli, stato.sessione, stato.calendario, archivio.carica(stato.id)?.pg ?? null).testo,
+  personaggio: structuredClone({ creazione: stato.scelte, livelli: stato.livelli }) });
+/** Le scelte del personaggio senza i blocchi del master e senza gli oggetti (che hanno le loro righe nel registro). */
+function soloSenzaOggetti(p = { creazione: stato.scelte, livelli: stato.livelli }) {
+  const s = soloScelte(p);
+  const { equipaggiamento: _e, ...creazione } = s.creazione;
+  return { creazione, livelli: s.livelli };
+}
+const correzioniAttuali = () => stato.scelte.correzioniMaster ?? [];
+function scriviCorrezioni(lista) { stato.scelte = { ...stato.scelte, correzioniMaster: lista }; }
+
+/**
+ * In modalità master ogni modifica entra nel registro: a ogni ridisegno la scheda confronta i valori «a mano» (Crediti,
+ * Punti Eroe, Ferite, quantità degli oggetti…) e le scelte (creazione e livelli) con quelli visti l'ultima volta. Per le
+ * scelte salva prima una copia del file (backup-master/ sul PC del master), che «Annulla» rimette.
+ */
+function registraModificheMaster() {
+  const prima = stato.masterVisto?.id === stato.id ? stato.masterVisto : null;
+  if (!prima) { stato.masterVisto = istantaneaMaster(); return; }
+  const dati = stato.dati;
+  const nomi = {
+    ferite: (n) => descriviFerite(n, dati).nome,
+    affaticamento: (n) => dati.regole.affaticamento?.stati?.[n]?.nome ?? String(n),
+    corruzione: (n) => dati.regole.corruzione?.stati?.[n]?.nome ?? String(n),
+    stato: nomeStato,
+  };
+  const cat = catalogo(dati);
+  const dirette = [...differenzeDirette(prima.sessione, stato.sessione, nomi), ...differenzeOggetti(prima.equip, stato.scelte.equipaggiamento, (v) => risolvi(v, cat).nome)];
+  const scelteOra = JSON.stringify(soloSenzaOggetti());
+  const scelteCambiate = scelteOra !== prima.scelte;
+  if (!dirette.length && !scelteCambiate) return;
+  let lista = correzioniAttuali();
+  for (const d of dirette) lista = registraDiretta(lista, d, { motivo: stato.masterMotivo ?? '' });
+  stato.masterMotivo = null;
+  let attesa = null;
+  if (scelteCambiate) {
+    const descr = descriviScelte(soloSenzaOggetti(prima.personaggio), soloSenzaOggetti(), (v) => { try { return [descriviVoce(v, dati)].flat().map(String); } catch { return ['scelte del livello']; } }) ?? 'Scelte del personaggio';
+    const riga = nuovaCorrezione({ chiave: 'scelte', etichetta: descr, tipo: 'scelta' });
+    lista = aggiungiCorrezione(lista, riga);
+    // la copia del file com'era prima: «Annulla» rimette le scelte da lì
+    attesa = { id: stato.id, riga: riga.id, nome: stato.scelte.nome, testo: prima.testo };
+  }
+  scriviCorrezioni(lista);
+  stato.masterVisto = istantaneaMaster();
+  persisti();
+  if (attesa) {
+    salvaBackupMaster(attesa.nome, attesa.testo).then((file) => {
+      if (stato.id !== attesa.id) return;
+      scriviCorrezioni(correzioniAttuali().map((x) => (x.id === attesa.riga ? { ...x, copia: file } : x)));
+      stato.masterVisto = istantaneaMaster();
+      persisti();
+      if (inScheda()) renderScheda({ mantieniScorrimento: true });
+    }).catch((e) => avvisoErrore(`Copia del file prima della modifica non salvata (${e.message}): la modifica resta nel registro, ma «Annulla» non potrà rimettere le scelte di prima.`));
+  }
+}
+
+/** Le azioni della modalità master per la scheda (ctx.master). */
+function azioniMaster() {
+  const ridisegna = () => renderScheda({ mantieniScorrimento: true });
+  const massimi = () => massimiAttuali();
+  return {
+    // correzione applicata dopo il calcolo («Aggiungi / togli N», «Imposta a N»)
+    correggi: ({ chiave, etichetta, tipo, numero, motivo }) => {
+      scriviCorrezioni(aggiungiCorrezione(correzioniAttuali(), nuovaCorrezione({ chiave, etichetta, tipo, numero, motivo })));
+      persisti();
+      ridisegna();
+    },
+    // valore «a mano» della sessione (Punti Eroe…) impostato dal master, con il motivo
+    diretta: ({ campo, valore, motivo }) => {
+      stato.masterMotivo = motivo || null;
+      stato.precedenteTavolo = { sessione: stato.sessione, calendario: stato.calendario };
+      stato.sessione = modificaSessione(stato.sessione, { [campo]: valore }, massimi());
+      persisti();
+      ridisegna();
+    },
+    // «gratis (dato dal DdG)» in Compra (S33): l'oggetto entra nell'Inventario senza scalare i crediti
+    gratis: (voce, nome) => {
+      const { scelte, avvisi } = applicaModifica(stato.scelte, { equipaggiamento: [...stato.scelte.equipaggiamento, voce] }, stato.dati);
+      stato.scelte = scelte;
+      scriviCorrezioni(aggiungiCorrezione(correzioniAttuali(), nuovaCorrezione({ chiave: `oggetto:${voce.uid}`, etichetta: `${nome}: gratis, dato dal DdG`, tipo: 'gratis', uid: voce.uid })));
+      stato.messaggioScheda = avvisi.length ? { tipo: 'attenzione', testo: avvisi.join(' ') } : { tipo: 'ok', testo: `${nome}: dato dal DdG, senza scalare i crediti.` };
+      stato.masterVisto = istantaneaMaster();
+      persisti();
+      ridisegna();
+    },
+    // bonus di circostanza mandato dal master: lo toglie solo il master
+    togliCircostanza: (id) => {
+      stato.scelte = { ...stato.scelte, circostanzeMaster: normalizzaCircostanzeMaster(stato.scelte.circostanzeMaster).filter((x) => x.id !== id) };
+      scriviCorrezioni(correzioniAttuali().map((x) => (x.tipo === 'circostanza' && x.circostanza === id && x.stato === 'attiva' ? { ...x, stato: 'annullata', annullataIl: new Date().toISOString() } : x)));
+      persisti();
+      ridisegna();
+    },
+    // «Annulla» di una riga del registro: non la cancella, la segna annullata e toglie l'effetto
+    annulla: async (id) => {
+      const lista = correzioniAttuali();
+      const x = lista.find((y) => y.id === id);
+      if (!x || x.stato !== 'attiva') return;
+      let avv = avvisoAnnulla(lista, id);
+      const rip = x.tipo === 'diretta' ? ripristinoDiretta(x, { sessione: stato.sessione, equipaggiamento: stato.scelte.equipaggiamento }) : null;
+      if (rip?.cambiato) avv = `${avv ? `${avv} ` : ''}Il valore è stato cambiato ancora dopo questa modifica: annullando torna a «${x.prima}».`;
+      let copia = null;
+      if (x.tipo === 'scelta') {
+        if (!x.copia) { avvisoErrore('Per questa modifica non c’è una copia del file: le scelte di prima non si possono rimettere da qui.'); return; }
+        try { copia = deserializzaPersonaggio(await leggiBackupMaster(x.copia)); } catch (e) { avvisoErrore(`Copia non letta: ${e.message}`); return; }
+      }
+      if (avv && !(await chiedi({ titolo: 'Annullare questa modifica?', testo: avv, si: 'Procedi comunque' }))) return;
+      if (copia) {
+        const r = ripristinaScelte({ creazione: stato.scelte, livelli: stato.livelli }, { creazione: normalizza(copia.creazione, stato.dati).scelte, livelli: copia.livelli ?? [] });
+        // gli oggetti restano quelli di adesso: le loro modifiche hanno le proprie righe
+        stato.scelte = normalizza({ ...r.creazione, equipaggiamento: stato.scelte.equipaggiamento }, stato.dati).scelte;
+        stato.livelli = r.livelli;
+      }
+      if (rip?.sessione) stato.sessione = modificaSessione(stato.sessione, { [rip.sessione.campo]: rip.sessione.valore }, massimi() ?? {});
+      if (rip?.oggetto || x.tipo === 'gratis') {
+        const o = rip?.oggetto ?? { uid: x.uid, azione: 'togli' };
+        const voci = stato.scelte.equipaggiamento;
+        const nuove = o.azione === 'quantita' ? voci.map((v) => (v.uid === o.uid ? { ...v, quantita: o.quantita } : v))
+          : o.azione === 'togli' ? voci.filter((v) => v.uid !== o.uid)
+            : voci.some((v) => v.uid === o.uid) ? voci : [...voci, o.voce];
+        stato.scelte = applicaModifica(stato.scelte, { equipaggiamento: nuove }, stato.dati).scelte;
+      }
+      if (x.tipo === 'circostanza') stato.scelte = { ...stato.scelte, circostanzeMaster: normalizzaCircostanzeMaster(stato.scelte.circostanzeMaster).filter((y) => y.id !== x.circostanza) };
+      scriviCorrezioni(annullaCorrezione(stato.scelte.correzioniMaster, id));
+      // ciò che l'annullamento rimette non è una nuova modifica da registrare
+      stato.masterVisto = istantaneaMaster();
+      stato.precedenteTavolo = null;
+      persisti();
+      ridisegna();
+    },
+    esci: () => { esciModalitaMaster(sessionStorage); stato.masterVisto = null; ridisegna(); },
+  };
+}
+
 function renderScheda({ mantieniScorrimento = false } = {}) {
   nascondiTooltip();
   const y = window.scrollY;
@@ -1398,6 +1565,9 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
     stato.sessione = allineata;
     persisti();
   }
+  // «Modifica master» (12/10/2026): la scheda aperta dal Tavolo con «Modifica master», sul PC del server
+  const inMaster = modalitaMaster({ server: stato.cartella, daQuestoPc: stato.master, aperta: modalitaMasterDi(sessionStorage), id: stato.id });
+  if (inMaster) registraModificheMaster(); else stato.masterVisto = null;
   const richiesta = ALIAS_TAB[stato.tab] ?? stato.tab;
   const attiva = tab.tab.some((t) => t.id === richiesta) ? richiesta : 'identita';
   const impostazioni = archivio.leggiImpostazioni();
@@ -1470,6 +1640,11 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
     messaggio: messaggio ?? (stato.salvataggioOk ? null : { tipo: 'errore', testo: testoSalvataggioFallito() }),
     passi: { background: 0, equipaggiamento: PASSO_EQUIPAGGIAMENTO },
     ui: stato.ui,
+    // S1: il tasto MUTANT con il server solo sul PC del master
+    marchio: mostraMarchio({ server: stato.cartella, daQuestoPc: stato.master }),
+    // «Modifiche del master» (tab Identità): tutti lo leggono; in modalità master si annulla
+    registroMaster: registroMaster(stato.scelte.correzioniMaster),
+    master: inMaster ? azioniMaster() : null,
     azioni: {
       vaiTab,
       // 08/10: «Muovi il PG sulla mappa» (riquadro «Scontro in corso»): la vista tablet della scena dello scontro, con il PG

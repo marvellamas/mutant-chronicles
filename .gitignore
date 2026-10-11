@@ -76,3 +76,8 @@ avvisi/registro.txt
 
 # Copie di sicurezza dei dati locali fatte dall'aggiornamento da zip (distribuzione/aggiorna-da-zip.ps1, 09/10)
 backup-prima-aggiornamento/
+
+# Copie del file di un PG prima di una «Modifica master» alle sue scelte (server.mjs → /api/backup-master, 12/10):
+# dati di gioco, con rotazione; si traccia solo il LEGGIMI
+backup-master/*
+!backup-master/LEGGIMI.txt

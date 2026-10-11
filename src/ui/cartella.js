@@ -3,6 +3,10 @@
 // localStorage più export e import.
 
 let disponibile = null; // null: non ancora chiesto
+// «Modifica master» (12/10): la pagina è aperta sul PC dove gira il server? Lo dice il server in /api/ping («master»)
+let master = false;
+/** Contesto master: questa pagina è sul PC del server (mai un tablet in rete). Vale dopo serverCartella(). */
+export const contestoMasterQui = () => disponibile === true && master;
 
 /**
  * C'è il server della cartella? Prima una HEAD su versione.json, che c'è con qualunque server statico: solo
@@ -20,6 +24,7 @@ export async function serverCartella() {
     clearTimeout(t);
     const j = r.ok ? await r.json() : null;
     disponibile = j?.ok === true && j.app === 'mutant';
+    master = disponibile && j.master === true;
   } catch {
     disponibile = false;
   }
@@ -73,4 +78,19 @@ export async function scriviCartella(file, testo, { mtime } = {}) {
   // riquadro «Il master ha aggiornato» non si apre; il messaggio del server dice che cosa fare
   if (!r.ok) throw Object.assign(new Error(j.errore ?? `errore ${r.status}`), { conflitto: r.status === 409 && !j.altroPersonaggio, altroPersonaggio: !!j.altroPersonaggio });
   return j;
+}
+
+/** «Modifica master»: salva una copia del file del PG prima di cambiarne le scelte (solo dal PC del master) → nome della copia. */
+export async function salvaBackupMaster(nome, testo) {
+  const r = await fetch('api/backup-master', { method: 'POST', body: JSON.stringify({ nome, testo }), headers: { 'Content-Type': 'application/json' } });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.errore ?? `errore ${r.status}`);
+  return j.file;
+}
+
+/** «Modifica master»: il testo di una copia salvata, per «Annulla» di una modifica di scelta. */
+export async function leggiBackupMaster(file) {
+  const r = await fetch(`api/backup-master/${encodeURIComponent(file)}`, { cache: 'no-store' });
+  if (!r.ok) throw new Error((await r.json().catch(() => ({}))).errore ?? `errore ${r.status}`);
+  return r.text();
 }

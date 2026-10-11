@@ -1,6 +1,7 @@
 // Modello delle scelte del giocatore: stato iniziale, invalidazione a valle, anteprima dei
 // valori derivati, serializzazione. Tutto ciò che è calcolato si ricava da calc.js: qui non
 // si conservano mai valori derivati.
+import { normalizzaCorrezioni, normalizzaCircostanzeMaster } from './correzioni-master.js';
 import {
   validaScelte, modOrdinario, modSalvezza, salvezza, puntiVita, puntiMagiaCreazione, iniziativa,
   bonusAvanzamentoSalvezze,
@@ -83,6 +84,11 @@ export function nuoveScelte() {
     // personaggio): [{ uid, profilo | scheda, nome, gruppo, conducente, andatura, pi, rinforzi, nec, avarie }]
     // (src/veicoli.js). Nel file solo se non vuoto: i personaggi senza veicoli restano identici.
     veicoli: [],
+    // «Modifica master» (12/10/2026, src/correzioni-master.js): registro delle modifiche del DdG, con le correzioni che
+    // il motore applica dopo il calcolo, e bonus di circostanza mandati dal Tavolo. Nel file stanno a parte
+    // (`correzioni_master`, `circostanze_master`), scritti solo se non vuoti.
+    correzioniMaster: [],
+    circostanzeMaster: [],
   };
 }
 
@@ -214,6 +220,8 @@ export function normalizza(scelteIn, dati) {
   // Equipaggiamento §7.1: il costo UMN si registra all'installazione e non si restituisce
   s.umanita = registraInstallazioni(s.umanita, s.equipaggiamento, dati, avvisi);
   s.veicoli = dati.veicoli ? normalizzaVeicoli(s.veicoli, dati, avvisi) : (Array.isArray(s.veicoli) ? s.veicoli : []);
+  s.correzioniMaster = normalizzaCorrezioni(s.correzioniMaster);
+  s.circostanzeMaster = normalizzaCircostanzeMaster(s.circostanzeMaster);
   // Anagrafica: facoltativa; i personaggi salvati prima l'hanno vuota.
   for (const { campo } of CAMPI_ANAGRAFICA) {
     if (typeof s[campo] !== 'string') s[campo] = '';
@@ -461,6 +469,11 @@ export function serializza(scelte, { versioniDati, livelli, sessione, calendario
   if (pulite.dotazione === null) delete pulite.dotazione;
   if (pulite.umanita === null) delete pulite.umanita;
   if (!Array.isArray(pulite.veicoli) || !pulite.veicoli.length) delete pulite.veicoli;
+  // i blocchi del master stanno a parte, fuori dalle scelte (e solo se non vuoti: i file di prima restano identici)
+  const correzioni = normalizzaCorrezioni(pulite.correzioniMaster);
+  const circostanze = normalizzaCircostanzeMaster(pulite.circostanzeMaster);
+  delete pulite.correzioniMaster;
+  delete pulite.circostanzeMaster;
   if (!Object.keys(pulite.parametriTalenti ?? {}).length) delete pulite.parametriTalenti;
   const file = { formato: FORMATO_FILE, versione: VERSIONE_FORMATO };
   // identificativo del personaggio (nuovoPg): scritto solo se c'è, così i file di prima restano identici
@@ -471,6 +484,8 @@ export function serializza(scelte, { versioniDati, livelli, sessione, calendario
   if (Array.isArray(livelli) && livelli.length) file.livelli = livelli;
   if (isOggetto(sessione)) file.sessione = sessione;
   if (isOggetto(calendario)) file.calendario = calendario;
+  if (correzioni.length) file.correzioni_master = correzioni;
+  if (circostanze.length) file.circostanze_master = circostanze;
   return JSON.stringify(file, null, 2);
 }
 
@@ -513,5 +528,10 @@ export function deserializza(testo) {
   if (!isOggetto(scelte) || !CAMPI.some((k) => k in scelte)) throw new Error('Il file non contiene le scelte di un personaggio.');
   const out = {};
   for (const k of CAMPI) if (k in scelte) out[k] = scelte[k];
+  // «Modifica master»: nel file i blocchi stanno a parte; in memoria viaggiano con le scelte, così ogni calcolo li ha
+  if (obj.formato === FORMATO_FILE) {
+    out.correzioniMaster = normalizzaCorrezioni(obj.correzioni_master);
+    out.circostanzeMaster = normalizzaCircostanzeMaster(obj.circostanze_master);
+  }
   return { ...nuoveScelte(), ...out };
 }

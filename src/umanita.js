@@ -13,6 +13,7 @@
 //   registrati prima, senza uid, restano con un avviso (TODO(Davide) A.111).
 // - A.69: interventi su un impianto (installazione, rimozione, reinstallazione) con clinica o personaggio:
 //   tempi, tariffe, Prova ed esiti da regole.json → impianti.procedure.
+import { applicaCorrezioni } from './correzioni-master.js';
 import { riga, provenienza } from './provenienza.js';
 import { catalogo, risolvi } from './equipaggiamento.js';
 
@@ -93,6 +94,10 @@ export function umanita(scelte, dati) {
     ...recuperi.map((x) => (x.legacy ? riga('Recupero concesso dal Direttore (prima della procedura)', x.punti, x.nota || 'A.111')
       : riga(`Riabilitazione: ${perdite.find((p) => p.uid === x.uid)?.nome ?? 'impianto'}`, x.riconsumato ? 0 : x.punti, x.riconsumato ? 'impianto reinstallato: recupero riconsumato (A.69)' : x.nota || 'A.70'))),
   ];
+  // «Modifica master»: la correzione entra nel conto come una riga, prima dei limiti (minimo e massimo del §5.21)
+  const daRegole = righe.reduce((s, x) => s + x.valore, 0);
+  const cm = applicaCorrezioni(daRegole, scelte?.correzioniMaster, 'umanita');
+  righe.push(...cm.righe);
   const grezzo = righe.reduce((s, x) => s + x.valore, 0);
   const valore = Math.min(R.massimo, Math.max(R.minimo, grezzo));
   if (valore !== grezzo) righe.push(riga(valore < grezzo ? `massimo ${R.massimo}` : `minimo ${R.minimo}`, valore - grezzo, 'Giocatore §5.21'));
@@ -109,6 +114,7 @@ export function umanita(scelte, dati) {
     perdite, recuperi, frasi: R.frasi ?? [],
     avvisi: recuperi.some((x) => x.legacy) ? [`Recuperi registrati prima della procedura di Riabilitazione, senza una rimozione: restano nel calcolo, da confermare con Davide (A.111).`] : [],
     provenienza: provenienza(righe, valore),
+    ...(cm.righe.length ? { calcolato: Math.min(R.massimo, Math.max(R.minimo, daRegole)), correzioniMaster: cm.righe } : {}),
   };
 }
 

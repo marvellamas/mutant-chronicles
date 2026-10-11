@@ -1,6 +1,7 @@
 // Tavolo del Master, pezzo 1 (docs/tavolo-direttore.md): i dati di una scheda compatta della plancia
 // a partire dal file di un personaggio in personaggi/. Funzione pura e nessun calcolo nuovo: valori
 // effettivi e provenienze vengono da calcolaScheda con la sessione del file, come nella scheda digitale.
+import { circostanzeMasterAttive } from './correzioni-master.js';
 import { testiTemporanei } from './temporanei.js';
 import { testoCircostanze } from './circostanze.js';
 import { deserializzaPersonaggio, normalizza, serializza, nomeFileEsportazione, nuovoPg, FORMATO_FILE, VERSIONE_FORMATO } from './character.js';
@@ -62,6 +63,8 @@ export function vistaPlancia(testo, dati, file = null, round = null) {
     stati: (r.stati?.elenco ?? []).filter((s) => (sessione.statiAttivi ?? []).includes(s.id)).map((s) => ({ id: s.id, nome: s.nome })),
     // modificatori temporanei di Caratteristica e circostanze del Direttore (playtest del 05/10/2026)
     modificatori: [...testiTemporanei(sessione, dati), ...testoCircostanze(sessione, dati)],
+    // S11: bonus di circostanza mandati dal master (src/correzioni-master.js), che solo lui toglie
+    circostanzeMaster: circostanzeMasterAttive(scelte.circostanzeMaster),
     // armi in mano (attive), con VA e danno effettivi e la provenienza, come nei riquadri delle mani della SD
     armi: (eq.armi ?? []).filter((a) => !a.daScudo).map((a) => ({
       uid: a.uid, nome: a.nome, moduloDi: a.moduloDi ?? null, rotta: !!a.rotta,
