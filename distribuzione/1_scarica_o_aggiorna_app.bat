@@ -93,7 +93,11 @@ rmdir /s /q "%LAVORO%" 2>nul
 
 echo.
 echo  Fatto: l'app e' nella cartella "mutant", accanto a questo file.
-echo  Adesso fai doppio clic su 3_avvia.bat
+rem Riavvio del server dopo l'aggiornamento (13/10/2026, tools\riavvia.mjs): se Mutant era acceso lo spegne
+rem salvando e lo riaccende con la versione nuova; se era spento lo lascia spento e lo dice qui sotto.
+where node >nul 2>nul
+if not errorlevel 1 if exist "%DEST%\tools\riavvia.mjs" node "%DEST%\tools\riavvia.mjs" --radice="%DEST%"
+echo  Se Mutant non e' ripartito da solo: doppio clic su 3_avvia.bat
 echo  (se Node.js non e' ancora installato, prima fai doppio clic su 2_installa_node.bat).
 echo.
 pause

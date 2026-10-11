@@ -31,9 +31,14 @@ if not exist "config-salvataggi.json" if exist "config-salvataggi.esempio.json" 
 rem File dell'app spariti (per esempio messi in quarantena dall'antivirus, 09/10): si rimettono dalla copia di Git
 for %%F in (Mutant.bat avvia-server.bat salva-sessione.bat crea-collegamento.bat avvia.bat server.mjs) do if not exist "%%F" git checkout -- "%%F" >nul 2>nul && echo  Rimesso il file mancante %%F
 
+rem Riavvio del server dopo l'aggiornamento (13/10/2026, tools\riavvia.mjs): se Mutant era acceso lo spegne
+rem salvando (come "Spegni Mutant") e lo riaccende con la versione nuova; se era spento lo lascia spento; se
+rem l'aggiornamento non ha cambiato niente non lo tocca. La porta la legge dall'ambiente (MUTANT_PORTA o PORTA).
 echo.
-echo  Fatto: Mutant e' aggiornato. Adesso apri Mutant.bat (o il collegamento Mutant del desktop)
-echo  e scegli 1; se il server era gia' acceso, chiudi la sua finestra nera e riaccendilo.
+echo  Fatto: Mutant e' aggiornato.
+if exist "tools\riavvia.mjs" node tools\riavvia.mjs
+echo.
+echo  Se Mutant non e' acceso: apri Mutant.bat (o il collegamento del desktop) e scegli 1.
 echo.
 pause
 exit /b 0
