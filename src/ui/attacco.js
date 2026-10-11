@@ -1,5 +1,6 @@
 // Pannello «Attacca!» della tab Combattimento (backlog voce 5). Le regole stanno in src/attacco.js;
-// qui solo la presentazione: passi con gruppi di pulsanti e interruttori (niente menu a tendina),
+// qui solo la presentazione, sintetica dal 13/10/2026 (S17, S20, S21: src/attacco-sintesi.js): in alto Arma, Modalità,
+// Distanza e Risultato, sotto «Altro ▾» con tutto il resto; gruppi di pulsanti e interruttori (niente menu a tendina),
 // risultato con la provenienza del VA (src/provenienza.js), «Spara» (a distanza) o «Attacca» (corpo a corpo e senz'armi). Nessun tiro di dado: al tavolo si tira a mano. Le scelte
 // si ricordano per ogni arma nella sessione (sessione → attacchi). Impianto del pannello e
 // componenti comuni in src/ui/pannello-passi.js (telefono: un passo per schermata; da 800 px le
@@ -12,16 +13,16 @@ import {
   calcolaAttaccoDistanza, vincoliDistanza, dichiarazioneDistanza, richiedeImbracciatura, talentiAttacco, descriviModalita, descriviManovraDistanza,
   calcolaAttaccoRavvicinato, vincoliRavvicinato, dichiarazioneRavvicinato, manovreRavvicinate, descriviManovraRavvicinata,
   modificatoriDistanza, vaDueArmi, effettiSituazionaliAttacco, fasciaCarica,
-  ESITI_ATLETICA, conProvaAtletica, penalitaMovimento, esitoAtletica,
+  ESITI_ATLETICA, conProvaAtletica, penalitaMovimento, esitoAtletica, senzArmiDisponibile, SENZ_ARMI,
 } from '../attacco.js';
 import { specTiro, tira } from '../tiri.js';
-import { riquadroDanno, rigaScelte, interruttore, pannelloPassi } from './pannello-passi.js';
+import { riquadroDanno, rigaScelte, interruttore, pannelloSintetico, pulsanteCommuta } from './pannello-passi.js';
+import { armiDelPannello, fasceDistanza, fasciaDi, mirato as datiMirato, vociAttive, vociAttiveConMappa, sceltePerScontro, conScontro } from '../attacco-sintesi.js';
+import { informa } from './finestrella.js';
 import { selettoreLuce } from './tab.js';
 import { avviso } from './avvisi.js';
 
-const PASSI = ['Il tuo movimento', 'Il bersaglio', 'Distanza', 'Tipo di tiro', 'Risultato'];
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
-const RAPIDE = [3, 10, 20, 40, 80, 160, 300, 500, 750, 1000, 1500];
 
 /**
  * Caselle degli effetti situazionali degli oggetti sul tiro o sul danno (Braccio potenziato, Equipaggiamento
@@ -89,12 +90,62 @@ function movimentoDallaMappa(ctx, a, stato, salvate) {
  * S22: i valori di questo attacco arrivati dalla mappa (linea di tiro, movimento del Round), ognuno con «✕» per
  * toglierlo e tornare al valore a mano. Compare solo se la scena dello scontro non è in «Mappa semplice».
  */
-function rigaDallaMappa(ctx, a, salvate) {
-  const voci = vociDallaMappa(salvate);
+function rigaDallaMappa(ctx, a, salvate, campi = null) {
+  const voci = vociDallaMappa(salvate).filter((v) => !campi || campi.includes(v.campo));
   if (!voci.length) return null;
   return h('p', { class: 'nota dalla-mappa', role: 'group', 'aria-label': 'Valori arrivati dalla mappa' }, h('strong', {}, 'Dalla mappa: '),
     voci.map((v) => h('button', { type: 'button', class: 'etichetta etichetta-mappa', title: 'Arrivato dalla mappa: tocca per toglierlo e metterlo a mano',
-      onclick: () => { if (v.campo === 'luce') ctx.azioni.imposta?.('luce', 'sufficiente'); ctx.azioni.ricordaAttacco(a.uid, togliDallaMappa(salvate, v.campo)); } }, `${v.testo} ✕`)));
+      onclick: () => { if (v.campo === 'luce') ctx.azioni.imposta?.('luce', 'sufficiente'); ctx.azioni.ricordaAttacco(a.uid, togliDallaMappa(salvate, v.campo)); } }, `${v.testo.replace(/^distanza /, '')} ✕`)));
+}
+
+/**
+ * S17: l'arma del pannello, quella impugnata già scelta; un tocco su un'altra arma in mano (o «Senz'armi») cambia. Le
+ * mani come nei riquadri del Combattimento. Per i nemici (plancia) l'attacco si sceglie prima del pannello: solo il nome.
+ */
+function rigaArma(ctx, a, stato) {
+  if (a.esterno) return h('p', { class: 'arma-pannello' }, h('span', { class: 'scelta-titolo' }, 'Arma '), h('strong', {}, a.nome));
+  const lista = armiDelPannello(ctx.tab.scheda.equipaggiamento?.armi, ctx.scelte?.equipaggiamento);
+  const voci = lista.map((x) => ({ valore: x.uid, etichetta: x.etichetta }));
+  if (senzArmiDisponibile(ctx.tab.scheda, ctx.dati) && !voci.some((x) => x.valore === SENZ_ARMI)) voci.push({ valore: SENZ_ARMI, etichetta: a.uid === SENZ_ARMI ? a.nome : 'Senz’armi' });
+  if (!voci.some((x) => x.valore === a.uid)) voci.unshift({ valore: a.uid, etichetta: a.nome });
+  return rigaScelte('Arma', voci, a.uid, (uid) => { if (uid === a.uid) return; ctx.ui.attacco = { uid, passo: 0, altro: stato.altro }; ctx.azioni.ridisegna(); }, { classe: 'scelta-arma' });
+}
+
+/**
+ * S17: le voci di «Altro» attive in questo attacco (anche arrivate dalla mappa), in una riga sopra «Altro ▾», ognuna con
+ * ✕ che la riporta al valore di partenza.
+ */
+function rigaAttive(ctx, a, salvate, voci, imposta) {
+  const tutte = vociAttiveConMappa(voci, vociDallaMappa(salvate));
+  if (!tutte.length) return null;
+  const togli = (v) => {
+    if (v.mappa && v.campo === 'luce') ctx.azioni.imposta?.('luce', 'sufficiente');
+    if (v.mappa) return ctx.azioni.ricordaAttacco(a.uid, togliDallaMappa(salvate, v.campo));
+    if (v.togli?.luce) return ctx.azioni.imposta?.('luce', (ctx.dati.regole.illuminazione?.livelli ?? []).find((x) => x.base)?.id ?? 'sufficiente');
+    return imposta(v.togli);
+  };
+  return h('p', { class: 'voci-attive', role: 'group', 'aria-label': 'Opzioni attive' }, h('strong', {}, 'Attive: '),
+    tutte.map((v) => h('button', { type: 'button', class: `etichetta voce-attiva${v.mappa ? ' etichetta-mappa' : ''}`, title: 'Tocca per toglierla', 'aria-label': `Togli: ${v.testo}`, onclick: () => togli(v) }, `${v.testo} ✕`)));
+}
+
+/** La luce sul bersaglio di adesso, per le voci attive: { id, nome, base }. */
+function luceAttuale(ctx) {
+  const L = ctx.dati.regole.illuminazione;
+  if (!L) return null;
+  const id = L.livelli.some((x) => x.id === ctx.sessione?.luce) ? ctx.sessione.luce : L.livelli.find((x) => x.base)?.id;
+  const liv = L.livelli.find((x) => x.id === id);
+  return liv ? { id, nome: liv.nome, base: !!liv.base } : null;
+}
+
+/** «Calcolo» del risultato (stile «Calcolo» delle Abilità): il conto del VA finale e i promemoria, in una finestrella. */
+function apriCalcoloAttacco(ctx, a, r) {
+  const contenuto = h('div', { class: 'calcolo-va calcolo-attacco' },
+    h('p', { class: 'tooltip-etichetta' }, 'Conto del VA'),
+    listaProvenienza(r.provenienza, 'VA finale'),
+    r.dopo_armatura?.length ? h('ul', { class: 'promemoria-attacco' }, r.dopo_armatura.map((x) => h('li', {}, x.testo))) : null,
+    r.promemoria?.length ? h('ul', { class: 'promemoria-attacco' }, r.promemoria.map((p) => h('li', {}, p))) : null,
+    promemoriaAR(ctx, a));
+  return informa({ titolo: `Calcolo: ${a.nome}`, contenuto, classe: 'finestrella-calcolo' });
 }
 
 /** Riga «Dalla mappa» sotto il movimento: fascia del Round, Passo diventato blocco, Q contati. */
@@ -166,10 +217,11 @@ export function pannelloAttacco(ctx, a) {
 function corpoRavvicinato(ctx, a, intestazione) {
   const R = ctx.dati.regole.attacco_ravvicinato;
   const personaggio = { scheda: ctx.tab.scheda, sessione: ctx.sessione };
-  // le scelte salvate contengono anche l’ultima Manovra: si conservano
-  const salvate = dallaMappa(ctx, a, ctx.sessione.attacchi?.[a.uid] ?? {});
+  // le scelte salvate contengono anche l’ultima Manovra: si conservano; si ricordano finché non cambia lo scontro (S17)
+  const scontro = ctx.roundScontro?.id ?? null;
+  const salvate = dallaMappa(ctx, a, sceltePerScontro(ctx.sessione.attacchi?.[a.uid] ?? {}, scontro));
   const d = dichiarazioneRavvicinato(salvate);
-  const imposta = (modifica) => ctx.azioni.ricordaAttacco(a.uid, { ...salvate, ...d, ...modifica, bersaglio: { ...d.bersaglio, ...(modifica.bersaglio ?? {}) }, dallaMappa: segniDopoModifica(salvate, modifica) });
+  const imposta = (modifica) => ctx.azioni.ricordaAttacco(a.uid, conScontro({ ...salvate, ...d, ...modifica, bersaglio: { ...d.bersaglio, ...(modifica.bersaglio ?? {}) }, dallaMappa: segniDopoModifica(salvate, modifica) }, scontro));
   const b = (modifica) => imposta({ bersaglio: modifica });
   const v = vincoliRavvicinato(personaggio, a, d, ctx.dati);
   const T = talentiAttacco(ctx.tab.scheda, ctx.dati, 'attacco_ravvicinato');
@@ -197,7 +249,6 @@ function corpoRavvicinato(ctx, a, intestazione) {
         { valore: 'fermo', etichetta: 'Fermo' }, { valore: 'passo', etichetta: 'Passo' }, { valore: 'corsa', etichetta: 'Corsa' }, { valore: 'scatto', etichetta: 'Scatto' },
       ], d.movimento, (x) => imposta({ movimento: x, atletica: null, atleticaTiro: null })),
       notaMappa(stato),
-      rigaDallaMappa(ctx, a, salvate),
       d.carica ? null : provaAtletica(ctx, d, stato, imposta),
       interruttore('Carica', d.carica, (x) => imposta({ carica: x, ...(x ? { controcarica: false, manovra: 'normale' } : {}) }),
         { motivo: d.carica ? v.carica : null, mod: `${carica ? numero(carica.va) : R.carica.fasce.map((f) => numero(f.va)).join('/')} · danno ×${molt}`, info: infoRegola('Carica', R.carica) }),
@@ -252,8 +303,9 @@ function corpoRavvicinato(ctx, a, intestazione) {
           h('span', { class: `fascia${d.bersaglio.distanza > v.portata ? ' malus' : ''}` }, d.bersaglio.distanza > v.portata ? 'oltre la portata' : d.bersaglio.distanza === 1 ? 'Contatto' : 'entro la portata')),
         h('div', { class: 'scelta-pulsanti' }, [...new Set([1, 2, 3, v.portata, 6])].sort((x, y) => x - y).map((q) => h('button', { type: 'button', class: `btn scelta-btn${d.bersaglio.distanza === q ? ' scelta' : ''}`, onclick: () => b({ distanza: q }) }, String(q))))),
     ] },
-    { titolo: 'Manovra', contenuto: [
-      rigaScelte('Manovra', Object.entries(v.manovre).filter(([, x]) => !x.nascosta).map(([id, x]) => ({
+    { titolo: 'Manovre', contenuto: [
+      // «Attacco normale» e «Colpo Mirato» stanno in cima, fra le modalità (S20): qui le altre
+      rigaScelte('Manovra', Object.entries(v.manovre).filter(([id, x]) => !x.nascosta && id !== 'normale' && id !== 'mirato').map(([id, x]) => ({
         valore: id, etichetta: manovreRavvicinate(ctx.tab.scheda, ctx.dati)[id].nome, motivo: x.motivo, ...descriviManovraRavvicinata(id, ctx.tab.scheda, ctx.dati),
       })), manovraScelta, (x) => imposta({ manovra: x })),
       // §5.12 (E&L 7–8): l'opposizione la sceglie il bersaglio prima del tiro
@@ -262,9 +314,16 @@ function corpoRavvicinato(ctx, a, intestazione) {
       mScelta?.va_per_bersagli ? rigaScelte(`Bersagli (${mScelta.nome})`, Object.keys(mScelta.va_per_bersagli).map(Number).map((n) => ({ valore: n, etichetta: `${n} bersagli`, riga: `${numero(vaBersagli(n))} VA${migB ? ` (${migB.nome})` : ''}` })), d.bersagli, (x) => imposta({ bersagli: x })) : null,
       a.senzArmi ? h('p', { class: 'nota' }, `Danno senz’armi: ${a.danno.una_mano} (${a.dannoOrigine === 'base' ? `base ${a.dannoBase}` : `${a.dannoBase}, ${a.dannoOrigine}`}${a.bonusCaratteristica?.bonus ? `, ${a.bonusCaratteristica.sigla} ${a.bonusCaratteristica.bonus > 0 ? '+' : ''}${a.bonusCaratteristica.bonus}` : ''}; §5.13).`) : null,
     ] },
-    { titolo: 'Risultato', contenuto: risultatoRavvicinato(ctx, a, r) },
   ];
-  return pannelloPassi({ ...intestazione, passi, stato, ridisegna: ctx.azioni.ridisegna });
+  // S20: in cima «Attacco normale» e «Colpo Mirato» (la Manovra di sempre, §5.12), affiancati
+  const nomiManovre = Object.fromEntries(Object.keys(v.manovre).map((id) => [id, manovreRavvicinate(ctx.tab.scheda, ctx.dati)[id]?.nome ?? id]));
+  const veloci = ['normale', 'mirato'].filter((id) => v.manovre[id] && !v.manovre[id].nascosta);
+  const modalita = rigaScelte('Modalità', veloci.map((id) => ({
+    valore: id, etichetta: id === 'mirato' ? datiMirato(a, ctx.dati).nome : nomiManovre[id], motivo: v.manovre[id].motivo, ...descriviManovraRavvicinata(id, ctx.tab.scheda, ctx.dati),
+  })), manovraScelta, (x) => imposta({ manovra: x }), { classe: 'scelta-modalita' });
+  const nomiOggetti = Object.fromEntries(effettiSituazionaliAttacco(ctx.tab.scheda, 'ravvicinati', { senzArmi: !!a.senzArmi }).map((x) => [x.uid, x.oggetto]));
+  const attive = rigaAttive(ctx, a, salvate, vociAttive('ravvicinato', d, { nomiManovre, nomiOggetti, luce: luceAttuale(ctx), dati: ctx.dati }), imposta);
+  return pannelloSintetico({ ...intestazione, arma: rigaArma(ctx, a, stato), modalita, risultato: risultatoRavvicinato(ctx, a, r), attive, altro: passi, stato, ridisegna: ctx.azioni.ridisegna });
 }
 
 /** Tooltip di una regola del blocco attacco_ravvicinato: titolo, paragrafo e frasi del manuale. */
@@ -278,21 +337,20 @@ function risultatoRavvicinato(ctx, a, r) {
     r.impossibile ? h('div', { class: 'riquadro errore', role: 'alert' }, h('p', {}, h('strong', {}, 'Attacco non possibile. '), r.impossibile.motivo)) : null,
     r.avvisi.length ? h('div', { class: 'riquadro attenzione' }, r.avvisi.map((x) => h('p', {}, x))) : null,
     h('div', { class: 'attacco-risultato' },
-      riquadroDanno([r.danno?.testo ? { valore: r.danno.testo, dettagli: [r.danno.natura, r.danno.testo_magistrale ? `Magistrale ${r.danno.testo_magistrale}` : null] } : null]),
-      h('p', { class: 'va-attacco' }, `${r.prova?.tipo === 'contrapposta' ? 'VA della Prova ' : 'VA finale '}`, pillola(a.nome, r.va_finale, r.provenienza),
-        h('small', { class: 'nota' }, ` · ${r.manovra?.nome ?? ''}`)),
+      h('div', { class: 'risultato-testa' },
+        h('p', { class: 'va-attacco' }, `${r.prova?.tipo === 'contrapposta' ? 'VA della Prova ' : 'VA finale '}`, pillola(a.nome, r.va_finale, r.provenienza)),
+        riquadroDanno([r.danno?.testo ? { valore: r.danno.testo, dettagli: [r.danno.natura, r.danno.testo_magistrale ? `Magistrale ${r.danno.testo_magistrale}` : null] } : null]),
+        h('button', { type: 'button', class: 'btn btn-piccolo btn-calcolo', title: 'Il conto del VA finale e i promemoria', onclick: () => apriCalcoloAttacco(ctx, a, r) }, 'Calcolo')),
       r.attacchi.length > 1 ? h('ul', { class: 'promemoria-attacco' }, r.attacchi.map((x) => h('li', {}, `${x.etichetta}: VA ${numero(x.va)}${x.danno ? ` · danno ${x.danno} (della propria arma)` : ''}`))) : null,
-      h('div', { class: 'provenienza-attacco' }, listaProvenienza(r.provenienza, 'VA finale')),
-      h('dl', { class: 'voci griglia-voci' },
+      h('dl', { class: 'voci griglia-voci voci-risultato' },
+        h('div', {}, h('dt', {}, 'Manovra'), h('dd', {}, r.manovra?.nome ?? '—')),
         h('div', {}, h('dt', {}, 'Azioni'), h('dd', {}, r.azioni_principali ? `${r.azioni_principali} ${r.azioni_principali === 1 ? 'Principale' : 'Principali'}` : 'nessuna (gratuito)', r.azioni_movimento ? ` + ${r.azioni_movimento} di Movimento` : '')),
         h('div', {}, h('dt', {}, 'Bersaglio'), h('dd', {}, r.prova?.testo ?? '—')),
         // il danno da tirare sta in evidenza in cima (riquadroDanno); qui solo quando non c'è
         r.danno?.testo ? null : h('div', {}, h('dt', {}, 'Danno'), h('dd', {}, r.danno === null ? 'nessuno' : 'da definire')),
         r.dopo_armatura.length ? h('div', {}, h('dt', {}, 'Dopo l’Armatura'), h('dd', {}, r.dopo_armatura.map((x) => x.etichetta).join(' · '), h('small', { class: 'nota' }, ' (solo se almeno 1 danno la supera)'))) : null,
         r.effetti.length ? h('div', {}, h('dt', {}, 'Effetti'), h('dd', {}, r.effetti.join(' '))) : null),
-      r.dopo_armatura.length ? h('ul', { class: 'promemoria-attacco' }, r.dopo_armatura.map((x) => h('li', {}, x.testo))) : null,
-      r.promemoria.length ? h('ul', { class: 'promemoria-attacco' }, r.promemoria.map((p) => h('li', {}, p))) : null,
-      promemoriaAR(ctx, a),
+      a.rotta ? h('div', { class: 'riquadro attenzione' }, h('p', {}, h('strong', {}, `${a.nome} è Rotta (0 PI): `), 'non può essere utilizzata finché non viene riparata (Armamenti §7.2.1).')) : null,
       // Tavolo del Master (pezzo 5): un attaccante esterno sostituisce la riga finale con tiro per colpire ed esito
       ctx.azioni.finale ? ctx.azioni.finale(r) : h('div', { class: 'attacco-azioni' },
         h('button', {
@@ -312,9 +370,11 @@ export function pillola(nome, va, provenienza) {
 
 function corpoDistanza(ctx, a, intestazione) {
   const personaggio = { scheda: ctx.tab.scheda, sessione: ctx.sessione };
-  const salvate = dallaMappa(ctx, a, ctx.sessione.attacchi?.[a.uid] ?? {});
+  // le scelte (modalità, distanza e il resto) si ricordano per quest'arma finché non cambia lo scontro (S17)
+  const scontro = ctx.roundScontro?.id ?? null;
+  const salvate = dallaMappa(ctx, a, sceltePerScontro(ctx.sessione.attacchi?.[a.uid] ?? {}, scontro));
   const d = dichiarazioneDistanza(salvate);
-  const imposta = (modifica) => ctx.azioni.ricordaAttacco(a.uid, { ...(salvate.luceMappa ? { luceMappa: salvate.luceMappa } : {}), ...d, ...modifica, bersaglio: { ...d.bersaglio, ...(modifica.bersaglio ?? {}) }, dallaMappa: segniDopoModifica(salvate, modifica) });
+  const imposta = (modifica) => ctx.azioni.ricordaAttacco(a.uid, conScontro({ ...(salvate.luceMappa ? { luceMappa: salvate.luceMappa } : {}), ...d, ...modifica, bersaglio: { ...d.bersaglio, ...(modifica.bersaglio ?? {}) }, dallaMappa: segniDopoModifica(salvate, modifica) }, scontro));
   const b = (modifica) => imposta({ bersaglio: modifica });
   const v = vincoliDistanza(personaggio, a, d, ctx.dati);
   const T = talentiAttacco(ctx.tab.scheda, ctx.dati);
@@ -347,7 +407,6 @@ function corpoDistanza(ctx, a, intestazione) {
         { valore: 'corsa', etichetta: `Corsa ${numero(MD.movimento.corsa)}${conTal(MD.talenti.movimento)}` }, { valore: 'scatto', etichetta: `Scatto ${numero(MD.movimento.scatto)}${conTal(MD.talenti.movimento)}` },
       ], d.movimento, (x) => imposta({ movimento: x, atletica: null, atleticaTiro: null, ...(x === 'fermo' ? { evasivo: false } : {}), ...(!['fermo', 'passo'].includes(x) ? { coperturaPropria: 'nessuna' } : {}) })),
       notaMappa(stato),
-      rigaDallaMappa(ctx, a, salvate),
       d.evasivo ? null : provaAtletica(ctx, d, stato, imposta),
       interruttore('Movimento Evasivo', d.evasivo, (x) => imposta({ evasivo: x }), { motivo: v.evasivo, mod: `AzM + AzP${evasivoProprio ? ` · ${numero(evasivoProprio)}` : ''}` }),
       rigaScelte('Attacco dalla Copertura (AzM)', [
@@ -393,25 +452,19 @@ function corpoDistanza(ctx, a, intestazione) {
     ],
     [
       h('div', { class: 'scelta-attacco scelta-distanza' },
-        h('label', { class: 'scelta-titolo', for: `dist-${a.uid}` }, 'Distanza in Q'),
+        h('label', { class: 'scelta-titolo', for: `dist-${a.uid}` }, 'Distanza esatta in Q (in cima ci sono le fasce a pulsanti)'),
         h('div', { class: 'distanza-riga' },
           h('input', {
             id: `dist-${a.uid}`, type: 'number', min: 1, step: 1, inputmode: 'numeric', value: d.distanza, class: 'input-distanza',
             onchange: (e) => { const n = Number(e.target.value); if (Number.isFinite(n) && n >= 1) imposta({ distanza: Math.round(n) }); },
           }),
           h('span', { class: `fascia${r.fascia.va ? ' malus' : ''}` }, `fascia fino a ${r.fascia.fino_a} Q: ${numero(r.fascia.va)}`),
-          a.gittataQ ? h('span', { class: 'nota' }, ` · gittata massima ${a.gittataQ} Q`) : null),
-        h('div', { class: 'scelta-pulsanti' }, RAPIDE.filter((q) => !a.gittataQ || q <= a.gittataQ).map((q) => h('button', {
-          type: 'button', class: `btn scelta-btn${d.distanza === q ? ' scelta' : ''}`, onclick: () => imposta({ distanza: q }),
-        }, `${q}`)))),
+          a.gittataQ ? h('span', { class: 'nota' }, ` · gittata massima ${a.gittataQ} Q`) : null)),
       a.esterno ? null : h('p', { class: 'nota' }, a.mirino
         ? `Mirino montato: ${a.mirino.nome} (riduce la penalità di ${a.mirino.riduzione}${a.mirino.distanza_max_q ? ` fino a ${a.mirino.distanza_max_q} Q` : ' entro la gittata'}${a.mirino.azp_minime > 1 ? `, almeno ${a.mirino.azp_minime} AzP` : ''}).`
         : 'Nessun mirino montato sull’arma (inventario).'),
     ],
     [
-      rigaScelte('Modalità', (a.modalita ?? []).filter((x) => x !== 'TM' && MF[x]).map((x) => ({ valore: x, etichetta: MF[x].nome, motivo: v.modalita[x], ...descriviModalita(x, ctx.dati, T) })),
-        d.modalita, (x) => imposta({ modalita: x, ...(ctx.dati.regole.attacco_distanza.modalita.manovre_ammesse[x]?.includes('mirato') ? {} : { mirato: false, ravvicinato: false, bruciapelo: false }) })),
-      interruttore(M.mirato.nome, d.mirato, (x) => imposta({ mirato: x }), { motivo: v.mirato, mod: man('mirato').riga, info: man('mirato').info }),
       d.distanza <= M.ravvicinato.distanza_max_q
         ? interruttore(`${M.ravvicinato.nome} (≤ ${M.ravvicinato.distanza_max_q} Q)`, d.ravvicinato || d.bersaglio.tiImpegna, (x) => imposta({ ravvicinato: x }),
           { motivo: d.bersaglio.tiImpegna ? 'obbligatorio: il bersaglio ti impegna' : v.ravvicinato, mod: man('ravvicinato').riga, info: man('ravvicinato').info }) : null,
@@ -422,10 +475,23 @@ function corpoDistanza(ctx, a, intestazione) {
         { valore: 'gia', etichetta: 'Già imbracciata' }, { valore: 'ora', etichetta: 'Imbraccio ora (1 AzM)' }, { valore: 'no', etichetta: `Senza ${numero(R.imbracciatura.va)}` },
       ], d.imbracciaOra ? 'ora' : d.imbracciata ? 'gia' : 'no', (x) => imposta({ imbracciata: x !== 'no', imbracciaOra: x === 'ora' })) : null,
     ],
-    risultato(ctx, a, r, colpi, imposta),
   ];
-
-  return pannelloPassi({ ...intestazione, passi: passi.map((contenuto, i) => ({ titolo: PASSI[i], contenuto })), stato, ridisegna: ctx.azioni.ridisegna });
+  // S20: le modalità dell'arma a pulsanti affiancati, con «Tiro Mirato» (§5.10) nella stessa fila; quelle che la regola
+  // non ammette restano toccabili, segnate ⚠ (N2)
+  const modalita = rigaScelte('Modalità', (a.modalita ?? []).filter((x) => x !== 'TM' && MF[x]).map((x) => ({ valore: x, etichetta: MF[x].nome, motivo: v.modalita[x], ...descriviModalita(x, ctx.dati, T) })),
+    d.modalita, (x) => imposta({ modalita: x, ...(ctx.dati.regole.attacco_distanza.modalita.manovre_ammesse[x]?.includes('mirato') ? {} : { mirato: false, ravvicinato: false, bruciapelo: false }) }),
+    { classe: 'scelta-modalita', accanto: pulsanteCommuta(datiMirato(a, ctx.dati).nome, d.mirato, (x) => imposta({ mirato: x }), { motivo: v.mirato, riga: man('mirato').riga, info: man('mirato').info }) });
+  // S21: le fasce di gittata dell'arma a pulsanti; se la distanza arriva dalla mappa, al loro posto «Dalla mappa: 8 Q ✕»
+  const fasce = fasceDistanza(a, ctx.dati);
+  const daMappa = rigaDallaMappa(ctx, a, salvate, ['distanza']);
+  const distanza = daMappa ?? rigaScelte(`Distanza${a.gittataQ ? ` (gittata ${a.gittataQ} Q)` : ''}`, fasce.map((f) => ({ valore: f.q, etichetta: f.etichetta, riga: f.riga })),
+    fasciaDi(d.distanza, fasce)?.q ?? null, (q) => imposta({ distanza: q }), { classe: 'scelta-fasce',
+      accanto: fasciaDi(d.distanza, fasce) && fasciaDi(d.distanza, fasce).q !== d.distanza ? h('small', { class: 'nota distanza-esatta' }, `esatta: ${d.distanza} Q`) : null });
+  const nomiOggetti = Object.fromEntries(effettiSituazionaliAttacco(ctx.tab.scheda, 'distanza', {}).map((x) => [x.uid, x.oggetto]));
+  const attive = rigaAttive(ctx, a, salvate, vociAttive('distanza', d, { nomiOggetti, luce: luceAttuale(ctx), dati: ctx.dati }), imposta);
+  const TITOLI = ['Il tuo movimento', 'Il bersaglio', 'Distanza esatta e mirino', 'Tiro Ravvicinato, Bruciapelo, Imbracciatura'];
+  return pannelloSintetico({ ...intestazione, arma: rigaArma(ctx, a, stato), modalita, distanza, risultato: risultato(ctx, a, r, colpi, imposta), attive,
+    altro: passi.map((contenuto, i) => ({ titolo: TITOLI[i], contenuto })), stato, ridisegna: ctx.azioni.ridisegna });
 }
 
 /**
@@ -441,7 +507,6 @@ function promemoriaAR(ctx, a) {
   const nomi = [...(a.proprieta ?? []).map((p) => String(p.nome ?? p)), ...(a.munizioneRiferimento?.proprieta ?? []).map(String)];
   const pertinente = !!o && o.proprieta.some((x) => nomi.some((n) => n.startsWith(x)));
   return [
-    a.rotta ? h('div', { class: 'riquadro attenzione' }, h('p', {}, h('strong', {}, `${a.nome} è Rotta (0 PI): `), 'non può essere utilizzata finché non viene riparata (Armamenti §7.2.1).')) : null,
     testo ? h('p', { class: 'nota promemoria-ar' }, h('strong', {}, 'Armatura del bersaglio: '), testo) : null,
     o ? h('details', { class: 'nota promemoria-ar' },
       h('summary', {}, 'Perforante, Laser, Incendiato: ordine delle riduzioni dell’AR (A.50)', pertinente ? h('strong', {}, ' · vale per quest’arma') : null),
@@ -466,21 +531,20 @@ function risultato(ctx, a, r, colpi, imposta) {
       r.impossibile.proposta ? h('button', { type: 'button', class: 'btn', onclick: () => imposta({ modalita: r.impossibile.proposta.modalita }) }, `Usa ${r.impossibile.proposta.nome}`) : null) : null,
     r.avvisi?.length ? h('div', { class: 'riquadro attenzione' }, r.avvisi.map((x) => h('p', {}, x))) : null,
     h('div', { class: 'attacco-risultato' },
-      riquadroDanno([r.danno_per_colpo ? { valore: r.danno_per_colpo, dettagli: [r.colpi_a_segno > 1 || r.applicazioni !== 1 ? 'per colpo' : null, r.applicazioni !== 1 ? `${r.applicazioni} applicazioni` : null,
-        r.danno_magistrale && r.danno_magistrale !== r.danno_per_colpo ? `Magistrale ${r.danno_magistrale}` : null] } : null]),
-      h('p', { class: 'va-attacco' }, 'VA finale ', pillola(a.nome, r.va_finale, r.provenienza), r.tiri > 1 ? h('span', { class: 'nota' }, ` · ${r.tiri} tiri, ciascuno con questo VA`) : null),
-      h('div', { class: 'provenienza-attacco' }, listaProvenienza(r.provenienza, 'VA finale')),
-      h('dl', { class: 'voci griglia-voci' },
+      h('div', { class: 'risultato-testa' },
+        h('p', { class: 'va-attacco' }, 'VA finale ', pillola(a.nome, r.va_finale, r.provenienza), r.tiri > 1 ? h('span', { class: 'nota' }, ` · ${r.tiri} tiri, ciascuno con questo VA`) : null),
+        riquadroDanno([r.danno_per_colpo ? { valore: r.danno_per_colpo, dettagli: [r.colpi_a_segno > 1 || r.applicazioni !== 1 ? 'per colpo' : null, r.applicazioni !== 1 ? `${r.applicazioni} applicazioni` : null,
+          r.danno_magistrale && r.danno_magistrale !== r.danno_per_colpo ? `Magistrale ${r.danno_magistrale}` : null] } : null]),
+        h('button', { type: 'button', class: 'btn btn-piccolo btn-calcolo', title: 'Il conto del VA finale e i promemoria', onclick: () => apriCalcoloAttacco(ctx, a, r) }, 'Calcolo')),
+      h('dl', { class: 'voci griglia-voci voci-risultato' },
         h('div', {}, h('dt', {}, 'Azioni'), h('dd', {}, `${r.azioni_principali} ${r.azioni_principali === 1 ? 'Principale' : 'Principali'}${r.azioni_movimento ? ` + ${r.azioni_movimento} di Movimento` : ''}`)),
         h('div', {}, h('dt', {}, 'Munizioni'), h('dd', {}, `${r.munizioni}${colpi !== null ? (a.granata ? ` (granate ${colpi})` : ` (nel caricatore ${colpi})`) : ''}`)),
         h('div', {}, h('dt', {}, 'Colpi a segno'), h('dd', {}, r.colpi_a_segno ? `${r.colpi_a_segno}${r.tiri > 1 ? ' per tiro riuscito' : ' con la Prova riuscita'}` : 'nessuno: effetto ad Area')),
         r.danno_per_colpo ? null : h('div', {}, h('dt', {}, 'Danno per colpo'), h('dd', {}, '—')),
         r.dopo_armatura?.length ? h('div', {}, h('dt', {}, 'Dopo l’Armatura'), h('dd', {}, r.dopo_armatura.map((x) => x.etichetta).join(' · '), h('small', { class: 'nota' }, ' (solo se almeno 1 danno la supera)'))) : null),
       r.attacchi?.length > 1 ? h('ul', { class: 'promemoria-attacco' }, r.attacchi.map((x) => h('li', {}, `${x.etichetta}: VA ${numero(x.va)}${x.danno ? ` · danno ${x.danno} (della propria arma)` : ''}`))) : null,
-      r.dopo_armatura?.length ? h('ul', { class: 'promemoria-attacco' }, r.dopo_armatura.map((x) => h('li', {}, x.testo))) : null,
       r.seconda_prova ? h('p', { class: 'nota' }, h('strong', {}, `Seconda Prova se fallisci: VA ${numero(r.seconda_prova.va)}. `), r.seconda_prova.testo) : null,
-      r.promemoria.length ? h('ul', { class: 'promemoria-attacco' }, r.promemoria.map((p) => h('li', {}, p))) : null,
-      promemoriaAR(ctx, a),
+      a.rotta ? h('div', { class: 'riquadro attenzione' }, h('p', {}, h('strong', {}, `${a.nome} è Rotta (0 PI): `), 'non può essere utilizzata finché non viene riparata (Armamenti §7.2.1).')) : null,
       // Tavolo del Master (pezzo 5): un attaccante esterno sostituisce la riga finale con tiro per colpire ed esito
       ctx.azioni.finale ? ctx.azioni.finale(r) : h('div', { class: 'attacco-azioni' },
         h('button', {

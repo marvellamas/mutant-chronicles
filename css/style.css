@@ -2553,3 +2553,36 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .plancia-master .etichetta-master { cursor: default; }
 /* S1: il tasto MUTANT con il server solo sul PC del master (src/correzioni-master.js → mostraMarchio) */
 .senza-marchio .marchio { display: none !important; }
+
+/* ---------------------------------------------------------------- «Attacca!» sintetico (13/10/2026, S17, S20, S21) */
+.attacco-pannello.attacco-sintetico { width: min(52rem, 100%); }
+.attacco-sintesi { display: grid; gap: 0.45rem; }
+.sintesi-sezione { margin: 0; }
+.sintesi-sezione .scelta-attacco { margin: 0; }
+.attacco-sintetico .scelta-titolo { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.03em; margin: 0 0 0.15rem; color: var(--tenue); }
+.attacco-sintetico .scelta-pulsanti { display: flex; flex-wrap: wrap; gap: 0.3rem; align-items: stretch; }
+.attacco-sintetico .sintesi-modalita .scelta-btn, .attacco-sintetico .sintesi-distanza .scelta-btn { min-height: 44px; }
+.scelta-btn.commuta { border-style: dashed; }
+.scelta-btn.commuta.scelta { border-style: solid; }
+.arma-pannello { margin: 0; font-size: 1.05rem; }
+.distanza-esatta { align-self: center; }
+.sintesi-distanza .dalla-mappa { margin: 0; font-size: 1rem; }
+.sintesi-risultato { border: 2px solid var(--accento); border-radius: var(--raggio); padding: 0.5rem 0.75rem; background: var(--superficie); }
+.risultato-testa { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; }
+.risultato-testa .va-attacco { margin: 0; font-size: 1.15rem; font-weight: 700; }
+.attacco-sintetico .risultato-testa .voce-info.pillola-attacco { font-size: 2.1rem; min-width: 3.2rem; text-align: center; }
+.risultato-testa .danno-evidenza { margin: 0; padding: 0.3rem 0.7rem; }
+.risultato-testa .danno-valore { font-size: 1.6rem; }
+.risultato-testa .btn-calcolo { margin-left: auto; }
+.voci-risultato { margin: 0.4rem 0 0.3rem; font-size: 0.9rem; }
+.attacco-sintetico .attacco-azioni { margin-top: 0.4rem; }
+.voci-attive { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem; margin: 0; }
+.voce-attiva { cursor: pointer; margin-left: 0; font-size: 0.82rem; padding: 0.15rem 0.5rem; min-height: 30px; border: 1px solid var(--accento); }
+.attacco-altro > summary { list-style: none; cursor: pointer; width: 100%; justify-content: flex-start; }
+.attacco-altro > summary::-webkit-details-marker { display: none; }
+.attacco-altro[open] > summary { margin-bottom: 0.4rem; }
+.attacco-altro .attacco-passo { display: block; border-bottom: 1px solid var(--bordo); padding: 0.4rem 0; }
+.finestrella .calcolo-attacco .promemoria-attacco { margin: 0.4rem 0; padding-left: 1.1rem; }
+@media (max-width: 799px) {
+  .attacco-sintetico .attacco-passo:not(.corrente) { display: block; }
+}

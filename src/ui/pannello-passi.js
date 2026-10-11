@@ -19,16 +19,17 @@ const infoOpzione = (nome, contenuto) => (contenuto ? infoValore('ⓘ', contenut
  * tooltip { titolo, sottotitolo, sezioni, tabella } con la regola completa, aperto da «ⓘ».
  * Nella griglia ogni gruppo prende la larghezza dei suoi pulsanti: due o tre gruppi per riga.
  */
-export function rigaScelte(titolo, opzioni, attuale, scegli) {
+export function rigaScelte(titolo, opzioni, attuale, scegli, { accanto = null, classe = '' } = {}) {
   const motivi = opzioni.filter((o) => o.motivo && o.valore !== attuale).map((o) => `${o.etichetta}: ${o.motivo}`);
   const pulsante = (o) => h('button', {
     // N2 (l'app avvisa, non blocca): una scelta sconsigliata dalla regola resta selezionabile, segnata, con il motivo sotto
     type: 'button', class: `btn scelta-btn${o.valore === attuale ? ' scelta' : ''}${o.riga ? ' con-riga' : ''}${o.motivo ? ' con-avviso' : ''}`, 'aria-pressed': String(o.valore === attuale),
     title: o.motivo ?? o.titolo ?? null, onclick: () => scegli(o.valore),
   }, o.riga ? [h('span', { class: 'scelta-etichetta' }, o.etichetta), h('small', { class: 'riga-opzione' }, o.riga)] : o.etichetta);
-  return h('div', { class: 'scelta-attacco scelta-gruppo', role: 'group', 'aria-label': titolo },
+  return h('div', { class: `scelta-attacco scelta-gruppo ${classe}`.trim(), role: 'group', 'aria-label': titolo },
     h('p', { class: 'scelta-titolo' }, titolo),
-    h('div', { class: 'scelta-pulsanti' }, opzioni.map((o) => (o.info ? h('span', { class: 'scelta-opzione' }, pulsante(o), infoOpzione(o.etichetta, o.info)) : pulsante(o)))),
+    // `accanto`: altri pulsanti nella stessa fila (per esempio «Tiro Mirato», che si accende sopra la modalità)
+    h('div', { class: 'scelta-pulsanti' }, opzioni.map((o) => (o.info ? h('span', { class: 'scelta-opzione' }, pulsante(o), infoOpzione(o.etichetta, o.info)) : pulsante(o))), accanto),
     motivi.length ? h('small', { class: 'motivo' }, motivi.join(' · ')) : null);
 }
 
@@ -103,4 +104,39 @@ export function riquadroDanno(righe, { titolo = 'Danno' } = {}) {
       h('span', { class: 'danno-etichetta' }, x.etichetta ?? titolo),
       h('strong', { class: 'danno-valore' }, x.valore),
       x.dettagli?.filter(Boolean).length ? h('span', { class: 'danno-dettagli' }, x.dettagli.filter(Boolean).join(' · ')) : null)));
+}
+
+/**
+ * Pulsante che si accende e si spegne nella fila di un gruppo di scelte (per esempio «Tiro Mirato» accanto alle
+ * modalità). Con `motivo` resta selezionabile, segnato ⚠ (N2: l'app avvisa, non blocca).
+ */
+export function pulsanteCommuta(etichetta, attivo, scegli, { motivo = null, riga = null, info = null } = {}) {
+  const b = h('button', {
+    type: 'button', class: `btn scelta-btn commuta${attivo ? ' scelta' : ''}${riga ? ' con-riga' : ''}${motivo ? ' con-avviso' : ''}`, 'aria-pressed': String(!!attivo), title: motivo, onclick: () => scegli(!attivo),
+  }, riga ? [h('span', { class: 'scelta-etichetta' }, etichetta), h('small', { class: 'riga-opzione' }, riga)] : etichetta);
+  return h('span', { class: 'scelta-opzione' }, b, infoOpzione(etichetta, info));
+}
+
+/**
+ * Pannello sintetico di «Attacca!» (13/10/2026, S17): dall'alto Arma, Modalità, Distanza, Risultato; sotto, la riga con
+ * le voci attive di «Altro» (ognuna con ✕) e «Altro ▾», chiuso di base, con tutto il resto. Un attacco normale si fa
+ * senza aprirlo. `altro`: [{ titolo, contenuto }] (i passi di prima); `stato.altro` ricorda se è aperto.
+ */
+export function pannelloSintetico({ etichetta, titolo, classe = '', chiudi, arma = null, modalita = null, distanza = null, risultato, attive = null, altro = [], stato, ridisegna }) {
+  const chiudiPannello = () => { nascondiTooltip(); chiudi(); };
+  const sezione = (nome, nodo, cl = '') => (nodo ? h('section', { class: `sintesi-sezione ${cl}`.trim(), 'aria-label': nome }, nodo) : null);
+  return h('div', { class: 'attacco-sfondo', onclick: (e) => { if (e.target === e.currentTarget) chiudiPannello(); } },
+    h('section', { class: `attacco-pannello attacco-sintetico ${classe}`.trim(), role: 'dialog', 'aria-modal': 'true', 'aria-label': etichetta },
+      h('header', { class: 'attacco-testa' },
+        h('h2', {}, titolo),
+        h('button', { type: 'button', class: 'btn', onclick: chiudiPannello, 'aria-label': `Chiudi: ${etichetta}` }, 'Chiudi')),
+      h('div', { class: 'attacco-sintesi' },
+        sezione('Arma', arma, 'sintesi-arma'),
+        sezione('Modalità', modalita, 'sintesi-modalita'),
+        sezione('Distanza', distanza, 'sintesi-distanza'),
+        sezione('Risultato', risultato, 'sintesi-risultato passo-risultato'),
+        attive,
+        h('details', { class: 'attacco-altro', open: !!stato.altro || null, ontoggle: (e) => { if (e.target.open !== !!stato.altro) { stato.altro = e.target.open; ridisegna(); } } },
+          h('summary', { class: 'btn btn-altro' }, 'Altro ▾', h('small', { class: 'nota' }, ' movimento, bersaglio, Copertura, luce, Manovre, Talenti…')),
+          stato.altro ? altro.filter((p) => p && [p.contenuto].flat(Infinity).some(Boolean)).map((p) => h('section', { class: 'attacco-passo' }, h('h3', {}, p.titolo), disponi(p.contenuto))) : null))));
 }
