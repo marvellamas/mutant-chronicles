@@ -72,7 +72,7 @@ export function vistaGiocatori(s, contesto = null, regoleTemplate = contesto?.re
   // fase 2, lotto 3: con la nebbia automatica (scena.visuale.automatica) i token che non sono PG si vedono solo dove i PG
   // vedono adesso; le zone esplorate ma non viste arrivano come «ombra» (più scure nella vista)
   // «Mappa semplice» (N3): nessuna automazione, vale solo la nebbia messa a mano
-  const auto = nebbiaAutomaticaAttiva(s) && regoleMappa?.visuale && regoleMappa?.porte;
+  const auto = nebbiaAutomaticaAttiva(s, regoleMappa ? { mappa: regoleMappa } : null) && regoleMappa?.visuale && regoleMappa?.porte;
   const visti = auto ? visualePg(s, tokenPg(s), ostacoliVista(s, regoleMappa.porte, { perGiocatori: true }), regoleMappa.visuale, null, regoleMappa) : null;
   const pg = (t) => t.rif?.tipo === 'partecipante' && String(t.rif.id).startsWith('pg:');
   // token in volo (data/mappa.json → volo.visibile_oltre_nebbia): A.150 (decisione 150) false, il volo non rivela; con

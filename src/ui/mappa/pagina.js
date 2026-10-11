@@ -24,7 +24,7 @@ import { conLineaDallaMappa } from '../../dalla-mappa.js';
 import { h, svuota } from '../dom.js';
 import { avviso, avvisoErrore } from '../avvisi.js';
 import { cameraIniziale, zoomVerso, sposta, adatta, mappaDaSchermo, schermoDaMappa, rettangoloVisibile, mantieniCentro, riadattaCentro } from '../../mappa/camera.js';
-import { DISPOSIZIONI, NOMI_DISPOSIZIONI, prossimaDisposizione, normalizzaDisposizione, larghezzaBarra, trascinaBordo, chiaveSchermo } from '../../mappa/disposizione.js';
+import { DISPOSIZIONI, NOMI_DISPOSIZIONI, prossimaDisposizione, normalizzaDisposizione, larghezzaBarra, trascinaBordo, chiaveSchermo, etichettaVista } from '../../mappa/disposizione.js';
 import { barraIniziativa } from '../../mappa/iniziativa.js';
 import { barraIniziativaEl, stileBordo } from './barra-iniziativa.js';
 import { bordoToken, assegnaColori, cambiaColore, tavolozzaPer, famiglia } from '../../mappa/colori.js';
@@ -35,9 +35,9 @@ import { creaTela } from './canvas.js';
 import { leggiScena, salvaScena, caricaImmagine, controllaFile, preparaRidotta } from './api.js';
 import { agganciaQ, centroToken, tokenSottoPunto, disponiInFila, sovrapposti, chiaveRif, dimensioni } from '../../mappa/token.js';
 import { pezziDellaScena, pezziSenzaToken, tokenOrfani, tokenPerPezzo } from '../../mappa/partecipanti.js';
-import { daBase64, inBase64, cella, conta } from '../../mappa/celle.js';
-import { ostacoliVista, lineaDiTiro, testoCopertura, visuale as visualePg, nebbiaDopoVisuale, tokenPg } from '../../mappa/visuale.js';
-import { mappaSemplice, conSemplice, lineaSemplice, nebbiaAutomaticaAttiva } from '../../mappa/semplice.js';
+import { daBase64, inBase64, cella, conta, impostaCella } from '../../mappa/celle.js';
+import { ostacoliVista, lineaDiTiro, testoCopertura, apriNebbiaConPg } from '../../mappa/visuale.js';
+import { mappaSemplice, conSemplice, lineaSemplice, nebbiaConPg, modoNebbia } from '../../mappa/semplice.js';
 import { fasciaDistanza } from '../../attacco.js';
 import { CHIAVE_DALLA_MAPPA } from '../attacco.js';
 import { tratto, valoreModo, nebbiaProvvisoria, chiudiPennellata, rettangoloNebbia, tuttaNebbia, trattiCoperti } from '../../mappa/nebbia.js';
@@ -52,7 +52,7 @@ import { disegnaMuri, disegnaMuriLinee, disegnaArea, disegnaPercorso, disegnaZoc
 import { luceQ, luceIngombro, testoLuceBersaglio, categorieLuce, ambienteDi, trattoLuce, rettangoloLuce, conVoceLuce, cambiaAmbiente } from '../../mappa/luce.js';
 import { celleTemplate, tokenDentro as tokenNelTemplate, nuovoTemplate, scaduto, direzioneVerso, ORIENTABILI, templateVisibili, ruota, cambiaMisura, permanente } from '../../mappa/template.js';
 import { livelliDi, livelliDati, conLivello, conTuttiILivelli, nascosti as livelliNascosti, statoEntrambi, conLivelloEntrambi } from '../../mappa/sovrapposizioni.js';
-import { portaA, muriEffettivi, lineeEffettive, porteVicine, apriChiudi, nuovaPorta, conAzione, azpNelRound, orientamento, orientamentoPorta, ruotaPorta, opposto, agganciaPorta, agganciaDiPorta, geometriaPorta, lineePerDisegno, muriPerDisegno } from '../../mappa/porte.js';
+import { portaA, muriEffettivi, lineeEffettive, porteVicine, apriChiudi, nuovaPorta, conAzione, azpNelRound, orientamento, orientamentoPorta, ruotaPorta, opposto, agganciaPorta, agganciaDiPorta, geometriaPorta, lineePerDisegno, muriPerDisegno, portaSotto, porteNellaForma } from '../../mappa/porte.js';
 import { apriMenuTemplate, sezioneTemplate, etichettaTemplate, testoMisure } from './template.js';
 import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
 import { componiMenu, unisciMenu } from '../../mappa/menu.js';
@@ -148,7 +148,7 @@ export function renderMappa(radice, ctx) {
     luci: { strumento: null, modo: 'buio', lato: 3 },
     // M2 (11/10): «spessore» è lo spessore del muro disegnato a mano libera (data/mappa.json -> muri_linee)
     // 12/10: raddrizza (casella), tracciato a mano o punto per punto, vertici in corso, muro selezionato
-    muri: { strumento: null, modo: 'muro', lato: 1, spessore: ctx.dati.mappa.muri_linee.predefinito, raddrizza: regoleRaddrizza(ctx.dati).predefinito, tracciato: 'mano', punti: [], cursore: null, ultimoClic: 0, selezionato: null, porta: { stato: ctx.dati.mappa.porte.stato_predefinito, segreta: false, verso: null } },
+    muri: { strumento: null, modo: 'muro', lato: 1, spessore: ctx.dati.mappa.muri_linee.predefinito, raddrizza: regoleRaddrizza(ctx.dati).predefinito, tracciato: 'mano', punti: [], cursore: null, ultimoClic: 0, selezionato: null, portaSelezionata: null, porta: { stato: ctx.dati.mappa.porte.stato_predefinito, segreta: false, verso: null } },
     fascia: 1,
     area: undefined,
     percorso: null,
@@ -204,8 +204,12 @@ export function renderMappa(radice, ctx) {
   // parole solo sugli schermi larghi (.lungo in css/style.css)
   const ICONE_DISPOSIZIONI = { mappa: '🗺', equilibrata: '⚖', scontro: '⚔' };
   const conIcona = (icona, testo) => [h('span', { class: 'icona', 'aria-hidden': 'true' }, icona), h('span', { class: 'lungo' }, ` ${testo}`)];
-  el.btnDisp = Object.fromEntries(DISPOSIZIONI.map((d) => [d, h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-pressed': 'false', 'aria-label': NOMI_DISPOSIZIONI[d], title: `${NOMI_DISPOSIZIONI[d]} (Tab per passare alla prossima)`, onclick: () => scegliDisposizione(d) }, conIcona(ICONE_DISPOSIZIONI[d], NOMI_DISPOSIZIONI[d]))]));
-  el.btnGriglia = h('span', { class: 'mappa-disposizioni', role: 'group', 'aria-label': 'Disposizione' }, DISPOSIZIONI.map((d) => el.btnDisp[d]));
+  // 12/10 (Marcello: nella barra non c'era spazio e la musica andava a capo): un solo pulsante con menu a tendina,
+  // l'etichetta dice la disposizione attuale («Vista: Equilibrata ▾»); Tab e doppio clic sul bordo come prima
+  el.btnDisp = Object.fromEntries(DISPOSIZIONI.map((d) => [d, h('button', { type: 'button', role: 'menuitemradio', class: 'voce-strumenti', 'aria-checked': 'false', title: `${NOMI_DISPOSIZIONI[d]} (Tab per passare alla prossima)`, onclick: () => { el.btnGriglia.open = false; scegliDisposizione(d); } }, `${ICONE_DISPOSIZIONI[d]} ${NOMI_DISPOSIZIONI[d]}`)]));
+  el.btnGriglia = h('details', { class: 'menu-strumenti menu-vista' },
+    el.vistaAttuale = h('summary', { class: 'btn', title: 'Disposizione di mappa e barra: Mappa grande, Equilibrata, Scontro grande (Tab per passare alla prossima)', 'aria-label': 'Vista' }, 'Vista ▾'),
+    h('div', { class: 'menu-strumenti-voci', role: 'menu', 'aria-label': 'Disposizione' }, DISPOSIZIONI.map((d) => el.btnDisp[d])));
   el.btnCarica = h('button', { type: 'button', class: 'btn', title: 'Immagine di fondo: JPG, PNG o WEBP', onclick: () => el.scegliFile.click() }, 'Carica immagine');
   // ritocchi del 08/10 (test di Marcello): cinque gruppi distinti, che vanno a capo interi: 1 «Mutant», «← Tavolo» e il
   // nome della scena (la testata dell'app sparisce: una riga in meno); 2 zoom e disposizioni; 3 sovrapposizioni;
@@ -350,7 +354,7 @@ export function renderMappa(radice, ctx) {
       if (liv.muri) disegnaMuriLinee(c, { scena: s, cam: st.cam, linee: lineePerDisegno(s, ctx.dati), colore: colori.muro, aspetto: ASPETTO, selezionato: st.muri.selezionato });
       // fase 2, lotto 2: le porte, ciascuna con il suo stato (le segrete con la «S»)
       // M3 (11/10): ogni porta sul suo muro; quelle salvate prima si convertono alla lettura (agganciaDiPorta)
-      if (liv.porte && s.porte?.length) disegnaPorte(c, { scena: s, cam: st.cam, info, porte: s.porte.map((p) => ({ ...p, orientamento: orientamentoPorta(s, p), aggancio: agganciaDiPorta(s, p, ctx.dati), geo: geometriaPorta(s, p, ctx.dati) })), colori: RP.colori, regole: RP });
+      if (liv.porte && s.porte?.length) disegnaPorte(c, { scena: s, cam: st.cam, info, porte: s.porte.map((p) => ({ ...p, orientamento: orientamentoPorta(s, p), aggancio: agganciaDiPorta(s, p, ctx.dati), geo: geometriaPorta(s, p, ctx.dati), selezionata: p.id === st.muri.portaSelezionata })), colori: RP.colori, regole: RP });
       // 07/10: anteprima della porta da mettere sotto il puntatore, con l'orientamento (← → per girarla)
       const ap = st.muri.strumento === 'porta' ? anteprimaPorta() : null;
       if (ap) { c.save(); c.globalAlpha = 0.6; disegnaPorte(c, { scena: s, cam: st.cam, info, porte: [ap], colori: RP.colori, regole: RP }); c.restore(); }
@@ -552,6 +556,7 @@ export function renderMappa(radice, ctx) {
         const fusi = esito.scena.fusi ?? [];
         st.scena = { ...(fusi.length ? fondiMovimentiTablet(st.scena, esito.scena, fusi, ctx.dati) : st.scena), revisione: esito.scena.revisione, aggiornato: esito.scena.aggiornato };
         if (fusi.length) {
+          aggiornaVisuale(); // 12/10: la nebbia si apre anche per i PG mossi dai tablet
           invalidaArea();
           disegnaPannelli();
           disegnaIniziativa();
@@ -1186,7 +1191,7 @@ export function renderMappa(radice, ctx) {
       luci: { testo: 'Luci', titolo: 'Luce della scena e zone a pennello', azione: () => apriStrumento(el.pLuci) },
       nebbia: { testo: 'Nebbia', titolo: 'Pennello e rettangolo, Rivela / Copri, tutto', azione: () => apriStrumento(el.pNebbia) },
       mappa_semplice: { testo: `Mappa semplice: ${sn(mappaSemplice(sc))}`, titolo: 'Accesa: nessuna automazione (nebbia automatica, luci, conteggio del movimento, Atletica, Copertura); sposti chi vuoi dove vuoi', azione: () => cambiaSemplice() },
-      nebbia_automatica: { testo: `Nebbia automatica: ${sn(nebbiaAutomaticaAttiva(sc))}`, titolo: mappaSemplice(sc) ? 'Ferma con «Mappa semplice»: spegnila per usarla' : 'La nebbia si apre da sola dove i PG vedono', azione: () => cambiaVisualeAutomatica() },
+      nebbia_automatica: { testo: `La nebbia si apre con i PG: ${sn(nebbiaConPg(sc, ctx.dati))}`, titolo: mappaSemplice(sc) ? 'Con «Mappa semplice»: quello che i PG vedono da dove stanno, fermati da muri e porte chiuse' : 'La nebbia si apre da sola dove i PG vedono (con luci e sensi)', azione: () => cambiaVisualeAutomatica() },
       scene: { testo: 'Scene…', titolo: 'Nuova, apri, rinomina, duplica, archivia', azione: () => apriStrumento(document.getElementById('plancia-scene-mappa')) },
       collegamento: { testo: 'Collegamento e token', titolo: 'Scontro o bozza collegati, pezzi da mettere in mappa', azione: () => apriStrumento(el.secScontro) },
       salva_iniziale: { testo: q ? 'Salva posizione iniziale (sovrascrive)' : 'Salva posizione iniziale', titolo: 'Token, porte, template e nebbia come sono adesso', azione: () => salvaInizialeUi() },
@@ -1569,12 +1574,13 @@ export function renderMappa(radice, ctx) {
     const g = st.scena.griglia;
     const coperti = conta(daBase64(st.scena.nebbia.coperti), g.colonne, g.righe);
     svuota(el.pNebbia,
-      h('summary', {}, h('strong', {}, 'Nebbia'), ` (${coperti} Q coperti su ${g.colonne * g.righe}; automatica: ${st.scena.visuale?.automatica ? 'sì' : 'no'})`),
-      // 07/10 (test di Marcello): l'interruttore della nebbia automatica in cima alla sezione, evidente, con lo stato
-      // fase 2, lotto 3: nebbia automatica dalla visuale dei PG
-      h('button', { type: 'button', role: 'switch', 'aria-checked': String(!!st.scena.visuale?.automatica), class: `interruttore-mappa interruttore-evidente${st.scena.visuale?.automatica ? ' acceso' : ''}`, title: `La nebbia si apre da sola dove i PG vedono (fino a ${ctx.dati.mappa.visuale.raggio_q} Q; muri e porte chiuse fermano la vista). Le zone esplorate restano scoperte; per i giocatori, più scure. La nebbia a mano continua a funzionare.`, onclick: () => cambiaVisualeAutomatica() },
-        h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `Nebbia automatica (visuale dei PG): ${st.scena.visuale?.automatica ? 'sì' : 'no'}`),
-      h('p', { class: 'nota' }, st.scena.visuale?.automatica ? 'Spostando un PG la nebbia si apre dove vede: in Luce senza limite, in Penombra fino a 10 Q, con Luce scarsa 5, al Buio solo la sua pedina (A.142; Strumenti → Luci).' : 'Spenta: la nebbia la apri e la chiudi solo tu, con gli strumenti qui sotto. Accesa, si apre da sola dove i PG vedono quando si spostano.'),
+      h('summary', {}, h('strong', {}, 'Nebbia'), ` (${coperti} Q coperti su ${g.colonne * g.righe}; si apre con i PG: ${nebbiaConPg(st.scena, ctx.dati) ? 'sì' : 'no'})`),
+      // 12/10: «La nebbia si apre con i PG», acceso di base; funziona anche con «Mappa semplice» (solo linea di vista)
+      h('button', { type: 'button', role: 'switch', 'aria-checked': String(nebbiaConPg(st.scena, ctx.dati)), class: `interruttore-mappa interruttore-evidente${nebbiaConPg(st.scena, ctx.dati) ? ' acceso' : ''}`, title: 'Quando un PG si sposta, la nebbia si apre dove vede: muri, muri disegnati e porte chiuse fermano la vista. Quello che è stato scoperto resta scoperto; puoi sempre ricoprire a mano.', onclick: () => cambiaVisualeAutomatica() },
+        h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `La nebbia si apre con i PG: ${nebbiaConPg(st.scena, ctx.dati) ? 'sì' : 'no'}`),
+      h('p', { class: 'nota' }, modoNebbia(st.scena, ctx.dati) === 'semplice' ? 'Mappa semplice: spostando un PG si scopre quello che vede da dove sta, fermato da muri e porte chiuse (luci e sensi speciali non contano). Quello che è scoperto resta scoperto; per ricoprire usa «Copri» qui sotto.'
+        : modoNebbia(st.scena, ctx.dati) === 'completa' ? 'Spostando un PG la nebbia si apre dove vede: in Luce senza limite, in Penombra fino a 10 Q, con Luce scarsa 5, al Buio solo la sua pedina (A.142; Strumenti → Luci); contano anche i sensi speciali.'
+          : 'Spento: la nebbia la apri e la chiudi solo tu, con gli strumenti qui sotto.'),
       h('p', { class: 'nota' }, 'Per te è semitrasparente, per i giocatori piena. Scegli lo strumento e trascina sulla mappa; la barra spaziatrice resta per spostarti.'),
       h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Strumento della nebbia' },
         pulsanteScelta('Pennello', N.strumento === 'pennello', () => strumentoNebbia(N.strumento === 'pennello' ? null : 'pennello'), 'Dipingi per quadretti'),
@@ -1602,7 +1608,7 @@ export function renderMappa(radice, ctx) {
         pulsanteScelta('Rettangolo', M.strumento === 'rettangolo', () => strumentoMuri(M.strumento === 'rettangolo' ? null : 'rettangolo'), 'Per le aree grandi: da un angolo all’altro'),
         pulsanteScelta('Disegna muro', M.strumento === 'linea', () => strumentoMuri(M.strumento === 'linea' ? null : 'linea'), 'Trascina: il muro segue il tratto, anche fuori dalla griglia e più sottile di un quadretto'),
         pulsanteScelta('Seleziona muro', M.strumento === 'seleziona', () => strumentoMuri(M.strumento === 'seleziona' ? null : 'seleziona'), 'Clic su un muro disegnato: lo seleziona; Canc o «Elimina muro» lo toglie tutto'),
-        pulsanteScelta('Porta', M.strumento === 'porta', () => strumentoMuri(M.strumento === 'porta' ? null : 'porta'), 'Clic su un Q di muro: mette una porta; clic su una porta: la toglie')),
+        pulsanteScelta('Porta', M.strumento === 'porta', () => strumentoMuri(M.strumento === 'porta' ? null : 'porta'), 'Clic su un muro: mette una porta; clic su una porta: la seleziona (Canc la toglie)')),
       // M2 (11/10): spessore del muro disegnato a mano libera
       M.strumento === 'linea' ? h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Spessore del muro' },
         h('span', { class: 'nota' }, 'Spessore:'),
@@ -1625,6 +1631,12 @@ export function renderMappa(radice, ctx) {
         h('span', { class: 'nota' }, 'Muro selezionato'),
         h('button', { type: 'button', class: 'btn btn-piccolo pericolo', onclick: () => eliminaMuroSelezionato() }, 'Elimina muro (Canc)'),
         h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => selezionaMuro(null) }, 'Deseleziona')) : null,
+      // 12/10: porta selezionata con un clic (strumento «Porta»): «Elimina porta» o Canc
+      M.portaSelezionata && (st.scena.porte ?? []).some((p) => p.id === M.portaSelezionata) ? h('div', { class: 'mappa-azioni-token' },
+        h('span', { class: 'nota' }, 'Porta selezionata'),
+        h('button', { type: 'button', class: 'btn btn-piccolo pericolo', onclick: () => eliminaPortaSelezionata() }, 'Elimina porta (Canc)'),
+        h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => selezionaPorta(null) }, 'Deseleziona')) : null,
+      M.strumento === 'porta' ? h('p', { class: 'nota' }, 'Clic su un muro: mette una porta. Clic su una porta: la seleziona; Canc o «Elimina porta» la toglie e il muro si richiude. Anche la Gomma (Pennello o Rettangolo) toglie le porte che tocca.') : null,
       M.strumento === 'porta' ? h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Porta nuova' },
         ctx.dati.mappa.porte.stati.map((s) => pulsanteScelta(ctx.dati.mappa.porte.nomi_stati[s], M.porta.stato === s, () => { M.porta.stato = s; disegnaPannelloMuri(); }, `Le porte nuove nascono ${ctx.dati.mappa.porte.nomi_stati[s].toLowerCase()}`)),
         h('label', { title: 'Per i giocatori è muro finché non la riveli (clic destro → Rivela)' }, h('input', { type: 'checkbox', checked: M.porta.segreta, onchange: (e) => { M.porta.segreta = e.target.checked; } }), ' segreta'),
@@ -2388,13 +2400,10 @@ export function renderMappa(radice, ctx) {
   }
   // ── Nebbia automatica (fase 2, lotto 3): la nebbia si apre dove i PG vedono; prossimo lotto: le luci ──
   function aggiornaVisuale() {
-    const s = st.scena;
-    if (!nebbiaAutomaticaAttiva(s)) return;
-    const g = s.griglia;
-    const visti = visualePg(s, tokenPg(s), ostacoliVista(s, RP, { perGiocatori: true }), RV, null, ctx.dati.mappa);
-    const m = nebbiaDopoVisuale(s.nebbia.coperti, visti, g.colonne, g.righe);
-    if (!m) return;
-    st.scena = { ...s, nebbia: { ...s.nebbia, coperti: inBase64(m) } };
+    // 12/10: «La nebbia si apre con i PG», anche con «Mappa semplice» (solo linea di vista: muri e porte chiuse la fermano)
+    const aperta = st.scena ? apriNebbiaConPg(st.scena, ctx.dati) : null;
+    if (!aperta) return;
+    st.scena = aperta;
     salvaPresto();
     disegnaPannelloNebbia();
     ridisegna(['aree']);
@@ -2421,8 +2430,8 @@ export function renderMappa(radice, ctx) {
     st.linea = null;
     cacheLinea.chiave = null;
     salvaPresto();
-    if (!v) aggiornaVisuale();
-    avviso(v ? 'Mappa semplice accesa: nessuna automazione. Sposti chi vuoi dove vuoi, senza conteggio; nebbia, luci, Atletica e Copertura si decidono al tavolo.'
+    aggiornaVisuale();
+    avviso(v ? 'Mappa semplice accesa: sposti chi vuoi dove vuoi, senza conteggio; luci, Atletica e Copertura si decidono al tavolo. La nebbia si apre comunque attorno ai PG quando si muovono (pannello Nebbia).'
       : ['Mappa semplice spenta: tornano il conteggio del movimento (Passo, Corsa, Scatto), gli Attacchi di Opportunità, la Copertura dalla linea di tiro e, se accesa, la nebbia automatica.'], { chiave: 'mappa-semplice', tipo: 'info', durata: 9000 });
     aggiornaSemplice();
     invalidaArea();
@@ -2444,8 +2453,7 @@ export function renderMappa(radice, ctx) {
   }
   function cambiaVisualeAutomatica() {
     if (!st.scena) return;
-    if (mappaSemplice(st.scena)) { avviso('Con «Mappa semplice» la nebbia automatica è ferma: spegni «Mappa semplice» per usarla. La nebbia a mano funziona sempre.', { chiave: 'visuale', tipo: 'info' }); return; }
-    const v = !st.scena.visuale?.automatica;
+    const v = !nebbiaConPg(st.scena, ctx.dati);
     st.scena = { ...st.scena, visuale: { automatica: v } };
     salvaPresto();
     disegnaPannelloNebbia();
@@ -2455,7 +2463,7 @@ export function renderMappa(radice, ctx) {
     const dopo = conta(daBase64(st.scena.nebbia.coperti), g.colonne, g.righe);
     // con la scena tutta in Luce i PG vedono senza limite (A.142) e la nebbia si apre quasi tutta subito: lo si dice
     const quasiTutta = v && prima > 0 && dopo < prima * 0.1;
-    avviso(v ? ['Nebbia automatica accesa: si apre dove i PG vedono quando si spostano; per i giocatori le zone esplorate restano più scure.', prima ? `Aperti ora ${prima - dopo} Q su ${prima} coperti.` : 'La mappa è già tutta scoperta: «Copri tutto» per ripartire.', quasiTutta ? 'In Luce i PG vedono senza limite: per una scena da esplorare metti Penombra o Buio (Strumenti → Luci).' : null] : 'Nebbia automatica spenta: la nebbia la muovi solo tu.', { chiave: 'visuale', tipo: 'info', durata: 9000 });
+    avviso(v ? [mappaSemplice(st.scena) ? 'La nebbia si apre con i PG: quando si spostano si scopre quello che vedono da dove stanno; muri e porte chiuse fermano la vista.' : 'La nebbia si apre con i PG: si apre dove vedono quando si spostano (con luci e sensi); per i giocatori le zone esplorate restano più scure.', prima ? `Aperti ora ${prima - dopo} Q su ${prima} coperti.` : 'La mappa è già tutta scoperta: «Copri tutto» per ripartire.', quasiTutta ? 'Senza muri fra i PG e il resto della mappa si scopre quasi tutto: disegna i muri e chiudi le porte, poi «Copri tutto».' : null] : 'La nebbia non si apre più da sola: la apri e la chiudi solo tu.', { chiave: 'visuale', tipo: 'info', durata: 9000 });
     aggiornaVoceNebbiaAutomatica();
   }
   // ── Porte (fase 2, lotto 2; A.125; src/mappa/porte.js) ──
@@ -2473,9 +2481,35 @@ export function renderMappa(radice, ctx) {
   const orientamentoDaAggancio = (a, q) => (a?.lato ? (a.lato === 'o' || a.lato === 'e' ? 'verticale' : 'orizzontale')
     : a?.da && a?.a ? (Math.abs(a.a[0] - a.da[0]) >= Math.abs(a.a[1] - a.da[1]) ? 'orizzontale' : 'verticale')
     : orientamento(st.scena, q));
+  /** 12/10: porta selezionata (evidenziata); Canc o «Elimina porta» la toglie. null per deselezionare. */
+  function selezionaPorta(id) {
+    M.portaSelezionata = id;
+    if (id) avviso('Porta selezionata: Canc o «Elimina porta» la toglie (il muro si richiude).', { chiave: 'porta' });
+    disegnaPannelloMuri();
+    ridisegna(['aree']);
+  }
+  function eliminaPortaSelezionata() {
+    const p = (st.scena?.porte ?? []).find((x) => x.id === M.portaSelezionata);
+    if (!p) return false;
+    st.scena = cambiaPortaAnnullabile(st.scena, p, null, ctx.dati);
+    M.portaSelezionata = null;
+    avviso('Porta tolta: il muro si è richiuso (Ctrl+Z la rimette).', { chiave: 'porta' });
+    dopoPorta();
+    disegnaPannelloMuri();
+    return true;
+  }
+  /** 12/10: la gomma toglie le porte che tocca (una voce di Ctrl+Z per porta). */
+  function gommaPorte(forma) {
+    const prese = porteNellaForma(st.scena, forma, ctx.dati);
+    for (const p of prese) st.scena = cambiaPortaAnnullabile(st.scena, p, null, ctx.dati);
+    if (prese.some((p) => p.id === M.portaSelezionata)) M.portaSelezionata = null;
+    return prese;
+  }
   function mettiTogliPorta(q, punto = null) {
-    const c = portaA(st.scena, q);
-    if (c) { st.scena = cambiaPortaAnnullabile(st.scena, c, null, ctx.dati); avviso('Porta tolta.', { chiave: 'porta' }); dopoPorta(); return; }
+    // 12/10: un clic su una porta (dove la si vede, anche se agganciata a un muro disegnato su un altro Q) la seleziona
+    const c = (punto ? portaSotto(st.scena, punto, ctx.dati) : null) ?? portaA(st.scena, q);
+    if (c) { selezionaPorta(c.id === M.portaSelezionata ? null : c.id); return; }
+    if (M.portaSelezionata) { selezionaPorta(null); return; }
     if ((st.scena.porte?.length ?? 0) >= RP.porte_max) { avvisoErrore(`Al massimo ${RP.porte_max} porte.`); return; }
     // 07/10: l'orientamento si salva (automatico dai muri, o quello scelto con ← →)
     // M3 (11/10): la porta si aggancia al muro su cui si mette (tratto disegnato o linea della griglia più vicina)
@@ -2867,6 +2901,23 @@ export function renderMappa(radice, ctx) {
    * «annulla»: la voce (una per passata) arriva al rilascio, da t.iniziale.muriLinee (conVoceMuriLinee).
    */
   function gommaMuriDisegnati(q, fino = null) {
+    // 12/10: la gomma toglie anche le porte che tocca (prima dei muri: la porta sparisce e il muro sotto si taglia)
+    const tolte = (st.scena.porte ?? []).length ? gommaPorte(formaGomma(q, fino)) : [];
+    // col pennello, la passata che toglie una porta non taglia anche i muri disegnati: tolta la porta il muro si richiude
+    // (un'altra passata lo taglia); se la porta stava su un Q di muro a quadretto, quel Q torna muro
+    if (tolte.length && !fino && st.trascina) st.trascina.portaTolta = true;
+    if (!fino && st.trascina?.portaTolta && !tolte.length) return;
+    if (tolte.length && !fino) {
+      const iniziali = st.trascina?.iniziale?.muri ? daBase64(st.trascina.iniziale.muri) : null;
+      if (iniziali) {
+        const g = st.scena.griglia;
+        const m = daBase64(st.scena.muri);
+        let cambiato = false;
+        for (const p of tolte) if (cella(iniziali, g.colonne, g.righe, p.q[0], p.q[1]) && !cella(m, g.colonne, g.righe, p.q[0], p.q[1])) { impostaCella(m, g.colonne, g.righe, p.q[0], p.q[1], true); cambiato = true; }
+        if (cambiato) st.scena = { ...st.scena, muri: inBase64(m) };
+      }
+      return;
+    }
     const linee = lineeDi(st.scena);
     if (!linee.length) return;
     const m = M.lato / 2;
@@ -2876,6 +2927,12 @@ export function renderMappa(radice, ctx) {
     const r = tagliaLinee(linee, forma);
     if (r.toccate.length) { st.scena = { ...st.scena, muriLinee: r.linee }; if (r.toccate.includes(M.selezionato)) M.selezionato = null; }
   }
+  /** La forma della gomma in Q: il quadrato del pennello attorno al Q, o il rettangolo trascinato. */
+  const formaGomma = (q, fino = null) => {
+    const m = M.lato / 2;
+    return fino ? { tipo: 'rettangolo', x0: Math.min(q[0], fino[0]), y0: Math.min(q[1], fino[1]), x1: Math.max(q[0], fino[0]) + 1, y1: Math.max(q[1], fino[1]) + 1 }
+      : { tipo: 'rettangolo', x0: q[0] + 0.5 - m, y0: q[1] + 0.5 - m, x1: q[0] + 0.5 + m, y1: q[1] + 0.5 + m };
+  };
   /** I Q fra a e b (compresi), per passare la gomma lungo tutta la pennellata e non solo all'arrivo. */
   function qLungo(a, b) {
     const n = Math.max(Math.abs(b[0] - a[0]), Math.abs(b[1] - a[1]));
@@ -3313,6 +3370,8 @@ export function renderMappa(radice, ctx) {
       if (e.key === 'Backspace') { e.preventDefault(); M.punti.pop(); disegnaPannelloMuri(); ridisegna(['sopra']); return; }
       if (e.key === 'Escape') { e.preventDefault(); M.punti = []; M.cursore = null; disegnaPannelloMuri(); ridisegna(['sopra']); return; }
     }
+    if (M.portaSelezionata && (e.key === 'Delete' || e.key === 'Backspace') && !menuAperto()) { e.preventDefault(); eliminaPortaSelezionata(); return; }
+    if (M.portaSelezionata && e.key === 'Escape' && !menuAperto()) { e.preventDefault(); selezionaPorta(null); return; }
     if (M.selezionato && (e.key === 'Delete' || e.key === 'Backspace') && !menuAperto()) { e.preventDefault(); eliminaMuroSelezionato(); return; }
     if (M.selezionato && e.key === 'Escape' && !menuAperto()) { e.preventDefault(); selezionaMuro(null); return; }
     if (e.key === 'Escape' && st.gruppo.size && !menuAperto()) { e.preventDefault(); cambiaGruppo(new Set()); return; }
@@ -3361,7 +3420,10 @@ export function renderMappa(radice, ctx) {
     if (!totale) return;
     el.laterale.style.width = `${larghezzaBarra(st.disp, totale, B)}px`;
     el.pagina.dataset.disposizione = st.disp.disposizione;
-    for (const d of DISPOSIZIONI) { el.btnDisp[d].classList.toggle('scelto', d === st.disp.disposizione); el.btnDisp[d].setAttribute('aria-pressed', String(d === st.disp.disposizione)); }
+    for (const d of DISPOSIZIONI) { el.btnDisp[d].classList.toggle('scelto', d === st.disp.disposizione); el.btnDisp[d].setAttribute('aria-checked', String(d === st.disp.disposizione)); }
+    // l'etichetta del menu dice la disposizione attuale; sugli schermi stretti resta l'icona
+    if (el.vistaAttuale) svuota(el.vistaAttuale, h('span', { class: 'icona', 'aria-hidden': 'true' }, ICONE_DISPOSIZIONI[st.disp.disposizione] ?? '⚖'), h('span', { class: 'lungo' }, ' Vista:'), ` ${NOMI_DISPOSIZIONI[st.disp.disposizione] ?? ''} ▾`);
+    el.vistaAttuale.setAttribute('aria-label', etichettaVista(st.disp.disposizione));
     const ridotta = st.disp.disposizione === 'mappa';
     el.ridotta.hidden = !ridotta;
     el.piena.hidden = ridotta;

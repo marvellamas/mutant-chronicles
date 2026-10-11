@@ -73,8 +73,8 @@ test('il campo: acceso di base per le scene nuove, assente nelle scene di prima 
   assert.deepEqual(['semplice' in vecchia, mappaSemplice(vecchia), riassuntoScena(vecchia).semplice], [false, false, false]);
   assert.deepEqual([conSemplice(vecchia, true).semplice, conSemplice(nuova, false).semplice], [true, false]);
   assert.match(validaScena({ ...vecchia, semplice: 'sì' }, dati), /semplice/);
-  assert.deepEqual(automazioni(nuova), { nebbiaAutomatica: false, luci: false, movimento: false, atletica: false, copertura: false, opportunita: false });
-  assert.deepEqual(automazioni({ ...vecchia, visuale: { automatica: true } }), { nebbiaAutomatica: true, luci: true, movimento: true, atletica: true, copertura: true, opportunita: true });
+  assert.deepEqual(automazioni(nuova), { nebbiaAutomatica: false, nebbia: 'semplice', luci: false, movimento: false, atletica: false, copertura: false, opportunita: false });
+  assert.deepEqual(automazioni({ ...vecchia, visuale: { automatica: true } }), { nebbiaAutomatica: true, nebbia: 'completa', luci: true, movimento: true, atletica: true, copertura: true, opportunita: true });
 });
 
 test('nebbia automatica: accesa nella scena ma ferma con «Mappa semplice»; spenta la Mappa semplice torna', () => {
@@ -99,8 +99,9 @@ test('pedina spostabile liberamente dal tablet: nessuna area, nessun conteggio; 
     // scena di prima (senza il campo): oltre il movimento rifiutato
     assert.equal((await muovi({ a: [20, 3] })).stato, 422);
     assert.ok((await vista()).io.area, 'con i limiti c’è l’area');
-    // Mappa semplice: lo stesso quadretto va bene, senza fascia né Q contati
-    scriviScena(conSemplice(leggiScena(), true));
+    // Mappa semplice: lo stesso quadretto va bene, senza fascia né Q contati (qui con «La nebbia si apre con i PG» spento,
+    // per provare che la nebbia messa a mano resta un limite: tests/mappa-ritocchi.test.js prova l'apertura)
+    scriviScena({ ...conSemplice(leggiScena(), true), visuale: { automatica: false } });
     const v = await vista();
     assert.deepEqual([v.io.semplice, v.io.area, v.io.permesso.puo, v.io.zoc], [true, null, true, []]);
     const p = await muovi({ a: [20, 3], prova: true });

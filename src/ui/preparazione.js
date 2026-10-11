@@ -346,7 +346,7 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
       if (!id) {
         const nome = await chiediTesto({ titolo: 'Nuova scena per questa bozza', etichetta: 'Nome della scena', valore: b.nome, conferma: 'Crea e apri' });
         if (!nome) return;
-        const r = await salvaScena(collegaABozza(nuovaScena({ id: idScena(nome), nome: nome.slice(0, 120), dati, semplice: semplicePredefinita(dati) }), b.id));
+        const r = await salvaScena(collegaABozza(nuovaScena({ id: idScena(nome), nome: nome.slice(0, 120), dati, semplice: semplicePredefinita(dati), nebbiaConPg: dati.mappa.visuale.automatica_predefinita }), b.id));
         if (r.conflitto) throw new Error('una scena con questo nome esiste già: riprova');
         id = r.scena.id;
       } else {

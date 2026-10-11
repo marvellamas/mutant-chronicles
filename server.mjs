@@ -118,6 +118,7 @@ import { validaScena, riassuntoScena, ID_SCENA, FILE_MAPPA } from './src/mappa/s
 import { movimentoDelRound } from './src/mappa/annulla.js';
 import { vistaGiocatori } from './src/mappa/vista.js';
 import { mappaSemplice } from './src/mappa/semplice.js';
+import { apriNebbiaConPg } from './src/mappa/visuale.js';
 import { validaDiretta, direttaPerGiocatori, visibileAiGiocatori } from './src/mappa/diretta.js';
 import { avversariZoc } from './src/mappa/zoc.js';
 import { dimensioniImmagine } from './src/mappa/immagine.js';
@@ -877,7 +878,8 @@ async function movimentoDalTablet(req, res, cartelle) {
     if (aiuto && contesto.scontro?.id !== aiuto.ruolo.scontro) return { stato: 409, corpo: { ok: false, errore: 'La mappa in gioco non è quella dello scontro dell’Aiuto-master.' } };
     const r = eseguiMovimentoGiocatore({ scena, pezzi: contesto.pezzi, scontro: contesto.scontro, chiavePg, a: d.a, fascia: d.fascia, dati });
     if (!r.ok) return { stato: 422, corpo: { ok: false, errore: r.errore } };
-    const nuova = { ...r.scena, revisione: scena.revisione + 1, aggiornato: new Date().toISOString() };
+    // 12/10: «La nebbia si apre con i PG» anche quando il giocatore muove dal tablet (src/mappa/visuale.js → apriNebbiaConPg)
+    const nuova = { ...(apriNebbiaConPg(r.scena, dati) ?? r.scena), revisione: scena.revisione + 1, aggiornato: new Date().toISOString() };
     const errore = validaScena(nuova, dati);
     if (errore) return { stato: 500, corpo: { ok: false, errore: `scena non valida dopo il movimento: ${errore}` } };
     await scriviJson(dove, nuova);

@@ -77,7 +77,7 @@ export function pannelloScene(ctx, st, { ridisegna, apri, scontroAperto = undefi
       const nome = await chiediNome('Nuova scena (per esempio «Cripta di Mishima»)', '', 'Crea');
       if (!nome) return;
       operazione(st, ridisegna, async () => {
-        const s = await salvaOAvvisa(nuovaScena({ id: idScena(nome), nome, dati: ctx.dati, semplice: semplicePredefinita(ctx.dati) }), 'Nuova scena');
+        const s = await salvaOAvvisa(nuovaScena({ id: idScena(nome), nome, dati: ctx.dati, semplice: semplicePredefinita(ctx.dati), nebbiaConPg: ctx.dati.mappa.visuale.automatica_predefinita }), 'Nuova scena');
         if (s) { avviso(`Scena creata: ${s.nome}.`); apri(s.id); }
       });
     },

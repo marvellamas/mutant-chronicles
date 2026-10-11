@@ -48,3 +48,6 @@ export function trascinaBordo(stato, larghezza, totale, B) {
 
 /** Chiave del localStorage per questo schermo: la scelta di un televisore non vale per il portatile. */
 export const chiaveSchermo = (larghezza, altezza) => `mutant-mappa-disposizione:${Math.round(larghezza)}x${Math.round(altezza)}`;
+
+/** Etichetta del menu a tendina delle disposizioni nella barra della mappa: «Vista: Equilibrata». */
+export const etichettaVista = (disposizione) => `Vista: ${NOMI_DISPOSIZIONI[disposizione] ?? NOMI_DISPOSIZIONI[DISPOSIZIONI[1]] ?? disposizione}`;

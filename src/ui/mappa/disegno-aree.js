@@ -309,6 +309,8 @@ export function disegnaPorte(c, { scena, cam, info, porte, colori, regole = null
         c.beginPath(); c.moveTo(-r, -r); c.lineTo(r, r); c.moveTo(r, -r); c.lineTo(-r, r); c.stroke();
       }
     }
+    // 12/10: porta selezionata (strumento «Porta»): contorno evidente attorno al battente
+    if (p.selezionata) { c.strokeStyle = regole?.selezione ?? '#ffb000'; c.lineWidth = 3; c.setLineDash([]); c.strokeRect(bx - 5, by - 5, bw + 10, bh + 10); }
     c.restore();
     // la segreta resta segnata sul Q (solo il master): si trova a occhio anche se il battente è sottile
     if (p.segreta) {

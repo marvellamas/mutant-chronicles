@@ -65,7 +65,7 @@ export function dimensioniGriglia(mappa, griglia) {
  * colonne × righe (predefinite in data/mappa.json → scena); con l'immagine si calcolano dalla griglia. Nebbia
  * iniziale dai dati (§5: coperta).
  */
-export function nuovaScena({ id, nome, mappa = null, griglia = {}, colonne, righe, nebbia, dati, adesso = new Date(), semplice = undefined }) {
+export function nuovaScena({ id, nome, mappa = null, griglia = {}, colonne, righe, nebbia, dati, adesso = new Date(), semplice = undefined, nebbiaConPg = undefined }) {
   const D = dati.mappa;
   const g = { ...D.griglia.predefinita, ...griglia };
   const dim = mappa ? dimensioniGriglia(mappa, g) : { colonne: colonne ?? D.scena.colonne_predefinite, righe: righe ?? D.scena.righe_predefinite };
@@ -92,6 +92,8 @@ export function nuovaScena({ id, nome, mappa = null, griglia = {}, colonne, righ
     annulla: [],
     // «Mappa semplice» (N3, src/mappa/semplice.js): chi crea la scena dall'app passa il valore predefinito dei dati
     ...(typeof semplice === 'boolean' ? { semplice } : {}),
+    // «La nebbia si apre con i PG» (12/10): acceso di base per le scene nuove create dall'app
+    ...(typeof nebbiaConPg === 'boolean' ? { visuale: { automatica: nebbiaConPg } } : {}),
   };
 }
 

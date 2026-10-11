@@ -21,7 +21,8 @@
 //     (di ogni Q, per un ingombro grande) verso il centro di ogni Q entro il raggio, attraversando la griglia
 //     Q per Q (si vede il Q ostacolo, non oltre; fra due ostacoli in diagonale non si passa). Le luci (prossimo lotto:
 //     penombra, buio) entreranno con `luce`, una funzione del Q che potrà ridurre il raggio o togliere Q.
-import { daBase64, cella, impostaCella } from './celle.js';
+import { modoNebbia } from './semplice.js';
+import { daBase64, cella, impostaCella, inBase64 } from './celle.js';
 import { attraversa, lineeDi, bucaConPorte } from './muri-linee.js';
 import { dimensioni, celleToken } from './token.js';
 import { formaDi } from './forma.js';
@@ -292,3 +293,19 @@ export function nebbiaDopoVisuale(coperti64, visti, C, R) {
 // fase 2, lotto 5: un veicolo con un PG a bordo vede come un PG (i PG a bordo guardano dal mezzo)
 export const tokenPg = (scena) => scena.token.filter((t) => !t.nascosto && ((t.rif?.tipo === 'partecipante' && String(t.rif.id).startsWith('pg:'))
   || (t.passeggeri ?? []).some((p) => !p.nascosto && String(p.rif?.id).startsWith('pg:'))));
+
+/**
+ * La nebbia aperta dai PG dove sono adesso (12/10/2026): la scena con i Q che vedono usciti dalla nebbia, oppure null se
+ * non cambia nulla o l'interruttore «La nebbia si apre con i PG» è spento. Con «Mappa semplice» vale la sola linea di
+ * vista (muri, muri disegnati e porte chiuse la fermano); con la mappa completa anche luci e sensi speciali.
+ * Quello che è stato scoperto resta scoperto; il master può sempre ricoprire a mano.
+ * @param dati regole dell'app (dati.mappa: data/mappa.json)
+ */
+export function apriNebbiaConPg(scena, dati) {
+  const modo = modoNebbia(scena, dati);
+  if (!modo) return null;
+  const { colonne: C, righe: R } = scena.griglia;
+  const visti = visuale(scena, tokenPg(scena), ostacoliVista(scena, dati.mappa.porte, { perGiocatori: true }), dati.mappa.visuale, null, modo === 'completa' ? dati.mappa : null);
+  const m = nebbiaDopoVisuale(scena.nebbia.coperti, visti, C, R);
+  return m ? { ...scena, nebbia: { ...scena.nebbia, coperti: inBase64(m) } } : null;
+}

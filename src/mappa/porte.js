@@ -23,7 +23,7 @@
 // la sua riga (src/scontro.js → rigaPorta). Funzioni pure.
 import { daBase64, cella, impostaCella } from './celle.js';
 import { celleToken } from './token.js';
-import { lineeDi, bucaConPorte, aggancioSuLinea } from './muri-linee.js';
+import { lineeDi, bucaConPorte, aggancioSuLinea, distanzaPuntoSegmento, tagliaLinee } from './muri-linee.js';
 
 export const STATI_PORTA = ['aperta', 'chiusa', 'bloccata'];
 export const ORIENTAMENTI = ['orizzontale', 'verticale'];
@@ -297,4 +297,41 @@ export function muriPerDisegno(scena) {
   const m = daBase64(scena.muri);
   for (const p of scena.porte ?? []) impostaCella(m, C, R, p.q[0], p.q[1], false);
   return m;
+}
+
+// ---------------------------------------------------------------------------
+// 12/10/2026 (Marcello non riusciva a cancellare le porte): prima si toglievano solo con un clic sul loro Q, ma una
+// porta agganciata a un muro disegnato si disegna sul tratto, che può stare su un altro Q. Ora la porta si trova dove
+// la si vede (la sua geometria): un clic con lo strumento «Porta» la seleziona, la gomma toglie quelle che tocca.
+
+/** Gli estremi del battente in Q: [a, b]. */
+function estremiPorta(geo) {
+  const m = geo.larghezza / 2;
+  return [[geo.centro[0] - geo.direzione[0] * m, geo.centro[1] - geo.direzione[1] * m], [geo.centro[0] + geo.direzione[0] * m, geo.centro[1] + geo.direzione[1] * m]];
+}
+
+/** La porta sotto il punto p (in Q frazionari): quella il cui battente passa entro `raggio` Q (più mezzo spessore), o null. */
+export function portaSotto(scena, p, dati, raggio = 0.3) {
+  let migliore = null;
+  for (const porta of scena.porte ?? []) {
+    const geo = geometriaPorta(scena, porta, dati);
+    const [a, b] = estremiPorta(geo);
+    const d = distanzaPuntoSegmento(p, a, b);
+    if (d <= raggio + geo.spessore / 2 && (!migliore || d < migliore.d)) migliore = { porta, d };
+  }
+  return migliore?.porta ?? null;
+}
+
+/**
+ * Le porte toccate dalla gomma: il battente passa dentro la forma ({ tipo: 'rettangolo', x0, y0, x1, y1 } o
+ * { tipo: 'cerchio', centro, raggio }, in Q), oppure il Q della porta sta nel rettangolo.
+ */
+export function porteNellaForma(scena, forma, dati) {
+  return (scena.porte ?? []).filter((porta) => {
+    const [a, b] = estremiPorta(geometriaPorta(scena, porta, dati));
+    if (tagliaLinee([{ id: 'porta', punti: [a, b], spessore: 0.1 }], forma).toccate.length) return true;
+    const c = [porta.q[0] + 0.5, porta.q[1] + 0.5];
+    return forma.tipo === 'rettangolo' ? c[0] >= forma.x0 && c[0] <= forma.x1 && c[1] >= forma.y0 && c[1] <= forma.y1
+      : Math.hypot(c[0] - forma.centro[0], c[1] - forma.centro[1]) <= forma.raggio;
+  });
 }

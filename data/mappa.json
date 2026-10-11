@@ -599,7 +599,8 @@
     "raggio_q": null,
     "metrica": "quadretti",
     "_nota_raggio": "A.142 (decisione 146): con luce sufficiente la vista dei PG non ha un limite fisso in Q (raggio_q null: tutta la griglia); un numero la limiterebbe per ogni luce. I raggi per luce stanno in luci.raggio_scoperta_q.",
-    "automatica_predefinita": false,
+    "automatica_predefinita": true,
+    "_nota_automatica": "«La nebbia si apre con i PG» (12/10/2026): acceso di base per le scene nuove e per quelle nate da quando c'è «Mappa semplice» che non hanno ancora scelto; le scene più vecchie restano spente finché il master non lo cambia. Con «Mappa semplice» la nebbia si apre con la sola linea di vista (muri e porte chiuse la fermano); con la mappa completa contano anche luci e sensi speciali.",
     "opacita_esplorate": 0.5,
     "_nota_esplorate": "Nebbia automatica (interruttore del master, spento di default): i Q visti dai PG escono dalla nebbia e restano scoperti; per i giocatori quelli scoperti ma non visti in questo momento sono più scuri (opacità sopra) e senza i token non PG. Prossimo lotto: le luci (penombra, buio) agganciate al parametro «fuori» della visuale.",
     "colori": {
