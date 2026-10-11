@@ -14,7 +14,8 @@ import {
 } from '../equipaggiamento.js';
 import { pesoVoce } from '../carico.js';
 
-import { GRUPPI_EQUIPAGGIAMENTO, SEZIONI_INVENTARIO, sezioneInventario } from '../palette.js';
+import { GRUPPI_EQUIPAGGIAMENTO } from '../palette.js';
+import { colonneInventario, preselezioneAggiungi } from '../scheda-vista.js';
 import { tipoRiserva, alimentazione as alimentazioneRiserva, nomeRiserva, nomeAlimentazione } from '../fonti.js';
 import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 
@@ -33,24 +34,60 @@ export function renderEquipaggiamento(ctx) {
 // ---------------------------------------------------------------------------
 // Elenco
 
+/** Stato del pannello «Aggiungi oggetto», ricordato fra i ridisegni (ctx.ui.equip). */
+function statoAggiungi(ui) {
+  ui.equip ??= { tipo: null, catalogo: null, famiglia: null, rif: null, cerca: '', pers: { nome: '', tipo: 'altro', abilita: '', danno: '', ar: '', potenza: '', energia: '', capacita: '', peso: '' } };
+  return ui.equip;
+}
+
+/**
+ * «Aggiungi» accanto a una categoria dell'Inventario (S32, 11/10/2026): apre «Aggiungi oggetto» / «Compra» con il Tipo
+ * della categoria già scelto (e, per le categorie di un capitolo, solo i suoi oggetti), e porta lì la pagina.
+ */
+function bottoneAggiungiCategoria(ctx, idSezione, etichetta = 'Aggiungi') {
+  const p = preselezioneAggiungi(idSezione);
+  if (!p) return null;
+  return h('button', {
+    type: 'button', class: 'btn btn-piccolo btn-aggiungi-categoria', title: `Aggiungi o compra un oggetto di «${p.titolo}»: si apre «Aggiungi oggetto» con il Tipo già scelto`,
+    onclick: (e) => {
+      // dentro il <summary>: il tocco non deve aprire o chiudere il gruppo
+      e.preventDefault(); e.stopPropagation?.();
+      Object.assign(statoAggiungi(ctx.ui), { tipo: p.tipo, catalogo: null, famiglia: null, rif: null, cerca: '', cataloghiRif: p.cataloghi, sezione: p.titolo });
+      ctx.ridisegna?.();
+      globalThis.setTimeout?.(() => globalThis.document?.querySelector?.('.aggiungi-equip')?.scrollIntoView?.({ behavior: 'smooth', block: 'start' }), 0);
+    },
+  }, etichetta);
+}
+
+/** Le categorie dell'Inventario senza oggetti: i loro «Aggiungi» in una riga (S32). */
+function categorieVuote(ctx, vuote) {
+  if (!vuote.length) return null;
+  return h('p', { class: 'categorie-vuote' }, h('span', { class: 'nota' }, 'Aggiungi in una categoria ancora vuota: '),
+    vuote.map((v) => bottoneAggiungiCategoria(ctx, v.id, `+ ${v.titolo}`)));
+}
+
 function elencoVoci(ctx) {
   const { dati, voci } = ctx;
   const cat = catalogo(dati);
   const risolte = voci.map((v) => risolvi(v, cat));
-  if (!risolte.length) return h('p', { class: 'vuoto' }, 'Nessun oggetto. Aggiungili dal catalogo o come oggetti personalizzati.');
+  if (!risolte.length) {
+    return h('div', {}, h('p', { class: 'vuoto' }, 'Nessun oggetto. Aggiungili dal catalogo o come oggetti personalizzati.'),
+      ctx.inventario ? categorieVuote(ctx, colonneInventario(risolte).vuote) : null);
+  }
   const cambia = (uid, modifica) => ctx.aggiorna(voci.map((v) => (v.uid === uid ? { ...v, ...modifica } : v)));
   // gruppi per tipo (docs/palette.md) o, nell'Inventario, sezioni per famiglia: espandibili, con lo
   // stato ricordato nel browser. A gruppo chiuso gli oggetti attivi restano visibili in una riga
   // compatta: cambiano i valori della scheda.
   const chiave = ctx.inventario ? 'sezioniInventarioChiuse' : 'gruppiEquipChiusi';
   const chiusi = new Set(leggiImpostazioni()[chiave] ?? []);
-  const gruppi = ctx.inventario
-    ? SEZIONI_INVENTARIO.map((s) => ({ id: s.id, titolo: s.titolo, colore: s.colore, colonna: s.colonna, sotto: !!s.sottosezioneDi, voci: risolte.filter((r) => sezioneInventario(r)?.id === s.id) }))
+  const gruppi = ctx.inventario ? []
     : GRUPPI_EQUIPAGGIAMENTO.map((g) => ({ id: g.tipo, titolo: g.titolo, colore: g.colore, voci: risolte.filter((r) => (TIPI.includes(r.tipo) ? r.tipo : 'altro') === g.tipo) }));
   const sezione = (g) => {
     const delGruppo = g.voci;
     if (!delGruppo.length) return null;
-    const aperto = !chiusi.has(g.id);
+    // nell'Inventario lo stesso gruppo c'è in due colonne: la chiave dice quale
+    const idGruppo = g.chiave ?? g.id;
+    const aperto = !chiusi.has(idGruppo);
     const attivi = delGruppo.filter((r) => r.attivo);
     return h('section', { class: `gruppo-equip${aperto ? '' : ' chiuso'}${g.sotto ? ' sottosezione' : ''}` },
       h('details', {
@@ -58,22 +95,41 @@ function elencoVoci(ctx) {
         ontoggle: (e) => {
           if (e.target.open === aperto) return; // il toggle iniziale non è un cambio
           const nuovi = new Set(leggiImpostazioni()[chiave] ?? []);
-          if (e.target.open) nuovi.delete(g.id); else nuovi.add(g.id);
+          if (e.target.open) nuovi.delete(idGruppo); else nuovi.add(idGruppo);
           salvaImpostazioni({ ...leggiImpostazioni(), [chiave]: [...nuovi] });
           ctx.ridisegna?.();
         },
       },
-      h('summary', {}, h('span', { class: 'etichetta-cat', style: `--cat: var(--${g.colore})` }, g.titolo), ` (${delGruppo.length})`),
+      h('summary', {}, h('span', { class: 'etichetta-cat', style: `--cat: var(--${g.colore})` }, g.titolo), ` (${delGruppo.length})`,
+        // S32: «Aggiungi» accanto a ogni categoria dell'Inventario
+        ctx.inventario ? bottoneAggiungiCategoria(ctx, g.id) : null),
       h('ul', { class: 'elenco-equip' }, delGruppo.map((r) => voceEquip(ctx, r, risolte, cambia)))),
       !aperto && attivi.length ? h('ul', { class: 'elenco-compatto', 'aria-label': `${g.titolo}: oggetti attivi` }, attivi.map((r) => h('li', {},
         h('strong', {}, r.nome), h('small', { class: 'sigla' }, ` · ${NOMI_STATI[r.voce.stato] ?? ''}${r.voce.quantita > 1 ? ` · ×${r.voce.quantita}` : ''}`)))) : null);
   };
-  // Inventario (richiesta di Davide del 02/10): due colonne con le sezioni nell'ordine dei dati
-  // (src/palette.js → SEZIONI_INVENTARIO, «colonna»); su schermi stretti una colonna sola, prima la
-  // sinistra poi la destra. Nel wizard i gruppi restano in una colonna.
+  // Inventario (S29–S32, 11/10/2026): due colonne, «Addosso» (indossato, impugnato, portato) e «Zaino e Deposito», ognuna
+  // con le categorie nell'ordine dei dati (src/palette.js → SEZIONI_INVENTARIO); ogni gruppo si riduce con la freccia;
+  // le colonne non scorrono per conto loro, scorre la pagina. Su schermi stretti una colonna sola. Nel wizard i gruppi
+  // restano in una colonna.
   if (ctx.inventario) {
-    const colonna = (lato) => h('div', { class: `colonna-inventario ${lato}` }, gruppi.filter((g) => (g.colonna ?? 'destra') === lato).map(sezione));
-    return h('div', { class: 'gruppi-equip inventario-colonne' }, colonna('sinistra'), colonna('destra'));
+    const { colonne, vuote } = colonneInventario(risolte);
+    const colonna = (c) => {
+      const idColonna = `colonna:${c.id}`;
+      const aperta = !chiusi.has(idColonna);
+      return h('details', {
+        class: `colonna-inventario ${c.id}`, open: aperta,
+        ontoggle: (e) => {
+          if (e.target.open === aperta) return;
+          const nuovi = new Set(leggiImpostazioni()[chiave] ?? []);
+          if (e.target.open) nuovi.delete(idColonna); else nuovi.add(idColonna);
+          salvaImpostazioni({ ...leggiImpostazioni(), [chiave]: [...nuovi] });
+          ctx.ridisegna?.();
+        },
+      },
+      h('summary', { class: 'titolo-colonna-inventario', title: c.nota }, h('strong', {}, c.titolo), h('small', { class: 'sigla' }, ` (${c.quanti}) · ${c.nota}`)),
+      c.sezioni.length ? c.sezioni.map(sezione) : h('p', { class: 'vuoto' }, 'Niente.'));
+    };
+    return h('div', { class: 'gruppi-equip' }, h('div', { class: 'inventario-colonne' }, colonne.map(colonna)), categorieVuote(ctx, vuote));
   }
   return h('div', { class: 'gruppi-equip' }, gruppi.map(sezione));
 }
@@ -290,8 +346,7 @@ function editorEffetti(ctx, v, cambia) {
 
 function pannelloAggiungi(ctx) {
   const { dati, ui } = ctx;
-  ui.equip ??= { tipo: null, catalogo: null, famiglia: null, rif: null, cerca: '', pers: { nome: '', tipo: 'altro', abilita: '', danno: '', ar: '', potenza: '', energia: '', capacita: '', peso: '' } };
-  const s = ui.equip;
+  const s = statoAggiungi(ui);
   const op = opzioniCascata(dati, s);
   const scelto = s.rif ? catalogo(dati).perRif.get(s.rif) : null;
   const imposta = (modifica) => { Object.assign(s, modifica); ctx.ridisegna(); };
@@ -303,7 +358,7 @@ function pannelloAggiungi(ctx) {
   const mostraRisultati = () => {
     const trovati = cercaNelCatalogo(dati, s.cerca);
     risultati.replaceChildren(...trovati.map((o) => h('li', {}, h('button', {
-      type: 'button', class: 'btn', onclick: () => imposta({ tipo: o.tipo, catalogo: o.catalogo, famiglia: o.famiglia, rif: o.rif, cerca: '' }),
+      type: 'button', class: 'btn', onclick: () => imposta({ tipo: o.tipo, catalogo: o.catalogo, famiglia: o.famiglia, rif: o.rif, cerca: '', cataloghiRif: null, sezione: null }),
     }, o.nome, h('small', { class: 'sigla' }, ` · ${o.famiglia} · ${o.catalogo}`)))));
     if (s.cerca.trim().length >= 2 && !trovati.length) risultati.append(h('li', { class: 'vuoto' }, 'Nessun oggetto con questo nome nel catalogo.'));
   };
@@ -325,8 +380,11 @@ function pannelloAggiungi(ctx) {
     h('label', { class: 'campo' }, h('span', {}, 'Cerca per nome'),
       h('input', { type: 'search', value: s.cerca, placeholder: 'es. spada, alabarda, armatura', oninput: (e) => { s.cerca = e.target.value; mostraRisultati(); } })),
     risultati,
+    // S32: arrivati da «Aggiungi» di una categoria, l'elenco mostra solo quella
+    s.cataloghiRif && s.sezione ? h('p', { class: 'nota filtro-categoria' }, `Solo «${s.sezione}» `,
+      h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Mostra tutto il Tipo', onclick: () => imposta({ cataloghiRif: null, sezione: null, catalogo: null, famiglia: null, rif: null }) }, '✕ tutto il catalogo')) : null,
     h('div', { class: 'cascata' },
-      selettore('Tipo', s.tipo, op.tipi, (v) => imposta({ tipo: v, catalogo: null, famiglia: null, rif: null }), (t) => NOMI_TIPI[t]),
+      selettore('Tipo', s.tipo, op.tipi, (v) => imposta({ tipo: v, catalogo: null, famiglia: null, rif: null, cataloghiRif: null, sezione: null }), (t) => NOMI_TIPI[t]),
       selettore('Catalogo', s.catalogo, op.cataloghi, (v) => imposta({ catalogo: v, famiglia: null, rif: null })),
       selettore('Famiglia', s.famiglia, op.famiglie, (v) => imposta({ famiglia: v, rif: null })),
       selettore('Profilo', s.rif, op.profili.map((o) => o.rif), (v) => imposta({ rif: v }), (r) => op.profili.find((o) => o.rif === r)?.nome ?? r)),

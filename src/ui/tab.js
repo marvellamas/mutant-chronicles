@@ -425,6 +425,7 @@ function testataComune(ctx) {
 function colonnaRisorse(ctx, { tab = 'identita' } = {}) {
   const dc = ctx.tab.tab.find((x) => x.id === 'combattimento')?.dati ?? null;
   return [
+    tab === 'inventario' ? riquadroCarico(ctx, { compatto: true }) : null,
     ...riquadriPvPm(ctx, { compatti: true, ferite: true }),
     tab === 'combattimento'
       ? (dc ? h('div', { class: 'ferite-sotto-pv' }, affaticamentoCorruzione(ctx, dc)) : null)
@@ -691,13 +692,30 @@ function rigaNec(ctx, r, x) {
  * la provenienza al tooltip (cosa pesa, cosa è escluso perché nel deposito comune, i pesi da
  * definire); soglie, penalità e peso aggiuntivo della sessione sotto. Era nella tab Combattimento.
  */
-function riquadroCarico(ctx) {
+function riquadroCarico(ctx, { compatto = false } = {}) {
   const c = ctx.tab.scheda.carico;
   if (!c) return null;
   const kg = (v) => v.toLocaleString('it-IT', { maximumFractionDigits: 1 });
   const penalita = !!c.livello.effetto;
   const forza = ctx.tab.scheda.caratteristiche.FOR.valore;
   const esclusi = c.esclusi.length;
+  const soglie = `Ordinario fino a ${kg(c.soglie.ordinario)} kg, Sovraccarico fino a ${kg(c.soglie.massimo)} kg; spingere o trascinare su terreno piano fino a ${kg(c.soglie.spinta)} kg (FOR ${forza}${c.soglie.talento ? `, soglie raddoppiate da ${c.soglie.talento}` : ''}).`;
+  const promemoria = `${c.parziale && !penalita ? 'Sul peso noto nessuna penalità; con i pesi da definire il carico reale può essere maggiore: decide il Direttore.' : c.livello.promemoria}${c.livello.movimento_q && c.passo !== null ? ` Passo ${c.passo} Q, prima delle altre penalità.` : ''}`;
+  // S28 (11/10/2026): compatto nella colonna di sinistra, sopra i PV; soglie e promemoria nel «?» (la penalità resta scritta)
+  if (compatto) {
+    return h('div', { class: `contatore-tavolo compatto riquadro-carico${penalita ? ' oltre' : ''}` },
+      h('h3', {}, 'Carico', infoValore('?', { titolo: 'Carico (§5.2.6)', sezioni: [{ testo: soglie }, { testo: promemoria }] }, { classe: 'info-gradi' })),
+      h('p', { class: `valore-tavolo${penalita ? ' oltre' : ''}` },
+        infoValore([h('strong', {}, kg(c.peso))], {
+          titolo: 'Peso trasportato',
+          sottotitolo: `${c.parziale ? 'Totale parziale: un peso mancante non vale 0 kg (E&L 4, A.30). ' : ''}${esclusi ? `${esclusi} ${esclusi === 1 ? 'oggetto' : 'oggetti'} nel deposito comune, fuori dal carico.` : ''}`.trim() || null,
+          provenienza: provenienzaCarico(c),
+        }, { classe: 'valore-carico' }),
+        h('span', {}, ` / ${kg(c.soglie.ordinario)} kg`)),
+      h('p', { class: penalita ? 'avviso-carico' : 'nota' }, c.parziale ? `almeno ${c.livello.nome}${c.parziale ? ' (pesi da definire)' : ''}` : c.livello.nome, penalita ? `: ${promemoria}` : ''),
+      h('label', { class: 'campo-inline peso-extra', title: 'Peso aggiuntivo: bottino, una creatura trasportata con il suo equipaggiamento…' }, '+ kg ',
+        h('input', { type: 'number', min: 0, step: 0.5, value: c.pesoExtra, 'aria-label': 'Peso aggiuntivo in kg', onchange: (e) => ctx.azioni.imposta('caricoExtra', Number(e.target.value) || 0) })));
+  }
   return h('div', { class: 'contatore-tavolo riquadro-carico' },
     h('h3', {}, 'Carico (§5.2.6)'),
     // E&L 4 (A.30): un peso mancante è «da definire», non 0 kg; il totale noto è parziale e il livello
@@ -721,21 +739,22 @@ function riquadroCarico(ctx) {
 }
 
 /**
- * Tab Inventario (docs/layout-sd.md, pezzo 2): l'unica casa degli oggetti del personaggio. In testa
- * carico e crediti; poi gli avvisi dell'equipaggiamento, il riquadro Integrità (spostato dalla tab
- * Combattimento) e le sezioni per famiglia, con lo stato di ogni oggetto (compreso il deposito
- * comune), PI e Ripara nella riga; in fondo il catalogo, con «Aggiungi» e «Compra».
+ * Tab Inventario (docs/layout-sd.md, pezzo 2; ritocchi dell'11/10/2026, S27–S32): l'unica casa degli oggetti del
+ * personaggio. Il Carico sta nella colonna di sinistra, sopra i PV; i Crediti nella testata. Gli avvisi
+ * dell'equipaggiamento, poi gli oggetti in due colonne, «Addosso» e «Zaino e Deposito», per categoria, con lo stato
+ * di ogni oggetto, PI e Ripara nella riga e «Aggiungi» accanto a ogni categoria; sotto il catalogo, con «Aggiungi» e
+ * «Compra»; in basso il riquadro Integrità.
  */
 function tabInventario(ctx) {
   const d = ctx.tab.tab.find((t) => t.id === 'combattimento')?.dati ?? null;
   const applicata = dotazioneApplicata(ctx.scelte.equipaggiamento);
   return [
-    // S27 (11/10/2026): i Crediti stanno nella testata, accanto al titolo
-    h('div', { class: 'griglia-tavolo testa-inventario' }, riquadroCarico(ctx)),
+    // S27, S28 (11/10/2026): i Crediti stanno nella testata; il Carico nella colonna di sinistra, sopra i PV (qui solo
+    // dove la colonna non c'è: telefono con le tab in basso)
+    h('div', { class: 'griglia-tavolo testa-inventario pv-pm-identita' }, riquadroCarico(ctx)),
     d?.avvisiEquipaggiamento?.length ? h('div', { class: 'riquadro attenzione' },
       h('p', {}, h('strong', {}, 'Equipaggiamento da controllare (avvisi, non blocchi: decide il master):')),
       h('ul', {}, d.avvisiEquipaggiamento.map((a) => h('li', {}, a)))) : null,
-    sezioneIntegrita(ctx),
     sezione('Oggetti',
       h('p', { class: 'nota' }, 'Solo gli oggetti impugnati, imbracciati o indossati cambiano i valori. Il deposito comune tiene l’oggetto fuori dal carico e fuori dal tavolo.',
         applicata ? ' La dotazione iniziale (§2.16) si cambia dal passo Equipaggiamento della creazione.' : null),
@@ -746,6 +765,8 @@ function tabInventario(ctx) {
         inventario: true, rigaExtra: (r) => [piRigaInventario(ctx, r), tavoloRigaInventario(ctx, r)],
         compra: ctx.azioni.compra, crediti: ctx.sessione.crediti, storico: ctx.azioni.storico,
       })),
+    // S30: l'Integrità degli oggetti in basso
+    sezioneIntegrita(ctx),
   ];
 }
 

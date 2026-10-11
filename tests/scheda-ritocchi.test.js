@@ -8,7 +8,7 @@ import { datiReali, copia } from './helpers.js';
 import { preparaTab } from '../src/stampa.js';
 import { deserializzaPersonaggio, normalizza } from '../src/character.js';
 import { massimiSessione, allineaSessione, penalitaSessione } from '../src/sessione.js';
-import { datiTestata, statiAttiviVista, contoVa, formulaVa, modificatoriAttivi, sintesiMani, sintesiProtezioni, sintesiSintonizzazione, inColonne } from '../src/scheda-vista.js';
+import { datiTestata, statiAttiviVista, contoVa, formulaVa, modificatoriAttivi, sintesiMani, sintesiProtezioni, sintesiSintonizzazione, inColonne, colonneInventario, colonnaInventario, preselezioneAggiungi } from '../src/scheda-vista.js';
 
 installaDomFinto();
 globalThis.localStorage ??= { getItem: () => null, setItem: () => {}, removeItem: () => {} };
@@ -380,4 +380,151 @@ test('S25: gli Artefatti sono in due colonne, «Addosso» e «Zaino e Deposito»
   assert.equal(nomi(colonne[1]).length, 1);
   assert.deepEqual(inColonne([{ uid: 'a' }, { uid: 'b' }, { uid: 'c' }], (x) => ({ a: { voce: { stato: 'trasportato' } }, b: { voce: { stato: 'zaino' } }, c: { voce: { stato: 'deposito' }, deposito: true } })[x.uid]).map((c) => [c.id, c.voci.map((x) => x.uid)]),
     [['addosso', ['a']], ['zaino', ['b', 'c']]]);
+});
+
+// ---------------------------------------------------------------------------
+// S27–S32: Inventario
+
+const { catalogo, risolvi, opzioniCascata } = await import('../src/equipaggiamento.js');
+const { SEZIONI_INVENTARIO } = await import('../src/palette.js');
+const risolte = (ctx) => { const cat = catalogo(dati); return ctx.scelte.equipaggiamento.map((v) => risolvi(v, cat)); };
+
+test('S29: gli oggetti sono in due colonne, «Addosso» e «Zaino e Deposito», con i gruppi giusti', () => {
+  for (const f of ESEMPI) {
+    // qualcosa nello zaino e qualcosa nel deposito comune, il resto com'è
+    const ctx = contesto(f, { attiva: 'inventario', scelte: (c) => { c.equipaggiamento = c.equipaggiamento.map((v, i) => (i % 5 === 1 ? { ...v, stato: 'deposito' } : v)); return c; } });
+    const lista = risolte(ctx);
+    const { colonne } = colonneInventario(lista);
+    assert.deepEqual(colonne.map((c) => [c.id, c.titolo]), [['addosso', 'Addosso'], ['zaino', 'Zaino e Deposito']]);
+    // ogni oggetto in una colonna sola, quella del suo stato
+    assert.equal(colonne[0].quanti + colonne[1].quanti, lista.length, f);
+    for (const r of lista) {
+      const attesa = r.deposito || r.voce.stato === 'zaino' ? 'zaino' : 'addosso';
+      assert.equal(colonnaInventario(r), attesa, `${f}: ${r.nome} (${r.voce.stato ?? 'con sé'})`);
+      const c = colonne.find((x) => x.id === attesa);
+      assert.equal(c.sezioni.filter((s) => s.voci.includes(r)).length, 1, `${f}: ${r.nome} in una categoria sola`);
+    }
+    // le categorie sono quelle dell'Inventario, nel loro ordine, e solo quelle con oggetti
+    const ordine = SEZIONI_INVENTARIO.map((s) => s.id);
+    for (const c of colonne) {
+      assert.ok(c.sezioni.every((s) => s.voci.length > 0));
+      assert.deepEqual(c.sezioni.map((s) => s.id), ordine.filter((id) => c.sezioni.some((s) => s.id === id)));
+    }
+    assert.ok(colonne[1].quanti > 0, `${f}: qualcosa nel deposito`);
+    // la pagina: due colonne riducibili, con dentro i gruppi riducibili
+    const r = resa(ctx);
+    const viste = r.classe('colonna-inventario');
+    assert.deepEqual(viste.map((n) => n.tagName), ['DETAILS', 'DETAILS'], 'ogni colonna si riduce con la freccia');
+    assert.match(viste[0].children[0].textContent, /^Addosso/);
+    assert.match(viste[1].children[0].textContent, /^Zaino e Deposito/);
+    for (const [i, c] of colonne.entries()) {
+      const gruppi = viste[i].querySelectorAll('.gruppo-equip');
+      assert.equal(gruppi.length, c.sezioni.length, `${f}: gruppi della colonna ${c.titolo}`);
+      assert.ok(gruppi.every((g) => g.children[0].tagName === 'DETAILS'), 'ogni gruppo si riduce con la freccia');
+      assert.equal(viste[i].querySelectorAll('.voce-equip').length, c.quanti, 'una riga per oggetto');
+    }
+  }
+});
+
+test('S29: «Con sé» (oggetti senza stati) è portato e sta in «Addosso»; zaino e deposito nell’altra colonna', () => {
+  assert.equal(colonnaInventario({ voce: { stato: null } }), 'addosso');
+  for (const stato of ['impugnata', 'imbracciato', 'indossata', 'in_uso', 'installato', 'pronta', 'trasportato']) assert.equal(colonnaInventario({ voce: { stato } }), 'addosso', stato);
+  assert.equal(colonnaInventario({ voce: { stato: 'zaino' } }), 'zaino');
+  assert.equal(colonnaInventario({ voce: { stato: 'deposito' }, deposito: true }), 'zaino');
+});
+
+test('S32: «Aggiungi» accanto a ogni categoria apre «Aggiungi oggetto» con il Tipo già scelto', () => {
+  const ctx = contesto(TORVALD, { attiva: 'inventario' });
+  const r = resa(ctx);
+  const gruppi = r.classe('gruppo-equip');
+  assert.ok(gruppi.length > 0);
+  for (const g of gruppi) assert.equal(g.children[0].children[0].querySelectorAll('.btn-aggiungi-categoria').length, 1, 'un «Aggiungi» nell’intestazione di ogni categoria');
+  // le categorie vuote hanno il loro «Aggiungi» sotto le colonne: nessuna categoria resta senza
+  const { colonne, vuote } = colonneInventario(risolte(ctx));
+  const conOggetti = new Set(colonne.flatMap((c) => c.sezioni.map((s) => s.id)));
+  assert.equal(conOggetti.size + vuote.length, SEZIONI_INVENTARIO.length);
+  assert.equal((r.classe('categorie-vuote')[0]?.querySelectorAll('.btn-aggiungi-categoria') ?? []).length, vuote.length);
+  // Armi: il Tipo è preselezionato e la pagina si ridisegna
+  const armi = gruppi.find((g) => g.querySelectorAll('.etichetta-cat')[0].textContent === 'Armi');
+  clic(armi.querySelectorAll('.btn-aggiungi-categoria')[0]);
+  assert.equal(ctx.ui.equip.tipo, 'arma_ravvicinata');
+  assert.equal(ctx.ui.equip.catalogo, null);
+  assert.equal(ctx.ui.equip.rif, null);
+  assert.deepEqual(ctx.chiamate.at(-1), ['ridisegna']);
+  const dopo = resa(ctx);
+  const tipo = dopo.classe('cascata')[0].children[0].tutti().filter((n) => n.tagName === 'OPTION' && n.selected);
+  assert.deepEqual(tipo.map((n) => n.value), ['arma_ravvicinata'], 'il Tipo risulta scelto nel pannello');
+});
+
+test('S32: la preselezione di ogni categoria dà un Tipo del catalogo; le categorie di un capitolo mostrano solo i loro oggetti', () => {
+  const tipi = opzioniCascata(dati).tipi;
+  for (const s of SEZIONI_INVENTARIO) {
+    const p = preselezioneAggiungi(s.id);
+    assert.equal(p.tipo, s.tipi[0], s.id);
+    assert.ok(tipi.includes(p.tipo), `${s.id}: il Tipo ${p.tipo} è nel catalogo`);
+    const op = opzioniCascata(dati, { tipo: p.tipo, cataloghiRif: p.cataloghi });
+    assert.ok(op.cataloghi.length > 0, `${s.id}: c'è almeno un catalogo da cui scegliere`);
+  }
+  assert.equal(preselezioneAggiungi('inesistente'), null);
+  // Esplorazione: solo gli oggetti del suo capitolo, non tutti gli «altro»
+  const p = preselezioneAggiungi('esplorazione');
+  assert.deepEqual([p.tipo, p.cataloghi], ['altro', ['esplorazione']]);
+  const cat = catalogo(dati).oggetti.filter((o) => !o.modulo_di);
+  const famiglie = (opz) => { const a = opzioniCascata(dati, opz); return a.cataloghi.flatMap((c) => opzioniCascata(dati, { ...opz, catalogo: c }).famiglie); };
+  const sue = new Set(cat.filter((o) => o.tipo === 'altro' && String(o.rif).startsWith('esplorazione:')).map((o) => o.famiglia));
+  assert.deepEqual(new Set(famiglie({ tipo: 'altro', cataloghiRif: ['esplorazione'] })), sue);
+  assert.ok(new Set(famiglie({ tipo: 'altro' })).size > sue.size, 'senza filtro il Tipo «altro» ha più famiglie');
+  // senza filtro la cascata è quella di sempre
+  assert.deepEqual(opzioniCascata(dati, { tipo: 'altro', cataloghiRif: null }), opzioniCascata(dati, { tipo: 'altro' }));
+});
+
+test('S27, S28, S30: nell’Inventario niente Crediti; il Carico solo qui, sopra i PV; l’Integrità in basso', () => {
+  const ctx = contesto(TORVALD, { attiva: 'inventario' });
+  const r = resa(ctx);
+  assert.equal(r.classe('riquadro-crediti').length, 0);
+  const colonna = r.classe('colonna-risorse')[0];
+  assert.match(colonna.children[0].className, /riquadro-carico/, 'il Carico è il primo riquadro della colonna');
+  assert.match(colonna.children[1].className, /riquadro-pv/, 'subito sopra i PV');
+  const c = ctx.tab.scheda.carico;
+  assert.ok(colonna.children[0].textContent.includes(c.peso.toLocaleString('it-IT', { maximumFractionDigits: 1 })), 'il peso calcolato');
+  assert.ok(colonna.children[0].textContent.includes(c.livello.nome), 'il livello di carico');
+  for (const attiva of TAB.filter((t) => t !== 'inventario')) assert.equal(resa(contesto(TORVALD, { attiva })).classe('riquadro-carico').length, 0, `${attiva}: niente Carico`);
+  // Integrità dopo gli oggetti e dopo «Aggiungi oggetto»
+  const [oggetti, aggiungi, integrita] = ['inventario-colonne', 'aggiungi-equip', 'sezione-integrita'].map((k) => r.tutti.indexOf(r.classe(k)[0]));
+  assert.ok(oggetti >= 0 && aggiungi > oggetti && integrita > aggiungi, `ordine: oggetti ${oggetti}, aggiungi ${aggiungi}, integrità ${integrita}`);
+});
+
+// ---------------------------------------------------------------------------
+// Nessun valore calcolato cambiato; la stampa non cambia
+
+test('rendere le tab non tocca i valori calcolati: scheda e dati delle tab restano identici, per ogni PG e ogni tab', () => {
+  for (const f of ESEMPI) {
+    for (const cambia of [null, conFerita]) {
+      const ctx = contesto(f, { cambia });
+      const prima = JSON.stringify({ scheda: ctx.tab.scheda, tab: ctx.tab.tab, sessione: ctx.sessione, massimi: ctx.massimi, scelte: ctx.scelte });
+      for (const attiva of TAB) resa({ ...ctx, attiva });
+      assert.equal(JSON.stringify({ scheda: ctx.tab.scheda, tab: ctx.tab.tab, sessione: ctx.sessione, massimi: ctx.massimi, scelte: ctx.scelte }), prima, f);
+      // e un secondo calcolo dà gli stessi valori: le funzioni di disposizione non lasciano tracce
+      const p = deserializzaPersonaggio(readFileSync(new URL(f, cartella), 'utf8'));
+      const di_nuovo = preparaTab({ creazione: ctx.scelte, livelli: p.livelli }, dati, { sessione: ctx.sessione });
+      assert.equal(JSON.stringify(di_nuovo.scheda), JSON.stringify(ctx.tab.scheda), f);
+    }
+  }
+});
+
+test('la scheda stampata non dipende dai riquadri tolti: stessi fogli e stessi dati, con o senza la scheda a tab resa', async () => {
+  const { preparaStampa } = await import('../src/stampa.js');
+  for (const f of ESEMPI) {
+    const p = deserializzaPersonaggio(readFileSync(new URL(f, cartella), 'utf8'));
+    const personaggio = { creazione: normalizza(p.creazione, dati).scelte, livelli: p.livelli };
+    const prima = JSON.stringify(preparaStampa(copia(personaggio), dati).fogli);
+    for (const attiva of TAB) resa(contesto(f, { attiva }));
+    const dopo = preparaStampa(copia(personaggio), dati);
+    assert.equal(JSON.stringify(dopo.fogli), prima, f);
+    // i fogli che leggevano dagli stessi dati dei riquadri tolti ci sono ancora, con i loro valori
+    const combattimento = dopo.fogli.find((x) => x.id === 'combattimento').dati;
+    assert.ok(combattimento.stati.length > 0 && combattimento.affaticamento.length > 0, `${f}: Stati e Affaticamento nel foglio 3`);
+    assert.ok(dopo.fogli.find((x) => x.id === 'inventario'), `${f}: foglio Inventario`);
+    assert.ok(dopo.fogli.find((x) => x.id === 'identita').dati.movimento, `${f}: Movimento nel foglio 1`);
+  }
 });

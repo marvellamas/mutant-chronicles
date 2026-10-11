@@ -2478,3 +2478,15 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 @container (max-width: 34rem) {
   .artefatti-colonne { grid-template-columns: minmax(0, 1fr); }
 }
+/* S27–S32: Inventario in due colonne «Addosso» e «Zaino e Deposito», senza scorrimento interno */
+.colonna-inventario { max-height: none; overflow: visible; padding-right: 0; }
+.titolo-colonna-inventario { cursor: pointer; font-size: 1rem; padding: 0.3rem 0.2rem; border-bottom: 2px solid var(--bordo); margin-bottom: 0.4rem; }
+.titolo-colonna-inventario strong { text-transform: uppercase; letter-spacing: 0.04em; }
+.btn-aggiungi-categoria { margin-left: 0.5rem; min-height: 28px; }
+.categorie-vuote { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem; margin: 0.6rem 0 0; }
+.categorie-vuote .btn-aggiungi-categoria { margin-left: 0; }
+.filtro-categoria { margin: 0.3rem 0; }
+.riquadro-carico.compatto .peso-extra { display: flex; align-items: center; gap: 0.3rem; font-size: 0.8rem; margin-top: 0.25rem; }
+.riquadro-carico.compatto .peso-extra input { width: 4.2rem; min-height: 28px; }
+.riquadro-carico.compatto h3 { display: flex; align-items: center; justify-content: space-between; }
+.riquadro-carico.compatto .avviso-carico, .riquadro-carico.compatto .nota { margin: 0.15rem 0 0; font-size: 0.78rem; }

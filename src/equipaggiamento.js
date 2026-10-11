@@ -540,10 +540,12 @@ export function catalogo(dati) {
 }
 
 /** Voci per la cascata Tipo → Catalogo → Famiglia → Profilo: ogni livello solo ciò che esiste. */
-export function opzioniCascata(dati, { tipo = null, catalogo: cat = null, famiglia = null } = {}) {
+export function opzioniCascata(dati, { tipo = null, catalogo: cat = null, famiglia = null, cataloghiRif = null } = {}) {
   const tutti = catalogo(dati).oggetti.filter((o) => !o.modulo_di); // §7.8: il modulo integrato è compreso nell'arma
   const unici = (lista) => [...new Set(lista)];
-  const perTipo = tipo ? tutti.filter((o) => o.tipo === tipo) : [];
+  // «Aggiungi» di una categoria dell'Inventario (S32): solo gli oggetti dei suoi capitoli (prefisso del riferimento)
+  const delCapitolo = (o) => !Array.isArray(cataloghiRif) || cataloghiRif.includes(String(o.rif).split(':')[0]);
+  const perTipo = tipo ? tutti.filter((o) => o.tipo === tipo && delCapitolo(o)) : [];
   const perCatalogo = cat ? perTipo.filter((o) => o.catalogo === cat) : [];
   const perFamiglia = famiglia ? perCatalogo.filter((o) => o.famiglia === famiglia) : [];
   return {
