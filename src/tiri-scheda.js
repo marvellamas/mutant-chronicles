@@ -121,3 +121,11 @@ export const tiriRecenti = (sessione) => [...(Array.isArray(sessione?.tiri) ? se
 
 /** La riga per il registro dello scontro, con il nome del PG: «Akira tira Percezione: 14 → Successo, scarto +3». */
 export const rigaRegistroScontro = (nome, e, t) => `${nome} tira ${t.nome}: ${e.esito ? `${e.naturale} → ${e.nome}, scarto ${segno(e.scarto)}` : e.totale}`;
+
+/** Le righe del registro dei tiri, pulite: solo quelle ben formate, le ultime TIRI_MAX (src/sessione.js). */
+export function allineaTiri(lista, max = TIRI_MAX) {
+  if (!Array.isArray(lista)) return [];
+  return lista
+    .filter((x) => x && typeof x === 'object' && typeof x.quando === 'string' && typeof x.testo === 'string' && Number.isFinite(x.naturale))
+    .slice(-max);
+}

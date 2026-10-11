@@ -48,6 +48,8 @@ export function infoValore(figli, contenuto, { classe = '', tira = null } = {}) 
   const el = h('button', {
     type: 'button', class: `voce-info valore-info ${tira ? 'valore-tirabile ' : ''}${classe}`.trim(), dataset: { infoTipo: 'valore' },
     ...(tira ? { title: 'Tocca per tirare; il conto è in «Calcolo»' } : {}),
+    // il tiro sta sull'elemento (non solo nel listener generale): funziona anche dove il clic non risale
+    ...(tira ? { onclick: (e) => { e.preventDefault(); nascondiTooltip(); tira(); } } : {}),
   }, figli);
   contenutiValore.set(el, contenuto);
   if (tira) tiriValore.set(el, tira);

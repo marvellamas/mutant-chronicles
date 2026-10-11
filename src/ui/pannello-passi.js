@@ -94,7 +94,8 @@ export function pannelloPassi({ etichetta, titolo, classe = '', chiudi, passi, s
 /**
  * Danno da tirare in evidenza in cima al risultato (playtest del 05/10/2026: al tavolo i giocatori non lo
  * trovavano): «DANNO 2d6+3» grande, in grassetto, in un riquadro proprio; sotto, piccoli, natura e varianti.
- * righe: [{ etichetta?, valore, dettagli? }] (più righe per gli incantesimi con più colonne di danno).
+ * righe: [{ etichetta?, valore, dettagli?, tira? }] (più righe per gli incantesimi con più colonne di danno).
+ * S18 (13/10/2026): con `tira` il valore si tocca e tira i dadi di quel danno; nessun pulsante in più.
  */
 export function riquadroDanno(righe, { titolo = 'Danno' } = {}) {
   const valide = righe.filter((x) => x && x.valore);
@@ -102,7 +103,7 @@ export function riquadroDanno(righe, { titolo = 'Danno' } = {}) {
   return h('div', { class: 'danno-evidenza', role: 'group', 'aria-label': titolo },
     valide.map((x) => h('div', { class: 'danno-riga' },
       h('span', { class: 'danno-etichetta' }, x.etichetta ?? titolo),
-      h('strong', { class: 'danno-valore' }, x.valore),
+      x.tira ? h('button', { type: 'button', class: 'danno-valore valore-tirabile', title: 'Tocca per tirare il danno', onclick: x.tira }, x.valore) : h('strong', { class: 'danno-valore' }, x.valore),
       x.dettagli?.filter(Boolean).length ? h('span', { class: 'danno-dettagli' }, x.dettagli.filter(Boolean).join(' · ')) : null)));
 }
 

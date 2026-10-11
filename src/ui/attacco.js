@@ -19,6 +19,8 @@ import { specTiro, tira } from '../tiri.js';
 import { riquadroDanno, rigaScelte, interruttore, pannelloSintetico, pulsanteCommuta } from './pannello-passi.js';
 import { armiDelPannello, fasceDistanza, fasciaDi, mirato as datiMirato, vociAttive, vociAttiveConMappa, sceltePerScontro, conScontro } from '../attacco-sintesi.js';
 import { informa } from './finestrella.js';
+import { apriTiro } from './tira-valore.js';
+import { leggiDanno } from '../nemico-attacco.js';
 import { selettoreLuce } from './tab.js';
 import { avviso } from './avvisi.js';
 
@@ -338,8 +340,8 @@ function risultatoRavvicinato(ctx, a, r) {
     r.avvisi.length ? h('div', { class: 'riquadro attenzione' }, r.avvisi.map((x) => h('p', {}, x))) : null,
     h('div', { class: 'attacco-risultato' },
       h('div', { class: 'risultato-testa' },
-        h('p', { class: 'va-attacco' }, `${r.prova?.tipo === 'contrapposta' ? 'VA della Prova ' : 'VA finale '}`, pillola(a.nome, r.va_finale, r.provenienza)),
-        riquadroDanno([r.danno?.testo ? { valore: r.danno.testo, dettagli: [r.danno.natura, r.danno.testo_magistrale ? `Magistrale ${r.danno.testo_magistrale}` : null] } : null]),
+        h('p', { class: 'va-attacco' }, `${r.prova?.tipo === 'contrapposta' ? 'VA della Prova ' : 'VA finale '}`, pillola(a.nome, r.va_finale, r.provenienza, tiriDelRisultato(ctx, a, r).va)),
+        riquadroDanno([r.danno?.testo ? { valore: r.danno.testo, dettagli: [r.danno.natura, r.danno.testo_magistrale ? `Magistrale ${r.danno.testo_magistrale}` : null], tira: tiriDelRisultato(ctx, a, r).danno(r.danno.formula ?? r.danno.testo) } : null]),
         h('button', { type: 'button', class: 'btn btn-piccolo btn-calcolo', title: 'Il conto del VA finale e i promemoria', onclick: () => apriCalcoloAttacco(ctx, a, r) }, 'Calcolo')),
       r.attacchi.length > 1 ? h('ul', { class: 'promemoria-attacco' }, r.attacchi.map((x) => h('li', {}, `${x.etichetta}: VA ${numero(x.va)}${x.danno ? ` · danno ${x.danno} (della propria arma)` : ''}`))) : null,
       h('dl', { class: 'voci griglia-voci voci-risultato' },
@@ -364,8 +366,22 @@ function risultatoRavvicinato(ctx, a, r) {
 }
 
 /** VA in pillola con il tooltip della provenienza del motore (src/provenienza.js), una riga per contributo. */
-export function pillola(nome, va, provenienza) {
-  return infoValore(numero(va), { titolo: `${nome}: ${numero(va)}`, provenienza, sezioni: [] }, { classe: 'val-eff pillola-va pillola-attacco' });
+export function pillola(nome, va, provenienza, tira = null) {
+  return infoValore(numero(va), { titolo: `${nome}: ${numero(va)}`, provenienza, sezioni: [] }, { classe: 'val-eff pillola-va pillola-attacco', tira });
+}
+
+/**
+ * S18 (13/10/2026): nel Risultato di «Attacca!» il VA si tocca e tira per colpire, il danno si tocca e tira i dadi
+ * dell'arma. Niente pulsanti in più: il pannello resta quello del 13/10. Per i nemici della plancia il tiro resta
+ * quello della plancia (riga «Tiro per colpire»), che è il primo modo: lì non si tocca.
+ */
+function tiriDelRisultato(ctx, a, r) {
+  if (ctx.azioni.finale || !ctx.azioni.tiro) return { va: null, danno: () => null };
+  const note = (r.provenienza?.righe ?? []).filter((x) => x.valore && !x.escluso).slice(1).map((x) => `${x.valore > 0 ? '+' : '−'}${Math.abs(x.valore)} ${x.fonte}`);
+  return {
+    va: r.va_finale === null || r.va_finale === undefined ? null : () => apriTiro(ctx, { genere: 'prova', nome: `${a.nome}: tiro per colpire`, va: r.va_finale, tipo: 'attacco', note }),
+    danno: (formula) => (formula ? () => apriTiro(ctx, { genere: 'danno', nome: `${a.nome}: danno`, formula: leggiDanno(formula).formula }) : null),
+  };
 }
 
 function corpoDistanza(ctx, a, intestazione) {
@@ -532,8 +548,8 @@ function risultato(ctx, a, r, colpi, imposta) {
     r.avvisi?.length ? h('div', { class: 'riquadro attenzione' }, r.avvisi.map((x) => h('p', {}, x))) : null,
     h('div', { class: 'attacco-risultato' },
       h('div', { class: 'risultato-testa' },
-        h('p', { class: 'va-attacco' }, 'VA finale ', pillola(a.nome, r.va_finale, r.provenienza), r.tiri > 1 ? h('span', { class: 'nota' }, ` · ${r.tiri} tiri, ciascuno con questo VA`) : null),
-        riquadroDanno([r.danno_per_colpo ? { valore: r.danno_per_colpo, dettagli: [r.colpi_a_segno > 1 || r.applicazioni !== 1 ? 'per colpo' : null, r.applicazioni !== 1 ? `${r.applicazioni} applicazioni` : null,
+        h('p', { class: 'va-attacco' }, 'VA finale ', pillola(a.nome, r.va_finale, r.provenienza, tiriDelRisultato(ctx, a, r).va), r.tiri > 1 ? h('span', { class: 'nota' }, ` · ${r.tiri} tiri, ciascuno con questo VA`) : null),
+        riquadroDanno([r.danno_per_colpo ? { tira: tiriDelRisultato(ctx, a, r).danno(r.danno_per_colpo), valore: r.danno_per_colpo, dettagli: [r.colpi_a_segno > 1 || r.applicazioni !== 1 ? 'per colpo' : null, r.applicazioni !== 1 ? `${r.applicazioni} applicazioni` : null,
           r.danno_magistrale && r.danno_magistrale !== r.danno_per_colpo ? `Magistrale ${r.danno_magistrale}` : null] } : null]),
         h('button', { type: 'button', class: 'btn btn-piccolo btn-calcolo', title: 'Il conto del VA finale e i promemoria', onclick: () => apriCalcoloAttacco(ctx, a, r) }, 'Calcolo')),
       h('dl', { class: 'voci griglia-voci voci-risultato' },

@@ -39,6 +39,7 @@
 // creditiIniziali: l'ultimo saldo iniziale visto; se il saldo cambia (dotazione rifatta, tabella
 // modificata) i crediti attuali si spostano della stessa differenza, così le spese restano.
 import { allineaStorico } from './storico.js';
+import { allineaTiri } from './tiri-scheda.js';
 import { normalizzaCircostanze } from './circostanze.js';
 import { normalizzaTemporanei } from './temporanei.js';
 import { valoreTiro } from './tiri.js';
@@ -386,6 +387,8 @@ export function allineaSessione(sessione, m) {
     ...(() => { const t = normalizzaTemporanei(sessione.caratteristicheTemporanee, m.temporanei, m.sigle); return t.length ? { caratteristicheTemporanee: t } : {}; })(),
     // N2: storico del personaggio («procedi comunque: …», src/storico.js); la chiave c'è solo se ci sono righe
     ...(() => { const st = allineaStorico(sessione.storico); return st.length ? { storico: st } : {}; })(),
+    // S9 (13/10/2026): gli ultimi tiri fatti con l'app (src/tiri-scheda.js); la chiave c'è solo se si è tirato
+    ...(() => { const t = allineaTiri(sessione.tiri); return t.length ? { tiri: t } : {}; })(),
     note: typeof sessione.note === 'string' ? sessione.note : '',
   };
 }
