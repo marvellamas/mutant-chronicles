@@ -66,6 +66,34 @@ export function disegnaMuri(c, { scena, cam, info, muri, terreno, colori }) {
 }
 
 /**
+ * Muri disegnati a mano libera (M2 dell'11/10, src/mappa/muri-linee.js): ogni tratto è una linea piena, dello spessore
+ * scelto (in Q, quindi segue lo zoom). Stesso colore dei muri a quadretto, perché al tavolo sono la stessa cosa.
+ * @param linee [{ id, punti, spessore }]
+ * @param anteprima il tratto che si sta disegnando adesso (più chiaro, con i capi tondi)
+ */
+export function disegnaMuriLinee(c, { scena, cam, linee, colore, anteprima = false }) {
+  if (!linee?.length) return;
+  const g = scena.griglia;
+  const px = (q) => Math.max(1, q * g.q_px * cam.scala); // uno spessore sotto il pixel resterebbe invisibile
+  c.save();
+  c.strokeStyle = colore;
+  c.lineCap = 'round';
+  c.lineJoin = 'round';
+  c.globalAlpha = anteprima ? 0.65 : 0.95;
+  for (const l of linee) {
+    if (!Array.isArray(l?.punti) || l.punti.length < 2) continue;
+    c.lineWidth = px(l.spessore ?? 0.25);
+    c.beginPath();
+    l.punti.forEach(([x, y], i) => {
+      const s = schermoDaMappa(cam, g.scosto_x + x * g.q_px, g.scosto_y + y * g.q_px);
+      if (i === 0) c.moveTo(s.x, s.y); else c.lineTo(s.x, s.y);
+    });
+    c.stroke();
+  }
+  c.restore();
+}
+
+/**
  * Area raggiungibile: `celle` (src/mappa/area.js → celleArea) con 1 Passo, 2 Corsa, 3 Scatto. Ogni fascia ha un
  * riempimento leggero e il suo contorno (i lati dei Q che confinano con un'altra fascia o con l'esterno).
  * @param stile data/mappa.json → vista.area

@@ -15,6 +15,7 @@
 // la sua riga (src/scontro.js → rigaPorta). Funzioni pure.
 import { daBase64, cella, impostaCella } from './celle.js';
 import { celleToken } from './token.js';
+import { lineeDi, bucaConPorte } from './muri-linee.js';
 
 export const STATI_PORTA = ['aperta', 'chiusa', 'bloccata'];
 export const ORIENTAMENTI = ['orizzontale', 'verticale'];
@@ -36,6 +37,18 @@ export function muriEffettivi(scena, { perGiocatori = false } = {}) {
     impostaCella(m, C, R, p.q[0], p.q[1], muro);
   }
   return m;
+}
+
+/**
+ * I muri disegnati (M2) per il movimento: tutti, meno il vano delle porte aperte agganciate a un tratto (M3).
+ * Per il movimento conta lo stato: solo la porta aperta è un passaggio, chiusa e bloccata restano muro.
+ * `perGiocatori`: una porta segreta resta muro anche se aperta (nessuna fuga di informazioni).
+ */
+export function lineeEffettive(scena, { perGiocatori = false } = {}) {
+  const linee = lineeDi(scena);
+  if (!linee.length) return linee;
+  const aperte = (scena.porte ?? []).filter((p) => p.aggancio?.muro && p.stato === 'aperta' && !(perGiocatori && p.segreta));
+  return aperte.length ? bucaConPorte(linee, aperte) : linee;
 }
 
 /** La porta blocca la linea di visuale? (prossimo lotto: data/mappa.json → porte.bloccano_vista) */

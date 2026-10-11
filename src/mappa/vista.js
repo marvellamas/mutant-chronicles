@@ -6,7 +6,8 @@
 //   - i token nascosti dal master e quelli con tutti i Q sotto la nebbia (basta un Q scoperto per vederlo);
 //   - i template nascosti; dei visibili arrivano solo i Q fuori dalla nebbia, come maschera (fase 2, lotto 1:
 //     src/mappa/template.js → templatePerGiocatori), e nessun template se è tutto sotto la nebbia;
-//   - muri e terreno difficile sotto la nebbia (la forma delle stanze non ancora viste);
+//   - muri e terreno difficile sotto la nebbia (la forma delle stanze non ancora viste); dei muri disegnati a mano
+//     libera (M2 dell'11/10) quelli con tutti i punti sotto la nebbia;
 //   - l'immagine originale (resta la copia ridotta, se c'è), il registro dei movimenti, la pila dell'annulla,
 //     la bozza collegata e le date.
 // Lotto 4: con il contesto dello scontro ogni token visibile porta solo ciò che serve a disegnarlo (lato, nome,
@@ -22,7 +23,7 @@ import { barraIniziativa, barraPerGiocatori } from './iniziativa.js';
 import { musicaDi } from './audio.js';
 import { templatePerGiocatori } from './template.js';
 import { livelliDi } from './sovrapposizioni.js';
-import { muriPerGiocatori, portePerGiocatori } from './porte.js';
+import { muriPerGiocatori, portePerGiocatori, lineeEffettive } from './porte.js';
 import { ostacoliVista, visuale as visualePg, tokenPg, segmentoBloccato, centro } from './visuale.js';
 import { inVolo } from './volo.js';
 import { luceQ } from './luce.js';
@@ -64,6 +65,8 @@ export function vistaGiocatori(s, contesto = null, regoleTemplate = contesto?.re
   const { colonne, righe } = s.griglia;
   const nebbia = daBase64(s.nebbia.coperti);
   const coperto = (x, y) => cella(nebbia, colonne, righe, x, y);
+  // M2: un muro disegnato può passare appena fuori dalla griglia; per la nebbia conta il Q più vicino
+  const limita = (v, max) => Math.min(max - 1, Math.max(0, v));
   // fase 2, lotto 3: con la nebbia automatica (scena.visuale.automatica) i token che non sono PG si vedono solo dove i PG
   // vedono adesso; le zone esplorate ma non viste arrivano come «ombra» (più scure nella vista)
   const auto = s.visuale?.automatica && regoleMappa?.visuale && regoleMappa?.porte;
@@ -117,6 +120,10 @@ export function vistaGiocatori(s, contesto = null, regoleTemplate = contesto?.re
     griglia: { ...s.griglia },
     // porte (fase 2, lotto 2): le segrete restano muro, le altre arrivano a parte con il loro stato
     muri: inBase64(senza(muriPerGiocatori(s), nebbia)),
+    // M2 (11/10): muri disegnati a mano libera, col vano delle porte aperte non segrete già aperto; quelli tutti sotto
+    // la nebbia non si mandano (sarebbe la forma di una stanza non ancora vista)
+    ...((l) => (l.length ? { muriLinee: l } : {}))(lineeEffettive(s, { perGiocatori: true })
+      .filter((l) => l.punti.some(([x, y]) => !coperto(limita(Math.floor(x), colonne), limita(Math.floor(y), righe))))),
     porte: portePerGiocatori(s),
     // M1 (11/10): i livelli visibili dei giocatori, uno per uno (template, templateDurata, muri, porte, terreno,
     // luci), già normalizzati: la vista disegna solo quelli accesi. Le scene salvate col formato di prima sono

@@ -5,6 +5,7 @@
 // Voci della pila (scena.annulla, al più data/mappa.json → scena.annulla_max):
 //   { tipo: 'nebbia', tratti }                      src/mappa/nebbia.js
 //   { tipo: 'muri', muri, terreno }                 src/mappa/muri.js
+//   { tipo: 'muri-linee', aggiunte, tolte }         src/mappa/muri-linee.js (M2 dell'11/10): muri disegnati
 //   { tipo: 'movimento', movimento: id, token, da, a }
 //   { tipo: 'token', id, prima, dopo }              prima null: messo; dopo null: tolto; tutti e due: cambiato
 //   { tipo: 'template', id, prima, dopo }           template ad area (fase 2, lotto 1): piazzato, spostato, tolto
@@ -22,6 +23,7 @@
 // Funzioni pure.
 import { daBase64, inBase64 } from './celle.js';
 import { inverti } from './nebbia.js';
+import { lineeDi } from './muri-linee.js';
 import { chiaveRif } from './token.js';
 import { annullaRipristino } from './iniziale.js';
 import { annullaLuce } from './luce.js';
@@ -200,6 +202,12 @@ export function annullaUltima(scena, { chiaviPresenti = null } = {}) {
       return { scena: { ...senza, nebbia: { ...senza.nebbia, coperti: inBase64(inverti(daBase64(senza.nebbia.coperti), voce.tratti)) } }, voce, testo: 'nebbia' };
     case 'muri':
       return { scena: { ...senza, muri: inBase64(inverti(daBase64(senza.muri), voce.muri)), terreno: inBase64(inverti(daBase64(senza.terreno), voce.terreno)) }, voce, testo: 'muri' };
+    // M2 (11/10): muri disegnati a mano libera; la voce tiene gli id aggiunti e i muri togliti per intero
+    case 'muri-linee': {
+      const via = new Set(voce.aggiunte ?? []);
+      const linee = [...lineeDi(senza).filter((l) => !via.has(l.id)), ...(voce.tolte ?? [])];
+      return { scena: { ...senza, muriLinee: linee }, voce, testo: 'muri' };
+    }
     case 'movimento': {
       const r = annullaMovimento(senza, voce.movimento);
       return r.errore ? { scena: senza, voce, errore: r.errore } : { scena: r.scena, voce, testo: 'movimento' };

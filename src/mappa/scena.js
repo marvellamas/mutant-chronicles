@@ -29,6 +29,7 @@
 //   tablet?: { movimento: turno | sempre, avvisoTurno } }      tablet dei giocatori (fase 2, lotto 7; src/mappa/tablet.js)
 import { nuovaMaschera, inBase64, mascheraValida } from './celle.js';
 import { erroreSovrapposizioni } from './sovrapposizioni.js';
+import { erroreLinea } from './muri-linee.js';
 import { tokenDentro } from './token.js';
 import { erroreTemplate } from './template.js';
 import { errorePorta } from './porte.js';
@@ -227,6 +228,18 @@ export function validaScena(s, dati) {
   // Cosa si vede sopra la mappa (M1 dell'11/10): un interruttore per livello e per lato; il formato di prima
   // ({ nascoste, ancheDurata }) resta valido e si converte alla lettura (src/mappa/sovrapposizioni.js)
   { const e = erroreSovrapposizioni(s.sovrapposizioni, dati); if (e) return e; }
+  // muri disegnati a mano libera (M2 dell'11/10; src/mappa/muri-linee.js): facoltativi, le scene di prima non li hanno
+  if (s.muriLinee !== undefined) {
+    const ML = dati.mappa?.muri_linee ?? {};
+    if (!Array.isArray(s.muriLinee) || s.muriLinee.length > (ML.linee_max ?? 0)) return `muriLinee: elenco di al massimo ${ML.linee_max}`;
+    const idLinee = new Set();
+    for (const [i, l] of s.muriLinee.entries()) {
+      const e = erroreLinea(l, ML, colonne, righe);
+      if (e) return `muriLinee[${i}].${e}`;
+      if (idLinee.has(l.id)) return `muriLinee[${i}].id ripetuto`;
+      idLinee.add(l.id);
+    }
+  }
   // porte (fase 2, lotto 2; A.125): un Q ciascuna, stato e segreta; le azioni dei token (AzP del Round)
   if (s.porte !== undefined) {
     if (!Array.isArray(s.porte) || s.porte.length > (D.porte?.porte_max ?? 0)) return `porte: elenco di al massimo ${D.porte?.porte_max}`;

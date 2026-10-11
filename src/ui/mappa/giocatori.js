@@ -27,7 +27,7 @@ import { disegnaToken, coloriMappa, creaImmagini } from './disegno-token.js';
 import { barraIniziativaEl } from './barra-iniziativa.js';
 import { creaAudio } from './audio.js';
 import { campanellaVista } from '../../mappa/audio.js';
-import { disegnaArea, disegnaZoc, disegnaPercorso, coloriAree, disegnaTemplate, disegnaPorte, disegnaMuri, disegnaLineaTiro, disegnaLuci } from './disegno-aree.js';
+import { disegnaArea, disegnaZoc, disegnaPercorso, coloriAree, disegnaTemplate, disegnaPorte, disegnaMuri, disegnaMuriLinee, disegnaLineaTiro, disegnaLuci } from './disegno-aree.js';
 import { celleDaMaschera, templateVisibili } from '../../mappa/template.js';
 import { celleDellaDiretta, zocDellaDiretta, avversariDellaDiretta, trattiPercorso } from '../../mappa/diretta.js';
 import { passiInZoc } from '../../mappa/zoc.js';
@@ -129,6 +129,8 @@ export function renderGiocatori(radice, ctx) {
       const sov = st.vista?.sovrapposizioni ?? {};
       const vede = (id) => sov[id] !== false;
       if (st.vista && (vede('muri') || vede('terreno'))) disegnaMuri(c, { scena: st.vista, cam: st.cam, info, muri: vede('muri') ? daBase64(st.vista.muri) : null, terreno: vede('terreno') ? daBase64(st.vista.terreno) : null, colori: coloriAree(el.riquadro) });
+      // M2 (11/10): muri disegnati a mano libera, con lo stesso interruttore dei muri a quadretto
+      if (st.vista?.muriLinee?.length && vede('muri')) disegnaMuriLinee(c, { scena: st.vista, cam: st.cam, linee: st.vista.muriLinee, colore: coloriAree(el.riquadro).muro });
       if (st.vista) for (const t of [...templateVisibili(st.vista.template ?? [], sov), ...(direttaAttuale()?.template ?? [])]) disegnaTemplateGiocatori(c, info, t);
       // porte (fase 2, lotto 2): già filtrate dal server (niente segrete non rivelate, niente sotto la nebbia)
       if (st.vista?.porte?.length && vede('porte')) disegnaPorte(c, { scena: st.vista, cam: st.cam, info, porte: st.vista.porte, colori: ctx.dati.mappa.porte.colori });

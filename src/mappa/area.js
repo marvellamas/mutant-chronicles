@@ -4,6 +4,9 @@
 // Regole provvisorie in data/mappa.json → movimento (TODO(Davide) A.124, A.127, A.128):
 //   - un passo ortogonale costa costo_ortogonale, uno diagonale costo_diagonale (o 1/2/1… con diagonali_alterne);
 //   - se l'ingombro entra anche solo in parte in un Q di terreno difficile, il passo costa ×terreno_difficile_moltiplicatore;
+//   - muri disegnati a mano libera (M2 dell'11/10, src/mappa/muri-linee.js): bloccano dove passano, cioè quando il
+//     tratto taglia il passo fra un Q dell'ingombro e quello corrispondente d'arrivo (anche in diagonale); una
+//     porta aperta agganciata al tratto apre il suo vano (src/mappa/porte.js → lineeEffettive);
 //   - muri: mai; avversari: attraversabili solo con attraversa_avversari; alleati (e segnaposto): attraversabili con
 //     attraversa_alleati, ci si ferma sopra solo con fermarsi_su_alleato;
 //   - diagonale_spigolo (A.134, risposta di Marcello del 07/10): «un_lato», in diagonale si passa rasente allo spigolo
@@ -11,6 +14,7 @@
 //     attraverserebbe); «vietata», servono liberi entrambi; «libera», i lati non contano. Le porte chiuse sono muri.
 // Funzioni pure. Con griglie da 300 × 300 Q e 300 token resta sotto i 50 ms (tests/mappa-area.test.js).
 import { dimensioni, celleToken } from './token.js';
+import { attraversa } from './muri-linee.js';
 import { formaDi } from './forma.js';
 
 /** Somme prefisse 2D di una maschera di Q (Uint8Array 0/1, un byte per Q): conteggio in un rettangolo in O(1). */
@@ -78,7 +82,8 @@ export const stessaParte = (a, b) => (a === 'avversario') === (b === 'avversario
 /**
  * Area raggiungibile del token `chi` entro `massimo` Q.
  * @param o { colonne, righe, muri, terreno (maschere di bit), token: [{ id, q, ingombro, lato }],
- *   chi: { id, q, ingombro, lato, angolo?, base? }, massimo, regole: data/mappa.json → movimento }
+ *   chi: { id, q, ingombro, lato, angolo?, base? }, massimo, regole: data/mappa.json → movimento,
+ *   linee?: i muri disegnati che valgono adesso (src/mappa/porte.js → lineeEffettive) }
  *   angolo e base (08/10, src/mappa/forma.js): un veicolo ruotato occupa solo i quadretti della sua forma, in ogni
  *   posizione; gli altri token con angolo e base fanno ostacolo solo con i loro quadretti
  *   lato: 'pg' | 'alleato' | 'avversario' | null (segnaposto: come un alleato di tutti)
@@ -86,7 +91,7 @@ export const stessaParte = (a, b) => (a === 'avversario') === (b === 'avversario
  *   costo e fermabile indicizzati per posizione (y × colonne + x del Q in alto a sinistra), costo Infinity se non
  *   raggiunta; migliore e precStato servono a ricostruire il percorso (percorso()).
  */
-export function areaRaggiungibile({ colonne: C, righe: R, muri, terreno, token, chi, massimo, regole }) {
+export function areaRaggiungibile({ colonne: C, righe: R, muri, terreno, token, chi, massimo, regole, linee = null }) {
   const [w, h] = dimensioni(chi.ingombro);
   const muro = bytePerQ(muri, C, R);
   const terr = bytePerQ(terreno, C, R);
@@ -111,6 +116,13 @@ export function areaRaggiungibile({ colonne: C, righe: R, muri, terreno, token, 
     && (regole.attraversa_avversari || inAvv(x, y) === 0)
     && (regole.attraversa_alleati || inAll(x, y) === 0);
   const ferma = (x, y) => inAvv(x, y) === 0 && (regole.fermarsi_su_alleato || inAll(x, y) === 0);
+  // M2 (11/10): muri disegnati. Il passo è bloccato se un tratto taglia il segmento fra il centro di un Q
+  // dell'ingombro e il centro del Q corrispondente d'arrivo (per un token 1 × 1 è il centro del Q).
+  const muriDisegnati = Array.isArray(linee) && linee.length ? linee : null;
+  const celleIngombro = muriDisegnati ? (forma ?? Array.from({ length: w * h }, (_, i) => [i % w, Math.floor(i / w)])) : null;
+  const tagliaIlPasso = muriDisegnati
+    ? (x, y, dx, dy) => celleIngombro.some(([cx, cy]) => attraversa(muriDisegnati, [x + cx + 0.5, y + cy + 0.5], [x + cx + dx + 0.5, y + cy + dy + 0.5]))
+    : null;
   const N = C * R;
   const alterne = !!regole.diagonali_alterne;
   // stato = posizione × 2 + parità delle diagonali già fatte (solo con le diagonali alterne)
@@ -136,6 +148,7 @@ export function areaRaggiungibile({ colonne: C, righe: R, muri, terreno, token, 
         const latoB = !dentro(x, ny) || inMuro(x, ny) !== 0;
         if (regole.diagonale_spigolo === 'vietata' ? latoA || latoB : latoA && latoB) continue;
       }
+      if (tagliaIlPasso && tagliaIlPasso(x, y, dx, dy)) continue;
       let passo = diagonale ? (alterne && parita ? 2 * regole.costo_diagonale : regole.costo_diagonale) : regole.costo_ortogonale;
       if (inTerr(nx, ny) > 0) passo *= regole.terreno_difficile_moltiplicatore;
       const nc = c + passo;

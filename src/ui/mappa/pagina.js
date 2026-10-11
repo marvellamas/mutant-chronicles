@@ -40,15 +40,17 @@ import { fasciaDistanza } from '../../attacco.js';
 import { CHIAVE_DALLA_MAPPA } from '../attacco.js';
 import { tratto, valoreModo, nebbiaProvvisoria, chiudiPennellata, rettangoloNebbia, tuttaNebbia, trattiCoperti } from '../../mappa/nebbia.js';
 import { trattoMuri, muriProvvisori, chiudiTrattoMuri, rettangoloMuri } from '../../mappa/muri.js';
+// M2 (11/10): muri disegnati a mano libera
+import { lineeDi, nuovaLinea, spessoreQ, spessoriDati, conMuriLinee, abbastanzaLontano, lineeVicine, lineeNelRettangolo } from '../../mappa/muri-linee.js';
 import { areaRaggiungibile, costoVerso, percorso, statoFasce, fasciaDi, celleArea, piuVicinaRaggiungibile } from '../../mappa/area.js';
 import { statoDiretta, visibileAiGiocatori } from '../../mappa/diretta.js';
 import { salvaIniziale, ripristinaIniziale } from '../../mappa/iniziale.js';
 import { muoviToken, usatoNelRound, fasceNelRound, mossoNelRound, annullaUltima, annullaUltimoMovimento, cambiaTokenAnnullabile, cambiaTemplateAnnullabile, cambiaPortaAnnullabile, togliTemplateAnnullabile, scadiTemplateAnnullabile, rimettiScaduti, nuovoTurno, turnoDi } from '../../mappa/annulla.js';
-import { disegnaMuri, disegnaArea, disegnaPercorso, disegnaZoc, coloriAree, disegnaTemplate, disegnaPorte, disegnaLineaTiro, disegnaLuci } from './disegno-aree.js';
+import { disegnaMuri, disegnaMuriLinee, disegnaArea, disegnaPercorso, disegnaZoc, coloriAree, disegnaTemplate, disegnaPorte, disegnaLineaTiro, disegnaLuci } from './disegno-aree.js';
 import { luceQ, luceIngombro, testoLuceBersaglio, categorieLuce, ambienteDi, trattoLuce, rettangoloLuce, conVoceLuce, cambiaAmbiente } from '../../mappa/luce.js';
 import { celleTemplate, tokenDentro as tokenNelTemplate, nuovoTemplate, scaduto, direzioneVerso, ORIENTABILI, templateVisibili, ruota, cambiaMisura, permanente } from '../../mappa/template.js';
 import { livelliDi, livelliDati, conLivello, conTuttiILivelli, nascosti as livelliNascosti } from '../../mappa/sovrapposizioni.js';
-import { portaA, muriEffettivi, porteVicine, apriChiudi, nuovaPorta, conAzione, azpNelRound, orientamento, orientamentoPorta, ruotaPorta, opposto } from '../../mappa/porte.js';
+import { portaA, muriEffettivi, lineeEffettive, porteVicine, apriChiudi, nuovaPorta, conAzione, azpNelRound, orientamento, orientamentoPorta, ruotaPorta, opposto } from '../../mappa/porte.js';
 import { apriMenuTemplate, sezioneTemplate, etichettaTemplate, testoMisure } from './template.js';
 import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
 import { componiMenu, unisciMenu } from '../../mappa/menu.js';
@@ -136,7 +138,8 @@ export function renderMappa(radice, ctx) {
     // lotto 5: strumenti dei muri, fascia mostrata (1 Passo, 2 Corri, 3 Scatta), area del token scelto, percorso
     // fase 2, lotto 4: zone di luce a pennello (come il terreno difficile)
     luci: { strumento: null, modo: 'buio', lato: 3 },
-    muri: { strumento: null, modo: 'muro', lato: 1, porta: { stato: ctx.dati.mappa.porte.stato_predefinito, segreta: false, verso: null } },
+    // M2 (11/10): «spessore» è lo spessore del muro disegnato a mano libera (data/mappa.json -> muri_linee)
+    muri: { strumento: null, modo: 'muro', lato: 1, spessore: ctx.dati.mappa.muri_linee.predefinito, porta: { stato: ctx.dati.mappa.porte.stato_predefinito, segreta: false, verso: null } },
     fascia: 1,
     area: undefined,
     percorso: null,
@@ -330,6 +333,8 @@ export function renderMappa(radice, ctx) {
       // movimento, linea di tiro e nebbia (src/mappa/sovrapposizioni.js)
       const liv = sovrapposizioni('master');
       if (liv.muri || liv.terreno) disegnaMuri(c, { scena: s, cam: st.cam, info, muri: liv.muri ? daBase64(s.muri) : null, terreno: liv.terreno ? daBase64(s.terreno) : null, colori });
+      // M2 (11/10): muri disegnati a mano libera, sotto lo stesso interruttore dei muri a quadretto
+      if (liv.muri) disegnaMuriLinee(c, { scena: s, cam: st.cam, linee: lineeDi(s), colore: colori.muro });
       // fase 2, lotto 2: le porte, ciascuna con il suo stato (le segrete con la «S»)
       if (liv.porte && s.porte?.length) disegnaPorte(c, { scena: s, cam: st.cam, info, porte: s.porte.map((p) => ({ ...p, orientamento: orientamentoPorta(s, p) })), colori: ctx.dati.mappa.porte.colori });
       // 07/10: anteprima della porta da mettere sotto il puntatore, con l'orientamento (← → per girarla)
@@ -397,6 +402,10 @@ export function renderMappa(radice, ctx) {
       // fase 2, lotto 3: la linea di tiro del token scelto verso il mouse o il bersaglio
       disegnaLineaScelta(c);
       if (st.percorso && st.scena) disegnaPercorso(c, { scena: st.scena, cam: st.cam, percorso: st.percorso.punti, ingombro: st.percorso.ingombro, costo: st.percorso.costo, fascia: st.percorso.fascia, colori: coloriAree(el.riquadro), inZoc: zocDelPercorso(st.percorso), coloreZoc: ctx.dati.mappa.zoc.colore });
+      // M2 (11/10): anteprima del muro che si sta disegnando a mano libera
+      if (st.trascina?.forma === 'linea' && st.scena && st.trascina.punti.length > 1) {
+        disegnaMuriLinee(c, { scena: st.scena, cam: st.cam, linee: [{ id: 'anteprima', punti: st.trascina.punti, spessore: spessoreQ(st.muri.spessore, ctx.dati) }], colore: coloriAree(el.riquadro).muro, anteprima: true });
+      }
       // anteprima del rettangolo di nebbia o di muri
       const tn = st.trascina;
       if (tn?.modo === 'disegno' && tn.forma === 'rettangolo' && st.scena) {
@@ -1486,6 +1495,11 @@ export function renderMappa(radice, ctx) {
     const g = st.scena.griglia;
     return [Math.max(0, Math.min(g.colonne - 1, Math.floor((m.x - g.scosto_x) / g.q_px))), Math.max(0, Math.min(g.righe - 1, Math.floor((m.y - g.scosto_y) / g.q_px)))];
   };
+  /** M2 (11/10): il punto in Q frazionari (1 = un quadretto), per i muri disegnati a mano libera. */
+  const qFrazionario = (m) => {
+    const g = st.scena.griglia;
+    return [(m.x - g.scosto_x) / g.q_px, (m.y - g.scosto_y) / g.q_px];
+  };
   /** Lo strumento di disegno attivo: { gruppo: 'nebbia' | 'muri', forma: 'pennello' | 'rettangolo' } oppure null. */
   const L = st.luci;
   const disegnoAttivo = () => (N.strumento ? { gruppo: 'nebbia', forma: N.strumento } : M.strumento ? { gruppo: 'muri', forma: M.strumento } : L.strumento ? { gruppo: 'luci', forma: L.strumento } : null);
@@ -1531,7 +1545,13 @@ export function renderMappa(radice, ctx) {
       h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Strumento dei muri' },
         pulsanteScelta('Pennello', M.strumento === 'pennello', () => strumentoMuri(M.strumento === 'pennello' ? null : 'pennello'), 'Dipingi per quadretti'),
         pulsanteScelta('Rettangolo', M.strumento === 'rettangolo', () => strumentoMuri(M.strumento === 'rettangolo' ? null : 'rettangolo'), 'Per le aree grandi: da un angolo all’altro'),
+        pulsanteScelta('Disegna muro', M.strumento === 'linea', () => strumentoMuri(M.strumento === 'linea' ? null : 'linea'), 'Trascina: il muro segue il tratto, anche fuori dalla griglia e più sottile di un quadretto'),
         pulsanteScelta('Porta', M.strumento === 'porta', () => strumentoMuri(M.strumento === 'porta' ? null : 'porta'), 'Clic su un Q di muro: mette una porta; clic su una porta: la toglie')),
+      // M2 (11/10): spessore del muro disegnato a mano libera
+      M.strumento === 'linea' ? h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Spessore del muro' },
+        h('span', { class: 'nota' }, 'Spessore:'),
+        spessoriDati(ctx.dati).map((s) => pulsanteScelta(s.nome, M.spessore === s.id, () => { M.spessore = s.id; disegnaPannelloMuri(); }, `${s.q} Q`))) : null,
+      M.strumento === 'linea' ? h('p', { class: 'nota' }, 'Trascina sulla mappa: il muro segue il tratto. Blocca come i muri a quadretto (linea di tiro, Copertura, nebbia e movimento). Per cancellarlo: Pennello o Rettangolo in modalità Gomma.') : null,
       M.strumento === 'porta' ? h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Porta nuova' },
         ctx.dati.mappa.porte.stati.map((s) => pulsanteScelta(ctx.dati.mappa.porte.nomi_stati[s], M.porta.stato === s, () => { M.porta.stato = s; disegnaPannelloMuri(); }, `Le porte nuove nascono ${ctx.dati.mappa.porte.nomi_stati[s].toLowerCase()}`)),
         h('label', { title: 'Per i giocatori è muro finché non la riveli (clic destro → Rivela)' }, h('input', { type: 'checkbox', checked: M.porta.segreta, onchange: (e) => { M.porta.segreta = e.target.checked; } }), ' segreta'),
@@ -1871,7 +1891,7 @@ export function renderMappa(radice, ctx) {
     const scelta = sf.chiusa ?? [...FASCE.slice(0, st.fascia)].reverse().find((f) => rimaste[f] !== null);
     const g = st.scena.griglia;
     const area = areaRaggiungibile({
-      colonne: g.colonne, righe: g.righe, muri: muriEffettivi(st.scena), terreno: daBase64(st.scena.terreno),
+      colonne: g.colonne, righe: g.righe, muri: muriEffettivi(st.scena), terreno: daBase64(st.scena.terreno), linee: lineeEffettive(st.scena),
       token: st.scena.token.map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: pezzoDi(x)?.lato ?? null })),
       chi: { id: t.id, q: t.q, ingombro: t.ingombro, angolo: t.angolo, base: t.base, lato: pz.lato }, massimo: Math.max(totale, portata), regole: regoleMovimento(t, ctx.dati),
     });
@@ -1957,7 +1977,7 @@ export function renderMappa(radice, ctx) {
         const g = s.griglia;
         const pz = pezzoDi(t);
         const areaG = areaRaggiungibile({
-          colonne: g.colonne, righe: g.righe, muri: muriEffettivi(s, { perGiocatori: true }), terreno: daBase64(s.terreno),
+          colonne: g.colonne, righe: g.righe, muri: muriEffettivi(s, { perGiocatori: true }), terreno: daBase64(s.terreno), linee: lineeEffettive(s, { perGiocatori: true }),
           token: s.token.filter((x) => x.id === t.id || visibileAiGiocatori(x, s, nebbia)).map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: pezzoDi(x)?.lato ?? null })),
           chi: { id: t.id, q: t.q, ingombro: t.ingombro, angolo: t.angolo, base: t.base, lato: pz?.lato ?? null }, massimo: info.totale, regole: regoleMovimento(t, ctx.dati),
         });
@@ -2680,6 +2700,12 @@ export function renderMappa(radice, ctx) {
     const base = { id: e.pointerId, x: p.x, y: p.y, x0: p.x, y0: p.y, mosso: false };
     const d = disegnoAttivo();
     if (d && d.forma === 'porta' && !st.spazio && st.strumento !== 'calibra') { mettiTogliPorta(qVicino(m)); return; }
+    // M2 (11/10): «Disegna muro», a mano libera in Q frazionari (anche fuori dalla griglia)
+    if (d && d.forma === 'linea' && !st.spazio && st.strumento !== 'calibra') {
+      st.trascina = { ...base, modo: 'disegno', gruppo: 'muri', forma: 'linea', punti: [qFrazionario(m)] };
+      ridisegna(['sopra']);
+      return;
+    }
     if (d && !st.spazio && st.strumento !== 'calibra') {
       const q = qVicino(m);
       st.trascina = { ...base, modo: 'disegno', ...d, iniziale: d.gruppo === 'nebbia' ? { nebbia: st.scena.nebbia.coperti } : d.gruppo === 'luci' ? { luce: st.scena.luce ?? null } : { muri: st.scena.muri, terreno: st.scena.terreno }, da: q, a: q };
@@ -2700,9 +2726,39 @@ export function renderMappa(radice, ctx) {
     }
     el.riquadro.classList.toggle('trascina', modo !== 'calibra');
   };
+  /**
+   * M2 (11/10): la gomma toglie anche i muri disegnati a mano libera. Col pennello prende quelli che passano entro
+   * mezzo quadretto dal centro (più largo se il pennello è largo), col rettangolo quelli che il rettangolo prende.
+   */
+  function gommaMuriDisegnati(q, fino = null) {
+    const linee = lineeDi(st.scena);
+    if (!linee.length) return;
+    const R = ctx.dati.mappa.muri_linee;
+    const ids = fino
+      ? lineeNelRettangolo(linee, [Math.min(q[0], fino[0]), Math.min(q[1], fino[1])], [Math.max(q[0], fino[0]) + 1, Math.max(q[1], fino[1]) + 1])
+      : lineeVicine(linee, [q[0] + 0.5, q[1] + 0.5], Math.max(R.gomma_raggio_q, M.lato / 2)).map((x) => x.linea.id);
+    if (ids.length) st.scena = conMuriLinee(st.scena, { togli: ids }, ctx.dati);
+  }
+  /**
+   * M2 (11/10): fine del tratto a mano libera. Un tocco senza trascinare non fa nulla (serve un tratto); oltre
+   * `linee_max` muri disegnati lo dice e non aggiunge.
+   */
+  function chiudiMuroDisegnato(t) {
+    const R = ctx.dati.mappa.muri_linee;
+    const punti = t.punti ?? [];
+    if (punti.length < 2) { avviso('Per disegnare un muro trascina il dito (o il mouse) lungo il muro.', { chiave: 'muri-linee' }); ridisegna(['sopra']); return; }
+    if (lineeDi(st.scena).length >= R.linee_max) { avviso(`Troppi muri disegnati in questa scena (massimo ${R.linee_max}).`, { chiave: 'muri-linee' }); ridisegna(['sopra']); return; }
+    const linea = nuovaLinea({ id: `muro-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`, punti, spessore: spessoreQ(M.spessore, ctx.dati) });
+    st.scena = conMuriLinee(st.scena, { aggiungi: [linea] }, ctx.dati);
+    dopoDisegno();
+  }
   /** Un passo del pennello (nebbia o muri) da a ad b, senza voce di «annulla» (la voce arriva al rilascio). */
   function passoPennello(a, b) {
-    if (st.trascina?.gruppo === 'muri') st.scena = muriProvvisori(st.scena, trattoMuri(st.scena, a, b, M.lato, M.modo));
+    if (st.trascina?.gruppo === 'muri') {
+      st.scena = muriProvvisori(st.scena, trattoMuri(st.scena, a, b, M.lato, M.modo));
+      // M2 (11/10): la gomma toglie anche i muri disegnati a mano libera che il pennello passa
+      if (M.modo === 'gomma') gommaMuriDisegnati(b);
+    }
     else if (st.trascina?.gruppo === 'luci') { st.scena = trattoLuce(st.scena, a, b, L.lato, L.modo, ctx.dati); st.luceCache = null; }
     else {
       const g = st.scena.griglia;
@@ -2720,6 +2776,16 @@ export function renderMappa(radice, ctx) {
     if (t.modo === 'sposta') cambiaCamera(sposta(st.cam, p.x - t.x, p.y - t.y));
     else if (t.modo === 'selezione') { t.a = mappaDaSchermo(st.cam, p.x, p.y); ridisegna(['sopra']); }
     else if (t.modo === 'disegno') {
+      // M2: il tratto a mano libera segue il dito; i punti troppo vicini si scartano (data/mappa.json -> muri_linee)
+      if (t.forma === 'linea') {
+        const f = qFrazionario(mappaDaSchermo(st.cam, p.x, p.y));
+        if (abbastanzaLontano(t.punti.at(-1), f, ctx.dati.mappa.muri_linee.punto_minimo_q) && t.punti.length < ctx.dati.mappa.muri_linee.punti_max) {
+          t.punti.push(f);
+          ridisegna(['sopra']);
+        }
+        t.x = p.x; t.y = p.y;
+        return;
+      }
       const q = qVicino(mappaDaSchermo(st.cam, p.x, p.y));
       if (q[0] !== t.a[0] || q[1] !== t.a[1]) {
         if (t.forma === 'pennello') { passoPennello(t.a, q); t.a = q; ridisegna(['aree']); } else { t.a = q; ridisegna(['sopra']); }
@@ -2760,7 +2826,11 @@ export function renderMappa(radice, ctx) {
         st.scena = conVoceLuce(fatta, t.iniziale.luce, ctx.dati);
         dopoLuci();
         return true;
-      } else st.scena = t.forma === 'rettangolo' ? rettangoloMuri(st.scena, t.da, t.a, M.modo, ctx.dati) : chiudiTrattoMuri(st.scena, t.iniziale, ctx.dati);
+      } else if (t.forma === 'linea') { chiudiMuroDisegnato(t); return true; } else {
+        st.scena = t.forma === 'rettangolo' ? rettangoloMuri(st.scena, t.da, t.a, M.modo, ctx.dati) : chiudiTrattoMuri(st.scena, t.iniziale, ctx.dati);
+        // M2: la gomma a rettangolo toglie anche i muri disegnati dentro il rettangolo
+        if (M.modo === 'gomma' && t.forma === 'rettangolo') gommaMuriDisegnati(t.da, t.a);
+      }
       dopoDisegno();
       return true;
     }

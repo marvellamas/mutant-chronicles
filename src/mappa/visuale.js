@@ -22,26 +22,56 @@
 //     Q per Q (si vede il Q ostacolo, non oltre; fra due ostacoli in diagonale non si passa). Le luci (prossimo lotto:
 //     penombra, buio) entreranno con `luce`, una funzione del Q che potrà ridurre il raggio o togliere Q.
 import { daBase64, cella, impostaCella } from './celle.js';
+import { attraversa, lineeDi, bucaConPorte } from './muri-linee.js';
 import { dimensioni, celleToken } from './token.js';
 import { formaDi } from './forma.js';
 import { distanzaIngombri } from './zoc.js';
 import { raggiScoperta, sensiToken } from './luce.js';
 import { inVolo } from './volo.js';
 
-/** Ostacoli alla vista: muri disegnati, porte che bloccano la vista; `perGiocatori`: le porte segrete sono muro. */
+/**
+ * Ostacoli alla vista: i Q di muro, le porte che bloccano la vista e (M2 dell'11/10) i muri disegnati a mano libera.
+ * `perGiocatori`: le porte segrete sono muro.
+ * @returns { q: maschera dei Q, linee: muri disegnati che bloccano } — le funzioni qui sotto accettano anche una
+ *   maschera nuda, che è quello che passano i token (maschereToken) e le prove di prima.
+ */
 export function ostacoliVista(scena, regolePorte, { perGiocatori = false } = {}) {
   const { colonne: C, righe: R } = scena.griglia;
   const m = daBase64(scena.muri);
   for (const p of scena.porte ?? []) impostaCella(m, C, R, p.q[0], p.q[1], (perGiocatori && p.segreta) || regolePorte.bloccano_vista.includes(p.stato));
-  return m;
+  // senza muri disegnati gli ostacoli restano la sola maschera dei Q, come prima di M2 (nessun cambiamento per le
+  // mappe già salvate e per chi legge la maschera nuda)
+  const linee = lineeVista(scena, regolePorte);
+  return linee.length ? { q: m, linee } : m;
 }
+
+/**
+ * I muri disegnati che bloccano la vista: tutti, meno i pezzi aperti dalle porte agganciate a un tratto (M3), che
+ * sono un passaggio. Una porta non aperta lascia il muro intero.
+ */
+export function lineeVista(scena, regolePorte) {
+  const linee = lineeDi(scena);
+  if (!linee.length) return linee;
+  const aperte = (scena.porte ?? []).filter((p) => p.aggancio?.muro && !regolePorte.bloccano_vista.includes(p.stato) && !p.segreta);
+  return aperte.length ? bucaConPorte(linee, aperte) : linee;
+}
+
+/** La maschera dei Q di un oggetto ostacoli (o la maschera stessa, se arriva nuda). */
+export const mascheraOstacoli = (ost) => (ost && ost.q ? ost.q : ost);
+/** I muri disegnati di un oggetto ostacoli (nessuno, se arriva una maschera nuda). */
+export const lineeOstacoli = (ost) => (ost && ost.linee ? ost.linee : null);
 
 /**
  * Il segmento a → b (punti in Q) attraversa l'interno di un Q ostacolo? Campioni ogni 1 / `campioni` di Q; i punti sui
  * bordi dei Q (entro `bordo`) contano solo fra due ostacoli, sugli angoli fra due ostacoli in diagonale: una linea che
  * sfiora un muro non è bloccata, una che corre dentro il muro o si infila fra due muri in diagonale sì.
  */
-export function segmentoBloccato(ost, C, R, a, b, campioni = 10, bordo = 0.02) {
+export function segmentoBloccato(ostacoli, C, R, a, b, campioni = 10, bordo = 0.02) {
+  // M2 (11/10): i muri disegnati a mano libera bloccano dove passano — un incrocio di segmenti, esatto
+  const linee = lineeOstacoli(ostacoli);
+  if (linee && attraversa(linee, a, b)) return true;
+  const ost = mascheraOstacoli(ostacoli);
+  if (!ost) return false;
   const lung = Math.hypot(b[0] - a[0], b[1] - a[1]);
   const n = Math.max(2, Math.ceil(lung * campioni));
   for (let i = 1; i < n; i++) {
@@ -113,8 +143,14 @@ function maschereToken(scena, tokens) {
   for (const t of tokens) for (const [x, y] of celleToken(t)) impostaCella(m, C, R, x, y, true);
   return m;
 }
-/** Unione di due maschere. */
-function unione(a, b) { const m = new Uint8Array(a.length); for (let i = 0; i < a.length; i++) m[i] = a[i] | b[i]; return m; }
+/** Unione di due insiemi di ostacoli: i Q in OR e i muri disegnati di entrambi (M2). */
+function unione(a, b) {
+  const ma = mascheraOstacoli(a), mb = mascheraOstacoli(b);
+  const m = new Uint8Array(ma.length);
+  for (let i = 0; i < ma.length; i++) m[i] = ma[i] | mb[i];
+  const linee = [...(lineeOstacoli(a) ?? []), ...(lineeOstacoli(b) ?? [])];
+  return linee.length ? { q: m, linee } : m;
+}
 
 /**
  * La linea di tiro da un token verso un altro token (o verso un Q): distanza (diagonale 1 Q), vista libera o bloccata,
@@ -192,7 +228,11 @@ export function qVisti(ost, C, R, o, raggio, metrica, visti = new Uint8Array(C *
 }
 
 /** Il raggio dal centro di (x0, y0) al centro di (x1, y1) arriva al Q d'arrivo senza attraversare ostacoli? */
-function raggioLibero(ost, C, R, x0, y0, x1, y1) {
+function raggioLibero(ostacoli, C, R, x0, y0, x1, y1) {
+  // M2 (11/10): un muro disegnato fra i due centri ferma il raggio come un Q di muro
+  const linee = lineeOstacoli(ostacoli);
+  if (linee && attraversa(linee, [x0 + 0.5, y0 + 0.5], [x1 + 0.5, y1 + 0.5])) return false;
+  const ost = mascheraOstacoli(ostacoli);
   const dx = x1 - x0, dy = y1 - y0;
   const sx = Math.sign(dx), sy = Math.sign(dy);
   const adx = Math.abs(dx), ady = Math.abs(dy);

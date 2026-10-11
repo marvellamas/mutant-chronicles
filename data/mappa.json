@@ -442,6 +442,21 @@
       { "titolo": "Pulizia", "icona": "🧹", "voci": ["cancella_temporanei", "cancella_tutti"] }
     ]
   },
+  "muri_linee": {
+    "_nota": "Muri disegnati a mano libera (segnalazione M2 di Davide dell'11/10/2026; src/mappa/muri-linee.js): si trascina il mouse o il dito e il muro segue il tratto, anche fuori dalla griglia e più sottile di un quadretto. Le coordinate sono in Q frazionari, come token e template. Valgono come i muri a quadretto: bloccano dove passano (linea di tiro, Copertura, nebbia automatica e movimento) e si cancellano con la gomma. «punto_minimo_q»: quanto deve spostarsi il dito prima di aggiungere un punto al tratto (semplifica); «gomma_raggio_q»: entro quanto la gomma prende un muro disegnato.",
+    "spessori": [
+      { "id": "sottile", "nome": "Sottile", "q": 0.1 },
+      { "id": "medio", "nome": "Medio", "q": 0.25 },
+      { "id": "quadretto", "nome": "Un quadretto", "q": 1 }
+    ],
+    "predefinito": "medio",
+    "spessore_max_q": 1,
+    "linee_max": 400,
+    "punti_max": 400,
+    "punto_minimo_q": 0.2,
+    "gomma_raggio_q": 0.5,
+    "margine_q": 2
+  },
   "sovrapposizioni": {
     "_nota": "Che cosa si disegna sopra la mappa, con un interruttore per livello e per lato (segnalazione M1 di Davide dell'11/10/2026: l'unico interruttore di prima nascondeva insieme muri, porte, terreno e template). «master» è quello che vede il Direttore sulla sua mappa, «giocatori» quello che arriva allo schermo dei giocatori e ai tablet (src/mappa/sovrapposizioni.js; scena.sovrapposizioni). I livelli valgono solo per il disegno: muri, porte e terreno contano sempre per movimento, linea di tiro e nebbia. Le scene salvate col formato di prima ({ nascoste, ancheDurata }) si leggono e si convertono da sé.",
     "livelli": [

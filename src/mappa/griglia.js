@@ -4,6 +4,10 @@
 import { dimensioniGriglia } from './scena.js';
 import { daBase64, inBase64, ridimensiona } from './celle.js';
 import { dimensioni } from './token.js';
+import { lineeDi } from './muri-linee.js';
+
+/** M2: un punto di un muro disegnato riportato dentro la griglia (col margine dei dati). */
+const dentroQ = (v, max, margine) => Math.max(-margine, Math.min(max + margine, v));
 
 /** Scostamento riportato dentro un quadretto: 0 ≤ scosto < q. */
 export function normalizzaScosto(scosto, q) {
@@ -69,8 +73,9 @@ export function applicaGriglia(scena, cambi, dati, { mappa } = {}) {
   g.colonne = dim.colonne;
   g.righe = dim.righe;
   const C0 = prima.colonne, R0 = prima.righe;
+  const margine = dati.mappa.muri_linee?.margine_q ?? 2;
   const adatta = (b64, riempi) => (C0 === g.colonne && R0 === g.righe ? b64 : inBase64(ridimensiona(daBase64(b64), C0, R0, g.colonne, g.righe, riempi)));
-  const dentro = (t) => {
+    const dentro = (t) => {
     const [w, h] = dimensioni(t.ingombro);
     return { ...t, q: [Math.max(0, Math.min(g.colonne - w, t.q[0])), Math.max(0, Math.min(g.righe - h, t.q[1]))] };
   };
@@ -84,6 +89,9 @@ export function applicaGriglia(scena, cambi, dati, { mappa } = {}) {
       nebbia: { ...scena.nebbia, coperti: adatta(scena.nebbia.coperti, scena.nebbia.iniziale === 'coperta') },
       token: scena.token.map(dentro),
       template: scena.template.filter((t) => t.origine[0] < g.colonne && t.origine[1] < g.righe),
+      // M2 (11/10): i muri disegnati sono in Q, quindi restano dove sono; se la griglia si stringe si riportano
+      // dentro (con il margine dei dati), altrimenti la scena non si potrebbe più salvare
+      ...((l) => (l.length ? { muriLinee: l.map((x) => ({ ...x, punti: x.punti.map(([px, py]) => [dentroQ(px, g.colonne, margine), dentroQ(py, g.righe, margine)]) })) } : {}))(lineeDi(scena)),
     },
   };
 }

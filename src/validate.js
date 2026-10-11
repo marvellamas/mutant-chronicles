@@ -5,6 +5,7 @@ import { TIPI as TIPI_EQUIP, STATI } from './equipaggiamento.js';
 import { FILE_MAPPA } from './mappa/scena.js';
 import { erroreMenu, erroreStrumenti } from './mappa/menu.js';
 import { erroreDatiSovrapposizioni } from './mappa/sovrapposizioni.js';
+import { erroreDatiMuriLinee } from './mappa/muri-linee.js';
 
 // Invarianti strutturali dei manuali. I valori numerici "di gioco" stanno in regole.json;
 // qui restano solo le forme fisse descritte dai paragrafi citati.
@@ -2952,6 +2953,8 @@ function validaMappa(dati, err) {
   { const e = erroreStrumenti(m.strumenti); if (e) err(F, e.chiave, e.problema); }
   // livelli di «Cosa si vede» (M1 dell'11/10, src/mappa/sovrapposizioni.js)
   { const e = erroreDatiSovrapposizioni(m.sovrapposizioni); if (e) err(F, e.chiave, e.problema); }
+  // muri disegnati a mano libera (M2 dell'11/10, src/mappa/muri-linee.js): spessori e limiti del tratto
+  { const e = erroreDatiMuriLinee(m.muri_linee); if (e) err(F, e.chiave, e.problema); }
   // zone di controllo (07/10, src/mappa/zoc.js; Giocatore §5.3)
   const Z = m.zoc;
   if (!isOggetto(Z)) err(F, 'zoc', 'oggetto mancante');
