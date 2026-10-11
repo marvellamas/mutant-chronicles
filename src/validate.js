@@ -2843,6 +2843,8 @@ function validaMappa(dati, err) {
     }
     if (!Array.isArray(S.nebbie_iniziali) || !S.nebbie_iniziali.includes(S.nebbia_iniziale)) err(F, 'scena.nebbia_iniziale', 'uno dei valori di scena.nebbie_iniziali');
     if (!isIntero(S.colonne_predefinite) || S.colonne_predefinite < 1 || S.colonne_predefinite > S.colonne_max) err(F, 'scena.colonne_predefinite', 'intero da 1 a colonne_max');
+    // «Mappa semplice» (N3): valore per le scene nuove
+    if (typeof S.semplice_predefinita !== 'boolean') err(F, 'scena.semplice_predefinita', 'vero o falso');
     if (!isIntero(S.righe_predefinite) || S.righe_predefinite < 1 || S.righe_predefinite > S.righe_max) err(F, 'scena.righe_predefinite', 'intero da 1 a righe_max');
   }
   // §4 e §12 della specifica: zoom e «Adatta allo schermo» (src/mappa/camera.js)

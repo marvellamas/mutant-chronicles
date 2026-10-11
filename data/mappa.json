@@ -19,7 +19,9 @@
       "scoperta"
     ],
     "colonne_predefinite": 30,
-    "righe_predefinite": 20
+    "righe_predefinite": 20,
+    "semplice_predefinita": true,
+    "_nota_semplice": "semplice_predefinita: «Mappa semplice» (N3, deciso da Marcello e Davide) per le scene nuove. Accesa, la scena non usa automazioni: niente nebbia automatica né sensi, luci che non limitano la vista, nessun conteggio del movimento, niente Prova di Atletica proposta, linea di tiro con la sola distanza. Le scene salvate prima non hanno il campo «semplice» e restano come sono (spento)."
   },
   "immagini": {
     "_nota": "§4 della specifica: JPG, PNG o WEBP. L'originale va al PC del master; la copia ridotta la prepara il browser del master al caricamento (nessuna libreria nativa sul server) e va alla vista giocatori e ai tablet.",
@@ -433,7 +435,7 @@
   "strumenti": {
     "_nota": "Menu «Strumenti» della barra in alto (ritocchi del 08/10/2026; src/mappa/menu.js → VOCI_STRUMENTI, src/ui/mappa/pagina.js → disegnaMenuStrumenti): gruppi con titolo e icona, voci brevi con la scorciatoia a destra, nell'ordine dei dati. Le voci che in quel momento non si possono usare restano spente, con il motivo nel suggerimento.",
     "gruppi": [
-      { "titolo": "Preparazione mappa", "icona": "🗺", "voci": ["immagine", "griglia", "muri", "porte", "luci", "nebbia", "nebbia_automatica"] },
+      { "titolo": "Preparazione mappa", "icona": "🗺", "voci": ["mappa_semplice", "immagine", "griglia", "muri", "porte", "luci", "nebbia", "nebbia_automatica"] },
       { "titolo": "Scena", "icona": "🎬", "voci": ["scene", "collegamento", "salva_iniziale", "ripristina_iniziale"] },
       { "titolo": "In gioco", "icona": "⚔", "voci": ["linea", "dettaglio_linea", "template", "mostra_area", "mostra_zoc", "seleziona_pg", "seleziona_nemici", "seleziona_tutti"] },
       { "titolo": "Vista giocatori", "icona": "📺", "voci": ["mostra_giocatori", "vista_giocatori", "adatta_giocatori", "pv_nemici", "sovrapposizioni_giocatori", "suoni_giocatori"] },

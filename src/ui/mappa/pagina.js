@@ -36,6 +36,7 @@ import { agganciaQ, centroToken, tokenSottoPunto, disponiInFila, sovrapposti, ch
 import { pezziDellaScena, pezziSenzaToken, tokenOrfani, tokenPerPezzo } from '../../mappa/partecipanti.js';
 import { daBase64, inBase64, cella, conta } from '../../mappa/celle.js';
 import { ostacoliVista, lineaDiTiro, testoCopertura, visuale as visualePg, nebbiaDopoVisuale, tokenPg } from '../../mappa/visuale.js';
+import { mappaSemplice, conSemplice, lineaSemplice, nebbiaAutomaticaAttiva } from '../../mappa/semplice.js';
 import { fasciaDistanza } from '../../attacco.js';
 import { CHIAVE_DALLA_MAPPA } from '../attacco.js';
 import { tratto, valoreModo, nebbiaProvvisoria, chiudiPennellata, rettangoloNebbia, tuttaNebbia, trattiCoperti } from '../../mappa/nebbia.js';
@@ -253,7 +254,9 @@ export function renderMappa(radice, ctx) {
   // 07/10: Maiusc premuto con un token scelto = Libero (l'area sparisce); selezione multipla con il contatore
   el.liberoInfo = h('div', { class: 'mappa-badge mappa-badge-libero', hidden: true, role: 'status' }, 'Libero (Maiusc): clic dove vuoi, senza conteggio');
   el.gruppoInfo = h('div', { class: 'mappa-badge mappa-badge-gruppo', hidden: true, role: 'status' });
-  el.riquadro.append(el.liberoInfo, el.gruppoInfo);
+  // «Mappa semplice» (N3): l'interruttore sta sulla mappa, sempre visibile; acceso, nessuna automazione
+  el.semplice = h('button', { type: 'button', role: 'switch', class: 'mappa-badge mappa-badge-semplice interruttore-mappa', hidden: true, onclick: () => cambiaSemplice() });
+  el.riquadro.append(el.liberoInfo, el.gruppoInfo, el.semplice);
   el.pannello = h('div', { class: 'mappa-pannello', 'aria-label': 'Collegamento, template, muri, nebbia, luci, vista giocatori e griglia' });
   el.cartaCorpo = h('div', { class: 'mappa-carta-corpo' });
   el.carta = h('section', { class: 'mappa-carta', 'aria-label': 'Mini-scheda del token', hidden: true },
@@ -360,7 +363,7 @@ export function renderMappa(radice, ctx) {
         disegnaTemplateScena(c, info);
         // prima le ZoC degli avversari del token scelto o trascinato (sotto l'area), poi l'area
         const id = st.trascina?.modo === 'token' ? st.trascina.token : st.selezionato;
-        if (st.mostraZoc && id && !disegnoAttivo()) {
+        if (st.mostraZoc && id && !disegnoAttivo() && !mappaSemplice(st.scena)) { // «Mappa semplice»: niente ZoC
           // A.132: prima le ZoC inattive (Stordito, Svenuto), tratteggiate; poi quelle attive
           const inattivi = avversariZocInattivi(s, st.pezzi, id, ctx.dati);
           if (inattivi.length) disegnaZoc(c, { scena: s, cam: st.cam, info, celle: celleZoc(s, inattivi), stile: ctx.dati.mappa.zoc, inattiva: true });
@@ -585,6 +588,7 @@ export function renderMappa(radice, ctx) {
   };
   const usaScena = async (s) => {
     st.scena = s;
+    aggiornaSemplice();
     el.titolo.textContent = s.nome;
     document.title = `${s.nome} · Mappa · Mutant`;
     if (s.mappa?.file !== st.fileImmagine) {
@@ -1165,7 +1169,8 @@ export function renderMappa(radice, ctx) {
       porte: { testo: 'Porte', titolo: 'Clic su un Q di muro: mette una porta; clic su una porta: la toglie', azione: () => { apriStrumento(el.pMuri); if (st.muri.strumento !== 'porta') strumentoMuri('porta'); } },
       luci: { testo: 'Luci', titolo: 'Luce della scena e zone a pennello', azione: () => apriStrumento(el.pLuci) },
       nebbia: { testo: 'Nebbia', titolo: 'Pennello e rettangolo, Rivela / Copri, tutto', azione: () => apriStrumento(el.pNebbia) },
-      nebbia_automatica: { testo: `Nebbia automatica: ${sn(sc?.visuale?.automatica)}`, titolo: 'La nebbia si apre da sola dove i PG vedono', azione: () => cambiaVisualeAutomatica() },
+      mappa_semplice: { testo: `Mappa semplice: ${sn(mappaSemplice(sc))}`, titolo: 'Accesa: nessuna automazione (nebbia automatica, luci, conteggio del movimento, Atletica, Copertura); sposti chi vuoi dove vuoi', azione: () => cambiaSemplice() },
+      nebbia_automatica: { testo: `Nebbia automatica: ${sn(nebbiaAutomaticaAttiva(sc))}`, titolo: mappaSemplice(sc) ? 'Ferma con «Mappa semplice»: spegnila per usarla' : 'La nebbia si apre da sola dove i PG vedono', azione: () => cambiaVisualeAutomatica() },
       scene: { testo: 'Scene…', titolo: 'Nuova, apri, rinomina, duplica, archivia', azione: () => apriStrumento(document.getElementById('plancia-scene-mappa')) },
       collegamento: { testo: 'Collegamento e token', titolo: 'Scontro o bozza collegati, pezzi da mettere in mappa', azione: () => apriStrumento(el.secScontro) },
       salva_iniziale: { testo: q ? 'Salva posizione iniziale (sovrascrive)' : 'Salva posizione iniziale', titolo: 'Token, porte, template e nebbia come sono adesso', azione: () => salvaInizialeUi() },
@@ -1892,6 +1897,8 @@ export function renderMappa(radice, ctx) {
     const scontro = st.fonti?.scontro ?? null;
     const base = { area: null, rimaste: null, usato: 0, fino: st.fascia, limite: 0, totale: 0, disponibili: null, celle: null, movimento: pz?.movimento ?? null, motivo: null, libero: false, escluse: [], chiusa: null, nonPiu: null, nota: null };
     // «Libero» (quarta modalità): nessuna area, nessun conteggio; il token va in qualunque quadretto
+    // «Mappa semplice» (N3): nessuna area, nessun conteggio, nessuna fascia: la pedina va dove il master la mette
+    if (mappaSemplice(st.scena)) return { ...base, libero: true, semplice: true };
     if (st.fascia === LIBERO) {
       if (!pz?.movimento) return { ...base, libero: true };
       const u = usatoNelRound(st.scena, t.id, scontro?.id ?? null, scontro?.round ?? null);
@@ -1946,7 +1953,7 @@ export function renderMappa(radice, ctx) {
   /** Passi del percorso dentro una ZoC degli avversari del token che si muove (null con «Mostra ZoC» spento). */
   function zocDelPercorso(per) {
     const id = st.trascina?.modo === 'token' ? st.trascina.token : st.selezionato;
-    if (!st.mostraZoc || !id || !per?.punti?.length) return null;
+    if (!st.mostraZoc || mappaSemplice(st.scena) || !id || !per?.punti?.length) return null;
     return passiInZoc(per.punti, per.ingombro, avversariZoc(st.scena, st.pezzi, id, ctx.dati));
   }
   /** «Mostra PV sui token»: interruttore ricordato (localStorage); vale solo per la vista master. */
@@ -2244,11 +2251,12 @@ export function renderMappa(radice, ctx) {
     const da = l ? st.scena.token.find((x) => x.id === l.da) : null;
     const a = l?.a ? st.scena.token.find((x) => x.id === l.a) : null;
     if (!da || (!a && !l.punto)) return null;
-    const chiave = JSON.stringify([idDi(st.scena), l.da, l.a, l.punto]);
+    const chiave = JSON.stringify([idDi(st.scena), l.da, l.a, l.punto, mappaSemplice(st.scena)]);
     if (cacheLinea.chiave === chiave) return cacheLinea.valore;
     const r = lineaDiTiro(st.scena, da, a ?? l.punto, ostacoliVista(st.scena, RP), RV, { contaToken: contaInLinea, volo: ctx.dati.mappa.volo.linea_di_tiro });
     cacheLinea.chiave = chiave;
-    cacheLinea.valore = { ...r, da, a: a ?? { q: l.punto, ingombro: 1 } };
+    // «Mappa semplice» (N3): la linea si traccia e dà la distanza; Copertura e creatura interposta non si calcolano
+    cacheLinea.valore = { ...(mappaSemplice(st.scena) ? lineaSemplice(r) : r), da, a: a ?? { q: l.punto, ingombro: 1 } };
     return cacheLinea.valore;
   }
   /**
@@ -2259,7 +2267,7 @@ export function renderMappa(radice, ctx) {
     const p = pezzoDi(t);
     return !p?.aZero && !(p?.stati ?? []).some((x) => (x?.id ?? x) === 'a-terra');
   }
-  const testoLinea = (r) => `${r.distanza} Q · ${testoCopertura(r)}${r.interposta ? ' · creatura interposta' : ''}${r.protetto ? ' · protetto' : ''}`;
+  const testoLinea = (r) => (r.semplice ? `${r.distanza} Q` : `${r.distanza} Q · ${testoCopertura(r)}${r.interposta ? ' · creatura interposta' : ''}${r.protetto ? ' · protetto' : ''}`);
   function disegnaLineaScelta(c) {
     if (!st.linea || !st.scena) return;
     const r = calcolaLinea();
@@ -2282,7 +2290,9 @@ export function renderMappa(radice, ctx) {
     if (!r) return null;
     // 07/10: per i giocatori la linea si ricalcola con quello che vedono: porte segrete come muro, niente token nascosti
     // (né come ostacolo né in mezzo), così la Copertura non tradisce un token che non vedono
-    const g = lineaDiTiro(st.scena, r.da, r.a.id ? r.a : r.a.q, ostacoliVista(st.scena, RP, { perGiocatori: true }), RV, { contaToken: (t) => !t.nascosto && contaInLinea(t), volo: ctx.dati.mappa.volo.linea_di_tiro });
+    const calcolata = lineaDiTiro(st.scena, r.da, r.a.id ? r.a : r.a.q, ostacoliVista(st.scena, RP, { perGiocatori: true }), RV, { contaToken: (t) => !t.nascosto && contaInLinea(t), volo: ctx.dati.mappa.volo.linea_di_tiro });
+    if (mappaSemplice(st.scena)) return { da: st.linea.da, a: st.linea.a, punto: st.linea.a ? null : st.linea.punto, distanza: calcolata.distanza, copertura: 'nessuna', vista: 'libera', testo: `${calcolata.distanza} Q` };
+    const g = calcolata;
     return { da: st.linea.da, a: st.linea.a, punto: st.linea.a ? null : st.linea.punto, distanza: g.distanza, copertura: g.copertura, vista: g.vista, testo: `${g.distanza} Q · ${testoCopertura(g)}${g.interposta ? ' · creatura interposta' : ''}${g.protetto ? ' · protetto' : ''}` };
   }
   /** Clic con la linea attiva: fissa il bersaglio e dice distanza, gittata, vista, Copertura; «Attacca!» con quei valori. */
@@ -2299,6 +2309,16 @@ export function renderMappa(radice, ctx) {
     const daTok = passeggero ?? r.da, aTok = st.linea.a ? st.scena.token.find((x) => x.id === st.linea.a) : null;
     const nomeDa = `${pezzoDi(daTok)?.nome ?? daTok.nome ?? daTok.id}${passeggero ? ` (da ${nomeTok(veicoloDa)})` : ''}`;
     const nomeA = aTok ? pezzoDi(aTok)?.nome ?? aTok.nome ?? aTok.id : `il quadretto (${st.linea.punto.join(', ')})`;
+    // «Mappa semplice» (N3, S22): solo la distanza; Copertura, creatura interposta e luce si decidono al tavolo e in
+    // «Attacca!» si mettono a mano (nessun valore compilato dalla mappa)
+    if (r.semplice) {
+      const az = [];
+      const idDaS = daTok.rif?.id, idAS = aTok?.rif?.id;
+      if (aTok && st.fonti?.scontro && st.planciaBarra?.puoAttaccare?.(idDaS)) az.push({ testo: `Attacca! (${nomeDa} → ${nomeA})`, fai: () => st.planciaBarra.attaccaContro(idDaS, idAS, {}) });
+      else if (aTok && pezzoDi(daTok)?.tipo === 'pg' && recordPg(pezzoDi(daTok))) az.push({ testo: `Apri la scheda di ${nomeDa} per «Attacca!»`, fai: () => apriSchedaToken(daTok) });
+      avviso([`${nomeDa} → ${nomeA}: ${r.distanza} Q.`, 'Mappa semplice: Copertura, creatura interposta e luce le decidi tu; in «Attacca!» si mettono a mano.'], { tipo: 'info', chiave: 'linea', durata: 12000, azioni: az });
+      return;
+    }
     const gittata = fasciaDistanza(r.distanza, ctx.dati).va;
     const pen = { leggera: ctx.dati.regole.attacco_distanza.copertura.bersaglio.leggera, media: ctx.dati.regole.attacco_distanza.copertura.bersaglio.media }[r.copertura];
     const righe = [
@@ -2333,7 +2353,7 @@ export function renderMappa(radice, ctx) {
   // ── Nebbia automatica (fase 2, lotto 3): la nebbia si apre dove i PG vedono; prossimo lotto: le luci ──
   function aggiornaVisuale() {
     const s = st.scena;
-    if (!s?.visuale?.automatica) return;
+    if (!nebbiaAutomaticaAttiva(s)) return;
     const g = s.griglia;
     const visti = visualePg(s, tokenPg(s), ostacoliVista(s, RP, { perGiocatori: true }), RV, null, ctx.dati.mappa);
     const m = nebbiaDopoVisuale(s.nebbia.coperti, visti, g.colonne, g.righe);
@@ -2355,8 +2375,40 @@ export function renderMappa(radice, ctx) {
   function aggiornaVoceNebbiaAutomatica() {
     if (el.strumenti?.open) disegnaMenuStrumenti();
   }
+  /**
+   * «Mappa semplice» (N3): accesa, nessuna automazione (nebbia automatica e sensi, luci, conteggio del movimento, Atletica,
+   * Copertura dalla linea); spenta, tutto torna come prima. Il resto della scena non cambia.
+   */
+  function cambiaSemplice(v = !mappaSemplice(st.scena)) {
+    if (!st.scena) return;
+    st.scena = conSemplice(st.scena, v);
+    st.linea = null;
+    cacheLinea.chiave = null;
+    salvaPresto();
+    if (!v) aggiornaVisuale();
+    avviso(v ? 'Mappa semplice accesa: nessuna automazione. Sposti chi vuoi dove vuoi, senza conteggio; nebbia, luci, Atletica e Copertura si decidono al tavolo.'
+      : ['Mappa semplice spenta: tornano il conteggio del movimento (Passo, Corsa, Scatto), gli Attacchi di Opportunità, la Copertura dalla linea di tiro e, se accesa, la nebbia automatica.'], { chiave: 'mappa-semplice', tipo: 'info', durata: 9000 });
+    aggiornaSemplice();
+    invalidaArea();
+    st.firmaPannello = null;
+    disegnaPannelli();
+    disegnaPannelloNebbia();
+    if (el.strumenti?.open) disegnaMenuStrumenti();
+    ridisegna(['aree', 'sopra', 'nebbia']);
+  }
+  /** L'interruttore sulla mappa: testo e stato dalla scena. */
+  function aggiornaSemplice() {
+    if (!el.semplice) return;
+    const v = mappaSemplice(st.scena);
+    el.semplice.hidden = !st.scena;
+    el.semplice.setAttribute('aria-checked', String(v));
+    el.semplice.classList.toggle('acceso', v);
+    el.semplice.title = v ? 'Mappa semplice: nessuna automazione, sposti chi vuoi dove vuoi. Clic per riaccendere conteggio del movimento, Copertura dalla linea, Atletica e nebbia automatica' : 'Clic per la Mappa semplice: spegne tutte le automazioni (conteggio del movimento, Attacchi di Opportunità, Copertura dalla linea, Atletica, nebbia automatica e luci)';
+    svuota(el.semplice, h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `Mappa semplice: ${v ? 'sì' : 'no'}`);
+  }
   function cambiaVisualeAutomatica() {
     if (!st.scena) return;
+    if (mappaSemplice(st.scena)) { avviso('Con «Mappa semplice» la nebbia automatica è ferma: spegni «Mappa semplice» per usarla. La nebbia a mano funziona sempre.', { chiave: 'visuale', tipo: 'info' }); return; }
     const v = !st.scena.visuale?.automatica;
     st.scena = { ...st.scena, visuale: { automatica: v } };
     salvaPresto();
@@ -2646,7 +2698,8 @@ export function renderMappa(radice, ctx) {
     // ZoC: il percorso fatto, per gli Attacchi di Opportunità (non con «Libero»: è il master che sposta)
     const fatto = !libero && info.area ? percorso(info.area, q) : [];
     st.scena = muoviToken(st.scena, t.id, { a: q, costo: libero ? null : costo, fascia, scontro: scontro?.id ?? null, round: scontro?.round ?? null, libero }, ctx.dati);
-    if (libero) {
+    // «Mappa semplice»: nessun avviso e nessuna riga nel registro, si sposta e basta
+    if (libero && !mappaSemplice(st.scena)) {
       avviso(`Libero: ${nome} spostato; non conta nel movimento${scontro ? ' (riga nel registro)' : ''}.`, { tipo: 'info', chiave: 'fuori-area' });
       if (scontro) scriviRegistro(scontro.id, (s) => rigaMovimentoLibero(s, nome, t.q, q), 'Riga del registro (movimento libero)');
     }
@@ -2701,7 +2754,7 @@ export function renderMappa(radice, ctx) {
   function movimentoPannello(t) {
     const info = st.area?.token === t.id ? st.area : infoArea(t);
     const ultimo = [...st.scena.movimenti].reverse().find((x) => x.token === t.id);
-    return { mostraArea: st.mostraArea, mostraZoc: st.mostraZoc, movimento: info.movimento, rimaste: info.rimaste, usato: info.usato, disponibili: info.disponibili, fascia: st.fascia, motivo: info.motivo, nota: info.nota, escluse: info.escluse ?? [], chiusa: info.chiusa ?? null, annullabile: !!ultimo, azp: azpToken(t), porte: porteVicine(st.scena, t).map((p) => ({ id: p.id, stato: p.stato })), veicolo: t.rif.tipo === 'veicolo', andatura: pezzoDi(t)?.andatura ?? null, senzaScontro: !st.fonti?.scontro };
+    return { semplice: !!info.semplice, mostraArea: st.mostraArea, mostraZoc: st.mostraZoc, movimento: info.movimento, rimaste: info.rimaste, usato: info.usato, disponibili: info.disponibili, fascia: st.fascia, motivo: info.motivo, nota: info.nota, escluse: info.escluse ?? [], chiusa: info.chiusa ?? null, annullabile: !!ultimo, azp: azpToken(t), porte: porteVicine(st.scena, t).map((p) => ({ id: p.id, stato: p.stato })), veicolo: t.rif.tipo === 'veicolo', andatura: pezzoDi(t)?.andatura ?? null, senzaScontro: !st.fonti?.scontro };
   }
   /** «Nuovo turno» senza scontro aperto: il conteggio del movimento riparte per un token o per tutti (null). */
   function nuovoTurnoUi(id = null) {

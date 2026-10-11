@@ -125,6 +125,11 @@ const q = (n) => `${String(n).replace('.', ',')} Q`;
  */
 function sezioneMovimento(m, a) {
   if (!m) return null;
+  // «Mappa semplice» (N3): nessun conteggio né fasce; restano «Annulla ultimo movimento» e le porte vicine
+  if (m.semplice) return h('div', { class: 'mappa-movimento' },
+    h('p', { class: 'nota' }, 'Mappa semplice: trascina o clicca, la pedina va dove vuoi, senza conteggio.'),
+    h('div', { class: 'riga-azioni' }, m.annullabile ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: a.annullaMovimento }, 'Annulla ultimo movimento') : null,
+      a.lineaTiro ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Distanza verso il mouse o un token; clic per fissarla', onclick: a.lineaTiro }, 'Linea di tiro (L)') : null));
   const mov = m.movimento;
   const fasce = [['Passo', 1, mov?.passo, 'passo'], ['Corri', 2, mov?.corsa, 'corsa'], ['Scatta', 3, mov?.scatto, 'scatto']];
   const spenta = (f) => f !== 'passo' && ((m.escluse ?? []).includes(f) || !!m.chiusa);

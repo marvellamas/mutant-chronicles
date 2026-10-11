@@ -6,6 +6,7 @@
 // Ritocchi del 06/10 (test di Marcello sul lotto 6 della mappa): «Tutti» / «Nessuno» sui PG, «Salvata alle hh:mm» e
 // «Salva e chiudi», spiegazione di «Inizia» e «Inizia e consuma la bozza», «Prepara la mappa» (scena collegata alla
 // bozza, esistente o nuova, aperta per mettere i token).
+import { semplicePredefinita } from '../mappa/semplice.js';
 import { h } from './dom.js';
 import { nascondiTooltip } from './tooltip.js';
 import { avviso, avvisoErrore } from './avvisi.js';
@@ -345,7 +346,7 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
       if (!id) {
         const nome = await chiediTesto({ titolo: 'Nuova scena per questa bozza', etichetta: 'Nome della scena', valore: b.nome, conferma: 'Crea e apri' });
         if (!nome) return;
-        const r = await salvaScena(collegaABozza(nuovaScena({ id: idScena(nome), nome: nome.slice(0, 120), dati }), b.id));
+        const r = await salvaScena(collegaABozza(nuovaScena({ id: idScena(nome), nome: nome.slice(0, 120), dati, semplice: semplicePredefinita(dati) }), b.id));
         if (r.conflitto) throw new Error('una scena con questo nome esiste già: riprova');
         id = r.scena.id;
       } else {

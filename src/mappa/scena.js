@@ -65,7 +65,7 @@ export function dimensioniGriglia(mappa, griglia) {
  * colonne × righe (predefinite in data/mappa.json → scena); con l'immagine si calcolano dalla griglia. Nebbia
  * iniziale dai dati (§5: coperta).
  */
-export function nuovaScena({ id, nome, mappa = null, griglia = {}, colonne, righe, nebbia, dati, adesso = new Date() }) {
+export function nuovaScena({ id, nome, mappa = null, griglia = {}, colonne, righe, nebbia, dati, adesso = new Date(), semplice = undefined }) {
   const D = dati.mappa;
   const g = { ...D.griglia.predefinita, ...griglia };
   const dim = mappa ? dimensioniGriglia(mappa, g) : { colonne: colonne ?? D.scena.colonne_predefinite, righe: righe ?? D.scena.righe_predefinite };
@@ -90,6 +90,8 @@ export function nuovaScena({ id, nome, mappa = null, griglia = {}, colonne, righ
     collegamento: { scontro: null, bozza: null },
     movimenti: [],
     annulla: [],
+    // «Mappa semplice» (N3, src/mappa/semplice.js): chi crea la scena dall'app passa il valore predefinito dei dati
+    ...(typeof semplice === 'boolean' ? { semplice } : {}),
   };
 }
 
@@ -119,6 +121,7 @@ export function riassuntoScena(s, mtime = null) {
     colonne: s.griglia?.colonne, righe: s.griglia?.righe,
     token: s.token?.length ?? 0,
     collegamento: s.collegamento ?? null,
+    semplice: s.semplice === true,
     // ritocchi del 08/10: «Prepara scontro» dice se la posizione iniziale è salvata
     iniziale: s.iniziale?.quando ?? null,
     ...(mtime !== null ? { mtime } : {}),
@@ -221,6 +224,8 @@ export function validaScena(s, dati) {
   }
 
   if (s.visuale !== undefined && (!isOggetto(s.visuale) || typeof s.visuale.automatica !== 'boolean')) return 'visuale: { automatica: vero o falso } atteso';
+  // «Mappa semplice» (N3): facoltativo; le scene di prima non lo hanno e valgono come spento
+  if (s.semplice !== undefined && typeof s.semplice !== 'boolean') return 'semplice: vero o falso atteso';
   if (s.audio !== undefined && (!isOggetto(s.audio) || typeof s.audio.giocatori !== 'boolean')) return 'audio: { giocatori: vero o falso } atteso';
   // fase 2, lotto 4: luci (facoltative; scene di prima: Luce sufficiente)
   if (s.luce !== undefined) { const e = erroreLuce(s.luce, dati, (m) => mascheraValida(m, colonne, righe)); if (e) return `luce.${e}`; }

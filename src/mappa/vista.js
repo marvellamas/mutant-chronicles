@@ -17,6 +17,7 @@
 // i partecipanti il cui token si vede (e i PG senza token in mappa).
 // La nebbia arriva intera: i giocatori la vedono piena (§5). Limite accettato: i pixel dell'immagine di fondo arrivano
 // comunque al dispositivo (decisione 118, ex A.130).
+import { nebbiaAutomaticaAttiva, mappaSemplice } from './semplice.js';
 import { daBase64, inBase64, cella, senza } from './celle.js';
 import { celleToken, chiaveRif, iniziali } from './token.js';
 import { barraIniziativa, barraPerGiocatori } from './iniziativa.js';
@@ -69,7 +70,8 @@ export function vistaGiocatori(s, contesto = null, regoleTemplate = contesto?.re
   const limita = (v, max) => Math.min(max - 1, Math.max(0, v));
   // fase 2, lotto 3: con la nebbia automatica (scena.visuale.automatica) i token che non sono PG si vedono solo dove i PG
   // vedono adesso; le zone esplorate ma non viste arrivano come «ombra» (più scure nella vista)
-  const auto = s.visuale?.automatica && regoleMappa?.visuale && regoleMappa?.porte;
+  // «Mappa semplice» (N3): nessuna automazione, vale solo la nebbia messa a mano
+  const auto = nebbiaAutomaticaAttiva(s) && regoleMappa?.visuale && regoleMappa?.porte;
   const visti = auto ? visualePg(s, tokenPg(s), ostacoliVista(s, regoleMappa.porte, { perGiocatori: true }), regoleMappa.visuale, null, regoleMappa) : null;
   const pg = (t) => t.rif?.tipo === 'partecipante' && String(t.rif.id).startsWith('pg:');
   // token in volo (data/mappa.json → volo.visibile_oltre_nebbia): A.150 (decisione 150) false, il volo non rivela; con

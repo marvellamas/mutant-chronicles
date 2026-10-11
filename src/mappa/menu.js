@@ -17,7 +17,7 @@ export const CONTESTI_MENU = Object.keys(VOCI_MENU);
 
 /** Le voci del menu «Strumenti» della barra in alto (ritocchi del 08/10; data/mappa.json → strumenti). */
 export const VOCI_STRUMENTI = [
-  'immagine', 'griglia', 'muri', 'porte', 'luci', 'nebbia', 'nebbia_automatica',
+  'mappa_semplice', 'immagine', 'griglia', 'muri', 'porte', 'luci', 'nebbia', 'nebbia_automatica',
   'scene', 'collegamento', 'salva_iniziale', 'ripristina_iniziale',
   'linea', 'dettaglio_linea', 'template', 'mostra_area', 'mostra_zoc', 'seleziona_pg', 'seleziona_nemici', 'seleziona_tutti',
   'mostra_giocatori', 'vista_giocatori', 'adatta_giocatori', 'pv_nemici', 'sovrapposizioni_giocatori', 'suoni_giocatori', 'blocco_giocatori',

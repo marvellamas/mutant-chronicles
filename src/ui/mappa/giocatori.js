@@ -529,7 +529,7 @@ export function renderGiocatori(radice, ctx) {
       else {
         const ao = (r.opportunita ?? []).map((o) => `Attacco di Opportunità di ${o.nome}!`);
         st.mosso = true;
-        avviso([st.io?.aiuto ? `Hai mosso ${st.io.nome} (Aiuto-master): ${numeroQ(r.costo)} Q (${NOMI_MODI[r.fascia] ?? r.fascia}).` : `Ti sei mosso: ${numeroQ(r.costo)} Q (${NOMI_MODI[r.fascia] ?? r.fascia}).`, ...ao, r.blocco ? 'Corsa e Scatto sono un blocco unico: movimento del Round finito.' : null].filter(Boolean), { tipo: ao.length ? 'info' : 'ok', chiave: 'tablet-mosso', durata: ao.length ? 12000 : 5000,
+        avviso([r.semplice ? (st.io?.aiuto ? `Hai mosso ${st.io.nome} (Aiuto-master).` : 'Pedina spostata.') : st.io?.aiuto ? `Hai mosso ${st.io.nome} (Aiuto-master): ${numeroQ(r.costo)} Q (${NOMI_MODI[r.fascia] ?? r.fascia}).` : `Ti sei mosso: ${numeroQ(r.costo)} Q (${NOMI_MODI[r.fascia] ?? r.fascia}).`, ...ao, r.blocco ? 'Corsa e Scatto sono un blocco unico: movimento del Round finito.' : null].filter(Boolean), { tipo: ao.length ? 'info' : 'ok', chiave: 'tablet-mosso', durata: ao.length ? 12000 : 5000,
           azioni: st.daScheda ? [{ testo: '← Torna alla scheda', fai: () => tornaAllaScheda() }] : [] });
       }
     } catch { avviso('Collegamento con il master perso: riprova.', { tipo: 'errore', chiave: 'tablet-prova' }); } finally { st.inVolo = false; }
@@ -585,17 +585,17 @@ export function renderGiocatori(radice, ctx) {
     const puo = !!io.permesso?.puo;
     const a = io.area;
     const stato = puo
-      ? h('p', { class: 'tablet-stato puo' }, a?.motivo ? `Movimento: ${a.motivo}.` : `Tocca un quadretto dell’area, poi «Conferma». Usati ${numeroQ(a?.usato ?? 0)} Q.`)
+      ? h('p', { class: 'tablet-stato puo' }, io.semplice ? 'Mappa semplice: tocca il quadretto dove vuoi andare, poi «Conferma».' : a?.motivo ? `Movimento: ${a.motivo}.` : `Tocca un quadretto dell’area, poi «Conferma». Usati ${numeroQ(a?.usato ?? 0)} Q.`)
       : h('p', { class: `tablet-stato${io.impostazioni?.bloccato ? ' bloccato' : ''}` }, io.impostazioni?.bloccato ? '🔒 ' : '', io.permesso?.motivo ?? '');
     const r = a?.rimaste ?? {};
-    const fasce = puo ? h('div', { class: 'tablet-fasce', role: 'group', 'aria-label': 'Fascia di movimento' }, ['passo', 'corsa', 'scatto'].map((f, i) => h('button', {
+    const fasce = puo && !io.semplice ? h('div', { class: 'tablet-fasce', role: 'group', 'aria-label': 'Fascia di movimento' }, ['passo', 'corsa', 'scatto'].map((f, i) => h('button', {
       type: 'button', class: `btn modo-${f}${st.fascia === i + 1 ? ' scelto' : ''}`, 'aria-pressed': String(st.fascia === i + 1), disabled: r[f] === null || r[f] === undefined,
       title: r[f] === null ? (a?.escluse?.includes(f) ? 'Passo già cominciato: Corsa e Scatto si fanno da fermi' : 'Non disponibile') : `${NOMI_MODI[f]}: ${numeroQ(r[f])} Q`,
       onclick: () => cambiaFascia(i + 1),
     }, NOMI_MODI[f], r[f] !== null && r[f] !== undefined ? h('small', {}, ` ${numeroQ(r[f])} Q`) : null))) : null;
     const p = st.prova;
     const conf = p ? h('div', { class: 'tablet-conferma' },
-      h('p', {}, `Arrivo: ${numeroQ(p.costo)} Q (${NOMI_MODI[p.fascia] ?? p.fascia})`, p.blocco ? `, blocco unico${p.persi ? `: ${numeroQ(p.persi)} Q persi` : ''}` : ''),
+      h('p', {}, p.semplice ? 'Sposta qui la pedina.' : `Arrivo: ${numeroQ(p.costo)} Q (${NOMI_MODI[p.fascia] ?? p.fascia})`, p.blocco ? `, blocco unico${p.persi ? `: ${numeroQ(p.persi)} Q persi` : ''}` : ''),
       ...(p.opportunita ?? []).map((o) => h('p', { class: 'tablet-zoc' }, `⚠ Esci dalla ZoC di ${o.nome}: Attacco di Opportunità!`)),
       h('div', { class: 'riga-azioni' },
         h('button', { type: 'button', class: 'btn', onclick: () => { st.prova = null; aggiornaTablet(); tela.richiedi(['sopra']); } }, 'Annulla'),

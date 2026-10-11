@@ -20,6 +20,7 @@ import { stessaChiave } from '../veicoli-registro.js';
 import { inVolo, movimentoInVolo, regoleMovimento } from './volo.js';
 import { lineaDiTiro, ostacoliVista, testoCopertura } from './visuale.js';
 import { luceIngombro, testoLuceBersaglio } from './luce.js';
+import { mappaSemplice, lineaSemplice } from './semplice.js';
 
 export const FASCE = ['passo', 'corsa', 'scatto'];
 export const MODI_MOVIMENTO = ['turno', 'sempre'];
@@ -63,6 +64,8 @@ export function permessoMovimento({ scena, pezzi, scontro = null, chiavePg, dati
     if (!scontro) return no('Nessuno scontro in corso: muovi al tuo turno, quando il master avvia lo scontro.', ok);
     if (diTurno(scontro)?.id !== token.rif.id) return no('Non è il tuo turno: aspetta il tuo turno per muovere.', ok);
   }
+  // «Mappa semplice» (N3): la pedina si sposta senza profilo di movimento e senza controlli sui PV
+  if (mappaSemplice(scena)) return { puo: true, motivo: null, token, pezzo, bordo: null };
   if (!pezzo.movimento) return no('Il master non ha ancora letto la tua scheda: niente movimento per ora.', ok);
   if (pezzo.aZero) return no('Sei a 0 PV: non puoi muoverti.', ok);
   // in volo (08/10): Passo, Corsa e Scatto del volo (Giocatore §5.2.3)
@@ -118,6 +121,8 @@ export const nomeFascia = (f) => NOMI[f] ?? f;
 export function areaPerTablet({ scena, pezzi, scontro, chiavePg, fascia = 1, dati }) {
   const p = permessoMovimento({ scena, pezzi, scontro, chiavePg, dati });
   if (!p.puo) return { permesso: p, area: null };
+  // «Mappa semplice» (N3): nessuna area e nessun conteggio; il giocatore tocca un quadretto che vede
+  if (mappaSemplice(scena)) return { permesso: p, area: null, semplice: true };
   const info = areaGiocatore({ scena, token: p.token, pezzo: p.pezzo, pezzi, scontro, fascia, dati, perGiocatori: true });
   const celle = celleArea(info.area, info.rimaste, fascia);
   const nebbia = daBase64(scena.nebbia.coperti);
@@ -142,6 +147,8 @@ export function provaMovimento({ scena, pezzi, scontro = null, chiavePg, a, fasc
   if (!tuttoDentro({ q: a, ingombro: token.ingombro }, scena.griglia.colonne, scena.griglia.righe)) return { ok: false, errore: 'quadretto di arrivo non valido: fuori dalla mappa' };
   const nebbia = daBase64(scena.nebbia.coperti);
   if (!visibileAiGiocatori({ q: a, ingombro: token.ingombro, nascosto: false }, scena, nebbia)) return { ok: false, errore: 'Quel quadretto è sotto la nebbia: scegline uno che vedi.' };
+  // «Mappa semplice» (N3): nessun conteggio, nessuna fascia, nessun Attacco di Opportunità; basta un quadretto che si vede
+  if (mappaSemplice(scena)) return { ok: true, semplice: true, costo: 0, fascia: null, percorso: [[...token.q], [...a]], punti: [[...token.q], [...a]], opportunita: [], token: token.id, nome: pezzo.nome, rifId: token.rif.id, usato: 0, blocco: false, persi: 0 };
   // quello che il giocatore vede e quello che c'è davvero
   const vista = areaGiocatore({ scena, token, pezzo, pezzi, scontro, fascia, dati, perGiocatori: true });
   const vera = areaGiocatore({ scena, token, pezzo, pezzi, scontro, fascia, dati });
@@ -176,7 +183,7 @@ export function provaMovimento({ scena, pezzi, scontro = null, chiavePg, a, fasc
 export function eseguiMovimentoGiocatore({ scena, pezzi, scontro = null, chiavePg, a, fascia = 1, dati, adesso = new Date() }) {
   const prova = provaMovimento({ scena, pezzi, scontro, chiavePg, a, fascia, dati });
   if (!prova.ok) return prova;
-  const nuova = muoviToken(scena, prova.token, { a, costo: prova.costo, fascia: prova.fascia, scontro: scontro?.id ?? null, round: scontro?.round ?? null, libero: false, tablet: chiavePg }, dati, adesso);
+  const nuova = muoviToken(scena, prova.token, { a, costo: prova.semplice ? null : prova.costo, fascia: prova.fascia, scontro: scontro?.id ?? null, round: scontro?.round ?? null, libero: !!prova.semplice, tablet: chiavePg }, dati, adesso);
   return { ok: true, scena: nuova, movimento: nuova.movimenti.at(-1), prova };
 }
 
@@ -251,10 +258,13 @@ export function lineaPerTablet({ scena, pezzi, chiavePg, verso, visibili, dati }
     return !p?.aZero && !(p?.stati ?? []).some((x) => (x?.id ?? x) === 'a-terra');
   };
   const ost = ostacoliVista(scena, dati.mappa.porte, { perGiocatori: true });
-  const r = lineaDiTiro(scena, da, a.id ? a : a.q, ost, dati.mappa.visuale, { contaToken, volo: dati.mappa.volo.linea_di_tiro });
-  const luce = testoLuceBersaglio(luceIngombro(scena, a, dati), dati);
+  const calcolata = lineaDiTiro(scena, da, a.id ? a : a.q, ost, dati.mappa.visuale, { contaToken, volo: dati.mappa.volo.linea_di_tiro });
+  // «Mappa semplice» (N3): la linea dà solo la distanza; Copertura, creatura interposta e luce si decidono al tavolo
+  const semplice = mappaSemplice(scena);
+  const r = semplice ? lineaSemplice(calcolata) : calcolata;
+  const luce = semplice ? null : testoLuceBersaglio(luceIngombro(scena, a, dati), dati);
   return {
-    ok: true, distanza: r.distanza, copertura: r.copertura, testo: testoCopertura(r), protetto: !!r.protetto, interposta: !!r.interposta, vista: r.vista, inVolo: !!r.inVolo,
+    ok: true, ...(semplice ? { semplice: true } : {}), distanza: r.distanza, copertura: r.copertura, testo: semplice ? 'Mappa semplice: Copertura a mano' : testoCopertura(r), protetto: !!r.protetto, interposta: !!r.interposta, vista: r.vista, inVolo: !!r.inVolo,
     luce, nome, da: { q: [...da.q], ingombro: da.ingombro }, a: { q: [...a.q], ingombro: a.ingombro },
   };
 }

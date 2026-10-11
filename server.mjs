@@ -117,6 +117,7 @@ import { validaNemico, formattaErrore } from './src/validate.js';
 import { validaScena, riassuntoScena, ID_SCENA, FILE_MAPPA } from './src/mappa/scena.js';
 import { movimentoDelRound } from './src/mappa/annulla.js';
 import { vistaGiocatori } from './src/mappa/vista.js';
+import { mappaSemplice } from './src/mappa/semplice.js';
 import { validaDiretta, direttaPerGiocatori, visibileAiGiocatori } from './src/mappa/diretta.js';
 import { avversariZoc } from './src/mappa/zoc.js';
 import { dimensioniImmagine } from './src/mappa/immagine.js';
@@ -473,6 +474,8 @@ async function apiMovimentoRound(req, res, scene, scontri) {
     let s;
     try { s = await leggiJson(join(scene, f)); } catch { continue; }
     if (s?.collegamento?.scontro !== idScontro) continue;
+    // «Mappa semplice» (N3, S22): nessun dato dalla mappa; movimento e Prova di Atletica si mettono a mano
+    if (mappaSemplice(s)) return json(res, 200, { fascia: null, daPasso: false, q: 0, round: scontro.round, scena: s.id, semplice: true });
     const m = movimentoDelRound(s, partecipante, idScontro, scontro.round);
     if (m) return json(res, 200, { ...m, round: scontro.round, scena: s.id });
   }
@@ -823,12 +826,14 @@ async function perIlTablet(scena, contesto, pg, cartelle) {
   const { permesso, area } = areaPerTablet({ scena, pezzi: contesto.pezzi, scontro: contesto.scontro, chiavePg: pg, fascia: 3, dati });
   const token = permesso.token ?? scena.token.find((t) => t.rif?.id === pezzo.rif.id) ?? null;
   // le ZoC degli avversari che il giocatore vede (Giocatore §5.3), come nella diretta: nessun nascosto, niente sotto la nebbia
-  const zoc = permesso.puo && scena.zocGiocatori !== false
+  const zoc = permesso.puo && scena.zocGiocatori !== false && !mappaSemplice(scena)
     ? avversariZoc(scena, contesto.pezzi, permesso.token.id, dati, { perGiocatori: true }).filter((a) => visibileAiGiocatori(a.token, scena)).map((a) => ({ q: [...a.token.q], ingombro: a.token.ingombro, portata: a.portata }))
     : [];
   return {
     pg, trovato: true, nome: pezzo.nome, token: token && !token.nascosto ? token.id : null, bordo: permesso.bordo ?? null,
     mini: miniScheda(pezzo), impostazioni: imp, permesso: { puo: permesso.puo, motivo: permesso.motivo }, area, zoc,
+    // «Mappa semplice» (N3): il tablet sposta la pedina senza area né fasce
+    ...(mappaSemplice(scena) ? { semplice: true } : {}),
   };
 }
 
@@ -888,7 +893,7 @@ async function movimentoDalTablet(req, res, cartelle) {
   }
   // A.122: «mosso da Aiuto-master (tablet di …)» nel registro dello scontro
   if (esito.stato === 200 && aiuto) {
-    try { await rigaAiutoNelRegistro(cartelle.scontri, aiuto.ruolo.scontro, { nome: esito.prova.nome ?? aiuto.nome, aiuto: aiuto.ruolo.nome, costo: esito.prova.costo, modo: NOMI_FASCE[esito.prova.fascia] ?? null, movimento: esito.movimento.id }); } catch { /* il movimento resta */ }
+    try { await rigaAiutoNelRegistro(cartelle.scontri, aiuto.ruolo.scontro, { nome: esito.prova.nome ?? aiuto.nome, aiuto: aiuto.ruolo.nome, costo: esito.prova.semplice ? null : esito.prova.costo, modo: NOMI_FASCE[esito.prova.fascia] ?? null, movimento: esito.movimento.id }); } catch { /* il movimento resta */ }
   }
   if (esito.stato === 200) cartelle.canale?.cambiata();
   return json(res, esito.stato, esito.corpo);
