@@ -74,6 +74,7 @@ src/
   incantesimi.js, checklist.js, descrizioni.js, tiri.js, lingua.js
   equipaggiamento.js  catalogo ed effetti degli oggetti
   attacco.js    utility d'attacco (a distanza; il corpo a corpo con lo stesso impianto)
+  tiri-scheda.js  dadi nell'app (13/10, S9, S15, S18): che dado si tira per ogni valore (dai dati), esito con lo scarto (src/prova.js), registro degli ultimi tiri; finestrella in ui/tira-valore.js
   attacco-sintesi.js  presentazione sintetica di «Attacca!» (13/10, S17, S20, S21): armi in mano, fasce di distanza a pulsanti, nome di «Mirato», voci attive di «Altro», memoria per scontro
   lancio.js     utility di lancio degli incantesimi (stesso impianto)
   ricarica.js   ricarica delle armi a distanza dalle riserve
@@ -164,6 +165,8 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
   - registro «Modifiche del master» nella tab Identità: sola lettura per i giocatori, «Annulla» per riga in modalità master (la riga resta, annullata);
   - tasto MUTANT con il server solo sul PC del master (S1); bonus di circostanza dal Tavolo («dal master», S11: lo toglie il master o «Fine scontro»); «gratis (dato dal DdG)» in Compra (S33);
   - tablet aperti: il server non lascia cambiare i blocchi del master a chi non è sul suo PC, e la scheda del giocatore prende la versione del master senza «Tieni la mia» quando il master è intervenuto.
+
+- Dadi nell'app (13/10, S9, S15, S18; richiesta di Davide e Mingo, forma decisa da Marcello): il dado dal vivo resta il modo di base, l'app tira solo se il giocatore lo chiede. Si tocca il valore (VA di un'Abilità, Difese, Iniziativa, Prove Salvezza; in «Attacca!» il VA finale e il danno) e si apre «Tira … — VA 12» con il dado delle regole (`regole.json` → `prova.dado`, validato; Iniziativa §2.14; danno dalla formula dell'arma), l'esito (§1.6, §1.7, A.78) e lo scarto; i bonus già compresi sono elencati in piccolo. Col mouse resta il tooltip della provenienza, il conto nel «Calcolo»; nessun pulsante nuovo. Gli ultimi venti tiri stanno in `sessione.tiri` («Ultimi tiri» in Identità) e, in uno scontro, ogni tiro scrive una riga nel registro della plancia: nessun tiro nascosto al master.
 
 Fuori perimetro per ora: tiri automatici fuori dalla plancia; manovre, inseguimenti e collisioni dei veicoli al tavolo.
 
