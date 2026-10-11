@@ -1032,13 +1032,10 @@ const paragrafi = (testo) => String(testo ?? '').split('\n').filter((x) => x.tri
 // Identità
 
 function tabIdentita(ctx, d) {
-  const s = ctx.sessione;
-  const m = ctx.massimi;
-  const mov = d.movimento;
   const vuoti = d.anagrafica.filter((x) => !x.valore).length;
   // Ordine (dall'alto): PV e PM (solo dove non stanno nella colonna di sinistra), anagrafica in una
-  // riga espandibile, Caratteristiche e Prove Salvezza affiancate, Punti Eroe · Distintivi ·
-  // Crediti, poi il resto. Su telefono lo stesso ordine, in una colonna.
+  // riga espandibile, Caratteristiche e Prove Salvezza affiancate, poi il resto (Punti Eroe, Distintivi e Crediti
+  // sono nella testata; Iniziativa, Movimento e Azioni nel Combattimento). Su telefono lo stesso ordine, in una colonna.
   const espansa = leggiImpostazioni().anagraficaEspansa === true;
   const riga = [d.nome, ...d.anagrafica.filter((x) => x.valore).map((x) => (x.campo === 'soprannome' ? `«${x.valore}»` : `${x.etichetta} ${x.valore}`))].join(' · ');
   return [
@@ -1088,13 +1085,7 @@ function tabIdentita(ctx, d) {
 
     // S4 (11/10/2026): Punti Eroe e Distintivi stanno nella testata, accanto al titolo di ogni tab
 
-    sezione('Combattimento e movimento',
-      ctx.tab.scheda.tavolo
-        ? h('div', { class: 'griglia-tavolo griglia-tavolo-compatta' }, riquadriTavolo(ctx))
-        : h('dl', { class: 'voci griglia-voci' },
-          h('div', {}, h('dt', {}, 'Iniziativa'), h('dd', {}, `${segno(d.iniziativa)} + ${d.dadoIniziativa}`)),
-          h('div', {}, h('dt', {}, 'Movimento'), h('dd', {}, `Passo ${mov.passo} ${mov.unita} · Corsa ${mov.corsa} ${mov.unita} · Scatto ${mov.scatto} ${mov.unita}`)),
-          h('div', {}, h('dt', {}, 'Azioni'), h('dd', {}, `${d.azioni.movimento} di Movimento, ${d.azioni.principali} ${d.azioni.principali === 1 ? 'Principale' : 'Principali'} per Round`)))),
+    // S6 (11/10/2026): Iniziativa, Movimento e Azioni stanno nella tab Combattimento
 
     sezione('Vantaggio dell’Addestramento', h('p', {}, h('strong', {}, `${d.vantaggio.nome}. `), d.vantaggio.testo)),
     sezione('Background', d.background ? h('div', { class: 'testo-lungo' }, paragrafi(d.background)) : h('p', { class: 'vuoto' }, 'Nessun Background scritto.')),

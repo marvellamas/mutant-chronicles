@@ -134,3 +134,19 @@ test('S5: nessuno Stato attivo, nessuna riga', () => {
   assert.deepEqual(statiAttiviVista({ statiAttivi: [] }, dati), []);
   assert.deepEqual(statiAttiviVista({ statiAttivi: ['svenuto'] }, dati).map((x) => [x.id, x.implicato]), [['a-terra', true], ['svenuto', false]].sort((a, b) => dati.regole.stati.elenco.findIndex((s) => s.id === a[0]) - dati.regole.stati.elenco.findIndex((s) => s.id === b[0])));
 });
+
+// ---------------------------------------------------------------------------
+// S6: Identità
+
+test('S6: in Identità non ci sono più i Distintivi né «Combattimento e movimento»; il resto resta', () => {
+  for (const f of ESEMPI) {
+    const r = resa(contesto(f, { attiva: 'identita' }));
+    const titoli = r.tutti.filter((n) => n.tagName === 'H2').map((n) => n.textContent);
+    assert.ok(!titoli.includes('Combattimento e movimento'), f);
+    for (const t of ['Anagrafica', 'Caratteristiche', 'Prove Salvezza', 'Background', 'Note di sessione', 'Progressione']) assert.ok(titoli.includes(t), `${f}: ${t}`);
+    assert.equal(r.tutti.filter((n) => n.tagName === 'H3' && /^(Iniziativa|Movimento|Azioni|Distintivi)$/.test(n.textContent)).length, 0, f);
+  }
+  // Iniziativa, Movimento e Azioni restano nella tab Combattimento
+  const c = resa(contesto(TORVALD, { attiva: 'combattimento' }));
+  for (const t of ['Iniziativa', 'Movimento', 'Azioni']) assert.equal(c.tutti.filter((n) => n.tagName === 'H3' && n.textContent === t).length, 1, t);
+});
