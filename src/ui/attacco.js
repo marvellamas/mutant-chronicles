@@ -4,6 +4,7 @@
 // si ricordano per ogni arma nella sessione (sessione → attacchi). Impianto del pannello e
 // componenti comuni in src/ui/pannello-passi.js (telefono: un passo per schermata; da 800 px le
 // scelte a sinistra e il risultato a destra).
+import { conLineaDallaMappa, conMovimentoDallaMappa, vociDallaMappa, togliDallaMappa, segniDopoModifica } from '../dalla-mappa.js';
 import { conAvviso } from './procedi.js';
 import { h, segno } from './dom.js';
 import { infoValore, listaProvenienza } from './tooltip.js';
@@ -53,7 +54,8 @@ function dallaMappa(ctx, a, salvate) {
   // fase 2, lotto 4: anche la luce della zona del bersaglio, proposta in «Luce sul bersaglio» (modificabile)
   // ritocchi del 07/10: anche l'id del bersaglio nello scontro, proposto in «Contro un nemico dello scontro»; dal menu del
   // token senza linea di tiro solo quello (soloBersaglio)
-  const v = { ...salvate, ...(p.soloBersaglio ? {} : { distanza: p.distanza, bersaglio: { ...(salvate.bersaglio ?? {}), copertura: p.copertura, distanza: p.distanza, ...(p.protetto ? { impegnato: true } : {}), ...(p.interposta ? { interposta: true } : {}) } }), ...(p.luceMappa ? { luceMappa: p.luceMappa } : {}), ...(p.bersaglioId ? { bersaglioScontro: p.bersaglioId } : {}) };
+  // S22: i valori arrivati dalla mappa portano il segno «dalla mappa» (src/dalla-mappa.js) e si tolgono con un tocco
+  const v = { ...(p.soloBersaglio ? salvate : conLineaDallaMappa(salvate, p)), ...(p.bersaglioId ? { bersaglioScontro: p.bersaglioId } : {}) };
   queueMicrotask(() => {
     ctx.azioni.ricordaAttacco?.(a.uid, v);
     if (p.luce && p.luce !== ctx.sessione?.luce) ctx.azioni.imposta?.('luce', p.luce);
@@ -77,10 +79,22 @@ function movimentoDallaMappa(ctx, a, stato, salvate) {
     if (!m?.fascia || ctx.ui.attacco !== stato) return;
     stato.mappa = m;
     if (conProvaAtletica(m.fascia, ctx.dati) && salvate.movimento !== m.fascia) {
-      ctx.azioni.ricordaAttacco(a.uid, { ...salvate, movimento: m.fascia, atletica: null, atleticaTiro: null, evasivo: false, carica: false });
+      ctx.azioni.ricordaAttacco(a.uid, { ...conMovimentoDallaMappa(salvate, m.fascia, NOME_FASCIA[m.fascia]), evasivo: false, carica: false });
       avviso(`Dalla mappa: ${NOME_FASCIA[m.fascia]} in questo Round${m.daPasso ? ' (un Passo già cominciato diventato ' + NOME_FASCIA[m.fascia] + ')' : ''}. Puoi dichiarare la Prova facoltativa di Atletica.`);
     } else ctx.azioni.ridisegna();
   }).catch(() => {});
+}
+
+/**
+ * S22: i valori di questo attacco arrivati dalla mappa (linea di tiro, movimento del Round), ognuno con «✕» per
+ * toglierlo e tornare al valore a mano. Compare solo se la scena dello scontro non è in «Mappa semplice».
+ */
+function rigaDallaMappa(ctx, a, salvate) {
+  const voci = vociDallaMappa(salvate);
+  if (!voci.length) return null;
+  return h('p', { class: 'nota dalla-mappa', role: 'group', 'aria-label': 'Valori arrivati dalla mappa' }, h('strong', {}, 'Dalla mappa: '),
+    voci.map((v) => h('button', { type: 'button', class: 'etichetta etichetta-mappa', title: 'Arrivato dalla mappa: tocca per toglierlo e metterlo a mano',
+      onclick: () => { if (v.campo === 'luce') ctx.azioni.imposta?.('luce', 'sufficiente'); ctx.azioni.ricordaAttacco(a.uid, togliDallaMappa(salvate, v.campo)); } }, `${v.testo} ✕`)));
 }
 
 /** Riga «Dalla mappa» sotto il movimento: fascia del Round, Passo diventato blocco, Q contati. */
@@ -155,7 +169,7 @@ function corpoRavvicinato(ctx, a, intestazione) {
   // le scelte salvate contengono anche l’ultima Manovra: si conservano
   const salvate = dallaMappa(ctx, a, ctx.sessione.attacchi?.[a.uid] ?? {});
   const d = dichiarazioneRavvicinato(salvate);
-  const imposta = (modifica) => ctx.azioni.ricordaAttacco(a.uid, { ...salvate, ...d, ...modifica, bersaglio: { ...d.bersaglio, ...(modifica.bersaglio ?? {}) } });
+  const imposta = (modifica) => ctx.azioni.ricordaAttacco(a.uid, { ...salvate, ...d, ...modifica, bersaglio: { ...d.bersaglio, ...(modifica.bersaglio ?? {}) }, dallaMappa: segniDopoModifica(salvate, modifica) });
   const b = (modifica) => imposta({ bersaglio: modifica });
   const v = vincoliRavvicinato(personaggio, a, d, ctx.dati);
   const T = talentiAttacco(ctx.tab.scheda, ctx.dati, 'attacco_ravvicinato');
@@ -183,6 +197,7 @@ function corpoRavvicinato(ctx, a, intestazione) {
         { valore: 'fermo', etichetta: 'Fermo' }, { valore: 'passo', etichetta: 'Passo' }, { valore: 'corsa', etichetta: 'Corsa' }, { valore: 'scatto', etichetta: 'Scatto' },
       ], d.movimento, (x) => imposta({ movimento: x, atletica: null, atleticaTiro: null })),
       notaMappa(stato),
+      rigaDallaMappa(ctx, a, salvate),
       d.carica ? null : provaAtletica(ctx, d, stato, imposta),
       interruttore('Carica', d.carica, (x) => imposta({ carica: x, ...(x ? { controcarica: false, manovra: 'normale' } : {}) }),
         { motivo: d.carica ? v.carica : null, mod: `${carica ? numero(carica.va) : R.carica.fasce.map((f) => numero(f.va)).join('/')} · danno ×${molt}`, info: infoRegola('Carica', R.carica) }),
@@ -299,7 +314,7 @@ function corpoDistanza(ctx, a, intestazione) {
   const personaggio = { scheda: ctx.tab.scheda, sessione: ctx.sessione };
   const salvate = dallaMappa(ctx, a, ctx.sessione.attacchi?.[a.uid] ?? {});
   const d = dichiarazioneDistanza(salvate);
-  const imposta = (modifica) => ctx.azioni.ricordaAttacco(a.uid, { ...(salvate.luceMappa ? { luceMappa: salvate.luceMappa } : {}), ...d, ...modifica, bersaglio: { ...d.bersaglio, ...(modifica.bersaglio ?? {}) } });
+  const imposta = (modifica) => ctx.azioni.ricordaAttacco(a.uid, { ...(salvate.luceMappa ? { luceMappa: salvate.luceMappa } : {}), ...d, ...modifica, bersaglio: { ...d.bersaglio, ...(modifica.bersaglio ?? {}) }, dallaMappa: segniDopoModifica(salvate, modifica) });
   const b = (modifica) => imposta({ bersaglio: modifica });
   const v = vincoliDistanza(personaggio, a, d, ctx.dati);
   const T = talentiAttacco(ctx.tab.scheda, ctx.dati);
@@ -332,6 +347,7 @@ function corpoDistanza(ctx, a, intestazione) {
         { valore: 'corsa', etichetta: `Corsa ${numero(MD.movimento.corsa)}${conTal(MD.talenti.movimento)}` }, { valore: 'scatto', etichetta: `Scatto ${numero(MD.movimento.scatto)}${conTal(MD.talenti.movimento)}` },
       ], d.movimento, (x) => imposta({ movimento: x, atletica: null, atleticaTiro: null, ...(x === 'fermo' ? { evasivo: false } : {}), ...(!['fermo', 'passo'].includes(x) ? { coperturaPropria: 'nessuna' } : {}) })),
       notaMappa(stato),
+      rigaDallaMappa(ctx, a, salvate),
       d.evasivo ? null : provaAtletica(ctx, d, stato, imposta),
       interruttore('Movimento Evasivo', d.evasivo, (x) => imposta({ evasivo: x }), { motivo: v.evasivo, mod: `AzM + AzP${evasivoProprio ? ` · ${numero(evasivoProprio)}` : ''}` }),
       rigaScelte('Attacco dalla Copertura (AzM)', [

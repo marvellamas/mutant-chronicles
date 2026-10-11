@@ -20,6 +20,7 @@
 // chi è di turno (./barra-iniziativa.js, src/mappa/iniziativa.js, src/mappa/disposizione.js).
 // Logica pura in src/mappa/ (camera, griglia, token, partecipanti, nebbia, muri, area, annulla); disegno in ./canvas.js,
 // ./disegno-token.js e ./disegno-aree.js.
+import { conLineaDallaMappa } from '../../dalla-mappa.js';
 import { h, svuota } from '../dom.js';
 import { avviso, avvisoErrore } from '../avvisi.js';
 import { cameraIniziale, zoomVerso, sposta, adatta, mappaDaSchermo, schermoDaMappa, rettangoloVisibile, mantieniCentro, riadattaCentro } from '../../mappa/camera.js';
@@ -2338,7 +2339,8 @@ export function renderMappa(radice, ctx) {
     const luceB = luceIngombro(st.scena, aTok ?? { q: st.linea.punto, ingombro: 1 }, ctx.dati);
     const rigaLuce = testoLuceBersaglio(luceB, ctx.dati);
     if (rigaLuce) righe.splice(1, 0, `Luce: ${rigaLuce}.`);
-    const preset = { distanza: r.distanza, bersaglio: { copertura: r.copertura, distanza: r.distanza, ...(r.protetto ? { impegnato: true } : {}), ...(r.interposta ? { interposta: true } : {}) }, luce: luceB, ...(rigaLuce ? { luceMappa: rigaLuce } : {}) };
+    // S22: i valori della linea arrivano ad «Attacca!» con il segno «dalla mappa» (src/dalla-mappa.js), da togliere con un tocco
+    const preset = { ...conLineaDallaMappa({}, { distanza: r.distanza, copertura: r.copertura, protetto: r.protetto, interposta: r.interposta, luceMappa: rigaLuce }), luce: luceB };
     if (aTok && r.copertura !== 'totale') {
       const pzDa = pezzoDi(daTok);
       const idDa = daTok.rif?.id, idA = aTok.rif?.id;
