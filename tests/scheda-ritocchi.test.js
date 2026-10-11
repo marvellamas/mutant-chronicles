@@ -8,7 +8,7 @@ import { datiReali, copia } from './helpers.js';
 import { preparaTab } from '../src/stampa.js';
 import { deserializzaPersonaggio, normalizza } from '../src/character.js';
 import { massimiSessione, allineaSessione, penalitaSessione } from '../src/sessione.js';
-import { datiTestata, statiAttiviVista, contoVa, formulaVa, modificatoriAttivi } from '../src/scheda-vista.js';
+import { datiTestata, statiAttiviVista, contoVa, formulaVa, modificatoriAttivi, sintesiMani, sintesiProtezioni } from '../src/scheda-vista.js';
 
 installaDomFinto();
 globalThis.localStorage ??= { getItem: () => null, setItem: () => {}, removeItem: () => {} };
@@ -247,4 +247,91 @@ test('S7: a destra un solo riquadro «Condizioni attive», con gli Stati attivi 
   const vuoto = resa(contesto(TORVALD, { attiva: 'abilita', scelte: (c) => { c.equipaggiamento = []; return c; } })).classe('colonna-condizioni')[0];
   assert.match(vuoto.textContent, /Nessuna\./);
   assert.match(vuoto.textContent, /Bonus di circostanza/);
+});
+
+// ---------------------------------------------------------------------------
+// S12–S16: Combattimento
+
+const ordine = (r, ...classi) => classi.map((c) => r.tutti.indexOf(r.classe(c)[0]));
+const titoliMani = (r) => r.classe('riquadro-mano').map((n) => n.getAttribute('aria-label'));
+/** Solo quest'arma, impugnata. */
+const conArma = (rif) => (c) => { c.equipaggiamento = [{ uid: 'prova-arma', rif, stato: 'impugnata', quantita: 1, note: '' }]; return c; };
+
+test('S12: in Combattimento gli Stati sono in alto, i bonus di circostanza subito sotto, prima del resto', () => {
+  for (const f of ESEMPI) {
+    const r = resa(contesto(f, { attiva: 'combattimento' }));
+    const [stati, circostanze, layout] = ordine(r, 'stati-in-alto', 'riquadro-circostanze', 'combattimento-layout');
+    assert.ok(stati >= 0 && circostanze > stati && layout > circostanze, `${f}: Stati, poi circostanze, poi il resto`);
+    const caselle = r.classe('stati-in-alto')[0].tutti().filter((n) => n.tagName === 'INPUT');
+    assert.equal(caselle.length, dati.regole.stati.elenco.length, 'tutti gli Stati, da spuntare');
+    // nella colonna destra non ci sono più Ferite, Affaticamento, Corruzione e Stati
+    assert.equal(r.classe('colonna-equip')[0].querySelectorAll('.riquadro-gradi').length, 0);
+  }
+});
+
+test('S14: a destra, nell’ordine, Protezioni e Armi, con la sintesi e sotto ciò che si possiede', () => {
+  const ctx = contesto(TORVALD, { attiva: 'combattimento' });
+  const r = resa(ctx);
+  const colonna = r.classe('colonna-equip')[0];
+  assert.deepEqual(colonna.children.map((n) => n.getAttribute('aria-label')), ['Protezioni', 'Armi']);
+  const [protezioni, armi] = colonna.children;
+  const d = ctx.tab.tab.find((t) => t.id === 'combattimento').dati;
+  for (const p of d.protezioniCalcolate) assert.ok(protezioni.querySelectorAll('.sintesi-equip')[0].textContent.includes(p.nome), `sintesi: ${p.nome}`);
+  assert.ok(protezioni.querySelectorAll('.elenco-disponibili').length === 1, 'elenco delle possedute');
+  assert.ok(protezioni.querySelectorAll('.voce-info').length >= d.protezioniCalcolate.length, 'un «?» con i dettagli per protezione');
+  const sintesi = armi.querySelectorAll('.sintesi-equip')[0].textContent;
+  for (const a of d.armiCalcolate.filter((x) => !x.moduloDi && !x.daScudo)) assert.ok(sintesi.includes(a.nome), `sintesi: ${a.nome}`);
+  assert.match(sintesi, /Mano destra /);
+  assert.match(sintesi, /Mano sinistra /);
+  // la tabella lunga delle Protezioni non c'è più: i dettagli stanno nel «?»
+  assert.equal(r.tutti.filter((n) => n.tagName === 'TH' && n.textContent === 'Categoria o taglia').length, 0);
+});
+
+test('S14: senza protezioni indossate la sintesi dice «Nessuna»', () => {
+  const r = resa(contesto(TORVALD, { attiva: 'combattimento', scelte: (c) => { c.equipaggiamento = c.equipaggiamento.map((v) => ({ ...v, stato: 'zaino' })); return c; } }));
+  const protezioni = r.classe('riquadro-protezioni')[0];
+  assert.equal(protezioni.querySelectorAll('.sintesi-vuota')[0].textContent, 'Nessuna');
+  assert.equal(protezioni.querySelectorAll('.sintesi-equip').length, 0);
+  assert.ok(protezioni.querySelectorAll('.elenco-disponibili')[0].textContent.includes('Indossa'), 'le possedute si possono indossare');
+  assert.deepEqual(sintesiProtezioni([], dati.regole.protezioni_rapide.voci), { nessuna: true, righe: [] });
+  const s = sintesiProtezioni([{ tipo: 'armatura', nome: 'Corazza' }, { tipo: 'rinforzo', nome: 'Mantello' }, { tipo: 'elmetto', nome: 'Elmo' }], dati.regole.protezioni_rapide.voci);
+  assert.equal(s.nessuna, false);
+  assert.deepEqual(s.righe.map((x) => [x.tipo, x.oggetti.map((o) => o.nome), x.rinforzi.map((o) => o.nome)]), [['armatura', ['Corazza'], ['Mantello']], ['elmetto', ['Elmo'], []]]);
+});
+
+test('S16: Mano destra e Mano sinistra con l’arma impugnata; libere se non c’è niente', () => {
+  const una = resa(contesto(TORVALD, { attiva: 'combattimento', scelte: conArma('armi:spada-lunga') }));
+  assert.deepEqual(titoliMani(una), ['Mano destra', 'Mano sinistra']);
+  assert.match(una.classe('riquadro-mano')[0].textContent, /Spada lunga/);
+  assert.match(una.classe('riquadro-mano')[1].textContent, /Libera\./);
+  assert.ok(una.classe('riquadro-mano')[0].querySelectorAll('.btn-attacca').length === 1, '«Attacca!» nel riquadro della mano');
+  const vuote = resa(contesto(TORVALD, { attiva: 'combattimento', scelte: (c) => { c.equipaggiamento = []; return c; } }));
+  assert.deepEqual(titoliMani(vuote), ['Mano destra', 'Mano sinistra']);
+  assert.ok(vuote.classe('riquadro-mano').every((n) => /Libera\./.test(n.textContent)));
+  assert.match(vuote.classe('riquadro-armi')[0].textContent, /Mano destra libera/);
+});
+
+test('S16: con un’arma a due mani resta un riquadro solo', () => {
+  const r = resa(contesto(TORVALD, { attiva: 'combattimento', scelte: conArma('armi:spadone') }));
+  assert.deepEqual(titoliMani(r), ['Due mani']);
+  assert.match(r.classe('riquadro-mano')[0].textContent, /Spadone/);
+  const sintesi = r.classe('riquadro-armi')[0].querySelectorAll('.sintesi-equip')[0];
+  assert.equal(sintesi.children.length, 1);
+  assert.match(sintesi.textContent, /Due mani .*Spadone/);
+  // la funzione pura
+  assert.deepEqual(sintesiMani({ due: { nome: 'Spadone' }, destra: null, sinistra: null }, []), [{ mano: 'due', titolo: 'Due mani', nome: 'Spadone' }]);
+  assert.deepEqual(sintesiMani({ due: null, destra: { nome: 'Spada' }, sinistra: null }, [{ nome: 'Pugnale' }]).map((x) => [x.mano, x.nome]), [['destra', 'Spada'], ['sinistra', null], ['oltre', 'Pugnale']]);
+});
+
+test('S13: Affaticamento e Corruzione stanno nella colonna di sinistra del Combattimento, sotto i PM, e si cambiano da lì', () => {
+  const ctx = contesto(TORVALD, { attiva: 'combattimento' });
+  const colonna = resa(ctx).classe('colonna-risorse')[0];
+  const titoli = colonna.tutti().filter((n) => n.tagName === 'H3').map((n) => n.textContent);
+  const posizione = (re) => titoli.findIndex((t) => re.test(t));
+  assert.ok(posizione(/^Punti Vita/) < posizione(/^Ferite/) && posizione(/^Ferite/) < posizione(/^Affaticamento/), titoli.join(' | '));
+  if (ctx.massimi.pm) assert.ok(posizione(/^Punti Magia/) < posizione(/^Affaticamento/));
+  assert.ok(posizione(/^Corruzione/) > posizione(/^Affaticamento/));
+  const grado = colonna.tutti().filter((n) => n.getAttribute('aria-label') === 'Affaticamento (§5.19)' && n.getAttribute('role') === 'radiogroup')[0].children[1];
+  clic(grado);
+  assert.deepEqual(ctx.chiamate.at(-1), ['imposta', 'affaticamento', 1]);
 });

@@ -2438,3 +2438,32 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .calcolo-va .calcolo-colonne th, .calcolo-va .calcolo-colonne td { text-align: center; }
 .calcolo-va .tooltip-provenienza { margin: 0 0 0.6rem; }
 .calcolo-totale { font-size: 1.1rem; }
+/* S12–S16: Combattimento con gli Stati in alto, le mani al centro, Protezioni e Armi a destra */
+.stati-in-alto { margin: 0 0 0.5rem; }
+.stati-in-alto .stati-compatti { grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr)); gap: 0.1rem 0.75rem; }
+.riga-interruttori { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 0.5rem 1rem; margin: 0.5rem 0; }
+.riga-interruttori > * { margin: 0; }
+.combattimento-layout { grid-template-columns: minmax(0, 1fr) 19rem; }
+.sezione-mani .riquadri-mani { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.sezione-mani .riquadri-mani.una { grid-template-columns: minmax(0, 1fr); }
+.riquadro-equip { margin: 0; padding: 0.45rem 0.6rem; }
+.riquadro-equip .testa-gradi h3 { font-size: 1rem; }
+.sintesi-equip { list-style: none; margin: 0.2rem 0 0.4rem; padding: 0; display: grid; gap: 0.25rem; }
+.sintesi-equip li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.15rem 0.35rem; }
+.sintesi-equip li.oltre { color: var(--errore); }
+.sintesi-equip .sigla { text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.03em; flex-basis: 100%; }
+.voce-sintesi { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 0 0.2rem; }
+.sintesi-vuota { margin: 0.2rem 0 0.4rem; font-weight: 700; }
+.sotto-equip { margin: 0.4rem 0 0.25rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--tenue); }
+.riquadro-equip .elenco-disponibili li { flex-wrap: wrap; }
+.riquadro-equip .resistenze { font-size: 0.85rem; margin: 0.2rem 0; }
+@container (max-width: 52rem) {
+  .combattimento-layout { grid-template-columns: minmax(0, 1fr) 15rem; }
+}
+@container (max-width: 40rem) {
+  .sezione-mani .riquadri-mani { grid-template-columns: minmax(0, 1fr); }
+}
+@container (max-width: 30rem) {
+  .combattimento-layout { grid-template-columns: minmax(0, 1fr); }
+}
+.condizioni-senza-colonna { display: grid; gap: 0.5rem; margin-bottom: 0.75rem; }
