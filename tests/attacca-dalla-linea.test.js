@@ -112,3 +112,25 @@ test('la scheda, aperta dalla linea, trova bersaglio e distanza (e con mappa sem
   assert.match(a, /const v = p\.soloBersaglio \? \{ \.\.\.salvate, \.\.\.\(p\.bersaglioId \? \{ bersaglioScontro: p\.bersaglioId \} : \{\}\) \} : presetDaLinea\(p, salvate\)\.scelte;/);
   assert.match(a, /Mappa semplice: Copertura e luce a mano/);
 });
+
+test('il preset si legge senza consumarlo, e solo per il proprio PG entro 10 minuti', async () => {
+  const memoria = new Map();
+  globalThis.sessionStorage = { getItem: (k) => memoria.get(k) ?? null, setItem: (k, v) => memoria.set(k, v), removeItem: (k) => memoria.delete(k) };
+  const { presetInAttesa, CHIAVE_DALLA_MAPPA } = await import('../src/ui/attacco.js');
+  memoria.set(CHIAVE_DALLA_MAPPA, JSON.stringify({ nome: 'Bea', distanza: 9, bersaglioId: 'nem:predone:2', quando: Date.now() }));
+  assert.equal(presetInAttesa('bea ')?.distanza, 9, 'il nome si confronta senza spazi né maiuscole');
+  assert.ok(memoria.has(CHIAVE_DALLA_MAPPA), 'leggerlo non lo consuma: lo consuma il pannello «Attacca!»');
+  assert.equal(presetInAttesa('Akira'), null, 'il preset di un altro PG non vale');
+  memoria.set(CHIAVE_DALLA_MAPPA, JSON.stringify({ nome: 'Bea', distanza: 9, quando: Date.now() - 11 * 60 * 1000 }));
+  assert.equal(presetInAttesa('Bea'), null, 'dopo 10 minuti non vale più');
+  delete globalThis.sessionStorage;
+});
+
+test('la scheda aperta dalla linea si mette sul Combattimento con «Attacca!» aperto (un tocco solo)', () => {
+  const t = readFileSync(new URL('../src/ui/tab.js', import.meta.url), 'utf8');
+  assert.match(t, /function apriDallaLineaDiTiro\(ctx\)/);
+  assert.match(t, /apriDallaLineaDiTiro\(ctx\);/, 'chiamata all’inizio di renderTab');
+  assert.match(t, /ctx\.ui\.lineaVista = p\.quando;/, 'una volta sola: niente giri a vuoto');
+  assert.match(t, /const arma = \(\(p\.distanza \?\? 0\) > 1 \? armi\.find\(\(a\) => a\.gittataQ\) : null\) \?\? armi\[0\];/);
+  assert.match(t, /ctx\.azioni\.vaiTab\('combattimento'\);/);
+});

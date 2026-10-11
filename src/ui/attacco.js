@@ -48,11 +48,22 @@ function caselleOggetti(ctx, a, tipo, d, imposta) {
  * Copertura per il PG; il primo «Attacca!» aperto nella sua scheda entro 10 minuti le usa come valori iniziali.
  */
 export const CHIAVE_DALLA_MAPPA = 'mutant-attacco-dalla-mappa';
-function dallaMappa(ctx, a, salvate) {
+
+/**
+ * P4 (13/10/2026): il preset lasciato dalla linea di tiro per questo PG, letto senza consumarlo. Lo usa la scheda per
+ * aprirsi da sola sul Combattimento con «Attacca!» già aperto: un tocco dalla mappa al pannello.
+ * @returns il preset, o null se non c'è, non è di questo PG o è vecchio (oltre 10 minuti).
+ */
+export function presetInAttesa(nome) {
   let p = null;
-  try { p = JSON.parse(sessionStorage.getItem(CHIAVE_DALLA_MAPPA) ?? 'null'); } catch { return salvate; }
-  const nome = ctx.tab?.tab?.[0]?.dati?.nome;
-  if (!p || !nome || String(p.nome).trim().toUpperCase() !== String(nome).trim().toUpperCase() || Date.now() - p.quando > 10 * 60 * 1000) return salvate;
+  try { p = JSON.parse(sessionStorage.getItem(CHIAVE_DALLA_MAPPA) ?? 'null'); } catch { return null; }
+  if (!p || !nome || String(p.nome).trim().toUpperCase() !== String(nome).trim().toUpperCase() || Date.now() - p.quando > 10 * 60 * 1000) return null;
+  return p;
+}
+
+function dallaMappa(ctx, a, salvate) {
+  const p = presetInAttesa(ctx.tab?.tab?.[0]?.dati?.nome);
+  if (!p) return salvate;
   try { sessionStorage.removeItem(CHIAVE_DALLA_MAPPA); } catch { /* resta */ }
   // fase 2, lotto 4: anche la luce della zona del bersaglio, proposta in «Luce sul bersaglio» (modificabile)
   // ritocchi del 07/10: anche l'id del bersaglio nello scontro, proposto in «Contro un nemico dello scontro»; dal menu del

@@ -33,7 +33,7 @@ import { talentiSituazionali } from '../talenti.js';
 import { gradiTaumaturgici } from '../incantesimi.js';
 import { statoRicarica, disponibili, carichiniDi } from '../ricarica.js';
 import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
-import { pannelloAttacco } from './attacco.js';
+import { pannelloAttacco, presetInAttesa } from './attacco.js';
 import { pugniPotenziati, profiloSenzArmi, profiloOndaInteriore, senzArmiDisponibile, SENZ_ARMI, ONDA, talentiAttacco, valoriDisciplina } from '../attacco.js';
 import { pannelloLancio } from './lancio.js';
 import { pulsanteMuovi } from '../round-scontro.js';
@@ -119,6 +119,8 @@ function riquadroScontro(ctx) {
 
 export function renderTab(ctx) {
   const { tab, attiva, azioni } = ctx;
+  // P4: se la scheda è stata aperta dalla linea di tiro, si mette sul Combattimento e apre «Attacca!» da sola
+  apriDallaLineaDiTiro(ctx);
   const corrente = tab.tab.find((t) => t.id === attiva) ?? tab.tab[0];
   const id = tab.tab[0].dati;
   const livelloMax = ctx.dati.regole.avanzamento.livello_massimo;
@@ -230,6 +232,28 @@ export function renderTab(ctx) {
     tecAttiva ? pannelloTecnica(ctx, tecAttiva) : null,
     ctx.ui?.attivaCalendario ? pannelloAttivazione(ctx) : null,
     ctx.ui?.importaCalendario ? pannelloImportaCalendario(ctx) : null];
+}
+
+/**
+ * «Attacca questo bersaglio» dalla linea di tiro (P4, 13/10/2026): la scheda aperta dalla mappa va sul Combattimento
+ * e apre «Attacca!» sull'arma in mano, così dalla linea al pannello c'è un tocco solo. Con più armi in mano sceglie
+ * quella con gittata se il bersaglio è lontano, altrimenti la prima: resta una proposta, l'arma si cambia nel
+ * pannello. I valori (distanza, Copertura, bersaglio) li mette src/ui/attacco.js: qui non si decide niente.
+ */
+function apriDallaLineaDiTiro(ctx) {
+  if (ctx.ui?.attacco || !ctx.ui) return;
+  const p = presetInAttesa(ctx.tab?.tab?.[0]?.dati?.nome);
+  if (!p || ctx.ui.lineaVista === p.quando) return;
+  ctx.ui.lineaVista = p.quando; // una volta sola: se non c'è un'arma in mano, la scheda resta dov'è
+  const armi = (ctx.tab.tab.find((t) => t.id === 'combattimento')?.dati?.armiCalcolate ?? [])
+    .filter((a) => !a.moduloDi && !a.daScudo && a.va !== null && !a.rotta);
+  if (!armi.length) return;
+  const arma = ((p.distanza ?? 0) > 1 ? armi.find((a) => a.gittataQ) : null) ?? armi[0];
+  queueMicrotask(() => {
+    ctx.ui.attacco = { uid: arma.uid, passo: 0 };
+    if (ctx.attiva === 'combattimento') ctx.azioni.ridisegna();
+    else ctx.azioni.vaiTab('combattimento');
+  });
 }
 
 /**
