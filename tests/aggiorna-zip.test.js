@@ -61,7 +61,8 @@ test('elenco unico dei file locali: tutte le cartelle del server, avvisi, config
   for (const c of ['personaggi', 'tavolo', 'scontri', 'nemici', 'veicoli', 'scene', 'mappe', 'musica', 'autosave', 'salvataggi', 'avvisi', 'node_modules', 'backup-prima-aggiornamento']) assert.ok(ELENCO.cartelle.includes(c), c);
   assert.ok(ELENCO.file.includes('config-salvataggi.json'));
   // ogni cartella con dati che .gitignore tiene fuori da git è nell'elenco
-  const ignorate = readFileSync(join(REPO, '.gitignore'), 'utf8').split(/\r?\n/).map((l) => /^([a-z]+)\/\*$/.exec(l)?.[1]).filter(Boolean);
+  // il trattino conta: backup-master sfuggiva al controllo e l'aggiornamento da zip la cancellava (12/10/2026)
+  const ignorate = readFileSync(join(REPO, '.gitignore'), 'utf8').split(/\r?\n/).map((l) => /^([a-z][a-z-]*)\/\*$/.exec(l)?.[1]).filter(Boolean);
   for (const c of ignorate) assert.ok(ELENCO.cartelle.includes(c), `${c} è in .gitignore ma non nell’elenco dei locali`);
   assert.equal(ELENCO.backup_da_tenere, 5);
 });
