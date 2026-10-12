@@ -79,4 +79,4 @@ Tre controlli, in quest'ordine.
   con il percorso della cartella in uso.
 - **Punto 4.** «Ripristina» elenca tutti i salvataggi di `salvataggi/`, `backup-prima-aggiornamento/`,
   `autosave/` e della cartella di Google Drive, con data, tipo, dimensione e contenuto.
-- **Punto 5.** Istruzioni per Davide aggiornate (`docs/guida-davide.md`, `distribuzione/LEGGIMI.txt`).
+- **Punto 5.** Istruzioni aggiornate: `distribuzione/LEGGIMI.txt` per Davide e `docs/aggiornare-e-ripristinare.md` per il quadro tecnico.

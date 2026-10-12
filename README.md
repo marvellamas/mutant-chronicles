@@ -17,7 +17,11 @@ clic, senza terminale, Git o Node già installati:
    [`tools/file-locali.json`](tools/file-locali.json)) non si cancellano mai e prima se ne fa una copia zip in
    `mutant/backup-prima-aggiornamento/` (le ultime 5). La copia la fa
    [`distribuzione/aggiorna-da-zip.ps1`](distribuzione/aggiorna-da-zip.ps1) della versione scaricata; con uno zip
-   incompleto non si tocca nulla. Salva anche in `backup_dati` una copia della cartella `data` se il master l'aveva
+   incompleto non si tocca nulla. **Dopo** l'aggiornamento ricontrolla: se una cartella che aveva file è rimasta
+   vuota si ferma e propone di rimettere la copia appena fatta ([`tools/dati-locali.mjs`](tools/dati-locali.mjs);
+   lo fa anche `aggiorna.bat`). I file del pacchetto fuori da `mutant/` si rimettono al passo da soli
+   ([`tools/aggiorna-avviatori.mjs`](tools/aggiorna-avviatori.mjs)). Procedura completa in
+   [`docs/aggiornare-e-ripristinare.md`](docs/aggiornare-e-ripristinare.md). Salva anche in `backup_dati` una copia della cartella `data` se il master l'aveva
    modificata.
 2. `2_installa_node.bat`: installa Node.js 22 LTS dal sito ufficiale, controllando
    l'impronta SHA-256 dell'installer.
@@ -34,7 +38,7 @@ Doppio clic su **`Mutant.bat`** nella cartella di Mutant: si apre una finestra n
 1. **Avvia Mutant**: accende il server nella sua finestra e apre il browser (come `avvia-server.bat`);
 2. **Aggiorna Mutant**: come `aggiorna.bat`, poi la console si riapre già aggiornata;
 3. **Salva sessione**: zip in `salvataggi`, copia su Google Drive, notifica a Marcello (come `salva-sessione.bat`);
-4. **Ripristina un salvataggio**: scegli dall'elenco; se Mutant è acceso lo spegne (dopo averlo chiesto), fa una copia di sicurezza di com'è adesso e rimette le cartelle del salvataggio;
+4. **Ripristina un salvataggio**: l'elenco di tutti i salvataggi dei quattro posti (`salvataggi/`, `backup-prima-aggiornamento/`, `autosave/` e la cartella di Google Drive), dal più recente, con data e ora, tipo, dove sta, dimensione e che cosa contiene; si sceglie quello giusto, anche uno vecchio. Se Mutant è acceso lo spegne (dopo averlo chiesto) e, prima di rimettere qualunque cosa, fa una copia di com'è adesso;
 5. **Apri la cartella dei salvataggi**;
 6. **Impostazioni**: apre nel Blocco note `config-salvataggi.json` e `avvisi/avvisi.json` (se mancano li crea);
 7. **Esci**.

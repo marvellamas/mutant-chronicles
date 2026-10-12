@@ -149,30 +149,89 @@ Consiglio: esporta i personaggi dopo ogni sessione di gioco.
 AGGIORNARE L'APP
 --------------------------------------------------------------
 
-Quando Marcello ti dice che c'è una versione nuova:
+C'e' UN SOLO MODO di aggiornare, ed e' questo. Non usarne altri.
 
-1. Spegni l'app (chiudi la finestra nera, se è aperta).
+Quando Marcello ti dice che c'e' una versione nuova:
+
+1. Spegni l'app (chiudi la finestra nera, se e' aperta).
 2. Fai doppio clic su 1_scarica_o_aggiorna_app.bat
-   - Se c'è una versione nuova, la scarica e sostituisce la vecchia.
-   - Se non c'è niente di nuovo, la finestra dice "già aggiornata".
+   - Se c'e' una versione nuova, la scarica e sostituisce la vecchia.
+   - Se non c'e' niente di nuovo, la finestra dice "gia' aggiornata".
 3. Riaccendi con 3_avvia.bat
 
-I personaggi non si toccano: stanno nel browser, non nella cartella.
+Questo file e 3_avvia.bat si aggiornano da soli insieme all'app: non devi fare
+niente. (Solo la prima volta, se il tuo 1_scarica_o_aggiorna_app.bat e' piu'
+vecchio del 12/10/2026, chiedi a Marcello quello nuovo: il vecchio cancellava i
+dati del server. Basta sostituirlo una volta.)
 
-Se usi anche il server di Mutant (Mutant.bat, avvia-server.bat), i suoi dati stanno nella
-cartella "mutant": personaggi, tavolo, scontri, nemici, veicoli, scene, mappe, musica,
-salvataggi, autosave, avvisi e config-salvataggi.json. L'aggiornamento non li cancella mai:
-cambia solo i file dell'app. Prima di aggiornare ne fa comunque una copia zip in
-"mutant\backup-prima-aggiornamento" (tiene le ultime 5). Se lo scaricamento non riesce o il
-file scaricato è incompleto, la finestra lo dice e non tocca nulla.
+CHE COSA FA L'AGGIORNAMENTO, IN ORDINE
 
-ATTENZIONE: questo vale dal 09/10/2026. Se il tuo 1_scarica_o_aggiorna_app.bat è più vecchio,
-chiedi a Marcello quello nuovo prima di aggiornare: il vecchio cancellava anche quei dati.
+a. Fa una copia zip di tutti i tuoi dati in
+   "mutantackup-prima-aggiornamento" (tiene le ultime 5).
+   Se la copia non riesce, non aggiorna niente e te lo dice.
+b. Sostituisce solo i file dell'app.
+c. Ricontrolla i tuoi dati. Se una cartella che prima aveva dei file adesso e'
+   vuota, si FERMA, scrive quale cartella e ti chiede:
+   "Rimetto adesso la copia fatta prima dell'aggiornamento? [S/N]"
+   Rispondi S: i dati tornano al loro posto.
+d. Se Mutant era acceso, lo riaccende da solo con la versione nuova.
+
+I personaggi del browser non si toccano mai: stanno nel browser, non nella
+cartella. I dati del server (personaggi, tavolo, scontri, nemici, veicoli, scene,
+mappe, musica, galleria, salvataggi, autosave, avvisi, config-salvataggi.json e
+backup-master) stanno nella cartella "mutant" e l'aggiornamento non li cancella.
 
 Se avevi modificato i file delle regole (la cartella "data" dentro "mutant"),
 l'aggiornamento li sostituisce con quelli nuovi. La tua versione non si perde:
 viene copiata nella cartella "backup_dati", accanto ai file .bat, con la data
 e l'ora dell'aggiornamento. La finestra nera lo dice quando succede.
+
+
+SE DOPO UN AGGIORNAMENTO LE CARTELLE SEMBRANO VUOTE
+--------------------------------------------------------------
+
+Non rifare i personaggi: quasi sicuramente non sono persi.
+
+Quando accendi Mutant, la finestra nera e la pagina del Tavolo lo dicono subito:
+  "Non trovo personaggi in questa cartella: C:\...\mutant\personaggi.
+   Ci sono salvataggi del 11/10/2026 21:40: vuoi ripristinarne uno?"
+
+Il percorso scritto li' e' la cartella che Mutant sta usando davvero.
+Controlla che sia quella giusta: se hai due copie dell'app, puoi averne
+aggiornata una e aperta un'altra.
+
+Poi rimetti un salvataggio, come qui sotto.
+
+
+RIPRISTINARE UN SALVATAGGIO
+--------------------------------------------------------------
+
+1. Spegni Mutant (chiudi la finestra nera; se e' acceso, la console si offre
+   di spegnerlo lei).
+2. Apri Mutant.bat (o il collegamento "Mutant" sul desktop).
+3. Scegli "4. Ripristina un salvataggio".
+
+Vedi l'elenco di TUTTI i salvataggi, dal piu' recente. Per ognuno c'e':
+  data e ora - nome - che tipo e' - dove sta - quanto e' grande - cosa contiene
+
+Per esempio:
+   3. 11/10/2026 21:40  sessione_2026-10-11_2140.zip
+      sessione - cartella dei salvataggi - 11,6 MB - 7 personaggi - 1 scontro - 4 mappe
+
+I salvataggi si cercano in quattro posti:
+  - "salvataggi": quelli di fine serata ("Salva sessione", "Spegni Mutant");
+  - "backup-prima-aggiornamento": le copie fatte prima di ogni aggiornamento;
+  - "autosave": il salvataggio automatico (ogni 5 minuti) e quello prima;
+  - la cartella di Google Drive, se l'hai impostata nelle Impostazioni.
+
+4. Scrivi il numero di quello che vuoi. NON devi per forza prendere l'ultimo:
+   se l'ultimo e' di dopo il guaio, prendi quello di prima.
+5. La console dice che cosa c'e' dentro e chiede conferma. Prima di rimettere
+   qualunque cosa fa comunque una copia di com'e' adesso
+   ("salvataggi\prima-del-ripristino_....zip"): se sbagli salvataggio puoi
+   tornare indietro con questa stessa voce.
+6. Rispondi S. Alla fine riaccendi Mutant con la voce 1.
+   Se un tablet chiede "Aggiorna" o "Tieni la mia", premi "Aggiorna".
 
 
 SE QUALCOSA NON VA
