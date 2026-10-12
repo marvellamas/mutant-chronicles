@@ -450,6 +450,7 @@ export function renderMappa(radice, ctx) {
       }
       // percorso del token scelto (o trascinato) verso il quadretto sotto il puntatore, con i Q che costa
       // fase 2, lotto 3: la linea di tiro del token scelto verso il mouse o il bersaglio
+      disegnaLineeTablet(c);
       disegnaLineaScelta(c);
       if (st.percorso && st.scena) disegnaPercorso(c, { scena: st.scena, cam: st.cam, percorso: st.percorso.punti, ingombro: st.percorso.ingombro, costo: st.percorso.costo, fascia: st.percorso.fascia, colori: coloriAree(el.riquadro), inZoc: zocDelPercorso(st.percorso), coloreZoc: ctx.dati.mappa.zoc.colore });
       // M2 (11/10): anteprima del muro che si sta disegnando a mano libera
@@ -2515,6 +2516,33 @@ export function renderMappa(radice, ctx) {
     return !p?.aZero && !(p?.stati ?? []).some((x) => (x?.id ?? x) === 'a-terra');
   }
   const testoLinea = (r) => (r.semplice ? `${r.distanza} Q` : `${r.distanza} Q · ${testoCopertura(r)}${r.interposta ? ' · creatura interposta' : ''}${r.protetto ? ' · protetto' : ''}`);
+  /**
+   * 12/10 (punto 5, sessione di gioco): le linee di tiro tracciate dai giocatori dal tablet. Il server le tiene in
+   * memoria e le manda a tutti: il master le vede sulla sua mappa con chi tira, il bersaglio e l'esito (distanza e
+   * Copertura), finché il giocatore le toglie o passa il turno. Una per tablet.
+   */
+  st.lineeTablet = [];
+  function disegnaLineeTablet(c) {
+    if (!st.scena || !st.lineeTablet.length) return;
+    for (const l of st.lineeTablet) {
+      if (l.scena && l.scena !== st.scena.id) continue;
+      disegnaLineaTiro(c, { scena: st.scena, cam: st.cam, da: l.da, a: l.a, copertura: l.copertura,
+        etichetta: `📱 ${l.tiratore ?? '—'}${l.nome ? ` → ${l.nome}` : ''}: ${l.distanza} Q · ${l.testo}${l.interposta ? ' · creatura interposta' : ''}${l.protetto ? ' · protetto' : ''}`,
+        colori: RV.colori });
+    }
+  }
+  /** Le linee dei tablet dal server (una lettura leggera, nello stesso giro dei movimenti dai tablet). */
+  async function leggiLineeTablet() {
+    if (st.chiusa) return;
+    try {
+      const r = await fetch('api/vista-giocatori/linee', { cache: 'no-store' });
+      if (!r.ok) return;
+      const linee = (await r.json()).linee ?? [];
+      if (JSON.stringify(linee) === JSON.stringify(st.lineeTablet)) return;
+      st.lineeTablet = linee;
+      ridisegna(['sopra']);
+    } catch { /* senza rete: si riprova al prossimo giro */ }
+  }
   function disegnaLineaScelta(c) {
     if (!st.linea || !st.scena) return;
     const r = calcolaLinea();
@@ -4085,7 +4113,7 @@ export function renderMappa(radice, ctx) {
   });
 
   // fase 2, lotto 7: i movimenti dai tablet arrivano entro un secondo
-  const giroRevisione = setInterval(() => controllaRevisione(), 1000);
+  const giroRevisione = setInterval(() => { controllaRevisione(); leggiLineeTablet(); }, 1000);
   const giro = setInterval(async () => {
     aggiornaFonti();
     const prima = [st.sceltaGiocatori, st.inGioco].join();

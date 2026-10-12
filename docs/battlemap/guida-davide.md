@@ -140,7 +140,7 @@ L'indirizzo è fatto così: `http://`, l'**indirizzo IP del PC del master** (qua
 - vede la mappa come lo schermo dei giocatori (stessi segreti: niente token nascosti, niente sotto la nebbia), con il suo token evidenziato;
 - in basso (a destra, col tablet in orizzontale) ha la sua mini-scheda: PV, PM e Stati, «tocca a te» quando è di turno, e «⌖ Centra su di me»;
 - **muove solo il suo PG, solo al suo turno** (se non hai scelto «sempre»): sceglie Passo, Corsa o Scatto (pulsanti grandi), tocca il quadretto di arrivo dentro l'area verde, controlla il percorso e i Q, poi tocca **«Conferma»**. Se uscendo da una zona di controllo provoca un Attacco di Opportunità, il tablet lo avvisa prima della conferma. Due dita per lo zoom, trascinare per spostare la vista;
-- traccia la **linea di tiro** dal suo PG (🎯), anche fuori turno: contano solo i token che vede, i nascosti non lo proteggono e non si possono scegliere;
+- traccia la **linea di tiro** dal suo PG (🎯), anche fuori turno: contano solo i token che vede, i nascosti non lo proteggono e non si possono scegliere. Dal 12/10 **la sua linea la vedi anche tu sulla mappa**, e si vede sullo schermo dei giocatori, con chi tira, il bersaglio, la distanza e la Copertura: resta finché il giocatore la chiude (tocca di nuovo 🎯) o finché passa il turno (allora spariscono tutte). Una linea per tablet;
 - niente «Libero», niente selezione di altri token, niente porte: quelle restano a te.
 
 **Che cosa fai tu:**

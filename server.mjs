@@ -74,7 +74,10 @@
 //                                      con prova: true solo il percorso e il costo; altrimenti scrive la scena (revisione
 //                                      +1, voce per Ctrl+Z del master) e gli Attacchi di Opportunità nel registro
 //   POST /api/vista-giocatori/linea    { scena, pg, token | q }: la linea di tiro dal PG del tablet (08/10), con i soli
-//                                      token che il giocatore vede; distanza, Copertura, protetto, luce. Non scrive nulla
+//                                      token che il giocatore vede; distanza, Copertura, protetto, luce. Non scrive nulla;
+//                                      resta in memoria (12/10, punto 5) e arriva al master e allo schermo dei giocatori
+//                                      finché il giocatore la toglie ({ pg, togli: true }) o passa il turno
+//   GET /api/vista-giocatori/linee     le linee di tiro dei tablet adesso: { linee: [...] } (la mappa del master)
 //   GET /api/vista-giocatori/diretta?pg=<chiave>  il flusso di eventi di un tablet: in più «avviso» (campanellino)
 //   GET /api/tablet                    { collegati: [chiavi dei PG con un tablet collegato] } per il master
 //   POST /api/tablet/avviso            { pg, nome, tipo: muovi | turno }: «Il master ti chiede di muovere <PG>» (o «Tocca a
@@ -418,6 +421,9 @@ async function apiScontri(req, res, percorso, scontri, dopoScrittura = null) {
       // si sposta il file (nessuna cancellazione) e poi lo si aggiorna con lo stato chiuso
       if (attuale) await rinomina(dove, join(archivio, `${id}.json`));
       await scriviJson(join(archivio, `${id}.json`), nuovo);
+      // 12/10 (punto 5): anche chiudendo lo scontro le linee di tiro dei tablet spariscono (avvisoTurnoTablet non fa
+      // nulla con uno scontro chiuso)
+      try { dopoScrittura?.(attuale, nuovo); } catch { /* l'archiviazione resta */ }
       return json(res, 200, nuovo);
     }
     await scriviJson(dove, nuovo);
@@ -798,6 +804,9 @@ function creaCanaleDiretta(cartelle) {
   const tablet = new Map(); // res → chiave del PG
   const letture = new Map(); // chiave del PG → ms
   const soloAvvisi = new Set(); // flussi delle schede dei PG (08/10): fuori da `clienti`, niente diretta
+  // 12/10 (punto 5): le linee di tiro tracciate dai tablet, una per PG, in memoria come la diretta. Le vedono il
+  // master sulla sua mappa e lo schermo dei giocatori finché il giocatore la toglie o passa il turno.
+  const lineeTablet = new Map(); // chiave del PG → { pg, nome, bersaglio, da, a, distanza, copertura, testo, …, quando }
   let grezza = null;
   let firma = 'null';
   let filtrata = null;
@@ -878,6 +887,25 @@ function creaCanaleDiretta(cartelle) {
       for (const r of [...clienti, ...soloAvvisi]) { manda(r, evento, dati); n++; }
       return n;
     },
+    /**
+     * 12/10 (punto 5): la linea di tiro di un tablet. Con `dati` la mette (sostituendo quella di prima di quel PG),
+     * con null la toglie; in tutti i casi la manda subito agli schermi collegati.
+     */
+    linea(pg, dati) {
+      if (dati) lineeTablet.set(pg, dati); else if (!lineeTablet.delete(pg)) return lineeTablet.size;
+      tutti('linee', [...lineeTablet.values()]);
+      return lineeTablet.size;
+    },
+    /** Le linee di tiro dei tablet adesso (vista giocatori e mappa del master). */
+    linee() { return [...lineeTablet.values()]; },
+    /** Via tutte le linee (passa il turno, cambia il Round, finisce lo scontro). */
+    pulisciLinee() {
+      if (!lineeTablet.size) return 0;
+      const n = lineeTablet.size;
+      lineeTablet.clear();
+      tutti('linee', []);
+      return n;
+    },
     /** «Adatta allo schermo» sulle viste giocatori aperte; restituisce quante sono. */
     adatta() { tutti('adatta', {}); return clienti.size; },
     chiudi() { clearInterval(battito); for (const r of clienti) { try { r.end(); } catch { /* già chiuso */ } } clienti.clear(); for (const r of soloAvvisi) { try { r.end(); } catch { /* già chiuso */ } } soloAvvisi.clear(); tablet.clear(); },
@@ -911,14 +939,16 @@ async function apiVistaGiocatori(req, res, percorso, cartelle) {
     return json(res, 200, { giocatori: cartelle.canale.adatta() });
   }
   if (percorso === '/api/vista-giocatori/movimento') return movimentoDalTablet(req, res, cartelle);
-  if (percorso === '/api/vista-giocatori/linea') return lineaDalTablet(req, res, cartelle);
+  if (percorso === '/api/vista-giocatori/linea' || percorso === '/api/vista-giocatori/linee') return lineaDalTablet(req, res, cartelle);
   if (percorso !== '/api/vista-giocatori' || req.method !== 'GET') return json(res, 405, { errore: 'metodo non ammesso' });
   const parametri = new URL(req.url, 'http://x').searchParams;
   const pg = parametri.get('pg') || null;
   const chiesto = parametri.get('scontro') || null;
   const { scelta, scena, motivo, scontri: aperti } = await scenaInGioco(cartelle, { scontro: chiesto });
   const contesto = scena ? await contestoScena(scena, cartelle) : null;
-  const corpo = { scelta, scena: scena ? vistaGiocatori(scena, contesto) : null, ...(motivo ? { motivo } : {}),
+  // 12/10 (punto 5): le linee di tiro dei tablet, per lo schermo dei giocatori e per gli altri tablet
+  const linee = (cartelle.canale?.linee() ?? []).filter((l) => !scena || l.scena === scena.id);
+  const corpo = { scelta, scena: scena ? vistaGiocatori(scena, contesto) : null, ...(linee.length ? { linee } : {}), ...(motivo ? { motivo } : {}),
     // 08/10: il tablet aperto dalla scheda sa se il suo scontro è ancora aperto (alla fine torna alla scheda)
     ...(chiesto ? { scontroAperto: (aperti ?? []).includes(chiesto) } : {}) };
   // fase 2, lotto 7: i PG della scena per «Sono…» e, con ?pg=, il blocco del tablet di quel giocatore
@@ -1027,16 +1057,25 @@ async function movimentoDalTablet(req, res, cartelle) {
  * scena completa con i soli token che il giocatore vede (src/mappa/vista.js → vistaGiocatori); non scrive nulla.
  */
 async function lineaDalTablet(req, res, cartelle) {
+  if (req.method === 'GET') return json(res, 200, { linee: cartelle.canale?.linee() ?? [] });
   if (req.method !== 'POST') return json(res, 405, { errore: 'metodo non ammesso' });
   let d;
   try { d = JSON.parse((await leggiCorpo(req, 16 * 1024)).toString('utf8')); } catch (e) { return json(res, 400, { errore: `contenuto non valido: ${e.message}` }); }
-  if (typeof d?.pg !== 'string' || !d.pg || typeof d.scena !== 'string' || !ID_SCENA.test(d.scena)) return json(res, 400, { errore: 'pg e scena attesi' });
+  if (typeof d?.pg !== 'string' || !d.pg) return json(res, 400, { errore: 'pg atteso' });
+  // 12/10 (punto 5): il giocatore chiude la sua linea: sparisce anche dalla mappa del master e dallo schermo
+  if (d.togli === true) { cartelle.canale?.linea(d.pg, null); return json(res, 200, { ok: true, tolta: true }); }
+  if (typeof d.scena !== 'string' || !ID_SCENA.test(d.scena)) return json(res, 400, { errore: 'scena attesa' });
   const { dati } = await datiDelServer(cartelle.radice);
   const { scena } = await scenaInGioco(cartelle, { scontro: typeof d.scontro === 'string' ? d.scontro : null });
   if (!scena || scena.id !== d.scena) return json(res, 409, { errore: 'La mappa in gioco è cambiata: attendi un momento.' });
   const contesto = await contestoScena(scena, cartelle);
   const visibili = new Set(vistaGiocatori(scena, contesto).token.map((t) => t.id));
   const r = lineaPerTablet({ scena, pezzi: contesto.pezzi, chiavePg: d.pg, verso: typeof d.token === 'string' ? { token: d.token } : { q: d.q }, visibili, dati });
+  // 12/10 (punto 5): la linea riuscita resta in memoria e arriva subito al master e allo schermo dei giocatori
+  if (r.ok) {
+    const { mini: _m, ...resto } = r;
+    cartelle.canale?.linea(d.pg, { ...resto, pg: d.pg, scena: scena.id, tiratore: pezzoDelPg(contesto.pezzi, d.pg)?.nome ?? d.pg, quando: Date.now() });
+  }
   return json(res, r.ok ? 200 : 422, r);
 }
 
@@ -1447,7 +1486,14 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
   }
   if (percorso === '/api/esempi') return req.method === 'POST' ? json(res, 200, await caricaEsempi(radice, cartella, nemici)) : json(res, 405, { errore: 'metodo non ammesso' });
   if (percorso === '/api/nemici' || percorso.startsWith('/api/nemici/')) return apiNemici(req, res, percorso, nemici, radice);
-  if (percorso === '/api/scontri' || percorso.startsWith('/api/scontri/')) return segnala(await apiScontri(req, res, percorso, scontri, (prima, dopo) => { if (canale) canale.ruoloAiuto = ruoloDopoScontro(canale.ruoloAiuto, dopo); avvisoTurnoTablet(prima, dopo, cartelle).catch(() => {}); }));
+  if (percorso === '/api/scontri' || percorso.startsWith('/api/scontri/')) {
+    return segnala(await apiScontri(req, res, percorso, scontri, (prima, dopo) => {
+      if (canale) canale.ruoloAiuto = ruoloDopoScontro(canale.ruoloAiuto, dopo);
+      // 12/10 (punto 5): passato il turno (o il Round, o chiuso lo scontro) le linee di tiro dei tablet spariscono
+      if (canale && prima && dopo && (prima.turno !== dopo.turno || prima.round !== dopo.round || prima.stato !== dopo.stato)) canale.pulisciLinee();
+      avvisoTurnoTablet(prima, dopo, cartelle).catch(() => {});
+    }));
+  }
   if (percorso === '/api/tavolo') {
     const dove = join(tavolo, 'sessione.json');
     if (req.method === 'GET') {

@@ -69,7 +69,9 @@ export function renderGiocatori(radice, ctx) {
     // 08/10: dalla scheda del PG il PG arriva già scelto (ctx.pg), con lo scontro e la scheda a cui tornare
     pg: ctx.pg || leggiPg(), daScheda: !!(ctx.pg && ctx.scheda), centrato: false, mosso: false, pgs: [], io: null, fascia: 1, prova: null, inVolo: false, turnoPrima: null, celleMie: null,
     // A.122: ruolo di Aiuto-master (dal server, con il gettone), modo «muovi il PG di turno», ultima vista letta
-    aiuto: null, aiutoModo: false, ultimoCorpo: null, mioNome: null };
+    aiuto: null, aiutoModo: false, ultimoCorpo: null, mioNome: null,
+    // 12/10 (punto 5): le linee di tiro dei tablet, dal server: le vedono tutti
+    linee: [] };
   const T = ctx.dati.mappa.tablet;
   const el = {};
   el.titolo = h('strong', { class: 'giocatori-titolo' }, 'Mappa');
@@ -171,6 +173,11 @@ export function renderGiocatori(radice, ctx) {
       if (d?.linea) disegnaLineaTiro(c, { scena: s, cam: st.cam, da: d.linea.da, a: d.linea.a, copertura: d.linea.copertura, etichetta: d.linea.testo ?? `${d.linea.distanza} Q · ${{ nessuna: 'nessuna Copertura', leggera: 'Copertura Leggera', media: 'Copertura Media', totale: 'Copertura Totale' }[d.linea.copertura] ?? ''}`, colori: ctx.dati.mappa.visuale.colori });
       // 08/10: la linea di tiro del giocatore (dal tablet), al posto di quella del master
       if (st.linea) disegnaLineaTiro(c, { scena: s, cam: st.cam, da: st.linea.da, a: st.linea.a, copertura: st.linea.copertura, etichetta: `${st.linea.distanza} Q · ${st.linea.testo}${st.linea.interposta ? ' · creatura interposta' : ''}${st.linea.protetto ? ' · protetto' : ''}`, colori: ctx.dati.mappa.visuale.colori });
+      // 12/10 (punto 5): le linee degli altri tablet (sullo schermo dei giocatori, tutte): chi tira, il bersaglio e l'esito
+      for (const l of st.linee ?? []) {
+        if (st.pg && l.pg === st.pg) continue; // la propria è già disegnata qui sopra, con il suo riquadro
+        disegnaLineaTiro(c, { scena: s, cam: st.cam, da: l.da, a: l.a, copertura: l.copertura, etichetta: etichettaLineaTablet(l), colori: ctx.dati.mappa.visuale.colori });
+      }
       // fase 2, lotto 7: il percorso provato dal tablet, in attesa di «Conferma»
       if (st.prova && st.io?.token) {
         const mio = s.token.find((t) => t.id === st.io.token);
@@ -317,6 +324,8 @@ export function renderGiocatori(radice, ctx) {
   const messaggio = (t) => { el.messaggio.textContent = t ?? ''; el.messaggio.hidden = !t; };
   async function usa(corpo) {
     usaTablet(corpo);
+    // 12/10 (punto 5): le linee di tiro tracciate dai tablet, visibili a tutti finché chi le ha fatte le toglie o passa il turno
+    st.linee = corpo.linee ?? [];
     // 08/10: la lettura precedente (scontro, Round, quando) per la campanella (src/mappa/audio.js → campanellaVista)
     const lettura = (v) => (v?.collegamento?.scontro ? { scontro: v.collegamento.scontro, round: v.turno?.round ?? null, quando: Date.now() } : null);
     const letturaPrima = st.ultimaLettura ?? null;
@@ -477,6 +486,8 @@ export function renderGiocatori(radice, ctx) {
   /** «Linea di tiro» dal tablet (08/10): dal proprio PG al token o al quadretto toccato; la calcola il server. */
   function cambiaLineaModo(v = !st.lineaModo) {
     st.lineaModo = v;
+    // 12/10 (punto 5): chiudendo la linea sparisce anche dalla mappa del master e dallo schermo dei giocatori
+    if (!v && st.linea && st.pg) togliLineaDalServer();
     if (!v) st.linea = null;
     st.prova = null;
     aggiornaTablet();
@@ -500,6 +511,10 @@ export function renderGiocatori(radice, ctx) {
     tornaAllaScheda();
   }
 
+  /** 12/10 (punto 5): toglie la propria linea anche agli altri schermi (il server la tiene in memoria). */
+  async function togliLineaDalServer() {
+    try { await fetch('api/vista-giocatori/linea', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ pg: st.pg, togli: true }) }); } catch { /* il master la vedrà sparire al cambio di turno */ }
+  }
   async function lineaVerso(p) {
     const g = st.vista.griglia;
     const m = mappaDaSchermo(st.cam, p.x, p.y);
@@ -515,6 +530,8 @@ export function renderGiocatori(radice, ctx) {
     aggiornaTablet();
     tela.richiedi(['sopra']);
   }
+  /** 12/10 (punto 5): l'etichetta della linea di un tablet sulla mappa degli altri: chi tira, il bersaglio e l'esito. */
+  const etichettaLineaTablet = (l) => `${l.tiratore ?? '—'}${l.nome ? ` → ${l.nome}` : ''}: ${l.distanza} Q · ${l.testo}${l.interposta ? ' · creatura interposta' : ''}${l.protetto ? ' · protetto' : ''}`;
   const testoLinea = (l) => [`${l.distanza} Q`, l.testo, l.interposta ? `creatura interposta (${ctx.dati.regole.attacco_distanza.interposta?.va ?? -2} VA, A.144)` : null, l.protetto ? 'bersaglio protetto (−4 VA, §5.10)' : null, l.luce ? `luce: ${l.luce}` : null, l.inVolo ? 'in volo' : null].filter(Boolean).join(' · ');
 
   const chiama = async (corpo) => {
@@ -673,6 +690,8 @@ export function renderGiocatori(radice, ctx) {
     flusso = typeof EventSource === 'function' ? new EventSource(`api/vista-giocatori/diretta${st.pg ? `?pg=${encodeURIComponent(st.pg)}` : ''}`) : null;
     flusso?.addEventListener('diretta', (e) => { try { usaDiretta(JSON.parse(e.data)); } catch { /* evento rovinato: si aspetta il prossimo */ } });
     flusso?.addEventListener('aggiorna', () => aggiorna());
+    // 12/10 (punto 5): una linea di tiro messa o tolta da un tablet arriva subito, senza aspettare il giro di lettura
+    flusso?.addEventListener('linee', (e) => { try { st.linee = JSON.parse(e.data) ?? []; tela.richiedi(['sopra']); } catch { /* evento rovinato */ } });
     flusso?.addEventListener('open', () => controllaVersione());
     // il master chiede «Adatta allo schermo» (sezione «Vista giocatori»)
     flusso?.addEventListener('adatta', () => adattaSchermo());
