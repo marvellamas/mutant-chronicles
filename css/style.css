@@ -2682,3 +2682,14 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
   .btn.mappa-strumento .mappa-strumento-nome { display: none; }
   .mappa-selezione { margin-left: 0; flex-basis: 100%; }
 }
+
+/* Stati in colonna, qualunque cosa compaia nella riga (12/10/2026, sessione di gioco di Marcello e Davide):
+   con Ammalato acceso il menu delle intensità («Ammalato 3 — penalità −4») è più largo della colonna e usciva
+   dalla sua casella, coprendo quella accanto. Le celle possono stringersi e il menu va a capo dentro la cella. */
+.stati-compatti li { min-width: 0; align-items: flex-start; }
+.stato-compatto { min-width: 0; flex-wrap: wrap; }
+.stato-compatto > span, .stato-compatto small { min-width: 0; overflow-wrap: anywhere; }
+/* il menu prende una riga sua dentro la cella: così non sborda mai, a nessuna larghezza */
+.intensita-stato { flex: 1 1 100%; max-width: 100%; min-width: 0; font-size: 0.82rem; }
+/* nella plancia gli Stati sono pillole in fila: lì il menu sta in linea, ma non più largo della fila */
+.plancia-stati .intensita-stato { flex: 0 1 auto; max-width: 100%; }
