@@ -261,13 +261,24 @@ export function nomeNellArea(c, { scena, cam, etichetta, posto, regole = {} }) {
   const a = schermoDaMappa(cam, g.scosto_x, g.scosto_y);
   const b = schermoDaMappa(cam, g.scosto_x + g.q_px, g.scosto_y);
   const qpx = Math.abs(b.x - a.x);
-  const massimo = posto.larghezza * qpx;
-  if (massimo < 6) return; // mappa rimpicciolita: il nome non si leggerebbe comunque
+  scriviConBordo(c, { testo: etichetta, x: s.x, y: s.y, massimo: posto.larghezza * qpx, qpx, regole: n });
+}
+
+/**
+ * Scritta con il bordo bianco, dentro una larghezza data (12/10/2026, punto 4): il corpo scende fino a `px_min` e, se
+ * ancora non ci sta, il testo si accorcia con i puntini. La usano il nome dei template e l'etichetta dei token liberi
+ * (punto 6), perché si leggano allo stesso modo su immagini chiare e scure.
+ * @param o { testo, x, y (centro della scritta), massimo: px disponibili, qpx: quanto misura un Q sullo schermo, regole }
+ * @returns il testo scritto davvero, o null se non si è scritto niente
+ */
+export function scriviConBordo(c, { testo: etichetta, x, y, massimo, qpx, regole = {} }) {
+  const n = { altezza_q: 0.4, px_min: 9, px_max: 22, colore: '#111111', bordo: '#ffffff', bordo_px: 3, ...regole };
+  if (!etichetta || !(massimo >= 6)) return null; // mappa rimpicciolita: non si leggerebbe comunque
   c.save();
   c.textAlign = 'center';
   c.textBaseline = 'middle';
   let px = Math.max(n.px_min, Math.min(n.px_max, qpx * n.altezza_q));
-  const misura = (testo, dim) => { c.font = `700 ${dim}px system-ui, sans-serif`; return c.measureText(testo).width; };
+  const misura = (s, dim) => { c.font = `700 ${dim}px system-ui, sans-serif`; return c.measureText(s).width; };
   while (px > n.px_min && misura(etichetta, px) > massimo) px = Math.max(n.px_min, px - 1);
   let testo = etichetta;
   if (misura(testo, px) > massimo) {
@@ -279,10 +290,11 @@ export function nomeNellArea(c, { scena, cam, etichetta, posto, regole = {} }) {
   c.lineJoin = 'round';
   c.lineWidth = n.bordo_px;
   c.strokeStyle = n.bordo;
-  c.strokeText(testo, s.x, s.y);
+  c.strokeText(testo, x, y);
   c.fillStyle = n.colore;
-  c.fillText(testo, s.x, s.y);
+  c.fillText(testo, x, y);
   c.restore();
+  return testo;
 }
 
 /**

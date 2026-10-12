@@ -104,7 +104,7 @@ export function oggettiScena(scena) {
   for (const l of lineeDi(scena)) out.push({ chiave: chiaveDi('muro', l.id), tipo: 'muro', id: l.id, nome: 'Muro disegnato', punti: l.punti, spessore: l.spessore });
   for (const p of scena.porte ?? []) out.push({ chiave: chiaveDi('porta', p.id), tipo: 'porta', id: p.id, nome: 'Porta', q: p.q, stato: p.stato, segreta: p.segreta });
   for (const a of areeTerreno(scena)) out.push({ chiave: chiaveDi('terreno', a.id), tipo: 'terreno', id: a.id, nome: 'Terreno difficile', celle: a.celle });
-  for (const t of tokenLiberi(scena)) out.push({ chiave: chiaveDi('token', t.id), tipo: 'token', id: t.id, nome: t.nome || 'Token libero', q: t.q, ingombro: t.ingombro, blocca: !!t.blocca, nascosto: !!t.nascosto });
+  for (const t of tokenLiberi(scena)) out.push({ chiave: chiaveDi('token', t.id), tipo: 'token', id: t.id, nome: t.nome || 'Token libero', q: t.q, ingombro: t.ingombro, blocca: !!t.blocca, bersaglio: !!t.bersaglio, nascosto: !!t.nascosto });
   return out;
 }
 
@@ -376,6 +376,8 @@ export function proprietaOggetto(o, dati) {
     return [
       { chiave: 'nascosto', etichetta: 'Nascosto ai giocatori', tipo: 'casella', valore: !!o.nascosto },
       { chiave: 'blocca', etichetta: 'Blocca il movimento e dà Copertura', tipo: 'casella', valore: !!o.blocca },
+      // 12/10 (punto 6): un oggetto della scena che si può prendere di mira (un barile, un generatore, una porta)
+      { chiave: 'bersaglio', etichetta: 'Bersaglio (si può attaccare)', tipo: 'casella', valore: !!o.bersaglio },
     ];
   }
   return [{ chiave: 'celle', etichetta: 'Quadretti', tipo: 'testo', valore: String(o.celle.length) }];

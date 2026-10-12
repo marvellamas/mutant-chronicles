@@ -237,7 +237,7 @@ export function lineaPerTablet({ scena, pezzi, chiavePg, verso, visibili, dati }
     return { ok: false, errore: aBordo ? 'Sei a bordo di un veicolo: la linea dal mezzo la traccia il master.' : 'Il tuo PG non è sulla mappa.' };
   }
   const { colonne: C, righe: R } = scena.griglia;
-  let a = null, nome = null, bersaglioId = null;
+  let a = null, nome = null, bersaglioId = null, bersagliabile = true;
   if (verso?.token) {
     const t = scena.token.find((x) => x.id === verso.token);
     if (!t || !visibili.has(t.id)) return { ok: false, errore: 'Quel bersaglio non lo vedi.' };
@@ -246,6 +246,8 @@ export function lineaPerTablet({ scena, pezzi, chiavePg, verso, visibili, dati }
     nome = (pezzi ?? []).find((p) => p.chiave === chiaveRif(t.rif))?.nome ?? t.nome ?? null;
     // P4: l'id del partecipante, per aprire «Attacca!» con il bersaglio già scelto
     bersaglioId = t.rif?.tipo === 'partecipante' ? t.rif.id ?? null : null;
+    // 12/10 (punto 6): un token libero si può attaccare solo se il master gli ha messo la spunta «Bersaglio»
+    if (t.rif?.tipo === 'segnaposto' && !t.bersaglio) bersagliabile = false;
   } else if (Array.isArray(verso?.q) && verso.q.length === 2 && verso.q.every(Number.isInteger)) {
     const [x, y] = verso.q;
     if (x < 0 || y < 0 || x >= C || y >= R) return { ok: false, errore: 'Quel quadretto è fuori dalla mappa.' };
@@ -266,7 +268,7 @@ export function lineaPerTablet({ scena, pezzi, chiavePg, verso, visibili, dati }
   const r = semplice ? lineaSemplice(calcolata) : calcolata;
   const luce = semplice ? null : testoLuceBersaglio(luceIngombro(scena, a, dati), dati);
   return {
-    ok: true, ...(semplice ? { semplice: true } : {}), distanza: r.distanza, copertura: r.copertura, testo: semplice ? 'Mappa semplice: Copertura a mano' : testoCopertura(r), protetto: !!r.protetto, interposta: !!r.interposta, vista: r.vista, inVolo: !!r.inVolo,
+    ok: true, ...(semplice ? { semplice: true } : {}), distanza: r.distanza, copertura: r.copertura, testo: semplice ? 'Mappa semplice: Copertura a mano' : testoCopertura(r), protetto: !!r.protetto, interposta: !!r.interposta, vista: r.vista, inVolo: !!r.inVolo, bersagliabile,
     luce, nome, bersaglioId, da: { q: [...da.q], ingombro: da.ingombro }, a: { q: [...a.q], ingombro: a.ingombro },
   };
 }

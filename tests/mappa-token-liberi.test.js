@@ -65,7 +65,7 @@ test('il token libero è un oggetto dell’editor, con le sue proprietà', () =>
   assert.equal(oggettoSotto(s, [6.5, 5.5])?.chiave, 'token:carro');
   const r = riassuntoSelezione(s, ['token:carro'], dati);
   assert.equal(r.testo, 'Token libero «Carro rovesciato»');
-  assert.deepEqual(r.proprieta.map((p) => p.chiave), ['nascosto', 'blocca']);
+  assert.deepEqual(r.proprieta.map((p) => p.chiave), ['nascosto', 'blocca', 'bersaglio']);
   assert.deepEqual(tokenLiberi(s).map((t) => t.id), ['carro']);
 });
 

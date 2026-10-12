@@ -10,6 +10,7 @@ import { dimensioni, chiaveRif } from '../../mappa/token.js';
 import { direzioneDi, angoloImmagine, postiCerchietti } from '../../mappa/veicoli-mappa.js';
 import { inVolo, quotaDi } from '../../mappa/volo.js';
 import { angoloDi, formaDi, baseDaIngombro } from '../../mappa/forma.js';
+import { scriviConBordo } from './disegno-aree.js';
 
 const SOGLIA_TESTO_PX = 16; // sotto questo lato in pixel di schermo niente testo né sigle
 
@@ -46,7 +47,7 @@ const sigla = (nome) => String(nome ?? '?').replace(/[^\p{L}\p{N} ]/gu, '').spli
  * Disegna i token della scena. `pezzi`: Map(chiave del rif → pezzo, src/mappa/partecipanti.js); `trascina`: il token
  * spostato ora ({ id, q }) o null; `selezionato`: id del token scelto.
  */
-export function disegnaToken(c, { scena, cam, pezzi, colori, immagine, selezionato = null, trascina = null, bordo = () => null, alone = '#ffffff', pv = null, ritrattoVerticale = 0.5, zero = null, volo = null }) {
+export function disegnaToken(c, { scena, cam, pezzi, colori, immagine, selezionato = null, trascina = null, bordo = () => null, alone = '#ffffff', pv = null, ritrattoVerticale = 0.5, zero = null, volo = null, stileNome = null }) {
   const g = scena.griglia;
   const qs = g.q_px * cam.scala;
   const ordinati = [...scena.token].sort((a, b) => (a.id === selezionato) - (b.id === selezionato) || (a.id === trascina?.id) - (b.id === trascina?.id));
@@ -59,6 +60,13 @@ export function disegnaToken(c, { scena, cam, pezzi, colori, immagine, seleziona
     const box = { x: a.x, y: a.y, w: w * qs, h: h * qs };
     const p = pezzi.get(chiaveRif(t.rif)) ?? null;
     disegnaUno(c, { t, p, box, colori, immagine, qs, scelto: t.id === selezionato, inMano: trascina?.id === t.id, b: p ? bordo(p) : null, alone, pv, ritrattoVerticale, zero, volo });
+    // 12/10 (punto 6, sessione di gioco): il nome di un token libero si legge sempre sotto la pedina, anche 1 × 1,
+    // con lo stesso bordo bianco dei nomi dei template (src/ui/mappa/disegno-aree.js → scriviConBordo)
+    if (stileNome && t.rif?.tipo === 'segnaposto' && t.nome) {
+      const larghezza = Math.max(1, Math.min(stileNome.larghezza_max_q ?? 3, Math.max(w, 1))) * qs;
+      const dim = Math.max(stileNome.px_min ?? 9, Math.min(stileNome.px_max ?? 22, qs * (stileNome.altezza_q ?? 0.4)));
+      scriviConBordo(c, { testo: t.nome, x: box.x + box.w / 2, y: box.y + box.h + dim * 0.7, massimo: Math.max(larghezza, (stileNome.larghezza_max_q ?? 3) * qs), qpx: qs, regole: stileNome });
+    }
     // chi è a bordo (fase 2, lotto 5; ritocchi del 08/10): come i token, due terzi di un Q, in griglia sul veicolo, il
     // conducente per primo con un anello del colore della selezione (pezzi della mappa o info della vista giocatori)
     const bordo_ = [...(t.passeggeri ?? [])].sort((a, x) => (x.ruolo === 'conducente') - (a.ruolo === 'conducente'));

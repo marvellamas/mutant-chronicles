@@ -168,7 +168,7 @@ export function renderGiocatori(radice, ctx) {
       const pezzi = new Map(s.token.filter((t) => t.info).map((t) => [chiaveRif(t.rif), { ...t.info, ritratto: t.info.immagine, pv: t.info.pv === null ? null : { attuali: t.info.pv, massimo: 1 }, stati: [] }]));
       const d = direttaAttuale();
       const mio = !!celleMie();
-      disegnaToken(c, { scena: s, cam: st.cam, pezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: (mio ? st.io.token : d?.token) ?? st.io?.token ?? null, bordo: (p) => p.bordo ?? null, alone: ctx.dati.mappa.colori.alone_turno, ritrattoVerticale: ctx.dati.mappa.token.ritratto_verticale, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => true }, zero: ctx.dati.mappa.pv_zero, volo: ctx.dati.mappa.volo });
+      disegnaToken(c, { scena: s, cam: st.cam, pezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: (mio ? st.io.token : d?.token) ?? st.io?.token ?? null, bordo: (p) => p.bordo ?? null, alone: ctx.dati.mappa.colori.alone_turno, ritrattoVerticale: ctx.dati.mappa.token.ritratto_verticale, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => true }, zero: ctx.dati.mappa.pv_zero, volo: ctx.dati.mappa.volo, stileNome: ctx.dati.mappa.template.nome });
       // fase 2, lotto 3: la linea di tiro del master (già filtrata dal server)
       if (d?.linea) disegnaLineaTiro(c, { scena: s, cam: st.cam, da: d.linea.da, a: d.linea.a, copertura: d.linea.copertura, etichetta: d.linea.testo ?? `${d.linea.distanza} Q · ${{ nessuna: 'nessuna Copertura', leggera: 'Copertura Leggera', media: 'Copertura Media', totale: 'Copertura Totale' }[d.linea.copertura] ?? ''}`, colori: ctx.dati.mappa.visuale.colori });
       // 08/10: la linea di tiro del giocatore (dal tablet), al posto di quella del master
@@ -635,8 +635,11 @@ export function renderGiocatori(radice, ctx) {
         h('button', { type: 'button', class: 'btn primario', disabled: st.inVolo, onclick: () => conferma() }, 'Conferma'))) : null;
     el.torna.className = `btn tablet-torna${st.mosso ? ' primario' : ''}`;
     // P4: sotto il risultato della linea, «Attacca questo bersaglio» (al proprio turno, come «Muovi il PG»)
-    const puoAttaccare = !!st.io?.permesso?.puo;
-    const motivoAttacco = st.linea?.copertura === 'totale' ? 'Copertura Totale: non si può attaccare direttamente (§5.8).' : st.io?.permesso?.motivo ?? 'Non è il tuo turno.';
+    // 12/10 (punto 6): un oggetto della scena si attacca solo se il master gli ha messo la spunta «Bersaglio»
+    const bersagliabile = st.linea?.bersagliabile !== false;
+    const puoAttaccare = !!st.io?.permesso?.puo && bersagliabile;
+    const motivoAttacco = !bersagliabile ? 'Questo non è un bersaglio: chiedi al master.'
+      : st.linea?.copertura === 'totale' ? 'Copertura Totale: non si può attaccare direttamente (§5.8).' : st.io?.permesso?.motivo ?? 'Non è il tuo turno.';
     const linea = st.linea ? h('div', { class: 'tablet-conferma tablet-linea' }, h('p', {}, `🎯 ${st.linea.nome ? `${st.linea.nome}: ` : ''}${testoLinea(st.linea)}`),
       st.linea.copertura === 'totale' ? h('p', { class: 'tablet-zoc' }, 'Copertura Totale: non si può attaccare direttamente (§5.8).') : null,
       ctx.scheda ? h('div', { class: 'riga-azioni' },

@@ -98,6 +98,7 @@ export function chiediTokenLibero({ titolo = 'Token libero', valori = {}, colori
     immagine: valori.immagine ?? null,
     ingombro: valori.ingombro ?? 1,
     blocca: !!valori.blocca,
+    bersaglio: !!valori.bersaglio,
     nascosto: !!valori.nascosto,
   };
   return apri('token-libero', titolo, (fine) => {
@@ -140,7 +141,9 @@ export function chiediTokenLibero({ titolo = 'Token libero', valori = {}, colori
         h('input', { type: 'checkbox', checked: stato.nascosto, onchange: (e) => { stato.nascosto = e.target.checked; } }), 'Nascosto ai giocatori'),
       h('label', { class: 'finestrella-campo finestrella-casella' },
         h('input', { type: 'checkbox', checked: stato.blocca, onchange: (e) => { stato.blocca = e.target.checked; } }), 'Blocca il movimento e dà Copertura'),
-      h('p', { class: 'nota' }, 'Un token libero non entra nello scontro: niente Iniziativa, niente conteggio del movimento, niente Attacchi di Opportunità. Lo sposti tu quando vuoi; i giocatori lo vedono ma non lo muovono.'),
+      h('label', { class: 'finestrella-campo finestrella-casella', title: 'Un barile, un generatore, una porta: si può scegliere come bersaglio nella linea di tiro e in «Attacca!». Niente Difese né PV: l’esito lo decidi tu' },
+        h('input', { type: 'checkbox', checked: stato.bersaglio, onchange: (e) => { stato.bersaglio = e.target.checked; } }), 'Bersaglio (si può attaccare)'),
+      h('p', { class: 'nota' }, 'Un token libero non entra nello scontro: niente Iniziativa, niente conteggio del movimento, niente Attacchi di Opportunità. Lo sposti tu quando vuoi; i giocatori lo vedono ma non lo muovono. Il nome si legge sempre sotto la pedina.'),
       h('div', { class: 'riga-azioni finestrella-azioni' },
         h('button', { type: 'button', class: 'btn', onclick: () => fine(null) }, 'Annulla'),
         h('button', { type: 'button', class: 'btn primario', onclick: ok }, valori.nome ? 'Salva' : 'Metti sulla mappa')),

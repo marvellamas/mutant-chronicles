@@ -99,9 +99,14 @@ provocano Attacchi di Opportunità.
 
 1. Strumento **Token libero**, poi clic sulla mappa.
 2. Nella finestrella: il **nome** (le sue iniziali finiscono sulla pedina), un **colore** oppure un'**immagine**
-   presa dalla Galleria, e quanti quadretti occupa: **1 × 1**, **2 × 2** o **3 × 3**.
-3. Due caselle: **«Nascosto ai giocatori»** (lo vedi solo tu) e **«Blocca il movimento e dà Copertura»** (da
-   spegnere per una pozza d'acqua, da accendere per una cassa o un muretto).
+   presa dalla Galleria, e quanti quadretti occupa: **1 × 1**, **2 × 2** o **3 × 3**. Il nome si legge sempre
+   **sotto la pedina**, anche a 1 × 1, col bordo bianco dei nomi dei template (se è lungo si rimpicciolisce e poi
+   finisce con i puntini): lo vedono anche i giocatori.
+3. Tre caselle: **«Nascosto ai giocatori»** (lo vedi solo tu), **«Blocca il movimento e dà Copertura»** (da
+   spegnere per una pozza d'acqua, da accendere per una cassa o un muretto) e **«Bersaglio (si può attaccare)»**
+   (12/10): con questa, l'oggetto si può scegliere nella linea di tiro e in «Attacca!» — un barile di carburante,
+   un generatore, una porta. Non ha né Difese né PV: l'app dà il VA di chi attacca e **l'esito lo decidi tu**.
+   Senza la spunta la linea si traccia lo stesso (distanza e Copertura), ma non compare «Attacca questo bersaglio».
 
 Poi lo tratti come tutto il resto: con **Seleziona** lo sposti dove vuoi (anche con «Mappa semplice» spenta:
 nessun conteggio, nessun avviso), le frecce **← →** lo girano, Canc lo toglie, Ctrl+Z rimette. Si salva nella

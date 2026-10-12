@@ -7,7 +7,8 @@
 //   muri, terreno: maschere di Q in base64 (src/mappa/celle.js),
 //   nebbia: { iniziale: "coperta" | "scoperta", coperti: maschera },
 //   token: [{ id, rif: { tipo: "partecipante" | "veicolo" | "segnaposto", id }, q: [x, y], ingombro, nascosto, nome?, luce?,
-//     (segnaposto = token libero, 12/10: nome, colore?, immagine?, angolo?, blocca?: vale come un Q di muro)
+//     (segnaposto = token libero, 12/10: nome, colore?, immagine?, angolo?, blocca?: vale come un Q di muro,
+//      bersaglio?: si può scegliere come bersaglio nella linea di tiro e in «Attacca!», senza scheda)
 //            direzione?, passeggeri? }]  (veicoli: muso e chi è a bordo, fase 2 lotto 5, src/mappa/veicoli-mappa.js)
 //   luce?: { ambiente, zone?: { categoria: maschera } }   luci della scena (fase 2, lotto 4; src/mappa/luce.js); token.luce: raggio in Q
 //   porte?: [{ id, q: [x, y], stato: aperta | chiusa | bloccata, segreta, orientamento?: orizzontale | verticale }]   porte (fase 2, lotto 2; src/mappa/porte.js; orientamento dal 07/10)
@@ -189,11 +190,13 @@ export function validaScena(s, dati) {
     // senza regole — un carro, una statua, un PNG di passaggio. «blocca» le fa valere come un Q di muro.
     if (t.rif.tipo === 'segnaposto') {
       if (t.blocca !== undefined && typeof t.blocca !== 'boolean') return `${k}.blocca: vero o falso`;
+      // 12/10 (punto 6): «Bersaglio»: si può scegliere nella linea di tiro e in «Attacca!», senza scheda
+      if (t.bersaglio !== undefined && typeof t.bersaglio !== 'boolean') return `${k}.bersaglio: vero o falso`;
       if (t.colore !== undefined && (!isTesto(t.colore) || !/^#[0-9a-f]{6}$/i.test(t.colore))) return `${k}.colore: #rrggbb`;
       if (t.immagine !== undefined && t.immagine !== null && (!isTesto(t.immagine) || t.immagine.length > 200)) return `${k}.immagine: nome del file della Galleria`;
       if (t.angolo !== undefined && t.angolo !== null && (!Number.isFinite(t.angolo) || t.angolo < 0 || t.angolo >= 360)) return `${k}.angolo: da 0 a 359 gradi`;
-    } else if (t.blocca !== undefined) {
-      return `${k}.blocca: solo per i token liberi`;
+    } else if (t.blocca !== undefined || t.bersaglio !== undefined) {
+      return `${k}.${t.blocca !== undefined ? 'blocca' : 'bersaglio'}: solo per i token liberi`;
     }
     if (t.rif.tipo === 'partecipante') {
       if (rifPartecipanti.has(t.rif.id)) return `${k}: il partecipante «${t.rif.id}» ha già un token`;

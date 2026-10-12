@@ -83,9 +83,12 @@ test('tablet: «Attacca questo bersaglio» solo al proprio turno, altrimenti spe
   const g = readFileSync(new URL('../src/ui/mappa/giocatori.js', import.meta.url), 'utf8');
   // il pulsante c'è, sotto il risultato della linea
   assert.match(g, /'🎯 Attacca questo bersaglio'/);
-  assert.match(g, /const puoAttaccare = !!st\.io\?\.permesso\?\.puo;/, 'stesso criterio di «Muovi il PG»');
+  assert.match(g, /const puoAttaccare = !!st\.io\?\.permesso\?\.puo && bersagliabile;/, 'stesso criterio di «Muovi il PG», più la spunta «Bersaglio» (punto 6 del 12/10)');
   assert.match(g, /disabled: !puoAttaccare \|\| st\.linea\.copertura === 'totale'/);
-  assert.match(g, /const motivoAttacco = st\.linea\?\.copertura === 'totale' \? 'Copertura Totale[^']*' : st\.io\?\.permesso\?\.motivo \?\? 'Non è il tuo turno\.'/);
+  assert.match(g, /st\.io\?\.permesso\?\.motivo \?\? 'Non è il tuo turno\.'/);
+  // 12/10 (punto 6): un oggetto della scena senza la spunta non si attacca, e il pulsante dice perché
+  assert.match(g, /const bersagliabile = st\.linea\?\.bersagliabile !== false;/);
+  assert.match(g, /Questo non è un bersaglio/);
   // apre la propria scheda con il preset in sessionStorage (come fa il master dalla mappa)
   assert.match(g, /function attaccaDallaLinea\(\)/);
   assert.match(g, /sessionStorage\.setItem\(CHIAVE_DALLA_MAPPA/);
@@ -98,6 +101,9 @@ test('master dalla mappa: «Attacca questo bersaglio» per i PG e, dai nemici, i
   // niente più «Apri la scheda di X per Attacca!»: il pulsante porta già il bersaglio
   assert.doesNotMatch(p, /Apri la scheda di \$\{nomeDa\} per «Attacca!»/);
   assert.equal((p.match(/Attacca questo bersaglio/g) ?? []).length, 4, 'due casi (mappa semplice e completa), PG e nemico');
+  // 12/10 (punto 6): un token libero si attacca solo con la spunta «Bersaglio»
+  assert.match(p, /const libero = aTok\?\.rif\?\.tipo === 'segnaposto';/);
+  assert.match(p, /\(!libero \|\| aTok\.bersaglio\)/);
   // dal nemico: la plancia, con il bersaglio della linea per primo
   assert.match(p, /st\.planciaBarra\.attaccaContro\(idDaS, idAS, presetS\.scelte\)/);
   assert.match(p, /st\.planciaBarra\.attaccaContro\(idDa, idA, preset\)/);

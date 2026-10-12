@@ -430,7 +430,7 @@ export function renderMappa(radice, ctx) {
     sopra: (c) => {
       if (st.scena) {
         const t = st.trascina?.modo === 'token' ? { id: st.trascina.token, q: st.trascina.q } : null;
-        disegnaToken(c, { scena: st.scena, cam: st.cam, pezzi: st.mappaPezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: st.selezionato, trascina: t, bordo: bordoDi, alone: ctx.dati.mappa.colori.alone_turno, ritrattoVerticale: ctx.dati.mappa.token.ritratto_verticale, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => st.mostraPv }, zero: ctx.dati.mappa.pv_zero, volo: ctx.dati.mappa.volo });
+        disegnaToken(c, { scena: st.scena, cam: st.cam, pezzi: st.mappaPezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: st.selezionato, trascina: t, bordo: bordoDi, alone: ctx.dati.mappa.colori.alone_turno, ritrattoVerticale: ctx.dati.mappa.token.ritratto_verticale, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => st.mostraPv }, zero: ctx.dati.mappa.pv_zero, volo: ctx.dati.mappa.volo, stileNome: ctx.dati.mappa.template.nome });
         disegnaSelezioneGruppo(c);
         // fase 2, lotto 5: i quadretti liberi accanto al veicolo per «Scendi»
         if (st.scendi) {
@@ -1833,10 +1833,10 @@ export function renderMappa(radice, ctx) {
     const t = {
       id: `libero-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`,
       rif: { tipo: 'segnaposto', id: null }, q: dentro, ingombro: scelto.ingombro, nascosto: !!scelto.nascosto,
-      nome: scelto.nome, colore: scelto.colore, immagine: scelto.immagine ?? null, blocca: !!scelto.blocca,
+      nome: scelto.nome, colore: scelto.colore, immagine: scelto.immagine ?? null, blocca: !!scelto.blocca, bersaglio: !!scelto.bersaglio,
     };
     st.scena = cambiaTokenAnnullabile(st.scena, null, t, ctx.dati);
-    avviso(`Token libero «${t.nome}» messo${t.blocca ? ', blocca il movimento' : ''}${t.nascosto ? ', nascosto ai giocatori' : ''} (Ctrl+Z lo toglie).`, { chiave: 'editor' });
+    avviso(`Token libero «${t.nome}» messo${t.blocca ? ', blocca il movimento' : ''}${t.bersaglio ? ', si può attaccare' : ''}${t.nascosto ? ', nascosto ai giocatori' : ''} (Ctrl+Z lo toglie).`, { chiave: 'editor' });
     dopoDisegno();
     st.editor = conSelezione(st.editor, [`token:${t.id}`]);
     dopoSelezione();
@@ -2592,8 +2592,10 @@ export function renderMappa(radice, ctx) {
       // P4 (13/10/2026): un tocco dalla linea ad «Attacca!» già pronto. Con «Mappa semplice» la linea dà solo la
       // distanza: Copertura, creatura interposta e luce restano da mettere a mano, come sempre con la mappa semplice
       const presetS = presetDaLinea({ distanza: r.distanza, semplice: true, bersaglioId: idAS ?? null, bersaglio: nomeA });
-      if (aTok && st.fonti?.scontro && st.planciaBarra?.puoAttaccare?.(idDaS)) az.push({ testo: `Attacca questo bersaglio (${nomeDa} → ${nomeA})`, fai: () => st.planciaBarra.attaccaContro(idDaS, idAS, presetS.scelte) });
-      else if (aTok && pezzoDi(daTok)?.tipo === 'pg' && recordPg(pezzoDi(daTok))) az.push({ testo: `Attacca questo bersaglio (${nomeDa})`, fai: () => {
+      // 12/10 (punto 6): un token libero si attacca solo con la spunta «Bersaglio»; senza scheda, l'esito lo decide il master
+      const liberoS = aTok?.rif?.tipo === 'segnaposto';
+      if (aTok && !liberoS && st.fonti?.scontro && st.planciaBarra?.puoAttaccare?.(idDaS)) az.push({ testo: `Attacca questo bersaglio (${nomeDa} → ${nomeA})`, fai: () => st.planciaBarra.attaccaContro(idDaS, idAS, presetS.scelte) });
+      else if (aTok && (!liberoS || aTok.bersaglio) && pezzoDi(daTok)?.tipo === 'pg' && recordPg(pezzoDi(daTok))) az.push({ testo: `Attacca questo bersaglio (${nomeDa})`, fai: () => {
         try { sessionStorage.setItem(CHIAVE_DALLA_MAPPA, JSON.stringify({ nome: pezzoDi(daTok).nome, distanza: r.distanza, semplice: true, bersaglio: nomeA, bersaglioId: idAS ?? null, quando: Date.now() })); } catch { /* senza memoria: il pannello si apre vuoto */ }
         apriSchedaToken(daTok);
       } });
@@ -2621,10 +2623,15 @@ export function renderMappa(radice, ctx) {
     if (rigaLuce) righe.splice(1, 0, `Luce: ${rigaLuce}.`);
     // S22: i valori della linea arrivano ad «Attacca!» con il segno «dalla mappa» (src/dalla-mappa.js), da togliere con un tocco
     const preset = { ...conLineaDallaMappa({}, { distanza: r.distanza, copertura: r.copertura, protetto: r.protetto, interposta: r.interposta, luceMappa: rigaLuce }), luce: luceB };
-    if (aTok && r.copertura !== 'totale') {
+    // 12/10 (punto 6): un oggetto della scena (token libero) si può prendere di mira solo con la spunta «Bersaglio»;
+    // non ha né Difese né PV: l'app dà il VA dell'attaccante e l'esito lo decide il master
+    const libero = aTok?.rif?.tipo === 'segnaposto';
+    if (libero && !aTok.bersaglio) righe.push(`${nomeA} è un oggetto della scena senza la spunta «Bersaglio»: per attaccarlo scegli il token con «Seleziona» e mettila nel pannello in alto.`);
+    if (libero && aTok.bersaglio) righe.push(`${nomeA} non ha Difese né PV: l’app dà il VA dell’attaccante, l’esito lo decidi tu.`);
+    if (aTok && r.copertura !== 'totale' && (!libero || aTok.bersaglio)) {
       const pzDa = pezzoDi(daTok);
       const idDa = daTok.rif?.id, idA = aTok.rif?.id;
-      if (st.fonti?.scontro && st.planciaBarra?.puoAttaccare?.(idDa)) azioni.push({ testo: `Attacca questo bersaglio (${nomeDa} → ${nomeA})`, fai: () => st.planciaBarra.attaccaContro(idDa, idA, preset) });
+      if (!libero && st.fonti?.scontro && st.planciaBarra?.puoAttaccare?.(idDa)) azioni.push({ testo: `Attacca questo bersaglio (${nomeDa} → ${nomeA})`, fai: () => st.planciaBarra.attaccaContro(idDa, idA, preset) });
       else if (pzDa?.tipo === 'pg' && recordPg(pzDa)) azioni.push({ testo: `Attacca questo bersaglio (${nomeDa})`, fai: () => {
         try { sessionStorage.setItem(CHIAVE_DALLA_MAPPA, JSON.stringify({ nome: pzDa.nome, distanza: r.distanza, copertura: r.copertura, protetto: r.protetto, interposta: r.interposta, bersaglio: nomeA, bersaglioId: idA ?? null, luce: luceB, luceMappa: rigaLuce, quando: Date.now() })); } catch { /* senza: valori a mano */ }
         apriSchedaToken(daTok);
