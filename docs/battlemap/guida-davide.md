@@ -16,7 +16,29 @@ Quando aggiorni o avvii Mutant, a Marcello arriva un avviso con la versione: ser
 2. **Prepara la mappa.** Nella bozza, sotto «Mappa», scegli «Nuova scena…» (o una scena esistente) e premi «Prepara la mappa»: la scena nasce collegata alla bozza e si apre.
 3. **Immagine.** «Carica immagine» (o «Strumenti» → «Carica immagine…»): JPG, PNG o WEBP.
 4. **Griglia.** «Strumenti» → «Griglia»: «Traccia un quadretto» sull'immagine, oppure scrivi il lato del quadretto in pixel. Quando combacia, «Blocca griglia».
-5. **Muri.** «Strumenti» → «Muri e terreno»: «Rettangolo» o «Pennello», poi «Muro» o «Terreno difficile»; trascina sulla mappa. I giocatori non vedono i muri sotto la nebbia. **Porte:** nello stesso pannello «Porta», scegli aperta, chiusa o bloccata (e «segreta» se vuoi), poi clic su un quadretto di muro; un altro clic la toglie. La porta si mette da sola lungo il muro (verticale in un muro verticale); se serve, ← → la girano mentre la metti, o clic destro → «Ruota» dopo. Una porta segreta per i giocatori è muro finché non la riveli (clic destro → «Rivela ai giocatori»). In diagonale un token passa rasente allo spigolo di un muro o di una porta chiusa, ma non fra due muri che si toccano a spigolo.
+5. **Muri, porte e terreno** (rifatti il 12/10/2026). Sopra la mappa c'è **una barra con sei strumenti**, e ne è acceso uno solo alla volta, ben evidenziato:
+
+   | Strumento | Che cosa fa |
+   |---|---|
+   | **Seleziona** (la freccia) | è quello di partenza: prendi, sposti e cancelli quello che c'è già |
+   | **Muro** | disegna un muro: trascina («Disegna»), oppure dipingi quadretti interi («Pennello», «Rettangolo») |
+   | **Porta** | clic su un muro e la porta c'è |
+   | **Terreno difficile** | dipingi i quadretti che costano di più |
+   | **Token libero** | una pedina senza scheda e senza regole: un carro, una statua, un PNG che passa |
+   | **Gomma** | cancella quello che tocchi, e taglia i muri disegnati dove passa |
+
+   **Esc torna sempre a Seleziona**, e cambiando strumento non resta mai niente di selezionato (prima capitava di premere Canc e far sparire un muro dall'altra parte della mappa).
+
+   **Con Seleziona, per tutto allo stesso modo** — un muro, una porta, un'area di terreno, un token libero:
+   - passandoci sopra si illumina: sai sempre che cosa stai per prendere;
+   - **clic** per prenderlo; **Maiusc+clic**, o un riquadro trascinato nel vuoto, per prenderne più d'uno;
+   - **trascina** per spostarlo; i **quadratini gialli** sui vertici di un muro lo allungano, lo accorciano o ne spostano un angolo;
+   - **Canc** lo cancella; **Ctrl+Z** annulla e **Ctrl+Y** rifà, qualunque cosa tu abbia fatto;
+   - nella barra, accanto agli strumenti, c'è scritto che cosa è selezionato e le sue cose: lo spessore del muro, se la porta è aperta, chiusa, bloccata o segreta, quanti quadretti è l'area, se il token libero è nascosto o blocca.
+
+   **Aggancia alla griglia** (la casella nella barra, accesa di base): i vertici dei muri vanno sugli incroci della griglia e sui punti medi delle sue linee, a qualunque spessore, sia mentre disegni sia mentre sposti. Spegnila per un muro storto a mano libera.
+
+   I giocatori non vedono i muri sotto la nebbia. Una **porta segreta** per loro è muro finché non la riveli (clic destro → «Rivela ai giocatori»). La porta si mette da sola lungo il muro (verticale in un muro verticale); se serve, ← → la girano mentre la metti. In diagonale un token passa rasente allo spigolo di un muro o di una porta chiusa, ma non fra due muri che si toccano a spigolo.
 6. **Token.** Nel gruppo «Mappa» della barra a destra, «Metti tutti» (o trascina un pezzo alla volta). Ogni PG ha il suo colore pieno, ogni tipo di nemico un colore tratteggiato con il nero; si cambiano con il clic destro → «Colore del bordo…».
 7. **Nebbia.** «Strumenti» → «Nebbia»: la mappa parte coperta; con «Rivela» e il rettangolo scopri la zona iniziale. Tu la vedi trasparente, i giocatori nera.
 8. **Posizione iniziale.** Quando la scena è pronta, «Strumenti» → «Salva posizione iniziale»: token, porte, template e nebbia restano registrati. Per rigiocare lo scontro (o dopo un errore) «Ripristina posizione iniziale»: tutto torna com'era, PV e Stati no; Ctrl+Z annulla.
@@ -68,6 +90,22 @@ Si preparano in pochi secondi e durante il gioco non si toccano più.
 - **Scendere:** pannello del veicolo → «A bordo» → gruppo «Scendi» (o clic destro sul veicolo → «Scendi»), il nome, poi clic su un quadretto evidenziato accanto al mezzo.
 - **Sparare da bordo:** gruppo «Linea di tiro» (pannello o clic destro), il nome: la linea parte dal veicolo.
 - Quante Azioni costano salire e scendere lo decide Davide (A.145): per ora contale a voce.
+
+## Token liberi
+
+Sono pedine **fuori dallo scontro**: un carro rovesciato, una statua, un banco del mercato, un PNG che passa, un
+segnaposto per ricordarti qualcosa. Non hanno scheda, non entrano nell'Iniziativa, non consumano movimento e non
+provocano Attacchi di Opportunità.
+
+1. Strumento **Token libero**, poi clic sulla mappa.
+2. Nella finestrella: il **nome** (le sue iniziali finiscono sulla pedina), un **colore** oppure un'**immagine**
+   presa dalla Galleria, e quanti quadretti occupa: **1 × 1**, **2 × 2** o **3 × 3**.
+3. Due caselle: **«Nascosto ai giocatori»** (lo vedi solo tu) e **«Blocca il movimento e dà Copertura»** (da
+   spegnere per una pozza d'acqua, da accendere per una cassa o un muretto).
+
+Poi lo tratti come tutto il resto: con **Seleziona** lo sposti dove vuoi (anche con «Mappa semplice» spenta:
+nessun conteggio, nessun avviso), le frecce **← →** lo girano, Canc lo toglie, Ctrl+Z rimette. Si salva nella
+scena. Sui tablet i giocatori lo vedono ma non lo muovono: muovono solo il proprio personaggio.
 
 ## Token in volo
 
