@@ -103,12 +103,17 @@ export function collegamentoScontro(scontro, chiave, difese = null) {
   const periodici = lista(scontro.periodici).filter((p) => p.bersaglio === id)
     .map((p) => ({ stato: p.stato, valore: p.valore ?? null, formula: p.formula ?? null, fonte: p.fonteNome ?? null, ultimo: p.ultimo ?? p.dal }));
   const effetti = effettiSu(scontro, id);
-  // ritocchi del 07/10: dei nemici anche lato, PV, Difese e AR, per il bersaglio di «Attacca!» dalla scheda
+  // 12/10 (punto 2): dal tablet lo scontro arriva filtrato (server.mjs → scontroPerGiocatori, `filtrato: true`): dei
+  // nemici c'è solo il nome, come sulla mappa. Sul PC del master, come dai ritocchi del 07/10, anche lato, PV, Difese
+  // e AR, per il bersaglio di «Attacca!» dalla scheda.
+  const filtrato = !!scontro.filtrato;
   const partecipanti = lista(scontro.partecipanti).filter((p) => p.id !== id).map((p) => ({ id: p.id, nome: p.nome, tipo: p.tipo,
     // Difese del nemico con i suoi Stati (sintesi del 05/10/2026, A.119): quelle che il PG deve superare
-    ...(p.tipo === 'nemico' ? { lato: p.lato, pv: { attuali: p.pv?.attuali, massimo: p.pv?.massimo }, difese: difese ? difese(p) : p.scheda?.difese ?? null, ar: p.scheda?.ar?.totale ?? null } : {}) }));
-  const t = chiDiTurno(scontro);
-  return { id: scontro.id, nome: scontro.nome, round: scontro.round, durate, periodici, effetti, partecipanti, diTurno: t?.id === id, turnoDi: t?.nome ?? null };
+    ...(p.tipo === 'nemico' && !filtrato ? { lato: p.lato, pv: { attuali: p.pv?.attuali, massimo: p.pv?.massimo }, difese: difese ? difese(p) : p.scheda?.difese ?? null, ar: p.scheda?.ar?.totale ?? null } : {}),
+    ...(p.tipo === 'nemico' && filtrato ? { lato: p.lato ?? null } : {}) }));
+  // con lo scontro filtrato il turno lo calcola il server (i valori d'Iniziativa dei nemici non escono dal suo PC)
+  const t = filtrato ? scontro.turnoDi ?? null : chiDiTurno(scontro);
+  return { id: scontro.id, nome: scontro.nome, round: scontro.round, durate, periodici, effetti, partecipanti, filtrato, diTurno: t?.id === id, turnoDi: t?.nome ?? null };
 }
 
 /** Incantesimi lanciati nello scontro (dai nemici) che hanno per bersaglio il partecipante `id`, ancora in corso. */

@@ -22,8 +22,7 @@ import { descriviVoce } from '../avanzamento.js';
 import { segnaModalitaMaster, modalitaMasterDi, esciModalitaMaster } from './ritorno.js';
 import { statoSalvataggioMaster, controllaRemoto, revisioneDaScrivere, differenzeSessione, testoScelta, indicatoreCollegamento, impronta } from '../collegamento.js';
 import { difeseNemico } from '../nemico-attacco.js';
-import { leggiScontroAperto, leggiScontro, salvaScontro, leggiMovimentoRound } from './scontro.js';
-import { registraRiga } from '../scontro.js';
+import { leggiScontroAperto, leggiScontro, rigaScontro, leggiMovimentoRound } from './scontro.js';
 import { elencoUnito, confronta, chiaveDaFile, chiavePersonaggio, messaggioSalvataggio, attesaRitentativo, nomeFileLibero, haNome, fileProvvisorio } from '../cartella.js';
 import { renderTavolo } from './tavolo.js';
 // Galleria (N1, 13/10/2026): l'immagine che il master mostra, sopra la scheda, con la ✕ per chiuderla da soli
@@ -722,17 +721,16 @@ async function apriConflitto() {
   if (inScheda()) renderScheda({ mantieniScorrimento: true });
 }
 
-/** Riga nel registro dello scontro aperto (se c'è), con un nuovo tentativo se un'altra finestra l'ha cambiato. */
+/**
+ * Riga nel registro dello scontro aperto (se c'è). 12/10 (punto 2): la aggiunge il server
+ * (POST /api/scontri/<id>/riga), senza riscrivere il file: così funziona anche dal tablet, a cui lo scontro arriva
+ * senza i dati dei nemici, e non si può perdere nulla di quello che il master ha scritto nel frattempo.
+ */
 async function rigaRegistro(testo) {
   try {
     const aperto = await leggiScontroAperto();
     if (!aperto) return;
-    let s = await leggiScontro(aperto.id);
-    for (let i = 0; i < 3; i++) {
-      const r = await salvaScontro(registraRiga(s, testo));
-      if (r.conflitto === undefined || !r.conflitto || r.conflitto.stato !== 'aperto') return;
-      s = r.conflitto;
-    }
+    await rigaScontro(aperto.id, testo);
   } catch {
     // il registro è un promemoria: senza scontro leggibile la scelta vale comunque
   }

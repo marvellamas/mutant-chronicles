@@ -603,6 +603,40 @@ export function chiudi(s, adesso) {
   return conRiga({ ...s, stato: 'chiuso', chiuso: ora(adesso) }, `Scontro chiuso al Round ${s.round}.`, adesso);
 }
 
+/**
+ * Lo scontro come lo può leggere un dispositivo che non è il PC del master (12/10/2026, sessione di gioco di Marcello
+ * e Davide, punto 2): dal tablet, scegliendo un nemico come bersaglio in «Attacca!», il giocatore vedeva la scheda del
+ * nemico (PV, Difese, AR, Stati), perché il server mandava lo scontro intero. Dei nemici restano soltanto id, nome,
+ * tipo e lato — il nome è quello che si vede già sulla mappa (src/mappa/vista.js) — e niente altro: nessuna scheda,
+ * PV, Ferite, Menomazioni, PM, Stati, attacchi, valori d'Iniziativa, registro, colpi o storico di «Indietro».
+ *
+ * È un elenco di campi ammessi, non di campi da togliere: un campo nuovo dello scontro non finisce ai tablet per
+ * sbaglio. Il turno arriva già calcolato (`turnoDi`: id e nome), così i valori d'Iniziativa non escono dal PC del
+ * master; `filtrato: true` lo dice alla scheda, che non mostra i numeri dei nemici e non riscrive lo scontro.
+ */
+export function scontroPerGiocatori(s) {
+  if (!s || typeof s !== 'object' || s.formato !== FORMATO_SCONTRO) return s;
+  const t = diTurno(s);
+  const suoi = (id) => typeof id === 'string' && id.startsWith('pg:');
+  const partecipante = (p) => (p?.tipo === 'pg' ? p : { id: p?.id ?? null, tipo: p?.tipo ?? null, nome: p?.nome ?? null, lato: p?.lato ?? null });
+  return {
+    formato: s.formato, versione: s.versione, id: s.id, nome: s.nome, creato: s.creato ?? null,
+    revisione: s.revisione, stato: s.stato, round: s.round, turno: s.turno,
+    partecipanti: (s.partecipanti ?? []).map(partecipante),
+    ordineAlleati: [...(s.ordineAlleati ?? [])],
+    // durate, perdite periodiche ed effetti: solo quelli che riguardano un PG (gli Stati dei nemici sono roba del master)
+    durate: (s.durate ?? []).filter((d) => suoi(d?.partecipante)),
+    periodici: (s.periodici ?? []).filter((x) => suoi(x?.bersaglio)),
+    effetti: (s.effetti ?? []).filter((e) => (e?.bersagli ?? []).some((b) => suoi(b?.id)))
+      .map((e) => ({ uid: e.uid, nome: e.nome, livello: e.livello ?? null, daNome: e.daNome ?? null, dal: e.dal ?? null, al: e.al ?? null,
+        testo: e.testo ?? null, concentrazione: !!e.concentrazione, bersagli: (e.bersagli ?? []).filter((b) => suoi(b?.id)) })),
+    // il registro racconta i colpi e i PM dei nemici: non esce dal PC del master (le righe si scrivono, non si leggono)
+    registro: [],
+    turnoDi: t ? { id: t.id, nome: t.nome } : null,
+    filtrato: true,
+  };
+}
+
 /** Controllo minimo di un file di scontro (server e plancia). */
 export function validaScontro(s) {
   if (s?.formato !== FORMATO_SCONTRO) return 'non è uno scontro di Mutant';

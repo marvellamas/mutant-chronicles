@@ -673,3 +673,39 @@ Richiesta di Davide e Marcello: il DdG deve poter cambiare qualsiasi valore di u
 **Tablet aperti.** La scheda del giocatore controlla il suo file ogni 3 secondi: se è cambiato e lei non ha modifiche da scrivere, si ricarica da sola. Se ne ha, prima c'era la scelta «Aggiorna» / «Tieni la mia», e «Tieni la mia» riscriveva tutto il file. Ora, quando nel file ci sono modifiche del master che la scheda non ha, la scheda prende la versione del master senza chiedere; e il server, comunque, non lascia cambiare né cancellare i blocchi del master a una richiesta che non arriva dal suo PC (risponde `masterRipristinato` e la scheda si rilegge).
 
 **Fuori da questo lavoro.** Le copie di `backup-master/` non entrano negli zip di «Salva sessione». I cambi di stato degli oggetti (impugnato, nello zaino) non vanno nel registro: solo quantità, oggetti aggiunti e tolti.
+
+## Niente dati dei nemici ai tablet (12/10/2026, punto 2 della sessione di gioco)
+
+Al tavolo, un giocatore che dal tablet sceglieva un nemico come bersaglio in «Attacca!» (o lo prendeva con la linea
+di tiro) vedeva la sua scheda: PV, Difese, AR, Stati. Non era un difetto dell'interfaccia: il server mandava lo
+**scontro intero** a chiunque lo chiedesse (`GET /api/scontri/<id>`), e la scheda ne mostrava una parte.
+
+Regola, da qui in avanti: **i dati dei nemici non escono dal PC del master.** Non basta nasconderli
+nell'interfaccia — il filtro sta nel server, dove c'è già il contesto master (`req.mutantMaster`, lo stesso
+controllo di «Spegni Mutant» e della «Modifica master»).
+
+Che cosa arriva oggi a un dispositivo che non è il PC del master:
+
+| Richiesta | Al master | A un tablet |
+|---|---|---|
+| `GET /api/scontri/<id>` | lo scontro intero | filtrato (`scontroPerGiocatori`): dei nemici solo id, nome, tipo e lato; niente registro, colpi, durate o effetti che non riguardino un PG; il turno già calcolato (`turnoDi`) |
+| `GET /api/scontri` | con il conteggio dei nemici delle bozze | senza |
+| `PUT /api/scontri/<id>` | salva | 403 |
+| `POST /api/scontri/<id>/riga` | aggiunge una riga | aggiunge una riga (è così che la scheda registra tiri di dado e attacchi) |
+| `GET`/`PUT` `/api/nemici*` | il bestiario | 403 |
+| `GET /api/scene/<id>` | la scena completa | 403 (resta `?vista=giocatori`, già filtrata) |
+| `GET /api/movimento-round` | chiunque | solo un `pg:` |
+| `GET /api/vista-giocatori*` | — | come prima: nome e iniziali dei token visibili, barretta dei PV dei nemici solo se il master l'ha accesa |
+
+`scontroPerGiocatori` (`src/scontro.js`) è un **elenco di campi ammessi**, non di campi da togliere: un campo nuovo
+dello scontro non finisce ai tablet per sbaglio.
+
+Nella scheda, con lo scontro filtrato (`filtrato: true`), il riquadro «Contro un nemico dello scontro» mostra il
+bersaglio **solo per nome**: niente PV, Difese o AR, nessun «Applica il danno». Il giocatore tira per colpire, vede il
+suo VA e l'esito del tiro (che dipende dal suo VA, non dalle Difese del nemico) e preme «Registra l'attacco per il
+master»: la riga compare nel registro della plancia e il danno lo applica lui. Sul PC del master tutto resta com'era.
+
+Conseguenza voluta: la plancia, l'editor della mappa e «Crea nemico» funzionano **solo dal PC dove gira il server**
+(come «Spegni Mutant» e la «Modifica master»). Da un altro computer in rete si aprono le schede e la vista giocatori.
+
+Prove: `tests/nemici-ai-tablet.test.js` (due server sulle stesse cartelle, uno master e uno no).

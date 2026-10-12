@@ -9,7 +9,7 @@
 import { h } from './dom.js';
 import { righeTiri, tiriPerRegistro } from './attacco-nemico.js';
 import { apriColpo } from './colpo.js';
-import { leggiScontro, salvaScontro } from './scontro.js';
+import { leggiScontro, salvaScontro, rigaScontro } from './scontro.js';
 import { propostaColpo } from '../nemico-attacco.js';
 import { registraAttacco, testoAttacco, annullaUltimoColpo } from '../scontro.js';
 import { colpoSuNemico } from '../colpo-nemico.js';
@@ -65,7 +65,10 @@ export function bloccoControNemico(ctx, a, r, info) {
   if (info.bersaglio && info.bersaglio !== st.proposto && nemici.some((n) => n.id === info.bersaglio)) { st.proposto = info.bersaglio; st.bersaglio = info.bersaglio; }
   if (!nemici.some((n) => n.id === st.bersaglio)) st.bersaglio = nemici[0]?.id ?? null;
   const b = nemici.find((n) => n.id === st.bersaglio) ?? null;
-  const descrizione = (n) => `${n.lato ?? 'avversario'} · PV ${n.pv?.attuali ?? '?'}/${n.pv?.massimo ?? '?'}${n.difese !== null && n.difese !== undefined ? ` · Difese ${numero(n.difese)}` : ''}${n.ar !== null && n.ar !== undefined ? ` · AR ${n.ar}` : ''}`;
+  // 12/10 (punto 2): dal tablet lo scontro arriva senza i dati dei nemici (server.mjs → scontroPerGiocatori): del
+  // bersaglio resta il nome, come sulla mappa. Il tiro e il VA li vede il giocatore, il danno lo applica il master.
+  const filtrato = !!info.scontro.filtrato;
+  const descrizione = (n) => (filtrato ? null : `${n.lato ?? 'avversario'} · PV ${n.pv?.attuali ?? '?'}/${n.pv?.massimo ?? '?'}${n.difese !== null && n.difese !== undefined ? ` · Difese ${numero(n.difese)}` : ''}${n.ar !== null && n.ar !== undefined ? ` · AR ${n.ar}` : ''}`);
   const titolo = h('h3', { class: 'contro-nemico-titolo' }, `Contro un nemico dello scontro «${info.scontro.nome}»`);
   if (!nemici.length) return h('section', { class: 'riquadro contro-nemico' }, titolo, h('p', { class: 'nota' }, 'Nessun nemico nello scontro.'));
 
@@ -78,7 +81,8 @@ export function bloccoControNemico(ctx, a, r, info) {
   const registra = async () => {
     st.inCorso = true; st.errore = null; disegna();
     try {
-      await scriviScontro(info.scontro.id, (s) => registraAttacco(s, datiAttacco(b.nome)));
+      if (filtrato) await rigaScontro(info.scontro.id, testoAttacco(datiAttacco(b.nome)));
+      else await scriviScontro(info.scontro.id, (s) => registraAttacco(s, datiAttacco(b.nome)));
       st.inCorso = false; st.tiri = []; st.ultimo = { testo: `Attacco registrato contro ${b.nome}.` };
       await info.aggiorna?.();
       disegna();
@@ -126,16 +130,19 @@ export function bloccoControNemico(ctx, a, r, info) {
     titolo,
     h('div', { class: 'scelta-attacco' }, h('p', { class: 'scelta-titolo' }, 'Bersaglio'),
       h('div', { class: 'scelta-pulsanti scelta-colonna' }, nemici.map((n) => h('button', {
-        type: 'button', class: `btn scelta-btn${n.id === st.bersaglio ? ' scelta' : ''}${n.pv?.attuali > 0 ? '' : ' a-zero'}`, 'aria-pressed': String(n.id === st.bersaglio),
+        type: 'button', class: `btn scelta-btn${n.id === st.bersaglio ? ' scelta' : ''}${filtrato || n.pv?.attuali > 0 ? '' : ' a-zero'}`, 'aria-pressed': String(n.id === st.bersaglio),
         onclick: () => { st.bersaglio = n.id; st.tiri = []; st.ultimo = null; disegna(); },
-      }, n.nome, h('small', { class: 'nota' }, ` · ${descrizione(n)}`))))),
-    b ? h('p', { class: 'nota' }, `Difese di ${b.nome}: ${b.difese ?? '—'} (la Difesa si sceglie in «Colpito»: Parata o Schivata); AR ${b.ar ?? '—'}, applicata con la natura del danno e le proprietà dell’arma.`) : null,
+      }, n.nome, descrizione(n) ? h('small', { class: 'nota' }, ` · ${descrizione(n)}`) : null)))),
+    b && !filtrato ? h('p', { class: 'nota' }, `Difese di ${b.nome}: ${b.difese ?? '—'} (la Difesa si sceglie in «Colpito»: Parata o Schivata); AR ${b.ar ?? '—'}, applicata con la natura del danno e le proprietà dell’arma.`) : null,
+    b && filtrato ? h('p', { class: 'nota' }, `Di ${b.nome} sai il nome e quello che vedi sulla mappa: Difese, AR e PV li ha il master. Tira per colpire, registra l’attacco e il danno lo applica lui.`) : null,
     nodi,
     st.errore ? h('p', { class: 'motivo', role: 'alert' }, st.errore) : null,
     st.ultimo ? h('p', { class: 'esito-attacco', role: 'status' }, st.ultimo.testo,
       st.ultimo.colpo ? [' ', h('button', { type: 'button', class: 'btn btn-piccolo', disabled: st.inCorso, onclick: annulla }, 'Annulla questo colpo')] : null) : null,
     h('div', { class: 'riga-azioni' },
-      e.colpisce && conDanno ? h('button', { type: 'button', class: 'btn primario btn-grande', disabled: st.inCorso || !b, onclick: applica }, 'Applica il danno') : null,
-      e.completo ? h('button', { type: 'button', class: `btn${e.colpisce && conDanno ? '' : ' primario'}`, disabled: st.inCorso || !b, onclick: registra }, e.colpisce ? 'Registra senza danno' : 'Registra l’attacco') : null),
-    h('small', { class: 'nota' }, 'Va nel registro dello scontro con una riga; «Applica il danno» apre «Colpito» sul nemico. Si corregge con «Annulla questo colpo» o, nella plancia, «Annulla ultimo colpo».'));
+      e.colpisce && conDanno && !filtrato ? h('button', { type: 'button', class: 'btn primario btn-grande', disabled: st.inCorso || !b, onclick: applica }, 'Applica il danno') : null,
+      e.completo ? h('button', { type: 'button', class: `btn${e.colpisce && conDanno && !filtrato ? '' : ' primario'}`, disabled: st.inCorso || !b, onclick: registra }, filtrato ? 'Registra l’attacco per il master' : e.colpisce ? 'Registra senza danno' : 'Registra l’attacco') : null),
+    h('small', { class: 'nota' }, filtrato
+      ? 'Va nel registro dello scontro con una riga: il master la vede nella plancia e applica lui il danno.'
+      : 'Va nel registro dello scontro con una riga; «Applica il danno» apre «Colpito» sul nemico. Si corregge con «Annulla questo colpo» o, nella plancia, «Annulla ultimo colpo».'));
 }

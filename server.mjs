@@ -28,21 +28,27 @@
 //   GET /api/tavolo                    selezione del Tavolo del Master: { versione, personaggi: [nomi] }
 //   PUT /api/tavolo                    la salva in tavolo/sessione.json (fuori da git come personaggi/)
 //   GET /api/scontri                   scontri e bozze in scontri/: [{ id, nome, stato, round, revisione, mtime, nemici? }]
-//   GET /api/scontri/<id>              lo scontro (src/scontro.js) o la bozza (src/preparazione.js, stato «bozza»)
-//   PUT /api/scontri/<id>              lo salva se `revisione` è quella del file (altrimenti 409 con lo
+//   GET /api/scontri/<id>              lo scontro (src/scontro.js) o la bozza (src/preparazione.js, stato «bozza»);
+//                                      a un dispositivo che non è il PC del master arriva filtrato (12/10, punto 2:
+//                                      src/scontro.js → scontroPerGiocatori): dei nemici solo id, nome, tipo e lato
+//   POST /api/scontri/<id>/riga        { testo }: una riga nel registro dello scontro aperto (i tiri di dado e gli
+//                                      attacchi della scheda, anche dal tablet); la scrive il server, revisione +1
+//   PUT /api/scontri/<id>              solo dal PC del master (12/10): lo salva se `revisione` è quella del file (altrimenti 409 con lo
 //                                      scontro attuale) e porta la revisione a +1; uno scontro «chiuso» o
 //                                      una bozza eliminata passa in scontri/archivio/ (non si cancella)
 //   GET /api/veicoli                   registro dei veicoli in veicoli/ (A.91): i record completi, con mtime
 //   GET /api/veicoli/<id>              un record (src/veicoli-registro.js)
 //   PUT /api/veicoli/<id>              lo salva se `revisione` è quella del file (altrimenti 409 con il record attuale)
-//   GET /api/nemici                    bestiario in nemici/: [{ file, mtime, nemico } | { file, mtime, errore }]
+//   GET /api/nemici                    bestiario in nemici/: [{ file, mtime, nemico } | { file, mtime, errore }];
+//                                      /api/nemici* risponde 403 a chi non è il PC del master (12/10, punto 2)
 //   POST /api/esempi                   copia esempi/ (PG) in personaggi/ ed esempi/nemici/ in nemici/, solo i
 //                                      file che lì non ci sono: { copiati: [...], saltati: [...] }
 //   PUT /api/nemici/<id>               salva nemici/<id>.json se è valido (data/formato_nemici.json,
 //                                      src/validate.js → validaNemico); altrimenti 400 con gli errori
 //   Mappa di battaglia (lotto 1 di docs/battlemap/piano.md; limiti in data/mappa.json):
 //   GET /api/scene                     scene in scene/: [{ id, nome, revisione, mappa, colonne, righe, token, collegamento, mtime }]
-//   GET /api/scene/<id>                la scena completa (src/mappa/scena.js), per il master
+//   GET /api/scene/<id>                la scena completa (src/mappa/scena.js), solo dal PC del master (12/10, punto 2:
+//                                      ha i token nascosti e i muri sotto la nebbia); agli altri 403
 //   GET /api/scene/<id>?vista=giocatori  la scena filtrata (src/mappa/vista.js): niente token o template nascosti,
 //                                      niente token, muri e terreno sotto la nebbia, solo la copia ridotta
 //   PUT /api/scene/<id>                la salva se è valida e se `revisione` è quella del file (altrimenti 409 con
@@ -109,7 +115,7 @@ import { avvisa, registraErrore } from './tools/avvisi.mjs';
 import { creaGestore, leggiConfig } from './tools/salva-sessione.mjs';
 import { avvisoCartellaVuota, postiSalvataggi, rigaSalvataggio } from './tools/ripristina.mjs';
 import { bordoToken } from './src/mappa/colori.js';
-import { validaScontro, rigaOpportunita, rigaAiutoMaster, diTurno } from './src/scontro.js';
+import { validaScontro, rigaOpportunita, rigaAiutoMaster, diTurno, registraRiga, scontroPerGiocatori } from './src/scontro.js';
 import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
 import { NOME_FILE, fileProvvisorio, ultimiPerPersonaggio, chiaveDaFile, chiavePersonaggio } from './src/cartella.js';
 import { validaRecord, ID_VEICOLO, migraVeicoli, eRiferimento, stessaChiave } from './src/veicoli-registro.js';
@@ -337,8 +343,15 @@ export async function scriviAtomico(dove, contenuto) {
 }
 const scriviJson = (dove, v) => scriviAtomico(dove, `${JSON.stringify(v, null, 2)}\n`);
 
-/** Scontri (pezzo 2): un file per scontro, revisione per non sovrascrivere le modifiche di un'altra finestra. */
+/**
+ * Scontri (pezzo 2): un file per scontro, revisione per non sovrascrivere le modifiche di un'altra finestra.
+ * 12/10: i dati dei nemici non escono dal PC del master (punto 2 della sessione di gioco). A un dispositivo che non è
+ * il master (un tablet, lo schermo dei giocatori) lo scontro arriva filtrato (src/scontro.js → scontroPerGiocatori) e
+ * la scrittura dell'intero file è rifiutata: dal tablet si aggiunge soltanto una riga al registro
+ * (POST /api/scontri/<id>/riga), che è come la scheda registra i tiri di dado e gli attacchi.
+ */
 async function apiScontri(req, res, percorso, scontri, dopoScrittura = null) {
+  const master = !!req.mutantMaster;
   if (percorso === '/api/scontri' && req.method === 'GET') {
     await mkdir(scontri, { recursive: true });
     const nomi = (await readdir(scontri)).filter((f) => f.endsWith('.json') && ID_SCONTRO.test(f.slice(0, -5)));
@@ -346,19 +359,44 @@ async function apiScontri(req, res, percorso, scontri, dopoScrittura = null) {
     for (const f of nomi) {
       try {
         const s = await leggiJson(join(scontri, f));
-        lista.push({ id: s.id, nome: s.nome, stato: s.stato, round: s.round, revisione: s.revisione, mtime: (await stat(join(scontri, f))).mtimeMs, ...(Array.isArray(s.nemici) ? { nemici: s.nemici.reduce((n, v) => n + (v?.quanti ?? 0), 0) } : {}) });
+        // quanti nemici ci sono in una bozza lo sa solo il master
+        lista.push({ id: s.id, nome: s.nome, stato: s.stato, round: s.round, revisione: s.revisione, mtime: (await stat(join(scontri, f))).mtimeMs, ...(master && Array.isArray(s.nemici) ? { nemici: s.nemici.reduce((n, v) => n + (v?.quanti ?? 0), 0) } : {}) });
       } catch { /* file rovinato: non si elenca */ }
     }
     return json(res, 200, lista.sort((a, b) => b.mtime - a.mtime));
+  }
+  // una riga nel registro (i tiri di dado e gli attacchi della scheda, anche dal tablet): l'unica scrittura non del master
+  const r = /^\/api\/scontri\/([^/]+)\/riga$/.exec(percorso);
+  if (r) {
+    if (!ID_SCONTRO.test(r[1])) return json(res, 400, { errore: 'id di scontro non valido' });
+    if (req.method !== 'POST') return json(res, 405, { errore: 'metodo non ammesso' });
+    let d;
+    try { d = JSON.parse((await leggiCorpo(req, 8 * 1024)).toString('utf8')); } catch (e) { return json(res, 400, { errore: `contenuto non valido: ${e.message}` }); }
+    const testo = String(d?.testo ?? '').trim();
+    if (!testo || testo.length > 500) return json(res, 400, { errore: 'testo: da 1 a 500 caratteri' });
+    const file = join(scontri, `${r[1]}.json`);
+    return inCoda(file, async () => {
+      let s;
+      try { s = await leggiJson(file); } catch { return json(res, 404, { errore: 'scontro non trovato' }); }
+      if (s.stato !== 'aperto') return json(res, 409, { errore: 'lo scontro non è aperto' });
+      const nuovo = { ...registraRiga(s, testo), revisione: s.revisione + 1 };
+      await scriviJson(file, nuovo);
+      return json(res, 200, { ok: true, revisione: nuovo.revisione, round: nuovo.round });
+    });
   }
   const m = /^\/api\/scontri\/([^/]+)$/.exec(percorso);
   if (!m || !ID_SCONTRO.test(m[1])) return json(res, 400, { errore: 'id di scontro non valido' });
   const id = m[1];
   const dove = join(scontri, `${id}.json`);
   if (req.method === 'GET') {
-    try { return json(res, 200, await leggiJson(dove)); } catch { return json(res, 404, { errore: 'scontro non trovato' }); }
+    try {
+      const s = await leggiJson(dove);
+      return json(res, 200, master ? s : scontroPerGiocatori(s));
+    } catch { return json(res, 404, { errore: 'scontro non trovato' }); }
   }
   if (req.method !== 'PUT') return json(res, 405, { errore: 'metodo non ammesso' });
+  // lo scontro lo cambia solo il PC del master: da un tablet arriverebbe senza i dati dei nemici e li cancellerebbe
+  if (!master) return json(res, 403, { errore: 'Lo scontro lo cambia solo il PC del master: dal tablet si può aggiungere una riga al registro.' });
   let s;
   try { s = JSON.parse((await leggiCorpo(req)).toString('utf8')); } catch (e) { return json(res, 400, { errore: `contenuto non valido: ${e.message}` }); }
   // «Prepara scontro»: le bozze stanno accanto agli scontri, con stato «bozza» (src/preparazione.js)
@@ -500,6 +538,8 @@ function datiDelServer(radice) {
 
 /** Bestiario (pezzo 3): un file per tipo di nemico, nemici/<id>.json. */
 async function apiNemici(req, res, percorso, nemici, radice) {
+  // 12/10 (punto 2): il bestiario è roba del master. A un tablet non arriva nemmeno l'elenco dei tipi
+  if (!req.mutantMaster) return json(res, 403, { errore: 'I nemici li vede solo il PC del master.' });
   if (percorso === '/api/nemici' && req.method === 'GET') {
     await mkdir(nemici, { recursive: true });
     const nomi = (await readdir(nemici)).filter((f) => f.endsWith('.json'));
@@ -537,6 +577,8 @@ async function apiMovimentoRound(req, res, scene, scontri) {
   const idScontro = p.get('scontro') ?? '';
   const partecipante = p.get('partecipante') ?? '';
   if (!ID_SCONTRO.test(idScontro) || !partecipante) return json(res, 400, { errore: 'servono scontro e partecipante' });
+  // 12/10 (punto 2): da un tablet si chiede solo il movimento di un PG; quanto ha corso un nemico non lo dice
+  if (!req.mutantMaster && !partecipante.startsWith('pg:')) return json(res, 403, { errore: 'Il movimento dei nemici lo vede solo il PC del master.' });
   let scontro;
   try { scontro = await leggiJson(join(scontri, `${idScontro}.json`)); } catch { return json(res, 404, { errore: 'scontro non trovato' }); }
   let nomi = [];
@@ -580,6 +622,9 @@ async function apiScene(req, res, percorso, scene, mappe, radice, cartelle) {
     const vista = parametri.get('vista');
     if (vista === 'giocatori') return json(res, 200, vistaGiocatori(s, await contestoScena(s, cartelle)));
     if (vista !== null) return json(res, 400, { errore: 'vista: solo «giocatori»' });
+    // 12/10 (punto 2): la scena intera (token nascosti, nemici sotto la nebbia, note del Direttore) la legge solo il
+    // PC del master; agli altri resta ?vista=giocatori, già filtrata (src/mappa/vista.js)
+    if (!req.mutantMaster) return json(res, 403, { errore: 'La scena completa la legge solo il PC del master: per gli altri c’è ?vista=giocatori.' });
     // avviso a Marcello (tools/avvisi.mjs): «Mappa aperta», al massimo una volta al giorno; solo dal server avviato
     cartelle.avvisi?.('mappa');
     return json(res, 200, s);

@@ -62,6 +62,18 @@ export async function salvaScontro(s) {
   return { scontro: j };
 }
 
+/**
+ * Una riga nel registro dello scontro (12/10, punto 2: server.mjs → POST /api/scontri/<id>/riga). La aggiunge il
+ * server, senza riscrivere il file: così la scheda registra i tiri di dado e gli attacchi anche da un tablet, a cui
+ * lo scontro arriva senza i dati dei nemici. { ok, revisione, round } oppure errore.
+ */
+export async function rigaScontro(id, testo) {
+  const r = await fetch(`api/scontri/${encodeURIComponent(id)}/riga`, { method: 'POST', body: JSON.stringify({ testo }), headers: { 'Content-Type': 'application/json' } });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.errore ?? `errore ${r.status}`);
+  return j;
+}
+
 export const idNuovo = (d = new Date()) => {
   const p = (n) => String(n).padStart(2, '0');
   return `scontro-${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`;
