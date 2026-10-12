@@ -39,7 +39,7 @@ export function barraIniziativaEl(barra, o = {}) {
     h('div', { class: 'iniziativa-scala' }, interna),
     comandi ? h('span', { class: 'iniziativa-comandi' },
       // «Indietro» (07/10): annulla l'ultimo «Avanti» (anche Maiusc+clic su «Avanti»); solo master
-      o.indietro ? h('button', { type: 'button', class: 'btn', disabled: !o.puoIndietro, title: o.puoIndietro ? `Annulla l’ultimo ${o.puoIndietro.iniziativa ? '«Reimposta Iniziativa»' : '«Avanti»'}: torna il turno di ${o.puoIndietro.diTurno?.nome ?? '—'}${o.puoIndietro.cambiaRound ? `, Round ${o.puoIndietro.round}` : ''} (Maiusc+clic su «Avanti»)` : 'Nessun «Avanti» da annullare' , onclick: () => o.indietro() }, '◀ Indietro') : null,
+      o.indietro ? h('button', { type: 'button', class: 'btn', disabled: !o.puoIndietro, title: o.puoIndietro ? `Annulla l’ultimo ${o.puoIndietro.iniziativa ? '«Reimposta Iniziativa»' : '«Avanti»'}: torna il turno di ${o.puoIndietro.diTurno?.nome ?? '—'}${o.puoIndietro.cambiaRound ? `, Round ${o.puoIndietro.round}` : ''}${o.puoIndietro.mancante ? ` (${o.puoIndietro.mancante} non è più nello scontro)` : ''} (Maiusc+clic su «Avanti»)` : 'Nessun «Avanti» da annullare' , onclick: () => o.indietro() }, '◀ Indietro') : null,
       // difetto del test del 07/10: chi è ancora senza Iniziativa resta fuori dalla linea; il pulsante apre la finestra
       o.daTirare?.nomi.length ? h('button', { type: 'button', class: 'btn primario', title: `Senza Iniziativa, fuori dall’ordine: ${o.daTirare.nomi.join(', ')}`, onclick: () => o.daTirare.chiedi() }, `Iniziativa… (${o.daTirare.nomi.length} senza)`) : null,
       // «Reimposta Iniziativa» (07/10): per tutti o per uno solo, la stessa della plancia

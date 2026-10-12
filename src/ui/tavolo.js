@@ -677,6 +677,9 @@ export function renderTavolo(radice, ctx) {
       if (cambiato) nonRimessi.push(pe.nome);
     }
     const testi = [];
+    // 12/10 (punto 3): chi era di turno è stato tolto dallo scontro (un nemico eliminato): il suo turno non torna,
+    // e «Indietro» scende al turno vero più vicino. Senza questo sembrava che il pulsante non facesse niente.
+    if (a.mancante) testi.push(`Il turno di prima era di ${a.mancante}, che non è più nello scontro: torna il turno di ${a.diTurno?.nome ?? '—'}.`);
     if (a.cambiaRound) testi.push(`Torno al Round ${a.round}: le durate scalate tornano come prima.`);
     if (a.altre) testi.push(`Le modifiche fatte dopo l’«Avanti» (${a.altre === 1 ? '1 riga' : `${a.altre} righe`} del registro: PV, colpi, Stati…) restano: torna solo il turno.`);
     if (nonRimessi.length) testi.push(`PV della perdita periodica non rimessi (cambiati dopo): ${nonRimessi.join(', ')}. Correggili dalla scheda.`);

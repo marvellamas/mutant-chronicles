@@ -333,7 +333,7 @@ function conSpareggi(s, tiraSpareggio, solo = null) {
 function voceIniziativa(s, t, adesso) {
   const d = diTurno(s);
   return {
-    tipo: 'iniziativa', quando: ora(adesso), prima: { round: s.round, turno: s.turno, diTurno: d?.id ?? null }, dopo: { round: t.round, turno: t.turno },
+    tipo: 'iniziativa', quando: ora(adesso), prima: { round: s.round, turno: s.turno, diTurno: d?.id ?? null, nome: d?.nome ?? null }, dopo: { round: t.round, turno: t.turno },
     tiri: s.partecipanti.map((p) => ({ id: p.id, d10: p.d10 ?? null, spareggio: p.spareggio ?? null })), ordineAlleati: s.ordineAlleati,
     righeInizio: s.registro.length, righe: t.registro.length, durateFinite: [], effettiFiniti: [], statiTolti: [], perdite: [],
   };
@@ -482,7 +482,9 @@ export function avanti(s, adesso, { indietroMax = 0 } = {}) {
   if (s.stato !== 'aperto') return s;
   const { ordinati } = ordineIniziativa(s);
   if (!ordinati.length) return s;
-  const prima = { round: s.round, turno: s.turno, diTurno: ordinati[Math.min(s.turno, ordinati.length - 1)]?.id ?? null };
+  const diT = ordinati[Math.min(s.turno, ordinati.length - 1)] ?? null;
+  // 12/10 (punto 3): anche il nome, per dire che cos'è successo quando quel partecipante non c'è più (tolto dallo scontro)
+  const prima = { round: s.round, turno: s.turno, diTurno: diT?.id ?? null, nome: diT?.nome ?? null };
   const conVoce = (t, extra = {}) => (indietroMax > 0
     ? { ...t, indietro: [...(s.indietro ?? []), { quando: ora(adesso), prima, dopo: { round: t.round, turno: t.turno }, righeInizio: s.registro.length, righe: t.registro.length, durateFinite: [], effettiFiniti: [], statiTolti: [], perdite: [], ...extra }].slice(-indietroMax) }
     : t);
@@ -524,9 +526,12 @@ export function anteprimaIndietro(s) {
   if (!v || s.stato !== 'aperto') return null;
   // una «Reimposta Iniziativa»: chi era di turno, nell'ordine di prima
   const { ordinati } = ordineIniziativa(v.tipo === 'iniziativa' ? conIniziativaDi(s, v) : s);
-  const chi = ordinati.find((p) => p.id === v.prima.diTurno) ?? ordinati[Math.min(v.prima.turno, ordinati.length - 1)] ?? null;
+  const suo = ordinati.find((p) => p.id === v.prima.diTurno) ?? null;
+  const chi = suo ?? ordinati[Math.min(v.prima.turno, ordinati.length - 1)] ?? null;
+  // 12/10 (punto 3): chi era di turno è stato tolto dallo scontro (un nemico eliminato): il suo turno non torna
+  const mancante = v.prima.diTurno && !suo ? v.prima.nome ?? 'quel partecipante' : null;
   return {
-    voce: v, iniziativa: v.tipo === 'iniziativa', round: v.prima.round, cambiaRound: v.prima.round !== s.round, diTurno: chi,
+    voce: v, iniziativa: v.tipo === 'iniziativa', round: v.prima.round, cambiaRound: v.prima.round !== s.round, diTurno: chi, mancante,
     altre: Math.max(0, s.registro.length - v.righe),
     perditePg: v.perdite.filter((x) => x.tipo === 'pg'),
     passi: s.indietro.length,
@@ -544,6 +549,27 @@ const conRigheProprie = (pila, v) => (pila.length && Number.isInteger(v.righeIni
  * applicazione). Le altre modifiche fatte dopo (PV, «Colpito», Stati, movimenti) restano. Una riga nel registro.
  */
 export function indietro(s, adesso) {
+  let t = unPassoIndietro(s, adesso);
+  // 12/10 (punto 3, sessione di gioco): un «Indietro» deve tornare a un turno vero. Se chi era di turno non c'è più
+  // (un nemico eliminato, tolto dallo scontro) il turno non cambierebbe e sembrerebbe che il pulsante non faccia
+  // niente: si continua a scendere nella pila finché il turno (o il Round) cambia davvero, o finché la pila finisce.
+  const prima = istantanea(s);
+  for (let i = 0; i < 50 && t !== s && istantanea(t) === prima && (t.indietro ?? []).length; i++) {
+    const dopo = unPassoIndietro(t, adesso);
+    if (dopo === t) break;
+    t = dopo;
+  }
+  return t;
+}
+
+/** Quello che il master vede dell'Iniziativa: Round, chi è di turno e l'ordine. Due stati uguali qui sono lo stesso turno. */
+function istantanea(s) {
+  const { ordinati } = ordineIniziativa(s);
+  return `${s.round}|${ordinati[Math.min(s.turno, ordinati.length - 1)]?.id ?? ''}|${ordinati.map((p) => p.id).join(',')}`;
+}
+
+/** Un solo passo di «Indietro»: annulla l'ultimo «Avanti» (o «Reimposta Iniziativa») della pila. */
+function unPassoIndietro(s, adesso) {
   const a = anteprimaIndietro(s);
   if (!a) return s;
   const v = a.voce;
@@ -551,7 +577,7 @@ export function indietro(s, adesso) {
     // «Reimposta Iniziativa» annullata: tornano tiri, spareggi e ordine fra alleati di prima; di turno chi lo era
     let t = conIniziativaDi(s, v);
     t = { ...t, turno: turnoDello(t, v.prima.diTurno, v.prima.turno), indietro: conRigheProprie(s.indietro.slice(0, -1), v) };
-    const parti = [`Indietro: torna l’Iniziativa di prima della «Reimposta»; di turno ${a.diTurno?.nome ?? '—'}.`];
+    const parti = [`Indietro: torna l’Iniziativa di prima della «Reimposta»; di turno ${a.diTurno?.nome ?? '—'}.${a.mancante ? ` ${a.mancante} non è più nello scontro.` : ''}`];
     if (a.altre) parti.push(`Restano le modifiche fatte dopo (${a.altre} righe del registro).`);
     return conRiga(t, parti.join(' '), adesso);
   }
@@ -582,7 +608,9 @@ export function indietro(s, adesso) {
     ...(s.effetti ? { effetti } : v.effettiFiniti.length ? { effetti } : {}),
     ...(periodici ? { periodici } : {}),
   };
-  const parti = [`Indietro: torna il turno di ${a.diTurno?.nome ?? '—'}${a.cambiaRound ? `, Round ${round}` : ''}.`];
+  const parti = [a.mancante
+    ? `Indietro: il turno di prima era di ${a.mancante}, che non è più nello scontro${a.cambiaRound ? `, Round ${round}` : ''}; di turno ${a.diTurno?.nome ?? '—'}.`
+    : `Indietro: torna il turno di ${a.diTurno?.nome ?? '—'}${a.cambiaRound ? `, Round ${round}` : ''}.`];
   if (v.durateFinite.length || v.effettiFiniti.length) parti.push(`Tornano in corso: ${[...v.durateFinite.map((d) => d.nome), ...v.effettiFiniti.map((e) => e.nome)].join(', ')}.`);
   if (v.perdite.length) parti.push(`Perdite periodiche annullate: ${v.perdite.map((p) => p.nome).join(', ')}.`);
   if (nonRimessi.length) parti.push(`PV non rimessi: ${nonRimessi.join(', ')}.`);
