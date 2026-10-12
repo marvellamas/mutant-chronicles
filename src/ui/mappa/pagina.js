@@ -50,6 +50,16 @@ import { statoDiretta, visibileAiGiocatori } from '../../mappa/diretta.js';
 import { salvaIniziale, ripristinaIniziale } from '../../mappa/iniziale.js';
 import { muoviToken, usatoNelRound, fasceNelRound, mossoNelRound, annullaUltima, annullaUltimoMovimento, cambiaTokenAnnullabile, cambiaTemplateAnnullabile, cambiaPortaAnnullabile, togliTemplateAnnullabile, scadiTemplateAnnullabile, rimettiScaduti, nuovoTurno, turnoDi } from '../../mappa/annulla.js';
 import { disegnaMuri, disegnaMuriLinee, disegnaArea, disegnaPercorso, disegnaZoc, coloriAree, disegnaTemplate, disegnaPorte, disegnaLineaTiro, disegnaLuci } from './disegno-aree.js';
+// 12/10: modello unico degli oggetti della mappa (docs/battlemap/ricognizione-editor-2026-10-12.md)
+import { disegnaSelezione, manigliaSotto } from './disegno-aree.js';
+import { barraStrumenti, pannelloSelezione } from './strumenti.js';
+import {
+  statoEditor, cambiaStrumento as cambiaStrumentoEditor, esci as esciEditor, oggettiScena, oggettoSotto,
+  oggettiNelRiquadro, conSelezione, ripulisciSelezione, spostaOggetti, eliminaOggetti, spostaVertice,
+  cambiaProprieta, riassuntoSelezione, agganciaSpostamento, agganciaPunto, agganciaPunti, dallaChiave, STRUMENTI,
+  fondiUltimeDue as fondiUltimeDueEditor,
+} from '../../mappa/editor.js';
+import { rifaiUltima } from '../../mappa/annulla.js';
 import { luceQ, luceIngombro, testoLuceBersaglio, categorieLuce, ambienteDi, trattoLuce, rettangoloLuce, conVoceLuce, cambiaAmbiente } from '../../mappa/luce.js';
 import { celleTemplate, tokenDentro as tokenNelTemplate, nuovoTemplate, scaduto, direzioneVerso, ORIENTABILI, templateVisibili, ruota, cambiaMisura, permanente } from '../../mappa/template.js';
 import { livelliDi, livelliDati, conLivello, conTuttiILivelli, nascosti as livelliNascosti, statoEntrambi, conLivelloEntrambi } from '../../mappa/sovrapposizioni.js';
@@ -150,6 +160,9 @@ export function renderMappa(radice, ctx) {
     luci: { strumento: null, modo: 'buio', lato: 3 },
     // M2 (11/10): «spessore» è lo spessore del muro disegnato a mano libera (data/mappa.json -> muri_linee)
     // 12/10: raddrizza (casella), tracciato a mano o punto per punto, vertici in corso, muro selezionato
+    // 12/10: lo stato dell'editor (strumento attivo, selezione, evidenziazione) e l'aggancio alla griglia
+    editor: statoEditor(),
+    aggancia: true,
     muri: { strumento: null, modo: 'muro', lato: 1, spessore: ctx.dati.mappa.muri_linee.predefinito, raddrizza: regoleRaddrizza(ctx.dati).predefinito, tracciato: 'mano', punti: [], cursore: null, ultimoClic: 0, selezionato: null, portaSelezionata: null, porta: { stato: ctx.dati.mappa.porte.stato_predefinito, segreta: false, verso: null } },
     fascia: 1,
     area: undefined,
@@ -304,7 +317,20 @@ export function renderMappa(radice, ctx) {
   el.laterale = h('aside', { class: 'mappa-laterale', 'aria-label': 'Scontro, mini-scheda e strumenti della mappa' }, el.ridotta, el.piena);
   el.bordo = h('div', { class: 'mappa-bordo', role: 'separator', 'aria-orientation': 'vertical', 'aria-label': 'Bordo fra mappa e barra: trascina per allargare, doppio clic per cambiare disposizione', title: 'Trascina per allargare o stringere la barra; doppio clic: prossima disposizione', tabindex: '0' });
   el.corpo = h('div', { class: 'mappa-corpo' }, el.riquadro, el.bordo, el.laterale);
-  el.pagina = h('section', { class: 'mappa-pagina' }, el.barra, el.iniziativa, el.corpo);
+  // 12/10: barra degli strumenti sempre in vista, un solo strumento attivo (D6)
+  el.barraStrumenti = barraStrumenti({
+    attivo: st.editor.strumento,
+    aggancia: st.aggancia,
+    onStrumento: (id) => impostaStrumentoEditor(id),
+    onAggancia: (acceso) => { st.aggancia = acceso; el.barraStrumenti.aggiorna({ strumento: st.editor.strumento, aggancia: st.aggancia }); },
+  });
+  el.selezione = pannelloSelezione({
+    onElimina: () => eliminaSelezione(),
+    onDeseleziona: () => { st.editor = conSelezione(st.editor, []); dopoSelezione(); },
+    onProprieta: (chiave, valore) => cambiaProprietaSelezione(chiave, valore),
+  });
+  el.rigaStrumenti = h('div', { class: 'mappa-strumenti-riga' }, el.barraStrumenti.el, el.selezione.el);
+  el.pagina = h('section', { class: 'mappa-pagina' }, el.barra, el.rigaStrumenti, el.iniziativa, el.corpo);
   svuota(radice, el.pagina);
 
   // ── Disegno ──
@@ -355,6 +381,8 @@ export function renderMappa(radice, ctx) {
       if (liv.muri || liv.terreno) disegnaMuri(c, { scena: s, cam: st.cam, info, muri: liv.muri ? muriPerDisegno(s) : null, terreno: liv.terreno ? daBase64(s.terreno) : null, colori, aspetto: ASPETTO });
       // M2 (11/10): muri disegnati a mano libera, sotto lo stesso interruttore dei muri a quadretto
       if (liv.muri) disegnaMuriLinee(c, { scena: s, cam: st.cam, linee: lineePerDisegno(s, ctx.dati), colore: colori.muro, aspetto: ASPETTO, selezionato: st.muri.selezionato });
+      // 12/10: contorno giallo su quello che è selezionato, leggero su quello sotto il puntatore, maniglie sui vertici
+      disegnaSelezione(c, { scena: s, cam: st.cam, oggetti: oggettiScena(s), selezione: st.editor.selezione, hover: st.editor.hover, colori: { selezione: ASPETTO?.selezione } });
       // fase 2, lotto 2: le porte, ciascuna con il suo stato (le segrete con la «S»)
       // M3 (11/10): ogni porta sul suo muro; quelle salvate prima si convertono alla lettura (agganciaDiPorta)
       if (liv.porte && s.porte?.length) disegnaPorte(c, { scena: s, cam: st.cam, info, porte: s.porte.map((p) => ({ ...p, orientamento: orientamentoPorta(s, p), aggancio: agganciaDiPorta(s, p, ctx.dati), geo: geometriaPorta(s, p, ctx.dati), selezionata: p.id === st.muri.portaSelezionata })), colori: RP.colori, regole: RP });
@@ -803,6 +831,10 @@ export function renderMappa(radice, ctx) {
 
   function disegnaPannelli() {
     if (!st.scena) return;
+    // 12/10: barra degli strumenti e pannello della selezione sempre allineati alla scena aperta
+    el.barraStrumenti.aggiorna({ strumento: st.editor.strumento, aggancia: st.aggancia });
+    st.editor = ripulisciSelezione(st.editor, st.scena);
+    el.selezione.aggiorna(riassuntoSelezione(st.scena, st.editor.selezione, ctx.dati));
     const f = st.fonti ?? { candidati: { aperti: [], bozze: [] }, errori: [], mancante: null, scontro: null, bozza: null };
     const senza = pezziSenzaToken(st.scena, st.pezzi);
     const scelto = st.scena.token.find((t) => t.id === st.selezionato) ?? null;
@@ -1617,55 +1649,63 @@ export function renderMappa(radice, ctx) {
     const g = st.scena.griglia;
     const muri = conta(daBase64(st.scena.muri), g.colonne, g.righe);
     const terreno = conta(daBase64(st.scena.terreno), g.colonne, g.righe);
+    const S = st.editor.strumento;
     svuota(el.pMuri,
       h('summary', {}, h('strong', {}, 'Muri'), ` (${muri} Q di muro, ${terreno} di terreno difficile)`),
       h('p', { class: 'nota' }, 'Muri (grigio scuro con bordo bianco) e terreno difficile (puntinato) decidono l’area raggiungibile, la linea di tiro e la nebbia. Dove metti una porta il muro si interrompe; togliendola si richiude. Ai giocatori non arrivano quelli sotto la nebbia.'),
-      h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Strumento dei muri' },
-        pulsanteScelta('Pennello', M.strumento === 'pennello', () => strumentoMuri(M.strumento === 'pennello' ? null : 'pennello'), 'Dipingi per quadretti'),
-        pulsanteScelta('Rettangolo', M.strumento === 'rettangolo', () => strumentoMuri(M.strumento === 'rettangolo' ? null : 'rettangolo'), 'Per le aree grandi: da un angolo all’altro'),
-        pulsanteScelta('Disegna muro', M.strumento === 'linea', () => strumentoMuri(M.strumento === 'linea' ? null : 'linea'), 'Trascina: il muro segue il tratto, anche fuori dalla griglia e più sottile di un quadretto'),
-        pulsanteScelta('Seleziona muro', M.strumento === 'seleziona', () => strumentoMuri(M.strumento === 'seleziona' ? null : 'seleziona'), 'Clic su un muro disegnato: lo seleziona; Canc o «Elimina muro» lo toglie tutto'),
-        pulsanteScelta('Porta', M.strumento === 'porta', () => strumentoMuri(M.strumento === 'porta' ? null : 'porta'), 'Clic su un muro: mette una porta; clic su una porta: la seleziona (Canc la toglie)')),
-      // M2 (11/10): spessore del muro disegnato a mano libera
-      M.strumento === 'linea' ? h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Spessore del muro' },
+      // 12/10 (D6): niente più righe di strumenti e di «modi» qui dentro — lo strumento lo sceglie la barra in alto.
+      // Questo pannello mostra solo le opzioni dello strumento attivo.
+      S === 'muro' ? h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Come si fa il muro' },
+        h('span', { class: 'nota' }, 'Come:'),
+        pulsanteScelta('Disegna', M.strumento === 'linea', () => formaMuri('linea'), 'Trascina: il muro segue il tratto, anche fuori dalla griglia'),
+        pulsanteScelta('Pennello', M.strumento === 'pennello', () => formaMuri('pennello'), 'Dipingi muri per quadretti interi'),
+        pulsanteScelta('Rettangolo', M.strumento === 'rettangolo', () => formaMuri('rettangolo'), 'Per le pareti lunghe: da un angolo all’altro')) : null,
+      (S === 'terreno' || S === 'gomma') ? h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Come si dipinge' },
+        h('span', { class: 'nota' }, 'Come:'),
+        pulsanteScelta('Pennello', M.strumento === 'pennello', () => formaMuri('pennello'), 'Dipingi per quadretti'),
+        pulsanteScelta('Rettangolo', M.strumento === 'rettangolo', () => formaMuri('rettangolo'), 'Da un angolo all’altro')) : null,
+      // M2 (11/10): spessore del muro disegnato
+      S === 'muro' && M.strumento === 'linea' ? h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Spessore del muro' },
         h('span', { class: 'nota' }, 'Spessore:'),
         spessoriDati(ctx.dati).map((s) => pulsanteScelta(s.nome, M.spessore === s.id, () => { M.spessore = s.id; disegnaPannelloMuri(); }, `${s.q} Q`))) : null,
       // 12/10: a mano libera o punto per punto; «Raddrizza» al rilascio; Maiusc per una linea dritta
-      M.strumento === 'linea' ? h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Come si traccia il muro' },
+      S === 'muro' && M.strumento === 'linea' ? h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Come si traccia il muro' },
         pulsanteScelta('A mano libera', M.tracciato === 'mano', () => { M.tracciato = 'mano'; M.punti = []; M.cursore = null; disegnaPannelloMuri(); ridisegna(['sopra']); }, 'Trascina: il muro segue il tratto'),
         pulsanteScelta('Punto per punto', M.tracciato === 'punti', () => { M.tracciato = 'punti'; disegnaPannelloMuri(); }, 'Un clic per vertice; doppio clic o Invio chiude il muro'),
-        h('label', { title: 'Al rilascio il tratto diventa pochi segmenti dritti, con gli angoli agganciati ai multipli di 15° quando ci sono vicini. Spenta, il tratto resta come l’hai disegnato' },
+        h('label', { title: 'Al rilascio il tratto diventa pochi segmenti dritti. Spenta, il tratto resta come l’hai disegnato' },
           h('input', { type: 'checkbox', checked: M.raddrizza, onchange: (e) => { M.raddrizza = e.target.checked; } }), ' Raddrizza')) : null,
-      M.strumento === 'linea' && M.tracciato === 'punti' && M.punti.length ? h('div', { class: 'mappa-azioni-token' },
+      S === 'muro' && M.strumento === 'linea' && M.tracciato === 'punti' && M.punti.length ? h('div', { class: 'mappa-azioni-token' },
         h('span', { class: 'nota' }, `${M.punti.length} ${M.punti.length === 1 ? 'vertice' : 'vertici'}`),
         h('button', { type: 'button', class: 'btn btn-piccolo primario', disabled: M.punti.length < 2, onclick: () => chiudiMuroAPunti() }, 'Chiudi muro (Invio)'),
         h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { M.punti = []; M.cursore = null; disegnaPannelloMuri(); ridisegna(['sopra']); } }, 'Annulla (Esc)')) : null,
-      M.strumento === 'linea' ? h('p', { class: 'nota' }, M.tracciato === 'punti'
-        ? 'Un clic per ogni vertice; doppio clic o Invio chiude il muro, Backspace toglie l’ultimo vertice. Con Maiusc il tratto si aggancia agli angoli.'
-        : 'Trascina sulla mappa: al rilascio il tratto si raddrizza. Con Maiusc premuto è una linea dritta dal punto di partenza. Un clic su un muro lo seleziona. Per cancellarne un pezzo: Pennello o Rettangolo in modalità Gomma.') : null,
-      M.strumento === 'seleziona' ? h('p', { class: 'nota' }, 'Clic su un muro disegnato per selezionarlo; Canc o «Elimina muro» lo toglie tutto (Ctrl+Z lo rimette).') : null,
-      M.selezionato && lineeDi(st.scena).some((l) => l.id === M.selezionato) ? h('div', { class: 'mappa-azioni-token' },
-        h('span', { class: 'nota' }, 'Muro selezionato'),
-        h('button', { type: 'button', class: 'btn btn-piccolo pericolo', onclick: () => eliminaMuroSelezionato() }, 'Elimina muro (Canc)'),
-        h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => selezionaMuro(null) }, 'Deseleziona')) : null,
-      // 12/10: porta selezionata con un clic (strumento «Porta»): «Elimina porta» o Canc
-      M.portaSelezionata && (st.scena.porte ?? []).some((p) => p.id === M.portaSelezionata) ? h('div', { class: 'mappa-azioni-token' },
-        h('span', { class: 'nota' }, 'Porta selezionata'),
-        h('button', { type: 'button', class: 'btn btn-piccolo pericolo', onclick: () => eliminaPortaSelezionata() }, 'Elimina porta (Canc)'),
-        h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => selezionaPorta(null) }, 'Deseleziona')) : null,
-      M.strumento === 'porta' ? h('p', { class: 'nota' }, 'Clic su un muro: mette una porta. Clic su una porta: la seleziona; Canc o «Elimina porta» la toglie e il muro si richiude. Anche la Gomma (Pennello o Rettangolo) toglie le porte che tocca.') : null,
-      M.strumento === 'porta' ? h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Porta nuova' },
-        ctx.dati.mappa.porte.stati.map((s) => pulsanteScelta(ctx.dati.mappa.porte.nomi_stati[s], M.porta.stato === s, () => { M.porta.stato = s; disegnaPannelloMuri(); }, `Le porte nuove nascono ${ctx.dati.mappa.porte.nomi_stati[s].toLowerCase()}`)),
+      S === 'muro' ? h('p', { class: 'nota' }, M.strumento !== 'linea'
+        ? 'Dipingi i quadretti di muro. Per cancellarli: strumento Gomma.'
+        : M.tracciato === 'punti'
+          ? 'Un clic per ogni vertice; doppio clic o Invio chiude il muro, Backspace toglie l’ultimo vertice. Con «Aggancia alla griglia» i vertici vanno sugli incroci e sui punti medi.'
+          : 'Trascina sulla mappa. Con Maiusc è una linea dritta dal punto di partenza. Con «Aggancia alla griglia» gli estremi vanno sugli incroci e sui punti medi.') : null,
+      S === 'terreno' ? h('p', { class: 'nota' }, 'Dipingi i quadretti che costano di più (provvisorio: ×2, A.128). Per toglierne una parte: strumento Gomma; per togliere tutta l’area: Seleziona e Canc.') : null,
+      S === 'gomma' ? h('p', { class: 'nota' }, 'Cancella quello che tocchi: muri a quadretto, terreno difficile e porte, e taglia i muri disegnati dove passa (il resto rimane). Per togliere un oggetto intero conviene Seleziona e Canc.') : null,
+      S === 'seleziona' ? h('p', { class: 'nota' }, 'Clic su un muro, una porta, un’area di terreno o un token libero per prenderlo; Maiusc o un riquadro per più d’uno; trascina per spostarlo; le maniglie gialle spostano i vertici di un muro; Canc lo cancella. Ctrl+Z annulla, Ctrl+Y rifà.') : null,
+      S === 'porta' ? h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Porta nuova' },
+        h('span', { class: 'nota' }, 'Le porte nuove nascono:'),
+        ctx.dati.mappa.porte.stati.map((x) => pulsanteScelta(ctx.dati.mappa.porte.nomi_stati[x], M.porta.stato === x, () => { M.porta.stato = x; disegnaPannelloMuri(); }, `Le porte nuove nascono ${ctx.dati.mappa.porte.nomi_stati[x].toLowerCase()}`)),
         h('label', { title: 'Per i giocatori è muro finché non la riveli (clic destro → Rivela)' }, h('input', { type: 'checkbox', checked: M.porta.segreta, onchange: (e) => { M.porta.segreta = e.target.checked; } }), ' segreta'),
-        // 07/10: orientamento, automatico dai muri vicini o scelto con ← →
         h('span', { class: 'nota' }, M.porta.verso ? `${M.porta.verso}, scelta a mano (← →)` : 'orientamento automatico dai muri (← → per girarla)'),
         M.porta.verso ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Torna all’orientamento automatico, dai muri vicini', onclick: () => { M.porta.verso = null; disegnaPannelloMuri(); ridisegna(['aree']); } }, 'Automatico') : null) : null,
-      h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Modalità dei muri' },
-        pulsanteScelta('Muro', M.modo === 'muro', () => { M.modo = 'muro'; disegnaPannelloMuri(); }, 'Invalicabile'),
-        pulsanteScelta('Terreno difficile', M.modo === 'terreno', () => { M.modo = 'terreno'; disegnaPannelloMuri(); }, 'Costa di più (provvisorio: ×2, A.128)'),
-        pulsanteScelta('Gomma', M.modo === 'gomma', () => { M.modo = 'gomma'; disegnaPannelloMuri(); }, 'Toglie muri e terreno difficile; taglia i muri disegnati dove passa (il resto rimane)')),
-      campoLato(M),
+      S === 'porta' ? h('p', { class: 'nota' }, 'Clic su un muro: mette una porta. Per spostarla o toglierla: Seleziona, poi trascina o Canc.') : null,
+      (S === 'terreno' || S === 'gomma' || (S === 'muro' && M.strumento !== 'linea')) ? campoLato(M) : null,
       h('div', { class: 'mappa-azioni-token' }, pulsanteAnnulla()));
+  }
+  /** 12/10: la «forma» dello strumento attivo (disegna, pennello, rettangolo); si ricorda per strumento. */
+  function formaMuri(f) {
+    const S = st.editor.strumento;
+    if (S === 'muro') M.formaMuro = f;
+    else if (S === 'terreno') M.formaTerreno = f;
+    else if (S === 'gomma') M.formaGomma = f;
+    M.strumento = f;
+    M.punti = [];
+    M.cursore = null;
+    dopoStrumento();
   }
   function strumentoNebbia(s) {
     N.strumento = s;
@@ -1682,6 +1722,83 @@ export function renderMappa(radice, ctx) {
     L.strumento = s;
     if (s) { N.strumento = null; M.strumento = null; }
     dopoStrumento();
+  }
+
+  // ── Editor della mappa: un modello unico per muri, porte, terreno e token liberi (12/10) ──────────────────────
+  // docs/battlemap/ricognizione-editor-2026-10-12.md. Gli strumenti vecchi restano il motore sotto: qui si traduce
+  // lo strumento scelto nella barra negli stati interni di prima, azzerando sempre la selezione (D1, D2).
+  const FORME = { muro: 'linea', terreno: 'pennello', gomma: 'pennello' };
+
+  /** Lo strumento attivo della barra. Esc ci torna sempre con «seleziona». */
+  function impostaStrumentoEditor(id) {
+    st.editor = cambiaStrumentoEditor(st.editor, id);
+    N.strumento = null;
+    L.strumento = null;
+    M.selezionato = null;
+    M.portaSelezionata = null;
+    M.punti = [];
+    M.cursore = null;
+    const s = st.editor.strumento;
+    if (s === 'muro') { M.strumento = M.formaMuro ?? FORME.muro; M.modo = 'muro'; }
+    else if (s === 'terreno') { M.strumento = M.formaTerreno ?? FORME.terreno; M.modo = 'terreno'; }
+    else if (s === 'gomma') { M.strumento = M.formaGomma ?? FORME.gomma; M.modo = 'gomma'; }
+    else if (s === 'porta') { M.strumento = 'porta'; }
+    else { M.strumento = null; }
+    if (st.strumento === 'calibra') impostaStrumento('sposta');
+    el.barraStrumenti.aggiorna({ strumento: s, aggancia: st.aggancia });
+    el.riquadro.classList.toggle('editor-seleziona', s === 'seleziona');
+    dopoStrumento();
+    dopoSelezione();
+  }
+
+  /** Dopo un cambio di selezione: pannello e ridisegno. */
+  function dopoSelezione() {
+    if (st.scena) st.editor = ripulisciSelezione(st.editor, st.scena);
+    el.selezione.aggiorna(st.scena ? riassuntoSelezione(st.scena, st.editor.selezione, ctx.dati) : null);
+    ridisegna(['aree']);
+  }
+
+  /** Gli oggetti dell'editor della scena, ricalcolati a ogni uso (le aree di terreno vengono dalla maschera). */
+  const oggettiEditor = () => (st.scena ? oggettiScena(st.scena) : []);
+
+  /** La tolleranza del clic sui muri disegnati, in Q: una decina di pixel di schermo a qualunque zoom (D7). */
+  const tolleranzaQ = () => {
+    const px = ctx.dati.mappa.muri_linee?.tolleranza_px ?? 10;
+    const q = st.scena?.griglia?.q_px ?? 64;
+    return Math.max(0.12, px / Math.max(1e-6, q * st.cam.scala));
+  };
+
+  /** L'oggetto dell'editor sotto il punto della mappa, o null. */
+  const oggettoSottoPunto = (m) => (st.scena ? oggettoSotto(st.scena, qFrazionario(m), { tolleranzaQ: tolleranzaQ() }) : null);
+
+  function eliminaSelezione() {
+    if (!st.scena || !st.editor.selezione.length) return false;
+    const quante = st.editor.selezione.length;
+    st.scena = eliminaOggetti(st.scena, st.editor.selezione, ctx.dati);
+    st.editor = conSelezione(st.editor, []);
+    avviso(`${quante === 1 ? 'Oggetto eliminato' : `${quante} oggetti eliminati`} (Ctrl+Z lo rimette).`, { chiave: 'editor' });
+    dopoDisegno();
+    dopoSelezione();
+    return true;
+  }
+
+  function cambiaProprietaSelezione(chiave, valore) {
+    if (!st.scena || st.editor.selezione.length !== 1) return;
+    st.scena = cambiaProprieta(st.scena, st.editor.selezione[0], { [chiave]: valore }, ctx.dati);
+    dopoDisegno();
+    dopoSelezione();
+  }
+
+  /** Ctrl+Y: rimette l'ultimo annullamento (D3). */
+  function rifaiUi() {
+    if (!st.scena) return;
+    const r = rifaiUltima(st.scena, ctx.dati);
+    if (!r) { avviso('Niente da rifare.', { chiave: 'annulla' }); return; }
+    st.scena = r.scena;
+    if (r.vecchia) { avviso('Non posso rifare: dopo l’annullamento hai fatto altro.', { chiave: 'annulla', tipo: 'info' }); return; }
+    avviso(`Rifatto: ${r.testo}.`, { chiave: 'annulla' });
+    dopoDisegno();
+    dopoSelezione();
   }
   /**
    * Fase 2, lotto 4 (decisione di Marcello del 07/10: luci semplici, pronte in pochi secondi): la luce della scena, un
@@ -1904,7 +2021,7 @@ export function renderMappa(radice, ctx) {
       rett(tok.q, tok.ingombro, [6, 4]);
       if (delta && (delta[0] || delta[1]) && tok.id !== t.token) { c.globalAlpha = 0.7; rett([tok.q[0] + delta[0], tok.q[1] + delta[1]], tok.ingombro, [2, 3]); c.globalAlpha = 1; }
     }
-    if (t?.modo === 'selezione' && t.mosso) {
+    if ((t?.modo === 'selezione' || t?.modo === 'riquadro') && t.mosso) {
       const a = schermoDaMappa(st.cam, t.da.x, t.da.y), b = schermoDaMappa(st.cam, t.a.x, t.a.y);
       c.setLineDash([5, 4]); c.lineWidth = 2;
       c.globalAlpha = 0.15; c.fillStyle = col; c.fillRect(Math.min(a.x, b.x), Math.min(a.y, b.y), Math.abs(b.x - a.x), Math.abs(b.y - a.y));
@@ -2904,6 +3021,32 @@ export function renderMappa(radice, ctx) {
       if (d.forma === 'pennello') { passoPennello(q, q); ridisegna(['aree']); } else ridisegna(['sopra']);
       return;
     }
+    // 12/10, strumento «Seleziona»: prima i token (si muovono con le regole di sempre), poi gli oggetti
+    // dell'editor — muri disegnati, porte, aree di terreno — tutti con le stesse azioni.
+    // i token liberi (segnaposto) sono oggetti dell'editor: si scelgono, si spostano e si cancellano come gli altri,
+    // senza conteggio del movimento né Iniziativa. I token dei PG, dei nemici e dei veicoli restano al loro posto.
+    const tokSotto = !st.spazio && st.strumento !== 'calibra' ? tokenSotto(m) : null;
+    const liberoSotto = tokSotto?.rif?.tipo === 'segnaposto' ? tokSotto : null;
+    if (st.editor.strumento === 'seleziona' && !st.spazio && st.strumento !== 'calibra' && st.scena && (!tokSotto || liberoSotto)) {
+      const o = oggettoSottoPunto(m);
+      // maniglia di un muro già selezionato: si sposta il vertice
+      if (st.editor.selezione.length === 1) {
+        const sel = oggettiEditor().find((x) => x.chiave === st.editor.selezione[0]);
+        const mn = sel?.tipo === 'muro' ? manigliaSotto(st.scena, st.cam, sel, p.x, p.y) : null;
+        if (mn) { st.trascina = { ...base, modo: 'maniglia', chiave: sel.chiave, indice: mn.indice }; return; }
+      }
+      if (o) {
+        const gia = st.editor.selezione.includes(o.chiave);
+        if (!gia) st.editor = conSelezione(st.editor, [o.chiave], { aggiungi: e.shiftKey });
+        else if (e.shiftKey) { st.editor = conSelezione(st.editor, [o.chiave], { aggiungi: true }); dopoSelezione(); return; }
+        dopoSelezione();
+        if (st.editor.selezione.length) st.trascina = { ...base, modo: 'oggetti', da: qFrazionario(m), ultimo: [0, 0] };
+        return;
+      }
+      // punto vuoto: riquadro di selezione (e, senza trascinare, deseleziona)
+      st.trascina = { ...base, modo: 'riquadro', da: m, a: m, aggiungi: e.shiftKey };
+      return;
+    }
     const tok = !st.spazio && st.strumento !== 'calibra' ? tokenSotto(m) : null;
     // 07/10: Maiusc + trascina su un punto vuoto = rettangolo di selezione (Maiusc + clic, senza trascinare, resta il
     // movimento libero del token scelto)
@@ -2994,7 +3137,8 @@ export function renderMappa(radice, ctx) {
     const doppio = ultimo && ora - M.ultimoClic < 400 && Math.hypot(p[0] - ultimo[0], p[1] - ultimo[1]) < 0.3;
     M.ultimoClic = ora;
     if (doppio) { chiudiMuroAPunti(); return; }
-    M.punti.push(ultimo && maiusc ? trattoDritto(ultimo, p, ctx.dati)[1] : p);
+    // 12/10: con «Aggancia alla griglia» ogni vertice va sull'incrocio o sul punto medio più vicino
+    M.punti.push(agganciaPunto(ultimo && maiusc ? trattoDritto(ultimo, p, ctx.dati)[1] : p, st.aggancia));
     M.cursore = null;
     disegnaPannelloMuri();
     ridisegna(['sopra']);
@@ -3004,7 +3148,8 @@ export function renderMappa(radice, ctx) {
     M.punti = []; M.cursore = null;
     if (punti.length < 2) { avviso('Servono almeno due vertici per un muro.', { chiave: 'muri-linee' }); disegnaPannelloMuri(); ridisegna(['sopra']); return; }
     // con «Raddrizza» gli angoli fra i vertici si agganciano ai multipli di 15° quando ci sono vicini
-    aggiungiMuroDisegnato(M.raddrizza ? raddrizza(punti, ctx.dati) : punti);
+    const dritti = M.raddrizza ? raddrizza(punti, ctx.dati) : punti;
+    aggiungiMuroDisegnato(st.aggancia ? agganciaPunti(dritti, true) : dritti);
   }
   /**
    * M2 (11/10): fine del tratto a mano libera. Un tocco senza trascinare non fa nulla (serve un tratto); oltre
@@ -3020,7 +3165,9 @@ export function renderMappa(radice, ctx) {
       return;
     }
     // 12/10: «Raddrizza» al rilascio (pochi segmenti dritti, angoli a 15°); con Maiusc il tratto è già una linea dritta
-    aggiungiMuroDisegnato(t.dritto || !M.raddrizza ? punti : raddrizza(punti, ctx.dati));
+    const dritti = t.dritto || !M.raddrizza ? punti : raddrizza(punti, ctx.dati);
+    // richiesta di Davide: con «Aggancia alla griglia» i vertici vanno sugli incroci e sui punti medi, a qualunque spessore
+    aggiungiMuroDisegnato(st.aggancia ? agganciaPunti(dritti, true) : dritti);
   }
   /** Un passo del pennello (nebbia o muri) da a ad b, senza voce di «annulla» (la voce arriva al rilascio). */
   function passoPennello(a, b) {
@@ -3046,12 +3193,39 @@ export function renderMappa(radice, ctx) {
       ridisegna(['sopra']);
       return;
     }
+    // 12/10: evidenziazione al passaggio con «Seleziona», così si capisce sempre che cosa si sta per prendere (D7)
+    if (!t && st.editor.strumento === 'seleziona' && st.scena && !st.spazio) {
+      const m = mappaDaSchermo(st.cam, p.x, p.y);
+      const sopra = tokenSotto(m) ? null : oggettoSottoPunto(m)?.chiave ?? null;
+      if (sopra !== st.editor.hover) { st.editor = { ...st.editor, hover: sopra }; ridisegna(['aree']); }
+    }
     if (!t || !mio) { suggerisci(e); return; }
     if (!t.mosso && Math.hypot(p.x - t.x0, p.y - t.y0) < TRASCINAMENTO_MINIMO_PX) return;
     t.mosso = true;
     fermaPressione();
     if (t.modo === 'sposta') cambiaCamera(sposta(st.cam, p.x - t.x, p.y - t.y));
     else if (t.modo === 'selezione') { t.a = mappaDaSchermo(st.cam, p.x, p.y); ridisegna(['sopra']); }
+    // 12/10: riquadro di selezione dell'editor, spostamento degli oggetti scelti, maniglia di un vertice
+    else if (t.modo === 'riquadro') { t.a = mappaDaSchermo(st.cam, p.x, p.y); ridisegna(['sopra']); }
+    else if (t.modo === 'oggetti') {
+      const f = qFrazionario(mappaDaSchermo(st.cam, p.x, p.y));
+      const d = agganciaSpostamento([f[0] - t.da[0], f[1] - t.da[1]], st.aggancia);
+      if (d[0] !== t.ultimo[0] || d[1] !== t.ultimo[1]) {
+        st.scena = spostaOggetti(st.scena, st.editor.selezione, [d[0] - t.ultimo[0], d[1] - t.ultimo[1]], ctx.dati);
+        // una voce sola per tutto il trascinamento: le intermedie si fondono
+        if (t.ultimo[0] || t.ultimo[1]) st.scena = { ...st.scena, annulla: fondiUltimeDueEditor(st.scena.annulla) };
+        t.ultimo = d;
+        ridisegna(['aree']);
+      }
+    }
+    else if (t.modo === 'maniglia') {
+      const f = qFrazionario(mappaDaSchermo(st.cam, p.x, p.y));
+      const prima = st.scena.annulla.length;
+      st.scena = spostaVertice(st.scena, t.chiave, t.indice, f, ctx.dati, { aggancia: st.aggancia });
+      if (st.scena.annulla.length > prima && t.iniziato) st.scena = { ...st.scena, annulla: fondiUltimeDueEditor(st.scena.annulla) };
+      if (st.scena.annulla.length > prima) t.iniziato = true;
+      ridisegna(['aree']);
+    }
     else if (t.modo === 'disegno') {
       // M2: il tratto a mano libera segue il dito; i punti troppo vicini si scartano (data/mappa.json -> muri_linee)
       if (t.forma === 'linea') {
@@ -3113,6 +3287,24 @@ export function renderMappa(radice, ctx) {
         if (M.modo === 'gomma') st.scena = conVoceMuriLinee(st.scena, t.iniziale.muriLinee, ctx.dati);
       }
       dopoDisegno();
+      return true;
+    }
+    // 12/10: fine del lavoro con «Seleziona»
+    if (t.modo === 'riquadro') {
+      if (t.mosso && st.scena) {
+        const g = st.scena.griglia;
+        const inQ = (pt) => [(pt.x - g.scosto_x) / g.q_px, (pt.y - g.scosto_y) / g.q_px];
+        const presi = oggettiNelRiquadro(st.scena, inQ(t.da), inQ(t.a)).map((o) => o.chiave);
+        st.editor = conSelezione(st.editor, presi, { aggiungi: t.aggiungi });
+      } else {
+        st.editor = conSelezione(st.editor, []);
+      }
+      dopoSelezione();
+      return true;
+    }
+    if (t.modo === 'oggetti' || t.modo === 'maniglia') {
+      if (t.mosso) { dopoDisegno(); avviso('Ctrl+Z annulla, Ctrl+Y rifà.', { chiave: 'editor', tipo: 'info' }); }
+      dopoSelezione();
       return true;
     }
     if (t.modo === 'selezione') {
@@ -3371,6 +3563,8 @@ export function renderMappa(radice, ctx) {
     }
     // Ctrl+Z (lotto 5): annulla l'ultima azione del master (movimento, muro, nebbia, token messo o tolto)
     if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === 'z') { e.preventDefault(); if (st.scena) annullaUi(); return; }
+    // 12/10 (D3): Ctrl+Y (e Ctrl+Maiusc+Z) rimettono quello che Ctrl+Z ha annullato
+    if ((e.ctrlKey || e.metaKey) && !e.altKey && (e.key.toLowerCase() === 'y' || (e.shiftKey && e.key.toLowerCase() === 'z'))) { e.preventDefault(); if (st.scena) rifaiUi(); return; }
     if (e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.key === 'm' || e.key === 'M') { e.preventDefault(); cambiaMostraArea(); return; }
     if (e.key === 'z' || e.key === 'Z') { e.preventDefault(); cambiaMostraZoc(); return; }
@@ -3393,6 +3587,9 @@ export function renderMappa(radice, ctx) {
       if (e.key === 'Backspace') { e.preventDefault(); M.punti.pop(); disegnaPannelloMuri(); ridisegna(['sopra']); return; }
       if (e.key === 'Escape') { e.preventDefault(); M.punti = []; M.cursore = null; disegnaPannelloMuri(); ridisegna(['sopra']); return; }
     }
+    // 12/10: con «Seleziona» Canc toglie quello che è selezionato, qualunque cosa sia (D2: prima Canc guardava
+    // prima la porta e poi il muro, e cancellava l'uno mentre credevi di togliere l'altro)
+    if (st.editor.selezione.length && (e.key === 'Delete' || e.key === 'Backspace') && !menuAperto()) { e.preventDefault(); eliminaSelezione(); return; }
     if (M.portaSelezionata && (e.key === 'Delete' || e.key === 'Backspace') && !menuAperto()) { e.preventDefault(); eliminaPortaSelezionata(); return; }
     if (M.portaSelezionata && e.key === 'Escape' && !menuAperto()) { e.preventDefault(); selezionaPorta(null); return; }
     if (M.selezionato && (e.key === 'Delete' || e.key === 'Backspace') && !menuAperto()) { e.preventDefault(); eliminaMuroSelezionato(); return; }
@@ -3414,6 +3611,8 @@ export function renderMappa(radice, ctx) {
     } else if (e.key === 'Escape') {
       if (menuAperto()) chiudiMenuToken();
       else if (st.strumento === 'calibra') impostaStrumento('sposta');
+      // 12/10 (D5): Esc torna sempre allo strumento Seleziona, senza niente selezionato
+      else if (st.editor.strumento !== 'seleziona' || st.editor.selezione.length) { impostaStrumentoEditor('seleziona'); }
       else if (disegnoAttivo()) { N.strumento = null; M.strumento = null; L.strumento = null; dopoStrumento(); } else if (st.daPiazzare) { st.daPiazzare = null; el.riquadro.classList.remove('piazza'); disegnaPannelli(); } else if (st.selezionato) scegli(null); else if (st.cartaAperta) chiudiCarta(); // 07/10: Esc prima lascia il token, poi chiude la mini-scheda
     }
   };
@@ -3428,7 +3627,8 @@ export function renderMappa(radice, ctx) {
     vista: V, camera: () => st.cam, cambiaCamera, adatta: adattaSchermo,
     premi, muovi, rilascia, annulla: () => annullaGesto(),
     // doppio clic del mouse: «Adatta» solo su un punto vuoto, senza strumenti attivi e senza un token scelto
-    vuoto: (p) => !disegnoAttivo() && st.strumento !== 'calibra' && !!st.scena && !st.selezionato && !tokenSotto(mappaDaSchermo(st.cam, p.x, p.y)),
+    // 12/10: un doppio clic su un muro, una porta o un'area non è «un punto vuoto»: non deve fare «Adatta»
+    vuoto: (p) => !disegnoAttivo() && st.strumento !== 'calibra' && !!st.scena && !st.selezionato && !tokenSotto(mappaDaSchermo(st.cam, p.x, p.y)) && !oggettoSottoPunto(mappaDaSchermo(st.cam, p.x, p.y)),
   });
   el.riquadro.addEventListener('pointerleave', suEsce);
   el.riquadro.addEventListener('dragover', suSopra);

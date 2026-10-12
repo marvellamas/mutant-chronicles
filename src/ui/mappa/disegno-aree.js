@@ -427,3 +427,88 @@ export function disegnaLuci(c, { scena, cam, info, maschere, opacita, colore = '
     c.restore();
   }
 }
+
+/**
+ * Selezione ed evidenziazione dell'editor (12/10/2026, src/mappa/editor.js): contorno giallo attorno agli oggetti
+ * selezionati, contorno leggero su quello sotto il puntatore (D7: prima non si capiva mai che cosa si stava per
+ * prendere) e maniglie quadrate sui vertici quando c'è un muro disegnato solo.
+ * @param oggetti l'elenco di src/mappa/editor.js → oggettiScena
+ * @param selezione chiavi selezionate; @param hover la chiave sotto il puntatore
+ */
+export function disegnaSelezione(c, { scena, cam, oggetti, selezione = [], hover = null, colori = {} }) {
+  const g = scena.griglia;
+  const scelte = new Set(selezione);
+  if (!scelte.size && !hover) return;
+  const giallo = colori.selezione ?? '#ffb000';
+  const leggero = colori.hover ?? 'rgba(255, 176, 0, 0.45)';
+  const punto = (x, y) => schermoDaMappa(cam, g.scosto_x + x * g.q_px, g.scosto_y + y * g.q_px);
+
+  const contorno = (o, colore, spessore) => {
+    c.save();
+    c.strokeStyle = colore;
+    c.lineWidth = spessore;
+    c.setLineDash([]);
+    c.lineJoin = 'round';
+    if (o.tipo === 'muro') {
+      c.beginPath();
+      o.punti.forEach(([x, y], i) => { const s = punto(x, y); if (i === 0) c.moveTo(s.x, s.y); else c.lineTo(s.x, s.y); });
+      c.lineCap = 'round';
+      c.lineWidth = Math.max(spessore, (o.spessore ?? 0.25) * g.q_px * cam.scala + spessore * 2);
+      c.globalAlpha = 0.55;
+      c.stroke();
+    } else if (o.tipo === 'terreno') {
+      c.globalAlpha = 0.95;
+      for (const [x, y] of o.celle) {
+        const [sx, sy, sw, sh] = rettQ(g, cam, x, y);
+        // solo i lati che danno fuori dall'area: così si vede il contorno della macchia, non la griglia
+        const dentro = (ax, ay) => o.celle.some(([bx, by]) => bx === ax && by === ay);
+        c.beginPath();
+        if (!dentro(x, y - 1)) { c.moveTo(sx, sy); c.lineTo(sx + sw, sy); }
+        if (!dentro(x, y + 1)) { c.moveTo(sx, sy + sh); c.lineTo(sx + sw, sy + sh); }
+        if (!dentro(x - 1, y)) { c.moveTo(sx, sy); c.lineTo(sx, sy + sh); }
+        if (!dentro(x + 1, y)) { c.moveTo(sx + sw, sy); c.lineTo(sx + sw, sy + sh); }
+        c.stroke();
+      }
+    } else {
+      const [lc, lr] = dimensioni(o.ingombro ?? 1);
+      const [sx, sy, sw, sh] = rettQ(g, cam, o.q[0], o.q[1], lc, lr);
+      c.globalAlpha = 0.95;
+      c.strokeRect(sx - 2, sy - 2, sw + 4, sh + 4);
+    }
+    c.restore();
+  };
+
+  if (hover && !scelte.has(hover)) {
+    const o = oggetti.find((x) => x.chiave === hover);
+    if (o) contorno(o, leggero, 3);
+  }
+  const selezionati = oggetti.filter((o) => scelte.has(o.chiave));
+  for (const o of selezionati) contorno(o, giallo, 3);
+
+  // maniglie: un muro disegnato solo, un quadratino per vertice
+  if (selezionati.length === 1 && selezionati[0].tipo === 'muro') {
+    c.save();
+    c.fillStyle = giallo;
+    c.strokeStyle = '#1d1f22';
+    c.lineWidth = 1;
+    for (const [x, y] of selezionati[0].punti) {
+      const s = punto(x, y);
+      c.fillRect(s.x - 5, s.y - 5, 10, 10);
+      c.strokeRect(s.x - 5, s.y - 5, 10, 10);
+    }
+    c.restore();
+  }
+}
+
+/** Il vertice del muro sotto il punto dello schermo (maniglia presa), o null: { indice, distanza }. */
+export function manigliaSotto(scena, cam, muro, sx, sy, raggioPx = 9) {
+  if (!muro?.punti) return null;
+  const g = scena.griglia;
+  let migliore = null;
+  muro.punti.forEach(([x, y], i) => {
+    const s = schermoDaMappa(cam, g.scosto_x + x * g.q_px, g.scosto_y + y * g.q_px);
+    const d = Math.hypot(s.x - sx, s.y - sy);
+    if (d <= raggioPx && (!migliore || d < migliore.distanza)) migliore = { indice: i, distanza: d };
+  });
+  return migliore;
+}

@@ -20,6 +20,7 @@
 //                scontro?, nascosto }]                       template ad area (fase 2, lotto 1; src/mappa/template.js)
 //   collegamento: { scontro: id | null, bozza: id | null },
 //   movimenti: [ … ], annulla: [ … ],                          movimenti del Round e azioni del master (lotto 5)
+//   rifai?: [{ blocchi, testo, dopoAnnulla }]                  pila di Ctrl+Y (12/10, src/mappa/annulla.js)
 //   turni?: { tutti, token: { id: n } },                       «Nuovo turno» senza scontro aperto (src/mappa/annulla.js)
 //   colori?: { pg: { chiave: id }, nemici: { tipo: id } },     colori dei bordi dei token (src/mappa/colori.js)
 //   bloccaGiocatori?: true,                                    i tablet dei giocatori vedono ma non muovono (fase 2, lotto 7)
@@ -278,6 +279,8 @@ export function validaScena(s, dati) {
   if (s.archiviata !== undefined && typeof s.archiviata !== 'boolean') return 'archiviata: vero o falso';
   if (!Array.isArray(s.movimenti) || s.movimenti.length > D.scena.movimenti_max) return `movimenti: elenco di al massimo ${D.scena.movimenti_max}`;
   if (!Array.isArray(s.annulla) || s.annulla.length > D.scena.annulla_max) return `annulla: elenco di al massimo ${D.scena.annulla_max}`;
+  // 12/10: pila «rifai» (Ctrl+Y, src/mappa/annulla.js). Facoltativa: le scene di prima non ce l'hanno.
+  if (s.rifai !== undefined && (!Array.isArray(s.rifai) || s.rifai.length > D.scena.annulla_max)) return `rifai: elenco di al massimo ${D.scena.annulla_max}`;
   if (s.bloccaGiocatori !== undefined && typeof s.bloccaGiocatori !== 'boolean') return 'bloccaGiocatori: vero o falso';
   if (s.pvNemiciGiocatori !== undefined && typeof s.pvNemiciGiocatori !== 'boolean') return 'pvNemiciGiocatori: vero o falso';
   for (const k of ['movimentoGiocatori', 'zocGiocatori']) if (s[k] !== undefined && typeof s[k] !== 'boolean') return `${k}: vero o falso`;

@@ -2658,3 +2658,27 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .fascia-cartella-vuota .fascia-salvataggi { margin: 0.5rem 0 0; font-size: 0.92rem; }
 .fascia-cartella-vuota .fascia-salvataggi ul { margin: 0.3rem 0 0; padding-left: 1.2rem; }
 .fascia-cartella-vuota .fascia-cosa-fare { margin: 0.5rem 0 0; font-size: 0.95rem; }
+
+/* Barra degli strumenti della mappa e pannello della selezione (12/10/2026,
+   docs/battlemap/ricognizione-editor-2026-10-12.md): una riga sola, sempre in vista, un solo strumento attivo. */
+.mappa-strumenti-riga { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.8rem;
+  padding: 0.35rem 0.6rem; border-bottom: 1px solid var(--linea, #cfccc5); }
+.mappa-strumenti { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.8rem; }
+.mappa-strumenti-gruppo { display: flex; gap: 0.25rem; }
+.btn.mappa-strumento { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.3rem 0.6rem; font-size: 0.9rem; }
+.btn.mappa-strumento .mappa-strumento-icona { font-size: 1.05rem; line-height: 1; }
+.btn.mappa-strumento[aria-pressed="true"] { background: var(--accento); color: #fff; border-color: var(--accento);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.35); font-weight: 700; }
+.mappa-aggancia { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.85rem; }
+.mappa-aggancia.spenta { opacity: 0.45; }
+.mappa-selezione { margin-left: auto; }
+.mappa-selezione-corpo { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem 0.7rem; font-size: 0.85rem; }
+.mappa-selezione-corpo .nota { margin: 0; }
+.mappa-selezione-titolo { margin: 0; font-weight: 700; }
+.mappa-selezione-prop { display: inline-flex; align-items: center; gap: 0.3rem; }
+.mappa-selezione-etichetta { color: var(--tenue, #5d6168); }
+.mappa-riquadro.editor-seleziona { cursor: default; }
+@media (max-width: 60rem) {
+  .btn.mappa-strumento .mappa-strumento-nome { display: none; }
+  .mappa-selezione { margin-left: 0; flex-basis: 100%; }
+}

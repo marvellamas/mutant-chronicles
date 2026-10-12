@@ -16,6 +16,11 @@
 //   { tipo: 'gruppo', prima: [{ id, q }] }          spostamento di gruppo (07/10, src/mappa/gruppo.js): tutti dov'erano
 //   { tipo: 'porta', id, prima, dopo, azione? }     porta (fase 2, lotto 2): messa, cambiata, tolta; con l'azione del
 //                                                   token che l'ha aperta o chiusa (annullando esce anche l'AzP)
+//   { tipo: 'editor', prima, dopo }                editor della mappa (12/10, src/mappa/editor.js): i soli blocchi
+//                                                   toccati, prima e dopo; una voce per spostamento o cancellazione
+// Rifai (scena.rifai, 12/10, difetto D3 della ricognizione dell'editor): ogni annullamento riuscito ci mette lo
+// stato dei blocchi che ha cambiato, così Ctrl+Y lo rimette qualunque fosse il tipo della voce. La pila vale finché
+// la pila «annulla» non cambia per altra via: una modifica nuova la rende vecchia e si butta (dopoAnnulla).
 // Movimenti (scena.movimenti, al più scena.movimenti_max): { id, token, scontro, round, turno?, da, a, costo, fascia, libero,
 // quando }. Senza scontro aperto (scena collegata a una bozza o a nulla) il movimento si conta lo stesso, per «turno»: il
 // numero del turno del token (turnoDi) che «Nuovo turno» fa avanzare, per un token o per tutti (scena.turni, primo test
@@ -193,7 +198,59 @@ function annullaMovimento(scena, idMovimento) {
  * @returns { scena, voce, testo } oppure null se non c'è nulla da annullare; una voce che non si può più applicare
  *   esce dalla pila con { scena, voce, errore }.
  */
-export function annullaUltima(scena, { chiaviPresenti = null } = {}) {
+/** I blocchi della scena che l'annulla e il rifai si scambiano (tutto il resto non cambia mai per una voce). */
+export const BLOCCHI_SCENA = ['nebbia', 'muri', 'terreno', 'muriLinee', 'porte', 'token', 'template', 'luce', 'azioni', 'movimenti', 'turni'];
+
+/** I blocchi che sono diversi fra due scene, nella forma che avevano nella prima: { chiave: valore }. */
+export function blocchiCambiati(prima, dopo) {
+  const out = {};
+  for (const k of BLOCCHI_SCENA) {
+    if (JSON.stringify(prima?.[k]) === JSON.stringify(dopo?.[k])) continue;
+    out[k] = prima?.[k];
+  }
+  return out;
+}
+
+/**
+ * Ctrl+Z, con la pila «rifai» (12/10): annulla come sempre e mette da parte lo stato dei blocchi che ha cambiato,
+ * così Ctrl+Y lo rimette qualunque fosse il tipo della voce.
+ */
+export function annullaUltima(scena, opzioni = {}) {
+  const r = annullaVoce(scena, opzioni);
+  if (!r || r.errore) return r;
+  const blocchi = blocchiCambiati(scena, r.scena);
+  if (!Object.keys(blocchi).length) return r;
+  const max = opzioni.rifaiMax ?? 50;
+  const rifai = [...(scena.rifai ?? []), { blocchi, testo: r.testo ?? 'modifica', dopoAnnulla: r.scena.annulla.length }].slice(-max);
+  return { ...r, scena: { ...r.scena, rifai } };
+}
+
+/**
+ * Ctrl+Y: rimette l'ultimo annullamento. La pila vale solo se da allora non è successo altro (la pila «annulla» ha
+ * ancora la lunghezza di quel momento): altrimenti si butta, perché rimettere sopra un lavoro nuovo rovinerebbe tutto.
+ * @returns { scena, testo } oppure null (niente da rifare, o pila vecchia: in quel caso la scena torna senza pila)
+ */
+export function rifaiUltima(scena, dati = null) {
+  const pila = scena?.rifai ?? [];
+  const v = pila.at(-1);
+  if (!v) return null;
+  if (v.dopoAnnulla !== (scena.annulla?.length ?? 0)) return { scena: { ...scena, rifai: [] }, vecchia: true };
+  const dopo = v.blocchi;
+  const prima = blocchiCambiati(scena, { ...scena, ...dopo });
+  const max = dati?.mappa?.scena?.annulla_max ?? 50;
+  return {
+    scena: {
+      ...scena,
+      ...dopo,
+      rifai: pila.slice(0, -1),
+      annulla: [...(scena.annulla ?? []), { tipo: 'editor', prima, dopo, testo: v.testo, quando: new Date().toISOString() }].slice(-max),
+    },
+    testo: v.testo,
+  };
+}
+
+/** L'annullamento vero e proprio, un tipo di voce alla volta. */
+export function annullaVoce(scena, { chiaviPresenti = null } = {}) {
   const voce = scena.annulla.at(-1);
   if (!voce) return null;
   const senza = { ...scena, annulla: scena.annulla.slice(0, -1) };
@@ -229,6 +286,9 @@ export function annullaUltima(scena, { chiaviPresenti = null } = {}) {
       const azioni = voce.azione ? (senza.azioni ?? []).filter((a) => a.id !== voce.azione) : senza.azioni;
       return { scena: { ...senza, porte, ...(azioni ? { azioni } : {}) }, voce, testo: !voce.prima ? 'porta messa' : !voce.dopo ? 'porta tolta' : 'porta' };
     }
+    // 12/10: editor della mappa (src/mappa/editor.js): i blocchi toccati tornano com'erano
+    case 'editor':
+      return { scena: { ...senza, ...voce.prima }, voce, testo: voce.testo ?? 'modifica della mappa' };
     case 'gruppo':
       return { scena: annullaGruppo(senza, voce), voce, testo: `spostamento di ${voce.prima.length} token` };
     case 'bordo':

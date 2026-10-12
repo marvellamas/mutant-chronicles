@@ -419,7 +419,10 @@
     "_nota_stati": "A.132 (risposta di Marcello del 07/10/2026, decisione 134 di docs/risposte-master.md; Davide può rivederla): uno Stordito non fa Attacchi di Opportunità, come chi è Svenuto o a 0 PV. La sua ZoC non genera l'avviso; il master la vede tratteggiata, senza riempimento («inattiva», zoc.inattiva: contorno ben visibile, tratteggio 8 × 6 px), i giocatori non la vedono. A 0 PV la ZoC non si mostra affatto.",
     "inattiva": {
       "opacita_contorno": 0.9,
-      "tratteggio_px": [8, 6]
+      "tratteggio_px": [
+        8,
+        6
+      ]
     },
     "opacita_riempimento": 0.16,
     "opacita_contorno": 0.7,
@@ -435,103 +438,399 @@
   "strumenti": {
     "_nota": "Menu «Strumenti» della barra in alto (ritocchi del 08/10/2026; src/mappa/menu.js → VOCI_STRUMENTI, src/ui/mappa/pagina.js → disegnaMenuStrumenti): gruppi con titolo e icona, voci brevi con la scorciatoia a destra, nell'ordine dei dati. Le voci che in quel momento non si possono usare restano spente, con il motivo nel suggerimento.",
     "gruppi": [
-      { "titolo": "Preparazione mappa", "icona": "🗺", "voci": ["mappa_semplice", "immagine", "griglia", "muri", "porte", "luci", "nebbia", "nebbia_automatica"] },
-      { "titolo": "Scena", "icona": "🎬", "voci": ["scene", "collegamento", "salva_iniziale", "ripristina_iniziale"] },
-      { "titolo": "In gioco", "icona": "⚔", "voci": ["linea", "dettaglio_linea", "template", "mostra_area", "mostra_zoc", "seleziona_pg", "seleziona_nemici", "seleziona_tutti"] },
-      { "titolo": "Vista giocatori", "icona": "📺", "voci": ["mostra_giocatori", "vista_giocatori", "adatta_giocatori", "pv_nemici", "sovrapposizioni_giocatori", "suoni_giocatori"] },
-      { "titolo": "Tablet dei giocatori", "icona": "📱", "voci": ["blocco_giocatori", "movimento_tablet", "avviso_turno_tablet", "collega_tablet"] },
-      { "titolo": "Suoni", "icona": "♫", "voci": ["musica", "muto"] },
-      { "titolo": "Pulizia", "icona": "🧹", "voci": ["cancella_temporanei", "cancella_tutti"] }
+      {
+        "titolo": "Preparazione mappa",
+        "icona": "🗺",
+        "voci": [
+          "mappa_semplice",
+          "immagine",
+          "griglia",
+          "muri",
+          "porte",
+          "luci",
+          "nebbia",
+          "nebbia_automatica"
+        ]
+      },
+      {
+        "titolo": "Scena",
+        "icona": "🎬",
+        "voci": [
+          "scene",
+          "collegamento",
+          "salva_iniziale",
+          "ripristina_iniziale"
+        ]
+      },
+      {
+        "titolo": "In gioco",
+        "icona": "⚔",
+        "voci": [
+          "linea",
+          "dettaglio_linea",
+          "template",
+          "mostra_area",
+          "mostra_zoc",
+          "seleziona_pg",
+          "seleziona_nemici",
+          "seleziona_tutti"
+        ]
+      },
+      {
+        "titolo": "Vista giocatori",
+        "icona": "📺",
+        "voci": [
+          "mostra_giocatori",
+          "vista_giocatori",
+          "adatta_giocatori",
+          "pv_nemici",
+          "sovrapposizioni_giocatori",
+          "suoni_giocatori"
+        ]
+      },
+      {
+        "titolo": "Tablet dei giocatori",
+        "icona": "📱",
+        "voci": [
+          "blocco_giocatori",
+          "movimento_tablet",
+          "avviso_turno_tablet",
+          "collega_tablet"
+        ]
+      },
+      {
+        "titolo": "Suoni",
+        "icona": "♫",
+        "voci": [
+          "musica",
+          "muto"
+        ]
+      },
+      {
+        "titolo": "Pulizia",
+        "icona": "🧹",
+        "voci": [
+          "cancella_temporanei",
+          "cancella_tutti"
+        ]
+      }
     ]
   },
   "muri_linee": {
     "_nota": "Muri disegnati a mano libera (segnalazione M2 di Davide dell'11/10/2026; src/mappa/muri-linee.js): si trascina il mouse o il dito e il muro segue il tratto, anche fuori dalla griglia e più sottile di un quadretto. Le coordinate sono in Q frazionari, come token e template. Valgono come i muri a quadretto: bloccano dove passano (linea di tiro, Copertura, nebbia automatica e movimento) e si cancellano con la gomma. «punto_minimo_q»: quanto deve spostarsi il dito prima di aggiungere un punto al tratto (semplifica); «gomma_raggio_q»: entro quanto la gomma prende un muro disegnato.",
     "spessori": [
-      { "id": "sottile", "nome": "Sottile", "q": 0.1 },
-      { "id": "medio", "nome": "Medio", "q": 0.25 },
-      { "id": "quadretto", "nome": "Un quadretto", "q": 1 }
+      {
+        "id": "sottile",
+        "nome": "Sottile",
+        "q": 0.1
+      },
+      {
+        "id": "medio",
+        "nome": "Medio",
+        "q": 0.25
+      },
+      {
+        "id": "quadretto",
+        "nome": "Un quadretto",
+        "q": 1
+      }
     ],
     "predefinito": "medio",
     "spessore_max_q": 1,
     "linee_max": 400,
     "punti_max": 400,
     "punto_minimo_q": 0.2,
-    "raddrizza": { "predefinito": true, "tolleranza_q": 0.3, "angolo_gradi": 15, "soglia_gradi": 5 },
+    "raddrizza": {
+      "predefinito": true,
+      "tolleranza_q": 0.3,
+      "angolo_gradi": 15,
+      "soglia_gradi": 5
+    },
     "_nota_raddrizza": "12/10/2026 (prove di Marcello): al rilascio il tratto a mano si semplifica in segmenti dritti (i punti entro «tolleranza_q» dalla corda si tolgono) e la direzione di ogni tratto si aggancia al multiplo di «angolo_gradi» più vicino se dista al massimo «soglia_gradi». «predefinito»: la casella «Raddrizza» del pannello all'apertura.",
-    "aspetto": { "colore": "#3a3a40", "bordo": "#ffffff", "bordo_px": 2, "selezione": "#ffb000", "quadretto_opacita": 0.6 },
+    "aspetto": {
+      "colore": "#3a3a40",
+      "bordo": "#ffffff",
+      "bordo_px": 2,
+      "selezione": "#ffb000",
+      "quadretto_opacita": 0.6
+    },
     "_nota_aspetto": "Muri grigio scuro con bordo bianco di «bordo_px» pixel, sulla mappa del master e dei giocatori: si vedono anche su immagini molto scure. I muri a quadretto hanno lo stesso colore, semitrasparente («quadretto_opacita») per lasciar vedere l'immagine; il terreno difficile resta puntinato nel suo colore. «selezione»: il muro selezionato.",
     "gomma_raggio_q": 0.5,
-    "margine_q": 2
+    "margine_q": 2,
+    "tolleranza_px": 10,
+    "_nota_tolleranza": "12/10/2026: quanti pixel di schermo vale il bersaglio di un muro disegnato con lo strumento Seleziona (difetto D7: prima erano 0,35 Q fissi, cioè una decina di pixel solo alla scala normale e due o tre da lontano)."
   },
   "sovrapposizioni": {
     "_nota": "Che cosa si disegna sopra la mappa, con un interruttore per livello e per lato (segnalazione M1 di Davide dell'11/10/2026: l'unico interruttore di prima nascondeva insieme muri, porte, terreno e template). «master» è quello che vede il Direttore sulla sua mappa, «giocatori» quello che arriva allo schermo dei giocatori e ai tablet (src/mappa/sovrapposizioni.js; scena.sovrapposizioni). I livelli valgono solo per il disegno: muri, porte e terreno contano sempre per movimento, linea di tiro e nebbia. Le scene salvate col formato di prima ({ nascoste, ancheDurata }) si leggono e si convertono da sé.",
     "livelli": [
-      { "id": "template", "nome": "Template", "titolo": "I template ad area senza durata (quelli che restano finché non li togli)", "master": true, "giocatori": true },
-      { "id": "templateDurata", "nome": "Template a durata", "titolo": "I template con una durata in Round (quelli dello scontro)", "master": true, "giocatori": true },
-      { "id": "muri", "nome": "Muri", "titolo": "I muri, a quadretto e disegnati; valgono comunque per movimento, linea di tiro e nebbia", "master": true, "giocatori": true },
-      { "id": "porte", "nome": "Porte", "titolo": "Le porte, con il loro stato; valgono comunque per movimento e linea di tiro", "master": true, "giocatori": true },
-      { "id": "terreno", "nome": "Terreno difficile", "titolo": "I quadretti di terreno difficile; valgono comunque per il movimento", "master": true, "giocatori": true },
-      { "id": "luci", "nome": "Luci e ombre", "titolo": "Le zone di penombra, luce scarsa e buio, e l'ombra della nebbia automatica", "master": true, "giocatori": true }
+      {
+        "id": "template",
+        "nome": "Template",
+        "titolo": "I template ad area senza durata (quelli che restano finché non li togli)",
+        "master": true,
+        "giocatori": true
+      },
+      {
+        "id": "templateDurata",
+        "nome": "Template a durata",
+        "titolo": "I template con una durata in Round (quelli dello scontro)",
+        "master": true,
+        "giocatori": true
+      },
+      {
+        "id": "muri",
+        "nome": "Muri",
+        "titolo": "I muri, a quadretto e disegnati; valgono comunque per movimento, linea di tiro e nebbia",
+        "master": true,
+        "giocatori": true
+      },
+      {
+        "id": "porte",
+        "nome": "Porte",
+        "titolo": "Le porte, con il loro stato; valgono comunque per movimento e linea di tiro",
+        "master": true,
+        "giocatori": true
+      },
+      {
+        "id": "terreno",
+        "nome": "Terreno difficile",
+        "titolo": "I quadretti di terreno difficile; valgono comunque per il movimento",
+        "master": true,
+        "giocatori": true
+      },
+      {
+        "id": "luci",
+        "nome": "Luci e ombre",
+        "titolo": "Le zone di penombra, luce scarsa e buio, e l'ombra della nebbia automatica",
+        "master": true,
+        "giocatori": true
+      }
     ]
   },
   "menu": {
     "_nota": "Menu del clic destro sulla mappa (richiesta di Marcello del 07/10/2026; src/mappa/menu.js): per contesto (token, porta, template, punto vuoto) la riga rapida, i gruppi con intestazione e le «Opzioni» (sottomenu), con gli id delle voci nell'ordine in cui compaiono. Si mostrano solo le voci utilizzabili in quel momento (la riga rapida anche spenta, con il motivo); i gruppi vuoti non si mostrano. «{nome}» nel titolo di un gruppo diventa il nome del template. altezza_voce_px: altezza minima di una voce, per il dito sul tablet.",
     "altezza_voce_px": 40,
     "token": {
-      "rapida": ["passo", "corsa", "scatto", "libero"],
-      "gruppi": [
-        { "titolo": "Movimento", "voci": ["in_volo", "quota_volo", "andature", "annulla_movimento", "nuovo_turno"] },
-        { "titolo": "Azioni", "voci": ["attacca", "porta_token"] },
-        { "titolo": "Veicolo", "voci": ["sali", "ruota_veicolo"] },
-        { "titolo": "Scendi", "voci": ["scendi_bordo"] },
-        { "titolo": "Linea di tiro", "voci": ["linea_bordo"] },
-        { "titolo": "Strumenti", "voci": ["linea", "area", "zoc", "template_qui"] },
-        { "titolo": "Scheda", "voci": ["mini_scheda", "scheda_completa"] },
-        { "titolo": "Selezione", "voci": ["selezione_token"] }
+      "rapida": [
+        "passo",
+        "corsa",
+        "scatto",
+        "libero"
       ],
-      "opzioni": ["nascondi", "luce_token", "sensi_token", "colore_bordo", "togli_token"]
+      "gruppi": [
+        {
+          "titolo": "Movimento",
+          "voci": [
+            "in_volo",
+            "quota_volo",
+            "andature",
+            "annulla_movimento",
+            "nuovo_turno"
+          ]
+        },
+        {
+          "titolo": "Azioni",
+          "voci": [
+            "attacca",
+            "porta_token"
+          ]
+        },
+        {
+          "titolo": "Veicolo",
+          "voci": [
+            "sali",
+            "ruota_veicolo"
+          ]
+        },
+        {
+          "titolo": "Scendi",
+          "voci": [
+            "scendi_bordo"
+          ]
+        },
+        {
+          "titolo": "Linea di tiro",
+          "voci": [
+            "linea_bordo"
+          ]
+        },
+        {
+          "titolo": "Strumenti",
+          "voci": [
+            "linea",
+            "area",
+            "zoc",
+            "template_qui"
+          ]
+        },
+        {
+          "titolo": "Scheda",
+          "voci": [
+            "mini_scheda",
+            "scheda_completa"
+          ]
+        },
+        {
+          "titolo": "Selezione",
+          "voci": [
+            "selezione_token"
+          ]
+        }
+      ],
+      "opzioni": [
+        "nascondi",
+        "luce_token",
+        "sensi_token",
+        "colore_bordo",
+        "togli_token"
+      ]
     },
     "porta": {
       "gruppi": [
-        { "titolo": "Azioni", "voci": ["porta_token"] },
-        { "titolo": "Porta", "voci": ["apri_chiudi", "blocca"] }
+        {
+          "titolo": "Azioni",
+          "voci": [
+            "porta_token"
+          ]
+        },
+        {
+          "titolo": "Porta",
+          "voci": [
+            "apri_chiudi",
+            "blocca"
+          ]
+        }
       ],
-      "opzioni": ["ruota", "segreta", "togli_porta"]
+      "opzioni": [
+        "ruota",
+        "segreta",
+        "togli_porta"
+      ]
     },
     "template": {
-      "gruppi": [{ "titolo": "{nome}", "voci": ["sposta_template", "nascondi_template"] }],
-      "opzioni": ["togli_template"]
+      "gruppi": [
+        {
+          "titolo": "{nome}",
+          "voci": [
+            "sposta_template",
+            "nascondi_template"
+          ]
+        }
+      ],
+      "opzioni": [
+        "togli_template"
+      ]
     },
     "mappa": {
       "gruppi": [
-        { "titolo": "Strumenti", "voci": ["template_qui", "linea_qui"] },
-        { "titolo": "Selezione", "voci": ["seleziona_pg", "seleziona_nemici", "seleziona_tutti", "annulla_selezione"] }
+        {
+          "titolo": "Strumenti",
+          "voci": [
+            "template_qui",
+            "linea_qui"
+          ]
+        },
+        {
+          "titolo": "Selezione",
+          "voci": [
+            "seleziona_pg",
+            "seleziona_nemici",
+            "seleziona_tutti",
+            "annulla_selezione"
+          ]
+        }
       ],
       "opzioni": []
     }
   },
   "luci": {
     "_nota": "Luci della mappa, versione semplice (fase 2, lotto 4; decisione di Marcello del 07/10/2026: si preparano in pochi secondi e non si ritoccano durante il gioco; niente ombre, intensità o livelli numerici; src/mappa/luce.js). Le categorie sono quelle di A.106 / A.116 (data/regole.json → illuminazione.livelli: sufficiente nessuna penalità, penombra −2, scarsa −4, buio come Accecato −8). Luce della scena: una per scena (ambiente). Zone a pennello facoltative: un Q può avere la sua categoria (anche «Luce» in una scena buia). Luci portate dai token: entro il raggio in Q (diagonale 1 Q) la zona diventa Luce; i muri non fermano la luce (nessun calcolo d'ombra, scelta voluta). Le vecchie etichette numeriche delle luci dell'app di Davide non si usano (A.125, decisione di Marcello del 07/10).",
-    "categorie": ["sufficiente", "penombra", "scarsa", "buio"],
+    "categorie": [
+      "sufficiente",
+      "penombra",
+      "scarsa",
+      "buio"
+    ],
     "predefinita": "sufficiente",
-    "raggio_scoperta_q": { "sufficiente": null, "penombra": 10, "scarsa": 5, "buio": 0 },
+    "raggio_scoperta_q": {
+      "sufficiente": null,
+      "penombra": 10,
+      "scarsa": 5,
+      "buio": 0
+    },
     "_nota_scoperta": "Nebbia automatica: un Q si scopre se il PG lo vede (muri e porte chiuse lo fermano) entro il raggio della luce di quel Q, non di quello del PG. A.142 (risposta di Davide dell’08/10/2026, decisione 146): piena luce nessun limite fisso (null: tutta la griglia), Penombra 10 Q, Luce scarsa 5 Q, Buio completo 0 (resta visibile la propria pedina, senza i Q adiacenti). Conta la luce della zona osservata: dal buio si vede una stanza illuminata oltre un corridoio oscuro, senza vedere il corridoio. Una luce portata rende Luce la zona attorno a sé, quindi si vede fin dove arriva. I sensi speciali seguono A.143 (sensi).",
     "sensi": [
-      { "id": "notturna", "nome": "Visione notturna", "portata_q": 80, "luci": ["penombra", "scarsa"], "nota": "in penombra e luce scarsa; richiede luce residua, non funziona nel buio completo" },
-      { "id": "termica", "nome": "Visione termica", "portata_q": 40, "luci": ["sufficiente", "penombra", "scarsa", "buio"], "nota": "anche nel buio naturale; distingue solo bersagli e superfici con contrasto termico, non scritte né colori" },
-      { "id": "felina", "nome": "Vista Felina", "portata_q": 20, "luci": ["buio"], "nota": "nel buio naturale: forme e profondità, non i colori" }
+      {
+        "id": "notturna",
+        "nome": "Visione notturna",
+        "portata_q": 80,
+        "luci": [
+          "penombra",
+          "scarsa"
+        ],
+        "nota": "in penombra e luce scarsa; richiede luce residua, non funziona nel buio completo"
+      },
+      {
+        "id": "termica",
+        "nome": "Visione termica",
+        "portata_q": 40,
+        "luci": [
+          "sufficiente",
+          "penombra",
+          "scarsa",
+          "buio"
+        ],
+        "nota": "anche nel buio naturale; distingue solo bersagli e superfici con contrasto termico, non scritte né colori"
+      },
+      {
+        "id": "felina",
+        "nome": "Vista Felina",
+        "portata_q": 20,
+        "luci": [
+          "buio"
+        ],
+        "nota": "nel buio naturale: forme e profondità, non i colori"
+      }
     ],
     "_nota_sensi": "A.143 (risposta di Davide dell’08/10/2026, decisione 147): Visione notturna 80 Q in penombra e luce scarsa (non al buio completo); Visione termica 40 Q, anche nel buio naturale; Vista Felina 20 Q nel buio naturale. Quando attivi rivelano automaticamente solo le parti della mappa percepite entro il loro limite; pareti e porte chiuse li bloccano; le creature nascoste richiedono le normali verifiche; non accorciano la vista normale in piena luce. Sulla mappa il master li accende sul token del PG (menu del token → «Sensi speciali…», campo sensi del token): un Q si vede se è entro la vista normale per la sua luce (raggio_scoperta_q) oppure entro la portata di un senso acceso che funziona in quella luce. Attivazione, costo e durata seguono le schede (impianti, Tecnica Vista Felina): la mappa non li controlla. Fonti nella scheda: regole.json → illuminazione.visione.",
     "sorgenti": [
-      { "id": "bastoncino", "nome": "Bastoncino luminoso", "raggio_q": 2, "rif": "dotazioni_personali:bastoncino-luminoso" },
-      { "id": "lanterna", "nome": "Lanterna elettrica", "raggio_q": 6, "rif": "dotazioni_personali:lanterna-elettrica" },
-      { "id": "frontale", "nome": "Lampada frontale", "raggio_q": 6, "rif": "dotazioni_personali:lampada-frontale" },
-      { "id": "torcia", "nome": "Torcia elettrica", "raggio_q": 10, "rif": "dotazioni_personali:torcia-elettrica" }
+      {
+        "id": "bastoncino",
+        "nome": "Bastoncino luminoso",
+        "raggio_q": 2,
+        "rif": "dotazioni_personali:bastoncino-luminoso"
+      },
+      {
+        "id": "lanterna",
+        "nome": "Lanterna elettrica",
+        "raggio_q": 6,
+        "rif": "dotazioni_personali:lanterna-elettrica"
+      },
+      {
+        "id": "frontale",
+        "nome": "Lampada frontale",
+        "raggio_q": 6,
+        "rif": "dotazioni_personali:lampada-frontale"
+      },
+      {
+        "id": "torcia",
+        "nome": "Torcia elettrica",
+        "raggio_q": 10,
+        "rif": "dotazioni_personali:torcia-elettrica"
+      }
     ],
     "_nota_sorgenti": "Raggi dal catalogo (Equipaggiamento §2.3). Torcia e lampada frontale hanno un fascio direzionale: sulla mappa illuminano tutto attorno, per semplicità.",
     "raggio_max_q": 30,
-    "oscurita": { "penombra": 0.22, "scarsa": 0.4, "buio": 0.6 },
-    "oscurita_giocatori": { "penombra": 0.18, "scarsa": 0.32, "buio": 0.48 },
+    "oscurita": {
+      "penombra": 0.22,
+      "scarsa": 0.4,
+      "buio": 0.6
+    },
+    "oscurita_giocatori": {
+      "penombra": 0.18,
+      "scarsa": 0.32,
+      "buio": 0.48
+    },
     "_nota_oscurita": "Opacità del velo scuro sulle zone non illuminate: per il master e (più leggero, perché la mappa resti leggibile) per i giocatori. Il buio non nasconde i token: a quello pensa la nebbia."
   },
   "pv_token": {
@@ -550,7 +849,10 @@
   },
   "porte": {
     "_nota": "Porte (fase 2, lotto 2; src/mappa/porte.js). A.125, decisione 130 (risposta di Davide del 06/10/2026): «Aprire o chiudere una normale porta accessibile e non bloccata costa 1 AzP, senza prova. Per azionarla manualmente occorre essere adiacenti e avere una mano libera. Attraversare la porta consuma il normale movimento, separatamente dall’apertura. Una porta bloccata richiede prima la procedura pertinente per sbloccarla, scassinarla o forzarla. Nell’app «chiusa» e «bloccata» sono condizioni distinte.» Per il movimento la porta aperta è un passaggio, chiusa o bloccata è muro. Le porte segrete sono muro per i giocatori finché il master non le rivela.",
-    "cardine": { "colore": "#111111", "bordo": "#ffffff" },
+    "cardine": {
+      "colore": "#111111",
+      "bordo": "#ffffff"
+    },
     "stati": [
       "aperta",
       "chiusa",
@@ -591,8 +893,15 @@
   "visuale": {
     "_nota": "Linea di visuale e di tiro (fase 2, lotto 3; src/mappa/visuale.js). Dai manuali: Giocatore §5.8 («Leggera −2 VA», «Media −4 VA», «Totale: il bersaglio non può essere attaccato direttamente»; «La Copertura è direzionale, non costituisce Armatura e più Coperture non si sommano»), §5.10 (bersaglio «protetto da un alleato» −4 VA), §5.11 (gittata a fasce), Scarto e A.124 (diagonale 1 Q). Nessun manuale dice come si legge la Copertura sulla griglia: la regola sotto è provvisoria.",
     "_nota_copertura": "Copertura «dal centro» (decisione di Marcello del 07/10/2026, al posto di «dagli angoli»): dal centro del Q di chi tira cinque linee, verso i quattro angoli e il centro dell'ingombro del bersaglio; contano quelle che attraversano un muro o una porta chiusa (sfiorare il bordo non blocca). copertura_linee dà il livello per 0, 1, 2, 3, 4, 5 linee bloccate. Chi tira con un ingombro grande parte dal centro del suo Q più favorevole. La nebbia automatica parte dallo stesso punto (il centro del Q del PG) verso il centro di ogni Q.",
-  "copertura_linee": ["nessuna", "leggera", "leggera", "media", "media", "totale"],
-  "_nota_a140": "A.140 (risposta di Davide dell’08/10/2026, decisione 144): cinque linee dal centro del Q dell’attaccante al centro e ai quattro angoli del bersaglio; 0 bloccate nessuna, 1–2 Leggera −2, 3–4 Media −4, 5 Totale; una linea è bloccata solo se attraversa davvero l’ostacolo (il contatto con un angolo non basta). Il Direttore corregge per altezza, postura e situazione. Rinviata da Davide la tabella automatica per tipo e altezza dell’ostacolo (anche se blocca una sola linea, con la postura del bersaglio). Le creature interposte seguono A.144.",
+    "copertura_linee": [
+      "nessuna",
+      "leggera",
+      "leggera",
+      "media",
+      "media",
+      "totale"
+    ],
+    "_nota_a140": "A.140 (risposta di Davide dell’08/10/2026, decisione 144): cinque linee dal centro del Q dell’attaccante al centro e ai quattro angoli del bersaglio; 0 bloccate nessuna, 1–2 Leggera −2, 3–4 Media −4, 5 Totale; una linea è bloccata solo se attraversa davvero l’ostacolo (il contatto con un angolo non basta). Il Direttore corregge per altezza, postura e situazione. Rinviata da Davide la tabella automatica per tipo e altezza dell’ostacolo (anche se blocca una sola linea, con la postura del bersaglio). Le creature interposte seguono A.144.",
     "token_in_mezzo": "interposta",
     "_nota_token_in_mezzo": "Creature fra chi tira e il bersaglio. A.141 e A.144 (risposta di Davide dell’08/10/2026, decisione 145): «interposta» (predefinito): un token attraversato dalla linea fra i centri propone in «Attacca!» la «Creatura interposta», −2 una sola volta qualunque sia il numero, senza seconda Prova (regole.json → attacco_distanza.interposta); il bersaglio ingaggiato (§5.10, −4 e seconda Prova) resta un interruttore a mano e la stessa creatura non conta due volte. Le creature non sono ostacoli della Copertura. Valori di prima, lasciati come dati: «protetto» (§5.10 per ogni token in mezzo) e «copertura» (proposta di Marcello del 07/10: i token come ostacoli). Non contano i token a 0 PV o A Terra; per i giocatori nemmeno i nascosti.",
     "campioni_per_q": 10,
@@ -615,7 +924,11 @@
     "_nota": "Tablet dei giocatori (fase 2, lotto 7; src/mappa/tablet.js, src/ui/mappa/giocatori.js, server.mjs → /api/vista-giocatori/movimento e /api/tablet). Il giocatore apre la vista giocatori dal tablet, sceglie «Sono…» e muove solo il suo PG; il server ricontrolla ogni movimento sulla scena completa. movimento_predefinito: «turno» (solo al proprio turno dello scontro aperto) o «sempre» (anche fuori turno e senza scontro); il master lo cambia per la scena da Strumenti → Tablet dei giocatori. avviso_turno_predefinito: avviso automatico «Tocca a te» quando arriva il turno del PG, spento finché il master non lo accende. vibrazione_ms: lo schema della vibrazione dell’avviso (solo dove il tablet la supporta). avviso_durata_ms: quanto resta l’avviso grande, se nessuno lo tocca. collegato_s: un tablet conta come collegato se il suo flusso di eventi è aperto o se ha chiesto la vista negli ultimi collegato_s secondi. testo_muovi («Chiedi di muovere» del master, 08/10) e testo_turno («Tocca a te», mandato dal server al cambio di turno): i testi dell’avviso grande, {nome} è il nome del PG. Gli avvisi arrivano alla scheda del PG e alla mappa aperte sul tablet.",
     "movimento_predefinito": "turno",
     "avviso_turno_predefinito": false,
-    "vibrazione_ms": [300, 120, 300],
+    "vibrazione_ms": [
+      300,
+      120,
+      300
+    ],
     "avviso_durata_ms": 12000,
     "collegato_s": 6,
     "testo_muovi": "Il master ti chiede di muovere {nome}",
@@ -660,9 +973,18 @@
     "campanella_vista_pausa_max_ms": 4000,
     "musica": {
       "cartella": "musica",
-      "formati": ["mp3", "ogg", "wav", "m4a", "aac"]
+      "formati": [
+        "mp3",
+        "ogg",
+        "wav",
+        "m4a",
+        "aac"
+      ]
     },
-    "volume_predefinito": { "musica": 0.4, "effetti": 0.8 },
+    "volume_predefinito": {
+      "musica": 0.4,
+      "effetti": 0.8
+    },
     "giocatori_predefinito": false
   }
 }
