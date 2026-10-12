@@ -4,9 +4,9 @@
 
 ## Regole della magia e novanta incantesimi
 
-**EDIZIONE 1.3**
+**EDIZIONE 1.4**
 
-Settembre 2026
+Ottobre 2026
 
 **GIOCO DI RUOLO**
 
@@ -5273,6 +5273,8 @@ Il progetto identifica il supporto, ogni incantesimo e la sua versione completa,
 
 Architetto TecnoMistico concede al Tecnomante l’accesso esclusivo al progetto e alla responsabilità dell’infusione degli Artefatti TecnoMistici, entro il proprio Grado di Classe. Per i manufatti Mistici e le batterie autonome occorre Ritualista Minore per i Gradi I–III oppure Ritualista Maggiore per i Gradi IV–VI, oltre alla conoscenza della procedura. Il costruttore fisico può essere un altro personaggio competente in Tecnologia e non deve essere un Ritualista.
 
+Eccezione della CyberArma. Maestro d’Arma consente al Custode di costruire la propria CyberArma personale, senza concedere accesso generale alla creazione TecnoMistica. Il progetto originale è privo di batteria e usa PM personali. Solo Custodi e Tecnomanti possono utilizzare l’oggetto; il Tecnomante può modificare il progetto per installare una batteria compatibile. Il frammento nel condensatore di energia mistica determina il colore della lama e non costituisce da solo una riserva. Le due modalità d’impiego, i limiti e i parametri da completare sono nel Manuale degli Armamenti, §7.25.
+
 Durante l’infusione deve essere presente chi conosce e può utilizzare ciascuna versione da infondere. Può essere una persona diversa dall’Officiante. La sua competenza fornisce l’accesso alla versione; per contribuire come Canale deve soddisfare anche i requisiti di partecipazione rituale.
 
 ## **24.2 Effetti, Grado e sintonizzazione**
@@ -5613,6 +5615,10 @@ Creazione. Supporto fisico 100 cr, Chroma Verde da 10 PM 1.000 cr, reagenti di A
 
 I Guanti da Combattimento Mistico sono una coppia di guanti e costituiscono un unico Artefatto Mistico da indossare sulle mani. Potenza Non Comune, Grado II, SnT 2 complessivi. Qualità fisica Non Comune, PS Integrità 12, 4 PI, peso complessivo 0,5 kg. Prezzo indicativo 3.000 cr; REP Molto Rara. Prezzo e profilo fisico sono parametri di catalogo da verificare in playtest.
 
+Classificazione e mani. Arma ravvicinata, famiglia Armi da pugno, tipo Guanti da combattimento; natura Artefatto Mistico. Si usano con Corpo a corpo (FOR), portata 1 Q e Manovra Stordire. Sono indossati e occupano 0 mani: il portatore può impugnare un’arma o un oggetto in ciascuna mano, oppure un’arma a due mani. I Tirapugni ordinari sono invece impugnati e occupano una mano.
+
+Impiego in combattimento. Quando il portatore sferra un pugno usa il profilo dei Guanti; quando attacca con un’arma impugnata usa il profilo di quell’arma. I pugni con i Guanti conservano il danno senz’armi e i benefici pertinenti, compresi Arti Marziali e il dado del Lottatore. Il danno fisso dei Tirapugni commerciali non sostituisce quello del personaggio. I poteri dei Guanti mantengono le applicazioni e i limiti descritti nella scheda e non si trasferiscono alle armi impugnate.
+
 Proprietà passiva. Conferiscono \+1 VA alle Prove per colpire con i pugni e alle Prove per colpire in corpo a corpo richieste dagli Incantesimi. Il beneficio passivo funziona anche senza sintonizzazione. Non concede danno passivo aggiuntivo e non si applica a calci, armi impugnate, attacchi a distanza, Prove di Potere per lanciare Incantesimi o danni degli Incantesimi.
 
 Riserva. Cariche Verdi da 10 PM, utilizzabili soltanto per alimentare i Guanti. Non sono una Batteria per il personaggio. La parola Cariche indica una riserva in PM: non significa dieci attivazioni.
@@ -5630,6 +5636,8 @@ Il gruppo possiede due Batterie Matrice Rosse da 10 PM, create con le schegge de
 Il gruppo possiede inoltre quattro Schegge instabili Verdi da 5 PM ciascuna: SnT 0 e capacità complessiva 20 PM, distribuita in quattro oggetti separati. Il totale non permette di prelevare 20 PM da una singola fonte. I PM attuali delle Batterie, delle Schegge e degli Artefatti posseduti si registrano secondo lo stato effettivo in campagna, senza presumere che siano pieni.
 
 Ogni oggetto ha un’unica scheda e un’unica istanza nell’inventario. La stessa voce può apparire nelle categorie Armamenti, Artefatti e Batterie secondo le sue funzioni. Quantità, peso, PM e SnT si conteggiano una sola volta; una coppia di Guanti costituisce un solo oggetto. Il catalogo completo è nel Manuale dell’Equipaggiamento, capitolo 10; la scheda di combattimento dei Guanti è nel Manuale degli Armamenti, §7.24.
+
+Classificazione degli oggetti. La funzione e la natura si registrano separatamente: un oggetto può essere contemporaneamente un’Arma e un Artefatto Mistico o TecnoMistico. Quando è utilizzabile come arma, la scheda indica famiglia, Abilità e profilo d’attacco. La modalità di impiego distingue gli oggetti impugnati da quelli indossati e ne indica le mani occupate. Le categorie sono viste della stessa istanza: quantità, peso, Integrità, riserve e SnT si conteggiano una sola volta.
 
 # **27 Artefatti consumabili** {#27-artefatti-consumabili}
 

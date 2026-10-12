@@ -4,7 +4,7 @@
 
 ## Personaggi e regole di gioco
 
-**EDIZIONE CONSULTABILE 0.47**
+**EDIZIONE CONSULTABILE 0.48**
 
 Ottobre 2026
 
@@ -3239,6 +3239,8 @@ Il Custode ottiene o costruisce una CyberArma personale. Quando la utilizza per 
 
 Nessun altro personaggio può evocare l’Arma Astrale del Custode mediante la sua CyberArma. Rimane illimitato il numero delle evocazioni, pagando ogni volta il costo previsto.
 
+Il progetto originale della CyberArma è privo di batteria interna e utilizza PM personali. La costruzione personale concessa da Maestro d’Arma è un’eccezione specifica all’accesso del Tecnomante alla creazione degli Artefatti TecnoMistici. I Tecnomanti possono utilizzare la CyberArma con il proprio profilo base e modificarne il progetto per installare una batteria; tale uso non evoca l’Arma Astrale personale del Custode. Il frammento di cristallo nel condensatore determina il colore della lama. Profili e configurazioni sono nel Manuale degli Armamenti, §7.25.
+
 #### **V Grado Scudo Assoluto**
 
 Una volta per scena, prima delle proprie Difese, Prove Salvezza o dell’applicazione degli effetti, il Custode può annullare completamente su di sé un singolo Incantesimo, diretto o ad Area. Deve essere cosciente e percepire la minaccia. Non richiede Azioni, PM o Prove aggiuntive.
@@ -3452,6 +3454,8 @@ Capacità superiore. Il Tecnomante ottiene \+2 alla capacità complessiva di sin
 
 Creazione TecnoMistica. Il Talento concede l’accesso esclusivo al progetto e alla responsabilità dell’infusione degli Artefatti TecnoMistici entro il proprio Grado di Classe. La creazione comprende Artefatti per il progetto obbligatorio, Tecnologia per la costruzione e Rituali per l’infusione (Manuale della Magia, sezione 24). Il progetto può essere già disponibile e la costruzione fisica può essere affidata a un altro tecnico; il Talento non sostituisce le tre fasi con una singola Prova.
 
+CyberArma. Il Tecnomante può utilizzare questo Artefatto riservato ai Custodi e modificare il progetto per aggiungere una batteria interna compatibile. Il progetto originale è alimentato dai PM personali. Per l’impiego base: Armi da mischia (DES), una mano, portata 1 Q, FOR richiesta 3; 1 AzP e 2 PM manifestano per 10 Round una lama da 1d8 Magico più i modificatori pertinenti, senza Concentrazione. La batteria modifica la fonte energetica, senza concedere i benefici del Custode. Il colore della lama dipende dal frammento nel condensatore. Parametri e limiti della configurazione seguono il Manuale degli Armamenti, §7.25. La costruzione personale della CyberArma tramite Maestro d’Arma resta l’eccezione specifica concessa al Custode.
+
 #### **III Grado Ricarica Efficiente**
 
 **Requisito per utilizzare il beneficio:** Addestramento Taumaturgo. Ricarica Efficiente porta il rapporto ordinario delle conversioni da 3:1 a 2:1, compresa la ricarica dei cristalli e delle batterie. Con Conversione Migliorata il rapporto diventa 1:1.
@@ -3595,6 +3599,8 @@ Comprende coltelli, pugnali, spade leggere, manganelli, mazze, bastoni, machete,
 Comprende pugni, calci, prese, lotta, immobilizzazioni, strangolamenti, spinte, sbilanciamenti e disarmi eseguiti a mani nude. Comprende inoltre Tirapugni, Tirapugni chiodato e Tirapugni concussivo. I benefici che richiedono specificamente attacchi senz’armi mantengono quel requisito.
 
 Il danno base di un attacco senz’armi è 1d4, al quale si aggiungono il bonus di FOR al danno e gli altri benefici pertinenti (§5.13). Arti Marziali porta il dado a 1d6; il Lottatore utilizza il proprio dado quando superiore.
+
+I Guanti da Combattimento Mistico sono un’Arma da pugno indossata: occupano 0 mani e consentono di impugnare oggetti in entrambe le mani o un’arma a due mani. I pugni sferrati con essi conservano il danno e i benefici pertinenti del combattimento senz’armi, compresi Arti Marziali e il dado del Lottatore. I Tirapugni commerciali restano armi impugnate con una mano e usano il proprio danno. Profili e poteri dei Guanti sono nel Manuale degli Armamenti, §7.24.
 
 ### **Difese**
 

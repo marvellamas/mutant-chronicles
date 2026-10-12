@@ -1399,3 +1399,17 @@ Il censimento degli impianti (`docs/censimento-impianti.md`) ha trovato i numeri
   Il Manuale del Giocatore non dà un valore per queste penalità, quindi la scheda non ha un numero da togliere e
   l'impianto resta un promemoria. Quanto vale la penalità (per esempio −2 in penombra, −4 al buio con luce residua)
   e a quali Prove si applica: Percezione, attacchi, altro?
+
+## Domanda aperta sulla CyberArma (manuali del 12/10/2026)
+
+Il controllo dei manuali del 12 ottobre (`docs/diff-manuali-2026-10-12.md`) ha trovato il nuovo §7.25 degli
+Armamenti 0.61, con la CyberArma descritta nei due impieghi (Custode e Tecnomante) ma con i parametri di
+catalogo dichiarati da completare. Nessun dato applicato: la CyberArma non è ancora nel catalogo dell'app.
+
+- **A.158 — CyberArma: parametri mancanti (Armamenti §7.25).** Il paragrafo dice espressamente che «SnT del
+  progetto originale, parametri commerciali e costi e procedura specifici di costruzione e modifica restano
+  da completare nel catalogo» e che «colore energetico, capacità, SnT e costo della batteria e della modifica
+  devono essere definiti nella relativa configurazione; non è assegnata automaticamente una batteria Verde da
+  10 PM». Servono: SnT del progetto originale; prezzo, Reperibilità, Qualità, PS Integrità, PI e peso; costo e
+  procedura della costruzione tramite Maestro d'Arma (III Grado) e della modifica per la batteria interna;
+  colore, capacità, SnT e costo della batteria compatibile. *Nel frattempo:* nessuna scheda nel catalogo.

@@ -4,7 +4,7 @@
 
 ## Armi armature scudi e dotazioni operative
 
-**EDIZIONE 0.60**
+**EDIZIONE 0.61**
 
 Ottobre 2026
 
@@ -82,9 +82,15 @@ Sezioni e pagine di consultazione
 
 [7.23 Catalogo dei rinforzi	134](#7.23-catalogo-dei-rinforzi)
 
+7.24 Guanti da Combattimento Mistico
+
+7.25 CyberArma
+
 # **Capitolo 7 — Armamenti**
 
 Questo capitolo presenta i dati delle armi, le regole di Integrità, gli accessori, le protezioni e i cataloghi operativi. Ogni scheda specifica le dotazioni comprese nel prezzo; armi, munizioni, rinforzi e corredi separati si acquistano individualmente. I modelli iconici mantengono la categoria e il profilo indicati, senza suddivisione automatica in versioni Leggere, Medie e Pesanti.
+
+Classificazione degli oggetti. La funzione e la natura si registrano separatamente: un oggetto può essere contemporaneamente un’Arma e un Artefatto Mistico o TecnoMistico. Quando è utilizzabile come arma, la scheda indica famiglia, Abilità e profilo d’attacco. La modalità di impiego distingue gli oggetti impugnati da quelli indossati e ne indica le mani occupate. Le categorie sono viste della stessa istanza: quantità, peso, Integrità, riserve e SnT si conteggiano una sola volta.
 
 ## **7.1 Dati fondamentali delle armi**
 
@@ -5413,6 +5419,10 @@ Configurazione completa: AR 4, FOR richiesta 6 e costo complessivo 10.500. L’a
 
 I Guanti da Combattimento Mistico sono una coppia di guanti e costituiscono un unico Artefatto Mistico da indossare sulle mani. Potenza Non Comune, Grado II, SnT 2 complessivi. Qualità fisica Non Comune, PS Integrità 12, 4 PI, peso complessivo 0,5 kg. Prezzo indicativo 3.000 cr; REP Molto Rara. Prezzo e profilo fisico sono parametri di catalogo da verificare in playtest.
 
+Classificazione e mani. Arma ravvicinata, famiglia Armi da pugno, tipo Guanti da combattimento; natura Artefatto Mistico. Si usano con Corpo a corpo (FOR), portata 1 Q e Manovra Stordire. Sono indossati e occupano 0 mani: il portatore può impugnare un’arma o un oggetto in ciascuna mano, oppure un’arma a due mani. I Tirapugni ordinari sono invece impugnati e occupano una mano.
+
+Impiego in combattimento. Quando il portatore sferra un pugno usa il profilo dei Guanti; quando attacca con un’arma impugnata usa il profilo di quell’arma. I pugni con i Guanti conservano il danno senz’armi e i benefici pertinenti, compresi Arti Marziali e il dado del Lottatore. Il danno fisso dei Tirapugni commerciali non sostituisce quello del personaggio. I poteri dei Guanti mantengono le applicazioni e i limiti descritti nella scheda e non si trasferiscono alle armi impugnate.
+
 Proprietà passiva. Conferiscono \+1 VA alle Prove per colpire con i pugni e alle Prove per colpire in corpo a corpo richieste dagli Incantesimi. Il beneficio passivo funziona anche senza sintonizzazione. Non concede danno passivo aggiuntivo e non si applica a calci, armi impugnate, attacchi a distanza, Prove di Potere per lanciare Incantesimi o danni degli Incantesimi.
 
 Riserva. Cariche Verdi da 10 PM, utilizzabili soltanto per alimentare i Guanti. Non sono una Batteria per il personaggio. La parola Cariche indica una riserva in PM: non significa dieci attivazioni.
@@ -5426,4 +5436,18 @@ Creazione. La ricetta approvata tratta il beneficio passivo come Grado I e l’a
 Il danno base dei pugni resta quello del personaggio, con FOR, Arti Marziali e gli altri benefici pertinenti. I Guanti aggiungono soltanto i bonus descritti. La scheda commerciale è nel Manuale dell’Equipaggiamento, §10.6; regole delle fonti e della sintonizzazione nel Manuale della Magia, §§26.1–26.2. È un unico oggetto visibile sia negli Armamenti sia negli Artefatti: il peso di 0,5 kg, i 10 PM e SnT 2 si contano una volta sola.
 
 Il campionario di Batterie Mistiche, Batterie Matrice e Schegge instabili, con tutti i colori e le capacità, è nel Manuale dell’Equipaggiamento, §§10.2–10.4. La Pietra della Vigilanza, che è anche una Batteria, è descritta nel §10.5 dello stesso manuale.
+
+## **7.25 CyberArma**
+
+La CyberArma è un Artefatto TecnoMistico utilizzabile soltanto dai Custodi e, per eccezione, dai Tecnomanti. Il progetto originale comprende un’impugnatura, un condensatore di energia mistica e un frammento di cristallo; è privo di batteria interna e viene alimentato con i PM personali dell’utilizzatore. La lama si manifesta durante l’attivazione.
+
+Impiego del Custode. Maestro d’Arma, al III Grado, permette al Custode di ottenere o costruire la propria CyberArma personale. Con essa evoca l’Arma Astrale per 1 PM e 15 Round, includendo l’evocazione nell’Azione del primo attacco, e aggiunge \+1 danno. Il danno base segue il Grado di Custode e gli altri benefici pertinenti del Manuale del Giocatore, §3.9.2. Nessun altro personaggio evoca l’Arma Astrale personale di quel Custode mediante l’oggetto.
+
+Impiego del Tecnomante. Il profilo base usa Armi da mischia (DES), una mano, portata 1 Q e FOR richiesta 3\. Con 1 AzP e 2 PM manifesta la lama per 10 Round, senza Concentrazione; infligge 1d8 Magico più i modificatori pertinenti. Non concede bonus propri al VA. Il danno Magico è assorbito normalmente dall’Armatura. Questo impiego non attribuisce i Talenti, la progressione del danno o i benefici di Maestro d’Arma del Custode.
+
+Batteria interna. Il Tecnomante può modificare il progetto per installare una batteria compatibile. La configurazione modificata resta utilizzabile soltanto da Custodi e Tecnomanti e consente di alimentare l’impiego pertinente con PM personali oppure con la batteria interna. La modifica non cambia da sola danno, durata, costi in PM o benefici di Classe. Colore energetico, capacità, SnT e costo della batteria e della modifica devono essere definiti nella relativa configurazione; non è assegnata automaticamente una batteria Verde da 10 PM.
+
+Colore della lama. Il colore è determinato dal frammento di cristallo inserito nel condensatore di energia mistica e cambia sostituendo quel componente. Il frammento svolge una funzione di focalizzazione e non costituisce da solo una riserva di PM. Il colore della lama non aggiunge automaticamente effetti elementali al danno Magico e non modifica le compatibilità energetiche delle fonti utilizzate.
+
+Costruzione. La costruzione della propria CyberArma attraverso Maestro d’Arma è un’eccezione specifica concessa al Custode e non abilita alla creazione generale di Artefatti TecnoMistici. Il Tecnomante conserva l’accesso alle normali procedure di progetto, costruzione e infusione e alla modifica per la batteria interna. SnT del progetto originale, parametri commerciali e costi e procedura specifici di costruzione e modifica restano da completare nel catalogo.
 

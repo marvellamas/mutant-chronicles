@@ -4,7 +4,7 @@
 
 ## Strumenti dotazioni e regole di impiego
 
-**EDIZIONE 0.6**
+**EDIZIONE 0.7**
 
 Ottobre 2026
 
@@ -1807,6 +1807,10 @@ Creazione. Supporto fisico 100 cr, Chroma Verde da 10 PM 1.000 cr, reagenti di A
 
 I Guanti da Combattimento Mistico sono una coppia di guanti e costituiscono un unico Artefatto Mistico da indossare sulle mani. Potenza Non Comune, Grado II, SnT 2 complessivi. Qualità fisica Non Comune, PS Integrità 12, 4 PI, peso complessivo 0,5 kg. Prezzo indicativo 3.000 cr; REP Molto Rara. Prezzo e profilo fisico sono parametri di catalogo da verificare in playtest.
 
+Classificazione e mani. Arma ravvicinata, famiglia Armi da pugno, tipo Guanti da combattimento; natura Artefatto Mistico. Si usano con Corpo a corpo (FOR), portata 1 Q e Manovra Stordire. Sono indossati e occupano 0 mani: il portatore può impugnare un’arma o un oggetto in ciascuna mano, oppure un’arma a due mani. I Tirapugni ordinari sono invece impugnati e occupano una mano.
+
+Impiego in combattimento. Quando il portatore sferra un pugno usa il profilo dei Guanti; quando attacca con un’arma impugnata usa il profilo di quell’arma. I pugni con i Guanti conservano il danno senz’armi e i benefici pertinenti, compresi Arti Marziali e il dado del Lottatore. Il danno fisso dei Tirapugni commerciali non sostituisce quello del personaggio. I poteri dei Guanti mantengono le applicazioni e i limiti descritti nella scheda e non si trasferiscono alle armi impugnate.
+
 Proprietà passiva. Conferiscono \+1 VA alle Prove per colpire con i pugni e alle Prove per colpire in corpo a corpo richieste dagli Incantesimi. Il beneficio passivo funziona anche senza sintonizzazione. Non concede danno passivo aggiuntivo e non si applica a calci, armi impugnate, attacchi a distanza, Prove di Potere per lanciare Incantesimi o danni degli Incantesimi.
 
 Riserva. Cariche Verdi da 10 PM, utilizzabili soltanto per alimentare i Guanti. Non sono una Batteria per il personaggio. La parola Cariche indica una riserva in PM: non significa dieci attivazioni.
@@ -1820,6 +1824,10 @@ Creazione. La ricetta approvata tratta il beneficio passivo come Grado I e l’a
 ## **10.7 Inventario e dotazioni di campagna**
 
 La Pietra compare sia fra gli Artefatti sia fra le Batterie; i Guanti sia fra gli Armamenti sia fra gli Artefatti. Si tratta di viste della stessa scheda: non duplicano quantità, peso, PM o costo SnT. In App la riserva appartiene all’istanza dell’oggetto; i campi di categoria possono contenere più valori. La sintonizzazione si gestisce soltanto per le istanze con SnT maggiore di zero.
+
+Classificazione degli oggetti. La funzione e la natura si registrano separatamente: un oggetto può essere contemporaneamente un’Arma e un Artefatto Mistico o TecnoMistico. Quando è utilizzabile come arma, la scheda indica famiglia, Abilità e profilo d’attacco. La modalità di impiego distingue gli oggetti impugnati da quelli indossati e ne indica le mani occupate. Le categorie sono viste della stessa istanza: quantità, peso, Integrità, riserve e SnT si conteggiano una sola volta.
+
+CyberArma. Artefatto TecnoMistico riservato a Custodi e Tecnomanti, con profili e impieghi nel Manuale degli Armamenti, §7.25. Il progetto originale usa PM personali ed è privo di batteria; il Tecnomante può modificarlo per inserire una batteria compatibile. Si registra un solo oggetto nelle categorie Armi e Artefatti. Il frammento nel condensatore determina il colore della lama. SnT, batteria e dati commerciali si compilano solo quando definiti dalla configurazione, senza assegnare valori automatici.
 
 | Dotazione del gruppo | Quantità | Dati da registrare |
 | :---- | ----- | :---- |
