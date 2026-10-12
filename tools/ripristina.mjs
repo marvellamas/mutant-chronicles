@@ -8,7 +8,7 @@
 //   4. ogni cartella presente nello zip si sostituisce: la vecchia si sposta da parte, la nuova si scrive, poi la
 //      vecchia si toglie (se qualcosa va storto si rimette la vecchia). Le cartelle che lo zip non ha restano come sono;
 //      il LEGGIMI.txt di ogni cartella resta sempre.
-import { existsSync, readdirSync, statSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, statSync, readFileSync, openSync, readSync, closeSync, fstatSync } from 'node:fs';
 import { mkdir, writeFile, rename, rm, copyFile, readFile } from 'node:fs/promises';
 import { join, dirname, normalize, sep } from 'node:path';
 import { CARTELLE, cartelleDi, raccogli, creaZip, leggiZip, nomeLibero, dimensione, cartellaDrive } from './salva-sessione.mjs';
@@ -96,6 +96,78 @@ export function avvisoCartellaVuota({ cartella, salvataggi, autosave, backup = n
     ? `Non trovo personaggi in questa cartella: ${cartella}. Ci sono salvataggi del ${quando(trovati[0].mtime)}: vuoi ripristinarne uno?`
     : `Non trovo personaggi in questa cartella: ${cartella}. Non ci sono nemmeno salvataggi da cui ripartire.`;
   return { vuota: true, percorso: cartella, quanti: 0, salvataggi: trovati, testo };
+}
+
+// --- che cosa c'è dentro uno zip, senza aprirlo tutto ----------------------------------------------------------
+// Un salvataggio può essere di 11 MB e nell'elenco ce ne sono fino a 30: si legge solo l'indice in coda al file
+// (la «central directory» dello zip), che dà i nomi senza decomprimere niente.
+
+/** I nomi dei file dentro uno zip, letti dal suo indice. `null` se l'indice non si legge. */
+export function nomiNelloZip(percorso) {
+  let fd;
+  try {
+    fd = openSync(percorso, 'r');
+    const tot = fstatSync(fd).size;
+    const coda = Math.min(tot, 66000); // 22 byte di indice finale + al massimo 65535 di commento
+    const fine = Buffer.alloc(coda);
+    readSync(fd, fine, 0, coda, tot - coda);
+    let i = fine.length - 22;
+    while (i >= 0 && fine.readUInt32LE(i) !== 0x06054b50) i--;
+    if (i < 0) return null;
+    const quanti = fine.readUInt16LE(i + 10);
+    const lungIndice = fine.readUInt32LE(i + 12);
+    const inizio = fine.readUInt32LE(i + 16);
+    if (inizio === 0xffffffff) return null; // zip64: non ci serve, si rinuncia
+    const indice = Buffer.alloc(lungIndice);
+    readSync(fd, indice, 0, lungIndice, inizio);
+    const nomi = [];
+    let p = 0;
+    for (let k = 0; k < quanti && p + 46 <= indice.length; k++) {
+      if (indice.readUInt32LE(p) !== 0x02014b50) return null;
+      const lnome = indice.readUInt16LE(p + 28);
+      const lextra = indice.readUInt16LE(p + 30);
+      const lcomm = indice.readUInt16LE(p + 32);
+      nomi.push(indice.toString('utf8', p + 46, p + 46 + lnome).replace(/\\/g, '/'));
+      p += 46 + lnome + lextra + lcomm;
+    }
+    return nomi;
+  } catch { return null; } finally { if (fd !== undefined) try { closeSync(fd); } catch { /* niente */ } }
+}
+
+/** Quante voci per cartella: { personaggi: 3, scontri: 1, mappe: 2, … }. Funzione pura. */
+export function perCartella(nomi) {
+  const out = {};
+  for (const n of nomi ?? []) {
+    const [c, ...resto] = n.replace(/\\/g, '/').split('/');
+    if (!resto.length || !resto.join('/') || /\/$/.test(n)) continue;
+    if (/^LEGGIMI\.txt$/i.test(resto[resto.length - 1])) continue;
+    out[c] = (out[c] ?? 0) + 1;
+  }
+  return out;
+}
+
+/** Come si dice: «3 personaggi · 1 scontro · 2 mappe · 5 immagini». Funzione pura. */
+export const PLURALI = {
+  personaggi: ['personaggio', 'personaggi'], nemici: ['nemico', 'nemici'], scontri: ['scontro', 'scontri'],
+  veicoli: ['veicolo', 'veicoli'], scene: ['scena', 'scene'], mappe: ['mappa', 'mappe'],
+  galleria: ['immagine', 'immagini'], musica: ['brano', 'brani'], tavolo: ['file del tavolo', 'file del tavolo'],
+};
+export function testoContenuto(conteggi) {
+  const voci = Object.entries(conteggi ?? {}).filter(([, n]) => n > 0);
+  if (!voci.length) return 'vuoto';
+  // nell'ordine in cui conta al tavolo, poi il resto
+  const ordine = Object.keys(PLURALI);
+  voci.sort((a, b) => (ordine.indexOf(a[0]) + 1 || 99) - (ordine.indexOf(b[0]) + 1 || 99) || a[0].localeCompare(b[0]));
+  return voci.map(([c, n]) => {
+    const p = PLURALI[c];
+    return p ? `${n} ${n === 1 ? p[0] : p[1]}` : `${n} in ${c}`;
+  }).join(' · ');
+}
+
+/** Il contenuto di un salvataggio per l'elenco: «3 personaggi · 1 scontro», o null se non si legge. */
+export function contenutoPerElenco(percorso) {
+  const nomi = nomiNelloZip(percorso);
+  return nomi === null ? null : testoContenuto(perCartella(nomi));
 }
 
 /**

@@ -13,8 +13,8 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createInterface } from 'node:readline/promises';
 import { cartelleDi, perConsole } from './salva-sessione.mjs';
-import { elencoSalvataggi, rigaSalvataggio, statoServer, spegniServer, ripristina, contenutoSalvataggio, avvisoCartellaVuota, postiSalvataggi } from './ripristina.mjs';
-import { leggiConfig } from './salva-sessione.mjs';
+import { elencoSalvataggi, rigaSalvataggio, quando, statoServer, spegniServer, ripristina, contenutoSalvataggio, avvisoCartellaVuota, postiSalvataggi, contenutoPerElenco } from './ripristina.mjs';
+import { leggiConfig, dimensione } from './salva-sessione.mjs';
 import { statoImpostazioni, testoAvvisi, testoDrive, argomentoGruppo, salvaAvvisi, salvaDrive, posizioniDrive, notificaDiProva, erroriNuovi, FILE_REGISTRO } from './impostazioni.mjs';
 import { hostname } from 'node:os';
 
@@ -96,12 +96,21 @@ async function voceRipristina() {
   const rl = lettore();
   const chiedi = (d) => rl.chiedi(d);
   try {
-    const salvataggi = join(radice, 'salvataggi');
-    const elenco = elencoSalvataggi({ salvataggi, autosave: join(radice, 'autosave') });
+    const config = (() => { try { return leggiConfig(join(radice, 'config-salvataggi.json')); } catch { return {}; } })();
+    const posti = postiSalvataggi(radice, config);
+    const salvataggi = posti.salvataggi;
+    const elenco = elencoSalvataggi(posti);
     console.log('\n Ripristina un salvataggio\n');
-    if (!elenco.length) { console.log(' Nessun salvataggio trovato in salvataggi\\ o in autosave\\.'); return; }
-    console.log(' Salvataggi, dal piu\' recente:');
-    elenco.forEach((s, i) => console.log(`  ${String(i + 1).padStart(2)}. ${rigaSalvataggio(s)}`));
+    if (!elenco.length) {
+      console.log(' Nessun salvataggio trovato. Cercati in:');
+      for (const d of Object.values(posti).filter(Boolean)) console.log(`   ${d}`);
+      return;
+    }
+    console.log(' Salvataggi, dal piu\' recente (data e ora, tipo, dove sta, dimensione, che cosa contiene):');
+    elenco.forEach((s, i) => {
+      console.log(`  ${String(i + 1).padStart(2)}. ${quando(s.mtime)}  ${s.nome}`);
+      console.log(`      ${s.tipoTesto} · ${s.dove} · ${dimensione(s.dimensione)} · ${perConsole(contenutoPerElenco(s.percorso) ?? 'contenuto non leggibile')}`);
+    });
     const r = (await chiedi('\n Numero del salvataggio da rimettere (Invio per tornare al menu): ')).trim();
     const scelto = elenco[Number(r) - 1];
     if (!r || !scelto) { console.log(r ? ' Numero non valido: niente da fare.' : ' Annullato.'); return; }
@@ -117,8 +126,13 @@ async function voceRipristina() {
     // cosa c'è nello zip, prima di chiedere conferma
     let contenuto;
     try { contenuto = contenutoSalvataggio(readFileSync(scelto.percorso)); } catch (e) { console.log(` Questo salvataggio non si puo' usare: ${e.message}.`); return; }
-    console.log(`\n ${scelto.etichetta} contiene:`);
+    console.log(`\n ${scelto.nome} (${scelto.tipoTesto}, ${scelto.dove}) del ${quando(scelto.mtime)} contiene:`);
     for (const [c, f] of Object.entries(contenuto.perCartella)) console.log(`   ${c} (${f.length} file)`);
+    if (contenuto.estranei.length) {
+      // una copia fatta prima di un aggiornamento contiene anche musica, avvisi e la configurazione: si lasciano stare
+      const fuori = [...new Set(contenuto.estranei.map((n) => n.split('/')[0]))].sort();
+      console.log(`   dentro c'e' anche ${fuori.join(', ')}: non si tocca, il ripristino rimette solo le cartelle di gioco.`);
+    }
     console.log('\n Queste cartelle di Mutant verranno sostituite. Prima faccio una copia di sicurezza di come sono');
     console.log(' adesso (salvataggi\\prima-del-ripristino_....zip), da cui si puo\' tornare indietro con questa stessa voce.');
     if (!si(await chiedi(' Procedo? [S/N] '))) { console.log(' Annullato: non ho toccato nulla.'); return; }
