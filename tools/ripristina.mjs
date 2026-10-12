@@ -11,7 +11,7 @@
 import { existsSync, readdirSync, statSync, readFileSync } from 'node:fs';
 import { mkdir, writeFile, rename, rm, copyFile, readFile } from 'node:fs/promises';
 import { join, dirname, normalize, sep } from 'node:path';
-import { CARTELLE, cartelleDi, raccogli, creaZip, leggiZip, nomeLibero, dimensione } from './salva-sessione.mjs';
+import { CARTELLE, cartelleDi, raccogli, creaZip, leggiZip, nomeLibero, dimensione, cartellaDrive } from './salva-sessione.mjs';
 
 const due = (n) => String(n).padStart(2, '0');
 /** prima-del-ripristino_AAAA-MM-GG_hhmm.zip */
@@ -20,33 +20,83 @@ export const nomeCopiaSicurezza = (d) => `prima-del-ripristino_${d.getFullYear()
 /** «09/10/2026 21:40» */
 export const quando = (d) => `${due(d.getDate())}/${due(d.getMonth() + 1)}/${d.getFullYear()} ${due(d.getHours())}:${due(d.getMinutes())}`;
 
+/** Che cos'è ogni tipo di salvataggio, per l'elenco. */
+export const TIPI = {
+  sessione: 'sessione',
+  'prima-del-ripristino': 'prima di un ripristino',
+  'prima-aggiornamento': 'prima di un aggiornamento',
+  autosave: 'automatico (ultimo)',
+  'autosave-precedente': 'automatico (quello prima)',
+};
+
 /**
- * I salvataggi da cui si può ripartire, dal più recente: [{ nome, percorso, tipo, etichetta, mtime, dimensione }].
- * tipo: 'sessione' | 'prima-del-ripristino' | 'autosave' | 'autosave-precedente'.
+ * I salvataggi da cui si può ripartire, dal più recente.
+ * Si guarda in quattro posti (12/10/2026: prima erano due, e dopo un aggiornamento sbagliato in «salvataggi»
+ * restava solo l'ultimo mentre gli altri erano su Drive o fra le copie dell'aggiornamento):
+ *   - `salvataggi`: sessione_… e prima-del-ripristino_… («Salva sessione», «Spegni Mutant»);
+ *   - `backup`: locali_… di backup-prima-aggiornamento/ (copie fatte prima di ogni aggiornamento);
+ *   - `autosave`: autosave.zip e autosave-precedente.zip;
+ *   - `drive`: la cartella di Google Drive impostata in config-salvataggi.json.
+ * @returns [{ nome, percorso, tipo, tipoTesto, dove, etichetta, mtime, dimensione }]
  */
-export function elencoSalvataggi({ salvataggi, autosave, massimo = 15 }) {
+export function elencoSalvataggi({ salvataggi, autosave, backup = null, drive = null, massimo = 30 }) {
   const out = [];
-  if (existsSync(salvataggi)) {
-    for (const n of readdirSync(salvataggi)) {
+  const tipoDaNome = (n) => (n.startsWith('prima-del-ripristino_') ? 'prima-del-ripristino'
+    : n.startsWith('sessione_') ? 'sessione' : n.startsWith('locali_') ? 'prima-aggiornamento' : null);
+  const cartella = (dove, etichettaDove) => {
+    if (!dove || !existsSync(dove)) return;
+    for (const n of readdirSync(dove)) {
       if (!/\.zip$/i.test(n)) continue;
-      const tipo = n.startsWith('prima-del-ripristino_') ? 'prima-del-ripristino' : n.startsWith('sessione_') ? 'sessione' : null;
+      const tipo = tipoDaNome(n);
       if (!tipo) continue;
-      const p = join(salvataggi, n);
-      const s = statSync(p);
-      out.push({ nome: n, percorso: p, tipo, etichetta: tipo === 'sessione' ? n : `${n} (copia di sicurezza)`, mtime: s.mtime, dimensione: s.size });
+      const p = join(dove, n);
+      let s;
+      try { s = statSync(p); } catch { continue; }
+      out.push({ nome: n, percorso: p, tipo, tipoTesto: TIPI[tipo], dove: etichettaDove, mtime: s.mtime, dimensione: s.size });
     }
-  }
-  for (const [n, tipo, etichetta] of [['autosave.zip', 'autosave', 'autosave (ultimo automatico)'], ['autosave-precedente.zip', 'autosave-precedente', 'autosave (quello prima)']]) {
-    const p = join(autosave, n);
-    if (!existsSync(p)) continue;
+  };
+  cartella(salvataggi, 'cartella dei salvataggi');
+  cartella(backup, 'copie prima degli aggiornamenti');
+  cartella(drive, 'Google Drive');
+  for (const [n, tipo] of [['autosave.zip', 'autosave'], ['autosave-precedente.zip', 'autosave-precedente']]) {
+    const p = join(autosave ?? '', n);
+    if (!autosave || !existsSync(p)) continue;
     const s = statSync(p);
-    out.push({ nome: n, percorso: p, tipo, etichetta, mtime: s.mtime, dimensione: s.size });
+    out.push({ nome: n, percorso: p, tipo, tipoTesto: TIPI[tipo], dove: 'salvataggio automatico', mtime: s.mtime, dimensione: s.size });
   }
+  for (const s of out) s.etichetta = `${s.nome} — ${s.tipoTesto}, ${s.dove}`;
   return out.sort((a, b) => b.mtime - a.mtime || a.nome.localeCompare(b.nome)).slice(0, massimo);
 }
 
-/** Una riga dell'elenco: «09/10/2026 21:40  sessione_2026-10-09_2140.zip  11,6 MB». */
+/** Una riga dell'elenco: «09/10/2026 21:40  sessione_2026-10-09_2140.zip — sessione, cartella dei salvataggi  11,6 MB». */
 export const rigaSalvataggio = (s) => `${quando(s.mtime)}  ${s.etichetta}  ${dimensione(s.dimensione)}`;
+
+/**
+ * Le quattro cartelle in cui cercare i salvataggi di un'installazione.
+ * @param config contenuto di config-salvataggi.json (per la cartella di Google Drive)
+ */
+export const postiSalvataggi = (radice, config = null) => ({
+  salvataggi: join(radice, 'salvataggi'),
+  autosave: join(radice, 'autosave'),
+  backup: join(radice, 'backup-prima-aggiornamento'),
+  drive: cartellaDrive(config),
+});
+
+/**
+ * All'avvio: la cartella dei personaggi è vuota ma dei salvataggi ci sono? (12/10/2026)
+ * Non decide niente: dice soltanto che cosa mostrare, con il percorso della cartella in uso ben visibile.
+ * @returns { vuota, percorso, quanti, salvataggi: [le prime voci], testo }
+ */
+export function avvisoCartellaVuota({ cartella, salvataggi, autosave, backup = null, drive = null, quante = 5 }) {
+  let quanti = 0;
+  try { quanti = readdirSync(cartella).filter((n) => /\.json$/i.test(n)).length; } catch { quanti = 0; }
+  if (quanti > 0) return { vuota: false, percorso: cartella, quanti, salvataggi: [], testo: '' };
+  const trovati = elencoSalvataggi({ salvataggi, autosave, backup, drive }).slice(0, quante);
+  const testo = trovati.length
+    ? `Non trovo personaggi in questa cartella: ${cartella}. Ci sono salvataggi del ${quando(trovati[0].mtime)}: vuoi ripristinarne uno?`
+    : `Non trovo personaggi in questa cartella: ${cartella}. Non ci sono nemmeno salvataggi da cui ripartire.`;
+  return { vuota: true, percorso: cartella, quanti: 0, salvataggi: trovati, testo };
+}
 
 /**
  * Il server di Mutant risponde su questa porta? { acceso, mutant }. Chiede /api/ping a 127.0.0.1, con un tempo breve.
@@ -87,11 +137,13 @@ export function contenutoSalvataggio(buf) {
   const voci = leggiZip(buf); // controlla anche i CRC
   const perCartella = {};
   const estranei = [];
-  for (const [nome, dati] of Object.entries(voci)) {
+  for (const [grezzo, dati] of Object.entries(voci)) {
+    // le copie fatte prima di un aggiornamento le scrive Compress-Archive di PowerShell, con le barre rovesciate
+    const nome = grezzo.replace(/\\/g, '/');
     const [cartella, ...resto] = nome.split('/');
     const rel = resto.join('/');
     if (!CARTELLE.includes(cartella) || !rel) { estranei.push(nome); continue; }
-    if (resto.some((p) => p === '..' || p === '' || p === '.') || /^[a-z]:/i.test(rel) || rel.includes('\\')) throw new Error(`nome non valido nello zip: ${nome}`);
+    if (resto.some((p) => p === '..' || p === '' || p === '.') || /^[a-z]:/i.test(rel)) throw new Error(`nome non valido nello zip: ${nome}`);
     (perCartella[cartella] ??= []).push({ rel, dati });
   }
   if (!Object.keys(perCartella).length) throw new Error('lo zip non contiene nessuna delle cartelle di Mutant');

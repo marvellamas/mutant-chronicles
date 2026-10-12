@@ -48,7 +48,8 @@ test('elenco dei salvataggi: sessioni, copie di sicurezza e i due autosave, dal 
   const e = elencoSalvataggi({ salvataggi: s, autosave: a });
   assert.deepEqual(e.map((x) => x.nome), ['prima-del-ripristino_2026-10-09_2150.zip', 'autosave.zip', 'sessione_2026-10-09_2140.zip', 'autosave-precedente.zip', 'sessione_2026-10-09_2110.zip']);
   assert.deepEqual(e.map((x) => x.tipo), ['prima-del-ripristino', 'autosave', 'sessione', 'autosave-precedente', 'sessione']);
-  assert.equal(rigaSalvataggio(e[1]), '09/10/2026 21:45  autosave (ultimo automatico)  2 KB');
+  // 12/10: ogni riga dice che cos'è e in quale dei quattro posti sta
+  assert.equal(rigaSalvataggio(e[1]), '09/10/2026 21:45  autosave.zip — automatico (ultimo), salvataggio automatico  2 KB');
   assert.equal(elencoSalvataggi({ salvataggi: s, autosave: a, massimo: 2 }).length, 2);
   assert.deepEqual(elencoSalvataggi({ salvataggi: join(r, 'manca'), autosave: join(r, 'manca2') }), []);
 });

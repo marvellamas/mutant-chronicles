@@ -2647,3 +2647,14 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .galleria-elenco { display: grid; gap: 0.5rem; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); }
 .galleria-elenco button { background: none; border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 0.3rem; cursor: pointer; color: inherit; font: inherit; display: grid; gap: 0.25rem; }
 .galleria-elenco img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 4px; }
+
+/* «Non trovo personaggi in questa cartella» (12/10/2026, docs/diagnosi-dati-spariti-2026-10-12.md):
+   la fascia in cima alla plancia, con il percorso della cartella in uso ben visibile. */
+.fascia-cartella-vuota { margin: 0 0 0.8rem; padding: 0.7rem 1rem; border-left: 4px solid var(--errore);
+  background: var(--errore-tenue); border-radius: var(--raggio); }
+.fascia-cartella-vuota .fascia-titolo { margin: 0; font-weight: 700; color: var(--errore); font-size: 1.05rem; }
+.fascia-cartella-vuota .fascia-percorso { margin: 0.35rem 0 0; }
+.fascia-cartella-vuota .fascia-percorso code { font-size: 1rem; word-break: break-all; }
+.fascia-cartella-vuota .fascia-salvataggi { margin: 0.5rem 0 0; font-size: 0.92rem; }
+.fascia-cartella-vuota .fascia-salvataggi ul { margin: 0.3rem 0 0; padding-left: 1.2rem; }
+.fascia-cartella-vuota .fascia-cosa-fare { margin: 0.5rem 0 0; font-size: 0.95rem; }

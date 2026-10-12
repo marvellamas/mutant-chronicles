@@ -35,6 +35,7 @@ import { avviso, avvisoErrore } from './avvisi.js';
 import { apriCreaNemico, apriDaBestiario } from './crea-nemico.js';
 import { apriPreparazione, iniziaBozzaDallaMappa } from './preparazione.js';
 import { riquadroCollega, leggiRete } from './collega.js';
+import { leggiAvvioVuoto, fasciaCartellaVuota } from './cartella-vuota.js';
 import { cartaVeicoloPlancia } from './veicoli.js';
 import { stessaChiave } from '../veicoli-registro.js';
 import { elencoVeicoli, aggiornaVeicolo } from './veicoli-registro.js';
@@ -122,6 +123,8 @@ export function renderTavolo(radice, ctx) {
     // «Collega i giocatori»: indirizzi della rete (server.mjs → /api/rete), riquadro aperto finché non lo si chiude
     rete: null,
     collegaAperto: !ctx.inMappa,
+    // 12/10: cartella dei personaggi vuota all'avvio (server.mjs → /api/avvio)
+    avvioVuoto: null,
     // Galleria (N1): indice di galleria/ (schede e immagine mostrata), filtro e ricerca della tab
     galleria: null,
     firmaGalleria: null,
@@ -493,6 +496,8 @@ export function renderTavolo(radice, ctx) {
           testataGruppi()),
       // 13/10: la riga che dice sempre se questo è il PC del master (prima i pulsanti sparivano in silenzio)
       ctx.inMappa ? null : rigaStatoMaster(),
+      // 12/10: «Non trovo personaggi in questa cartella», con il percorso in uso e i salvataggi
+      ctx.inMappa ? null : fasciaCartellaVuota(stato.avvioVuoto),
       // 12/10: lo scontro in corso in cima, ben visibile, con «Apri la mappa e continua lo scontro»
       ctx.inMappa ? null : testaInCorso(),
       // N1: quando un'immagine è ai giocatori, la fascia in testa al Tavolo
@@ -1039,16 +1044,22 @@ export function renderTavolo(radice, ctx) {
   }
 
   // rilegge l'elenco e i file cambiati dei personaggi al tavolo (confronto sull'mtime)
+  // 12/10: la fascia «cartella vuota» e' cambiata? allora si ridisegna
+  let cambiatoAvvio = false;
   const visti = new Map(); // file → mtime letto
   const aggiorna = async (forza = false) => {
     const [elenco, selezione] = await Promise.all([elencoCartella(), forza ? Promise.resolve(stato.selezione) : leggiSelezione()]);
     if (!stato.attivo) return;
+    // 12/10: la cartella dei personaggi e' vuota? si richiede a ogni giro, cosi' la fascia sparisce dopo un ripristino
+    const vuoto = elenco && elenco.length === 0 ? await leggiAvvioVuoto() : null;
+    if (JSON.stringify(vuoto) !== JSON.stringify(stato.avvioVuoto)) { stato.avvioVuoto = vuoto; cambiatoAvvio = true; }
     if (!elenco) { stato.errore = 'cartella personaggi/ non leggibile: il server è acceso?'; aggiornaIndicatore(); return; }
     stato.errore = null;
     stato.elenco = elenco;
     stato.selezione = selezione;
     const ultimi = ultimiPerPersonaggio(elenco);
-    let cambiato = forza;
+    let cambiato = forza || cambiatoAvvio;
+    cambiatoAvvio = false;
     // carta sola di un PG (pannello della mappa): il suo file si legge anche se non è «al tavolo»
     const pgSolo = /^partecipante:pg:(.+)$/.exec(ctx.soloCarta?.() ?? '')?.[1];
     const daLeggere = [...selezione, ...(pgSolo ? [...ultimi.keys()].filter((k) => stessaChiave(k, pgSolo) && !selezione.includes(k)) : [])];

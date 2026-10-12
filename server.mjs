@@ -107,6 +107,7 @@ import { chiOccupa, testoDomanda, risposteSi, fermaMutant, sorvegliaFinestra } f
 import { indirizziRete, testoAvvio } from './src/rete.js';
 import { avvisa, registraErrore } from './tools/avvisi.mjs';
 import { creaGestore, leggiConfig } from './tools/salva-sessione.mjs';
+import { avvisoCartellaVuota, postiSalvataggi, rigaSalvataggio } from './tools/ripristina.mjs';
 import { bordoToken } from './src/mappa/colori.js';
 import { validaScontro, rigaOpportunita, rigaAiutoMaster, diTurno } from './src/scontro.js';
 import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
@@ -1570,7 +1571,7 @@ async function apiSalvataggi(req, res, percorso, salvataggi) {
   return json(res, 200, { ...esito, spento: true });
 }
 
-export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA), tavolo = join(RADICE, TAVOLO), scontri = join(RADICE, SCONTRI), nemici = join(RADICE, NEMICI), veicoli: veicoliDati = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), musica = join(RADICE, MUSICA), galleria = join(RADICE, GALLERIA), soloLocale = false, avvisi = null, salvataggi = null, backupMaster = null, eMaster = (req) => daQuestoPc(req.socket.remoteAddress) } = {}) {
+export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA), tavolo = join(RADICE, TAVOLO), scontri = join(RADICE, SCONTRI), nemici = join(RADICE, NEMICI), veicoli: veicoliDati = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), musica = join(RADICE, MUSICA), galleria = join(RADICE, GALLERIA), soloLocale = false, avvisi = null, salvataggi = null, backupMaster = null, avvio = null, eMaster = (req) => daQuestoPc(req.socket.remoteAddress) } = {}) {
   // copie della «Modifica master»: accanto alla cartella dei personaggi (con cartelle di prova non si tocca il progetto)
   backupMaster ??= normalize(cartella) === normalize(join(RADICE, CARTELLA)) ? join(RADICE, BACKUP_MASTER) : join(dirname(cartella), BACKUP_MASTER);
   const veicoli = veicoliDati ?? join(RADICE, VEICOLI);
@@ -1592,6 +1593,8 @@ export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA),
       // contesto master: la richiesta arriva dal PC dove gira il server (lo stesso controllo di «Spegni Mutant»)
       req.mutantMaster = eMaster(req);
       if (percorso === '/api/ping') return json(res, 200, { ok: true, app: 'mutant', cartella: CARTELLA, ...identita, master: req.mutantMaster });
+      // Cartella dei personaggi vuota all'avvio (12/10/2026): il Tavolo lo dice al master, con il percorso in uso
+      if (percorso === '/api/avvio') return json(res, 200, avvio ? avvio() : { vuota: false, percorso: cartella, salvataggi: [], testo: '' });
       if (percorso === '/api/backup-master' || percorso.startsWith('/api/backup-master/')) return await apiBackupMaster(req, res, percorso, backupMaster, req.mutantMaster);
       // A.122: il tablet dell'Aiuto-master non salva, non spegne e non scrive nulla fuori dal movimento del PG di turno
       if (req.headers[INTESTAZIONE_AIUTO] && percorso.startsWith('/api/')) {
@@ -1667,7 +1670,14 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
       setTimeout(() => process.exit(42), 300);
     },
   };
-  const server = creaServer({ cartella, tavolo, scontri, nemici, veicoli, scene, mappe, musica, galleria, soloLocale, avvisi, salvataggi });
+  // Cartella dei personaggi vuota (12/10/2026): si ricalcola a ogni richiesta, così sparisce appena si ripristina
+  const avvisoPersonaggiVuoti = () => {
+    try {
+      const posti = postiSalvataggi(baseSalvataggi, leggiConfig(fileConfig));
+      return avvisoCartellaVuota({ cartella, ...posti, salvataggi: dirSalvataggi, autosave: dirAutosave });
+    } catch { return { vuota: false, percorso: cartella, quanti: 0, salvataggi: [], testo: '' }; }
+  };
+  const server = creaServer({ cartella, tavolo, scontri, nemici, veicoli, scene, mappe, musica, galleria, soloLocale, avvisi, salvataggi, avvio: avvisoPersonaggiVuoti });
   // si spegne quando si chiude la finestra di avvia-server.bat (o con Ctrl+C), senza restare in ascolto da solo; prima
   // prova il salvataggio completo (08/10): Windows concede pochi secondi alla chiusura con la X, per questo ntfy ha un
   // tempo breve e GitHub si salta; l'autosave copre gli spegnimenti bruschi
@@ -1688,6 +1698,15 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
     console.log(testoAvvio(indirizziRete(networkInterfaces(), porta), porta, { soloLocale }));
     console.log(`Personaggi salvati in ${cartella}`);
     console.log(minuti ? `Salvataggio automatico ogni ${minuti} minuti in ${dirAutosave}; «Salva sessione» e «Spegni Mutant» nel Tavolo del Master.` : 'Salvataggio automatico spento (config-salvataggi.json → autosave_minuti: 0).');
+    // Cartella dei personaggi vuota (12/10/2026, docs/diagnosi-dati-spariti-2026-10-12.md): lo si dice subito,
+    // con il percorso in uso e i salvataggi da cui si può ripartire. Lo stesso avviso arriva al Tavolo (/api/avvio).
+    const a = avvisoPersonaggiVuoti();
+    if (a?.vuota) {
+      console.log(`\n${'='.repeat(70)}\n${a.testo}`);
+      for (const s of a.salvataggi) console.log(`  ${rigaSalvataggio(s)}`);
+      if (a.salvataggi.length) console.log('Per rimetterne uno: chiudi questa finestra, apri Mutant.bat e scegli 4 (Ripristina un salvataggio).');
+      console.log('='.repeat(70));
+    }
     avvisi?.('avvio');
     server.migrazione.then((e) => {
       if (e?.record?.length) console.log(`Veicoli spostati nel registro (veicoli/): ${e.record.join(', ')}.`);

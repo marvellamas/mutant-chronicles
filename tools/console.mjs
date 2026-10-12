@@ -13,7 +13,8 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createInterface } from 'node:readline/promises';
 import { cartelleDi, perConsole } from './salva-sessione.mjs';
-import { elencoSalvataggi, rigaSalvataggio, statoServer, spegniServer, ripristina, contenutoSalvataggio } from './ripristina.mjs';
+import { elencoSalvataggi, rigaSalvataggio, statoServer, spegniServer, ripristina, contenutoSalvataggio, avvisoCartellaVuota, postiSalvataggi } from './ripristina.mjs';
+import { leggiConfig } from './salva-sessione.mjs';
 import { statoImpostazioni, testoAvvisi, testoDrive, argomentoGruppo, salvaAvvisi, salvaDrive, posizioniDrive, notificaDiProva, erroriNuovi, FILE_REGISTRO } from './impostazioni.mjs';
 import { hostname } from 'node:os';
 
@@ -70,6 +71,26 @@ function lettore() {
 }
 
 const si = (r) => /^\s*(s|si|sì|y|yes)\s*$/i.test(r ?? '');
+
+/**
+ * «Non trovo personaggi in questa cartella» (12/10/2026, docs/diagnosi-dati-spariti-2026-10-12.md): le righe
+ * che la console mostra sopra il menu quando personaggi/ e' vuota ma dei salvataggi ci sono.
+ * Niente lettere accentate: la console di Windows non e' in UTF-8.
+ */
+export function righeCartellaVuota(radiceApp = radice) {
+  let a;
+  try {
+    const config = (() => { try { return leggiConfig(join(radiceApp, 'config-salvataggi.json')); } catch { return {}; } })();
+    a = avvisoCartellaVuota({ cartella: join(radiceApp, 'personaggi'), ...postiSalvataggi(radiceApp, config) });
+  } catch { return []; }
+  if (!a.vuota) return [];
+  const righe = ['', ' ==============================================================', ` ${perConsole(a.testo)}`];
+  for (const s of a.salvataggi) righe.push(`   ${perConsole(rigaSalvataggio(s))}`);
+  righe.push(a.salvataggi.length ? '  Per rimetterne uno: scegli 4 (Ripristina un salvataggio).'
+    : '  Controlla di aver aperto la cartella giusta: il percorso qui sopra e\' quello in uso.');
+  righe.push(' ==============================================================');
+  return righe;
+}
 
 async function voceRipristina() {
   const rl = lettore();
@@ -226,6 +247,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
     console.log(` Versione installata: ${testoVersione()}`);
     console.log(` Server: ${s.acceso ? (s.mutant ? `ACCESO (http://localhost:${porta})` : `porta ${porta} occupata da un altro programma`) : 'spento'}`);
     console.log(` ${rigaImpostazioni()}`);
+    for (const r of righeCartellaVuota()) console.log(r);
   } else if (comando === 'stato') {
     // codice d'uscita per il .bat: 0 acceso, 1 spento
     process.exitCode = (await statoServer(porta)).acceso ? 0 : 1;
