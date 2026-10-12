@@ -94,6 +94,12 @@ export const stessaParte = (a, b) => (a === 'avversario') === (b === 'avversario
 export function areaRaggiungibile({ colonne: C, righe: R, muri, terreno, token, chi, massimo, regole, linee = null }) {
   const [w, h] = dimensioni(chi.ingombro);
   const muro = bytePerQ(muri, C, R);
+  // 12/10: un token libero segnato «blocca» (src/mappa/editor.js) vale come un Q di muro anche per il movimento;
+  // gli altri token liberi non bloccano e restano attraversabili come un alleato di tutti.
+  for (const t of token) {
+    if (!t.blocca || t.id === chi.id) continue;
+    for (const [x, y] of celleToken(t)) if (x >= 0 && y >= 0 && x < C && y < R) muro[y * C + x] = 1;
+  }
   const terr = bytePerQ(terreno, C, R);
   const avv = new Uint8Array(C * R);
   const all = new Uint8Array(C * R);

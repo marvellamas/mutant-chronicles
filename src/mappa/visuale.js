@@ -40,6 +40,12 @@ export function ostacoliVista(scena, regolePorte, { perGiocatori = false } = {})
   const { colonne: C, righe: R } = scena.griglia;
   const m = daBase64(scena.muri);
   for (const p of scena.porte ?? []) impostaCella(m, C, R, p.q[0], p.q[1], (perGiocatori && p.segreta) || regolePorte.bloccano_vista.includes(p.stato));
+  // 12/10: un token libero segnato «blocca» (una cassa, una statua, un carro) vale come un Q di muro: ferma la vista
+  // e quindi dà Copertura. Quelli non segnati non contano, come prima (src/mappa/editor.js).
+  for (const t of scena.token ?? []) {
+    if (t.rif?.tipo !== 'segnaposto' || !t.blocca) continue;
+    for (const [x, y] of celleToken(t)) if (x >= 0 && y >= 0 && x < C && y < R) impostaCella(m, C, R, x, y, true);
+  }
   // senza muri disegnati gli ostacoli restano la sola maschera dei Q, come prima di M2 (nessun cambiamento per le
   // mappe già salvate e per chi legge la maschera nuda)
   const linee = lineeVista(scena, regolePorte);

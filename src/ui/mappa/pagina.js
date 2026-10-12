@@ -52,12 +52,13 @@ import { muoviToken, usatoNelRound, fasceNelRound, mossoNelRound, annullaUltima,
 import { disegnaMuri, disegnaMuriLinee, disegnaArea, disegnaPercorso, disegnaZoc, coloriAree, disegnaTemplate, disegnaPorte, disegnaLineaTiro, disegnaLuci } from './disegno-aree.js';
 // 12/10: modello unico degli oggetti della mappa (docs/battlemap/ricognizione-editor-2026-10-12.md)
 import { disegnaSelezione, manigliaSotto } from './disegno-aree.js';
-import { barraStrumenti, pannelloSelezione } from './strumenti.js';
+import { barraStrumenti, pannelloSelezione, chiediTokenLibero } from './strumenti.js';
+import { leggiGalleria, urlGalleria } from '../galleria.js';
+import { vociPerMaster } from '../../galleria.js';
 import {
   statoEditor, cambiaStrumento as cambiaStrumentoEditor, esci as esciEditor, oggettiScena, oggettoSotto,
   oggettiNelRiquadro, conSelezione, ripulisciSelezione, spostaOggetti, eliminaOggetti, spostaVertice,
   cambiaProprieta, riassuntoSelezione, agganciaSpostamento, agganciaPunto, agganciaPunti, dallaChiave, STRUMENTI,
-  fondiUltimeDue as fondiUltimeDueEditor,
 } from '../../mappa/editor.js';
 import { rifaiUltima } from '../../mappa/annulla.js';
 import { luceQ, luceIngombro, testoLuceBersaglio, categorieLuce, ambienteDi, trattoLuce, rettangoloLuce, conVoceLuce, cambiaAmbiente } from '../../mappa/luce.js';
@@ -1498,6 +1499,22 @@ export function renderMappa(radice, ctx) {
     avviso(`${nomeTok(prima)}: muso a ${r.token.angolo}° (0° in alto; Ctrl+Z annulla).`, { tipo: 'info', chiave: 'ruota-veicolo' });
     dopoCambioToken();
   }
+  /** 12/10: ← → girano anche un token libero selezionato (richiesta di Davide: un carro, una panca, una statua). */
+  function frecciaTokenLibero(e) {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return false;
+    if (st.editor.selezione.length !== 1) return false;
+    const r = dallaChiave(st.editor.selezione[0]);
+    const t = r?.tipo === 'token' ? (st.scena?.token ?? []).find((x) => x.id === r.id && x.rif?.tipo === 'segnaposto') : null;
+    if (!t) return false;
+    e.preventDefault();
+    const verso = e.key === 'ArrowRight' ? 1 : -1;
+    const angolo = normaAngolo((t.angolo ?? 0) + verso * passoRotazione(e.shiftKey));
+    st.scena = cambiaProprieta(st.scena, st.editor.selezione[0], { angolo }, ctx.dati);
+    avviso(`${t.nome}: girato a ${angolo}° (Ctrl+Z annulla).`, { tipo: 'info', chiave: 'editor' });
+    dopoDisegno();
+    dopoSelezione();
+    return true;
+  }
   /** ← → : gira il veicolo da mettere (prima del clic) o quello scelto, di 10° (Maiusc: 45°). */
   function frecciaVeicolo(e) {
     if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return false;
@@ -1786,6 +1803,41 @@ export function renderMappa(radice, ctx) {
     if (!st.scena || st.editor.selezione.length !== 1) return;
     st.scena = cambiaProprieta(st.scena, st.editor.selezione[0], { [chiave]: valore }, ctx.dati);
     dopoDisegno();
+    dopoSelezione();
+  }
+
+  /**
+   * 12/10 (richiesta di Davide): un token libero — un carro, una statua, un PNG che passa, un segnaposto. Niente
+   * scheda, niente Iniziativa, niente conteggio del movimento, niente Attacchi di Opportunità; i giocatori lo vedono
+   * (se non è nascosto) ma non lo muovono. Si salva nella scena come token «segnaposto».
+   */
+  async function mettiTokenLibero(q) {
+    const D = ctx.dati.mappa;
+    // le immagini della Galleria (N1), lette al momento: se il server non c'è restano le iniziali
+    let immagini = [];
+    try {
+      const indice = await leggiGalleria();
+      immagini = vociPerMaster(indice).slice(0, 60).map((v) => ({ nome: v.nome, file: v.file, url: urlGalleria(v.mini ?? v.file) }));
+    } catch { immagini = []; }
+    const scelto = await chiediTokenLibero({
+      titolo: 'Token libero',
+      colori: D.colori.pg,
+      immagini,
+      ingombri: D.token.ingombri_ammessi,
+      apri: apriFinestrella,
+    });
+    if (!scelto || !st.scena) return;
+    const [lc] = [scelto.ingombro];
+    const dentro = [Math.min(Math.max(0, q[0]), st.scena.griglia.colonne - lc), Math.min(Math.max(0, q[1]), st.scena.griglia.righe - lc)];
+    const t = {
+      id: `libero-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`,
+      rif: { tipo: 'segnaposto', id: null }, q: dentro, ingombro: scelto.ingombro, nascosto: !!scelto.nascosto,
+      nome: scelto.nome, colore: scelto.colore, immagine: scelto.immagine ?? null, blocca: !!scelto.blocca,
+    };
+    st.scena = cambiaTokenAnnullabile(st.scena, null, t, ctx.dati);
+    avviso(`Token libero «${t.nome}» messo${t.blocca ? ', blocca il movimento' : ''}${t.nascosto ? ', nascosto ai giocatori' : ''} (Ctrl+Z lo toglie).`, { chiave: 'editor' });
+    dopoDisegno();
+    st.editor = conSelezione(st.editor, [`token:${t.id}`]);
     dopoSelezione();
   }
 
@@ -2114,7 +2166,7 @@ export function renderMappa(radice, ctx) {
     const g = st.scena.griglia;
     const area = areaRaggiungibile({
       colonne: g.colonne, righe: g.righe, muri: muriEffettivi(st.scena), terreno: daBase64(st.scena.terreno), linee: lineeEffettive(st.scena, { larghezza: RP.larghezza_q }),
-      token: st.scena.token.map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: pezzoDi(x)?.lato ?? null })),
+      token: st.scena.token.map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: pezzoDi(x)?.lato ?? null, blocca: !!x.blocca })),
       chi: { id: t.id, q: t.q, ingombro: t.ingombro, angolo: t.angolo, base: t.base, lato: pz.lato }, massimo: Math.max(totale, portata), regole: regoleMovimento(t, ctx.dati),
     });
     const quando = scontro ? 'del Round' : 'del turno';
@@ -2200,7 +2252,7 @@ export function renderMappa(radice, ctx) {
         const pz = pezzoDi(t);
         const areaG = areaRaggiungibile({
           colonne: g.colonne, righe: g.righe, muri: muriEffettivi(s, { perGiocatori: true }), terreno: daBase64(s.terreno), linee: lineeEffettive(s, { perGiocatori: true, larghezza: RP.larghezza_q }),
-          token: s.token.filter((x) => x.id === t.id || visibileAiGiocatori(x, s, nebbia)).map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: pezzoDi(x)?.lato ?? null })),
+          token: s.token.filter((x) => x.id === t.id || visibileAiGiocatori(x, s, nebbia)).map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: pezzoDi(x)?.lato ?? null, blocca: !!x.blocca })),
           chi: { id: t.id, q: t.q, ingombro: t.ingombro, angolo: t.angolo, base: t.base, lato: pz?.lato ?? null }, massimo: info.totale, regole: regoleMovimento(t, ctx.dati),
         });
         st.diretta.areaG = { per: info.area, area: areaG, celle: celleArea(areaG, info.rimaste, st.fascia), fascia: st.fascia };
@@ -3023,6 +3075,8 @@ export function renderMappa(radice, ctx) {
     }
     // 12/10, strumento «Seleziona»: prima i token (si muovono con le regole di sempre), poi gli oggetti
     // dell'editor — muri disegnati, porte, aree di terreno — tutti con le stesse azioni.
+    // 12/10 (richiesta di Davide): con «Token libero» un clic mette una pedina senza scheda e senza regole
+    if (st.editor.strumento === 'token-libero' && !st.spazio && st.strumento !== 'calibra' && st.scena) { mettiTokenLibero(qVicino(m)); return; }
     // i token liberi (segnaposto) sono oggetti dell'editor: si scelgono, si spostano e si cancellano come gli altri,
     // senza conteggio del movimento né Iniziativa. I token dei PG, dei nemici e dei veicoli restano al loro posto.
     const tokSotto = !st.spazio && st.strumento !== 'calibra' ? tokenSotto(m) : null;
@@ -3033,14 +3087,14 @@ export function renderMappa(radice, ctx) {
       if (st.editor.selezione.length === 1) {
         const sel = oggettiEditor().find((x) => x.chiave === st.editor.selezione[0]);
         const mn = sel?.tipo === 'muro' ? manigliaSotto(st.scena, st.cam, sel, p.x, p.y) : null;
-        if (mn) { st.trascina = { ...base, modo: 'maniglia', chiave: sel.chiave, indice: mn.indice }; return; }
+        if (mn) { st.trascina = { ...base, modo: 'maniglia', chiave: sel.chiave, indice: mn.indice, iniziale: st.scena }; return; }
       }
       if (o) {
         const gia = st.editor.selezione.includes(o.chiave);
         if (!gia) st.editor = conSelezione(st.editor, [o.chiave], { aggiungi: e.shiftKey });
         else if (e.shiftKey) { st.editor = conSelezione(st.editor, [o.chiave], { aggiungi: true }); dopoSelezione(); return; }
         dopoSelezione();
-        if (st.editor.selezione.length) st.trascina = { ...base, modo: 'oggetti', da: qFrazionario(m), ultimo: [0, 0] };
+        if (st.editor.selezione.length) st.trascina = { ...base, modo: 'oggetti', da: qFrazionario(m), iniziale: st.scena, ultimo: [0, 0] };
         return;
       }
       // punto vuoto: riquadro di selezione (e, senza trascinare, deseleziona)
@@ -3207,23 +3261,20 @@ export function renderMappa(radice, ctx) {
     else if (t.modo === 'selezione') { t.a = mappaDaSchermo(st.cam, p.x, p.y); ridisegna(['sopra']); }
     // 12/10: riquadro di selezione dell'editor, spostamento degli oggetti scelti, maniglia di un vertice
     else if (t.modo === 'riquadro') { t.a = mappaDaSchermo(st.cam, p.x, p.y); ridisegna(['sopra']); }
+    // lo spostamento si ricalcola sempre dalla scena di partenza del trascinamento: una voce sola di «annulla», e
+    // niente arrotondamenti che si sommano (i token e il terreno stanno su Q interi, i muri no)
     else if (t.modo === 'oggetti') {
       const f = qFrazionario(mappaDaSchermo(st.cam, p.x, p.y));
       const d = agganciaSpostamento([f[0] - t.da[0], f[1] - t.da[1]], st.aggancia);
       if (d[0] !== t.ultimo[0] || d[1] !== t.ultimo[1]) {
-        st.scena = spostaOggetti(st.scena, st.editor.selezione, [d[0] - t.ultimo[0], d[1] - t.ultimo[1]], ctx.dati);
-        // una voce sola per tutto il trascinamento: le intermedie si fondono
-        if (t.ultimo[0] || t.ultimo[1]) st.scena = { ...st.scena, annulla: fondiUltimeDueEditor(st.scena.annulla) };
         t.ultimo = d;
+        st.scena = spostaOggetti(t.iniziale, st.editor.selezione, d, ctx.dati);
         ridisegna(['aree']);
       }
     }
     else if (t.modo === 'maniglia') {
       const f = qFrazionario(mappaDaSchermo(st.cam, p.x, p.y));
-      const prima = st.scena.annulla.length;
-      st.scena = spostaVertice(st.scena, t.chiave, t.indice, f, ctx.dati, { aggancia: st.aggancia });
-      if (st.scena.annulla.length > prima && t.iniziato) st.scena = { ...st.scena, annulla: fondiUltimeDueEditor(st.scena.annulla) };
-      if (st.scena.annulla.length > prima) t.iniziato = true;
+      st.scena = spostaVertice(t.iniziale, t.chiave, t.indice, f, ctx.dati, { aggancia: st.aggancia });
       ridisegna(['aree']);
     }
     else if (t.modo === 'disegno') {
@@ -3572,6 +3623,7 @@ export function renderMappa(radice, ctx) {
     if ((e.key === 'a' || e.key === 'A') && !e.shiftKey) { e.preventDefault(); adattaSchermo(); return; }
     if (frecciaTemplate(e)) return;
     if (frecciaPorta(e)) return;
+    if (frecciaTokenLibero(e)) return;
     if (frecciaVeicolo(e)) return;
     if (e.key === 'Escape' && st.scendi) { e.preventDefault(); st.scendi = null; ridisegna(['sopra']); avviso('Discesa annullata.', { chiave: 'scendi' }); return; }
     // 07/10: le frecce spostano il gruppo selezionato di 1 Q (un Ctrl+Z per passo)

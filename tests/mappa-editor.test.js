@@ -243,6 +243,22 @@ test('cancellare: muri, porte, aree di terreno e token liberi, con annulla', () 
   assert.equal(eliminaOggetti(s, [], dati), s);
 });
 
+test('il trascinamento si calcola sempre dalla scena di partenza, non a passetti', () => {
+  // difetto trovato provando nel browser: sommando spostamenti di mezzo quadretto, i token e il terreno (che stanno
+  // su Q interi) arrotondavano ogni passo a zero e non si muovevano mai. Lo spostamento parte dalla scena iniziale.
+  const s = scenaDiProva();
+  const chiavi = ['token:lib1', 'terreno:10-3', 'muro:m1'];
+  let aPassetti = s;
+  for (let i = 1; i <= 6; i++) aPassetti = spostaOggetti(aPassetti, chiavi, [0.5, 0], dati);
+  const inUnaVolta = spostaOggetti(s, chiavi, [3, 0], dati);
+  assert.deepEqual(inUnaVolta.token.find((t) => t.id === 'lib1').q, [18, 10]);
+  assert.deepEqual(areeTerreno(inUnaVolta).map((a) => a.id).sort(), ['13-3', '2-12']);
+  assert.deepEqual(inUnaVolta.muriLinee.find((l) => l.id === 'm1').punti, [[7, 4], [11, 4]]);
+  // e una voce sola di «annulla», non sei
+  assert.equal(inUnaVolta.annulla.length, s.annulla.length + 1);
+  assert.deepEqual(annullaUltima(inUnaVolta).scena.token.find((t) => t.id === 'lib1').q, [15, 10]);
+});
+
 test('D9: le maniglie spostano un vertice del muro, agganciato o libero', () => {
   const s = scenaDiProva();
   const d = spostaVertice(s, 'muro:m2', 1, [5.4, 11.2], dati, { aggancia: true });

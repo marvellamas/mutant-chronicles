@@ -382,16 +382,3 @@ export function proprietaOggetto(o, dati) {
 }
 
 export { conMuriLinee, portaA, celleToken };
-
-/**
- * Fonde le ultime due voci «editor» della pila in una sola: un trascinamento fa tanti passi, ma Ctrl+Z deve
- * riportare indietro tutto lo spostamento in una volta. Se le ultime due non sono dell'editor, la pila com'è.
- */
-export function fondiUltimeDue(annulla) {
-  const n = annulla?.length ?? 0;
-  if (n < 2) return annulla;
-  const vecchia = annulla[n - 2];
-  const nuova = annulla[n - 1];
-  if (vecchia.tipo !== 'editor' || nuova.tipo !== 'editor') return annulla;
-  return [...annulla.slice(0, n - 2), { ...nuova, prima: { ...nuova.prima, ...vecchia.prima }, dopo: { ...vecchia.dopo, ...nuova.dopo } }];
-}

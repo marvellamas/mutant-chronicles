@@ -117,6 +117,11 @@ export function ruotaDi(t, gradi, { colonne, righe }) {
 /** Errore di forma di un token ruotato (null se va bene o se non è ruotato): angolo, base e ingombro coerenti. */
 export function erroreForma(t) {
   if (t.angolo === undefined && t.base === undefined) return null;
+  // 12/10: un token libero (segnaposto) si gira con ← →, ma resta quadrato: ha solo l'angolo, non la base
+  if (t.rif?.tipo === 'segnaposto') {
+    if (t.base !== undefined) return 'base: solo per i veicoli';
+    return t.angolo === null || (Number.isFinite(t.angolo) && t.angolo >= 0 && t.angolo < 360) ? null : 'angolo: da 0 a 359 gradi';
+  }
   if (t.rif?.tipo !== 'veicolo') return 'angolo e base: solo per i veicoli';
   if (!Number.isInteger(t.angolo) || t.angolo < 0 || t.angolo > 359) return 'angolo: intero da 0 a 359';
   if (!Array.isArray(t.base) || t.base.length !== 2 || !t.base.every((n) => Number.isInteger(n) && n >= 1) || t.base[0] < t.base[1]) return 'base: [lungo, largo] interi, lungo ≥ largo';

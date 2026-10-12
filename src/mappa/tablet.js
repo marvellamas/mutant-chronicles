@@ -96,7 +96,7 @@ export function areaGiocatore({ scena, token, pezzo, pezzi, scontro = null, fasc
   const terreno = perGiocatori ? senza(daBase64(scena.terreno), nebbia) : daBase64(scena.terreno);
   const area = areaRaggiungibile({
     colonne: g.colonne, righe: g.righe, muri, terreno, linee: lineeEffettive(scena, { perGiocatori, larghezza: dati.mappa.porte.larghezza_q }),
-    token: scena.token.filter(ostacolo).map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: perChiave.get(chiaveRif(x.rif))?.lato ?? null })),
+    token: scena.token.filter(ostacolo).map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: perChiave.get(chiaveRif(x.rif))?.lato ?? null, blocca: !!x.blocca })),
     chi: { id: token.id, q: token.q, ingombro: token.ingombro, lato: pezzo.lato }, massimo: totale, regole: regoleMovimento(token, dati),
   });
   const scelta = sf.chiusa ?? [...FASCE.slice(0, fascia)].reverse().find((f) => rimaste[f] !== null);
