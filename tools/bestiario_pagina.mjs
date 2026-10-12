@@ -6,7 +6,9 @@
 // - data/*.json, caricati e validati dallo stesso caricatore dell'app (src/rules.js → caricaDati);
 // - data/bestiario.json → creature pronte (cap. 5) e basi (cap. 3), con i profili calcolati da
 //   src/crea-nemico.js, lo stesso motore di «Crea nemico» del Tavolo del Master;
-// - esempi/nemici/ ed esempi/nemici/umani/ → i nemici prestabiliti tracciati in git.
+// - esempi/nemici/ ed esempi/nemici/umani/ → i nemici prestabiliti tracciati in git;
+// - docs/bestiario/bestiario.md → il testo del manuale proposto (capitoli 1–6 e Appendice A), nella
+//   seconda vista della pagina, convertito da tools/bestiario_html.mjs.
 //
 // La pagina è un file solo, senza risorse esterne e senza data di generazione: così è deterministica e
 // tests/bestiario-pagina.test.js può accorgersi quando i dati cambiano e la pagina no (CLAUDE.md,
@@ -15,6 +17,7 @@ import { readFile, readdir, writeFile } from 'node:fs/promises';
 import { caricaDati } from '../src/rules.js';
 import { testoMovimento } from '../src/nemici.js';
 import { profiloNemico, scelteCreatura, SUFFISSO_UMANO } from '../src/crea-nemico.js';
+import { blocchiHtml } from './bestiario_html.mjs';
 
 const RADICE = new URL('../', import.meta.url);
 export const FILE_PAGINA = 'docs/bestiario/bestiario-online.html';
@@ -31,6 +34,9 @@ export async function dati(radice = RADICE) {
   if (errori.length) throw new Error(`dati non validi: ${errori.map((e) => `${e.file} ${e.chiave}: ${e.problema}`).join('; ')}`);
   return d;
 }
+
+/** Il testo del manuale proposto. */
+export const testoManuale = (radice = RADICE) => readFile(new URL('docs/bestiario/bestiario.md', radice), 'utf8');
 
 /** I nemici prestabiliti tracciati in git: esempi/nemici/*.json e esempi/nemici/umani/*.json. */
 export async function esempiNemici(radice = RADICE) {
@@ -171,6 +177,8 @@ const CSS = `:root{color-scheme:light dark;--sfondo:#f3f2ef;--testo:#1d1f22;--te
 @media (prefers-color-scheme:dark){:root:not([data-tema="chiaro"]){--sfondo:#17181b;--testo:#e4e2dd;--tenue:#9a9ea6;
 --linea:#34363b;--accento:#e0705c;--pannello:#202226;--scheda:#1d1f23;--spia:#e9c877;--spia-sfondo:#2e2616}}
 *{box-sizing:border-box}
+/* le regole di display qui sotto (main{display:grid}…) batterebbero il display:none di [hidden] */
+[hidden]{display:none!important}
 body{margin:0;background:var(--sfondo);color:var(--testo);
 font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
 padding:0 16px env(safe-area-inset-bottom,16px);font-variant-numeric:tabular-nums}
@@ -212,6 +220,26 @@ border-top:1px solid var(--linea);padding-top:.6em}
 .scheda dd ul{margin:0;padding-left:1.1em}
 .scheda dd li{margin:.1em 0}
 .nota{margin:.8em 0 0;padding-top:.6em;border-top:1px solid var(--linea);color:var(--tenue);font-size:.78rem}
+.viste{display:flex;gap:6px;margin:12px 0 0}
+.viste button{font:inherit;font-size:.9rem;padding:.35em .9em;border:1px solid var(--linea);border-radius:6px;
+background:var(--pannello);color:var(--tenue);cursor:pointer}
+.viste button[aria-pressed=true]{background:var(--accento);border-color:var(--accento);color:#fff}
+#manuale{max-width:46rem;margin:0 auto;padding:8px 0 48px;font-size:1.02rem;line-height:1.6}
+#manuale h1{font-size:1.9rem;color:var(--accento);border-top:3px solid var(--accento);
+padding-top:.5em;margin-top:2.2em;text-transform:uppercase;line-height:1.15}
+#manuale h1:first-of-type{margin-top:.6em}
+#manuale h2{font-size:1.4rem;margin-top:1.8em;line-height:1.2}
+#manuale h3{font-size:1.15rem;margin-top:1.4em;line-height:1.2}
+#manuale h4{font-size:1rem;margin-top:1.2em}
+#manuale p,#manuale li{max-width:65ch}
+#manuale .tw{overflow-x:auto;margin:1em 0;border:1px solid var(--linea)}
+#manuale table{border-collapse:collapse;font-size:.86rem;width:100%}
+#manuale th,#manuale td{border:1px solid var(--linea);padding:.4em .6em;text-align:left;vertical-align:top}
+#manuale th{background:var(--pannello)}
+#manuale tr:nth-child(even) td{background:var(--pannello)}
+.indice{background:var(--pannello);padding:1em 1.3em;margin:1.2em 0}
+.indice p{margin:0 0 .3em;color:var(--tenue);font-size:.74rem;text-transform:uppercase;letter-spacing:.08em}
+.indice ol{margin:0;padding-left:1.3em}
 footer{max-width:72rem;margin:0 auto;padding:16px 0 32px;border-top:1px solid var(--linea);
 color:var(--tenue);font-size:.78rem}
 @media (max-width:40rem){body{padding-inline:12px}.testata h1{font-size:1.7rem}
@@ -225,6 +253,33 @@ main{grid-template-columns:1fr;gap:12px}.scheda{padding:12px 13px}
 @media print{.barra{display:none}main{display:block}.scheda{break-inside:avoid;margin-bottom:10px}}`;
 
 const JS = `(function(){
+  // due viste: lo schedario delle creature e il testo del manuale. Senza JS si vedono tutte e due.
+  var viste={creature:[document.getElementById('barra'),document.getElementById('schede')],
+             manuale:[document.getElementById('manuale')]};
+  function mostra(quale){
+    Object.keys(viste).forEach(function(k){viste[k].forEach(function(e){if(e)e.hidden=k!==quale})});
+    document.querySelectorAll('.viste button').forEach(function(b){
+      b.setAttribute('aria-pressed',String(b.dataset.vista===quale));
+    });
+  }
+  document.querySelectorAll('.viste button').forEach(function(b){
+    b.addEventListener('click',function(){mostra(b.dataset.vista);
+      if(b.dataset.vista==='manuale')window.scrollTo(0,0);});
+  });
+  function vistaDaIndirizzo(){
+    var id=location.hash.slice(1);
+    if(!id)return 'creature';
+    if(id==='manuale')return 'manuale';
+    var e=document.getElementById(id);
+    return e&&document.getElementById('manuale').contains(e)?'manuale':'creature';
+  }
+  mostra(vistaDaIndirizzo());
+  window.addEventListener('hashchange',function(){
+    mostra(vistaDaIndirizzo());
+    var e=document.getElementById(location.hash.slice(1));
+    if(e)e.scrollIntoView();
+  });
+
   var cerca=document.getElementById('cerca'),conteggio=document.getElementById('conteggio');
   var schede=[].slice.call(document.querySelectorAll('.scheda'));
   var filtri={categoria:'',grado:''};
@@ -299,8 +354,39 @@ ${n.note ? `<p class="nota">${esc(n.note)}</p>` : ''}
 </article>`;
 }
 
+/** Slug per gli id dei titoli del manuale: «Capitolo 2 — Scala di potenza» → «capitolo-2-scala-di-potenza». */
+const slug = (t) => senzaAccenti(t).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60);
+
+/**
+ * Il testo del manuale proposto (docs/bestiario/bestiario.md) come sezione della pagina, con un indice
+ * dei capitoli. Il titolo del documento diventa un h2: nella pagina il titolo è già in testata.
+ */
+export function manualeHtml(md) {
+  const capitoli = [];
+  const blocchi = blocchiHtml(md, (livello, testo) => {
+    const id = slug(testo);
+    if (livello === 1) capitoli.push({ id, testo });
+    return id;
+  });
+  // il primo h1 è il titolo del documento: nella pagina lo degradiamo, la testata lo dice già
+  const primo = blocchi.findIndex((b) => b.startsWith('<h1'));
+  if (primo >= 0) {
+    blocchi[primo] = blocchi[primo].replace(/^<h1/, '<h2').replace(/<\/h1>$/, '</h2>');
+    capitoli.shift();
+  }
+  const corpo = blocchi.join('\n')
+    .replace(/<table border="1">/g, '<div class="tw"><table>')
+    .replace(/<\/table>/g, '</table></div>');
+  const indice = capitoli.length
+    ? `<nav class="indice"><p>Indice</p><ol>${capitoli.map((c) => `<li><a href="#${c.id}">${esc(c.testo)}</a></li>`).join('')}</ol></nav>`
+    : '';
+  // l'indice va dopo il frontespizio, cioè prima del primo capitolo
+  const taglio = corpo.indexOf(`<h1 id="${capitoli[0]?.id}"`);
+  return taglio > 0 ? `${corpo.slice(0, taglio)}${indice}${corpo.slice(taglio)}` : `${indice}${corpo}`;
+}
+
 /** La pagina completa. Nessuna data di generazione: dagli stessi dati esce sempre lo stesso file. */
-export function paginaHtml(voci, d) {
+export function paginaHtml(voci, d, md = '') {
   const categorie = [];
   for (const v of voci) if (!categorie.includes(v.categoria)) categorie.push(v.categoria);
   const gradi = d.bestiario.gradi.filter((g) => voci.some((v) => v.grado === g.id));
@@ -322,19 +408,26 @@ export function paginaHtml(voci, d) {
 <h1>Bestiario</h1>
 <p class="sotto">${esc(voci.length)} schede con i valori come li mostra la plancia del Tavolo del Master. ${esc(d.bestiario.versione_manuale)}</p>
 <p class="avviso"><b>${esc(proposte)} schede su ${esc(voci.length)} sono una proposta da validare con Davide</b> e lo dicono nella propria intestazione. La scala di potenza è una stima sperimentale, da verificare al tavolo.</p>
+<div class="viste" role="group" aria-label="Vista">
+<button type="button" data-vista="creature" aria-pressed="true">Creature (${esc(voci.length)})</button>
+<button type="button" data-vista="manuale" aria-pressed="false">Manuale</button>
+</div>
 </header>
-<form class="barra" role="search" onsubmit="return false">
+<form class="barra" id="barra" role="search" onsubmit="return false">
 <input type="search" id="cerca" placeholder="Cerca un nome…" aria-label="Cerca una creatura per nome" autocomplete="off">
 <div class="filtri" role="group" aria-label="Categoria">${categorie.map((c) => chip('categoria', c, c)).join('')}</div>
 <div class="filtri" role="group" aria-label="Grado">${gradi.map((g) => chip('grado', g.id, g.nome)).join('')}</div>
 <p class="conteggio" id="conteggio" aria-live="polite">${esc(voci.length)} schede</p>
 </form>
-<main>
+<main id="schede">
 ${voci.map((v) => scheda(v, d)).join('\n')}
 <p class="vuoto" id="vuoto" hidden>Nessuna scheda con questi filtri.</p>
 </main>
+<article id="manuale">
+${md ? manualeHtml(md) : '<p>Il testo del manuale non è compreso in questa copia.</p>'}
+</article>
 <footer>
-<p>Pagina generata dai dati del repository con <code>node tools/bestiario_pagina.mjs</code>: creature e basi di <code>data/bestiario.json</code> calcolate da <code>src/crea-nemico.js</code>, nemici prestabiliti di <code>esempi/nemici/</code>. Non contiene nulla delle cartelle del server né dei personaggi dei giocatori.</p>
+<p>Pagina generata dai dati del repository con <code>node tools/bestiario_pagina.mjs</code>: creature e basi di <code>data/bestiario.json</code> calcolate da <code>src/crea-nemico.js</code>, nemici prestabiliti di <code>esempi/nemici/</code>, testo del manuale di <code>docs/bestiario/bestiario.md</code>. Non contiene nulla delle cartelle del server né dei personaggi dei giocatori.</p>
 <p>${esc(d.bestiario.fonte ?? '')}</p>
 </footer>
 <script>${JS}</script>
@@ -347,7 +440,7 @@ ${voci.map((v) => scheda(v, d)).join('\n')}
 export async function genera(radice = RADICE) {
   const d = await dati(radice);
   const { esempi, umani } = await esempiNemici(radice);
-  return paginaHtml(vociPagina(d, { esempi, umani }), d);
+  return paginaHtml(vociPagina(d, { esempi, umani }), d, await testoManuale(radice));
 }
 
 /** Come tools/versione.mjs --controlla: la pagina sul disco corrisponde ai dati? */

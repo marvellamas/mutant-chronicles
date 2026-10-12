@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
 import { datiReali } from './helpers.js';
 import {
-  CARTELLE_VIETATE, FILE_PAGINA, esempiNemici, vociPagina, paginaHtml, stato,
+  CARTELLE_VIETATE, FILE_PAGINA, esempiNemici, vociPagina, paginaHtml, manualeHtml, stato,
   testoAzioni, testoAttacco, testoIncantesimo,
 } from '../tools/bestiario_pagina.mjs';
 
@@ -95,6 +95,55 @@ test('dati di prova: ricerca per nome, filtro per categoria e marchio della prop
   assert.match(html, /name="viewport" content="width=device-width, initial-scale=1/);
 });
 
+const MD_PROVA = `**SIMPLY RPG**
+
+# **Bestiario di prova**
+
+## Sottotitolo
+
+Un paragrafo di apertura.
+
+# **Capitolo 1 — Prova**
+
+| Valore | Minore |
+| :---- | :---: |
+| PV | 21 |
+
+# **Appendice A — Taratura**
+
+Ultimo paragrafo.
+`;
+
+test('dati di prova: il testo del manuale diventa la seconda vista, con indice e tabelle scorrevoli', () => {
+  const m = manualeHtml(MD_PROVA);
+  // il titolo del documento scende a h2 (in pagina il titolo è già in testata); i capitoli restano h1 con l'id
+  assert.match(m, /<h2 id="bestiario-di-prova">Bestiario di prova<\/h2>/);
+  assert.match(m, /<h1 id="capitolo-1-prova">Capitolo 1 — Prova<\/h1>/);
+  assert.match(m, /<h1 id="appendice-a-taratura">Appendice A — Taratura<\/h1>/);
+  // indice dei soli capitoli, prima del primo capitolo
+  assert.match(m, /<nav class="indice">.*capitolo-1-prova.*appendice-a-taratura.*<\/nav>/s);
+  assert.ok(m.indexOf('class="indice"') < m.indexOf('<h1 id="capitolo-1-prova"'));
+  assert.doesNotMatch(m, /<li><a href="#bestiario-di-prova"/); // il titolo non è un capitolo
+  // tabelle avvolte per lo scorrimento orizzontale sul telefono
+  assert.match(m, /<div class="tw"><table>/);
+  assert.match(m, /<\/table><\/div>/);
+
+  const html = paginaHtml([vocePROVA()], DATI_PROVA, MD_PROVA);
+  assert.match(html, /<article id="manuale">/);
+  assert.match(html, /data-vista="creature"/);
+  assert.match(html, /data-vista="manuale"/);
+  // senza il testo la pagina si genera lo stesso e lo dice
+  assert.match(paginaHtml([vocePROVA()], DATI_PROVA), /Il testo del manuale non è compreso/);
+});
+
+test('dati di prova: [hidden] batte i display delle due viste', () => {
+  // main{display:grid} e .barra batterebbero il display:none predefinito di [hidden]:
+  // senza questa regola il passaggio fra «Creature» e «Manuale» lascia le schede sullo schermo
+  const html = paginaHtml([vocePROVA()], DATI_PROVA, MD_PROVA);
+  assert.match(html, /\[hidden\]\{display:none!important\}/);
+  assert.ok(html.indexOf('[hidden]{display:none!important}') < html.indexOf('main{max-width'));
+});
+
 test('dati di prova: i testi dei valori sono quelli della plancia', () => {
   assert.equal(testoAzioni({ principali: 1, movimento: 1 }), '1 Azione Principale e 1 di Movimento');
   assert.equal(testoAzioni(null), null);
@@ -179,4 +228,15 @@ test('la pagina è un file solo: nessuna risorsa esterna e nessuna data di gener
   // i file dei nemici prestabiliti ci sono tutti
   const umani = readdirSync(new URL('esempi/nemici/umani/', RADICE)).filter((x) => x.endsWith('.json'));
   assert.equal((html.match(/data-categoria="Bestiario umano"/g) ?? []).length, umani.length);
+});
+
+test('la pagina porta anche il testo del manuale proposto, con i suoi capitoli', () => {
+  const html = readFileSync(new URL(FILE_PAGINA, RADICE), 'utf8');
+  const md = readFileSync(new URL('docs/bestiario/bestiario.md', RADICE), 'utf8');
+  const capitoli = md.split(/\r?\n/).filter((r) => /^# /.test(r)).length - 1; // meno il titolo
+  const manuale = html.slice(html.indexOf('<article id="manuale">'));
+  assert.equal((manuale.match(/<h1 id="/g) ?? []).length, capitoli);
+  assert.match(manuale, /<h1 id="capitolo-1-come-si-usa-il-bestiario">/);
+  assert.match(manuale, /<h1 id="appendice-a-taratura">/);
+  assert.equal((manuale.match(/<nav class="indice">/g) ?? []).length, 1);
 });
