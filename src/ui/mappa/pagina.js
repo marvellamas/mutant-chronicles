@@ -62,7 +62,7 @@ import {
 } from '../../mappa/editor.js';
 import { rifaiUltima } from '../../mappa/annulla.js';
 import { luceQ, luceIngombro, testoLuceBersaglio, categorieLuce, ambienteDi, trattoLuce, rettangoloLuce, conVoceLuce, cambiaAmbiente } from '../../mappa/luce.js';
-import { celleTemplate, tokenDentro as tokenNelTemplate, nuovoTemplate, scaduto, direzioneVerso, ORIENTABILI, templateVisibili, ruota, cambiaMisura, permanente } from '../../mappa/template.js';
+import { celleTemplate, tokenDentro as tokenNelTemplate, nuovoTemplate, scaduto, direzioneVerso, ORIENTABILI, templateVisibili, ruota, cambiaMisura, permanente, postoNome } from '../../mappa/template.js';
 import { livelliDi, livelliDati, conLivello, conTuttiILivelli, nascosti as livelliNascosti, statoEntrambi, conLivelloEntrambi } from '../../mappa/sovrapposizioni.js';
 import { portaA, muriEffettivi, lineeEffettive, porteVicine, apriChiudi, nuovaPorta, conAzione, azpNelRound, orientamento, orientamentoPorta, ruotaPorta, opposto, agganciaPorta, agganciaDiPorta, geometriaPorta, lineePerDisegno, muriPerDisegno, portaSotto, porteNellaForma } from '../../mappa/porte.js';
 import { apriMenuTemplate, sezioneTemplate, etichettaTemplate, testoMisure } from './template.js';
@@ -2309,10 +2309,11 @@ export function renderMappa(radice, ctx) {
     const s = st.scena;
     for (const t of templateVisibili(s.template, sovrapposizioni('master'))) {
       if (t.id === st.tpl.sposta) continue;
-      disegnaTemplate(c, { scena: s, cam: st.cam, info, celle: celleTpl(t), colore: t.colore ?? RT.colori[0].valore, stile: RT, etichetta: `${etichettaTemplate(t, RT, roundAttuale())}${t.nascosto ? ' (nascosto)' : ''}`, origine: t.origine });
+      // 12/10 (punto 4): il nome sta dentro l'area, non sul Q d'origine (cono e linea non lo coprono nemmeno)
+      disegnaTemplate(c, { scena: s, cam: st.cam, info, celle: celleTpl(t), colore: t.colore ?? RT.colori[0].valore, stile: RT, etichetta: `${etichettaTemplate(t, RT, roundAttuale())}${t.nascosto ? ' (nascosto)' : ''}`, posto: postoNome(t, s.griglia, RT, celleTpl(t)) });
     }
     const a = st.tpl.anteprima;
-    if (a) disegnaTemplate(c, { scena: s, cam: st.cam, info, celle: celleTpl(a), colore: a.colore, stile: RT, etichetta: a.nome || testoMisure(a, RT), origine: a.origine, anteprima: true });
+    if (a) disegnaTemplate(c, { scena: s, cam: st.cam, info, celle: celleTpl(a), colore: a.colore, stile: RT, etichetta: a.nome || testoMisure(a, RT), posto: postoNome(a, s.griglia, RT, celleTpl(a)), anteprima: true });
   }
   /** Mini-menu, poi il piazzamento; `origine`: il Q del clic destro (l'anteprima parte da lì). */
   async function nuovoTemplateUi(origine = null) {
@@ -2418,6 +2419,19 @@ export function renderMappa(radice, ctx) {
   }
   const togliTemplate = (id) => cambiaTemplate(id, () => null);
   const nascondiTemplate = (id) => cambiaTemplate(id, (t) => ({ ...t, nascosto: !t.nascosto }));
+  /**
+   * Nome del template (12/10, punto 4): si scrive dentro l'area, largo al più 3 Q, con i puntini se non ci sta.
+   * Vuoto: il template torna senza nome (sulla mappa resta la misura, come prima).
+   */
+  async function rinominaTemplateUi(id) {
+    const t = st.scena?.template.find((x) => x.id === id);
+    if (!t) return;
+    const v = await chiediTesto({ titolo: 'Nome del template', etichetta: `Si legge dentro l’area (al più ${RT.nome?.larghezza_max_q ?? 3} Q, poi si accorcia); vuoto: nessun nome`, valore: t.nome ?? '', conferma: 'Salva' });
+    if (v === null) return;
+    const nome = String(v).trim().slice(0, 40);
+    cambiaTemplate(id, (x) => ({ ...x, ...(nome ? { nome } : { nome: '' }) }));
+    avviso(nome ? `Template «${nome}».` : 'Nome tolto al template.', { chiave: 'template' });
+  }
   function spostaTemplate(id) {
     const t = st.scena.template.find((x) => x.id === id);
     if (t) iniziaPiazzamento(t, t.origine, id);
@@ -2446,7 +2460,7 @@ export function renderMappa(radice, ctx) {
     const firma = JSON.stringify([voci, roundAttuale()]);
     if (firma === st.tpl.firma) return;
     st.tpl.firma = firma;
-    svuota(el.pTemplate, ...sezioneTemplate(voci, RT, { nuovo: () => nuovoTemplateUi(), cancellaTemporanei: () => cancellaTemplate({ tutti: false }), sposta: spostaTemplate, nascondi: nascondiTemplate, togli: togliTemplate, round: roundAttuale() }));
+    svuota(el.pTemplate, ...sezioneTemplate(voci, RT, { nuovo: () => nuovoTemplateUi(), cancellaTemporanei: () => cancellaTemplate({ tutti: false }), sposta: spostaTemplate, rinomina: rinominaTemplateUi, nascondi: nascondiTemplate, togli: togliTemplate, round: roundAttuale() }));
   }
   // ── Linea di tiro e visuale (fase 2, lotto 3; src/mappa/visuale.js; Giocatore §5.8, §5.10, §5.11) ──
   const RV = ctx.dati.mappa.visuale;
@@ -2785,6 +2799,7 @@ export function renderMappa(radice, ctx) {
     const nome = t.nome || testoMisure(t, RT);
     return {
       sposta_template: () => ({ testo: 'Sposta o ruota', chiave: `${t.id}:sposta`, titolo: 'Segue il mouse; ← → lo ruotano, ↑ ↓ cambiano la misura; clic per rimetterlo', azione: () => spostaTemplate(t.id) }),
+      nome_template: () => ({ testo: t.nome ? `Nome: «${t.nome}»…` : 'Dai un nome…', chiave: `${t.id}:nome`, titolo: 'Il nome scritto dentro l’area; lo vedono anche i giocatori, se vedono il template', azione: () => rinominaTemplateUi(t.id) }),
       nascondi_template: () => ({ testo: t.nascosto ? 'Mostra ai giocatori' : 'Nascondi ai giocatori', chiave: `${t.id}:nascondi`, azione: () => nascondiTemplate(t.id) }),
       togli_template: () => ({ testo: `Togli «${nome}»`, chiave: `${t.id}:togli`, tasto: 'Ctrl+Z', pericolo: true, azione: () => togliTemplate(t.id) }),
     };

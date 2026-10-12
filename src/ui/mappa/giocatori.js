@@ -32,7 +32,7 @@ import { barraIniziativaEl } from './barra-iniziativa.js';
 import { creaAudio } from './audio.js';
 import { campanellaVista } from '../../mappa/audio.js';
 import { disegnaArea, disegnaZoc, disegnaPercorso, coloriAree, disegnaTemplate, disegnaPorte, disegnaMuri, disegnaMuriLinee, disegnaLineaTiro, disegnaLuci } from './disegno-aree.js';
-import { celleDaMaschera, templateVisibili } from '../../mappa/template.js';
+import { celleDaMaschera, templateVisibili, postoNomeCelle } from '../../mappa/template.js';
 import { celleDellaDiretta, zocDellaDiretta, avversariDellaDiretta, trattiPercorso } from '../../mappa/diretta.js';
 import { passiInZoc } from '../../mappa/zoc.js';
 import { avviso } from '../avvisi.js';
@@ -191,15 +191,9 @@ export function renderGiocatori(radice, ctx) {
     const chiave = `${st.vista.griglia.colonne}x${st.vista.griglia.righe}|${t.celle}`;
     if (!celleTemplate.has(chiave)) { if (celleTemplate.size > 200) celleTemplate.clear(); celleTemplate.set(chiave, celleDaMaschera(t.celle, st.vista.griglia)); }
     const celle = celleTemplate.get(chiave);
-    // il nome sul Q coperto più vicino al centro dei Q coperti
-    let origine = null;
-    if (t.nome) {
-      const C = st.vista.griglia.colonne;
-      let sx = 0, sy = 0, n = 0;
-      for (let i = 0; i < celle.length; i++) if (celle[i]) { sx += i % C; sy += Math.floor(i / C); n++; }
-      if (n) origine = [Math.floor(sx / n), Math.floor(sy / n)];
-    }
-    disegnaTemplate(c, { scena: st.vista, cam: st.cam, info, celle, colore: t.colore, stile: ctx.dati.mappa.template, etichetta: t.nome ?? null, origine });
+    // 12/10 (punto 4): il nome dentro l'area, come lo vede il master (src/mappa/template.js → postoNome)
+    const posto = t.nome ? postoNomeCelle(celle, st.vista.griglia, ctx.dati.mappa.template) : null;
+    disegnaTemplate(c, { scena: st.vista, cam: st.cam, info, celle, colore: t.colore, stile: ctx.dati.mappa.template, etichetta: t.nome ?? null, posto });
   }
   /** La diretta, se riguarda la scena mostrata. */
   const direttaAttuale = () => (st.diretta && st.vista && st.diretta.scena === st.vista.id ? st.diretta : null);

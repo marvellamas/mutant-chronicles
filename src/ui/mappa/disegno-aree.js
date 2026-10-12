@@ -243,22 +243,45 @@ export function coloriAree(el) {
  * contorno come l'area di movimento, e il nome (o la forma) sul Q d'origine. `anteprima`: tratteggiato, mentre si piazza.
  * @param stile data/mappa.json → template ({ opacita_riempimento, opacita_contorno, spessore_contorno_px })
  */
-export function disegnaTemplate(c, { scena, cam, info, celle, colore, stile, etichetta = null, origine = null, anteprima = false }) {
+export function disegnaTemplate(c, { scena, cam, info, celle, colore, stile, etichetta = null, posto = null, anteprima = false }) {
   disegnaArea(c, { scena, cam, info, celle, colori: { passo: colore, corsa: colore, scatto: colore }, stile: { ...stile, opacita_riempimento: anteprima ? stile.opacita_riempimento * 0.7 : stile.opacita_riempimento }, solo: 1 });
-  if (!etichetta || !origine) return;
+  if (etichetta && posto) nomeNellArea(c, { scena, cam, etichetta, posto, regole: stile.nome });
+}
+
+/**
+ * Il nome dentro l'area del template (12/10/2026, punto 4): nel posto che dice src/mappa/template.js → postoNome,
+ * largo al più quei Q (fra 1 e 3). Il testo si rimpicciolisce fino a px_min e poi si accorcia con i puntini: non esce
+ * mai dall'area. Bordo bianco e pieno scuro, come i muri, così si legge su immagini chiare e scure.
+ */
+export function nomeNellArea(c, { scena, cam, etichetta, posto, regole = {} }) {
   const g = scena.griglia;
-  const s = schermoDaMappa(cam, g.scosto_x + (origine[0] + 0.5) * g.q_px, g.scosto_y + (origine[1] + 0.5) * g.q_px);
+  const n = { altezza_q: 0.4, px_min: 9, px_max: 22, colore: '#111111', bordo: '#ffffff', bordo_px: 3, ...regole };
+  const s = schermoDaMappa(cam, g.scosto_x + posto.q[0] * g.q_px, g.scosto_y + posto.q[1] * g.q_px);
+  // quanto misura un quadretto sullo schermo adesso (zoom compreso)
+  const a = schermoDaMappa(cam, g.scosto_x, g.scosto_y);
+  const b = schermoDaMappa(cam, g.scosto_x + g.q_px, g.scosto_y);
+  const qpx = Math.abs(b.x - a.x);
+  const massimo = posto.larghezza * qpx;
+  if (massimo < 6) return; // mappa rimpicciolita: il nome non si leggerebbe comunque
   c.save();
-  c.font = '700 12px system-ui, sans-serif';
-  const larg = c.measureText(etichetta).width + 10;
-  c.globalAlpha = 0.85;
-  c.fillStyle = '#000';
-  c.fillRect(s.x - larg / 2, s.y - 9, larg, 18);
-  c.globalAlpha = 1;
-  c.fillStyle = '#fff';
   c.textAlign = 'center';
   c.textBaseline = 'middle';
-  c.fillText(etichetta, s.x, s.y);
+  let px = Math.max(n.px_min, Math.min(n.px_max, qpx * n.altezza_q));
+  const misura = (testo, dim) => { c.font = `700 ${dim}px system-ui, sans-serif`; return c.measureText(testo).width; };
+  while (px > n.px_min && misura(etichetta, px) > massimo) px = Math.max(n.px_min, px - 1);
+  let testo = etichetta;
+  if (misura(testo, px) > massimo) {
+    // non ci sta nemmeno al minimo: si taglia con i puntini
+    while (testo.length > 1 && misura(`${testo}…`, px) > massimo) testo = testo.slice(0, -1);
+    testo = `${testo}…`;
+  }
+  c.font = `700 ${px}px system-ui, sans-serif`;
+  c.lineJoin = 'round';
+  c.lineWidth = n.bordo_px;
+  c.strokeStyle = n.bordo;
+  c.strokeText(testo, s.x, s.y);
+  c.fillStyle = n.colore;
+  c.fillText(testo, s.x, s.y);
   c.restore();
 }
 

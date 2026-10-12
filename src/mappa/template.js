@@ -208,6 +208,47 @@ export function templatePerGiocatori(lista, scena, regole) {
   return r;
 }
 
+/**
+ * Dove va scritto il nome di un template e quanto può essere largo (12/10/2026, punto 4 della sessione di gioco di
+ * Marcello e Davide: «il nome si vede dentro l'area del template»). Si sceglie il Q coperto più vicino al centro dei Q
+ * coperti — così il nome sta sempre **dentro** l'area, anche per cono e linea, che non coprono il Q d'origine — e si
+ * misura la fila di Q coperti attorno a lui in quella riga: il nome è largo quella fila, al più `larghezza_max_q` e
+ * almeno `larghezza_min_q` (chi disegna lo accorcia con i puntini se non ci sta).
+ * @param celle Uint8Array per Q (src/mappa/template.js → celleTemplate, o celleDaMaschera per la vista giocatori)
+ * @returns { q: [x, y] centro in Q (numeri con la virgola), larghezza: Q } oppure null (nessun Q coperto)
+ */
+export function postoNomeCelle(celle, griglia, regole) {
+  const { colonne: C, righe: R } = griglia;
+  const n = regole?.nome ?? {};
+  const min = n.larghezza_min_q ?? 1;
+  const max = n.larghezza_max_q ?? 3;
+  let sx = 0, sy = 0, quanti = 0;
+  for (let i = 0; i < C * R; i++) if (celle[i]) { sx += (i % C) + 0.5; sy += Math.floor(i / C) + 0.5; quanti++; }
+  if (!quanti) return null;
+  const cx = sx / quanti, cy = sy / quanti;
+  // il Q coperto più vicino al centro (il centro di un cono o di una ciambella può cadere fuori dall'area)
+  let scelto = null, migliore = Infinity;
+  for (let i = 0; i < C * R; i++) {
+    if (!celle[i]) continue;
+    const x = i % C, y = Math.floor(i / C);
+    const d = (x + 0.5 - cx) ** 2 + (y + 0.5 - cy) ** 2;
+    if (d < migliore) { migliore = d; scelto = [x, y]; }
+  }
+  const [qx, qy] = scelto;
+  // la fila di Q coperti attorno a lui, in quella riga
+  let x0 = qx, x1 = qx;
+  while (x0 > 0 && celle[qy * C + x0 - 1]) x0--;
+  while (x1 < C - 1 && celle[qy * C + x1 + 1]) x1++;
+  const larghezza = Math.min(max, Math.max(min, x1 - x0 + 1));
+  // il nome resta dentro la fila: il suo riquadro non esce né a sinistra né a destra
+  const meta = larghezza / 2;
+  const centro = Math.min(Math.max(cx, x0 + meta), x1 + 1 - meta);
+  return { q: [centro, qy + 0.5], larghezza };
+}
+
+/** Come sopra, dal template (i Q coperti si calcolano se non sono già pronti). */
+export const postoNome = (t, griglia, regole, celle = celleTemplate(t, griglia, regole)) => postoNomeCelle(celle, griglia, regole);
+
 /** Celle di un template già filtrato per i giocatori (Uint8Array per Q). */
 export function celleDaMaschera(base64, griglia) {
   const { colonne: C, righe: R } = griglia;

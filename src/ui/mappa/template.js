@@ -87,6 +87,8 @@ export function sezioneTemplate(voci, regole, a) {
       h('div', { class: 'nota' }, dentro.length ? `Dentro: ${dentro.join(', ')}` : 'Nessun token dentro'),
       h('div', { class: 'mappa-azioni-token' },
         h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Lo riprendi: segue il mouse, ← → lo ruotano, ↑ ↓ cambiano la misura; clic per rimetterlo (Esc lo lascia dov’era)', onclick: () => a.sposta(t.id) }, 'Sposta o ruota'),
+        // 12/10 (punto 4): il nome si cambia da qui e dal clic destro; si vede dentro l'area, anche ai giocatori
+        a.rinomina ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Il nome scritto dentro l’area (vuoto: nessun nome)', onclick: () => a.rinomina(t.id) }, t.nome ? 'Nome…' : 'Dai un nome…') : null,
         h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => a.nascondi(t.id) }, t.nascosto ? 'Mostra ai giocatori' : 'Nascondi ai giocatori'),
         h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => a.togli(t.id) }, 'Togli'))))) : h('p', { class: 'nota' }, 'Nessun template sulla mappa.'),
   ];

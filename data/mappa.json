@@ -164,6 +164,17 @@
       "quadrato": "Quadrato",
       "rettangolo": "Rettangolo"
     },
+    "nome": {
+      "_nota": "Nome del template scritto sulla mappa (12/10/2026, punto 4 della sessione di gioco di Marcello e Davide): sta dentro l'area (src/mappa/template.js → postoNome), largo fra larghezza_min_q e larghezza_max_q quadretti; se il testo non ci sta si rimpicciolisce fino a px_min e poi si accorcia con i puntini. Bordo bianco come i muri, perché si legga su immagini chiare e scure. Lo vedono anche i giocatori, se vedono il template.",
+      "larghezza_min_q": 1,
+      "larghezza_max_q": 3,
+      "altezza_q": 0.4,
+      "px_min": 9,
+      "px_max": 22,
+      "colore": "#111111",
+      "bordo": "#ffffff",
+      "bordo_px": 3
+    },
     "regola_copertura": "almeno_meta",
     "campioni_per_lato": 8,
     "metrica_raggio": "quadretti",
@@ -713,6 +724,7 @@
           "titolo": "{nome}",
           "voci": [
             "sposta_template",
+            "nome_template",
             "nascondi_template"
           ]
         }
