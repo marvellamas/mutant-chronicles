@@ -84,8 +84,10 @@ test('aggiornamento con tutte le cartelle locali: restano identiche, l’app si 
   assert.equal(readFileSync(join(d, 'img', 'sfondi', 'predefinito.jpg'), 'utf8'), 'sfondo nuovo');
   assert.equal(readFileSync(join(d, 'node_modules', 'serve', 'index.js'), 'utf8'), 'componente');
   // copia di sicurezza dei dati locali (senza node_modules)
-  const zip = readdirSync(join(d, 'backup-prima-aggiornamento'));
+  // accanto alle copie c'e' anche .stato-prima.json, che serve al controllo dopo l'aggiornamento (12/10)
+  const zip = readdirSync(join(d, 'backup-prima-aggiornamento')).filter((n) => /^locali_.*\.zip$/.test(n));
   assert.equal(zip.length, 1);
+  assert.ok(existsSync(join(d, 'backup-prima-aggiornamento', '.stato-prima.json')));
   assert.match(zip[0], /^locali_\d{4}-\d{2}-\d{2}_\d{2}-\d{2}-\d{2}\.zip$/);
   assert.ok(statSync(join(d, 'backup-prima-aggiornamento', zip[0])).size > 0);
   rmSync(r, { recursive: true, force: true });
@@ -120,7 +122,7 @@ test('copie di sicurezza: si tengono le ultime 5', opz, () => {
   }
   const e = esegui(sorgente(r), d, r);
   assert.equal(e.status, 0, e.stdout + e.stderr);
-  const restano = readdirSync(dirB).sort();
+  const restano = readdirSync(dirB).filter((n) => /^locali_.*\.zip$/.test(n)).sort();
   assert.equal(restano.length, 5);
   assert.ok(!restano.includes('locali_2026-01-01_10-00-00.zip') && !restano.includes('locali_2026-01-02_10-00-00.zip'));
   assert.ok(restano.includes('locali_2026-01-06_10-00-00.zip'));
@@ -133,7 +135,8 @@ test('installazione nuova (cartella vuota): l’app arriva, nessuna copia di sic
   const e = esegui(sorgente(r), d, r);
   assert.equal(e.status, 0, e.stdout + e.stderr);
   assert.equal(readFileSync(join(d, 'index.html'), 'utf8'), '<html>nuova</html>');
-  assert.equal(existsSync(join(d, 'backup-prima-aggiornamento')), false);
+  // niente da salvare: nessuna copia, ma lo stato di prima si scrive lo stesso (tutte le cartelle a zero)
+  assert.equal(readdirSync(join(d, 'backup-prima-aggiornamento')).filter((n) => /^locali_.*\.zip$/.test(n)).length, 0);
   rmSync(r, { recursive: true, force: true });
 });
 

@@ -23,6 +23,20 @@ $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
 function Fine([int]$codice, [string]$testo) { if ($testo) { Write-Host $testo }; exit $codice }
 
+# Quanti file di dati ha adesso ogni cartella da controllare (i LEGGIMI non contano): lo stesso conteggio di
+# tools\dati-locali.mjs → statoLocali. Serve per accorgersi dopo l'aggiornamento se una cartella si e' svuotata.
+function ContaDati($radice, $cartelle) {
+  $o = [ordered]@{}
+  foreach ($c in $cartelle) {
+    $p = Join-Path $radice $c
+    $esiste = Test-Path -LiteralPath $p
+    $n = 0
+    if ($esiste) { $n = @(Get-ChildItem -Recurse -File -LiteralPath $p -ErrorAction SilentlyContinue | Where-Object { $_.Name -ne 'LEGGIMI.txt' }).Count }
+    $o[$c] = [ordered]@{ esiste = $esiste; file = $n; byte = 0 }
+  }
+  return $o
+}
+
 # 1. lo zip e' completo?
 $fileElenco = Join-Path $Sorgente 'tools\file-locali.json'
 if (-not (Test-Path -LiteralPath $fileElenco)) { Fine 3 '       Lo zip scaricato e'' incompleto (manca tools\file-locali.json): non ho toccato nulla.' }
@@ -52,6 +66,10 @@ foreach ($a in $L.annidati) {
     $annidatiTrovati += [pscustomobject]@{ Percorso = $x.FullName; Relativo = (Join-Path $sopra $x.Name) }
   }
 }
+# che cosa c'e' adesso: si riconta alla fine (tools\dati-locali.mjs dopo), e se una cartella si e' svuotata
+# l'aggiornamento si ferma e propone di rimettere la copia qui sotto
+$prima = ContaDati $Destinazione $L.controllo_svuotamento
+$zipCopia = $null
 if ($daSalvare.Count -gt 0) {
   try {
     $dirB = Join-Path $Destinazione $L.cartella_backup
@@ -62,12 +80,21 @@ if ($daSalvare.Count -gt 0) {
     Compress-Archive -LiteralPath $daSalvare -DestinationPath $zip
     if (-not (Test-Path -LiteralPath $zip) -or (Get-Item -LiteralPath $zip).Length -le 0) { throw 'zip vuoto' }
     Write-Host ('       Copia di sicurezza dei dati di questo PC: ' + $zip)
+    $zipCopia = $zip
     # le ultime N
     Get-ChildItem -LiteralPath $dirB -Filter 'locali_*.zip' | Sort-Object LastWriteTime, Name -Descending | Select-Object -Skip ([int]$L.backup_da_tenere) | Remove-Item -Force
   } catch {
     Fine 4 ('       Non riesco a fare la copia di sicurezza dei dati di questo PC (' + $_ + '): non ho aggiornato nulla.')
   }
 }
+# stato di prima, nello stesso formato di tools\dati-locali.mjs: il controllo dopo l'aggiornamento lo rilegge
+try {
+  $dirB = Join-Path $Destinazione $L.cartella_backup
+  New-Item -ItemType Directory -Force $dirB | Out-Null
+  $stato = [ordered]@{ quando = (Get-Date).ToString('o'); prima = $prima; zip = $zipCopia }
+  # UTF-8 senza BOM: con il BOM JSON.parse di Node si rifiuta di leggerlo
+  [IO.File]::WriteAllText((Join-Path $dirB '.stato-prima.json'), ($stato | ConvertTo-Json -Depth 5), (New-Object Text.UTF8Encoding $false))
+} catch { Write-Host ('       (non sono riuscito a scrivere lo stato di prima: ' + $_ + ')') }
 
 try {
   # 3. data (regole che il master puo' aver modificato): copia in BackupDati, tenuta solo se diversa dalla nuova

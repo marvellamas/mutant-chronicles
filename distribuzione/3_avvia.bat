@@ -88,6 +88,9 @@ if errorlevel 1 goto porta_occupata
 rem Versione dell'app e indirizzi dei moduli con ?v= (docs/cache.md): dopo un aggiornamento il
 rem browser prende i file nuovi senza Ctrl+F5. Se lo script manca o non riesce si prosegue.
 if exist "%APP%\tools\versione.mjs" node "%APP%\tools\versione.mjs" >>"%LOG%" 2>&1
+rem I file fuori dalla cartella "mutant" si rimettono al passo con l'app (12/10/2026): qui non e' in uso
+rem 1_scarica_o_aggiorna_app.bat, quindi si aggiorna anche quello. Questo file e' in uso: si salta.
+if exist "%APP%\tools\aggiorna-avviatori.mjs" node "%APP%\tools\aggiorna-avviatori.mjs" --radice=%APP% --fuori=%QUI%. --salta=3_avvia.bat >>"%LOG%" 2>&1
 call :scrivi " [5/5] Accendo l'app..."
 call :scrivi ""
 call :scrivi " --------------------------------------------------------------"

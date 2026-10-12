@@ -139,8 +139,10 @@ export function rimettiCopia({ radice = RADICE, zip }) {
   let rimessi = 0;
   let saltati = 0;
   const cartelle = new Set();
-  for (const [nome, dati] of Object.entries(voci)) {
-    if (nome.split('/').some((p) => p === '..' || p === '' || p === '.') || /^[a-z]:/i.test(nome) || nome.includes('\\')) continue;
+  for (const [grezzo, dati] of Object.entries(voci)) {
+    // Compress-Archive di PowerShell scrive i nomi con le barre rovesciate: si normalizzano
+    const nome = grezzo.replace(/\\/g, '/');
+    if (nome.split('/').some((p) => p === '..' || p === '' || p === '.') || /^[a-z]:/i.test(nome)) continue;
     const p = join(radice, ...nome.split('/'));
     if (!normalize(p).startsWith(normalize(radice + sep))) continue;
     if (existsSync(p)) { saltati++; continue; }
@@ -174,7 +176,8 @@ export function scriviStatoPrima(radice = RADICE, { elenco = elencoLocali(radice
 }
 
 export function leggiStatoPrima(radice = RADICE, elenco = elencoLocali(radice)) {
-  try { return JSON.parse(readFileSync(percorsoStato(radice, elenco), 'utf8')); } catch { return null; }
+  // lo scrive anche distribuzione/aggiorna-da-zip.ps1: si toglie l'eventuale BOM di PowerShell
+  try { return JSON.parse(readFileSync(percorsoStato(radice, elenco), 'utf8').replace(/^﻿/, '')); } catch { return null; }
 }
 
 const arg = (k) => process.argv.find((x) => x.startsWith(`--${k}=`))?.slice(k.length + 3);

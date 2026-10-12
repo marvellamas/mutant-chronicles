@@ -91,6 +91,20 @@ if errorlevel 1 goto errore_copia
 if defined ULTIMA (echo %ULTIMA%)>"%DEST%\.versione"
 rmdir /s /q "%LAVORO%" 2>nul
 
+rem Controllo dopo l'aggiornamento (12/10/2026, docs\diagnosi-dati-spariti-2026-10-12.md): se una cartella che
+rem prima aveva file adesso e' vuota, ci si ferma e si propone di rimettere la copia appena fatta.
+where node >nul 2>nul
+if errorlevel 1 goto senza_controllo
+if not exist "%DEST%\tools\dati-locali.mjs" goto senza_controllo
+node "%DEST%\tools\dati-locali.mjs" dopo --radice=%DEST%
+if errorlevel 1 goto dati_mancanti
+:senza_controllo
+
+rem I file fuori dalla cartella "mutant" (questo compreso) si rimettono al passo con l'app: altrimenti
+rem restano per sempre quelli del primo scaricamento. Questo file e' in uso adesso, quindi si salta:
+rem lo aggiorna 3_avvia.bat al prossimo avvio.
+if exist "%DEST%\tools\aggiorna-avviatori.mjs" node "%DEST%\tools\aggiorna-avviatori.mjs" --radice=%DEST% --fuori=%~dp0. --salta=1_scarica_o_aggiorna_app.bat
+
 echo.
 echo  Fatto: l'app e' nella cartella "mutant", accanto a questo file.
 rem Riavvio del server dopo l'aggiornamento (13/10/2026, tools\riavvia.mjs): se Mutant era acceso lo spegne
@@ -103,8 +117,39 @@ echo.
 pause
 exit /b 0
 
+:dati_mancanti
+echo.
+echo  I file dell'app sono stati aggiornati, ma mancano dei dati di questo PC.
+echo.
+choice /c SN /n /m "  Rimetto adesso la copia fatta prima dell'aggiornamento? [S/N] "
+if errorlevel 2 goto dati_mancanti_no
+node "%DEST%\tools\dati-locali.mjs" rimetti --radice=%DEST%
+node "%DEST%\tools\dati-locali.mjs" dopo --radice=%DEST%
+if errorlevel 1 (
+  echo.
+  echo  Qualcosa manca ancora: manda questo schermo a Marcello. Non ho cancellato niente; le copie
+  echo  sono nella cartella mutant\backup-prima-aggiornamento.
+) else (
+  echo.
+  echo  I dati sono tornati al loro posto.
+)
+echo.
+pause
+exit /b 1
+
+:dati_mancanti_no
+echo.
+echo  Va bene: non ho toccato niente. La copia resta in mutant\backup-prima-aggiornamento e la puoi
+echo  rimettere quando vuoi con la voce 4 della console (Ripristina un salvataggio).
+echo.
+pause
+exit /b 1
+
 :gia_aggiornato
 rmdir /s /q "%LAVORO%" 2>nul
+rem anche quando non c'e' niente da scaricare, i file fuori dalla cartella "mutant" si rimettono al passo
+where node >nul 2>nul
+if not errorlevel 1 if exist "%DEST%\tools\aggiorna-avviatori.mjs" node "%DEST%\tools\aggiorna-avviatori.mjs" --radice=%DEST% --fuori=%~dp0. --salta=1_scarica_o_aggiorna_app.bat
 echo.
 echo  L'app e' gia' aggiornata: non c'e' niente da scaricare.
 echo  Per usarla fai doppio clic su 3_avvia.bat
