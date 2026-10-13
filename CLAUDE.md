@@ -176,6 +176,8 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
   - giocatori (`src/ui/galleria-giocatori.js`): l'immagine a tutto schermo sullo schermo dei giocatori e su tutti i tablet, sopra la scheda o la mappa, con la ✕ per chiuderla da soli (non la chiude agli altri); mostrarne un'altra sostituisce la precedente, chi arriva dopo vede quella in corso. Nella scheda, ultimo pulsante della barra, «Galleria»: le sole immagini già mostrate, la più recente in cima; il master può toglierne una dal loro elenco senza cancellarla dalla sua;
   - leggerezza: l'originale resta sul PC del master; la copia ridotta (per schermo e tablet) e la miniatura le prepara il suo browser una volta sola, come per le mappe.
 
+- Ritocchi della scheda del 13/10 (richieste di Marcello dopo la sessione del 12/10): Ferite «oltre Grave» con gli stessi malus di Grave (`regole.json` → `ferite.oltre_penalita_come`, A.159: prima nessun malus; la morte del §5.14 resta un avviso, non un blocco); «Bonus dei Talenti» nelle Opzioni (⚙) con il segno «⚠ Talenti spenti» in testata; i sei riquadri dei valori del Combattimento in una griglia (Difese, Prove Salvezza più evidente con `--salvezze-sfondo`, Iniziativa, Movimento, Azioni, Luce sul bersaglio; 1 colonna su telefono, 2 da 600 px, 3 da 1100 px); gli Artefatti con PM sotto i Punti Magia nella colonna di sinistra, a parte dalla riserva personale (A.112, A.20); «Cerca nella scheda» (🔍 in testata, `src/cerca-scheda.js` e `src/ui/cerca.js`): si scrive una parola e si trova dove sta, con il valore accanto, un tocco porta alla tab e il 🎲 tira.
+
 Fuori perimetro per ora: tiri automatici fuori dalla plancia; manovre, inseguimenti e collisioni dei veicoli al tavolo.
 
 ## Riferimenti
