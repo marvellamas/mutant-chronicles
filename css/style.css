@@ -2693,3 +2693,8 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .intensita-stato { flex: 1 1 100%; max-width: 100%; min-width: 0; font-size: 0.82rem; }
 /* nella plancia gli Stati sono pillole in fila: lì il menu sta in linea, ma non più largo della fila */
 .plancia-stati .intensita-stato { flex: 0 1 auto; max-width: 100%; }
+
+/* «Bonus dei Talenti» nelle Opzioni (13/10) e il segno in testata quando sono spenti */
+.opzione-talenti .nota { margin: 0.25rem 0 0; }
+.segno-talenti-spenti { font: inherit; font-size: 0.8rem; color: var(--attenzione-testo, inherit); background: var(--attenzione-tenue); border: 1px solid var(--attenzione); border-radius: var(--raggio); padding: 0.1rem 0.45rem; cursor: pointer; white-space: nowrap; }
+.segno-talenti-spenti:hover, .segno-talenti-spenti:focus-visible { background: var(--attenzione); }

@@ -352,6 +352,8 @@ function menuImpostazioni(ctx) {
           ' Ritratto come sfondo dell’intestazione'),
         ctx.scelte.ritratto ? null : h('p', { class: 'nota' }, 'Nessun ritratto: si carica nel passo Background.')),
       h('p', { class: 'nota' }, 'Salvate in questo browser.'),
+      // 13/10: «Bonus dei Talenti» (prima in testa a Combattimento e Poteri): si salva nel personaggio
+      interruttoreTalenti(ctx),
       // sezione facoltativa: si salva nel personaggio (e nel file esportato), non nel browser
       h('fieldset', {},
         h('legend', {}, 'Calendario'),
@@ -421,6 +423,7 @@ function testataComune(ctx) {
     'aria-label': `${delta > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(delta)} crediti`,
   }, delta > 0 ? `+${delta}` : `−${-delta}`);
   return h('div', { class: 'testata-comune', role: 'group', 'aria-label': 'Punti Eroe, Distintivi e Crediti' },
+    segnoTalentiSpenti(ctx),
     h('span', { class: 'voce-testata voce-pe', title: `Punti Eroe: ${t.puntiEroe.valore} su ${t.puntiEroe.massimo ?? '—'}. «−» ne spende uno; si riottengono convertendo i Distintivi (§1.8.3).` },
       h('span', { class: 'etichetta-testata' }, 'Punti Eroe'), h('strong', { 'aria-live': 'polite' }, String(t.puntiEroe.valore)),
       tasto('puntiEroe', -1, !t.puntiEroe.puoTogliere, 'Spendi 1 Punto Eroe'),
@@ -879,11 +882,21 @@ function interruttoreTalenti(ctx) {
   const on = ctx.tab.scheda.bonusTalenti !== false;
   const testo = on ? 'Bonus dei Talenti: contano nei valori, in «Attacca!» e in «Lancia!»'
     : 'Bonus dei Talenti spenti: i valori non li contano (nella provenienza sono barrati)';
-  return h('div', { class: 'interruttore-talenti' },
-    h('label', { class: `pillola-condizionale${on ? ' attivo' : ''}`, title: testo },
-      h('input', { type: 'checkbox', role: 'switch', checked: on, 'aria-label': 'Bonus dei Talenti', onchange: ctx.azioni.bonusTalenti }),
-      h('span', { class: 'nome-condizionale' }, 'Bonus dei Talenti'),
-      h('span', { class: 'effetto-condizionale' }, on ? ` · accesi${effetti.length ? '' : ' (nessun effetto numerico tipizzato)'}` : ' · spenti')));
+  return h('fieldset', { class: 'opzione-talenti' },
+    h('legend', {}, 'Bonus dei Talenti'),
+    h('label', { class: 'scelta-radio', title: testo },
+      h('input', { type: 'checkbox', checked: on, 'aria-label': 'Bonus dei Talenti', onchange: ctx.azioni.bonusTalenti }),
+      on ? ` Accesi${effetti.length ? '' : ' (nessun effetto numerico tipizzato)'}` : ' Spenti'),
+    h('p', { class: 'nota' }, on ? 'Contano nei valori, in «Attacca!» e in «Lancia!». Salvato nel personaggio.' : 'I valori non li contano: nella provenienza sono barrati. In testata resta il segno «Talenti spenti».'));
+}
+
+/** Segno «Talenti spenti» nella testata di ogni tab (13/10): piccolo, così non si dimentica l'interruttore. */
+function segnoTalentiSpenti(ctx) {
+  if (ctx.tab.scheda.bonusTalenti !== false) return null;
+  return h('button', {
+    type: 'button', class: 'segno-talenti-spenti', title: 'I bonus dei Talenti non contano nei valori. Si riaccendono dalle Opzioni (⚙).',
+    onclick: ctx.azioni.bonusTalenti,
+  }, '⚠ Talenti spenti');
 }
 
 /**
@@ -1570,7 +1583,8 @@ function tabCombattimento(ctx, d) {
     // S12 (11/10/2026): gli Stati in alto; sotto, i bonus di circostanza
     riquadroStati(ctx, d),
     riquadroCircostanze(ctx),
-    h('div', { class: 'riga-interruttori' }, interruttoreTalenti(ctx), selettoreLuce(ctx, { compatto: true })),
+    // 13/10: l'interruttore «Bonus dei Talenti» è nelle Opzioni (⚙); qui resta la luce
+    h('div', { class: 'riga-interruttori' }, selettoreLuce(ctx, { compatto: true })),
     promemoriaPenalita(ctx),
     // conducente di un veicolo: andatura e penalità come promemoria, senza cambiare i VA (Veicoli §2.1, §3.1)
     promemoriaConducente(ctx),
@@ -2253,7 +2267,6 @@ function tabPoteri(ctx, d) {
   // i dati del foglio Poteri esistono anche con le sole Tecniche (conMagia: false): la Magia solo se c'è
   if (d && d.conMagia === false) d = null;
   return [
-    interruttoreTalenti(ctx),
     riquadroCircostanze(ctx),
     ...(d ? tabMagia(ctx, d) : risorse ? [] : [h('section', { class: 'riquadro nessun-potere' }, h('h2', {}, 'Nessun potere'), p.nessuno ? h('p', { class: 'nota' }, p.nessuno) : null)]),
     // Risorse Interiori (Giocatore §8.9; richiesta di Davide del 02/10): le Tecniche con «Attiva»
