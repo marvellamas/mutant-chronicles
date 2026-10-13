@@ -57,7 +57,12 @@ export function vociScheda(scheda, sessione = {}, dati = null) {
     const segno = e.valore > 0 ? `+${e.valore}` : String(e.valore ?? '');
     agg('Oggetto con bonus', e.oggetto, [segno, e.abilita].filter(Boolean).join(' '), 'inventario', { testo: e.uso ?? e.condizione ?? null });
   }
-  for (const o of scheda.equipaggiamento?.oggetti ?? []) agg('Oggetto', o.nome, o.quantita > 1 ? `×${o.quantita}` : null, 'inventario');
+  // gli Artefatti con PM hanno già la loro voce: non si ripetono come oggetti
+  const conPm = new Set((scheda.equipaggiamento?.contenitori ?? []).map((c) => c.uid));
+  for (const o of scheda.equipaggiamento?.oggetti ?? []) {
+    if (conPm.has(o.uid)) continue;
+    agg('Oggetto', o.nome, o.voce?.quantita > 1 ? `×${o.voce.quantita}` : null, 'inventario');
+  }
   // Stati attivi e note di sessione
   const stati = dati?.regole?.stati?.elenco ?? [];
   for (const id of sessione.statiAttivi ?? []) {
