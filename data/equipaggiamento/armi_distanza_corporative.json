@@ -1475,8 +1475,8 @@
       "catalogo": "Capitol",
       "famiglia": "Revolver",
       "nomi_alternativi": [],
-      "note_manuale": "Colt Hammershot. Revolver pesante. Specializzazione: Pistole. Usa proiettili da pistola (§7.20.9) e un tamburo fisso da sei colpi. Ricaricare il tamburo con munizioni pronte richiede 1 AzP e la mano libera. Il prezzo comprende il tamburo, mentre le munizioni si acquistano separatamente. Non possiede proprietà aggiuntive.",
-      "paragrafo": "§7.8",
+      "note_manuale": "Colt Hammershot. Revolver pesante. Specializzazione: Pistole. Usa proiettili da pistola (§7.20.9) e un tamburo fisso da sei colpi. La ricarica segue la A.135: 2 cartucce per AzP, 4 con Ricarica Migliorata, oppure fino a 6 con un carichino preparato e accessibile, entro gli spazi liberi; servono le mani disponibili. Il prezzo comprende il tamburo, mentre le munizioni si acquistano separatamente. Non possiede proprietà aggiuntive.",
+      "paragrafo": "§7.8, E&L A.152",
       "versione_manuale": "Armamenti 0.59",
       "abilita": "Armi leggere",
       "specializzazione": "specializzazione-pistole",
@@ -1508,7 +1508,8 @@
       "ps_int": 14,
       "reperibilita": "RA",
       "costo": 3500,
-      "proprieta": []
+      "proprieta": [],
+      "_nota_a152": "A.152 (risposta di Davide del 09/10/2026): la Colt Hammershot usa proiettili da pistola (§7.8, §7.20.9); «revolver pesante» non cambia la famiglia delle munizioni, e l’associazione del catalogo era già corretta. La vecchia riga «tamburo completo in 1 AzP» è sostituita dalla A.135."
     },
     {
       "id": "bolter-10",
