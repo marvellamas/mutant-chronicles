@@ -110,16 +110,52 @@
   },
   "corruzione": {
     "stati": [
-      { "nome": "Umano", "penalita": 0, "manifestazioni": "Nessuna contaminazione rilevabile." },
-      { "nome": "Esposto", "penalita": 0, "manifestazioni": "Tracce lievi dell’esposizione." },
-      { "nome": "Contagiato", "penalita": -1, "manifestazioni": "Irrequietezza, nervosismo e primi segni di contaminazione." },
-      { "nome": "Infetto", "penalita": -2, "manifestazioni": "Malessere persistente e aggressività verbale o emotiva." },
-      { "nome": "Corrotto", "penalita": -4, "manifestazioni": "Influenza oscura marcata e possibili perdite di controllo." },
-      { "nome": "Eretico", "penalita": -6, "manifestazioni": "Tendenza a servire il Caos e possibile comparsa di Mutazioni Oscure." },
-      { "nome": "Caotico", "penalita": -10, "manifestazioni": "Identità quasi perduta, instabilità e trasformazioni mostruose." },
-      { "nome": "Oscuro", "penalita": null, "irreversibile": true, "manifestazioni": "Corruzione irreversibile: il personaggio diventa un PNG." }
+      {
+        "nome": "Umano",
+        "penalita": 0,
+        "manifestazioni": "Nessuna contaminazione rilevabile."
+      },
+      {
+        "nome": "Esposto",
+        "penalita": 0,
+        "manifestazioni": "Tracce lievi dell’esposizione."
+      },
+      {
+        "nome": "Contagiato",
+        "penalita": -1,
+        "manifestazioni": "Irrequietezza, nervosismo e primi segni di contaminazione."
+      },
+      {
+        "nome": "Infetto",
+        "penalita": -2,
+        "manifestazioni": "Malessere persistente e aggressività verbale o emotiva."
+      },
+      {
+        "nome": "Corrotto",
+        "penalita": -4,
+        "manifestazioni": "Influenza oscura marcata e possibili perdite di controllo."
+      },
+      {
+        "nome": "Eretico",
+        "penalita": -6,
+        "manifestazioni": "Tendenza a servire il Caos e possibile comparsa di Mutazioni Oscure."
+      },
+      {
+        "nome": "Caotico",
+        "penalita": -10,
+        "manifestazioni": "Identità quasi perduta, instabilità e trasformazioni mostruose."
+      },
+      {
+        "nome": "Oscuro",
+        "penalita": null,
+        "irreversibile": true,
+        "manifestazioni": "Corruzione irreversibile: il personaggio diventa un PNG."
+      }
     ],
-    "si_applica_a": ["abilita", "salvezze"],
+    "si_applica_a": [
+      "abilita",
+      "salvezze"
+    ],
     "versione_manuale": "Giocatore 0.43 + Doc del 29/09/2026",
     "_nota_stati": "Giocatore §5.20: un unico Stato di Corruzione Oscura (CROS); si applica soltanto la penalità dello Stato attuale, a tutte le Prove di Caratteristica, Abilità e Salvezza, comprese quelle contro ulteriori esposizioni. Non modifica Iniziativa, Movimento, Azioni, danni, Armatura, PV o PM. Oscuro: penalità «—», il personaggio diventa un PNG. Lo Stato attuale sta nella sessione (sessione → corruzione, indice in «stati»); «Nuova sessione» non lo azzera (il recupero segue il §5.20.2). Esposizione, Intensità ed esiti (§5.20.1) e l’Umanità (§5.21) non sono tracciati dall’app (docs/backlog.md).",
     "chroma_viola": {
@@ -198,10 +234,46 @@
   "competenze": {
     "paragrafo": "Giocatore §§1.2.1, 2.3, 2.12, 2.13, 4.2, 8.3, 8.7 (Doc del 29/09/2026, 23:45)",
     "categorie": {
-      "S": { "nome": "Specializzate", "numero": 2, "base": 7, "limite": { "fisso": 10, "per_grado_totale": 1, "per_grado_categoria": 1 } },
-      "P": { "nome": "Professionali", "numero": 6, "base": 6, "limite": { "fisso": 7, "per_grado_totale": 1, "per_grado_categoria": 1 } },
-      "G": { "nome": "Generiche", "numero": 12, "base": 5, "limite": { "fisso": 5, "per_grado_totale": 2, "per_grado_categoria": 0 } },
-      "N": { "nome": "Non competenti", "numero": 4, "base": 3, "limite": { "fisso": 3, "per_grado_totale": 2, "per_grado_categoria": 0 } }
+      "S": {
+        "nome": "Specializzate",
+        "numero": 2,
+        "base": 7,
+        "limite": {
+          "fisso": 10,
+          "per_grado_totale": 1,
+          "per_grado_categoria": 1
+        }
+      },
+      "P": {
+        "nome": "Professionali",
+        "numero": 6,
+        "base": 6,
+        "limite": {
+          "fisso": 7,
+          "per_grado_totale": 1,
+          "per_grado_categoria": 1
+        }
+      },
+      "G": {
+        "nome": "Generiche",
+        "numero": 12,
+        "base": 5,
+        "limite": {
+          "fisso": 5,
+          "per_grado_totale": 2,
+          "per_grado_categoria": 0
+        }
+      },
+      "N": {
+        "nome": "Non competenti",
+        "numero": 4,
+        "base": 3,
+        "limite": {
+          "fisso": 3,
+          "per_grado_totale": 2,
+          "per_grado_categoria": 0
+        }
+      }
     },
     "punti_base_totali": 122,
     "_nota": "La prima Classe assegna a ciascuna delle 24 Abilità una categoria di competenza (classi.json → competenze) e la sua base, che resta fissa (§2.3). VA grezzo personale = Mod + Base + Corporazione + Avanzamento; VA personale = min(grezzo, limite) (§1.2.1). Limite di un'Abilità (§8.7): per ogni categoria che le attribuisce almeno una Classe posseduta, fisso + per_grado_totale × G + per_grado_categoria × g (G = Gradi di tutte le Classi, g = Gradi delle Classi che la mettono in quella categoria); vale il più alto. Con una sola Classe al Grado g dà la tabella del §8.3 (S 10 + 2g, P 7 + 2g, G 5 + 2g, N 3 + 2g). Bonus e penalità alla Prova (equipaggiamento, Talenti, Specializzazioni, condizioni) si applicano dopo il limite (§4.2). I +1 di Classe oltre il limite restano nel grezzo; i punti liberi valgono solo se aumentano il VA personale (§2.13, §8.3)."
@@ -470,10 +542,10 @@
       "server_non_risponde": "Il Tavolo del Master non risponde: controlla che la finestra di avvia-server.bat sia aperta, poi ricarica la pagina. Il personaggio è al sicuro nel browser.",
       "non_riuscito": "Salvataggio nella cartella personaggi/ non riuscito: {errore}. Il personaggio resta salvato nel browser.",
       "ritenta_ogni_s": 5,
-    "indicatore_salvato": "Salvato sul PC del master alle {ora}",
-    "indicatore_da_salvare": "Modifiche non ancora salvate sul PC del master",
-    "indicatore_senza_nome": "Dai un nome al personaggio per salvarlo sul PC del master",
-    "_nota_indicatore": "Indicatore sempre visibile nella scheda con il server (src/collegamento.js → statoSalvataggioMaster): l'ora è quella del file nella cartella personaggi/ del PC del master. Se la scheda ha modifiche non ancora nella cartella, la scheda riprova da sola al controllo successivo (ogni 3 secondi).",
+      "indicatore_salvato": "Salvato sul PC del master alle {ora}",
+      "indicatore_da_salvare": "Modifiche non ancora salvate sul PC del master",
+      "indicatore_senza_nome": "Dai un nome al personaggio per salvarlo sul PC del master",
+      "_nota_indicatore": "Indicatore sempre visibile nella scheda con il server (src/collegamento.js → statoSalvataggioMaster): l'ora è quella del file nella cartella personaggi/ del PC del master. Se la scheda ha modifiche non ancora nella cartella, la scheda riprova da sola al controllo successivo (ogni 3 secondi).",
       "_nota": "Messaggi del salvataggio nella cartella del server (src/cartella.js → messaggioSalvataggio, src/ui/app.js). Quando il server non risponde (errore di rete) si mostra «server_non_risponde», senza gergo tecnico, e l'app ritenta da sé ogni «ritenta_ogni_s» secondi: appena il server torna, scrive e mostra «riuscito». Il messaggio tecnico resta nella console del browser. «non_riuscito» ({errore}) vale per gli errori veri del server (file non valido, permessi), che un nuovo tentativo non risolve."
     },
     "_nota": "Scheda digitale: barre dei PV e dei PM. Verde sopra verde_sopra del massimo, rosso sotto rosso_sotto, giallo fra le due soglie (comprese). Frazioni da 0 a 1."
@@ -726,7 +798,12 @@
         "media": -4,
         "totale": null
       },
-      "bersaglio_migliorata": { "nessuna": 0, "leggera": -4, "media": -6, "totale": null },
+      "bersaglio_migliorata": {
+        "nessuna": 0,
+        "leggera": -4,
+        "media": -6,
+        "totale": null
+      },
       "propria": {
         "nessuna": 0,
         "leggera": -2,
@@ -1278,28 +1355,98 @@
     ]
   },
   "meditazione": {
-    "pm_per_ora": { "fisso": 3, "caratteristiche": ["SAG"], "minimo": 3 },
-    "ore_al_giorno": { "fisso": 2, "caratteristiche": ["SAG", "COS"], "minimo": 1 },
+    "pm_per_ora": {
+      "fisso": 3,
+      "caratteristiche": [
+        "SAG"
+      ],
+      "minimo": 3
+    },
+    "ore_al_giorno": {
+      "fisso": 2,
+      "caratteristiche": [
+        "SAG",
+        "COS"
+      ],
+      "minimo": 1
+    },
     "fonte": "Magia sez. 6, «Meditazione»: recupero per ora completa 3 + Mod SAG PM, minimo 3; ore utili al giorno 2 + Mod SAG + Mod COS, minimo 1. Schede di Recupero Meditativo, Meditazione Migliorata e Meditazione Estesa approvate dal master il 26/09/2026.",
     "_nota": "Chi ha la capacità di Meditazione: talenti_liberi.json → condizioni_prerequisiti → capacita:meditazione. I Talenti aggiungono pm_per_ora dopo il minimo e moltiplicano le ore dopo il minimo. L’app mostra i valori; le ore non si contano."
   },
   "chroma": {
     "colori": {
-      "Bianco": { "energia": "Universale", "macrofamiglie": ["Fisica", "Mentale", "Spirituale"] },
-      "Rosso": { "energia": "Fisica", "macrofamiglie": ["Fisica"] },
-      "Blu": { "energia": "Mentale", "macrofamiglie": ["Mentale"] },
-      "Verde": { "energia": "Spirituale", "macrofamiglie": ["Spirituale"] },
-      "Viola": { "energia": "Oscura", "macrofamiglie": [], "contenitore": false, "corruzione_passiva": "chroma_viola" },
-      "Trasparente": { "energia": "Nessuna energia residua", "macrofamiglie": [], "esausto": true }
+      "Bianco": {
+        "energia": "Universale",
+        "macrofamiglie": [
+          "Fisica",
+          "Mentale",
+          "Spirituale"
+        ]
+      },
+      "Rosso": {
+        "energia": "Fisica",
+        "macrofamiglie": [
+          "Fisica"
+        ]
+      },
+      "Blu": {
+        "energia": "Mentale",
+        "macrofamiglie": [
+          "Mentale"
+        ]
+      },
+      "Verde": {
+        "energia": "Spirituale",
+        "macrofamiglie": [
+          "Spirituale"
+        ]
+      },
+      "Viola": {
+        "energia": "Oscura",
+        "macrofamiglie": [],
+        "contenitore": false,
+        "corruzione_passiva": "chroma_viola"
+      },
+      "Trasparente": {
+        "energia": "Nessuna energia residua",
+        "macrofamiglie": [],
+        "esausto": true
+      }
     },
     "conversione": {
       "rapporto_ordinario": 3,
-      "rapporti_fissi": { "Bianco": 2 },
-      "talenti_riduzione": ["Ricarica Efficiente", "Conversione Migliorata"],
-      "rapporto_per_talenti": [3, 2, 1],
+      "rapporti_fissi": {
+        "Bianco": 2
+      },
+      "talenti_riduzione": [
+        "Ricarica Efficiente",
+        "Conversione Migliorata"
+      ],
+      "rapporto_per_talenti": [
+        3,
+        2,
+        1
+      ],
       "addestramento_richiesto": "Taumaturgo",
-      "prelievo": { "colori": ["Bianco"], "richiede": "accesso_magia", "fonte": "Magia sez. 6, «Convertire Potere, ricaricare e prelevare»: un personaggio cosciente che abbia accesso alla magia può prelevare PM da un contenitore Bianco sintonizzato, con contatto, nella propria riserva personale, 2:1; non serve l’Addestramento Taumaturgo (che resta necessario per ricaricare), ma il prelievo non è disponibile a chi non ha accesso alla magia.", "decisione": "A.20 (confermata da Davide l’08/10/2026, decisione 155 di docs/risposte-master.md): il Chroma Bianco resta riservato a chi ha accesso alla magia; non basta essere coscienti." },
-      "prova_gruppi": { "automatici": 1, "penalita": { "2": 0, "3": -2, "4": -4, "5": -6, "6": -8 }, "per_gruppo_oltre": -2 },
+      "prelievo": {
+        "colori": [
+          "Bianco"
+        ],
+        "richiede": "accesso_magia",
+        "fonte": "Magia sez. 6, «Convertire Potere, ricaricare e prelevare»: un personaggio cosciente che abbia accesso alla magia può prelevare PM da un contenitore Bianco sintonizzato, con contatto, nella propria riserva personale, 2:1; non serve l’Addestramento Taumaturgo (che resta necessario per ricaricare), ma il prelievo non è disponibile a chi non ha accesso alla magia.",
+        "decisione": "A.20 (confermata da Davide l’08/10/2026, decisione 155 di docs/risposte-master.md): il Chroma Bianco resta riservato a chi ha accesso alla magia; non basta essere coscienti."
+      },
+      "prova_gruppi": {
+        "automatici": 1,
+        "penalita": {
+          "2": 0,
+          "3": -2,
+          "4": -4,
+          "5": -6,
+          "6": -8
+        },
+        "per_gruppo_oltre": -2
+      },
       "fonte": "Magia sez. 6, pp. 9–10 (tabella «Convertire Potere, ricaricare e prelevare» e Prova per gruppi); Armamenti §7.5.1; Giocatore §3.9.5 (Ricarica Efficiente)"
     },
     "contenitori_per_lancio": 1,
@@ -1307,12 +1454,34 @@
       "paragrafo": "Magia 1.3 §26.2, Armamenti 0.58 §7.5 (Google Doc del 02/10/2026)",
       "_nota": "Ogni riserva è Batteria o Cariche; ogni proprietà infusa è Esclusiva o Universale (src/fonti.js). Le riserve a sé (batterie del catalogo) sono Batterie; le riserve integrate senza indicazione sono Cariche con proprietà Esclusive («integrata_predefinita», «proprieta_predefinita»: schede anteriori alla distinzione, armi con Chroma integrato del §7.5.1, risposta A.18). «fonti_esterne_per_pagamento»: una sola fonte esterna per lancio o attivazione, eventualmente con PM personali; la riserva di un Artefatto è esterna rispetto al personaggio.",
       "tipi": {
-        "batteria": { "nome": "Batteria", "fonte_per_pg": true, "testo": "Alimenta l’Artefatto ed è una fonte esterna per gli Incantesimi compatibili del personaggio; segue le normali regole di conversione." },
-        "cariche": { "nome": "Cariche", "fonte_per_pg": false, "testo": "Alimenta soltanto il proprio Artefatto. Non si possono prelevare PM per Incantesimi personali o convertirli in PM personali." }
+        "batteria": {
+          "nome": "Batteria",
+          "fonte_per_pg": true,
+          "testo": "Alimenta l’Artefatto ed è una fonte esterna per gli Incantesimi compatibili del personaggio; segue le normali regole di conversione."
+        },
+        "cariche": {
+          "nome": "Cariche",
+          "fonte_per_pg": false,
+          "testo": "Alimenta soltanto il proprio Artefatto. Non si possono prelevare PM per Incantesimi personali o convertirli in PM personali."
+        }
       },
       "alimentazioni": {
-        "esclusiva": { "nome": "Esclusiva", "fonti": ["interna"], "testo": "Soltanto la riserva interna del medesimo oggetto, sia essa Batteria o Cariche." },
-        "universale": { "nome": "Universale", "fonti": ["interna", "personali", "esterna"], "testo": "Riserva interna, PM personali oppure un’altra fonte esterna compatibile, secondo i limiti ordinari." }
+        "esclusiva": {
+          "nome": "Esclusiva",
+          "fonti": [
+            "interna"
+          ],
+          "testo": "Soltanto la riserva interna del medesimo oggetto, sia essa Batteria o Cariche."
+        },
+        "universale": {
+          "nome": "Universale",
+          "fonti": [
+            "interna",
+            "personali",
+            "esterna"
+          ],
+          "testo": "Riserva interna, PM personali oppure un’altra fonte esterna compatibile, secondo i limiti ordinari."
+        }
       },
       "integrata_predefinita": "cariche",
       "proprieta_predefinita": "esclusiva",
@@ -1825,7 +1994,15 @@
       "intervallo_ore": 24,
       "attivi_massimo": 1,
       "strumenti": "si_somma",
-      "equivalenti": { "tipi": ["impianto", "elmetto"], "famiglie": ["Esoscheletri"] },
+      "equivalenti": {
+        "tipi": [
+          "impianto",
+          "elmetto"
+        ],
+        "famiglie": [
+          "Esoscheletri"
+        ]
+      },
       "decisione": "A.114 (E&L del 05/10/2026, decisione 124 di docs/risposte-master.md): il bonus pertinente del chip si somma al modificatore degli strumenti, di cui non è un secondo; resta un solo modificatore complessivo degli strumenti (Giocatore §1.4.1). Benefici tecnologici equivalenti al chip sulla stessa Prova non si sommano: vale il maggiore, anche con elmetti ed esoscheletri (Equipaggiamento §7.1, «Cumulo»: «equivalenti» = effetti degli oggetti di questi tipi e famiglie). Esempio: Medicina 10, chip +2, Kit trauma Professionale +2 → VA 14. Restano un chip attivo, 30 minuti, un'attivazione ogni 24 ore, niente su attacchi, Difese, manovre e magia. Superata l'ipotesi del maggiore fra chip e strumenti.",
       "innesto": "processore",
       "abilita": [
@@ -1876,7 +2053,13 @@
       }
     ],
     "oltre": "Morte",
-    "si_applica_a": ["abilita", "salvezze"],
+    "oltre_penalita_come": "Grave",
+    "oltre_avviso": "Oltre Grave di norma è la morte (§5.14). Se il personaggio resta in piedi per qualche motivo, valgono gli stessi malus di Grave: decide il master.",
+    "_nota_oltre": "Decisione di Marcello del 13/10/2026 (A.159, da rivedere con Davide): «oltre Grave» non è più senza malus. oltre_penalita_come indica lo Stato di Ferita da cui prendere la penalità (qui Grave, −8); null per tornare a nessuna penalità. Nessun blocco: la morte resta un avviso al master (src/danno.js).",
+    "si_applica_a": [
+      "abilita",
+      "salvezze"
+    ],
     "_nota": "§5.14: penalità cumulativa a VA e Prove Salvezza; §5.14.1: PS di Tempra per le Menomazioni al primo raggiungimento di Profonda, Seria, Grave. Usato dalla scheda stampata."
   },
   "stati": {
@@ -2308,14 +2491,62 @@
   },
   "condizioni_armi": {
     "elenco": [
-      { "id": "integra", "nome": "Integra", "utilizzabile": true, "va": 0, "testo": "Nessuna condizione." },
-      { "id": "inceppata", "nome": "Inceppata", "utilizzabile": false, "va": 0, "testo": "Non spara finché non viene liberata: 1 AzP e una Prova con l’Abilità dell’arma, con il modificatore della tabella (§5.17)." },
-      { "id": "inutilizzabile", "nome": "Inutilizzabile", "utilizzabile": false, "va": 0, "testo": "Richiede la riparazione sul campo: 1 AzP e una Prova di Tecnologia con il modificatore della tabella; dopo, −3 VA fino alla riparazione completa (§5.17)." },
-      { "id": "riparata-sul-campo", "nome": "Riparata sul campo (era Inutilizzabile)", "utilizzabile": true, "va": -3, "testo": "−3 VA fino alla riparazione completa (§5.17)." },
-      { "id": "rotta", "nome": "Rotta (Complicazione)", "utilizzabile": false, "va": 0, "testo": "Resta inutilizzabile fino alla riparazione sul campo (Tecnologia con il modificatore della tabella); dopo, −5 VA fino alla riparazione completa (§5.17). Distinta dai PI: non li azzera (A.49)." },
-      { "id": "riparata-da-rotta", "nome": "Riparata sul campo (era Rotta)", "utilizzabile": true, "va": -5, "testo": "−5 VA fino alla riparazione completa (§5.17)." },
-      { "id": "danneggiata", "nome": "Danneggiata", "utilizzabile": true, "va": -2, "testo": "−2 VA; si applica quando una regola la prevede, non per la sola perdita di PI (Armamenti §7.2.1)." },
-      { "id": "distrutta", "nome": "Distrutta", "utilizzabile": false, "va": 0, "testo": "Non recuperabile con una riparazione ordinaria (§5.17, A.46)." }
+      {
+        "id": "integra",
+        "nome": "Integra",
+        "utilizzabile": true,
+        "va": 0,
+        "testo": "Nessuna condizione."
+      },
+      {
+        "id": "inceppata",
+        "nome": "Inceppata",
+        "utilizzabile": false,
+        "va": 0,
+        "testo": "Non spara finché non viene liberata: 1 AzP e una Prova con l’Abilità dell’arma, con il modificatore della tabella (§5.17)."
+      },
+      {
+        "id": "inutilizzabile",
+        "nome": "Inutilizzabile",
+        "utilizzabile": false,
+        "va": 0,
+        "testo": "Richiede la riparazione sul campo: 1 AzP e una Prova di Tecnologia con il modificatore della tabella; dopo, −3 VA fino alla riparazione completa (§5.17)."
+      },
+      {
+        "id": "riparata-sul-campo",
+        "nome": "Riparata sul campo (era Inutilizzabile)",
+        "utilizzabile": true,
+        "va": -3,
+        "testo": "−3 VA fino alla riparazione completa (§5.17)."
+      },
+      {
+        "id": "rotta",
+        "nome": "Rotta (Complicazione)",
+        "utilizzabile": false,
+        "va": 0,
+        "testo": "Resta inutilizzabile fino alla riparazione sul campo (Tecnologia con il modificatore della tabella); dopo, −5 VA fino alla riparazione completa (§5.17). Distinta dai PI: non li azzera (A.49)."
+      },
+      {
+        "id": "riparata-da-rotta",
+        "nome": "Riparata sul campo (era Rotta)",
+        "utilizzabile": true,
+        "va": -5,
+        "testo": "−5 VA fino alla riparazione completa (§5.17)."
+      },
+      {
+        "id": "danneggiata",
+        "nome": "Danneggiata",
+        "utilizzabile": true,
+        "va": -2,
+        "testo": "−2 VA; si applica quando una regola la prevede, non per la sola perdita di PI (Armamenti §7.2.1)."
+      },
+      {
+        "id": "distrutta",
+        "nome": "Distrutta",
+        "utilizzabile": false,
+        "va": 0,
+        "testo": "Non recuperabile con una riparazione ordinaria (§5.17, A.46)."
+      }
     ],
     "fonte": "Giocatore §5.17 (28/09); Armamenti §7.2, §7.2.1; risposta di Davide A.49",
     "_nota": "Stato dell’arma al tavolo, distinto dai PI (A.49): una Complicazione non azzera i PI e la riparazione sul campo non ne restituisce; recuperare PI (A.46) non toglie la condizione. A 0 PI l’arma è comunque Rotta. «va» entra nel VA effettivo dell’arma; «utilizzabile»: false blocca «Attacca!»."
@@ -2446,11 +2677,49 @@
     }
   },
   "categorie_prove": {
-    "fisiche": ["Armi da lancio", "Armi leggere", "Armi medie", "Armi pesanti", "Armi da guerra", "Armi da mischia", "Corpo a corpo", "Difese", "Atletica", "Furtività"],
-    "fisiche_ravvicinate": ["Armi da guerra", "Armi da mischia", "Corpo a corpo", "Difese"],
-    "vista": ["Armi da lancio", "Armi leggere", "Armi medie", "Armi pesanti", "Armi da guerra", "Armi da mischia", "Corpo a corpo", "Difese", "Pilotare"],
-    "udito": ["Percezione", "Intrattenere"],
-    "luce": ["Armi da lancio", "Armi leggere", "Armi medie", "Armi pesanti", "Armi da guerra", "Armi da mischia", "Corpo a corpo", "Difese"],
+    "fisiche": [
+      "Armi da lancio",
+      "Armi leggere",
+      "Armi medie",
+      "Armi pesanti",
+      "Armi da guerra",
+      "Armi da mischia",
+      "Corpo a corpo",
+      "Difese",
+      "Atletica",
+      "Furtività"
+    ],
+    "fisiche_ravvicinate": [
+      "Armi da guerra",
+      "Armi da mischia",
+      "Corpo a corpo",
+      "Difese"
+    ],
+    "vista": [
+      "Armi da lancio",
+      "Armi leggere",
+      "Armi medie",
+      "Armi pesanti",
+      "Armi da guerra",
+      "Armi da mischia",
+      "Corpo a corpo",
+      "Difese",
+      "Pilotare"
+    ],
+    "udito": [
+      "Percezione",
+      "Intrattenere"
+    ],
+    "luce": [
+      "Armi da lancio",
+      "Armi leggere",
+      "Armi medie",
+      "Armi pesanti",
+      "Armi da guerra",
+      "Armi da mischia",
+      "Corpo a corpo",
+      "Difese"
+    ],
     "_nota_luce": "A.106 (E&L del 05/10/2026): penalità di luce (regole.json → illuminazione) agli attacchi e alle Difese che dipendono dalla vista, sempre; la Percezione visiva come valore a parte. Le altre Prove la ricevono solo se l’uso «richiede la vista» (A.116, illuminazione.richiede_vista: predefinite per Abilità, correzione del Direttore in sessione).",
     "_nota_fisiche": "E&L del 29/09, risposta 3 (A.16): «fisiche» è la lista di riferimento confermata; conta l’azione svolta, non la Caratteristica; il Direttore può includere altre Prove quando l’impiego è fisico. Le penalità alle azioni fisiche non si estendono a Potere né alle Prove Salvezza; prevalgono le indicazioni specifiche dello Stato o della circostanza (A Terra non penalizza ogni tiro a distanza).",
     "_nota": "Categorie di Prove per gli effetti degli Stati e del carico («prove» negli effetti). Ogni lista è di Abilità di abilita.json. Risposta di Davide A.51 (28/09/2026): le liste sono di riferimento, non chiuse; il Direttore di Gioco valuta i casi particolari. «vista» (Accecato): Abilità di attacco, Difese, Pilotare; Percezione non ha una penalità generale, le azioni esclusivamente visive falliscono. «udito» (Assordato): solo valore a parte «quando l’udito conta», nessuna penalità generale."
@@ -2486,7 +2755,10 @@
         "penalita": -10
       }
     ],
-    "si_applica_a": ["abilita", "salvezze"],
+    "si_applica_a": [
+      "abilita",
+      "salvezze"
+    ],
     "_nota": "§5.19: un unico Stato di Affaticamento; si applica solo la penalità dello Stato attuale, a tutte le Prove di Caratteristica, Abilità e Salvezza. Riposato è la riserva iniziale."
   },
   "carico": {
@@ -2505,7 +2777,12 @@
         "id": "sovraccarico",
         "nome": "Sovraccarico",
         "fino_a_kg_per_punto": 20,
-        "effetto": { "va_gruppi": { "fisiche": -2 }, "fonte": "§5.2.6, §1.6: −2 VA alle Prove fisiche, compresi attacchi e Difese; non modifica le Prove Salvezza" },
+        "effetto": {
+          "va_gruppi": {
+            "fisiche": -2
+          },
+          "fonte": "§5.2.6, §1.6: −2 VA alle Prove fisiche, compresi attacchi e Difese; non modifica le Prove Salvezza"
+        },
         "movimento_q": -2,
         "solo_passo": true,
         "affaticamento_ogni_ora": true,
@@ -2515,14 +2792,23 @@
         "id": "oltre_il_massimo",
         "nome": "Oltre il massimo",
         "fino_a_kg_per_punto": null,
-        "effetto": { "va_gruppi": { "fisiche": -2 }, "fonte": "§5.2.6; E&L 5 (A.31): oltre il massimo Movimento 0 Q e −2 alle Prove fisiche; nessuna penalità alle Prove Salvezza" },
+        "effetto": {
+          "va_gruppi": {
+            "fisiche": -2
+          },
+          "fonte": "§5.2.6; E&L 5 (A.31): oltre il massimo Movimento 0 Q e −2 alle Prove fisiche; nessuna penalità alle Prove Salvezza"
+        },
         "movimento_zero": true,
         "promemoria": "Movimento 0 Q finché non riduci il carico o ricevi un aiuto adeguato, e −2 VA alle Prove fisiche (non alle Prove Salvezza). Il peso in eccesso non si solleva né si trasporta senza strumenti o aiuti adeguati."
       }
     ],
     "spinta_kg_per_punto": 40,
     "moltiplicatori": [
-      { "talento": "Forza da Lavoro", "fattore": 2, "fonte": "§5.2.6, «Interazioni con le capacità»: raddoppia tutte le soglie (ordinario FOR × 20, massimo FOR × 40, spinta FOR × 80 kg)" }
+      {
+        "talento": "Forza da Lavoro",
+        "fattore": 2,
+        "fonte": "§5.2.6, «Interazioni con le capacità»: raddoppia tutte le soglie (ordinario FOR × 20, massimo FOR × 40, spinta FOR × 80 kg)"
+      }
     ],
     "_nota_pesi": "E&L del 29/09, risposte 4–5 (A.30, A.31): si conta tutto ciò che si trasporta, senza contare due volte gli stessi oggetti; un peso mancante è «da definire», non 0 kg: il totale noto è parziale e non attesta l’assenza di penalità. Forza da Lavoro porta il massimo a FOR × 40 kg e il trascinamento a FOR × 80 kg prima del confronto.",
     "_nota": "Soglie = valore di FOR (non il modificatore) × kg per punto, moltiplicate dai Talenti di «moltiplicatori». Le Prove fisiche sono quelle di regole.json → categorie_prove.fisiche (domande aperte A.16, A.51). Il peso trasportato è la somma dei pesi dell’equipaggiamento (campo «peso» del catalogo, in kg per unità, o dell’oggetto personalizzato) più il peso aggiuntivo della sessione. Mulo da Soma ed Evacuazione Medica non cambiano le soglie: restano nel testo dei Talenti. «Oltre il massimo» con le penalità del Sovraccarico è una scelta dell’app: il manuale dice solo che il carico non si trasporta."
@@ -2534,7 +2820,12 @@
     ],
     "da_solo": {
       "ar": "profilo_autonomo",
-      "profilo_autonomo": { "ar": 1, "magica": 0, "categoria": "Leggera", "for_richiesta": 3 },
+      "profilo_autonomo": {
+        "ar": 1,
+        "magica": 0,
+        "categoria": "Leggera",
+        "for_richiesta": 3
+      },
       "proprieta": true,
       "con_armatura_indossata": "nessun_effetto",
       "uno_solo": true,
@@ -2571,26 +2862,69 @@
       "A 0 PI l’oggetto è Rotto e non può essere utilizzato finché non viene riparato.",
       "Una perdita di PI non assegna automaticamente la condizione Danneggiata e la relativa penalità di −2 VA."
     ],
-    "tipi_tracciati": ["arma_ravvicinata", "arma_distanza", "scudo", "armatura", "rinforzo", "elmetto", "accessorio", "artefatto", "sanitario", "impianto", "altro"],
+    "tipi_tracciati": [
+      "arma_ravvicinata",
+      "arma_distanza",
+      "scudo",
+      "armatura",
+      "rinforzo",
+      "elmetto",
+      "accessorio",
+      "artefatto",
+      "sanitario",
+      "impianto",
+      "altro"
+    ],
     "_nota_tipi_tracciati": "Risposta A.47 (Armamenti §7.2.1 del 28/09): si tracciano gli oggetti con «pi» nella scheda, sanitari compresi (kit Standard 4, Professionale 6, iniettore 2); le munizioni e i consumabili contano quantità, dosi o applicazioni. Ogni esemplare ha i propri PI: esemplari identici restano raggruppati finché integri e si separano appena uno viene danneggiato («Danneggia uno»). Senza «pi» a catalogo nessun valore, nemmeno 0: il Direttore può fissarlo in modalità tavolo («pi_direttore» della voce).",
     "riparazione": {
       "ore": 1,
       "abilita": "Tecnologia",
       "esiti": [
-        { "id": "maldestro", "nome": "Fallimento Maldestro", "pi": -1 },
-        { "id": "fallimento", "nome": "Fallimento", "pi": 0 },
-        { "id": "successo", "nome": "Successo", "pi": 1 },
-        { "id": "magistrale", "nome": "Successo Magistrale", "pi": 2 }
+        {
+          "id": "maldestro",
+          "nome": "Fallimento Maldestro",
+          "pi": -1
+        },
+        {
+          "id": "fallimento",
+          "nome": "Fallimento",
+          "pi": 0
+        },
+        {
+          "id": "successo",
+          "nome": "Successo",
+          "pi": 1
+        },
+        {
+          "id": "magistrale",
+          "nome": "Successo Magistrale",
+          "pi": 2
+        }
       ],
       "strumenti_improvvisati_va": -2,
       "materiali_percentuale": 5,
-      "tipi": ["arma_ravvicinata", "arma_distanza", "armatura", "rinforzo", "scudo", "elmetto", "accessorio"],
-      "esclusi": ["distrutta"],
+      "tipi": [
+        "arma_ravvicinata",
+        "arma_distanza",
+        "armatura",
+        "rinforzo",
+        "scudo",
+        "elmetto",
+        "accessorio"
+      ],
+      "esclusi": [
+        "distrutta"
+      ],
       "fonte": "Armamenti §7.2.1 (28/09), «Riparazione strutturale degli oggetti personali»; risposta di Davide A.46",
       "_nota": "Un intervento: un oggetto, 1 ora, Prova di Tecnologia. Successo +1 PI, Magistrale +2, Fallimento nessun PI e tempo consumato, Maldestro −1 PI fino a 0 senza PS Integrità; mai oltre il massimo. Strumenti improvvisati −2 VA. Materiali: 5% del prezzo di catalogo per ogni PI effettivamente recuperato (un’armatura da 2.000 crediti: 100 per PI); la manodopera di un riparatore esterno si paga a parte. Un oggetto Rotto a 0 PI torna utilizzabile con almeno 1 PI. «accessorio»: i rinforzi. Distrutti e componenti mistiche da ricostruire: procedure specifiche. Nessun dado nell’app: l’esito si sceglie dopo il tiro al tavolo (src/riparazione.js)."
     },
     "soglie": [
-      { "pi_fino_a": 0, "etichetta": "Rotto", "effetto": "inutilizzabile", "fonte": "Armamenti §7.2.1" }
+      {
+        "pi_fino_a": 0,
+        "etichetta": "Rotto",
+        "effetto": "inutilizzabile",
+        "fonte": "Armamenti §7.2.1"
+      }
     ],
     "_nota_soglie": "Nessuna soglia intermedia: «Una perdita di PI non impone automaticamente −2 VA» (Equipaggiamento §1.7). Effetto «inutilizzabile»: l'oggetto Rotto non dà AR né i suoi effetti, peso e penalità restano; un rinforzo rotto montato tiene FOR richiesta e penalità della configurazione (risposte A.44, A.45; l'elmetto a 0 PI «perde i propri vantaggi», §7.21.3). Riparazione: «riparazione» qui sopra (A.46)."
   },
@@ -2602,21 +2936,69 @@
       "Due scudi non sommano la protezione: si utilizza soltanto il contributo maggiore.",
       "Gli elmetti non forniscono AR, neppure magica."
     ],
-    "cumulo": { "armatura": "massimo", "scudo": "massimo", "elmetto": "nessuna", "effetti": "somma", "ar_contro": "massimo" },
+    "cumulo": {
+      "armatura": "massimo",
+      "scudo": "massimo",
+      "elmetto": "nessuna",
+      "effetti": "somma",
+      "ar_contro": "massimo"
+    },
     "_nota_cumulo": "Un solo valore complessivo, «totale, di cui magica», senza zone del corpo (risposta A.43). Due armature non si sovrappongono (§7.11.2): vale la maggiore, con l’avviso del motore.",
-    "etichette": { "totale": "AR", "magica": "contro Etereo" },
+    "etichette": {
+      "totale": "AR",
+      "magica": "contro Etereo"
+    },
     "talenti": [
-      { "talento": "Corazza Potenziata", "totale": 1, "magica": 1, "richiede": "protezione_artefatto", "fonte": "Giocatore §3.9.5 (28/09); risposta A.48", "frase": "Il beneficio è personale e si applica una sola volta, anche utilizzando contemporaneamente armatura e scudo." }
+      {
+        "talento": "Corazza Potenziata",
+        "totale": 1,
+        "magica": 1,
+        "richiede": "protezione_artefatto",
+        "fonte": "Giocatore §3.9.5 (28/09); risposta A.48",
+        "frase": "Il beneficio è personale e si applica una sola volta, anche utilizzando contemporaneamente armatura e scudo."
+      }
     ],
     "_nota_talenti": "Corazza Potenziata (risposta A.48): +1 AR magica una sola volta con un’armatura indossata o uno scudo imbracciato classificati Artefatto Mistico o TecnoMistico, utilizzabili e con almeno 1 PI. «Artefatto» è la tipologia «Protezioni» della classificazione degli Artefatti del catalogo (artefatti.json → artefatti_catalogo): oggi solo lo Scudo delle Guardie Sacre. Le armature con AR magica propria sono in per-davide A.53.",
     "tecniche": [
-      { "tecnica": "aura-di-resistenza", "totale": 1, "magica": 1, "contro": null, "durata": "3 Round", "fonte": "Giocatore §8.9; risposta A.48" },
-      { "tecnica": "pelle-di-rinoceronte", "totale": 1, "magica": 0, "contro": "ravvicinato", "durata": "3 Round", "fonte": "Giocatore §8.9; risposta A.48" }
+      {
+        "tecnica": "aura-di-resistenza",
+        "totale": 1,
+        "magica": 1,
+        "contro": null,
+        "durata": "3 Round",
+        "fonte": "Giocatore §8.9; risposta A.48"
+      },
+      {
+        "tecnica": "pelle-di-rinoceronte",
+        "totale": 1,
+        "magica": 0,
+        "contro": "ravvicinato",
+        "durata": "3 Round",
+        "fonte": "Giocatore §8.9; risposta A.48"
+      }
     ],
     "incantesimi": [
-      { "incantesimo": "Scudo", "colonna": "AR naturale", "magica": false, "gruppo": "scudo", "fonte": "Magia, scheda 17.2" },
-      { "incantesimo": "Armatura di Forza", "colonna": "AR magica", "magica": true, "gruppo": "pelle_o_forza", "fonte": "Magia, scheda 17.3" },
-      { "incantesimo": "Pelle Corazzata", "colonna": "AR", "magica": false, "gruppo": "pelle_o_forza", "fonte": "Magia, scheda 16.6" }
+      {
+        "incantesimo": "Scudo",
+        "colonna": "AR naturale",
+        "magica": false,
+        "gruppo": "scudo",
+        "fonte": "Magia, scheda 17.2"
+      },
+      {
+        "incantesimo": "Armatura di Forza",
+        "colonna": "AR magica",
+        "magica": true,
+        "gruppo": "pelle_o_forza",
+        "fonte": "Magia, scheda 17.3"
+      },
+      {
+        "incantesimo": "Pelle Corazzata",
+        "colonna": "AR",
+        "magica": false,
+        "gruppo": "pelle_o_forza",
+        "fonte": "Magia, scheda 16.6"
+      }
     ],
     "frasi_incantesimi": [
       "Non si somma a scudi fisici o ad altri Scudo: per ciascun attacco si sceglie un solo scudo, usandone sia l’AR sia gli eventuali benefici di Parata.",
@@ -2652,8 +3034,14 @@
     "da_x2": 3,
     "massimo": 3,
     "solo_prima_applicazione": true,
-    "prima_di": ["difesa", "armatura"],
-    "non_moltiplicati": ["dopo_armatura", "periodici"],
+    "prima_di": [
+      "difesa",
+      "armatura"
+    ],
+    "non_moltiplicati": [
+      "dopo_armatura",
+      "periodici"
+    ],
     "_nota": "E&L del 29/09, risposta 11 (A.29): i bonus ordinari (Colpo Mirato, Affondo, Carica Brutale, Caratteristica) si sommano prima del moltiplicatore e si moltiplicano; quelli espressamente dopo l’Armatura no e richiedono almeno 1 danno residuo; ×2 diventa ×3, ×3 resta ×3; nelle applicazioni multiple solo la prima (§1.6). Il §1.6 è una regola generale, non del solo corpo a corpo: la applica src/danno.js → applicaColpo (moltiplicatore prima della Difesa e dell’Armatura, §5.13 passo 3) a ogni colpo del tavolo, con lo stesso calcolo per i PG e per i nemici, sia che il danno sia tirato dall’app sia che venga scritto dal vivo.",
     "promemoria": "Magistrale: i bonus ordinari al danno sono già nella formula e si moltiplicano; quelli dopo l’Armatura no. Nelle applicazioni multiple di danno il moltiplicatore vale solo per la prima (§1.6, §5.13).",
     "frasi": [
@@ -2688,7 +3076,10 @@
       "Il successo automatico è un successo normale: non produce un Successo Magistrale o Distintivi e non elimina il consumo ordinario di tempo e risorse."
     ],
     "tiro_sempre": {
-      "tipi": ["attacco", "difesa"],
+      "tipi": [
+        "attacco",
+        "difesa"
+      ],
       "decisione": "Gli attacchi e le Difese attive richiedono il tiro anche quando il VA finale è 20 o superiore. Si applicano prima tutti i modificatori e poi si determina il VA finale. Restano valide le eccezioni esplicite che colpiscono automaticamente, come Colpo Elementale.",
       "promemoria": "si tira comunque: attacchi e Difese non hanno il successo automatico",
       "fonte": "E&L del 02/10/2026, decisione 3 (per-davide A.78); docs/risposte-master.md, decisione 71"
@@ -2696,8 +3087,14 @@
     "magistrale_migliorato": {
       "talento": "successo-magistrale-migliorato",
       "naturali": [
-        { "va_da": 1, "fino_a": 2 },
-        { "va_da": 21, "fino_a": 3 }
+        {
+          "va_da": 1,
+          "fino_a": 2
+        },
+        {
+          "va_da": 21,
+          "fino_a": 3
+        }
       ],
       "decisione": "Con Successo Magistrale Migliorato: con VA finale 20, sono Magistrali 1–2; da VA finale 21 sono Magistrali 1–2–3. Il 20 naturale rimane Maldestro. Correzione espressamente approvata: con il talento, il 3 naturale diventa Magistrale già da VA 21.",
       "fonte": "E&L del 02/10/2026, decisione 3 (per-davide A.78); Giocatore §8.6.1"
@@ -2862,20 +3259,52 @@
   "danno_caratteristica": {
     "paragrafo": "Giocatore §5.13, «Danno base e bonus di Caratteristica»",
     "fasce": [
-      { "da": 1, "a": 5, "bonus": 0 },
-      { "da": 6, "a": 7, "bonus": 1 },
-      { "da": 8, "a": 9, "bonus": 2 },
-      { "da": 10, "a": null, "bonus": 3 }
+      {
+        "da": 1,
+        "a": 5,
+        "bonus": 0
+      },
+      {
+        "da": 6,
+        "a": 7,
+        "bonus": 1
+      },
+      {
+        "da": 8,
+        "a": 9,
+        "bonus": 2
+      },
+      {
+        "da": 10,
+        "a": null,
+        "bonus": 3
+      }
     ],
     "tetto_per_livello": [
-      { "da": 1, "a": 7, "massimo": 1 },
-      { "da": 8, "a": 14, "massimo": 2 },
-      { "da": 15, "a": null, "massimo": 3 }
+      {
+        "da": 1,
+        "a": 7,
+        "massimo": 1
+      },
+      {
+        "da": 8,
+        "a": 14,
+        "massimo": 2
+      },
+      {
+        "da": 15,
+        "a": null,
+        "massimo": 3
+      }
     ],
-    "caratteristica_per_abilita": { "Armi pesanti": "INT" },
+    "caratteristica_per_abilita": {
+      "Armi pesanti": "INT"
+    },
     "senz_armi": "FOR",
     "magia": "SAG",
-    "proprieta_escluse": ["Danno calibrato"],
+    "proprieta_escluse": [
+      "Danno calibrato"
+    ],
     "esplosivi": {
       "senza_bonus": true,
       "decisione": "A.86 (E&L del 03/10/2026): il danno dell’esplosione di granate e razzi non riceve il bonus di Caratteristica del §5.13, eccezione esplicita alla regola generale; vale per granate a mano, granate sparate con lanciagranate (anche integrati) e razzi dei lanciarazzi. Si usa il danno completo della munizione con i bonus fissi della scheda (Granata standard a frammentazione 1d6+1 a qualsiasi livello).",
@@ -3227,8 +3656,18 @@
     },
     "copertura": {
       "paragrafo": "Giocatore §5.8",
-      "bersaglio": { "nessuna": 0, "leggera": -2, "media": -4, "totale": null },
-      "bersaglio_migliorata": { "nessuna": 0, "leggera": -4, "media": -6, "totale": null },
+      "bersaglio": {
+        "nessuna": 0,
+        "leggera": -2,
+        "media": -4,
+        "totale": null
+      },
+      "bersaglio_migliorata": {
+        "nessuna": 0,
+        "leggera": -4,
+        "media": -6,
+        "totale": null
+      },
       "_nota": "E&L del 29/09, risposta 13 (A.25): vale quando l’ostacolo protegge davvero dalla direzione dell’attacco e la portata permette di colpire. Totale (null): nessun attacco diretto. «bersaglio_migliorata»: il bersaglio ha Copertura Migliorata.",
       "frasi": [
         "La Copertura vale anche contro attacchi ravvicinati quando l’ostacolo protegge realmente dalla direzione dell’attacco e la portata permette di colpire: Leggera −2, Media −4, Totale impedisce l’attacco diretto.",
@@ -3238,10 +3677,26 @@
     "superiorita_numerica": {
       "paragrafo": "Giocatore §5.3",
       "fasce": [
-        { "da": 1, "a": 2, "va": 0 },
-        { "da": 3, "a": 5, "va": 1 },
-        { "da": 6, "a": 7, "va": 2 },
-        { "da": 8, "a": null, "va": 3 }
+        {
+          "da": 1,
+          "a": 2,
+          "va": 0
+        },
+        {
+          "da": 3,
+          "a": 5,
+          "va": 1
+        },
+        {
+          "da": 6,
+          "a": 7,
+          "va": 2
+        },
+        {
+          "da": 8,
+          "a": null,
+          "va": 3
+        }
       ],
       "_nota": "E&L del 29/09, risposta 14 (A.26): ogni attaccante in ravvicinato contro lo stesso bersaglio, secondo quanti partecipano davvero; il Direttore decide quanti possono intervenire (porte, corridoi, spazio, portata).",
       "frasi": [
@@ -3285,12 +3740,32 @@
     "minimo": -10,
     "massimo": 10,
     "unita": [
-      { "id": "round", "nome": "Round", "singolare": "Round", "round": true },
-      { "id": "minuti", "nome": "minuti", "singolare": "minuto" },
-      { "id": "ore", "nome": "ore", "singolare": "ora" },
-      { "id": "giorni", "nome": "giorni", "singolare": "giorno" }
+      {
+        "id": "round",
+        "nome": "Round",
+        "singolare": "Round",
+        "round": true
+      },
+      {
+        "id": "minuti",
+        "nome": "minuti",
+        "singolare": "minuto"
+      },
+      {
+        "id": "ore",
+        "nome": "ore",
+        "singolare": "ora"
+      },
+      {
+        "id": "giorni",
+        "nome": "giorni",
+        "singolare": "giorno"
+      }
     ],
-    "durata_predefinita": { "numero": 1, "unita": "round" },
+    "durata_predefinita": {
+      "numero": 1,
+      "unita": "round"
+    },
     "massimi_pv_pm": false,
     "decisione": "A.120 (E&L del 06/10/2026; decisione 119 in docs/risposte-master.md): bonus e malus temporanei di COS e SAG non cambiano i PV e i PM massimi né quelli attuali, all’inizio e alla fine dell’effetto; la Caratteristica modificata vale per le Prove e i bonus pertinenti (Tempra, Potere…). Un effetto cambia PV o PM solo se lo dice espressamente."
   },
@@ -3300,11 +3775,46 @@
     "minimo": -10,
     "massimo": 10,
     "categorie": [
-      { "id": "corpo_a_corpo", "nome": "Corpo a corpo", "abilita": ["Armi da guerra", "Armi da mischia", "Corpo a corpo"] },
-      { "id": "distanza", "nome": "Distanza", "abilita": ["Armi da lancio", "Armi leggere", "Armi medie", "Armi pesanti"] },
-      { "id": "poteri", "nome": "Poteri", "abilita": ["Potere", "Rituali"] },
-      { "id": "abilita", "nome": "Abilità", "altre_abilita": true, "_nota": "tutte le Abilità non elencate nelle altre categorie, Difese comprese" },
-      { "id": "derivate", "nome": "Derivate", "salvezze": true, "iniziativa": true, "_nota": "Prove Salvezza e Iniziativa" }
+      {
+        "id": "corpo_a_corpo",
+        "nome": "Corpo a corpo",
+        "abilita": [
+          "Armi da guerra",
+          "Armi da mischia",
+          "Corpo a corpo"
+        ]
+      },
+      {
+        "id": "distanza",
+        "nome": "Distanza",
+        "abilita": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi medie",
+          "Armi pesanti"
+        ]
+      },
+      {
+        "id": "poteri",
+        "nome": "Poteri",
+        "abilita": [
+          "Potere",
+          "Rituali"
+        ]
+      },
+      {
+        "id": "abilita",
+        "nome": "Abilità",
+        "altre_abilita": true,
+        "_nota": "tutte le Abilità non elencate nelle altre categorie, Difese comprese"
+      },
+      {
+        "id": "derivate",
+        "nome": "Derivate",
+        "salvezze": true,
+        "iniziativa": true,
+        "_nota": "Prove Salvezza e Iniziativa"
+      }
     ]
   },
   "protezioni_rapide": {
@@ -3394,16 +3904,40 @@
   "calendario": {
     "_nota": "Calendario di gioco della scheda digitale (src/calendario.js): non è una regola dei manuali, è un aiuto per le note di campagna. Le fasce sono in ordine: «+ fascia» dopo l’ultima passa alla prima del giorno dopo. Le bandierine danno l’importanza di una nota; «M» (da ricordare) si combina con qualunque bandierina.",
     "fasce": [
-      { "id": "mattina", "nome": "Mattina" },
-      { "id": "pomeriggio", "nome": "Pomeriggio" },
-      { "id": "sera", "nome": "Sera" },
-      { "id": "notte", "nome": "Notte" }
+      {
+        "id": "mattina",
+        "nome": "Mattina"
+      },
+      {
+        "id": "pomeriggio",
+        "nome": "Pomeriggio"
+      },
+      {
+        "id": "sera",
+        "nome": "Sera"
+      },
+      {
+        "id": "notte",
+        "nome": "Notte"
+      }
     ],
     "bandierine": [
-      { "id": "rosso", "nome": "Cruciale" },
-      { "id": "giallo", "nome": "Importante" },
-      { "id": "verde", "nome": "Minore" }
+      {
+        "id": "rosso",
+        "nome": "Cruciale"
+      },
+      {
+        "id": "giallo",
+        "nome": "Importante"
+      },
+      {
+        "id": "verde",
+        "nome": "Minore"
+      }
     ],
-    "ricordare": { "sigla": "M", "nome": "Da ricordare" }
+    "ricordare": {
+      "sigla": "M",
+      "nome": "Da ricordare"
+    }
   }
 }

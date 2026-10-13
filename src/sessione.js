@@ -606,12 +606,18 @@ export function convertiDistintivi(sessione, m) {
   return { ...s, distintivi: s.distintivi - m.distintiviPerPuntoEroe, puntiEroe: s.puntiEroe + 1 };
 }
 
-/** Descrizione del gradino di Ferita `n` (0 = nessuna). */
+/**
+ * Descrizione del gradino di Ferita `n` (0 = nessuna).
+ * Oltre Grave (decisione di Marcello del 13/10/2026, A.159): di norma è la morte (§5.14), ma se il personaggio
+ * resta in piedi valgono gli stessi malus dello Stato indicato da `regole.json` → `ferite.oltre_penalita_come`
+ * (oggi Grave, −8). È una proposta, non un blocco: l'avviso lo legge il master e decide lui.
+ */
 export function descriviFerite(n, dati) {
   const f = dati.regole.ferite;
   if (!n) return { nome: 'Nessuna Ferita', penalita: 0 };
   if (n <= f.stati.length) return { ...f.stati[n - 1] };
-  return { nome: `Oltre Grave: ${f.oltre}`, penalita: null };
+  const come = f.oltre_penalita_come ? f.stati.find((s) => s.nome === f.oltre_penalita_come) ?? null : null;
+  return { nome: `Oltre Grave: ${f.oltre}`, penalita: come?.penalita ?? null, come: come?.nome ?? null, avviso: f.oltre_avviso ?? null };
 }
 
 /**

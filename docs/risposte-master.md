@@ -1413,3 +1413,16 @@ catalogo dichiarati da completare. Nessun dato applicato: la CyberArma non è an
   10 PM». Servono: SnT del progetto originale; prezzo, Reperibilità, Qualità, PS Integrità, PI e peso; costo e
   procedura della costruzione tramite Maestro d'Arma (III Grado) e della modifica per la batteria interna;
   colore, capacità, SnT e costo della batteria compatibile. *Nel frattempo:* nessuna scheda nel catalogo.
+
+## Decisione di Marcello del 13 ottobre 2026 (da rivedere con Davide)
+
+- **Ferite «oltre Grave» con i malus di Grave** (Giocatore §5.14). Marcello: «lo stato di Ferite *Oltre* deve
+  dare gli stessi malus dello stato *Grave*, perché il PG potrebbe restare in piedi per qualche motivo».
+  Applicato il 13/10 in `data/regole.json` → `ferite.oltre_penalita_come: "Grave"` (penalità −8 a VA e Prove
+  Salvezza, cumulativa come gli altri gradini): prima «oltre Grave» non dava nessuna penalità. Nessun blocco
+  aggiunto: la morte del §5.14 resta un avviso («Oltre Grave di norma è la morte… decide il master»), nel
+  riquadro Ferite della scheda e nel promemoria di «Colpito». Si torna indietro mettendo `null` nel dato.
+- **A.159 — «Oltre Grave» dà penalità?** (Giocatore §5.14). Il manuale elenca cinque Stati di Ferita con la
+  penalità cumulativa e dice che oltre Grave è la morte, senza dire che cosa vale se il personaggio
+  sopravvive (Punto Eroe, cure immediate, intervento del Direttore). *Decisione di Marcello del 13/10, «puoi
+  rivederla»:* valgono i malus di Grave (−8). Serve una conferma o una regola diversa.

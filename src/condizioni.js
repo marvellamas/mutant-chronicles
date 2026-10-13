@@ -93,7 +93,8 @@ export function condizioniAttive(sessione, dati, scheda = null) {
   const out = [];
   // §5.14: penalità a VA e Prove Salvezza (a che cosa si applica sta in regole.json)
   const ferita = descriviFerite(sessione.ferite, dati);
-  if (sessione.ferite && ferita.penalita) out.push({ etichetta: `Ferita ${ferita.nome}`, fonte: 'ferite', effetto: perAmbiti(r.ferite.si_applica_a, ferita.penalita) });
+  // A.159: oltre Grave la penalità è quella dello Stato di `ferite.oltre_penalita_come` (etichetta «come Grave»)
+  if (sessione.ferite && ferita.penalita) out.push({ etichetta: ferita.come ? `Ferita oltre Grave (malus di ${ferita.come})` : `Ferita ${ferita.nome}`, fonte: 'ferite', effetto: perAmbiti(r.ferite.si_applica_a, ferita.penalita) });
   // §5.19: si applica solo la penalità dello Stato di Affaticamento attuale
   const aft = r.affaticamento.stati[sessione.affaticamento];
   if (aft?.penalita) out.push({ etichetta: aft.nome, fonte: 'affaticamento', effetto: perAmbiti(r.affaticamento.si_applica_a, aft.penalita) });

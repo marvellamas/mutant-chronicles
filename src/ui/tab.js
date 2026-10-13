@@ -1533,7 +1533,7 @@ function riquadroCircostanze(ctx) {
 }
 
 /** Riga compatta di un riquadro della colonna destra: titolo, stato attuale e gradi cliccabili. */
-function gradiCompatti(ctx, { titolo, campo, attuale, gradi, nota }) {
+function gradiCompatti(ctx, { titolo, campo, attuale, gradi, nota, avviso = null }) {
   const g = gradi[attuale];
   return h('section', { class: 'riquadro riquadro-gradi', 'aria-label': titolo },
     h('header', { class: 'testa-gradi' }, h('h3', {}, titolo),
@@ -1543,7 +1543,9 @@ function gradiCompatti(ctx, { titolo, campo, attuale, gradi, nota }) {
       type: 'button', role: 'radio', 'aria-checked': String(attuale === n), title: [x.nome, x.penalita === null ? null : x.penalita ? segno(x.penalita) : '0', x.descrizione].filter(Boolean).join(' · '),
       class: `grado${attuale === n ? ' attivo' : ''}${n > 0 && attuale >= n ? ' raggiunto' : ''}`,
       onclick: () => ctx.azioni.imposta(campo, n),
-    }, x.breve ?? x.nome))));
+    }, x.breve ?? x.nome))),
+    // A.159: avviso del gradino attuale (oltre Grave), non un blocco: l'ultima parola è del master
+    avviso ? h('p', { class: 'nota avviso-gradi', role: 'status' }, avviso) : null);
 }
 
 /**
@@ -1766,7 +1768,9 @@ function riquadroFerite(ctx) {
   const m = ctx.massimi;
   const ferite = Array.from({ length: m.ferite + 1 }, (_, n) => ({ n, ...descriviFerite(n, ctx.dati) }))
     .map((g) => ({ nome: g.nome, breve: g.n === 0 ? 'Nessuna' : g.n > ctx.dati.regole.ferite.stati.length ? 'Oltre' : g.nome, penalita: g.penalita, descrizione: g.menomazione ?? null }));
-  return gradiCompatti(ctx, { titolo: 'Ferite (§5.14)', campo: 'ferite', attuale: ctx.sessione.ferite, gradi: ferite,
+  // A.159 (decisione di Marcello del 13/10/2026): oltre Grave valgono i malus di Grave, con l'avviso che di norma è la morte
+  const oltre = ctx.sessione.ferite > ctx.dati.regole.ferite.stati.length ? descriviFerite(ctx.sessione.ferite, ctx.dati).avviso : null;
+  return gradiCompatti(ctx, { titolo: 'Ferite (§5.14)', campo: 'ferite', attuale: ctx.sessione.ferite, gradi: ferite, avviso: oltre,
     nota: 'Ogni nuova Ferita fa avanzare di un gradino. La penalità è cumulativa a VA e Prove Salvezza.' });
 }
 
