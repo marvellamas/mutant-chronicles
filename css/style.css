@@ -2698,3 +2698,19 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .opzione-talenti .nota { margin: 0.25rem 0 0; }
 .segno-talenti-spenti { font: inherit; font-size: 0.8rem; color: var(--attenzione-testo, inherit); background: var(--attenzione-tenue); border: 1px solid var(--attenzione); border-radius: var(--raggio); padding: 0.1rem 0.45rem; cursor: pointer; white-space: nowrap; }
 .segno-talenti-spenti:hover, .segno-talenti-spenti:focus-visible { background: var(--attenzione); }
+
+/* I sei riquadri dei valori del Combattimento (13/10, Marcello): Difese, Prove Salvezza (la più evidente),
+   Iniziativa, Movimento, Azioni, Luce sul bersaglio. Stessa altezza, griglia ordinata: uno per fila su telefono,
+   due da 600 px (tablet e 1024 px), tre da 1100 px (a 1280 px due file pari). */
+.griglia-valori { display: grid; gap: 0.6rem; align-items: stretch; grid-template-columns: 1fr; margin: 0.75rem 0; }
+@media (min-width: 600px) { .griglia-valori { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .griglia-valori { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.griglia-valori > .riquadro-valore { display: flex; flex-direction: column; gap: 0.2rem; height: 100%; margin: 0; padding: 0.5rem 0.75rem; border: 1px solid var(--bordo); border-radius: var(--raggio); background: var(--superficie); }
+.griglia-valori > .riquadro-valore > h3 { margin: 0 0 0.2rem; font-size: 1rem; }
+.griglia-valori > .riquadro-valore > .nota:last-child { margin-top: auto; }
+.griglia-valori > .riquadro-grande { border-width: 2px; border-color: var(--salvezze-bordo); background: var(--salvezze-sfondo); }
+.griglia-valori > .riquadro-grande > h3 { font-size: 1.15rem; }
+.griglia-valori > .riquadro-grande .pillole-salvezze { font-size: 1.1rem; }
+.riquadro-luce-valore .scelta-titolo:empty { display: none; }
+.riquadro-luce-valore .scelta-pulsanti { gap: 0.25rem; }
+.riquadro-sensi { margin-top: 0.6rem; }

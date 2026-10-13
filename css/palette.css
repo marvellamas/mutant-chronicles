@@ -63,6 +63,10 @@
   /* lato nel Tavolo del Master: bordo della carta e nome del lato */
   --lato-avversario: #a3238f;  /* magenta scuro */
   --lato-alleato: #0b7377;     /* petrolio */
+
+  /* Prove Salvezza (13/10): il riquadro più evidente fra i sei valori del Combattimento */
+  --salvezze-sfondo: #eef3fb;
+  --salvezze-bordo: #2a5ca8;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -106,5 +110,8 @@
 
     --lato-avversario: #f28be0;
     --lato-alleato: #5fd6d6;
+
+    --salvezze-sfondo: #1b2433;
+    --salvezze-bordo: #7fb0ff;
   }
 }

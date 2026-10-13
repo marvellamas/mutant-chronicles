@@ -1354,20 +1354,26 @@ function riquadriTavolo(ctx) {
   if (!t) return [];
   const u = t.movimento.unita;
   return [
-    h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Iniziativa', toccoMaster(ctx, (() => { const sc = ctx.tab.scheda; const master = (sc.vociIniziativa ?? []).filter((v) => v.master).reduce((x, v) => x + v.valore, 0); return { chiave: 'iniziativa', etichetta: 'Iniziativa', attuale: sc.iniziativa, calcolato: sc.iniziativa - master }; })())),
+    h('section', { class: 'contatore-tavolo riquadro-valore' }, h('h3', {}, 'Iniziativa', toccoMaster(ctx, (() => { const sc = ctx.tab.scheda; const master = (sc.vociIniziativa ?? []).filter((v) => v.master).reduce((x, v) => x + v.valore, 0); return { chiave: 'iniziativa', etichetta: 'Iniziativa', attuale: sc.iniziativa, calcolato: sc.iniziativa - master }; })())),
       // S15: il tocco sull'Iniziativa tira il dado del combattimento (§2.14) e la somma al valore
       h('p', { class: 'valore-tavolo' }, pillolaTavolo('Iniziativa', [{ nome: '', v: t.iniziativa }], segno, () => apriTiro(ctx, { genere: 'iniziativa', nome: 'Iniziativa', va: t.iniziativa.effettivo ?? t.iniziativa.daRegole })), h('span', {}, ` + ${ctx.dati.regole.iniziativa.dado_in_combattimento}`)),
       h('p', { class: 'nota' }, 'Mod DES + Mod INT e Talenti (§2.14)')),
-    h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Movimento', toccoMaster(ctx, ['passo', 'corsa', 'scatto'].map((k) => { const mv = ctx.tab.scheda.movimento ?? {}; return { chiave: `movimento:${k}`, etichetta: `Movimento: ${k[0].toUpperCase()}${k.slice(1)} (Q)`, attuale: mv[k], calcolato: mv.correzioniMaster?.[k]?.calcolato ?? mv[k], limiti: { minimo: 0 } }; }))),
+    h('section', { class: 'contatore-tavolo riquadro-valore' }, h('h3', {}, 'Movimento', toccoMaster(ctx, ['passo', 'corsa', 'scatto'].map((k) => { const mv = ctx.tab.scheda.movimento ?? {}; return { chiave: `movimento:${k}`, etichetta: `Movimento: ${k[0].toUpperCase()}${k.slice(1)} (Q)`, attuale: mv[k], calcolato: mv.correzioniMaster?.[k]?.calcolato ?? mv[k], limiti: { minimo: 0 } }; }))),
       h('p', { class: 'valore-tavolo' }, pillolaTavolo('Movimento', [{ nome: 'Passo', v: t.movimento.passo }, { nome: 'Corsa', v: t.movimento.corsa }, { nome: 'Scatto', v: t.movimento.scatto }]), h('span', {}, ` ${u}`)),
       h('p', { class: 'nota' }, 'Passo · Corsa · Scatto (§5.2)')),
-    ...(ctx.tab.scheda.sensi?.length ? [h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Sensi'),
-      ctx.tab.scheda.sensi.map((s) => h('p', { class: 'valore-tavolo', title: [s.condizione, s.fonte].join(' — ') }, h('strong', {}, `${s.raggioQ} Q`), ` ${s.nome}`)),
-      h('p', { class: 'nota' }, ctx.tab.scheda.sensi.map((s) => s.fonte).join(' · ')))] : []),
-    h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Azioni'),
+    h('section', { class: 'contatore-tavolo riquadro-valore' }, h('h3', {}, 'Azioni'),
       h('p', { class: 'valore-tavolo' }, pillolaTavolo('Azioni', [{ nome: 'Principali', v: t.azioni.principali }, { nome: 'di Movimento', v: t.azioni.movimento }])),
       h('p', { class: 'nota' }, 'Principali · di Movimento per Round (§5.1)')),
   ];
+}
+
+/** Sensi dati dagli oggetti (visione notturna…): un riquadro a parte, sotto i sei valori (13/10). */
+function riquadroSensi(ctx) {
+  const sensi = ctx.tab.scheda.sensi ?? [];
+  if (!sensi.length) return null;
+  return h('section', { class: 'contatore-tavolo riquadro-valore riquadro-sensi' }, h('h3', {}, 'Sensi'),
+    sensi.map((s) => h('p', { class: 'valore-tavolo', title: [s.condizione, s.fonte].join(' — ') }, h('strong', {}, `${s.raggioQ} Q`), ` ${s.nome}`)),
+    h('p', { class: 'nota' }, sensi.map((s) => s.fonte).join(' · ')));
 }
 
 // ---------------------------------------------------------------------------
@@ -1583,8 +1589,6 @@ function tabCombattimento(ctx, d) {
     // S12 (11/10/2026): gli Stati in alto; sotto, i bonus di circostanza
     riquadroStati(ctx, d),
     riquadroCircostanze(ctx),
-    // 13/10: l'interruttore «Bonus dei Talenti» è nelle Opzioni (⚙); qui resta la luce
-    h('div', { class: 'riga-interruttori' }, selettoreLuce(ctx, { compatto: true })),
     promemoriaPenalita(ctx),
     // conducente di un veicolo: andatura e penalità come promemoria, senza cambiare i VA (Veicoli §2.1, §3.1)
     promemoriaConducente(ctx),
@@ -1600,8 +1604,10 @@ function tabCombattimento(ctx, d) {
         h('div', { class: 'pv-pm-identita condizioni-senza-colonna' },
           contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true, classe: 'riquadro-pv', extra: pilloleAR(ctx) }),
           riquadroFerite(ctx), ...affaticamentoCorruzione(ctx, d)),
-        h('div', { class: 'griglia-tavolo griglia-tavolo-compatta' },
-          d.difese ? h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Difese', toccoMaster(ctx, { chiave: 'abilita:Difese', etichetta: 'VA di Difese', attuale: d.difese.totale, calcolato: (ctx.tab.scheda.abilita ?? []).find((x) => x.nome === 'Difese')?.calcolato ?? d.difese.totale })),
+        // 13/10 (Marcello): i sei riquadri dei valori in una griglia ordinata, nell'ordine Difese, Prove Salvezza
+        // (la più evidente), Iniziativa, Movimento, Azioni, Luce sul bersaglio; stessa altezza, due o tre per fila
+        h('div', { class: 'griglia-valori' },
+          d.difese ? h('section', { class: 'contatore-tavolo riquadro-valore' }, h('h3', {}, 'Difese', toccoMaster(ctx, { chiave: 'abilita:Difese', etichetta: 'VA di Difese', attuale: d.difese.totale, calcolato: (ctx.tab.scheda.abilita ?? []).find((x) => x.nome === 'Difese')?.calcolato ?? d.difese.totale })),
             h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), valoreEffettivo('Difese', d.difese.effettivo, d.difese.totale, d.difese.scomposizione, { pillola: true, provenienza: d.difese.provenienza,
               // A.78: le Difese si tirano anche con VA 20 o più
               tira: () => apriTiro(ctx, { genere: 'prova', nome: 'Difese', va: d.difese.effettivo, tipo: 'difesa', note: noteScomposizione(d.difese.scomposizione) }) }),
@@ -1612,11 +1618,16 @@ function tabCombattimento(ctx, d) {
               `${t.testo}: `, t.contro === 'resistenza' ? h('strong', {}, segno(t.valore)) : h('strong', {}, `VA ${numero(d.difese.effettivo + t.valore)}`),
               t.contro === 'resistenza' ? ` (${t.nome})` : ` (${segno(t.valore)} ${t.nome})`)),
             istintive.length ? h('p', { class: 'proprieta-arma' }, istintive.map((t) => h('span', { class: 'etichetta', title: t.testo }, t.nome))) : null) : null,
-          ...riquadriTavolo(ctx)),
-        idt?.salvezze ? h('div', { class: 'contatore-tavolo salvezze-tavolo' }, h('h3', {}, 'Prove Salvezza'),
-          h('p', { class: 'valore-tavolo pillole-salvezze' }, idt.salvezze.map((x) => h('span', { class: 'salvezza-pillola' }, h('small', { class: 'sigla' }, `${x.nome} `),
-            valoreEffettivo(x.nome, x.effettivo, x.totale, x.scomposizione, { pillola: true, provenienza: x.provenienza, tira: () => apriTiro(ctx, { genere: 'prova', nome: `Prova Salvezza: ${x.nome}`, va: x.effettivo ?? x.totale, abilita: false, note: noteScomposizione(x.scomposizione) }) })))),
-          usiSalvezze(ctx, idt.salvezze)) : null,
+          // la più evidente: più grande e con un colore di sfondo proprio (css/palette.css → --salvezze-sfondo)
+          idt?.salvezze ? h('section', { class: 'contatore-tavolo riquadro-valore salvezze-tavolo riquadro-grande' }, h('h3', {}, 'Prove Salvezza'),
+            h('p', { class: 'valore-tavolo pillole-salvezze' }, idt.salvezze.map((x) => h('span', { class: 'salvezza-pillola' }, h('small', { class: 'sigla' }, `${x.nome} `),
+              valoreEffettivo(x.nome, x.effettivo, x.totale, x.scomposizione, { pillola: true, provenienza: x.provenienza, tira: () => apriTiro(ctx, { genere: 'prova', nome: `Prova Salvezza: ${x.nome}`, va: x.effettivo ?? x.totale, abilita: false, note: noteScomposizione(x.scomposizione) }) })))),
+            usiSalvezze(ctx, idt.salvezze)) : null,
+          ...riquadriTavolo(ctx),
+          // la luce era in testa alla tab: ora è il sesto riquadro, con gli altri
+          h('section', { class: 'contatore-tavolo riquadro-valore riquadro-luce-valore' }, h('h3', {}, 'Luce sul bersaglio (A.106)'),
+            selettoreLuce(ctx, { compatto: true, senzaTitolo: true }))),
+        riquadroSensi(ctx),
 
         // S16: al centro Mano destra e Mano sinistra con l'arma impugnata; con un'arma a due mani un riquadro solo
         h('section', { class: 'sezione-tab sezione-mani', 'aria-label': 'In mano' },
@@ -1848,7 +1859,7 @@ function protezioniDisponibili(ctx) {
  * illuminazione). Penombra e luce molto scarsa entrano nei VA effettivi di attacchi e Difese e nella Percezione
  * visiva (valore a parte); il buio vale Accecato. Con una visione del personaggio, la casella la applica.
  */
-export function selettoreLuce(ctx, { compatto = false } = {}) {
+export function selettoreLuce(ctx, { compatto = false, senzaTitolo = false } = {}) {
   const L = ctx.dati.regole.illuminazione;
   if (!L) return null;
   const s = ctx.sessione ?? {};
@@ -1856,7 +1867,7 @@ export function selettoreLuce(ctx, { compatto = false } = {}) {
   const liv = L.livelli.find((x) => x.id === attuale);
   const visioni = visioniPersonaggio(ctx.scelte?.equipaggiamento, s, ctx.dati);
   const contenuto = [
-    rigaScelte('Luce sul bersaglio (A.106)', L.livelli.map((x) => ({ valore: x.id, etichetta: x.nome, riga: x.riga })), attuale, (x) => ctx.azioni.imposta('luce', x)),
+    rigaScelte(senzaTitolo ? '' : 'Luce sul bersaglio (A.106)', L.livelli.map((x) => ({ valore: x.id, etichetta: x.nome, riga: x.riga })), attuale, (x) => ctx.azioni.imposta('luce', x)),
     !compatto && liv?.descrizione ? h('p', { class: 'nota' }, liv.descrizione) : null,
     visioni.length && (L.visione?.elimina ?? []).includes(attuale)
       ? h('label', { class: 'casella-luce', title: L.visione.testo }, h('input', { type: 'checkbox', checked: s.luceVisione === true, onchange: (e) => ctx.azioni.imposta('luceVisione', e.target.checked) }),
