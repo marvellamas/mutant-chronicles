@@ -662,11 +662,11 @@
   },
   "attacco_distanza": {
     "a_terra": {
-      "paragrafo": "Giocatore §5.5; sintesi A Terra del 05/10/2026",
+      "paragrafo": "Giocatore §5.5; sintesi A Terra del 05/10/2026; E&L A.153",
       "bersaglio": -2,
       "stato": "a-terra",
-      "decisione": "Sintesi 1/11 (05/10/2026): chi attacca un personaggio A Terra a distanza subisce −2 VA; nessun modificatore per gli attacchi ad Area.",
-      "TODO(Davide)": "A.153: il −2 a distanza contro un bersaglio A Terra si somma alla Copertura del bersaglio (−2 Leggera, −4 Media)? Le sintesi non lo dicono; intanto l’app li somma, come due modificatori distinti."
+      "decisione": "Sintesi 1/11 (05/10/2026): chi attacca un personaggio A Terra a distanza subisce −2 VA; nessun modificatore per gli attacchi ad Area. A.153 (approvata il 10/10/2026): il −2 si somma alla penalità della Copertura, perché postura e ostacolo sono modificatori distinti: A Terra senza Copertura −2, con Copertura Leggera −4, con Copertura Media −6. La Copertura deve essere davvero presente rispetto alla linea di tiro; se l’ostacolo nasconde del tutto il bersaglio valgono le regole che impediscono il tiro diretto.",
+      "con_copertura": "somma"
     },
     "_nota": "Utility «Attacco a distanza» (src/attacco.js). Valori e regole del Manuale del Giocatore §5.2, §5.8, §5.10, §5.11; «frasi» sono copiate dal manuale (anche righe di tabella) e verificate da tools/verifica_frasi.mjs. Le modalità di fuoco (VA, munizioni, Azioni) stanno in «modalita_di_fuoco»; i mirini (riduzione, distanza massima, Azioni minime) nel catalogo (accessori_armi → mirino, Armamenti §7.3); i Talenti che modificano l’attacco hanno effetti.attacco_distanza in talenti_liberi.json e classi.json.",
     "movimento": {

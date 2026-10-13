@@ -55,7 +55,9 @@ test('A Terra: −4 ravvicinato e Difese, distanza no; striscia 3 Q; chi attacca
   const dist = (aTerra) => calcolaAttaccoDistanza(pg, arma, { distanza: 5, bersaglio: { aTerra } }, dati).va_finale;
   assert.equal(dist(true) - dist(false), -2);
   assert.equal(dati.regole.attacco_ravvicinato.a_terra.bersaglio, 2);
-  assert.match(dati.regole.attacco_distanza.a_terra['TODO(Davide)'], /^A\.153/);
+  // A.153 (10/10/2026): la domanda è risolta, il −2 si somma alla Copertura (tests/a153-a-terra.test.js)
+  assert.equal(dati.regole.attacco_distanza.a_terra['TODO(Davide)'], undefined);
+  assert.equal(dati.regole.attacco_distanza.a_terra.con_copertura, 'somma');
 });
 
 test('Accecato: −8 alle Prove con la vista (attacchi, Difese, Pilotare), niente Tiro o Colpo Mirato; luce non sommata', () => {

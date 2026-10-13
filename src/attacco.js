@@ -514,7 +514,8 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
     const pb = penalitaMovimento(b.movimento, b.atletica, dati);
     aggiungi(`Bersaglio in ${b.movimento}${pb.esito ? `, Prova di Atletica: ${pb.nome}` : ''}`, pb.bersaglio, 'bersaglio', pb.esito ? 'A.136' : A.movimento.paragrafo);
   }
-  // sintesi A Terra (05/10/2026): a distanza −2 a chi lo attacca; con la Copertura si somma (TODO(Davide) A.153)
+  // sintesi A Terra (05/10/2026) e A.153 (approvata il 10/10/2026): a distanza −2 a chi lo attacca, che si somma
+  // alla penalità della Copertura (−2 / −4 / −6): postura e ostacolo sono modificatori distinti
   if (b.aTerra && A.a_terra) aggiungi('Bersaglio A Terra', A.a_terra.bersaglio, 'bersaglio', A.a_terra.paragrafo);
   let penCopertura = 0;
   if (b.copertura === 'totale') blocca('Il bersaglio in Copertura Totale non può essere attaccato direttamente (§5.8).');
