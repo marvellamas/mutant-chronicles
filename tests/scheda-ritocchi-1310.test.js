@@ -72,3 +72,33 @@ test('il foglio di stile allinea la griglia e dà un colore proprio alle Prove S
   const palette = readFileSync(new URL('../css/palette.css', import.meta.url), 'utf8');
   assert.ok((palette.match(/--salvezze-sfondo/g) ?? []).length >= 2, 'definito per tema chiaro e scuro');
 });
+
+// ---------------------------------------------------------------------------
+// punto 4: gli Artefatti con PM nel riquadro laterale dei Punti Magia
+
+test('nel riquadro laterale «Punti Magia» ci sono anche gli Artefatti con PM, a parte', () => {
+  const conArtefatti = ESEMPI.map((f) => contesto(f, { attiva: 'combattimento' }))
+    .find((c) => (c.tab.scheda.equipaggiamento?.contenitori ?? []).length);
+  assert.ok(conArtefatti, 'serve un PG d’esempio con un contenitore di Chroma');
+  const r = resa(conArtefatti);
+  const lato = r.classe('colonna-risorse')[0] ?? r.radice;
+  const blocco = lato.tutti().find((n) => n.className?.includes('cristalli-compatti'));
+  assert.ok(blocco, 'il blocco degli Artefatti con PM è nella colonna di sinistra');
+  const righe = blocco.tutti().filter((n) => n.className === 'riga-cristallo' || n.className?.startsWith('riga-cristallo'));
+  assert.equal(righe.length, conArtefatti.tab.scheda.equipaggiamento.contenitori.length, 'una riga per Artefatto');
+  // PM attuali su massimi e i tasti per spendere o ricaricare, come nella tab Artefatti
+  assert.match(blocco.textContent, /\d+ \/ \d+/);
+  const tasti = righe[0].tutti().filter((n) => n.tagName === 'BUTTON');
+  assert.deepEqual(tasti.map((b) => b.textContent), ['−1', '+1']);
+  // non si sommano ai PM del personaggio
+  const pm = r.classe('riquadro-pm')[0];
+  assert.match(pm.textContent, /non si sommano ai PM personali/);
+  assert.match(pm.tutti().find((n) => n.className === 'valore-tavolo').textContent, new RegExp(`^${conArtefatti.sessione.pmAttuali} / ${conArtefatti.massimi.pm}$`));
+});
+
+test('chi non ha Artefatti con PM non vede righe in più', () => {
+  const senza = ESEMPI.map((f) => contesto(f, { attiva: 'combattimento' }))
+    .find((c) => !(c.tab.scheda.equipaggiamento?.contenitori ?? []).length);
+  assert.ok(senza);
+  assert.equal(resa(senza).classe('cristalli-compatti').length, 0);
+});

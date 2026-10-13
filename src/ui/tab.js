@@ -490,7 +490,11 @@ function riquadriPvPm(ctx, { compatti = false, ferite = false } = {}) {
     contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true, classe: `riquadro-pv${classe}`, extra: [notaCorrezione(cm.pv), pilloleAR(ctx)], accanto: toccoPv }),
     ferite ? h('div', { class: 'ferite-sotto-pv' }, riquadroFerite(ctx)) : null,
     compatti
-      ? (m.pm || ctx.master ? contatoreTavolo(ctx, { titolo: 'Punti Magia', campo: 'pmAttuali', attuale: s.pmAttuali, massimo: m.pm, barra: true, classe: `riquadro-pm${classe}`, extra: notaCorrezione(cm.pm), accanto: toccoPm }) : null)
+      // 13/10 (Marcello): sotto i PM personali anche gli Artefatti con PM spendibili (riserve, batterie, schegge,
+      // guanti…), ognuno con i suoi tasti; non si sommano mai alla riserva personale (A.112, A.20)
+      ? (m.pm || cristalli(ctx).length || ctx.master
+        ? contatoreTavolo(ctx, { titolo: 'Punti Magia', campo: 'pmAttuali', attuale: s.pmAttuali, massimo: m.pm, barra: true, classe: `riquadro-pm${classe}`, extra: [notaCorrezione(cm.pm), cristalliCompatti(ctx)], accanto: toccoPm })
+        : null)
       : riquadroPM(ctx),
   ];
 }
@@ -812,6 +816,26 @@ function tabInventario(ctx) {
   ];
 }
 
+/** Gli Artefatti con PM spendibili del personaggio, pronti per primi (trasportati e sintonizzati). */
+function cristalli(ctx) {
+  return [...(ctx.tab.scheda.equipaggiamento?.contenitori ?? [])]
+    .sort((x, y) => Number(y.trasportato && y.sintonizzato) - Number(x.trasportato && x.sintonizzato));
+}
+
+/**
+ * Gli stessi Artefatti nella colonna di sinistra, sotto i PM (13/10/2026, richiesta di Marcello): una riga per
+ * ciascuno con PM attuali/massimi e i tasti della tab Artefatti. Righe a parte: i loro PM non si sommano a quelli
+ * del personaggio (A.112, A.20). Chi non ne ha non vede nulla.
+ */
+function cristalliCompatti(ctx) {
+  const c = cristalli(ctx);
+  if (!c.length) return null;
+  return h('div', { class: 'cristalli cristalli-compatti' },
+    h('h4', {}, 'Artefatti con PM'),
+    h('p', { class: 'nota' }, 'Riserve separate: non si sommano ai PM personali.'),
+    h('ul', { class: 'elenco-cristalli' }, c.map((x) => h('li', {}, rigaCristallo(ctx, x)))));
+}
+
 /**
  * Riquadro dei Punti Magia: la riserva personale e, sotto, i contenitori di Chroma posseduti
  * (trasportati e sintonizzati per primi, gli altri in grigio). Due sottosezioni distinte: i PM dei
@@ -819,8 +843,7 @@ function tabInventario(ctx) {
  */
 function riquadroPM(ctx) {
   const s = ctx.sessione;
-  const contenitori = [...(ctx.tab.scheda.equipaggiamento?.contenitori ?? [])]
-    .sort((x, y) => Number(y.trasportato && y.sintonizzato) - Number(x.trasportato && x.sintonizzato));
+  const contenitori = cristalli(ctx);
   // Magia sez. 6 e Talenti di Meditazione: valori calcolati, le ore non si contano
   const med = ctx.tab.scheda.magia?.meditazione;
   // Convertire Potere e ricaricare (Magia sez. 6): rapporto con i Talenti (Ricarica Efficiente, Conversione Migliorata)

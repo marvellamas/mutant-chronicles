@@ -2714,3 +2714,9 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .riquadro-luce-valore .scelta-titolo:empty { display: none; }
 .riquadro-luce-valore .scelta-pulsanti { gap: 0.25rem; }
 .riquadro-sensi { margin-top: 0.6rem; }
+/* Artefatti con PM nella colonna di sinistra, sotto i PM personali (13/10): righe a parte, più strette */
+.cristalli-compatti { margin-top: 0.4rem; }
+.cristalli-compatti h4 { margin: 0.2rem 0; font-size: 0.9rem; }
+.cristalli-compatti .nota { font-size: 0.78rem; margin: 0 0 0.2rem; }
+.cristalli-compatti .elenco-cristalli { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.3rem; }
+.cristalli-compatti .cristallo-nome { font-size: 0.85rem; }
