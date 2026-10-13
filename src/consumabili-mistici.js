@@ -168,20 +168,22 @@ export function versioniCreabili(scheda, dati, { conosciutaDaAltri = false } = {
  *   progetto: { disponibile, magistrale?, esito?, tentativo? }, costruzione: { esito, tentativo? },
  *   infusione: { esito, pmCanali?, aiutoCanali? } }; tentativo: 'primo' | 'fallimento' | 'maldestro' (dopo quale esito
  * si ritenta). `contesto`: { scheda, crediti, pmAttuali }.
- * @returns {{ grado, incantesimo, livello, pmSigillati, fasi, ore, crediti, pm, pmCanali, creato, voce, errori, avvisi }}
+ * @returns {{ grado, incantesimo, livello, pmSigillati, fasi, ore, crediti, pm, pmCanali, creato, voce, errori, avvisi, note }}
  */
 export function pianoCreazione(scelta, { scheda = null, crediti = Infinity, pmAttuali = Infinity } = {}, dati) {
   const R = regoleConsumabili(dati);
   const C = R?.creazione;
   const errori = [];
   const avvisi = [];
+  // A.157 (10/10/2026): note informative, distinte dagli avvisi (quelli segnalano qualcosa da sistemare)
+  const note = [];
   // N2 (l'app avvisa, non blocca): le regole non rispettate; il piano si registra lo stesso con «Procedi comunque»
   const irregolari = [];
   const inc = incantesimoDi({ incantesimo: scelta?.incantesimo }, dati);
   const livello = scelta?.livello;
   const grado = Number.isInteger(livello) ? gradoVersione(livello, dati) : null;
   if (!C || !inc || !grado || !(inc.versioni ?? []).some((r) => livelloRiga(r) === livello)) {
-    return { errori: ['scegli un Incantesimo e una sua versione'], avvisi, irregolari, fasi: [], ore: 0, crediti: 0, pm: 0, pmCanali: 0, creato: false, voce: null };
+    return { errori: ['scegli un Incantesimo e una sua versione'], avvisi, note, irregolari, fasi: [], ore: 0, crediti: 0, pm: 0, pmCanali: 0, creato: false, voce: null };
   }
   const n = NUMERI_ROMANI.indexOf(grado) + 1;
   const pmSigillati = pmVersione(inc, livello);
@@ -192,7 +194,10 @@ export function pianoCreazione(scelta, { scheda = null, crediti = Infinity, pmAt
   if (!scelta.conosciutaDaAltri && !(noti.has(inc.nome) && livello <= (scheda?.incantesimi?.livelloMassimo ?? 0))) {
     irregolari.push(`non conosci ${inc.nome} ${livello}: all’infusione deve essere presente chi la conosce e può usarla (Magia §24.1)`);
   }
-  if (/Rituale: non consentito/.test(inc.intestazione ?? '')) avvisi.push(`La scheda di ${inc.nome} dice «Rituale: non consentito»: non è chiaro se si possa infondere in un Consumabile (domanda A.157); l’app lo permette.`);
+  // A.157 (10/10/2026): l'infusione è permessa; non è più un dubbio, è una nota che spiega la risposta
+  if (/Rituale: non consentito/.test(inc.intestazione ?? '')) note.push(C.rituale_non_consentito?.nota
+    ? `${inc.nome}: «Rituale: non consentito» vieta soltanto il lancio come Rituale (A.157). L’infusione in un Consumabile è permessa, con i requisiti e i limiti della creazione; restano validi i divieti specifici della scheda.`
+    : `${inc.nome}: l’infusione è permessa (A.157).`);
   // supporto: la pergamena standard o un altro, con costo e complessità della costruzione effettiva (§27.2)
   const S = (R.supporti ?? []).find((x) => x.id === (scelta.supporto?.id ?? 'pergamena')) ?? R.supporti[0];
   const costoSupporto = S.costo ?? (Number.isInteger(scelta.supporto?.costo) && scelta.supporto.costo >= 0 ? scelta.supporto.costo : null);
@@ -260,7 +265,7 @@ export function pianoCreazione(scelta, { scheda = null, crediti = Infinity, pmAt
   // PS Integrità e PI del supporto, se i dati lo danno); un altro supporto resta senza, come prima
   const fisico = Object.fromEntries(['peso', 'qualita', 'ps_int', 'pi'].filter((k) => S[k] !== undefined && S[k] !== null).map((k) => [k, S[k]]));
   const voce = creato ? { rif: null, personalizzato: { nome: `${nomeSupporto} di ${inc.nome} ${livello}`, tipo: 'artefatto', ...fisico, consumabile: { incantesimo: inc.nome, livello, supporto: S.id === 'pergamena' ? 'pergamena' : nomeSupporto } }, stato: null, quantita: 1, note: '' } : null;
-  return { grado, incantesimo: inc.nome, livello, pmSigillati, fasi, ore, crediti: spesa, pm, pmCanali, creato, voce, errori, avvisi, irregolari };
+  return { grado, incantesimo: inc.nome, livello, pmSigillati, fasi, ore, crediti: spesa, pm, pmCanali, creato, voce, errori, avvisi, note, irregolari };
 }
 
 /**

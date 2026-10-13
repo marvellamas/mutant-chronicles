@@ -2751,3 +2751,5 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .segno-semplice { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.78rem; padding: 0.15rem 0.5rem 0.15rem 0.2rem; border-radius: 999px; cursor: pointer; }
 .segno-semplice .interruttore-mappa-pallino { width: 1.4rem; height: 0.8rem; background: var(--ok); }
 .segno-semplice .interruttore-mappa-pallino::after { top: 0.1rem; left: 0.7rem; width: 0.6rem; height: 0.6rem; }
+/* note informative del modulo «Crea consumabile» (A.157, 13/10): spiegano una regola, non segnalano un problema */
+.nota-regola { border-left: 3px solid var(--bordo); padding-left: 0.5rem; }

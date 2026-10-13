@@ -146,6 +146,8 @@ export function pannelloCreaConsumabile(ctx) {
             piano.creato ? ` Risultato: ${piano.voce.personalizzato.nome}, Grado ${piano.grado}, con ${piano.pmSigillati} PM sigillati.` : ' Risultato: nessun Consumabile.'),
         ] : null,
         piano.avvisi.map((a) => h('p', { class: 'nota' }, a)),
+        // A.157 (10/10/2026): note informative (prima era un avviso di dubbio): spiegano la regola, non segnalano nulla da sistemare
+        (piano.note ?? []).map((n) => h('p', { class: 'nota nota-regola' }, 'ℹ ', n)),
         piano.errori.map((e) => h('p', { class: 'nota motivo' }, `Manca un dato: ${e}.`)),
         // N2: le regole non rispettate avvisano; «Registra comunque» chiede conferma e lascia la riga nello storico
         (piano.irregolari ?? []).map((e) => h('p', { class: 'nota motivo' }, `Avviso: ${e}.`)),

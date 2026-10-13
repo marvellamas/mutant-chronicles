@@ -2744,10 +2744,14 @@
             "supporto": "riutilizzabile"
           }
         },
-        "TODO(Davide)": "A.156: con un Fallimento o un Maldestro dell’infusione di un Consumabile i «PM consumati» del §24.5 sono tutti, compresi quelli che sarebbero stati sigillati, oppure solo i PM di lavoro (3 × Grado)? Intanto: tutti.",
-        "fonte": "Magia §24.5, §24.6; §27.2"
+        "fonte": "Magia §24.5, §24.6; §27.2; E&L A.156",
+        "_nota_a156": "A.156 (risposta di Davide del 10/10/2026): con un Fallimento o un Fallimento Maldestro dell’infusione si perdono tutti i PM impegnati, cioè i PM di lavoro (3 × Grado) più i PM da sigillare (il costo della versione dell’incantesimo); anche i reagenti vengono consumati e il Consumabile non viene creato. Esempio della risposta: Grado II con 4 PM da sigillare → 6 + 4 = 10 PM, tutti persi. Gli effetti ulteriori del Maldestro restano quelli delle regole d’infusione."
       },
-      "TODO(Davide)": "A.157: le schede con «Rituale: non consentito» (Colpo Elementale, Cono Elementale e altre cinque) si possono infondere in un Consumabile? Intanto sì, con un avviso nel modulo."
+      "rituale_non_consentito": {
+        "consentita": true,
+        "nota": "A.157 (risposta di Davide del 10/10/2026): «Rituale: non consentito» vieta soltanto il lancio dell’incantesimo come Rituale. L’incantesimo si può comunque infondere in un Consumabile o in un Artefatto, rispettando requisiti e limiti della creazione: la procedura rituale di fabbricazione serve a infondere l’effetto nel supporto e non rende disponibile una versione rituale dell’incantesimo. Restano validi eventuali divieti specifici della scheda. Vale anche per le sette schede del quesito: §§13.1, 13.7, 17.4, 18.4, 18.9, 21.8 e 23.5 del Manuale della Magia.",
+        "fonte": "E&L A.157"
+      }
     },
     "frasi": {
       "snt": "tutti i Consumabili qui descritti hanno SnT 0 e non richiedono sintonizzazione, anche se producono un effetto attivo.",

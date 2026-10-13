@@ -74,7 +74,11 @@ test('accesso: Ritualista per il Grado, versione conosciuta, «Rituale: non cons
   assert.ok(pianoCreazione({ incantesimo: 'Cura Ferite', livello: 3, progetto: { disponibile: true } }, { scheda: scheda([]) }, dati).irregolari.some((e) => /Ritualista Minore/.test(e)));
   assert.ok(piano({ incantesimo: 'Arma Mistica', livello: 12, conosciutaDaAltri: true }).irregolari.some((e) => /Ritualista Maggiore/.test(e)));
   assert.ok(piano({ incantesimo: 'Arma Mistica', livello: 9 }).irregolari.some((e) => /non conosci/.test(e)));
-  assert.ok(piano({ incantesimo: 'Colpo Elementale', livello: 3 }).avvisi.some((a) => /A\.157/.test(a)));
+  // A.157 (approvata il 10/10/2026): non è più un dubbio ma una nota informativa, e l'infusione è permessa
+  const colpo = piano({ incantesimo: 'Colpo Elementale', livello: 3 });
+  assert.ok(!colpo.avvisi.some((x) => /A\.157/.test(x)), 'niente più avviso di dubbio');
+  assert.ok(colpo.note.some((x) => /A\.157/.test(x) && /vieta soltanto il lancio come Rituale/.test(x)), 'la nota spiega la risposta');
+  assert.ok(!colpo.irregolari.some((x) => /Rituale/.test(x)), 'l’infusione è permessa');
   const el = versioniCreabili(scheda(), dati);
   assert.deepEqual(el.map((x) => x.incantesimo), ['Arma Mistica', 'Colpo Elementale', 'Cura Ferite', 'Individuare']);
   assert.match(el[0].versioni.find((v) => v.livello === 9).motivo, /livello massimo/);
