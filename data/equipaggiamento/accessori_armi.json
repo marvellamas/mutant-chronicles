@@ -410,20 +410,19 @@
       "nomi_alternativi": [
         "Carichino"
       ],
-      "note_manuale": "Carichino rapido riutilizzabile, compatibile con il modello d’arma: Ricarica per Tamburo, 6 colpi, 100 crediti a vuoto; le munizioni si acquistano separatamente. Un carichino già preparato e accessibile trasferisce fino a 6 colpi in 1 AzP, entro gli spazi liberi dell’arma; i colpi non trasferiti restano nel carichino. Ricarica Migliorata non aumenta questo limite. Preparare i dispositivi richiede 1 minuto ogni 50 colpi o frazione.",
-      "paragrafo": "E&L A.135",
-      "versione_manuale": "E&L 08/10",
-      "pi": null,
-      "qualita": null,
-      "ps_int": null,
-      "reperibilita": null,
-      "peso": null,
+      "note_manuale": "Carichino rapido riutilizzabile, compatibile con il modello d’arma: Ricarica per Tamburo, 6 colpi, 100 crediti a vuoto; le munizioni si acquistano separatamente. Un carichino già preparato e accessibile trasferisce fino a 6 colpi in 1 AzP, entro gli spazi liberi dell’arma; i colpi non trasferiti restano nel carichino. Ricarica Migliorata non aumenta questo limite. Preparare i dispositivi richiede 1 minuto ogni 50 colpi o frazione. A.151: peso a vuoto 0,1 kg, Qualità Comune, PS Integrità 10, PI massimi 2, Reperibilità Comune. Il peso delle munizioni contenute si aggiunge al peso a vuoto, e ogni cartuccia si conta una sola volta nell’inventario. A 0 PI il carichino è inutilizzabile finché non viene riparato.",
+      "paragrafo": "E&L A.135, A.151",
+      "versione_manuale": "E&L 10/10",
+      "pi": 2,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "peso": 0.1,
       "costo": 100,
       "carichino": {
         "tipo": "tamburo",
         "colpi": 6
       },
-      "TODO(Davide)": "A.151: peso, Qualità, Integrità e Reperibilità dei carichini non sono definiti dalla A.135. Intanto restano vuoti: non pesano sul carico e non hanno PI.",
       "proprieta": [],
       "effetto_breve": "6 colpi in 1 AzP entro gli spazi liberi; si prepara fuori combattimento (1 minuto ogni 50 colpi)."
     },
@@ -436,20 +435,19 @@
       "nomi_alternativi": [
         "Carichino"
       ],
-      "note_manuale": "Carichino rapido riutilizzabile, compatibile con il modello d’arma: Ricarica per Serbatoio, 6 colpi, 150 crediti a vuoto; le munizioni si acquistano separatamente. Un carichino già preparato e accessibile trasferisce fino a 6 colpi in 1 AzP, entro gli spazi liberi dell’arma; i colpi non trasferiti restano nel carichino. Ricarica Migliorata non aumenta questo limite. Preparare i dispositivi richiede 1 minuto ogni 50 colpi o frazione.",
-      "paragrafo": "E&L A.135",
-      "versione_manuale": "E&L 08/10",
-      "pi": null,
-      "qualita": null,
-      "ps_int": null,
-      "reperibilita": null,
-      "peso": null,
+      "note_manuale": "Carichino rapido riutilizzabile, compatibile con il modello d’arma: Ricarica per Serbatoio, 6 colpi, 150 crediti a vuoto; le munizioni si acquistano separatamente. Un carichino già preparato e accessibile trasferisce fino a 6 colpi in 1 AzP, entro gli spazi liberi dell’arma; i colpi non trasferiti restano nel carichino. Ricarica Migliorata non aumenta questo limite. Preparare i dispositivi richiede 1 minuto ogni 50 colpi o frazione. A.151: peso a vuoto 0,2 kg, Qualità Comune, PS Integrità 10, PI massimi 2, Reperibilità Comune. Il peso delle munizioni contenute si aggiunge al peso a vuoto, e ogni cartuccia si conta una sola volta nell’inventario. A 0 PI il carichino è inutilizzabile finché non viene riparato.",
+      "paragrafo": "E&L A.135, A.151",
+      "versione_manuale": "E&L 10/10",
+      "pi": 2,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "peso": 0.2,
       "costo": 150,
       "carichino": {
         "tipo": "serbatoio",
         "colpi": 6
       },
-      "TODO(Davide)": "A.151: peso, Qualità, Integrità e Reperibilità dei carichini non sono definiti dalla A.135. Intanto restano vuoti: non pesano sul carico e non hanno PI.",
       "proprieta": [],
       "effetto_breve": "6 colpi in 1 AzP entro gli spazi liberi; si prepara fuori combattimento (1 minuto ogni 50 colpi)."
     }

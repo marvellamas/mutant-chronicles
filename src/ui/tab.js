@@ -2073,16 +2073,22 @@ const MODI_RICARICA = {
 function rigaCarichini(ctx, a, info, m, capacita) {
   const C = ctx.dati.equipaggiamento.file.munizioni.ricarica.carichini;
   const stati = info.carichini.flatMap((c) => carichiniDi(ctx.sessione.carichini, c.uid, c.quantita, info.colpiCarichino));
+  // A.151 (09/10/2026): a 0 PI il carichino è inutilizzabile finché non si ripara. Come gli altri blocchi per regola
+  // (N2) è un avviso con «Procedi comunque»: l'ultima parola è del master.
+  const rottiOra = new Set(ctx.tab.scheda.equipaggiamento?.rotti ?? []);
+  const rotto = info.carichini.every((c) => rottiOra.has(String(c.uid).split(':')[0]));
+  const motivoRotto = rotto ? `${info.carichini[0].nome} a 0 PI: Rotto, inutilizzabile finché non lo ripari (A.151)` : null;
   const pieni = stati.filter((n) => n > 0);
   const spazi = capacita === null ? 0 : capacita - m.colpi;
   const daRiempire = stati.some((n) => n < info.colpiCarichino) && info.scorte.some((s) => disponibili(s, ctx.sessione.scorte) > 0);
   const nome = info.carichini[0].nome;
   return h('div', { class: 'riga-munizioni carichini-tavolo' },
     h('span', {}, `${nome}: `, stati.map((n, i) => h('span', { class: `carichino${n ? '' : ' vuoto'}`, title: n ? `${n} colpi` : 'vuoto' }, `${i ? ' · ' : ''}${n}/${info.colpiCarichino}`))),
-    h('button', { type: 'button', class: 'btn', disabled: !pieni.length || spazi <= 0, title: !pieni.length ? 'Nessun carichino preparato' : spazi <= 0 ? 'Arma già piena' : `Trasferisce fino a ${C?.per_operazione ?? 6} colpi in 1 AzP, entro gli spazi liberi; il resto rimane nel carichino (A.135)`,
-      onclick: () => ctx.azioni.usaCarichino(a.uid) }, `Usa carichino +${Math.min(spazi, Math.max(0, ...pieni)) || 0}`),
-    h('button', { type: 'button', class: 'btn', disabled: !daRiempire, title: daRiempire ? `Riempie un carichino con le munizioni sciolte compatibili: ${C?.preparazione ?? 'fuori dal combattimento'} (A.135)` : 'Nessun carichino da riempire o nessuna munizione compatibile',
-      onclick: () => ctx.azioni.preparaCarichino(a.uid) }, 'Prepara'));
+    h('button', { type: 'button', class: `btn${motivoRotto ? ' con-avviso' : ''}`, disabled: !pieni.length || spazi <= 0, title: motivoRotto ?? (!pieni.length ? 'Nessun carichino preparato' : spazi <= 0 ? 'Arma già piena' : `Trasferisce fino a ${C?.per_operazione ?? 6} colpi in 1 AzP, entro gli spazi liberi; il resto rimane nel carichino (A.135)`),
+      onclick: () => conAvviso(ctx.azioni.storico, { azione: `usare ${info.carichini[0].nome}`, motivo: motivoRotto, fai: () => ctx.azioni.usaCarichino(a.uid) }) }, `Usa carichino +${Math.min(spazi, Math.max(0, ...pieni)) || 0}`),
+    h('button', { type: 'button', class: `btn${motivoRotto ? ' con-avviso' : ''}`, disabled: !daRiempire, title: motivoRotto ?? (daRiempire ? `Riempie un carichino con le munizioni sciolte compatibili: ${C?.preparazione ?? 'fuori dal combattimento'} (A.135)` : 'Nessun carichino da riempire o nessuna munizione compatibile'),
+      onclick: () => conAvviso(ctx.azioni.storico, { azione: `preparare ${info.carichini[0].nome}`, motivo: motivoRotto, fai: () => ctx.azioni.preparaCarichino(a.uid) }) }, 'Prepara'),
+    motivoRotto ? h('small', { class: 'nota motivo' }, motivoRotto) : null);
 }
 
 /**

@@ -419,7 +419,8 @@
             "armi_distanza:fucile-a-pompa"
           ]
         }
-      }
+      },
+      "_nota_a151": "A.151 (risposta di Davide del 09/10/2026, ripristinata nel Doc il 10/10): Ricarica per Tamburo peso a vuoto 0,1 kg; Ricarica per Serbatoio 0,2 kg; entrambi Qualità Comune, PS Integrità 10, PI massimi 2, Reperibilità Comune (CO). Il peso delle munizioni contenute si aggiunge al peso a vuoto, e ogni cartuccia si conta una sola volta nell’inventario (nell’app le cartucce restano nella loro voce: il carichino aggiunge solo il peso a vuoto). A 0 PI il carichino è inutilizzabile finché non viene riparato (nell’app un avviso con «Procedi comunque», N2)."
     }
   },
   "oggetti": [
