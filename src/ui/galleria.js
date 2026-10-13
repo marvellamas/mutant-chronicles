@@ -120,7 +120,7 @@ export function pannelloGalleria(ctx, st, az) {
 
   // campi nome e categoria di una scheda: si salvano quando si esce dal campo
   const rinomina = (v) => h('input', {
-    type: 'text', class: 'galleria-nome', value: v.nome, 'aria-label': `Nome di ${v.nome}`,
+    type: 'text', class: 'galleria-nome', value: v.nome, title: v.nome, 'aria-label': `Nome di ${v.nome}`,
     onchange: (e) => conErrore('Nome non salvato', () => cambiaVoce(v.file, { nome: e.target.value.trim() || v.nome, categoria: v.categoria })),
   });
   const categorie = categorieGalleria(indice, ctx.dati);
@@ -151,18 +151,33 @@ export function pannelloGalleria(ctx, st, az) {
     const img = h('img', { class: 'galleria-mini', loading: 'lazy', src: urlGalleria(v.mini ?? v.ridotta ?? v.file), alt: v.nome });
     // una miniatura che manca (immagine copiata a mano) si prepara qui, una volta sola
     if (!v.mini && !st.inCorso) completaCopie(v, ctx.dati).then((i) => { if (i) aggiorna(i); }).catch(() => {});
-    return img;
+    // 13/10: riquadro fisso, stesse proporzioni per tutte: l'immagine si ritaglia e non spinge la scheda
+    return h('span', { class: 'galleria-riquadro-mini' }, img);
   };
 
-  const carta = (v) => h('article', { class: `galleria-carta${indice.mostrata === v.file ? ' mostrata' : ''}` },
-    h('button', { type: 'button', class: 'galleria-tocco', title: 'Anteprima grande (solo per te)', onclick: () => anteprima(v) }, miniatura(v)),
-    h('div', { class: 'galleria-dati' }, rinomina(v), categoriaDi(v)),
-    h('div', { class: 'riga-azioni' },
-      h('button', { type: 'button', class: `btn btn-piccolo${indice.mostrata === v.file ? '' : ' primario'}`, disabled: indice.mostrata === v.file, title: 'La manda allo schermo dei giocatori e a tutti i tablet', onclick: () => mostra(v) }, '📺 Mostra ai giocatori'),
-      v.mostrata && v.daiGiocatori !== false
-        ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'La toglie dall’elenco «Galleria» dei giocatori; a te resta', onclick: () => conErrore('Non tolta', () => cambiaVoce(v.file, { daiGiocatori: false })) }, 'Togli dalla galleria dei giocatori')
-        : null,
-      h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Cancella il file dalla cartella galleria/', onclick: () => elimina(v) }, 'Elimina')));
+  /**
+   * Una scheda della griglia (rifatta il 13/10 dopo la schermata di Marcello: le schede si accavallavano, i nomi
+   * lunghi uscivano e la prima aveva una riga in più). Tutte uguali: miniatura in un riquadro fisso (ritagliata),
+   * nome su una riga sola con i puntini, categoria sotto, e in fondo una riga di pulsanti sempre della stessa
+   * altezza — «Mostra ai giocatori» in evidenza, gli altri due come icone con il suggerimento.
+   */
+  const carta = (v) => {
+    const mostrataOra = indice.mostrata === v.file;
+    const iconaBtn = (icona, titolo, fai, { pericolo = false } = {}) => h('button', {
+      type: 'button', class: `btn btn-piccolo btn-icona-galleria${pericolo ? ' pericolo' : ''}`, title: titolo, 'aria-label': titolo, onclick: fai,
+    }, icona);
+    return h('article', { class: `galleria-carta${mostrataOra ? ' mostrata' : ''}` },
+      h('button', { type: 'button', class: 'galleria-tocco', title: 'Anteprima grande (solo per te)', onclick: () => anteprima(v) }, miniatura(v)),
+      h('div', { class: 'galleria-dati' }, rinomina(v), categoriaDi(v)),
+      h('div', { class: 'galleria-azioni' },
+        h('button', { type: 'button', class: `btn btn-piccolo galleria-mostra${mostrataOra ? '' : ' primario'}`, disabled: mostrataOra,
+          title: mostrataOra ? 'È già sugli schermi dei giocatori' : 'La manda allo schermo dei giocatori e a tutti i tablet',
+          onclick: () => mostra(v) }, mostrataOra ? '📺 Ai giocatori' : '📺 Mostra ai giocatori'),
+        v.mostrata && v.daiGiocatori !== false
+          ? iconaBtn('🚫', 'Togli dalla galleria dei giocatori (a te resta)', () => conErrore('Non tolta', () => cambiaVoce(v.file, { daiGiocatori: false })))
+          : null,
+        iconaBtn('🗑', 'Elimina: cancella il file dalla cartella galleria/', () => elimina(v), { pericolo: true })));
+  };
 
   // «Aggiungi immagini» e il trascinamento: stessa strada
   const scelta = h('input', { type: 'file', accept: Object.values(G.tipi).map((t) => t.mime).join(','), multiple: true, hidden: true,

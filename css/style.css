@@ -2629,14 +2629,23 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .galleria-fascia-tocco { display: flex; align-items: center; gap: 0.6rem; background: none; border: 0; color: inherit; font: inherit; cursor: pointer; text-align: left; padding: 0; }
 .galleria-zona { border: 2px dashed var(--bordo); border-radius: var(--raggio); padding: 0.6rem; display: grid; gap: 0.6rem; }
 .galleria-zona.sopra { border-color: var(--accento); background: color-mix(in srgb, var(--accento) 12%, transparent); }
-.galleria-cerca, .galleria-filtro { min-width: 9rem; }
-.galleria-griglia { display: grid; gap: 0.6rem; grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); }
-.galleria-carta { border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 0.4rem; display: grid; gap: 0.35rem; }
+.galleria-cerca, .galleria-filtro { min-width: 9rem; height: 2.5rem; font: inherit; font-size: 0.95rem; padding: 0.25rem 0.6rem; border: 1px solid var(--bordo); border-radius: var(--raggio); background: var(--superficie); color: var(--testo); }
+/* Griglia della Galleria rifatta il 13/10 (schermata di Marcello: schede accavallate, nomi lunghi fuori, pulsanti
+   disallineati). Colonne che si adattano senza sovrapposizioni, schede tutte uguali, pulsanti su una riga in fondo. */
+.galleria-griglia { display: grid; gap: 0.6rem; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); align-items: stretch; }
+.galleria-carta { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr auto; gap: 0.35rem; min-width: 0; height: 100%; margin: 0; padding: 0.4rem; border: 1px solid var(--bordo); border-radius: var(--raggio); background: var(--superficie); }
 .galleria-carta.mostrata { border-color: var(--accento); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accento) 45%, transparent); }
-.galleria-tocco { background: none; border: 0; padding: 0; cursor: pointer; }
-.galleria-mini { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 4px; display: block; }
-.galleria-dati { display: grid; gap: 0.25rem; }
-.galleria-dati input, .galleria-dati select { width: 100%; }
+.galleria-tocco { display: block; width: 100%; background: none; border: 0; padding: 0; cursor: pointer; }
+/* riquadro fisso: ogni miniatura ha le stesse proporzioni, l'immagine si ritaglia e non allarga la scheda */
+.galleria-riquadro-mini { display: block; width: 100%; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 4px; background: var(--sfondo); }
+.galleria-mini { width: 100%; height: 100%; object-fit: cover; display: block; }
+.galleria-dati { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.25rem; align-content: start; min-width: 0; }
+.galleria-dati input, .galleria-dati select { width: 100%; min-width: 0; max-width: 100%; font-size: 0.85rem; padding: 0.25rem 0.4rem; border: 1px solid var(--bordo); border-radius: var(--raggio); background: var(--superficie); color: var(--testo); }
+/* il nome su una riga sola, con i puntini: il nome intero nel suggerimento e scrivendoci dentro */
+.galleria-nome { text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+.galleria-azioni { display: flex; align-items: center; gap: 0.3rem; flex-wrap: nowrap; min-width: 0; }
+.galleria-mostra { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.btn-icona-galleria { flex: none; width: 2.1rem; padding: 0.25rem 0; text-align: center; }
 .finestrella-galleria { max-width: min(60rem, calc(100vw - 2rem)); }
 .galleria-grande { max-width: 100%; max-height: 70vh; object-fit: contain; display: block; margin: 0 auto; }
 /* l'immagine mostrata ai giocatori: sopra la scheda o la mappa, con la ✕ per chiuderla sul proprio schermo */
