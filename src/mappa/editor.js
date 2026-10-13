@@ -14,6 +14,7 @@ import { cella, daBase64, impostaCella, inBase64 } from './celle.js';
 import { lineeDi, tratti, distanzaPuntoSegmento, conMuriLinee } from './muri-linee.js';
 import { celleToken, dimensioni } from './token.js';
 import { portaA } from './porte.js';
+import { celleTemplate, testoMisure } from './template.js';
 
 /** Gli strumenti della barra, nell'ordine. `seleziona` è il predefinito e quello a cui torna Esc. */
 export const STRUMENTI = [
@@ -27,7 +28,7 @@ export const STRUMENTI = [
 export const ID_STRUMENTI = STRUMENTI.map((s) => s.id);
 export const STRUMENTO_PREDEFINITO = 'seleziona';
 /** I tipi di oggetto che la selezione conosce. */
-export const TIPI = ['muro', 'porta', 'terreno', 'token'];
+export const TIPI = ['muro', 'porta', 'terreno', 'token', 'template'];
 
 /** Lo stato dell'editor all'apertura della mappa. */
 export const statoEditor = () => ({ strumento: STRUMENTO_PREDEFINITO, selezione: [], hover: null });
@@ -99,13 +100,33 @@ export const tokenLiberi = (scena) => (scena.token ?? []).filter((t) => t.rif?.t
  * Tutti gli oggetti selezionabili della scena, con la stessa forma.
  * @returns [{ chiave, tipo, id, nome, punti?, celle?, q?, ingombro?, spessore? }]
  */
-export function oggettiScena(scena) {
+export function oggettiScena(scena, dati = null) {
   const out = [];
   for (const l of lineeDi(scena)) out.push({ chiave: chiaveDi('muro', l.id), tipo: 'muro', id: l.id, nome: 'Muro disegnato', punti: l.punti, spessore: l.spessore });
   for (const p of scena.porte ?? []) out.push({ chiave: chiaveDi('porta', p.id), tipo: 'porta', id: p.id, nome: 'Porta', q: p.q, stato: p.stato, segreta: p.segreta });
   for (const a of areeTerreno(scena)) out.push({ chiave: chiaveDi('terreno', a.id), tipo: 'terreno', id: a.id, nome: 'Terreno difficile', celle: a.celle });
   for (const t of tokenLiberi(scena)) out.push({ chiave: chiaveDi('token', t.id), tipo: 'token', id: t.id, nome: t.nome || 'Token libero', q: t.q, ingombro: t.ingombro, blocca: !!t.blocca, bersaglio: !!t.bersaglio, nascosto: !!t.nascosto });
+  // 13/10 (richiesta di Marcello): anche i template si scelgono uno alla volta, come gli altri oggetti. I Q coperti
+  // si calcolano solo con i dati delle regole (dati.mappa.template); senza, resta il quadretto d'origine.
+  const regole = dati?.mappa?.template ?? null;
+  for (const t of scena.template ?? []) {
+    out.push({
+      chiave: chiaveDi('template', t.id), tipo: 'template', id: t.id, nome: t.nome || '', forma: t.forma, misure: t.misure,
+      origine: t.origine, direzione: t.direzione ?? null, durata: t.durata ?? null, fineRound: t.fine_round ?? null,
+      nascosto: !!t.nascosto, colore: t.colore ?? null,
+      celle: regole ? celleDelTemplate(t, scena.griglia, regole) : [[...t.origine]],
+    });
+  }
   return out;
+}
+
+/** I Q coperti da un template, come coppie [x, y] (la maschera di src/mappa/template.js, srotolata). */
+function celleDelTemplate(t, griglia, regole) {
+  const { colonne: C, righe: Rg } = griglia;
+  const m = celleTemplate(t, griglia, regole);
+  const celle = [];
+  for (let y = 0; y < Rg; y++) for (let x = 0; x < C; x++) if (m[y * C + x]) celle.push([x, y]);
+  return celle.length ? celle : [[...t.origine]];
 }
 
 /** L'oggetto di una chiave, o null. */
@@ -116,12 +137,12 @@ export const oggettoDi = (scena, chiave) => oggettiScena(scena).find((o) => o.ch
  * ben visibili), poi i muri disegnati, poi le aree di terreno (grandi, stanno sotto).
  * @param tolleranzaQ quanto si può sbagliare sui muri disegnati (la UI la calcola dallo zoom, D7)
  */
-export function oggettoSotto(scena, p, { tolleranzaQ = 0.35 } = {}) {
+export function oggettoSotto(scena, p, { tolleranzaQ = 0.35, dati = null } = {}) {
   const dentroCella = (q, ingombro, [px, py]) => {
     const [lc, lr] = dimensioni(ingombro);
     return px >= q[0] && px < q[0] + lc && py >= q[1] && py < q[1] + lr;
   };
-  const oggetti = oggettiScena(scena);
+  const oggetti = oggettiScena(scena, dati);
   for (const o of oggetti) if (o.tipo === 'token' && dentroCella(o.q, o.ingombro, p)) return o;
   for (const o of oggetti) if (o.tipo === 'porta' && dentroCella(o.q, 1, p)) return o;
   let muro = null;
@@ -133,21 +154,23 @@ export function oggettoSotto(scena, p, { tolleranzaQ = 0.35 } = {}) {
     if (d <= tolleranzaQ + (o.spessore ?? 0) / 2 && d < dMin) { dMin = d; muro = o; }
   }
   if (muro) return muro;
+  // i template stanno sopra il terreno difficile: un'area dipinta non deve rubare il clic al template che ci sta sopra
+  for (const o of oggetti) if (o.tipo === 'template' && o.celle.some(([x, y]) => dentroCella([x, y], 1, p))) return o;
   for (const o of oggetti) if (o.tipo === 'terreno' && o.celle.some(([x, y]) => dentroCella([x, y], 1, p))) return o;
   return null;
 }
 
 /** Gli oggetti che il riquadro fra a e b (Q frazionari, in qualunque ordine) prende per intero o in parte. */
-export function oggettiNelRiquadro(scena, a, b) {
+export function oggettiNelRiquadro(scena, a, b, dati = null) {
   const x0 = Math.min(a[0], b[0]);
   const x1 = Math.max(a[0], b[0]);
   const y0 = Math.min(a[1], b[1]);
   const y1 = Math.max(a[1], b[1]);
   const dentro = ([x, y]) => x >= x0 && x <= x1 && y >= y0 && y <= y1;
   const cellaDentro = ([x, y]) => x + 1 > x0 && x < x1 && y + 1 > y0 && y < y1;
-  return oggettiScena(scena).filter((o) => {
+  return oggettiScena(scena, dati).filter((o) => {
     if (o.tipo === 'muro') return o.punti.some(dentro);
-    if (o.tipo === 'terreno') return o.celle.some(cellaDentro);
+    if (o.tipo === 'terreno' || o.tipo === 'template') return o.celle.some(cellaDentro);
     const [lc, lr] = dimensioni(o.ingombro ?? 1);
     return o.q[0] + lc > x0 && o.q[0] < x1 && o.q[1] + lr > y0 && o.q[1] < y1;
   });
@@ -223,7 +246,7 @@ export function spostaOggetti(scena, chiavi, [dx, dy], dati, adesso = new Date()
   if (!chiavi?.length || (!dx && !dy)) return scena;
   const { colonne: C, righe: R } = scena.griglia;
   const scelte = new Set(chiavi);
-  const prima = { muriLinee: lineeDi(scena), porte: scena.porte ?? [], terreno: scena.terreno, token: scena.token ?? [] };
+  const prima = { muriLinee: lineeDi(scena), porte: scena.porte ?? [], terreno: scena.terreno, token: scena.token ?? [], template: scena.template ?? [] };
   const dxi = Math.round(dx);
   const dyi = Math.round(dy);
 
@@ -245,7 +268,14 @@ export function spostaOggetti(scena, chiavi, [dx, dy], dati, adesso = new Date()
     return { ...t, q };
   });
 
-  return conVoceEditor(scena, { ...scena, muriLinee, porte, terreno: inBase64(terreno), token }, prima, dati, adesso);
+  // 13/10: il template si sposta per quadretti interi, come porte e token; resta dentro la mappa
+  const template = (prima.template).map((t) => {
+    if (!scelte.has(chiaveDi('template', t.id))) return t;
+    const q = [Math.min(Math.max(0, t.origine[0] + dxi), C - 1), Math.min(Math.max(0, t.origine[1] + dyi), R - 1)];
+    return { ...t, origine: q };
+  });
+
+  return conVoceEditor(scena, { ...scena, muriLinee, porte, terreno: inBase64(terreno), token, template }, prima, dati, adesso);
 }
 
 /** La scena senza gli oggetti selezionati, con una sola voce di «annulla». */
@@ -253,7 +283,7 @@ export function eliminaOggetti(scena, chiavi, dati, adesso = new Date()) {
   if (!chiavi?.length) return scena;
   const { colonne: C, righe: R } = scena.griglia;
   const scelte = new Set(chiavi);
-  const prima = { muriLinee: lineeDi(scena), porte: scena.porte ?? [], terreno: scena.terreno, token: scena.token ?? [] };
+  const prima = { muriLinee: lineeDi(scena), porte: scena.porte ?? [], terreno: scena.terreno, token: scena.token ?? [], template: scena.template ?? [] };
   const muriLinee = prima.muriLinee.filter((l) => !scelte.has(chiaveDi('muro', l.id)));
   const porte = prima.porte.filter((p) => !scelte.has(chiaveDi('porta', p.id)));
   let terreno = daBase64(prima.terreno);
@@ -262,7 +292,9 @@ export function eliminaOggetti(scena, chiavi, dati, adesso = new Date()) {
     for (const [x, y] of a.celle) terreno = impostaCella(terreno, C, R, x, y, false);
   }
   const token = prima.token.filter((t) => !(t.rif?.tipo === 'segnaposto' && scelte.has(chiaveDi('token', t.id))));
-  return conVoceEditor(scena, { ...scena, muriLinee, porte, terreno: inBase64(terreno), token }, prima, dati, adesso);
+  // 13/10: un template alla volta, non più solo «tutti insieme»
+  const template = prima.template.filter((t) => !scelte.has(chiaveDi('template', t.id)));
+  return conVoceEditor(scena, { ...scena, muriLinee, porte, terreno: inBase64(terreno), token, template }, prima, dati, adesso);
 }
 
 /**
@@ -285,7 +317,7 @@ export function spostaVertice(scena, chiaveMuro, indice, punto, dati, { aggancia
 export function cambiaProprieta(scena, chiave, modifiche, dati, adesso = new Date()) {
   const r = dallaChiave(chiave);
   if (!r) return scena;
-  const prima = { muriLinee: lineeDi(scena), porte: scena.porte ?? [], token: scena.token ?? [] };
+  const prima = { muriLinee: lineeDi(scena), porte: scena.porte ?? [], token: scena.token ?? [], template: scena.template ?? [] };
   if (r.tipo === 'muro') {
     const muriLinee = prima.muriLinee.map((l) => (l.id === r.id ? { ...l, ...modifiche } : l));
     return conVoceEditor(scena, { ...scena, muriLinee }, prima, dati, adesso);
@@ -298,6 +330,10 @@ export function cambiaProprieta(scena, chiave, modifiche, dati, adesso = new Dat
     const token = prima.token.map((t) => (t.id === r.id && t.rif?.tipo === 'segnaposto' ? { ...t, ...modifiche } : t));
     return conVoceEditor(scena, { ...scena, token }, prima, dati, adesso);
   }
+  if (r.tipo === 'template') {
+    const template = prima.template.map((t) => (t.id === r.id ? { ...t, ...modifiche } : t));
+    return conVoceEditor(scena, { ...scena, template }, prima, dati, adesso);
+  }
   return scena;
 }
 
@@ -306,7 +342,7 @@ export function cambiaProprieta(scena, chiave, modifiche, dati, adesso = new Dat
  * rimettono tutto in una volta (D3). Niente è cambiato: la scena com'era.
  */
 export function conVoceEditor(scenaPrima, scenaDopo, prima, dati, adesso = new Date()) {
-  const chiavi = ['muriLinee', 'porte', 'terreno', 'token'].filter((k) => k in prima);
+  const chiavi = ['muriLinee', 'porte', 'terreno', 'token', 'template'].filter((k) => k in prima);
   const dopo = {};
   const vecchio = {};
   let cambiato = false;
@@ -333,12 +369,13 @@ export function conVoceEditor(scenaPrima, scenaDopo, prima, dati, adesso = new D
  * `tipo` è il tipo comune quando sono tutti uguali, altrimenti null; `proprieta` c'è solo con un oggetto solo.
  */
 export function riassuntoSelezione(scena, chiavi, dati) {
-  const oggetti = (chiavi ?? []).map((k) => oggettoDi(scena, k)).filter(Boolean);
+  const tutti = oggettiScena(scena, dati);
+  const oggetti = (chiavi ?? []).map((k) => tutti.find((o) => o.chiave === k)).filter(Boolean);
   if (!oggetti.length) return { quanti: 0, tipo: null, testo: 'Niente selezionato', oggetti: [], proprieta: null };
   const tipi = [...new Set(oggetti.map((o) => o.tipo))];
   const tipo = tipi.length === 1 ? tipi[0] : null;
   if (oggetti.length > 1) {
-    const nomi = { muro: ['muro', 'muri'], porta: ['porta', 'porte'], terreno: ['area di terreno difficile', 'aree di terreno difficile'], token: ['token libero', 'token liberi'] };
+    const nomi = { muro: ['muro', 'muri'], porta: ['porta', 'porte'], terreno: ['area di terreno difficile', 'aree di terreno difficile'], token: ['token libero', 'token liberi'], template: ['template', 'template'] };
     const testo = tipo ? `${oggetti.length} ${nomi[tipo][1]}` : `${oggetti.length} oggetti`;
     return { quanti: oggetti.length, tipo, testo, oggetti, proprieta: null };
   }
@@ -351,6 +388,7 @@ export function nomeOggetto(o, dati) {
   if (o.tipo === 'muro') return `Muro disegnato (${nomeSpessore(o.spessore, dati)})`;
   if (o.tipo === 'porta') return `Porta ${o.stato}${o.segreta ? ', segreta' : ''}`;
   if (o.tipo === 'terreno') return `Terreno difficile (${o.celle.length} Q)`;
+  if (o.tipo === 'template') return `Template ${testoMisure(o, dati?.mappa?.template ?? {})}${o.nome ? ` «${o.nome}»` : ''}`;
   return `Token libero «${o.nome}»`;
 }
 
@@ -378,6 +416,15 @@ export function proprietaOggetto(o, dati) {
       { chiave: 'blocca', etichetta: 'Blocca il movimento e dà Copertura', tipo: 'casella', valore: !!o.blocca },
       // 12/10 (punto 6): un oggetto della scena che si può prendere di mira (un barile, un generatore, una porta)
       { chiave: 'bersaglio', etichetta: 'Bersaglio (si può attaccare)', tipo: 'casella', valore: !!o.bersaglio },
+    ];
+  }
+  if (o.tipo === 'template') {
+    // forma e misura non si cambiano qui (si rifà il template): si leggono. Nome e durata sì.
+    return [
+      { chiave: 'forma', etichetta: 'Forma', tipo: 'testo', valore: testoMisure(o, dati?.mappa?.template ?? {}) },
+      { chiave: 'nome', etichetta: 'Nome', tipo: 'riga', valore: o.nome ?? '' },
+      { chiave: 'durata', etichetta: 'Durata (Round)', tipo: 'numero', valore: o.durata ?? null, vuoto: 'finché non lo tolgo' },
+      { chiave: 'nascosto', etichetta: 'Nascosto ai giocatori', tipo: 'casella', valore: !!o.nascosto },
     ];
   }
   return [{ chiave: 'celle', etichetta: 'Quadretti', tipo: 'testo', valore: String(o.celle.length) }];

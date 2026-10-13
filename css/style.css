@@ -2734,3 +2734,5 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .esito-cerca { position: absolute; top: 100%; right: 0; z-index: var(--z-menu); margin: 0.25rem 0 0; padding: 0.4rem 0.6rem; max-width: min(24rem, 90vw); background: var(--superficie); border: 1px solid var(--bordo); border-radius: var(--raggio); }
 /* il riquadro raggiunto dalla ricerca lampeggia un attimo */
 .evidenziato { outline: 3px solid var(--accento); outline-offset: 2px; border-radius: var(--raggio); }
+/* campi del pannello «Selezione» della mappa (nome e durata del template, 13/10) */
+.mappa-selezione-campo { font: inherit; font-size: 0.85rem; width: 100%; padding: 0.25rem 0.4rem; border: 1px solid var(--bordo); border-radius: var(--raggio); background: var(--superficie); color: var(--testo); }

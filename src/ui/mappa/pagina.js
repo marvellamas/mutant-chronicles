@@ -383,7 +383,7 @@ export function renderMappa(radice, ctx) {
       // M2 (11/10): muri disegnati a mano libera, sotto lo stesso interruttore dei muri a quadretto
       if (liv.muri) disegnaMuriLinee(c, { scena: s, cam: st.cam, linee: lineePerDisegno(s, ctx.dati), colore: colori.muro, aspetto: ASPETTO, selezionato: st.muri.selezionato });
       // 12/10: contorno giallo su quello che è selezionato, leggero su quello sotto il puntatore, maniglie sui vertici
-      disegnaSelezione(c, { scena: s, cam: st.cam, oggetti: oggettiScena(s), selezione: st.editor.selezione, hover: st.editor.hover, colori: { selezione: ASPETTO?.selezione } });
+      disegnaSelezione(c, { scena: s, cam: st.cam, oggetti: oggettiScena(s, ctx.dati), selezione: st.editor.selezione, hover: st.editor.hover, colori: { selezione: ASPETTO?.selezione } });
       // fase 2, lotto 2: le porte, ciascuna con il suo stato (le segrete con la «S»)
       // M3 (11/10): ogni porta sul suo muro; quelle salvate prima si convertono alla lettura (agganciaDiPorta)
       if (liv.porte && s.porte?.length) disegnaPorte(c, { scena: s, cam: st.cam, info, porte: s.porte.map((p) => ({ ...p, orientamento: orientamentoPorta(s, p), aggancio: agganciaDiPorta(s, p, ctx.dati), geo: geometriaPorta(s, p, ctx.dati), selezionata: p.id === st.muri.portaSelezionata })), colori: RP.colori, regole: RP });
@@ -1777,7 +1777,7 @@ export function renderMappa(radice, ctx) {
   }
 
   /** Gli oggetti dell'editor della scena, ricalcolati a ogni uso (le aree di terreno vengono dalla maschera). */
-  const oggettiEditor = () => (st.scena ? oggettiScena(st.scena) : []);
+  const oggettiEditor = () => (st.scena ? oggettiScena(st.scena, ctx.dati) : []);
 
   /** La tolleranza del clic sui muri disegnati, in Q: una decina di pixel di schermo a qualunque zoom (D7). */
   const tolleranzaQ = () => {
@@ -1787,7 +1787,7 @@ export function renderMappa(radice, ctx) {
   };
 
   /** L'oggetto dell'editor sotto il punto della mappa, o null. */
-  const oggettoSottoPunto = (m) => (st.scena ? oggettoSotto(st.scena, qFrazionario(m), { tolleranzaQ: tolleranzaQ() }) : null);
+  const oggettoSottoPunto = (m) => (st.scena ? oggettoSotto(st.scena, qFrazionario(m), { tolleranzaQ: tolleranzaQ(), dati: ctx.dati }) : null);
 
   function eliminaSelezione() {
     if (!st.scena || !st.editor.selezione.length) return false;
@@ -3395,7 +3395,7 @@ export function renderMappa(radice, ctx) {
       if (t.mosso && st.scena) {
         const g = st.scena.griglia;
         const inQ = (pt) => [(pt.x - g.scosto_x) / g.q_px, (pt.y - g.scosto_y) / g.q_px];
-        const presi = oggettiNelRiquadro(st.scena, inQ(t.da), inQ(t.a)).map((o) => o.chiave);
+        const presi = oggettiNelRiquadro(st.scena, inQ(t.da), inQ(t.a), ctx.dati).map((o) => o.chiave);
         st.editor = conSelezione(st.editor, presi, { aggiungi: t.aggiungi });
       } else {
         st.editor = conSelezione(st.editor, []);

@@ -118,6 +118,20 @@ export function direzioneVerso(da, verso) {
 }
 
 /** Nuovo template dal mini-menu. */
+const NOMI_MISURE_Q = { raggio: 'Raggio', lato: 'Lato', larghezza: 'Larghezza', altezza: 'Altezza', lunghezza: 'Lunghezza' };
+const qTesto = (n) => `${String(n).replace('.', ',')} Q`;
+
+/** «Raggio 2 Q», «Cono 6 × 3 Q», «Linea 5 Q», «Quadrato 3 × 3 Q», «Rettangolo 4 × 2 Q» (funzione pura, 13/10). */
+export function testoMisure(t, regole = {}) {
+  const m = t.misure ?? {};
+  const nome = regole.nomi_forme?.[t.forma] ?? t.forma;
+  if (t.forma === 'cerchio') return `${nome} ${qTesto(m.raggio)}`;
+  if (t.forma === 'quadrato') return `${nome} ${m.lato} × ${qTesto(m.lato)}`;
+  if (t.forma === 'rettangolo') return `${nome} ${m.larghezza} × ${qTesto(m.altezza)}`;
+  if (t.forma === 'cono') return `${nome} ${m.lunghezza} × ${qTesto(m.larghezza)}`;
+  return `${nome} ${qTesto(m.lunghezza)}`;
+}
+
 export function nuovoTemplate({ id, forma, misure, origine, direzione = 0, colore, nome = '', durata = null, round = null, nascosto = false, scontro = null }) {
   return {
     id, forma, origine: [...origine], misure: { ...misure }, ...(ORIENTABILI.includes(forma) ? { direzione } : {}),

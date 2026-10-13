@@ -491,7 +491,7 @@ export function disegnaSelezione(c, { scena, cam, oggetti, selezione = [], hover
       c.lineWidth = Math.max(spessore, (o.spessore ?? 0.25) * g.q_px * cam.scala + spessore * 2);
       c.globalAlpha = 0.55;
       c.stroke();
-    } else if (o.tipo === 'terreno') {
+    } else if (o.tipo === 'terreno' || o.tipo === 'template') {
       c.globalAlpha = 0.95;
       for (const [x, y] of o.celle) {
         const [sx, sy, sw, sh] = rettQ(g, cam, x, y);

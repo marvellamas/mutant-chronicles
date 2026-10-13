@@ -4,21 +4,12 @@
 // Il posizionamento (anteprima che segue il mouse, rotella per orientare, clic per fissare, Esc) sta in ./pagina.js.
 import { h } from '../dom.js';
 import { apri } from '../finestrella.js';
-import { MISURE_FORMA, ORIENTABILI, roundRimasti } from '../../mappa/template.js';
+import { MISURE_FORMA, ORIENTABILI, roundRimasti, testoMisure } from '../../mappa/template.js';
+// 13/10: testoMisure è una funzione pura (src/mappa/template.js); qui si ri-esporta, gli usi non cambiano
+export { testoMisure };
 
 const NOMI_MISURE = { raggio: 'Raggio', lato: 'Lato', larghezza: 'Larghezza', altezza: 'Altezza', lunghezza: 'Lunghezza' };
 const q = (n) => `${String(n).replace('.', ',')} Q`;
-
-/** «Raggio 2 Q», «Cono 6 × 3 Q», «Linea 5 Q», «Quadrato 3 × 3 Q», «Rettangolo 4 × 2 Q». */
-export function testoMisure(t, regole) {
-  const m = t.misure;
-  const nome = regole.nomi_forme[t.forma] ?? t.forma;
-  if (t.forma === 'cerchio') return `${nome} ${q(m.raggio)}`;
-  if (t.forma === 'quadrato') return `${nome} ${m.lato} × ${q(m.lato)}`;
-  if (t.forma === 'rettangolo') return `${nome} ${m.larghezza} × ${q(m.altezza)}`;
-  if (t.forma === 'cono') return `${nome} ${m.lunghezza} × ${q(m.larghezza)}`;
-  return `${nome} ${q(m.lunghezza)}`;
-}
 
 /** Etichetta sulla mappa: il nome (o la forma con la misura) e i Round che restano. */
 export function etichettaTemplate(t, regole, round) {

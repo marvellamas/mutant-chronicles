@@ -57,7 +57,7 @@ export function pannelloSelezione({ onElimina, onProprieta, onDeseleziona } = {}
     el,
     aggiorna(r) {
       if (!r || !r.quanti) {
-        svuota(corpo, h('p', { class: 'nota' }, 'Niente selezionato. Con Seleziona: clic su un oggetto per prenderlo, Maiusc per più d’uno, trascina per spostarlo, Canc per cancellarlo.'));
+        svuota(corpo, h('p', { class: 'nota' }, 'Niente selezionato. Con Seleziona: clic su un oggetto (anche un template) per prenderlo, Maiusc per più d’uno, trascina per spostarlo, Canc per cancellarlo.'));
         el.hidden = false;
         return;
       }
@@ -72,6 +72,16 @@ export function pannelloSelezione({ onElimina, onProprieta, onDeseleziona } = {}
               type: 'button', class: `btn btn-piccolo${v.valore === p.valore ? ' scelto' : ''}`, 'aria-pressed': String(v.valore === p.valore),
               onclick: () => onProprieta?.(p.chiave, v.valore),
             }, v.nome)))));
+        } else if (p.tipo === 'riga') {
+          // 13/10: nome del template, modificabile dal pannello (si salva uscendo dal campo o con Invio)
+          const campo = h('input', { type: 'text', class: 'mappa-selezione-campo', value: p.valore ?? '', maxlength: 60, 'aria-label': p.etichetta,
+            onchange: (e) => onProprieta?.(p.chiave, e.target.value.trim()),
+            onkeydown: (e) => { if (e.key === 'Enter') { e.preventDefault(); e.target.blur(); } } });
+          righe.push(h('label', { class: 'mappa-selezione-prop' }, h('span', { class: 'mappa-selezione-etichetta' }, p.etichetta), campo));
+        } else if (p.tipo === 'numero') {
+          const campo = h('input', { type: 'number', class: 'mappa-selezione-campo', min: 1, step: 1, value: p.valore ?? '', placeholder: p.vuoto ?? '', 'aria-label': p.etichetta,
+            onchange: (e) => { const n = Math.round(Number(e.target.value)); onProprieta?.(p.chiave, e.target.value === '' || !Number.isFinite(n) || n < 1 ? null : n); } });
+          righe.push(h('label', { class: 'mappa-selezione-prop' }, h('span', { class: 'mappa-selezione-etichetta' }, p.etichetta), campo));
         } else {
           righe.push(h('p', { class: 'nota' }, `${p.etichetta}: ${p.valore}`));
         }
