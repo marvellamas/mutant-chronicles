@@ -60,8 +60,37 @@
       "scosto_y": 0,
       "colore": "#000000",
       "opacita": 0.35,
-      "bloccata": false
-    }
+      "bloccata": false,
+      "spessore": 1
+    },
+    "spessori": [
+      {
+        "id": "sottile",
+        "nome": "Sottile",
+        "px": 1
+      },
+      {
+        "id": "normale",
+        "nome": "Normale",
+        "px": 1.5
+      },
+      {
+        "id": "medio",
+        "nome": "Medio",
+        "px": 2
+      },
+      {
+        "id": "spesso",
+        "nome": "Spesso",
+        "px": 3
+      },
+      {
+        "id": "molto-spesso",
+        "nome": "Molto spesso",
+        "px": 4
+      }
+    ],
+    "_nota_spessori": "Spessore delle linee della griglia in pixel dello schermo (13/10/2026, richiesta di Marcello): un cursore accanto all’opacità, salvato nella scena (griglia.spessore) e uguale per il master e per lo schermo dei giocatori. Le scene salvate prima non hanno il campo: vale predefinita.spessore."
   },
   "vista": {
     "riadatta_oltre": 0.15,

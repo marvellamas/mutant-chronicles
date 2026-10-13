@@ -3,7 +3,7 @@
 //
 // { formato: "mutant-scena", versione: 1, id, nome, revisione, creato, aggiornato,
 //   mappa: { file, ridotta, larghezza, altezza } | null,     immagini in mappe/ (pixel dell'originale)
-//   griglia: { q_px, scosto_x, scosto_y, colore, opacita, bloccata, colonne, righe },
+//   griglia: { q_px, scosto_x, scosto_y, colore, opacita, spessore?, bloccata, colonne, righe },
 //   muri, terreno: maschere di Q in base64 (src/mappa/celle.js),
 //   nebbia: { iniziale: "coperta" | "scoperta", coperti: maschera },
 //   token: [{ id, rif: { tipo: "partecipante" | "veicolo" | "segnaposto", id }, q: [x, y], ingombro, nascosto, nome?, luce?,
@@ -162,6 +162,8 @@ export function validaScena(s, dati) {
   if (typeof g.q_px !== 'number' || g.q_px < D.griglia.q_px_min || g.q_px > D.griglia.q_px_max) return `griglia.q_px: da ${D.griglia.q_px_min} a ${D.griglia.q_px_max} pixel per Q`;
   if (typeof g.scosto_x !== 'number' || typeof g.scosto_y !== 'number') return 'griglia: scosto_x e scosto_y numerici attesi';
   if (typeof g.opacita !== 'number' || g.opacita < 0 || g.opacita > 1) return 'griglia.opacita: da 0 a 1';
+  // 13/10: spessore delle linee in pixel; manca nelle scene salvate prima (vale griglia.predefinita.spessore)
+  if (g.spessore !== undefined && !(typeof g.spessore === 'number' && g.spessore > 0 && g.spessore <= 10)) return 'griglia.spessore: numero di pixel da 0 a 10, o assente';
   if (!/^#[0-9a-fA-F]{6}$/.test(String(g.colore))) return 'griglia.colore: #rrggbb atteso';
   if (typeof g.bloccata !== 'boolean') return 'griglia.bloccata: vero o falso';
   const { colonne, righe } = g;

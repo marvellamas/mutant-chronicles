@@ -62,6 +62,8 @@ export function applicaGriglia(scena, cambi, dati, { mappa } = {}) {
   const g = { ...prima, ...cambi };
   if (typeof g.q_px !== 'number' || !(g.q_px >= G.q_px_min && g.q_px <= G.q_px_max)) return { errore: `dimensione del quadretto: da ${G.q_px_min} a ${G.q_px_max} pixel` };
   if (!(typeof g.opacita === 'number' && g.opacita >= 0 && g.opacita <= 1)) return { errore: 'opacità: da 0 a 1' };
+  // 13/10: spessore delle linee (px dello schermo), fra i gradini di data/mappa.json → griglia.spessori
+  if (g.spessore !== undefined) g.spessore = spessoreGriglia(g, dati);
   g.scosto_x = normalizzaScosto(Number(g.scosto_x) || 0, g.q_px);
   g.scosto_y = normalizzaScosto(Number(g.scosto_y) || 0, g.q_px);
   const nuovaMappa = mappa === undefined ? scena.mappa : mappa;
@@ -101,6 +103,20 @@ export function applicaGriglia(scena, cambi, dati, { mappa } = {}) {
  * coordinate delle verticali e delle orizzontali e gli estremi dei segmenti. null se a questo zoom un Q sarebbe
  * più piccolo di vista.griglia_px_schermo_minimi pixel (griglia troppo fitta per servire) o se non si vede nulla.
  */
+export function spessoreGriglia(griglia, dati) {
+  const G = dati?.mappa?.griglia ?? {};
+  const gradini = G.spessori ?? [];
+  const predefinito = G.predefinita?.spessore ?? gradini[0]?.px ?? 1;
+  const v = Number(griglia?.spessore);
+  if (!Number.isFinite(v) || v <= 0) return predefinito;
+  if (!gradini.length) return v;
+  // il gradino più vicino: nel file può esserci un valore vecchio o scritto a mano
+  return gradini.reduce((a, b) => (Math.abs(b.px - v) < Math.abs(a.px - v) ? b : a)).px;
+}
+
+/** Lo scarto di mezzo pixel che rende nitide le linee dispari (1 e 3 px); con le pari non serve. */
+export const scostoNitido = (px) => (Math.round(px) % 2 === 1 ? 0.5 : 0);
+
 export function lineeVisibili(griglia, rett, scala, vista) {
   const { q_px: q, scosto_x: sx, scosto_y: sy, colonne, righe } = griglia;
   if (q * scala < vista.griglia_px_schermo_minimi) return null;

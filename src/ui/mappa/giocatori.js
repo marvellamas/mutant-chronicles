@@ -21,7 +21,7 @@ import { h, svuota } from '../dom.js';
 // Galleria (N1, 13/10/2026): l'immagine che il master mostra, sopra la mappa, con la ✕ per chiuderla da soli
 import { collegaGalleria } from '../galleria-giocatori.js';
 import { cameraIniziale, sposta, adatta, adattaRettangolo, schermoDaMappa, rettangoloVisibile } from '../../mappa/camera.js';
-import { dimensioniMappa, lineeVisibili } from '../../mappa/griglia.js';
+import { dimensioniMappa, lineeVisibili, spessoreGriglia, scostoNitido } from '../../mappa/griglia.js';
 import { daBase64 } from '../../mappa/celle.js';
 import { trattiCoperti, rettangoloScoperto } from '../../mappa/nebbia.js';
 import { chiaveRif } from '../../mappa/token.js';
@@ -116,12 +116,15 @@ export function renderGiocatori(radice, ctx) {
       c.save();
       c.globalAlpha = g.opacita;
       c.strokeStyle = g.colore;
-      c.lineWidth = 1;
+      // 13/10: spessore delle linee dalla scena (griglia.spessore), uguale per il master e per i giocatori
+      const sp = spessoreGriglia(g, ctx.dati);
+      c.lineWidth = sp;
+      const nit = scostoNitido(sp);
       c.beginPath();
       const ya = schermoDaMappa(st.cam, 0, linee.y0).y, yb = schermoDaMappa(st.cam, 0, linee.y1).y;
       const xa = schermoDaMappa(st.cam, linee.x0, 0).x, xb = schermoDaMappa(st.cam, linee.x1, 0).x;
-      for (const x of linee.xs) { const sx = Math.round(schermoDaMappa(st.cam, x, 0).x) + 0.5; c.moveTo(sx, ya); c.lineTo(sx, yb); }
-      for (const y of linee.ys) { const sy = Math.round(schermoDaMappa(st.cam, 0, y).y) + 0.5; c.moveTo(xa, sy); c.lineTo(xb, sy); }
+      for (const x of linee.xs) { const sx = Math.round(schermoDaMappa(st.cam, x, 0).x) + nit; c.moveTo(sx, ya); c.lineTo(sx, yb); }
+      for (const y of linee.ys) { const sy = Math.round(schermoDaMappa(st.cam, 0, y).y) + nit; c.moveTo(xa, sy); c.lineTo(xb, sy); }
       c.stroke();
       c.restore();
     },

@@ -31,7 +31,7 @@ import { barraIniziativaEl, stileBordo } from './barra-iniziativa.js';
 import { bordoToken, assegnaColori, cambiaColore, tavolozzaPer, famiglia } from '../../mappa/colori.js';
 import { avversariZoc, avversariZocInattivi, celleZoc, passiInZoc, attacchiDiOpportunita, testoOpportunita, giaInQuestoRound } from '../../mappa/zoc.js';
 import { scegliColore, chiedi, chiediTesto, informa, apri as apriFinestrella } from '../finestrella.js';
-import { calibraDaQuadretto, applicaGriglia, dimensioniMappa, lineeVisibili, testoScala } from '../../mappa/griglia.js';
+import { calibraDaQuadretto, applicaGriglia, dimensioniMappa, lineeVisibili, testoScala, spessoreGriglia, scostoNitido } from '../../mappa/griglia.js';
 import { creaTela } from './canvas.js';
 import { leggiScena, salvaScena, caricaImmagine, controllaFile, preparaRidotta } from './api.js';
 import { agganciaQ, centroToken, tokenSottoPunto, disponiInFila, sovrapposti, chiaveRif, dimensioni } from '../../mappa/token.js';
@@ -358,12 +358,15 @@ export function renderMappa(radice, ctx) {
       c.save();
       c.globalAlpha = g.opacita;
       c.strokeStyle = g.colore;
-      c.lineWidth = 1;
+      // 13/10: spessore delle linee dalla scena (griglia.spessore), uguale per il master e per i giocatori
+      const sp = spessoreGriglia(g, ctx.dati);
+      c.lineWidth = sp;
+      const nit = scostoNitido(sp);
       c.beginPath();
       const ya = schermoDaMappa(st.cam, 0, linee.y0).y, yb = schermoDaMappa(st.cam, 0, linee.y1).y;
       const xa = schermoDaMappa(st.cam, linee.x0, 0).x, xb = schermoDaMappa(st.cam, linee.x1, 0).x;
-      for (const x of linee.xs) { const sx = Math.round(schermoDaMappa(st.cam, x, 0).x) + 0.5; c.moveTo(sx, ya); c.lineTo(sx, yb); }
-      for (const y of linee.ys) { const sy = Math.round(schermoDaMappa(st.cam, 0, y).y) + 0.5; c.moveTo(xa, sy); c.lineTo(xb, sy); }
+      for (const x of linee.xs) { const sx = Math.round(schermoDaMappa(st.cam, x, 0).x) + nit; c.moveTo(sx, ya); c.lineTo(sx, yb); }
+      for (const y of linee.ys) { const sy = Math.round(schermoDaMappa(st.cam, 0, y).y) + nit; c.moveTo(xa, sy); c.lineTo(xb, sy); }
       c.stroke();
       c.restore();
     },
@@ -698,7 +701,7 @@ export function renderMappa(radice, ctx) {
   }
 
   // ── Pannello della griglia (§4) ──
-  const campo = (etichetta, input, nota = null) => h('label', { class: 'mappa-campo' }, h('span', {}, etichetta), input, nota ? h('small', { class: 'nota' }, nota) : null);
+  const campo = (etichetta, input, nota = null, extra = null) => h('label', { class: 'mappa-campo' }, h('span', {}, etichetta), input, nota ? h('small', { class: 'nota' }, nota) : null, extra);
   const G = ctx.dati.mappa.griglia;
   el.q = h('input', { type: 'number', min: G.q_px_min, max: G.q_px_max, step: '0.01', onchange: (e) => cambiaGriglia({ q_px: Number(e.target.value) }) });
   el.sx = h('input', { type: 'number', step: '0.5', onchange: (e) => cambiaGriglia({ scosto_x: Number(e.target.value) }) });
@@ -708,6 +711,14 @@ export function renderMappa(radice, ctx) {
   el.dimVuota = h('div', { class: 'mappa-campi-riga' }, campo('Colonne', el.colonne), campo('Righe', el.righe));
   el.colore = h('input', { type: 'color', oninput: (e) => cambiaGriglia({ colore: e.target.value }) });
   el.opacita = h('input', { type: 'range', min: 0, max: 1, step: '0.05', oninput: (e) => cambiaGriglia({ opacita: Number(e.target.value) }) });
+  // 13/10 (richiesta di Marcello): spessore delle linee, dai gradini di data/mappa.json → griglia.spessori
+  const SPESSORI = G.spessori ?? [{ id: 'sottile', nome: 'Sottile', px: 1 }];
+  el.spessore = h('input', {
+    type: 'range', min: 0, max: SPESSORI.length - 1, step: '1', list: 'mappa-spessori-griglia',
+    'aria-label': 'Spessore della griglia',
+    oninput: (e) => cambiaGriglia({ spessore: SPESSORI[Math.min(SPESSORI.length - 1, Math.max(0, Math.round(Number(e.target.value))))].px }),
+  });
+  el.spessoreNome = h('small', { class: 'nota mappa-spessore-nome' });
   el.quadretti = h('input', { type: 'number', min: 1, max: 50, step: '1', value: '1', onchange: (e) => { st.quadretti = Math.max(1, Math.round(Number(e.target.value) || 1)); e.target.value = st.quadretti; } });
   el.traccia = h('button', { type: 'button', class: 'btn', onclick: () => impostaStrumento(st.strumento === 'calibra' ? 'sposta' : 'calibra') }, 'Traccia un quadretto');
   el.blocca = h('button', { type: 'button', class: 'btn', onclick: () => bloccaGriglia() });
@@ -724,6 +735,7 @@ export function renderMappa(radice, ctx) {
     campo('Lato del quadretto (px dell’immagine)', el.q),
     h('div', { class: 'mappa-campi-riga' }, campo('Scostamento X', el.sx), campo('Scostamento Y', el.sy)),
     h('div', { class: 'mappa-campi-riga' }, campo('Colore', el.colore), campo('Opacità', el.opacita)),
+    campo('Spessore griglia', el.spessore, null, el.spessoreNome),
     el.info, el.notaBlocco, el.blocca);
 
   function aggiornaPannello() {
@@ -736,6 +748,11 @@ export function renderMappa(radice, ctx) {
     }
     el.colore.value = g.colore;
     el.opacita.value = String(g.opacita);
+    // lo spessore: il gradino più vicino al valore salvato (le scene di prima non ce l'hanno)
+    const px = spessoreGriglia(g, ctx.dati);
+    const i = Math.max(0, SPESSORI.findIndex((x) => x.px === px));
+    el.spessore.value = String(i);
+    el.spessoreNome.textContent = SPESSORI[i]?.nome ?? '';
     el.dimVuota.hidden = !!st.scena.mappa; // con l'immagine righe e colonne si calcolano
     el.traccia.disabled = fissa || !st.scena.mappa;
     el.traccia.title = st.scena.mappa ? 'Trascina sull’immagine da un angolo all’angolo opposto di un quadretto disegnato (Esc annulla)' : 'Serve un’immagine di fondo';
