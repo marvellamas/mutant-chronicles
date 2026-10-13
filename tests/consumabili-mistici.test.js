@@ -29,9 +29,12 @@ test('§27.3: le sei pergamene del campionario, con i numeri della tabella', () 
   assert.deepEqual(rigaCampionario('individuare-6'), ['II', 6, '1 AzP', 125, 250, 'MR']);
   assert.deepEqual(rigaCampionario('esorcizzare-corruzione-6'), ['II', 6, '10 minuti', 125, 250, 'MR']);
   assert.deepEqual(rigaCampionario('rigenerazione-9'), ['III', 9, '3 ore continuative', 225, 450, 'MR']);
-  // peso non dato dal manuale: vuoto, con la domanda (A.155)
-  assert.equal(cat.perRif.get(P('cura-ferite-3')).peso, null);
-  assert.match(cat.perRif.get(P('cura-ferite-3'))['TODO(Davide)'], /^A\.155/);
+  // A.155 (approvata il 10/10/2026): profilo fisico uguale per tutti i Gradi, per esemplare
+  for (const id of ['cura-ferite-3', 'individuare-6', 'rigenerazione-9']) {
+    const o = cat.perRif.get(P(id));
+    assert.deepEqual([o.peso, o.qualita, o.ps_int, o.pi], [0.1, 'Comune', 10, 1], id);
+    assert.equal(o['TODO(Davide)'], undefined, `${id}: la domanda è risolta`);
+  }
 });
 
 test('§27.2 creazione: l’esempio di Cura Ferite 3 (75 cr e 6 PM; Magistrale 50 cr e 5 PM)', () => {

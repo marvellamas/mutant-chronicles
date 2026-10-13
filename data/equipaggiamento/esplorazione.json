@@ -546,17 +546,17 @@
       "catalogo": "Commerciale",
       "famiglia": "Protezioni ambientali",
       "nomi_alternativi": [],
-      "note_manuale": "Cartuccia di ricambio per l’erogatore ricaricabile: 5 dosi. Cambiare la cartuccia richiede un minuto e due mani.",
+      "note_manuale": "Cartuccia di ricambio per l’erogatore ricaricabile: 5 dosi. Cambiare la cartuccia richiede un minuto e due mani. A.154: pesa 0,5 kg; per semplicità il peso resta 0,5 kg finché la cartuccia è nell’inventario, senza ricalcolarlo a ogni dose usata.",
       "paragrafo": "§3.5.1",
       "versione_manuale": "Equipaggiamento 0.6",
-      "peso": null,
+      "peso": 0.5,
       "reperibilita": "NC",
       "costo": 500,
       "applicazioni": 5,
       "nome_applicazioni": "dosi",
-      "TODO(Davide)": "A.154: nella tabella del §3.5.1 il peso della cartuccia di ricambio è «—»: è trascurabile (0 kg) o manca il dato? Intanto resta vuoto e non pesa sul carico.",
       "effetto_breve": "Ricambio da 5 dosi per l’erogatore di decontaminante.",
-      "proprieta": []
+      "proprieta": [],
+      "_nota_a154": "A.154 (risposta di Davide del 10/10/2026): la cartuccia di ricambio pesa 0,5 kg da piena; nella tabella del §3.5.1 il trattino del peso va sostituito con 0,5 kg. Per semplicità il peso resta 0,5 kg finché la cartuccia è nell’inventario, senza ricalcolarlo a ogni dose usata, e conta nel carico."
     },
     {
       "id": "estintore-personale",

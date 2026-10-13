@@ -19,13 +19,14 @@ test('§3.3.1 Navigatore inerziale: 0,3 kg, 600 cr, NC, Comune 10, 2 PI; NEC Ver
   assert.equal(r('esplorazione:navigatore-inerziale').versione_manuale, 'Equipaggiamento 0.6');
 });
 
-test('§3.5.1 Decontaminazione: dosi separate dai PI; cartuccia di ricambio senza peso (A.154)', () => {
+test('§3.5.1 Decontaminazione: dosi separate dai PI; cartuccia di ricambio da 0,5 kg (A.154)', () => {
   assert.deepEqual(numeri('esplorazione:decontaminante-personale'), [0.5, 200, 'NC', 'Comune', 10, 2]);
   assert.deepEqual(numeri('esplorazione:erogatore-decontaminante-ricaricabile'), [2.5, 800, 'NC', 'Comune', 10, 4]);
   assert.deepEqual([r('esplorazione:erogatore-decontaminante-ricaricabile').applicazioni, r('esplorazione:erogatore-decontaminante-ricaricabile').ricarica], [5, { applicazioni: 5, costo: 500 }]);
   const c = r('esplorazione:cartuccia-di-decontaminante');
-  assert.deepEqual([c.peso, c.costo, c.applicazioni], [null, 500, 5]);
-  assert.match(c['TODO(Davide)'], /^A\.154/);
+  // A.154 (approvata il 10/10/2026): 0,5 kg da piena, fisso finché la cartuccia è nell'inventario
+  assert.deepEqual([c.peso, c.costo, c.applicazioni], [0.5, 500, 5]);
+  assert.equal(c['TODO(Davide)'], undefined, 'la domanda è risolta');
 });
 
 test('§3.7 Emergenze: estintori, nastro, toppe, schiuma con dosi e ricambi', () => {

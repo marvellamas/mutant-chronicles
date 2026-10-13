@@ -2219,7 +2219,7 @@
       "catalogo": "Commerciale",
       "famiglia": "Consumabili",
       "nomi_alternativi": [],
-      "note_manuale": "Artefatto Mistico consumabile, monouso, con SnT 0 e Cariche Esclusive sigillate Verdi. I PM sono già inclusi nell’oggetto: l’utilizzatore non deve fornirli, conoscere l’Incantesimo o possedere Ritualista. L’attivazione è automatica, salvo eccezioni espresse; restano eventuali Prove per colpire, Difese e Salvezze. I costi di creazione presuppongono il progetto già disponibile. A contatto, restituisce 1d4+2 PV a una creatura vivente consenziente, oppure incosciente soccorsa. Ogni 2 punti di guarigione possono invece ridurre il Sanguinamento di 1; i punti rimanenti restituiscono PV. Effetto istantaneo. Non cura Ferite o Menomazioni e conserva gli altri limiti di Cura Ferite. Riferimento: scheda 21.1.",
+      "note_manuale": "Artefatto Mistico consumabile, monouso, con SnT 0 e Cariche Esclusive sigillate Verdi. I PM sono già inclusi nell’oggetto: l’utilizzatore non deve fornirli, conoscere l’Incantesimo o possedere Ritualista. L’attivazione è automatica, salvo eccezioni espresse; restano eventuali Prove per colpire, Difese e Salvezze. I costi di creazione presuppongono il progetto già disponibile. A contatto, restituisce 1d4+2 PV a una creatura vivente consenziente, oppure incosciente soccorsa. Ogni 2 punti di guarigione possono invece ridurre il Sanguinamento di 1; i punti rimanenti restituiscono PV. Effetto istantaneo. Non cura Ferite o Menomazioni e conserva gli altri limiti di Cura Ferite. Riferimento: scheda 21.1. A.155: peso 0,1 kg, Qualità Comune, PS Integrità 10, PI massimi 1, uguali per tutti i Gradi; peso e Integrità valgono per ciascun esemplare. A 0 PI la pergamena è inutilizzabile e non si può attivare; la sua distruzione non libera l’incantesimo.",
       "paragrafo": "Magia §27.3.1",
       "versione_manuale": "Magia (Google Doc dell’08/10/2026, 21:33 UTC)",
       "costo": 150,
@@ -2244,9 +2244,11 @@
       },
       "proprieta": [],
       "reperibilita": "MR",
-      "peso": null,
+      "peso": 0.1,
       "creazione_cr": 75,
-      "TODO(Davide)": "A.155: il §27.3 non dà peso, Qualità, PS Integrità e PI delle pergamene. Intanto il peso resta vuoto (non pesa sul carico) e la pergamena non ha PI."
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1
     },
     {
       "id": "pergamena-di-arma-mistica-3",
@@ -2255,7 +2257,7 @@
       "catalogo": "Commerciale",
       "famiglia": "Consumabili",
       "nomi_alternativi": [],
-      "note_manuale": "Artefatto Mistico consumabile, monouso, con SnT 0 e Cariche Esclusive sigillate Verdi. I PM sono già inclusi nell’oggetto: l’utilizzatore non deve fornirli, conoscere l’Incantesimo o possedere Ritualista. L’attivazione è automatica, salvo eccezioni espresse; restano eventuali Prove per colpire, Difese e Salvezze. I costi di creazione presuppongono il progetto già disponibile. Incanta un’arma toccata per 5 RND, senza Concentrazione. I danni diventano Magici; conferisce +1 al VA degli attacchi e +1 al danno. Il bonus al VA non si applica alla Parata. Restano i limiti di cumulo della scheda; ripetere l’effetto non somma i bonus. Riferimento: scheda 22.1.",
+      "note_manuale": "Artefatto Mistico consumabile, monouso, con SnT 0 e Cariche Esclusive sigillate Verdi. I PM sono già inclusi nell’oggetto: l’utilizzatore non deve fornirli, conoscere l’Incantesimo o possedere Ritualista. L’attivazione è automatica, salvo eccezioni espresse; restano eventuali Prove per colpire, Difese e Salvezze. I costi di creazione presuppongono il progetto già disponibile. Incanta un’arma toccata per 5 RND, senza Concentrazione. I danni diventano Magici; conferisce +1 al VA degli attacchi e +1 al danno. Il bonus al VA non si applica alla Parata. Restano i limiti di cumulo della scheda; ripetere l’effetto non somma i bonus. Riferimento: scheda 22.1. A.155: peso 0,1 kg, Qualità Comune, PS Integrità 10, PI massimi 1, uguali per tutti i Gradi; peso e Integrità valgono per ciascun esemplare. A 0 PI la pergamena è inutilizzabile e non si può attivare; la sua distruzione non libera l’incantesimo.",
       "paragrafo": "Magia §27.3.2",
       "versione_manuale": "Magia (Google Doc dell’08/10/2026, 21:33 UTC)",
       "costo": 150,
@@ -2280,9 +2282,11 @@
       },
       "proprieta": [],
       "reperibilita": "MR",
-      "peso": null,
+      "peso": 0.1,
       "creazione_cr": 75,
-      "TODO(Davide)": "A.155: il §27.3 non dà peso, Qualità, PS Integrità e PI delle pergamene. Intanto il peso resta vuoto (non pesa sul carico) e la pergamena non ha PI."
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1
     },
     {
       "id": "pergamena-di-armatura-mistica-3",
@@ -2291,7 +2295,7 @@
       "catalogo": "Commerciale",
       "famiglia": "Consumabili",
       "nomi_alternativi": [],
-      "note_manuale": "Artefatto Mistico consumabile, monouso, con SnT 0 e Cariche Esclusive sigillate Verdi. I PM sono già inclusi nell’oggetto: l’utilizzatore non deve fornirli, conoscere l’Incantesimo o possedere Ritualista. L’attivazione è automatica, salvo eccezioni espresse; restano eventuali Prove per colpire, Difese e Salvezze. I costi di creazione presuppongono il progetto già disponibile. Incanta un’armatura fisica indossata e toccata per 5 RND, senza Concentrazione. Converte la sua AR in Magica e aggiunge +1 AR. Non ripara l’armatura. Sono esclusi scudi, pelle naturale e protezioni generate da Incantesimi; restano i normali limiti di cumulo. Riferimento: scheda 22.2.",
+      "note_manuale": "Artefatto Mistico consumabile, monouso, con SnT 0 e Cariche Esclusive sigillate Verdi. I PM sono già inclusi nell’oggetto: l’utilizzatore non deve fornirli, conoscere l’Incantesimo o possedere Ritualista. L’attivazione è automatica, salvo eccezioni espresse; restano eventuali Prove per colpire, Difese e Salvezze. I costi di creazione presuppongono il progetto già disponibile. Incanta un’armatura fisica indossata e toccata per 5 RND, senza Concentrazione. Converte la sua AR in Magica e aggiunge +1 AR. Non ripara l’armatura. Sono esclusi scudi, pelle naturale e protezioni generate da Incantesimi; restano i normali limiti di cumulo. Riferimento: scheda 22.2. A.155: peso 0,1 kg, Qualità Comune, PS Integrità 10, PI massimi 1, uguali per tutti i Gradi; peso e Integrità valgono per ciascun esemplare. A 0 PI la pergamena è inutilizzabile e non si può attivare; la sua distruzione non libera l’incantesimo.",
       "paragrafo": "Magia §27.3.3",
       "versione_manuale": "Magia (Google Doc dell’08/10/2026, 21:33 UTC)",
       "costo": 150,
@@ -2316,9 +2320,11 @@
       },
       "proprieta": [],
       "reperibilita": "MR",
-      "peso": null,
+      "peso": 0.1,
       "creazione_cr": 75,
-      "TODO(Davide)": "A.155: il §27.3 non dà peso, Qualità, PS Integrità e PI delle pergamene. Intanto il peso resta vuoto (non pesa sul carico) e la pergamena non ha PI."
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1
     },
     {
       "id": "pergamena-di-individuare-6",
@@ -2327,7 +2333,7 @@
       "catalogo": "Commerciale",
       "famiglia": "Consumabili",
       "nomi_alternativi": [],
-      "note_manuale": "Artefatto Mistico consumabile, monouso, con SnT 0 e Cariche Esclusive sigillate Verdi. I PM sono già inclusi nell’oggetto: l’utilizzatore non deve fornirli, conoscere l’Incantesimo o possedere Ritualista. L’attivazione è automatica, salvo eccezioni espresse; restano eventuali Prove per colpire, Difese e Salvezze. I costi di creazione presuppongono il progetto già disponibile. Potere di Rilevazione 6. Permette la percezione delle emanazioni entro 10 Q (15 m), oppure l’analisi di un’area totale di 1 Q entro la stessa gittata. Una sola modalità alla volta. Si sceglie Concentrazione fino a 10 minuti oppure durata fissa di 5 RND. Percezione, analisi, cambi di modalità e occultamenti seguono la scheda. Riconosce l’impronta dell’Oscura Simmetria, ma non certifica la Corruzione personale di una creatura. Riferimento: scheda 23.9.",
+      "note_manuale": "Artefatto Mistico consumabile, monouso, con SnT 0 e Cariche Esclusive sigillate Verdi. I PM sono già inclusi nell’oggetto: l’utilizzatore non deve fornirli, conoscere l’Incantesimo o possedere Ritualista. L’attivazione è automatica, salvo eccezioni espresse; restano eventuali Prove per colpire, Difese e Salvezze. I costi di creazione presuppongono il progetto già disponibile. Potere di Rilevazione 6. Permette la percezione delle emanazioni entro 10 Q (15 m), oppure l’analisi di un’area totale di 1 Q entro la stessa gittata. Una sola modalità alla volta. Si sceglie Concentrazione fino a 10 minuti oppure durata fissa di 5 RND. Percezione, analisi, cambi di modalità e occultamenti seguono la scheda. Riconosce l’impronta dell’Oscura Simmetria, ma non certifica la Corruzione personale di una creatura. Riferimento: scheda 23.9. A.155: peso 0,1 kg, Qualità Comune, PS Integrità 10, PI massimi 1, uguali per tutti i Gradi; peso e Integrità valgono per ciascun esemplare. A 0 PI la pergamena è inutilizzabile e non si può attivare; la sua distruzione non libera l’incantesimo.",
       "paragrafo": "Magia §27.3.4",
       "versione_manuale": "Magia (Google Doc dell’08/10/2026, 21:33 UTC)",
       "costo": 250,
@@ -2352,9 +2358,11 @@
       },
       "proprieta": [],
       "reperibilita": "MR",
-      "peso": null,
+      "peso": 0.1,
       "creazione_cr": 125,
-      "TODO(Davide)": "A.155: il §27.3 non dà peso, Qualità, PS Integrità e PI delle pergamene. Intanto il peso resta vuoto (non pesa sul carico) e la pergamena non ha PI."
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1
     },
     {
       "id": "pergamena-di-esorcizzare-corruzione-6",
@@ -2363,7 +2371,7 @@
       "catalogo": "Commerciale",
       "famiglia": "Consumabili",
       "nomi_alternativi": [],
-      "note_manuale": "Artefatto Mistico consumabile, monouso, con SnT 0 e Cariche Esclusive sigillate Verdi. I PM sono già inclusi nell’oggetto: l’utilizzatore non deve fornirli, conoscere l’Incantesimo o possedere Ritualista. L’attivazione è automatica, salvo eccezioni espresse; restano eventuali Prove per colpire, Difese e Salvezze. I costi di creazione presuppongono il progetto già disponibile. Fuori dal combattimento, richiede Concentrazione e contatto per tutta l’attivazione con una creatura vivente consenziente, oppure incosciente soccorsa. Riduce di uno Stato la Corruzione; lo Stato iniziale non può superare Corrotto. Un solo trattamento efficace ogni 24 ore per beneficiario, considerando insieme pergamene, altri Artefatti e lanci diretti. Non cura Oscuro, non rimuove automaticamente mutazioni permanenti e non espelle possessioni. Riferimento: scheda 21.5.",
+      "note_manuale": "Artefatto Mistico consumabile, monouso, con SnT 0 e Cariche Esclusive sigillate Verdi. I PM sono già inclusi nell’oggetto: l’utilizzatore non deve fornirli, conoscere l’Incantesimo o possedere Ritualista. L’attivazione è automatica, salvo eccezioni espresse; restano eventuali Prove per colpire, Difese e Salvezze. I costi di creazione presuppongono il progetto già disponibile. Fuori dal combattimento, richiede Concentrazione e contatto per tutta l’attivazione con una creatura vivente consenziente, oppure incosciente soccorsa. Riduce di uno Stato la Corruzione; lo Stato iniziale non può superare Corrotto. Un solo trattamento efficace ogni 24 ore per beneficiario, considerando insieme pergamene, altri Artefatti e lanci diretti. Non cura Oscuro, non rimuove automaticamente mutazioni permanenti e non espelle possessioni. Riferimento: scheda 21.5. A.155: peso 0,1 kg, Qualità Comune, PS Integrità 10, PI massimi 1, uguali per tutti i Gradi; peso e Integrità valgono per ciascun esemplare. A 0 PI la pergamena è inutilizzabile e non si può attivare; la sua distruzione non libera l’incantesimo.",
       "paragrafo": "Magia §27.3.5",
       "versione_manuale": "Magia (Google Doc dell’08/10/2026, 21:33 UTC)",
       "costo": 250,
@@ -2389,9 +2397,11 @@
       },
       "proprieta": [],
       "reperibilita": "MR",
-      "peso": null,
+      "peso": 0.1,
       "creazione_cr": 125,
-      "TODO(Davide)": "A.155: il §27.3 non dà peso, Qualità, PS Integrità e PI delle pergamene. Intanto il peso resta vuoto (non pesa sul carico) e la pergamena non ha PI."
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1
     },
     {
       "id": "pergamena-di-rigenerazione-9",
@@ -2400,7 +2410,7 @@
       "catalogo": "Commerciale",
       "famiglia": "Consumabili",
       "nomi_alternativi": [],
-      "note_manuale": "Artefatto Mistico consumabile, monouso, con SnT 0 e Cariche Esclusive sigillate Verdi. I PM sono già inclusi nell’oggetto: l’utilizzatore non deve fornirli, conoscere l’Incantesimo o possedere Ritualista. L’attivazione è automatica, salvo eccezioni espresse; restano eventuali Prove per colpire, Difese e Salvezze. I costi di creazione presuppongono il progetto già disponibile. Mantenendo contatto e condizioni della versione per tre ore, avvia la riparazione di una Menomazione permanente in un beneficiario vivente consenziente, oppure incosciente soccorso, purché la parte anatomica sia ancora presente. Il processo si completa nei cinque giorni successivi, senza ulteriore contatto o Concentrazione. Una sola Rigenerazione attiva per beneficiario. Non ricrea un arto mancante a questo livello, non resuscita e non recupera automaticamente Umanità. Le nuove lesioni non entrano nel processo già avviato. Riferimento: scheda 21.10; 25.3–25.4.",
+      "note_manuale": "Artefatto Mistico consumabile, monouso, con SnT 0 e Cariche Esclusive sigillate Verdi. I PM sono già inclusi nell’oggetto: l’utilizzatore non deve fornirli, conoscere l’Incantesimo o possedere Ritualista. L’attivazione è automatica, salvo eccezioni espresse; restano eventuali Prove per colpire, Difese e Salvezze. I costi di creazione presuppongono il progetto già disponibile. Mantenendo contatto e condizioni della versione per tre ore, avvia la riparazione di una Menomazione permanente in un beneficiario vivente consenziente, oppure incosciente soccorso, purché la parte anatomica sia ancora presente. Il processo si completa nei cinque giorni successivi, senza ulteriore contatto o Concentrazione. Una sola Rigenerazione attiva per beneficiario. Non ricrea un arto mancante a questo livello, non resuscita e non recupera automaticamente Umanità. Le nuove lesioni non entrano nel processo già avviato. Riferimento: scheda 21.10; 25.3–25.4. A.155: peso 0,1 kg, Qualità Comune, PS Integrità 10, PI massimi 1, uguali per tutti i Gradi; peso e Integrità valgono per ciascun esemplare. A 0 PI la pergamena è inutilizzabile e non si può attivare; la sua distruzione non libera l’incantesimo.",
       "paragrafo": "Magia §27.3.6",
       "versione_manuale": "Magia (Google Doc dell’08/10/2026, 21:33 UTC)",
       "costo": 450,
@@ -2425,9 +2435,11 @@
       },
       "proprieta": [],
       "reperibilita": "MR",
-      "peso": null,
+      "peso": 0.1,
       "creazione_cr": 225,
-      "TODO(Davide)": "A.155: il §27.3 non dà peso, Qualità, PS Integrità e PI delle pergamene. Intanto il peso resta vuoto (non pesa sul carico) e la pergamena non ha PI."
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1
     }
   ],
   "fuori_scala": {
@@ -2573,7 +2585,12 @@
         "id": "pergamena",
         "nome": "Pergamena standard",
         "costo": 25,
-        "complessita": "Semplice"
+        "complessita": "Semplice",
+        "peso": 0.1,
+        "qualita": "Comune",
+        "ps_int": 10,
+        "pi": 1,
+        "nota": "A.155 (risposta di Davide del 10/10/2026): peso 0,1 kg, Qualità Comune, PS Integrità 10, PI massimi 1, uguali per tutti i Gradi; peso e Integrità valgono per ciascun esemplare. A 0 PI la pergamena è inutilizzabile e non può essere attivata, e la sua distruzione non libera l’incantesimo. Lo stesso profilo lo prendono le pergamene create con «Crea consumabile»."
       },
       {
         "id": "altro",

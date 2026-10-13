@@ -44,7 +44,7 @@ function pulsantiUsa(ctx, x, motivo) {
 /** Scheda completa (tab Artefatti). */
 export function schedaConsumabile(ctx, x) {
   const c = x.consumabile;
-  const motivo = motivoNonUsabile(x, { inScontro: !!ctx.roundScontro });
+  const motivo = motivoNonUsabile(x, { inScontro: !!ctx.roundScontro, rotti: new Set(ctx.tab?.scheda?.equipaggiamento?.rotti ?? []) });
   const costi = costiCreazione({ grado: c.grado, pmSigillati: c.pm_sigillati }, ctx.dati);
   return h('article', { class: `arma-tab artefatto-scheda consumabile-scheda${x.deposito ? ' in-deposito' : ''}` },
     h('div', { class: 'arma-testa' },
@@ -59,7 +59,7 @@ export function schedaConsumabile(ctx, x) {
 
 /** Richiamo compatto (riga dell'Inventario, tab Combattimento): quantità e «Usa». */
 export function rigaConsumabile(ctx, x) {
-  const motivo = motivoNonUsabile(x, { inScontro: !!ctx.roundScontro });
+  const motivo = motivoNonUsabile(x, { inScontro: !!ctx.roundScontro, rotti: new Set(ctx.tab?.scheda?.equipaggiamento?.rotti ?? []) });
   return h('div', { class: 'pi-voce riga-consumabile' },
     h('span', {}, 'Esemplari ', h('strong', {}, String(x.quantita)), ' '),
     pulsantiUsa(ctx, x, motivo));

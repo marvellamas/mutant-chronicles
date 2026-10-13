@@ -79,9 +79,12 @@ export function consumabiliMistici(voci, dati) {
  * Perché non si può usare ora, o null: non è un consumabile, è nel deposito, oppure (in un Round, cioè in uno
  * scontro) l'attivazione non è in AzP.
  */
-export function motivoNonUsabile(x, { inScontro = false } = {}) {
+export function motivoNonUsabile(x, { inScontro = false, rotti = null } = {}) {
   if (!x) return 'nessun consumabile';
   if (x.deposito) return 'è nel deposito comune: va preso con sé';
+  // A.155 (10/10/2026): a 0 PI la pergamena è inutilizzabile e non può essere attivata; la sua distruzione non
+  // libera l'incantesimo. Come gli altri blocchi per regola è un avviso con «Procedi comunque» (N2).
+  if (rotti && rotti.has(String(x.uid).split(':')[0])) return 'è a 0 PI (Rotta): non si può attivare finché non viene riparata (A.155)';
   if (inScontro && !x.attivazione.inRound) return x.attivazione.motivo;
   return null;
 }
@@ -253,7 +256,10 @@ export function pianoCreazione(scelta, { scheda = null, crediti = Infinity, pmAt
   if (spesa > crediti) irregolari.push(`servono ${spesa} cr, ne hai ${crediti}`);
   if (pm > pmAttuali) irregolari.push(`servono ${pm} PM personali, ne hai ${pmAttuali}`);
   const nomeSupporto = S.id === 'pergamena' ? 'Pergamena' : (scelta.supporto?.nome?.trim() || 'Consumabile');
-  const voce = creato ? { rif: null, personalizzato: { nome: `${nomeSupporto} di ${inc.nome} ${livello}`, tipo: 'artefatto', consumabile: { incantesimo: inc.nome, livello, supporto: S.id === 'pergamena' ? 'pergamena' : nomeSupporto } }, stato: null, quantita: 1, note: '' } : null;
+  // A.155 (10/10/2026): la pergamena creata ha lo stesso profilo fisico di quelle del campionario (peso, Qualità,
+  // PS Integrità e PI del supporto, se i dati lo danno); un altro supporto resta senza, come prima
+  const fisico = Object.fromEntries(['peso', 'qualita', 'ps_int', 'pi'].filter((k) => S[k] !== undefined && S[k] !== null).map((k) => [k, S[k]]));
+  const voce = creato ? { rif: null, personalizzato: { nome: `${nomeSupporto} di ${inc.nome} ${livello}`, tipo: 'artefatto', ...fisico, consumabile: { incantesimo: inc.nome, livello, supporto: S.id === 'pergamena' ? 'pergamena' : nomeSupporto } }, stato: null, quantita: 1, note: '' } : null;
   return { grado, incantesimo: inc.nome, livello, pmSigillati, fasi, ore, crediti: spesa, pm, pmCanali, creato, voce, errori, avvisi, irregolari };
 }
 
