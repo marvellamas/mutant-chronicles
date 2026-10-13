@@ -36,6 +36,8 @@ import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 import { pannelloAttacco, presetInAttesa } from './attacco.js';
 // Galleria (N1, 13/10/2026): le immagini già mostrate dal master in questa campagna
 import { apriGalleriaGiocatore } from './galleria-giocatori.js';
+// «Cerca nella scheda» (13/10/2026): l'icona 🔍 della testata
+import { cercaNellaScheda } from './cerca.js';
 import { pugniPotenziati, profiloSenzArmi, profiloOndaInteriore, senzArmiDisponibile, SENZ_ARMI, ONDA, talentiAttacco, valoriDisciplina } from '../attacco.js';
 import { pannelloLancio } from './lancio.js';
 import { pulsanteMuovi } from '../round-scontro.js';
@@ -161,6 +163,8 @@ export function renderTab(ctx) {
         // N2: punti in eccesso (A.108) e riassegnazioni in sospeso (A.107) sono un avviso con «Procedi comunque»
         ? h('button', { type: 'button', class: `btn primario${ctx.avvisoSalita ? ' con-avviso' : ''}`, disabled: !!ctx.motivoNoSalita, title: ctx.motivoNoSalita ?? ctx.avvisoSalita, onclick: azioni.sali }, `Sali al livello ${id.livello + 1}`)
         : null,
+      // 13/10: «Cerca nella scheda» (🔍): un campo e l'elenco di tutto ciò che contiene quella parola
+      cercaNellaScheda(ctx),
       menuAzioni(ctx),
       menuImpostazioni(ctx),
       // N1: ultimo pulsante della barra, solo con il server (le immagini stanno sul PC del master)

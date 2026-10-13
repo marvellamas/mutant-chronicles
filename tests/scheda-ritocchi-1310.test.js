@@ -3,7 +3,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { contesto, resa, clic, TAB, ESEMPI } from './scheda-aiuti.js';
+import { contesto, resa, clic, TAB, ESEMPI, dati } from './scheda-aiuti.js';
 
 const TORVALD = ESEMPI.find((f) => f.startsWith('Torvald'));
 
@@ -101,4 +101,71 @@ test('chi non ha Artefatti con PM non vede righe in più', () => {
     .find((c) => !(c.tab.scheda.equipaggiamento?.contenitori ?? []).length);
   assert.ok(senza);
   assert.equal(resa(senza).classe('cristalli-compatti').length, 0);
+});
+
+// ---------------------------------------------------------------------------
+// punto 5: «Cerca nella scheda»
+
+test('la ricerca trova la Prova Salvezza Tempra, con qualunque scrittura', async () => {
+  const { vociScheda, cercaVoci, testoVoce } = await import('../src/cerca-scheda.js');
+  const ctx = contesto(TORVALD, { attiva: 'identita' });
+  const voci = vociScheda(ctx.tab.scheda, ctx.sessione, dati);
+  for (const q of ['tempra', 'temp', 'TEMPRA', 'Tèmpra']) {
+    const r = cercaVoci(voci, q);
+    const ps = r.find((x) => x.gruppo === 'Prova Salvezza' && x.nome === 'Tempra');
+    assert.ok(ps, `«${q}» deve trovare la Prova Salvezza`);
+    assert.match(testoVoce(ps), /^Prova Salvezza Tempra — VA \d+$/);
+    assert.equal(ps.tab, 'identita', 'porta alla tab giusta');
+    assert.ok(Number.isFinite(ps.tiro.va), 'si può tirare da lì (prompt 78)');
+    assert.equal(r.indexOf(ps), 0, 'chi comincia con la parola cercata viene prima');
+  }
+  assert.deepEqual(cercaVoci(voci, 't'), [], 'con una lettera sola non si cerca');
+  assert.deepEqual(cercaVoci(voci, 'zzzz'), []);
+});
+
+test('la ricerca copre Abilità, Talenti, oggetti, Stati e il resto della scheda', async () => {
+  const { vociScheda } = await import('../src/cerca-scheda.js');
+  const ctx = contesto(TORVALD, { attiva: 'identita', cambia: (s) => { s.statiAttivi = ['a-terra']; s.note = 'appunti del giocatore'; } });
+  const voci = vociScheda(ctx.tab.scheda, ctx.sessione, dati);
+  const gruppi = new Set(voci.map((v) => v.gruppo));
+  for (const g of ['Caratteristica', 'Prova Salvezza', 'Abilità', 'Talento', 'Arma', 'Protezione', 'Oggetto', 'Valore', 'Stato attivo', 'Note']) {
+    assert.ok(gruppi.has(g), `manca il gruppo ${g}`);
+  }
+  // ogni voce dice dove andare e che cosa evidenziare
+  for (const v of voci) {
+    assert.ok(TAB.includes(v.tab), `${v.nome}: tab valida (${v.tab})`);
+    assert.ok(v.cerca, `${v.nome}: testo da evidenziare`);
+  }
+});
+
+test('il campo si apre dall’icona 🔍 della testata e si chiude con ✕', () => {
+  const ctx = contesto(TORVALD, { attiva: 'identita' });
+  const chiuso = resa(ctx);
+  const icona = chiuso.classe('btn-cerca')[0];
+  assert.ok(icona, 'l’icona c’è nella testata');
+  assert.equal(chiuso.classe('campo-cerca').length, 0, 'il campo si apre solo al tocco');
+  clic(icona);
+  const aperto = resa(ctx);
+  assert.equal(aperto.classe('campo-cerca').length, 1);
+  // si scrive «tempra» e compare l'elenco, con il tocco che porta alla tab
+  ctx.ui.cerca.testo = 'tempra';
+  const conEsiti = resa(ctx);
+  const esiti = conEsiti.classe('esiti-cerca')[0];
+  assert.ok(esiti, 'l’elenco dei risultati');
+  assert.match(esiti.textContent, /Prova Salvezza/);
+  assert.match(esiti.textContent, /VA \d+/);
+  const primo = esiti.tutti().find((n) => n.className === 'risultato-cerca');
+  clic(primo);
+  assert.ok(ctx.chiamate.some((c) => c[0] === 'vaiTab' || c[0] === 'ridisegna'), 'porta alla tab giusta');
+  assert.equal(ctx.ui.cerca.aperta, false, 'e la ricerca si chiude');
+});
+
+test('fuori dalla scheda la ricerca non cambia nessun valore calcolato', () => {
+  const a = contesto(TORVALD, { attiva: 'combattimento' });
+  const prima = JSON.stringify(a.tab.scheda);
+  const r = resa(a);
+  clic(r.classe('btn-cerca')[0]);
+  a.ui.cerca.testo = 'tempra';
+  resa(a);
+  assert.equal(JSON.stringify(a.tab.scheda), prima);
 });

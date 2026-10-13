@@ -2720,3 +2720,17 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .cristalli-compatti .nota { font-size: 0.78rem; margin: 0 0 0.2rem; }
 .cristalli-compatti .elenco-cristalli { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.3rem; }
 .cristalli-compatti .cristallo-nome { font-size: 0.85rem; }
+
+/* «Cerca nella scheda» (13/10): l'icona 🔍 della testata, il campo e i risultati */
+.cerca-scheda { position: relative; display: flex; flex-direction: column; gap: 0.3rem; }
+.riga-cerca { display: flex; align-items: center; gap: 0.3rem; }
+.campo-cerca { font: inherit; min-width: 10rem; max-width: 16rem; padding: 0.4rem 0.6rem; border: 1px solid var(--bordo); border-radius: var(--raggio); background: var(--superficie); color: var(--testo); }
+.btn-cerca.attiva { border-color: var(--accento); }
+.esiti-cerca { position: absolute; top: 100%; right: 0; z-index: var(--z-menu); list-style: none; margin: 0.25rem 0 0; padding: 0.3rem; min-width: min(24rem, 90vw); max-height: 60vh; overflow-y: auto; background: var(--superficie); border: 1px solid var(--bordo); border-radius: var(--raggio); box-shadow: 0 4px 16px rgb(0 0 0 / 0.25); }
+.esiti-cerca li { display: flex; align-items: center; gap: 0.3rem; }
+.risultato-cerca { flex: 1; text-align: left; font: inherit; background: none; border: 0; color: inherit; padding: 0.3rem 0.4rem; border-radius: var(--raggio); cursor: pointer; }
+.risultato-cerca:hover, .risultato-cerca:focus-visible { background: var(--accento-tenue); }
+.valore-cerca { color: var(--tenue); }
+.esito-cerca { position: absolute; top: 100%; right: 0; z-index: var(--z-menu); margin: 0.25rem 0 0; padding: 0.4rem 0.6rem; max-width: min(24rem, 90vw); background: var(--superficie); border: 1px solid var(--bordo); border-radius: var(--raggio); }
+/* il riquadro raggiunto dalla ricerca lampeggia un attimo */
+.evidenziato { outline: 3px solid var(--accento); outline-offset: 2px; border-radius: var(--raggio); }
