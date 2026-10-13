@@ -2159,8 +2159,8 @@
       "famiglia": "Artefatti",
       "nomi_alternativi": [],
       "note_manuale": "I Guanti da Combattimento Mistico sono una coppia di guanti e costituiscono un unico Artefatto Mistico da indossare sulle mani. Conferiscono +1 VA alle Prove per colpire con i pugni e alle Prove per colpire in corpo a corpo richieste dagli Incantesimi. Il beneficio passivo funziona anche senza sintonizzazione. Riserva. Cariche Verdi da 10 PM, utilizzabili soltanto per alimentare i Guanti. Spendendo 3 PM dalla riserva interna e 1 AzP, per 5 RND i danni dei pugni diventano Magici e ottengono +1 al danno. L’effetto non potenzia il danno degli Incantesimi e non si cumula con ulteriori attivazioni della stessa proprietà; una nuova attivazione rinnova la durata. Prezzo e profilo fisico sono parametri di catalogo da verificare in playtest.",
-      "paragrafo": "Equipaggiamento §10.6; Armamenti §7.24; Magia §26.6.2",
-      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "paragrafo": "Equipaggiamento §10.6; Armamenti §7.24; Magia §26.6.2; Giocatore §5.13",
+      "versione_manuale": "Armamenti 0.61 / Equipaggiamento 0.7 / Magia 1.4 / Giocatore 0.48 (12/10/2026)",
       "costo": 3000,
       "indossabile": true,
       "artefatto": {
@@ -2210,7 +2210,22 @@
       "qualita": "Non comune",
       "ps_int": 12,
       "pi": 4,
-      "peso": 0.5
+      "peso": 0.5,
+      "mani": 0,
+      "impugnato": false,
+      "profilo_pugni": {
+        "famiglia": "Armi da pugno",
+        "tipo_arma": "Guanti da combattimento",
+        "abilita": "Corpo a corpo",
+        "caratteristica": "FOR",
+        "portata_q": 1,
+        "manovre": [
+          "Stordire"
+        ],
+        "danno": "quello senz’armi del personaggio",
+        "fonte": "Armamenti §7.24; Equipaggiamento cap. 10; Magia sez. 26; Giocatore §5.13"
+      },
+      "_nota_mani": "Manuali del 12/10/2026: i Guanti sono un’Arma ravvicinata (famiglia Armi da pugno, tipo «Guanti da combattimento») e insieme un Artefatto Mistico: quantità, peso, Integrità, riserva e SnT si contano una volta sola. Sono indossati e occupano 0 mani: si può impugnare un’arma o un oggetto in ciascuna mano, oppure un’arma a due mani. Col pugno vale il profilo dei Guanti (Corpo a corpo su FOR, portata 1 Q, Manovra Stordire), con l’arma impugnata quello dell’arma; i pugni coi Guanti conservano il danno senz’armi e i benefici pertinenti (Arti Marziali, dado del Lottatore), e i poteri dei Guanti non passano alle armi impugnate. I Tirapugni ordinari restano impugnati e occupano una mano."
     },
     {
       "id": "pergamena-di-cura-ferite-3",
@@ -2769,5 +2784,6 @@
       "inventario": "Si registra la quantità posseduta e se ne sottrae una solo al completamento dell’attivazione.",
       "campionario": "I sei profili costituiscono un campionario di catalogo, non una nuova assegnazione automatica ai personaggi."
     }
-  }
+  },
+  "_nota_classificazione": "Manuali del 12/10/2026 (Armamenti cap. 7, Equipaggiamento cap. 10, Magia sez. 26): un oggetto può essere contemporaneamente un’Arma e un Artefatto Mistico o TecnoMistico — sono viste della stessa istanza, e quantità, peso, Integrità, riserve e SnT si conteggiano una sola volta. La modalità d’impiego distingue gli oggetti impugnati da quelli indossati e dice quante mani occupano (i Guanti da Combattimento Mistico: 0)."
 }
