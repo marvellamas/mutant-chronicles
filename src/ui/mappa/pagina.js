@@ -277,10 +277,15 @@ export function renderMappa(radice, ctx) {
   // 07/10: Maiusc premuto con un token scelto = Libero (l'area sparisce); selezione multipla con il contatore
   el.liberoInfo = h('div', { class: 'mappa-badge mappa-badge-libero', hidden: true, role: 'status' }, 'Libero (Maiusc): clic dove vuoi, senza conteggio');
   el.gruppoInfo = h('div', { class: 'mappa-badge mappa-badge-gruppo', hidden: true, role: 'status' });
-  // «Mappa semplice» (N3): l'interruttore sta sulla mappa, sempre visibile; acceso, nessuna automazione
-  el.semplice = h('button', { type: 'button', role: 'switch', class: 'mappa-badge mappa-badge-semplice interruttore-mappa', hidden: true, onclick: () => cambiaSemplice() });
+  // «Mappa semplice» (N3; 13/10: l'interruttore è passato nelle regolazioni della mappa): sulla mappa resta solo un
+  // piccolo segno quando è accesa, e un clic porta alle regolazioni
+  el.semplice = h('button', { type: 'button', class: 'mappa-badge mappa-badge-semplice segno-semplice', hidden: true, onclick: () => apriRegolazioniSemplice() });
   el.riquadro.append(el.liberoInfo, el.gruppoInfo, el.semplice);
   el.pannello = h('div', { class: 'mappa-pannello', 'aria-label': 'Collegamento, template, muri, nebbia, luci, vista giocatori e griglia' });
+  // 13/10 (richiesta di Marcello): «Mappa semplice» sta qui, con le altre regolazioni
+  el.sempliceInt = h('button', { type: 'button', role: 'switch', class: 'interruttore-mappa', onclick: () => cambiaSemplice() });
+  el.pSemplice = h('div', { class: 'mappa-sezione mappa-regolazione-semplice' }, el.sempliceInt,
+    h('p', { class: 'nota' }, 'Accesa: niente conteggio del movimento, Attacchi di Opportunità, Copertura dalla linea, Atletica, nebbia automatica e luci. Sposti chi vuoi dove vuoi.'));
   el.cartaCorpo = h('div', { class: 'mappa-carta-corpo' });
   el.carta = h('section', { class: 'mappa-carta', 'aria-label': 'Mini-scheda del token', hidden: true },
     h('div', { class: 'mappa-carta-testa' },
@@ -724,7 +729,7 @@ export function renderMappa(radice, ctx) {
   el.blocca = h('button', { type: 'button', class: 'btn', onclick: () => bloccaGriglia() });
   el.info = h('p', { class: 'nota mappa-info' });
   el.notaBlocco = h('p', { class: 'riquadro attenzione mappa-nota-blocco', hidden: true }, 'Griglia bloccata: dimensione e scostamento non cambiano, così nebbia, muri e token restano allineati. Colore e opacità sì.');
-  svuota(el.pannello, el.secScontro, el.pTemplate, el.pMuri, el.pNebbia, el.pLuci, el.pLivelli, el.pGiocatori, el.pGriglia);
+  svuota(el.pannello, el.secScontro, el.pSemplice, el.pTemplate, el.pMuri, el.pNebbia, el.pLuci, el.pLivelli, el.pGiocatori, el.pGriglia);
   svuota(el.pLivelli, h('summary', { class: 'mappa-sezione-testa' }, 'Cosa si vede'), el.vociLivelli = h('div', { class: 'mappa-sezione-corpo' }));
   svuota(el.pGriglia,
     h('summary', {}, h('strong', {}, 'Griglia')),
@@ -1258,7 +1263,6 @@ export function renderMappa(radice, ctx) {
       porte: { testo: 'Porte', titolo: 'Clic su un Q di muro: mette una porta; clic su una porta: la toglie', azione: () => { apriStrumento(el.pMuri); if (st.muri.strumento !== 'porta') strumentoMuri('porta'); } },
       luci: { testo: 'Luci', titolo: 'Luce della scena e zone a pennello', azione: () => apriStrumento(el.pLuci) },
       nebbia: { testo: 'Nebbia', titolo: 'Pennello e rettangolo, Rivela / Copri, tutto', azione: () => apriStrumento(el.pNebbia) },
-      mappa_semplice: { testo: `Mappa semplice: ${sn(mappaSemplice(sc))}`, titolo: 'Accesa: nessuna automazione (nebbia automatica, luci, conteggio del movimento, Atletica, Copertura); sposti chi vuoi dove vuoi', azione: () => cambiaSemplice() },
       nebbia_automatica: { testo: `La nebbia si apre con i PG: ${sn(nebbiaConPg(sc, ctx.dati))}`, titolo: mappaSemplice(sc) ? 'Con «Mappa semplice»: quello che i PG vedono da dove stanno, fermati da muri e porte chiuse' : 'La nebbia si apre da sola dove i PG vedono (con luci e sensi)', azione: () => cambiaVisualeAutomatica() },
       scene: { testo: 'Scene…', titolo: 'Nuova, apri, rinomina, duplica, archivia', azione: () => apriStrumento(document.getElementById('plancia-scene-mappa')) },
       collegamento: { testo: 'Collegamento e token', titolo: 'Scontro o bozza collegati, pezzi da mettere in mappa', azione: () => apriStrumento(el.secScontro) },
@@ -2701,13 +2705,25 @@ export function renderMappa(radice, ctx) {
   }
   /** L'interruttore sulla mappa: testo e stato dalla scena. */
   function aggiornaSemplice() {
-    if (!el.semplice) return;
     const v = mappaSemplice(st.scena);
-    el.semplice.hidden = !st.scena;
-    el.semplice.setAttribute('aria-checked', String(v));
-    el.semplice.classList.toggle('acceso', v);
-    el.semplice.title = v ? 'Mappa semplice: nessuna automazione, sposti chi vuoi dove vuoi. Clic per riaccendere conteggio del movimento, Copertura dalla linea, Atletica e nebbia automatica' : 'Clic per la Mappa semplice: spegne tutte le automazioni (conteggio del movimento, Attacchi di Opportunità, Copertura dalla linea, Atletica, nebbia automatica e luci)';
-    svuota(el.semplice, h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `Mappa semplice: ${v ? 'sì' : 'no'}`);
+    if (el.semplice) {
+      // 13/10: solo un segno di stato, e solo quando è accesa (nella barra resta spazio)
+      el.semplice.hidden = !st.scena || !v;
+      el.semplice.title = 'Mappa semplice accesa: nessuna automazione. Clic per aprire le regolazioni della mappa e spegnerla.';
+      svuota(el.semplice, h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), 'Semplice');
+    }
+    if (el.sempliceInt) {
+      el.sempliceInt.setAttribute('aria-checked', String(v));
+      el.sempliceInt.classList.toggle('acceso', v);
+      el.sempliceInt.title = v ? 'Accesa: sposti chi vuoi dove vuoi. Clic per riaccendere conteggio del movimento, Copertura dalla linea, Atletica e nebbia automatica' : 'Clic per la Mappa semplice: spegne tutte le automazioni (conteggio del movimento, Attacchi di Opportunità, Copertura dalla linea, Atletica, nebbia automatica e luci)';
+      svuota(el.sempliceInt, h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `Mappa semplice: ${v ? 'sì' : 'no'}`);
+    }
+  }
+
+  /** Il segno «Semplice» sulla mappa porta alle regolazioni, dove sta l'interruttore (13/10). */
+  function apriRegolazioniSemplice() {
+    vaiAlGruppo('mappa');
+    el.sempliceInt?.focus?.();
   }
   function cambiaVisualeAutomatica() {
     if (!st.scena) return;

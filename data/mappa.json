@@ -482,7 +482,6 @@
         "titolo": "Preparazione mappa",
         "icona": "🗺",
         "voci": [
-          "mappa_semplice",
           "immagine",
           "griglia",
           "muri",
