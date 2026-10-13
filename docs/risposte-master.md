@@ -1326,6 +1326,63 @@ Fonte: E&L dell'08/10/2026, 21:10 UTC, blocco «Aggiornamento cumulativo — ris
   accessori non sono stati definiti». Quali sono? Provvisorio per il lotto «armi»: nel catalogo con quei valori a `null` e il
   `TODO(Davide)`; carico e PI non li contano.
 
+## 13 ottobre 2026 — risposte A.151–A.157 e Guanti a 0 mani
+
+Fonte: sezione 7 del Doc «per-davide.md» (versione del 13/10/2026 06:29 UTC, scaricata in `docs/per-davide.md`),
+blocchi «Ripristino delle risposte A.151–A.152 già approvate il 9 ottobre 2026» e «Risposte approvate ai quesiti
+dell'app A.153–A.157 — 10 ottobre 2026»; manuali del 12/10 per i Guanti (`docs/diff-manuali-2026-10-12.md`).
+Tutte applicate il 13/10 e verificate con i test; i `TODO(Davide)` corrispondenti sono tolti.
+
+151. **Carichini: peso, Qualità, Integrità e Reperibilità** (A.151, approvata il 09/10/2026). Ricarica per Tamburo:
+    peso a vuoto 0,1 kg. Ricarica per Serbatoio: 0,2 kg. Entrambi Qualità Comune, PS Integrità 10, PI massimi 2,
+    Reperibilità Comune (CO); capacità, costi, preparazione e funzionamento restano quelli della A.135. Il peso delle
+    munizioni contenute si aggiunge al peso a vuoto e ogni cartuccia si conta una sola volta nell'inventario; a 0 PI
+    il carichino è inutilizzabile finché non viene riparato. **Applicata:** `data/equipaggiamento/accessori_armi.json`
+    (peso, qualita, ps_int, pi, reperibilita) e nota in `munizioni.json` → `ricarica.carichini`; nell'app le cartucce
+    restano contate nella loro voce e a 0 PI «Usa carichino» e «Prepara» avvisano con «Procedi comunque» (N2).
+152. **Colt Hammershot: munizioni e scheda** (A.152, approvata il 09/10/2026). Usa proiettili da pistola (§7.8,
+    §7.20.9): «revolver pesante» non cambia la famiglia delle munizioni e l'associazione del catalogo dell'app era
+    già corretta. Nella scheda la vecchia indicazione del tamburo completo in 1 AzP è sostituita dalla A.135.
+    **Applicata:** nota e testo in `armi_distanza_corporative.json`, con il test del catalogo. **Resta da fare a
+    Marcello:** nel file di Michele Giorgetti sostituire i 6 «proiettili pesanti» della Colt con 6 «proiettili da
+    pistola» (passi nel riepilogo della sessione del 13/10).
+153. **A Terra e Copertura a distanza** (A.153, approvata il 10/10/2026). Il −2 per attaccare a distanza un bersaglio
+    A Terra si somma alla penalità della Copertura, perché postura e ostacolo sono modificatori distinti: A Terra
+    senza Copertura −2, con Copertura Leggera −4, con Copertura Media −6. La Copertura dev'essere effettivamente
+    presente rispetto alla linea di tiro; se l'ostacolo nasconde del tutto il bersaglio valgono le regole che
+    impediscono il tiro diretto. **Conferma il comportamento dell'app:** decisione registrata in `regole.json` →
+    `attacco_distanza.a_terra` (`con_copertura: "somma"`), con i tre numeri in `tests/a153-a-terra.test.js`.
+154. **Peso della cartuccia del decontaminante** (A.154, approvata il 10/10/2026). La cartuccia di ricambio da 5 dosi
+    pesa 0,5 kg da piena; nel §3.5.1 il trattino va sostituito con 0,5 kg. Per semplicità il peso resta 0,5 kg finché
+    la cartuccia è nell'inventario, senza ricalcolarlo a ogni dose usata. **Applicata:** `esplorazione.json`, con il
+    peso nel carico.
+155. **Dati fisici delle pergamene** (A.155, approvata il 10/10/2026). Peso 0,1 kg, Qualità Comune, PS Integrità 10,
+    PI massimi 1, uguali per tutti i Gradi; peso e Integrità per ciascun esemplare. A 0 PI la pergamena è
+    inutilizzabile e non può essere attivata, e la sua distruzione non libera l'incantesimo. **Applicata:** le sei
+    pergamene del campionario in `artefatti.json` e il supporto «Pergamena standard», così anche le pergamene fatte
+    con «Crea consumabile» nascono con peso e PI; a 0 PI «Usa» avvisa con «Procedi comunque» (N2).
+156. **PM persi quando fallisce l'infusione** (A.156, approvata il 10/10/2026). Con un Fallimento o un Fallimento
+    Maldestro si perdono tutti i PM impegnati: i PM di lavoro (3 × Grado) più i PM da sigillare (costo della
+    versione); anche i reagenti si consumano e il Consumabile non viene creato. Esempio: Grado II con 4 PM da
+    sigillare, 6 + 4 = 10 PM, tutti persi. **Conferma il comportamento dell'app:** nota in `artefatti.json` →
+    `consumabili.creazione.infusione`, esempio in `tests/a156-a157.test.js`.
+157. **«Rituale: non consentito» e infusione** (A.157, approvata il 10/10/2026). L'indicazione vieta soltanto il
+    lancio dell'incantesimo come Rituale: l'infusione in un Consumabile o in un Artefatto è permessa, con requisiti e
+    limiti della creazione, e la procedura rituale di fabbricazione non rende disponibile una versione rituale.
+    Restano validi i divieti specifici della scheda. Vale anche per le sette schede del quesito (§§13.1, 13.7, 17.4,
+    18.4, 18.9, 21.8, 23.5). **Applicata:** in «Crea consumabile» l'avviso di dubbio è diventato una nota informativa
+    che spiega la risposta.
+158. **Guanti da Combattimento Mistico: 0 mani** (manuali del 12/10/2026: Armamenti 0.61 §7.24, Equipaggiamento 0.7
+    cap. 10, Magia 1.4 sez. 26, Giocatore 0.48 §5.13; non è una risposta a un quesito dell'app). Un oggetto può essere
+    contemporaneamente un'Arma e un Artefatto Mistico o TecnoMistico: sono viste della stessa istanza e quantità,
+    peso, Integrità, riserve e SnT si contano una sola volta. I Guanti sono Arma ravvicinata (famiglia Armi da pugno,
+    tipo «Guanti da combattimento», Corpo a corpo su FOR, portata 1 Q, Manovra Stordire) e insieme Artefatto Mistico,
+    **indossati e con 0 mani occupate**: si può impugnare un'arma per mano, o un'arma a due mani. Col pugno vale il
+    profilo dei Guanti, con l'arma impugnata quello dell'arma; i pugni conservano il danno senz'armi e i benefici
+    pertinenti (Arti Marziali, dado del Lottatore) e i poteri dei Guanti non passano alle armi impugnate. I Tirapugni
+    ordinari restano impugnati e occupano una mano. **Applicata** nel catalogo e verificata con i test. La CyberArma
+    (§7.25) resta fuori dal catalogo finché Davide non risponde alla A.158.
+
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 
 Il Manuale dei Veicoli 0.2 è completo di numeri e il lotto 2 (dati e motore) non ha dovuto inventare nulla. Restano
