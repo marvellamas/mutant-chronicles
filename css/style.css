@@ -2753,3 +2753,16 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .segno-semplice .interruttore-mappa-pallino::after { top: 0.1rem; left: 0.7rem; width: 0.6rem; height: 0.6rem; }
 /* note informative del modulo «Crea consumabile» (A.157, 13/10): spiegano una regola, non segnalano un problema */
 .nota-regola { border-left: 3px solid var(--bordo); padding-left: 0.5rem; }
+/* Morente (A.159, 15/10): il contatore dei Round in evidenza nella scheda e nella plancia, con l'avviso a 0 */
+.riquadro-morente { border-left: 4px solid var(--pv); background: var(--pv-tenue); display: grid; gap: 0.35rem; }
+.riquadro-morente .nota { margin: 0; }
+.contatore-morente { font-weight: 700; font-size: 1.15rem; color: var(--pv); margin-left: auto; }
+.azioni-morente { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0; }
+.vie-morente summary { cursor: pointer; font-size: 0.85rem; }
+.vie-morente ul { margin: 0.3rem 0 0; padding-left: 1.1rem; display: grid; gap: 0.25rem; }
+.riquadro-morente.morente-zero { outline: 2px solid var(--pv); }
+.plancia-morente { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem; margin: 0.3rem 0; padding: 0.3rem 0.5rem; border-left: 4px solid var(--pv); background: var(--pv-tenue); border-radius: var(--raggio); }
+.plancia-morente strong { color: var(--pv); }
+.plancia-morente .nota { margin: 0; }
+.plancia-morente.morente-zero { outline: 2px solid var(--pv); }
+.avviso-morente { background: var(--pv); color: #fff; }

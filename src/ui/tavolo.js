@@ -10,6 +10,7 @@ import { h, svuota } from './dom.js';
 import { infoValore, nascondiTooltip } from './tooltip.js';
 import { iconaPagina } from './immagini.js';
 import { riempimento } from '../interfaccia.js';
+import { togliRound, roundRimasti } from '../morente.js';
 import { vistaPlancia, testoConSessione, sessioneDaFile, pgDaAggiungere } from '../tavolo.js';
 import { riallinea, alRound, terminaDurate, collegamentoScontro, durateCarta, testoDurata } from '../round-scontro.js';
 import { rigaDurate } from './durate.js';
@@ -444,7 +445,7 @@ export function renderTavolo(radice, ctx) {
       tablet: { collegati: stato.tablet ?? [], chiama: (p) => chiamaTablet(p) } };
     const cartePg = alTavolo.length
       ? h('div', { class: 'plancia-griglia' }, alTavolo.map((r) => (r.mancante ? cartaMancante(r.mancante)
-        : stato.viste.get(r.file) ? conPezzo(cartaPg(ctx, stato.viste.get(r.file), r, turnoDi(r), colpitoPg, durateDi(stato.viste.get(r.file))), `partecipante:pg:${chiaveDaFile(r.file)}`, ctx.inMappa?.volo ?? ctx.volo) : cartaErrore(r, stato.errori.get(r.file)))))
+        : stato.viste.get(r.file) ? conPezzo(cartaPg(ctx, stato.viste.get(r.file), r, turnoDi(r), colpitoPg, durateDi(stato.viste.get(r.file)), roundDi(stato.viste.get(r.file))), `partecipante:pg:${chiaveDaFile(r.file)}`, ctx.inMappa?.volo ?? ctx.volo) : cartaErrore(r, stato.errori.get(r.file)))))
       : h('p', { class: 'vuoto' }, 'Nessun personaggio al tavolo: sceglili con «Chi è al tavolo».');
     const carteNemici = nemiciInScontro().length
       ? h('div', { class: 'plancia-griglia' }, nemiciInCarta().map((p) => conPezzo(cartaNemico(ctx, p, { modifica, durate: durateNemico(p), diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p), onAttacca: attacchiDi(p).length ? () => attacca(p, alTavolo) : null, onLancia: (i) => lancia(p, i, alTavolo), onRiduci: (v) => modifica((x) => riduciNemico(x, p.id, v)), onRegime: (k, r) => modifica((x) => confermaRegimeNemico(x, p.id, k, r, new Date())), onImmagine: () => immagineNemico(p) }), `partecipante:${p.id}`, ctx.inMappa?.volo ?? ctx.volo)))
@@ -597,7 +598,8 @@ export function renderTavolo(radice, ctx) {
   };
   const colpitoPg = (v, r, proposta = {}) => {
     if (!stato.scontro) return;
-    const bersaglio = { nome: v.nome, pv: v.pv, ferite: v.ferite.grado, ar: v.ar };
+    // A.159: oltre Grave un PG entra in Morente (i nemici restano come oggi, A.164 aperta)
+    const bersaglio = { nome: v.nome, pv: v.pv, ferite: v.ferite.grado, ar: v.ar, morente: true };
     apriColpo(ctx, bersaglio, {
       proposta,
       fonti: fontiPeriodiche(),
@@ -605,10 +607,14 @@ export function renderTavolo(radice, ctx) {
         const { testo, mtime } = await leggiCartellaConRevisione(r.file);
         const ora = vistaPlancia(testo, ctx.dati, r.file);
         if (ora.pv.attuali !== v.pv.attuali || ora.ferite.grado !== v.ferite.grado) throw new Error(`${v.nome} è cambiato nel frattempo (PV ${ora.pv.attuali}, Ferite ${ora.ferite.grado}): chiudi e riapri «Colpito».`);
-        const prima = { pv: ora.pv.attuali, ferite: ora.ferite.grado, stati: ora.sessione.statiAttivi ?? [] };
+        const prima = { pv: ora.pv.attuali, ferite: ora.ferite.grado, stati: ora.sessione.statiAttivi ?? [], morente: ora.sessione.morente ?? null };
         const dopo = { pv: ris.pv.dopo, ferite: ris.ferite.dopo, stati: [...new Set([...prima.stati, ...stati])] };
+        // A.159, punto 3: il colpo che fa entrare in Morente lascia il contatore pieno; le Ferite prese da
+        // chi era già Morente ne togliono 1 Round ciascuna
+        const morente = prima.morente && ris.feriteOltre ? togliRound(prima.morente, ris.feriteOltre, ctx.dati) : prima.morente;
+        if (morente !== prima.morente) dopo.morente = morente;
         try {
-          await scriviCartella(r.file, testoConSessione(testo, { pvAttuali: dopo.pv, ferite: dopo.ferite, statiAttivi: dopo.stati }, ctx.dati), { mtime });
+          await scriviCartella(r.file, testoConSessione(testo, { pvAttuali: dopo.pv, ferite: dopo.ferite, statiAttivi: dopo.stati, ...(morente ? { morente } : {}) }, ctx.dati), { mtime });
         } catch (e) {
           throw new Error(e.conflitto ? `${v.nome} è stato salvato altrove proprio ora: chiudi e riapri «Colpito».` : e.message);
         }
@@ -734,7 +740,8 @@ export function renderTavolo(radice, ctx) {
           disegna();
           return;
         }
-        await scriviCartella(colpo.file, testoConSessione(testo, { pvAttuali: colpo.prima.pv, ferite: colpo.prima.ferite, statiAttivi: colpo.prima.stati }, ctx.dati), { mtime });
+        // A.159: si rimette anche il contatore di Morente di prima (null se non lo era)
+        await scriviCartella(colpo.file, testoConSessione(testo, { pvAttuali: colpo.prima.pv, ferite: colpo.prima.ferite, statiAttivi: colpo.prima.stati, morente: colpo.prima.morente ?? null }, ctx.dati), { mtime });
       } catch (e) {
         stato.avvisoScontro = `Annullamento non fatto: ${e.message}`;
         avvisoErrore(stato.avvisoScontro);
@@ -858,7 +865,7 @@ export function renderTavolo(radice, ctx) {
       const v = r ? stato.viste.get(r.file) : null;
       if (!r) return h('p', { class: 'nota' }, stato.elenco.length ? `Nessun file di ${pg[1]} in personaggi/.` : 'Lettura delle schede…');
       if (!v) return h('p', { class: 'nota' }, stato.errori.get(r.file) ?? 'Lettura della scheda…');
-      return [conPezzo(cartaPg(ctx, v, r, turnoDi(r), colpitoPg, durateDi(v)), `partecipante:pg:${chiaveDaFile(r.file)}`, ctx.inMappa?.volo ?? ctx.volo),
+      return [conPezzo(cartaPg(ctx, v, r, turnoDi(r), colpitoPg, durateDi(v), roundDi(v)), `partecipante:pg:${chiaveDaFile(r.file)}`, ctx.inMappa?.volo ?? ctx.volo),
         h('button', { type: 'button', class: 'btn primario btn-scheda-completa', onclick: () => ctx.azioni.apri(r) }, 'Apri scheda completa')];
     }
     const part = /^partecipante:(.+)$/.exec(chiave);
@@ -1202,10 +1209,12 @@ const pillola = (titolo, valore, provenienza, classe = '') => (provenienza
   : h('strong', { class: `pillola-plancia ${classe}`.trim() }, numero(valore)));
 
 /** Scheda compatta di un PG: risorse, AR e Difese, condizioni, Stati, armi in mano; evidenziata se è di turno. */
-function cartaPg(ctx, v, r, diTurnoOra = false, colpito = null, durate = []) {
+function cartaPg(ctx, v, r, diTurnoOra = false, colpito = null, durate = [], roundOra = null) {
   const apri = () => ctx.azioni.apri(r);
+  // A.159: Morente, con i Round che restano contati sul Round dello scontro (src/morente.js)
+  const morente = v.morente ? { ...v.morente, round: roundRimasti(v.sessione?.morente, roundOra ?? v.sessione?.round ?? 1) ?? v.morente.round } : null;
   const condizioni = [
-    v.ferite?.grado ? `Ferita ${v.ferite.nome}` : null,
+    morente ? null : v.ferite?.grado ? `Ferita ${v.ferite.nome}` : null,
     v.affaticamento?.grado ? v.affaticamento.nome : null,
     v.corruzione?.grado ? v.corruzione.nome : null,
   ].filter(Boolean);
@@ -1231,7 +1240,12 @@ function cartaPg(ctx, v, r, diTurnoOra = false, colpito = null, durate = []) {
         arPrincipale ? h('span', {}, 'AR ', pillola('AR', arPrincipale.valore, arPrincipale.provenienza, 'pillola-ar'),
           ...v.ar.valori.filter((x) => x !== arPrincipale).map((x) => h('small', { class: 'nota' }, ' · ', x.etichetta, ' ', pillola(`AR ${x.etichetta}`, x.valore, x.provenienza)))) : null,
         v.difese ? h('span', {}, ' · Difese ', pillola('Difese', v.difese.valore, v.difese.provenienza)) : null),
-      h('p', { class: 'plancia-condizioni' }, condizioni.length ? condizioni.map((c) => h('span', { class: 'etichetta condizione-plancia' }, c)) : h('span', { class: 'nota' }, 'Nessuna Ferita, Affaticamento o Corruzione')),
+      // A.159: il contatore di Morente in evidenza, con l'avviso a 0 (decide il master)
+      morente ? h('p', { class: `plancia-morente${morente.round === 0 ? ' morente-zero' : ''}`, role: 'status' },
+        h('strong', {}, `${morente.nome} — ${morente.round} Round`),
+        h('small', { class: 'nota' }, ` su ${morente.iniziale} (COS)`),
+        morente.round === 0 && morente.avviso ? h('span', { class: 'etichetta avviso-morente' }, morente.avviso) : null) : null,
+      h('p', { class: 'plancia-condizioni' }, condizioni.length ? condizioni.map((c) => h('span', { class: 'etichetta condizione-plancia' }, c)) : morente ? null : h('span', { class: 'nota' }, 'Nessuna Ferita, Affaticamento o Corruzione')),
       v.stati.length ? h('p', { class: 'plancia-stati' }, v.stati.map((s) => {
         const d = durate.find((x) => x.tipo === 'stato' && x.nome === s.nome);
         return h('span', { class: 'etichetta stato-plancia', title: d ? `fino alla fine del Round ${d.al}` : null }, d ? `${s.nome} · ${d.rimasti} Round` : s.nome);

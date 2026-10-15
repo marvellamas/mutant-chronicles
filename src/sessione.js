@@ -27,7 +27,9 @@
 // ricaricando (la quantità della voce resta la scelta del giocatore). Ricarica: src/ricarica.js.
 // chroma: PM attuali di ogni contenitore di Chroma (Magia sez. 6), limitati alla sua capacità. Non
 // si ricaricano con «Ricarica» né con «Nuova sessione»: solo convertendo PM (Magia sez. 6, §7.5.1).
-// ferite: 0 = nessuna, 1…5 = gli Stati di Ferita di regole.json (§5.14), 6 = oltre Grave.
+// ferite: 0 = nessuna, 1…5 = gli Stati di Ferita di regole.json (§5.14), 6 = oltre Grave (Morente).
+// morente: contatore di Morente (A.159, src/morente.js), { dal: Round d'ingresso, iniziale: COS, tolti? }.
+// C'è solo quando il personaggio è Morente; i Round che restano si ricavano dal Round corrente.
 // affaticamento: indice in regole.json → affaticamento.stati (§5.19), 0 = Riposato.
 // corruzione: indice in regole.json → corruzione.stati (§5.20), 0 = Umano; «Nuova sessione» non lo azzera.
 // caricoExtra: kg trasportati oltre all'equipaggiamento (bottino, una creatura trasportata con il
@@ -51,6 +53,7 @@ import { oggettiConPi } from './protezione.js';
 import { attivaTecnica, nuovoRound, terminaTecnica, allineaTecnicheAttive, tecnicaDi } from './tecniche.js';
 import { allineaIncantesimiAttivi } from './durate-incantesimi.js';
 import { allineaImpianti } from './impianti.js';
+import { allineaMorente, statoMorente, togliRound } from './morente.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const limita = (v, min, max) => Math.min(max, Math.max(min, v));
@@ -70,7 +73,10 @@ export function massimiSessione(scheda, creazione, dati) {
     puntiEroe: pe.riserva_massima, // §1.8.3, §2.15: il massimo posseduto è sempre 10
     puntiEroeIniziali: valoreTiro(creazione?.puntiEroe) ?? 0,
     distintiviPerPuntoEroe: pe.distintivi_per_punto_eroe,
-    ferite: dati.regole.ferite.stati.length + 1, // l'ultimo gradino è «oltre Grave»
+    ferite: dati.regole.ferite.stati.length + 1, // l'ultimo gradino è «oltre Grave» (Morente, A.159)
+    // A.159: contatore di Morente pari alla COS intera effettiva, e le sue regole (src/morente.js)
+    cos: ((c) => (c && typeof c === 'object' ? c.valore : c) ?? null)(scheda?.caratteristiche?.[dati.regole.ferite.morente?.contatore?.caratteristica ?? 'COS']),
+    morente: dati.regole.ferite.morente ?? null,
     affaticamento: dati.regole.affaticamento.stati.length - 1,
     corruzione: (dati.regole.corruzione?.stati?.length ?? 1) - 1,
     stati: dati.regole.stati.elenco.map((s) => s.id),
@@ -331,6 +337,24 @@ export function inizializzaSessione(m) {
   };
 }
 
+/** A.159: il contatore di Morente per le Ferite attuali (null se non è Morente). */
+function morenteDi(sessione, m) {
+  return allineaMorente(sessione.morente, limita(intero(sessione.ferite, 0), 0, m.ferite),
+    Number.isInteger(sessione.round) && sessione.round >= 1 ? sessione.round : 1, m);
+}
+
+/**
+ * Stati attivi, con lo Stato previsto dai dati acceso quando si entra in Morente (A.159: «sviene
+ * automaticamente»). Si accende solo all'ingresso: dopo si può togliere a mano, come ogni altro Stato.
+ */
+function statiConMorente(sessione, m) {
+  const attivi = Array.isArray(sessione.statiAttivi) ? [...new Set(sessione.statiAttivi.filter((id) => m.stati.includes(id)))] : [];
+  const stato = m.morente?.stato;
+  const entra = !isOggetto(sessione.morente) && !!morenteDi(sessione, m);
+  if (entra && stato && m.stati.includes(stato) && !attivi.includes(stato)) attivi.push(stato);
+  return attivi;
+}
+
 /**
  * Porta una sessione salvata (o assente) a una forma valida per i massimi attuali: se manca la
  * inizializza; altrimenti limita i valori ai massimi senza riazzerarli.
@@ -343,7 +367,7 @@ export function allineaSessione(sessione, m) {
     pmAttuali: limita(intero(sessione.pmAttuali, m.pm), 0, m.pm),
     puntiEroe: limita(intero(sessione.puntiEroe, m.puntiEroeIniziali), 0, m.puntiEroe),
     distintivi: Math.max(0, intero(sessione.distintivi, 0)),
-    statiAttivi: Array.isArray(sessione.statiAttivi) ? [...new Set(sessione.statiAttivi.filter((id) => m.stati.includes(id)))] : [],
+    statiAttivi: statiConMorente(sessione, m),
     ferite: limita(intero(sessione.ferite, 0), 0, m.ferite),
     affaticamento: limita(intero(sessione.affaticamento, 0), 0, m.affaticamento),
     corruzione: limita(intero(sessione.corruzione, 0), 0, m.corruzione ?? 0),
@@ -389,6 +413,8 @@ export function allineaSessione(sessione, m) {
     ...(() => { const st = allineaStorico(sessione.storico); return st.length ? { storico: st } : {}; })(),
     // S9 (13/10/2026): gli ultimi tiri fatti con l'app (src/tiri-scheda.js); la chiave c'è solo se si è tirato
     ...(() => { const t = allineaTiri(sessione.tiri); return t.length ? { tiri: t } : {}; })(),
+    // A.159: contatore di Morente (src/morente.js); la chiave c'è solo quando il personaggio è Morente
+    ...(() => { const mo = morenteDi(sessione, m); return mo ? { morente: mo } : {}; })(),
     note: typeof sessione.note === 'string' ? sessione.note : '',
   };
 }
@@ -572,7 +598,8 @@ export function attivaArtefatto(sessione, uid, pm, m, { forza = false } = {}) {
 
 export function nuovaSessione(sessione, m) {
   // «Nuova sessione»: anche gli incantesimi in corso finiscono
-  const { incantesimiAttivi: _inc, ...resto } = allineaSessione(sessione, m);
+  // A.159: «Nuova sessione» azzera le Ferite, quindi anche il contatore di Morente
+  const { incantesimiAttivi: _inc, morente: _mor, ...resto } = allineaSessione(sessione, m);
   const temporanei = (resto.caratteristicheTemporanee ?? []).filter((x) => x.al === null);
   delete resto.caratteristicheTemporanee;
   return { ...resto, pvAttuali: m.pv, pmAttuali: m.pm, statiAttivi: [], ferite: 0, affaticamento: 0, round: 1, ultimaTecnica: null, tecnicheAttive: [], ...(temporanei.length ? { caratteristicheTemporanee: temporanei } : {}) };
@@ -608,9 +635,9 @@ export function convertiDistintivi(sessione, m) {
 
 /**
  * Descrizione del gradino di Ferita `n` (0 = nessuna).
- * Oltre Grave (decisione di Marcello del 13/10/2026, A.159): di norma è la morte (§5.14), ma se il personaggio
- * resta in piedi valgono gli stessi malus dello Stato indicato da `regole.json` → `ferite.oltre_penalita_come`
- * (oggi Grave, −8). È una proposta, non un blocco: l'avviso lo legge il master e decide lui.
+ * Oltre Grave (A.159, risposta di Davide del 14/10/2026): il personaggio è Morente, mantiene i malus dello
+ * Stato indicato da `regole.json` → `ferite.oltre_penalita_come` (Grave, −8), sviene e ha il contatore di
+ * Round di `ferite.morente` (src/morente.js). Non è un blocco: a 0 l'app avvisa e decide il master.
  */
 export function descriviFerite(n, dati) {
   const f = dati.regole.ferite;
@@ -618,6 +645,34 @@ export function descriviFerite(n, dati) {
   if (n <= f.stati.length) return { ...f.stati[n - 1] };
   const come = f.oltre_penalita_come ? f.stati.find((s) => s.nome === f.oltre_penalita_come) ?? null : null;
   return { nome: `Oltre Grave: ${f.oltre}`, penalita: come?.penalita ?? null, come: come?.nome ?? null, avviso: f.oltre_avviso ?? null };
+}
+
+/**
+ * A.159: «Stabilizza». Registra l'esito di una cura che stabilizza: da Morente si torna a Grave (l'ultimo
+ * Stato di Ferita) e il contatore si spegne. Non concede nulla: PV, PM, applicazioni e cartucce si segnano
+ * a parte. null se il personaggio non è Morente.
+ */
+export function stabilizzaMorente(sessione, m) {
+  const s = allineaSessione(sessione, m);
+  if (!s.morente) return null;
+  // il gradino torna a Grave: allineaSessione spegne da sé il contatore (src/morente.js)
+  return modificaSessione(s, { ferite: Math.max(0, m.ferite - 1), morente: null }, m);
+}
+
+/**
+ * A.159: toglie `n` Round al contatore di Morente (il «−1» a mano e le nuove Ferite subite da Morente:
+ * 1 Round per Ferita). Il gradino di Ferita non cambia. null se il personaggio non è Morente.
+ */
+export function scalaMorente(sessione, n, m, dati) {
+  const s = allineaSessione(sessione, m);
+  if (!s.morente) return null;
+  const mo = togliRound(s.morente, n, dati);
+  return mo === s.morente ? null : modificaSessione(s, { morente: mo }, m);
+}
+
+/** A.159: i Round che restano al contatore, o null se il personaggio non è Morente. */
+export function morenteSessione(sessione, dati) {
+  return statoMorente(sessione, dati);
 }
 
 /**

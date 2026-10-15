@@ -22,6 +22,7 @@ import { classeMacrofamiglia } from '../palette.js';
 import { formulaScomposizione, visioniPersonaggio, abilitaVista, intensitaStato, statiConImplicati } from '../condizioni.js';
 import { rigaScelte } from './pannello-passi.js';
 import { colore, riempimento, condizioniAttiveAbilita } from '../interfaccia.js';
+import { statoMorente } from '../morente.js';
 import { descriviFerite } from '../sessione.js';
 import { statoIntegrita } from '../protezione.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
@@ -1820,10 +1821,37 @@ function riquadroFerite(ctx) {
   const m = ctx.massimi;
   const ferite = Array.from({ length: m.ferite + 1 }, (_, n) => ({ n, ...descriviFerite(n, ctx.dati) }))
     .map((g) => ({ nome: g.nome, breve: g.n === 0 ? 'Nessuna' : g.n > ctx.dati.regole.ferite.stati.length ? 'Oltre' : g.nome, penalita: g.penalita, descrizione: g.menomazione ?? null }));
-  // A.159 (decisione di Marcello del 13/10/2026): oltre Grave valgono i malus di Grave, con l'avviso che di norma è la morte
+  // A.159 (risposta di Davide del 14/10/2026): oltre Grave si entra in Morente, con il contatore qui sotto
   const oltre = ctx.sessione.ferite > ctx.dati.regole.ferite.stati.length ? descriviFerite(ctx.sessione.ferite, ctx.dati).avviso : null;
-  return gradiCompatti(ctx, { titolo: 'Ferite (§5.14)', campo: 'ferite', attuale: ctx.sessione.ferite, gradi: ferite, avviso: oltre,
-    nota: 'Ogni nuova Ferita fa avanzare di un gradino. La penalità è cumulativa a VA e Prove Salvezza.' });
+  return [
+    gradiCompatti(ctx, { titolo: 'Ferite (§5.14)', campo: 'ferite', attuale: ctx.sessione.ferite, gradi: ferite, avviso: oltre,
+      nota: 'Ogni nuova Ferita fa avanzare di un gradino. La penalità è cumulativa a VA e Prove Salvezza. Oltre Grave il personaggio è Morente (A.159).' }),
+    riquadroMorente(ctx),
+  ];
+}
+
+/**
+ * Contatore di Morente (A.159, src/morente.js): i Round che restano in evidenza, «−1» a mano, «Stabilizza» e
+ * il promemoria di solo testo delle vie approvate. Niente Prove automatiche: decide il tavolo.
+ */
+function riquadroMorente(ctx) {
+  const mo = statoMorente(ctx.sessione, ctx.dati);
+  if (!mo) return null;
+  const R = ctx.dati.regole.ferite.morente ?? {};
+  return h('section', { class: `riquadro riquadro-morente${mo.morto ? ' morente-zero' : ''}`, 'aria-label': mo.nome },
+    h('header', { class: 'testa-gradi' }, h('h3', {}, mo.nome),
+      h('span', { class: 'contatore-morente' }, `${mo.round} Round`),
+      infoValore('?', { titolo: `${mo.nome} (${mo.paragrafo ?? '§5.14'})`,
+        sezioni: [{ testo: mo.promemoria ?? '' }, ...mo.vie.map((v) => ({ testo: v })),
+          R.stabilizza?.nota ? { etichetta: R.stabilizza.etichetta ?? 'Stabilizza', testo: R.stabilizza.nota } : null].filter((x) => x && x.testo) },
+      { classe: 'info-gradi' })),
+    h('p', { class: 'nota' }, `Contatore partito da ${mo.iniziale} (COS intera). Cala di 1 a ogni Round e di 1 per ogni nuova Ferita.`),
+    mo.morto ? h('p', { class: 'nota avviso-gradi', role: 'status' }, mo.avviso) : null,
+    h('p', { class: 'azioni-morente' },
+      h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Toglie 1 Round al contatore: una nuova Ferita fuori scontro, o la correzione del master', onclick: () => ctx.azioni.scalaMorente(1) }, '−1 Round'),
+      h('button', { type: 'button', class: 'btn primario btn-piccolo', title: R.stabilizza?.nota ?? 'Riporta a Grave e spegne il contatore', onclick: () => ctx.azioni.stabilizza() }, R.stabilizza?.etichetta ?? 'Stabilizza')),
+    mo.vie.length ? h('details', { class: 'vie-morente' }, h('summary', {}, 'Come si stabilizza'),
+      h('ul', {}, mo.vie.map((v) => h('li', {}, h('small', { class: 'nota' }, v))))) : null);
 }
 
 /** Affaticamento (§5.19) e Corruzione (§5.20), modificabili: sotto i PM nella colonna di sinistra del Combattimento (S13). */

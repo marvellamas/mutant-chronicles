@@ -110,7 +110,9 @@ test('cap. 4: 11 voci con REP propria; Binocolo +1 Percezione per un uso (vale l
 test('cap. 6: le 16 schede del §7.19 restano (stessi valori); 7 voci nuove: ricariche, ricambi, farmaco, antidoto', () => {
   const tutte = deiFile('sanitario');
   // 23 fino alla 0.3; la 0.5 aggiunge naniti, 8 postazioni e 3 consumabili del §6.8 (tests/sanitario-05.test.js)
-  assert.equal(tutte.length, 33); // A.71 (E&L del 02/10): set e confezione di set chirurgici uniti nella Cartuccia chirurgica
+  // A.71 (E&L del 02/10): set e confezione di set chirurgici uniti nella Cartuccia chirurgica;
+  // A.159 (14/10): la Cartuccia Stabilizzante è la 34ª (tests/morente.test.js)
+  assert.equal(tutte.length, 34);
   // valori del §6.1 e §6.4 uguali a quelli già nel catalogo
   assert.deepEqual([r('sanitario:kit-di-pronto-soccorso-standard').pi, r('sanitario:kit-di-pronto-soccorso-standard').costo], [4, 1000]);
   assert.deepEqual(r('sanitario:kit-di-pronto-soccorso-professionale').ricarica, { applicazioni: 5, costo: 300 });

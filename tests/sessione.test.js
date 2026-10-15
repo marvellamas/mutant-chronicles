@@ -61,7 +61,11 @@ test('limiti: niente sotto 0 né sopra i massimi; Stati sconosciuti scartati', (
   s = modificaSessione(s, { ferite: 99, affaticamento: -3, statiAttivi: ['stordito', 'inesistente', 'stordito'] }, m);
   assert.equal(s.ferite, m.ferite);
   assert.equal(s.affaticamento, 0);
-  assert.deepEqual(s.statiAttivi, ['stordito']);
+  // A.159: al gradino oltre Grave si entra in Morente e si sviene (tests/morente.test.js)
+  assert.deepEqual(s.statiAttivi, ['stordito', 'svenuto']);
+  assert.equal(s.morente.iniziale, m.cos);
+  assert.deepEqual(modificaSessione(s, { ferite: 1 }, m).statiAttivi, ['stordito', 'svenuto'], 'lo Stato resta: si toglie a mano');
+  assert.equal(modificaSessione(s, { ferite: 1 }, m).morente, undefined, 'il contatore si spegne da sé');
   // valori non numerici tornano ai predefiniti
   const rotta = allineaSessione({ pvAttuali: 'tanti', distintivi: -2, munizioni: { frecce: 12, rotte: -1 }, note: 5 }, m);
   assert.equal(rotta.pvAttuali, m.pv);
@@ -86,7 +90,7 @@ test('Stati, Ferite e Affaticamento: promemoria delle penalità dai dati', () =>
   assert.equal(p.totale, -3);
   assert.deepEqual(commutaStato(s, 'rallentato', m).statiAttivi, []);
   assert.equal(descriviFerite(0, dati).penalita, 0);
-  assert.match(descriviFerite(m.ferite, dati).nome, /Oltre Grave: Morte/);
+  assert.match(descriviFerite(m.ferite, dati).nome, /Oltre Grave: Morente/);
 });
 
 test('Nuova sessione: PV/PM ai massimi, Stati, Ferite, Affaticamento a zero; note, Punti Eroe e Distintivi restano', () => {

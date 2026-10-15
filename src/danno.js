@@ -80,7 +80,9 @@ export function arApplicabile(ar, colpo, dati) {
 /**
  * Applica un colpo a un bersaglio.
  * @param bersaglio { nome, pv: { attuali, massimo }, ferite: grado attuale (anche i nemici, che seguono la
- *   procedura dei PG: per-davide A.73, decisione 7; null per chi non le registra), ar: { totale, magica, valori? } }
+ *   procedura dei PG: per-davide A.73, decisione 7; null per chi non le registra), ar: { totale, magica, valori? },
+ *   morente: true per chi entra in Morente oltre Grave invece di morire (i PG, A.159; i nemici restano come
+ *   oggi finché non risponde la A.164) }
  * @param colpo { danni: [dadi con i bonus ordinari, per applicazione: §5.13 passi 1–2],
  *   moltiplicatore: moltiplicatore di ogni applicazione (Carica, Bruciapelo…; 1 se non c'è),
  *   magistrale: true se l'attacco è un Successo Magistrale (§1.6: la sola prima applicazione),
@@ -142,8 +144,21 @@ export function applicaColpo(bersaglio, colpo, dati) {
     }
     applicazioni.push(a);
   });
-  const morte = conFerite && ferite > dati.regole.ferite.stati.length;
-  if (morte) promemoria.push(`${bersaglio.nome}: oltre Grave, ${dati.regole.ferite.oltre} (§5.14).`);
+  // A.159: oltre Grave un PG non muore, entra in Morente con il contatore pieno (il colpo che lo fa entrare
+  // non lo riduce: punto 3 della risposta). I nemici restano come oggi: morte (A.164 aperta).
+  const oltre = conFerite && ferite > dati.regole.ferite.stati.length;
+  const morente = oltre && bersaglio.morente === true;
+  const morte = oltre && !morente;
+  if (morte) promemoria.push(`${bersaglio.nome}: oltre Grave, morte (§5.14).`);
+  if (morente) {
+    const R = dati.regole.ferite.morente ?? {};
+    const gia = (bersaglio.ferite ?? 0) > dati.regole.ferite.stati.length;
+    const nuove = Math.max(0, ferite - Math.max(bersaglio.ferite ?? 0, dati.regole.ferite.stati.length + 1));
+    if (gia) promemoria.push(nuove
+      ? `${bersaglio.nome} era già ${R.nome ?? 'Morente'}: ${nuove} nuov${nuove === 1 ? 'a Ferita' : 'e Ferite'}, ${nuove} Round in meno al contatore (A.159).`
+      : `${bersaglio.nome} è ${R.nome ?? 'Morente'}: nessuna nuova Ferita, il contatore non cambia (A.159).`);
+    else promemoria.push(`${bersaglio.nome}: oltre Grave → ${R.nome ?? 'Morente'}, sviene e si apre il contatore di Round pari alla COS (${R.paragrafo ?? '§5.14'}).`);
+  }
   // §5.14.1: al primo raggiungimento di Profonda, Seria e Grave, PS di Tempra per la Menomazione
   const menomazioni = [];
   if (conFerite && ferite > (bersaglio.ferite ?? 0)) {
@@ -206,6 +221,9 @@ export function applicaColpo(bersaglio, colpo, dati) {
     pv: { prima: bersaglio.pv.attuali, dopo: pv, massimo: bersaglio.pv.massimo },
     ferite: conFerite ? { prima: bersaglio.ferite, dopo: ferite, nome: nomeFerita(ferite, dati) } : null,
     morte,
+    // A.159: oltre Grave per un PG; `feriteOltre` sono le Ferite che eccedono il gradino di Morente (1 Round ciascuna)
+    morente,
+    feriteOltre: oltre ? Math.max(0, ferite - (dati.regole.ferite.stati.length + 1)) : 0,
     pvPersi,
     tempraMancanti,
     stati,
@@ -231,5 +249,5 @@ export function testoColpo(nome, colpo, r) {
   const subito = (r.immediate ?? []).map((x) => (x.pvDopo === x.pvPrima
     ? `; ${x.nome} ${x.valore} a 0 PV: PS di ${x.aZeroPv?.salvezza ?? 'Tempra'}`
     : `; ${x.nome} ${x.valore}: −${x.valore} PV subito (PV ${x.pvPrima} → ${x.pvDopo})`)).join('');
-  return `${nome} colpito (${colpo.natura}${magi}${r.difesa.id !== 'nessuna' ? `, ${r.difesa.nome}` : ''}${colpo.proprieta?.length ? `, ${colpo.proprieta.join(', ')}` : ''}): ${danni}; PV ${r.pv.prima} → ${r.pv.dopo}${zero}${ferite}${r.morte ? ', MORTE' : ''}${subito}${menomazioni}.`;
+  return `${nome} colpito (${colpo.natura}${magi}${r.difesa.id !== 'nessuna' ? `, ${r.difesa.nome}` : ''}${colpo.proprieta?.length ? `, ${colpo.proprieta.join(', ')}` : ''}): ${danni}; PV ${r.pv.prima} → ${r.pv.dopo}${zero}${ferite}${r.morte ? ', MORTE' : r.morente ? ', MORENTE' : ''}${subito}${menomazioni}.`;
 }

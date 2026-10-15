@@ -2052,10 +2052,41 @@
         "menomazione": "Permanente (funzione colpita impedita)"
       }
     ],
-    "oltre": "Morte",
+    "oltre": "Morente",
     "oltre_penalita_come": "Grave",
-    "oltre_avviso": "Oltre Grave di norma è la morte (§5.14). Se il personaggio resta in piedi per qualche motivo, valgono gli stessi malus di Grave: decide il master.",
-    "_nota_oltre": "Decisione di Marcello del 13/10/2026 (A.159, da rivedere con Davide): «oltre Grave» non è più senza malus. oltre_penalita_come indica lo Stato di Ferita da cui prendere la penalità (qui Grave, −8); null per tornare a nessuna penalità. Nessun blocco: la morte resta un avviso al master (src/danno.js).",
+    "oltre_avviso": "Oltre Grave il personaggio è Morente: mantiene i malus di Grave, sviene e ha i Round del contatore per essere stabilizzato (A.159).",
+    "_nota_oltre": "A.159 (risposta di Davide del 14/10/2026, che supera la decisione provvisoria di Marcello del 13/10): oltre Grave non è più la morte immediata ma lo Stato Morente del blocco «morente» qui sotto. oltre_penalita_come indica lo Stato di Ferita da cui prendere la penalità (Grave, −8).",
+    "morente": {
+      "nome": "Morente",
+      "penalita_come": "Grave",
+      "stato": "svenuto",
+      "contatore": {
+        "caratteristica": "COS",
+        "per_round": 1,
+        "per_ferita": 1,
+        "etichetta": "Morente",
+        "unita": "Round"
+      },
+      "morto": {
+        "nome": "Morto",
+        "avviso": "È morto (A.159) — decide il master"
+      },
+      "stabilizza": {
+        "etichetta": "Stabilizza",
+        "torna_a": "Grave",
+        "nota": "Registra l'esito di una cura che stabilizza: riporta a Grave (−8) e spegne il contatore. Non è una cura gratuita: PV, PM, applicazioni del kit, cartucce e Azioni si segnano a parte. Il personaggio riprende coscienza all'inizio del suo turno successivo (lo Stato Svenuto si toglie a mano)."
+      },
+      "vie": [
+        "Stabilizzazione d'emergenza (Medicina): paziente adiacente, kit almeno Standard, 2 Round con 1 AzP ciascuno, una applicazione, poi Prova di Medicina −2. Soccorso Immediato la porta a 1 AzP; Stabilizzazione del Medico dà +2; Triage Estremo in 1 AzP senza Prova, una volta per combattimento.",
+        "Guarigione d'emergenza (incantesimo conosciuto almeno al livello 3): 3 PM, 1 AzP, contatto, Prova di Potere; riporta a Grave e restituisce 1 PV.",
+        "Cartuccia Stabilizzante: una somministrazione riuscita riporta a Grave; UMC Passiva 1 AzP con Prova, UMC Attiva 1 AzP senza Prova. Una sola somministrazione rapida per Round.",
+        "UMC Automatica con protocollo Morente e una Cartuccia Stabilizzante caricata: interviene da sé alla fine dell'intero attacco, senza Azioni né Prova.",
+        "Le cure che ridanno solo PV non stabilizzano; la Stasi sospende il contatore senza azzerarlo."
+      ],
+      "promemoria_contatore": "Il contatore parte dalla COS intera e cala di 1 per ogni Round passato e di 1 per ogni nuova Ferita. Il colpo che fa entrare in Morente lascia il contatore pieno. A 0 decide il master.",
+      "paragrafo": "§5.14 (A.159, risposta approvata il 14/10/2026)",
+      "_nota": "Le regole dell'app si fermano qui: contatore visibile, «−1» a mano, «Stabilizza» e il promemoria delle vie. Niente Prove automatiche né procedure guidate (CLAUDE.md: l'app aiuta il tavolo e non lo rallenta). I nemici restano come oggi: A.164 aperta."
+    },
     "si_applica_a": [
       "abilita",
       "salvezze"

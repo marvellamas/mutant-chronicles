@@ -57,7 +57,7 @@ test('§5.10: più applicazioni (AC) separate; Parata dimezza per eccesso ogni a
   assert.equal(applicaColpo(bersaglio(), colpo([30], { difesa: 'parata_magistrale' }), dati).pvPersi, 0);
 });
 
-test('§5.14: soglie delle nuove Ferite per fascia ed esito; oltre Grave la Morte; Menomazioni', () => {
+test('§5.14: soglie delle nuove Ferite per fascia ed esito; oltre Grave Morente o la morte; Menomazioni', () => {
   assert.deepEqual(['successo_magistrale', 'successo', 'fallimento', 'fallimento_maldestro'].map((e) => nuoveFerite(12, e, dati).ferite), [0, 2, 3, 4]);
   assert.deepEqual([nuoveFerite(5, 'fallimento', dati).fascia, nuoveFerite(6, 'fallimento', dati).fascia, nuoveFerite(26, 'fallimento', dati).fascia], ['1–5', '6–10', '26+']);
   assert.equal(nuoveFerite(40, 'successo', dati).ferite, 5);
@@ -67,9 +67,12 @@ test('§5.14: soglie delle nuove Ferite per fascia ed esito; oltre Grave la Mort
   assert.ok(r.promemoria.some((p) => /Profonda: PS di Tempra per la Menomazione/.test(p)));
   // le Menomazioni raggiunte per la prima volta, anche come dato (i nemici le registrano: A.73, decisione 7)
   assert.deepEqual(r.menomazioni.map((x) => x.stato), ['Profonda', 'Seria', 'Grave']);
-  // 26+ con fallimento: 6 Ferite, oltre Grave → Morte
+  // 26+ con fallimento: 6 Ferite, oltre Grave. Senza il segno `morente` (i nemici, A.164 aperta) è la morte
   const m = applicaColpo(bersaglio({ pv: 0, ferite: 0, totale: 0 }), colpo([30], { tempra: ['fallimento'] }), dati);
-  assert.deepEqual([m.ferite.dopo, m.ferite.nome, m.morte], [6, 'Morte', true]);
+  assert.deepEqual([m.ferite.dopo, m.ferite.nome, m.morte, m.morente], [6, 'Morente', true, false]);
+  // A.159: con il segno (i PG) si entra in Morente, non si muore (tests/morente.test.js)
+  const pg = applicaColpo({ ...bersaglio({ pv: 0, ferite: 0, totale: 0 }), morente: true }, colpo([30], { tempra: ['fallimento'] }), dati);
+  assert.deepEqual([pg.morte, pg.morente], [false, true]);
   // senza grado di Ferite (null): a 0 PV solo il promemoria, nessuna PS di Tempra
   const n = applicaColpo({ ...bersaglio({ pv: 0 }), ferite: null }, colpo([10]), dati);
   assert.deepEqual([n.ferite, n.tempraMancanti, n.menomazioni], [null, [], []]);

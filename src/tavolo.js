@@ -4,6 +4,7 @@
 import { circostanzeMasterAttive } from './correzioni-master.js';
 import { testiTemporanei } from './temporanei.js';
 import { testoCircostanze } from './circostanze.js';
+import { statoMorente } from './morente.js';
 import { deserializzaPersonaggio, normalizza, serializza, nomeFileEsportazione, nuovoPg, FORMATO_FILE, VERSIONE_FORMATO } from './character.js';
 import { calcolaScheda } from './calc.js';
 import { massimiSessione, allineaSessione, descriviFerite } from './sessione.js';
@@ -58,6 +59,8 @@ export function vistaPlancia(testo, dati, file = null, round = null) {
     ar: ar ? { totale: ar.totale, magica: ar.magica, valori: (ar.valori ?? []).map((v) => ({ id: v.id, etichetta: v.etichetta, valore: v.valore, principale: !!v.principale, provenienza: v.provenienza })) } : null,
     difese: difese ? { valore: difese.effettivo ?? difese.totale, daRegole: difese.totale, provenienza: difese.provenienza ?? null } : null,
     ferite: { grado: sessione.ferite ?? 0, nome: sessione.ferite ? descriviFerite(sessione.ferite, dati).nome : null },
+    // A.159: contatore di Morente, ben visibile nella plancia (src/morente.js); null se il PG non è Morente
+    morente: statoMorente(sessione, dati),
     affaticamento: grado(sessione.affaticamento, r.affaticamento?.stati),
     corruzione: grado(sessione.corruzione, r.corruzione?.stati),
     stati: (r.stati?.elenco ?? []).filter((s) => (sessione.statiAttivi ?? []).includes(s.id)).map((s) => ({ id: s.id, nome: s.nome })),

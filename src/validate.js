@@ -526,6 +526,21 @@ function validaRegole(r, err, dati = {}) {
     if (!isTesto(x?.nome)) err(F, `ferite.stati[${i}].nome`, 'nome mancante');
     if (!isIntero(x?.penalita) || x.penalita > 0) err(F, `ferite.stati[${i}].penalita`, 'penalità intera ≤ 0 mancante');
   });
+  // A.159: Morente, il gradino oltre Grave (src/morente.js)
+  const mo = r.ferite?.morente;
+  if (!isOggetto(mo)) err(F, 'ferite.morente', 'blocco di Morente mancante (A.159)');
+  else {
+    if (!isTesto(mo.nome)) err(F, 'ferite.morente.nome', 'nome dello Stato mancante');
+    if (!isTesto(mo.penalita_come) || !(r.ferite?.stati ?? []).some((x) => x.nome === mo.penalita_come)) err(F, 'ferite.morente.penalita_come', 'deve essere il nome di uno Stato di Ferita (la penalità che si mantiene)');
+    if (!isTesto(mo.stato) || !(r.stati?.elenco ?? []).some((x) => x.id === mo.stato)) err(F, 'ferite.morente.stato', 'deve essere l’id di uno Stato di regole.json → stati.elenco (lo Stato che si accende all’ingresso)');
+    if (!isTesto(mo.contatore?.caratteristica)) err(F, 'ferite.morente.contatore.caratteristica', 'sigla della Caratteristica del contatore mancante');
+    else if (!(dati.caratteristiche?.caratteristiche ?? []).some((c) => c.sigla === mo.contatore.caratteristica)) err(F, 'ferite.morente.contatore.caratteristica', `"${mo.contatore.caratteristica}" non è una Caratteristica`);
+    for (const k of ['per_round', 'per_ferita']) {
+      if (!isIntero(mo.contatore?.[k]) || mo.contatore[k] < 0) err(F, `ferite.morente.contatore.${k}`, 'intero ≥ 0 mancante (quanti Round cala)');
+    }
+    if (!isTesto(mo.morto?.avviso)) err(F, 'ferite.morente.morto.avviso', 'avviso da mostrare a 0 Round mancante (non è un blocco)');
+    if (!Array.isArray(mo.vie) || !mo.vie.length || !mo.vie.every(isTesto)) err(F, 'ferite.morente.vie', 'elenco delle vie di stabilizzazione (solo testo) mancante');
+  }
   const st = r.stati?.elenco;
   if (!Array.isArray(st) || !st.length) err(F, 'stati.elenco', 'elenco {nome, durata} mancante');
   else {

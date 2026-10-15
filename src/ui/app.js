@@ -55,7 +55,7 @@ import { caricaImmagini, iconaPagina } from './immagini.js';
 import { preparaStampa, preparaTab, normalizzaOpzioniStampa, versioniCompatte } from '../stampa.js';
 import { renderTab, tabFissi, ALIAS_TAB } from './tab.js';
 import {
-  massimiSessione, allineaSessione, variaSessione, modificaSessione, commutaStato, commutaCondizioneOggetto, commutaTalento, commutaBonusTalenti, impostaCondizioneArma, riparaOggetto, spendiPmLancio, ricaricaMatrice, attivaArtefatto, attivaTecnicaSessione, nuovoRoundSessione, terminaTecnicaSessione, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
+  massimiSessione, allineaSessione, variaSessione, modificaSessione, stabilizzaMorente, scalaMorente, commutaStato, commutaCondizioneOggetto, commutaTalento, commutaBonusTalenti, impostaCondizioneArma, riparaOggetto, spendiPmLancio, ricaricaMatrice, attivaArtefatto, attivaTecnicaSessione, nuovoRoundSessione, terminaTecnicaSessione, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
   penalitaSessione, variaMunizioni, consumaColpi, scegliGranata, granateDiPartenza, ricaricaArma, caricaDaCarichino, preparaCarichino, variaChroma, variaIntegrita, variaNec,
 } from '../sessione.js';
 import { conOrdinale } from '../lingua.js';
@@ -1686,6 +1686,19 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       },
       varia: (campo, delta) => cambiaSessione(variaSessione(stato.sessione, campo, delta, massimi)),
       imposta: (campo, valore) => cambiaSessione(modificaSessione(stato.sessione, { [campo]: valore }, massimi)),
+      // A.159: «−1» al contatore di Morente (nuove Ferite fuori scontro, o il master che lo scala a mano)
+      scalaMorente: (n = 1) => {
+        const nuova = scalaMorente(stato.sessione, n, massimi, dati);
+        if (nuova) cambiaSessione(nuova);
+      },
+      // A.159: «Stabilizza» registra l'esito di una cura riuscita: si torna a Grave e il contatore si spegne
+      stabilizza: () => {
+        const nuova = stabilizzaMorente(stato.sessione, massimi);
+        if (!nuova) return;
+        cambiaSessione(nuova);
+        stato.messaggioScheda = { tipo: 'ok', testo: dati.regole.ferite.morente?.stabilizza?.nota ?? 'Stabilizzato: si torna a Grave.' };
+        renderScheda({ mantieniScorrimento: true });
+      },
       commutaStato: (id) => cambiaSessione(commutaStato(stato.sessione, id, massimi)),
       condizioneOggetto: (uid) => cambiaSessione(commutaCondizioneOggetto(stato.sessione, uid, massimi)),
       // impianti attivabili (src/impianti.js): «Somministra», cartucce, «Attiva» dei chip; null = non si può

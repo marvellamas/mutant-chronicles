@@ -170,6 +170,27 @@
       }
     },
     {
+      "id": "cartuccia-stabilizzante",
+      "nome": "Cartuccia Stabilizzante",
+      "tipo": "sanitario",
+      "catalogo": "Commerciale",
+      "famiglia": "Cartucce sanitarie",
+      "nomi_alternativi": [],
+      "note_manuale": "Le cartucce sono compatibili con UMC, iniettori e pistole sanitarie descritti in questa sezione. Ogni cartuccia fornisce una sola somministrazione e occupa un posto nella capacità del dispositivo. I carichi possono essere misti e si annotano separatamente per tipo. L’emostatica sospende le ricorrenze del Sanguinamento senza arrestarlo: dopo cinque Round riprende se nessun effetto lo ha arrestato. La coagulante lo arresta, ma un nuovo effetto Sanguinante può applicarlo nuovamente. Nessuna cartuccia restituisce la perdita iniziale già subita o annulla conseguenze già risolte. La Curativa e lo Spray rimarginante recuperano PV soltanto se il paziente non è in Sanguinamento attivo: il recupero è possibile anche durante una sospensione valida del Sanguinamento. Non curano stati di Ferita o Menomazioni. I PV recuperati non superano il massimo del paziente. Un’unica somministrazione rapida per Round Ogni destinatario può ricevere una sola somministrazione medica rapida per Round complessivamente da UMC, Iniettore sanitario, Pistola sanitaria, Spray rimarginante, impianti e postazioni medicochirurgiche, comprese le monodosi del §6.6 e i naniti del §6.7. Il limite riguarda il paziente, anche se intervengono più persone o dispositivi. Un’attivazione automatica e una manuale non aggirano questo limite. Se il paziente ha già ricevuto una Curativa nel Round, l’emergenza automatica della UMC deve attendere il Round successivo; se ha ricevuto l’emostatica automatica, non può ricevere anche una Curativa nello stesso Round. Medicazioni, Talenti e magia seguono le rispettive procedure e limiti; non sono trasformati in somministrazioni rapide. Quando una ferita attiva un protocollo d’emergenza, prima si risolvono interamente attacco, perdita iniziale da Sanguinamento, Prove Salvezza, Ferite ed eventuale morte. Poi interviene il dispositivo, se il paziente è ancora assistibile e il limite del Round lo consente. Il trattamento non annulla retroattivamente una morte già risolta.",
+      "paragrafo": "§6.2 (A.159, risposta approvata il 14/10/2026)",
+      "versione_manuale": "Equipaggiamento 0.8",
+      "reperibilita": "MR",
+      "costo": 2000,
+      "effetto": "Riporta un paziente Morente a Grave e spegne il contatore dei Round",
+      "proprieta": [],
+      "effetto_breve": "Stabilizza un paziente Morente: torna a Grave (−8), contatore spento. Non ridà PV, non arresta il Sanguinamento, non toglie Menomazioni.",
+      "cura": {
+        "morente": "stabilizza",
+        "fonte": "§5.14 (A.159)"
+      },
+      "_nota_a159": "Monouso, occupa un alloggiamento per cartucce. Compatibile con UMC, iniettori sanitari, pistole sanitarie, iniettori impiantati e postazioni medicochirurgiche. UMC Passiva: 1 AzP e Prova di Medicina o Tecnologia–Strumentazione; UMC Attiva: 1 AzP senza Prova; UMC Automatica con protocollo Morente: da sé alla fine dell’intero attacco, senza Azioni né Prova e con la priorità fra i protocolli. Resta il limite di una sola somministrazione rapida per paziente per Round. Non agisce dopo la morte. Peso, PS Integrità e PI non sono indicati dalla risposta: restano da completare."
+    },
+    {
       "id": "cartuccia-curativa",
       "nome": "Cartuccia curativa",
       "tipo": "sanitario",
