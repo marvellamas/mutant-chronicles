@@ -1471,6 +1471,61 @@ catalogo dichiarati da completare. Nessun dato applicato: la CyberArma non è an
   procedura della costruzione tramite Maestro d'Arma (III Grado) e della modifica per la batteria interna;
   colore, capacità, SnT e costo della batteria compatibile. *Nel frattempo:* nessuna scheda nel catalogo.
 
+
+## 15 ottobre 2026 — dieci risposte ricevute (ricognizione, nulla applicato)
+
+Fonte: sezione 7 del Doc «per-davide.md» (15/10 13:25 UTC) ed E&L (14/10 12:25), con i manuali del 15/10.
+**Nessun dato dell'app è stato cambiato:** la ricognizione completa, con lavoro stimato, automazioni segnalate e
+lotti proposti, è in `docs/diff-davide-2026-10-15.md`; il pacchetto per il Doc in
+`docs/pacchetto-per-davide-2026-10-15.md`. Le voci passano dalle «aperte» alle «ricevute, in implementazione».
+
+- **A.158 — CyberArma** (approvata il 13/10): Grado I, SnT 1, Non Comune, PS Integrità 12, 4 PI, 0,5 kg, Epica,
+  nessun prezzo di catalogo; Custode 1 PM/15 Round, Tecnomante 2 PM/10 Round e 1d8 Magico, altre Classi solo con
+  la batteria e a −2 VA; configurazione con Batteria Verde da 5 cariche (Grado II, SnT 2, 0,7 kg), saldo in
+  cariche; costi e Prove di costruzione e modifica. Il §7.25 degli Armamenti non è ancora aggiornato: vale questa.
+- **A.159 — Ferite, Morente e stabilizzazione** (approvata il 14/10): oltre Grave si entra in Morente (−8, Svenuto,
+  contatore di Round pari alla COS intera, −1 per Round e −1 per ogni nuova Ferita, morte a 0); stabilizzazione
+  che riporta a Grave; Stabilizzazione d'emergenza (Medicina −2, 2 Round), Guarigione d'emergenza (3 PM, 1 AzP),
+  Cartuccia Stabilizzante (2.000 cr, MR), UMC Automatica dopo l'intero attacco.
+  **Supera la decisione di Marcello del 13/10** registrata qui sotto: fino al recepimento l'app resta com'è.
+- **A.115 — Capacità dei nemici** (15/10): descrizione completa e parametri (Prove, Azioni, risorse, limiti) dal
+  profilo; niente costi per analogia.
+- **A.126 — Ingombro e campo Spazio** (15/10): campo Spazio in Q (1×1, 2×2, 3×3) nel profilo, distinto dalla Taglia
+  e dalla portata.
+- **A.133 — Portata delle creature grandi** (15/10): quella del singolo attacco, misurata attorno all'ingombro.
+- **A.126–A.138 — Origine dei coni** (15/10): dal centro di un quadretto periferico sul lato dell'emissione, con
+  l'asse che esce dall'ingombro; origine e direzione scelte prima dei tiri.
+- **A.113 — Veicoli** (15/10): il Direttore modifica tutti i mezzi; senza server il veicolo condiviso è in sola
+  lettura; nomi ufficiali Corpo principale, Propulsione, Motore.
+- **A.145 — Azioni sui veicoli** (15/10): tabella completa (salire/scendere 1 AzP, comandi 1 AzP, avvio 1 AzP,
+  condurre 1 AzM, manovra complessa +1 AzP) per auto, moto, imbarcazioni, remi, vele, velivoli e astronavi.
+- **A.146 — Veicoli e Attacchi di Opportunità** (15/10): possibili, bersaglio mezzo o occupante esposto, una sola
+  occasione per nemico; non fermano il movimento. *Supera il provvisorio «no in entrambi i casi».*
+- **A.147 — Curve e rotazioni** (15/10): curva ordinaria nell'AzM, Sterzata stretta +1 AzP e −2, Inversione rapida
+  +1 AzP e −4, nessun costo per i gradi; l'app deve permettere gli otto orientamenti a 45° (oggi ruota di 10°).
+
+Manuali del 15/10, in ricognizione: Magia 1.5 (sez. 28: Hachimaki, Scrigno del Primo Giuramento, Contenitori del
+Silenzio, Tomo dei Guardiani), Armamenti 0.62 (§7.25.1, CyberArma come voce unica e Custodia del Silenzio),
+Equipaggiamento 0.8 (cap. 10 ampliato), Mostri 0.3 (nove caste della Covata, il Lorath e quindici creature con
+Spazio, portata per attacco e GS/PX).
+
+## Domande aperte dalla ricognizione del 15 ottobre 2026
+
+- **A.160 — Punti Abilità liberi nel Manuale dei Mostri** (Mostri 0.3, §5.2). Il paragrafo dice ancora «5 punti
+  Abilità liberi a ogni Grado», mentre la regola approvata è 7 (A.90, decisione 92). Refuso o taratura diversa per
+  gli avversari umani? *Nel frattempo:* 7 per tutti.
+- **A.161 — GS e PX dei Mostri 0.3 e bestiario dell'app.** Le schede danno GS (Principiante…Leggenda) e PX per 4
+  PG; il bestiario proposto usa i cinque gradi Minore…Molto potente su 7 PG (A.97). Le scale si unificano? Servono
+  i PX anche per «Crea nemico»? *Nel frattempo:* scale distinte, nessun PX calcolato.
+- **A.162 — Oggetti indistruttibili** (Equipaggiamento §10.12, Magia §28.2). Lo Scrigno «non perde PI»: basta
+  registrarlo senza PI con una nota, o serve un valore «indistruttibile» riutilizzabile? *Nel frattempo:* nessun
+  PI e una nota.
+- **A.163 — Schermatura dei Contenitori del Silenzio** (Equipaggiamento §10.13, Magia §28.3). Serve uno stato
+  «chiuso / aperto» con effetto sulla Corruzione, o basta un promemoria? La Corruzione degli oggetti oggi non è
+  modellata. *Nel frattempo:* promemoria.
+- **A.164 — Morente e i nemici** (A.159). Vale anche per i nemici della plancia, o per loro resta la morte oltre
+  Grave? E le creature senza COS indicata? *Nel frattempo:* nessun contatore per i nemici.
+
 ## Decisione di Marcello del 13 ottobre 2026 (da rivedere con Davide)
 
 - **Ferite «oltre Grave» con i malus di Grave** (Giocatore §5.14). Marcello: «lo stato di Ferite *Oltre* deve
@@ -1479,7 +1534,7 @@ catalogo dichiarati da completare. Nessun dato applicato: la CyberArma non è an
   Salvezza, cumulativa come gli altri gradini): prima «oltre Grave» non dava nessuna penalità. Nessun blocco
   aggiunto: la morte del §5.14 resta un avviso («Oltre Grave di norma è la morte… decide il master»), nel
   riquadro Ferite della scheda e nel promemoria di «Colpito». Si torna indietro mettendo `null` nel dato.
-- **A.159 — «Oltre Grave» dà penalità?** (Giocatore §5.14). Il manuale elenca cinque Stati di Ferita con la
+- **A.159 — «Oltre Grave» dà penalità?** (Giocatore §5.14). **Risposta ricevuta il 14/10/2026: vedi il blocco del 15 ottobre qui sopra. Oltre Grave si entra in Morente con il contatore; la decisione qui sotto resta applicata finché non si recepisce la risposta.** Il manuale elenca cinque Stati di Ferita con la
   penalità cumulativa e dice che oltre Grave è la morte, senza dire che cosa vale se il personaggio
   sopravvive (Punto Eroe, cure immediate, intervento del Direttore). *Decisione di Marcello del 13/10, «puoi
   rivederla»:* valgono i malus di Grave (−8). Serve una conferma o una regola diversa.
