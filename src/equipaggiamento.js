@@ -1272,6 +1272,8 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       ac: d?.ac ?? null, inc: d?.inc ?? null, mov: d?.mov ?? 0, modalita: d?.modalita ?? [],
       munizioni: d?.munizioni ?? null,
       attivazione: d?.attivazione ?? null, manovre: d?.manovre ?? [], naturaDanno: d?.natura_danno ?? null,
+      // A.158: costo, durata e malus dell'attivazione per Classe (CyberArma, src/attivazione-arma.js)
+      usoPerClasse: d?.uso_per_classe ?? null,
       proprieta: d?.proprieta ?? [], parata, personalizzato: o.personalizzato,
       // §7.5.1: riserva di Chroma integrata (Bordone Templare…), mostrata accanto all'arma
       contenitore: extra.moduloDi ? null : (infoArtefatto(d, dati)?.contenitore ?? null),

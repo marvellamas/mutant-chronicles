@@ -371,6 +371,21 @@
           "fonte": "Equipaggiamento §2.5"
         }
       ]
+    },
+    {
+      "id": "custodia-del-silenzio",
+      "nome": "Custodia del Silenzio",
+      "tipo": "altro",
+      "catalogo": "Artefatti di campagna",
+      "famiglia": "Contenitori e trasporto",
+      "nomi_alternativi": [],
+      "paragrafo": "Armamenti §7.25.1; Equipaggiamento §10.13.1; Magia §28.3",
+      "versione_manuale": "Armamenti 0.62 / Equipaggiamento 0.8 / Magia 1.5 (15/10/2026)",
+      "peso": 0.3,
+      "costo": null,
+      "effetto_breve": "Cilindro di cuoio per la CyberArma disattivata: chiuso e integro ne scherma le emanazioni di Corruzione 1. SnT 0, nessun costo in PM.",
+      "proprieta": [],
+      "_nota": "Cilindro di cuoio semplice, lungo 30 cm e di 6 cm di diametro esterno, con passante per la cintura. La schermatura è passiva e vale solo con l’arma disattivata e interamente riposta; aprirla o comprometterne la chiusura la fa cessare, richiuderla la ripristina senza Prove né PM. Non è indistruttibile: cuoio e legno seguono le normali regole di Integrità. Non modifica danno, colore, attivazione o requisiti della CyberArma e non concede estrazioni gratuite; il suo peso si somma a quello dell’arma. Prezzo e Reperibilità non sono indicati dai manuali: restano da completare. La famiglia dei Contenitori del Silenzio (Zaino e Cofanetto, §10.13.2 e §10.13.3) e lo stato «chiuso / aperto» restano da fare: A.163."
     }
   ]
 }

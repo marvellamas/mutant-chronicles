@@ -54,6 +54,7 @@ import { attivaTecnica, nuovoRound, terminaTecnica, allineaTecnicheAttive, tecni
 import { allineaIncantesimiAttivi } from './durate-incantesimi.js';
 import { allineaImpianti } from './impianti.js';
 import { allineaMorente, statoMorente, togliRound } from './morente.js';
+import { allineaAttivazioniArmi, attivaArma, terminaArma } from './attivazione-arma.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const limita = (v, min, max) => Math.min(max, Math.max(min, v));
@@ -415,6 +416,8 @@ export function allineaSessione(sessione, m) {
     ...(() => { const t = allineaTiri(sessione.tiri); return t.length ? { tiri: t } : {}; })(),
     // A.159: contatore di Morente (src/morente.js); la chiave c'è solo quando il personaggio è Morente
     ...(() => { const mo = morenteDi(sessione, m); return mo ? { morente: mo } : {}; })(),
+    // A.158: armi attivate a Round (CyberArma, src/attivazione-arma.js); la chiave c'è solo se ce n'è una in corso
+    ...(() => { const at = allineaAttivazioniArmi(sessione.attivazioniArmi, m.oggetti ?? null, sessione.round); return Object.keys(at).length ? { attivazioniArmi: at } : {}; })(),
     note: typeof sessione.note === 'string' ? sessione.note : '',
   };
 }
@@ -668,6 +671,36 @@ export function scalaMorente(sessione, n, m, dati) {
   if (!s.morente) return null;
   const mo = togliRound(s.morente, n, dati);
   return mo === s.morente ? null : modificaSessione(s, { morente: mo }, m);
+}
+
+/**
+ * A.158: «Attiva» di un'arma che dura un tot di Round (CyberArma). Scala il costo previsto dai dati per la
+ * Classe di chi la impugna (PM personali, oppure una carica della riserva integrata) e fa partire la durata
+ * dal Round corrente. null se non si può (riserva o PM insufficienti) e `forza` è falso; con `forza` si
+ * attiva lo stesso e la riserva non va sotto 0 (N2, «procedi comunque»).
+ */
+export function attivaArmaSessione(sessione, uid, uso, m, { forza = false } = {}) {
+  const s = allineaSessione(sessione, m);
+  if (!uso?.round) return null;
+  const modifica = {};
+  if (uso.cariche) {
+    const c = s.chroma[uid];
+    if (!c) return null;
+    if (c.pmAttuali < uso.cariche && !forza) return null;
+    modifica.chroma = { ...s.chroma, [uid]: { ...c, pmAttuali: Math.max(0, c.pmAttuali - uso.cariche) } };
+  } else if (uso.pm) {
+    if (s.pmAttuali < uso.pm && !forza) return null;
+    modifica.pmAttuali = Math.max(0, s.pmAttuali - uso.pm);
+  }
+  modifica.attivazioniArmi = attivaArma(s, uid, uso.round);
+  return modificaSessione(s, modifica, m);
+}
+
+/** A.158: «Termina» l'attivazione di un'arma (niente si restituisce: il costo è già pagato). */
+export function terminaArmaSessione(sessione, uid, m) {
+  const s = allineaSessione(sessione, m);
+  if (!s.attivazioniArmi?.[uid]) return null;
+  return modificaSessione({ ...s, attivazioniArmi: terminaArma(s, uid) }, {}, m);
 }
 
 /** A.159: i Round che restano al contatore, o null se il personaggio non è Morente. */

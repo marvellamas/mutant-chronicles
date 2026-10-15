@@ -33,7 +33,7 @@ test('catalogo: caricato dall’indice, un lotto = un file e una riga; riferimen
 test('cascata e ricerca: solo ciò che esiste; i nomi alternativi portano al profilo', () => {
   const o = opzioniCascata(dati, { tipo: 'arma_ravvicinata', catalogo: 'Commerciale', famiglia: 'Spade' });
   assert.deepEqual(o.tipi, ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'rinforzo', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'impianto', 'altro']);
-  assert.deepEqual(o.cataloghi, ['Commerciale', 'Bauhaus', 'Capitol', 'Cybertronic', 'Fratellanza', 'Imperial', 'Mishima', 'Alleanza']);
+  assert.deepEqual(o.cataloghi, ['Commerciale', 'Artefatti di campagna', 'Bauhaus', 'Capitol', 'Cybertronic', 'Fratellanza', 'Imperial', 'Mishima', 'Alleanza']);
   assert.ok(o.famiglie.includes('Armi da pugno'));
   assert.deepEqual(o.profili.map((p) => p.nome), ['Spada leggera', 'Stocco', 'Spada lunga', 'Spada bastarda', 'Spadone']);
   assert.deepEqual(cercaNelCatalogo(dati, 'alabarda').map((x) => x.rif), ['armi:arma-inastata-pesante']);
@@ -929,7 +929,7 @@ test('lotto 12: regole di sintonizzazione, profili con riserva mistica, batterie
   assert.deepEqual(f.sintonizzazione.capacita_per_gradi, [8, 9, 10, 11, 12, 13]);
   assert.deepEqual(f.sintonizzazione.talento, { nome: 'Architetto TecnoMistico', bonus: 2 });
   assert.equal(f.sintonizzazione.potenze.Leggendaria, 6);
-  assert.equal(f.artefatti_catalogo.length, 6);
+  assert.equal(f.artefatti_catalogo.length, 8); // A.158: le due configurazioni della CyberArma
   assert.deepEqual(f.artefatti_catalogo.find((a) => a.rif === 'scudi:scudo-delle-guardie-sacre'), {
     rif: 'scudi:scudo-delle-guardie-sacre', tipologia: 'Protezioni', potenza: 'Rara', sintonizzazione: 3, sintonizzabile: true, proprieta_attive: true,
     contenitore: { energia: 'Rosso', capacita_pm: 5, integrato: true, riserva: 'cariche', alimentazione: 'esclusiva' }, // Magia §26.2, Armamenti §7.5.1
@@ -984,7 +984,8 @@ test('validatore degli Artefatti: costo = potenza, riferimenti, regole', () => {
 // --- Lotto 13: Manovre compatibili dei profili commerciali (§7.1.7) ------------------------
 
 test('lotto 13: Manovre compatibili su tutti i 28 profili commerciali (§7.1.7)', () => {
-  const commerciali = catalogo(dati).oggetti.filter((o) => o.file === 'armi');
+  // A.158: le due CyberArme stanno in armi.json ma non sono profili commerciali del §7.1
+  const commerciali = catalogo(dati).oggetti.filter((o) => o.file === 'armi' && o.catalogo === 'Commerciale');
   assert.equal(commerciali.length, 28);
   assert.ok(commerciali.every((o) => o.manovre?.length));
   const r = (id) => catalogo(dati).perRif.get(`armi:${id}`).manovre;

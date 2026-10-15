@@ -1,6 +1,6 @@
 {
   "versione_manuale": "Armamenti 0.50",
-  "fonte": "Manuale degli Armamenti v0.50, §7.1.1–7.1.3 (catalogo Commerciale delle armi ravvicinate); lotto 1 dal pilota di estrazione",
+  "fonte": "Manuale degli Armamenti v0.50, §7.1.1–7.1.3 (catalogo Commerciale delle armi ravvicinate); lotto 1 dal pilota di estrazione · Armamenti §7.25 e §7.25.1 (0.62); A.158, risposta approvata il 13/10/2026",
   "_nota": "Generato da tools/lotti/lotto1_pilota.mjs; da qui in poi si modifica questo file. «abilita» è il nome in abilita.json; «specializzazione» è l’id della Specializzazione nelle armi (§8.8.1) che si applica.",
   "oggetti": [
     {
@@ -950,6 +950,181 @@
           "testo": "Il Tirapugni concussivo dispone di cinque cariche in una cella energetica sostituibile. Spendendone una aggiunge 1d6 danni al danno base di 2 e applica Concussivo all’attacco. A zero cariche conserva il danno ordinario di 2. La dichiarazione e l’eventuale risparmio della carica seguono il §7.1.4. Può usare la Manovra Stordire anche senza carica; Concussivo resta un effetto distinto."
         }
       ]
+    },
+    {
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Artefatti di campagna",
+      "famiglia": "Spade",
+      "nomi_alternativi": [
+        "Cyber Arma",
+        "Cyber-Arma"
+      ],
+      "paragrafo": "§7.25",
+      "versione_manuale": "Armamenti 0.62 (A.158)",
+      "abilita": "Armi da mischia",
+      "specializzazione": "specializzazione-spade",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d8",
+        "due_mani": null
+      },
+      "natura_danno": "Magico",
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 3,
+      "inc": null,
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "EP",
+      "costo": null,
+      "_nota_costo": "A.158, punto 5: la CyberArma non è normalmente commercializzata e non ha un prezzo standard di catalogo (la proposta di 3.000 crediti è ritirata). Nell’app il prezzo risulta non disponibile, non zero. L’eventuale cessione la stabilisce il Direttore.",
+      "manovre": [
+        "generali"
+      ],
+      "_nota_manovre": "TODO(Davide) A.165: il §7.25 non elenca Manovre per la CyberArma; restano quelle generali, come per le armi con «—» (§7.1.7).",
+      "proprieta": [],
+      "id": "cyberarma",
+      "nome": "CyberArma",
+      "effetto_breve": "Artefatto TecnoMistico di Grado I: la lama si manifesta pagando con i PM personali. Solo Custodi e Tecnomanti.",
+      "peso": 0.5,
+      "_nota_peso": "A.158, punto 1: impugnatura, condensatore di energia mistica e frammento di cristallo focalizzatore; la lama manifestata non aggiunge peso.",
+      "uso_per_classe": {
+        "fonte": "A.158, punto 2 (approvata il 13/10/2026)",
+        "predefinito": "altre",
+        "classi": [
+          {
+            "classe": "Custode",
+            "pm": 1,
+            "round": 15,
+            "danno_extra": 1,
+            "va": 0,
+            "testo": "Custode: 1 PM personale, 15 Round, evocazione compresa nell’Azione del primo attacco, +1 al danno. Il danno base segue il Grado di Custode (Giocatore §3.9.2)."
+          },
+          {
+            "classe": "Tecnomante",
+            "pm": 2,
+            "round": 10,
+            "danno_extra": 0,
+            "va": 0,
+            "testo": "Tecnomante: 1 AzP e 2 PM personali per 10 Round; 1d8 Magico più i modificatori pertinenti, senza Concentrazione e senza bonus propri al VA."
+          },
+          {
+            "classe": "altre",
+            "pm": null,
+            "cariche": null,
+            "round": null,
+            "danno_extra": 0,
+            "va": -2,
+            "ammesso": false,
+            "testo": "Altre Classi: il modello originale, privo di batteria, non si può utilizzare (A.158, punto 2). Serve la configurazione con Batteria Verde."
+          }
+        ]
+      },
+      "costruzione": {
+        "fonte": "A.158, punto 6",
+        "chi": "Un Custode con Maestro d’Arma (la ricetta è compresa nel Talento, senza Ritualista) oppure un Tecnomante con Architetto TecnoMistico.",
+        "passi": [
+          "Progettazione, solo se manca il progetto: Prova di Artefatti senza penalità, 4 ore, 100 crediti di risorse.",
+          "Assemblaggio e regolazione del condensatore: Prova di Tecnologia −4, 16 ore, 1.000 crediti di componenti (impugnatura, condensatore e frammento di cristallo focalizzatore).",
+          "Infusione di Grado I: Prova di Rituali senza penalità, 1 ora, 250 crediti di reagenti e 3 PM personali."
+        ],
+        "totali": "Con il progetto disponibile e successi ordinari: 1.250 crediti, 17 ore e 3 PM personali. Sviluppando anche il progetto: 1.350 crediti, 21 ore e 3 PM personali.",
+        "nota": "Si applicano i normali esiti Magistrali, fallimenti, Maldestri e interruzioni dei §§24.3–24.5 del Manuale della Magia. La reperibilità dei componenti la stabilisce il Direttore."
+      },
+      "_nota_a158": "Modello originale senza batteria interna. La Qualità fisica (Non comune) è distinta dal Grado mistico e non aumenta da sola la SnT. La progressione dell’Arma Astrale del Custode dipende dalla Classe e non aumenta Grado o SnT dell’oggetto. Il colore della lama dipende dal frammento focalizzatore e non aggiunge effetti elementali. Registrazione: un’unica voce di inventario fra Armi e Artefatti (Armamenti §7.25.1, Equipaggiamento §10.9)."
+    },
+    {
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Artefatti di campagna",
+      "famiglia": "Spade",
+      "nomi_alternativi": [
+        "Cyber Arma",
+        "Cyber-Arma"
+      ],
+      "paragrafo": "§7.25",
+      "versione_manuale": "Armamenti 0.62 (A.158)",
+      "abilita": "Armi da mischia",
+      "specializzazione": "specializzazione-spade",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d8",
+        "due_mani": null
+      },
+      "natura_danno": "Magico",
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 3,
+      "inc": null,
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "EP",
+      "costo": null,
+      "_nota_costo": "A.158, punto 5: la CyberArma non è normalmente commercializzata e non ha un prezzo standard di catalogo (la proposta di 3.000 crediti è ritirata). Nell’app il prezzo risulta non disponibile, non zero. L’eventuale cessione la stabilisce il Direttore.",
+      "manovre": [
+        "generali"
+      ],
+      "_nota_manovre": "TODO(Davide) A.165: il §7.25 non elenca Manovre per la CyberArma; restano quelle generali, come per le armi con «—» (§7.1.7).",
+      "proprieta": [],
+      "id": "cyberarma-batteria-verde",
+      "nome": "CyberArma con Batteria Verde",
+      "effetto_breve": "CyberArma modificata con Batteria Verde da 5 cariche: Grado II, una carica per attivazione. Le altre Classi la usano a −2 VA.",
+      "peso": 0.7,
+      "_nota_peso": "A.158, punto 3: peso complessivo della configurazione modificata.",
+      "munizioni": {
+        "capacita": 5,
+        "unita": "cariche",
+        "consumo": "una carica intera per attivazione, senza mezze cariche",
+        "ricarica": "2 PM di energia Spirituale immagazzinata per carica, 10 PM Verdi per le cinque cariche (A.158, punto 4)",
+        "riferimento": "Batteria Verde da 5 cariche, dedicata esclusivamente alla CyberArma"
+      },
+      "uso_per_classe": {
+        "fonte": "A.158, punto 2 (approvata il 13/10/2026)",
+        "predefinito": "altre",
+        "classi": [
+          {
+            "classe": "Custode",
+            "pm": 1,
+            "round": 15,
+            "danno_extra": 1,
+            "va": 0,
+            "cariche": 1,
+            "testo": "Custode: 1 PM personale oppure una carica della batteria, 15 Round, evocazione compresa nell’Azione del primo attacco, +1 al danno. Il danno base segue il Grado di Custode (Giocatore §3.9.2)."
+          },
+          {
+            "classe": "Tecnomante",
+            "pm": 2,
+            "round": 10,
+            "danno_extra": 0,
+            "va": 0,
+            "cariche": 1,
+            "testo": "Tecnomante: 1 AzP e 2 PM personali, oppure una carica della batteria, per 10 Round; 1d8 Magico più i modificatori pertinenti, senza Concentrazione e senza bonus propri al VA."
+          },
+          {
+            "classe": "altre",
+            "pm": null,
+            "cariche": 1,
+            "round": 10,
+            "danno_extra": 0,
+            "va": -2,
+            "ammesso": true,
+            "testo": "Altre Classi: 1 AzP e una carica della batteria per 10 Round, 1d8 Magico; −2 al VA delle Prove per colpire con l’arma, cumulativo con gli altri modificatori. Nessuna Prova di attivazione in più. Restano i requisiti d’impiego e la sintonizzazione."
+          }
+        ]
+      },
+      "costruzione": {
+        "fonte": "A.158, punto 7",
+        "chi": "Un Tecnomante con Architetto TecnoMistico e almeno II Grado di Classe.",
+        "passi": [
+          "Progetto della modifica, se non disponibile: Prova di Artefatti −2, 8 ore, 200 crediti di risorse.",
+          "Adattamento e installazione: Prova di Tecnologia −2, 8 ore, 500 crediti di materiali, contenitore compreso; Chroma Verde per le cinque cariche: altri 1.000 crediti.",
+          "Reinfusione completa della configurazione di Grado II: Prova di Rituali −2, 2 ore, 500 crediti di reagenti e 6 PM personali."
+        ],
+        "totali": "Costo aggiuntivo con il progetto disponibile e successi ordinari: 2.000 crediti, 10 ore e 6 PM personali. Sviluppando anche il progetto: 2.200 crediti, 18 ore e 6 PM personali; i totali comprendono materiali, contenitore, Chroma e reagenti.",
+        "nota": "Al termine della modifica la batteria è a 0/5 cariche: la prima ricarica è separata. Una carica richiede 2 PM di energia Spirituale immagazzinata, quindi 10 PM Verdi per le cinque cariche, con le normali conversioni (i 6 PM del rituale infondono il manufatto e non caricano la batteria)."
+      },
+      "_nota_a158": "La scheda mostra soltanto cariche attuali e massime (per esempio 3/5): non è una riserva di PM da spendere per Incantesimi personali, conversioni o altri oggetti. Grado finale II e SnT 2 complessivi: con una riserva integrata il Grado è il maggiore fra arma e riserva e la sintonizzazione si conta una volta sola, senza sommare due costi. Il colore energetico della batteria è distinto da quello della lama."
     }
   ]
 }

@@ -23,6 +23,7 @@ import { formulaScomposizione, visioniPersonaggio, abilitaVista, intensitaStato,
 import { rigaScelte } from './pannello-passi.js';
 import { colore, riempimento, condizioniAttiveAbilita } from '../interfaccia.js';
 import { statoMorente } from '../morente.js';
+import { testoAttivazione } from '../attivazione-arma.js';
 import { descriviFerite } from '../sessione.js';
 import { statoIntegrita } from '../protezione.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
@@ -1801,7 +1802,9 @@ function riquadroArmi(ctx, d, mani) {
     return h('li', { class: r.oltre ? 'oltre' : null }, h('span', { class: 'sigla' }, `${r.titolo} `),
       o ? h('span', { class: 'voce-sintesi' }, h('strong', {}, r.nome),
         a && a.va !== null ? ` · VA ${numero(a.vaEffettivo ?? a.va)}` : '', a && !a.dannoDaMunizione ? ` · ${testoDanno(a.danno)}` : '',
-        o.scudo ? ` · AR ${testoAr(o.scudo.ar)}` : '', dettagli(o))
+        o.scudo ? ` · AR ${testoAr(o.scudo.ar)}` : '', dettagli(o),
+        // A.158: armi che si attivano per un tot di Round (CyberArma), con il costo della propria Classe
+        a ? attivazioneArmaUi(ctx, a) : null)
         : h('span', { class: 'nota' }, 'libera'));
   };
   return h('section', { class: 'riquadro riquadro-equip riquadro-armi', 'aria-label': 'Armi' },
@@ -1814,6 +1817,29 @@ function riquadroArmi(ctx, d, mani) {
     // Artefatti che potenziano i pugni (Guanti da Combattimento Mistico, Armamenti §7.24): si indossano da qui
     oggettiDisponibili(ctx, ['artefatto'], { verbo: () => 'Indossa', statoAttivo: (r) => (r.stati.includes('indossata') ? 'indossata' : null), soloNonAttivi: true,
       filtro: (r) => (r.def?.effetti ?? []).some((e) => e.attacchi === 'senz_armi') }));
+}
+
+/**
+ * A.158: attivazione a Round di un'arma (CyberArma, Armamenti §7.25). Costo e durata sono quelli della Classe
+ * del personaggio, presi dai dati (uso_per_classe); «Attiva» li scala e segna i Round, «Termina» la spegne.
+ * Per le Classi che non la possono usare è un avviso, non un blocco: decide il tavolo.
+ */
+function attivazioneArmaUi(ctx, a) {
+  if (!a.usoPerClasse) return null;
+  const u = testoAttivazione({ uso_per_classe: a.usoPerClasse }, ctx.tab.scheda, ctx.sessione, a.uid);
+  if (!u) return null;
+  const pm = u.cariche ? ctx.sessione.chroma?.[a.uid]?.pmAttuali ?? 0 : ctx.sessione.pmAttuali;
+  const motivo = !u.ammessa ? `${a.nome}: questa configurazione non è utilizzabile dalla tua Classe`
+    : u.cariche && pm < u.cariche ? `la riserva ha ${pm} caric${pm === 1 ? 'a' : 'he'}`
+      : u.pm && pm < u.pm ? `hai ${pm} PM, ne servono ${u.pm}` : null;
+  return h('span', { class: `attivazione-arma${u.attiva ? ' attiva' : ''}` },
+    h('small', { class: 'nota' }, ` · ${u.sintesi ?? 'non si attiva'}`),
+    u.va ? h('small', { class: 'motivo' }, ` ${numero(u.va)} VA`) : null,
+    u.attiva
+      ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Spegne l’attivazione (il costo resta pagato)', onclick: () => ctx.azioni.terminaArma(a.uid) }, 'Termina')
+      : h('button', { type: 'button', class: `btn btn-piccolo${motivo ? ' con-avviso' : ''}`, title: motivo ?? u.testo ?? `Scala ${u.costo} e fa partire ${u.round} Round`,
+        onclick: () => conAvviso(ctx.azioni.storico, { azione: `attivare ${a.nome}`, motivo, fai: (forza) => ctx.azioni.attivaArma(a.uid, u, forza) }) }, u.costo ? `Attiva (−${u.costo})` : 'Attiva'),
+    u.testo ? infoValore('?', { titolo: `${a.nome}: attivazione`, sezioni: [{ testo: u.testo }] }, { classe: 'info-gradi' }) : null);
 }
 
 /** Riquadro delle Ferite (§5.14), modificabile: sotto i PV nella colonna di sinistra di ogni tab (S5). */

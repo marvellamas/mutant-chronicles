@@ -17,9 +17,10 @@ const deiFile = (f) => cat.oggetti.filter((o) => o.file === f);
 const vecchiaDotazione = (id, nome, extra = {}) => normalizzaEquipaggiamento([{ uid: `dot-${id}`, rif: null, personalizzato: { nome, tipo: 'altro' }, stato: null, quantita: 1, note: '', dotazione_iniziale: true, dotazione_id: id, ...extra }])[0];
 
 test('cap. 2: 19 voci del catalogo Commerciale, tutte CO, con peso e prezzo; niente PI né Qualità inventati', () => {
-  const tutte = deiFile('dotazioni_personali');
+  // A.158: la Custodia del Silenzio sta fra i contenitori ma è un Artefatto di campagna, fuori dal cap. 2
+  const tutte = deiFile('dotazioni_personali').filter((o) => o.catalogo === 'Commerciale');
   assert.equal(tutte.length, 19);
-  assert.ok(tutte.every((o) => o.catalogo === 'Commerciale' && o.reperibilita === 'CO' && o.peso > 0 && o.costo > 0));
+  assert.ok(tutte.every((o) => o.reperibilita === 'CO' && o.peso > 0 && o.costo > 0));
   assert.ok(tutte.every((o) => o.pi === undefined && o.qualita === undefined));
   assert.deepEqual([r('dotazioni_personali:zaino-da-viaggio').peso, r('dotazioni_personali:zaino-da-viaggio').costo], [1, 100]);
   assert.equal(r('dotazioni_personali:bastoncino-luminoso').peso, 0.05);

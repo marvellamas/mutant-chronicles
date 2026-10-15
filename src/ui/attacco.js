@@ -17,6 +17,7 @@ import {
 } from '../attacco.js';
 import { specTiro, tira } from '../tiri.js';
 import { riquadroDanno, rigaScelte, interruttore, pannelloSintetico, pulsanteCommuta } from './pannello-passi.js';
+import { testoAttivazione } from '../attivazione-arma.js';
 import { armiDelPannello, fasceDistanza, fasciaDi, mirato as datiMirato, vociAttive, vociAttiveConMappa, sceltePerScontro, conScontro } from '../attacco-sintesi.js';
 import { informa } from './finestrella.js';
 import { apriTiro } from './tira-valore.js';
@@ -125,7 +126,12 @@ function rigaArma(ctx, a, stato) {
   const voci = lista.map((x) => ({ valore: x.uid, etichetta: x.etichetta }));
   if (senzArmiDisponibile(ctx.tab.scheda, ctx.dati) && !voci.some((x) => x.valore === SENZ_ARMI)) voci.push({ valore: SENZ_ARMI, etichetta: a.uid === SENZ_ARMI ? a.nome : 'Senz’armi' });
   if (!voci.some((x) => x.valore === a.uid)) voci.unshift({ valore: a.uid, etichetta: a.nome });
-  return rigaScelte('Arma', voci, a.uid, (uid) => { if (uid === a.uid) return; ctx.ui.attacco = { uid, passo: 0, altro: stato.altro }; ctx.azioni.ridisegna(); }, { classe: 'scelta-arma' });
+  const scelta = rigaScelte('Arma', voci, a.uid, (uid) => { if (uid === a.uid) return; ctx.ui.attacco = { uid, passo: 0, altro: stato.altro }; ctx.azioni.ridisegna(); }, { classe: 'scelta-arma' });
+  // A.158: arma che si attiva a Round (CyberArma): costo e Round che restano, accanto all'arma scelta
+  const u = a.usoPerClasse ? testoAttivazione({ uso_per_classe: a.usoPerClasse }, ctx.tab?.scheda, ctx.sessione, a.uid) : null;
+  if (u?.sintesi) scelta.append(h('span', { class: `attivazione-arma${u.attiva ? ' attiva' : ''}` }, h('small', { class: 'nota' }, ` ${u.sintesi}`),
+    u.va ? h('small', { class: 'motivo' }, ` ${u.va > 0 ? '+' : '−'}${Math.abs(u.va)} VA per la tua Classe`) : null));
+  return scelta;
 }
 
 /**

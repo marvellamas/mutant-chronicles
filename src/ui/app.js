@@ -55,7 +55,7 @@ import { caricaImmagini, iconaPagina } from './immagini.js';
 import { preparaStampa, preparaTab, normalizzaOpzioniStampa, versioniCompatte } from '../stampa.js';
 import { renderTab, tabFissi, ALIAS_TAB } from './tab.js';
 import {
-  massimiSessione, allineaSessione, variaSessione, modificaSessione, stabilizzaMorente, scalaMorente, commutaStato, commutaCondizioneOggetto, commutaTalento, commutaBonusTalenti, impostaCondizioneArma, riparaOggetto, spendiPmLancio, ricaricaMatrice, attivaArtefatto, attivaTecnicaSessione, nuovoRoundSessione, terminaTecnicaSessione, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
+  massimiSessione, allineaSessione, variaSessione, modificaSessione, stabilizzaMorente, scalaMorente, attivaArmaSessione, terminaArmaSessione, commutaStato, commutaCondizioneOggetto, commutaTalento, commutaBonusTalenti, impostaCondizioneArma, riparaOggetto, spendiPmLancio, ricaricaMatrice, attivaArtefatto, attivaTecnicaSessione, nuovoRoundSessione, terminaTecnicaSessione, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
   penalitaSessione, variaMunizioni, consumaColpi, scegliGranata, granateDiPartenza, ricaricaArma, caricaDaCarichino, preparaCarichino, variaChroma, variaIntegrita, variaNec,
 } from '../sessione.js';
 import { conOrdinale } from '../lingua.js';
@@ -1686,6 +1686,13 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       },
       varia: (campo, delta) => cambiaSessione(variaSessione(stato.sessione, campo, delta, massimi)),
       imposta: (campo, valore) => cambiaSessione(modificaSessione(stato.sessione, { [campo]: valore }, massimi)),
+      // A.158: «Attiva» e «Termina» di un'arma a durata (CyberArma, src/attivazione-arma.js)
+      attivaArma: (uid, uso, forza = false) => {
+        const nuova = attivaArmaSessione(stato.sessione, uid, uso, massimi, { forza });
+        if (!nuova) { stato.messaggioScheda = { tipo: 'attenzione', testo: 'Attivazione non possibile: controlla PM o cariche.' }; renderScheda({ mantieniScorrimento: true }); return; }
+        cambiaSessione(nuova);
+      },
+      terminaArma: (uid) => { const n = terminaArmaSessione(stato.sessione, uid, massimi); if (n) cambiaSessione(n); },
       // A.159: «−1» al contatore di Morente (nuove Ferite fuori scontro, o il master che lo scala a mano)
       scalaMorente: (n = 1) => {
         const nuova = scalaMorente(stato.sessione, n, massimi, dati);

@@ -140,6 +140,29 @@
         "riserva": "cariche",
         "alimentazione": "esclusiva"
       }
+    },
+    {
+      "rif": "armi:cyberarma",
+      "tipologia": "Armi",
+      "potenza": "Comune",
+      "sintonizzazione": 1,
+      "sintonizzabile": true,
+      "proprieta_attive": true
+    },
+    {
+      "rif": "armi:cyberarma-batteria-verde",
+      "tipologia": "Armi",
+      "potenza": "Non Comune",
+      "sintonizzazione": 2,
+      "sintonizzabile": true,
+      "proprieta_attive": true,
+      "contenitore": {
+        "energia": "Verde",
+        "capacita_pm": 5,
+        "integrato": true,
+        "riserva": "cariche",
+        "alimentazione": "esclusiva"
+      }
     }
   ],
   "oggetti": [
