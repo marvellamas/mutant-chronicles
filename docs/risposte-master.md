@@ -1463,7 +1463,7 @@ Il controllo dei manuali del 12 ottobre (`docs/diff-manuali-2026-10-12.md`) ha t
 Armamenti 0.61, con la CyberArma descritta nei due impieghi (Custode e Tecnomante) ma con i parametri di
 catalogo dichiarati da completare. Nessun dato applicato: la CyberArma non è ancora nel catalogo dell'app.
 
-- **A.158 — CyberArma: parametri mancanti (Armamenti §7.25).** Il paragrafo dice espressamente che «SnT del
+- **A.158 — CyberArma: parametri mancanti (Armamenti §7.25).** **RISOLTA: risposta del 13/10/2026 applicata il 15/10 sera (blocco «lotto personaggi»): due configurazioni nel catalogo, uso per Classe, saldo in cariche, costruzione e modifica. Resta aperta la sola A.165 sulla famiglia dell'arma.** Il paragrafo dice espressamente che «SnT del
   progetto originale, parametri commerciali e costi e procedura specifici di costruzione e modifica restano
   da completare nel catalogo» e che «colore energetico, capacità, SnT e costo della batteria e della modifica
   devono essere definiti nella relativa configurazione; non è assegnata automaticamente una batteria Verde da
@@ -1471,6 +1471,61 @@ catalogo dichiarati da completare. Nessun dato applicato: la CyberArma non è an
   procedura della costruzione tramite Maestro d'Arma (III Grado) e della modifica per la batteria interna;
   colore, capacità, SnT e costo della batteria compatibile. *Nel frattempo:* nessuna scheda nel catalogo.
 
+
+## 15 ottobre 2026, sera — lotto «personaggi»: A.159 e A.158 applicate
+
+Primo lotto dopo la ricognizione del 15/10 (`docs/diff-davide-2026-10-15.md`). Le due voci passano da
+«ricevute, in implementazione» a **risolte**; le altre otto restano in implementazione.
+
+**A.159 — Ferite, Morente e stabilizzazione** (approvata il 14/10, applicata il 15/10 sera). Supera la
+decisione provvisoria di Marcello del 13/10 («oltre Grave vale come Grave e basta»), registrata più sotto.
+Nei dati, `regole.json` → `ferite.morente`; motore puro in `src/morente.js`; test in `tests/morente.test.js`.
+
+- oltre Grave il personaggio entra in **Morente**: mantiene −8, sviene (lo Stato Svenuto si accende da solo
+  e si può togliere a mano) e apre un contatore di Round pari alla **COS intera** del momento;
+- il contatore cala di 1 per ogni Round passato — nello scontro lo fa avanzare la plancia — e di 1 per ogni
+  **nuova** Ferita; il colpo che fa entrare in Morente lascia il contatore pieno (punto 3 della risposta);
+- a 0 l'app scrive «È morto (A.159) — decide il master»: **nessun blocco, nessuna cancellazione**;
+- «Stabilizza» riporta a Grave e spegne il contatore, senza concedere cure: PV, PM, applicazioni del kit,
+  cartucce e Azioni si segnano a parte;
+- le vie approvate (Stabilizzazione d'emergenza Medicina −2 in 2 Round, Guarigione d'emergenza 3 PM e 1 AzP,
+  Cartuccia Stabilizzante, UMC Automatica a fine attacco) sono un **promemoria di solo testo**: nessuna Prova
+  automatica, nessuna procedura guidata (forma leggera decisa con Marcello);
+- **Cartuccia Stabilizzante** nel catalogo: 2.000 cr, MR, monouso. Peso, PS Integrità e PI non sono nella
+  risposta e restano vuoti;
+- i nemici restano come oggi (oltre Grave è la morte): **A.164 aperta**.
+
+**A.158 — CyberArma** (approvata il 13/10, applicata il 15/10 sera), con il §7.25.1 degli Armamenti 0.62. Il
+§7.25 del manuale non riporta ancora i parametri: vale la risposta. Lotto in
+`tools/lotti/lotto_cyberarma_a158.mjs`, test in `tests/cyberarma-a158.test.js`.
+
+- due configurazioni, una sola voce di inventario fra Armi e Artefatti (§7.25.1, Equipaggiamento §10.9):
+  **modello originale** Grado I, SnT 1, Qualità fisica Non comune, PS Integrità 12, 4 PI, 0,5 kg,
+  Reperibilità Epica, **senza prezzo di catalogo** (la proposta di 3.000 cr è ritirata: nell'app il prezzo
+  risulta non disponibile, non zero); **con Batteria Verde** Grado II, SnT 2, 0,7 kg, 5 cariche;
+- con una riserva integrata il Grado è il maggiore fra arma e riserva e la **sintonizzazione si conta una
+  volta sola**: SnT 2, non 1 + 2;
+- uso per Classe nei dati (`uso_per_classe`): Custode 1 PM per 15 Round e +1 al danno; Tecnomante 1 AzP e
+  2 PM per 10 Round, 1d8 Magico; altre Classi **soltanto con la batteria** e a −2 al VA. Il modello originale
+  avvisa la Classe che non lo può usare, senza bloccare;
+- il saldo della batteria è in **cariche** (per esempio 3/5), riserva Esclusiva: non alimenta Incantesimi
+  personali né altri oggetti. Una carica intera per attivazione, senza mezze cariche;
+- «Attiva» scala il costo della propria Classe e fa partire la durata; la scheda e «Attacca!» mostrano costo
+  e **Round che restano**; «Termina» la spegne (il costo resta pagato);
+- costruzione e modifica (punti 6 e 7) sono **solo testo** nella voce: 1.250 cr / 17 ore / 3 PM con il
+  progetto, 2.000 cr / 10 ore / 6 PM per la modifica, batteria a 0/5 cariche alla fine;
+- **Custodia del Silenzio** (§7.25.1, Equipaggiamento §10.13.1) fra i contenitori: 0,3 kg, SnT 0,
+  schermatura passiva della Corruzione 1 con l'arma disattivata e il contenitore chiuso; non è
+  indistruttibile. Prezzo e Reperibilità non sono nei manuali: restano da completare.
+
+### Domanda nuova
+
+- **A.165 — Famiglia, Specializzazione e Manovre della CyberArma** (Armamenti §7.25; A.158). Né il paragrafo
+  né la risposta dicono a quale famiglia d'arma appartiene la CyberArma, quindi quale Specializzazione le si
+  applica e quali Manovre consente. L'invariante dell'app (A.13: ogni arma del catalogo ha una
+  Specializzazione) ne richiede una. *Nel frattempo:* registrata fra le **Spade** (lama a una mano, Armi da
+  mischia) con le sole Manovre generali, con il `TODO(Davide)` nel lotto. Se la famiglia è un'altra cambiano
+  il +1 VA e il +1 al danno della Specializzazione (§8.8.1).
 
 ## 15 ottobre 2026 — dieci risposte ricevute (ricognizione, nulla applicato)
 
@@ -1534,7 +1589,9 @@ Spazio, portata per attacco e GS/PX).
   Salvezza, cumulativa come gli altri gradini): prima «oltre Grave» non dava nessuna penalità. Nessun blocco
   aggiunto: la morte del §5.14 resta un avviso («Oltre Grave di norma è la morte… decide il master»), nel
   riquadro Ferite della scheda e nel promemoria di «Colpito». Si torna indietro mettendo `null` nel dato.
-- **A.159 — «Oltre Grave» dà penalità?** (Giocatore §5.14). **Risposta ricevuta il 14/10/2026: vedi il blocco del 15 ottobre qui sopra. Oltre Grave si entra in Morente con il contatore; la decisione qui sotto resta applicata finché non si recepisce la risposta.** Il manuale elenca cinque Stati di Ferita con la
+  **Superata il 15/10 sera dalla A.159 e recepita: oltre Grave adesso è Morente, con il contatore di Round
+  (blocco del 15 ottobre sera qui sopra). La penalità di Grave resta, ed è quella che Morente mantiene.**
+- **A.159 — «Oltre Grave» dà penalità?** (Giocatore §5.14). **RISOLTA: risposta del 14/10/2026 applicata il 15/10 sera (blocco «lotto personaggi» qui sopra). Oltre Grave si entra in Morente, con il contatore di Round pari alla COS.** Il manuale elenca cinque Stati di Ferita con la
   penalità cumulativa e dice che oltre Grave è la morte, senza dire che cosa vale se il personaggio
   sopravvive (Punto Eroe, cure immediate, intervento del Direttore). *Decisione di Marcello del 13/10, «puoi
   rivederla»:* valgono i malus di Grave (−8). Serve una conferma o una regola diversa.
