@@ -1649,6 +1649,34 @@ Silenzio, Tomo dei Guardiani), Armamenti 0.62 (§7.25.1, CyberArma come voce uni
 Equipaggiamento 0.8 (cap. 10 ampliato), Mostri 0.3 (nove caste della Covata, il Lorath e quindici creature con
 Spazio, portata per attacco e GS/PX).
 
+## 16 ottobre 2026 — lotto «Manuale dei Mostri 0.13»: catalogo nel bestiario
+
+Dopo il controllo d'inizio sessione: il Manuale dei Mostri è passato da 0.9 a **0.13** (Doc
+`11Uxmz9GM2vU2knngtIPk_80532ABlHC3xL8ZvAXX7rE`, modificato il 16/10 13:47), con **115 creature** (le 0.9 ne
+avevano 75), le nove caste della Covata e il Lorath. Gli altri manuali e «per-davide.md» invariati (solo i
+riassunti della sezione 1). Dettaglio in `docs/lotto-mostri-2026-10-16.md` e
+`docs/mostri-0.13-ricognizione-2026-10-16.md`; generatori `tools/genera_mostri_covata.mjs` e
+`tools/genera_mostri_bestie.mjs`.
+
+**Regole operative (cap. 4 e §8): nessun cambiamento, nessuna automazione nuova.** Verificate coerenti con le
+risposte già applicate — §4.2 Morente = A.159/A.164, §4.5 spazio = A.126/A.133, §4.6 Abilità non riportate =
+A.116, §5.2 = A.160 (7 punti), §3.1 = A.164 (un dato assente non vale 0). Dove il manuale dà un ingombro
+diverso dalle regole già approvate **non si è cambiato**: vedi A.167 qui sotto.
+
+- **GS e PX (A.161, «nel frattempo»).** Aggiunto il campo `gs_px` al formato dei nemici (`{ gs, px, per_pg }`),
+  **informativo**: la mini-scheda lo mostra («GS Principiante · 10 PX per 4 PG»), l'app **non calcola i PX** e
+  **non unifica** la scala GS (Principiante…Leggenda) ai gradi del bestiario proposto (Minore…Molto potente, 7
+  PG). Il calcolatore «PX della partita» resta la A.161, prossimo lotto.
+- **Profili aggiunti al bestiario come prestabiliti** (`esempi/nemici/mostri/`, caricati da «Carica esempi» e da
+  «+ Aggiungi nemico» come gli altri): le **nove caste della Covata e il Lorath** (cap. 7, «Fauna di Iris»); il
+  blocco **«Bestie e predatori»** del catalogo (cap. 8): Lupo, Lupo feroce, Orso bruno, Cinghiale gigante,
+  Leone, Iena gigante, Ragno gigante, Scorpione gigante, Serpente costrittore gigante, Coccodrillo gigante.
+  Tutti con Spazio, portata per attacco, capacità con i parametri del manuale e GS/PX. Bestiario online
+  rigenerato (`docs/bestiario/bestiario-online.html`, 162 schede). **Restano** gli altri blocchi del cap. 8
+  (circa 95 creature: Bande e grandi avversari, Non morti, Costrutti ed elementali, Giganti, e i quindici
+  della prima parte: Aarakocra, Aboleth, Ankheg, Arpia, Basilisco, …): si faranno a blocchi nei prossimi
+  lotti (il catalogo è troppo grande per un solo prompt).
+
 ## Domande aperte dalla ricognizione del 15 ottobre 2026
 
 - **A.160 — Punti Abilità liberi nel Manuale dei Mostri** (Mostri 0.3, §5.2). **RISOLTA: risposta del 16/10/2026 (refuso), verificata nell’app il 16/10; il manuale 0.9 dice 7.** Il paragrafo dice ancora «5 punti
@@ -1656,7 +1684,9 @@ Spazio, portata per attacco e GS/PX).
   gli avversari umani? *Nel frattempo:* 7 per tutti.
 - **A.161 — GS e PX dei Mostri 0.3 e bestiario dell'app.** **Risposta ricevuta il 16/10/2026 (assegnazione manuale dei PX e calcolatore «PX della partita» nel Tavolo del Direttore): da applicare nel prossimo lotto.** Le schede danno GS (Principiante…Leggenda) e PX per 4
   PG; il bestiario proposto usa i cinque gradi Minore…Molto potente su 7 PG (A.97). Le scale si unificano? Servono
-  i PX anche per «Crea nemico»? *Nel frattempo:* scale distinte, nessun PX calcolato.
+  i PX anche per «Crea nemico»? *Nel frattempo (applicato il 16/10):* campo `gs_px` informativo nelle schede del
+  catalogo, mostrato dalla mini-scheda; scale distinte, nessun PX calcolato. Il calcolatore «PX della partita»
+  resta il prossimo lotto.
 - **A.162 — Oggetti indistruttibili** (Equipaggiamento §10.12, Magia §28.2). **RISOLTA: risposta del 16/10/2026 applicata lo stesso giorno (tre stati dell’Integrità, proprietà esplicita).** Lo Scrigno «non perde PI»: basta
   registrarlo senza PI con una nota, o serve un valore «indistruttibile» riutilizzabile? *Nel frattempo:* nessun
   PI e una nota.
@@ -1665,6 +1695,18 @@ Spazio, portata per attacco e GS/PX).
   modellata. *Nel frattempo:* promemoria.
 - **A.164 — Morente e i nemici** (A.159). **RISOLTA: risposta del 16/10/2026 applicata lo stesso giorno (Morente anche per i nemici, con le precisazioni).** Vale anche per i nemici della plancia, o per loro resta la morte oltre
   Grave? E le creature senza COS indicata? *Nel frattempo:* nessun contatore per i nemici.
+
+## Domanda aperta dal lotto «Manuale dei Mostri 0.13» del 16 ottobre 2026
+
+- **A.167 — Spazio delle creature non quadrato o maggiore di 3 × 3 Q** (Mostri 0.13, cap. 7 e 8; contraddice
+  A.126). La A.126 (approvata il 15/10) ammette solo ingombri **quadrati**: 1 × 1 Q, 2 × 2 Q, 3 × 3 Q. Diverse
+  schede del Manuale dei Mostri 0.13 danno ingombri **non quadrati o più grandi**: Covata — Corazzato 1 × 2 Q,
+  Regina Comandante 2 × 3 Q, Incubatrice 3 × 5 Q, Madre 3 × 10 Q; Bestie — Lupo feroce, Leone e Iena 2 × 1 Q,
+  Coccodrillo 3 × 2 Q; nella prima parte del catalogo compaiono anche 2 × 3 Q, 3 × 2 Q e 4 × 4 Q. Che cosa
+  vale al tavolo: pedine quadrate (arrotondate al lato maggiore, 2 × 2 o 3 × 3) o pedine rettangolari da
+  gestire sulla mappa? *Nel frattempo:* il campo `spazio` resta ai soli valori quadrati della A.126; gli
+  ingombri non ammessi sono scritti nelle **note** della creatura con il rimando ad A.167 e la taglia è
+  **Grande**. Nessun valore inventato.
 
 ## Decisione di Marcello del 13 ottobre 2026 (da rivedere con Davide)
 

@@ -48,5 +48,7 @@ distinte** per scelta (A.161 ancora aperta sull'unificazione): non è una contra
 
 ## Che cosa resta (creature del catalogo)
 
-Le 115 creature del cap. 8 e le 9 caste della Covata + il Lorath sono profili da trascrivere nel bestiario:
-si fanno a blocchi (vedi `docs/lotto-mostri-2026-10-16.md`).
+Fatte (`docs/lotto-mostri-2026-10-16.md`): le 9 caste della Covata + il Lorath (cap. 7) e il blocco «Bestie e
+predatori» del cap. 8 (10 creature). Restano gli altri blocchi del cap. 8 (circa 95 creature: la prima parte
+senza nome, «Bande e grandi avversari», «Non morti», «Costrutti ed elementali», «Giganti», ecc.), da fare a
+blocchi nei prossimi lotti.
