@@ -1750,6 +1750,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const mappe = arg('mappe') ? normalize(arg('mappe')) : join(RADICE, MAPPE);
   const musica = arg('musica') ? normalize(arg('musica')) : join(RADICE, MUSICA);
   const galleria = arg('galleria') ? normalize(arg('galleria')) : join(RADICE, GALLERIA);
+  const px = arg('px') ? normalize(arg('px')) : join(RADICE, PX);
   // avvisi a Marcello (tools/avvisi.mjs, avvisi/LEGGIMI.txt): solo dal server avviato da qui, mai nei test né con cartelle
   // di prova (--cartella=…) o con --senza-avvisi; in silenzio
   const senzaAvvisi = process.argv.includes('--senza-avvisi') || !!arg('cartella');
@@ -1793,7 +1794,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
       return avvisoCartellaVuota({ cartella, ...posti, salvataggi: dirSalvataggi, autosave: dirAutosave });
     } catch { return { vuota: false, percorso: cartella, quanti: 0, salvataggi: [], testo: '' }; }
   };
-  const server = creaServer({ cartella, tavolo, scontri, nemici, veicoli, scene, mappe, musica, galleria, soloLocale, avvisi, salvataggi, avvio: avvisoPersonaggiVuoti });
+  const server = creaServer({ cartella, tavolo, scontri, nemici, veicoli, scene, mappe, musica, galleria, px, soloLocale, avvisi, salvataggi, avvio: avvisoPersonaggiVuoti });
   // si spegne quando si chiude la finestra di avvia-server.bat (o con Ctrl+C), senza restare in ascolto da solo; prima
   // prova il salvataggio completo (08/10): Windows concede pochi secondi alla chiusura con la X, per questo ntfy ha un
   // tempo breve e GitHub si salta; l'autosave copre gli spegnimenti bruschi

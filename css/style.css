@@ -2803,3 +2803,25 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .etichetta-manifestazione { font-size: 0.75rem; }
 /* A.161 (16/10): GS e PX del Manuale dei Mostri nella mini-scheda del nemico (informativo) */
 .tratto-gspx { background: var(--pm-tenue); color: var(--pm); }
+
+/* PX della partita (A.161, 16/10): la tab del Tavolo del Master. Layout essenziale, solo sul PC del master. */
+.px-pannello { margin-top: 1rem; }
+.px-pannello h3 { margin: 0 0 0.25rem; }
+.px-pannello h4 { margin: 0.75rem 0 0.25rem; }
+.px-nav { display: flex; flex-wrap: wrap; gap: 0.25rem; margin: 0.5rem 0; }
+.px-nav .btn.attivo { background: var(--accento); color: #fff; }
+.px-scelta-partita, .px-incontri-azioni, .px-azioni { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin: 0.5rem 0; }
+.px-intest { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; margin: 0.5rem 0; }
+.px-campo { display: flex; flex-direction: column; font-size: 0.85rem; }
+.px-campo.px-check { flex-direction: row; align-items: center; gap: 0.35rem; }
+.px-check { display: inline-flex; align-items: center; gap: 0.35rem; }
+.px-tabella { width: 100%; border-collapse: collapse; margin: 0.5rem 0; font-size: 0.9rem; }
+.px-tabella th, .px-tabella td { border: 1px solid var(--bordo); padding: 0.25rem 0.4rem; text-align: center; }
+.px-tabella th:first-child, .px-tabella td:first-child { text-align: left; }
+.px-voto { width: 3.2rem; }
+.px-finale { width: 5rem; font-weight: 600; }
+.px-comp { font-variant-numeric: tabular-nums; }
+.px-assente { opacity: 0.5; }
+.px-incontro { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin: 0.25rem 0; }
+.px-archivio-riga, .px-gioc-riga { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin: 0.25rem 0; }
+.px-stato { font-size: 0.85rem; color: var(--ok, green); }

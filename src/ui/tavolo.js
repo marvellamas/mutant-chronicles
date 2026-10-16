@@ -29,6 +29,9 @@ import { pannelloScontro, leggiScontroAperto, leggiScontro, salvaScontro, scegli
 import { pannelloBestiario, elencoNemici, cartaNemico } from './nemici.js';
 // Galleria (N1, 13/10/2026): le immagini da mostrare ai giocatori con un tocco
 import { pannelloGalleria, fasciaGalleria, leggiGalleria, nascondiATutti } from './galleria.js';
+// PX della partita (A.161): calcolatore e archivio del Direttore, solo sul PC del master
+import { pannelloPx, leggiPx, salvaPx, patchPgAssegnazione, dbIniziale } from './px-partita.js';
+import { deltaAssegnazione, partitaAssegnata } from '../px-partita.js';
 import { chiudi as chiudiScontro, cambiaMusica, diTurno, ordineIniziativa, registraIniziative, senzaIniziativaNuovi, avanti, indietro, anteprimaIndietro, reimpostaIniziativa, reimpostaIniziativaDi, dadoIniziativa, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico, confermaRegimeNemico, aggiungiNemici, registraRiga, cambiaStatoNemico } from '../scontro.js';
 import { vociBestiario } from '../nemici.js';
 import { creaCustode } from './ridisegno.js';
@@ -128,6 +131,10 @@ export function renderTavolo(radice, ctx) {
     avvioVuoto: null,
     // Galleria (N1): indice di galleria/ (schede e immagine mostrata), filtro e ricerca della tab
     galleria: null,
+    // PX della partita (A.161): archivio px/px.json (solo master) e stato della tab
+    db: null,
+    firmaPx: null,
+    uiPx: { vista: 'partita', selezione: null },
     firmaGalleria: null,
     uiGalleria: { categoria: null, cerca: '', inCorso: false },
     // A.105: registro unico dei veicoli (veicoli/ sul server), stato dei pannelli «Colpito» delle carte
@@ -456,6 +463,11 @@ export function renderTavolo(radice, ctx) {
       ridisegna: () => { stato.galleria = stato.uiGalleria.indice ?? stato.galleria; stato.firmaGalleria = null; disegna(); },
     });
     const fascia = fasciaGalleria(ctx, stato.galleria, { nascondi: nascondiGalleria, vai: () => (ctx.inMappa?.vaiAlGruppo ? ctx.inMappa.vaiAlGruppo('galleria') : document.querySelector('.galleria-pannello')?.scrollIntoView({ behavior: 'smooth', block: 'start' })) });
+    // PX della partita (A.161): la tab, solo sul PC del master e non dentro la mappa
+    const px = (ctx.master && !ctx.inMappa && stato.db) ? pannelloPx(ctx, {
+      db: stato.db, dati: ctx.dati, uiPx: stato.uiPx, pxGiocatori: pxGiocatori(),
+      schede: stato.elenco, scontri: stato.scontro ? [stato.scontro] : [],
+    }, { salva: salvaPxDb, ridisegna: disegna, assegna: assegnaPx }) : null;
     const bestiario = pannelloBestiario(ctx, stato.bestiario, {
       aperto: stato.bestiarioAperto,
       onToggle: (v) => { stato.bestiarioAperto = v; },
@@ -513,6 +525,7 @@ export function renderTavolo(radice, ctx) {
       barraPeriodici(alTavolo),
       scene,
       galleria,
+      ctx.inMappa ? null : px,
       bestiario,
       // 08/10: anche i veicoli in un gruppo richiudibile, come le mini-schede
       stato.veicoli.length ? gruppoCarte('veicoli', `Mini-schede dei veicoli (${stato.veicoli.length})`, sezioneVeicoli().slice(1)) : null,
@@ -928,6 +941,48 @@ export function renderTavolo(radice, ctx) {
     stato.galleria = indice;
     return true;
   };
+  // PX della partita (A.161): l'archivio px/px.json, solo sul PC del master. Se non c'è ancora, parte dai
+  // valori di default dei dati. Si ridisegna solo quando cambia.
+  const aggiornaPx = async () => {
+    const letto = await leggiPx();
+    const db = letto ?? dbIniziale(ctx.dati);
+    const firma = JSON.stringify(db);
+    if (firma === stato.firmaPx) return false;
+    stato.firmaPx = firma;
+    stato.db = db;
+    return true;
+  };
+  // i PX attuali di ogni giocatore, dal file del suo PG (scelte.puntiEsperienza); altrimenti i PX iniziali comuni
+  const pxGiocatori = () => Object.fromEntries((stato.db?.giocatori ?? []).map((g) => {
+    let px = stato.db?.impostazioni?.baseline ?? 0;
+    try { const o = JSON.parse(stato.testi.get(g.pgFile) ?? 'null'); if (Number.isFinite(Number(o?.scelte?.puntiEsperienza))) px = Number(o.scelte.puntiEsperienza); } catch { /* resta la baseline */ }
+    return [g.id, px];
+  }));
+  const salvaPxDb = async () => { try { await salvaPx(stato.db); stato.firmaPx = JSON.stringify(stato.db); } catch (e) { avvisoErrore(`PX della partita non salvati: ${e.message}. Controlla che avvia-server.bat sia aperto.`); } };
+  // «Assegna PX della partita»: applica i delta ai PG presenti come Modifica master «diretta» su puntiEsperienza
+  const assegnaPx = async (partita) => {
+    const p = ctx.dati.px_partita;
+    const delta = deltaAssegnazione(partita, pxGiocatori(), p);
+    const etichetta = `PX della partita del ${partita.data || new Date().toISOString().slice(0, 10)}`;
+    const senzaPg = [];
+    for (const [id, d] of Object.entries(delta)) {
+      const g = stato.db.giocatori.find((x) => x.id === id);
+      if (!g?.pgFile) { senzaPg.push(g?.pg || id); continue; }
+      const r = await fetch(`api/personaggi/${encodeURIComponent(g.pgFile)}`, { cache: 'no-store' });
+      if (!r.ok) { senzaPg.push(g.pg || id); continue; }
+      const pg = await r.json();
+      const dopo = patchPgAssegnazione(pg, d, etichetta);
+      const put = await fetch(`api/personaggi/${encodeURIComponent(g.pgFile)}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(dopo) });
+      if (!put.ok) throw new Error((await put.json().catch(() => ({}))).errore ?? `errore ${put.status} su ${g.pgFile}`);
+    }
+    const idx = stato.db.partite.findIndex((m) => m.id === partita.id);
+    if (idx >= 0) stato.db.partite[idx] = partitaAssegnata(partita, pxGiocatori(), new Date().toISOString().slice(0, 10), p);
+    await salvaPxDb();
+    avviso(senzaPg.length ? `PX assegnati. Senza PG associato (non aggiornati): ${senzaPg.join(', ')}. Collegali in «Impostazioni».` : 'PX della partita assegnati ai PG presenti (Modifica master).', { tipo: senzaPg.length ? 'info' : 'ok', durata: 8000 });
+    await aggiorna(true);
+    disegna();
+  };
+
   const nascondiGalleria = async () => {
     try {
       stato.galleria = (await nascondiATutti()).indice;
@@ -1100,6 +1155,10 @@ export function renderTavolo(radice, ctx) {
     try {
       if (await aggiornaGalleria()) cambiato = true;
     } catch { /* senza server della galleria: la tab dice che non si legge */ }
+    try {
+      // PX della partita: solo sul PC del master (il server risponde 403 agli altri)
+      if (ctx.master && !ctx.inMappa && await aggiornaPx()) cambiato = true;
+    } catch { /* non master o senza server: la tab non compare */ }
     try {
       if (await aggiornaTablet()) cambiato = true;
     } catch { /* senza server dei tablet: nessun indicatore */ }
