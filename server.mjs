@@ -153,6 +153,8 @@ const SCENE = 'scene';
 const MAPPE = 'mappe';
 const MUSICA = 'musica';
 const GALLERIA = 'galleria'; // N1: le immagini da mostrare ai giocatori
+const PX = 'px'; // A.161: calcolatore e archivio «PX della partita» del Direttore (solo master)
+const FILE_PX = 'px.json';
 const ID_NEMICO = /^[a-z0-9-]{1,60}$/;
 
 const TIPI = {
@@ -1347,6 +1349,26 @@ async function apiGalleria(req, res, percorso, galleria, radice, canale) {
   return res.end(await readFile(join(galleria, file)));
 }
 
+// A.161: calcolatore e archivio «PX della partita». Un solo file px/px.json (impostazioni di campagna,
+// roster e archivio delle partite); SOLO il PC del master lo legge e lo scrive (contiene i nomi dei giocatori
+// e gli importi assegnati). L'assegnazione vera ai PG passa dalla «Modifica master» sul file del PG.
+async function apiPx(req, res, px, master) {
+  if (!master) return json(res, 403, { errore: 'I PX della partita li gestisce solo il PC del master.' });
+  const dove = join(px, FILE_PX);
+  if (req.method === 'GET') {
+    try { return json(res, 200, JSON.parse(await readFile(dove, 'utf8'))); } catch { return json(res, 200, null); }
+  }
+  if (req.method === 'PUT') {
+    let d;
+    try { d = JSON.parse((await leggiCorpo(req)).toString('utf8')); } catch (e) { return json(res, 400, { errore: e.message }); }
+    if (!d || typeof d !== 'object' || Array.isArray(d)) return json(res, 400, { errore: 'il corpo è l’oggetto dei PX della partita' });
+    await mkdir(px, { recursive: true });
+    await inCoda(dove, () => scriviJson(dove, d));
+    return json(res, 200, d);
+  }
+  return json(res, 405, { errore: 'metodo non ammesso' });
+}
+
 /**
  * Musica di fondo della mappa (richiesta di Marcello del 07/10/2026): i file audio che il master mette nella cartella
  * reale musica/ (fuori da git, come mappe/), con i formati di data/mappa.json → audio.musica.formati. Solo lettura:
@@ -1464,7 +1486,7 @@ async function caricaEsempi(radice, cartella, nemici) {
   return { copiati, saltati };
 }
 
-async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice, soloLocale, veicoli, migraIn = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), canale = null, musica = join(RADICE, MUSICA), avvisi = null, galleria = join(RADICE, GALLERIA)) {
+async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice, soloLocale, veicoli, migraIn = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), canale = null, musica = join(RADICE, MUSICA), avvisi = null, galleria = join(RADICE, GALLERIA), px = join(RADICE, PX)) {
   const cartelle = { cartella, tavolo, scontri, veicoli, scene, radice, canale, avvisi };
   // diretta (07/10): dopo una scrittura riuscita di scena o scontro la vista giocatori si rilegge subito
   const segnala = (r) => { if (req.method !== 'GET' && res.statusCode < 300) canale?.cambiata(); return r; };
@@ -1481,6 +1503,7 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
   if (percorso === '/api/mappe' || percorso.startsWith('/api/mappe/')) return apiMappe(req, res, percorso, mappe, radice);
   if (percorso === '/api/musica' || percorso.startsWith('/api/musica/')) return apiMusica(req, res, percorso, musica, radice);
   if (percorso === '/api/galleria' || percorso.startsWith('/api/galleria/')) return apiGalleria(req, res, percorso, galleria, radice, canale);
+  if (percorso === '/api/px') return apiPx(req, res, px, req.mutantMaster);
   if (percorso === '/api/veicoli' || percorso.startsWith('/api/veicoli/')) return apiVeicoli(req, res, percorso, veicoli);
   if (percorso === '/api/rete') {
     const porta = req.socket.localPort;
@@ -1664,7 +1687,7 @@ async function apiSalvataggi(req, res, percorso, salvataggi) {
   return json(res, 200, { ...esito, spento: true });
 }
 
-export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA), tavolo = join(RADICE, TAVOLO), scontri = join(RADICE, SCONTRI), nemici = join(RADICE, NEMICI), veicoli: veicoliDati = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), musica = join(RADICE, MUSICA), galleria = join(RADICE, GALLERIA), soloLocale = false, avvisi = null, salvataggi = null, backupMaster = null, avvio = null, eMaster = (req) => daQuestoPc(req.socket.remoteAddress) } = {}) {
+export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA), tavolo = join(RADICE, TAVOLO), scontri = join(RADICE, SCONTRI), nemici = join(RADICE, NEMICI), veicoli: veicoliDati = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), musica = join(RADICE, MUSICA), galleria = join(RADICE, GALLERIA), px = join(RADICE, PX), soloLocale = false, avvisi = null, salvataggi = null, backupMaster = null, avvio = null, eMaster = (req) => daQuestoPc(req.socket.remoteAddress) } = {}) {
   // copie della «Modifica master»: accanto alla cartella dei personaggi (con cartelle di prova non si tocca il progetto)
   backupMaster ??= normalize(cartella) === normalize(join(RADICE, CARTELLA)) ? join(RADICE, BACKUP_MASTER) : join(dirname(cartella), BACKUP_MASTER);
   const veicoli = veicoliDati ?? join(RADICE, VEICOLI);
@@ -1695,7 +1718,7 @@ export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA),
         if (no) return json(res, no.stato, { errore: no.errore });
       }
       if (percorso === '/api/salvataggi' || percorso === '/api/salva-sessione' || percorso === '/api/spegni') return await apiSalvataggi(req, res, percorso, salvataggi);
-      if (percorso.startsWith('/api/')) return await api(req, res, percorso, cartella, tavolo, scontri, nemici, base, soloLocale, veicoli, migraIn, scene, mappe, canale, musica, avvisi, galleria);
+      if (percorso.startsWith('/api/')) return await api(req, res, percorso, cartella, tavolo, scontri, nemici, base, soloLocale, veicoli, migraIn, scene, mappe, canale, musica, avvisi, galleria, px);
       return await statico(req, res, percorso, base, versioneAvvio);
     } catch (e) {
       if (!res.headersSent) json(res, 500, { errore: e.message });
