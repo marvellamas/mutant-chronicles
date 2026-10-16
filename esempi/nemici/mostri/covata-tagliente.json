@@ -1,0 +1,116 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "covata-tagliente",
+  "nome": "Tagliente",
+  "fonte": "dal Manuale dei Mostri v0.13 (16/10/2026), cap. 7 «Fauna di Iris»",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 8,
+    "COS": 7,
+    "INT": 3,
+    "SAG": 6,
+    "CAR": 2
+  },
+  "pv": 38,
+  "pm": 8,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 13,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 13,
+    "volonta": 10,
+    "magia": 11
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Lama naturale",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    }
+  ],
+  "contromisure": [
+    {
+      "nome": "Ignifugo",
+      "valore": 6
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Due arti a lama",
+      "effetto": "Due attacchi separati spendendo entrambe le AzP, oppure conservarne una per la Difesa. Un attacco normale usa una sola lama, AC 1; nessun attacco gratuito per la seconda lama."
+    },
+    {
+      "nome": "Parata naturale",
+      "effetto": "Con una lama integra para attacchi ravvicinati: 1 AzP, Difese 13; successo dimezza per eccesso prima dell’AR, Magistrale annulla. Non para a distanza.",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Protezione della comandante",
+      "effetto": "Una volta per Round, prima del tiro di un attacco diretto contro la comandante adiacente, spende 1 AzP per interporsi (cosciente, consapevole, con percorso libero di al massimo 1 Q verso una posizione che intercetti l’attacco): percorre il tratto, diventa il bersaglio e paga a parte l’eventuale Difesa. Non contro Aree o attacchi psichici diretti.",
+      "azioni": {
+        "principali": 1
+      },
+      "usi": {
+        "quanti": 1,
+        "per": "Round"
+      }
+    },
+    {
+      "nome": "Resistenza al fuoco",
+      "effetto": "Dimezza per eccesso ogni componente di danno Fuoco (anche Magico o Etereo e il danno di Incendiato) dopo Difese e Salvezze e prima dell’AR. Non si estende a Plasma, Laser o Elettricità."
+    },
+    {
+      "nome": "Adattamento alle Terre del Fuoco",
+      "effetto": "Le condizioni ambientali delle Terre del Fuoco, compreso il contatto con la lava, non producono danni o Affaticamento da calore. Crolli e urti restano pericolosi."
+    },
+    {
+      "nome": "Disorientamento da freddo",
+      "effetto": "Un effetto di freddo che la raggiunge la disorienta per 1 Round (dal Round R alla fine di R+1), anche se l’AR assorbe tutto il danno: non può spostarsi né attaccare (neppure Attacchi di Opportunità), ma può difendersi spendendo AzP e AzM. Un colpo schivato non lo attiva. Nuove esposizioni tengono la scadenza più lontana senza sommare Round."
+    }
+  ],
+  "note": "Può usare Schivata ed Elusione ordinarie. Covata (Mostri cap. 7): insettoide vivente di Natura Comune; nessuno Stato iniziale, nessun incantesimo. Resistenza al Fuoco e Ignifugo 6 di carapace (Contromisura, A.73). A 0 PV può continuare ad agire; le Ferite arrivano solo con danno positivo già a 0 PV (§5.14). PM personali anche senza poteri; a 0 PM Svenuto."
+}

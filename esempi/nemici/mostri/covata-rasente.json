@@ -1,0 +1,114 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "covata-rasente",
+  "nome": "Rasente",
+  "fonte": "dal Manuale dei Mostri v0.13 (16/10/2026), cap. 7 «Fauna di Iris»",
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 7,
+    "COS": 5,
+    "INT": 2,
+    "SAG": 5,
+    "CAR": 1
+  },
+  "pv": 20,
+  "pm": 5,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": -1,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 12,
+    "volonta": 8,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Artigli anteriori",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d4+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    }
+  ],
+  "contromisure": [
+    {
+      "nome": "Ignifugo",
+      "valore": 6
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Scalatore",
+      "effetto": "Con 1 AzM percorre fino a 4 Q su roccia o muratura con appigli, anche verticale; Atletica solo in condizioni difficili. Niente Corsa o Scatto in arrampicata; superfici lisce e soffitti no.",
+      "azioni": {
+        "movimento": 1
+      }
+    },
+    {
+      "nome": "Terzetto",
+      "effetto": "Tre Rasenti che attaccano realmente lo stesso bersaglio ricevono il normale +1 VA di Superiorità numerica; nessun bonus di squadra aggiuntivo."
+    },
+    {
+      "nome": "Resistenza al fuoco",
+      "effetto": "Dimezza per eccesso ogni componente di danno Fuoco (anche Magico o Etereo e il danno di Incendiato) dopo Difese e Salvezze e prima dell’AR. Non si estende a Plasma, Laser o Elettricità."
+    },
+    {
+      "nome": "Adattamento alle Terre del Fuoco",
+      "effetto": "Le condizioni ambientali delle Terre del Fuoco, compreso il contatto con la lava, non producono danni o Affaticamento da calore. Crolli e urti restano pericolosi."
+    },
+    {
+      "nome": "Disorientamento da freddo",
+      "effetto": "Un effetto di freddo che la raggiunge la disorienta per 1 Round (dal Round R alla fine di R+1), anche se l’AR assorbe tutto il danno: non può spostarsi né attaccare (neppure Attacchi di Opportunità), ma può difendersi spendendo AzP e AzM. Un colpo schivato non lo attiva. Nuove esposizioni tengono la scadenza più lontana senza sommare Round."
+    }
+  ],
+  "note": "Può Schivare ed Elusione; nessuna Parata naturale. Non attacca spontaneamente: interviene se provocato o comandato. Covata (Mostri cap. 7): insettoide vivente di Natura Comune; nessuno Stato iniziale, nessun incantesimo. Resistenza al Fuoco e Ignifugo 6 di carapace (Contromisura, A.73). A 0 PV può continuare ad agire; le Ferite arrivano solo con danno positivo già a 0 PV (§5.14). PM personali anche senza poteri; a 0 PM Svenuto."
+}

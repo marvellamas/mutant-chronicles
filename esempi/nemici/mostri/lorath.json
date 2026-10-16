@@ -1,0 +1,95 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "lorath",
+  "nome": "Lorath",
+  "fonte": "dal Manuale dei Mostri v0.13 (16/10/2026), cap. 7 «Fauna di Iris»",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 5,
+    "COS": 7,
+    "INT": 2,
+    "SAG": 5,
+    "CAR": 1
+  },
+  "pv": 32,
+  "pm": 5,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": -3,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "2 × 2 Q",
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 9,
+    "volonta": 7,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Chela",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Getto acido",
+      "tipo": "distanza",
+      "va": 11,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Corrosivo"
+      ],
+      "gittata_q": 6,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 8
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Getto acido",
+      "effetto": "Attacco a un solo bersaglio visibile, senza area; niente raffiche, Tiro Rapido o bonus del Tiro Ravvicinato. Non ripetibile nel Round immediatamente successivo. Dopo danno residuo e Contromisure si applica Corrosivo (§5.24); non infligge Avvelenato, danni periodici o perdita automatica di AR.",
+      "limiti": "non due Round di fila"
+    },
+    {
+      "nome": "Presa delle chele",
+      "effetto": "Usa Immobilizzare con Corpo a corpo 12; non infligge insieme il danno della Chela e mentre mantiene la presa non usa il Getto acido. Restano Prove e liberazioni della manovra."
+    }
+  ],
+  "note": "Profilo sperimentale; potenza orientativa: Semplice (nessun GS/PX nella scheda). Aracnoide, Natura Comune; nessun incantesimo. Le chele non concedono Parata naturale. Nessuna immunità o Contromisura particolare."
+}

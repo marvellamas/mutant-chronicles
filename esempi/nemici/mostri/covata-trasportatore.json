@@ -1,0 +1,87 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "covata-trasportatore",
+  "nome": "Trasportatore",
+  "fonte": "dal Manuale dei Mostri v0.13 (16/10/2026), cap. 7 «Fauna di Iris»",
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 4,
+    "COS": 6,
+    "INT": 2,
+    "SAG": 5,
+    "CAR": 1
+  },
+  "pv": 18,
+  "pm": 4,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 8,
+  "iniziativa": -4,
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "—",
+    "px": 0,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 9,
+    "volonta": 7,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [],
+  "abilita": [
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    }
+  ],
+  "contromisure": [
+    {
+      "nome": "Ignifugo",
+      "valore": 6
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Trasporto biologico",
+      "effetto": "Custodisce fino a 30 kg di grappoli nel ventre, carico già compatibile con i movimenti indicati: è un limite di trasporto, non PM o cariche."
+    },
+    {
+      "nome": "Scarico",
+      "effetto": "Fuori dallo scontro depone i grappoli senza danneggiarli; liberarsene volontariamente costa 1 AzP e li deposita nel proprio spazio. Ferirlo non produce esplosioni.",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Resistenza al fuoco",
+      "effetto": "Dimezza per eccesso ogni componente di danno Fuoco (anche Magico o Etereo e il danno di Incendiato) dopo Difese e Salvezze e prima dell’AR. Non si estende a Plasma, Laser o Elettricità."
+    },
+    {
+      "nome": "Adattamento alle Terre del Fuoco",
+      "effetto": "Le condizioni ambientali delle Terre del Fuoco, compreso il contatto con la lava, non producono danni o Affaticamento da calore. Crolli e urti restano pericolosi."
+    },
+    {
+      "nome": "Disorientamento da freddo",
+      "effetto": "Un effetto di freddo che la raggiunge la disorienta per 1 Round (dal Round R alla fine di R+1), anche se l’AR assorbe tutto il danno: non può spostarsi né attaccare (neppure Attacchi di Opportunità), ma può difendersi spendendo AzP e AzM. Un colpo schivato non lo attiva. Nuove esposizioni tengono la scadenza più lontana senza sommare Round."
+    }
+  ],
+  "note": "Casta non combattente: nessun attacco, nessun Attacco di Opportunità. Può Schivare ed Elusione. Covata (Mostri cap. 7): insettoide vivente di Natura Comune; nessuno Stato iniziale, nessun incantesimo. Resistenza al Fuoco e Ignifugo 6 di carapace (Contromisura, A.73). A 0 PV può continuare ad agire; le Ferite arrivano solo con danno positivo già a 0 PV (§5.14). PM personali anche senza poteri; a 0 PM Svenuto."
+}

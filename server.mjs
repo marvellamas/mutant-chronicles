@@ -1459,6 +1459,8 @@ async function caricaEsempi(radice, cartella, nemici) {
   await copia(join(radice, 'esempi', NEMICI), nemici, (f) => f.endsWith('.json') && ID_NEMICO.test(f.slice(0, -5)));
   // bestiario umano proposto (tools/genera_nemici_umani.mjs): nella stessa cartella nemici/ del server
   await copia(join(radice, 'esempi', NEMICI, 'umani'), nemici, (f) => f.endsWith('.json') && ID_NEMICO.test(f.slice(0, -5)));
+  // creature del Manuale dei Mostri (tools/estrai_mostri.mjs): nella stessa cartella nemici/ del server
+  await copia(join(radice, 'esempi', NEMICI, 'mostri'), nemici, (f) => f.endsWith('.json') && ID_NEMICO.test(f.slice(0, -5)));
   return { copiati, saltati };
 }
 

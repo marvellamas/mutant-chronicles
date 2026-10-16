@@ -1,0 +1,127 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "covata-regina-comandante",
+  "nome": "Regina Comandante",
+  "fonte": "dal Manuale dei Mostri v0.13 (16/10/2026), cap. 7 «Fauna di Iris»",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 6,
+    "COS": 9,
+    "INT": 6,
+    "SAG": 7,
+    "CAR": 6
+  },
+  "pv": 70,
+  "pm": 18,
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 2,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "taglia": "grande",
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 10,
+    "volonta": 13,
+    "magia": 13
+  },
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+3",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Coda",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Atletica",
+      "va": 14
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    }
+  ],
+  "contromisure": [
+    {
+      "nome": "Ignifugo",
+      "valore": 6
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Comando telepatico",
+      "effetto": "Raggio 6 km, senza costo in PM: alla propria Iniziativa comunica gratis un ordine semplice alle unità della colonia (proteggere, raggiungere un punto, attaccare un bersaglio identificato, ripiegare), senza linea di vista, attraverso ostacoli ordinari. Con 1 AzP assegna ordini diversi a un massimo di tre gruppi. I destinatari agiscono alla propria Iniziativa con le Azioni rimaste.",
+      "costo": "gratis (1 AzP per ordini a tre gruppi)"
+    },
+    {
+      "nome": "Onda psichica",
+      "effetto": "Capacità innata: fino a 3 nemici visibili e dotati di mente entro 6 Q; 1d4+2 psichico diretto per bersaglio (un unico tiro condiviso) che ignora AR e PV temporanei, come Dardo Psichico. PS Volontà senza modificatore: successo dimezza per eccesso ed evita il disturbo; fallimento subisce danno pieno e −2 VA alla prossima Prova di Abilità entro fine del Round successivo. Niente Parata, Schivata o Elusione; nessuna Prova di Potere. Il freddo la impedisce (è un attacco). A 0 PM sviene dopo la risoluzione.",
+      "costo": "1 AzP e 4 PM",
+      "azioni": {
+        "principali": 1
+      },
+      "prova": "PS Volontà (dei bersagli)",
+      "risorsa": "4 PM",
+      "usi": {
+        "quanti": 1,
+        "per": "Round"
+      }
+    },
+    {
+      "nome": "Resistenza al fuoco",
+      "effetto": "Dimezza per eccesso ogni componente di danno Fuoco (anche Magico o Etereo e il danno di Incendiato) dopo Difese e Salvezze e prima dell’AR. Non si estende a Plasma, Laser o Elettricità."
+    },
+    {
+      "nome": "Adattamento alle Terre del Fuoco",
+      "effetto": "Le condizioni ambientali delle Terre del Fuoco, compreso il contatto con la lava, non producono danni o Affaticamento da calore. Crolli e urti restano pericolosi."
+    },
+    {
+      "nome": "Disorientamento da freddo",
+      "effetto": "Un effetto di freddo che la raggiunge la disorienta per 1 Round (dal Round R alla fine di R+1), anche se l’AR assorbe tutto il danno: non può spostarsi né attaccare (neppure Attacchi di Opportunità), ma può difendersi spendendo AzP e AzM. Un colpo schivato non lo attiva. Nuove esposizioni tengono la scadenza più lontana senza sommare Round."
+    }
+  ],
+  "note": "Massa paragonabile a un veicolo per Sbalzante (taglia Grande, A.95). Con un arto anteriore integro para solo in Ravvicinato (1 AzP, Difese 11). Spazio sulla mappa 2 × 3 Q (dal manuale): pedine quadrate nell’app (A.167). Covata (Mostri cap. 7): insettoide vivente di Natura Comune; nessuno Stato iniziale, nessun incantesimo. Resistenza al Fuoco e Ignifugo 6 di carapace (Contromisura, A.73). A 0 PV può continuare ad agire; le Ferite arrivano solo con danno positivo già a 0 PV (§5.14). PM personali anche senza poteri; a 0 PM Svenuto."
+}

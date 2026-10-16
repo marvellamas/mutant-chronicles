@@ -38,15 +38,16 @@ export async function dati(radice = RADICE) {
 /** Il testo del manuale proposto. */
 export const testoManuale = (radice = RADICE) => readFile(new URL('docs/bestiario/bestiario.md', radice), 'utf8');
 
-/** I nemici prestabiliti tracciati in git: esempi/nemici/*.json e esempi/nemici/umani/*.json. */
+/** I nemici prestabiliti tracciati in git: esempi/nemici/*.json, /umani/ e /mostri/. */
 export async function esempiNemici(radice = RADICE) {
   const leggi = async (sotto) => {
     const base = new URL(`esempi/nemici/${sotto}`, radice);
-    const file = (await readdir(base)).filter((x) => x.endsWith('.json')).sort();
+    let file;
+    try { file = (await readdir(base)).filter((x) => x.endsWith('.json')).sort(); } catch { return {}; }
     return Object.fromEntries(await Promise.all(file.map(async (x) => [x.replace(/\.json$/, ''),
       JSON.parse(await readFile(new URL(x, base), 'utf8'))])));
   };
-  return { esempi: await leggi(''), umani: await leggi('umani/') };
+  return { esempi: await leggi(''), umani: await leggi('umani/'), mostri: await leggi('mostri/') };
 }
 
 // --- voci della pagina ------------------------------------------------------------------------------------
@@ -60,7 +61,7 @@ const maiuscola = (t) => t.charAt(0).toUpperCase() + t.slice(1);
  * esempi del Tavolo. Ogni voce porta il nemico nel formato di data/formato_nemici.json, cioè i valori
  * come li mostra la plancia.
  */
-export function vociPagina(d, { esempi = {}, umani = {} } = {}) {
+export function vociPagina(d, { esempi = {}, umani = {}, mostri = {} } = {}) {
   const B = d.bestiario;
   const nomeGrado = (id) => B.gradi.find((g) => g.id === id)?.nome ?? id;
   const voci = [];
@@ -117,7 +118,14 @@ export function vociPagina(d, { esempi = {}, umani = {} } = {}) {
       riferimento: null, nemico: n });
   }
 
-  // 4. esempi del Tavolo del Master
+  // 4. creature del Manuale dei Mostri (esempi/nemici/mostri/): categoria dalla famiglia della scheda
+  for (const [id, n] of Object.entries(mostri)) {
+    aggiungi({ chiave: `mostro:${id}`, gruppo: 'Manuale dei Mostri', categoria: n.famiglia ? maiuscola(n.famiglia) : 'Manuale dei Mostri',
+      titolo: n.nome ?? id, grado: null, gradoNome: n.gs_px?.gs ? `GS ${n.gs_px.gs}` : null, boss: false,
+      riferimento: n.fonte ?? null, nemico: n });
+  }
+
+  // 5. esempi del Tavolo del Master
   for (const [id, n] of Object.entries(esempi)) {
     aggiungi({ chiave: `esempio:${id}`, gruppo: 'Esempi del Tavolo', categoria: 'Esempi del Tavolo',
       titolo: n.nome ?? id, grado: null, gradoNome: null, boss: false, riferimento: null, nemico: n });
@@ -439,8 +447,8 @@ ${md ? manualeHtml(md) : '<p>Il testo del manuale non è compreso in questa copi
 /** Tutto insieme: dati → pagina. */
 export async function genera(radice = RADICE) {
   const d = await dati(radice);
-  const { esempi, umani } = await esempiNemici(radice);
-  return paginaHtml(vociPagina(d, { esempi, umani }), d, await testoManuale(radice));
+  const { esempi, umani, mostri } = await esempiNemici(radice);
+  return paginaHtml(vociPagina(d, { esempi, umani, mostri }), d, await testoManuale(radice));
 }
 
 /** Come tools/versione.mjs --controlla: la pagina sul disco corrisponde ai dati? */

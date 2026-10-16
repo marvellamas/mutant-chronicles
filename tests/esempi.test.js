@@ -70,12 +70,15 @@ test('«Carica esempi»: copia nelle cartelle attive, non sovrascrive mai, segna
   assert.deepEqual(r.saltati, ['Rhea-Valdis_liv5_2026-10-02.json']);
   const umani = readdirSync(new URL('nemici/umani/', cartellaEsempi)).filter((f) => f.endsWith('.json'));
   assert.equal(umani.length, 30);
-  assert.deepEqual(r.copiati.sort(), ['Aiko-Tenzan_liv5_2026-10-02.json', 'Fratello-Anselmo-Viri_liv3_2026-10-02.json', 'Nadia-Ferro_liv4_2026-10-02.json', 'Torvald-Krane_liv6_2026-10-02.json', 'legionario-oscuro.json', 'predone-delle-lande.json', ...umani].sort());
+  const mostri = readdirSync(new URL('nemici/mostri/', cartellaEsempi)).filter((f) => f.endsWith('.json'));
+  assert.ok(mostri.length >= 10, 'le creature del Manuale dei Mostri si caricano come gli altri prestabiliti');
+  const nemiciEsempio = ['legionario-oscuro.json', 'predone-delle-lande.json', ...umani, ...mostri];
+  assert.deepEqual(r.copiati.sort(), ['Aiko-Tenzan_liv5_2026-10-02.json', 'Fratello-Anselmo-Viri_liv3_2026-10-02.json', 'Nadia-Ferro_liv4_2026-10-02.json', 'Torvald-Krane_liv6_2026-10-02.json', ...nemiciEsempio].sort());
   assert.equal(readFileSync(join(cPersonaggi, 'Rhea-Valdis_liv5_2026-10-02.json'), 'utf8'), 'IL MIO FILE');
-  assert.deepEqual(readdirSync(cNemici).sort(), ['legionario-oscuro.json', 'predone-delle-lande.json', ...umani].sort());
+  assert.deepEqual(readdirSync(cNemici).sort(), nemiciEsempio.slice().sort());
   // seconda volta: tutto già presente, nulla copiato
   const r2 = await (await fetch(`${base}/api/esempi`, { method: 'POST' })).json();
-  assert.deepEqual([r2.copiati, r2.saltati.length], [[], 37]);
+  assert.deepEqual([r2.copiati, r2.saltati.length], [[], 5 + nemiciEsempio.length]);
   assert.equal((await fetch(`${base}/api/esempi`)).status, 405);
   // i PG copiati si leggono dall'elenco della cartella
   const elenco = await (await fetch(`${base}/api/personaggi`)).json();

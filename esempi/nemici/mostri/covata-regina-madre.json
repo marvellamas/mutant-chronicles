@@ -1,0 +1,81 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "covata-regina-madre",
+  "nome": "Regina Madre",
+  "fonte": "dal Manuale dei Mostri v0.13 (16/10/2026), cap. 7 «Fauna di Iris»",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 1,
+    "COS": 10,
+    "INT": 7,
+    "SAG": 8,
+    "CAR": 8
+  },
+  "pv": 150,
+  "pm": 24,
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 5,
+  "iniziativa": -2,
+  "movimento": {
+    "passo": 1,
+    "corsa": "non_consentito",
+    "scatto": "non_consentito"
+  },
+  "taglia": "grande",
+  "gs_px": {
+    "gs": "—",
+    "px": 0,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 16,
+    "riflessi": 5,
+    "volonta": 15,
+    "magia": 14
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [],
+  "abilita": [
+    {
+      "nome": "Percezione",
+      "va": 12
+    }
+  ],
+  "contromisure": [
+    {
+      "nome": "Ignifugo",
+      "valore": 6
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Generazione delle regine",
+      "effetto": "Produce regine incubatrici e comandanti; con popolazione eccessiva genera una nuova Regina Madre che parte a fondare un’altra colonia (profilo distinto per il viaggio)."
+    },
+    {
+      "nome": "Governo della colonia",
+      "effetto": "Stabilisce priorità di crescita, nutrimento e difesa; comunica con le altre regine del complesso senza Azioni o PM. Le comandanti traducono le direttive; la madre non concede Azioni aggiuntive a distanza.",
+      "costo": "gratis"
+    },
+    {
+      "nome": "Resistenza al fuoco",
+      "effetto": "Dimezza per eccesso ogni componente di danno Fuoco (anche Magico o Etereo e il danno di Incendiato) dopo Difese e Salvezze e prima dell’AR. Non si estende a Plasma, Laser o Elettricità."
+    },
+    {
+      "nome": "Adattamento alle Terre del Fuoco",
+      "effetto": "Le condizioni ambientali delle Terre del Fuoco, compreso il contatto con la lava, non producono danni o Affaticamento da calore. Crolli e urti restano pericolosi."
+    },
+    {
+      "nome": "Disorientamento da freddo",
+      "effetto": "Un effetto di freddo che la raggiunge la disorienta per 1 Round (dal Round R alla fine di R+1), anche se l’AR assorbe tutto il danno: non può spostarsi né attaccare (neppure Attacchi di Opportunità), ma può difendersi spendendo AzP e AzM. Un colpo schivato non lo attiva. Nuove esposizioni tengono la scadenza più lontana senza sommare Round."
+    }
+  ],
+  "note": "Casta non combattente: nessun attacco, Parata naturale o Attacco di Opportunità; nessuna Onda psichica offensiva. Massa paragonabile a un veicolo per Sbalzante (taglia Grande). La sua morte non uccide gli altri membri. Spazio sulla mappa 3 × 10 Q (dal manuale): pedine quadrate nell’app (A.167). Covata (Mostri cap. 7): insettoide vivente di Natura Comune; nessuno Stato iniziale, nessun incantesimo. Resistenza al Fuoco e Ignifugo 6 di carapace (Contromisura, A.73). A 0 PV può continuare ad agire; le Ferite arrivano solo con danno positivo già a 0 PV (§5.14). PM personali anche senza poteri; a 0 PM Svenuto."
+}
