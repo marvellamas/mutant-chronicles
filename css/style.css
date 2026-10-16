@@ -2783,3 +2783,7 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .usi-capacita { display: inline-flex; align-items: center; gap: 0.25rem; margin-left: 0.35rem; }
 .usi-capacita .usi-finiti { color: var(--pv); }
 .capacita-esaurita { opacity: 0.85; }
+/* A.162 (16/10): proprietà Indistruttibile e Integrità da definire, nella sezione Integrità dell'Inventario */
+.integrita-speciali { list-style: none; margin: 0.4rem 0 0; padding: 0; display: grid; gap: 0.3rem; }
+.etichetta-indistruttibile { background: var(--pe-tenue); color: var(--pe); border: 1px solid var(--pe); }
+.etichetta-integrita-definire { background: var(--pv-tenue); color: var(--pv); border: 1px dashed var(--pv); }

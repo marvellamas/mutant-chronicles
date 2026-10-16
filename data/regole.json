@@ -2957,7 +2957,36 @@
         "fonte": "Armamenti §7.2.1"
       }
     ],
-    "_nota_soglie": "Nessuna soglia intermedia: «Una perdita di PI non impone automaticamente −2 VA» (Equipaggiamento §1.7). Effetto «inutilizzabile»: l'oggetto Rotto non dà AR né i suoi effetti, peso e penalità restano; un rinforzo rotto montato tiene FOR richiesta e penalità della configurazione (risposte A.44, A.45; l'elmetto a 0 PI «perde i propri vantaggi», §7.21.3). Riparazione: «riparazione» qui sopra (A.46)."
+    "_nota_soglie": "Nessuna soglia intermedia: «Una perdita di PI non impone automaticamente −2 VA» (Equipaggiamento §1.7). Effetto «inutilizzabile»: l'oggetto Rotto non dà AR né i suoi effetti, peso e penalità restano; un rinforzo rotto montato tiene FOR richiesta e penalità della configurazione (risposte A.44, A.45; l'elmetto a 0 PI «perde i propri vantaggi», §7.21.3). Riparazione: «riparazione» qui sopra (A.46).",
+    "stati": {
+      "fonte": "A.162, risposta approvata il 16/10/2026; Equipaggiamento §§1.7 e 10.12, Magia §28.2",
+      "predefinito": "ordinaria",
+      "elenco": [
+        {
+          "id": "ordinaria",
+          "nome": "Integrità ordinaria",
+          "testo": "Si applica la gestione normale di PS Integrità e PI.",
+          "pi": true
+        },
+        {
+          "id": "indistruttibile",
+          "nome": "Indistruttibile",
+          "etichetta": "Indistruttibile",
+          "testo": "Il danneggiamento non provoca perdita di PI o rottura.",
+          "pi": false
+        },
+        {
+          "id": "da_definire",
+          "nome": "Integrità da definire",
+          "etichetta": "Integrità da definire",
+          "testo": "Il dato manca e va completato quando serve. Non vale come indistruttibile e non vale come oggetto rotto.",
+          "pi": false,
+          "avviso": true
+        }
+      ],
+      "_nota": "Campo «integrita» della voce di catalogo (o della voce personalizzata): uno dei tre id. Senza campo vale «ordinaria», come tutti gli oggetti di sempre. Un PI assente non significa indistruttibile: senza PI e senza campo l’oggetto semplicemente non si traccia (src/protezione.js → oggettiConPi).",
+      "_nota_estensione": "A.162: la proprietà è riutilizzabile per altri oggetti soltanto quando la loro scheda la prevede. Non si estende ai Sigilli, al contenuto dello Scrigno, né a un oggetto per il fatto di essere un Artefatto o una reliquia."
+    }
   },
   "ar": {
     "paragrafo": "Giocatore §5.13, §5.24; Armamenti §7.4, §7.11, §7.11.2, §7.21.1; Magia sez. 7",

@@ -23,6 +23,31 @@ const intero = (v) => (Number.isInteger(v) ? v : 0);
  * con quantità 1. Le modifiche d'elmetto condividono i PI dell'elmetto (§7.21.3): non hanno PI propri.
  * @param oggetti voci risolte (risolvi() di src/equipaggiamento.js)
  */
+/**
+ * A.162 (16/10/2026): lo stato dell'Integrità di un oggetto — «ordinaria», «indistruttibile» o
+ * «da_definire» — dal campo `integrita` della voce di catalogo (o della voce personalizzata). Senza campo
+ * vale «ordinaria»: un PI assente non significa indistruttibile e non significa rotto.
+ * @returns { id, nome, etichetta?, testo, pi: traccia i PI?, avviso?: va segnalato? }
+ */
+export function integritaOggetto(o, dati) {
+  const S = dati?.regole?.integrita?.stati ?? null;
+  const elenco = S?.elenco ?? [];
+  const predefinito = elenco.find((x) => x.id === (S?.predefinito ?? 'ordinaria')) ?? { id: 'ordinaria', nome: 'Integrità ordinaria', pi: true };
+  const chiesto = o?.def?.integrita ?? o?.voce?.personalizzato?.integrita ?? o?.integrita ?? null;
+  return elenco.find((x) => x.id === chiesto) ?? predefinito;
+}
+
+/** A.162: gli oggetti con l'Integrità da completare, da segnalare nell'Inventario (mai «rotti»). */
+export function oggettiIntegritaDaDefinire(oggetti, dati) {
+  return (oggetti ?? []).filter((o) => integritaOggetto(o, dati).id === 'da_definire').map((o) => ({ uid: o.uid, nome: o.nome }));
+}
+
+/** A.162: gli oggetti Indistruttibili (dicitura visibile; il danno non toglie PI e non rompe). */
+export function oggettiIndistruttibili(oggetti, dati) {
+  return (oggetti ?? []).filter((o) => integritaOggetto(o, dati).id === 'indistruttibile')
+    .map((o) => ({ uid: o.uid, nome: o.nome, stato: integritaOggetto(o, dati), nota: o.def?._nota_integrita ?? null }));
+}
+
 export function oggettiConPi(oggetti, dati) {
   const r = dati.regole.integrita ?? {};
   const tipi = new Set(r.tipi_tracciati ?? []);
@@ -30,6 +55,8 @@ export function oggettiConPi(oggetti, dati) {
   const out = [];
   for (const o of oggetti) {
     if (o.fuoriCatalogo || !tipi.has(o.tipo) || o.def?.modifica_elmetto) continue;
+    // A.162: un Indistruttibile non ha PI da tracciare; l'Integrità da definire si segnala a parte
+    if (!integritaOggetto(o, dati).pi) continue;
     // A.47: PI del catalogo, oppure fissati dal Direttore per l'oggetto senza PI a catalogo
     const piMax = o.def?.pi ?? o.voce.pi_direttore ?? o.voce.personalizzato?.pi;
     if (!Number.isInteger(piMax) || piMax <= 0) continue;

@@ -18,7 +18,7 @@
 
 import { bonusDannoCaratteristica, caratteristicaDanno } from './calc.js';
 import { riga, provenienza, rigaBonusCaratteristica as rigaBonus } from './provenienza.js';
-import { calcolaAR, oggettiConPi, oggettiSenzaPi } from './protezione.js';
+import { calcolaAR, oggettiConPi, oggettiSenzaPi, oggettiIndistruttibili, oggettiIntegritaDaDefinire } from './protezione.js';
 import { tipoRiserva, alimentazione as alimentazioneRiserva, fontePerPg } from './fonti.js';
 
 export const TIPI = ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'rinforzo', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'impianto', 'altro'];
@@ -1427,6 +1427,9 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     integrita: dati.regole?.integrita ? oggettiConPi(oggetti, dati) : [],
     // A.47: oggetti senza PI a catalogo, per il campo «PI (definito dal Direttore)»
     senzaPi: dati.regole?.integrita ? oggettiSenzaPi(oggetti, dati) : [],
+    // A.162 (16/10/2026): oggetti con la proprietà Indistruttibile e oggetti con l'Integrità da definire
+    indistruttibili: dati.regole?.integrita ? oggettiIndistruttibili(oggetti, dati) : [],
+    integritaDaDefinire: dati.regole?.integrita ? oggettiIntegritaDaDefinire(oggetti, dati) : [],
     zaino: oggetti.filter((o) => !o.attivo),
     equipAbilita,
     componentiEquip,

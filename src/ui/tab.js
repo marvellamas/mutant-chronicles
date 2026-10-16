@@ -554,7 +554,9 @@ function pilloleAR(ctx) {
  */
 function sezioneIntegrita(ctx) {
   const lista = ctx.tab.scheda.equipaggiamento?.integrita ?? [];
-  if (!lista.length) return null;
+  // A.162: gli Indistruttibili e quelli con l'Integrità da definire si vedono anche senza PI da tracciare
+  const speciali = [...(ctx.tab.scheda.equipaggiamento?.indistruttibili ?? []), ...(ctx.tab.scheda.equipaggiamento?.integritaDaDefinire ?? [])];
+  if (!lista.length && !speciali.length) return null;
   const pi = ctx.sessione.integrita ?? {};
   const rip = regoleRiparazione(ctx.dati);
   const attuali = (x) => pi[x.uid] ?? x.piMax;
@@ -601,6 +603,8 @@ function sezioneIntegrita(ctx) {
       h('tbody', {}, righe.map(riga)))),
     dalRiquadro ? pannelloRiparazione(ctx, lista, pi, rip) : null,
     campiPiDirettore(ctx),
+    // A.162 (16/10/2026): proprietà esplicita, con la sua regola; mai dedotta dal PI mancante
+    righeSpeciali(ctx),
     h('p', { class: 'nota' }, 'Un colpo o una Parata ordinari non tolgono PI: si perdono con un attacco per rompere l’oggetto, un Magistrale che lo coinvolge, Corrosivo o Demolitrice e il danno Etereo, se la PS Integrità (1d20 ≤ PS) fallisce. A 0 PI l’oggetto è Rotto: non dà AR né i suoi effetti. Si ripara con «Ripara» (un’ora, Prova di Tecnologia, esito scelto dopo il tiro, A.46); il Direttore può sempre rimettere i PI con +.'));
 }
 
@@ -1878,6 +1882,28 @@ function riquadroMorente(ctx) {
       h('button', { type: 'button', class: 'btn primario btn-piccolo', title: R.stabilizza?.nota ?? 'Riporta a Grave e spegne il contatore', onclick: () => ctx.azioni.stabilizza() }, R.stabilizza?.etichetta ?? 'Stabilizza')),
     mo.vie.length ? h('details', { class: 'vie-morente' }, h('summary', {}, 'Come si stabilizza'),
       h('ul', {}, mo.vie.map((v) => h('li', {}, h('small', { class: 'nota' }, v))))) : null);
+}
+
+/**
+ * A.162: gli oggetti Indistruttibili e quelli con l'Integrità da definire, nella sezione Integrità.
+ * I primi mostrano la dicitura e la loro regola particolare; i secondi un avviso: il dato manca e va
+ * completato, senza trattarli come indistruttibili né come rotti.
+ */
+function righeSpeciali(ctx) {
+  const eq = ctx.tab.scheda.equipaggiamento ?? {};
+  const S = ctx.dati.regole.integrita?.stati?.elenco ?? [];
+  const stato = (id) => S.find((x) => x.id === id) ?? null;
+  const ind = eq.indistruttibili ?? [];
+  const def = eq.integritaDaDefinire ?? [];
+  if (!ind.length && !def.length) return null;
+  return h('ul', { class: 'integrita-speciali' }, [
+    ...ind.map((o) => h('li', {}, h('strong', {}, o.nome), ' ',
+      h('span', { class: 'etichetta etichetta-indistruttibile' }, o.stato?.etichetta ?? 'Indistruttibile'),
+      h('small', { class: 'nota' }, ` ${o.stato?.testo ?? ''}${o.nota ? ` ${o.nota}` : ''}`))),
+    ...def.map((o) => h('li', {}, h('strong', {}, o.nome), ' ',
+      h('span', { class: 'etichetta etichetta-integrita-definire' }, stato('da_definire')?.etichetta ?? 'Integrità da definire'),
+      h('small', { class: 'motivo' }, ` ${stato('da_definire')?.testo ?? ''}`))),
+  ]);
 }
 
 /** Affaticamento (§5.19) e Corruzione (§5.20), modificabili: sotto i PM nella colonna di sinistra del Combattimento (S13). */

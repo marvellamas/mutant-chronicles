@@ -2478,6 +2478,23 @@
       "qualita": "Comune",
       "ps_int": 10,
       "pi": 1
+    },
+    {
+      "id": "scrigno-del-primo-giuramento",
+      "nome": "Scrigno del Primo Giuramento",
+      "tipo": "artefatto",
+      "catalogo": "Artefatti di campagna",
+      "famiglia": "Artefatti",
+      "nomi_alternativi": [],
+      "paragrafo": "Equipaggiamento §10.12; Magia §28.2",
+      "versione_manuale": "Equipaggiamento 0.8 / Magia 1.5 (15/10/2026); A.162 del 16/10/2026",
+      "peso": null,
+      "costo": null,
+      "integrita": "indistruttibile",
+      "_nota_integrita": "A.162: proprietà Indistruttibile attiva. Il danneggiamento non toglie PI e non rompe lo Scrigno, e **non consente di forzarne l’apertura**: le autorizzazioni di apertura seguono la sua scheda. La proprietà non si estende ai Sigilli né al contenuto.",
+      "effetto_breve": "Scrigno indistruttibile: il danneggiamento non lo apre. Le autorizzazioni di apertura seguono la sua scheda.",
+      "proprieta": [],
+      "_nota": "Artefatto di campagna del Manuale della Magia §28.2. Peso, prezzo e Reperibilità non sono indicati dai manuali: restano da completare. La schermatura dei Contenitori del Silenzio è un’altra cosa (A.163, §10.13)."
     }
   ],
   "fuori_scala": {
