@@ -34,17 +34,7 @@ Nessuna, al momento: hai risposto a tutte. Grazie!
 
 Le tue risposte sono nella sezione 7. Qui c’è cosa fa l’app finché l’implementazione non è finita; poi la voce passa fra le Risolte.
 
-•             **A.160 — Punti Abilità degli avversari costruiti come PG.** Ricevuta: 7 punti, il 5 era un refuso. L’app usa già 7; passa fra le Risolte dopo la verifica.
-
 •             **A.161 — PX della partita.** Ricevuta: niente PX automatici; sezione «PX della partita» nel Tavolo del Direttore con calcolatore, totale finale modificabile e «Assegna PX della partita». In implementazione.
-
-•             **A.162 — Proprietà Indistruttibile.** Ricevuta. In implementazione: proprietà esplicita, attiva per lo Scrigno del Primo Giuramento.
-
-•             **A.163 — Schermatura dei Contenitori del Silenzio.** Ricevuta: vale per qualsiasi contenuto interamente riposto, a contenitore chiuso e integro. In implementazione.
-
-•             **A.164 — Morente anche per i nemici.** Ricevuta. In implementazione: stesso contatore della A.159; se manca la COS l’app chiede il dato invece di dedurlo.
-
-•             **A.166 — Manifestazioni della CyberArma.** Ricevuta. In implementazione: Abilità sempre Armi da mischia; famiglia e Specializzazione secondo la forma manifestata (il Custode sceglie la forma, gli altri usano quella del progetto, lama lunga di base).
 
 •             **A.111 — Recuperi di Umanità e Pablo Zaion.** La perdita di 2 UMN fatta per prova si toglie dal file di Pablo, con una nota, senza rimozioni o recuperi fittizi: lo fa Marcello. La regola generale sui recuperi pregressi resta in implementazione.
 
@@ -441,6 +431,16 @@ Voci con risposta recepita e funzione implementata nell’app (o chiuse). La dat
 •             **A.158** — CyberArma: due configurazioni nel catalogo con una sola voce d’inventario (fra Armi e Artefatti): modello originale (Grado I, SnT 1, Non comune, PS Integrità 12, 4 PI, 0,5 kg, Epica, senza prezzo) e con Batteria Verde da 5 cariche (Grado II, SnT 2 contata una volta, 0,7 kg, una carica per attivazione). Uso per Classe nei dati: Custode 1 PM per 15 Round e +1 danno; Tecnomante 2 PM per 10 Round, 1d8 Magico; altre Classi solo con la batteria e a −2 (avviso, non blocco). «Attiva» scala il costo; scheda e «Attacca!» mostrano i Round che restano. Costruzione come testo. Nel catalogo anche la Custodia del Silenzio (§7.25.1). *Approvata il 13/10, implementata il 15/10.* Vedi la A.166.
 
 •             **A.159** — Morente: oltre Grave il PG resta a −8, sviene e ha un contatore di Round pari alla COS, che cala di 1 a ogni Round dello scontro e per ogni nuova Ferita; a 0 l’app avvisa che è morto e lascia decidere al Direttore. «Stabilizza» riporta a Grave; le quattro vie approvate sono un promemoria di solo testo. Cartuccia Stabilizzante nel catalogo (2.000 cr, MR). Supera la decisione provvisoria di Marcello del 13/10. Nemici invariati in attesa della A.164. *Approvata il 14/10, implementata il 15/10.*
+
+•             **A.160** — Avversari costruiti come PG: 7 punti Abilità liberi alla creazione e a ogni Grado; il «5» del §5.2 era un refuso, corretto dalla 0.4 in poi. *Era già così nell’app; verificata il 16/10.*
+
+•             **A.162** — Integrità degli oggetti in tre stati: ordinaria (PS Integrità e PI), **Indistruttibile** (dicitura visibile, il danno non toglie PI e non rompe) e «da definire» (dato mancante, segnalato). Scrigno del Primo Giuramento indistruttibile, con la regola che il danneggiamento non lo apre; non si estende a Sigilli, contenuto o altri Artefatti. *Approvata e implementata il 16/10.*
+
+•             **A.163** — Contenitori del Silenzio (Custodia, Zaino, Cofanetto) nel catalogo, con «Schermatura attiva / inattiva» e le due caselle «chiuso» e «contenuto riposto»: vale per qualunque contenuto, senza elenchi di oggetti; l’app non calcola la Corruzione e ricorda che la schermatura non la elimina. *Approvata e implementata il 16/10.*
+
+•             **A.164** — Morente anche per i nemici: oltre Grave Svenuto, −8 e contatore pari alla COS intera all’ingresso (0 PV da soli non bastano). Il primo calo arriva dopo un Round completo, alla stessa Iniziativa dell’ingresso (vale anche per i PG); le Ferite in eccesso del colpo d’ingresso non tolgono Round, ogni Ferita successiva ne toglie 1; a 0 l’app avvisa senza bloccare. «Stabilizza» riporta a Grave. Senza COS l’app la chiede, non la deduce e non dichiara morto. *Approvata e implementata il 16/10.*
+
+•             **A.166** — CyberArma: Abilità sempre Armi da mischia; la manifestazione è un campo a parte e da essa dipendono famiglia, Specializzazione e Manovre (lama lunga → Spade, frusta → Armi flessibili, ascia → Asce, lancia → Armi inastate). Il Custode sceglie la forma; gli altri usano quella del progetto (lama lunga), modificabile solo come modifica del manufatto. Una sola Specializzazione. *Approvata e implementata il 16/10.*
 
 •             **A.165** — A.109 nel Doc E\&L: rettifica editoriale, la A.109 è risolta e le note di sospensione sono state aggiornate; l’app mantiene i 32 gradini dell’08/10. *Chiusa il 16/10.*
 

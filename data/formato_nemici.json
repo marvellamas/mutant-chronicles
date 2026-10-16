@@ -181,6 +181,30 @@
       "obbligatorio": false,
       "descrizione": "Spazio occupato sulla mappa, in Q (A.126, risposta approvata il 15/10/2026): si usa l’ingombro indicato nel profilo e non si deduce dalla Taglia. Serve a rappresentare la pedina e a verificarne passaggio e posizionamento; resta distinto dalla portata degli attacchi (A.133). Se manca vale il lato dalla Taglia, come prima (1 Q di norma)."
     },
+    "gs_px": {
+      "tipo": "oggetto",
+      "obbligatorio": false,
+      "descrizione": "Grado di Sfida (GS) e PX del Manuale dei Mostri, per 4 PG (A.161, risposta del 16/10/2026 da applicare). Valore informativo: la mini-scheda lo mostra, l’app non calcola PX e non lo unifica ai gradi del bestiario proposto (Minore…Molto potente, tarati su 7 PG).",
+      "campi": {
+        "gs": {
+          "tipo": "testo",
+          "obbligatorio": true,
+          "descrizione": "Grado di Sfida come lo scrive il manuale (Principiante, Inesperto, Esperto, Veterano, Eroe, Leggenda)."
+        },
+        "px": {
+          "tipo": "intero",
+          "min": 0,
+          "obbligatorio": false,
+          "descrizione": "PX per 4 PG, come valore informativo."
+        },
+        "per_pg": {
+          "tipo": "intero",
+          "min": 1,
+          "obbligatorio": false,
+          "descrizione": "Numero di PG per cui valgono i PX (4 nel manuale)."
+        }
+      }
+    },
     "salvezze": {
       "tipo": "mappa",
       "chiavi_da": "salvezze",

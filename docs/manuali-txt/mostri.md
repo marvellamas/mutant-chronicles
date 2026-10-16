@@ -4,11 +4,11 @@
 
 ## *Bestiario e avversari per il Direttore*
 
-VERSIONE 0.9  •  COVATA E CATALOGO DEL BESTIARIO  •  OTTOBRE 2026
+VERSIONE 0.13  •  COVATA E CATALOGO DEL BESTIARIO  •  OTTOBRE 2026
 
 Il Manuale dei Mostri raccoglie creature, avversari e strumenti per costruire gli incontri di Simply RPG. Ogni scheda deve permettere al Direttore di capire che cosa vuole la creatura, come agisce e quali regole applicare, senza ricostruirne i valori durante la partita.
 
-Il volume comprende le regole comuni, la fauna di Iris con le nove caste della Covata nel capitolo 7 e settantacinque creature nel catalogo del capitolo 8. Le schede riportano statistiche complete e PX riferiti a quattro PG. Il metodo per assegnare i PX agli incontri è nel Manuale del Direttore §9.3.
+Il volume comprende le regole comuni, la fauna di Iris con le nove caste della Covata nel capitolo 7 e centoquindici creature nel catalogo del capitolo 8. Le schede riportano statistiche complete e PX riferiti a quattro PG. Il metodo per assegnare i PX agli incontri è nel Manuale del Direttore §9.3.
 
 ## **Contenuto del volume**
 
@@ -26,7 +26,7 @@ Il volume comprende le regole comuni, la fauna di Iris con le nove caste della C
 
 7 Fauna di Iris  •  Covata e Lorath
 
-8 Catalogo delle creature  •  Settantacinque schede con GS e PX
+8 Catalogo delle creature  •  Centoquindici schede con GS e PX
 
 # **1 Principi del Bestiario**
 
@@ -747,7 +747,7 @@ Le chele non concedono Parata naturale in questo profilo. Il Lorath apre con il 
 
 Le schede presentano esemplari con le caratteristiche e la dotazione indicate. Tutte le creature di questo capitolo hanno Natura Comune; la loro eventuale presenza su Iris richiede una collocazione nell’ambientazione e non le assimila alla Covata.
 
-**PX di riferimento.** Valori per un esemplare e quattro PG, con la dotazione descritta; premio dell’incontro nel Direttore §9.3. Dopo le prime quindici schede seguono sei blocchi di dieci: «Bande e grandi avversari», «Non morti», «Bestie e predatori», «Costrutti e creature elementali», «Giganti e abitanti delle montagne» e «Creature del sottosuolo», ciascuno con un riepilogo.
+**PX di riferimento.** Valori per un esemplare e quattro PG, con la dotazione descritta; premio dell’incontro nel Direttore §9.3. Le prime quindici schede sono riepilogate qui. Seguono dieci blocchi di dieci, ciascuno con il proprio prospetto; l’ultimo è «Creature delle acque e popoli sommersi».
 
   
 
@@ -4631,5 +4631,2081 @@ Un grande necrofago dal corpo allungato, sensibile all’odore di sangue e decom
 **Prede e trascinamento.** Immobilizzato da veleno non è una presa del Vermeiena: allontanare o uccidere il necrofago non termina l’intossicazione. Per trascinare una vittima ancora cosciente deve prima afferrarla con la normale manovra Immobilizzare, pagando l’Azione e risolvendo la contrapposta. Il trasporto rispetta carico, percorso e movimento ordinari; una preda non viene portata sul soffitto senza un appiglio e una presa adeguati.
 
 **Verifica della sfida.** Il GS Esperto, 30 PX, comprende due AzP, portata dei Tentacoli, veleno con ripetizione e aderenza. Non comprende un branco o un ambiente che renda impossibile il soccorso. Durante il playtest osservare quante Azioni vengono dedicate a liberazioni, antidoti e Difese, oltre ai danni: è questa pressione che distingue il Vermeiena da un semplice predatore da Morso.
+
+# **Melme funghi e imitatori**
+
+*Dieci profili per ambienti umidi, colonie fungine e oggetti insidiosi*
+
+Una chiazza sul pavimento, un fungo lungo il sentiero o un forziere abbandonato possono essere organismi viventi. Le melme cercano nutrimento, i funghi reagiscono agli stimoli e i Miconidi possono diventare interlocutori. Queste schede appartengono al catalogo generale: la loro presenza su Iris e i rapporti con Paradise richiedono una collocazione nell’ambientazione. Non sono nuove caste della Covata.
+
+  
+
+|  |  |  |
+| :-: | :-: | :-: |
+| **Creatura** | **GS** | **PX per 4 PG** |
+| Melma grigia | Inesperto | 20 |
+| Gelatina ocra | Esperto | 30 |
+| Budino nero | Veterano | 50 |
+| Cubo gelatinoso | Esperto | 30 |
+| Fungo stridente | — | 0 |
+| Fungo violetto | Inesperto | 20 |
+| Spora gassosa | Inesperto | 20 |
+| Miconide germoglio | Principiante | 10 |
+| Miconide adulto | Inesperto | 20 |
+| Mimic | Esperto | 30 |
+
+  
+
+**PX di riferimento.** I valori riguardano un esemplare nella configurazione descritta e quattro PG. Nessuno di questi profili comprende equipaggiamento conteggiato. Il premio complessivo dell’incontro segue il Manuale del Direttore §9.3. I frammenti di una melma restano parte del medesimo esemplare; il Fungo stridente non assegna PX di combattimento. Mettere in sicurezza un allarme può comunque risolvere un obiettivo della scena.
+
+**Criterio di adattamento.** Scissione, inglobamento, adesione e spore hanno costi, limiti e procedure di soccorso espliciti. I danni biologici non ignorano automaticamente le armature: le eccezioni riguardano solo esposizioni interne indicate. I Miconidi impiegano spore anche per comunicare, senza imporre obbedienza o leggere pensieri.
+
+**Fonti e verifica.** Riferimenti operativi: Giocatore v0.49, Magia v1.5, Direttore v0.41 e Armamenti v0.64. Le pagine delle voci sono quelle stampate del Manuale dei Mostri fornito. GS e PX restano stime da verificare al tavolo, soprattutto per la scissione, l’usura degli oggetti e il costo delle liberazioni.
+
+# **Melme e funghi regole operative**
+
+**Natura e risorse.** Tutti i profili hanno Natura Comune e sono organismi viventi. Le quattro melme e i tre funghi autonomi sono privi di mente strutturata: PM — e Volontà —, immunità espressa a danni psichici, controllo mentale e Terrorizzato. Questa è una proprietà delle schede, non una conseguenza generale di INT bassa. Miconidi e Mimic hanno invece mente e PM personali; a 0 PM diventano Svenuti. Stati iniziali e incantesimi appresi: nessuno.
+
+**Danni e sopravvivenza.** A 0 PV non si muore né si sviene automaticamente: valgono Tempra, Ferite, Menomazioni e Morente. Le cure biologiche ordinarie sono applicabili. Melme e funghi autonomi non dormono e scambiano gas attraverso il corpo: l’ostruzione di una bocca inesistente non li soffoca. Non sono immuni a ogni veleno, malattia o ambiente privo di condizioni vitali. Miconidi e Mimic respirano e riposano normalmente.
+
+**Azioni e Difese.** INI è il modificatore a 1d10. Le AzP e l’unica AzM valgono per l’intero Round. Ogni attacco costa 1 AzP e produce una sola applicazione di danno, AC 1, salvo eccezione espressa; i danni comprendono tutti i bonus. Nessun profilo possiede Parata naturale. Schivata costa 1 AzP e 1 AzM e richiede uno spostamento concretamente possibile; un organismo immobile non può usarla. Un Attacco di Opportunità ordinario usa soltanto un attacco con VA in tabella: non attiva gratuitamente spore, Inglobare, Digerire o mutamenti di forma.
+
+**Ordine del danno.** Si applicano bonus e moltiplicatori, Difesa, resistenze, AR e infine effetti subordinati al danno residuo. I dimezzamenti arrotondano per eccesso. Naturale e Magico incontrano tutta l’AR pertinente; Etereo soltanto l’AR magica. Una capacità che richiede una Salvezza al posto del tiro per colpire non genera un attacco Magistrale. L’acido è il mezzo del danno, mentre Corrosivo è una proprietà ulteriore, presente soltanto dove dichiarata.
+
+**Movimento e sensi.** Le terne sono Passo / Corsa / Scatto in Q; velocità speciali già effettive. Tragitti misti condividono il budget ordinario. Scurovisione non attraversa solidi o oscurità soprannaturale. Percezione diffusa localizza entro il raggio dichiarato senza occhi o udito, ma non legge, distingue colori o soddisfa gli sguardi; barriere solide la interrompono. Non individua automaticamente un bersaglio nascosto: resta il confronto Percezione–Furtività.
+
+**Stati e liberazioni.** Immobilizzato significa movimento 0 e −4 alle azioni fisiche, comprese Difese e tentativi fisici di liberazione; non alle Salvezze. Le mani restano utilizzabili salvo blocco espresso. Le liberazioni indicate costano 1 AzP e i pareggi conservano una presa già stabilita. Quando una capacità dura 1 Round termina alla fine del Round successivo a quello di applicazione, salvo una diversa scadenza dichiarata.
+
+# **Melme anatomia e percezione**
+
+**Quattro organismi differenti.** Melma grigia, Gelatina ocra, Budino nero e Cubo gelatinoso condividono un corpo gelatinoso e l’assenza di mente strutturata. Cercano nutrimento attraverso stimoli locali; non elaborano tattiche, alleanze o vendette. La forma e il metabolismo non concedono resistenze ulteriori rispetto a quelle delle singole voci.
+
+**Sensi e Stati.** Tutte hanno Percezione diffusa entro 12 Q e sono immuni ad Accecato, Assordato, A terra e all’accumulo di AFT. La loro percezione può essere schermata da un ostacolo, anche se non dipende dagli organi colpiti da questi Stati. Oltre 12 Q non localizzano con precisione una preda. Restano soggette agli altri Stati compatibili, compresi Rallentato, Immobilizzato e Stordito.
+
+**Localizzazioni.** Testa indica la regione sensoriale anteriore; Torace la massa centrale; Braccia gli pseudopodi destro e sinistro; Gambe le due porzioni della base locomotrice. Il Direttore mantiene queste corrispondenze durante lo scontro. Le Menomazioni danneggiano la funzione della regione: una lesione sensoriale può impedire di localizzare, una lesione della base può impedire il movimento. Non si ignorano una Ferita o una Menomazione perché manca un osso.
+
+**Corpo amorfo.** Melma grigia, Gelatina ocra e Budino nero possono attraversare aperture larghe almeno 3 cm. Serve 1 AzM intera, un percorso continuo lungo non oltre il proprio Passo e spazio libero all’uscita; durante l’attraversamento non attaccano. Non attraversano creature, solidi o serrature sigillate. Oggetti rigidi inglobati che non entrano nell’apertura vengono lasciati prima del passaggio. Il Cubo gelatinoso non possiede questa capacità.
+
+**Aderenza.** Gelatina ocra e Budino nero aderiscono a pareti e soffitti solidi ordinari senza Prova, alla velocità indicata. Melma grigia scala pareti con asperità, senza aderenza ai soffitti lisci. Supporti fragili, ghiaccio e altre condizioni eccezionali possono richiedere Atletica. La massa conserva il proprio peso e cade se il sostegno cede.
+
+**Cibo e guarigione.** Gli enzimi digestivi non dissolvono all’istante una creatura viva o una porta. Oggetti, barriere e cadaveri richiedono materiale compatibile e tempo; durante lo scontro si usano gli attacchi e l’Integrità indicati. Cambiare forma, attraversare una fessura o dividere il corpo non guarisce Ferite, Menomazioni o Stati. Le capacità biologiche non si cancellano con Negare Potere.
+
+# **Melma grigia**
+
+*Melma • mimetismo e corrosione del metallo • Natura Comune*
+
+Una massa grigia simile a roccia bagnata o olio denso. Si muove lentamente verso calore e movimento e consuma materia organica e metallo. Fonte: Gray Ooze, p. 243.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 6 • DES 3 • COS 7 • INT 1 • SAG 4 • CAR 1 |
+| Risorse e protezioni | PV 24 • PM — • AR 1 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 6 • Tempra 12 • Riflessi 6 • Volontà — • Magia 9 |
+| Iniziativa e Azioni | INI −3 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra e arrampicata 2 / 4 / 6 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 10 • Atletica 8 • Percezione 9 • Furtività 10; immobile 14 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Pseudopodo | 10 | 1d6+2 Naturale; acido, Corrosivo | 1 Q |
+
+  
+
+**Resistenze.** Dimezza i danni da Acido, Fuoco e Ghiaccio, di qualunque Natura, prima dell’AR pertinente. Le immunità mentali, sensoriali e ad AFT sono quelle delle regole comuni delle melme. Non ha Scissione e non è immune al Taglio o al Fulmine.
+
+**Pietra bagnata.** Furtività 14 richiede immobilità e un fondale di roccia umida, fango o liquido scuro. Movimento, contatto o un esame riuscito permettono di riconoscere la creatura; nessuna Sorpresa automatica. Il corpo amorfo consente le aperture delle regole comuni.
+
+**Metallo esposto.** Corrosivo interessa soltanto protezioni non magiche di metallo compatibile raggiunte dall’attacco. Un’arma non magica di metallo che colpisce la melma può deteriorarsi per contatto. Legno, pietra e oggetti mistici non subiscono questa usura. Procedura e Anticorrosivo sono nella pagina «Melme corrosione e oggetti».
+
+**Condotta.** Si avvicina alla fonte di nutrimento percepita più vicina; rumori lontani non la attirano oltre il proprio raggio sensoriale. Un’offerta di materiale commestibile può intercettarne il percorso. Non riconosce un avversario corazzato come una scelta tattica e non insegue oltre ostacoli che non può superare.
+
+# **Gelatina ocra**
+
+*Melma • aderenza e scissione • Natura Comune*
+
+Una massa giallastra che filtra nelle fessure e segue le prede sulle superfici della caverna. I suoi enzimi attaccano soprattutto i tessuti molli. Fonte: Ochre Jelly, p. 243.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 7 • DES 3 • COS 6 • INT 2 • SAG 4 • CAR 1 |
+| Risorse e protezioni | PV 36 • PM — • AR 1 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 6 • Tempra 11 • Riflessi 6 • Volontà — • Magia 9 |
+| Iniziativa e Azioni | INI −3 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra e aderenza 2 / 4 / 6 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 11 • Atletica 10 • Percezione 9 • Furtività 8 |
+| GS e PX per 4 PG | Esperto • 30 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Pseudopodo | 11 | 1d8+1 Naturale; acido | 1 Q |
+| Frammento | 11 | 1d6+1 Naturale; acido | 1 Q; dopo Scissione |
+
+  
+
+**Resistenze.** Dimezza i danni da Acido di qualunque Natura. È immune al Fulmine di qualunque Natura e ai danni fisici Naturali da Taglio. Taglio Magico o Etereo può ferirla e non attiva Scissione. Non è immune al Ghiaccio. Le altre immunità sono quelle comuni delle melme.
+
+**Scissione.** Un colpo Naturale da Taglio o un effetto di Fulmine che raggiunga il corpo può dividerla in due frammenti, pur senza danneggiarla con quella componente. Occorrono almeno 12 PV attuali e spazi liberi. È possibile una sola divisione per esemplare durante l’incontro; i dettagli sono nella pagina «Melme scissione».
+
+**Digestione selettiva.** Il danno del Pseudopodo incontra normalmente l’AR. Non possiede Corrosivo e non danneggia l’Integrità dell’equipaggiamento per contatto. I suoi enzimi non consumano legno, metallo o ossa; contro un bersaglio interamente composto da questi materiali il suo attacco non infligge danni.
+
+**Condotta.** Segue stimoli di nutrimento fino a pareti e soffitti raggiungibili. Non collabora intenzionalmente con i propri frammenti: ciascuno segue ciò che percepisce. Il corpo amorfo consente i passaggi stretti, ma non una fuga istantanea durante l’attacco che provoca la divisione.
+
+# **Budino nero**
+
+*Melma • corrosione e scissione • Natura Comune*
+
+Una massa nera e lucida che aderisce alle superfici e consuma materia organica e metallo. La sua superficie danneggia gli strumenti impiegati per colpirla. Fonte: Black Pudding, p. 241.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 8 • DES 3 • COS 8 • INT 1 • SAG 4 • CAR 1 |
+| Risorse e protezioni | PV 52 • PM — • AR 2 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 6 • Tempra 13 • Riflessi 6 • Volontà — • Magia 10 |
+| Iniziativa e Azioni | INI −3 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra e aderenza 4 / 8 / 12 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 12 • Atletica 11 • Percezione 10 • Furtività 9 |
+| GS e PX per 4 PG | Veterano • 50 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Pseudopodo | 12 | 2d6+1 Naturale; acido, Corrosivo | 1 Q |
+| Frammento | 12 | 1d8+1 Naturale; acido, Corrosivo | 1 Q; dopo Scissione |
+
+  
+
+**Immunità.** È immune ad Acido, Ghiaccio e Fulmine di qualunque Natura e ai danni fisici Naturali da Taglio. Taglio Magico o Etereo può ferirlo e non attiva Scissione. Fuoco non è fra le sue immunità. Valgono inoltre le proprietà comuni delle melme.
+
+**Corrosione.** Il Pseudopodo ha Corrosivo contro protezioni non magiche di metallo o materiale organico compatibile. Armi di questi materiali che colpiscono il corpo possono perdere Integrità anche se l’AR assorbe il danno. Pietra, vetro e oggetti mistici non subiscono tale usura. Si usa la procedura della pagina successiva.
+
+**Contatto biologico.** Una creatura che tocca la superficie con tessuti vivi esposti subisce 1d4 Naturale da acido, AR ordinaria pertinente, al massimo una volta per Round per creatura. Non richiede Azioni al Budino e non si attiva tramite un’arma, una protezione integra o un attrezzo interposto. Questo contatto non ha Corrosivo e non aggiunge danni al Pseudopodo.
+
+**Scissione e condotta.** Può dividersi come la Gelatina ocra secondo «Melme scissione», con danno dei frammenti indicato in tabella. Segue nutrimento percepito, supera dislivelli aderendo e filtra nelle aperture accessibili. La divisione non concede decisioni tattiche o nuovi PX.
+
+# **Melme corrosione e oggetti**
+
+**Materiali.** La Melma grigia corrode solo metallo non magico; il Budino nero anche materiale organico non magico, come legno e cuoio. Sono coinvolti soltanto materiali effettivamente raggiunti: un rivestimento integro può proteggere ciò che copre. Materiali speciali richiedono una compatibilità dichiarata dal Direttore. Gelatina ocra, Cubo gelatinoso e Mimic non applicano questa procedura.
+
+**Corrosivo degli attacchi.** Dopo almeno 1 danno finale ai PV, una protezione compatibile che abbia fornito almeno 1 AR contro il colpo effettua la propria PS Integrità, determinata dalla Qualità. Con più protezioni, si verifica ciascuna che risponde a questi requisiti, al massimo una volta per attacco. Successo evita la perdita; fallimento fa perdere 1 PI. Se è presente anche la causa di deterioramento di un Magistrale, si somma 1 PI potenziale usando la stessa PS, senza raddoppiare i PI.
+
+**Anticorrosivo.** Contro il danno del Pseudopodo, Anticorrosivo X impedisce Corrosivo quando il danno finale non supera X. Se il residuo è maggiore, si effettua la PS Integrità. Le protezioni non compatibili o non raggiunte non perdono PI per il solo fatto di essere indossate. La perdita di PI avviene dopo il danno e non ricalcola retroattivamente l’AR del colpo.
+
+**Armi e superficie.** Quando un’arma o una munizione compatibile colpisce realmente il corpo, effettua una PS Integrità: successo nessuna perdita, fallimento 1 PI. È un effetto specifico di contatto, anche se l’AR della melma assorbe tutto il danno. Anticorrosivo di almeno 1 sullo strumento impedisce questo deterioramento da contatto. Un colpo fallito o una Schivata riuscita non lo attivano. Un’arma già distrutta non viene riutilizzata nello stesso gesto.
+
+**Deterioramento e oggetti.** Non si applica il −1 progressivo a danni o AR della fonte originale. Finché restano PI l’oggetto funziona secondo le regole ordinarie; a 0 PI è Rotto, perde la funzione e conserva peso e ingombro. Un oggetto senza PI già definiti riceve Qualità, PS e PI prima della risoluzione. Danni diretti a una porta o a un oggetto non indossato seguono le regole degli oggetti, senza inventare PV del portatore per attivare Corrosivo.
+
+**Difese e pulizia.** Una Difesa che annulla il contatto evita l’effetto relativo; una Parata fisica può esporre lo strumento parante compatibile alla procedura di contatto, una sola volta. Sciacquare una superficie o separare i corpi interrompe ulteriori esposizioni, ma non restituisce PI già perduti. Le riparazioni seguono Armamenti e le capacità effettivamente possedute.
+
+# **Melme scissione**
+
+**Innesco.** Solo Gelatina ocra e Budino nero possono dividersi. Occorre un effetto di Fulmine oppure un colpo fisico Naturale da Taglio con danno positivo prima delle immunità, che abbia raggiunto il corpo. Un attacco fallito o annullato da una Difesa non basta. Si risolve prima l’intero attacco, comprese altre componenti e Ferite; poi si verifica Scissione. Il danno della componente immune resta 0.
+
+**Limiti.** Servono almeno 12 PV attuali, il corpo originale ancora in grado di agire e due spazi liberi di 1 × 1 Q adiacenti fra loro, compresi nell’impronta precedente o immediatamente adiacenti. Senza spazio o requisiti, non avviene alcuna divisione. Un esemplare può dividersi una sola volta durante l’incontro. I due frammenti non si dividono di nuovo, neppure se curati; non si riuniscono in combattimento.
+
+**Risorse.** Il corpo originale viene sostituito da due frammenti. Ciascuno ha metà dei PV attuali e metà dei PV massimi originari, arrotondate per difetto. Non si recuperano risorse: una Gelatina ocra a 19/36 PV produce due frammenti a 9/18 PV. Entrambi conservano le stesse Ferite, Menomazioni e Stati, con la scadenza residua originaria. La funzione menomata rimane tale nei due corpi.
+
+**Valori.** Ogni frammento occupa 1 × 1 Q. Mantiene Caratteristiche, VA, AR, Salvezze, movimento, sensi, resistenze, corrosione e altre proprietà del corpo originale; usa soltanto il danno «Frammento» della propria scheda. La portata resta 1 Q. Non guadagna un Morso, una Parata naturale o una diversa dotazione.
+
+**Round della divisione.** I frammenti condividono le AzP, l’AzM e l’eventuale Attacco di Opportunità ancora disponibili all’esemplare originale: ogni risorsa può essere usata da uno soltanto. Nessuno agisce retroattivamente se l’Iniziativa è già passata. All’inizio del Round successivo, ciascuno dispone di 1 AzP e 1 AzM e agisce alla stessa Iniziativa originaria, nell’ordine fissato dal Direttore.
+
+**Conseguenze e PX.** Da quel momento danni, Stati e cure hanno il frammento effettivamente raggiunto come bersaglio; una cura singola non cura entrambi. Resta un solo esemplare ai fini dei PX: 30 per la Gelatina ocra o 50 per il Budino nero, già comprensivi della possibile divisione. I frammenti sono un pericolo maggiore per chi resta vicino, ma conservano la lentezza e i limiti percettivi della creatura.
+
+# **Cubo gelatinoso**
+
+*Melma • ostacolo trasparente e inglobamento • Natura Comune*
+
+Una massa quasi trasparente che riempie un tratto di corridoio. Ingloba ciò che incontra e può conservare al proprio interno oggetti che non riesce a digerire. Fonte: Gelatinous Cube, p. 242.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 7 • DES 2 • COS 9 • INT 1 • SAG 4 • CAR 1 |
+| Risorse e protezioni | PV 44 • PM — • AR 1 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 5 • Tempra 14 • Riflessi 5 • Volontà — • Magia 9 |
+| Iniziativa e Azioni | INI −4 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 3 / 6 / 9 Q • spazio 2 × 2 Q; altezza 2 Q |
+| Abilità | Corpo a corpo 11 • Atletica 12 • Percezione 9 • Furtività 9; immobile 14 |
+| GS e PX per 4 PG | Esperto • 30 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Pseudopodo | 11 | 1d8+1 Naturale; acido | 1 Q |
+| Inglobare | — | 1d6 Naturale; acido e presa | AzP + AzM; Riflessi 0 |
+| Digerire | — | 1d6 Naturale; acido | 1 AzP; vittime interne |
+
+  
+
+**Trasparenza.** Furtività 14 richiede immobilità, ambiente adatto e assenza di oggetti visibili sospesi nel corpo. Resti o riflessi possono rendere la massa evidente. Un esame riuscito la rivela; entrarvi inconsapevolmente non annulla la Salvezza contro Inglobare. Occupa tutto il proprio volume. Chi entra nel corpo attiva la PS e le conseguenze di Inglobare, senza movimento o spesa di Azioni del Cubo; restano capienza e limiti per Round. Con successo resta fuori, interrompendo il proprio movimento.
+
+**Metabolismo.** Non possiede resistenze elementali aggiuntive. Valgono le immunità comuni delle melme. L’acido digerisce tessuti biologici ma non legno, metallo o ossa: non ha Corrosivo e non riduce l’Integrità dell’equipaggiamento. Il Pseudopodo non danneggia un bersaglio interamente composto da materiali indigeribili.
+
+**Ingombro.** Non scala e non attraversa le fessure dei corpi amorfi. Il movimento richiede un passaggio capace di accogliere il suo volume. Può deformarsi quanto basta a seguire una curva ordinaria del corridoio, senza ridurre la propria impronta o attraversare un varco più stretto.
+
+**Condotta.** Avanza verso la fonte di nutrimento percepita. Inglobare, Digerire, Pseudopodo e una Difesa competono per la sua unica AzP. Non infligge automaticamente danni digestivi a ogni turno: li produce soltanto nelle occasioni indicate nella pagina seguente.
+
+# **Cubo inglobamento e soccorso**
+
+**Inglobare.** Spende 1 AzP e 1 AzM per avanzare fino a 3 Q lungo un percorso libero, entrando negli spazi delle creature incontrate. Ognuna effettua Riflessi senza modificatore, una sola volta per Round contro quel Cubo. Successo: si sposta gratuitamente nel più vicino Q libero adiacente al percorso; se non esiste, il Cubo si ferma prima di raggiungerla. Fallimento: viene inglobata. La PS sostituisce tiro per colpire, Parata e Schivata; lo spostamento concesso non provoca Opportunità.
+
+**Capienza e danno iniziale.** Può contenere fino a quattro creature di spazio 1 × 1 Q o una di spazio 2 × 2 Q, senza combinare le due capienze. Non ingloba creature maggiori o altre melme. Ogni nuovo prigioniero è Immobilizzato senza blocco specifico delle mani; se biologico subisce 1d6 Naturale da acido, con AR ordinaria. Segue gli spostamenti del Cubo. Per una creatura biologica con vie respiratorie sommerse inizia il soffocamento del Giocatore §5.23; sistemi autonomi adeguati lo impediscono.
+
+**Digerire.** Con 1 AzP il Cubo infligge 1d6 Naturale da acido a ciascun prigioniero biologico, AR ordinaria. Non richiede tiro per colpire o ulteriore Salvezza. Una creatura può subire il danno da Inglobare o Digerire al massimo una volta per Round per Cubo. Un prigioniero non biologico può essere trattenuto, ma non subisce questo danno. Nessun danno digestivo gratuito alla fine del Round.
+
+**Uscire e aiutare.** Un prigioniero spende 1 AzP e contrappone Corpo a corpo o Atletica ad Atletica 12 del Cubo; il −4 di Immobilizzato si applica. Un alleato adiacente può usare la stessa procedura con il proprio VA, senza quel malus se non è a sua volta Immobilizzato. Successo estrae la vittima nel più vicino spazio libero adiacente; senza spazio non è possibile completare il soccorso. Un soccorritore che immerge tessuti vivi esposti subisce 1d4 Naturale da acido, al massimo una volta per Round; un attrezzo adeguato evita tale contatto.
+
+**Attacchi e rilascio.** Il prigioniero può attaccare il Cubo dall’interno con un’arma concretamente utilizzabile, applicando −4; il Cubo non può Schivare restando attorno a lui. La massa offre copertura totale fra prigioniero e bersagli esterni: un attacco ordinario non attraversa gratuitamente il corpo. Perdita di coscienza, morte o Menomazione della funzione di contenimento fanno collassare la presa e lasciano i prigionieri liberi; 0 PV da soli non bastano.
+
+**Ripresa del respiro.** All’uscita cessa l’ostruzione. La riserva di fiato torna dopo un Round di respirazione normale; chi era svenuto per soffocamento si riprende dopo 1d3 Round salvo altre cause. PV e Ferite non si recuperano automaticamente e Morente richiede stabilizzazione. Tagliare via un oggetto inghiottito non concede PX aggiuntivi.
+
+# **Fungo stridente**
+
+*Fungo immobile • allarme biologico • Natura Comune*
+
+Un fungo violaceo che emette un grido penetrante quando viene stimolato dalla luce intensa o da una creatura vicina. Può essere usato come allarme naturale. Fonte: Shrieker, pp. 137–138.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 1 • DES 1 • COS 5 • INT 1 • SAG 2 • CAR 1 |
+| Risorse e protezioni | PV 12 • PM — • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 1 • Tempra 9 • Riflessi 1 • Volontà — • Magia 8 |
+| Iniziativa e Azioni | INI −4 • 1 AzP; AzM inutilizzabile |
+| Movimento e spazio | Immobile • spazio 1 × 1 Q |
+| Abilità | Percezione 8 • Furtività 10; fra funghi simili 13 |
+| GS e PX per 4 PG | — • 0 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Stridio | — | Allarme; nessun danno | Innesco 6 Q; udibile 60 Q |
+
+  
+
+**Sensi e anatomia.** Percezione diffusa 6 Q; immunità ad Accecato e Assordato. Può rilevare luce intensa sulla superficie pur senza occhi. Testa indica il cappello, Torace il gambo; Braccia le lamelle, Gambe la base radicata. Ferite e Menomazioni restano applicabili alle rispettive funzioni. Il mimetismo non rende irriconoscibile un fungo esaminato con successo.
+
+**Allarme.** Quando percepisce una creatura entro 6 Q oppure il proprio corpo è illuminato intensamente, inizia a stridere senza spendere Azioni. Il suono è udibile fino a 60 Q in condizioni libere; porte, terreno e rumore possono attenuarlo. Dopo la cessazione dell’ultimo stimolo continua per 1d4 proprie Iniziative. Nuovi stimoli fanno ripartire il conteggio, senza moltiplicare gli allarmi.
+
+**Interruzione.** Il grido termina se perde coscienza, muore o subisce una Menomazione che impedisce lo stridio; 0 PV non lo spengono automaticamente. Una barriera contro il suono può impedirne la propagazione. Il grido non infligge danni, non applica Assordato e non costringe altre creature a intervenire.
+
+**Impiego e PX.** Non attacca, non effettua Opportunità e non può Schivare. Possiede 0 PX come esemplare da combattimento. Le sentinelle o i predatori richiamati sono incontri distinti da valutare per ciò che effettivamente fanno. Evitare l’allarme o disattivarlo può essere l’obiettivo della scena, secondo il Direttore.
+
+# **Fungo violetto**
+
+*Fungo mobile • appendici che degradano i tessuti • Natura Comune*
+
+Un fungo carnoso che si sposta lentamente e protende filamenti capaci di deteriorare materia vivente. Cerca terreno ricco di sostanze organiche. Fonte: Violet Fungus, p. 138.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 2 • DES 1 • COS 5 • INT 1 • SAG 2 • CAR 1 |
+| Risorse e protezioni | PV 18 • PM — • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 2 • Tempra 9 • Riflessi 2 • Volontà — • Magia 8 |
+| Iniziativa e Azioni | INI −4 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 1 / 2 / 3 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 9 • Atletica 4 • Percezione 8 • Furtività 10; fra funghi 13 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Tocco degradante | 9 | 1d6 Naturale; degradazione biologica | 2 Q |
+
+  
+
+**Sensi e corpo.** Percezione diffusa 6 Q; immunità ad Accecato e Assordato. Testa indica il cappello, Torace il gambo, Braccia i filamenti divisi nei due lati, Gambe la base locomotrice. Manca un sistema nervoso strutturato, ma le lesioni funzionali restano rilevanti secondo le regole comuni.
+
+**Due tocchi.** Può effettuare al massimo due Tocchi degradanti per Round, ciascuno con 1 AzP. La conversione sostituisce il numero casuale di attacchi della fonte. Un’Opportunità ordinaria può usare il Tocco entro 2 Q, rispettando lo stesso limite offensivo. Non possiede Parata naturale e può Schivare solo con movimento concretamente disponibile.
+
+**Degradazione.** Il Tocco danneggia organismi biologici; incontra normalmente tutta l’AR pertinente. Non è danno Etereo e non applica automaticamente veleno, malattia o Corrosivo. Un bersaglio interamente inorganico non ne subisce il danno. Curare PV o Ferite segue le normali capacità disponibili, senza una cura speciale richiesta dalla sola origine del danno.
+
+**Crescita e condotta.** Un cadavere biologico lasciato a contatto con il fungo può nutrire un nuovo esemplare in 2d6 giorni, se l’ambiente è adatto. Non nasce nulla da una creatura ancora viva, a 0 PV o Morente. Il fungo reagisce al movimento percepito e cerca nutrimento: non distingue amici, nemici o soccorritori.
+
+# **Spora gassosa**
+
+*Fungo fluttuante • nube di spore infettive • Natura Comune*
+
+Un involucro fungino cavo che fluttua e ricorda la sagoma di un osservatore mostruoso. Il suo aspetto imita una minaccia ben diversa dalle capacità che possiede. Fonte: Gas Spore, pp. 137–138.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 3 • DES 1 • COS 2 • INT 1 • SAG 1 • CAR 1 |
+| Risorse e protezioni | PV 4 • PM — • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 2 • Tempra 6 • Riflessi 2 • Volontà — • Magia 8 |
+| Iniziativa e Azioni | INI −4 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Volo fluttuante 2 / 4 / 6 Q; terra 0 • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 6 • Percezione 7 • Furtività 6 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Tocco infettivo | 6 | 1 Naturale; poi Tempra 0 | 1 Q |
+| Rottura del sacco | — | 1d6 Naturale interno; Tempra −2 | Raggio 4 Q; una sola volta |
+
+  
+
+**Sensi e protezioni.** Percezione diffusa 6 Q. È immune ad Accecato, Assordato, Paralizzato, A terra, Avvelenato e ai danni da veleno. Il suo volo non usa ali e può restare sospesa, finché il sacco è integro. Non possiede raggi oculari o poteri dello spettatore che imita. Testa è la regione sensoriale, Torace il sacco, Braccia le escrescenze, Gambe la base di galleggiamento.
+
+**Tocco infettivo.** Dopo almeno 1 danno finale contro una creatura biologica suscettibile, Tempra senza modificatore: successo evita l’infezione; fallimento applica la Micosi sporale descritta nella pagina seguente. Non aggiunge altri danni da veleno al Tocco. Una barriera che impedisce il danno impedisce anche questa inoculazione.
+
+**Sacco fragile.** Il primo colpo che porta i PV a 0 rompe l’involucro e libera la nube una sola volta. Se viene colpita quando è già a 0 PV e ancora integra, si rompe allora. È una conseguenza anatomica espressa: perde il volo e non può più attaccare, ma non muore né sviene automaticamente. Cade secondo le regole ordinarie e continua a usare Ferite e Morente.
+
+**Ripristino e condotta.** Recuperare PV non richiude il sacco durante lo scontro e non genera altre nubi. Il recupero della struttura richiede cure delle lesioni e almeno sette giorni in ambiente adatto. Galleggia verso stimoli vicini; non seleziona gli alleati da proteggere e non si fa esplodere volontariamente.
+
+# **Spora nube e micosi**
+
+**Rottura e propagazione.** La nube raggiunge subito le creature entro 4 Q con un percorso libero nell’aria; pareti e chiusure ermetiche la bloccano. È una dispersione biologica, senza fiamma, urto o danni alle strutture. Dopo la risoluzione si disperde: non crea un’area persistente. Una sola esposizione per vittima per rottura, anche se coinvolta da più parti del corpo.
+
+**Esposizione.** Chi respira aria nella zona effettua Tempra −2; non aggiunge Elusione o una Difesa attiva contro la tossina già inalata. Fallimento: 1d6 Naturale da tossina inalata, ignorando l’AR, e Micosi sporale se suscettibile. Successo: metà danno per eccesso e nessuna infezione. Il danno istantaneo è veleno naturale di Pericolosità II, ma la malattia è distinta. Immunità al veleno evita il danno, non automaticamente l’infezione; immunità alle malattie evita l’infezione, non automaticamente la tossina.
+
+**Protezione.** Apparati respiratori autonomi, filtri espressamente adatti alle spore o trattenere già il fiato prima della rottura impediscono l’inalazione. Non si decide retroattivamente di aver trattenuto il fiato. Costrutti, non morti e organismi non biologici non contraggono questa micosi. Una Spora gassosa non infetta un’altra Spora gassosa; le altre immunità dipendono dalla scheda del bersaglio.
+
+**Micosi sporale.** Malattia naturale, Pericolosità V, Grave, incubazione di 1 ora dall’esposizione. Terminata l’ora, e a ogni ora successiva, Tempra −2: fallimento infligge 1d6 Naturale interno che ignora AR e 1 AFT; successo evita entrambi. Due successi consecutivi eliminano l’infezione; un fallimento azzera il conteggio. La malattia termina anche con Cura Malattie di livello almeno 6: 10 minuti fuori dal combattimento, con Concentrazione e gli altri requisiti del manuale della Magia. Non ha una scadenza che uccide automaticamente.
+
+**Cura e ricadute.** Nuove esposizioni durante la stessa infezione non duplicano il decorso e non azzerano incubazione o successi. Cura Avvelenamenti non elimina la micosi; Medicina può identificarla e assistere il malato secondo le capacità disponibili, senza garantire una cura. Eliminare l’infezione interrompe i futuri danni, non restituisce PV, non guarisce Ferite e non cancella l’AFT già accumulato. A 0 PV, Ferite e Morente si risolvono normalmente.
+
+**Riproduzione.** Se un ospite muore realmente mentre è infetto e il cadavere resta in un ambiente adatto senza essere bonificato, dopo sette giorni può produrre 2d4 nuove Spore gassose. Svenuto, 0 PV e Morente non bastano. La bonifica richiede distruzione o trattamento adeguato del materiale infetto; non è una manovra di combattimento che produce nuovi PX. L’aspetto imitato non trasmette poteri o conoscenze di un’altra specie.
+
+# **Miconide germoglio**
+
+*Organismo fungino senziente • esploratore giovane e comunicazione • Natura Comune*
+
+Un giovane Miconide, capace di condividere semplici comunicazioni attraverso spore. Cerca protezione nel proprio circolo e può chiedere aiuto invece di combattere. Fonte: Myconid Sprout, p. 230.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 4 • DES 5 • COS 5 • INT 4 • SAG 6 • CAR 3 |
+| Risorse e protezioni | PV 12 • PM 6 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 8 • Tempra 9 • Riflessi 9 • Volontà 9 • Magia 8 |
+| Iniziativa e Azioni | INI 0 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 4 / 8 / 12 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 8 • Atletica 7 • Percezione 10 • Furtività 10 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Pugno | 8 | 1d4 Naturale; spore irritanti | 1 Q |
+| Spore di rapporto | — | Comunicazione consensuale | Raggio 2 Q; 1 AzP |
+
+  
+
+**Sensi e mente.** Scurovisione 24 Q. Possiede una mente e può subire effetti mentali compatibili: non eredita le immunità dei funghi privi di mente. Le localizzazioni seguono il corpo umanoide; il cappello fa parte della Testa. Non possiede Parata naturale.
+
+**Rapporto e allarme.** Può emettere Spore di rapporto tre volte in ogni periodo di 24 ore. Quando subisce danni ai PV emette Spore di allarme, secondo la pagina «Miconidi spore e sole». Entrambe sono capacità biologiche senza costo in PM; non insegnano automaticamente una lingua o permettono di impartire ordini.
+
+**Spore irritanti.** Dopo almeno 1 danno finale del Pugno contro un organismo biologico, Tempra senza modificatore. Fallimento: Avvelenato, −2 ai VA delle azioni fisiche per 1 Round, senza danni periodici. Successo evita lo Stato. Veleno naturale di Pericolosità I: antidoto adeguato o Cura Avvelenamenti di livello almeno 1 lo interrompono. Più applicazioni mantengono la scadenza più lontana, senza sommare il malus.
+
+**Condotta.** Evita il sole e gli estranei aggressivi, cerca un adulto o propone un contatto tramite spore. Sotto 3 PV o a Ferita Profonda tenta di ritirarsi. I PX descrivono un eventuale scontro, non richiedono di aggredire una comunità pacifica. La sensibilità solare è definita nelle regole comuni dei Miconidi.
+
+# **Miconide adulto**
+
+*Organismo fungino senziente • pacificazione e vita comunitaria • Natura Comune*
+
+Un Miconide formato, abituato alla vita del circolo e alla condivisione delle esperienze. Può cercare di fermare un aggressore senza ucciderlo. Fonte: Myconid Adult, p. 232.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 5 • DES 5 • COS 6 • INT 5 • SAG 7 • CAR 4 |
+| Risorse e protezioni | PV 24 • PM 8 • AR 1 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 11 • Riflessi 9 • Volontà 11 • Magia 9 |
+| Iniziativa e Azioni | INI 0 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 4 / 8 / 12 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 10 • Atletica 9 • Percezione 11 • Furtività 9 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Pugno | 10 | 1d6 Naturale; spore irritanti | 1 Q |
+| Spore pacificanti | — | Stordito; Tempra 0 | 1 Q; 1 AzP |
+| Spore di rapporto | — | Comunicazione consensuale | Raggio 4 Q; 1 AzP |
+
+  
+
+**Sensi e comunicazione.** Scurovisione 24 Q, mente e localizzazioni umanoidi come il germoglio. Può usare Spore di rapporto senza limite giornaliero, pagando ogni volta 1 AzP. Le Spore di allarme e il sole seguono le regole della pagina successiva. Non possiede Parata naturale.
+
+**Pugno.** Le spore irritanti funzionano esattamente come quelle del germoglio: dopo danno residuo, Tempra 0; fallimento Avvelenato e −2 fisico per 1 Round, Pericolosità I. Il Pugno non incorpora gratuitamente Spore pacificanti.
+
+**Pacificazione.** Tre volte in ogni periodo di 24 ore, al massimo una per Round: 1 AzP contro un organismo biologico visibile entro 1 Q che respiri la nube diretta. Tempra 0: successo nessun effetto, fallimento Stordito per 1 Round. Alla fine di ciascuna propria Iniziativa il bersaglio ripete Tempra 0 e un successo termina lo Stato. Questa Salvezza sostituisce attacco e Difesa; pareti, apparati autonomi o filtri adatti impediscono l’esposizione.
+
+**Natura e condotta.** Pacificazione è veleno naturale di Pericolosità II: antidoto adeguato o Cura Avvelenamenti di livello almeno 2 lo eliminano; immunità ai veleni o a Stordito impedisce lo Stato. Le applicazioni non si sommano. Con una sola AzP l’adulto sceglie fra Pugno, spore o Difesa; non può concatenarli gratuitamente. Cerca dialogo e protezione del circolo, ritirandosi sotto 6 PV o a Ferita Profonda.
+
+# **Miconidi spore e sole**
+
+**Spore di rapporto.** 1 AzP diffonde spore nel raggio della scheda lungo percorsi liberi nell’aria. Possono aderire volontariamente creature biologiche con una mente, inclusi altri Miconidi; costrutti, non morti ed elementali non sono compatibili. Un apparato che impedisce ogni contatto con le spore impedisce il collegamento. Il Miconide emittente partecipa sempre; ogni altro partecipante può rifiutare senza Prova.
+
+**Comunicazione.** Per 1 ora, i partecipanti alla stessa emissione possono scambiarsi pensieri intenzionalmente formulati quando distano al massimo 6 Q l’uno dall’altro. Non occorre una lingua comune. Il legame non rivela pensieri non condivisi, posizione, sensi o ricordi; non impone obbedienza e non concede Azioni extra. Una parete non interrompe da sola un legame già stabilito, mentre una protezione che blocca la telepatia ne impedisce l’uso. Fuori portata la comunicazione è sospesa, non prolungata.
+
+**Consenso e durata.** Un partecipante può cessare il proprio collegamento gratuitamente alla propria Iniziativa, senza spegnere quello altrui. Le emissioni successive non allargano automaticamente una rete precedente: ciascuna collega soltanto chi è stato esposto e ha acconsentito. I PM non vengono spesi e Negare Potere non dissolve la secrezione biologica; eventuali protezioni mentali mantengono le proprie normali funzioni.
+
+**Spore di allarme.** Dopo almeno 1 danno ai PV, un Miconide cosciente emette automaticamente un segnale biologico, al massimo una volta per Round. Gli altri Miconidi entro 48 Q, raggiungibili attraverso aria comunicante, avvertono il pericolo e la direzione approssimativa. Pareti sigillate e separazioni ermetiche bloccano il segnale. Non trasmette una mappa, identità precise o bersagli utilizzabili attraverso muri, e non concede un turno gratuito ai destinatari.
+
+**Sensibilità solare.** Sotto luce solare diretta subiscono −2 a tutti i VA di Abilità e Salvezza; la penalità termina quando sono concretamente schermati. Luce Mistica e illuminazione artificiale ordinaria non contano come sole. Ogni 10 minuti continuativi di esposizione effettuano Tempra 0, con il −2 solare: fallimento 1 AFT. Dal sessantesimo minuto, ogni verifica infligge anche 1d6 Naturale interno che ignora AR, indipendentemente dall’esito della PS.
+
+**Riparo e gravità.** Un minuto continuativo di ombra interrompe il conteggio di esposizione; PV, Ferite e AFT già subiti restano. La conversione sostituisce la morte automatica dopo un’ora della fonte con un deterioramento risolto dalle normali regole. Un Miconide a 0 PV continua a seguire Ferite e Morente. Il sole non produce spontaneamente danni da Fuoco o Corrosivo all’equipaggiamento.
+
+# **Mimic**
+
+*Predatore mutaforma • oggetto mimetico e adesione • Natura Comune*
+
+Una creatura capace di assumere l’aspetto di un oggetto compatto, spesso un contenitore o un elemento d’arredo. Aspetta il contatto della preda prima di rivelare bocca e appendici. Fonte: Mimic, p. 220.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 8 • DES 6 • COS 7 • INT 3 • SAG 6 • CAR 4 |
+| Risorse e protezioni | PV 38 • PM 6 • AR 2 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 12 • Riflessi 9 • Volontà 9 • Magia 10 |
+| Iniziativa e Azioni | INI 0 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 3 / 6 / 9 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 12 • Atletica 11 • Percezione 11 • Furtività 10; oggetto immobile 14 |
+| GS e PX per 4 PG | Esperto • 30 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Pseudopodo | 12 | 1d8+1 Naturale; adesione in forma oggetto | 1 Q |
+| Morso | 12 | AC 2: 1d8+1 Naturale, poi 1d4 Naturale da acido | 1 Q |
+
+  
+
+**Corpo e sensi.** Scurovisione 12 Q; immunità ad Acido di qualunque Natura e ad A terra. Ha una mente e non è immune agli effetti mentali. Testa indica la regione bocca e sensi, Torace la massa centrale, Braccia gli pseudopodi e Gambe la base locomotrice; mutare forma non guarisce le Menomazioni.
+
+**Imitazione.** Con 1 AzP assume forma amorfa oppure l’aspetto di un oggetto solido che rientra nel proprio volume di 1 × 1 Q. È una trasformazione biologica senza PM: statistiche immutate, nessuna funzione meccanica dell’oggetto imitato. Non diventa un’arma mistica, una serratura funzionante o materia inerte. Furtività 14 richiede forma oggetto e immobilità in una collocazione plausibile; esame riuscito, contatto rivelatore o movimento possono scoprirlo.
+
+**Attacchi.** Può attaccare anche in forma oggetto, rivelando la propria natura. Il Morso produce AC 2: prima 1d8+1 fisico, poi 1d4 da acido. Si effettua una sola Difesa; il suo esito e l’AR si applicano separatamente a ogni danno, risolvendo PV e Ferite prima del successivo. Un Magistrale raddoppia soltanto il primo. L’acido non ha Corrosivo. Contro la vittima che trattiene ottiene +2 al VA, quindi 14 prima di ulteriori modificatori.
+
+**Condotta.** Immobilizza una preda e la morde; mantenere l’adesione non concede altri attacchi. Sotto 9 PV o a Ferita Profonda può rilasciarla e tentare la fuga. Un esemplare capace di comprendere un’offerta può scambiare il passaggio con nutrimento; questo profilo non possiede automaticamente un linguaggio parlato.
+
+# **Mimic adesione e liberazione**
+
+**Superficie adesiva.** L’adesione funziona soltanto in forma oggetto, su una creatura di spazio non superiore a 2 × 2 Q o su un oggetto esposto. Un contatto diretto col corpo, anche se l’AR assorbe il danno del Pseudopodo, consente Riflessi senza modificatore: successo evita la presa, fallimento la stabilisce. La capacità è parte del contatto e non costa un’altra AzP. Un attacco fallito, una Schivata o una Parata magica che annulli il contatto non la attivano.
+
+**Cosa rimane attaccato.** Un’arma o un attrezzo interposto può aderire senza immobilizzare automaticamente il possessore: questi può lasciarlo con le normali regole del rilascio. Una Parata fisica espone solo lo strumento che tocca la superficie; il possessore effettua la stessa PS Riflessi per ritirarlo in tempo. Un proiettile aderente non trascina il tiratore. Un’armatura indossata o un contatto con il corpo può invece trattenere la creatura.
+
+**Presa.** Può trattenere una sola creatura alla volta. Questa è Immobilizzata, movimento 0 e −4 fisico; se ha toccato con una mano, quella mano non è utilizzabile finché resta attaccata, mentre l’altra rimane libera. Un’adesione tramite armatura non blocca le mani. Mantenere la presa è gratuito, ma il Mimic non può spostare il proprio corpo o Schivare senza rilasciarla prima. Non trasferisce alla vittima i danni degli attacchi diretti contro di lui.
+
+**Liberarsi.** La vittima spende 1 AzP e contrappone Corpo a corpo o Atletica a Corpo a corpo 12 del Mimic, con il normale −4 di Immobilizzato. Un alleato adiacente può fare altrettanto usando il proprio VA, senza il malus se libero. Successo separa la creatura o un singolo oggetto aderente; pareggio conserva il contatto. Non si aggiunge un tiro per colpire. L’uso di un attrezzo adeguato evita di esporre direttamente le mani del soccorritore.
+
+**Rilascio.** Può liberare gratuitamente alla propria Iniziativa una creatura o un oggetto. Passare alla forma amorfa, perdere coscienza, morire o subire una Menomazione che renda impossibile l’adesione interrompe tutte le prese. Il passaggio a 0 PV non le interrompe da solo. La morte rivela la forma amorfa. Gli oggetti liberati conservano la propria Integrità salvo danni realmente subiti; il semplice contatto non li corrode.
+
+**Ambiente.** Un Mimic che imita una porta non sostituisce automaticamente un’intera parete e non sigilla passaggi maggiori del proprio volume. Il mimetismo consente un agguato soltanto se le normali Prove di percezione e occultamento lo permettono. Spostare o colpire a distanza un oggetto sospetto può rivelare la creatura senza entrare nella portata del Morso.
+
+# **Vegetali e custodi delle foreste**
+
+*Dieci profili per boschi viventi, radure e paludi*
+
+Il bosco può essere un ambiente, un interlocutore o un avversario. Arbusti risvegliati, alberi senzienti e custodi silvani hanno esigenze differenti dai vegetali infestanti e dai predatori di materia organica. Questi profili ampliano il catalogo generale; la loro presenza su Iris richiede una collocazione nell’ambientazione. Origini divine, piani e culti della fonte non vengono assegnati automaticamente al mondo di Simply RPG.
+
+  
+
+|  |  |  |
+| :-: | :-: | :-: |
+| **Creatura** | **GS** | **PX per 4 PG** |
+| Arbusto risvegliato | Principiante | 10 |
+| Albero risvegliato | Esperto | 30 |
+| Avvizzito ramoso | Principiante | 10 |
+| Avvizzito spinoso | Principiante | 10 |
+| Avvizzito rampicante | Inesperto | 20 |
+| Driade | Esperto | 33 |
+| Cumulo strisciante | Veterano | 50 |
+| Treant | Leggenda | 100 |
+| Pegaso | Esperto | 30 |
+| Unicorno | Eroe | 70 |
+
+  
+
+**PX di riferimento.** Valori per un esemplare e quattro PG. Solo la Driade comprende una dotazione conteggiata, il randello di qualità Comune. L’animazione di due alberi ordinari è già compresa nel profilo e nei 100 PX del Treant: quegli alberi non assegnano un secondo premio. Alberi risvegliati autonomi incontrati separatamente conservano invece la propria scheda. Il calcolo complessivo dell’incontro è nel Manuale del Direttore §9.3.
+
+**Adattamento.** Gli Avvizziti sono tre forme di vegetali infestanti; il nome e il comportamento ostile non attribuiscono Natura Oscura Simmetria, CROS o una dipendenza da un Apostolo. Il Cumulo strisciante è un predatore vegetale. Driade, Treant, Pegaso e Unicorno possono dialogare e scegliere di aiutare gli intrusi: il loro valore in PX non prescrive uno scontro.
+
+**Fonti e verifica.** Giocatore v0.49, Magia v1.5, Direttore v0.41 e Armamenti v0.64. Le pagine delle singole voci sono quelle stampate del Manuale dei Mostri fornito. Le capacità sono convertite, con un insieme definito di poteri invece delle liste di incantesimi e delle Azioni Leggendarie originali. GS e PX sono stime da verificare al tavolo, soprattutto per servitori, prese e supporto.
+
+# **Foreste regole operative**
+
+**Corpi e menti.** Tutte le dieci creature hanno Natura Comune, sono biologicamente viventi e possiedono una mente e PM personali, anche senza poteri magici. INT bassa, corpo vegetale o incapacità di parlare non concedono immunità mentali. A 0 PM diventano Svenute. L’eccezione riguarda soltanto gli alberi temporaneamente animati dal Treant, che non hanno una mente autonoma e sono descritti separatamente. Stati iniziali e incantesimi appresi: nessuno.
+
+**Vita e lesioni.** A 0 PV si applicano normalmente Tempra, Ferite, Menomazioni e Morente; non si muore e non si sviene per il solo esaurimento dei PV. Le cure biologiche sono applicabili. I vegetali respirano attraverso i tessuti: non hanno una gola animale da strangolare, ma non sono immuni alla mancanza d’aria o all’immersione completa incompatibile con il proprio metabolismo. Nessun corpo vegetale è automaticamente immune a veleni o malattie.
+
+**Azioni.** INI è il modificatore a 1d10. AzP e unica AzM appartengono all’intero Round, senza ripristino all’arrivo dell’Iniziativa. Ogni attacco costa 1 AzP, produce AC 1 e comprende tutti i bonus, salvo eccezione espressa. Un Attacco di Opportunità ordinario usa soltanto un attacco ravvicinato con VA della scheda: non concede poteri, cure, prese speciali o animazioni gratuiti. I limiti offensivi dichiarati comprendono le Opportunità.
+
+**Difese e danni.** Nessuno possiede Parata naturale; la Driade può parare con il randello pronto. Schivata richiede 1 AzP, 1 AzM e possibilità concreta di spostarsi. Parata normale dimezza per eccesso prima dell’AR, Magistrale annulla. Si risolvono dadi e bonus, moltiplicatori, Difesa, resistenze, AR e infine effetti subordinati al danno residuo. Naturale e Magico incontrano tutta l’AR pertinente; Etereo soltanto la quota magica.
+
+**Sensi e anatomia.** Scurovisione vede nel buio naturale, non attraverso solidi o oscurità soprannaturale. La Percezione diffusa degli Avvizziti e del Cumulo localizza senza occhi e udito entro 12 Q: non legge colori o scritte, non soddisfa gli sguardi e non attraversa ostacoli solidi. Richiede comunque il normale confronto Percezione–Furtività. Nei vegetali umanoidi Testa è la regione sensoriale, Torace il tronco, Braccia i rami anteriori e Gambe radici o appendici locomotrici; lesioni e Menomazioni colpiscono quelle funzioni.
+
+**Movimento e durate.** Le terne sono Passo / Corsa / Scatto in Q. Velocità speciali già effettive; tragitti misti condividono il budget ordinario. Terreno difficile segue il Giocatore §5.2. Una durata di N Round termina alla fine del Round di applicazione più N. Immobilizzato applica movimento 0 e −4 alle azioni fisiche, comprese Difese e liberazioni, non alle Salvezze; le mani restano libere salvo blocco espresso.
+
+# **Arbusto risvegliato**
+
+*Vegetale senziente • piccolo guardiano o interlocutore • Natura Comune*
+
+Un arbusto al quale sono state conferite coscienza e capacità di spostarsi. Può proteggere un passaggio, portare un messaggio o cercare un luogo adatto a mettere radici. Fonte: Awakened Shrub, p. 317.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 2 • DES 4 • COS 5 • INT 5 • SAG 5 • CAR 3 |
+| Risorse e protezioni | PV 12 • PM 6 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 7 • Tempra 9 • Riflessi 8 • Volontà 8 • Magia 8 |
+| Iniziativa e Azioni | INI −1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 4 / 8 / 12 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 7 • Atletica 5 • Percezione 9 • Furtività 10; immobile 14 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Rami graffianti | 7 | 1d4 Naturale; Taglio | 1 Q |
+
+  
+
+**Legno e fuoco.** Dimezza i danni fisici Naturali da Perforazione; il beneficio non riguarda proiettili Magici o Eterei. Subisce danno ×2 da Fuoco di qualunque Natura, prima di Difesa e AR. Se lo stesso danno è già raddoppiato da un Magistrale, il moltiplicatore complessivo diventa ×3. Le fiamme non lo rendono automaticamente Incendiato senza le condizioni pertinenti.
+
+**Aspetto ordinario.** Furtività 14 richiede immobilità fra vegetazione compatibile. Movimento, contatto rivelatore o esame riuscito possono svelarlo; nessuna Sorpresa automatica. Vista e udito ordinari, senza scurovisione o percezione attraverso radici. Le localizzazioni sono quelle vegetali comuni, con rami e radici proporzionati alla taglia.
+
+**Coscienza.** Conosce una lingua assegnata alla sua origine e può parlare. Il risveglio è una trasformazione permanente già avvenuta, non un mantenimento da annullare con Negare Potere. Non dipende per le proprie Azioni dalla presenza del creatore e non è obbligato a obbedirgli per una regola di questa scheda.
+
+**Condotta.** Si affida a nascondigli, richiami o trattative. Può difendersi con i rami, ma sotto 3 PV o a Ferita Profonda cerca riparo. Il GS minimo descrive un eventuale impiego combattente; accompagnarlo in un compito o ottenere informazioni può risolvere la scena senza violenza.
+
+# **Albero risvegliato**
+
+*Vegetale senziente • guardiano massiccio • Natura Comune*
+
+Un albero capace di ragionare, parlare e sradicarsi per camminare. È un individuo autonomo, distinto dagli alberi mossi temporaneamente da un Treant. Fonte: Awakened Tree, p. 317.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 9 • DES 3 • COS 7 • INT 5 • SAG 5 • CAR 3 |
+| Risorse e protezioni | PV 40 • PM 8 • AR 3 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 6 • Tempra 12 • Riflessi 6 • Volontà 9 • Magia 9 |
+| Iniziativa e Azioni | INI −2 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 4 / 8 / 12 Q • spazio 3 × 3 Q; altezza circa 6 Q |
+| Abilità | Corpo a corpo 12 • Atletica 13 • Percezione 10 • Furtività 6; immobile 13 |
+| GS e PX per 4 PG | Esperto • 30 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Schianto di ramo | 12 | 2d6+2 Naturale; Contundente | 2 Q |
+
+  
+
+**Struttura.** Dimezza i danni fisici Naturali da Contusione e Perforazione, non Taglio. Subisce Fuoco ×2 di qualunque Natura, secondo la procedura dell’Arbusto risvegliato. La corteccia resta AR biologica: non è equipaggiamento e non possiede PI recuperabili separatamente dal corpo.
+
+**Albero immobile.** Furtività 13 fra alberi compatibili, senza movimenti rivelatori. Possiede vista e udito ordinari; rami estesi non concedono una visuale attraverso muri o un secondo punto di osservazione indipendente. La chioma deve entrare nel passaggio: non riduce la taglia lasciando indietro le parti ingombranti.
+
+**Vita autonoma.** Conosce una lingua legata al risveglio e può parlare. Non è un incantesimo mantenuto: Negare Potere non gli toglie la coscienza. Non dispone di Animare alberi, lanci di roccia o una capacità da assedio. Le sue radici e i rami seguono le localizzazioni comuni; perdere una funzione resta significativo anche con più appendici.
+
+**Condotta.** Può bloccare un accesso con il corpo, avvertire altri abitanti o chiedere che si risparmino le piante. Sotto 10 PV o a Ferita Seria tenta di fermare lo scontro o raggiungere riparo. Con una sola AzP scegliere una Schivata impedisce lo Schianto di quel Round.
+
+# **Avvizzito ramoso**
+
+*Vegetale infestante • agguato fra rami secchi • Natura Comune*
+
+Un piccolo intreccio di legno secco che assume una forma vagamente umanoide quando si muove. Si radica vicino a sentieri e luoghi di sosta. Fonte: Twig Blight, pp. 31–32.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 3 • DES 6 • COS 6 • INT 2 • SAG 4 • CAR 2 |
+| Risorse e protezioni | PV 12 • PM 4 • AR 1 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 9 • Riflessi 9 • Volontà 7 • Magia 8 |
+| Iniziativa e Azioni | INI 0 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 4 / 8 / 12 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 9 • Atletica 7 • Percezione 9 • Furtività 11; immobile 14 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Artigli di ramo | 9 | 1d4+1 Naturale; Perforazione | 1 Q |
+
+  
+
+**Sensi.** Percezione diffusa 12 Q; immunità ad Accecato e Assordato. Oltre il raggio non possiede una vista alternativa utile al combattimento. La mente elementare non lo protegge da paura, controllo mentale o danni psichici. Le regole delle melme prive di mente non si applicano.
+
+**Legno secco.** Subisce Fuoco ×2 di qualunque Natura, prima di Difesa e AR; Magistrale e vulnerabilità danno ×3 complessivo. Non possiede le resistenze da Contusione o Perforazione dell’Albero risvegliato. Ghiaccio non gli applica il disorientamento speciale della Covata.
+
+**Rami e nascondigli.** Furtività 14 quando è immobile fra cespugli secchi o detriti compatibili. Deve avere una possibilità reale di nascondersi e può essere riconosciuto con un esame riuscito. Le localizzazioni vegetali comuni comprendono il piccolo capo sensoriale, il tronco e gli arti intrecciati.
+
+**Condotta.** Può comprendere istruzioni semplici in una lingua assegnata all’infestazione, ma non parla. Attacca prede vicine da un nascondiglio e cerca copertura sotto 3 PV o a Ferita Profonda. Un gruppo richiede esemplari distinti, ciascuno con proprie Azioni: l’aspetto di una catasta non concede attacchi collettivi gratuiti.
+
+# **Avvizzito spinoso**
+
+*Vegetale infestante • tiratore e segnalazione biologica • Natura Comune*
+
+Una creatura vegetale ricoperta di aghi, capace di scagliarli a distanza. Il polline può avvertire altri esemplari vicini. Fonte: Needle Blight, pp. 31–32.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 6 • DES 6 • COS 6 • INT 2 • SAG 4 • CAR 2 |
+| Risorse e protezioni | PV 16 • PM 4 • AR 1 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 10 • Riflessi 9 • Volontà 7 • Magia 8 |
+| Iniziativa e Azioni | INI 0 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 6 / 12 / 18 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 9 • Tiro naturale 10 • Atletica 8 • Percezione 9 • Furtività 9 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Artigli | 9 | 1d6 Naturale; Perforazione | 1 Q |
+| Aghi | 10 | 1d6+1 Naturale; Perforazione | 12 Q massimo |
+
+  
+
+**Sensi e corpo.** Percezione diffusa 12 Q; immunità ad Accecato e Assordato, non agli effetti mentali. Le spine sono parti del corpo; non costituiscono armature o proiettili mistici recuperabili con un valore di catalogo. Non ha la vulnerabilità al Fuoco del ramoso né le resistenze fisiche degli alberi.
+
+**Lancio degli aghi.** Un singolo tiro, AC 1, senza raffiche. Si applicano fasce di distanza, coperture, ingaggio e Difese del Giocatore; non si tira oltre 12 Q. Il profilo dispone di sei scariche per incontro, annotate e consumate anche con un tiro fallito. Occorrono almeno 24 ore di crescita per ripristinarle, non un’Azione di ricarica. Gli Artigli restano disponibili.
+
+**Polline di allarme.** Con 1 AzP emette un segnale che raggiunge altri Avvizziti spinosi entro 24 Q attraverso aria comunicante. Pareti sigillate lo bloccano; vento e ostacoli possono limitarlo. Comunica pericolo e direzione approssimativa, non identità, mappa o bersagli da colpire attraverso muri. Non danneggia, non infetta e non concede Azioni immediate ai destinatari.
+
+**Condotta.** Comprende istruzioni semplici ma non parla. Cerca coperture e un tiro libero, alternando allarme e attacchi secondo l’unica AzP disponibile. Sotto 4 PV o a Ferita Profonda arretra verso vegetazione fitta. Non si radica obbligatoriamente e non guadagna un bonus mimetico speciale da immobilità.
+
+# **Avvizzito rampicante**
+
+*Vegetale infestante • presa e controllo del terreno • Natura Comune*
+
+Un groviglio di rampicanti che si tende verso le prede e può mettere in movimento radici vicine. È più capace di comunicare delle altre due forme. Fonte: Vine Blight, pp. 31–32.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 7 • DES 4 • COS 7 • INT 3 • SAG 5 • CAR 2 |
+| Risorse e protezioni | PV 26 • PM 9 • AR 1 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 7 • Tempra 11 • Riflessi 7 • Volontà 8 • Magia 9 |
+| Iniziativa e Azioni | INI −1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 2 / 4 / 6 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 11 • Atletica 11 • Percezione 10 • Furtività 10; immobile 14 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Sferzata di liana | 11 | 1d6+1 Naturale; poi possibile presa | 2 Q |
+| Stringere | 11 | 1d6+1 Naturale; contrapposta | Vittima già presa |
+| Rovi viventi | — | Terreno difficile e legami | Raggio 3 Q personale; 3 PM |
+
+  
+
+**Sensi e mimetismo.** Percezione diffusa 12 Q; immunità ad Accecato e Assordato. Furtività 14 richiede immobilità fra liane compatibili, senza Sorpresa automatica. Può parlare una lingua assegnata alla comunità. Non ottiene immunità mentali né la vulnerabilità al Fuoco del ramoso.
+
+**Presa delle liane.** Dopo almeno 1 danno finale della Sferzata contro una creatura di spazio non superiore a 2 × 2 Q, questa effettua Riflessi 0. Successo evita l’aggancio; fallimento applica Immobilizzato senza bloccare le mani. Può trattenere una sola vittima; non trascina e non si muove mantenendo la presa. Una Sferzata di Opportunità non applica questo aggancio speciale.
+
+**Stringere e liberarsi.** Stringere costa 1 AzP e contrappone Corpo a corpo 11 a Corpo a corpo o Atletica della vittima: con successo infligge il danno, AR ordinaria; fallimento o pareggio nessun danno. Per liberarsi, la vittima o un alleato adiacente spende 1 AzP con lo stesso confronto; successo termina la presa, pareggio la conserva. Si applica il −4 fisico a chi è Immobilizzato. Rilascio volontario gratuito alla propria Iniziativa; perdita di coscienza o funzione prensile termina la presa, 0 PV da soli no.
+
+**Rovi e condotta.** Rovi viventi costa 1 AzP e 3 PM, dura 5 Round e segue la pagina successiva. Il centro coincide con la posizione al lancio e resta fermo. Con una sola AzP deve scegliere fra controllo del terreno, attacco, stretta o Difesa. Può contrattare; sotto 6 PV o a Ferita Profonda tende a cercare riparo.
+
+# **Rovi viventi e liberazione**
+
+**Attivazione.** Capacità mistica innata di Avvizzito rampicante, Driade e Unicorno: 1 AzP, 3 PM, durata 5 Round, senza Concentrazione. Non richiede Potere, Focus o Invocazione. Il rampicante centra l’area su di sé; Driade e Unicorno scelgono un punto visibile entro 6 Q. Il raggio è 3 Q. Servono terreno naturale con radici o vegetazione viva: non genera liane da metallo, pietra nuda o dal vuoto.
+
+**Area.** Le piante restano legate al suolo e non attraversano pareti. La zona diventa terreno difficile per chi si muove a terra, tranne i vegetali. Questo dimezzamento del movimento non applica anche Rallentato. Volo sopra le piante, sostegni rialzati e altri percorsi realmente liberi permettono di evitare la zona; il solo nome di una modalità non consente di passare attraverso le radici.
+
+**Legami iniziali.** All’attivazione l’emittente può scegliere fino a tre creature percepite a terra nella zona, anche alleati se lo desidera. Ognuna effettua Riflessi 0: successo evita il legame, fallimento applica Immobilizzato senza bloccare le mani. Questa PS sostituisce tiro per colpire e Difese attive. Chi entra dopo incontra terreno difficile, ma non effettua una nuova PS e non viene afferrato automaticamente.
+
+**Sciogliere la presa.** La vittima spende 1 AzP ed effettua Atletica senza modificatore oltre alle proprie penalità, compreso −4 di Immobilizzato: successo la libera. Un alleato adiacente può tentare la stessa Prova per lei, con il proprio VA. Non è una contrapposta e non richiede una seconda Prova contro l’emittente. Liberarsi non rimuove il terreno difficile e la stessa attivazione non riafferra chi si è liberato.
+
+**Recidere.** I legami di una singola vittima sono un bersaglio materiale distinto, AR 0 e 6 PV propri, senza Difese attive. Si attaccano con le normali regole e a 0 PV sono recisi, liberando la vittima; essendo appendici, non usano Ferite o Morente. Un attacco fallito non colpisce automaticamente il prigioniero. Danni ai legami non si trasferiscono all’emittente e non concedono PX separati.
+
+**Durata e negazione.** Una sola area attiva per emittente; un nuovo uso termina la precedente. Potenza di confronto 3 per Negare Potere: una negazione superiore rimuove l’intera area, pari richiede soltanto la PS Volontà del negatore, inferiore non basta. Alla scadenza, congedo gratuito alla propria Iniziativa o perdita di coscienza dell’emittente, cessano legami e terreno difficile magico. Cura Spirituale non recide vincoli materiali ancora attivi; danni e lesioni già prodotti restano.
+
+# **Driade**
+
+*Custode silvana • dialogo, fascino e passaggi fra alberi • Natura Comune*
+
+Una creatura silvana dalla forma umanoide, legata alla vita di un albero. Può difendere il bosco con parole, radici e magia innata prima di ricorrere al randello. Fonte: Dryad, p. 121.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 5 • DES 6 • COS 5 • INT 7 • SAG 7 • CAR 8 |
+| Risorse e protezioni | PV 24 • PM 14 • AR 0; con Corteccia 3 Naturale; AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 9 • Riflessi 10 • Volontà 12 • Magia 13 |
+| Iniziativa e Azioni | INI +1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 6 / 12 / 18 Q; con Corteccia 5 / 10 / 15 Q • spazio 1 × 1 Q |
+| Abilità | Mischia 9 • Atletica 8 • Percezione 12 • Furtività 12 • Diplomazia 13 |
+| GS e PX per 4 PG | Esperto • 33 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Randello | 9 | 1d6+1 Naturale; Contundente | 1 Q |
+| Randello incantato | 11 | 1d8+2 Magico; Contundente | 1 Q; potere attivo |
+| Fascino silvano | — | Influenza amichevole; Volontà −2 | 6 Q; 3 PM |
+| Rovi viventi | — | Terreno difficile e legami | Centro entro 6 Q; 3 PM |
+
+  
+
+**Dotazione.** Randello di legno di qualità Comune, una mano, FOR 3, PS Integrità 10 e PI 5; già pronto. Danno ordinario 1d6 base e +1 da DES, già compreso. Nessuna armatura o scudo. Il randello permette Parata, ma l’AzP spesa per difendersi non resta disponibile per un potere o un attacco.
+
+**Sensi e resistenza mistica.** Scurovisione 12 Q. Contro incantesimi e capacità mistiche ottiene +2 alle PS pertinenti: Magia 13 lo comprende già; Tempra, Riflessi e Volontà lo aggiungono solo contro tali fonti. Non migliora Difese, non dimezza danni e non protegge da un comune attacco fisico solo perché l’arma è Magica. Localizzazioni umanoidi ordinarie.
+
+**Linguaggi.** Parla il linguaggio silvano assegnato all’ambientazione e una lingua di contatto. Può comunicare intenzioni semplici con animali e piante viventi vicini; gli interlocutori rispondono secondo sensi, memoria e capacità reali. Un albero ordinario non diventa una mente umana, un testimone onnisciente o un servitore obbligato.
+
+**Condotta.** Cerca di allontanare chi danneggia il bosco, negoziare o sfruttare i passaggi arborei. Sotto 6 PV o a Ferita Profonda tenta il riparo. Corteccia e altri poteri non sono già attivi all’inizio della scena. Le due pagine seguenti precisano fascino, movimento e magia di supporto.
+
+# **Driade fascino e albero legato**
+
+**Fascino silvano.** 1 AzP e 3 PM, una creatura umanoide o una bestia con mente, visibile entro 6 Q e capace di vedere la Driade. Volontà −2: successo nessuna influenza, fallimento considera la Driade una conoscente fidata per 5 Round. Richiede Concentrazione e riguarda una sola vittima alla volta. Un nuovo uso termina il precedente. Immunità alle influenze di fascinazione o protezioni mentali pertinenti si applicano normalmente.
+
+**Scelte della vittima.** Il fascino cambia la disposizione verso la Driade, senza comandare Azioni, imporre suicidio o far attaccare i compagni. La vittima valuta favorevolmente richieste compatibili con la situazione, ma conserva memoria, convinzioni e altre relazioni. Nessun tiro di Diplomazia trasforma una richiesta impossibile in un ordine obbligatorio. La capacità non legge pensieri o rivela informazioni automaticamente.
+
+**Interrompere.** Se Driade o suoi alleati compiono un atto dannoso contro la vittima, l’effetto termina subito. Cessa anche per fine durata, perdita di Concentrazione, congedo gratuito alla propria Iniziativa o Negare Potere, potenza di confronto 3. Chi supera la PS iniziale o viene liberato diventa immune al Fascino di quella Driade per 24 ore. Distogliere lo sguardo prima dell’attivazione impedisce il requisito visivo, con le normali conseguenze contro ciò che non si guarda.
+
+**Passaggio arboreo.** Una volta per Round, 1 AzM intera e 2 PM permettono di entrare magicamente in un albero vivo adiacente e uscire accanto a un secondo albero vivo entro 12 Q dal primo. Entrambi devono avere un tronco di almeno mezzo Q di diametro e un’altezza di almeno 4 Q. L’albero d’uscita e il punto libero adiacente devono essere visibili alla partenza. Non trasporta altre creature, non attraversa interdizioni al teletrasporto e non concede ulteriore movimento ordinario.
+
+**Vincoli del passaggio.** Porta solo la dotazione entro il proprio carico ordinario; non attraversa con una vittima trattenuta. È un trasferimento istantaneo, non un tragitto lungo la linea intermedia, e non provoca Opportunità per quel tragitto; altre Azioni restano normali. Non crea un portale utilizzabile da altri. Se i requisiti mancano il passaggio non è dichiarabile; un’interdizione che lo impedisce dopo la spesa non restituisce PM e AzM.
+
+**Albero legato.** Il legame con un albero preciso va definito nella scena. Danni a quell’albero sono un motivo narrativo di sofferenza e urgenza, senza trasferire automaticamente danni, Ferite o CROS alla Driade. La distruzione non provoca morte o follia obbligatoria del personaggio: le conseguenze durature richiedono una scelta esplicita dell’ambientazione. Le statistiche non dipendono da un legame lasciato indefinito.
+
+# **Driade magia del bosco**
+
+**Poteri innati.** Le capacità di questa pagina costano 1 AzP e i PM indicati, senza Potere, Focus o Invocazione. Non sono incantesimi appresi, non ammettono Anticipazione e non concedono automaticamente Talenti del Taumaturgo. Rovi viventi segue la propria pagina. Una Driade con PM insufficienti non attiva la capacità; spendere l’ultimo PM provoca il normale Svenuto.
+
+**Corteccia.** 3 PM, soltanto su di sé, 20 Round senza Concentrazione. Fornisce AR 3 Naturale e riduce Passo da 6 a 5 Q, Corsa a 10 e Scatto a 15. Riprende Pelle Corazzata 3 per protezione, movimento e cumuli: non somma la propria AR a un altro contributo di Pelle Corazzata o Armatura di Forza e non protegge dal danno Etereo. Negare Potere usa confronto 3. La perdita di coscienza da sola non termina questa durata fissa.
+
+**Ramo incantato.** 2 PM, un randello di legno impugnato, 5 Round senza Concentrazione. Soltanto negli attacchi della Driade quel randello usa VA 11 e 1d8+2 Magico, valori completi. Non aggiunge il proprio danno al profilo ordinario, non concede Azioni e mantiene requisiti e Integrità. Un’altra magia che sostituisce lo stesso danno non si somma: si sceglie un profilo. Negare Potere usa confronto 3; lasciare l’arma non ferma il tempo residuo.
+
+**Velo del sottobosco.** 3 PM, fino a tre creature consenzienti visibili entro 4 Q, inclusa la Driade, 5 Round con Concentrazione. Ottengono +2 a Furtività e non lasciano orme ordinarie nei terreni naturali attraversati. Non diventano invisibili, silenziose o prive di odore; servono coperture e possibilità reale di nascondersi. Un beneficiario uscito oltre 4 Q perde l’effetto definitivamente. Più Veli non sommano il bonus; Negare Potere, confronto 3, lo rimuove da un beneficiario alla volta.
+
+**Frutti del bosco.** 2 PM a contatto con un vegetale vivo fruttifero fanno maturare tre piccoli frutti, al massimo una volta in ogni periodo di 24 ore. Restano efficaci per 24 ore. Mangiarne uno costa 1 AzP, recupera 1 PV biologico e fornisce una porzione di cibo; ciascun individuo riceve il recupero una sola volta in 24 ore, anche da Driadi diverse. Non cura Ferite, non arresta Sanguinamento e non stabilizza Morente. Un ulteriore frutto resta solo nutrimento.
+
+**Limiti.** Si mantiene una sola Concentrazione: iniziare Fascino mentre è attivo Velo, o viceversa, termina il primo. I recuperi e i frutti già maturati sono risultati istantanei, non annullabili dopo da Negare Potere. La scheda non concede ulteriori incantesimi silvani, creazione illimitata di cibo o capacità di diagnosticare e guarire ogni malattia.
+
+# **Cumulo strisciante**
+
+*Predatore vegetale • assorbimento elettrico e inglobamento • Natura Comune*
+
+Una massa di radici, liane e vegetazione in decomposizione, animata attorno a un nucleo vivente. Si nasconde negli acquitrini e consuma materia organica. Fonte: Shambling Mound, p. 270.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 9 • DES 4 • COS 8 • INT 3 • SAG 5 • CAR 3 |
+| Risorse e protezioni | PV 60 • PM 8 • AR 3 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 7 • Tempra 13 • Riflessi 7 • Volontà 8 • Magia 10 |
+| Iniziativa e Azioni | INI −1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra e nuoto 4 / 8 / 12 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 13 • Atletica 13 • Percezione 10 • Furtività 10; fra detriti vegetali 14 |
+| GS e PX per 4 PG | Veterano • 50 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Schianto | 13 | 1d8+2 Naturale; Contundente | 1 Q |
+| Afferrare | 13 | Presa; contrapposta, senza danno | 1 Q; 1 AzP |
+| Inglobare | — | Contenimento; nessun danno iniziale | Una vittima già presa; 1 AzP |
+| Comprimere | — | 1d8+2 Naturale; Tempra 0 dimezza | Prigioniero interno; 1 AzP |
+
+  
+
+**Sensi e metabolismo.** Percezione diffusa 12 Q; immunità ad Accecato, Assordato e all’accumulo di AFT. Possiede una mente istintiva e non è immune agli effetti mentali. Non dorme, ma entra in quiescenza; respira e si nutre. Il corpo segue le localizzazioni vegetali comuni, con Torace corrispondente al nucleo e alla massa centrale.
+
+**Resistenze e assorbimento.** Dimezza Fuoco e Ghiaccio di qualunque Natura ed è immune al Fulmine. Per ogni danno da Fulmine che lo raggiunge, si calcola il residuo dopo Difesa e AR ignorando solo tale immunità: recupera quel numero di PV, fino a 4 PV complessivi per Round da tutte le fonti elettriche. Non supera i PV massimi, non cura Ferite o Menomazioni e non stabilizza Morente. Esposizioni senza residuo non curano.
+
+**Presa.** Afferrare usa Corpo a corpo 13 contrapposto a Corpo a corpo o Atletica di una creatura di spazio 1 × 1 Q o inferiore. Successo Immobilizza senza bloccare le mani; un pareggio iniziale non afferra. Non richiede anche tiro per colpire e Difesa. Mantiene una sola vittima senza Azioni, ma non si sposta finché questa non è inglobata o rilasciata.
+
+**Condotta.** Attende fra detriti compatibili, senza Sorpresa automatica, poi sceglie Schianti o la sequenza Afferrare–Inglobare. Due Schianti non concedono una terza AzP né un inglobamento gratuito. Sotto 15 PV o a Ferita Seria tenta di ritirarsi; una massa collassata ancora viva non è un esemplare nuovo e non risorge dopo la morte.
+
+# **Cumulo contenimento e soccorso**
+
+**Inglobare.** 1 AzP contro l’unica vittima già presa: la trasferisce dentro la massa senza altro tiro e senza danni iniziali. Diventa Accecata verso l’esterno e resta Immobilizzata, −4 fisico e mani non specificamente bloccate. Segue gli spostamenti del Cumulo, che ora può muoversi. Il contenimento occupa la capacità prensile: non può Afferrare altre creature prima di liberarla.
+
+**Respirazione.** Se la massa ostruisce le vie respiratorie, inizia il soffocamento del Giocatore §5.23, conservando la riserva di fiato pari a COS. Un apparato autonomo funzionante lo impedisce. Un organismo che respira attraverso tutta la superficie è esposto se il contenimento ne impedisce davvero lo scambio gassoso; l’assenza di una bocca non garantisce protezione. Non viene ucciso automaticamente al termine di un numero di Round inventato.
+
+**Comprimere.** 1 AzP, al massimo una volta per Round: il prigioniero effettua Tempra 0. Fallimento subisce 1d8+2 Naturale da Contusione; successo dimezza per eccesso prima dell’AR. Non si aggiungono tiro per colpire, Parata, Schivata o un secondo tentativo di Elusione. Gli Schianti non possono essere diretti contro il prigioniero interno. Semplice permanenza nel corpo e fine Round non infliggono altri danni automatici.
+
+**Liberazione.** La vittima, presa esternamente o inglobata, spende 1 AzP e contrappone Corpo a corpo o Atletica a Corpo a corpo 13 del Cumulo; il −4 di Immobilizzato si applica. Un alleato adiacente può tentare lo stesso con il proprio VA, senza quel malus se libero. Successo libera in uno spazio adiacente capace di accoglierla; senza spazio non completa l’estrazione. Un pareggio mantiene la presa, senza danno da tentativo fallito.
+
+**Combattere e rilasciare.** Il prigioniero può attaccare il Cumulo dall’interno con strumenti utilizzabili e −4; per colpire la massa che sente attorno a sé non aggiunge una seconda penalità visiva. Il Cumulo non può Schivare quel colpo conservando il contenimento. La massa dà copertura totale fra interno ed esterno. Rilascio gratuito alla propria Iniziativa; perdita di coscienza, morte o Menomazione della funzione di contenimento libera la vittima. 0 PV da soli non lo fanno.
+
+**Dopo l’uscita.** Cessano la cecità da copertura e l’ostruzione respiratoria. Un Round di respiro normale ripristina il fiato; chi era svenuto per soffocamento riprende conoscenza in 1d3 Round salvo altre cause. PV, Ferite e Menomazioni restano; Morente richiede stabilizzazione. Un nucleo sopravvissuto può recuperare con tempo e cure ordinarie, senza rigenerazione gratuita o ritorno dalla morte.
+
+# **Treant**
+
+*Vegetale senziente • difensore antico e animatore di alberi • Natura Comune*
+
+Un grande custode arboreo che protegge il proprio bosco. Può restare immobile per lunghi periodi e chiedere aiuto a due alberi ordinari quando affronta una minaccia seria. Fonte: Treant, p. 289.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 10 • DES 4 • COS 10 • INT 6 • SAG 8 • CAR 6 |
+| Risorse e protezioni | PV 76 • PM 16 • AR 4 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 8 • Tempra 15 • Riflessi 7 • Volontà 12 • Magia 12 |
+| Iniziativa e Azioni | INI −1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 6 / 12 / 18 Q • spazio 3 × 3 Q; altezza circa 7 Q |
+| Abilità | Corpo a corpo 15 • Tiro naturale 13 • Atletica 16 • Percezione 13 • Furtività 6; immobile 14 |
+| GS e PX per 4 PG | Leggenda • 100 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Schianto | 15 | 2d6+3 Naturale; Contundente | 2 Q |
+| Roccia | 13 | 3d6+3 Naturale; Contundente | 36 Q massimo; una per Round |
+| Animare alberi | — | Fino a due servitori temporanei | 12 Q; 6 PM; 1 AzP |
+
+  
+
+**Legno antico.** Dimezza i danni fisici Naturali da Contusione e Perforazione, non Taglio. Fuoco di qualunque Natura infligge ×2 prima di Difesa e AR, ×3 complessivo se anche Magistrale. Il tronco è un corpo biologico e non una struttura con PI. Nessuna Parata naturale.
+
+**Aspetto e coscienza.** Vista e udito ordinari, senza radar attraverso le radici. Immobile fra alberi compatibili usa Furtività 14; un esame riuscito può riconoscerlo. Parla il linguaggio del bosco e una lingua di contatto. Le localizzazioni vegetali comuni restano funzionali anche quando sembra un albero ordinario.
+
+**Rocce e assedio.** Roccia richiede un masso libero di circa 30 kg già impugnato; raccoglierlo costa 1 AzP. Si applicano fasce di distanza e Difese ordinarie, senza raffiche. Contro oggetti e strutture inerti infligge danno ×2 con Schianto o Roccia, risolvendo PS Integrità e PI secondo Armamenti §7.2.1. Non raddoppia contro costrutti o creature soltanto per la loro grandezza; Magistrale con assedio dà ×3, non ×4.
+
+**Condotta.** Cerca di fermare incendi, abbattimenti e distruzione del bosco, distinguendo gli intrusi dalle minacce reali. Può avvertire o trattare prima di attaccare. Sotto 19 PV o a Ferita Seria tende a ripiegare proteggendo il territorio. I 100 PX comprendono il potenziale di Animare alberi della pagina seguente.
+
+# **Treant animare alberi**
+
+**Attivazione.** Una volta in ogni periodo di 24 ore, 1 AzP e 6 PM animano uno o due alberi ordinari viventi, visibili entro 12 Q. Ciascuno deve poter occupare uno spazio 3 × 3 Q e muoversi senza attraversare solidi. Non genera alberi dal terreno, non bersaglia Treant, Alberi risvegliati, oggetti morti o creature con una propria coscienza. È un potere innato senza Prova di Potere e senza componenti.
+
+**Profilo temporaneo.** Ogni albero usa i valori dell’Albero risvegliato di questo blocco, con queste sostituzioni: INT 1, CAR 1, PM —, Volontà —, nessun linguaggio. Non è una mente autonoma: immunità espressa ai danni psichici, al controllo mentale e a Terrorizzato. Mantiene PV 40, AR 3, resistenze, vulnerabilità, movimento, Salvezze fisiche e Magia della scheda. Può usare solo Schianto di ramo, movimento e Difese consentite; non lancia rocce o anima altri alberi.
+
+**Azioni e comando.** Alla creazione non riceve un turno immediato. Comincia ad agire dal Round successivo all’attivazione, con 1 AzP e 1 AzM per Round. Usa lo stesso risultato di INI e viene dopo il Treant. Quest’ultimo indica gratuitamente un ordine semplice alla propria Iniziativa; l’albero lo esegue con le proprie Azioni, senza trasferirgli quelle del Treant. Un ordine non permette attività incompatibili con la scheda.
+
+**Durata e portata.** L’animazione dura 10 Round senza Concentrazione. Un albero torna inerte se termina la durata, il Treant perde coscienza o muore, la distanza da lui supera 24 Q oppure il Treant lo congeda gratuitamente alla propria Iniziativa. Non si possono attivare altri alberi nello stesso periodo di 24 ore per sostituire quelli perduti. La magia non ripristina PV, Ferite o Menomazioni di un albero già danneggiato.
+
+**Negazione e collasso.** Negare Potere usa potenza di confronto 6 e riguarda un albero alla volta. Gli alberi animati seguono PV e Ferite delle creature; a 0 PV non tornano automaticamente inerti e non muoiono. Alla cessazione dell’animazione si fermano nella posizione occupata, mettono radici se possibile e rilasciano ciò che sorreggevano. Danni e lesioni reali al legno restano. Il ritorno inerte non distrugge un ponte o una parete vicini senza una conseguenza fisica concreta.
+
+**PX e limiti del profilo.** I due servitori temporanei sono già compresi nei 100 PX del Treant. Non si conteggiano come due Alberi risvegliati autonomi e non producono un secondo premio quando la magia termina. Questa conversione usa servitori meno potenti e durata più breve rispetto alla fonte: non si sostituiscono le loro statistiche con quelle complete del Treant durante la scena.
+
+# **Pegaso**
+
+*Cavallo alato senziente • volo e alleanza • Natura Comune*
+
+Un equino alato capace di giudicare chi gli si avvicina e scegliere se accettarne la compagnia. Può diventare un alleato o un trasportatore consenziente. Fonte: Pegasus, p. 250.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 9 • DES 7 • COS 7 • INT 5 • SAG 7 • CAR 6 |
+| Risorse e protezioni | PV 38 • PM 8 • AR 1 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 11 • Tempra 12 • Riflessi 12 • Volontà 11 • Magia 10 |
+| Iniziativa e Azioni | INI +1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 12 / 24 / 36 Q; volo 18 / 36 / 54 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 12 • Atletica 13 • Percezione 14 • Furtività 7 |
+| GS e PX per 4 PG | Esperto • 30 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Zoccoli | 12 | 1d8+2 Naturale; Contundente | 1 Q |
+
+  
+
+**Sensi e parola.** Vista e udito ordinari, senza scurovisione. Comprende due lingue assegnate all’ambiente ma non può parlare con voce umanoide. Può rispondere con gesti o tramite una capacità di comunicazione adatta. Intelligenza e volontà restano personali: Cavalcare non lo rende un animale privo di decisioni.
+
+**Volo.** Usa ali reali; occorrono spazio e un percorso che accolgano la sua apertura. Non resta sospeso come un organismo fluttuante. Danni alle ali, perdita di coscienza o condizioni che impediscano il volo possono provocare la normale caduta. Volo e terra condividono il budget dei tragitti misti; salire in quota non concede AzM extra né attacchi in picchiata gratuiti.
+
+**Cavaliere.** Può accettare un cavaliere di spazio 1 × 1 Q, con equipaggiamento entro il proprio carico ordinario. Montare, Cavalcare, ingombro e carichi seguono il Giocatore; i valori di movimento indicano il profilo non sovraccarico. Pegaso e cavaliere mantengono Azioni, Difese e bersagli distinti. Una sella o bardatura aggiunta cambia la dotazione e non è già compresa nella scheda.
+
+**Condotta.** Cerca una via aerea libera, protegge un compagno scelto e può rifiutare un ordine suicida. Sotto 9 PV o a Ferita Profonda tenta di allontanarsi. Per le localizzazioni, Braccia sono le zampe anteriori e Gambe quelle posteriori; le ali sono appendici delle Braccia, distinguendo in anticipo quale parte funzionale viene colpita.
+
+# **Unicorno**
+
+*Custode equino senziente • carica, protezione e soccorso • Natura Comune*
+
+Un equino dal corno mistico, capace di proteggere altri viventi e lasciare un luogo pericoloso con un piccolo gruppo consenziente. Fonte: Unicorn, pp. 293–294.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 9 • DES 7 • COS 7 • INT 6 • SAG 8 • CAR 8 |
+| Risorse e protezioni | PV 50 • PM 20 • AR 1 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 11 • Tempra 12 • Riflessi 11 • Volontà 13 • Magia 14 |
+| Iniziativa e Azioni | INI +1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 10 / 20 / 30 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 14 • Atletica 13 • Percezione 13 • Furtività 9 |
+| GS e PX per 4 PG | Eroe • 70 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Zoccoli | 14 | 1d8+2 Magico; Contundente | 1 Q |
+| Corno | 14 | 1d8+2 Magico; Perforazione | 1 Q |
+| Corno in carica | 14 | 2d6+2 Magico; possibile A terra | 4 Q in linea retta; un uso per Round |
+| Tocco risanante | — | 1d4+5 PV biologici o Sanguinamento | Contatto; 1 AzP e 6 PM |
+
+  
+
+**Protezione innata.** È immune ai danni da veleno, ad Avvelenato, Paralizzato e alle influenze di fascinazione che impongono fiducia o attrazione. Non è immune a ogni effetto mentale. Contro incantesimi e capacità mistiche ottiene +2 alle PS: Magia 14 lo comprende già, le altre lo aggiungono solo contro tali fonti. Questa resistenza non migliora Difese o AR.
+
+**Sensi e comunicazione.** Scurovisione 12 Q. Parla il linguaggio silvano e una lingua di contatto; può rivolgere parole mentali a un interlocutore percepito entro 12 Q, capace di comprendere una lingua. Il canale non legge pensieri o concede localizzazione attraverso solidi; una protezione che blocca la telepatia lo impedisce. Le localizzazioni sono equine come nel Pegaso, senza ali; il corno appartiene alla Testa.
+
+**Sequenza e carica.** Al massimo due attacchi per Round, uno di Zoccoli e uno di Corno; poteri e Difese usano le stesse due AzP. La carica richiede almeno 4 Q di movimento effettivo rettilineo verso la vittima nella stessa Iniziativa, poi 1 AzP per Corno. Se infligge almeno 1 danno finale a una creatura non maggiore di 2 × 2 Q, questa effettua Tempra 0: fallimento A terra. Non applica anche Sbalzante o un secondo attacco gratuito.
+
+**Condotta.** Avverte, protegge ed eventualmente usa Rovi per fermare un inseguitore. Sotto 12 PV o a Ferita Profonda cerca di mettere in salvo sé e gli alleati. I poteri di supporto sono nelle due pagine seguenti; non possiede Azioni Leggendarie aggiuntive o effetti regionali automatici su una foresta.
+
+# **Unicorno cure e protezione**
+
+**Capacità innate.** Le attivazioni non richiedono Potere, Focus o Invocazione e non ammettono Anticipazione. Costi e Azioni restano obbligatori; usare l’ultimo PM causa il normale Svenuto. Rovi viventi costa 1 AzP e 3 PM e usa la pagina comune, con centro visibile entro 6 Q. L’Unicorno non apprende automaticamente gli altri incantesimi della fonte.
+
+**Tocco risanante.** 1 AzP e 6 PM, a contatto con il corno, su un organismo biologicamente vivo consenziente o incosciente soccorso. Può usarlo anche su di sé, al massimo tre volte in ogni periodo di 24 ore. Ripristina 1d4+5 PV, oppure destina ogni 2 punti a ridurre Sanguinamento di 1, con il resto ai PV. Segue i limiti di Cura Ferite 6, senza Talenti aggiuntivi; non supera i massimi effettivi e non cura Ferite o Menomazioni.
+
+**Purificazione.** 6 PM e 10 minuti fuori dal combattimento, con Concentrazione e contatto continuo del corno con un vivente consenziente o incosciente soccorso. Si sceglie una sola malattia naturale o un solo veleno naturale attivo, di Pericolosità non superiore a III, Profonda. Per una malattia occorre prima identificarla con Medicina o informazioni attendibili; per il veleno non identificato sceglie quello compatibile più pericoloso. L’interruzione impedisce la cura e non restituisce PM.
+
+**Esito della purificazione.** Rimuove la causa scelta e gli Stati che mantiene, senza restituire PV, guarire Ferite o cancellare AFT. Non tratta origini artificiali o mistiche, non elimina tutte le affezioni insieme e non concede immunità a una nuova esposizione. Non occorrono ulteriori PS dopo la rimozione della causa. Una maledizione, un legame o un effetto ambientale distinto restano da risolvere.
+
+**Scudo luminoso.** 1 AzP e 3 PM, su di sé o un consenziente visibile entro 12 Q, per 2 Round senza Concentrazione: +2 alle Prove di Difese. Non concede una Difesa gratuita, non migliora Elusione o altre PS e non aggiunge AR. Non si sommano più Scudi luminosi: si conserva la scadenza più lontana. Negare Potere usa confronto 3 e rimuove lo scudo da quel beneficiario.
+
+**Limiti del soccorso.** Tocco risanante e Purificazione non stabilizzano Morente. Arrestare Sanguinamento non guarisce la lesione che lo ha provocato. Il trasferimento della pagina successiva può portare una vittima al sicuro, ma non arresta il suo contatore. Cure riuscite sono risultati istantanei: Negare Potere non annulla dopo i PV recuperati o ripristina un veleno già neutralizzato.
+
+# **Unicorno passaggio del guardiano**
+
+**Trasferimento.** Una volta in ogni periodo di 24 ore, 1 AzP e 9 PM permettono all’Unicorno di teletrasportare sé e fino a tre altre creature consenzienti, percepite entro 1 Q. La destinazione deve essere un luogo da lui visitato e conosciuto, entro 1.000 Q dall’origine. Non richiede Concentrazione o una Prova Potere. È una capacità innata specifica, non la versione di livello 6 dell’incantesimo Teletrasporto.
+
+**Spazi e carico.** Deve conoscere un’area d’arrivo capace di accogliere tutte le creature in spazi liberi e sostenuti. Un arrivo dentro solidi, sopra un vuoto non sostenibile o in uno spazio occupato non avviene: il tentativo fallisce e consuma AzP, PM e uso giornaliero. Ogni partecipante porta solo la dotazione entro il proprio carico ordinario; contenitori non aggirano il limite sul numero delle creature trasportate.
+
+**Consenso.** Non trascina nemici, una creatura che rifiuta o un prigioniero ancora vincolato a un ostacolo non trasportato. Un vivente incosciente può essere soccorso se chi lo assiste ne autorizza il trasporto e nessun vincolo magico contrario lo impedisce. Il trasferimento non recide automaticamente legami materiali o mistici: vanno risolti prima. Un cavaliere conta come uno dei tre accompagnatori.
+
+**Interdizioni e tempi.** Barriere che impediscono teletrasporto o trasferimenti bloccano il potere secondo la propria scheda; non basta una parete ordinaria a interrompere il salto. Non è una reazione gratuita: si usa alla propria Iniziativa con AzP disponibile, non dopo aver già subito un attacco dichiarando di evitarlo. Non provoca Opportunità lungo un tragitto inesistente; le altre Azioni e gli spostamenti normali mantengono le proprie conseguenze.
+
+**Magia e limiti.** Il trasferimento è istantaneo, quindi Negare Potere successivo non riporta indietro i partecipanti. Non crea portali, non collega piani, non conferisce conoscenza remota della destinazione e non ripristina Azioni, PV, PM o durate. Il confronto con un’interdizione, quando questa lo richiede, usa potenza 9. L’Unicorno non può scegliere un luogo soltanto descritto da un altro.
+
+**Impiego al tavolo.** Questa capacità permette una fuga o un soccorso pianificati, con il costo di quasi metà della riserva personale. Il profilo da 70 PX comprende due AzP, attacchi Magici, cure limitate, Rovi e questo trasferimento. Un territorio con benedizioni permanenti, servitori o altri poteri richiede un modulo distinto: non si aggiunge gratuitamente alla scheda base.
+
+# **Grandi rettili e predatori mostruosi**
+
+*Dieci profili per pianure, scogliere, acque e caverne*
+
+Cariche, code, ali e lunghi colli permettono di minacciare spazi diversi. Alcuni di questi animali difendono piccoli e territorio; altri cacciano, e il Drago tartaruga può negoziare un passaggio. Le sei forme preistoriche precedono quattro predatori fantastici. Sono voci del catalogo generale: la loro presenza su Iris richiede una collocazione nell’ambientazione, senza attribuire loro appartenenza alla Covata o origini cosmologiche della fonte.
+
+  
+
+|  |  |  |
+| :-: | :-: | :-: |
+| **Creatura** | **GS** | **PX per 4 PG** |
+| Allosauro | Esperto | 30 |
+| Anchilosauro | Esperto | 30 |
+| Plesiosauro | Esperto | 30 |
+| Pteranodonte | Principiante | 10 |
+| Triceratopo | Veterano | 50 |
+| Tirannosauro | Eroe | 70 |
+| Viverna | Veterano | 50 |
+| Idra | Eroe | 70 |
+| Behir | Leggenda | 100 |
+| Drago tartaruga | Leggenda | 100 |
+
+  
+
+**PX di riferimento.** Valori per un esemplare e quattro PG, senza dotazione conteggiata. Veleno, ricrescita delle teste, capacità di inghiottire e soffi sono già compresi nel GS. Le teste dell’Idra e le altre appendici non sono avversari separati e non assegnano PX aggiuntivi. Il premio complessivo dell’incontro segue il Manuale del Direttore §9.3.
+
+**Adattamento.** Le sequenze offensive impiegano Azioni effettive. Essere afferrati o inghiottiti lascia procedure di liberazione e soccorso; i soffi hanno un intervallo definito prima del riutilizzo. La perdita delle teste dell’Idra può portare a Morente secondo l’eccezione anatomica della sua voce, mentre 0 PV da soli mantengono sempre la procedura ordinaria.
+
+**Fonti e verifica.** Giocatore v0.49, Magia v1.5, Direttore v0.41 e Armamenti v0.64. Le pagine indicate sono quelle stampate del Manuale dei Mostri fornito. GS e PX sono stime da verificare al tavolo, soprattutto per creature con più attacchi, rigenerazione o forte vantaggio ambientale. Acqua profonda, passaggi stretti e spazi di volo cambiano le scelte disponibili, senza modificare retroattivamente le statistiche.
+
+# **Rettili regole operative**
+
+**Natura e risorse.** Tutti i profili hanno Natura Comune, sono organismi biologicamente viventi e possiedono una mente e PM personali. A 0 PM diventano Svenuti. Non conoscono incantesimi appresi. Bassa INT, grande massa e parentela draconica non concedono immunità mentali o alla Corruzione. Stati iniziali: nessuno; l’Idra inizia con cinque teste e la Viverna con tre dosi di veleno, se non già consumate nella continuità della scena.
+
+**PV e anatomia.** A 0 PV si applicano Tempra, Ferite, Menomazioni e Morente, senza morte o svenimento automatici. Le cure biologiche sono applicabili. Nei quadrupedi Testa è capo e collo, Torace il corpo, Braccia gli arti anteriori e Gambe quelli posteriori; la coda è un’appendice locomotrice delle Gambe. Le voci precisano le altre anatomie. Prima di risolvere una Menomazione si identifica la funzione realmente coinvolta.
+
+**Azioni e Difese.** INI è il modificatore a 1d10; AzP e unica AzM valgono per l’intero Round. Ogni attacco costa 1 AzP, produce AC 1 e include tutti i bonus, salvo eccezione espressa. Nessuno possiede Parata naturale. Schivata richiede 1 AzP, 1 AzM e spazio concretamente disponibile. Parata normale dimezza per eccesso prima dell’AR, Magistrale annulla. Limiti offensivi delle singole voci comprendono l’Opportunità, salvo l’eccezione delle teste dell’Idra.
+
+**Ordine del danno.** Dadi e bonus, moltiplicatori, Difesa, resistenze, AR e infine effetti che richiedono danno residuo. Naturale e Magico incontrano tutta l’AR pertinente; Etereo soltanto la quota magica. Taglio, Contusione e Perforazione descrivono il mezzo fisico: Perforazione non equivale alla proprietà Perforante X. Un danno interno che ignora AR lo dichiara espressamente. L’acido non applica Corrosivo senza una proprietà indicata.
+
+**Movimento e sensi.** Le terne indicano Passo / Corsa / Scatto in Q, con velocità speciali già effettive. Tragitti misti condividono il budget ordinario. Ali reali richiedono spazio e non concedono volo stazionario; impedimenti funzionali o perdita di coscienza possono provocare caduta. Nuoto e combattimento immerso seguono il Giocatore. Scurovisione non attraversa solidi o oscurità soprannaturale; gli altri sensi non individuano automaticamente un nemico nascosto.
+
+**Prese e tempi.** Immobilizzato significa movimento 0 e −4 alle azioni fisiche, comprese Difese e liberazioni, non alle Salvezze. Le mani restano utilizzabili salvo blocco espresso. Liberazioni contrapposte costano 1 AzP; un pareggio conserva una presa già stabilita. Le durate in Round terminano alla fine del Round di applicazione più il numero indicato. Per i soffi usati nel Round R, il primo riutilizzo è R + 3: non basta raggiungere nuovamente la propria Iniziativa nello stesso Round.
+
+# **Allosauro**
+
+*Predatore terrestre • inseguimento e assalto • Natura Comune*
+
+Un grande bipede carnivoro che raggiunge la preda e la atterra con gli artigli prima di usare le fauci. Fonte: Allosaurus, p. 79.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 9 • DES 6 • COS 7 • INT 1 • SAG 6 • CAR 3 |
+| Risorse e protezioni | PV 36 • PM 5 • AR 2 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 12 • Riflessi 10 • Volontà 8 • Magia 8 |
+| Iniziativa e Azioni | INI 0 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 12 / 24 / 36 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 12 • Atletica 13 • Percezione 12 • Furtività 8 |
+| GS e PX per 4 PG | Esperto • 30 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Morso | 12 | 1d8+2 Naturale; Perforazione | 1 Q |
+| Artigli | 12 | 1d6+2 Naturale; Taglio | 1 Q |
+
+  
+
+**Sequenza.** Fino a due attacchi per Round, al massimo un Morso e un attacco di Artigli. Un’Azione conservata per Schivata non resta disponibile per completare la sequenza. Non possiede attacchi ad Area o danni automatici per chi si trova sotto il corpo.
+
+**Assalto.** Dopo almeno 6 Q di movimento rettilineo verso la vittima nella stessa Iniziativa, Artigli che infliggano almeno 1 danno finale impongono Tempra 0 a una creatura non maggiore di 2 × 2 Q. Fallimento: A terra. Il Morso successivo usa la seconda AzP, se disponibile: non è gratuito e non interrompe una Difesa o una PS ancora da risolvere. Assalto non aggiunge danni oltre alle formule indicate.
+
+**Sensi e arti.** Vista e udito ordinari, senza scurovisione. Testa comprende il collo; Braccia sono gli arti anteriori con artigli, Gambe le zampe posteriori e la funzione della coda. Una Menomazione degli arti anteriori può impedire Artigli senza rendere inutilizzabile il Morso.
+
+**Condotta.** Preferisce prede isolate e spazio per prendere slancio. Non comprende linguaggi, ma può reagire a cibo, richiami o minacce secondo l’esperienza. Sotto 9 PV o a Ferita Profonda tende ad abbandonare una caccia rischiosa; una via di fuga o una fonte di nutrimento accessibile possono cambiare l’incontro.
+
+# **Anchilosauro**
+
+*Erbivoro corazzato • difesa con la coda • Natura Comune*
+
+Un quadrupede dalla corazza ossea, capace di colpire con la mazza caudale quando viene minacciato. Fonte: Ankylosaurus, p. 79.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 9 • DES 5 • COS 7 • INT 1 • SAG 6 • CAR 3 |
+| Risorse e protezioni | PV 46 • PM 5 • AR 4 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 8 • Tempra 12 • Riflessi 8 • Volontà 8 • Magia 8 |
+| Iniziativa e Azioni | INI −1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 6 / 12 / 18 Q • spazio 3 × 3 Q |
+| Abilità | Corpo a corpo 12 • Atletica 12 • Percezione 10 • Furtività 5 |
+| GS e PX per 4 PG | Esperto • 30 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Coda a mazza | 12 | 2d6+2 Naturale; Contundente | 2 Q |
+
+  
+
+**Impatto.** Dopo almeno 1 danno finale della Coda contro una creatura di spazio non superiore a 2 × 2 Q, questa effettua Tempra 0. Fallimento: A terra. Non spinge anche il bersaglio e non applica Stordito. Un attacco risolve una sola vittima, senza spazzare gratuitamente tutta la portata.
+
+**Corazza.** L’AR è biologica e complessiva, non una serie di piastre con PI separati. Non consente di parare con il dorso e non concede immunità a proiettili, Fuoco, Ghiaccio o effetti mentali. Un eventuale rivestimento aggiunto richiede una dotazione diversa dalla scheda base.
+
+**Sensi e coda.** Vista e udito ordinari. Le localizzazioni sono quadrupedi; per una Menomazione delle Gambe si distingue se è coinvolta una zampa o la coda. Una coda non utilizzabile impedisce l’attacco, senza annullare necessariamente ogni spostamento delle zampe rimaste integre.
+
+**Condotta.** Difende il proprio spazio e i piccoli, cercando di tenere le minacce lontane dal corpo. Non è un predatore e può smettere di combattere quando gli aggressori si allontanano. Sotto 11 PV o a Ferita Seria tenta di raggiungere il gruppo o una zona protetta. Non comprende linguaggi.
+
+# **Plesiosauro**
+
+*Predatore acquatico • morso a collo lungo • Natura Comune*
+
+Un nuotatore dal corpo compatto e dalle grandi pinne, capace di raggiungere la preda con un collo molto mobile. Respira aria. Fonte: Plesiosaurus, p. 80.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 9 • DES 7 • COS 7 • INT 1 • SAG 6 • CAR 3 |
+| Risorse e protezioni | PV 40 • PM 5 • AR 2 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 12 • Riflessi 11 • Volontà 8 • Magia 8 |
+| Iniziativa e Azioni | INI +1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 4 / 8 / 12 Q; nuoto 8 / 16 / 24 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 12 • Atletica 12 • Percezione 11 • Furtività 10; in acqua 13 |
+| GS e PX per 4 PG | Esperto • 30 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Morso | 12 | 2d6+2 Naturale; Perforazione | 2 Q |
+
+  
+
+**Fiato prolungato.** Può trattenere il respiro fino a 1 ora. È un’eccezione alla riserva ordinaria di COS Round, non la capacità di respirare sott’acqua. Consumata l’ora, le PS e le conseguenze del soffocamento seguono il Giocatore §5.23. Un Round completo di respirazione normale ripristina la riserva.
+
+**Collo e bersagli.** La portata consente di mordere una creatura in superficie o lungo una riva accessibile, ma non di attraversare una parete o una barriera. Il Morso non afferra, trascina o inghiotte automaticamente. Un bersaglio che non riesce concretamente a raggiungere resta fuori dall’attacco, anche se è entro due Q misurati in pianta.
+
+**Sensi e pinne.** Vista e udito ordinari, senza percezione attraverso l’acqua torbida. Furtività 13 richiede una possibilità reale di occultarsi in acqua. Testa comprende il collo; Braccia sono le pinne anteriori e Gambe quelle posteriori, con la coda come appendice. Una lesione delle pinne può compromettere il nuoto.
+
+**Condotta.** Cerca nutrimento raggiungibile e può attaccare da un nascondiglio immerso. Non comprende linguaggi. Sotto 10 PV o a Ferita Profonda si allontana verso acque libere; non riceve una fuga gratuita e la necessità di tornare a respirare resta reale.
+
+# **Pteranodonte**
+
+*Predatore alato • passaggio ravvicinato e disimpegno • Natura Comune*
+
+Un rettile volante dal lungo becco, adatto a catturare piccole prede e colpire durante un passaggio in volo. Fonte: Pteranodon, p. 80.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 6 • DES 7 • COS 5 • INT 1 • SAG 4 • CAR 3 |
+| Risorse e protezioni | PV 16 • PM 4 • AR 1 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 9 • Riflessi 11 • Volontà 7 • Magia 8 |
+| Iniziativa e Azioni | INI +1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 2 / 4 / 6 Q; volo 12 / 24 / 36 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 9 • Atletica 10 • Percezione 10 • Furtività 9 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Becco | 9 | 1d6+1 Naturale; Perforazione | 1 Q |
+
+  
+
+**Passaggio in volo.** Non provoca Attacchi di Opportunità per il solo allontanamento dalla portata di un avversario mentre vola. Le altre occasioni seguono le regole ordinarie. La capacità non permette di attraversare corpi, sciogliere prese o volare quando le ali sono impedite. L’attacco costa comunque l’unica AzP.
+
+**Traiettoria.** Per colpire e poi allontanarsi nella stessa Iniziativa deve disporre del movimento necessario; la somma dei tratti segue il budget ordinario dell’andatura. Non ripristina l’AzM dopo il colpo e non moltiplica gli attacchi passando vicino a più vittime. Una picchiata non aggiunge danni se non è prevista da un’altra capacità effettiva.
+
+**Sensi e ali.** Vista e udito ordinari. Testa comprende il becco; Braccia corrispondono alle ali e Gambe agli arti posteriori. L’apertura alare richiede spazio reale lungo il percorso. Un’ala menomata può impedire il volo; la conseguente caduta segue le regole comuni.
+
+**Condotta.** Preferisce piccoli animali e cibo esposto, evitando un gruppo che reagisce in modo efficace. Sotto 4 PV o a Ferita Profonda tenta di prendere distanza. Non comprende linguaggi e non dispone di una presa speciale per sollevare gratuitamente una creatura colpita.
+
+# **Triceratopo**
+
+*Erbivoro massiccio • carica e calpestamento • Natura Comune*
+
+Un grande quadrupede dalle corna e dal collare osseo. Una carica difensiva può far cadere l’aggressore davanti alle zampe. Fonte: Triceratops, p. 80.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 10 • DES 4 • COS 8 • INT 1 • SAG 5 • CAR 3 |
+| Risorse e protezioni | PV 58 • PM 6 • AR 3 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 8 • Tempra 13 • Riflessi 7 • Volontà 8 • Magia 9 |
+| Iniziativa e Azioni | INI −1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 10 / 20 / 30 Q • spazio 3 × 3 Q |
+| Abilità | Corpo a corpo 14 • Atletica 14 • Percezione 10 • Furtività 5 |
+| GS e PX per 4 PG | Veterano • 50 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Corna | 14 | 2d6+3 Naturale; Perforazione | 1 Q |
+| Calpestare | 14 | 1d8+3 Naturale; Contundente | 1 Q; una vittima A terra |
+
+  
+
+**Sequenza.** Al massimo un attacco di Corna e uno di Calpestare per Round, ciascuno con 1 AzP. Calpestare richiede una vittima già A terra di spazio non superiore a 2 × 2 Q e una posizione concretamente raggiungibile dalle zampe. Non significa entrare automaticamente nello spazio del bersaglio o infliggere danni a chiunque venga attraversato.
+
+**Carica.** Dopo almeno 4 Q rettilinei verso la vittima nella stessa Iniziativa, Corna che infliggano almeno 1 danno finale impongono Tempra 0 a una creatura non maggiore di 2 × 2 Q. Fallimento: A terra. Il successivo Calpestare costa la seconda AzP e conserva tiro per colpire, Difesa e AR normali. La carica non aggiunge un bonus di danno oltre alla formula della scheda.
+
+**Corpo e sensi.** Vista e udito ordinari. Le localizzazioni sono quadrupedi; corna e collare sono parti della Testa, senza una Parata naturale o PI separati. Una lesione delle corna può impedire il relativo attacco, mentre una lesione locomotrice può rendere impossibile prendere slancio.
+
+**Condotta.** Avverte, protegge il branco o reagisce a una minaccia vicina. Non comprende linguaggi e può fermarsi quando viene lasciato un varco per allontanarsi. Sotto 14 PV o a Ferita Seria tende a cercare protezione. Un branco richiede esemplari distinti, non ulteriori Azioni del singolo profilo.
+
+# **Tirannosauro**
+
+*Predatore terrestre • morso prensile e coda • Natura Comune*
+
+**Un carnivoro bipede dalle grandi fauci.** Può trattenere una preda piccola rispetto al proprio corpo e respingere un altro avversario con la coda. Fonte: Tyrannosaurus Rex, p. 80.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 10 • DES 5 • COS 9 • INT 1 • SAG 6 • CAR 4 |
+| Risorse e protezioni | PV 80 • PM 7 • AR 3 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 8 • Tempra 14 • Riflessi 8 • Volontà 9 • Magia 10 |
+| Iniziativa e Azioni | INI 0 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 10 / 20 / 30 Q • spazio 3 × 3 Q |
+| Abilità | Corpo a corpo 15 • Atletica 15 • Percezione 12 • Furtività 5 |
+| GS e PX per 4 PG | Eroe • 70 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Morso | 15 | 2d8+3 Naturale; possibile presa | 2 Q |
+| Coda | 15 | 2d6+3 Naturale; Contundente | 2 Q |
+| Stringere le fauci | 15 | 2d8+3 Naturale; contrapposta | Vittima già presa |
+
+  
+
+**Sequenza.** Fino a due attacchi per Round: un Morso oppure Stringere le fauci, e un attacco di Coda. Se usa entrambi devono riguardare bersagli diversi. Un attacco di Opportunità rispetta gli stessi limiti. Non possiede un attacco di Artigli efficace nel profilo.
+
+**Aggancio.** Dopo almeno 1 danno finale del Morso contro una creatura di spazio non superiore a 1 × 1 Q, questa effettua Riflessi 0. Successo evita la presa; fallimento applica Immobilizzato senza blocco specifico delle mani. Può trattenere una sola vittima e non morde altri finché la presa rimane. Un Morso di Opportunità non attiva l’aggancio speciale.
+
+**Sensi e arti.** Vista e udito ordinari. Braccia sono i piccoli arti anteriori, Gambe gli arti posteriori e la coda; Testa comprende le fauci. Immobilizzare gli arti anteriori non elimina da solo il Morso, mentre una Menomazione della funzione mandibolare può interrompere la presa.
+
+**Condotta.** Cerca nutrimento e può abbandonare avversari difficili da consumare. Non comprende linguaggi. Sotto 20 PV o a Ferita Seria tenta di ritirarsi. Il Morso non inghiotte automaticamente la vittima e la presa non trasferisce su di lei gli attacchi diretti contro il Tirannosauro. La pagina seguente descrive stretta, movimento e soccorso.
+
+# **Tirannosauro fauci e liberazione**
+
+**Stringere le fauci.** 1 AzP contro la sola vittima già afferrata: Corpo a corpo 15 contrapposto a Corpo a corpo o Atletica della vittima, con il normale −4 fisico di Immobilizzato. Successo infligge 2d8+3 Naturale, AR ordinaria; fallimento o pareggio nessun danno. La Prova contrapposta sostituisce tiro per colpire e Difesa. È l’unico attacco delle fauci di quel Round, non un’aggiunta al Morso.
+
+**Liberarsi.** La vittima spende 1 AzP e contrappone Corpo a corpo o Atletica a Corpo a corpo 15 del Tirannosauro; successo termina la propria presa, pareggio la conserva. Un alleato entro portata delle fauci può tentare la stessa procedura usando il proprio VA, con un attrezzo adatto a fare leva se la sua anatomia non permette di separarle direttamente. Il −4 riguarda chi è Immobilizzato, non il soccorritore libero.
+
+**Spostamento.** Nel profilo la vittima trattenuta può avere massa complessiva, inclusa la dotazione, non superiore a 250 kg. Il Tirannosauro la porta con sé usando l’AzM ordinaria a velocità dimezzate, arrotondate per difetto. Mantiene la vittima entro la portata delle fauci, senza attraversare solidi o spazi incapaci di accoglierla. La sola presa non consente di sollevare masse superiori al limite.
+
+**Pericoli immediati.** Prima di trascinare la vittima oltre un bordo o dentro un pericolo immediato, questa effettua Riflessi 0: successo impone al Tirannosauro di fermarsi all’ultimo spazio sicuro se vuole conservare la presa; fallimento permette lo spostamento e le normali conseguenze. Il movimento forzato della vittima non provoca Attacchi di Opportunità contro di lei; gli spostamenti del predatore mantengono le occasioni ordinarie.
+
+**Difese e rilascio.** Non può Schivare un attacco della vittima trattenuta conservando la presa. Gli attacchi contro l’uno o l’altra li trattano come bersagli distinti, con le normali coperture e interferenze: un colpo fallito non ferisce automaticamente il prigioniero. Rilascio volontario gratuito alla propria Iniziativa; perdita di coscienza, morte o Menomazione della funzione prensile interrompono l’aggancio. 0 PV da soli non lo interrompono.
+
+**Dopo il rilascio.** La vittima viene collocata nel più vicino spazio libero e sostenuto adiacente alle fauci. Se era sospesa senza sostegno, cade normalmente. Non subisce danno automatico per il solo distacco. Cure dei PV, Ferite, Menomazioni e stabilizzazione rimangono procedure distinte; essere liberati non le risolve.
+
+# **Viverna**
+
+*Predatore alato • pungiglione velenoso • Natura Comune*
+
+Un cacciatore dalle ali membranose, due zampe e una coda armata di pungiglione. Può colpire mentre vola o difendersi al suolo. Fonte: Wyvern, p. 303.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 9 • DES 5 • COS 7 • INT 3 • SAG 6 • CAR 3 |
+| Risorse e protezioni | PV 56 • PM 8 • AR 3 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 12 • Riflessi 9 • Volontà 9 • Magia 10 |
+| Iniziativa e Azioni | INI 0 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 4 / 8 / 12 Q; volo 16 / 32 / 48 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 13 • Atletica 12 • Percezione 12 • Furtività 7 |
+| GS e PX per 4 PG | Veterano • 50 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Morso | 13 | 1d8+2 Naturale; Perforazione | 2 Q |
+| Pungiglione | 13 | 1d6+2 Naturale; poi veleno | 2 Q |
+| Artigli | 13 | 1d8+2 Naturale; Taglio | 1 Q; solo in volo |
+
+  
+
+**Sequenza.** Fino a due attacchi per Round, al massimo un Morso e un Pungiglione. In volo può sostituire uno dei due con Artigli. Un attacco costa 1 AzP e non ne incorpora un altro. L’Opportunità ordinaria usa Morso o Artigli se la posizione lo permette, senza una puntura velenosa gratuita.
+
+**Veleno.** Dispone di tre dosi in ogni periodo di 24 ore. Prima di un Pungiglione dichiara se ne usa una: si consuma soltanto se almeno 1 danno finale raggiunge un organismo biologico, anche se immune al veleno. La dose non usata resta disponibile; un nuovo incontro non ripristina quelle consumate. Senza dose il Pungiglione mantiene solo il danno fisico. La procedura della tossina è nella pagina seguente.
+
+**Volo e sensi.** Scurovisione 12 Q. Le ali richiedono spazio reale e il corpo non può restare sospeso come una creatura fluttuante. Testa comprende il collo, Braccia le ali, Gambe le zampe posteriori e la coda; per una lesione si identifica la funzione coinvolta. Il volo non concede una presa o un trasporto automatico con Artigli.
+
+**Condotta.** Insegue una preda accessibile, cercando spazio per usare la coda. Non comprende linguaggi nel profilo base e non possiede un soffio. Sotto 14 PV o a Ferita Profonda tenta di allontanarsi in volo, se possibile. Una vittima che raggiunge un riparo può indurla ad attendere oppure cercare altro nutrimento.
+
+# **Viverna veleno e soccorso**
+
+**Inoculazione.** Una dose dichiarata entra in circolo dopo almeno 1 danno finale del Pungiglione. La vittima effettua Tempra −2. Fallimento: 2d6 Naturale interno da veleno, ignorando l’AR, e Avvelenato con −2 ai VA delle azioni fisiche per 2 Round. Successo: metà per eccesso del danno da veleno e nessuna penalità. Questo esito specifico sostituisce il dimezzamento ordinario della durata.
+
+**Due risoluzioni.** Prima si risolvono danno fisico, PV e Ferite della puntura; poi il veleno. Se il fisico ha appena portato a 0 PV, il danno interno può già richiedere Tempra per le Ferite. Un Magistrale raddoppia soltanto il danno fisico del Pungiglione: non raddoppia la tossina, non peggiora la sua PS e non consuma due dosi.
+
+**Frequenza.** Il veleno produce un solo danno immediato per inoculazione, senza danni periodici. Per quella dose non si effettuano altre PS dopo la prova iniziale. Nuove dosi possono infliggere nuovo danno, ma il −2 fisico non si somma: si conserva la scadenza più lontana. Immunità ai veleni impedisce danno e penalità; la sola immunità ad Avvelenato non annulla un danno tossico altrimenti compatibile.
+
+**Cura.** Veleno naturale di Pericolosità IV, Seria. Un antidoto adeguato o Cura Avvelenamenti di livello almeno 5 neutralizzano la sostanza e terminano la penalità ancora mantenuta. PV, Ferite e Menomazioni già prodotti restano. Medicina può identificare il problema e assistere secondo le capacità disponibili, senza eliminare automaticamente la tossina. Cura Spirituale non rimuove un veleno ancora attivo.
+
+**Soccorso.** La priorità dipende dalle condizioni della vittima: neutralizzazione della sostanza, recupero dei PV, trattamento di Sanguinamento o stabilizzazione non sono la stessa operazione. Il veleno non ha una regola che dichiara morto un bersaglio a 0 PV. Una Viverna incapacitata conserva eventuale veleno residuo; la sua perdita di coscienza non annulla una dose già inoculata.
+
+**Raccolta.** Il profilo non assegna automaticamente dosi commerciali al pungiglione reciso o al cadavere. Estrarre, conservare o usare la tossina su un’arma richiede strumenti e una scheda di sostanza adeguati; non trasferisce gratuitamente al personaggio tutti i valori del mostro. Le dosi innate consumate non diventano bottino recuperabile.
+
+# **Idra**
+
+*Predatore a più teste • morsi, reazioni e ricrescita • Natura Comune*
+
+Un grande rettile acquatico con cinque teste iniziali su colli mobili. Le lesioni ai colli possono innescare ricrescita, se non vengono cauterizzate. Fonte: Hydra, p. 190.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 10 • DES 6 • COS 10 • INT 1 • SAG 5 • CAR 4 |
+| Risorse e protezioni | PV 76 • PM 9 • AR 3 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 8 • Tempra 15 • Riflessi 9 • Volontà 9 • Magia 11 |
+| Iniziativa e Azioni | INI 0 • 3 AzP e 1 AzM per Round; Opportunità speciali sotto |
+| Movimento e spazio | Terra e nuoto 6 / 12 / 18 Q • spazio 3 × 3 Q |
+| Abilità | Corpo a corpo 14 • Atletica 14 • Percezione 14 • Furtività 6 |
+| GS e PX per 4 PG | Eroe • 70 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Morso | 14 | 1d8+2 Naturale; Perforazione | 2 Q; una testa funzionale |
+
+  
+
+**Morsi.** Con le AzP può attaccare al massimo tre volte per Round e non più del numero di teste funzionali. Ogni Morso costa 1 AzP. Le teste non consentono una Parata naturale, azioni simultanee fuori Iniziativa o attacchi attraverso ostacoli. Non afferra automaticamente con il Morso.
+
+**Opportunità delle teste.** Eccezione espressa: con almeno tre teste funzionali può effettuare fino a due Attacchi di Opportunità ordinari per Round, su due occasioni distinte; con una o due teste, uno soltanto. Questi Morsi sono aggiuntivi rispetto al limite di tre con AzP. Ogni testa può mordere al massimo una volta complessiva per Round: si annotano le teste usate. Nessuna occasione concreta significa nessun attacco gratuito.
+
+**Vigilanza e sensi.** Scurovisione 12 Q. Nel sonno naturale almeno una testa rimane vigile con Percezione 14, senza individuare automaticamente un agguato. Può trattenere il fiato per 1 ora, poi segue il Giocatore §5.23. Un Round di respiro normale ripristina la riserva. Magia, Ferite e PM 0 possono rendere incosciente l’intera creatura.
+
+**Condotta.** Cerca nutrimento presso rive e paludi e può cambiare territorio quando le prede scarseggiano. Sotto 19 PV o a Ferita Seria tenta di ritirarsi; la capacità di ricrescita non rende obbligatorio restare fino alla morte. Le pagine seguenti definiscono teste, resistenze specifiche e cauterizzazione.
+
+# **Idra teste e lesioni**
+
+**Un solo organismo.** Inizia con cinque teste, numerate da 1 a 5; le nuove ricevono i numeri disponibili, fino a sette contemporanee. Le teste condividono PV, PM, Ferite, Azioni e Stati dell’Idra e non hanno proprie riserve. Nessun danno si conta una seconda volta sul corpo. Torace, Braccia e Gambe corrispondono al corpo quadrupede; una localizzazione Testa riguarda una testa funzionale determinata casualmente fra quelle coinvolte e raggiungibili.
+
+**Soglia di lesione.** Quando accumula almeno 16 danni finali nello stesso Round, una testa funzionale viene distrutta o recisa e lascia un collo aperto. Si verifica dopo aver risolto interamente l’attacco che raggiunge la soglia. Questo innesco può togliere al massimo una testa per Round; ulteriori danni seguono comunque PV e Ferite. Si conta il danno finale positivo anche quando i PV sono già 0, non la perdita di PM.
+
+**Menomazioni.** Le conseguenze anatomiche ordinarie restano: una lesione che distrugge una testa può renderla non funzionale anche senza la soglia. La medesima testa non si perde due volte per la stessa risoluzione. La soglia non aggiunge automaticamente altre Ferite oltre a quelle prodotte dall’attacco. Una testa solo Accecata o Assordata non diventa per questo un collo reciso capace di generare nuove teste.
+
+**Resistenza delle menti collegate.** Con almeno due teste funzionali ottiene +2 alle PS direttamente richieste per evitare Accecato, Assordato, Terrorizzato, Stordito, fascinazione o uno svenimento imposto da un effetto. Non è un bonus a tutte le PS di Tempra o Magia: non modifica la normale determinazione delle Ferite. Non evita Svenuto da PM 0, Morente o un’altra conseguenza automatica priva di PS.
+
+**Ultima testa.** Se nessuna testa rimane funzionale per distruzione anatomica, l’Idra diventa Svenuta ed entra in Morente, con il normale contatore iniziale di COS 10 e penalità −8. È un’eccezione anatomica dichiarata, distinta da 0 PV. Il primo decremento avviene dopo un Round completo. La ricrescita innata non opera senza almeno una testa superstite; recuperare PV non stabilizza né ricostruisce da solo una testa.
+
+**Soccorso e memoria.** La stabilizzazione segue le capacità ordinarie e non restituisce automaticamente la funzione anatomica mancante. Rigenerazione o un trattamento espressamente adeguato può ricostruirla secondo le proprie regole. Le Ferite, gli Stati e le teste già utilizzate per mordere restano annotati: una nuova testa non ripristina Azioni del Round in corso.
+
+# **Idra ricrescita e cauterizzazione**
+
+**Verifica.** Alla fine di ciascuna propria Iniziativa, se è cosciente e conserva almeno una testa funzionale, verifica i colli ancora aperti. Se ha subito almeno 1 danno finale da Fuoco dall’ultima verifica, tutti quei colli vengono cauterizzati e non ricrescono con questa capacità. Alla prima verifica si considera il tempo dall’inizio dello scontro. La fonte del Fuoco e la sua Natura non cambiano questo requisito.
+
+**Ricrescita.** In assenza di quel danno da Fuoco, ogni collo aperto genera fino a due nuove teste, rispettando il massimo di sette contemporanee. La capacità non costa Azioni o PM. Un collo trattato viene chiuso anche se il limite impedisce di generare entrambe le teste. Una testa effettivamente ricresciuta recupera 2 PV al corpo, fino a 4 PV complessivi per Round da questa capacità e senza superare i PV massimi.
+
+**Cosa guarisce.** La nuova testa ripristina soltanto la funzione della testa fisicamente perduta. Non riduce Ferite, non stabilizza Morente e non guarisce Menomazioni del corpo, delle zampe o di altri colli. Non si producono ricrescite o recuperi da semplice danno ai PV quando nessuna testa è stata persa. Perdere una testa e ricrearla non cancella Avvelenato, controllo mentale o le durate degli altri effetti sull’organismo.
+
+**Nuove teste.** Possono essere usate dal Round successivo alla ricrescita, mantenendo i limiti di tre Morsi con AzP e due Opportunità. Sette teste non significano sette AzP. Teste cauterizzate non tornano disponibili cambiando scena o recuperando PV; occorrono le cure o i tempi biologici stabiliti per quella lesione, senza una rigenerazione istantanea aggiuntiva.
+
+**Fuoco e protezioni.** Una fiamma che non infligge danno finale, per AR, Difesa o altra protezione, non cauterizza. La capacità non rende l’Idra vulnerabile al Fuoco e non la rende automaticamente Incendiata. La ricrescita è intrinseca all’organismo, non un incantesimo mantenuto che Negare Potere possa eliminare come effetto attivo. Le immunità o resistenze di altre creature non si trasferiscono all’Idra.
+
+**PX e impiego.** I 70 PX comprendono cinque teste iniziali, possibile ricrescita fino a sette, recupero limitato e Opportunità speciali. Ogni testa resta parte dello stesso esemplare e non assegna un premio distinto. In verifica al tavolo registrare teste attive, colli cauterizzati, PV recuperati e quante Opportunità si verificano davvero: inseguire l’Idra senza cauterizzare può allungare molto lo scontro.
+
+# **Behir**
+
+*Predatore cavernicolo • costrizione, fulmine e inghiottimento • Natura Comune*
+
+Un grande predatore serpentino con numerose zampe, capace di arrampicarsi, avvolgere la preda e scaricare un soffio elettrico. Fonte: Behir, p. 25.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 10 • DES 8 • COS 9 • INT 4 • SAG 7 • CAR 6 |
+| Risorse e protezioni | PV 88 • PM 12 • AR 4 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 11 • Tempra 14 • Riflessi 12 • Volontà 10 • Magia 12 |
+| Iniziativa e Azioni | INI +2 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 10 / 20 / 30 Q; arrampicata 8 / 16 / 24 Q • spazio 3 × 3 Q |
+| Abilità | Corpo a corpo 16 • Atletica 15 • Percezione 14 • Furtività 12 |
+| GS e PX per 4 PG | Leggenda • 100 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Morso | 16 | 2d6+3 Naturale; Perforazione | 2 Q |
+| Costrizione | 16 | 1d8+3 Naturale; poi possibile presa | 1 Q |
+| Stringere | 16 | 1d8+3 Naturale; contrapposta | Vittima già presa |
+| Soffio elettrico | — | 4d6 Naturale; Fulmine | Linea 4 Q; larghezza 1 Q; 2 AzP |
+
+  
+
+**Sensi e protezione.** Scurovisione 18 Q e immunità ai danni da Fulmine di qualunque Natura. Non assorbe il Fulmine per recuperare PV e non possiede altre resistenze elementali. Comprende e parla una lingua assegnata alla propria origine, senza ereditare automaticamente inimicizie cosmologiche della fonte.
+
+**Sequenza.** Può usare al massimo un Morso e, in aggiunta, una Costrizione oppure Stringere per Round, ciascuno con 1 AzP. Il Soffio costa entrambe le AzP e sostituisce quella sequenza. Un’Opportunità ordinaria può usare solo Morso, entro i limiti offensivi. Il Morso dichiarato per inghiottire segue la pagina dedicata e usa la stessa AzP, senza un attacco aggiuntivo.
+
+**Zampe e aderenza.** Le numerose zampe consentono l’arrampicata su pareti con appigli, non l’aderenza automatica a soffitti lisci. Condizioni eccezionali richiedono Atletica. Per le localizzazioni, Testa comprende le fauci, Torace la massa e lo stomaco, Braccia il gruppo anteriore di zampe e Gambe quello posteriore con la coda; si applicano le lesioni alla funzione coinvolta.
+
+**Condotta.** Cerca prede isolate e accessi difficili, ma può comunicare o valutare un’offerta. Sotto 22 PV o a Ferita Seria tenta di ritirarsi. Soffio e presa sono descritti nella pagina seguente; l’inghiottimento non elimina la vittima dalla scena o dalle possibilità di soccorso.
+
+# **Behir spire e soffio elettrico**
+
+**Aggancio.** Dopo almeno 1 danno finale di Costrizione contro una creatura di spazio non superiore a 2 × 2 Q, questa effettua Riflessi 0. Fallimento: Immobilizzato senza bloccare specificamente le mani; successo evita la presa. Può trattenere una sola vittima esterna. Mantenerla è gratuito, ma nel profilo non si sposta finché la trattiene nelle spire. Può invece muoversi quando la vittima è stata inghiottita.
+
+**Stringere.** 1 AzP, Corpo a corpo 16 contrapposto a Corpo a corpo o Atletica della vittima: successo infligge 1d8+3 Naturale da Contusione, AR ordinaria; fallimento o pareggio nessun danno. Sostituisce Costrizione del Round. Le normali penalità di Immobilizzato si applicano alla vittima. Non aggiunge Taglio, soffocamento o Ferite automatiche al danno indicato.
+
+**Sciogliere le spire.** La vittima o un alleato adiacente spende 1 AzP e contrappone Corpo a corpo o Atletica a Corpo a corpo 16 del Behir; successo termina la presa, pareggio la conserva. Si applica −4 a chi è Immobilizzato. Rilascio volontario gratuito alla propria Iniziativa; perdita di coscienza, morte o Menomazione della funzione di costrizione libera la vittima. 0 PV da soli non la liberano.
+
+**Soffio elettrico.** 2 AzP, una linea lunga 4 Q e larga 1 Q dall’origine delle fauci, lungo un percorso libero. Ogni creatura nella linea risolve Elusione con Riflessi 0, se concretamente possibile: successo dimezza 4d6 Naturale da Fulmine per eccesso prima dell’AR; fallimento o Elusione impossibile danno completo. Non richiede tiro per colpire e non concede un’altra Difesa contro lo stesso soffio.
+
+**Intervallo e bersagli.** Dopo l’uso nel Round R non può soffiare prima di R + 3. Nessun costo in PM: la scarica è una capacità intrinseca, non un incantesimo appreso. Non aggiunge Stordito o Paralizzato. Pareti e solidi fermano la linea; metallo o acqua non propagano gratuitamente l’attacco fuori dall’area. Il Behir non colpisce la vittima dentro il proprio stomaco con il Soffio.
+
+**Scelte.** Un prigioniero esterno deve essere realmente nella linea per essere coinvolto; gli altri bersagli mantengono le proprie coperture. Un soffio non attiva anche Morso, stretta o Digestione gratuiti. L’intervallo viene annotato e non si azzera perché si raggiunge 0 PV, si recuperano PV o cambia l’obiettivo del predatore.
+
+# **Behir inghiottimento e soccorso**
+
+**Inghiottire.** Può dichiararlo soltanto con Morso contro la propria vittima già afferrata nelle spire, di spazio non superiore a 1 × 1 Q. Si risolve il Morso con attacco, eventuale Difesa e AR normali. Dopo almeno 1 danno finale la vittima viene inghiottita, la presa esterna termina e il Behir non può trattenere o inghiottire un’altra creatura finché ha quella nello stomaco. Il danno del Morso non viene applicato due volte.
+
+**All’interno.** La vittima è Immobilizzata e Accecata verso l’esterno, con mani non specificamente bloccate; segue il movimento del Behir. Inizia il soffocamento del Giocatore §5.23 se non dispone di respirazione autonoma adeguata, conservando il proprio fiato. La massa offre copertura totale fra interno ed esterno. Può attaccare il Behir dall’interno con strumenti utilizzabili e −4 fisico, senza un secondo malus visivo per colpire la parete che sente attorno a sé. Il Behir non può Schivare quel colpo mantenendo l’inghiottimento.
+
+**Digestione.** 1 AzP, al massimo una volta per Round: 1d6+2 Naturale da acido alla vittima, con AR ordinaria pertinente. Nessun tiro per colpire o Difesa attiva contro il contatto interno. Non ha Corrosivo e non riduce automaticamente PI di armi o protezioni. In questa conversione non produce danni digestivi gratuiti a inizio Iniziativa: scegliere di digerire impiega un’Azione del predatore.
+
+**Uscire.** Con 1 AzP la vittima contrappone Corpo a corpo o Atletica a Atletica 15 del Behir, applicando −4 di Immobilizzato. Successo risale e viene espulsa nel più vicino spazio libero e sostenuto adiacente alle fauci; pareggio resta dentro. Un alleato presso le fauci può usare la stessa procedura per aiutarla, con un attrezzo adeguato a raggiungerla e fare leva. Non serve un secondo tiro per colpire. Senza spazio d’uscita non completa il soccorso.
+
+**Rigurgito.** Se subisce almeno 10 danni finali dall’interno nello stesso Round, alla fine dell’Iniziativa della vittima il Behir effettua Tempra 0. Fallimento la espelle, A terra, in uno spazio libero entro 2 Q dalle fauci; successo la conserva. Al massimo una verifica per Round. Perdita di coscienza o morte fanno cessare la compressione: la vittima può uscire spendendo 1 AzM intera o essere estratta da un alleato con 1 AzP e strumenti adatti, senza contrapposta. 0 PV da soli non provocano rigurgito.
+
+**Dopo il soccorso.** L’uscita termina la cecità da copertura e l’ostruzione del respiro. Un Round di respirazione normale ripristina il fiato; chi era svenuto per soffocamento riprende conoscenza in 1d3 Round salvo altre cause. PV, Ferite, Menomazioni e Morente restano da trattare. Il rilascio volontario da parte del Behir costa 1 AzP alla propria Iniziativa e usa gli stessi spazi d’uscita.
+
+# **Drago tartaruga**
+
+*Predatore marino senziente • carapace e vapore ustionante • Natura Comune*
+
+Un enorme abitante del mare, protetto da un carapace e capace di emettere vapore rovente. Può accumulare ricchezze e accettare offerte per lasciare libero un passaggio. Fonte: Dragon Turtle, p. 119.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 10 • DES 5 • COS 10 • INT 5 • SAG 6 • CAR 6 |
+| Risorse e protezioni | PV 110 • PM 16 • AR 6 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 8 • Tempra 16 • Riflessi 9 • Volontà 12 • Magia 13 |
+| Iniziativa e Azioni | INI 0 • 3 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 4 / 8 / 12 Q; nuoto 8 / 16 / 24 Q • spazio 4 × 4 Q |
+| Abilità | Corpo a corpo 17 • Atletica 17 • Percezione 12 • Furtività 4; immerso e immobile 10 |
+| GS e PX per 4 PG | Leggenda • 100 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Morso | 17 | 2d8+3 Naturale; Perforazione | 3 Q |
+| Artiglio | 17 | 1d8+3 Naturale; Taglio | 2 Q |
+| Coda | 17 | 2d8+3 Naturale; possibile spinta | 3 Q; costa 2 AzP |
+| Soffio di vapore | — | 5d6 Naturale; Fuoco | Cono 12 Q; 2 AzP; Riflessi −2 |
+
+  
+
+**Sequenza.** Un Morso e fino a due Artigli per Round, ciascuno con 1 AzP. Coda costa 2 AzP e sostituisce i due Artigli; può accompagnarla al Morso. Soffio costa 2 AzP, lascia disponibile soltanto un eventuale Morso e non si combina con Artigli o Coda nello stesso Round. Un’Opportunità ordinaria usa Morso entro i limiti: non concede Coda o Soffio gratuiti.
+
+**Metabolismo e corazza.** Respira aria e acqua. Dimezza i danni da Fuoco di qualunque Natura prima dell’AR; non è immune a ogni calore e non applica tale resistenza a Ghiaccio, Fulmine o acido. Il carapace è AR biologica complessiva, senza PI separati e senza Parata naturale.
+
+**Sensi e parola.** Scurovisione 24 Q. Parla due lingue assegnate all’ambiente, fra cui una di contatto se presente. Furtività 10 richiede immersione, immobilità e un fondale adatto a occultare il corpo, senza invisibilità o Sorpresa automatica. Localizzazioni quadrupedi; Torace comprende il carapace e la massa centrale.
+
+**Condotta.** Può intimidire, richiedere un’offerta o tentare di scacciare una nave, ma non affonda strutture con una sola dichiarazione. Sotto 27 PV o a Ferita Seria tende a cercare profondità o un accordo. La pagina seguente definisce Coda, vapore e interazioni con imbarcazioni.
+
+# **Drago tartaruga vapore e impatto**
+
+**Coda.** Costa 2 AzP per un unico attacco, AC 1. Dopo almeno 1 danno finale contro una creatura non maggiore di 2 × 2 Q, questa effettua Tempra −2. Fallimento: viene spinta fino a 2 Q direttamente lontano dal corpo ed è A terra; successo evita entrambi gli effetti. Il percorso si ferma davanti a solidi e non li sfonda. Un ostacolo non aggiunge automaticamente danni d’impatto. Cadute e altri pericoli concretamente raggiunti si risolvono normalmente.
+
+**Vapore.** 2 AzP per un cono lungo 12 Q dall’origine delle fauci, lungo percorsi liberi. Ogni creatura nell’area risolve Elusione con Riflessi −2, se concretamente possibile. Successo dimezza per eccesso 5d6 Naturale da Fuoco prima di resistenze e AR; fallimento o Elusione impossibile danno completo. Non aggiunge tiro per colpire, Parata o Schivata e non genera un Magistrale d’attacco.
+
+**Acqua e protezioni.** L’immersione non concede una riduzione speciale contro questo soffio; resistenze personali al Fuoco e protezioni applicabili continuano a funzionare. Il cono può propagarsi in aria o acqua lungo un mezzo comunicante, senza attraversare pareti, scafi integri o altri solidi. Non crea una nube persistente, non applica Accecato e non Incendia automaticamente materiali o creature.
+
+**Riutilizzo.** Dopo un soffio nel Round R, il successivo non può avvenire prima di R + 3. Nessun costo in PM: è una capacità intrinseca del predatore. La riserva personale resta rilevante contro gli effetti che colpiscono la mente o i PM. Il cambio di bersaglio e il recupero di PV non azzerano l’intervallo; una creatura ingaggiata non viene respinta gratuitamente dal solo vapore.
+
+**Imbarcazioni.** Artigli, Morso e Coda possono colpire una parte di scafo effettivamente raggiungibile; si applicano il profilo, le protezioni, PS Integrità e PI della struttura. Non si convertono i PV della creatura nei PI di una nave. Coda non sposta automaticamente un veicolo come una creatura di 2 × 2 Q e non lo capovolge senza una capacità o una procedura del mezzo. In assenza di un profilo, il Direttore lo definisce prima dello scontro.
+
+**Valutazione.** I 100 PX descrivono questa configurazione senza tesoro, servitori, magie regionali o equipaggiamento conteggiato. La grande massa, l’AR e il cono ne fanno una minaccia che richiede spazio, coperture e un obiettivo chiaro per concludere la scena. Un accordo o il disimpegno possono risolvere l’incontro secondo le decisioni del Direttore, senza trattare ogni avvistamento come un combattimento obbligatorio.
+
+# **Creature delle acque e popoli sommersi**
+
+*Dieci profili per coste fondali e rovine sommerse*
+
+Queste schede comprendono animali acquatici, comunità capaci di dialogare e predatori che catturano la preda. Il fondale, la distanza dalla superficie e gli accessi all’aria determinano possibilità concrete di fuga e soccorso. Le voci appartengono al catalogo generale: il Direttore stabilisce dove collocarle su Iris. Non sono membri della Covata e non ereditano automaticamente culti, guerre o origini cosmologiche della fonte.
+
+  
+
+|  |  |  |
+| :-: | :-: | :-: |
+| **Creatura** | **GS** | **PX per 4 PG** |
+| Granchio gigante | Principiante | 10 |
+| Polpo gigante | Esperto | 30 |
+| Squalo delle scogliere | Inesperto | 20 |
+| Squalo cacciatore | Esperto | 30 |
+| Squalo gigante | Veterano | 50 |
+| Marinide | Principiante | 11 |
+| Merrow | Esperto | 33 |
+| Sahuagin | Inesperto | 22 |
+| Kuo-toa | Inesperto | 22 |
+| Chuul | Veterano | 50 |
+
+  
+
+**PX di riferimento.** Valori per un esemplare e quattro PG. Marinide, Merrow, Sahuagin e Kuo-toa comprendono la dotazione Comune descritta nelle loro schede. Gli altri profili non hanno equipaggiamento conteggiato. Chele, inchiostro, veleno e sensi innati sono compresi nel GS. Uno squalo comandato rimane un avversario con il proprio valore unitario; non è una parte gratuita del Sahuagin. Il premio dell’incontro segue il Direttore §9.3.
+
+**Fonti e verifica.** Giocatore v0.49, Magia v1.5, Direttore v0.41 e Armamenti v0.64. Le pagine delle creature si riferiscono al Manuale dei Mostri fornito. GS e PX sono stime da provare al tavolo, soprattutto con PG costretti a trattenere il respiro. I valori non presumono automaticamente un agguato riuscito, una vittima già legata o l’assenza di equipaggiamento subacqueo.
+
+# **Acque regole operative**
+
+**Natura e danni.** Tutti i profili hanno Natura Comune, sono biologicamente viventi e possiedono mente e PM personali. A 0 PM diventano Svenuti. A 0 PV proseguono Tempra, Ferite, Menomazioni e Morente: non scattano automaticamente morte, incoscienza o rilascio di una presa. Le cure biologiche sono applicabili. Nessuno conosce incantesimi appresi. Dadi e bonus sono completi; ogni attacco produce AC 1 salvo indicazione diversa.
+
+**Azioni e Difese.** INI modifica 1d10; AzP e unica AzM valgono per l’intero Round. Un attacco costa 1 AzP. L’Opportunità ordinaria è un solo attacco ravvicinato normale gratuito, su un’occasione effettiva, entro i limiti offensivi dichiarati. Non permette Rete, Inchiostro, comando mentale o Tentacoli velenosi. Nessuno ha Parata naturale: le creature armate possono parare con l’arma o lo scudo pronti. Schivata richiede 1 AzP, 1 AzM e spazio; Parata normale dimezza per eccesso prima dell’AR, Magistrale annulla.
+
+**Movimento.** Le terne indicano Q effettivi di Passo / Corsa / Scatto. Il Nuoto nativo è un’eccezione espressa al costo ordinario 2: nel solo Nuoto si percorrono le distanze indicate. Corsa e Scatto mantengono Prove, modificatori ed esiti del Giocatore §5.2. Nei percorsi misti si segue il budget unico del §5.2.4, con costo 1 sulla terra e 2 in acqua. Inoltre, il tratto di ciascuna modalità non supera la distanza indicata per l’andatura scelta. Cambiare modalità non rinnova Movimento o Azioni; una modalità con distanza 0 non consente spostamenti.
+
+**Respirazione e Stati.** Il fiato ordinario dura COS Round; poi si segue il §5.23. Immobilizzato impedisce il Nuoto, ma non affoga chi respira acqua o possiede un sistema autonomo funzionante. A Terra non si applica a chi nuota senza appoggio e non lo immerge automaticamente; sul fondo o su una piattaforma torna pertinente. Correnti, pressione e temperature estreme richiedono condizioni dichiarate nella scena: respirare acqua non conferisce ogni resistenza ambientale.
+
+**Prese e soccorso.** Immobilizzato significa Movimento 0 e −4 alle azioni fisiche, comprese Difese e fuga, non alle PS. Le mani sono utilizzabili salvo blocco espresso. Liberazioni contrapposte costano 1 AzP; un pareggio conserva la presa. Un alleato adiacente può usare la stessa procedura, con strumenti adeguati se necessari. Una vittima non si sposta con il predatore per il solo fatto di essere afferrata: le schede dichiarano il trasporto consentito. Il soccorso libera dalla causa, senza curare automaticamente PV, Ferite o Menomazioni.
+
+**Sensi e protezioni.** I sensi alternativi sostituiscono la vista soltanto nel mezzo e nella distanza indicati. Non attraversano solidi né rivelano automaticamente un essere nascosto. Naturale e Magico incontrano tutta l’AR pertinente, Etereo soltanto la quota magica. Perforazione descrive il mezzo fisico e non equivale a Perforante X. Le durate in Round terminano a fine Round R + N, dove R è quello di applicazione.
+
+# **Granchio gigante**
+
+*Crostaceo anfibio • chele e presa • Natura Comune*
+
+Un crostaceo delle rive e dei bassi fondali che può trattenere una minaccia con ciascuna chela. Cerca cibo o difende un rifugio. Fonte: Giant Crab, p. 324.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 5 • DES 6 • COS 5 • INT 1 • SAG 4 • CAR 2 |
+| Risorse e protezioni | PV 18 • PM 4 • AR 3 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 9 • Riflessi 10 • Volontà 6 • Magia 7 |
+| Iniziativa e Azioni | INI 0 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra e nuoto 6 / 12 / 18 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 9 • Atletica 9 • Percezione 9 • Furtività 11 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Chela | 9 | 1d6+1 Naturale; Contusione | 1 Q |
+| Stringere | 9 | 1d6+1 Naturale; contrapposta | Una vittima già presa |
+
+  
+
+**Afferrare.** Chela con almeno 1 danno finale contro una creatura non maggiore di 1 × 1 Q impone Riflessi 0: fallimento Immobilizzato, senza bloccare specificamente le mani. Può trattenere due vittime, una per chela; la chela occupata non attacca altri bersagli. Il limite è un solo attacco di Chela o Stringere per Round, comprese le Opportunità: due chele non assegnano due AzP.
+
+**Stringere e liberarsi.** Stringere costa 1 AzP: Corpo a corpo 9 contrapposto a Corpo a corpo o Atletica della vittima, con il −4 fisico di Immobilizzato. Successo infligge il danno indicato, pareggio o fallimento nessun danno. La stessa contrapposta, iniziata dalla vittima o da un soccorritore con 1 AzP, libera in caso di successo. Rilascio volontario gratuito alla propria Iniziativa; incoscienza, morte o perdita della funzione della chela interrompono la relativa presa.
+
+**Sensi e corpo.** Respira aria e acqua. Percezione tattile di vibrazioni entro 6 Q nel mezzo fisico comunicante, senza attraversare pareti o distinguere colori e scritte. Le condizioni per nascondersi restano reali. Testa comprende occhi e apparato boccale, Torace il carapace, Braccia le chele e Gambe le zampe. Nel profilo resta fermo mentre trattiene qualcuno: non trascina automaticamente una vittima sott’acqua.
+
+**Condotta.** Non comprende linguaggi. Può abbandonare una presa per raggiungere un riparo o conservare il cibo. Sotto 4 PV o a Ferita Profonda tende a ritirarsi. Il carapace riduce i danni secondo l’AR; non permette Parata naturale né immunità alle armi leggere.
+
+# **Polpo gigante**
+
+*Predatore subacqueo • tentacoli e inchiostro • Natura Comune*
+
+Un grande mollusco che si apposta sul fondale e avvolge la preda. Può oscurare l’acqua per allontanarsi. Fonte: Giant Octopus, p. 326.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 8 • DES 6 • COS 6 • INT 2 • SAG 5 • CAR 3 |
+| Risorse e protezioni | PV 38 • PM 5 • AR 1 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 11 • Riflessi 10 • Volontà 7 • Magia 8 |
+| Iniziativa e Azioni | INI 0 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 2 / 4 / 6 Q; nuoto 12 / 24 / 36 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 12 • Atletica 13 • Percezione 12 • Furtività 11; immerso 13 |
+| GS e PX per 4 PG | Esperto • 30 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Tentacoli | 12 | 2d6+2 Naturale; Contusione | 3 Q |
+| Stringere | 12 | 2d6+2 Naturale; contrapposta | Una vittima già presa |
+
+  
+
+**Avvolgere.** Tentacoli con almeno 1 danno finale contro una creatura non maggiore di 2 × 2 Q impongono Riflessi 0. Fallimento: Immobilizzato, con mani non specificamente bloccate. Il profilo può trattenere una sola vittima e non attaccarne altre con Tentacoli finché la conserva. Le otto appendici non producono otto attacchi, PV o premi separati.
+
+**Presa.** Stringere costa 1 AzP e contrappone Corpo a corpo 12 a Corpo a corpo o Atletica della vittima; successo infligge il danno indicato, pareggio conserva la presa senza danno. Liberarsi o aiutare costa 1 AzP con la stessa opposizione e i normali modificatori di Immobilizzato. Rilascio gratuito alla propria Iniziativa; incoscienza, morte o Menomazione della funzione prensile interrompono la presa. Nel profilo resta fermo mentre trattiene: non trascina automaticamente la vittima in profondità.
+
+**Respiro e anatomia.** Respira soltanto acqua; fuori può trattenere il fiato per 1 ora, poi segue il §5.23. Un Round di respirazione in acqua ripristina la riserva. Scurovisione 12 Q, senza visione attraverso inchiostro o torbidità. Testa comprende occhi e bocca, Torace il mantello; Braccia e Gambe indicano i gruppi anteriori e posteriori di tentacoli, valutando la funzione realmente lesa.
+
+**Condotta.** Furtività 13 richiede copertura e possibilità di confondersi con l’ambiente immerso. Non comprende linguaggi. Sotto 9 PV o a Ferita Profonda tende a rilasciare la preda e fuggire; l’Inchiostro della pagina seguente impiega la sua AzP, senza movimento aggiuntivo gratuito.
+
+# **Polpo gigante nube di inchiostro**
+
+**Rilascio.** 1 AzP, soltanto mentre è immerso. Crea una nube non magica di raggio 4 Q centrata sul proprio corpo; l’area iniziale resta fissa e segue soltanto eventuali correnti dichiarate. Dispone di una sacca utilizzabile una volta in ogni periodo di 24 ore. Cambiare incontro o recuperare PV non la riempie. Non costa PM e sostituisce l’attacco di quel Round.
+
+**Oscuramento.** Chi cerca di vedere attraverso l’inchiostro è Accecato per quelle attività finché la linea visiva attraversa la nube. Non si effettua Riflessi: è un mezzo opaco, non un accecamento personale a durata fissa. Uscire o ristabilire una linea libera elimina subito la limitazione. Coinvolge anche il Polpo e i suoi alleati. Sensi pertinenti diversi dalla vista possono sostituirla; Scurovisione ordinaria non basta.
+
+**Distanze e attacchi.** La nube non sposta, Immobilizza o avvelena; non infligge danni ai PV, ai PM o all’equipaggiamento. Conoscere il Q di una creatura non equivale a vederla: si applicano gli effetti di Accecato quando pertinenti. Non autorizza attacchi contro posizioni sconosciute e non fornisce protezione fisica da un’area che raggiunge effettivamente l’interno.
+
+**Durata.** Persiste per 5 Round; una corrente abbastanza forte la disperde prima, secondo la condizione annunciata nella scena. La fine della nube non cancella danni o Stati prodotti da altri attacchi. Negare Potere non dissolve il materiale biologico; un effetto che muove o purifica davvero l’acqua può disperderlo nei propri limiti.
+
+**Fuga.** Dopo il rilascio il Polpo può usare soltanto l’AzM ancora disponibile e la distanza dell’andatura scelta. L’oscuramento non concede Ritirata gratuita. Gli avversari effettuano Opportunità solo se restano soddisfatte le condizioni ordinarie di percezione e ingaggio; il solo inchiostro non annulla un senso alternativo valido.
+
+# **Squalo delle scogliere**
+
+*Predatore dei bassi fondali • caccia in gruppo • Natura Comune*
+
+Uno squalo relativamente piccolo, lungo circa due o tre metri, che può cacciare insieme ad altri individui nelle acque costiere. Fonte: Reef Shark, p. 336.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 6 • DES 6 • COS 6 • INT 1 • SAG 5 • CAR 3 |
+| Risorse e protezioni | PV 24 • PM 4 • AR 1 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 10 • Riflessi 10 • Volontà 7 • Magia 8 |
+| Iniziativa e Azioni | INI 0 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 0 Q; nuoto 8 / 16 / 24 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 10 • Atletica 11 • Percezione 11 • Furtività 9 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Morso | 10 | 1d8+1 Naturale; Perforazione | 1 Q |
+
+  
+
+**Tattiche di branco.** Ottiene +2 VA al Morso contro una vittima quando almeno un alleato cosciente e capace di agire è entro 1 Q da lei e può concretamente minacciarla. Il VA diventa 12, prima degli altri modificatori. Più alleati non aumentano il bonus. La semplice vicinanza di uno squalo nemico, Svenuto o chiuso oltre una barriera non basta.
+
+**Predazione.** Non possiede la Frenesia del sangue delle due specie maggiori. Il Morso non afferra, trascina o inghiotte, non applica Sanguinamento come proprietà automatica e non può colpire un’intera imbarcazione senza un bersaglio strutturale definito. Il limite è un Morso per Round, Opportunità compresa.
+
+**Sensi e respiro.** Respira soltanto acqua. Percepisce corpi e movimenti entro 6 Q nell’acqua comunicante con Percezione 11, anche senza vista, senza attraversare scafi o pareti. Non legge scritte, non individua automaticamente una creatura nascosta e non avverte ogni perdita di sangue nel mare. Fuori dall’acqua segue il fiato ordinario e il §5.23.
+
+**Anatomia e condotta.** Testa comprende le fauci, Torace il corpo, Braccia le pinne anteriori e Gambe quelle posteriori con la coda. Non comprende linguaggi. Un branco può cercare prede più accessibili; sotto 6 PV o a Ferita Profonda l’esemplare tende a staccarsi. Un Sahuagin non è automaticamente suo alleato senza un rapporto o un comando stabiliti nella scena.
+
+# **Squalo cacciatore**
+
+*Predatore delle acque profonde • frenesia del sangue • Natura Comune*
+
+Uno squalo di grandi dimensioni che di norma caccia da solo, pur potendo condividere una zona ricca di prede con altri individui. Fonte: Hunter Shark, p. 330.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 8 • DES 6 • COS 7 • INT 1 • SAG 5 • CAR 3 |
+| Risorse e protezioni | PV 40 • PM 5 • AR 2 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 12 • Riflessi 10 • Volontà 7 • Magia 8 |
+| Iniziativa e Azioni | INI 0 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 0 Q; nuoto 8 / 16 / 24 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 12 • Atletica 12 • Percezione 12 • Furtività 9 |
+| GS e PX per 4 PG | Esperto • 30 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Morso | 12 | 2d6+2 Naturale; Perforazione | 1 Q |
+
+  
+
+**Frenesia del sangue.** Il Morso riceve +2 VA contro una creatura biologicamente vivente che abbia meno PV del proprio massimo o un Sanguinamento attivo. Il VA diventa 14 prima degli altri modificatori. Il bonus non si moltiplica per danni già inflitti, Ferite o alleati e non aumenta il danno. Una Lesione priva di deficit di PV e senza sangue attivo non soddisfa da sola il requisito.
+
+**Limiti.** La Frenesia non è un obbligo di attaccare, un’immunità a Terrorizzato o un bonus alle Difese. Non permette di localizzare chi sanguina oltre i sensi disponibili. Il Morso non afferra e non inghiotte; un singolo esemplare effettua al massimo un Morso per Round, compresa l’Opportunità.
+
+**Sensi e anatomia.** Respira soltanto acqua; fuori segue COS Round di fiato e il §5.23. Percezione alternativa entro 6 Q nell’acqua comunicante, con Percezione 12 e i limiti dello Squalo delle scogliere. Testa comprende le fauci, Torace il corpo, Braccia le pinne anteriori e Gambe quelle posteriori con la coda. Le pinne non permettono di impugnare armi o parare.
+
+**Condotta.** Non comprende linguaggi. Può interrompere una caccia se trova una preda più semplice, una barriera o un avversario troppo rischioso. Sotto 10 PV o a Ferita Profonda tende a ritirarsi verso acqua libera. Lo spazio deve accogliere realmente il corpo; la distanza in pianta non consente di attraversare una rete o uno scafo.
+
+# **Squalo gigante**
+
+*Grande predatore oceanico • morso potente • Natura Comune*
+
+Uno squalo lungo circa nove metri, capace di minacciare grandi prede e avvicinarsi alle imbarcazioni. La sua massa richiede spazio e profondità adeguati. Fonte: Giant Shark, p. 328.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 10 • DES 5 • COS 9 • INT 1 • SAG 5 • CAR 4 |
+| Risorse e protezioni | PV 64 • PM 6 • AR 3 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 8 • Tempra 14 • Riflessi 9 • Volontà 8 • Magia 9 |
+| Iniziativa e Azioni | INI −1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 0 Q; nuoto 10 / 20 / 30 Q • spazio 3 × 3 Q |
+| Abilità | Corpo a corpo 14 • Atletica 14 • Percezione 12 • Furtività 6 |
+| GS e PX per 4 PG | Veterano • 50 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Morso | 14 | 2d8+3 Naturale; Perforazione | 2 Q |
+
+  
+
+**Frenesia del sangue.** Usa la medesima condizione dello Squalo cacciatore: +2 VA al Morso contro un organismo vivente sotto i PV massimi o con Sanguinamento attivo. Il VA diventa 16, prima degli altri modificatori. Non riceve anche Tattiche di branco. Il profilo non aggiunge un attacco gratuito quando ferisce o porta una vittima a 0 PV.
+
+**Massa e bersagli.** Un Morso per Round, Opportunità compresa. Non applica presa, Sanguinamento, inghiottimento o capovolgimento automatici. Per danneggiare una barca deve raggiungere una parte dello scafo, usando AR, PS Integrità e PI definiti per quella struttura. I suoi PV non diventano i PI del mezzo e non misura i danni alla nave come Ferite biologiche.
+
+**Sensi e respiro.** Respira soltanto acqua. Percezione alternativa entro 12 Q nell’acqua comunicante, con Percezione 12; non attraversa solidi e non scopre automaticamente un bersaglio nascosto. Fuori dall’acqua segue la riserva ordinaria di fiato e il §5.23. Le localizzazioni seguono quelle degli altri squali; una coda lesa può compromettere la propulsione.
+
+**Condotta.** Non comprende linguaggi. Il comportamento audace della fonte non diventa immunità alle influenze mentali: restano Volontà e Stati normali. Sotto 16 PV o a Ferita Seria può allontanarsi se ne ha la possibilità. Una profondità insufficiente o un accesso troppo stretto possono impedire l’inseguimento senza richiedere di sconfiggerlo.
+
+# **Marinide**
+
+*Abitante delle acque • lancia e dialogo • Natura Comune*
+
+Un umanoide dal tronco umano e dalla coda di pesce. Può vivere in comunità, proteggere i fondali o trattare con chi arriva dalla superficie. Fonte: Merfolk, p. 218.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 5 • DES 6 • COS 5 • INT 5 • SAG 5 • CAR 6 |
+| Risorse e protezioni | PV 16 • PM 6 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 9 • Riflessi 10 • Volontà 10 • Magia 9 |
+| Iniziativa e Azioni | INI 0 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 2 / 4 / 6 Q; nuoto 8 / 16 / 24 Q • spazio 1 × 1 Q |
+| Abilità | Armi da guerra 9 • Armi da lancio 8 • Atletica 10 • Percezione 11 • Diplomazia 10 |
+| GS e PX per 4 PG | Principiante • 11 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Lancia a una mano | 9 | 1d6+1 Naturale; Perforazione | 2 Q |
+| Lancia a due mani | 9 | 1d6+3 Naturale; Perforazione | 2 Q |
+| Lancia scagliata | 8 | 1d6+1 Naturale; Perforazione | Massimo 4 Q in aria; 2 Q in acqua |
+
+  
+
+**Dotazione.** Una Lancia commerciale di qualità Comune, FOR 5, PI 6 e PS Integrità 10; nessuna armatura o scudo. I danni della tabella comprendono il bonus personale 0. Una mano oppure due seguono Versatile. Il profilo scagliato è un adattamento specifico della scheda: usa Armi da lancio e le gittate indicate, senza tornare automaticamente in mano. Il valore 11 PX comprende questa dotazione.
+
+**Difesa e mani.** Può parare con la Lancia pronta, pagando 1 AzP e usando Difese 9; a distanza applica il normale −8 VA dell’arma. Una Parata spende l’unica AzP e non lascia AzP per attaccare; resta un’eventuale Opportunità ordinaria. Gettare la Lancia lo lascia senza quell’arma finché non la recupera; estrazione e cambio d’impugnatura seguono il Giocatore §5.1.1. Non dispone di una Parata con pinne o coda.
+
+**Vita anfibia.** Respira aria e acqua. Vista e udito ordinari, senza Scurovisione innata. Comprende e parla due lingue assegnate alla comunità, una delle quali può essere di contatto. Testa, Torace e Braccia sono umanoidi; Gambe corrisponde alla coda e alla funzione natatoria. Fuori dall’acqua la lenta locomozione non lo rende automaticamente A Terra.
+
+**Condotta.** La scheda descrive un difensore ordinario, non rende ostile un popolo intero. Può indicare rotte, chiedere aiuto o scambiare merci. Sotto 4 PV o a Ferita Profonda cerca riparo o soccorso. La cultura e l’accesso alla tecnologia dipendono dalla collocazione nell’ambientazione, senza imporre l’incapacità generale di lavorare materiali.
+
+# **Merrow**
+
+*Predatore anfibio • arpione con sagola • Natura Comune*
+
+Un grande umanoide acquatico dalla coda robusta, capace di ferire e avvicinare una preda con un arpione. Le origini demoniache della fonte non sono assunte per Iris. Fonte: Merrow, p. 219.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 9 • DES 5 • COS 7 • INT 4 • SAG 5 • CAR 4 |
+| Risorse e protezioni | PV 40 • PM 6 • AR 2 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 8 • Tempra 12 • Riflessi 9 • Volontà 8 • Magia 9 |
+| Iniziativa e Azioni | INI −1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 2 / 4 / 6 Q; nuoto 8 / 16 / 24 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 12 • Armi da guerra 12 • Armi da lancio 11 • Atletica 13 • Percezione 11 |
+| GS e PX per 4 PG | Esperto • 33 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Morso | 12 | 1d8+2 Naturale; Perforazione | 1 Q |
+| Artigli | 12 | 1d8+2 Naturale; Taglio | 1 Q |
+| Arpione in mischia | 12 | 1d6+3 Naturale; Perforazione | 2 Q |
+| Arpione scagliato | 11 | 1d6+3 Naturale; Perforazione | Massimo 4 Q in aria; 2 Q in acqua |
+
+  
+
+**Sequenza.** Al massimo un Morso e un attacco di Artigli oppure Arpione per Round, ciascuno con 1 AzP. L’Opportunità usa un attacco ravvicinato entro tali limiti. Tirare la sagola richiede l’AzP indicata nella pagina seguente e non si somma gratuitamente al colpo. Un attacco di Artigli richiede una mano disponibile.
+
+**Arpione.** La dotazione Comune comprende un’arma da cattura con sagola: FOR 5, una mano, portata 2 Q, PI 6, PS Integrità 10. Per danni, Abilità e Parata usa il profilo della Lancia a una mano, con +2 personale già incluso; non possiede Versatile. La sagola lunga 4 Q richiede l’altra mano per essere gestita. Non è una proprietà generale aggiunta alle Lance commerciali. I 33 PX comprendono questa dotazione.
+
+**Vita e condotta.** Respira aria e acqua; Scurovisione 12 Q. Può comprendere e parlare due lingue legate alla comunità. Anatomia umanoide, con la coda al posto delle Gambe. Può minacciare, trattare o ritirarsi, senza un obbligo cosmologico di servire demoni. Sotto 10 PV o a Ferita Profonda tende a interrompere una caccia pericolosa.
+
+# **Merrow arpione e trascinamento**
+
+**Aggancio.** Prima di un attacco con Arpione dichiara se cerca di agganciare. Il bersaglio deve essere un organismo non maggiore di 2 × 2 Q. Si risolvono tiro, eventuale Difesa e AR; dopo almeno 1 danno finale effettua Riflessi 0. Fallimento: l’arpione si aggancia. Il solo aggancio non applica Immobilizzato, non impedisce attacchi e non aggiunge Sanguinamento. Una struttura o una creatura priva di una parte agganciabile non è un bersaglio valido.
+
+**Vincoli.** Un solo aggancio, con una sola sagola. L’arma resta al bersaglio e il Merrow non può attaccare nuovamente con essa finché non la recupera. La sagola deve avere un percorso libero e non può attraversare solidi. La distanza non supera i 4 Q disponibili. La vittima può avvicinarsi o usare le procedure di rimozione; per allontanarsi oltre la lunghezza deve prima liberarsi, rompere il filo o costringere il Merrow a lasciarlo.
+
+**Tirare.** 1 AzP, al massimo una volta per Round, con una mano che controlla la sagola e appoggio o propulsione reali. Atletica 13 contrapposta a Corpo a corpo o Atletica della vittima. Successo la avvicina fino a 2 Q lungo il filo; pareggio o fallimento non la spostano. Nessun danno aggiuntivo per trazione. Non trascina un carico complessivo oltre FOR × 40 kg, cioè 360 kg, compreso l’equipaggiamento. Restano gli impedimenti e le capacità che vietano spostamenti forzati.
+
+**Pericolo immediato.** Prima di trascinare la vittima oltre un bordo o immergerne le vie respiratorie, questa effettua Riflessi 0: successo ferma il trascinamento nell’ultimo spazio sicuro; fallimento consente lo spostamento e le normali conseguenze. Essere agganciati non azzera il fiato. Non si passa attraverso scafi o un passaggio incapace di accogliere il corpo; l’urto contro un ostacolo non infligge danni gratuiti.
+
+**Liberarsi.** Con 1 AzP la vittima o un alleato adiacente può rimuovere l’aggancio mediante Atletica 0, con mani o strumenti adatti; successo libera, senza nuovo danno automatico. In alternativa può recidere la sagola, AR 0, PI 2, PS Integrità 10, usando le regole per gli oggetti: non basta assegnarle PV. Un colpo fallito al filo non ferisce automaticamente la vittima. Tagliata la sagola, l’arpione resta da rimuovere ma non collega più i due corpi.
+
+**Rilascio.** Il Merrow può lasciare il filo gratuitamente alla propria Iniziativa; incoscienza o perdita della funzione della mano lo fanno cadere. Non è ancorato di default a cintura o fondale. Finché non lo lascia, tentare di superare la lunghezza disponibile richiede la stessa contrapposta del trascinamento, iniziata dalla vittima con 1 AzP: successo fa mollare il filo. L’estrazione dell’arpione resta separata dal trattamento delle Ferite e dal recupero dell’arma.
+
+# **Sahuagin**
+
+*Combattente anfibio • frenesia e comando degli squali • Natura Comune*
+
+Un umanoide acquatico dalle fauci dentate e dalle mani artigliate. Può coordinare una caccia mediante una limitata influenza mentale sugli squali. Fonte: Sahuagin, p. 263.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 6 • DES 5 • COS 6 • INT 6 • SAG 6 • CAR 4 |
+| Risorse e protezioni | PV 26 • PM 8 • AR 1 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 8 • Tempra 10 • Riflessi 9 • Volontà 8 • Magia 10 |
+| Iniziativa e Azioni | INI −1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 6 / 12 / 18 Q; nuoto 8 / 16 / 24 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 10 • Armi da guerra 10 • Armi da lancio 9 • Atletica 11 • Percezione 13 |
+| GS e PX per 4 PG | Inesperto • 22 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Morso | 10 | 1d4+1 Naturale; Perforazione | 1 Q |
+| Artigli | 10 | 1d4+1 Naturale; Taglio | 1 Q |
+| Lancia a una mano | 10 | 1d6+2 Naturale; Perforazione | 2 Q |
+| Lancia a due mani | 10 | 1d6+4 Naturale; Perforazione | 2 Q |
+| Lancia scagliata | 9 | 1d6+2 Naturale; Perforazione | Massimo 4 Q in aria; 2 Q in acqua |
+
+  
+
+**Sequenza e frenesia.** Al massimo un Morso e un attacco di Artigli oppure Lancia per Round, ciascuno con 1 AzP; Opportunità entro tali limiti. Gli Artigli richiedono una mano libera. Contro un organismo vivente sotto i PV massimi o con Sanguinamento attivo ottiene +2 VA agli attacchi ravvicinati, non al lancio o ai danni. È lo stesso criterio degli squali maggiori; non dà localizzazione automatica.
+
+**Dotazione.** Una Lancia commerciale Comune, FOR 5, PI 6, PS Integrità 10; nessuna armatura o scudo. Le formule comprendono +1 personale. Può parare con la Lancia pronta pagando l’AzP; a distanza −8 VA. Il lancio usa il profilo specifico indicato e lascia l’arma lontana finché non viene recuperata. I 22 PX comprendono questa dotazione, senza squali o seguaci.
+
+**Respiro e corpo.** Respira acqua e aria ma deve immergere completamente il corpo almeno una volta ogni 4 ore. Trascorso il termine inizia il soffocamento dal punto successivo all’esaurimento del fiato nel §5.23, finché non viene immerso o una capacità adeguata risolve il bisogno. Un Round completamente immerso ripristina le 4 ore. Scurovisione 24 Q; anatomia umanoide, con coda nella funzione delle Gambe. Parla la lingua della propria comunità.
+
+# **Sahuagin comando e alleati**
+
+**Comando degli squali.** Capacità mistica innata: 1 AzP, 2 PM, uno squalo con mente, visibile entro 24 Q. Non richiede Potere, Focus o Invocazione e non ammette Anticipazione. Volontà 0: successo nessuna influenza, fallimento il Sahuagin può impartire istruzioni semplici di caccia e movimento per 3 Round, con Concentrazione. Non si applica a umanoidi, Chuul o creature trasformate che conservano una mente diversa da quella di uno squalo.
+
+**Ordini.** La comunicazione è telepatica e riguarda soltanto lo squalo scelto, senza lettura dei pensieri o condivisione dei suoi sensi. Può indicare una preda percepita, una direzione o una zona da sorvegliare; non conferisce conoscenze, passaggi attraverso solidi o Azioni aggiuntive. Non impone suicidio evidente, compresa l’uscita volontaria dall’acqua senza una protezione respiratoria adeguata. Le istruzioni non trasformano un bersaglio ignoto in uno localizzato.
+
+**Iniziativa.** Lo squalo conserva INI, AzP, AzM, capacità consumate, PV e PM. Agisce alla propria Iniziativa e non riceve un turno immediato dopo il comando. Il Sahuagin non attacca in sua vece e non gli trasferisce risorse. Per cambiare un’istruzione basta una breve comunicazione alla propria Iniziativa, senza un nuovo attacco o movimento. Mantiene un solo comando alla volta; un nuovo uso termina il precedente.
+
+**Resistere e terminare.** Alla fine di ciascuna propria Iniziativa lo squalo può ripetere Volontà 0 gratuitamente: successo termina il controllo. Cessa anche per fine durata, perdita di Concentrazione, distanza oltre 24 Q, congedo gratuito o Negare Potere, confronto 3. Superare la PS iniziale o una ripetizione rende immune al comando di quel Sahuagin per 24 ore. Danni, Ferite e azioni già risolte rimangono.
+
+**Concentrazione e PM.** Si applicano le normali interruzioni della Concentrazione. Non può mantenere un secondo potere a Concentrazione contemporaneamente. PM insufficienti impediscono l’uso; spendere l’ultimo PM causa il normale Svenuto e interrompe il comando. Terminare il controllo non guarisce, stordisce o rende obbligatoriamente ostile lo squalo: il Direttore ne valuta il comportamento libero.
+
+**Comunità e condotta.** Il profilo è quello di un combattente ordinario con due braccia: non include Barone, Sacerdotessa o Malenti. Culti, nemici e rapporti con altre specie dipendono dall’ambientazione. Squali addestrati o alleati autentici seguono il rapporto stabilito, senza una dominazione permanente gratuita. Sotto 6 PV o a Ferita Profonda il Sahuagin può cercare acqua, copertura o una trattativa.
+
+# **Kuo-toa**
+
+*Abitante anfibio • cattura e scudo adesivo • Natura Comune*
+
+Un umanoide pisciforme dalla pelle scivolosa, adatto a muoversi fra acque e grotte. Il profilo usa strumenti da cattura e uno scudo rivestito di secrezione adesiva. Fonte: Kuo-toa, p. 199.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 5 • DES 5 • COS 5 • INT 5 • SAG 5 • CAR 4 |
+| Risorse e protezioni | PV 22 • PM 6 • AR 1 biologica + 2 scudo = 3; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 9 • Riflessi 9 • Volontà 8 • Magia 9 |
+| Iniziativa e Azioni | INI −1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra e nuoto 6 / 12 / 18 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 9 • Armi da guerra 9 • Armi da lancio 9 • Atletica 10 • Percezione 12 |
+| GS e PX per 4 PG | Inesperto • 22 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Morso | 9 | 1d4+1 Naturale; Perforazione | 1 Q |
+| Lancia a una mano | 9 | 1d6+1 Naturale; Perforazione | 2 Q |
+| Lancia a due mani | 9 | 1d6+3 Naturale; Perforazione | 2 Q |
+| Lancia scagliata | 9 | 1d6+1 Naturale; Perforazione | Massimo 4 Q in aria; 2 Q in acqua |
+| Rete | 9 | Cattura, senza danno | Massimo 2 Q; due mani |
+
+  
+
+**Dotazione.** Lancia commerciale e Scudo Medio di qualità Comune, entrambi FOR 5, PI 6 e PS Integrità 10, più una Rete della pagina seguente. I danni comprendono bonus personale 0. Lo Scudo occupa una mano e concede +2 AR passiva; senza perde tale quota. Parata ravvicinata senza bonus, a distanza −4 VA con Scudo oppure −8 con Lancia, sempre pagando 1 AzP. I 22 PX comprendono la dotazione complessiva.
+
+**Mani e attacchi.** Al massimo due attacchi per Round, non più di un Morso, un attacco di Lancia e un lancio di Rete, entro le due AzP disponibili. Lancia a due mani e Rete richiedono di aver liberato entrambe le mani: non si usano mantenendo lo Scudo impugnato. Preparare, riporre o recuperare gli oggetti segue il §5.1.1. L’Opportunità è soltanto Morso o Lancia in mischia, entro i limiti.
+
+**Sensi e condotta.** Respira aria e acqua; Scurovisione 24 Q. In luce solare diretta subisce −2 VA agli attacchi e a Percezione visiva, non alle PS. Parla una lingua della propria comunità. Anatomia umanoide. Sotto 5 PV o a Ferita Profonda può fuggire, cedere o cercare aiuto. La specie non attribuisce automaticamente malattia mentale o capacità collettive di creare divinità.
+
+# **Kuo-toa strumenti di cattura e sensi**
+
+**Rete.** Profilo da cattura della scheda: Comune, FOR 3, due mani, Armi da lancio, gittata massima 2 Q anche immersa, 1 AzP. Una sola Rete pronta; bersaglio corporeo non maggiore di 2 × 2 Q. Si risolve il tiro con normali modificatori: Schivata consentita, Parata non adatta a fermare la rete che avvolge. Un successo non evitato applica Immobilizzato senza danni e senza bloccare specificamente le mani. L’AR non impedisce il legame. Un Magistrale non aggiunge danni o durata.
+
+**Aprire o rompere.** Vittima o alleato adiacente spende 1 AzP ed effettua Atletica 0 con mani o strumenti adatti; successo libera. Il −4 fisico di Immobilizzato si applica alla vittima, non al soccorritore libero. In alternativa si attacca la Rete come oggetto, AR 0, PI 2 e PS Integrità 10: la rimozione avviene a 0 PI o mediante una capacità che recide effettivamente il legame. I colpi alla rete non danneggiano automaticamente chi è avvolto. Il Kuo-toa non la controlla a distanza dopo il lancio.
+
+**Scudo adesivo.** Una volta per Round, dopo una propria Parata ravvicinata riuscita con Scudo contro un’arma materiale entro 1 Q, può spendere un’altra AzP disponibile per tentare di trattenerla. Atletica 10 contrapposta ad Atletica dell’attaccante: successo blocca quell’arma contro lo Scudo; pareggio o fallimento no. Si applica dopo la normale riduzione del colpo, senza annullarlo retroattivamente. Non cattura proiettili, parti del corpo, lame incorporee o effetti ad Area.
+
+**Arma bloccata.** Lo Scudo trattiene un solo oggetto. L’arma non attacca finché è incollata; chi la conserva in mano non può allontanarsi oltre la sua portata fisica dal punto di contatto, ma non diventa Immobilizzato per tutto il corpo. Lasciarla è possibile secondo le normali Azioni. Con 1 AzP, possessore o alleato adiacente effettua Atletica 0: successo la stacca. Una sostanza o un potere che elimina realmente l’adesivo può liberarla nei propri costi. Il Kuo-toa può staccarla volontariamente con 1 AzP.
+
+**Pelle e percezione.** Ottiene +2 VA soltanto alle Prove fisiche effettuate per liberarsi da una presa o da una legatura, non a tutte le PS. Percezione 12 può avvertire la presenza di creature invisibili o incorporee entro 6 Q, senza attraversare solidi. Se una di esse si muove ne localizza il Q; se è immobile ricava soltanto presenza e direzione. Localizzare non rende visibile, non concede attacchi capaci di colpire un essere incorporeo e non apre passaggi fra piani.
+
+**Limiti e manutenzione.** La percezione speciale non legge menti o oggetti, non identifica poteri e non elimina altre cause di occultamento. Lo Scudo conserva i propri PI: a 0 perde AR e funzione adesiva. L’incoscienza del Kuo-toa non dissolve fisicamente una rete o l’adesivo già applicato; lascia cadere gli oggetti impugnati. Il rivestimento non trasforma automaticamente uno scudo recuperato in un artefatto permanente: la secrezione va rinnovata prima di un nuovo incontro.
+
+# **Chuul**
+
+*Predatore corazzato • chele e tentacoli velenosi • Natura Comune*
+
+Un grande crostaceo senziente, capace di trattenere prede e percepire emanazioni mistiche. Può essere un guardiano o un predatore, secondo il contesto. Fonte: Chuul, p. 40.
+
+  
+
+|  |  |
+| :-: | :-: |
+| **Campo** | **Valore pronto** |
+| Caratteristiche | FOR 9 • DES 5 • COS 8 • INT 3 • SAG 6 • CAR 3 |
+| Risorse e protezioni | PV 56 • PM 8 • AR 4 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 8 • Tempra 13 • Riflessi 9 • Volontà 8 • Magia 10 |
+| Iniziativa e Azioni | INI −1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra e nuoto 6 / 12 / 18 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 14 • Atletica 13 • Percezione 12 • Furtività 7 |
+| GS e PX per 4 PG | Veterano • 50 PX |
+
+  
+  
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Chela | 14 | 1d8+2 Naturale; Contusione | 2 Q |
+| Stringere | 14 | 1d8+2 Naturale; contrapposta | Una vittima già presa |
+| Tentacoli velenosi | — | Tossina paralizzante; Tempra −2 | Una vittima già presa entro 1 Q |
+
+  
+
+**Sequenza.** Fino a due attacchi di Chela o Stringere per Round, ciascuno con 1 AzP; Tentacoli velenosi costa 1 AzP e ne sostituisce uno. L’Opportunità può usare soltanto una Chela libera, entro il limite complessivo di due attacchi con chele. La tossina non è un terzo attacco gratuito. Dispone di tre dosi in ogni periodo di 24 ore, se non già consumate nella continuità della scena.
+
+**Afferrare.** Chela con almeno 1 danno finale contro una creatura non maggiore di 2 × 2 Q impone Riflessi 0: fallimento Immobilizzato, con mani non specificamente bloccate. Fino a due vittime, una per chela; una chela occupata non attacca altri bersagli. Una vittima presa entro 2 Q non viene spostata automaticamente entro 1 Q per i Tentacoli: occorre che la posizione reale lo permetta.
+
+**Stringere e liberarsi.** 1 AzP, Corpo a corpo 14 contrapposto a Corpo a corpo o Atletica della vittima; successo infligge il danno indicato, fallimento o pareggio nessun danno. Vittima o alleato adiacente può iniziare la stessa opposizione con 1 AzP per liberare, applicando il −4 fisico solo a chi è Immobilizzato. Rilascio gratuito alla propria Iniziativa; incoscienza, morte o perdita della funzione della chela interrompono la presa. Nel profilo il Chuul non si sposta mentre trattiene qualcuno.
+
+**Corpo e respiro.** Respira aria e acqua, Scurovisione 12 Q. È immune ai danni da veleno e ad Avvelenato; non a malattie, Fuoco, Ghiaccio o influenze mentali in generale. Testa comprende occhi, bocca e tentacoli velenosi; Torace il carapace; Braccia le chele; Gambe le zampe. L’AR non concede una Parata con il guscio. Tossina e percezione sono nelle pagine seguenti.
+
+# **Chuul tossina paralizzante e soccorso**
+
+**Inoculazione.** Con 1 AzP applica una dose a una vittima biologicamente vivente già trattenuta da una chela ed entro 1 Q dalla bocca. Deve raggiungere una parte biologica: una protezione sigillata che impedisce il contatto blocca l’inoculazione. Non richiede un secondo tiro per colpire o una Difesa attiva: il contatto è con la preda già presa. Consuma la dose anche se la vittima resiste o è immune. Senza dose disponibile non applica l’effetto. Non aggiunge danno fisico o da veleno ai PV.
+
+**Salvezza.** La vittima effettua Tempra −2. Successo impedisce del tutto Avvelenato e paralisi; fallimento applica entrambi per 3 Round. È l’esito specifico della tossina, in sostituzione del dimezzamento ordinario della durata. Alla fine di ogni propria Iniziativa può ripetere gratuitamente Tempra 0: successo termina entrambi, fallimento li conserva fino alla scadenza. Non si spende un’Azione per questa PS.
+
+**Paralisi.** Resta cosciente ma non dispone di AzP o Movimento e non può effettuare Difese attive. Conserva PS e opposizioni passive che non richiedano movimenti incompatibili; la sola paralisi non impone −4 alle PS. Non cade automaticamente Svenuta, non perde PM e non subisce Magistrali automatici. Conta come incapace di reagire per gli impieghi pertinenti, fra cui Tiro a Bruciapelo. Se nuota senza appoggio non nuota più; può soffocare soltanto se non respira il mezzo in cui si trova.
+
+**Immunità e conclusione.** Immunità ai veleni o ad Avvelenato impedisce l’intero effetto; immunità a Paralizzato impedisce la paralisi ma non la presenza della tossina, priva di altre penalità in questa scheda. Nuove dosi non sommano Stati: conservano la scadenza più lontana e permettono le medesime PS di recupero. Essere liberati dalla chela o rendere incosciente il Chuul non neutralizza una dose già inoculata.
+
+**Cura.** Veleno naturale di Pericolosità IV, Seria. Un antidoto adeguato o Cura Avvelenamenti di livello almeno 5 termina la sostanza e la paralisi da essa mantenuta. Cura Spirituale da sola non rimuove una causa tossica ancora attiva. Medicina può riconoscere il problema e assistere secondo gli strumenti disponibili; non annulla automaticamente il veleno. La paralisi non è una Menomazione anatomica permanente.
+
+**Priorità del soccorso.** Sottrarre la vittima alla presa, consentirle di respirare, neutralizzare la tossina, recuperare PV e stabilizzare Morente sono interventi distinti. La fine della paralisi restituisce la capacità di agire soltanto se non persistono Svenuto, PM 0 o altre cause. Le dosi innate non diventano automaticamente veleni commerciabili: raccolta, conservazione e applicazione su armi richiedono una scheda di sostanza e strumenti adeguati.
+
+# **Chuul percezione delle emanazioni**
+
+**Percezione innata.** Un senso biologico avverte emanazioni di incantesimi attivi e artefatti entro 24 Q, con Potere di Rilevazione 6 per il confronto con gli occultamenti. Non costa PM, non richiede Potere o Concentrazione e non è un incantesimo appreso. La sola presenza di una creatura vivente, di una riserva PM o di tecnologia ordinaria non costituisce un’emanazione rilevata da questo senso.
+
+**Informazione iniziale.** Ricava soltanto presenza e direzione delle fonti non protette. Emanazioni sovrapposte possono apparire come una sola. Non conosce Q esatto, numero preciso, nome, proprietario, cariche residue, livello o rarità dell’oggetto. Non identifica automaticamente CROS o Natura Oscura Simmetria. Il senso della fonte è ridotto a questa funzione specifica e non concede tutte le analisi dell’incantesimo Individuare.
+
+**Localizzare.** Con 1 AzP esamina un solo Q visibile o già noto entro 12 Q. Se contiene una fonte percepibile, ne localizza l’emanazione in quel Q senza riconoscerne funzionamento o inventario nascosto. Non svela immagini, parole o la forma di un oggetto celato. La posizione nota non rimuove la protezione fisica di uno scrigno o di un corpo che copre la fonte.
+
+**Occultamenti e barriere.** Nascondere Aura, Alterare Aura, contenitori schermanti e interdizioni seguono le proprie schede e i confronti con Rilevazione 6. Il senso non scavalca una schermatura solo perché è biologico. Una barriera solida impedisce questo senso nel profilo convertito, anche se lascia intuire che un rumore proviene dall’altro lato. Magie istantanee già concluse e proprietà non emananti non lasciano automaticamente una fonte attiva.
+
+**Interazioni.** Negare Potere non elimina il senso intrinseco del Chuul, ma può terminare gli effetti magici che stava percependo secondo i propri limiti. Il senso non gli concede attacchi Magici o Eterei, controllo degli artefatti o comprensione dei loro comandi. Conoscere una direzione non rende possibile colpire attraverso una parete.
+
+**Condotta e impiego.** Comprende una lingua scelta per la propria origine, ma non parla. Può conservare ordini ricevuti e raccogliere oggetti che emanano potere; un eventuale legame con un Aboleth va stabilito nella scena e non equivale a controllo universale gratuito. Sotto 14 PV o a Ferita Seria può lasciare le prede per proteggere il rifugio o ritirarsi. I 50 PX comprendono sensi, due chele e tossina; appendici e dosi non assegnano un premio separato.
 
   

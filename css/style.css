@@ -2801,3 +2801,5 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .manifestazione { display: inline-flex; align-items: center; gap: 0.2rem; }
 .scelta-manifestazione { font: inherit; font-size: 0.8rem; padding: 0.1rem 0.2rem; border: 1px solid var(--bordo); border-radius: var(--raggio); background: var(--superficie); color: var(--testo); }
 .etichetta-manifestazione { font-size: 0.75rem; }
+/* A.161 (16/10): GS e PX del Manuale dei Mostri nella mini-scheda del nemico (informativo) */
+.tratto-gspx { background: var(--pm-tenue); color: var(--pm); }
