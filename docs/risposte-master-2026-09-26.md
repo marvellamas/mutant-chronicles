@@ -1,4 +1,4 @@
-# E&L – Risposte e correzioni approvate
+# E\&L – Risposte e correzioni approvate
 
 Decisioni approvate e aggiornamenti dei manuali condivisi.
 
@@ -1468,7 +1468,7 @@ Scheda digitale: aggiungere ai PV attuali l’incremento dei PV massimi e ai PM 
 
 La numerazione da 1 a 19 corrisponde ai quesiti dell’app inviati dal collaboratore. Per ogni risposta sono indicati il campo interessato e il riferimento storico A.xx, che mantiene la propria numerazione. Queste risposte raccolgono le decisioni approvate e le precisazioni da recepire nell’app; i dati di catalogo mancanti e le procedure rituali ancora da definire sono segnalati espressamente.
 
-## 1\. Anticipazione senza Addestramento Taumaturgo
+## 1. Anticipazione senza Addestramento Taumaturgo
 
 Campo dell’app: regole.json.lancio.anticipazione.TODO(Davide)
 
@@ -1480,7 +1480,7 @@ La Prova di Potere resta sempre obbligatoria. Anticipazione Migliorata elimina s
 
 Riferimenti: Manuale della Magia, §12.3.
 
-## 2\. Carica iniziale dei contenitori Chroma
+## 2. Carica iniziale dei contenitori Chroma
 
 Campo dell’app: regole.json.chroma.TODO(Davide)[0]
 
@@ -1492,7 +1492,7 @@ L’app deve consentire di impostare i PM attuali di un contenitore trovato, sen
 
 Riferimenti: Manuale della Magia, §6.
 
-## 3\. Abilità e prove fisiche
+## 3. Abilità e prove fisiche
 
 Campo dell’app: regole.json.categorie_prove.TODO(Davide)
 
@@ -1506,7 +1506,7 @@ Prevalgono le indicazioni specifiche dello Stato o della circostanza: per esempi
 
 Riferimenti: Manuale del Giocatore, §5.18.
 
-## 4\. Pesi degli oggetti e calcolo del carico
+## 4. Pesi degli oggetti e calcolo del carico
 
 Campo dell’app: regole.json.carico.TODO(Davide)[0]
 
@@ -1520,7 +1520,7 @@ Resta da completare il catalogo dei pesi mancanti.
 
 Riferimenti: Manuale del Giocatore, §5.2.6; Manuale dell’Equipaggiamento, §1.6.
 
-## 5\. Superamento del carico massimo
+## 5. Superamento del carico massimo
 
 Campo dell’app: regole.json.carico.TODO(Davide)[1]
 
@@ -1532,7 +1532,7 @@ Il personaggio non può sollevare o trasportare il peso eccedente senza strument
 
 Riferimenti: Manuale del Giocatore, §5.2.6.
 
-## 6\. Spazzata: adiacenza e portata
+## 6. Spazzata: adiacenza e portata
 
 Campo dell’app: regole.json.attacco_ravvicinato.manovre.spazzata.TODO(Davide)
 
@@ -1546,7 +1546,7 @@ Spazzata Migliorata riduce la penalità di 2. Il superamento dei 3 bersagli è a
 
 Riferimenti: Manuale del Giocatore, §5.12.
 
-## 7\. Sbilanciare: scelta della difesa
+## 7. Sbilanciare: scelta della difesa
 
 Campo dell’app: regole.json.attacco_ravvicinato.manovre.sbilanciare.TODO(Davide)
 
@@ -1558,7 +1558,7 @@ L’attaccante dichiara prima del tiro se agisce senz’armi o con un’arma e u
 
 Riferimenti: Manuale del Giocatore, §5.12.
 
-## 8\. Disarmare: scelta della difesa
+## 8. Disarmare: scelta della difesa
 
 Campo dell’app: regole.json.attacco_ravvicinato.manovre.disarmare.TODO(Davide)
 
@@ -1570,7 +1570,7 @@ L’attaccante usa l’Abilità corrispondente al mezzo effettivamente impiegato
 
 Riferimenti: Manuale del Giocatore, §5.12.
 
-## 9\. Incalzare: tipo di prova
+## 9. Incalzare: tipo di prova
 
 Campo dell’app: regole.json.attacco_ravvicinato.manovre.incalzare.TODO(Davide)
 
@@ -1582,7 +1582,7 @@ La manovra costa 1 Azione Principale, spinge il bersaglio di 2 Q e non infligge 
 
 Riferimenti: Manuale del Giocatore, §5.5.
 
-## 10\. Attacco con la mano non dominante
+## 10. Attacco con la mano non dominante
 
 Campo dell’app: regole.json.attacco_ravvicinato.mano_non_dominante.TODO(Davide)
 
@@ -1594,7 +1594,7 @@ Combattere con due armi applica soltanto la propria penalità: non si aggiunge u
 
 Riferimenti: Manuale del Giocatore, §5.7.
 
-## 11\. Magistrale e bonus fissi al danno
+## 11. Magistrale e bonus fissi al danno
 
 Campo dell’app: regole.json.attacco_ravvicinato.magistrale.TODO(Davide)
 
@@ -1608,7 +1608,7 @@ Con Magistrale, un danno già ×2 passa a ×3, non a ×4; un danno già ×3 rest
 
 Riferimenti: Manuale del Giocatore, §§5.13 e 1.6.
 
-## 12\. Danno base senz’armi
+## 12. Danno base senz’armi
 
 Campo dell’app: regole.json.attacco_ravvicinato.senz_armi.TODO(Davide)
 
@@ -1622,7 +1622,7 @@ Arti Marziali porta il dado base a 1d6; si applica il dado superiore previsto da
 
 Riferimenti: Manuale del Giocatore, §4.4 (Corpo a corpo) e §5.13.
 
-## 13\. Copertura negli attacchi ravvicinati
+## 13. Copertura negli attacchi ravvicinati
 
 Campo dell’app: regole.json.attacco_ravvicinato.copertura.TODO(Davide)
 
@@ -1636,7 +1636,7 @@ L’app deve applicare il modificatore quando viene dichiarata una Copertura per
 
 Riferimenti: Manuale del Giocatore, §5.8.
 
-## 14\. Ingaggio multiplo e superiorità numerica
+## 14. Ingaggio multiplo e superiorità numerica
 
 Campo dell’app: regole.json.attacco_ravvicinato.circostanze.TODO(Davide)
 
@@ -1648,7 +1648,7 @@ Il Direttore decide quanti personaggi possano partecipare realmente all’ingagg
 
 Riferimenti: Manuale del Giocatore, §5.3.
 
-## 15\. Oggetti delle dotazioni privi di scheda di catalogo
+## 15. Oggetti delle dotazioni privi di scheda di catalogo
 
 Campo dell’app: dotazioni.json.TODO(Davide)
 
@@ -1664,11 +1664,11 @@ L’esistenza di un prezzo non rende automaticamente cedibile ogni oggetto della
 
 Riferimenti: Manuale dell’Equipaggiamento, §§4.2–4.3; Manuale del Giocatore, §2.16.29; approvazione A.34.
 
-## 16\. Abbinamenti corporativi delle pistole
+## 16. Abbinamenti corporativi delle pistole
 
 Campo dell’app: dotazioni.json.corporativi.TODO(Davide)
 
-Riferimento storico: A.33; E&L A.5.27 e A.5.30
+Riferimento storico: A.33; E\&L A.5.27 e A.5.30
 
 Per la Pistola semiautomatica di base si applicano questi abbinamenti:
 
@@ -1692,7 +1692,7 @@ I modelli e i prezzi si ricavano dai rispettivi cataloghi. Il totale delle muniz
 
 Riferimenti: Manuale del Giocatore, §2.16.27; Manuale degli Armamenti, §§7.8–7.9.
 
-## 17\. Colpo Elementale: significato di «Mod PS»
+## 17. Colpo Elementale: significato di «Mod PS»
 
 Campo dell’app: incantesimi.json.incantesimi[0].meccanica.TODO(Davide)
 
@@ -1708,7 +1708,7 @@ Salvo eccezioni esplicite, occorre almeno 1 danno residuo e il rispetto della so
 
 Riferimenti: Manuale della Magia, §§12.1–12.2 e 13.1.
 
-## 18\. Rigenerazione e procedura rituale
+## 18. Rigenerazione e procedura rituale
 
 Campo dell’app: incantesimi.json.incantesimi[69].meccanica.TODO(Davide)
 
@@ -1724,7 +1724,7 @@ L’Anticipazione ordinaria non si applica; le amplificazioni rituali restano da
 
 Riferimenti: Manuale della Magia, §§12.4, 21.10 e 25.
 
-## 19\. Ricarica di doppiette e fucili a pompa
+## 19. Ricarica di doppiette e fucili a pompa
 
 Campo dell’app: equipaggiamento.json.file.munizioni.ricarica.inserimento_singolo.TODO(Davide)
 
@@ -1802,7 +1802,7 @@ Per gli argomenti trattati, queste risposte sostituiscono i comportamenti provvi
 
 I percorsi JSON riportati identificano i punti da aggiornare. La registrazione delle decisioni in questo documento non attesta che siano già state implementate nell’app o recepite in tutti i manuali.
 
-## 1\. A.74, punto 1 — VA pertinente del Canale
+## 1. A.74, punto 1 — VA pertinente del Canale
 
 *Riferimenti dell’elenco originale: Voce iniziale non numerata.*
 
@@ -1816,7 +1816,7 @@ Il +2 all’infusione ottenuto con un Successo Magistrale nella costruzione del 
 
 Applicazione nell’app: usare Rituali del singolo Canale e applicare la tabella e il limite complessivo. Riferimento: Manuale della Magia, §24.6.
 
-## 2\. A.74, punto 2 — Ripartizione dei PM dopo un Magistrale
+## 2. A.74, punto 2 — Ripartizione dei PM dopo un Magistrale
 
 *Riferimenti dell’elenco originale: Voce 1.*
 
@@ -1832,7 +1832,7 @@ Esempio: Rituale di Grado III da 9 PM, con quote dichiarate Officiante 3, Canale
 
 Applicazione nell’app: proporre quote modificabili e convalidare somma, massimi dichiarati e minimi. Non imporre che i Canali conservino le quote iniziali e che l’Officiante paghi automaticamente il resto. Riferimenti: Manuale della Magia, §§24.6 e 25.2.
 
-## 3\. A.78 — Tiro con VA finale 20 o superiore e Magistrale Migliorato
+## 3. A.78 — Tiro con VA finale 20 o superiore e Magistrale Migliorato
 
 *Riferimenti dell’elenco originale: Voce 2.*
 
@@ -1848,7 +1848,7 @@ Con Successo Magistrale Migliorato: con VA finale 20, sono Magistrali 1–2; da 
 
 Applicazione nell’app: eliminare il successo automatico senza tiro per attacchi e Difese attive con VA ≥ 20; mantenere le eccezioni esplicite. Questa modifica non impone il tiro per ogni altra Prova non di combattimento che beneficia di un automatismo.
 
-## 4\. Capolavoro del Corazzaio — Bonus a una Contromisura
+## 4. Capolavoro del Corazzaio — Bonus a una Contromisura
 
 *Riferimenti dell’elenco originale: Voce 3.*
 
@@ -1862,7 +1862,7 @@ Il beneficio non aumenta l’AR e non sottrae direttamente 1 ai danni ai PV: si 
 
 Applicazione nell’app: memorizzare la Contromisura scelta e il relativo incremento, sostituendo il generico «+1 Protezione».
 
-## 5\. A.73 — Formato comune dei nemici
+## 5. A.73 — Formato comune dei nemici
 
 *Riferimenti dell’elenco originale: Voce 4.*
 
@@ -1878,7 +1878,7 @@ Si aggiungono quattro campi: azioni per turno (AzP e AzM, con eventuali eccezion
 
 Le decisioni 6–9 precisano Caratteristiche, PV e Ferite, incantesimi e movimento. I valori già calcolati non vanno ricostruiti automaticamente da dati incompleti.
 
-## 6\. A.73 — Caratteristiche dei nemici e parità d’Iniziativa
+## 6. A.73 — Caratteristiche dei nemici e parità d’Iniziativa
 
 *Riferimenti dell’elenco originale: Voci 5 e 9.*
 
@@ -1894,7 +1894,7 @@ In caso di parità d’Iniziativa si confronta prima DES e, se necessario, INT. 
 
 Applicazione nell’app: aggiornare sia la regola sia la descrizione del campo, distinguendo dati assenti e valori numerici effettivi. Riferimento: Manuale del Giocatore, §5.1.
 
-## 7\. A.73 — PV e Ferite dei nemici; nessun campo Affaticamento
+## 7. A.73 — PV e Ferite dei nemici; nessun campo Affaticamento
 
 *Riferimenti dell’elenco originale: Voce 6.*
 
@@ -1908,7 +1908,7 @@ Salvo un’eccezione esplicita della scheda, i nemici seguono la procedura dei P
 
 L’assenza del tracciato non conferisce immunità all’Affaticamento: un effetto eccezionale che lo imponga può essere gestito nelle note e con i modificatori necessari. Riferimenti: Manuale del Giocatore, §§5.14 e 5.19.
 
-## 8\. A.73 — Incantesimi dei nemici utilizzabili dall’app
+## 8. A.73 — Incantesimi dei nemici utilizzabili dall’app
 
 *Riferimenti dell’elenco originale: Voci 7 e 11.*
 
@@ -1920,11 +1920,11 @@ Gli incantesimi dei nemici possono essere lanciati dall’app con la stessa proc
 
 Per ciascun incantesimo occorrono nome e versione utilizzabile; VA di lancio già calcolato per quella versione, prima dei modificatori temporanei; costo in PM; azioni e durata del lancio; riferimento alla scheda dell’effetto ed eventuali eccezioni specifiche del nemico.
 
-Il comando «Lancia\!» risolve il tiro e il consumo di PM secondo le regole ordinarie, usando la riserva del nemico. Si applicano soltanto le eccezioni esplicitamente indicate.
+Il comando «Lancia!» risolve il tiro e il consumo di PM secondo le regole ordinarie, usando la riserva del nemico. Si applicano soltanto le eccezioni esplicitamente indicate.
 
-Una voce incompleta può restare un promemoria da gestire manualmente; non si inventano VA, costi o altri valori mancanti. Aggiornare anche la descrizione del campo, eliminando il divieto generale di «Lancia\!».
+Una voce incompleta può restare un promemoria da gestire manualmente; non si inventano VA, costi o altri valori mancanti. Aggiornare anche la descrizione del campo, eliminando il divieto generale di «Lancia!».
 
-## 9\. A.73 — Passo, Corsa e Scatto dei nemici
+## 9. A.73 — Passo, Corsa e Scatto dei nemici
 
 *Riferimenti dell’elenco originale: Voci 8 e 10.*
 
@@ -1938,7 +1938,7 @@ Esempio: Passo 4 Q comporta Corsa 8 Q e Scatto 12 Q quando questi ultimi valori 
 
 L’app deve distinguere «valore mancante» da «movimento non consentito»: un nemico che non può correre o scattare non riceve automaticamente quella modalità di movimento. Aggiornare sia la regola sia la descrizione del campo. Riferimento: Manuale del Giocatore, §2.14.
 
-## 10\. A.65 — Corredo agricolo Standard per allevamento
+## 10. A.65 — Corredo agricolo Standard per allevamento
 
 *Riferimenti dell’elenco originale: Voce 12.*
 
@@ -1954,7 +1954,7 @@ La scelta «coltivazione» continua a usare gli Attrezzi agricoli di base: 5 kg,
 
 Riferimenti: Manuale dell’Equipaggiamento, §5.3; nella versione attuale del Manuale del Giocatore la dotazione pertinente è al §2.16.12, non al vecchio §2.16.23 citato nel quesito.
 
-## 11\. A.65 — Strumento musicale portatile iniziale
+## 11. A.65 — Strumento musicale portatile iniziale
 
 *Riferimenti dell’elenco originale: Voce 13.*
 
@@ -1968,7 +1968,7 @@ La versione elettronica comprende un NEC Verde compatto carico da 100 Lx, consum
 
 Per entrambi valgono Qualità fisica Comune, PS Integrità 10 e 4 PI. L’app assegna la scheda scelta con peso, prezzo e alimentazione pertinenti. Riferimento: Manuale dell’Equipaggiamento, §5.8.
 
-## 12\. A.74, punto 3 — PM personali per il Rituale diretto di Rigenerazione
+## 12. A.74, punto 3 — PM personali per il Rituale diretto di Rigenerazione
 
 *Riferimenti dell’elenco originale: Voce 14.*
 
@@ -1982,7 +1982,7 @@ L’attivazione di Rigenerazione tramite Artefatto è distinta dal Rituale diret
 
 Applicazione nell’app: impedire il pagamento del Rituale diretto con batterie, senza estendere il divieto alle proprietà Universali degli Artefatti. Riferimento: Manuale della Magia, §25.1 e regole delle riserve.
 
-## 13\. A.74, punto 4 — Versioni di Rigenerazione e talenti Ritualista
+## 13. A.74, punto 4 — Versioni di Rigenerazione e talenti Ritualista
 
 *Riferimenti dell’elenco originale: Voce 15.*
 
@@ -1996,7 +1996,7 @@ Restano obbligatori conoscenza della procedura, risorse, tempi e Prova di Ritual
 
 Applicazione nell’app: non filtrare queste versioni rituali in base al livello massimo degli Incantesimi ordinari. Questa decisione riguarda il Rituale diretto e non elimina il requisito di conoscenza della versione per l’infusione di un Artefatto previsto dal §24.1.
 
-## 14\. A.67 — Modulo Blu del Gehemmapuker e divieto di travaso NEC
+## 14. A.67 — Modulo Blu del Gehemmapuker e divieto di travaso NEC
 
 *Riferimenti dell’elenco originale: Voce 16.*
 
@@ -2014,7 +2014,7 @@ Applicazione nell’app: una sola voce di catalogo, richiamata anche dalle muniz
 
 Il divieto riguarda i NEC e l’energia in Lx: non modifica le regole del Chroma, dei PM o delle loro conversioni. Riferimenti: Manuale degli Armamenti, §7.20.6; Manuale dell’Equipaggiamento, §§5.4.4–5.4.5.
 
-## 15\. A.62 — Ryūjin: Natura del danno e proprietà Plasma
+## 15. A.62 — Ryūjin: Natura del danno e proprietà Plasma
 
 *Riferimenti dell’elenco originale: Voce 17.*
 
@@ -2028,7 +2028,7 @@ L’effetto secondario del Plasma si applica secondo la sua regola ordinaria: oc
 
 Applicazione nell’app: mantenere Natura = Naturale e attivare la proprietà Plasma insieme all’arma; non introdurre «Plasma» come Natura. Riferimenti: Manuale degli Armamenti, scheda Ryūjin e §7.5.1; Manuale del Giocatore, §5.24.
 
-## 16\. A.75 — Dati fisici delle batterie oltre 5 PM
+## 16. A.75 — Dati fisici delle batterie oltre 5 PM
 
 *Riferimenti dell’elenco originale: Voci 18–36: 19 riferimenti alla stessa decisione.*
 
@@ -2078,7 +2078,7 @@ Il profilo si applica anche alle Batterie Matrice che usano quel supporto. Non s
 
 Applicazione nell’app: chiudere tutti i 19 TODO indicati recependo il profilo già definito; mantenere capacità, Grado, REP, prezzo dell’oggetto finito e altre differenze delle singole schede.
 
-## 17\. A.71 — Cartuccia chirurgica e set chirurgico
+## 17. A.71 — Cartuccia chirurgica e set chirurgico
 
 *Riferimenti dell’elenco originale: Voce 37.*
 
@@ -2092,7 +2092,7 @@ Si consuma un’unità all’inizio di ogni procedura, anche se la procedura fal
 
 Applicazione nell’app: unificare le due voci in una sola voce di catalogo e in un’unica scorta d’inventario. Riferimenti: Manuale dell’Equipaggiamento, §§6.5 e 6.8.7.
 
-## 18\. A.63 — Alimentazione di esoscheletri e armature servoassistite
+## 18. A.63 — Alimentazione di esoscheletri e armature servoassistite
 
 *Riferimenti dell’elenco originale: Voci 38–43 e 45: 7 riferimenti.*
 
@@ -2132,7 +2132,7 @@ Ogni modello richiede il proprio formato dedicato. L’intercambiabilità fra mo
 
 Applicazione nell’app: aggiornare la denominazione dell’alimentazione e gestire le ore operative residue. Non inventare capacità o consumi in Lx non definiti. Vale il divieto generale di trasferire energia fra NEC della decisione 14.
 
-## 19\. A.66 — Preparazione del pasto con il kit da campo
+## 19. A.66 — Preparazione del pasto con il kit da campo
 
 *Riferimenti dell’elenco originale: Voce 44.*
 
@@ -2148,7 +2148,7 @@ Correzioni al testo del §3.2: mantenere 30 minuti ed eliminare l’indicazione 
 
 La sostituzione del filtro del depuratore rimane un’operazione distinta da 1 minuto: non va confusa con il cambio del NEC. Riferimenti: Manuale dell’Equipaggiamento, §§3.2 e 5.4.5.
 
-## 20\. A.64 — Riserva e consumi del NEC Blu IAS
+## 20. A.64 — Riserva e consumi del NEC Blu IAS
 
 *Riferimenti dell’elenco originale: Voci 46–50: 5 riferimenti.*
 
@@ -2180,7 +2180,7 @@ Ricambio carico: 1.000 cr. Servizio di ricarica specialistico: 50 cr, tempo 1 or
 
 Applicazione nell’app: cariche e Lx rappresentano la stessa riserva e non si sommano. Conservare le autonomie sopra indicate e applicare il divieto di travaso fra NEC. Riferimento: Manuale degli Armamenti, §7.15.4.
 
-## 21\. A.68 — Interfaccia neurale standard
+## 21. A.68 — Interfaccia neurale standard
 
 *Riferimenti dell’elenco originale: Voce 51.*
 
@@ -2208,7 +2208,7 @@ Questo blocco risponde ai sei nuovi quesiti dell’app A.81, A.82, A.80, A.86, A
 
 Le indicazioni operative sono destinate al collaboratore per l’aggiornamento dell’app. La registrazione in questo documento non attesta l’avvenuta modifica dell’app o di tutti i manuali.
 
-## 1\. A.81 — Pelle di Rinoceronte: manovre di forza
+## 1. A.81 — Pelle di Rinoceronte: manovre di forza
 
 Campo dell’app: tecniche_interiori.json.tecniche[14].effetti.TODO(Davide)
 
@@ -2228,11 +2228,11 @@ Fuori dalle manovre, il +3 ad Atletica vale quando la Prova riguarda uno sforzo 
 
 Attacchi normali, Stordire, Affondo, Spazzata e Colpo Mirato non ricevono questo +3. Il distinto +2 al danno Ravvicinato e gli altri benefici di Pelle di Rinoceronte restano validi nei rispettivi ambiti.
 
-Applicazione nell’app: sommare automaticamente il +3 soltanto alle manovre e alle Abilità ammesse sopra; per gli altri impieghi di Atletica prevedere l’opzione «Sforzo di forza». Sostituire il solo promemoria provvisorio di «Attacca\!» con queste condizioni esplicite.
+Applicazione nell’app: sommare automaticamente il +3 soltanto alle manovre e alle Abilità ammesse sopra; per gli altri impieghi di Atletica prevedere l’opzione «Sforzo di forza». Sostituire il solo promemoria provvisorio di «Attacca!» con queste condizioni esplicite.
 
 Riferimenti: Manuale del Giocatore, §§5.5, 5.12 e 8.9.3.
 
-## 2\. A.82 — Onda Interiore: bonus di SAG al danno
+## 2. A.82 — Onda Interiore: bonus di SAG al danno
 
 Campo dell’app: tecniche_interiori.json.tecniche[24].effetti.TODO(Davide)
 
@@ -2248,7 +2248,7 @@ Applicazione nell’app: partire dal dado della Disciplina, aggiungere una sola 
 
 Questa decisione corregge il comportamento provvisorio «bonus di FOR sì»: il bonus corretto è SAG. Riferimenti: Manuale del Giocatore, §§5.13 e 8.9.4.
 
-## 3\. A.80 — Rinforzi indossati da soli e rimozione dell’armatura
+## 3. A.80 — Rinforzi indossati da soli e rimozione dell’armatura
 
 Campo dell’app: regole.json.rinforzi.TODO(Davide)
 
@@ -2276,7 +2276,7 @@ Applicazione nell’app: distinguere «indossabile autonomamente», «indossato�
 
 Riferimenti: Manuale degli Armamenti, §§7.11.1–7.11.2 e 7.23. Il profilo autonomo è una nuova integrazione approvata.
 
-## 4\. A.86 — Granate e razzi: nessun bonus di Caratteristica al danno
+## 4. A.86 — Granate e razzi: nessun bonus di Caratteristica al danno
 
 Campo dell’app: regole.json.danno_caratteristica.esplosivi.TODO(Davide)
 
@@ -2292,7 +2292,7 @@ Applicazione nell’app: contributo di Caratteristica al danno pari a 0 per ques
 
 Riferimenti: Manuale del Giocatore, §5.13; Manuale degli Armamenti, §7.8 e §§7.20.3–7.20.4.
 
-## 5\. A.88 — Individuare: durata massima a Concentrazione
+## 5. A.88 — Individuare: durata massima a Concentrazione
 
 Campo dell’app: incantesimi.json.incantesimi[88].meccanica.durata.TODO(Davide)
 
@@ -2323,7 +2323,7 @@ Applicazione nell’app: recepire entrambe le colonne, far scegliere la modalit�
 
 Riferimenti: Manuale della Magia, sezione 2 e scheda 23.9. Quesito chiuso mediante recepimento del manuale e conferma dei valori.
 
-## 6\. A.83 — Reperibilità Epica e ricerca con Oratoria
+## 6. A.83 — Reperibilità Epica e ricerca con Oratoria
 
 Campo dell’app: equipaggiamento.json.indice.reperibilita.EP.TODO(Davide)
 
@@ -2411,19 +2411,19 @@ Binocolo: +1 alle osservazioni di dettagli lontani attraverso le ottiche. Corred
 
 ## A.38 — Attacco a distanza: sette chiarimenti
 
-1\. Movimento Tattico e Movimento Fluido si sommano, fino ad annullare la penalità pertinente. Movimento Tattico riduce di 2 la penalità del proprio movimento; Movimento Fluido riduce di 2 il totale pertinente di movimento, terreno e posizione instabile. Considerando il solo movimento: Passo/Corsa/Scatto = 0/−2/−6; con uno dei due Talenti = 0/0/−4; con entrambi = 0/0/−2. Non cambiano le penalità di chi spara contro il personaggio.
+1. Movimento Tattico e Movimento Fluido si sommano, fino ad annullare la penalità pertinente. Movimento Tattico riduce di 2 la penalità del proprio movimento; Movimento Fluido riduce di 2 il totale pertinente di movimento, terreno e posizione instabile. Considerando il solo movimento: Passo/Corsa/Scatto = 0/−2/−6; con uno dei due Talenti = 0/0/−4; con entrambi = 0/0/−2. Non cambiano le penalità di chi spara contro il personaggio.
 
-2\. Attaccare dalla Copertura costa 1 AzM e 1 AzP, comprendendo il tiro. Uscita e rientro non possono superare complessivamente 6 Q. Dal livello 12 le due AzP possono essere usate prima di completare lo stesso movimento e rientrare.
+2. Attaccare dalla Copertura costa 1 AzM e 1 AzP, comprendendo il tiro. Uscita e rientro non possono superare complessivamente 6 Q. Dal livello 12 le due AzP possono essere usate prima di completare lo stesso movimento e rientrare.
 
-3\. La seconda Prova per evitare di colpire un altro soggetto, dopo un tiro fallito contro un bersaglio impegnato o protetto, usa il VA dell’Abilità dell’arma a −4, con i modificatori personali pertinenti come Ferite e Affaticamento. Non si applicano nuovamente distanza, Copertura, movimento o modalità di fuoco del tiro originario. Successo: nessun altro soggetto colpito; fallimento: viene colpito il bersaglio secondario. Fuoco di Precisione porta il −4 a −2. Fuoco Controllato dell’Agente elimina questa seconda Prova e il rischio correlato previsto dalla regola.
+3. La seconda Prova per evitare di colpire un altro soggetto, dopo un tiro fallito contro un bersaglio impegnato o protetto, usa il VA dell’Abilità dell’arma a −4, con i modificatori personali pertinenti come Ferite e Affaticamento. Non si applicano nuovamente distanza, Copertura, movimento o modalità di fuoco del tiro originario. Successo: nessun altro soggetto colpito; fallimento: viene colpito il bersaglio secondario. Fuoco di Precisione porta il −4 a −2. Fuoco Controllato dell’Agente elimina questa seconda Prova e il rischio correlato previsto dalla regola.
 
-4\. Mira Selettiva richiede Tiro Mirato e immobilità per l’intero Round: anche il Passo la fa perdere. Copertura leggera da −2 a 0; media da −4 a −2; totale continua a impedire il tiro.
+4. Mira Selettiva richiede Tiro Mirato e immobilità per l’intero Round: anche il Passo la fa perdere. Copertura leggera da −2 a 0; media da −4 a −2; totale continua a impedire il tiro.
 
-5\. Imbracciare costa 1 AzM, senza Prova. Un’arma già imbracciata non richiede di pagare di nuovo. Qualsiasi movimento, anche forzato, la caduta o il rilascio fanno perdere l’Imbracciatura. Un’arma che la richiede, usata senza, impone −4 VA. Imbracciatura Rapida permette di imbracciare gratuitamente una volta per Round alla propria INI; non conserva l’Imbracciatura durante il movimento.
+5. Imbracciare costa 1 AzM, senza Prova. Un’arma già imbracciata non richiede di pagare di nuovo. Qualsiasi movimento, anche forzato, la caduta o il rilascio fanno perdere l’Imbracciatura. Un’arma che la richiede, usata senza, impone −4 VA. Imbracciatura Rapida permette di imbracciare gratuitamente una volta per Round alla propria INI; non conserva l’Imbracciatura durante il movimento.
 
-6\. Tiro a Bruciapelo Migliorato contro un bersaglio consapevole che impegna il tiratore al Contatto mantiene le penalità del Tiro Ravvicinato: −2 con armi leggere e −4 con armi medie; con Tiro Istintivo diventano 0 e −2. Ogni colpo infligge danno ×2 prima di Difese e AR, senza aggiungere i precedenti +3/+5. Si applicano le normali Difese. Sono ammessi i modi previsti, colpo singolo e Raffica Breve, con armi leggere o medie.
+6. Tiro a Bruciapelo Migliorato contro un bersaglio consapevole che impegna il tiratore al Contatto mantiene le penalità del Tiro Ravvicinato: −2 con armi leggere e −4 con armi medie; con Tiro Istintivo diventano 0 e −2. Ogni colpo infligge danno ×2 prima di Difese e AR, senza aggiungere i precedenti +3/+5. Si applicano le normali Difese. Sono ammessi i modi previsti, colpo singolo e Raffica Breve, con armi leggere o medie.
 
-7\. Movimento Evasivo richiede almeno 1 Q realmente percorso e costa 1 AzM + 1 AzP. Non è compatibile con «Fermo». L’app deve registrarlo esplicitamente, senza dedurlo automaticamente dal Passo; la fine dello spostamento non fa cessare anticipatamente il beneficio previsto.
+7. Movimento Evasivo richiede almeno 1 Q realmente percorso e costa 1 AzM + 1 AzP. Non è compatibile con «Fermo». L’app deve registrarlo esplicitamente, senza dedurlo automaticamente dal Passo; la fine dello spostamento non fa cessare anticipatamente il beneficio previsto.
 
   
 
@@ -2853,7 +2853,7 @@ Quando un Talento non può essere riassunto integralmente, la sintesi lo segnala
 
 Promemoria degli Stati — Aggiornamento: sono state redatte e approvate undici nuove sintesi dal manuale, riportate nel successivo blocco «Stati — Sintesi operative approvate per l’app». Le undici righe originarie dell’app restano non disponibili per un confronto diretto. Ammalato è definito separatamente dalla A.119.
 
-A.72 / A.109 — Il precedente conteggio del censimento è superato dall’ultimo elenco di riferimenti. La A.109 resta sospesa: servono nomi e aspetti, oppure incantesimi.json. Vedere «Quesiti sospesi e dati ancora da fornire» nell’aggiornamento successivo; restano valide le risposte già approvate.
+A.72 / A.109 — Nota storica superata dall’approvazione dell’8 ottobre 2026: i 32 aspetti dell’Anticipazione sono definiti nella sezione «A.109 — Anticipazione: regola comune ai 32 aspetti» e nei punti 1/32–32/32 di questo documento. La A.109 non è più sospesa e non richiede un nuovo elenco o allegato. Rettifica dello stato registrata il 16 ottobre 2026.
 
 A.87: recuperare dai file dei PG le assegnazioni già effettuate e i residui, senza riaprire la scelta dei destinatari.
 
@@ -3295,7 +3295,7 @@ L’ipotesi provvisoria «movimento diviso consentito entro il totale» va quind
 
 Stato verificato al ott 6, 2026
 
-A.109 — Anticipazione: sospesa. L’ultimo elenco incollato in conversazione contiene 32 riferimenti a incantesimi/aspetti, mentre il vecchio testo del quesito parlava di 31. Non si attribuiscono nomi o gradini agli indici per supposizione. Serve il file incantesimi.json oppure un elenco con nome dell’incantesimo, nome dell’aspetto e relativa scheda. Le risposte già approvate sull’Anticipazione restano valide.
+A.109 — Anticipazione: risolta. La precedente sospensione per mancanza dell’elenco è superata dall’approvazione dell’8 ottobre 2026. Tutti i 32 aspetti sono definiti nella sezione «A.109 — Anticipazione: regola comune ai 32 aspetti» e nei punti 1/32–32/32 di questo documento. Restano valide quelle risposte, senza riaprire i gradini già definiti o richiedere un nuovo incantesimi.json. Rettifica dello stato registrata il 16 ottobre 2026.
 
 A.111 — Rimane da verificare la storia dell’Interfaccia neurale di Pablo Zaion; la regola generale sui recuperi pregressi è invece approvata.
 

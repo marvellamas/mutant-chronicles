@@ -4,7 +4,7 @@
 
 ## Armi armature scudi e dotazioni operative
 
-**EDIZIONE 0.62**
+**EDIZIONE 0.64**
 
 Ottobre 2026
 
@@ -829,8 +829,8 @@ Bipiede e Treppiede migliorano la precisione quando l’arma viene utilizzata da
 |  |  |  |  |  |  |
 | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Supporto** | **Compatibilità** | **Bonus al tiro** | **PI** | **REP** | **Costo** |
-| Bipiede | Carabine, fucili e mitragliatrici leggere predisposti | \\+1 VA | 4 | NC | 400 |
-| Treppiede | Armi Pesanti predisposte | \\+2 VA | 6 | NC | 1.200 |
+| Bipiede | Carabine, fucili e mitragliatrici leggere predisposti | \+1 VA | 4 | NC | 400 |
+| Treppiede | Armi Pesanti predisposte | \+2 VA | 6 | NC | 1.200 |
 
 #### **Bipiede**
 
@@ -907,9 +907,9 @@ Gli elmetti del §7.21 hanno un consumo complessivo unico. Catalogo, formati e r
 |  |  |
 | :-: | :-: |
 | **Scudo** | **Armatura passiva** |
-| Piccolo o leggero | \\+1 |
-| Medio o grande | \\+2 |
-| Enorme | \\+3 |
+| Piccolo o leggero | \+1 |
+| Medio o grande | \+2 |
+| Enorme | \+3 |
 
 La protezione passiva dello Scudo si aggiunge all’AR dell’armatura mentre è impugnato e utilizzabile. La Parata attiva usa Difese e segue il Capitolo 5 del Manuale del Giocatore. Le proprietà del danno, le Contromisure e il loro ordine di applicazione sono nel §5.24 dello stesso manuale; le proprietà perforanti riducono l’AR soltanto quando lo dichiarano espressamente.
 
@@ -926,10 +926,10 @@ Gli Scudi ordinari concedono AR passiva e non hanno un bonus alla Parata ravvici
 |  |  |  |  |
 | :-: | :-: | :-: | :-: |
 | **Equipaggiamento** | **AR passiva aggiuntiva** | **Parata ravvicinata** | **Parata a distanza** |
-| Tonfa | 0 | \\+2 VA | **−6 VA:** −8 arma, +2 Difensiva |
-| Scudo piccolo o leggero | \\+1 | 0 | −4 VA |
-| Scudo medio o grande | \\+2 | 0 | −4 VA |
-| Scudo enorme | \\+3 | 0 | −4 VA |
+| Tonfa | 0 | \+2 VA | **−6 VA:** −8 arma, +2 Difensiva |
+| Scudo piccolo o leggero | \+1 | 0 | −4 VA |
+| Scudo medio o grande | \+2 | 0 | −4 VA |
+| Scudo enorme | \+3 | 0 | −4 VA |
 
 Con Tonfa e Scudo si sceglie l’oggetto con cui effettuare ciascuna Parata. Il +2 del Tonfa vale soltanto parando con il Tonfa; il modificatore dello Scudo vale soltanto parando con lo Scudo. L’AR passiva dello Scudo rimane applicabile in entrambi i casi. Restano i benefici pertinenti dei Talenti e degli Scudi Capolavoro. I bonus di Scudo Magico delle Guardie Sacre non si trasferiscono al Tonfa (§7.4.10).
 
@@ -940,7 +940,7 @@ Le protezioni indicano AR totale ed eventuale componente magica separata. Per es
 |  |  |  |  |  |  |  |
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Modello** | **Taglia** | **Mani** | **AR** | **AR magica** | **FOR** | **PI** |
-| Scudo Punisher | Grande | 1 | \\+2 | 0 | 5 | 8 |
+| Scudo Punisher | Grande | 1 | \+2 | 0 | 5 | 8 |
 
   
 
@@ -980,32 +980,32 @@ AR indica il contributo aggiuntivo dello Scudo. Tutti richiedono una mano. Il tr
 |  |  |  |  |  |  |
 | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Catalogo e modello** | **Taglia** | **AR** | **FOR** | **PI** | **MOV** |
-| Commerciale — Scudo piccolo | Piccolo | \\+1 | 3 | 4 | — |
-| Commerciale — Scudo medio | Medio | \\+2 | 5 | 6 | — |
-| Commerciale — Scudo enorme | Enorme | \\+3 | 7 | 8 | −1 Q |
-| Bauhaus — Scudo d’ordinanza BLEU | Medio | \\+2 | 5 | 6 | — |
-| Bauhaus — Scudo d’assalto Blitzer | Piccolo | \\+1 | 3 | 6 | — |
-| Bauhaus — Scudo da breccia dei Dragoni | Enorme | \\+3 | 7 | 10 | −1 Q |
-| Bauhaus — Scudo delle Guardie Ducali | Medio | \\+2 | 5 | 8 | — |
-| Alleanza — Scudo compatto ASA | Piccolo | \\+1 | 3 | 4 | — |
-| Alleanza — Scudo Punisher | Medio | \\+2 | 5 | 8 | — |
-| Alleanza — Scudo da sfondamento Bastion | Enorme | \\+3 | 7 | 10 | −1 Q |
-| Capitol — Scudo antisommossa CSS | Medio | \\+2 | 5 | 6 | — |
-| Capitol — Scudo tattico Alpha | Medio | \\+2 | 5 | 6 | — |
-| Capitol — Scudo da breccia Free Marines | Enorme | \\+3 | 7 | 10 | −1 Q |
-| Cybertronic — Scudo della Sicurezza | Medio | \\+2 | 5 | 6 | — |
-| Cybertronic — Scudo d’assalto Chasseur | Medio | \\+2 | 5 | 8 | — |
-| Cybertronic — Scudo pesante Reaver | Enorme | \\+3 | 7 | 10 | −1 Q |
-| Imperial — Scudo da trincea Trencher | Enorme | \\+3 | 7 | 10 | −1 Q |
-| Imperial — Scudo d’assalto dei Clan | Piccolo | \\+1 | 3 | 6 | — |
-| Imperial — Scudo della Young Guard | Medio | \\+2 | 5 | 8 | — |
-| Mishima — Scudo da campo Ashigaru | Medio | \\+2 | 5 | 6 | — |
-| Mishima — Scudo da duello Samurai | Piccolo | \\+1 | 3 | 6 | — |
-| Mishima — Scudo pesante Hatamoto | Enorme | \\+3 | 7 | 10 | −1 Q |
-| Fratellanza — Scudo del Pellegrino | Piccolo | \\+1 | 3 | 6 | — |
-| Fratellanza — Scudo della Sentinella | Medio | \\+2 | 5 | 6 | — |
-| Fratellanza — Scudo dei Sacri Guerrieri | Enorme | \\+3 | 7 | 10 | −1 Q |
-| Fratellanza — Scudo delle Guardie Sacre | Medio | \\+2 | 5 | 6 | — |
+| Commerciale — Scudo piccolo | Piccolo | \+1 | 3 | 4 | — |
+| Commerciale — Scudo medio | Medio | \+2 | 5 | 6 | — |
+| Commerciale — Scudo enorme | Enorme | \+3 | 7 | 8 | −1 Q |
+| Bauhaus — Scudo d’ordinanza BLEU | Medio | \+2 | 5 | 6 | — |
+| Bauhaus — Scudo d’assalto Blitzer | Piccolo | \+1 | 3 | 6 | — |
+| Bauhaus — Scudo da breccia dei Dragoni | Enorme | \+3 | 7 | 10 | −1 Q |
+| Bauhaus — Scudo delle Guardie Ducali | Medio | \+2 | 5 | 8 | — |
+| Alleanza — Scudo compatto ASA | Piccolo | \+1 | 3 | 4 | — |
+| Alleanza — Scudo Punisher | Medio | \+2 | 5 | 8 | — |
+| Alleanza — Scudo da sfondamento Bastion | Enorme | \+3 | 7 | 10 | −1 Q |
+| Capitol — Scudo antisommossa CSS | Medio | \+2 | 5 | 6 | — |
+| Capitol — Scudo tattico Alpha | Medio | \+2 | 5 | 6 | — |
+| Capitol — Scudo da breccia Free Marines | Enorme | \+3 | 7 | 10 | −1 Q |
+| Cybertronic — Scudo della Sicurezza | Medio | \+2 | 5 | 6 | — |
+| Cybertronic — Scudo d’assalto Chasseur | Medio | \+2 | 5 | 8 | — |
+| Cybertronic — Scudo pesante Reaver | Enorme | \+3 | 7 | 10 | −1 Q |
+| Imperial — Scudo da trincea Trencher | Enorme | \+3 | 7 | 10 | −1 Q |
+| Imperial — Scudo d’assalto dei Clan | Piccolo | \+1 | 3 | 6 | — |
+| Imperial — Scudo della Young Guard | Medio | \+2 | 5 | 8 | — |
+| Mishima — Scudo da campo Ashigaru | Medio | \+2 | 5 | 6 | — |
+| Mishima — Scudo da duello Samurai | Piccolo | \+1 | 3 | 6 | — |
+| Mishima — Scudo pesante Hatamoto | Enorme | \+3 | 7 | 10 | −1 Q |
+| Fratellanza — Scudo del Pellegrino | Piccolo | \+1 | 3 | 6 | — |
+| Fratellanza — Scudo della Sentinella | Medio | \+2 | 5 | 6 | — |
+| Fratellanza — Scudo dei Sacri Guerrieri | Enorme | \+3 | 7 | 10 | −1 Q |
+| Fratellanza — Scudo delle Guardie Sacre | Medio | \+2 | 5 | 6 | — |
 
 #### **Qualità reperibilità e costi**
 
@@ -1215,21 +1215,21 @@ I valori seguenti sono i modificatori propri dello Scudo, prima di armatura, FOR
 | :-: | :-: | :-: |
 | **Modelli o condizione** | **Ravvicinata** | **A distanza** |
 | Commerciali | 0 | −4 VA |
-| BLEU e CSS | \\+1 VA contro Corpo a corpo; altrimenti 0 | −4 VA |
-| Blitzer, Clan, Samurai e Pellegrino | \\+1 VA | −4 VA |
-| Guardie Ducali e Young Guard | \\+1 VA | −4 VA |
+| BLEU e CSS | \+1 VA contro Corpo a corpo; altrimenti 0 | −4 VA |
+| Blitzer, Clan, Samurai e Pellegrino | \+1 VA | −4 VA |
+| Guardie Ducali e Young Guard | \+1 VA | −4 VA |
 | Dragoni e Free Marines | 0 | −4 VA |
 | Compatto ASA aperto | 0 | −4 VA |
-| Punisher | \\+1 VA | −3 VA |
+| Punisher | \+1 VA | −3 VA |
 | Bastion, Hatamoto e Sacri Guerrieri | 0 | −4 VA |
 | Alpha e Sentinella | 0 | −3 VA |
-| Sicurezza Cybertronic con SIN 1 | \\+1 VA | −3 VA |
-| Chasseur con SIN 2 | \\+2 VA | −2 VA |
-| Reaver con SIN 1 | \\+1 VA | −3 VA |
+| Sicurezza Cybertronic con SIN 1 | \+1 VA | −3 VA |
+| Chasseur con SIN 2 | \+2 VA | −2 VA |
+| Reaver con SIN 1 | \+1 VA | −3 VA |
 | Scudi Cybertronic senza SIN | 0 | −4 VA |
 | Trencher e Ashigaru | 0 | −4 VA |
 | Guardie Sacre a riposo | 0 | −4 VA |
-| Guardie Sacre con Scudo Magico | \\+2 VA | −3 VA |
+| Guardie Sacre con Scudo Magico | \+2 VA | −3 VA |
 
 Esempio: armatura AR 3 e Scudo Medio AR +2 forniscono AR totale 5. Contro 10 danni, senza Parata riuscita passano 5 danni. Con una Parata ordinaria riuscita il danno viene dimezzato a 5, poi l’AR lo assorbe interamente. Contro danni Eterei si applica soltanto l’eventuale componente magica della protezione.
 
@@ -1316,7 +1316,7 @@ Max Q è la gittata massima; CC è la capacità del caricatore, della cella o de
 
 ### **Specializzazioni dei modelli a distanza**
 
-Pistole: pistole ordinarie e mitragliette, compreso il Mitra compatto e i modelli Colt Hammershot, MP105, P1000 e Nemesis 210. Restano Armi Leggere in tutte le modalità; la Raffica non li trasferisce nella famiglia Mitragliatori. La SA30 a dardi usa Pistole per il +1 VA, ma Danno calibrato esclude il +1 danno.
+Pistole: pistole ordinarie e mitragliette, compreso il Mitra compatto e le linee Colt e Bolter Capitol e i modelli MP105, P1000 e Nemesis 210. Restano Armi Leggere in tutte le modalità; la Raffica non li trasferisce nella famiglia Mitragliatori. La SA30 a dardi usa Pistole per il +1 VA, ma Danno calibrato esclude il +1 danno.
 
 Fucili di Precisione: Eruptor, Mefisto, Archer e Assailant. Fucili d’Assalto: M50, AR3000, Volcano, Invader, Shogun e Panzerknacker. Carabine: Interceptor, Windrider N4, MP105GW, Nemesis 21 e Rainy Dayer. Mandible e Airbrush appartengono invece a Fucili a Pallini e Doppiette, insieme agli altri modelli della famiglia.
 
@@ -1414,8 +1414,8 @@ Pugnale e Ascia leggera sono gli stessi oggetti del catalogo ravvicinato e conse
 |  |  |  |  |  |  |
 | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Modello** | **Abilità** | **Mani** | **PI** | **MOV** | **Modalità** |
-| Mitragliatore leggero | Pesanti | 2 | 8 | \\-1 | RM RL FS |
-| Mitragliatore pesante | Pesanti | 2 | 8 | \\-2 | RM RL FS |
+| Mitragliatore leggero | Pesanti | 2 | 8 | \-1 | RM RL FS |
+| Mitragliatore pesante | Pesanti | 2 | 8 | \-2 | RM RL FS |
 
   
 
@@ -1439,7 +1439,7 @@ Pugnale e Ascia leggera sono gli stessi oggetti del catalogo ravvicinato e conse
 | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Modello** | **Abilità** | **Mani** | **PI** | **MOV** | **Modalità** |
 | Lanciagranate | Medie | 2 | 6 | 0 | S TR |
-| Lanciarazzi | Pesanti | 2 | 8 | \\-1 | S |
+| Lanciarazzi | Pesanti | 2 | 8 | \-1 | S |
 
   
 
@@ -1533,7 +1533,7 @@ Arco da guerra. Incoccare è compreso nell’attacco; Tiro Rapido consuma due fr
 | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Modello** | **Abilità** | **Mani** | **PI** | **MOV** | **Modalità** |
 | Fucile al plasma | Medie | 2 | 6 | 0 | S RB TR |
-| Lanciafiamme | Pesanti | 2 | 8 | \\-1 | S |
+| Lanciafiamme | Pesanti | 2 | 8 | \-1 | S |
 
   
 
@@ -1580,7 +1580,7 @@ Il prezzo di ciascuna pistola di base comprende un caricatore vuoto specifico; m
 
 Un modulo integrato usa la propria Abilità, gittata, INC, capacità e modalità di tiro. Prima di ogni attacco si sceglie il profilo da usare. Le alimentazioni sono separate; il passaggio di profilo non concede attacchi gratuiti. Il costo dell’insieme comprende il modulo. PI, Qualità e MOV sono condivisi con l’arma principale e non si sommano.
 
-Le granate a mano utilizzano Armi da Lancio (DES); i lanciagranate autonomi e integrati utilizzano Armi Medie (INT), anche quando montati su una pistola o su un’Arma Pesante. I lanciarazzi utilizzano Armi Pesanti (FOR). Il modulo dell’Ironfist 15 richiede due mani; quelli del Bolter 20 e della Nemesis 221 una mano. Imbracciatura e Postura si applicano ai lanciagranate secondo il §5.10.
+Le granate a mano utilizzano Armi da Lancio (DES); i lanciagranate autonomi e integrati utilizzano Armi Medie (INT), anche quando montati su una pistola o su un’Arma Pesante. I lanciarazzi utilizzano Armi Pesanti (FOR). Il lanciagranate Ironfist integrato nella Bolter 15 Ironfist richiede due mani; quello della Nemesis 221 una mano. Imbracciatura e Postura si applicano ai lanciagranate secondo il §5.10.
 
 Danno calibrato. Per SA30 e SA50F, i bonus ordinari al danno di Classi, Talenti e Manovre non modificano il danno del dardo. Il Magistrale si applica normalmente; sono ammessi modificatori specifici della munizione. Tiro Mirato concede il bonus al VA ma non il bonus ordinario al danno. L’effetto del contenuto del dardo si applica soltanto se almeno 1 danno supera l’Armatura. Il lanciatore determina danno e gittata, il carico del dardo determina l’effetto aggiuntivo. Le due armi usano gli stessi dardi e includono quattro dardi stordenti; effetti, Prove Salvezza e prezzi dei dardi sono nel §7.20.8.
 
@@ -1591,11 +1591,11 @@ Danno calibrato. Per SA30 e SA50F, i bonus ordinari al danno di Classi, Talenti 
 |  |  |  |  |  |  |  |  |
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Modello** | **Danno** | **AC** | **VA** | **FOR** | **Max Q** | **CC** | **INC** |
-| AXIS 227 | 1d6 | 1 | \\+1 | 4 | 30 | 15 | 7 |
+| AXIS 227 | 1d6 | 1 | \+1 | 4 | 30 | 15 | 7 |
 | Piranha | 1d6+1 | 1 | 0 | 2 | 35 | 8 | 8 |
 | Punisher | 1d6+2 | 1 | 0 | 4 | 25 | 10 | 6 |
 | Hellblazer | 1d6+1 | 1 | 0 | 3 | 30 | 30 | 6 |
-| KEP 808 | 1d6+1 | 1d3 | \\+1 | 5 | 20 | 10 | 6 |
+| KEP 808 | 1d6+1 | 1d3 | \+1 | 5 | 20 | 10 | 6 |
 
   
 
@@ -1668,7 +1668,7 @@ Lanciagranate Alleanza. Richiede Imbracciatura; si applica Postura. Munizione di
 | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Modello** | **Abilità** | **Mani** | **PI** | **MOV** | **Modalità** |
 | Lanciagranate Carabina Punisher | Medie | 2 | Condivisi | 0 | S |
-| Lanciagranate Deathlock Drum | Medie | 2 | Condivisi | \\-3 | S TR |
+| Lanciagranate Deathlock Drum | Medie | 2 | Condivisi | \-3 | S TR |
 
   
 
@@ -1688,7 +1688,7 @@ Lanciagranate Alleanza. Richiede Imbracciatura; si applica Postura. Munizione di
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Modello** | **Danno** | **AC** | **VA** | **FOR** | **Max Q** | **CC** | **INC** |
 | Deathlock Drum | 1d10+3 | 1 | 0 | 7 | 1000 | 750 | 6 |
-| Nimrod Autocannon | 2d8+5 | 1 | \\+1 | 8 | 150 | 300 | 7 |
+| Nimrod Autocannon | 2d8+5 | 1 | \+1 | 8 | 150 | 300 | 7 |
 | Gehemmapuker | 2d6 | 1d3 | 0 | 7 | 15 | 50 | 7 |
 
   
@@ -1696,8 +1696,8 @@ Lanciagranate Alleanza. Richiede Imbracciatura; si applica Postura. Munizione di
 |  |  |  |  |  |  |
 | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Modello** | **Abilità** | **Mani** | **PI** | **MOV** | **Modalità** |
-| Deathlock Drum | Pesanti | 2 | 8 | \\-3 | RM RL FS |
-| Nimrod Autocannon | Pesanti | 2 | 8 | \\-3 | RM RL FS |
+| Deathlock Drum | Pesanti | 2 | 8 | \-3 | RM RL FS |
+| Nimrod Autocannon | Pesanti | 2 | 8 | \-3 | RM RL FS |
 | Gehemmapuker | Pesanti | 2 | 6 | 0 | S |
 
   
@@ -1718,11 +1718,11 @@ Lanciagranate Alleanza. Richiede Imbracciatura; si applica Postura. Munizione di
 |  |  |  |  |  |  |  |  |
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Modello** | **Danno** | **AC** | **VA** | **FOR** | **Max Q** | **CC** | **INC** |
-| HG10 | 1d6 | 1 | \\+1 | 3 | 10 | 4 | 7 |
-| HG12 | 1d6+1 | 1 | \\+1 | 2 | 10 | 4 | 8 |
-| Equalizer | 1d6+3 | 1 | \\+1 | 4 | 20 | 4 | 8 |
-| MP105 | 1d6+1 | 1 | \\+1 | 4 | 45 | 30 | 9 |
-| SA30 a dardi | 1d4+1 | 1 | \\+1 | 2 | 10 | 4 | 6 |
+| HG10 | 1d6 | 1 | \+1 | 3 | 10 | 4 | 7 |
+| HG12 | 1d6+1 | 1 | \+1 | 2 | 10 | 4 | 8 |
+| Equalizer | 1d6+3 | 1 | \+1 | 4 | 20 | 4 | 8 |
+| MP105 | 1d6+1 | 1 | \+1 | 4 | 45 | 30 | 9 |
+| SA30 a dardi | 1d4+1 | 1 | \+1 | 2 | 10 | 4 | 6 |
 
   
 
@@ -1757,7 +1757,7 @@ Lanciagranate Alleanza. Richiede Imbracciatura; si applica Postura. Munizione di
 |  |  |  |  |  |  |  |  |
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Modello** | **Danno** | **AC** | **VA** | **FOR** | **Max Q** | **CC** | **INC** |
-| HD14M | 1d6 | 2 | \\+1 | 4 | 10 | 6 | 6 |
+| HD14M | 1d6 | 2 | \+1 | 4 | 10 | 6 | 6 |
 | HG14 | 1d6+1 | 2 | 0 | 5 | 30 | 6 | 8 |
 
   
@@ -1840,7 +1840,7 @@ MP105GW. Carabina automatica; modello distinto dalla pistola MP105.
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Modello** | **Danno** | **AC** | **VA** | **FOR** | **Max Q** | **CC** | **INC** |
 | PSG99 | 1d6+3 | 1 | 0 | 5 | 1400 | 30 | 9 |
-| SA50F a dardi | 1d6+1 | 1 | \\+1 | 4 | 50 | 4 | 7 |
+| SA50F a dardi | 1d6+1 | 1 | \+1 | 4 | 50 | 4 | 7 |
 
   
 
@@ -1874,9 +1874,9 @@ MP105GW. Carabina automatica; modello distinto dalla pistola MP105.
 |  |  |  |  |  |  |
 | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Modello** | **Abilità** | **Mani** | **PI** | **MOV** | **Modalità** |
-| MG40 | Pesanti | 2 | 9 | \\-1 | RM RL FS |
-| MG80 | Pesanti | 2 | 9 | \\-2 | RM RL FS |
-| ARG17 | Pesanti | 2 | 9 | \\-1 | S TR |
+| MG40 | Pesanti | 2 | 9 | \-1 | RM RL FS |
+| MG80 | Pesanti | 2 | 9 | \-2 | RM RL FS |
+| ARG17 | Pesanti | 2 | 9 | \-1 | S TR |
 
   
 
@@ -1891,24 +1891,26 @@ MP105GW. Carabina automatica; modello distinto dalla pistola MP105.
 
 ### **Capitol**
 
-#### **Revolver**
+#### **Revolver Colt**
 
 |  |  |  |  |  |  |  |  |
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Modello** | **Danno** | **AC** | **VA** | **FOR** | **Max Q** | **CC** | **INC** |
-| Bolter 09 | 1d6 | 1 | 0 | 3 | 60 | 10 | 6 |
-| Enforcer | 1d6+1 | 1 | 0 | 2 | 15 | 6 | 6 |
-| Jemson 45 | 1d6+2 | 1 | 0 | 3 | 15 | 6 | 6 |
-| Colt Hammershot | 1d6+3 | 1 | −1 | 5 | 10 | 6 | 5 |
+| Colt Enforcer | 1d6 | 1 | 0 | 2 | 10 | 4 | 6 |
+| Colt Trooper | 1d6 | 1 | 0 | 2 | 15 | 6 | 6 |
+| Colt Frontier | 1d6+1 | 1 | 0 | 3 | 20 | 6 | 6 |
+| Colt Jamson 45 | 1d6+2 | 1 | 0 | 3 | 15 | 6 | 6 |
+| Colt Hammershot | 1d6+3 | 1 | −1 | 5 | 10 | 4 | 5 |
 
   
 
 |  |  |  |  |  |  |
 | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Modello** | **Abilità** | **Mani** | **PI** | **MOV** | **Modalità** |
-| Bolter 09 | Leggere | 1 | 4 | 0 | S TR |
-| Enforcer | Leggere | 1 | 4 | 0 | S TR |
-| Jemson 45 | Leggere | 1 | 4 | 0 | S TR |
+| Colt Enforcer | Leggere | 1 | 4 | 0 | S TR |
+| Colt Trooper | Leggere | 1 | 4 | 0 | S TR |
+| Colt Frontier | Leggere | 1 | 4 | 0 | S TR |
+| Colt Jamson 45 | Leggere | 1 | 4 | 0 | S TR |
 | Colt Hammershot | Leggere | 1 | 4 | 0 | S TR |
 
   
@@ -1916,22 +1918,29 @@ MP105GW. Carabina automatica; modello distinto dalla pistola MP105.
 |  |  |  |  |  |
 | :-: | :-: | :-: | :-: | :-: |
 | **Modello** | **Qualità** | **PS INT** | **REP** | **Costo proposto** |
-| Bolter 09 | Comune | 10 | CO | 1.450 |
-| Enforcer | Comune | 10 | CO | 1.200 |
-| Jemson 45 | Comune | 10 | CO | 1.600 |
+| Colt Enforcer | Comune | 10 | CO | 1.200 |
+| Colt Trooper | Comune | 10 | CO | 1.000 |
+| Colt Frontier | Comune | 10 | CO | 1.500 |
+| Colt Jamson 45 | Comune | 10 | CO | 1.600 |
 | Colt Hammershot | Rara | 14 | RA | 3.500 |
 
-**Colt Hammershot.** Revolver pesante. Specializzazione: Pistole. Usa proiettili da pistola (§7.20.9) e un tamburo fisso da sei colpi. La ricarica manuale inserisce fino a 2 cartucce in 1 AzP, oppure fino a 4 con Ricarica Migliorata. Un carichino Ricarica per Tamburo compatibile, già preparato e accessibile, trasferisce fino a 6 colpi in 1 AzP, entro gli spazi liberi. È necessaria la mano libera; Ricarica Rapida permette una sola operazione di ricarica gratuita per Round, alla propria Iniziativa (§7.20.2). Il prezzo comprende il tamburo, mentre le munizioni si acquistano separatamente. Non possiede proprietà aggiuntive.
+Linea Colt. Revolver Capitol a una mano, con Abilità Armi Leggere (DES), Specializzazione Pistole e proiettili da pistola (§7.20.9). Tutti dispongono di Colpo Singolo (S) e Tiro Rapido (TR). La Colt Enforcer ha canna corta ed è occultabile; Trooper e Jamson 45 hanno canna normale, Frontier canna lunga e Hammershot canna rinforzata.
 
-#### **Pistole semiautomatiche e automatiche**
+Colt Hammershot. Revolver pesante con tamburo fisso da quattro colpi. La ricarica manuale inserisce fino a 2 cartucce in 1 AzP, oppure fino a 4 con Ricarica Migliorata. Un carichino Ricarica per Tamburo compatibile, già preparato e accessibile, trasferisce fino a 4 colpi in 1 AzP, entro gli spazi liberi; gli eventuali colpi non trasferiti restano nel carichino. È necessaria la mano libera; Ricarica Rapida permette una sola operazione di ricarica gratuita per Round, alla propria Iniziativa (§7.20.2). Il prezzo comprende il tamburo; le munizioni si acquistano separatamente.
+
+La Colt Enforcer ha un tamburo da quattro colpi; Trooper, Frontier e Jamson 45 hanno un tamburo da sei. La ricarica segue il §7.20.2 e non supera mai gli spazi liberi del modello.
+
+Per Trooper e Frontier: fino a 2 colpi per AzP, 4 con Ricarica Migliorata o 6 con carichino compatibile preparato, entro gli spazi liberi. Tamburo incluso nel prezzo; munizioni e carichini separati.
+
+#### **Pistole Bolter semiautomatiche e automatiche**
 
 |  |  |  |  |  |  |  |  |
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Modello** | **Danno** | **AC** | **VA** | **FOR** | **Max Q** | **CC** | **INC** |
 | Bolter 10 | 1d6 | 1 | 0 | 3 | 15 | 15 | 5 |
-| Bolter 13 | 1d6 | 1 | 0 | 3 | 15 | 20 | 6 |
-| Bolter 20 | 1d6+1 | 1 | \\-1 | 4 | 15 | 25 | 4 |
-| Ironfist 15 | 1d6 | 1 | 0 | 5 | 25 | 30 | 4 |
+| Bolter 13 | 1d6 | 1 | 0 | 3 | 20 | 20 | 6 |
+| Bolter 15 Ironfist | 1d6 | 1 | 0 | 5 | 20 | 20 | 4 |
+| Bolter 20 | 1d6+1 | 1 | \-1 | 4 | 15 | 30 | 4 |
 
   
 
@@ -1939,9 +1948,9 @@ MP105GW. Carabina automatica; modello distinto dalla pistola MP105.
 | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Modello** | **Abilità** | **Mani** | **PI** | **MOV** | **Modalità** |
 | Bolter 10 | Leggere | 1 | 4 | 0 | S TR |
-| Bolter 13 | Leggere | 1 | 4 | 0 | S RB TR |
-| Bolter 20 | Leggere | 1 | 6 | 0 | S RB TR |
-| Ironfist 15 | Leggere | 1 | 6 | 0 | S RB TR |
+| Bolter 13 | Leggere | 1 | 4 | 0 | S TR RB |
+| Bolter 15 Ironfist | Leggere | 1 | 6 | 0 | S TR RB |
+| Bolter 20 | Leggere | 1 | 6 | 0 | S TR RB |
 
   
 
@@ -1950,18 +1959,23 @@ MP105GW. Carabina automatica; modello distinto dalla pistola MP105.
 | **Modello** | **Qualità** | **PS INT** | **REP** | **Costo** |
 | Bolter 10 | Comune | 10 | CO | 1.000 |
 | Bolter 13 | Comune | 10 | CO | 1.300 |
+| Bolter 15 Ironfist | Comune | 10 | CO | 5.100 |
 | Bolter 20 | Comune | 10 | CO | 3.600 |
-| Ironfist 15 | Comune | 10 | CO | 5.100 |
 
-**Bolter 10.** Pistola semiautomatica economica di larga produzione, con caricatore da quindici colpi e gittata 15 Q. Non possiede proprietà aggiuntive. La Bolter 13 porta il caricatore a venti colpi e INC a 6, aggiungendo Raffica Breve.
+Bolter 10. Pistola semiautomatica economica di larga produzione, con canna corta, occultabile, caricatore da quindici colpi e gittata 15 Q. Dispone di Colpo Singolo e Tiro Rapido.
+
+Bolter 13. Canna normale, caricatore da venti colpi e gittata 20 Q; INC 6. Dispone di Colpo Singolo, Tiro Rapido e Raffica Breve.
+
+Bolter 15 Ironfist. Caricatore da venti colpi, gittata 20 Q e modalità Colpo Singolo, Tiro Rapido e Raffica Breve. Comprende il lanciagranate Ironfist, con profilo separato e PI condivisi.
+
+Bolter 20. Canna normale, danno 1d6+1, caricatore da trenta colpi e gittata 15 Q. Dispone di Colpo Singolo, Tiro Rapido e Raffica Breve. Non comprende un lanciagranate integrato.
 
 #### **Lanciagranate integrato**
 
 |  |  |  |  |  |  |  |  |
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Modello** | **Danno** | **AC** | **VA** | **FOR** | **Max Q** | **CC** | **INC** |
-| Lanciagranate Bolter 20 | Munizione | Mun. | \\-1 | 4 | 25 | 1 | 4 |
-| Lanciagranate Ironfist 15 | Munizione | Mun. | 0 | 5 | 30 | 4 | 4 |
+| Lanciagranate Ironfist | Munizione | Mun. | 0 | 5 | 30 | 4 | 4 |
 | Lanciagranate CAR24 | Munizione | Mun. | 0 | 4 | 30 | 1 | 5 |
 | Lanciagranate M50 | Munizione | Mun. | 0 | 5 | 70 | 1 | 3 |
 
@@ -1970,8 +1984,7 @@ MP105GW. Carabina automatica; modello distinto dalla pistola MP105.
 |  |  |  |  |  |  |
 | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Modello** | **Abilità** | **Mani** | **PI** | **MOV** | **Modalità** |
-| Lanciagranate Bolter 20 | Medie | 1 | Condivisi | 0 | S |
-| Lanciagranate Ironfist 15 | Medie | 2 | Condivisi | 0 | S |
+| Lanciagranate Ironfist | Medie | 2 | Condivisi | 0 | S |
 | Lanciagranate CAR24 | Medie | 2 | Condivisi | 0 | S |
 | Lanciagranate M50 | Medie | 2 | Condivisi | 0 | S |
 
@@ -1980,14 +1993,11 @@ MP105GW. Carabina automatica; modello distinto dalla pistola MP105.
 |  |  |  |  |  |
 | :-: | :-: | :-: | :-: | :-: |
 | **Modello** | **Qualità** | **PS INT** | **REP** | **Costo proposto** |
-| Lanciagranate Bolter 20 | Comune | 10 | Come arma | Incluso |
-| Lanciagranate Ironfist 15 | Comune | 10 | Come arma | Incluso |
+| Lanciagranate Ironfist | Comune | 10 | Come arma | Incluso |
 | Lanciagranate CAR24 | Comune | 10 | Come arma | Incluso |
 | Lanciagranate M50 | Comune | 10 | Come arma | Incluso |
 
-**Lanciagranate Bolter 20. Munizione di riferimento:** Granata standard a frammentazione.
-
-**Lanciagranate Ironfist 15. Munizione di riferimento:** Granata standard a frammentazione.
+Lanciagranate Ironfist. Integrato nella Bolter 15 Ironfist. Munizione di riferimento: Granata standard a frammentazione.
 
 **Lanciagranate CAR24. Munizione di riferimento:** Granata standard a frammentazione.
 
@@ -2104,9 +2114,9 @@ SR30. Carabina priva di Raffiche Breve, Media e Lunga.
 |  |  |  |  |  |  |
 | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Modello** | **Abilità** | **Mani** | **PI** | **MOV** | **Modalità** |
-| M606 | Pesanti | 2 | 8 | \\-1 | RM RL FS |
-| Improved M89 | Pesanti | 2 | 8 | \\-2 | RM RL FS |
-| Lanciarazzi Deuce | Pesanti | 2 | 8 | \\-2 | S TR |
+| M606 | Pesanti | 2 | 8 | \-1 | RM RL FS |
+| Improved M89 | Pesanti | 2 | 8 | \-2 | RM RL FS |
+| Lanciarazzi Deuce | Pesanti | 2 | 8 | \-2 | S TR |
 
   
 
@@ -2127,7 +2137,7 @@ SR30. Carabina priva di Raffiche Breve, Media e Lunga.
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Modello** | **Danno** | **AC** | **VA** | **FOR** | **Max Q** | **CC** | **INC** |
 | P500 | 1d6 | 1 | 0 | 3 | 30 | 12 | 7 |
-| P1000 | 1d6 | 1 | \\+1 | 3 | 60 | 30 | 7 |
+| P1000 | 1d6 | 1 | \+1 | 3 | 60 | 30 | 7 |
 
   
 
@@ -2177,7 +2187,7 @@ SR30. Carabina priva di Raffiche Breve, Media e Lunga.
 |  |  |  |  |  |  |  |  |
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Modello** | **Danno** | **AC** | **VA** | **FOR** | **Max Q** | **CC** | **INC** |
-| CAW2000 | 1d6+1 | 1 | \\+1 | 4 | 80 | 30 | 8 |
+| CAW2000 | 1d6+1 | 1 | \+1 | 4 | 80 | 30 | 8 |
 | AR3000 | 1d6+2 | 1 | 0 | 5 | 150 | 50 | 7 |
 
   
@@ -2203,7 +2213,7 @@ CAW2000. Carabina automatica.
 |  |  |  |  |  |  |  |  |
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Modello** | **Danno** | **AC** | **VA** | **FOR** | **Max Q** | **CC** | **INC** |
-| Lanciagranate CAW2000 | Munizione | Mun. | \\+1 | 4 | 40 | 2 | 7 |
+| Lanciagranate CAW2000 | Munizione | Mun. | \+1 | 4 | 40 | 2 | 7 |
 | Lanciagranate AR3000 | Munizione | Mun. | 0 | 5 | 70 | 4 | 7 |
 
   
@@ -2261,9 +2271,9 @@ CAW2000. Carabina automatica.
 |  |  |  |  |  |  |
 | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Modello** | **Abilità** | **Mani** | **PI** | **MOV** | **Modalità** |
-| TSW4000 | Pesanti | 2 | 8 | \\-1 | RM RL FS |
-| SSW4200P | Pesanti | 2 | 8 | \\-2 | RM RL FS |
-| Lanciarazzi SSW5500 | Pesanti | 2 | 8 | \\-1 | S TR |
+| TSW4000 | Pesanti | 2 | 8 | \-1 | RM RL FS |
+| SSW4200P | Pesanti | 2 | 8 | \-2 | RM RL FS |
+| Lanciarazzi SSW5500 | Pesanti | 2 | 8 | \-1 | S TR |
 
   
 
@@ -2287,10 +2297,10 @@ Tutti i modelli e i moduli possiedono Purificatrice 1, con il bonus separato dai
 | **Modello** | **Danno** | **AC** | **VA** | **FOR** | **Max Q** | **CC** | **INC** |
 | Eliminator | 1d6+1 | 1 | −2 | 3 | 70 | 15 | 7 |
 | Nemesis 100 | 1d6 | 1 | 0 | 3 | 15 | 8 | 5 |
-| Nemesis 210 | 1d6 | 1 | \\+1 | 3 | 20 | 20 | 7 |
-| Nemesis 214 | 1d6 | 1 | \\+1 | 4 | 40 | 20 | 7 |
-| Nemesis 221 | 1d6 | 1 | \\+1 | 4 | 40 | 20 | 7 |
-| Nemesis 21 | 1d6+1 | 1 | \\+1 | 4 | 60 | 20 | 7 |
+| Nemesis 210 | 1d6 | 1 | \+1 | 3 | 20 | 20 | 7 |
+| Nemesis 214 | 1d6 | 1 | \+1 | 4 | 40 | 20 | 7 |
+| Nemesis 221 | 1d6 | 1 | \+1 | 4 | 40 | 20 | 7 |
+| Nemesis 21 | 1d6+1 | 1 | \+1 | 4 | 60 | 20 | 7 |
 
   
 
@@ -2356,8 +2366,8 @@ Tutti i modelli e i moduli possiedono Purificatrice 1, con il bonus separato dai
 |  |  |  |  |  |  |  |  |
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Modello** | **Danno** | **AC** | **VA** | **FOR** | **Max Q** | **CC** | **INC** |
-| Lanciafiamme Nemesis 214 | 2d4 | 1d3 | \\+1 | 4 | 8 | 5 | 8 |
-| Lanciagranate Nemesis 221 | Munizione | Mun. | \\+1 | 4 | 30 | 1 | 7 |
+| Lanciafiamme Nemesis 214 | 2d4 | 1d3 | \+1 | 4 | 8 | 5 | 8 |
+| Lanciagranate Nemesis 221 | Munizione | Mun. | \+1 | 4 | 30 | 1 | 7 |
 | Lanciagranate Volcano | Munizione | Mun. | 0 | 5 | 50 | 1 | 7 |
 | Lanciafiamme Eruptor | 1d10 | 1d3 | 0 | 6 | 12 | 10 | 8 |
 | Lanciafiamme Purifier | 1d10+2 | 1d3 | 0 | 7 | 20 | 15 | 7 |
@@ -2811,14 +2821,15 @@ Il prezzo comprende un caricatore vuoto specifico. Le munizioni e i caricatori a
 |  |  |
 | :-: | :-: |
 | **Modello o insieme** | **Costo di riferimento** |
-| Bolter 09 | 1.450 |
-| Enforcer | 1.200 |
-| Jemson 45 | 1.600 |
+| Colt Enforcer | 1.200 |
+| Colt Trooper | 1.000 |
+| Colt Frontier | 1.500 |
+| Colt Jamson 45 | 1.600 |
 | Colt Hammershot | 3.500 |
 | Bolter 10 | 1.000 |
 | Bolter 13 | 1.300 |
-| Bolter 20 con modulo | 3.600 |
-| Ironfist 15 con modulo | 5.100 |
+| Bolter 15 Ironfist con modulo | 5.100 |
+| Bolter 20 | 3.600 |
 | M310 | 1.350 |
 | M510 | 1.000 |
 | M516S | 1.100 |
@@ -2979,8 +2990,8 @@ Per ogni punto di FOR mancante rispetto al requisito si applica un ulteriore −
 |  |  |  |  |  |  |  |  |
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Rinforzo** | **AR** | **FOR richiesta** | **PI** | **Qualità** | **PS INT** | **REP** | **Costo** |
-| Leggero | \\+1 | \\+1 | 6 | Comune | 10 | NC | 1.000 |
-| Pesante | \\+2 | \\+2 | 8 | Comune | 10 | NC | 2.000 |
+| Leggero | \+1 | \+1 | 6 | Comune | 10 | NC | 1.000 |
+| Pesante | \+2 | \+2 | 8 | Comune | 10 | NC | 2.000 |
 
 Si può montare un solo rinforzo compatibile, scelto dal catalogo del §7.23. Non si sommano più kit e non si sovrappongono due armature complete. Il kit aumenta AR e requisito FOR dell’armatura; conserva PI e PS propri, registrati separatamente. Non si sommano i suoi PI a quelli della protezione. Le proprietà native restano applicabili nei rispettivi ambiti.
 
@@ -3330,19 +3341,19 @@ Le armi pesanti di riferimento dell’Alleanza restano quelle del §7.8, compres
 
 #### **Valigetta investigativa ASA**
 
-\+2 VA a Percezione per esaminare tracce materiali mediante gli strumenti del corredo e a Scienza per analisi preliminari eseguibili con una dotazione portatile. Non concede un bonus generale alla vigilanza e non sostituisce un laboratorio completo. Il Verde standard incluso alimenta gli strumenti a 25 Lx/h per 40 ore; ricarica e ricambi nel Manuale dell’Equipaggiamento, §5.4.
++2 VA a Percezione per esaminare tracce materiali mediante gli strumenti del corredo e a Scienza per analisi preliminari eseguibili con una dotazione portatile. Non concede un bonus generale alla vigilanza e non sostituisce un laboratorio completo. Il Verde standard incluso alimenta gli strumenti a 25 Lx/h per 40 ore; ricarica e ricambi nel Manuale dell’Equipaggiamento, §5.4.
 
 #### **Corredo d’intrusione ASA**
 
-\+2 VA a Tecnologia per intervenire su serrature, allarmi e sistemi di accesso raggiungibili e compatibili con gli strumenti. Richiede l’accesso materiale e le condizioni necessarie all’intervento; non supera automaticamente i sistemi di sicurezza.
++2 VA a Tecnologia per intervenire su serrature, allarmi e sistemi di accesso raggiungibili e compatibili con gli strumenti. Richiede l’accesso materiale e le condizioni necessarie all’intervento; non supera automaticamente i sistemi di sicurezza.
 
 #### **Kit di controsorveglianza ASA**
 
-\+2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili. Non individua automaticamente sorveglianti e non concede un bonus universale a Percezione.
++2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili. Non individua automaticamente sorveglianti e non concede un bonus universale a Percezione.
 
 #### **Corredo da artificiere dell’Alleanza**
 
-\+2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili. Non include cariche esplosive, munizioni o componenti destinati a restare installati. Il corredo non sostituisce le competenze del personaggio né elimina i rischi delle Prove.
++2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili. Non include cariche esplosive, munizioni o componenti destinati a restare installati. Il corredo non sostituisce le competenze del personaggio né elimina i rischi delle Prove.
 
 ### **7.12.2 Kit trauma e materiali sanitari**
 
@@ -3662,19 +3673,19 @@ Queste versioni Capitol utilizzano gli stessi valori e le stesse regole dei corr
 
 #### **Valigetta investigativa Capitol**
 
-\+2 VA a Percezione per esaminare tracce materiali mediante gli strumenti e a Scienza per analisi preliminari eseguibili con dotazione portatile. Non concede un bonus generale alla vigilanza e non sostituisce un laboratorio completo.
++2 VA a Percezione per esaminare tracce materiali mediante gli strumenti e a Scienza per analisi preliminari eseguibili con dotazione portatile. Non concede un bonus generale alla vigilanza e non sostituisce un laboratorio completo.
 
 #### **Corredo d’intrusione Capitol**
 
-\+2 VA a Tecnologia per intervenire su serrature, allarmi e sistemi di accesso raggiungibili e compatibili. Richiede accesso materiale e condizioni adatte; non supera automaticamente la sicurezza.
++2 VA a Tecnologia per intervenire su serrature, allarmi e sistemi di accesso raggiungibili e compatibili. Richiede accesso materiale e condizioni adatte; non supera automaticamente la sicurezza.
 
 #### **Kit di controsorveglianza Capitol**
 
-\+2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili. Non individua automaticamente sorveglianti e non concede un bonus universale a Percezione.
++2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili. Non individua automaticamente sorveglianti e non concede un bonus universale a Percezione.
 
 #### **Corredo da artificiere Capitol**
 
-\+2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili. Non include cariche esplosive, munizioni o componenti destinati a restare installati. Non sostituisce le competenze né elimina i rischi delle Prove.
++2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili. Non include cariche esplosive, munizioni o componenti destinati a restare installati. Non sostituisce le competenze né elimina i rischi delle Prove.
 
 #### **Kit trauma Capitol**
 
@@ -4444,15 +4455,15 @@ I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate
 
 #### **Investigazione**
 
-\+2 VA a Percezione per esaminare tracce materiali attraverso gli strumenti e a Scienza per analisi preliminari realizzabili con una dotazione portatile. Non sostituisce un laboratorio né concede un bonus generale alla vigilanza.
++2 VA a Percezione per esaminare tracce materiali attraverso gli strumenti e a Scienza per analisi preliminari realizzabili con una dotazione portatile. Non sostituisce un laboratorio né concede un bonus generale alla vigilanza.
 
 #### **Intrusione**
 
-\+2 VA a Tecnologia per intervenire su serrature elettroniche, allarmi e sistemi di accesso materialmente raggiungibili e compatibili. Restano i normali tempi, le Prove e le protezioni del sistema.
++2 VA a Tecnologia per intervenire su serrature elettroniche, allarmi e sistemi di accesso materialmente raggiungibili e compatibili. Restano i normali tempi, le Prove e le protezioni del sistema.
 
 #### **Controsorveglianza**
 
-\+2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili. Non individua automaticamente chi segue o osserva il personaggio.
++2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili. Non individua automaticamente chi segue o osserva il personaggio.
 
 #### **Ricognizione**
 
@@ -4468,11 +4479,11 @@ Imbracatura, corda da 20 Q, discensore, moschettoni e ancoraggi. +2 VA ad Atleti
 
 #### **Artificiere**
 
-\+2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili. Comprende gli strumenti; cariche, munizioni e componenti destinati a rimanere installati sono separati.
++2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili. Comprende gli strumenti; cariche, munizioni e componenti destinati a rimanere installati sono separati.
 
 #### **Manutenzione**
 
-\+2 VA a Tecnologia per diagnosi, manutenzione e riparazioni sul campo di armi, armature, propulsori ed esoscheletri compatibili. Materiali e pezzi di ricambio sono separati. Il corredo non ripristina automaticamente PI.
++2 VA a Tecnologia per diagnosi, manutenzione e riparazioni sul campo di armi, armature, propulsori ed esoscheletri compatibili. Materiali e pezzi di ricambio sono separati. Il corredo non ripristina automaticamente PI.
 
 #### **Kit trauma**
 
@@ -4692,15 +4703,15 @@ I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate
 
 #### **Investigazione**
 
-\+2 VA a Percezione per esaminare tracce materiali attraverso gli strumenti e a Scienza per analisi preliminari realizzabili con una dotazione portatile. Non sostituisce un laboratorio né concede un bonus generale alla vigilanza.
++2 VA a Percezione per esaminare tracce materiali attraverso gli strumenti e a Scienza per analisi preliminari realizzabili con una dotazione portatile. Non sostituisce un laboratorio né concede un bonus generale alla vigilanza.
 
 #### **Intrusione**
 
-\+2 VA a Tecnologia per intervenire su serrature elettroniche, allarmi e sistemi di accesso materialmente raggiungibili e compatibili. Restano i normali tempi, le Prove e le protezioni del sistema.
++2 VA a Tecnologia per intervenire su serrature elettroniche, allarmi e sistemi di accesso materialmente raggiungibili e compatibili. Restano i normali tempi, le Prove e le protezioni del sistema.
 
 #### **Controsorveglianza**
 
-\+2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili. Non individua automaticamente chi segue o osserva il personaggio.
++2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili. Non individua automaticamente chi segue o osserva il personaggio.
 
 #### **Ricognizione**
 
@@ -4716,11 +4727,11 @@ Imbracatura, corda da 20 Q, discensore, moschettoni e ancoraggi. +2 VA ad Atleti
 
 #### **Artificiere**
 
-\+2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili. Comprende gli strumenti; cariche, munizioni e componenti destinati a rimanere installati sono separati.
++2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili. Comprende gli strumenti; cariche, munizioni e componenti destinati a rimanere installati sono separati.
 
 #### **Manutenzione**
 
-\+2 VA a Tecnologia per diagnosi, manutenzione e riparazioni sul campo di armi, armature, propulsori ed esoscheletri compatibili. Materiali e pezzi di ricambio sono separati. Il corredo non ripristina automaticamente PI.
++2 VA a Tecnologia per diagnosi, manutenzione e riparazioni sul campo di armi, armature, propulsori ed esoscheletri compatibili. Materiali e pezzi di ricambio sono separati. Il corredo non ripristina automaticamente PI.
 
 #### **Kit trauma**
 
@@ -4830,7 +4841,7 @@ Questa sezione riunisce pronto soccorso, kit trauma, cartucce, UMC, dispositivi 
 | **Kit** | **VA strumenti** | **Usi** | **Successo** | **Magistrale** |
 | Improvvisato | −2 | 1 | Sospende il Sanguinamento per 10 Round | Arresta il Sanguinamento |
 | Standard | 0 | 5 | Arresta il Sanguinamento | Arresta il Sanguinamento e recupera 1d4 PV |
-| Professionale / Kit trauma | \\+2 | 5 | Arresta il Sanguinamento e recupera 1d4 PV | Arresta il Sanguinamento e recupera il doppio del risultato di 1d4 PV |
+| Professionale / Kit trauma | \+2 | 5 | Arresta il Sanguinamento e recupera 1d4 PV | Arresta il Sanguinamento e recupera il doppio del risultato di 1d4 PV |
 
 Il kit Professionale cura Punti Vita, non stati di Ferita. Con Magistrale si tira una volta 1d4 e si raddoppia il risultato: 2, 4, 6 oppure 8 PV; non si tirano 2d4. Nessun recupero supera i PV massimi. Il pronto soccorso non elimina automaticamente Menomazioni e non restituisce automaticamente conoscenza.
 
@@ -5049,7 +5060,7 @@ Ricarica per Tamburo. Capacità 6 colpi; prezzo a vuoto 100 crediti; peso a vuot
 
 Ricarica per Serbatoio. Capacità 6 colpi; prezzo a vuoto 150 crediti; peso a vuoto 0,2 kg; Qualità Comune; PS Integrità 10; PI massimi 2; Reperibilità Comune (CO).
 
-Sono accessori meccanici riutilizzabili, compatibili con lo specifico modello d’arma. Le munizioni si acquistano separatamente. Un carichino preparato e accessibile trasferisce fino a 6 colpi in 1 AzP, entro gli spazi liberi dell’arma; i colpi non trasferiti restano nel carichino e vanno registrati. Ricarica Migliorata non aumenta questo limite.
+Sono accessori meccanici riutilizzabili, compatibili con lo specifico modello d’arma. Le munizioni si acquistano separatamente. Un carichino preparato e accessibile trasferisce fino a 6 colpi in 1 AzP, entro gli spazi liberi dell’arma; i colpi non trasferiti restano nel carichino e vanno registrati. Ricarica Migliorata non aumenta questo limite. Per Colt Enforcer e Colt Hammershot il limite effettivo è di 4 colpi, pari alla capacità del tamburo.
 
 Preparare i carichini richiede 1 minuto ogni 50 colpi o frazione. Il peso delle munizioni contenute si aggiunge a quello a vuoto: ogni cartuccia si conta una sola volta nell’inventario. A 0 PI il dispositivo è inutilizzabile finché non viene riparato, secondo le normali regole.
 
@@ -5087,7 +5098,7 @@ Tutti i modelli seguenti accettano Frammentazione standard, Fumogena ed Elettros
 | Commerciale | Lanciagranate commerciale |
 | Alleanza | Lanciagranate dell’Alleanza; modulo della Carabina Punisher |
 | Bauhaus | Moduli MP105GW e Panzerknacker |
-| Capitol | Moduli Bolter 20, Ironfist 15, CAR 24 e M50 |
+| Capitol | Moduli Bolter 15 Ironfist, CAR 24 e M50 |
 | Cybertronic | Moduli CAW2000 e AR3000 |
 | Fratellanza | Moduli Nemesis 221 e Volcano |
 | Imperial | Howler; moduli Interceptor e Invader |
@@ -5282,7 +5293,7 @@ Le tabelle assegnano la famiglia del tiro balistico principale. Eventuali lancia
 | **Catalogo** | **Pistola — 2 per colpo** | **Pallini — 4 per cartuccia** |
 | Alleanza | AXIS 227; Piranha; Pistola Punisher | — |
 | Bauhaus | HG10; HG12; Equalizer; MP105 | HD14M; HG14 |
-| Capitol | Bolter 10; Bolter 09; Enforcer; Jemson 45; Colt Hammershot; Bolter 13; Bolter 20; Ironfist 15 | M310; M510; M516S; M516D; M410 |
+| Capitol | Colt Enforcer; Colt Trooper; Colt Frontier; Colt Jamson 45; Colt Hammershot; Bolter 10; Bolter 13; Bolter 15 Ironfist; Bolter 20 | M310; M510; M516S; M516D; M410 |
 | Cybertronic | P500; P1000 | SA SG2001 |
 | Fratellanza | Nemesis 100; Eliminator; Nemesis 210; Nemesis 214; Nemesis 221 | — |
 | Imperial | Belliger; Aggressor; Rainy Dayer | Mandible |
@@ -5348,19 +5359,19 @@ Indossare o togliere un elmetto richiede 1 AzP ed entrambe le mani libere. Il co
 
 #### **Antibagliore 2**
 
-\+2 alla PS già prevista contro Accecamento provocato da lampi o luce intensa. Non introduce una PS se l’effetto non la prevede e non protegge dagli altri tipi di Accecamento.
++2 alla PS già prevista contro Accecamento provocato da lampi o luce intensa. Non introduce una PS se l’effetto non la prevede e non protegge dagli altri tipi di Accecamento.
 
 #### **Protezione acustica 2**
 
-\+2 alla PS già prevista contro un effetto sonoro o un rumore dannoso, come nel §7.11.4. Non è una protezione generale contro esplosioni o danni.
++2 alla PS già prevista contro un effetto sonoro o un rumore dannoso, come nel §7.11.4. Non è una protezione generale contro esplosioni o danni.
 
 #### **Filtro respiratorio 2**
 
-\+2 alla PS Tempra contro veleni e agenti patogeni inalati, con maschera indossata. Richiede aria respirabile; non fornisce ossigeno né tenuta per immersione o vuoto.
++2 alla PS Tempra contro veleni e agenti patogeni inalati, con maschera indossata. Richiede aria respirabile; non fornisce ossigeno né tenuta per immersione o vuoto.
 
 #### **Sensori X**
 
-\+X VA a Percezione per vista e/o udito, come indicato nella scheda. Non concede Prove o osservazioni gratuite, non individua automaticamente creature nascoste e non supera ostacoli che impediscono al sensore di rilevare il bersaglio.
++X VA a Percezione per vista e/o udito, come indicato nella scheda. Non concede Prove o osservazioni gratuite, non individua automaticamente creature nascoste e non supera ostacoli che impediscono al sensore di rilevare il bersaglio.
 
 #### **Visione notturna**
 
@@ -5372,21 +5383,21 @@ Entro 40 Q permette di osservare e prendere di mira bersagli con sufficiente con
 
 #### **Interfaccia di pilotaggio 1**
 
-\+1 VA alle Prove di Pilotare per la conduzione di un mezzo con comandi compatibili, alimentati e collegati. Non si applica al tiro con le armi, ai paracadute o ai propulsori personali. Non si somma alle interfacce equivalenti dell’armatura.
++1 VA alle Prove di Pilotare per la conduzione di un mezzo con comandi compatibili, alimentati e collegati. Non si applica al tiro con le armi, ai paracadute o ai propulsori personali. Non si somma alle interfacce equivalenti dell’armatura.
 
 #### **Proprietà di combattimento**
 
 #### **Assistenza offensiva 1**
 
-\+1 VA alle Prove per colpire ravvicinate e a distanza, comprese armi da lancio e attacchi senz’armi. Comprende l’eventuale Prova per colpire separata richiesta da un Incantesimo; non modifica la Prova di Potere per lanciarlo. Non aumenta danni, numero di attacchi o Azioni.
++1 VA alle Prove per colpire ravvicinate e a distanza, comprese armi da lancio e attacchi senz’armi. Comprende l’eventuale Prova per colpire separata richiesta da un Incantesimo; non modifica la Prova di Potere per lanciarlo. Non aumenta danni, numero di attacchi o Azioni.
 
 #### **Assistenza difensiva 1**
 
-\+1 VA alle Prove di Difese per Parata e Schivata, anche contro attacchi a distanza; inoltre +1 alla PS di Riflessi quando viene usata per Elusione. Non modifica le altre PS di Riflessi.
++1 VA alle Prove di Difese per Parata e Schivata, anche contro attacchi a distanza; inoltre +1 alla PS di Riflessi quando viene usata per Elusione. Non modifica le altre PS di Riflessi.
 
 #### **Allerta tattica 1**
 
-\+1 Iniziativa. Il bonus si applica quando si determina l’Iniziativa; attivare o cambiare elmetto dopo non permette di ritirarla o riordinare i turni già stabiliti. Non impedisce automaticamente la Sorpresa.
++1 Iniziativa. Il bonus si applica quando si determina l’Iniziativa; attivare o cambiare elmetto dopo non permette di ritirarla o riordinare i turni già stabiliti. Non impedisce automaticamente la Sorpresa.
 
 Questi vantaggi non consentono azioni o Difese altrimenti vietate e non rimuovono i normali costi e requisiti. Il personaggio deve poter effettuare la Prova: Elusione rimane impossibile se è immobilizzato, ignaro o privo della possibilità fisica di evitare l’effetto. Non si ottengono nuove informazioni sensoriali oltre a quelle consentite dalle funzioni realmente installate.
 
@@ -5414,10 +5425,10 @@ I costi usano la stessa unità monetaria dei cataloghi esistenti e comprendono l
 | Visiera antibagliore | Antibagliore 2 | CO | 500 |
 | Protezione acustica | Protezione acustica 2 | NC | 600 |
 | Maschera filtrante | Filtro respiratorio 2 | NC | 700 |
-| Sensori visivi 1 | \\+1 VA a Percezione tramite la vista | NC | 700 |
-| Sensori visivi 2 | \\+2 VA a Percezione tramite la vista | RA | 2.200 |
-| Sensori acustici 1 | \\+1 VA a Percezione tramite l’udito | NC | 700 |
-| Sensori acustici 2 | \\+2 VA a Percezione tramite l’udito | RA | 2.200 |
+| Sensori visivi 1 | \+1 VA a Percezione tramite la vista | NC | 700 |
+| Sensori visivi 2 | \+2 VA a Percezione tramite la vista | RA | 2.200 |
+| Sensori acustici 1 | \+1 VA a Percezione tramite l’udito | NC | 700 |
+| Sensori acustici 2 | \+2 VA a Percezione tramite l’udito | RA | 2.200 |
 | Interfaccia di pilotaggio | Interfaccia di pilotaggio 1 | NC | 1.200 |
 | Visore notturno | Visione notturna 80 Q | RA | 2.600 |
 | Visore termico | Visione termica 40 Q | MR | 4.800 |
@@ -5468,10 +5479,10 @@ Elmetto tattico integrato che coordina segnalazioni di minaccia, assistenza al p
 | :-: | :-: |
 | **Dato** | **Valore** |
 | AR aggiuntiva | Nessuna |
-| Iniziativa | \\+1 |
-| Prove per colpire | \\+1 VA, ravvicinate e a distanza, nei limiti di Assistenza offensiva 1 |
-| Parata e Schivata | \\+1 VA alle Prove di Difese |
-| Elusione | \\+1 alla PS di Riflessi usata per Elusione |
+| Iniziativa | \+1 |
+| Prove per colpire | \+1 VA, ravvicinate e a distanza, nei limiti di Assistenza offensiva 1 |
+| Parata e Schivata | \+1 VA alle Prove di Difese |
+| Elusione | \+1 alla PS di Riflessi usata per Elusione |
 | PI | 4 |
 | Qualità / PS Integrità | Non comune / 12 |
 | Reperibilità | Molto rara |
@@ -5530,7 +5541,7 @@ Le ottiche previste per l'Artigliere restano comprese nella sua dotazione: Refle
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Catalogo** | **Modello** | **Danno** | **VA** | **Max Q** | **CC** | **INC** | **REP** | **Crediti** |
 | Commerciale | Carabina — riferimento | 1d6+1 | 0 | 80 | 15 | 7 | CO | 1.800 |
-| Bauhaus | KR10 | 1d6+1 | \\+1 | 60 | 10 | 7 | CO | 2.000 |
+| Bauhaus | KR10 | 1d6+1 | \+1 | 60 | 10 | 7 | CO | 2.000 |
 | Capitol | CAR10 | 1d6+1 | 0 | 80 | 15 | 6 | CO | 1.600 |
 | Cybertronic | CAW1000 | 1d6+1 | 0 | 80 | 15 | 8 | NC | 2.100 |
 | Fratellanza | Nemesis 11 | 1d6+1 | 0 | 60 | 15 | 7 | NC | 2.100 |
@@ -5545,7 +5556,7 @@ Nemesis 11 possiede **Purificatrice 1**, separata dal danno in tabella. Gli altr
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Catalogo** | **Modello** | **Danno** | **VA** | **Max Q** | **CC** | **INC** | **REP** | **Crediti** |
 | Commerciale | Fucile d'assalto — riferimento | 1d6+2 | 0 | 160 | 30 | 6 | NC | 4.000 |
-| Bauhaus | STG10 | 1d6+2 | \\+1 | 120 | 20 | 6 | NC | 4.400 |
+| Bauhaus | STG10 | 1d6+2 | \+1 | 120 | 20 | 6 | NC | 4.400 |
 | Capitol | M40 | 1d6+2 | 0 | 160 | 30 | 5 | CO | 3.500 |
 | Cybertronic | AR2000 | 1d6+2 | 0 | 160 | 30 | 7 | NC | 4.400 |
 | Fratellanza | Volcano 100 | 1d6+2 | 0 | 120 | 30 | 6 | NC | 4.600 |
@@ -5560,7 +5571,7 @@ Volcano 100 possiede **Purificatrice 1**, separata dal danno in tabella. Volcano
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Catalogo** | **Modello** | **Danno** | **VA** | **Max Q** | **CC** | **INC** | **REP** | **Crediti** |
 | Commerciale | Fucile di precisione — riferimento | 1d6+3 | 0 | 1.000 | 5 | 7 | NC | 5.500 |
-| Bauhaus | PSG50 | 1d6+3 | \\+1 | 800 | 4 | 7 | NC | 6.000 |
+| Bauhaus | PSG50 | 1d6+3 | \+1 | 800 | 4 | 7 | NC | 6.000 |
 | Capitol | SR20 | 1d6+3 | 0 | 1.000 | 5 | 6 | CO | 4.800 |
 | Cybertronic | SR1500 | 1d6+3 | 0 | 1.000 | 5 | 8 | NC | 6.000 |
 | Fratellanza | Mefisto 100 | 1d6+3 | 0 | 800 | 5 | 7 | NC | 6.200 |
@@ -5575,7 +5586,7 @@ Mefisto 100 possiede **Purificatrice 1**, separata dal danno in tabella. Mefisto
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Catalogo** | **Modello** | **Danno** | **VA** | **Max Q** | **CC** | **INC** | **REP** | **Crediti** |
 | Commerciale | Fucile a pompa — riferimento | 1d6 | 0 | 30 | 6 | 6 | CO | 1.200 |
-| Bauhaus | HD10 | 1d6 | \\+1 | 20 | 4 | 6 | CO | 1.400 |
+| Bauhaus | HD10 | 1d6 | \+1 | 20 | 4 | 6 | CO | 1.400 |
 | Capitol | M516S | 1d6 | 0 | 15 | 6 | 6 | CO | 1.100 |
 | Cybertronic | SA SG1000 | 1d6 | 0 | 30 | 6 | 7 | NC | 1.400 |
 | Fratellanza | Judicator 100 | 1d6 | 0 | 20 | 6 | 6 | NC | 1.400 |
@@ -5684,11 +5695,11 @@ Si applicano le regole del Manuale degli Armamenti e del §5.24 del Manuale del 
 |  |  |
 | :-: | :-: |
 | **Proprietà** | **Effetto** |
-| Manutenzione semplice / agevolata | \\+1 VA a Tecnologia per riparare quell'oggetto, con strumenti e materiali necessari. Non ripristina PI automaticamente e non riduce da sola tempi o costi. Le due denominazioni non si sommano. |
-| Struttura robusta | \\+2 PI massimi, già inclusi nella tabella del modello; nessun incremento della PS Integrità. |
+| Manutenzione semplice / agevolata | \+1 VA a Tecnologia per riparare quell'oggetto, con strumenti e materiali necessari. Non ripristina PI automaticamente e non riduce da sola tempi o costi. Le due denominazioni non si sommano. |
+| Struttura robusta | \+2 PI massimi, già inclusi nella tabella del modello; nessun incremento della PS Integrità. |
 | Imbottita 1 | Contromisura di soglia 1 contro l'effetto aggiuntivo Concussivo; non riduce ulteriormente il danno. |
 | Isolante 1 | Contromisura di soglia 1 contro l'effetto aggiuntivo Elettricità; non riduce ulteriormente il danno. |
-| Contenimento 1 | \\+1 VA alle Parate ravvicinate effettuate con quello Scudo contro Corpo a corpo; non contro Armi da Mischia o da Guerra. |
+| Contenimento 1 | \+1 VA alle Parate ravvicinate effettuate con quello Scudo contro Corpo a corpo; non contro Armi da Mischia o da Guerra. |
 
 Le Contromisure degli Scudi si applicano solo mentre lo Scudo è impugnato e utilizzabile e alle condizioni delle regole generali delle protezioni. Due soglie uguali provenienti da Scudo e armatura non diventano automaticamente una soglia doppia.
 
@@ -5725,8 +5736,8 @@ Leggero e Pesante indicano la categoria regolistica del rinforzo. Il catalogo id
 |  |  |  |  |  |  |  |  |
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | **Categoria** | **AR** | **FOR richiesta** | **PI** | **Qualità** | **PS INT** | **REP** | **Costo** |
-| Rinforzo Leggero | \\+1 | \\+1 | 6 | Comune | 10 | NC | 1.000 |
-| Rinforzo Pesante | \\+2 | \\+2 | 8 | Comune | 10 | NC | 2.000 |
+| Rinforzo Leggero | \+1 | \+1 | 6 | Comune | 10 | NC | 1.000 |
+| Rinforzo Pesante | \+2 | \+2 | 8 | Comune | 10 | NC | 2.000 |
 
   
 
