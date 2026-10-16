@@ -963,6 +963,10 @@
       "versione_manuale": "Armamenti 0.62 (A.158)",
       "abilita": "Armi da mischia",
       "specializzazione": "specializzazione-spade",
+      "manovre": [
+        "Affondo",
+        "Spazzata"
+      ],
       "mani": 1,
       "danno": {
         "una_mano": "1d8",
@@ -979,11 +983,60 @@
       "reperibilita": "EP",
       "costo": null,
       "_nota_costo": "A.158, punto 5: la CyberArma non è normalmente commercializzata e non ha un prezzo standard di catalogo (la proposta di 3.000 crediti è ritirata). Nell’app il prezzo risulta non disponibile, non zero. L’eventuale cessione la stabilisce il Direttore.",
-      "manovre": [
-        "generali"
-      ],
-      "_nota_manovre": "TODO(Davide) A.166: il §7.25 non elenca Manovre per la CyberArma; restano quelle generali, come per le armi con «—» (§7.1.7).",
       "proprieta": [],
+      "manifestazioni": {
+        "fonte": "A.166, risposta approvata il 16/10/2026; Armamenti §7.25",
+        "abilita": "Armi da mischia",
+        "_abilita": "Si usa sempre con Armi da mischia, qualunque forma sia manifestata: non si passa ad Armi da guerra, Corpo a corpo o altro perché l’arma ordinaria corrispondente usa quell’Abilità.",
+        "scelta_libera": [
+          "Custode"
+        ],
+        "_scelta_libera": "Il Custode manifesta qualsiasi tipo di arma ravvicinata. Il Tecnomante e gli altri utilizzatori ammessi usano la forma del progetto; cambiarla è una modifica del manufatto (nell’app si cambia in «Modifica master»), non una facoltà di cambio forma.",
+        "progetto": "lama-lunga",
+        "una_sola_specializzazione": true,
+        "_una_sola_specializzazione": "La Specializzazione posseduta pertinente alla forma dà i normali +1 VA e +1 danno (§8.8.1); non si cumulano Specializzazioni di forme diverse.",
+        "elenco": [
+          {
+            "id": "lama-lunga",
+            "nome": "Lama lunga (spada)",
+            "famiglia": "Spade",
+            "specializzazione": "specializzazione-spade",
+            "manovre": [
+              "Affondo",
+              "Spazzata"
+            ]
+          },
+          {
+            "id": "frusta",
+            "nome": "Frusta",
+            "famiglia": "Armi flessibili",
+            "specializzazione": "specializzazione-armi-flessibili",
+            "manovre": [
+              "generali"
+            ],
+            "nota": "Si usa la procedura di Immobilizzare con la Frusta (§7.1.5); la presa senza danno non acquista il bonus al danno della Specializzazione."
+          },
+          {
+            "id": "ascia",
+            "nome": "Ascia",
+            "famiglia": "Asce",
+            "specializzazione": "specializzazione-asce",
+            "manovre": [
+              "Spazzata"
+            ]
+          },
+          {
+            "id": "lancia",
+            "nome": "Lancia",
+            "famiglia": "Armi inastate",
+            "specializzazione": "specializzazione-armi-inastate",
+            "manovre": [
+              "Affondo"
+            ]
+          }
+        ],
+        "_altre_forme": "A.166: per le forme non elencate si usa la famiglia corrispondente del catalogo, con la sua Specializzazione e le sue Manovre."
+      },
       "id": "cyberarma",
       "nome": "CyberArma",
       "effetto_breve": "Artefatto TecnoMistico di Grado I: la lama si manifesta pagando con i PM personali. Solo Custodi e Tecnomanti.",
@@ -1046,6 +1099,10 @@
       "versione_manuale": "Armamenti 0.62 (A.158)",
       "abilita": "Armi da mischia",
       "specializzazione": "specializzazione-spade",
+      "manovre": [
+        "Affondo",
+        "Spazzata"
+      ],
       "mani": 1,
       "danno": {
         "una_mano": "1d8",
@@ -1062,11 +1119,60 @@
       "reperibilita": "EP",
       "costo": null,
       "_nota_costo": "A.158, punto 5: la CyberArma non è normalmente commercializzata e non ha un prezzo standard di catalogo (la proposta di 3.000 crediti è ritirata). Nell’app il prezzo risulta non disponibile, non zero. L’eventuale cessione la stabilisce il Direttore.",
-      "manovre": [
-        "generali"
-      ],
-      "_nota_manovre": "TODO(Davide) A.166: il §7.25 non elenca Manovre per la CyberArma; restano quelle generali, come per le armi con «—» (§7.1.7).",
       "proprieta": [],
+      "manifestazioni": {
+        "fonte": "A.166, risposta approvata il 16/10/2026; Armamenti §7.25",
+        "abilita": "Armi da mischia",
+        "_abilita": "Si usa sempre con Armi da mischia, qualunque forma sia manifestata: non si passa ad Armi da guerra, Corpo a corpo o altro perché l’arma ordinaria corrispondente usa quell’Abilità.",
+        "scelta_libera": [
+          "Custode"
+        ],
+        "_scelta_libera": "Il Custode manifesta qualsiasi tipo di arma ravvicinata. Il Tecnomante e gli altri utilizzatori ammessi usano la forma del progetto; cambiarla è una modifica del manufatto (nell’app si cambia in «Modifica master»), non una facoltà di cambio forma.",
+        "progetto": "lama-lunga",
+        "una_sola_specializzazione": true,
+        "_una_sola_specializzazione": "La Specializzazione posseduta pertinente alla forma dà i normali +1 VA e +1 danno (§8.8.1); non si cumulano Specializzazioni di forme diverse.",
+        "elenco": [
+          {
+            "id": "lama-lunga",
+            "nome": "Lama lunga (spada)",
+            "famiglia": "Spade",
+            "specializzazione": "specializzazione-spade",
+            "manovre": [
+              "Affondo",
+              "Spazzata"
+            ]
+          },
+          {
+            "id": "frusta",
+            "nome": "Frusta",
+            "famiglia": "Armi flessibili",
+            "specializzazione": "specializzazione-armi-flessibili",
+            "manovre": [
+              "generali"
+            ],
+            "nota": "Si usa la procedura di Immobilizzare con la Frusta (§7.1.5); la presa senza danno non acquista il bonus al danno della Specializzazione."
+          },
+          {
+            "id": "ascia",
+            "nome": "Ascia",
+            "famiglia": "Asce",
+            "specializzazione": "specializzazione-asce",
+            "manovre": [
+              "Spazzata"
+            ]
+          },
+          {
+            "id": "lancia",
+            "nome": "Lancia",
+            "famiglia": "Armi inastate",
+            "specializzazione": "specializzazione-armi-inastate",
+            "manovre": [
+              "Affondo"
+            ]
+          }
+        ],
+        "_altre_forme": "A.166: per le forme non elencate si usa la famiglia corrispondente del catalogo, con la sua Specializzazione e le sue Manovre."
+      },
       "id": "cyberarma-batteria-verde",
       "nome": "CyberArma con Batteria Verde",
       "effetto_breve": "CyberArma modificata con Batteria Verde da 5 cariche: Grado II, una carica per attivazione. Le altre Classi la usano a −2 VA.",

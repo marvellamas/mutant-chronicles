@@ -15,7 +15,8 @@
 // VA delle Prove per colpire (avviso, non blocco). Costruzione e modifica (punti 6 e 7) in `costruzione`:
 // solo testo nella scheda dell'oggetto, nessuna procedura guidata.
 //
-// Nello stesso lotto la Custodia del Silenzio (Armamenti §7.25.1, Equipaggiamento §10.13.1): oggetto a sé.
+// La Custodia del Silenzio (Armamenti §7.25.1) è nel lotto della A.163, con gli altri due Contenitori del
+// Silenzio (tools/lotti/lotto_schermatura_a163.mjs).
 //
 // Uso: node tools/lotti/lotto_cyberarma_a158.mjs [--controlla]
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -24,7 +25,31 @@ const CONTROLLA = process.argv.includes('--controlla');
 const leggi = (p) => JSON.parse(readFileSync(new URL(`../../${p}`, import.meta.url), 'utf8'));
 const scrivi = (p, d) => writeFileSync(new URL(`../../${p}`, import.meta.url), `${JSON.stringify(d, null, 2)}\n`);
 
-const FONTE = 'Armamenti §7.25 e §7.25.1 (0.62); A.158, risposta approvata il 13/10/2026';
+const FONTE = 'Armamenti §7.25 e §7.25.1 (0.62); A.158 del 13/10/2026 e A.166 del 16/10/2026';
+
+/**
+ * A.166 (16/10/2026): le manifestazioni della CyberArma. L'Abilità resta Armi da mischia in tutti i casi;
+ * famiglia, Specializzazione pertinente e Manovre compatibili dipendono dalla forma manifestata. Il Custode
+ * sceglie liberamente; il Tecnomante e gli altri utilizzatori ammessi usano la forma del progetto (lama
+ * lunga nel modello base), che si cambia solo modificando il manufatto.
+ */
+const MANIFESTAZIONI = {
+  fonte: 'A.166, risposta approvata il 16/10/2026; Armamenti §7.25',
+  abilita: 'Armi da mischia',
+  _abilita: 'Si usa sempre con Armi da mischia, qualunque forma sia manifestata: non si passa ad Armi da guerra, Corpo a corpo o altro perché l’arma ordinaria corrispondente usa quell’Abilità.',
+  scelta_libera: ['Custode'],
+  _scelta_libera: 'Il Custode manifesta qualsiasi tipo di arma ravvicinata. Il Tecnomante e gli altri utilizzatori ammessi usano la forma del progetto; cambiarla è una modifica del manufatto (nell’app si cambia in «Modifica master»), non una facoltà di cambio forma.',
+  progetto: 'lama-lunga',
+  una_sola_specializzazione: true,
+  _una_sola_specializzazione: 'La Specializzazione posseduta pertinente alla forma dà i normali +1 VA e +1 danno (§8.8.1); non si cumulano Specializzazioni di forme diverse.',
+  elenco: [
+    { id: 'lama-lunga', nome: 'Lama lunga (spada)', famiglia: 'Spade', specializzazione: 'specializzazione-spade', manovre: ['Affondo', 'Spazzata'] },
+    { id: 'frusta', nome: 'Frusta', famiglia: 'Armi flessibili', specializzazione: 'specializzazione-armi-flessibili', manovre: ['generali'], nota: 'Si usa la procedura di Immobilizzare con la Frusta (§7.1.5); la presa senza danno non acquista il bonus al danno della Specializzazione.' },
+    { id: 'ascia', nome: 'Ascia', famiglia: 'Asce', specializzazione: 'specializzazione-asce', manovre: ['Spazzata'] },
+    { id: 'lancia', nome: 'Lancia', famiglia: 'Armi inastate', specializzazione: 'specializzazione-armi-inastate', manovre: ['Affondo'] },
+  ],
+  _altre_forme: 'A.166: per le forme non elencate si usa la famiglia corrispondente del catalogo, con la sua Specializzazione e le sue Manovre.',
+};
 const VERSIONE = 'Armamenti 0.62 (A.158)';
 
 /** Parte comune alle due configurazioni: profilo d'arma del §7.25 e dati fisici della risposta. */
@@ -35,11 +60,13 @@ const comune = {
   nomi_alternativi: ['Cyber Arma', 'Cyber-Arma'],
   paragrafo: '§7.25',
   versione_manuale: VERSIONE,
+  // A.166 (16/10/2026): l'Abilità è sempre Armi da mischia; famiglia, Specializzazione e Manovre dipendono
+  // dalla manifestazione (blocco `manifestazioni` qui sotto). I campi del catalogo tengono la forma del
+  // progetto base — lama lunga —, che è quella di partenza per tutti.
   abilita: 'Armi da mischia',
-  // TODO(Davide) A.166: né il §7.25 né la A.158 dicono la famiglia della CyberArma. L'invariante della
-  // A.13 vuole una Specializzazione per ogni arma del catalogo: la lama a una mano con Armi da mischia è
-  // registrata fra le Spade, da confermare (cambia il +1 VA e +1 al danno della Specializzazione, §8.8.1).
+  famiglia: 'Spade',
   specializzazione: 'specializzazione-spade',
+  manovre: ['Affondo', 'Spazzata'],
   mani: 1,
   danno: { una_mano: '1d8', due_mani: null },
   natura_danno: 'Magico',
@@ -53,9 +80,8 @@ const comune = {
   reperibilita: 'EP',
   costo: null,
   _nota_costo: 'A.158, punto 5: la CyberArma non è normalmente commercializzata e non ha un prezzo standard di catalogo (la proposta di 3.000 crediti è ritirata). Nell’app il prezzo risulta non disponibile, non zero. L’eventuale cessione la stabilisce il Direttore.',
-  manovre: ['generali'],
-  _nota_manovre: 'TODO(Davide) A.166: il §7.25 non elenca Manovre per la CyberArma; restano quelle generali, come per le armi con «—» (§7.1.7).',
   proprieta: [],
+  manifestazioni: MANIFESTAZIONI,
 };
 
 /** Punto 2: chi la usa, con quale costo e per quanti Round. Le Classi sono quelle di data/classi.json. */
@@ -183,30 +209,12 @@ const BLOCCHI = [
   },
 ];
 
-/** Custodia del Silenzio (Armamenti §7.25.1; Equipaggiamento §10.13.1; Magia §28.3). */
-const CUSTODIA = {
-  id: 'custodia-del-silenzio',
-  nome: 'Custodia del Silenzio',
-  tipo: 'altro',
-  catalogo: 'Artefatti di campagna',
-  famiglia: 'Contenitori e trasporto',
-  nomi_alternativi: [],
-  paragrafo: 'Armamenti §7.25.1; Equipaggiamento §10.13.1; Magia §28.3',
-  versione_manuale: 'Armamenti 0.62 / Equipaggiamento 0.8 / Magia 1.5 (15/10/2026)',
-  peso: 0.3,
-  costo: null,
-  effetto_breve: 'Cilindro di cuoio per la CyberArma disattivata: chiuso e integro ne scherma le emanazioni di Corruzione 1. SnT 0, nessun costo in PM.',
-  proprieta: [],
-  _nota: 'Cilindro di cuoio semplice, lungo 30 cm e di 6 cm di diametro esterno, con passante per la cintura. La schermatura è passiva e vale solo con l’arma disattivata e interamente riposta; aprirla o comprometterne la chiusura la fa cessare, richiuderla la ripristina senza Prove né PM. Non è indistruttibile: cuoio e legno seguono le normali regole di Integrità. Non modifica danno, colore, attivazione o requisiti della CyberArma e non concede estrazioni gratuite; il suo peso si somma a quello dell’arma. Prezzo e Reperibilità non sono indicati dai manuali: restano da completare. La famiglia dei Contenitori del Silenzio (Zaino e Cofanetto, §10.13.2 e §10.13.3) e lo stato «chiuso / aperto» restano da fare: A.163.',
-};
-
 function applica() {
   const armi = leggi('data/equipaggiamento/armi.json');
   const art = leggi('data/equipaggiamento/artefatti.json');
-  const dot = leggi('data/equipaggiamento/dotazioni_personali.json');
   const mancano = [];
 
-  for (const [file, voce] of [[armi, ORIGINALE], [armi, CON_BATTERIA], [dot, CUSTODIA]]) {
+  for (const [file, voce] of [[armi, ORIGINALE], [armi, CON_BATTERIA]]) {
     const i = file.oggetti.findIndex((o) => o.id === voce.id);
     const uguale = i >= 0 && JSON.stringify(file.oggetti[i]) === JSON.stringify(voce);
     if (!uguale) mancano.push(voce.id);
@@ -226,8 +234,8 @@ function applica() {
   armi.fonte = armi.fonte?.includes('§7.25') ? armi.fonte : `${armi.fonte} · ${FONTE}`;
   scrivi('data/equipaggiamento/armi.json', armi);
   scrivi('data/equipaggiamento/artefatti.json', art);
-  scrivi('data/equipaggiamento/dotazioni_personali.json', dot);
-  console.log(`CyberArma (2 configurazioni), Custodia del Silenzio e ${BLOCCHI.length} blocchi artefatto scritti.`);
+  // la Custodia del Silenzio sta nel lotto della A.163, con gli altri due Contenitori del Silenzio
+  console.log(`CyberArma (2 configurazioni) e ${BLOCCHI.length} blocchi artefatto scritti.`);
 }
 
 applica();

@@ -24,6 +24,7 @@ import { rigaScelte } from './pannello-passi.js';
 import { colore, riempimento, condizioniAttiveAbilita } from '../interfaccia.js';
 import { statoMorente } from '../morente.js';
 import { testoAttivazione } from '../attivazione-arma.js';
+import { testoManifestazione } from '../manifestazione.js';
 import { descriviFerite } from '../sessione.js';
 import { statoIntegrita, oggettiRotti } from '../protezione.js';
 import { schermaQualcosa, statoContenitore, statoSchermatura } from '../schermatura.js';
@@ -1828,6 +1829,8 @@ function riquadroArmi(ctx, d, mani) {
       o ? h('span', { class: 'voce-sintesi' }, h('strong', {}, r.nome),
         a && a.va !== null ? ` · VA ${numero(a.vaEffettivo ?? a.va)}` : '', a && !a.dannoDaMunizione ? ` · ${testoDanno(a.danno)}` : '',
         o.scudo ? ` · AR ${testoAr(o.scudo.ar)}` : '', dettagli(o),
+        // A.166: la forma manifestata (CyberArma), da cui dipendono famiglia, Specializzazione e Manovre
+        a ? manifestazioneUi(ctx, a) : null,
         // A.158: armi che si attivano per un tot di Round (CyberArma), con il costo della propria Classe
         a ? attivazioneArmaUi(ctx, a) : null)
         : h('span', { class: 'nota' }, 'libera'));
@@ -1842,6 +1845,27 @@ function riquadroArmi(ctx, d, mani) {
     // Artefatti che potenziano i pugni (Guanti da Combattimento Mistico, Armamenti §7.24): si indossano da qui
     oggettiDisponibili(ctx, ['artefatto'], { verbo: () => 'Indossa', statoAttivo: (r) => (r.stati.includes('indossata') ? 'indossata' : null), soloNonAttivi: true,
       filtro: (r) => (r.def?.effetti ?? []).some((e) => e.attacchi === 'senz_armi') }));
+}
+
+/**
+ * A.166 (16/10/2026): la manifestazione di un'arma che ne ha (CyberArma). L'Abilità resta Armi da mischia;
+ * la forma decide famiglia, Specializzazione pertinente e Manovre. Il Custode la sceglie da qui; per il
+ * Tecnomante e gli altri è la forma del progetto e si cambia solo in «Modifica master» (modifica del
+ * manufatto).
+ */
+function manifestazioneUi(ctx, a) {
+  if (!a.manifestazione || !(a.manifestazioni ?? []).length) return null;
+  const puo = a.manifestazioneLibera || !!ctx.master;
+  const cambia = (id) => ctx.azioni.equipaggiamento((ctx.scelte.equipaggiamento ?? []).map((v) => (v.uid === a.uid ? { ...v, manifestazione: id } : v)));
+  const titolo = `Forma manifestata: ${testoManifestazione(a.manifestazione)}${a.manifestazione.nota ? `. ${a.manifestazione.nota}` : ''}`;
+  return h('span', { class: 'manifestazione' },
+    h('small', { class: 'nota' }, ' · '),
+    puo
+      ? h('select', { class: 'scelta-manifestazione', 'aria-label': `Forma manifestata di ${a.nome}`, title: titolo, onchange: (e) => cambia(e.target.value) },
+        a.manifestazioni.map((m) => h('option', { value: m.id, selected: m.id === a.manifestazione.id }, m.nome)))
+      : h('span', { class: 'etichetta etichetta-manifestazione', title: `${titolo} · La forma segue il progetto: si cambia modificando il manufatto (Modifica master).` }, a.manifestazione.nome),
+    h('small', { class: 'nota' }, ` ${a.manifestazione.famiglia}`),
+    a.manifestazione.nota ? infoValore('?', { titolo: 'Manifestazione (A.166)', sezioni: [{ testo: a.manifestazione.nota }] }, { classe: 'info-gradi' }) : null);
 }
 
 /**

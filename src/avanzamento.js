@@ -1217,6 +1217,8 @@ function schedaARiposo(personaggio, dati) {
     livello: n, caratteristiche, abilita, specializzazioni: specPossedute,
     // §7.10: capacità di sintonizzazione per Gradi complessivi e Talenti di Classe
     gradiComplessivi: stato.classi.reduce((s, c) => s + c.grado, 0),
+    // A.166: le Classi servono a sapere chi sceglie la manifestazione della CyberArma (il Custode)
+    classi: stato.classi.map((c) => c.nome),
     talenti: stato.classi.flatMap((c) => c.talenti.map((t) => t.nome)),
     umanita: umn,
     correzioniMaster: cm,

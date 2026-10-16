@@ -19,6 +19,7 @@
 import { bonusDannoCaratteristica, caratteristicaDanno } from './calc.js';
 import { riga, provenienza, rigaBonusCaratteristica as rigaBonus } from './provenienza.js';
 import { calcolaAR, oggettiConPi, oggettiSenzaPi, oggettiIndistruttibili, oggettiIntegritaDaDefinire } from './protezione.js';
+import { conManifestazione, manifestazioniDi, sceltaLibera } from './manifestazione.js';
 import { tipoRiserva, alimentazione as alimentazioneRiserva, fontePerPg } from './fonti.js';
 
 export const TIPI = ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'rinforzo', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'impianto', 'altro'];
@@ -645,6 +646,8 @@ export function normalizzaEquipaggiamento(valore) {
     // A.60 (E&L del 05/10/2026): mano registrata per un'arma impugnata o uno scudo imbracciato; senza, l'ordine
     if (['destra', 'sinistra'].includes(v.mano)) out.mano = v.mano;
     if (v.sintonizzato === true) out.sintonizzato = true; // §7.10: scelta del giocatore
+    // A.166: forma manifestata della CyberArma (id dell'elenco del catalogo): resta nella voce
+    if (typeof v.manifestazione === 'string' && v.manifestazione) out.manifestazione = v.manifestazione;
     // A.61: armatura Capolavoro del Corazzaio, con la Contromisura scelta alla costruzione
     if (isOggetto(v.capolavoro) && testo(v.capolavoro.contromisura)) out.capolavoro = { contromisura: v.capolavoro.contromisura };
     if (Number.isInteger(v.pi_direttore) && v.pi_direttore >= 1) out.pi_direttore = v.pi_direttore; // A.47: PI fissati dal Direttore
@@ -1185,7 +1188,10 @@ export function calcolaEquipaggiamento(base, voci, dati) {
 
   // Armi impugnate: VA per colpire, danno, Parata
   const armi = [];
-  const profiloArma = (o, d, extra = {}) => {
+  const profiloArma = (o, dBase, extra = {}) => {
+    // A.166 (16/10/2026): la CyberArma usa sempre Armi da mischia; famiglia, Specializzazione e Manovre
+    // vengono dalla manifestazione attiva (src/manifestazione.js)
+    const d = conManifestazione(dBase, o.voce, base.classi ?? []);
     const nomeAbilita = d?.abilita ?? o.voce.personalizzato?.abilita ?? null;
     const a = nomeAbilita ? abilitaPer(nomeAbilita) : null;
     const spec = d?.specializzazione && specPosseduti.has(d.specializzazione)
@@ -1278,6 +1284,10 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       // §7.5.1: riserva di Chroma integrata (Bordone Templare…), mostrata accanto all'arma
       contenitore: extra.moduloDi ? null : (infoArtefatto(d, dati)?.contenitore ?? null),
       specializzazione: spec ? `Specializzazione in ${spec.nome}` : null,
+      // A.166: la forma manifestata (null per le armi che non ne hanno), con le sue Manovre
+      manifestazione: d?.manifestazione ?? null,
+      manifestazioni: manifestazioniDi(dBase),
+      manifestazioneLibera: sceltaLibera(dBase, base.classi ?? []),
       ...extra,
     });
     if (!a && o.personalizzato) avvisi.push(`${o.nome}: arma personalizzata senza Abilità, VA non calcolato.`);

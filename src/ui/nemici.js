@@ -8,6 +8,7 @@ import { riempimento } from '../interfaccia.js';
 import { validaNemico, formattaErrore, sorgentiNemico } from '../validate.js';
 import { nemicoVuoto, voceVuota, pulisciNemico, idDaNome, testoMovimento } from '../nemici.js';
 import { variaPvNemico, variaPmNemico, cambiaStatoNemico, cambiaIntensitaNemico, usaCapacitaNemico, stabilizzaNemico, scalaMorenteNemico, cosNemico } from '../scontro.js';
+import { infoValore } from './tooltip.js';
 import { statoMorenteNemico } from '../morente.js';
 import { difeseNemico } from '../nemico-attacco.js';
 import { intensitaStato } from '../condizioni.js';
