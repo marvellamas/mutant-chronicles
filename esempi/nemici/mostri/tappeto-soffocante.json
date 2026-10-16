@@ -1,0 +1,104 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "tappeto-soffocante",
+  "nome": "Tappeto soffocante",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e creature elementali",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 6,
+    "COS": 6,
+    "INT": 1,
+    "SAG": 3,
+    "CAR": 1
+  },
+  "pv": 28,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 2,
+    "corsa": 4,
+    "scatto": 6
+  },
+  "taglia": "grande",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 9,
+    "volonta": 7,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Stringere",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "note": "Solo sulla vittima già avvolta; opposizione, non una Difesa. Avvolgere è la capacità omonima."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 8
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Automa senza mente",
+      "effetto": "Esegue ordini semplici; nessuna mente da influenzare. Immune a Sonno, Affaticamento, Paralizzato e Disorientato; il Ghiaccio può renderlo Rallentato o Congelato."
+    },
+    {
+      "nome": "Avvolgere",
+      "effetto": "1 AzP contro una creatura con spazio massimo 1 × 1 Q a portata: Corpo a corpo 12 contro Corpo a corpo o Atletica (Prova contrapposta, senza Parata o Schivata). Il successo applica Immobilizzato (braccia e gambe avvolte), Accecato e impedisce la respirazione (§5.23, fiato per COS Round). Una vittima alla volta; la presa non costa Azioni per mantenersi, e finché trattiene non si muove né attacca altri."
+    },
+    {
+      "nome": "Colpire mentre avvolge",
+      "effetto": "Un singolo attacco fisico contro il Tappeto avvolto: metà per eccesso del danno al Tappeto, metà per difetto alla vittima (ognuno con la propria AR); solo la quota di danno fisico si trasferisce, non Stati o altre componenti. Liberarsi: 1 AzP e Corpo a corpo o Atletica contro Corpo a corpo 12 (col −4 di Immobilizzato), consentito anche con gli arti avvolti; un alleato adiacente può srotolarlo con la stessa opposizione, senza danno."
+    },
+    {
+      "nome": "Sopprimere l’animazione",
+      "effetto": "Negare Potere sull’animazione (potenza 4); inerte fino alla fine del terzo Round successivo."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; non distingue i colori al buio, non vede attraverso gli ostacoli e non individua da sé chi è nascosto."
+    },
+    {
+      "nome": "Corpo non biologico",
+      "effetto": "Non è un organismo vivente: non respira, non mangia, non beve, non dorme. Immune a veleni e malattie biologiche, soffocamento e Sanguinamento. Le cure biologiche, Medicina e il riposo non lo riparano; servono effetti espressamente compatibili. Corrosivo, urti e gli altri danni restano applicabili."
+    }
+  ],
+  "immunita": [
+    "sanguinamento",
+    "stordito"
+  ],
+  "note": "PM —: nessuna riserva. Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app (A.167). Immobile sembra un tappeto (+4 Furtività). Comportamento: protegge un’area o un accesso; interrompere l’animazione apre una finestra per salvare la vittima."
+}

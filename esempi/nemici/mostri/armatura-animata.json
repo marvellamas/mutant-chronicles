@@ -1,0 +1,103 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "armatura-animata",
+  "nome": "Armatura animata",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e creature elementali",
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 4,
+    "COS": 7,
+    "INT": 1,
+    "SAG": 3,
+    "CAR": 1
+  },
+  "pv": 24,
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 8,
+  "iniziativa": -2,
+  "movimento": {
+    "passo": 5,
+    "corsa": 10,
+    "scatto": 15
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 7,
+    "volonta": 7,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Schianto",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 8
+    },
+    {
+      "nome": "Furtività",
+      "va": 6
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Automa senza mente",
+      "effetto": "Esegue ordini semplici fissati alla creazione; nessuna mente da leggere, persuadere, spaventare o possedere (Dardo Psichico non trova bersaglio). Immune anche a Sonno, Affaticamento, Paralizzato e Disorientato; il Ghiaccio può ancora renderla Rallentata o Congelata."
+    },
+    {
+      "nome": "Due colpi distinti",
+      "effetto": "Può usare entrambe le AzP per Schianto, con tiri e Difese separati; nessun attacco doppio gratuito. Le stesse Azioni valgono per altre attività."
+    },
+    {
+      "nome": "Parata con gli avambracci",
+      "effetto": "Parata naturale contro colpi ravvicinati fisici con un avambraccio utilizzabile (Difese 8, 1 AzP). Non para proiettili, aree o tocchi Eterei; le piastre non sono uno scudo e non aggiungono AR."
+    },
+    {
+      "nome": "Sopprimere l’animazione",
+      "effetto": "Negare Potere può bersagliare l’animazione (eccezione, potenza 3): superiore sopprime, pari richiede la PS Volontà del negatore, inferiore no. L’oggetto resta inerte fino alla fine del terzo Round dopo il lancio."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; non distingue i colori al buio, non vede attraverso gli ostacoli e non individua da sé chi è nascosto."
+    },
+    {
+      "nome": "Corpo non biologico",
+      "effetto": "Non è un organismo vivente: non respira, non mangia, non beve, non dorme. Immune a veleni e malattie biologiche, soffocamento e Sanguinamento. Le cure biologiche, Medicina e il riposo non lo riparano; servono effetti espressamente compatibili. Corrosivo, urti e gli altri danni restano applicabili."
+    }
+  ],
+  "immunita": [
+    "sanguinamento",
+    "stordito"
+  ],
+  "note": "PM —: nessuna riserva. AR 4 intrinseca (non armatura indossata, nessuna penalità). Percepisce forme e movimenti entro 12 Q senza occhi (Accecato e Assordato non lo impediscono). Immobile sembra un’armatura: +4 Furtività. Comportamento: blocca un passaggio o insegue nel perimetro assegnato; non fugge per paura."
+}

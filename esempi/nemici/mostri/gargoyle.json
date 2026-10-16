@@ -1,0 +1,113 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "gargoyle",
+  "nome": "Gargoyle",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e creature elementali",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 5,
+    "COS": 7,
+    "INT": 3,
+    "SAG": 5,
+    "CAR": 3
+  },
+  "pv": 34,
+  "pm": 8,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18,
+    "volo": 12
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 9,
+    "volonta": 9,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sequenza",
+      "effetto": "Nelle proprie AzP al massimo un attacco di Artigli e un Morso per Round. Nessuna Parata naturale; Schivata e altro consumano le stesse Azioni."
+    },
+    {
+      "nome": "Corpo di pietra",
+      "effetto": "Dimezza per eccesso il danno Naturale da urti, tagli e perforazioni dopo le Difese e prima dell’AR 3. Magico, Etereo ed elementale pieni. Immune ad Affaticamento e alla pietrificazione; Ghiaccio, paura e controllo mentale restano applicabili."
+    },
+    {
+      "nome": "Statua in attesa",
+      "effetto": "Immobile in una posa plausibile: +4 Furtività per non essere riconosciuto come creatura, fino a un movimento osservato. Scurovisione 12 Q."
+    },
+    {
+      "nome": "Ali e anatomia",
+      "effetto": "Vola con ali funzionali (12 / 24 / 36 Q); una Menomazione permanente al Torace compromette il cingolo alare e impedisce il volo. Ha una mente: non usa le immunità degli Oggetti animati. Negare Potere non cancella il corpo o il volo innato."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; non distingue i colori al buio, non vede attraverso gli ostacoli e non individua da sé chi è nascosto."
+    },
+    {
+      "nome": "Corpo non biologico",
+      "effetto": "Non è un organismo vivente: non respira, non mangia, non beve, non dorme. Immune a veleni e malattie biologiche, soffocamento e Sanguinamento. Le cure biologiche, Medicina e il riposo non lo riparano; servono effetti espressamente compatibili. Corrosivo, urti e gli altri danni restano applicabili."
+    }
+  ],
+  "immunita": [
+    "sanguinamento"
+  ],
+  "note": "Creatura elementale di pietra con mente. Comportamento: difende appostamenti e accessi, sceglie prede isolate, può trattare; sotto 9 PV o a Ferita Seria cerca una posizione protetta."
+}

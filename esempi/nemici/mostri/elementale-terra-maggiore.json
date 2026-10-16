@@ -1,0 +1,90 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "elementale-terra-maggiore",
+  "nome": "Elementale della Terra Maggiore",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e creature elementali",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 7,
+    "COS": 10,
+    "INT": 5,
+    "SAG": 5,
+    "CAR": 5
+  },
+  "pv": 40,
+  "ar": {
+    "totale": 5,
+    "magica": 5
+  },
+  "difese": 13,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 17,
+    "riflessi": 12,
+    "volonta": 10,
+    "magia": 12
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Pugno di Pietra",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "2d6+6",
+      "natura": "Magico",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Terra"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 16
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Pugno di Pietra",
+      "effetto": "Corpo a corpo 16 con le Difese ordinarie; dopo danno residuo e Contromisura applica Sanguinamento 1 (perdita di PV a inizio turno della vittima; cumulo e conseguenze comuni). Non aggiunge Sbalzante o caduta automatici."
+    },
+    {
+      "nome": "Terremoto",
+      "effetto": "1 AzP, una volta per Round, appoggiato a terra: entro 3 Q tutte le altre creature appoggiate sulla stessa superficie continua e livello (alleati compresi); non colpisce chi vola senza appoggio. Nessun tiro per colpire, 1 AC, un solo 1d10 Terra Magico. Elusione su Riflessi con −4 dimezza prima dell’AR; dopo residuo e Contromisura, una distinta PS Riflessi con −4 evita A Terra (che qui sostituisce Sanguinamento)."
+    },
+    {
+      "nome": "Protezioni e forza",
+      "effetto": "Immune a Terra (effetti secondari compresi). Dimezza Fuoco, Fulmine e danno Naturale (un solo dimezzamento per componente). AR 5 tutta magica. Sposta rocce e carichi secondo FOR 10; le Prove di FOR valgono 15. Niente scavo, attraversamento della roccia o percezione delle vibrazioni."
+    },
+    {
+      "nome": "Corpo non biologico",
+      "effetto": "Non è un organismo vivente: non respira, non mangia, non beve, non dorme. Immune a veleni e malattie biologiche, soffocamento e Sanguinamento. Le cure biologiche, Medicina e il riposo non lo riparano; servono effetti espressamente compatibili. Corrosivo, urti e gli altri danni restano applicabili."
+    }
+  ],
+  "immunita": [
+    "a-terra",
+    "ammalato",
+    "avvelenato",
+    "sanguinamento",
+    "stordito"
+  ],
+  "note": "PM —: nessuna riserva. Profilo evocato (Magia §14.4): «INI dopo l’evocatore» (qui 0; sulla plancia agisce dopo chi lo evoca). Scompare a 0 PV, a fine durata o al congedo. Spazio 2 × 2 Q, taglia Grande."
+}

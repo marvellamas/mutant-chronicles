@@ -1,0 +1,98 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "magmin",
+  "nome": "Magmin",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e creature elementali",
+  "caratteristiche": {
+    "FOR": 3,
+    "DES": 7,
+    "COS": 5,
+    "INT": 4,
+    "SAG": 5,
+    "CAR": 4
+  },
+  "pv": 14,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 11,
+    "volonta": 8,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Tocco ardente",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Fuoco"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Guscio e fiamma",
+      "effetto": "Immune a Fuoco e Incendiato. Dimezza per eccesso il danno Naturale da urti, tagli e perforazioni dopo le Difese e prima dell’AR 2; le altre componenti no. Immune ad Affaticamento e Sonno. Ha una mente (non eredita le immunità mentali degli automi). Nessuna Parata naturale."
+    },
+    {
+      "nome": "Tocco e luce",
+      "effetto": "Il Tocco ardente ammette le Difese; il residuo oltre Ignifugo può imporre Riflessi ordinario contro Incendiato. Con 1 AzP accende o spegne le fiamme (acceso illumina 2 Q più 2 di penombra) o incendia combustibile incustodito a contatto. Scurovisione 12 Q."
+    },
+    {
+      "nome": "Esplosione finale",
+      "effetto": "Una sola volta, quando è distrutto (fine del contatore di Morente, non a 0 PV): tutte le altre creature entro 2 Q, alleati compresi, 1 AC, un solo 1d6+2 Fuoco Naturale; i solidi bloccano. Elusione su Riflessi con +2 dimezza prima dell’AR; dopo residuo e Ignifugo, una distinta PS Riflessi con +2 evita Incendiato. Non costa Azioni e non è volontaria."
+    },
+    {
+      "nome": "Corpo non biologico",
+      "effetto": "Non è un organismo vivente: non respira, non mangia, non beve, non dorme. Immune a veleni e malattie biologiche, soffocamento e Sanguinamento. Le cure biologiche, Medicina e il riposo non lo riparano; servono effetti espressamente compatibili. Corrosivo, urti e gli altri danni restano applicabili."
+    }
+  ],
+  "immunita": [
+    "sanguinamento",
+    "incendiato"
+  ],
+  "note": "PM —: nessuna riserva. Creatura elementale di magma con mente. Comportamento: cerca calore e combustibile; sotto 4 PV o a Ferita Profonda cerca calore o fuga. Acqua e sabbia spengono gli incendi ma non lo distruggono."
+}

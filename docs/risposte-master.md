@@ -1686,11 +1686,16 @@ diverso dalle regole già approvate **non si è cambiato**: vedi A.167 qui sotto
   Spettro, Wraith, Mummia, Progenie vampirica. Scelte del blocco: natura dell'attacco dai dati
   (Naturale/Etereo/Magico); immunità `sanguinamento` nel campo e le altre immunità biologiche nelle note; lo
   Sguardo terribile (senza danni) come capacità; le presenze incorporee (Spettro, Wraith) con movimento di
-  volo (passo 0, Corsa/Scatto non consentiti a terra). Bestiario online rigenerato. **Restano** gli altri
-  blocchi del cap. 8 (circa 115 creature: i quindici della prima parte, «Costrutti ed elementali», «Giganti»,
-  «Creature del sottosuolo», «Melme funghi e imitatori», «Vegetali e custodi delle foreste», «Grandi rettili e
-  predatori mostruosi», «Creature delle acque e popoli sommersi», «Predatori e grandi erbivori», «Creature
-  alate e piccoli predatori», «Sciami e piccola fauna»): a blocchi nei prossimi lotti.
+  volo (passo 0, Corsa/Scatto non consentiti a terra). Poi il blocco **«Costrutti e creature elementali»**:
+  Armatura animata, Spada volante, Tappeto soffocante, Gargoyle, Azer, Magmin e i quattro Elementali Maggiori
+  (Acqua, Aria, Fuoco, Terra). Scelte del blocco: attacchi ad area o senza tiro (VA «—»: Esplosione finale,
+  Fiammata, Terremoto) come capacità; elemento del danno nella proprietà dell'attacco; AR magica degli
+  Elementali (`ar.magica`); immunità come Stati del formato, le altre nelle note; Elementali evocati con
+  `iniziativa: 0` e nota «agisce dopo l'evocatore». Bestiario online rigenerato. **Restano** gli altri blocchi
+  del cap. 8 (circa 105 creature: i quindici della prima parte, «Giganti», «Creature del sottosuolo», «Melme
+  funghi e imitatori», «Vegetali e custodi delle foreste», «Grandi rettili e predatori mostruosi», «Creature
+  delle acque e popoli sommersi», «Predatori e grandi erbivori», «Creature alate e piccoli predatori», «Sciami
+  e piccola fauna»): a blocchi nei prossimi lotti.
 
 ## Domande aperte dalla ricognizione del 15 ottobre 2026
 

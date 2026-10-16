@@ -1,0 +1,105 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "elementale-acqua-maggiore",
+  "nome": "Elementale dell’Acqua Maggiore",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e creature elementali",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 8,
+    "COS": 10,
+    "INT": 5,
+    "SAG": 5,
+    "CAR": 5
+  },
+  "pv": 32,
+  "ar": {
+    "totale": 4,
+    "magica": 4
+  },
+  "difese": 14,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 16,
+    "riflessi": 14,
+    "volonta": 10,
+    "magia": 12
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Schiaffo",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "2d6+4",
+      "natura": "Magico",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Acqua"
+      ]
+    },
+    {
+      "nome": "Dardo d’acqua",
+      "tipo": "distanza",
+      "va": 14,
+      "danno": "2d6+2",
+      "natura": "Magico",
+      "gittata_q": 12,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1,
+      "proprieta": [
+        "Acqua"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 15
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sbalzante",
+      "effetto": "Entrambi gli attacchi applicano Sbalzante 1 dopo il danno residuo e la Contromisura, senza PS contro lo spostamento, allontanando dall’elementale. Un ostacolo ferma nell’ultimo Q libero senza danno da collisione; la PS Riflessi prima di un pericolo letale resta dovuta."
+    },
+    {
+      "nome": "Avvolgere le vie respiratorie",
+      "effetto": "1 AzP contro una creatura a contatto con spazio ≤ 2 × 2 Q: Corpo a corpo 15 contro Corpo a corpo o Atletica (opposizione, senza seconda Difesa). Il successo applica Immobilizzato e impedisce la respirazione anche fuori dall’acqua (§5.23), senza Schiaffo né Sbalzante. Mantenere costa 1 AzP per Round; l’elementale resta fermo. Liberarsi: 1 AzP e nuova opposizione (i pareggi favoriscono l’elementale)."
+    },
+    {
+      "nome": "Protezioni",
+      "effetto": "Immune ad Acqua e Fuoco (effetti secondari compresi). Ghiaccio infligge danno normale e può dare Rallentato o Congelato. Dimezza il danno Naturale dopo le Difese e prima dell’AR 4 (tutta magica). Nuota 12 / 24 / 36 Q."
+    },
+    {
+      "nome": "Corpo non biologico",
+      "effetto": "Non è un organismo vivente: non respira, non mangia, non beve, non dorme. Immune a veleni e malattie biologiche, soffocamento e Sanguinamento. Le cure biologiche, Medicina e il riposo non lo riparano; servono effetti espressamente compatibili. Corrosivo, urti e gli altri danni restano applicabili."
+    }
+  ],
+  "immunita": [
+    "a-terra",
+    "ammalato",
+    "avvelenato",
+    "sanguinamento",
+    "stordito"
+  ],
+  "note": "PM —: nessuna riserva. Profilo evocato (Magia §14.1): «INI dopo l’evocatore» (qui 0; sulla plancia agisce dopo chi lo evoca). Scompare a 0 PV, a fine durata, al congedo o alla perdita di coscienza dell’evocatore. Spazio 2 × 2 Q, taglia Grande (Sbalzante non lo sposta)."
+}

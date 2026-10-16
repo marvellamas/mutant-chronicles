@@ -87,14 +87,24 @@ capacità; «AR X: Y intrinseca e Z da armatura» → `ar.totale` = X; immunità
 note; presenze spirituali con «terra —» → movimento di volo (`passo: 0`, Corsa/Scatto `non_consentito`, campo
 `volo`). Test: `tests/mostri-nonmorti.test.js`.
 
-## 7. Che cosa resta del catalogo (Mostri 0.16)
+## 8. Catalogo, blocco «Costrutti e creature elementali» — cap. 8 (16/10 sera, Mostri 0.16)
 
-Circa 115 creature, da fare a blocchi nei prossimi lotti:
+`tools/genera_mostri_costrutti.mjs` → `esempi/nemici/mostri/`: Armatura animata, Spada volante, Tappeto
+soffocante, Gargoyle, Azer, Magmin, Elementale dell'Acqua / dell'Aria / del Fuoco / della Terra Maggiore.
+
+Scelte del blocco: attacchi ad area o senza tiro per colpire (VA «—»: Esplosione finale del Magmin, Fiammata
+del Fuoco, Terremoto della Terra) → capacità, perché `va` è obbligatorio; elemento del danno nella `proprieta`
+dell'attacco («Acqua Magico» → natura Magico + proprieta ["Acqua"]); «AR X, di cui Y magica» → `ar.magica`;
+immunità mappate agli Stati del formato (le altre — Fuoco, Fulmine, Sonno, Paralizzato, Disorientato,
+Affaticamento, pietrificazione — nelle note); Elementali evocati con `iniziativa: 0` e la nota «agisce dopo
+l'evocatore, scompare a 0 PV»; Tappeto 2×1 Q fuori dal campo `spazio` (A.167). Test: `tests/mostri-costrutti.test.js`.
+
+## 9. Che cosa resta del catalogo (Mostri 0.16)
+
+Circa 105 creature, da fare a blocchi nei prossimi lotti:
 
 - **Prima parte senza nome** (15): Aarakocra, Aboleth, Ankheg, Arpia, Basilisco, Bestia distorcente, Bulette,
   Chimera, Cockatrice, Ettercap, Grick, Grifone, Ippogrifo, Manticora, Orsogufo.
-- **Costrutti e creature elementali** (~10): Armatura animata, Spada volante, Tappeto soffocante, Gargoyle,
-  Azer, Magmin, Elementali Maggiori (Acqua, Aria, Fuoco, Terra).
 - **Giganti e abitanti delle montagne** (~11): Ciclope, Giganti (colline, pietre, gelo, fuoco, nuvole,
   tempeste), Fomorian, Yeti, Yeti abominevole.
 - **Creature del sottosuolo** (~12): Mantoscuro, Perforatore, Roper, Rugginofago, Umber Hulk, Orrore uncinato,

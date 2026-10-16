@@ -1,0 +1,91 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "elementale-fuoco-maggiore",
+  "nome": "Elementale del Fuoco Maggiore",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e creature elementali",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 9,
+    "COS": 9,
+    "INT": 5,
+    "SAG": 5,
+    "CAR": 5
+  },
+  "pv": 28,
+  "ar": {
+    "totale": 3,
+    "magica": 3
+  },
+  "difese": 14,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 5,
+    "corsa": 10,
+    "scatto": 15
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 15,
+    "volonta": 10,
+    "magia": 12
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Tocco Ustionante",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "2d6+5",
+      "natura": "Magico",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Fuoco"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 16
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Tocco",
+      "effetto": "Corpo a corpo 16 con le normali Difese; dopo residuo e Ignifugo impone Riflessi con −4 contro Incendiato. Non colpisce una creatura per il solo contatto dei Q."
+    },
+    {
+      "nome": "Fiammata",
+      "effetto": "1 AzP, linea lunga 5 Q e larga 1 Q dal bordo del corpo in una direzione dichiarata. Nessun tiro per colpire, 1 AC per bersaglio, un solo 2d6+2 Fuoco Magico per tutta l’area; coinvolge gli alleati, fermata dai solidi. Elusione su Riflessi con −4 dimezza prima dell’AR; dopo residuo e Ignifugo, una distinta PS Riflessi con −4 evita Incendiato."
+    },
+    {
+      "nome": "Protezioni e luce",
+      "effetto": "Immune a Fuoco e Incendiato. Per il Maggiore, Acqua e Ghiaccio infliggono danno normale (non raddoppiano, nessuno spegnimento automatico). Dimezza il danno Naturale dopo le Difese e prima dell’AR 3 (tutta magica). Illumina 2 Q; con 1 AzP incendia combustibile incustodito a contatto. Non vola né attraversa pareti."
+    },
+    {
+      "nome": "Corpo non biologico",
+      "effetto": "Non è un organismo vivente: non respira, non mangia, non beve, non dorme. Immune a veleni e malattie biologiche, soffocamento e Sanguinamento. Le cure biologiche, Medicina e il riposo non lo riparano; servono effetti espressamente compatibili. Corrosivo, urti e gli altri danni restano applicabili."
+    }
+  ],
+  "immunita": [
+    "a-terra",
+    "ammalato",
+    "avvelenato",
+    "sanguinamento",
+    "stordito",
+    "incendiato"
+  ],
+  "note": "PM —: nessuna riserva. Profilo evocato (Magia §14.3): «INI dopo l’evocatore» (qui 0; sulla plancia agisce dopo chi lo evoca). Scompare a 0 PV, a fine durata o al congedo. Spazio 2 × 2 Q, taglia Grande."
+}

@@ -1,0 +1,114 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "azer",
+  "nome": "Azer",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e creature elementali",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 5,
+    "COS": 7,
+    "INT": 6,
+    "SAG": 6,
+    "CAR": 5
+  },
+  "pv": 32,
+  "pm": 8,
+  "ar": {
+    "totale": 5,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 33,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 10,
+    "volonta": 10,
+    "magia": 11
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Martello caldo",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "note": "Aggiunge 1d4 Fuoco Naturale (stesso attacco e stessa AC): vedi «Arma riscaldata». Solo il residuo di Fuoco oltre Ignifugo può imporre Incendiato."
+    },
+    {
+      "nome": "Pugno",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 12
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Tecnologia",
+      "va": 13
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Arma riscaldata",
+      "effetto": "Il martello impugnato dall’Azer aggiunge 1d4 Fuoco Naturale al colpo (un solo attacco, una sola AC, una sola Difesa). Resistenze e AR si applicano separatamente al fisico e al Fuoco, poi si sommano i residui. Solo il residuo di Fuoco oltre Ignifugo può imporre Riflessi senza modificatore contro Incendiato. Un martello lasciato o raccolto da altri perde subito il Fuoco; il Pugno non lo riceve."
+    },
+    {
+      "nome": "Contatto diretto",
+      "effetto": "Chi tocca il suo corpo o mantiene una presa diretta subisce 1d4 Fuoco Naturale, senza Difesa attiva (AR e protezioni pertinenti), al massimo una volta per creatura e Round. Colpirlo con un’arma o parare con uno scudo non è contatto diretto. Il residuo oltre Ignifugo può imporre Incendiato con Riflessi ordinario."
+    },
+    {
+      "nome": "Calore e protezioni",
+      "effetto": "Immune a Fuoco e Incendiato. Non dimezza genericamente il Naturale, non è immune al Ghiaccio. Capelli e barba incandescenti illuminano 2 Q (penombra per altri 2). Ha mente, emozioni e volontà."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; non distingue i colori al buio, non vede attraverso gli ostacoli e non individua da sé chi è nascosto."
+    },
+    {
+      "nome": "Corpo non biologico",
+      "effetto": "Non è un organismo vivente: non respira, non mangia, non beve, non dorme. Immune a veleni e malattie biologiche, soffocamento e Sanguinamento. Le cure biologiche, Medicina e il riposo non lo riparano; servono effetti espressamente compatibili. Corrosivo, urti e gli altri danni restano applicabili."
+    }
+  ],
+  "immunita": [
+    "sanguinamento",
+    "incendiato"
+  ],
+  "note": "AR 5 (3 intrinseca + 2 scudo medio); senza scudo scende a 3. Tecnologia 13 per metallurgia. Martello da guerra e scudo medio Comuni, entrambi pronti; può parare con l’uno o l’altro. Comportamento: difende la fucina o un lavoro; non necessariamente ostile, trattare può evitare lo scontro."
+}

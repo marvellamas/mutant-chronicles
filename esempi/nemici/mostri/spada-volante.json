@@ -1,0 +1,104 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "spada-volante",
+  "nome": "Spada volante",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e creature elementali",
+  "caratteristiche": {
+    "FOR": 4,
+    "DES": 7,
+    "COS": 5,
+    "INT": 1,
+    "SAG": 3,
+    "CAR": 1
+  },
+  "pv": 14,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 12,
+  "iniziativa": 2,
+  "movimento": {
+    "passo": 0,
+    "corsa": "non_consentito",
+    "scatto": "non_consentito",
+    "volo": 10
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 8,
+    "riflessi": 12,
+    "volonta": 7,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Fendente",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Automa senza mente",
+      "effetto": "Esegue ordini semplici; nessuna mente da leggere o influenzare. Immune a Sonno, Affaticamento, Paralizzato e Disorientato; il Ghiaccio può renderla Rallentata o Congelata."
+    },
+    {
+      "nome": "Sostentamento",
+      "effetto": "Si muove in ogni direzione e resta sospesa senza percorso minimo o costo. Immobilizzato blocca il movimento senza spegnere la levitazione; Svenuto da Morente, distruzione o soppressione la fanno cadere. Non trasporta creature."
+    },
+    {
+      "nome": "Parata con la lama",
+      "effetto": "1 AzP per Parata contro un colpo ravvicinato fisico (Difese 12); non para a distanza o il tocco Etereo. La sua unica AzP spesa in Difesa impedisce il proprio attacco quel Round."
+    },
+    {
+      "nome": "Sopprimere l’animazione",
+      "effetto": "Negare Potere sull’animazione (potenza 3), come l’Armatura animata; inerte fino alla fine del terzo Round successivo."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; non distingue i colori al buio, non vede attraverso gli ostacoli e non individua da sé chi è nascosto."
+    },
+    {
+      "nome": "Corpo non biologico",
+      "effetto": "Non è un organismo vivente: non respira, non mangia, non beve, non dorme. Immune a veleni e malattie biologiche, soffocamento e Sanguinamento. Le cure biologiche, Medicina e il riposo non lo riparano; servono effetti espressamente compatibili. Corrosivo, urti e gli altri danni restano applicabili."
+    }
+  ],
+  "immunita": [
+    "sanguinamento",
+    "stordito"
+  ],
+  "note": "PM —: nessuna riserva. Il corpo è l’arma; i danni seguono PV e Ferite, senza PI. Non dà proprietà o sintonizzazioni di un’arma magica ai PG. Immobile e appoggiata sembra un oggetto (+4 Furtività). Comportamento: percorso di guardia o bersaglio assegnato; una barriera chiusa ne ferma l’inseguimento."
+}

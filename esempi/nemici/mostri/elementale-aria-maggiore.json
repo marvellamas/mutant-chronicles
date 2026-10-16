@@ -1,0 +1,106 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "elementale-aria-maggiore",
+  "nome": "Elementale dell’Aria Maggiore",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e creature elementali",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 10,
+    "COS": 9,
+    "INT": 5,
+    "SAG": 5,
+    "CAR": 5
+  },
+  "pv": 28,
+  "ar": {
+    "totale": 3,
+    "magica": 3
+  },
+  "difese": 16,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 0,
+    "corsa": "non_consentito",
+    "scatto": "non_consentito",
+    "volo": 12
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 16,
+    "volonta": 10,
+    "magia": 12
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Folata",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "2d6+3",
+      "natura": "Magico",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Aria"
+      ]
+    },
+    {
+      "nome": "Dardo d’aria",
+      "tipo": "distanza",
+      "va": 16,
+      "danno": "2d6+2",
+      "natura": "Magico",
+      "gittata_q": 12,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1,
+      "proprieta": [
+        "Aria"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 15
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Abbattimento",
+      "effetto": "Entrambi gli attacchi colpiscono un solo bersaglio: dopo danno residuo e Contromisura, Riflessi con −4; il fallimento applica A Terra (chi è già A Terra non subisce effetto aggiuntivo). Niente lancio casuale, danno da collisione o turbine ad area."
+    },
+    {
+      "nome": "Sostentamento",
+      "effetto": "Vola in ogni direzione (12 / 24 / 36 Q) e resta sospeso senza AzP. Movimento 0 impedisce lo spostamento senza fargli perdere quota. Non attraversa muri o creature e non vede attraverso gli ostacoli."
+    },
+    {
+      "nome": "Protezioni",
+      "effetto": "Immune ad Aria e Fulmine (effetti secondari compresi). Nessuna vulnerabilità ×2. Dimezza il danno Naturale dopo le Difese e prima dell’AR 3 (tutta magica)."
+    },
+    {
+      "nome": "Corpo non biologico",
+      "effetto": "Non è un organismo vivente: non respira, non mangia, non beve, non dorme. Immune a veleni e malattie biologiche, soffocamento e Sanguinamento. Le cure biologiche, Medicina e il riposo non lo riparano; servono effetti espressamente compatibili. Corrosivo, urti e gli altri danni restano applicabili."
+    }
+  ],
+  "immunita": [
+    "a-terra",
+    "ammalato",
+    "avvelenato",
+    "sanguinamento",
+    "stordito"
+  ],
+  "note": "PM —: nessuna riserva. Profilo evocato (Magia §14.2): «INI dopo l’evocatore» (qui 0; sulla plancia agisce dopo chi lo evoca). Scompare a 0 PV, a fine durata o al congedo. Spazio 2 × 2 Q, taglia Grande. È immune ad A Terra (lo subisce il bersaglio, non l’elementale)."
+}
