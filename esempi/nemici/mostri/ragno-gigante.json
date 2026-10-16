@@ -1,0 +1,100 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "ragno-gigante",
+  "nome": "Ragno gigante",
+  "fonte": "dal Manuale dei Mostri v0.13 (16/10/2026), cap. 8 «Catalogo delle creature» — Bestie e predatori",
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 7,
+    "COS": 5,
+    "INT": 1,
+    "SAG": 5,
+    "CAR": 1
+  },
+  "pv": 22,
+  "pm": 6,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 11,
+    "volonta": 8,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sensi e superfici",
+      "effetto": "Scurovisione 12 Q. Entro 2 Q localizza una creatura in movimento tramite le vibrazioni del supporto continuo condiviso; non percepisce così chi vola, resta immobile o è isolato dal supporto, e non vede attraverso le pareti. Si muove su pareti e soffitti aderenti senza Atletica ordinaria (superfici scivolose o friabili richiedono Prova). Arrampicata 6 Q al Passo."
+    },
+    {
+      "nome": "Getto di seta",
+      "effetto": "1 AzP, nessun PM, Prova Armi da lancio 11 contro una creatura visibile non superiore a 2 × 2 Q entro 12 Q (da 11 Q: −2 per la distanza). Il bersaglio può Schivare con le Azioni richieste; la Parata non ferma il getto. Nessun danno, ignora l’AR: se riesce e non è evitato applica Immobilizzato (braccia e gambe legate). Dopo l’uso servono tre Round senza Getto (usato nel Round 1, torna nel Round 5). Le reti persistono finché rimosse. Nuove reti sulla stessa vittima non aggiungono penalità.",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Veleno aracnide naturale II",
+      "effetto": "Il Morso che infligge almeno 1 danno finale a un vivente impone Tempra senza modificatore. Successo: dimezza per eccesso 1d4 danni da veleno, nessuna penalità. Fallimento o Maldestro: 1d4 danni (ignora AR, immediato, non si ripete) e Avvelenato con −2 alle Prove fisiche per 10 Round. A fine di ogni propria Iniziativa la vittima ripete Tempra: un successo termina la penalità. Cura Avvelenamenti (liv. 2) o un antidoto la rimuovono. Stesso veleno dell’Ettercap: nuove esposizioni rinnovano solo i 10 Round."
+    },
+    {
+      "nome": "Liberazione dalla seta",
+      "effetto": "La vittima spende 1 AzP per Atletica con il −4 di Immobilizzato (consentita anche con gli arti legati); un successo la libera. Un alleato adiacente con una lama idonea spende 1 AzP per tagliare la rete senza tiro né danno al prigioniero. Un attacco da Fuoco che infligge almeno 1 danno alla tela la distrugge (la tela non ha AR né Difese), ma non spegne fiamme sul corpo. Negare Potere non dissolve questa materia biologica."
+    }
+  ],
+  "note": "Con una sola AzP sceglie fra Morso, Getto e Difesa. Condotta: preferisce catturare e attendere; sotto 6 PV o a Ferita Profonda abbandona la preda e si ritira lungo la rete."
+}

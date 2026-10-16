@@ -1,0 +1,98 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "orso-bruno",
+  "nome": "Orso bruno",
+  "fonte": "dal Manuale dei Mostri v0.13 (16/10/2026), cap. 8 «Catalogo delle creature» — Bestie e predatori",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 4,
+    "COS": 7,
+    "INT": 2,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "pv": 34,
+  "pm": 6,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 8,
+    "volonta": 8,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sequenza",
+      "effetto": "Con le due AzP un attacco di Artigli e un Morso, al massimo uno di ciascuno per Round; ogni attacco si risolve a parte, con la propria Difesa e AR. Può conservare Azioni per Schivata. Gli Artigli non infliggono due colpi per l’uso di due zampe."
+    },
+    {
+      "nome": "Fiuto e arrampicata",
+      "effetto": "+2 a Percezione quando l’olfatto è determinante. Si arrampica fino a 4 Q per AzM su tronchi e superfici con appigli adatti al suo peso, con Atletica se la difficoltà lo richiede; non aderisce a soffitti o pareti lisce."
+    },
+    {
+      "nome": "Forza e anatomia",
+      "effetto": "Gli arti anteriori sono Braccia anche da sollevato: esegue manovre fisicamente praticabili pagandone costi e penalità. Il Morso non crea una presa automatica e la zampata non atterra automaticamente. Pelliccia e massa non danno immunità al freddo o ai proiettili."
+    }
+  ],
+  "note": "Condotta: difende piccoli, spazio e cibo; sotto 9 PV o a Ferita Seria interrompe lo scontro se ha via libera, più ostinato a difesa dei piccoli. Non combatte fino alla morte per una regola automatica."
+}

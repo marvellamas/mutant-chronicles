@@ -1,0 +1,92 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "lupo",
+  "nome": "Lupo",
+  "fonte": "dal Manuale dei Mostri v0.13 (16/10/2026), cap. 8 «Catalogo delle creature» — Bestie e predatori",
+  "caratteristiche": {
+    "FOR": 4,
+    "DES": 6,
+    "COS": 5,
+    "INT": 2,
+    "SAG": 6,
+    "CAR": 2
+  },
+  "pv": 14,
+  "pm": 4,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 8,
+    "riflessi": 10,
+    "volonta": 7,
+    "magia": 7
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Branco e sensi",
+      "effetto": "Applica il +2 di Branco alle condizioni comuni. +2 a Percezione quando udito oppure olfatto sono determinanti, senza sommare i due sensi. Segue tracce con Sopravvivenza se esistono indizi accessibili; il fiuto non dà la posizione esatta oltre gli ostacoli. Non vede attraverso le pareti."
+    },
+    {
+      "nome": "Abbattere la preda",
+      "effetto": "Una volta per Round, se un Morso infligge almeno 1 danno finale a una creatura con spazio non superiore a 1 × 1 Q, le impone Tempra con +2; fallimento o Maldestro applica A Terra. Non sposta la vittima, non aggiunge una presa, richiede un appoggio (chi vola o nuota senza appoggio non cade) e non agisce su chi è già A Terra. Non ignora armature né attiva Sanguinamento.",
+      "usi": {
+        "quanti": 1,
+        "per": "Round"
+      }
+    }
+  ],
+  "note": "Può Schivare ed Elusione; nessuna Parata naturale. Condotta: cerca isolamento e vie di fuga, tende a ritirarsi sotto 4 PV, a Ferita Profonda o dopo la dispersione del branco."
+}

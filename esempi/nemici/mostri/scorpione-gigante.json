@@ -1,0 +1,106 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "scorpione-gigante",
+  "nome": "Scorpione gigante",
+  "fonte": "dal Manuale dei Mostri v0.13 (16/10/2026), cap. 8 «Catalogo delle creature» — Bestie e predatori",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 5,
+    "COS": 7,
+    "INT": 1,
+    "SAG": 5,
+    "CAR": 1
+  },
+  "pv": 42,
+  "pm": 8,
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 9,
+    "volonta": 8,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Chela",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Pungiglione",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sequenza",
+      "effetto": "Due AzP, non i tre attacchi simultanei dell’originale: una volta con ciascuna chela libera, oppure una chela e il Pungiglione. Massimo un Pungiglione per Round. Difese e altre attività consumano le stesse Azioni."
+    },
+    {
+      "nome": "Presa con le chele",
+      "effetto": "Al posto del danno di una Chela: Presa naturale con Corpo a corpo 12 contro una preda non superiore a 1 × 1 Q. Ogni chela trattiene una sola vittima e, mentre occupata, non attacca altri. La presa blocca le gambe; mani e braccia restano con il −4 di Immobilizzato. Nessun danno iniziale. Con 1 AzP e una nuova opposizione stringe per 1d6+1 Naturale (AR normale); il fallimento non scioglie la presa."
+    },
+    {
+      "nome": "Veleno del pungiglione (Pericolosità III, Profonda)",
+      "effetto": "Se il Pungiglione infligge almeno 1 danno finale a un vivente, applica il veleno: Tempra con −2. Tre applicazioni di 1d4 danni (una immediata e una all’Iniziativa dello Scorpione nei due Round successivi), ciascuna ignora AR e non concede Difese. Un successo iniziale dimezza per eccesso ognuna; non si ripete Tempra. Avvelenato termina dopo l’ultima applicazione. Nuove esposizioni rinnovano solo le due applicazioni future; più Scorpioni non sommano il veleno (una sola sequenza). Cura Avvelenamenti (liv. 3) o un antidoto terminano il veleno e le applicazioni dovute."
+    },
+    {
+      "nome": "Percezione per vibrazioni",
+      "effetto": "Il carapace non rende immune ai veleni. Percepisce tramite vibrazioni le creature in movimento entro 6 Q sul medesimo supporto continuo: sostituisce la vista per localizzarle, senza attraversare muri né riconoscere chi resta immobile."
+    },
+    {
+      "nome": "Trascinare una preda",
+      "effetto": "Trattenere non dà spostamenti gratuiti. Per trascinare una vittima riluttante spende 1 AzP e l’AzM intera, vince una nuova opposizione della Presa, poi muove al massimo 2 Q al Passo. Una sola vittima alla volta; deve liberare l’altra chela e avere spazio per entrambi. Il fallimento consuma le Azioni senza spostare. Prima di un pericolo letale la vittima effettua la normale PS Riflessi."
+    }
+  ],
+  "note": "Condotta: cerca contatto e trattiene una preda minacciando gli altri con la coda; sotto 11 PV o a Ferita Seria cerca un riparo."
+}

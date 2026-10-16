@@ -1,0 +1,99 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "serpente-costrittore-gigante",
+  "nome": "Serpente costrittore gigante",
+  "fonte": "dal Manuale dei Mostri v0.13 (16/10/2026), cap. 8 «Catalogo delle creature» — Bestie e predatori",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 5,
+    "COS": 8,
+    "INT": 1,
+    "SAG": 5,
+    "CAR": 2
+  },
+  "pv": 48,
+  "pm": 8,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "taglia": "grande",
+  "spazio": "3 × 3 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 9,
+    "volonta": 9,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+3",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Costrizione",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+3",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "note": "Applica anche la presa: vedi la capacità «Costrizione»."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Costrizione",
+      "effetto": "1 AzP e una Prova contrapposta di Presa naturale contro una preda non superiore a 2 × 2 Q. Se riesce applica Immobilizzato e infligge una volta 1d8+3 Naturale (AR normale). Le spire bloccano tronco e arti inferiori; braccia e mani restano con il −4 fisico. Trattiene una sola preda; non è un Morso seguito da presa gratuita."
+    },
+    {
+      "nome": "Compressione successiva",
+      "effetto": "Mantenere la presa non causa danno. Con 1 AzP una nuova opposizione di Corpo a corpo 13 contro Corpo a corpo o Atletica della vittima: successo 1d8+3 Naturale, fallimento nessun danno senza perdere la presa. Danno di Costrizione una sola volta per Round (compresa la presa iniziale) e al massimo un Morso per Round."
+    },
+    {
+      "nome": "Mobilità e sensi",
+      "effetto": "Percepisce per vibrazioni una creatura in movimento entro 2 Q sul medesimo supporto continuo; non vede attraverso le pareti. Nuoto 6 / 12 / 18 Q, ma respira aria (riserva di fiato su COS, §5.23); nessuna immunità al soffocamento. Non può usare Corsa, Scatto o Carica mantenendo la Costrizione; per trascinare la vittima spende 1 AzP e l’AzM intera e vince una nuova opposizione (fino a 2 Q al Passo, a terra o a nuoto), senza infliggere anche il danno di Costrizione."
+    }
+  ],
+  "note": "Morso con portata 2 Q. Liberazione con le regole comuni delle Prese naturali; colpirlo non libera, salvo Svenuto/Morente o perdita funzionale delle spire. Condotta: attende presso vegetazione o passaggi stretti; sotto 12 PV o a Ferita Seria può rilasciare e fuggire."
+}

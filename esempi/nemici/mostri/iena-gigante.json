@@ -1,0 +1,92 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "iena-gigante",
+  "nome": "Iena gigante",
+  "fonte": "dal Manuale dei Mostri v0.13 (16/10/2026), cap. 8 «Catalogo delle creature» — Bestie e predatori",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 6,
+    "COS": 6,
+    "INT": 2,
+    "SAG": 6,
+    "CAR": 2
+  },
+  "pv": 30,
+  "pm": 6,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 10,
+    "corsa": 20,
+    "scatto": 30
+  },
+  "taglia": "grande",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 10,
+    "volonta": 8,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Frenesia della caccia",
+      "effetto": "Una volta per Round, se il proprio Morso alla propria Iniziativa rende un nemico Svenuto, Morente o Morto, ottiene subito una sola AzP vincolata a un Morso contro un altro nemico raggiungibile. Il solo passaggio a 0 PV non basta. Il Morso aggiuntivo non attiva una seconda Frenesia e non colpisce di nuovo la stessa vittima. Prima può usare il movimento ordinario rimasto; non riceve un’altra AzM, non interrompe Corsa o Scatto, non ignora gli Attacchi di Opportunità. L’AzP aggiuntiva scade a fine Iniziativa se inutilizzata.",
+      "usi": {
+        "quanti": 1,
+        "per": "Round"
+      }
+    },
+    {
+      "nome": "Difese e gruppo",
+      "effetto": "Non applica il bonus di Branco: il vantaggio del gruppo nasce da posizioni e numero. La propria AzP ordinaria resta necessaria per Schivare. Denti e mascelle non sono una Parata naturale e non infliggono Corrosivo o Sanguinamento automatici. Il riso e i richiami sono comunicazione, non un attacco che impone Terrorizzato."
+    }
+  ],
+  "note": "Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app (A.167). Condotta: segue una preda indebolita, contende carcasse; sotto 8 PV, a Ferita Profonda o separata dal gruppo interrompe l’inseguimento."
+}

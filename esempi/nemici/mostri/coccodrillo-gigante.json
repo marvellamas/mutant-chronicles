@@ -1,0 +1,101 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "coccodrillo-gigante",
+  "nome": "Coccodrillo gigante",
+  "fonte": "dal Manuale dei Mostri v0.13 (16/10/2026), cap. 8 «Catalogo delle creature» — Bestie e predatori",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 4,
+    "COS": 8,
+    "INT": 2,
+    "SAG": 5,
+    "CAR": 2
+  },
+  "pv": 62,
+  "pm": 8,
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "taglia": "grande",
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 8,
+    "volonta": 10,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Coda",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sequenza",
+      "effetto": "Nelle AzP al massimo un’azione di mascelle e un attacco di Coda per Round. Una presa o stretta occupa l’azione di mascelle. Il bersaglio della Coda deve essere diverso dalla preda trattenuta. Le due AzP possono servire anche per Difese."
+    },
+    {
+      "nome": "Presa delle mascelle",
+      "effetto": "Al posto del Morso: Presa naturale, Corpo a corpo 14 contro Corpo a corpo o Atletica, su una preda non superiore a 2 × 2 Q. Se riesce applica Immobilizzato e infligge 1d10+2 Naturale (AR normale). Trattiene una sola preda (corpo e gambe bloccati, mani con il −4 fisico); non può mordere un altro bersaglio mentre tiene. Una stretta successiva: 1 AzP e nuova opposizione, successo 1d10+2 Naturale, fallimento nessun danno e conserva la presa."
+    },
+    {
+      "nome": "Spazzata di coda",
+      "effetto": "La Coda che infligge almeno 1 danno finale a una creatura non superiore a 2 × 2 Q impone Tempra senza modificatore; fallimento o Maldestro applica A Terra. Richiede un appoggio, senza spostamento o effetto su chi è già A Terra."
+    },
+    {
+      "nome": "Anfibio",
+      "effetto": "Nuoto 10 / 20 / 30 Q. Apnea 30 minuti (sostituisce i Round pari a COS, senza respirazione acquatica); esaurita, PS, perdita di coscienza e danni del §5.23, un Round d’aria la ripristina. +2 a Furtività nell’acqua con riparo (Furtività 13). Per trascinare una preda riluttante mentre tiene (niente Corsa/Scatto/Carica): 1 AzP e l’AzM intera, nuova opposizione, poi fino a 2 Q a terra o 4 Q a nuoto; percorso misto con budget 4 (1 Q a terra = 2, 1 Q a nuoto = 1). Prima di un pericolo letale la vittima effettua la normale PS Riflessi."
+    }
+  ],
+  "note": "Spazio sulla mappa 3 × 2 Q (dal manuale): pedine quadrate nell’app (A.167). Condotta: sfrutta occultamento e sponde senza sorpresa automatica; sotto 16 PV o a Ferita Seria rilascia la preda e cerca acqua profonda."
+}

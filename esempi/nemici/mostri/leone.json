@@ -1,0 +1,105 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "leone",
+  "nome": "Leone",
+  "fonte": "dal Manuale dei Mostri v0.13 (16/10/2026), cap. 8 «Catalogo delle creature» — Bestie e predatori",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 7,
+    "COS": 6,
+    "INT": 2,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "pv": 28,
+  "pm": 6,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 2,
+  "movimento": {
+    "passo": 10,
+    "corsa": 20,
+    "scatto": 30
+  },
+  "taglia": "grande",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 11,
+    "volonta": 9,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Branco e fiuto",
+      "effetto": "Applica Branco e +2 a Percezione quando l’olfatto è determinante. Il terreno può permettere Furtività, ma non diventa invisibile nell’erba e non sorprende chi lo ha già individuato."
+    },
+    {
+      "nome": "Balzo predatorio",
+      "effetto": "Una volta per Round, dopo almeno 4 Q di Passo rettilineo verso una preda non superiore a 2 × 2 Q, attacca con Artigli (AzP; danno non raddoppiato). Se infligge almeno 1 danno finale, la preda effettua Tempra senza modificatore: fallimento o Maldestro applica A Terra, e se cade proprio per questo il Leone ottiene subito una sola AzP vincolata a un Morso contro di lei. Una preda già A Terra non concede il Morso. Il percorso usa l’AzM. Non si combina con Carica, Corsa, Scatto o altre manovre. Senza appoggio niente A Terra né Morso aggiuntivo.",
+      "usi": {
+        "quanti": 1,
+        "per": "Round"
+      }
+    },
+    {
+      "nome": "Salto",
+      "effetto": "Con almeno 2 Q di rincorsa salta fino a 5 Q in orizzontale senza Prova in condizioni ordinarie, contando rincorsa e salto nel movimento; serve un atterraggio adatto. Ostacoli o circostanze difficili richiedono Atletica."
+    }
+  ],
+  "note": "Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app (A.167). Condotta: sotto 7 PV o a Ferita Profonda cerca riparo e sostegno, salvo minaccia immediata ai piccoli."
+}

@@ -1,0 +1,92 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "lupo-feroce",
+  "nome": "Lupo feroce",
+  "fonte": "dal Manuale dei Mostri v0.13 (16/10/2026), cap. 8 «Catalogo delle creature» — Bestie e predatori",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 6,
+    "COS": 6,
+    "INT": 2,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "pv": 26,
+  "pm": 6,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 10,
+    "corsa": 20,
+    "scatto": 30
+  },
+  "taglia": "grande",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 11,
+    "volonta": 8,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Branco e sensi",
+      "effetto": "Applica Branco, con +2 VA condizionale. +2 a Percezione quando udito oppure olfatto sono determinanti, senza raddoppiare il bonus. Non possiede scurovisione o percezione magica."
+    },
+    {
+      "nome": "Abbattere la preda",
+      "effetto": "Una volta per Round, un Morso che infligge almeno 1 danno finale può imporre Tempra senza modificatore proprio a una preda non superiore a 2 × 2 Q. Fallimento o Maldestro applica A Terra. Restano i limiti di appoggio, l’assenza di spostamento e le regole per rialzarsi del Lupo.",
+      "usi": {
+        "quanti": 1,
+        "per": "Round"
+      }
+    }
+  ],
+  "note": "Una sola AzP obbliga a scegliere fra Morso e Difesa. Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app (A.167). Condotta: insegue una preda separata, evita un fronte compatto, cerca riparo sotto 7 PV o a Ferita Profonda. Non è una cavalcatura addestrata."
+}

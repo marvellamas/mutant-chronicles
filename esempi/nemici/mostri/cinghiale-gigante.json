@@ -1,0 +1,89 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "cinghiale-gigante",
+  "nome": "Cinghiale gigante",
+  "fonte": "dal Manuale dei Mostri v0.13 (16/10/2026), cap. 8 «Catalogo delle creature» — Bestie e predatori",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 4,
+    "COS": 8,
+    "INT": 2,
+    "SAG": 4,
+    "CAR": 2
+  },
+  "pv": 38,
+  "pm": 6,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 8,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 8,
+    "volonta": 9,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Zanne",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Carica delle zanne",
+      "effetto": "Usa la Carica del Giocatore §5.6 (1 AzM e 1 AzP, percorso rettilineo minimo 3 Q, fino alla Corsa, penalità e danno ×2). Se infligge almeno 1 danno finale a una creatura non superiore a 2 × 2 Q, questa effettua Tempra senza modificatore proprio; fallimento o Maldestro applica A Terra. Non con un attacco da fermo, non aggiunge i dadi da carica dell’originale, nessuna Carica Migliorata né secondo attacco. L’abbattimento richiede un appoggio, non sposta la vittima e non agisce su chi è già A Terra."
+    },
+    {
+      "nome": "Tenacia",
+      "effetto": "Una volta per scena, prima di una PS Tempra per nuove Ferite mentre è già a 0 PV, ottiene +2 a quella PS se il danno è Naturale e non da Successo Magistrale. L’uso si consuma comunque. Non evita la Ferita minima, non recupera PV e non interrompe Morente. Una pausa nello stesso scontro non lo ripristina.",
+      "usi": {
+        "quanti": 1,
+        "per": "Scena"
+      }
+    }
+  ],
+  "note": "Condotta: reagisce a una minaccia vicina o sfonda verso la fuga; sotto 10 PV o a Ferita Seria cerca una via di uscita. Non si scaglia contro muri invalicabili per la propria tenacia."
+}
