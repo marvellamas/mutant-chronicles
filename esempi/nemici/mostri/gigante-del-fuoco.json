@@ -1,0 +1,104 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "gigante-del-fuoco",
+  "nome": "Gigante del fuoco",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Giganti e abitanti delle montagne",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 5,
+    "COS": 10,
+    "INT": 5,
+    "SAG": 6,
+    "CAR": 6
+  },
+  "pv": 82,
+  "pm": 14,
+  "ar": {
+    "totale": 6,
+    "magica": 0
+  },
+  "difese": 13,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 4,
+    "corsa": 10,
+    "scatto": 16
+  },
+  "taglia": "grande",
+  "spazio": "3 × 3 Q",
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 77,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 17,
+    "riflessi": 10,
+    "volonta": 12,
+    "magia": 12
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Spadone",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "2d6+7",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Masso",
+      "tipo": "distanza",
+      "va": 11,
+      "danno": "2d6+4",
+      "natura": "Naturale",
+      "gittata_q": 30,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 15
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Tecnologia",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Immunità al Fuoco",
+      "effetto": "Non subisce Fuoco né Incendiato e tollera il calore ambientale senza danni o Affaticamento. Fumo, mancanza d’aria, crolli e materiali che lo intrappolano restano pericolosi. Ghiaccio normale, con i suoi Stati. L’equipaggiamento conserva le normali vulnerabilità."
+    },
+    {
+      "nome": "Valori con armatura",
+      "effetto": "I valori pronti includono −2 ad attacchi e Agilità e −2 Q a ogni andatura; Parata 13. Tolta la corazza: AR 1, Armi da guerra 17, Armi da lancio 13, Schivata 13, Atletica 16, movimento 6/12/18."
+    }
+  ],
+  "immunita": [
+    "incendiato"
+  ],
+  "note": "AR 6 (1 biologica + 5 armatura Pesante su misura). Difese = Parata 13; Schivata 11. Tecnologia 12 per forgia. Spadone a due mani (+3 ordinario, +3 innato, portata 2 Q). Comportamento: terreno solido e fronte controllabile; sotto 21 PV o a Ferita Seria ripiega o tratta."
+}

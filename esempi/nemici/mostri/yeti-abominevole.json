@@ -1,0 +1,109 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "yeti-abominevole",
+  "nome": "Yeti abominevole",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Giganti e abitanti delle montagne",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 5,
+    "COS": 10,
+    "INT": 5,
+    "SAG": 6,
+    "CAR": 4
+  },
+  "pv": 85,
+  "pm": 14,
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 12,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "taglia": "grande",
+  "spazio": "3 × 3 Q",
+  "gs_px": {
+    "gs": "Leggenda",
+    "px": 100,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 16,
+    "riflessi": 11,
+    "volonta": 12,
+    "magia": 13
+  },
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Artiglio",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "1d8+3",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "note": "Aggiunge 1d6 Ghiaccio Naturale (una Difesa, una AC): vedi «Gelo degli artigli»."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 15
+    },
+    {
+      "nome": "Atletica",
+      "va": 16
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Gelo degli artigli",
+      "effetto": "L’Artiglio aggiunge 1d6 Ghiaccio Naturale; la PS Tempra contro Rallentato/Congelato ha −2. Il +3 fisico è già incluso."
+    },
+    {
+      "nome": "Sguardo gelido",
+      "effetto": "1 AzP e 2 PM, una volta per Round, bersaglio entro 6 Q che lo vede: PS Magia −2 evita; fallimento 2d6+3 Ghiaccio Magico (AR normale), poi Tempra −2 contro lo Stato. Nessuna Parata, Schivata o Elusione. Immunità allo Sguardo di quello Yeti per un’ora dopo la PS.",
+      "risorsa": "2 PM",
+      "azioni": {
+        "principali": 1
+      },
+      "usi": {
+        "quanti": 1,
+        "per": "Round"
+      }
+    },
+    {
+      "nome": "Soffio gelido",
+      "effetto": "1 AzP, cono lungo 3 Q (file di larghezza 1/3/5 Q, 9 Q), i solidi bloccano; tutte le creature comprese, alleati inclusi, 1 AC. Un solo 3d6+3 Ghiaccio Naturale; Elusione su Riflessi −2 dimezza prima dell’AR; dopo residuo, Tempra −2 contro Rallentato/Congelato. Massimo una per Round, non nel Round immediatamente successivo (usato nel Round 1, torna dal 3); esclude lo Sguardo nello stesso Round, non gli Artigli. Non costa PM.",
+      "azioni": {
+        "principali": 1
+      },
+      "usi": {
+        "quanti": 1,
+        "per": "Round"
+      }
+    },
+    {
+      "nome": "Freddo e fuoco",
+      "effetto": "Immune a Ghiaccio e ai suoi Rallentato/Congelato e al freddo. Dopo almeno 1 danno da Fuoco −2 VA a tutte le Prove di Abilità fino a fine del turno successivo (il maggiore fra questo e Incendiato). Scurovisione 12 Q; +2 Furtività in neve e ghiaccio; olfatto 15."
+    }
+  ],
+  "note": "AR 4 biologica. Terra e arrampicata 8/16/24 Q. Nelle AzP al massimo due Artigli e una sola fra Sguardo e Soffio. Nessuna Parata naturale. Comportamento: coinvolge più intrusi nel Soffio; sotto 22 PV o a Ferita Seria valuta la ritirata."
+}

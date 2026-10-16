@@ -1,0 +1,101 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "ciclope",
+  "nome": "Ciclope",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Giganti e abitanti delle montagne",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 4,
+    "COS": 9,
+    "INT": 4,
+    "SAG": 3,
+    "CAR": 4
+  },
+  "pv": 64,
+  "pm": 8,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": -1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "taglia": "grande",
+  "spazio": "3 × 3 Q",
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 77,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 8,
+    "volonta": 8,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Maglio rustico",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "2d6+5",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Masso",
+      "tipo": "distanza",
+      "va": 10,
+      "danno": "2d6+3",
+      "natura": "Naturale",
+      "gittata_q": 30,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 13
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 15
+    },
+    {
+      "nome": "Percezione",
+      "va": 8
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Percezione della profondità",
+      "effetto": "Contro un bersaglio oltre 6 Q applica un ulteriore −2 VA a tutti gli attacchi diretti a distanza, cumulativo con la penalità di distanza (a 15 Q il Masso usa VA 6). Non penalizza Percezione, i colpi ravvicinati o le Salvezze."
+    },
+    {
+      "nome": "Un solo occhio",
+      "effetto": "Accecato impedisce la vista normalmente. Il capo resta una sola localizzazione: un colpo alla Testa non distrugge l’occhio da sé. Non possiede scurovisione né un senso alternativo."
+    }
+  ],
+  "note": "AR 2 biologica. Maglio = Martello a due mani (danno con +3 ordinario e +2 innato, portata 2 Q); nessuno scudo, para con il maglio. Lancio di massi: solo Colpo Singolo, serve un masso libero (~20 kg) da raccogliere (1 AzP, due mani). Comportamento: difende rifugio e risorse; sotto 16 PV o a Ferita Seria cerca riparo o tratta."
+}

@@ -99,14 +99,26 @@ immunità mappate agli Stati del formato (le altre — Fuoco, Fulmine, Sonno, Pa
 Affaticamento, pietrificazione — nelle note); Elementali evocati con `iniziativa: 0` e la nota «agisce dopo
 l'evocatore, scompare a 0 PV»; Tappeto 2×1 Q fuori dal campo `spazio` (A.167). Test: `tests/mostri-costrutti.test.js`.
 
-## 9. Che cosa resta del catalogo (Mostri 0.16)
+## 10. Catalogo, blocco «Giganti e abitanti delle montagne» — cap. 8 (16/10 sera, Mostri 0.16)
 
-Circa 105 creature, da fare a blocchi nei prossimi lotti:
+`tools/genera_mostri_giganti.mjs` → `esempi/nemici/mostri/`: Ciclope, Gigante delle colline / delle pietre /
+del gelo / del fuoco / delle nuvole / delle tempeste, Fomorian, Yeti, Yeti abominevole.
+
+Scelte del blocco: attacchi senza tiro per colpire (Malocchio e Deformazione del Fomorian, Sguardo e Soffio
+gelido degli Yeti, Scarica tempestosa) → capacità; poteri innati a PM (Nebbia, Sostentamento, Passo nelle
+nubi, Levitazione) → capacità con `risorsa`; il volo del Gigante delle nuvole è un potere (non nel campo
+`volo`); Difese = Parata per i giganti corazzati (Schivata e valori senza armatura nelle note); armi con due
+componenti (Artiglio dello Yeti: fisico nel campo `danno`, Ghiaccio nella capacità «Gelo degli artigli»); Masso
+come attacco a distanza (solo Colpo Singolo, gittata 30 Q); Scurovisione solo dove indicata (Pietre 12 Q,
+Fomorian 24 Q; il Ciclope non ne ha). GS/PX anche con valori non tondi (77/100/110). Test:
+`tests/mostri-giganti.test.js`.
+
+## 11. Che cosa resta del catalogo (Mostri 0.16)
+
+Circa 95 creature, da fare a blocchi nei prossimi lotti:
 
 - **Prima parte senza nome** (15): Aarakocra, Aboleth, Ankheg, Arpia, Basilisco, Bestia distorcente, Bulette,
   Chimera, Cockatrice, Ettercap, Grick, Grifone, Ippogrifo, Manticora, Orsogufo.
-- **Giganti e abitanti delle montagne** (~11): Ciclope, Giganti (colline, pietre, gelo, fuoco, nuvole,
-  tempeste), Fomorian, Yeti, Yeti abominevole.
 - **Creature del sottosuolo** (~12): Mantoscuro, Perforatore, Roper, Rugginofago, Umber Hulk, Orrore uncinato,
   Grimlock, Troglodita, Stirge, Vermeiena.
 - Poi: **Melme funghi e imitatori**, **Vegetali e custodi delle foreste**, **Grandi rettili e predatori

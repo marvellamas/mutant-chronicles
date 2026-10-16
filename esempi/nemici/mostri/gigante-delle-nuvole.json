@@ -1,0 +1,117 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "gigante-delle-nuvole",
+  "nome": "Gigante delle nuvole",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Giganti e abitanti delle montagne",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 6,
+    "COS": 9,
+    "INT": 7,
+    "SAG": 8,
+    "CAR": 8
+  },
+  "pv": 88,
+  "pm": 24,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 13,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "taglia": "grande",
+  "spazio": "3 × 3 Q",
+  "gs_px": {
+    "gs": "Leggenda",
+    "px": 110,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 15,
+    "riflessi": 11,
+    "volonta": 14,
+    "magia": 14
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Maglio chiodato",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "2d6+7",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Masso",
+      "tipo": "distanza",
+      "va": 14,
+      "danno": "2d6+5",
+      "natura": "Naturale",
+      "gittata_q": 30,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 15
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 15
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Oratoria",
+      "va": 14
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Nebbia",
+      "effetto": "1 AzP e 2 PM: nebbia in raggio 3 Q attorno a un punto visibile entro 10 Q, ferma per 10 Round senza Concentrazione. Dopo 1 Q di nebbia lungo la linea di vista impedisce di vedere oltre (la creatura nascosta resta percepibile con altri sensi). Nessun danno, non soffoca. Ne mantiene una sola; un vento forte per un Round la disperde. Negare Potere: effetto unico di potenza 6.",
+      "risorsa": "2 PM",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Sostentamento",
+      "effetto": "1 AzP e 3 PM: volo 6 / 12 / 18 Q per 10 Round senza Concentrazione. Usa l’AzM ordinaria, resta sospeso senza percorso minimo. Solleva sé e gli oggetti entro il carico, non altre creature; non passa attraverso solidi. Potenza 9 per Negare Potere.",
+      "risorsa": "3 PM",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Passo nelle nubi",
+      "effetto": "1 AzP e 3 PM: si trasferisce istantaneamente con gli oggetti indossati a una destinazione libera, visibile, entro 10 Q, con spazio per tutti i 3 × 3 Q. Non porta altre creature, non attraversa pareti, non provoca Attacchi di Opportunità per i Q intermedi. Senza Sostentamento serve un appoggio alla destinazione.",
+      "risorsa": "3 PM",
+      "azioni": {
+        "principali": 1
+      }
+    }
+  ],
+  "note": "AR 3 biologica, nessuna armatura. Percezione 14; olfatto 16. Maglio = Martello a due mani (+3 ordinario, +4 innato, portata 2 Q). I 24 PM sono una sola riserva. Comportamento: usa l’altezza; sotto 22 PV, a Ferita Seria o con meno di 4 PM si ritira."
+}

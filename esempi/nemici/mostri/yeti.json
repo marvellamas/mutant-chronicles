@@ -1,0 +1,98 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "yeti",
+  "nome": "Yeti",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Giganti e abitanti delle montagne",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 6,
+    "COS": 7,
+    "INT": 4,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "pv": 35,
+  "pm": 8,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 10,
+    "volonta": 9,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Artiglio",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "note": "Aggiunge 1d4 Ghiaccio Naturale (una Difesa, una AC): vedi «Gelo degli artigli». Le componenti restano distinte per AR e Stati."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Gelo degli artigli",
+      "effetto": "L’Artiglio aggiunge 1d4 Ghiaccio Naturale: dopo il residuo della componente Ghiaccio e la Contromisura, PS Tempra ordinaria contro Rallentato ed eventuale progressione a Congelato. Il +2 fisico è già incluso."
+    },
+    {
+      "nome": "Sguardo gelido",
+      "effetto": "1 AzP e 2 PM, una volta per Round, bersaglio entro 6 Q che lo vede: PS Magia (modificatore 0) evita danno ed effetto; fallimento subisce 1d6+2 Ghiaccio Magico (AR normale). Nessuna Parata, Schivata o Elusione; dopo residuo una distinta Tempra evita lo Stato del Ghiaccio. Dopo la PS la vittima è immune allo Sguardo di quello Yeti per un’ora.",
+      "risorsa": "2 PM",
+      "azioni": {
+        "principali": 1
+      },
+      "usi": {
+        "quanti": 1,
+        "per": "Round"
+      }
+    },
+    {
+      "nome": "Freddo e fuoco",
+      "effetto": "Immune a Ghiaccio e ai suoi Rallentato/Congelato e al freddo ambientale. Dopo almeno 1 danno finale da Fuoco: −2 VA a tutte le Prove di Abilità fino al termine del proprio turno successivo (si usa il maggiore fra questo e il malus di Incendiato). Scurovisione 12 Q; +2 Furtività in neve e ghiaccio; olfatto 13."
+    }
+  ],
+  "note": "AR 2 biologica. Terra e arrampicata 8/16/24 Q (su appigli adeguati). Può Schivare, non parare con gli artigli. Comportamento: prede isolate; sotto 9 PV o a Ferita Profonda si ritira. Non ha Soffio gelido."
+}

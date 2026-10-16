@@ -1,0 +1,101 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "gigante-delle-colline",
+  "nome": "Gigante delle colline",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Giganti e abitanti delle montagne",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 4,
+    "COS": 9,
+    "INT": 3,
+    "SAG": 4,
+    "CAR": 3
+  },
+  "pv": 60,
+  "pm": 8,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": -1,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "taglia": "grande",
+  "spazio": "3 × 3 Q",
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 77,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 8,
+    "volonta": 8,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Maglio rustico",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "2d6+4",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Masso",
+      "tipo": "distanza",
+      "va": 10,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "gittata_q": 30,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 13
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 15
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Due Azioni",
+      "effetto": "Può portare due colpi di maglio (pagati separatamente) o conservare AzP per Parata e altro. Un colpo non travolge più avversari e non dà A Terra o Sbalzante senza una manovra pertinente."
+    },
+    {
+      "nome": "Forza da Lavoro",
+      "effetto": "Atletica 15 e soglie FOR × 20 / × 40 / × 80 kg per sollevare, trascinare o forzare (§4), rispettando Integrità e caratteristiche dell’ostacolo. Nessun danno doppio da assedio."
+    }
+  ],
+  "note": "AR 2 biologica, nessuna armatura. Maglio = Martello a due mani (+3 ordinario, +1 innato, portata 2 Q). Comportamento: raggiunge il bersaglio più accessibile; sotto 15 PV o a Ferita Profonda valuta fuga, resa o trattativa."
+}

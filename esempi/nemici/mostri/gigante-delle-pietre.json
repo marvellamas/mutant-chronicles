@@ -1,0 +1,102 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "gigante-delle-pietre",
+  "nome": "Gigante delle pietre",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Giganti e abitanti delle montagne",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 7,
+    "COS": 9,
+    "INT": 5,
+    "SAG": 6,
+    "CAR": 4
+  },
+  "pv": 70,
+  "pm": 12,
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 13,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "taglia": "grande",
+  "spazio": "3 × 3 Q",
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 77,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 15,
+    "riflessi": 12,
+    "volonta": 11,
+    "magia": 12
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Maglio di pietra",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "2d6+5",
+      "natura": "Naturale",
+      "portata_q": 3,
+      "ac": 1
+    },
+    {
+      "nome": "Masso",
+      "tipo": "distanza",
+      "va": 14,
+      "danno": "2d6+4",
+      "natura": "Naturale",
+      "gittata_q": 30,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1,
+      "note": "Masso destabilizzante: dopo almeno 1 danno finale, una vittima ≤ 3×3 Q fa FOR o DES; il fallimento dà A Terra (Stabile X si applica). Non contro chi vola senza appoggio."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 14
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 16
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Afferrare un masso",
+      "effetto": "Contro un singolo masso o proiettile non esplosivo ≤ 20 kg: 1 AzP, due mani libere e Riflessi 12. Successo lo afferra annullando quel danno; fallimento lo subisce senza un’altra Difesa. Deve percepirlo; non intercetta proiettili d’arma da fuoco, aree o dardi energetici. Scagliarlo richiede una nuova AzP."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori né vista attraverso ostacoli. Furtività +2 in terreno roccioso quando può nascondersi, senza Sorpresa automatica."
+    }
+  ],
+  "note": "AR 4 biologica, nessuna armatura. Maglio = Martello a due mani (+3 ordinario, +2 innato, portata 3 Q). Comportamento: difende luoghi e opere proprie; sotto 18 PV o a Ferita Seria cerca una strettoia o negozia."
+}

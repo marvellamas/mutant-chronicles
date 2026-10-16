@@ -1,0 +1,97 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "fomorian",
+  "nome": "Fomorian",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Giganti e abitanti delle montagne",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 4,
+    "COS": 9,
+    "INT": 5,
+    "SAG": 7,
+    "CAR": 3
+  },
+  "pv": 70,
+  "pm": 20,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "taglia": "grande",
+  "spazio": "3 × 3 Q",
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 77,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 9,
+    "volonta": 10,
+    "magia": 12
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Maglio rustico",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "2d6+5",
+      "natura": "Naturale",
+      "portata_q": 3,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Malocchio",
+      "effetto": "1 AzP e 3 PM: una creatura con mente visibile entro 12 Q, nessun tiro per colpire, PS Volontà −2 (successo dimezza per eccesso 1d6+4, fallimento tutto). Danno psichico diretto ai PV: ignora PV temporanei, AR, Parata, Schivata ed Elusione; non toglie PM né produce Ferite. Se porta a 0 PV (o colpisce chi è già a 0), seconda PS Volontà −2 o Svenuto 1+1d4 Round. Barriera Mentale lo impedisce del tutto.",
+      "risorsa": "3 PM",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Deformazione maledetta",
+      "effetto": "1 AzP e 5 PM: bersaglio vivente visibile entro 12 Q, PS Magia −2 evita tutto; il fallimento applica Rallentato per 10 Round (Passo max 3 Q, niente Corsa o Scatto, −2 alle Prove fisiche e alle Difese), senza danno o Menomazioni. Non richiede Concentrazione; danni o morte del Fomorian non la terminano. Negare Potere potenza 6. Una sola capacità oculare per Round.",
+      "risorsa": "5 PM",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 24 Q nel buio naturale, senza colori o vista attraverso ostacoli. Lo sguardo richiede che il Fomorian veda la vittima, non che questa ricambi."
+    }
+  ],
+  "note": "AR 2 biologica, nessuna armatura; non lancia massi. Maglio = Martello a due mani (+3 ordinario, +2 innato, portata 3 Q). Comportamento: difende una caverna, cerca gli isolati; può essere interlocutore; sotto 18 PV o con meno di 4 PM cerca riparo o una via negoziata."
+}

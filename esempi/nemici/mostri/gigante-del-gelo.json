@@ -1,0 +1,101 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "gigante-del-gelo",
+  "nome": "Gigante del gelo",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Giganti e abitanti delle montagne",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 5,
+    "COS": 10,
+    "INT": 4,
+    "SAG": 5,
+    "CAR": 5
+  },
+  "pv": 76,
+  "pm": 12,
+  "ar": {
+    "totale": 5,
+    "magica": 0
+  },
+  "difese": 12,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 7,
+    "corsa": 15,
+    "scatto": 23
+  },
+  "taglia": "grande",
+  "spazio": "3 × 3 Q",
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 77,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 16,
+    "riflessi": 9,
+    "volonta": 11,
+    "magia": 11
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Ascia bipenne",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "2d6+6",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Masso",
+      "tipo": "distanza",
+      "va": 11,
+      "danno": "2d6+4",
+      "natura": "Naturale",
+      "gittata_q": 30,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 15
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 7
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Immunità al Ghiaccio",
+      "effetto": "Non subisce danni da Ghiaccio né i suoi Rallentato e Congelato; il freddo ambientale ordinario non gli dà danni o Affaticamento (restano frane, cadute, seppellimento). Fuoco e Incendiato normali, senza vulnerabilità ×2."
+    },
+    {
+      "nome": "Valori con armatura",
+      "effetto": "I valori pronti includono −1 ad attacchi e Agilità (Schivata compresa) e −1 Q a ogni andatura; Parata 12. Tolta l’armatura: AR 2, Armi da guerra 16, Armi da lancio 12, Schivata 12, Atletica 15, Furtività 8, movimento 8/16/24. Perdere i PI non elimina da solo le penalità."
+    }
+  ],
+  "note": "AR 5 (2 biologica + 3 armatura Media su misura). Difese = Parata 12; Schivata 11. Ascia bipenne a due mani (+3 ordinario, +2 innato, portata 2 Q). Comportamento: alterna ascia e Difese o prepara il tiro; sotto 19 PV o a Ferita Seria cerca copertura o un accordo."
+}

@@ -1,0 +1,117 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "gigante-delle-tempeste",
+  "nome": "Gigante delle tempeste",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Giganti e abitanti delle montagne",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 8,
+    "COS": 10,
+    "INT": 8,
+    "SAG": 9,
+    "CAR": 9
+  },
+  "pv": 100,
+  "pm": 30,
+  "ar": {
+    "totale": 5,
+    "magica": 0
+  },
+  "difese": 15,
+  "iniziativa": 3,
+  "movimento": {
+    "passo": 9,
+    "corsa": 19,
+    "scatto": 29
+  },
+  "taglia": "grande",
+  "spazio": "3 × 3 Q",
+  "gs_px": {
+    "gs": "Leggenda",
+    "px": 110,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 17,
+    "riflessi": 14,
+    "volonta": 16,
+    "magia": 16
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Spadone",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "2d6+9",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Masso",
+      "tipo": "distanza",
+      "va": 15,
+      "danno": "2d6+6",
+      "natura": "Naturale",
+      "gittata_q": 30,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 16
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 15
+    },
+    {
+      "nome": "Atletica",
+      "va": 16
+    },
+    {
+      "nome": "Percezione",
+      "va": 16
+    },
+    {
+      "nome": "Oratoria",
+      "va": 15
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Scarica tempestosa",
+      "effetto": "1 AzP e 6 PM, punto visibile entro 20 Q: tutte le creature entro 2 Q (alleati e il gigante se coinvolto), 1 AC, un solo 3d6+5 Fulmine Magico; i solidi fermano. Elusione su Riflessi −4 dimezza prima dell’AR; dopo residuo e Contromisura, una distinta Tempra −4: fallimento Disorientato 1+1d3 Round (−2 VA), con 20 naturale Stordito. Massimo una per Round e non nel Round immediatamente successivo (usata nel Round 1, torna dal 3).",
+      "risorsa": "6 PM",
+      "azioni": {
+        "principali": 1
+      },
+      "usi": {
+        "quanti": 1,
+        "per": "Round"
+      }
+    },
+    {
+      "nome": "Levitazione",
+      "effetto": "1 AzP e 3 PM: per 10 Round senza Concentrazione solleva sé e i propri oggetti entro il carico, non altre creature. L’AzM permette fino a 6 Q in verticale (niente Corsa o Scatto), può restare sospeso; nessun moto orizzontale aereo. Non elimina gli Attacchi di Opportunità né l’immunità alle cadute. Negare Potere potenza 6.",
+      "risorsa": "3 PM",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Anfibio e protezioni",
+      "effetto": "Respira aria e acqua senza costo; nuoto 9 / 19 / 29 Q effettivo (già con l’armatura). Immune a Fulmine (effetti secondari compresi). Dimezza per eccesso il Ghiaccio dopo le Difese e prima dell’AR (il residuo può dare Rallentato o Congelato). Non immune ad Assordato o Aria."
+    }
+  ],
+  "note": "AR 5 (2 biologica + 3 armatura Media su misura). Difese = Parata 15; Schivata 14. Spadone a due mani (+3 ordinario, +5 innato, portata 2 Q). Tolta la corazza: AR 2, Armi da guerra 17, Armi da lancio 16, Schivata 15, Atletica 17, terra/nuoto 10/20/30. Comportamento: sotto 25 PV, a Ferita Seria o con meno di 7 PM cerca l’acqua o una tregua."
+}
