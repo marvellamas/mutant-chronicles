@@ -1,0 +1,104 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "scheletro",
+  "nome": "Scheletro",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Non morti",
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 6,
+    "COS": 6,
+    "INT": 3,
+    "SAG": 4,
+    "CAR": 2
+  },
+  "pv": 18,
+  "pm": 4,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 11,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 9,
+    "volonta": 7,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Spada leggera",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Arco da guerra",
+      "tipo": "distanza",
+      "va": 10,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "gittata_q": 100,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 10
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Ossa fragili",
+      "effetto": "Un colpo di martello, mazza o randello aggiunge +2 al danno base (prima di moltiplicatori, Difese e AR); anche i danni da caduta +2 per evento. Vale per l’impatto contundente effettivo, non per proiettili, lame o la sola proprietà Concussivo."
+    },
+    {
+      "nome": "Non morto",
+      "effetto": "Non biologicamente vivo: non respira, non mangia, non beve e non dorme. Immune a soffocamento, malattie e veleni biologici e a Sanguinamento (il danno fisico del colpo che porta un veleno resta). Cura Ferite e le cure per organismi viventi non lo curano. 0 PV non lo distrugge: la distruzione arriva con Morente (Svenuto e contatore su COS, §5.14). A 0 PM è Svenuto finché non recupera almeno 1 PM."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; non distingue i colori al buio, non vede attraverso gli ostacoli e non individua da sé chi è nascosto."
+    }
+  ],
+  "immunita": [
+    "sanguinamento"
+  ],
+  "note": "AR 1 da armatura leggera. Inizia con la spada pronta; l’arco (due mani) ha Colpo Singolo e Tiro Rapido. Comprende ordini semplici ma non parla. Comportamento: presidia un luogo o esegue una consegna."
+}

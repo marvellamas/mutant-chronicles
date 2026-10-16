@@ -1,0 +1,130 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "progenie-vampirica",
+  "nome": "Progenie vampirica",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Non morti",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 7,
+    "COS": 7,
+    "INT": 5,
+    "SAG": 5,
+    "CAR": 6
+  },
+  "pv": 50,
+  "pm": 12,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 12,
+  "iniziativa": 2,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 12,
+    "volonta": 11,
+    "magia": 11
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "note": "Costa anche 2 PM: dopo il danno recupera i PV sottratti, max 4. Solo contro vivente consenziente, Svenuto o Immobilizzato."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Raggirare",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Presa e Morso",
+      "effetto": "Può Immobilizzare con Corpo a corpo 13 al posto del danno degli Artigli. Morde solo un vivente consenziente, Svenuto o Immobilizzato con il collo accessibile. Al massimo un Morso per Round; l’altra AzP per Artigli, presa o Difesa."
+    },
+    {
+      "nome": "Nutrimento",
+      "effetto": "Il Morso costa 2 PM (prima del tiro): dopo il danno finale recupera tanti PV quanti ne ha sottratti, massimo 4, senza superare il massimo. Se la vittima era già a 0 PV non recupera. Non riduce i PV massimi, non cura Ferite e non trasforma la vittima.",
+      "risorsa": "2 PM"
+    },
+    {
+      "nome": "Carne resistente",
+      "effetto": "Dimezza per eccesso il danno Naturale dopo le Difese e prima dell’AR; Magico ed Etereo pieni. Non è immune alle armi comuni."
+    },
+    {
+      "nome": "Rigenerazione",
+      "effetto": "A inizio della propria Iniziativa recupera 4 PV senza Azioni o PM, solo con almeno 1 PV, non Morente e non esposta a sole diretto o acqua corrente. Almeno 1 danno finale Etereo blocca il recupero alla Iniziativa successiva. A 0 PV non rigenera."
+    },
+    {
+      "nome": "Sole e acqua corrente",
+      "effetto": "Al sole diretto, a inizio Iniziativa 1d6 Etereo diretto e −4 VA a tutte le Prove di Abilità finché esposta. Se termina l’Iniziativa immersa in acqua corrente, 2d4 Eterei diretti. Luce Mistica, torce, pioggia e schizzi non bastano."
+    },
+    {
+      "nome": "Invito e paletto",
+      "effetto": "Non attraversa la soglia di una dimora abitata senza l’invito cosciente di un occupante. Una Progenie già Svenuta nel proprio rifugio può essere distrutta con un paletto di legno nel cuore (un minuto ininterrotto, accesso al torace): eccezione di distruzione diretta, non un colpo in combattimento."
+    },
+    {
+      "nome": "Arrampicata",
+      "effetto": "Percorre pareti e soffitti a 4 Q per AzM senza Prova, con almeno tre arti in appoggio; niente Corsa o Scatto in questa modalità. Non è teletrasporto e non ignora gli Attacchi di Opportunità."
+    },
+    {
+      "nome": "Non morto",
+      "effetto": "Non biologicamente vivo: non respira, non mangia, non beve e non dorme. Immune a soffocamento, malattie e veleni biologici e a Sanguinamento (il danno fisico del colpo che porta un veleno resta). Cura Ferite e le cure per organismi viventi non lo curano. 0 PV non lo distrugge: la distruzione arriva con Morente (Svenuto e contatore su COS, §5.14). A 0 PM è Svenuto finché non recupera almeno 1 PM."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; non distingue i colori al buio, non vede attraverso gli ostacoli e non individua da sé chi è nascosto."
+    }
+  ],
+  "immunita": [
+    "sanguinamento"
+  ],
+  "note": "AR 3 intrinseca. Non è incorporea e non attraversa pareti o porte. Nessuna dotazione né Parata naturale. Il legame con un signore non dà controllo mentale o immunità. Comportamento: isolamento, presa e vie verticali; davanti a sole o acqua cerca riparo."
+}

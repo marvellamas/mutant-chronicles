@@ -1,0 +1,116 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "wraith",
+  "nome": "Wraith",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Non morti",
+  "caratteristiche": {
+    "FOR": 2,
+    "DES": 7,
+    "COS": 8,
+    "INT": 6,
+    "SAG": 7,
+    "CAR": 7
+  },
+  "pv": 50,
+  "pm": 18,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 12,
+  "iniziativa": 2,
+  "movimento": {
+    "passo": 0,
+    "corsa": "non_consentito",
+    "scatto": "non_consentito",
+    "volo": 12
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 12,
+    "volonta": 13,
+    "magia": 13
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Tocco",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d8+2",
+      "natura": "Etereo",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    },
+    {
+      "nome": "Oratoria",
+      "va": 12
+    },
+    {
+      "nome": "Occultismo",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Incorporeità",
+      "effetto": "Come lo Spettro: Corpo immateriale, attraversamento della materia (2 Q per Q, espulsione con 1d6 Etereo diretto) e Volo spettrale 12 / 24 / 36 Q. Resta visibile e non attacca attraverso gli ostacoli."
+    },
+    {
+      "nome": "Risucchio maggiore",
+      "effetto": "Potenzia un Tocco per Round con 2 PM; la PS Tempra contro Affaticamento ha −2. Resta il limite di una PS per bersaglio e Round; non aggiunge il risucchio a ogni Tocco né infligge Ferite dirette."
+    },
+    {
+      "nome": "Generare uno Spettro",
+      "effetto": "1 AzP e 6 PM, una volta per Round: percependo entro 2 Q e senza ostacoli il cadavere di un umanoide morto per violenza da meno di un minuto (Morto davvero, non Svenuto/0 PV/Morente), fa comparire uno Spettro a PV/PM pieni entro 1 Q. Al massimo due Spettri vincolati; il nuovo non agisce nel Round di creazione. Ogni vincolo è un effetto mistico di potenza 6 (Negare Potere col confronto ordinario). Ogni Spettro vale 30 PX a parte (§9.3).",
+      "risorsa": "6 PM",
+      "azioni": {
+        "principali": 1
+      },
+      "usi": {
+        "quanti": 1,
+        "per": "Round"
+      }
+    },
+    {
+      "nome": "Sensibilità solare",
+      "effetto": "Come lo Spettro: −2 VA agli attacchi e a Percezione visiva al sole diretto."
+    },
+    {
+      "nome": "Non morto",
+      "effetto": "Non biologicamente vivo: non respira, non mangia, non beve e non dorme. Immune a soffocamento, malattie e veleni biologici e a Sanguinamento (il danno fisico del colpo che porta un veleno resta). Cura Ferite e le cure per organismi viventi non lo curano. 0 PV non lo distrugge: la distruzione arriva con Morente (Svenuto e contatore su COS, §5.14). A 0 PM è Svenuto finché non recupera almeno 1 PM."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; non distingue i colori al buio, non vede attraverso gli ostacoli e non individua da sé chi è nascosto."
+    }
+  ],
+  "immunita": [
+    "sanguinamento"
+  ],
+  "note": "Presenza incorporea: nessun movimento a terra (vola). Per parare il Tocco serve un’arma magica o uno scudo con componente magica. Parte senza servitori. Nessuna dotazione né Parata naturale. Comportamento: separa i nemici; sotto 12 PV o a Ferita Seria si ritira."
+}

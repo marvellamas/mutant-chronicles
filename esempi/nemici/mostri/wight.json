@@ -1,0 +1,129 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "wight",
+  "nome": "Wight",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Non morti",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 6,
+    "COS": 7,
+    "INT": 6,
+    "SAG": 6,
+    "CAR": 7
+  },
+  "pv": 40,
+  "pm": 12,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 12,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 55,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 10,
+    "volonta": 12,
+    "magia": 11
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Spada lunga",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Arco da guerra",
+      "tipo": "distanza",
+      "va": 12,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "gittata_q": 100,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "ac": 1
+    },
+    {
+      "nome": "Tocco",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+1",
+      "natura": "Etereo",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 13
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 12
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    },
+    {
+      "nome": "Oratoria",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Risucchio vitale",
+      "effetto": "Può potenziare il Tocco (Etereo): 2 PM prima del tiro, una volta per Round. Dopo almeno 1 danno finale a un vivente, Tempra senza modificatore proprio: fallimento peggiora l’Affaticamento di uno Stato, Maldestro di due (§5.19). Un bersaglio fa al massimo una PS di Risucchio per Round per tutto il blocco. Solo l’AR magica riduce il danno del Tocco."
+    },
+    {
+      "nome": "Vincolo del cadavere",
+      "effetto": "Se un umanoide entra in Morente per un Tocco potenziato e muore senza stabilizzazione, dopo 24 ore il cadavere integro diventa uno Zombie di questo blocco (PV e PM pieni), fino a quattro vincolati. Prima del risveglio è un effetto mistico di potenza 6 (Negare Potere lo rimuove col confronto ordinario; distruggere il cadavere lo interrompe). Il Wight parte senza Zombie; ogni Zombie coinvolto vale 10 PX a parte (§9.3)."
+    },
+    {
+      "nome": "Debolezza solare",
+      "effetto": "In luce solare diretta (il Wight o il bersaglio osservato) −2 VA agli attacchi e a Percezione visiva; le due esposizioni non si sommano, nessun danno."
+    },
+    {
+      "nome": "Non morto",
+      "effetto": "Non biologicamente vivo: non respira, non mangia, non beve e non dorme. Immune a soffocamento, malattie e veleni biologici e a Sanguinamento (il danno fisico del colpo che porta un veleno resta). Cura Ferite e le cure per organismi viventi non lo curano. 0 PV non lo distrugge: la distruzione arriva con Morente (Svenuto e contatore su COS, §5.14). A 0 PM è Svenuto finché non recupera almeno 1 PM."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; non distingue i colori al buio, non vede attraverso gli ostacoli e non individua da sé chi è nascosto."
+    }
+  ],
+  "immunita": [
+    "sanguinamento"
+  ],
+  "note": "AR 3 (2 intrinseca + 1 da armatura leggera). Inizia con spada e mano libera per il Tocco; l’arco richiede due mani (Colpo Singolo e Tiro Rapido). Comportamento: usa ripari dal sole; sotto 10 PV o a Ferita Seria valuta la ritirata."
+}

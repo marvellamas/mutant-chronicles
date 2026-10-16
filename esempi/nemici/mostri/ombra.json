@@ -1,0 +1,107 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "ombra",
+  "nome": "Ombra",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Non morti",
+  "caratteristiche": {
+    "FOR": 2,
+    "DES": 7,
+    "COS": 5,
+    "INT": 3,
+    "SAG": 5,
+    "CAR": 4
+  },
+  "pv": 18,
+  "pm": 8,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 2,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 12,
+    "volonta": 9,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Tocco",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d4+1",
+      "natura": "Etereo",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo immateriale",
+      "effetto": "Dimezza per eccesso il danno Naturale dopo le Difese e prima dell’AR; Magico ed Etereo pieni. Immune ad A Terra e a Immobilizzato da vincoli esclusivamente materiali (un vincolo magico adatto resta valido); non è immune alle armi comuni. Non trasporta oggetti né apre porte. Per parare il Tocco serve un’arma magica o uno scudo con componente magica; solo l’AR magica riduce il danno."
+    },
+    {
+      "nome": "Risucchio vitale",
+      "effetto": "Può potenziare il Tocco: 2 PM, Tempra senza modificatore contro Affaticamento (una PS per bersaglio e Round per tutto il blocco). Non sottrae FOR e non uccide per azzeramento della Caratteristica."
+    },
+    {
+      "nome": "Forma cedevole",
+      "effetto": "Col normale movimento passa per un’apertura reale larga almeno 2,5 cm, senza Prova; non attraversa pareti integre, non vola, non percorre superfici verticali."
+    },
+    {
+      "nome": "Nascondersi nelle ombre",
+      "effetto": "Una volta per Round, a fine Passo in penombra o buio, effettua Furtività senza AzP se può davvero nascondersi (non è invisibile).",
+      "usi": {
+        "quanti": 1,
+        "per": "Round"
+      }
+    },
+    {
+      "nome": "Debolezza solare",
+      "effetto": "Nella luce solare diretta −2 a tutte le Prove di Abilità e Salvezza; nessun danno automatico, torce e luce magica non la attivano."
+    },
+    {
+      "nome": "Non morto",
+      "effetto": "Non biologicamente vivo: non respira, non mangia, non beve e non dorme. Immune a soffocamento, malattie e veleni biologici e a Sanguinamento (il danno fisico del colpo che porta un veleno resta). Cura Ferite e le cure per organismi viventi non lo curano. 0 PV non lo distrugge: la distruzione arriva con Morente (Svenuto e contatore su COS, §5.14). A 0 PM è Svenuto finché non recupera almeno 1 PM."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; non distingue i colori al buio, non vede attraverso gli ostacoli e non individua da sé chi è nascosto."
+    }
+  ],
+  "immunita": [
+    "sanguinamento"
+  ],
+  "note": "Furtività 14 in penombra o buio. Niente volo né attraversamento delle pareti. Nessuna dotazione né Parata naturale. Comportamento: aggira il fronte; sotto 5 PV o senza ripari fugge. Non genera nuove Ombre in questo profilo."
+}

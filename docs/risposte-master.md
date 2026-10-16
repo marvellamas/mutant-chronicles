@@ -1682,11 +1682,15 @@ diverso dalle regole già approvate **non si è cambiato**: vedi A.167 qui sotto
   una volta sola): AR «con scudo» nel campo e «senza scudo» nelle note; Difese = Parata (difesa con scudo), con
   Schivata/Elusione nelle note; nomi d'Abilità del catalogo (Mischia → Armi da mischia, Lancio → Armi da
   lancio, Guerra → Armi da guerra); armi a distanza «massimo N Q» come attacchi di tipo distanza; «tutti gli
-  attacchi Naturali, AC 1». Bestiario online rigenerato. **Restano** gli altri blocchi del cap. 8 (circa 125
-  creature: i quindici della prima parte, «Non morti», «Costrutti ed elementali», «Giganti», «Creature del
-  sottosuolo», «Melme funghi e imitatori», «Vegetali e custodi delle foreste», «Grandi rettili e predatori
-  mostruosi», «Creature delle acque e popoli sommersi», «Predatori e grandi erbivori», «Creature alate e
-  piccoli predatori», «Sciami e piccola fauna»): a blocchi nei prossimi lotti.
+  attacchi Naturali, AC 1». Poi il blocco **«Non morti»**: Scheletro, Zombie, Ghoul, Ghast, Wight, Ombra,
+  Spettro, Wraith, Mummia, Progenie vampirica. Scelte del blocco: natura dell'attacco dai dati
+  (Naturale/Etereo/Magico); immunità `sanguinamento` nel campo e le altre immunità biologiche nelle note; lo
+  Sguardo terribile (senza danni) come capacità; le presenze incorporee (Spettro, Wraith) con movimento di
+  volo (passo 0, Corsa/Scatto non consentiti a terra). Bestiario online rigenerato. **Restano** gli altri
+  blocchi del cap. 8 (circa 115 creature: i quindici della prima parte, «Costrutti ed elementali», «Giganti»,
+  «Creature del sottosuolo», «Melme funghi e imitatori», «Vegetali e custodi delle foreste», «Grandi rettili e
+  predatori mostruosi», «Creature delle acque e popoli sommersi», «Predatori e grandi erbivori», «Creature
+  alate e piccoli predatori», «Sciami e piccola fauna»): a blocchi nei prossimi lotti.
 
 ## Domande aperte dalla ricognizione del 15 ottobre 2026
 

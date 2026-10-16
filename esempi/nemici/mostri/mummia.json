@@ -1,0 +1,100 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "mummia",
+  "nome": "Mummia",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Non morti",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 3,
+    "COS": 7,
+    "INT": 4,
+    "SAG": 5,
+    "CAR": 6
+  },
+  "pv": 44,
+  "pm": 12,
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 8,
+  "iniziativa": -2,
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 7,
+    "volonta": 12,
+    "magia": 12
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Pugno funerario",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+2",
+      "natura": "Magico",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Occultismo",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sguardo terribile",
+      "effetto": "1 AzP e 2 PM: una creatura cosciente entro 6 Q che la Mummia vede e che può vederne il volto. PS Volontà senza modificatore: fallimento o Maldestro → Terrorizzato per 1 Round. Nessuna Parata, Schivata o Elusione. Un successo (o la rimozione dello Stato) dà immunità allo Sguardo di quella Mummia per 24 ore.",
+      "risorsa": "2 PM",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Marciume della tomba",
+      "effetto": "Una volta per Round potenzia il Pugno con 2 PM: dopo almeno 1 danno finale a un vivente, Tempra senza modificatore; fallimento o Maldestro contrae il Marciume (malattia mistica Pericolosità IV). Finché è attiva, ogni recupero di PV del bersaglio è dimezzato per eccesso. Ogni 24 ore Tempra: successo termina, fallimento 1d4 danni diretti. Cura Malattie (liv. 6) la elimina; uccidere la Mummia non la rimuove.",
+      "risorsa": "2 PM"
+    },
+    {
+      "nome": "Vulnerabilità al Fuoco",
+      "effetto": "Raddoppia la componente di danno Fuoco dopo Difese e riduzioni e prima dell’AR (anche il danno di Incendiato). Altri componenti non raddoppiano; nessuna vulnerabilità a Laser, Plasma o luce ordinaria."
+    },
+    {
+      "nome": "Non morto",
+      "effetto": "Non biologicamente vivo: non respira, non mangia, non beve e non dorme. Immune a soffocamento, malattie e veleni biologici e a Sanguinamento (il danno fisico del colpo che porta un veleno resta). Cura Ferite e le cure per organismi viventi non lo curano. 0 PV non lo distrugge: la distruzione arriva con Morente (Svenuto e contatore su COS, §5.14). A 0 PM è Svenuto finché non recupera almeno 1 PM."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; non distingue i colori al buio, non vede attraverso gli ostacoli e non individua da sé chi è nascosto."
+    }
+  ],
+  "immunita": [
+    "sanguinamento"
+  ],
+  "note": "AR 4 intrinseca. Nelle AzP al massimo un Pugno e uno Sguardo per Round. Non para naturalmente; bende e amuleti non sono equipaggiamento recuperabile. Comportamento: difende un luogo o una consegna; davanti al fuoco cerca copertura."
+}

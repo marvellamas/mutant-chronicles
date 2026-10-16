@@ -1,0 +1,100 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "spettro",
+  "nome": "Spettro",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Non morti",
+  "caratteristiche": {
+    "FOR": 1,
+    "DES": 7,
+    "COS": 6,
+    "INT": 5,
+    "SAG": 5,
+    "CAR": 5
+  },
+  "pv": 24,
+  "pm": 10,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 2,
+  "movimento": {
+    "passo": 0,
+    "corsa": "non_consentito",
+    "scatto": "non_consentito",
+    "volo": 10
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 12,
+    "volonta": 10,
+    "magia": 11
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Tocco",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+1",
+      "natura": "Etereo",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Incorporeità",
+      "effetto": "Corpo immateriale (dimezza il Naturale dopo le Difese e prima dell’AR; Magico ed Etereo pieni; immune ad A Terra e Immobilizzato materiali). Attraversa pareti, oggetti e creature: ogni Q di materia costa 2 Q del budget; non vede né attacca attraverso il materiale e non termina il movimento dentro la materia (sennò è espulso e subisce 1d6 Etereo diretto). È normalmente visibile."
+    },
+    {
+      "nome": "Volo spettrale",
+      "effetto": "Levita senza ali e mantiene la quota senza AzM; Volo 10 / 20 / 30 Q. Da Svenuto resta sospeso e non si muove; l’immobilità non lo protegge."
+    },
+    {
+      "nome": "Risucchio vitale",
+      "effetto": "Potenzia il Tocco una volta per Round con 2 PM: dopo almeno 1 danno finale a un vivente, Tempra senza modificatore contro Affaticamento (una PS per bersaglio e Round per il blocco). Un Tocco ordinario non causa la PS."
+    },
+    {
+      "nome": "Sensibilità solare",
+      "effetto": "Se lo Spettro o il bersaglio osservato è al sole diretto, −2 VA agli attacchi e a Percezione visiva (non raddoppia); nessun danno automatico."
+    },
+    {
+      "nome": "Non morto",
+      "effetto": "Non biologicamente vivo: non respira, non mangia, non beve e non dorme. Immune a soffocamento, malattie e veleni biologici e a Sanguinamento (il danno fisico del colpo che porta un veleno resta). Cura Ferite e le cure per organismi viventi non lo curano. 0 PV non lo distrugge: la distruzione arriva con Morente (Svenuto e contatore su COS, §5.14). A 0 PM è Svenuto finché non recupera almeno 1 PM."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; non distingue i colori al buio, non vede attraverso gli ostacoli e non individua da sé chi è nascosto."
+    }
+  ],
+  "immunita": [
+    "sanguinamento"
+  ],
+  "note": "Presenza incorporea: nessun movimento a terra (si muove in volo). Per parare il Tocco serve un’arma magica o uno scudo con componente magica. Nessuna dotazione né Parata naturale. Comportamento: percorso laterale e bersaglio isolato; sotto 6 PV o a Ferita Profonda si ritira nel luogo che infesta."
+}

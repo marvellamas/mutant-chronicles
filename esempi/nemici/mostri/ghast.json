@@ -1,0 +1,108 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "ghast",
+  "nome": "Ghast",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Non morti",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 6,
+    "COS": 6,
+    "INT": 5,
+    "SAG": 5,
+    "CAR": 4
+  },
+  "pv": 32,
+  "pm": 8,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 10,
+    "volonta": 10,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d8+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Oratoria",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Attacchi e rigidità",
+      "effetto": "Nelle proprie AzP al massimo un Artiglio e un Morso per Round. Gli Artigli applicano la Rigidità cadaverica del Ghoul con durata 2 Round (Tempra iniziale, ripetizione a fine Iniziativa, Pericolosità II). Non somma le durate."
+    },
+    {
+      "nome": "Fetore",
+      "effetto": "Passivo, senza PM. Un vivente che respira ed è entro 1 Q a inizio della propria Iniziativa effettua Tempra (una sola volta per Round per tutti i Ghast): successo evita e dà immunità al Fetore per 24 ore; fallimento → Avvelenato per 1 Round, senza danno, −2 VA alle Prove fisiche. Agente inalato di Pericolosità I; una protezione respiratoria adatta evita l’esposizione; Cura Avvelenamenti 1 lo termina."
+    },
+    {
+      "nome": "Non morto",
+      "effetto": "Non biologicamente vivo: non respira, non mangia, non beve e non dorme. Immune a soffocamento, malattie e veleni biologici e a Sanguinamento (il danno fisico del colpo che porta un veleno resta). Cura Ferite e le cure per organismi viventi non lo curano. 0 PV non lo distrugge: la distruzione arriva con Morente (Svenuto e contatore su COS, §5.14). A 0 PM è Svenuto finché non recupera almeno 1 PM."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; non distingue i colori al buio, non vede attraverso gli ostacoli e non individua da sé chi è nascosto."
+    }
+  ],
+  "immunita": [
+    "sanguinamento"
+  ],
+  "note": "Nessuna dotazione né Parata naturale. Gli ordini vocali guidano i Ghoul che li odono, senza Azioni gratuite. Comportamento: sotto 8 PV o a Ferita Seria può fuggire."
+}

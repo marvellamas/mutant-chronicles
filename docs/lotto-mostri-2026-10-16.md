@@ -75,13 +75,24 @@ una volta sola cambiando il generatore):
 
 Test: `tests/mostri-bande.test.js`.
 
-## 6. Che cosa resta del catalogo (Mostri 0.16)
+## 6. Catalogo, blocco «Non morti» — cap. 8 (16/10 sera, Mostri 0.16)
 
-Circa 125 creature, da fare a blocchi nei prossimi lotti:
+`tools/genera_mostri_nonmorti.mjs` → `esempi/nemici/mostri/`: Scheletro, Zombie, Ghoul, Ghast, Wight, Ombra,
+Spettro, Wraith, Mummia, Progenie vampirica.
+
+Scelte del blocco (oltre a quelle delle bande): natura dell'attacco dalla colonna «Danno completo»
+(Naturale/Etereo/Magico); attacchi senza danni (Sguardo terribile della Mummia, che applica Terrorizzato) →
+capacità; «AR X: Y intrinseca e Z da armatura» → `ar.totale` = X; immunità `sanguinamento` nel campo `immunita`
+(i non morti non sanguinano), le altre immunità biologiche (soffocamento, malattie e veleni biologici) nelle
+note; presenze spirituali con «terra —» → movimento di volo (`passo: 0`, Corsa/Scatto `non_consentito`, campo
+`volo`). Test: `tests/mostri-nonmorti.test.js`.
+
+## 7. Che cosa resta del catalogo (Mostri 0.16)
+
+Circa 115 creature, da fare a blocchi nei prossimi lotti:
 
 - **Prima parte senza nome** (15): Aarakocra, Aboleth, Ankheg, Arpia, Basilisco, Bestia distorcente, Bulette,
   Chimera, Cockatrice, Ettercap, Grick, Grifone, Ippogrifo, Manticora, Orsogufo.
-- **Non morti** (10): Scheletro, Zombie, Ghoul, Ghast, Wight, Ombra, Spettro, Wraith, Mummia, Progenie vampirica.
 - **Costrutti e creature elementali** (~10): Armatura animata, Spada volante, Tappeto soffocante, Gargoyle,
   Azer, Magmin, Elementali Maggiori (Acqua, Aria, Fuoco, Terra).
 - **Giganti e abitanti delle montagne** (~11): Ciclope, Giganti (colline, pietre, gelo, fuoco, nuvole,

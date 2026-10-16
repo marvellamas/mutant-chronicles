@@ -1,0 +1,91 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "zombie",
+  "nome": "Zombie",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Non morti",
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 2,
+    "COS": 7,
+    "INT": 2,
+    "SAG": 3,
+    "CAR": 1
+  },
+  "pv": 24,
+  "pm": 4,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 6,
+  "iniziativa": -3,
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 6,
+    "volonta": 7,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Percossa",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 8
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Tenacia cadaverica",
+      "effetto": "Già a 0 PV, quando un colpo Naturale impone una PS Tempra per le nuove Ferite, ottiene +2 a quella PS. Non vale contro danno Magico o Etereo, contro un Successo Magistrale o le Ferite dirette senza Tempra. Non recupera 1 PV e non ripete la Prova."
+    },
+    {
+      "nome": "Presa",
+      "effetto": "Può Immobilizzare con Corpo a corpo 9 (manovra, mani occupate e liberazione del §5.5); non infligge la Percossa insieme alla presa e non ottiene un Morso o una seconda AzP."
+    },
+    {
+      "nome": "Non morto",
+      "effetto": "Non biologicamente vivo: non respira, non mangia, non beve e non dorme. Immune a soffocamento, malattie e veleni biologici e a Sanguinamento (il danno fisico del colpo che porta un veleno resta). Cura Ferite e le cure per organismi viventi non lo curano. 0 PV non lo distrugge: la distruzione arriva con Morente (Svenuto e contatore su COS, §5.14). A 0 PM è Svenuto finché non recupera almeno 1 PM."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; non distingue i colori al buio, non vede attraverso gli ostacoli e non individua da sé chi è nascosto."
+    }
+  ],
+  "immunita": [
+    "sanguinamento"
+  ],
+  "note": "Nessuna dotazione, nessuna Parata naturale. Non è immune ad A Terra, Immobilizzato o rallentamenti materiali. Non trasmette infezioni né trasforma in Zombie chi colpisce. Comportamento: avanza verso il vivente indicato o più vicino, non fugge per PV bassi."
+}

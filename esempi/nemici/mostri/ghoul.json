@@ -1,0 +1,100 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "ghoul",
+  "nome": "Ghoul",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Non morti",
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 6,
+    "COS": 5,
+    "INT": 3,
+    "SAG": 5,
+    "CAR": 2
+  },
+  "pv": 22,
+  "pm": 6,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 10,
+    "volonta": 8,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Rigidità cadaverica",
+      "effetto": "Se gli Artigli infliggono almeno 1 danno finale a un vivente, Tempra senza modificatore: fallimento o Maldestro → Immobilizzato per 1 Round (niente movimento, −4 alle Prove fisiche, senza bloccare le mani). Non è una presa e non va mantenuto. A fine di ogni propria Iniziativa il bersaglio ripete Tempra senza Azioni: un successo termina. È un veleno naturale di Pericolosità II; Cura Avvelenamenti (liv. 2) o un antidoto lo rimuovono."
+    },
+    {
+      "nome": "Non morto",
+      "effetto": "Non biologicamente vivo: non respira, non mangia, non beve e non dorme. Immune a soffocamento, malattie e veleni biologici e a Sanguinamento (il danno fisico del colpo che porta un veleno resta). Cura Ferite e le cure per organismi viventi non lo curano. 0 PV non lo distrugge: la distruzione arriva con Morente (Svenuto e contatore su COS, §5.14). A 0 PM è Svenuto finché non recupera almeno 1 PM."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; non distingue i colori al buio, non vede attraverso gli ostacoli e non individua da sé chi è nascosto."
+    }
+  ],
+  "immunita": [
+    "sanguinamento"
+  ],
+  "note": "Nessuna dotazione né Parata naturale. Con una sola AzP sceglie Artigli, Morso o Difesa; gli Artigli non aggiungono un Morso gratuito. Comportamento: preda isolata; a Ferita Profonda o sotto 6 PV cerca riparo."
+}
