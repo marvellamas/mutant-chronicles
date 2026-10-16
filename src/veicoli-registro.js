@@ -11,8 +11,10 @@
 // Nel file del PG resta il riferimento { uid, rif: id, nome }. Senza server il veicolo resta nel file del PG. La
 // migrazione avviene all'avvio del server, quando la plancia legge o cambia il tavolo, alla lettura del file di un PG
 // (server.mjs → migraVeicoliCartella) e all'apertura della scheda con il server (src/ui/app.js).
-// TODO(Davide) A.113: permessi (oggi il master può cambiare tutto, i PG i veicoli che vedono) e nome della struttura
-// («Corpo principale» come nel Manuale dei Veicoli) sono provvisori.
+// A.113 (risposta approvata il 15/10/2026, data/veicoli.json → personaggio.permessi): il Direttore modifica tutti i
+// veicoli della campagna, compresi quelli personali dei PG, e la proprietà resta al personaggio; senza collegamento al
+// server il veicolo condiviso è in sola lettura e si consulta l'ultima copia (riferimento → copia, qui sotto). Le tre
+// denominazioni ufficiali sono Corpo principale, Propulsione e Motore (data/veicoli.json → strutture.elenco).
 import { normalizzaVeicoli, andaturaResidua, andaturaDi, eseguiCambioAndatura } from './veicoli.js';
 
 export const FORMATO_VEICOLO = 'mutant-veicolo';
@@ -26,8 +28,70 @@ const forma = (k) => String(k ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g
 export const stessaChiave = (a, b) => Boolean(forma(a)) && forma(a) === forma(b);
 const persona = (x) => (isOggetto(x) && testo(x.chiave) ? { ...(testo(x.pg) ? { pg: x.pg } : {}), chiave: x.chiave, nome: testo(x.nome) || x.chiave } : null);
 
-/** Riferimento che resta nel file del PG. */
-export const riferimento = (rec) => ({ uid: rec.id, rif: rec.id, nome: rec.mezzo?.nome ?? rec.id });
+/**
+ * Riferimento che resta nel file del PG, con l'ultima copia del record (A.113: senza server il veicolo condiviso è in
+ * sola lettura e si consulta l'ultima copia). La copia è una fotografia, non una seconda verità: appena torna il
+ * server vale il registro.
+ */
+export const riferimento = (rec) => ({ uid: rec.id, rif: rec.id, nome: rec.mezzo?.nome ?? rec.id, copia: copiaDi(rec) });
+
+/** La fotografia di un record da tenere nel file del PG (A.113). */
+export const copiaDi = (rec) => ({
+  revisione: rec.revisione ?? 0,
+  aggiornato: rec.aggiornato ?? null,
+  proprietario: rec.proprietario ?? null,
+  conducente: rec.conducente ?? null,
+  mezzo: rec.mezzo ?? null,
+});
+
+/**
+ * A.113: i riferimenti del file del PG con la copia aggiornata ai record letti dal registro. Torna le scelte di
+ * prima se non cambia niente, così non si salva per nulla.
+ * @param veicoli scelte.veicoli del personaggio
+ * @param record i record letti dal server
+ */
+export function conCopie(veicoli, record) {
+  const perId = new Map((record ?? []).map((r) => [r.id, r]));
+  let cambiato = false;
+  const fuori = (veicoli ?? []).map((v) => {
+    const rec = eRiferimento(v) ? perId.get(v.rif) : null;
+    if (!rec) return v;
+    const copia = copiaDi(rec);
+    const nome = rec.mezzo?.nome ?? v.nome;
+    if (v.nome === nome && JSON.stringify(v.copia) === JSON.stringify(copia)) return v;
+    cambiato = true;
+    return { ...v, nome, copia };
+  });
+  return cambiato ? fuori : veicoli;
+}
+
+/** A.113: il mezzo dell'ultima copia di un riferimento, da mostrare in sola lettura. null se non c'è. */
+export function mezzoDallaCopia(v) {
+  const c = isOggetto(v?.copia) ? v.copia : null;
+  if (!isOggetto(c?.mezzo)) return null;
+  return {
+    ...c.mezzo,
+    gruppo: c.proprietario?.tipo === 'gruppo',
+    conducente: false,
+    _copia: { revisione: c.revisione ?? 0, aggiornato: c.aggiornato ?? null, proprietario: c.proprietario ?? null, conducente: c.conducente ?? null },
+  };
+}
+
+/**
+ * A.113: chi può cambiare un veicolo. Il Direttore tutti (anche i mezzi personali dei PG); il giocatore quelli che
+ * vede; senza collegamento al server il veicolo condiviso è in sola lettura.
+ * @param rec record o riferimento con la copia
+ * @param chi { pg, chiave, nome } del personaggio aperto
+ * @param contesto { server: bool, master: bool }
+ * @returns {{ puoCambiare: boolean, motivo: string|null }}
+ */
+export function permessiVeicolo(rec, chi, { server = true, master = false } = {}, dati = null) {
+  const P = dati?.veicoli?.personaggio?.permessi ?? null;
+  if (!server) return { puoCambiare: false, motivo: P?.avviso_sola_lettura ?? 'Veicolo condiviso in sola lettura: senza il server vedi l’ultima copia (A.113).' };
+  if (master) return { puoCambiare: true, motivo: null };
+  if (rec && !vede(rec, chi)) return { puoCambiare: false, motivo: 'Questo veicolo non è tuo e non lo guidi: lo cambia il Direttore (A.113).' };
+  return { puoCambiare: true, motivo: null };
+}
 /** Un veicolo delle scelte è un riferimento al registro? */
 export const eRiferimento = (v) => isOggetto(v) && typeof v.rif === 'string' && v.rif !== '';
 

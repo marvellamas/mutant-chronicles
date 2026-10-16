@@ -446,8 +446,9 @@ export function nuovoVeicolo(origine, dati, { uid = null, nome = null } = {}) {
 export function normalizzaVeicoli(veicoli, dati, avvisi = []) {
   const andature = dati.veicoli.andature.elenco.map((a) => a.id);
   return lista(veicoli).filter(isOggetto).map((v) => {
-    // A.91: riferimento al registro unico dei veicoli (src/veicoli-registro.js): resta com'è
-    if (typeof v.rif === 'string' && v.rif) return { uid: testo(v.uid) || v.rif, rif: v.rif, nome: testo(v.nome) || v.rif };
+    // A.91: riferimento al registro unico dei veicoli (src/veicoli-registro.js): resta com'è.
+    // A.113: con il riferimento viaggia l'ultima copia del record, da consultare in sola lettura senza server.
+    if (typeof v.rif === 'string' && v.rif) return { uid: testo(v.uid) || v.rif, rif: v.rif, nome: testo(v.nome) || v.rif, ...(isOggetto(v.copia) ? { copia: v.copia } : {}) };
     const profilo = profiloDi(v, dati);
     if (!profilo) {
       avvisi.push(`Veicolo «${testo(v.nome) || v.profilo || 'senza nome'}»: profilo «${v.profilo ?? '—'}» non più nel catalogo dei veicoli; resta nel file, senza scheda.`);

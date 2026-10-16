@@ -50,7 +50,11 @@ test('avvio del server: record creato e riferimento nel file; nessun doppione al
   assert.deepEqual(rec.proprietario, { tipo: 'gruppo' });
   assert.deepEqual(rec.mezzo.pi, scoutLocale.pi);
   assert.equal(rec.mezzo.energia.rosso.reduce((x, y) => x + y, 0), 100000); // NEC di prima normalizzato
-  assert.deepEqual(veicoliNelFile(c, file), [{ uid: 'veimuu14mqa0', rif: 'veimuu14mqa0', nome: 'ASA Scout MK4' }]);
+  // A.113: nel file resta il riferimento con l'ultima copia, da consultare in sola lettura senza server
+  const [rif] = veicoliNelFile(c, file);
+  assert.deepEqual({ uid: rif.uid, rif: rif.rif, nome: rif.nome }, { uid: 'veimuu14mqa0', rif: 'veimuu14mqa0', nome: 'ASA Scout MK4' });
+  assert.equal(rif.copia.mezzo.nome, 'ASA Scout MK4');
+  assert.deepEqual(rif.copia.proprietario, { tipo: 'gruppo' });
   const b = await avvia(c);
   b.s.close();
   assert.deepEqual(b.esito.record, []);

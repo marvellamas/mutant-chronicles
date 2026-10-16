@@ -86,12 +86,13 @@ export function sezioneToken(t, p, dati, a) {
       : h('p', { class: 'nota' }, `Ingombro ${testoIngombro(t.ingombro)} dal profilo del veicolo.`),
     // fase 2, lotto 5: girare il mezzo e chi è a bordo (conducente e passeggeri), con «Scendi» e la linea di tiro
     creatura ? null : h('div', { class: 'mappa-azioni-token' },
-      // 08/10: orientamento libero, a passi di 10° (← →) o 45° (Maiusc+← →)
-      h('button', { type: 'button', class: 'btn btn-piccolo', title: `Gira il veicolo di ${a.passiRotazione?.[1] ?? 45}° in senso antiorario (Maiusc+←)`, onclick: () => a.ruota(-1, true) }, `↺ ${a.passiRotazione?.[1] ?? 45}°`),
-      h('button', { type: 'button', class: 'btn btn-piccolo', title: `Gira il veicolo di ${a.passiRotazione?.[0] ?? 10}° in senso antiorario (←)`, onclick: () => a.ruota(-1) }, `↺ ${a.passiRotazione?.[0] ?? 10}°`),
+      // A.147 (15/10/2026): di base gli otto orientamenti a 45° (← →); con Maiusc il passo fine, per un
+      // orientamento libero scelto dal master. Girare non consuma Q.
+      h('button', { type: 'button', class: 'btn btn-piccolo', title: `Gira il veicolo di ${a.passiRotazione?.[0] ?? 45}° in senso antiorario (←): gli otto orientamenti della A.147, anche in diagonale`, onclick: () => a.ruota(-1) }, `↺ ${a.passiRotazione?.[0] ?? 45}°`),
+      h('button', { type: 'button', class: 'btn btn-piccolo btn-fine', title: `Passo fine: gira il veicolo di ${a.passiRotazione?.[1] ?? 10}° in senso antiorario (Maiusc+←)`, onclick: () => a.ruota(-1, true) }, `↺ ${a.passiRotazione?.[1] ?? 10}°`),
       a.angolo !== null && a.angolo !== undefined ? h('span', { class: 'nota', title: 'Direzione del muso: 0° in alto, in senso orario' }, ` ${a.angolo}° `) : null,
-      h('button', { type: 'button', class: 'btn btn-piccolo', title: `Gira il veicolo di ${a.passiRotazione?.[0] ?? 10}° in senso orario (→)`, onclick: () => a.ruota(1) }, `${a.passiRotazione?.[0] ?? 10}° ↻`),
-      h('button', { type: 'button', class: 'btn btn-piccolo', title: `Gira il veicolo di ${a.passiRotazione?.[1] ?? 45}° in senso orario (Maiusc+→)`, onclick: () => a.ruota(1, true) }, `${a.passiRotazione?.[1] ?? 45}° ↻`)),
+      h('button', { type: 'button', class: 'btn btn-piccolo btn-fine', title: `Passo fine: gira il veicolo di ${a.passiRotazione?.[1] ?? 10}° in senso orario (Maiusc+→)`, onclick: () => a.ruota(1, true) }, `${a.passiRotazione?.[1] ?? 10}° ↻`),
+      h('button', { type: 'button', class: 'btn btn-piccolo', title: `Gira il veicolo di ${a.passiRotazione?.[0] ?? 45}° in senso orario (→): gli otto orientamenti della A.147, anche in diagonale`, onclick: () => a.ruota(1) }, `${a.passiRotazione?.[0] ?? 45}° ↻`)),
     creatura ? null : h('div', { class: 'mappa-a-bordo' },
       h('h3', {}, `A bordo (${a.aBordo.length}${p?.posti ? ` su ${p.posti.conducente + p.posti.passeggeri} posti` : ''})`),
       // ritocchi del 08/10: chi è a bordo, poi le discese tutte insieme, poi le linee di tiro tutte insieme

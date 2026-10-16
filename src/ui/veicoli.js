@@ -12,7 +12,7 @@ import {
   montaRicambio, struttureVeicolo, profiloDi, consumaRisorse, installaRicambioEnergia, munizioniArmaVeicolo,
   sollecitazioneFallita, eseguiCambioAndatura, movimentoMassimo, profiloVeicolo as profiloDelCatalogo,
 } from '../veicoli.js';
-import { migraVeicoli, nuovoRecord, riferimento, vede, eRiferimento, statoMovimento, muoviVeicolo, cambiaConducente, movimentoResiduo, stessaChiave, scegliAndatura } from '../veicoli-registro.js';
+import { migraVeicoli, nuovoRecord, riferimento, vede, eRiferimento, statoMovimento, muoviVeicolo, cambiaConducente, movimentoResiduo, stessaChiave, scegliAndatura, conCopie, mezzoDallaCopia } from '../veicoli-registro.js';
 import { elencoVeicoli, scriviVeicolo, aggiornaVeicolo } from './veicoli-registro.js';
 
 const numero = (n) => (Number.isInteger(n) ? n.toLocaleString('it-IT') : '—');
@@ -44,7 +44,9 @@ export function tabVeicoli(ctx) {
   const riferimenti = (ctx.scelte.veicoli ?? []).filter(eRiferimento);
   return [
     h('p', { class: 'riquadro attenzione' }, 'Senza il server di Mutant (avvia-server.bat) il veicolo è una copia locale in questa scheda: la scheda unica condivisa con le altre schede e con il Tavolo del Master richiede il server (A.91).'),
-    riferimenti.length ? h('p', { class: 'nota' }, `Nel registro dei veicoli del Tavolo: ${riferimenti.map((x) => x.nome).join(', ')}. Si vedono e si modificano con il server acceso.`) : null,
+    // A.113: i veicoli del registro restano consultabili, in sola lettura, nell'ultima copia ricevuta
+    riferimenti.length ? h('p', { class: 'nota' }, `Nel registro dei veicoli del Tavolo: ${riferimenti.map((x) => x.nome).join(', ')}. Qui sotto l'ultima copia, in sola lettura (A.113); per cambiarli serve il server.`) : null,
+    riferimenti.map((x) => schedaSolaLettura(ctx, x, pilotare)),
     h('div', { class: 'riga-azioni' }, h('button', { type: 'button', class: 'btn primario', onclick: () => { statoUi(ctx).aggiungi = statoUi(ctx).aggiungi ? null : { origine: ctx.dati.veicoli.profili[0]?.id ?? 'mano', nome: '', scheda: {} }; ctx.azioni.ridisegna(); } }, 'Aggiungi veicolo')),
     statoUi(ctx).aggiungi ? pannelloAggiungi(ctx) : null,
     veicoli.length ? veicoli.map((v) => schedaVeicolo(ctx, v, pilotare))
@@ -71,10 +73,13 @@ async function leggiRegistro(ctx) {
     }
     R.record = lista;
     R.avvisi = m.avvisi;
+    // A.113: l'ultima copia dei veicoli del registro resta nel file del PG, da consultare senza server
+    const conLeCopie = conCopie(m.veicoli ?? ctx.scelte.veicoli ?? [], lista);
     R.stato = 'pronto';
     R.letto = Date.now();
     R.errore = null;
-    if (m.nuovi.length) ctx.azioni.veicoli(m.veicoli, `Veicoli nel registro unico del Tavolo: ${m.nuovi.map((x) => x.mezzo.nome).join(', ')} (A.91). Nella scheda resta il riferimento.`);
+    if (m.nuovi.length) ctx.azioni.veicoli(conLeCopie, `Veicoli nel registro unico del Tavolo: ${m.nuovi.map((x) => x.mezzo.nome).join(', ')} (A.91). Nella scheda resta il riferimento.`);
+    else if (conLeCopie !== (ctx.scelte.veicoli ?? [])) ctx.azioni.veicoli(conLeCopie, null);
     else ctx.azioni.ridisegna();
   } catch (e) {
     R.stato = 'errore';
@@ -97,7 +102,8 @@ function tabVeicoliRegistro(ctx) {
       const { record, conflitti } = await aggiornaVeicolo(prima, dopo);
       R.record = R.record.map((x) => (x.id === record.id ? record : x));
       const avviso = conflitti.length ? `${record.mezzo.nome}: ${conflitti.join(', ')} cambiati anche altrove nel frattempo, resta il valore del registro.` : null;
-      ctx.azioni.veicoli(ctx.scelte.veicoli ?? [], avviso ?? messaggio ?? null);
+      // A.113: nel file del PG resta la copia aggiornata, per consultarla senza server
+      ctx.azioni.veicoli(conCopie(ctx.scelte.veicoli ?? [], R.record), avviso ?? messaggio ?? null);
     } catch (e) { R.errore = e.message; ctx.azioni.ridisegna(); }
   };
   const scheda = (rec) => {
@@ -165,6 +171,66 @@ function pannelloAggiungi(ctx, inRegistro = null) {
       h('button', { type: 'button', class: 'btn', onclick: () => { statoUi(ctx).aggiungi = null; ctx.azioni.ridisegna(); } }, 'Annulla')));
 }
 
+/**
+ * A.113: l'ultima copia di un veicolo del registro, senza server. Si consulta e basta: profilo, Pilotare, PI delle
+ * strutture, armi; niente «Colpito», «Ripara», andature o PI da cambiare. Per modificarlo serve il collegamento.
+ */
+function schedaSolaLettura(ctx, riferimentoVeicolo, pilotare) {
+  const mezzo = mezzoDallaCopia(riferimentoVeicolo);
+  const P = ctx.dati.veicoli.personaggio?.permessi ?? {};
+  if (!mezzo) {
+    return h('section', { class: 'sezione-tab scheda-veicolo sola-lettura' }, h('h2', {}, riferimentoVeicolo.nome ?? 'Veicolo'),
+      h('p', { class: 'riquadro attenzione' }, 'Di questo veicolo non c’è ancora una copia locale: si vede con il server acceso (A.113).'));
+  }
+  const v = vistaVeicoloPersonaggio(mezzo, ctx.dati, { pilotare });
+  if (!v) return h('section', { class: 'sezione-tab scheda-veicolo sola-lettura' }, h('h2', {}, mezzo.nome ?? 'Veicolo'), h('p', { class: 'riquadro attenzione' }, 'Profilo non più nel catalogo dei veicoli.'));
+  const c = mezzo._copia ?? {};
+  const quando = c.aggiornato ? new Date(c.aggiornato).toLocaleString('it-IT', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : null;
+  return h('section', { class: 'sezione-tab scheda-veicolo sola-lettura' },
+    h('header', { class: 'testa-veicolo' }, h('h2', {}, v.nome),
+      h('span', { class: 'sigla' }, v.manuale ? 'scritto a mano' : `${v.profilo.nome} · ${v.profilo.paragrafo}`),
+      h('span', { class: 'etichetta etichetta-sola-lettura' }, 'sola lettura')),
+    h('p', { class: 'riquadro attenzione' }, P.avviso_sola_lettura ?? 'Veicolo condiviso in sola lettura (A.113).'),
+    h('p', { class: 'nota' }, `Ultima copia${quando ? ` del ${quando}` : ''} (revisione ${c.revisione ?? 0}) · proprietario: ${c.proprietario?.tipo === 'gruppo' ? 'il gruppo' : c.proprietario?.nome ?? '—'} · conducente: ${c.conducente?.nome ?? 'nessuno'}`),
+    h('div', { class: 'veicolo-colonne' },
+      h('div', {}, profiloVeicolo(v, ctx.dati), pilotareVeicolo(v, ctx.dati)),
+      h('div', {}, h('div', { class: 'strutture-veicolo' }, v.strutture.map((x) => h('p', { class: `struttura-veicolo stato-${x.stato}` },
+        h('strong', {}, x.nome), ` ${x.pi}/${x.massimi} PI · `, h('span', { class: `etichetta stato-struttura stato-${x.stato}` }, x.statoNome ?? '—')))))),
+    armiEProprieta(v));
+}
+
+/**
+ * A.145: tabella delle azioni sui veicoli, da consultare. Nessun conteggio automatico: i costi li applica il tavolo.
+ * Si apre chiusa; con una categoria mostra le righe generali e quelle della categoria.
+ */
+export function tabellaAzioniVeicoli(dati, { categoria = null, aperta = false } = {}) {
+  const T = dati.veicoli?.azioni?.tabella;
+  if (!T) return null;
+  const righe = T.righe.filter((r) => !categoria || r.categoria === 'Generale' || r.categoria === categoria);
+  const perCategoria = T.categorie.filter((c) => righe.some((r) => r.categoria === c));
+  return h('details', { class: 'tabella-azioni-veicoli', open: aperta },
+    h('summary', {}, `${T.titolo} (A.145)`),
+    h('p', { class: 'nota' }, T.nota),
+    h('ul', { class: 'nota premesse-azioni' }, T.premesse.map((x) => h('li', {}, x))),
+    perCategoria.map((cat) => h('div', { class: 'gruppo-azioni' },
+      h('h4', {}, cat),
+      h('table', { class: 'tabella-azioni' },
+        h('tbody', {}, righe.filter((r) => r.categoria === cat).map((r) => h('tr', {},
+          h('th', { scope: 'row' }, r.operazione), h('td', {}, r.costo))))))));
+}
+
+/** A.147: le manovre di rotazione, come promemoria nella scheda del veicolo. Nessun costo in Q, nessun calcolo. */
+function manovreRotazione(dati) {
+  const M = dati.veicoli?.manovre_rotazione;
+  if (!M) return null;
+  return h('details', { class: 'manovre-rotazione' },
+    h('summary', {}, 'Curve, sterzate e inversioni (A.147)'),
+    h('table', { class: 'tabella-azioni' }, h('tbody', {}, M.manovre.map((x) => h('tr', {},
+      h('th', { scope: 'row' }, x.nome),
+      h('td', {}, x.costo, x.prova ? h('strong', {}, ` · ${x.prova}`) : null, h('small', { class: 'nota' }, ` ${x.nota}`)))))),
+    h('ul', { class: 'nota' }, (M.frasi_risposta ?? []).map((x) => h('li', {}, x))));
+}
+
 // --- scheda di un veicolo ---------------------------------------------------------------------------
 
 function schedaVeicolo(ctx, mezzo, pilotare, registro = null) {
@@ -197,6 +263,9 @@ function schedaVeicolo(ctx, mezzo, pilotare, registro = null) {
       h('button', { type: 'button', class: 'btn', onclick: () => { const u = statoUi(ctx); u.ripara[mezzo.uid] = u.ripara[mezzo.uid] ? null : { struttura: v.strutture.find((s) => s.pi < s.massimi)?.struttura ?? 'corpo', esito: 'successo', capacita: [], improvvisati: false, kit: false }; ctx.azioni.ridisegna(); } }, 'Ripara')),
     statoUi(ctx).colpo[mezzo.uid] ? pannelloColpo(ctx, mezzo, v, aggiorna) : null,
     statoUi(ctx).ripara[mezzo.uid] ? pannelloRipara(ctx, mezzo, v, aggiorna) : null,
+    // A.145 e A.147: promemoria da consultare, senza conteggi automatici
+    manovreRotazione(ctx.dati),
+    tabellaAzioniVeicoli(ctx.dati, { categoria: v.profilo?.categoria_azioni ?? null }),
     h('label', { class: 'note-veicolo' }, 'Avarie e note ', h('textarea', { rows: 2, value: mezzo.avarie ?? '', onchange: (e) => aggiorna({ ...mezzo, avarie: e.target.value }) })));
 }
 
@@ -515,5 +584,8 @@ export function cartaVeicoloPlancia(ctx, rec, o) {
       st.motivo && !st.mosso ? h('small', { class: 'nota' }, ` ${st.motivo}`) : null) : h('p', { class: 'nota' }, 'Nessuno scontro aperto: il mezzo si muove all’Iniziativa del conducente quando c’è uno scontro.'),
     residuo ? h('p', { class: 'riquadro attenzione' }, `${rec.conducente.nome} non può guidare: il movimento residuo prosegue all’Iniziativa precedente finché un nuovo conducente interviene o il mezzo si arresta (§5.6); a terra l’andatura scende a ${residuo.andatura.nome}.${residuo.conseguenza ? ` ${residuo.conseguenza}` : ''}`) : null,
     h('p', { class: 'riga-azioni' }, h('button', { type: 'button', class: 'btn', onclick: () => { const u = statoUi(ctx); u.colpo[mezzo.uid] = u.colpo[mezzo.uid] ? null : { modo: 'd20', d20: 10, struttura: 'corpo', danni: '', natura: 'Naturale', magistrale: false, piAggiuntivi: 0, ps: 'fallita', esposti: true }; ctx.azioni.ridisegna(); } }, 'Colpito')),
-    statoUi(ctx).colpo[mezzo.uid] ? pannelloColpo(ctx, mezzo, v, scrivi) : null);
+    statoUi(ctx).colpo[mezzo.uid] ? pannelloColpo(ctx, mezzo, v, scrivi) : null,
+    // A.145 e A.147: le stesse tabelle della scheda, da consultare anche dalla plancia; nessun conteggio
+    manovreRotazione(d),
+    tabellaAzioniVeicoli(d, { categoria: v.profilo?.categoria_azioni ?? null }));
 }

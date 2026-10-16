@@ -2970,7 +2970,9 @@ function validaMappa(dati, err) {
   // veicoli ruotati (08/10, src/mappa/forma.js): passi di rotazione in gradi
   {
     const RV = m.token?.rotazione_veicoli;
-    for (const k of ['passo_gradi', 'passo_rapido_gradi']) if (!isIntero(RV?.[k]) || RV[k] < 1 || RV[k] > 180 || 360 % RV[k] !== 0) err(F, `token.rotazione_veicoli.${k}`, 'intero da 1 a 180 che divide 360 (gradi)');
+    // A.147: il passo di base sono i 45° degli otto orientamenti; il passo fine (Maiusc) è l'orientamento libero
+    for (const k of ['passo_gradi', 'passo_fine_gradi']) if (!isIntero(RV?.[k]) || RV[k] < 1 || RV[k] > 180 || 360 % RV[k] !== 0) err(F, `token.rotazione_veicoli.${k}`, 'intero da 1 a 180 che divide 360 (gradi)');
+    if (isIntero(RV?.passo_gradi) && RV.passo_gradi % 45 !== 0) err(F, 'token.rotazione_veicoli.passo_gradi', 'A.147: il passo di base deve dare gli otto orientamenti a 45° (multiplo di 45)');
   }
   // tablet dei giocatori (fase 2, lotto 7; src/mappa/tablet.js): movimento al turno o sempre, avviso «Tocca a te»
   {

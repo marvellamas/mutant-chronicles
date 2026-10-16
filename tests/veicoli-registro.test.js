@@ -46,7 +46,9 @@ test('migrazione dello Scout: record del registro con PI, energia, munizioni e a
   assert.equal(rec.conducente, null);
   for (const k of ['pi', 'energia', 'munizioni', 'andatura', 'rinforzi']) assert.deepEqual(rec.mezzo[k], s[k], k);
   assert.equal('gruppo' in rec.mezzo || 'conducente' in rec.mezzo, false);
-  assert.deepEqual(m.veicoli, [{ uid: 'veimuu14mqa0', rif: 'veimuu14mqa0', nome: 'Scout' }]);
+  // A.113: il riferimento porta con sé l'ultima copia del record
+  assert.deepEqual(m.veicoli.map((x) => ({ uid: x.uid, rif: x.rif, nome: x.nome })), [{ uid: 'veimuu14mqa0', rif: 'veimuu14mqa0', nome: 'Scout' }]);
+  assert.deepEqual(m.veicoli[0].copia.mezzo.pi, s.pi);
   // il riferimento sopravvive al salvataggio del PG
   const { scelte } = normalizza({ ...copia(MISHIMA_AGENTE), veicoli: m.veicoli }, dati);
   const riletto = deserializza(serializza(scelte, {}));
@@ -141,8 +143,15 @@ test('A.105: il veicolo si muove all’Iniziativa del conducente, una volta per 
 });
 
 test('il riferimento del registro non entra nella stampa né nel calcolo come mezzo', () => {
-  const [r] = normalizzaVeicoli([riferimento(nuovoRecord(scoutDiPablo(), pablo))], dati);
-  assert.deepEqual(r, { uid: 'veimuu14mqa0', rif: 'veimuu14mqa0', nome: 'Scout' });
+  const rec = nuovoRecord(scoutDiPablo(), pablo);
+  const [r] = normalizzaVeicoli([riferimento(rec)], dati);
+  // A.113: con il riferimento viaggia l'ultima copia, per consultarla in sola lettura senza server
+  assert.deepEqual({ uid: r.uid, rif: r.rif, nome: r.nome }, { uid: 'veimuu14mqa0', rif: 'veimuu14mqa0', nome: 'Scout' });
+  assert.equal(r.copia.revisione, 0);
+  assert.equal(r.copia.mezzo.nome, 'Scout');
+  // il riferimento senza copia (file di prima) resta valido
+  const [vecchio] = normalizzaVeicoli([{ uid: rec.id, rif: rec.id, nome: 'Scout' }], dati);
+  assert.deepEqual(vecchio, { uid: rec.id, rif: rec.id, nome: 'Scout' });
 });
 
 test('stampa (seguito di A.91): il veicolo del registro si stampa dal record; senza record il foglio lo dice', async () => {

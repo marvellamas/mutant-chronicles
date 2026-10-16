@@ -894,7 +894,7 @@ export function renderMappa(radice, ctx) {
       togli: () => togliToken(scelto.id),
       // fase 2, lotto 5: veicolo
       rigaAndature: () => (recordVeicolo(scelto) ? rigaAndature(ctx.dati, recordVeicolo(scelto).mezzo, (id) => andaturaUi(scelto, id), { classe: 'mappa-andature' }) : null),
-      ruota: (verso, rapido = false) => ruotaVeicoloUi(scelto.id, verso, rapido),
+      ruota: (verso, fine = false) => ruotaVeicoloUi(scelto.id, verso, fine),
       passiRotazione: [passoRotazione(false), passoRotazione(true)],
       angolo: scelto?.rif?.tipo === 'veicolo' ? angoloDi(scelto) : null,
       aBordo: aBordo(scelto).map((x) => ({ id: x.id, nome: nomeTok(x), ruolo: x.ruolo })),
@@ -1340,7 +1340,7 @@ export function renderMappa(radice, ctx) {
       ['🔊 (clic: cursori Musica / Effetti e «Muto»)', 'volumi e muto generale su questo PC (ricordati); il pulsante diventa 🔇 con l’audio muto; la campanella suona a ogni nuovo Round. Strumenti → «Suoni anche nella vista giocatori» per il televisore con le casse'],
       ['Avviso «clic per attivare l’audio»', 'il browser blocca i suoni finché non tocchi la pagina: un clic qualunque li sblocca'],
       ['Clic destro → «In volo» (gruppo Movimento; anche pannello e carta)', 'icona e ombra sul token: passa sopra terreno difficile e token (senza fermarsi su un altro token), muri e porte chiuse restano; niente token in mezzo né Copertura Leggera o Media; i giocatori lo vedono anche sotto la nebbia se un PG ha una linea senza muri. «Quota…» per l’etichetta in Q. Un nemico che sa volare lo propone quando lo metti in mappa'],
-      ['Veicolo da mettere o scelto: ← → (Maiusc: a 45°)', 'gira il veicolo di 10° (con Maiusc di 45°) attorno al centro; anche clic destro → «Ruota». Il triangolino indica il muso; girare non consuma movimento. Ctrl+Z annulla'],
+      ['Veicolo da mettere o scelto: ← → (Maiusc: passo fine)', `gira il veicolo di ${passoRotazione(false)}° attorno al centro — gli otto orientamenti della A.147, anche in diagonale — e con Maiusc di ${passoRotazione(true)}°, per un orientamento libero; anche clic destro → «Ruota». Il triangolino indica il muso; girare non consuma Q. Ctrl+Z annulla`],
       ['Veicolo scelto: riga «Andatura» del pannello (o clic destro → «Movimento»)', 'Fermo, Controllata, Veloce, Massima con i Q del Round; l’area si aggiorna subito. Nello scontro una fascia per Round (Veicoli §2.1): il resto resta scelto per i Round dopo. Con l’andatura Fermo il veicolo non si muove e un avviso lo dice, con le andature come pulsanti'],
       ['Veicolo: muoverlo', 'trascinalo o clic sul quadretto di arrivo, come un token; una volta per Round'],
       ['Clic destro su un PG o un nemico accanto a un veicolo', '«Sali su … come conducente» (un PG) o «come passeggero»: il token va a bordo e si muove con il mezzo'],
@@ -1506,16 +1506,21 @@ export function renderMappa(radice, ctx) {
   }
   /** Le andature come pulsanti di un avviso (veicolo fermo). */
   const azioniAndatura = (t) => ctx.dati.veicoli.andature.elenco.filter((a) => a.moltiplicatore > 0).map((a) => ({ testo: a.nome, fai: () => andaturaUi(t, a.id) }));
-  /** Passo della rotazione (08/10; data/mappa.json → token.rotazione_veicoli): 10°, oppure 45° con Maiusc. */
-  const passoRotazione = (rapido) => ctx.dati.mappa.token.rotazione_veicoli[rapido ? 'passo_rapido_gradi' : 'passo_gradi'];
+  /**
+   * Passo della rotazione (A.147, risposta del 15/10/2026): 45°, cioè gli otto orientamenti della risposta,
+   * anche in diagonale; con Maiusc il passo fine, per l'orientamento libero scelto dal master.
+   * Dati: data/mappa.json → token.rotazione_veicoli.
+   */
+  const passoRotazione = (fine) => ctx.dati.mappa.token.rotazione_veicoli[fine ? 'passo_fine_gradi' : 'passo_gradi'];
   /**
    * Gira il veicolo attorno al suo centro (Ctrl+Z annulla) di un passo (verso +1 orario, −1 antiorario); non su muri o
    * altri token, controllati sui quadretti occupati. Girare non consuma movimento (Veicoli §1.3; A.147).
    */
-  function ruotaVeicoloUi(id, verso, rapido = false) {
+  function ruotaVeicoloUi(id, verso, fine = false) {
     const prima = st.scena.token.find((t) => t.id === id);
     if (!prima) return;
-    const r = ruotaSeLibero(st.scena, id, verso * passoRotazione(rapido), muroQ());
+    // A.147: l'ingombro si controlla nell'orientamento effettivo, anche in diagonale
+    const r = ruotaSeLibero(st.scena, id, verso * passoRotazione(fine), muroQ());
     if (r.errore) { avvisoErrore(`${nomeTok(prima)} non si gira: ${r.errore}.`); return; }
     st.scena = cambiaTokenAnnullabile(st.scena, prima, r.token, ctx.dati);
     avviso(`${nomeTok(prima)}: muso a ${r.token.angolo}° (0° in alto; Ctrl+Z annulla).`, { tipo: 'info', chiave: 'ruota-veicolo' });
@@ -1537,7 +1542,7 @@ export function renderMappa(radice, ctx) {
     dopoSelezione();
     return true;
   }
-  /** ← → : gira il veicolo da mettere (prima del clic) o quello scelto, di 10° (Maiusc: 45°). */
+  /** ← → : gira il veicolo da mettere (prima del clic) o quello scelto, di 45° (Maiusc: passo fine, A.147). */
   function frecciaVeicolo(e) {
     if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return false;
     const verso = e.key === 'ArrowRight' ? 1 : -1;

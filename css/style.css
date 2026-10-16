@@ -2766,3 +2766,14 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .plancia-morente .nota { margin: 0; }
 .plancia-morente.morente-zero { outline: 2px solid var(--pv); }
 .avviso-morente { background: var(--pv); color: #fff; }
+/* Veicoli: tabella delle azioni (A.145), manovre di rotazione (A.147) e copia in sola lettura (A.113), 16/10 */
+.tabella-azioni-veicoli summary, .manovre-rotazione summary { cursor: pointer; font-weight: 600; }
+.tabella-azioni { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 0.3rem 0; }
+.tabella-azioni th { text-align: left; font-weight: 600; padding: 0.25rem 0.5rem 0.25rem 0; vertical-align: top; width: 38%; }
+.tabella-azioni td { padding: 0.25rem 0; vertical-align: top; border-top: 1px solid var(--bordo); }
+.tabella-azioni tr:first-child td, .tabella-azioni tr:first-child th { border-top: 0; }
+.gruppo-azioni h4 { margin: 0.6rem 0 0.1rem; font-size: 0.9rem; }
+.premesse-azioni { margin: 0.3rem 0; padding-left: 1.1rem; }
+.scheda-veicolo.sola-lettura { opacity: 0.95; border-left: 4px solid var(--bordo); }
+.etichetta-sola-lettura { background: var(--bordo); color: var(--testo); }
+.btn-fine { opacity: 0.8; font-size: 0.78rem; }

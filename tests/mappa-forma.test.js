@@ -19,7 +19,8 @@ const scout = (q, angolo, extra = {}) => ({ id: 'v', rif: { tipo: 'veicolo', id:
 
 test('campioni come i template (data/mappa.json → template.campioni_per_lato)', () => {
   assert.equal(CAMPIONI, dati.mappa.template.campioni_per_lato);
-  assert.ok(dati.mappa.token.rotazione_veicoli.passo_gradi === 10 && dati.mappa.token.rotazione_veicoli.passo_rapido_gradi === 45);
+  // A.147 (15/10/2026): il passo di base sono i 45° degli otto orientamenti; con Maiusc il passo fine
+  assert.ok(dati.mappa.token.rotazione_veicoli.passo_gradi === 45 && dati.mappa.token.rotazione_veicoli.passo_fine_gradi === 10);
 });
 
 test('quadretti occupati dallo Scout 4 × 2 a 0°, 10°, 30°, 45°, 90°: almeno metà coperta, sempre 8 quadretti', () => {
