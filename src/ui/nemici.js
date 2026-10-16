@@ -7,7 +7,7 @@ import { h } from './dom.js';
 import { riempimento } from '../interfaccia.js';
 import { validaNemico, formattaErrore, sorgentiNemico } from '../validate.js';
 import { nemicoVuoto, voceVuota, pulisciNemico, idDaNome, testoMovimento } from '../nemici.js';
-import { variaPvNemico, variaPmNemico, cambiaStatoNemico, cambiaIntensitaNemico } from '../scontro.js';
+import { variaPvNemico, variaPmNemico, cambiaStatoNemico, cambiaIntensitaNemico, usaCapacitaNemico } from '../scontro.js';
 import { difeseNemico } from '../nemico-attacco.js';
 import { intensitaStato } from '../condizioni.js';
 import { statoIncantesimoNemico, regimeProposto, NOMI_REGIMI } from '../nemico-lancio.js';
@@ -33,12 +33,15 @@ export async function salvaNemico(n) {
   return j;
 }
 
+import { capacitaDi, avvisoUsi, testoUsi } from '../capacita-nemico.js';
+
 // etichette dei campi del formato: presentazione (i campi e le regole stanno nel formato)
 const ETICHETTE = {
   pv: 'PV', pm: 'PM', ar: 'AR', va: 'VA', ac: 'AC', id: 'Identificativo (nome del file)', portata_q: 'Portata (Q)', gittata_q: 'Gittata (Q)',
   costo_pm: 'Costo (PM)', immunita: 'Immunità', modalita: 'Modalità', proprieta: 'Proprietà', magica: 'di cui magica',
   totale: 'totale', difese: 'Difese', iniziativa: 'Iniziativa', movimento: 'Movimento (Q)', salvezze: 'Prove Salvezza',
   azioni: 'Azioni per Round', principali: 'Azioni Principali', abilita: 'Abilità', capacita: 'Capacità speciali e Talenti', livello: 'Livello della versione',
+  spazio: 'Spazio sulla mappa', passiva: 'Passiva', prova: 'Prova', risorsa: 'Risorsa', usi: 'Usi', quanti: 'Quanti', per: 'Per',
 };
 const etichetta = (k) => ETICHETTE[k] ?? (k.charAt(0).toUpperCase() + k.slice(1).replace(/_/g, ' '));
 
@@ -332,9 +335,11 @@ export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false,
       (() => { const d = difeseNemico(p, dati); return h('span', { title: d.voci.length ? `Difese ${numero(d.base)} ${d.voci.map((v) => `${numero(v.valore)} ${v.etichetta}`).join(', ')}` : null }, ' · Difese ', h('strong', { class: `pillola-plancia${d.voci.length ? ' con-penalita' : ''}` }, numero(d.valore))); })(),
       h('span', {}, ' · Iniziativa ', h('strong', { class: 'pillola-plancia' }, numero(n.iniziativa)))),
     // Bestiario §3.1.1: volo e taglia Grande, con la regola nel suggerimento (data/formato_nemici.json)
-    n.movimento?.volo || n.taglia === 'grande' ? h('p', { class: 'plancia-condizioni tratti-nemico' },
+    n.movimento?.volo || n.taglia === 'grande' || n.spazio ? h('p', { class: 'plancia-condizioni tratti-nemico' },
       n.movimento?.volo ? h('span', { class: 'etichetta tratto-nemico', title: dati.formato_nemici.campi.movimento.campi.volo?.descrizione ?? null }, `Vola · Passo in volo ${n.movimento.volo} Q`) : null,
-      n.taglia === 'grande' ? [' ', h('span', { class: 'etichetta tratto-nemico', title: dati.formato_nemici.campi.taglia?.descrizione ?? null }, 'Taglia Grande')] : null) : null,
+      n.taglia === 'grande' ? [' ', h('span', { class: 'etichetta tratto-nemico', title: dati.formato_nemici.campi.taglia?.descrizione ?? null }, 'Taglia Grande')] : null,
+      // A.126: lo spazio occupato viene dal profilo, non dalla Taglia; la pedina sulla mappa usa quello
+      n.spazio ? [' ', h('span', { class: 'etichetta tratto-nemico', title: dati.formato_nemici.campi.spazio?.descrizione ?? null }, `Spazio ${n.spazio}`)] : null) : null,
     // incantesimi in corso del nemico e quelli che ha addosso (src/durate-incantesimi.js, src/ui/tavolo.js → rigaDurate)
     rigaDurate(durate, 'incantesimo', 'Incantesimi in corso'),
     rigaDurate(durate, 'subito', 'Su di lui'),
@@ -358,8 +363,16 @@ export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false,
     n.abilita?.length ? h('p', { class: 'nota abilita-nemico' }, 'Abilità: ', n.abilita.map((a) => `${a.nome} ${numero(a.va)}`).join(' · ')) : null,
     n.attacchi.length ? h('ul', { class: 'plancia-armi' }, n.attacchi.map(attacco)) : h('p', { class: 'nota' }, 'Nessun attacco.'),
     n.incantesimi?.length ? h('ul', { class: 'plancia-armi incantesimi-nemico', 'aria-label': 'Incantesimi' }, n.incantesimi.map(incantesimo)) : null,
+    // A.115: descrizione completa e i soli parametri che il profilo dà; con un limite d'uso, il contatore
     n.capacita?.length ? h('details', { class: 'capacita-nemico' }, h('summary', {}, `Capacità speciali (${n.capacita.length})`),
-      h('ul', { class: 'nota' }, n.capacita.map((c) => h('li', {}, h('strong', {}, c.nome), `: ${c.effetto}`, c.costo ? ` · costo ${c.costo}` : '', c.limiti ? ` · ${c.limiti}` : '')))) : null,
+      h('ul', { class: 'nota' }, capacitaDi(n, p.usiCapacita).map((v) => h('li', { class: v.esauriti ? 'capacita-esaurita' : null },
+        h('strong', {}, v.nome), `: ${v.effetto}`,
+        v.parametri.length ? h('span', { class: 'parametri-capacita' }, v.parametri.map((x) => h('span', { class: 'etichetta parametro-capacita', title: x.etichetta }, `${x.etichetta}: ${x.valore}`))) : null,
+        v.usi && modifica ? h('span', { class: 'usi-capacita' },
+          h('strong', { class: v.esauriti ? 'usi-finiti' : null }, ` ${v.rimasti} su ${v.usi.quanti}`),
+          h('button', { type: 'button', class: `btn btn-piccolo${v.esauriti ? ' con-avviso' : ''}`, title: v.esauriti ? avvisoUsi(v, p.nome) : `Segna un uso di ${v.nome} (${testoUsi(v.usi)})`, onclick: () => modifica((x) => usaCapacitaNemico(x, p.id, v.nome, 1)) }, 'Usa'),
+          v.usati ? h('button', { type: 'button', class: 'btn-link', 'aria-label': `Annulla un uso di ${v.nome}`, title: 'Annulla un uso', onclick: () => modifica((x) => usaCapacitaNemico(x, p.id, v.nome, -1)) }, '↩') : null) : null,
+        v.esauriti ? h('small', { class: 'motivo' }, ` ${avvisoUsi(v, p.nome)}`) : null)))) : null,
     n.note ? h('p', { class: 'nota' }, n.note) : null);
 }
 

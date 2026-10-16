@@ -9,14 +9,23 @@
 import { formaDi } from './forma.js';
 
 /**
- * Lato del token in Q dalla Taglia (data/mappa.json → token.ingombro_per_taglia; data/formato_nemici.json → taglia).
- * Taglia sconosciuta o assente: 1 Q. TODO(Davide) A.126: il 3 × 3 «se indicato» non ha un campo nel formato dei
- * nemici; per ora lo indica il master sul token (ingombro 3, fra token.ingombri_ammessi).
+ * Lato del token in Q dal profilo della creatura (A.126, risposta approvata il 15/10/2026): si usa il campo
+ * «spazio» (data/formato_nemici.json → spazio: «1 Q», «2 × 2 Q», «3 × 3 Q»; tabella in data/mappa.json →
+ * token.spazio_lato), che non si deduce dalla Taglia. Un profilo senza il campo tiene il lato della Taglia
+ * (token.ingombro_per_taglia), come prima: i nemici di sempre non cambiano. Il master può sempre cambiarlo
+ * sul token.
+ * @param scheda il profilo del nemico, oppure la sola Taglia (come prima)
  */
-export function ingombroDaTaglia(taglia, dati) {
-  const tabella = dati?.mappa?.token?.ingombro_per_taglia ?? {};
-  return tabella[taglia] ?? 1;
+export function ingombroDaTaglia(scheda, dati) {
+  const T = dati?.mappa?.token ?? {};
+  const profilo = scheda !== null && typeof scheda === 'object' ? scheda : { taglia: scheda };
+  const dallo = T.spazio_lato?.[profilo?.spazio];
+  if (Number.isInteger(dallo)) return dallo;
+  return T.ingombro_per_taglia?.[profilo?.taglia] ?? 1;
 }
+
+/** Il nome dello spazio di un profilo («2 × 2 Q»), o null se non lo indica (A.126). */
+export const spazioDi = (scheda) => (typeof scheda?.spazio === 'string' && scheda.spazio ? scheda.spazio : null);
 
 /**
  * Ingombro di un veicolo [colonne, righe] dal suo profilo (data/veicoli.json → profili[].dimensioni.ingombro_q,

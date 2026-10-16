@@ -116,7 +116,8 @@ export function profiloNemico(scelte, dati, { umani = {} } = {}) {
     if (c.ragnatela) n.capacita.push({ nome: 'Ragnatela', effetto: `VA ${c.ragnatela.va}, gittata ${c.ragnatela.gittata_q} Q. ${base.capacita.find((x) => x.nome === 'Ragnatela')?.effetto ?? ''}`.trim() });
     for (const x of base.capacita) if (x.nome !== 'Ragnatela') n.capacita.push(clona(x));
     n.immunita = [...(base.immunita ?? [])];
-    if (c.spazio && c.spazio !== '1 Q') n.capacita.push({ nome: 'Spazio', effetto: `Occupa ${c.spazio}.` });
+    // A.126 (15/10/2026): lo spazio occupato è un campo del profilo, non una capacità da leggere
+    if (c.spazio) n.spazio = c.spazio;
   }
   n.immunita ??= [];
   n.capacita ??= [];
@@ -189,7 +190,8 @@ export function profiloNemico(scelte, dati, { umani = {} } = {}) {
     if (e.portata_q) for (const a of naturali(n, umano)) if ((a.portata_q ?? 1) < e.portata_q) a.portata_q = e.portata_q;
     // Ali membranose: Passo in volo (Giocatore §5.2.3), nel campo del formato
     if (e.volo_q && !n.movimento.volo) { n.movimento.volo = e.volo_q; prov('volo', fonte, e.volo_q); }
-    if (e.spazio && !ecc?.senza?.includes('spazio')) { n.capacita = n.capacita.filter((x) => x.nome !== 'Spazio'); capacita('Spazio', `Occupa ${e.spazio}.`); }
+    // A.126: il modulo che ingrandisce la creatura cambia il campo «spazio» del profilo
+    if (e.spazio && !ecc?.senza?.includes('spazio')) { n.capacita = n.capacita.filter((x) => x.nome !== 'Spazio'); n.spazio = e.spazio; }
     if (e.proprieta_naturali) for (const a of naturali(n, umano)) for (const p of e.proprieta_naturali) aggiungiProprieta(a, p);
     if (e.abilita) for (const [nome, v] of Object.entries(e.abilita)) {
       const ab = n.abilita?.find((x) => x.nome === nome);

@@ -34,7 +34,7 @@ import { scegliColore, chiedi, chiediTesto, informa, apri as apriFinestrella } f
 import { calibraDaQuadretto, applicaGriglia, dimensioniMappa, lineeVisibili, testoScala, spessoreGriglia, scostoNitido } from '../../mappa/griglia.js';
 import { creaTela } from './canvas.js';
 import { leggiScena, salvaScena, caricaImmagine, controllaFile, preparaRidotta } from './api.js';
-import { agganciaQ, centroToken, tokenSottoPunto, disponiInFila, sovrapposti, chiaveRif, dimensioni } from '../../mappa/token.js';
+import { agganciaQ, centroToken, tokenSottoPunto, disponiInFila, sovrapposti, chiaveRif, dimensioni, celleToken as celleTokenQ } from '../../mappa/token.js';
 import { pezziDellaScena, pezziSenzaToken, tokenOrfani, tokenPerPezzo } from '../../mappa/partecipanti.js';
 import { daBase64, inBase64, cella, conta, impostaCella } from '../../mappa/celle.js';
 import { ostacoliVista, lineaDiTiro, testoCopertura, apriNebbiaConPg } from '../../mappa/visuale.js';
@@ -62,7 +62,7 @@ import {
 } from '../../mappa/editor.js';
 import { rifaiUltima } from '../../mappa/annulla.js';
 import { luceQ, luceIngombro, testoLuceBersaglio, categorieLuce, ambienteDi, trattoLuce, rettangoloLuce, conVoceLuce, cambiaAmbiente } from '../../mappa/luce.js';
-import { celleTemplate, tokenDentro as tokenNelTemplate, nuovoTemplate, scaduto, direzioneVerso, ORIENTABILI, templateVisibili, ruota, cambiaMisura, permanente, postoNome } from '../../mappa/template.js';
+import { celleTemplate, tokenDentro as tokenNelTemplate, nuovoTemplate, scaduto, direzioneVerso, ORIENTABILI, templateVisibili, ruota, cambiaMisura, permanente, postoNome, origineConoCreatura } from '../../mappa/template.js';
 import { livelliDi, livelliDati, conLivello, conTuttiILivelli, nascosti as livelliNascosti, statoEntrambi, conLivelloEntrambi } from '../../mappa/sovrapposizioni.js';
 import { portaA, muriEffettivi, lineeEffettive, porteVicine, apriChiudi, nuovaPorta, conAzione, azpNelRound, orientamento, orientamentoPorta, ruotaPorta, opposto, agganciaPorta, agganciaDiPorta, geometriaPorta, lineePerDisegno, muriPerDisegno, portaSotto, porteNellaForma } from '../../mappa/porte.js';
 import { apriMenuTemplate, sezioneTemplate, etichettaTemplate, testoMisure } from './template.js';
@@ -2372,12 +2372,21 @@ export function renderMappa(radice, ctx) {
     const tok = ORIENTABILI.includes(a.forma) && !st.tpl.sposta && st.selezionato ? st.scena.token.find((x) => x.id === st.selezionato) : null;
     let nuovo;
     if (tok) {
+      // A.126–A.138 (15/10/2026): il cono di una creatura che occupa più Q parte dal centro di un quadretto
+      // periferico, sul lato dell'emissione: di base quello verso cui punta, e il master lo sposta muovendo il
+      // puntatore lungo il lato. Le altre forme (e le creature 1 × 1) restano come prima, dal centro.
+      const CC = ctx.dati.mappa.template.cono_creature ?? null;
+      const dalPerimetro = a.forma === 'cono' && CC?.origine === 'perimetro';
       const [w, hh] = Array.isArray(tok.ingombro) ? tok.ingombro : [tok.ingombro ?? 1, tok.ingombro ?? 1];
-      const origine = [tok.q[0] + Math.floor((w - 1) / 2), tok.q[1] + Math.floor((hh - 1) / 2)];
-      nuovo = { ...a, origine, direzione: st.tpl.direzioneFissa ? a.direzione : direzioneVerso(origine, verso) };
+      const centro = [tok.q[0] + Math.floor((w - 1) / 2), tok.q[1] + Math.floor((hh - 1) / 2)];
+      const origine = dalPerimetro ? origineConoCreatura(tok, verso) : centro;
+      // i quadretti della creatura restano fuori dal suo cono (A.126–A.138), e l'asse esce dall'ingombro
+      const escludi = dalPerimetro && CC?.esclude_ingombro ? celleTokenQ(tok) : null;
+      nuovo = { ...a, origine, direzione: st.tpl.direzioneFissa ? a.direzione : direzioneVerso(origine, verso), ...(escludi ? { escludi } : {}) };
     } else nuovo = { ...a, origine: qVicino(m) };
     st.tpl.ancorato = !!tok;
-    if (nuovo.origine[0] === a.origine[0] && nuovo.origine[1] === a.origine[1] && nuovo.direzione === a.direzione) return;
+    if (nuovo.origine[0] === a.origine[0] && nuovo.origine[1] === a.origine[1] && nuovo.direzione === a.direzione
+      && JSON.stringify(nuovo.escludi ?? null) === JSON.stringify(a.escludi ?? null)) return;
     st.tpl.anteprima = nuovo;
     ridisegna(['aree']);
   }
@@ -2423,7 +2432,8 @@ export function renderMappa(radice, ctx) {
     const scontro = st.fonti?.scontro ?? null;
     const prima = st.tpl.sposta ? st.scena.template.find((t) => t.id === st.tpl.sposta) ?? null : null;
     const t = prima ? { ...prima, origine: [...a.origine], misure: { ...a.misure }, ...(ORIENTABILI.includes(a.forma) ? { direzione: a.direzione } : {}) }
-      : nuovoTemplate({ id: a.id, forma: a.forma, misure: a.misure, origine: a.origine, direzione: a.direzione ?? 0, colore: a.colore, nome: a.nome, durata: a.durata, round: scontro?.round ?? null, nascosto: a.nascosto, scontro: scontro?.id ?? null });
+      // A.126–A.138: l'esclusione dei quadretti della creatura resta anche quando il template si fissa
+      : nuovoTemplate({ id: a.id, forma: a.forma, misure: a.misure, origine: a.origine, direzione: a.direzione ?? 0, colore: a.colore, nome: a.nome, durata: a.durata, round: scontro?.round ?? null, nascosto: a.nascosto, scontro: scontro?.id ?? null, escludi: a.escludi ?? null });
     st.scena = cambiaTemplateAnnullabile(st.scena, prima, t, ctx.dati);
     st.tpl.anteprima = null;
     st.tpl.sposta = null;

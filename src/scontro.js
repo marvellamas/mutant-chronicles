@@ -20,6 +20,7 @@
 // del tipo; se una manca, spareggio con 1d10: A.73, decisione 6).
 import { specTiro, motivoFuoriIntervallo } from './tiri.js';
 import { fineDurata } from './tecniche.js';
+import { segnaUso, azzeraPerRound, vistaCapacita } from './capacita-nemico.js';
 
 /** Ultimo Round di una durata registrata (`al`); i file di prima hanno solo i Round rimasti. */
 const fineDi = (d, round) => (Number.isInteger(d.al) ? d.al : round + (d.rimasti ?? 1) - 1);
@@ -183,6 +184,32 @@ export function registraLancioNemico(s, l, adesso, dati = null) {
  * Stato di un nemico acceso o spento (regole.json → stati.elenco). Le immunità del tipo lo impediscono;
  * spegnendolo si toglie anche la sua durata.
  */
+/**
+ * A.115: segna un uso di una capacità con limite d'uso dichiarato dal profilo (+1), oppure lo annulla (−1).
+ * Non blocca mai: oltre il limite il contatore continua e la carta avvisa, poi decide il master.
+ */
+export function usaCapacitaNemico(s, id, nome, delta = 1, adesso) {
+  const p = s.partecipanti.find((x) => x.id === id);
+  if (p?.tipo !== 'nemico') throw new Error('partecipante non trovato fra i nemici');
+  const usi = segnaUso(p.usiCapacita, nome, delta);
+  if (usi === (p.usiCapacita ?? {})) return s;
+  const c = (p.scheda?.capacita ?? []).find((x) => x.nome === nome);
+  const v = vistaCapacita(c, usi[nome] ?? 0);
+  const t = { ...s, partecipanti: s.partecipanti.map((x) => (x.id === id ? (Object.keys(usi).length ? { ...x, usiCapacita: usi } : (({ usiCapacita: _u, ...resto }) => resto)(x)) : x)) };
+  const quanti = v.usi ? `${v.rimasti} su ${v.usi.quanti} rimasti` : `${usi[nome] ?? 0} usi`;
+  return conRiga(t, delta > 0 ? `${p.nome}: usa ${nome} (${quanti}).` : `${p.nome}: annullato un uso di ${nome} (${quanti}).`, adesso);
+}
+
+/** A.115: i contatori «per Round» si azzerano quando passa il Round. */
+export function azzeraUsiPerRound(partecipanti) {
+  return partecipanti.map((p) => {
+    if (p.tipo !== 'nemico' || !p.usiCapacita) return p;
+    const usi = azzeraPerRound(p.scheda, p.usiCapacita);
+    if (usi === p.usiCapacita) return p;
+    return Object.keys(usi).length ? { ...p, usiCapacita: usi } : (({ usiCapacita: _u, ...resto }) => resto)(p);
+  });
+}
+
 export function cambiaStatoNemico(s, id, stato, attivo, adesso) {
   const p = s.partecipanti.find((x) => x.id === id);
   if (p?.tipo !== 'nemico') throw new Error('partecipante non trovato fra i nemici');
@@ -492,7 +519,8 @@ export function avanti(s, adesso, { indietroMax = 0 } = {}) {
     const t = { ...s, turno: s.turno + 1 };
     return conVoce(conRiga(t, `Tocca a ${ordinati[t.turno].nome}.`, adesso));
   }
-  let t = { ...s, round: s.round + 1, turno: 0 };
+  // A.115: i contatori delle capacità «per Round» ripartono con il Round nuovo
+  let t = { ...s, round: s.round + 1, turno: 0, partecipanti: azzeraUsiPerRound(s.partecipanti) };
   const conFine = s.durate.map((d) => { const al = fineDi(d, s.round); return { ...d, al, rimasti: al - t.round + 1 }; });
   const finite = conFine.filter((d) => d.al < t.round);
   t.durate = conFine.filter((d) => d.al >= t.round);

@@ -2777,3 +2777,9 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .scheda-veicolo.sola-lettura { opacity: 0.95; border-left: 4px solid var(--bordo); }
 .etichetta-sola-lettura { background: var(--bordo); color: var(--testo); }
 .btn-fine { opacity: 0.8; font-size: 0.78rem; }
+/* Capacità dei nemici con i parametri del profilo e il contatore degli usi (A.115, 16/10) */
+.parametri-capacita { display: inline-flex; flex-wrap: wrap; gap: 0.25rem; margin-left: 0.35rem; }
+.parametro-capacita { font-size: 0.72rem; }
+.usi-capacita { display: inline-flex; align-items: center; gap: 0.25rem; margin-left: 0.35rem; }
+.usi-capacita .usi-finiti { color: var(--pv); }
+.capacita-esaurita { opacity: 0.85; }

@@ -68,7 +68,8 @@ function pezzoNemico(p, dati) {
   const stato = nomeStato(dati);
   return {
     chiave: chiaveRif({ tipo: 'partecipante', id: p.id }), rif: { tipo: 'partecipante', id: p.id }, tipo: 'nemico', nemico: p.nemico ?? null,
-    nome: p.nome, lato: p.lato === 'alleato' ? 'alleato' : 'avversario', ingombro: ingombroDaTaglia(p.scheda?.taglia, dati),
+    // A.126: il lato del token viene dal campo «spazio» del profilo, altrimenti dalla Taglia (come prima)
+    nome: p.nome, lato: p.lato === 'alleato' ? 'alleato' : 'avversario', ingombro: ingombroDaTaglia(p.scheda ?? null, dati),
     iniziali: iniziali(p.scheda?.nome ?? p.nome, p.numero ?? null), ritratto: urlImmagineNemico(p.scheda?.immagine), pv: p.pv ?? null,
     aZero: (p.pv?.attuali ?? 1) <= 0, stati: (p.stati ?? []).map(stato), ferite: null,
     movimento: movimentoNemico(p.scheda, p.stati, dati),

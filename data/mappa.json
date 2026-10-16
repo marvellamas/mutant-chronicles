@@ -141,14 +141,19 @@
       3,
       2
     ],
-    "TODO(Davide)": "A.126: quando una creatura occupa 3 × 3 Q («se indicato», §7 della specifica)? Serve un campo «ingombro in Q» nel formato dei nemici, oltre a normale e grande?",
     "riferimenti": [
       "partecipante",
       "veicolo",
       "segnaposto"
     ],
     "ritratto_verticale": 0.2,
-    "_nota_ritratto": "07/10: il ritratto riempie il cerchio dentro il bordo; delle foto più alte che larghe si tiene il quadrato a questa altezza (0 = in cima, 0,5 = al centro), dove di solito sta il viso."
+    "_nota_ritratto": "07/10: il ritratto riempie il cerchio dentro il bordo; delle foto più alte che larghe si tiene il quadrato a questa altezza (0 = in cima, 0,5 = al centro), dove di solito sta il viso.",
+    "spazio_lato": {
+      "1 Q": 1,
+      "2 × 2 Q": 2,
+      "3 × 3 Q": 3
+    },
+    "_nota_spazio": "A.126 (risposta approvata il 15/10/2026): il lato del token viene dal campo «spazio» del profilo (data/formato_nemici.json → spazio, tabella spazio_lato qui sotto), non dedotto dalla Taglia. Un nemico senza il campo tiene il lato della Taglia (ingombro_per_taglia), come prima; il master può sempre cambiarlo sul token."
   },
   "movimento": {
     "_nota": "Parametri dell'area raggiungibile (§8 della specifica, lotto 5), confermati dalle risposte di Davide del 06/10/2026 (A.124, A.127, A.128, A.129; decisioni 129, 131–133 di docs/risposte-master.md). Costi in Q.",
@@ -358,7 +363,20 @@
     "opacita_riempimento": 0.28,
     "opacita_contorno": 0.95,
     "spessore_contorno_px": 2.5,
-    "tasto": "t"
+    "tasto": "t",
+    "cono_creature": {
+      "fonte": "A.126–A.138, risposta integrativa approvata il 15/10/2026",
+      "origine": "perimetro",
+      "_origine": "Il cono di una creatura che occupa più di un Q parte dal centro di un quadretto periferico, sul lato da cui è emesso l’effetto; per una creatura di 1 × 1 Q nulla cambia (parte dal centro del suo unico quadretto).",
+      "esclude_ingombro": true,
+      "_esclude_ingombro": "Tutti i quadretti occupati dalla creatura sono esclusi dal suo cono, salvo eccezione espressa, e l’asse esce dall’ingombro senza attraversare altri quadretti occupati.",
+      "frasi_risposta": [
+        "Origine coerente con l’attacco: un soffio parte dal lato della bocca, un’emissione da un’appendice ne rispetta la posizione. Se la scheda indica un punto specifico, prevale quello.",
+        "Dimensioni invariate: lunghezza e ampiezza sono quelle dell’effetto, misurate dal punto d’origine scelto. La Taglia non le aumenta.",
+        "Un quadretto è colpito quando almeno metà della sua superficie è coperta dal template; restano le normali regole di propagazione e ostacoli.",
+        "Origine e direzione si fissano prima dei tiri e restano ferme per quell’uso dell’effetto."
+      ]
+    }
   },
   "colori": {
     "_nota": "Colori dei bordi dei token (decisione di Marcello del 06/10/2026; src/mappa/colori.js). PG: bordo pieno, un colore per PG, assegnato al primo ingresso in mappa e salvato nella scena. Nemici: bordo tratteggiato che alterna nemici_alterno e il colore del tipo (tavolozza diversa da quella dei PG). Alleati non PG: bordo pieno doppio color alleati. Veicoli: il colore del PG proprietario, del gruppo veicolo_del_gruppo. Ogni bordo ha un contorno sottile scuro o chiaro (il più contrastato), per le mappe chiare e scure. alone_turno: l'alone del token di turno, bianco, che non si confonde col giallo dei PG.",
@@ -450,7 +468,6 @@
   "zoc": {
     "_nota": "Zone di controllo e Attacchi di Opportunità (richiesta di Marcello del 07/10/2026; src/mappa/zoc.js). Giocatore §5.3: provoca un Attacco di Opportunità chi, con un Movimento volontario, esce dalla portata ravvicinata di un avversario in grado di attaccarlo (non entrare, non muoversi dentro, non la Ritirata, non il movimento forzato); una volta per Round per avversario. Armamenti §7.1.2: la portata è quella dell'arma (1 Q di norma, 2–3 Q per armi lunghe), e Ingaggio e Attacchi di Opportunità la usano. La ZoC è quindi la fascia profonda quanto la portata attorno all'ingombro; per i nemici la portata viene dagli attacchi ravvicinati del profilo (portata_q), per PG e partecipanti a mano è portata_predefinita. La ZoC non blocca, segnala.",
     "portata_predefinita": 1,
-    "TODO(Davide) creature grandi": "A.133: una creatura Grande (2 × 2 Q) o Enorme (3 × 3 Q) ha la portata del suo profilo (1 Q, come nei profili del Manuale dei Mostri) attorno a tutto l'ingombro, o una portata maggiore per la Taglia? Provvisorio: quella del profilo.",
     "stati_che_impediscono": [
       "stordito",
       "svenuto"
@@ -466,7 +483,8 @@
     "opacita_riempimento": 0.16,
     "opacita_contorno": 0.7,
     "colore": "#e03131",
-    "frase_eccezione": "senza Attacchi di Opportunità"
+    "frase_eccezione": "senza Attacchi di Opportunità",
+    "_nota_portata_creature": "A.133 (risposta approvata il 15/10/2026): si usa la portata indicata nel profilo del singolo attacco, misurata attorno all’ingombro della creatura e non dal solo centro della pedina. Occupare 2 × 2 o 3 × 3 Q non porta la portata a 2 o 3 Q: se il profilo dice 1 Q, la portata resta 1 Q tutto attorno allo spazio occupato. Restano le normali condizioni per controllare una zona e per gli Attacchi di Opportunità (src/mappa/zoc.js); con «Mappa semplice» accesa non si calcola nulla, come per ogni automazione della mappa."
   },
   "iniziativa": {
     "_nota": "«Indietro» nella barra dell'Iniziativa e nella plancia (ritocchi del 07/10/2026; src/scontro.js → avanti, indietro): annulla l'ultimo «Avanti» e riporta turno, Round, durate degli Stati, effetti degli incantesimi, Stati tolti ai nemici e perdite periodiche applicate a quel turno; le modifiche fatte dopo (PV, «Colpito», movimenti) restano. Lo storico sta nello scontro (indietro) e tiene al massimo indietro_max «Avanti».",

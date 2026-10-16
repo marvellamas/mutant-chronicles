@@ -69,11 +69,53 @@ export function qCoperto(t, x, y, regole) {
   if (t.forma === 'rettangolo') return x >= t.origine[0] && x < t.origine[0] + m.larghezza && y >= t.origine[1] && y < t.origine[1] + m.altezza;
   if (t.forma === 'cerchio' && regole.metrica_raggio === 'quadretti') return Math.max(Math.abs(x - t.origine[0]), Math.abs(y - t.origine[1])) <= Math.floor(m.raggio + EPS);
   if (ORIENTABILI.includes(t.forma) && x === t.origine[0] && y === t.origine[1]) return false;
+  // A.126–A.138: i quadretti occupati dalla creatura sono esclusi dal suo cono, salvo eccezione espressa
+  if (Array.isArray(t.escludi) && t.escludi.some(([ex, ey]) => ex === x && ey === y)) return false;
   // «almeno metà» del Q: i punti di campione dentro l'area
   const n = regole.campioni_per_lato;
   let dentro = 0;
   for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) if (puntoDentro(t, x + (i + 0.5) / n, y + (j + 0.5) / n, regole)) dentro++;
   return dentro * 2 >= n * n;
+}
+
+/**
+ * A.126–A.138 (risposta integrativa approvata il 15/10/2026): i quadretti periferici dell'ingombro di una
+ * creatura, cioè quelli che hanno almeno un lato libero. Per una creatura di 1 × 1 Q è il suo unico quadretto.
+ */
+export function perimetroToken(token) {
+  const celle = celleToken(token);
+  const dentro = new Set(celle.map(([x, y]) => `${x},${y}`));
+  if (celle.length <= 1) return celle;
+  return celle.filter(([x, y]) => [[1, 0], [-1, 0], [0, 1], [0, -1]].some(([dx, dy]) => !dentro.has(`${x + dx},${y + dy}`)));
+}
+
+/**
+ * A.126–A.138: il quadretto d'origine del cono di una creatura. Parte dal centro di un quadretto periferico sul
+ * lato da cui esce l'effetto: fra quelli del perimetro si prende il più avanzato verso `verso` (il punto in Q
+ * guardato, di norma il mouse) e, a parità, quello meno scostato dall'asse. Così il master lo sposta con un
+ * tocco, muovendo il puntatore lungo il lato. Per una creatura di 1 × 1 Q torna il suo quadretto, come prima.
+ * @param token token della creatura
+ * @param verso [x, y] in Q (anche frazionario) verso cui punta il cono
+ * @returns [x, y] del Q d'origine
+ */
+export function origineConoCreatura(token, verso) {
+  const celle = perimetroToken(token);
+  if (celle.length <= 1) return celle[0] ?? [...(token?.q ?? [0, 0])];
+  const tutte = celleToken(token);
+  const cx = tutte.reduce((a, [x]) => a + x + 0.5, 0) / tutte.length;
+  const cy = tutte.reduce((a, [, y]) => a + y + 0.5, 0) / tutte.length;
+  const dx = (verso?.[0] ?? cx) - cx, dy = (verso?.[1] ?? cy) - cy;
+  const n = Math.hypot(dx, dy) || 1;
+  const ux = dx / n, uy = dy / n;
+  let scelta = celle[0];
+  let migliore = -Infinity;
+  for (const [x, y] of celle) {
+    const px = x + 0.5 - cx, py = y + 0.5 - cy;
+    // quanto il quadretto è avanzato verso la direzione, meno quanto se ne scosta di lato
+    const punteggio = px * ux + py * uy - 0.001 * Math.abs(-px * uy + py * ux);
+    if (punteggio > migliore) { migliore = punteggio; scelta = [x, y]; }
+  }
+  return [...scelta];
 }
 
 /** Estensione massima del template attorno all'origine, in Q (per limitare la ricerca). */
@@ -132,10 +174,12 @@ export function testoMisure(t, regole = {}) {
   return `${nome} ${qTesto(m.lunghezza)}`;
 }
 
-export function nuovoTemplate({ id, forma, misure, origine, direzione = 0, colore, nome = '', durata = null, round = null, nascosto = false, scontro = null }) {
+export function nuovoTemplate({ id, forma, misure, origine, direzione = 0, colore, nome = '', durata = null, round = null, nascosto = false, scontro = null, escludi = null }) {
   return {
     id, forma, origine: [...origine], misure: { ...misure }, ...(ORIENTABILI.includes(forma) ? { direzione } : {}),
     colore, ...(nome ? { nome } : {}), durata, fine_round: fineRound(durata, round), scontro, nascosto,
+    // A.126–A.138: i quadretti della creatura esclusi dal suo cono; la chiave c'è solo quando serve
+    ...(Array.isArray(escludi) && escludi.length ? { escludi: escludi.map(([x, y]) => [x, y]) } : {}),
   };
 }
 
@@ -198,6 +242,8 @@ export function erroreTemplate(t, regole) {
   if (t.colore !== undefined && !/^#[0-9a-fA-F]{6}$/.test(String(t.colore))) return 'colore: #rrggbb';
   if (t.nome !== undefined && !(typeof t.nome === 'string' && t.nome.length <= 40)) return 'nome: al più 40 caratteri';
   if (t.durata !== undefined && t.durata !== null && !(Number.isInteger(t.durata) && t.durata >= 0)) return 'durata: Round (intero) o null';
+  // A.126–A.138: i quadretti della creatura esclusi dal suo cono
+  if (t.escludi !== undefined && !(Array.isArray(t.escludi) && t.escludi.every((q) => Array.isArray(q) && q.length === 2 && q.every(Number.isInteger)))) return 'escludi: elenco di [x, y]';
   return null;
 }
 

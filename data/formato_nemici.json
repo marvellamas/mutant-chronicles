@@ -171,6 +171,16 @@
       "obbligatorio": false,
       "descrizione": "Normale se manca. Grande: occupa 2 × 2 Q o più, Sbalzante non lo sposta (Bestiario §3.1.1); nessun bonus generico per chi lo attacca (A.95, E&L del 05/10/2026)."
     },
+    "spazio": {
+      "tipo": "scelta",
+      "valori": [
+        "1 Q",
+        "2 × 2 Q",
+        "3 × 3 Q"
+      ],
+      "obbligatorio": false,
+      "descrizione": "Spazio occupato sulla mappa, in Q (A.126, risposta approvata il 15/10/2026): si usa l’ingombro indicato nel profilo e non si deduce dalla Taglia. Serve a rappresentare la pedina e a verificarne passaggio e posizionamento; resta distinto dalla portata degli attacchi (A.133). Se manca vale il lato dalla Taglia, come prima (1 Q di norma)."
+    },
     "salvezze": {
       "tipo": "mappa",
       "chiavi_da": "salvezze",
@@ -347,7 +357,7 @@
     "capacita": {
       "tipo": "lista",
       "obbligatorio": false,
-      "descrizione": "Talenti e capacità speciali (A.73) con effetto, costo e limiti d’uso: promemoria al tavolo.",
+      "descrizione": "Talenti e capacità speciali (A.73) con la descrizione completa e, quando il profilo li dà, i parametri della risoluzione: Prova, costo in Azioni, risorsa consumata e limiti d’uso (A.115, risposta approvata il 15/10/2026). Dove i dati mancano resta il solo testo: non si assegnano costi o effetti per analogia.",
       "voce": {
         "tipo": "oggetto",
         "campi": {
@@ -357,7 +367,8 @@
           },
           "effetto": {
             "tipo": "testo",
-            "obbligatorio": true
+            "obbligatorio": true,
+            "descrizione": "Descrizione completa della capacità, come la scrive il profilo (A.115): si mostra sempre per intero."
           },
           "costo": {
             "tipo": "testo",
@@ -366,6 +377,72 @@
           "limiti": {
             "tipo": "testo",
             "obbligatorio": false
+          },
+          "passiva": {
+            "tipo": "vero_falso",
+            "obbligatorio": false,
+            "descrizione": "Vero solo se il profilo dichiara la capacità passiva (A.115): allora non richiede Azioni. Senza il campo non si presume nulla."
+          },
+          "prova": {
+            "tipo": "testo",
+            "obbligatorio": false,
+            "descrizione": "Prova richiesta dal profilo, come la scrive («PS di Volontà», «Prova di Atletica −2»). A.115: non si aggiunge una Prova per analogia."
+          },
+          "azioni": {
+            "tipo": "oggetto",
+            "obbligatorio": false,
+            "descrizione": "Costo in Azioni dichiarato dal profilo (A.115).",
+            "campi": {
+              "principali": {
+                "tipo": "intero",
+                "min": 0,
+                "obbligatorio": false,
+                "descrizione": "AzP."
+              },
+              "movimento": {
+                "tipo": "intero",
+                "min": 0,
+                "obbligatorio": false,
+                "descrizione": "AzM."
+              },
+              "testo": {
+                "tipo": "testo",
+                "obbligatorio": false,
+                "descrizione": "Momento d’impiego o formula non riducibile a numeri («come reazione», «1 AzP del conducente»)."
+              }
+            }
+          },
+          "risorsa": {
+            "tipo": "testo",
+            "obbligatorio": false,
+            "descrizione": "Risorsa consumata dal profilo («2 PM», «una carica»): promemoria, l’app non la scala da sé."
+          },
+          "usi": {
+            "tipo": "oggetto",
+            "obbligatorio": false,
+            "descrizione": "Limite d’uso numerico dichiarato dal profilo (A.115): l’app tiene il contatore degli usi rimasti e avvisa a 0, senza bloccare.",
+            "campi": {
+              "quanti": {
+                "tipo": "intero",
+                "min": 1,
+                "obbligatorio": true
+              },
+              "per": {
+                "tipo": "scelta",
+                "valori": [
+                  "Round",
+                  "scontro",
+                  "Scena",
+                  "giorno"
+                ],
+                "obbligatorio": true
+              },
+              "nota": {
+                "tipo": "testo",
+                "obbligatorio": false,
+                "descrizione": "Per chi o per che cosa vale il limite («per personaggio», «per attaccante»)."
+              }
+            }
           }
         }
       }

@@ -19,6 +19,7 @@
 //                                       «Mostra / nascondi template»: template senza durata, muri, porte, terreno (07/10)
 //   azioni?: [{ id, token, tipo: 'porta', porta, azione, azp, scontro, round, turno?, quando }]  AzP dei token (A.125)
 //   template: [{ id, forma, origine: [x, y], misure: { … in Q }, direzione?, colore?, nome?, durata?, fine_round?,
+//                escludi?: [[x, y], …]                       i Q della creatura, esclusi dal suo cono (A.126–A.138)
 //                scontro?, nascosto }]                       template ad area (fase 2, lotto 1; src/mappa/template.js)
 //   collegamento: { scontro: id | null, bozza: id | null },
 //   movimenti: [ … ], annulla: [ … ],                          movimenti del Round e azioni del master (lotto 5)

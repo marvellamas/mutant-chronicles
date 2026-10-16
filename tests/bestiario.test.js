@@ -104,7 +104,9 @@ test('basi nuove (§3.6–3.9): profili validi nel formato A.73 a ogni grado, co
   assert.deepEqual([gigante.taglia, gigante.pv, gigante.attacchi[0].portata_q], ['grande', 198, 2]);
   assert.equal(alato.pv, B.gradi.find((g) => g.id === 'medio').pv);
   assert.deepEqual([B.basi.alato.va_contro, B.basi.gigante.va_contro], [undefined, undefined]);
-  assert.match(gigante.capacita.find((c) => c.nome === 'Spazio').effetto, /3 × 3 Q/);
+  // A.126 (15/10/2026): lo spazio occupato è un campo del profilo, non più una capacità da leggere
+  assert.equal(gigante.spazio, '3 × 3 Q');
+  assert.equal(gigante.capacita.some((c) => c.nome === 'Spazio'), false);
   // le Ali membranose danno il Passo in volo anche a un Quadrupede
   assert.equal(profiloNemico({ base: 'quadrupede', grado: 'medio', mutazioni: ['ali-membranose'] }, dati).nemico.movimento.volo, 6);
 });

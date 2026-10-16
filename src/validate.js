@@ -2361,7 +2361,7 @@ function validaMeccanicaIncantesimi(dati, err) {
 // i campi, validaNemico controlla un file nemico. Il Giocatore 0.45 non ha un capitolo dei nemici.
 
 // «immagine»: { file, ridotta? } in mappe/ (mappa di battaglia, A.131): non è una regola, solo l'aspetto del token
-const TIPI_CAMPO_NEMICO = ['costante', 'testo', 'intero', 'dadi', 'scelta', 'lista', 'oggetto', 'mappa', 'immagine'];
+const TIPI_CAMPO_NEMICO = ['costante', 'testo', 'intero', 'dadi', 'scelta', 'lista', 'oggetto', 'mappa', 'immagine', 'vero_falso'];
 
 /** Valori ammessi per «valori_da» e «chiavi_da» del formato, presi dagli altri dati. */
 export function sorgentiNemico(dati) {
@@ -2458,6 +2458,10 @@ export function validaNemico(nemico, dati, file = 'nemico') {
         return;
       case 'dadi':
         if (!(typeof v === 'string' && DADI.test(v.replace(/\s+/g, '')))) err(k, `dadi come «1d8+2», non ${JSON.stringify(v)}`);
+        return;
+      // A.115: capacità dichiarata passiva dal profilo
+      case 'vero_falso':
+        if (typeof v !== 'boolean') err(k, 'vero o falso');
         return;
       case 'immagine':
         // file caricati sul server in mappe/ (src/mappa/scena.js → FILE_MAPPA); la copia ridotta è facoltativa
@@ -3092,6 +3096,12 @@ function validaMappa(dati, err) {
     if (!ammessi.includes(T?.ingombro_per_taglia?.[t])) err(F, `token.ingombro_per_taglia.${t}`, `manca o non è fra gli ingombri ammessi (Taglia di formato_nemici.json)`);
   }
   for (const t of Object.keys(T?.ingombro_per_taglia ?? {})) if (!taglie.includes(t)) err(F, `token.ingombro_per_taglia.${t}`, 'Taglia che formato_nemici.json non conosce');
+  // A.126: ogni valore del campo «spazio» del formato dei nemici ha il suo lato in Q, fra gli ingombri ammessi
+  const spazi = dati.formato_nemici?.campi?.spazio?.valori ?? [];
+  for (const s of spazi) {
+    if (!ammessi.includes(T?.spazio_lato?.[s])) err(F, `token.spazio_lato["${s}"]`, 'manca o non è fra gli ingombri ammessi (campo «spazio» di formato_nemici.json, A.126)');
+  }
+  for (const s of Object.keys(T?.spazio_lato ?? {})) if (!spazi.includes(s)) err(F, `token.spazio_lato["${s}"]`, 'spazio che formato_nemici.json non conosce');
   if (!['partecipante', 'veicolo', 'segnaposto'].every((r) => T?.riferimenti?.includes(r))) err(F, 'token.riferimenti', 'partecipante, veicolo e segnaposto attesi');
   if (!isIntero(T?.veicolo_ingombro_max) || T.veicolo_ingombro_max < 1) err(F, 'token.veicolo_ingombro_max', 'intero da 1 in su');
   const vp = T?.veicolo_predefinito;
