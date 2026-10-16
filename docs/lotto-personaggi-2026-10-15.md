@@ -99,7 +99,7 @@ del Silenzio (Zaino, Cofanetto) restano fuori: **A.163**.
 
 ## Domanda nuova
 
-**A.165 — Famiglia, Specializzazione e Manovre della CyberArma.** Né il §7.25 né la A.158 dicono a quale
+**A.166 — Famiglia, Specializzazione e Manovre della CyberArma.** Né il §7.25 né la A.158 dicono a quale
 famiglia d'arma appartiene. L'invariante dell'app (A.13: ogni arma del catalogo ha una Specializzazione) ne
 vuole una. *Nel frattempo:* registrata fra le **Spade**, con le sole Manovre generali e un `TODO(Davide)`
 nel lotto. Se la famiglia è un'altra cambiano il +1 VA e il +1 al danno della Specializzazione (§8.8.1).

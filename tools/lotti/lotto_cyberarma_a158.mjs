@@ -36,7 +36,7 @@ const comune = {
   paragrafo: '§7.25',
   versione_manuale: VERSIONE,
   abilita: 'Armi da mischia',
-  // TODO(Davide) A.165: né il §7.25 né la A.158 dicono la famiglia della CyberArma. L'invariante della
+  // TODO(Davide) A.166: né il §7.25 né la A.158 dicono la famiglia della CyberArma. L'invariante della
   // A.13 vuole una Specializzazione per ogni arma del catalogo: la lama a una mano con Armi da mischia è
   // registrata fra le Spade, da confermare (cambia il +1 VA e +1 al danno della Specializzazione, §8.8.1).
   specializzazione: 'specializzazione-spade',
@@ -54,7 +54,7 @@ const comune = {
   costo: null,
   _nota_costo: 'A.158, punto 5: la CyberArma non è normalmente commercializzata e non ha un prezzo standard di catalogo (la proposta di 3.000 crediti è ritirata). Nell’app il prezzo risulta non disponibile, non zero. L’eventuale cessione la stabilisce il Direttore.',
   manovre: ['generali'],
-  _nota_manovre: 'TODO(Davide) A.165: il §7.25 non elenca Manovre per la CyberArma; restano quelle generali, come per le armi con «—» (§7.1.7).',
+  _nota_manovre: 'TODO(Davide) A.166: il §7.25 non elenca Manovre per la CyberArma; restano quelle generali, come per le armi con «—» (§7.1.7).',
   proprieta: [],
 };
 

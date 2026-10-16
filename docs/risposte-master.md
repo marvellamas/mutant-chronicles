@@ -1463,7 +1463,7 @@ Il controllo dei manuali del 12 ottobre (`docs/diff-manuali-2026-10-12.md`) ha t
 Armamenti 0.61, con la CyberArma descritta nei due impieghi (Custode e Tecnomante) ma con i parametri di
 catalogo dichiarati da completare. Nessun dato applicato: la CyberArma non è ancora nel catalogo dell'app.
 
-- **A.158 — CyberArma: parametri mancanti (Armamenti §7.25).** **RISOLTA: risposta del 13/10/2026 applicata il 15/10 sera (blocco «lotto personaggi»): due configurazioni nel catalogo, uso per Classe, saldo in cariche, costruzione e modifica. Resta aperta la sola A.165 sulla famiglia dell'arma.** Il paragrafo dice espressamente che «SnT del
+- **A.158 — CyberArma: parametri mancanti (Armamenti §7.25).** **RISOLTA: risposta del 13/10/2026 applicata il 15/10 sera (blocco «lotto personaggi»): due configurazioni nel catalogo, uso per Classe, saldo in cariche, costruzione e modifica. Resta aperta la sola A.166 sulla famiglia dell'arma.** Il paragrafo dice espressamente che «SnT del
   progetto originale, parametri commerciali e costi e procedura specifici di costruzione e modifica restano
   da completare nel catalogo» e che «colore energetico, capacità, SnT e costo della batteria e della modifica
   devono essere definiti nella relativa configurazione; non è assegnata automaticamente una batteria Verde da
@@ -1520,7 +1520,9 @@ Nei dati, `regole.json` → `ferite.morente`; motore puro in `src/morente.js`; t
 
 ### Domanda nuova
 
-- **A.165 — Famiglia, Specializzazione e Manovre della CyberArma** (Armamenti §7.25; A.158). Né il paragrafo
+- **A.166 — Famiglia, Specializzazione e Manovre della CyberArma** (Armamenti §7.25; A.158). *Numerata A.165
+  il 15/10 sera e rinumerata il 16/10: nel Doc di Davide la A.165 era già usata (A.109 sospesa). Le prossime
+  domande partono da A.167.* Né il paragrafo
   né la risposta dicono a quale famiglia d'arma appartiene la CyberArma, quindi quale Specializzazione le si
   applica e quali Manovre consente. L'invariante dell'app (A.13: ogni arma del catalogo ha una
   Specializzazione) ne richiede una. *Nel frattempo:* registrata fra le **Spade** (lama a una mano, Armi da
