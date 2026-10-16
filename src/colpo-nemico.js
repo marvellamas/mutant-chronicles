@@ -2,7 +2,8 @@
 // del nemico nella plancia e, dai ritocchi del 07/10/2026, dal pannello «Attacca!» della scheda di un PG. Funzione pura
 // sullo scontro: PV, Ferite, Menomazioni e Stati del nemico nello scontro, riga nel registro, pila dei colpi per
 // «Annulla ultimo colpo», perdite periodiche dei soli Stati applicati davvero (§5.15).
-import { registraColpo } from './scontro.js';
+import { registraColpo, morenteDopoColpo } from './scontro.js';
+import { gradoMorente } from './morente.js';
 import { registraPeriodico } from './periodici.js';
 import { testoColpo } from './danno.js';
 
@@ -18,8 +19,18 @@ export function colpoSuNemico(s, visto, ris, colpo, stati, periodici, dati, { pr
   const q = s.partecipanti.find((y) => y.id === visto.id);
   if (!q || q.pv.attuali !== visto.pv.attuali || (q.ferite ?? 0) !== (visto.ferite ?? 0)) throw new Error(`${visto.nome} è cambiato nel frattempo: chiudi e riapri «Colpito».`);
   const ammessi = stati.filter((id) => !(q.scheda?.immunita ?? []).includes(id));
-  const prima = { pv: q.pv.attuali, ferite: q.ferite ?? 0, menomazioni: q.menomazioni ?? [], stati: q.stati };
-  const dopo = { pv: ris.pv.dopo, ferite: ris.ferite?.dopo ?? prima.ferite, menomazioni: [...prima.menomazioni, ...(ris.menomazioni ?? [])], stati: [...new Set([...q.stati, ...ammessi])] };
+  const prima = { pv: q.pv.attuali, ferite: q.ferite ?? 0, menomazioni: q.menomazioni ?? [], stati: q.stati, morente: q.morente ?? null };
+  // A.164 (16/10/2026): oltre Grave il nemico entra in Morente, con lo Stato previsto e il contatore
+  const grezze = ris.ferite?.dopo ?? prima.ferite;
+  const morente = morenteDopoColpo(s, q, prima.ferite, grezze, dati);
+  const statoMorente = morente && !prima.morente ? dati.regole.ferite.morente?.stato ?? null : null;
+  const dopo = {
+    pv: ris.pv.dopo,
+    ferite: Math.min(grezze, gradoMorente(dati)),
+    menomazioni: [...prima.menomazioni, ...(ris.menomazioni ?? [])],
+    stati: [...new Set([...q.stati, ...ammessi, ...(statoMorente ? [statoMorente] : [])])],
+    morente: morente ?? null,
+  };
   const testo = `${prefisso ? `${prefisso} ` : ''}${testoColpo(q.nome, colpo, ris)}`;
   let t = registraColpo(s, { bersaglio: q.id, nome: q.nome, tipo: 'nemico', testo, prima, dopo }, adesso);
   // §5.15: perdita periodica dei soli Stati applicati davvero (un nemico immune non la prende)

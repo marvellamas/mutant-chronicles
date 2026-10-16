@@ -139,15 +139,19 @@ test('la penalità mantenuta sta nei dati', () => {
   assert.ok(!readFileSync(new URL('../src/sessione.js', import.meta.url), 'utf8').includes('penalita: -8'));
 });
 
-test('«Colpito»: un PG entra in Morente, un nemico resta come oggi (A.164 aperta)', () => {
+test('«Colpito»: PG e nemici entrano in Morente (A.164 del 16/10); l’eccezione è esplicita', () => {
   const colpo = { danni: [30], natura: 'Naturale', difesa: 'nessuna', proprieta: [], tempra: ['fallimento'] };
-  const pg = applicaColpo({ nome: 'Lucas', pv: { attuali: 0, massimo: 20 }, ferite: 5, ar: { totale: 0, magica: 0 }, morente: true }, colpo, dati);
+  const pg = applicaColpo({ nome: 'Lucas', pv: { attuali: 0, massimo: 20 }, ferite: 5, ar: { totale: 0, magica: 0 } }, colpo, dati);
   assert.equal(pg.morente, true);
   assert.equal(pg.morte, false, 'oltre Grave non è più la morte immediata');
   assert.ok(pg.promemoria.some((p) => /Morente/.test(p) && /contatore/.test(p)));
   const nemico = applicaColpo({ nome: 'Rasente', pv: { attuali: 0, massimo: 20 }, ferite: 5, ar: { totale: 0, magica: 0 } }, colpo, dati);
-  assert.equal(nemico.morte, true, 'i nemici restano come oggi');
-  assert.equal(nemico.morente, false);
+  assert.equal(nemico.morente, true, 'A.164: anche i nemici');
+  assert.equal(nemico.morte, false);
+  // solo la scheda che lo prevede (o una causa di morte diretta) salta Morente
+  const eccezione = applicaColpo({ nome: 'Costrutto', pv: { attuali: 0, massimo: 20 }, ferite: 5, ar: { totale: 0, magica: 0 }, morente: false }, colpo, dati);
+  assert.equal(eccezione.morte, true);
+  assert.equal(eccezione.morente, false);
 });
 
 test('il colpo che fa entrare in Morente lascia il contatore pieno (punto 3)', () => {

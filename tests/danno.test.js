@@ -67,12 +67,12 @@ test('§5.14: soglie delle nuove Ferite per fascia ed esito; oltre Grave Morente
   assert.ok(r.promemoria.some((p) => /Profonda: PS di Tempra per la Menomazione/.test(p)));
   // le Menomazioni raggiunte per la prima volta, anche come dato (i nemici le registrano: A.73, decisione 7)
   assert.deepEqual(r.menomazioni.map((x) => x.stato), ['Profonda', 'Seria', 'Grave']);
-  // 26+ con fallimento: 6 Ferite, oltre Grave. Senza il segno `morente` (i nemici, A.164 aperta) è la morte
+  // 26+ con fallimento: 6 Ferite, oltre Grave → Morente, per i PG e (A.164 del 16/10) per i nemici
   const m = applicaColpo(bersaglio({ pv: 0, ferite: 0, totale: 0 }), colpo([30], { tempra: ['fallimento'] }), dati);
-  assert.deepEqual([m.ferite.dopo, m.ferite.nome, m.morte, m.morente], [6, 'Morente', true, false]);
-  // A.159: con il segno (i PG) si entra in Morente, non si muore (tests/morente.test.js)
-  const pg = applicaColpo({ ...bersaglio({ pv: 0, ferite: 0, totale: 0 }), morente: true }, colpo([30], { tempra: ['fallimento'] }), dati);
-  assert.deepEqual([pg.morte, pg.morente], [false, true]);
+  assert.deepEqual([m.ferite.dopo, m.ferite.nome, m.morte, m.morente], [6, 'Morente', false, true]);
+  // «morente: false» è l'eccezione esplicita (scheda che prevede la distruzione, morte diretta)
+  const senza = applicaColpo({ ...bersaglio({ pv: 0, ferite: 0, totale: 0 }), morente: false }, colpo([30], { tempra: ['fallimento'] }), dati);
+  assert.deepEqual([senza.morte, senza.morente], [true, false]);
   // senza grado di Ferite (null): a 0 PV solo il promemoria, nessuna PS di Tempra
   const n = applicaColpo({ ...bersaglio({ pv: 0 }), ferite: null }, colpo([10]), dati);
   assert.deepEqual([n.ferite, n.tempraMancanti, n.menomazioni], [null, [], []]);

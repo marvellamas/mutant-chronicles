@@ -81,8 +81,8 @@ export function arApplicabile(ar, colpo, dati) {
  * Applica un colpo a un bersaglio.
  * @param bersaglio { nome, pv: { attuali, massimo }, ferite: grado attuale (anche i nemici, che seguono la
  *   procedura dei PG: per-davide A.73, decisione 7; null per chi non le registra), ar: { totale, magica, valori? },
- *   morente: true per chi entra in Morente oltre Grave invece di morire (i PG, A.159; i nemici restano come
- *   oggi finché non risponde la A.164) }
+ *   morente: false solo per chi NON entra in Morente oltre Grave (eccezione esplicita della scheda, o causa
+ *   di morte diretta); di norma vale per tutti, PG e nemici (A.159 e A.164 del 16/10/2026) }
  * @param colpo { danni: [dadi con i bonus ordinari, per applicazione: §5.13 passi 1–2],
  *   moltiplicatore: moltiplicatore di ogni applicazione (Carica, Bruciapelo…; 1 se non c'è),
  *   magistrale: true se l'attacco è un Successo Magistrale (§1.6: la sola prima applicazione),
@@ -144,10 +144,11 @@ export function applicaColpo(bersaglio, colpo, dati) {
     }
     applicazioni.push(a);
   });
-  // A.159: oltre Grave un PG non muore, entra in Morente con il contatore pieno (il colpo che lo fa entrare
-  // non lo riduce: punto 3 della risposta). I nemici restano come oggi: morte (A.164 aperta).
+  // A.159 e A.164 (16/10/2026): oltre Grave non si muore subito, si entra in Morente con il contatore pieno
+  // (il colpo d'ingresso non lo riduce). Vale per i PG e per i nemici; «morente: false» è l'eccezione
+  // esplicita della scheda o la causa di morte diretta.
   const oltre = conFerite && ferite > dati.regole.ferite.stati.length;
-  const morente = oltre && bersaglio.morente === true;
+  const morente = oltre && bersaglio.morente !== false;
   const morte = oltre && !morente;
   if (morte) promemoria.push(`${bersaglio.nome}: oltre Grave, morte (§5.14).`);
   if (morente) {

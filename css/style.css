@@ -2792,3 +2792,8 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .etichetta-schermatura { background: var(--pv-tenue); color: var(--pv); border: 1px solid var(--pv); }
 .etichetta-schermatura.attiva { background: var(--pe-tenue); color: var(--pe); border-color: var(--pe); }
 .casella-contenitore { font-size: 0.85rem; }
+/* A.164 (16/10): il riquadro di Morente nella mini-scheda del nemico, come quello dei PG */
+.riquadro-morente-nemico { border-left: 4px solid var(--pv); background: var(--pv-tenue); border-radius: var(--raggio); padding: 0.3rem 0.5rem; margin: 0.3rem 0; display: grid; gap: 0.25rem; }
+.riquadro-morente-nemico .riga-morente { margin: 0; display: flex; align-items: baseline; gap: 0.35rem; }
+.riquadro-morente-nemico strong { color: var(--pv); }
+.campo-cos { width: 4.5rem; }

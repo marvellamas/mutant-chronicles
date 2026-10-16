@@ -7,7 +7,8 @@ import { h } from './dom.js';
 import { riempimento } from '../interfaccia.js';
 import { validaNemico, formattaErrore, sorgentiNemico } from '../validate.js';
 import { nemicoVuoto, voceVuota, pulisciNemico, idDaNome, testoMovimento } from '../nemici.js';
-import { variaPvNemico, variaPmNemico, cambiaStatoNemico, cambiaIntensitaNemico, usaCapacitaNemico } from '../scontro.js';
+import { variaPvNemico, variaPmNemico, cambiaStatoNemico, cambiaIntensitaNemico, usaCapacitaNemico, stabilizzaNemico, scalaMorenteNemico, cosNemico } from '../scontro.js';
+import { statoMorenteNemico } from '../morente.js';
 import { difeseNemico } from '../nemico-attacco.js';
 import { intensitaStato } from '../condizioni.js';
 import { statoIncantesimoNemico, regimeProposto, NOMI_REGIMI } from '../nemico-lancio.js';
@@ -263,7 +264,7 @@ function testoAzioni(a) {
  * Difese, Azioni, Movimento, Resistenze (Immunità e Contromisure), Abilità, attacchi, incantesimi con «Lancia!»
  * (decisione 8) e capacità come promemoria.
  */
-export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false, onColpito = null, onAttacca = null, onLancia = null, onRiduci = null, onRegime = null, onImmagine = null }) {
+export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false, scontro = null, onColpito = null, onAttacca = null, onLancia = null, onRiduci = null, onRegime = null, onImmagine = null }) {
   const n = p.scheda;
   const dati = ctx.dati;
   // a 0 PV la carta si riduce a una riga (nome, PV, Ferita) e va in fondo; un clic la riapre (src/scontro.js → conPv)
@@ -342,6 +343,28 @@ export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false,
       // A.126 (16/10): lo Spazio che la pedina occupa davvero, sempre, con la provenienza (profilo o Taglia)
       (() => { const sp = spazioEffettivo(n, dati); return [' ', h('span', { class: 'etichetta tratto-nemico', title: dati.formato_nemici.campi.spazio?.descrizione ?? null },
         `Spazio ${sp.testo}${sp.dalProfilo ? '' : ' (dalla Taglia)'}`)]; })()),
+    // A.164 (16/10/2026): Morente del nemico, con lo stesso riquadro dei PG (src/morente.js)
+    (() => {
+      const mo = statoMorenteNemico(p, scontro, dati);
+      if (!mo) return null;
+      const R = dati.regole.ferite.morente ?? {};
+      return h('div', { class: `riquadro-morente riquadro-morente-nemico${mo.morto || mo.cosMancante ? ' morente-zero' : ''}` },
+        h('p', { class: 'riga-morente' },
+          h('strong', {}, mo.etichetta),
+          mo.cosMancante ? null : h('small', { class: 'nota' }, ` su ${mo.iniziale} (COS)`),
+          infoValore('?', { titolo: `${mo.nome} (${mo.paragrafo ?? '§5.14'})`,
+            sezioni: [{ testo: mo.promemoria ?? '' }, { etichetta: 'Primo decremento', testo: R.contatore?.primo_decremento ?? '' },
+              ...mo.vie.map((v) => ({ testo: v }))].filter((x) => x.testo) }, { classe: 'info-gradi' })),
+        mo.avviso ? h('p', { class: 'nota avviso-gradi', role: 'status' }, mo.avviso) : null,
+        mo.cosMancante
+          ? h('p', { class: 'azioni-morente' },
+            h('label', { class: 'campo-inline' }, `${R.cos_mancante?.campo ?? 'COS'} `,
+              h('input', { type: 'number', min: 1, step: 1, class: 'campo-cos', 'aria-label': `COS di ${p.nome}`,
+                onchange: (e) => { const v = Math.round(Number(e.target.value)); if (v > 0) modifica((x) => cosNemico(x, p.id, v, dati)); } })))
+          : h('p', { class: 'azioni-morente' },
+            h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Toglie 1 Round al contatore (una nuova Ferita fuori dal colpo, o la correzione del master)', onclick: () => modifica((x) => scalaMorenteNemico(x, p.id, 1, dati)) }, '−1 Round'),
+            h('button', { type: 'button', class: 'btn primario btn-piccolo', title: R.stabilizza?.nota ?? 'Riporta a Grave e spegne il contatore', onclick: () => modifica((x) => stabilizzaNemico(x, p.id, dati)) }, R.stabilizza?.etichetta ?? 'Stabilizza')));
+    })(),
     // incantesimi in corso del nemico e quelli che ha addosso (src/durate-incantesimi.js, src/ui/tavolo.js → rigaDurate)
     rigaDurate(durate, 'incantesimo', 'Incantesimi in corso'),
     rigaDurate(durate, 'subito', 'Su di lui'),

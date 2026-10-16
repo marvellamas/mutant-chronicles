@@ -21,6 +21,7 @@
 import { specTiro, motivoFuoriIntervallo } from './tiri.js';
 import { fineDurata } from './tecniche.js';
 import { segnaUso, azzeraPerRound, vistaCapacita } from './capacita-nemico.js';
+import { apriMorente, conCos, togliRound, statoMorente, gradoMorente } from './morente.js';
 
 /** Ultimo Round di una durata registrata (`al`); i file di prima hanno solo i Round rimasti. */
 const fineDi = (d, round) => (Number.isInteger(d.al) ? d.al : round + (d.rimasti ?? 1) - 1);
@@ -740,7 +741,63 @@ function statoNemico(p, v) {
     ...conPv(p, v.pv), stati: v.stati ?? p.stati,
     ...(Number.isInteger(v.ferite) ? { ferite: v.ferite } : {}),
     ...(Array.isArray(v.menomazioni) ? { menomazioni: v.menomazioni } : {}),
+    // A.164: il contatore di Morente del nemico segue il colpo (annullando, torna com'era)
+    ...('morente' in v ? { morente: v.morente ?? undefined } : {}),
   };
+}
+
+/**
+ * A.164 (16/10/2026): il nemico oltre Grave entra in Morente, come un PG. Il contatore parte dalla COS
+ * intera del profilo, fissata all'ingresso, con il Round e la posizione d'Iniziativa di allora; senza COS
+ * si apre lo stesso e l'app chiede il dato. Le Ferite eccedenti del colpo d'ingresso non lo abbreviano;
+ * ogni nuova Ferita successiva toglie un Round.
+ * @returns il blocco morente del partecipante dopo il colpo, o undefined se non è Morente
+ */
+export function morenteDopoColpo(s, p, feritePrima, feriteDopo, dati) {
+  const grado = gradoMorente(dati);
+  if (feriteDopo < grado) return undefined;
+  const cos = p.scheda?.caratteristiche?.COS;
+  const nuovo = () => apriMorente({ round: s.round, turno: s.turno, cos: Number.isInteger(cos) ? cos : null });
+  // ingresso: contatore pieno, Ferite in eccesso ignorate (A.159 punto 3, confermato dalla A.164)
+  if (feritePrima < grado) return nuovo();
+  const nuove = Math.max(0, feriteDopo - Math.max(feritePrima, grado));
+  const base = p.morente ?? nuovo();
+  return nuove ? togliRound(base, nuove, dati) : base;
+}
+
+/** A.164: «Stabilizza» un nemico — torna a Grave e il contatore si spegne. */
+export function stabilizzaNemico(s, id, dati, adesso) {
+  const p = s.partecipanti.find((x) => x.id === id);
+  if (p?.tipo !== 'nemico') throw new Error('partecipante non trovato fra i nemici');
+  if (!p.morente) return s;
+  const grave = Math.max(0, gradoMorente(dati) - 1);
+  const nome = dati.regole.ferite.stati[grave - 1]?.nome ?? 'Grave';
+  const t = { ...s, partecipanti: s.partecipanti.map((x) => (x.id === id ? { ...x, ferite: grave, morente: undefined } : x)) };
+  return conRiga(t, `${p.nome}: stabilizzato, torna a ${nome} e il contatore si spegne (A.164).`, adesso);
+}
+
+/** A.164: toglie (o rimette) Round al contatore di un nemico Morente: nuove Ferite fuori turno, correzioni. */
+export function scalaMorenteNemico(s, id, n, dati, adesso) {
+  const p = s.partecipanti.find((x) => x.id === id);
+  if (p?.tipo !== 'nemico' || !p.morente) throw new Error('questo nemico non è Morente');
+  const morente = togliRound(p.morente, n, dati);
+  const t = { ...s, partecipanti: s.partecipanti.map((x) => (x.id === id ? { ...x, morente } : x)) };
+  const v = statoMorente({ morente, round: s.round }, dati, { turno: s.turno });
+  const quanti = v?.cosMancante ? 'COS da inserire' : `${v?.round} Round rimasti`;
+  return conRiga(t, `${p.nome}: ${n > 0 ? `−${n}` : `+${-n}`} al contatore di Morente (${quanti}).`, adesso);
+}
+
+/** A.164: la COS inserita dal Direttore a scontro in corso; i Round già trascorsi restano contati. */
+export function cosNemico(s, id, cos, dati, adesso) {
+  const p = s.partecipanti.find((x) => x.id === id);
+  if (p?.tipo !== 'nemico') throw new Error('partecipante non trovato fra i nemici');
+  if (!Number.isInteger(cos) || cos <= 0) throw new Error('COS: un numero intero maggiore di zero');
+  const scheda = { ...(p.scheda ?? {}), caratteristiche: { ...(p.scheda?.caratteristiche ?? {}), COS: cos } };
+  const morente = p.morente ? conCos(p.morente, cos) : null;
+  const t = { ...s, partecipanti: s.partecipanti.map((x) => (x.id === id ? { ...x, scheda, ...(morente ? { morente } : {}) } : x)) };
+  const v = morente ? statoMorente({ morente, round: s.round }, dati, { turno: s.turno }) : null;
+  const coda = v ? ` Morente: ${v.round} Round, ${v.trascorsi} già trascorsi dall’ingresso.` : '';
+  return conRiga(t, `${p.nome}: COS ${cos} inserita dal Direttore.${coda}`, adesso);
 }
 
 /** Toglie l'ultimo colpo: per un nemico rimette PV, Ferite, Menomazioni e Stati di prima; restituisce anche il colpo, per il file del PG. */

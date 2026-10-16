@@ -2065,7 +2065,20 @@
         "per_round": 1,
         "per_ferita": 1,
         "etichetta": "Morente",
-        "unita": "Round"
+        "unita": "Round",
+        "primo_decremento": "dopo un Round completo, alla stessa posizione d'Iniziativa dell'ingresso",
+        "_primo_decremento": "A.164 (16/10/2026): il primo Round si compie alla stessa posizione d'Iniziativa in cui si è entrati in Morente, non al semplice cambio di Round; poi si perde un Round per ogni altro Round intero. Per questo il contatore salva anche il turno d'ingresso (src/morente.js → roundTrascorsi)."
+      },
+      "cos_mancante": {
+        "etichetta": "COS da inserire",
+        "avviso": "Manca la COS: inseriscila per far partire il contatore (A.164). Non si ricava da Tempra o PV, non vale 0 e non dichiara morto nessuno.",
+        "campo": "Costituzione (COS)",
+        "_nota": "A.164: se la COS arriva a scontro già in corso, contano i Round già trascorsi dall'ingresso in Morente: il contatore non riparte da capo."
+      },
+      "nemici": {
+        "vale": true,
+        "_vale": "A.164 (16/10/2026): anche i nemici del Tavolo del Direttore seguono Morente, con la procedura della A.159. Restano le eccezioni esplicite della scheda e le cause che stabiliscono espressamente morte diretta o distruzione (campo «morente: false» del profilo).",
+        "campo_profilo": "morente"
       },
       "morto": {
         "nome": "Morto",
