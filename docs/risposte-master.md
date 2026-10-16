@@ -1515,7 +1515,11 @@ della CyberArma non è cambiato: vale la risposta), E&L del 15/10 sera (solo la 
 - **A.165 — Anticipazione: rettifica dello stato della A.109** (16/10). Solo editoriale: la A.109 è risolta
   e le 32 risposte dell'8/10 restano quelle. Niente da applicare nell'app.
 - **A.161 — PX della partita** (approvata il 16/10): assegnazione manuale dei PX e calcolatore nel Tavolo del
-  Direttore. **Non applicata in questo lotto:** è il prossimo (decisione di Marcello).
+  Direttore. **RISOLTA: calcolatore applicato il 16/10** (`docs/lotto-px-partita-2026-10-16.md`). Tab «PX della
+  partita» del Tavolo (solo master): componenti e totale suggerito, totale finale modificabile, «Assegna PX
+  della partita» che aggiorna i PG presenti con una Modifica master; archivio, riepilogo/CSV, impostazioni di
+  campagna. L'app non assegna mai da sola. I fattori (Titoli, soglie dei livelli, Atti, incontro 100%/50%,
+  correttivo dei PG) vengono dal gestore di Davide (`docs/riferimenti/`), da confermare sui manuali: **A.168**.
 
 ## 16 ottobre 2026 — lotto «mappa e plancia»: A.113, A.115, A.126, A.133, A.145, A.146, A.147 e A.126–A.138
 
@@ -1707,6 +1711,18 @@ diverso dalle regole già approvate **non si è cambiato**: vedi A.167 qui sotto
   gestire sulla mappa? *Nel frattempo:* il campo `spazio` resta ai soli valori quadrati della A.126; gli
   ingombri non ammessi sono scritti nelle **note** della creatura con il rimando ad A.167 e la taglia è
   **Grande**. Nessun valore inventato.
+
+## Domanda aperta dal lotto «PX della partita» del 16 ottobre 2026
+
+- **A.168 — Fattori del calcolatore «PX della partita» da confermare sui manuali** (A.161; Manuale del
+  Direttore §9.3). Il Manuale del Direttore **non è fra i Doc che controlliamo**: i fattori del calcolatore
+  vengono dal gestore di Davide (`EROI_LEGGENDE_Gestore_PX v1.2`, in `docs/riferimenti/`), scritti in
+  `data/px_partita.json`. Da confermare o correggere sul §9.3: (a) le soglie cumulative di PX dei livelli
+  1–20 `[0, 50, 110, 180, 340, 520, 720, 1050, 1410, 1800, 2220, 2820, 3460, 4140, 4860, 5810, 6810, 7860,
+  8960, 10340]`; (b) i limiti di livello e i premi degli Atti (I → liv 8 / 150, II → 12 / 200, III → 15 / 250,
+  IV → 17 / 250, V → 19 / 300, VI → 20 / 300); (c) il correttivo per il numero di PG `max(0,5; 1 + 0,1 × (4 −
+  n))`; (d) il raddoppio della sola componente voti nelle partite lunghe e il bonus eccezionale × Titolo. *Nel
+  frattempo:* valgono i valori del gestore, tutti in `data/px_partita.json` e modificabili dal Direttore.
 
 ## Decisione di Marcello del 13 ottobre 2026 (da rivedere con Davide)
 
