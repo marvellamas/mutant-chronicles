@@ -1,52 +1,40 @@
-# Pacchetto per il Doc «per-davide.md» — 16 ottobre 2026 (lotto «mappa e plancia»)
+# Pacchetto per il Doc «per-davide.md» — 16 ottobre 2026
 
-Segue i due pacchetti del 15/10 (`docs/pacchetto-per-davide-2026-10-15.md` e `…-15-sera.md`). Questo sposta
-**sette voci dalla sezione 3 alle «Risolte»** e corregge una numerazione.
+Cinque voci passano dalla sezione 3 («Risposte ricevute, in implementazione») alle **Risolte**: sono state
+applicate nell'app il 16/10. La **A.161** resta in implementazione (è il prossimo lotto) e la **A.165** è una
+rettifica editoriale già registrata da Davide.
 
 Lo applica Cowork o Marcello, seguendo `docs/protocollo-davide.md` §5. Claude Code non scrive nei Google Doc.
 
-- **Correzione di numerazione:** la domanda aperta il 15/10 sera sulla CyberArma era numerata **A.165**, che
-  nel Doc è già usata (A.109 «sospesa»). Va rinumerata **A.166**. Le prossime domande partono da **A.167**.
-- **Sette voci da spostare dalla sezione 3 («Risposte ricevute, in implementazione») alle «Risolte»:**
-  A.113, A.115, A.126 (con l'integrativa A.126–A.138), A.133, A.145, A.146, A.147.
-- **Nessuna domanda nuova.** Restano aperte A.160–A.164 e A.166.
+- **Cinque voci da spostare dalla sezione 3 alle «Risolte»:** A.160, A.162, A.163, A.164, A.166.
+- **Nessuna domanda nuova.**
+- Restano aperte A.161 (risposta ricevuta, da applicare).
 
-Dettaglio di che cosa è stato fatto: `docs/lotto-mappa-plancia-2026-10-16.md`.
+Dettaglio di che cosa è stato fatto: `docs/lotto-risposte-2026-10-16.md`.
 
 ---
 
 ```
-*** DOC per-davide.md — voce A.165 → A.166
-*** AZIONE: rinumera la voce aperta sulla CyberArma (era A.165, numero già usato dalla A.109 sospesa).
-*** Il testo resta quello del pacchetto del 15/10 sera, con il solo numero cambiato in A.166.
-```
-
----
-
-```
-*** DOC per-davide.md — voci A.113, A.115, A.126, A.133, A.145, A.146, A.147
+*** DOC per-davide.md — voci A.160, A.162, A.163, A.164, A.166
 *** AZIONE: spostale dalla sezione 3 alle «Risolte», sostituendo la riga con il testo qui sotto
 
 --- TESTO ---
-A.113 — Veicoli: permessi, sincronizzazione e denominazioni. RISOLTA (risposta approvata il 15/10/2026, applicata nell’app il 16/10/2026). I permessi sono nei dati: il Direttore modifica tutti i veicoli della campagna, compresi quelli personali dei personaggi, e la proprietà resta assegnata al personaggio. Senza collegamento al server il veicolo condiviso non sparisce più dalla scheda: si consulta in sola lettura nell’ultima copia ricevuta, con la data, la revisione, il proprietario e il conducente di allora; la copia viaggia nel file del personaggio accanto al riferimento e si aggiorna da sola ogni volta che la scheda legge o scrive il registro. Le tre denominazioni ufficiali (Corpo principale, Propulsione, Motore) erano già quelle in uso e sono ora verificate dai controlli automatici.
+A.160 — Punti Abilità liberi degli avversari costruiti come PG. RISOLTA (risposta approvata il 16/10/2026, verificata nell’app lo stesso giorno). Gli avversari costruiti con le regole dei personaggi ricevono 7 punti Abilità liberi alla creazione e a ogni Grado, con i normali limiti di assegnazione: l’app faceva già così dappertutto, perché i punti vengono dai dati delle regole e passano per lo stesso motore dei personaggi, sia per il bestiario umano costruito come PG sia per la conversione «PG → nemico», che porta i valori della scheda senza ritararli. Il refuso del §5.2 del Manuale dei Mostri è corretto nella 0.4 e nelle versioni successive, e nella 0.9 letta il 16/10 il paragrafo dice 7.
 
-A.115 — Capacità specifiche dei nemici. RISOLTA (risposta approvata il 15/10/2026, applicata nell’app il 16/10/2026). La mini-scheda del nemico mostra la descrizione completa della capacità e, quando il profilo li dà, i parametri della risoluzione: Prova richiesta, costo in Azioni, risorsa consumata, limite d’uso e l’indicazione «passiva». Dove i dati mancano resta il solo testo: non si assegnano costi, Prove o effetti per analogia, e una capacità non è passiva finché il profilo non lo dichiara. Con un limite d’uso numerico compare il contatore degli usi rimasti con «Usa» e con l’annullamento; a zero l’app avvisa e lascia comunque usare la capacità, perché decide il Direttore, e i limiti «per Round» si azzerano quando passa il Round.
+A.162 — Proprietà Indistruttibile e Integrità degli oggetti. RISOLTA (risposta approvata il 16/10/2026, applicata nell’app lo stesso giorno). L’app ha ora tre stati espliciti: integrità ordinaria, con PS Integrità e PI come sempre; Indistruttibile, con la dicitura visibile nella scheda e il danneggiamento che non toglie PI e non rompe; Integrità da definire, per il dato mancante, che viene segnalato e non vale né come indistruttibilità né come oggetto rotto. Un PI assente non è più sufficiente a rappresentare nulla. Lo Scrigno del Primo Giuramento è nel catalogo con la proprietà attiva e con la regola, visibile, che il danneggiamento non consente di forzarne l’apertura; la proprietà non si estende ai Sigilli, al contenuto dello Scrigno né agli altri Artefatti, e nessun altro oggetto del catalogo la possiede. I tre Contenitori del Silenzio usano il terzo stato, perché il §10.13 lascia Qualità, PI, PS Integrità, costo e Reperibilità da definire.
 
-A.126 — Ingombro delle creature e campo Spazio. RISOLTA (risposta approvata il 15/10/2026, con l’integrativa A.126–A.138 sull’origine dei coni, applicate nell’app il 16/10/2026). Il profilo dei nemici ha il campo Spazio in Q (1 Q, 2 × 2 Q, 3 × 3 Q), che si prende dal profilo e non si deduce dalla Taglia; la pedina sulla mappa usa quello e il passaggio si verifica sull’ingombro effettivo. Un profilo senza il campo tiene il comportamento di prima, quindi nessun nemico già scritto cambia. «Crea nemico» scrive lo Spazio nel profilo invece che fra le capacità, e la mini-scheda lo mostra accanto a volo e Taglia. Quanto all’integrativa: il cono di una creatura che occupa più di un Q parte dal centro di un quadretto periferico sul lato dell’emissione, scelto con un tocco fra quelli di quel lato, e i quadretti occupati dalla creatura restano esclusi dal suo cono; per le creature di 1 × 1 Q non cambia nulla.
+A.163 — Schermatura dei Contenitori del Silenzio. RISOLTA (precisazione registrata il 16/10/2026, applicata nell’app lo stesso giorno). Custodia, Zaino e Cofanetto del Silenzio sono nel catalogo con la loro schermatura di Corruzione 1 e SnT 0. Nella riga dell’oggetto compare l’indicazione «Schermatura attiva» o «Schermatura inattiva», con due caselle da toccare — contenitore chiuso e contenuto interamente riposto — e il dettaglio delle condizioni. L’indicazione dipende soltanto dalle tre condizioni approvate, contenuto interamente riposto, contenitore chiuso e schermatura integra: l’app non controlla che cosa c’è dentro, perché la schermatura vale per qualunque contenuto, e CyberArma, armatura, anello e amuleto restano esempi d’uso. L’app non calcola la Corruzione e ricorda che la schermatura non elimina quella dell’oggetto né quella già accumulata dai personaggi.
 
-A.133 — Portata delle creature grandi. RISOLTA (risposta approvata il 15/10/2026, applicata nell’app il 16/10/2026). L’app misurava già la portata attorno all’ingombro e non dal centro della pedina: la regola è ora scritta nei dati e verificata dai controlli automatici. Una creatura di 3 × 3 Q con portata 1 Q raggiunge chi le sta attorno e non chi si trova a 2 Q dal bordo; occupare 2 × 2 o 3 × 3 Q non porta la portata a 2 o 3 Q. Zone di controllo e Attacchi di Opportunità seguono le normali condizioni e, come ogni calcolo automatico della mappa, restano spenti quando è attiva la «Mappa semplice».
+A.164 — Morente, morte e stabilizzazione dei nemici. RISOLTA (risposta approvata il 16/10/2026, applicata nell’app lo stesso giorno). Anche i nemici del Tavolo del Direttore seguono Morente: superare Grave provoca Svenuto, mantiene la penalità −8 e avvia il contatore pari alla Costituzione intera effettiva all’ingresso, fissata per quell’episodio; il solo raggiungimento di 0 PV non porta a Morente. Il primo decremento avviene dopo un Round completo, alla stessa posizione d’Iniziativa dell’ingresso, e la stessa regola vale adesso anche per i personaggi; le Ferite eccedenti del colpo d’ingresso non abbreviano il contatore, mentre ogni nuova Ferita successiva toglie un Round e a zero l’app avvisa della morte senza bloccare nulla. «Stabilizza» riporta a Grave e disattiva il contatore, e un contatore spento a zero non uccide. Se manca la Costituzione l’app lo segnala e offre il campo per inserirla, senza ricavarla da Tempra o PV, senza trattarla come zero e senza dichiarare morto il nemico; inserita a scontro già in corso, contano i Round già trascorsi dall’ingresso. La mini-scheda del nemico nella plancia mostra lo stesso riquadro «Morente — N Round» dei personaggi, con il comando per togliere un Round e quello per stabilizzare. Restano le eccezioni esplicite delle schede e le cause che stabiliscono morte diretta o distruzione.
 
-A.145 — Azioni sui veicoli: regole generali e categorie. RISOLTA (risposta approvata il 15/10/2026, applicata nell’app il 16/10/2026). La tabella approvata è consultabile nella scheda del veicolo e nella mini-scheda della plancia, con le righe generali e quelle di auto e moto, moto, imbarcazioni, remi, vela, velivoli atmosferici e astronavi. È un promemoria da leggere: i costi sono testo e l’app non conta le Azioni al posto del tavolo.
-
-A.146 — Veicoli e Attacchi di Opportunità. RISOLTA (risposta approvata il 15/10/2026, applicata nell’app il 16/10/2026). La regola è registrata nei dati e richiamata da una riga della tabella delle azioni sui veicoli. La mappa non propone l’Attacco di Opportunità quando un mezzo esce dalla portata di un nemico: le condizioni dipendono dal tavolo (bersaglio esposto, Copertura, arma pronta del conducente) e l’app non le decide. Il veicolo non possiede una zona di controllo propria.
-
-A.147 — Curve, rotazioni e posizionamento a 45°. RISOLTA (risposta approvata il 15/10/2026, applicata nell’app il 16/10/2026). Sulla mappa il veicolo si gira di 45° per volta, cioè negli otto orientamenti richiesti, anche in diagonale, e li mantiene; con il tasto Maiusc resta disponibile un passo fine per l’orientamento libero scelto dal Direttore. Il controllo del posizionamento e del passaggio considera l’ingombro nell’orientamento effettivo, compresi quelli diagonali, e una rotazione che porterebbe il mezzo su un muro o su un altro pezzo non viene eseguita. Girare non consuma quadretti: Sterzata stretta, Inversione rapida e rotazione sul posto, con i loro costi e le loro Prove, sono un promemoria nella scheda del veicolo e nella plancia, che il Direttore applica quando serve.
+A.166 — Manifestazioni della CyberArma, Abilità e Specializzazioni. RISOLTA (risposta approvata il 16/10/2026, applicata nell’app lo stesso giorno). La CyberArma si utilizza sempre con Armi da mischia, qualunque forma manifesti; la manifestazione è registrata a parte e da essa dipendono famiglia, Specializzazione pertinente e Manovre compatibili: lama lunga o spada danno Spade, la frusta Armi flessibili, l’ascia Asce, la lancia Armi inastate, e per le altre forme vale la famiglia corrispondente del catalogo. Il Custode sceglie la manifestazione da un menu nella scheda dell’arma; il Tecnomante e gli altri utilizzatori ammessi vedono la forma prevista dal progetto, lama lunga nel modello base, e la si cambia soltanto come modifica del manufatto. La Specializzazione pertinente alla forma dà i normali +1 al VA e +1 al danno e non si cumula con quelle di altre forme. L’associazione provvisoria di ogni CyberArma alle Spade è stata sostituita.
 ```
 
 ---
 
 ## Nota per Marcello (non va nel Doc)
 
-Il veicolo di Pablo Zaion non è stato toccato: quando aprirà la scheda, la tab Veicoli aggiungerà da sola
-l'ultima copia del record `veimuu14mqa0` (ASA Scout MK4, revisione 16) accanto al riferimento, per poterlo
-consultare anche a server spento. Il formato del file resta 8.
+Il Manuale dei Mostri sul Drive è la **v0.9** del 16/10 (Davide cita la 0.4 e la 0.5): il §5.2 dice già 7
+punti e il §4.2 applica Morente alle creature, quindi le due risposte sono allineate al manuale. Il catalogo
+è passato da 15 a 75 creature: le 60 nuove, la scala GS/PX e le regole comuni dei blocchi nuovi restano da
+recepire, con la A.161, nei prossimi lotti.

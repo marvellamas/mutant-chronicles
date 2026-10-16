@@ -1472,6 +1472,51 @@ catalogo dichiarati da completare. Nessun dato applicato: la CyberArma non è an
   colore, capacità, SnT e costo della batteria compatibile. *Nel frattempo:* nessuna scheda nel catalogo.
 
 
+## 16 ottobre 2026 — risposte A.160, A.162, A.163, A.164 e A.166 applicate
+
+Fonte: sezione 7 del Doc «per-davide.md» (16/10 09:55 UTC), blocchi del 16/10. Dettaglio del lavoro in
+`docs/lotto-risposte-2026-10-16.md`; pacchetto per il Doc in `docs/pacchetto-per-davide-2026-10-16.md`.
+Manuali ricontrollati lo stesso giorno: **Mostri 0.9** (il §5.2 dice 7 punti, il §4.2 applica Morente alle
+creature, il §3.1 «un dato assente non vale 0»), **Armamenti 0.64** (solo le linee delle pistole; il §7.25
+della CyberArma non è cambiato: vale la risposta), E&L del 15/10 sera (solo la rettifica della A.109).
+
+- **A.160 — Punti Abilità liberi degli avversari costruiti come PG** (approvata il 16/10). Il «5» del
+  Manuale dei Mostri §5.2 era un refuso: 7 punti alla creazione e a ogni Grado, come per i personaggi, con i
+  normali limiti di assegnazione. Non impone di ricostruire con quella procedura le creature che hanno un
+  profilo autonomo. **L'app faceva già così** (regole.json → creazione e avanzamento, stesso motore per PG,
+  bestiario umano e «PG → nemico»): verificato e bloccato dai test. Corretto anche nel manuale (0.4 e
+  seguenti).
+- **A.162 — Proprietà Indistruttibile e Integrità degli oggetti** (16/10). Tre stati espliciti: integrità
+  ordinaria (PS Integrità e PI come sempre), **Indistruttibile** (dicitura visibile, il danno non toglie PI e
+  non rompe) e **Integrità da definire** (dato mancante, segnalato). Un PI assente non significa
+  indistruttibile e non significa rotto. Attiva per lo **Scrigno del Primo Giuramento**, con la regola che il
+  danneggiamento non consente di forzarne l'apertura; non si estende ai Sigilli, al contenuto, né a un
+  oggetto per il fatto di essere un Artefatto. Dati in `regole.json` → `integrita.stati`.
+- **A.163 — Schermatura estesa a qualsiasi contenuto** (16/10). I Contenitori del Silenzio schermano
+  **qualunque** contenuto interamente riposto: CyberArma, armatura, anello e amuleto sono esempi d'uso, non
+  un elenco di oggetti ammessi. L'indicazione «Schermatura attiva / inattiva» dipende solo da contenuto
+  riposto, contenitore chiuso e schermatura integra. Non elimina la Corruzione dell'oggetto né quella già
+  accumulata; l'app mostra lo stato e la regola e **non calcola** la Corruzione.
+- **A.164 — Morente, morte e stabilizzazione dei nemici** (16/10). Morente vale anche per i nemici del
+  Tavolo del Direttore, con la procedura della A.159. Precisazioni valide anche per i PG: il contatore parte
+  dalla COS intera all'ingresso, fissata per quell'episodio; il **primo decremento avviene dopo un Round
+  completo, alla stessa posizione d'Iniziativa dell'ingresso**; le Ferite eccedenti del colpo d'ingresso non
+  lo abbreviano; ogni nuova Ferita successiva toglie un Round; a 0 si muore (avviso al master). 0 PV da soli
+  non portano a Morente. «Stabilizza» torna a Grave e spegne il contatore; un contatore spento a 0 non
+  uccide. **COS mancante:** l'app lo segnala e chiede il dato al Direttore — non lo ricava da Tempra o PV,
+  non lo tratta come 0, non dichiara morto nessuno; inserito a scontro in corso contano i Round già
+  trascorsi. Raccordo: Mostri 0.5 §4.2 e §3.1 (nella 0.9 che abbiamo letto, confermati).
+- **A.166 — Manifestazioni della CyberArma** (16/10). L'Abilità è sempre **Armi da mischia**; la
+  manifestazione è un campo a parte da cui dipendono famiglia, Specializzazione pertinente e Manovre: lama
+  lunga o spada → Spade, frusta → Armi flessibili, ascia → Asce, lancia → Armi inastate; per le altre forme
+  la famiglia del catalogo. Il **Custode** sceglie la forma; il Tecnomante e gli altri usano quella del
+  progetto (lama lunga) e la cambiano solo modificando il manufatto. Una sola Specializzazione pertinente,
+  mai cumulata. Sostituisce l'associazione provvisoria di ogni CyberArma alle Spade.
+- **A.165 — Anticipazione: rettifica dello stato della A.109** (16/10). Solo editoriale: la A.109 è risolta
+  e le 32 risposte dell'8/10 restano quelle. Niente da applicare nell'app.
+- **A.161 — PX della partita** (approvata il 16/10): assegnazione manuale dei PX e calcolatore nel Tavolo del
+  Direttore. **Non applicata in questo lotto:** è il prossimo (decisione di Marcello).
+
 ## 16 ottobre 2026 — lotto «mappa e plancia»: A.113, A.115, A.126, A.133, A.145, A.146, A.147 e A.126–A.138
 
 Secondo lotto dopo la ricognizione del 15/10. Le sette voci passano da «ricevute, in implementazione» a
@@ -1558,7 +1603,7 @@ Nei dati, `regole.json` → `ferite.morente`; motore puro in `src/morente.js`; t
 
 ### Domanda nuova
 
-- **A.166 — Famiglia, Specializzazione e Manovre della CyberArma** (Armamenti §7.25; A.158). *Numerata A.165
+- **A.166 — Famiglia, Specializzazione e Manovre della CyberArma** (Armamenti §7.25; A.158). **RISOLTA: risposta del 16/10/2026 applicata lo stesso giorno (manifestazioni).** *Numerata A.165
   il 15/10 sera e rinumerata il 16/10: nel Doc di Davide la A.165 era già usata (A.109 sospesa). Le prossime
   domande partono da A.167.* Né il paragrafo
   né la risposta dicono a quale famiglia d'arma appartiene la CyberArma, quindi quale Specializzazione le si
@@ -1606,19 +1651,19 @@ Spazio, portata per attacco e GS/PX).
 
 ## Domande aperte dalla ricognizione del 15 ottobre 2026
 
-- **A.160 — Punti Abilità liberi nel Manuale dei Mostri** (Mostri 0.3, §5.2). Il paragrafo dice ancora «5 punti
+- **A.160 — Punti Abilità liberi nel Manuale dei Mostri** (Mostri 0.3, §5.2). **RISOLTA: risposta del 16/10/2026 (refuso), verificata nell’app il 16/10; il manuale 0.9 dice 7.** Il paragrafo dice ancora «5 punti
   Abilità liberi a ogni Grado», mentre la regola approvata è 7 (A.90, decisione 92). Refuso o taratura diversa per
   gli avversari umani? *Nel frattempo:* 7 per tutti.
-- **A.161 — GS e PX dei Mostri 0.3 e bestiario dell'app.** Le schede danno GS (Principiante…Leggenda) e PX per 4
+- **A.161 — GS e PX dei Mostri 0.3 e bestiario dell'app.** **Risposta ricevuta il 16/10/2026 (assegnazione manuale dei PX e calcolatore «PX della partita» nel Tavolo del Direttore): da applicare nel prossimo lotto.** Le schede danno GS (Principiante…Leggenda) e PX per 4
   PG; il bestiario proposto usa i cinque gradi Minore…Molto potente su 7 PG (A.97). Le scale si unificano? Servono
   i PX anche per «Crea nemico»? *Nel frattempo:* scale distinte, nessun PX calcolato.
-- **A.162 — Oggetti indistruttibili** (Equipaggiamento §10.12, Magia §28.2). Lo Scrigno «non perde PI»: basta
+- **A.162 — Oggetti indistruttibili** (Equipaggiamento §10.12, Magia §28.2). **RISOLTA: risposta del 16/10/2026 applicata lo stesso giorno (tre stati dell’Integrità, proprietà esplicita).** Lo Scrigno «non perde PI»: basta
   registrarlo senza PI con una nota, o serve un valore «indistruttibile» riutilizzabile? *Nel frattempo:* nessun
   PI e una nota.
-- **A.163 — Schermatura dei Contenitori del Silenzio** (Equipaggiamento §10.13, Magia §28.3). Serve uno stato
+- **A.163 — Schermatura dei Contenitori del Silenzio** (Equipaggiamento §10.13, Magia §28.3). **RISOLTA: precisazione del 16/10/2026 applicata lo stesso giorno (indicazione attiva/inattiva, qualsiasi contenuto).** Serve uno stato
   «chiuso / aperto» con effetto sulla Corruzione, o basta un promemoria? La Corruzione degli oggetti oggi non è
   modellata. *Nel frattempo:* promemoria.
-- **A.164 — Morente e i nemici** (A.159). Vale anche per i nemici della plancia, o per loro resta la morte oltre
+- **A.164 — Morente e i nemici** (A.159). **RISOLTA: risposta del 16/10/2026 applicata lo stesso giorno (Morente anche per i nemici, con le precisazioni).** Vale anche per i nemici della plancia, o per loro resta la morte oltre
   Grave? E le creature senza COS indicata? *Nel frattempo:* nessun contatore per i nemici.
 
 ## Decisione di Marcello del 13 ottobre 2026 (da rivedere con Davide)
