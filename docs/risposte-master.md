@@ -1472,6 +1472,44 @@ catalogo dichiarati da completare. Nessun dato applicato: la CyberArma non è an
   colore, capacità, SnT e costo della batteria compatibile. *Nel frattempo:* nessuna scheda nel catalogo.
 
 
+## 16 ottobre 2026 — lotto «mappa e plancia»: A.113, A.115, A.126, A.133, A.145, A.146, A.147 e A.126–A.138
+
+Secondo lotto dopo la ricognizione del 15/10. Le sette voci passano da «ricevute, in implementazione» a
+**risolte**; restano in implementazione soltanto i manuali nuovi del 15/10. Dettaglio in
+`docs/lotto-mappa-plancia-2026-10-16.md`; lotti in `tools/lotti/lotto_veicoli_a113_a147.mjs`,
+`tools/lotti/lotto_spazio_a126.mjs` e `tools/lotti/lotto_capacita_a115.mjs`.
+
+**Rinumerazione.** La domanda del 15/10 sera sulla CyberArma passa da A.165 ad **A.166**: nel Doc di Davide
+la A.165 è già usata (A.109 sospesa). Le prossime domande partono da A.167.
+
+- **A.147 — Curve, rotazioni e 45°** (applicata il 16/10). Sulla mappa ← → girano il veicolo di **45°**, gli
+  otto orientamenti della risposta anche in diagonale; con Maiusc il passo fine (10°), che resta per
+  l'orientamento libero scelto dal master. Il controllo del passaggio usa l'ingombro nell'orientamento
+  effettivo (era già così). Girare non consuma Q. Sterzata stretta (+1 AzP, Pilotare −2), Inversione rapida
+  (+1 AzP, −4) e rotazione sul posto sono un **promemoria** nella scheda del veicolo e nella plancia.
+- **A.113 — Veicoli: permessi e denominazioni** (16/10). Permessi nei dati (`veicoli.json` →
+  `personaggio.permessi`): il Direttore modifica tutti i mezzi, la proprietà resta al PG. **Senza server** il
+  veicolo condiviso si consulta in **sola lettura** nell'ultima copia, che adesso viaggia nel file del PG
+  accanto al riferimento. Le tre denominazioni (Corpo principale, Propulsione, Motore) erano già giuste.
+- **A.145 — Azioni sui veicoli** (16/10). Tabella completa delle operazioni approvate, da consultare nella
+  scheda e nella plancia. I costi sono testo: **nessun conteggio automatico** delle Azioni.
+- **A.146 — Veicoli e Attacchi di Opportunità** (16/10). Regola registrata e riga nella tabella; **nessun
+  avviso automatico** sulla mappa (le condizioni dipendono dal tavolo). Il mezzo non ha zona di controllo.
+- **A.126 — Ingombro e campo Spazio** (16/10). Campo `spazio` del profilo (1 Q, 2 × 2 Q, 3 × 3 Q), preso dal
+  profilo e non dedotto dalla Taglia; la pedina lo usa. I nemici senza il campo restano come oggi.
+- **A.133 — Portata delle creature grandi** (16/10). Era già misurata attorno all'ingombro: adesso è scritta
+  nei dati e bloccata dai test. 2 × 2 e 3 × 3 non allungano la portata; con «Mappa semplice» accesa non si
+  calcola nulla.
+- **A.126–A.138 — Origine dei coni** (16/10). Il cono di una creatura grande parte dal centro di un quadretto
+  periferico sul lato dell'emissione, spostabile con un tocco; i quadretti della creatura sono esclusi dal
+  suo cono. Per le creature 1 × 1 nulla cambia.
+- **A.115 — Capacità dei nemici** (16/10). Descrizione completa più i parametri che il profilo dà (Prova,
+  Azioni, risorsa, limiti d'uso, «passiva»). Con un limite numerico c'è il contatore «N su M» con «Usa» e
+  annulla: a 0 **avvisa e basta**, e i limiti «per Round» si azzerano con il Round. Senza dati, solo il testo.
+
+Restano aperte A.160–A.164 (ricognizione del 15/10) e A.166 (famiglia della CyberArma). Nessuna domanda
+nuova da questo lotto.
+
 ## 15 ottobre 2026, sera — lotto «personaggi»: A.159 e A.158 applicate
 
 Primo lotto dopo la ricognizione del 15/10 (`docs/diff-davide-2026-10-15.md`). Le due voci passano da
@@ -1545,20 +1583,20 @@ lotti proposti, è in `docs/diff-davide-2026-10-15.md`; il pacchetto per il Doc 
   che riporta a Grave; Stabilizzazione d'emergenza (Medicina −2, 2 Round), Guarigione d'emergenza (3 PM, 1 AzP),
   Cartuccia Stabilizzante (2.000 cr, MR), UMC Automatica dopo l'intero attacco.
   **Supera la decisione di Marcello del 13/10** registrata qui sotto: fino al recepimento l'app resta com'è.
-- **A.115 — Capacità dei nemici** (15/10): descrizione completa e parametri (Prove, Azioni, risorse, limiti) dal
+- **A.115 — Capacità dei nemici** (15/10). **RISOLTA: applicata il 16/10 (lotto «mappa e plancia»).** descrizione completa e parametri (Prove, Azioni, risorse, limiti) dal
   profilo; niente costi per analogia.
-- **A.126 — Ingombro e campo Spazio** (15/10): campo Spazio in Q (1×1, 2×2, 3×3) nel profilo, distinto dalla Taglia
+- **A.126 — Ingombro e campo Spazio** (15/10). **RISOLTA: applicata il 16/10.** campo Spazio in Q (1×1, 2×2, 3×3) nel profilo, distinto dalla Taglia
   e dalla portata.
-- **A.133 — Portata delle creature grandi** (15/10): quella del singolo attacco, misurata attorno all'ingombro.
-- **A.126–A.138 — Origine dei coni** (15/10): dal centro di un quadretto periferico sul lato dell'emissione, con
+- **A.133 — Portata delle creature grandi** (15/10). **RISOLTA: applicata il 16/10.** quella del singolo attacco, misurata attorno all'ingombro.
+- **A.126–A.138 — Origine dei coni** (15/10). **RISOLTA: applicata il 16/10.** dal centro di un quadretto periferico sul lato dell'emissione, con
   l'asse che esce dall'ingombro; origine e direzione scelte prima dei tiri.
-- **A.113 — Veicoli** (15/10): il Direttore modifica tutti i mezzi; senza server il veicolo condiviso è in sola
+- **A.113 — Veicoli** (15/10). **RISOLTA: applicata il 16/10.** il Direttore modifica tutti i mezzi; senza server il veicolo condiviso è in sola
   lettura; nomi ufficiali Corpo principale, Propulsione, Motore.
-- **A.145 — Azioni sui veicoli** (15/10): tabella completa (salire/scendere 1 AzP, comandi 1 AzP, avvio 1 AzP,
+- **A.145 — Azioni sui veicoli** (15/10). **RISOLTA: applicata il 16/10.** tabella completa (salire/scendere 1 AzP, comandi 1 AzP, avvio 1 AzP,
   condurre 1 AzM, manovra complessa +1 AzP) per auto, moto, imbarcazioni, remi, vele, velivoli e astronavi.
-- **A.146 — Veicoli e Attacchi di Opportunità** (15/10): possibili, bersaglio mezzo o occupante esposto, una sola
+- **A.146 — Veicoli e Attacchi di Opportunità** (15/10). **RISOLTA: applicata il 16/10.** possibili, bersaglio mezzo o occupante esposto, una sola
   occasione per nemico; non fermano il movimento. *Supera il provvisorio «no in entrambi i casi».*
-- **A.147 — Curve e rotazioni** (15/10): curva ordinaria nell'AzM, Sterzata stretta +1 AzP e −2, Inversione rapida
+- **A.147 — Curve e rotazioni** (15/10). **RISOLTA: applicata il 16/10.** curva ordinaria nell'AzM, Sterzata stretta +1 AzP e −2, Inversione rapida
   +1 AzP e −4, nessun costo per i gradi; l'app deve permettere gli otto orientamenti a 45° (oggi ruota di 10°).
 
 Manuali del 15/10, in ricognizione: Magia 1.5 (sez. 28: Hachimaki, Scrigno del Primo Giuramento, Contenitori del
