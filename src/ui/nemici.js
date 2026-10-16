@@ -34,6 +34,7 @@ export async function salvaNemico(n) {
 }
 
 import { capacitaDi, avvisoUsi, testoUsi } from '../capacita-nemico.js';
+import { spazioEffettivo } from '../mappa/token.js';
 
 // etichette dei campi del formato: presentazione (i campi e le regole stanno nel formato)
 const ETICHETTE = {
@@ -335,11 +336,12 @@ export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false,
       (() => { const d = difeseNemico(p, dati); return h('span', { title: d.voci.length ? `Difese ${numero(d.base)} ${d.voci.map((v) => `${numero(v.valore)} ${v.etichetta}`).join(', ')}` : null }, ' · Difese ', h('strong', { class: `pillola-plancia${d.voci.length ? ' con-penalita' : ''}` }, numero(d.valore))); })(),
       h('span', {}, ' · Iniziativa ', h('strong', { class: 'pillola-plancia' }, numero(n.iniziativa)))),
     // Bestiario §3.1.1: volo e taglia Grande, con la regola nel suggerimento (data/formato_nemici.json)
-    n.movimento?.volo || n.taglia === 'grande' || n.spazio ? h('p', { class: 'plancia-condizioni tratti-nemico' },
+    h('p', { class: 'plancia-condizioni tratti-nemico' },
       n.movimento?.volo ? h('span', { class: 'etichetta tratto-nemico', title: dati.formato_nemici.campi.movimento.campi.volo?.descrizione ?? null }, `Vola · Passo in volo ${n.movimento.volo} Q`) : null,
       n.taglia === 'grande' ? [' ', h('span', { class: 'etichetta tratto-nemico', title: dati.formato_nemici.campi.taglia?.descrizione ?? null }, 'Taglia Grande')] : null,
-      // A.126: lo spazio occupato viene dal profilo, non dalla Taglia; la pedina sulla mappa usa quello
-      n.spazio ? [' ', h('span', { class: 'etichetta tratto-nemico', title: dati.formato_nemici.campi.spazio?.descrizione ?? null }, `Spazio ${n.spazio}`)] : null) : null,
+      // A.126 (16/10): lo Spazio che la pedina occupa davvero, sempre, con la provenienza (profilo o Taglia)
+      (() => { const sp = spazioEffettivo(n, dati); return [' ', h('span', { class: 'etichetta tratto-nemico', title: dati.formato_nemici.campi.spazio?.descrizione ?? null },
+        `Spazio ${sp.testo}${sp.dalProfilo ? '' : ' (dalla Taglia)'}`)]; })()),
     // incantesimi in corso del nemico e quelli che ha addosso (src/durate-incantesimi.js, src/ui/tavolo.js → rigaDurate)
     rigaDurate(durate, 'incantesimo', 'Incantesimi in corso'),
     rigaDurate(durate, 'subito', 'Su di lui'),

@@ -60,6 +60,7 @@ import {
   oggettiNelRiquadro, conSelezione, ripulisciSelezione, spostaOggetti, eliminaOggetti, spostaVertice,
   cambiaProprieta, riassuntoSelezione, agganciaSpostamento, agganciaPunto, agganciaPunti, dallaChiave, STRUMENTI,
 } from '../../mappa/editor.js';
+import { azioneDelClic, pedinaCheMuove } from '../../mappa/clic.js';
 import { rifaiUltima } from '../../mappa/annulla.js';
 import { luceQ, luceIngombro, testoLuceBersaglio, categorieLuce, ambienteDi, trattoLuce, rettangoloLuce, conVoceLuce, cambiaAmbiente } from '../../mappa/luce.js';
 import { celleTemplate, tokenDentro as tokenNelTemplate, nuovoTemplate, scaduto, direzioneVerso, ORIENTABILI, templateVisibili, ruota, cambiaMisura, permanente, postoNome, origineConoCreatura } from '../../mappa/template.js';
@@ -3179,8 +3180,13 @@ export function renderMappa(radice, ctx) {
     // senza conteggio del movimento né Iniziativa. I token dei PG, dei nemici e dei veicoli restano al loro posto.
     const tokSotto = !st.spazio && st.strumento !== 'calibra' ? tokenSotto(m) : null;
     const liberoSotto = tokSotto?.rif?.tipo === 'segnaposto' ? tokSotto : null;
-    if (st.editor.strumento === 'seleziona' && !st.spazio && st.strumento !== 'calibra' && st.scena && (!tokSotto || liberoSotto)) {
-      const o = oggettoSottoPunto(m);
+    // Bug del 16/10: la pedina scelta ha la precedenza sul riquadro di selezione dell'editor (src/mappa/clic.js).
+    // Finché è scelta il clic sulla mappa è suo; con Alt si prende l'oggetto sotto il puntatore.
+    const scelta = st.selezionato && !st.spazio ? st.scena.token.find((x) => x.id === st.selezionato) : null;
+    const oggettoQui = st.editor.strumento === 'seleziona' && !st.spazio && st.strumento !== 'calibra' && st.scena ? oggettoSottoPunto(m) : null;
+    const azione = azioneDelClic({ strumentoEditor: st.editor.strumento, pedinaScelta: scelta, tokenSotto: tokSotto, oggettoSotto: oggettoQui, alt: e.altKey });
+    if (azione !== 'token' && azione !== 'mappa' && !st.spazio && st.strumento !== 'calibra' && st.scena) {
+      const o = oggettoQui;
       // maniglia di un muro già selezionato: si sposta il vertice
       if (st.editor.selezione.length === 1) {
         const sel = oggettiEditor().find((x) => x.chiave === st.editor.selezione[0]);
@@ -3199,7 +3205,8 @@ export function renderMappa(radice, ctx) {
       st.trascina = { ...base, modo: 'riquadro', da: m, a: m, aggiungi: e.shiftKey };
       return;
     }
-    const tok = !st.spazio && st.strumento !== 'calibra' ? tokenSotto(m) : null;
+    // con una pedina scelta un token libero sotto il puntatore non la interrompe: il clic resta della pedina
+    const tok = azione === 'token' ? tokSotto : null;
     // 07/10: Maiusc + trascina su un punto vuoto = rettangolo di selezione (Maiusc + clic, senza trascinare, resta il
     // movimento libero del token scelto)
     if (!tok && e.shiftKey && !st.spazio && st.strumento !== 'calibra') { st.trascina = { ...base, modo: 'selezione', da: m, a: m }; return; }

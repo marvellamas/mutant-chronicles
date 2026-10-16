@@ -28,6 +28,23 @@ export function ingombroDaTaglia(scheda, dati) {
 export const spazioDi = (scheda) => (typeof scheda?.spazio === 'string' && scheda.spazio ? scheda.spazio : null);
 
 /**
+ * A.126, 16/10/2026: lo spazio che la pedina occupa davvero, con la provenienza — così la mini-scheda lo dice
+ * sempre, anche per i profili che hanno solo la Taglia (segnalazione di Marcello: «Sgorbio delle Vasche»
+ * Grande, pedina 2 × 2, mini-scheda muta).
+ * @returns {{ lato, testo, dalProfilo, fonte }} fonte: 'profilo' | 'taglia'
+ */
+export function spazioEffettivo(scheda, dati) {
+  const lato = ingombroDaTaglia(scheda ?? null, dati);
+  const dalProfilo = !!spazioDi(scheda) && dati?.mappa?.token?.spazio_lato?.[spazioDi(scheda)] === lato;
+  return {
+    lato,
+    testo: dalProfilo ? spazioDi(scheda) : `${lato} × ${lato} Q`,
+    dalProfilo,
+    fonte: dalProfilo ? 'profilo' : 'taglia',
+  };
+}
+
+/**
  * Ingombro di un veicolo [colonne, righe] dal suo profilo (data/veicoli.json → profili[].dimensioni.ingombro_q,
  * «3 × 2»), oppure dalle misure in metri (1 Q = 1,5 m), oppure quello predefinito dei dati.
  */
