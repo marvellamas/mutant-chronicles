@@ -13,6 +13,7 @@
     "autosave",
     "salvataggi",
     "backup-master",
+    "px",
     "avvisi",
     "node_modules",
     "backup-prima-aggiornamento"
@@ -43,7 +44,8 @@
     "galleria",
     "autosave",
     "salvataggi",
-    "backup-master"
+    "backup-master",
+    "px"
   ],
   "controllo_zip": [
     "index.html",

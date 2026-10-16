@@ -30,7 +30,7 @@ import { deflateRawSync, inflateRawSync, crc32 } from 'node:zlib';
 import { execFile } from 'node:child_process';
 import { configurazione as confAvvisi, dataOra, registraErrore } from './avvisi.mjs';
 
-export const CARTELLE = ['personaggi', 'veicoli', 'scontri', 'nemici', 'tavolo', 'scene', 'mappe', 'galleria'];
+export const CARTELLE = ['personaggi', 'veicoli', 'scontri', 'nemici', 'tavolo', 'scene', 'mappe', 'galleria', 'px'];
 /** Lo zip «dati» per la rete: tutto tranne le immagini delle mappe e della galleria (pochi KB). */
 export const CARTELLE_DATI = CARTELLE.filter((c) => c !== 'mappe' && c !== 'galleria');
 const RADICE = fileURLToPath(new URL('..', import.meta.url));

@@ -99,7 +99,7 @@ test('la cartella galleria/ sta fuori da git, nei salvataggi e fra i file locali
   assert.match(readFileSync(new URL('.gitignore', r), 'utf8'), /^galleria\/\*$/m);
   assert.match(readFileSync(new URL('.gitignore', r), 'utf8'), /^!galleria\/LEGGIMI\.txt$/m);
   const salva = readFileSync(new URL('tools/salva-sessione.mjs', r), 'utf8');
-  assert.match(salva, /export const CARTELLE = \[[^\]]*'galleria'\]/, 'nelle copie di «Salva sessione»');
+  assert.match(salva, /export const CARTELLE = \[[^\]]*'galleria'[^\]]*\]/, 'nelle copie di «Salva sessione»');
   assert.match(salva, /c !== 'mappe' && c !== 'galleria'/, 'fuori dallo zip «dati» (sono immagini)');
   const locali = JSON.parse(readFileSync(new URL('tools/file-locali.json', r), 'utf8'));
   assert.ok(locali.cartelle.includes('galleria'), 'l’aggiornamento non la cancella');

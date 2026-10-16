@@ -93,7 +93,7 @@ src/
   ui/           wizard a passi (fasi 0–9 del §2.0), scheda a tab, Sali di livello, stampa, import/export
 data/           JSON delle regole (fonte di verità): 16 file in data/ (galleria.json: parametri della Galleria, N1; mappa.json: parametri della mappa di battaglia; formato_nemici.json: formato dei nemici del Tavolo del Master, per-davide A.73, validaNemico in validate.js; bestiario.json: Bestiario proposto per «Crea nemico» e «Prepara scontro», dal lotto tools/lotti/lotto_bestiario_dati.mjs), catalogo in data/equipaggiamento/ (index.json + 21 file)
 server.mjs      server di Mutant per il Tavolo del Master (avvia-server.bat): file statici, /api per personaggi, tavolo, scontri, nemici, esempi
-personaggi/ tavolo/ scontri/ nemici/ veicoli/ scene/ mappe/ musica/ galleria/  dati del server, fuori da git (si traccia il LEGGIMI)
+personaggi/ tavolo/ scontri/ nemici/ veicoli/ scene/ mappe/ musica/ galleria/ px/  dati del server, fuori da git (si traccia il LEGGIMI)
 tests/          node --test; tests/collaudo/ tre personaggi di riferimento con PDF
 esempi/         PG d'esempio (tools/genera_esempi.mjs; Aiko Tenzan da tools/genera_esempio_tecniche.mjs), nemici/ e nemici/umani/ (tools/genera_nemici_umani.mjs)
 avvisi/         avvisi a Marcello con ntfy.sh (tools/avvisi.mjs, chiamato da aggiorna.bat e dall'avvio del server): avvisi.json e stato.json fuori da git, LEGGIMI ed esempio tracciati
@@ -217,7 +217,7 @@ Valgono per ogni prompt, anche quando il prompt non le ripete.
 - Un ambito per prompt: niente lavori fuori da quello chiesto (le cose notate si segnalano nel riepilogo).
 - Le regole stanno in `data/`, non nel codice.
 - Per le ambiguità, `TODO(Davide)` nel dato o nel codice, con la domanda numerata (A.n) nelle aperte di `docs/risposte-master.md` e nel pacchetto per il Doc «per-davide.md».
-- Cartelle reali intoccabili: `personaggi/`, `tavolo/`, `scontri/`, `nemici/`, `veicoli/`, `scene/`, `mappe/`, `musica/`, `galleria/`, `salvataggi/`, `autosave/`, `backup-master/`. Intoccabile anche la porta 3000. Le prove si fanno su cartelle temporanee nello scratchpad e su un'altra porta (3017).
+- Cartelle reali intoccabili: `personaggi/`, `tavolo/`, `scontri/`, `nemici/`, `veicoli/`, `scene/`, `mappe/`, `musica/`, `galleria/`, `px/`, `salvataggi/`, `autosave/`, `backup-master/`. Intoccabile anche la porta 3000. Le prove si fanno su cartelle temporanee nello scratchpad e su un'altra porta (3017).
 - **Una cartella di dati nuova del server va aggiunta in tre posti:** `.gitignore`, `tools/file-locali.json` (`cartelle` e `controllo_svuotamento`) e, se contiene dati di gioco da salvare, `CARTELLE` di `tools/salva-sessione.mjs`. Altrimenti un aggiornamento la cancella: è successo a `backup-master/` (12/10, `docs/diagnosi-dati-spariti-2026-10-12.md`). `tests/dati-spariti.test.js` lo controlla.
 - I PG reali (Drive «FILE PG», `PersonaggiBackup/`) solo in lettura: si lavora sulle copie.
 - Prima del commit devono essere verdi:

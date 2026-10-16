@@ -1,0 +1,55 @@
+{
+  "versione_manuale": "Manuale del Direttore §9.3 (riferimento funzionale: EROI_LEGGENDE_Gestore_PX v1.2 di Davide, 16/10/2026)",
+  "_nota": "Regole del calcolatore «PX della partita» del Tavolo del Direttore (A.161, approvata il 16/10/2026). Riferimento funzionale: il gestore di Davide (docs/riferimenti/EROI_LEGGENDE_Gestore_PX_v1_2.html), non codice da copiare. Il Manuale del Direttore §9.3 non è fra i Doc che controlliamo: i fattori qui sotto vengono dal gestore e sono DA CONFERMARE sui manuali (A.168). L'app non assegna mai PX da sola: il calcolatore propone, il Direttore vede il totale finale modificabile e solo «Assegna PX della partita» aggiorna i PG. Tutti i numeri sono qui, modificabili dal Direttore.",
+  "voti": {
+    "min": 1,
+    "max": 5,
+    "componenti": ["Partecipazione", "Interpretazione/Ruolo", "Contributo"],
+    "_nota": "Tre voti individuali 1–5. La loro somma (3–15) è la componente «voti»."
+  },
+  "durata": {
+    "opzioni": [
+      { "valore": 1, "nome": "Normale", "moltiplicatore_voti": 1 },
+      { "valore": 2, "nome": "Lunga", "moltiplicatore_voti": 2 }
+    ],
+    "_nota": "Il raddoppio della partita lunga riguarda SOLO la componente dei voti, non il bonus eccezionale né i PX degli incontri o i premi di fine Atto."
+  },
+  "titoli": [
+    { "nome": "Principiante", "px": 10, "fattore": 1, "livello_min": 1, "livello_max": 3 },
+    { "nome": "Inesperto", "px": 20, "fattore": 2, "livello_min": 4, "livello_max": 6 },
+    { "nome": "Esperto", "px": 30, "fattore": 3, "livello_min": 7, "livello_max": 10 },
+    { "nome": "Veterano", "px": 50, "fattore": 4, "livello_min": 11, "livello_max": 14 },
+    { "nome": "Eroe", "px": 70, "fattore": 5, "livello_min": 15, "livello_max": 18 },
+    { "nome": "Leggenda", "px": 100, "fattore": 6, "livello_min": 19, "livello_max": 20 }
+  ],
+  "_nota_titoli": "Il Titolo del PG dipende dal suo livello; il «fattore» moltiplica la componente dei voti e il bonus eccezionale. «px» è il valore base del Grado di Sfida corrispondente (stessa scala GS dei Mostri 0.13), usato come valore unitario di un nemico di quel GS negli incontri.",
+  "atti": [
+    { "nome": "I", "limite_livello": 8, "premio": 150 },
+    { "nome": "II", "limite_livello": 12, "premio": 200 },
+    { "nome": "III", "limite_livello": 15, "premio": 250 },
+    { "nome": "IV", "limite_livello": 17, "premio": 250 },
+    { "nome": "V", "limite_livello": 19, "premio": 300 },
+    { "nome": "VI", "limite_livello": 20, "premio": 300 }
+  ],
+  "_nota_atti": "L'Atto corrente limita il livello massimo raggiungibile (i PX in eccesso restano e valgono quando l'Atto si sblocca). «premio» è il premio di fine Atto, incluso SOLO quando il Direttore lo dispone, una volta per partita.",
+  "soglie_px": [0, 50, 110, 180, 340, 520, 720, 1050, 1410, 1800, 2220, 2820, 3460, 4140, 4860, 5810, 6810, 7860, 8960, 10340],
+  "_nota_soglie": "Soglie cumulative di PX per i livelli 1–20 (soglie_px[n-1] = PX minimi per il livello n). Dal gestore di Davide, DA CONFERMARE sui manuali (A.168).",
+  "incontro": {
+    "principale": 1,
+    "altri": 0.5,
+    "dotazione_gia_compresa": true,
+    "arrotondamento": "per_incontro",
+    "_nota": "Per ogni incontro: un solo esemplare principale al 100%, tutti gli altri (comprese le copie in più del principale) al 50%; il totale pesato si moltiplica per il correttivo del numero di PG e si arrotonda per incontro. I PX dei nemici del catalogo hanno la dotazione GIÀ compresa (Mostri §8, righe «PX per 4 PG»): non si applica una seconda maggiorazione per l'equipaggiamento."
+  },
+  "correttivo_pg": {
+    "base": 4,
+    "passo": 0.1,
+    "minimo": 0.5,
+    "_nota": "Moltiplicatore = max(minimo, 1 + passo × (base − numero di PG presenti)). Con 4 PG = ×1; ogni PG in meno +0,1, ogni PG in più −0,1, mai sotto 0,5. Riferimento: 4 PG (Mostri: «PX per 4 PG»)."
+  },
+  "campagna": {
+    "baseline_px_default": 520,
+    "atto_default": "I",
+    "_nota": "Valori di partenza suggeriti per una nuova campagna (dal gestore: baseline 520 = livello 6). I PX iniziali comuni e l'Atto corrente sono impostazioni di campagna, modificabili dal Direttore e salvate nella cartella px/ del server; i PX veri stanno sul PG."
+  }
+}

@@ -1,0 +1,10 @@
+Cartella «PX della partita» (A.161) del Tavolo del Direttore.
+
+Qui il server (avvia-server.bat) tiene:
+- px.json: impostazioni di campagna (Atto corrente, PX iniziali comuni, associazione giocatore–PG)
+  e l'archivio delle partite con il dettaglio del calcolo e gli importi assegnati.
+
+I PX veri stanno sul PG (scelte.puntiEsperienza): «Assegna PX della partita» li aggiorna con una
+Modifica master. Questa cartella NON contiene i personaggi.
+
+Fuori da git (solo questo LEGGIMI è tracciato). È nei backup di «Salva sessione».

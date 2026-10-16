@@ -91,6 +91,7 @@ export function validaDati(dati) {
   if (isOggetto(dati.veicoli)) validaVeicoli(dati, err);
   if (isOggetto(dati.mappa)) validaMappa(dati, err);
   if (isOggetto(dati.galleria)) validaGalleria(dati, err);
+  if (isOggetto(dati.px_partita)) validaPxPartita(dati, err);
   if (dati.incantesimi?.incantesimi?.length) validaDurateIncantesimi(dati, err);
   // durate in Round (Giocatore §8.9.1, §5.18): il Round di attivazione conta o no (src/tecniche.js → fineDurata)
   if (dati.regole?.durate_round !== undefined && typeof dati.regole.durate_round?.round_attivazione_conta !== 'boolean') err('regole', 'durate_round.round_attivazione_conta', 'vero o falso: il Round di attivazione conta nella durata?');
@@ -2850,6 +2851,61 @@ function validaVeicoli(dati, err) {
  * Galleria (data/galleria.json, N1 del 13/10/2026): i parametri della cartella galleria/ e della tab del master.
  * Un numero sbagliato qui farebbe rifiutare ogni immagine o manderebbe l'originale ai tablet.
  */
+// A.161: regole del calcolatore «PX della partita». I Titoli coprono i livelli 1–20 senza buchi, con fattori e
+// px crescenti; 20 soglie cumulative crescenti; Atti con limite di livello crescente; voti min < max.
+function validaPxPartita(dati, err) {
+  const F = 'px_partita';
+  const p = dati.px_partita;
+  if (!isTesto(p.versione_manuale)) err(F, 'versione_manuale', 'testo mancante');
+  // voti
+  const v = p.voti;
+  if (!isOggetto(v) || !isIntero(v.min) || !isIntero(v.max) || v.min >= v.max) err(F, 'voti', 'min e max interi con min < max');
+  if (!Array.isArray(v?.componenti) || v.componenti.length !== 3 || !v.componenti.every(isTesto)) err(F, 'voti.componenti', 'tre nomi di componenti');
+  // durata
+  if (!Array.isArray(p.durata?.opzioni) || !p.durata.opzioni.length) err(F, 'durata.opzioni', 'almeno una durata');
+  else for (const [i, o] of p.durata.opzioni.entries()) {
+    if (!isIntero(o?.valore) || !isTesto(o?.nome) || !(typeof o?.moltiplicatore_voti === 'number' && o.moltiplicatore_voti > 0)) err(F, `durata.opzioni[${i}]`, 'valore intero, nome e moltiplicatore_voti positivo');
+  }
+  // titoli: coprono 1..20 senza buchi né sovrapposizioni, px e fattori crescenti
+  const t = p.titoli;
+  if (!Array.isArray(t) || !t.length) { err(F, 'titoli', 'almeno un Titolo'); return; }
+  let atteso = 1; let pxPrec = 0; let fatPrec = 0;
+  for (const [i, x] of t.entries()) {
+    if (!isTesto(x?.nome)) err(F, `titoli[${i}].nome`, 'testo mancante');
+    if (!isIntero(x?.px) || x.px <= pxPrec) err(F, `titoli[${i}].px`, 'intero crescente');
+    if (!isIntero(x?.fattore) || x.fattore <= fatPrec) err(F, `titoli[${i}].fattore`, 'intero crescente');
+    if (x?.livello_min !== atteso) err(F, `titoli[${i}].livello_min`, `atteso ${atteso} (i Titoli coprono i livelli senza buchi)`);
+    if (!isIntero(x?.livello_max) || x.livello_max < x?.livello_min) err(F, `titoli[${i}].livello_max`, 'intero ≥ livello_min');
+    atteso = (x?.livello_max ?? atteso) + 1; pxPrec = x?.px ?? pxPrec; fatPrec = x?.fattore ?? fatPrec;
+  }
+  const ultimo = t[t.length - 1]?.livello_max;
+  // atti: limite di livello crescente, premio ≥ 0, ultimo = livello massimo dei Titoli
+  const a = p.atti;
+  if (!Array.isArray(a) || !a.length) err(F, 'atti', 'almeno un Atto');
+  else {
+    let limPrec = 0;
+    for (const [i, x] of a.entries()) {
+      if (!isTesto(x?.nome)) err(F, `atti[${i}].nome`, 'testo mancante');
+      if (!isIntero(x?.limite_livello) || x.limite_livello < limPrec) err(F, `atti[${i}].limite_livello`, 'intero non decrescente');
+      if (!isIntero(x?.premio) || x.premio < 0) err(F, `atti[${i}].premio`, 'intero ≥ 0');
+      limPrec = x?.limite_livello ?? limPrec;
+    }
+    if (isIntero(ultimo) && a[a.length - 1]?.limite_livello !== ultimo) err(F, 'atti', `l'ultimo Atto deve sbloccare il livello massimo ${ultimo}`);
+  }
+  // soglie: una per livello coperto dai Titoli, crescenti, la prima 0
+  const s = p.soglie_px;
+  if (!Array.isArray(s) || (isIntero(ultimo) && s.length !== ultimo)) err(F, 'soglie_px', `${isIntero(ultimo) ? ultimo : 'N'} soglie (una per livello)`);
+  else {
+    if (s[0] !== 0) err(F, 'soglie_px[0]', 'la prima soglia è 0');
+    for (let i = 1; i < s.length; i += 1) if (!(typeof s[i] === 'number' && s[i] > s[i - 1])) err(F, `soglie_px[${i}]`, 'crescente rispetto alla precedente');
+  }
+  // incontro e correttivo
+  const inc = p.incontro;
+  if (!isOggetto(inc) || typeof inc.principale !== 'number' || typeof inc.altri !== 'number') err(F, 'incontro', 'principale e altri numerici');
+  const c = p.correttivo_pg;
+  if (!isOggetto(c) || !isIntero(c.base) || typeof c.passo !== 'number' || typeof c.minimo !== 'number') err(F, 'correttivo_pg', 'base intero, passo e minimo numerici');
+}
+
 function validaGalleria(dati, err) {
   const F = 'galleria';
   const g = dati.galleria;
