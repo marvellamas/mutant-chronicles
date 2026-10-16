@@ -2787,3 +2787,8 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .integrita-speciali { list-style: none; margin: 0.4rem 0 0; padding: 0; display: grid; gap: 0.3rem; }
 .etichetta-indistruttibile { background: var(--pe-tenue); color: var(--pe); border: 1px solid var(--pe); }
 .etichetta-integrita-definire { background: var(--pv-tenue); color: var(--pv); border: 1px dashed var(--pv); }
+/* A.163 (16/10): Contenitori del Silenzio — indicazione della schermatura e i due stati da toccare */
+.schermatura { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; }
+.etichetta-schermatura { background: var(--pv-tenue); color: var(--pv); border: 1px solid var(--pv); }
+.etichetta-schermatura.attiva { background: var(--pe-tenue); color: var(--pe); border-color: var(--pe); }
+.casella-contenitore { font-size: 0.85rem; }

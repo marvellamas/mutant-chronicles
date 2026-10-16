@@ -55,7 +55,7 @@ import { caricaImmagini, iconaPagina } from './immagini.js';
 import { preparaStampa, preparaTab, normalizzaOpzioniStampa, versioniCompatte } from '../stampa.js';
 import { renderTab, tabFissi, ALIAS_TAB } from './tab.js';
 import {
-  massimiSessione, allineaSessione, variaSessione, modificaSessione, stabilizzaMorente, scalaMorente, attivaArmaSessione, terminaArmaSessione, commutaStato, commutaCondizioneOggetto, commutaTalento, commutaBonusTalenti, impostaCondizioneArma, riparaOggetto, spendiPmLancio, ricaricaMatrice, attivaArtefatto, attivaTecnicaSessione, nuovoRoundSessione, terminaTecnicaSessione, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
+  massimiSessione, allineaSessione, variaSessione, modificaSessione, stabilizzaMorente, scalaMorente, attivaArmaSessione, terminaArmaSessione, commutaContenitoreSessione, commutaStato, commutaCondizioneOggetto, commutaTalento, commutaBonusTalenti, impostaCondizioneArma, riparaOggetto, spendiPmLancio, ricaricaMatrice, attivaArtefatto, attivaTecnicaSessione, nuovoRoundSessione, terminaTecnicaSessione, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
   penalitaSessione, variaMunizioni, consumaColpi, scegliGranata, granateDiPartenza, ricaricaArma, caricaDaCarichino, preparaCarichino, variaChroma, variaIntegrita, variaNec,
 } from '../sessione.js';
 import { conOrdinale } from '../lingua.js';
@@ -1686,6 +1686,8 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       },
       varia: (campo, delta) => cambiaSessione(variaSessione(stato.sessione, campo, delta, massimi)),
       imposta: (campo, valore) => cambiaSessione(modificaSessione(stato.sessione, { [campo]: valore }, massimi)),
+      // A.163: «chiuso» e «contenuto riposto» di un Contenitore del Silenzio (src/schermatura.js)
+      contenitore: (uid, campo) => cambiaSessione(commutaContenitoreSessione(stato.sessione, uid, campo, massimi)),
       // A.158: «Attiva» e «Termina» di un'arma a durata (CyberArma, src/attivazione-arma.js)
       attivaArma: (uid, uso, forza = false) => {
         const nuova = attivaArmaSessione(stato.sessione, uid, uso, massimi, { forza });

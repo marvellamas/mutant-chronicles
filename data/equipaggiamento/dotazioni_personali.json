@@ -373,19 +373,70 @@
       ]
     },
     {
-      "id": "custodia-del-silenzio",
-      "nome": "Custodia del Silenzio",
       "tipo": "altro",
       "catalogo": "Artefatti di campagna",
       "famiglia": "Contenitori e trasporto",
       "nomi_alternativi": [],
-      "paragrafo": "Armamenti §7.25.1; Equipaggiamento §10.13.1; Magia §28.3",
-      "versione_manuale": "Armamenti 0.62 / Equipaggiamento 0.8 / Magia 1.5 (15/10/2026)",
-      "peso": 0.3,
+      "versione_manuale": "Equipaggiamento 0.8 / Magia 1.5 (15/10/2026); A.163 del 16/10/2026",
       "costo": null,
-      "effetto_breve": "Cilindro di cuoio per la CyberArma disattivata: chiuso e integro ne scherma le emanazioni di Corruzione 1. SnT 0, nessun costo in PM.",
+      "integrita": "da_definire",
       "proprieta": [],
-      "_nota": "Cilindro di cuoio semplice, lungo 30 cm e di 6 cm di diametro esterno, con passante per la cintura. La schermatura è passiva e vale solo con l’arma disattivata e interamente riposta; aprirla o comprometterne la chiusura la fa cessare, richiuderla la ripristina senza Prove né PM. Non è indistruttibile: cuoio e legno seguono le normali regole di Integrità. Non modifica danno, colore, attivazione o requisiti della CyberArma e non concede estrazioni gratuite; il suo peso si somma a quello dell’arma. Prezzo e Reperibilità non sono indicati dai manuali: restano da completare. La famiglia dei Contenitori del Silenzio (Zaino e Cofanetto, §10.13.2 e §10.13.3) e lo stato «chiuso / aperto» restano da fare: A.163."
+      "schermatura": {
+        "corruzione": 1,
+        "snt": 0,
+        "fonte": "Equipaggiamento §10.13; Magia §28.3; A.163",
+        "testo": "Chiuso e integro, con il contenuto interamente riposto, scherma le emanazioni e il potere corruttivo di qualunque contenuto (Corruzione 1). Aprirlo o comprometterne la chiusura la fa cessare; richiuderlo integro la ripristina senza Prove né PM."
+      },
+      "id": "custodia-del-silenzio",
+      "nome": "Custodia del Silenzio",
+      "paragrafo": "Armamenti §7.25.1; Equipaggiamento §10.13.1; Magia §28.3",
+      "peso": 0.3,
+      "effetto_breve": "Cilindro di cuoio, 30 × 6 cm: chiuso e integro scherma qualunque contenuto interamente riposto (Corruzione 1). SnT 0, nessun costo in PM.",
+      "_nota": "Cuoio semplice marrone scuro, cilindro lungo 30 cm e di 6 cm di diametro, con cappuccio a linguetta e passante per la cintura; imbottitura per impugnatura e condensatore (l’alloggiamento è pensato per la CyberArma disattivata, ma la schermatura vale per qualsiasi contenuto: A.163). Non è indistruttibile: cuoio e legno seguono le normali regole di Integrità. Qualità, PI, PS Integrità, costo e Reperibilità restano da definire (§10.13)."
+    },
+    {
+      "tipo": "altro",
+      "catalogo": "Artefatti di campagna",
+      "famiglia": "Contenitori e trasporto",
+      "nomi_alternativi": [],
+      "versione_manuale": "Equipaggiamento 0.8 / Magia 1.5 (15/10/2026); A.163 del 16/10/2026",
+      "costo": null,
+      "integrita": "da_definire",
+      "proprieta": [],
+      "schermatura": {
+        "corruzione": 1,
+        "snt": 0,
+        "fonte": "Equipaggiamento §10.13; Magia §28.3; A.163",
+        "testo": "Chiuso e integro, con il contenuto interamente riposto, scherma le emanazioni e il potere corruttivo di qualunque contenuto (Corruzione 1). Aprirlo o comprometterne la chiusura la fa cessare; richiuderlo integro la ripristina senza Prove né PM."
+      },
+      "id": "zaino-del-silenzio",
+      "nome": "Zaino del Silenzio",
+      "paragrafo": "Equipaggiamento §10.13.2; Magia §28.3",
+      "peso": 2,
+      "effetto_breve": "Zaino di cuoio, 60 × 40 × 25 cm: chiuso e integro scherma qualunque contenuto interamente riposto (Corruzione 1).",
+      "_nota": "Cuoio marrone scuro, due spallacci regolabili e maniglia superiore, apertura a cordoncino con patta e due fibbie; fodera imbottita e cinghie interne (l’alloggiamento è pensato per un’armatura ripiegata, ma la schermatura vale per qualsiasi contenuto che entri interamente e permetta la chiusura completa: A.163). Qualità, PI, PS Integrità, costo e Reperibilità restano da definire (§10.13)."
+    },
+    {
+      "tipo": "altro",
+      "catalogo": "Artefatti di campagna",
+      "famiglia": "Contenitori e trasporto",
+      "nomi_alternativi": [],
+      "versione_manuale": "Equipaggiamento 0.8 / Magia 1.5 (15/10/2026); A.163 del 16/10/2026",
+      "costo": null,
+      "integrita": "da_definire",
+      "proprieta": [],
+      "schermatura": {
+        "corruzione": 1,
+        "snt": 0,
+        "fonte": "Equipaggiamento §10.13; Magia §28.3; A.163",
+        "testo": "Chiuso e integro, con il contenuto interamente riposto, scherma le emanazioni e il potere corruttivo di qualunque contenuto (Corruzione 1). Aprirlo o comprometterne la chiusura la fa cessare; richiuderlo integro la ripristina senza Prove né PM."
+      },
+      "id": "cofanetto-del-silenzio",
+      "nome": "Cofanetto del Silenzio",
+      "paragrafo": "Equipaggiamento §10.13.3; Magia §28.3",
+      "peso": 0.4,
+      "effetto_breve": "Cofanetto di legno, 20 × 14 × 8 cm, due alloggiamenti: chiuso e integro scherma qualunque contenuto interamente riposto (Corruzione 1 ciascuno).",
+      "_nota": "Legno scuro opaco con coperchio incernierato e fermaglio metallico, rivestimento interno in cuoio con due alloggiamenti imbottiti (pensati per anello e amuleto, ma la schermatura vale per qualsiasi contenuto: A.163); scherma contemporaneamente entrambi gli alloggiamenti. Qualità, PI, PS Integrità, costo e Reperibilità restano da definire (§10.13)."
     }
   ]
 }

@@ -55,6 +55,7 @@ import { allineaIncantesimiAttivi } from './durate-incantesimi.js';
 import { allineaImpianti } from './impianti.js';
 import { allineaMorente, statoMorente, togliRound } from './morente.js';
 import { allineaAttivazioniArmi, attivaArma, terminaArma } from './attivazione-arma.js';
+import { allineaContenitori, commutaContenitore } from './schermatura.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const limita = (v, min, max) => Math.min(max, Math.max(min, v));
@@ -418,6 +419,8 @@ export function allineaSessione(sessione, m) {
     ...(() => { const mo = morenteDi(sessione, m); return mo ? { morente: mo } : {}; })(),
     // A.158: armi attivate a Round (CyberArma, src/attivazione-arma.js); la chiave c'è solo se ce n'è una in corso
     ...(() => { const at = allineaAttivazioniArmi(sessione.attivazioniArmi, m.oggetti ?? null, sessione.round); return Object.keys(at).length ? { attivazioniArmi: at } : {}; })(),
+    // A.163: «chiuso» e «contenuto riposto» dei Contenitori del Silenzio; la chiave c'è solo se se ne è toccato uno
+    ...(() => { const c = allineaContenitori(sessione.contenitori, m.oggetti ?? null); return Object.keys(c).length ? { contenitori: c } : {}; })(),
     note: typeof sessione.note === 'string' ? sessione.note : '',
   };
 }
@@ -701,6 +704,12 @@ export function terminaArmaSessione(sessione, uid, m) {
   const s = allineaSessione(sessione, m);
   if (!s.attivazioniArmi?.[uid]) return null;
   return modificaSessione({ ...s, attivazioniArmi: terminaArma(s, uid) }, {}, m);
+}
+
+/** A.163: accende o spegne «chiuso» o «contenuto riposto» di un Contenitore del Silenzio. */
+export function commutaContenitoreSessione(sessione, uid, campo, m) {
+  const s = allineaSessione(sessione, m);
+  return modificaSessione(s, { contenitori: commutaContenitore(s.contenitori, uid, campo) }, m);
 }
 
 /** A.159: i Round che restano al contatore, o null se il personaggio non è Morente. */

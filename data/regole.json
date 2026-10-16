@@ -3999,5 +3999,33 @@
       "sigla": "M",
       "nome": "Da ricordare"
     }
+  },
+  "schermatura": {
+    "fonte": "A.163, precisazione approvata il 16/10/2026; Equipaggiamento §10.13, Magia §28.3",
+    "nome": "Schermatura",
+    "attiva": "Schermatura attiva",
+    "inattiva": "Schermatura inattiva",
+    "condizioni": [
+      {
+        "id": "riposto",
+        "nome": "Contenuto interamente riposto",
+        "motivo": "il contenuto non è interamente riposto"
+      },
+      {
+        "id": "chiuso",
+        "nome": "Contenitore chiuso",
+        "motivo": "il contenitore è aperto"
+      },
+      {
+        "id": "integra",
+        "nome": "Schermatura integra",
+        "motivo": "la schermatura è compromessa (contenitore rotto)"
+      }
+    ],
+    "qualsiasi_contenuto": true,
+    "_qualsiasi_contenuto": "A.163: la proprietà appartiene al contenitore e vale per qualunque contenuto interamente riposto. CyberArma, armatura, anello e amuleto sono esempi d’uso, non un elenco di oggetti ammessi: origine, proprietario o tipologia non sono requisiti. L’app non controlla che cosa c’è dentro.",
+    "non_elimina": "La schermatura contiene le emanazioni e il potere corruttivo del contenuto: non elimina la Corruzione dell’oggetto né quella già accumulata dai personaggi.",
+    "nessun_calcolo": "L’app mostra l’indicazione e la regola; non calcola la Corruzione e non cambia valori. Lo stato «chiuso» e «contenuto riposto» si cambiano con un tocco nella riga dell’oggetto.",
+    "capienza": "Dimensioni e capienza restano quelle del contenitore: niente spazio extradimensionale, niente alleggerimento. Il peso del contenuto si somma a quello del contenitore."
   }
 }

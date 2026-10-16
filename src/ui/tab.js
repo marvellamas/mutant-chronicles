@@ -25,7 +25,8 @@ import { colore, riempimento, condizioniAttiveAbilita } from '../interfaccia.js'
 import { statoMorente } from '../morente.js';
 import { testoAttivazione } from '../attivazione-arma.js';
 import { descriviFerite } from '../sessione.js';
-import { statoIntegrita } from '../protezione.js';
+import { statoIntegrita, oggettiRotti } from '../protezione.js';
+import { schermaQualcosa, statoContenitore, statoSchermatura } from '../schermatura.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
 import { testoDanno } from '../stampa.js';
 import { assegnaMani, legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto, catalogo, risolvi, infoArtefattoVoce, infusiDi, regoleSintonizzazione, rapportoConversione, riserveNec, tempiProtezione, cambioProtezione } from '../equipaggiamento.js';
@@ -680,6 +681,26 @@ function piRigaInventario(ctx, r) {
 function tavoloRigaInventario(ctx, r) {
   if (r.deposito || r.fuoriCatalogo) return null;
   const nodi = [];
+  // A.163: Contenitori del Silenzio — indicazione «Schermatura attiva/inattiva» e i due stati da toccare.
+  // Nessun calcolo della Corruzione: l'app mostra lo stato e la regola.
+  if (schermaQualcosa(r.def)) {
+    const rotto = oggettiRotti(ctx.sessione, ctx.dati).has(r.uid);
+    const stato = statoContenitore(ctx.sessione, r.uid);
+    const s = statoSchermatura(stato, { rotto }, ctx.dati);
+    const interruttore = (campo, testo) => h('label', { class: 'campo-inline casella-contenitore' },
+      h('input', { type: 'checkbox', checked: stato[campo], onchange: () => ctx.azioni.contenitore(r.uid, campo) }), ` ${testo}`);
+    nodi.push(h('div', { class: `pi-voce schermatura${s.attiva ? ' schermatura-attiva' : ''}` },
+      h('span', { class: `etichetta etichetta-schermatura${s.attiva ? ' attiva' : ''}`, title: r.def.schermatura?.testo ?? null }, s.etichetta),
+      interruttore('chiuso', 'chiuso'),
+      interruttore('riposto', 'contenuto riposto'),
+      s.motivi.length ? h('small', { class: 'motivo' }, ` ${s.motivi.join('; ')}`) : null,
+      infoValore('?', { titolo: `${s.nome} (A.163)`, sezioni: [
+        { testo: r.def.schermatura?.testo ?? '' },
+        { etichetta: 'Condizioni', testo: s.condizioni.map((c) => `${c.ok ? '✔' : '✕'} ${c.nome}`).join(' · ') },
+        { testo: s.nota ?? '' },
+        { testo: ctx.dati.regole.schermatura?.qualsiasi_contenuto ? 'Vale per qualunque contenuto interamente riposto: l’app non controlla che cosa c’è dentro.' : '' },
+      ].filter((x) => x.testo) }, { classe: 'info-gradi' })));
+  }
   const condizioni = ctx.dati.regole.condizioni_armi;
   if (condizioni && ['arma_ravvicinata', 'arma_distanza'].includes(r.tipo)) {
     const attuale = ctx.sessione.condizioniArmi?.[r.uid] ?? 'integra';

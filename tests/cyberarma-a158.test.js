@@ -98,8 +98,10 @@ test('Custodia del Silenzio (§7.25.1) nel catalogo', () => {
   assert.equal(c.nome, 'Custodia del Silenzio');
   assert.equal(c.peso, 0.3);
   assert.equal(c.costo, null, 'prezzo non indicato dai manuali: non si inventa');
-  assert.match(c._nota, /schermatura è passiva/);
-  assert.match(c._nota, /A\.163/, 'lo stato chiuso/aperto resta da decidere');
+  // A.163 (16/10): la schermatura vale per qualsiasi contenuto; «chiuso» e «riposto» si toccano nella riga
+  assert.match(c._nota, /la schermatura vale per qualsiasi contenuto: A\.163/);
+  assert.equal(c.schermatura.corruzione, 1);
+  assert.equal(c.integrita, 'da_definire', 'Qualità, PI e PS Integrità restano da definire (§10.13)');
 });
 
 test('la CyberArma resta fuori dagli acquisti automatici: niente prezzo', () => {
