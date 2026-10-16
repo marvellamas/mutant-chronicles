@@ -4,11 +4,11 @@
 
 ## *Bestiario e avversari per il Direttore*
 
-VERSIONE 0.13  •  COVATA E CATALOGO DEL BESTIARIO  •  OTTOBRE 2026
+VERSIONE 0.16  •  COVATA E CATALOGO DEL BESTIARIO  •  OTTOBRE 2026
 
 Il Manuale dei Mostri raccoglie creature, avversari e strumenti per costruire gli incontri di Simply RPG. Ogni scheda deve permettere al Direttore di capire che cosa vuole la creatura, come agisce e quali regole applicare, senza ricostruirne i valori durante la partita.
 
-Il volume comprende le regole comuni, la fauna di Iris con le nove caste della Covata nel capitolo 7 e centoquindici creature nel catalogo del capitolo 8. Le schede riportano statistiche complete e PX riferiti a quattro PG. Il metodo per assegnare i PX agli incontri è nel Manuale del Direttore §9.3.
+Il volume comprende le regole comuni, la fauna di Iris con le nove caste della Covata nel capitolo 7 e centoquarantacinque creature nel catalogo del capitolo 8. Le schede riportano statistiche complete e PX riferiti a quattro PG. Il metodo per assegnare i PX agli incontri è nel Manuale del Direttore §9.3.
 
 ## **Contenuto del volume**
 
@@ -26,7 +26,7 @@ Il volume comprende le regole comuni, la fauna di Iris con le nove caste della C
 
 7 Fauna di Iris  •  Covata e Lorath
 
-8 Catalogo delle creature  •  Centoquindici schede con GS e PX
+8 Catalogo delle creature  •  Centoquarantacinque schede con GS e PX
 
 # **1 Principi del Bestiario**
 
@@ -44,9 +44,8 @@ Il volume comprende le regole comuni, la fauna di Iris con le nove caste della C
 
 Ogni creatura viene descritta mediante informazioni indipendenti. Una creatura insettoide può essere grande, volante e corrotta contemporaneamente. La forma del corpo non determina da sola intelligenza, moralità, immunità o poteri.
 
-|  |  |
-| :-: | :-: |
-| **Voce** | **Che cosa descrive** |
+| Voce | Che cosa descrive |
+| :---- | ----- |
 | Famiglia | Umano, umanoide, insettoide, aracnoide, bestia, vegetale, costrutto, entità o altra famiglia pertinente. |
 | Anatomia | Arti, appendici, sensi e parti funzionali; guida interazioni e Menomazioni. |
 | Spazio e portata | Ingombro in Q sulla mappa e distanza raggiunta da ogni attacco. |
@@ -54,24 +53,19 @@ Ogni creatura viene descritta mediante informazioni indipendenti. Una creatura i
 | Origine | Fauna, mutazione biologica, creazione artificiale, evocazione o altra origine dichiarata. |
 | Natura | Comune oppure Oscura Simmetria, ai fini degli effetti che distinguono questi bersagli. |
 
-  
-
 Una mutazione fisica non conferisce automaticamente Natura Oscura Simmetria. Allo stesso modo, essere pericolosi o ostili non rende una creatura corrotta. La Natura Oscura Simmetria è assegnata espressamente e rende applicabili gli effetti che la richiedono. La CROS personale rimane distinta: gli incantesimi stabiliscono quando uno Stato di Corruzione costituisce un bersaglio valido.
 
 ## **2.2 Potenza ruolo e impiego**
 
 Il Grado di Sfida usa le fasce Principiante, Inesperto, Esperto, Veterano, Eroe e Leggenda. Il GS descrive il profilo nel suo insieme; non assegna automaticamente PV, Azioni o un livello equivalente dei PG. Il Lorath conserva la precedente potenza orientativa, senza conversione automatica in GS.
 
-|  |  |
-| :-: | :-: |
-| **Ruolo tattico** | **Funzione prevalente** |
+| Ruolo tattico | Funzione prevalente |
+| :---- | ----- |
 | Assaltatore | Raggiunge il bersaglio e concentra la pressione offensiva. |
 | Difensore | Protegge un passaggio, un alleato o una posizione. |
 | Tiratore | Combatte soprattutto a distanza e sfrutta le linee di tiro. |
 | Controllore | Limita movimento o azioni attraverso capacità definite. |
 | Supporto | Aiuta altri avversari mediante comandi, cure o poteri specifici. |
-
-  
 
 L’impiego distingue gregario, avversario ordinario, élite e boss. Queste etichette aiutano a preparare la scena e non concedono bonus. Un gregario conserva PV e Ferite; un boss possiede soltanto le capacità scritte nella propria scheda. Una stessa creatura può avere un ruolo secondario senza ricevere nuove azioni.
 
@@ -79,9 +73,8 @@ L’impiego distingue gregario, avversario ordinario, élite e boss. Queste etic
 
 ## **3.1 Dati da riportare**
 
-|  |  |
-| :-: | :-: |
-| **Campo** | **Contenuto operativo** |
+| Campo | Contenuto operativo |
+| :---- | ----- |
 | Nome e variante | Specie, stadio o specializzazione; stato di verifica del profilo. |
 | Identità | Famiglia, origine, Natura, ruolo, impiego e breve descrizione. |
 | Caratteristiche | FOR, DES, COS, INT, SAG, CAR. Un dato assente non vale 0. |
@@ -99,8 +92,6 @@ L’impiego distingue gregario, avversario ordinario, élite e boss. Queste etic
 | Capacità | Effetto, costo, momento, bersagli, Prove, durata e limiti d’uso. |
 | Incantesimi | Nome e versione, VA di lancio, PM, Azioni, tempo e riferimento alla scheda. |
 | Comportamento | Obiettivo, tattica, condizioni di fuga, resa o cambio di fase. |
-
-  
 
 ## **3.2 Attacchi e capacità completi**
 
@@ -180,16 +171,13 @@ Armi, munizioni e protezioni conservano requisiti, penalità, consumo e Integrit
 
 Un modulo modifica una base e descrive integralmente le modifiche: per esempio corazza più spessa, veleno, ali, rigenerazione o corruzione. Una variante riporta i valori finali risultanti. Non esiste ancora un costo universale in mezzi gradi: ogni combinazione va esaminata nel suo insieme.
 
-|  |  |
-| :-: | :-: |
-| **Combinazione** | **Verifica necessaria** |
+| Combinazione | Verifica necessaria |
+| :---- | ----- |
 | AR e rigenerazione | Il gruppo riesce a superare il recupero con opzioni realistiche? |
 | Presa e danno elevato | La vittima e gli alleati dispongono di un modo concreto per intervenire? |
 | Mobilità e distanza | Esistono finestre utili per rispondere o sottrarsi all’attacco? |
 | Attacchi extra e proprietà | Quanti colpi, Stati e perdite di Integrità può produrre un Round? |
 | Paura e altri controlli | Il cumulo lascia ai PG decisioni utili e procedure di rimozione? |
-
-  
 
 ## **5.4 Boss e fasi**
 
@@ -209,14 +197,11 @@ Stabilire prima che cosa conclude l’incontro: eliminare una minaccia, attraver
 
 Per confrontare i profili si usa inizialmente un gruppo di quattro PG, con livello, schede e risorse dichiarati. Gli scenari seguenti servono alla verifica delle caste della Covata; non definiscono incontri certificati come facili, normali o difficili.
 
-|  |  |  |
-| :-: | :-: | :-: |
-| **Scenario** | **Composizione** | **Aspetto da osservare** |
+| Scenario | Composizione | Aspetto da osservare |
+| :---- | :---: | ----- |
 | Scorta di raccolta | 3 Rasenti e 1 Raccoglitore | Terzetto, fuga del raccoglitore e disorientamento da freddo. |
 | Assalto alla barriera | 1 Corazzato e 2 Saltatori | Sfondamento, salti e separazione dei bersagli. |
 | Comando della spedizione | 1 Regina Comandante e 1 Tagliente | Azioni, Onda psichica e protezione della comandante. |
-
-  
 
 Usare inizialmente terreno leggibile, distanze dichiarate e risorse note. Ripetere poi con coperture o passaggi stretti per misurare la sensibilità al contesto. Le prove numeriche devono includere raffiche, AC, Magistrali, requisiti delle Difese, incantesimi e risorse effettivamente utilizzate.
 
@@ -246,11 +231,8 @@ La Covata è una specie insettoide delle Terre del Fuoco di Iris. Vive in comple
 
 **Paradise.** Nel corso degli ultimi cinque anni la colonia vicina a Paradise ha tentato più volte di raggiungere il cristallo rosso, ritenuto una possibile fonte di nutrimento migliore. Le incubatrici hanno sviluppato Saltatori per superare la muraglia, Corazzati per aprire brecce e Taglienti per proteggere le comandanti.
 
-  
-
-|  |  |  |
-| :-: | :-: | :-: |
-| **Casta** | **GS** | **PX per 4 PG** |
+| Casta | GS | PX per 4 PG |
+| :---- | :---- | :---- |
 | Rasente | Principiante | 10 |
 | Raccoglitore | — | 0 |
 | Trasportatore | — | 0 |
@@ -260,8 +242,6 @@ La Covata è una specie insettoide delle Terre del Fuoco di Iris. Vive in comple
 | Regina Comandante | Eroe | 70 |
 | Regina Incubatrice | — | 0 |
 | Regina Madre | — | 0 |
-
-  
 
 **I valori riguardano un esemplare.** Il trattino indica una casta non combattente; per assegnazione dei premi e obiettivi del nido si consulta il Manuale del Direttore §9.3. Le schede delle nove caste seguono; il Lorath è una creatura distinta dalla Covata.
 
@@ -303,17 +283,12 @@ I PM sono riserve personali anche per chi non possiede poteri attivi. A 0 PM si 
 
 ## **Localizzazioni**
 
-  
-
-|  |  |  |
-| :-: | :-: | :-: |
-| **Localizzazione ordinaria** | **Caste a sei arti** | **Tagliente** |
+| Localizzazione ordinaria | Caste a sei arti | Tagliente |
+| :---- | :---- | :---- |
 | Testa | Capo, sensi e mandibole | Capo, sensi e mandibole |
 | Torace | Tronco e addome | Tronco e addome |
 | Braccio destro o sinistro | Arto anteriore del lato indicato | Arto a lama del lato indicato |
 | Gamba destra o sinistra | Gruppo locomotorio del lato indicato | Gamba del lato indicato |
-
-  
 
 Le coppie locomotorie costituiscono un’unità funzionale ai fini della tabella: non moltiplicare tiri e Ferite per il numero di zampe. Ali, coda, antenne e organi ventrali non sono localizzazioni aggiuntive gratuite. Una lesione specifica dichiarata dal Direttore può limitarne l’uso, senza assegnare automaticamente quell’esito a ogni colpo alla Testa o al Torace.
 
@@ -335,33 +310,23 @@ Produzione dei grappoli, incubazione e nascita delle caste sono processi della c
 
 **Lungo circa 1,5 m e alto circa 1 m.** Corpo basso, placche scure, sei arti, mandibole e zampe anteriori artigliate. La sua funzione principale è proteggere raccoglitori e trasportatori.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Dato** | **Valore pronto** |
+| Dato | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 5 · DES 7 · COS 5 · INT 2 · SAG 5 · CAR 1 |
 | Risorse | PV 20 · PM 5 |
 | Protezioni | AR 2, di cui 0 magica · Difese 10 · Ignifugo 6 |
 | Salvezze | Tempra 10 · Riflessi 12 · Volontà 8 · Magia 9 |
-| Iniziativa e Azioni | \-1 + 1d10 · 1 AzP e 1 AzM per Round |
+| Iniziativa e Azioni | -1 + 1d10 · 1 AzP e 1 AzM per Round |
 | Movimento | Passo 8 · Corsa 16 · Scatto 24 Q · spazio 1 × 1 Q |
 | Abilità | Atletica 12 · Corpo a corpo 11 · Furtività 10 · Percezione 10 |
 | GS e PX per 4 PG | Principiante • 10 PX |
 
-  
-
 Attacchi ravvicinati di Natura Naturale; ciascuno costa 1 AzP e produce AC 1.
 
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno finale** | **Portata** |
+| Attacco | VA | Danno finale | Portata |
+| :---- | :---- | :---- | :---- |
 | Morso | 11 | 1d6+2 | 1 Q |
 | Artigli anteriori | 10 | 1d4+2 | 1 Q |
-
-  
 
 **Scalatore.** Con 1 AzM percorre fino a 4 Q su roccia o muratura dotata di appigli, anche verticale. Atletica è richiesta solo in condizioni difficili. Nessuna Corsa o Scatto in arrampicata; superfici lisce e soffitti non sono concessi automaticamente.
 
@@ -377,21 +342,16 @@ Attacchi ravvicinati di Natura Naturale; ciascuno costa 1 AzP e produce AC 1.
 
 Grande quanto un maiale, ha un carapace tondeggiante e un ventre luminoso. Raccoglie lava e la sintetizza internamente, espellendo grappoli di essenza energetica pronti al consumo.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Dato** | **Valore pronto** |
+| Dato | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 4 · DES 4 · COS 6 · INT 2 · SAG 5 · CAR 1 |
 | Risorse | PV 16 · PM 4 |
 | Protezioni | AR 1, di cui 0 magica · Difese 8 · Ignifugo 6 |
 | Salvezze | Tempra 11 · Riflessi 9 · Volontà 7 · Magia 8 |
-| Iniziativa e Azioni | \-4 + 1d10 · 1 AzP e 1 AzM per Round |
+| Iniziativa e Azioni | -4 + 1d10 · 1 AzP e 1 AzM per Round |
 | Movimento | Passo 4 · Corsa 8 · Scatto 12 Q · spazio 1 × 1 Q |
 | Abilità | Atletica 7 · Percezione 9 |
 | GS e PX per 4 PG | — • 0 PX • casta non combattente |
-
-  
 
 **Attacchi: nessuno.** Le AzP disponibili servono alle attività e alle Difese consentite.
 
@@ -409,21 +369,16 @@ Grande quanto un maiale, ha un carapace tondeggiante e un ventre luminoso. Racco
 
 Grande quanto un maiale, è simile al raccoglitore ma usa il ventre per custodire i grappoli già prodotti e trasportarli al formicaio. Non sintetizza la lava.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Dato** | **Valore pronto** |
+| Dato | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 6 · DES 4 · COS 6 · INT 2 · SAG 5 · CAR 1 |
 | Risorse | PV 18 · PM 4 |
 | Protezioni | AR 2, di cui 0 magica · Difese 8 · Ignifugo 6 |
 | Salvezze | Tempra 11 · Riflessi 9 · Volontà 7 · Magia 8 |
-| Iniziativa e Azioni | \-4 + 1d10 · 1 AzP e 1 AzM per Round |
+| Iniziativa e Azioni | -4 + 1d10 · 1 AzP e 1 AzM per Round |
 | Movimento | Passo 4 · Corsa 8 · Scatto 12 Q · spazio 1 × 1 Q |
 | Abilità | Atletica 10 · Percezione 9 |
 | GS e PX per 4 PG | — • 0 PX • casta non combattente |
-
-  
 
 **Attacchi: nessuno.** Le AzP disponibili servono alle attività e alle Difese consentite.
 
@@ -441,33 +396,23 @@ Grande quanto un maiale, è simile al raccoglitore ma usa il ventre per custodir
 
 **Più piccolo e agile del Rasente.** Le zampe posteriori e le ali membranose gli permettono salti lunghi e alti, sviluppati per superare la muraglia e raggiungere posizioni difficili.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Dato** | **Valore pronto** |
+| Dato | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 4 · DES 8 · COS 4 · INT 2 · SAG 5 · CAR 1 |
 | Risorse | PV 16 · PM 5 |
 | Protezioni | AR 1, di cui 0 magica · Difese 12 · Ignifugo 6 |
 | Salvezze | Tempra 9 · Riflessi 13 · Volontà 8 · Magia 9 |
-| Iniziativa e Azioni | \+0 + 1d10 · 1 AzP e 1 AzM per Round |
+| Iniziativa e Azioni | +0 + 1d10 · 1 AzP e 1 AzM per Round |
 | Movimento | Passo 8 · Corsa 16 · Scatto 24 Q · spazio 1 × 1 Q |
 | Abilità | Atletica 12 · Corpo a corpo 11 · Furtività 11 · Percezione 10 |
 | GS e PX per 4 PG | Principiante • 10 PX |
 
-  
-
 Attacchi ravvicinati di Natura Naturale; ciascuno costa 1 AzP e produce AC 1.
 
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno finale** | **Portata** |
+| Attacco | VA | Danno finale | Portata |
+| :---- | :---- | :---- | :---- |
 | Artigli | 12 | 1d6+1 | 1 Q |
 | Morso | 11 | 1d4+2 | 1 Q |
-
-  
 
 **Salto alare.** 1 AzM per un salto con distanza orizzontale fino a 8 Q e apice fino a 4 Q sopra il punto di partenza. Il tragitto deve essere libero; può atterrare su una superficie entro tali limiti. Nessuna Prova in condizioni ordinarie, Atletica se l’appoggio o il percorso sono difficili.
 
@@ -483,33 +428,23 @@ Attacchi ravvicinati di Natura Naturale; ciascuno costa 1 AzP e produce AC 1.
 
 Condivide la struttura del Rasente, ma presenta placche molto più spesse, spalle robuste e un rostro frontale. È stato generato per abbattere barriere e aprire passaggi nella muraglia.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Dato** | **Valore pronto** |
+| Dato | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 8 · DES 4 · COS 8 · INT 2 · SAG 5 · CAR 1 |
 | Risorse | PV 40 · PM 6 |
 | Protezioni | AR 5, di cui 0 magica · Difese 8 · Ignifugo 6 |
 | Salvezze | Tempra 14 · Riflessi 8 · Volontà 9 · Magia 10 |
-| Iniziativa e Azioni | \-4 + 1d10 · 1 AzP e 1 AzM per Round |
+| Iniziativa e Azioni | -4 + 1d10 · 1 AzP e 1 AzM per Round |
 | Movimento | Passo 5 · Corsa 10 · Scatto 15 Q · spazio 1 × 2 Q |
 | Abilità | Atletica 14 · Corpo a corpo 12 · Percezione 9 |
 | GS e PX per 4 PG | Veterano • 50 PX |
 
-  
-
 Attacchi ravvicinati di Natura Naturale; ciascuno costa 1 AzP e produce AC 1.
 
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno finale** | **Portata** |
+| Attacco | VA | Danno finale | Portata |
+| :---- | :---- | :---- | :---- |
 | Rostro | 12 | 1d10+2 | 1 Q |
 | Morso | 10 | 1d6+2 | 1 Q |
-
-  
 
 **Sfondamento.** Il Rostro infligge +4 danni contro porte, barricate e strutture immobili; totale 1d10+6 prima di Difese e AR. Si risolvono normalmente AR e Integrità del bersaglio. Non ignora la corazza dei veicoli e non abbatte automaticamente muri privi di una scheda strutturale. Il +4 di Sfondamento si aggiunge dopo l’eventuale moltiplicatore della Carica.
 
@@ -525,32 +460,22 @@ Attacchi ravvicinati di Natura Naturale; ciascuno costa 1 AzP e produce AC 1.
 
 Insettoide bipede, forte e agile, con arti superiori terminanti in lame naturali. Occupa una posizione di guardia vicino alla comandante e intercetta chi cerca di raggiungerla.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Dato** | **Valore pronto** |
+| Dato | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 7 · DES 8 · COS 7 · INT 3 · SAG 6 · CAR 2 |
 | Risorse | PV 38 · PM 8 |
 | Protezioni | AR 3, di cui 0 magica · Difese 13 · Ignifugo 6 |
 | Salvezze | Tempra 12 · Riflessi 13 · Volontà 10 · Magia 11 |
-| Iniziativa e Azioni | \+1 + 1d10 · 2 AzP e 1 AzM per Round |
+| Iniziativa e Azioni | +1 + 1d10 · 2 AzP e 1 AzM per Round |
 | Movimento | Passo 8 · Corsa 16 · Scatto 24 Q · spazio 1 × 1 Q |
 | Abilità | Atletica 13 · Corpo a corpo 14 · Furtività 11 · Percezione 12 |
 | GS e PX per 4 PG | Veterano • 50 PX |
 
-  
-
 Attacchi ravvicinati di Natura Naturale; ciascuno costa 1 AzP e produce AC 1.
 
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno finale** | **Portata** |
+| Attacco | VA | Danno finale | Portata |
+| :---- | :---- | :---- | :---- |
 | Lama naturale | 14 | 1d8+2 | 1 Q |
-
-  
 
 **Due arti a lama.** Può effettuare due attacchi separati spendendo entrambe le AzP, oppure conservarne una per la Difesa. Un attacco normale usa una sola lama: AC 1. Nessun attacco aggiuntivo gratuito per la seconda lama.
 
@@ -566,34 +491,24 @@ Attacchi ravvicinati di Natura Naturale; ciascuno costa 1 AzP e produce AC 1.
 
 **Grande quanto un furgone.** Il carapace mostra bagliori rossi e le antenne ramificate sostengono il comando telepatico. Dirige i gruppi di raccolta e combatte con morso, artigli e coda.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Dato** | **Valore pronto** |
+| Dato | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 9 · DES 6 · COS 9 · INT 6 · SAG 7 · CAR 6 |
 | Risorse | PV 70 · PM 18 |
 | Protezioni | AR 4, di cui 0 magica · Difese 11 · Ignifugo 6 |
 | Salvezze | Tempra 14 · Riflessi 10 · Volontà 13 · Magia 13 |
-| Iniziativa e Azioni | \+2 + 1d10 · 3 AzP e 1 AzM per Round |
+| Iniziativa e Azioni | +2 + 1d10 · 3 AzP e 1 AzM per Round |
 | Movimento | Passo 6 · Corsa 12 · Scatto 18 Q · spazio 2 × 3 Q |
 | Abilità | Atletica 14 · Corpo a corpo 14 · Percezione 13 |
 | GS e PX per 4 PG | Eroe • 70 PX |
 
-  
-
 Attacchi ravvicinati di Natura Naturale; ciascuno costa 1 AzP e produce AC 1.
 
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno finale** | **Portata** |
+| Attacco | VA | Danno finale | Portata |
+| :---- | :---- | :---- | :---- |
 | Morso | 14 | 2d6+2 | 1 Q |
 | Artigli | 13 | 1d8+3 | 1 Q |
 | Coda | 12 | 1d8+2 | 2 Q |
-
-  
 
 **Azioni e Difese.** Le 3 AzP sono il totale del Round. Non riceve azioni distribuite, fasi o recuperi automatici di PV. Con un arto anteriore integro può parare solo in Ravvicinato: 1 AzP, Difese 11, con esiti ordinari. Può Schivare ed effettuare Elusione.
 
@@ -613,19 +528,14 @@ Le unità possono trasmettere un allarme essenziale attraverso il collegamento. 
 
 ## **Onda psichica**
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Parametro** | **Valore operativo** |
+| Parametro | Valore operativo |
+| :---- | :---- |
 | Costo | 1 AzP e 4 PM personali; massimo una volta per Round |
 | Attivazione | Automatica; entrambe le antenne funzionali |
 | Bersagli | Fino a 3 nemici visibili, dotati di mente, entro 6 Q |
 | Danno | 1d4+2 psichico diretto per bersaglio; un unico tiro condiviso |
 | Resistenza | PS Volontà senza modificatore; niente Parata, Schivata o Elusione |
 | Disturbo | Fallimento di Volontà: −2 VA alla prossima Prova di Abilità entro fine Round successivo |
-
-  
 
 L’Onda è una capacità innata: l’attivazione consuma Azione e PM e non richiede una Prova di Potere o un tiro per colpire. Non richiede Focus, Gesto o Invocazione. Il costo si paga anche se tutti i bersagli resistono o sono protetti. Non essendoci un tiro di attivazione, non produce Magistrali o Maldestri della regina; le PS dei bersagli mantengono i propri risultati naturali.
 
@@ -641,21 +551,16 @@ A 0 PV segue il raccordo di Dardo Psichico: non infligge Ferite; se esaurisce i 
 
 Grande quanto un camion, rimane nella camera d’incubazione del formicaio. La sua funzione è generare i membri della colonia, soprattutto raccoglitori, trasportatori e Rasenti, e produrre nuove forme quando necessario.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Dato** | **Valore pronto** |
+| Dato | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 8 · DES 2 · COS 10 · INT 4 · SAG 6 · CAR 3 |
 | Risorse | PV 100 · PM 12 |
 | Protezioni | AR 3, di cui 0 magica · Difese 6 · Ignifugo 6 |
 | Salvezze | Tempra 15 · Riflessi 6 · Volontà 11 · Magia 11 |
-| Iniziativa e Azioni | \-4 + 1d10 · 1 AzP e 1 AzM per Round |
+| Iniziativa e Azioni | -4 + 1d10 · 1 AzP e 1 AzM per Round |
 | Movimento | Passo 1 Q · Corsa e Scatto non consentiti · spazio 3 × 5 Q |
 | Abilità | Percezione 10 |
 | GS e PX per 4 PG | — • 0 PX • casta non combattente |
-
-  
 
 **Attacchi: nessuno.** Le AzP disponibili servono alle attività e alle Difese consentite.
 
@@ -677,21 +582,16 @@ Grande quanto un camion, rimane nella camera d’incubazione del formicaio. La s
 
 Grande quanto un TIR, risiede nel nido centrale e governa l’intera Covata del complesso. La sua funzione riproduttiva consiste nel generare le altre regine quando la colonia ne ha bisogno. La madre insediata non lascia il formicaio.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Dato** | **Valore pronto** |
+| Dato | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 10 · DES 1 · COS 10 · INT 7 · SAG 8 · CAR 8 |
 | Risorse | PV 150 · PM 24 |
 | Protezioni | AR 4, di cui 0 magica · Difese 5 · Ignifugo 6 |
 | Salvezze | Tempra 16 · Riflessi 5 · Volontà 15 · Magia 14 |
-| Iniziativa e Azioni | \-2 + 1d10 · 1 AzP e 1 AzM per Round |
+| Iniziativa e Azioni | -2 + 1d10 · 1 AzP e 1 AzM per Round |
 | Movimento | Passo 1 Q · Corsa e Scatto non consentiti · spazio 3 × 10 Q |
 | Abilità | Percezione 12 |
 | GS e PX per 4 PG | — • 0 PX • casta non combattente |
-
-  
 
 **Attacchi: nessuno.** Le AzP disponibili servono alle attività e alle Difese consentite.
 
@@ -711,9 +611,8 @@ Grande quanto un TIR, risiede nel nido centrale e governa l’intera Covata del 
 
 **Profilo sperimentale  •  predatore adulto.** Creatura scorpioniforme dotata di chele e apparato caudale che proietta una secrezione acida. Questa variante protegge il proprio rifugio e sfrutta strettoie e ostacoli per separare gli intrusi.
 
-|  |  |
-| :-: | :-: |
-| **Voce** | **Valore** |
+| Voce | Valore |
+| :---- | ----- |
 | Classificazione | Aracnoide; Natura Comune; controllore e tiratore; specialista. Potenza orientativa: Semplice. |
 | Caratteristiche | FOR 7  ·  DES 5  ·  COS 7  ·  INT 2  ·  SAG 5  ·  CAR 1 |
 | Risorse | PV 32  ·  PM 5; nessun incantesimo |
@@ -726,8 +625,6 @@ Grande quanto un TIR, risiede nel nido centrale e governa l’intera Covata del 
 | Chela | Ravvicinato  ·  VA 12  ·  1d8+2  ·  Naturale  ·  portata 1 Q  ·  AC 1  ·  1 AzP |
 | Getto acido | Distanza  ·  VA 11  ·  1d6+2  ·  Naturale, Corrosivo  ·  gittata massima 6 Q  ·  AC 1  ·  1 AzP |
 | Immunità e Contromisure | Nessuna; danni e Stati ordinari. |
-
-  
 
 ## **Capacità e limiti**
 
@@ -747,13 +644,10 @@ Le chele non concedono Parata naturale in questo profilo. Il Lorath apre con il 
 
 Le schede presentano esemplari con le caratteristiche e la dotazione indicate. Tutte le creature di questo capitolo hanno Natura Comune; la loro eventuale presenza su Iris richiede una collocazione nell’ambientazione e non le assimila alla Covata.
 
-**PX di riferimento.** Valori per un esemplare e quattro PG, con la dotazione descritta; premio dell’incontro nel Direttore §9.3. Le prime quindici schede sono riepilogate qui. Seguono dieci blocchi di dieci, ciascuno con il proprio prospetto; l’ultimo è «Creature delle acque e popoli sommersi».
+**PX di riferimento.** Valori per un esemplare oppure uno Sciame e quattro PG, con la dotazione descritta; premio dell’incontro nel Direttore §9.3. Le prime quindici schede sono riepilogate qui. Seguono tredici blocchi di dieci, ciascuno con il proprio prospetto; l’ultimo è «Sciami e piccola fauna».
 
-  
-
-|  |  |  |
-| :-: | :-: | :-: |
-| **Creatura** | **GS** | **PX per 4 PG** |
+| Creatura | GS | PX per 4 PG |
+| :---- | :---- | :---- |
 | Aarakocra | Principiante | 11 |
 | Aboleth | Eroe | 70 |
 | Aboleth con modulo tana | Leggenda | 100 |
@@ -770,8 +664,6 @@ Le schede presentano esemplari con le caratteristiche e la dotazione indicate. T
 | Ippogrifo | Inesperto | 20 |
 | Manticora | Veterano | 50 |
 | Orsogufo | Esperto | 30 |
-
-  
 
 **Aboleth.** Il valore della variante con tana si usa quando il modulo descritto nella scheda incide effettivamente sull’incontro. La sola presenza in una tana non cambia il profilo.
 
@@ -801,11 +693,8 @@ La verifica al tavolo considera risorse consumate, Ferite, Azioni perse e contro
 
 Una sentinella alata che vive e combatte in ambienti aperti e sopraelevati. Sfrutta quota, osservazione e cooperazione; in uno spazio basso perde il proprio vantaggio principale. Nome originale: Aarakocra, p. 12.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 5 • DES 7 • COS 5 • INT 5 • SAG 6 • CAR 5 |
 | Risorse e protezioni | PV 18 • PM 6 • AR 0, componente magica 0 |
 | Difese e Salvezze | Difese 11 • Tempra 10 • Riflessi 12 • Volontà 9 • Magia 10 |
@@ -816,17 +705,11 @@ Una sentinella alata che vive e combatte in ambienti aperti e sopraelevati. Sfru
 | Protezioni specifiche | Nessuna immunità o Contromisura. Linguaggio auran nell’ambientazione originale. |
 | GS e PX per 4 PG | Principiante • 11 PX. |
 
-  
-  
-
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata** | **Costo** |
+| Attacco | VA | Danno completo | Portata | Costo |
+| :---- | :---- | :---- | :---- | :---- |
 | Artigli | 11 | 1d4+1 Naturale | 1 Q | 1 AzP • AC 1 |
 | Giavellotto a mano | 10 | 1d6 Naturale | 1 Q | 1 AzP • AC 1 |
 | Giavellotto scagliato | 11 | 1d6+1 Naturale | massimo 15 Q | 1 AzP • AC 1 |
-
-  
 
 **Volo alato.** Richiede entrambe le ali utilizzabili e spazio per distenderle. Può mantenersi in quota battendo le ali, senza un percorso minimo obbligatorio o un’AzM aggiuntiva. Non è levitazione: perdita di coscienza e impedimenti alle ali seguono Volo e Stati del §5.2.5. Decollo e atterraggio sono compresi nell’AzM. Nessuna penalità universale per colpirlo soltanto perché vola.
 
@@ -862,11 +745,8 @@ Ogni partecipante può tentare questa danza una sola volta ogni 24 ore e apparte
 
 Predatore intelligente che accumula conoscenze, sceglie servitori e prepara il terreno. La sua pericolosità nasce dall’acqua, dai condizionamenti mentali e dalle alterazioni biologiche. La malvagità dell’originale non gli assegna automaticamente Natura Oscura Simmetria. Fonte: pp. 13–14.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 9 • DES 4 • COS 8 • INT 9 • SAG 8 • CAR 8 |
 | Risorse e protezioni | PV 70 • PM 24 • AR 4 naturale, componente magica 0 |
 | Difese e Salvezze | Difese 9 • Tempra 14 • Riflessi 9 • Volontà 14 • Magia 13 |
@@ -877,16 +757,10 @@ Predatore intelligente che accumula conoscenze, sceglie servitori e prepara il t
 | Protezioni specifiche | Nessuna immunità generale. Respira sia aria sia acqua. Linguaggio delle profondità nell’originale. |
 | GS e PX per 4 PG | Eroe • 70 PX • con modulo tana attivo: Leggenda, 100 PX. |
 
-  
-  
-
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata** | **Costo** |
+| Attacco | VA | Danno completo | Portata | Costo |
+| :---- | :---- | :---- | :---- | :---- |
 | Tentacolo | 14 | 1d8+3 Naturale | 2 Q | 1 AzP • AC 1 |
 | Coda | 13 | 1d10+3 Naturale | 2 Q | 1 AzP • AC 1 |
-
-  
 
 **Azioni distribuite.** Può spendere una sola delle proprie AzP per Tentacolo, Coda o Percezione alla fine dell’Iniziativa di un avversario, al massimo due volte per Round e dopo avversari diversi. Sono comprese nelle tre AzP totali: non si aggiungono azioni leggendarie. Non concede movimento o manovre offensive fuori Iniziativa. Occorre essere cosciente, non Sorpreso e libero da impedimenti pertinenti.
 
@@ -952,11 +826,8 @@ Modulo facoltativo per un Aboleth insediato in una tana preparata. Queste opzion
 
 Grande insetto terrestre che emerge da gallerie poco profonde, afferra una preda e usa secrezioni acide. Si nutre di carne e sostanze del terreno. È indipendente dalla Covata e non possiede le sue resistenze. Fonte: p. 21.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 8 • DES 5 • COS 7 • INT 1 • SAG 6 • CAR 3 |
 | Risorse e protezioni | PV 32 • PM 6 • AR 3 naturale, componente magica 0 |
 | Difese e Salvezze | Difese 9 • Tempra 12 • Riflessi 10 • Volontà 8 • Magia 9 |
@@ -967,16 +838,10 @@ Grande insetto terrestre che emerge da gallerie poco profonde, afferra una preda
 | Protezioni specifiche | Nessuna immunità o Contromisura. A Terra la sua AR naturale scende a 1 finché non si rialza. |
 | GS e PX per 4 PG | Inesperto • 20 PX. |
 
-  
-  
-
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata** | **Costo** |
+| Attacco | VA | Danno completo | Portata | Costo |
+| :---- | :---- | :---- | :---- | :---- |
 | Morso | 12 | 1d8+2 Naturale, Corrosivo | 1 Q | 1 AzP • AC 1 |
 | Getto acido | — | 2d6+1 Naturale, Corrosivo | linea 6 × 1 Q | 1 AzP • area |
-
-  
 
 **Scavo.** Attraversa terra e sabbia, non roccia, metallo o muratura. Lascia un cunicolo stretto e instabile; non crea automaticamente un percorso sicuro per altri. Non può colpire attraverso il terreno: deve emergere e disporre di portata e linea d’attacco. Le regole comuni determinano la Sorpresa.
 
@@ -1004,11 +869,8 @@ Dopo il getto deve trascorrere tre Round interi senza ripeterlo. Esempio: usato 
 
 Predatrice che sfrutta il canto e l’altezza per separare gli intrusi. Cerca una posizione sopraelevata e una via di fuga; il suo pericolo maggiore è costringere la preda a lasciare un riparo o ad avvicinarsi a un ostacolo.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 6 • DES 6 • COS 5 • INT 4 • SAG 5 • CAR 7 |
 | Risorse e protezioni | PV 24 • PM 10 • AR 0; componente magica 0 |
 | Difese e Salvezze | Difese 10 • Tempra 10 • Riflessi 11 • Volontà 10 • Magia 10 |
@@ -1018,17 +880,11 @@ Predatrice che sfrutta il canto e l’altezza per separare gli intrusi. Cerca un
 | Sensi e protezioni | Vista e udito ordinari; nessuna immunità. Comprende e parla una lingua locale, da scegliere nell’ambientazione. |
 | GS e PX per 4 PG | Esperto • 33 PX. |
 
-  
-  
-
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno o effetto** | **Portata** | **Costo** |
+| Attacco | VA | Danno o effetto | Portata | Costo |
+| :---- | :---- | :---- | :---- | :---- |
 | Artigli | 11 | 1d6+1 Naturale | 1 Q | 1 AzP • AC 1 |
 | Randello | 10 | 1d4+1 Naturale | 1 Q | 1 AzP • AC 1 |
 | Canto | — | Richiamo; Volontà | 24 Q | 1 AzP • 2 PM |
-
-  
 
 **Sequenza.** Al massimo un attacco con Artigli e uno con Randello nel Round; ognuno usa una propria AzP. Iniziare o mantenere il Canto occupa una delle due AzP. L’Attacco di Opportunità ordinario resta distinto da questi limiti.
 
@@ -1044,18 +900,13 @@ Predatrice che sfrutta il canto e l’altezza per separare gli intrusi. Cerca un
 
 Colpisce gli umanoidi e i giganti che possiedono una mente e odono direttamente il canto entro 24 Q. Non richiede una lingua comune né la vista dell’Arpia. Non attraversa barriere che ne impediscono l’ascolto e una registrazione non trasmette il potere. Ogni nuovo ascoltatore effettua subito Volontà senza modificatore; un successo lo rende immune a questa Arpia per 24 ore.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Esito o momento** | **Risoluzione** |
+| Esito o momento | Risoluzione |
+| :---- | :---- |
 | Fallimento iniziale | Subisce Richiamo, un effetto specifico di questa capacità. Alla propria Iniziativa usa la propria AzM disponibile al Passo per avvicinarsi lungo il percorso più diretto praticabile; si ferma a 1 Q dall’Arpia. |
 | Azioni disponibili | Non può attaccare né scegliere altre attività. Può difendersi e compiere soltanto azioni necessarie a percorrere la via, come aprire una porta accessibile. Non riceve Azioni o Movimento aggiuntivi; conserva Salvezze e resistenze passive. |
 | Pericolo evidente | Prima di entrare in un luogo evidentemente dannoso, come un precipizio o la lava, effettua una nuova Volontà con +2. Successo termina il Richiamo; fallimento consente il passo pericoloso e poi si applicano le regole dell’ambiente. |
 | Fine della propria Iniziativa | Effettua una nuova Volontà senza modificatore, anche se non ha potuto muoversi. Successo termina il Richiamo e concede l’immunità di 24 ore. |
 | Danno subito | Dopo ogni attacco o evento che gli infligge almeno 1 danno effettivo, effettua una nuova Volontà senza modificatore. Vale anche per danni dell’Arpia. Un successo termina il Richiamo e concede l’immunità. |
-
-  
 
 Il movimento è imposto: non provoca Attacchi di Opportunità da uscita volontaria. Una porta chiusa a chiave o un impedimento materiale non viene superato automaticamente. Un bersaglio già sotto Richiamo ignora i canti di altre Arpie finché il primo effetto persiste; non si moltiplicano spostamenti e Azioni negate.
 
@@ -1071,11 +922,8 @@ Barriera Mentale aggiunge il proprio bonus a tutte queste PS Volontà; non conce
 
 Rettile massiccio e lento, riconoscibile per le prede pietrificate attorno al rifugio. La minaccia principale è lo sguardo; avvertire i personaggi con tracce e statue rende possibile affrontarlo con una strategia. Nome originale: Basilisk, p. 24.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 7 • DES 4 • COS 7 • INT 1 • SAG 4 • CAR 3 |
 | Risorse e protezioni | PV 32 • PM 8 • AR 3 naturale, componente magica 0 |
 | Difese e Salvezze | Difese 8 • Tempra 12 • Riflessi 8 • Volontà 8 • Magia 10 |
@@ -1085,16 +933,10 @@ Rettile massiccio e lento, riconoscibile per le prede pietrificate attorno al ri
 | Protezioni specifiche | Nessuna immunità o Contromisura; non è immune al proprio sguardo riflesso. |
 | GS e PX per 4 PG | Veterano • 50 PX. |
 
-  
-  
-
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata** | **Costo** |
+| Attacco | VA | Danno completo | Portata | Costo |
+| :---- | :---- | :---- | :---- | :---- |
 | Morso | 12 | 1d8+2 Naturale; veleno se penetra | 1 Q | 1 AzP • AC 1 |
 | Sguardo pietrificante | — | Trasformazione; vedi procedura | 6 Q | 1 AzP + 2 PM |
-
-  
 
 **Veleno del morso.** Se almeno 1 danno del Morso supera l’AR, un bersaglio biologicamente vivente subisce un’esposizione a veleno naturale di Pericolosità II, Importante. Tempra senza modificatore: successo dimezza per eccesso 1d4+1 danni, fallimento li subisce interamente. È una sola perdita immediata che ignora AR; non aggiunge uno Stato o danni periodici. A 0 PV si applicano le Ferite. Il veleno è una conseguenza separata del colpo, non una seconda AC del morso.
 
@@ -1108,17 +950,12 @@ Rettile massiccio e lento, riconoscibile per le prede pietrificate attorno al ri
 
 Capacità innata: 1 AzP e 2 PM, un bersaglio biologicamente vivente entro 6 Q. Basilisco e bersaglio devono vedersi direttamente negli occhi. Non funziona attraverso immagini, registrazioni o una semplice posizione percepita. Il riflesso in uno specchio costituisce l’eccezione descritta sotto. Nessuna Prova per colpire e nessuna Parata, Schivata o Elusione.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Fase** | **Risoluzione** |
+| Fase | Risoluzione |
+| :---- | :---- |
 | Primo contatto | Tempra senza modificatore. Successo: nessun effetto. Fallimento: Immobilizzato, ma cosciente. Nessun danno diretto. |
 | Verifica successiva | Alla fine della successiva Iniziativa della vittima, una sola nuova Tempra senza modificatore proprio. Successo: termina Immobilizzato. Fallimento: completa la pietrificazione. Non serve mantenere il contatto visivo. |
 | Pietrificato | Diventa una statua inerte: nessuna Azione, Movimento, percezione o Difesa attiva; Concentrazione e Focalizzazione terminano. Non è morto e non ha bisogno di respirare o nutrirsi. |
 | Rimozione | Le due fasi costituiscono un unico effetto persistente di potenza 6. Questa scheda ammette espressamente Negare Potere secondo il §23.6, anche dopo la trasformazione completa. |
-
-  
 
 La trasformazione non ripristina PV, PM, Ferite o parti perdute e non termina con la morte del Basilisco. La statua mantiene il totale di AR che il bersaglio possedeva all’ingresso nella pietrificazione, con la stessa componente magica; non ottiene una nuova corazza. I danni ricevuti si risolvono sui PV e, quando dovuto, sulle Ferite con le normali Salvezze passive. Le lesioni rimangono al ritorno alla carne. Ferite oltre Grave seguono Morente; la pietrificazione non ne sospende il contatore e non resuscita una vittima morta.
 
@@ -1138,11 +975,8 @@ Le normali cure biologiche non agiscono sulla statua finché l’effetto non è 
 
 **Felino a sei zampe con due tentacoli dorsali.** Un’alterazione della luce ne sposta l’immagine apparente, mentre il corpo rimane materiale. Colpisce oltre la portata delle prede e tenta di attirarle verso un secondo predatore nascosto.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 8 • DES 7 • COS 7 • INT 3 • SAG 6 • CAR 4 |
 | Risorse e protezioni | PV 38 • PM 8 • AR 1 naturale; componente magica 0 |
 | Difese e Salvezze | Difese 12 • Tempra 12 • Riflessi 13 • Volontà 9 • Magia 10 |
@@ -1152,15 +986,9 @@ Le normali cure biologiche non agiscono sulla statua finché l’effetto non è 
 | Sensi e protezioni | Scurovisione 12 Q. Nessuna immunità generale; la distorsione non rende incorporea. |
 | GS e PX per 4 PG | Esperto • 30 PX. |
 
-  
-  
-
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno o effetto** | **Portata** | **Costo** |
+| Attacco | VA | Danno o effetto | Portata | Costo |
+| :---- | :---- | :---- | :---- | :---- |
 | Tentacolo | 13 | 1d8+2 Naturale | 2 Q | 1 AzP • AC 1 |
-
-  
 
 **Tentacoli.** Al massimo due attacchi ordinari con Tentacolo per Round, ciascuno con la propria AzP. Se è utilizzabile un solo tentacolo, il massimo scende a uno. I tentacoli non concedono Parata naturale; rimangono le Difese comuni e l’Attacco di Opportunità ordinario.
 
@@ -1196,11 +1024,8 @@ Occorre poter percepire l’effetto e avere spazio per una schivata fisicamente 
 
 Massiccio predatore dal dorso corazzato, capace di attraversare terreno cedevole e piombare sulla preda con un balzo. Un solco che si avvicina, vibrazioni e cedimenti del suolo possono annunciarlo prima dell’emersione.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 10 • DES 5 • COS 9 • INT 2 • SAG 5 • CAR 2 |
 | Risorse e protezioni | PV 52 • PM 6 • AR 4 naturale; componente magica 0 |
 | Difese e Salvezze | Difese 9 • Tempra 14 • Riflessi 9 • Volontà 8 • Magia 9 |
@@ -1210,16 +1035,10 @@ Massiccio predatore dal dorso corazzato, capace di attraversare terreno cedevole
 | Sensi e protezioni | Scurovisione 12 Q; percezione delle vibrazioni 12 Q. Nessuna immunità generale. |
 | GS e PX per 4 PG | Veterano • 50 PX. |
 
-  
-  
-
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno o effetto** | **Portata** | **Costo** |
+| Attacco | VA | Danno o effetto | Portata | Costo |
+| :---- | :---- | :---- | :---- | :---- |
 | Morso | 13 | 1d10+3 Naturale | 1 Q | 1 AzP • AC 1 |
 | Balzo dirompente | — | 2d6+3 Naturale; Riflessi | Vedi capacità | 1 AzP + 1 AzM |
-
-  
 
 **Limite offensivo.** Può usare al massimo un Morso oppure un Balzo dirompente nel Round. La seconda AzP rimane disponibile per Difese o altre attività, non per aggirare il limite con un’altra manovra offensiva. Resta escluso da questo limite il singolo Attacco di Opportunità ordinario.
 
@@ -1243,15 +1062,10 @@ Nel terreno e nelle condizioni ordinarie non serve Atletica entro questi limiti.
 
 Lo spazio finale di 2 × 2 Q deve essere libero; non può concludere il salto sovrapposta a una creatura o dentro un ostacolo. La capacità rappresenta l’urto con zampe e massa all’arrivo, non una caduta sulla casella occupata dalla vittima. Il salto e l’attacco si risolvono nella stessa Iniziativa.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Riflessi del bersaglio** | **Conseguenza** |
+| Riflessi del bersaglio | Conseguenza |
+| :---- | :---- |
 | Successo | Dimezza per eccesso 2d6+3 danni Naturali prima dell’AR; non cade A Terra. |
 | Fallimento | Subisce 2d6+3 danni Naturali, ridotti dall’AR, e cade A Terra anche se l’AR azzera il danno. |
-
-  
 
 Una sola applicazione per bersaglio, senza Parata, Schivata o Elusione aggiuntive. Non applica il moltiplicatore della Carica e non concede un Morso gratuito. Creature di massa paragonabile a un veicolo non vengono abbattute automaticamente: non sono bersagli ammessi da questa versione del Balzo.
 
@@ -1265,11 +1079,8 @@ La Bulette emerge e tenta il balzo quando più prede sono vicine. Passaggi stret
 
 Corpo leonino e caprino, ali membranose e tre teste: leone, capra e drago. Controlla un territorio ampio e può aprire lo scontro dall’alto. La sua origine su Iris va definita senza importare automaticamente la genealogia demoniaca dell’originale.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 9 • DES 5 • COS 8 • INT 2 • SAG 7 • CAR 5 |
 | Risorse e protezioni | PV 60 • PM 8 • AR 3 naturale; componente magica 0 |
 | Difese e Salvezze | Difese 9 • Tempra 13 • Riflessi 9 • Volontà 10 • Magia 10 |
@@ -1279,18 +1090,12 @@ Corpo leonino e caprino, ali membranose e tre teste: leone, capra e drago. Contr
 | Sensi e protezioni | Scurovisione 12 Q. Nessuna immunità o resistenza automatica al fuoco; comprende una lingua dell’ambientazione ma non la parla. |
 | GS e PX per 4 PG | Eroe • 70 PX. |
 
-  
-  
-
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno o effetto** | **Portata** | **Costo** |
+| Attacco | VA | Danno o effetto | Portata | Costo |
+| :---- | :---- | :---- | :---- | :---- |
 | Morso | 13 | 1d8+3 Naturale | 1 Q | 1 AzP • AC 1 |
 | Corna | 12 | 1d8+3 Naturale | 1 Q | 1 AzP • AC 1 |
 | Artigli | 13 | 1d6+3 Naturale | 1 Q | 1 AzP • AC 1 |
 | Soffio di fuoco | — | 2d6+3 Naturale, Fuoco | Cono 3 Q | 1 AzP • area |
-
-  
 
 **Tre opzioni ordinarie.** Nel Round può usare al massimo un Morso, un attacco di Corna e uno di Artigli. Ognuno costa una delle tre AzP. Può rinunciare a uno o più attacchi per difendersi; le tre teste non le concedono Reazioni o Azioni fuori Iniziativa.
 
@@ -1328,11 +1133,8 @@ A Ferita Grave o con le ali compromesse cerca di difendere una posizione o negoz
 
 **Creatura nervosa con tratti di volatile e rettile.** Cerca piccoli alimenti e attacca soprattutto per difendersi o proteggere il nido. Il pericolo della beccata risiede nella trasformazione che può avviare, più che nel danno fisico.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 3 • DES 6 • COS 5 • INT 1 • SAG 6 • CAR 2 |
 | Risorse e protezioni | PV 14 • PM 6 • AR 0; componente magica 0 |
 | Difese e Salvezze | Difese 10 • Tempra 9 • Riflessi 11 • Volontà 8 • Magia 10 |
@@ -1342,15 +1144,9 @@ A Ferita Grave o con le ali compromesse cerca di difendere una posizione o negoz
 | Sensi e protezioni | Scurovisione 12 Q; nessuna immunità generale. Non comprende ordini complessi. |
 | GS e PX per 4 PG | Inesperto • 20 PX. |
 
-  
-  
-
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno o effetto** | **Portata** | **Costo** |
+| Attacco | VA | Danno o effetto | Portata | Costo |
+| :---- | :---- | :---- | :---- | :---- |
 | Beccata | 10 | 1d4 Naturale; possibile pietrificazione | 1 Q | 1 AzP • AC 1 |
-
-  
 
 **Condizione di attivazione.** La pietrificazione si avvia soltanto se la Beccata infligge almeno 1 danno dopo le protezioni a un organismo biologicamente vivente. È una proprietà innata del contatto lesivo: non richiede un’altra AzP o PM. Un colpo annullato o assorbito interamente dall’AR non la attiva.
 
@@ -1360,17 +1156,12 @@ A Ferita Grave o con le ali compromesse cerca di difendere una posizione o negoz
 
 # **Cockatrice pietrificazione temporanea**
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Fase** | **Procedura** |
+| Fase | Procedura |
+| :---- | :---- |
 | Prima resistenza | Dopo la Beccata che supera l’AR, Tempra con +2. Successo: nessun effetto. Fallimento: Immobilizzato, ma cosciente; gli arti sono bloccati dalla trasformazione. |
 | Seconda resistenza | Alla fine della successiva Iniziativa della vittima, una nuova Tempra con +2. Successo: termina Immobilizzato. Fallimento: la vittima diventa una statua per 24 ore dal completamento. |
 | Nuove beccate | Infliggono i normali danni, ma non accelerano una trasformazione già avviata e non impongono ulteriori tiri prima della seconda resistenza. |
 | Conclusione | Dopo 24 ore torna alla condizione biologica originaria, conservando danni, Ferite e Menomazioni. La morte della Cockatrice non termina anticipatamente l’effetto. |
-
-  
 
 ## **Condizione di statua**
 
@@ -1394,11 +1185,8 @@ Non è un veleno o una malattia: Cura Avvelenamenti e Cura Malattie non bastano.
 
 Aracnoide dall’assetto quasi umanoide, capace di appendersi alle superfici e tendere filamenti lungo i passaggi. Sorveglia le proprie ragnatele attraverso le vibrazioni e preferisce avvicinarsi a una preda già trattenuta.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 6 • DES 7 • COS 6 • INT 3 • SAG 6 • CAR 3 |
 | Risorse e protezioni | PV 28 • PM 6 • AR 1 naturale; componente magica 0 |
 | Difese e Salvezze | Difese 11 • Tempra 10 • Riflessi 12 • Volontà 9 • Magia 9 |
@@ -1408,17 +1196,11 @@ Aracnoide dall’assetto quasi umanoide, capace di appendersi alle superfici e t
 | Sensi e protezioni | Scurovisione 12 Q. Nessuna immunità al veleno; ignora gli impedimenti delle normali ragnatele. |
 | GS e PX per 4 PG | Esperto • 30 PX. |
 
-  
-  
-
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno o effetto** | **Portata** | **Costo** |
+| Attacco | VA | Danno o effetto | Portata | Costo |
+| :---- | :---- | :---- | :---- | :---- |
 | Morso | 12 | 1d6+1 Naturale; veleno se penetra | 1 Q | 1 AzP • AC 1 |
 | Artigli | 12 | 1d6+2 Naturale | 1 Q | 1 AzP • AC 1 |
 | Getto di seta | 12 | Immobilizzato; vedi capacità | Massimo 12 Q | 1 AzP |
-
-  
 
 **Sequenza.** Al massimo un Morso e un attacco di Artigli per Round. Il Getto di seta impiega una delle due AzP e rispetta il proprio recupero: non si aggiunge ai due attacchi. Restano l’Attacco di Opportunità ordinario e le Difese comuni, senza Parata naturale.
 
@@ -1444,16 +1226,11 @@ Quando tocca una propria ragnatela continua localizza entro 12 Q le creature che
 
 Dopo l’uso devono trascorrere tre Round successivi senza Getto: utilizzato nel Round 1, torna disponibile nel Round 5. Le reti già prodotte persistono finché non vengono rimosse; non dipendono dalla coscienza dell’Ettercap. Una nuova rete sulla stessa vittima non aggiunge penalità o strati di liberazione.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Liberazione** | **Procedura** |
+| Liberazione | Procedura |
+| :---- | :---- |
 | Spezzare la rete | La vittima spende 1 AzP ed effettua Atletica, con il normale −4 di Immobilizzato. Un successo la libera; il tentativo è espressamente consentito anche con gli arti legati. |
 | Taglio da parte di un alleato | Un alleato adiacente, con una lama idonea utilizzabile, spende 1 AzP e taglia la rete senza tiro né danno alla vittima. Occorre poter raggiungere materialmente i legami. |
 | Fuoco | Un attacco da Fuoco che raggiunge la tela e le infligge almeno 1 danno la distrugge. L’attacco conserva i propri bersagli: se è un’area, coinvolge normalmente anche il prigioniero. |
-
-  
 
 È materia biologica, non un effetto magico attivo: Negare Potere non la dissolve. Non usa la Classe Armatura e i punti ferita della rete di D\&D; le procedure sopra sostituiscono quel sottosistema per questa conversione.
 
@@ -1465,11 +1242,8 @@ Dopo l’uso devono trascorrere tre Round successivi senza Getto: utilizzato nel
 
 Predatore delle rocce e delle caverne, con quattro tentacoli attorno al becco. Attende quasi immobile presso un passaggio e tenta di portare la preda ferita alla bocca. Il profilo riguarda l’esemplare comune, non il Grick Alfa.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 6 • DES 6 • COS 5 • INT 2 • SAG 6 • CAR 2 |
 | Risorse e protezioni | PV 24 • PM 5 • AR 1 naturale; 4 contro colpi fisici Naturali, vedi sotto; magica 0 |
 | Difese e Salvezze | Difese 10 • Tempra 10 • Riflessi 10 • Volontà 8 • Magia 9 |
@@ -1479,16 +1253,10 @@ Predatore delle rocce e delle caverne, con quattro tentacoli attorno al becco. A
 | Sensi e protezioni | Scurovisione 12 Q; nessuna immunità generale. |
 | GS e PX per 4 PG | Inesperto • 20 PX. |
 
-  
-  
-
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno o effetto** | **Portata** | **Costo** |
+| Attacco | VA | Danno o effetto | Portata | Costo |
+| :---- | :---- | :---- | :---- | :---- |
 | Tentacoli | 12 | 1d8+1 Naturale | 1 Q | 1 AzP • AC 1 |
 | Becco | 11 | 1d6+1 Naturale; condizionato | 1 Q | 1 AzP • AC 1 |
-
-  
 
 **Tentacoli e Becco.** Un solo attacco di Tentacoli per Round. Se infligge almeno 1 danno dopo l’AR, può spendere la seconda AzP per un Becco contro la stessa vittima nella medesima Iniziativa. Il Becco non è gratuito e non è disponibile contro un’altra vittima. Un Attacco di Opportunità usa soltanto Tentacoli, senza aggiungere Becco.
 
@@ -1504,11 +1272,8 @@ Predatore delle rocce e delle caverne, con quattro tentacoli attorno al becco. A
 
 **Predatore dal corpo leonino, ali e capo di rapace.** Sorveglia ampie zone aperte e può concentrarsi su una cavalcatura o su un animale da branco, invece di attaccare immediatamente chi lo accompagna.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 8 • DES 7 • COS 7 • INT 2 • SAG 6 • CAR 3 |
 | Risorse e protezioni | PV 36 • PM 6 • AR 1 naturale; componente magica 0 |
 | Difese e Salvezze | Difese 11 • Tempra 12 • Riflessi 12 • Volontà 8 • Magia 9 |
@@ -1518,16 +1283,10 @@ Predatore delle rocce e delle caverne, con quattro tentacoli attorno al becco. A
 | Sensi e protezioni | Scurovisione 12 Q; nessuna immunità. La vista acuta non rivela automaticamente invisibili o bersagli nascosti. |
 | GS e PX per 4 PG | Esperto • 30 PX. |
 
-  
-  
-
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno o effetto** | **Portata** | **Costo** |
+| Attacco | VA | Danno o effetto | Portata | Costo |
+| :---- | :---- | :---- | :---- | :---- |
 | Becco | 12 | 1d6+2 Naturale | 1 Q | 1 AzP • AC 1 |
 | Artigli | 13 | 1d8+2 Naturale | 1 Q | 1 AzP • AC 1 |
-
-  
 
 **Sequenza offensiva.** Al massimo un Becco e un attacco di Artigli per Round, ognuno con la propria AzP. La Picchiata usa la Carica comune su un solo attacco. Non afferra né trasporta automaticamente una preda colpita; presa, carico e Movimento richiedono le normali condizioni.
 
@@ -1541,11 +1300,8 @@ Predatore delle rocce e delle caverne, con quattro tentacoli attorno al becco. A
 
 **Creatura con tratti equini e di rapace.** Tende a evitare conflitti inutili, ma difende il compagno e i piccoli. Può essere addestrabile senza diventare per questo mansueta o automaticamente disponibile al trasporto.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 7 • DES 6 • COS 6 • INT 2 • SAG 6 • CAR 3 |
 | Risorse e protezioni | PV 24 • PM 6 • AR 0; componente magica 0 |
 | Difese e Salvezze | Difese 10 • Tempra 10 • Riflessi 11 • Volontà 8 • Magia 9 |
@@ -1555,16 +1311,10 @@ Predatore delle rocce e delle caverne, con quattro tentacoli attorno al becco. A
 | Sensi e protezioni | Vista e udito ordinari; vista acuta come sopra, senza scurovisione o immunità. |
 | GS e PX per 4 PG | Inesperto • 20 PX. |
 
-  
-  
-
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno o effetto** | **Portata** | **Costo** |
+| Attacco | VA | Danno o effetto | Portata | Costo |
+| :---- | :---- | :---- | :---- | :---- |
 | Becco | 11 | 1d6+2 Naturale | 1 Q | 1 AzP • AC 1 |
 | Artigli | 11 | 1d6+2 Naturale | 1 Q | 1 AzP • AC 1 |
-
-  
 
 **Attacchi e movimento.** Al massimo un Becco e un attacco di Artigli per Round, ciascuno con un’AzP. Può usare la Carica, anche in Picchiata, migliorando soltanto un attacco. La velocità non concede una ritirata gratuita dopo il colpo. Non possiede Parata naturale.
 
@@ -1578,11 +1328,8 @@ Predatore delle rocce e delle caverne, con quattro tentacoli attorno al becco. A
 
 Predatore leonino con testa dai tratti umanoidi, ali e coda carica di spine. È abbastanza intelligente da alternare minacce e contrattazione e da consumare munizioni naturali per indebolire una preda prima della mischia.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 8 • DES 7 • COS 7 • INT 4 • SAG 6 • CAR 4 |
 | Risorse e protezioni | PV 40 • PM 8 • AR 2 naturale; componente magica 0 |
 | Difese e Salvezze | Difese 11 • Tempra 12 • Riflessi 12 • Volontà 9 • Magia 10 |
@@ -1592,17 +1339,11 @@ Predatore leonino con testa dai tratti umanoidi, ali e coda carica di spine. È 
 | Sensi e protezioni | Scurovisione 12 Q; nessuna immunità. Comprende e parla una lingua dell’ambientazione. |
 | GS e PX per 4 PG | Veterano • 50 PX. |
 
-  
-  
-
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno o effetto** | **Portata** | **Costo** |
+| Attacco | VA | Danno o effetto | Portata | Costo |
+| :---- | :---- | :---- | :---- | :---- |
 | Morso | 12 | 1d6+2 Naturale | 1 Q | 1 AzP • AC 1 |
 | Artigli | 12 | 1d6+2 Naturale | 1 Q | 1 AzP • AC 1 |
 | Spina caudale | 12 | 1d6+2 Naturale | Massimo 40 Q | 1 AzP • AC 1 |
-
-  
 
 **Sequenza.** Nel Round può usare al massimo un Morso, due attacchi di Artigli e tre Spine, entro il budget complessivo di tre AzP. È consentito combinarli: i massimi non si sommano in sei attacchi. Ogni colpo costa una propria AzP; il multiattacco dell’originale non diventa una singola Azione.
 
@@ -1616,17 +1357,12 @@ Predatore leonino con testa dai tratti umanoidi, ali e coda carica di spine. È 
 
 **Riserva massima 24 spine.** Ogni tiro ne consuma una, anche se manca o viene evitato. Il costo di 1 AzP comprende il rilascio; non serve un’azione di estrazione o ricarica fra le spine. Non sono Tiro Rapido o Raffica: ogni tiro ha il proprio VA, bersaglio, Difesa e danno.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Distanza** | **VA prima degli altri modificatori** |
+| Distanza | VA prima degli altri modificatori |
+| :---- | :---- |
 | 1–10 Q | 12 |
 | 11–20 Q | 10 |
 | 21–40 Q | 8 |
 | Oltre 40 Q | Non può colpire con questa capacità |
-
-  
 
 Si applicano Copertura, impedimenti e Difese pertinenti agli attacchi a distanza. Una spina non infligge veleno e non causa automaticamente Sanguinamento o Immobilizzato; eventuali conseguenze derivano dalle normali Ferite. Il danno è Naturale, senza capacità perforante speciale oltre alle regole comuni.
 
@@ -1648,11 +1384,8 @@ A Ferita Seria, con poche spine o davanti a una preda troppo costosa può tentar
 
 Predatore dalla massa di un orso e dal capo di un rapace notturno. Difende il territorio, conserva carcasse nella tana e può cacciare da solo o in coppia. L’origine fantastica non lo rende automaticamente una creatura dell’Oscura Simmetria. Nome originale: Owlbear, p. 249.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 10 • DES 6 • COS 8 • INT 2 • SAG 6 • CAR 3 |
 | Risorse e protezioni | PV 42 • PM 6 • AR 2 naturale, componente magica 0 |
 | Difese e Salvezze | Difese 10 • Tempra 13 • Riflessi 10 • Volontà 8 • Magia 10 |
@@ -1662,16 +1395,10 @@ Predatore dalla massa di un orso e dal capo di un rapace notturno. Difende il te
 | Sensi e protezioni | Scurovisione 12 Q; nessuna immunità o Contromisura. Non possiede volo. |
 | GS e PX per 4 PG | Esperto • 30 PX. |
 
-  
-  
-
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata** | **Costo** |
+| Attacco | VA | Danno completo | Portata | Costo |
+| :---- | :---- | :---- | :---- | :---- |
 | Becco | 13 | 1d6+3 Naturale | 1 Q | 1 AzP • AC 1 |
 | Artigli | 13 | 1d8+3 Naturale | 1 Q | 1 AzP • AC 1 |
-
-  
 
 **Sequenza offensiva.** Può effettuare al massimo un attacco con Becco e uno con Artigli per Round; entrambi richiedono la propria AzP. Può riservare una delle due AzP per difendersi o per un’altra attività. Un normale Attacco di Opportunità resta disponibile alle condizioni comuni ed è escluso dal limite della sequenza; non diventa una coppia di attacchi.
 
@@ -1687,11 +1414,8 @@ Predatore dalla massa di un orso e dal capo di un rapace notturno. Difende il te
 
 Queste schede aggiungono al capitolo 8 avversari capaci di sfruttare equipaggiamento, cooperazione, forza fisica e rigenerazione. Descrivono esemplari ordinari: capi, sciamani, varianti alate e versioni corrotte richiedono schede proprie. La loro presenza su Iris resta una scelta di ambientazione.
 
-  
-
-|  |  |  |
-| :-: | :-: | :-: |
-| **Creatura** | **GS** | **PX per 4 PG** |
+| Creatura | GS | PX per 4 PG |
+| :---- | :---: | :---: |
 | Goblin | Principiante | 11 |
 | Hobgoblin | Inesperto | 22 |
 | Bugbear | Esperto | 33 |
@@ -1702,8 +1426,6 @@ Queste schede aggiungono al capitolo 8 avversari capaci di sfruttare equipaggiam
 | Ettin | Veterano | 55 |
 | Minotauro | Veterano | 55 |
 | Troll | Eroe | 70 |
-
-  
 
 **PX di riferimento.** Il valore riguarda un esemplare e comprende la dotazione indicata. Per un incontro con più avversari si applica il Manuale del Direttore §9.3. Le statistiche rimangono quelle della scheda al variare del numero dei PG.
 
@@ -1737,11 +1459,8 @@ Queste schede aggiungono al capitolo 8 avversari capaci di sfruttare equipaggiam
 
 Piccolo ricognitore che sfrutta ripari, passaggi stretti e tiri dalle retrovie. Questa variante usa una balestra piccola al posto dell’arco dell’originale. Fonte: Goblin, p. 166.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 3 • DES 7 • COS 4 • INT 5 • SAG 4 • CAR 4 |
 | Risorse e protezioni | PV 14 • PM 5 • AR 2 con scudo, 1 senza; componente magica 0 |
 | Difese e Salvezze | Difese 10 • Tempra 8 • Riflessi 11 • Volontà 8 • Magia 8 |
@@ -1750,16 +1469,10 @@ Piccolo ricognitore che sfrutta ripari, passaggi stretti e tiri dalle retrovie. 
 | Abilità | Mischia 10 • Lancio 10 • Furtività 13 • Percezione 9 • Atletica 9 |
 | GS e PX per 4 PG | Principiante • 11 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Spada leggera | 10 | 1d6+2 | 1 Q |
 | Balestra piccola | 10 | 1d4+2 | massimo 30 Q |
-
-  
 
 **Sgusciare.** Una volta per Round, durante il proprio Passo, può evitare l’Attacco di Opportunità di un solo nemico visibile quando ne lascia la portata. Deve dichiararlo prima di muoversi. Gli altri nemici mantengono i propri Attacchi di Opportunità. Non concede movimento o Azioni aggiuntivi e non funziona con Corsa, Scatto o Carica.
 
@@ -1775,11 +1488,8 @@ Piccolo ricognitore che sfrutta ripari, passaggi stretti e tiri dalle retrovie. 
 
 Soldato addestrato a presidiare accessi e concentrare gli attacchi insieme ai compagni. Il profilo comprende armatura media e scudo medio. Fonte: Hobgoblin, p. 186.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 6 • DES 5 • COS 6 • INT 5 • SAG 5 • CAR 5 |
 | Risorse e protezioni | PV 22 • PM 6 • AR 5 con scudo, 3 senza; componente magica 0 |
 | Difese e Salvezze | Parata 11 • Schivata/Elusione 10 • Tempra 10 • Riflessi 9 • Volontà 10 • Magia 9 |
@@ -1788,16 +1498,10 @@ Soldato addestrato a presidiare accessi e concentrare gli attacchi insieme ai co
 | Abilità | Guerra 11 • Lancio 10 • Percezione 11 • Atletica 10 • Furtività 8 |
 | GS e PX per 4 PG | Inesperto • 22 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Spada lunga | 11 | 1d8+2 | 1 Q |
 | Arco da guerra | 10 | 1d6+1 | massimo 100 Q |
-
-  
 
 **Attacco coordinato.** Una volta per Round, un colpo d’arma a segno infligge +2 danni prima di moltiplicatori, Difese e AR se un alleato cosciente del soldato è entro 1 Q dal bersaglio e può minacciarlo in mischia. Il bonus riguarda una sola applicazione, anche con Tiro Rapido. Non richiede un’azione all’alleato e non cresce con il numero dei compagni.
 
@@ -1813,11 +1517,8 @@ Soldato addestrato a presidiare accessi e concentrare gli attacchi insieme ai co
 
 Massiccio cacciatore capace di attendere al riparo e colpire chi si separa dal gruppo. La forza del primo impatto è distinta dal semplice fatto di agire prima. Fonte: Bugbear, p. 33.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 7 • DES 6 • COS 6 • INT 4 • SAG 5 • CAR 4 |
 | Risorse e protezioni | PV 30 • PM 6 • AR 2 con scudo, 1 senza; componente magica 0 |
 | Difese e Salvezze | Difese 10 • Tempra 11 • Riflessi 10 • Volontà 9 • Magia 9 |
@@ -1826,17 +1527,11 @@ Massiccio cacciatore capace di attendere al riparo e colpire chi si separa dal g
 | Abilità | Mischia 12 • Guerra 11 • Lancio 10 • Furtività 13 • Percezione 10 • Sopravvivenza 11 |
 | GS e PX per 4 PG | Esperto • 33 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Mazza ferrata | 12 | 1d6+4 | 1 Q |
 | Giavellotto a mano | 11 | 1d6+3 | 1 Q |
 | Giavellotto scagliato | 10 | 1d6+1 | massimo 21 Q |
-
-  
 
 **Forza brutale.** I danni ravvicinati includono un bonus innato di +2, oltre al bonus ordinario di Caratteristica. Il bonus non appartiene all’arma recuperata, non si aggiunge al lancio e non aumenta i danni periodici.
 
@@ -1852,11 +1547,8 @@ Massiccio cacciatore capace di attendere al riparo e colpire chi si separa dal g
 
 Piccolo abitatore del sottosuolo che compensa la fragilità con cooperazione, vie di fuga e preparazione del terreno. Questa variante usa pugnali da lancio. Fonte: Kobold, p. 195.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 3 • DES 6 • COS 4 • INT 5 • SAG 4 • CAR 4 |
 | Risorse e protezioni | PV 12 • PM 5 • AR 0; componente magica 0 |
 | Difese e Salvezze | Difese 9 • Tempra 8 • Riflessi 10 • Volontà 8 • Magia 8 |
@@ -1865,16 +1557,10 @@ Piccolo abitatore del sottosuolo che compensa la fragilità con cooperazione, vi
 | Abilità | Mischia 9 • Lancio 9 • Furtività 11 • Percezione 9 • Tecnologia 10 per congegni semplici |
 | GS e PX per 4 PG | Principiante • 11 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Pugnale a mano | 9 | 1d4+2 | 1 Q |
 | Pugnale scagliato | 9 | 1d4+2 | massimo 9 Q |
-
-  
 
 **Tattica di gruppo.** Ottiene +2 VA agli attacchi contro un bersaglio minacciato in mischia da almeno un alleato cosciente entro 1 Q. Il bonus si applica una volta, indipendentemente dal numero degli alleati. La stessa superiorità numerica non fornisce anche un secondo bonus di circostanza; altri vantaggi distinti restano pertinenti.
 
@@ -1890,11 +1576,8 @@ Piccolo abitatore del sottosuolo che compensa la fragilità con cooperazione, vi
 
 Combattente robusto che cerca di raggiungere rapidamente il nemico e rompere una posizione con un’arma pesante. Questa è una variante di razziatore, non una descrizione obbligatoria della specie. Fonte: Orc, p. 246.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 7 • DES 5 • COS 7 • INT 4 • SAG 5 • CAR 5 |
 | Risorse e protezioni | PV 24 • PM 6 • AR 1; componente magica 0 |
 | Difese e Salvezze | Difese 10 • Tempra 11 • Riflessi 9 • Volontà 9 • Magia 9 |
@@ -1903,17 +1586,11 @@ Combattente robusto che cerca di raggiungere rapidamente il nemico e rompere una
 | Abilità | Guerra 11 • Lancio 10 • Atletica 12 • Percezione 10 • Oratoria 11 per intimidire |
 | GS e PX per 4 PG | Inesperto • 22 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Ascia bipenne | 11 | 2d6+2 | 1 Q |
 | Giavellotto a mano | 11 | 1d6+1 | 1 Q |
 | Giavellotto scagliato | 10 | 1d6 | massimo 21 Q |
-
-  
 
 **Avanzata aggressiva.** Una volta per Round, quando spende l’AzM per un Passo verso un nemico visibile, il budget è 8 Q invece di 6. Deve terminare più vicino a quel nemico e il percorso non può allontanarsene volontariamente. Non ottiene una seconda AzM; Corsa, Scatto, Schivata e Carica mantengono i valori ordinari. Ostacoli e Attacchi di Opportunità restano applicabili.
 
@@ -1929,11 +1606,8 @@ Combattente robusto che cerca di raggiungere rapidamente il nemico e rompere una
 
 Predatore di gruppo che insiste sulle prede in difficoltà e sfrutta una vittoria ravvicinata per minacciarne un’altra. Il raggiungimento di 0 PV non attiva da solo la sua frenesia. Fonte: Gnoll, p. 163.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 6 • DES 5 • COS 6 • INT 4 • SAG 5 • CAR 4 |
 | Risorse e protezioni | PV 24 • PM 6 • AR 2 con scudo, 1 senza; componente magica 0 |
 | Difese e Salvezze | Difese 10 • Tempra 10 • Riflessi 9 • Volontà 8 • Magia 9 |
@@ -1942,17 +1616,11 @@ Predatore di gruppo che insiste sulle prede in difficoltà e sfrutta una vittori
 | Abilità | Guerra 11 • Lancio 10 • Corpo a corpo 10 • Percezione 11 • Sopravvivenza 11 • Atletica 10 |
 | GS e PX per 4 PG | Inesperto • 22 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Lancia, una / due mani | 11 | 1d6+2 / 1d6+4 | 2 Q |
 | Morso | 10 | 1d4+1 | 1 Q |
 | Arco da guerra | 10 | 1d6+1 | massimo 100 Q |
-
-  
 
 **Frenesia.** Una volta per Round, se un suo attacco ravvicinato alla propria Iniziativa rende un nemico Svenuto, Morente o Morto, ottiene immediatamente una sola AzP vincolata a un Morso contro un altro nemico a portata. Si usa durante la stessa Iniziativa e poi scade; non si trasforma in Difesa o altra azione. Può prima spendere l’AzM ordinaria ancora disponibile. Il Morso non attiva di nuovo Frenesia. PV 0, resa o fuga da soli non bastano.
 
@@ -1966,11 +1634,8 @@ Predatore di gruppo che insiste sulle prede in difficoltà e sfrutta una vittori
 
 Grande combattente dalla forza evidente e dalle difese poco raffinate. Le sue armi usano profili del catalogo, senza dadi aggiuntivi automatici per la taglia. Fonte: Ogre, p. 237.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 9 • DES 4 • COS 8 • INT 3 • SAG 4 • CAR 3 |
 | Risorse e protezioni | PV 46 • PM 6 • AR 1; componente magica 0 |
 | Difese e Salvezze | Difese 8 • Tempra 13 • Riflessi 7 • Volontà 8 • Magia 9 |
@@ -1979,17 +1644,11 @@ Grande combattente dalla forza evidente e dalle difese poco raffinate. Le sue ar
 | Abilità | Guerra 12 • Lancio 9 • Atletica 14 • Percezione 9 • Oratoria 12 per intimidire |
 | GS e PX per 4 PG | Esperto • 33 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Maglio a due mani | 12 | 2d6+2 | 1 Q |
 | Giavellotto a mano | 12 | 1d6+2 | 1 Q |
 | Giavellotto scagliato | 9 | 1d6 | massimo 27 Q |
-
-  
 
 **Dotazione.** Il maglio usa il profilo Martello a due mani: FOR 6, PI 6, due mani, nessuna proprietà aggiunta. Due giavellotti FOR 3, PI 4 ciascuno; armatura leggera su misura AR 1, FOR 3, PI 6. Inizia con il maglio pronto. La dotazione su misura non aumenta da sola danno, portata o qualità.
 
@@ -2005,11 +1664,8 @@ Grande combattente dalla forza evidente e dalle difese poco raffinate. Le sue ar
 
 Due teste vigili condividono lo stesso corpo. Il profilo mantiene una sola riserva di risorse, un solo spazio e un’unica sequenza di Ferite. Fonte: Ettin, p. 132.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 9 • DES 4 • COS 8 • INT 4 • SAG 5 • CAR 4 |
 | Risorse e protezioni | PV 60 • PM 8 • AR 2 biologica; componente magica 0 |
 | Difese e Salvezze | Difese 10 • Tempra 13 • Riflessi 8 • Volontà 10 • Magia 10 |
@@ -2018,16 +1674,10 @@ Due teste vigili condividono lo stesso corpo. Il profilo mantiene una sola riser
 | Abilità | Mischia 12 • Corpo a corpo 11 • Atletica 14 • Percezione 11 • Oratoria 13 per intimidire |
 | GS e PX per 4 PG | Veterano • 55 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Ascia leggera | 12 | 1d6+3 | 1 Q |
 | Mazza ferrata | 12 | 1d6+3 | 1 Q |
-
-  
 
 **Braccia poderose.** I due danni includono +2 innato, oltre al bonus ordinario pertinente. È ambidestro: non applica il −4 per un attacco singolo con la mano secondaria. Può risolvere al massimo due attacchi offensivi nelle proprie AzP di un Round; la manovra con due armi li consuma entrambi, con il normale −4 VA, e lascia l’eventuale AzP restante per altre attività. L’Attacco di Opportunità ordinario resta distinto, al massimo uno per Round.
 
@@ -2043,11 +1693,8 @@ Due teste vigili condividono lo stesso corpo. Il profilo mantiene una sola riser
 
 Avversario massiccio capace di ricordare i percorsi e trasformare un corridoio libero in una linea di Carica. L’origine di questa specie nell’ambientazione resta da definire. Fonte: Minotaur, p. 223.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 9 • DES 5 • COS 8 • INT 4 • SAG 7 • CAR 4 |
 | Risorse e protezioni | PV 54 • PM 8 • AR 2 biologica; componente magica 0 |
 | Difese e Salvezze | Difese 11 • Tempra 13 • Riflessi 9 • Volontà 11 • Magia 10 |
@@ -2056,16 +1703,10 @@ Avversario massiccio capace di ricordare i percorsi e trasformare un corridoio l
 | Abilità | Guerra 13 • Corpo a corpo 13 • Atletica 14 • Percezione 13 • Sopravvivenza 12 |
 | GS e PX per 4 PG | Veterano • 55 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Ascia bipenne | 13 | 2d6+3 | 1 Q |
 | Corna | 13 | 1d8+2 | 1 Q |
-
-  
 
 **Carica cornuta.** Esegue la Carica ordinaria con Corna: 1 AzP e 1 AzM, almeno 3 Q sufficientemente rettilinei entro 16 Q; VA −2 per 3–6 Q o −4 da 7 Q, danno ×2. Se il colpo infligge almeno 1 danno finale a un bersaglio di massa non superiore, questi effettua una Prova di FOR o DES a scelta: fallimento lo rende A Terra. Questo effetto specifico non richiede due colpi e non sposta il bersaglio. Rialzarsi segue le regole comuni. L’eventuale secondo attacco non riceve i benefici della Carica.
 
@@ -2081,11 +1722,8 @@ Avversario massiccio capace di ricordare i percorsi e trasformare un corridoio l
 
 Predatore dalla carne capace di ricomporsi. Il pericolo nasce dalla pressione di più attacchi e dal recupero continuo, che può essere interrotto con mezzi appropriati. Fonte: Troll, p. 291; variante con arti autonomi esclusa.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 8 • DES 6 • COS 10 • INT 4 • SAG 5 • CAR 3 |
 | Risorse e protezioni | PV 60 • PM 8 • AR 3 biologica; componente magica 0 |
 | Difese e Salvezze | Difese 11 • Tempra 15 • Riflessi 10 • Volontà 9 • Magia 10 |
@@ -2094,16 +1732,10 @@ Predatore dalla carne capace di ricomporsi. Il pericolo nasce dalla pressione di
 | Abilità | Corpo a corpo 14 • Atletica 14 • Percezione 10; olfatto 12 • Sopravvivenza 11 |
 | GS e PX per 4 PG | Eroe • 70 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Artiglio | 14 | 1d8+2 | 1 Q |
 | Morso | 14 | 1d6+2 | 1 Q |
-
-  
 
 **Sequenza offensiva.** Nelle proprie AzP può effettuare al massimo due Artigli e un Morso per Round, ciascuno pagato separatamente. Le AzP spese per Difese o altre attività riducono gli attacchi disponibili. L’Attacco di Opportunità ordinario rimane distinto e non ripete tutta la sequenza.
 
@@ -2133,11 +1765,8 @@ Predatore dalla carne capace di ricomporsi. Il pericolo nasce dalla pressione di
 
 Il catalogo comprende ora cadaveri animati, predatori non morti e presenze spirituali. Le loro capacità distinguono il modo in cui occupano lo spazio, consumano le risorse degli avversari e possono essere contrastati. Questi profili sono autonomi e non sostituiscono gli Spettri della Fratellanza della campagna di Iris.
 
-  
-
-|  |  |  |
-| :-: | :-: | :-: |
-| **Creatura** | **GS** | **PX per 4 PG** |
+| Creatura | GS | PX per 4 PG |
+| :---- | :---: | :---: |
 | Scheletro | Principiante | 11 |
 | Zombie | Principiante | 10 |
 | Ghoul | Inesperto | 20 |
@@ -2148,8 +1777,6 @@ Il catalogo comprende ora cadaveri animati, predatori non morti e presenze spiri
 | Wraith | Eroe | 70 |
 | Mummia | Veterano | 50 |
 | Progenie vampirica | Eroe | 70 |
-
-  
 
 **PX di riferimento.** Ogni valore riguarda un esemplare con la dotazione indicata. Zombie e Spettri presenti come servitori contano separatamente, secondo il Manuale del Direttore §9.3. Nessuna scheda parte con servitori già compresi nel premio.
 
@@ -2199,11 +1826,8 @@ Il catalogo comprende ora cadaveri animati, predatori non morti e presenze spiri
 
 Ossa animate che conservano semplici routine di guardia e combattimento. Il profilo usa armi commerciali di Simply RPG. Fonte: Skeleton, p. 272.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 5 • DES 6 • COS 6 • INT 3 • SAG 4 • CAR 2 |
 | Risorse e protezioni | PV 18 • PM 4 • AR 1 da armatura, di cui 0 magica |
 | Difese e Salvezze | Difese 9 • Tempra 10 • Riflessi 9 • Volontà 7 • Magia 8 |
@@ -2212,16 +1836,10 @@ Ossa animate che conservano semplici routine di guardia e combattimento. Il prof
 | Abilità | Mischia 10 • Lancio 10 • Percezione 9 • Atletica 9 |
 | GS e PX per 4 PG | Principiante • 11 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Spada leggera | 10 | 1d6+2 Naturale | 1 Q |
 | Arco da guerra | 10 | 1d6+2 Naturale | massimo 100 Q |
-
-  
 
 **Ossa fragili.** Un colpo di martello, mazza o randello che lo raggiunge aggiunge +2 al danno base prima di moltiplicatori, Difese e AR. Anche i danni da caduta ricevono +2 per evento. Il beneficio riguarda l’impatto contundente effettivo: non si applica automaticamente a proiettili, lame o alla sola proprietà Concussivo.
 
@@ -2237,11 +1855,8 @@ Ossa animate che conservano semplici routine di guardia e combattimento. Il prof
 
 Cadavere animato che avanza senza cautela e continua a muoversi anche dopo aver esaurito i PV. La sua tenacia usa le normali Prove sulle Ferite. Fonte: Zombie, p. 316.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 6 • DES 2 • COS 7 • INT 2 • SAG 3 • CAR 1 |
 | Risorse e protezioni | PV 24 • PM 4 • AR 1 intrinseca, di cui 0 magica |
 | Difese e Salvezze | Difese 6 • Tempra 11 • Riflessi 6 • Volontà 7 • Magia 8 |
@@ -2250,15 +1865,9 @@ Cadavere animato che avanza senza cautela e continua a muoversi anche dopo aver 
 | Abilità | Corpo a corpo 9 • Atletica 10 • Percezione 8 |
 | GS e PX per 4 PG | Principiante • 10 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Percossa | 9 | 1d6+1 Naturale | 1 Q |
-
-  
 
 **Tenacia cadaverica.** Quando è già a 0 PV e un colpo Naturale causa una PS Tempra per le nuove Ferite, ottiene +2 a quella PS. Non si applica contro danno Magico o Etereo, contro il danno di un Successo Magistrale o a Ferite dirette che non ammettono Tempra. Restano tutte le conseguenze della fascia di danno e degli esiti della PS. Non recupera 1 PV e non ripete la Prova per cercare un risultato migliore.
 
@@ -2274,11 +1883,8 @@ Cadavere animato che avanza senza cautela e continua a muoversi anche dopo aver 
 
 Divoratore di cadaveri che assale una preda e tenta di impedirle la fuga. La rigidità degli artigli è tradotta nello Stato Immobilizzato. Fonte: Ghoul, p. 148.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 6 • DES 6 • COS 5 • INT 3 • SAG 5 • CAR 2 |
 | Risorse e protezioni | PV 22 • PM 6 • AR 0, di cui 0 magica |
 | Difese e Salvezze | Difese 10 • Tempra 9 • Riflessi 10 • Volontà 8 • Magia 9 |
@@ -2287,16 +1893,10 @@ Divoratore di cadaveri che assale una preda e tenta di impedirle la fuga. La rig
 | Abilità | Corpo a corpo 11 • Furtività 11 • Percezione 11 • Atletica 11 |
 | GS e PX per 4 PG | Inesperto • 20 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Artigli | 11 | 1d4+1 Naturale | 1 Q |
 | Morso | 10 | 1d6+1 Naturale | 1 Q |
-
-  
 
 **Rigidità cadaverica.** Se gli Artigli infliggono almeno 1 danno finale a un organismo vivente, il bersaglio effettua Tempra senza modificatore. Successo evita; fallimento o Maldestro applica Immobilizzato per 1 Round: niente movimento e −4 alle Prove fisiche, senza bloccare specificamente le mani. Può quindi usare le AzP e le Difese concretamente praticabili. Non è una presa e non richiede il mantenimento del Ghoul.
 
@@ -2312,11 +1912,8 @@ Divoratore di cadaveri che assale una preda e tenta di impedirle la fuga. La rig
 
 Predatore più robusto del Ghoul, riconoscibile dal fetore e dalla maggiore capacità di scegliere i bersagli. Fonte: Ghast, p. 148.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 7 • DES 6 • COS 6 • INT 5 • SAG 5 • CAR 4 |
 | Risorse e protezioni | PV 32 • PM 8 • AR 1 intrinseca, di cui 0 magica |
 | Difese e Salvezze | Difese 11 • Tempra 11 • Riflessi 10 • Volontà 10 • Magia 10 |
@@ -2325,16 +1922,10 @@ Predatore più robusto del Ghoul, riconoscibile dal fetore e dalla maggiore capa
 | Abilità | Corpo a corpo 12 • Furtività 11 • Percezione 12 • Atletica 12 • Oratoria 10 |
 | GS e PX per 4 PG | Esperto • 30 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Artigli | 12 | 1d6+1 Naturale | 1 Q |
 | Morso | 11 | 1d8+1 Naturale | 1 Q |
-
-  
 
 **Attacchi e rigidità.** Nelle proprie AzP può usare al massimo un Artiglio e un Morso per Round. Gli Artigli applicano la stessa Rigidità cadaverica del Ghoul, con durata 2 Round. Rimangono Tempra iniziale, ripetizione alla fine di ogni Iniziativa, Pericolosità II e rimozione. Non somma le durate se colpisce di nuovo.
 
@@ -2350,11 +1941,8 @@ Predatore più robusto del Ghoul, riconoscibile dal fetore e dalla maggiore capa
 
 Guerriero non morto che conserva memoria, linguaggio e disciplina. Il Tocco può accompagnare un attacco d’arma, pagando le Azioni necessarie. Fonte: Wight, p. 300.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 7 • DES 6 • COS 7 • INT 6 • SAG 6 • CAR 7 |
 | Risorse e protezioni | PV 40 • PM 12 • AR 3: 2 intrinseca e 1 da armatura, di cui 0 magica |
 | Difese e Salvezze | Difese 12 • Tempra 12 • Riflessi 10 • Volontà 12 • Magia 11 |
@@ -2363,17 +1951,11 @@ Guerriero non morto che conserva memoria, linguaggio e disciplina. Il Tocco può
 | Abilità | Guerra 13 • Lancio 12 • Corpo a corpo 11 • Percezione 12 • Furtività 11 • Oratoria 12 |
 | GS e PX per 4 PG | Veterano • 55 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Spada lunga | 13 | 1d8+2 Naturale | 1 Q |
 | Arco da guerra | 12 | 1d6+2 Naturale | massimo 100 Q |
 | Tocco | 11 | 1d6+1 Etereo | 1 Q |
-
-  
 
 **Risucchio e sole.** Può applicare Risucchio vitale al Tocco: 2 PM prima del tiro, massimo una volta per Round, Tempra senza modificatore proprio. In luce solare diretta subisce −2 VA agli attacchi e a Percezione visiva; basta che il Wight o il bersaglio osservato sia esposto. Le due esposizioni non si sommano e non producono danno.
 
@@ -2401,11 +1983,8 @@ Guerriero non morto che conserva memoria, linguaggio e disciplina. Il Tocco può
 
 Sagoma scura che si deforma, cerca zone poco illuminate e indebolisce i viventi che raggiunge. Fonte: Shadow, p. 269.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 2 • DES 7 • COS 5 • INT 3 • SAG 5 • CAR 4 |
 | Risorse e protezioni | PV 18 • PM 8 • AR 0, di cui 0 magica |
 | Difese e Salvezze | Difese 11 • Tempra 9 • Riflessi 12 • Volontà 9 • Magia 10 |
@@ -2414,15 +1993,9 @@ Sagoma scura che si deforma, cerca zone poco illuminate e indebolisce i viventi 
 | Abilità | Corpo a corpo 11 • Furtività 12, 14 in penombra o buio • Percezione 10 |
 | GS e PX per 4 PG | Inesperto • 20 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Tocco | 11 | 1d4+1 Etereo | 1 Q |
-
-  
 
 **Corpo e risucchio.** Applica Corpo immateriale e Tocco Etereo delle regole comuni. Può potenziare il Tocco con Risucchio vitale, 2 PM e Tempra senza modificatore proprio. L’indebolimento è rappresentato dall’Affaticamento: non sottrae FOR e non uccide per azzeramento della Caratteristica.
 
@@ -2440,11 +2013,8 @@ Sagoma scura che si deforma, cerca zone poco illuminate e indebolisce i viventi 
 
 Presenza spirituale capace di attraversare la materia e colpire con un Tocco gelido. È il profilo generico del catalogo, distinto dalle prove degli Spettri della Fratellanza. Fonte: Specter, p. 279.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 1 • DES 7 • COS 6 • INT 5 • SAG 5 • CAR 5 |
 | Risorse e protezioni | PV 24 • PM 10 • AR 0, di cui 0 magica |
 | Difese e Salvezze | Difese 11 • Tempra 10 • Riflessi 12 • Volontà 10 • Magia 11 |
@@ -2453,15 +2023,9 @@ Presenza spirituale capace di attraversare la materia e colpire con un Tocco gel
 | Abilità | Corpo a corpo 12 • Percezione 11 • Furtività 11 |
 | GS e PX per 4 PG | Esperto • 30 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Tocco | 12 | 1d6+1 Etereo | 1 Q |
-
-  
 
 **Incorporeità.** Applica Corpo immateriale, Attraversare la materia e Volo spettrale. È normalmente visibile. Non possiede la telecinesi o l’invisibilità della variante Poltergeist. Le pareti continuano a impedirgli di vedere e attaccare bersagli dall’altra parte.
 
@@ -2477,11 +2041,8 @@ Presenza spirituale capace di attraversare la materia e colpire con un Tocco gel
 
 Presenza spirituale più potente dello Spettro, capace di legare residui di una morte recente. Il profilo parte senza servitori. Fonte: Wraith, p. 302.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 2 • DES 7 • COS 8 • INT 6 • SAG 7 • CAR 7 |
 | Risorse e protezioni | PV 50 • PM 18 • AR 0, di cui 0 magica |
 | Difese e Salvezze | Difese 12 • Tempra 13 • Riflessi 12 • Volontà 13 • Magia 13 |
@@ -2490,15 +2051,9 @@ Presenza spirituale più potente dello Spettro, capace di legare residui di una 
 | Abilità | Corpo a corpo 14 • Percezione 13 • Furtività 12 • Oratoria 12 • Occultismo 12 |
 | GS e PX per 4 PG | Eroe • 70 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Tocco | 14 | 1d8+2 Etereo | 1 Q |
-
-  
 
 **Corpo e movimento.** Applica Corpo immateriale, Attraversare la materia e Volo spettrale. Rimane visibile e non ottiene attacchi attraverso ostacoli. Le proprie due AzP possono servire per Tocchi, creazione di un servitore o Difese, senza risolvere tutto con un’unica azione.
 
@@ -2526,11 +2081,8 @@ Presenza spirituale più potente dello Spettro, capace di legare residui di una 
 
 Cadavere conservato che difende un luogo o un vincolo funerario. La minaccia unisce forza, terrore e un’affezione mistica curabile. Fonte: Mummy, p. 228; Mummy Lord escluso.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 7 • DES 3 • COS 7 • INT 4 • SAG 5 • CAR 6 |
 | Risorse e protezioni | PV 44 • PM 12 • AR 4 intrinseca, di cui 0 magica |
 | Difese e Salvezze | Difese 8 • Tempra 12 • Riflessi 7 • Volontà 12 • Magia 12 |
@@ -2539,16 +2091,10 @@ Cadavere conservato che difende un luogo o un vincolo funerario. La minaccia uni
 | Abilità | Corpo a corpo 13 • Percezione 10 • Occultismo 10 |
 | GS e PX per 4 PG | Veterano • 50 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Pugno funerario | 13 | 1d8+2 Magico | 1 Q |
 | Sguardo terribile | — | Terrorizzato; vedi testo | massimo 6 Q |
-
-  
 
 **Sequenza.** Nelle proprie AzP può usare al massimo un Pugno e uno Sguardo per Round, oppure spendere le azioni per altre attività o Difese. Il Pugno è un solo colpo Magico, assorbito da tutta l’AR pertinente; non aggiunge una seconda applicazione di danno necrotico.
 
@@ -2578,11 +2124,8 @@ Cadavere conservato che difende un luogo o un vincolo funerario. La minaccia uni
 
 Vampiro subordinato che unisce presa, nutrimento e recupero. Il profilo non possiede trasformazione in nebbia, charme o capacità da signore vampiro. Fonte: Vampire Spawn, p. 298.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 7 • DES 7 • COS 7 • INT 5 • SAG 5 • CAR 6 |
 | Risorse e protezioni | PV 50 • PM 12 • AR 3 intrinseca, di cui 0 magica |
 | Difese e Salvezze | Difese 12 • Tempra 12 • Riflessi 12 • Volontà 11 • Magia 11 |
@@ -2591,16 +2134,10 @@ Vampiro subordinato che unisce presa, nutrimento e recupero. Il profilo non poss
 | Abilità | Corpo a corpo 13 • Furtività 13 • Percezione 12 • Atletica 12 • Raggirare 11 |
 | GS e PX per 4 PG | Eroe • 70 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Artigli | 13 | 1d6+1 Naturale | 1 Q |
 | Morso | 13 | 1d6+2 Naturale | 1 Q |
-
-  
 
 **Presa e Morso.** Può usare Immobilizzare con Corpo a corpo 13 al posto del danno degli Artigli; segue la manovra ordinaria e occupa le mani richieste. Può mordere soltanto un vivente consenziente, Svenuto o Immobilizzato con il collo accessibile. Un bersaglio consapevole conserva le Difese concretamente praticabili. Massimo un Morso nelle proprie AzP per Round; l’altra AzP può servire per Artigli, presa o Difesa.
 
@@ -2634,11 +2171,8 @@ Vampiro subordinato che unisce presa, nutrimento e recupero. Il profilo non poss
 
 Questo blocco aggiunge animali ordinari e versioni giganti, con comportamenti di caccia, difesa del territorio e fuga. La loro presenza su Iris richiede una scelta di ambientazione: non acquisiscono automaticamente la resistenza delle specie delle Terre del Fuoco e non appartengono alla Covata.
 
-  
-
-|  |  |  |
-| :-: | :-: | :-: |
-| **Creatura** | **GS** | **PX per 4 PG** |
+| Creatura | GS | PX per 4 PG |
+| :---- | :---: | :---: |
 | Lupo | Principiante | 10 |
 | Lupo feroce | Inesperto | 20 |
 | Orso bruno | Esperto | 30 |
@@ -2649,8 +2183,6 @@ Questo blocco aggiunge animali ordinari e versioni giganti, con comportamenti di
 | Scorpione gigante | Veterano | 50 |
 | Serpente costrittore gigante | Veterano | 50 |
 | Coccodrillo gigante | Eroe | 70 |
-
-  
 
 **PX di riferimento.** Il valore riguarda un solo esemplare senza equipaggiamento. Gli altri membri del branco contano separatamente secondo il Manuale del Direttore §9.3. Il premio riguarda la risoluzione della sfida: allontanare un predatore o proteggere il passaggio può soddisfare l’obiettivo senza ucciderlo.
 
@@ -2670,17 +2202,12 @@ Questo blocco aggiunge animali ordinari e versioni giganti, con comportamenti di
 
 **Prese naturali.** Scorpione, Serpente e Coccodrillo dichiarano una presa prima del tiro. Si usa Corpo a corpo contro Corpo a corpo o Atletica del bersaglio; è una Prova contrapposta, senza un’ulteriore Parata o Schivata. Liberarsi costa 1 AzP e ripete la stessa opposizione, applicando anche il −4 fisico di Immobilizzato; i pareggi favoriscono chi trattiene. Un alleato adiacente può spendere 1 AzP per la stessa opposizione e liberare il prigioniero, usando Corpo a corpo o Atletica. Mantenere non costa Azioni. Rilasciare è gratuito; Svenuto, Morente, distruzione del mezzo di presa o separazione oltre la portata terminano la presa. Stordito da solo non la scioglie.
 
-  
-
-|  |  |  |
-| :-: | :-: | :-: |
-| **Anatomia** | **Braccia** | **Gambe** |
+| Anatomia | Braccia | Gambe |
+| :---- | :---: | :---: |
 | Quadrupedi | Arti anteriori | Arti posteriori |
 | Ragno gigante | Quattro zampe anteriori | Quattro zampe posteriori |
 | Scorpione gigante | Chele | Zampe locomotrici |
 | Serpente gigante | Spire anteriori usate per trattenere | Tratto posteriore e coda |
-
-  
 
 **Localizzazioni.** Testa indica capo e organi sensoriali; Torace il corpo centrale. La coda del Coccodrillo rientra nelle Gambe, quella dello Scorpione nel Torace. Per il Serpente le Menomazioni alle Braccia limitano la costrizione e quelle alle Gambe la locomozione; le conseguenze si applicano alla funzione corrispondente, senza inventare mani. Gli arti numerosi non annullano automaticamente una Menomazione. Il Direttore identifica il mezzo colpito prima di applicarne gli impedimenti.
 
@@ -2690,11 +2217,8 @@ Questo blocco aggiunge animali ordinari e versioni giganti, con comportamenti di
 
 Predatore che circonda la preda, cerca un fianco scoperto e rinuncia a uno scontro troppo costoso. Fonte: Wolf, p. 341.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 4 • DES 6 • COS 5 • INT 2 • SAG 6 • CAR 2 |
 | Risorse e protezioni | PV 14 • PM 4 • AR 0 intrinseca, di cui 0 magica |
 | Difese e Salvezze | Difese 10 • Tempra 8 • Riflessi 10 • Volontà 7 • Magia 7 |
@@ -2703,15 +2227,9 @@ Predatore che circonda la preda, cerca un fianco scoperto e rinuncia a uno scont
 | Abilità | Corpo a corpo 10 • Atletica 10 • Furtività 11 • Percezione 11 • Sopravvivenza 11 |
 | GS e PX per 4 PG | Principiante • 10 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Morso | 10 | 1d6+1 Naturale | 1 Q |
-
-  
 
 **Branco e sensi.** Applica il +2 di Branco alle condizioni comuni. Ottiene +2 a Percezione quando udito oppure olfatto sono determinanti, senza sommare i due sensi. Può seguire tracce con Sopravvivenza se esistono indizi accessibili; il fiuto non fornisce la posizione esatta di un bersaglio oltre gli ostacoli.
 
@@ -2727,11 +2245,8 @@ Predatore che circonda la preda, cerca un fianco scoperto e rinuncia a uno scont
 
 Versione più grande e robusta del lupo, capace di atterrare prede più voluminose. Fonte: Dire Wolf, p. 321.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 7 • DES 6 • COS 6 • INT 2 • SAG 6 • CAR 3 |
 | Risorse e protezioni | PV 26 • PM 6 • AR 1 intrinseca, di cui 0 magica |
 | Difese e Salvezze | Difese 11 • Tempra 10 • Riflessi 11 • Volontà 8 • Magia 8 |
@@ -2740,15 +2255,9 @@ Versione più grande e robusta del lupo, capace di atterrare prede più volumino
 | Abilità | Corpo a corpo 12 • Atletica 12 • Furtività 11 • Percezione 12 • Sopravvivenza 12 |
 | GS e PX per 4 PG | Inesperto • 20 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Morso | 12 | 1d8+2 Naturale | 1 Q |
-
-  
 
 **Branco e sensi.** Applica Branco, con +2 VA condizionale. Ha +2 a Percezione quando udito oppure olfatto sono determinanti, senza raddoppiare il bonus. Tracce, vento, rumori e ostacoli continuano a contare; non possiede scurovisione o percezione magica.
 
@@ -2764,11 +2273,8 @@ Versione più grande e robusta del lupo, capace di atterrare prede più volumino
 
 Animale robusto che può colpire con gli arti anteriori e mordere nello stesso Round. Fonte: Brown Bear, p. 319.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 8 • DES 4 • COS 7 • INT 2 • SAG 6 • CAR 3 |
 | Risorse e protezioni | PV 34 • PM 6 • AR 1 intrinseca, di cui 0 magica |
 | Difese e Salvezze | Difese 9 • Tempra 11 • Riflessi 8 • Volontà 8 • Magia 8 |
@@ -2777,16 +2283,10 @@ Animale robusto che può colpire con gli arti anteriori e mordere nello stesso R
 | Abilità | Corpo a corpo 12 • Atletica 12 • Percezione 11 • Sopravvivenza 11 |
 | GS e PX per 4 PG | Esperto • 30 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Artigli | 12 | 1d8+2 Naturale | 1 Q |
 | Morso | 11 | 1d8+2 Naturale | 1 Q |
-
-  
 
 **Sequenza.** Può spendere le due AzP per un attacco di Artigli e un Morso, al massimo uno di ciascuno nelle proprie AzP per Round. Ogni attacco si risolve separatamente, con la propria Difesa e AR. Può conservare Azioni per Schivata o altre attività. Gli Artigli non infliggono due colpi per il solo fatto di usare due zampe.
 
@@ -2802,11 +2302,8 @@ Animale robusto che può colpire con gli arti anteriori e mordere nello stesso R
 
 Animale massiccio che usa slancio, zanne e tenacia per aprirsi una via. Fonte: Giant Boar, p. 323.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 8 • DES 4 • COS 8 • INT 2 • SAG 4 • CAR 2 |
 | Risorse e protezioni | PV 38 • PM 6 • AR 2 intrinseca, di cui 0 magica |
 | Difese e Salvezze | Difese 8 • Tempra 12 • Riflessi 8 • Volontà 9 • Magia 8 |
@@ -2815,15 +2312,9 @@ Animale massiccio che usa slancio, zanne e tenacia per aprirsi una via. Fonte: G
 | Abilità | Corpo a corpo 12 • Atletica 12 • Percezione 9 • Sopravvivenza 10 |
 | GS e PX per 4 PG | Esperto • 30 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Zanne | 12 | 1d8+2 Naturale | 1 Q |
-
-  
 
 **Carica delle zanne.** Usa la normale Carica del Giocatore §5.6: 1 AzM e 1 AzP, percorso rettilineo minimo 3 Q, fino alla Corsa, con penalità e danno ×2 ordinari. Se infligge almeno 1 danno finale a una creatura non superiore a 2 × 2 Q, questa effettua Tempra senza modificatore proprio; fallimento o Maldestro applica A Terra. Il beneficio non si attiva con un semplice attacco da fermo.
 
@@ -2839,11 +2330,8 @@ Animale massiccio che usa slancio, zanne e tenacia per aprirsi una via. Fonte: G
 
 Predatore che alterna avvicinamento nascosto e balzo finale, spesso sostenuto dal gruppo. Fonte: Lion, p. 331.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 7 • DES 7 • COS 6 • INT 2 • SAG 6 • CAR 3 |
 | Risorse e protezioni | PV 28 • PM 6 • AR 1 intrinseca, di cui 0 magica |
 | Difese e Salvezze | Difese 11 • Tempra 10 • Riflessi 11 • Volontà 9 • Magia 9 |
@@ -2852,16 +2340,10 @@ Predatore che alterna avvicinamento nascosto e balzo finale, spesso sostenuto da
 | Abilità | Corpo a corpo 12 • Atletica 12 • Furtività 13 • Percezione 11 • Sopravvivenza 12 |
 | GS e PX per 4 PG | Esperto • 30 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Artigli | 12 | 1d6+2 Naturale | 1 Q |
 | Morso | 12 | 1d8+1 Naturale | 1 Q |
-
-  
 
 **Branco e fiuto.** Applica Branco e ottiene +2 a Percezione quando l’olfatto è determinante. Il terreno può permettere Furtività, ma il leone non diventa invisibile nell’erba e non sorprende automaticamente chi lo ha già individuato.
 
@@ -2877,11 +2359,8 @@ Predatore che alterna avvicinamento nascosto e balzo finale, spesso sostenuto da
 
 Predatore opportunista che sfrutta il crollo di una preda per passare a un altro bersaglio. Fonte: Giant Hyena, p. 326.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 7 • DES 6 • COS 6 • INT 2 • SAG 6 • CAR 2 |
 | Risorse e protezioni | PV 30 • PM 6 • AR 1 intrinseca, di cui 0 magica |
 | Difese e Salvezze | Difese 10 • Tempra 10 • Riflessi 10 • Volontà 8 • Magia 8 |
@@ -2890,15 +2369,9 @@ Predatore opportunista che sfrutta il crollo di una preda per passare a un altro
 | Abilità | Corpo a corpo 11 • Atletica 11 • Percezione 11 • Sopravvivenza 12 • Furtività 10 |
 | GS e PX per 4 PG | Inesperto • 20 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Morso | 11 | 1d8+2 Naturale | 1 Q |
-
-  
 
 **Frenesia della caccia.** Una volta per Round, se il proprio Morso alla propria Iniziativa rende un nemico Svenuto, Morente o Morto, ottiene immediatamente una sola AzP vincolata a un Morso contro un altro nemico raggiungibile. Il passaggio a 0 PV non basta. Il Morso aggiuntivo non può attivare una seconda Frenesia e non può colpire nuovamente la stessa vittima.
 
@@ -2914,11 +2387,8 @@ Predatore opportunista che sfrutta il crollo di una preda per passare a un altro
 
 Cacciatore che sorveglia filamenti e raggiunge una preda trattenuta lungo pareti e soffitti. Fonte: Giant Spider, p. 328.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 6 • DES 7 • COS 5 • INT 1 • SAG 5 • CAR 1 |
 | Risorse e protezioni | PV 22 • PM 6 • AR 1 intrinseca, di cui 0 magica |
 | Difese e Salvezze | Difese 11 • Tempra 9 • Riflessi 11 • Volontà 8 • Magia 9 |
@@ -2927,16 +2397,10 @@ Cacciatore che sorveglia filamenti e raggiunge una preda trattenuta lungo pareti
 | Abilità | Corpo a corpo 11 • Armi da lancio 11 • Atletica 11 • Furtività 13 • Percezione 10 |
 | GS e PX per 4 PG | Inesperto • 20 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Morso | 11 | 1d6+1 Naturale | 1 Q |
 | Getto di seta | 11 | Immobilizzato; vedi testo | massimo 12 Q |
-
-  
 
 **Sensi e superfici.** Scurovisione 12 Q. Entro 2 Q può localizzare una creatura in movimento attraverso vibrazioni del supporto continuo condiviso; non percepisce così chi vola, rimane perfettamente immobile o è isolato dal supporto. Non vede attraverso le pareti. Può muoversi su pareti e soffitti aderenti, senza Atletica ordinaria; superfici scivolose o friabili richiedono valutazione e Prova pertinenti.
 
@@ -2966,11 +2430,8 @@ Cacciatore che sorveglia filamenti e raggiunge una preda trattenuta lungo pareti
 
 Cacciatore protetto dal carapace che può trattenere con le chele e colpire con il pungiglione. Fonte: Giant Scorpion, p. 327.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 7 • DES 5 • COS 7 • INT 1 • SAG 5 • CAR 1 |
 | Risorse e protezioni | PV 42 • PM 8 • AR 4 intrinseca, di cui 0 magica |
 | Difese e Salvezze | Difese 9 • Tempra 12 • Riflessi 9 • Volontà 8 • Magia 10 |
@@ -2979,16 +2440,10 @@ Cacciatore protetto dal carapace che può trattenere con le chele e colpire con 
 | Abilità | Corpo a corpo 12 • Atletica 11 • Percezione 10 • Furtività 10 |
 | GS e PX per 4 PG | Veterano • 50 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Chela | 12 | 1d6+1 Naturale | 1 Q |
 | Pungiglione | 12 | 1d6+1 Naturale | 1 Q |
-
-  
 
 **Sequenza.** Dispone di due AzP, non dei tre attacchi simultanei dell’originale. Può attaccare una volta con ciascuna chela libera oppure usare una chela e il Pungiglione. Massimo un Pungiglione nelle proprie AzP per Round. Difese e altre attività consumano le medesime Azioni.
 
@@ -3016,11 +2471,8 @@ Cacciatore protetto dal carapace che può trattenere con le chele e colpire con 
 
 Grande serpente che avvolge una preda e la comprime. La presa è potente, ma ogni danno richiede una nuova Azione e una Prova. Fonte: Giant Constrictor Snake, p. 324.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 9 • DES 5 • COS 8 • INT 1 • SAG 5 • CAR 2 |
 | Risorse e protezioni | PV 48 • PM 8 • AR 2 intrinseca, di cui 0 magica |
 | Difese e Salvezze | Difese 9 • Tempra 12 • Riflessi 9 • Volontà 9 • Magia 10 |
@@ -3029,16 +2481,10 @@ Grande serpente che avvolge una preda e la comprime. La presa è potente, ma ogn
 | Abilità | Corpo a corpo 13 • Atletica 13 • Percezione 10 • Furtività 11 |
 | GS e PX per 4 PG | Veterano • 50 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Morso | 13 | 1d8+3 Naturale | 2 Q |
 | Costrizione | 13 | 1d8+3 Naturale; presa | 1 Q |
-
-  
 
 **Costrizione.** 1 AzP e una Prova contrapposta di Presa naturale contro una preda non superiore a 2 × 2 Q. Se riesce, applica Immobilizzato e infligge una volta 1d8+3 Naturale con AR normale. Le spire bloccano il tronco e gli arti inferiori; braccia e mani restano utilizzabili con il −4 fisico. Può trattenere una sola preda; la Costrizione non è un Morso seguito da una presa gratuita.
 
@@ -3066,11 +2512,8 @@ Grande serpente che avvolge una preda e la comprime. La presa è potente, ma ogn
 
 Predatore massiccio che attende vicino all’acqua, blocca con le mascelle e tiene lontano un secondo nemico con la coda. Fonte: Giant Crocodile, p. 324.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 9 • DES 4 • COS 8 • INT 2 • SAG 5 • CAR 2 |
 | Risorse e protezioni | PV 62 • PM 8 • AR 4 intrinseca, di cui 0 magica |
 | Difese e Salvezze | Difese 9 • Tempra 13 • Riflessi 8 • Volontà 10 • Magia 10 |
@@ -3079,16 +2522,10 @@ Predatore massiccio che attende vicino all’acqua, blocca con le mascelle e tie
 | Abilità | Corpo a corpo 14 • Atletica 13 • Percezione 11 • Furtività 11, 13 nell’acqua con riparo |
 | GS e PX per 4 PG | Eroe • 70 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Morso | 14 | 2d6+2 Naturale | 1 Q |
 | Coda | 13 | 1d8+2 Naturale | 2 Q |
-
-  
 
 **Sequenza.** Nelle proprie AzP può usare al massimo un’azione di mascelle e un attacco di Coda per Round. Una presa iniziale o una stretta successiva occupa l’azione di mascelle. Il bersaglio della Coda deve essere diverso dalla preda trattenuta. Le due AzP possono anche servire per Difese o altre attività.
 
@@ -3118,11 +2555,8 @@ Predatore massiccio che attende vicino all’acqua, blocca con le mascelle e tie
 
 Armature, lame e tappeti possono essere guardiani animati; pietra, metallo e magma possono formare corpi abitati da una coscienza. Il blocco distingue questi avversari dai quattro Elementali puri Maggiori già definiti nel Manuale della Magia. Tutte le schede hanno Natura Comune: origine elementale e aspetto inquietante non assegnano Oscura Simmetria né appartenenza alla Covata.
 
-  
-
-|  |  |  |
-| :-: | :-: | :-: |
-| **Creatura** | **GS** | **PX per 4 PG** |
+| Creatura | GS | PX per 4 PG |
+| :---- | :---: | :---: |
 | Armatura animata | Inesperto | 20 |
 | Spada volante | Principiante | 10 |
 | Tappeto soffocante | Esperto | 30 |
@@ -3133,8 +2567,6 @@ Armature, lame e tappeti possono essere guardiani animati; pietra, metallo e mag
 | Elementale dell’Aria Maggiore | Eroe | 70 |
 | Elementale del Fuoco Maggiore | Eroe | 70 |
 | Elementale della Terra Maggiore | Eroe | 70 |
-
-  
 
 **PX di riferimento.** Ogni valore riguarda un esemplare nella configurazione descritta. L’Azer comprende martello da guerra e scudo medio di qualità Comune; gli altri profili non hanno dotazioni conteggiate separatamente. I premi degli incontri seguono il Manuale del Direttore §9.3. Disattivazione, liberazione di un passaggio o conclusione di un accordo possono risolvere la sfida.
 
@@ -3180,11 +2612,8 @@ Armature, lame e tappeti possono essere guardiani animati; pietra, metallo e mag
 
 Un involucro metallico vuoto che presidia una stanza, una porta o un oggetto secondo istruzioni semplici. Fonte: Animated Armor, p. 19.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 6 • DES 4 • COS 7 • INT 1 • SAG 3 • CAR 1 |
 | Risorse e protezioni | PV 24 • PM — • AR 4, di cui 0 magica |
 | Difese e Salvezze | Difese 8 • Tempra 11 • Riflessi 7 • Volontà 7 • Magia 9 |
@@ -3193,15 +2622,9 @@ Un involucro metallico vuoto che presidia una stanza, una porta o un oggetto sec
 | Abilità | Corpo a corpo 11 • Atletica 10 • Percezione 8 • Furtività 6 |
 | GS e PX per 4 PG | Inesperto • 20 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Schianto | 11 | 1d6+1 Naturale | 1 Q |
-
-  
 
 **Due colpi distinti.** Può usare entrambe le AzP per Schianto, con tiri e Difese separati. Non possiede un attacco doppio gratuito; può impiegare le medesime Azioni per altre attività. Il rumore delle piastre durante il movimento può rivelarne la presenza.
 
@@ -3217,11 +2640,8 @@ Un involucro metallico vuoto che presidia una stanza, una porta o un oggetto sec
 
 Una lama animata che si stacca da un supporto e combatte sospesa. Il corpo è l’arma stessa. Fonte: Flying Sword, p. 20.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 4 • DES 7 • COS 5 • INT 1 • SAG 3 • CAR 1 |
 | Risorse e protezioni | PV 14 • PM — • AR 3, di cui 0 magica |
 | Difese e Salvezze | Difese 12 • Tempra 8 • Riflessi 12 • Volontà 7 • Magia 9 |
@@ -3230,15 +2650,9 @@ Una lama animata che si stacca da un supporto e combatte sospesa. Il corpo è l�
 | Abilità | Corpo a corpo 11 • Atletica 9 • Percezione 9 • Furtività 10 |
 | GS e PX per 4 PG | Principiante • 10 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Fendente | 11 | 1d8+2 Naturale | 1 Q |
-
-  
 
 **Sostentamento.** Si muove in ogni direzione e resta sospesa senza percorso minimo o costo aggiuntivo. Immobilizzato blocca il movimento senza spegnere la levitazione; una presa fisica può trattenerla. Svenuto da Morente, distruzione o soppressione dell’animazione fanno invece cessare il sostentamento e causano la caduta ordinaria. Non trasporta cavalieri o altre creature.
 
@@ -3254,11 +2668,8 @@ Una lama animata che si stacca da un supporto e combatte sospesa. Il corpo è l�
 
 Un tappeto animato che avvolge una sola vittima e le copre volto e arti. Fonte: Rug of Smothering, p. 20.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 7 • DES 6 • COS 6 • INT 1 • SAG 3 • CAR 1 |
 | Risorse e protezioni | PV 28 • PM — • AR 0, di cui 0 magica |
 | Difese e Salvezze | Difese 10 • Tempra 10 • Riflessi 9 • Volontà 7 • Magia 9 |
@@ -3267,16 +2678,10 @@ Un tappeto animato che avvolge una sola vittima e le copre volto e arti. Fonte: 
 | Abilità | Corpo a corpo 12 • Atletica 11 • Percezione 8 • Furtività 10 |
 | GS e PX per 4 PG | Esperto • 30 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Avvolgere | 12 | Presa; nessun danno iniziale | 1 Q |
 | Stringere | 12 | 1d6+2 Naturale; opposizione | Solo vittima avvolta |
-
-  
 
 **Avvolgere.** Spende 1 AzP contro una creatura con spazio massimo 1 × 1 Q a portata, usando Corpo a corpo 12 contro Corpo a corpo oppure Atletica della vittima. È una Prova contrapposta, senza ulteriore Parata o Schivata. Il successo applica Immobilizzato con braccia e gambe avvolte, Accecato e impedisce la respirazione. Non infligge un danno automatico né porta la vittima immediatamente a Svenuto.
 
@@ -3306,11 +2711,8 @@ Un tappeto animato che avvolge una sola vittima e le copre volto e arti. Fonte: 
 
 Predatore intelligente dalla forma di una statua mostruosa, capace di attendere a lungo sopra un cornicione. Fonte: Gargoyle, p. 140.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 7 • DES 5 • COS 7 • INT 3 • SAG 5 • CAR 3 |
 | Risorse e protezioni | PV 34 • PM 8 • AR 3, di cui 0 magica |
 | Difese e Salvezze | Difese 10 • Tempra 12 • Riflessi 9 • Volontà 9 • Magia 10 |
@@ -3319,16 +2721,10 @@ Predatore intelligente dalla forma di una statua mostruosa, capace di attendere 
 | Abilità | Corpo a corpo 12 • Atletica 12 • Percezione 10 • Furtività 10 |
 | GS e PX per 4 PG | Esperto • 30 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Artigli | 12 | 1d6+2 Naturale | 1 Q |
 | Morso | 12 | 1d6+2 Naturale | 1 Q |
-
-  
 
 **Sequenza.** Nelle proprie AzP può effettuare al massimo un attacco di Artigli e un Morso per Round. Non possiede Parata naturale. Schivata e altre attività consumano le stesse Azioni. Artigli e Morso non ricevono automaticamente la proprietà Terra.
 
@@ -3346,11 +2742,8 @@ Predatore intelligente dalla forma di una statua mostruosa, capace di attendere 
 
 Un essere cosciente di fuoco contenuto in una forma bronzea, equipaggiato con martello da guerra e scudo medio. Fonte: Azer, p. 22.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 7 • DES 5 • COS 7 • INT 6 • SAG 6 • CAR 5 |
 | Risorse e protezioni | PV 32 • PM 8 • AR 5, di cui 0 magica |
 | Difese e Salvezze | Difese 11 • Tempra 12 • Riflessi 10 • Volontà 10 • Magia 11 |
@@ -3359,16 +2752,10 @@ Un essere cosciente di fuoco contenuto in una forma bronzea, equipaggiato con ma
 | Abilità | Armi da guerra 12 • Corpo a corpo 10 • Atletica 11 • Percezione 11 • Tecnologia 13 per metallurgia |
 | GS e PX per 4 PG | Esperto • 33 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Martello caldo | 12 | 1d8+2 Naturale e 1d4 Fuoco Naturale | 1 Q |
 | Pugno | 10 | 1d4+1 Naturale | 1 Q |
-
-  
 
 **Protezioni.** AR 3 intrinseca più 2 dello scudo medio, tutta non magica. È immune a Fuoco e Incendiato, oltre alle immunità fisiologiche comuni. Non dimezza genericamente il danno Naturale, non è immune al Ghiaccio e non ha una vulnerabilità al freddo ×2. Ha una mente, emozioni e volontà proprie.
 
@@ -3398,11 +2785,8 @@ Un essere cosciente di fuoco contenuto in una forma bronzea, equipaggiato con ma
 
 Un piccolo essere di magma animato che cerca calore e combustibile. Il guscio contiene la fiamma fino alla distruzione. Fonte: Magmin, p. 212.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 3 • DES 7 • COS 5 • INT 4 • SAG 5 • CAR 4 |
 | Risorse e protezioni | PV 14 • PM — • AR 2, di cui 0 magica |
 | Difese e Salvezze | Difese 10 • Tempra 9 • Riflessi 11 • Volontà 8 • Magia 9 |
@@ -3411,16 +2795,10 @@ Un piccolo essere di magma animato che cerca calore e combustibile. Il guscio co
 | Abilità | Corpo a corpo 11 • Atletica 9 • Percezione 10 • Furtività 10 |
 | GS e PX per 4 PG | Inesperto • 20 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Tocco ardente | 11 | 1d6+2 Fuoco Naturale | 1 Q |
 | Esplosione finale | — | 1d6+2 Fuoco Naturale; area | Raggio 2 Q; distruzione |
-
-  
 
 **Guscio e fiamma.** È immune a Fuoco e Incendiato. Dimezza per eccesso il danno Naturale da urti, tagli e perforazioni dopo le Difese e prima dell’AR 2 intrinseca; le altre componenti non sono ridotte. È immune ad Affaticamento e Sonno. Non possiede Parata naturale; ha una mente e non eredita le immunità mentali degli automi.
 
@@ -3452,11 +2830,8 @@ Un piccolo essere di magma animato che cerca calore e combustibile. Il guscio co
 
 Una massa d’acqua animata che colpisce, spinge e può avvolgere le vie respiratorie di una sola vittima. Fonte originale: Water Elemental, p. 125; profilo Simply RPG: Magia §14.1, Maggiore.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 9 • DES 8 • COS 10 • INT 5 • SAG 5 • CAR 5 |
 | Risorse e protezioni | PV 32 • PM — • AR 4, di cui 4 magica |
 | Difese e Salvezze | Difese 14 • Tempra 16 • Riflessi 14 • Volontà 10 • Magia 12 |
@@ -3465,16 +2840,10 @@ Una massa d’acqua animata che colpisce, spinge e può avvolgere le vie respira
 | Abilità | Corpo a corpo 15 • Attacco a distanza 14 |
 | GS e PX per 4 PG | Eroe • 70 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Schiaffo | 15 | 2d6+4 Acqua Magico | 1 Q |
 | Dardo d’acqua | 14 | 2d6+2 Acqua Magico | Massimo 12 Q |
-
-  
 
 **Sbalzante.** Entrambi gli attacchi applicano Sbalzante 1 dopo il danno residuo e la Contromisura pertinente, senza una PS ordinaria contro lo spostamento. La direzione allontana dall’elementale. Un ostacolo, uno spazio occupato o invalicabile ferma nell’ultimo Q libero, senza danno automatico da collisione. La PS Riflessi prima di un pericolo immediatamente letale resta dovuta.
 
@@ -3504,11 +2873,8 @@ Una massa d’acqua animata che colpisce, spinge e può avvolgere le vie respira
 
 Un vortice con sagoma riconoscibile, capace di colpire da contatto o a distanza. Fonte originale: Air Elemental, p. 124; profilo Simply RPG: Magia §14.2, Maggiore.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 8 • DES 10 • COS 9 • INT 5 • SAG 5 • CAR 5 |
 | Risorse e protezioni | PV 28 • PM — • AR 3, di cui 3 magica |
 | Difese e Salvezze | Difese 16 • Tempra 14 • Riflessi 16 • Volontà 10 • Magia 12 |
@@ -3517,16 +2883,10 @@ Un vortice con sagoma riconoscibile, capace di colpire da contatto o a distanza.
 | Abilità | Corpo a corpo 15 • Attacco a distanza 16 |
 | GS e PX per 4 PG | Eroe • 70 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Folata | 15 | 2d6+3 Aria Magico | 1 Q |
 | Dardo d’aria | 16 | 2d6+2 Aria Magico | Massimo 12 Q |
-
-  
 
 **Abbattimento.** Entrambi gli attacchi colpiscono un solo bersaglio e applicano l’effetto dell’Aria: dopo danno residuo e Contromisura, Riflessi con −4; fallimento applica A Terra. Chi è già A Terra non subisce un effetto aggiuntivo. Non si aggiungono il lancio casuale, il danno da collisione o il turbine ad area del profilo originale.
 
@@ -3542,11 +2902,8 @@ Un vortice con sagoma riconoscibile, capace di colpire da contatto o a distanza.
 
 Una figura di fiamme che può colpire a contatto o proiettare una Fiammata. Fonte originale: Fire Elemental, p. 125; profilo Simply RPG: Magia §14.3, Maggiore.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 9 • DES 9 • COS 9 • INT 5 • SAG 5 • CAR 5 |
 | Risorse e protezioni | PV 28 • PM — • AR 3, di cui 3 magica |
 | Difese e Salvezze | Difese 14 • Tempra 14 • Riflessi 15 • Volontà 10 • Magia 12 |
@@ -3555,16 +2912,10 @@ Una figura di fiamme che può colpire a contatto o proiettare una Fiammata. Font
 | Abilità | Corpo a corpo 16 |
 | GS e PX per 4 PG | Eroe • 70 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Tocco Ustionante | 16 | 2d6+5 Fuoco Magico | 1 Q |
 | Fiammata | — | 2d6+2 Fuoco Magico; area | Linea 5 × 1 Q |
-
-  
 
 **Tocco.** Usa Corpo a corpo 16 e consente le normali Difese. Dopo residuo e Ignifugo impone Riflessi con −4 contro Incendiato. Non colpisce automaticamente una creatura per il solo contatto dei suoi Q con quelli della manifestazione.
 
@@ -3582,11 +2933,8 @@ Una figura di fiamme che può colpire a contatto o proiettare una Fiammata. Font
 
 Una figura massiccia che colpisce con pugni di pietra e scuote il terreno vicino. Fonte originale: Earth Elemental, p. 124; profilo Simply RPG: Magia §14.4, Maggiore.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 10 • DES 7 • COS 10 • INT 5 • SAG 5 • CAR 5 |
 | Risorse e protezioni | PV 40 • PM — • AR 5, di cui 5 magica |
 | Difese e Salvezze | Difese 13 • Tempra 17 • Riflessi 12 • Volontà 10 • Magia 12 |
@@ -3595,16 +2943,10 @@ Una figura massiccia che colpisce con pugni di pietra e scuote il terreno vicino
 | Abilità | Corpo a corpo 16 • Prove di FOR 15 |
 | GS e PX per 4 PG | Eroe • 70 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Pugno di Pietra | 16 | 2d6+6 Terra Magico | 1 Q |
 | Terremoto | — | 1d10 Terra Magico; area | Raggio 3 Q |
-
-  
 
 **Pugno di Pietra.** Usa Corpo a corpo 16 e ammette le Difese ordinarie. Dopo danno residuo e Contromisura applica automaticamente Sanguinamento 1. Per questo effetto la perdita di PV avviene all’inizio del turno della vittima; cumulo, trattamento e conseguenze a 0 PV seguono le regole comuni. Il Pugno non aggiunge uno Sbalzante o una caduta automatici.
 
@@ -3620,11 +2962,8 @@ Una figura massiccia che colpisce con pugni di pietra e scuote il terreno vicino
 
 I giganti possono presidiare un valico, contendere un territorio o diventare interlocutori. Gli Yeti sono cacciatori del freddo; il Fomorian combina forza e poteri debilitanti. Queste schede hanno Natura Comune. La loro presenza su Iris e i rapporti con Paradise richiedono una collocazione nell’ambientazione: non discendono automaticamente dalla Covata.
 
-  
-
-|  |  |  |
-| :-: | :-: | :-: |
-| **Creatura** | **GS** | **PX per 4 PG** |
+| Creatura | GS | PX per 4 PG |
+| :---- | :---: | :---: |
 | Ciclope | Eroe | 77 |
 | Gigante delle colline | Eroe | 77 |
 | Gigante delle pietre | Eroe | 77 |
@@ -3635,8 +2974,6 @@ I giganti possono presidiare un valico, contendere un territorio o diventare int
 | Fomorian | Eroe | 77 |
 | Yeti | Veterano | 50 |
 | Yeti abominevole | Leggenda | 100 |
-
-  
 
 **PX di riferimento.** Ogni valore riguarda un esemplare nella configurazione descritta. Gli otto giganti comprendono dotazione di qualità Comune; gli Yeti non hanno equipaggiamento conteggiato. Per comporre il premio dell’incontro si usa il Manuale del Direttore §9.3. Trattativa, passaggio ottenuto o rinuncia all’assedio possono risolvere la sfida quando ne soddisfano l’obiettivo.
 
@@ -3666,11 +3003,8 @@ I giganti possono presidiare un valico, contendere un territorio o diventare int
 
 Un grande abitante di altipiani e caverne, spesso legato a un rifugio o a una mandria. La scarsa valutazione delle distanze limita il tiro lungo. Fonte: Cyclops, p. 45.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 10 • DES 4 • COS 9 • INT 4 • SAG 3 • CAR 4 |
 | Risorse e protezioni | PV 64 • PM 8 • AR 2 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 9 • Tempra 14 • Riflessi 8 • Volontà 8 • Magia 10 |
@@ -3679,16 +3013,10 @@ Un grande abitante di altipiani e caverne, spesso legato a un rifugio o a una ma
 | Abilità | Guerra 13 • Lancio 10 • Atletica 15 • Percezione 8 • Sopravvivenza 10 |
 | GS e PX per 4 PG | Eroe • 77 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Maglio rustico | 13 | 2d6+5 Naturale | 2 Q |
 | Masso | 10 | 2d6+3 Naturale | Massimo 30 Q |
-
-  
 
 **Braccia poderose.** Il maglio usa Martello a due mani: due mani, FOR 6, PI 6, base 2d6. Il danno include +3 ordinario e +2 innato del Ciclope. Portata 2 Q è una capacità di questo corpo. Il Masso ha base 2d6 e +3 innato, già compresi. Nessuno dei bonus passa a un PG che recupera l’arma o il proiettile.
 
@@ -3704,11 +3032,8 @@ Un grande abitante di altipiani e caverne, spesso legato a un rifugio o a una ma
 
 Un avversario massiccio che si affida alla forza e alla presenza fisica. Fame e possesso delle risorse guidano questo esemplare, senza imporre una condotta a tutta la specie. Fonte: Hill Giant, p. 155.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 10 • DES 4 • COS 9 • INT 3 • SAG 4 • CAR 3 |
 | Risorse e protezioni | PV 60 • PM 8 • AR 2 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 9 • Tempra 14 • Riflessi 8 • Volontà 8 • Magia 9 |
@@ -3717,16 +3042,10 @@ Un avversario massiccio che si affida alla forza e alla presenza fisica. Fame e 
 | Abilità | Guerra 13 • Lancio 10 • Atletica 15 • Percezione 9 • Sopravvivenza 10 |
 | GS e PX per 4 PG | Eroe • 77 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Maglio rustico | 13 | 2d6+4 Naturale | 2 Q |
 | Masso | 10 | 2d6+2 Naturale | Massimo 30 Q |
-
-  
 
 **Potenza del corpo.** Maglio con profilo Martello a due mani: FOR 6, PI 6, base 2d6; aggiunge +3 ordinario e +1 innato. Masso: base 2d6 e +2 innato. Portata 2 Q e bonus appartengono alla creatura. Non indossa armature e non ha protezioni contro un particolare elemento.
 
@@ -3742,11 +3061,8 @@ Un avversario massiccio che si affida alla forza e alla presenza fisica. Fame e 
 
 Abitante di ambienti rocciosi, capace di confondersi con le pareti e di intercettare i massi avversari. Fonte: Stone Giant, p. 156.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 10 • DES 7 • COS 9 • INT 5 • SAG 6 • CAR 4 |
 | Risorse e protezioni | PV 70 • PM 12 • AR 4 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 13 • Tempra 15 • Riflessi 12 • Volontà 11 • Magia 12 |
@@ -3755,16 +3071,10 @@ Abitante di ambienti rocciosi, capace di confondersi con le pareti e di intercet
 | Abilità | Guerra 14 • Lancio 14 • Atletica 16 • Percezione 12 • Furtività 10 |
 | GS e PX per 4 PG | Eroe • 77 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Maglio di pietra | 14 | 2d6+5 Naturale | 3 Q |
 | Masso | 14 | 2d6+4 Naturale | Massimo 30 Q |
-
-  
 
 **Dotazione e forza.** Maglio con profilo Martello a due mani, FOR 6, PI 6: 2d6 base, +3 ordinario e +2 innato. Il Masso comprende 2d6 base, +1 ordinario e +3 innato. Nessuna armatura indossata. La pelle non dimezza genericamente il danno Naturale.
 
@@ -3780,11 +3090,8 @@ Abitante di ambienti rocciosi, capace di confondersi con le pareti e di intercet
 
 Un combattente abituato a ghiacci e neve, protetto da una corazza assemblata. L’immunità al gelo appartiene al corpo. Fonte: Frost Giant, p. 155.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 10 • DES 5 • COS 10 • INT 4 • SAG 5 • CAR 5 |
 | Risorse e protezioni | PV 76 • PM 12 • AR 5: 2 biologica + 3 armatura; AR magica 0 |
 | Difese e Salvezze | Parata 12 • Schivata 11 • Tempra 16 • Riflessi 9 • Volontà 11 • Magia 11 |
@@ -3793,16 +3100,10 @@ Un combattente abituato a ghiacci e neve, protetto da una corazza assemblata. L�
 | Abilità | Guerra 15 • Lancio 11 • Atletica 14 • Percezione 11 • Furtività 7 |
 | GS e PX per 4 PG | Eroe • 77 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Ascia bipenne | 15 | 2d6+6 Naturale | 2 Q |
 | Masso | 11 | 2d6+4 Naturale | Massimo 30 Q |
-
-  
 
 **Dotazione e danni.** Ascia bipenne FOR 6, PI 6, due mani: base 2d6+1, +3 ordinario e +2 innato. Armatura civile Media su misura: AR 3, FOR 5, PI 8. Masso: base 2d6 e +4 innato. Le armi non infliggono Ghiaccio per il solo fatto di essere usate dal gigante.
 
@@ -3818,11 +3119,8 @@ Un combattente abituato a ghiacci e neve, protetto da una corazza assemblata. L�
 
 Un combattente protetto da piastre, adatto a presidiare forge e accessi angusti. Il corpo tollera il fuoco ma non irradia danni passivi. Fonte: Fire Giant, p. 154.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 10 • DES 5 • COS 10 • INT 5 • SAG 6 • CAR 6 |
 | Risorse e protezioni | PV 82 • PM 14 • AR 6: 1 biologica + 5 armatura; AR magica 0 |
 | Difese e Salvezze | Parata 13 • Schivata 11 • Tempra 17 • Riflessi 10 • Volontà 12 • Magia 12 |
@@ -3831,16 +3129,10 @@ Un combattente protetto da piastre, adatto a presidiare forge e accessi angusti.
 | Abilità | Guerra 15 • Lancio 11 • Atletica 14 • Percezione 12 • Tecnologia 12 per forgia |
 | GS e PX per 4 PG | Eroe • 77 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Spadone | 15 | 2d6+7 Naturale | 2 Q |
 | Masso | 11 | 2d6+4 Naturale | Massimo 30 Q |
-
-  
 
 **Dotazione e danni.** Spadone FOR 6, PI 6, due mani: base 2d6+1, +3 ordinario e +3 innato. Armatura civile Pesante su misura: AR 5, FOR 7, PI 10. Masso: base 2d6 e +4 innato. Nessuna arma ha Fuoco aggiunto e le piastre recuperate non rendono immuni al calore.
 
@@ -3856,11 +3148,8 @@ Un combattente protetto da piastre, adatto a presidiare forge e accessi angusti.
 
 Un gigante capace di avvolgere il campo nella nebbia e spostarsi nell’aria. Il profilo concentra la sua magia innata su mobilità e occultamento. Fonte: Cloud Giant, p. 154.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 10 • DES 6 • COS 9 • INT 7 • SAG 8 • CAR 8 |
 | Risorse e protezioni | PV 88 • PM 24 • AR 3 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 13 • Tempra 15 • Riflessi 11 • Volontà 14 • Magia 14 |
@@ -3869,16 +3158,10 @@ Un gigante capace di avvolgere il campo nella nebbia e spostarsi nell’aria. Il
 | Abilità | Guerra 15 • Lancio 14 • Atletica 15 • Percezione 14; olfatto 16 • Oratoria 14 |
 | GS e PX per 4 PG | Leggenda • 110 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Maglio chiodato | 15 | 2d6+7 Naturale | 2 Q |
 | Masso | 14 | 2d6+5 Naturale | Massimo 30 Q |
-
-  
 
 **Dotazione e danni.** Il maglio sostituisce l’arma dell’originale con Martello a due mani: FOR 6, PI 6, base 2d6, +3 ordinario e +4 innato. Masso: base 2d6, +1 ordinario e +4 innato. Non indossa armatura. Non è immune ad Aria, Fulmine, cadute o altri elementi.
 
@@ -3908,11 +3191,8 @@ Un gigante capace di avvolgere il campo nella nebbia e spostarsi nell’aria. Il
 
 Un gigante anfibio che alterna un’arma pesante a scariche ad area. Può vivere lungo coste e grandi corsi d’acqua oltre che sulle vette. Fonte: Storm Giant, p. 156.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 10 • DES 8 • COS 10 • INT 8 • SAG 9 • CAR 9 |
 | Risorse e protezioni | PV 100 • PM 30 • AR 5: 2 biologica + 3 armatura; AR magica 0 |
 | Difese e Salvezze | Parata 15 • Schivata 14 • Tempra 17 • Riflessi 14 • Volontà 16 • Magia 16 |
@@ -3921,17 +3201,11 @@ Un gigante anfibio che alterna un’arma pesante a scariche ad area. Può vivere
 | Abilità | Guerra 16 • Lancio 15 • Atletica 16 • Percezione 16 • Oratoria 15 |
 | GS e PX per 4 PG | Leggenda • 110 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Spadone | 16 | 2d6+9 Naturale | 2 Q |
 | Masso | 15 | 2d6+6 Naturale | Massimo 30 Q |
 | Scarica tempestosa | — | 3d6+5 Fulmine Magico | Centro 20 Q; raggio 2 Q |
-
-  
 
 **Dotazione e danni.** Spadone FOR 6, PI 6, due mani: 2d6+1 base, +3 ordinario e +5 innato. Armatura civile Media su misura, AR 3, FOR 5, PI 8. Masso: 2d6 base, +2 ordinario e +4 innato. Tolta la corazza: AR 2, Guerra 17, Lancio 16, Schivata 15, Atletica 17 e terra/nuoto 10 / 20 / 30. Parata e Salvezze non cambiano.
 
@@ -3961,11 +3235,8 @@ Un gigante anfibio che alterna un’arma pesante a scariche ad area. Può vivere
 
 Un gigante dal corpo asimmetrico e dallo sguardo capace di infliggere dolore e alterazioni temporanee. Aspetto fisico e Natura restano informazioni distinte. Fonte: Fomorian, p. 136.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 10 • DES 4 • COS 9 • INT 5 • SAG 7 • CAR 3 |
 | Risorse e protezioni | PV 70 • PM 20 • AR 2 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 10 • Tempra 14 • Riflessi 9 • Volontà 10 • Magia 12 |
@@ -3974,17 +3245,11 @@ Un gigante dal corpo asimmetrico e dallo sguardo capace di infliggere dolore e a
 | Abilità | Guerra 14 • Atletica 14 • Percezione 14 • Furtività 10 |
 | GS e PX per 4 PG | Eroe • 77 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Maglio rustico | 14 | 2d6+5 Naturale | 3 Q |
 | Malocchio | — | 1d6+4 psichico diretto | 12 Q; PS Volontà −2 |
 | Deformazione maledetta | — | Nessun danno; Rallentato | 12 Q; PS Magia −2 |
-
-  
 
 **Dotazione e anatomia.** Maglio con profilo Martello a due mani: FOR 6, PI 6, base 2d6, +3 ordinario e +2 innato. Non indossa armature e non dispone del Lancio di massi. Gli arti asimmetrici rimangono associati alle localizzazioni omonime, senza immunità alle Menomazioni.
 
@@ -4030,11 +3295,8 @@ Un gigante dal corpo asimmetrico e dallo sguardo capace di infliggere dolore e a
 
 Un cacciatore di montagna dal pelo chiaro, capace di raffreddare con artigli e sguardo. Fonte: Yeti, p. 305.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 8 • DES 6 • COS 7 • INT 4 • SAG 6 • CAR 3 |
 | Risorse e protezioni | PV 35 • PM 8 • AR 2 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 11 • Tempra 12 • Riflessi 10 • Volontà 9 • Magia 10 |
@@ -4043,16 +3305,10 @@ Un cacciatore di montagna dal pelo chiaro, capace di raffreddare con artigli e s
 | Abilità | Corpo a corpo 13 • Atletica 13 • Percezione 11; olfatto 13 • Furtività 11 |
 | GS e PX per 4 PG | Veterano • 50 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Artiglio | 13 | 1d6+2 Naturale + 1d4 Ghiaccio Naturale | 1 Q |
 | Sguardo gelido | — | 1d6+2 Ghiaccio Magico | 6 Q; Magia e Tempra 0 |
-
-  
 
 **Sequenza.** Può effettuare al massimo due Artigli nelle proprie AzP, oppure un Artiglio e uno Sguardo. Ogni attacco costa 1 AzP; non ottiene due artigli gratuiti dopo lo Sguardo. Resta un solo Attacco di Opportunità ordinario per Round, alle condizioni comuni, eseguito con Artiglio. Gli attacchi biologici non costano PM.
 
@@ -4068,11 +3324,8 @@ Un cacciatore di montagna dal pelo chiaro, capace di raffreddare con artigli e s
 
 Un Yeti più grande, capace di emettere un soffio di gelo e sostenere una sequenza offensiva più lunga. Fonte: Abominable Yeti, p. 306.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 10 • DES 5 • COS 10 • INT 5 • SAG 6 • CAR 4 |
 | Risorse e protezioni | PV 85 • PM 14 • AR 4 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 12 • Tempra 16 • Riflessi 11 • Volontà 12 • Magia 13 |
@@ -4081,17 +3334,11 @@ Un Yeti più grande, capace di emettere un soffio di gelo e sostenere una sequen
 | Abilità | Corpo a corpo 15 • Atletica 16 • Percezione 13; olfatto 15 • Furtività 10 |
 | GS e PX per 4 PG | Leggenda • 100 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Artiglio | 15 | 1d8+3 Naturale + 1d6 Ghiaccio Naturale | 1 Q |
 | Sguardo gelido | — | 2d6+3 Ghiaccio Magico | 6 Q; Magia e Tempra −2 |
 | Soffio gelido | — | 3d6+3 Ghiaccio Naturale | Cono 3 Q; larghezze 1/3/5 |
-
-  
 
 **Sequenza.** Nelle proprie AzP può usare al massimo due Artigli e una sola fra Sguardo e Soffio, pagando 1 AzP per ciascuno. Può conservare Azioni per Difese o altre attività. Attacco di Opportunità ordinario con Artiglio, massimo uno per Round, distinto da questo limite. Artigli e Soffio non costano PM; Sguardo costa 2 PM.
 
@@ -4117,11 +3364,8 @@ Un Yeti più grande, capace di emettere un soffio di gelo e sostenere una sequen
 
 Il sottosuolo offre nascondigli, pareti scalabili e passaggi stretti. Queste creature sfruttano il buio, le prese, il veleno o l’equipaggiamento degli intrusi. Sono profili di catalogo: la loro presenza su Iris e i rapporti con Paradise richiedono una collocazione nell’ambientazione. Nessuna appartiene automaticamente alla Covata.
 
-  
-
-|  |  |  |
-| :-: | :-: | :-: |
-| **Creatura** | **GS** | **PX per 4 PG** |
+| Creatura | GS | PX per 4 PG |
+| :---- | :---: | :---: |
 | Mantoscuro | Inesperto | 20 |
 | Perforatore | Principiante | 10 |
 | Roper | Eroe | 70 |
@@ -4132,8 +3376,6 @@ Il sottosuolo offre nascondigli, pareti scalabili e passaggi stretti. Queste cre
 | Troglodita | Inesperto | 20 |
 | Stirge | Principiante | 10 |
 | Vermeiena | Esperto | 30 |
-
-  
 
 **PX di riferimento.** I valori riguardano un esemplare nella configurazione descritta e quattro PG. Il Grimlock comprende una mazza di qualità Comune; gli altri profili non hanno equipaggiamento conteggiato. Il premio complessivo dell’incontro segue il Manuale del Direttore §9.3. Superare il pericolo, mettere in sicurezza un passaggio o ottenere un accordo può risolvere la sfida secondo l’obiettivo della scena.
 
@@ -4161,11 +3403,8 @@ Il sottosuolo offre nascondigli, pareti scalabili e passaggi stretti. Queste cre
 
 Un piccolo predatore dal mantello carnoso, simile a una stalattite quando riposa. Piomba sul capo della preda e può oscurare l’ambiente circostante. Fonte: Darkmantle, p. 46.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 6 • DES 7 • COS 5 • INT 2 • SAG 6 • CAR 3 |
 | Risorse e protezioni | PV 22 • PM 8 • AR 1 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 12 • Tempra 10 • Riflessi 12 • Volontà 8 • Magia 9 |
@@ -4174,16 +3413,10 @@ Un piccolo predatore dal mantello carnoso, simile a una stalattite quando riposa
 | Abilità | Corpo a corpo 11 • Atletica 10 • Percezione 12 • Furtività 12 |
 | GS e PX per 4 PG | Inesperto • 20 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Avvolgimento | 11 | 1d6+1 Naturale | 1 Q |
 | Oscuramento | — | Nessun danno; area buia | Raggio 3 Q; 2 PM |
-
-  
 
 **Aspetto roccioso.** Immobile su un soffitto adatto ottiene +3 a Furtività, VA 15. Una buona illuminazione non svela da sola il travestimento, ma contatto, movimento o esame riuscito permettono di riconoscerlo. Ecolocalizzazione 12 Q; se non funziona, non dispone di una vista alternativa utile al combattimento. Ali e mantello corrispondono alle Braccia, appendici di appiglio alle Gambe.
 
@@ -4213,11 +3446,8 @@ Un piccolo predatore dal mantello carnoso, simile a una stalattite quando riposa
 
 Stadio giovanile del Roper, con un guscio appuntito e un corpo aderente nascosto al suo interno. Attende sopra un passaggio; dopo la caduta risale lentamente. Fonte: Piercer, p. 252.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 5 • DES 5 • COS 7 • INT 1 • SAG 4 • CAR 2 |
 | Risorse e protezioni | PV 18 • PM 4 • AR 3 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 8 • Tempra 12 • Riflessi 8 • Volontà 7 • Magia 8 |
@@ -4226,15 +3456,9 @@ Stadio giovanile del Roper, con un guscio appuntito e un corpo aderente nascosto
 | Abilità | Corpo a corpo 10 • Atletica 9 • Percezione 9 • Furtività 10; immobile sulla roccia 14 |
 | GS e PX per 4 PG | Principiante • 10 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Caduta perforante | 10 | 1d6 Naturale ogni 2 Q; massimo 3d6 | Verticale da 2 a 6 Q |
-
-  
 
 **Sensi e appigli.** Scurovisione 12 Q; l’udito integra Percezione senza concedere vista cieca o individuazione attraverso pareti. Può aderire a pareti e soffitti secondo le regole comuni. Il mimetismo richiede un supporto roccioso e immobilità. Braccia e Gambe indicano rispettivamente le porzioni anteriore e posteriore del corpo aderente; danneggiarle può impedire di arrampicarsi.
 
@@ -4250,11 +3474,8 @@ Stadio giovanile del Roper, con un guscio appuntito e un corpo aderente nascosto
 
 Un predatore massiccio che imita una formazione rocciosa. Sei filamenti retrattili raggiungono le prede e le tirano verso il morso. Fonte: Roper, p. 261.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 9 • DES 4 • COS 8 • INT 4 • SAG 8 • CAR 3 |
 | Risorse e protezioni | PV 55 • PM 8 • AR 4 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 9 • Tempra 14 • Riflessi 8 • Volontà 11 • Magia 11 |
@@ -4263,17 +3484,11 @@ Un predatore massiccio che imita una formazione rocciosa. Sei filamenti retratti
 | Abilità | Corpo a corpo 14 • Atletica 14 • Percezione 14 • Furtività 11; immobile sulla roccia 15 |
 | GS e PX per 4 PG | Eroe • 70 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Morso | 14 | 2d6+2 Naturale | 1 Q |
 | Filamento | 14 | Presa; nessun danno | 10 Q; contrapposta |
 | Trascinare | 14 | Fino a 4 Q verso il corpo | Una vittima già presa |
-
-  
 
 **Sequenza.** Può tentare al massimo due nuovi agganci e un Morso per Round, pagando 1 AzP per ciascuno. Trascinare, rigenerare un filamento o difendersi impiegano le stesse tre AzP. Un Attacco di Opportunità usa soltanto Morso, entro 1 Q: i filamenti non creano una zona di minaccia di 10 Q.
 
@@ -4303,11 +3518,8 @@ Un predatore massiccio che imita una formazione rocciosa. Sei filamenti retratti
 
 Una creatura dalle antenne piumose che si nutre della ruggine prodotta sul ferro. Può ignorare chi non porta il suo nutrimento e inseguire invece un oggetto abbandonato. Fonte: Rust Monster, p. 262.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 6 • DES 6 • COS 6 • INT 2 • SAG 6 • CAR 3 |
 | Risorse e protezioni | PV 24 • PM 5 • AR 2 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 10 • Tempra 11 • Riflessi 10 • Volontà 8 • Magia 9 |
@@ -4316,16 +3528,10 @@ Una creatura dalle antenne piumose che si nutre della ruggine prodotta sul ferro
 | Abilità | Corpo a corpo 10 • Atletica 10 • Percezione 10; odore del ferro 14 • Furtività 8 |
 | GS e PX per 4 PG | Inesperto • 20 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Morso | 10 | 1d6+1 Naturale | 1 Q |
 | Antenne | 11 | Ruggine: perdita di PI | 1 Q; un oggetto |
-
-  
 
 **Nutrimento e sensi.** Scurovisione 12 Q. Individua l’odore di ferro o acciaio esposti entro 6 Q con Percezione 14; contenitori ermetici e barriere adeguate possono impedirlo. Il senso non dà la composizione completa di una lega e non attraversa automaticamente muri. Un pezzo di ferro accessibile può attirarlo lontano, senza una regola di provocazione obbligatoria.
 
@@ -4355,11 +3561,8 @@ Una creatura dalle antenne piumose che si nutre della ruggine prodotta sul ferro
 
 Un predatore dalla corazza robusta, grandi mandibole e occhi capaci di confondere. Scava fino a un passaggio frequentato e attacca a breve distanza. Fonte: Umber Hulk, p. 292.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 10 • DES 6 • COS 8 • INT 5 • SAG 5 • CAR 5 |
 | Risorse e protezioni | PV 58 • PM 12 • AR 4 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 10 • Tempra 14 • Riflessi 10 • Volontà 10 • Magia 12 |
@@ -4368,17 +3571,11 @@ Un predatore dalla corazza robusta, grandi mandibole e occhi capaci di confonder
 | Abilità | Corpo a corpo 14 • Atletica 15 • Percezione 12 • Furtività 9 sotto terra, 7 all’aperto |
 | GS e PX per 4 PG | Eroe • 70 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Artiglio | 14 | 1d8+3 Naturale | 1 Q |
 | Mandibole | 14 | 1d10+3 Naturale | 1 Q |
 | Sguardo perturbante | — | Disorientato; nessun danno | 6 Q; Volontà −2; 3 PM |
-
-  
 
 **Sequenza.** Può usare al massimo due Artigli e un attacco di Mandibole per Round, ciascuno con 1 AzP. Sguardo o Difese consumano le stesse tre AzP: non si aggiungono ai tre colpi. Sguardo è disponibile una sola volta per Round. Attacco di Opportunità con Artiglio, massimo uno ordinario; Mandibole non si aggiunge gratuitamente.
 
@@ -4408,11 +3605,8 @@ Un predatore dalla corazza robusta, grandi mandibole e occhi capaci di confonder
 
 Una creatura dal corpo corazzato e dal capo simile a quello di un avvoltoio. Comunica battendo i grandi uncini sulla pietra e vive in gruppi familiari. Fonte: Hook Horror, p. 189.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 9 • DES 5 • COS 7 • INT 3 • SAG 6 • CAR 4 |
 | Risorse e protezioni | PV 38 • PM 6 • AR 3 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 10 • Tempra 12 • Riflessi 9 • Volontà 9 • Magia 9 |
@@ -4421,15 +3615,9 @@ Una creatura dal corpo corazzato e dal capo simile a quello di un avvoltoio. Com
 | Abilità | Corpo a corpo 13 • Atletica 13 • Percezione 12; udito 14 • Furtività 8 |
 | GS e PX per 4 PG | Esperto • 30 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Uncino | 13 | 1d8+2 Naturale | 2 Q |
-
-  
 
 **Due uncini.** Ogni attacco costa 1 AzP; può compierne due se non conserva Azioni per difendersi. La portata è misurata dal bordo del corpo. Non applica automaticamente Immobilizzato, trascinamento o Disarmare. Può eseguire un Attacco di Opportunità ordinario con Uncino, senza un secondo colpo gratuito.
 
@@ -4445,11 +3633,8 @@ Una creatura dal corpo corazzato e dal capo simile a quello di un avvoltoio. Com
 
 Abitante delle caverne privo di occhi, capace di orientarsi tramite udito e olfatto. Il profilo rappresenta un cacciatore con mazza, senza imporre alleanze o culto alla specie. Fonte: Grimlock, p. 175.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 7 • DES 6 • COS 6 • INT 5 • SAG 4 • CAR 3 |
 | Risorse e protezioni | PV 16 • PM 6 • AR 0; AR magica 0 |
 | Difese e Salvezze | Difese 10 • Tempra 10 • Riflessi 10 • Volontà 8 • Magia 8 |
@@ -4458,15 +3643,9 @@ Abitante delle caverne privo di occhi, capace di orientarsi tramite udito e olfa
 | Abilità | Mischia 11 • Corpo a corpo 10 • Atletica 12 • Percezione 12 • Furtività 11; fra rocce 13 |
 | GS e PX per 4 PG | Principiante • 11 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Mazza ferrata | 11 | 1d6+2 Naturale | 1 Q |
-
-  
 
 **Dotazione.** Mazza ferrata di qualità Comune, PS Integrità 10, PI 5, FOR 4, una mano; già pronta. Il danno comprende 1d6+1 base e +1 da DES. Nessuna armatura o scudo. Può usare Parata con la mazza; con una sola AzP scegliere una Difesa limita l’attacco di quel Round. Il profilo non attribuisce stordimenti automatici ai colpi.
 
@@ -4482,11 +3661,8 @@ Abitante delle caverne privo di occhi, capace di orientarsi tramite udito e olfa
 
 Un abitante delle caverne dalla pelle mimetica e dalle secrezioni dall’odore intenso. Questo profilo combatte con le proprie armi naturali. Fonte: Troglodyte, p. 290.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 6 • DES 5 • COS 7 • INT 3 • SAG 5 • CAR 3 |
 | Risorse e protezioni | PV 20 • PM 5 • AR 1 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 9 • Tempra 11 • Riflessi 9 • Volontà 8 • Magia 8 |
@@ -4495,16 +3671,10 @@ Un abitante delle caverne dalla pelle mimetica e dalle secrezioni dall’odore i
 | Abilità | Corpo a corpo 10 • Atletica 10 • Percezione 9 • Furtività 10; mimetizzato 13 |
 | GS e PX per 4 PG | Inesperto • 20 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Artiglio | 10 | 1d4+1 Naturale | 1 Q |
 | Morso | 10 | 1d4+1 Naturale | 1 Q |
-
-  
 
 **Sequenza.** Può effettuare fino a due attacchi naturali per Round, ciascuno con 1 AzP; al massimo uno è Morso. La conversione non aggiunge il terzo attacco dell’originale. Può conservare Azioni per Schivare; non possiede Parata naturale. Attacco di Opportunità ordinario con Artiglio o Morso, senza una combinazione gratuita.
 
@@ -4534,11 +3704,8 @@ Un abitante delle caverne dalla pelle mimetica e dalle secrezioni dall’odore i
 
 Un piccolo animale volante con zampe prensili e una lunga proboscide. Cerca sangue e può diventare pericoloso quando più esemplari costringono il gruppo a liberazioni ripetute. Fonte: Stirge, p. 284.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 2 • DES 8 • COS 5 • INT 1 • SAG 4 • CAR 2 |
 | Risorse e protezioni | PV 6 • PM 4 • AR 0; AR magica 0 |
 | Difese e Salvezze | Difese 12 • Tempra 8 • Riflessi 12 • Volontà 7 • Magia 8 |
@@ -4547,16 +3714,10 @@ Un piccolo animale volante con zampe prensili e una lunga proboscide. Cerca sang
 | Abilità | Corpo a corpo 10 • Atletica 7 • Percezione 9 • Furtività 12 |
 | GS e PX per 4 PG | Principiante • 10 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Puntura | 10 | 1d4 Naturale | 1 Q |
 | Suzione | — | 2 danni interni fissi | Solo vittima agganciata |
-
-  
 
 **Puntura.** Se causa almeno 1 danno finale a una creatura con sangue nutriente e pelle raggiungibile, la Stirge si aggancia. L’AR e le Difese possono impedirlo azzerando il danno. Non si fissa a costrutti, corpi senza sangue o attraverso un involucro ermetico integro. L’aggancio non applica Immobilizzato, non occupa le mani della vittima e non riduce il suo movimento.
 
@@ -4586,11 +3747,8 @@ Un piccolo animale volante con zampe prensili e una lunga proboscide. Cerca sang
 
 Un grande necrofago dal corpo allungato, sensibile all’odore di sangue e decomposizione. I tentacoli intorno al capo intossicano la preda, che viene poi raggiunta dal morso. Fonte: Carrion Crawler, p. 37.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 7 • DES 6 • COS 8 • INT 1 • SAG 6 • CAR 3 |
 | Risorse e protezioni | PV 34 • PM 6 • AR 2 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 10 • Tempra 13 • Riflessi 10 • Volontà 8 • Magia 9 |
@@ -4599,16 +3757,10 @@ Un grande necrofago dal corpo allungato, sensibile all’odore di sangue e decom
 | Abilità | Corpo a corpo 12 • Atletica 12 • Percezione 11; olfatto 14 • Furtività 10 |
 | GS e PX per 4 PG | Esperto • 30 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Tentacoli | 13 | 1d4+1 Naturale; veleno | 2 Q |
 | Morso | 12 | 1d8+1 Naturale | 1 Q |
-
-  
 
 **Sequenza.** Può usare al massimo un attacco di Tentacoli e un Morso per Round, ciascuno con 1 AzP. La precisione dei Tentacoli, VA 13, è specifica di quell’attacco. Il Morso non è gratuito e non ignora le Difese di una vittima intossicata. Un Attacco di Opportunità ordinario usa soltanto Morso.
 
@@ -4638,11 +3790,8 @@ Un grande necrofago dal corpo allungato, sensibile all’odore di sangue e decom
 
 Una chiazza sul pavimento, un fungo lungo il sentiero o un forziere abbandonato possono essere organismi viventi. Le melme cercano nutrimento, i funghi reagiscono agli stimoli e i Miconidi possono diventare interlocutori. Queste schede appartengono al catalogo generale: la loro presenza su Iris e i rapporti con Paradise richiedono una collocazione nell’ambientazione. Non sono nuove caste della Covata.
 
-  
-
-|  |  |  |
-| :-: | :-: | :-: |
-| **Creatura** | **GS** | **PX per 4 PG** |
+| Creatura | GS | PX per 4 PG |
+| :---- | :---: | :---: |
 | Melma grigia | Inesperto | 20 |
 | Gelatina ocra | Esperto | 30 |
 | Budino nero | Veterano | 50 |
@@ -4653,8 +3802,6 @@ Una chiazza sul pavimento, un fungo lungo il sentiero o un forziere abbandonato 
 | Miconide germoglio | Principiante | 10 |
 | Miconide adulto | Inesperto | 20 |
 | Mimic | Esperto | 30 |
-
-  
 
 **PX di riferimento.** I valori riguardano un esemplare nella configurazione descritta e quattro PG. Nessuno di questi profili comprende equipaggiamento conteggiato. Il premio complessivo dell’incontro segue il Manuale del Direttore §9.3. I frammenti di una melma restano parte del medesimo esemplare; il Fungo stridente non assegna PX di combattimento. Mettere in sicurezza un allarme può comunque risolvere un obiettivo della scena.
 
@@ -4696,11 +3843,8 @@ Una chiazza sul pavimento, un fungo lungo il sentiero o un forziere abbandonato 
 
 Una massa grigia simile a roccia bagnata o olio denso. Si muove lentamente verso calore e movimento e consuma materia organica e metallo. Fonte: Gray Ooze, p. 243.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 6 • DES 3 • COS 7 • INT 1 • SAG 4 • CAR 1 |
 | Risorse e protezioni | PV 24 • PM — • AR 1 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 6 • Tempra 12 • Riflessi 6 • Volontà — • Magia 9 |
@@ -4709,15 +3853,9 @@ Una massa grigia simile a roccia bagnata o olio denso. Si muove lentamente verso
 | Abilità | Corpo a corpo 10 • Atletica 8 • Percezione 9 • Furtività 10; immobile 14 |
 | GS e PX per 4 PG | Inesperto • 20 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Pseudopodo | 10 | 1d6+2 Naturale; acido, Corrosivo | 1 Q |
-
-  
 
 **Resistenze.** Dimezza i danni da Acido, Fuoco e Ghiaccio, di qualunque Natura, prima dell’AR pertinente. Le immunità mentali, sensoriali e ad AFT sono quelle delle regole comuni delle melme. Non ha Scissione e non è immune al Taglio o al Fulmine.
 
@@ -4733,11 +3871,8 @@ Una massa grigia simile a roccia bagnata o olio denso. Si muove lentamente verso
 
 Una massa giallastra che filtra nelle fessure e segue le prede sulle superfici della caverna. I suoi enzimi attaccano soprattutto i tessuti molli. Fonte: Ochre Jelly, p. 243.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 7 • DES 3 • COS 6 • INT 2 • SAG 4 • CAR 1 |
 | Risorse e protezioni | PV 36 • PM — • AR 1 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 6 • Tempra 11 • Riflessi 6 • Volontà — • Magia 9 |
@@ -4746,16 +3881,10 @@ Una massa giallastra che filtra nelle fessure e segue le prede sulle superfici d
 | Abilità | Corpo a corpo 11 • Atletica 10 • Percezione 9 • Furtività 8 |
 | GS e PX per 4 PG | Esperto • 30 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Pseudopodo | 11 | 1d8+1 Naturale; acido | 1 Q |
 | Frammento | 11 | 1d6+1 Naturale; acido | 1 Q; dopo Scissione |
-
-  
 
 **Resistenze.** Dimezza i danni da Acido di qualunque Natura. È immune al Fulmine di qualunque Natura e ai danni fisici Naturali da Taglio. Taglio Magico o Etereo può ferirla e non attiva Scissione. Non è immune al Ghiaccio. Le altre immunità sono quelle comuni delle melme.
 
@@ -4771,11 +3900,8 @@ Una massa giallastra che filtra nelle fessure e segue le prede sulle superfici d
 
 Una massa nera e lucida che aderisce alle superfici e consuma materia organica e metallo. La sua superficie danneggia gli strumenti impiegati per colpirla. Fonte: Black Pudding, p. 241.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 8 • DES 3 • COS 8 • INT 1 • SAG 4 • CAR 1 |
 | Risorse e protezioni | PV 52 • PM — • AR 2 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 6 • Tempra 13 • Riflessi 6 • Volontà — • Magia 10 |
@@ -4784,16 +3910,10 @@ Una massa nera e lucida che aderisce alle superfici e consuma materia organica e
 | Abilità | Corpo a corpo 12 • Atletica 11 • Percezione 10 • Furtività 9 |
 | GS e PX per 4 PG | Veterano • 50 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Pseudopodo | 12 | 2d6+1 Naturale; acido, Corrosivo | 1 Q |
 | Frammento | 12 | 1d8+1 Naturale; acido, Corrosivo | 1 Q; dopo Scissione |
-
-  
 
 **Immunità.** È immune ad Acido, Ghiaccio e Fulmine di qualunque Natura e ai danni fisici Naturali da Taglio. Taglio Magico o Etereo può ferirlo e non attiva Scissione. Fuoco non è fra le sue immunità. Valgono inoltre le proprietà comuni delle melme.
 
@@ -4837,11 +3957,8 @@ Una massa nera e lucida che aderisce alle superfici e consuma materia organica e
 
 Una massa quasi trasparente che riempie un tratto di corridoio. Ingloba ciò che incontra e può conservare al proprio interno oggetti che non riesce a digerire. Fonte: Gelatinous Cube, p. 242.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 7 • DES 2 • COS 9 • INT 1 • SAG 4 • CAR 1 |
 | Risorse e protezioni | PV 44 • PM — • AR 1 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 5 • Tempra 14 • Riflessi 5 • Volontà — • Magia 9 |
@@ -4850,17 +3967,11 @@ Una massa quasi trasparente che riempie un tratto di corridoio. Ingloba ciò che
 | Abilità | Corpo a corpo 11 • Atletica 12 • Percezione 9 • Furtività 9; immobile 14 |
 | GS e PX per 4 PG | Esperto • 30 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Pseudopodo | 11 | 1d8+1 Naturale; acido | 1 Q |
 | Inglobare | — | 1d6 Naturale; acido e presa | AzP + AzM; Riflessi 0 |
 | Digerire | — | 1d6 Naturale; acido | 1 AzP; vittime interne |
-
-  
 
 **Trasparenza.** Furtività 14 richiede immobilità, ambiente adatto e assenza di oggetti visibili sospesi nel corpo. Resti o riflessi possono rendere la massa evidente. Un esame riuscito la rivela; entrarvi inconsapevolmente non annulla la Salvezza contro Inglobare. Occupa tutto il proprio volume. Chi entra nel corpo attiva la PS e le conseguenze di Inglobare, senza movimento o spesa di Azioni del Cubo; restano capienza e limiti per Round. Con successo resta fuori, interrompendo il proprio movimento.
 
@@ -4890,11 +4001,8 @@ Una massa quasi trasparente che riempie un tratto di corridoio. Ingloba ciò che
 
 Un fungo violaceo che emette un grido penetrante quando viene stimolato dalla luce intensa o da una creatura vicina. Può essere usato come allarme naturale. Fonte: Shrieker, pp. 137–138.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 1 • DES 1 • COS 5 • INT 1 • SAG 2 • CAR 1 |
 | Risorse e protezioni | PV 12 • PM — • AR 0; AR magica 0 |
 | Difese e Salvezze | Difese 1 • Tempra 9 • Riflessi 1 • Volontà — • Magia 8 |
@@ -4903,15 +4011,9 @@ Un fungo violaceo che emette un grido penetrante quando viene stimolato dalla lu
 | Abilità | Percezione 8 • Furtività 10; fra funghi simili 13 |
 | GS e PX per 4 PG | — • 0 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Stridio | — | Allarme; nessun danno | Innesco 6 Q; udibile 60 Q |
-
-  
 
 **Sensi e anatomia.** Percezione diffusa 6 Q; immunità ad Accecato e Assordato. Può rilevare luce intensa sulla superficie pur senza occhi. Testa indica il cappello, Torace il gambo; Braccia le lamelle, Gambe la base radicata. Ferite e Menomazioni restano applicabili alle rispettive funzioni. Il mimetismo non rende irriconoscibile un fungo esaminato con successo.
 
@@ -4927,11 +4029,8 @@ Un fungo violaceo che emette un grido penetrante quando viene stimolato dalla lu
 
 Un fungo carnoso che si sposta lentamente e protende filamenti capaci di deteriorare materia vivente. Cerca terreno ricco di sostanze organiche. Fonte: Violet Fungus, p. 138.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 2 • DES 1 • COS 5 • INT 1 • SAG 2 • CAR 1 |
 | Risorse e protezioni | PV 18 • PM — • AR 0; AR magica 0 |
 | Difese e Salvezze | Difese 2 • Tempra 9 • Riflessi 2 • Volontà — • Magia 8 |
@@ -4940,15 +4039,9 @@ Un fungo carnoso che si sposta lentamente e protende filamenti capaci di deterio
 | Abilità | Corpo a corpo 9 • Atletica 4 • Percezione 8 • Furtività 10; fra funghi 13 |
 | GS e PX per 4 PG | Inesperto • 20 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Tocco degradante | 9 | 1d6 Naturale; degradazione biologica | 2 Q |
-
-  
 
 **Sensi e corpo.** Percezione diffusa 6 Q; immunità ad Accecato e Assordato. Testa indica il cappello, Torace il gambo, Braccia i filamenti divisi nei due lati, Gambe la base locomotrice. Manca un sistema nervoso strutturato, ma le lesioni funzionali restano rilevanti secondo le regole comuni.
 
@@ -4964,11 +4057,8 @@ Un fungo carnoso che si sposta lentamente e protende filamenti capaci di deterio
 
 Un involucro fungino cavo che fluttua e ricorda la sagoma di un osservatore mostruoso. Il suo aspetto imita una minaccia ben diversa dalle capacità che possiede. Fonte: Gas Spore, pp. 137–138.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 3 • DES 1 • COS 2 • INT 1 • SAG 1 • CAR 1 |
 | Risorse e protezioni | PV 4 • PM — • AR 0; AR magica 0 |
 | Difese e Salvezze | Difese 2 • Tempra 6 • Riflessi 2 • Volontà — • Magia 8 |
@@ -4977,16 +4067,10 @@ Un involucro fungino cavo che fluttua e ricorda la sagoma di un osservatore most
 | Abilità | Corpo a corpo 6 • Percezione 7 • Furtività 6 |
 | GS e PX per 4 PG | Inesperto • 20 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Tocco infettivo | 6 | 1 Naturale; poi Tempra 0 | 1 Q |
 | Rottura del sacco | — | 1d6 Naturale interno; Tempra −2 | Raggio 4 Q; una sola volta |
-
-  
 
 **Sensi e protezioni.** Percezione diffusa 6 Q. È immune ad Accecato, Assordato, Paralizzato, A terra, Avvelenato e ai danni da veleno. Il suo volo non usa ali e può restare sospesa, finché il sacco è integro. Non possiede raggi oculari o poteri dello spettatore che imita. Testa è la regione sensoriale, Torace il sacco, Braccia le escrescenze, Gambe la base di galleggiamento.
 
@@ -5016,11 +4100,8 @@ Un involucro fungino cavo che fluttua e ricorda la sagoma di un osservatore most
 
 Un giovane Miconide, capace di condividere semplici comunicazioni attraverso spore. Cerca protezione nel proprio circolo e può chiedere aiuto invece di combattere. Fonte: Myconid Sprout, p. 230.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 4 • DES 5 • COS 5 • INT 4 • SAG 6 • CAR 3 |
 | Risorse e protezioni | PV 12 • PM 6 • AR 0; AR magica 0 |
 | Difese e Salvezze | Difese 8 • Tempra 9 • Riflessi 9 • Volontà 9 • Magia 8 |
@@ -5029,16 +4110,10 @@ Un giovane Miconide, capace di condividere semplici comunicazioni attraverso spo
 | Abilità | Corpo a corpo 8 • Atletica 7 • Percezione 10 • Furtività 10 |
 | GS e PX per 4 PG | Principiante • 10 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Pugno | 8 | 1d4 Naturale; spore irritanti | 1 Q |
 | Spore di rapporto | — | Comunicazione consensuale | Raggio 2 Q; 1 AzP |
-
-  
 
 **Sensi e mente.** Scurovisione 24 Q. Possiede una mente e può subire effetti mentali compatibili: non eredita le immunità dei funghi privi di mente. Le localizzazioni seguono il corpo umanoide; il cappello fa parte della Testa. Non possiede Parata naturale.
 
@@ -5054,11 +4129,8 @@ Un giovane Miconide, capace di condividere semplici comunicazioni attraverso spo
 
 Un Miconide formato, abituato alla vita del circolo e alla condivisione delle esperienze. Può cercare di fermare un aggressore senza ucciderlo. Fonte: Myconid Adult, p. 232.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 5 • DES 5 • COS 6 • INT 5 • SAG 7 • CAR 4 |
 | Risorse e protezioni | PV 24 • PM 8 • AR 1 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 9 • Tempra 11 • Riflessi 9 • Volontà 11 • Magia 9 |
@@ -5067,17 +4139,11 @@ Un Miconide formato, abituato alla vita del circolo e alla condivisione delle es
 | Abilità | Corpo a corpo 10 • Atletica 9 • Percezione 11 • Furtività 9 |
 | GS e PX per 4 PG | Inesperto • 20 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Pugno | 10 | 1d6 Naturale; spore irritanti | 1 Q |
 | Spore pacificanti | — | Stordito; Tempra 0 | 1 Q; 1 AzP |
 | Spore di rapporto | — | Comunicazione consensuale | Raggio 4 Q; 1 AzP |
-
-  
 
 **Sensi e comunicazione.** Scurovisione 24 Q, mente e localizzazioni umanoidi come il germoglio. Può usare Spore di rapporto senza limite giornaliero, pagando ogni volta 1 AzP. Le Spore di allarme e il sole seguono le regole della pagina successiva. Non possiede Parata naturale.
 
@@ -5107,11 +4173,8 @@ Un Miconide formato, abituato alla vita del circolo e alla condivisione delle es
 
 Una creatura capace di assumere l’aspetto di un oggetto compatto, spesso un contenitore o un elemento d’arredo. Aspetta il contatto della preda prima di rivelare bocca e appendici. Fonte: Mimic, p. 220.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 8 • DES 6 • COS 7 • INT 3 • SAG 6 • CAR 4 |
 | Risorse e protezioni | PV 38 • PM 6 • AR 2 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 9 • Tempra 12 • Riflessi 9 • Volontà 9 • Magia 10 |
@@ -5120,16 +4183,10 @@ Una creatura capace di assumere l’aspetto di un oggetto compatto, spesso un co
 | Abilità | Corpo a corpo 12 • Atletica 11 • Percezione 11 • Furtività 10; oggetto immobile 14 |
 | GS e PX per 4 PG | Esperto • 30 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Pseudopodo | 12 | 1d8+1 Naturale; adesione in forma oggetto | 1 Q |
 | Morso | 12 | AC 2: 1d8+1 Naturale, poi 1d4 Naturale da acido | 1 Q |
-
-  
 
 **Corpo e sensi.** Scurovisione 12 Q; immunità ad Acido di qualunque Natura e ad A terra. Ha una mente e non è immune agli effetti mentali. Testa indica la regione bocca e sensi, Torace la massa centrale, Braccia gli pseudopodi e Gambe la base locomotrice; mutare forma non guarisce le Menomazioni.
 
@@ -5159,11 +4216,8 @@ Una creatura capace di assumere l’aspetto di un oggetto compatto, spesso un co
 
 Il bosco può essere un ambiente, un interlocutore o un avversario. Arbusti risvegliati, alberi senzienti e custodi silvani hanno esigenze differenti dai vegetali infestanti e dai predatori di materia organica. Questi profili ampliano il catalogo generale; la loro presenza su Iris richiede una collocazione nell’ambientazione. Origini divine, piani e culti della fonte non vengono assegnati automaticamente al mondo di Simply RPG.
 
-  
-
-|  |  |  |
-| :-: | :-: | :-: |
-| **Creatura** | **GS** | **PX per 4 PG** |
+| Creatura | GS | PX per 4 PG |
+| :---- | :---: | :---: |
 | Arbusto risvegliato | Principiante | 10 |
 | Albero risvegliato | Esperto | 30 |
 | Avvizzito ramoso | Principiante | 10 |
@@ -5174,8 +4228,6 @@ Il bosco può essere un ambiente, un interlocutore o un avversario. Arbusti risv
 | Treant | Leggenda | 100 |
 | Pegaso | Esperto | 30 |
 | Unicorno | Eroe | 70 |
-
-  
 
 **PX di riferimento.** Valori per un esemplare e quattro PG. Solo la Driade comprende una dotazione conteggiata, il randello di qualità Comune. L’animazione di due alberi ordinari è già compresa nel profilo e nei 100 PX del Treant: quegli alberi non assegnano un secondo premio. Alberi risvegliati autonomi incontrati separatamente conservano invece la propria scheda. Il calcolo complessivo dell’incontro è nel Manuale del Direttore §9.3.
 
@@ -5203,11 +4255,8 @@ Il bosco può essere un ambiente, un interlocutore o un avversario. Arbusti risv
 
 Un arbusto al quale sono state conferite coscienza e capacità di spostarsi. Può proteggere un passaggio, portare un messaggio o cercare un luogo adatto a mettere radici. Fonte: Awakened Shrub, p. 317.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 2 • DES 4 • COS 5 • INT 5 • SAG 5 • CAR 3 |
 | Risorse e protezioni | PV 12 • PM 6 • AR 0; AR magica 0 |
 | Difese e Salvezze | Difese 7 • Tempra 9 • Riflessi 8 • Volontà 8 • Magia 8 |
@@ -5216,15 +4265,9 @@ Un arbusto al quale sono state conferite coscienza e capacità di spostarsi. Pu�
 | Abilità | Corpo a corpo 7 • Atletica 5 • Percezione 9 • Furtività 10; immobile 14 |
 | GS e PX per 4 PG | Principiante • 10 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Rami graffianti | 7 | 1d4 Naturale; Taglio | 1 Q |
-
-  
 
 **Legno e fuoco.** Dimezza i danni fisici Naturali da Perforazione; il beneficio non riguarda proiettili Magici o Eterei. Subisce danno ×2 da Fuoco di qualunque Natura, prima di Difesa e AR. Se lo stesso danno è già raddoppiato da un Magistrale, il moltiplicatore complessivo diventa ×3. Le fiamme non lo rendono automaticamente Incendiato senza le condizioni pertinenti.
 
@@ -5240,11 +4283,8 @@ Un arbusto al quale sono state conferite coscienza e capacità di spostarsi. Pu�
 
 Un albero capace di ragionare, parlare e sradicarsi per camminare. È un individuo autonomo, distinto dagli alberi mossi temporaneamente da un Treant. Fonte: Awakened Tree, p. 317.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 9 • DES 3 • COS 7 • INT 5 • SAG 5 • CAR 3 |
 | Risorse e protezioni | PV 40 • PM 8 • AR 3 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 6 • Tempra 12 • Riflessi 6 • Volontà 9 • Magia 9 |
@@ -5253,15 +4293,9 @@ Un albero capace di ragionare, parlare e sradicarsi per camminare. È un individ
 | Abilità | Corpo a corpo 12 • Atletica 13 • Percezione 10 • Furtività 6; immobile 13 |
 | GS e PX per 4 PG | Esperto • 30 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Schianto di ramo | 12 | 2d6+2 Naturale; Contundente | 2 Q |
-
-  
 
 **Struttura.** Dimezza i danni fisici Naturali da Contusione e Perforazione, non Taglio. Subisce Fuoco ×2 di qualunque Natura, secondo la procedura dell’Arbusto risvegliato. La corteccia resta AR biologica: non è equipaggiamento e non possiede PI recuperabili separatamente dal corpo.
 
@@ -5277,11 +4311,8 @@ Un albero capace di ragionare, parlare e sradicarsi per camminare. È un individ
 
 Un piccolo intreccio di legno secco che assume una forma vagamente umanoide quando si muove. Si radica vicino a sentieri e luoghi di sosta. Fonte: Twig Blight, pp. 31–32.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 3 • DES 6 • COS 6 • INT 2 • SAG 4 • CAR 2 |
 | Risorse e protezioni | PV 12 • PM 4 • AR 1 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 9 • Tempra 9 • Riflessi 9 • Volontà 7 • Magia 8 |
@@ -5290,15 +4321,9 @@ Un piccolo intreccio di legno secco che assume una forma vagamente umanoide quan
 | Abilità | Corpo a corpo 9 • Atletica 7 • Percezione 9 • Furtività 11; immobile 14 |
 | GS e PX per 4 PG | Principiante • 10 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Artigli di ramo | 9 | 1d4+1 Naturale; Perforazione | 1 Q |
-
-  
 
 **Sensi.** Percezione diffusa 12 Q; immunità ad Accecato e Assordato. Oltre il raggio non possiede una vista alternativa utile al combattimento. La mente elementare non lo protegge da paura, controllo mentale o danni psichici. Le regole delle melme prive di mente non si applicano.
 
@@ -5314,11 +4339,8 @@ Un piccolo intreccio di legno secco che assume una forma vagamente umanoide quan
 
 Una creatura vegetale ricoperta di aghi, capace di scagliarli a distanza. Il polline può avvertire altri esemplari vicini. Fonte: Needle Blight, pp. 31–32.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 6 • DES 6 • COS 6 • INT 2 • SAG 4 • CAR 2 |
 | Risorse e protezioni | PV 16 • PM 4 • AR 1 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 9 • Tempra 10 • Riflessi 9 • Volontà 7 • Magia 8 |
@@ -5327,16 +4349,10 @@ Una creatura vegetale ricoperta di aghi, capace di scagliarli a distanza. Il pol
 | Abilità | Corpo a corpo 9 • Tiro naturale 10 • Atletica 8 • Percezione 9 • Furtività 9 |
 | GS e PX per 4 PG | Principiante • 10 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Artigli | 9 | 1d6 Naturale; Perforazione | 1 Q |
 | Aghi | 10 | 1d6+1 Naturale; Perforazione | 12 Q massimo |
-
-  
 
 **Sensi e corpo.** Percezione diffusa 12 Q; immunità ad Accecato e Assordato, non agli effetti mentali. Le spine sono parti del corpo; non costituiscono armature o proiettili mistici recuperabili con un valore di catalogo. Non ha la vulnerabilità al Fuoco del ramoso né le resistenze fisiche degli alberi.
 
@@ -5352,11 +4368,8 @@ Una creatura vegetale ricoperta di aghi, capace di scagliarli a distanza. Il pol
 
 Un groviglio di rampicanti che si tende verso le prede e può mettere in movimento radici vicine. È più capace di comunicare delle altre due forme. Fonte: Vine Blight, pp. 31–32.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 7 • DES 4 • COS 7 • INT 3 • SAG 5 • CAR 2 |
 | Risorse e protezioni | PV 26 • PM 9 • AR 1 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 7 • Tempra 11 • Riflessi 7 • Volontà 8 • Magia 9 |
@@ -5365,17 +4378,11 @@ Un groviglio di rampicanti che si tende verso le prede e può mettere in movimen
 | Abilità | Corpo a corpo 11 • Atletica 11 • Percezione 10 • Furtività 10; immobile 14 |
 | GS e PX per 4 PG | Inesperto • 20 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Sferzata di liana | 11 | 1d6+1 Naturale; poi possibile presa | 2 Q |
 | Stringere | 11 | 1d6+1 Naturale; contrapposta | Vittima già presa |
 | Rovi viventi | — | Terreno difficile e legami | Raggio 3 Q personale; 3 PM |
-
-  
 
 **Sensi e mimetismo.** Percezione diffusa 12 Q; immunità ad Accecato e Assordato. Furtività 14 richiede immobilità fra liane compatibili, senza Sorpresa automatica. Può parlare una lingua assegnata alla comunità. Non ottiene immunità mentali né la vulnerabilità al Fuoco del ramoso.
 
@@ -5405,11 +4412,8 @@ Un groviglio di rampicanti che si tende verso le prede e può mettere in movimen
 
 Una creatura silvana dalla forma umanoide, legata alla vita di un albero. Può difendere il bosco con parole, radici e magia innata prima di ricorrere al randello. Fonte: Dryad, p. 121.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 5 • DES 6 • COS 5 • INT 7 • SAG 7 • CAR 8 |
 | Risorse e protezioni | PV 24 • PM 14 • AR 0; con Corteccia 3 Naturale; AR magica 0 |
 | Difese e Salvezze | Difese 10 • Tempra 9 • Riflessi 10 • Volontà 12 • Magia 13 |
@@ -5418,18 +4422,12 @@ Una creatura silvana dalla forma umanoide, legata alla vita di un albero. Può d
 | Abilità | Mischia 9 • Atletica 8 • Percezione 12 • Furtività 12 • Diplomazia 13 |
 | GS e PX per 4 PG | Esperto • 33 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Randello | 9 | 1d6+1 Naturale; Contundente | 1 Q |
 | Randello incantato | 11 | 1d8+2 Magico; Contundente | 1 Q; potere attivo |
 | Fascino silvano | — | Influenza amichevole; Volontà −2 | 6 Q; 3 PM |
 | Rovi viventi | — | Terreno difficile e legami | Centro entro 6 Q; 3 PM |
-
-  
 
 **Dotazione.** Randello di legno di qualità Comune, una mano, FOR 3, PS Integrità 10 e PI 5; già pronto. Danno ordinario 1d6 base e +1 da DES, già compreso. Nessuna armatura o scudo. Il randello permette Parata, ma l’AzP spesa per difendersi non resta disponibile per un potere o un attacco.
 
@@ -5473,11 +4471,8 @@ Una creatura silvana dalla forma umanoide, legata alla vita di un albero. Può d
 
 Una massa di radici, liane e vegetazione in decomposizione, animata attorno a un nucleo vivente. Si nasconde negli acquitrini e consuma materia organica. Fonte: Shambling Mound, p. 270.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 9 • DES 4 • COS 8 • INT 3 • SAG 5 • CAR 3 |
 | Risorse e protezioni | PV 60 • PM 8 • AR 3 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 7 • Tempra 13 • Riflessi 7 • Volontà 8 • Magia 10 |
@@ -5486,18 +4481,12 @@ Una massa di radici, liane e vegetazione in decomposizione, animata attorno a un
 | Abilità | Corpo a corpo 13 • Atletica 13 • Percezione 10 • Furtività 10; fra detriti vegetali 14 |
 | GS e PX per 4 PG | Veterano • 50 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Schianto | 13 | 1d8+2 Naturale; Contundente | 1 Q |
 | Afferrare | 13 | Presa; contrapposta, senza danno | 1 Q; 1 AzP |
 | Inglobare | — | Contenimento; nessun danno iniziale | Una vittima già presa; 1 AzP |
 | Comprimere | — | 1d8+2 Naturale; Tempra 0 dimezza | Prigioniero interno; 1 AzP |
-
-  
 
 **Sensi e metabolismo.** Percezione diffusa 12 Q; immunità ad Accecato, Assordato e all’accumulo di AFT. Possiede una mente istintiva e non è immune agli effetti mentali. Non dorme, ma entra in quiescenza; respira e si nutre. Il corpo segue le localizzazioni vegetali comuni, con Torace corrispondente al nucleo e alla massa centrale.
 
@@ -5527,11 +4516,8 @@ Una massa di radici, liane e vegetazione in decomposizione, animata attorno a un
 
 Un grande custode arboreo che protegge il proprio bosco. Può restare immobile per lunghi periodi e chiedere aiuto a due alberi ordinari quando affronta una minaccia seria. Fonte: Treant, p. 289.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 10 • DES 4 • COS 10 • INT 6 • SAG 8 • CAR 6 |
 | Risorse e protezioni | PV 76 • PM 16 • AR 4 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 8 • Tempra 15 • Riflessi 7 • Volontà 12 • Magia 12 |
@@ -5540,17 +4526,11 @@ Un grande custode arboreo che protegge il proprio bosco. Può restare immobile p
 | Abilità | Corpo a corpo 15 • Tiro naturale 13 • Atletica 16 • Percezione 13 • Furtività 6; immobile 14 |
 | GS e PX per 4 PG | Leggenda • 100 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Schianto | 15 | 2d6+3 Naturale; Contundente | 2 Q |
 | Roccia | 13 | 3d6+3 Naturale; Contundente | 36 Q massimo; una per Round |
 | Animare alberi | — | Fino a due servitori temporanei | 12 Q; 6 PM; 1 AzP |
-
-  
 
 **Legno antico.** Dimezza i danni fisici Naturali da Contusione e Perforazione, non Taglio. Fuoco di qualunque Natura infligge ×2 prima di Difesa e AR, ×3 complessivo se anche Magistrale. Il tronco è un corpo biologico e non una struttura con PI. Nessuna Parata naturale.
 
@@ -5580,11 +4560,8 @@ Un grande custode arboreo che protegge il proprio bosco. Può restare immobile p
 
 Un equino alato capace di giudicare chi gli si avvicina e scegliere se accettarne la compagnia. Può diventare un alleato o un trasportatore consenziente. Fonte: Pegasus, p. 250.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 9 • DES 7 • COS 7 • INT 5 • SAG 7 • CAR 6 |
 | Risorse e protezioni | PV 38 • PM 8 • AR 1 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 11 • Tempra 12 • Riflessi 12 • Volontà 11 • Magia 10 |
@@ -5593,15 +4570,9 @@ Un equino alato capace di giudicare chi gli si avvicina e scegliere se accettarn
 | Abilità | Corpo a corpo 12 • Atletica 13 • Percezione 14 • Furtività 7 |
 | GS e PX per 4 PG | Esperto • 30 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Zoccoli | 12 | 1d8+2 Naturale; Contundente | 1 Q |
-
-  
 
 **Sensi e parola.** Vista e udito ordinari, senza scurovisione. Comprende due lingue assegnate all’ambiente ma non può parlare con voce umanoide. Può rispondere con gesti o tramite una capacità di comunicazione adatta. Intelligenza e volontà restano personali: Cavalcare non lo rende un animale privo di decisioni.
 
@@ -5617,11 +4588,8 @@ Un equino alato capace di giudicare chi gli si avvicina e scegliere se accettarn
 
 Un equino dal corno mistico, capace di proteggere altri viventi e lasciare un luogo pericoloso con un piccolo gruppo consenziente. Fonte: Unicorn, pp. 293–294.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 9 • DES 7 • COS 7 • INT 6 • SAG 8 • CAR 8 |
 | Risorse e protezioni | PV 50 • PM 20 • AR 1 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 11 • Tempra 12 • Riflessi 11 • Volontà 13 • Magia 14 |
@@ -5630,18 +4598,12 @@ Un equino dal corno mistico, capace di proteggere altri viventi e lasciare un lu
 | Abilità | Corpo a corpo 14 • Atletica 13 • Percezione 13 • Furtività 9 |
 | GS e PX per 4 PG | Eroe • 70 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Zoccoli | 14 | 1d8+2 Magico; Contundente | 1 Q |
 | Corno | 14 | 1d8+2 Magico; Perforazione | 1 Q |
 | Corno in carica | 14 | 2d6+2 Magico; possibile A terra | 4 Q in linea retta; un uso per Round |
 | Tocco risanante | — | 1d4+5 PV biologici o Sanguinamento | Contatto; 1 AzP e 6 PM |
-
-  
 
 **Protezione innata.** È immune ai danni da veleno, ad Avvelenato, Paralizzato e alle influenze di fascinazione che impongono fiducia o attrazione. Non è immune a ogni effetto mentale. Contro incantesimi e capacità mistiche ottiene +2 alle PS: Magia 14 lo comprende già, le altre lo aggiungono solo contro tali fonti. Questa resistenza non migliora Difese o AR.
 
@@ -5685,11 +4647,8 @@ Un equino dal corno mistico, capace di proteggere altri viventi e lasciare un lu
 
 Cariche, code, ali e lunghi colli permettono di minacciare spazi diversi. Alcuni di questi animali difendono piccoli e territorio; altri cacciano, e il Drago tartaruga può negoziare un passaggio. Le sei forme preistoriche precedono quattro predatori fantastici. Sono voci del catalogo generale: la loro presenza su Iris richiede una collocazione nell’ambientazione, senza attribuire loro appartenenza alla Covata o origini cosmologiche della fonte.
 
-  
-
-|  |  |  |
-| :-: | :-: | :-: |
-| **Creatura** | **GS** | **PX per 4 PG** |
+| Creatura | GS | PX per 4 PG |
+| :---- | :---: | :---: |
 | Allosauro | Esperto | 30 |
 | Anchilosauro | Esperto | 30 |
 | Plesiosauro | Esperto | 30 |
@@ -5700,8 +4659,6 @@ Cariche, code, ali e lunghi colli permettono di minacciare spazi diversi. Alcuni
 | Idra | Eroe | 70 |
 | Behir | Leggenda | 100 |
 | Drago tartaruga | Leggenda | 100 |
-
-  
 
 **PX di riferimento.** Valori per un esemplare e quattro PG, senza dotazione conteggiata. Veleno, ricrescita delle teste, capacità di inghiottire e soffi sono già compresi nel GS. Le teste dell’Idra e le altre appendici non sono avversari separati e non assegnano PX aggiuntivi. Il premio complessivo dell’incontro segue il Manuale del Direttore §9.3.
 
@@ -5729,11 +4686,8 @@ Cariche, code, ali e lunghi colli permettono di minacciare spazi diversi. Alcuni
 
 Un grande bipede carnivoro che raggiunge la preda e la atterra con gli artigli prima di usare le fauci. Fonte: Allosaurus, p. 79.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 9 • DES 6 • COS 7 • INT 1 • SAG 6 • CAR 3 |
 | Risorse e protezioni | PV 36 • PM 5 • AR 2 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 9 • Tempra 12 • Riflessi 10 • Volontà 8 • Magia 8 |
@@ -5742,16 +4696,10 @@ Un grande bipede carnivoro che raggiunge la preda e la atterra con gli artigli p
 | Abilità | Corpo a corpo 12 • Atletica 13 • Percezione 12 • Furtività 8 |
 | GS e PX per 4 PG | Esperto • 30 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Morso | 12 | 1d8+2 Naturale; Perforazione | 1 Q |
 | Artigli | 12 | 1d6+2 Naturale; Taglio | 1 Q |
-
-  
 
 **Sequenza.** Fino a due attacchi per Round, al massimo un Morso e un attacco di Artigli. Un’Azione conservata per Schivata non resta disponibile per completare la sequenza. Non possiede attacchi ad Area o danni automatici per chi si trova sotto il corpo.
 
@@ -5767,11 +4715,8 @@ Un grande bipede carnivoro che raggiunge la preda e la atterra con gli artigli p
 
 Un quadrupede dalla corazza ossea, capace di colpire con la mazza caudale quando viene minacciato. Fonte: Ankylosaurus, p. 79.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 9 • DES 5 • COS 7 • INT 1 • SAG 6 • CAR 3 |
 | Risorse e protezioni | PV 46 • PM 5 • AR 4 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 8 • Tempra 12 • Riflessi 8 • Volontà 8 • Magia 8 |
@@ -5780,15 +4725,9 @@ Un quadrupede dalla corazza ossea, capace di colpire con la mazza caudale quando
 | Abilità | Corpo a corpo 12 • Atletica 12 • Percezione 10 • Furtività 5 |
 | GS e PX per 4 PG | Esperto • 30 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Coda a mazza | 12 | 2d6+2 Naturale; Contundente | 2 Q |
-
-  
 
 **Impatto.** Dopo almeno 1 danno finale della Coda contro una creatura di spazio non superiore a 2 × 2 Q, questa effettua Tempra 0. Fallimento: A terra. Non spinge anche il bersaglio e non applica Stordito. Un attacco risolve una sola vittima, senza spazzare gratuitamente tutta la portata.
 
@@ -5804,11 +4743,8 @@ Un quadrupede dalla corazza ossea, capace di colpire con la mazza caudale quando
 
 Un nuotatore dal corpo compatto e dalle grandi pinne, capace di raggiungere la preda con un collo molto mobile. Respira aria. Fonte: Plesiosaurus, p. 80.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 9 • DES 7 • COS 7 • INT 1 • SAG 6 • CAR 3 |
 | Risorse e protezioni | PV 40 • PM 5 • AR 2 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 10 • Tempra 12 • Riflessi 11 • Volontà 8 • Magia 8 |
@@ -5817,15 +4753,9 @@ Un nuotatore dal corpo compatto e dalle grandi pinne, capace di raggiungere la p
 | Abilità | Corpo a corpo 12 • Atletica 12 • Percezione 11 • Furtività 10; in acqua 13 |
 | GS e PX per 4 PG | Esperto • 30 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Morso | 12 | 2d6+2 Naturale; Perforazione | 2 Q |
-
-  
 
 **Fiato prolungato.** Può trattenere il respiro fino a 1 ora. È un’eccezione alla riserva ordinaria di COS Round, non la capacità di respirare sott’acqua. Consumata l’ora, le PS e le conseguenze del soffocamento seguono il Giocatore §5.23. Un Round completo di respirazione normale ripristina la riserva.
 
@@ -5841,11 +4771,8 @@ Un nuotatore dal corpo compatto e dalle grandi pinne, capace di raggiungere la p
 
 Un rettile volante dal lungo becco, adatto a catturare piccole prede e colpire durante un passaggio in volo. Fonte: Pteranodon, p. 80.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 6 • DES 7 • COS 5 • INT 1 • SAG 4 • CAR 3 |
 | Risorse e protezioni | PV 16 • PM 4 • AR 1 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 10 • Tempra 9 • Riflessi 11 • Volontà 7 • Magia 8 |
@@ -5854,15 +4781,9 @@ Un rettile volante dal lungo becco, adatto a catturare piccole prede e colpire d
 | Abilità | Corpo a corpo 9 • Atletica 10 • Percezione 10 • Furtività 9 |
 | GS e PX per 4 PG | Principiante • 10 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Becco | 9 | 1d6+1 Naturale; Perforazione | 1 Q |
-
-  
 
 **Passaggio in volo.** Non provoca Attacchi di Opportunità per il solo allontanamento dalla portata di un avversario mentre vola. Le altre occasioni seguono le regole ordinarie. La capacità non permette di attraversare corpi, sciogliere prese o volare quando le ali sono impedite. L’attacco costa comunque l’unica AzP.
 
@@ -5878,11 +4799,8 @@ Un rettile volante dal lungo becco, adatto a catturare piccole prede e colpire d
 
 Un grande quadrupede dalle corna e dal collare osseo. Una carica difensiva può far cadere l’aggressore davanti alle zampe. Fonte: Triceratops, p. 80.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 10 • DES 4 • COS 8 • INT 1 • SAG 5 • CAR 3 |
 | Risorse e protezioni | PV 58 • PM 6 • AR 3 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 8 • Tempra 13 • Riflessi 7 • Volontà 8 • Magia 9 |
@@ -5891,16 +4809,10 @@ Un grande quadrupede dalle corna e dal collare osseo. Una carica difensiva può 
 | Abilità | Corpo a corpo 14 • Atletica 14 • Percezione 10 • Furtività 5 |
 | GS e PX per 4 PG | Veterano • 50 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Corna | 14 | 2d6+3 Naturale; Perforazione | 1 Q |
 | Calpestare | 14 | 1d8+3 Naturale; Contundente | 1 Q; una vittima A terra |
-
-  
 
 **Sequenza.** Al massimo un attacco di Corna e uno di Calpestare per Round, ciascuno con 1 AzP. Calpestare richiede una vittima già A terra di spazio non superiore a 2 × 2 Q e una posizione concretamente raggiungibile dalle zampe. Non significa entrare automaticamente nello spazio del bersaglio o infliggere danni a chiunque venga attraversato.
 
@@ -5916,11 +4828,8 @@ Un grande quadrupede dalle corna e dal collare osseo. Una carica difensiva può 
 
 **Un carnivoro bipede dalle grandi fauci.** Può trattenere una preda piccola rispetto al proprio corpo e respingere un altro avversario con la coda. Fonte: Tyrannosaurus Rex, p. 80.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 10 • DES 5 • COS 9 • INT 1 • SAG 6 • CAR 4 |
 | Risorse e protezioni | PV 80 • PM 7 • AR 3 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 8 • Tempra 14 • Riflessi 8 • Volontà 9 • Magia 10 |
@@ -5929,17 +4838,11 @@ Un grande quadrupede dalle corna e dal collare osseo. Una carica difensiva può 
 | Abilità | Corpo a corpo 15 • Atletica 15 • Percezione 12 • Furtività 5 |
 | GS e PX per 4 PG | Eroe • 70 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Morso | 15 | 2d8+3 Naturale; possibile presa | 2 Q |
 | Coda | 15 | 2d6+3 Naturale; Contundente | 2 Q |
 | Stringere le fauci | 15 | 2d8+3 Naturale; contrapposta | Vittima già presa |
-
-  
 
 **Sequenza.** Fino a due attacchi per Round: un Morso oppure Stringere le fauci, e un attacco di Coda. Se usa entrambi devono riguardare bersagli diversi. Un attacco di Opportunità rispetta gli stessi limiti. Non possiede un attacco di Artigli efficace nel profilo.
 
@@ -5969,11 +4872,8 @@ Un grande quadrupede dalle corna e dal collare osseo. Una carica difensiva può 
 
 Un cacciatore dalle ali membranose, due zampe e una coda armata di pungiglione. Può colpire mentre vola o difendersi al suolo. Fonte: Wyvern, p. 303.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 9 • DES 5 • COS 7 • INT 3 • SAG 6 • CAR 3 |
 | Risorse e protezioni | PV 56 • PM 8 • AR 3 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 9 • Tempra 12 • Riflessi 9 • Volontà 9 • Magia 10 |
@@ -5982,17 +4882,11 @@ Un cacciatore dalle ali membranose, due zampe e una coda armata di pungiglione. 
 | Abilità | Corpo a corpo 13 • Atletica 12 • Percezione 12 • Furtività 7 |
 | GS e PX per 4 PG | Veterano • 50 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Morso | 13 | 1d8+2 Naturale; Perforazione | 2 Q |
 | Pungiglione | 13 | 1d6+2 Naturale; poi veleno | 2 Q |
 | Artigli | 13 | 1d8+2 Naturale; Taglio | 1 Q; solo in volo |
-
-  
 
 **Sequenza.** Fino a due attacchi per Round, al massimo un Morso e un Pungiglione. In volo può sostituire uno dei due con Artigli. Un attacco costa 1 AzP e non ne incorpora un altro. L’Opportunità ordinaria usa Morso o Artigli se la posizione lo permette, senza una puntura velenosa gratuita.
 
@@ -6022,11 +4916,8 @@ Un cacciatore dalle ali membranose, due zampe e una coda armata di pungiglione. 
 
 Un grande rettile acquatico con cinque teste iniziali su colli mobili. Le lesioni ai colli possono innescare ricrescita, se non vengono cauterizzate. Fonte: Hydra, p. 190.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 10 • DES 6 • COS 10 • INT 1 • SAG 5 • CAR 4 |
 | Risorse e protezioni | PV 76 • PM 9 • AR 3 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 8 • Tempra 15 • Riflessi 9 • Volontà 9 • Magia 11 |
@@ -6035,15 +4926,9 @@ Un grande rettile acquatico con cinque teste iniziali su colli mobili. Le lesion
 | Abilità | Corpo a corpo 14 • Atletica 14 • Percezione 14 • Furtività 6 |
 | GS e PX per 4 PG | Eroe • 70 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Morso | 14 | 1d8+2 Naturale; Perforazione | 2 Q; una testa funzionale |
-
-  
 
 **Morsi.** Con le AzP può attaccare al massimo tre volte per Round e non più del numero di teste funzionali. Ogni Morso costa 1 AzP. Le teste non consentono una Parata naturale, azioni simultanee fuori Iniziativa o attacchi attraverso ostacoli. Non afferra automaticamente con il Morso.
 
@@ -6087,11 +4972,8 @@ Un grande rettile acquatico con cinque teste iniziali su colli mobili. Le lesion
 
 Un grande predatore serpentino con numerose zampe, capace di arrampicarsi, avvolgere la preda e scaricare un soffio elettrico. Fonte: Behir, p. 25.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 10 • DES 8 • COS 9 • INT 4 • SAG 7 • CAR 6 |
 | Risorse e protezioni | PV 88 • PM 12 • AR 4 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 11 • Tempra 14 • Riflessi 12 • Volontà 10 • Magia 12 |
@@ -6100,18 +4982,12 @@ Un grande predatore serpentino con numerose zampe, capace di arrampicarsi, avvol
 | Abilità | Corpo a corpo 16 • Atletica 15 • Percezione 14 • Furtività 12 |
 | GS e PX per 4 PG | Leggenda • 100 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Morso | 16 | 2d6+3 Naturale; Perforazione | 2 Q |
 | Costrizione | 16 | 1d8+3 Naturale; poi possibile presa | 1 Q |
 | Stringere | 16 | 1d8+3 Naturale; contrapposta | Vittima già presa |
 | Soffio elettrico | — | 4d6 Naturale; Fulmine | Linea 4 Q; larghezza 1 Q; 2 AzP |
-
-  
 
 **Sensi e protezione.** Scurovisione 18 Q e immunità ai danni da Fulmine di qualunque Natura. Non assorbe il Fulmine per recuperare PV e non possiede altre resistenze elementali. Comprende e parla una lingua assegnata alla propria origine, senza ereditare automaticamente inimicizie cosmologiche della fonte.
 
@@ -6155,11 +5031,8 @@ Un grande predatore serpentino con numerose zampe, capace di arrampicarsi, avvol
 
 Un enorme abitante del mare, protetto da un carapace e capace di emettere vapore rovente. Può accumulare ricchezze e accettare offerte per lasciare libero un passaggio. Fonte: Dragon Turtle, p. 119.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 10 • DES 5 • COS 10 • INT 5 • SAG 6 • CAR 6 |
 | Risorse e protezioni | PV 110 • PM 16 • AR 6 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 8 • Tempra 16 • Riflessi 9 • Volontà 12 • Magia 13 |
@@ -6168,18 +5041,12 @@ Un enorme abitante del mare, protetto da un carapace e capace di emettere vapore
 | Abilità | Corpo a corpo 17 • Atletica 17 • Percezione 12 • Furtività 4; immerso e immobile 10 |
 | GS e PX per 4 PG | Leggenda • 100 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Morso | 17 | 2d8+3 Naturale; Perforazione | 3 Q |
 | Artiglio | 17 | 1d8+3 Naturale; Taglio | 2 Q |
 | Coda | 17 | 2d8+3 Naturale; possibile spinta | 3 Q; costa 2 AzP |
 | Soffio di vapore | — | 5d6 Naturale; Fuoco | Cono 12 Q; 2 AzP; Riflessi −2 |
-
-  
 
 **Sequenza.** Un Morso e fino a due Artigli per Round, ciascuno con 1 AzP. Coda costa 2 AzP e sostituisce i due Artigli; può accompagnarla al Morso. Soffio costa 2 AzP, lascia disponibile soltanto un eventuale Morso e non si combina con Artigli o Coda nello stesso Round. Un’Opportunità ordinaria usa Morso entro i limiti: non concede Coda o Soffio gratuiti.
 
@@ -6209,11 +5076,8 @@ Un enorme abitante del mare, protetto da un carapace e capace di emettere vapore
 
 Queste schede comprendono animali acquatici, comunità capaci di dialogare e predatori che catturano la preda. Il fondale, la distanza dalla superficie e gli accessi all’aria determinano possibilità concrete di fuga e soccorso. Le voci appartengono al catalogo generale: il Direttore stabilisce dove collocarle su Iris. Non sono membri della Covata e non ereditano automaticamente culti, guerre o origini cosmologiche della fonte.
 
-  
-
-|  |  |  |
-| :-: | :-: | :-: |
-| **Creatura** | **GS** | **PX per 4 PG** |
+| Creatura | GS | PX per 4 PG |
+| :---- | :---: | :---: |
 | Granchio gigante | Principiante | 10 |
 | Polpo gigante | Esperto | 30 |
 | Squalo delle scogliere | Inesperto | 20 |
@@ -6224,8 +5088,6 @@ Queste schede comprendono animali acquatici, comunità capaci di dialogare e pre
 | Sahuagin | Inesperto | 22 |
 | Kuo-toa | Inesperto | 22 |
 | Chuul | Veterano | 50 |
-
-  
 
 **PX di riferimento.** Valori per un esemplare e quattro PG. Marinide, Merrow, Sahuagin e Kuo-toa comprendono la dotazione Comune descritta nelle loro schede. Gli altri profili non hanno equipaggiamento conteggiato. Chele, inchiostro, veleno e sensi innati sono compresi nel GS. Uno squalo comandato rimane un avversario con il proprio valore unitario; non è una parte gratuita del Sahuagin. Il premio dell’incontro segue il Direttore §9.3.
 
@@ -6251,11 +5113,8 @@ Queste schede comprendono animali acquatici, comunità capaci di dialogare e pre
 
 Un crostaceo delle rive e dei bassi fondali che può trattenere una minaccia con ciascuna chela. Cerca cibo o difende un rifugio. Fonte: Giant Crab, p. 324.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 5 • DES 6 • COS 5 • INT 1 • SAG 4 • CAR 2 |
 | Risorse e protezioni | PV 18 • PM 4 • AR 3 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 9 • Tempra 9 • Riflessi 10 • Volontà 6 • Magia 7 |
@@ -6264,16 +5123,10 @@ Un crostaceo delle rive e dei bassi fondali che può trattenere una minaccia con
 | Abilità | Corpo a corpo 9 • Atletica 9 • Percezione 9 • Furtività 11 |
 | GS e PX per 4 PG | Principiante • 10 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Chela | 9 | 1d6+1 Naturale; Contusione | 1 Q |
 | Stringere | 9 | 1d6+1 Naturale; contrapposta | Una vittima già presa |
-
-  
 
 **Afferrare.** Chela con almeno 1 danno finale contro una creatura non maggiore di 1 × 1 Q impone Riflessi 0: fallimento Immobilizzato, senza bloccare specificamente le mani. Può trattenere due vittime, una per chela; la chela occupata non attacca altri bersagli. Il limite è un solo attacco di Chela o Stringere per Round, comprese le Opportunità: due chele non assegnano due AzP.
 
@@ -6289,11 +5142,8 @@ Un crostaceo delle rive e dei bassi fondali che può trattenere una minaccia con
 
 Un grande mollusco che si apposta sul fondale e avvolge la preda. Può oscurare l’acqua per allontanarsi. Fonte: Giant Octopus, p. 326.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 8 • DES 6 • COS 6 • INT 2 • SAG 5 • CAR 3 |
 | Risorse e protezioni | PV 38 • PM 5 • AR 1 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 10 • Tempra 11 • Riflessi 10 • Volontà 7 • Magia 8 |
@@ -6302,16 +5152,10 @@ Un grande mollusco che si apposta sul fondale e avvolge la preda. Può oscurare 
 | Abilità | Corpo a corpo 12 • Atletica 13 • Percezione 12 • Furtività 11; immerso 13 |
 | GS e PX per 4 PG | Esperto • 30 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Tentacoli | 12 | 2d6+2 Naturale; Contusione | 3 Q |
 | Stringere | 12 | 2d6+2 Naturale; contrapposta | Una vittima già presa |
-
-  
 
 **Avvolgere.** Tentacoli con almeno 1 danno finale contro una creatura non maggiore di 2 × 2 Q impongono Riflessi 0. Fallimento: Immobilizzato, con mani non specificamente bloccate. Il profilo può trattenere una sola vittima e non attaccarne altre con Tentacoli finché la conserva. Le otto appendici non producono otto attacchi, PV o premi separati.
 
@@ -6339,11 +5183,8 @@ Un grande mollusco che si apposta sul fondale e avvolge la preda. Può oscurare 
 
 Uno squalo relativamente piccolo, lungo circa due o tre metri, che può cacciare insieme ad altri individui nelle acque costiere. Fonte: Reef Shark, p. 336.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 6 • DES 6 • COS 6 • INT 1 • SAG 5 • CAR 3 |
 | Risorse e protezioni | PV 24 • PM 4 • AR 1 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 9 • Tempra 10 • Riflessi 10 • Volontà 7 • Magia 8 |
@@ -6352,15 +5193,9 @@ Uno squalo relativamente piccolo, lungo circa due o tre metri, che può cacciare
 | Abilità | Corpo a corpo 10 • Atletica 11 • Percezione 11 • Furtività 9 |
 | GS e PX per 4 PG | Inesperto • 20 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Morso | 10 | 1d8+1 Naturale; Perforazione | 1 Q |
-
-  
 
 **Tattiche di branco.** Ottiene +2 VA al Morso contro una vittima quando almeno un alleato cosciente e capace di agire è entro 1 Q da lei e può concretamente minacciarla. Il VA diventa 12, prima degli altri modificatori. Più alleati non aumentano il bonus. La semplice vicinanza di uno squalo nemico, Svenuto o chiuso oltre una barriera non basta.
 
@@ -6376,11 +5211,8 @@ Uno squalo relativamente piccolo, lungo circa due o tre metri, che può cacciare
 
 Uno squalo di grandi dimensioni che di norma caccia da solo, pur potendo condividere una zona ricca di prede con altri individui. Fonte: Hunter Shark, p. 330.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 8 • DES 6 • COS 7 • INT 1 • SAG 5 • CAR 3 |
 | Risorse e protezioni | PV 40 • PM 5 • AR 2 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 9 • Tempra 12 • Riflessi 10 • Volontà 7 • Magia 8 |
@@ -6389,15 +5221,9 @@ Uno squalo di grandi dimensioni che di norma caccia da solo, pur potendo condivi
 | Abilità | Corpo a corpo 12 • Atletica 12 • Percezione 12 • Furtività 9 |
 | GS e PX per 4 PG | Esperto • 30 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Morso | 12 | 2d6+2 Naturale; Perforazione | 1 Q |
-
-  
 
 **Frenesia del sangue.** Il Morso riceve +2 VA contro una creatura biologicamente vivente che abbia meno PV del proprio massimo o un Sanguinamento attivo. Il VA diventa 14 prima degli altri modificatori. Il bonus non si moltiplica per danni già inflitti, Ferite o alleati e non aumenta il danno. Una Lesione priva di deficit di PV e senza sangue attivo non soddisfa da sola il requisito.
 
@@ -6413,11 +5239,8 @@ Uno squalo di grandi dimensioni che di norma caccia da solo, pur potendo condivi
 
 Uno squalo lungo circa nove metri, capace di minacciare grandi prede e avvicinarsi alle imbarcazioni. La sua massa richiede spazio e profondità adeguati. Fonte: Giant Shark, p. 328.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 10 • DES 5 • COS 9 • INT 1 • SAG 5 • CAR 4 |
 | Risorse e protezioni | PV 64 • PM 6 • AR 3 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 8 • Tempra 14 • Riflessi 9 • Volontà 8 • Magia 9 |
@@ -6426,15 +5249,9 @@ Uno squalo lungo circa nove metri, capace di minacciare grandi prede e avvicinar
 | Abilità | Corpo a corpo 14 • Atletica 14 • Percezione 12 • Furtività 6 |
 | GS e PX per 4 PG | Veterano • 50 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Morso | 14 | 2d8+3 Naturale; Perforazione | 2 Q |
-
-  
 
 **Frenesia del sangue.** Usa la medesima condizione dello Squalo cacciatore: +2 VA al Morso contro un organismo vivente sotto i PV massimi o con Sanguinamento attivo. Il VA diventa 16, prima degli altri modificatori. Non riceve anche Tattiche di branco. Il profilo non aggiunge un attacco gratuito quando ferisce o porta una vittima a 0 PV.
 
@@ -6450,11 +5267,8 @@ Uno squalo lungo circa nove metri, capace di minacciare grandi prede e avvicinar
 
 Un umanoide dal tronco umano e dalla coda di pesce. Può vivere in comunità, proteggere i fondali o trattare con chi arriva dalla superficie. Fonte: Merfolk, p. 218.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 5 • DES 6 • COS 5 • INT 5 • SAG 5 • CAR 6 |
 | Risorse e protezioni | PV 16 • PM 6 • AR 0; AR magica 0 |
 | Difese e Salvezze | Difese 9 • Tempra 9 • Riflessi 10 • Volontà 10 • Magia 9 |
@@ -6463,17 +5277,11 @@ Un umanoide dal tronco umano e dalla coda di pesce. Può vivere in comunità, pr
 | Abilità | Armi da guerra 9 • Armi da lancio 8 • Atletica 10 • Percezione 11 • Diplomazia 10 |
 | GS e PX per 4 PG | Principiante • 11 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Lancia a una mano | 9 | 1d6+1 Naturale; Perforazione | 2 Q |
 | Lancia a due mani | 9 | 1d6+3 Naturale; Perforazione | 2 Q |
 | Lancia scagliata | 8 | 1d6+1 Naturale; Perforazione | Massimo 4 Q in aria; 2 Q in acqua |
-
-  
 
 **Dotazione.** Una Lancia commerciale di qualità Comune, FOR 5, PI 6 e PS Integrità 10; nessuna armatura o scudo. I danni della tabella comprendono il bonus personale 0. Una mano oppure due seguono Versatile. Il profilo scagliato è un adattamento specifico della scheda: usa Armi da lancio e le gittate indicate, senza tornare automaticamente in mano. Il valore 11 PX comprende questa dotazione.
 
@@ -6489,11 +5297,8 @@ Un umanoide dal tronco umano e dalla coda di pesce. Può vivere in comunità, pr
 
 Un grande umanoide acquatico dalla coda robusta, capace di ferire e avvicinare una preda con un arpione. Le origini demoniache della fonte non sono assunte per Iris. Fonte: Merrow, p. 219.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 9 • DES 5 • COS 7 • INT 4 • SAG 5 • CAR 4 |
 | Risorse e protezioni | PV 40 • PM 6 • AR 2 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 8 • Tempra 12 • Riflessi 9 • Volontà 8 • Magia 9 |
@@ -6502,18 +5307,12 @@ Un grande umanoide acquatico dalla coda robusta, capace di ferire e avvicinare u
 | Abilità | Corpo a corpo 12 • Armi da guerra 12 • Armi da lancio 11 • Atletica 13 • Percezione 11 |
 | GS e PX per 4 PG | Esperto • 33 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Morso | 12 | 1d8+2 Naturale; Perforazione | 1 Q |
 | Artigli | 12 | 1d8+2 Naturale; Taglio | 1 Q |
 | Arpione in mischia | 12 | 1d6+3 Naturale; Perforazione | 2 Q |
 | Arpione scagliato | 11 | 1d6+3 Naturale; Perforazione | Massimo 4 Q in aria; 2 Q in acqua |
-
-  
 
 **Sequenza.** Al massimo un Morso e un attacco di Artigli oppure Arpione per Round, ciascuno con 1 AzP. L’Opportunità usa un attacco ravvicinato entro tali limiti. Tirare la sagola richiede l’AzP indicata nella pagina seguente e non si somma gratuitamente al colpo. Un attacco di Artigli richiede una mano disponibile.
 
@@ -6541,11 +5340,8 @@ Un grande umanoide acquatico dalla coda robusta, capace di ferire e avvicinare u
 
 Un umanoide acquatico dalle fauci dentate e dalle mani artigliate. Può coordinare una caccia mediante una limitata influenza mentale sugli squali. Fonte: Sahuagin, p. 263.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 6 • DES 5 • COS 6 • INT 6 • SAG 6 • CAR 4 |
 | Risorse e protezioni | PV 26 • PM 8 • AR 1 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 8 • Tempra 10 • Riflessi 9 • Volontà 8 • Magia 10 |
@@ -6554,19 +5350,13 @@ Un umanoide acquatico dalle fauci dentate e dalle mani artigliate. Può coordina
 | Abilità | Corpo a corpo 10 • Armi da guerra 10 • Armi da lancio 9 • Atletica 11 • Percezione 13 |
 | GS e PX per 4 PG | Inesperto • 22 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Morso | 10 | 1d4+1 Naturale; Perforazione | 1 Q |
 | Artigli | 10 | 1d4+1 Naturale; Taglio | 1 Q |
 | Lancia a una mano | 10 | 1d6+2 Naturale; Perforazione | 2 Q |
 | Lancia a due mani | 10 | 1d6+4 Naturale; Perforazione | 2 Q |
 | Lancia scagliata | 9 | 1d6+2 Naturale; Perforazione | Massimo 4 Q in aria; 2 Q in acqua |
-
-  
 
 **Sequenza e frenesia.** Al massimo un Morso e un attacco di Artigli oppure Lancia per Round, ciascuno con 1 AzP; Opportunità entro tali limiti. Gli Artigli richiedono una mano libera. Contro un organismo vivente sotto i PV massimi o con Sanguinamento attivo ottiene +2 VA agli attacchi ravvicinati, non al lancio o ai danni. È lo stesso criterio degli squali maggiori; non dà localizzazione automatica.
 
@@ -6594,32 +5384,23 @@ Un umanoide acquatico dalle fauci dentate e dalle mani artigliate. Può coordina
 
 Un umanoide pisciforme dalla pelle scivolosa, adatto a muoversi fra acque e grotte. Il profilo usa strumenti da cattura e uno scudo rivestito di secrezione adesiva. Fonte: Kuo-toa, p. 199.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 5 • DES 5 • COS 5 • INT 5 • SAG 5 • CAR 4 |
-| Risorse e protezioni | PV 22 • PM 6 • AR 1 biologica + 2 scudo = 3; AR magica 0 |
+| Risorse e protezioni | PV 22 • PM 6 • AR 1 biologica + 2 scudo \= 3; AR magica 0 |
 | Difese e Salvezze | Difese 9 • Tempra 9 • Riflessi 9 • Volontà 8 • Magia 9 |
 | Iniziativa e Azioni | INI −1 • 2 AzP e 1 AzM per Round |
 | Movimento e spazio | Terra e nuoto 6 / 12 / 18 Q • spazio 1 × 1 Q |
 | Abilità | Corpo a corpo 9 • Armi da guerra 9 • Armi da lancio 9 • Atletica 10 • Percezione 12 |
 | GS e PX per 4 PG | Inesperto • 22 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Morso | 9 | 1d4+1 Naturale; Perforazione | 1 Q |
 | Lancia a una mano | 9 | 1d6+1 Naturale; Perforazione | 2 Q |
 | Lancia a due mani | 9 | 1d6+3 Naturale; Perforazione | 2 Q |
 | Lancia scagliata | 9 | 1d6+1 Naturale; Perforazione | Massimo 4 Q in aria; 2 Q in acqua |
 | Rete | 9 | Cattura, senza danno | Massimo 2 Q; due mani |
-
-  
 
 **Dotazione.** Lancia commerciale e Scudo Medio di qualità Comune, entrambi FOR 5, PI 6 e PS Integrità 10, più una Rete della pagina seguente. I danni comprendono bonus personale 0. Lo Scudo occupa una mano e concede +2 AR passiva; senza perde tale quota. Parata ravvicinata senza bonus, a distanza −4 VA con Scudo oppure −8 con Lancia, sempre pagando 1 AzP. I 22 PX comprendono la dotazione complessiva.
 
@@ -6647,11 +5428,8 @@ Un umanoide pisciforme dalla pelle scivolosa, adatto a muoversi fra acque e grot
 
 Un grande crostaceo senziente, capace di trattenere prede e percepire emanazioni mistiche. Può essere un guardiano o un predatore, secondo il contesto. Fonte: Chuul, p. 40.
 
-  
-
-|  |  |
-| :-: | :-: |
-| **Campo** | **Valore pronto** |
+| Campo | Valore pronto |
+| :---- | :---- |
 | Caratteristiche | FOR 9 • DES 5 • COS 8 • INT 3 • SAG 6 • CAR 3 |
 | Risorse e protezioni | PV 56 • PM 8 • AR 4 biologica; AR magica 0 |
 | Difese e Salvezze | Difese 8 • Tempra 13 • Riflessi 9 • Volontà 8 • Magia 10 |
@@ -6660,17 +5438,11 @@ Un grande crostaceo senziente, capace di trattenere prede e percepire emanazioni
 | Abilità | Corpo a corpo 14 • Atletica 13 • Percezione 12 • Furtività 7 |
 | GS e PX per 4 PG | Veterano • 50 PX |
 
-  
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| **Attacco** | **VA** | **Danno completo** | **Portata / gittata** |
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
 | Chela | 14 | 1d8+2 Naturale; Contusione | 2 Q |
 | Stringere | 14 | 1d8+2 Naturale; contrapposta | Una vittima già presa |
 | Tentacoli velenosi | — | Tossina paralizzante; Tempra −2 | Una vittima già presa entro 1 Q |
-
-  
 
 **Sequenza.** Fino a due attacchi di Chela o Stringere per Round, ciascuno con 1 AzP; Tentacoli velenosi costa 1 AzP e ne sostituisce uno. L’Opportunità può usare soltanto una Chela libera, entro il limite complessivo di due attacchi con chele. La tossina non è un terzo attacco gratuito. Dispone di tre dosi in ogni periodo di 24 ore, se non già consumate nella continuità della scena.
 
@@ -6708,4 +5480,1009 @@ Un grande crostaceo senziente, capace di trattenere prede e percepire emanazioni
 
 **Condotta e impiego.** Comprende una lingua scelta per la propria origine, ma non parla. Può conservare ordini ricevuti e raccogliere oggetti che emanano potere; un eventuale legame con un Aboleth va stabilito nella scena e non equivale a controllo universale gratuito. Sotto 14 PV o a Ferita Seria può lasciare le prede per proteggere il rifugio o ritirarsi. I 50 PX comprendono sensi, due chele e tossina; appendici e dosi non assegnano un premio separato.
 
-  
+# **Predatori e grandi erbivori**
+
+*Dieci bestie per foreste pianure e regioni fredde*
+
+Felini, orsi, grandi erbivori e primati richiedono incontri con spazio, ripari e motivazioni riconoscibili. Un predatore cerca nutrimento; un branco può difendere i piccoli o un passaggio. Le schede permettono di gestire queste situazioni con gli stessi valori usati in combattimento. Sono voci del catalogo generale: il Direttore stabilisce la loro presenza su Iris, senza assimilarle alla Covata.
+
+| Creatura | GS | PX per 4 PG |
+| :---- | :---: | :---: |
+| Pantera | Inesperto | 20 |
+| Tigre | Esperto | 30 |
+| Tigre dai denti a sciabola | Esperto | 30 |
+| Orso polare | Esperto | 30 |
+| Rinoceronte | Esperto | 30 |
+| Elefante | Veterano | 50 |
+| Mammut | Eroe | 70 |
+| Alce gigante | Esperto | 30 |
+| Scimmione | Inesperto | 20 |
+| Scimmione gigante | Eroe | 70 |
+
+**PX di riferimento.** Valori per un esemplare e quattro PG, senza dotazione conteggiata. Artigli, corna, zanne, massa e attacchi con pietre raccolte sul posto sono compresi nei profili. I colpi aggiuntivi consumano le AzP indicate. Il premio complessivo dell’incontro si determina nel Manuale del Direttore §9.3; qui rimangono soltanto i valori unitari.
+
+**Impiego.** Una via di fuga, una distanza di sicurezza o l’accesso al cibo possono risolvere una situazione senza combattere. Le soglie di ritirata descrivono una tendenza, che il Direttore adatta alla protezione dei piccoli e alle condizioni della scena. La presenza di un animale grande non applica automaticamente Terrorizzato ai personaggi.
+
+**Fonti e verifica.** Giocatore v0.49, Magia v1.5, Direttore v0.41 e Armamenti v0.64. I riferimenti delle creature sono alle pagine stampate del Manuale dei Mostri fornito. GS e PX sono stime da verificare al tavolo, osservando Azioni consumate, danni finali, Ferite e possibilità di sottrarsi agli assalti. Il terreno modifica le opportunità, senza cambiare retroattivamente la scheda.
+
+# **Bestie selvagge regole operative**
+
+**Natura e risorse.** Tutte le creature del blocco hanno Natura Comune, sono biologicamente viventi e possiedono mente e PM personali. Non conoscono incantesimi appresi o poteri magici innati. A 0 PM diventano Svenute; a 0 PV continuano Tempra, Ferite, Menomazioni e Morente, senza morte o incoscienza automatica. Le cure biologiche sono applicabili. Stati iniziali: nessuno.
+
+**Azioni e danni.** INI modifica 1d10; AzP e unica AzM valgono per l’intero Round. Ogni attacco costa 1 AzP, produce AC 1 e comprende tutti i bonus indicati, salvo il Masso dello Scimmione gigante che costa 2 AzP. Dadi e bonus, moltiplicatori, Difesa, resistenze, AR e conseguenze da danno residuo si risolvono in quest’ordine. Naturale e Magico incontrano tutta l’AR pertinente, Etereo soltanto la quota magica.
+
+**Difese e Opportunità.** Nessuno ha Parata naturale: artigli, corna, proboscide e pugni non sostituiscono un’arma o uno scudo adatti. Schivata richiede 1 AzP, 1 AzM e possibilità concreta di spostarsi. L’Opportunità ordinaria resta un solo attacco ravvicinato normale gratuito su un’occasione reale; rispetta i limiti offensivi espressi nelle voci. Non incorpora Assalto, Impeto, Calpestare, lanci o altre manovre offensive.
+
+**Assalto e Impeto.** Le capacità con questi nomi richiedono almeno 4 Q di Passo rettilineo verso la vittima nella stessa Iniziativa. Usano l’AzM ordinaria e l’AzP del colpo; si dichiarano prima del tiro e non si combinano con Carica, Corsa, Scatto o altre manovre offensive. Il bersaglio e il percorso devono essere realmente raggiungibili. Eventuali AzP successive si pagano normalmente e non ricevono un raddoppio del danno.
+
+**Atterramento.** Dove indicato, almeno 1 danno finale impone la Tempra della scheda; il fallimento applica A Terra soltanto a una creatura entro la dimensione ammessa e con appoggio. Non provoca anche spostamento, Stordito o presa. Chi nuota o vola senza appoggio segue il Giocatore §5.2.5. Un bersaglio già A Terra non subisce una seconda caduta e non assegna Azioni aggiuntive.
+
+**Movimento e anatomia.** Le terne sono Q di Passo / Corsa / Scatto. Corsa e Scatto mantengono Prove di Atletica, modificatori ed esiti del §5.2. Arrampicata richiede appigli e sostegno adeguati; non è aderenza a superfici lisce. Nei quadrupedi Testa comprende capo e collo, Torace il corpo, Braccia gli arti anteriori e Gambe quelli posteriori con la coda. Per le Menomazioni si identifica la funzione effettivamente colpita.
+
+**Sensi e ambiente.** Fiuto +2 significa +2 VA a Percezione quando l’olfatto è determinante, senza localizzazione automatica o lettura delle intenzioni. Furtività richiede possibilità concrete di nascondersi. Scurovisione, quando presente, non attraversa solidi, fumo o oscurità soprannaturale. Pelliccia e habitat non concedono resistenza automatica ai danni da Ghiaccio o Fuoco. Tutte respirano aria e seguono il normale fiato di COS Round, salvo capacità espresse.
+
+# **Pantera**
+
+*Felino arboricolo • agguato e assalto • Natura Comune*
+
+Un felino agile che sfrutta vegetazione e rami per avvicinarsi alla preda. Può rappresentare grandi felini simili con la stessa taglia e funzione. Fonte: Panther, p. 333.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 6 • DES 7 • COS 5 • INT 2 • SAG 6 • CAR 3 |
+| Risorse e protezioni | PV 18 • PM 5 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 11 • Tempra 9 • Riflessi 11 • Volontà 7 • Magia 8 |
+| Iniziativa e Azioni | INI +1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 10 / 20 / 30 Q; arrampicata 8 Q al Passo • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 10 • Atletica 12 • Furtività 14 • Percezione 12 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Artigli | 10 | 1d4+1 Naturale; Taglio | 1 Q |
+| Morso | 10 | 1d6+1 Naturale; Perforazione | 1 Q |
+
+**Sequenza.** Al massimo un attacco di Artigli e un Morso per Round, ciascuno con 1 AzP, comprese le Opportunità. Due zampe non producono due applicazioni del danno. Può conservare un’Azione per una Difesa invece di completare la sequenza.
+
+**Assalto.** Dopo il percorso comune di 4 Q, Artigli con almeno 1 danno finale impongono Tempra 0 a una vittima non maggiore di 1 × 1 Q. Fallimento: A Terra. Un Morso successivo richiede ancora la seconda AzP e portata valida, anche se la vittima è caduta. Il danno resta quello in tabella.
+
+**Fiuto e rami.** Fiuto +2; vista e udito ordinari, senza Scurovisione innata nel profilo. Arrampicata fino a 8 Q con l’AzM al Passo, su tronchi e appigli adatti; altre andature non sono previste per questa modalità. Un ramo incapace di sostenerla non diventa percorribile grazie ad Atletica. Un agguato dall’alto conserva le normali condizioni di Sorpresa e Caduta.
+
+**Condotta.** Non comprende linguaggi. Preferisce una preda isolata e una via verso la vegetazione. Sotto 4 PV o a Ferita Profonda tende a sottrarsi alla minaccia. Se può nutrirsi senza affrontare un gruppo armato, può abbandonare la caccia.
+
+# **Tigre**
+
+*Grande felino • assalto e caccia solitaria • Natura Comune*
+
+Un predatore robusto che sfrutta vegetazione e scarsa luce per arrivare a breve distanza dalla preda. Fonte: Tiger, p. 339.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 8 • DES 7 • COS 6 • INT 2 • SAG 6 • CAR 4 |
+| Risorse e protezioni | PV 32 • PM 6 • AR 1 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 11 • Tempra 11 • Riflessi 11 • Volontà 8 • Magia 9 |
+| Iniziativa e Azioni | INI +1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 8 / 16 / 24 Q • spazio 2 × 1 Q |
+| Abilità | Corpo a corpo 12 • Atletica 12 • Furtività 14 • Percezione 11 |
+| GS e PX per 4 PG | Esperto • 30 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Artigli | 12 | 1d6+2 Naturale; Taglio | 1 Q |
+| Morso | 12 | 1d8+2 Naturale; Perforazione | 1 Q |
+
+**Sequenza.** Al massimo un attacco di Artigli e un Morso per Round, ciascuno con 1 AzP; le Opportunità rientrano negli stessi limiti. Artigli è un solo attacco contro una sola vittima. Il Morso non Immobilizza, trascina o soffoca automaticamente.
+
+**Assalto.** Dopo almeno 4 Q del Passo rettilineo, Artigli con almeno 1 danno finale impongono Tempra 0 a una vittima non maggiore di 2 × 2 Q. Fallimento: A Terra. Il Morso seguente impiega la seconda AzP, senza colpi gratuiti o raddoppio del danno. Può mordere anche una vittima ancora in piedi, pagando l’attacco ordinario.
+
+**Sensi.** Scurovisione 12 Q e Fiuto +2. La vegetazione può permetterle di nascondersi; restare visibile a un osservatore non diventa occultamento per il colore del mantello. L’acqua o un odore forte possono rendere una traccia olfattiva inservibile, secondo le circostanze; il bonus non crea una pista assente.
+
+**Condotta.** Non comprende linguaggi. Caccia spesso da sola e può difendere territorio o piccoli. Sotto 8 PV o a Ferita Profonda tende a cercare copertura. Un bersaglio fuori portata o oltre una barriera richiede un nuovo avvicinamento, non un allungo gratuito del Morso.
+
+# **Tigre dai denti a sciabola**
+
+*Felino massiccio • assalto e morso potente • Natura Comune*
+
+Un grande felino dalle zanne allungate, pericoloso quando raggiunge una preda e la abbatte con gli arti anteriori. Fonte: Saber-Toothed Tiger, p. 336.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 9 • DES 6 • COS 7 • INT 2 • SAG 6 • CAR 4 |
+| Risorse e protezioni | PV 42 • PM 6 • AR 1 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 12 • Riflessi 10 • Volontà 8 • Magia 9 |
+| Iniziativa e Azioni | INI 0 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 8 / 16 / 24 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 13 • Atletica 13 • Furtività 13 • Percezione 11 |
+| GS e PX per 4 PG | Esperto • 30 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Artigli | 13 | 1d8+2 Naturale; Taglio | 1 Q |
+| Morso | 13 | 1d10+2 Naturale; Perforazione | 1 Q |
+
+**Sequenza.** Al massimo un attacco di Artigli e un Morso per Round, ciascuno con 1 AzP; Opportunità comprese. Le zanne sono parte del Morso e non infliggono due danni separati. La formula include la loro potenza: non aggiunge Perforante, Sanguinamento o Ferite dirette come proprietà.
+
+**Assalto.** Dopo almeno 4 Q del Passo rettilineo, Artigli con almeno 1 danno finale impongono Tempra −2 a una vittima non maggiore di 2 × 2 Q. Fallimento: A Terra. Il Morso richiede una seconda AzP disponibile. L’Assalto non aumenta il danno oltre alle formule indicate e non si somma alla Carica ordinaria.
+
+**Sensi e corpo.** Fiuto +2; vista e udito ordinari, senza Scurovisione innata nella scheda. Le localizzazioni sono quadrupedi. Una lesione della funzione delle fauci può impedire il Morso, mentre gli Artigli restano utilizzabili se gli arti sono integri; un danno generico ai PV non distrugge automaticamente una zanna.
+
+**Condotta.** Non comprende linguaggi. Cerca prede raggiungibili e può restare nei pressi di una carcassa senza attaccare chiunque avvisti. Sotto 10 PV o a Ferita Seria tende a ritirarsi. La difesa di piccoli o nutrimento può trattenerla, senza renderla immune a Terrorizzato.
+
+# **Orso polare**
+
+*Predatore delle regioni fredde • morso e artigli • Natura Comune*
+
+Un grande orso capace di cacciare lungo coste e ghiacci e di inseguire la preda in acqua. La pelliccia protegge dall’ambiente, senza essere un’immunità magica. Fonte: Polar Bear, p. 334.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 9 • DES 5 • COS 7 • INT 2 • SAG 6 • CAR 3 |
+| Risorse e protezioni | PV 42 • PM 6 • AR 2 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 12 • Riflessi 9 • Volontà 8 • Magia 9 |
+| Iniziativa e Azioni | INI −1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 8 / 16 / 24 Q; nuoto 6 / 12 / 18 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 13 • Atletica 13 • Percezione 11 • Furtività 9 |
+| GS e PX per 4 PG | Esperto • 30 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso | 12 | 1d8+2 Naturale; Perforazione | 1 Q |
+| Artigli | 13 | 1d8+2 Naturale; Taglio | 1 Q |
+
+**Sequenza.** Al massimo un Morso e un attacco di Artigli per Round, ciascuno con 1 AzP; Opportunità comprese. Una zampata non colpisce gratuitamente tutti gli adiacenti. Per Immobilizzare o Sbilanciare occorre una manovra fisicamente praticabile, con i relativi costi, opposizioni e penalità.
+
+**Fiuto e gelo.** Fiuto +2. Vista e udito ordinari, senza Scurovisione nel profilo base. È adatto al clima freddo del proprio habitat, ma le condizioni estreme annunciate dal Direttore possono richiedere le normali PS. Non dimezza danni da Ghiaccio e non ignora gli effetti di Congelato o Rallentato.
+
+**Nuoto.** Le distanze native sono effettive nel solo Nuoto e sostituiscono il costo ordinario 2. Nei percorsi misti segue il budget unico e i costi del Giocatore §5.2.4, senza superare la distanza della singola modalità per l’andatura scelta. Respira aria: dopo COS Round senza respirare segue il §5.23. Immobilizzato in acqua non riceve una protezione respiratoria aggiuntiva.
+
+**Condotta.** Non comprende linguaggi. Fame, piccoli e possibilità di raggiungere la preda ne guidano le scelte. Sotto 10 PV o a Ferita Seria può interrompere lo scontro e cercare una riva o una zona libera. Una variante cavernicola richiederebbe adattamenti dichiarati; questa scheda non la include.
+
+# **Rinoceronte**
+
+*Grande erbivoro • corno e impeto • Natura Comune*
+
+Un animale massiccio che difende il proprio spazio con il corno e può lanciarsi contro una minaccia lungo un percorso libero. Fonte: Rhinoceros, p. 336.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 9 • DES 4 • COS 7 • INT 2 • SAG 5 • CAR 3 |
+| Risorse e protezioni | PV 40 • PM 5 • AR 3 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 8 • Tempra 12 • Riflessi 8 • Volontà 7 • Magia 8 |
+| Iniziativa e Azioni | INI −1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 8 / 16 / 24 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 12 • Atletica 12 • Percezione 10 • Furtività 5 |
+| GS e PX per 4 PG | Esperto • 30 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Corno | 12 | 2d6+2 Naturale; Perforazione | 1 Q |
+| Corno in Impeto | 12 | 3d6+2 Naturale; Perforazione | 1 Q; 4 Q di Passo rettilineo |
+
+**Impeto.** Dopo il percorso comune di 4 Q, usa il profilo Corno in Impeto al posto del Corno ordinario. La formula comprende un solo 1d6 aggiuntivo da slancio e resta AC 1. Almeno 1 danno finale impone Tempra −2 a una creatura non maggiore di 2 × 2 Q: fallimento A Terra. Non infligge un secondo colpo e non attraversa il corpo della vittima.
+
+**Limiti.** Un solo attacco di Corno per Round, ordinario oppure in Impeto; l’Opportunità può usare soltanto il profilo ordinario e rientra nel limite. Il danno in Impeto non riceve il ×2 della Carica. Per usare la Carica ordinaria deve rinunciare all’intera capacità Impeto, compreso il suo atterramento, e seguire il Giocatore §5.6.
+
+**Pelle e corno.** L’AR è biologica complessiva. Il corno non ha PI separati e non para; una sua Menomazione si valuta nella funzione della Testa. Il peso non permette di ignorare trincee, barriere o un pavimento incapace di sostenerlo. Eventuali attacchi a un oggetto seguono le regole di Integrità.
+
+**Condotta.** Vista, udito e olfatto ordinari; non comprende linguaggi. Può minacciare prima di attaccare e fermarsi quando gli intrusi cedono spazio. Sotto 10 PV o a Ferita Seria tende ad allontanarsi. Un piccolo da difendere può cambiare tale decisione, senza obbligarlo a inseguire oltre il territorio.
+
+# **Elefante**
+
+*Grande erbivoro • zanne e calpestamento • Natura Comune*
+
+Un erbivoro sociale capace di difendere il branco con le zanne e di colpire una minaccia caduta a breve distanza. Fonte: Elephant, p. 322.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 10 • DES 4 • COS 8 • INT 3 • SAG 5 • CAR 4 |
+| Risorse e protezioni | PV 60 • PM 7 • AR 3 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 8 • Tempra 13 • Riflessi 8 • Volontà 9 • Magia 9 |
+| Iniziativa e Azioni | INI −1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 8 / 16 / 24 Q • spazio 3 × 3 Q |
+| Abilità | Corpo a corpo 14 • Atletica 14 • Percezione 11 • Furtività 4 |
+| GS e PX per 4 PG | Veterano • 50 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Zanne | 14 | 2d6+3 Naturale; Perforazione | 1 Q |
+| Calpestare | 14 | 2d8+3 Naturale; Contusione | 1 Q; vittima A Terra |
+
+**Sequenza.** Al massimo un attacco di Zanne e un Calpestare per Round, ciascuno con 1 AzP. Calpestare richiede una creatura A Terra non maggiore di 2 × 2 Q e un appoggio che consenta materialmente il colpo; può colpire una vittima già caduta prima del suo turno. Non occupa automaticamente il suo Q e non produce un attacco ad Area. L’Opportunità usa soltanto Zanne, entro il limite di un attacco con esse.
+
+**Impeto.** Dopo almeno 4 Q del Passo rettilineo, Zanne con almeno 1 danno finale impongono Tempra 0 a una vittima non maggiore di 2 × 2 Q. Fallimento: A Terra. Calpestare usa la seconda AzP e le Difese ordinarie ancora possibili. Il danno delle Zanne resta 2d6+3, senza bonus da slancio o ×2 di Carica.
+
+**Proboscide e massa.** La proboscide può manipolare oggetti compatibili con la sua anatomia. Non assegna un terzo attacco, una Parata o una presa automatica; un’eventuale manovra usa Azioni e procedure ordinarie. Per lesionarla si considera la funzione della Testa coinvolta. Veicoli e costruzioni richiedono un bersaglio strutturale raggiungibile e il proprio profilo di Integrità.
+
+**Condotta.** Sensi ordinari; non comprende linguaggi nel profilo selvatico. Può rispondere a segnali appresi se il rapporto di addestramento è stabilito nella scena. Protegge i piccoli e può aprirsi una via di fuga. Sotto 15 PV o a Ferita Seria tende a ritirarsi con il branco. Montura e carico richiedono una configurazione propria, senza Azioni o portata trasferite gratuitamente al cavaliere.
+
+# **Mammut**
+
+*Grande erbivoro delle terre fredde • zanne e calpestamento • Natura Comune*
+
+Un grande proboscidato dalla pelliccia folta e dalle lunghe zanne. La minaccia deriva soprattutto dalla massa e dalla capacità di abbattere un avversario. Fonte: Mammoth, p. 332.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 10 • DES 4 • COS 10 • INT 3 • SAG 5 • CAR 4 |
+| Risorse e protezioni | PV 84 • PM 8 • AR 4 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 8 • Tempra 15 • Riflessi 8 • Volontà 9 • Magia 10 |
+| Iniziativa e Azioni | INI −1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 8 / 16 / 24 Q • spazio 3 × 3 Q |
+| Abilità | Corpo a corpo 15 • Atletica 15 • Percezione 11 • Furtività 4 |
+| GS e PX per 4 PG | Eroe • 70 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Zanne | 15 | 2d8+3 Naturale; Perforazione | 2 Q |
+| Calpestare | 15 | 2d10+3 Naturale; Contusione | 1 Q; vittima A Terra |
+
+**Sequenza.** Al massimo un attacco di Zanne e un Calpestare per Round, ciascuno con 1 AzP. Calpestare richiede una vittima A Terra non maggiore di 2 × 2 Q entro 1 Q e una posizione che permetta il colpo. La maggiore portata delle Zanne non estende quella del piede. L’Opportunità usa soltanto Zanne, entro il limite di un attacco con esse.
+
+**Impeto.** Dopo almeno 4 Q del Passo rettilineo, Zanne con almeno 1 danno finale impongono Tempra −2 a una creatura non maggiore di 3 × 3 Q. Fallimento: A Terra. Soltanto una vittima entro i limiti propri di Calpestare può poi subirlo, spendendo la seconda AzP. Nessun attacco gratuito, raddoppio del danno o spostamento automatico.
+
+**Pelliccia e appoggio.** L’adattamento al clima freddo non dimezza i danni da Ghiaccio. La pelliccia è compresa nell’AR biologica; non è un’armatura rimovibile con gli stessi valori. Proboscide e zanne appartengono alla funzione della Testa; gli arti seguono l’anatomia quadrupede. Un terreno cedevole o un ponte devono poter sostenere il corpo prima che vi avanzi.
+
+**Condotta.** Sensi ordinari; non comprende linguaggi. Difende il gruppo e può reagire a chi gli chiude il passaggio. Sotto 21 PV o a Ferita Seria tende a cercare spazio e branco. Un corridoio stretto può impedirgli di raggiungere gli avversari; la grandezza non autorizza a colpirli attraverso una parete.
+
+# **Alce gigante**
+
+*Erbivoro senziente • corna e zoccoli • Natura Comune*
+
+Un grande cervide dalla mente vigile, capace di riconoscere richieste e usare un proprio linguaggio. L’aspetto imponente può avere valore culturale senza conferirgli poteri divini. Fonte: Giant Elk, p. 325.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 9 • DES 7 • COS 7 • INT 4 • SAG 7 • CAR 5 |
+| Risorse e protezioni | PV 42 • PM 8 • AR 2 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 11 • Tempra 12 • Riflessi 11 • Volontà 10 • Magia 10 |
+| Iniziativa e Azioni | INI +1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 12 / 24 / 36 Q • spazio 3 × 3 Q |
+| Abilità | Corpo a corpo 12 • Atletica 13 • Percezione 13 • Furtività 7 |
+| GS e PX per 4 PG | Esperto • 30 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Corna | 12 | 2d6+2 Naturale; Contusione | 2 Q |
+| Corna in Impeto | 12 | 3d6+2 Naturale; Contusione | 2 Q; 4 Q di Passo rettilineo |
+| Zoccoli | 12 | 2d8+2 Naturale; Contusione | 1 Q; vittima A Terra |
+
+**Sequenza.** Al massimo un attacco di Corna, ordinario oppure in Impeto, e un attacco di Zoccoli per Round, ciascuno con 1 AzP. Zoccoli richiede una creatura A Terra non maggiore di 2 × 2 Q e un appoggio che permetta il colpo. L’Opportunità usa soltanto Corna ordinarie, entro il limite di un attacco con esse.
+
+**Impeto.** Dopo almeno 4 Q del Passo rettilineo usa il profilo completo 3d6+2, che comprende un solo 1d6 da slancio. Almeno 1 danno finale impone Tempra 0 a una vittima non maggiore di 2 × 2 Q: fallimento A Terra. Per usare Zoccoli deve ancora raggiungere la propria portata di 1 Q e spendere la seconda AzP. Non riceve anche la Carica ordinaria.
+
+**Linguaggio e sensi.** Parla il linguaggio degli Alci giganti e comprende altre due lingue assegnate alla comunità o all’origine; non le parla automaticamente. Vista e udito ordinari. Il Direttore può attribuire significati culturali alla sua comparsa, ma la scheda non manifesta divinità, concede profezie o rende una caccia automaticamente maledetta.
+
+**Condotta.** Può indicare una via sicura, negare un passaggio o proteggere altri animali. Le corna non permettono di impugnare armi o parare. Sotto 10 PV o a Ferita Profonda tende a disimpegnarsi; la sua comprensione permette anche una trattativa compatibile con il linguaggio e la situazione.
+
+# **Scimmione**
+
+*Primate • pugni e lancio di pietre • Natura Comune*
+
+Un primate robusto capace di arrampicarsi e difendere il gruppo con pugni o oggetti raccolti. Fonte: Ape, p. 317.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 7 • DES 6 • COS 6 • INT 3 • SAG 6 • CAR 4 |
+| Risorse e protezioni | PV 24 • PM 6 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 10 • Riflessi 10 • Volontà 8 • Magia 9 |
+| Iniziativa e Azioni | INI 0 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 6 / 12 / 18 Q; arrampicata 6 Q al Passo • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 11 • Armi da lancio 10 • Atletica 12 • Percezione 11 • Furtività 8 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Pugno | 11 | 1d6+2 Naturale; Contusione | 1 Q |
+| Pietra | 10 | 1d6+1 Naturale; Contusione | Massimo 6 Q; una mano |
+
+**Sequenza.** Fino a due Pugni per Round, ciascuno con 1 AzP, oppure un solo lancio di Pietra con 1 AzP. Nel Round di un lancio può effettuare al massimo un Pugno. Le Opportunità usano soltanto Pugno e rispettano questi limiti. Avere due mani non aggiunge applicazioni del danno a un attacco.
+
+**Pietre e mani.** Il lancio richiede una pietra pronta e una mano libera; raccolta, peso e recupero seguono la pagina comune agli Scimmioni. Non crea proiettili dal proprio corpo e non lancia automaticamente gli avversari usando il profilo di Pietra. Una mano occupata da una presa o necessaria per sostenersi non è disponibile per il Pugno di quella mano.
+
+**Arrampicata.** Fino a 6 Q per AzM al Passo, con appigli e sostegno adeguati al peso. Atletica risolve difficoltà reali, senza aderire a pareti lisce o concedere altre andature native. Testa e Torace sono quelli del corpo, Braccia gli arti superiori e Gambe quelli inferiori. La postura sulle nocche non cambia le funzioni per le Menomazioni.
+
+**Condotta.** Vista e udito ordinari. Non comprende linguaggi nel profilo selvatico; può apprendere segnali tramite un rapporto stabilito nella scena. Può minacciare con richiami e posture prima dello scontro. Sotto 6 PV o a Ferita Profonda tende a raggiungere il gruppo o un riparo. Pietre e pugni non concedono una Parata naturale.
+
+# **Scimmione gigante**
+
+*Primate gigante • pugni potenti e massi • Natura Comune*
+
+Un grande primate che domina la distanza ravvicinata e può scagliare massi quando il terreno ne offre. La mole richiede appoggi e vie d’accesso adeguati. Fonte: Giant Ape, p. 323.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 10 • DES 6 • COS 9 • INT 4 • SAG 6 • CAR 4 |
+| Risorse e protezioni | PV 80 • PM 8 • AR 2 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 14 • Riflessi 10 • Volontà 9 • Magia 10 |
+| Iniziativa e Azioni | INI 0 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 8 / 16 / 24 Q; arrampicata 8 Q al Passo • spazio 3 × 3 Q |
+| Abilità | Corpo a corpo 15 • Armi da lancio 14 • Atletica 16 • Percezione 12 • Furtività 6 |
+| GS e PX per 4 PG | Eroe • 70 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Pugno | 15 | 2d6+3 Naturale; Contusione | 2 Q |
+| Masso | 14 | 3d6+3 Naturale; Contusione | Massimo 20 Q; 2 AzP; due mani |
+
+**Sequenza.** Fino a due Pugni per Round, ciascuno con 1 AzP, oppure un solo Masso che costa 2 AzP. Nel Round in cui lancia non può effettuare Pugni, nemmeno come Opportunità; se ne ha già effettuato uno, il Masso non è disponibile. Può riservare Azioni per Difese rinunciando a parte della sequenza. Non afferra o schiaccia automaticamente chi colpisce.
+
+**Massi e braccia.** Usa il profilo completo della tabella con un masso pronto e due mani disponibili. Raccolta, ostacoli e oggetti bersaglio sono nella pagina seguente. Il singolo masso produce AC 1 contro una sola vittima, senza un’Area d’impatto implicita o il danno completo ripetuto per ogni pietra del terreno.
+
+**Appigli e corpo.** Arrampicata fino a 8 Q per AzM al Passo su sostegni realmente capaci di reggerlo. Non aderisce a soffitti e non conserva automaticamente due mani libere mentre è sospeso. Le localizzazioni sono quelle di un bipede: una Menomazione del braccio può rendere impossibile il Masso, lasciando un Pugno con l’arto ancora valido.
+
+**Condotta.** Sensi ordinari. Non comprende linguaggi nel profilo selvatico, ma può riconoscere segnali appresi e reagire a offerte o minacce. Sotto 20 PV o a Ferita Seria può ritirarsi verso un accesso protetto. Una casa o un veicolo non si distruggono per la sola dichiarazione di un gesto: si usano i loro profili di Integrità.
+
+# **Scimmioni pietre e massi**
+
+**Disponibilità.** Il Direttore stabilisce prima della scena le pietre raggiungibili. Il profilo dello Scimmione usa una pietra di circa 1 kg, quello gigante un masso fino a 20 kg. Roccia compatta, un blocco murato o terreno privo di pietre non sono una riserva pronta. Una superficie di scena non diventa munizione senza essere realmente separabile.
+
+**Preparazione.** Raccogliere una pietra o un masso accessibile entro 1 Q costa 1 AzP e richiede le mani necessarie. La raccolta da terra non è un’estrazione incorporabile nel tiro. Estrarre invece un proiettile già trasportato in un supporto accessibile segue il Giocatore §5.1.1, compreso l’eventuale −4 VA per una sola estrazione incorporata. Non permette di strappare rocce dal muro, rompere vincoli o prendere un oggetto occupato da un’altra creatura. Le due AzP del Masso comprendono il gesto e il lancio, senza aggiungere una raccolta gratuita.
+
+**Tiro.** Si usa Armi da lancio con Copertura, linea libera e modificatori ordinari. Lo Scimmione gigante tira a VA 14 entro 10 Q e a 12 da 11 a 20 Q, prima degli altri modificatori. Il costo specifico di 2 AzP resta anche entro 10 Q. Lo Scimmione ordinario ha gittata massima 6 Q. Ogni tiro richiede un nuovo proiettile: il masso non torna in mano e il danno non si replica sui bersagli adiacenti.
+
+**Difese e impatto.** Si applicano le Difese concretamente valide contro un proiettile materiale; non è un’esplosione e non richiede Elusione da Area. Il danno è Naturale e incontra tutta l’AR pertinente. I lanci non hanno Sbalzante, Sbilanciante o Perforante come proprietà: eventuali Ferite e Menomazioni seguono la risoluzione ordinaria. Un colpo fallito non infligge automaticamente il danno a un altro personaggio.
+
+**Oggetti e creature.** Per colpire uno scafo, una porta o una parte strutturale si dichiarano bersaglio, AR, PS Integrità e PI. Il profilo del Masso non autorizza a usare una creatura come proiettile: afferrare, sollevare e spostare una vittima richiedono manovre, capacità di carico e procedure proprie. Non assegna una forza illimitata al primate per il nome o per la taglia.
+
+**Bilanciamento.** I 20 PX dello Scimmione e i 70 PX di quello gigante includono l’alternativa fra colpire da vicino e usare oggetti disponibili. Una riserva preparata va dichiarata prima dell’incontro; non si aggiunge retroattivamente per evitare la raccolta. Con soli Pugni il gigante può infliggere più danno nel Round, mentre il Masso consente di minacciare una posizione lontana consumando entrambe le AzP.
+
+# **Creature alate e piccoli predatori**
+
+*Dieci profili per cieli boschi e anfratti*
+
+Queste creature permettono di popolare nidi, rovine, acque basse e passaggi nascosti. Alcune cacciano, altre difendono un rifugio; Aquila e Gufo giganti possono comprendere richieste e comunicare. I sensi e il modo di muoversi distinguono gli incontri quanto gli attacchi. Il Direttore stabilisce la loro collocazione su Iris: le specie del blocco non appartengono automaticamente alla Covata.
+
+| Creatura | GS | PX per 4 PG |
+| :---- | :---: | :---: |
+| Aquila gigante | Esperto | 30 |
+| Gufo gigante | Inesperto | 20 |
+| Avvoltoio gigante | Esperto | 30 |
+| Pipistrello gigante | Principiante | 10 |
+| Vespa gigante | Inesperto | 20 |
+| Scarabeo di fuoco gigante | Principiante | 10 |
+| Centopiedi gigante | Principiante | 10 |
+| Serpente velenoso | Principiante | 10 |
+| Serpente velenoso gigante | Inesperto | 20 |
+| Ragno lupo gigante | Principiante | 10 |
+
+**PX di riferimento.** Valori per un esemplare e quattro PG, senza dotazione conteggiata. Volo, luce biologica, veleni e sensi sono compresi nel GS. Un singolo animale usa una sola scheda; più esemplari conservano i propri valori unitari e non diventano uno Sciame senza un profilo apposito. Il premio dell’incontro si determina nel Direttore §9.3.
+
+**Impiego.** Un nido da evitare, un animale capace di guidare i personaggi o una luce naturale da proteggere possono essere il centro della scena. Le soglie di ritirata descrivono tendenze; fame, piccoli e accessi al rifugio restano motivazioni concrete. Le capacità non garantiscono Sorpresa o ostilità al primo avvistamento.
+
+**Fonti e verifica.** Giocatore v0.49, Magia v1.5, Direttore v0.41 e Armamenti v0.64. Le pagine indicate nelle voci sono quelle stampate del Manuale dei Mostri fornito. GS e PX sono stime da verificare al tavolo, soprattutto in spazi dove Volo, veleni o sensi alternativi cambiano le possibilità dei personaggi. Le procedure dei veleni sono raccolte alla fine del blocco.
+
+# **Ali sensi e regole operative**
+
+**Natura e risorse.** Tutti i profili hanno Natura Comune, sono organismi viventi e possiedono mente e PM personali. Non conoscono incantesimi appresi o poteri magici innati. A 0 PM diventano Svenuti. A 0 PV continuano Tempra, Ferite, Menomazioni e Morente, senza morte o incoscienza automatica. Le cure biologiche sono applicabili. Stati iniziali: nessuno.
+
+**Azioni e danni.** INI modifica 1d10; AzP e unica AzM valgono per l’intero Round. Ogni attacco costa 1 AzP, produce AC 1 e comprende tutti i bonus. Si risolvono dadi e bonus, moltiplicatori, Difesa, resistenze, AR e conseguenze da danno residuo. Il veleno interno è una risoluzione successiva, non una seconda applicazione fisica dell’attacco. Nessuna delle creature ha Parata naturale.
+
+**Difese e Opportunità.** Schivata richiede 1 AzP, 1 AzM e una possibilità reale di spostarsi. Una sola Opportunità ordinaria gratuita per Round, su un’occasione concreta e rispettando i limiti offensivi della voce. Il veleno collegato a un Morso o Pungiglione normale può applicarsi anche in quell’occasione; non aggiunge una manovra offensiva o un attacco gratuito. Artigli e zampate non afferrano automaticamente.
+
+**Volo e movimento.** Le terne sono Q effettivi di Passo / Corsa / Scatto. In volo Corsa e Scatto richiedono Atletica rispettivamente a −2 e −4, con esiti e altre penalità del Giocatore §5.2. Una sola AzM comprende decollo, dislivello, tragitto e atterraggio. Nei percorsi misti si usa il budget unico del §5.2.4; il tratto di ogni modalità non supera la sua distanza per l’andatura scelta. Cambiare modalità non rinnova le Azioni.
+
+**Ali e appoggi.** Uccelli e Pipistrello non hanno volo stazionario in questa conversione; la Vespa può restare sospesa come specificato nella sua scheda. Servono spazio per le ali e una traiettoria libera. Svenuto o perdita della funzione alare possono provocare Caduta. L’effetto A Terra da solo non abbatte chi vola senza appoggio; si applica il §5.2.5. Trasportare qualcuno richiede presa reale, Azioni e capacità di carico, senza derivare automaticamente dagli Artigli.
+
+**Sensi alternativi.** Il bonus di un senso acuto è +2 a Percezione quando quel senso è determinante; non si somma due volte se sono utili vista e udito insieme. Scurovisione non attraversa solidi, torbidità o fumo. Ecolocalizzazione e percezioni di prossimità sostituiscono la vista solo nei limiti della voce: possono distinguere la posizione di un corpo, non colori, scritte o pensieri. Un bersaglio nascosto richiede comunque la pertinente Percezione.
+
+**Anatomia e spazio.** Negli uccelli e nel Pipistrello Braccia indica le ali e Gambe gli arti posteriori; negli insetti si identifica la funzione realmente coinvolta. Una Menomazione dell’ala si applica al Volo. Lo spazio tattico di 1 × 1 Q non trasforma un animale piccolo in un corpo largo 1,5 metri e non gli permette di passare in ogni fessura. Tutti respirano aria e seguono il normale fiato di COS Round, salvo capacità espressa.
+
+# **Aquila gigante**
+
+*Rapace senziente • vista acuta e attacchi ravvicinati • Natura Comune*
+
+Una grande aquila capace di comunicare, difendere il nido e riconoscere richieste provenienti da altre creature. Fonte: Giant Eagle, p. 324.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 8 • DES 7 • COS 6 • INT 4 • SAG 7 • CAR 5 |
+| Risorse e protezioni | PV 28 • PM 8 • AR 1 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 11 • Tempra 10 • Riflessi 11 • Volontà 10 • Magia 10 |
+| Iniziativa e Azioni | INI +1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 2 / 4 / 6 Q; volo 16 / 32 / 48 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 12 • Atletica 13 • Percezione 13 • Furtività 8 |
+| GS e PX per 4 PG | Esperto • 30 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Becco | 12 | 1d6+2 Naturale; Perforazione | 1 Q |
+| Artigli | 12 | 1d8+2 Naturale; Taglio | 1 Q |
+
+**Sequenza.** Al massimo una Beccata e un attacco di Artigli per Round, ciascuno con 1 AzP, Opportunità comprese. I due artigli non producono due applicazioni di danno nello stesso colpo. Può conservare un’Azione per Difesa invece di completare la sequenza.
+
+**Vista e parola.** Vista acuta +2; nessuna Scurovisione innata. Parla il linguaggio delle Aquile giganti e comprende altre due lingue assegnate alla comunità o all’origine. Comprenderle non le concede la capacità di pronunciarle. Può valutare una richiesta, senza un obbligo di aiutare o attaccare determinato dall’allineamento della fonte.
+
+**Volo e artigli.** Non possiede Passaggio in volo del Gufo: lasciare una portata nemica può provocare Opportunità. Un attacco riuscito di Artigli non solleva o trasporta la vittima. Occorrono eventuale manovra prensile praticabile e i normali limiti di carico; le Azioni impegnate nella presa non restano disponibili per attacchi incompatibili.
+
+**Condotta.** Difende piccoli e posatoi, può indicare una direzione o chiedere agli intrusi di allontanarsi. Sotto 7 PV o a Ferita Profonda tende a cercare quota e un riparo. Un accesso troppo stretto può impedirle di raggiungere la preda anche quando la distanza in pianta è breve.
+
+# **Gufo gigante**
+
+*Rapace notturno senziente • passaggio in volo • Natura Comune*
+
+Un grande rapace capace di muoversi nel buio naturale e colpire senza rimanere accanto alla preda. Fonte: Giant Owl, p. 327.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 6 • DES 7 • COS 6 • INT 4 • SAG 7 • CAR 5 |
+| Risorse e protezioni | PV 22 • PM 8 • AR 1 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 11 • Tempra 10 • Riflessi 11 • Volontà 10 • Magia 10 |
+| Iniziativa e Azioni | INI +1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 1 / 2 / 3 Q; volo 12 / 24 / 36 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 11 • Atletica 12 • Percezione 13 • Furtività 14 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Artigli | 11 | 1d8+1 Naturale; Taglio | 1 Q |
+
+**Passaggio in volo.** Non provoca Opportunità quando abbandona la portata di un nemico mediante il proprio Volo. L’eccezione riguarda soltanto quell’uscita in volo: non rende gratuiti attacchi, tragitti a terra o altre attività rischiose. Può dividere il Passo prima e dopo l’attacco entro la distanza complessiva disponibile, senza una seconda AzM.
+
+**Sensi.** Scurovisione 24 Q e +2 a Percezione quando vista o udito sono determinanti, una sola volta per Prova. Furtività 14 richiede la possibilità reale di occultarsi: non diventa invisibile o perfettamente silenzioso in ogni circostanza. La vista notturna non rivela automaticamente chi è nascosto.
+
+**Linguaggi.** Parla il linguaggio dei Gufi giganti e comprende altre tre lingue scelte per la propria comunità, senza poterle necessariamente parlare. Può fare da sentinella o negoziare un passaggio. Non riceve poteri silvani o vincoli con esseri fatati per il solo nome.
+
+**Condotta.** Un solo attacco di Artigli per Round, Opportunità compresa. Non afferra automaticamente la preda. Sotto 5 PV o a Ferita Profonda tende a raggiungere un posatoio protetto. Se rimane senza spazio per usare le ali, Passaggio in volo non gli apre un percorso attraverso il solido.
+
+# **Avvoltoio gigante**
+
+*Predatore alato • branco e sensi acuti • Natura Comune*
+
+Un grande necrofago capace di approfittare della debolezza di una preda, soprattutto insieme ad altri individui. Fonte: Giant Vulture, p. 329.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 7 • DES 5 • COS 6 • INT 3 • SAG 6 • CAR 4 |
+| Risorse e protezioni | PV 28 • PM 6 • AR 1 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 10 • Riflessi 9 • Volontà 8 • Magia 9 |
+| Iniziativa e Azioni | INI −1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 2 / 4 / 6 Q; volo 12 / 24 / 36 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 11 • Atletica 11 • Percezione 12 • Furtività 7 |
+| GS e PX per 4 PG | Esperto • 30 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Becco | 11 | 1d6+2 Naturale; Perforazione | 1 Q |
+| Artigli | 11 | 1d8+1 Naturale; Taglio | 1 Q |
+
+**Sequenza.** Al massimo una Beccata e un attacco di Artigli per Round, ciascuno con 1 AzP; le Opportunità rientrano nei limiti. La preda ferita non concede un attacco aggiuntivo e non subisce Sanguinamento come proprietà automatica del Becco.
+
+**Branco.** +2 VA agli attacchi ravvicinati contro una vittima quando un alleato cosciente e capace di agire è entro 1 Q da lei e può realmente minacciarla. Il VA diventa 13, prima degli altri modificatori; più alleati non aumentano il bonus. Non ottiene anche la Frenesia del sangue degli squali.
+
+**Vista e fiuto.** +2 a Percezione quando vista o olfatto sono determinanti, una sola volta per Prova; nessuna Scurovisione innata. Può seguire tracce accessibili ma non localizza ogni morente a distanza illimitata. Comprende una lingua assegnata alla sua origine, senza parlarla.
+
+**Condotta.** Può seguire un gruppo e aspettare un’occasione, oppure abbandonarlo per una carcassa più accessibile. Sotto 7 PV o a Ferita Profonda tende a riprendere quota. Non possiede Passaggio in volo: le normali occasioni di Opportunità continuano a valere.
+
+# **Pipistrello gigante**
+
+*Volatore notturno • ecolocalizzazione • Natura Comune*
+
+Un grande pipistrello che si orienta mediante echi e può cacciare o difendere un rifugio nell’oscurità. Fonte: Giant Bat, p. 323.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 7 • DES 7 • COS 5 • INT 1 • SAG 6 • CAR 3 |
+| Risorse e protezioni | PV 18 • PM 5 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 11 • Tempra 9 • Riflessi 11 • Volontà 7 • Magia 8 |
+| Iniziativa e Azioni | INI +1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 2 / 4 / 6 Q; volo 12 / 24 / 36 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 10 • Atletica 12 • Percezione 11 • Furtività 10 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso | 10 | 1d6+1 Naturale; Perforazione | 1 Q |
+
+**Ecolocalizzazione.** Entro 12 Q in aria comunicante usa Percezione 11 per distinguere corpi e ostacoli senza vista, quando può emettere e ricevere gli echi. Assordato o un impedimento reale all’emissione o alla propagazione del suono interrompono questo senso. Conserva la vista ordinaria; la scheda non aggiunge Scurovisione.
+
+**Limiti degli echi.** Non attraversa muri o scafi, non legge scritte e non scopre automaticamente un essere nascosto. Un ostacolo otticamente opaco non blocca necessariamente gli echi: il Direttore verifica il mezzo reale. Il buio da solo non impone Accecato contro una posizione che questo senso percepisce validamente.
+
+**Volo e morso.** Un solo Morso per Round, Opportunità compresa. Non possiede Passaggio in volo e non trasmette automaticamente malattie o risucchia sangue. Braccia indica le ali membranose; una Menomazione di quella funzione può compromettere il Volo. Non rimane sospeso gratuitamente senza avanzare.
+
+**Condotta.** Non comprende linguaggi. Può disimpegnarsi se il rifugio rimane accessibile o se trova una preda meno rischiosa. Sotto 4 PV o a Ferita Profonda tende a tornare al riparo. Un rumore ordinario non lo stordisce automaticamente: serve una capacità o una condizione con effetti dichiarati.
+
+# **Vespa gigante**
+
+*Insetto alato • pungiglione velenoso • Natura Comune*
+
+Una grande vespa che può difendere il nido o cacciare da una posizione sospesa. Le sue colonie non coincidono con la Covata. Fonte: Giant Wasp, p. 329.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 5 • DES 6 • COS 5 • INT 1 • SAG 5 • CAR 2 |
+| Risorse e protezioni | PV 18 • PM 4 • AR 1 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 9 • Riflessi 10 • Volontà 6 • Magia 8 |
+| Iniziativa e Azioni | INI 0 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 2 / 4 / 6 Q; volo 10 / 20 / 30 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 10 • Atletica 11 • Percezione 10 • Furtività 8 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Pungiglione | 10 | 1d6+1 Naturale; poi veleno | 1 Q |
+
+**Veleno di vespa II.** Dopo almeno 1 danno fisico finale a un vivente inocula veleno naturale di Pericolosità II, Importante: Tempra 0, 1d6 Naturale interno e, se la PS fallisce, Avvelenato con −2 fisico per 5 Round. Successo dimezza per eccesso il solo danno da veleno e impedisce la penalità. Recupero, nuove esposizioni e cure seguono la pagina comune finale.
+
+**Ali vibranti.** Può restare sospesa in aria usando le ali funzionali, senza un movimento minimo. È un’eccezione anatomica al volo non stazionario delle altre creature del blocco; non è sostegno magico. Perdita di coscienza, blocco del battito o Menomazione che impedisca il Volo possono farla cadere. Non ha Passaggio in volo.
+
+**Corpo.** Un Pungiglione per Round, Opportunità compresa. Testa comprende antenne e mandibole; Torace il corpo e l’apparato alare; Braccia le zampe anteriori e Gambe quelle posteriori con la funzione del pungiglione. La localizzazione individua la parte effettivamente lesa. Non ha resistenze innate al Fuoco o al calore delle Terre del Fuoco.
+
+**Condotta.** Sensi ordinari, senza Scurovisione; non comprende linguaggi. Può difendere il nido e interrompere l’inseguimento quando la minaccia si allontana. Sotto 4 PV o a Ferita Profonda tende a ritirarsi. Il veleno non rende automaticamente stabile o paralizzata una vittima a 0 PV.
+
+# **Scarabeo di fuoco gigante**
+
+*Insetto luminoso • ghiandole bioluminescenti • Natura Comune*
+
+Uno scarabeo notturno dotato di ghiandole che emettono luce naturale. Il nome si riferisce al bagliore, non a un attacco incendiario. Fonte: Giant Fire Beetle, p. 325.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 3 • DES 5 • COS 4 • INT 1 • SAG 3 • CAR 2 |
+| Risorse e protezioni | PV 8 • PM 3 • AR 2 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 8 • Tempra 8 • Riflessi 9 • Volontà 6 • Magia 7 |
+| Iniziativa e Azioni | INI −1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 6 / 12 / 18 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 7 • Atletica 7 • Percezione 8 • Furtività 7 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso | 7 | 1d4 Naturale; Taglio | 1 Q |
+
+**Luce biologica.** Le ghiandole emettono luce piena entro 2 Q e debole per altri 2 Q. L’emissione è continua, non costa Azioni o PM ed è non magica. Un contenitore realmente opaco la scherma. Il bagliore può rivelarne la presenza; Furtività non nasconde automaticamente una sorgente luminosa esposta.
+
+**Ghiandole estratte.** Dopo la morte effettiva, non per i soli 0 PV, la coppia può continuare a illuminare per 1d6 giorni: un solo tiro per entrambe. Estrarla da un cadavere accessibile richiede un minuto e strumenti adatti. La coppia integra mantiene la medesima emissione; dividerla non moltiplica le sorgenti con quel profilo. Scaduto il tempo, non si ricarica con PM.
+
+**Sensi e corpo.** Percezione non visiva di prossimità entro 6 Q, con Percezione 8 e senza attraversare solidi; non identifica automaticamente creature nascoste. Testa comprende mandibole e sensori, Torace il carapace con le ghiandole, Braccia e Gambe i gruppi anteriori e posteriori di zampe. Il profilo non possiede Volo nonostante il nome di scarabeo.
+
+**Condotta.** Un Morso per Round, Opportunità compresa. Non comprende linguaggi e non emette Fuoco o calore dannoso; non ha resistenza speciale a Fuoco o Ghiaccio. Sotto 2 PV o a Ferita Profonda tende a cercare un anfratto. Può costituire una fonte di luce o un incontro ambientale senza diventare un combattimento obbligatorio.
+
+# **Centopiedi gigante**
+
+*Artropode strisciante • morso velenoso • Natura Comune*
+
+Un predatore allungato che si muove fra detriti, crepe e pareti con appigli. Fonte: Giant Centipede, p. 323.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 3 • DES 6 • COS 5 • INT 1 • SAG 3 • CAR 2 |
+| Risorse e protezioni | PV 10 • PM 3 • AR 1 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 9 • Riflessi 10 • Volontà 6 • Magia 7 |
+| Iniziativa e Azioni | INI 0 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 6 / 12 / 18 Q; arrampicata 6 Q al Passo • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 9 • Atletica 9 • Percezione 8 • Furtività 11 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso | 9 | 1d4+1 Naturale; poi veleno | 1 Q |
+
+**Veleno di miriapode II.** Dopo almeno 1 danno fisico finale a un vivente inocula veleno naturale di Pericolosità II, Importante: Tempra 0, 1d4 Naturale interno e, con fallimento, Avvelenato con −2 fisico per 5 Round. Successo dimezza per eccesso il danno da veleno e impedisce la penalità. La tossina è distinta da quella della Vespa; si applicano le procedure finali del blocco.
+
+**Superfici e sensi.** Arrampicata fino a 6 Q per AzM al Passo, su appigli adatti; non aderisce automaticamente a superfici lisce o soffitti. Entro 6 Q su un supporto continuo usa Percezione 8 per avvertire vibrazioni, senza attraversare pareti o percepire in questo modo chi è sospeso in aria. Non sostituisce una pista assente con un’individuazione automatica.
+
+**Corpo segmentato.** Un solo Morso per Round, Opportunità compresa. Testa comprende apparato boccale e antenne, Torace il tronco, Braccia il gruppo anteriore di zampe e Gambe quello posteriore. Segmenti e numerose zampe non hanno PV separati, attacchi simultanei o premi distinti.
+
+**Condotta.** Non comprende linguaggi. Può attaccare una creatura che ostacola il rifugio e poi sottrarsi negli anfratti accessibili. Sotto 2 PV o a Ferita Profonda tende a nascondersi. La perdita di PV causata dal veleno non aggiunge paralisi o stabilizzazione a 0 PV.
+
+# **Serpente velenoso**
+
+*Piccolo rettile • morso e veleno ofidico • Natura Comune*
+
+Un serpente di piccola taglia che può rappresentare una minaccia se disturbato o maneggiato senza protezione. Fonte: Poisonous Snake, p. 334.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 1 • DES 7 • COS 4 • INT 1 • SAG 5 • CAR 2 |
+| Risorse e protezioni | PV 8 • PM 3 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 8 • Riflessi 11 • Volontà 6 • Magia 7 |
+| Iniziativa e Azioni | INI +1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra e nuoto 6 / 12 / 18 Q • spazio tattico 1 × 1 Q |
+| Abilità | Corpo a corpo 10 • Atletica 9 • Percezione 10 • Furtività 12 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso | 10 | 1 Naturale; poi veleno | 1 Q |
+
+**Veleno ofidico II.** Dopo almeno 1 danno fisico finale a un vivente inocula veleno naturale di Pericolosità II, Importante: Tempra 0, 1d4 Naturale interno e, con fallimento, Avvelenato con −2 fisico per 5 Round. Successo dimezza per eccesso il danno tossico e impedisce la penalità. Un Morso assorbito interamente dalla protezione non inocula. Nuove esposizioni e cure seguono la pagina comune.
+
+**Sensi e acqua.** Percezione non visiva di prossimità entro 2 Q, con Percezione 10, senza attraversare solidi; non legge immagini o intenzioni. Non ha Scurovisione innata. Il Nuoto nativo è già effettivo; nei percorsi misti segue budget unico e costi del Giocatore §5.2.4. Respira aria e non ignora il soffocamento soltanto perché sa nuotare.
+
+**Corpo e morso.** Un Morso per Round, Opportunità compresa. Testa indica capo e fauci, Torace il tronco; Braccia e Gambe, quando richieste dalla localizzazione, indicano le porzioni anteriori e posteriori che sostengono la locomozione. Non possiede arti prensili, attacco di Costrizione o capacità di inghiottire un personaggio.
+
+**Condotta.** Non comprende linguaggi. Preferisce una via di fuga a un avversario troppo grande; il morso può essere una difesa del rifugio. Sotto 2 PV o a Ferita Profonda tende a sottrarsi. Lo spazio tattico non rappresenta le sue dimensioni reali e non lo trasforma in un intero sciame di serpenti.
+
+# **Serpente velenoso gigante**
+
+*Rettile velenoso • fauci a maggiore portata • Natura Comune*
+
+Un serpente più grande, capace di raggiungere la preda con il capo proteso e inoculare una dose più intensa dello stesso veleno ofidico. Fonte: Giant Poisonous Snake, p. 327.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 5 • DES 8 • COS 6 • INT 1 • SAG 5 • CAR 2 |
+| Risorse e protezioni | PV 20 • PM 4 • AR 1 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 11 • Tempra 10 • Riflessi 12 • Volontà 6 • Magia 8 |
+| Iniziativa e Azioni | INI +2 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra e nuoto 6 / 12 / 18 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 11 • Atletica 10 • Percezione 11 • Furtività 12 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso | 11 | 1d4+1 Naturale; poi veleno | 2 Q |
+
+**Veleno ofidico II.** Dopo almeno 1 danno fisico finale a un vivente: Tempra 0, 1d6 Naturale interno e, con fallimento, Avvelenato con −2 fisico per 5 Round. Successo dimezza per eccesso il danno tossico e impedisce la penalità. Origine naturale, Pericolosità II, Importante. È la stessa tossina del Serpente velenoso: una dose gigante non somma altro danno mentre essa è già attiva.
+
+**Portata.** Un solo Morso per Round, Opportunità compresa. Può colpire entro 2 Q soltanto lungo un percorso libero per il capo; non attraversa pareti o protezioni. Il Morso non crea una presa e non usa il profilo del Serpente costrittore gigante. La maggiore dose è già espressa in 1d6, senza un moltiplicatore aggiuntivo.
+
+**Sensi e respiro.** Percezione non visiva di prossimità entro 2 Q con Percezione 11, senza Scurovisione o individuazione automatica di un essere nascosto. Il Nuoto nativo è effettivo; percorsi misti e respirazione seguono le stesse regole della specie minore. Nessuna respirazione acquatica, resistenza al Fuoco o immunità generica ai veleni.
+
+**Condotta e anatomia.** Non comprende linguaggi. Localizzazioni funzionali come nel Serpente velenoso, senza arti prensili. Sotto 5 PV o a Ferita Profonda tende a cercare riparo o acqua libera. Può evitare un confronto se gli viene lasciato un passaggio.
+
+# **Ragno lupo gigante**
+
+*Aracnide cacciatore • movimento e veleno • Natura Comune*
+
+Un ragno che cerca la preda sul terreno e fra le fessure, invece di dipendere da una rete da cattura. Fonte: Giant Wolf Spider, p. 330.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 5 • DES 7 • COS 6 • INT 2 • SAG 6 • CAR 2 |
+| Risorse e protezioni | PV 14 • PM 4 • AR 1 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 11 • Tempra 10 • Riflessi 11 • Volontà 6 • Magia 8 |
+| Iniziativa e Azioni | INI +1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 8 / 16 / 24 Q; arrampicata 8 Q al Passo • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 10 • Atletica 10 • Percezione 11 • Furtività 14 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso | 10 | 1d4+1 Naturale; poi veleno | 1 Q |
+
+**Veleno aracnide naturale II.** Dopo almeno 1 danno fisico finale a un vivente: Tempra 0, 1d4 Naturale interno e, con fallimento, Avvelenato con −2 fisico per 10 Round. Successo dimezza per eccesso il danno tossico e impedisce la penalità. È lo stesso veleno aracnide di Ettercap e Ragno gigante: finché attivo si rinnova soltanto la durata, senza nuove PS iniziali o danni tossici aggiuntivi.
+
+**Superfici e seta.** Può muoversi fino a 8 Q per AzM al Passo su pareti e soffitti aderenti senza Atletica ordinaria; superfici friabili o scivolose richiedono la valutazione pertinente. Attraversa normali ragnatele senza il loro costo aggiuntivo di terreno. Non dispone di Getto di seta o reti predisposte da cattura: tali capacità appartengono agli altri profili.
+
+**Sensi.** Scurovisione 12 Q. Entro 2 Q avverte una creatura in movimento attraverso un supporto continuo condiviso, usando Percezione 11; non chi vola, è isolato dal supporto o rimane immobile. Toccando una rete continua localizza entro 6 Q chi la muove, senza ricavarne identità o intenzioni; fili interrotti fermano il segnale. Nessuno di questi sensi attraversa pareti.
+
+**Condotta e corpo.** Un Morso per Round, Opportunità compresa. Non comprende linguaggi. Testa include fauci e sensori, Torace il corpo, Braccia e Gambe i gruppi anteriori e posteriori di zampe. Sotto 3 PV o a Ferita Profonda tende a raggiungere una fessura. Il veleno non causa paralisi o stabilizzazione automatica a 0 PV.
+
+# **Veleni minori inoculazione e soccorso**
+
+**Esposizione.** Vespa, Centopiedi, due Serpenti e Ragno lupo inoculano soltanto dopo almeno 1 danno fisico finale a un organismo vivente. Prima si risolvono attacco, Difesa, AR, PV e Ferite del colpo; poi la tossina. Tutti questi veleni sono Naturali di Pericolosità II, Importante, e usano Tempra 0. Non costano PM o AzP aggiuntive oltre all’attacco, ma non attraversano una protezione che ha assorbito l’intero danno fisico.
+
+**Salvezza e durata.** Fallimento: danno tossico immediato della voce, ignorando l’AR, e −2 VA alle azioni fisiche per la durata indicata. Successo: metà per eccesso del solo danno tossico e nessuna penalità; questa è la regola specifica, senza dimezzare anche una durata residua. Alla fine di ogni propria Iniziativa la vittima può ripetere Tempra 0 gratuitamente: successo termina la penalità. Non si ripete il danno nei Round seguenti. La scadenza è a fine Round R + N.
+
+**Esposizioni ripetute.** Finché la stessa tossina è attiva, nuove inoculazioni rinnovano solo la durata senza una nuova PS iniziale o altro danno tossico; il danno fisico del colpo resta ordinario. I due Serpenti condividono il veleno ofidico, il Ragno lupo quello aracnide di Ettercap e Ragno gigante. Veleno di Vespa e di Centopiedi sono distinti. Tossine diverse coesistono; ciascuna conserva durata e PS di recupero proprie, senza confondere una sostanza con più dosi della stessa.
+
+**Danni e immunità.** Il Magistrale raddoppia soltanto il danno fisico del Morso o Pungiglione, non la tossina o la difficoltà della sua PS. Un danno tossico subito quando i PV sono già 0 può richiedere le normali Tempra per le Ferite. Nessun veleno di questa pagina dichiara automaticamente morte, paralisi, Svenuto o stabilizzazione a 0 PV. Immunità ai veleni impedisce danno e Stato; la sola immunità ad Avvelenato impedisce la penalità ma non un danno tossico altrimenti compatibile.
+
+**Cura.** Un antidoto adeguato alla sostanza o Cura Avvelenamenti dal livello 2 neutralizza la tossina e termina le penalità ancora mantenute. Il numero di sostanze trattate segue il profilo della cura: curarne una non elimina automaticamente quelle diverse coesistenti. Medicina può riconoscere e trattare i sintomi secondo gli strumenti, senza annullare automaticamente il veleno. Cura Spirituale non elimina una causa tossica attiva. PV, Ferite, Menomazioni e Morente restano interventi distinti.
+
+**Raccolta.** La capacità innata di inoculare non assegna dosi commerciali recuperabili dal cadavere o applicabili a un’arma. Estrazione, conservazione e impiego richiedono una scheda di sostanza, strumenti e tempi adeguati. Neutralizzare una dose nel corpo non sterilizza il nido o rende innocuo l’animale. Una creatura resa incosciente non annulla una tossina già inoculata.
+
+# **Sciami e piccola fauna**
+
+*Dieci profili per nidi acque e luoghi infestati*
+
+Quattro animali minuti e sei sciami permettono di distinguere un incontro con un singolo esemplare da una massa che agisce insieme. Il Corvo può ripetere suoni, Pipistrello e Ratto cercano riparo negli anfratti, il Quipper popola le acque. Gli sciami possono ostacolare un passaggio o difendere un nido. Il Direttore ne stabilisce la presenza su Iris e la ragione concreta dell’aggressività.
+
+| Creatura | GS | PX per 4 PG |
+| :---- | :---: | :---: |
+| Pipistrello | Principiante | 10 |
+| Corvo | Principiante | 10 |
+| Ratto | Principiante | 10 |
+| Quipper | Principiante | 10 |
+| Sciame di pipistrelli | Inesperto | 20 |
+| Sciame di corvi | Inesperto | 20 |
+| Sciame di ratti | Inesperto | 20 |
+| Sciame di insetti | Inesperto | 20 |
+| Sciame di quipper | Esperto | 30 |
+| Sciame di serpenti velenosi | Esperto | 30 |
+
+**PX di riferimento.** Valori per un esemplare oppure uno Sciame completo, con quattro PG come riferimento e nessuna dotazione conteggiata. Resistenza del corpo distribuito, immunità, movimento e veleno sono compresi nel GS. Lo Sciame è un solo avversario: i suoi componenti non aggiungono premi individuali. Per il premio dell’incontro si consulta il Direttore §9.3.
+
+**Impiego.** Un animale incontrato non costituisce automaticamente una minaccia. Cibo, rifugio, rumori, uova e accessi al nido possono spiegare la condotta. La presenza di molti animali non converte da sola le loro schede in uno Sciame: si sceglie una delle due rappresentazioni prima dell’incontro e si conserva il relativo conteggio.
+
+**Fonti e verifica.** Giocatore v0.49, Magia v1.5, Direttore v0.41 e Armamenti v0.64. Le pagine citate sono quelle stampate del Manuale dei Mostri fornito. GS e PX sono stime da verificare al tavolo; contromisure ad Area, vie di fuga e possibilità di chiudere gli accessi incidono molto sugli sciami. Le varianti opzionali dello Sciame di insetti della fonte richiedono profili propri.
+
+# **Sciami spazio e regole operative**
+
+**Natura e Azioni.** Tutti hanno Natura Comune e sono viventi. Nessuno conosce incantesimi o poteri magici attivi. Ogni scheda dispone di 1 AzP e 1 AzM per l’intero Round; INI modifica 1d10. Un attacco costa 1 AzP e produce AC 1, anche quando rappresenta molti morsi. È consentito al massimo un attacco per Round, Opportunità compresa; nessuno possiede Parata naturale.
+
+**Difese e danni.** Schivata richiede 1 AzP, 1 AzM e uno spostamento concretamente possibile. Una vittima può difendersi dall’attacco collettivo con le Difese normalmente adatte: condividere il Q non annulla la sua AR. Dadi e bonus sono completi; si applicano moltiplicatori, Difesa o Salvezza, resistenze, AR ed effetti subordinati al danno residuo. Naturale e Magico incontrano tutta l’AR pertinente, Etereo soltanto quella magica.
+
+**Spazio condiviso.** Uno Sciame occupa 1 × 1 Q e può condividere lo spazio di altre creature. Per attaccare deve condividere con la vittima almeno un Q e il relativo volume: un gruppo in quota non morde chi è al suolo. La portata è 0 Q; anche un’Opportunità richiede che il bersaglio sia ancora nello spazio condiviso al momento dell’innesco. Entrare o restare nel Q non infligge danno automatico.
+
+**Passaggi e contatto.** Lo Sciame attraversa soltanto aperture realmente percorribili da un suo componente e prosegue come un’unica pedina. Non si divide in unità con nuove Azioni o risorse. Pareti, vetri e contenitori chiusi fermano il passaggio; vestiti e armature non sono ignorati dai morsi. Ogni Area risolve sullo Sciame un solo bersaglio, senza moltiplicare colpi o danni per il numero di animali.
+
+**Movimento.** Le terne indicano Q effettivi di Passo / Corsa / Scatto. In volo Corsa e Scatto richiedono Atletica a −2 e −4. Il solo Nuoto nativo percorre le distanze scritte come eccezione al costo 2, mantenendo Prove ed esiti del Giocatore §5.2. Nei percorsi misti si usa il budget unico del §5.2.4, con costo 1 sulla terra o in volo e 2 a nuoto, senza superare il limite di ciascuna modalità.
+
+**Ali e sensi.** Pipistrelli e Corvi non hanno volo stazionario; decollo, dislivello e atterraggio consumano la stessa AzM. Svenuto o perdita della funzione alare possono causare Caduta. Scurovisione, fiuto ed ecolocalizzazione hanno i limiti delle singole voci e non attraversano solidi. Un senso alternativo non individua automaticamente un bersaglio nascosto. Un senso acuto concede +2 a Percezione soltanto quando è determinante.
+
+**Risorse e Stati.** Stati iniziali: nessuno. Gli animali singoli seguono integralmente PV, PM, Ferite, Menomazioni e cure biologiche. Gli sciami usano un solo tracciato per ciascuna risorsa; le eccezioni relative a resistenza, immunità e recupero sono nella pagina finale del blocco. A 0 PV non scattano morte o incoscienza automatiche. A 0 PM si applica Svenuto; le schede non concedono immunità generiche agli effetti spirituali.
+
+# **Pipistrello**
+
+*Piccolo mammifero alato • ecolocalizzazione • Natura Comune*
+
+Un pipistrello comune può trovare rifugio in una grotta o in un edificio e reagire se intrappolato. Un singolo esemplare usa questa scheda; il gruppo ostile ha un profilo separato. Fonte: Bat, p. 318.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 1 • DES 7 • COS 4 • INT 2 • SAG 6 • CAR 3 |
+| Risorse e protezioni | PV 3 • PM 3 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 8 • Riflessi 11 • Volontà 7 • Magia 7 |
+| Iniziativa e Azioni | INI +1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 1 / 2 / 3 Q; volo 6 / 12 / 18 Q • spazio tattico 1 × 1 Q |
+| Abilità | Corpo a corpo 6 • Atletica 9 • Percezione 9 • Furtività 12 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso | 6 | 1 Naturale; Perforazione | 1 Q |
+
+**Ecolocalizzazione.** Entro 12 Q in aria comunicante usa Percezione 9 per distinguere corpi e ostacoli quando può emettere e ricevere gli echi. Assordato o un impedimento reale alla propagazione del suono interrompono questo senso. Conserva la vista ordinaria; non riceve Scurovisione. Non distingue colori o scritte attraverso gli echi.
+
+**Udito acuto.** +2 a Percezione quando l’udito è determinante, anche per una Prova di ecolocalizzazione che richieda di distinguere un suono. Il bonus si applica una sola volta e non riattiva il senso da Assordato. Il semplice rumore non lo stordisce automaticamente.
+
+**Corpo e fuga.** Un Morso per Round, Opportunità compresa. Braccia indica le ali, Gambe gli arti posteriori; lo spazio tattico non ne rappresenta la larghezza reale. Non comprende linguaggi. Cerca normalmente una fuga in volo; a Ferita Superficiale tende ad abbandonare lo scontro. Il Morso non trasmette automaticamente malattie o suzione di sangue.
+
+# **Corvo**
+
+*Uccello opportunista • imitazione di suoni • Natura Comune*
+
+Un corvo esplora ciò che è stato abbandonato, sorveglia un posatoio e può ripetere brevi suoni sentiti. Il suo richiamo può entrare nella scena senza indicare un potere soprannaturale. Fonte: Raven, p. 335.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 1 • DES 6 • COS 4 • INT 2 • SAG 6 • CAR 4 |
+| Risorse e protezioni | PV 4 • PM 4 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 8 • Riflessi 10 • Volontà 8 • Magia 8 |
+| Iniziativa e Azioni | INI 0 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 2 / 4 / 6 Q; volo 10 / 20 / 30 Q • spazio tattico 1 × 1 Q |
+| Abilità | Corpo a corpo 8 • Atletica 9 • Percezione 11 • Furtività 10 • Raggirare 8 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Becco | 8 | 1 Naturale; Perforazione | 1 Q |
+
+**Imitazione.** Con 1 AzP ripete un breve suono semplice già udito. Se un ascoltatore cerca di riconoscere l’imitazione, si risolve Raggirare 8 del Corvo contrapposto alla sua Percezione, con le regole ordinarie. Il successo dell’ascoltatore svela l’origine imitata. Non costruisce discorsi nuovi e non comprende un linguaggio per il solo fatto di ripeterne un suono.
+
+**Sensi e corpo.** Vista e udito ordinari, senza Scurovisione innata. Braccia corrisponde alle ali e Gambe agli arti posteriori. Non possiede Passaggio in volo e lasciare una portata nemica può provocare Opportunità. Può trasportare soltanto ciò che anatomia e carico gli consentono.
+
+**Condotta.** Una Beccata per Round, Opportunità compresa. Il richiamo non applica Stati né garantisce Sorpresa. Può cercare cibo, attirare l’attenzione o difendere il nido; a Ferita Superficiale tende a raggiungere un posatoio sicuro. Un oggetto sottratto richiede comunque un’azione e un accesso realmente praticabile.
+
+# **Ratto**
+
+*Piccolo roditore • olfatto acuto e scurovisione • Natura Comune*
+
+Un ratto cerca cibo e ripari accessibili. Può fuggire davanti a una creatura più grande o mordere se bloccato; la sua sola presenza non dichiara un’infestazione pericolosa. Fonte: Rat, p. 335.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 1 • DES 5 • COS 4 • INT 2 • SAG 5 • CAR 3 |
+| Risorse e protezioni | PV 3 • PM 3 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 8 • Tempra 8 • Riflessi 9 • Volontà 7 • Magia 7 |
+| Iniziativa e Azioni | INI −1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 4 / 8 / 12 Q • spazio tattico 1 × 1 Q |
+| Abilità | Corpo a corpo 6 • Atletica 8 • Percezione 8 • Furtività 12 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso | 6 | 1 Naturale; Perforazione | 1 Q |
+
+**Sensi.** Scurovisione 6 Q e +2 a Percezione quando l’olfatto è determinante. Un odore accessibile può rivelare una traccia, ma non localizza ogni creatura oltre pareti o in un ambiente saturo di altri odori. Restano necessarie le Prove appropriate per seguire una pista.
+
+**Passaggi e anatomia.** Può utilizzare un varco adatto al suo corpo reale; una fessura chiusa non diventa percorribile perché occupa una pedina. Testa e Torace sono capo e tronco, Braccia le zampe anteriori e Gambe quelle posteriori. Un’arrampicata ordinaria richiede appigli e la Prova pertinente: questa scheda non concede aderenza a pareti lisce.
+
+**Condotta.** Un Morso per Round, Opportunità compresa. Non comprende linguaggi e non inocula veleno o malattie automaticamente. Cerca un anfratto libero; a Ferita Superficiale tende alla fuga. Il profilo non aggiunge Tattiche di branco quando sono presenti altri ratti.
+
+# **Quipper**
+
+*Piccolo pesce carnivoro • frenesia del sangue • Natura Comune*
+
+Un piccolo pesce dai denti affilati che può radunarsi dove trova nutrimento. Si usa questa scheda per un esemplare isolato e quella dello Sciame per il branco compatto ostile. Fonte: Quipper, p. 335.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 1 • DES 7 • COS 4 • INT 1 • SAG 3 • CAR 2 |
+| Risorse e protezioni | PV 3 • PM 2 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 8 • Riflessi 11 • Volontà 6 • Magia 6 |
+| Iniziativa e Azioni | INI +1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 0; nuoto 8 / 16 / 24 Q • spazio tattico 1 × 1 Q |
+| Abilità | Corpo a corpo 9 • Atletica 9 • Percezione 7 • Furtività 10 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso | 9 | 1 Naturale; Perforazione | 1 Q in acqua |
+
+**Frenesia del sangue.** +2 VA al Morso contro un organismo vivente con PV inferiori al massimo oppure Sanguinamento attivo. Il VA diventa 11 prima degli altri modificatori. Il bonus non si somma per più ferite, tracce o alleati e non aumenta il danno. Il Morso non procura Sanguinamento automaticamente.
+
+**Acqua e sensi.** Respira soltanto acqua e ha Scurovisione 12 Q. Fuori dall’acqua non si sposta e segue la normale riserva di fiato di COS Round e il successivo soffocamento; resistere per qualche istante non gli consente di attaccare oltre il mezzo che raggiunge. L’adattamento a un’acqua fredda non concede immunità al Gelo.
+
+**Corpo e condotta.** Un Morso per Round, Opportunità compresa. Testa e Torace sono capo e tronco, Braccia le pinne anteriori e Gambe l’apparato propulsivo posteriore. Non comprende linguaggi. A Ferita Superficiale tende a sottrarsi nella vegetazione o nell’acqua più profonda, se raggiungibile.
+
+# **Sciame di pipistrelli**
+
+*Gruppo alato • corpo distribuito ed ecolocalizzazione • Natura Comune*
+
+Una massa compatta di pipistrelli che mantiene una condotta comune nello scontro. Il Direttore può legarla a un nido disturbato o a un’influenza dell’avventura, senza attribuirle automaticamente Natura Oscura Simmetria. Fonte: Swarm of Bats, p. 337.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 3 • DES 7 • COS 5 • INT 2 • SAG 6 • CAR 3 |
+| Risorse e protezioni | PV 24 • PM 6 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 9 • Riflessi 11 • Volontà 7 • Magia 8 |
+| Iniziativa e Azioni | INI +1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 0; volo 6 / 12 / 18 Q • spazio condivisibile 1 × 1 Q |
+| Abilità | Corpo a corpo 10 • Atletica 10 • Percezione 9 • Furtività 10 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morsi con PV 13–24 | 10 | 2d3 Naturale; Perforazione | 0 Q condiviso |
+| Morsi con PV 0–12 | 10 | 1d3 Naturale; Perforazione | 0 Q condiviso |
+
+**Corpo distribuito.** Usa resistenza fisica, immunità collettive, mancato recupero di PV e localizzazioni funzionali della pagina finale. Il danno più basso sostituisce quello ordinario a 12 PV o meno; i due profili non sono attacchi separati.
+
+**Echi e udito.** Ecolocalizzazione entro 12 Q in aria comunicante, con Percezione 9; +2 quando l’udito è determinante, una sola volta. Assordato o un blocco reale dell’emissione o degli echi interrompono il senso. Restano vista ordinaria e limiti del Pipistrello; non ottiene Scurovisione o percezione attraverso muri.
+
+**Condotta.** Attacca una sola vittima nello spazio condiviso. Può posarsi ma non ha andatura terrestre o volo stazionario. Non riceve Passaggio in volo, malattie o suzione di sangue. A 12 PV o meno, oppure a Ferita Profonda, tende a raggiungere il rifugio o disperdersi lungo una via realmente libera.
+
+# **Sciame di corvi**
+
+*Gruppo alato • beccate e vista ordinaria • Natura Comune*
+
+Un gruppo di corvi che si stringe attorno a una minaccia o a una fonte di cibo. Le ali possono nascondere parti della scena, ma la scheda non crea un’oscurità magica. Fonte: Swarm of Ravens, p. 339.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 4 • DES 6 • COS 4 • INT 2 • SAG 6 • CAR 4 |
+| Risorse e protezioni | PV 24 • PM 6 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 8 • Riflessi 10 • Volontà 8 • Magia 8 |
+| Iniziativa e Azioni | INI 0 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 2 / 4 / 6 Q; volo 10 / 20 / 30 Q • spazio condivisibile 1 × 1 Q |
+| Abilità | Corpo a corpo 10 • Atletica 10 • Percezione 13 • Furtività 9 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Becchi con PV 13–24 | 10 | 1d6+1 Naturale; Perforazione | 0 Q condiviso |
+| Becchi con PV 0–12 | 10 | 1d3+1 Naturale; Perforazione | 0 Q condiviso |
+
+**Corpo distribuito.** Applica le proprietà comuni degli sciami della pagina finale. A 12 PV o meno usa soltanto il danno ridotto. Il numero di becchi non concede colpi aggiuntivi, accecamento automatico o danni a tutte le creature attraversate.
+
+**Sensi e richiami.** Vista e udito ordinari, senza Scurovisione. Percezione 13 non assicura l’individuazione di una creatura nascosta. Lo Sciame non possiede l’Imitazione attiva del Corvo singolo: richiami simultanei non concedono una serie di tentativi gratuiti di Raggirare.
+
+**Condotta.** Deve condividere lo spazio della vittima per colpire. Può cercare un posatoio o ripiegare verso il nido; a 12 PV o meno oppure a Ferita Profonda tende alla dispersione. Nessun volo stazionario o Passaggio in volo. Un bersaglio dietro un vetro chiuso rimane fisicamente protetto dall’accesso dei corvi.
+
+# **Sciame di ratti**
+
+*Gruppo terrestre • olfatto e accessi stretti • Natura Comune*
+
+Una massa di roditori che occupa un passaggio basso o si raccoglie attorno al cibo. Uno Sciame può costringere a cambiare strada senza che ogni ratto debba essere eliminato. Fonte: Swarm of Rats, p. 339.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 4 • DES 5 • COS 5 • INT 2 • SAG 5 • CAR 3 |
+| Risorse e protezioni | PV 24 • PM 5 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 8 • Tempra 9 • Riflessi 9 • Volontà 7 • Magia 7 |
+| Iniziativa e Azioni | INI −1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 6 / 12 / 18 Q • spazio condivisibile 1 × 1 Q |
+| Abilità | Corpo a corpo 9 • Atletica 9 • Percezione 9 • Furtività 11 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morsi con PV 13–24 | 9 | 1d6+1 Naturale; Perforazione | 0 Q condiviso |
+| Morsi con PV 0–12 | 9 | 1d3+1 Naturale; Perforazione | 0 Q condiviso |
+
+**Corpo distribuito.** Applica le proprietà comuni degli sciami. A 12 PV o meno usa il danno ridotto. Il contatto con più gambe nello stesso Q non moltiplica l’attacco; l’AR della vittima conserva la propria efficacia.
+
+**Sensi.** Scurovisione 6 Q e +2 a Percezione quando l’olfatto è determinante. Il bonus non concede localizzazione oltre ogni ostacolo o una pista in assenza di indizi. Gli accessi devono consentire il passaggio reale di un ratto, non soltanto di un odore.
+
+**Condotta.** Può abbandonare una minaccia per un riparo o cibo più accessibile. A 12 PV o meno oppure a Ferita Profonda tende a disperdersi. Non possiede Tattiche di branco e i morsi non inoculano malattie automaticamente. Il profilo non attribuisce Scavo o aderenza a pareti lisce.
+
+# **Sciame di insetti**
+
+*Gruppo terrestre • morsi e arrampicata • Natura Comune*
+
+Un insieme di piccoli insetti terrestri che procede come un’unica massa ostile. È un profilo generico distinto dalla Covata e dalle varianti volanti o velenose. Fonte: Swarm of Insects, p. 338.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 3 • DES 6 • COS 5 • INT 1 • SAG 3 • CAR 1 |
+| Risorse e protezioni | PV 24 • PM 4 • AR 1 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 9 • Riflessi 10 • Volontà 6 • Magia 7 |
+| Iniziativa e Azioni | INI 0 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 4 / 8 / 12 Q; arrampicata 4 Q al Passo • spazio 1 × 1 Q condivisibile |
+| Abilità | Corpo a corpo 10 • Atletica 9 • Percezione 7 • Furtività 10 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morsi con PV 13–24 | 10 | 2d4 Naturale; Perforazione | 0 Q condiviso |
+| Morsi con PV 0–12 | 10 | 1d4 Naturale; Perforazione | 0 Q condiviso |
+
+**Corpo distribuito.** Applica resistenza e immunità comuni degli sciami. L’AR 1 si sottrae dopo la resistenza pertinente. A 12 PV o meno il danno è 1d4. Il carapace non dà PI separati o una Parata naturale.
+
+**Superfici e sensi.** Arrampicata su appigli adatti, fino a 4 Q per AzM al Passo; nessuna aderenza automatica ai soffitti. Entro 2 Q usa Percezione 7 per avvertire corpi e vibrazioni sul supporto continuo condiviso. Non rileva in questo modo chi vola o è separato dal supporto, non attraversa pareti e non ottiene Scurovisione.
+
+**Condotta.** Può difendere un nido o seguire una fonte di nutrimento; a 12 PV o meno oppure a Ferita Profonda tende a riparare nelle crepe. Non ha Volo, Scavo, veleno, telepatia o adattamento alle Terre del Fuoco. Le varianti di vespe, ragni, scarabei e centopiedi della fonte non sono aggiunte a questa scheda.
+
+# **Sciame di quipper**
+
+*Branco acquatico • frenesia del sangue • Natura Comune*
+
+Un banco compatto di piccoli pesci carnivori che può circondare una creatura immersa. La densità del gruppo ne sostiene l’offensiva senza creare attacchi per ciascun pesce. Fonte: Swarm of Quippers, p. 338.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 6 • DES 7 • COS 5 • INT 1 • SAG 3 • CAR 2 |
+| Risorse e protezioni | PV 28 • PM 5 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 9 • Riflessi 11 • Volontà 6 • Magia 7 |
+| Iniziativa e Azioni | INI +1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 0; nuoto 8 / 16 / 24 Q • spazio condivisibile 1 × 1 Q |
+| Abilità | Corpo a corpo 11 • Atletica 11 • Percezione 8 • Furtività 9 |
+| GS e PX per 4 PG | Esperto • 30 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morsi con PV 15–28 | 11 | 2d6 Naturale; Perforazione | 0 Q in acqua |
+| Morsi con PV 0–14 | 11 | 1d6 Naturale; Perforazione | 0 Q in acqua |
+
+**Corpo distribuito.** Usa le proprietà comuni degli sciami e passa al danno ridotto a 14 PV o meno. Deve condividere con la vittima un volume d’acqua raggiungibile; non morde attraverso uno scafo integro o oltre una sponda asciutta.
+
+**Frenesia del sangue.** +2 VA ai Morsi contro un vivente sotto i PV massimi oppure con Sanguinamento attivo: VA 13 prima degli altri modificatori. Vale anche con il danno ridotto; non aumenta danni o numero di attacchi e non si somma per le vittime già ferite. Nessuno Sanguinamento automatico.
+
+**Acqua e condotta.** Respira soltanto acqua; Scurovisione 12 Q, senza vista attraverso torbidità o ostacoli. Fuori dall’acqua segue fiato e soffocamento, senza andatura terrestre. Può interrompere l’inseguimento se manca il passaggio; a 14 PV o meno oppure a Ferita Profonda tende a raggiungere acqua libera. Il numero dei pesci non concede immunità al Gelo.
+
+# **Sciame di serpenti velenosi**
+
+*Gruppo strisciante • morsi e veleno ofidico • Natura Comune*
+
+Una massa di piccoli serpenti velenosi che si muove come un solo avversario. La conversione mantiene una sola inoculazione per attacco, evitando una serie di tiri per ciascun morso. Fonte: Swarm of Poisonous Snakes, p. 338.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 5 • DES 8 • COS 6 • INT 1 • SAG 5 • CAR 3 |
+| Risorse e protezioni | PV 36 • PM 6 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 12 • Tempra 10 • Riflessi 12 • Volontà 7 • Magia 8 |
+| Iniziativa e Azioni | INI +2 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra e nuoto 6 / 12 / 18 Q • spazio condivisibile 1 × 1 Q |
+| Abilità | Corpo a corpo 12 • Atletica 10 • Percezione 10 • Furtività 11 |
+| GS e PX per 4 PG | Esperto • 30 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morsi con PV 19–36 | 12 | 2d6 Naturale; poi veleno | 0 Q condiviso |
+| Morsi con PV 0–18 | 12 | 1d6 Naturale; poi veleno | 0 Q condiviso |
+
+**Corpo distribuito.** Usa resistenza, immunità e risorse comuni degli sciami. A 18 PV o meno riduce soltanto il danno fisico a 1d6. I morsi restano AC 1 e non ignorano l’AR. Non possiede Costrizione, prese automatiche o immunità generica al veleno.
+
+**Veleno ofidico II.** Dopo almeno 1 danno fisico finale a un vivente: Tempra 0; fallimento 1d6 Naturale interno e Avvelenato con −2 fisico per 5 Round; successo metà danno per eccesso e nessuna penalità. La tossina resta 1d6 anche sotto metà PV. È lo stesso veleno dei due Serpenti del blocco precedente; esposizioni, recupero e cure seguono la pagina finale.
+
+**Sensi e condotta.** Percezione non visiva di prossimità entro 2 Q, con Percezione 10, senza attraversare solidi o rivelare automaticamente chi è nascosto. Nessuna Scurovisione. Respira aria anche quando nuota. A 18 PV o meno oppure a Ferita Profonda tende a raggiungere fessure o acqua libera; non ha bisogno di un comandante telepatico per restare operativo.
+
+# **Sciami ferite dispersione e veleno**
+
+**Corpo distribuito.** Tutti e sei gli sciami dimezzano per eccesso i danni fisici da Taglio, Perforazione e Contusione di qualunque Natura, dopo Difesa o Salvezza e prima dell’AR. La resistenza vale anche per una componente fisica ad Area, senza estendersi a Fuoco, Gelo, Elettricità, veleno o danno psichico. Un attacco misto separa le componenti; la resistenza non riduce un danno una seconda volta per il numero di animali.
+
+**Immunità collettive.** Lo Sciame è immune ad A Terra, Immobilizzato, Stordito e Terrorizzato, nonché a fascinazione, paralisi e pietrificazione. Gli eventuali danni associati si risolvono comunque. Non è immune a Rallentato, Accecato, Assordato, Avvelenato, Incendiato, Sanguinamento, Svenuto o a ogni effetto mentale e spirituale. Le immunità non permettono di attraversare una barriera o un contenitore che impedisce fisicamente il passaggio.
+
+**Bersagli e risorse.** Lo Sciame conta come una creatura biologica per bersagli, Azioni e applicazioni degli effetti, con una sola riserva di PV e PM. Non è una mente telepatica. Per la natura collettiva del profilo non recupera PV e non riceve PV temporanei, neppure da una cura; spostarlo, disperderlo o radunarlo non ripristina le risorse. PM, Ferite e altri effetti seguono le rispettive procedure compatibili.
+
+**Ferite e funzioni.** A 0 PV si continua con Tempra e fasce delle Ferite del §4.2. Per le Menomazioni, Testa rappresenta orientamento e sensi, Torace la coesione centrale, Braccia le componenti offensive e Gambe la locomozione, compresi Volo o Nuoto. Si applicano le conseguenze alla funzione interessata. Svenuto arresta l’azione del gruppo; Morente mantiene il normale contatore di COS Round. La morte della scheda descrive la distruzione del gruppo come unità, senza certificare la morte di ogni componente.
+
+**Dispersione.** La soglia di metà PV sostituisce soltanto il danno fisico con il profilo ridotto della scheda. La tendenza alla fuga usa Movimento, accessi e Opportunità ordinari: non teletrasporta i componenti fuori da un ambiente chiuso. Un gruppo che si ricompone conserva risorse e condizioni annotate. Rappresentare in seguito un superstite con la scheda individuale non ricrea lo Sciame né genera un secondo premio per la stessa minaccia.
+
+**Veleno ofidico.** Si risolvono prima danno fisico, PV e Ferite, poi una sola inoculazione naturale di Pericolosità II, Importante. Il veleno ignora AR; il Magistrale aumenta solo il fisico. Alla fine di ogni propria Iniziativa la vittima ripete Tempra 0 gratuitamente: successo termina la penalità; altrimenti termina a fine Round R + 5. Nessun danno periodico. Finché attivo, nuove dosi dello stesso veleno, anche da un Serpente singolo o gigante, rinnovano soltanto la durata, senza nuove PS iniziali o danni tossici.
+
+**Cure del veleno.** Un antidoto adeguato o Cura Avvelenamenti dal livello 2 neutralizza la tossina secondo i bersagli ammessi dalla cura. Veleni diversi possono coesistere; eliminarne uno non cura automaticamente gli altri, PV o Ferite. A 0 PV il danno tossico segue normalmente Tempra e Ferite, senza stabilizzazione o paralisi automatica. L’immunità ad Avvelenato evita la penalità, quella al veleno evita anche il danno. Il gruppo non assegna dosi commerciali recuperabili senza una procedura di estrazione propria.
+

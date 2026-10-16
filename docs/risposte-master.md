@@ -1675,11 +1675,18 @@ diverso dalle regole già approvate **non si è cambiato**: vedi A.167 qui sotto
   «+ Aggiungi nemico» come gli altri): le **nove caste della Covata e il Lorath** (cap. 7, «Fauna di Iris»); il
   blocco **«Bestie e predatori»** del catalogo (cap. 8): Lupo, Lupo feroce, Orso bruno, Cinghiale gigante,
   Leone, Iena gigante, Ragno gigante, Scorpione gigante, Serpente costrittore gigante, Coccodrillo gigante.
-  Tutti con Spazio, portata per attacco, capacità con i parametri del manuale e GS/PX. Bestiario online
-  rigenerato (`docs/bestiario/bestiario-online.html`, 162 schede). **Restano** gli altri blocchi del cap. 8
-  (circa 95 creature: Bande e grandi avversari, Non morti, Costrutti ed elementali, Giganti, e i quindici
-  della prima parte: Aarakocra, Aboleth, Ankheg, Arpia, Basilisco, …): si faranno a blocchi nei prossimi
-  lotti (il catalogo è troppo grande per un solo prompt).
+  Tutti con Spazio, portata per attacco, capacità con i parametri del manuale e GS/PX.
+- **Seguito del 16/10 sera (Manuale dei Mostri passato a 0.16, 145 creature nel cap. 8).** Blocco
+  **«Bande e grandi avversari»** (cap. 8): Goblin, Hobgoblin, Bugbear, Coboldo, Orco, Gnoll, Ogre, Ettin,
+  Minotauro, Troll. Scelte ricorrenti sugli umanoidi con equipaggiamento (criterio delle bestie, da correggere
+  una volta sola): AR «con scudo» nel campo e «senza scudo» nelle note; Difese = Parata (difesa con scudo), con
+  Schivata/Elusione nelle note; nomi d'Abilità del catalogo (Mischia → Armi da mischia, Lancio → Armi da
+  lancio, Guerra → Armi da guerra); armi a distanza «massimo N Q» come attacchi di tipo distanza; «tutti gli
+  attacchi Naturali, AC 1». Bestiario online rigenerato. **Restano** gli altri blocchi del cap. 8 (circa 125
+  creature: i quindici della prima parte, «Non morti», «Costrutti ed elementali», «Giganti», «Creature del
+  sottosuolo», «Melme funghi e imitatori», «Vegetali e custodi delle foreste», «Grandi rettili e predatori
+  mostruosi», «Creature delle acque e popoli sommersi», «Predatori e grandi erbivori», «Creature alate e
+  piccoli predatori», «Sciami e piccola fauna»): a blocchi nei prossimi lotti.
 
 ## Domande aperte dalla ricognizione del 15 ottobre 2026
 

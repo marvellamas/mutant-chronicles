@@ -47,13 +47,53 @@ Leone, Iena gigante, Ragno gigante, Scorpione gigante, Serpente costrittore giga
   attacchi, perché il campo `danno` del formato vuole i dadi.
 - GS/PX informativo su ciascuna.
 
-**Restano** gli altri blocchi del cap. 8 (circa 95 creature), da fare a blocchi nei prossimi lotti:
-la prima parte senza nome (Aarakocra, Aboleth, Ankheg, Arpia, Basilisco, Bestia distorcente, Bulette,
-Chimera, Cockatrice, Ettercap, Grick, Grifone, Ippogrifo, Manticora, Orsogufo), «Bande e grandi avversari»
-(Goblin, Hobgoblin, Bugbear, Coboldo, Orco, Gnoll, Ogre, Ettin, Minotauro, Troll), «Non morti», «Costrutti e
-creature elementali», «Giganti e abitanti delle montagne» e gli altri gruppi. I blocchi con equipaggiamento
-(bande umanoidi) hanno scelte per scheda — AR con/senza scudo, Parata/Schivata separate, nomi d'Abilità
-abbreviati da mappare — e vanno trascritti a mano come questi, senza automatismi.
+## 5. Catalogo, blocco «Bande e grandi avversari» — cap. 8 (16/10 sera, Mostri 0.16)
+
+`tools/genera_mostri_bande.mjs` → `esempi/nemici/mostri/`: Goblin, Hobgoblin, Bugbear, Coboldo, Orco, Gnoll,
+Ogre, Ettin, Minotauro, Troll. Il Manuale dei Mostri è passato a **0.16** (16/10 16:46, 145 creature nel cap.
+8; Covata, Lorath e «Bestie e predatori» invariati dalla 0.13).
+
+**Scelte ricorrenti sugli umanoidi con equipaggiamento** (criterio delle bestie; Marcello le può correggere
+una volta sola cambiando il generatore):
+
+- **AR «X con scudo, Y senza»** → `ar.totale` = valore con scudo (il profilo inizia con lo scudo pronto); il
+  valore senza scudo è nelle note.
+- **Difese «Parata N • Schivata/Elusione M»** (Hobgoblin) → `difese` = N (Parata, la difesa attiva con lo
+  scudo); M nelle note. Quando il manuale dà una sola «Difese N» si usa quella.
+- **Nomi d'Abilità abbreviati** → nomi del catalogo: Mischia → Armi da mischia, Lancio → Armi da lancio,
+  Guerra → Armi da guerra; le qualificazioni («per intimidire», «per congegni semplici», «olfatto 12»)
+  restano nelle note.
+- **Armi a distanza «massimo N Q»** → attacco di tipo `distanza`, `gittata_q` = N, `modalita` (`S`; `S`+`TR`
+  per l'Arco da guerra, che ha Colpo Singolo e Tiro Rapido). Giavellotto a mano (ravvicinato) e giavellotto
+  scagliato (distanza) sono due attacchi distinti.
+- **Armi a due impugnature** (Gnoll: lancia 1d6+2 / 1d6+4) → si registra il profilo iniziale (una mano, con
+  scudo); il profilo a due mani è nelle note.
+- **«Tutti gli attacchi Naturali, AC 1»** (Regole del blocco) → `natura: Naturale`, `ac: 1` per ogni attacco,
+  anche le armi.
+- **Spazio**: tutti quadrati (1 × 1 Q; Ogre, Ettin, Minotauro, Troll 2 × 2 Q, taglia Grande). Nessun ingombro
+  non ammesso in questo blocco.
+
+Test: `tests/mostri-bande.test.js`.
+
+## 6. Che cosa resta del catalogo (Mostri 0.16)
+
+Circa 125 creature, da fare a blocchi nei prossimi lotti:
+
+- **Prima parte senza nome** (15): Aarakocra, Aboleth, Ankheg, Arpia, Basilisco, Bestia distorcente, Bulette,
+  Chimera, Cockatrice, Ettercap, Grick, Grifone, Ippogrifo, Manticora, Orsogufo.
+- **Non morti** (10): Scheletro, Zombie, Ghoul, Ghast, Wight, Ombra, Spettro, Wraith, Mummia, Progenie vampirica.
+- **Costrutti e creature elementali** (~10): Armatura animata, Spada volante, Tappeto soffocante, Gargoyle,
+  Azer, Magmin, Elementali Maggiori (Acqua, Aria, Fuoco, Terra).
+- **Giganti e abitanti delle montagne** (~11): Ciclope, Giganti (colline, pietre, gelo, fuoco, nuvole,
+  tempeste), Fomorian, Yeti, Yeti abominevole.
+- **Creature del sottosuolo** (~12): Mantoscuro, Perforatore, Roper, Rugginofago, Umber Hulk, Orrore uncinato,
+  Grimlock, Troglodita, Stirge, Vermeiena.
+- Poi: **Melme funghi e imitatori**, **Vegetali e custodi delle foreste**, **Grandi rettili e predatori
+  mostruosi**, **Creature delle acque e popoli sommersi**, **Predatori e grandi erbivori**, **Creature alate e
+  piccoli predatori**, **Sciami e piccola fauna**.
+
+Nota: le bande umanoidi usano le scelte ricorrenti del §5; le melme/sciami avranno ingombri e meccaniche
+proprie (area, scissione) da trascrivere a mano come questi, senza automatismi.
 
 ## 5. Cosa trova di nuovo il master
 

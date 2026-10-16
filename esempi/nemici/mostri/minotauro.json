@@ -1,0 +1,106 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "minotauro",
+  "nome": "Minotauro",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Bande e grandi avversari",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 5,
+    "COS": 8,
+    "INT": 4,
+    "SAG": 7,
+    "CAR": 4
+  },
+  "pv": 54,
+  "pm": 8,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 55,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 9,
+    "volonta": 11,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Ascia bipenne",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "2d6+3",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Corna",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 13
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Carica cornuta",
+      "effetto": "Carica ordinaria con le Corna: 1 AzP e 1 AzM, almeno 3 Q rettilinei entro 16 Q, VA −2 per 3–6 Q o −4 da 7 Q, danno ×2. Se infligge almeno 1 danno finale a una massa non superiore, il bersaglio effettua FOR o DES a scelta: fallimento → A Terra (senza spostarlo, senza doppio colpo). L’eventuale secondo attacco non ha i benefici della Carica."
+    },
+    {
+      "nome": "Assalto temerario",
+      "effetto": "A inizio Iniziativa, senza costo: +2 VA agli attacchi ravvicinati e −2 VA alle Difese fino all’Iniziativa successiva. Si somma alle penalità della Carica, non elimina costi o requisiti, non si cumula, non tocca le Salvezze."
+    },
+    {
+      "nome": "Memoria dei percorsi",
+      "effetto": "Ricorda gli itinerari percorsi senza Prova; non conosce passaggi mai visitati, cambiamenti, trappole o illusioni non riconosciute, e non vede attraverso i muri."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; al buio non distingue i colori, non vede attraverso ostacoli, fumo o oscurità magica e non individua da sé chi è nascosto. Oltre i 12 Q valgono luce e vista ordinarie."
+    }
+  ],
+  "note": "AR 2 biologica. Ascia bipenne a due mani FOR 6, pronta; niente armatura o scudo; para con l’ascia, non con le corna. Comportamento: cerca un percorso di carica; sotto 14 PV o a Ferita Seria ripiega in zona conosciuta."
+}

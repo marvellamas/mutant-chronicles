@@ -1,0 +1,118 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "gnoll",
+  "nome": "Gnoll",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Bande e grandi avversari",
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 5,
+    "COS": 6,
+    "INT": 4,
+    "SAG": 5,
+    "CAR": 4
+  },
+  "pv": 24,
+  "pm": 6,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 22,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 9,
+    "volonta": 8,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Lancia",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Arco da guerra",
+      "tipo": "distanza",
+      "va": 10,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "gittata_q": 100,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 11
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 10
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Frenesia",
+      "effetto": "Una volta per Round, se un attacco ravvicinato alla propria Iniziativa rende un nemico Svenuto, Morente o Morto, ottiene subito una sola AzP vincolata a un Morso contro un altro nemico a portata, nella stessa Iniziativa; poi scade (non diventa Difesa). Può prima spendere l’AzM ordinaria. Il Morso non riattiva Frenesia. Il solo passaggio a 0 PV, la resa o la fuga non bastano.",
+      "usi": {
+        "quanti": 1,
+        "per": "Round"
+      }
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; al buio non distingue i colori, non vede attraverso ostacoli, fumo o oscurità magica e non individua da sé chi è nascosto. Oltre i 12 Q valgono luce e vista ordinarie."
+    }
+  ],
+  "note": "AR 1 senza scudo (inizia con lancia a una mano e scudo piccolo). Lancia a due mani: danno 1d6+4, riposto lo scudo (AR 1). L’arco richiede riporre lo scudo. La lancia non è un giavellotto. Comportamento: isolamento e inseguimento; se la preda è troppo costosa o sotto 6 PV si ritira verso il gruppo."
+}

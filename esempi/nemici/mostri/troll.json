@@ -1,0 +1,110 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "troll",
+  "nome": "Troll",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Bande e grandi avversari",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 6,
+    "COS": 10,
+    "INT": 4,
+    "SAG": 5,
+    "CAR": 3
+  },
+  "pv": 60,
+  "pm": 8,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 15,
+    "riflessi": 10,
+    "volonta": 9,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Artiglio",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sequenza offensiva",
+      "effetto": "Nelle proprie AzP al massimo due Artigli e un Morso per Round, pagati separatamente. Le AzP spese per Difese o altro riducono gli attacchi. L’Attacco di Opportunità ordinario resta distinto e non ripete la sequenza."
+    },
+    {
+      "nome": "Rigenerazione",
+      "effetto": "A inizio della propria Iniziativa, prima di agire, recupera 5 PV senza Azioni o PM, fino al massimo. Funziona anche a 0 PV e durante Svenuto, se è vivo e non Morente. Non elimina Ferite, Stati o Menomazioni, non stabilizza Morente, non riattiva un morto. A Morente il recupero è sospeso fino alla stabilizzazione."
+    },
+    {
+      "nome": "Arrestare il recupero",
+      "effetto": "Se subisce almeno 1 danno finale da Fuoco o da un attacco Corrosivo (anche il danno periodico di Incendiato), si annota un blocco: alla successiva Iniziativa salta il recupero e il blocco si cancella. Più colpi prima di quell’Iniziativa non accumulano recuperi persi. Un colpo del tutto assorbito non basta."
+    },
+    {
+      "nome": "Ricrescita lenta",
+      "effetto": "Fuori scontro, vivo e non Morente, ricostruisce un braccio o una gamba dopo un’ora ininterrotta di riposo (un’ora per arto); l’interruzione fa ripartire il tempo. Toglie solo la Menomazione di quell’arto. Non ricrea un capo distrutto né restituisce la vita; le parti staccate sono inerti."
+    },
+    {
+      "nome": "Olfatto",
+      "effetto": "Percezione 12 per odori percepibili (già compresa); non è vista cieca, non dà la posizione esatta e non ignora ostacoli solidi o penalità alla Prova per colpire."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; al buio non distingue i colori, non vede attraverso ostacoli, fumo o oscurità magica e non individua da sé chi è nascosto. Oltre i 12 Q valgono luce e vista ordinarie."
+    }
+  ],
+  "note": "AR 3 biologica. Nessun equipaggiamento: artigli, pelle e rigenerazione sono biologici; nessuna Parata naturale. Contromisure: Fuoco e Corrosivo bloccano il recupero; separarlo dalle prede. Comportamento: mantiene il contatto con una preda isolata; sotto 15 PV o dopo ripetuti blocchi cerca riparo."
+}

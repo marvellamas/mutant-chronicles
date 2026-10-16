@@ -16,25 +16,31 @@
 
 **Sezioni:** 1. Domande che bloccano un lavoro in corso · 2. Domande aperte · 3. Risposte ricevute, in implementazione · 4. Da correggere nei manuali · 5. Manuali che l’app aspetta · 6. Risolte · 7. Risposte di Davide.
 
------
+---
 
 ## **1. Domande che bloccano un lavoro in corso**
 
 Nessuna, al momento. Grazie per l’aggiornamento cumulativo dell’8 ottobre.
 
------
+---
 
 ## **2. Domande aperte (l’app ha già un’ipotesi ragionevole)**
 
-Nessuna, al momento: hai risposto a tutte. Grazie!
+### **Punti Esperienza**
 
------
+**A.168 — Fattori del calcolatore «PX della partita», da confermare sul Manuale del Direttore §9.3 (collegata alla A.161).** Il §9.3 non è fra i Doc che riceviamo, quindi i fattori del calcolatore vengono dal tuo gestore «EROI_LEGGENDE_Gestore_PX v1.2». Da confermare o correggere: (a) le soglie cumulative dei livelli 1–20 (0, 50, 110, 180, 340, 520, 720, 1050, 1410, 1800, 2220, 2820, 3460, 4140, 4860, 5810, 6810, 7860, 8960, 10340); (b) limiti e premi degli Atti (I → 8 e 150, II → 12 e 200, III → 15 e 250, IV → 17 e 250, V → 19 e 300, VI → 20 e 300); (c) il correttivo per il numero di PG, max(0,5; 1 + 0,1 × (4 − n)); (d) che nella partita lunga raddoppino solo i voti, e il bonus eccezionale si moltiplichi per il Titolo. *Nel frattempo:* valgono i valori del gestore, tutti modificabili dal Direttore nelle impostazioni.
+
+Una nota: nel gestore il PX del nemico viene moltiplicato per un fattore di equipaggiamento (da ×1,1 a ×2). Il Manuale dei Mostri dice però che il PX della scheda comprende già la dotazione, e il §9.3 vieta di contarla due volte: nell’app usiamo il PX della scheda, senza quel fattore. Se intendevi diversamente, dimmelo.
+
+### **Bestiario**
+
+**A.167 — Spazio delle creature non quadrato o maggiore di 3 × 3 Q (Manuale dei Mostri 0.13, cap. 7 e 8; contraddice la A.126).** La A.126 ammette solo ingombri quadrati (1 × 1, 2 × 2, 3 × 3 Q). Diverse schede della 0.13 ne danno altri: Covata — Corazzato 1 × 2, Regina Comandante 2 × 3, Incubatrice 3 × 5, Madre 3 × 10 Q; bestie — Lupo feroce, Leone e Iena 2 × 1 Q, Coccodrillo 3 × 2 Q; nel catalogo anche 2 × 3, 3 × 2 e 4 × 4 Q. Al tavolo vuoi pedine quadrate (arrotondate al lato maggiore) oppure pedine rettangolari da gestire sulla mappa? *Nel frattempo:* il campo Spazio resta ai soli valori quadrati; gli ingombri non ammessi sono nelle note della creatura, con taglia Grande e il rimando a questa domanda.
+
+---
 
 ## **3. Risposte ricevute, in implementazione**
 
 Le tue risposte sono nella sezione 7. Qui c’è cosa fa l’app finché l’implementazione non è finita; poi la voce passa fra le Risolte.
-
-•             **A.161 — PX della partita.** Ricevuta: niente PX automatici; sezione «PX della partita» nel Tavolo del Direttore con calcolatore, totale finale modificabile e «Assegna PX della partita». In implementazione.
 
 •             **A.111 — Recuperi di Umanità e Pablo Zaion.** La perdita di 2 UMN fatta per prova si toglie dal file di Pablo, con una nota, senza rimozioni o recuperi fittizi: lo fa Marcello. La regola generale sui recuperi pregressi resta in implementazione.
 
@@ -44,7 +50,7 @@ Le tue risposte sono nella sezione 7. Qui c’è cosa fa l’app finché l’imp
 
 •             **A.128 — Terreno difficile.** Coincide con quello che la mappa già fa. Passa fra le Risolte quando la mappa è in uso al tavolo.
 
------
+---
 
 ## **4. Da correggere nella prossima edizione dei manuali**
 
@@ -70,7 +76,7 @@ Decisioni già prese o errori evidenti: l’app segue la decisione, il testo dic
 
 **Manuale della Magia**
 
-•             ~~Sez. 1: livello massimo incantesimi = tabella I→3, II→8, III→11, IV→14, V→17, VI→18~~ — fatto nel Google Doc (verificato il 28/09).
+•             ~~Sez. 1: livello massimo incantesimi \= tabella I→3, II→8, III→11, IV→14, V→17, VI→18~~ — fatto nel Google Doc (verificato il 28/09).
 
 •             ~~Armatura Mistica (scheda 22.2): togliere il riferimento alle zone del corpo coperte (A.43)~~ — fatto nel Google Doc (verificato il 28/09).
 
@@ -108,7 +114,7 @@ Decisioni già prese o errori evidenti: l’app segue la decisione, il testo dic
 
 •             **Talenti nella stampa**: il foglio 2 stampa la prima frase di ogni Talento. Se preferisci un riassunto tuo, si aggiunge un campo.
 
------
+---
 
 ## **5. Manuali che l’app aspetta**
 
@@ -122,7 +128,7 @@ Decisioni già prese o errori evidenti: l’app segue la decisione, il testo dic
 
 •             Manuale del Direttore: regole dettagliate di malattie e cure (A.119).
 
------
+---
 
 ## **6. Risolte**
 
@@ -264,7 +270,7 @@ Voci con risposta recepita e funzione implementata nell’app (o chiuse). La dat
 
 •             **A.63 — Esoscheletri**: NEC Rossi di formato dedicato al modello, con autonomia, ricarica e ricambio della scheda; sostituzione 1 minuto. Risposta del 02/10 (decisione 18) — implementata il 02/10.
 
-•             **A.64 — Moduli IAS**: NEC Blu IAS da 1.000 Lx = 20 cariche da 50 Lx (Power Blink 2); ricambio 1.000 cr, ricarica 50 cr in 1 ora. Risposta del 02/10 (decisione 20) — implementata il 02/10.
+•             **A.64 — Moduli IAS**: NEC Blu IAS da 1.000 Lx \= 20 cariche da 50 Lx (Power Blink 2); ricambio 1.000 cr, ricarica 50 cr in 1 ora. Risposta del 02/10 (decisione 20) — implementata il 02/10.
 
 •             **A.65 — Dotazioni con più schede**: nuova scheda «Corredo agricolo Standard — Allevamento» (2 kg, 200 cr, CO, +0); strumento musicale acustico o elettronico a scelta, senza sovrapprezzo. Risposta del 02/10 (decisioni 10 e 11) — implementata il 02/10.
 
@@ -284,7 +290,7 @@ Voci con risposta recepita e funzione implementata nell’app (o chiuse). La dat
 
 •             **A.73 — Formato dei nemici per il Tavolo del Master** (E\&L del 02/10, decisioni 5–9). Formato con valori già calcolati, comune all’app e al futuro bestiario. Campi nuovi: azioni per Round, Contromisure, Abilità rilevanti con VA, talenti e capacità speciali. Sei Caratteristiche nel bestiario, facoltative nell’app; un valore mancante non vale 0. Parità d’Iniziativa DES → INT → 1d10. I nemici seguono la procedura dei PG per PV, Ferite e Menomazioni, senza Affaticamento. Incantesimi completi con «Lancia!» e PM scalati; incompleti come promemoria. Passo obbligatorio; Corsa e Scatto 2× e 3× se mancano; «non consentito» è diverso da «mancante». Formato implementato il 02/10 su main; plancia del Tavolo del Master implementata il 02/10 sul branch.
 
-•             **A.74 — Rituale di Rigenerazione**: VA del Canale = Rituali; dopo il Magistrale ripartizione libera entro i limiti; Rituale diretto solo PM personali; versioni per Ritualista. Risposta del 02/10 (decisioni 1, 2, 12, 13) — implementata il 02/10.
+•             **A.74 — Rituale di Rigenerazione**: VA del Canale \= Rituali; dopo il Magistrale ripartizione libera entro i limiti; Rituale diretto solo PM personali; versioni per Ritualista. Risposta del 02/10 (decisioni 1, 2, 12, 13) — implementata il 02/10.
 
 •             **A.74 e A.75** — Confermate le risposte su Canali, Rituali, Ritualista e batterie con supporto base. *App: già conforme.*
 
@@ -388,7 +394,7 @@ Voci con risposta recepita e funzione implementata nell’app (o chiuse). La dat
 
 •             **A.136** — Corsa o Scatto dopo un Passo già cominciato e Prova facoltativa di Atletica: sulla mappa il Passo cominciato diventa Corsa o Scatto, con i quadretti fatti contati. In «Attacca!» (PG e nemici, anche per il bersaglio che ha corso o scattato), senza Prova valgono Corsa −2/−2 e Scatto −6/−4; con la Prova l’esito sostituisce le penalità: Successo Magistrale 0/−6 e −2/−8; Successo 0/−4 e −4/−6; Fallimento −4/0 e −8/−2; Maldestro −6/0 e −10/0. Se il movimento è stato fatto sulla mappa, «Attacca!» propone la Prova da solo. Le penalità valgono anche in mischia, salvo la Carica che ha le sue; il Movimento Evasivo è escluso. *Implementata il 09/10.*
 
-•             **A.137** — Raggio di un’Area sulla griglia: a quadretti, con la diagonale a 1 Q (raggio 1 = 3 × 3 Q, 2 = 5 × 5, 3 = 7 × 7). *Era già così nell’app; confermato il 09/10.*
+•             **A.137** — Raggio di un’Area sulla griglia: a quadretti, con la diagonale a 1 Q (raggio 1 \= 3 × 3 Q, 2 \= 5 × 5, 3 \= 7 × 7). *Era già così nell’app; confermato il 09/10.*
 
 •             **A.138** — Forma del Cono: parte dal centro del quadretto di chi lo usa e si allarga da zero fino all’ampiezza finale; un quadretto è colpito se è coperto per almeno metà; il quadretto d’origine è escluso. *Implementata il 09/10.* Origine per le creature grandi: vedi A.126 (16/10).
 
@@ -432,6 +438,8 @@ Voci con risposta recepita e funzione implementata nell’app (o chiuse). La dat
 
 •             **A.159** — Morente: oltre Grave il PG resta a −8, sviene e ha un contatore di Round pari alla COS, che cala di 1 a ogni Round dello scontro e per ogni nuova Ferita; a 0 l’app avvisa che è morto e lascia decidere al Direttore. «Stabilizza» riporta a Grave; le quattro vie approvate sono un promemoria di solo testo. Cartuccia Stabilizzante nel catalogo (2.000 cr, MR). Supera la decisione provvisoria di Marcello del 13/10. Nemici invariati in attesa della A.164. *Approvata il 14/10, implementata il 15/10.*
 
+•             **A.161** — PX della partita: tab «PX della partita» nel Tavolo del Direttore, solo sul PC del master. Voti, bonus, incontri (principale al 100%, gli altri al 50%, con il correttivo per il numero di PG) e premio di fine Atto; componenti separate, totale suggerito e totale finale modificabile; «Assegna PX della partita» aggiorna i PG presenti e scrive la Modifica master. L’app non assegna mai da sola: salvare o ricalcolare non assegna, e correggere una partita applica solo la differenza. Ci sono archivio delle partite, riepilogo con esportazione CSV e impostazioni di campagna (Atto, PX iniziali, abbinamenti giocatore–PG). I fattori stanno in un file modificabile. *Approvata e implementata il 16/10.* Vedi la A.168.
+
 •             **A.160** — Avversari costruiti come PG: 7 punti Abilità liberi alla creazione e a ogni Grado; il «5» del §5.2 era un refuso, corretto dalla 0.4 in poi. *Era già così nell’app; verificata il 16/10.*
 
 •             **A.162** — Integrità degli oggetti in tre stati: ordinaria (PS Integrità e PI), **Indistruttibile** (dicitura visibile, il danno non toglie PI e non rompe) e «da definire» (dato mancante, segnalato). Scrigno del Primo Giuramento indistruttibile, con la regola che il danneggiamento non lo apre; non si estende a Sigilli, contenuto o altri Artefatti. *Approvata e implementata il 16/10.*
@@ -441,6 +449,8 @@ Voci con risposta recepita e funzione implementata nell’app (o chiuse). La dat
 •             **A.164** — Morente anche per i nemici: oltre Grave Svenuto, −8 e contatore pari alla COS intera all’ingresso (0 PV da soli non bastano). Il primo calo arriva dopo un Round completo, alla stessa Iniziativa dell’ingresso (vale anche per i PG); le Ferite in eccesso del colpo d’ingresso non tolgono Round, ogni Ferita successiva ne toglie 1; a 0 l’app avvisa senza bloccare. «Stabilizza» riporta a Grave. Senza COS l’app la chiede, non la deduce e non dichiara morto. *Approvata e implementata il 16/10.*
 
 •             **A.166** — CyberArma: Abilità sempre Armi da mischia; la manifestazione è un campo a parte e da essa dipendono famiglia, Specializzazione e Manovre (lama lunga → Spade, frusta → Armi flessibili, ascia → Asce, lancia → Armi inastate). Il Custode sceglie la forma; gli altri usano quella del progetto (lama lunga), modificabile solo come modifica del manufatto. Una sola Specializzazione. *Approvata e implementata il 16/10.*
+
+•             **Manuale dei Mostri 0.13** — le regole comuni (cap. 4) e le «Regole operative del catalogo» (cap. 8) coincidono con le decisioni già approvate (Morente A.159 e A.164, spazio A.126 e A.133, Abilità non riportate A.116, 7 punti A.160, dato assente ≠ 0): nessuna automazione nuova. Le schede mostrano GS e PX del manuale come dato informativo (A.161). Nel bestiario, pronti da usare: le nove caste della Covata, il Lorath e il blocco «Bestie e predatori» (Lupo, Lupo feroce, Orso bruno, Cinghiale gigante, Leone, Iena gigante, Ragno gigante, Scorpione gigante, Serpente costrittore gigante, Coccodrillo gigante). *Implementato il 16/10.* Restano gli altri blocchi del capitolo 8 (circa 95 creature), nei prossimi lotti. Vedi la A.167.
 
 •             **A.165** — A.109 nel Doc E\&L: rettifica editoriale, la A.109 è risolta e le note di sospensione sono state aggiornate; l’app mantiene i 32 gradini dell’08/10. *Chiusa il 16/10.*
 
@@ -452,7 +462,7 @@ Voci con risposta recepita e funzione implementata nell’app (o chiuse). La dat
 
 •             **Manuali del 12/10 (Giocatore 0.48, Armamenti 0.61)** — Guanti da Combattimento Mistico: oggetto insieme Arma e Artefatto, si indossano senza occupare le mani. *Implementati il 13/10.* La CyberArma (§7.25) aspetta la A.158.
 
------
+---
 
 ## **7. Risposte di Davide**
 
@@ -463,8 +473,8 @@ Scrivi qui, in coda, una risposta per blocco: numero della domanda, data, testo.
  **A.9 (famiglie delle 12 armi ravvicinate corporative).** Katana, Wakizashi, Lama Mushashi e Lama Demontooth appartengono a Spade; Kriss a Coltelli e Pugnali; Nunchaku, Nunchaku elettrificato e Catena chiodata ad Armi Flessibili; Bordone Templare a Mazze e Bastoni; Elettrosega CSB600, Chainreaper e Sbudellatrice alla nuova famiglia Armi a Sega.  
  Si aggiunge Specializzazione Armi a Sega all’elenco del Manuale del Giocatore, §8.8.1, con il normale beneficio di +1 VA e +1 danno. La classificazione ai fini della Specializzazione non modifica l’Abilità prevista dalla scheda di ciascuna arma. Per esempio, Katana utilizza Armi da guerra e Wakizashi Armi da mischia, pur appartenendo entrambe a Spade. Nell’app le dodici armi devono essere associate alle famiglie indicate e Armi a Sega deve diventare una Specializzazione selezionabile. Riferimenti: Manuale degli Armamenti, §7.1.9; Manuale del Giocatore, §8.8.1.  
  **A.10 (Scudo delle Guardie Sacre).** Il danno base è 1d6+1 Naturale con lama ritratta e 1d6+1+1d4 Naturale con lama estratta. Si conferma il valore del §7.1.9 e si deve correggere il §7.4.10, dove manca il +1. La lama aggiunge 1d4 al danno base dello Scudo. È un unico colpo: si sommano dadi e bonus pertinenti e si applica l’Armatura una sola volta. Estrarre o ritrarre la lama costa 1 Azione Principale; il suo utilizzo non consuma PM e non richiede Sintonizzazione. La lama resta indipendente dall’attivazione di Scudo Magico. Nell’app devono comparire i due profili di danno corretti, secondo lo stato della lama. Riferimenti: Manuale degli Armamenti, §§7.1.9 e 7.4.10.  
- **A.11 (Specializzazioni delle 16 armi a distanza corporative, §7.8, riferite al profilo principale dell’arma).****  
-** Fucili di Precisione: Eruptor, Mefisto, Archer, Assailant.  
+ **A.11 (Specializzazioni delle 16 armi a distanza corporative, §7.8, riferite al profilo principale dell’arma).**  
+ Fucili di Precisione: Eruptor, Mefisto, Archer, Assailant.  
  Fucili d’Assalto: M50, AR3000, Volcano, Invader, Shogun, Panzerknacker.  
  Mitragliatori: Justifier, Purifier.  
  Carabine: Mandible, Interceptor, Airbrush, Windrider N4.  
@@ -483,8 +493,8 @@ Scrivi qui, in coda, una risposta per blocco: numero della domanda, data, testo.
  Raggio approvato: per un frammento trasportabile di Chroma Viola l’aura di Corruzione passiva si estende fino a 12 Q (18 metri), inclusi. Oltre questo limite il frammento non provoca esposizione passiva. Cristalli grandi e giacimenti hanno un raggio specificato dal Direttore di Gioco.  
  Tempi approvati: la prima PS di Magia si effettua dopo un’ora complessiva di esposizione; segue una PS per ogni ulteriore ora di esposizione. Fuori dall’aura il conteggio si sospende, senza azzerare i minuti già accumulati. Cambiare distanza non provoca PS aggiuntive. Alla scadenza si usa il modificatore e l’Intensità della fascia più grave raggiunta durante quell’ora di esposizione, quindi inizia il nuovo intervallo orario. Un contatto brevissimo, da solo, non impone una PS immediata, ma contribuisce al tempo accumulato e alla gravità della prossima prova. Esempio: 10 minuti a contatto e 50 minuti a 8 Q richiedono una sola PS contro esposizione Intensa, −2 alla PS e Intensità 2 Stati.  
  A.21: definita la gestione della Corruzione passiva del Chroma Viola. La registrazione come oggetto inerte è superata; le regole per impiegarne l’Energia Oscura restano da sviluppare.  
- *Risposte scritte da Davide il 28/09 nel documento «Per Davide — aggiornato 28/09» (che non si usa più), riportate qui.**  
-* **Risposta A.52** — Chiarimento delle decisioni già approvate il 27/09/2026 e recepite nel Manuale del Giocatore v0.43.  
+ *Risposte scritte da Davide il 28/09 nel documento «Per Davide — aggiornato 28/09» (che non si usa più), riportate qui.*  
+ **Risposta A.52** — Chiarimento delle decisioni già approvate il 27/09/2026 e recepite nel Manuale del Giocatore v0.43.  
  La versione operativa per la prova approvata è quella con 76 punti base per ciascun Addestramento: 8 Abilità con base 4, 12 con base 3 e 4 con base 2, per un totale di 24 Abilità. Sostituisce la precedente distribuzione da 56 punti. L’adozione della nuova distribuzione non costituisce una verifica definitiva dell’equilibrio di gioco.  
  I Punti Abilità Liberi sono 10 alla creazione e altri 10 ai livelli 4, 8, 12, 16 e 20: 60 complessivi. I 10 della creazione sono già quelli del 1° livello e non si assegnano due volte.  
  I limiti di Avanzamento nella stessa Abilità restano: livelli 1–3 massimo 3; livelli 4–7 massimo 4; livelli 8–11 massimo 5; livelli 12–15 massimo 6; livelli 16–19 massimo 7; livello 20 massimo 8.  
@@ -555,8 +565,8 @@ Scrivi qui, in coda, una risposta per blocco: numero della domanda, data, testo.
 ### **Allineamento delle risposte approvate — regole tecniche e Stati**
 
 Aggiornamento del ott 6, 2026  
- Fonte delle decisioni:[ *E\&L – Risposte e correzioni approvate**  
-*](https://docs.google.com/document/d/1VaqZaAe4NK5P8A956Eahua_ZT60eh3ohnR2xSqh-tVs/edit) Questo aggiornamento riporta le risposte approvate già registrate nel documento E\&L: 14 quesiti tecnici e le sintesi degli undici Stati, con Ammalato disciplinato dalla A.119. Non introduce nuove decisioni.  
+ Fonte delle decisioni: [*E\&L – Risposte e correzioni approvate*](https://docs.google.com/document/d/1VaqZaAe4NK5P8A956Eahua_ZT60eh3ohnR2xSqh-tVs/edit)  
+ Questo aggiornamento riporta le risposte approvate già registrate nel documento E\&L: 14 quesiti tecnici e le sintesi degli undici Stati, con Ammalato disciplinato dalla A.119. Non introduce nuove decisioni.  
  Stato delle risposte: A.107, A.108, A.110, A.114, A.116, A.119, A.120, A.124, A.127, A.128 e A.129 sono definite nei limiti esplicitati; A.111, A.122 e A.125 hanno ancora dati o sottopunti da chiarire, indicati in fondo. Le regole dettagliate delle malattie restano destinate al Manuale del Direttore.  
  «Risposta approvata» non significa «implementata nell’app». Le domande originali e le annotazioni del collaboratore sono conservate: le ipotesi «Nel frattempo» corrispondenti sono superate dalle risposte riportate qui. Il passaggio alla sezione 6 richiede la verifica del recepimento nell’app.
 
@@ -781,7 +791,7 @@ Approvato il ott 6, 2026
  Nei percorsi misti si conteggiano separatamente i tratti: 1 Q per quadretto normale e 2 Q per quadretto difficile.  
  Il costo maggiore non aggiunge da solo penalità al VA o nuove prove. Eventuali pericoli e le normali prove di Corsa e Scatto mantengono le proprie regole. Le capacità che ignorano il terreno difficile seguono la propria descrizione.  
  Con i valori ordinari e un percorso interamente difficile: Passo 6 Q disponibili → 3 quadretti effettivi; Corsa 12 Q → 6 quadretti; Scatto 18 Q → 9 quadretti. Questi valori precedono ulteriori modificatori e gli esiti delle prove di movimento.  
- Esempio: 2 quadretti normali e 2 difficili consumano 2 + 4 = 6 Q, esaurendo il Passo ordinario.
+ Esempio: 2 quadretti normali e 2 difficili consumano 2 + 4 \= 6 Q, esaurendo il Passo ordinario.
 
 #### **A.129 — Movimento diviso, Corsa e Scatto**
 
@@ -1296,7 +1306,7 @@ Approvato il 10 ottobre 2026.
 
 Con Fallimento o Fallimento Maldestro dell’infusione si perdono tutti i PM impegnati: i PM di lavoro, pari a 3 × Grado, più i PM da sigillare, pari al costo della versione dell’incantesimo. Anche i reagenti vengono consumati e il Consumabile non viene creato.
 
-Esempio: un Consumabile di Grado II con 4 PM da sigillare richiede 6 + 4 = 10 PM; se l’infusione fallisce si perdono tutti e 10.
+Esempio: un Consumabile di Grado II con 4 PM da sigillare richiede 6 + 4 \= 10 PM; se l’infusione fallisce si perdono tutti e 10.
 
 Gli eventuali effetti ulteriori del Fallimento Maldestro restano quelli previsti dalle regole d’infusione.
 
@@ -1317,85 +1327,85 @@ L’app può consentire l’infusione e sostituire l’avviso di dubbio nel modu
 #### **A.158 — CyberArma: risposta completa approvata**
 
 Approvato il 13 ottobre 2026. Risposta al quesito dell’app A.158 (Manuale degli Armamenti §7.25). Le decisioni seguenti completano i parametri mancanti e sostituiscono le formulazioni precedenti incompatibili, in particolare il divieto di utilizzo da parte delle altre Classi anche dopo l’installazione della batteria. Risposta approvata; recepimento nei manuali e implementazione nell’app da applicare e verificare.  
- **1. Modello originale: Grado, sintonizzazione e profilo fisico****  
-** La CyberArma originale è un Artefatto TecnoMistico di Grado I, SnT 1, senza batteria interna. Qualità fisica Non Comune, PS Integrità 12, 4 PI, peso 0,5 kg. Il peso comprende impugnatura, condensatore di energia mistica e frammento di cristallo focalizzatore; la lama manifestata non aggiunge peso. La Qualità fisica è distinta dal Grado mistico e non aumenta da sola la SnT.  
+ **1. Modello originale: Grado, sintonizzazione e profilo fisico**  
+ La CyberArma originale è un Artefatto TecnoMistico di Grado I, SnT 1, senza batteria interna. Qualità fisica Non Comune, PS Integrità 12, 4 PI, peso 0,5 kg. Il peso comprende impugnatura, condensatore di energia mistica e frammento di cristallo focalizzatore; la lama manifestata non aggiunge peso. La Qualità fisica è distinta dal Grado mistico e non aumenta da sola la SnT.  
  La progressione dell’Arma Astrale del Custode dipende dalla Classe e non aumenta automaticamente Grado o SnT dell’oggetto. Con una riserva integrata il Grado finale è il maggiore fra quello dell’arma e quello della riserva; la SnT dell’oggetto completo si conteggia una sola volta, senza sommare due costi di sintonizzazione.  
- **2. Utilizzatori, attivazione e penalità****  
-** Custode: mantiene i benefici previsti dalla Classe e da Maestro d’Arma al III Grado. Con PM personali attiva l’Arma Astrale per 1 PM e 15 Round, con evocazione compresa nell’Azione del primo attacco e +1 danno; il danno base segue il Grado di Custode. Con la batteria integrata approvata sotto, può pagare invece una carica per la stessa attivazione di 15 Round. Non subisce il −2 specifico previsto per le altre Classi. Nessun altro utilizzatore acquisisce o evoca l’Arma Astrale personale del Custode.  
+ **2. Utilizzatori, attivazione e penalità**  
+ Custode: mantiene i benefici previsti dalla Classe e da Maestro d’Arma al III Grado. Con PM personali attiva l’Arma Astrale per 1 PM e 15 Round, con evocazione compresa nell’Azione del primo attacco e +1 danno; il danno base segue il Grado di Custode. Con la batteria integrata approvata sotto, può pagare invece una carica per la stessa attivazione di 15 Round. Non subisce il −2 specifico previsto per le altre Classi. Nessun altro utilizzatore acquisisce o evoca l’Arma Astrale personale del Custode.  
  Tecnomante: usa il profilo base senza il −2 specifico delle altre Classi. Armi da mischia (DES), una mano, portata 1 Q, FOR richiesta 3; 1 AzP e 2 PM personali per manifestare la lama per 10 Round, senza Concentrazione; danno 1d8 Magico più i modificatori pertinenti, nessun bonus proprio al VA. Il danno Magico è assorbito normalmente dall’Armatura. Con la batteria integrata può pagare invece una carica per la stessa attivazione di 10 Round. Non ottiene la progressione o i benefici del Custode.  
  Altre Classi: possono utilizzare soltanto la CyberArma modificata con batteria integrata, alimentandola dalla batteria. Usano il profilo base: 1 AzP e una carica per 10 Round, 1d8 Magico più i modificatori pertinenti, senza Concentrazione. Subiscono −2 al VA delle Prove per colpire con l’arma, cumulativo con gli altri modificatori; non si aggiunge una Prova di attivazione. Restano necessari i requisiti d’impiego e la sintonizzazione dell’artefatto attivo. Non acquisiscono i benefici del Custode e non possono utilizzare il modello originale privo di batteria.  
- **3. Batteria Verde — 5 cariche****  
-** La configurazione standard modificata monta una «Batteria Verde — 5 cariche», dedicata esclusivamente alla CyberArma. Grado finale II, SnT 2 complessivi, peso complessivo 0,7 kg. Restano Qualità fisica Non Comune, PS Integrità 12, 4 PI e Reperibilità Epica.  
+ **3. Batteria Verde — 5 cariche**  
+ La configurazione standard modificata monta una «Batteria Verde — 5 cariche», dedicata esclusivamente alla CyberArma. Grado finale II, SnT 2 complessivi, peso complessivo 0,7 kg. Restano Qualità fisica Non Comune, PS Integrità 12, 4 PI e Reperibilità Epica.  
  La scheda e l’app mostrano soltanto le cariche attuali e massime, per esempio 3/5: non una riserva di PM liberamente utilizzabile. Non si possono prelevare risorse da questa batteria per incantesimi personali, conversioni in PM personali o altri oggetti. Per il funzionamento si tratta di una riserva a cariche dedicata all’arma, anche se la denominazione dell’oggetto resta «Batteria Verde».  
  Ogni attivazione dalla batteria consuma una carica intera: 15 Round per il Custode; 10 Round per Tecnomante e altre Classi. A piena carica offre quindi cinque attivazioni per qualsiasi utilizzatore, senza mezze cariche. Il Custode conserva in alternativa il costo di 1 PM personale; il Tecnomante conserva quello di 2 PM personali. Il colore della lama dipende dal frammento focalizzatore ed è distinto dal colore energetico della batteria; non aggiunge effetti elementali.  
- **4. Costruzione energetica e ricarica delle cariche****  
-** Nel manuale, nelle regole di costruzione e ricarica, si specifica che una carica della CyberArma richiede 2 PM di energia Spirituale effettivamente immagazzinata. Per ottenere le cinque cariche complete occorre infondere complessivamente 10 PM Verdi, applicando tutte le normali conversioni e procedure del regolamento. I PM personali effettivamente spesi dipendono dal rapporto di conversione: non si presume automaticamente un rapporto 1:1.  
+ **4. Costruzione energetica e ricarica delle cariche**  
+ Nel manuale, nelle regole di costruzione e ricarica, si specifica che una carica della CyberArma richiede 2 PM di energia Spirituale effettivamente immagazzinata. Per ottenere le cinque cariche complete occorre infondere complessivamente 10 PM Verdi, applicando tutte le normali conversioni e procedure del regolamento. I PM personali effettivamente spesi dipendono dal rapporto di conversione: non si presume automaticamente un rapporto 1:1.  
  Questi valori servono al calcolo tecnico della creazione e della ricarica e non costituiscono un saldo di PM prelevabile dal giocatore. Per le riserve dedicate degli altri artefatti il rapporto fra PM infusi e numero di cariche dipende dal costo della rispettiva attivazione: cinque cariche non equivalgono automaticamente a 10 PM per ogni oggetto. La presente risposta definisce la configurazione della CyberArma e non converte automaticamente le batterie autonome destinate ad alimentare incantesimi.  
- **5. Reperibilità, valore e disponibilità****  
-** Reperibilità Epica per il modello originale e per quello modificato. La CyberArma non è normalmente commercializzata: non ha un prezzo standard di catalogo. La precedente proposta di 3.000 crediti è ritirata. Nell’app il prezzo risulta non disponibile, non zero.  
+ **5. Reperibilità, valore e disponibilità**  
+ Reperibilità Epica per il modello originale e per quello modificato. La CyberArma non è normalmente commercializzata: non ha un prezzo standard di catalogo. La precedente proposta di 3.000 crediti è ritirata. Nell’app il prezzo risulta non disponibile, non zero.  
  Esistono pochissimi esemplari, custoditi dai Custodi che li hanno costruiti e dai Tecnomanti che li realizzano o modificano. Non è un normale acquisto da negozio; avere abbastanza crediti non ne garantisce la disponibilità. L’eventuale cessione o commissione e il relativo valore vengono stabiliti dal Direttore secondo disponibilità, costruttore e condizioni richieste. I costi di realizzazione riportati sotto non costituiscono un prezzo di vendita automatico.  
- **6. Costruzione del modello originale senza batteria****  
-** La costruzione è riservata a un Custode con Maestro d’Arma oppure a un Tecnomante con Architetto TecnoMistico. Per il Custode, Maestro d’Arma comprende la ricetta e autorizza costruzione e infusione della propria arma personale senza richiedere Ritualista; restano le Prove della procedura. Il Tecnomante usa un progetto disponibile oppure lo sviluppa seguendo la procedura ordinaria.  
+ **6. Costruzione del modello originale senza batteria**  
+ La costruzione è riservata a un Custode con Maestro d’Arma oppure a un Tecnomante con Architetto TecnoMistico. Per il Custode, Maestro d’Arma comprende la ricetta e autorizza costruzione e infusione della propria arma personale senza richiedere Ritualista; restano le Prove della procedura. Il Tecnomante usa un progetto disponibile oppure lo sviluppa seguendo la procedura ordinaria.  
  Progettazione, soltanto se manca il progetto: Prova di Artefatti senza penalità, 4 ore e 100 crediti di risorse. Un progetto disponibile non deve essere sviluppato nuovamente.  
  Assemblaggio e regolazione del condensatore: Prova di Tecnologia −4, 16 ore e 1.000 crediti di componenti. Sono compresi impugnatura, condensatore e frammento di cristallo focalizzatore; il frammento non costituisce una riserva.  
  Infusione di Grado I: Prova di Rituali senza penalità, 1 ora, 250 crediti di reagenti e 3 PM personali.  
  Totale con progetto disponibile e successi ordinari: 1.250 crediti, 17 ore di lavoro e 3 PM personali. Se occorre sviluppare anche il progetto: 1.350 crediti, 21 ore e 3 PM personali. Si applicano i normali esiti Magistrali, fallimenti, Maldestri e interruzioni dei §§24.3–24.5 del Manuale della Magia. La reperibilità dei componenti specifici è stabilita dal Direttore.  
- **7. Modifica per integrare la Batteria Verde da 5 cariche****  
-** La modifica è riservata a un Tecnomante con Architetto TecnoMistico e almeno II Grado di Classe.  
+ **7. Modifica per integrare la Batteria Verde da 5 cariche**  
+ La modifica è riservata a un Tecnomante con Architetto TecnoMistico e almeno II Grado di Classe.  
  Progetto della modifica, se non disponibile: Prova di Artefatti −2, 8 ore e 200 crediti di risorse.  
  Adattamento e installazione: Prova di Tecnologia −2, 8 ore e 500 crediti di materiali, contenitore compreso. Chroma Verde per la capacità di cinque cariche: ulteriori 1.000 crediti.  
  Reinfusione completa della configurazione di Grado II: Prova di Rituali −2, 2 ore, 500 crediti di reagenti e 6 PM personali. La nuova infusione riguarda l’intera configurazione, secondo le normali regole di modifica degli artefatti.  
  Costo aggiuntivo per modificare un’arma esistente, con progetto disponibile e successi ordinari: 2.000 crediti, 10 ore e 6 PM personali. Se bisogna sviluppare anche il progetto: 2.200 crediti, 18 ore e 6 PM personali. Questi totali comprendono materiali, contenitore, Chroma e reagenti sopra indicati: il costo della batteria non si aggiunge nuovamente. Si applicano i normali esiti delle Prove.  
  Al termine della modifica la batteria è a 0/5 cariche. La prima ricarica è separata: per raggiungere cinque cariche occorre immagazzinare l’equivalente di 10 PM Verdi con le conversioni ordinarie. I 6 PM personali del rituale servono all’infusione del manufatto e non caricano la batteria.  
- **8. Recepimento nei manuali e nell’app****  
-** Integrare la scheda del Manuale degli Armamenti §7.25 e i rimandi pertinenti del Giocatore, della Magia e dell’Equipaggiamento. Sostituire il precedente limite che riservava anche il modello con batteria soltanto a Custodi e Tecnomanti con l’accesso delle altre Classi a −2 VA qui approvato. Registrare un’unica istanza dell’oggetto nelle categorie Armi e Artefatti, senza duplicare peso, Integrità, riserva o SnT.  
+ **8. Recepimento nei manuali e nell’app**  
+ Integrare la scheda del Manuale degli Armamenti §7.25 e i rimandi pertinenti del Giocatore, della Magia e dell’Equipaggiamento. Sostituire il precedente limite che riservava anche il modello con batteria soltanto a Custodi e Tecnomanti con l’accesso delle altre Classi a −2 VA qui approvato. Registrare un’unica istanza dell’oggetto nelle categorie Armi e Artefatti, senza duplicare peso, Integrità, riserva o SnT.  
  Nell’app distinguere modello originale e configurazione con Batteria Verde da 5 cariche, applicare requisiti, profili e −2 alle altre Classi, mostrare il saldo in cariche e impedirne l’uso come PM per altri effetti. Conservare separati costo della creazione/ricarica e cariche disponibili. A.158 ha ricevuto risposta completa; l’effettivo recepimento nell’app e nei manuali resta da verificare e non è attestato dalla presente registrazione.
 
 #### **A.159 — Ferite, Morente e stabilizzazione: risposta completa approvata**
 
 Approvato il 14 ottobre 2026, a conclusione delle decisioni del 13–14 ottobre. Risposta al quesito dell’app A.159 (Manuale del Giocatore §5.14), con raccordi alle cure del Giocatore, della Magia e dell’Equipaggiamento. La seguente regola sostituisce la morte immediata per il solo superamento di Grave e la gestione provvisoria «Oltre Grave» come semplice avviso al Direttore. Risposta approvata; il recepimento nei manuali e l’implementazione nell’app devono essere applicati e verificati separatamente.  
- **1. Da Grave a Morente****  
-** La scala ordinaria delle Ferite resta Superficiale −1, Importante −2, Profonda −4, Seria −6, Grave −8. Quando le Ferite fanno superare Grave, il personaggio entra in Morente: mantiene la penalità −8 a VA e Prove Salvezza e sviene automaticamente, senza una Prova aggiuntiva per rimanere cosciente. Si applicano le limitazioni di Svenuto.  
+ **1. Da Grave a Morente**  
+ La scala ordinaria delle Ferite resta Superficiale −1, Importante −2, Profonda −4, Seria −6, Grave −8. Quando le Ferite fanno superare Grave, il personaggio entra in Morente: mantiene la penalità −8 a VA e Prove Salvezza e sviene automaticamente, senza una Prova aggiuntiva per rimanere cosciente. Si applicano le limitazioni di Svenuto.  
  Il solo raggiungimento di 0 PV non provoca automaticamente Svenuto, Morente o morte. Restano le normali regole di danno, Tempra, acquisizione delle Ferite e Menomazioni. Le cause che stabiliscono espressamente la morte diretta o la distruzione del corpo restano distinte: Morente e le cure descritte qui non costituiscono una resurrezione.  
- **2. Contatore dei Round****  
-** All’ingresso in Morente si apre un contatore pari al valore intero effettivo di Costituzione (COS) in quel momento, non al modificatore. Il valore iniziale resta fissato per quell’episodio: successive variazioni di COS non modificano il contatore già aperto.  
+ **2. Contatore dei Round**  
+ All’ingresso in Morente si apre un contatore pari al valore intero effettivo di Costituzione (COS) in quel momento, non al modificatore. Il valore iniziale resta fissato per quell’episodio: successive variazioni di COS non modificano il contatore già aperto.  
  Si perde 1 Round per ogni Round intero trascorso dall’ingresso in Morente. Il decremento avviene alla stessa posizione d’Iniziativa in cui è iniziato l’episodio; la frazione del Round d’ingresso non determina un decremento immediato. L’app deve conservare il riferimento temporale dell’ingresso, senza anticipare il primo decremento alla semplice fine del Round corrente.  
  Quando il contatore attivo arriva a 0, il personaggio muore definitivamente. Una cura specifica deve avere prodotto il proprio effetto prima della scadenza: iniziare una procedura non sospende il tempo disponibile. Dopo una stabilizzazione, un successivo nuovo ingresso in Morente apre un nuovo contatore completo, calcolato sulla COS effettiva del nuovo episodio.  
- **3. Colpo iniziale e Ferite successive****  
-** Il singolo colpo che porta oltre Grave esaurisce l’avanzamento delle Ferite nel passaggio a Morente. Le eventuali Ferite eccedenti prodotte da quello stesso colpo non riducono il contatore: l’ingresso avviene sempre con tutti i Round previsti dalla COS. Restano applicabili gli altri effetti del colpo, compreso l’eventuale Sanguinamento.  
+ **3. Colpo iniziale e Ferite successive**  
+ Il singolo colpo che porta oltre Grave esaurisce l’avanzamento delle Ferite nel passaggio a Morente. Le eventuali Ferite eccedenti prodotte da quello stesso colpo non riducono il contatore: l’ingresso avviene sempre con tutti i Round previsti dalla COS. Restano applicabili gli altri effetti del colpo, compreso l’eventuale Sanguinamento.  
  Soltanto i colpi o gli eventi di danno successivi, quando il personaggio è già Morente, possono abbreviare il contatore attraverso nuove Ferite. Si risolvono normalmente danno, protezioni, Tempra quando prevista ed effettive Ferite prodotte. Ogni nuova Ferita sottrae 1 Round residuo; non si sottrae un Round per ogni punto di danno. Le ulteriori Ferite non riavviano il contatore.  
  La regola vale anche per i colpi successivi dello stesso attacco e per le Ferite causate dal Sanguinamento. Se una riduzione porta il contatore a 0, la morte è immediata. Esempio: un personaggio Grave con COS 5 subisce un colpo che produrrebbe tre Ferite; entra in Morente con 5 Round. Un colpo successivo che produce due nuove Ferite sottrae 2 Round dal saldo rimasto.  
- **4. Stabilizzazione, coscienza e Sanguinamento****  
-** Una cura con capacità esplicita di stabilizzare riporta immediatamente da Morente a Grave (−8), azzera e disattiva il contatore. Il valore 0 di un contatore disattivato dopo la cura non provoca la morte. Il personaggio riprende coscienza all’inizio del proprio turno successivo, salvo altre cause di incoscienza ancora presenti, e può agire in quel turno con tutte le penalità pertinenti.  
+ **4. Stabilizzazione, coscienza e Sanguinamento**  
+ Una cura con capacità esplicita di stabilizzare riporta immediatamente da Morente a Grave (−8), azzera e disattiva il contatore. Il valore 0 di un contatore disattivato dopo la cura non provoca la morte. Il personaggio riprende coscienza all’inizio del proprio turno successivo, salvo altre cause di incoscienza ancora presenti, e può agire in quel turno con tutte le penalità pertinenti.  
  Il recupero della coscienza è possibile anche se il personaggio è ancora a 0 PV. La stabilizzazione non ripristina automaticamente PV, non elimina Menomazioni e non arresta il Sanguinamento: questi effetti dipendono dalla cura concretamente utilizzata.  
  Se un personaggio stabilizzato a Grave subisce in seguito una nuova Ferita da Sanguinamento, torna Morente, sviene e apre un nuovo contatore completo. Se è già Morente, ogni nuova Ferita da Sanguinamento riduce invece di 1 Round il contatore esistente. Stabilizzante e Coagulante svolgono quindi funzioni diverse e possono servire entrambi, rispettando il limite comune di somministrazione rapida.  
- **5. Cura medica: Stabilizzazione d’emergenza****  
-** Nuova procedura medica per un paziente Morente: Medicina utilizzabile, paziente adiacente e accessibile, kit medico almeno Standard. Richiede 2 Round consecutivi, con 1 AzP in ciascun Round, e consuma un’applicazione del kit all’inizio. Alla fine si effettua una Prova di Medicina con −2 per l’urgenza, oltre ai modificatori pertinenti di strumenti e circostanze. Il kit Professionale applica il proprio +2; la penalità −8 del paziente non si trasferisce al soccorritore.  
+ **5. Cura medica: Stabilizzazione d’emergenza**  
+ Nuova procedura medica per un paziente Morente: Medicina utilizzabile, paziente adiacente e accessibile, kit medico almeno Standard. Richiede 2 Round consecutivi, con 1 AzP in ciascun Round, e consuma un’applicazione del kit all’inizio. Alla fine si effettua una Prova di Medicina con −2 per l’urgenza, oltre ai modificatori pertinenti di strumenti e circostanze. Il kit Professionale applica il proprio +2; la penalità −8 del paziente non si trasferisce al soccorritore.  
  Successo: Morente → Grave (−8), contatore azzerato e disattivato, nessun PV recuperato. Successo Magistrale: stesso effetto e recupero di 1d4 PV, se consentito dalle condizioni di Sanguinamento. Fallimento: nessuna stabilizzazione, il contatore continua. Maldestro: nessuna stabilizzazione e perdita immediata di 1 ulteriore Round residuo.  
  L’inizio della procedura non ferma il contatore. Se viene interrotta non si effettua la Prova finale e l’applicazione già spesa resta consumata. Si può tentare nuovamente se rimane tempo, spendendo una nuova applicazione. Questa procedura di salvataggio è distinta dal limite settimanale dei normali trattamenti che riducono gli Stati di Ferita.  
  Raccordi ai Talenti: Soccorso Immediato del Paramedico riduce questa nuova procedura a 1 AzP, mantenendo Prova e materiali; Stabilizzazione del Medico applica il proprio +2 alla Prova. Triage Estremo consente l’intervento in 1 AzP senza Prova, una volta per combattimento e con kit almeno Standard e materiali previsti: riporta a Grave, disattiva il contatore e arresta anche il Sanguinamento. Restano le altre condizioni del Talento e le regole sulle Menomazioni.  
- **6. Cura magica e Stasi****  
-** Guarigione acquisisce una modalità di stabilizzazione d’emergenza: occorre conoscere l’incantesimo almeno al livello 3; costo 3 PM, tempo 1 AzP, contatto, un solo bersaglio vivente e normale Prova di Potere con i requisiti di lancio dell’incantesimo. Se il lancio riesce su un bersaglio Morente, lo riporta a Grave (−8), disattiva il contatore e gli restituisce 1 PV. Non arresta il Sanguinamento e non cura le Menomazioni.  
+ **6. Cura magica e Stasi**  
+ Guarigione acquisisce una modalità di stabilizzazione d’emergenza: occorre conoscere l’incantesimo almeno al livello 3; costo 3 PM, tempo 1 AzP, contatto, un solo bersaglio vivente e normale Prova di Potere con i requisiti di lancio dell’incantesimo. Se il lancio riesce su un bersaglio Morente, lo riporta a Grave (−8), disattiva il contatore e gli restituisce 1 PV. Non arresta il Sanguinamento e non cura le Menomazioni.  
  La modalità d’emergenza è utilizzabile anche se il paziente ha già ricevuto il normale effetto di Guarigione nelle precedenti 24 ore. Non consuma né azzera quel limite della cura ordinaria. Può essere ripetuta per un nuovo episodio di Morente, pagando nuovamente il costo; nell’impiego d’emergenza il ritorno è sempre a Grave e non a uno Stato migliore per l’impiego di una versione superiore.  
  Le cure che recuperano soltanto PV non stabilizzano: fra queste Cura Ferite, Corpo Adattivo, Psicometabolismo, cartucce Curative e spray curativi. Recuperare PV mentre si è Morente non disattiva da solo il contatore. Analogamente, arrestare o sospendere il Sanguinamento non equivale a stabilizzare, se l’effetto non lo prevede espressamente.  
  Protocollo Shock e gli effetti di Cura Spirituale che rimuovono Svenuto non sostituiscono una cura di Morente. Naniti, Intervento Mirato e Terapia Intensiva restano trattamenti con i propri tempi; non diventano interventi istantanei. Imposizione della Mano Curativa mantiene il tempo di 5 minuti per la cura di una Ferita e non acquisisce una nuova modalità rapida. Rigenerazione resta rivolta alle Menomazioni e non è una resurrezione o una stabilizzazione d’emergenza.  
  La Stasi sospende il decorso del contatore di Morente senza azzerarlo e senza stabilizzare. All’uscita riprende il conteggio dai Round residui. Il paziente necessita ancora di una cura specifica; restano le normali condizioni della Stasi e dei trattamenti.  
- **7. Nuovo consumabile: Cartuccia Stabilizzante****  
-** Cartuccia Stabilizzante: prezzo 2.000 crediti; Reperibilità Molto rara (MR); monouso; occupa un alloggiamento per cartucce. Compatibile con le UMC, gli iniettori sanitari, le pistole sanitarie, gli iniettori impiantati e le postazioni medico-chirurgiche secondo le rispettive regole d’impiego.  
+ **7. Nuovo consumabile: Cartuccia Stabilizzante**  
+ Cartuccia Stabilizzante: prezzo 2.000 crediti; Reperibilità Molto rara (MR); monouso; occupa un alloggiamento per cartucce. Compatibile con le UMC, gli iniettori sanitari, le pistole sanitarie, gli iniettori impiantati e le postazioni medico-chirurgiche secondo le rispettive regole d’impiego.  
  Una somministrazione riuscita a un paziente ancora vivo e Morente lo riporta immediatamente a Grave (−8) e azzera/disattiva il contatore. Non restituisce PV, non cancella i PV eventualmente già recuperati, non arresta il Sanguinamento, non elimina Menomazioni e non migliora la condizione oltre Grave. Non agisce dopo la morte e non neutralizza cause di morte diretta.  
  Il paziente Morente e incosciente non può attivare volontariamente un dispositivo. Un alleato può usare i comandi accessibili: con UMC Passiva occorrono 1 AzP e la normale Prova di Medicina o Tecnologia–Strumentazione; con UMC Attiva occorre 1 AzP senza Prova. Gli altri dispositivi mantengono le proprie regole di somministrazione, azione e Prova.  
  L’UMC Automatica può avere un protocollo Morente abilitato, con almeno una Cartuccia Stabilizzante caricata: interviene senza Azioni e senza Prova, rispettando l’ordine di risoluzione seguente. Quando il paziente è Morente, la Stabilizzante ha priorità tra i protocolli automatici.  
  Resta il limite di una sola somministrazione rapida per paziente per Round, condiviso fra dispositivi, UMC, impianti e postazioni. Non si ottengono somministrazioni aggiuntive usando strumenti differenti. Una nuova Cartuccia Stabilizzante può essere usata in un successivo episodio di Morente, sempre nel rispetto di questo limite.  
- **8. UMC Automatica: dopo l’intero attacco****  
-** Si risolve prima l’intero attacco, compresi tutti i suoi colpi, le Prove pertinenti e tutte le Ferite. Il primo colpo che porta a Morente lascia il contatore pieno; eventuali colpi successivi dello stesso attacco possono ridurlo secondo il punto 3.  
+ **8. UMC Automatica: dopo l’intero attacco**  
+ Si risolve prima l’intero attacco, compresi tutti i suoi colpi, le Prove pertinenti e tutte le Ferite. Il primo colpo che porta a Morente lascia il contatore pieno; eventuali colpi successivi dello stesso attacco possono ridurlo secondo il punto 3.  
  Soltanto al termine dell’intero attacco, se il personaggio è ancora vivo e Morente, l’UMC Automatica può somministrare la Stabilizzante caricata, se il protocollo è abilitato e il limite di somministrazione del Round non è già stato utilizzato. Se il contatore si è esaurito durante l’attacco, il dispositivo non può salvare né resuscitare il personaggio.  
  Se la somministrazione rapida del Round è già stata utilizzata, il primo momento utile è nel Round successivo, purché il personaggio sia ancora vivo e le altre condizioni siano rispettate. Questa tempistica sostituisce la precedente formulazione provvisoria «immediatamente all’ingresso in Morente»: non si interrompe un attacco fra i suoi colpi per far intervenire l’UMC Automatica.  
- **9. Rappresentazione e comandi dell’app****  
-** L’app distingue Grave, Morente e Morto. Grave mantiene −8. Morente mantiene −8, applica le limitazioni di Svenuto e rende ben visibili i Round residui. Il contatore diminuisce per il trascorrere dei Round e per le nuove Ferite secondo i punti 2–3. Al raggiungimento di 0 con contatore attivo, il personaggio passa a Morto: non resta soltanto un avviso generico «Oltre Grave».  
+ **9. Rappresentazione e comandi dell’app**  
+ L’app distingue Grave, Morente e Morto. Grave mantiene −8. Morente mantiene −8, applica le limitazioni di Svenuto e rende ben visibili i Round residui. Il contatore diminuisce per il trascorrere dei Round e per le nuove Ferite secondo i punti 2–3. Al raggiungimento di 0 con contatore attivo, il personaggio passa a Morto: non resta soltanto un avviso generico «Oltre Grave».  
  Il comando «Stabilizza» registra l’esito di una cura specifica riuscita: riporta a Grave, disattiva il contatore e lo nasconde dalla visualizzazione. Registra anche il recupero della coscienza all’inizio del turno successivo del paziente, salvo altre cause. Il comando non concede una cura gratuita: PV, Sanguinamento, Azioni, PM, applicazioni del kit e cartucce devono riflettere il trattamento effettivamente utilizzato.  
  Un contatore disattivato a 0 dopo stabilizzazione deve essere distinto da un contatore attivo esaurito. Un nuovo episodio apre un nuovo contatore completo; il normale recupero dei PV non deve cancellare automaticamente Morente. L’automatismo UMC deve rispettare sia la conclusione dell’intero attacco sia il limite condiviso di somministrazione.  
- **10. Recepimento e stato del quesito****  
-** A.159 ha ricevuto risposta completa. Raccordare il Manuale del Giocatore (§5.14, Svenuto, soccorso, Talenti medici e Sanguinamento), il Manuale della Magia (Guarigione, Stasi e rimandi alle cure) e il Manuale dell’Equipaggiamento (Cartuccia Stabilizzante, UMC e dispositivi compatibili). Le normali regole delle Ferite, delle Menomazioni e delle cure non modificate da questa risposta restano valide.  
+ **10. Recepimento e stato del quesito**  
+ A.159 ha ricevuto risposta completa. Raccordare il Manuale del Giocatore (§5.14, Svenuto, soccorso, Talenti medici e Sanguinamento), il Manuale della Magia (Guarigione, Stasi e rimandi alle cure) e il Manuale dell’Equipaggiamento (Cartuccia Stabilizzante, UMC e dispositivi compatibili). Le normali regole delle Ferite, delle Menomazioni e delle cure non modificate da questa risposta restano valide.  
  Questa registrazione consolida le decisioni approvate nei due documenti di risposta. Non attesta che i manuali siano già stati aggiornati o che Marcello abbia già implementato le nuove funzioni nell’app. La domanda originale resta nel documento del collaboratore per il normale recepimento e passaggio di stato.
 
 #### **A.115 — Capacità specifiche dei nemici**
@@ -1436,15 +1446,14 @@ Decisioni approvate il 15 ottobre 2026 e consolidate dopo la conclusione dei que
  Le cinture ordinarie sono comprese nell’operazione di prendere posto o lasciarlo; le imbracature complesse richiedono 1 AzP per allacciare e 1 AzP per slacciare. Porte e portelli non si chiudono automaticamente.  
  Tabella delle operazioni approvate. Le righe generali si applicano alle categorie pertinenti; le righe specifiche le completano senza duplicare il costo della stessa operazione.
 
-|  |  |  |
-| :-: | :-: | :-: |
 | Categoria | Operazione | Costo e condizioni |
+| :---- | :---- | :---- |
 | Generale | Salire o scendere | 1 AzP per operazione; accesso aperto e praticabile, mezzo fermo o in condizioni adatte. |
 | Generale | Aprire o chiudere porta, portello o tettuccio | 1 AzP per operazione. Blocchi e procedure particolari si risolvono separatamente. |
 | Generale | Prendere posto ai comandi | 1 AzP; eventuale imbracatura complessa richiede una propria AzP. |
 | Generale | Avviare il mezzo già predisposto | 1 AzP; restano i tempi tecnici previsti. |
 | Generale | Condurre e muovere il mezzo | 1 AzM per Round. |
-| Generale | Manovra complessa volontaria | \+1 AzP oltre all’AzM; Prova e modificatori pertinenti. |
+| Generale | Manovra complessa volontaria | +1 AzP oltre all’AzM; Prova e modificatori pertinenti. |
 | Generale | Muoversi verso il mezzo o al suo interno | Normale movimento in Q; separato dall’operazione di accesso. |
 | Generale | Cintura ordinaria / imbracatura complessa | Cintura ordinaria compresa nel prendere o lasciare il posto. Imbracatura complessa: 1 AzP per allacciare o slacciare. |
 | Auto e moto | Freno di stazionamento e cavalletto | Compresi nell’AzM di partenza o parcheggio, nelle condizioni ordinarie. |
@@ -1587,5 +1596,3 @@ Rettifica editoriale registrata il 16 ottobre 2026 sulla base delle risposte gi�
  Le precedenti note di sospensione per mancanza dell’elenco sono state aggiornate in entrambi i documenti. Non occorre un nuovo elenco o allegato e non vengono riaperti o modificati i gradini già approvati.  
  Indicazione per lo sviluppo: mantenere le 32 risposte dell’8 ottobre 2026. La presente rettifica riguarda lo stato editoriale della A.109; non attesta una verifica o una modifica del codice dell’app.
 
-  
-  

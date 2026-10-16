@@ -1,0 +1,117 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "orco",
+  "nome": "Orco",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Bande e grandi avversari",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 5,
+    "COS": 7,
+    "INT": 4,
+    "SAG": 5,
+    "CAR": 5
+  },
+  "pv": 24,
+  "pm": 6,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 22,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 9,
+    "volonta": 9,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Ascia bipenne",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Giavellotto a mano",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Giavellotto scagliato",
+      "tipo": "distanza",
+      "va": 10,
+      "danno": "1d6",
+      "natura": "Naturale",
+      "gittata_q": 21,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 11
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Oratoria",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Avanzata aggressiva",
+      "effetto": "Una volta per Round, quando spende l’AzM per un Passo verso un nemico visibile, il budget è 8 Q invece di 6; deve terminare più vicino a quel nemico e non allontanarsene. Nessuna seconda AzM; Corsa, Scatto, Schivata e Carica restano ordinarie. Ostacoli e Attacchi di Opportunità valgono.",
+      "usi": {
+        "quanti": 1,
+        "per": "Round"
+      }
+    },
+    {
+      "nome": "Carica",
+      "effetto": "Carica comune con l’ascia (Giocatore §5.6): 1 AzP e 1 AzM, almeno 3 Q rettilinei entro 12 Q, VA −2 per 3–6 Q o −4 da 7 Q, danno ×2 per un solo attacco. Avanzata aggressiva non ne aumenta la distanza."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; al buio non distingue i colori, non vede attraverso ostacoli, fumo o oscurità magica e non individua da sé chi è nascosto. Oltre i 12 Q valgono luce e vista ordinarie."
+    }
+  ],
+  "note": "Oratoria 11 per intimidire. Ascia bipenne a due mani FOR 6; inizia con l’ascia pronta, nessuno scudo. Comportamento: cerca un bersaglio raggiungibile; se molto ferito o sotto 6 PV può ripiegare."
+}

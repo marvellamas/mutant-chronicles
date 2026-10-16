@@ -1,0 +1,105 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "hobgoblin",
+  "nome": "Hobgoblin",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Bande e grandi avversari",
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 5,
+    "COS": 6,
+    "INT": 5,
+    "SAG": 5,
+    "CAR": 5
+  },
+  "pv": 22,
+  "pm": 6,
+  "ar": {
+    "totale": 5,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 5,
+    "corsa": 11,
+    "scatto": 17
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 22,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 9,
+    "volonta": 10,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Spada lunga",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Arco da guerra",
+      "tipo": "distanza",
+      "va": 10,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "gittata_q": 100,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 11
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 8
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Attacco coordinato",
+      "effetto": "Una volta per Round, un colpo a segno infligge +2 danni (prima di moltiplicatori, Difese e AR) se un alleato cosciente è entro 1 Q dal bersaglio e lo minaccia in mischia. Una sola applicazione, anche con Tiro Rapido; non cresce col numero di alleati.",
+      "usi": {
+        "quanti": 1,
+        "per": "Round"
+      }
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; al buio non distingue i colori, non vede attraverso ostacoli, fumo o oscurità magica e non individua da sé chi è nascosto. Oltre i 12 Q valgono luce e vista ordinarie."
+    }
+  ],
+  "note": "Difesa: Parata 11; Schivata/Elusione 10. AR 5 con scudo medio, 3 senza; con l’arco si ripongono spada e scudo e l’AR scende a 3. La media applica già −1 agli attacchi e alle Prove fisiche ostacolate (Schivata compresa) e −1 Q al movimento (senza media: VA +1 e movimento 6/12/18). Comportamento: tiene un fronte; sotto 6 PV o a Ferita Profonda ritirata ordinata."
+}

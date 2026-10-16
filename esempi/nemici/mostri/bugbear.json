@@ -1,0 +1,121 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "bugbear",
+  "nome": "Bugbear",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Bande e grandi avversari",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 6,
+    "COS": 6,
+    "INT": 4,
+    "SAG": 5,
+    "CAR": 4
+  },
+  "pv": 30,
+  "pm": 6,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 33,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 10,
+    "volonta": 9,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Mazza ferrata",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+4",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Giavellotto a mano",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+3",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Giavellotto scagliato",
+      "tipo": "distanza",
+      "va": 10,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "gittata_q": 21,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 12
+    },
+    {
+      "nome": "Armi da guerra",
+      "va": 11
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Forza brutale",
+      "effetto": "I danni ravvicinati includono un +2 innato, oltre al bonus ordinario di Caratteristica (già compreso nei danni scritti). Non appartiene all’arma recuperata, non si aggiunge al lancio né ai danni periodici."
+    },
+    {
+      "nome": "Colpo d’imboscata",
+      "effetto": "Una volta per incontro, nel primo Round in cui partecipa, +2 danni a un colpo ravvicinato contro un bersaglio che non lo aveva individuato. Si dichiara prima del tiro (si consuma anche se manca); precede moltiplicatori, Difese e AR. Vincere l’Iniziativa da solo non basta.",
+      "usi": {
+        "quanti": 1,
+        "per": "scontro"
+      }
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; al buio non distingue i colori, non vede attraverso ostacoli, fumo o oscurità magica e non individua da sé chi è nascosto. Oltre i 12 Q valgono luce e vista ordinarie."
+    }
+  ],
+  "note": "AR 1 senza scudo (inizia con mazza e scudo piccolo). Due giavellotti FOR 3, PI 4. Comportamento: cerca sorpresa e via di fuga; sotto 8 PV o a Ferita Profonda valuta la ritirata."
+}

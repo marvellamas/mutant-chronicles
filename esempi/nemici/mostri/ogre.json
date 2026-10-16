@@ -1,0 +1,110 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "ogre",
+  "nome": "Ogre",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Bande e grandi avversari",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 4,
+    "COS": 8,
+    "INT": 3,
+    "SAG": 4,
+    "CAR": 3
+  },
+  "pv": 46,
+  "pm": 6,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 8,
+  "iniziativa": -1,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 33,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 7,
+    "volonta": 8,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Maglio a due mani",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Giavellotto a mano",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Giavellotto scagliato",
+      "tipo": "distanza",
+      "va": 9,
+      "danno": "1d6",
+      "natura": "Naturale",
+      "gittata_q": 27,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 12
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    },
+    {
+      "nome": "Oratoria",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Forza e ingombro",
+      "effetto": "Solleva, trascina, forza o rompe oggetti con le regole comuni e gli strumenti adatti; non sfonda da sé porte o muri e non ignora l’Integrità. Lo spazio 2 × 2 Q deve poter attraversare il percorso; i passaggi stretti lo limitano. Non ottiene attacchi multipli per la taglia."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; al buio non distingue i colori, non vede attraverso ostacoli, fumo o oscurità magica e non individua da sé chi è nascosto. Oltre i 12 Q valgono luce e vista ordinarie."
+    }
+  ],
+  "note": "Oratoria 12 per intimidire. Maglio = Martello a due mani FOR 6; inizia col maglio pronto, nessuno scudo. Con una sola AzP sceglie fra attaccare e Difendersi. Comportamento: colpisce il nemico più vicino; sotto 12 PV o a Ferita Profonda cerca l’uscita."
+}

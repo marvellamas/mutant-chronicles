@@ -12,17 +12,18 @@ const dir = new URL('../esempi/nemici/mostri/', import.meta.url);
 const file = readdirSync(dir).filter((f) => f.endsWith('.json'));
 const leggi = (f) => JSON.parse(readFileSync(new URL(f, dir), 'utf8'));
 
+const CASTE = ['covata-rasente', 'covata-raccoglitore', 'covata-trasportatore', 'covata-saltatore',
+  'covata-corazzato', 'covata-tagliente', 'covata-regina-comandante', 'covata-regina-incubatrice',
+  'covata-regina-madre', 'lorath'];
+
 test('le dieci caste/Lorath ci sono e sono valide per il formato', () => {
   const id = file.map((f) => f.replace('.json', '')).sort();
-  for (const atteso of ['covata-rasente', 'covata-raccoglitore', 'covata-trasportatore', 'covata-saltatore',
-    'covata-corazzato', 'covata-tagliente', 'covata-regina-comandante', 'covata-regina-incubatrice',
-    'covata-regina-madre', 'lorath']) {
-    assert.ok(id.includes(atteso), atteso);
-  }
-  for (const f of file) {
-    const n = leggi(f);
-    assert.deepEqual(validaNemico(n, dati, f), [], `${f} valido`);
-    assert.match(n.fonte, /Manuale dei Mostri v0\.13/);
+  for (const atteso of CASTE) assert.ok(id.includes(atteso), atteso);
+  // solo i profili del cap. 7: gli altri blocchi del catalogo hanno il loro test e la loro versione
+  for (const base of CASTE) {
+    const n = leggi(`${base}.json`);
+    assert.deepEqual(validaNemico(n, dati, base), [], `${base} valido`);
+    assert.match(n.fonte, /Manuale dei Mostri v0\.1\d.*cap\. 7/);
   }
 });
 

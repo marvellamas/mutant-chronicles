@@ -1,0 +1,104 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "coboldo",
+  "nome": "Coboldo",
+  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Bande e grandi avversari",
+  "caratteristiche": {
+    "FOR": 3,
+    "DES": 6,
+    "COS": 4,
+    "INT": 5,
+    "SAG": 4,
+    "CAR": 4
+  },
+  "pv": 12,
+  "pm": 5,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 11,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 8,
+    "riflessi": 10,
+    "volonta": 8,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Pugnale a mano",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d4+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Pugnale scagliato",
+      "tipo": "distanza",
+      "va": 9,
+      "danno": "1d4+2",
+      "natura": "Naturale",
+      "gittata_q": 9,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 9
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 9
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    },
+    {
+      "nome": "Tecnologia",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Tattica di gruppo",
+      "effetto": "+2 VA agli attacchi contro un bersaglio minacciato in mischia da almeno un alleato cosciente entro 1 Q. Una volta sola, qualunque sia il numero di alleati; non dà un secondo bonus di circostanza."
+    },
+    {
+      "nome": "Sensibilità al sole",
+      "effetto": "Sotto luce solare diretta (il coboldo o il bersaglio osservato): −2 VA agli attacchi e a Percezione basata sulla vista. Le due condizioni non si sommano; torce e luci artificiali non la attivano; nessun danno o Stato."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; al buio non distingue i colori, non vede attraverso ostacoli, fumo o oscurità magica e non individua da sé chi è nascosto. Oltre i 12 Q valgono luce e vista ordinarie."
+    }
+  ],
+  "note": "Tecnologia 10 per congegni semplici. Nessuna armatura o scudo. Tre pugnali FOR 2, PI 4; Tiro Rapido richiede due pugnali pronti. Trappole e cunicoli vanno descritti prima dell’incontro. Comportamento: isolato o sotto 3 PV cerca riparo o si arrende."
+}
