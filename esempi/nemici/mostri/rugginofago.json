@@ -1,0 +1,91 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "rugginofago",
+  "nome": "Rugginofago",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Creature del sottosuolo",
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 6,
+    "COS": 6,
+    "INT": 2,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "pv": 24,
+  "pm": 5,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 10,
+    "volonta": 8,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 8
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Antenne (ruggine)",
+      "effetto": "1 AzP, VA 11 contro un oggetto compatibile (solo ferro e acciaio non magici) esposto e individuato, portata 1 Q; nessun Colpo Mirato. Se portato o indossato, il possessore usa le proprie Difese. Un successo non difeso impone all’oggetto una PS Integrità (dalla Qualità): fallimento → −1 PI; con Magistrale −1 PI aggiuntivo (una sola PS). Schivata riuscita evita il contatto; Parata Magistrale lo devia; con Parata normale il contatto riguarda solo l’arma o lo scudo usato. Anticorrosivo X ≥ 1 protegge. Contro un oggetto immobile e accessibile non serve il tiro, ma 1 AzP e la PS. Non è un Attacco di Opportunità. Non danneggia i PV del portatore.",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Odore del ferro",
+      "effetto": "Individua ferro e acciaio esposti entro 6 Q con Percezione 14; contenitori ermetici e barriere adeguate lo impediscono. Scurovisione 12 Q."
+    },
+    {
+      "nome": "Carapace reattivo",
+      "effetto": "Un’arma o proiettile di ferro o acciaio non magici che lo colpisce direttamente fa dopo il colpo una PS Integrità: fallimento −1 PI (anche se l’AR ha assorbito tutto, non se una Difesa ha evitato il contatto). Una sola applicazione per arma e attacco; un’arma naturale non arrugginisce."
+    }
+  ],
+  "note": "Percezione 14 per l’odore del ferro. La ruggine non corrode carne, legno, pietra, altri metalli o oggetti mistici. Comportamento: preferisce le Antenne al Morso; smette di inseguire chi abbandona una fonte di ferro; sotto 6 PV o a Ferita Profonda fugge."
+}

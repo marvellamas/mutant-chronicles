@@ -1697,10 +1697,19 @@ diverso dalle regole già approvate **non si è cambiato**: vedi A.167 qui sotto
   nubi, Scarica tempestosa, Levitazione, Malocchio, Sguardo e Soffio gelido) come capacità con `risorsa`;
   Difese = Parata per i giganti corazzati (Schivata nelle note); armi con due componenti (Artiglio dello Yeti)
   con il danno fisico nel campo e il Ghiaccio nella capacità; GS/PX anche con valori non tondi (77/100/110).
-  Bestiario online rigenerato. **Restano** gli altri blocchi del cap. 8 (circa 95 creature: i quindici della
-  prima parte, «Creature del sottosuolo», «Melme funghi e imitatori», «Vegetali e custodi delle foreste»,
-  «Grandi rettili e predatori mostruosi», «Creature delle acque e popoli sommersi», «Predatori e grandi
-  erbivori», «Creature alate e piccoli predatori», «Sciami e piccola fauna»): a blocchi nei prossimi lotti.
+  Bestiario online rigenerato.
+- **Seguito del 17/10 (Manuale dei Mostri passato a 0.18, 165 creature nel cap. 8).** La 0.18 aggiunge in coda
+  i blocchi «Cavalcature e animali da lavoro» e «Mephit e creature elementali» e non cambia le schede già
+  trascritte. Blocco **«Creature del sottosuolo»**: Mantoscuro, Perforatore, Roper, Rugginofago, Umber Hulk,
+  Orrore uncinato, Grimlock, Troglodita, Stirge, Vermeiena. Scelte del blocco: attacchi senza danno ai PV
+  (Oscuramento, Filamento, Antenne, Sguardo perturbante, Suzione) come capacità; la Caduta perforante del
+  Perforatore (portata verticale da 2 a 6 Q, non rappresentabile come portata in Q) fra le capacità; Furtività
+  con valori condizionati: nel campo il valore senza condizione, il condizionato nelle note; Vermeiena 1 × 2 Q
+  fuori dal campo Spazio (A.167). Bestiario online rigenerato. **Restano** 105 creature del cap. 8: la prima
+  parte senza nome (15), «Melme funghi e imitatori», «Vegetali e custodi delle foreste», «Grandi rettili e
+  predatori mostruosi», «Creature delle acque e popoli sommersi», «Predatori e grandi erbivori», «Creature
+  alate e piccoli predatori», «Sciami e piccola fauna», «Cavalcature e animali da lavoro», «Mephit e
+  creature elementali»: a blocchi nei prossimi lotti.
 
 ## Domande aperte dalla ricognizione del 15 ottobre 2026
 

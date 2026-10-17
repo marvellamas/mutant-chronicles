@@ -1,0 +1,93 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "mantoscuro",
+  "nome": "Mantoscuro",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Creature del sottosuolo",
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 7,
+    "COS": 5,
+    "INT": 2,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "pv": 22,
+  "pm": 8,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 12,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 2,
+    "corsa": 4,
+    "scatto": 6,
+    "volo": 6
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 12,
+    "volonta": 8,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Avvolgimento",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Aspetto roccioso",
+      "effetto": "Immobile su un soffitto adatto ottiene +3 a Furtività (VA 15). Ecolocalizzazione 12 Q; se non funziona non ha una vista alternativa utile al combattimento. Ali e mantello sono le Braccia, le appendici di appiglio le Gambe."
+    },
+    {
+      "nome": "Avvolgimento al capo",
+      "effetto": "Dopo almeno 1 danno finale a una creatura di spazio ≤ 1 × 1 Q con capo accessibile, Riflessi senza modificatore: fallimento → si fissa al capo (nessuna AzP, non applica Immobilizzato). La vittima è Accecata finché il capo è coperto e, se respira da vie ostruite, inizia il soffocamento del §5.23. Con 1 AzP stringe: Corpo a corpo 11 contrapposto, 1d6+1 Naturale con AR ordinaria. Liberazione: 1 AzP della vittima o di un alleato adiacente, Corpo a corpo o Atletica contro Corpo a corpo 11 (il pareggio conserva la presa). Una sola vittima; agganciato non Schiva né attacca altri."
+    },
+    {
+      "nome": "Oscuramento",
+      "effetto": "1 AzP e 2 PM: sfera buia di raggio 3 Q centrata su di sé e mobile con lui, per 5 Round, senza Concentrazione. Blocca la vista (anche scurovisione); torce e fari non la dissipano; Luce Mistica illumina la sola porzione della propria aura. Nessun danno. Negare Potere: potenza 3. Se spende l’AzP per Oscuramento non attacca in quell’Iniziativa.",
+      "risorsa": "2 PM",
+      "azioni": {
+        "principali": 1
+      }
+    }
+  ],
+  "note": "Volo 6/12/18 Q; a terra 2/4/6 Q. Comportamento: sceglie una preda isolata; si ritira sotto 6 PV o a Ferita Profonda."
+}

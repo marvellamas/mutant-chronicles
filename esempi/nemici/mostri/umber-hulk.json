@@ -1,0 +1,110 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "umber-hulk",
+  "nome": "Umber Hulk",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Creature del sottosuolo",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 6,
+    "COS": 8,
+    "INT": 5,
+    "SAG": 5,
+    "CAR": 5
+  },
+  "pv": 58,
+  "pm": 12,
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 10,
+    "volonta": 10,
+    "magia": 12
+  },
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Artiglio",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d8+3",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Mandibole",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d10+3",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 15
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 7
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sequenza",
+      "effetto": "Al massimo due Artigli e un attacco di Mandibole per Round, 1 AzP ciascuno; Sguardo o Difese usano le stesse tre AzP. Attacco di Opportunità con Artiglio, uno per Round."
+    },
+    {
+      "nome": "Sguardo perturbante",
+      "effetto": "1 AzP e 3 PM, una volta per Round, contro una creatura dotata di mente entro 6 Q che si veda reciprocamente, con linea d’effetto libera. Nessun tiro per colpire; Volontà con −2 evita (senza Azioni, niente Parata o Schivata). Fallimento: Disorientato, −2 VA a tutte le Prove di Abilità per 1+1d3 Round; non tocca Caratteristiche, Salvezze, danni, movimento o Azioni e il giocatore sceglie cosa fare. Nuove applicazioni tengono la scadenza più lontana; Barriera Mentale dà il suo bonus alla PS. Cura Spirituale (liv. 1) lo rimuove; Negare Potere: potenza 6. Coprirsi gli occhi rende Accecati.",
+      "risorsa": "3 PM",
+      "azioni": {
+        "principali": 1
+      },
+      "usi": {
+        "quanti": 1,
+        "per": "Round"
+      }
+    },
+    {
+      "nome": "Scavo",
+      "effetto": "Attraversa terra a 4 Q e roccia ordinaria compatta a 2 Q per AzM, solo al Passo; non perfora metallo, strutture rinforzate o barriere magiche. Lascia un cunicolo di circa 1 Q × 2 Q. Nessun crollo ad area come attacco."
+    },
+    {
+      "nome": "Sensi",
+      "effetto": "Scurovisione 24 Q e percezione delle vibrazioni 12 Q sul medesimo terreno continuo: localizza creature in movimento, non chi vola o è isolato dal terreno; non soddisfa i requisiti dello Sguardo."
+    }
+  ],
+  "note": "Furtività 9 sotto terra, 7 all’aperto. Comportamento: emerge vicino alla preda senza farsi accerchiare; parla e può trattare; sotto 15 PV o a Ferita Seria si ritira in un tunnel."
+}

@@ -1,0 +1,97 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "troglodita",
+  "nome": "Troglodita",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Creature del sottosuolo",
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 5,
+    "COS": 7,
+    "INT": 3,
+    "SAG": 5,
+    "CAR": 3
+  },
+  "pv": 20,
+  "pm": 5,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 9,
+    "volonta": 8,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Artiglio",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sequenza",
+      "effetto": "Fino a due attacchi naturali per Round (1 AzP ciascuno), al massimo uno è Morso. Può conservare Azioni per Schivare. Attacco di Opportunità con Artiglio o Morso."
+    },
+    {
+      "nome": "Fetore",
+      "effetto": "Passivo, senza AzP o PM. Una creatura biologica che respira aria entro 1 Q da un Troglodita cosciente fa Tempra senza modificatore alla prima esposizione e a inizio di ogni propria Iniziativa ancora esposta (una sola Prova per Round per tutti i Trogloditi). Successo: evita e immunità al fetore di tutti i Trogloditi per un’ora. Fallimento: Avvelenato fino all’inizio della propria Iniziativa successiva, −2 VA alle Prove fisiche (Difese comprese), senza danno periodico. Veleno naturale di Pericolosità I; Cura Avvelenamenti (liv. 1) o un antidoto lo termina senza dare l’immunità. Pareti, separazione ermetica o un sistema respiratorio autonomo lo evitano; più Trogloditi non moltiplicano il −2."
+    },
+    {
+      "nome": "Sole",
+      "effetto": "Scurovisione 12 Q. In luce solare diretta −2 VA agli attacchi e alla Percezione visiva (non a Salvezze o Difese); luce artificiale e Luce Mistica non contano."
+    }
+  ],
+  "note": "Furtività 13 mimetizzato (immobile, fondale naturale adatto; muoversi la riporta a 10). AR 1 biologica; nessuna dotazione. Comportamento: difende cibo, rifugio o compagni, può trattare; sotto 5 PV o a Ferita Profonda cerca riparo."
+}

@@ -4,11 +4,11 @@
 
 ## *Bestiario e avversari per il Direttore*
 
-VERSIONE 0.16  •  COVATA E CATALOGO DEL BESTIARIO  •  OTTOBRE 2026
+VERSIONE 0.18  •  COVATA E CATALOGO DEL BESTIARIO  •  OTTOBRE 2026
 
 Il Manuale dei Mostri raccoglie creature, avversari e strumenti per costruire gli incontri di Simply RPG. Ogni scheda deve permettere al Direttore di capire che cosa vuole la creatura, come agisce e quali regole applicare, senza ricostruirne i valori durante la partita.
 
-Il volume comprende le regole comuni, la fauna di Iris con le nove caste della Covata nel capitolo 7 e centoquarantacinque creature nel catalogo del capitolo 8. Le schede riportano statistiche complete e PX riferiti a quattro PG. Il metodo per assegnare i PX agli incontri è nel Manuale del Direttore §9.3.
+Il volume comprende le regole comuni, la fauna di Iris con le nove caste della Covata nel capitolo 7 e centosessantacinque creature nel catalogo del capitolo 8. Le schede riportano statistiche complete e PX riferiti a quattro PG. Il metodo per assegnare i PX agli incontri è nel Manuale del Direttore §9.3.
 
 ## **Contenuto del volume**
 
@@ -26,7 +26,7 @@ Il volume comprende le regole comuni, la fauna di Iris con le nove caste della C
 
 7 Fauna di Iris  •  Covata e Lorath
 
-8 Catalogo delle creature  •  Centoquarantacinque schede con GS e PX
+8 Catalogo delle creature  •  Centosessantacinque schede con GS e PX
 
 # **1 Principi del Bestiario**
 
@@ -644,7 +644,7 @@ Le chele non concedono Parata naturale in questo profilo. Il Lorath apre con il 
 
 Le schede presentano esemplari con le caratteristiche e la dotazione indicate. Tutte le creature di questo capitolo hanno Natura Comune; la loro eventuale presenza su Iris richiede una collocazione nell’ambientazione e non le assimila alla Covata.
 
-**PX di riferimento.** Valori per un esemplare oppure uno Sciame e quattro PG, con la dotazione descritta; premio dell’incontro nel Direttore §9.3. Le prime quindici schede sono riepilogate qui. Seguono tredici blocchi di dieci, ciascuno con il proprio prospetto; l’ultimo è «Sciami e piccola fauna».
+**PX di riferimento. Valori per un esemplare oppure uno Sciame e quattro PG, con la dotazione descritta; premio dell’incontro nel Direttore §9.3. Le prime quindici schede sono riepilogate qui. Seguono quindici blocchi di dieci, ciascuno con il proprio prospetto; l’ultimo è «Mephit e creature elementali».**
 
 | Creatura | GS | PX per 4 PG |
 | :---- | :---- | :---- |
@@ -6485,4 +6485,703 @@ Una massa di piccoli serpenti velenosi che si muove come un solo avversario. La 
 **Veleno ofidico.** Si risolvono prima danno fisico, PV e Ferite, poi una sola inoculazione naturale di Pericolosità II, Importante. Il veleno ignora AR; il Magistrale aumenta solo il fisico. Alla fine di ogni propria Iniziativa la vittima ripete Tempra 0 gratuitamente: successo termina la penalità; altrimenti termina a fine Round R + 5. Nessun danno periodico. Finché attivo, nuove dosi dello stesso veleno, anche da un Serpente singolo o gigante, rinnovano soltanto la durata, senza nuove PS iniziali o danni tossici.
 
 **Cure del veleno.** Un antidoto adeguato o Cura Avvelenamenti dal livello 2 neutralizza la tossina secondo i bersagli ammessi dalla cura. Veleni diversi possono coesistere; eliminarne uno non cura automaticamente gli altri, PV o Ferite. A 0 PV il danno tossico segue normalmente Tempra e Ferite, senza stabilizzazione o paralisi automatica. L’immunità ad Avvelenato evita la penalità, quella al veleno evita anche il danno. Il gruppo non assegna dosi commerciali recuperabili senza una procedura di estrazione propria.
+
+# **Cavalcature e animali da lavoro**
+
+*Dieci profili per viaggi allevamenti e incontri selvatici*
+
+Queste schede descrivono animali impiegabili nel trasporto, nella sorveglianza e nell’allevamento, insieme all’Alce selvatico. Cibo, riposo, carico e familiarità con le persone contano quanto gli attacchi. Il Direttore stabilisce dove siano allevati o presenti su Iris: il nome della specie e lo spazio occupato non garantiscono addestramento, disponibilità a farsi cavalcare o adattamento alle Terre del Fuoco.
+
+| Creatura | GS | PX per 4 PG |
+| :---- | :---: | :---: |
+| Cammello | Principiante | 10 |
+| Cavallo da tiro | Principiante | 10 |
+| Cavallo da sella | Principiante | 10 |
+| Cavallo da guerra | Inesperto | 20 |
+| Mulo | Principiante | 10 |
+| Pony | Principiante | 10 |
+| Mastino | Principiante | 10 |
+| Capra | Principiante | 10 |
+| Capra gigante | Inesperto | 20 |
+| Alce | Inesperto | 20 |
+
+**PX di riferimento.** Valori per un esemplare e quattro PG, senza dotazione conteggiata. Corna, zoccoli, morso, Impeto e capacità di trasporto sono compresi nel GS. I profili non includono bardature, selle, finimenti o carri. Un animale usato come alleato conserva le proprie statistiche; il valore di PX riguarda il suo impiego come avversario. Il premio dell’incontro segue il Direttore §9.3.
+
+**Impiego.** Una cavalcatura spaventata, un animale da soma da soccorrere o un ungulato che difende i piccoli possono creare una scena senza richiedere l’uccisione dell’animale. La condotta descrive tendenze: abitudine al conduttore, addestramento, possibilità di fuga e presenza di un carico possono modificarle.
+
+**Fonti e verifica.** Giocatore v0.49, Magia v1.5, Direttore v0.41 e Armamenti v0.64. I rimandi delle creature indicano le pagine stampate del Manuale dei Mostri fornito. La tabella finale riporta soglie di carico esplicite per questa conversione. GS e PX sono stime da verificare al tavolo, soprattutto quando Impeto e Calpestare possono essere usati in spazi aperti.
+
+# **Animali da lavoro regole operative**
+
+**Natura e risorse.** Tutti hanno Natura Comune, sono viventi e possiedono mente e PM personali. Nessuno conosce incantesimi o poteri magici attivi. Stati iniziali: nessuno. A 0 PM diventano Svenuti. A 0 PV continuano Tempra, Ferite, Menomazioni e Morente senza morte o incoscienza automatiche. Le cure biologiche compatibili seguono le normali procedure.
+
+**Azioni e Difese.** INI modifica 1d10; AzP e unica AzM valgono per l’intero Round. Ogni attacco costa 1 AzP, produce AC 1 e comprende tutti i bonus. Nessuno ha Parata naturale: denti, corna e zoccoli non sono scudi. Schivata richiede 1 AzP, 1 AzM e possibilità concreta di spostarsi. Naturale e Magico incontrano tutta l’AR pertinente, Etereo soltanto quella magica.
+
+**Opportunità.** Una sola Opportunità ordinaria gratuita per Round, su un’occasione reale e nei limiti offensivi delle singole schede. Usa l’attacco normale indicato; non comprende Impeto o Calpestare. L’atterramento del Morso del Mastino è invece un effetto del normale colpo penetrante e può verificarsi anche in quell’occasione. Non aggiunge un’altra AzP o un secondo attacco.
+
+**Impeto.** Richiede almeno 4 Q di Passo rettilineo verso la vittima nella stessa Iniziativa, usa l’AzM ordinaria e l’AzP del colpo e si dichiara prima del tiro. Non si combina con Carica, Corsa, Scatto o altre manovre offensive. Il danno speciale della scheda sostituisce quello normale, senza aggiungere anche il ×2 della Carica. Gli atterramenti richiedono almeno 1 danno finale e la PS indicata. Il Magistrale non ne peggiora la Salvezza.
+
+**Piede saldo.** Mulo, Capra e Capra gigante ottengono +2 alle PS di Tempra o Riflessi e alle Prove di FOR o DES espressamente richieste per evitare A Terra. Si aggiunge alla Prova pertinente, non ai valori permanenti della scheda. Non introduce una Prova se l’effetto non la concede, non evita ogni spostamento forzato e non si estende alle PS per Ferite. Non concede aderenza a superfici lisce o immunità alle Cadute.
+
+**Movimento e anatomia.** Le terne sono Q effettivi di Passo / Corsa / Scatto; restano terreno, carico e penalità del Giocatore §5.2. Testa comprende capo, fauci e corna se presenti; Torace il tronco, Braccia gli arti anteriori e Gambe quelli posteriori. Tutti respirano aria, con fiato ordinario di COS Round. Vista, udito e olfatto sono ordinari salvo il Mastino; nessuno ha Scurovisione innata.
+
+**Addestramento.** Un animale abituato al conduttore può eseguire operazioni ordinarie senza Prova. Per difficoltà concrete si usano Sopravvivenza, Percezione o Medicina secondo l’attività, applicando Allevatore Esperto quando pertinente. Il comando non ripristina Azioni e l’obbedienza non è controllo mentale. Peso, anatomia, finimenti, abitudine alla sella e disponibilità a trasportare qualcuno vanno verificati prima dell’impiego.
+
+# **Cammello**
+
+*Cavalcatura e animale da soma • trasporto robusto • Natura Comune*
+
+Un grande animale da viaggio adatto a piste aride. Può portare un carico organizzato o difendersi con un morso quando viene costretto senza spazio per sottrarsi. Fonte: Camel, p. 320.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 8 • DES 4 • COS 6 • INT 2 • SAG 4 • CAR 3 |
+| Risorse e protezioni | PV 24 • PM 5 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 8 • Tempra 10 • Riflessi 8 • Volontà 7 • Magia 8 |
+| Iniziativa e Azioni | INI −2 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 10 / 20 / 30 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 8 • Atletica 10 • Percezione 9 • Furtività 5 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso | 8 | 1d4+1 Naturale; Contusione | 1 Q |
+
+**Trasporto robusto.** Usa le soglie anatomiche raddoppiate della tabella finale: 160 kg ordinari, 320 kg massimi trasportabili e 640 kg di spinta o trascinamento. Il beneficio non aumenta FOR, attacchi, danni o numero di passeggeri; serve una sistemazione realmente utilizzabile per il carico.
+
+**Viaggio.** Il profilo non assegna un consumo fisso di acqua o un’esenzione dall’Affaticamento: si valutano clima, sforzo e disponibilità secondo le regole comuni. L’adattamento a un ambiente arido non protegge da lava, Fuoco o gas delle Terre del Fuoco.
+
+**Condotta.** Un Morso per Round, Opportunità compresa. Non comprende linguaggi e non ha un attacco di sputo in questa scheda. Può fermarsi, arretrare o cercare il gruppo; sotto 6 PV o a Ferita Profonda tende a sottrarsi. Se è carico, la fuga conserva i relativi impedimenti.
+
+# **Cavallo da tiro**
+
+*Equino da lavoro • trasporto robusto • Natura Comune*
+
+Un cavallo robusto impiegato per carichi e lavoro. I finimenti possono permettergli di trainare un mezzo compatibile; il calcio rimane una reazione fisicamente raggiungibile, non un attacco contro ogni lato del corpo. Fonte: Draft Horse, p. 321.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 9 • DES 5 • COS 6 • INT 2 • SAG 5 • CAR 4 |
+| Risorse e protezioni | PV 28 • PM 6 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 8 • Tempra 10 • Riflessi 9 • Volontà 8 • Magia 8 |
+| Iniziativa e Azioni | INI −1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 8 / 16 / 24 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 10 • Atletica 12 • Percezione 10 • Furtività 5 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Zoccoli | 10 | 1d8+2 Naturale; Contusione | 1 Q |
+
+**Trasporto robusto.** Carico ordinario 180 kg, massimo trasportabile 360 kg, spinta o trascinamento 720 kg nelle condizioni della tabella finale. Tiro di un carro, pendenza, fondo e finimenti devono essere compatibili con il mezzo; la massa del carico non si traduce da sola in velocità o Azioni aggiuntive.
+
+**Lavoro e difesa.** Un solo attacco di Zoccoli per Round, Opportunità compresa. Non possiede Impeto o Calpestare del Cavallo da guerra. Un imbrago che limita lo spostamento può impedire una Schivata, pur lasciando applicabili AR, PS e altre conseguenze ordinarie.
+
+**Condotta.** Non comprende linguaggi. Un esemplare abituato al lavoro può seguire indicazioni note e fermarsi se il percorso diventa impraticabile. Sotto 7 PV o a Ferita Profonda tende ad arretrare o cercare il conduttore. Sella e bardatura non sono comprese nel profilo.
+
+# **Cavallo da sella**
+
+*Equino da viaggio • andatura veloce • Natura Comune*
+
+Un cavallo preparato al trasporto di un cavaliere su percorsi compatibili. La sua velocità non implica la capacità di affrontare volontariamente fiamme, spari o una carica contro una minaccia. Fonte: Riding Horse, p. 336.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 8 • DES 6 • COS 5 • INT 2 • SAG 5 • CAR 4 |
+| Risorse e protezioni | PV 22 • PM 5 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 9 • Riflessi 10 • Volontà 8 • Magia 8 |
+| Iniziativa e Azioni | INI 0 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 12 / 24 / 36 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 9 • Atletica 12 • Percezione 10 • Furtività 6 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Zoccoli | 9 | 1d6+2 Naturale; Contusione | 1 Q |
+
+**Trasporto robusto.** Carico ordinario 160 kg, massimo trasportabile 320 kg e spinta o trascinamento 640 kg nelle condizioni comuni. Cavaliere, sua dotazione, sella e bagagli entrano nello stesso peso complessivo. La portata degli Zoccoli non diventa quella dell’arma del cavaliere.
+
+**Andatura.** Usa l’AzM dell’animale e le distanze riportate, ridotte da carico, terreno o lesioni. L’abitudine alla sella non gli concede Impeto, Calpestare, immunità a Terrorizzato o una Difesa gratuita. Un attacco di Zoccoli per Round, Opportunità compresa.
+
+**Condotta.** Non comprende linguaggi. Cerca uno spazio aperto e una direzione conosciuta; sotto 5 PV o a Ferita Profonda tende alla fuga. Un rapporto con il conduttore può agevolare la gestione ordinaria, senza annullare pericoli reali o trasformare ogni esemplare in cavallo da guerra.
+
+# **Cavallo da guerra**
+
+*Equino addestrato allo scontro • Impeto e Calpestare • Natura Comune*
+
+Un cavallo abituato al combattimento, capace di colpire con gli zoccoli e sfruttare una vittima caduta. Il profilo descrive l’animale senza armatura; la tabella di bardature della fonte non si trasferisce automaticamente al sistema AR. Fonte: Warhorse, p. 340.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 8 • DES 6 • COS 6 • INT 2 • SAG 6 • CAR 4 |
+| Risorse e protezioni | PV 28 • PM 6 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 10 • Riflessi 10 • Volontà 8 • Magia 9 |
+| Iniziativa e Azioni | INI 0 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 12 / 24 / 36 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 11 • Atletica 12 • Percezione 11 • Furtività 6 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Zoccoli | 11 | 1d8+2 Naturale; Contusione | 1 Q |
+| Calpestare | 11 | 1d8+2 Naturale; Contusione | 1 Q; vittima A Terra |
+
+**Sequenza.** Al massimo un attacco di Zoccoli e un Calpestare per Round, ciascuno con 1 AzP. Calpestare richiede una vittima A Terra non maggiore di 1 × 1 Q e un appoggio che consenta materialmente il colpo. L’Opportunità usa soltanto Zoccoli e rientra nel relativo limite. Non entra automaticamente nello spazio della vittima.
+
+**Impeto.** Dopo almeno 4 Q del Passo rettilineo, Zoccoli con almeno 1 danno finale impongono Tempra 0 a una vittima non maggiore di 1 × 1 Q: fallimento A Terra. Non aumenta il danno degli Zoccoli. Un eventuale Calpestare costa la seconda AzP; se l’ha spesa per una Difesa non può recuperarla. Nessun attacco gratuito dell’originale.
+
+**Trasporto e condotta.** Trasporto robusto: 160 / 320 / 640 kg secondo la tabella finale. Non comprende linguaggi; può eseguire segnali di combattimento già appresi. Sotto 7 PV o a Ferita Profonda tende a cercare riparo o il conduttore. L’addestramento non rende immune a Paura, Terrorizzato o dolore.
+
+# **Mulo**
+
+*Animale da soma • trasporto robusto e Piede saldo • Natura Comune*
+
+Un animale da carico adatto a percorsi che lasciano poco spazio per manovrare. Cerca un appoggio stabile e può colpire con gli zoccoli quando qualcuno lo stringe senza via di fuga. Fonte: Mule, p. 333.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 6 • DES 5 • COS 6 • INT 2 • SAG 5 • CAR 3 |
+| Risorse e protezioni | PV 18 • PM 5 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 8 • Tempra 10 • Riflessi 9 • Volontà 7 • Magia 8 |
+| Iniziativa e Azioni | INI −1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 8 / 16 / 24 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 8 • Atletica 11 • Percezione 10 • Furtività 7 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Zoccoli | 8 | 1d4+1 Naturale; Contusione | 1 Q |
+
+**Trasporto robusto.** Nonostante lo spazio di 1 × 1 Q, usa le soglie anatomiche raddoppiate: 120 kg ordinari, 240 kg massimi trasportabili e 480 kg di spinta o trascinamento. Non aumenta FOR o danni e non concede il Talento Mulo da Soma del Giocatore, che ha effetti distinti sulle Prove.
+
+**Piede saldo.** Applica il +2 circoscritto della pagina comune contro gli effetti che lo fanno cadere. Non aggiungerlo a ogni Tempra o ad Atletica per qualunque attività. Appigli, larghezza del passaggio e stabilità del carico rimangono necessari.
+
+**Condotta.** Un attacco di Zoccoli per Round, Opportunità compresa. Non comprende linguaggi. Può fermarsi davanti a un ostacolo concreto anziché proseguire; sotto 4 PV o a Ferita Profonda tende a cercare un riparo. Una bardatura non viene creata automaticamente dal suo ruolo di animale da soma.
+
+# **Pony**
+
+*Piccolo equino • cavalcatura per carichi compatibili • Natura Comune*
+
+Un equino di dimensioni contenute, utilizzabile da un cavaliere il cui peso e ingombro siano realmente compatibili. Conserva capacità di difesa con gli zoccoli senza diventare una versione ridotta del Cavallo da guerra. Fonte: Pony, p. 335.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 6 • DES 5 • COS 5 • INT 2 • SAG 5 • CAR 4 |
+| Risorse e protezioni | PV 16 • PM 5 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 8 • Tempra 9 • Riflessi 9 • Volontà 8 • Magia 8 |
+| Iniziativa e Azioni | INI −1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 8 / 16 / 24 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 9 • Atletica 10 • Percezione 10 • Furtività 7 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Zoccoli | 9 | 1d6+1 Naturale; Contusione | 1 Q |
+
+**Carico.** Usa le soglie ordinarie del Giocatore: 60 kg senza Sovraccarico, 120 kg massimi trasportabili e 240 kg di spinta o trascinamento. Il totale comprende il cavaliere e tutta la sua dotazione. Lo spazio occupato non raddoppia le soglie e non rende adatto un carico troppo alto o instabile.
+
+**Limiti.** Un attacco di Zoccoli per Round, Opportunità compresa. Non ha Trasporto robusto, Piede saldo, Impeto o Calpestare. Per un passaggio stretto si valuta il corpo reale con sella e carico; la pedina da 1 Q non elimina questi ingombri.
+
+**Condotta.** Non comprende linguaggi. Un esemplare abituato può seguire il conduttore o fermarsi a un segnale noto. Sotto 4 PV o a Ferita Profonda tende a cercare il gruppo o un’uscita. Cure, affaticamento e riposo seguono le stesse procedure degli altri animali.
+
+# **Mastino**
+
+*Cane da guardia • sensi acuti e atterramento • Natura Comune*
+
+Un cane robusto che può essere addestrato alla guardia, alla ricerca e a compiti di accompagnamento. L’animale distingue suoni e odori accessibili, senza riconoscere automaticamente intenzioni o appartenenze. Fonte: Mastiff, p. 332.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 5 • DES 7 • COS 5 • INT 3 • SAG 6 • CAR 4 |
+| Risorse e protezioni | PV 12 • PM 5 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 9 • Riflessi 11 • Volontà 8 • Magia 8 |
+| Iniziativa e Azioni | INI +1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 8 / 16 / 24 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 9 • Atletica 10 • Percezione 11 • Furtività 10 • Sopravvivenza 9 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso | 9 | 1d6+1 Naturale; Perforazione | 1 Q |
+
+**Atterrare.** Un Morso con almeno 1 danno finale contro una creatura non maggiore di 1 × 1 Q impone Tempra 0: fallimento A Terra. Il Morso non afferra automaticamente, non impedisce il movimento e non infligge un secondo danno. Il limite è un Morso per Round, Opportunità compresa.
+
+**Udito e olfatto.** +2 a Percezione quando udito oppure olfatto sono determinanti, una sola volta per Prova. Per seguire una traccia usa Sopravvivenza 9 con indizi accessibili; il bonus di Percezione non si trasferisce automaticamente a quell’Abilità. Nessuna Scurovisione o individuazione oltre ogni ostacolo.
+
+**Carico e condotta.** Soglie ordinarie 50 / 100 / 200 kg. Un eventuale impiego come cavalcatura richiede cavaliere piccolo, peso e anatomia compatibili e addestramento specifico. Non comprende linguaggi; può apprendere segnali. Sotto 3 PV o a Ferita Profonda tende a ritirarsi o tornare al conduttore. Il Morso non trasmette malattie automaticamente.
+
+# **Capra**
+
+*Ungulato agile • Piede saldo e Impeto • Natura Comune*
+
+Un animale di allevamento o selvatico capace di cercare cibo su terreni irregolari e difendere lo spazio vicino con le corna. Un percorso roccioso resta una difficoltà concreta, anche per un animale dal passo sicuro. Fonte: Goat, p. 330.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 4 • DES 5 • COS 5 • INT 2 • SAG 5 • CAR 3 |
+| Risorse e protezioni | PV 8 • PM 4 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 8 • Tempra 9 • Riflessi 9 • Volontà 7 • Magia 7 |
+| Iniziativa e Azioni | INI −1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 8 / 16 / 24 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 8 • Atletica 10 • Percezione 10 • Furtività 9 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Cornata | 8 | 1d4+1 Naturale; Contusione | 1 Q |
+| Cornata in Impeto | 8 | 2d4+1 Naturale; Contusione | 1 Q; 4 Q rettilinei |
+
+**Impeto.** Dopo il percorso comune di 4 Q del Passo usa 2d4+1 al posto del danno normale; la formula comprende un solo 1d4 da slancio. Almeno 1 danno finale impone Tempra 0 a una creatura non maggiore di 1 × 1 Q: fallimento A Terra. Non combina il danno speciale con il raddoppio della Carica.
+
+**Piede saldo e carico.** Applica il +2 comune alle Prove pertinenti contro A Terra. Non ottiene movimento di arrampicata speciale o aderenza ai soffitti. Soglie ordinarie 40 / 80 / 160 kg; capacità di trasporto e disponibilità a portare una persona restano distinte.
+
+**Condotta.** Una Cornata per Round, normale oppure in Impeto; l’Opportunità usa soltanto quella normale. Non comprende linguaggi. Può minacciare, allontanarsi o difendere i piccoli; sotto 2 PV o a Ferita Profonda tende a cercare un appoggio protetto o il branco.
+
+# **Capra gigante**
+
+*Grande ungulato • Impeto e Piede saldo • Natura Comune*
+
+Una capra di grandi dimensioni capace di colpire con una cornata in slancio. La sua struttura può sostenere carichi maggiori, ma non implica un’abitudine alla sella o la disponibilità ad avvicinarsi a una battaglia. Fonte: Giant Goat, p. 326.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 8 • DES 5 • COS 6 • INT 2 • SAG 6 • CAR 3 |
+| Risorse e protezioni | PV 28 • PM 6 • AR 1 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 10 • Riflessi 9 • Volontà 7 • Magia 8 |
+| Iniziativa e Azioni | INI −1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 8 / 16 / 24 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 10 • Atletica 12 • Percezione 11 • Furtività 6 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Cornata | 10 | 1d6+2 Naturale; Contusione | 1 Q |
+| Cornata in Impeto | 10 | 2d6+2 Naturale; Contusione | 1 Q; 4 Q rettilinei |
+
+**Impeto.** Con almeno 4 Q del Passo rettilineo usa il danno completo 2d6+2, comprensivo di un solo 1d6 aggiuntivo. Almeno 1 danno finale impone Tempra 0 a una creatura non maggiore di 1 × 1 Q: fallimento A Terra. Nessun Calpestare o attacco gratuito dopo la caduta.
+
+**Piede saldo e trasporto.** Ha il +2 circoscritto contro A Terra e Trasporto robusto: 160 / 320 / 640 kg nelle condizioni finali del blocco. La corazza è AR biologica senza PI separati; le corna non permettono Parata naturale e non aprono automaticamente una breccia nei muri.
+
+**Condotta.** Una Cornata per Round, normale oppure in Impeto, con sola Cornata normale per l’Opportunità. Non comprende linguaggi. Sotto 7 PV o a Ferita Profonda tende a sottrarsi verso terreno favorevole. Il nome e la massa non aggiungono immunità ambientali o poteri della Covata.
+
+# **Alce**
+
+*Ungulato selvatico • Impeto e zoccoli • Natura Comune*
+
+Un grande erbivoro che può allontanarsi dagli intrusi o difendere il branco. È distinto dall’Alce gigante già presente nel catalogo e non riceve le sue Azioni aggiuntive o la maggiore portata. Fonte: Elk, p. 322.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 8 • DES 5 • COS 5 • INT 2 • SAG 5 • CAR 3 |
+| Risorse e protezioni | PV 22 • PM 5 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 9 • Riflessi 9 • Volontà 7 • Magia 8 |
+| Iniziativa e Azioni | INI −1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 10 / 20 / 30 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 10 • Atletica 12 • Percezione 10 • Furtività 7 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Corna | 10 | 1d6+2 Naturale; Contusione | 1 Q |
+| Corna in Impeto | 10 | 2d6+2 Naturale; Contusione | 1 Q; 4 Q rettilinei |
+| Zoccoli | 10 | 1d8+2 Naturale; Contusione | 1 Q; vittima A Terra |
+
+**Impeto.** Dopo almeno 4 Q del Passo rettilineo sostituisce il danno ordinario con 2d6+2, che comprende un solo 1d6 da slancio. Almeno 1 danno finale impone Tempra 0 a una vittima non maggiore di 1 × 1 Q: fallimento A Terra. Nessun ×2 aggiuntivo da Carica.
+
+**Un solo colpo.** Sceglie Corna, Corna in Impeto oppure Zoccoli per l’unico attacco del Round. Zoccoli richiede una vittima già A Terra non maggiore di 1 × 1 Q e un appoggio che consenta il colpo. Non colpisce ancora dopo averla atterrata. L’Opportunità usa solo Corna ordinarie e consuma il limite offensivo.
+
+**Trasporto e condotta.** Trasporto robusto: 160 / 320 / 640 kg. È una capacità anatomica, non addestramento come cavalcatura. Non comprende linguaggi e non possiede Piede saldo speciale o sensi acuti. Sotto 5 PV o a Ferita Profonda tende a cercare il branco o spazio libero, salvo la necessità di proteggere piccoli vicini.
+
+# **Carico e gestione degli animali**
+
+**Soglie.** Tutti i pesi comprendono persone, loro dotazioni e attrezzatura dell’animale. Pony, Mastino e Capra usano FOR × 10 / 20 / 40 kg. Cammello, tre Cavalli, Mulo, Capra gigante e Alce possiedono Trasporto robusto: per questa anatomia le sole soglie diventano FOR × 20 / 40 / 80 kg. Non raddoppiano FOR, bonus alle Prove o danni. Lo spazio occupato, da solo, non concede il tratto ad altre creature.
+
+| Animale | Ordinario | Massimo trasportabile | Spinta e trascinamento |
+| :---- | :---: | :---: | :---: |
+| Cammello | 160 kg | 320 kg | 640 kg |
+| Cavallo da tiro | 180 kg | 360 kg | 720 kg |
+| Cavallo da sella | 160 kg | 320 kg | 640 kg |
+| Cavallo da guerra | 160 kg | 320 kg | 640 kg |
+| Mulo | 120 kg | 240 kg | 480 kg |
+| Pony | 60 kg | 120 kg | 240 kg |
+| Mastino | 50 kg | 100 kg | 200 kg |
+| Capra | 40 kg | 80 kg | 160 kg |
+| Capra gigante | 160 kg | 320 kg | 640 kg |
+| Alce | 160 kg | 320 kg | 640 kg |
+
+**Sovraccarico.** Oltre l’ordinario e fino al massimo: −2 VA alle Prove fisiche, non alle PS, solo Passo con −2 Q e normale peggioramento automatico di Affaticamento per ogni ora completa di trasporto gravoso. Oltre il massimo: Movimento 0 finché il carico non è ridotto o interviene un aiuto adeguato; resta −2 fisico. I pesi mancanti sono «da definire» e il totale «parziale», non 0 kg.
+
+**Spinta e traino.** La quarta colonna vale su terreno piano e senza ostacoli, con le limitazioni del Sovraccarico, secondo il Giocatore §5.2.6. Ruote, pendenze, terreno e tiro di più animali richiedono condizioni e un mezzo definiti prima dell’impiego. Non si deducono da questa tabella autonomia giornaliera, velocità di un carro o prestazioni di un veicolo.
+
+**Cavaliere e animale.** Il tragitto trasportato usa il Movimento dell’animale e non si raddoppia per il solo fatto di impartire un ordine. Restano distinti Azioni, risorse, attacchi e bersagli dei due soggetti: Impeto e danni dell’animale non si trasferiscono all’arma del cavaliere. Stare in sella non concede automaticamente AR, Copertura o Difese condivise. Un animale selvatico deve essere reso concretamente gestibile prima dell’impiego come cavalcatura.
+
+**Dotazione e cure.** Selle, bardature e finimenti richiedono profili compatibili; una variante corazzata deve indicare AR, penalità e valore unitario finale dei PX. Le cure seguono PV, Ferite, Menomazioni, Sanguinamento e Morente come interventi distinti. Recuperare PV o fermarsi a riposare non stabilizza da solo un animale Morente.
+
+# **Mephit e creature elementali**
+
+*Dieci profili per fenomeni elementali, fucine e profondità*
+
+Polvere, ghiaccio, magma, fango, fumo e vapore formano i sei Mephit. Serpente di fuoco e Salamandra abitano luoghi incandescenti; Galeb Duhr e Xorn sono legati alla pietra. Queste schede descrivono esseri autonomi, con motivazioni e risorse proprie. La loro presenza su Iris e gli eventuali vincoli di evocazione devono essere stabiliti nell’avventura: non sono nuove opzioni automatiche di Evoca Elementale.
+
+| Creatura | GS | PX per 4 PG |
+| :---- | :---: | :---: |
+| Mephit della polvere | Inesperto | 20 |
+| Mephit del ghiaccio | Inesperto | 20 |
+| Mephit del magma | Inesperto | 20 |
+| Mephit del fango | Inesperto | 20 |
+| Mephit del fumo | Principiante | 10 |
+| Mephit del vapore | Inesperto | 20 |
+| Serpente di fuoco | Esperto | 30 |
+| Salamandra | Veterano | 55 |
+| Galeb Duhr | Veterano | 50 |
+| Xorn | Veterano | 50 |
+
+**PX di riferimento.** Valori per un esemplare e quattro PG. La Salamandra comprende una Lancia Comune; gli altri nove profili non hanno dotazione conteggiata. I massi animati dal Galeb Duhr sono avversari aggiuntivi con 30 PX unitari, descritti nella pagina dedicata; non si sommano come equipaggiamento. Il premio dell’incontro segue il Direttore §9.3.
+
+**Impiego.** Un Mephit può creare un diversivo o chiedere attenzioni, una Salamandra può trattare il lavoro della fucina e uno Xorn può negoziare per nutrirsi di minerali preziosi. Le descrizioni della fonte non impongono un allineamento o un’ostilità automatica. Nessuna di queste specie appartiene alla Covata per origine o aspetto.
+
+**Fonti e verifica.** Giocatore v0.49, Magia v1.5, Direttore v0.41 e Armamenti v0.64. I rimandi indicano le pagine stampate del Manuale dei Mostri fornito. I poteri della fonte sono convertiti in capacità innate complete; non assegnano un repertorio di incantesimi. La variante opzionale di evocazione di altri Mephit non è compresa. GS e PX sono stime da verificare al tavolo, soprattutto con più massi animati o passaggi nella roccia.
+
+# **Corpi elementali risorse e protezioni**
+
+**Corpi autonomi.** Tutti hanno Natura Comune, una mente e la riserva personale di PM indicata. Non sono organismi biologicamente viventi: non richiedono aria, cibo, acqua o sonno, salvo il nutrimento minerale dello Xorn. Sono immuni a soffocamento, Sonno, Sanguinamento, veleni e malattie biologici. Le cure biologiche, Medicina, riposo biologico e normali riparazioni tecnologiche non ripristinano questi corpi; occorre un effetto espressamente compatibile. Non sono immuni a tutti gli effetti mentali o spirituali.
+
+**PV PM e Ferite.** A 0 PV non scompaiono: Tempra, Ferite, Menomazioni e Morente seguono il §4.2. Le Ferite descrivono la perdita di integrità o coesione; la distruzione avviene alla fine del normale contatore di Morente o con una fonte che distrugga espressamente il corpo. A 0 PM diventano Svenuti al termine della risoluzione completa dell’azione. Recuperano PM secondo le condizioni ordinarie compatibili. Dardo Spirituale e Dardo Psichico seguono le proprie schede e i requisiti del bersaglio.
+
+**Azioni e Difese.** INI modifica 1d10. AzP e unica AzM valgono per l’intero Round; nessuno ha Parata naturale. Schivata richiede 1 AzP, 1 AzM e spazio. La Salamandra può parare con la Lancia pronta, pagando 1 AzP; a distanza applica il −8 dell’arma. Una Parata normale dimezza per eccesso prima dell’AR, una Magistrale annulla. L’Opportunità è un solo attacco ravvicinato normale gratuito per Round, nei limiti delle voci; non attiva Soffi, Stringere, Impeto, poteri o animazioni.
+
+**Danni misti.** Artigli gelidi, colpi incandescenti e Lancia calda producono AC 1: una sola Difesa si applica alle due componenti. Per ciascuna si calcolano moltiplicatori, riduzione della Difesa, resistenze e AR pertinente; i residui si sommano per una sola applicazione a PV e Ferite. Naturale e Magico incontrano tutta l’AR pertinente, Etereo solo quella magica. Il residuo di Fuoco o Gelo, superata la relativa Contromisura, può imporre la propria PS ordinaria contro Incendiato o Rallentato.
+
+**Immunità e vulnerabilità.** I sei Mephit sono inoltre immuni ad Avvelenato. L’immunità al Fuoco evita danni da Fuoco e Incendiato; quella al Gelo evita danni e conseguenze del Gelo. Una vulnerabilità ×2 vale per la componente indicata di qualunque Natura, prima di Difesa e AR; con Magistrale il ×2 diventa ×3 complessivo. Non si estende agli altri componenti del colpo e non applica il disorientamento da freddo della Covata.
+
+**Movimento e parti.** Le terne sono Passo / Corsa / Scatto in Q. Corsa e Scatto in volo richiedono Atletica −2 e −4; percorsi misti e Nuoto nativo del Fango seguono §5.2 e il budget unico, senza rinnovare l’AzM. I Mephit volano con ali funzionali senza volo stazionario: Torace comprende il cingolo alare, Testa capo e bocca, Braccia e Gambe gli arti corrispondenti. Svenuto o perdita delle ali possono causare Caduta. Le altre anatomie sono specificate nelle voci.
+
+# **Mephit soffi e dissoluzione**
+
+**Capacità innate.** Nessuno dei dieci conosce incantesimi appresi. I poteri pagano Azioni e PM dichiarati, senza Focus, componenti o Potere; non sono lanci interrompibili con Contromagia. Negare Potere può rimuovere soltanto gli effetti per i quali è indicata una potenza di confronto, con le procedure del §23.6 della Magia. Non cancella il corpo autonomo, il calore o il movimento innato nella pietra. Un uso ogni 24 ore si conta dall’attivazione, non dall’inizio dello scontro.
+
+**Soffi.** Ogni Mephit inizia con il Soffio pronto. Dopo un uso nel Round R può riutilizzarlo dalla propria Iniziativa nel Round R + 3, pagando di nuovo i PM. Nessun tiro di Ricarica e nessuna rigenerazione automatica di PM. Serve una bocca libera e un mezzo compatibile. Il Soffio costa 1 AzP, senza tiro per colpire, Parata o Schivata; si usa soltanto la PS o l’Elusione indicata. Non è un’Opportunità.
+
+**Aree e protezioni.** I coni sono lunghi 3 Q e si propagano dalla bocca lungo percorsi liberi. Colpiscono tutti i bersagli nell’area, alleati compresi, escludendo la fonte. I solidi bloccano la propagazione e le Coperture pertinenti modificano la Salvezza. Un danno ad Area usa Elusione Riflessi 0, quando fisicamente possibile: successo dimezza per eccesso prima dell’AR. Le eccezioni delle capacità senza danno e del Vapore finale sono scritte nelle voci.
+
+**Distruzione.** La dissoluzione dei sei Mephit avviene una sola volta alla distruzione effettiva del corpo, non a 0 PV, a 0 PM o all’ingresso in Morente. Non costa Azioni, non può essere attivata volontariamente e non è un attacco con Magistrale. Il raggio è 1 Q dal bordo del corpo. I solidi fermano la propagazione; tutte le altre creature possono essere coinvolte. Un eventuale congedo o termine di evocazione non equivale a distruzione.
+
+**Esiti finali.** Polvere impone Tempra 0 contro Accecato per 5 Round, con una nuova Tempra 0 gratuita a fine propria Iniziativa. Ghiaccio infligge 1d8 Naturale da Taglio e Magma 2d6 Fuoco Naturale, con Elusione Riflessi 0 per dimezzare. Fango impone Riflessi 0 alle creature non maggiori di 1 × 1 Q: fallimento Immobilizzato per 1 Round, con le liberazioni della voce. Fumo lascia una nube di raggio 1 Q per 10 Round. Vapore impone Riflessi 0: successo evita tutto, fallimento 1d8 Fuoco Naturale; nessuna Elusione aggiuntiva.
+
+**Durate e visibilità.** Uno Stato di durata N applicato nel Round R termina a fine Round R + N, salvo recupero anticipato. Accecato mantiene le regole del Giocatore, compresi i sensi alternativi. Nubi di fumo e nebbia sono opache: nessuna linea visiva attraverso la nube, senza assegnare Accecato persistente a chi ne esce. Una posizione nota può essere attaccata con i normali limiti sensoriali; Scurovisione non attraversa la nube. Un vento forte continuo per un Round la disperde; non causa soffocamento da sola.
+
+# **Mephit della polvere**
+
+*Piccolo elementale di terra e aria • polvere accecante • Natura Comune*
+
+Un essere curioso e invadente che cerca luoghi polverosi e può nascondere la fuga dietro un soffio. Fonte: Dust Mephit, p. 215.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 3 • DES 7 • COS 5 • INT 5 • SAG 5 • CAR 5 |
+| Risorse e protezioni | PV 18 • PM 9 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 9 • Riflessi 11 • Volontà 9 • Magia 9 |
+| Iniziativa e Azioni | INI +1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra e volo 6 / 12 / 18 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 9 • Atletica 9 • Percezione 10 • Furtività 12 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Artigli | 9 | 1d4+1 Naturale; Taglio | 1 Q |
+
+**Soffio accecante.** 1 AzP e 2 PM, cono 3 Q, cadenza comune R + 3. Ogni creatura coinvolta effettua Riflessi 0: successo evita, fallimento Accecato per 5 Round. Nessun danno né confronto con AR. A fine di ogni propria Iniziativa la vittima ripete gratuitamente Riflessi 0: successo termina lo Stato. I sensi alternativi mantengono i propri limiti.
+
+**Sonno innato.** 1 AzP e 3 PM, un uso ogni 24 ore. Un vivente visibile capace di dormire entro 6 Q effettua Volontà 0; riceve +4 se già in combattimento o in pericolo concreto e immediato. Fallimento: sonno per 5 Round con gli effetti e le condizioni di Indurre Sonno 3, Magia §18.6. Danni non svegliano; due turni consecutivi di scuotimento con 1 AzP ciascuno, Cura Spirituale 6 o Negare Potere 3 risvegliano. Barriera Mentale dà il proprio bonus, senza immunità.
+
+**Corpo e condotta.** Vulnerabile al Fuoco ×2; Scurovisione 12 Q. Parla Auran e Terran. Un Artiglio per Round, Opportunità compresa; la dissoluzione usa Polvere della pagina comune. Sotto 4 PV o a Ferita Profonda cerca copertura e fuga. Non impone Sorpresa soltanto perché il bersaglio è stato accecato.
+
+# **Mephit del ghiaccio**
+
+*Piccolo elementale di aria e acqua • gelo e nebbia • Natura Comune*
+
+Una creatura dal corpo di ghiaccio che può celarsi tra schegge e accumuli gelati. Fonte: Ice Mephit, p. 215.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 3 • DES 6 • COS 5 • INT 5 • SAG 5 • CAR 6 |
+| Risorse e protezioni | PV 22 • PM 10 • AR 1 intrinseca; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 9 • Riflessi 10 • Volontà 10 • Magia 9 |
+| Iniziativa e Azioni | INI 0 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra e volo 6 / 12 / 18 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 9 • Atletica 9 • Percezione 10 • Furtività 11 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Artigli gelidi | 9 | 1d4+1 Taglio e 1d4 Gelo; Naturali | 1 Q |
+
+**Soffio gelido.** 1 AzP e 3 PM, cono 3 Q, cadenza comune. Infligge 2d4 Gelo Naturale; Elusione Riflessi 0 dimezza per eccesso. Dopo il residuo di Gelo si risolve Tempra ordinaria contro Rallentato, se dovuta. Non concede una presa o un congelamento permanente.
+
+**Nebbia innata.** 1 AzP e 3 PM, un uso ogni 24 ore: crea una nube immobile di raggio 2 Q centrata in un punto visibile entro 6 Q, per 5 Round senza Concentrazione. Usa i limiti di visibilità e vento della pagina comune; ostacola anche il Mephit. Una nuova nube termina la precedente. Congedo gratuito alla propria Iniziativa; la morte non la cancella. Negare Potere ammesso, potenza 3.
+
+**Corpo e condotta.** Immune al Gelo; vulnerabile a Fuoco e Contusione ×2, ciascuno per la propria componente. Scurovisione 12 Q; parla Aquan e Auran. Immobile con appoggio tra ghiaccio plausibile ottiene +4 a Furtività per apparire una scheggia, fino a un movimento osservato. Un Artiglio per Round, Opportunità compresa; dissoluzione Ghiaccio. Sotto 5 PV o a Ferita Profonda cerca riparo.
+
+# **Mephit del magma**
+
+*Piccolo elementale di terra e fuoco • fiamme e metallo caldo • Natura Comune*
+
+Un piccolo corpo di magma che cerca calore e può trasformare un oggetto metallico in un pericolo per chi lo porta. Fonte: Magma Mephit, p. 216.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 4 • DES 6 • COS 6 • INT 4 • SAG 5 • CAR 5 |
+| Risorse e protezioni | PV 22 • PM 10 • AR 1 intrinseca; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 10 • Riflessi 10 • Volontà 9 • Magia 9 |
+| Iniziativa e Azioni | INI 0 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra e volo 6 / 12 / 18 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 9 • Atletica 9 • Percezione 9 • Furtività 11 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Artigli ardenti | 9 | 1d4+1 Taglio e 1d4 Fuoco; Naturali | 1 Q |
+
+**Soffio di fuoco.** 1 AzP e 3 PM, cono 3 Q, cadenza comune: 2d6 Fuoco Naturale, Elusione Riflessi 0 per dimezzare. Il residuo oltre Ignifugo può imporre Riflessi ordinario contro Incendiato. Il corpo non infligge un secondo danno per la semplice vicinanza.
+
+**Metallo caldo.** La capacità attiva, i suoi costi e le contromisure sono nella pagina seguente. È distinta dal calore passivo di Azer, Serpente di fuoco e Salamandra; gli Artigli non scaldano gratuitamente ogni oggetto colpito.
+
+**Corpo e condotta.** Immune al Fuoco e Incendiato, vulnerabile al Gelo ×2. Scurovisione 12 Q; parla Ignan e Terran. Immobile con appoggio in un accumulo di magma plausibile ottiene +4 a Furtività per celare la propria natura, fino a un movimento osservato. Un Artiglio per Round, Opportunità compresa; dissoluzione Magma. Sotto 5 PV o a Ferita Profonda cerca calore e fuga.
+
+# **Mephit del magma metallo caldo**
+
+**Attivazione.** 1 AzP e 3 PM, un uso ogni 24 ore: un singolo oggetto metallico non magico indossato o impugnato, visibile entro 6 Q e con linea d’effetto libera. Non seleziona impianti nascosti dentro il corpo, un intero veicolo o tutti gli oggetti di un personaggio. Non occorre tiro per colpire o Potere. Il calore dura a Concentrazione per un massimo di 5 Round, mantenendo oggetto entro 6 Q e linea d’effetto libera.
+
+**Danno.** Il portatore a contatto subisce subito 1d4 Fuoco Magico interno; la stessa applicazione ricorre all’Iniziativa del Mephit, al massimo una volta per Round. Ignora AR non magica generica; AR magica e protezioni specifiche dal Fuoco restano pertinenti. È riscaldamento senza fiamma: per questa capacità non applica Incendiato. Nessun Magistrale d’attacco, Parata, Schivata o Elusione; resistenze e immunità al Fuoco funzionano normalmente.
+
+**Lasciare l’oggetto.** Prima di ciascuna applicazione chi lo impugna può lasciarlo cadere gratuitamente ed evitare quel danno, se l’oggetto non è vincolato e il contatto cessa davvero. Togliere una protezione indossata richiede invece i tempi e le Azioni ordinari. Afferrarlo di nuovo mentre è caldo espone alla stessa fonte, senza superare una applicazione per creatura e per Round. Nessun danno al proprietario che non lo tocca.
+
+**Mantenimento e rimozione.** La Concentrazione segue integralmente la Magia: ne conserva limiti alle Azioni, PS di Volontà e interruzione per perdita di coscienza. Il Mephit non possiede Concentrazione Operativa. Può interromperla gratuitamente alla propria Iniziativa; Negare Potere è ammesso, potenza 6. Finito l’effetto cessa il danno magico, senza guarire PV o Ferite.
+
+**Oggetti.** La capacità non applica Corrosivo, non sottrae PI, non detona automaticamente munizioni e non distrugge il metallo. Un oggetto incustodito può diventare scomodo da manipolare, ma non fornisce danno illimitato a un’intera struttura. Il riscaldamento attivo non resta una proprietà commerciabile dopo la fine del potere.
+
+# **Mephit del fango**
+
+*Piccolo elementale di terra e acqua • fango immobilizzante • Natura Comune*
+
+Un essere viscoso che cerca ripari umidi e può intralciare chi gli si avvicina con una massa di fango aderente. Fonte: Mud Mephit, p. 216.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 4 • DES 6 • COS 6 • INT 5 • SAG 5 • CAR 4 |
+| Risorse e protezioni | PV 26 • PM 8 • AR 1 intrinseca; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 10 • Riflessi 10 • Volontà 8 • Magia 9 |
+| Iniziativa e Azioni | INI 0 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra volo e nuoto 4 / 8 / 12 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 9 • Atletica 9 • Percezione 9 • Furtività 11 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Pugni | 9 | 1d6+1 Naturale; Contusione | 1 Q |
+
+**Soffio di fango.** 1 AzP e 2 PM, una sola creatura non maggiore di 1 × 1 Q entro 1 Q, cadenza comune. Riflessi 0 evita; fallimento Immobilizzato per 5 Round, senza danni e senza bloccare specificamente le mani. Non è un cono e non ignora un ostacolo solido.
+
+**Liberazione.** A fine di ogni propria Iniziativa la vittima ripete Riflessi 0 gratuitamente: successo termina Immobilizzato. In alternativa può spendere 1 AzP per Atletica 0, applicando il −4 fisico dello Stato; successo rompe il vincolo. Un alleato adiacente può tentare Atletica 0 con 1 AzP. Il fango prodotto è materia: Negare Potere non lo scioglie. Queste liberazioni valgono anche per la dissoluzione Fango.
+
+**Corpo e condotta.** Scurovisione 12 Q; parla Aquan e Terran. Immobile con appoggio in fango plausibile ottiene +4 a Furtività per sembrare una massa inerte, fino a un movimento osservato. Un Pugno per Round, Opportunità compresa. Dissoluzione Fango: durata 1 Round. Sotto 6 PV o a Ferita Profonda cerca una via umida di fuga; non è immune a Gelo o Fuoco.
+
+# **Mephit del fumo**
+
+*Piccolo elementale di aria e fuoco • cenere e luci • Natura Comune*
+
+Una creatura fumosa che può distrarre con bagliori o nascondersi dietro ciò che lascia alla distruzione. Il corpo rimane materiale e colpibile. Fonte: Smoke Mephit, p. 217.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 3 • DES 7 • COS 6 • INT 5 • SAG 5 • CAR 5 |
+| Risorse e protezioni | PV 18 • PM 8 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 10 • Riflessi 11 • Volontà 9 • Magia 9 |
+| Iniziativa e Azioni | INI +1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra e volo 6 / 12 / 18 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 9 • Atletica 9 • Percezione 10 • Furtività 12 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Artigli | 9 | 1d4+1 Naturale; Taglio | 1 Q |
+
+**Soffio di cenere.** 1 AzP e 2 PM, cono 3 Q, cadenza comune. Riflessi 0 evita; fallimento Accecato per 1 Round, senza danni. Si applicano tempi e sensi della pagina comune. Non infligge Fuoco soltanto perché contiene cenere calda.
+
+**Luci danzanti innate.** 1 AzP e 2 PM, un uso ogni 24 ore: fino a quattro punti luminosi in spazi visibili entro 6 Q. Ogni punto illumina 1 Q più 1 Q di penombra per 10 Round, senza Concentrazione. Con 1 AzP sposta i punti lungo percorsi liberi, mantenendoli entro 6 Q da sé; non attraversano solidi. Non sono corpi, fiamme o immagini di creature e non infliggono danno. Congedo gratuito; Negare Potere ammesso, potenza 3 per l’insieme.
+
+**Corpo e condotta.** Immune a Fuoco e Incendiato; Scurovisione 12 Q. Parla Auran e Ignan. Un Artiglio per Round, Opportunità compresa. La dissoluzione Fumo lascia una nube fisica di raggio 1 Q per 10 Round, non rimovibile con Negare Potere. Sotto 4 PV o a Ferita Profonda cerca copertura; non diventa incorporeo e non passa attraverso muri.
+
+# **Mephit del vapore**
+
+*Piccolo elementale di acqua e fuoco • vapore e sfocatura • Natura Comune*
+
+Un essere che emette sfiati e gocce calde. Può rendere incerta la propria sagoma senza diventare invisibile. Fonte: Steam Mephit, p. 217.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 3 • DES 5 • COS 5 • INT 6 • SAG 5 • CAR 6 |
+| Risorse e protezioni | PV 20 • PM 9 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 8 • Tempra 9 • Riflessi 9 • Volontà 10 • Magia 9 |
+| Iniziativa e Azioni | INI −1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra e volo 6 / 12 / 18 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 8 • Atletica 9 • Percezione 9 • Furtività 10 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Artigli caldi | 8 | 1d4 Taglio e 1d4 Fuoco; Naturali | 1 Q |
+
+**Soffio di vapore.** 1 AzP e 2 PM, cono 3 Q, cadenza comune: 1d8 Fuoco Naturale; Elusione Riflessi 0 dimezza. L’eventuale residuo di Fuoco segue Ignifugo e Incendiato ordinari. L’acqua calda non è un veleno o un effetto Corrosivo.
+
+**Sfocatura innata.** 1 AzP e 3 PM, un uso ogni 24 ore. Per 5 Round senza Concentrazione gli attacchi diretti contro di lui subiscono −2 VA quando dipendono dalla vista. Non modifica attacchi ad Area, PS, danni automatici o attacchi basati interamente su un senso alternativo valido. Non concede AR o una Difesa gratuita. Negare Potere ammesso, potenza 6; la perdita di coscienza la termina.
+
+**Corpo e condotta.** Immune a Fuoco e Incendiato; Scurovisione 12 Q. Parla Aquan e Ignan. Un Artiglio per Round, Opportunità compresa. Dissoluzione Vapore: Riflessi 0 evita interamente 1d8 Fuoco, come eccezione alla normale Elusione per dimezzare. Sotto 5 PV o a Ferita Profonda cerca riparo; le scie ordinarie non infliggono danno passivo.
+
+# **Serpente di fuoco**
+
+*Elementale giovane • corpo caldo e due attacchi • Natura Comune*
+
+La forma giovane da cui può maturare una Salamandra. Il corpo è materiale e mantiene un calore pericoloso al contatto diretto. Fonte: Fire Snake, p. 265.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 6 • DES 7 • COS 6 • INT 4 • SAG 5 • CAR 4 |
+| Risorse e protezioni | PV 24 • PM 6 • AR 2 intrinseca; AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 10 • Riflessi 11 • Volontà 8 • Magia 9 |
+| Iniziativa e Azioni | INI +1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 6 / 12 / 18 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 10 • Atletica 10 • Percezione 10 • Furtività 9 |
+| GS e PX per 4 PG | Esperto • 30 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso | 10 | 1d4+1 Perforazione e 1d4 Fuoco; Naturali | 1 Q |
+| Coda | 10 | 1d4+1 Contusione e 1d4 Fuoco; Naturali | 1 Q |
+
+**Sequenza.** Al massimo un Morso e una Coda per Round, ciascuno con 1 AzP; le Opportunità rientrano nei limiti. La Coda non afferra e il Morso non inocula veleno. Non si aggiunge il calore corporeo ai suoi attacchi: le componenti di Fuoco sono già complete.
+
+**Protezioni e calore.** Immune a Fuoco e Incendiato, vulnerabile al Gelo ×2. Dimezza il danno Naturale da Contusione, Taglio e Perforazione prima dell’AR; non il danno Magico, Etereo o elementale. Il calore al contatto diretto è nella pagina dedicata, senza danno per semplice vicinanza.
+
+**Corpo e condotta.** Scurovisione 12 Q; comprende Ignan senza parlarlo. Testa comprende fauci, Torace il tronco, Braccia e Gambe le porzioni anteriori e posteriori locomotorie; Coda è la funzione posteriore. Sotto 6 PV o a Ferita Profonda cerca una via calda di fuga. Non si trasforma in Salamandra adulta durante lo scontro e non ha dissoluzione esplosiva.
+
+# **Salamandra**
+
+*Elementale di fuoco • Lancia calda e Coda prensile • Natura Comune*
+
+Un essere serpentiforme con arti superiori, capace di combattere con una Lancia e trattenere una vittima con la coda. Può essere un artigiano o difendere una fucina. Fonte: Salamander, pp. 265–266.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 8 • DES 7 • COS 7 • INT 6 • SAG 5 • CAR 6 |
+| Risorse e protezioni | PV 52 • PM 10 • AR 3 intrinseca; AR magica 0 |
+| Difese e Salvezze | Difese 11 • Tempra 12 • Riflessi 11 • Volontà 10 • Magia 11 |
+| Iniziativa e Azioni | INI +1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 6 / 12 / 18 Q • spazio 2 × 2 Q |
+| Abilità | Armi da guerra 13 • Corpo a corpo 13 • Atletica 12 • Percezione 10 • Tecnologia 12 per metallurgia |
+| GS e PX per 4 PG | Veterano • 55 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Lancia due mani | 13 | 1d6+5 Perforazione e 1d4 Fuoco; Naturali | 2 Q |
+| Coda | 13 | 1d8+2 Contusione e 1d6 Fuoco; Naturali | 2 Q |
+| Stringere | 13 | 1d8+2 Contusione e 1d6 Fuoco; Naturali | vittima trattenuta |
+
+**Sequenza.** Al massimo una Lancia e una Coda oppure Stringere per Round, ciascuno con 1 AzP; le Opportunità usano Lancia o Coda normali nei rispettivi limiti. Le procedure della presa sono nella pagina seguente. Non colpisce automaticamente chi è trattenuto e non assegna altre Azioni per la lunghezza del corpo.
+
+**Dotazione.** Lancia Comune commerciale, FOR 5, PI 6, PS Integrità 10, Armi da guerra, due mani, portata 2 Q e Versatile. Il danno comprende 1d6+3 base a due mani e +2 personale. Inizia pronta; nessuna armatura o scudo. Se usa una mano, il fisico diventa 1d6+3 complessivo. Non è compreso un profilo a lancio. I 55 PX includono questa dotazione.
+
+**Protezioni e condotta.** Immune a Fuoco e Incendiato; vulnerabile al Gelo ×2. Dimezza il Naturale da Contusione, Taglio e Perforazione prima dell’AR. Scurovisione 12 Q; parla Ignan. Testa, Torace e Braccia sono le parti omonime; Gambe rappresenta la coda locomotrice e prensile. Sotto 13 PV o a Ferita Seria può cercare riparo o negoziare. Tecnologia vale solo per metallurgia con mezzi appropriati.
+
+# **Salamandra presa e calore corporeo**
+
+**Afferrare.** Coda con almeno 1 danno finale contro una creatura non maggiore di 1 × 1 Q impone Riflessi −2: fallimento Immobilizzato, con mani utilizzabili salvo un impedimento indipendente. Una sola vittima; la Coda impegnata non attacca altri. Il vincolo permane fino a liberazione o rilascio, senza danno per la sola permanenza. La Salamandra resta ferma mentre mantiene la presa e non trascina automaticamente la vittima.
+
+**Stringere.** Costa 1 AzP e occupa il limite della Coda. Corpo a corpo 13 contrapposto a Corpo a corpo o Atletica della vittima, con il −4 fisico di Immobilizzato: successo infligge il danno completo di Stringere; pareggio o fallimento nessun danno. Si applicano AR e resistenze alle componenti, senza una seconda Parata o Schivata oltre alla contrapposta. Non è utilizzabile come Opportunità.
+
+**Liberarsi.** La vittima usa 1 AzP e la stessa contrapposta per rompere la presa: successo libera, pareggio o fallimento la conserva. Un alleato adiacente può tentare con 1 AzP e strumenti fisicamente adatti. Rilascio volontario gratuito all’Iniziativa della Salamandra; Svenuto, distruzione o perdita della funzione della coda interrompono la presa. Uscire non cura danni o Stati indipendenti.
+
+**Calore diretto.** Serpente di fuoco e Salamandra infliggono rispettivamente 1d4 e 1d6 Fuoco Naturale a chi li tocca o afferra direttamente oppure li colpisce con il proprio corpo entro 1 Q. Massimo una applicazione per creatura e per Round, al primo contatto o all’Iniziativa della fonte se quel contatto prosegue. Non si usa Difesa attiva; AR e protezioni pertinenti restano. Il residuo oltre Ignifugo può applicare Incendiato con Riflessi ordinario.
+
+**Limiti del calore.** Un’arma o uno scudo non trasmettono automaticamente il calore al portatore. Non è un’aura adiacente e non si somma ai colpi portati dalla creatura calda. La vittima trattenuta dalla Salamandra riceve il Fuoco tramite Coda o Stringere pagati, senza un’altra applicazione passiva per la stessa presa. Una protezione indossata conserva la propria AR ma non elimina da sola il contatto diretto.
+
+**Arma calda.** La Salamandra aggiunge 1d4 Fuoco Naturale a una Lancia metallica impugnata, già incluso nei profili. Se la lascia o la perde, il danno aggiuntivo termina; non crea un’arma magica permanente. Il calore non concede Corrosivo, perdita automatica di PI o una presa con la Lancia. Corpo, armi e calore innati non sono cancellati da Negare Potere.
+
+# **Galeb Duhr**
+
+*Elementale di pietra • rotolamento e massi animati • Natura Comune*
+
+Un essere simile a un masso con arti tozzi, capace di custodire un luogo per lunghi periodi e comunicare con chi vi entra. Può ricorrere a pietre animate per difenderlo. Fonte: Galeb Duhr, p. 139.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 10 • DES 6 • COS 9 • INT 6 • SAG 6 • CAR 6 |
+| Risorse e protezioni | PV 58 • PM 12 • AR 4 intrinseca; AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 14 • Riflessi 10 • Volontà 11 • Magia 12 |
+| Iniziativa e Azioni | INI 0 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 3 / 6 / 9 Q; rotolamento 6 Q al Passo • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 13 • Atletica 13 • Percezione 11 • Furtività 9 |
+| GS e PX per 4 PG | Veterano • 50 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Schianto | 13 | 2d6+3 Naturale; Contusione | 1 Q |
+| Schianto in Impeto | 13 | 3d6+3 Naturale; Contusione | 1 Q; 4 Q rotolati |
+
+**Rotolamento.** Con l’AzM percorre fino a 6 Q al Passo, oppure 12 Q lungo una discesa continua realmente praticabile. Conta tutto il percorso e non usa Corsa o Scatto mentre rotola. Dopo almeno 4 Q rettilinei verso la vittima può usare Schianto in Impeto: un solo 1d6 aggiuntivo già compreso, senza ×2 della Carica. Almeno 1 danno finale impone Tempra −2 a una vittima non maggiore di 2 × 2 Q: fallimento A Terra.
+
+**Corpo e sensi.** Dimezza il Naturale da Contusione, Taglio e Perforazione prima dell’AR; immune ad Affaticamento, Avvelenato, Paralizzato e pietrificazione. Scurovisione 12 Q e vibrazioni entro 12 Q sul terreno continuo condiviso, non contro chi vola o è isolato dal supporto. Immobile con appoggio tra rocce plausibili ottiene +4 a Furtività per sembrare un masso, fino a un movimento osservato.
+
+**Anatomia e condotta.** Testa è la parte sensoriale, Torace il nucleo, Braccia gli arti superiori e Gambe quelli locomotori. Un solo Schianto per Round, normale o in Impeto; l’Opportunità usa solo quello normale. Può riservare Azioni per animare o difendersi. Parla Terran e può trattare informazioni sul luogo. Sotto 14 PV o a Ferita Seria tende a proteggere l’accesso o cercare riparo; non perde automaticamente la Concentrazione a 0 PV.
+
+# **Galeb Duhr animare massi**
+
+**Attivazione.** 2 AzP e 6 PM, un uso ogni 24 ore: anima fino a due massi non magici e non lavorati, ciascuno con ingombro compatibile con 1 × 1 Q, visibili entro 12 Q lungo una linea d’effetto libera. Le pietre devono esistere e non far parte di un muro portante o di un corpo. Mantiene Concentrazione per un massimo di 10 Round. Questa capacità consente le sue normali Azioni durante il mantenimento, conservando PS di Volontà e tutte le interruzioni della Concentrazione; non gli assegna il Talento Concentrazione Operativa per altri poteri.
+
+**Profilo dei massi.** Ciascuno usa la scheda completa del Galeb Duhr con queste sostituzioni: PM —, INT 1, CAR 1, Volontà 6, Percezione 8, Furtività 5, 1 AzP e 1 AzM per Round, GS Esperto e 30 PX per quattro PG. Conserva PV 58, COS 9, AR 4, altri VA, Schianto, Impeto, movimento, resistenze e immunità. Non possiede Animare massi, linguaggi o una mente autonoma; è immune a paura, fascinazione e controllo che richieda una mente. Non copia capacità di comando.
+
+**Azioni e ordini.** I massi agiscono subito dopo il Galeb Duhr. Un ordine semplice comune alla propria Iniziativa è gratuito entro 12 Q; oltre questa distanza, o se non può comunicarlo, il compito precedente continua. Allontanarsi non rinnova la durata né interrompe da solo la Concentrazione. Un solo Schianto per masso e per Round, Opportunità compresa. Sono pedine separate con risorse proprie. Risvegliare, sostituire o impartire un altro ordine non concede un secondo turno nello stesso Round.
+
+**Danni e termine.** A 0 PV i massi seguono ancora Tempra, Ferite e Morente. Non hanno PM da sottrarre, ma Dardo Spirituale può applicare la quota di danno ai PV prevista dalla propria scheda; Dardo Psichico non trova una mente. Perdita di Concentrazione, scadenza, congedo gratuito del Galeb Duhr o sua incoscienza fanno tornare inerti entrambi. Le pietre non scompaiono: una riattivazione conserva PV, Ferite e Menomazioni residui. Un masso distrutto non torna integro con una nuova animazione.
+
+**Rimozione e PX.** Negare Potere può terminare l’animazione di un masso alla volta, potenza di confronto 9; rimuoverne una non interrompe l’altra. L’effetto non possiede una Salvezza aggiuntiva del masso oltre alla procedura di Negare Potere. Ogni masso effettivamente coinvolto ha 30 PX unitari per quattro PG, distinti dai 50 del Galeb Duhr, senza moltiplicarli per riattivazioni della stessa minaccia. Il calcolo dell’incontro resta nel Direttore §9.3.
+
+# **Xorn**
+
+*Elementale minerale • movimento nella roccia e senso dei tesori • Natura Comune*
+
+Un essere pesante con tre braccia, tre occhi e una grande bocca superiore. Cerca metalli preziosi e gemme per nutrirsi e può offrire informazioni in cambio di una parte del tesoro. Fonte: Xorn, p. 304.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 8 • DES 5 • COS 10 • INT 6 • SAG 5 • CAR 6 |
+| Risorse e protezioni | PV 50 • PM 10 • AR 4 intrinseca; AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 14 • Riflessi 9 • Volontà 10 • Magia 11 |
+| Iniziativa e Azioni | INI −1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 4 / 8 / 12 Q; roccia 4 Q al Passo • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 13 • Atletica 12 • Percezione 14 • Furtività 10 |
+| GS e PX per 4 PG | Veterano • 50 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Artigli | 13 | 1d6+2 Naturale; Taglio | 1 Q |
+| Morso | 13 | 2d6+2 Naturale; Perforazione | 1 Q |
+
+**Sequenza.** Al massimo un attacco di Artigli e un Morso per Round, ciascuno con 1 AzP; le Opportunità rientrano nei rispettivi limiti. Le tre braccia non concedono tre attacchi simultanei o Parata naturale. Il Morso non inghiotte una persona né distrugge automaticamente monete o equipaggiamento indossato.
+
+**Corpo e sensi.** Dimezza il danno Naturale da Taglio e Perforazione prima dell’AR, non la Contusione o le componenti Magiche, Eteree ed elementali. Scurovisione 12 Q e vibrazioni entro 12 Q sul terreno continuo condiviso, senza individuare chi vola o è isolato. Tra rocce dove possa realmente celarsi ottiene +2 a Furtività; non diventa invisibile.
+
+**Anatomia e condotta.** Testa comprende bocca e occhi, Torace il nucleo, Braccia il gruppo di arti superiori e Gambe le appendici locomotorie. Parla Terran. Sotto 12 PV o a Ferita Seria tende alla trattativa o alla ritirata nel terreno. Non consuma automaticamente gli oggetti di un personaggio per la semplice vicinanza; roccia e senso dei tesori sono nella pagina seguente.
+
+# **Xorn roccia e senso dei tesori**
+
+**Passaggio minerale.** Con l’AzM al Passo attraversa fino a 4 Q di terra o pietra naturali, non magiche e non lavorate, in qualsiasi direzione realmente percorribile dal corpo; conta anche il dislivello. Il tratto nel solido non consente Corsa o Scatto e nei percorsi misti non rinnova il Movimento. Non sposta il materiale, non lascia un cunicolo e non porta una vittima o un passeggero attraverso il solido.
+
+**Barriere.** Murature lavorate, metallo, materiali artificiali, pietra magica e barriere che impediscono il passaggio della materia bloccano questa capacità. Non permette di aprire una breccia o di demolire un edificio. Può rimanere nel materiale compatibile senza soffocare, ma non vede attraverso la pietra: usa le proprie vibrazioni nei limiti dichiarati.
+
+**Attaccare.** Artigli e Morso richiedono bocca o arti esposti e un percorso libero verso la vittima; il terreno non può trovarsi tra l’organo che colpisce e il bersaglio. Non attacca da un rifugio solido senza esporsi. Entrare nel terreno è Movimento ordinario, non teletrasporto o Ritirata: un’uscita dalla portata nemica può provocare Opportunità prima che il percorso sia protetto dal solido.
+
+**Senso dei tesori.** Entro 12 Q localizza metalli preziosi e gemme, anche attraverso terra e roccia naturali comunicanti. È un senso minerale innato, non normale vista e non Individuare Magia. Non identifica valore esatto, proprietà magiche, proprietario o intenzioni e non localizza creature prive di tali materiali. Metallo schermante continuo, pietra lavorata o barriera magica interrompono la rilevazione attraverso quell’ostacolo. Occorrono accessi reali per raggiungere il nutrimento.
+
+**Interazione.** Può chiedere minerali o contrattare con chi li porta, anziché iniziare un combattimento. Percepire una gemma dentro una borsa non la trasferisce nella sua bocca e non rivela tutti gli altri contenuti. Mangiare, sottrarre o danneggiare un oggetto richiede un’azione e una situazione concretamente praticabile; un’arma o protezione mantiene le normali regole di Integrità.
 

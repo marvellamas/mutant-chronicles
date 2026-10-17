@@ -1,0 +1,84 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "grimlock",
+  "nome": "Grimlock",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Creature del sottosuolo",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 6,
+    "COS": 6,
+    "INT": 5,
+    "SAG": 4,
+    "CAR": 3
+  },
+  "pv": 16,
+  "pm": 6,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 11,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 10,
+    "volonta": 8,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Mazza ferrata",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 11
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Percezione senza occhi",
+      "effetto": "Entro 6 Q localizza con udito e olfatto abbastanza da combattere senza penalità di buio o mancanza di vista. Assordato: solo olfatto entro 2 Q; senza olfatto non localizza. Ostacoli e bersagli nascosti richiedono le normali Prove; oltre la portata non ha vista alternativa. Non legge, non distingue i colori né soddisfa requisiti di visione reciproca: immune agli accecamenti sugli occhi e agli sguardi che richiedono di essere visti, non a ogni effetto mentale."
+    }
+  ],
+  "note": "Furtività 13 fra le rocce. Mazza ferrata Comune FOR 4, PI 5, una mano, già pronta; nessuna armatura o scudo; può parare con la mazza. Linguaggio delle profondità, può negoziare. Comportamento: sotto 4 PV o a Ferita Profonda cerca una via nota."
+}

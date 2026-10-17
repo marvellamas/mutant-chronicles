@@ -1,0 +1,77 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "perforatore",
+  "nome": "Perforatore",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Creature del sottosuolo",
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 5,
+    "COS": 7,
+    "INT": 1,
+    "SAG": 4,
+    "CAR": 2
+  },
+  "pv": 18,
+  "pm": 4,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 8,
+  "iniziativa": -3,
+  "movimento": {
+    "passo": 1,
+    "corsa": 2,
+    "scatto": 3
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 8,
+    "volonta": 7,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Caduta perforante",
+      "effetto": "1 AzP: si lascia cadere da 2–6 Q verticali sulla preda sotto di sé, con traiettoria libera, VA 10. Danno 1d6 Naturale ogni 2 Q di dislivello, massimo 3d6 (nessun bonus di FOR); Parata e Schivata normali, AR ordinaria. Prima del tiro indica un Q libero adiacente alla vittima su cui scivolerà; senza spazio d’arrivo non usa la manovra. Con attacco riuscito non subisce danni dalla caduta; se il tiro per colpire fallisce subisce metà per eccesso dei normali danni da caduta, ignorando la propria AR. Il movimento verticale non costa AzM. Cadute involontarie o oltre 6 Q seguono il §5.22 senza questa protezione.",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Sensi e appigli",
+      "effetto": "Scurovisione 12 Q; l’udito integra Percezione senza vista cieca. Aderisce a pareti e soffitti. Il mimetismo richiede un supporto roccioso e immobilità. Braccia e Gambe sono le porzioni anteriore e posteriore del corpo aderente."
+    }
+  ],
+  "note": "Stadio giovanile del Roper (nessuna trasformazione in combattimento). Furtività 14 immobile sulla roccia. Terra e aderenza 1/2/3 Q. A terra non ha un attacco offensivo efficace né Attacco di Opportunità; non ripete la caduta senza tornare in posizione. Comportamento: sotto 5 PV o a Ferita Profonda cerca una fessura. Nessun attacco in elenco: la Caduta perforante è fra le capacità, perché la sua portata è verticale (da 2 a 6 Q) e non rappresentabile come portata in Q."
+}

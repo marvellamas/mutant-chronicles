@@ -1,0 +1,103 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "roper",
+  "nome": "Roper",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Creature del sottosuolo",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 4,
+    "COS": 8,
+    "INT": 4,
+    "SAG": 8,
+    "CAR": 3
+  },
+  "pv": 55,
+  "pm": 8,
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": -1,
+  "movimento": {
+    "passo": 2,
+    "corsa": 4,
+    "scatto": 6
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 8,
+    "volonta": 11,
+    "magia": 11
+  },
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sequenza",
+      "effetto": "Al massimo due nuovi agganci e un Morso per Round, 1 AzP ciascuno; Trascinare, rigenerare un filamento o difendersi usano le stesse tre AzP. L’Attacco di Opportunità usa solo il Morso, entro 1 Q."
+    },
+    {
+      "nome": "Filamento (aggancio)",
+      "effetto": "1 AzP, portata 10 Q, VA 14: con un filamento libero e un bersaglio percepito di spazio ≤ 2 × 2 Q con percorso libero, contrappone Corpo a corpo 14 a Corpo a corpo o Atletica della vittima (sostituisce tiro per colpire e Difesa; il pareggio non afferra). Il successo applica Immobilizzato (movimento 0, −4 alle azioni fisiche, mani libere). Sei filamenti: fino a sei vittime, uno per vittima; mantenere non costa Azioni, ma per muoversi deve rilasciare. Pareti e barriere solide impediscono l’aggancio.",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Trascinare",
+      "effetto": "1 AzP su una vittima già afferrata: Corpo a corpo 14 contrapposto. Con successo la sposta fino a 4 Q verso di sé, fermandola prima del proprio spazio (movimento forzato, niente Attacchi di Opportunità); fallimento o pareggio la lasciano ferma e conservano la presa. Prima di un pericolo immediato la vittima fa Riflessi senza modificatore.",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Liberazione e recisione",
+      "effetto": "La vittima (o un alleato adiacente) spende 1 AzP: Corpo a corpo o Atletica contro Corpo a corpo 14. Un filamento esteso è un bersaglio distinto: AR 2, 8 PV propri, nessuna Difesa attiva; a 0 PV si recide e libera la vittima (niente Ferite o Morente, danni non trasferiti al corpo). Una volta per Round, 1 AzP sostituisce un filamento reciso con uno integro da 8 PV."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né oscurità soprannaturale. Un bersaglio nascosto richiede il normale confronto di Percezione e Furtività."
+    }
+  ],
+  "note": "Furtività 15 immobile sulla roccia (aderenza a pareti e soffitti, 2/4/6 Q). Comportamento: attende il gruppo, poi una preda alla volta per il Morso; sotto 14 PV o a Ferita Seria rilascia i prigionieri."
+}

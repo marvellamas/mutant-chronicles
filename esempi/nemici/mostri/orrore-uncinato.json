@@ -1,0 +1,89 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "orrore-uncinato",
+  "nome": "Orrore uncinato",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Creature del sottosuolo",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 5,
+    "COS": 7,
+    "INT": 3,
+    "SAG": 6,
+    "CAR": 4
+  },
+  "pv": 38,
+  "pm": 6,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 9,
+    "volonta": 9,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Uncino",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 8
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Due uncini",
+      "effetto": "Ogni attacco costa 1 AzP; ne compie due se non conserva Azioni per difendersi. La portata (2 Q) si misura dal bordo del corpo. Non applica Immobilizzato, trascinamento o Disarmare. Un Attacco di Opportunità ordinario, senza secondo colpo gratuito."
+    },
+    {
+      "nome": "Sensi",
+      "effetto": "Ecolocalizzazione 12 Q e scurovisione 2 Q. Se Assordato perde ecolocalizzazione e bonus d’ascolto (Percezione 14 con l’udito), conservando la vista utilizzabile. Il linguaggio di colpi e raschi non è telepatia."
+    },
+    {
+      "nome": "Arrampicata",
+      "effetto": "Gli uncini danno la velocità indicata (6/12/18 Q) su roccia con appigli, non aderenza a soffitti lisci; servono arti utilizzabili e un percorso che lo regga."
+    }
+  ],
+  "note": "Percezione 14 con l’udito. Comportamento: difende il gruppo e le uova, richiama i compagni, cerca un accesso laterale o rialzato; sotto 10 PV o a Ferita Profonda si ritira arrampicandosi."
+}

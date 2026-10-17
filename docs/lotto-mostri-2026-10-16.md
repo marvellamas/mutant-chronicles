@@ -113,20 +113,37 @@ come attacco a distanza (solo Colpo Singolo, gittata 30 Q); Scurovisione solo do
 Fomorian 24 Q; il Ciclope non ne ha). GS/PX anche con valori non tondi (77/100/110). Test:
 `tests/mostri-giganti.test.js`.
 
-## 11. Che cosa resta del catalogo (Mostri 0.16)
+## Catalogo, blocco «Creature del sottosuolo» — cap. 8 (17/10, Mostri 0.18)
 
-Circa 95 creature, da fare a blocchi nei prossimi lotti:
+`tools/genera_mostri_sottosuolo.mjs` → `esempi/nemici/mostri/`: Mantoscuro, Perforatore, Roper, Rugginofago,
+Umber Hulk, Orrore uncinato, Grimlock, Troglodita, Stirge, Vermeiena.
+
+Scelte del blocco: attacchi senza danno ai PV (Oscuramento, Filamento e Trascinare del Roper, Antenne del
+Rugginofago, Sguardo perturbante, Suzione della Stirge) → capacità; la **Caduta perforante** del Perforatore ha
+VA 10 ma portata verticale (da 2 a 6 Q), non rappresentabile come `portata_q`: sta fra le capacità e la scheda
+resta senza attacchi in elenco; Furtività con valori condizionati: nel campo il valore senza condizione (Umber
+Hulk 7 all'aperto, Perforatore e Roper 10/11), quello condizionato (sotto terra, immobile sulla roccia,
+mimetizzato, fra le rocce) nelle note; scavo, aderenza e arrampicata (non nel movimento del formato) come
+capacità; Vermeiena 1 × 2 Q → `spazio` vuoto e nota con A.167, come il Corazzato della Covata. Test:
+`tests/mostri-sottosuolo.test.js`; `tests/mostri-scontro.test.js` (nuovo) aggiunge ogni creatura della cartella a
+uno scontro di prova.
+
+## Che cosa resta del catalogo (Mostri 0.18)
+
+Il catalogo del cap. 8 ha 165 creature; ne sono fatte 60 (sei blocchi da dieci). Restano 105, da fare a blocchi
+nei prossimi lotti:
 
 - **Prima parte senza nome** (15): Aarakocra, Aboleth, Ankheg, Arpia, Basilisco, Bestia distorcente, Bulette,
   Chimera, Cockatrice, Ettercap, Grick, Grifone, Ippogrifo, Manticora, Orsogufo.
-- **Creature del sottosuolo** (~12): Mantoscuro, Perforatore, Roper, Rugginofago, Umber Hulk, Orrore uncinato,
-  Grimlock, Troglodita, Stirge, Vermeiena.
-- Poi: **Melme funghi e imitatori**, **Vegetali e custodi delle foreste**, **Grandi rettili e predatori
-  mostruosi**, **Creature delle acque e popoli sommersi**, **Predatori e grandi erbivori**, **Creature alate e
-  piccoli predatori**, **Sciami e piccola fauna**.
+- **Melme funghi e imitatori**, **Vegetali e custodi delle foreste**, **Grandi rettili e predatori mostruosi**,
+  **Creature delle acque e popoli sommersi**, **Predatori e grandi erbivori**, **Creature alate e piccoli
+  predatori**, **Sciami e piccola fauna**.
+- Nuovi della 0.18: **Cavalcature e animali da lavoro** (Cammello, Cavallo da tiro, da sella, da guerra, Mulo,
+  Pony, Mastino, Capra, Capra gigante, Alce) e **Mephit e creature elementali** (Mephit della polvere, del
+  ghiaccio, del magma, del fango, del fumo, del vapore, Serpente di fuoco, Salamandra, Galeb Duhr, Xorn).
 
-Nota: le bande umanoidi usano le scelte ricorrenti del §5; le melme/sciami avranno ingombri e meccaniche
-proprie (area, scissione) da trascrivere a mano come questi, senza automatismi.
+Nota: le melme e gli sciami avranno meccaniche proprie (area, scissione, sciame) da trascrivere a mano come gli
+altri blocchi, senza automatismi.
 
 ## 5. Cosa trova di nuovo il master
 

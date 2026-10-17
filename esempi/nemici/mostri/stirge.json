@@ -1,0 +1,92 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "stirge",
+  "nome": "Stirge",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Creature del sottosuolo",
+  "caratteristiche": {
+    "FOR": 2,
+    "DES": 8,
+    "COS": 5,
+    "INT": 1,
+    "SAG": 4,
+    "CAR": 2
+  },
+  "pv": 6,
+  "pm": 4,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 12,
+  "iniziativa": 2,
+  "movimento": {
+    "passo": 2,
+    "corsa": 4,
+    "scatto": 6,
+    "volo": 8
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 8,
+    "riflessi": 12,
+    "volonta": 7,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Puntura",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d4",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 7
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Aggancio",
+      "effetto": "Se la Puntura causa almeno 1 danno finale a una creatura con sangue nutriente e pelle raggiungibile, si aggancia (non su costrutti, corpi senza sangue o attraverso un involucro ermetico integro). Non applica Immobilizzato né occupa le mani. Agganciata segue la vittima senza AzM, non attacca altri, non Schiva ed è un bersaglio distinto attaccabile. Staccarla: 1 AzP della vittima o di un alleato adiacente con una mano libera, automatico, senza danno. Al massimo tre fissate a una creatura 1 × 1 Q, sei a una 2 × 2 Q o più."
+    },
+    {
+      "nome": "Suzione",
+      "effetto": "Dalla propria Iniziativa successiva all’aggancio, 1 AzP: sottrae 2 PV ordinari alla stessa vittima, ignorando AR e PV temporanei (nessun tiro, Parata o Schivata). Se la vittima è già a 0 PV si applicano Tempra e Ferite da danno 1–5. Sazietà: raggiunti 6 PV sottratti, o dopo tre Suzioni, si stacca gratuitamente e si allontana. Non applica Sanguinamento, né veleni o malattie.",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né oscurità soprannaturale. Un bersaglio nascosto richiede il normale confronto di Percezione e Furtività."
+    }
+  ],
+  "note": "Corpo molto piccolo (nessun malus a chi la attacca). Volo 8/16/24 Q; a terra 2/4/6 Q. Più esemplari non usano la scheda Sciame. Comportamento: cerca una preda accessibile; sotto 2 PV o a Ferita Profonda cerca riparo."
+}
