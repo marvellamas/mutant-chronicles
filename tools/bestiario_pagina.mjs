@@ -327,7 +327,8 @@ function scheda(v, d) {
 
   const car = Object.entries(n.caratteristiche ?? {}).map(([k, x]) => `${k} ${x}`).join(' · ');
   riga('Caratteristiche', esc(car));
-  riga('Prove Salvezza', n.salvezze ? esc(`Tempra ${n.salvezze.tempra} · Riflessi ${n.salvezze.riflessi} · Volontà ${n.salvezze.volonta} · Magia ${n.salvezze.magia}`) : '');
+  // una Salvezza assente (senza_salvezza: «Volontà —» di melme e funghi senza mente) si mostra «—», mai «undefined»
+  riga('Prove Salvezza', n.salvezze ? esc(`Tempra ${n.salvezze.tempra ?? '—'} · Riflessi ${n.salvezze.riflessi ?? '—'} · Volontà ${n.salvezze.volonta ?? '—'} · Magia ${n.salvezze.magia ?? '—'}`) : '');
   riga('Movimento', esc(testoMovimento(n, d)));
   riga('Azioni per Round', esc(testoAzioni(n.azioni) ?? ''));
   riga('Attacchi', elenco((n.attacchi ?? []).map((a) => `<b>${esc(a.nome)}</b> — ${esc(testoAttacco(a))}`)));

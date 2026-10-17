@@ -1,0 +1,120 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "cubo-gelatinoso",
+  "nome": "Cubo gelatinoso",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Melme funghi e imitatori",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 2,
+    "COS": 9,
+    "INT": 1,
+    "SAG": 4,
+    "CAR": 1
+  },
+  "pv": 44,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 5,
+  "iniziativa": -4,
+  "movimento": {
+    "passo": 3,
+    "corsa": 6,
+    "scatto": 9
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 5,
+    "magia": 9
+  },
+  "senza_salvezza": [
+    "volonta"
+  ],
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Pseudopodo",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d8+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "note": "Danno da acido (non Corrosivo)."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    },
+    {
+      "nome": "Furtività",
+      "va": 9
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Senza mente",
+      "effetto": "PM — e Volontà —: nessuna mente strutturata. Immune a danni psichici, controllo mentale e Terrorizzato (proprietà della scheda). Non dorme e scambia i gas attraverso il corpo: l’ostruzione di una bocca inesistente non la soffoca. Non è immune a ogni veleno, malattia o ambiente privo di condizioni vitali."
+    },
+    {
+      "nome": "Melma",
+      "effetto": "Percezione diffusa 12 Q, immune ad Accecato, Assordato, A Terra e all’accumulo di AFT (resta soggetta a Rallentato, Immobilizzato e Stordito). Cerca nutrimento da stimoli locali: nessuna tattica, alleanza o vendetta. Localizzazioni: Testa = regione sensoriale anteriore, Torace = massa centrale, Braccia = pseudopodi, Gambe = base locomotrice; una lesione sensoriale può impedire di localizzare, una della base il movimento. Cambiare forma o dividersi non guarisce Ferite, Menomazioni o Stati; le capacità biologiche non si cancellano con Negare Potere."
+    },
+    {
+      "nome": "Trasparenza",
+      "effetto": "Furtività 14 immobile, in ambiente adatto e senza oggetti visibili sospesi nel corpo; un esame riuscito la rivela, ma entrarvi inconsapevolmente non annulla la Salvezza contro Inglobare. Altezza 2 Q. Chi entra nel corpo attiva la PS e le conseguenze di Inglobare senza che il Cubo spenda Azioni; con successo resta fuori, interrompendo il movimento."
+    },
+    {
+      "nome": "Metabolismo e ingombro",
+      "effetto": "L’acido digerisce tessuti biologici, non legno, metallo o ossa; non ha Corrosivo e non riduce l’Integrità dell’equipaggiamento. Il Pseudopodo non danneggia un bersaglio di soli materiali indigeribili. Non scala e non attraversa fessure: serve un passaggio per il suo volume; si deforma solo per seguire una curva ordinaria."
+    },
+    {
+      "nome": "Inglobare",
+      "effetto": "1 AzP e 1 AzM: avanza fino a 3 Q lungo un percorso libero, entrando negli spazi delle creature incontrate. Ognuna fa Riflessi senza modificatore (una volta per Round contro quel Cubo): successo, si sposta gratis nel più vicino Q libero adiacente (se non esiste, il Cubo si ferma prima); fallimento, è inglobata. La PS sostituisce tiro per colpire, Parata e Schivata. Capienza: fino a quattro creature 1 × 1 Q o una 2 × 2 Q (non combinabili); non ingloba creature maggiori o altre melme. Ogni nuovo prigioniero è Immobilizzato (mani non bloccate) e, se biologico, subisce 1d6 Naturale da acido con AR ordinaria; segue il Cubo. Con vie respiratorie sommerse inizia il soffocamento del §5.23.",
+      "azioni": {
+        "principali": 1,
+        "movimento": 1
+      }
+    },
+    {
+      "nome": "Digerire",
+      "effetto": "1 AzP: 1d6 Naturale da acido a ciascun prigioniero biologico (AR ordinaria), senza tiro per colpire né Salvezza. Una creatura subisce il danno di Inglobare o Digerire al massimo una volta per Round per Cubo; i prigionieri non biologici sono trattenuti ma non subiscono danno. Nessun danno digestivo gratuito a fine Round.",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Uscire e aiutare",
+      "effetto": "Un prigioniero spende 1 AzP: Corpo a corpo o Atletica contro Atletica 12 del Cubo (−4 di Immobilizzato). Un alleato adiacente può usare la stessa procedura con il proprio VA (senza il malus se libero); il successo estrae la vittima nel più vicino spazio libero (senza spazio non si completa). Un soccorritore che immerge tessuti vivi esposti subisce 1d4 acido (una volta per Round); un attrezzo lo evita. Il prigioniero attacca dall’interno con −4; la massa dà copertura totale verso l’esterno. Perdita di coscienza, morte o Menomazione del contenimento liberano i prigionieri (0 PV da soli no). All’uscita cessa l’ostruzione; la riserva di fiato torna dopo un Round di respiro normale."
+    }
+  ],
+  "immunita": [
+    "accecato",
+    "assordato",
+    "a-terra",
+    "terrorizzato"
+  ],
+  "note": "AR 1 biologica. Condotta: avanza verso la fonte di nutrimento percepita; Inglobare, Digerire, Pseudopodo e Difesa competono per la sua unica AzP. Fonte: Gelatinous Cube, p. 242."
+}

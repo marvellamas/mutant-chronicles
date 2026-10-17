@@ -1,0 +1,137 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "budino-nero",
+  "nome": "Budino nero",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Melme funghi e imitatori",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 3,
+    "COS": 8,
+    "INT": 1,
+    "SAG": 4,
+    "CAR": 1
+  },
+  "pv": 52,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 6,
+  "iniziativa": -3,
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 6,
+    "magia": 10
+  },
+  "senza_salvezza": [
+    "volonta"
+  ],
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Pseudopodo",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "2d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Corrosivo"
+      ],
+      "note": "Danno da acido."
+    },
+    {
+      "nome": "Frammento",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Corrosivo"
+      ],
+      "note": "Solo dopo la Scissione. Danno da acido."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 9
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Senza mente",
+      "effetto": "PM — e Volontà —: nessuna mente strutturata. Immune a danni psichici, controllo mentale e Terrorizzato (proprietà della scheda). Non dorme e scambia i gas attraverso il corpo: l’ostruzione di una bocca inesistente non la soffoca. Non è immune a ogni veleno, malattia o ambiente privo di condizioni vitali."
+    },
+    {
+      "nome": "Melma",
+      "effetto": "Percezione diffusa 12 Q, immune ad Accecato, Assordato, A Terra e all’accumulo di AFT (resta soggetta a Rallentato, Immobilizzato e Stordito). Cerca nutrimento da stimoli locali: nessuna tattica, alleanza o vendetta. Localizzazioni: Testa = regione sensoriale anteriore, Torace = massa centrale, Braccia = pseudopodi, Gambe = base locomotrice; una lesione sensoriale può impedire di localizzare, una della base il movimento. Cambiare forma o dividersi non guarisce Ferite, Menomazioni o Stati; le capacità biologiche non si cancellano con Negare Potere."
+    },
+    {
+      "nome": "Corpo amorfo",
+      "effetto": "Attraversa aperture larghe almeno 3 cm con 1 AzM intera, un percorso continuo non oltre il proprio Passo e spazio libero all’uscita; durante l’attraversamento non attacca. Non attraversa creature, solidi o serrature sigillate; lascia gli oggetti rigidi inglobati che non entrano nell’apertura."
+    },
+    {
+      "nome": "Aderenza",
+      "effetto": "Aderisce a pareti e soffitti solidi ordinari senza Prova, a 4/8/12 Q; supporti fragili o ghiaccio possono richiedere Atletica; cade se il sostegno cede."
+    },
+    {
+      "nome": "Immunità",
+      "effetto": "Immune ad Acido, Ghiaccio e Fulmine di qualunque Natura e ai danni fisici Naturali da Taglio (Taglio Magico o Etereo può ferirlo e non attiva Scissione). Fuoco non è fra le sue immunità."
+    },
+    {
+      "nome": "Contatto biologico",
+      "effetto": "Una creatura che tocca la superficie con tessuti vivi esposti subisce 1d4 Naturale da acido (AR ordinaria), al massimo una volta per Round per creatura. Non costa Azioni, non si attiva tramite un’arma, una protezione integra o un attrezzo; non ha Corrosivo."
+    },
+    {
+      "nome": "Corrosione dei materiali",
+      "effetto": "Il Pseudopodo ha Corrosivo contro protezioni non magiche di metallo o materiale organico compatibile (legno, cuoio); pietra, vetro e oggetti mistici non subiscono l’usura. Procedura nella capacità «Corrosione»."
+    },
+    {
+      "nome": "Corrosione",
+      "effetto": "Corrosivo (§5.24) dopo almeno 1 danno finale ai PV: una protezione compatibile che ha fornito almeno 1 AR fa la PS Integrità (dalla Qualità); fallimento −1 PI, al massimo una volta per protezione e attacco (con il deterioramento di un Magistrale si somma 1 PI potenziale con la stessa PS). Anticorrosivo X impedisce l’effetto se il danno finale non supera X. Un’arma o munizione compatibile che colpisce davvero il corpo fa una PS Integrità (fallimento −1 PI), anche se l’AR assorbe tutto; Anticorrosivo ≥ 1 sullo strumento lo impedisce; un colpo fallito o una Schivata riuscita no. A 0 PI l’oggetto è Rotto (peso e ingombro restano); i PI perduti richiedono riparazione. Legno, pietra, vetro e oggetti mistici non sono coinvolti."
+    },
+    {
+      "nome": "Scissione",
+      "effetto": "Innesco: un effetto di Fulmine, oppure un colpo fisico Naturale da Taglio con danno positivo prima delle immunità che raggiunga il corpo (un attacco fallito o annullato da una Difesa non basta); si risolve prima l’intero attacco, poi la Scissione. Servono almeno 12 PV attuali, il corpo originale in grado di agire e due spazi liberi 1 × 1 Q adiacenti fra loro (nell’impronta o subito accanto). Una sola divisione per esemplare nell’incontro; i frammenti non si dividono né si riuniscono. Ciascun frammento ha metà dei PV attuali e metà dei PV massimi (per difetto), le stesse Ferite, Menomazioni e Stati; occupa 1 × 1 Q, mantiene i valori del corpo originale e usa il danno «Frammento» (1d8+1). I frammenti condividono le AzP, l’AzM e l’eventuale Attacco di Opportunità ancora disponibili nel Round della divisione; dal Round dopo ognuno ha 1 AzP e 1 AzM, alla stessa Iniziativa. Un solo esemplare ai fini dei PX (50 PX, già comprensivi della possibile divisione)."
+    }
+  ],
+  "immunita": [
+    "accecato",
+    "assordato",
+    "a-terra",
+    "terrorizzato"
+  ],
+  "note": "AR 2 biologica. Condotta: segue il nutrimento percepito, supera dislivelli aderendo e filtra nelle aperture accessibili. Fonte: Black Pudding, p. 241."
+}

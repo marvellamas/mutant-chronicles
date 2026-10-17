@@ -209,12 +209,22 @@
       "tipo": "mappa",
       "chiavi_da": "salvezze",
       "tutte": true,
+      "assenze_da": "senza_salvezza",
       "obbligatorio": true,
       "valore": {
         "tipo": "intero",
         "min": 0
       },
-      "descrizione": "Valori delle quattro Prove Salvezza (§1.2.3)."
+      "descrizione": "Valori delle quattro Prove Salvezza (§1.2.3). Una Salvezza può mancare solo se è elencata in «senza_salvezza»."
+    },
+    "senza_salvezza": {
+      "tipo": "lista",
+      "voce": {
+        "tipo": "scelta",
+        "valori_da": "salvezze"
+      },
+      "obbligatorio": false,
+      "descrizione": "Prove Salvezza che la scheda del manuale lascia «—» (Mostri 0.18, cap. 8: melme e funghi senza mente hanno Volontà —). Un dato assente non vale 0: la Salvezza manca in «salvezze» e la mini-scheda mostra «—»."
     },
     "azioni": {
       "tipo": "oggetto",

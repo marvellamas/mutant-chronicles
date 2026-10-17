@@ -1711,11 +1711,17 @@ diverso dalle regole già approvate **non si è cambiato**: vedi A.167 qui sotto
   Ankheg, Arpia, Basilisco, Bestia distorcente, Bulette, Chimera, Cockatrice, Ettercap, Grick, Grifone,
   Ippogrifo, Manticora, Orsogufo): attacchi senza danno o ad area come capacità; AR condizionale con il primo
   valore nel campo e la condizione come capacità; modulo «tana» dell'Aboleth come capacità distinte con GS/PX
-  del profilo base (la variante Leggenda, 100 PX, nella nota). Bestiario online rigenerato. **Restano** 90
-  creature del cap. 8: «Melme funghi e imitatori», «Vegetali e custodi delle foreste», «Grandi rettili e
-  predatori mostruosi», «Creature delle acque e popoli sommersi», «Predatori e grandi erbivori», «Creature
-  alate e piccoli predatori», «Sciami e piccola fauna», «Cavalcature e animali da lavoro», «Mephit e creature
-  elementali»: a blocchi nei prossimi lotti.
+  del profilo base (la variante Leggenda, 100 PX, nella nota). Poi il blocco **«Melme funghi e imitatori»**
+  (Melma grigia, Gelatina ocra, Budino nero, Cubo gelatinoso, Fungo stridente, Fungo violetto, Spora gassosa,
+  Miconide germoglio, Miconide adulto, Mimic). **Novità del formato dei nemici:** melme e funghi senza mente
+  hanno «Volontà —»: un dato assente non vale 0, perciò il campo nuovo `senza_salvezza` (es. `["volonta"]`) ed
+  il validatore accetta una Salvezza mancante solo se elencata. Corrosivo solo dove dichiarato (Melma grigia e
+  Budino nero), l'acido senza Corrosivo nella nota; Frammento come attacco con la condizione nella nota;
+  Inglobare, Digerire, Stridio e Rottura del sacco come capacità. Bestiario online rigenerato. **Restano** 80
+  creature del cap. 8: «Vegetali e custodi delle foreste», «Grandi rettili e predatori mostruosi», «Creature
+  delle acque e popoli sommersi», «Predatori e grandi erbivori», «Creature alate e piccoli predatori», «Sciami
+  e piccola fauna», «Cavalcature e animali da lavoro», «Mephit e creature elementali»: a blocchi nei prossimi
+  lotti.
 
 ## Domande aperte dalla ricognizione del 15 ottobre 2026
 

@@ -1,0 +1,77 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "fungo-stridente",
+  "nome": "Fungo stridente",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Melme funghi e imitatori",
+  "caratteristiche": {
+    "FOR": 1,
+    "DES": 1,
+    "COS": 5,
+    "INT": 1,
+    "SAG": 2,
+    "CAR": 1
+  },
+  "pv": 12,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 1,
+  "iniziativa": -4,
+  "movimento": {
+    "passo": 0,
+    "corsa": "non_consentito",
+    "scatto": "non_consentito"
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "—",
+    "px": 0,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 1,
+    "magia": 8
+  },
+  "senza_salvezza": [
+    "volonta"
+  ],
+  "azioni": {
+    "principali": 1,
+    "movimento": 0,
+    "eccezioni": "AzM inutilizzabile"
+  },
+  "attacchi": [],
+  "abilita": [
+    {
+      "nome": "Percezione",
+      "va": 8
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Senza mente",
+      "effetto": "PM — e Volontà —: nessuna mente strutturata. Immune a danni psichici, controllo mentale e Terrorizzato (proprietà della scheda). Non dorme e scambia i gas attraverso il corpo: l’ostruzione di una bocca inesistente non la soffoca. Non è immune a ogni veleno, malattia o ambiente privo di condizioni vitali."
+    },
+    {
+      "nome": "Percezione diffusa",
+      "effetto": "Localizza entro 6 Q senza occhi o udito; non legge, non distingue i colori e non soddisfa gli sguardi; le barriere solide la interrompono. Non individua da sola chi è nascosto (resta il confronto Percezione–Furtività)."
+    },
+    {
+      "nome": "Stridio (allarme)",
+      "effetto": "Quando percepisce una creatura entro 6 Q oppure il proprio corpo è illuminato intensamente, inizia a stridere senza spendere Azioni; udibile fino a 60 Q in condizioni libere (porte, terreno e rumore lo attenuano). Dopo l’ultimo stimolo continua per 1d4 proprie Iniziative; nuovi stimoli fanno ripartire il conteggio. Termina se perde coscienza, muore o subisce una Menomazione che lo impedisce (0 PV no); una barriera contro il suono ne impedisce la propagazione. Non infligge danni né Assordato."
+    }
+  ],
+  "immunita": [
+    "accecato",
+    "assordato",
+    "terrorizzato"
+  ],
+  "note": "Non attacca, non fa Opportunità e non può Schivare; 0 PX come esemplare da combattimento (le sentinelle o i predatori richiamati sono incontri distinti). Furtività 13 fra funghi simili. Testa = cappello, Torace = gambo, Braccia = lamelle, Gambe = base radicata. Fonte: Shrieker, pp. 137–138."
+}

@@ -1,0 +1,123 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "gelatina-ocra",
+  "nome": "Gelatina ocra",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Melme funghi e imitatori",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 3,
+    "COS": 6,
+    "INT": 2,
+    "SAG": 4,
+    "CAR": 1
+  },
+  "pv": 36,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 6,
+  "iniziativa": -3,
+  "movimento": {
+    "passo": 2,
+    "corsa": 4,
+    "scatto": 6
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 6,
+    "magia": 9
+  },
+  "senza_salvezza": [
+    "volonta"
+  ],
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Pseudopodo",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d8+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "note": "Danno da acido (non Corrosivo)."
+    },
+    {
+      "nome": "Frammento",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "note": "Solo dopo la Scissione. Danno da acido (non Corrosivo)."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    },
+    {
+      "nome": "Furtività",
+      "va": 8
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Senza mente",
+      "effetto": "PM — e Volontà —: nessuna mente strutturata. Immune a danni psichici, controllo mentale e Terrorizzato (proprietà della scheda). Non dorme e scambia i gas attraverso il corpo: l’ostruzione di una bocca inesistente non la soffoca. Non è immune a ogni veleno, malattia o ambiente privo di condizioni vitali."
+    },
+    {
+      "nome": "Melma",
+      "effetto": "Percezione diffusa 12 Q, immune ad Accecato, Assordato, A Terra e all’accumulo di AFT (resta soggetta a Rallentato, Immobilizzato e Stordito). Cerca nutrimento da stimoli locali: nessuna tattica, alleanza o vendetta. Localizzazioni: Testa = regione sensoriale anteriore, Torace = massa centrale, Braccia = pseudopodi, Gambe = base locomotrice; una lesione sensoriale può impedire di localizzare, una della base il movimento. Cambiare forma o dividersi non guarisce Ferite, Menomazioni o Stati; le capacità biologiche non si cancellano con Negare Potere."
+    },
+    {
+      "nome": "Corpo amorfo",
+      "effetto": "Attraversa aperture larghe almeno 3 cm con 1 AzM intera, un percorso continuo non oltre il proprio Passo e spazio libero all’uscita; durante l’attraversamento non attacca. Non attraversa creature, solidi o serrature sigillate; lascia gli oggetti rigidi inglobati che non entrano nell’apertura."
+    },
+    {
+      "nome": "Aderenza",
+      "effetto": "Aderisce a pareti e soffitti solidi ordinari senza Prova, a 2/4/6 Q; supporti fragili o ghiaccio possono richiedere Atletica; cade se il sostegno cede."
+    },
+    {
+      "nome": "Resistenze",
+      "effetto": "Dimezza i danni da Acido di qualunque Natura. Immune al Fulmine di qualunque Natura e ai danni fisici Naturali da Taglio (Taglio Magico o Etereo può ferirla e non attiva Scissione). Non è immune al Ghiaccio."
+    },
+    {
+      "nome": "Digestione selettiva",
+      "effetto": "Il danno del Pseudopodo incontra normalmente l’AR. Non ha Corrosivo e non danneggia l’Integrità dell’equipaggiamento. I suoi enzimi non consumano legno, metallo o ossa: contro un bersaglio interamente composto da questi materiali non infligge danni."
+    },
+    {
+      "nome": "Scissione",
+      "effetto": "Innesco: un effetto di Fulmine, oppure un colpo fisico Naturale da Taglio con danno positivo prima delle immunità che raggiunga il corpo (un attacco fallito o annullato da una Difesa non basta); si risolve prima l’intero attacco, poi la Scissione. Servono almeno 12 PV attuali, il corpo originale in grado di agire e due spazi liberi 1 × 1 Q adiacenti fra loro (nell’impronta o subito accanto). Una sola divisione per esemplare nell’incontro; i frammenti non si dividono né si riuniscono. Ciascun frammento ha metà dei PV attuali e metà dei PV massimi (per difetto), le stesse Ferite, Menomazioni e Stati; occupa 1 × 1 Q, mantiene i valori del corpo originale e usa il danno «Frammento» (1d6+1). I frammenti condividono le AzP, l’AzM e l’eventuale Attacco di Opportunità ancora disponibili nel Round della divisione; dal Round dopo ognuno ha 1 AzP e 1 AzM, alla stessa Iniziativa. Un solo esemplare ai fini dei PX (30 PX, già comprensivi della possibile divisione)."
+    }
+  ],
+  "immunita": [
+    "accecato",
+    "assordato",
+    "a-terra",
+    "terrorizzato"
+  ],
+  "note": "AR 1 biologica. Condotta: segue stimoli di nutrimento fino a pareti e soffitti; i frammenti non collaborano intenzionalmente fra loro. Fonte: Ochre Jelly, p. 243."
+}

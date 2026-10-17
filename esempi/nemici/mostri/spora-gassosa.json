@@ -1,0 +1,107 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "spora-gassosa",
+  "nome": "Spora gassosa",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Melme funghi e imitatori",
+  "caratteristiche": {
+    "FOR": 3,
+    "DES": 1,
+    "COS": 2,
+    "INT": 1,
+    "SAG": 1,
+    "CAR": 1
+  },
+  "pv": 4,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 2,
+  "iniziativa": -4,
+  "movimento": {
+    "passo": 0,
+    "corsa": "non_consentito",
+    "scatto": "non_consentito",
+    "volo": 2
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 6,
+    "riflessi": 2,
+    "magia": 8
+  },
+  "senza_salvezza": [
+    "volonta"
+  ],
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Tocco infettivo",
+      "tipo": "ravvicinato",
+      "va": 6,
+      "danno": "1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "note": "Poi Tempra senza modificatore: vedi «Tocco infettivo»."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 6
+    },
+    {
+      "nome": "Percezione",
+      "va": 7
+    },
+    {
+      "nome": "Furtività",
+      "va": 6
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Senza mente",
+      "effetto": "PM — e Volontà —: nessuna mente strutturata. Immune a danni psichici, controllo mentale e Terrorizzato (proprietà della scheda). Non dorme e scambia i gas attraverso il corpo: l’ostruzione di una bocca inesistente non la soffoca. Non è immune a ogni veleno, malattia o ambiente privo di condizioni vitali."
+    },
+    {
+      "nome": "Percezione diffusa",
+      "effetto": "Localizza entro 6 Q senza occhi o udito; non legge, non distingue i colori e non soddisfa gli sguardi; le barriere solide la interrompono. Non individua da sola chi è nascosto (resta il confronto Percezione–Furtività)."
+    },
+    {
+      "nome": "Corpo fluttuante",
+      "effetto": "Volo fluttuante 2 / 4 / 6 Q (nessun movimento a terra), senza ali, finché il sacco è integro. Immune anche a Paralizzato e ai danni da veleno. Non ha raggi oculari né i poteri dello spettatore che imita. Testa = regione sensoriale, Torace = sacco, Braccia = escrescenze, Gambe = base di galleggiamento."
+    },
+    {
+      "nome": "Tocco infettivo",
+      "effetto": "Dopo almeno 1 danno finale contro una creatura biologica suscettibile, Tempra senza modificatore: fallimento → Micosi sporale. Nessun danno da veleno aggiunto; una barriera che impedisce il danno impedisce l’inoculazione."
+    },
+    {
+      "nome": "Sacco fragile e rottura",
+      "effetto": "Il primo colpo che porta i PV a 0 (o un colpo quando è già a 0 PV e ancora integra) rompe l’involucro e libera la nube una sola volta: perde il volo e non può più attaccare, ma non muore né sviene; cade e prosegue con Ferite e Morente. La nube raggiunge subito le creature entro 4 Q con un percorso libero nell’aria (pareti e chiusure ermetiche la bloccano), una sola esposizione per vittima: chi respira fa Tempra −2 (nessuna Difesa attiva); fallimento 1d6 Naturale da tossina inalata (ignora l’AR) e Micosi sporale; successo metà danno per eccesso e nessuna infezione. Apparati autonomi, filtri adatti o fiato già trattenuto proteggono; costrutti, non morti e non biologici non contraggono la micosi. Recuperare PV non richiude il sacco (servono cure e almeno sette giorni)."
+    },
+    {
+      "nome": "Micosi sporale",
+      "effetto": "Malattia naturale, Pericolosità V, Grave, incubazione di 1 ora. Poi, a ogni ora, Tempra −2: fallimento 1d6 Naturale interno (ignora AR) e 1 AFT; successo evita entrambi. Due successi consecutivi eliminano l’infezione; un fallimento azzera il conteggio. Termina con Cura Malattie di livello almeno 6 (10 minuti fuori dal combattimento). Nuove esposizioni non duplicano il decorso. Cura Avvelenamenti non la elimina; guarire non restituisce PV né cancella l’AFT. Se un ospite muore infetto e il cadavere non è bonificato, dopo sette giorni può produrre 2d4 nuove Spore gassose."
+    }
+  ],
+  "immunita": [
+    "accecato",
+    "assordato",
+    "a-terra",
+    "avvelenato",
+    "terrorizzato"
+  ],
+  "note": "Spora gassosa: PV 4, Tempra 6. Condotta: galleggia verso gli stimoli vicini; non si fa esplodere volontariamente. Fonte: Gas Spore, pp. 137–138."
+}

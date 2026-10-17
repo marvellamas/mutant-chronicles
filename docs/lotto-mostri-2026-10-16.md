@@ -145,20 +145,43 @@ paragonabile a un veicolo»), Basilisco 2 × 1 Q e Grick 1 × 2 Q (taglia normal
 «Giavellotto della sentinella» degli Aarakocra è una proposta del manuale e non entra nel catalogo degli
 Armamenti. Test: `tests/mostri-prima-parte.test.js`.
 
+## Catalogo, blocco «Melme funghi e imitatori» — cap. 8 (17/10, Mostri 0.18)
+
+`tools/genera_mostri_melme.mjs` → `esempi/nemici/mostri/`: Melma grigia, Gelatina ocra, Budino nero, Cubo
+gelatinoso, Fungo stridente, Fungo violetto, Spora gassosa, Miconide germoglio, Miconide adulto, Mimic.
+
+**Novità del formato.** Le melme e i funghi senza mente hanno «PM —» e «Volontà —». Il PM assente è già
+rappresentabile (nessun campo `pm`); la Volontà no: `salvezze` richiedeva tutte e quattro le Prove. Un dato assente
+non vale 0, quindi `data/formato_nemici.json` ha un campo nuovo `senza_salvezza` (per esempio `["volonta"]`) e il
+validatore accetta una Salvezza mancante **solo** se è elencata lì (e rifiuta una elencata che ha un valore): una
+Salvezza dimenticata resta un errore. La mini-scheda mostrava già «—» per una Salvezza assente. Sette profili lo
+usano (le quattro melme, i tre funghi senza mente).
+
+Altre scelte del blocco: immunità espresse → Stati del formato (accecato, assordato, a-terra, terrorizzato,
+avvelenato), le altre (psichici, controllo mentale, AFT, Paralizzato, Acido, Fulmine, Taglio) nelle capacità;
+l'acido è il mezzo del danno e **Corrosivo** una proprietà ulteriore, presente solo per Melma grigia e Budino nero
+(`proprieta`), l'acido senza Corrosivo nella nota dell'attacco; attacchi senza tiro per colpire (Inglobare,
+Digerire, Stridio, Rottura del sacco, Spore pacificanti e di rapporto) → capacità; il **Frammento** (dopo la
+Scissione) resta un attacco con la condizione nella nota; Mimic con Morso AC 2 (1d8+1 e poi 1d4 acido in nota);
+Fungo stridente immobile (passo 0, AzM inutilizzabile), GS «—» e 0 PX; Spora gassosa con il Tocco infettivo di
+danno fisso 1 e la nube, la Micosi sporale e la riproduzione come capacità. Test: `tests/mostri-melme.test.js`.
+
 ## Che cosa resta del catalogo (Mostri 0.18)
 
-Il catalogo del cap. 8 ha 165 creature; ne sono fatte 75 (sei blocchi da dieci più le quindici della prima
-parte). Restano 90, da fare a blocchi nei prossimi lotti:
+Il catalogo del cap. 8 ha 165 creature; ne sono fatte 85 (sette blocchi da dieci più le quindici della prima
+parte). Restano 80, da fare a blocchi nei prossimi lotti:
 
-- **Melme funghi e imitatori**, **Vegetali e custodi delle foreste**, **Grandi rettili e predatori mostruosi**,
+- **Vegetali e custodi delle foreste** (Arbusto, Albero risvegliato, Avvizzito ramoso / spinoso / rampicante,
+  Driade, Cumulo strisciante, Treant, Pegaso, Unicorno), **Grandi rettili e predatori mostruosi** (Allosauro,
+  Anchilosauro, Plesiosauro, Pteranodonte, Triceratopo, Tirannosauro, Viverna, Idra, Behir, Drago tartaruga),
   **Creature delle acque e popoli sommersi**, **Predatori e grandi erbivori**, **Creature alate e piccoli
   predatori**, **Sciami e piccola fauna**.
 - Nuovi della 0.18: **Cavalcature e animali da lavoro** (Cammello, Cavallo da tiro, da sella, da guerra, Mulo,
   Pony, Mastino, Capra, Capra gigante, Alce) e **Mephit e creature elementali** (Mephit della polvere, del
   ghiaccio, del magma, del fango, del fumo, del vapore, Serpente di fuoco, Salamandra, Galeb Duhr, Xorn).
 
-Nota: le melme e gli sciami avranno meccaniche proprie (area, scissione, sciame) da trascrivere a mano come gli
-altri blocchi, senza automatismi.
+Nota: gli sciami avranno meccaniche proprie (spazio, dispersione) da trascrivere a mano come gli altri blocchi,
+senza automatismi.
 
 ## 5. Cosa trova di nuovo il master
 

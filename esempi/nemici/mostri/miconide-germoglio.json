@@ -1,0 +1,104 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "miconide-germoglio",
+  "nome": "Miconide germoglio",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Melme funghi e imitatori",
+  "caratteristiche": {
+    "FOR": 4,
+    "DES": 5,
+    "COS": 5,
+    "INT": 4,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "pv": 12,
+  "pm": 6,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 8,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 9,
+    "volonta": 9,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Pugno",
+      "tipo": "ravvicinato",
+      "va": 8,
+      "danno": "1d4",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "note": "Spore irritanti: vedi la capacità."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 8
+    },
+    {
+      "nome": "Atletica",
+      "va": 7
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sensi e mente",
+      "effetto": "Scurovisione 24 Q. Ha una mente e può subire effetti mentali compatibili (non eredita le immunità dei funghi senza mente). Localizzazioni del corpo umanoide (il cappello fa parte della Testa). Nessuna Parata naturale."
+    },
+    {
+      "nome": "Spore di rapporto",
+      "effetto": "Diffonde spore nel raggio della scheda lungo percorsi liberi: possono aderire volontariamente creature biologiche con una mente (non costrutti, non morti, elementali). Per 1 ora i partecipanti entro 6 Q l’uno dall’altro si scambiano pensieri intenzionalmente formulati senza lingua comune; nessun obbligo di obbedienza, nessuna lettura di pensieri non condivisi. Ogni partecipante può cessare gratis alla propria Iniziativa. Nessun PM; Negare Potere non dissolve la secrezione. Raggio 2 Q, 1 AzP; tre volte in ogni periodo di 24 ore.",
+      "azioni": {
+        "principali": 1
+      },
+      "usi": {
+        "quanti": 3,
+        "per": "giorno"
+      }
+    },
+    {
+      "nome": "Spore di allarme",
+      "effetto": "Dopo almeno 1 danno ai PV, un Miconide cosciente emette automaticamente un segnale biologico (al massimo una volta per Round): gli altri Miconidi entro 48 Q raggiungibili attraverso aria comunicante avvertono il pericolo e la direzione approssimativa. Pareti sigillate lo bloccano; non dà mappe, identità o un turno gratuito."
+    },
+    {
+      "nome": "Spore irritanti",
+      "effetto": "Dopo almeno 1 danno finale del Pugno contro un organismo biologico, Tempra senza modificatore: fallimento → Avvelenato, −2 ai VA delle azioni fisiche per 1 Round, senza danni periodici. Veleno naturale di Pericolosità I: antidoto adeguato o Cura Avvelenamenti (liv. 1) lo interrompono. Più applicazioni tengono la scadenza più lontana, senza sommare il malus."
+    },
+    {
+      "nome": "Sensibilità solare",
+      "effetto": "Sotto luce solare diretta −2 a tutti i VA di Abilità e Salvezza; termina quando sono schermati (Luce Mistica e luce artificiale non contano). Ogni 10 minuti continuativi di esposizione Tempra 0 con il −2: fallimento 1 AFT; dal sessantesimo minuto ogni verifica infligge anche 1d6 Naturale interno che ignora AR. Un minuto di ombra interrompe il conteggio; PV, Ferite e AFT subiti restano."
+    }
+  ],
+  "note": "Condotta: evita il sole e gli estranei aggressivi, cerca un adulto o propone un contatto tramite spore; sotto 3 PV o a Ferita Profonda si ritira. I PX descrivono un eventuale scontro, non richiedono di aggredire una comunità pacifica. Fonte: Myconid Sprout, p. 230."
+}

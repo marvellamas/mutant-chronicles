@@ -1,0 +1,99 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "fungo-violetto",
+  "nome": "Fungo violetto",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Melme funghi e imitatori",
+  "caratteristiche": {
+    "FOR": 2,
+    "DES": 1,
+    "COS": 5,
+    "INT": 1,
+    "SAG": 2,
+    "CAR": 1
+  },
+  "pv": 18,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 2,
+  "iniziativa": -4,
+  "movimento": {
+    "passo": 1,
+    "corsa": 2,
+    "scatto": 3
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 2,
+    "magia": 8
+  },
+  "senza_salvezza": [
+    "volonta"
+  ],
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Tocco degradante",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d6",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "note": "Degradazione biologica: colpisce solo organismi biologici, AR normale; non è Etereo e non applica veleno, malattia o Corrosivo."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 4
+    },
+    {
+      "nome": "Percezione",
+      "va": 8
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Senza mente",
+      "effetto": "PM — e Volontà —: nessuna mente strutturata. Immune a danni psichici, controllo mentale e Terrorizzato (proprietà della scheda). Non dorme e scambia i gas attraverso il corpo: l’ostruzione di una bocca inesistente non la soffoca. Non è immune a ogni veleno, malattia o ambiente privo di condizioni vitali."
+    },
+    {
+      "nome": "Percezione diffusa",
+      "effetto": "Localizza entro 6 Q senza occhi o udito; non legge, non distingue i colori e non soddisfa gli sguardi; le barriere solide la interrompono. Non individua da sola chi è nascosto (resta il confronto Percezione–Furtività)."
+    },
+    {
+      "nome": "Due tocchi",
+      "effetto": "Al massimo due Tocchi degradanti per Round, ciascuno con 1 AzP; un’Opportunità ordinaria usa il Tocco entro 2 Q con lo stesso limite. Nessuna Parata naturale; Schiva solo con movimento concretamente disponibile."
+    },
+    {
+      "nome": "Crescita",
+      "effetto": "Un cadavere biologico a contatto col fungo può nutrire un nuovo esemplare in 2d6 giorni, in ambiente adatto; nulla nasce da una creatura ancora viva, a 0 PV o Morente. Reagisce al movimento e non distingue amici, nemici o soccorritori."
+    }
+  ],
+  "immunita": [
+    "accecato",
+    "assordato",
+    "terrorizzato"
+  ],
+  "note": "Furtività 13 fra funghi. Testa = cappello, Torace = gambo, Braccia = filamenti, Gambe = base locomotrice. Fonte: Violet Fungus, p. 138."
+}

@@ -1,0 +1,107 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "miconide-adulto",
+  "nome": "Miconide adulto",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Melme funghi e imitatori",
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 5,
+    "COS": 6,
+    "INT": 5,
+    "SAG": 7,
+    "CAR": 4
+  },
+  "pv": 24,
+  "pm": 8,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 9,
+    "volonta": 11,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Pugno",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d6",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "note": "Spore irritanti: Tempra senza modificatore, fallimento Avvelenato e −2 fisico per 1 Round (Pericolosità I). Non incorpora gratis le Spore pacificanti."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 9
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sensi e mente",
+      "effetto": "Scurovisione 24 Q; ha una mente, come il germoglio. Nessuna Parata naturale. Con una sola AzP sceglie fra Pugno, spore o Difesa, senza concatenarli."
+    },
+    {
+      "nome": "Spore di rapporto",
+      "effetto": "Diffonde spore nel raggio della scheda lungo percorsi liberi: possono aderire volontariamente creature biologiche con una mente (non costrutti, non morti, elementali). Per 1 ora i partecipanti entro 6 Q l’uno dall’altro si scambiano pensieri intenzionalmente formulati senza lingua comune; nessun obbligo di obbedienza, nessuna lettura di pensieri non condivisi. Ogni partecipante può cessare gratis alla propria Iniziativa. Nessun PM; Negare Potere non dissolve la secrezione. Raggio 4 Q, 1 AzP ogni volta, senza limite giornaliero.",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Spore pacificanti",
+      "effetto": "Tre volte in ogni periodo di 24 ore, al massimo una per Round: 1 AzP contro un organismo biologico visibile entro 1 Q che respiri la nube. Tempra senza modificatore: fallimento → Stordito per 1 Round; a fine di ogni propria Iniziativa il bersaglio ripete Tempra e un successo termina lo Stato. La Salvezza sostituisce attacco e Difesa; pareti, apparati autonomi o filtri adatti impediscono l’esposizione. Veleno naturale di Pericolosità II: antidoto adeguato o Cura Avvelenamenti (liv. 2) lo eliminano; immunità ai veleni o a Stordito lo impedisce. Le applicazioni non si sommano.",
+      "azioni": {
+        "principali": 1
+      },
+      "usi": {
+        "quanti": 3,
+        "per": "giorno"
+      }
+    },
+    {
+      "nome": "Spore di allarme",
+      "effetto": "Dopo almeno 1 danno ai PV, un Miconide cosciente emette automaticamente un segnale biologico (al massimo una volta per Round): gli altri Miconidi entro 48 Q raggiungibili attraverso aria comunicante avvertono il pericolo e la direzione approssimativa. Pareti sigillate lo bloccano; non dà mappe, identità o un turno gratuito."
+    },
+    {
+      "nome": "Sensibilità solare",
+      "effetto": "Sotto luce solare diretta −2 a tutti i VA di Abilità e Salvezza; termina quando sono schermati (Luce Mistica e luce artificiale non contano). Ogni 10 minuti continuativi di esposizione Tempra 0 con il −2: fallimento 1 AFT; dal sessantesimo minuto ogni verifica infligge anche 1d6 Naturale interno che ignora AR. Un minuto di ombra interrompe il conteggio; PV, Ferite e AFT subiti restano."
+    }
+  ],
+  "note": "Cerca dialogo e protezione del circolo; si ritira sotto 6 PV o a Ferita Profonda. Fonte: Myconid Adult, p. 232."
+}

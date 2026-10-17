@@ -2484,7 +2484,10 @@ export function validaNemico(nemico, dati, file = 'nemico') {
         if (!isOggetto(v)) { err(k, 'oggetto'); return; }
         const chiavi = sorgenti[s.chiavi_da] ?? [];
         for (const c of Object.keys(v)) if (!chiavi.includes(c)) err(`${k}.${c}`, `chiave non ammessa (una fra ${elenco(chiavi)})`);
-        if (s.tutte) for (const c of chiavi) if (v[c] === undefined) err(`${k}.${c}`, 'mancante');
+        // «assenze_da»: un campo fratello elenca le chiavi che la scheda del manuale lascia «—» (un dato assente non vale 0)
+        const assenti = s.assenze_da && Array.isArray(fratelli[s.assenze_da]) ? fratelli[s.assenze_da] : [];
+        if (s.tutte) for (const c of chiavi) if (v[c] === undefined && !assenti.includes(c)) err(`${k}.${c}`, s.assenze_da ? `mancante (o elencata in ${s.assenze_da})` : 'mancante');
+        for (const c of assenti) if (v[c] !== undefined) err(`${k}.${c}`, `ha un valore ma è elencata in ${s.assenze_da}`);
         for (const [c, x] of Object.entries(v)) if (chiavi.includes(c)) controlla(`${k}.${c}`, s.valore, x);
         return;
       }

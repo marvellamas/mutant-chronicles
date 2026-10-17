@@ -1,0 +1,105 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "mimic",
+  "nome": "Mimic",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Melme funghi e imitatori",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 6,
+    "COS": 7,
+    "INT": 3,
+    "SAG": 6,
+    "CAR": 4
+  },
+  "pv": 38,
+  "pm": 6,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 3,
+    "corsa": 6,
+    "scatto": 9
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 9,
+    "volonta": 9,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Pseudopodo",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "note": "Adesione in forma oggetto: vedi la capacità «Adesione»."
+    },
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 2,
+      "note": "AC 2: prima 1d8+1 Naturale, poi 1d4 Naturale da acido (senza Corrosivo). Una sola Difesa; l’esito e l’AR si applicano a ciascun danno, risolvendo PV e Ferite prima del successivo; un Magistrale raddoppia solo il primo. +2 al VA (14) contro la vittima che trattiene."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Scurovisione 12 Q; immune ad Acido di qualunque Natura e ad A Terra. Ha una mente e non è immune agli effetti mentali. Testa = bocca e sensi, Torace = massa centrale, Braccia = pseudopodi, Gambe = base locomotrice; mutare forma non guarisce le Menomazioni."
+    },
+    {
+      "nome": "Imitazione",
+      "effetto": "1 AzP: assume forma amorfa oppure l’aspetto di un oggetto solido che rientra nel suo volume di 1 × 1 Q. Trasformazione biologica senza PM: statistiche immutate e nessuna funzione meccanica dell’oggetto imitato (non diventa un’arma mistica o una serratura funzionante). Furtività 14 solo in forma oggetto, immobile, in una collocazione plausibile; un esame riuscito, il contatto o il movimento lo scoprono. Può attaccare anche in forma oggetto, rivelandosi.",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Adesione",
+      "effetto": "Solo in forma oggetto, su una creatura di spazio ≤ 2 × 2 Q o su un oggetto esposto. Un contatto diretto col corpo, anche se l’AR assorbe il danno del Pseudopodo, impone Riflessi senza modificatore: fallimento → presa (non costa un’altra AzP; un attacco fallito, una Schivata o una Parata magica che annulla il contatto non la attivano). Un’arma o attrezzo interposto può aderire senza immobilizzare chi lo impugna (lo si lascia con le regole del rilascio); una Parata fisica espone solo lo strumento parante, con la stessa PS per ritirarlo. Una sola creatura alla volta: Immobilizzata (movimento 0, −4 fisico); la mano che ha toccato è inutilizzabile finché resta attaccata, l’altra no (l’adesione tramite armatura non blocca le mani). Mantenerla è gratuito, ma il Mimic non può muoversi o Schivare senza rilasciarla. Liberarsi: 1 AzP, Corpo a corpo o Atletica contro Corpo a corpo 12 (−4 di Immobilizzato); un alleato adiacente può fare altrettanto (senza malus se libero); il pareggio conserva il contatto. Rilascio gratuito alla propria Iniziativa; forma amorfa, perdita di coscienza, morte o Menomazione ne interrompono le prese (0 PV no)."
+    }
+  ],
+  "immunita": [
+    "a-terra"
+  ],
+  "note": "Non ha automaticamente un linguaggio parlato; un esemplare che comprende un’offerta può scambiare il passaggio con nutrimento. Un Mimic che imita una porta non sostituisce un’intera parete. Condotta: immobilizza una preda e la morde; sotto 9 PV o a Ferita Profonda può rilasciarla e fuggire. Fonte: Mimic, p. 220."
+}
