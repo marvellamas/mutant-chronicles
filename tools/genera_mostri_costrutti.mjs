@@ -65,7 +65,7 @@ const CREATURE = [
     note: 'PM —: nessuna riserva. Il corpo è l’arma; i danni seguono PV e Ferite, senza PI. Non dà proprietà o sintonizzazioni di un’arma magica ai PG. Immobile e appoggiata sembra un oggetto (+4 Furtività). Comportamento: percorso di guardia o bersaglio assegnato; una barriera chiusa ne ferma l’inseguimento.',
   },
   {
-    id: 'tappeto-soffocante', nome: 'Tappeto soffocante', taglia: 'grande',
+    id: 'tappeto-soffocante', nome: 'Tappeto soffocante',
     caratteristiche: { FOR: 7, DES: 6, COS: 6, INT: 1, SAG: 3, CAR: 1 },
     pv: 28, ar: { totale: 0, magica: 0 }, difese: 10, iniziativa: 0,
     movimento: { passo: 2, corsa: 4, scatto: 6 },
@@ -81,7 +81,7 @@ const CREATURE = [
       { nome: 'Sopprimere l’animazione', effetto: 'Negare Potere sull’animazione (potenza 4); inerte fino alla fine del terzo Round successivo.' },
       SCUROVISIONE, NON_BIOLOGICO,
     ],
-    note: 'PM —: nessuna riserva. Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app (A.167). Immobile sembra un tappeto (+4 Furtività). Comportamento: protegge un’area o un accesso; interrompere l’animazione apre una finestra per salvare la vittima.',
+    note: 'PM —: nessuna riserva. Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). Immobile sembra un tappeto (+4 Furtività). Comportamento: protegge un’area o un accesso; interrompere l’animazione apre una finestra per salvare la vittima.',
   },
   {
     id: 'gargoyle', nome: 'Gargoyle',

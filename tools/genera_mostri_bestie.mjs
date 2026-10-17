@@ -34,7 +34,7 @@ const CREATURE = [
     note: 'Può Schivare ed Elusione; nessuna Parata naturale. Condotta: cerca isolamento e vie di fuga, tende a ritirarsi sotto 4 PV, a Ferita Profonda o dopo la dispersione del branco.',
   },
   {
-    id: 'lupo-feroce', nome: 'Lupo feroce', taglia: 'grande',
+    id: 'lupo-feroce', nome: 'Lupo feroce',
     caratteristiche: { FOR: 7, DES: 6, COS: 6, INT: 2, SAG: 6, CAR: 3 },
     pv: 26, pm: 6, ar: { totale: 1, magica: 0 }, difese: 11, iniziativa: 1,
     movimento: { passo: 10, corsa: 20, scatto: 30 },
@@ -47,7 +47,7 @@ const CREATURE = [
       { nome: 'Branco e sensi', effetto: 'Applica Branco, con +2 VA condizionale. +2 a Percezione quando udito oppure olfatto sono determinanti, senza raddoppiare il bonus. Non possiede scurovisione o percezione magica.' },
       { nome: 'Abbattere la preda', effetto: 'Una volta per Round, un Morso che infligge almeno 1 danno finale può imporre Tempra senza modificatore proprio a una preda non superiore a 2 × 2 Q. Fallimento o Maldestro applica A Terra. Restano i limiti di appoggio, l’assenza di spostamento e le regole per rialzarsi del Lupo.', usi: { quanti: 1, per: 'Round' } },
     ],
-    note: 'Una sola AzP obbliga a scegliere fra Morso e Difesa. Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app (A.167). Condotta: insegue una preda separata, evita un fronte compatto, cerca riparo sotto 7 PV o a Ferita Profonda. Non è una cavalcatura addestrata.',
+    note: 'Una sola AzP obbliga a scegliere fra Morso e Difesa. Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). Condotta: insegue una preda separata, evita un fronte compatto, cerca riparo sotto 7 PV o a Ferita Profonda. Non è una cavalcatura addestrata.',
   },
   {
     id: 'orso-bruno', nome: 'Orso bruno', taglia: 'grande',
@@ -86,7 +86,7 @@ const CREATURE = [
     note: 'Condotta: reagisce a una minaccia vicina o sfonda verso la fuga; sotto 10 PV o a Ferita Seria cerca una via di uscita. Non si scaglia contro muri invalicabili per la propria tenacia.',
   },
   {
-    id: 'leone', nome: 'Leone', taglia: 'grande',
+    id: 'leone', nome: 'Leone',
     caratteristiche: { FOR: 7, DES: 7, COS: 6, INT: 2, SAG: 6, CAR: 3 },
     pv: 28, pm: 6, ar: { totale: 1, magica: 0 }, difese: 11, iniziativa: 2,
     movimento: { passo: 10, corsa: 20, scatto: 30 },
@@ -103,10 +103,10 @@ const CREATURE = [
       { nome: 'Balzo predatorio', effetto: 'Una volta per Round, dopo almeno 4 Q di Passo rettilineo verso una preda non superiore a 2 × 2 Q, attacca con Artigli (AzP; danno non raddoppiato). Se infligge almeno 1 danno finale, la preda effettua Tempra senza modificatore: fallimento o Maldestro applica A Terra, e se cade proprio per questo il Leone ottiene subito una sola AzP vincolata a un Morso contro di lei. Una preda già A Terra non concede il Morso. Il percorso usa l’AzM. Non si combina con Carica, Corsa, Scatto o altre manovre. Senza appoggio niente A Terra né Morso aggiuntivo.', usi: { quanti: 1, per: 'Round' } },
       { nome: 'Salto', effetto: 'Con almeno 2 Q di rincorsa salta fino a 5 Q in orizzontale senza Prova in condizioni ordinarie, contando rincorsa e salto nel movimento; serve un atterraggio adatto. Ostacoli o circostanze difficili richiedono Atletica.' },
     ],
-    note: 'Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app (A.167). Condotta: sotto 7 PV o a Ferita Profonda cerca riparo e sostegno, salvo minaccia immediata ai piccoli.',
+    note: 'Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). Condotta: sotto 7 PV o a Ferita Profonda cerca riparo e sostegno, salvo minaccia immediata ai piccoli.',
   },
   {
-    id: 'iena-gigante', nome: 'Iena gigante', taglia: 'grande',
+    id: 'iena-gigante', nome: 'Iena gigante',
     caratteristiche: { FOR: 7, DES: 6, COS: 6, INT: 2, SAG: 6, CAR: 2 },
     pv: 30, pm: 6, ar: { totale: 1, magica: 0 }, difese: 10, iniziativa: 1,
     movimento: { passo: 10, corsa: 20, scatto: 30 },
@@ -119,7 +119,7 @@ const CREATURE = [
       { nome: 'Frenesia della caccia', effetto: 'Una volta per Round, se il proprio Morso alla propria Iniziativa rende un nemico Svenuto, Morente o Morto, ottiene subito una sola AzP vincolata a un Morso contro un altro nemico raggiungibile. Il solo passaggio a 0 PV non basta. Il Morso aggiuntivo non attiva una seconda Frenesia e non colpisce di nuovo la stessa vittima. Prima può usare il movimento ordinario rimasto; non riceve un’altra AzM, non interrompe Corsa o Scatto, non ignora gli Attacchi di Opportunità. L’AzP aggiuntiva scade a fine Iniziativa se inutilizzata.', usi: { quanti: 1, per: 'Round' } },
       { nome: 'Difese e gruppo', effetto: 'Non applica il bonus di Branco: il vantaggio del gruppo nasce da posizioni e numero. La propria AzP ordinaria resta necessaria per Schivare. Denti e mascelle non sono una Parata naturale e non infliggono Corrosivo o Sanguinamento automatici. Il riso e i richiami sono comunicazione, non un attacco che impone Terrorizzato.' },
     ],
-    note: 'Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app (A.167). Condotta: segue una preda indebolita, contende carcasse; sotto 8 PV, a Ferita Profonda o separata dal gruppo interrompe l’inseguimento.',
+    note: 'Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). Condotta: segue una preda indebolita, contende carcasse; sotto 8 PV, a Ferita Profonda o separata dal gruppo interrompe l’inseguimento.',
   },
   {
     id: 'ragno-gigante', nome: 'Ragno gigante', taglia: 'grande',

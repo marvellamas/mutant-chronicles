@@ -25,7 +25,6 @@
     "corsa": 20,
     "scatto": 30
   },
-  "taglia": "grande",
   "gs_px": {
     "gs": "Inesperto",
     "px": 20,
@@ -88,5 +87,5 @@
       }
     }
   ],
-  "note": "Una sola AzP obbliga a scegliere fra Morso e Difesa. Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app (A.167). Condotta: insegue una preda separata, evita un fronte compatto, cerca riparo sotto 7 PV o a Ferita Profonda. Non è una cavalcatura addestrata."
+  "note": "Una sola AzP obbliga a scegliere fra Morso e Difesa. Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). Condotta: insegue una preda separata, evita un fronte compatto, cerca riparo sotto 7 PV o a Ferita Profonda. Non è una cavalcatura addestrata."
 }

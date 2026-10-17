@@ -42,7 +42,7 @@ Leone, Iena gigante, Ragno gigante, Scorpione gigante, Serpente costrittore giga
 - Movimento: il formato ha solo passo/corsa/scatto/volo (§2.14); le andature secondarie (arrampicata, nuoto)
   e la scurovisione restano nelle note o in una capacità, come le scrive il manuale.
 - Spazio: quadrati (1 Q, 2 × 2 Q, 3 × 3 Q) nel campo `spazio`; 2 × 1 Q (Lupo feroce, Leone, Iena) e 3 × 2 Q
-  (Coccodrillo) nelle note con il rimando ad A.167, taglia Grande.
+  (Coccodrillo) nelle note con il rimando ad A.167; taglia Grande solo per il 3 × 2 Q (il formato dei nemici la riserva a chi occupa 2 × 2 Q o più).
 - Attacchi che non infliggono danni (Getto di seta del Ragno: applica Immobilizzato) sono **capacità**, non
   attacchi, perché il campo `danno` del formato vuole i dadi.
 - GS/PX informativo su ciascuna.

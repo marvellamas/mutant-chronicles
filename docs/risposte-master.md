@@ -1739,8 +1739,9 @@ diverso dalle regole già approvate **non si è cambiato**: vedi A.167 qui sotto
   Coccodrillo 3 × 2 Q; nella prima parte del catalogo compaiono anche 2 × 3 Q, 3 × 2 Q e 4 × 4 Q. Che cosa
   vale al tavolo: pedine quadrate (arrotondate al lato maggiore, 2 × 2 o 3 × 3) o pedine rettangolari da
   gestire sulla mappa? *Nel frattempo:* il campo `spazio` resta ai soli valori quadrati della A.126; gli
-  ingombri non ammessi sono scritti nelle **note** della creatura con il rimando ad A.167 e la taglia è
-  **Grande**. Nessun valore inventato.
+  ingombri non ammessi sono scritti nelle **note** della creatura con il rimando ad A.167; la taglia resta
+  quella del formato dei nemici (Grande solo se l’ingombro contiene 2 × 2 Q, o se il manuale la dice, come per
+  le Regine della Covata e l’Aboleth). Nessun valore inventato.
 
 ## Domanda aperta dal lotto «PX della partita» del 16 ottobre 2026
 

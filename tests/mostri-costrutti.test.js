@@ -63,7 +63,7 @@ test('movimento: Spada volante e Aria in volo (passo 0); Tappeto 2×1 fuori dal 
   }
   const tap = leggi('tappeto-soffocante');
   assert.equal(tap.spazio, undefined, 'Tappeto 2×1 non quadrato: campo vuoto');
-  assert.equal(tap.taglia, 'grande');
+  assert.equal(tap.taglia, undefined, '2 × 1 Q non contiene un 2 × 2 Q: taglia normale');
   assert.ok(/2 × 1 Q/.test(tap.note) && /A\.167/.test(tap.note));
   // gli Elementali 2×2 sono Grandi
   for (const id of ['elementale-acqua-maggiore', 'elementale-terra-maggiore']) {

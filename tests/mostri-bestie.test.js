@@ -31,7 +31,8 @@ test('Spazio dai dati: quadrati nel campo, non quadrati nelle note con A.167', (
     ['iena-gigante', '2 × 1 Q'], ['coccodrillo-gigante', '3 × 2 Q']]) {
     const n = leggi(id);
     assert.equal(n.spazio, undefined, `${id} senza spazio quadrato`);
-    assert.equal(n.taglia, 'grande', `${id} Grande`);
+    // Taglia Grande solo se l’ingombro contiene 2 × 2 Q (formato dei nemici): il 3 × 2 Q sì, il 2 × 1 Q no
+    assert.equal(n.taglia, ingombro === '3 × 2 Q' ? 'grande' : undefined, `${id} taglia`);
     assert.ok(n.note.includes(ingombro) && n.note.includes('A.167'), `${id} ingombro e A.167 nelle note`);
   }
 });
