@@ -1,0 +1,121 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "cumulo-strisciante",
+  "nome": "Cumulo strisciante",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Vegetali e custodi delle foreste",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 4,
+    "COS": 8,
+    "INT": 3,
+    "SAG": 5,
+    "CAR": 3
+  },
+  "pv": 60,
+  "pm": 8,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 7,
+  "iniziativa": -1,
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 7,
+    "volonta": 8,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Schianto",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Contundente"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sensi e metabolismo",
+      "effetto": "Terra e nuoto 4/8/12 Q. Percezione diffusa 12 Q; immune ad Accecato, Assordato e all’accumulo di AFT. Ha una mente istintiva e non è immune agli effetti mentali. Non dorme (entra in quiescenza); respira e si nutre. Torace = nucleo e massa centrale."
+    },
+    {
+      "nome": "Resistenze e assorbimento",
+      "effetto": "Dimezza Fuoco e Ghiaccio di qualunque Natura; immune al Fulmine. Per ogni danno da Fulmine che lo raggiunge si calcola il residuo dopo Difesa e AR (ignorando solo l’immunità) e recupera tanti PV, fino a 4 PV per Round da tutte le fonti elettriche; non oltre il massimo, non cura Ferite o Menomazioni, non stabilizza Morente."
+    },
+    {
+      "nome": "Afferrare",
+      "effetto": "1 AzP, VA 13: Corpo a corpo 13 contrapposto a Corpo a corpo o Atletica di una creatura ≤ 1 × 1 Q; successo → Immobilizzato (mani non bloccate), il pareggio iniziale non afferra; nessun danno. Mantiene una sola vittima senza Azioni, ma non si sposta finché non è inglobata o rilasciata. Due Schianti non danno una terza AzP né un inglobamento gratuito.",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Inglobare",
+      "effetto": "1 AzP sull’unica vittima già presa: la trasferisce dentro la massa senza altro tiro né danni; è Accecata verso l’esterno e Immobilizzata (−4 fisico, mani non bloccate). Segue gli spostamenti del Cumulo, che ora può muoversi; occupa la capacità prensile (non afferra altre creature). Se le vie respiratorie sono ostruite, soffocamento del §5.23 (riserva pari a COS; un apparato autonomo lo impedisce).",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Comprimere",
+      "effetto": "1 AzP, una volta per Round, sul prigioniero interno: Tempra senza modificatore, fallimento 1d8+2 Naturale da Contusione, successo metà per eccesso, prima dell’AR; niente tiro per colpire né Difese. Gli Schianti non possono essere diretti contro il prigioniero. Nessun altro danno automatico.",
+      "azioni": {
+        "principali": 1
+      },
+      "usi": {
+        "quanti": 1,
+        "per": "Round"
+      }
+    },
+    {
+      "nome": "Liberazione",
+      "effetto": "La vittima (presa o inglobata) spende 1 AzP: Corpo a corpo o Atletica contro Corpo a corpo 13 (−4 di Immobilizzato); un alleato adiacente può farlo col proprio VA (senza il malus se libero). Successo libera in uno spazio adiacente capace di accoglierla; il pareggio mantiene la presa. Il prigioniero attacca dall’interno con −4; la massa dà copertura totale. Rilascio gratuito; perdita di coscienza, morte o Menomazione del contenimento la liberano (0 PV no). All’uscita cessano cecità e ostruzione; il fiato torna dopo un Round di respiro normale."
+    }
+  ],
+  "immunita": [
+    "accecato",
+    "assordato"
+  ],
+  "note": "AR 3 biologica. Furtività 14 fra detriti vegetali compatibili. Condotta: attende fra detriti, poi Schianti o la sequenza Afferrare–Inglobare; sotto 15 PV o a Ferita Seria tenta di ritirarsi. Fonte: Shambling Mound, p. 270."
+}

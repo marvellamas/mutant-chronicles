@@ -1,0 +1,169 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "unicorno",
+  "nome": "Unicorno",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Vegetali e custodi delle foreste",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 7,
+    "COS": 7,
+    "INT": 6,
+    "SAG": 8,
+    "CAR": 8
+  },
+  "pv": 50,
+  "pm": 20,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 10,
+    "corsa": 20,
+    "scatto": 30
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 11,
+    "volonta": 13,
+    "magia": 14
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Zoccoli",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d8+2",
+      "natura": "Magico",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Contundente"
+      ]
+    },
+    {
+      "nome": "Corno",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d8+2",
+      "natura": "Magico",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    },
+    {
+      "nome": "Corno in carica",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "2d6+2",
+      "natura": "Magico",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ],
+      "note": "Almeno 4 Q di movimento effettivo rettilineo verso la vittima nella stessa Iniziativa, poi 1 AzP; un uso per Round. Se infligge almeno 1 danno finale a una creatura ≤ 2 × 2 Q: Tempra senza modificatore, fallimento A Terra. Non applica Sbalzante né un secondo attacco gratuito."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 9
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Protezione innata",
+      "effetto": "Immune ai danni da veleno, ad Avvelenato, a Paralizzato e alle influenze di fascinazione che impongono fiducia o attrazione; non a ogni effetto mentale. Contro incantesimi e capacità mistiche +2 alle PS (Magia 14 lo comprende già; non migliora Difese o AR)."
+    },
+    {
+      "nome": "Sensi e comunicazione",
+      "effetto": "Scurovisione 12 Q. Parla il linguaggio silvano e una lingua di contatto; può rivolgere parole mentali a un interlocutore percepito entro 12 Q che comprenda una lingua (non legge pensieri; una protezione contro la telepatia lo impedisce). Localizzazioni equine, senza ali; il corno appartiene alla Testa."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Al massimo due attacchi per Round, uno di Zoccoli e uno di Corno; poteri e Difese usano le stesse due AzP."
+    },
+    {
+      "nome": "Capacità innate",
+      "effetto": "Senza Potere, Focus o Invocazione, senza Anticipazione; costi e Azioni obbligatori; l’ultimo PM causa Svenuto. Non apprende gli altri incantesimi della fonte."
+    },
+    {
+      "nome": "Rovi viventi",
+      "effetto": "Capacità mistica innata: 1 AzP e 3 PM, durata 5 Round, senza Concentrazione né Potere, Focus o Invocazione. Scelge un punto visibile entro 6 Q. Raggio 3 Q; serve terreno naturale con radici o vegetazione viva. Le piante restano legate al suolo: la zona è terreno difficile per chi si muove a terra (non i vegetali; non applica Rallentato; il volo sopra le piante o percorsi liberi la evitano). All’attivazione l’emittente sceglie fino a tre creature percepite a terra nella zona (anche alleati): Riflessi senza modificatore, fallimento → Immobilizzato (mani non bloccate); chi entra dopo non fa una nuova PS. Sciogliere la presa: 1 AzP e Atletica senza modificatore (col −4 di Immobilizzato), anche da un alleato adiacente. Recidere: i legami di una vittima sono un bersaglio materiale con AR 0 e 6 PV, senza Difese; a 0 PV liberano la vittima (niente Ferite o Morente; nessun PX separato). Una sola area per emittente. Negare Potere: potenza 3. Termina alla scadenza, a congedo gratuito o alla perdita di coscienza dell’emittente.",
+      "risorsa": "3 PM",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Tocco risanante",
+      "effetto": "1 AzP e 6 PM, a contatto del corno, su un vivente consenziente o incosciente soccorso (anche su di sé), al massimo tre volte ogni 24 ore: ripristina 1d4+5 PV, oppure destina ogni 2 punti a ridurre Sanguinamento di 1, il resto ai PV. Segue i limiti di Cura Ferite 6, senza Talenti aggiuntivi; non oltre i massimi, non cura Ferite o Menomazioni, non stabilizza Morente.",
+      "risorsa": "6 PM",
+      "azioni": {
+        "principali": 1
+      },
+      "usi": {
+        "quanti": 3,
+        "per": "giorno"
+      }
+    },
+    {
+      "nome": "Purificazione",
+      "effetto": "6 PM e 10 minuti fuori dal combattimento, Concentrazione e contatto continuo del corno con un vivente consenziente o incosciente soccorso: rimuove una sola malattia naturale o un solo veleno naturale attivo, di Pericolosità non superiore a III, Profonda (la malattia va prima identificata con Medicina o informazioni attendibili; per un veleno non identificato sceglie il più pericoloso compatibile). Toglie la causa e gli Stati che mantiene; non restituisce PV, non cura Ferite, non cancella AFT, non concede immunità. L’interruzione impedisce la cura senza restituire PM.",
+      "risorsa": "6 PM"
+    },
+    {
+      "nome": "Scudo luminoso",
+      "effetto": "1 AzP e 3 PM, su di sé o su un consenziente visibile entro 12 Q, per 2 Round senza Concentrazione: +2 alle Prove di Difese. Non dà Difese gratuite né AR; gli Scudi non si sommano. Negare Potere: potenza 3.",
+      "risorsa": "3 PM",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Passaggio del guardiano",
+      "effetto": "Una volta ogni 24 ore, 1 AzP e 9 PM: teletrasporta sé e fino a tre altre creature consenzienti percepite entro 1 Q verso un luogo da lui visitato e conosciuto, entro 1.000 Q, con un’area d’arrivo libera e sostenuta per tutti (altrimenti fallisce e consuma AzP, PM e uso). Ogni partecipante porta la dotazione entro il proprio carico. Non trascina nemici o creature che rifiutano; non recide da sé legami materiali o mistici. Si usa alla propria Iniziativa, non come reazione. Istantaneo: Negare Potere non riporta indietro; interdizioni al teletrasporto lo bloccano (confronto con potenza 9). Non crea portali. È una capacità innata, non il Teletrasporto di livello 6.",
+      "risorsa": "9 PM",
+      "azioni": {
+        "principali": 1
+      },
+      "usi": {
+        "quanti": 1,
+        "per": "giorno"
+      }
+    }
+  ],
+  "immunita": [
+    "avvelenato"
+  ],
+  "note": "Il profilo da 70 PX comprende due AzP, attacchi Magici, cure limitate, Rovi e il Passaggio del guardiano; non ha Azioni Leggendarie né effetti regionali. Condotta: avverte, protegge, può usare Rovi per fermare un inseguitore; sotto 12 PV o a Ferita Profonda mette in salvo sé e gli alleati. Fonte: Unicorn, pp. 293–294."
+}

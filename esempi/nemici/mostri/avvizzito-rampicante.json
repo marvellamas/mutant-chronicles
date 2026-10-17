@@ -1,0 +1,107 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "avvizzito-rampicante",
+  "nome": "Avvizzito rampicante",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Vegetali e custodi delle foreste",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 4,
+    "COS": 7,
+    "INT": 3,
+    "SAG": 5,
+    "CAR": 2
+  },
+  "pv": 26,
+  "pm": 9,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 7,
+  "iniziativa": -1,
+  "movimento": {
+    "passo": 2,
+    "corsa": 4,
+    "scatto": 6
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 7,
+    "volonta": 8,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Sferzata di liana",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo vegetale",
+      "effetto": "Natura Comune, biologicamente vivente, con una mente e PM personali (a 0 PM Svenuto): INT bassa, corpo vegetale o assenza di parola non danno immunità mentali. Respira attraverso i tessuti (nessuna gola da strangolare, ma non è immune alla mancanza d’aria). Nessuna Parata naturale, salvo la Driade con il randello. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente. Testa = regione sensoriale, Torace = tronco, Braccia = rami anteriori, Gambe = radici o appendici locomotrici."
+    },
+    {
+      "nome": "Percezione diffusa",
+      "effetto": "Localizza entro 12 Q senza occhi e udito; non legge colori o scritte, non soddisfa gli sguardi e non attraversa ostacoli solidi. Immune ad Accecato e Assordato; non agli effetti mentali. Resta il confronto Percezione–Furtività."
+    },
+    {
+      "nome": "Presa delle liane",
+      "effetto": "Dopo almeno 1 danno finale della Sferzata contro una creatura di spazio ≤ 2 × 2 Q, Riflessi senza modificatore: fallimento → Immobilizzato (mani non bloccate). Una sola vittima; non trascina e non si muove mantenendo la presa. La Sferzata di Opportunità non applica l’aggancio."
+    },
+    {
+      "nome": "Stringere",
+      "effetto": "1 AzP, su una vittima già presa: Corpo a corpo 11 contrapposto a Corpo a corpo o Atletica; con successo 1d6+1 Naturale con AR ordinaria, fallimento o pareggio nessun danno. Liberarsi: la vittima o un alleato adiacente spende 1 AzP con lo stesso confronto (−4 di Immobilizzato alla vittima; il pareggio conserva la presa). Rilascio gratuito; perdita di coscienza o funzione prensile la terminano (0 PV no).",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Rovi viventi",
+      "effetto": "Capacità mistica innata: 1 AzP e 3 PM, durata 5 Round, senza Concentrazione né Potere, Focus o Invocazione. Centra l’area su di sé. Raggio 3 Q; serve terreno naturale con radici o vegetazione viva. Le piante restano legate al suolo: la zona è terreno difficile per chi si muove a terra (non i vegetali; non applica Rallentato; il volo sopra le piante o percorsi liberi la evitano). All’attivazione l’emittente sceglie fino a tre creature percepite a terra nella zona (anche alleati): Riflessi senza modificatore, fallimento → Immobilizzato (mani non bloccate); chi entra dopo non fa una nuova PS. Sciogliere la presa: 1 AzP e Atletica senza modificatore (col −4 di Immobilizzato), anche da un alleato adiacente. Recidere: i legami di una vittima sono un bersaglio materiale con AR 0 e 6 PV, senza Difese; a 0 PV liberano la vittima (niente Ferite o Morente; nessun PX separato). Una sola area per emittente. Negare Potere: potenza 3. Termina alla scadenza, a congedo gratuito o alla perdita di coscienza dell’emittente.",
+      "risorsa": "3 PM",
+      "azioni": {
+        "principali": 1
+      }
+    }
+  ],
+  "immunita": [
+    "accecato",
+    "assordato"
+  ],
+  "note": "Furtività 14 immobile fra liane compatibili. Parla una lingua assegnata alla comunità. Con una sola AzP sceglie fra terreno, attacco, stretta o Difesa. Può contrattare; sotto 6 PV o a Ferita Profonda cerca riparo. Fonte: Vine Blight, pp. 31–32."
+}

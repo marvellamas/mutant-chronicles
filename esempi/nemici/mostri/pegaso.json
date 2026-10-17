@@ -1,0 +1,93 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "pegaso",
+  "nome": "Pegaso",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Vegetali e custodi delle foreste",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 7,
+    "COS": 7,
+    "INT": 5,
+    "SAG": 7,
+    "CAR": 6
+  },
+  "pv": 38,
+  "pm": 8,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 12,
+    "corsa": 24,
+    "scatto": 36,
+    "volo": 18
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 12,
+    "volonta": 11,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Zoccoli",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Contundente"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Furtività",
+      "va": 7
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sensi e parola",
+      "effetto": "Vista e udito ordinari, senza scurovisione. Comprende due lingue assegnate all’ambiente ma non parla con voce umanoide (gesti o una capacità di comunicazione adatta). Intelligenza e volontà personali. Braccia = zampe anteriori, Gambe = posteriori; le ali sono appendici delle Braccia."
+    },
+    {
+      "nome": "Volo",
+      "effetto": "Ali reali: servono spazio e un percorso per la loro apertura. Non resta sospeso come un organismo fluttuante. Danni alle ali, perdita di coscienza o impedimenti possono causare la normale caduta. Volo e terra condividono il budget dei tragitti misti; salire in quota non dà AzM extra né attacchi in picchiata gratuiti."
+    },
+    {
+      "nome": "Cavaliere",
+      "effetto": "Può accettare un cavaliere di spazio 1 × 1 Q con equipaggiamento entro il carico ordinario (movimento del profilo non sovraccarico). Pegaso e cavaliere mantengono Azioni, Difese e bersagli distinti. Una sella o bardatura aggiunta cambia la dotazione."
+    }
+  ],
+  "note": "Può diventare un alleato o un trasportatore consenziente. Condotta: cerca una via aerea libera, protegge un compagno scelto, può rifiutare un ordine suicida; sotto 9 PV o a Ferita Profonda si allontana. Fonte: Pegasus, p. 250."
+}

@@ -1,0 +1,92 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "albero-risvegliato",
+  "nome": "Albero risvegliato",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Vegetali e custodi delle foreste",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 3,
+    "COS": 7,
+    "INT": 5,
+    "SAG": 5,
+    "CAR": 3
+  },
+  "pv": 40,
+  "pm": 8,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 6,
+  "iniziativa": -2,
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "taglia": "grande",
+  "spazio": "3 × 3 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 6,
+    "volonta": 9,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Schianto di ramo",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Contundente"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 6
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo vegetale",
+      "effetto": "Natura Comune, biologicamente vivente, con una mente e PM personali (a 0 PM Svenuto): INT bassa, corpo vegetale o assenza di parola non danno immunità mentali. Respira attraverso i tessuti (nessuna gola da strangolare, ma non è immune alla mancanza d’aria). Nessuna Parata naturale, salvo la Driade con il randello. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente. Testa = regione sensoriale, Torace = tronco, Braccia = rami anteriori, Gambe = radici o appendici locomotrici."
+    },
+    {
+      "nome": "Struttura",
+      "effetto": "Dimezza i danni fisici Naturali da Contusione e Perforazione, non Taglio. Subisce danno ×2 da Fuoco di qualunque Natura, prima di Difesa e AR; con un Magistrale il moltiplicatore complessivo diventa ×3. Le fiamme non lo rendono automaticamente Incendiato. La corteccia è AR biologica, non equipaggiamento: nessun PI separato dal corpo."
+    },
+    {
+      "nome": "Vita autonoma",
+      "effetto": "Conosce una lingua legata al risveglio e può parlare. Non è un incantesimo mantenuto: Negare Potere non gli toglie la coscienza. Non ha Animare alberi, lanci di roccia o capacità da assedio. La chioma deve entrare nel passaggio."
+    }
+  ],
+  "note": "Altezza circa 6 Q. Furtività 13 immobile fra alberi compatibili. Vista e udito ordinari. Distinto dagli alberi mossi da un Treant. Condotta: blocca un accesso, avverte gli altri abitanti; sotto 10 PV o a Ferita Seria cerca riparo; con una sola AzP la Schivata impedisce lo Schianto di quel Round. Fonte: Awakened Tree, p. 317."
+}

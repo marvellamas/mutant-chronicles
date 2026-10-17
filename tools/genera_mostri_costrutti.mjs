@@ -154,7 +154,7 @@ const CREATURE = [
       { nome: 'Protezioni', effetto: 'Immune ad Acqua e Fuoco (effetti secondari compresi). Ghiaccio infligge danno normale e può dare Rallentato o Congelato. Dimezza il danno Naturale dopo le Difese e prima dell’AR 4 (tutta magica). Nuota 12 / 24 / 36 Q.' },
       NON_BIOLOGICO,
     ],
-    note: 'PM —: nessuna riserva. Profilo evocato (Magia §14.1): «INI dopo l’evocatore» (qui 0; sulla plancia agisce dopo chi lo evoca). Scompare a 0 PV, a fine durata, al congedo o alla perdita di coscienza dell’evocatore. Spazio 2 × 2 Q, taglia Grande (Sbalzante non lo sposta).',
+    note: 'PM —: nessuna riserva. Attacco a distanza 14 (nome del manuale non presente nel catalogo delle Abilità: vedi A.169; il VA del Dardo d’acqua è già in tabella). Profilo evocato (Magia §14.1): «INI dopo l’evocatore» (qui 0; sulla plancia agisce dopo chi lo evoca). Scompare a 0 PV, a fine durata, al congedo o alla perdita di coscienza dell’evocatore. Spazio 2 × 2 Q, taglia Grande (Sbalzante non lo sposta).',
   },
   {
     id: 'elementale-aria-maggiore', nome: 'Elementale dell’Aria Maggiore', taglia: 'grande',
@@ -172,7 +172,7 @@ const CREATURE = [
       { nome: 'Protezioni', effetto: 'Immune ad Aria e Fulmine (effetti secondari compresi). Nessuna vulnerabilità ×2. Dimezza il danno Naturale dopo le Difese e prima dell’AR 3 (tutta magica).' },
       NON_BIOLOGICO,
     ],
-    note: 'PM —: nessuna riserva. Profilo evocato (Magia §14.2): «INI dopo l’evocatore» (qui 0; sulla plancia agisce dopo chi lo evoca). Scompare a 0 PV, a fine durata o al congedo. Spazio 2 × 2 Q, taglia Grande. È immune ad A Terra (lo subisce il bersaglio, non l’elementale).',
+    note: 'PM —: nessuna riserva. Attacco a distanza 16 (nome del manuale non presente nel catalogo delle Abilità: vedi A.169; il VA del Dardo d’aria è già in tabella). Profilo evocato (Magia §14.2): «INI dopo l’evocatore» (qui 0; sulla plancia agisce dopo chi lo evoca). Scompare a 0 PV, a fine durata o al congedo. Spazio 2 × 2 Q, taglia Grande. È immune ad A Terra (lo subisce il bersaglio, non l’elementale).',
   },
   {
     id: 'elementale-fuoco-maggiore', nome: 'Elementale del Fuoco Maggiore', taglia: 'grande',
@@ -208,7 +208,7 @@ const CREATURE = [
       { nome: 'Protezioni e forza', effetto: 'Immune a Terra (effetti secondari compresi). Dimezza Fuoco, Fulmine e danno Naturale (un solo dimezzamento per componente). AR 5 tutta magica. Sposta rocce e carichi secondo FOR 10; le Prove di FOR valgono 15. Niente scavo, attraversamento della roccia o percezione delle vibrazioni.' },
       NON_BIOLOGICO,
     ],
-    note: 'PM —: nessuna riserva. Profilo evocato (Magia §14.4): «INI dopo l’evocatore» (qui 0; sulla plancia agisce dopo chi lo evoca). Scompare a 0 PV, a fine durata o al congedo. Spazio 2 × 2 Q, taglia Grande.',
+    note: 'PM —: nessuna riserva. Prove di FOR 15 (nome del manuale non presente nel catalogo delle Abilità: vedi A.169). Profilo evocato (Magia §14.4): «INI dopo l’evocatore» (qui 0; sulla plancia agisce dopo chi lo evoca). Scompare a 0 PV, a fine durata o al congedo. Spazio 2 × 2 Q, taglia Grande.',
   },
 ];
 

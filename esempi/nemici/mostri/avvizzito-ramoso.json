@@ -1,0 +1,95 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "avvizzito-ramoso",
+  "nome": "Avvizzito ramoso",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Vegetali e custodi delle foreste",
+  "caratteristiche": {
+    "FOR": 3,
+    "DES": 6,
+    "COS": 6,
+    "INT": 2,
+    "SAG": 4,
+    "CAR": 2
+  },
+  "pv": 12,
+  "pm": 4,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 9,
+    "volonta": 7,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Artigli di ramo",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 7
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo vegetale",
+      "effetto": "Natura Comune, biologicamente vivente, con una mente e PM personali (a 0 PM Svenuto): INT bassa, corpo vegetale o assenza di parola non danno immunità mentali. Respira attraverso i tessuti (nessuna gola da strangolare, ma non è immune alla mancanza d’aria). Nessuna Parata naturale, salvo la Driade con il randello. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente. Testa = regione sensoriale, Torace = tronco, Braccia = rami anteriori, Gambe = radici o appendici locomotrici."
+    },
+    {
+      "nome": "Percezione diffusa",
+      "effetto": "Localizza entro 12 Q senza occhi e udito; non legge colori o scritte, non soddisfa gli sguardi e non attraversa ostacoli solidi. Immune ad Accecato e Assordato; non agli effetti mentali. Resta il confronto Percezione–Furtività."
+    },
+    {
+      "nome": "Legno secco",
+      "effetto": "Subisce danno ×2 da Fuoco di qualunque Natura, prima di Difesa e AR; con un Magistrale il moltiplicatore complessivo diventa ×3. Le fiamme non lo rendono automaticamente Incendiato. Non ha le resistenze da Contusione o Perforazione dell’Albero risvegliato; il Ghiaccio non gli applica il disorientamento speciale della Covata."
+    }
+  ],
+  "immunita": [
+    "accecato",
+    "assordato"
+  ],
+  "note": "Furtività 14 immobile fra cespugli secchi o detriti compatibili. Capisce istruzioni semplici in una lingua assegnata all’infestazione ma non parla. Non è nella Covata né ha Natura Oscura Simmetria. Un gruppo richiede esemplari distinti con proprie Azioni. Condotta: attacca da un nascondiglio; sotto 3 PV o a Ferita Profonda cerca copertura. Fonte: Twig Blight, pp. 31–32."
+}

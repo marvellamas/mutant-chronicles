@@ -166,16 +166,30 @@ Scissione) resta un attacco con la condizione nella nota; Mimic con Morso AC 2 (
 Fungo stridente immobile (passo 0, AzM inutilizzabile), GS «—» e 0 PX; Spora gassosa con il Tocco infettivo di
 danno fisso 1 e la nube, la Micosi sporale e la riproduzione come capacità. Test: `tests/mostri-melme.test.js`.
 
+## Catalogo, blocco «Vegetali e custodi delle foreste» — cap. 8 (17/10, Mostri 0.18)
+
+`tools/genera_mostri_vegetali.mjs` → `esempi/nemici/mostri/`: Arbusto risvegliato, Albero risvegliato, Avvizzito
+ramoso / spinoso / rampicante, Driade, Cumulo strisciante, Treant, Pegaso, Unicorno.
+
+Scelte del blocco: tipo di danno fisico (Taglio, Perforazione, Contundente) nella `proprieta` dell'attacco; **Rovi
+viventi** (rampicante, Driade, Unicorno) come una sola capacità con 3 PM; poteri a PM della Driade, del Treant
+(Animare alberi, un uso al giorno, 100 PX già comprensivi dei due alberi) e dell'Unicorno (Tocco risanante tre volte
+al giorno, Purificazione, Scudo luminoso, Passaggio del guardiano) come capacità con `risorsa`; Afferrare, Inglobare
+e Comprimere del Cumulo come capacità; Aghi dell'Avvizzito spinoso e Roccia del Treant come attacchi a distanza;
+**Corno in carica** dell'Unicorno come attacco con la condizione di movimento nella nota; «Randello incantato» della
+Driade come attacco con la condizione «solo con Ramo incantato attivo». **Abilità non nel catalogo:** Diplomazia →
+Oratoria (il Giocatore dice «Oratoria per diplomazia»); «Tiro naturale» (Avvizzito spinoso, Treant) resta nella nota
+e lo stesso vale, per gli Elementali del blocco precedente, per «Attacco a distanza» e «Prove di FOR» (prima
+scartate in silenzio, ora recuperate nelle note): domanda **A.169**. Test: `tests/mostri-vegetali.test.js`.
+
 ## Che cosa resta del catalogo (Mostri 0.18)
 
-Il catalogo del cap. 8 ha 165 creature; ne sono fatte 85 (sette blocchi da dieci più le quindici della prima
-parte). Restano 80, da fare a blocchi nei prossimi lotti:
+Il catalogo del cap. 8 ha 165 creature; ne sono fatte 95 (otto blocchi da dieci più le quindici della prima
+parte). Restano 70, da fare a blocchi nei prossimi lotti:
 
-- **Vegetali e custodi delle foreste** (Arbusto, Albero risvegliato, Avvizzito ramoso / spinoso / rampicante,
-  Driade, Cumulo strisciante, Treant, Pegaso, Unicorno), **Grandi rettili e predatori mostruosi** (Allosauro,
-  Anchilosauro, Plesiosauro, Pteranodonte, Triceratopo, Tirannosauro, Viverna, Idra, Behir, Drago tartaruga),
-  **Creature delle acque e popoli sommersi**, **Predatori e grandi erbivori**, **Creature alate e piccoli
-  predatori**, **Sciami e piccola fauna**.
+- **Grandi rettili e predatori mostruosi** (Allosauro, Anchilosauro, Plesiosauro, Pteranodonte, Triceratopo,
+  Tirannosauro, Viverna, Idra, Behir, Drago tartaruga), **Creature delle acque e popoli sommersi**, **Predatori e
+  grandi erbivori**, **Creature alate e piccoli predatori**, **Sciami e piccola fauna**.
 - Nuovi della 0.18: **Cavalcature e animali da lavoro** (Cammello, Cavallo da tiro, da sella, da guerra, Mulo,
   Pony, Mastino, Capra, Capra gigante, Alce) e **Mephit e creature elementali** (Mephit della polvere, del
   ghiaccio, del magma, del fango, del fumo, del vapore, Serpente di fuoco, Salamandra, Galeb Duhr, Xorn).

@@ -1717,11 +1717,15 @@ diverso dalle regole già approvate **non si è cambiato**: vedi A.167 qui sotto
   hanno «Volontà —»: un dato assente non vale 0, perciò il campo nuovo `senza_salvezza` (es. `["volonta"]`) ed
   il validatore accetta una Salvezza mancante solo se elencata. Corrosivo solo dove dichiarato (Melma grigia e
   Budino nero), l'acido senza Corrosivo nella nota; Frammento come attacco con la condizione nella nota;
-  Inglobare, Digerire, Stridio e Rottura del sacco come capacità. Bestiario online rigenerato. **Restano** 80
-  creature del cap. 8: «Vegetali e custodi delle foreste», «Grandi rettili e predatori mostruosi», «Creature
-  delle acque e popoli sommersi», «Predatori e grandi erbivori», «Creature alate e piccoli predatori», «Sciami
-  e piccola fauna», «Cavalcature e animali da lavoro», «Mephit e creature elementali»: a blocchi nei prossimi
-  lotti.
+  Inglobare, Digerire, Stridio e Rottura del sacco come capacità. Poi il blocco **«Vegetali e custodi delle foreste»** (Arbusto risvegliato,
+  Albero risvegliato, Avvizzito ramoso / spinoso / rampicante, Driade, Cumulo strisciante, Treant, Pegaso,
+  Unicorno): Rovi viventi, poteri a PM e Afferrare/Inglobare/Comprimere come capacità; Corno in carica come
+  attacco con la condizione nella nota. **Abilità non nel catalogo** («Tiro naturale», «Attacco a distanza»,
+  «Prove di FOR»): nella nota, nessuna Abilità inventata (domanda **A.169**); Diplomazia → Oratoria.
+  Bestiario online rigenerato. **Restano** 70 creature del cap. 8: «Grandi rettili e predatori mostruosi»,
+  «Creature delle acque e popoli sommersi», «Predatori e grandi erbivori», «Creature alate e piccoli predatori»,
+  «Sciami e piccola fauna», «Cavalcature e animali da lavoro», «Mephit e creature elementali»: a blocchi nei
+  prossimi lotti.
 
 ## Domande aperte dalla ricognizione del 15 ottobre 2026
 
@@ -1754,6 +1758,16 @@ diverso dalle regole già approvate **non si è cambiato**: vedi A.167 qui sotto
   ingombri non ammessi sono scritti nelle **note** della creatura con il rimando ad A.167; la taglia resta
   quella del formato dei nemici (Grande solo se l’ingombro contiene 2 × 2 Q, o se il manuale la dice, come per
   le Regine della Covata e l’Aboleth). Nessun valore inventato.
+
+- **A.169 — Abilità del Manuale dei Mostri che non esistono nel catalogo** (Mostri 0.18, cap. 8). Alcune schede
+  elencano Abilità con nomi che le 24 del Giocatore non hanno: «Tiro naturale» (Avvizzito spinoso 10, Treant 13),
+  «Attacco a distanza» (Elementale dell’Acqua 14, dell’Aria 16), «Prove di FOR» (Elementale della Terra 15).
+  «Diplomazia» (Driade 13) è nel Giocatore come «Oratoria per diplomazia e seduzione». Vanno lette come Abilità di
+  catalogo (per esempio Armi da lancio per il tiro naturale e per gli attacchi a distanza, Atletica per le Prove
+  di FOR) oppure come valori propri della scheda, da usare così come sono? E le abbreviazioni «Mischia», «Lancio»
+  e «Guerra» sono Armi da mischia, Armi da lancio e Armi da guerra? *Nel frattempo:* Diplomazia → Oratoria e le
+  tre abbreviazioni → i nomi di catalogo; «Tiro naturale», «Attacco a distanza» e «Prove di FOR» restano **nella
+  nota** della creatura (nessuna Abilità inventata) e il VA degli attacchi è già in tabella.
 
 ## Domanda aperta dal lotto «PX della partita» del 16 ottobre 2026
 

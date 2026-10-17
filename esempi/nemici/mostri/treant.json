@@ -1,0 +1,120 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "treant",
+  "nome": "Treant",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Vegetali e custodi delle foreste",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 4,
+    "COS": 10,
+    "INT": 6,
+    "SAG": 8,
+    "CAR": 6
+  },
+  "pv": 76,
+  "pm": 16,
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 8,
+  "iniziativa": -1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "taglia": "grande",
+  "spazio": "3 × 3 Q",
+  "gs_px": {
+    "gs": "Leggenda",
+    "px": 100,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 15,
+    "riflessi": 7,
+    "volonta": 12,
+    "magia": 12
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Schianto",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "2d6+3",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Contundente"
+      ]
+    },
+    {
+      "nome": "Roccia",
+      "tipo": "distanza",
+      "va": 13,
+      "danno": "3d6+3",
+      "natura": "Naturale",
+      "gittata_q": 36,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1,
+      "proprieta": [
+        "Contundente"
+      ],
+      "note": "Una per Round. Richiede un masso libero di circa 30 kg già impugnato (raccoglierlo costa 1 AzP)."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 15
+    },
+    {
+      "nome": "Atletica",
+      "va": 16
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 6
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo vegetale",
+      "effetto": "Natura Comune, biologicamente vivente, con una mente e PM personali (a 0 PM Svenuto): INT bassa, corpo vegetale o assenza di parola non danno immunità mentali. Respira attraverso i tessuti (nessuna gola da strangolare, ma non è immune alla mancanza d’aria). Nessuna Parata naturale, salvo la Driade con il randello. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente. Testa = regione sensoriale, Torace = tronco, Braccia = rami anteriori, Gambe = radici o appendici locomotrici."
+    },
+    {
+      "nome": "Legno antico",
+      "effetto": "Dimezza i danni fisici Naturali da Contusione e Perforazione, non Taglio. Fuoco di qualunque Natura ×2 prima di Difesa e AR (×3 complessivo se anche Magistrale). Il tronco è un corpo biologico, non una struttura con PI."
+    },
+    {
+      "nome": "Rocce e assedio",
+      "effetto": "Con Schianto o Roccia, contro oggetti e strutture inerti infligge danno ×2, risolvendo PS Integrità e PI (Armamenti §7.2.1); non raddoppia contro costrutti o creature per la sola grandezza; un Magistrale con assedio dà ×3, non ×4."
+    },
+    {
+      "nome": "Animare alberi",
+      "effetto": "Una volta ogni 24 ore, 1 AzP e 6 PM, senza Prova di Potere: anima uno o due alberi ordinari viventi, visibili entro 12 Q, ciascuno in grado di occupare 3 × 3 Q (non bersaglia Treant, Alberi risvegliati, oggetti morti o creature con coscienza). Profilo temporaneo: i valori dell’Albero risvegliato con INT 1, CAR 1, PM —, Volontà — e nessun linguaggio (immune a danni psichici, controllo mentale e Terrorizzato); PV 40, AR 3; solo Schianto di ramo, movimento e Difese. Non agisce nel Round dell’attivazione; poi 1 AzP e 1 AzM per Round, con lo stesso risultato di INI, dopo il Treant, che dà gratuitamente un ordine semplice alla propria Iniziativa. Dura 10 Round senza Concentrazione; torna inerte a scadenza, se il Treant perde coscienza o muore, oltre 24 Q da lui o per congedo gratuito. Negare Potere: potenza 6, un albero alla volta. I due alberi sono già compresi nei 100 PX.",
+      "risorsa": "6 PM",
+      "azioni": {
+        "principali": 1
+      },
+      "usi": {
+        "quanti": 1,
+        "per": "giorno"
+      }
+    }
+  ],
+  "note": "Altezza circa 7 Q. Tiro naturale 13 (nome del manuale non presente nel catalogo delle Abilità: vedi A.169; il VA della Roccia è già in tabella). Furtività 14 immobile fra alberi compatibili. Parla il linguaggio del bosco e una lingua di contatto. Condotta: ferma incendi e abbattimenti, distingue gli intrusi dalle minacce reali, può avvertire o trattare prima di attaccare; sotto 19 PV o a Ferita Seria ripiega. Fonte: Treant, p. 289."
+}

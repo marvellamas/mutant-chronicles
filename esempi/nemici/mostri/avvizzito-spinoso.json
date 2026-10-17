@@ -1,0 +1,117 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "avvizzito-spinoso",
+  "nome": "Avvizzito spinoso",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Vegetali e custodi delle foreste",
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 6,
+    "COS": 6,
+    "INT": 2,
+    "SAG": 4,
+    "CAR": 2
+  },
+  "pv": 16,
+  "pm": 4,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 9,
+    "volonta": 7,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d6",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    },
+    {
+      "nome": "Aghi",
+      "tipo": "distanza",
+      "va": 10,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "gittata_q": 12,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 8
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    },
+    {
+      "nome": "Furtività",
+      "va": 9
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo vegetale",
+      "effetto": "Natura Comune, biologicamente vivente, con una mente e PM personali (a 0 PM Svenuto): INT bassa, corpo vegetale o assenza di parola non danno immunità mentali. Respira attraverso i tessuti (nessuna gola da strangolare, ma non è immune alla mancanza d’aria). Nessuna Parata naturale, salvo la Driade con il randello. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente. Testa = regione sensoriale, Torace = tronco, Braccia = rami anteriori, Gambe = radici o appendici locomotrici."
+    },
+    {
+      "nome": "Percezione diffusa",
+      "effetto": "Localizza entro 12 Q senza occhi e udito; non legge colori o scritte, non soddisfa gli sguardi e non attraversa ostacoli solidi. Immune ad Accecato e Assordato; non agli effetti mentali. Resta il confronto Percezione–Furtività."
+    },
+    {
+      "nome": "Lancio degli aghi",
+      "effetto": "Un singolo tiro, AC 1, senza raffiche, fino a 12 Q con fasce di distanza, coperture, ingaggio e Difese del Giocatore. Sei scariche per incontro, consumate anche da un tiro fallito; servono almeno 24 ore di crescita per ripristinarle (nessuna Azione di ricarica). Gli Artigli restano disponibili."
+    },
+    {
+      "nome": "Polline di allarme",
+      "effetto": "1 AzP: segnale che raggiunge altri Avvizziti spinosi entro 24 Q attraverso aria comunicante (pareti sigillate lo bloccano; vento e ostacoli possono limitarlo). Comunica pericolo e direzione approssimativa, non identità o mappe. Non danneggia, non infetta, non dà Azioni ai destinatari.",
+      "azioni": {
+        "principali": 1
+      }
+    }
+  ],
+  "immunita": [
+    "accecato",
+    "assordato"
+  ],
+  "note": "Tiro naturale 10 (nome del manuale non presente nel catalogo delle Abilità: vedi A.169; il VA degli Aghi è già in tabella). Le spine sono parti del corpo, non proiettili recuperabili. Non ha la vulnerabilità al Fuoco del ramoso né le resistenze fisiche degli alberi. Capisce istruzioni semplici ma non parla. Condotta: cerca coperture e un tiro libero; sotto 4 PV o a Ferita Profonda arretra nella vegetazione fitta. Fonte: Needle Blight, pp. 31–32."
+}

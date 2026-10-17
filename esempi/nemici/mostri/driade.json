@@ -1,0 +1,166 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "driade",
+  "nome": "Driade",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Vegetali e custodi delle foreste",
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 6,
+    "COS": 5,
+    "INT": 7,
+    "SAG": 7,
+    "CAR": 8
+  },
+  "pv": 24,
+  "pm": 14,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 33,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 10,
+    "volonta": 12,
+    "magia": 13
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Randello",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Contundente"
+      ]
+    },
+    {
+      "nome": "Randello incantato",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d8+2",
+      "natura": "Magico",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Contundente"
+      ],
+      "note": "Solo con Ramo incantato attivo (potere attivo): sostituisce il profilo del randello, non si somma."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 8
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    },
+    {
+      "nome": "Oratoria",
+      "va": 13
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Natura Comune, vivente, con mente e PM. Scurovisione 12 Q. Contro incantesimi e capacità mistiche +2 alle PS pertinenti (Magia 13 lo comprende già; Tempra, Riflessi e Volontà lo aggiungono solo contro tali fonti); non migliora Difese né dimezza danni. Localizzazioni umanoidi. Può parare con il randello (1 AzP): l’AzP spesa non resta per un potere o un attacco."
+    },
+    {
+      "nome": "Linguaggi",
+      "effetto": "Parla il linguaggio silvano assegnato all’ambientazione e una lingua di contatto. Comunica intenzioni semplici con animali e piante viventi vicini; un albero ordinario non diventa una mente umana né un servitore obbligato."
+    },
+    {
+      "nome": "Poteri innati",
+      "effetto": "Le capacità seguenti costano 1 AzP e i PM indicati (salvo dove detto), senza Potere, Focus o Invocazione; non sono incantesimi appresi né ammettono Anticipazione. Con PM insufficienti non si attivano; spendere l’ultimo PM causa Svenuto. Si mantiene una sola Concentrazione: iniziare Fascino mentre è attivo il Velo (o viceversa) termina il primo."
+    },
+    {
+      "nome": "Fascino silvano",
+      "effetto": "1 AzP e 3 PM: un umanoide o una bestia con mente, visibile entro 6 Q e capace di vedere la Driade. Volontà −2: fallimento → la considera una conoscente fidata per 5 Round (Concentrazione, una vittima alla volta). Cambia la disposizione, non comanda Azioni né impone suicidio o di attaccare i compagni; non legge pensieri. Termina se la Driade o i suoi alleati compiono un atto dannoso contro la vittima, a scadenza, perdita di Concentrazione, congedo gratuito o Negare Potere (potenza 3); chi supera la PS o è liberato è immune 24 ore.",
+      "risorsa": "3 PM",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Rovi viventi",
+      "effetto": "Capacità mistica innata: 1 AzP e 3 PM, durata 5 Round, senza Concentrazione né Potere, Focus o Invocazione. Scelge un punto visibile entro 6 Q. Raggio 3 Q; serve terreno naturale con radici o vegetazione viva. Le piante restano legate al suolo: la zona è terreno difficile per chi si muove a terra (non i vegetali; non applica Rallentato; il volo sopra le piante o percorsi liberi la evitano). All’attivazione l’emittente sceglie fino a tre creature percepite a terra nella zona (anche alleati): Riflessi senza modificatore, fallimento → Immobilizzato (mani non bloccate); chi entra dopo non fa una nuova PS. Sciogliere la presa: 1 AzP e Atletica senza modificatore (col −4 di Immobilizzato), anche da un alleato adiacente. Recidere: i legami di una vittima sono un bersaglio materiale con AR 0 e 6 PV, senza Difese; a 0 PV liberano la vittima (niente Ferite o Morente; nessun PX separato). Una sola area per emittente. Negare Potere: potenza 3. Termina alla scadenza, a congedo gratuito o alla perdita di coscienza dell’emittente.",
+      "risorsa": "3 PM",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Passaggio arboreo",
+      "effetto": "Una volta per Round, 1 AzM intera e 2 PM: entra in un albero vivo adiacente ed esce accanto a un secondo albero vivo entro 12 Q dal primo (tronco di almeno mezzo Q di diametro e altezza di almeno 4 Q; l’albero d’uscita e il punto libero adiacente visibili alla partenza). Trasferimento istantaneo, senza Opportunità per il tragitto; porta solo la dotazione entro il carico ordinario, non altre creature né una vittima trattenuta; non attraversa interdizioni al teletrasporto; senza i requisiti non è dichiarabile.",
+      "risorsa": "2 PM",
+      "usi": {
+        "quanti": 1,
+        "per": "Round"
+      }
+    },
+    {
+      "nome": "Corteccia",
+      "effetto": "3 PM, solo su di sé, 20 Round senza Concentrazione: AR 3 Naturale e movimento 5/10/15 Q. Come Pelle Corazzata 3 per cumuli (non si somma a un altro contributo di Pelle Corazzata o Armatura di Forza); non protegge dal danno Etereo. Negare Potere: potenza 3. La perdita di coscienza non la termina.",
+      "risorsa": "3 PM",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Ramo incantato",
+      "effetto": "2 PM, un randello di legno impugnato, 5 Round senza Concentrazione: negli attacchi della Driade quel randello usa VA 11 e 1d8+2 Magico (valori completi, non si sommano al profilo ordinario). Non dà Azioni. Negare Potere: potenza 3.",
+      "risorsa": "2 PM",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Velo del sottobosco",
+      "effetto": "3 PM, fino a tre creature consenzienti visibili entro 4 Q (lei compresa), 5 Round con Concentrazione: +2 a Furtività e nessuna orma ordinaria nei terreni naturali. Non invisibili, silenziose o prive di odore. Chi esce oltre 4 Q perde l’effetto. I Veli non si sommano; Negare Potere (potenza 3) lo toglie a un beneficiario alla volta.",
+      "risorsa": "3 PM",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Frutti del bosco",
+      "effetto": "2 PM, a contatto con un vegetale vivo fruttifero: maturano tre piccoli frutti, una volta ogni 24 ore, efficaci 24 ore. Mangiarne uno: 1 AzP, 1 PV biologico e una porzione di cibo (un recupero per individuo ogni 24 ore). Non cura Ferite, non arresta Sanguinamento, non stabilizza Morente.",
+      "risorsa": "2 PM",
+      "usi": {
+        "quanti": 1,
+        "per": "giorno"
+      }
+    }
+  ],
+  "note": "AR 0; con Corteccia 3 Naturale e movimento 5/10/15 Q. Randello di legno Comune, una mano, FOR 3, PS Integrità 10, PI 5, già pronto (1d6 base +1 da DES già compreso); nessuna armatura o scudo. Oratoria 13 (nel manuale «Diplomazia 13»: l’Oratoria è la Abilità «per diplomazia e seduzione» del Giocatore). L’albero legato va definito nella scena: danni a quell’albero sono un motivo narrativo, non trasferiscono danni o Ferite alla Driade. Condotta: allontana chi danneggia il bosco, negozia o usa i passaggi arborei; sotto 6 PV o a Ferita Profonda cerca riparo. Fonte: Dryad, p. 121."
+}
