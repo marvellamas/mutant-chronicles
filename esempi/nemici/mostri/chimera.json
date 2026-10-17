@@ -1,0 +1,119 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "chimera",
+  "nome": "Chimera",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — prime quindici schede",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 5,
+    "COS": 8,
+    "INT": 2,
+    "SAG": 7,
+    "CAR": 5
+  },
+  "pv": 60,
+  "pm": 8,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": -3,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18,
+    "volo": 12
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 9,
+    "volonta": 10,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+3",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Corna",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+3",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d6+3",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Furtività",
+      "va": 8
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Volo alato",
+      "effetto": "Richiede entrambe le ali utilizzabili e spazio per distenderle. Si mantiene in quota battendo le ali senza percorso minimo né AzM aggiuntiva; decollo e atterraggio sono compresi nell’AzM. Non è levitazione: perdita di coscienza e impedimenti alle ali seguono Volo e Stati del §5.2.5. Nessuna penalità universale per colpirlo perché vola. Una Menomazione permanente al Torace impedisce il volo."
+    },
+    {
+      "nome": "Tre opzioni ordinarie",
+      "effetto": "Nel Round al massimo un Morso, un attacco di Corna e uno di Artigli, ognuno con una delle tre AzP; può rinunciare a uno o più attacchi per difendersi. Le tre teste non danno Reazioni o Azioni fuori Iniziativa. L’Attacco di Opportunità usa solo un’arma naturale ravvicinata."
+    },
+    {
+      "nome": "Soffio di fuoco",
+      "effetto": "Secrezione biologica, nessun PM, 1 AzP. Sostituisce nel Round il Morso o le Corna (dichiarando quale), non è un quarto attacco. Cono lungo 3 Q dalla testa draconica, con percorso libero (Copertura Totale e ostacoli lo fermano); colpisce tutte le creature comprese, alleati compresi, una sola volta. Riflessi senza modificatore: successo dimezza per eccesso 2d6+3 Naturale Fuoco prima dell’AR, fallimento tutto. Nessuna Prova per colpire. Non applica Incendiato (può incendiare materiali infiammabili). Dopo l’uso tre Round successivi senza Soffio (usato nel Round 1, torna nel Round 5); non si accelera con AzP o PM.",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Tre teste",
+      "effetto": "Una Menomazione funzionale alla Testa colpisce la testa determinata con 1d3 (1 leone, 2 capra, 3 drago): la testa inutilizzabile impedisce rispettivamente Morso, Corna o Soffio. Ferite e gravità restano della creatura intera. Usa la sola Percezione della scheda e non è immune alla Sorpresa; la perdita di una testa non riduce il budget di AzP."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
+    }
+  ],
+  "note": "Comprende una lingua dell’ambientazione ma non la parla. Nessuna resistenza al fuoco. Braccia = zampe anteriori; Gambe = posteriori. Nome originale: Chimera, p. 39. Comportamento: apre con il Soffio su bersagli raccolti; a Ferita Grave o con le ali compromesse difende una posizione o negozia."
+}

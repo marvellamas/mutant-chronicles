@@ -1,0 +1,110 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "arpia",
+  "nome": "Arpia",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — prime quindici schede",
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 6,
+    "COS": 5,
+    "INT": 4,
+    "SAG": 5,
+    "CAR": 7
+  },
+  "pv": 24,
+  "pm": 10,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12,
+    "volo": 8
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 33,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 11,
+    "volonta": 10,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Randello",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Armi da mischia",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    },
+    {
+      "nome": "Intrattenere",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Volo alato",
+      "effetto": "Richiede entrambe le ali utilizzabili e spazio per distenderle. Si mantiene in quota battendo le ali senza percorso minimo né AzM aggiuntiva; decollo e atterraggio sono compresi nell’AzM. Non è levitazione: perdita di coscienza e impedimenti alle ali seguono Volo e Stati del §5.2.5. Nessuna penalità universale per colpirlo perché vola. Una Menomazione permanente al Torace impedisce il volo."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Al massimo un attacco di Artigli e uno di Randello nel Round, ognuno con una propria AzP. Iniziare o mantenere il Canto occupa una delle due AzP. L’Attacco di Opportunità ordinario resta distinto."
+    },
+    {
+      "nome": "Canto di richiamo",
+      "effetto": "Capacità innata mentale: inizio 1 AzP e 2 PM; mantenimento a ogni Iniziativa successiva 1 AzP e 1 PM; voce udibile e Concentrazione, massimo 10 Round; interrompibile gratis. Colpisce umanoidi e giganti con una mente che odono il canto entro 24 Q (non serve una lingua comune né vedere l’Arpia); ogni nuovo ascoltatore fa subito Volontà senza modificatore (successo → immune a questa Arpia per 24 ore). Fallimento: Richiamo — alla propria Iniziativa usa l’AzM al Passo per avvicinarsi lungo il percorso più diretto, fermandosi a 1 Q; non può attaccare né scegliere altre attività, può difendersi e compiere le sole azioni necessarie al percorso. Davanti a un pericolo evidente (precipizio, lava) nuova Volontà con +2. A fine della propria Iniziativa e dopo ogni danno subito: nuova Volontà senza modificatore (successo termina e dà l’immunità). Il movimento imposto non provoca Attacchi di Opportunità. Il Richiamo termina se la vittima non può più udire, esce da 24 Q o il canto finisce. Barriera Mentale aggiunge il bonus. Negare Potere sulla vittima: potenza 4 (immune 24 ore).",
+      "risorsa": "2 PM",
+      "azioni": {
+        "principali": 1
+      }
+    }
+  ],
+  "note": "Randello d’osso: Comune, una mano, Armi da mischia, FOR 3, 1d4 Naturale (il danno della scheda include già +1), PI 3, PS Integrità 10; può parare, disarmabile e danneggiabile. Vista e udito ordinari. Comprende e parla una lingua locale. Fonte: Harpy, p. 181. Comportamento: cerca una posizione sopraelevata e una via di fuga; a Ferita Profonda o senza il vantaggio della quota fugge."
+}

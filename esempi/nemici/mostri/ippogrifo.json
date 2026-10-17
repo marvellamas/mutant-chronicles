@@ -1,0 +1,95 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "ippogrifo",
+  "nome": "Ippogrifo",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — prime quindici schede",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 6,
+    "COS": 6,
+    "INT": 2,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "pv": 24,
+  "pm": 6,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": -2,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24,
+    "volo": 12
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 11,
+    "volonta": 8,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Becco",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 8
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Volo alato",
+      "effetto": "Richiede entrambe le ali utilizzabili e spazio per distenderle. Si mantiene in quota battendo le ali senza percorso minimo né AzM aggiuntiva; decollo e atterraggio sono compresi nell’AzM. Non è levitazione: perdita di coscienza e impedimenti alle ali seguono Volo e Stati del §5.2.5. Nessuna penalità universale per colpirlo perché vola. Una Menomazione permanente al Torace impedisce il volo."
+    },
+    {
+      "nome": "Attacchi e movimento",
+      "effetto": "Al massimo un Becco e un attacco di Artigli per Round, ciascuno con un’AzP. Può usare la Carica, anche in Picchiata, migliorando un solo attacco. La velocità non concede una ritirata gratuita dopo il colpo. Nessuna Parata naturale."
+    }
+  ],
+  "note": "Percezione 12, oppure 15 con la vista (senza scurovisione né immunità). Addestrabile ma non per questo mansueto o disponibile al trasporto. Nome originale: Hippogriff, p. 184. Comportamento: prima minaccia o tenta di allontanare l’intruso, se può sceglie la fuga; a Ferita Profonda abbandona lo scontro senza motivazioni territoriali; vicino ai piccoli continua a proteggere il nido."
+}

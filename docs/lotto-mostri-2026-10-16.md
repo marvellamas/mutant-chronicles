@@ -128,13 +128,28 @@ capacità; Vermeiena 1 × 2 Q → `spazio` vuoto e nota con A.167, come il Coraz
 `tests/mostri-sottosuolo.test.js`; `tests/mostri-scontro.test.js` (nuovo) aggiunge ogni creatura della cartella a
 uno scontro di prova.
 
+## Catalogo, «prima parte» (le prime quindici schede) — cap. 8 (17/10, Mostri 0.18)
+
+`tools/genera_mostri_prima_parte.mjs` → `esempi/nemici/mostri/`: Aarakocra, Aboleth, Ankheg, Arpia, Basilisco,
+Bestia distorcente, Bulette, Chimera, Cockatrice, Ettercap, Grick, Grifone, Ippogrifo, Manticora, Orsogufo.
+
+Scelte del blocco: attacchi senza tiro o senza danno (Canto dell'Arpia, Sguardo pietrificante, Getto di seta,
+Soffio di fuoco, Getto acido, Balzo dirompente) → capacità; AR condizionale (Grick 1 / 4 contro colpi fisici
+Naturali; Ankheg 3, ma 1 se A Terra) → nel campo il primo valore, la condizione come capacità; Furtività e
+Percezione con valori condizionati: nel campo quello senza condizione; **Aboleth** con il modulo facoltativo
+«tana» come capacità distinte «(modulo tana)» e GS/PX del profilo base (Eroe, 70 PX; con modulo attivo Leggenda,
+100 PX nella nota); Danza dei cinque venti degli Aarakocra come capacità collettiva con 3 PM e un uso al giorno;
+Spina caudale della Manticora come attacco a distanza (massimo 40 Q) con riserva di 24 spine e tabella dei VA
+nella capacità; ingombri non quadrati: Aboleth 2 × 3 Q (taglia Grande perché il manuale dice «massa
+paragonabile a un veicolo»), Basilisco 2 × 1 Q e Grick 1 × 2 Q (taglia normale) con nota e A.167. Il
+«Giavellotto della sentinella» degli Aarakocra è una proposta del manuale e non entra nel catalogo degli
+Armamenti. Test: `tests/mostri-prima-parte.test.js`.
+
 ## Che cosa resta del catalogo (Mostri 0.18)
 
-Il catalogo del cap. 8 ha 165 creature; ne sono fatte 60 (sei blocchi da dieci). Restano 105, da fare a blocchi
-nei prossimi lotti:
+Il catalogo del cap. 8 ha 165 creature; ne sono fatte 75 (sei blocchi da dieci più le quindici della prima
+parte). Restano 90, da fare a blocchi nei prossimi lotti:
 
-- **Prima parte senza nome** (15): Aarakocra, Aboleth, Ankheg, Arpia, Basilisco, Bestia distorcente, Bulette,
-  Chimera, Cockatrice, Ettercap, Grick, Grifone, Ippogrifo, Manticora, Orsogufo.
 - **Melme funghi e imitatori**, **Vegetali e custodi delle foreste**, **Grandi rettili e predatori mostruosi**,
   **Creature delle acque e popoli sommersi**, **Predatori e grandi erbivori**, **Creature alate e piccoli
   predatori**, **Sciami e piccola fauna**.

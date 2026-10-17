@@ -1,0 +1,89 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "cockatrice",
+  "nome": "Cockatrice",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — prime quindici schede",
+  "caratteristiche": {
+    "FOR": 3,
+    "DES": 6,
+    "COS": 5,
+    "INT": 1,
+    "SAG": 6,
+    "CAR": 2
+  },
+  "pv": 14,
+  "pm": 6,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": -3,
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12,
+    "volo": 8
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 11,
+    "volonta": 8,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Beccata",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d4",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Pietrificazione temporanea",
+      "effetto": "Si avvia solo se la Beccata infligge almeno 1 danno dopo le protezioni a un organismo vivente (proprietà innata del contatto lesivo; nessuna AzP o PM). Prima resistenza: Tempra con +2; fallimento → Immobilizzato ma cosciente. Alla fine della successiva Iniziativa della vittima seconda Tempra con +2: successo termina, fallimento → statua per 24 ore dal completamento. Nuove beccate non accelerano né impongono altri tiri. Statua: inerte, senza percezione né Difese attive, Concentrazione e Focalizzazione terminano; mantiene l’AR; i danni agiscono normalmente (la vittima può morire); Sanguinamento e affezioni sospesi; il contatore di Morente continua (nessuna stabilizzazione). Dopo 24 ore torna in carne conservando danni, Ferite e Menomazioni; la morte della Cockatrice non la termina. Effetto magico persistente di potenza 4 (Negare Potere ammesso, anche dopo la trasformazione completa). Non è un veleno né una malattia; evitare il contatto visivo non protegge, Armatura e Difese che impediscono il danno residuo sì."
+    },
+    {
+      "nome": "Volo alato",
+      "effetto": "Richiede entrambe le ali utilizzabili e spazio per distenderle. Si mantiene in quota battendo le ali senza percorso minimo né AzM aggiuntiva; decollo e atterraggio sono compresi nell’AzM. Non è levitazione: perdita di coscienza e impedimenti alle ali seguono Volo e Stati del §5.2.5. Nessuna penalità universale per colpirlo perché vola. Una Menomazione permanente al Torace impedisce il volo."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
+    }
+  ],
+  "note": "Piccola bestia alata (Braccia = ali, Gambe = zampe); un’ala inutilizzabile impedisce il volo; nessun modificatore speciale a chi la attacca. Non comprende ordini complessi. Differisce dal Basilisco: qui servono una ferita e due Tempra con +2, e l’effetto termina dopo 24 ore. Nome originale: Cockatrice, p. 42. Comportamento: sibila e becca la minaccia più vicina; a Ferita Profonda si ritira verso un riparo."
+}

@@ -1705,11 +1705,17 @@ diverso dalle regole già approvate **non si è cambiato**: vedi A.167 qui sotto
   (Oscuramento, Filamento, Antenne, Sguardo perturbante, Suzione) come capacità; la Caduta perforante del
   Perforatore (portata verticale da 2 a 6 Q, non rappresentabile come portata in Q) fra le capacità; Furtività
   con valori condizionati: nel campo il valore senza condizione, il condizionato nelle note; Vermeiena 1 × 2 Q
-  fuori dal campo Spazio (A.167). Bestiario online rigenerato. **Restano** 105 creature del cap. 8: la prima
-  parte senza nome (15), «Melme funghi e imitatori», «Vegetali e custodi delle foreste», «Grandi rettili e
+  fuori dal campo Spazio (A.167). **Taglia:** corretta nei blocchi precedenti: «Grande» solo se l'ingombro
+  contiene 2 × 2 Q o se il manuale la dice (Regine della Covata, Aboleth), non più per i 2 × 1 Q (Lupo feroce,
+  Leone, Iena gigante, Tappeto soffocante). Poi le **prime quindici schede del cap. 8** (Aarakocra, Aboleth,
+  Ankheg, Arpia, Basilisco, Bestia distorcente, Bulette, Chimera, Cockatrice, Ettercap, Grick, Grifone,
+  Ippogrifo, Manticora, Orsogufo): attacchi senza danno o ad area come capacità; AR condizionale con il primo
+  valore nel campo e la condizione come capacità; modulo «tana» dell'Aboleth come capacità distinte con GS/PX
+  del profilo base (la variante Leggenda, 100 PX, nella nota). Bestiario online rigenerato. **Restano** 90
+  creature del cap. 8: «Melme funghi e imitatori», «Vegetali e custodi delle foreste», «Grandi rettili e
   predatori mostruosi», «Creature delle acque e popoli sommersi», «Predatori e grandi erbivori», «Creature
-  alate e piccoli predatori», «Sciami e piccola fauna», «Cavalcature e animali da lavoro», «Mephit e
-  creature elementali»: a blocchi nei prossimi lotti.
+  alate e piccoli predatori», «Sciami e piccola fauna», «Cavalcature e animali da lavoro», «Mephit e creature
+  elementali»: a blocchi nei prossimi lotti.
 
 ## Domande aperte dalla ricognizione del 15 ottobre 2026
 

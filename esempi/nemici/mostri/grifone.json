@@ -1,0 +1,103 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "grifone",
+  "nome": "Grifone",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — prime quindici schede",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 7,
+    "COS": 7,
+    "INT": 2,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "pv": 36,
+  "pm": 6,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": -1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18,
+    "volo": 16
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 12,
+    "volonta": 8,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Becco",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 9
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Volo alato",
+      "effetto": "Richiede entrambe le ali utilizzabili e spazio per distenderle. Si mantiene in quota battendo le ali senza percorso minimo né AzM aggiuntiva; decollo e atterraggio sono compresi nell’AzM. Non è levitazione: perdita di coscienza e impedimenti alle ali seguono Volo e Stati del §5.2.5. Nessuna penalità universale per colpirlo perché vola. Una Menomazione permanente al Torace impedisce il volo."
+    },
+    {
+      "nome": "Picchiata",
+      "effetto": "È la Carica ordinaria in volo (§5.6): 1 AzP e 1 AzM, almeno 3 Q sufficientemente rettilinei entro la Corsa, VA −2 per 3–6 Q o −4 da 7 Q, danno ×2 per un solo attacco. Nessuna uscita gratuita dalla portata dopo la Carica."
+    },
+    {
+      "nome": "Sequenza offensiva",
+      "effetto": "Al massimo un Becco e un attacco di Artigli per Round, ognuno con una propria AzP. La Picchiata usa la Carica su un solo attacco. Non afferra né trasporta automaticamente una preda colpita. Nessuna Parata naturale; Schivare consuma l’unica AzM. Movimento misto: si sommano le frazioni distanza percorsa / consentita (es. 3 dei 6 Q a terra lasciano 8 dei 16 Q in volo)."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
+    }
+  ],
+  "note": "Percezione 12, oppure 15 con la vista (la vista acuta non rivela invisibili o nascosti). Un Grifone selvatico non è una cavalcatura pronta all’uso. Nome originale: Griffon, p. 174. Comportamento: cerca un bersaglio esposto e attacca dall’alto; a Ferita Seria può interrompere la caccia; difende più a lungo il nido."
+}

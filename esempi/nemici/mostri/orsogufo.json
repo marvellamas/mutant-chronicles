@@ -1,0 +1,98 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "orsogufo",
+  "nome": "Orsogufo",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — prime quindici schede",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 6,
+    "COS": 8,
+    "INT": 2,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "pv": 42,
+  "pm": 6,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": -2,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 10,
+    "volonta": 8,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Becco",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d6+3",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+3",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 14
+    },
+    {
+      "nome": "Furtività",
+      "va": 8
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sequenza offensiva",
+      "effetto": "Al massimo un attacco con Becco e uno con Artigli per Round, ciascuno con la propria AzP; può riservarne una per difendersi. L’Attacco di Opportunità ordinario è escluso dal limite e non diventa una coppia di attacchi."
+    },
+    {
+      "nome": "Difese",
+      "effetto": "Nessuna Parata naturale. Schivare consuma 1 AzP e 1 AzM; dopo Corsa o Carica non ha una seconda AzM. Con la Carica esegue solo il colpo ammesso; l’eventuale seconda AzP non ha il moltiplicatore."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
+    }
+  ],
+  "note": "Percezione 11, oppure 14 se dipende da vista o olfatto. Non vola. L’origine fantastica non lo rende una creatura dell’Oscura Simmetria. Braccia = zampe anteriori; una zampa inutilizzabile limita attacchi e appoggi. Nome originale: Owlbear, p. 249. Comportamento: concentra gli attacchi sulla preda raggiungibile; se caccia per nutrirsi trascina via una preda inerme; a Ferita Seria può abbandonare; resiste più a lungo se protegge i piccoli."
+}

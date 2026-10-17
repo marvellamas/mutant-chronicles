@@ -1,0 +1,123 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "aarakocra",
+  "nome": "Aarakocra",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — prime quindici schede",
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 7,
+    "COS": 5,
+    "INT": 5,
+    "SAG": 6,
+    "CAR": 5
+  },
+  "pv": 18,
+  "pm": 6,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 2,
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12,
+    "volo": 10
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 11,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 12,
+    "volonta": 9,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Giavellotto a mano",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d6",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Giavellotto scagliato",
+      "tipo": "distanza",
+      "va": 11,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "gittata_q": 15,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 11
+    },
+    {
+      "nome": "Rituali",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Volo alato",
+      "effetto": "Richiede entrambe le ali utilizzabili e spazio per distenderle. Si mantiene in quota battendo le ali senza percorso minimo né AzM aggiuntiva; decollo e atterraggio sono compresi nell’AzM. Non è levitazione: perdita di coscienza e impedimenti alle ali seguono Volo e Stati del §5.2.5. Nessuna penalità universale per colpirlo perché vola. Una Menomazione permanente al Torace impedisce il volo."
+    },
+    {
+      "nome": "Picchiata",
+      "effetto": "È la Carica ordinaria in volo (§5.6): 1 AzP e 1 AzM, almeno 3 Q sufficientemente rettilinei entro la Corsa, VA −2 per 3–6 Q o −4 da 7 Q, danno ×2 per un solo attacco. Nessuna uscita gratuita dalla portata dopo la Carica."
+    },
+    {
+      "nome": "Difendersi",
+      "effetto": "Può parare con il giavellotto integro (1 AzP); gli artigli non danno Parata naturale. Spendere l’AzM per Schivare esaurisce il movimento del Round, senza un secondo spostamento in volo."
+    },
+    {
+      "nome": "Danza dei cinque venti",
+      "effetto": "Capacità collettiva: cinque Aarakocra coscienti, tutti capaci di volare, entro 6 Q dal capofila (scelto prima) e con almeno 3 PM ciascuno. Per tre Round consecutivi ciascuno spende 1 AzP e 1 AzM alla propria Iniziativa, resta in volo entro 6 Q dal capofila e mantiene Concentrazione; la danza è il solo movimento consentito. Ognuno paga 3 PM all’inizio del primo Round; se uno interrompe, perde Concentrazione o non paga, l’intera danza fallisce e i PM non tornano. Dopo l’azione del quinto nel terzo Round il capofila effettua Rituali 10: un successo evoca un Elementale Minore puro dell’Aria entro 10 Q, per 5 minuti (scheda del Manuale della Magia §14, Evoca Elementale 12 del §13.8: ordini entro 20 Q, iniziativa subito dopo il capofila). Una volta ogni 24 ore per partecipante; nessun viaggio planare.",
+      "risorsa": "3 PM",
+      "usi": {
+        "quanti": 1,
+        "per": "giorno"
+      }
+    }
+  ],
+  "note": "Vista e udito ordinari, nessuna scurovisione. Dotazione: due giavellotti, uno pronto. Il «Giavellotto della sentinella» (una mano, FOR 3, 1d6 Naturale, portata 1 Q, gittata FOR × 3 Q, AC 1, PI 4, PS Integrità 10; Armi da guerra in Ravvicinato e Armi da lancio a distanza; niente Tiro Rapido, Raffiche o bonus di Parata) è una proposta del manuale e non modifica il catalogo degli Armamenti. Linguaggio auran nell’ambientazione originale. Nome originale: Aarakocra, p. 12. Comportamento: avvista, avverte e prende quota; se perde il volo o subisce Ferita Profonda cerca riparo."
+}

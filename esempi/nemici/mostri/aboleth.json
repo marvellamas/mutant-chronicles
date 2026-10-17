@@ -1,0 +1,177 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "aboleth",
+  "nome": "Aboleth",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — prime quindici schede",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 4,
+    "COS": 8,
+    "INT": 9,
+    "SAG": 8,
+    "CAR": 8
+  },
+  "pv": 70,
+  "pm": 24,
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 3,
+  "movimento": {
+    "passo": 2,
+    "corsa": 4,
+    "scatto": 6
+  },
+  "taglia": "grande",
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 9,
+    "volonta": 14,
+    "magia": 13
+  },
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Tentacolo",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d8+3",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Coda",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d10+3",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Scienza",
+      "va": 15
+    },
+    {
+      "nome": "Cultura",
+      "va": 14
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Azioni distribuite",
+      "effetto": "Può spendere una sola delle proprie AzP per Tentacolo, Coda o Percezione alla fine dell’Iniziativa di un avversario, al massimo due volte per Round e dopo avversari diversi. Sono comprese nelle tre AzP totali (non azioni leggendarie); nessun movimento o manovra offensiva fuori Iniziativa. Occorre essere coscienti, non Sorpresi e liberi da impedimenti."
+    },
+    {
+      "nome": "Parata naturale",
+      "effetto": "Un gruppo di tentacoli integro permette Parata naturale solo in Ravvicinato, a Difese 9 e costo 1 AzP."
+    },
+    {
+      "nome": "Nuotatore nato",
+      "effetto": "Nuoto 8 / 16 / 24 Q effettivi: ogni Q a nuoto costa 1. Respira sia aria sia acqua. Scurovisione 24 Q (solo vista nell’oscurità, senza attraversare ostacoli)."
+    },
+    {
+      "nome": "Telepatia",
+      "effetto": "Comunica con una mente consenziente entro 24 Q che comprenda almeno un linguaggio, senza AzP o PM per brevi messaggi nel proprio turno. Non individua menti o bersagli nascosti e non supera protezioni che bloccano il collegamento mentale."
+    },
+    {
+      "nome": "Muco respiratorio",
+      "effetto": "Passivo subacqueo. Il contatto diretto con la sua pelle impone Tempra senza modificatore (una volta per vittima e Round; non basta toccarlo con un’arma o attraverso una protezione chiusa). Fallimento: la vittima respira solo acqua per 1d4 ore; all’asciutto valgono riserva di fiato e soffocamento del §5.23. Malattia naturale di Pericolosità V, Grave: Cura Malattie 6 la termina. Nuove applicazioni tengono la scadenza più lontana."
+    },
+    {
+      "nome": "Infezione dei tentacoli",
+      "effetto": "Se un Tentacolo causa almeno 1 danno dopo le protezioni a un vivente, Tempra senza modificatore: fallimento → latenza di 10 Round, poi una seconda Tempra (successo elimina, fallimento avvia i sintomi). Con i sintomi pelle e tessuti vanno tenuti bagnati: i PV si recuperano solo immersi; ogni 10 minuti consecutivi senza essere immerso né bagnato, 1d4 danni Naturali diretti (ignorano AR). Bagnare la pelle: 1 AzP, riavvia l’intervallo senza curare. Malattia di Pericolosità V, Grave: Cura Malattie 6 la elimina; altrimenti Tempra ogni 24 ore dall’inizio dei sintomi (successo conclude). Nessun aggravamento automatico."
+    },
+    {
+      "nome": "Sondare desideri",
+      "effetto": "Una volta per scena e per mente, quando una creatura visibile comunica con lui per telepatia, tenta di coglierne il desiderio dominante, senza AzP o PM: Volontà senza modificatore; fallimento rivela solo quel desiderio, non memorie complete.",
+      "usi": {
+        "quanti": 1,
+        "per": "Scena"
+      }
+    },
+    {
+      "nome": "Assoggettare",
+      "effetto": "1 AzP e 6 PM, massimo tre tentativi ogni 24 ore: un bersaglio con mente, percepito e visibile entro 6 Q fa Volontà −2. Fallimento: obbedisce agli ordini mentali per 10 Round con le proprie Azioni (nessuna extra). Controlla fino a tre vittime. Un ordine breve comune è gratuito una volta per Iniziativa; ordini diversi costano 1 AzP in più; gli ordini entro 24 Q (fuori portata resta l’ultimo). Ordini suicidi terminano il controllo. La vittima ripete Volontà senza penalità a fine di ogni propria Iniziativa e dopo ogni danno subito; termina anche a scadenza, se l’Aboleth perde i sensi, muore o rilascia. Barriera Mentale dà il bonus alla PS; non è una Possessione. Negare Potere: potenza 9.",
+      "risorsa": "6 PM",
+      "azioni": {
+        "principali": 1
+      },
+      "usi": {
+        "quanti": 3,
+        "per": "giorno"
+      }
+    },
+    {
+      "nome": "Drenaggio psichico",
+      "effetto": "2 AzP e 3 PM su un bersaglio ancora assoggettato, visibile entro 6 Q; nessun tiro per colpire. Volontà senza modificatore: successo dimezza per eccesso 1d6+2 danni psichici e termina Assoggettare; fallimento subisce tutto e resta controllato. Ignora AR e PV temporanei, nessuna Ferita; a 0 PV Volontà come Dardo Psichico (fallimento Svenuto 1+1d4 Round). Barriera Mentale blocca. Recupera PV pari a quelli sottratti, entro il massimo; non PM. Il +2 ai suoi danni psichici è già compreso.",
+      "risorsa": "3 PM",
+      "azioni": {
+        "principali": 2
+      }
+    },
+    {
+      "nome": "Promessa illusoria (modulo tana)",
+      "effetto": "Opzione facoltativa per un Aboleth in tana preparata (non per l’esemplare errante). 1 AzP e 4 PM, fino a tre menti visibili entro 12 Q: Volontà senza modificatore; chi fallisce percepisce una ricompensa o un ambiente falso e ha −2 alle Prove di Percezione pertinenti. Concentrazione, massimo 10 Round; un’interazione fisica contraddittoria permette una nuova Volontà (una per Round); chi resiste è immune 24 ore. Negare Potere: potenza 6. Al massimo una delle prime tre opzioni del modulo per Round.",
+      "risorsa": "4 PM",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Marea predatoria (modulo tana)",
+      "effetto": "1 AzP e 2 PM, superficie d’acqua visibile della tana entro 18 Q: fino a tre creature a terra entro 4 Q dalla riva con percorso libero verso l’acqua fanno Riflessi senza modificatore; chi fallisce è trascinato fino a 4 Q verso la pozza e cade A Terra (nessun danno; movimento forzato senza Attacchi di Opportunità). Non in due Round consecutivi.",
+      "risorsa": "2 PM",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Rabbia nelle acque (modulo tana)",
+      "effetto": "1 AzP e 3 PM, fino a tre menti visibili immerse nell’acqua della tana entro 18 Q: Volontà senza modificatore; fallimento 1d6+2 danni psichici come il Drenaggio, senza recupero di PV. Barriera Mentale blocca. Non in due Round consecutivi.",
+      "risorsa": "3 PM",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Proiezione remota (modulo tana)",
+      "effetto": "1 AzP e 3 PM: immagine illusoria propria entro 1,6 km in un luogo già visto o visto da una vittima assoggettata, a Concentrazione, massimo 10 minuti; percepisce, parla e comunica entro 24 Q ma non attacca né usa altre capacità. Il contatto fisico la dissolve. Negare Potere: potenza 6. Una sola attiva.",
+      "risorsa": "3 PM",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Segni del territorio (modulo tana)",
+      "effetto": "Entro 1,6 km dalla tana il Direttore può collocare superfici scivolose e fangose (Terreno Difficile sulla mappa) e fonti contaminate imbevibili; svaniscono in 3d10 giorni dopo la morte dell’Aboleth. Non sono attacchi ogni Round."
+    }
+  ],
+  "note": "Spazio sulla mappa 2 × 3 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). Massa paragonabile a quella di un veicolo ai fini del limite di Sbalzante (taglia Grande). GS e PX con modulo tana attivo (solo quando incide davvero sull’incontro): Leggenda, 100 PX. Braccia = gruppi di tentacoli laterali; Gambe = porzioni locomotorie. Natura Comune (la malvagità dell’originale non dà Oscura Simmetria). Fonte: pp. 13–14. Comportamento: tratta e inganna prima di combattere; a 20 PV o Ferita Profonda cerca una via sommersa."
+}

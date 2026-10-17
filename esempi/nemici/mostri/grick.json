@@ -1,0 +1,100 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "grick",
+  "nome": "Grick",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — prime quindici schede",
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 6,
+    "COS": 5,
+    "INT": 2,
+    "SAG": 6,
+    "CAR": 2
+  },
+  "pv": 24,
+  "pm": 5,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": -2,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 10,
+    "volonta": 8,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Tentacoli",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Becco",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Tentacoli e Becco",
+      "effetto": "Un solo attacco di Tentacoli per Round. Se infligge almeno 1 danno dopo l’AR, può spendere la seconda AzP per un Becco contro la stessa vittima nella stessa Iniziativa (non gratuito, non contro un’altra vittima). L’Attacco di Opportunità usa solo i Tentacoli."
+    },
+    {
+      "nome": "Cute elastica",
+      "effetto": "Contro danni Naturali da taglio, perforazione o impatto fisico (compresi proiettili e armi naturali) usa AR totale 4 al posto di 1. Contro Fuoco, acido, altri danni non coperti e qualsiasi danno Magico usa AR 1; contro Etereo AR 0. Non si sommano 4 e 1."
+    },
+    {
+      "nome": "Arrampicata",
+      "effetto": "Arrampicata 4 Q al Passo su superfici con appigli, non su ogni soffitto liscio."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
+    }
+  ],
+  "note": "Spazio sulla mappa 1 × 2 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). Furtività 13 immobile fra rocce in ambiente adatto (non è invisibilità). Il profilo è il Grick comune, non l’Alfa. Braccia = tentacoli; Testa = becco e capo. Nessuna Parata naturale. Nome originale: Grick, p. 173. Comportamento: preda vicina; a Ferita Profonda si ritrae in una fessura."
+}

@@ -1,0 +1,120 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "ettercap",
+  "nome": "Ettercap",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — prime quindici schede",
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 7,
+    "COS": 6,
+    "INT": 3,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "pv": 28,
+  "pm": 6,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 12,
+    "volonta": 9,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sequenza",
+      "effetto": "Al massimo un Morso e un attacco di Artigli per Round. Il Getto di seta usa una delle due AzP e rispetta il proprio recupero. Nessuna Parata naturale."
+    },
+    {
+      "nome": "Veleno naturale II",
+      "effetto": "Se il Morso infligge almeno 1 danno dopo l’AR, Tempra senza modificatore a un vivente: successo dimezza per eccesso 1d4 danni da veleno e nessuna penalità; fallimento 1d4 danni (immediati, ignorano AR, non si ripetono) e Avvelenato con −2 alle Prove fisiche per 10 Round. A fine di ogni propria Iniziativa nuova Tempra: il successo termina la penalità. Una nuova esposizione rinnova solo i 10 Round (niente PS iniziale, danno o cumulo). Cura Avvelenamenti 2 o un antidoto lo terminano; Medicina da sola no."
+    },
+    {
+      "nome": "Arrampicata e percezione della rete",
+      "effetto": "Pareti e soffitti aderenti senza Atletica nelle condizioni ordinarie, fino a 6 Q al Passo per AzM; niente Corsa o Scatto in arrampicata. Toccando una propria ragnatela continua localizza entro 12 Q chi la sollecita; non vede attraverso i filamenti né chi resta immobile. Ignora gli impedimenti delle normali ragnatele."
+    },
+    {
+      "nome": "Getto di seta",
+      "effetto": "1 AzP, nessun PM, Armi da lancio 12 contro un bersaglio visibile ≤ 2 × 2 Q, gittata massima 12 Q (da 11 Q −2). Non causa danno, ignora l’AR. Il bersaglio può Schivare; la Parata non ferma il getto. Colpo riuscito e non evitato: Immobilizzato (gambe e braccia legate, −4 alle Prove fisiche). Dopo l’uso tre Round successivi senza Getto (usato nel Round 1, torna nel Round 5). Le reti persistono finché rimosse. Liberazione: la vittima spende 1 AzP per Atletica (con il −4, consentita anche con gli arti legati); un alleato adiacente con una lama idonea spende 1 AzP e taglia senza tiro né danno; un attacco da Fuoco che infligge almeno 1 danno alla tela la distrugge (le aree coinvolgono anche il prigioniero). Materia biologica: Negare Potere non la dissolve.",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Reti predisposte",
+      "effetto": "Un minuto di lavoro occupa un Q di passaggio con filamenti visibili: Terreno Difficile (Immobilizzato richiede l’attacco o una trappola definita a parte). L’Ettercap le attraversa senza penalità."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
+    }
+  ],
+  "note": "Getto di seta: VA 12, massimo 12 Q (non è nell’elenco attacchi perché non infligge danni). Braccia = arti superiori di presa. Nome originale: Ettercap, p. 131. Comportamento: cerca vie verticali e ostacoli; a Ferita Profonda può abbandonare la preda e allontanarsi sulla rete. Il manuale esclude l’Ettercap con garrota."
+}

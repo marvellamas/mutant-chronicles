@@ -1,0 +1,120 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "manticora",
+  "nome": "Manticora",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — prime quindici schede",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 7,
+    "COS": 7,
+    "INT": 4,
+    "SAG": 6,
+    "CAR": 4
+  },
+  "pv": 40,
+  "pm": 8,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18,
+    "volo": 10
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 12,
+    "volonta": 9,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Spina caudale",
+      "tipo": "distanza",
+      "va": 12,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "gittata_q": 40,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1,
+      "note": "VA 12 a 1–10 Q, 10 a 11–20 Q, 8 a 21–40 Q; oltre 40 Q non colpisce. Riserva di 24 spine."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 9
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Volo alato",
+      "effetto": "Richiede entrambe le ali utilizzabili e spazio per distenderle. Si mantiene in quota battendo le ali senza percorso minimo né AzM aggiuntiva; decollo e atterraggio sono compresi nell’AzM. Non è levitazione: perdita di coscienza e impedimenti alle ali seguono Volo e Stati del §5.2.5. Nessuna penalità universale per colpirlo perché vola. Una Menomazione permanente al Torace impedisce il volo."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Nel Round al massimo un Morso, due attacchi di Artigli e tre Spine entro il budget di tre AzP; si possono combinare ma i massimi non si sommano in sei attacchi. Ogni colpo costa una propria AzP. L’Attacco di Opportunità usa Morso o Artigli (non una salva di Spine) ed è escluso dai limiti. Nessuna Parata naturale."
+    },
+    {
+      "nome": "Spine caudali",
+      "effetto": "Riserva massima 24 spine; ogni tiro ne consuma una (anche se manca o è evitato). Il costo di 1 AzP comprende il rilascio; non sono Tiro Rapido né Raffica: ogni tiro ha il proprio VA, bersaglio, Difesa e danno. VA prima degli altri modificatori: 12 a 1–10 Q, 10 a 11–20 Q, 8 a 21–40 Q, oltre 40 Q non può colpire. Si applicano Copertura e Difese a distanza. Nessun veleno né Sanguinamento o Immobilizzato automatici. Ricrescita: 3 spine per ogni ora completa di riposo con nutrimento adeguato, fino a 24; nessun ripristino automatico a fine scontro. Se la coda è resa inutilizzabile, niente Spine."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
+    }
+  ],
+  "note": "Comprende e parla una lingua dell’ambientazione; può trattare (un tributo può risolvere l’incontro). Nome originale: Manticore, p. 213. Comportamento: cerca quota e Copertura; a Ferita Seria, con poche spine o davanti a una preda troppo costosa può ritirarsi o chiedere un tributo."
+}

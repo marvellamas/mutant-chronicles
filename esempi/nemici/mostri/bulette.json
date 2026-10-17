@@ -1,0 +1,105 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "bulette",
+  "nome": "Bulette",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — prime quindici schede",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 5,
+    "COS": 9,
+    "INT": 2,
+    "SAG": 5,
+    "CAR": 2
+  },
+  "pv": 52,
+  "pm": 6,
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": -3,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 9,
+    "volonta": 8,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d10+3",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 6
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Limite offensivo",
+      "effetto": "Al massimo un Morso oppure un Balzo dirompente nel Round; la seconda AzP resta per Difese o altre attività. Escluso il singolo Attacco di Opportunità ordinario."
+    },
+    {
+      "nome": "Scavo",
+      "effetto": "Scavo 4 Q al Passo: attraversa terra, sabbia e detriti cedevoli, non roccia compatta, cemento o metallo; niente Corsa o Scatto sotto terra. Deve emergere per attaccare; il tunnel non è automaticamente stabile."
+    },
+    {
+      "nome": "Vibrazioni",
+      "effetto": "Localizza creature in movimento sul medesimo terreno continuo entro 12 Q; non chi vola o è sospeso, nessun dettaglio visivo; interruzioni del terreno possono bloccare il senso. Non consente attacchi attraverso ostacoli."
+    },
+    {
+      "nome": "Balzo da fermo",
+      "effetto": "Con un’AzM salta fino a 6 Q in orizzontale e supera un dislivello fino a 3 Q anche senza rincorsa, con traiettoria libera e spazio d’arrivo per tutto il suo ingombro; senza Atletica entro questi limiti. Sostituisce quel movimento; può provocare Attacchi di Opportunità per uscita volontaria dalla portata."
+    },
+    {
+      "nome": "Balzo dirompente",
+      "effetto": "1 AzP e 1 AzM, nessun PM: un salto di almeno 3 Q orizzontali; sceglie prima fino a tre creature di ingombro ≤ 2 × 2 Q che si troveranno entro 1 Q dal punto d’atterraggio (2 × 2 Q liberi). Riflessi del bersaglio: successo dimezza per eccesso 2d6+3 Naturale prima dell’AR e non cade; fallimento subisce 2d6+3 ridotti dall’AR e cade A Terra anche se l’AR azzera il danno. Una sola applicazione per bersaglio, senza Parata, Schivata o Elusione; niente moltiplicatore della Carica né Morso gratuito. Creature di massa pari a un veicolo non sono bersagli ammessi.",
+      "azioni": {
+        "principali": 1,
+        "movimento": 1
+      }
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
+    }
+  ],
+  "note": "Furtività 9 sotto terra, 6 in superficie. Nessuna Parata naturale; non è immune a Terrorizzato. Nome originale: Bulette, p. 34. Comportamento: punta alla preda raggiungibile; a Ferita Seria può ritirarsi sottoterra. Dopo il salto non ha l’AzM per una Schivata nello stesso Round."
+}

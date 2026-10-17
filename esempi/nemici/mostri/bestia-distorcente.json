@@ -1,0 +1,93 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "bestia-distorcente",
+  "nome": "Bestia distorcente",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — prime quindici schede",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 7,
+    "COS": 7,
+    "INT": 3,
+    "SAG": 6,
+    "CAR": 4
+  },
+  "pv": 38,
+  "pm": 8,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 12,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 13,
+    "volonta": 9,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Tentacolo",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Tentacoli",
+      "effetto": "Al massimo due attacchi ordinari con Tentacolo per Round, ciascuno con la propria AzP; con un solo tentacolo utilizzabile, uno. Nessuna Parata naturale."
+    },
+    {
+      "nome": "Distorsione luminosa",
+      "effetto": "Passiva, senza AzP o PM. Finché è cosciente e libera di muoversi, gli attacchi che mirano al suo corpo usando la vista subiscono −2 VA. Il corpo occupa i Q reali: l’immagine non dà Copertura né cambia la portata. Non vale contro aree, effetti senza Prova per colpire o chi la localizza con un senso non visivo preciso. Un attacco che raggiunge il corpo senza essere annullato da Schivata, Parata Magistrale o altra Difesa completa la interrompe subito (anche se l’AR azzera il danno); si riattiva alla fine della successiva Iniziativa della bestia. Sospesa se Svenuta, Stordita, Immobilizzata o incapace di spostarsi. Negare Potere: soppressione per 3 Round, potenza 4."
+    },
+    {
+      "nome": "Agilità contro le aree",
+      "effetto": "Passiva. Quando un effetto fisicamente evitabile concede Riflessi per dimezzare il danno, subisce 0 con successo e metà per eccesso con fallimento, poi si sottrae l’AR. Serve poter percepire l’effetto e avere spazio per schivare; non vale se Svenuta, Stordita, Immobilizzata o ignara. Non cambia Tempra, Volontà, Magia, veleni già nel corpo o danni inevitabili."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
+    }
+  ],
+  "note": "Felino a sei zampe con due tentacoli dorsali (Braccia = tentacoli; Gambe = i due gruppi locomotori da tre zampe). Non incorporea. Nome originale: Displacer Beast, p. 81. Comportamento: attacca un bersaglio isolato usando portata e terreno; dopo un colpo subito cerca Copertura; a Ferita Seria abbandona la caccia ordinaria."
+}

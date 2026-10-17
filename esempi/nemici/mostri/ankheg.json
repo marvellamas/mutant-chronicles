@@ -1,0 +1,110 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "ankheg",
+  "nome": "Ankheg",
+  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — prime quindici schede",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 5,
+    "COS": 7,
+    "INT": 1,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "pv": 32,
+  "pm": 6,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": -4,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 10,
+    "volonta": 8,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Corrosivo"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 7
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Scavo",
+      "effetto": "Scavo 2 Q al Passo, senza Corsa o Scatto sotterranei. Attraversa terra e sabbia, non roccia, metallo o muratura; lascia un cunicolo stretto e instabile. Non colpisce attraverso il terreno: deve emergere e avere portata e linea d’attacco."
+    },
+    {
+      "nome": "Sensi",
+      "effetto": "Scurovisione 12 Q. Percezione delle vibrazioni entro 12 Q sul medesimo terreno continuo: localizza creature in movimento anche senza vederle; non chi vola o è sospeso; pavimenti isolati o interruzioni la spezzano."
+    },
+    {
+      "nome": "Presa mandibolare",
+      "effetto": "In alternativa al Morso: Immobilizzare, 1 AzP, Corpo a corpo 12 contrapposto a Corpo a corpo o Atletica (nessun danno nel tentativo), contro una creatura fino al proprio ingombro. Con successo Immobilizzato e mandibole impegnate. Liberarsi: 1 AzP e Prova contrapposta (i pareggi favoriscono chi trattiene). Per stringere: 1 AzP e nuova contrapposta; con successo il danno del Morso con AR normale e Corrosivo (nessun secondo tiro o Difesa). Finché trattiene non morde altri né usa il Getto acido; rilascio gratuito nella propria Iniziativa.",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Getto acido",
+      "effetto": "1 AzP, solo con le mandibole libere: linea di 6 × 1 Q dal bordo del suo spazio (non comprende il suo corpo), libera da ostacoli solidi; colpisce tutte le creature della linea, alleati compresi, senza tiro per colpire. Ciascuna fa Riflessi: successo dimezza per eccesso 2d6+1 Naturale Corrosivo prima dell’AR, fallimento tutto. È l’unica difesa (niente Elusione, Parata o Schivata). Dopo l’uso tre Round interi senza ripeterlo (usato nel Round 1, torna nel Round 5). Non spende PM.",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Corrosivo",
+      "effetto": "Segue il §5.24: dopo danno e Contromisure si risolve l’Integrità della protezione; il fallimento causa la perdita prevista di PI. Nessun danno periodico, Avvelenato o sottrazione diretta all’AR. Il carapace biologico non è un oggetto con PI. Il Morso ha una sola applicazione di danno."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
+    }
+  ],
+  "note": "AR 3 naturale; da A Terra scende a 1 finché non si rialza. Furtività 10 sotto terra, 7 in superficie. Indipendente dalla Covata. Fonte: p. 21. Comportamento: individua una creatura isolata, emerge vicino e la trascina verso il cunicolo; a 8 PV o Ferita Profonda cerca di interrarsi."
+}
