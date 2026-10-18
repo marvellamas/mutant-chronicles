@@ -943,26 +943,35 @@ export function renderTavolo(radice, ctx) {
   };
   // PX della partita (A.161): l'archivio px/px.json, solo sul PC del master. Se non c'è ancora, parte dai
   // valori di default dei dati. Si ridisegna solo quando cambia.
+  // PX attuali dai file dei PG associati, anche se non sono al tavolo (il Titolo dipende dal livello): si rileggono
+  // solo se il file è cambiato (mtime dell'elenco della cartella)
+  const pxDaFile = new Map();
   const aggiornaPx = async () => {
     const letto = await leggiPx();
     const db = letto ?? dbIniziale(ctx.dati);
-    const firma = JSON.stringify(db);
+    for (const g of db.giocatori ?? []) {
+      const r = stato.elenco.find((x) => x.file === g.pgFile);
+      if (!r || pxDaFile.get(g.pgFile)?.mtime === r.mtime) continue;
+      try {
+        const res = await fetch(`api/personaggi/${encodeURIComponent(g.pgFile)}`, { cache: 'no-store' });
+        const o = res.ok ? await res.json() : null;
+        pxDaFile.set(g.pgFile, { mtime: r.mtime, px: Number.isFinite(Number(o?.scelte?.puntiEsperienza)) ? Number(o.scelte.puntiEsperienza) : null });
+      } catch { /* resta il valore di prima */ }
+    }
+    const firma = JSON.stringify([db, [...pxDaFile].map(([file, v]) => [file, v.px])]);
     if (firma === stato.firmaPx) return false;
     stato.firmaPx = firma;
     stato.db = db;
     return true;
   };
   // i PX attuali di ogni giocatore, dal file del suo PG (scelte.puntiEsperienza); altrimenti i PX iniziali comuni
-  const pxGiocatori = () => Object.fromEntries((stato.db?.giocatori ?? []).map((g) => {
-    let px = stato.db?.impostazioni?.baseline ?? 0;
-    try { const o = JSON.parse(stato.testi.get(g.pgFile) ?? 'null'); if (Number.isFinite(Number(o?.scelte?.puntiEsperienza))) px = Number(o.scelte.puntiEsperienza); } catch { /* resta la baseline */ }
-    return [g.id, px];
-  }));
+  const pxGiocatori = () => Object.fromEntries((stato.db?.giocatori ?? []).map((g) => [g.id, pxDaFile.get(g.pgFile)?.px ?? stato.db?.impostazioni?.baseline ?? 0]));
   const salvaPxDb = async () => { try { await salvaPx(stato.db); stato.firmaPx = JSON.stringify(stato.db); } catch (e) { avvisoErrore(`PX della partita non salvati: ${e.message}. Controlla che avvia-server.bat sia aperto.`); } };
   // «Assegna PX della partita»: applica i delta ai PG presenti come Modifica master «diretta» su puntiEsperienza
   const assegnaPx = async (partita) => {
     const p = ctx.dati.px_partita;
-    const delta = deltaAssegnazione(partita, pxGiocatori(), p);
+    const pxPrima = pxGiocatori(); // gli stessi PX per il delta e per gli importi registrati (un aggiornamento in mezzo non li sposta)
+    const delta = deltaAssegnazione(partita, pxPrima, p);
     const etichetta = `PX della partita del ${partita.data || new Date().toISOString().slice(0, 10)}`;
     const senzaPg = [];
     for (const [id, d] of Object.entries(delta)) {
@@ -976,7 +985,7 @@ export function renderTavolo(radice, ctx) {
       if (!put.ok) throw new Error((await put.json().catch(() => ({}))).errore ?? `errore ${put.status} su ${g.pgFile}`);
     }
     const idx = stato.db.partite.findIndex((m) => m.id === partita.id);
-    if (idx >= 0) stato.db.partite[idx] = partitaAssegnata(partita, pxGiocatori(), new Date().toISOString().slice(0, 10), p);
+    if (idx >= 0) stato.db.partite[idx] = partitaAssegnata(partita, pxPrima, new Date().toISOString().slice(0, 10), p);
     await salvaPxDb();
     avviso(senzaPg.length ? `PX assegnati. Senza PG associato (non aggiornati): ${senzaPg.join(', ')}. Collegali in «Impostazioni».` : 'PX della partita assegnati ai PG presenti (Modifica master).', { tipo: senzaPg.length ? 'info' : 'ok', durata: 8000 });
     await aggiorna(true);
