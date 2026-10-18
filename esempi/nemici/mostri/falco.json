@@ -1,0 +1,100 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "falco",
+  "nome": "Falco",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Fauna delle terre aperte",
+  "caratteristiche": {
+    "FOR": 2,
+    "DES": 8,
+    "COS": 4,
+    "INT": 2,
+    "SAG": 7,
+    "CAR": 3
+  },
+  "pv": 3,
+  "pm": 3,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 2,
+  "movimento": {
+    "passo": 2,
+    "corsa": 4,
+    "scatto": 6,
+    "volo": 12
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 7,
+    "riflessi": 12,
+    "volonta": 7,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 9
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Animale",
+      "effetto": "Vivente, respira aria, ha mente e PM personali (senza incantesimi o spese di PM); veleni, malattie, cure, alimentazione e riposo seguono le regole ordinarie. Nessuna dotazione; colore della pelliccia, penne e zanne non danno protezioni diverse dall’AR indicata. A 0 PV non Svenuto né morto automaticamente: un nuovo danno finale positivo a 0 PV richiede Tempra e le normali Ferite (l’eccedenza del colpo che esaurisce i PV non genera da sola una Ferita); a 0 PM personali Svenuto dopo la risoluzione completa dell’azione; la volontà di fuggire non annulla impedimenti, Ferite o Morente. INI si somma a 1d10; AzP e unica AzM valgono per il Round; ogni attacco costa 1 AzP, produce AC 1 e usa il danno completo della tabella; i limiti offensivi comprendono Opportunità e attacchi ordinati; l’unica Opportunità ordinaria per Round usa un attacco normale (niente Carica o effetti che richiedono movimento). Nessuna Parata naturale; Schivata 1 AzP e 1 AzM (anche in volo) con consapevolezza e spazio; chi ha una sola AzP e la spende per difendersi non può poi attaccare nello stesso Round. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica; nessuna AR magica né immunità elementali. Un senso acuto dà +2 a Percezione quando il senso dichiarato è determinante (una sola volta per Prova). Non comprende linguaggi (salvo singoli segnali appresi con l’addestramento); gestirlo richiede Sopravvivenza quando c’è incertezza; cibo o una Prova riuscita non danno controllo mentale, domestichezza immediata o un comando suicida. Morso e contatto non trasmettono automaticamente malattie. Testa e Torace = capo e tronco; nei quadrupedi Braccia = arti anteriori, Gambe = posteriori (nei rapaci Braccia = ali). Si attraversa solo un varco compatibile con il corpo reale; le soglie di carico seguono FOR e Giocatore §5.2.6 con anatomia e presa concreta. Andature con costi, Prove ed esiti del Giocatore §§5.2.1–5.2.4 (Corsa Atletica 0, Scatto −2; in volo −2 e −4; penalità personali alle altre Azioni −2 in Corsa e −6 in Scatto); percorsi misti con un’unica AzM e un unico budget."
+    },
+    {
+      "nome": "Ali e quota",
+      "effetto": "Ali reali: decollo, salita, discesa e atterraggio consumano movimento; serve spazio per batterle; nessuna sospensione immobile né Passaggio in volo. Uscire volontariamente da una portata nemica (anche salendo) può provocare Opportunità. Se perde il sostegno (per esempio Svenuto) si applica Caduta; A Terra da solo non abbatte un volatore senza appoggio (§5.2.5). Può afferrare un oggetto o una piccola preda solo con anatomia, peso e accesso compatibili, con manovra e Azioni necessarie; colpire con gli Artigli non basta per sollevare qualcuno."
+    },
+    {
+      "nome": "Vista acuta",
+      "effetto": "+2 a Percezione quando la vista è determinante (VA 14 prima degli altri modificatori). Nessuna Scurovisione innata o vista attraverso ostacoli; luce e accessibilità del dettaglio restano pertinenti."
+    },
+    {
+      "nome": "Attacco e segnali",
+      "effetto": "Un attacco di Artigli per Round, Opportunità compresa. La piccola taglia non concede Colpo Mirato agli occhi, Accecato o un attacco contro un organo esposto (le manovre mantengono costi e penalità). Nessun Branco, Passaggio in volo o danno da picchiata. Un Falco addestrato risponde a richiami e svolge compiti compatibili con l’addestramento, senza comprendere una conversazione né riferire a parole ciò che ha visto; non condivide i sensi con un padrone né fornisce una visuale a distanza."
+    }
+  ],
+  "note": "La pedina tattica 1 × 1 Q non rappresenta la larghezza reale; gli oggetti trasportabili devono essere compatibili con artigli, becco e carico. Piccolo rapace distinto dal Falco sanguinario della fonte. Condotta: preferisce quota e posatoi e tende ad abbandonare il contatto quando ferito, già da Ferita Superficiale, se ha percorso e funzione alare utilizzabili. Fonte: Hawk, p. 330."
+}

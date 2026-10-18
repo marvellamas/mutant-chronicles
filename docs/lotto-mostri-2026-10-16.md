@@ -268,13 +268,15 @@ Scelte del blocco: Soffi (Lupo invernale, Segugio infernale) come capacità da 2
 
 Scelte del blocco: Difese = Parata per l'Orog (Schivata in nota) e AR «con scudo» nel campo (Bullywug 2, Lucertoloide 3; senza scudo in nota); Lancia a una e a due mani come due attacchi; armi della dotazione con gittata e modalità S; Nuoto nativo, apnea di 15 minuti (150 Round), Salto del Bullywug, Carica del Centauro, Agguato e Imitazione del Kenku, Impalare del Re e Avanzata aggressiva dell'Orog come capacità; i repertori dello Sciamano lucertoloide (tre incantesimi) e del Quaggoth Thonot (cinque, più Caduta protetta) come capacità con `azioni` e `risorsa` in PM, come per la Driade e l'Occhio di Gruumsh; la forma di Coccodrillo dello Sciamano come capacità sulla stessa scheda (un solo corpo, stesse risorse); immunità negli Stati solo per Avvelenato (Quaggoth e Thonot) e Terrorizzato (Re o Regina); Taglia non dedotta dall'ingombro (Centauro 2 × 2 Q senza Taglia). Test: `tests/mostri-selvagge.test.js`.
 
-## Che cosa resta del catalogo (Mostri 0.23)
+## Catalogo, blocco «Fauna delle terre aperte» — cap. 8 (18/10, Mostri 0.23)
 
-Il catalogo del cap. 8 ha 215 creature in 21 blocchi; ne sono fatte 205. Restano 10, in 1 blocchi, da fare nei prossimi lotti:
+`tools/genera_mostri_fauna.mjs` → `esempi/nemici/mostri/`: Babbuino, Tasso, Orso nero, Cinghiale, Cervo, Aquila, Falco, Iena, Avvoltoio, Sciacallo.
 
-- **Fauna delle terre aperte** (10 creature).
+Scelte del blocco: tutti 1 × 1 Q, senza Taglia e senza immunità; Branco (Babbuino, Iena, Avvoltoio, Sciacallo) come capacità passiva con il VA risultante nel testo e il VA base nel campo; Fiuto, Vista acuta e Udito e fiuto come capacità con il +2 a Percezione; Carica delle zanne e Abbattimento del Cinghiale come capacità e Tenacia con `usi` una volta per Scena; volo di Aquila, Falco e Avvoltoio, scavo del Tasso e arrampicata come capacità. Test: `tests/mostri-fauna.test.js`.
 
-Nota: gli sciami avranno meccaniche proprie (spazio, dispersione) da trascrivere a mano come gli altri blocchi, senza automatismi.
+## Catalogo completo (Mostri 0.23)
+
+Il catalogo del cap. 8 ha 215 creature in 21 blocchi: **tutte e 215 sono trascritte** (18/10, ultimo blocco «Fauna delle terre aperte»), più i 10 profili del cap. 7 (Covata e Lorath). Nulla resta da fare del catalogo della 0.23; se Davide pubblica una versione nuova si ripete il confronto (`docs/manuali-drive.md`). Le sue schede sono in `esempi/nemici/mostri/` (225 file) e nella pagina del bestiario online.
 
 ## 5. Cosa trova di nuovo il master
 

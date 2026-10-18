@@ -1,0 +1,111 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "orso-nero",
+  "nome": "Orso nero",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Fauna delle terre aperte",
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 5,
+    "COS": 6,
+    "INT": 2,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "pv": 24,
+  "pm": 5,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 9,
+    "volonta": 8,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ]
+    },
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 8
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Animale",
+      "effetto": "Vivente, respira aria, ha mente e PM personali (senza incantesimi o spese di PM); veleni, malattie, cure, alimentazione e riposo seguono le regole ordinarie. Nessuna dotazione; colore della pelliccia, penne e zanne non danno protezioni diverse dall’AR indicata. A 0 PV non Svenuto né morto automaticamente: un nuovo danno finale positivo a 0 PV richiede Tempra e le normali Ferite (l’eccedenza del colpo che esaurisce i PV non genera da sola una Ferita); a 0 PM personali Svenuto dopo la risoluzione completa dell’azione; la volontà di fuggire non annulla impedimenti, Ferite o Morente. INI si somma a 1d10; AzP e unica AzM valgono per il Round; ogni attacco costa 1 AzP, produce AC 1 e usa il danno completo della tabella; i limiti offensivi comprendono Opportunità e attacchi ordinati; l’unica Opportunità ordinaria per Round usa un attacco normale (niente Carica o effetti che richiedono movimento). Nessuna Parata naturale; Schivata 1 AzP e 1 AzM (anche in volo) con consapevolezza e spazio; chi ha una sola AzP e la spende per difendersi non può poi attaccare nello stesso Round. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica; nessuna AR magica né immunità elementali. Un senso acuto dà +2 a Percezione quando il senso dichiarato è determinante (una sola volta per Prova). Non comprende linguaggi (salvo singoli segnali appresi con l’addestramento); gestirlo richiede Sopravvivenza quando c’è incertezza; cibo o una Prova riuscita non danno controllo mentale, domestichezza immediata o un comando suicida. Morso e contatto non trasmettono automaticamente malattie. Testa e Torace = capo e tronco; nei quadrupedi Braccia = arti anteriori, Gambe = posteriori (nei rapaci Braccia = ali). Si attraversa solo un varco compatibile con il corpo reale; le soglie di carico seguono FOR e Giocatore §5.2.6 con anatomia e presa concreta. Andature con costi, Prove ed esiti del Giocatore §§5.2.1–5.2.4 (Corsa Atletica 0, Scatto −2; in volo −2 e −4; penalità personali alle altre Azioni −2 in Corsa e −6 in Scatto); percorsi misti con un’unica AzM e un unico budget."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Al massimo un attacco di Artigli e un Morso per Round, ciascuno con 1 AzP; Opportunità e attacchi ordinati rientrano in questi limiti. Può conservare una AzP per difendersi. Le due zampe non generano due applicazioni di danno e non può sostituire il Morso con un secondo attacco di Artigli. Morso e Artigli non impongono una presa automatica."
+    },
+    {
+      "nome": "Fiuto",
+      "effetto": "+2 a Percezione quando l’olfatto è determinante (VA 13 prima degli altri modificatori). Nessuna Scurovisione innata. Il cibo nascosto può lasciare un odore, ma un contenitore chiuso non diventa individuabile o apribile automaticamente."
+    },
+    {
+      "nome": "Arrampicata",
+      "effetto": "Con la propria AzM percorre fino a 6 Q al Passo su appigli adatti, senza Prova in condizioni ordinarie; superfici precarie o altre difficoltà concrete richiedono la Prova pertinente. Non aderisce a soffitti o pareti lisce e non ottiene un secondo budget passando da terra a un tronco. Sollevarsi sulle zampe posteriori non cambia spazio, riserve o localizzazioni."
+    }
+  ],
+  "note": "Orso di taglia media, più piccolo del Bruno già nel catalogo. Pelliccia e massa non aggiungono resistenze al freddo, alle armi da fuoco o agli Stati. Condotta: può difendere piccoli o cibo e cercare distanza quando gli viene lasciata una via libera; sotto 6 PV o a Ferita Profonda tende a ritirarsi. Fonte: Black Bear, p. 318."
+}
