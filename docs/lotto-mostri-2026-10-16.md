@@ -238,11 +238,16 @@ Scelte del blocco: gli Sciami sono un solo avversario da 1 × 1 Q condivisibile,
 
 Scelte del blocco: soglie di carico (ordinario / massimo / spinta) della tabella finale del blocco come capacità «Carico» o «Trasporto robusto» per creatura, con sovraccarico e rapporto cavaliere-animale nella capacità comune «Animale da lavoro»; Impeto del Cavallo da guerra come capacità, mentre Cornata in Impeto (Capra, Capra gigante) e Corna in Impeto dell'Alce, con formula propria, restano attacchi con la condizione nella nota; Calpestare e Zoccoli dell'Alce su vittima A Terra come attacchi con la condizione; Piede saldo (+2 circoscritto) e Atterrare del Mastino come capacità; cammello, cavalli, capra gigante e alce 2 × 2 Q di taglia Grande. Test: `tests/mostri-cavalcature.test.js`.
 
+## Catalogo, blocco «Mephit e creature elementali» — cap. 8 (18/10, Mostri 0.23)
+
+`tools/genera_mostri_elementali.mjs` → `esempi/nemici/mostri/`: Mephit della polvere, Mephit del ghiaccio, Mephit del magma, Mephit del fango, Mephit del fumo, Mephit del vapore, Serpente di fuoco, Salamandra, Galeb Duhr, Xorn.
+
+Scelte del blocco: danno misto (per esempio Taglio + Gelo): la prima componente in `danno` con la sua proprietà e la seconda nella nota dell'attacco, come per Azer e Yeti; Soffi e poteri innati (Sonno, Nebbia, Metallo caldo, Luci danzanti, Sfocatura, Animare massi) come capacità con `azioni`, `risorsa` in PM e, dove il manuale dice un uso ogni 24 ore, `usi` per giorno (la cadenza R + 3 dei Soffi nei `limiti`); dissoluzione dei Mephit come capacità passiva, una per creatura; negli Stati di immunità solo ciò che è uno Stato dell'app (Avvelenato, Sanguinamento, Incendiato), il resto (Sonno, soffocamento, Paralizzato, pietrificazione, Gelo) nelle capacità; Stringere della Salamandra, Animare massi del Galeb Duhr (scheda derivata del masso a 30 PX) e Passaggio minerale dello Xorn come capacità; Schianto in Impeto con formula propria come attacco; Salamandra 2 × 2 Q di taglia Grande. Test: `tests/mostri-elementali.test.js`.
+
 ## Che cosa resta del catalogo (Mostri 0.23)
 
-Il catalogo del cap. 8 ha 215 creature in 21 blocchi; ne sono fatte 155. Restano 60, in 6 blocchi, da fare nei prossimi lotti:
+Il catalogo del cap. 8 ha 215 creature in 21 blocchi; ne sono fatte 165. Restano 50, in 5 blocchi, da fare nei prossimi lotti:
 
-- **Mephit e creature elementali** (10 creature);
 - **Costrutti e Modron** (10 creature);
 - **Capi e varianti dei popoli guerrieri** (10 creature);
 - **Predatori straordinari** (10 creature);

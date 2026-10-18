@@ -1,0 +1,128 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "salamandra",
+  "nome": "Salamandra",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Mephit e creature elementali",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 7,
+    "COS": 7,
+    "INT": 6,
+    "SAG": 5,
+    "CAR": 6
+  },
+  "pv": 52,
+  "pm": 10,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 55,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 11,
+    "volonta": 10,
+    "magia": 11
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Lancia due mani",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d6+5",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ],
+      "note": "Aggiunge 1d4 Fuoco Naturale (una Difesa, una AC): le componenti restano distinte per AR e Stati. Con una mano il fisico diventa 1d6+3 complessivo. Non è compreso un profilo a lancio."
+    },
+    {
+      "nome": "Coda",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ],
+      "note": "Aggiunge 1d6 Fuoco Naturale (una Difesa, una AC). Con almeno 1 danno finale contro una creatura non maggiore di 1 × 1 Q: vedi «Afferrare e Stringere»."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 13
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Tecnologia",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo elementale",
+      "effetto": "Natura Comune, con una mente e la riserva personale di PM indicata, ma non biologicamente vivente: non richiede aria, cibo, acqua o sonno (salvo il nutrimento minerale dello Xorn). Immune a soffocamento, Sonno, Sanguinamento, veleni e malattie biologici; non è immune a tutti gli effetti mentali o spirituali. Cure biologiche, Medicina, riposo biologico e normali riparazioni tecnologiche non lo ripristinano: serve un effetto espressamente compatibile. A 0 PV non scompare: Tempra, Ferite, Menomazioni e Morente seguono il §4.2 (le Ferite descrivono perdita di integrità o coesione; la distruzione avviene alla fine del contatore di Morente o con una fonte che distrugga espressamente il corpo). A 0 PM Svenuto al termine della risoluzione completa dell’azione. Nessuna Parata naturale; Schivata: 1 AzP, 1 AzM e spazio. Una sola Opportunità ordinaria gratuita per Round (un attacco ravvicinato normale), che non attiva Soffi, Stringere, Impeto, poteri o animazioni. Danni misti: una sola Difesa per le due componenti; per ciascuna si calcolano moltiplicatori, riduzione della Difesa, resistenze e AR pertinente, e i residui si sommano per una sola applicazione a PV e Ferite. Il residuo di Fuoco o Gelo, superata la Contromisura, può imporre la PS ordinaria contro Incendiato o Rallentato. Vulnerabilità ×2: vale per la componente indicata di qualunque Natura, prima di Difesa e AR (con Magistrale ×3 complessivo), e non si estende alle altre componenti del colpo."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Al massimo una Lancia e una Coda oppure Stringere per Round, ciascuno con 1 AzP; le Opportunità usano Lancia o Coda normali nei rispettivi limiti. Non colpisce automaticamente chi è trattenuto e non assegna altre Azioni per la lunghezza del corpo."
+    },
+    {
+      "nome": "Dotazione",
+      "effetto": "Lancia Comune commerciale, FOR 5, PI 6, PS Integrità 10, Armi da guerra, due mani, portata 2 Q e Versatile. Il danno comprende 1d6+3 base a due mani e +2 personale. Inizia pronta; nessuna armatura o scudo. Può parare con la Lancia pronta pagando 1 AzP (a distanza applica il −8 dell’arma): una Parata normale dimezza per eccesso prima dell’AR, una Magistrale annulla. I 55 PX includono questa dotazione."
+    },
+    {
+      "nome": "Afferrare e Stringere",
+      "effetto": "Afferrare: Coda con almeno 1 danno finale contro una creatura non maggiore di 1 × 1 Q impone Riflessi −2; fallimento Immobilizzato, con le mani utilizzabili salvo impedimenti indipendenti. Una sola vittima; la Coda impegnata non attacca altri; il vincolo permane fino a liberazione o rilascio, senza danno per la sola permanenza; la Salamandra resta ferma mentre mantiene la presa e non trascina la vittima. Stringere: 1 AzP, occupa il limite della Coda; Corpo a corpo 13 contrapposto a Corpo a corpo o Atletica della vittima (con il −4 fisico di Immobilizzato): successo infligge 1d8+2 Contusione e 1d6 Fuoco Naturali; pareggio o fallimento nessun danno; AR e resistenze alle componenti, senza una seconda Parata o Schivata; non è un’Opportunità. Liberarsi: la vittima usa 1 AzP e la stessa contrapposta (successo libera, pareggio o fallimento conserva); un alleato adiacente può tentare con 1 AzP e strumenti adatti. Rilascio volontario gratuito alla propria Iniziativa; Svenuto, distruzione o perdita della funzione della coda interrompono la presa.",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Protezioni e calore",
+      "effetto": "Immune a Fuoco e Incendiato; vulnerabile al Gelo ×2. Dimezza il Naturale da Contusione, Taglio e Perforazione prima dell’AR. Calore diretto: 1d6 Fuoco Naturale a chi la tocca o afferra direttamente, o la colpisce col proprio corpo entro 1 Q, massimo una applicazione per creatura e per Round (la vittima trattenuta riceve il Fuoco tramite Coda o Stringere pagati, senza un’altra applicazione passiva); nessuna Difesa attiva, AR e protezioni pertinenti restano; il residuo oltre Ignifugo può applicare Incendiato con Riflessi ordinario; un’arma o uno scudo non trasmettono il calore. Arma calda: 1d4 Fuoco Naturale a una Lancia metallica impugnata (già incluso nei profili); se la lascia o la perde il danno aggiuntivo termina; nessun Corrosivo o perdita di PI. Corpo, armi e calore innati non sono cancellati da Negare Potere."
+    }
+  ],
+  "immunita": [
+    "incendiato"
+  ],
+  "note": "Essere serpentiforme con arti superiori: può essere un artigiano o difendere una fucina. Parla Ignan. Testa, Torace e Braccia sono le parti omonime; Gambe = la coda locomotrice e prensile. Tecnologia 12 vale solo per metallurgia con mezzi appropriati. Condotta: sotto 13 PV o a Ferita Seria può cercare riparo o negoziare. Fonte: Salamander, pp. 265–266."
+}

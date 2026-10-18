@@ -1,0 +1,127 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "mephit-del-ghiaccio",
+  "nome": "Mephit del ghiaccio",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Mephit e creature elementali",
+  "caratteristiche": {
+    "FOR": 3,
+    "DES": 6,
+    "COS": 5,
+    "INT": 5,
+    "SAG": 5,
+    "CAR": 6
+  },
+  "pv": 22,
+  "pm": 10,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18,
+    "volo": 6
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 10,
+    "volonta": 10,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Artigli gelidi",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ],
+      "note": "Aggiunge 1d4 Gelo Naturale (una Difesa, una AC): le componenti restano distinte per AR e Stati."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo elementale",
+      "effetto": "Natura Comune, con una mente e la riserva personale di PM indicata, ma non biologicamente vivente: non richiede aria, cibo, acqua o sonno (salvo il nutrimento minerale dello Xorn). Immune a soffocamento, Sonno, Sanguinamento, veleni e malattie biologici; non è immune a tutti gli effetti mentali o spirituali. Cure biologiche, Medicina, riposo biologico e normali riparazioni tecnologiche non lo ripristinano: serve un effetto espressamente compatibile. A 0 PV non scompare: Tempra, Ferite, Menomazioni e Morente seguono il §4.2 (le Ferite descrivono perdita di integrità o coesione; la distruzione avviene alla fine del contatore di Morente o con una fonte che distrugga espressamente il corpo). A 0 PM Svenuto al termine della risoluzione completa dell’azione. Nessuna Parata naturale; Schivata: 1 AzP, 1 AzM e spazio. Una sola Opportunità ordinaria gratuita per Round (un attacco ravvicinato normale), che non attiva Soffi, Stringere, Impeto, poteri o animazioni. Danni misti: una sola Difesa per le due componenti; per ciascuna si calcolano moltiplicatori, riduzione della Difesa, resistenze e AR pertinente, e i residui si sommano per una sola applicazione a PV e Ferite. Il residuo di Fuoco o Gelo, superata la Contromisura, può imporre la PS ordinaria contro Incendiato o Rallentato. Vulnerabilità ×2: vale per la componente indicata di qualunque Natura, prima di Difesa e AR (con Magistrale ×3 complessivo), e non si estende alle altre componenti del colpo."
+    },
+    {
+      "nome": "Volo",
+      "effetto": "Ali funzionali, nessun volo stazionario: Torace comprende il cingolo alare, Testa capo e bocca, Braccia e Gambe gli arti corrispondenti. In volo Corsa e Scatto richiedono Atletica −2 e −4; percorsi misti secondo §5.2 e budget unico, senza rinnovare l’AzM. Svenuto o perdita delle ali possono causare Caduta."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    },
+    {
+      "nome": "Soffio gelido",
+      "azioni": {
+        "principali": 1
+      },
+      "risorsa": "3 PM",
+      "limiti": "Cadenza comune: pronto a inizio scontro; dopo un uso nel Round R di nuovo dalla propria Iniziativa del Round R + 3, pagando di nuovo i PM (nessun tiro di Ricarica).",
+      "effetto": "Cono 3 Q: 2d4 Gelo Naturale; Elusione Riflessi senza modificatore dimezza per eccesso. Dopo il residuo di Gelo si risolve la Tempra ordinaria contro Rallentato, se dovuta. Non concede una presa o un congelamento permanente. Serve una bocca libera e un mezzo compatibile; senza tiro per colpire, Parata o Schivata (solo la PS o l’Elusione indicata); non è un’Opportunità. I coni sono lunghi 3 Q dalla bocca lungo percorsi liberi, colpiscono anche gli alleati (non la fonte) e i solidi li bloccano; le Coperture pertinenti modificano la Salvezza. Capacità innata (nessun incantesimo appreso): paga Azioni e PM dichiarati, senza Focus, componenti o Potere; non è un lancio interrompibile con Contromagia. Negare Potere rimuove soltanto gli effetti per i quali è indicata una potenza di confronto (Magia §23.6); non cancella il corpo autonomo. Un uso ogni 24 ore si conta dall’attivazione."
+    },
+    {
+      "nome": "Nebbia innata",
+      "azioni": {
+        "principali": 1
+      },
+      "risorsa": "3 PM",
+      "usi": {
+        "quanti": 1,
+        "per": "giorno"
+      },
+      "effetto": "Crea una nube immobile di raggio 2 Q centrata in un punto visibile entro 6 Q, per 5 Round senza Concentrazione. Nubi di fumo e nebbia sono opache: nessuna linea visiva attraverso la nube (senza assegnare Accecato persistente a chi ne esce; Scurovisione non l’attraversa); ostacola anche il Mephit; un vento forte continuo per un Round la disperde. Una nuova nube termina la precedente. Congedo gratuito alla propria Iniziativa; la morte non la cancella. Negare Potere ammesso, potenza 3. Capacità innata (nessun incantesimo appreso): paga Azioni e PM dichiarati, senza Focus, componenti o Potere; non è un lancio interrompibile con Contromagia. Negare Potere rimuove soltanto gli effetti per i quali è indicata una potenza di confronto (Magia §23.6); non cancella il corpo autonomo. Un uso ogni 24 ore si conta dall’attivazione."
+    },
+    {
+      "nome": "Furtività tra il ghiaccio",
+      "effetto": "Immobile con appoggio tra ghiaccio plausibile ottiene +4 a Furtività per apparire una scheggia, fino a un movimento osservato."
+    },
+    {
+      "nome": "Dissoluzione",
+      "passiva": true,
+      "effetto": "Alla distruzione effettiva del corpo (non a 0 PV, a 0 PM o all’ingresso in Morente; un congedo o il termine di un’evocazione non equivalgono a distruzione), una sola volta: raggio 1 Q dal bordo del corpo, tutte le altre creature possono essere coinvolte, i solidi fermano la propagazione. Non costa Azioni, non è attivabile a volontà e non è un attacco con Magistrale. Ghiaccio: 1d8 Taglio Naturale; Elusione Riflessi senza modificatore dimezza."
+    }
+  ],
+  "immunita": [
+    "avvelenato",
+    "sanguinamento"
+  ],
+  "note": "Immune al Gelo (danni e conseguenze); vulnerabile a Fuoco e Contusione ×2, ciascuno per la propria componente. Parla Aquan e Auran. Condotta: sotto 5 PV o a Ferita Profonda cerca riparo. Non appartiene alla Covata; la variante di evocazione di altri Mephit non è compresa e la specie non è un’opzione di Evoca Elementale. Un Artiglio per Round, Opportunità compresa. Fonte: Ice Mephit, p. 215."
+}

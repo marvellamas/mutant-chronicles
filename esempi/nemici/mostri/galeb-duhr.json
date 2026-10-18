@@ -1,0 +1,124 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "galeb-duhr",
+  "nome": "Galeb Duhr",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Mephit e creature elementali",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 6,
+    "COS": 9,
+    "INT": 6,
+    "SAG": 6,
+    "CAR": 6
+  },
+  "pv": 58,
+  "pm": 12,
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 3,
+    "corsa": 6,
+    "scatto": 9
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 10,
+    "volonta": 11,
+    "magia": 12
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Schianto",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "2d6+3",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ]
+    },
+    {
+      "nome": "Schianto in Impeto",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "3d6+3",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ],
+      "note": "Dopo almeno 4 Q rettilinei rotolati verso la vittima; sostituisce lo Schianto normale: vedi «Rotolamento». Un solo 1d6 aggiuntivo già compreso, senza ×2 della Carica."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 9
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo elementale",
+      "effetto": "Natura Comune, con una mente e la riserva personale di PM indicata, ma non biologicamente vivente: non richiede aria, cibo, acqua o sonno (salvo il nutrimento minerale dello Xorn). Immune a soffocamento, Sonno, Sanguinamento, veleni e malattie biologici; non è immune a tutti gli effetti mentali o spirituali. Cure biologiche, Medicina, riposo biologico e normali riparazioni tecnologiche non lo ripristinano: serve un effetto espressamente compatibile. A 0 PV non scompare: Tempra, Ferite, Menomazioni e Morente seguono il §4.2 (le Ferite descrivono perdita di integrità o coesione; la distruzione avviene alla fine del contatore di Morente o con una fonte che distrugga espressamente il corpo). A 0 PM Svenuto al termine della risoluzione completa dell’azione. Nessuna Parata naturale; Schivata: 1 AzP, 1 AzM e spazio. Una sola Opportunità ordinaria gratuita per Round (un attacco ravvicinato normale), che non attiva Soffi, Stringere, Impeto, poteri o animazioni. Danni misti: una sola Difesa per le due componenti; per ciascuna si calcolano moltiplicatori, riduzione della Difesa, resistenze e AR pertinente, e i residui si sommano per una sola applicazione a PV e Ferite. Il residuo di Fuoco o Gelo, superata la Contromisura, può imporre la PS ordinaria contro Incendiato o Rallentato. Vulnerabilità ×2: vale per la componente indicata di qualunque Natura, prima di Difesa e AR (con Magistrale ×3 complessivo), e non si estende alle altre componenti del colpo."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    },
+    {
+      "nome": "Rotolamento",
+      "effetto": "Con l’AzM percorre fino a 6 Q al Passo, oppure 12 Q lungo una discesa continua realmente praticabile; conta tutto il percorso e non usa Corsa o Scatto mentre rotola. Dopo almeno 4 Q rettilinei verso la vittima può usare Schianto in Impeto: almeno 1 danno finale impone Tempra −2 a una vittima non maggiore di 2 × 2 Q; fallimento → A Terra. Un solo Schianto per Round, normale o in Impeto; l’Opportunità usa solo quello normale."
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Dimezza il Naturale da Contusione, Taglio e Perforazione prima dell’AR; immune ad Affaticamento, Avvelenato, Paralizzato e pietrificazione. Vibrazioni entro 12 Q sul terreno continuo condiviso, non contro chi vola o è isolato dal supporto. Immobile con appoggio tra rocce plausibili ottiene +4 a Furtività per sembrare un masso, fino a un movimento osservato."
+    },
+    {
+      "nome": "Animare massi",
+      "azioni": {
+        "principali": 2
+      },
+      "risorsa": "6 PM",
+      "usi": {
+        "quanti": 1,
+        "per": "giorno"
+      },
+      "limiti": "Concentrazione per un massimo di 10 Round; le sue normali Azioni restano consentite durante il mantenimento (conserva PS di Volontà e interruzioni della Concentrazione; nessun Talento Concentrazione Operativa).",
+      "effetto": "Anima fino a due massi non magici e non lavorati, ciascuno con ingombro compatibile con 1 × 1 Q, visibili entro 12 Q lungo una linea d’effetto libera (non parte di un muro portante o di un corpo). Ogni masso usa la scheda completa del Galeb Duhr con queste sostituzioni: PM —, INT 1, CAR 1, Volontà 6, Percezione 8, Furtività 5, 1 AzP e 1 AzM per Round, GS Esperto e 30 PX per quattro PG; conserva PV 58, COS 9, AR 4, altri VA, Schianto, Impeto, movimento, resistenze e immunità; non ha Animare massi, linguaggi o mente autonoma ed è immune a paura, fascinazione e controllo che richieda una mente. I massi agiscono subito dopo il Galeb Duhr; un ordine semplice comune alla propria Iniziativa è gratuito entro 12 Q (oltre, il compito precedente continua); un solo Schianto per masso e per Round, Opportunità compresa; sono pedine separate con risorse proprie. A 0 PV seguono Tempra, Ferite e Morente (senza PM; Dardo Spirituale applica la quota ai PV, Dardo Psichico non trova una mente). Perdita di Concentrazione, scadenza, congedo gratuito o incoscienza del Galeb Duhr li fanno tornare inerti (le pietre non scompaiono: la riattivazione conserva PV, Ferite e Menomazioni; un masso distrutto non torna integro). Negare Potere termina un masso alla volta, potenza di confronto 9. Ogni masso coinvolto vale 30 PX unitari per quattro PG, distinti dai 50 del Galeb Duhr."
+    }
+  ],
+  "immunita": [
+    "avvelenato"
+  ],
+  "note": "Elementale di pietra simile a un masso con arti tozzi, può custodire un luogo per lunghi periodi e comunicare con chi vi entra. Parla Terran e può trattare informazioni sul luogo. Testa = parte sensoriale, Torace = nucleo, Braccia = arti superiori, Gambe = locomotori. Condotta: sotto 14 PV o a Ferita Seria tende a proteggere l’accesso o cercare riparo; non perde automaticamente la Concentrazione a 0 PV. Fonte: Galeb Duhr, p. 139."
+}

@@ -1,0 +1,119 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "xorn",
+  "nome": "Xorn",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Mephit e creature elementali",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 5,
+    "COS": 10,
+    "INT": 6,
+    "SAG": 5,
+    "CAR": 6
+  },
+  "pv": 50,
+  "pm": 10,
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": -1,
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 9,
+    "volonta": 10,
+    "magia": 11
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ]
+    },
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo elementale",
+      "effetto": "Natura Comune, con una mente e la riserva personale di PM indicata, ma non biologicamente vivente: non richiede aria, cibo, acqua o sonno (salvo il nutrimento minerale dello Xorn). Immune a soffocamento, Sonno, Sanguinamento, veleni e malattie biologici; non è immune a tutti gli effetti mentali o spirituali. Cure biologiche, Medicina, riposo biologico e normali riparazioni tecnologiche non lo ripristinano: serve un effetto espressamente compatibile. A 0 PV non scompare: Tempra, Ferite, Menomazioni e Morente seguono il §4.2 (le Ferite descrivono perdita di integrità o coesione; la distruzione avviene alla fine del contatore di Morente o con una fonte che distrugga espressamente il corpo). A 0 PM Svenuto al termine della risoluzione completa dell’azione. Nessuna Parata naturale; Schivata: 1 AzP, 1 AzM e spazio. Una sola Opportunità ordinaria gratuita per Round (un attacco ravvicinato normale), che non attiva Soffi, Stringere, Impeto, poteri o animazioni. Danni misti: una sola Difesa per le due componenti; per ciascuna si calcolano moltiplicatori, riduzione della Difesa, resistenze e AR pertinente, e i residui si sommano per una sola applicazione a PV e Ferite. Il residuo di Fuoco o Gelo, superata la Contromisura, può imporre la PS ordinaria contro Incendiato o Rallentato. Vulnerabilità ×2: vale per la componente indicata di qualunque Natura, prima di Difesa e AR (con Magistrale ×3 complessivo), e non si estende alle altre componenti del colpo."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Al massimo un attacco di Artigli e un Morso per Round, ciascuno con 1 AzP; le Opportunità rientrano nei rispettivi limiti. Le tre braccia non concedono tre attacchi simultanei né Parata naturale. Il Morso non inghiotte una persona né distrugge automaticamente monete o equipaggiamento indossato."
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Dimezza il danno Naturale da Taglio e Perforazione prima dell’AR, non la Contusione né le componenti Magiche, Eteree ed elementali. Vibrazioni entro 12 Q sul terreno continuo condiviso, senza individuare chi vola o è isolato. Tra rocce dove possa realmente celarsi ottiene +2 a Furtività (non diventa invisibile)."
+    },
+    {
+      "nome": "Passaggio minerale",
+      "azioni": {
+        "movimento": 1
+      },
+      "effetto": "Con l’AzM al Passo attraversa fino a 4 Q di terra o pietra naturali, non magiche e non lavorate, in qualsiasi direzione realmente percorribile dal corpo; conta anche il dislivello. Il tratto nel solido non consente Corsa o Scatto e nei percorsi misti non rinnova il Movimento. Non sposta il materiale, non lascia un cunicolo e non porta una vittima o un passeggero. Murature lavorate, metallo, materiali artificiali, pietra magica e barriere che impediscono il passaggio della materia lo bloccano; non apre brecce. Può restare nel materiale compatibile senza soffocare, ma non vede attraverso la pietra. Artigli e Morso richiedono bocca o arti esposti e un percorso libero verso la vittima: non attacca da un rifugio solido senza esporsi. Entrare nel terreno è Movimento ordinario (non teletrasporto né Ritirata): un’uscita dalla portata nemica può provocare Opportunità prima che il percorso sia protetto dal solido."
+    },
+    {
+      "nome": "Senso dei tesori",
+      "passiva": true,
+      "effetto": "Entro 12 Q localizza metalli preziosi e gemme, anche attraverso terra e roccia naturali comunicanti. È un senso minerale innato, non normale vista né Individuare Magia: non identifica valore esatto, proprietà magiche, proprietario o intenzioni e non localizza creature prive di tali materiali. Metallo schermante continuo, pietra lavorata o barriera magica interrompono la rilevazione attraverso quell’ostacolo. Percepire una gemma dentro una borsa non la trasferisce nella sua bocca né rivela gli altri contenuti; mangiare, sottrarre o danneggiare un oggetto richiede un’azione e una situazione praticabile (un’arma o protezione mantiene le normali regole di Integrità)."
+    }
+  ],
+  "note": "Essere pesante con tre braccia, tre occhi e una grande bocca superiore: cerca metalli preziosi e gemme per nutrirsi e può offrire informazioni in cambio di una parte del tesoro (contratta anziché iniziare un combattimento). Parla Terran. Testa = bocca e occhi, Torace = nucleo, Braccia = gruppo di arti superiori, Gambe = appendici locomotorie. Condotta: sotto 12 PV o a Ferita Seria tende alla trattativa o alla ritirata nel terreno; non consuma automaticamente gli oggetti per la semplice vicinanza. Fonte: Xorn, p. 304."
+}
