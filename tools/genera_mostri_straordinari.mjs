@@ -1,7 +1,7 @@
 // Blocco «Predatori straordinari» del catalogo (cap. 8) del Manuale dei Mostri v0.23: dieci profili prestabiliti in
 // esempi/nemici/mostri/, nel formato di data/formato_nemici.json (A.73). Valori trascritti; niente valori inventati.
-// GS/PX informativo (A.161). Spazio ai soli valori quadrati (A.126); ingombro non ammesso (Worg 2 × 1 Q, Roc 6 × 6 Q) nelle
-// note con A.167 (approvata il 18/10, in implementazione); la Taglia non si deduce dall'ingombro.
+// GS/PX informativo (A.161). Spazio dal campo `spazio`, anche rettangolare e oltre 3 × 3 (Worg 2 × 1 Q, Roc 6 × 6 Q:
+// A.167 del 18/10); la Taglia non si deduce dall'ingombro.
 //
 // Scelte del blocco (oltre a quelle dei blocchi precedenti):
 //  - Soffi (Lupo invernale, Segugio infernale): capacità con 2 AzP, cadenza R + 3 e PS di Elusione; non attacchi.

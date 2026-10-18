@@ -1,6 +1,6 @@
 // Blocco «Creature del sottosuolo» del catalogo (cap. 8) del Manuale dei Mostri v0.18: dieci profili
 // prestabiliti in esempi/nemici/mostri/, nel formato di data/formato_nemici.json (A.73). Valori trascritti;
-// niente valori inventati. GS/PX informativo (A.161). Spazio ai soli valori quadrati (A.126).
+// niente valori inventati. GS/PX informativo (A.161). Spazio dal campo `spazio` (A.126, A.167).
 //
 // Scelte del blocco (oltre a quelle dei blocchi precedenti):
 //  - attacchi senza danno ai PV o con portata non rappresentabile (Oscuramento del Mantoscuro, Caduta
@@ -9,7 +9,7 @@
 //    nel testo.
 //  - Furtività con valori condizionati (Perforatore, Roper, Umber Hulk, Troglodita, Grimlock): nel campo il
 //    valore senza condizione; quello condizionato nelle note.
-//  - Vermeiena 1 × 2 Q: ingombro non quadrato → `spazio` vuoto e nota con A.167 (come il Corazzato della Covata).
+//  - Vermeiena 1 × 2 Q: ingombro rettangolare nel campo `spazio` (A.167 del 18/10, come il Corazzato della Covata).
 //  - scavo, aderenza e arrampicata non sono nel movimento del formato (passo/corsa/scatto/volo): capacità.
 //
 // Uso: node tools/genera_mostri_sottosuolo.mjs

@@ -1,6 +1,6 @@
 // Blocco «Grandi rettili e predatori mostruosi» del catalogo (cap. 8) del Manuale dei Mostri v0.23: dieci
 // profili prestabiliti in esempi/nemici/mostri/, nel formato di data/formato_nemici.json (A.73). Valori
-// trascritti; niente valori inventati. GS/PX informativo (A.161). Spazio ai soli valori quadrati (A.126).
+// trascritti; niente valori inventati. GS/PX informativo (A.161). Spazio dal campo `spazio` (A.126, A.167).
 //
 // Scelte del blocco (oltre a quelle dei blocchi precedenti):
 //  - tipo di danno fisico (Taglio, Perforazione, Contundente) → `proprieta` dell'attacco; il manuale precisa che
@@ -10,7 +10,7 @@
 //    con la condizione nella nota; Costrizione del Behir è un attacco.
 //  - Idra: cinque teste iniziali (Stato iniziale della scheda, nelle capacità) e Opportunità speciali nel campo
 //    `azioni.eccezioni`.
-//  - Drago tartaruga 4 × 4 Q: ingombro non ammesso → `spazio` vuoto e nota con A.167; Taglia Grande (contiene 2 × 2).
+//  - Drago tartaruga 4 × 4 Q: nel campo `spazio` (A.167 del 18/10); la Taglia non si deduce dall'ingombro.
 //
 // Uso: node tools/genera_mostri_rettili.mjs
 import { writeFile } from 'node:fs/promises';

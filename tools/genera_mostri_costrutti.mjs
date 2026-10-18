@@ -1,6 +1,6 @@
 // Blocco «Costrutti e creature elementali» del catalogo (cap. 8) del Manuale dei Mostri v0.16: dieci profili
 // prestabiliti in esempi/nemici/mostri/, nel formato di data/formato_nemici.json (A.73). Valori trascritti;
-// niente valori inventati. GS/PX informativo (A.161). Spazio ai soli valori quadrati (A.126).
+// niente valori inventati. GS/PX informativo (A.161). Spazio dal campo `spazio` (A.126, A.167).
 //
 // Scelte del blocco:
 //  - attacchi ad area o senza tiro per colpire (VA «—»: Esplosione finale, Fiammata, Terremoto) → capacità,
@@ -13,7 +13,7 @@
 //  - Elementali evocati: «INI dopo l'evocatore» non è un numero → `iniziativa: 0` con la nota (agiscono dopo
 //    l'evocatore); scompaiono a 0 PV (nota). Spazio 2×2 Q, taglia Grande.
 //  - presenze/oggetti in volo con «nessun movimento terrestre» → passo 0, Corsa/Scatto non consentiti, `volo`.
-//  - ingombri non quadrati (Tappeto 2×1 Q) → campo `spazio` vuoto, ingombro nelle note con A.167, taglia Grande.
+//  - ingombri non quadrati (Tappeto 2×1 Q) → campo `spazio` (A.167 del 18/10); la Taglia non si deduce dall'ingombro.
 //
 // Uso: node tools/genera_mostri_costrutti.mjs
 import { writeFile } from 'node:fs/promises';

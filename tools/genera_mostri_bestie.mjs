@@ -6,7 +6,7 @@
 // passo/corsa/scatto/volo (§2.14), quindi le andature secondarie (arrampicata, nuoto) e la scurovisione
 // restano nelle note o in una capacità, com'è scritto nel manuale. Spazio sulla mappa (A.126): le bestie con
 // ingombro non quadrato (Lupo feroce, Leone, Iena 2 × 1 Q; Coccodrillo 3 × 2 Q) non entrano nel campo
-// `spazio` (ammessi 1 Q, 2 × 2 Q, 3 × 3 Q): campo vuoto e ingombro del manuale nelle note, rimando ad A.167.
+// `spazio` («1 Q» o «larghezza × lunghezza Q», anche rettangolare, A.167 del 18/10): l'ingombro del manuale sta nel campo.
 // Gli attacchi che non infliggono danni (Getto di seta del Ragno: applica Immobilizzato) sono capacità, non
 // attacchi, perché il campo `danno` del formato vuole i dadi.
 //

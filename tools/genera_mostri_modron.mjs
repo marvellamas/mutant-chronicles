@@ -1,7 +1,7 @@
 // Blocco «Costrutti e Modron» del catalogo (cap. 8) del Manuale dei Mostri v0.23: dieci profili prestabiliti in
 // esempi/nemici/mostri/ (cinque guardiani animati e cinque Modron), nel formato di data/formato_nemici.json
 // (A.73). Valori trascritti; niente valori inventati. GS/PX informativo (A.161, valori non tondi 11/22/33 compresi).
-// Spazio ai soli valori quadrati (A.126); la Taglia non si deduce dall'ingombro (A.167, 18/10).
+// Spazio dal campo `spazio` (A.126, A.167); la Taglia non si deduce dall'ingombro (A.167, 18/10).
 //
 // Scelte del blocco (oltre a quelle dei blocchi precedenti):
 //  - AR «con scudo» nel campo (Orrore in elmo 6), senza scudo nelle note; Guardiano: AR magica 0 a riposo, la carica

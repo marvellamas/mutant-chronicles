@@ -2,7 +2,7 @@
 // prima dei blocchi tematici (Aarakocra, Aboleth, Ankheg, Arpia, Basilisco, Bestia distorcente, Bulette, Chimera,
 // Cockatrice, Ettercap, Grick, Grifone, Ippogrifo, Manticora, Orsogufo). Profili prestabiliti in
 // esempi/nemici/mostri/, nel formato di data/formato_nemici.json (A.73). Valori trascritti; niente valori
-// inventati. GS/PX informativo (A.161). Spazio ai soli valori quadrati (A.126).
+// inventati. GS/PX informativo (A.161). Spazio dal campo `spazio` (A.126, A.167).
 //
 // Scelte di questo blocco (oltre a quelle dei blocchi precedenti):
 //  - le schede di questa parte hanno la colonna «Costo» (1 AzP, AC 1) e sono già nel formato dei nemici.
@@ -13,7 +13,7 @@
 //  - AR condizionale (Grick: 1, ma 4 contro colpi fisici Naturali; Ankheg: 3, ma 1 se A Terra): nel campo il
 //    primo valore della scheda; la condizione è una capacità.
 //  - ingombri non quadrati (Aboleth 2 × 3 Q, Basilisco 2 × 1 Q, Grick 1 × 2 Q): `spazio` vuoto e nota con
-//    A.167. Taglia Grande solo se il manuale la dice (Aboleth: massa pari a un veicolo) o l'ingombro contiene 2 × 2 Q.
+//    A.167. Taglia Grande solo se il manuale la dice (Aboleth: massa pari a un veicolo); mai dall'ingombro.
 //  - nuoto, scavo, arrampicata e aderenza: capacità o nota (non sono nel movimento del formato).
 //  - modulo facoltativo «tana» dell'Aboleth: capacità distinte, marcate «(modulo tana)»; GS/PX del profilo base
 //    (Eroe, 70 PX); la variante con modulo attivo (Leggenda, 100 PX) è nella nota.

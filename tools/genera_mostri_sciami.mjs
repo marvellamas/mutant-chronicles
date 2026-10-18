@@ -1,6 +1,6 @@
 // Blocco «Sciami e piccola fauna» del catalogo (cap. 8) del Manuale dei Mostri v0.23: dieci profili prestabiliti
 // in esempi/nemici/mostri/ (quattro animali e sei Sciami), nel formato di data/formato_nemici.json (A.73).
-// Valori trascritti; niente valori inventati. GS/PX informativo (A.161). Spazio ai soli valori quadrati (A.126).
+// Valori trascritti; niente valori inventati. GS/PX informativo (A.161). Spazio dal campo `spazio` (A.126, A.167).
 //
 // Scelte del blocco (oltre a quelle dei blocchi precedenti):
 //  - Sciame: un solo avversario, spazio 1 × 1 Q condivisibile (nota), portata 0 Q: il validatore ammette portate da 1 Q,

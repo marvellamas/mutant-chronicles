@@ -1,6 +1,6 @@
 // Blocco «Creature delle acque e popoli sommersi» del catalogo (cap. 8) del Manuale dei Mostri v0.23: dieci
 // profili prestabiliti in esempi/nemici/mostri/, nel formato di data/formato_nemici.json (A.73). Valori
-// trascritti; niente valori inventati. GS/PX informativo (A.161). Spazio ai soli valori quadrati (A.126).
+// trascritti; niente valori inventati. GS/PX informativo (A.161). Spazio dal campo `spazio` (A.126, A.167).
 //
 // Scelte del blocco (oltre a quelle dei blocchi precedenti):
 //  - nuoto (non è nel movimento del formato) → capacità «Nuoto» con le terne del manuale; i pesci senza moto a

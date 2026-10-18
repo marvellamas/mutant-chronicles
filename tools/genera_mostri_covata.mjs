@@ -2,10 +2,9 @@
 // Scrive esempi/nemici/mostri/*.json nel formato di data/formato_nemici.json (A.73), utilizzabili da
 // «+ Aggiungi nemico» e dalla plancia come gli altri prestabiliti.
 //
-// Valori trascritti dalle schede del manuale; niente valori inventati. Spazio sulla mappa (A.126): le caste
-// con ingombro non quadrato o maggiore di 3 × 3 Q (Corazzato 1 × 2, Regina Comandante 2 × 3, Incubatrice
-// 3 × 5, Madre 3 × 10) non entrano nei valori del campo `spazio` (1 Q, 2 × 2, 3 × 3): si lascia il campo
-// vuoto e si scrive l'ingombro del manuale nelle note, con il rimando alla domanda A.167.
+// Valori trascritti dalle schede del manuale; niente valori inventati. Spazio sulla mappa (A.126, A.167 del 18/10):
+// il campo `spazio` ha l'ingombro del manuale, anche rettangolare e oltre 3 × 3 Q (Corazzato 1 × 2, Regina
+// Comandante 2 × 3, Incubatrice 3 × 5, Madre 3 × 10).
 //
 // Uso: node tools/genera_mostri_covata.mjs
 import { writeFile } from 'node:fs/promises';
@@ -95,7 +94,7 @@ const CREATURE = [
     spazio: '1 × 2 Q',
     caratteristiche: { FOR: 8, DES: 4, COS: 8, INT: 2, SAG: 5, CAR: 1 },
     pv: 40, pm: 6, ar: { totale: 5, magica: 0 }, difese: 8, iniziativa: -4,
-    movimento: { passo: 5, corsa: 10, scatto: 15 }, // spazio 1 × 2 Q: A.167
+    movimento: { passo: 5, corsa: 10, scatto: 15 }, // spazio 1 × 2 Q
     azioni: { principali: 1, movimento: 1 },
     salvezze: { tempra: 14, riflessi: 8, volonta: 9, magia: 10 },
     attacchi: [
@@ -134,7 +133,7 @@ const CREATURE = [
     spazio: '2 × 3 Q',
     caratteristiche: { FOR: 9, DES: 6, COS: 9, INT: 6, SAG: 7, CAR: 6 },
     pv: 70, pm: 18, ar: { totale: 4, magica: 0 }, difese: 11, iniziativa: 2,
-    movimento: { passo: 6, corsa: 12, scatto: 18 }, // spazio 2 × 3 Q: A.167
+    movimento: { passo: 6, corsa: 12, scatto: 18 }, // spazio 2 × 3 Q
     azioni: { principali: 3, movimento: 1 },
     salvezze: { tempra: 14, riflessi: 10, volonta: 13, magia: 13 },
     attacchi: [
@@ -155,7 +154,7 @@ const CREATURE = [
     spazio: '3 × 5 Q',
     caratteristiche: { FOR: 8, DES: 2, COS: 10, INT: 4, SAG: 6, CAR: 3 },
     pv: 100, pm: 12, ar: { totale: 3, magica: 0 }, difese: 6, iniziativa: -4,
-    movimento: { passo: 1, corsa: 'non_consentito', scatto: 'non_consentito' }, // spazio 3 × 5 Q: A.167
+    movimento: { passo: 1, corsa: 'non_consentito', scatto: 'non_consentito' }, // spazio 3 × 5 Q
     azioni: { principali: 1, movimento: 1 },
     salvezze: { tempra: 15, riflessi: 6, volonta: 11, magia: 11 },
     attacchi: [],
@@ -172,7 +171,7 @@ const CREATURE = [
     spazio: '3 × 10 Q',
     caratteristiche: { FOR: 10, DES: 1, COS: 10, INT: 7, SAG: 8, CAR: 8 },
     pv: 150, pm: 24, ar: { totale: 4, magica: 0 }, difese: 5, iniziativa: -2,
-    movimento: { passo: 1, corsa: 'non_consentito', scatto: 'non_consentito' }, // spazio 3 × 10 Q: A.167
+    movimento: { passo: 1, corsa: 'non_consentito', scatto: 'non_consentito' }, // spazio 3 × 10 Q
     azioni: { principali: 1, movimento: 1 },
     salvezze: { tempra: 16, riflessi: 5, volonta: 15, magia: 14 },
     attacchi: [],

@@ -1760,15 +1760,19 @@ diverso dalle regole già approvate **non si è cambiato**: vedi A.167 qui sotto
 ## Domanda aperta dal lotto «Manuale dei Mostri 0.13» del 16 ottobre 2026
 
 - **A.167 — Spazio delle creature non quadrato o maggiore di 3 × 3 Q** (Mostri 0.13, cap. 7 e 8; contraddice
-  A.126). **APPROVATA da Davide il 18/10, IN IMPLEMENTAZIONE** (resta fra le risposte in implementazione del Doc):
+  A.126). **RISOLTA: approvata da Davide il 18/10, applicata il 18/10 (sagome sulla mappa; `docs/sagome-a167-2026-10-18.md`).** Risposta di Davide:
   pedine che rispettano larghezza e lunghezza della scheda (anche rettangolari e oltre 3 × 3 Q: Corazzato 1 × 2,
   Regina Comandante 2 × 3, Incubatrice 3 × 5, Madre 3 × 10), senza arrotondare al quadrato maggiore; posizionamento
   anche a 45°; ingombro, sovrapposizioni e passaggio fra gli ostacoli sulla sagoma ruotata, non sul centro. Taglia,
   spazio occupato e portata degli attacchi sono dati distinti; la Taglia deriva dalla scheda e non si assegna
-  «Grande» perché la sagoma contiene un 2 × 2. **Applicata il 18/10 la sola parte piccola:** tolta la Taglia
-  «Grande» dalle 70 creature del Manuale dei Mostri che l'avevano solo per l'ingombro (restano Aboleth,
-  Coccodrillo gigante, Drago tartaruga e le Regine della Covata, senza campo Spazio o con il manuale che la dice).
-  **Resta da fare** (lavoro successivo): sagome rettangolari, rotazione a 45° e collisioni sulla sagoma vera.
+  «Grande» perché la sagoma contiene un 2 × 2. **Applicato il 18/10:** il campo `spazio` dei
+  profili è «1 Q» o «larghezza × lunghezza Q», fino a 12 per lato (`data/formato_nemici.json`, `data/mappa.json` →
+  `token.creatura_ingombro_max`); le 17 creature che avevano l'ingombro nelle note ora lo hanno nel campo (note di
+  ripiego tolte); la Taglia «Grande» è tolta dove veniva dedotta dall'ingombro (restano Aboleth e le Regine della
+  Covata, dove la dice il manuale); la mappa disegna, muove e gira la sagoma vera (rotazione a 45° con ← →, ZoC,
+  luce, selezione, posizione iniziale e vista dei giocatori sui quadretti veri). **Non applicato:** la rotazione di
+  una pedina quadrata (4 × 4, 6 × 6: un rombo non è una sagoma della scheda) e il disegno del percorso fantasma
+  sulla sagoma (usa il rettangolo che la contiene); vedi `docs/sagome-a167-2026-10-18.md`.
   Prima (domanda originale): La A.126 (approvata il 15/10) ammette solo ingombri **quadrati**: 1 × 1 Q, 2 × 2 Q, 3 × 3 Q. Diverse
   schede del Manuale dei Mostri 0.13 danno ingombri **non quadrati o più grandi**: Covata — Corazzato 1 × 2 Q,
   Regina Comandante 2 × 3 Q, Incubatrice 3 × 5 Q, Madre 3 × 10 Q; Bestie — Lupo feroce, Leone e Iena 2 × 1 Q,
@@ -1806,6 +1810,12 @@ diverso dalle regole già approvate **non si è cambiato**: vedi A.167 qui sotto
   17 / 250, V → 19 / 300, VI → 20 / 300); (c) il correttivo per il numero di PG `max(0,5; 1 + 0,1 × (4 − n))`;
   (d) il raddoppio della sola componente voti nelle partite lunghe e il bonus eccezionale × Titolo. *Nel
   frattempo:* valgono i valori del gestore, tutti in `data/px_partita.json` e modificabili dal Direttore.
+- **A.172 — Quadretti occupati da una sagoma ruotata** (A.167, 18/10). Con la sagoma ruotata a 45° (o a un angolo
+  libero) un quadretto si considera occupato se la sagoma lo copre per **almeno metà**: la stessa regola già usata
+  per i veicoli (A.147) e per i template. Una 3 × 10 a 45° occupa così 28 Q (a 0° ne occupa 30). Va bene? Inoltre:
+  la portata degli attacchi si misura dai quadretti occupati (non dal centro), e un attacco da una sagoma lunga
+  parte dal suo quadretto più favorevole, come per le creature 2 × 2. *Nel frattempo:* si usa la regola
+  dell'«almeno metà» e la misura dai quadretti occupati, in `src/mappa/sagoma.js` e `src/mappa/forma.js`.
 - **A.171 — Portata 0 Q degli Sciami** (Manuale dei Mostri 0.23, «Sciami e piccola fauna»). Gli attacchi degli
   Sciami hanno portata «0 Q condiviso»: colpiscono solo una vittima che condivide il Q con lo Sciame. Il formato dei
   nemici (`data/formato_nemici.json`) ammette portate da 1 Q. *Nel frattempo:* `portata_q` = 1 con la nota «portata

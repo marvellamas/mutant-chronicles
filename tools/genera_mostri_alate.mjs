@@ -1,6 +1,6 @@
 // Blocco «Creature alate e piccoli predatori» del catalogo (cap. 8) del Manuale dei Mostri v0.23: dieci profili
 // prestabiliti in esempi/nemici/mostri/, nel formato di data/formato_nemici.json (A.73). Valori trascritti;
-// niente valori inventati. GS/PX informativo (A.161). Spazio ai soli valori quadrati (A.126).
+// niente valori inventati. GS/PX informativo (A.161). Spazio dal campo `spazio` (A.126, A.167).
 //
 // Scelte del blocco (oltre a quelle dei blocchi precedenti):
 //  - volo: `movimento.volo` = Passo di volo (la terna 16 / 32 / 48 del manuale è Passo / Corsa / Scatto); Corsa e

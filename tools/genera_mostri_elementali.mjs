@@ -1,7 +1,7 @@
 // Blocco «Mephit e creature elementali» del catalogo (cap. 8) del Manuale dei Mostri v0.23: dieci profili
 // prestabiliti in esempi/nemici/mostri/ (sei Mephit, Serpente di fuoco, Salamandra, Galeb Duhr, Xorn), nel formato
 // di data/formato_nemici.json (A.73). Valori trascritti; niente valori inventati. GS/PX informativo (A.161).
-// Spazio ai soli valori quadrati (A.126).
+// Spazio dal campo `spazio` (A.126, A.167).
 //
 // Scelte del blocco (oltre a quelle dei blocchi precedenti):
 //  - danno misto (Artigli gelidi: Taglio + Gelo, ecc.): la prima componente è `danno` con la sua proprietà e la

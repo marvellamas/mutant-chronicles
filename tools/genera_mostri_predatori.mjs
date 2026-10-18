@@ -1,6 +1,6 @@
 // Blocco «Predatori e grandi erbivori» del catalogo (cap. 8) del Manuale dei Mostri v0.23: dieci profili
 // prestabiliti in esempi/nemici/mostri/, nel formato di data/formato_nemici.json (A.73). Valori trascritti;
-// niente valori inventati. GS/PX informativo (A.161). Spazio ai soli valori quadrati (A.126).
+// niente valori inventati. GS/PX informativo (A.161). Spazio dal campo `spazio` (A.126, A.167).
 //
 // Scelte del blocco (oltre a quelle dei blocchi precedenti):
 //  - «Assalto» / «Impeto» (4 Q di Passo rettilineo + atterramento): una capacità per creatura con la Tempra e la
@@ -8,7 +8,7 @@
 //    di Elefante, Mammut, Alce) restano attacchi con la condizione nella nota.
 //  - Masso dello Scimmione gigante (2 AzP, due mani, 20 Q): attacco a distanza con il costo nella nota; Pietra dello
 //    Scimmione (6 Q, una mano): attacco a distanza.
-//  - Tigre 2 × 1 Q: ingombro non ammesso → `spazio` vuoto e nota con A.167, taglia normale (non contiene 2 × 2 Q).
+//  - Tigre 2 × 1 Q: nel campo `spazio` (A.167 del 18/10), taglia normale.
 //  - Arrampicata e nuoto: capacità.
 //
 // Uso: node tools/genera_mostri_predatori.mjs

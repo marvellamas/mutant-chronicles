@@ -1,6 +1,6 @@
 // Blocco «Bande e grandi avversari» del catalogo (cap. 8) del Manuale dei Mostri v0.16: dieci profili
 // prestabiliti in esempi/nemici/mostri/, nel formato di data/formato_nemici.json (A.73). Valori trascritti
-// dalle schede; niente valori inventati. GS/PX informativo (A.161). Spazio ai soli valori quadrati (A.126).
+// dalle schede; niente valori inventati. GS/PX informativo (A.161). Spazio dal campo `spazio` (A.126, A.167).
 //
 // Scelte ricorrenti sugli umanoidi con equipaggiamento (criterio delle bestie, da correggere una volta sola):
 //  - AR «X con scudo, Y senza»: `ar.totale` = valore CON scudo (il profilo inizia con lo scudo pronto); il
