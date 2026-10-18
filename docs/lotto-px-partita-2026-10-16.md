@@ -3,7 +3,7 @@
 Calcolatore e assegnazione dei PX nel Tavolo del Master, approvati da Davide il 16/10/2026 (A.161). Riferimento
 funzionale: il gestore di Davide `EROI_LEGGENDE_Gestore_PX v1.2` (scaricato da Drive in
 `docs/riferimenti/EROI_LEGGENDE_Gestore_PX_v1_2.html`), **non codice da copiare**: i fattori sono allineati ai
-manuali e alle decisioni vigenti, e quelli che non si possono confermare sono in A.168.
+manuali e alle decisioni vigenti, e quelli che non si possono confermare sono in A.170 (le fasce dei Titoli le ha corrette Davide il 18/10, A.168).
 
 Principio di CLAUDE.md rispettato: **l'app non assegna mai PX da sola.** Niente a fine scontro, niente
 sconfiggendo un nemico, niente ricalcolando. Si usa a fine partita, non durante il gioco.
@@ -52,14 +52,14 @@ incontri (30 + 30) × 1,2 = 72; premio 150 → **272**. Nadia 3/3/3 → 36 + 0 +
 Torvald a +272 e Nadia a +258 sui PG. Correggendo il voto di Torvald a 5/5/3 il suggerito sale a 276 e la
 ri-assegnazione applica **+4**, non 276.
 
-## Differenze fra il file di Davide e i manuali (A.168)
+## Differenze fra il file di Davide e i manuali (A.168, A.170)
 
 - **Dotazione contata due volte.** Il gestore moltiplica il PX base del GS per un fattore di equipaggiamento
   (Comune ×1,1 … Leggendario ×2). Il Manuale dei Mostri (§8, righe «PX per 4 PG») dice che il PX della scheda
   ha **la dotazione già compresa**, e il Direttore §9.3 vieta una seconda maggiorazione. Nell'app l'unità di PX
   di un nemico è il suo `gs_px.px` (già comprensivo): **nessun fattore di equipaggiamento**.
 - **Fonte dei fattori.** Soglie dei livelli, limiti/premi degli Atti e correttivo dei PG vengono dal gestore: il
-  Manuale del Direttore §9.3 non è fra i Doc che controlliamo, perciò **A.168** per la conferma. Tutti i valori
+  Manuale del Direttore §9.3 non è fra i Doc che controlliamo, perciò **A.170** per la conferma (A.168, 18/10: Davide ha confermato soltanto le fasce dei Titoli, Principiante 1–3 ×1, Inesperto 4–7 ×2, Esperto 8–11 ×3, Veterano 12–15 ×4, Eroe 16–19 ×5, Leggenda 20+ ×6, che sostituiscono quelle del gestore). Tutti i valori
   sono in `data/px_partita.json`, modificabili dal Direttore senza toccare il codice.
 - **Roster reale.** Il gestore contiene i nomi veri dei giocatori: non entrano nel repo. L'associazione
   giocatore–PG è un'impostazione di campagna salvata in `px/px.json` (fuori da git).

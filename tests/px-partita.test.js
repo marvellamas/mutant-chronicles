@@ -189,3 +189,51 @@ test('import dell’archivio del vecchio gestore: normalizza e NON riassegna (de
   // file non valido
   assert.match(importaArchivio(null, p).avvisi[0], /non riconosciuto/);
 });
+
+test('fasce dei Titoli di Davide (A.168, 18/10): un livello per fascia e i confini, con il moltiplicatore giusto', () => {
+  // [livello, Titolo, moltiplicatore]: un livello a metà fascia e i due confini di ogni fascia
+  const attesi = [
+    [1, 'Principiante', 1], [2, 'Principiante', 1], [3, 'Principiante', 1],
+    [4, 'Inesperto', 2], [5, 'Inesperto', 2], [7, 'Inesperto', 2],
+    [8, 'Esperto', 3], [10, 'Esperto', 3], [11, 'Esperto', 3],
+    [12, 'Veterano', 4], [14, 'Veterano', 4], [15, 'Veterano', 4],
+    [16, 'Eroe', 5], [18, 'Eroe', 5], [19, 'Eroe', 5],
+    [20, 'Leggenda', 6],
+  ];
+  for (const [liv, nome, fattore] of attesi) {
+    const t = titoloPerLivello(liv, p);
+    assert.deepEqual([t.nome, t.fattore], [nome, fattore], `livello ${liv}`);
+  }
+  // oltre il livello massimo resta Leggenda (20+)
+  assert.equal(titoloPerLivello(25, p).nome, 'Leggenda');
+  // Titolo, soglie cumulative e Grado di Sfida restano dati distinti: le soglie non sono cambiate
+  assert.equal(p.soglie_px.length, 20);
+  assert.deepEqual(p.soglie_px.slice(0, 7), [0, 50, 110, 180, 340, 520, 720]);
+  assert.deepEqual(p.titoli.map((t) => t.px), [10, 20, 30, 50, 70, 100], 'PX base del GS invariati');
+});
+
+test('PX suggeriti con le fasce nuove: un PG di livello 11 è Esperto ×3 (prima Veterano ×4); i livelli 7, 15 e 19 scendono di un Titolo', () => {
+  // livello 11 → 2220 PX; Atto IV (limite 17) per non fermarlo; partita lunga, voti 4/5/3, bonus 1, 4 presenti
+  const partita = {
+    durata: 2, atto: 'IV', premioAtto: false,
+    partecipanti: { a: { presente: true, partecipazione: 4, interpretazione: 5, contributo: 3, eccezionale: 1 }, b: { presente: true }, c: { presente: true }, d: { presente: true } },
+    incontri: [],
+  };
+  const c = componentiGiocatore(partita, 'a', 2220, p);
+  assert.equal(c.livello, 11);
+  assert.deepEqual([c.titolo, c.fattore], ['Esperto', 3]);
+  assert.equal(c.pxVoti, 12 * 3 * 2); // 72 (prima 12 × 4 × 2 = 96)
+  assert.equal(c.pxBonus, 1 * 3); // 3 (prima 4)
+  assert.equal(c.totaleSuggerito, 75); // prima 100
+  // 7 → Inesperto ×2 (prima Esperto ×3); 15 → Veterano ×4 (prima Eroe ×5); 19 → Eroe ×5 (prima Leggenda ×6)
+  const px = (liv) => p.soglie_px[liv - 1];
+  const atto6 = { ...partita, atto: 'VI' }; // limite 20: i livelli alti non vengono fermati dall’Atto
+  const verifica = (liv, titolo, fattore) => {
+    const g = componentiGiocatore(atto6, 'a', px(liv), p);
+    assert.deepEqual([g.livello, g.titolo, g.fattore], [liv, titolo, fattore], `livello ${liv}`);
+  };
+  verifica(7, 'Inesperto', 2);
+  verifica(15, 'Veterano', 4);
+  verifica(19, 'Eroe', 5);
+  verifica(20, 'Leggenda', 6);
+});

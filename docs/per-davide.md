@@ -1,6 +1,6 @@
 # **Per Davide — domande aperte ed errata dei manuali**
 
-*Aggiornato al 16 ottobre 2026.*
+*Aggiornato al 18 ottobre 2026.*
 
 **Istruzioni per Davide (e per l’AI che usi per rispondere)**
 
@@ -26,15 +26,19 @@ Nessuna, al momento. Grazie per l’aggiornamento cumulativo dell’8 ottobre.
 
 ## **2. Domande aperte (l’app ha già un’ipotesi ragionevole)**
 
+### **Bestiario — Abilità**
+
+**A.169 — Abilità del Manuale dei Mostri che non esistono nel catalogo (Mostri 0.18, cap. 8).** Alcune schede elencano Abilità con nomi che le 24 del Giocatore non hanno: «Tiro naturale» (Avvizzito spinoso 10, Treant 13), «Attacco a distanza» (Elementale dell’Acqua 14, dell’Aria 16), «Prove di FOR» (Elementale della Terra 15). «Diplomazia» (Driade 13) nel Giocatore è «Oratoria per diplomazia e seduzione». Vanno lette come Abilità di catalogo (per esempio Armi da lancio per il tiro naturale e per gli attacchi a distanza, Atletica per le Prove di FOR) oppure come valori propri della scheda? E le abbreviazioni «Mischia», «Lancio» e «Guerra» sono Armi da mischia, Armi da lancio e Armi da guerra? *Nel frattempo:* Diplomazia diventa Oratoria e le tre abbreviazioni i nomi di catalogo; «Tiro naturale», «Attacco a distanza» e «Prove di FOR» restano nella nota della creatura, senza inventare Abilità, e il VA degli attacchi è già in tabella.
+
 ### **Punti Esperienza**
 
-**A.168 — Fattori del calcolatore «PX della partita», da confermare sul Manuale del Direttore §9.3 (collegata alla A.161).** Il §9.3 non è fra i Doc che riceviamo, quindi i fattori del calcolatore vengono dal tuo gestore «EROI_LEGGENDE_Gestore_PX v1.2». Da confermare o correggere: (a) le soglie cumulative dei livelli 1–20 (0, 50, 110, 180, 340, 520, 720, 1050, 1410, 1800, 2220, 2820, 3460, 4140, 4860, 5810, 6810, 7860, 8960, 10340); (b) limiti e premi degli Atti (I → 8 e 150, II → 12 e 200, III → 15 e 250, IV → 17 e 250, V → 19 e 300, VI → 20 e 300); (c) il correttivo per il numero di PG, max(0,5; 1 + 0,1 × (4 − n)); (d) che nella partita lunga raddoppino solo i voti, e il bonus eccezionale si moltiplichi per il Titolo. *Nel frattempo:* valgono i valori del gestore, tutti modificabili dal Direttore nelle impostazioni.
+**A.170 — Il resto dei fattori dei PX (seguito della A.168).** Grazie per le fasce dei Titoli del 18/10: le applichiamo. Restano da confermare: (a) le soglie cumulative dei livelli 1–20 (0, 50, 110, 180, 340, 520, 720, 1050, 1410, 1800, 2220, 2820, 3460, 4140, 4860, 5810, 6810, 7860, 8960, 10340); (b) limiti e premi degli Atti (I → 8 e 150, II → 12 e 200, III → 15 e 250, IV → 17 e 250, V → 19 e 300, VI → 20 e 300); (c) il correttivo per il numero di PG, max(0,5; 1 + 0,1 × (4 − n)); (d) che nella partita lunga raddoppino solo i voti, e il bonus eccezionale si moltiplichi per il Titolo. *Nel frattempo:* valgono i valori del tuo gestore, tutti modificabili dal Direttore nelle impostazioni.
 
 Una nota: nel gestore il PX del nemico viene moltiplicato per un fattore di equipaggiamento (da ×1,1 a ×2). Il Manuale dei Mostri dice però che il PX della scheda comprende già la dotazione, e il §9.3 vieta di contarla due volte: nell’app usiamo il PX della scheda, senza quel fattore. Se intendevi diversamente, dimmelo.
 
 ### **Bestiario**
 
-**A.167 — Spazio delle creature non quadrato o maggiore di 3 × 3 Q (Manuale dei Mostri 0.13, cap. 7 e 8; contraddice la A.126).** La A.126 ammette solo ingombri quadrati (1 × 1, 2 × 2, 3 × 3 Q). Diverse schede della 0.13 ne danno altri: Covata — Corazzato 1 × 2, Regina Comandante 2 × 3, Incubatrice 3 × 5, Madre 3 × 10 Q; bestie — Lupo feroce, Leone e Iena 2 × 1 Q, Coccodrillo 3 × 2 Q; nel catalogo anche 2 × 3, 3 × 2 e 4 × 4 Q. Al tavolo vuoi pedine quadrate (arrotondate al lato maggiore) oppure pedine rettangolari da gestire sulla mappa? *Nel frattempo:* il campo Spazio resta ai soli valori quadrati; gli ingombri non ammessi sono nelle note della creatura, con taglia Grande e il rimando a questa domanda.
+**A.167 — Spazio delle creature non quadrato o maggiore di 3 × 3 Q (Manuale dei Mostri 0.13, cap. 7 e 8; contraddice la A.126).** La A.126 ammette solo ingombri quadrati (1 × 1, 2 × 2, 3 × 3 Q). Diverse schede della 0.13 ne danno altri: Covata — Corazzato 1 × 2, Regina Comandante 2 × 3, Incubatrice 3 × 5, Madre 3 × 10 Q; bestie — Lupo feroce, Leone e Iena 2 × 1 Q, Coccodrillo 3 × 2 Q; nel catalogo anche 2 × 3, 3 × 2 e 4 × 4 Q. Al tavolo vuoi pedine quadrate (arrotondate al lato maggiore) oppure pedine rettangolari da gestire sulla mappa? *Nel frattempo:* il campo Spazio resta ai soli valori quadrati; gli ingombri non ammessi sono nelle note della creatura, con il rimando a questa domanda. La taglia resta quella del formato dei nemici: «Grande» solo se l’ingombro contiene 2 × 2 Q, o se lo dice il manuale.
 
 ---
 
@@ -440,6 +444,8 @@ Voci con risposta recepita e funzione implementata nell’app (o chiuse). La dat
 
 •             **A.161** — PX della partita: tab «PX della partita» nel Tavolo del Direttore, solo sul PC del master. Voti, bonus, incontri (principale al 100%, gli altri al 50%, con il correttivo per il numero di PG) e premio di fine Atto; componenti separate, totale suggerito e totale finale modificabile; «Assegna PX della partita» aggiorna i PG presenti e scrive la Modifica master. L’app non assegna mai da sola: salvare o ricalcolare non assegna, e correggere una partita applica solo la differenza. Ci sono archivio delle partite, riepilogo con esportazione CSV e impostazioni di campagna (Atto, PX iniziali, abbinamenti giocatore–PG). I fattori stanno in un file modificabile. *Approvata e implementata il 16/10.* Vedi la A.168.
 
+•             **A.168 — Fasce dei Titoli per i PX.** Ricevuta (18/10): Principiante 1–3 ×1, Inesperto 4–7 ×2, Esperto 8–11 ×3, Veterano 12–15 ×4, Eroe 16–19 ×5, Leggenda 20+ ×6. In implementazione nel calcolatore dei PX; il resto dei fattori resta da confermare (A.170).
+
 •             **A.160** — Avversari costruiti come PG: 7 punti Abilità liberi alla creazione e a ogni Grado; il «5» del §5.2 era un refuso, corretto dalla 0.4 in poi. *Era già così nell’app; verificata il 16/10.*
 
 •             **A.162** — Integrità degli oggetti in tre stati: ordinaria (PS Integrità e PI), **Indistruttibile** (dicitura visibile, il danno non toglie PI e non rompe) e «da definire» (dato mancante, segnalato). Scrigno del Primo Giuramento indistruttibile, con la regola che il danneggiamento non lo apre; non si estende a Sigilli, contenuto o altri Artefatti. *Approvata e implementata il 16/10.*
@@ -450,7 +456,7 @@ Voci con risposta recepita e funzione implementata nell’app (o chiuse). La dat
 
 •             **A.166** — CyberArma: Abilità sempre Armi da mischia; la manifestazione è un campo a parte e da essa dipendono famiglia, Specializzazione e Manovre (lama lunga → Spade, frusta → Armi flessibili, ascia → Asce, lancia → Armi inastate). Il Custode sceglie la forma; gli altri usano quella del progetto (lama lunga), modificabile solo come modifica del manufatto. Una sola Specializzazione. *Approvata e implementata il 16/10.*
 
-•             **Manuale dei Mostri 0.16** — le regole comuni (cap. 4) e le «Regole operative del catalogo» (cap. 8) coincidono con le decisioni già approvate (Morente A.159 e A.164, spazio A.126 e A.133, Abilità non riportate A.116, 7 punti A.160, dato assente ≠ 0): nessuna automazione nuova. Le schede mostrano GS e PX del manuale come dato informativo (A.161). Nel bestiario, pronti da usare: la Covata (nove caste) e il Lorath del cap. 7, e dal cap. 8 i blocchi «Bestie e predatori», «Bande e grandi avversari», «Non morti», «Costrutti e creature elementali» e «Giganti e abitanti delle montagne», 50 creature in tutto, con Spazio, portata per attacco e capacità con i parametri del manuale. *Implementato il 16/10.* Restano gli altri blocchi del capitolo 8 (circa 95 creature: la prima parte senza nome, Creature del sottosuolo, Melme funghi e imitatori, Vegetali, Grandi rettili, Creature delle acque, Predatori e grandi erbivori, Creature alate, Sciami), nei prossimi lotti. Vedi la A.167.
+•             **Manuale dei Mostri 0.18** — le regole comuni (cap. 4) e le «Regole operative del catalogo» (cap. 8) coincidono con le decisioni già approvate (Morente A.159 e A.164, spazio A.126 e A.133, Abilità non riportate A.116, 7 punti A.160, dato assente ≠ 0): nessuna automazione nuova. Le schede mostrano GS e PX del manuale come dato informativo (A.161). Nel bestiario, pronti da usare: la Covata (nove caste) e il Lorath del cap. 7, e dal cap. 8 i blocchi «Bestie e predatori», «Bande e grandi avversari», «Non morti», «Costrutti e creature elementali», «Giganti e abitanti delle montagne», «Creature del sottosuolo», le prime quindici schede (Aarakocra … Orsogufo), «Melme, funghi e imitatori» e «Vegetali e custodi delle foreste»: 105 profili in tutto, con Spazio, portata per attacco e capacità con i parametri del manuale. Le melme e i funghi senza mente, con «Volontà —», hanno la Salvezza assente in modo esplicito, mai uno 0. *Implementato il 16–17/10.* Restano 70 creature del capitolo 8 (Grandi rettili, Creature delle acque, Predatori e grandi erbivori, Creature alate, Sciami e piccola fauna, Cavalcature e animali da lavoro, Mephit e creature elementali), nei prossimi lotti. Vedi A.167 e A.169.
 
 •             **A.165** — A.109 nel Doc E\&L: rettifica editoriale, la A.109 è risolta e le note di sospensione sono state aggiornate; l’app mantiene i 32 gradini dell’08/10. *Chiusa il 16/10.*
 
@@ -1595,4 +1601,21 @@ Rettifica editoriale registrata il 16 ottobre 2026 sulla base delle risposte gi�
  La A.109 è risolta: la regola comune e tutti i punti 1/32–32/32 sono già presenti sia in questo documento sia in «E\&L – Risposte e correzioni approvate». Il confronto dei testi conferma che le regole coincidono.  
  Le precedenti note di sospensione per mancanza dell’elenco sono state aggiornate in entrambi i documenti. Non occorre un nuovo elenco o allegato e non vengono riaperti o modificati i gradini già approvati.  
  Indicazione per lo sviluppo: mantenere le 32 risposte dell’8 ottobre 2026. La presente rettifica riguarda lo stato editoriale della A.109; non attesta una verifica o una modifica del codice dell’app.
+
+#### **A.168 — Correzione delle fasce dei Titoli e dei moltiplicatori PX**
+
+Indicazione esplicita di Davide, registrata il 18 ottobre 2026. Per il Titolo del personaggio si applicano le seguenti fasce di livello e i relativi moltiplicatori.
+
+| Titolo | Livelli | Moltiplicatore |
+| :---- | :---- | :---- |
+| Principiante | 1–3 | ×1 |
+| Inesperto | 4–7 | ×2 |
+| Esperto | 8–11 | ×3 |
+| Veterano | 12–15 | ×4 |
+| Eroe | 16–19 | ×5 |
+| Leggenda | 20+ | ×6 |
+
+Applicazione nel calcolatore: usare queste fasce per ricavare il moltiplicatore del Titolo nelle componenti dei PX che lo prevedono, in raccordo alla A.161. La tabella sostituisce le fasce diverse riportate nella precedente proposta per la A.168 e nel gestore PX.  
+ Ambito: Titolo del personaggio, soglie cumulative di PX e Grado di Sfida dell’avversario sono dati distinti. Questa precisazione corregge soltanto le fasce dei Titoli e conferma i moltiplicatori indicati.  
+ Stato: correzione registrata per il recepimento nel calcolatore. Le altre parti delle proposte A.167 e A.168 restano da confermare.
 
