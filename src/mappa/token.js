@@ -24,8 +24,8 @@ export const spazioDi = (scheda) => (typeof scheda?.spazio === 'string' && sched
  * Taglia (token.ingombro_per_taglia), come prima: i nemici di sempre non cambiano. Il master può sempre cambiarlo sul
  * token.
  * Ripiego (18/10, finché la mappa non disegna le sagome vere): per uno spazio che non è un quadrato ammesso (6 × 6,
- * 2 × 1, 3 × 10…) il quadrato ammesso più grande che non supera l'ingombro dichiarato — un mostro enorme che occupa
- * un quadretto è peggio di uno un po' troppo piccolo.
+ * 2 × 1, 3 × 10…) il quadrato ammesso più grande che non supera il lato maggiore dell'ingombro dichiarato (Roc 6 × 6 → 3 × 3,
+ * Worg 2 × 1 → 2 × 2) — un mostro enorme che occupa un quadretto è peggio di uno un po' troppo grande.
  * @param scheda il profilo del nemico, oppure la sola Taglia (come prima)
  */
 export function ingombroDaTaglia(scheda, dati) {
@@ -33,8 +33,8 @@ export function ingombroDaTaglia(scheda, dati) {
   const profilo = scheda !== null && typeof scheda === 'object' ? scheda : { taglia: scheda };
   const dim = parseSpazio(profilo?.spazio);
   if (dim) {
-    const minimo = Math.min(...dim);
-    const ammessi = (T.ingombri_ammessi ?? [1]).filter((n) => n <= minimo);
+    const massimo = Math.max(...dim);
+    const ammessi = (T.ingombri_ammessi ?? [1]).filter((n) => n <= massimo);
     return ammessi.length ? Math.max(...ammessi) : 1;
   }
   return T.ingombro_per_taglia?.[profilo?.taglia] ?? 1;

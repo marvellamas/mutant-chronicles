@@ -219,16 +219,16 @@ test('A.167: parseSpazio legge «1 Q» e «larghezza × lunghezza Q»; altro è 
   assert.equal(parseSpazio(undefined), null);
 });
 
-test('A.167, ripiego: il quadrato ammesso più grande che non supera l’ingombro dichiarato (mai 1 × 1 per un mostro enorme)', () => {
+test('A.167, ripiego: il quadrato ammesso più grande che non supera il lato maggiore dell’ingombro (mai 1 × 1 per un mostro enorme)', () => {
   const lato = (spazio) => ingombroDaTaglia({ spazio }, dati);
   assert.equal(lato('6 × 6 Q'), 3, 'Roc');
   assert.equal(lato('4 × 4 Q'), 3, 'Drago tartaruga');
   assert.equal(lato('3 × 10 Q'), 3, 'Madre');
   assert.equal(lato('3 × 5 Q'), 3, 'Incubatrice');
-  assert.equal(lato('2 × 3 Q'), 2, 'Regina Comandante');
-  assert.equal(lato('3 × 2 Q'), 2, 'Coccodrillo gigante');
-  assert.equal(lato('2 × 1 Q'), 1, 'Worg');
-  assert.equal(lato('1 × 2 Q'), 1, 'Corazzato');
+  assert.equal(lato('2 × 3 Q'), 3, 'Regina Comandante');
+  assert.equal(lato('3 × 2 Q'), 3, 'Coccodrillo gigante');
+  assert.equal(lato('2 × 1 Q'), 2, 'Worg');
+  assert.equal(lato('1 × 2 Q'), 2, 'Corazzato');
 });
 
 test('A.167: il campo spazio dei nemici ammette i rettangoli e il validatore ne controlla il massimo', async () => {

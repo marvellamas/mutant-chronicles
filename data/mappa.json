@@ -149,7 +149,7 @@
     "ritratto_verticale": 0.2,
     "_nota_ritratto": "07/10: il ritratto riempie il cerchio dentro il bordo; delle foto più alte che larghe si tiene il quadrato a questa altezza (0 = in cima, 0,5 = al centro), dove di solito sta il viso.",
     "creatura_ingombro_max": 12,
-    "_nota_creature": "A.126 e A.167 (risposte approvate il 15/10 e il 18/10/2026): il token di una creatura ha l’ingombro del campo «spazio» del profilo (data/formato_nemici.json → spazio: «1 Q» o «larghezza × lunghezza Q»), anche rettangolare e oltre 3 × 3, al massimo creatura_ingombro_max per lato; non si deduce dalla Taglia. Un profilo senza il campo tiene il lato della Taglia (ingombro_per_taglia), come prima; il master può sempre cambiarlo sul token. Ripiego di prima delle sagome: il quadrato ammesso più grande che non supera l’ingombro dichiarato."
+    "_nota_creature": "A.126 e A.167 (risposte approvate il 15/10 e il 18/10/2026): il token di una creatura ha l’ingombro del campo «spazio» del profilo (data/formato_nemici.json → spazio: «1 Q» o «larghezza × lunghezza Q»), anche rettangolare e oltre 3 × 3, al massimo creatura_ingombro_max per lato; non si deduce dalla Taglia. Un profilo senza il campo tiene il lato della Taglia (ingombro_per_taglia), come prima; il master può sempre cambiarlo sul token. Ripiego di prima delle sagome: il quadrato ammesso più grande che non supera il lato maggiore dell’ingombro dichiarato."
   },
   "movimento": {
     "_nota": "Parametri dell'area raggiungibile (§8 della specifica, lotto 5), confermati dalle risposte di Davide del 06/10/2026 (A.124, A.127, A.128, A.129; decisioni 129, 131–133 di docs/risposte-master.md). Costi in Q.",
