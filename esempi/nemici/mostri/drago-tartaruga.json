@@ -1,0 +1,132 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "drago-tartaruga",
+  "nome": "Drago tartaruga",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Grandi rettili e predatori mostruosi",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 5,
+    "COS": 10,
+    "INT": 5,
+    "SAG": 6,
+    "CAR": 6
+  },
+  "pv": 110,
+  "pm": 16,
+  "ar": {
+    "totale": 6,
+    "magica": 0
+  },
+  "difese": 8,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "taglia": "grande",
+  "gs_px": {
+    "gs": "Leggenda",
+    "px": 100,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 16,
+    "riflessi": 9,
+    "volonta": 12,
+    "magia": 13
+  },
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 17,
+      "danno": "2d8+3",
+      "natura": "Naturale",
+      "portata_q": 3,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    },
+    {
+      "nome": "Artiglio",
+      "tipo": "ravvicinato",
+      "va": 17,
+      "danno": "1d8+3",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ]
+    },
+    {
+      "nome": "Coda",
+      "tipo": "ravvicinato",
+      "va": 17,
+      "danno": "2d8+3",
+      "natura": "Naturale",
+      "portata_q": 3,
+      "ac": 1,
+      "note": "Costa 2 AzP e sostituisce i due Artigli (può accompagnare il Morso). Possibile spinta: vedi «Coda»."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 17
+    },
+    {
+      "nome": "Atletica",
+      "va": 17
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 4
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e anatomia",
+      "effetto": "Natura Comune, biologicamente vivente, con una mente e PM personali (a 0 PM Svenuto); bassa INT, grande massa e parentela draconica non danno immunità mentali o alla Corruzione. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente. Nei quadrupedi Testa = capo e collo, Torace = corpo, Braccia = arti anteriori, Gambe = arti posteriori (la coda è un’appendice locomotrice delle Gambe). Nessuna Parata naturale; per una Menomazione si identifica la funzione coinvolta."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 24 Q nel buio naturale, senza colori; non attraversa ostacoli né oscurità soprannaturale."
+    },
+    {
+      "nome": "Metabolismo e corazza",
+      "effetto": "Respira aria e acqua. Nuoto 8 / 16 / 24 Q. Dimezza i danni da Fuoco di qualunque Natura prima dell’AR (non è immune a ogni calore; non vale per Ghiaccio, Fulmine o acido). Il carapace è AR biologica complessiva, senza PI separati e senza Parata naturale. Torace comprende il carapace."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Un Morso e fino a due Artigli per Round, 1 AzP ciascuno. La Coda costa 2 AzP e sostituisce i due Artigli (può accompagnare il Morso). Il Soffio costa 2 AzP, lascia disponibile solo un eventuale Morso e non si combina con Artigli o Coda. L’Opportunità ordinaria usa il Morso."
+    },
+    {
+      "nome": "Coda",
+      "effetto": "Un unico attacco, AC 1. Dopo almeno 1 danno finale contro una creatura ≤ 2 × 2 Q, Tempra −2: fallimento → spinta fino a 2 Q direttamente lontano dal corpo e A Terra; successo evita entrambi. Il percorso si ferma davanti ai solidi, senza danno d’impatto automatico."
+    },
+    {
+      "nome": "Soffio di vapore",
+      "effetto": "2 AzP, nessun PM: cono lungo 12 Q dalle fauci su percorsi liberi (aria o acqua, non attraverso pareti o scafi integri). Ogni creatura risolve Elusione con Riflessi −2: successo dimezza per eccesso 5d6 Naturale da Fuoco prima di resistenze e AR, fallimento (o Elusione impossibile) danno completo. Nessun tiro per colpire, Parata o Schivata, né Magistrale. L’immersione non dà riduzioni speciali. Niente nube persistente, Accecato o Incendiato automatico. Dopo un soffio nel Round R il successivo non prima di R + 3.",
+      "azioni": {
+        "principali": 2
+      }
+    },
+    {
+      "nome": "Imbarcazioni",
+      "effetto": "Artigli, Morso e Coda possono colpire una parte di scafo raggiungibile, con profilo, protezioni, PS Integrità e PI della struttura (i PV della creatura non si convertono in PI di una nave). La Coda non sposta né capovolge un veicolo senza una procedura del mezzo; in assenza di un profilo lo definisce il Direttore."
+    }
+  ],
+  "note": "Spazio sulla mappa 4 × 4 Q (dal manuale): ingombro non ammesso dal campo (1 Q, 2 × 2, 3 × 3), pedine quadrate nell’app (A.167). Furtività 10 immerso e immobile su un fondale adatto. Parla due lingue assegnate all’ambiente. Può intimidire, chiedere un’offerta o scacciare una nave; un accordo risolve l’incontro. Condotta: sotto 27 PV o a Ferita Seria cerca profondità o un accordo. Fonte: Dragon Turtle, p. 119."
+}

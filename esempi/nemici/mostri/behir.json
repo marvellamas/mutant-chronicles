@@ -1,0 +1,128 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "behir",
+  "nome": "Behir",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Grandi rettili e predatori mostruosi",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 8,
+    "COS": 9,
+    "INT": 4,
+    "SAG": 7,
+    "CAR": 6
+  },
+  "pv": 88,
+  "pm": 12,
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 2,
+  "movimento": {
+    "passo": 10,
+    "corsa": 20,
+    "scatto": 30
+  },
+  "taglia": "grande",
+  "spazio": "3 × 3 Q",
+  "gs_px": {
+    "gs": "Leggenda",
+    "px": 100,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 12,
+    "volonta": 10,
+    "magia": 12
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "2d6+3",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    },
+    {
+      "nome": "Costrizione",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "1d8+3",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "note": "Poi possibile presa: vedi «Spire»."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 16
+    },
+    {
+      "nome": "Atletica",
+      "va": 15
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e anatomia",
+      "effetto": "Natura Comune, biologicamente vivente, con una mente e PM personali (a 0 PM Svenuto); bassa INT, grande massa e parentela draconica non danno immunità mentali o alla Corruzione. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente. Nei quadrupedi Testa = capo e collo, Torace = corpo, Braccia = arti anteriori, Gambe = arti posteriori (la coda è un’appendice locomotrice delle Gambe). Nessuna Parata naturale; per una Menomazione si identifica la funzione coinvolta."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 18 Q nel buio naturale, senza colori; non attraversa ostacoli né oscurità soprannaturale."
+    },
+    {
+      "nome": "Sensi e protezione",
+      "effetto": "Immune ai danni da Fulmine di qualunque Natura (non li assorbe per recuperare PV; nessun’altra resistenza elementale). Comprende e parla una lingua assegnata alla sua origine. Arrampicata 8 / 16 / 24 Q su pareti con appigli, non aderenza a soffitti lisci. Testa = fauci, Torace = massa e stomaco, Braccia = zampe anteriori, Gambe = posteriori e coda."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Al massimo un Morso e, in aggiunta, una Costrizione oppure Stringere per Round, 1 AzP ciascuno. Il Soffio costa entrambe le AzP e sostituisce quella sequenza. L’Opportunità ordinaria usa solo il Morso. Il Morso per inghiottire usa la stessa AzP."
+    },
+    {
+      "nome": "Spire",
+      "effetto": "Dopo almeno 1 danno finale di Costrizione contro una creatura ≤ 2 × 2 Q, Riflessi senza modificatore: fallimento → Immobilizzato (mani non bloccate). Una sola vittima esterna; mantenerla è gratuito, ma non si sposta finché la trattiene (può muoversi se è stata inghiottita). Sciogliere: la vittima o un alleato adiacente spende 1 AzP, Corpo a corpo o Atletica contro Corpo a corpo 16 (−4 a chi è Immobilizzato; il pareggio conserva). Rilascio gratuito; perdita di coscienza, morte o Menomazione della costrizione la liberano (0 PV no)."
+    },
+    {
+      "nome": "Stringere",
+      "effetto": "1 AzP, VA 16, sulla vittima già presa: Corpo a corpo 16 contrapposto a Corpo a corpo o Atletica; successo 1d8+3 Naturale da Contusione con AR ordinaria, fallimento o pareggio nessun danno. Sostituisce la Costrizione del Round.",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Soffio elettrico",
+      "effetto": "2 AzP, nessun PM: linea lunga 4 Q e larga 1 Q dalle fauci su un percorso libero. Ogni creatura risolve Elusione con Riflessi senza modificatore: successo dimezza per eccesso 4d6 Naturale da Fulmine prima dell’AR, fallimento (o Elusione impossibile) danno completo. Nessun tiro per colpire né altra Difesa. Dopo l’uso nel Round R non può soffiare prima di R + 3 (non si azzera con 0 PV, cure o cambio di obiettivo). Non aggiunge Stordito o Paralizzato; non colpisce la vittima nel proprio stomaco.",
+      "azioni": {
+        "principali": 2
+      }
+    },
+    {
+      "nome": "Inghiottire",
+      "effetto": "Solo con un Morso contro la propria vittima già afferrata nelle spire, di spazio ≤ 1 × 1 Q: dopo almeno 1 danno finale la vittima è inghiottita e la presa esterna termina; non può trattenere o inghiottire altri finché ha quella nello stomaco. Dentro è Immobilizzata e Accecata verso l’esterno (mani non bloccate), segue il Behir, e se non ha respirazione autonoma inizia il soffocamento del §5.23. La massa dà copertura totale; la vittima attacca dall’interno con −4 e il Behir non può Schivare quel colpo. Digestione: 1 AzP, una volta per Round, 1d6+2 Naturale da acido (AR ordinaria; niente Corrosivo). Uscire: 1 AzP, Corpo a corpo o Atletica contro Atletica 15 (−4 di Immobilizzato): successo la espelle nel più vicino spazio libero adiacente alle fauci; un alleato presso le fauci può aiutarla con un attrezzo. Rigurgito: con almeno 10 danni finali dall’interno nello stesso Round, a fine dell’Iniziativa della vittima il Behir fa Tempra senza modificatore: fallimento la espelle A Terra entro 2 Q dalle fauci (una verifica per Round). Rilascio volontario: 1 AzP. Perdita di coscienza o morte fanno cessare la compressione."
+    }
+  ],
+  "note": "Cerca prede isolate e accessi difficili, ma può comunicare o valutare un’offerta; non eredita inimicizie cosmologiche della fonte. Condotta: sotto 22 PV o a Ferita Seria tenta di ritirarsi. Fonte: Behir, p. 25."
+}

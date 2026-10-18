@@ -1,0 +1,92 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "anchilosauro",
+  "nome": "Anchilosauro",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Grandi rettili e predatori mostruosi",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 5,
+    "COS": 7,
+    "INT": 1,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "pv": 46,
+  "pm": 5,
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 8,
+  "iniziativa": -1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "taglia": "grande",
+  "spazio": "3 × 3 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 8,
+    "volonta": 8,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Coda a mazza",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Contundente"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 5
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e anatomia",
+      "effetto": "Natura Comune, biologicamente vivente, con una mente e PM personali (a 0 PM Svenuto); bassa INT, grande massa e parentela draconica non danno immunità mentali o alla Corruzione. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente. Nei quadrupedi Testa = capo e collo, Torace = corpo, Braccia = arti anteriori, Gambe = arti posteriori (la coda è un’appendice locomotrice delle Gambe). Nessuna Parata naturale; per una Menomazione si identifica la funzione coinvolta."
+    },
+    {
+      "nome": "Impatto",
+      "effetto": "Dopo almeno 1 danno finale della Coda contro una creatura ≤ 2 × 2 Q, Tempra senza modificatore: fallimento → A Terra. Non spinge il bersaglio né applica Stordito. Un attacco risolve una sola vittima, senza spazzare tutta la portata."
+    },
+    {
+      "nome": "Corazza",
+      "effetto": "L’AR è biologica e complessiva (nessuna piastra con PI separati). Non consente di parare con il dorso e non dà immunità a proiettili, Fuoco, Ghiaccio o effetti mentali."
+    }
+  ],
+  "note": "Vista e udito ordinari. Una coda non utilizzabile impedisce l’attacco. Non comprende linguaggi. Condotta: difende il proprio spazio e i piccoli; non è un predatore e può smettere quando gli aggressori si allontanano; sotto 11 PV o a Ferita Seria raggiunge il gruppo o una zona protetta. Fonte: Ankylosaurus, p. 79."
+}

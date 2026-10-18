@@ -1,0 +1,88 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "pteranodonte",
+  "nome": "Pteranodonte",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Grandi rettili e predatori mostruosi",
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 7,
+    "COS": 5,
+    "INT": 1,
+    "SAG": 4,
+    "CAR": 3
+  },
+  "pv": 16,
+  "pm": 4,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 2,
+    "corsa": 4,
+    "scatto": 6,
+    "volo": 12
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 11,
+    "volonta": 7,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Becco",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 9
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e anatomia",
+      "effetto": "Natura Comune, biologicamente vivente, con una mente e PM personali (a 0 PM Svenuto); bassa INT, grande massa e parentela draconica non danno immunità mentali o alla Corruzione. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente. Nei quadrupedi Testa = capo e collo, Torace = corpo, Braccia = arti anteriori, Gambe = arti posteriori (la coda è un’appendice locomotrice delle Gambe). Nessuna Parata naturale; per una Menomazione si identifica la funzione coinvolta."
+    },
+    {
+      "nome": "Passaggio in volo",
+      "effetto": "Non provoca Attacchi di Opportunità per il solo allontanamento dalla portata di un avversario mentre vola; le altre occasioni seguono le regole ordinarie. Non attraversa corpi né scioglie prese. Per colpire e poi allontanarsi nella stessa Iniziativa serve il movimento necessario (budget ordinario); non ripristina l’AzM, non moltiplica gli attacchi, la picchiata non aggiunge danni. Ali reali: servono spazio e non resta sospeso come una creatura fluttuante; impedimenti o perdita di coscienza possono causare caduta."
+    }
+  ],
+  "note": "Vista e udito ordinari. Braccia = ali; Gambe = arti posteriori; un’ala menomata può impedire il volo. Non ha una presa per sollevare una creatura colpita. Non comprende linguaggi. Condotta: piccoli animali e cibo esposto; evita un gruppo che reagisce; sotto 4 PV o a Ferita Profonda prende distanza. Fonte: Pteranodon, p. 80."
+}

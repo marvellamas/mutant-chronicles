@@ -1,0 +1,96 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "plesiosauro",
+  "nome": "Plesiosauro",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Grandi rettili e predatori mostruosi",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 7,
+    "COS": 7,
+    "INT": 1,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "pv": 40,
+  "pm": 5,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 11,
+    "volonta": 8,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e anatomia",
+      "effetto": "Natura Comune, biologicamente vivente, con una mente e PM personali (a 0 PM Svenuto); bassa INT, grande massa e parentela draconica non danno immunità mentali o alla Corruzione. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente. Nei quadrupedi Testa = capo e collo, Torace = corpo, Braccia = arti anteriori, Gambe = arti posteriori (la coda è un’appendice locomotrice delle Gambe). Nessuna Parata naturale; per una Menomazione si identifica la funzione coinvolta."
+    },
+    {
+      "nome": "Nuoto",
+      "effetto": "Nuoto 8 / 16 / 24 Q; a terra 4/8/12 Q. Respira aria."
+    },
+    {
+      "nome": "Fiato prolungato",
+      "effetto": "Può trattenere il respiro fino a 1 ora (eccezione alla riserva di COS Round; non è respirare sott’acqua). Consumata l’ora valgono il §5.23. Un Round completo di respirazione normale ripristina la riserva."
+    },
+    {
+      "nome": "Collo e bersagli",
+      "effetto": "La portata (2 Q) consente di mordere una creatura in superficie o lungo una riva accessibile, non di attraversare pareti o barriere. Il Morso non afferra, trascina o inghiotte. Un bersaglio che non riesce a raggiungere concretamente resta fuori."
+    }
+  ],
+  "note": "Vista e udito ordinari, senza percezione attraverso l’acqua torbida. Furtività 13 in acqua, con una possibilità reale di occultarsi. Braccia = pinne anteriori, Gambe = posteriori (coda come appendice). Condotta: cerca nutrimento e può attaccare da un nascondiglio immerso; sotto 10 PV o a Ferita Profonda si allontana verso acque libere. Fonte: Plesiosaurus, p. 80."
+}

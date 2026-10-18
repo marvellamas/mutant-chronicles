@@ -4,11 +4,11 @@
 
 ## *Bestiario e avversari per il Direttore*
 
-VERSIONE 0.18  •  COVATA E CATALOGO DEL BESTIARIO  •  OTTOBRE 2026
+VERSIONE 0.23  •  COVATA E CATALOGO DEL BESTIARIO  •  OTTOBRE 2026
 
 Il Manuale dei Mostri raccoglie creature, avversari e strumenti per costruire gli incontri di Simply RPG. Ogni scheda deve permettere al Direttore di capire che cosa vuole la creatura, come agisce e quali regole applicare, senza ricostruirne i valori durante la partita.
 
-Il volume comprende le regole comuni, la fauna di Iris con le nove caste della Covata nel capitolo 7 e centosessantacinque creature nel catalogo del capitolo 8. Le schede riportano statistiche complete e PX riferiti a quattro PG. Il metodo per assegnare i PX agli incontri è nel Manuale del Direttore §9.3.
+Il volume comprende le regole comuni, la fauna di Iris con le nove caste della Covata nel capitolo 7 e duecentoquindici creature nel catalogo del capitolo 8. Le schede riportano statistiche complete e PX riferiti a quattro PG. Il metodo per assegnare i PX agli incontri è nel Manuale del Direttore §9.3.
 
 ## **Contenuto del volume**
 
@@ -26,7 +26,7 @@ Il volume comprende le regole comuni, la fauna di Iris con le nove caste della C
 
 7 Fauna di Iris  •  Covata e Lorath
 
-8 Catalogo delle creature  •  Centosessantacinque schede con GS e PX
+8 Catalogo delle creature  •  Duecentoquindici schede con GS e PX
 
 # **1 Principi del Bestiario**
 
@@ -644,7 +644,7 @@ Le chele non concedono Parata naturale in questo profilo. Il Lorath apre con il 
 
 Le schede presentano esemplari con le caratteristiche e la dotazione indicate. Tutte le creature di questo capitolo hanno Natura Comune; la loro eventuale presenza su Iris richiede una collocazione nell’ambientazione e non le assimila alla Covata.
 
-**PX di riferimento. Valori per un esemplare oppure uno Sciame e quattro PG, con la dotazione descritta; premio dell’incontro nel Direttore §9.3. Le prime quindici schede sono riepilogate qui. Seguono quindici blocchi di dieci, ciascuno con il proprio prospetto; l’ultimo è «Mephit e creature elementali».**
+**PX di riferimento.** Valori per un esemplare oppure uno Sciame e quattro PG, con la dotazione descritta; premio dell’incontro nel Direttore §9.3. Le prime quindici schede sono riepilogate qui. Seguono venti blocchi di dieci, ciascuno con il proprio prospetto; l’ultimo è «Fauna delle terre aperte».
 
 | Creatura | GS | PX per 4 PG |
 | :---- | :---- | :---- |
@@ -7184,4 +7184,1951 @@ Un essere pesante con tre braccia, tre occhi e una grande bocca superiore. Cerca
 **Senso dei tesori.** Entro 12 Q localizza metalli preziosi e gemme, anche attraverso terra e roccia naturali comunicanti. È un senso minerale innato, non normale vista e non Individuare Magia. Non identifica valore esatto, proprietà magiche, proprietario o intenzioni e non localizza creature prive di tali materiali. Metallo schermante continuo, pietra lavorata o barriera magica interrompono la rilevazione attraverso quell’ostacolo. Occorrono accessi reali per raggiungere il nutrimento.
 
 **Interazione.** Può chiedere minerali o contrattare con chi li porta, anziché iniziare un combattimento. Percepire una gemma dentro una borsa non la trasferisce nella sua bocca e non rivela tutti gli altri contenuti. Mangiare, sottrarre o danneggiare un oggetto richiede un’azione e una situazione concretamente praticabile; un’arma o protezione mantiene le normali regole di Integrità.
+
+# **Costrutti e Modron**
+
+*Dieci profili per sentinelle artificiali e gerarchie biomeccaniche*
+
+Spaventapasseri, Orrore in elmo, Guardiano protettore e Golem di carne e argilla sono guardiani animati con funzioni diverse. I cinque Modron formano invece una gerarchia di esseri biomeccanici. Le schede distinguono corpo, mente e alimentazione del potere: chiamare una creatura costrutto non le assegna tutte le immunità degli automi. La presenza su Iris e l’origine dei singoli esemplari richiedono una collocazione nell’avventura.
+
+| Creatura | GS | PX per 4 PG |
+| :---- | :---: | :---: |
+| Spaventapasseri | Esperto | 30 |
+| Orrore in elmo | Veterano | 55 |
+| Golem di carne | Veterano | 50 |
+| Golem di argilla | Eroe | 70 |
+| Guardiano protettore | Eroe | 70 |
+| Monodrone | Principiante | 11 |
+| Duodrone | Inesperto | 22 |
+| Tridrone | Inesperto | 22 |
+| Quadrone | Esperto | 33 |
+| Pentadrone | Veterano | 50 |
+
+**PX di riferimento.** Valori per un esemplare e quattro PG. Orrore in elmo, Monodrone, Duodrone, Tridrone e Quadrone comprendono la dotazione Comune descritta; gli altri hanno capacità intrinseche già conteggiate nel GS. Il vincolo e la carica pronta del Guardiano sono compresi nel suo profilo. Il premio dell’incontro segue il Direttore §9.3, senza riapplicare il moltiplicatore di dotazione.
+
+**Impiego.** Interrompere un ordine, recuperare una chiave di comando, convincere una sentinella intelligente o aggirare una consegna possono risolvere la sfida. Queste creature non sono automaticamente strumenti dell’Oscura Simmetria e non appartengono alla Covata. Non sono nuove opzioni di evocazione o fabbricazione disponibili ai PG.
+
+**Fonti e verifica.** Giocatore v0.49, Magia v1.5, Direttore v0.41 e Armamenti v0.64. I rimandi indicano le pagine stampate del Manuale dei Mostri fornito. Le immunità fisiche dei Golem sono convertite in resistenza dichiarata; le Azioni dei Modron seguono il budget di Simply RPG. GS e PX sono stime da verificare al tavolo, soprattutto con assorbimenti, veleno ad Area e trasferimento dei danni.
+
+# **Costrutti corpi e risorse**
+
+**Natura e mente.** Tutti hanno Natura Comune e nessun incantesimo appreso. Spaventapasseri, Orrore in elmo e Golem di carne hanno mente e PM personali; possono essere bersagli di Dardo Psichico, salvo una protezione specifica. Guardiano e Golem di argilla eseguono istruzioni senza mente autonoma: PM — e Volontà —; lettura mentale, Dardo Psichico, paura e controllo che richieda una mente non trovano un bersaglio valido. I Modron hanno mente, PM personali e fisiologia propria, descritta nella loro pagina comune.
+
+**Corpi animati.** I cinque guardiani non richiedono aria, cibo, acqua o sonno. Sono immuni a soffocamento, Sonno, Sanguinamento, Avvelenato, veleni e malattie biologici. Il Golem di carne è composto da tessuto morto: non è un organismo vivo curabile come un umano. Cure biologiche, Medicina, riposo biologico e normali riparazioni tecnologiche non ripristinano questi cinque corpi. Gli assorbimenti e la rigenerazione dichiarati recuperano solo PV; non curano Ferite o Menomazioni e non stabilizzano Morente.
+
+**PV e PM.** A 0 PV si applicano Tempra, Ferite, Menomazioni e Morente del §4.2. Nessuno diventa un oggetto inerte per il solo esaurimento dei PV. A 0 PM personali si diventa Svenuti dopo la risoluzione completa dell’azione; PM — non significa 0 PM. L’animazione non rende immuni allo svenimento da esaurimento, Morente o da un effetto compatibile. Il recupero dei PM personali segue le condizioni ordinarie compatibili.
+
+**Nucleo spirituale.** Come eccezione esplicita, Dardo Spirituale può colpire i cinque guardiani animati, compresi Guardiano e Golem di argilla privi di PM. Applica il danno Etereo ai PV e sottrae soltanto PM personali esistenti; nessun drenaggio dalla carica preparata o dal creatore. I Modron sono bersagli validi secondo la propria natura vivente. I Tre sigilli dell’Orrore in elmo prevalgono per gli incantesimi esattamente indicati.
+
+**Protezioni specifiche.** Spaventapasseri, Orrore in elmo e i due Golem dimezzano per eccesso il danno Naturale da Contusione, Taglio e Perforazione prima dell’AR. La riduzione non vale contro Fuoco, Gelo, acido, Elettricità, danni Magici o Eterei. Non viene importata una proprietà adamantina non definita nei cataloghi. Il Guardiano e i Modron non possiedono questa riduzione.
+
+**Magia e costruzione.** Negare Potere non cancella questi corpi autonomi o i loro attacchi intrinseci; le eccezioni riguardano solo effetti espressamente rimovibili. Contromagia non interrompe capacità innate senza lancio. Individuare o Identificare Potere non concedono il comando. Le schede non definiscono un Rituale costruttivo, una ricetta di riparazione o il prezzo di un guardiano funzionante.
+
+# **Costrutti azioni e comandi**
+
+**Azioni e attacchi.** INI modifica 1d10; AzP e unica AzM valgono per tutto il Round. Ogni attacco costa 1 AzP, produce AC 1 e include i bonus indicati. L’Opportunità è una sola per Round e usa un attacco ravvicinato normale nei limiti della voce. Non attiva Sguardi, gas, Accelerazione, cariche o poteri di comando. Più arti non concedono attacchi gratuiti.
+
+**Difese.** Nessuno ha Parata naturale. Parata richiede 1 AzP e un’arma o scudo idonei; successo dimezza per eccesso prima dell’AR, Magistrale annulla. Spada, Pugnale e Giavellotto hanno −8 VA per parare a distanza; Scudo medio −4, con ulteriore −2 contro Raffica. I Pugni e l’Arco non concedono Parata. Schivata richiede 1 AzP, 1 AzM, consapevolezza e spazio. Naturale e Magico incontrano tutta l’AR pertinente; Etereo solo quella magica.
+
+**Ordini.** Un comando breve a una propria sentinella presente entro 12 Q è gratuito alla propria Iniziativa, ma deve poterle arrivare tramite il mezzo indicato. Cambiare padrone, imitare una voce o possedere una lingua non attribuisce automaticamente autorità. Le condizioni di riconoscimento e il perimetro di servizio si fissano prima della scena. Senza un nuovo ordine valido continua l’ultimo compito praticabile, senza azioni impossibili o informazioni sconosciute. Il Guardiano usa il proprio amuleto; i Modron la propria gerarchia.
+
+**Anatomia e Movimento.** Per i cinque guardiani Testa, Torace, Braccia e Gambe sono le parti corrispondenti del corpo; l’elmo è la Testa dell’Orrore. Le piastre integrate usano PV e Ferite, non un secondo tracciato di PI. Gli oggetti impugnati mantengono invece i propri PI. Le terne sono Passo / Corsa / Scatto; percorsi misti, carico e andature seguono il §5.2. Le parti dei Modron sono indicate nella loro pagina comune.
+
+**Durate e cumulo.** Uno Stato di durata N applicato nel Round R termina a fine Round R + N, salvo recupero anticipato. Nuove applicazioni non sommano la stessa penalità e conservano la scadenza più lontana. Le immunità impediscono soltanto gli effetti nominati. Fuoco e Gelo possono ancora applicare i propri Stati dopo danno residuo e Contromisure, salvo immunità specifica; non applicano il disorientamento da freddo della Covata.
+
+# **Spaventapasseri**
+
+*Costrutto animato da uno spirito • terrore e agguato • Natura Comune*
+
+Una sentinella di legno, stoffa e paglia che aspetta nel luogo affidatole. Lo spirito conserva impulsi e reazioni, senza i ricordi di una vita precedente. Fonte: Scarecrow, p. 268.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 5 • DES 6 • COS 5 • INT 6 • SAG 5 • CAR 7 |
+| Risorse e protezioni | PV 32 • PM 9 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 9 • Riflessi 10 • Volontà 11 • Magia 10 |
+| Iniziativa e Azioni | INI 0 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 6 / 12 / 18 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 10 • Atletica 9 • Percezione 10 • Furtività 11 |
+| GS e PX per 4 PG | Esperto • 30 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Artigli | 10 | 1d6+1 Naturale; Taglio | 1 Q |
+
+**Artigli e paura.** Al massimo due Artigli per Round, Opportunità compresa. Se un colpo infligge almeno 1 danno finale, una vittima dotata di mente effettua Volontà 0: successo evita, fallimento Terrorizzato per 1 Round. Non si aggiunge una seconda PS iniziale dello Stato. Barriera Mentale dà il proprio bonus; AR che annulla il colpo evita anche questa applicazione.
+
+**Sguardo e aspetto.** Lo Sguardo terribile è descritto nella pagina seguente. Immobile e appoggiato come uno spaventapasseri plausibile ottiene +4 a Furtività per celare la natura animata, fino a un movimento osservato. Non assegna automaticamente Sorpresa. Scurovisione 12 Q; comprende la lingua del creatore senza parlarla.
+
+**Protezioni e condotta.** Applica la resistenza fisica comune; vulnerabile al Fuoco ×2 di ogni Natura. Con Magistrale il moltiplicatore complessivo diventa ×3, non ×4. Immune ad Affaticamento, Terrorizzato, fascinazione e Paralizzato. Segue la consegna, ma può ripararsi dal fuoco o preservare il luogo protetto. La morte del creatore non lo distrugge automaticamente.
+
+# **Spaventapasseri sguardo terribile**
+
+**Attivazione.** 1 AzP e 2 PM, al massimo una volta per Round: una creatura dotata di mente entro 6 Q. Lo Spaventapasseri deve vederla ed essa deve vedere direttamente il suo volto. Pareti opache, volto completamente coperto o impossibilità di vedere impediscono l’effetto; una registrazione o un’immagine non lo trasmettono. Non occorre tiro per colpire e non sono ammesse Parata, Schivata o Elusione.
+
+**Salvezza ed esito.** Volontà 0 evita. Fallimento: Paralizzato per 1 Round, come blocco da paura; non applica anche la penalità di Terrorizzato. Immunità a paura o Terrorizzato, oppure a Paralizzato, impedisce il blocco. Barriera Mentale aggiunge il proprio bonus alla PS, senza immunità automatica. Il semplice aspetto della sentinella non impone questa Prova fuori dall’attivazione pagata.
+
+**Paralisi.** La vittima resta cosciente ma non dispone di AzP o Movimento e non effettua Difese attive. Conserva PS e opposizioni passive compatibili; la sola paralisi non penalizza le Salvezze. Conta come incapace di reagire per gli impieghi pertinenti, senza Magistrali automatici. Volo o nuoto senza appoggio seguono le conseguenze dell’impossibilità di muoversi.
+
+**Rimozione.** Scadenza, Cura Spirituale 6 sui beneficiari ammessi oppure Negare Potere con potenza di confronto 3 terminano il blocco. Danni e uscita dalla gittata non lo eliminano da soli. Dopo una PS iniziale riuscita o la fine del blocco, la vittima è immune allo Sguardo di quello Spaventapasseri per 24 ore; l’immunità non riguarda la paura degli Artigli. Nessuna nuova PS automatica è necessaria nella breve durata.
+
+**Soccorso.** I Terrorizzato prodotti dagli Artigli seguono invece il Giocatore: scomparsa evidente della fonte, Oratoria di un compagno adiacente con 1 AzP e cure compatibili possono terminarli. Assistere la fuga non cura PV, Ferite, PM o altri Stati. Lo Sguardo non è una Possessione e non trasferisce lo spirito nella vittima.
+
+# **Orrore in elmo**
+
+*Sentinella intelligente in un corpo di piastre • volo e sigilli • Natura Comune*
+
+Un involucro metallico capace di ragionare sull’intento della consegna. Non è la semplice Armatura animata: sceglie bersagli e posizioni secondo ciò che percepisce. Fonte: Helmed Horror, p. 183.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 8 • DES 6 • COS 7 • INT 6 • SAG 6 • CAR 5 |
+| Risorse e protezioni | PV 46 • PM 10 • AR 6 con Scudo, 4 senza; AR magica 0 |
+| Difese e Salvezze | Difese 12 • Tempra 11 • Riflessi 10 • Volontà 9 • Magia 11 |
+| Iniziativa e Azioni | INI 0 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra e volo 6 / 12 / 18 Q • spazio 1 × 1 Q |
+| Abilità | Armi da guerra 12 • Corpo a corpo 10 • Atletica 11 • Percezione 12 • Furtività 7 |
+| GS e PX per 4 PG | Veterano • 55 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Spada lunga | 12 | 1d8+3 Naturale; Taglio | 1 Q |
+
+**Dotazione.** Spada lunga Comune, una mano, FOR 4, PI 5, PS Integrità 10: base 1d8+1 e +2 personale. Scudo medio Comune, FOR 5, PI 6, PS Integrità 10, AR passiva +2 già compresa. Inizia con entrambi pronti; le piastre sono corpo intrinseco AR 4. Al massimo due attacchi per Round, Opportunità compresa. Le Parate usano Difese 12 e i modificatori comuni; la Spada lunga non è Versatile.
+
+**Tre sigilli.** Questo esemplare è immune ai soli incantesimi Respingere, Dardo Spirituale e Maledizione, a ogni versione: ne evita danni, perdita di PM e altre conseguenze. Non è immune a tutti i danni Magici o Eterei, ad altre maledizioni o a capacità che abbiano effetti simili. I sigilli sono innati e fissi; non si cambiano durante lo scontro.
+
+**Sensi e protezioni.** Percezione artificiale 12 Q di forme e movimenti anche al buio, attraverso un percorso senza solidi, con acquisizione di bersagli solo in quel raggio. Non usa occhi o udito: immune ad Accecato e Assordato. Immune anche a Terrorizzato, fascinazione, Paralizzato, pietrificazione, Stordito e Avvelenato. Resistenza fisica comune; contro incantesimi e poteri mistici aggiunge +2 alle sole PS già previste, non compreso nei VA, senza migliorare Difese, AR o la determinazione delle Ferite.
+
+**Volo e consegna.** Volo innato senza ali, con sosta in quota finché cosciente; Corsa e Scatto richiedono Atletica −2 e −4. Decollo, quota e atterraggio rientrano nell’unica AzM. Svenuto perde sostentamento e può cadere. Comprende il creatore senza parlare; può ritirarsi tatticamente per conservare la posizione da proteggere.
+
+# **Golem di carne**
+
+*Corpo artificiale di tessuto morto • assorbimento elettrico • Natura Comune*
+
+Un guardiano assemblato che possiede ragionamento elementare, movimenti rigidi e reazioni violente quando il corpo cede. Non è un non morto per la sola materia che lo compone. Fonte: Flesh Golem, pp. 167 e 169.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 9 • DES 4 • COS 8 • INT 3 • SAG 5 • CAR 3 |
+| Risorse e protezioni | PV 60 • PM 8 • AR 2 intrinseca; AR magica 0 |
+| Difese e Salvezze | Difese 7 • Tempra 13 • Riflessi 8 • Volontà 7 • Magia 11 |
+| Iniziativa e Azioni | INI −2 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 6 / 12 / 18 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 13 • Atletica 12 • Percezione 9 • Furtività 6 |
+| GS e PX per 4 PG | Veterano • 50 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Schianto | 13 | 2d6+2 Magico; Contusione | 1 Q |
+
+**Schianti e protezioni.** Al massimo due Schianti per Round, Opportunità compresa. Il danno è Magico, non Etereo, e incontra l’AR ordinaria. Resistenza fisica comune. Immune ad Affaticamento, Terrorizzato, fascinazione, Paralizzato e pietrificazione. Non è immune a Dardo Psichico o a ogni altro effetto mentale.
+
+**Forma e magia.** Non può essere trasformato in un altro materiale o anatomia da un potere di mutazione. Questo non annulla vincoli, spinte, A Terra, Rallentato, Incendiato o perdite di funzione da Menomazione. Contro incantesimi e poteri mistici aggiunge +2 alle sole PS già previste, non compreso nei VA; non migliora le PS delle Ferite per il solo fatto che il danno era Magico.
+
+**Sensi e servizio.** Scurovisione 12 Q; comprende le lingue del creatore senza parlare. Esegue una consegna semplice e può valutare un ostacolo concreto, senza ottenere conoscenze del creatore. Assorbimento, avversione al fuoco e Furia sono nella pagina seguente. Può essere richiamato dal creatore, ma non persuaso da chiunque come una sentinella umana.
+
+# **Golem di carne energia e furia**
+
+**Assorbimento elettrico.** È immune ai danni da Elettricità, compreso Fulmine, e ai loro effetti secondari, di qualunque Natura. Per una fonte che produrrebbe danno si calcola il residuo dopo Difese, riduzioni e AR, ignorando solo questo assorbimento. Invece di subirlo recupera altrettanti PV, fino a 4 PV complessivi per Round da tutte le fonti. Il resto è annullato; contatti innocui non generano cura. L’assorbimento non ripristina PM o cariche.
+
+**Limiti del recupero.** Non supera il massimo effettivo dei PV e può operare a 0 PV finché il Golem è vivo e non Morente. Non cura Ferite, Menomazioni, Stati o contatore di Morente e non riattiva un corpo distrutto. Elettricità e danni fisici di un colpo misto si separano: l’assorbimento non annulla l’altra componente.
+
+**Avversione al fuoco.** Dopo almeno 1 danno finale da Fuoco subisce −2 VA alle Prove di Abilità fino alla fine della propria Iniziativa successiva. Non penalizza le PS, non elimina Azioni e non è Terrorizzato. Nuovi danni rinnovano la scadenza; non si somma al −2 di Incendiato, usando il maggiore. Il Fuoco mantiene anche le proprie conseguenze ordinarie quando dovute.
+
+**Furia.** All’inizio della propria Iniziativa, con 24 PV o meno e se può agire, tira 1d6: con 6 entra in Furia. Non costa PM o Azioni. Finché dura dà precedenza all’attacco contro la creatura percepita più vicina, senza distinguere alleati; in parità sceglie il percorso più breve e poi casualmente. Se nessuna è raggiungibile attacca un oggetto accessibile, preferendo uno più piccolo di sé. Conserva Azioni, costi, sensi e impedimenti ordinari.
+
+**Calmare.** Il creatore riconosciuto, udibile entro 12 Q, può usare 1 AzP e Oratoria 0: successo termina Furia, senza curare. La Furia termina anche se il Golem recupera tutti i propri PV effettivi; Ferite e Menomazioni restano. Se rimane a 24 PV o meno può ricaderci a una successiva Iniziativa con un nuovo 6. Svenuto sospende le Azioni, senza trasformare la Furia in una cura o cancellare le altre condizioni.
+
+# **Golem di argilla**
+
+*Guardiano privo di mente • acido e colpi maledetti • Natura Comune*
+
+Un pesante corpo di argilla animata che presidia un luogo e può sfuggire alla consegna quando perde integrità. La sua origine religiosa eventuale non gli assegna Natura Oscura Simmetria. Fonte: Clay Golem, pp. 167–168.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 10 • DES 4 • COS 9 • INT 1 • SAG 4 • CAR 1 |
+| Risorse e protezioni | PV 84 • PM — • AR 4 intrinseca; AR magica 0 |
+| Difese e Salvezze | Difese 7 • Tempra 14 • Riflessi 8 • Volontà — • Magia 12 |
+| Iniziativa e Azioni | INI −2 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 4 / 8 / 12 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 14 • Atletica 14 • Percezione 8 • Furtività 5 |
+| GS e PX per 4 PG | Eroe • 70 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Schianto maledetto | 14 | 2d8+3 Magico; Contusione | 1 Q |
+
+**Attacchi e corpo.** Al massimo due Schianti per Round, Opportunità compresa; nessun danno Etereo automatico. Resistenza fisica comune. Immune ad Affaticamento, Paralizzato e pietrificazione; l’assenza di mente impedisce gli effetti che ne richiedono una. Non può essere trasformato da un potere di mutazione, ma conserva Ferite, Menomazioni e vincoli materiali.
+
+**Magia e assorbimento.** Contro incantesimi e poteri mistici aggiunge +2 alle sole PS già previste, non compreso nei VA. Non modifica la determinazione delle Ferite. È immune ad acido e Corrosivo prodotto da quell’acido: il residuo che infliggerebbe danno recupera PV con la procedura del Golem di carne, ma con massimo 6 PV complessivi per Round. Non ripara automaticamente oggetti impugnati, non sana Ferite e non stabilizza Morente.
+
+**Sensi e consegna.** Scurovisione 12 Q; comprende gli ordini del creatore senza parlare. Sotto una soglia di integrità può entrare in Furia. I colpi maledetti e l’Accelerazione sono nella pagina seguente. Non può essere calmato con Oratoria: termina Furia soltanto tornando al massimo effettivo dei PV oppure quando viene distrutto; l’incoscienza ne impedisce comunque le azioni.
+
+# **Golem di argilla maledizione e accelerazione**
+
+**Colpo maledetto.** Dopo almeno 1 danno finale di Schianto una vittima con PV massimi ordinari effettua Tempra −2. Successo evita la maledizione; fallimento riduce di 2 il massimo dei PV. Ulteriori applicazioni fallite possono portare la riduzione complessiva di questa capacità a 6, sommando anche Golem diversi, senza abbassare il massimo sotto 1. Nessuna seconda Difesa o PS iniziale. È una capacità innata, non un lancio dell’incantesimo Maledizione.
+
+**Riserva ridotta.** I PV attuali eccedenti il nuovo massimo si perdono, senza una seconda applicazione di danno, Tempra per Ferite o altri effetti legati a un colpo. Il tetto si applica anche a rigenerazione e cure; non riduce PV temporanei, PM, COS, VA o contatore di Morente. Non uccide automaticamente riducendo il massimo e non crea un tracciato alternativo alle Ferite.
+
+**Durata e rimozione.** Tutta la riduzione dura un’ora dall’ultima applicazione fallita. Rimane anche dopo la distruzione del Golem. Negare Potere può rimuovere l’intera riduzione della capacità dal bersaglio, potenza di confronto 9; non serve Rompere Vincolo, perché non lega un oggetto. Scadenza o rimozione restituiscono il massimo, non i PV mancanti. Cure dei PV e Cura Spirituale non rimuovono da sole la causa.
+
+**Accelerazione.** 1 AzP, senza PM: +2 VA a Difese e Riflessi fino a fine del Round successivo. Usata nel Round R, non si riattiva prima della propria Iniziativa in R + 3. Non somma il bonus con un’altra propria Accelerazione e non concede AzP, AzM, Schianti, Opportunità o ricariche aggiuntive. L’attivazione prende una delle due AzP ordinarie.
+
+**Furia di argilla.** All’inizio della propria Iniziativa, con 36 PV o meno e se può agire, tira 1d6: con 6 entra in Furia. Segue scelta dei bersagli e costi della Furia del Golem di carne; non esegue ordini finché dura. Il creatore non la termina con una parola d’arresto o una Prova di Oratoria. L’assorbimento può recuperare PV fino al massimo effettivo, senza eliminare le Ferite.
+
+# **Guardiano protettore**
+
+*Costrutto senza mente • amuleto e protezione del portatore • Natura Comune*
+
+Una sentinella pesante che segue il portatore della propria chiave mistica e può ricevere parte dei danni diretti a lui. Questo profilo comprende una sola carica preparata di Armatura di Forza 3. Fonte: Shield Guardian, p. 271.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 9 • DES 4 • COS 8 • INT 1 • SAG 5 • CAR 1 |
+| Risorse e protezioni | PV 78 • PM — • AR 4 intrinseca; AR magica 0 a riposo |
+| Difese e Salvezze | Difese 8 • Tempra 13 • Riflessi 8 • Volontà — • Magia 11 |
+| Iniziativa e Azioni | INI −2 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 6 / 12 / 18 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 13 • Atletica 13 • Percezione 10 • Furtività 5 |
+| GS e PX per 4 PG | Eroe • 70 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Pugni | 13 | 2d6+2 Naturale; Contusione | 1 Q |
+
+**Azioni e rigenerazione.** Al massimo due Pugni per Round, Opportunità compresa. All’inizio della propria Iniziativa recupera 3 PV senza Azioni soltanto se ha almeno 1 PV e non è Morente. Non sana Ferite, Menomazioni o Stati. A 0 PV non rigenera; un recupero compatibile sopra 0 permette i recuperi successivi. La semplice incapacità del portatore non distrugge il Guardiano.
+
+**Protezione ravvicinata.** Una volta per Round, prima della Prova per colpire contro il portatore entro 1 Q, usa 1 AzP per assisterne la Difesa. Deve essere cosciente, percepire il colpo e poter interferire fisicamente dalla propria posizione. Concede +2 VA alla sola Difesa attiva che il portatore paga contro quel colpo; non concede una Difesa gratuita, non aumenta AR e non protegge da Aree o attacchi psichici diretti. Nessun movimento gratuito è compreso.
+
+**Corpo e sensi.** Immune ad Affaticamento e Paralizzato, oltre alle immunità dei corpi animati. Scurovisione 12 Q; percezione artificiale di forme e movimenti entro 2 Q, senza solidi interposti, anche al buio e senza dipendere da occhi o udito. Comprende comandi del portatore in qualunque lingua; non parla. Amuleto, trasferimento e carica sono descritti nelle due pagine seguenti.
+
+# **Guardiano protettore amuleto e trasferimento**
+
+**Chiave di comando.** Un unico amuleto è collegato al Guardiano. Chi lo indossa può impartire comandi brevi e richiamarlo mentalmente entro 1 km, nello stesso piano; il Guardiano conosce direzione e distanza della chiave, senza vedere il percorso. Il richiamo non teletrasporta e non fa attraversare ostacoli. Non richiede Sintonizzazione: la chiave abilita la funzione intrinseca del Guardiano, senza conferire al portatore altre proprietà personali.
+
+**Perdita del legame.** Amuleto non indossato: nessun trasferimento o nuovo comando; il Guardiano continua l’ultimo ordine praticabile. Amuleto distrutto o legame reciso: Guardiano inerte, senza Azioni o Difese attive, ma non guarito o distrutto. A 0 PV conserva le normali Ferite. Indossare una chiave valida richiede 1 AzP e trasferisce l’autorità senza rinnovare Azioni, PV o carica preparata.
+
+**Integrità e rimozione.** La chiave ha PI 4, PS Integrità 14 e qualità Rara; quando indossata o trasportata segue le normali regole degli oggetti posseduti. Non si danneggia automaticamente perché il portatore perde PV. È un oggetto, non una mente o una riserva di PM. Rompere Vincolo può recidere il collegamento, potenza 9, con la propria procedura; Negare Potere non cancella la funzione passiva. Sostituire chiave o ricreare il legame richiede una procedura costruttiva distinta, non una nuova AzP gratuita.
+
+**Trasferimento.** Se operativo ed entro 12 Q dal portatore della chiave indossata, il Guardiano riceve metà per eccesso del danno ai PV di ogni AC, dopo Difese, Salvezze, riduzioni e AR del portatore ma prima di sottrarlo alla sua riserva. Il portatore subisce solo il resto, usando prima eventuali PV temporanei. Il Guardiano perde la quota trasferita senza applicare un secondo giro di AR, resistenze, Salvezze o Difese. Non occorre linea visiva; una barriera che recide legami mistici può impedirlo.
+
+**PV e Ferite separati.** Ciascuno applica la propria quota a PV temporanei, PV e, se era già a 0 PV e il residuo è positivo, Tempra e Ferite. Il colpo che esaurisce i PV di uno dei due non ne trasferisce l’eccedenza in Ferite. Non si trasferiscono Stati, veleno, Corruzione, perdita di PM, PV sacrificati o danni che richiedono una mente come Dardo Psichico. La perdita di coscienza del Guardiano interrompe il trasferimento per gli eventi successivi, senza annullare una quota già ricevuta.
+
+**Un solo destinatario.** Una quota trasferita non può essere trasferita ancora. Nessuna catena fra Guardiani o divisione ripetuta dello stesso danno. Il portatore può essere Svenuto e ricevere comunque protezione finché gli altri requisiti restano validi. L’amuleto è interfaccia del profilo, non un secondo avversario con PX propri; cambiare portatore non genera un nuovo premio per lo stesso Guardiano.
+
+# **Guardiano protettore carica preparata**
+
+**Profilo pronto.** Una carica di Armatura di Forza 3 è già preparata all’inizio dell’impiego della scheda, se non consumata nella continuità della scena. I 3 PM sono stati pagati da chi l’ha caricata: non sono PM personali del Guardiano, non causano Svenuto quando finiscono e non vengono ripristinati cambiando scena. Il profilo non contiene un repertorio di incantesimi.
+
+**Attivazione.** 1 AzP del Guardiano, su ordine valido oppure a una condizione fissata al caricamento. Sceglie sé stesso o il portatore consenziente che possa realmente toccare. La carica si consuma e applica Armatura di Forza 3: +2 AR Magica per 10 Round senza Concentrazione, secondo §17.3 della Magia. Non serve una nuova Prova Potere, Focus o componenti e non è un lancio interrompibile con Contromagia. Un innesco non concede AzP mancanti o un turno aggiuntivo.
+
+**Protezioni e cumulo.** L’AR Magica vale contro Naturale, Magico ed Etereo. Sul Guardiano porta AR complessiva a 6, di cui 2 magica. Non concede Difese, Salvezze o Azioni. Con Pelle Corazzata o un’altra Armatura di Forza si usa il valore pertinente maggiore, senza sommare doppioni; scudi ed equipaggiamento compatibili seguono la scheda dell’incantesimo. Un effetto già attivato rimane fino alla scadenza anche se il Guardiano viene reso inerte.
+
+**Caricare di nuovo.** Chi indossa la chiave, conosce Armatura di Forza 3 e può lanciarla, tocca il Guardiano e compie il normale lancio con 1 AzP, componenti, 3 PM e Potere quando richiesto. In caso di successo l’effetto viene immagazzinato invece di applicarsi; sostituisce l’eventuale carica precedente. Fallimento segue i normali costi del lancio. Non immagazzina Anticipazioni, benefici di Talenti o altre versioni. Un’altra carica richiede un altro vero lancio.
+
+**Rimozione e varianti.** Negare Potere può cancellare la carica immagazzinata oppure un singolo effetto attivato, potenza 3, senza restituire i PM pagati. Non spegne corpo, rigenerazione o legame con l’amuleto. Eventuali altri incantesimi immagazzinati richiedono una scheda di variante con parametri, bersagli e PX propri: questa voce include soltanto la carica descritta.
+
+# **Modron fisiologia gerarchia e sensi**
+
+**Corpi biomeccanici.** Per questa conversione i cinque Modron sono costrutti biomeccanici viventi di Natura Comune: respirano aria, si nutrono, richiedono acqua e riposo compatibile. Hanno mente e PM personali; nessuna delle immunità fisiologiche dei cinque guardiani si estende a loro. Possono subire veleni, malattie, Sanguinamento, Sonno, Affaticamento e Stati se la fonte è compatibile. Le cure biologiche recuperano i loro PV viventi come eccezione esplicita; non ricostruiscono parti perdute o riparano automaticamente componenti meccaniche.
+
+**Mente assiomatica.** Un effetto di controllo mentale non può costringerli ad agire contro la propria funzione o un ordine valido già ricevuto: quella parte del comando non viene eseguita. Non concede immunità a danni psichici, lettura della mente, paura, illusioni, perdita di PM o a qualsiasi influenza sociale. Non rivela menzogne e non riscrive le condizioni di riuscita dei singoli poteri. Una spiegazione può risolvere un equivoco senza obbligare il Modron a disobbedire.
+
+**Visione ordinatrice.** Entro 12 Q vedono forme e movimenti nel buio completo. Contro Mimetismo questo senso usa Potere di Rilevazione 6: superiore supera, inferiore fallisce, parità richiede una sola PS Magia dell’osservatore per coppia di effetti; si riprova solo dopo un nuovo lancio o una variazione reale della protezione. Non dissolve Mimetismo né rivela la posizione agli alleati. Restano Percezione contro Furtività, ostacoli solidi e fumo opaco. Le illusioni puramente visive concedono +2 alle Prove di riconoscimento già previste, senza crearne di nuove.
+
+**Limiti sensoriali.** Velo Psichico mantiene la propria PS ordinaria e può ingannare questa mente; il senso non vede attraverso pareti, non legge testi al buio, non legge pensieri, non identifica aure o trasformazioni e non sostituisce tutte le funzioni della Vista Superiore. È una capacità innata continua, non un incantesimo da mantenere. Accecato impedisce la vista ordinaria; il senso delle forme rimane utilizzabile entro 12 Q, senza recuperare dettagli puramente visivi.
+
+**Gerarchia e parola.** Parlano Modron. Comprendono comandi operativi soltanto di esemplari del proprio grado o di quello immediatamente superiore o inferiore. Monodrone svolge un compito semplice alla volta e può riportare un messaggio fino a 48 parole; Duodrone gestisce due consegne semplici, senza due turni o nuove Azioni. Tridrone coordina pattuglie, Quadrone il tiro, Pentadrone valuta situazioni nuove. Non esiste una telepatia di comando a distanza illimitata.
+
+**Distruzione e parti.** Solo alla distruzione effettiva, dopo la normale procedura di Morente, il corpo si disgrega: armi e oggetti trasportati restano con l’Integrità residua. A 0 PV o PM non scompare. Un’eventuale promozione di un altro Modron avviene fuori dallo scontro: non cura, trasforma o sostituisce combattenti durante la scena. Testa è il gruppo sensoriale, Torace il nucleo, Braccia il gruppo di arti manipolatori, Gambe gli arti locomotori; per Monodrone e Quadrone Torace comprende il cingolo alare.
+
+# **Monodrone**
+
+*Modron di primo grado • esecutore alato • Natura Comune*
+
+Un piccolo corpo sferico con arti e ali, adatto a consegne elementari e messaggi brevi. La sua rigidità mentale non gli concede conoscenze illimitate. Fonte: Monodrone, p. 224.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 5 • DES 6 • COS 5 • INT 2 • SAG 5 • CAR 3 |
+| Risorse e protezioni | PV 8 • PM 5 • AR 1 intrinseca; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 9 • Riflessi 10 • Volontà 7 • Magia 8 |
+| Iniziativa e Azioni | INI 0 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra e volo 6 / 12 / 18 Q • spazio 1 × 1 Q |
+| Abilità | Armi da guerra 8 • Armi da lancio 9 • Armi da mischia 9 • Atletica 8 • Percezione 9 • Furtività 8 |
+| GS e PX per 4 PG | Principiante • 11 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Pugnale | 9 | 1d4+1 Naturale; Perforazione | 1 Q |
+| Giavellotto a mano | 8 | 1d6 Naturale; Perforazione | 1 Q |
+| Giavellotto lanciato | 9 | 1d6+1 Naturale; Perforazione | massimo 15 Q |
+
+**Dotazione e limiti.** Un Pugnale Comune, FOR 2, PI 4, PS Integrità 10; due Giavellotti Comuni della sentinella, descritti in «Aarakocra capacità e dotazione», FOR 3, PI 4, PS Integrità 10. Inizia con un Giavellotto pronto e gli altri oggetti riposti. Un solo attacco per Round, Opportunità compresa; quest’ultima usa soltanto un’arma ravvicinata pronta. Estrarre o recuperare un’arma richiede 1 AzP.
+
+**Volo e condotta.** Ali funzionali e spazio sono necessari; può sostenersi battendo le ali senza percorso minimo, non levitare senza di esse. Corsa e Scatto in volo richiedono Atletica −2 e −4; quota, decollo e atterraggio rientrano nell’unica AzM. Sotto 2 PV o a Ferita Profonda cerca il superiore o un riparo se il compito lo consente. Applica fisiologia, mente e sensi della pagina comune.
+
+# **Duodrone**
+
+*Modron di secondo grado • sorvegliante di esecutori • Natura Comune*
+
+Un corpo squadrato che coordina consegne semplici e segue l’ordine ricevuto con precisione. Le due funzioni gestite non sono due azioni simultanee gratuite. Fonte: Duodrone, p. 225.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 5 • DES 6 • COS 5 • INT 4 • SAG 5 • CAR 4 |
+| Risorse e protezioni | PV 16 • PM 6 • AR 1 intrinseca; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 9 • Riflessi 10 • Volontà 8 • Magia 9 |
+| Iniziativa e Azioni | INI 0 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 6 / 12 / 18 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 9 • Armi da guerra 9 • Armi da lancio 9 • Atletica 9 • Percezione 9 • Furtività 7 |
+| GS e PX per 4 PG | Inesperto • 22 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Pugno | 9 | 1d4 Naturale; Contusione | 1 Q |
+| Giavellotto a mano | 9 | 1d6 Naturale; Perforazione | 1 Q |
+| Giavellotto lanciato | 9 | 1d6+1 Naturale; Perforazione | massimo 15 Q |
+
+**Armi e mani.** Tre Giavellotti Comuni della sentinella: FOR 3, PI 4, PS Integrità 10; due già pronti nelle mani, uno riposto. Può lasciarne uno gratuitamente per liberare una mano, ma raccoglierlo o estrarre quello riposto costa 1 AzP. Ogni lancio consuma un esemplare disponibile. Nessuna riserva si ricarica automaticamente.
+
+**Sequenza e servizio.** Al massimo due attacchi di Pugno o Giavellotto per Round complessivi, Opportunità compresa. Il Pugno richiede una mano libera e non permette Parata. Usa la gerarchia della pagina comune; sotto 4 PV o a Ferita Profonda può ripiegare per riferire e preservare la consegna, senza ottenere immunità a paura o dolore.
+
+# **Tridrone**
+
+*Modron di terzo grado • coordinatore di pattuglia • Natura Comune*
+
+Un corpo a piramide rovesciata con tre braccia. Distribuisce compiti a esecutori di grado adiacente e combatte senza trasformare ogni arto in un attacco gratuito. Fonte: Tridrone, p. 225.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 6 • DES 6 • COS 5 • INT 5 • SAG 5 • CAR 5 |
+| Risorse e protezioni | PV 22 • PM 7 • AR 1 intrinseca; AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 9 • Riflessi 10 • Volontà 9 • Magia 10 |
+| Iniziativa e Azioni | INI 0 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 6 / 12 / 18 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 10 • Armi da guerra 10 • Armi da lancio 10 • Atletica 10 • Percezione 10 • Furtività 8 |
+| GS e PX per 4 PG | Inesperto • 22 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Pugno | 10 | 1d4+1 Naturale; Contusione | 1 Q |
+| Giavellotto a mano | 10 | 1d6+1 Naturale; Perforazione | 1 Q |
+| Giavellotto lanciato | 10 | 1d6+1 Naturale; Perforazione | massimo 18 Q |
+
+**Dotazione e sequenza.** Tre Giavellotti Comuni della sentinella, FOR 3, PI 4, PS Integrità 10: due pronti e uno riposto; una terza mano resta libera. Al massimo due attacchi complessivi per Round, Opportunità compresa. Lanciare richiede il proprio esemplare; estrarre o recuperare costa 1 AzP. L’arto libero può usare oggetti o un Pugno, entro il budget.
+
+**Anatomia e condotta.** Si annota l’arto interessato da una Menomazione: gli altri non ne eliminano penalità o gravità. Parla Modron, coordina Duodroni e riceve da Quadroni secondo la gerarchia comune. Sotto 5 PV o a Ferita Profonda tende a riferire o riunire la pattuglia se la consegna lo permette. Nessun bonus collettivo al tiro è concesso dalla sola presenza del coordinatore.
+
+# **Quadrone**
+
+*Modron di quarto grado • arciere e ufficiale alato • Natura Comune*
+
+Una piattaforma biomeccanica con quattro braccia e ali, capace di prendere quota e coordinare il tiro. Il numero di braccia non genera una Raffica con armi a frecce. Fonte: Quadrone, p. 226.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 6 • DES 7 • COS 6 • INT 6 • SAG 6 • CAR 6 |
+| Risorse e protezioni | PV 28 • PM 9 • AR 2 intrinseca; AR magica 0 |
+| Difese e Salvezze | Difese 11 • Tempra 10 • Riflessi 11 • Volontà 10 • Magia 10 |
+| Iniziativa e Azioni | INI +1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra e volo 6 / 12 / 18 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 10 • Armi da lancio 12 • Atletica 10 • Percezione 12 • Furtività 9 |
+| GS e PX per 4 PG | Esperto • 33 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Pugno | 10 | 1d4+1 Naturale; Contusione | 1 Q |
+| Arco da guerra | 12 | 1d6+2 Naturale; Perforazione | massimo 100 Q |
+
+**Dotazione.** Arco da guerra Comune, Armi da lancio, due mani, FOR 5, PI 6, PS Integrità 10, MOV 0; venti frecce ordinarie. Base 1d6+1 e +1 personale già compresi. Incoccare è compreso nell’attacco; frecce e recuperi seguono gli Armamenti. L’Arco non para; le altre due braccia possono tenere oggetti compatibili o usare Pugno, pagando le Azioni.
+
+**Tiro e volo.** Al massimo due attacchi o due frecce complessive per Round, Opportunità compresa, che usa solo Pugno. Nessun tiro simultaneo di quattro frecce; l’eventuale Tiro Rapido mantiene tutti i propri costi e requisiti entro quel limite. Ali funzionali e Torace integro: volo come Monodrone, senza nuova AzM. Non possiede un bonus di Tiro Mirato già attivo o il Talento di sparare automaticamente in volo.
+
+**Condotta.** Sceglie linee di tiro praticabili e riferisce ai Pentadroni. Sotto 7 PV o a Ferita Profonda può ripararsi e conservare le informazioni. Mente, fisiologia e sensi sono quelli comuni; vedere una forma non permette alla freccia di attraversare un ostacolo.
+
+# **Pentadrone**
+
+*Modron di quinto grado • coordinatore e gas paralizzante • Natura Comune*
+
+Un organismo biomeccanico a cinque braccia che sorveglia compiti complessi e può bloccare un gruppo con un getto tossico. Non decide per gli altri Modron attraverso le loro Azioni. Fonte: Pentadrone, p. 226.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 7 • DES 7 • COS 6 • INT 6 • SAG 7 • CAR 7 |
+| Risorse e protezioni | PV 38 • PM 10 • AR 2 intrinseca; AR magica 0 |
+| Difese e Salvezze | Difese 12 • Tempra 11 • Riflessi 11 • Volontà 11 • Magia 11 |
+| Iniziativa e Azioni | INI +1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 8 / 16 / 24 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 12 • Atletica 11 • Percezione 14 • Furtività 8 |
+| GS e PX per 4 PG | Veterano • 50 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Braccio | 12 | 1d6+2 Naturale; Contusione | 1 Q |
+
+**Sequenza e corpo.** Al massimo due attacchi di Braccio per Round, Opportunità compresa. I cinque arti non concedono Parata naturale o altre Azioni; una Menomazione si applica alla funzione colpita, senza essere cancellata dagli arti rimasti. Il Gas costa 1 AzP e sostituisce un’attività ordinaria: non è un attacco gratuito dopo i colpi.
+
+**Condotta.** Può adattare un ordine a una situazione nuova senza conoscere intenzioni o mappe non percepite. Coordina Quadroni e propri pari secondo la gerarchia comune. Sotto 9 PV o a Ferita Seria cerca una posizione utile a conservare la consegna. Non è immune al proprio tipo di veleno solo perché lo produce; l’Area esclude la fonte, non gli alleati.
+
+# **Pentadrone gas paralizzante**
+
+**Emissione.** 1 AzP, senza PM, tre dosi in ogni periodo di 24 ore. Una dose produce un cono di gas lungo 6 Q dalla bocca, in un mezzo aeriforme compatibile e lungo percorsi liberi. Colpisce tutte le creature nell’Area, alleati compresi, escludendo la fonte; i solidi bloccano la propagazione. Consuma la dose anche contro bersagli immuni. Usato nel Round R, non può essere riutilizzato prima della propria Iniziativa in R + 3.
+
+**Esposizione e Salvezza.** Una vittima biologicamente vivente, Modron compresi, deve poter inalare il gas. Un sistema chiuso che escluda davvero l’aria contaminata impedisce l’esposizione; trattenere il respiro richiede di averlo fatto prima che il gas raggiunga le vie respiratorie. Un filtro adatto segue la propria scheda. Tempra 0 evita; fallimento Avvelenato e Paralizzato per 3 Round. Nessun danno ai PV, tiro per colpire, Parata, Schivata o Elusione aggiuntiva. Coperture pertinenti modificano la PS.
+
+**Recupero.** A fine di ogni propria Iniziativa la vittima ripete gratuitamente Tempra 0: successo termina veleno e paralisi. Non si applica una penalità generica da Avvelenato a questa PS: in questa tossina lo Stato indica solo la sostanza e non aggiunge altri malus. Nuove dosi non sommano Stati e conservano la scadenza più lontana. Immunità a veleni o Avvelenato impedisce tutto; immunità a Paralizzato impedisce il blocco ma non la sostanza, priva di altre penalità.
+
+**Paralisi e cure.** Paralisi cosciente con gli stessi effetti operativi descritti per lo Spaventapasseri, senza implicare paura. Veleno naturale di Pericolosità IV, Seria: antidoto appropriato o Cura Avvelenamenti di livello almeno 5 rimuove la causa e la paralisi mantenuta. Cura Spirituale da sola non neutralizza una tossina ancora attiva. Un costrutto privo di fisiologia biologica non è un bersaglio valido di questo gas.
+
+**Dispersione e riserva.** Il getto è un’esposizione istantanea e non lascia una nube tossica persistente. Entrare più tardi nei Q non applica nuove dosi. Un vento o un ostacolo che impedisce realmente al gas di raggiungere una vittima può escluderla; non si estende l’Area gratuitamente sottovento. Le tre dosi non si recuperano cambiando scena, riposando brevemente o sostituendo il superiore. Raccolta e uso del gas in armi richiedono un profilo di sostanza distinto.
+
+# **Capi e varianti dei popoli guerrieri**
+
+*Dieci profili per bande, pattuglie e comandanti*
+
+Questi profili completano Goblin, Hobgoblin, Bugbear, Coboldo, Gnoll, Orco e Ogre già presenti. Capi e specialisti possono guidare una banda, negoziare un passaggio o difendere un territorio. Le condotte descritte servono a interpretare il singolo avversario: specie e discendenza non determinano automaticamente ostilità, lealtà o morale. La loro presenza su Iris richiede una collocazione nell’avventura.
+
+| Creatura | GS | PX per 4 PG |
+| :---- | :---: | :---: |
+| Capo goblin | Inesperto | 22 |
+| Capitano hobgoblin | Veterano | 55 |
+| Signore della guerra hobgoblin | Elite | 77 |
+| Capobanda bugbear | Veterano | 55 |
+| Coboldo alato | Principiante | 11 |
+| Capobranco gnoll | Esperto | 33 |
+| Zanna di Yeenoghu | Veterano | 55 |
+| Capoguerra orco | Veterano | 55 |
+| Occhio di Gruumsh | Esperto | 33 |
+| Mezzogre (Ogrillon) | Esperto | 33 |
+
+**PX di riferimento.** Valori per un esemplare e quattro PG, comprensivi della dotazione Comune descritta. Capacità innate, comando e repertorio mistico sono già valutati nel GS. Il premio dell’incontro segue il Direttore §9.3, senza applicare di nuovo il moltiplicatore di dotazione.
+
+**Impiego.** I capi cercano riparo, alleati e condizioni favorevoli. Un comandante isolato perde l’utilità di diversi poteri, ma non cambia automaticamente scheda durante lo scontro. Resa, trattativa, liberazione di prigionieri o interruzione di un’incursione possono risolvere l’obiettivo dell’incontro.
+
+**Fonti e verifica.** Giocatore v0.49, Magia v1.5, Direttore v0.41 e Armamenti v0.64. I rimandi sono alle pagine stampate del Manuale dei Mostri fornito. GS e PX sono stime da verificare al tavolo, soprattutto quando più comandanti agiscono insieme. I nomi Yeenoghu e Gruumsh mantengono il riferimento alla fonte e non stabiliscono da soli la cosmologia di Iris.
+
+# **Popoli guerrieri regole comuni**
+
+**Corpo e Natura.** Tutti i dieci profili hanno Natura Comune, mente e PM personali. Respirano, mangiano, bevono e dormono; cure biologiche e normali Stati sono applicabili. La Zanna ha un’influenza spirituale dichiarata nella propria pagina, senza acquisire automaticamente Natura Oscura Simmetria, CROS, immunità o danno Etereo. Nessuno appartiene alla Covata.
+
+**PV e PM.** A 0 PV si continua ad applicare il §4.2: non si diventa automaticamente Svenuti o morti. Un ulteriore danno finale positivo subito quando si è già a 0 PV richiede Tempra e la procedura delle Ferite. L’eccedenza del colpo che esaurisce i PV non genera da sola Ferite. A 0 PM personali si diventa Svenuti dopo la risoluzione completa dell’azione; gli altri PM non sostituiscono la riserva personale.
+
+**Azioni.** INI modifica 1d10. AzP e unica AzM sono il budget dell’intero Round; ogni attacco normale costa 1 AzP e produce AC 1. I danni in tabella comprendono già i bonus fissi personali: non sommare ancora FOR, DES, Forza brutale o Furia. Più armi, ali o arti non concedono altre Azioni. L’Attacco di Opportunità ordinario è uno per Round, prima dell’uscita dalla portata, con arma ravvicinata pronta o morso/artiglio consentito.
+
+**Limiti offensivi.** Nei profili con un tetto agli attacchi, Opportunità e attacco ordinato consumano quel tetto anche se non consumano l’AzP ordinaria nello stesso modo. La sola Frenesia concede l’AzP aggiuntiva espressamente descritta. Comandi, Urlo e magia non sono attacchi di Opportunità. AzP conservate per Difese o ordini fuori Iniziativa non si recuperano al proprio turno nello stesso Round.
+
+**Difese e Armatura.** Parata costa 1 AzP e richiede arma o scudo idonei: successo dimezza per eccesso prima dell’AR, Magistrale annulla. Nessuna Parata naturale. Spade, mazze e altre armi ravvicinate hanno −8 VA per parare a distanza; Scudo piccolo o medio −4, con ulteriore −2 contro Raffica. Schivata richiede 1 AzP, 1 AzM, consapevolezza e spazio. Naturale e Magico incontrano l’AR pertinente; Etereo soltanto quella magica.
+
+**Movimento e attrezzatura.** Le terne sono Passo / Corsa / Scatto. Armatura Media: −1 ai VA degli attacchi, alla Schivata e alle Prove fisiche ostacolate; −1 Q al budget scelto. Pesante: −2 VA e −2 Q negli stessi ambiti. Parata, Percezione e PS non ricevono questi malus. I valori pronti li comprendono già. La protezione a 0 PI perde AR ma mantiene le penalità finché indossata. Estrarre, riporre o recuperare un oggetto costa 1 AzP salvo regola specifica; abbandonarlo è gratuito.
+
+# **Comandi disciplina e Frenesia**
+
+**Catena di comando.** Un ordine ordinario non costringe un alleato a obbedire. Richiede comprensione e un rapporto di comando o accordo effettivi; non è telepatia né controllo mentale. Le capacità di queste pagine funzionano solo sui beneficiari indicati. Un alleato non ottiene conoscenze che il capo non possiede, né può colpire un bersaglio fuori portata o non localizzato.
+
+**Disciplina hobgoblin.** Capitano e Signore della guerra possono attivarla alla propria Iniziativa con 1 AzP, una volta per scontro. Dura fino alla fine del terzo Round successivo all’attivazione, salvo interruzione. A ogni singolo evento, fino a quattro alleati consenzienti entro 6 Q, visibili al comandante e capaci di udire e comprendere le sue istruzioni, ricevono +1 al VA dei tiri per colpire e delle PS. Il comandante stesso è escluso.
+
+**Limiti della Disciplina.** Non migliora Difese, Potere, danni, AR, Movimento o Azioni. Fra più Discipline vale solo +1; come bonus di comando non si somma a Benedizione, Efficienza o altri bonus magici alla stessa Prova: si usa il maggiore pertinente. Uscire dai requisiti sospende il beneficio per quell’evento; rientrare non prolunga la durata. Il comandante deve poter parlare ed essere cosciente e operativo: Svenuto, Stordito, Paralizzato o impossibilità di comunicare interrompono l’attivazione. Negare Potere non rimuove un ordine non magico.
+
+**Attacco coordinato.** I due capi hobgoblin ottengono una volta per Round +3 danni a un singolo colpo d’arma riuscito se un proprio alleato cosciente, capace di attaccare, minaccia in mischia la vittima da entro 1 Q. Si aggiunge prima di moltiplicatori, Difese e AR, alla stessa AC. Vale anche su Opportunità o colpo ordinato se non già usato nel Round. Numero di alleati, più AC e ulteriori colpi non moltiplicano il beneficio; nessuno spende Azioni per concederlo.
+
+**Frenesia gnoll.** Capobranco e Zanna conservano questa capacità dello Gnoll: una volta per Round, se un proprio attacco ravvicinato alla propria Iniziativa rende un nemico Svenuto, Morente o morto, ottengono subito 1 AzP aggiuntiva utilizzabile soltanto per un Morso contro un altro nemico in portata. Possono prima spendere la propria AzM del Round, se ancora disponibile; nessuna AzM aggiuntiva. Il Morso di Frenesia non può attivare un’altra Frenesia. 0 PV senza tali esiti, resa o fuga non bastano.
+
+**Ordini fuori Iniziativa.** Incitare la Frenesia permette un singolo attacco immediato pagato dal destinatario con 1 AzP ancora disponibile del Round. Non è una nuova Iniziativa, non concede Movimento e non attiva Frenesia. Lo stesso destinatario può ricevere un solo attacco ordinato per Round da qualsiasi numero di capi; conserva la propria Opportunità ordinaria se non consumata e se il tetto del profilo lo consente. Non può spendere un’AzP di Frenesia non ancora ottenuta.
+
+# **Capo goblin**
+
+*Goblin • capo di una piccola banda • Natura Comune*
+
+Guida con agguati, minacce e vie di fuga. Preferisce farsi proteggere dai seguaci piuttosto che scambiare colpi in campo aperto. Fonte: Goblin Boss, p. 166.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 4 • DES 7 • COS 5 • INT 6 • SAG 5 • CAR 6 |
+| Risorse e protezioni | PV 26 • PM 8 • AR 2 con Scudo piccolo; 1 senza • AR magica 0 |
+| Difese e Salvezze | Difese 11 • Tempra 9 • Riflessi 11 • Volontà 10 • Magia 9 |
+| Iniziativa e Azioni | INI +2 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 6 / 12 / 18 Q • spazio 1 × 1 Q |
+| Abilità | Armi da mischia 11 • Armi da guerra 10 • Armi da lancio 11 • Furtività 13 • Percezione 10 • Oratoria 11 |
+| GS e PX per 4 PG | Inesperto • 22 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Spada leggera | 11 | 1d6+2 Naturale; Taglio | 1 Q |
+| Giavellotto a mano | 10 | 1d6 Naturale; Perforazione | 1 Q |
+| Giavellotto lanciato | 11 | 1d6+1 Naturale; Perforazione | massimo 12 Q |
+
+**Dotazione.** Spada leggera, FOR 3, PI 5; due Giavellotti della sentinella, FOR 3, PI 4; Armatura leggera, AR 1, FOR 3, PI 6; Scudo piccolo, AR +1, FOR 3, PI 4. Tutto Comune, PS Integrità 10. Inizia con Spada e Scudo pronti. Al massimo due attacchi per Round, Opportunità e colpo ordinato compresi; il secondo tiro per colpire del Round ha −2 VA, qualunque sia la sua origine.
+
+**Sgusciare.** Una volta per Round, prima di iniziare il proprio Passo, sceglie un nemico visibile: il movimento non provoca la sua Opportunità, ma può provocare quelle degli altri. Corsa, Scatto e Carica non ricevono il beneficio. Se termina quel Passo in condizioni adatte può effettuare Furtività per nascondersi senza un’ulteriore AzP; non diventa invisibile. Conserva lo Sgusciare del Goblin senza Movimento aggiuntivo.
+
+**Sensi e condotta.** Scurovisione 12 Q; parla Comune e Goblin. Sotto 7 PV, a Ferita Profonda o senza seguaci cerca una via di fuga o offre informazioni. La sua protezione opportunista richiede il costo e il consenso descritti nella pagina successiva.
+
+# **Capo goblin protezione opportunista**
+
+**Innesco e costo.** Una volta per Round, prima del tiro per colpire di un attacco diretto solo contro il Capo, può spendere 1 AzP ancora disponibile per farsi sostituire da un altro Goblin consenziente entro 1 Q. Deve percepire l’attacco; entrambi devono essere coscienti, mobili e in condizioni di reagire. Il sostituto deve avere spazio compatibile per occupare la posizione e non può essere trattenuto, Immobilizzato o incapace di muoversi.
+
+**Scambio.** I due scambiano la posizione. È l’unico Movimento concesso dalla capacità e non consuma l’AzM del sostituto; non permette di superare barriere o occupare un Q impraticabile. Per questa sola sostituzione non si generano Opportunità. Si tratta di un’eccezione tattica del profilo, non di una Manovra generale disponibile a tutti.
+
+**Nuovo bersaglio.** Il Goblin sostituto diventa il bersaglio dichiarato soltanto se, nella posizione del Capo, è ancora un bersaglio valido dello stesso attacco. Si ricalcolano eventuali modificatori pertinenti e poi si effettua il tiro. Il sostituto può effettuare le normali Difese spendendo le proprie risorse; non eredita Parate o Schivate del Capo. Il danno si applica soltanto al nuovo bersaglio, con le sue protezioni.
+
+**Esclusioni.** Non si usa dopo aver conosciuto il tiro, i danni o la Salvezza. Non devia Aree, Raffiche, attacchi a più bersagli o effetti che scelgono una mente o uno spirito senza tiro per colpire. Non assorbe un colpo già risolto e non trasferisce Stati già applicati. Se mancano i requisiti non si spende l’AzP e l’attacco continua contro il Capo.
+
+**Risorse e rischio.** Il sostituto non spende AzP per accettare lo scambio, ma il Capo sì: con entrambe le AzP già usate non può attivarlo. L’attaccante conserva la propria Azione e non riceve un nuovo attacco gratuito. Il consenso non viene prodotto dalla sola intimidazione o dall’appartenenza alla stessa specie; può venir meno quando la banda abbandona il capo.
+
+# **Capitano hobgoblin**
+
+*Hobgoblin • ufficiale di reparto • Natura Comune*
+
+Coordina una pattuglia e apre un varco con uno Spadone. Si espone quando i gregari possono sostenere l’assalto e conserva Azioni per difendersi. Fonte: Hobgoblin Captain, p. 186.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 7 • DES 6 • COS 7 • INT 6 • SAG 5 • CAR 7 |
+| Risorse e protezioni | PV 44 • PM 10 • AR 3 da Armatura media • AR magica 0 |
+| Difese e Salvezze | Parata 12 • Schivata / Elusione 10 • Tempra 11 • Riflessi 10 • Volontà 11 • Magia 10 |
+| Iniziativa e Azioni | INI +1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 5 / 11 / 17 Q • spazio 1 × 1 Q |
+| Abilità | Armi da guerra 12 • Armi da lancio 10 • Atletica 11 • Furtività 9 • Percezione 11 • Oratoria 12 |
+| GS e PX per 4 PG | Veterano • 55 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Spadone | 12 | 2d6+2 Naturale; Taglio | 1 Q |
+| Giavellotto a mano | 12 | 1d6+1 Naturale; Perforazione | 1 Q |
+| Giavellotto lanciato | 10 | 1d6 Naturale; Perforazione | massimo 21 Q |
+
+**Dotazione.** Spadone a due mani, FOR 6, PI 6; due Giavellotti della sentinella, FOR 3, PI 4; Armatura media, AR 3, FOR 5, PI 8. Tutto Comune, PS Integrità 10. Inizia con lo Spadone pronto, senza Scudo. Un lancio richiede di liberare una mano e preparare il Giavellotto; la mano libera non rende pronto quello riposto. Al massimo due attacchi per Round, Opportunità e colpo ordinato compresi.
+
+**Disciplina e coordinamento.** Possiede Disciplina hobgoblin e Attacco coordinato della pagina comune. Attivare la Disciplina consuma una delle sue due AzP: non effettua anche due colpi gratuiti. Il +3 di Attacco coordinato non è incluso nei danni della tabella e si aggiunge una sola volta quando i requisiti sono presenti.
+
+**Protezione e condotta.** I VA pronti includono la Media. Rimuovendola si recuperano +1 ai VA fisici penalizzati e Movimento 6 / 12 / 18 Q; Parata e PS restano invariate. Scurovisione 12 Q, Comune e Goblin. Sotto 11 PV o a Ferita Profonda cerca una ritirata ordinata; resa o trattativa restano possibili.
+
+# **Signore della guerra hobgoblin**
+
+*Hobgoblin • comandante di una forza organizzata • Natura Comune*
+
+Un veterano protetto da armatura completa e Scudo medio. Guida il reparto, sfrutta i fianchi scoperti e alterna colpi e Parate. Fonte: Hobgoblin Warlord, p. 187.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 8 • DES 6 • COS 8 • INT 7 • SAG 6 • CAR 8 |
+| Risorse e protezioni | PV 68 • PM 12 • AR 7 con Scudo medio; 5 senza • AR magica 0 |
+| Difese e Salvezze | Parata 14 • Schivata / Elusione 9 • Tempra 13 • Riflessi 11 • Volontà 13 • Magia 11 |
+| Iniziativa e Azioni | INI +1 • 3 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 4 / 10 / 16 Q • spazio 1 × 1 Q |
+| Abilità | Armi da guerra 13 • Armi da lancio 11 • Atletica 11 • Furtività 8 • Percezione 12 • Oratoria 14 |
+| GS e PX per 4 PG | Elite • 77 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Spada lunga | 13 | 1d8+3 Naturale; Taglio | 1 Q |
+| Giavellotto a mano | 13 | 1d6+2 Naturale; Perforazione | 1 Q |
+| Giavellotto lanciato | 11 | 1d6+1 Naturale; Perforazione | massimo 24 Q |
+
+**Dotazione.** Spada lunga, FOR 4, PI 5; due Giavellotti della sentinella, FOR 3, PI 4; Armatura pesante, AR 5, FOR 7, PI 10; Scudo medio, AR +2, FOR 5, PI 6. Tutto Comune, PS Integrità 10. Inizia con Spada e Scudo pronti. Al massimo tre attacchi per Round complessivi, dei quali non più di due lanci, Opportunità e attacco ordinato compresi. Occorre un Giavellotto distinto e pronto per ogni lancio.
+
+**Disciplina e vantaggio.** Possiede Disciplina hobgoblin e Attacco coordinato della pagina comune. Parata usa il VA 14 indicato e costa ogni volta 1 AzP: non si importa la Reazione gratuita della fonte. Attivare la Disciplina lascia due AzP disponibili, prima di eventuali altre spese.
+
+**Assetto e condotta.** I VA pronti includono la Pesante. Rimuovendola recupera +2 ai VA fisici penalizzati e Movimento 6 / 12 / 18 Q, perdendo AR 5; lo Scudo rimane distinto. Scurovisione 12 Q, Comune e Goblin. Sotto 17 PV o a Ferita Profonda cerca copertura, rinforzi o condizioni di resa. Non è obbligato a combattere fino alla morte.
+
+# **Signore della guerra urto di Scudo**
+
+**Azione e requisiti.** In questa conversione il colpo di Scudo della fonte usa una variante di atterramento senza danno: 1 AzP, un nemico adiacente entro 1 Q, di taglia non maggiore del comandante. Occorre lo Scudo medio impugnato e integro, terreno che consenta il contatto e la possibilità di esercitare una spinta. Non si sommano danno della Spada e atterramento nella stessa Azione.
+
+**Prova opposta.** Il comandante usa Armi da guerra 13 con −2 per questa variante di Sbilanciare Migliorato, quindi VA 11; la penalità della Pesante è già inclusa nel 13. Il bersaglio si oppone con Atletica oppure Difese per Schivare, a propria scelta. È un’opposizione difensiva della capacità, senza costo di AzP o AzM e senza ulteriore Schivata o Parata. Immobilizzato e altre penalità fisiche pertinenti si applicano, le PS non sono usate al loro posto. Si risolve con le normali regole delle Prove opposte del Giocatore.
+
+**Esito.** Se vince il comandante, il bersaglio diventa A Terra nel proprio spazio. Nessun danno ai PV o ai PI, spostamento, AC da localizzare o Magistrale automatico successivo. Un bersaglio già A Terra non subisce un effetto aggiuntivo. Per rialzarsi e per le penalità si usa lo Stato A Terra del Giocatore, senza introdurre Paralizzato o Stordito.
+
+**Limiti.** L’urto consuma uno dei tre impieghi offensivi del Round e non può essere usato come Opportunità o attacco ordinato. Non permette di atterrare automaticamente un Ogre, un volatore fuori portata o una creatura senza un assetto compatibile. Non si applicano Attacco coordinato, bonus al danno o Furia: questa variante non infligge danno.
+
+**Scelta tattica.** Usarlo lascia al comandante meno AzP per Spada, Disciplina e Parata. La vittima non perde tutte le sue Azioni e può reagire secondo il proprio budget. Fuori da questa scheda, le Manovre ordinarie conservano i propri requisiti: possedere uno Scudo non concede automaticamente questa variante.
+
+# **Capobanda bugbear**
+
+*Bugbear • assaltatore esperto • Natura Comune*
+
+Un capo fisicamente potente, abile nel colpire da un riparo e nel radunare seguaci intimiditi. La robustezza mentale non lo rende immune agli incantesimi. Fonte: Bugbear Chief, p. 33.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 8 • DES 6 • COS 7 • INT 6 • SAG 6 • CAR 6 |
+| Risorse e protezioni | PV 50 • PM 9 • AR 4 con Scudo piccolo; 3 senza • AR magica 0 |
+| Difese e Salvezze | Parata 12 • Schivata / Elusione 10 • Tempra 12 • Riflessi 10 • Volontà 10 • Magia 10 |
+| Iniziativa e Azioni | INI +1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 5 / 11 / 17 Q • spazio 1 × 1 Q |
+| Abilità | Armi da mischia 13 • Armi da guerra 12 • Armi da lancio 10 • Furtività 13 • Percezione 11 • Sopravvivenza 12 • Oratoria 12 |
+| GS e PX per 4 PG | Veterano • 55 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Mazza ferrata | 13 | 1d6+5 Naturale; Contusione | 1 Q |
+| Giavellotto a mano | 12 | 1d6+4 Naturale; Perforazione | 1 Q |
+| Giavellotto lanciato | 10 | 1d6+1 Naturale; Perforazione | massimo 24 Q |
+
+**Dotazione e forza.** Mazza ferrata, FOR 4, PI 5; due Giavellotti della sentinella, FOR 3, PI 4; Armatura media, AR 3, FOR 5, PI 8; Scudo piccolo, AR +1, FOR 3, PI 4. Tutto Comune, PS Integrità 10. Inizia con Mazza e Scudo. Forza brutale aggiunge +2 ai danni personali delle armi ravvicinate, già inclusi; non si trasferisce agli oggetti raccolti, ai lanci o a danni periodici. Al massimo due attacchi per Round, Opportunità e colpo ordinato compresi.
+
+**Agguato.** Una volta per incontro, nel primo Round cui partecipa, può dichiarare +2 danni a un proprio attacco ravvicinato contro una vittima che non lo aveva individuato prima dell’attacco. Si dichiara prima del tiro e si consuma anche mancando. Stessa AC, prima di moltiplicatori, Difese e AR. Vincere l’Iniziativa o sfruttare una Distrazione non dimostra da solo un agguato.
+
+**Tenacia e condotta.** +2 alla sola PS pertinente contro fascinazione, Terrorizzato, Paralizzato, Avvelenato, Stordito e Sonno, senza immunità o PS aggiuntive quando non previste. Scurovisione 12 Q, Comune e Goblin. Sotto 13 PV o a Ferita Profonda può abbandonare la banda. La Media è già conteggiata; rimossa recupera +1 ai VA fisici penalizzati e Movimento 6 / 12 / 18 Q.
+
+# **Coboldo alato**
+
+*Coboldo • esploratore e incursore volante • Natura Comune*
+
+Una variante alata del Coboldo, capace di passare sopra ostacoli e lasciar cadere pietre. La vulnerabilità al sole e le tattiche di branco rimangono. Fonte: Winged Kobold, p. 195.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 3 • DES 6 • COS 4 • INT 5 • SAG 4 • CAR 4 |
+| Risorse e protezioni | PV 12 • PM 5 • AR 0 • AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 8 • Riflessi 10 • Volontà 8 • Magia 8 |
+| Iniziativa e Azioni | INI +1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra e volo 6 / 12 / 18 Q • spazio 1 × 1 Q |
+| Abilità | Armi da mischia 9 • Armi da lancio 9 • Furtività 11 • Percezione 9 • Atletica 9 • Tecnologia 10 per trappole semplici |
+| GS e PX per 4 PG | Principiante • 11 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Pugnale a mano | 9 | 1d4+2 Naturale; Perforazione | 1 Q |
+| Pugnale lanciato | 9 | 1d4+2 Naturale; Perforazione | massimo 9 Q |
+| Pietra lasciata cadere | 9 | 1d4+1 Naturale; Contusione | direttamente sotto, entro 6 Q |
+
+**Dotazione e attacchi.** Tre Pugnali Comuni, FOR 2, PI 4, PS Integrità 10, e tre pietre; una pietra già pronta in una mano, un Pugnale nell’altra. Una pietra è una munizione improvvisata di questo profilo, non un’arma recuperabile con proprietà speciali. Ogni lancio o caduta consuma un oggetto pronto; prepararne un altro costa 1 AzP. L’attacco con pietra richiede bersaglio visibile direttamente sotto la verticale, senza ostacoli; non è un’Area. Al massimo un attacco per Round, Opportunità e colpo ordinato compresi; l’Opportunità usa soltanto il Pugnale impugnato.
+
+**Branco e sole.** +2 al VA del tiro per colpire se un alleato cosciente e capace di attaccare minaccia la vittima in mischia da entro 1 Q; non aggiungere un secondo vantaggio numerico per la stessa circostanza. −2 ai tiri per colpire e a Percezione basata sulla vista se il Coboldo oppure il bersaglio è sotto sole diretto; una sola penalità anche se entrambi lo sono. Luce diffusa o artificiale non basta.
+
+**Volo e sensi.** Ali e spazio funzionali necessari; può sostenersi battendole senza percorso minimo. Corsa e Scatto in volo richiedono Atletica −2 e −4. Quota, decollo e atterraggio usano l’unica AzM; perdita del sostegno o incoscienza possono farlo cadere. Scurovisione 12 Q, Comune e Draconico. Sotto 3 PV o isolato cerca un riparo o fugge.
+
+# **Capobranco gnoll**
+
+*Gnoll • guida di una banda predatrice • Natura Comune*
+
+Coordina il branco con richiami e assalti ravvicinati. L’arma lunga protegge i compagni senza concedere colpi gratuiti a ogni comando. Fonte: Gnoll Pack Lord, p. 163.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 7 • DES 6 • COS 6 • INT 5 • SAG 5 • CAR 5 |
+| Risorse e protezioni | PV 40 • PM 9 • AR 3 da Armatura media • AR magica 0 |
+| Difese e Salvezze | Parata 11 • Schivata / Elusione 10 • Tempra 11 • Riflessi 10 • Volontà 9 • Magia 9 |
+| Iniziativa e Azioni | INI +1 • 2 AzP più eventuale Frenesia; 1 AzM per Round |
+| Movimento e spazio | Terra 5 / 11 / 17 Q • spazio 1 × 1 Q |
+| Abilità | Armi da guerra 12 • Armi da lancio 11 • Corpo a corpo 11 • Atletica 11 • Percezione 12 • Sopravvivenza 12 • Oratoria 11 |
+| GS e PX per 4 PG | Esperto • 33 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Arma inastata pesante | 12 | 1d8+2 Naturale; Taglio | 2 Q |
+| Morso | 11 | 1d4+2 Naturale; Perforazione | 1 Q |
+| Arco da guerra | 11 | 1d6+1 Naturale; Perforazione | massimo 100 Q |
+
+**Dotazione.** Arma inastata pesante a due mani, FOR 6, PI 6; Arco da guerra a due mani, FOR 5, PI 6, con 20 frecce; Armatura media, AR 3, FOR 5, PI 8. Tutto Comune, PS Integrità 10. Inizia con l’arma inastata, senza Scudo. Incoccare è compreso nell’attacco con arco pronto; cambio d’arma segue le AzP ordinarie. Al massimo due attacchi normali per Round, Opportunità e colpo ordinato compresi, più l’unico Morso eventualmente ottenuto da Frenesia.
+
+**Incitare la Frenesia.** 1 AzP e 2 PM, una volta per Round, alla propria Iniziativa: un altro alleato con la capacità Frenesia gnoll, visibile entro 6 Q e capace di udire e comprendere il richiamo, può effettuare subito un singolo attacco ravvicinato pagando 1 propria AzP ancora disponibile. Si applicano limiti e divieti della pagina comune. Non concede un’AzP, un nuovo Morso gratuito o un attacco con l’arco.
+
+**Frenesia e condotta.** Possiede la Frenesia della pagina comune. Il Morso è Naturale e non concede Parata naturale a chi lo usa; nessuna Salvezza o infezione aggiuntiva. Scurovisione 12 Q, Comune e Gnoll. Sotto 10 PV o a Ferita Profonda cerca di riunire i superstiti e ripiegare. La Media è già inclusa: rimossa recupera +1 ai VA fisici penalizzati e Movimento 6 / 12 / 18 Q.
+
+# **Zanna di Yeenoghu**
+
+*Gnoll • campione sotto influenza spirituale • Natura Comune*
+
+Una variante del combattente gnoll dal morso tossico e dagli artigli sviluppati. Il nome indica il culto della fonte; questa scheda ne definisce soltanto il corpo combattente. Fonte: Gnoll Fang of Yeenoghu, pp. 162–163.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 8 • DES 6 • COS 7 • INT 5 • SAG 5 • CAR 6 |
+| Risorse e protezioni | PV 54 • PM 10 • AR 1 da Armatura leggera • AR magica 0 |
+| Difese e Salvezze | Difese 11 • Tempra 12 • Riflessi 11 • Volontà 11 • Magia 10 |
+| Iniziativa e Azioni | INI +1 • 3 AzP più eventuale Frenesia; 1 AzM per Round |
+| Movimento e spazio | Terra 6 / 12 / 18 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 13 • Atletica 12 • Percezione 11 • Sopravvivenza 12 • Furtività 10 • Oratoria 12 |
+| GS e PX per 4 PG | Veterano • 55 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Artiglio | 13 | 1d8+2 Naturale; Taglio | 1 Q |
+| Morso | 13 | 1d6+2 Naturale; Perforazione, più tossina se applicabile | 1 Q |
+
+**Attacchi e dotazione.** Armatura leggera Comune, AR 1, FOR 3, PI 6, PS Integrità 10; nessuna arma impugnata. Al massimo tre attacchi normali per Round, dei quali non più di due Artigli e un Morso, Opportunità e colpo ordinato compresi. Il Morso di Frenesia può aggiungersi ed è l’unica eccezione al limite di un Morso; non genera un’altra Frenesia. Artigli e Morso sono parti del corpo e non concedono Parata.
+
+**Tossina.** Una sola volta per Round, sul primo Morso che infligge almeno 1 danno fisico finale a una vittima biologicamente vulnerabile, impone Tempra 0. Fallimento: 1d6 danni Naturali da veleno immediati, senza ulteriore tiro per colpire; successo evita. La tossina non incontra di nuovo l’AR ordinaria della ferita, ma si applicano protezioni specifiche contro veleno. È un evento separato dal morso, non moltiplicato dal suo Magistrale e capace di richiedere Tempra per Ferite se raggiunge una vittima ormai a 0 PV.
+
+**Sensi e condotta.** Scurovisione 12 Q; parla Gnoll e Abissale. Nessuna immunità biologica o mentale. Sotto 14 PV o a Ferita Profonda può ripiegare verso il branco oppure obbedire a una consegna fanatica fissata dal Direttore. Non guadagna bonus o PX ulteriori per il solo appellativo demoniaco.
+
+# **Zanna tossina e influenza spirituale**
+
+**Limite della tossina.** L’uso del Round si consuma quando il primo Morso produce la PS, anche se la vittima la supera. Un bersaglio immune o privo di fisiologia compatibile non riceve la tossina e non consuma l’uso, ma può subire il danno fisico del Morso. Il Morso di Frenesia può iniettarla solo se non è stata ancora applicata in quel Round. Nessuno Stato Avvelenato persistente, nuove dosi periodiche o danni retroattivi.
+
+**Protezioni e cure.** Immunità al veleno o ad Avvelenato evita la tossina; bonus specifici modificano la PS pertinente. Per questa variante il veleno è naturale di Pericolosità II, Importante. Antidoti preventivi compatibili seguono la propria scheda. Dopo il danno immediato non resta una causa tossica da neutralizzare: Cura Avvelenamenti non restituisce i PV o annulla Ferite già subite. Il normale recupero e le cure dei danni restano possibili.
+
+**Influenza.** La fonte descrive una possessione demoniaca all’origine del campione. Qui viene conservata come influenza su una creatura vivente, senza un secondo avversario annidato, una riserva esterna o un trasferimento automatico al momento della morte. La Zanna conserva mente e PM: Dardo Psichico, Dardo Spirituale e influenze mentali possono raggiungerla secondo le proprie schede. La fedeltà al culto non è un’immunità.
+
+**Nessun contagio.** Morso, sangue, vicinanza o uccisione della Zanna non trasferiscono questa condizione e non aumentano automaticamente CROS. La generazione di altri campioni, l’emersione di un demone autonomo o un vero esorcismo richiedono un effetto o un’avventura definiti separatamente. Questa voce non assegna a Negare Potere la capacità di cancellare artigli, Frenesia o addestramento.
+
+**Ferite e fisiologia.** La tossina applica un solo evento ai PV. Quando il Morso ha soltanto esaurito i PV, la successiva tossina con danno residuo trova già la vittima a 0 PV e segue la normale procedura delle Ferite. Se il danno fisico del Morso era interamente assorbito, non c’è esposizione: non si effettua la PS né il tiro di veleno.
+
+# **Capoguerra orco**
+
+*Orco • capo combattente • Natura Comune*
+
+Un veterano capace di concentrare un assalto con un richiamo. Può sostenere un duello o una trattativa senza rappresentare automaticamente tutti gli Orchi. Fonte: Orc War Chief, p. 246.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 8 • DES 5 • COS 8 • INT 6 • SAG 5 • CAR 8 |
+| Risorse e protezioni | PV 56 • PM 11 • AR 3 da Armatura media • AR magica 0 |
+| Difese e Salvezze | Parata 12 • Schivata / Elusione 9 • Tempra 13 • Riflessi 10 • Volontà 12 • Magia 10 |
+| Iniziativa e Azioni | INI 0 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 5 / 11 / 17 Q • spazio 1 × 1 Q |
+| Abilità | Armi da guerra 13 • Armi da lancio 11 • Atletica 12 • Percezione 11 • Oratoria 14 |
+| GS e PX per 4 PG | Veterano • 55 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Ascia bipenne | 13 | 2d6+5 Naturale; Taglio | 1 Q |
+| Lancia, una / due mani | 13 | 1d6+5 / 1d6+7 Naturale; Perforazione | 2 Q |
+
+**Dotazione e Furia.** Ascia bipenne a due mani, FOR 6, PI 6; Lancia, FOR 5, PI 6; Armatura media, AR 3, FOR 5, PI 8. Tutto Comune, PS Integrità 10. Inizia con la Bipenne pronta, senza Scudo. Furia aggiunge +2 al danno personale delle armi del profilo, già inclusi: non conferisce Natura Magica, non si trasferisce all’arma e non modifica danni periodici. La Lancia non ha un profilo di lancio; non viene usata come Giavellotto. Al massimo due attacchi per Round, Opportunità e colpo ordinato compresi.
+
+**Avanzata aggressiva.** Una volta per Round può usare la propria AzM come Passo verso un nemico visibile con budget 7 Q anziché 5. Il percorso non può allontanarlo dal nemico e deve terminare più vicino. Nessun’altra AzM, né aumento a Corsa, Scatto, Schivata o Carica; Opportunità normali. Rimuovendo la Media, Passo / Corsa / Scatto tornano 6 / 12 / 18 Q e questo Passo aggressivo arriva a 8 Q.
+
+**Urlo e condotta.** L’Urlo di guerra è nella pagina seguente e consuma un’AzP. Scurovisione 12 Q, Comune e Orchesco. Sotto 14 PV o a Ferita Profonda può cercare una posizione protetta, trattare o ritirarsi; non ha una Frenesia gnoll. I VA includono già −1 da Media; rimossa si recupera +1 ai VA fisici penalizzati.
+
+# **Capoguerra Urlo di guerra**
+
+**Attivazione.** Una volta per scontro, alla propria Iniziativa, 1 AzP e 2 PM. Sceglie fino a quattro altri alleati consenzienti visibili entro 6 Q che possano udire e comprendere il richiamo. Il Capoguerra non è un beneficiario. L’effetto inizia dopo l’attivazione e termina all’inizio della successiva Iniziativa del Capoguerra; se essa non può avvenire, termina comunque allo stesso conteggio d’Iniziativa del Round successivo.
+
+**Beneficio.** +2 al VA dei tiri per colpire dei beneficiari per quella durata. Nessun bonus a Difese, Potere, PS, danni o Azioni. Il richiamo non concede attacchi immediati, movimento fuori turno o opportunità aggiuntive. Il Capoguerra può usare l’AzP ordinaria rimasta per attaccare, muoversi con l’AzM disponibile o conservarla per difendersi: non esegue il colpo gratuito della fonte.
+
+**Cumulo.** Fra Urli vale il maggiore beneficio, senza sommare più capi. Per la stessa Prova, Urlo e Disciplina hobgoblin non si sommano; con Benedizione, Efficienza e altri bonus magici al tiro si usa il maggiore applicabile. Bonus per circostanze realmente diverse seguono il Giocatore. Tattiche di branco non si contano due volte come identico vantaggio numerico.
+
+**Durata breve.** Dopo aver ricevuto il richiamo non occorre restare in gittata; la perdita di coscienza del Capoguerra non cancella l’impeto già ricevuto. Non è un controllo mentale e non obbliga ad attaccare. La paura continua a imporre i propri divieti: un bonus al VA non autorizza azioni vietate da Terrorizzato. Negare Potere non rimuove questo incitamento non magico.
+
+**Recupero e identità.** La scena deve essere realmente conclusa prima di recuperare l’uso: allontanarsi per un Round o cambiare bersaglio non basta. I PM spesi non tornano automaticamente con l’uso e seguono il recupero personale. Il favore attribuito a Gruumsh nella fonte è rappresentato dalla Furia e dall’Urlo di questo profilo, senza aggiungere un effetto spirituale non descritto.
+
+# **Occhio di Gruumsh**
+
+*Orco • ministro di un culto guerriero • Natura Comune*
+
+Un combattente ritualista che sostiene i compagni e impone brevi ordini con la magia. Il titolo e la menomazione rituale della fonte non concedono nuove immunità. Fonte: Orc Eye of Gruumsh, p. 247.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 7 • DES 5 • COS 7 • INT 5 • SAG 7 • CAR 6 |
+| Risorse e protezioni | PV 36 • PM 18 • AR 5 con Scudo medio; 3 senza • AR magica 0 |
+| Difese e Salvezze | Parata 11 • Schivata / Elusione 9 • Tempra 11 • Riflessi 9 • Volontà 11 • Magia 11 |
+| Iniziativa e Azioni | INI 0 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 5 / 11 / 17 Q • spazio 1 × 1 Q |
+| Abilità | Armi da guerra 11 • Atletica 10 • Percezione 11 • Oratoria 12 • Occultismo 11 • Potere 12; lancio con Media 9 |
+| GS e PX per 4 PG | Esperto • 33 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Lancia, una / due mani | 11 | 1d6+4 / 1d6+6 Naturale; Perforazione | 2 Q |
+
+**Dotazione.** Lancia, FOR 5, PI 6; Armatura media, AR 3, FOR 5, PI 8; Scudo medio, AR +2, FOR 5, PI 6. Tutto Comune, PS Integrità 10. Focus personale semplice già sintonizzato, senza PM o bonus, secondo Equipaggiamento §5.8. Inizia con Lancia a una mano e Scudo; la presa a due mani richiede liberarsi dello Scudo e porta AR a 3. La Lancia non è un Giavellotto. Un solo attacco d’arma per Round, Opportunità e colpo ordinato compresi; il lancio di un incantesimo usa l’AzP e non aggiunge un attacco d’arma.
+
+**Furia e avanzata.** Furia +2 ai danni personali della Lancia, già inclusi, senza Natura Magica o bonus all’oggetto. Conserva l’Avanzata aggressiva dell’Orco: proprio Passo 7 Q con Media verso un nemico visibile, senza allontanarsi lungo il percorso e terminando più vicino. Nessuna AzM aggiuntiva o aumento delle altre andature. Opportunità normali.
+
+**Sensi e condotta.** Scurovisione 12 Q, Comune e Orchesco. Il valore di Percezione rappresenta già il profilo con un occhio; non aggiungere una penalità generica permanente. Sotto 9 PV o a Ferita Profonda cerca protezione o si arrende secondo il culto e la situazione. Rimossa la Media recupera +1 ai VA fisici penalizzati, lancio Potere 12 e Movimento 6 / 12 / 18 Q; Passo aggressivo 8 Q.
+
+# **Occhio repertorio e lancio**
+
+**Repertorio chiuso.** È un utilizzatore autorizzato con accesso soltanto a Benedizione 3, Comando 3 e Dardo Spirituale 3, nelle versioni qui indicate. Non possiede Addestramento Taumaturgo, Contromagia, Anticipazione, Meditazione o Convertire Potere. Non riceve altri livelli, rituali, presagi automatici o una seconda creatura armata evocata. Dardo Spirituale converte la minaccia spirituale della fonte in un attacco del nostro catalogo.
+
+**Costo e Prova.** Ogni lancio richiede 1 AzP e 3 PM, pagati prima della Prova. Potere base 12, con −3 da Armatura media: VA pronto 9 anche al livello 3. Ingaggio aggiunge −2 quando pertinente, portando a 7; non è compreso nel 9 della scheda. Mancanza di Focus, Gesti o Invocazione dà ciascuna il normale −2, fino a −6. Per Comando la voce è obbligatoria e non può essere omessa. Fallimento consuma AzP e PM; Magistrale e Maldestro seguono la Magia.
+
+**Mani e preparazione.** La scheda non concede esclusioni delle Componenti. Deve liberare una mano per i Gesti; abbandonare la Lancia è gratuito, riprenderla richiede 1 AzP. Per usare la Lancia a due mani deve invece riporre o abbandonare lo Scudo, perdendone l’AR. Il Focus semplice sintonizzato non è una batteria. Può omettere Gesti e accettarne la penalità nei lanci che lo consentono, senza creare una mano libera fittizia.
+
+**Benedizione 3.** Magia §23.3: un lancio, 3 PM, fino a due beneficiari consenzienti visibili entro 6 Q, sé stesso compreso; se sono due devono essere concatenati entro 2 Q al lancio. +1 alle Prove di Abilità, Caratteristica e alle quattro PS per 10 Round, senza Concentrazione o PS iniziale. Nessun bonus a danni, AR, PV, PM, Azioni o Movimento. Uscire dalla gittata non lo elimina. Si usa il maggiore bonus magico pertinente e non si somma a Disciplina o Urlo sulla stessa Prova.
+
+**Durata e cessazione.** Per Benedizione, durata 10 applicata nel Round R termina a fine Round R + 10. Incoscienza o morte dell’Occhio non cancellano l’effetto già applicato. Negare Potere può rimuoverlo da un beneficiario, potenza 3. Queste tre versioni non richiedono Concentrazione; gli effetti istantanei non rimangono disponibili per una dissoluzione successiva.
+
+# **Occhio Comando e Dardo Spirituale**
+
+**Comando 3.** Magia §19.2: 1 AzP, 3 PM e Potere come nella pagina precedente. Un bersaglio visibile entro 6 Q, capace di udire e comprendere un singolo ordine di massimo tre parole; Volontà 0 evita. Barriera Mentale migliora la PS. Nessun tiro per colpire, AR, Parata, Schivata o Elusione. Fallita la PS, tenta l’ordine nel primo proprio turno successivo entro al massimo 1 AzP e l’AzM disponibili, senza ottenerne altre; l’effetto scade alla fine di quel turno.
+
+**Limiti del Comando.** Non impone autolesionismo diretto, tradimento di principi morali profondi o lealtà, uso di incantesimi o spesa di PM e PE. «Fermo» impedisce il Movimento volontario ma conserva AzP e Difese; «Cadi» costa al bersaglio 1 AzP per andare A Terra e impedisce di rialzarsi in quel turno. Il tentativo soddisfa l’ordine anche se fallisce. Un comando palesemente impossibile al lancio consuma PM senza effetto. Impossibilità sopravvenuta dopo una PS fallita applica la perdita del turno prevista dalla scheda, senza dichiarare Stordito.
+
+**Sovrapposizione.** Un solo Comando attivo per vittima: un nuovo lancio cui fallisce la PS sostituisce il precedente. I danni non terminano l’ordine né concedono nuove PS; Negare Potere 3 può rimuoverlo prima dell’esecuzione. L’Occhio non possiede una preparazione gratuita con Oratoria: un’eventuale Manovra sociale paga tempi e costi ordinari.
+
+**Dardo Spirituale 3.** Magia §23.5: 1 AzP, 3 PM e Potere ordinario del profilo. Una creatura vivente o entità spirituale ammessa, visibile entro 6 Q. Infligge 1d4 danni Eterei ai PV e sottrae 1 PM personale; Magia 0 dimezza separatamente per eccesso, quindi il singolo PM è comunque perso salvo protezioni specifiche. Nessun tiro per colpire o Difesa attiva. Una AC per i PV: AR magica assorbe, AR ordinaria no. La perdita di PM è distinta, non ridotta dall’AR e non viene ricevuta dall’Occhio.
+
+**Bersagli e protezioni.** Dardo Spirituale non colpisce normali oggetti o dispositivi, Ectoplasma o costrutti puramente meccanici salvo eccezioni del Bestiario. PM — non è 0 PM e non produce svenimento o danni sostitutivi. Scudo Spirituale modifica la PS e la perdita di PM secondo la propria scheda; Barriera Mentale non protegge da questo dardo spirituale. Si applicano le altre interferenze e barriere della Magia. A 0 PM personali l’incoscienza si verifica dopo la risoluzione completa dell’azione.
+
+# **Mezzogre (Ogrillon)**
+
+*Umanoide di discendenza ogre • combattente robusto • Natura Comune*
+
+Un individuo dalla grande corporatura, meno massiccio di un Ogre. Può lavorare come guardia, guida o mercenario; la discendenza non decide le sue scelte. Fonte: Half-Ogre, p. 238.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 8 • DES 5 • COS 7 • INT 4 • SAG 4 • CAR 5 |
+| Risorse e protezioni | PV 36 • PM 6 • AR 1 da Armatura leggera • AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 12 • Riflessi 9 • Volontà 9 • Magia 9 |
+| Iniziativa e Azioni | INI 0 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 6 / 12 / 18 Q • spazio 2 × 2 Q |
+| Abilità | Armi da mischia 11 • Armi da guerra 11 • Armi da lancio 9 • Atletica 13 • Percezione 9 • Oratoria 10 |
+| GS e PX per 4 PG | Esperto • 33 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Ascia leggera | 11 | 1d6+3 Naturale; Taglio | 1 Q |
+| Giavellotto a mano | 11 | 1d6+2 Naturale; Perforazione | 1 Q |
+| Giavellotto lanciato | 9 | 1d6 Naturale; Perforazione | massimo 24 Q |
+
+**Dotazione.** L’ascia da battaglia della fonte è convertita in Ascia leggera del catalogo, una mano, FOR 4, PI 5, senza impugnatura Versatile. Due Giavellotti della sentinella, FOR 3, PI 4; Armatura leggera della propria misura, AR 1, FOR 3, PI 6. Tutto Comune, PS Integrità 10. Inizia con Ascia pronta e mano secondaria libera, senza Scudo. Preparare ogni Giavellotto costa 1 AzP. Al massimo un attacco per Round, Opportunità e attacco ordinato compresi.
+
+**Taglia e capacità.** Spazio 2 × 2 Q non concede più danni, Azioni, PI, qualità o portata. La portata si misura dal bordo dello spazio secondo il Giocatore. Il danno personale dell’Ascia è già completo; altri utilizzatori recuperano l’oggetto Comune del catalogo, senza il bonus personale del Mezzogre. Non possiede Forza brutale del Bugbear o Furia dell’Orco.
+
+**Sensi e condotta.** Scurovisione 12 Q; parla Comune e Gigante. Sotto 9 PV o a Ferita Profonda cerca una via di fuga o tratta. Barriere, oggetti, carico e passaggi stretti seguono le regole ordinarie: la grande forza non sfonda automaticamente muri e porte.
+
+# **Predatori straordinari**
+
+*Dieci creature per caccia, territori estremi e agguati insoliti*
+
+Questi predatori completano i profili delle bestie con soffi elementali, traslazioni, corpi incandescenti e grandi rapaci. Non sono automaticamente ostili a ogni viaggiatore: fame, nido, addestramento, accordi o difesa del territorio determinano il comportamento. Alcuni comprendono linguaggi e possono negoziare. La loro presenza su Iris richiede una collocazione nell’avventura.
+
+| Creatura | GS | PX per 4 PG |
+| :---- | :---: | :---: |
+| Worg | Inesperto | 20 |
+| Lupo invernale | Veterano | 50 |
+| Segugio infernale | Veterano | 50 |
+| Cane della morte | Esperto | 30 |
+| Cane intermittente | Inesperto | 20 |
+| Ragno di fase | Veterano | 50 |
+| Remorhaz giovane | Eroe | 70 |
+| Remorhaz | Leggenda | 100 |
+| Peryton | Esperto | 30 |
+| Roc | Leggenda | 100 |
+
+**PX di riferimento.** Valori per un esemplare e quattro PG, senza dotazione recuperabile. Le capacità innate sono già comprese nel GS; nessun moltiplicatore di equipaggiamento. Il premio complessivo dell’incontro segue il Direttore §9.3.
+
+**Impiego.** Ripari, vie di fuga, terreno, quota e possibilità di soccorso devono essere leggibili nella scena. Il Roc può minacciare un carico o un animale; il Worg può trattare; un Remorhaz può essere aggirato evitando le vibrazioni che attirano la sua attenzione. Raggiungere l’obiettivo non richiede sempre uccidere il predatore.
+
+**Fonti e verifica.** Giocatore v0.49, Magia v1.5, Direttore v0.41 e Armamenti v0.64; pagine stampate del Manuale dei Mostri fornito. GS e PX sono stime da verificare al tavolo, soprattutto per fase, danni da contatto, presa e trasporto in quota. Le capacità non costituiscono nuovi incantesimi o opzioni gratuite per i PG.
+
+# **Predatori regole comuni**
+
+**Corpi viventi.** Tutti hanno Natura Comune, mente e PM personali. Respirano, mangiano, bevono e richiedono riposo; veleni, malattie e cure biologiche possono interessarli salvo immunità esplicite. Il nome Segugio infernale non assegna Natura Oscura Simmetria o CROS. Non appartengono alla Covata e non ne applicano il disorientamento da freddo.
+
+**PV PM e Ferite.** A 0 PV non sono automaticamente morti o Svenuti. Si usa il §4.2: un nuovo danno finale positivo, quando il bersaglio è già a 0 PV, richiede Tempra e le normali Ferite. L’eccedenza del colpo che esaurisce i PV non genera da sola Ferite. A 0 PM personali si diventa Svenuti dopo la risoluzione completa dell’azione; PM personali e riserve esterne rimangono distinti.
+
+**Azioni e attacchi.** INI modifica 1d10. AzP e unica AzM valgono per tutto il Round. Ogni attacco normale costa 1 AzP e produce AC 1; il danno in tabella è già completo, senza aggiungere ancora FOR o DES. I limiti offensivi comprendono Opportunità e attacchi ordinati fuori Iniziativa. Un’unica Opportunità ordinaria per Round usa soltanto Morso, Becco, Corna o Artigli ammessi, non Soffi, teletrasporto, inghiottimento o Manovre offensive.
+
+**Difese e protezioni.** Nessuna Parata naturale. Schivata costa 1 AzP e 1 AzM e richiede consapevolezza, spazio e una funzione locomotoria utilizzabile. Le opposizioni passive espressamente previste non sono Schivate aggiuntive a pagamento. Naturale e Magico incontrano l’AR pertinente, Etereo soltanto quella magica. Nessuno ha AR magica. Le immunità elementali valgono soltanto per gli elementi dichiarati, di qualunque Natura.
+
+**Sensi e Branco.** Un senso acuto concede +2 a Percezione quando il senso indicato è determinante, una sola volta per Prova. Non sostituisce automaticamente Furtività, ostacoli e localizzazione. Branco, soltanto per Lupo invernale e Segugio infernale, concede +2 ai tiri per colpire se un alleato cosciente e capace di attaccare minaccia la vittima in mischia da entro 1 Q. Non aggiungere un secondo vantaggio numerico per la stessa circostanza. Il bonus non modifica Soffi o PS.
+
+**Movimento e parti.** Terne Passo / Corsa / Scatto in Q; percorsi misti e carico usano un budget unico. Corsa e Scatto in volo richiedono Atletica −2 e −4. Ali, quota e spazio sono necessari; i rapaci non levitano immobili. Perdita del sostegno o incoscienza possono provocare Caduta. Testa comprende bocca e sensori, Torace il corpo, Braccia e Gambe i gruppi di arti corrispondenti; per Peryton e Roc le Braccia sono le ali. Le eccezioni anatomiche sono indicate nelle singole voci.
+
+# **Predatori Soffi e danni elementali**
+
+**Soffi.** Lupo invernale e Segugio infernale spendono 2 AzP alla propria Iniziativa. Un cono lungo 3 Q dalle fauci: a distanza 1, 2 e 3 Q è largo rispettivamente 1, 2 e 3 Q, centrato sulla direzione scelta. Richiede un percorso libero; pareti e solidi fermano le parti schermate. Tutte le creature nell’Area, alleati compresi, sono coinvolte. Non occorre tiro per colpire e non si applica Branco.
+
+**Elusione.** Per ogni vittima, Riflessi 0 per Eludere l’Area se concretamente possibile: successo dimezza per eccesso il danno prima dell’AR, fallimento o impossibilità lo lascia intero. Non consuma AzP o AzM. Coperture pertinenti modificano la PS; non si aggiungono una Parata, una Schivata o un altro tiro iniziale contro lo stesso soffio. Una sola AC per vittima.
+
+**Intervallo.** Dopo l’uso nel Round R il medesimo predatore non può soffiare prima di R + 3. Nessun costo in PM e nessuna ricarica casuale. Cambiare bersaglio, recuperare PV, entrare in un nuovo tratto della stessa scena o essere curato non azzerano l’intervallo. Il Soffio sostituisce entrambe le AzP, senza Morso aggiuntivo.
+
+**Fuoco e Gelo.** Dopo almeno 1 danno elementale residuo oltre Difesa, AR e Contromisura pertinente, il Fuoco impone Riflessi 0 contro Incendiato e il Gelo Tempra 0 contro Rallentato. Sono PS di Stato distinte da Elusione. Successo evita lo Stato, fallimento lo applica per 1+1d3 Round; nessun altro danno iniziale è annullato. Ignifugo e Termico non riducono i PV persi: possono impedire lo Stato secondo il Giocatore §5.24.
+
+**Componenti miste.** Morso del Segugio e dei Remorhaz produce una sola AC con una componente fisica e una di Fuoco. Si applicano Difesa e protezioni pertinenti a ciascuna componente e si aggregano i residui per una sola applicazione ai PV e alle Ferite. Non si aggiungono due colpi o due tiri per colpire. Solo il residuo di Fuoco può innescare Incendiato. Un’immunità al Fuoco non annulla il danno fisico.
+
+**Stati e fonte.** Incendiato infligge subito 1d4 e poi all’Iniziativa della fonte, al massimo una volta per Round, con −2 alle Abilità ma non alle PS. Ignora l’AR non magica generica; protezioni specifiche e AR magica restano pertinenti. Spegnersi segue il Giocatore. Rallentato limita il Passo a 3 Q, vieta Corsa e Scatto e dà −2 alle Prove fisiche e alle Difese. Applicazioni ripetute non sommano lo stesso Stato e conservano la scadenza più lontana; durata N nel Round R termina a fine R + N.
+
+# **Worg**
+
+*Canide senziente • cacciatore e possibile alleato di una banda • Natura Comune*
+
+Un grosso predatore capace di comprendere accordi e valutare il rischio. Può collaborare con Goblin e Hobgoblin, ma non è un animale obbediente per definizione. Fonte: Worg, p. 341.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 7 • DES 6 • COS 6 • INT 5 • SAG 5 • CAR 4 |
+| Risorse e protezioni | PV 28 • PM 7 • AR 1 biologica • AR magica 0 |
+| Difese e Salvezze | Difese 11 • Tempra 10 • Riflessi 11 • Volontà 9 • Magia 9 |
+| Iniziativa e Azioni | INI +1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 10 / 20 / 30 Q • spazio 2 × 1 Q |
+| Abilità | Corpo a corpo 12 • Atletica 12 • Percezione 12 • Sopravvivenza 12 • Furtività 10 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso | 12 | 1d8+2 Naturale; Perforazione | 1 Q |
+
+**Abbattere la preda.** Una volta per Round, dopo almeno 1 danno finale di Morso a una creatura su un appoggio e di spazio non superiore a 2 × 2 Q, impone Tempra 0. Fallimento: A Terra nel proprio spazio. Successo mantiene l’appoggio; nessuna presa, spinta o seconda AC. Una vittima già A Terra non ripete la PS. Non atterra chi vola o nuota senza appoggio.
+
+**Sensi e parola.** Scurovisione 12 Q; udito e olfatto acuti +2 a Percezione senza sommarli. Parla Goblin e Worg. Non possiede Branco, telepatia o controllo sui Goblin. Un solo Morso per Round, Opportunità e attacco ordinato compresi; niente Parata naturale. Dotazione: nessuna.
+
+**Condotta e cavalcatura.** Sotto 7 PV o a Ferita Profonda cerca una via di fuga oppure tratta. Portare un cavaliere richiede un accordo, addestramento pertinente, attrezzatura e carico compatibili con le regole delle cavalcature. Il suo Movimento non diventa quello personale del cavaliere e non concede Azioni condivise gratuite.
+
+# **Lupo invernale**
+
+*Canide senziente dei climi freddi • Morso e Soffio gelido • Natura Comune*
+
+Un grande lupo bianco che segue tracce sulla neve e sceglie quando impiegare il proprio Soffio. Può servire come guardiano per accordo o addestramento. Fonti: Winter Wolf, pp. 340–341.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 8 • DES 6 • COS 7 • INT 5 • SAG 6 • CAR 5 |
+| Risorse e protezioni | PV 50 • PM 9 • AR 2 biologica • AR magica 0 |
+| Difese e Salvezze | Difese 11 • Tempra 12 • Riflessi 11 • Volontà 10 • Magia 10 |
+| Iniziativa e Azioni | INI +1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 10 / 20 / 30 Q • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 13 • Atletica 13 • Percezione 13 • Sopravvivenza 13 • Furtività 11 |
+| GS e PX per 4 PG | Veterano • 50 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso | 13 | 1d8+3 Naturale; Perforazione | 1 Q |
+| Soffio gelido | — | 3d6 Naturale; Gelo | cono 3 Q; 2 AzP |
+
+**Morso e Branco.** Al massimo un Morso per Round, Opportunità e colpo ordinato compresi. Dopo almeno 1 danno finale può abbattere una vittima su appoggio fino a 2 × 2 Q: Tempra 0 evita A Terra, come per il Worg. Possiede Branco +2 alle condizioni comuni. Il Morso non aggiunge danno da Gelo; Soffio e possibile Rallentato seguono la pagina comune.
+
+**Gelo e neve.** Immune a danni e conseguenze del Gelo di qualunque Natura; non è vulnerabile automaticamente al Fuoco. Udito e olfatto acuti +2. Sulla neve ottiene +2 a Furtività quando il manto bianco aiuta realmente a nascondersi, senza invisibilità o cancellazione delle impronte. Non ha Scurovisione innata.
+
+**Lingue e condotta.** Parla Comune, Gigante e il linguaggio dei Lupi invernali. Sotto 13 PV o a Ferita Profonda può proteggere il branco ripiegando. Non guadagna altri Soffi restando al freddo e non assorbe il Gelo per curarsi. Dotazione: nessuna.
+
+# **Segugio infernale**
+
+*Predatore dal corpo ardente • caccia in branco e Fuoco • Natura Comune*
+
+Un canide intelligente dalle fauci incandescenti. Il profilo conserva la minaccia del Fuoco senza attribuirgli automaticamente Corruzione o un legame con un Apostolo. Fonte: Hell Hound, p. 182.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 8 • DES 5 • COS 7 • INT 4 • SAG 6 • CAR 4 |
+| Risorse e protezioni | PV 44 • PM 9 • AR 2 biologica • AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 11 • Riflessi 10 • Volontà 9 • Magia 10 |
+| Iniziativa e Azioni | INI 0 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 10 / 20 / 30 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 13 • Atletica 12 • Percezione 13 • Furtività 10 • Sopravvivenza 12 |
+| GS e PX per 4 PG | Veterano • 50 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso ardente | 13 | 1d8+2 Perforazione + 1d4 Fuoco; tutto Naturale | 1 Q; una AC |
+| Soffio di Fuoco | — | 3d6 Naturale; Fuoco | cono 3 Q; 2 AzP |
+
+**Soffio e Morso.** Usa le regole comuni per Soffio, componenti miste e Incendiato. Al massimo un Morso per Round, Opportunità e attacco ordinato compresi. Possiede Branco +2; il bonus non modifica il Soffio. Il Fuoco del Morso è intrinseco e non è un incantesimo o una seconda applicazione fisica gratuita.
+
+**Immunità e sensi.** Immune al Fuoco di qualunque Natura e a Incendiato; non assorbe fiamme per recuperare PV. Non è immune al Gelo, ai danni psichici o ai veleni compatibili. Scurovisione 12 Q, udito e olfatto acuti +2. Comprende Infernale, senza parlarlo; capire una lingua non equivale ad accettare ordini.
+
+**Condotta e fine.** Sotto 11 PV o a Ferita Profonda può ripiegare o cambiare preda. Alla morte effettiva il corpo si consuma in fumo e braci senza esplosione, Area dannosa o nuovo Stato; a 0 PV o PM non scompare. Non libera un secondo avversario. Dotazione: nessuna.
+
+# **Cane della morte**
+
+*Canide bicefalo • assaltatore e portatore di malattia • Natura Comune*
+
+Un predatore a due teste che sorveglia più direzioni e trasmette un’infezione con la saliva. Il nome non conferisce attacchi di morte istantanea. Fonte: Death Dog, p. 321.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 6 • DES 6 • COS 6 • INT 2 • SAG 6 • CAR 3 |
+| Risorse e protezioni | PV 32 • PM 6 • AR 0 • AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 10 • Riflessi 10 • Volontà 8 • Magia 9 |
+| Iniziativa e Azioni | INI +1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 8 / 16 / 24 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 11 • Atletica 11 • Percezione 11 • Furtività 11 • Sopravvivenza 10 |
+| GS e PX per 4 PG | Esperto • 30 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso | 11 | 1d6+2 Naturale; Perforazione | 1 Q |
+
+**Due teste.** Al massimo due Morsi per Round, uno per testa operativa, Opportunità e attacco ordinato compresi. Le due teste non concedono AzP aggiuntive o due riserve di PV. Finché entrambe funzionano, +2 a Percezione e alle PS contro Accecato, Assordato, fascinazione, Terrorizzato, Stordito e Svenuto, soltanto quando l’effetto prevede quella PS. Non crea Salvezze contro 0 PM, Morente o esiti senza PS.
+
+**Saliva infetta.** Un Morso con almeno 1 danno fisico finale a un vivente vulnerabile può trasmettere la malattia della pagina seguente. Immunità al veleno non equivale a immunità alle malattie. Non infligge danni tossici immediati e non modifica i PV massimi. Il secondo Morso nello stesso Round non impone una seconda esposizione della stessa infezione.
+
+**Sensi e condotta.** Scurovisione 24 Q; non comprende linguaggi. Per Testa si considera quella concretamente coinvolta; una Menomazione della funzione di una testa non colpisce automaticamente l’altra, ma Ferite, coscienza e Morente rimangono dell’unico corpo. Sotto 8 PV o a Ferita Profonda tende a ritirarsi. Dotazione: nessuna.
+
+# **Cane della morte infezione della saliva**
+
+**Esposizione.** Malattia biologica naturale di Pericolosità IV, Seria. Dopo almeno 1 danno fisico finale da Morso, Tempra 0 evita l’infezione. Al massimo una PS di esposizione per bersaglio e Round da questa malattia, anche contro più Cani. Superarla non concede immunità per i Round successivi. Chi è già infetto non aggiunge dosi, penalità o decorso parallelo; immunità alle malattie biologiche impedisce l’infezione.
+
+**Esordio.** Dopo un’ora dall’esposizione fallita compaiono febbre e infiammazione: −2 alle Prove fisiche, comprese attacchi e Difese, senza penalità alle PS per questa sola infezione. Non è lo Stato Avvelenato e non somma un secondo malus omonimo. La Pericolosità Seria classifica l’affezione: non assegna una Ferita Seria.
+
+**Decorso.** Ogni 24 ore dall’esposizione iniziale si effettua Tempra 0. Fallimento: 1d6 danni Naturali interni ai PV, ignorando l’AR, e si azzera la sequenza di guarigione. Successo: nessun danno e si registra una riuscita; due successi consecutivi eliminano la malattia. Si applicano i normali esiti delle PS. Un singolo tiro giornaliero non colpisce due AC e non riduce PV massimi o livelli.
+
+**Ferite e urgenza.** Il danno giornaliero usa PV e Ferite ordinari: se la vittima era già a 0 PV e subisce danno residuo, effettua anche la distinta Tempra per Ferite. Un’eventuale morte segue Morente e le sue regole, senza soglie di morte automatiche della fonte. Riposo e cure dei PV non eliminano da soli l’infezione, ma possono trattarne le conseguenze.
+
+**Cure.** Cura Malattie dal livello 5, con i propri 10 minuti e requisiti, rimuove questa causa naturale Seria e la penalità che mantiene. Restano danni e Ferite già prodotti. Medicina può riconoscerla e impostare una terapia appropriata; un normale Kit di pronto soccorso o una singola Prova non la cancellano automaticamente. Cura Avvelenamenti e un antidoto al veleno non sono cure della malattia.
+
+**Contagio.** In questa scheda la trasmissione avviene solo tramite saliva inoculata dal Morso. Vicinanza, sangue, condivisione del rifugio o cura del paziente non producono nuove esposizioni automatiche. Una guarigione non concede immunità a futuri Morsi. La gestione di agenti patogeni raccolti richiede un profilo separato e non crea una munizione gratuita.
+
+# **Cane intermittente**
+
+*Canide senziente • traslazione breve e caccia mobile • Natura Comune*
+
+Un cacciatore che scompare da un punto e riappare in un altro visibile. Il suo corpo rimane vivente e materiale prima e dopo il salto. Fonte: Blink Dog, p. 318.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 5 • DES 7 • COS 5 • INT 6 • SAG 6 • CAR 5 |
+| Risorse e protezioni | PV 20 • PM 10 • AR 0 • AR magica 0 |
+| Difese e Salvezze | Difese 12 • Tempra 9 • Riflessi 12 • Volontà 10 • Magia 10 |
+| Iniziativa e Azioni | INI +2 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 8 / 16 / 24 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 10 • Atletica 11 • Percezione 11 • Furtività 13 • Sopravvivenza 11 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso | 10 | 1d6+1 Naturale; Perforazione | 1 Q |
+
+**Traslazione.** Possiede il Balzo intermittente della pagina seguente: 1 AzP e 2 PM, una volta per Round. Non comprende un Morso gratuito. Con due AzP può combinare un Morso e un Balzo oppure conservare Azioni per Difese, entro il budget del Round. Al massimo un Morso per Round, Opportunità e attacco ordinato compresi.
+
+**Sensi e parola.** Udito e olfatto acuti +2, senza Scurovisione innata. Parla il linguaggio dei Cani intermittenti e comprende Silvano senza pronunciarlo. Può comunicare, cooperare o rifiutare una proposta. La rivalità con le Bestie distorcenti descritta nella fonte è uno spunto di comportamento, non un obbligo cosmologico di Iris.
+
+**Condotta e corpo.** Sotto 5 PV o a Ferita Profonda cerca un punto visibile riparato. Non è invisibile fra i Balzi, non vede attraverso muri e non rimane in una dimensione separata. Le Difese fisiche e le cure biologiche sono normali. Dotazione: nessuna.
+
+# **Cane intermittente Balzo e vincoli**
+
+**Attivazione.** 1 AzP e 2 PM, alla propria Iniziativa, al massimo una volta per Round. Sceglie uno spazio libero visibile entro 8 Q, capace di contenerne il corpo e con appoggio sicuro. È una capacità innata: nessuna Prova Potere, Focus o componente. Non è un lancio interrompibile con Contromagia e non gli insegna Teletrasporto del manuale della Magia.
+
+**Spostamento.** Scompare dall’origine e riappare alla destinazione senza percorrere i Q intermedi. Non provoca Opportunità per il solo abbandono della portata durante il salto; non attraversa fisicamente muri o creature lungo un percorso. Ostacoli opachi impediscono la scelta di uno spazio non visibile, mentre una vetrata trasparente può permettere di vederlo. Interdizioni specifiche al teletrasporto restano applicabili.
+
+**Cosa viaggia.** Solo il Cane e oggetti non viventi effettivamente indossati o fissati al corpo, entro il suo carico ordinario. Non porta una seconda creatura, una preda, un cavaliere o un nemico che lo trattiene. Il Balzo è impedito da un’ancora fisica esterna non trasportabile, da catene fissate, una presa o Immobilizzato; non viene usato come fuga automatica da un vincolo. Gli oggetti trasportati non possono trascinare ciò a cui sono ancorati.
+
+**Scelte e Difese.** Il Balzo non è una Reazione, una Schivata gratuita o un modo per annullare un attacco già dichiarato e in risoluzione. Deve essere attivato nel proprio momento disponibile. Gli effetti e gli Stati personali lo seguono, compreso Incendiato: cambiare posto non lo spegne. Se la destinazione non è valida al momento di dichiararlo non può attivarlo.
+
+**Risorse e rimozione.** L’AzM non viene spesa né rinnovata dal Balzo. A 0 PM dopo la completa risoluzione compare alla destinazione e diventa Svenuto. La traslazione è istantanea: Negare Potere non la annulla dopo l’arrivo e non cancella l’abilità biologica innata. Barriere e poteri che vietano espressamente una traslazione prevalgono; il Balzo non rimuove una Prigione Dimensionale.
+
+# **Ragno di fase**
+
+*Aracnide cacciatore • veleno e passaggio di fase • Natura Comune*
+
+Un grande ragno che alterna corpo solido e fase incorporea per raggiungere o abbandonare una posizione. Si sposta durante la fase: non dispone del Balzo del Cane intermittente. Fonte: Phase Spider, p. 334.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 6 • DES 7 • COS 6 • INT 4 • SAG 5 • CAR 3 |
+| Risorse e protezioni | PV 30 • PM 12 • AR 1 biologica • AR magica 0 |
+| Difese e Salvezze | Difese 12 • Tempra 10 • Riflessi 12 • Volontà 8 • Magia 10 |
+| Iniziativa e Azioni | INI +2 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 6 / 12 / 18 Q; arrampicata 6 Q al Passo • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 12 • Atletica 11 • Percezione 10 • Furtività 14 |
+| GS e PX per 4 PG | Veterano • 50 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso | 12 | 1d8+2 Naturale; Perforazione, poi veleno | 1 Q |
+
+**Veleno di fase naturale III.** Dopo almeno 1 danno fisico finale a un vivente vulnerabile, Tempra 0: successo dimezza per eccesso 2d4 danni Naturali interni e impedisce la penalità; fallimento lascia il danno intero e applica Avvelenato con −2 alle Prove fisiche per 10 Round. Il danno tossico ignora l’AR ordinaria e non riceve il Magistrale del Morso. Si applicano protezioni specifiche; nessuna paralisi o stabilizzazione automatica a 0 PV.
+
+**Dosi e cura.** È distinto dal veleno aracnide II. Finché questa tossina è attiva, nuove esposizioni rinnovano solo i 10 Round senza nuove PS iniziali, danni tossici o malus cumulati; il Morso fisico resta. A fine di ogni propria Iniziativa, Tempra 0 riuscita termina la tossina. Antidoto appropriato o Cura Avvelenamenti dal livello 3 la rimuovono; restano i danni. Immunità al veleno o ad Avvelenato impedisce la tossina.
+
+**Superfici e condotta.** Scurovisione 12 Q. Su pareti e soffitti aderenti si muove al Passo senza Atletica ordinaria; superfici friabili o scivolose richiedono valutazione. Attraversa normali ragnatele senza il costo aggiuntivo, ma non possiede Getto di seta o reti da cattura. Un solo Morso per Round, Opportunità e colpo ordinato compresi, soltanto corporeo. Sotto 8 PV o a Ferita Profonda cerca una fessura. Nessun linguaggio o dotazione.
+
+# **Ragno passaggio di fase**
+
+**Attivazione e durata.** 1 AzP e 2 PM alla propria Iniziativa, al massimo una volta per Round, soltanto quando corporeo e non Immobilizzato, preso o ancorato fisicamente all’esterno. Diventa incorporeo fino all’inizio della propria Iniziativa successiva; il ritorno è automatico e non costa Azioni o PM. Può anticiparlo alla propria Iniziativa spendendo 1 AzP. L’attivazione non comprende Movimento, attacco o occultamento gratuiti. Non richiede Potere, componenti o Concentrazione.
+
+**Corpo sfalsato.** Rimane visibile come sagoma tenue nella posizione reale e può essere localizzato con i sensi pertinenti; Furtività richiede ripari effettivi. Danni Naturali lo attraversano senza effetto. Magici ed Eterei possono colpirlo e applicare gli effetti compatibili: Magico incontra AR 1, Etereo AR magica 0. Durante la fase non morde, non afferra, non manipola oggetti solidi e non trasporta altre creature. Mente, spirito, PM e Natura Comune non cambiano.
+
+**Attraversamento.** Con l’AzM disponibile percorre i Q effettivi al Passo, entro 6 Q complessivi, anche attraversando corpi e pareti spesse non più di 1 Q. Il solido resta opaco: deve conoscere da un’osservazione attendibile il punto libero d’uscita, senza ottenere vista attraverso muri. Termina ogni AzM in uno spazio libero e sostenuto; non può fermarsi dentro materia o terminare a mezz’aria. Non ottiene Volo o Corsa di fase.
+
+**Portate e attacchi.** Uscire da una portata provoca normalmente Opportunità, ma un colpo Naturale non può danneggiarlo mentre è incorporeo. Schivata usa le risorse ordinarie e non ripristina l’AzM; non è una nuova attivazione della fase. Gli avversari possono attendere il ritorno corporeo secondo le regole di Iniziativa e Azioni del Giocatore. Un attacco già in risoluzione non viene annullato dichiarando dopo il passaggio.
+
+**Interruzioni.** Svenuto, morte o 0 PM dopo l’azione fanno terminare la fase nello spazio già valido occupato: non espellono il corpo con danni arbitrari. Negare Potere può terminare una fase attiva, potenza di confronto 3; non cancella l’abilità innata. Contromagia non interrompe un’attivazione senza lancio. Vincoli e barriere che impediscono espressamente spostamenti incorporei o dimensionali prevalgono; non scioglie automaticamente Immobilizzato, prese o catene.
+
+# **Remorhaz giovane**
+
+*Predatore artico segmentato • Morso e corpo incandescente • Natura Comune*
+
+Una creatura allungata che attende sotto neve e ghiaccio e genera calore nel proprio corpo. Non possiede ancora la capacità d’inghiottire dell’adulto. Fonte: Young Remorhaz, p. 258.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 9 • DES 6 • COS 8 • INT 2 • SAG 5 • CAR 3 |
+| Risorse e protezioni | PV 62 • PM 8 • AR 3 biologica • AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 13 • Riflessi 10 • Volontà 8 • Magia 10 |
+| Iniziativa e Azioni | INI +1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 6 / 12 / 18 Q; scavo 4 Q al Passo • spazio 2 × 2 Q |
+| Abilità | Corpo a corpo 14 • Atletica 14 • Percezione 10 • Furtività 9 |
+| GS e PX per 4 PG | Eroe • 70 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso ardente | 14 | 1d10+3 Perforazione + 1d4 Fuoco; tutto Naturale | 1 Q; una AC |
+
+**Calore e immunità.** Corpo incandescente infligge 1d6 Naturale da Fuoco nelle condizioni della pagina comune dei Remorhaz, al massimo una volta per creatura e Round. Immune a Fuoco, Incendiato e Gelo di qualunque Natura, senza guarigione per assorbimento. Il Morso usa le componenti miste e può innescare Incendiato soltanto attraverso il residuo di Fuoco.
+
+**Sensi e scavo.** Scurovisione 12 Q e percezione delle vibrazioni entro 12 Q su supporto continuo condiviso, con i limiti dichiarati nella pagina comune. Può scavare neve, terra e ghiaccio non strutturale; non attraversa roccia, muri o scafi integri. Il calore non elimina automaticamente la copertura o ogni massa di ghiaccio intorno al corpo.
+
+**Limiti e condotta.** Un solo Morso per Round, Opportunità e attacco ordinato compresi. Nessuna presa automatica, inghiottimento o Parata naturale. Sotto 16 PV o a Ferita Seria cerca terreno scavabile e riparo; non comprende linguaggi. Testa indica il capo, Torace il corpo segmentato, Braccia e Gambe i gruppi anteriori e posteriori di zampe. Dotazione: nessuna.
+
+# **Remorhaz**
+
+*Grande predatore artico • presa delle fauci e inghiottimento • Natura Comune*
+
+L’adulto emerge dal ghiaccio con un corpo dal calore intenso e fauci capaci di trattenere una preda. L’inghiottimento lascia possibilità di resistenza e soccorso. Fonte: Remorhaz, p. 258.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 10 • DES 6 • COS 10 • INT 2 • SAG 5 • CAR 3 |
+| Risorse e protezioni | PV 102 • PM 10 • AR 4 biologica • AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 15 • Riflessi 11 • Volontà 9 • Magia 11 |
+| Iniziativa e Azioni | INI +1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 6 / 12 / 18 Q; scavo 4 Q al Passo • spazio 3 × 3 Q |
+| Abilità | Corpo a corpo 16 • Atletica 16 • Percezione 11 • Furtività 9 |
+| GS e PX per 4 PG | Leggenda • 100 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso ardente | 16 | 2d8+3 Perforazione + 1d6 Fuoco; tutto Naturale | 2 Q; una AC |
+| Digestione | — | 2d6 Naturale; acido | solo vittima inghiottita; 1 AzP |
+
+**Morso e risorse.** Al massimo un Morso per Round, Opportunità e colpo ordinato compresi. La presa si può innescare dopo il danno, alle condizioni della pagina dedicata. Il Morso per inghiottire usa lo stesso limite del Round: non è un colpo aggiuntivo. Con una vittima esterna nelle fauci non morde altre creature. Digestione costa 1 AzP e non è un’Opportunità.
+
+**Protezioni e sensi.** Corpo incandescente infligge 1d6+2 Naturale da Fuoco, al massimo una volta per creatura e Round. Immune a Fuoco, Incendiato e Gelo di qualunque Natura. Scurovisione 12 Q e percezione delle vibrazioni entro 12 Q; scavo e calore seguono la pagina comune. Le pinne presso il capo non concedono Volo.
+
+**Condotta e anatomia.** Sotto 26 PV o a Ferita Seria tende a ritirarsi. Nessun linguaggio, Parata naturale o dotazione. Testa comprende le fauci, Torace il corpo e lo stomaco, Braccia e Gambe i gruppi anteriori e posteriori di zampe. Perdita di coscienza può liberare una presa ma non spegne immediatamente il calore del corpo.
+
+# **Remorhaz calore vibrazioni e terreno**
+
+**Corpo incandescente.** Una creatura che tocca direttamente il corpo, vi mantiene una presa o lo colpisce con un attacco ravvicinato da entro 1 Q riceve il danno da contatto del profilo: 1d6 per il giovane, 1d6+2 per l’adulto, Naturale da Fuoco. È un contatto termico distinto, senza tiro per colpire o Difesa attiva; AR pertinente e protezioni specifiche si applicano normalmente. Se rimane Fuoco residuo, verifica anche Incendiato secondo la pagina comune.
+
+**Frequenza.** Al massimo una applicazione di Corpo incandescente per creatura e Round, condivisa per il medesimo Remorhaz. Si risolve dopo il contatto o l’attacco che lo provoca; mantenere il contatto senza interruzione applica il danno all’Iniziativa del Remorhaz nei Round successivi, sempre entro il limite. Non è un’aura che danneggia chi gli sta semplicemente accanto. Essere morsi o trattenuti nelle fauci non la innesca da solo: il Fuoco del Morso è già compreso nel suo danno. Più attacchi della stessa vittima non moltiplicano la risposta nel Round.
+
+**Distanza e coscienza.** Un’arma che colpisce da oltre 1 Q non provoca questo danno, salvo contatto diretto del corpo del suo utilizzatore. Arco, proiettili e incantesimi a distanza non sono contatto dell’attaccante. Svenuto non spegne il calore di un corpo vivo. Dopo la morte effettiva cessa a fine del Round successivo; a 0 PV non si considera automaticamente spento. Nessuna esplosione alla morte o danno gratuito ai PI degli oggetti.
+
+**Vibrazioni.** Percezione del profilo entro 12 Q per localizzare corpi in movimento sul medesimo supporto continuo. Non legge identità, pensieri o scritte, non scopre automaticamente Furtività e non raggiunge chi vola, rimane immobile o è isolato dal supporto. Un muro non diventa trasparente: occorre continuità effettiva della vibrazione e non si attacca attraverso il solido. Le vibrazioni percepite non conferiscono Scurovisione aggiuntiva.
+
+**Scavo.** L’unica AzM può essere usata per un Passo di scavo fino a 4 Q in neve, suolo o ghiaccio non strutturale. Non concede Corsa o Scatto sotterranei, un secondo Movimento o la capacità di perforare qualsiasi materiale. Un corpo di 3 × 3 Q richiede una sezione realmente praticabile. Non si presume che resti una galleria sicura e percorribile dagli inseguitori.
+
+**Ambiente.** Il calore può produrre vapore e segni nel ghiaccio, senza un’Area oscurante o un crollo automatici. Nascondersi sotto una superficie richiede condizioni e Furtività reali; prima di emergere deve esserci spazio per il corpo. Immunità elementale non concede aria respirabile, immunità al soffocamento o la capacità di ignorare ogni pericolo ambientale.
+
+# **Remorhaz presa delle fauci**
+
+**Aggancio.** Dopo almeno 1 danno finale da Morso a una creatura di spazio non superiore a 2 × 2 Q, l’adulto può imporre Riflessi 0. Successo evita; fallimento applica Immobilizzato nelle fauci, senza bloccare specificamente mani e braccia. Una sola vittima esterna. Il Morso e l’aggancio sono la stessa AC e non aggiungono un altro danno o un’AzP gratuita per stringere.
+
+**Mantenere.** La presa non costa Azioni nei Round successivi, ma occupa le fauci: non può mordere altri bersagli. La vittima subisce −4 alle Prove fisiche, non alle PS per questo solo Stato. Può attaccare il corpo a portata con strumenti praticabili e le normali Azioni; l’impossibilità di muovere il corpo non la rende automaticamente Svenuta. Il contatto con il Remorhaz resta termicamente pericoloso.
+
+**Fuga e soccorso.** La vittima o un alleato presso le fauci spende 1 AzP e contrappone Corpo a corpo o Atletica a Corpo a corpo 16 del Remorhaz. Il prigioniero applica −4 fisico; un alleato non Immobilizzato no. Successo termina la presa, pareggio la mantiene. Un aiuto deve poter raggiungere e fare leva: non si libera la vittima da oltre un muro o tirando a distanza una Prova astratta.
+
+**Trasporto esterno.** Non può scavare o trascinare la preda attraverso solidi mentre la trattiene fuori dal corpo. Su terreno libero può usare soltanto il Passo e solo se la vittima può seguirlo senza attraversare ostacoli o superare un carico praticabile. Non ottiene danni da trascinamento gratuiti. Perdita di coscienza, morte o Menomazione della funzione delle fauci sciolgono la presa; 0 PV da soli no.
+
+**Rilascio e inghiottimento.** Può lasciare la preda gratuitamente alla propria Iniziativa, in uno spazio libero e sostenuto adiacente alle fauci; se manca uno spazio valido non la colloca dentro materia. Può invece tentare di inghiottirla con il Morso di un successivo impiego consentito, soltanto se non supera 1 × 1 Q. La procedura è nella pagina seguente.
+
+# **Remorhaz inghiottimento e soccorso**
+
+**Inghiottire.** 1 AzP e un Morso ordinario contro la propria vittima già nelle fauci, fino a 1 × 1 Q. Tiro, Difese praticabili e AR normali. Dopo almeno 1 danno finale la vittima è inghiottita e termina la presa esterna. Il danno del Morso non si applica due volte. Può avere una sola vittima fra presa esterna e stomaco; finché la contiene non ne afferra o inghiotte un’altra.
+
+**All’interno.** Immobilizzato, mani non specificamente bloccate, e Accecato verso l’esterno; segue il corpo del Remorhaz. Copertura totale tra interno ed esterno. Inizia il soffocamento del §5.23 se non dispone di respirazione autonoma adeguata, conservando il proprio fiato. Può attaccare il corpo dall’interno con strumenti utilizzabili e −4 fisico, senza aggiungere un secondo malus visivo contro la parete percepita al tatto. Il Remorhaz non Schiva tali attacchi mantenendo l’inghiottimento.
+
+**Digestione.** 1 AzP, al massimo una volta per Round, infligge 2d6 Naturale da acido con AR ordinaria pertinente; nessun tiro per colpire o Difesa attiva. Non danneggia automaticamente PI e non ha Corrosivo. Non è gratuita a inizio turno. All’interno il calore di contatto è sostituito dalla Digestione: non si aggiunge al danno acido una seconda applicazione passiva. Il Soffio di un’altra creatura non raggiunge automaticamente l’interno.
+
+**Uscita.** 1 AzP della vittima, Corpo a corpo o Atletica contro Atletica 16 del Remorhaz, con −4 di Immobilizzato. Successo la espelle nel più vicino spazio libero e sostenuto adiacente alle fauci, pareggio resta dentro. Un alleato presso le fauci, con strumenti adatti a raggiungerla e fare leva, può usare la stessa opposizione senza il malus del prigioniero. Non si aggiunge un tiro per colpire.
+
+**Rigurgito.** Almeno 12 danni finali dall’interno nello stesso Round impongono al Remorhaz Tempra 0 alla fine dell’Iniziativa della vittima, al massimo una volta per Round. Fallimento: espulsione A Terra in uno spazio libero entro 2 Q dalle fauci. Successo la conserva. Perdita di coscienza o morte cessano la compressione: uscire costa 1 AzM intera della vittima, oppure 1 AzP di un alleato con strumenti adatti, senza opposizione. 0 PV da soli non bastano.
+
+**Dopo il soccorso.** Terminano Immobilizzato, cecità da copertura e ostruzione del respiro; un Round di respirazione normale ripristina il fiato. Svenuto per soffocamento si risolve in 1d3 Round salvo altre cause. PV, Ferite e Morente restano da trattare. Rilascio volontario dallo stomaco: 1 AzP del Remorhaz alla propria Iniziativa, negli stessi spazi validi d’uscita.
+
+# **Peryton**
+
+*Predatore alato • Corna, Artigli e passaggio in volo • Natura Comune*
+
+Un rapace con capo e corna da cervo, dall’ombra simile a quella di un umanoide. Caccia dalle alture e può tornare su una preda che ha dovuto abbandonare. Fonte: Peryton, p. 251.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 7 • DES 6 • COS 6 • INT 5 • SAG 6 • CAR 5 |
+| Risorse e protezioni | PV 32 • PM 8 • AR 1 biologica • AR magica 0 |
+| Difese e Salvezze | Difese 11 • Tempra 10 • Riflessi 11 • Volontà 10 • Magia 10 |
+| Iniziativa e Azioni | INI +1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 4 / 8 / 12 Q; volo 12 / 24 / 36 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 12 • Atletica 13 • Percezione 13 • Furtività 10 • Sopravvivenza 12 |
+| GS e PX per 4 PG | Esperto • 30 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Corna | 12 | 1d8+2 Naturale; Perforazione | 1 Q |
+| Artigli | 12 | 1d8+2 Naturale; Taglio | 1 Q |
+
+**Resistenza e sensi.** Dimezza per eccesso danni Naturali da Contusione, Perforazione e Taglio prima dell’AR; non vale contro Magico, Etereo, Fuoco, Gelo o acido. Vista e olfatto acuti +2, senza sommarli; nessuna Scurovisione innata. Comprende Comune ed Elfico senza parlarli. L’ombra umanoide è visibile quando la luce la produce: non è una creatura, un’illusione controllabile o un potere di paura.
+
+**Attacchi e passaggio.** Al massimo un attacco di Corna e uno di Artigli per Round, Opportunità e attacco ordinato compresi. Uscire dalla portata di un nemico usando il proprio Volo non provoca Opportunità. Non concede altre AzM, non scioglie prese e non permette di attraversare il solido. Per attaccare e allontanarsi divide il Passo entro il budget complessivo; Artigli riusciti non afferrano automaticamente la vittima.
+
+**Picchiata e condotta.** Può usare Carica in volo: 1 AzP e 1 AzM, traiettoria rettilinea praticabile di almeno 3 Q, con discesa verticale di almeno 6 Q per la Picchiata. Un solo attacco di Corna: −2 VA fino a 6 Q, −4 da 7 Q; danno ×2, oppure ×3 complessivo con Magistrale. Nessun ulteriore dado da picchiata o secondo colpo nella Carica. Sotto 8 PV o a Ferita Profonda può disimpegnarsi per tornare a cacciare. Dotazione: nessuna.
+
+# **Roc**
+
+*Rapace gigantesco • cattura e trasporto della preda • Natura Comune*
+
+Un uccello enorme, il cui nido domina pareti e vette isolate. Predilige prede grandi o lente e può ignorare chi trova riparo sotto una copertura adatta. Fonte: Roc, p. 260.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 10 • DES 5 • COS 10 • INT 2 • SAG 6 • CAR 4 |
+| Risorse e protezioni | PV 128 • PM 12 • AR 2 biologica • AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 15 • Riflessi 12 • Volontà 10 • Magia 12 |
+| Iniziativa e Azioni | INI 0 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 4 / 8 / 12 Q; volo 24 / 48 / 72 Q • spazio 6 × 6 Q |
+| Abilità | Corpo a corpo 16 • Atletica 17 • Percezione 14 • Sopravvivenza 13 • Furtività 6 |
+| GS e PX per 4 PG | Leggenda • 100 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Becco | 16 | 2d8+3 Naturale; Perforazione | 2 Q |
+| Artigli | 16 | 2d6+3 Naturale; Taglio | 1 Q |
+
+**Sequenza e presa.** Al massimo una Beccata e un attacco di Artigli per Round, Opportunità e attacco ordinato compresi. Gli Artigli possono innescare una presa soltanto dopo il danno e secondo la pagina seguente. Le due zampe non producono due AC nel medesimo attacco. Un bersaglio colpito non viene automaticamente sollevato o scagliato.
+
+**Volo e ingombro.** Vista acuta +2, senza Scurovisione innata; nessun linguaggio. Apertura alare indicativa circa 40 Q: spazio del corpo e margine per battere le ali sono distinti. Non può raggiungere una vittima sotto un tetto o fra strutture che impediscano fisicamente il passaggio; non sfonda automaticamente costruzioni. Braccia indica le ali, Gambe gli arti con artigli.
+
+**Condotta.** Sotto 32 PV o a Ferita Seria può abbandonare una preda e cercare un posatoio. Difende nido e piccoli, ma non riceve un’ira senza limiti, una Carica gratuita o danni maggiori per la sola taglia. Non è una cavalcatura addestrata per definizione. Dotazione: nessuna; eventuali resti e tesori nel nido appartengono alla scena, non al corpo.
+
+# **Roc presa trasporto e soccorso**
+
+**Aggancio.** Dopo almeno 1 danno finale di Artigli a una creatura fino a 3 × 3 Q, Riflessi 0 evita la presa. Fallimento: Immobilizzato, con le mani non specificamente bloccate, trattenuto da una o entrambe le zampe. Una sola vittima esterna; finché la tiene non usa Artigli contro altri bersagli. Mantenerla non costa Azioni e non infligge altri danni gratuiti. Può Beccarla con un normale attacco, se a portata.
+
+**Liberarsi.** La vittima o un alleato a contatto con gli artigli spende 1 AzP e contrappone Corpo a corpo o Atletica a Corpo a corpo 16 del Roc. Il prigioniero applica −4 fisico di Immobilizzato; successo termina la presa, pareggio la conserva. Un attrezzo deve essere concretamente adatto al soccorso. Un attacco riuscito contro il Roc non spezza automaticamente la presa.
+
+**Capacità specifica.** Per questo profilo può sollevare una sola preda fino a 3 × 3 Q e non oltre 1.000 kg complessivi, oggetti indossati inclusi. È una capacità corporea dichiarata, non una regola di carico derivata dalla sola FOR o taglia. Trattenerla non prova che possa sollevarla se supera i limiti. Con preda sollevata, il Volo è limitato al Passo di 12 Q e non consente Corsa o Scatto; decollo e quota rientrano nell’unica AzM.
+
+**Movimento e rischio.** Non trascina la preda attraverso solidi, Q occupati o passaggi troppo stretti. La vittima segue il Roc e può agire nei limiti della presa e delle proprie Azioni; non perde automaticamente coscienza. Liberarsi in quota termina Immobilizzato ma non concede Volo o un atterraggio sicuro. Le normali regole di Caduta restano applicabili; ripari, quota e opportunità di soccorso devono essere chiari prima dell’ascesa.
+
+**Rilascio.** Il Roc può lasciare gratuitamente la vittima alla propria Iniziativa, senza tiro o lancio offensivo aggiuntivo. Se manca un appoggio, questa cade verticalmente dalla posizione effettiva; non si aggiunge una gittata o una nuova AC da Artigli. Svenuto, morte o Menomazione che impedisca la presa la sciolgono. 0 PV da soli non bastano; interrompere soltanto il Volo può far precipitare entrambi.
+
+**Assenza di preda.** Un passeggero consenziente, un’imbracatura da trasporto o un carico esterno diverso richiedono attrezzatura, accordo e condizioni proprie; non usano automaticamente la presa offensiva come sedile sicuro. La capacità non rende ogni altra grande aquila o creatura di FOR 10 capace di portare lo stesso peso.
+
+# **Popoli delle terre selvagge**
+
+*Dieci profili per comunità, pattuglie e incontri di frontiera*
+
+Queste schede descrivono abitanti di paludi, foreste, pianure e caverne. Possono essere guide, vicini, rivali, guardie o interlocutori, oltre che avversari. La specie non impone una morale, una cultura tecnologica o un rapporto con le Corporazioni. Origine, comunità e ragioni della presenza su Iris si stabiliscono nell’avventura, senza assimilare questi popoli alla Covata.
+
+| Creatura | GS | PX per 4 PG |
+| :---- | :---: | :---: |
+| Bullywug | Principiante | 11 |
+| Centauro | Esperto | 33 |
+| Kenku | Principiante | 11 |
+| Satiro | Inesperto | 22 |
+| Lucertoloide | Inesperto | 22 |
+| Sciamano lucertoloide | Esperto | 33 |
+| Re o Regina lucertoloide | Veterano | 55 |
+| Quaggoth | Esperto | 30 |
+| Quaggoth Thonot | Veterano | 50 |
+| Orog | Veterano | 55 |
+
+**PX di riferimento.** Valori per un esemplare e quattro PG. Bullywug, Centauro, Kenku, Satiro, i tre Lucertoloidi e Orog comprendono la dotazione Comune descritta. Quaggoth e Thonot hanno capacità intrinseche già conteggiate nel GS, senza dotazione. Il premio dell’incontro segue il Direttore §9.3, senza riapplicare il moltiplicatore di equipaggiamento.
+
+**Impiego.** Una disputa sui confini, uno scambio, una richiesta di passaggio o la difesa di un rifugio possono essere il centro dell’incontro. I profili indicano mezzi e limiti del singolo esemplare; non assegnano automaticamente controllo sugli animali, poteri ai capi o ostilità verso altri popoli.
+
+**Fonti e verifica.** Giocatore v0.49, Magia v1.5, Direttore v0.41 e Armamenti v0.64; rimandi alle pagine stampate del Manuale dei Mostri fornito. GS e PX sono stime da verificare al tavolo, soprattutto per riserve temporanee, imitazione, trasformazione e sostegno mistico. Le capacità descritte non introducono nuove opzioni gratuite per i PG.
+
+# **Terre selvagge regole comuni**
+
+**Corpo e risorse.** Tutti hanno Natura Comune, mente e PM personali. Respirano, mangiano, bevono e richiedono riposo; cure biologiche, malattie e Stati sono applicabili salvo protezioni esplicite. Quaggoth e Thonot sono immuni a veleno e Avvelenato, non alle malattie. Re o Regina lucertoloide non riceve Natura Oscura Simmetria o CROS per l’origine demoniaca della fonte.
+
+**PV PM e Ferite.** A 0 PV non diventano automaticamente Svenuti o morti: ulteriore danno finale positivo, quando si è già a 0 PV, richiede Tempra e le Ferite del §4.2. L’eccedenza del colpo che esaurisce i PV non genera da sola Ferite. A 0 PM personali si diventa Svenuti dopo la risoluzione completa dell’azione. Cambiare forma, entrare in Furia o ricevere PV temporanei non cura Ferite, Menomazioni o Morente.
+
+**Azioni e attacchi.** INI modifica 1d10; AzP e unica AzM valgono per l’intero Round. Ogni attacco normale costa 1 AzP, produce AC 1 e usa il danno già completo della tabella, senza aggiungere ancora FOR o DES. I tetti offensivi comprendono Opportunità e attacchi ordinati. Una sola Opportunità ordinaria per Round, con un’arma ravvicinata pronta o un attacco naturale ammesso; niente Carica, incantesimo, trasformazione o Manovra offensiva gratuita.
+
+**Difese.** Parata costa 1 AzP e richiede arma o scudo idonei: successo dimezza per eccesso prima dell’AR, Magistrale annulla. Nessuna Parata naturale. Armi ravvicinate −8 VA per parare a distanza; Scudo piccolo −4, con ulteriore −2 contro Raffica. Schivata richiede 1 AzP, 1 AzM, consapevolezza e spazio. Naturale e Magico incontrano l’AR pertinente; Etereo soltanto quella magica. Nessun profilo possiede AR magica.
+
+**Dotazione.** Tutti gli oggetti da combattimento indicati sono Comuni, PS Integrità 10. Requisiti FOR e PI sono nelle singole voci. Recuperare un’arma non trasferisce i bonus personali della creatura. Incoccare è compreso nell’attacco con Arco pronto; ogni tiro consuma una freccia. Estrarre, riporre o recuperare un oggetto costa 1 AzP salvo una regola specifica; abbandonarlo è gratuito. Le mani occupate restano occupate durante Difese e lanci.
+
+**Movimento e armatura.** Terne Passo / Corsa / Scatto in Q, con un unico budget per percorsi misti. Orog include già −2 da Pesante ad attacchi, Schivata e Prove fisiche ostacolate, e −2 Q a ciascuna andatura. Parata, Percezione e PS non ricevono questi malus. Armatura a 0 PI perde AR ma mantiene le penalità finché indossata. Taglia e numero di arti non concedono automaticamente danni, PI, portata o Azioni maggiori.
+
+# **Anfibi apnea e anatomia**
+
+**Nuoto nativo.** Bullywug e i tre Lucertoloidi percorrono nel solo Nuoto le distanze effettive indicate, come eccezione al costo 2. Corsa e Scatto mantengono Prove, modificatori ed esiti del Giocatore §5.2. Nei percorsi misti si usa il budget unico del §5.2.4: costo 1 a terra e 2 in acqua, senza superare il limite scritto per ciascuna modalità. Entrare in acqua, immergersi e riemergere non rinnovano l’AzM.
+
+**Respirazione.** Bullywug respira aria e acqua. I Lucertoloidi respirano aria e possono trattenere il fiato per 15 minuti, cioè 150 Round, al posto della normale riserva pari a COS. La riserva è una sola per entrambe le forme dello Sciamano: trasformarsi non la rinnova. Esaurita, seguono PS, coscienza e danni del §5.23. Un Round respirando normalmente ripristina il fiato. Acqua irrespirabile o contaminata resta un pericolo compatibile.
+
+**Salto del Bullywug.** Come parte della propria AzM al Passo può compiere un salto da fermo lungo fino a 4 Q oppure alto fino a 2 Q, senza rincorsa e senza una Prova in condizioni ordinarie. Il percorso reale consuma il budget disponibile, compresa salita e discesa quando necessarie. Occorre un arrivo libero, praticabile e sostenuto. Ostacoli eccezionali, terreno precario o carico richiedono le normali valutazioni; non è Volo o una Schivata gratuita.
+
+**Corpi diversi.** Centauro ha Testa e Braccia umanoidi, Torace comprendente entrambe le masse corporee e Gambe corrispondenti agli arti equini. Per Kenku Braccia indica gli arti manipolatori, privi di ali funzionali. Per Satiro Gambe indica gli arti caprini. Quaggoth e Thonot hanno anatomia umanoide. Nei Lucertoloidi la coda partecipa all’equilibrio e al Nuoto, senza un attacco gratuito di Coda.
+
+**Spazi e appoggi.** Il corpo del Centauro e la forma di Coccodrillo occupano 2 × 2 Q; il resto dei profili 1 × 1 Q. Aperture e appigli devono permettere il passaggio reale. Nuoto e arrampicata non consentono di attraversare avversari, solidi o vincoli. Una Menomazione interessa la funzione coinvolta e mantiene le conseguenze ordinarie delle Ferite, senza assegnare riserve separate a ciascun arto.
+
+# **Bullywug**
+
+*Umanoide anfibio • difensore delle zone umide • Natura Comune*
+
+Un abitante delle paludi capace di alternare sponde, acqua e salti brevi. Titoli, consuetudini e rapporti con gli estranei dipendono dalla comunità. Fonte: Bullywug, p. 35.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 5 • DES 5 • COS 5 • INT 4 • SAG 5 • CAR 4 |
+| Risorse e protezioni | PV 14 • PM 5 • AR 2 con Scudo piccolo; 1 senza • AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 9 • Riflessi 9 • Volontà 8 • Magia 9 |
+| Iniziativa e Azioni | INI 0 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 4 / 8 / 12 Q; Nuoto nativo 8 / 16 / 24 Q • spazio 1 × 1 Q |
+| Abilità | Armi da guerra 9 • Corpo a corpo 8 • Atletica 10 • Furtività 10 • Percezione 9 |
+| GS e PX per 4 PG | Principiante • 11 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Lancia, una / due mani | 9 | 1d6+1 / 1d6+3 Naturale; Perforazione | 2 Q |
+| Morso | 8 | 1d4+1 Naturale; Contusione | 1 Q |
+
+**Dotazione.** Lancia, FOR 5, PI 6; Armatura leggera, AR 1, FOR 3, PI 6; Scudo piccolo, AR +1, FOR 3, PI 4. Inizia con Lancia a una mano e Scudo pronti. Per usare due mani deve liberarsi dello Scudo e perde AR 1. La Lancia non è un Giavellotto e non ha un profilo scagliato. Un solo attacco per Round, Opportunità e attacco ordinato compresi; Morso e Lancia non si risolvono insieme con l’unica AzP.
+
+**Palude e parola.** Respira aria e acqua; usa Nuoto nativo e Salto della pagina comune. In palude ottiene +2 a Furtività quando pelle, vegetazione e fango aiutano a occultarlo. Parla Bullywug e può comunicare concetti semplici a rane e rospi che lo sentano; non li comanda magicamente, non condivide sensi e non raggiunge distanze illimitate con il gracidare.
+
+**Condotta.** Può chiedere un tributo, indicare una via o allontanare intrusi; non riceve una cavalcatura gratis. Sotto 4 PV o a Ferita Profonda cerca acqua e riparo. Vista ordinaria, senza Scurovisione innata o attacchi velenosi.
+
+# **Centauro**
+
+*Umanoide equino • esploratore e combattente mobile • Natura Comune*
+
+Un viaggiatore dal corpo equino e tronco umanoide, capace di usare armi e leggere le piste. La mobilità non lo rende una cavalcatura disponibile a chiunque. Fonte: Centaur, p. 38.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 8 • DES 6 • COS 7 • INT 5 • SAG 6 • CAR 6 |
+| Risorse e protezioni | PV 40 • PM 8 • AR 0 • AR magica 0 |
+| Difese e Salvezze | Difese 11 • Tempra 11 • Riflessi 11 • Volontà 10 • Magia 10 |
+| Iniziativa e Azioni | INI +1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 10 / 20 / 30 Q • spazio 2 × 2 Q |
+| Abilità | Armi da guerra 12 • Armi da lancio 11 • Corpo a corpo 12 • Atletica 14 • Percezione 12 • Sopravvivenza 13 • Oratoria 10 |
+| GS e PX per 4 PG | Esperto • 33 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Picca | 12 | 1d6+3 Naturale; Perforazione | 3 Q |
+| Zoccoli | 12 | 1d8+2 Naturale; Contusione | 1 Q |
+| Arco da guerra | 11 | 1d6+1 Naturale; Perforazione | massimo 100 Q |
+
+**Dotazione e sequenza.** Picca a due mani, FOR 6, PI 6; Arco da guerra a due mani, FOR 5, PI 6, con 20 frecce; nessuna armatura o scudo. Inizia con la Picca pronta. Per Round: al massimo una Picca e uno Zoccoli, oppure due tiri d’Arco, Opportunità e attacco ordinato compresi. Non combina due frecce e altri due colpi. Zoccoli non concedono Parata o un terzo attacco per gli arti posteriori.
+
+**Carica.** 1 AzP e 1 AzM, almeno 3 Q rettilinei su percorso praticabile, entro il budget di Corsa di 20 Q. Un singolo attacco con Picca, fermandosi alla portata valida: −2 VA tra 3 e 6 Q, −4 da 7 Q; danno ×2, oppure ×3 complessivo con Magistrale. Non aggiunge altri dadi o Zoccoli gratuiti. Le altre Azioni eventualmente rimaste seguono i limiti della sequenza.
+
+**Comunità e condotta.** Parla Elfico e Silvano; nessuna Scurovisione innata. Sotto 10 PV o a Ferita Profonda cerca spazio per ripiegare. Un passeggero richiede consenso, appoggio e carico compatibili, senza condividere Azioni o rinnovare il Movimento del Centauro. Scale e passaggi stretti devono essere concretamente percorribili.
+
+# **Kenku**
+
+*Umanoide aviforme • imitazione e agguato • Natura Comune*
+
+Un individuo piumato capace di riprodurre suoni già ascoltati. Può lavorare come messaggero, esploratore o imitatore senza essere vincolato alla vita criminale della fonte. Fonte: Kenku, p. 194.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 5 • DES 7 • COS 5 • INT 6 • SAG 5 • CAR 5 |
+| Risorse e protezioni | PV 16 • PM 6 • AR 0 • AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 9 • Riflessi 11 • Volontà 9 • Magia 9 |
+| Iniziativa e Azioni | INI +2 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 6 / 12 / 18 Q • spazio 1 × 1 Q |
+| Abilità | Armi da mischia 10 • Armi da lancio 10 • Furtività 12 • Percezione 10 • Raggirare 12 • Intrattenere 11 |
+| GS e PX per 4 PG | Principiante • 11 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Spada leggera | 10 | 1d6+2 Naturale; Taglio | 1 Q |
+| Arco da guerra | 10 | 1d6+1 Naturale; Perforazione | massimo 100 Q |
+
+**Dotazione.** Spada leggera, FOR 3, PI 5; Arco da guerra a due mani, FOR 5, PI 6, con 20 frecce; nessuna armatura o scudo. Inizia con Spada pronta. Un solo attacco per Round, Opportunità e attacco ordinato compresi. Passare all’Arco richiede liberare entrambe le mani e prepararlo con le Azioni ordinarie; il becco non concede un attacco aggiuntivo.
+
+**Agguato.** Una volta per scontro, nel primo Round cui partecipa, +2 al VA di un proprio attacco contro una vittima che non lo aveva individuato prima del tiro. Si dichiara prima e si consuma anche mancando. Vincere l’Iniziativa non dimostra da solo il requisito. Non aggiunge danni e non si applica a tutti i bersagli del Round.
+
+**Voce e condotta.** Comprende Comune e Auran e comunica ripetendo suoni, parole e frasi già uditi, oppure mediante gesti e codici appresi. L’Imitazione è nella pagina seguente. Non ha Volo o Scurovisione innati. Sotto 4 PV o a Ferita Profonda cerca copertura, una via di fuga o una trattativa.
+
+# **Kenku imitazione e riconoscimento**
+
+**Suoni appresi.** Può riprodurre una voce, un rumore o un breve insieme di suoni ascoltato adeguatamente, con il volume e i limiti fisici della propria voce. Non impara ricordi, lingue, password o informazioni che non ha udito. Usa frammenti conosciuti e codici per comunicare, senza creare liberamente una nuova frase con la voce di una persona. Non genera una registrazione tecnologica o rumori da un’altra posizione.
+
+**Ingannare.** Quando tenta di far credere che il suono provenga realmente dalla fonte imitata, Raggirare 12 si oppone a Percezione dell’ascoltatore, secondo le normali Prove opposte. Ambiente, familiarità con la voce e indizi osservabili possono modificare la Prova. Non è necessario tirare se non esiste una posta o se la situazione rende l’origine evidente. Una Prova riuscita rende credibile il suono, non obbliga a obbedire.
+
+**Azioni e portata.** Un richiamo breve compatibile con le normali comunicazioni non costa un’AzP. Preparare un falso dialogo, costruire una distrazione o svolgere una Manovra sociale usa invece tempi e costi appropriati, senza aggiungersi gratuitamente a un attacco. Può essere udito soltanto dove il suono arriva realmente. Assordato, isolamento acustico e rumore possono impedirne la ricezione.
+
+**Aspetto e prove nuove.** Chi vede il Kenku non scambia il suo corpo per quello della voce imitata. Per un’identità visiva servono travestimento o altri mezzi, con i propri requisiti. Un fallimento dell’osservatore non giustifica ritiri ripetuti senza un nuovo indizio o cambiamento concreto; una contraddizione, un avvistamento o una richiesta inattesa possono fornire quell’indizio.
+
+**Scrittura e limiti.** Copiare una grafia richiede un campione e strumenti adatti; falsificare un documento resta una Prova pertinente di Raggirare, con tempi e contenuti da conoscere. L’Imitazione non sostituisce chiavi, autorizzazioni o prove d’identità diverse dalla voce. Non è Comando, fascinazione, magia o un beneficio trasferibile mangiando o indossando parti del Kenku.
+
+# **Satiro**
+
+*Abitante silvano • musica, mobilità e resistenza mistica • Natura Comune*
+
+Un individuo dalle gambe caprine e corna, spesso legato a musica e incontri sociali. La propensione alla festa non elimina responsabilità o capacità di scelta. Fonte: Satyr, p. 267.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 5 • DES 7 • COS 5 • INT 6 • SAG 5 • CAR 7 |
+| Risorse e protezioni | PV 26 • PM 10 • AR 1 da Armatura leggera • AR magica 0 |
+| Difese e Salvezze | Difese 11 • Tempra 9 • Riflessi 11 • Volontà 11 • Magia 10 |
+| Iniziativa e Azioni | INI +2 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 8 / 16 / 24 Q • spazio 1 × 1 Q |
+| Abilità | Armi da mischia 10 • Armi da lancio 10 • Corpo a corpo 9 • Atletica 11 • Percezione 10 • Furtività 12 • Intrattenere 14 • Oratoria 12 |
+| GS e PX per 4 PG | Inesperto • 22 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Corna | 9 | 1d6+1 Naturale; Contusione | 1 Q |
+| Spada leggera | 10 | 1d6+2 Naturale; Taglio | 1 Q |
+| Arco da guerra | 10 | 1d6+1 Naturale; Perforazione | massimo 100 Q |
+
+**Dotazione.** Spada leggera, FOR 3, PI 5; Arco da guerra a due mani, FOR 5, PI 6, con 20 frecce; Armatura leggera, AR 1, FOR 3, PI 6. Un flauto ordinario non magico accompagna l’esemplare. Inizia con Spada pronta. Un solo attacco per Round, Opportunità e attacco ordinato compresi. Corna non concedono Parata, atterramento o Carica gratuiti.
+
+**Resistenza mistica.** +2 alla PS effettivamente richiesta da un incantesimo o da una capacità espressamente magica, senza creare una PS dove non esiste. Vale anche se il danno dell’incantesimo è Naturale; non concede AR, immunità o riduzione del danno. Il bonus non si applica a un normale veleno o colpo d’arma soltanto perché soprannaturale è il suo utilizzatore. Con altri bonus magici alla stessa Prova si usa il maggiore pertinente.
+
+**Musica e condotta.** Parla Comune, Elfico e Silvano; nessuna Scurovisione innata. Il flauto ordinario usa Intrattenere e non impone Sonno, Terrorizzato o fascinazione. La variante dei Flauti magici della fonte non è compresa in questo profilo. Sotto 7 PV o a Ferita Profonda può allontanarsi o trattare.
+
+# **Lucertoloide**
+
+*Umanoide rettile • pattuglia anfibia • Natura Comune*
+
+Un abitante di rive e paludi, attrezzato per pattugliare e difendere una comunità. Strumenti e ornamenti d’osso non determinano la qualità costruttiva degli oggetti. Fonte: Lizardfolk, p. 204.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 6 • DES 5 • COS 6 • INT 4 • SAG 5 • CAR 4 |
+| Risorse e protezioni | PV 24 • PM 6 • AR 3 con Scudo piccolo; 2 biologica senza • AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 10 • Riflessi 9 • Volontà 8 • Magia 9 |
+| Iniziativa e Azioni | INI 0 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra e Nuoto nativo 6 / 12 / 18 Q • spazio 1 × 1 Q |
+| Abilità | Armi da mischia 10 • Armi da guerra 10 • Armi da lancio 9 • Corpo a corpo 10 • Atletica 11 • Percezione 11 • Furtività 11 • Sopravvivenza 12 |
+| GS e PX per 4 PG | Inesperto • 22 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Randello | 10 | 1d6+1 Naturale; Contusione | 1 Q |
+| Morso | 10 | 1d6+1 Naturale; Perforazione | 1 Q |
+| Giavellotto a mano | 10 | 1d6+1 Naturale; Perforazione | 1 Q |
+| Giavellotto lanciato | 9 | 1d6 Naturale; Perforazione | massimo 18 Q |
+
+**Dotazione e sequenza.** Randello, FOR 3, PI 5; due Giavellotti della sentinella, FOR 3, PI 4; Scudo piccolo, AR +1, FOR 3, PI 4. Nessuna armatura indossata. Inizia con Randello e Scudo pronti. Per Round può compiere un Morso e un attacco con Randello oppure Giavellotto, Opportunità e colpo ordinato compresi; non ripete due volte la stessa sequenza. Ogni Giavellotto va preparato e consumato dal lancio.
+
+**Scaglie e Scudo.** L’AR biologica 2 resta anche perdendo lo Scudo. Lo Scudo è ordinario: spuntoni ornamentali non concedono un attacco aggiuntivo, un’arma con danno autonomo o un bonus alla Parata. Il Morso non concede Parata naturale, non trasmette automaticamente malattie e non afferra la preda.
+
+**Vita e condotta.** Apnea di 15 minuti e Nuoto nativo come nella pagina comune. Parla Draconico; nessuna Scurovisione innata. Sotto 6 PV o a Ferita Profonda cerca la sponda, un riparo o l’aiuto dei compagni. Può riconoscere accordi e confini senza un obbligo di trattare gli estranei come cibo.
+
+# **Sciamano lucertoloide**
+
+*Umanoide rettile • incantatore e mutaforma • Natura Comune*
+
+Un custode di riti e conoscenze della comunità, capace di assumere una forma di Coccodrillo. Il repertorio è convertito in tre incantesimi di Simply RPG. Fonte: Lizardfolk Shaman, p. 205.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 6 • DES 5 • COS 6 • INT 5 • SAG 7 • CAR 5 |
+| Risorse e protezioni | PV 28 • PM 16 • AR 1 biologica in entrambe le forme • AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 10 • Riflessi 9 • Volontà 10 • Magia 11 |
+| Iniziativa e Azioni | INI 0 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Forma umanoide: terra e Nuoto nativo 6 / 12 / 18 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 11 • Atletica 11 • Percezione 12 • Furtività 11 • Sopravvivenza 13 • Occultismo 11 • Potere 12 |
+| GS e PX per 4 PG | Esperto • 33 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso umanoide | 11 | 1d6+1 Naturale; Perforazione | 1 Q |
+| Artigli umanoidi | 11 | 1d4+1 Naturale; Taglio | 1 Q |
+| Morso di Coccodrillo | 11 | 1d8+2 Naturale; Perforazione | 1 Q; vedi forma |
+
+**Dotazione e mani.** Focus personale semplice Comune già sintonizzato, senza bonus o PM, secondo Equipaggiamento §5.8; nessuna arma, armatura o scudo. In forma umanoide ha mani libere per Gesti e contatti. Al massimo un Morso e un Artigli per Round, Opportunità e colpo ordinato compresi. Gli Artigli richiedono una mano libera e non concedono Parata naturale.
+
+**Magia.** Accesso solo a Colpo Elementale di Fuoco 3, Catene di Forza 3 e Controllo Elementale dell’Acqua 3, modalità ordinaria. Un solo lancio di repertorio per Round, pagato con una delle proprie AzP. Usa la colonna degli altri utilizzatori autorizzati: Potere 12 è sempre necessario. Non possiede Addestramento Taumaturgo, Contromagia, Anticipazione o Convertire Potere. Costi e parametri sono nella pagina seguente.
+
+**Vita e condotta.** Apnea 15 minuti, Draconico, nessuna Scurovisione innata. Sotto 7 PV o a Ferita Profonda cerca riparo o la via d’acqua. La forma animale non rende automaticamente innocuo l’aspetto, non cura e non crea una seconda riserva di risorse.
+
+# **Sciamano repertorio elementale**
+
+**Lancio.** Ogni incantesimo costa 1 AzP e 3 PM, pagati prima di Potere 12. Focus, Gesto e Invocazione ordinari; ogni componente mancante dà −2, fino a −6. Ingaggio aggiunge −2 quando pertinente. Corsa o Scatto nella stessa Iniziativa impediscono il lancio. Fallimento consuma AzP e PM; Magistrale e Maldestro seguono la Magia. In forma di Coccodrillo non può lanciare questi incantesimi.
+
+**Colpo Elementale di Fuoco 3.** Magia §13.1: una creatura o altro bersaglio valido visibile entro 6 Q, percorso libero; un colpo automatico da 1d6+2 Naturale da Fuoco, AC 1. Dopo il lancio riuscito non occorre tiro per colpire: Parata o Schivata ordinarie sono ammesse, Elusione no. Si applica l’AR pertinente. Dopo Fuoco residuo oltre protezioni e Ignifugo, Riflessi 0 evita Incendiato per 1+1d3 Round; la PS non riduce il danno iniziale.
+
+**Catene di Forza 3.** Magia §17.6: una creatura visibile entro 6 Q, Tempra 0 evita. Fallimento: Rallentato per 3 Round, senza Concentrazione; nessun danno, tiro per colpire o Difesa attiva. Passo 3 Q, niente Corsa o Scatto, −2 alle Prove fisiche e alle Difese, arti ancora utilizzabili. Liberarsi costa 1 AzP e una nuova Tempra 0; successo termina. La prima volta per Round che subisce almeno 1 danno finale, Riflessi 0 evita A Terra se poggia su un appoggio. Negare Potere può rimuovere il vincolo, potenza 3.
+
+**Controllo Elementale dell’Acqua 3.** Magia §13.2, sola manipolazione ordinaria: sfera fissa di raggio 1 Q, centro visibile entro 10 Q, al massimo 1 kg d’acqua o umidità disponibile. Un comportamento semplice dichiarato dura 5 minuti senza Concentrazione; per modificarlo attivamente occorre Concentrazione ordinaria, fino a 10 minuti. Non crea acqua, flora, danno, ghiaccio imprigionante o una nube automaticamente oscurante. Eco Elementale non è preparato in questo profilo.
+
+**Concentrazione e cessazione.** Senza Concentrazione Operativa non usa AzP mentre concentra e il Passo è al massimo 6 Q. Dopo la prima fonte di danno del Round, Volontà per mantenerla; acquisire Stordito in un evento successivo richiede la nuova PS prevista, incoscienza termina automaticamente. Negare Potere può rimuovere gli effetti attivi, potenza 3; il danno istantaneo di Colpo Elementale non viene cancellato retroattivamente.
+
+**Durate.** Uno Stato o effetto di durata N Round applicato nel Round R termina a fine R + N, salvo rimozione anticipata. Incendiato infligge subito 1d4 e poi all’Iniziativa della fonte, massimo una volta per Round, con −2 alle Abilità ma non alle PS; ignora l’AR non magica generica e può essere spento secondo il Giocatore. Più applicazioni non sommano lo Stato e conservano la scadenza più lontana.
+
+# **Sciamano forma di Coccodrillo**
+
+**Mutare.** 1 AzP e 3 PM, alla propria Iniziativa, soltanto su sé stesso; durata 10 Round senza Concentrazione. Assume un Coccodrillo di spazio 2 × 2 Q. Ritorno volontario 1 AzP; scadenza, Svenuto o morte fanno tornare alla forma umanoide senza altro costo. Negare Potere può terminare la trasformazione, potenza 3. È un’abilità del profilo, non Trasformazione Totale appresa o un effetto che possa condividere.
+
+**Un solo corpo.** Tutte le Caratteristiche, Abilità, Difese, PS, INI, PV e PM restano quelli della scheda; conserva PV attuali, PM spesi, Ferite, Menomazioni e Stati. AR biologica sempre 1. Non acquista i PV o gli attacchi del Coccodrillo gigante già nel catalogo e non recupera il fiato. Gambe e Braccia diventano i gruppi posteriori e anteriori di zampe; le menomazioni conservano la funzione corrispondente.
+
+**Movimento e azioni.** In questa forma: terra 4 / 8 / 12 Q, Nuoto nativo 6 / 12 / 18 Q. Mantiene 2 AzP e 1 AzM per Round, ma al massimo un Morso di Coccodrillo, Opportunità e colpo ordinato compresi. Nessun Artigli, attacco di Coda, uso di armi, lancio del repertorio o Parata naturale. La forma non concede resistenza al Fuoco, al Gelo o immunità biologiche ulteriori.
+
+**Presa delle mascelle.** Dopo almeno 1 danno finale di Morso a una creatura fino a 1 × 1 Q, può imporre Riflessi 0: fallimento Immobilizzato, mani non specificamente bloccate. Una sola preda; finché la tiene non morde altre vittime. La vittima o un alleato presso le mascelle spende 1 AzP e contrappone Corpo a corpo o Atletica a Corpo a corpo 11 dello Sciamano; successo libera, pareggio conserva. Il prigioniero applica −4 fisico. Nessuno Stringere o danno periodico gratuito.
+
+**Rilascio e acqua.** Rilascio volontario gratuito alla propria Iniziativa; ritorno umanoide, incoscienza o perdita delle mascelle sciolgono la presa. Trascinare una preda esterna consente solo Passo, con distanze dimezzate, carico e percorso compatibili: non attraversa solidi. La vittima non perde il fiato per il solo aggancio; se viene realmente immersa usa la propria riserva e il §5.23. Sciamano e preda non condividono la respirazione.
+
+**Oggetti e spazio.** Gli oggetti non si trasformano né si fondono nel corpo. Deve liberarsi prima di indumenti o vincoli incompatibili; il Focus lasciato a terra non torna in mano al rientro. Una presa, un’ancora esterna o uno spazio insufficiente impediscono di iniziare la trasformazione. Il passaggio alla forma minore non strappa catene, cura lesioni o sposta il corpo attraverso un ostacolo.
+
+# **Re o Regina lucertoloide**
+
+*Campione rettile • Tridente e impeto vitale • Natura Comune*
+
+Un capo combattente dalla forte presenza, distinto dallo Sciamano. Il titolo non conferisce autorità automatica su tutti i Lucertoloidi. Fonte: Lizard King/Queen, p. 205.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 8 • DES 6 • COS 7 • INT 6 • SAG 5 • CAR 7 |
+| Risorse e protezioni | PV 56 • PM 10 • AR 3 biologica • AR magica 0 |
+| Difese e Salvezze | Difese 11 • Tempra 12 • Riflessi 10 • Volontà 11 • Magia 10 |
+| Iniziativa e Azioni | INI +1 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra e Nuoto nativo 6 / 12 / 18 Q • spazio 1 × 1 Q |
+| Abilità | Armi da guerra 13 • Corpo a corpo 12 • Atletica 12 • Percezione 12 • Furtività 12 • Sopravvivenza 12 • Oratoria 13 |
+| GS e PX per 4 PG | Veterano • 55 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Tridente | 13 | 1d8+3 Naturale; Perforazione | 2 Q |
+| Morso | 12 | 1d6+2 Naturale; Perforazione | 1 Q |
+| Artiglio | 12 | 1d4+2 Naturale; Taglio | 1 Q |
+
+**Dotazione e sequenza.** Tridente a una mano, FOR 4, PI 6; nessuna armatura o scudo. Inizia con Tridente e mano secondaria libera. Per Round può effettuare due attacchi di Tridente, oppure un Morso e un Artiglio o Tridente, Opportunità e attacco ordinato compresi. Artiglio richiede mano libera; nessuna Parata naturale. Il Tridente non ha impugnatura Versatile o profilo scagliato in questa scheda.
+
+**Impeto.** Può attivare Impalare della pagina seguente su un attacco di Tridente, pagando PM e rispettandone i limiti. Il danno aggiuntivo non è già incluso nella tabella. Non trasferisce una proprietà magica al Tridente raccolto e non riceve PV permanenti o una cura gratuita da ogni colpo.
+
+**Sensi e condotta.** Immune a Terrorizzato, senza immunità generale al controllo mentale. Apnea 15 minuti, Scurovisione 12 Q; parla Abissale e Draconico. Sotto 14 PV o a Ferita Profonda può ritirarsi, chiedere aiuto o trattare. Non impone agli altri Lucertoloidi una fedeltà soprannaturale e non causa Corruzione col Morso.
+
+# **Campione lucertoloide Impalare**
+
+**Attivazione.** Una volta per Round può spendere 2 PM prima del tiro di un normale attacco di Tridente. È un potenziamento intrinseco dello stesso colpo: nessuna AzP aggiuntiva, ma l’attacco conserva il proprio costo. Può essere usato anche su Opportunità se non già attivato nel Round e se il limite offensivo lo consente. I PM sono spesi anche se manca; non si aggiunge a una Manovra offensiva, come Carica o Colpo Mirato.
+
+**Danno.** Aggiunge +2 al danno del singolo colpo prima di moltiplicatori, Difesa e AR, nella stessa AC. Il Tridente passa quindi da 1d8+3 a 1d8+5 per quell’attacco. Il danno resta Naturale da Perforazione. Un Magistrale segue il moltiplicatore ordinario; non produce una seconda applicazione del bonus o un’altra verifica delle Ferite.
+
+**Riserva.** Solo se il colpo produce almeno 1 danno finale dopo le protezioni riceve 3 PV temporanei, per 3 Round. Nessun beneficio se il colpo manca, viene annullato o assorbito interamente. È un effetto sul campione e non un drenaggio aggiuntivo di PV o PM della vittima. Non guarisce PV ordinari e non riduce Ferite, Menomazioni o Morente.
+
+**Sostituzione.** I nuovi 3 PV temporanei possono sostituire, mai aggiungersi, a una riserva temporanea già presente. Il campione può conservare quella precedente con la sua scadenza; in tal caso non riceve la nuova. Non si sommano Impalare e Irrobustire per accumulare riserve. La durata N nel Round R termina a fine R + N; la scadenza rimuove soltanto i temporanei rimasti.
+
+**Uso della riserva.** Difese, resistenze e AR si applicano prima; il residuo consuma i PV temporanei scelti e poi i PV ordinari, con le normali regole delle Ferite. Dardo Psichico li ignora secondo la propria scheda. Non diventano PM o risorse da convertire. A 0 PM dopo la completa risoluzione del colpo il campione diventa Svenuto anche se ha ricevuto i temporanei.
+
+**Rimozione.** Il colpo è istantaneo e il beneficio intrinseco non è un incantesimo mantenuto: Negare Potere non annulla retroattivamente il danno o l’abilità corporea. Non è un nuovo rituale trasferibile al Tridente, una cura biologica o una regola che ogni sovrano acquisisce per titolo.
+
+# **Quaggoth**
+
+*Umanoide cavernicolo • scalatore e combattente naturale • Natura Comune*
+
+Un abitante delle caverne dal corpo robusto e dagli artigli sviluppati. Origine e rapporti con altri popoli si definiscono nell’avventura, senza imporre le inimicizie della fonte. Fonte: Quaggoth, p. 256.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 8 • DES 5 • COS 7 • INT 3 • SAG 6 • CAR 3 |
+| Risorse e protezioni | PV 38 • PM 7 • AR 1 biologica • AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 11 • Riflessi 9 • Volontà 8 • Magia 9 |
+| Iniziativa e Azioni | INI 0 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 6 / 12 / 18 Q; arrampicata 6 Q al Passo • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 12 • Atletica 13 • Percezione 10 • Furtività 9 • Sopravvivenza 11 |
+| GS e PX per 4 PG | Esperto • 30 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Artiglio | 12 | 1d6+2 Naturale; Taglio | 1 Q |
+
+**Furia ferita.** Finché cosciente e con PV ordinari non superiori a 9, ottiene +2 al VA degli Artigli e +2 al loro danno: VA 14, 1d6+4. Si verifica prima di ogni attacco e cessa appena i PV superano la soglia. Le penalità di Ferite e Stati continuano ad applicarsi, così come Tempra a 0 PV. Non riceve AzP, immunità, PV o bonus ai lanci e alle PS.
+
+**Corpo e sensi.** Immune a danni da veleno e ad Avvelenato, senza immunità ad acido, malattie, soffocamento o Corruzione. Scurovisione 24 Q; parla Sottocomune. Si arrampica su pareti con appigli, al Passo, senza Atletica ordinaria; superfici scivolose o precarie richiedono Prove pertinenti. Non aderisce a soffitti lisci e non attraversa roccia.
+
+**Limiti e condotta.** Al massimo due Artigli per Round, Opportunità e colpo ordinato compresi; richiedono arti anteriori liberi e non concedono Parata naturale. Dotazione: nessuna. La Furia può sostenerlo, ma a Ferita Seria o se la consegna lo permette può ritirarsi; non lo obbliga a inseguire fino alla morte.
+
+# **Quaggoth Thonot**
+
+*Quaggoth dotato di poteri innati • sostegno e inganno • Natura Comune*
+
+Un raro esemplare capace di manipolazioni e manifestazioni psioniche, spesso custode di conoscenze della comunità. Il potere non si trasferisce consumandone il corpo. Fonte: Quaggoth Thonot, p. 256.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 8 • DES 5 • COS 7 • INT 3 • SAG 6 • CAR 4 |
+| Risorse e protezioni | PV 40 • PM 18 • AR 1 biologica • AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 12 • Riflessi 10 • Volontà 10 • Magia 11 |
+| Iniziativa e Azioni | INI 0 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 6 / 12 / 18 Q; arrampicata 6 Q al Passo • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 13 • Armi da lancio 9 • Atletica 13 • Percezione 11 • Furtività 9 • Sopravvivenza 12 • Potere 11 |
+| GS e PX per 4 PG | Veterano • 50 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Artiglio | 13 | 1d6+2 Naturale; Taglio | 1 Q |
+
+**Fisiologia.** Conserva immunità a veleno e Avvelenato, Scurovisione 24 Q, Sottocomune e arrampicata del Quaggoth. Al massimo due Artigli per Round, Opportunità e colpo ordinato compresi; nessuna Parata naturale. Furia ferita con PV ordinari fino a 10: +2 VA e +2 danni solo agli Artigli, quindi VA 15 e 1d6+4 prima di altre penalità. Non migliora Potere, PS o altri danni.
+
+**Repertorio.** Telecinesi 1, Cura Ferite 3, Irrobustire 3, Colpo Elementale di Fuoco 3 e Illusione 3, nelle versioni indicate nelle due pagine seguenti. Un solo lancio del repertorio per Round. Sono manifestazioni innate senza Focus, Gesti o Invocazione, ma richiedono sempre Potere 11 e PM; non importano usi illimitati o ricariche giornaliere della fonte. Non possiede Addestramento Taumaturgo, Anticipazione, Contromagia o Convertire Potere.
+
+**Condotta.** Può sostenere i compagni o usare coperture e inganni. A Ferita Seria o se la comunità è al sicuro può ripiegare. La Caduta protetta è una distinta capacità innata con risorse proprie indicate di seguito, non una Difesa gratuita. Dotazione: nessuna; psionico non significa privo di mente o immune a Dardo Psichico.
+
+# **Thonot manipolazione e sostegno**
+
+**Lancio e risorse.** Ogni lancio costa 1 AzP e i PM del livello, prima di Potere 11; usa la colonna degli altri utilizzatori autorizzati. Nessuna penalità per componenti assenti, come eccezione innata esplicita. Ingaggio dà −2 e altre interferenze restano pertinenti; Corsa o Scatto nella stessa Iniziativa impediscono il lancio. Fallimento consuma AzP e PM; Magistrale e Maldestro seguono la Magia. A 0 PM diventa Svenuto dopo la completa risoluzione.
+
+**Telecinesi 1.** Magia §17.1: 1 PM, un oggetto visibile fino a 0,5 kg entro 6 Q, percorso libero. Durata fissa 10 Round oppure Concentrazione ordinaria fino a 10 minuti. Movimento dell’oggetto fino a 6 Q per Round, sempre visibile e in gittata; altrimenti cessa il sostegno. Prima manipolazione semplice inclusa nel lancio; a durata fissa le successive costano 1 AzP. In Concentrazione una manipolazione non offensiva per propria Iniziativa è compresa, ma non dispone di AzP e il Passo è limitato a 6 Q.
+
+**Oggetti e attacchi.** Telecinesi non bersaglia creature né le trasporta tramite un oggetto. Un possessore che trattiene l’oggetto effettua Tempra 0 per non perderlo; oggetti fissati vanno prima liberati. Solo a durata fissa può scagliare l’oggetto: Armi da lancio 9 con il normale +2, dunque VA 11 prima degli altri modificatori, 1d4 Naturale, AC 1, normali Difese e AR. Il primo colpo può rientrare nel lancio; i successivi costano 1 AzP. L’oggetto non ritorna da solo e il proprio danno è sostituito da quello del potere.
+
+**Cura Ferite 3.** Magia §21.1: 3 PM, Contatto con un vivente consenziente o un incosciente soccorso; recupera 1d4+2 PV fino al massimo ordinario. Ogni 2 punti di cura possono invece ridurre Sanguinamento di 1, anche parzialmente. Non cura Ferite, Menomazioni, malattie, veleno o Morente, non resuscita e non ripara un corpo puramente meccanico. Gli esiti istantanei non si dissolvono successivamente.
+
+**Irrobustire 3.** Magia §16.1: 3 PM, Contatto con un consenziente, sé stesso incluso, 6 PV temporanei per 20 Round, senza Concentrazione. Difese e AR precedono la riserva; non cura PV ordinari o Ferite. Più Irrobustire si sostituiscono, non si sommano. La trasformazione non rinnova i residui. Con Impalare si conserva una sola riserva secondo la compatibilità di quel potere; nessun aumento di FOR, taglia, portata o danno.
+
+**Fuoco e rimozione.** Colpo Elementale di Fuoco 3 costa 3 PM e usa esattamente gittata 6 Q, colpo automatico 1d6+2 Naturale, Difese e Incendiato descritti per lo Sciamano; il Thonot non può scegliere altri elementi. Negare Potere può rimuovere Telecinesi o Irrobustire attivi, potenza 1 e 3; non annulla danni o cure già risolti. Dardo Psichico ignora i PV temporanei secondo la propria scheda.
+
+# **Thonot Illusione e Caduta protetta**
+
+**Illusione 3.** Magia §19.4: 1 AzP, 3 PM e Potere 11. Centro fisso visibile entro 6 Q, scena entro raggio 2 Q anche in verticale, durata 5 minuti senza Concentrazione. Immagine statica semplice, come cassa o parete, con eventuali suoni e odori semplici; non una copia animata del Thonot. Non crea materia, luce reale, attacchi, AR o bonus automatici alle Difese. Cambiare una scena nei limiti del livello costa 1 AzP, con centro visibile in gittata.
+
+**Riconoscere.** Nessuna PS per la sola osservazione. Esaminare deliberatamente costa 1 AzP e concede Magia 0; un indizio concreto o interazione fisica concede invece la PS immediata senza AzP, prima delle conseguenze pericolose. Successo riconosce l’inganno per quel lancio; fallimento richiede un nuovo indizio per riprovare. Barriera Mentale concede il proprio bonus. Sensori e osservazione esclusivamente su schermo rilevano la realtà. Negare Potere può rimuovere la scena, potenza 3.
+
+**Caduta protetta.** Capacità innata distinta: 1 AzP disponibile e 2 PM, al massimo una volta per Round, anche fuori dalla propria Iniziativa, quando sé stesso o un’altra creatura consenziente visibile entro 6 Q inizia a cadere. Si dichiara prima del danno; niente Potere o componenti. Non è un lancio del repertorio, ma consuma il medesimo budget di AzP. Senza coscienza o risorse non può attivarla e non annulla una caduta già risolta.
+
+**Discesa.** Un solo beneficiario per attivazione scende verticalmente di 6 Q subito e poi all’inizio delle proprie Iniziative, al massimo una discesa per Round; se raggiunge prima un appoggio praticabile atterra senza danni da quella caduta. Dura fino all’atterraggio o a fine del terzo Round successivo all’attivazione. Non concede Volo, risalita, spostamento orizzontale, immunità ad attacchi o superfici letali. Se termina a mezz’aria, la Caduta riprende dalla quota attuale con le regole ordinarie.
+
+**Persistenza.** Cambiare quota non interrompe Incendiato, prese o Stati personali. Incoscienza del Thonot dopo l’attivazione non cancella una Caduta protetta già applicata; la sua riserva di PM resta personale. Negare Potere può rimuovere il rallentamento della discesa, potenza 3. Attivarla nuovamente può sostituire, non sommare, il medesimo effetto; non trasporta altre creature appese al beneficiario.
+
+# **Orog**
+
+*Variante dell’Orco • combattente in armatura pesante • Natura Comune*
+
+Un combattente robusto e disciplinato, capace di valutare terreno e ritirata. Non acquisisce i poteri del Capoguerra o dell’Occhio di Gruumsh già nel catalogo. Fonte: Orog, p. 247.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 8 • DES 5 • COS 8 • INT 6 • SAG 5 • CAR 6 |
+| Risorse e protezioni | PV 42 • PM 8 • AR 5 da Armatura pesante • AR magica 0 |
+| Difese e Salvezze | Parata 12 • Schivata / Elusione 8 • Tempra 12 • Riflessi 10 • Volontà 10 • Magia 10 |
+| Iniziativa e Azioni | INI 0 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 4 / 10 / 16 Q • spazio 1 × 1 Q |
+| Abilità | Armi da guerra 12 • Armi da lancio 10 • Atletica 11 • Furtività 7 • Percezione 11 • Sopravvivenza 12 • Oratoria 12 |
+| GS e PX per 4 PG | Veterano • 55 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Ascia bipenne | 12 | 2d6+3 Naturale; Taglio | 1 Q |
+| Giavellotto a mano | 12 | 1d6+2 Naturale; Perforazione | 1 Q |
+| Giavellotto lanciato | 10 | 1d6+1 Naturale; Perforazione | massimo 24 Q |
+
+**Dotazione.** Ascia bipenne a due mani, FOR 6, PI 6; due Giavellotti della sentinella, FOR 3, PI 4; Armatura pesante, AR 5, FOR 7, PI 10. Inizia con Bipenne pronta, senza Scudo. Al massimo due attacchi per Round, di cui non più di un lancio di Giavellotto, Opportunità e attacco ordinato compresi. Estrarre il Giavellotto e cambiare arma richiedono le Azioni ordinarie.
+
+**Avanzata aggressiva.** Una volta per Round può usare la propria AzM come Passo di 6 Q anziché 4 verso un nemico visibile. Il percorso non può allontanarlo da quel nemico e deve terminare più vicino. Nessuna AzM aggiuntiva o aumento a Corsa, Scatto, Carica e Schivata. Opportunità normali. Non possiede Furia di Gruumsh, Urlo di guerra o Frenesia gnoll.
+
+**Armatura e condotta.** I VA pronti comprendono la Pesante. Rimossa recupera +2 ai VA fisici penalizzati e Movimento 6 / 12 / 18 Q; il Passo aggressivo diventa 8 Q. Parata, Percezione e PS restano invariate. Scurovisione 12 Q, Comune e Orchesco. Sotto 11 PV o a Ferita Profonda può arretrare per salvare il reparto o trattare.
+
+# **Fauna delle terre aperte**
+
+*Dieci animali per piste, incontri e territori abitati*
+
+Questo blocco completa la fauna ordinaria di boschi, praterie, pendii e margini degli insediamenti. Le schede descrivono animali, con bisogni e reazioni legati alla situazione: una carcassa, un nido, piccoli da proteggere o una via di fuga. Non stabiliscono che queste specie siano originarie di Iris; provenienza e presenza nell’ambientazione si definiscono nell’avventura. Nessuna appartiene alla Covata.
+
+| Creatura | GS | PX per 4 PG |
+| :---- | :---: | :---: |
+| Babbuino | Principiante | 10 |
+| Tasso | Principiante | 10 |
+| Orso nero | Inesperto | 20 |
+| Cinghiale | Inesperto | 20 |
+| Cervo | Principiante | 10 |
+| Aquila | Principiante | 10 |
+| Falco | Principiante | 10 |
+| Iena | Principiante | 10 |
+| Avvoltoio | Principiante | 10 |
+| Sciacallo | Principiante | 10 |
+
+**PX di riferimento.** I valori riguardano un esemplare e quattro PG, senza dotazione. Sensi, volo, scavo, Tenacia e capacità di gruppo sono già inclusi nel GS. Il valore della scheda non è un premio automatico per l’uccisione di un animale: superamento della sfida e calcolo dell’incontro seguono il Manuale del Direttore §9.3.
+
+**Fonti e conversione.** Appendix A del manuale di partenza, pp. 318–322, 330–331 e 339. La conversione conserva il ruolo delle capacità e usa statistiche pronte, Azioni, PS, Movimento e Ferite di Simply RPG. Il profilo del Cervo mantiene il Morso della fonte; palchi, calci e altre varianti non sono attacchi aggiuntivi impliciti.
+
+# **Fauna aperta regole comuni**
+
+**Vita e risorse.** Tutti sono viventi, respirano aria, hanno mente e PM personali, senza incantesimi o spese di PM previste dalle capacità di questo blocco. Veleni, malattie, cure, alimentazione e riposo seguono le regole ordinarie. Stati iniziali: nessuno. Dotazione: nessuna. Il colore della pelliccia, le penne e le zanne non concedono protezioni diverse dall’AR indicata.
+
+**PV e Ferite.** A 0 PV non diventano automaticamente Svenuti o morti. Un nuovo danno finale positivo, quando sono già a 0 PV, richiede Tempra e le normali Ferite; l’eccedenza del colpo che esaurisce i PV non genera da sola una Ferita. A 0 PM personali diventano Svenuti dopo la risoluzione completa dell’azione. La volontà di fuggire descritta nelle schede non annulla impedimenti, Ferite o Morente.
+
+**Azioni e attacchi.** INI si somma a 1d10. AzP e unica AzM valgono per tutto il Round di 6 secondi. Ogni attacco costa 1 AzP, produce AC 1 e usa il danno completo in tabella, senza aggiungere ancora FOR o DES. I limiti offensivi comprendono Opportunità e attacchi ordinati fuori Iniziativa. L’unica Opportunità ordinaria per Round usa un attacco normale, senza Carica o altri effetti che richiedono movimento.
+
+**Difese e protezioni.** Nessuna Parata naturale. Schivata costa 1 AzP e 1 AzM e richiede consapevolezza e spazio praticabile; conserva i normali requisiti anche in volo. Chi dispone di una sola AzP e la spende per difendersi non può poi attaccare nello stesso Round. Naturale e Magico incontrano l’AR pertinente; Etereo soltanto l’AR magica. Nessun animale di questo blocco ha AR magica o immunità elementali.
+
+**Sensi e gruppo.** Un senso acuto concede +2 a Percezione quando il senso dichiarato è determinante, una sola volta per Prova. Branco, soltanto per Babbuino, Iena, Avvoltoio e Sciacallo, concede +2 al VA dei loro attacchi ravvicinati se un alleato cosciente e capace di attaccare minaccia la vittima da entro 1 Q. Più alleati non aumentano il bonus; nessun beneficio alle Difese, ai danni o alle PS. Un compagno Stordito o completamente bloccato non basta.
+
+**Rapporti con gli animali.** Non comprendono linguaggi parlati, salvo singoli segnali appresi in un contesto di addestramento. Gestirli richiede Sopravvivenza quando esiste un’incertezza concreta, con tempi, mezzi e circostanze appropriati. Cibo o una Prova riuscita non danno controllo mentale, domestichezza immediata o un comando suicida. Morso e contatto non trasmettono automaticamente malattie.
+
+# **Fauna aperta movimento e anatomia**
+
+**Distanze.** Le terne sono Passo / Corsa / Scatto in Q. Le andature conservano costi, Prove ed esiti del Giocatore §§5.2.1–5.2.4: Corsa terrestre Atletica 0, Scatto −2; in volo rispettivamente −2 e −4. Le penalità personali alle altre Azioni restano −2 in Corsa e −6 in Scatto. I percorsi misti impiegano un’unica AzM e un unico budget, senza ricevere ogni volta l’intera distanza del nuovo mezzo; ciascuna modalità conserva il proprio limite.
+
+**Ali e quota.** Aquila, Falco e Avvoltoio hanno ali reali: decollo, salita, discesa e atterraggio consumano movimento. Devono avere spazio per batterle e non possiedono sospensione immobile o Passaggio in volo. Uscire volontariamente da una portata nemica può provocare Opportunità anche salendo. Se perdono il sostegno, per esempio da Svenuti senza un altro effetto che li sorregga, si applica Caduta; il semplice Stato A Terra non abbatte un volatore senza appoggio (§5.2.5).
+
+**Piste e osservazione.** Una vista acuta può aiutare a distinguere un movimento o una carcassa visibile; non rivela ciò che resta coperto da un tetto o dal fogliame. L’olfatto richiede odori accessibili e risente di distanza, vento e contaminazioni pertinenti. Percezione individua indizi; Sopravvivenza interpreta o segue una pista quando occorre. Nessun senso assegna un’ubicazione esatta oltre pareti o sostituisce automaticamente le Prove contrapposte.
+
+**Corpi e localizzazioni.** Tutti usano una pedina tattica di 1 × 1 Q: per Tasso e Falco non rappresenta la larghezza reale. Testa e Torace sono capo e tronco. Nei mammiferi quadrupedi Braccia indica gli arti anteriori e Gambe quelli posteriori; nei rapaci Braccia sono le ali e Gambe gli arti posteriori. Per il Babbuino gli arti anteriori mantengono la funzione prensile. Le Menomazioni limitano la funzione colpita e non scompaiono cambiando postura.
+
+**Passaggi carico e prese.** Si attraversa soltanto un varco compatibile con il corpo reale. Le soglie di carico seguono FOR e il Giocatore §5.2.6, insieme all’anatomia e alla possibilità concreta di afferrare l’oggetto: un limite teorico di peso non crea una sella, mani o una presa sicura. Artigli e Morso infliggono soltanto il danno indicato; afferrare o trasportare una creatura richiede una manovra praticabile, con Azioni e opposizioni ordinarie.
+
+# **Babbuino**
+
+*Primate sociale • arrampicata e Branco • Natura Comune*
+
+Un animale vigile che cerca cibo in gruppo, sorveglia gli accessi e può reagire a una minaccia troppo vicina. Si serve degli arti anteriori per arrampicarsi e maneggiare oggetti semplici. Fonte: Baboon, p. 318.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 3 • DES 7 • COS 5 • INT 2 • SAG 6 • CAR 3 |
+| Risorse e protezioni | PV 6 • PM 4 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 8 • Riflessi 11 • Volontà 7 • Magia 7 |
+| Iniziativa e Azioni | INI +1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 6 / 12 / 18 Q; arrampicata 6 Q al Passo • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 8 • Atletica 11 • Percezione 10 • Furtività 10 • Sopravvivenza 9 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso | 8 | 1d4 Naturale; Perforazione | 1 Q |
+
+**Branco.** Alle condizioni comuni il Morso usa VA 10 anziché 8. Un solo Morso per Round, Opportunità e attacco ordinato compresi. Grida, gesti e denti esposti possono segnalare una minaccia, ma non impongono Terrorizzato né forniscono un attacco aggiuntivo.
+
+**Arrampicata.** Con la propria AzM percorre fino a 6 Q al Passo su appigli adatti, senza una Prova in condizioni ordinarie. Superfici precarie o altre difficoltà concrete possono richiedere Atletica 11. Non aderisce a soffitti lisci e non ottiene un secondo budget passando da terra a un tronco.
+
+**Prensione.** Può afferrare cibo o un oggetto accessibile e trasportabile, spendendo le Azioni ordinarie. Il profilo non possiede Abilità d’arma, comprensione di dispositivi complessi o la capacità automatica di attivare un Artefatto. Manipolare con un arto occupato può impedire un appiglio necessario.
+
+**Condotta.** Non comprende linguaggi e non ha Scurovisione innata. Tende a difendere gruppo e piccoli, cercando rumore, distanza e una via sui rami; sotto 2 PV o a Ferita Importante tende a disimpegnarsi. Un branco non diventa una sola creatura o uno Sciame per il solo fatto di riunirsi.
+
+# **Tasso**
+
+*Piccolo scavatore • fiuto e Scurovisione • Natura Comune*
+
+Un animale che cerca cibo e costruisce ripari nel terreno scavabile. Può mordere se bloccato presso la tana, ma la possibilità di scavare non gli permette di attraversare ogni materiale. Fonte: Badger, p. 318.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 2 • DES 5 • COS 6 • INT 2 • SAG 6 • CAR 3 |
+| Risorse e protezioni | PV 6 • PM 3 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 8 • Tempra 10 • Riflessi 9 • Volontà 7 • Magia 7 |
+| Iniziativa e Azioni | INI −1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 4 / 8 / 12 Q; scavo 1 Q al Passo • spazio tattico 1 × 1 Q |
+| Abilità | Corpo a corpo 7 • Atletica 8 • Percezione 10 • Furtività 11 • Sopravvivenza 10 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso | 7 | 1 Naturale; Perforazione | 1 Q |
+
+**Scavare.** Spende la propria AzM per avanzare fino a 1 Q al Passo in terra sufficientemente tenera, lasciando un cunicolo adatto al proprio corpo. Non corre o scatta scavando. Radici fitte, terreno instabile o altri ostacoli superabili richiedono una Prova pertinente, senza rendere attraversabili roccia, calcestruzzo o metallo.
+
+**Tana e accesso.** Lo scavo non infligge danni da attacco a muri o fondamenta e non nasconde automaticamente il Tasso. Entrare in un cunicolo aperto richiede che il corpo vi passi; una persona non può seguirlo soltanto perché le due pedine occupano 1 Q. Il terreno frapposto continua a impedire vista e attacchi non praticabili.
+
+**Sensi.** Scurovisione 6 Q e +2 a Percezione quando l’olfatto è determinante: VA 12 prima degli altri modificatori. Non riceve Senso Tellurico e non localizza ogni creatura che cammina sopra la tana.
+
+**Condotta.** Un solo Morso per Round, Opportunità compresa; le zampe da scavo non sono un secondo attacco. Cerca copertura o la tana quando può raggiungerla; sotto 2 PV o a Ferita Importante tende a fuggire. Non applica Branco, veleno o Tenacia del Cinghiale.
+
+# **Orso nero**
+
+*Orso di taglia media • fiuto e arrampicata • Natura Comune*
+
+Un orso più piccolo del Bruno già presente nel catalogo. Può usare Morso e Artigli nello stesso Round, ma la scelta di completare la sequenza consuma le Azioni che servirebbero per difendersi. Fonte: Black Bear, p. 318.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 6 • DES 5 • COS 6 • INT 2 • SAG 6 • CAR 3 |
+| Risorse e protezioni | PV 24 • PM 5 • AR 1 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 10 • Riflessi 9 • Volontà 8 • Magia 8 |
+| Iniziativa e Azioni | INI 0 • 2 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 8 / 16 / 24 Q; arrampicata 6 Q al Passo • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 11 • Atletica 11 • Percezione 11 • Sopravvivenza 11 • Furtività 8 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Artigli | 11 | 1d6+2 Naturale; Taglio | 1 Q |
+| Morso | 10 | 1d6+1 Naturale; Perforazione | 1 Q |
+
+**Sequenza.** Al massimo un attacco di Artigli e un Morso per Round, ciascuno con 1 AzP; Opportunità e attacchi ordinati rientrano in questi limiti. Può conservarne una per difendersi. Le due zampe non generano due applicazioni di danno e non può sostituire il Morso con un secondo attacco di Artigli.
+
+**Fiuto.** +2 a Percezione quando l’olfatto è determinante, quindi VA 13 prima degli altri modificatori. Nessuna Scurovisione innata. Il cibo nascosto può lasciare un odore, ma un contenitore chiuso non diventa automaticamente individuabile o apribile.
+
+**Arrampicata.** Con la propria AzM può percorrere fino a 6 Q al Passo su tronchi o superfici con appigli adatti al suo peso. Non occorre Atletica in condizioni ordinarie; difficoltà concrete richiedono la Prova pertinente. Non aderisce a pareti lisce. Sollevarsi sulle zampe posteriori non cambia spazio, riserve o localizzazioni.
+
+**Condotta.** Può difendere piccoli o cibo e cercare distanza quando gli viene lasciata una via libera. Sotto 6 PV o a Ferita Profonda tende a ritirarsi. Pelliccia e massa non aggiungono resistenze al freddo, alle armi da fuoco o agli Stati; Morso e Artigli non impongono una presa automatica.
+
+# **Cinghiale**
+
+*Ungulato robusto • Carica e Tenacia • Natura Comune*
+
+Un animale massiccio che può caricare per allontanare una minaccia o aprire una via di uscita. Il profilo usa le stesse procedure di Carica e Ferite adottate per il Cinghiale gigante, con valori inferiori. Fonte: Boar, p. 319.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 5 • DES 5 • COS 6 • INT 2 • SAG 4 • CAR 3 |
+| Risorse e protezioni | PV 18 • PM 4 • AR 1 biologica; AR magica 0 |
+| Difese e Salvezze | Difese 8 • Tempra 10 • Riflessi 9 • Volontà 8 • Magia 7 |
+| Iniziativa e Azioni | INI −1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 8 / 16 / 24 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 10 • Atletica 10 • Percezione 9 • Sopravvivenza 10 |
+| GS e PX per 4 PG | Inesperto • 20 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Zanne | 10 | 1d6+1 Naturale; Taglio | 1 Q |
+
+**Carica delle zanne.** Carica ordinaria del Giocatore §5.6: 1 AzM e 1 AzP, almeno 3 Q rettilinei effettivi, fino alla Corsa. Il danno normale è ×2, oppure ×3 con un Magistrale, senza aggiungere i dadi da slancio della fonte. Si applicano Prova di movimento se occorre Corsa e penalità della Carica: personali −2 VA con 3–6 Q, −4 da 7 Q; per colpirlo rispettivamente −4 e −6 VA, fino all’Iniziativa successiva.
+
+**Abbattimento.** Se le Zanne in Carica infliggono almeno 1 danno finale a una creatura con spazio fino a 1 × 1 Q, questa effettua Tempra 0: fallimento o Maldestro applica A Terra. Occorre un appoggio, non si sposta la vittima e chi è già A Terra non ripete la PS. Un colpo da fermo o un’Opportunità non attivano questo effetto.
+
+**Tenacia.** Una volta per scena, prima di effettuare Tempra per nuove Ferite mentre è già a 0 PV, può ottenere +2 a quella PS se il danno è Naturale e non deriva da un Successo Magistrale. L’uso si consuma qualunque sia l’esito. Non evita la Ferita minima, non recupera PV e non annulla Morente. Una pausa nello stesso scontro non ripristina l’uso.
+
+**Condotta.** Un attacco di Zanne per Round, normale oppure in Carica, Opportunità comprese. Nessuna Scurovisione o capacità sensoriale speciale in questo profilo. Sotto 5 PV o a Ferita Profonda cerca di allontanarsi se può; può caricare verso un varco, ma non riceve un movimento o un secondo attacco gratuito.
+
+# **Cervo**
+
+*Ungulato rapido • fuga e orientamento • Natura Comune*
+
+Un animale pronto a prendere distanza da una minaccia percepita. I suoi valori servono per piste, inseguimenti e scene in cui deve attraversare un passaggio esposto. Il profilo mantiene il Morso dell’originale. Fonte: Deer, p. 321.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 4 • DES 8 • COS 5 • INT 2 • SAG 7 • CAR 3 |
+| Risorse e protezioni | PV 8 • PM 4 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 11 • Tempra 8 • Riflessi 12 • Volontà 7 • Magia 8 |
+| Iniziativa e Azioni | INI +2 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 10 / 20 / 30 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 7 • Atletica 12 • Percezione 11 • Furtività 10 • Sopravvivenza 11 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso | 7 | 1d4 Naturale; Perforazione | 1 Q |
+
+**Attacco.** Un solo Morso per Round, Opportunità compresa. Palchi, zoccoli e slancio non aggiungono un attacco, una Carica speciale o un abbattimento a questa scheda. Un esemplare da rappresentare con capacità differenti richiede una variante esplicita.
+
+**Fuga.** Può usare le andature ordinarie e, se conserva AzP e AzM, Ritirata o Movimento Evasivo. La Corsa e lo Scatto richiedono le normali Prove; il VA di Atletica non concede automaticamente una fuga riuscita. Deve disporre di un percorso realmente praticabile per il corpo e non attraversa recinzioni o ostacoli senza superarli.
+
+**Sensi.** Vista e udito ordinari, senza Scurovisione o bonus sensoriale innato. Riconoscere una minaccia nascosta richiede Percezione contro Furtività quando pertinente; guardare nella stessa direzione degli altri animali non identifica da solo chi si nasconde.
+
+**Condotta.** Tende a fuggire quando la minaccia si avvicina e a mantenere un passaggio verso il gruppo. Sotto 2 PV o a Ferita Importante evita di prolungare il contatto, rispettando gli impedimenti della lesione. Non comprende linguaggi e la rapidità non lo rende automaticamente una cavalcatura utilizzabile.
+
+# **Aquila**
+
+*Rapace diurno • vista acuta e Artigli • Natura Comune*
+
+Un rapace che caccia prede compatibili con le proprie dimensioni e difende nido o posatoio. A differenza dell’Aquila gigante, non parla né comprende linguaggi. Fonte: Eagle, p. 322.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 3 • DES 7 • COS 5 • INT 2 • SAG 7 • CAR 3 |
+| Risorse e protezioni | PV 6 • PM 4 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 8 • Riflessi 11 • Volontà 7 • Magia 8 |
+| Iniziativa e Azioni | INI +1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 2 / 4 / 6 Q; volo 12 / 24 / 36 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 10 • Atletica 11 • Percezione 12 • Furtività 10 • Sopravvivenza 10 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Artigli | 10 | 1d4+1 Naturale; Taglio | 1 Q |
+
+**Vista acuta.** +2 a Percezione quando la vista è determinante, quindi VA 14 prima degli altri modificatori. Nessuna Scurovisione innata. Osservare da quota non consente di vedere oltre coperture opache o leggere automaticamente dettagli troppo lontani.
+
+**Artigli e volo.** Un solo attacco di Artigli per Round, Opportunità e attacco ordinato compresi. Non aggiunge una Beccata, un danno da picchiata o una presa automatica. Decollare e allontanarsi dopo il colpo usa soltanto il movimento ancora disponibile, con le normali Opportunità; le ali non sono una Parata naturale.
+
+**Trasporto.** Può afferrare un oggetto o una piccola preda soltanto con anatomia, peso e accesso compatibili, impiegando la manovra e le Azioni necessarie. Colpire con Artigli non basta per sollevare qualcuno. Non può attaccare con un mezzo che resta impegnato a trattenere un carico incompatibile.
+
+**Condotta.** Cerca cibo e correnti adatte, evita di atterrare tra avversari troppo numerosi. Sotto 2 PV o a Ferita Importante tende a cercare un posatoio sicuro se le ali funzionano. Un eventuale addestramento consente soltanto i segnali e i compiti realmente appresi.
+
+# **Falco**
+
+*Piccolo rapace • osservazione e agilità • Natura Comune*
+
+Un rapace leggero capace di osservare dall’alto e raggiungere posatoi poco accessibili. La scheda descrive il Falco ordinario, distinto dal Falco sanguinario della fonte. Fonte: Hawk, p. 330.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 2 • DES 8 • COS 4 • INT 2 • SAG 7 • CAR 3 |
+| Risorse e protezioni | PV 3 • PM 3 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 11 • Tempra 7 • Riflessi 12 • Volontà 7 • Magia 8 |
+| Iniziativa e Azioni | INI +2 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 2 / 4 / 6 Q; volo 12 / 24 / 36 Q • spazio tattico 1 × 1 Q |
+| Abilità | Corpo a corpo 9 • Atletica 11 • Percezione 12 • Furtività 12 • Sopravvivenza 9 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Artigli | 9 | 1 Naturale; Taglio | 1 Q |
+
+**Vista acuta.** +2 a Percezione quando la vista è determinante: VA 14 prima degli altri modificatori. Nessuna Scurovisione innata o vista attraverso ostacoli. Le condizioni di luce e l’accessibilità del dettaglio restano pertinenti.
+
+**Attacco e accesso.** Un attacco di Artigli per Round, Opportunità compresa. La piccola taglia non concede automaticamente Colpo Mirato agli occhi, Accecato o un attacco contro un organo esposto; le manovre appropriate mantengono costi e penalità. Non possiede Branco, Passaggio in volo o un danno speciale da picchiata.
+
+**Segnali appresi.** Un Falco addestrato può rispondere a richiami e svolgere compiti compatibili con il proprio addestramento, senza comprendere una conversazione o riferire verbalmente ciò che ha visto. Non condivide i propri sensi con un padrone e non fornisce una visuale a distanza per il solo fatto di essere addestrato.
+
+**Condotta.** Preferisce quota e posatoi e tende ad abbandonare il contatto quando ferito, già da Ferita Superficiale. Può fuggire soltanto con un percorso e una funzione alare utilizzabili. Gli oggetti trasportabili devono essere compatibili con artigli, becco e carico: la pedina tattica non ne aumenta le dimensioni reali.
+
+# **Iena**
+
+*Predatore opportunista • Branco e inseguimento • Natura Comune*
+
+Un animale che può cercare cibo in gruppo e approfittare di una vittima isolata. Il suo richiamo è comunicazione animale; il profilo non possiede la Frenesia della caccia della Iena gigante. Fonte: Hyena, p. 331.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 4 • DES 6 • COS 5 • INT 2 • SAG 6 • CAR 3 |
+| Risorse e protezioni | PV 10 • PM 4 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 9 • Tempra 9 • Riflessi 10 • Volontà 7 • Magia 7 |
+| Iniziativa e Azioni | INI 0 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 10 / 20 / 30 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 9 • Atletica 11 • Percezione 11 • Furtività 10 • Sopravvivenza 11 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso | 9 | 1d6 Naturale; Perforazione | 1 Q |
+
+**Branco.** Il Morso usa VA 11 anziché 9 quando un alleato soddisfa le condizioni comuni entro 1 Q dalla vittima. Il beneficio non aumenta i danni e non si moltiplica con il numero dei compagni. Un solo Morso per Round, Opportunità e attacco ordinato compresi.
+
+**Caccia.** Le andature e le Prove di Atletica restano ordinarie. Il Morso non impone automaticamente A Terra, Sanguinamento o una presa. Rendere una preda Svenuta o Morente non concede un altro attacco o Movimento: quella capacità appartiene alla scheda della Iena gigante.
+
+**Sensi e richiami.** Percezione 11, senza senso acuto o Scurovisione innata in questo profilo. Il riso e gli altri richiami possono avvertire compagni realmente in grado di udirli, ma non comunicano informazioni precise illimitate e non impongono Terrorizzato agli ascoltatori.
+
+**Condotta.** Può cacciare, contendersi una carcassa o seguire un gruppo a distanza. Sotto 3 PV, a Ferita Importante o quando resta isolata tende a interrompere il contatto. Non comprende linguaggi; il nome e la presenza di Gnoll non la rendono automaticamente un loro servitore.
+
+# **Avvoltoio**
+
+*Necrofago alato • vista fiuto e Branco • Natura Comune*
+
+Un uccello capace di cercare carcasse e reagire se viene intrappolato o minacciato. Il profilo è distinto dall’Avvoltoio gigante, che ha altri attacchi e capacità di comprensione. Fonte: Vulture, p. 339.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 3 • DES 5 • COS 6 • INT 2 • SAG 6 • CAR 2 |
+| Risorse e protezioni | PV 8 • PM 3 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 8 • Tempra 10 • Riflessi 9 • Volontà 6 • Magia 7 |
+| Iniziativa e Azioni | INI −1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 2 / 4 / 6 Q; volo 10 / 20 / 30 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 8 • Atletica 10 • Percezione 11 • Furtività 7 • Sopravvivenza 11 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Becco | 8 | 1d4 Naturale; Perforazione | 1 Q |
+
+**Vista e fiuto.** +2 a Percezione quando vista oppure olfatto sono determinanti: VA 13 prima degli altri modificatori, una sola volta anche quando entrambi aiutano. Nessuna Scurovisione innata. Non percepisce tutti i morenti a distanza illimitata né vede attraverso il terreno.
+
+**Branco.** Il Becco usa VA 10 anziché 8 se sono soddisfatte le condizioni comuni di Branco. Più compagni non aumentano il bonus. Un solo attacco di Becco per Round, Opportunità compresa; gli Artigli non sono un secondo mezzo offensivo previsto da questa scheda.
+
+**Volo e alimentazione.** Per riprendere quota spende il movimento disponibile, con spazio per le ali e le normali Opportunità. Non possiede sospensione immobile o Passaggio in volo. Alimentarsi di carcasse non gli concede immunità generale a veleni, malattie o Corruzione; nessun Morso infetto viene aggiunto al profilo.
+
+**Condotta.** Può attendere una carcassa accessibile o lasciare il posto a una minaccia più grande. Sotto 2 PV o a Ferita Importante tende a cercare quota e un posatoio sicuro. Non comprende linguaggi e non acquisisce la comprensione linguistica della variante gigante.
+
+# **Sciacallo**
+
+*Piccolo canide • udito fiuto e Branco • Natura Comune*
+
+Un canide che cerca piccole prede e resti alimentari, spesso vicino ai margini di un territorio frequentato. I suoi sensi aiutano a individuare tracce, senza sostituire le normali difficoltà della ricerca. Fonte: Jackal, p. 331.
+
+| Campo | Valore pronto |
+| :---- | :---- |
+| Caratteristiche | FOR 3 • DES 7 • COS 5 • INT 2 • SAG 6 • CAR 3 |
+| Risorse e protezioni | PV 6 • PM 4 • AR 0; AR magica 0 |
+| Difese e Salvezze | Difese 10 • Tempra 8 • Riflessi 11 • Volontà 7 • Magia 7 |
+| Iniziativa e Azioni | INI +1 • 1 AzP e 1 AzM per Round |
+| Movimento e spazio | Terra 8 / 16 / 24 Q • spazio 1 × 1 Q |
+| Abilità | Corpo a corpo 8 • Atletica 10 • Percezione 11 • Furtività 11 • Sopravvivenza 11 |
+| GS e PX per 4 PG | Principiante • 10 PX |
+
+| Attacco | VA | Danno completo | Portata / gittata |
+| :---- | :---: | :---: | :---: |
+| Morso | 8 | 1d4 Naturale; Perforazione | 1 Q |
+
+**Udito e fiuto.** +2 a Percezione quando udito oppure olfatto sono determinanti, quindi VA 13 prima degli altri modificatori. Non si sommano i due sensi. Nessuna Scurovisione innata; non riceve ecolocalizzazione o localizzazione precisa attraverso ostacoli.
+
+**Branco.** Il Morso usa VA 10 anziché 8 quando un alleato soddisfa le condizioni comuni entro 1 Q dalla vittima. Un solo Morso per Round, Opportunità e attacco ordinato compresi. Il Morso non impone automaticamente A Terra, veleno, malattie o una presa.
+
+**Piste e accessi.** Può seguire indizi accessibili con Sopravvivenza 11 quando occorre una Prova. Un odore non permette di aprire una chiusura e una fessura deve essere adatta al corpo reale. Non possiede movimento speciale di scavo o arrampicata; l’eventuale ostacolo segue le procedure ordinarie.
+
+**Condotta.** Tende a evitare un confronto diretto con avversari grandi e vigili, preferendo resti accessibili o prede isolate. Sotto 2 PV, a Ferita Importante o dopo la dispersione del gruppo tende a ritirarsi. Non comprende linguaggi ed è distinto dallo Sciacallo mannaro: nessuna trasformazione o influenza soprannaturale in questa scheda.
 

@@ -1,0 +1,113 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "tirannosauro",
+  "nome": "Tirannosauro",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Grandi rettili e predatori mostruosi",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 5,
+    "COS": 9,
+    "INT": 1,
+    "SAG": 6,
+    "CAR": 4
+  },
+  "pv": 80,
+  "pm": 7,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 8,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 10,
+    "corsa": 20,
+    "scatto": 30
+  },
+  "taglia": "grande",
+  "spazio": "3 × 3 Q",
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 8,
+    "volonta": 9,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "2d8+3",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "note": "Possibile presa: vedi «Aggancio»."
+    },
+    {
+      "nome": "Coda",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "2d6+3",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Contundente"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 15
+    },
+    {
+      "nome": "Atletica",
+      "va": 15
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 5
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e anatomia",
+      "effetto": "Natura Comune, biologicamente vivente, con una mente e PM personali (a 0 PM Svenuto); bassa INT, grande massa e parentela draconica non danno immunità mentali o alla Corruzione. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente. Nei quadrupedi Testa = capo e collo, Torace = corpo, Braccia = arti anteriori, Gambe = arti posteriori (la coda è un’appendice locomotrice delle Gambe). Nessuna Parata naturale; per una Menomazione si identifica la funzione coinvolta."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Fino a due attacchi per Round: un Morso oppure Stringere le fauci, e un attacco di Coda; se usa entrambi devono riguardare bersagli diversi. L’Attacco di Opportunità rispetta gli stessi limiti. Nessun attacco di Artigli efficace."
+    },
+    {
+      "nome": "Aggancio",
+      "effetto": "Dopo almeno 1 danno finale del Morso contro una creatura ≤ 1 × 1 Q, Riflessi senza modificatore: successo evita la presa; fallimento → Immobilizzato (mani non bloccate). Una sola vittima, e non morde altri finché la presa dura. Un Morso di Opportunità non attiva l’aggancio."
+    },
+    {
+      "nome": "Stringere le fauci",
+      "effetto": "1 AzP, solo sulla vittima già afferrata, VA 15: Corpo a corpo 15 contrapposto a Corpo a corpo o Atletica della vittima (−4 di Immobilizzato); successo infligge 2d8+3 Naturale con AR ordinaria, fallimento o pareggio nessun danno. La contrapposta sostituisce tiro per colpire e Difesa. È l’unico attacco delle fauci del Round.",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Liberarsi e spostamento",
+      "effetto": "La vittima spende 1 AzP: Corpo a corpo o Atletica contro Corpo a corpo 15 (pareggio conserva la presa); un alleato entro portata delle fauci può farlo col proprio VA, con un attrezzo per fare leva. Una vittima di massa (dotazione compresa) non oltre 250 kg viene portata a velocità dimezzate (per difetto) con l’AzM ordinaria, entro la portata delle fauci. Prima di un bordo o pericolo immediato la vittima fa Riflessi senza modificatore: successo ferma il Tirannosauro all’ultimo spazio sicuro se vuole conservare la presa. Non Schiva conservando la presa. Rilascio gratuito; perdita di coscienza, morte o Menomazione mandibolare interrompono l’aggancio (0 PV no). Dopo il rilascio la vittima è nel più vicino spazio libero e sostenuto adiacente; nessun danno automatico."
+    }
+  ],
+  "note": "Vista e udito ordinari. Braccia = piccoli arti anteriori, Gambe = posteriori e coda, Testa = fauci. Non inghiotte e non trasferisce sulla vittima gli attacchi diretti contro di lui. Non comprende linguaggi. Condotta: nutrimento; può abbandonare avversari difficili; sotto 20 PV o a Ferita Seria si ritira. Fonte: Tyrannosaurus Rex, p. 80."
+}

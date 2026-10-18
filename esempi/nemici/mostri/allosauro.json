@@ -1,0 +1,104 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "allosauro",
+  "nome": "Allosauro",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Grandi rettili e predatori mostruosi",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 6,
+    "COS": 7,
+    "INT": 1,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "pv": 36,
+  "pm": 5,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 12,
+    "corsa": 24,
+    "scatto": 36
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 10,
+    "volonta": 8,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    },
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 8
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e anatomia",
+      "effetto": "Natura Comune, biologicamente vivente, con una mente e PM personali (a 0 PM Svenuto); bassa INT, grande massa e parentela draconica non danno immunità mentali o alla Corruzione. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente. Nei quadrupedi Testa = capo e collo, Torace = corpo, Braccia = arti anteriori, Gambe = arti posteriori (la coda è un’appendice locomotrice delle Gambe). Nessuna Parata naturale; per una Menomazione si identifica la funzione coinvolta."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Fino a due attacchi per Round, al massimo un Morso e un attacco di Artigli. Un’Azione conservata per Schivare non resta per completare la sequenza. Nessun attacco ad Area né danni automatici per chi è sotto il corpo."
+    },
+    {
+      "nome": "Assalto",
+      "effetto": "Dopo almeno 6 Q di movimento rettilineo verso la vittima nella stessa Iniziativa, Artigli che infliggono almeno 1 danno finale impongono Tempra senza modificatore a una creatura ≤ 2 × 2 Q: fallimento → A Terra. Il Morso successivo usa la seconda AzP (non è gratuito). Nessun danno oltre alle formule."
+    }
+  ],
+  "note": "Vista e udito ordinari, senza scurovisione. Non comprende linguaggi. Condotta: preda isolata e spazio per lo slancio; sotto 9 PV o a Ferita Profonda abbandona una caccia rischiosa. Fonte: Allosaurus, p. 79."
+}

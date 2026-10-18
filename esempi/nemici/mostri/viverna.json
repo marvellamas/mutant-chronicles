@@ -1,0 +1,125 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "viverna",
+  "nome": "Viverna",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Grandi rettili e predatori mostruosi",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 5,
+    "COS": 7,
+    "INT": 3,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "pv": 56,
+  "pm": 8,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12,
+    "volo": 16
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 9,
+    "volonta": 9,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    },
+    {
+      "nome": "Pungiglione",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "note": "Poi veleno (una dose dichiarata prima del tiro): vedi la capacità «Veleno»."
+    },
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ],
+      "note": "Solo in volo."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 7
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e anatomia",
+      "effetto": "Natura Comune, biologicamente vivente, con una mente e PM personali (a 0 PM Svenuto); bassa INT, grande massa e parentela draconica non danno immunità mentali o alla Corruzione. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente. Nei quadrupedi Testa = capo e collo, Torace = corpo, Braccia = arti anteriori, Gambe = arti posteriori (la coda è un’appendice locomotrice delle Gambe). Nessuna Parata naturale; per una Menomazione si identifica la funzione coinvolta."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né oscurità soprannaturale."
+    },
+    {
+      "nome": "Sequenza e volo",
+      "effetto": "Fino a due attacchi per Round, al massimo un Morso e un Pungiglione; in volo può sostituire uno dei due con Artigli. L’Opportunità ordinaria usa Morso o Artigli, senza puntura velenosa gratuita. Ali reali: servono spazio e non resta sospeso come una creatura fluttuante; impedimenti o perdita di coscienza possono causare caduta. Il volo non dà una presa o un trasporto automatico con gli Artigli. Testa = collo, Braccia = ali, Gambe = zampe posteriori e coda."
+    },
+    {
+      "nome": "Veleno",
+      "effetto": "Tre dosi in ogni periodo di 24 ore, dichiarate prima di un Pungiglione: si consuma solo se almeno 1 danno finale raggiunge un organismo biologico (anche se immune al veleno); una dose non usata resta; un nuovo incontro non ripristina. Senza dose il Pungiglione fa solo il danno fisico. Inoculazione: Tempra −2; fallimento 2d6 Naturale interno (ignora AR) e Avvelenato con −2 ai VA delle azioni fisiche per 2 Round; successo metà per eccesso e nessuna penalità. Si risolvono prima il danno fisico (PV, Ferite), poi il veleno; un Magistrale raddoppia solo il fisico. Un solo danno immediato per dose, nessun danno periodico; nuove dosi non sommano il −2 (resta la scadenza più lontana). Veleno naturale di Pericolosità IV, Seria: antidoto o Cura Avvelenamenti (liv. 5) lo neutralizzano; Cura Spirituale no. Nessuna dose commerciale dal cadavere; le dosi consumate non sono bottino.",
+      "risorsa": "1 dose",
+      "usi": {
+        "quanti": 3,
+        "per": "giorno"
+      }
+    }
+  ],
+  "note": "Non comprende linguaggi nel profilo base e non ha un soffio. Condotta: insegue una preda accessibile cercando spazio per la coda; sotto 14 PV o a Ferita Profonda si allontana in volo. Fonte: Wyvern, p. 303."
+}

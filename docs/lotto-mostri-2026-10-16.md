@@ -182,17 +182,30 @@ Oratoria (il Giocatore dice «Oratoria per diplomazia»); «Tiro naturale» (Avv
 e lo stesso vale, per gli Elementali del blocco precedente, per «Attacco a distanza» e «Prove di FOR» (prima
 scartate in silenzio, ora recuperate nelle note): domanda **A.169**. Test: `tests/mostri-vegetali.test.js`.
 
-## Che cosa resta del catalogo (Mostri 0.18)
+## Catalogo, blocco «Grandi rettili e predatori mostruosi» — cap. 8 (18/10, Mostri 0.23)
 
-Il catalogo del cap. 8 ha 165 creature; ne sono fatte 95 (otto blocchi da dieci più le quindici della prima
-parte). Restano 70, da fare a blocchi nei prossimi lotti:
+`tools/genera_mostri_rettili.mjs` → `esempi/nemici/mostri/`: Allosauro, Anchilosauro, Plesiosauro, Pteranodonte,
+Triceratopo, Tirannosauro, Viverna, Idra, Behir, Drago tartaruga.
 
-- **Grandi rettili e predatori mostruosi** (Allosauro, Anchilosauro, Plesiosauro, Pteranodonte, Triceratopo,
-  Tirannosauro, Viverna, Idra, Behir, Drago tartaruga), **Creature delle acque e popoli sommersi**, **Predatori e
-  grandi erbivori**, **Creature alate e piccoli predatori**, **Sciami e piccola fauna**.
-- Nuovi della 0.18: **Cavalcature e animali da lavoro** (Cammello, Cavallo da tiro, da sella, da guerra, Mulo,
-  Pony, Mastino, Capra, Capra gigante, Alce) e **Mephit e creature elementali** (Mephit della polvere, del
-  ghiaccio, del magma, del fango, del fumo, del vapore, Serpente di fuoco, Salamandra, Galeb Duhr, Xorn).
+Scelte del blocco: tipo di danno fisico (Taglio, Perforazione, Contundente) nella `proprieta` dell'attacco (il
+manuale precisa che Perforazione non è la proprietà Perforante X); Stringere, Stringere le fauci, Soffio elettrico e
+Soffio di vapore → capacità; Calpestare (vittima già A Terra) e Coda del Drago tartaruga (2 AzP) restano attacchi con la
+condizione nella nota; Viverna con tre dosi di veleno al giorno (`usi`); **Idra** con le Opportunità speciali nel
+campo `azioni.eccezioni` e soglia di lesione, ultima testa, ricrescita e cauterizzazione come capacità; il Behir con
+spire, soffio e inghiottimento complessi come capacità; **Drago tartaruga 4 × 4 Q**: ingombro non ammesso dal campo
+Spazio → `spazio` vuoto, nota con A.167, taglia Grande (nell'app compare come pedina 2 × 2 «dalla Taglia»). Test:
+`tests/mostri-rettili.test.js`.
+
+## Che cosa resta del catalogo (Mostri 0.23)
+
+Il catalogo del cap. 8 ha 215 creature in 21 blocchi; ne sono fatte 105 (dieci blocchi da dieci più le quindici
+della prima parte). Restano 110, in undici blocchi da dieci, da fare nei prossimi lotti:
+
+- dei blocchi già nella 0.16: **Creature delle acque e popoli sommersi**, **Predatori e grandi erbivori**,
+  **Creature alate e piccoli predatori**, **Sciami e piccola fauna**;
+- della 0.18: **Cavalcature e animali da lavoro** e **Mephit e creature elementali**;
+- nuovi della 0.23: **Costrutti e Modron**, **Capi e varianti dei popoli guerrieri**, **Predatori straordinari**,
+  **Popoli delle terre selvagge**, **Fauna delle terre aperte**.
 
 Nota: gli sciami avranno meccaniche proprie (spazio, dispersione) da trascrivere a mano come gli altri blocchi,
 senza automatismi.

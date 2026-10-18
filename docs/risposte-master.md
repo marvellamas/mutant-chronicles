@@ -1722,10 +1722,19 @@ diverso dalle regole già approvate **non si è cambiato**: vedi A.167 qui sotto
   Unicorno): Rovi viventi, poteri a PM e Afferrare/Inglobare/Comprimere come capacità; Corno in carica come
   attacco con la condizione nella nota. **Abilità non nel catalogo** («Tiro naturale», «Attacco a distanza»,
   «Prove di FOR»): nella nota, nessuna Abilità inventata (domanda **A.169**); Diplomazia → Oratoria.
-  Bestiario online rigenerato. **Restano** 70 creature del cap. 8: «Grandi rettili e predatori mostruosi»,
-  «Creature delle acque e popoli sommersi», «Predatori e grandi erbivori», «Creature alate e piccoli predatori»,
-  «Sciami e piccola fauna», «Cavalcature e animali da lavoro», «Mephit e creature elementali»: a blocchi nei
-  prossimi lotti.
+  Bestiario online rigenerato. (Il seguito è nel punto del 18/10.)
+- **Seguito del 18/10 (Manuale dei Mostri passato a 0.23, 215 creature nel cap. 8).** La 0.23 aggiunge in coda
+  cinque blocchi («Costrutti e Modron», «Capi e varianti dei popoli guerrieri», «Predatori straordinari», «Popoli
+  delle terre selvagge», «Fauna delle terre aperte») e non cambia le schede già trascritte. Blocco **«Grandi rettili
+  e predatori mostruosi»**: Allosauro, Anchilosauro, Plesiosauro, Pteranodonte, Triceratopo, Tirannosauro, Viverna,
+  Idra, Behir, Drago tartaruga. Scelte del blocco: tipo di danno fisico nella proprietà dell'attacco; soffi e prese
+  (Stringere, Stringere le fauci, Soffio elettrico, Soffio di vapore) come capacità; Calpestare e la Coda del Drago
+  tartaruga come attacchi con la condizione nella nota; Idra con Opportunità speciali in `azioni.eccezioni`;
+  Drago tartaruga 4 × 4 Q fuori dal campo Spazio (A.167). Bestiario online rigenerato. **Restano** 110 creature del
+  cap. 8, in undici blocchi: «Creature delle acque e popoli sommersi», «Predatori e grandi erbivori», «Creature
+  alate e piccoli predatori», «Sciami e piccola fauna», «Cavalcature e animali da lavoro», «Mephit e creature
+  elementali», «Costrutti e Modron», «Capi e varianti dei popoli guerrieri», «Predatori straordinari», «Popoli
+  delle terre selvagge», «Fauna delle terre aperte»: a blocchi nei prossimi lotti.
 
 ## Domande aperte dalla ricognizione del 15 ottobre 2026
 

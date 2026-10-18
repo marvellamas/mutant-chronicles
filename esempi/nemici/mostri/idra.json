@@ -1,0 +1,114 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "idra",
+  "nome": "Idra",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Grandi rettili e predatori mostruosi",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 6,
+    "COS": 10,
+    "INT": 1,
+    "SAG": 5,
+    "CAR": 4
+  },
+  "pv": 76,
+  "pm": 9,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 8,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "taglia": "grande",
+  "spazio": "3 × 3 Q",
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 15,
+    "riflessi": 9,
+    "volonta": 9,
+    "magia": 11
+  },
+  "azioni": {
+    "principali": 3,
+    "movimento": 1,
+    "eccezioni": "Opportunità speciali delle teste (vedi la capacità «Opportunità delle teste»)"
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ],
+      "note": "Una testa funzionale per ogni Morso."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Furtività",
+      "va": 6
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e anatomia",
+      "effetto": "Natura Comune, biologicamente vivente, con una mente e PM personali (a 0 PM Svenuto); bassa INT, grande massa e parentela draconica non danno immunità mentali o alla Corruzione. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente. Nei quadrupedi Testa = capo e collo, Torace = corpo, Braccia = arti anteriori, Gambe = arti posteriori (la coda è un’appendice locomotrice delle Gambe). Nessuna Parata naturale; per una Menomazione si identifica la funzione coinvolta."
+    },
+    {
+      "nome": "Morsi e Opportunità delle teste",
+      "effetto": "Con le AzP al massimo tre Morsi per Round e non più del numero di teste funzionali, 1 AzP ciascuno. Eccezione espressa: con almeno tre teste funzionali può fare fino a due Attacchi di Opportunità ordinari per Round, su due occasioni distinte (con una o due teste, uno solo), aggiuntivi rispetto ai tre Morsi; ogni testa morde al massimo una volta per Round (si annotano le teste usate). Niente Parata naturale, azioni simultanee fuori Iniziativa o attacchi attraverso ostacoli."
+    },
+    {
+      "nome": "Un solo organismo",
+      "effetto": "Inizia con cinque teste (numerate da 1 a 5), fino a sette contemporanee; condividono PV, PM, Ferite, Azioni e Stati dell’Idra. Una localizzazione Testa riguarda una testa funzionale determinata a caso fra quelle coinvolte e raggiungibili. Sette teste non significano sette AzP."
+    },
+    {
+      "nome": "Soglia di lesione",
+      "effetto": "Quando accumula almeno 16 danni finali nello stesso Round, una testa funzionale è distrutta o recisa e lascia un collo aperto (si verifica dopo aver risolto l’intero attacco; al massimo una testa per Round per questo innesco; conta il danno positivo anche a 0 PV, non i PM). Una lesione anatomica ordinaria può rendere non funzionale una testa anche senza la soglia. Una testa solo Accecata o Assordata non genera nuove teste."
+    },
+    {
+      "nome": "Menti collegate",
+      "effetto": "Con almeno due teste funzionali +2 alle PS richieste direttamente per evitare Accecato, Assordato, Terrorizzato, Stordito, fascinazione o uno svenimento imposto da un effetto (non alla determinazione delle Ferite; non evita Svenuto da PM 0, Morente o conseguenze senza PS)."
+    },
+    {
+      "nome": "Ultima testa",
+      "effetto": "Se nessuna testa rimane funzionale per distruzione anatomica, l’Idra è Svenuta ed entra in Morente (contatore COS 10, penalità −8; primo decremento dopo un Round completo): eccezione anatomica distinta da 0 PV. La ricrescita non opera senza almeno una testa; recuperare PV non ricostruisce una testa. La stabilizzazione non restituisce la funzione; Rigenerazione sì."
+    },
+    {
+      "nome": "Ricrescita e cauterizzazione",
+      "effetto": "A fine di ogni propria Iniziativa, se cosciente e con almeno una testa funzionale, verifica i colli aperti. Se ha subito almeno 1 danno finale da Fuoco dall’ultima verifica, tutti i colli aperti sono cauterizzati e non ricrescono con questa capacità. Altrimenti ogni collo aperto genera fino a due nuove teste (massimo sette), senza Azioni o PM; ogni testa ricresciuta cura 2 PV al corpo, fino a 4 PV per Round. Non riduce Ferite, non stabilizza, non guarisce Menomazioni di altro tipo. Le nuove teste agiscono dal Round dopo la ricrescita (limiti di tre Morsi e due Opportunità). Una fiamma senza danno finale non cauterizza; non è vulnerabile al Fuoco né Incendiata; la ricrescita non è un effetto di Negare Potere. I 70 PX comprendono cinque teste, ricrescita fino a sette e le Opportunità."
+    },
+    {
+      "nome": "Sensi e fiato",
+      "effetto": "Scurovisione 12 Q. Nel sonno almeno una testa resta vigile (Percezione 14). Può trattenere il fiato per 1 ora, poi §5.23. Terra e nuoto 6/12/18 Q."
+    }
+  ],
+  "note": "Un grande rettile acquatico a cinque teste iniziali. Condotta: nutrimento presso rive e paludi; sotto 19 PV o a Ferita Seria tenta di ritirarsi. Verifica al tavolo: registrare teste attive, colli cauterizzati, PV recuperati e Opportunità effettive. Fonte: Hydra, p. 190."
+}
