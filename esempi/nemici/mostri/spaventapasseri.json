@@ -1,0 +1,111 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "spaventapasseri",
+  "nome": "Spaventapasseri",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e Modron",
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 6,
+    "COS": 5,
+    "INT": 6,
+    "SAG": 5,
+    "CAR": 7
+  },
+  "pv": 32,
+  "pm": 9,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 10,
+    "volonta": 11,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ],
+      "note": "Con almeno 1 danno finale, una vittima dotata di mente effettua Volontà senza modificatore: fallimento Terrorizzato per 1 Round (nessuna seconda PS iniziale; Barriera Mentale dà il proprio bonus; un’AR che annulla il colpo evita anche questa applicazione)."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo animato",
+      "effetto": "Natura Comune, nessun incantesimo appreso. Ha mente e PM personali; può essere bersaglio di Dardo Psichico, salvo protezione specifica. Non richiede aria, cibo, acqua o sonno. Immune a soffocamento, Sonno, Sanguinamento, Avvelenato, veleni e malattie biologici. Cure biologiche, Medicina, riposo biologico e normali riparazioni tecnologiche non lo ripristinano; assorbimenti e rigenerazione dichiarati recuperano solo PV (non curano Ferite o Menomazioni e non stabilizzano Morente). A 0 PV valgono Tempra, Ferite, Menomazioni e Morente (§4.2): non diventa un oggetto inerte per il solo esaurimento dei PV; a 0 PM personali Svenuto dopo la risoluzione completa dell’azione (PM — non significa 0 PM). Dardo Spirituale lo può colpire (eccezione esplicita): danno Etereo ai PV e sottrae soltanto PM personali esistenti. Negare Potere non cancella il corpo né i suoi attacchi intrinseci; Contromagia non interrompe capacità innate; Individuare o Identificare Potere non concedono il comando. Testa, Torace, Braccia e Gambe sono le parti omonime; le piastre integrate usano PV e Ferite (gli oggetti impugnati mantengono i propri PI). INI modifica 1d10; AzP e unica AzM valgono per tutto il Round. Ogni attacco costa 1 AzP e produce AC 1. Una sola Opportunità per Round, con un attacco ravvicinato normale nei limiti della voce (non attiva Sguardi, gas, Accelerazione, cariche o poteri di comando). Più arti non concedono attacchi gratuiti. Nessuna Parata naturale: la Parata richiede 1 AzP e un’arma o scudo idonei (successo dimezza per eccesso prima dell’AR, Magistrale annulla; Spada, Pugnale e Giavellotto −8 VA per parare a distanza, Scudo medio −4 con ulteriore −2 contro Raffica; Pugni e Arco non parano). Schivata: 1 AzP, 1 AzM, consapevolezza e spazio. Naturale e Magico incontrano tutta l’AR pertinente, Etereo solo quella magica. Uno Stato di durata N applicato nel Round R termina a fine Round R + N; nuove applicazioni non sommano la stessa penalità e conservano la scadenza più lontana."
+    },
+    {
+      "nome": "Resistenza fisica",
+      "effetto": "Dimezza per eccesso il danno Naturale da Contusione, Taglio e Perforazione prima dell’AR. Non vale contro Fuoco, Gelo, acido, Elettricità, danni Magici o Eterei. Nessuna proprietà adamantina importata."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    },
+    {
+      "nome": "Sguardo terribile",
+      "azioni": {
+        "principali": 1
+      },
+      "risorsa": "2 PM",
+      "limiti": "Al massimo una volta per Round.",
+      "prova": "PS di Volontà",
+      "effetto": "Una creatura dotata di mente entro 6 Q: lo Spaventapasseri deve vederla ed essa deve vedere direttamente il suo volto (pareti opache, volto coperto o impossibilità di vedere impediscono l’effetto; registrazioni e immagini non lo trasmettono). Nessun tiro per colpire; non ammesse Parata, Schivata o Elusione. Volontà senza modificatore evita; fallimento Paralizzato per 1 Round, come blocco da paura (non si applica anche Terrorizzato). Immunità a paura o Terrorizzato, oppure a Paralizzato, impedisce il blocco; Barriera Mentale aggiunge il proprio bonus senza immunità automatica. Paralisi: la vittima resta cosciente ma senza AzP o Movimento e senza Difese attive; conserva PS e opposizioni passive; nessun Magistrale automatico. Termina a scadenza, con Cura Spirituale 6 o Negare Potere potenza 3 (danni e uscita dalla gittata non bastano). Dopo una PS riuscita o la fine del blocco la vittima è immune allo Sguardo di quello Spaventapasseri per 24 ore (non alla paura degli Artigli). I Terrorizzato degli Artigli seguono il Giocatore (scomparsa evidente della fonte, Oratoria di un compagno adiacente con 1 AzP, cure compatibili). Non è una Possessione."
+    },
+    {
+      "nome": "Aspetto e protezioni",
+      "effetto": "Immobile e appoggiato come uno spaventapasseri plausibile ottiene +4 a Furtività per celare la natura animata, fino a un movimento osservato (nessuna Sorpresa automatica). Vulnerabile al Fuoco ×2 di ogni Natura (con Magistrale ×3 complessivo, non ×4). Immune ad Affaticamento, Terrorizzato, fascinazione e Paralizzato. Comprende la lingua del creatore senza parlarla. Segue la consegna, ma può ripararsi dal fuoco o preservare il luogo; la morte del creatore non lo distrugge."
+    }
+  ],
+  "immunita": [
+    "avvelenato",
+    "sanguinamento",
+    "terrorizzato"
+  ],
+  "note": "Sentinella di legno, stoffa e paglia animata da uno spirito (impulsi e reazioni, senza i ricordi di una vita precedente). Al massimo due Artigli per Round, Opportunità compresa. Fonte: Scarecrow, p. 268."
+}

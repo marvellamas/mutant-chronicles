@@ -1,0 +1,123 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "golem-di-argilla",
+  "nome": "Golem di argilla",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e Modron",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 4,
+    "COS": 9,
+    "INT": 1,
+    "SAG": 4,
+    "CAR": 1
+  },
+  "pv": 84,
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 7,
+  "iniziativa": -2,
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 8,
+    "magia": 12
+  },
+  "senza_salvezza": [
+    "volonta"
+  ],
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Schianto maledetto",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "2d8+3",
+      "natura": "Magico",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ],
+      "note": "Nessun danno Etereo automatico. Dopo almeno 1 danno finale: vedi «Colpo maledetto»."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 8
+    },
+    {
+      "nome": "Furtività",
+      "va": 5
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo animato",
+      "effetto": "Natura Comune, nessun incantesimo appreso. Esegue istruzioni senza mente autonoma: PM — e Volontà —; lettura mentale, Dardo Psichico, paura e controllo che richieda una mente non trovano un bersaglio valido. Non richiede aria, cibo, acqua o sonno. Immune a soffocamento, Sonno, Sanguinamento, Avvelenato, veleni e malattie biologici. Cure biologiche, Medicina, riposo biologico e normali riparazioni tecnologiche non lo ripristinano; assorbimenti e rigenerazione dichiarati recuperano solo PV (non curano Ferite o Menomazioni e non stabilizzano Morente). A 0 PV valgono Tempra, Ferite, Menomazioni e Morente (§4.2): non diventa un oggetto inerte per il solo esaurimento dei PV; a 0 PM personali Svenuto dopo la risoluzione completa dell’azione (PM — non significa 0 PM). Dardo Spirituale lo può colpire (eccezione esplicita): danno Etereo ai PV e sottrae soltanto PM personali esistenti. Negare Potere non cancella il corpo né i suoi attacchi intrinseci; Contromagia non interrompe capacità innate; Individuare o Identificare Potere non concedono il comando. Testa, Torace, Braccia e Gambe sono le parti omonime; le piastre integrate usano PV e Ferite (gli oggetti impugnati mantengono i propri PI). INI modifica 1d10; AzP e unica AzM valgono per tutto il Round. Ogni attacco costa 1 AzP e produce AC 1. Una sola Opportunità per Round, con un attacco ravvicinato normale nei limiti della voce (non attiva Sguardi, gas, Accelerazione, cariche o poteri di comando). Più arti non concedono attacchi gratuiti. Nessuna Parata naturale: la Parata richiede 1 AzP e un’arma o scudo idonei (successo dimezza per eccesso prima dell’AR, Magistrale annulla; Spada, Pugnale e Giavellotto −8 VA per parare a distanza, Scudo medio −4 con ulteriore −2 contro Raffica; Pugni e Arco non parano). Schivata: 1 AzP, 1 AzM, consapevolezza e spazio. Naturale e Magico incontrano tutta l’AR pertinente, Etereo solo quella magica. Uno Stato di durata N applicato nel Round R termina a fine Round R + N; nuove applicazioni non sommano la stessa penalità e conservano la scadenza più lontana."
+    },
+    {
+      "nome": "Resistenza fisica",
+      "effetto": "Dimezza per eccesso il danno Naturale da Contusione, Taglio e Perforazione prima dell’AR. Non vale contro Fuoco, Gelo, acido, Elettricità, danni Magici o Eterei. Nessuna proprietà adamantina importata."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    },
+    {
+      "nome": "Magia e assorbimento",
+      "passiva": true,
+      "effetto": "Contro incantesimi e poteri mistici +2 alle sole PS già previste, non nei VA; non modifica la determinazione delle Ferite. Immune ad acido e a Corrosivo prodotto da quell’acido: il residuo che infliggerebbe danno recupera PV con la procedura del Golem di carne, ma con massimo 6 PV complessivi per Round. Non ripara oggetti impugnati, non sana Ferite e non stabilizza Morente. Immune ad Affaticamento, Paralizzato e pietrificazione; non può essere trasformato da un potere di mutazione (conserva Ferite, Menomazioni e vincoli materiali)."
+    },
+    {
+      "nome": "Colpo maledetto",
+      "prova": "Tempra −2",
+      "effetto": "Dopo almeno 1 danno finale di Schianto, una vittima con PV massimi ordinari effettua Tempra −2: successo evita; fallimento riduce di 2 il massimo dei PV. Ulteriori fallimenti possono portare la riduzione complessiva a 6 (sommando anche Golem diversi), senza abbassare il massimo sotto 1. Nessuna seconda Difesa o PS iniziale; capacità innata, non il lancio di Maledizione. I PV attuali eccedenti il nuovo massimo si perdono senza un secondo danno né Tempra per Ferite; il tetto vale anche per rigenerazione e cure; non riduce PV temporanei, PM, COS, VA o contatore di Morente e non uccide automaticamente. Dura un’ora dall’ultima applicazione fallita, anche dopo la distruzione del Golem. Negare Potere rimuove l’intera riduzione dal bersaglio (potenza 9; non serve Rompere Vincolo); scadenza o rimozione restituiscono il massimo, non i PV mancanti; le cure dei PV e Cura Spirituale non rimuovono la causa."
+    },
+    {
+      "nome": "Accelerazione",
+      "azioni": {
+        "principali": 1
+      },
+      "limiti": "Usata nel Round R, non si riattiva prima della propria Iniziativa in R + 3.",
+      "effetto": "Senza PM: +2 VA a Difese e Riflessi fino a fine del Round successivo. Non somma il bonus con un’altra propria Accelerazione e non concede AzP, AzM, Schianti, Opportunità o ricariche aggiuntive; prende una delle due AzP ordinarie."
+    },
+    {
+      "nome": "Furia",
+      "effetto": "All’inizio della propria Iniziativa, con 36 PV o meno e se può agire, tira 1d6: con 6 entra in Furia. Non costa PM o Azioni. Finché dura dà precedenza all’attacco contro la creatura percepita più vicina, senza distinguere alleati (in parità sceglie il percorso più breve e poi casualmente); se nessuna è raggiungibile attacca un oggetto accessibile, preferendo uno più piccolo di sé. Conserva Azioni, costi, sensi e impedimenti ordinari. Non esegue ordini finché dura; il creatore non la termina con una parola d’arresto né con Oratoria: termina solo tornando al massimo effettivo dei PV o alla distruzione (l’incoscienza ne impedisce comunque le azioni). L’assorbimento può recuperare PV fino al massimo effettivo, senza eliminare le Ferite. Svenuto sospende le Azioni senza cancellare le altre condizioni."
+    },
+    {
+      "nome": "Sensi e consegna",
+      "effetto": "Comprende gli ordini del creatore senza parlare. L’assenza di mente impedisce gli effetti che ne richiedono una."
+    }
+  ],
+  "immunita": [
+    "avvelenato",
+    "sanguinamento"
+  ],
+  "note": "Pesante corpo di argilla animata che presidia un luogo; l’eventuale origine religiosa non gli dà Natura Oscura Simmetria. PM — e Volontà —: nessun dato (un dato assente non vale 0). Al massimo due Schianti per Round, Opportunità compresa. Fonte: Clay Golem, pp. 167–168."
+}

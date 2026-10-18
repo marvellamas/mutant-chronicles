@@ -1,0 +1,126 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "tridrone",
+  "nome": "Tridrone",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e Modron",
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 6,
+    "COS": 5,
+    "INT": 5,
+    "SAG": 5,
+    "CAR": 5
+  },
+  "pv": 22,
+  "pm": 7,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 22,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 10,
+    "volonta": 9,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Pugno",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ]
+    },
+    {
+      "nome": "Giavellotto a mano",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    },
+    {
+      "nome": "Giavellotto lanciato",
+      "tipo": "distanza",
+      "va": 10,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "gittata_q": 18,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Armi da guerra",
+      "va": 10
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 8
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Modron",
+      "effetto": "Costrutto biomeccanico vivente di Natura Comune: respira aria, si nutre, richiede acqua e riposo compatibile; ha mente e PM personali. Nessuna delle immunità fisiologiche dei guardiani animati: può subire veleni, malattie, Sanguinamento, Sonno, Affaticamento e Stati se la fonte è compatibile. Le cure biologiche recuperano i PV (eccezione esplicita) ma non ricostruiscono parti perdute né riparano componenti meccaniche. Mente assiomatica: un controllo mentale non può costringerlo ad agire contro la propria funzione o un ordine valido già ricevuto (quella parte non viene eseguita); nessuna immunità a danni psichici, lettura della mente, paura, illusioni, perdita di PM o influenza sociale. Parla Modron e comprende comandi operativi solo di esemplari del proprio grado o di quello immediatamente superiore o inferiore (Monodrone: un compito semplice, messaggio fino a 48 parole; Duodrone: due consegne semplici senza nuove Azioni; Tridrone coordina pattuglie, Quadrone il tiro, Pentadrone valuta situazioni nuove); nessuna telepatia di comando a distanza illimitata. Solo alla distruzione effettiva il corpo si disgrega (armi e oggetti restano con l’Integrità residua); a 0 PV o PM non scompare. Testa = gruppo sensoriale, Torace = nucleo, Braccia = arti manipolatori, Gambe = arti locomotori (per Monodrone e Quadrone il Torace comprende il cingolo alare). INI modifica 1d10; AzP e unica AzM valgono per tutto il Round. Ogni attacco costa 1 AzP e produce AC 1. Una sola Opportunità per Round, con un attacco ravvicinato normale nei limiti della voce (non attiva Sguardi, gas, Accelerazione, cariche o poteri di comando). Più arti non concedono attacchi gratuiti. Nessuna Parata naturale: la Parata richiede 1 AzP e un’arma o scudo idonei (successo dimezza per eccesso prima dell’AR, Magistrale annulla; Spada, Pugnale e Giavellotto −8 VA per parare a distanza, Scudo medio −4 con ulteriore −2 contro Raffica; Pugni e Arco non parano). Schivata: 1 AzP, 1 AzM, consapevolezza e spazio. Naturale e Magico incontrano tutta l’AR pertinente, Etereo solo quella magica. Uno Stato di durata N applicato nel Round R termina a fine Round R + N; nuove applicazioni non sommano la stessa penalità e conservano la scadenza più lontana."
+    },
+    {
+      "nome": "Visione ordinatrice",
+      "effetto": "Entro 12 Q vede forme e movimenti nel buio completo (Accecato: il senso delle forme resta utilizzabile, senza dettagli puramente visivi). Contro Mimetismo usa Potere di Rilevazione 6: superiore supera, inferiore fallisce, parità richiede una PS Magia dell’osservatore per coppia di effetti (si riprova solo dopo un nuovo lancio o una variazione reale della protezione); non dissolve Mimetismo né rivela la posizione agli alleati. Restano Percezione contro Furtività, ostacoli solidi e fumo opaco. Le illusioni puramente visive concedono +2 alle Prove di riconoscimento già previste. Velo Psichico mantiene la propria PS ordinaria; non vede attraverso pareti, non legge testi al buio né pensieri, non identifica aure o trasformazioni. Capacità innata continua, non un incantesimo da mantenere."
+    },
+    {
+      "nome": "Dotazione e sequenza",
+      "effetto": "Tre Giavellotti Comuni della sentinella (FOR 3, PI 4, PS Integrità 10): due pronti e uno riposto; una terza mano resta libera. Al massimo due attacchi complessivi per Round, Opportunità compresa. Lanciare richiede il proprio esemplare; estrarre o recuperare costa 1 AzP. L’arto libero può usare oggetti o un Pugno, entro il budget. I 22 PX comprendono la dotazione."
+    }
+  ],
+  "note": "Modron di terzo grado: corpo a piramide rovesciata con tre braccia; coordina Duodroni e riceve da Quadroni. Si annota l’arto interessato da una Menomazione. Nessun bonus collettivo al tiro dalla sola presenza del coordinatore. Condotta: sotto 5 PV o a Ferita Profonda tende a riferire o riunire la pattuglia. Fonte: Tridrone, p. 225."
+}

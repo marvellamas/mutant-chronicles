@@ -1,0 +1,115 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "golem-di-carne",
+  "nome": "Golem di carne",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e Modron",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 4,
+    "COS": 8,
+    "INT": 3,
+    "SAG": 5,
+    "CAR": 3
+  },
+  "pv": 60,
+  "pm": 8,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 7,
+  "iniziativa": -2,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 8,
+    "volonta": 7,
+    "magia": 11
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Schianto",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "2d6+2",
+      "natura": "Magico",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ],
+      "note": "Il danno è Magico, non Etereo, e incontra l’AR ordinaria."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    },
+    {
+      "nome": "Furtività",
+      "va": 6
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo animato",
+      "effetto": "Natura Comune, nessun incantesimo appreso. Ha mente e PM personali; può essere bersaglio di Dardo Psichico, salvo protezione specifica. È tessuto morto, ma non un non morto né un organismo vivo curabile come un umano. Non richiede aria, cibo, acqua o sonno. Immune a soffocamento, Sonno, Sanguinamento, Avvelenato, veleni e malattie biologici. Cure biologiche, Medicina, riposo biologico e normali riparazioni tecnologiche non lo ripristinano; assorbimenti e rigenerazione dichiarati recuperano solo PV (non curano Ferite o Menomazioni e non stabilizzano Morente). A 0 PV valgono Tempra, Ferite, Menomazioni e Morente (§4.2): non diventa un oggetto inerte per il solo esaurimento dei PV; a 0 PM personali Svenuto dopo la risoluzione completa dell’azione (PM — non significa 0 PM). Dardo Spirituale lo può colpire (eccezione esplicita): danno Etereo ai PV e sottrae soltanto PM personali esistenti. Negare Potere non cancella il corpo né i suoi attacchi intrinseci; Contromagia non interrompe capacità innate; Individuare o Identificare Potere non concedono il comando. Testa, Torace, Braccia e Gambe sono le parti omonime; le piastre integrate usano PV e Ferite (gli oggetti impugnati mantengono i propri PI). INI modifica 1d10; AzP e unica AzM valgono per tutto il Round. Ogni attacco costa 1 AzP e produce AC 1. Una sola Opportunità per Round, con un attacco ravvicinato normale nei limiti della voce (non attiva Sguardi, gas, Accelerazione, cariche o poteri di comando). Più arti non concedono attacchi gratuiti. Nessuna Parata naturale: la Parata richiede 1 AzP e un’arma o scudo idonei (successo dimezza per eccesso prima dell’AR, Magistrale annulla; Spada, Pugnale e Giavellotto −8 VA per parare a distanza, Scudo medio −4 con ulteriore −2 contro Raffica; Pugni e Arco non parano). Schivata: 1 AzP, 1 AzM, consapevolezza e spazio. Naturale e Magico incontrano tutta l’AR pertinente, Etereo solo quella magica. Uno Stato di durata N applicato nel Round R termina a fine Round R + N; nuove applicazioni non sommano la stessa penalità e conservano la scadenza più lontana."
+    },
+    {
+      "nome": "Resistenza fisica",
+      "effetto": "Dimezza per eccesso il danno Naturale da Contusione, Taglio e Perforazione prima dell’AR. Non vale contro Fuoco, Gelo, acido, Elettricità, danni Magici o Eterei. Nessuna proprietà adamantina importata."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    },
+    {
+      "nome": "Assorbimento elettrico",
+      "passiva": true,
+      "effetto": "Immune ai danni da Elettricità, compreso Fulmine, e ai loro effetti secondari, di qualunque Natura. Per una fonte che produrrebbe danno si calcola il residuo dopo Difese, riduzioni e AR, ignorando solo questo assorbimento: invece di subirlo recupera altrettanti PV, fino a 4 PV complessivi per Round da tutte le fonti (il resto è annullato; contatti innocui non curano). Non ripristina PM o cariche; non supera il massimo effettivo dei PV; opera a 0 PV finché il Golem non è Morente; non cura Ferite, Menomazioni, Stati o Morente. Elettricità e danni fisici di un colpo misto si separano."
+    },
+    {
+      "nome": "Avversione al fuoco",
+      "passiva": true,
+      "effetto": "Dopo almeno 1 danno finale da Fuoco subisce −2 VA alle Prove di Abilità fino alla fine della propria Iniziativa successiva. Non penalizza le PS, non toglie Azioni e non è Terrorizzato. Nuovi danni rinnovano la scadenza; non si somma al −2 di Incendiato (vale il maggiore). Il Fuoco mantiene le proprie conseguenze."
+    },
+    {
+      "nome": "Furia",
+      "effetto": "All’inizio della propria Iniziativa, con 24 PV o meno e se può agire, tira 1d6: con 6 entra in Furia. Non costa PM o Azioni. Finché dura dà precedenza all’attacco contro la creatura percepita più vicina, senza distinguere alleati (in parità sceglie il percorso più breve e poi casualmente); se nessuna è raggiungibile attacca un oggetto accessibile, preferendo uno più piccolo di sé. Conserva Azioni, costi, sensi e impedimenti ordinari. Calmare: il creatore riconosciuto, udibile entro 12 Q, usa 1 AzP e Oratoria senza modificatore: successo termina la Furia, senza curare. La Furia termina anche se il Golem recupera tutti i propri PV effettivi (Ferite e Menomazioni restano); se resta a 24 PV o meno può ricadervi con un nuovo 6. Svenuto sospende le Azioni senza cancellare le altre condizioni."
+    },
+    {
+      "nome": "Forma, magia e servizio",
+      "effetto": "Non può essere trasformato in un altro materiale o anatomia da un potere di mutazione (restano vincoli, spinte, A Terra, Rallentato, Incendiato o perdite di funzione da Menomazione). Contro incantesimi e poteri mistici +2 alle sole PS già previste, non nei VA; non migliora le PS delle Ferite perché il danno era Magico. Non è immune a Dardo Psichico né a ogni altro effetto mentale. Immune ad Affaticamento, fascinazione, Paralizzato e pietrificazione. Comprende le lingue del creatore senza parlare; esegue una consegna semplice e valuta un ostacolo concreto; può essere richiamato dal creatore, non persuaso da chiunque."
+    }
+  ],
+  "immunita": [
+    "avvelenato",
+    "sanguinamento",
+    "terrorizzato"
+  ],
+  "note": "Guardiano assemblato con ragionamento elementare e movimenti rigidi. Al massimo due Schianti per Round, Opportunità compresa. Fonte: Flesh Golem, pp. 167 e 169."
+}

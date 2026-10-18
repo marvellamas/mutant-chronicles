@@ -244,11 +244,16 @@ Scelte del blocco: soglie di carico (ordinario / massimo / spinta) della tabella
 
 Scelte del blocco: danno misto (per esempio Taglio + Gelo): la prima componente in `danno` con la sua proprietà e la seconda nella nota dell'attacco, come per Azer e Yeti; Soffi e poteri innati (Sonno, Nebbia, Metallo caldo, Luci danzanti, Sfocatura, Animare massi) come capacità con `azioni`, `risorsa` in PM e, dove il manuale dice un uso ogni 24 ore, `usi` per giorno (la cadenza R + 3 dei Soffi nei `limiti`); dissoluzione dei Mephit come capacità passiva, una per creatura; negli Stati di immunità solo ciò che è uno Stato dell'app (Avvelenato, Sanguinamento, Incendiato), il resto (Sonno, soffocamento, Paralizzato, pietrificazione, Gelo) nelle capacità; Stringere della Salamandra, Animare massi del Galeb Duhr (scheda derivata del masso a 30 PX) e Passaggio minerale dello Xorn come capacità; Schianto in Impeto con formula propria come attacco; Salamandra 2 × 2 Q di taglia Grande. Test: `tests/mostri-elementali.test.js`.
 
+## Catalogo, blocco «Costrutti e Modron» — cap. 8 (18/10, Mostri 0.23)
+
+`tools/genera_mostri_modron.mjs` → `esempi/nemici/mostri/`: Spaventapasseri, Orrore in elmo, Golem di carne, Golem di argilla, Guardiano protettore, Monodrone, Duodrone, Tridrone, Quadrone, Pentadrone.
+
+Scelte del blocco: AR «con scudo» nel campo (Orrore in elmo 6, 4 senza Scudo in nota); PM — e Volontà — del Golem di argilla e del Guardiano con `pm` assente e `senza_salvezza`; immunità negli Stati solo per Avvelenato, Sanguinamento, Terrorizzato, Stordito, Accecato e Assordato (Sonno, soffocamento, Paralizzato, Affaticamento, fascinazione e pietrificazione nella capacità «Corpo animato»); i Modron, viventi, senza immunità; armi della dotazione come attacchi (Giavellotto lanciato e Arco con gittata); Sguardo terribile, Gas paralizzante (3 dosi al giorno), Accelerazione, Furia, Colpo maledetto, trasferimento del danno e carica preparata del Guardiano come capacità con `azioni`, `risorsa` e `usi`; Schianto dei Golem di natura Magica; PX non tondi dei Modron (11, 22, 33) riportati così; Taglia non dedotta dall'ingombro (A.167). Test: `tests/mostri-modron.test.js`.
+
 ## Che cosa resta del catalogo (Mostri 0.23)
 
-Il catalogo del cap. 8 ha 215 creature in 21 blocchi; ne sono fatte 165. Restano 50, in 5 blocchi, da fare nei prossimi lotti:
+Il catalogo del cap. 8 ha 215 creature in 21 blocchi; ne sono fatte 175. Restano 40, in 4 blocchi, da fare nei prossimi lotti:
 
-- **Costrutti e Modron** (10 creature);
 - **Capi e varianti dei popoli guerrieri** (10 creature);
 - **Predatori straordinari** (10 creature);
 - **Popoli delle terre selvagge** (10 creature);

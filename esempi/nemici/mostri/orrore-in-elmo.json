@@ -1,0 +1,117 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "orrore-in-elmo",
+  "nome": "Orrore in elmo",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e Modron",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 6,
+    "COS": 7,
+    "INT": 6,
+    "SAG": 6,
+    "CAR": 5
+  },
+  "pv": 46,
+  "pm": 10,
+  "ar": {
+    "totale": 6,
+    "magica": 0
+  },
+  "difese": 12,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18,
+    "volo": 6
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 55,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 10,
+    "volonta": 9,
+    "magia": 11
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Spada lunga",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+3",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 12
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 7
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo animato",
+      "effetto": "Natura Comune, nessun incantesimo appreso. Ha mente e PM personali; può essere bersaglio di Dardo Psichico, salvo protezione specifica. Non richiede aria, cibo, acqua o sonno. Immune a soffocamento, Sonno, Sanguinamento, Avvelenato, veleni e malattie biologici. Cure biologiche, Medicina, riposo biologico e normali riparazioni tecnologiche non lo ripristinano; assorbimenti e rigenerazione dichiarati recuperano solo PV (non curano Ferite o Menomazioni e non stabilizzano Morente). A 0 PV valgono Tempra, Ferite, Menomazioni e Morente (§4.2): non diventa un oggetto inerte per il solo esaurimento dei PV; a 0 PM personali Svenuto dopo la risoluzione completa dell’azione (PM — non significa 0 PM). Dardo Spirituale lo può colpire (eccezione esplicita): danno Etereo ai PV e sottrae soltanto PM personali esistenti. Negare Potere non cancella il corpo né i suoi attacchi intrinseci; Contromagia non interrompe capacità innate; Individuare o Identificare Potere non concedono il comando. Testa, Torace, Braccia e Gambe sono le parti omonime; le piastre integrate usano PV e Ferite (gli oggetti impugnati mantengono i propri PI). INI modifica 1d10; AzP e unica AzM valgono per tutto il Round. Ogni attacco costa 1 AzP e produce AC 1. Una sola Opportunità per Round, con un attacco ravvicinato normale nei limiti della voce (non attiva Sguardi, gas, Accelerazione, cariche o poteri di comando). Più arti non concedono attacchi gratuiti. Nessuna Parata naturale: la Parata richiede 1 AzP e un’arma o scudo idonei (successo dimezza per eccesso prima dell’AR, Magistrale annulla; Spada, Pugnale e Giavellotto −8 VA per parare a distanza, Scudo medio −4 con ulteriore −2 contro Raffica; Pugni e Arco non parano). Schivata: 1 AzP, 1 AzM, consapevolezza e spazio. Naturale e Magico incontrano tutta l’AR pertinente, Etereo solo quella magica. Uno Stato di durata N applicato nel Round R termina a fine Round R + N; nuove applicazioni non sommano la stessa penalità e conservano la scadenza più lontana."
+    },
+    {
+      "nome": "Resistenza fisica",
+      "effetto": "Dimezza per eccesso il danno Naturale da Contusione, Taglio e Perforazione prima dell’AR. Non vale contro Fuoco, Gelo, acido, Elettricità, danni Magici o Eterei. Nessuna proprietà adamantina importata."
+    },
+    {
+      "nome": "Dotazione",
+      "effetto": "Spada lunga Comune, una mano, FOR 4, PI 5, PS Integrità 10 (base 1d8+1 e +2 personale; non Versatile). Scudo medio Comune, FOR 5, PI 6, PS Integrità 10, AR passiva +2 già compresa. Inizia con entrambi pronti; le piastre sono corpo intrinseco AR 4. Al massimo due attacchi per Round, Opportunità compresa. Le Parate usano Difese 12 e i modificatori comuni. I 55 PX comprendono la dotazione."
+    },
+    {
+      "nome": "Tre sigilli",
+      "passiva": true,
+      "effetto": "Immune ai soli incantesimi Respingere, Dardo Spirituale e Maledizione, a ogni versione: ne evita danni, perdita di PM e altre conseguenze (prevale su «Nucleo spirituale»). Non è immune a tutti i danni Magici o Eterei, ad altre maledizioni o a capacità con effetti simili. Innati e fissi."
+    },
+    {
+      "nome": "Sensi e protezioni",
+      "effetto": "Percezione artificiale entro 12 Q di forme e movimenti anche al buio, attraverso un percorso senza solidi, con acquisizione di bersagli solo in quel raggio. Non usa occhi o udito: immune ad Accecato e Assordato. Immune anche a Terrorizzato, fascinazione, Paralizzato, pietrificazione, Stordito e Avvelenato. Contro incantesimi e poteri mistici +2 alle sole PS già previste (non nei VA, non migliora Difese, AR o la determinazione delle Ferite)."
+    },
+    {
+      "nome": "Volo e consegna",
+      "effetto": "Volo innato senza ali, con sosta in quota finché cosciente; Corsa e Scatto richiedono Atletica −2 e −4; decollo, quota e atterraggio rientrano nell’unica AzM. Svenuto perde sostentamento e può cadere. Comprende il creatore senza parlare; può ritirarsi tatticamente per conservare la posizione da proteggere."
+    }
+  ],
+  "immunita": [
+    "avvelenato",
+    "sanguinamento",
+    "accecato",
+    "assordato",
+    "terrorizzato",
+    "stordito"
+  ],
+  "note": "AR 6 con Scudo medio, 4 senza (piastre intrinseche AR 4 + AR passiva +2 dello Scudo). Sentinella intelligente che ragiona sull’intento della consegna: non è la semplice Armatura animata. Fonte: Helmed Horror, p. 183."
+}
