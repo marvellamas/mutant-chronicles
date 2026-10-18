@@ -94,8 +94,13 @@ export function presentiNella(partita) {
 export function componentiGiocatore(partita, pgId, pxPg, p) {
   const part = partita?.partecipanti?.[pgId] ?? {};
   const presente = !!part.presente;
-  const livello = livelloPg(pxPg, partita?.atto, p);
-  const fattore = titoloPerLivello(livello, p).fattore;
+  // A.168 (18/10): il Titolo di una partita dipende dai PX che il PG aveva PRIMA della sua assegnazione
+  // (`pxPrima`, salvato alla prima assegnazione); il Direttore può cambiarlo a mano (`titoliManuali`)
+  const pxBase = Number.isFinite(Number(partita?.pxPrima?.[pgId])) ? Number(partita.pxPrima[pgId]) : pxPg;
+  const livello = livelloPg(pxBase, partita?.atto, p);
+  const manuale = p.titoli.find((x) => x.nome === partita?.titoliManuali?.[pgId]);
+  const titoloT = manuale ?? titoloPerLivello(livello, p);
+  const fattore = titoloT.fattore;
   const [c0, c1, c2] = p.voti.componenti;
   const voti = {
     [c0]: num(part.partecipazione),
@@ -110,7 +115,7 @@ export function componentiGiocatore(partita, pgId, pxPg, p) {
     ? (partita?.incontri ?? []).reduce((acc, inc) => acc + pxIncontro(inc, nPresenti, p).px, 0) : 0;
   const premio = presente && partita?.premioAtto ? premioAtto(partita.atto, p) : 0;
   const totaleSuggerito = pxVoti + pxBonus + pxIncontri + premio;
-  return { presente, livello, titolo: titoloPerLivello(livello, p).nome, fattore, voti, sommaVoti,
+  return { presente, livello, titolo: titoloT.nome, titoloAutomatico: titoloPerLivello(livello, p).nome, fattore, voti, sommaVoti,
     pxVoti, pxBonus, pxIncontri, premio, totaleSuggerito };
 }
 
@@ -155,8 +160,13 @@ export function deltaAssegnazione(partita, pxGiocatori, p) {
 export function partitaAssegnata(partita, pxGiocatori, quando, p) {
   const { perGiocatore } = calcolaPartita(partita, pxGiocatori, p);
   const assegnato = {};
-  for (const [pgId, g] of Object.entries(perGiocatore)) if (g.presente) assegnato[pgId] = arrotonda(g.totaleFinale);
-  return { ...partita, assegnato, statoAssegnazione: 'assegnata', assegnataIl: quando };
+  const pxPrima = { ...(partita?.pxPrima ?? {}) };
+  for (const [pgId, g] of Object.entries(perGiocatore)) {
+    if (!g.presente) continue;
+    assegnato[pgId] = arrotonda(g.totaleFinale);
+    if (!Number.isFinite(Number(pxPrima[pgId]))) pxPrima[pgId] = num(pxGiocatori?.[pgId]); // solo alla prima assegnazione
+  }
+  return { ...partita, assegnato, pxPrima, statoAssegnazione: 'assegnata', assegnataIl: quando };
 }
 
 /**

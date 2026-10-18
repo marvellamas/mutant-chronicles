@@ -166,7 +166,11 @@ function vistaPartita(ctx, st, az, salva, partita) {
       oninput: (e) => { part[chiave] = Number(e.target.value); az.salva(); az.ridisegna(); } });
     const finaleVal = partita.finali?.[g.id];
     return h('tr', { class: part.presente ? '' : 'px-assente' },
-      h('td', {}, h('label', { class: 'px-check' }, h('input', { type: 'checkbox', checked: !!part.presente, onchange: (e) => { part.presente = e.target.checked; az.salva(); az.ridisegna(); } }), h('span', {}, g.pg || g.id))),
+      h('td', {}, h('label', { class: 'px-check' }, h('input', { type: 'checkbox', checked: !!part.presente, onchange: (e) => { part.presente = e.target.checked; az.salva(); az.ridisegna(); } }), h('span', {}, g.pg || g.id)),
+        part.presente ? h('select', { class: 'px-titolo', title: 'Titolo di questa partita (dai PX che il PG aveva prima dell’assegnazione); cambialo a mano se serve',
+          onchange: (e) => { partita.titoliManuali = { ...partita.titoliManuali }; if (e.target.value) partita.titoliManuali[g.id] = e.target.value; else delete partita.titoliManuali[g.id]; salva(); } },
+          h('option', { value: '', selected: !partita.titoliManuali?.[g.id] }, `Auto: ${c.titoloAutomatico} ×${p(st).titoli.find((x) => x.nome === c.titoloAutomatico)?.fattore}`),
+          ...p(st).titoli.map((t) => h('option', { value: t.nome, selected: partita.titoliManuali?.[g.id] === t.nome }, `${t.nome} ×${t.fattore}`))) : null),
       h('td', {}, part.presente ? voto('partecipazione') : '—'),
       h('td', {}, part.presente ? voto('interpretazione') : '—'),
       h('td', {}, part.presente ? voto('contributo') : '—'),

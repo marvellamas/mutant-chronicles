@@ -77,3 +77,7 @@ il motore e il test ci sono (`tests/px-partita.test.js`).
 `npm test` verde (1855), validatore verde, `node tools/verifica_frasi.mjs` 1277/1277. Nuovi test:
 `tests/px-partita.test.js` (motore), `tests/px-partita-ui.test.js` (funzioni pure della tab),
 `tests/px-server.test.js` (API e 403). Prova end-to-end nel browser su copie dei PG (sopra).
+
+## Titolo nella riassegnazione (18/10)
+
+Il Titolo (e quindi il fattore) di una partita dipende dai PX che il PG aveva **prima** di quella assegnazione: alla prima assegnazione si salva `partita.pxPrima[pg]` (`partitaAssegnata`), e le correzioni lo riusano (`componentiGiocatore`). Il Direttore può cambiarlo a mano con il menu «Titolo» accanto al nome (`partita.titoliManuali[pg]`). Senza `pxPrima` (bozze, partite vecchie) si usano i PX attuali. Esempio: PG a 20 PX dal livello 8 (Inesperto ×2); la partita gli dà 24 PX e passa a livello 8; correggendo i voti resta Inesperto ×2 (non Esperto ×3).

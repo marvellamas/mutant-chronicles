@@ -237,3 +237,32 @@ test('PX suggeriti con le fasce nuove: un PG di livello 11 è Esperto ×3 (prima
   verifica(19, 'Eroe', 5);
   verifica(20, 'Leggenda', 6);
 });
+
+test('Titolo nella riassegnazione (A.168, 18/10): resta quello dei PX di prima della partita, anche se il premio fa cambiare fascia', () => {
+  const soglia8 = p.soglie_px[7];
+  const prima = soglia8 - 20; // livello 7, Inesperto ×2: a un passo dal livello 8 (Esperto ×3)
+  const partita = {
+    durata: 1, atto: 'IV', premioAtto: false,
+    partecipanti: { a: { presente: true, partecipazione: 4, interpretazione: 4, contributo: 4, eccezionale: 0 } },
+    incontri: [],
+  };
+  const c0 = componentiGiocatore(partita, 'a', prima, p);
+  assert.deepEqual([c0.livello, c0.titolo, c0.fattore, c0.totaleSuggerito], [7, 'Inesperto', 2, 24]);
+  const assegnata = partitaAssegnata(partita, { a: prima }, '2026-10-18', p);
+  assert.equal(assegnata.pxPrima.a, prima);
+  // dopo l'assegnazione il PG ha più di 20 PX in più: ora è di livello 8 (Esperto)
+  const dopo = prima + assegnata.assegnato.a + 20;
+  assert.equal(livelloDaPx(dopo, p), 8);
+  // correzione dei voti: il Titolo resta Inesperto ×2 (non Esperto ×3), e il delta è solo sui voti
+  const corretta = { ...assegnata, partecipanti: { a: { ...partita.partecipanti.a, partecipazione: 5 } } };
+  const c1 = componentiGiocatore(corretta, 'a', dopo, p);
+  assert.deepEqual([c1.livello, c1.titolo, c1.fattore, c1.totaleSuggerito], [7, 'Inesperto', 2, 26]);
+  assert.deepEqual(deltaAssegnazione(corretta, { a: dopo }, p), { a: 2 });
+  // ri-assegnare non sposta pxPrima
+  assert.equal(partitaAssegnata(corretta, { a: dopo }, '2026-10-19', p).pxPrima.a, prima);
+  // il Direttore può cambiare il Titolo a mano
+  const manuale = { ...corretta, titoliManuali: { a: 'Esperto' } };
+  assert.deepEqual([componentiGiocatore(manuale, 'a', dopo, p).titolo, componentiGiocatore(manuale, 'a', dopo, p).totaleSuggerito], ['Esperto', 39]);
+  // senza pxPrima (bozza o partite vecchie) si usano i PX attuali, come prima
+  assert.equal(componentiGiocatore(partita, 'a', dopo, p).titolo, 'Esperto');
+});
