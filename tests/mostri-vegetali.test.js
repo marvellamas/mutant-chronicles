@@ -58,22 +58,24 @@ test('attacchi: Aghi e Roccia a distanza; Afferrare, Inglobare, Comprimere, Fasc
   assert.deepEqual([carica.va, carica.danno, carica.natura, carica.portata_q], [14, '2d6+2', 'Magico', 1]);
 });
 
-test('Abilità del manuale non nel catalogo: Diplomazia → Oratoria (Giocatore), Tiro naturale solo in nota (A.169)', () => {
-  assert.ok(leggi('driade').abilita.some((a) => a.nome === 'Oratoria' && a.va === 13));
-  assert.match(leggi('driade').note, /Diplomazia 13/);
-  for (const id of ['avvizzito-spinoso', 'treant']) {
-    assert.ok(!leggi(id).abilita.some((a) => /naturale/i.test(a.nome)), `${id}: nessuna Abilità inventata`);
-    assert.match(leggi(id).note, /Tiro naturale \d+ .*A\.169/);
+test('A.169 (18/10): Abilità col nome di catalogo; i VA degli attacchi specifici restano negli attacchi; Prova di Forza separata', () => {
+  assert.deepEqual(leggi('driade').abilita.find((x) => x.nome === 'Oratoria'), { nome: 'Oratoria', va: 13 });
+  assert.deepEqual(leggi('driade').abilita.find((x) => x.nome === 'Armi da mischia'), { nome: 'Armi da mischia', va: 9 });
+  const vaAttacco = { 'avvizzito-spinoso': ['Aghi', 10], treant: ['Roccia', 13], 'elementale-acqua-maggiore': ['Dardo d’acqua', 14], 'elementale-aria-maggiore': ['Dardo d’aria', 16] };
+  for (const [id, [att, va]] of Object.entries(vaAttacco)) {
+    assert.equal(leggi(id).attacchi.find((x) => x.nome === att).va, va, `${id} VA dell’attacco`);
+    assert.ok(!leggi(id).abilita.some((x) => /naturale|distanza|prove? di/i.test(x.nome)), `${id}: nessuna Abilità impropria`);
+    assert.ok(!leggi(id).abilita.some((x) => x.nome === 'Armi da lancio'), `${id}: nessuna Armi da lancio attribuita`);
   }
-  // recuperate nelle note degli Elementali del blocco precedente
-  assert.match(leggi('elementale-acqua-maggiore').note, /Attacco a distanza 14 .*A\.169/);
-  assert.match(leggi('elementale-terra-maggiore').note, /Prove di FOR 15 .*A\.169/);
+  const prova = leggi('elementale-terra-maggiore');
+  assert.ok(!prova.abilita.some((x) => /FOR|Forza|Atletica/.test(x.nome)));
+  assert.match(prova.capacita.find((c) => c.nome === 'Prova di Forza').effetto, /Prova di Forza: 15.*10 . 5 = 15.*seconda volta/);
 });
 
 test('Spazio quadrato dai dati; Grandi dove l’ingombro è 2×2 o più', () => {
   for (const id of ['arbusto-risvegliato', 'avvizzito-ramoso', 'avvizzito-spinoso', 'avvizzito-rampicante', 'driade']) assert.equal(leggi(id).spazio, '1 Q', id);
-  for (const id of ['cumulo-strisciante', 'pegaso', 'unicorno']) { assert.equal(leggi(id).spazio, '2 × 2 Q', id); assert.equal(leggi(id).taglia, 'grande'); }
-  for (const id of ['albero-risvegliato', 'treant']) { assert.equal(leggi(id).spazio, '3 × 3 Q', id); assert.equal(leggi(id).taglia, 'grande'); }
+  for (const id of ['cumulo-strisciante', 'pegaso', 'unicorno']) { assert.equal(leggi(id).spazio, '2 × 2 Q', id); assert.equal(leggi(id).taglia, undefined); }
+  for (const id of ['albero-risvegliato', 'treant']) { assert.equal(leggi(id).spazio, '3 × 3 Q', id); assert.equal(leggi(id).taglia, undefined); }
 });
 
 test('movimento: Pegaso a terra 12/24/36 e in volo 18; GS/PX informativo (Treant Leggenda 100)', () => {

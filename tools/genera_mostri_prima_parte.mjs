@@ -73,7 +73,7 @@ const CREATURE = [
     note: 'Spazio sulla mappa 2 × 3 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). Massa paragonabile a quella di un veicolo ai fini del limite di Sbalzante (taglia Grande). GS e PX con modulo tana attivo (solo quando incide davvero sull’incontro): Leggenda, 100 PX. Braccia = gruppi di tentacoli laterali; Gambe = porzioni locomotorie. Natura Comune (la malvagità dell’originale non dà Oscura Simmetria). Fonte: pp. 13–14. Comportamento: tratta e inganna prima di combattere; a 20 PV o Ferita Profonda cerca una via sommersa.',
   },
   {
-    id: 'ankheg', nome: 'Ankheg', taglia: 'grande',
+    id: 'ankheg', nome: 'Ankheg',
     caratteristiche: { FOR: 8, DES: 5, COS: 7, INT: 1, SAG: 6, CAR: 3 },
     pv: 32, pm: 6, ar: { totale: 3, magica: 0 }, difese: 9, iniziativa: -4,
     movimento: { passo: 6, corsa: 12, scatto: 18 }, spazio: '2 × 2 Q',
@@ -125,7 +125,7 @@ const CREATURE = [
     note: 'Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). AR 3 naturale. Non è immune al proprio sguardo riflesso. Nessuna Parata naturale. Otto zampe (Braccia = gruppo anteriore, Gambe = posteriore). Nome originale: Basilisk, p. 24. Comportamento: preferisce incontrare lo sguardo di un intruso e attendere che rallenti; a Ferita Seria cerca riparo.',
   },
   {
-    id: 'bestia-distorcente', nome: 'Bestia distorcente', taglia: 'grande',
+    id: 'bestia-distorcente', nome: 'Bestia distorcente',
     caratteristiche: { FOR: 8, DES: 7, COS: 7, INT: 3, SAG: 6, CAR: 4 },
     pv: 38, pm: 8, ar: { totale: 1, magica: 0 }, difese: 12, iniziativa: 0,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '2 × 2 Q',
@@ -142,7 +142,7 @@ const CREATURE = [
     note: 'Felino a sei zampe con due tentacoli dorsali (Braccia = tentacoli; Gambe = i due gruppi locomotori da tre zampe). Non incorporea. Nome originale: Displacer Beast, p. 81. Comportamento: attacca un bersaglio isolato usando portata e terreno; dopo un colpo subito cerca Copertura; a Ferita Seria abbandona la caccia ordinaria.',
   },
   {
-    id: 'bulette', nome: 'Bulette', taglia: 'grande',
+    id: 'bulette', nome: 'Bulette',
     caratteristiche: { FOR: 10, DES: 5, COS: 9, INT: 2, SAG: 5, CAR: 2 },
     pv: 52, pm: 6, ar: { totale: 4, magica: 0 }, difese: 9, iniziativa: -3,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '2 × 2 Q',
@@ -161,7 +161,7 @@ const CREATURE = [
     note: 'Furtività 9 sotto terra, 6 in superficie. Nessuna Parata naturale; non è immune a Terrorizzato. Nome originale: Bulette, p. 34. Comportamento: punta alla preda raggiungibile; a Ferita Seria può ritirarsi sottoterra. Dopo il salto non ha l’AzM per una Schivata nello stesso Round.',
   },
   {
-    id: 'chimera', nome: 'Chimera', taglia: 'grande',
+    id: 'chimera', nome: 'Chimera',
     caratteristiche: { FOR: 9, DES: 5, COS: 8, INT: 2, SAG: 7, CAR: 5 },
     pv: 60, pm: 8, ar: { totale: 3, magica: 0 }, difese: 9, iniziativa: -3,
     movimento: { passo: 6, corsa: 12, scatto: 18, volo: 12 }, spazio: '2 × 2 Q',
@@ -231,7 +231,7 @@ const CREATURE = [
     note: 'Spazio sulla mappa 1 × 2 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). Furtività 13 immobile fra rocce in ambiente adatto (non è invisibilità). Il profilo è il Grick comune, non l’Alfa. Braccia = tentacoli; Testa = becco e capo. Nessuna Parata naturale. Nome originale: Grick, p. 173. Comportamento: preda vicina; a Ferita Profonda si ritrae in una fessura.',
   },
   {
-    id: 'grifone', nome: 'Grifone', taglia: 'grande',
+    id: 'grifone', nome: 'Grifone',
     caratteristiche: { FOR: 8, DES: 7, COS: 7, INT: 2, SAG: 6, CAR: 3 },
     pv: 36, pm: 6, ar: { totale: 1, magica: 0 }, difese: 11, iniziativa: -1,
     movimento: { passo: 6, corsa: 12, scatto: 18, volo: 16 }, spazio: '2 × 2 Q',
@@ -247,7 +247,7 @@ const CREATURE = [
     note: 'Percezione 12, oppure 15 con la vista (la vista acuta non rivela invisibili o nascosti). Un Grifone selvatico non è una cavalcatura pronta all’uso. Nome originale: Griffon, p. 174. Comportamento: cerca un bersaglio esposto e attacca dall’alto; a Ferita Seria può interrompere la caccia; difende più a lungo il nido.',
   },
   {
-    id: 'ippogrifo', nome: 'Ippogrifo', taglia: 'grande',
+    id: 'ippogrifo', nome: 'Ippogrifo',
     caratteristiche: { FOR: 7, DES: 6, COS: 6, INT: 2, SAG: 6, CAR: 3 },
     pv: 24, pm: 6, ar: { totale: 0, magica: 0 }, difese: 10, iniziativa: -2,
     movimento: { passo: 8, corsa: 16, scatto: 24, volo: 12 }, spazio: '2 × 2 Q',
@@ -262,7 +262,7 @@ const CREATURE = [
     note: 'Percezione 12, oppure 15 con la vista (senza scurovisione né immunità). Addestrabile ma non per questo mansueto o disponibile al trasporto. Nome originale: Hippogriff, p. 184. Comportamento: prima minaccia o tenta di allontanare l’intruso, se può sceglie la fuga; a Ferita Profonda abbandona lo scontro senza motivazioni territoriali; vicino ai piccoli continua a proteggere il nido.',
   },
   {
-    id: 'manticora', nome: 'Manticora', taglia: 'grande',
+    id: 'manticora', nome: 'Manticora',
     caratteristiche: { FOR: 8, DES: 7, COS: 7, INT: 4, SAG: 6, CAR: 4 },
     pv: 40, pm: 8, ar: { totale: 2, magica: 0 }, difese: 11, iniziativa: 1,
     movimento: { passo: 6, corsa: 12, scatto: 18, volo: 10 }, spazio: '2 × 2 Q',
@@ -279,7 +279,7 @@ const CREATURE = [
     note: 'Comprende e parla una lingua dell’ambientazione; può trattare (un tributo può risolvere l’incontro). Nome originale: Manticore, p. 213. Comportamento: cerca quota e Copertura; a Ferita Seria, con poche spine o davanti a una preda troppo costosa può ritirarsi o chiedere un tributo.',
   },
   {
-    id: 'orsogufo', nome: 'Orsogufo', taglia: 'grande',
+    id: 'orsogufo', nome: 'Orsogufo',
     caratteristiche: { FOR: 10, DES: 6, COS: 8, INT: 2, SAG: 6, CAR: 3 },
     pv: 42, pm: 6, ar: { totale: 2, magica: 0 }, difese: 10, iniziativa: -2,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '2 × 2 Q',

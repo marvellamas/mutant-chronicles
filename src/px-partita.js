@@ -88,6 +88,20 @@ export function presentiNella(partita) {
 }
 
 /**
+ * A.170 (18/10): il premio di fine Atto va dato una sola volta per personaggio. Avviso, non blocco (decide il
+ * Direttore): gli id dei giocatori presenti in `partita` che hanno già avuto il premio dello stesso Atto in
+ * un'altra partita (assegnata, o in bozza con il premio disposto).
+ */
+export function premioGiaDato(partita, partite) {
+  const ids = new Set();
+  for (const m of partite ?? []) {
+    if (m.id === partita?.id || m.atto !== partita?.atto || !m.premioAtto) continue;
+    for (const [id, part] of Object.entries(m.partecipanti ?? {})) if (part?.presente && partita?.partecipanti?.[id]?.presente) ids.add(id);
+  }
+  return [...ids];
+}
+
+/**
  * Componenti e totale suggerito di un giocatore. `pxPg` sono i PX attuali del suo PG (per Titolo e livello).
  * Non assegna nulla.
  */

@@ -55,7 +55,7 @@ test('Spazio quadrato e taglia Grande; GS/PX informativo (anche i valori non ton
   for (const id of GIGANTI) {
     const n = leggi(id);
     assert.ok(n.spazio === '2 × 2 Q' || n.spazio === '3 × 3 Q', `${id} spazio quadrato`);
-    assert.equal(n.taglia, 'grande', `${id} Grande`);
+    assert.equal(n.taglia, undefined, `${id} Grande`);
     assert.ok(Number.isInteger(n.gs_px.px) && n.gs_px.px > 0, `${id} PX`);
   }
   assert.equal(leggi('ciclope').gs_px.px, 77);

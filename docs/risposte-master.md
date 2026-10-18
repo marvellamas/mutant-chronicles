@@ -1760,7 +1760,16 @@ diverso dalle regole già approvate **non si è cambiato**: vedi A.167 qui sotto
 ## Domanda aperta dal lotto «Manuale dei Mostri 0.13» del 16 ottobre 2026
 
 - **A.167 — Spazio delle creature non quadrato o maggiore di 3 × 3 Q** (Mostri 0.13, cap. 7 e 8; contraddice
-  A.126). La A.126 (approvata il 15/10) ammette solo ingombri **quadrati**: 1 × 1 Q, 2 × 2 Q, 3 × 3 Q. Diverse
+  A.126). **APPROVATA da Davide il 18/10, IN IMPLEMENTAZIONE** (resta fra le risposte in implementazione del Doc):
+  pedine che rispettano larghezza e lunghezza della scheda (anche rettangolari e oltre 3 × 3 Q: Corazzato 1 × 2,
+  Regina Comandante 2 × 3, Incubatrice 3 × 5, Madre 3 × 10), senza arrotondare al quadrato maggiore; posizionamento
+  anche a 45°; ingombro, sovrapposizioni e passaggio fra gli ostacoli sulla sagoma ruotata, non sul centro. Taglia,
+  spazio occupato e portata degli attacchi sono dati distinti; la Taglia deriva dalla scheda e non si assegna
+  «Grande» perché la sagoma contiene un 2 × 2. **Applicata il 18/10 la sola parte piccola:** tolta la Taglia
+  «Grande» dalle 70 creature del Manuale dei Mostri che l'avevano solo per l'ingombro (restano Aboleth,
+  Coccodrillo gigante, Drago tartaruga e le Regine della Covata, senza campo Spazio o con il manuale che la dice).
+  **Resta da fare** (lavoro successivo): sagome rettangolari, rotazione a 45° e collisioni sulla sagoma vera.
+  Prima (domanda originale): La A.126 (approvata il 15/10) ammette solo ingombri **quadrati**: 1 × 1 Q, 2 × 2 Q, 3 × 3 Q. Diverse
   schede del Manuale dei Mostri 0.13 danno ingombri **non quadrati o più grandi**: Covata — Corazzato 1 × 2 Q,
   Regina Comandante 2 × 3 Q, Incubatrice 3 × 5 Q, Madre 3 × 10 Q; Bestie — Lupo feroce, Leone e Iena 2 × 1 Q,
   Coccodrillo 3 × 2 Q; nella prima parte del catalogo compaiono anche 2 × 3 Q, 3 × 2 Q e 4 × 4 Q. Che cosa
@@ -1770,7 +1779,7 @@ diverso dalle regole già approvate **non si è cambiato**: vedi A.167 qui sotto
   quella del formato dei nemici (Grande solo se l’ingombro contiene 2 × 2 Q, o se il manuale la dice, come per
   le Regine della Covata e l’Aboleth). Nessun valore inventato.
 
-- **A.169 — Abilità del Manuale dei Mostri che non esistono nel catalogo** (Mostri 0.18, cap. 8). Alcune schede
+- **A.169 — Abilità del Manuale dei Mostri che non esistono nel catalogo** (Mostri 0.18, cap. 8). **RISOLTA: approvata da Davide il 18/10, applicata il 18/10.** Mischia → Armi da mischia, Lancio → Armi da lancio, Guerra → Armi da guerra, Diplomazia → Oratoria (Driade: Armi da mischia 9, Oratoria 13), valori invariati; «Tiro naturale» e «Attacco a distanza» non sono Abilità né danno Armi da lancio: il VA resta nell'attacco (Avvizzito spinoso, Aghi 10; Treant, Roccia 13; Elementale dell'Acqua, Dardo d'acqua 14; dell'Aria, Dardo d'aria 16); «Prove di FOR 15» dell'Elementale della Terra è la Prova di Forza (FOR 10, +5, valore 10 + 5 = 15, il modificatore non si somma due volte), mostrata a parte dalle Abilità (capacità «Prova di Forza»). Controllate tutte le creature: nessuna Abilità impropria nell'elenco (`tests/mostri-vegetali.test.js`). Domanda originale: Alcune schede
   elencano Abilità con nomi che le 24 del Giocatore non hanno: «Tiro naturale» (Avvizzito spinoso 10, Treant 13),
   «Attacco a distanza» (Elementale dell’Acqua 14, dell’Aria 16), «Prove di FOR» (Elementale della Terra 15).
   «Diplomazia» (Driade 13) è nel Giocatore come «Oratoria per diplomazia e seduzione». Vanno lette come Abilità di
@@ -1790,7 +1799,7 @@ diverso dalle regole già approvate **non si è cambiato**: vedi A.167 qui sotto
   **Riassegnazione (18/10, richiesta di Marcello):** il Titolo di una partita dipende dai PX che il PG aveva prima
   di quella assegnazione (`pxPrima`, salvato alla prima assegnazione e riusato nelle correzioni; il Direttore può
   cambiarlo a mano dal menu «Titolo»), così il premio della stessa partita non sposta il PG in una fascia più alta.
-- **A.170 — Il resto dei fattori dei PX** (seguito della A.168). Il Manuale del Direttore §9.3 non è fra i Doc che
+- **A.170 — Il resto dei fattori dei PX** (seguito della A.168). **RISOLTA: confermata da Davide il 18/10.** Soglie dei livelli 1–20, limiti e premi degli Atti, correttivo `max(0,5; 1 + 0,1 × (4 − n))`, voti × Titolo con raddoppio solo dei voti nelle partite lunghe, bonus eccezionale × Titolo senza raddoppio, incontri e premi degli Atti senza Titolo né raddoppio, Titolo posseduto all'inizio della partita, nessun fattore per l'equipaggiamento: il calcolatore già li applicava (verificato, `tests/px-partita.test.js`). Unica differenza trovata: «il premio di fine Atto una sola volta per personaggio» non era controllato; ora un avviso (non un blocco) segnala se i giocatori presenti hanno già avuto il premio dello stesso Atto in un'altra partita. Domanda originale: Il Manuale del Direttore §9.3 non è fra i Doc che
   controlliamo e Davide ha confermato solo le fasce dei Titoli. Restano da confermare: (a) le soglie cumulative
   dei livelli 1–20 `[0, 50, 110, 180, 340, 520, 720, 1050, 1410, 1800, 2220, 2820, 3460, 4140, 4860, 5810, 6810,
   7860, 8960, 10340]`; (b) limiti di livello e premi degli Atti (I → 8 / 150, II → 12 / 200, III → 15 / 250, IV →

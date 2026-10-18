@@ -96,7 +96,7 @@ test('Spazio: 1 × 1 Q per funghi, germoglio, adulto, Mimic e Melma grigia; 2 ×
   for (const id of ['melma-grigia', 'fungo-stridente', 'fungo-violetto', 'miconide-germoglio', 'miconide-adulto', 'mimic']) assert.equal(leggi(id).spazio, '1 Q', id);
   for (const id of ['gelatina-ocra', 'budino-nero', 'cubo-gelatinoso', 'spora-gassosa']) {
     assert.equal(leggi(id).spazio, '2 × 2 Q', id);
-    assert.equal(leggi(id).taglia, 'grande');
+    assert.equal(leggi(id).taglia, undefined);
   }
 });
 

@@ -68,7 +68,7 @@ test('movimento: Spada volante e Aria in volo (passo 0); Tappeto 2×1 fuori dal 
   // gli Elementali 2×2 sono Grandi
   for (const id of ['elementale-acqua-maggiore', 'elementale-terra-maggiore']) {
     assert.equal(leggi(id).spazio, '2 × 2 Q');
-    assert.equal(leggi(id).taglia, 'grande');
+    assert.equal(leggi(id).taglia, undefined);
   }
 });
 

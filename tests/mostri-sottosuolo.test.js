@@ -49,7 +49,7 @@ test('Spazio: quadrato nel campo; Roper, Umber Hulk, Orrore uncinato 2 × 2 Gran
   for (const id of ['mantoscuro', 'perforatore', 'rugginofago', 'grimlock', 'troglodita', 'stirge']) assert.equal(leggi(id).spazio, '1 Q');
   for (const id of ['roper', 'umber-hulk', 'orrore-uncinato']) {
     assert.equal(leggi(id).spazio, '2 × 2 Q', `${id} 2×2`);
-    assert.equal(leggi(id).taglia, 'grande');
+    assert.equal(leggi(id).taglia, undefined);
   }
   const v = leggi('vermeiena');
   assert.equal(v.spazio, undefined);

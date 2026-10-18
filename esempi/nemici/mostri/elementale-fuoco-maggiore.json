@@ -24,7 +24,6 @@
     "corsa": 10,
     "scatto": 15
   },
-  "taglia": "grande",
   "spazio": "2 × 2 Q",
   "gs_px": {
     "gs": "Eroe",
@@ -87,5 +86,5 @@
     "stordito",
     "incendiato"
   ],
-  "note": "PM —: nessuna riserva. Profilo evocato (Magia §14.3): «INI dopo l’evocatore» (qui 0; sulla plancia agisce dopo chi lo evoca). Scompare a 0 PV, a fine durata o al congedo. Spazio 2 × 2 Q, taglia Grande."
+  "note": "PM —: nessuna riserva. Profilo evocato (Magia §14.3): «INI dopo l’evocatore» (qui 0; sulla plancia agisce dopo chi lo evoca). Scompare a 0 PV, a fine durata o al congedo. Spazio 2 × 2 Q."
 }

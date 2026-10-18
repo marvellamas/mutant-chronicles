@@ -26,7 +26,7 @@ test('i dieci profili ci sono, sono validi e vengono dal cap. 8', () => {
 test('Spazio quadrato dai dati; le quattro creature 2 × 2 Q sono di taglia Grande', () => {
   for (const id of ['aquila-gigante', 'gufo-gigante', 'avvoltoio-gigante', 'pipistrello-gigante']) {
     assert.equal(leggi(id).spazio, '2 × 2 Q', id);
-    assert.equal(leggi(id).taglia, 'grande', id);
+    assert.equal(leggi(id).taglia, undefined, id);
   }
   for (const id of ['vespa-gigante', 'scarabeo-di-fuoco-gigante', 'centopiedi-gigante', 'serpente-velenoso', 'serpente-velenoso-gigante', 'ragno-lupo-gigante']) {
     assert.equal(leggi(id).spazio, '1 Q', id);

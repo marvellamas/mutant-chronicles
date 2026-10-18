@@ -57,7 +57,7 @@ const CREATURE = [
     note: 'Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). Condotta: caccia spesso da sola, può difendere territorio o piccoli; sotto 8 PV o a Ferita Profonda cerca copertura. Fonte: Tiger, p. 339.',
   },
   {
-    id: 'tigre-denti-a-sciabola', nome: 'Tigre dai denti a sciabola', taglia: 'grande',
+    id: 'tigre-denti-a-sciabola', nome: 'Tigre dai denti a sciabola',
     caratteristiche: { FOR: 9, DES: 6, COS: 7, INT: 2, SAG: 6, CAR: 4 },
     pv: 42, pm: 6, ar: { totale: 1, magica: 0 }, difese: 10, iniziativa: 0,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '2 × 2 Q',
@@ -74,7 +74,7 @@ const CREATURE = [
     note: 'Condotta: cerca prede raggiungibili, può restare presso una carcassa senza attaccare chiunque avvisti; sotto 10 PV o a Ferita Seria si ritira; la difesa di piccoli o nutrimento può trattenerla (senza immunità a Terrorizzato). Fonte: Saber-Toothed Tiger, p. 336.',
   },
   {
-    id: 'orso-polare', nome: 'Orso polare', taglia: 'grande',
+    id: 'orso-polare', nome: 'Orso polare',
     caratteristiche: { FOR: 9, DES: 5, COS: 7, INT: 2, SAG: 6, CAR: 3 },
     pv: 42, pm: 6, ar: { totale: 2, magica: 0 }, difese: 9, iniziativa: -1,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '2 × 2 Q',
@@ -91,7 +91,7 @@ const CREATURE = [
     note: 'Una variante cavernicola richiederebbe adattamenti dichiarati: non è inclusa. Condotta: fame, piccoli e possibilità di raggiungere la preda; sotto 10 PV o a Ferita Seria cerca una riva o una zona libera. Fonte: Polar Bear, p. 334.',
   },
   {
-    id: 'rinoceronte', nome: 'Rinoceronte', taglia: 'grande',
+    id: 'rinoceronte', nome: 'Rinoceronte',
     caratteristiche: { FOR: 9, DES: 4, COS: 7, INT: 2, SAG: 5, CAR: 3 },
     pv: 40, pm: 5, ar: { totale: 3, magica: 0 }, difese: 8, iniziativa: -1,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '2 × 2 Q',
@@ -110,7 +110,7 @@ const CREATURE = [
     note: 'Vista, udito e olfatto ordinari. Condotta: può minacciare prima di attaccare e fermarsi quando gli intrusi cedono spazio; sotto 10 PV o a Ferita Seria si allontana (un piccolo da difendere può cambiarlo). Fonte: Rhinoceros, p. 336.',
   },
   {
-    id: 'elefante', nome: 'Elefante', taglia: 'grande',
+    id: 'elefante', nome: 'Elefante',
     caratteristiche: { FOR: 10, DES: 4, COS: 8, INT: 3, SAG: 5, CAR: 4 },
     pv: 60, pm: 7, ar: { totale: 3, magica: 0 }, difese: 8, iniziativa: -1,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '3 × 3 Q',
@@ -130,7 +130,7 @@ const CREATURE = [
     note: 'Sensi ordinari; non comprende linguaggi nel profilo selvatico (può rispondere a segnali appresi se il rapporto di addestramento è stabilito nella scena). Montura e carico richiedono una configurazione propria, senza Azioni o portata trasferite al cavaliere. Condotta: protegge i piccoli e può aprirsi una via di fuga; sotto 15 PV o a Ferita Seria si ritira con il branco. Fonte: Elephant, p. 322.',
   },
   {
-    id: 'mammut', nome: 'Mammut', taglia: 'grande',
+    id: 'mammut', nome: 'Mammut',
     caratteristiche: { FOR: 10, DES: 4, COS: 10, INT: 3, SAG: 5, CAR: 4 },
     pv: 84, pm: 8, ar: { totale: 4, magica: 0 }, difese: 8, iniziativa: -1,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '3 × 3 Q',
@@ -150,7 +150,7 @@ const CREATURE = [
     note: 'Sensi ordinari; non comprende linguaggi. Condotta: difende il gruppo e reagisce a chi gli chiude il passaggio; sotto 21 PV o a Ferita Seria cerca spazio e branco. Fonte: Mammoth, p. 332.',
   },
   {
-    id: 'alce-gigante', nome: 'Alce gigante', taglia: 'grande',
+    id: 'alce-gigante', nome: 'Alce gigante',
     caratteristiche: { FOR: 9, DES: 7, COS: 7, INT: 4, SAG: 7, CAR: 5 },
     pv: 42, pm: 8, ar: { totale: 2, magica: 0 }, difese: 11, iniziativa: 1,
     movimento: { passo: 12, corsa: 24, scatto: 36 }, spazio: '3 × 3 Q',
@@ -187,7 +187,7 @@ const CREATURE = [
     note: 'Non comprende linguaggi nel profilo selvatico; può apprendere segnali tramite un rapporto stabilito nella scena. Condotta: minaccia con richiami e posture prima dello scontro; sotto 6 PV o a Ferita Profonda raggiunge il gruppo o un riparo. Fonte: Ape, p. 317.',
   },
   {
-    id: 'scimmione-gigante', nome: 'Scimmione gigante', taglia: 'grande',
+    id: 'scimmione-gigante', nome: 'Scimmione gigante',
     caratteristiche: { FOR: 10, DES: 6, COS: 9, INT: 4, SAG: 6, CAR: 4 },
     pv: 80, pm: 8, ar: { totale: 2, magica: 0 }, difese: 10, iniziativa: 0,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '3 × 3 Q',

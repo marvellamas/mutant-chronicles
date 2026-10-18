@@ -25,7 +25,6 @@
     "corsa": 12,
     "scatto": 18
   },
-  "taglia": "grande",
   "spazio": "3 × 3 Q",
   "gs_px": {
     "gs": "Leggenda",
@@ -116,5 +115,5 @@
       }
     }
   ],
-  "note": "Altezza circa 7 Q. Tiro naturale 13 (nome del manuale non presente nel catalogo delle Abilità: vedi A.169; il VA della Roccia è già in tabella). Furtività 14 immobile fra alberi compatibili. Parla il linguaggio del bosco e una lingua di contatto. Condotta: ferma incendi e abbattimenti, distingue gli intrusi dalle minacce reali, può avvertire o trattare prima di attaccare; sotto 19 PV o a Ferita Seria ripiega. Fonte: Treant, p. 289."
+  "note": "Altezza circa 7 Q. Il VA 13 è quello della Roccia, già in tabella: «Tiro naturale» non è un’Abilità (A.169, 18/10), non dà Armi da lancio né altre competenze. Furtività 14 immobile fra alberi compatibili. Parla il linguaggio del bosco e una lingua di contatto. Condotta: ferma incendi e abbattimenti, distingue gli intrusi dalle minacce reali, può avvertire o trattare prima di attaccare; sotto 19 PV o a Ferita Seria ripiega. Fonte: Treant, p. 289."
 }

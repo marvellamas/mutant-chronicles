@@ -24,7 +24,7 @@ const carico = (o, m, s, robusto = false, extra = '') => ({ nome: robusto ? 'Tra
 
 const CREATURE = [
   {
-    id: 'cammello', nome: 'Cammello', taglia: 'grande',
+    id: 'cammello', nome: 'Cammello',
     caratteristiche: { FOR: 8, DES: 4, COS: 6, INT: 2, SAG: 4, CAR: 3 },
     pv: 24, pm: 5, ar: { totale: 0, magica: 0 }, difese: 8, iniziativa: -2,
     movimento: { passo: 10, corsa: 20, scatto: 30 }, spazio: '2 × 2 Q',
@@ -37,7 +37,7 @@ const CREATURE = [
     note: 'Un Morso per Round, Opportunità compresa; nessun attacco di sputo in questa scheda. Condotta: può fermarsi, arretrare o cercare il gruppo; sotto 6 PV o a Ferita Profonda tende a sottrarsi (se è carico, la fuga conserva gli impedimenti). Fonte: Camel, p. 320.',
   },
   {
-    id: 'cavallo-da-tiro', nome: 'Cavallo da tiro', taglia: 'grande',
+    id: 'cavallo-da-tiro', nome: 'Cavallo da tiro',
     caratteristiche: { FOR: 9, DES: 5, COS: 6, INT: 2, SAG: 5, CAR: 4 },
     pv: 28, pm: 6, ar: { totale: 0, magica: 0 }, difese: 8, iniziativa: -1,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '2 × 2 Q',
@@ -50,7 +50,7 @@ const CREATURE = [
     note: 'Il calcio è una reazione fisicamente raggiungibile, non un attacco contro ogni lato del corpo. Condotta: può seguire indicazioni note e fermarsi se il percorso è impraticabile; sotto 7 PV o a Ferita Profonda tende ad arretrare o cercare il conduttore. Fonte: Draft Horse, p. 321.',
   },
   {
-    id: 'cavallo-da-sella', nome: 'Cavallo da sella', taglia: 'grande',
+    id: 'cavallo-da-sella', nome: 'Cavallo da sella',
     caratteristiche: { FOR: 8, DES: 6, COS: 5, INT: 2, SAG: 5, CAR: 4 },
     pv: 22, pm: 5, ar: { totale: 0, magica: 0 }, difese: 9, iniziativa: 0,
     movimento: { passo: 12, corsa: 24, scatto: 36 }, spazio: '2 × 2 Q',
@@ -63,7 +63,7 @@ const CREATURE = [
     note: 'La velocità non implica la capacità di affrontare volontariamente fiamme, spari o una carica. Condotta: cerca uno spazio aperto e una direzione conosciuta; sotto 5 PV o a Ferita Profonda tende alla fuga. Fonte: Riding Horse, p. 336.',
   },
   {
-    id: 'cavallo-da-guerra', nome: 'Cavallo da guerra', taglia: 'grande',
+    id: 'cavallo-da-guerra', nome: 'Cavallo da guerra',
     caratteristiche: { FOR: 8, DES: 6, COS: 6, INT: 2, SAG: 6, CAR: 4 },
     pv: 28, pm: 6, ar: { totale: 0, magica: 0 }, difese: 10, iniziativa: 0,
     movimento: { passo: 12, corsa: 24, scatto: 36 }, spazio: '2 × 2 Q',
@@ -129,7 +129,7 @@ const CREATURE = [
     note: 'Un percorso roccioso resta una difficoltà concreta anche per un animale dal passo sicuro. Capacità di trasporto e disponibilità a portare una persona restano distinte. Condotta: può minacciare, allontanarsi o difendere i piccoli; sotto 2 PV o a Ferita Profonda tende a cercare un appoggio protetto o il branco. Fonte: Goat, p. 330.',
   },
   {
-    id: 'capra-gigante', nome: 'Capra gigante', taglia: 'grande',
+    id: 'capra-gigante', nome: 'Capra gigante',
     caratteristiche: { FOR: 8, DES: 5, COS: 6, INT: 2, SAG: 6, CAR: 3 },
     pv: 28, pm: 6, ar: { totale: 1, magica: 0 }, difese: 9, iniziativa: -1,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '2 × 2 Q',
@@ -142,7 +142,7 @@ const CREATURE = [
     note: 'La corazza è AR biologica senza PI separati; le corna non permettono Parata naturale e non aprono automaticamente una breccia nei muri. Il nome e la massa non aggiungono immunità ambientali né poteri della Covata. Condotta: la sua struttura non implica abitudine alla sella; sotto 7 PV o a Ferita Profonda tende a sottrarsi verso terreno favorevole. Fonte: Giant Goat, p. 326.',
   },
   {
-    id: 'alce', nome: 'Alce', taglia: 'grande',
+    id: 'alce', nome: 'Alce',
     caratteristiche: { FOR: 8, DES: 5, COS: 5, INT: 2, SAG: 5, CAR: 3 },
     pv: 22, pm: 5, ar: { totale: 0, magica: 0 }, difese: 9, iniziativa: -1,
     movimento: { passo: 10, corsa: 20, scatto: 30 }, spazio: '2 × 2 Q',

@@ -50,7 +50,7 @@ const CREATURE = [
     note: 'AR 1 biologica. Il Corrosivo interessa solo protezioni non magiche di metallo compatibile (la Melma grigia: solo metallo). Condotta: va verso la fonte di nutrimento percepita più vicina; un’offerta di materiale commestibile può intercettarla. Fonte: Gray Ooze, p. 243.',
   },
   {
-    id: 'gelatina-ocra', nome: 'Gelatina ocra', taglia: 'grande', senzaSalvezza: ['volonta'],
+    id: 'gelatina-ocra', nome: 'Gelatina ocra', senzaSalvezza: ['volonta'],
     caratteristiche: { FOR: 7, DES: 3, COS: 6, INT: 2, SAG: 4, CAR: 1 },
     pv: 36, ar: { totale: 1, magica: 0 }, difese: 6, iniziativa: -3,
     movimento: { passo: 2, corsa: 4, scatto: 6 }, spazio: '2 × 2 Q',
@@ -72,7 +72,7 @@ const CREATURE = [
     note: 'AR 1 biologica. Condotta: segue stimoli di nutrimento fino a pareti e soffitti; i frammenti non collaborano intenzionalmente fra loro. Fonte: Ochre Jelly, p. 243.',
   },
   {
-    id: 'budino-nero', nome: 'Budino nero', taglia: 'grande', senzaSalvezza: ['volonta'],
+    id: 'budino-nero', nome: 'Budino nero', senzaSalvezza: ['volonta'],
     caratteristiche: { FOR: 8, DES: 3, COS: 8, INT: 1, SAG: 4, CAR: 1 },
     pv: 52, ar: { totale: 2, magica: 0 }, difese: 6, iniziativa: -3,
     movimento: { passo: 4, corsa: 8, scatto: 12 }, spazio: '2 × 2 Q',
@@ -96,7 +96,7 @@ const CREATURE = [
     note: 'AR 2 biologica. Condotta: segue il nutrimento percepito, supera dislivelli aderendo e filtra nelle aperture accessibili. Fonte: Black Pudding, p. 241.',
   },
   {
-    id: 'cubo-gelatinoso', nome: 'Cubo gelatinoso', taglia: 'grande', senzaSalvezza: ['volonta'],
+    id: 'cubo-gelatinoso', nome: 'Cubo gelatinoso', senzaSalvezza: ['volonta'],
     caratteristiche: { FOR: 7, DES: 2, COS: 9, INT: 1, SAG: 4, CAR: 1 },
     pv: 44, ar: { totale: 1, magica: 0 }, difese: 5, iniziativa: -4,
     movimento: { passo: 3, corsa: 6, scatto: 9 }, spazio: '2 × 2 Q',
@@ -149,7 +149,7 @@ const CREATURE = [
     note: 'Furtività 13 fra funghi. Testa = cappello, Torace = gambo, Braccia = filamenti, Gambe = base locomotrice. Fonte: Violet Fungus, p. 138.',
   },
   {
-    id: 'spora-gassosa', nome: 'Spora gassosa', taglia: 'grande', senzaSalvezza: ['volonta'],
+    id: 'spora-gassosa', nome: 'Spora gassosa', senzaSalvezza: ['volonta'],
     caratteristiche: { FOR: 3, DES: 1, COS: 2, INT: 1, SAG: 1, CAR: 1 },
     pv: 4, ar: { totale: 0, magica: 0 }, difese: 2, iniziativa: -4,
     movimento: { passo: 0, corsa: 'non_consentito', scatto: 'non_consentito', volo: 2 }, spazio: '2 × 2 Q',

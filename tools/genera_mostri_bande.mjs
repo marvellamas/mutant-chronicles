@@ -120,7 +120,7 @@ const CREATURE = [
     note: 'AR 1 senza scudo (inizia con lancia a una mano e scudo piccolo). Lancia a due mani: danno 1d6+4, riposto lo scudo (AR 1). L’arco richiede riporre lo scudo. La lancia non è un giavellotto. Comportamento: isolamento e inseguimento; se la preda è troppo costosa o sotto 6 PV si ritira verso il gruppo.',
   },
   {
-    id: 'ogre', nome: 'Ogre', taglia: 'grande',
+    id: 'ogre', nome: 'Ogre',
     caratteristiche: { FOR: 9, DES: 4, COS: 8, INT: 3, SAG: 4, CAR: 3 },
     pv: 46, pm: 6, ar: { totale: 1, magica: 0 }, difese: 8, iniziativa: -1,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '2 × 2 Q',
@@ -135,7 +135,7 @@ const CREATURE = [
     note: 'Oratoria 12 per intimidire. Maglio = Martello a due mani FOR 6; inizia col maglio pronto, nessuno scudo. Con una sola AzP sceglie fra attaccare e Difendersi. Comportamento: colpisce il nemico più vicino; sotto 12 PV o a Ferita Profonda cerca l’uscita.',
   },
   {
-    id: 'ettin', nome: 'Ettin', taglia: 'grande',
+    id: 'ettin', nome: 'Ettin',
     caratteristiche: { FOR: 9, DES: 4, COS: 8, INT: 4, SAG: 5, CAR: 4 },
     pv: 60, pm: 8, ar: { totale: 2, magica: 0 }, difese: 10, iniziativa: 0,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '2 × 2 Q',
@@ -152,7 +152,7 @@ const CREATURE = [
     note: 'AR 2 biologica. Oratoria 13 per intimidire. Ascia leggera e mazza ferrata entrambe pronte; nessuna armatura o scudo; para con entrambe senza sommarne i benefici. Comportamento: difende un rifugio o un accordo; sotto 15 PV o a Ferita Seria può abbandonare.',
   },
   {
-    id: 'minotauro', nome: 'Minotauro', taglia: 'grande',
+    id: 'minotauro', nome: 'Minotauro',
     caratteristiche: { FOR: 9, DES: 5, COS: 8, INT: 4, SAG: 7, CAR: 4 },
     pv: 54, pm: 8, ar: { totale: 2, magica: 0 }, difese: 11, iniziativa: 1,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '2 × 2 Q',
@@ -169,7 +169,7 @@ const CREATURE = [
     note: 'AR 2 biologica. Ascia bipenne a due mani FOR 6, pronta; niente armatura o scudo; para con l’ascia, non con le corna. Comportamento: cerca un percorso di carica; sotto 14 PV o a Ferita Seria ripiega in zona conosciuta.',
   },
   {
-    id: 'troll', nome: 'Troll', taglia: 'grande',
+    id: 'troll', nome: 'Troll',
     caratteristiche: { FOR: 8, DES: 6, COS: 10, INT: 4, SAG: 5, CAR: 3 },
     pv: 60, pm: 8, ar: { totale: 3, magica: 0 }, difese: 11, iniziativa: 1,
     movimento: { passo: 6, corsa: 12, scatto: 18 }, spazio: '2 × 2 Q',

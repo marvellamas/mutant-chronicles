@@ -50,7 +50,7 @@ const CREATURE = [
     note: 'Una sola AzP obbliga a scegliere fra Morso e Difesa. Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). Condotta: insegue una preda separata, evita un fronte compatto, cerca riparo sotto 7 PV o a Ferita Profonda. Non è una cavalcatura addestrata.',
   },
   {
-    id: 'orso-bruno', nome: 'Orso bruno', taglia: 'grande',
+    id: 'orso-bruno', nome: 'Orso bruno',
     caratteristiche: { FOR: 8, DES: 4, COS: 7, INT: 2, SAG: 6, CAR: 3 },
     pv: 34, pm: 6, ar: { totale: 1, magica: 0 }, difese: 9, iniziativa: 0,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '2 × 2 Q',
@@ -70,7 +70,7 @@ const CREATURE = [
     note: 'Condotta: difende piccoli, spazio e cibo; sotto 9 PV o a Ferita Seria interrompe lo scontro se ha via libera, più ostinato a difesa dei piccoli. Non combatte fino alla morte per una regola automatica.',
   },
   {
-    id: 'cinghiale-gigante', nome: 'Cinghiale gigante', taglia: 'grande',
+    id: 'cinghiale-gigante', nome: 'Cinghiale gigante',
     caratteristiche: { FOR: 8, DES: 4, COS: 8, INT: 2, SAG: 4, CAR: 2 },
     pv: 38, pm: 6, ar: { totale: 2, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '2 × 2 Q',
@@ -122,7 +122,7 @@ const CREATURE = [
     note: 'Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). Condotta: segue una preda indebolita, contende carcasse; sotto 8 PV, a Ferita Profonda o separata dal gruppo interrompe l’inseguimento.',
   },
   {
-    id: 'ragno-gigante', nome: 'Ragno gigante', taglia: 'grande',
+    id: 'ragno-gigante', nome: 'Ragno gigante',
     caratteristiche: { FOR: 6, DES: 7, COS: 5, INT: 1, SAG: 5, CAR: 1 },
     pv: 22, pm: 6, ar: { totale: 1, magica: 0 }, difese: 11, iniziativa: 1,
     movimento: { passo: 6, corsa: 12, scatto: 18 }, spazio: '2 × 2 Q',
@@ -140,7 +140,7 @@ const CREATURE = [
     note: 'Con una sola AzP sceglie fra Morso, Getto e Difesa. Condotta: preferisce catturare e attendere; sotto 6 PV o a Ferita Profonda abbandona la preda e si ritira lungo la rete.',
   },
   {
-    id: 'scorpione-gigante', nome: 'Scorpione gigante', taglia: 'grande',
+    id: 'scorpione-gigante', nome: 'Scorpione gigante',
     caratteristiche: { FOR: 7, DES: 5, COS: 7, INT: 1, SAG: 5, CAR: 1 },
     pv: 42, pm: 8, ar: { totale: 4, magica: 0 }, difese: 9, iniziativa: 0,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '2 × 2 Q',
@@ -162,7 +162,7 @@ const CREATURE = [
     note: 'Condotta: cerca contatto e trattiene una preda minacciando gli altri con la coda; sotto 11 PV o a Ferita Seria cerca un riparo.',
   },
   {
-    id: 'serpente-costrittore-gigante', nome: 'Serpente costrittore gigante', taglia: 'grande',
+    id: 'serpente-costrittore-gigante', nome: 'Serpente costrittore gigante',
     caratteristiche: { FOR: 9, DES: 5, COS: 8, INT: 1, SAG: 5, CAR: 2 },
     pv: 48, pm: 8, ar: { totale: 2, magica: 0 }, difese: 9, iniziativa: 0,
     movimento: { passo: 6, corsa: 12, scatto: 18 }, spazio: '3 × 3 Q',

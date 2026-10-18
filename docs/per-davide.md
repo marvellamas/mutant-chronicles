@@ -6,7 +6,7 @@
 
 •             Questo è l’unico documento con le domande dell’app Mutant. Il link resta sempre questo: non ne esistono altri e non se ne creano di nuovi. Lo stesso testo è nel repo GitHub, docs/per-davide.md.
 
-•             **Rispondi in coda**, nella sezione **7. Risposte di Davide**, alla fine del documento, oppure nel tuo Doc «E\&L – Risposte e correzioni approvate»: leggiamo tutti e due a ogni sessione. Un blocco per risposta, con il numero della domanda (per esempio «A.23»), la data e il testo. Anche «confermo il Nel frattempo» è una risposta valida.
+•             **Rispondi in coda**, nella sezione **7. Risposte di Davide**, alla fine del documento, oppure nel tuo Doc «E&L – Risposte e correzioni approvate»: leggiamo tutti e due a ogni sessione. Un blocco per risposta, con il numero della domanda (per esempio «A.23»), la data e il testo. Anche «confermo il Nel frattempo» è una risposta valida.
 
 •             Non modificare, spostare o cancellare le domande: lo facciamo noi. Quando una risposta è recepita e la funzione è implementata nell’app, la voce passa nella sezione **6. Risolte**, con la data.
 
@@ -76,11 +76,11 @@ Decisioni già prese o errori evidenti: l’app segue la decisione, il testo dic
 
 •             §2.16.3 (Cacciatore) e §2.16.4 (Esploratore): «Il binocolo non richiede batterie.» Nel §2.16.2 (Agente) il testo dice già «Il binocolo non richiede NEC.»: uniformare a «non richiede NEC».
 
-•             §8.6.1 e §1.6: con Successo Magistrale Migliorato il 3 naturale è Magistrale da VA finale 21 (correzione approvata il 02/10, E\&L decisione 3).
+•             §8.6.1 e §1.6: con Successo Magistrale Migliorato il 3 naturale è Magistrale da VA finale 21 (correzione approvata il 02/10, E&L decisione 3).
 
 **Manuale della Magia**
 
-•             ~~Sez. 1: livello massimo incantesimi \= tabella I→3, II→8, III→11, IV→14, V→17, VI→18~~ — fatto nel Google Doc (verificato il 28/09).
+•             ~~Sez. 1: livello massimo incantesimi = tabella I→3, II→8, III→11, IV→14, V→17, VI→18~~ — fatto nel Google Doc (verificato il 28/09).
 
 •             ~~Armatura Mistica (scheda 22.2): togliere il riferimento alle zone del corpo coperte (A.43)~~ — fatto nel Google Doc (verificato il 28/09).
 
@@ -104,7 +104,7 @@ Decisioni già prese o errori evidenti: l’app segue la decisione, il testo dic
 
 •             ~~§7.4.10 Scudo delle Guardie Sacre: con la lama estratta il danno è 1d6+1+1d4 Naturale~~ — fatto nel Google Doc (verificato il 28/09).
 
-•             §7.8, schede di M310 e SA SG2001: indicare che usano un caricatore amovibile specifico e che la sostituzione con un caricatore pronto costa 1 AzP (E\&L 19: «va esplicitata nelle relative schede di catalogo»).
+•             §7.8, schede di M310 e SA SG2001: indicare che usano un caricatore amovibile specifico e che la sostituzione con un caricatore pronto costa 1 AzP (E&L 19: «va esplicitata nelle relative schede di catalogo»).
 
 **Manuale dell’Equipaggiamento**
 
@@ -142,9 +142,9 @@ Voci con risposta recepita e funzione implementata nell’app (o chiuse). La dat
 
 •             **Durata di tre Tecniche Interiori** (Vipera dal Cappuccio, Presa dell’Anima, Contraccolpo Interiore) — implementata il 26/09.
 
-•             **Equipaggiamento iniziale** (E\&L A.5–A.5.31): dotazioni delle 25 Classi, armamenti corporativi di base (Armamenti §7.22), crediti iniziali 1.000 + 2d6 × 100, acquisti con cessione, veicoli esclusi — implementato il 27/09.
+•             **Equipaggiamento iniziale** (E&L A.5–A.5.31): dotazioni delle 25 Classi, armamenti corporativi di base (Armamenti §7.22), crediti iniziali 1.000 + 2d6 × 100, acquisti con cessione, veicoli esclusi — implementato il 27/09.
 
-•             **PV e PM attuali al passaggio di livello** (§8.1.2, E\&L A.6) — implementata il 27/09.
+•             **PV e PM attuali al passaggio di livello** (§8.1.2, E&L A.6) — implementata il 27/09.
 
 •             **18 Talenti magici e mistici nuovi del 27/09** — recepiti nell’app il 27/09; la conferma è chiesta in A.32.
 
@@ -172,7 +172,7 @@ Voci con risposta recepita e funzione implementata nell’app (o chiuse). La dat
 
 •             **A.13 — Rainy Dayer** nelle Carabine, solo per il profilo di tiro — implementata il 28/09.
 
-•             **A.14 — Batterie da 5 PM** (Rosso, Blu, Verde Molto rara; Bianco Leggendaria), scala di reperibilità fino a Leggendaria, disponibilità degli Artefatti Mistici — implementata il 28/09. Prezzi aggiornati il 02/10 a 1.000 crediti (Rosso, Blu, Verde) e 5.000 (Bianco), come nell’Armamenti §7.5, nella Magia §24.7 e nell’E\&L del 01/10.
+•             **A.14 — Batterie da 5 PM** (Rosso, Blu, Verde Molto rara; Bianco Leggendaria), scala di reperibilità fino a Leggendaria, disponibilità degli Artefatti Mistici — implementata il 28/09. Prezzi aggiornati il 02/10 a 1.000 crediti (Rosso, Blu, Verde) e 5.000 (Bianco), come nell’Armamenti §7.5, nella Magia §24.7 e nell’E&L del 01/10.
 
 •             **A.16 — Prove fisiche**: lista confermata; le penalità fisiche non toccano Potere né le Salvezze — implementata il 29/09.
 
@@ -224,7 +224,7 @@ Voci con risposta recepita e funzione implementata nell’app (o chiuse). La dat
 
 •             **A.38** — Sette chiarimenti sull’attacco a distanza (Movimento Tattico e Fluido si sommano, Copertura, seconda Prova a −4, Mira Selettiva, Imbracciare, Bruciapelo Migliorato, Movimento Evasivo). *App: da applicare.*
 
-•             **A.39, punti 1–3** — Anticipazione senza Addestramento (colonna «altri» −2), Colpo Elementale (PS solo per gli effetti secondari, per elemento) — implementata il 29/09. Punto 3, Rigenerazione: procedura completa (Magia sez. 25, E\&L del 01/10) — implementata il 02/10.
+•             **A.39, punti 1–3** — Anticipazione senza Addestramento (colonna «altri» −2), Colpo Elementale (PS solo per gli effetti secondari, per elemento) — implementata il 29/09. Punto 3, Rigenerazione: procedura completa (Magia sez. 25, E&L del 01/10) — implementata il 02/10.
 
 •             **A.40** — Carica fino alla Corsa massima: 3–6 Q −2/−4, da 7 Q −4/−6, danno ×2; tolto il limite di 12 Q. *App: da applicare.*
 
@@ -268,13 +268,13 @@ Voci con risposta recepita e funzione implementata nell’app (o chiuse). La dat
 
 •             **A.60** — Otto schede; mani registrate; vista rapida delle protezioni; condizioni modificabili anche nella tab Abilità. *App: applicata; la vista rapida delle protezioni ha i tempi dal 09/10 (A.110).*
 
-•             **A.61 — Capolavoro del Corazzaio**: +1 a una sola Contromisura numerica scelta alla costruzione (Ignifugo, Termico, Isolante, Dissipante, Imbottita, Anticorrosivo); assente vale 1, con valore X diventa X + 1; non aumenta l’AR; Riflettente esclusa. Risposta del 02/10 (E\&L, decisione 4) — implementata il 02/10.
+•             **A.61 — Capolavoro del Corazzaio**: +1 a una sola Contromisura numerica scelta alla costruzione (Ignifugo, Termico, Isolante, Dissipante, Imbottita, Anticorrosivo); assente vale 1, con valore X diventa X + 1; non aumenta l’AR; Riflettente esclusa. Risposta del 02/10 (E&L, decisione 4) — implementata il 02/10.
 
 •             **A.62 — Katana Ryūjin**: natura Naturale; attiva 1d8 + 1 + 1d6 con la proprietà Plasma, un solo colpo. Risposta del 02/10 (decisione 15) — implementata il 02/10.
 
 •             **A.63 — Esoscheletri**: NEC Rossi di formato dedicato al modello, con autonomia, ricarica e ricambio della scheda; sostituzione 1 minuto. Risposta del 02/10 (decisione 18) — implementata il 02/10.
 
-•             **A.64 — Moduli IAS**: NEC Blu IAS da 1.000 Lx \= 20 cariche da 50 Lx (Power Blink 2); ricambio 1.000 cr, ricarica 50 cr in 1 ora. Risposta del 02/10 (decisione 20) — implementata il 02/10.
+•             **A.64 — Moduli IAS**: NEC Blu IAS da 1.000 Lx = 20 cariche da 50 Lx (Power Blink 2); ricambio 1.000 cr, ricarica 50 cr in 1 ora. Risposta del 02/10 (decisione 20) — implementata il 02/10.
 
 •             **A.65 — Dotazioni con più schede**: nuova scheda «Corredo agricolo Standard — Allevamento» (2 kg, 200 cr, CO, +0); strumento musicale acustico o elettronico a scelta, senza sovrapprezzo. Risposta del 02/10 (decisioni 10 e 11) — implementata il 02/10.
 
@@ -292,9 +292,9 @@ Voci con risposta recepita e funzione implementata nell’app (o chiuse). La dat
 
 •             **A.72** — Anticipazione senza scala leggibile: confluita nella A.109. *Chiusa il 07/10.*
 
-•             **A.73 — Formato dei nemici per il Tavolo del Master** (E\&L del 02/10, decisioni 5–9). Formato con valori già calcolati, comune all’app e al futuro bestiario. Campi nuovi: azioni per Round, Contromisure, Abilità rilevanti con VA, talenti e capacità speciali. Sei Caratteristiche nel bestiario, facoltative nell’app; un valore mancante non vale 0. Parità d’Iniziativa DES → INT → 1d10. I nemici seguono la procedura dei PG per PV, Ferite e Menomazioni, senza Affaticamento. Incantesimi completi con «Lancia!» e PM scalati; incompleti come promemoria. Passo obbligatorio; Corsa e Scatto 2× e 3× se mancano; «non consentito» è diverso da «mancante». Formato implementato il 02/10 su main; plancia del Tavolo del Master implementata il 02/10 sul branch.
+•             **A.73 — Formato dei nemici per il Tavolo del Master** (E&L del 02/10, decisioni 5–9). Formato con valori già calcolati, comune all’app e al futuro bestiario. Campi nuovi: azioni per Round, Contromisure, Abilità rilevanti con VA, talenti e capacità speciali. Sei Caratteristiche nel bestiario, facoltative nell’app; un valore mancante non vale 0. Parità d’Iniziativa DES → INT → 1d10. I nemici seguono la procedura dei PG per PV, Ferite e Menomazioni, senza Affaticamento. Incantesimi completi con «Lancia!» e PM scalati; incompleti come promemoria. Passo obbligatorio; Corsa e Scatto 2× e 3× se mancano; «non consentito» è diverso da «mancante». Formato implementato il 02/10 su main; plancia del Tavolo del Master implementata il 02/10 sul branch.
 
-•             **A.74 — Rituale di Rigenerazione**: VA del Canale \= Rituali; dopo il Magistrale ripartizione libera entro i limiti; Rituale diretto solo PM personali; versioni per Ritualista. Risposta del 02/10 (decisioni 1, 2, 12, 13) — implementata il 02/10.
+•             **A.74 — Rituale di Rigenerazione**: VA del Canale = Rituali; dopo il Magistrale ripartizione libera entro i limiti; Rituale diretto solo PM personali; versioni per Ritualista. Risposta del 02/10 (decisioni 1, 2, 12, 13) — implementata il 02/10.
 
 •             **A.74 e A.75** — Confermate le risposte su Canali, Rituali, Ritualista e batterie con supporto base. *App: già conforme.*
 
@@ -304,7 +304,7 @@ Voci con risposta recepita e funzione implementata nell’app (o chiuse). La dat
 
 •             **A.77** — Perforante riduce l’AR non magica totale a ogni applicazione di danno, senza erosione. *App: già conforme.*
 
-•             **A.78 — Attacco con VA finale 20 o più**: gli attacchi e le Difese attive si tirano anche con VA finale 20 o più (salvo le eccezioni esplicite, come Colpo Elementale); Magistrale con 1 a VA 20 e con 1–2 da VA 21; con Successo Magistrale Migliorato 1–2 a VA 20 e 1–3 da VA 21; il 20 resta Maldestro. Le altre Prove seguono il §1.7. Risposta del 02/10 (E\&L, decisione 3) — implementata il 02/10.
+•             **A.78 — Attacco con VA finale 20 o più**: gli attacchi e le Difese attive si tirano anche con VA finale 20 o più (salvo le eccezioni esplicite, come Colpo Elementale); Magistrale con 1 a VA 20 e con 1–2 da VA 21; con Successo Magistrale Migliorato 1–2 a VA 20 e 1–3 da VA 21; il 20 resta Maldestro. Le altre Prove seguono il §1.7. Risposta del 02/10 (E&L, decisione 3) — implementata il 02/10.
 
 •             **A.79** — Umani costruiti come PG (livelli 2/5/8, media del dado arrotondata per eccesso, 7 punti); le etichette non danno PV, danni o Azioni; Eretico senza poteri oscuri. *App: da applicare.*
 
@@ -326,7 +326,7 @@ Voci con risposta recepita e funzione implementata nell’app (o chiuse). La dat
 
 •             **A.88** — Individuare a Concentrazione: 10 min / 30 min / 1 h / 2 h / 4 h per le versioni 6–8 / 9–11 / 12–14 / 15–17 / 18. *Implementata il 03/10.*
 
-•             **A.90 — Punti Abilità liberi**: vale il Manuale del Giocatore del 03/10 sera, 7 punti alla creazione e a ogni Grado (livelli 4, 8, 12, 16, 20); l’E\&L con 5 è superato. Chi ne ha assegnati 5 per Grado ha 2 punti da assegnare per evento («Assegna»); chi ne ha 10 ne ha 3 in eccesso per evento («Togli»). Nessun punto cambia da solo — implementata il 04/10.
+•             **A.90 — Punti Abilità liberi**: vale il Manuale del Giocatore del 03/10 sera, 7 punti alla creazione e a ogni Grado (livelli 4, 8, 12, 16, 20); l’E&L con 5 è superato. Chi ne ha assegnati 5 per Grado ha 2 punti da assegnare per evento («Assegna»); chi ne ha 10 ne ha 3 in eccesso per evento («Togli»). Nessun punto cambia da solo — implementata il 04/10.
 
 •             **A.91** — Scheda unica del veicolo condivisa fra PG e Tavolo, proprietario distinto dal conducente. *App: da applicare (registro sul server).*
 
@@ -398,7 +398,7 @@ Voci con risposta recepita e funzione implementata nell’app (o chiuse). La dat
 
 •             **A.136** — Corsa o Scatto dopo un Passo già cominciato e Prova facoltativa di Atletica: sulla mappa il Passo cominciato diventa Corsa o Scatto, con i quadretti fatti contati. In «Attacca!» (PG e nemici, anche per il bersaglio che ha corso o scattato), senza Prova valgono Corsa −2/−2 e Scatto −6/−4; con la Prova l’esito sostituisce le penalità: Successo Magistrale 0/−6 e −2/−8; Successo 0/−4 e −4/−6; Fallimento −4/0 e −8/−2; Maldestro −6/0 e −10/0. Se il movimento è stato fatto sulla mappa, «Attacca!» propone la Prova da solo. Le penalità valgono anche in mischia, salvo la Carica che ha le sue; il Movimento Evasivo è escluso. *Implementata il 09/10.*
 
-•             **A.137** — Raggio di un’Area sulla griglia: a quadretti, con la diagonale a 1 Q (raggio 1 \= 3 × 3 Q, 2 \= 5 × 5, 3 \= 7 × 7). *Era già così nell’app; confermato il 09/10.*
+•             **A.137** — Raggio di un’Area sulla griglia: a quadretti, con la diagonale a 1 Q (raggio 1 = 3 × 3 Q, 2 = 5 × 5, 3 = 7 × 7). *Era già così nell’app; confermato il 09/10.*
 
 •             **A.138** — Forma del Cono: parte dal centro del quadretto di chi lo usa e si allarga da zero fino all’ampiezza finale; un quadretto è colpito se è coperto per almeno metà; il quadretto d’origine è escluso. *Implementata il 09/10.* Origine per le creature grandi: vedi A.126 (16/10).
 
@@ -458,7 +458,7 @@ Voci con risposta recepita e funzione implementata nell’app (o chiuse). La dat
 
 •             **Manuale dei Mostri 0.18** — le regole comuni (cap. 4) e le «Regole operative del catalogo» (cap. 8) coincidono con le decisioni già approvate (Morente A.159 e A.164, spazio A.126 e A.133, Abilità non riportate A.116, 7 punti A.160, dato assente ≠ 0): nessuna automazione nuova. Le schede mostrano GS e PX del manuale come dato informativo (A.161). Nel bestiario, pronti da usare: la Covata (nove caste) e il Lorath del cap. 7, e dal cap. 8 i blocchi «Bestie e predatori», «Bande e grandi avversari», «Non morti», «Costrutti e creature elementali», «Giganti e abitanti delle montagne», «Creature del sottosuolo», le prime quindici schede (Aarakocra … Orsogufo), «Melme, funghi e imitatori» e «Vegetali e custodi delle foreste»: 105 profili in tutto, con Spazio, portata per attacco e capacità con i parametri del manuale. Le melme e i funghi senza mente, con «Volontà —», hanno la Salvezza assente in modo esplicito, mai uno 0. *Implementato il 16–17/10.* Restano 70 creature del capitolo 8 (Grandi rettili, Creature delle acque, Predatori e grandi erbivori, Creature alate, Sciami e piccola fauna, Cavalcature e animali da lavoro, Mephit e creature elementali), nei prossimi lotti. Vedi A.167 e A.169.
 
-•             **A.165** — A.109 nel Doc E\&L: rettifica editoriale, la A.109 è risolta e le note di sospensione sono state aggiornate; l’app mantiene i 32 gradini dell’08/10. *Chiusa il 16/10.*
+•             **A.165** — A.109 nel Doc E&L: rettifica editoriale, la A.109 è risolta e le note di sospensione sono state aggiornate; l’app mantiene i 32 gradini dell’08/10. *Chiusa il 16/10.*
 
 •             **Stati 1/11–11/11** — Sintesi operative approvate il 05/10: il testo di ogni sintesi è nell’app (tooltip degli Stati), con i modificatori allineati. Cambiati: A Terra (striscia 3 Q; a distanza −2 a chi lo attacca), Svenuto (cade A Terra anche nei valori), Accecato (la penalità di luce non si somma; il −8 vale anche per le attività che richiedono la vista). Già uguali nei numeri: Assordato, Avvelenato, Immobilizzato, Incendiato, Rallentato, Sanguinamento, Stordito, Terrorizzato. Gli Stati dei nemici pesano ora sui loro attacchi e sulle loro Difese. *Implementate il 09/10.* Vedi anche la A.153.
 
@@ -472,7 +472,7 @@ Voci con risposta recepita e funzione implementata nell’app (o chiuse). La dat
 
 ## **7. Risposte di Davide**
 
-Scrivi qui, in coda, una risposta per blocco: numero della domanda, data, testo. Va bene anche rispondere nel Doc E\&L.  
+Scrivi qui, in coda, una risposta per blocco: numero della domanda, data, testo. Va bene anche rispondere nel Doc E&L.  
  Le risposte qui sotto sono riportate dal documento «Per Davide» del 28/09, che non si usa più.  
  **A.7 (Pistola mitragliatrice compatta).** Appartiene alla famiglia Pistole ai fini delle Specializzazioni. Specializzazione Pistole concede +1 VA e +1 danno anche usando Raffica Breve o Media. Specializzazione Mitragliatori non si applica a questo modello. L’Abilità utilizzata rimane Armi leggere in tutte le modalità di fuoco; la raffica non cambia la famiglia dell’arma. Nell’app il profilo deve quindi essere associato a Pistole, senza passare a Mitragliatori quando viene selezionata una raffica. Riferimenti: Manuale degli Armamenti, §7.7; Manuale del Giocatore, §8.8.1.  
  **A.8 (Pugnale e Ascia leggera, uso ravvicinato e lancio).** La Specializzazione applicabile dipende dall’impiego. Per il Pugnale si applica Coltelli e Pugnali nell’uso ravvicinato e Armi da Lancio quando viene lanciato. Per l’Ascia leggera si applica Asce nell’uso ravvicinato e Armi da Lancio quando viene lanciata. Al lancio si usa l’Abilità Armi da lancio; possedere la Specializzazione Armi da Lancio concede +1 VA e +1 danno. Coltelli e Pugnali e Asce concedono i rispettivi benefici soltanto nell’impiego ravvicinato. Anche possedendo entrambe le Specializzazioni pertinenti all’oggetto, si applica soltanto quella relativa all’attacco effettuato, senza cumulo né scelta alternativa. Le Abilità dei profili ravvicinati restano quelle indicate nelle schede. Riferimenti: Manuale degli Armamenti, §§7.1.1 e 7.7; Manuale del Giocatore, §8.8.1.  
@@ -571,8 +571,8 @@ Scrivi qui, in coda, una risposta per blocco: numero della domanda, data, testo.
 ### **Allineamento delle risposte approvate — regole tecniche e Stati**
 
 Aggiornamento del ott 6, 2026  
- Fonte delle decisioni: [*E\&L – Risposte e correzioni approvate*](https://docs.google.com/document/d/1VaqZaAe4NK5P8A956Eahua_ZT60eh3ohnR2xSqh-tVs/edit)  
- Questo aggiornamento riporta le risposte approvate già registrate nel documento E\&L: 14 quesiti tecnici e le sintesi degli undici Stati, con Ammalato disciplinato dalla A.119. Non introduce nuove decisioni.  
+ Fonte delle decisioni: [*E&L – Risposte e correzioni approvate*](https://docs.google.com/document/d/1VaqZaAe4NK5P8A956Eahua_ZT60eh3ohnR2xSqh-tVs/edit)  
+ Questo aggiornamento riporta le risposte approvate già registrate nel documento E&L: 14 quesiti tecnici e le sintesi degli undici Stati, con Ammalato disciplinato dalla A.119. Non introduce nuove decisioni.  
  Stato delle risposte: A.107, A.108, A.110, A.114, A.116, A.119, A.120, A.124, A.127, A.128 e A.129 sono definite nei limiti esplicitati; A.111, A.122 e A.125 hanno ancora dati o sottopunti da chiarire, indicati in fondo. Le regole dettagliate delle malattie restano destinate al Manuale del Direttore.  
  «Risposta approvata» non significa «implementata nell’app». Le domande originali e le annotazioni del collaboratore sono conservate: le ipotesi «Nel frattempo» corrispondenti sono superate dalle risposte riportate qui. Il passaggio alla sezione 6 richiede la verifica del recepimento nell’app.
 
@@ -797,7 +797,7 @@ Approvato il ott 6, 2026
  Nei percorsi misti si conteggiano separatamente i tratti: 1 Q per quadretto normale e 2 Q per quadretto difficile.  
  Il costo maggiore non aggiunge da solo penalità al VA o nuove prove. Eventuali pericoli e le normali prove di Corsa e Scatto mantengono le proprie regole. Le capacità che ignorano il terreno difficile seguono la propria descrizione.  
  Con i valori ordinari e un percorso interamente difficile: Passo 6 Q disponibili → 3 quadretti effettivi; Corsa 12 Q → 6 quadretti; Scatto 18 Q → 9 quadretti. Questi valori precedono ulteriori modificatori e gli esiti delle prove di movimento.  
- Esempio: 2 quadretti normali e 2 difficili consumano 2 + 4 \= 6 Q, esaurendo il Passo ordinario.
+ Esempio: 2 quadretti normali e 2 difficili consumano 2 + 4 = 6 Q, esaurendo il Passo ordinario.
 
 #### **A.129 — Movimento diviso, Corsa e Scatto**
 
@@ -1242,7 +1242,7 @@ Le regole dettagliate delle malattie e delle cure restano destinate al Manuale d
 
 ### **Ripristino delle risposte A.151–A.152 già approvate il 9 ottobre 2026**
 
-Riportate il 10 ottobre 2026 dal documento «E\&L – Risposte e correzioni approvate». Le decisioni e la loro data di approvazione restano invariate.
+Riportate il 10 ottobre 2026 dal documento «E&L – Risposte e correzioni approvate». Le decisioni e la loro data di approvazione restano invariate.
 
 #### **A.151 — Carichini: peso, Qualità, Integrità e Reperibilità**
 
@@ -1312,7 +1312,7 @@ Approvato il 10 ottobre 2026.
 
 Con Fallimento o Fallimento Maldestro dell’infusione si perdono tutti i PM impegnati: i PM di lavoro, pari a 3 × Grado, più i PM da sigillare, pari al costo della versione dell’incantesimo. Anche i reagenti vengono consumati e il Consumabile non viene creato.
 
-Esempio: un Consumabile di Grado II con 4 PM da sigillare richiede 6 + 4 \= 10 PM; se l’infusione fallisce si perdono tutti e 10.
+Esempio: un Consumabile di Grado II con 4 PM da sigillare richiede 6 + 4 = 10 PM; se l’infusione fallisce si perdono tutti e 10.
 
 Gli eventuali effetti ulteriori del Fallimento Maldestro restano quelli previsti dalle regole d’infusione.
 
@@ -1598,7 +1598,7 @@ Risposta approvata da Davide il 16 ottobre 2026. Sostituisce la proposta di dist
 #### **A.165 — Anticipazione: rettifica dello stato della A.109**
 
 Rettifica editoriale registrata il 16 ottobre 2026 sulla base delle risposte già approvate da Davide l’8 ottobre 2026.  
- La A.109 è risolta: la regola comune e tutti i punti 1/32–32/32 sono già presenti sia in questo documento sia in «E\&L – Risposte e correzioni approvate». Il confronto dei testi conferma che le regole coincidono.  
+ La A.109 è risolta: la regola comune e tutti i punti 1/32–32/32 sono già presenti sia in questo documento sia in «E&L – Risposte e correzioni approvate». Il confronto dei testi conferma che le regole coincidono.  
  Le precedenti note di sospensione per mancanza dell’elenco sono state aggiornate in entrambi i documenti. Non occorre un nuovo elenco o allegato e non vengono riaperti o modificati i gradini già approvati.  
  Indicazione per lo sviluppo: mantenere le 32 risposte dell’8 ottobre 2026. La presente rettifica riguarda lo stato editoriale della A.109; non attesta una verifica o una modifica del codice dell’app.
 
@@ -1618,4 +1618,105 @@ Indicazione esplicita di Davide, registrata il 18 ottobre 2026. Per il Titolo de
 Applicazione nel calcolatore: usare queste fasce per ricavare il moltiplicatore del Titolo nelle componenti dei PX che lo prevedono, in raccordo alla A.161. La tabella sostituisce le fasce diverse riportate nella precedente proposta per la A.168 e nel gestore PX.  
  Ambito: Titolo del personaggio, soglie cumulative di PX e Grado di Sfida dell’avversario sono dati distinti. Questa precisazione corregge soltanto le fasce dei Titoli e conferma i moltiplicatori indicati.  
  Stato: correzione registrata per il recepimento nel calcolatore. Le altre parti delle proposte A.167 e A.168 restano da confermare.
+
+#### A.169 — Abilità del Bestiario, VA degli attacchi e Prove di Caratteristica
+
+Approvazione di Davide: 18 ottobre 2026.  
+Normalizzazione delle Abilità: Mischia → Armi da mischia; Lancio → Armi da lancio; Guerra → Armi da guerra; Diplomazia → Oratoria. I valori restano invariati. Per la Driade: Armi da mischia 9 e Oratoria 13.  
+Attacchi specifici: «Tiro naturale» e «Attacco a distanza» non costituiscono nuove Abilità del catalogo e non attribuiscono automaticamente Armi da lancio. I valori restano associati ai rispettivi attacchi: Avvizzito spinoso, Aghi VA 10; Treant, Roccia VA 13; Elementale dell’Acqua, Dardo d’acqua VA 14; Elementale dell’Aria, Dardo d’aria VA 16. Nell’app questi valori vanno mantenuti nelle tabelle degli attacchi, eliminando le voci improprie dall’elenco delle Abilità. Non conferiscono competenza con altre armi né specializzazioni aggiuntive.  
+Elementale della Terra: «Prove di FOR 15» è una Prova di Caratteristica, non Atletica. Con FOR 10 il modificatore è +5 e il valore della prova è 10 + 5 = 15, secondo il Manuale del Giocatore, §1.2.2. Visualizzare «Prova di Forza: 15» separatamente dalle Abilità; il modificatore non va aggiunto una seconda volta.  
+Regola generale: le Abilità effettive adottano i nomi del catalogo; i VA degli attacchi specifici rimangono negli attacchi; le Prove di Caratteristica restano separate. Questa normalizzazione non modifica la potenza delle creature né i valori numerici delle schede.  
+Stato: risposta approvata, da recepire nei manuali e nello sviluppo. La registrazione non attesta l’avvenuto aggiornamento dei manuali o dell’app.
+
+#### A.167 — Ingombri rettangolari e orientamento delle creature
+
+Approvazione di Davide: 18 ottobre 2026.  
+Le pedine rispettano larghezza e lunghezza indicate nella scheda, ammettendo ingombri rettangolari e dimensioni superiori a 3 × 3 Q. I formati quadrati della A.126 non sono un elenco esclusivo. Esempi: Corazzato 1 × 2 Q; Regina Comandante 2 × 3 Q; Incubatrice 3 × 5 Q; Madre 3 × 10 Q.  
+Non si arrotonda al quadrato maggiore: una creatura di 3 × 10 Q occupa un rettangolo di 30 Q, non un quadrato di 100 Q. L’app deve permettere anche il posizionamento a 45°. Ingombro, sovrapposizioni e passaggio fra gli ostacoli seguono la sagoma effettivamente ruotata; non basta controllare il centro della pedina.  
+Taglia, spazio occupato e portata degli attacchi sono dati distinti. Non si assegna automaticamente «Grande» soltanto perché la sagoma contiene un’area di 2 × 2 Q: la Taglia deriva dalla scheda. Una pedina più lunga non ottiene automaticamente una maggiore portata.  
+Stato: risposta approvata, da recepire nello sviluppo e nei testi pertinenti; questa registrazione non attesta l’avvenuta implementazione.
+
+#### A.170 — Soglie, Atti e fattori di calcolo dei PX
+
+Approvazione di Davide: 18 ottobre 2026.  
+Soglie cumulative dei PX per i livelli 1–20: 1 → 0; 2 → 50; 3 → 110; 4 → 180; 5 → 340; 6 → 520; 7 → 720; 8 → 1.050; 9 → 1.410; 10 → 1.800; 11 → 2.220; 12 → 2.820; 13 → 3.460; 14 → 4.140; 15 → 4.860; 16 → 5.810; 17 → 6.810; 18 → 7.860; 19 → 8.960; 20 → 10.340. Sono totali da raggiungere, non costi da pagare a ogni passaggio.  
+Limiti e premi degli Atti, come impostazioni della nostra campagna modificabili dal Direttore: Atto I, livello massimo 8 e premio 150 PX; II, 12 e 200 PX; III, 15 e 250 PX; IV, 17 e 250 PX; V, 19 e 300 PX; VI, 20 e 300 PX. Il limite blocca il passaggio di livello senza cancellare i PX accumulati. Il premio viene assegnato una sola volta per personaggio beneficiario, su decisione del Direttore.  
+Correttivo dei PX degli incontri per il numero di PG partecipanti: fattore = max(0,5; 1 + 0,1 × (4 − n)), dove n è il numero di PG partecipanti. Esempi: 3 PG ×1,1; 4 PG ×1; 5 PG ×0,9; 6 PG ×0,8; 7 PG ×0,7; 8 PG ×0,6; 9 o più PG ×0,5. Il fattore non equivale a dividere i PX fra i partecipanti.  
+Voti della partita: somma dei tre voti × moltiplicatore del Titolo. Nelle partite lunghe raddoppia soltanto questa componente. Bonus eccezionale: moltiplicato per il Titolo, senza raddoppio per la durata. PX degli incontri e premi degli Atti: senza moltiplicatore del Titolo e senza raddoppio per la durata.  
+Si utilizza il Titolo posseduto all’inizio della partita, con le fasce già corrette e approvate: Principiante 1–3 ×1; Inesperto 4–7 ×2; Esperto 8–11 ×3; Veterano 12–15 ×4; Eroe 16–19 ×5; Leggenda 20+ ×6.  
+Nessun ulteriore fattore per l’equipaggiamento: i PX della scheda del nemico comprendono già la dotazione, che non deve essere conteggiata due volte.  
+Il calcolatore propone un risultato nel tavolo del Direttore. Il Direttore stabilisce e assegna il totale dei PX della partita a ciascun giocatore. Nessun accredito automatico dopo gli scontri.  
+Stato: risposta approvata, da recepire nei testi e nel calcolatore; questa registrazione non attesta l’avvenuto aggiornamento dei manuali o dell’app.
+
+**Grazie delle risposte — e una mano con le prove**
+
+Ciao Davide, ho visto le tue risposte del 18 ottobre nel Doc: **A.167** (ingombri rettangolari), **A.169** (Abilità del bestiario) e **A.170** (soglie, Atti e fattori dei PX). Sono tutte chiare, le recepiamo.
+
+Due note su queste, poi ti chiedo un favore sulle prove.
+
+---
+
+## **Sulle tue risposte**
+
+**A.170 — PX.** Tutto confermato come l'app già fa: soglie dei livelli, limiti e premi degli Atti, correttivo per il numero di PG, voti × Titolo con il raddoppio solo sui voti nelle partite lunghe, bonus eccezionale × Titolo, incontri e premi degli Atti senza Titolo, nessun fattore per l'equipaggiamento. Qui non c'è nulla da cambiare: la domanda si chiude.
+
+**A.167 — ingombri rettangolari e rotazione a 45°.** Questa è la risposta che ci serviva, ma è anche la più impegnativa: oggi la mappa gestisce pedine quadrate, e passare a sagome rettangolari **ruotabili**, con sovrapposizioni e passaggio fra gli ostacoli calcolati sulla sagoma vera e non sul centro, è un lavoro vero sulla mappa. Lo facciamo, ma non in giornata: nel frattempo le creature restano con la pedina quadrata e l'ingombro vero nella nota, come adesso. Ti avviso quando è pronto.
+
+Ho recepito anche il punto sulla Taglia: non viene più assegnata «Grande» solo perché la sagoma contiene un 2 × 2, ma si legge dalla scheda.
+
+**A.171 — una domanda nuova, piccola.** Gli Sciami, da manuale, attaccano solo chi condivide il loro spazio: portata 0 quadretti. Il formato dei dati dell'app accetta però da 1 quadretto in su. Per ora ho messo **1 quadretto** con la condizione scritta in nota. Confermi che va bene così, o preferisci che l'app accetti anche lo 0?
+
+**Una conferma, mentre ci sei.** Per gli umanoidi con lo scudo ho messo l'**AR comprensivo dello scudo** (un solo numero), tenendo Parata e Schivata come valori separati. Se preferisci l'AR senza scudo, con lo scudo come bonus a parte, si cambia — ma meglio saperlo ora, perché riguarda una cinquantina di creature già inserite.
+
+---
+
+## **Il favore: le prove che non sono ancora state fatte**
+
+Nelle ultime sessioni ho aggiunto parecchie cose senza riuscire a provarle al tavolo. Nessuna è complicata, ma se le fai tu sul tuo PC ci risparmi dei giri a vuoto. Ti scrivo il percorso completo dal primo clic, così non devi cercare in giro.
+
+Fai quelle che riesci e dimmi solo cosa **non** funziona.
+
+### **1. PX della partita (il pannello nuovo)**
+
+1. Lancia `avvia-server.bat`, poi apri `http://localhost:3000`.  
+2. **Tavolo del Master** → in alto, pannello **«PX della partita»**.  
+3. In «Partita» crea o scegli una partita e segna **presente** un PG che sia vicino a una soglia di livello (per esempio a 20 PX dal livello successivo).  
+4. Metti i tre voti, premi **«Assegna PX della partita»** e conferma.  
+5. Ora cambia uno dei voti e premi **«Ri-assegna (correzione)»**: il numero che compare nella conferma deve essere **piccolo** (solo la differenza), e il **Titolo non deve salire** di fascia per merito del premio di quella stessa partita.  
+6. Nel menu accanto al nome del giocatore scegli un **Titolo diverso a mano**: la voce «Suggerito» deve ricalcolarsi.  
+7. Nelle **impostazioni** dello stesso pannello ci sono i **PX iniziali** dei PG: se i valori non corrispondono a quelli veri della campagna, correggili tu — sono quelli che contano.
+
+### **2. Le creature nuove del tuo manuale**
+
+1. **Tavolo del Master** → **Prepara scontro** → **Aggiungi nemico** → **Bestiario proposto**.  
+2. Cerca per esempio **Mephit**, **Sciame di quipper**, **Cavallo da guerra**: devono comparire con Spazio, immunità, volo e la nota.  
+3. Mettine due in uno scontro e guarda le **mini-schede** nella plancia: controlla che i numeri siano quelli del manuale.
+
+Sono dentro **165 creature su 215**: restano i cinque blocchi nuovi della 0.23 (Costrutti e Modron, Capi e varianti dei popoli guerrieri, Predatori straordinari, Popoli delle terre selvagge, Fauna delle terre aperte), che sto facendo adesso.
+
+### **3. Il tablet dei giocatori**
+
+1. Apri uno scontro dal **Tavolo del Master** e fai collegare un giocatore col suo **tablet** (o aprilo tu da un secondo dispositivo).  
+2. Dal **PC del master**, con il tablet aperto, dai **+10 PV** a quel PG: il tablet deve aggiornarsi da solo, senza ricaricare.  
+3. Metti sulla mappa un **token libero**: dal tablet si deve **vedere** ma **non spostare**.  
+4. Metti un bersaglio dietro un muro e usa **«Attacca questo bersaglio»**: deve avvisare della **Copertura Totale** (avvisare, non bloccare: il «Procedi comunque» resta).
+
+### **4. Gli avvisi sul telefono**
+
+Questa è quella di cui ti avevo mandato le istruzioni in otto passi. Serve solo a far arrivare una notifica sul telefono quando qualcuno avvia il server o lascia un messaggio.
+
+1. Installa **ntfy** sul telefono (Play Store o App Store).  
+2. Nell'app, iscriviti all'argomento indicato nelle istruzioni che ti ho mandato.  
+3. Avvia il server sul PC: ti deve arrivare una notifica.
+
+Se non arriva nulla, dimmelo: è probabile che vada sistemato dalla mia parte.
+
+### **5. Galleria**
+
+1. **Tavolo del Master** → **Galleria** → carica una **GIF animata**.  
+2. Mandala ai giocatori: controlla se sui loro schermi si **muove** o se arriva ferma.
+
+---
+
+Nient'altro. Se hai dieci minuti per il punto 1 e il punto 3 sono quelli che mi servono di più: il resto può aspettare.
 

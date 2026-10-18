@@ -24,7 +24,7 @@ test('i dieci profili ci sono, sono validi e vengono dal cap. 8', () => {
 
 test('Spazio: quadrato dai dati; il Drago tartaruga 4 × 4 Q resta fuori dal campo, con la nota e A.167', () => {
   assert.equal(leggi('pteranodonte').spazio, '1 Q');
-  for (const id of ['allosauro', 'plesiosauro', 'viverna']) { assert.equal(leggi(id).spazio, '2 × 2 Q', id); assert.equal(leggi(id).taglia, 'grande'); }
+  for (const id of ['allosauro', 'plesiosauro', 'viverna']) { assert.equal(leggi(id).spazio, '2 × 2 Q', id); assert.equal(leggi(id).taglia, undefined); }
   for (const id of ['anchilosauro', 'triceratopo', 'tirannosauro', 'idra', 'behir']) assert.equal(leggi(id).spazio, '3 × 3 Q', id);
   const d = leggi('drago-tartaruga');
   assert.equal(d.spazio, undefined);

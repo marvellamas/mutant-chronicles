@@ -22,7 +22,7 @@ const masso = (va, danno, extra = {}) => ({ nome: 'Masso', tipo: 'distanza', va,
 
 const CREATURE = [
   {
-    id: 'ciclope', nome: 'Ciclope', taglia: 'grande',
+    id: 'ciclope', nome: 'Ciclope',
     caratteristiche: { FOR: 10, DES: 4, COS: 9, INT: 4, SAG: 3, CAR: 4 },
     pv: 64, pm: 8, ar: { totale: 2, magica: 0 }, difese: 9, iniziativa: -1,
     movimento: { passo: 6, corsa: 12, scatto: 18 }, spazio: '3 × 3 Q',
@@ -37,7 +37,7 @@ const CREATURE = [
     note: 'AR 2 biologica. Maglio = Martello a due mani (danno con +3 ordinario e +2 innato, portata 2 Q); nessuno scudo, para con il maglio. Lancio di massi: solo Colpo Singolo, serve un masso libero (~20 kg) da raccogliere (1 AzP, due mani). Comportamento: difende rifugio e risorse; sotto 16 PV o a Ferita Seria cerca riparo o tratta.',
   },
   {
-    id: 'gigante-delle-colline', nome: 'Gigante delle colline', taglia: 'grande',
+    id: 'gigante-delle-colline', nome: 'Gigante delle colline',
     caratteristiche: { FOR: 10, DES: 4, COS: 9, INT: 3, SAG: 4, CAR: 3 },
     pv: 60, pm: 8, ar: { totale: 2, magica: 0 }, difese: 9, iniziativa: -1,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '3 × 3 Q',
@@ -52,7 +52,7 @@ const CREATURE = [
     note: 'AR 2 biologica, nessuna armatura. Maglio = Martello a due mani (+3 ordinario, +1 innato, portata 2 Q). Comportamento: raggiunge il bersaglio più accessibile; sotto 15 PV o a Ferita Profonda valuta fuga, resa o trattativa.',
   },
   {
-    id: 'gigante-delle-pietre', nome: 'Gigante delle pietre', taglia: 'grande',
+    id: 'gigante-delle-pietre', nome: 'Gigante delle pietre',
     caratteristiche: { FOR: 10, DES: 7, COS: 9, INT: 5, SAG: 6, CAR: 4 },
     pv: 70, pm: 12, ar: { totale: 4, magica: 0 }, difese: 13, iniziativa: 1,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '3 × 3 Q',
@@ -67,7 +67,7 @@ const CREATURE = [
     note: 'AR 4 biologica, nessuna armatura. Maglio = Martello a due mani (+3 ordinario, +2 innato, portata 3 Q). Comportamento: difende luoghi e opere proprie; sotto 18 PV o a Ferita Seria cerca una strettoia o negozia.',
   },
   {
-    id: 'gigante-del-gelo', nome: 'Gigante del gelo', taglia: 'grande',
+    id: 'gigante-del-gelo', nome: 'Gigante del gelo',
     caratteristiche: { FOR: 10, DES: 5, COS: 10, INT: 4, SAG: 5, CAR: 5 },
     pv: 76, pm: 12, ar: { totale: 5, magica: 0 }, difese: 12, iniziativa: 0,
     movimento: { passo: 7, corsa: 15, scatto: 23 }, spazio: '3 × 3 Q',
@@ -82,7 +82,7 @@ const CREATURE = [
     note: 'AR 5 (2 biologica + 3 armatura Media su misura). Difese = Parata 12; Schivata 11. Ascia bipenne a due mani (+3 ordinario, +2 innato, portata 2 Q). Comportamento: alterna ascia e Difese o prepara il tiro; sotto 19 PV o a Ferita Seria cerca copertura o un accordo.',
   },
   {
-    id: 'gigante-del-fuoco', nome: 'Gigante del fuoco', taglia: 'grande',
+    id: 'gigante-del-fuoco', nome: 'Gigante del fuoco',
     caratteristiche: { FOR: 10, DES: 5, COS: 10, INT: 5, SAG: 6, CAR: 6 },
     pv: 82, pm: 14, ar: { totale: 6, magica: 0 }, difese: 13, iniziativa: 0,
     movimento: { passo: 4, corsa: 10, scatto: 16 }, spazio: '3 × 3 Q',
@@ -98,7 +98,7 @@ const CREATURE = [
     note: 'AR 6 (1 biologica + 5 armatura Pesante su misura). Difese = Parata 13; Schivata 11. Tecnologia 12 per forgia. Spadone a due mani (+3 ordinario, +3 innato, portata 2 Q). Comportamento: terreno solido e fronte controllabile; sotto 21 PV o a Ferita Seria ripiega o tratta.',
   },
   {
-    id: 'gigante-delle-nuvole', nome: 'Gigante delle nuvole', taglia: 'grande',
+    id: 'gigante-delle-nuvole', nome: 'Gigante delle nuvole',
     caratteristiche: { FOR: 10, DES: 6, COS: 9, INT: 7, SAG: 8, CAR: 8 },
     pv: 88, pm: 24, ar: { totale: 3, magica: 0 }, difese: 13, iniziativa: 1,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '3 × 3 Q',
@@ -114,7 +114,7 @@ const CREATURE = [
     note: 'AR 3 biologica, nessuna armatura. Percezione 14; olfatto 16. Maglio = Martello a due mani (+3 ordinario, +4 innato, portata 2 Q). I 24 PM sono una sola riserva. Comportamento: usa l’altezza; sotto 22 PV, a Ferita Seria o con meno di 4 PM si ritira.',
   },
   {
-    id: 'gigante-delle-tempeste', nome: 'Gigante delle tempeste', taglia: 'grande',
+    id: 'gigante-delle-tempeste', nome: 'Gigante delle tempeste',
     caratteristiche: { FOR: 10, DES: 8, COS: 10, INT: 8, SAG: 9, CAR: 9 },
     pv: 100, pm: 30, ar: { totale: 5, magica: 0 }, difese: 15, iniziativa: 3,
     movimento: { passo: 9, corsa: 19, scatto: 29 }, spazio: '3 × 3 Q',
@@ -130,7 +130,7 @@ const CREATURE = [
     note: 'AR 5 (2 biologica + 3 armatura Media su misura). Difese = Parata 15; Schivata 14. Spadone a due mani (+3 ordinario, +5 innato, portata 2 Q). Tolta la corazza: AR 2, Armi da guerra 17, Armi da lancio 16, Schivata 15, Atletica 17, terra/nuoto 10/20/30. Comportamento: sotto 25 PV, a Ferita Seria o con meno di 7 PM cerca l’acqua o una tregua.',
   },
   {
-    id: 'fomorian', nome: 'Fomorian', taglia: 'grande',
+    id: 'fomorian', nome: 'Fomorian',
     caratteristiche: { FOR: 10, DES: 4, COS: 9, INT: 5, SAG: 7, CAR: 3 },
     pv: 70, pm: 20, ar: { totale: 2, magica: 0 }, difese: 10, iniziativa: 0,
     movimento: { passo: 6, corsa: 12, scatto: 18 }, spazio: '3 × 3 Q',
@@ -146,7 +146,7 @@ const CREATURE = [
     note: 'AR 2 biologica, nessuna armatura; non lancia massi. Maglio = Martello a due mani (+3 ordinario, +2 innato, portata 3 Q). Comportamento: difende una caverna, cerca gli isolati; può essere interlocutore; sotto 18 PV o con meno di 4 PM cerca riparo o una via negoziata.',
   },
   {
-    id: 'yeti', nome: 'Yeti', taglia: 'grande',
+    id: 'yeti', nome: 'Yeti',
     caratteristiche: { FOR: 8, DES: 6, COS: 7, INT: 4, SAG: 6, CAR: 3 },
     pv: 35, pm: 8, ar: { totale: 2, magica: 0 }, difese: 11, iniziativa: 1,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '2 × 2 Q',
@@ -162,7 +162,7 @@ const CREATURE = [
     note: 'AR 2 biologica. Terra e arrampicata 8/16/24 Q (su appigli adeguati). Può Schivare, non parare con gli artigli. Comportamento: prede isolate; sotto 9 PV o a Ferita Profonda si ritira. Non ha Soffio gelido.',
   },
   {
-    id: 'yeti-abominevole', nome: 'Yeti abominevole', taglia: 'grande',
+    id: 'yeti-abominevole', nome: 'Yeti abominevole',
     caratteristiche: { FOR: 10, DES: 5, COS: 10, INT: 5, SAG: 6, CAR: 4 },
     pv: 85, pm: 14, ar: { totale: 4, magica: 0 }, difese: 12, iniziativa: 1,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '3 × 3 Q',

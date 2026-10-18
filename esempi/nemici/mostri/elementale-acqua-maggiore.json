@@ -24,7 +24,6 @@
     "corsa": 8,
     "scatto": 12
   },
-  "taglia": "grande",
   "spazio": "2 × 2 Q",
   "gs_px": {
     "gs": "Eroe",
@@ -101,5 +100,5 @@
     "sanguinamento",
     "stordito"
   ],
-  "note": "PM —: nessuna riserva. Attacco a distanza 14 (nome del manuale non presente nel catalogo delle Abilità: vedi A.169; il VA del Dardo d’acqua è già in tabella). Profilo evocato (Magia §14.1): «INI dopo l’evocatore» (qui 0; sulla plancia agisce dopo chi lo evoca). Scompare a 0 PV, a fine durata, al congedo o alla perdita di coscienza dell’evocatore. Spazio 2 × 2 Q, taglia Grande (Sbalzante non lo sposta)."
+  "note": "PM —: nessuna riserva. Il VA 14 è quello del Dardo d’acqua, già in tabella: «Attacco a distanza» non è un’Abilità (A.169, 18/10), non dà Armi da lancio né altre competenze. Profilo evocato (Magia §14.1): «INI dopo l’evocatore» (qui 0; sulla plancia agisce dopo chi lo evoca). Scompare a 0 PV, a fine durata, al congedo o alla perdita di coscienza dell’evocatore. Spazio 2 × 2 Q (Sbalzante non lo sposta)."
 }

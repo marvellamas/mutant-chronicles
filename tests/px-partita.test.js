@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';
 import {
   titoloPerLivello, livelloDaPx, limiteAtto, livelloPg, correttivoPg, pxIncontro,
-  componentiGiocatore, calcolaPartita, deltaAssegnazione, partitaAssegnata, riepilogo, csvRiepilogo, importaArchivio,
+  componentiGiocatore, calcolaPartita, deltaAssegnazione, partitaAssegnata, riepilogo, csvRiepilogo, importaArchivio, premioGiaDato,
 } from '../src/px-partita.js';
 
 const { dati } = await datiReali();
@@ -265,4 +265,34 @@ test('Titolo nella riassegnazione (A.168, 18/10): resta quello dei PX di prima d
   assert.deepEqual([componentiGiocatore(manuale, 'a', dopo, p).titolo, componentiGiocatore(manuale, 'a', dopo, p).totaleSuggerito], ['Esperto', 39]);
   // senza pxPrima (bozza o partite vecchie) si usano i PX attuali, come prima
   assert.equal(componentiGiocatore(partita, 'a', dopo, p).titolo, 'Esperto');
+});
+
+test('A.170 (18/10): i fattori confermati da Davide sono quelli dei dati e del calcolo', () => {
+  assert.deepEqual(p.soglie_px, [0, 50, 110, 180, 340, 520, 720, 1050, 1410, 1800, 2220, 2820, 3460, 4140, 4860, 5810, 6810, 7860, 8960, 10340]);
+  assert.deepEqual(p.atti.map((a) => [a.nome, a.limite_livello, a.premio]), [['I', 8, 150], ['II', 12, 200], ['III', 15, 250], ['IV', 17, 250], ['V', 19, 300], ['VI', 20, 300]]);
+  // correttivo max(0,5; 1 + 0,1 × (4 − n))
+  const esatti = { 3: 1.1, 4: 1, 5: 0.9, 6: 0.8, 7: 0.7, 8: 0.6, 9: 0.5, 12: 0.5 };
+  for (const [n, f] of Object.entries(esatti)) assert.ok(Math.abs(correttivoPg(Number(n), p) - f) < 1e-9, `${n} PG`);
+  // voti × Titolo con raddoppio solo dei voti; bonus × Titolo senza raddoppio; incontri e premio senza Titolo né raddoppio
+  const partita = {
+    durata: 2, atto: 'IV', premioAtto: true,
+    partecipanti: { a: { presente: true, partecipazione: 3, interpretazione: 3, contributo: 3, eccezionale: 2 }, b: { presente: true }, c: { presente: true }, d: { presente: true } },
+    incontri: [{ nome: 'x', nemici: [{ nome: 'n', px: 100, qty: 1, principale: true }] }],
+  };
+  const c = componentiGiocatore(partita, 'a', p.soglie_px[9], p); // livello 10: Esperto ×3
+  assert.deepEqual([c.titolo, c.fattore], ['Esperto', 3]);
+  assert.equal(c.pxVoti, 9 * 3 * 2);
+  assert.equal(c.pxBonus, 2 * 3);
+  assert.equal(c.pxIncontri, 100);
+  assert.equal(c.premio, 250);
+  assert.equal(c.totaleSuggerito, 54 + 6 + 100 + 250);
+});
+
+test('il premio di fine Atto va dato una sola volta per personaggio: avviso sugli altri premi dello stesso Atto', () => {
+  const presenti = (...ids) => Object.fromEntries(ids.map((id) => [id, { presente: true }]));
+  const prima = { id: 'p1', atto: 'IV', premioAtto: true, partecipanti: presenti('a', 'b') };
+  const adesso = { id: 'p2', atto: 'IV', premioAtto: true, partecipanti: presenti('b', 'c') };
+  assert.deepEqual(premioGiaDato(adesso, [prima, adesso]), ['b']);
+  assert.deepEqual(premioGiaDato({ ...adesso, atto: 'V' }, [prima, adesso]), []);
+  assert.deepEqual(premioGiaDato(adesso, [{ ...prima, premioAtto: false }, adesso]), []);
 });

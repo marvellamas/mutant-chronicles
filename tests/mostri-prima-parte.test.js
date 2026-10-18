@@ -26,7 +26,7 @@ test('Spazio: quadrato nel campo; Aboleth 2×3, Basilisco 2×1, Grick 1×2 nelle
   for (const id of ['aarakocra', 'arpia', 'cockatrice', 'ettercap']) assert.equal(leggi(id).spazio, '1 Q', id);
   for (const id of ['ankheg', 'bestia-distorcente', 'bulette', 'chimera', 'grifone', 'ippogrifo', 'manticora', 'orsogufo']) {
     assert.equal(leggi(id).spazio, '2 × 2 Q', id);
-    assert.equal(leggi(id).taglia, 'grande', `${id} Grande (ingombro 2 × 2 Q)`);
+    assert.equal(leggi(id).taglia, undefined, `${id} Grande (ingombro 2 × 2 Q)`);
   }
   for (const [id, ingombro] of [['aboleth', '2 × 3 Q'], ['basilisco', '2 × 1 Q'], ['grick', '1 × 2 Q']]) {
     const n = leggi(id);

@@ -27,7 +27,7 @@ test('i dieci profili ci sono, sono validi e vengono dal cap. 8', () => {
 test('Spazio quadrato: 1 Q per tutti, tranne la Salamandra 2 × 2 Q di taglia Grande', () => {
   for (const id of ELEMENTALI.filter((x) => x !== 'salamandra')) { assert.equal(leggi(id).spazio, '1 Q', id); assert.equal(leggi(id).taglia, undefined, id); }
   assert.equal(leggi('salamandra').spazio, '2 × 2 Q');
-  assert.equal(leggi('salamandra').taglia, 'grande');
+  assert.equal(leggi('salamandra').taglia, undefined);
 });
 
 test('Mephit: Soffio come capacità con PM e cadenza R + 3, poteri innati una volta al giorno, dissoluzione unica', () => {

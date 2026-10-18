@@ -52,7 +52,7 @@ const CREATURE = [
     note: 'Stadio giovanile del Roper (nessuna trasformazione in combattimento). Furtività 14 immobile sulla roccia. Terra e aderenza 1/2/3 Q. A terra non ha un attacco offensivo efficace né Attacco di Opportunità; non ripete la caduta senza tornare in posizione. Comportamento: sotto 5 PV o a Ferita Profonda cerca una fessura. Nessun attacco in elenco: la Caduta perforante è fra le capacità, perché la sua portata è verticale (da 2 a 6 Q) e non rappresentabile come portata in Q.',
   },
   {
-    id: 'roper', nome: 'Roper', taglia: 'grande',
+    id: 'roper', nome: 'Roper',
     caratteristiche: { FOR: 9, DES: 4, COS: 8, INT: 4, SAG: 8, CAR: 3 },
     pv: 55, pm: 8, ar: { totale: 4, magica: 0 }, difese: 9, iniziativa: -1,
     movimento: { passo: 2, corsa: 4, scatto: 6 }, spazio: '2 × 2 Q',
@@ -86,7 +86,7 @@ const CREATURE = [
     note: 'Percezione 14 per l’odore del ferro. La ruggine non corrode carne, legno, pietra, altri metalli o oggetti mistici. Comportamento: preferisce le Antenne al Morso; smette di inseguire chi abbandona una fonte di ferro; sotto 6 PV o a Ferita Profonda fugge.',
   },
   {
-    id: 'umber-hulk', nome: 'Umber Hulk', taglia: 'grande',
+    id: 'umber-hulk', nome: 'Umber Hulk',
     caratteristiche: { FOR: 10, DES: 6, COS: 8, INT: 5, SAG: 5, CAR: 5 },
     pv: 58, pm: 12, ar: { totale: 4, magica: 0 }, difese: 10, iniziativa: 0,
     movimento: { passo: 6, corsa: 12, scatto: 18 }, spazio: '2 × 2 Q',
@@ -103,7 +103,7 @@ const CREATURE = [
     note: 'Furtività 9 sotto terra, 7 all’aperto. Comportamento: emerge vicino alla preda senza farsi accerchiare; parla e può trattare; sotto 15 PV o a Ferita Seria si ritira in un tunnel.',
   },
   {
-    id: 'orrore-uncinato', nome: 'Orrore uncinato', taglia: 'grande',
+    id: 'orrore-uncinato', nome: 'Orrore uncinato',
     caratteristiche: { FOR: 9, DES: 5, COS: 7, INT: 3, SAG: 6, CAR: 4 },
     pv: 38, pm: 6, ar: { totale: 3, magica: 0 }, difese: 10, iniziativa: 0,
     movimento: { passo: 6, corsa: 12, scatto: 18 }, spazio: '2 × 2 Q',

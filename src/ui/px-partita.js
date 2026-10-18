@@ -13,7 +13,7 @@ import { avviso, avvisoErrore } from './avvisi.js';
 import { chiedi } from './finestrella.js';
 import { registraDiretta } from '../correzioni-master.js';
 import {
-  calcolaPartita, deltaAssegnazione, partitaAssegnata, riepilogo, csvRiepilogo, componentiGiocatore, presentiNella,
+  calcolaPartita, deltaAssegnazione, partitaAssegnata, premioGiaDato, riepilogo, csvRiepilogo, componentiGiocatore, presentiNella,
 } from '../px-partita.js';
 
 const errore = async (r) => Object.assign(new Error((await r.json().catch(() => ({}))).errore ?? `errore ${r.status}`), { stato: r.status });
@@ -154,7 +154,11 @@ function vistaPartita(ctx, st, az, salva, partita) {
       h('select', { onchange: (e) => { partita.atto = e.target.value; salva(); } },
         ...p(st).atti.map((a) => h('option', { value: a.nome, selected: partita.atto === a.nome }, `Atto ${a.nome}`)))),
     h('label', { class: 'px-campo px-check' }, h('input', { type: 'checkbox', checked: !!partita.premioAtto, onchange: (e) => { partita.premioAtto = e.target.checked; salva(); } }),
-      h('span', {}, `Premio di fine Atto (${fmt(premioDi(st, partita.atto))})`)));
+      h('span', {}, `Premio di fine Atto (${fmt(premioDi(st, partita.atto))})`)),
+    (() => {
+      const gia = partita.premioAtto ? premioGiaDato(partita, db.partite).map((id) => db.giocatori.find((g) => g.id === id)?.pg || id) : [];
+      return gia.length ? h('p', { class: 'nota' }, `Il premio dell’Atto ${partita.atto} è già stato dato a ${gia.join(', ')} in un’altra partita: va dato una sola volta per personaggio (decide il Direttore).`) : null;
+    })());
 
   const calc = calcolaPartita(partita, st.pxGiocatori, p(st));
   const nPresenti = presentiNella(partita);

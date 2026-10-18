@@ -62,7 +62,7 @@ test('Spazio: Tigre 2 × 1 Q nelle note con A.167 (taglia normale); Pantera 1; s
   assert.equal(leggi('pantera').spazio, '1 Q');
   assert.equal(leggi('scimmione').spazio, '1 Q');
   for (const id of ['tigre-denti-a-sciabola', 'orso-polare', 'rinoceronte']) assert.equal(leggi(id).spazio, '2 × 2 Q', id);
-  for (const id of ['elefante', 'mammut', 'alce-gigante', 'scimmione-gigante']) { assert.equal(leggi(id).spazio, '3 × 3 Q', id); assert.equal(leggi(id).taglia, 'grande'); }
+  for (const id of ['elefante', 'mammut', 'alce-gigante', 'scimmione-gigante']) { assert.equal(leggi(id).spazio, '3 × 3 Q', id); assert.equal(leggi(id).taglia, undefined); }
 });
 
 test('Orso polare: Nuoto nelle capacità; GS/PX informativo', () => {

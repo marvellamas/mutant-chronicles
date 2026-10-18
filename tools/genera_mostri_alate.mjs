@@ -24,7 +24,7 @@ const corpoStrisc = (testa) => `Testa = ${testa}; Torace = corpo; Braccia e Gamb
 
 const CREATURE = [
   {
-    id: 'aquila-gigante', nome: 'Aquila gigante', taglia: 'grande',
+    id: 'aquila-gigante', nome: 'Aquila gigante',
     caratteristiche: { FOR: 8, DES: 7, COS: 6, INT: 4, SAG: 7, CAR: 5 },
     pv: 28, pm: 8, ar: { totale: 1, magica: 0 }, difese: 11, iniziativa: 1,
     movimento: { passo: 2, corsa: 4, scatto: 6, volo: 16 }, spazio: '2 × 2 Q',
@@ -41,7 +41,7 @@ const CREATURE = [
     note: 'Difende piccoli e posatoi, può indicare una direzione o chiedere agli intrusi di allontanarsi. Condotta: sotto 7 PV o a Ferita Profonda tende a cercare quota e un riparo; un accesso troppo stretto può impedirle di raggiungere la preda. Fonte: Giant Eagle, p. 324.',
   },
   {
-    id: 'gufo-gigante', nome: 'Gufo gigante', taglia: 'grande',
+    id: 'gufo-gigante', nome: 'Gufo gigante',
     caratteristiche: { FOR: 6, DES: 7, COS: 6, INT: 4, SAG: 7, CAR: 5 },
     pv: 22, pm: 8, ar: { totale: 1, magica: 0 }, difese: 11, iniziativa: 1,
     movimento: { passo: 1, corsa: 2, scatto: 3, volo: 12 }, spazio: '2 × 2 Q',
@@ -57,7 +57,7 @@ const CREATURE = [
     note: 'Un solo attacco di Artigli per Round, Opportunità compresa; non afferra automaticamente la preda. Condotta: sotto 5 PV o a Ferita Profonda tende a raggiungere un posatoio protetto. Fonte: Giant Owl, p. 327.',
   },
   {
-    id: 'avvoltoio-gigante', nome: 'Avvoltoio gigante', taglia: 'grande',
+    id: 'avvoltoio-gigante', nome: 'Avvoltoio gigante',
     caratteristiche: { FOR: 7, DES: 5, COS: 6, INT: 3, SAG: 6, CAR: 4 },
     pv: 28, pm: 6, ar: { totale: 1, magica: 0 }, difese: 9, iniziativa: -1,
     movimento: { passo: 2, corsa: 4, scatto: 6, volo: 12 }, spazio: '2 × 2 Q',
@@ -74,7 +74,7 @@ const CREATURE = [
     note: 'Può seguire un gruppo e aspettare un’occasione, o abbandonarlo per una carcassa più accessibile. Condotta: sotto 7 PV o a Ferita Profonda tende a riprendere quota. Fonte: Giant Vulture, p. 329.',
   },
   {
-    id: 'pipistrello-gigante', nome: 'Pipistrello gigante', taglia: 'grande',
+    id: 'pipistrello-gigante', nome: 'Pipistrello gigante',
     caratteristiche: { FOR: 7, DES: 7, COS: 5, INT: 1, SAG: 6, CAR: 3 },
     pv: 18, pm: 5, ar: { totale: 0, magica: 0 }, difese: 11, iniziativa: 1,
     movimento: { passo: 2, corsa: 4, scatto: 6, volo: 12 }, spazio: '2 × 2 Q',

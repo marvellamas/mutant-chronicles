@@ -23,7 +23,7 @@ const VOLO = 'Ali reali: servono spazio e non resta sospeso come una creatura fl
 
 const CREATURE = [
   {
-    id: 'allosauro', nome: 'Allosauro', taglia: 'grande',
+    id: 'allosauro', nome: 'Allosauro',
     caratteristiche: { FOR: 9, DES: 6, COS: 7, INT: 1, SAG: 6, CAR: 3 },
     pv: 36, pm: 5, ar: { totale: 2, magica: 0 }, difese: 9, iniziativa: 0,
     movimento: { passo: 12, corsa: 24, scatto: 36 }, spazio: '2 × 2 Q',
@@ -39,7 +39,7 @@ const CREATURE = [
     note: 'Vista e udito ordinari, senza scurovisione. Non comprende linguaggi. Condotta: preda isolata e spazio per lo slancio; sotto 9 PV o a Ferita Profonda abbandona una caccia rischiosa. Fonte: Allosaurus, p. 79.',
   },
   {
-    id: 'anchilosauro', nome: 'Anchilosauro', taglia: 'grande',
+    id: 'anchilosauro', nome: 'Anchilosauro',
     caratteristiche: { FOR: 9, DES: 5, COS: 7, INT: 1, SAG: 6, CAR: 3 },
     pv: 46, pm: 5, ar: { totale: 4, magica: 0 }, difese: 8, iniziativa: -1,
     movimento: { passo: 6, corsa: 12, scatto: 18 }, spazio: '3 × 3 Q',
@@ -55,7 +55,7 @@ const CREATURE = [
     note: 'Vista e udito ordinari. Una coda non utilizzabile impedisce l’attacco. Non comprende linguaggi. Condotta: difende il proprio spazio e i piccoli; non è un predatore e può smettere quando gli aggressori si allontanano; sotto 11 PV o a Ferita Seria raggiunge il gruppo o una zona protetta. Fonte: Ankylosaurus, p. 79.',
   },
   {
-    id: 'plesiosauro', nome: 'Plesiosauro', taglia: 'grande',
+    id: 'plesiosauro', nome: 'Plesiosauro',
     caratteristiche: { FOR: 9, DES: 7, COS: 7, INT: 1, SAG: 6, CAR: 3 },
     pv: 40, pm: 5, ar: { totale: 2, magica: 0 }, difese: 10, iniziativa: 1,
     movimento: { passo: 4, corsa: 8, scatto: 12 }, spazio: '2 × 2 Q',
@@ -87,7 +87,7 @@ const CREATURE = [
     note: 'Vista e udito ordinari. Braccia = ali; Gambe = arti posteriori; un’ala menomata può impedire il volo. Non ha una presa per sollevare una creatura colpita. Non comprende linguaggi. Condotta: piccoli animali e cibo esposto; evita un gruppo che reagisce; sotto 4 PV o a Ferita Profonda prende distanza. Fonte: Pteranodon, p. 80.',
   },
   {
-    id: 'triceratopo', nome: 'Triceratopo', taglia: 'grande',
+    id: 'triceratopo', nome: 'Triceratopo',
     caratteristiche: { FOR: 10, DES: 4, COS: 8, INT: 1, SAG: 5, CAR: 3 },
     pv: 58, pm: 6, ar: { totale: 3, magica: 0 }, difese: 8, iniziativa: -1,
     movimento: { passo: 10, corsa: 20, scatto: 30 }, spazio: '3 × 3 Q',
@@ -106,7 +106,7 @@ const CREATURE = [
     note: 'Vista e udito ordinari. Corna e collare sono parti della Testa, senza Parata naturale né PI separati. Non comprende linguaggi. Un branco richiede esemplari distinti. Condotta: protegge il branco o reagisce a una minaccia vicina; sotto 14 PV o a Ferita Seria cerca protezione. Fonte: Triceratops, p. 80.',
   },
   {
-    id: 'tirannosauro', nome: 'Tirannosauro', taglia: 'grande',
+    id: 'tirannosauro', nome: 'Tirannosauro',
     caratteristiche: { FOR: 10, DES: 5, COS: 9, INT: 1, SAG: 6, CAR: 4 },
     pv: 80, pm: 7, ar: { totale: 3, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 10, corsa: 20, scatto: 30 }, spazio: '3 × 3 Q',
@@ -127,7 +127,7 @@ const CREATURE = [
     note: 'Vista e udito ordinari. Braccia = piccoli arti anteriori, Gambe = posteriori e coda, Testa = fauci. Non inghiotte e non trasferisce sulla vittima gli attacchi diretti contro di lui. Non comprende linguaggi. Condotta: nutrimento; può abbandonare avversari difficili; sotto 20 PV o a Ferita Seria si ritira. Fonte: Tyrannosaurus Rex, p. 80.',
   },
   {
-    id: 'viverna', nome: 'Viverna', taglia: 'grande',
+    id: 'viverna', nome: 'Viverna',
     caratteristiche: { FOR: 9, DES: 5, COS: 7, INT: 3, SAG: 6, CAR: 3 },
     pv: 56, pm: 8, ar: { totale: 3, magica: 0 }, difese: 9, iniziativa: 0,
     movimento: { passo: 4, corsa: 8, scatto: 12, volo: 16 }, spazio: '2 × 2 Q',
@@ -147,7 +147,7 @@ const CREATURE = [
     note: 'Non comprende linguaggi nel profilo base e non ha un soffio. Condotta: insegue una preda accessibile cercando spazio per la coda; sotto 14 PV o a Ferita Profonda si allontana in volo. Fonte: Wyvern, p. 303.',
   },
   {
-    id: 'idra', nome: 'Idra', taglia: 'grande',
+    id: 'idra', nome: 'Idra',
     caratteristiche: { FOR: 10, DES: 6, COS: 10, INT: 1, SAG: 5, CAR: 4 },
     pv: 76, pm: 9, ar: { totale: 3, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 6, corsa: 12, scatto: 18 }, spazio: '3 × 3 Q',
@@ -168,7 +168,7 @@ const CREATURE = [
     note: 'Un grande rettile acquatico a cinque teste iniziali. Condotta: nutrimento presso rive e paludi; sotto 19 PV o a Ferita Seria tenta di ritirarsi. Verifica al tavolo: registrare teste attive, colli cauterizzati, PV recuperati e Opportunità effettive. Fonte: Hydra, p. 190.',
   },
   {
-    id: 'behir', nome: 'Behir', taglia: 'grande',
+    id: 'behir', nome: 'Behir',
     caratteristiche: { FOR: 10, DES: 8, COS: 9, INT: 4, SAG: 7, CAR: 6 },
     pv: 88, pm: 12, ar: { totale: 4, magica: 0 }, difese: 11, iniziativa: 2,
     movimento: { passo: 10, corsa: 20, scatto: 30 }, spazio: '3 × 3 Q',

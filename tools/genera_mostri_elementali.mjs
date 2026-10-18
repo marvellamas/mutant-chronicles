@@ -159,7 +159,7 @@ const CREATURE = [
     note: 'Forma giovane da cui può maturare una Salamandra, ma non si trasforma durante lo scontro e non ha dissoluzione esplosiva. Comprende Ignan senza parlarlo. Testa = fauci, Torace = tronco, Braccia e Gambe = porzioni anteriori e posteriori locomotorie (Coda = funzione posteriore). Condotta: sotto 6 PV o a Ferita Profonda cerca una via calda di fuga. Fonte: Fire Snake, p. 265.',
   },
   {
-    id: 'salamandra', nome: 'Salamandra', taglia: 'grande',
+    id: 'salamandra', nome: 'Salamandra',
     caratteristiche: { FOR: 8, DES: 7, COS: 7, INT: 6, SAG: 5, CAR: 6 },
     pv: 52, pm: 10, ar: { totale: 3, magica: 0 }, difese: 11, iniziativa: 1,
     movimento: { passo: 6, corsa: 12, scatto: 18 }, spazio: '2 × 2 Q',

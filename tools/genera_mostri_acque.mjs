@@ -42,7 +42,7 @@ const CREATURE = [
     note: 'Testa = occhi e apparato boccale, Torace = carapace, Braccia = chele, Gambe = zampe. Non comprende linguaggi. Condotta: cibo o difesa di un rifugio; sotto 4 PV o a Ferita Profonda si ritira. Fonte: Giant Crab, p. 324.',
   },
   {
-    id: 'polpo-gigante', nome: 'Polpo gigante', taglia: 'grande',
+    id: 'polpo-gigante', nome: 'Polpo gigante',
     caratteristiche: { FOR: 8, DES: 6, COS: 6, INT: 2, SAG: 5, CAR: 3 },
     pv: 38, pm: 5, ar: { totale: 1, magica: 0 }, difese: 10, iniziativa: 0,
     movimento: { passo: 2, corsa: 4, scatto: 6 }, spazio: '2 × 2 Q',
@@ -75,7 +75,7 @@ const CREATURE = [
     note: 'Un Sahuagin non è automaticamente suo alleato senza un rapporto o un comando stabiliti nella scena. Condotta: un branco cerca le prede più accessibili; sotto 6 PV o a Ferita Profonda si stacca. Non comprende linguaggi. Fonte: Reef Shark, p. 336.',
   },
   {
-    id: 'squalo-cacciatore', nome: 'Squalo cacciatore', taglia: 'grande',
+    id: 'squalo-cacciatore', nome: 'Squalo cacciatore',
     caratteristiche: { FOR: 8, DES: 6, COS: 7, INT: 1, SAG: 5, CAR: 3 },
     pv: 40, pm: 5, ar: { totale: 2, magica: 0 }, difese: 9, iniziativa: 0,
     movimento: { passo: 0, corsa: 'non_consentito', scatto: 'non_consentito' }, spazio: '2 × 2 Q',
@@ -91,7 +91,7 @@ const CREATURE = [
     note: 'Di norma caccia da solo. Non comprende linguaggi. Condotta: può interrompere la caccia per una preda più semplice, una barriera o un avversario troppo rischioso; sotto 10 PV o a Ferita Profonda si ritira verso acqua libera. La distanza in pianta non consente di attraversare una rete o uno scafo. Fonte: Hunter Shark, p. 330.',
   },
   {
-    id: 'squalo-gigante', nome: 'Squalo gigante', taglia: 'grande',
+    id: 'squalo-gigante', nome: 'Squalo gigante',
     caratteristiche: { FOR: 10, DES: 5, COS: 9, INT: 1, SAG: 5, CAR: 4 },
     pv: 64, pm: 6, ar: { totale: 3, magica: 0 }, difese: 8, iniziativa: -1,
     movimento: { passo: 0, corsa: 'non_consentito', scatto: 'non_consentito' }, spazio: '3 × 3 Q',
@@ -126,7 +126,7 @@ const CREATURE = [
     note: 'Dotazione: una Lancia Comune, FOR 5, PI 6, PS Integrità 10 (compresa nei 11 PX); nessuna armatura o scudo. Danni con bonus personale 0; una o due mani secondo Versatile. Vista e udito ordinari. Comprende e parla due lingue della comunità. Oratoria 10 (nel manuale «Diplomazia 10»). Testa, Torace e Braccia umanoidi; Gambe = coda. Condotta: difensore ordinario, non rende ostile un popolo; sotto 4 PV o a Ferita Profonda cerca riparo o soccorso. Fonte: Merfolk, p. 218.',
   },
   {
-    id: 'merrow', nome: 'Merrow', taglia: 'grande',
+    id: 'merrow', nome: 'Merrow',
     caratteristiche: { FOR: 9, DES: 5, COS: 7, INT: 4, SAG: 5, CAR: 4 },
     pv: 40, pm: 6, ar: { totale: 2, magica: 0 }, difese: 8, iniziativa: -1,
     movimento: { passo: 2, corsa: 4, scatto: 6 }, spazio: '2 × 2 Q',
@@ -196,7 +196,7 @@ const CREATURE = [
     note: 'AR 3 = 1 biologica + 2 dello Scudo Medio (senza Scudo 1). Dotazione Comune: Lancia e Scudo Medio (FOR 5, PI 6, PS Integrità 10 ciascuno) più una Rete (FOR 3, due mani, PI 2); le formule comprendono bonus personale 0; i 22 PX comprendono la dotazione. Parla una lingua della sua comunità. Condotta: sotto 5 PV o a Ferita Profonda può fuggire, cedere o cercare aiuto. Fonte: Kuo-toa, p. 199.',
   },
   {
-    id: 'chuul', nome: 'Chuul', taglia: 'grande',
+    id: 'chuul', nome: 'Chuul',
     caratteristiche: { FOR: 9, DES: 5, COS: 8, INT: 3, SAG: 6, CAR: 3 },
     pv: 56, pm: 8, ar: { totale: 4, magica: 0 }, difese: 8, iniziativa: -1,
     movimento: { passo: 6, corsa: 12, scatto: 18 }, spazio: '2 × 2 Q',

@@ -28,7 +28,7 @@ test('Spazio quadrato dai dati; i grandi sono 2 × 2 Q', () => {
   }
   for (const id of ['ogre', 'ettin', 'minotauro', 'troll']) {
     assert.equal(leggi(id).spazio, '2 × 2 Q', `${id} 2×2`);
-    assert.equal(leggi(id).taglia, 'grande', `${id} Grande`);
+    assert.equal(leggi(id).taglia, undefined, `${id} Grande`);
   }
 });
 

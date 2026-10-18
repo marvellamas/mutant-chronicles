@@ -24,7 +24,7 @@ test('i dieci profili ci sono, sono validi e vengono dal cap. 8', () => {
 
 test('Spazio quadrato dai dati: 2 × 2 Q (Grande) per cammello, cavalli, capra gigante e alce; 1 Q per gli altri', () => {
   for (const id of ['cammello', 'cavallo-da-tiro', 'cavallo-da-sella', 'cavallo-da-guerra', 'capra-gigante', 'alce']) {
-    assert.equal(leggi(id).spazio, '2 × 2 Q', id); assert.equal(leggi(id).taglia, 'grande', id);
+    assert.equal(leggi(id).spazio, '2 × 2 Q', id); assert.equal(leggi(id).taglia, undefined, id);
   }
   for (const id of ['mulo', 'pony', 'mastino', 'capra']) { assert.equal(leggi(id).spazio, '1 Q', id); assert.equal(leggi(id).taglia, undefined, id); }
 });

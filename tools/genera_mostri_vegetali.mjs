@@ -45,7 +45,7 @@ const CREATURE = [
     note: 'Furtività 14 immobile fra vegetazione compatibile. Vista e udito ordinari, senza scurovisione. Condotta: nascondigli, richiami o trattative; sotto 3 PV o a Ferita Profonda cerca riparo. Fonte: Awakened Shrub, p. 317.',
   },
   {
-    id: 'albero-risvegliato', nome: 'Albero risvegliato', taglia: 'grande',
+    id: 'albero-risvegliato', nome: 'Albero risvegliato',
     caratteristiche: { FOR: 9, DES: 3, COS: 7, INT: 5, SAG: 5, CAR: 3 },
     pv: 40, pm: 8, ar: { totale: 3, magica: 0 }, difese: 6, iniziativa: -2,
     movimento: { passo: 4, corsa: 8, scatto: 12 }, spazio: '3 × 3 Q',
@@ -91,7 +91,7 @@ const CREATURE = [
       { nome: 'Lancio degli aghi', effetto: 'Un singolo tiro, AC 1, senza raffiche, fino a 12 Q con fasce di distanza, coperture, ingaggio e Difese del Giocatore. Sei scariche per incontro, consumate anche da un tiro fallito; servono almeno 24 ore di crescita per ripristinarle (nessuna Azione di ricarica). Gli Artigli restano disponibili.' },
       { nome: 'Polline di allarme', effetto: '1 AzP: segnale che raggiunge altri Avvizziti spinosi entro 24 Q attraverso aria comunicante (pareti sigillate lo bloccano; vento e ostacoli possono limitarlo). Comunica pericolo e direzione approssimativa, non identità o mappe. Non danneggia, non infetta, non dà Azioni ai destinatari.', azioni: { principali: 1 } },
     ],
-    note: 'Tiro naturale 10 (nome del manuale non presente nel catalogo delle Abilità: vedi A.169; il VA degli Aghi è già in tabella). Le spine sono parti del corpo, non proiettili recuperabili. Non ha la vulnerabilità al Fuoco del ramoso né le resistenze fisiche degli alberi. Capisce istruzioni semplici ma non parla. Condotta: cerca coperture e un tiro libero; sotto 4 PV o a Ferita Profonda arretra nella vegetazione fitta. Fonte: Needle Blight, pp. 31–32.',
+    note: 'Il VA 10 è quello degli Aghi, già in tabella: «Tiro naturale» non è un’Abilità (A.169, 18/10), non dà Armi da lancio né altre competenze. Le spine sono parti del corpo, non proiettili recuperabili. Non ha la vulnerabilità al Fuoco del ramoso né le resistenze fisiche degli alberi. Capisce istruzioni semplici ma non parla. Condotta: cerca coperture e un tiro libero; sotto 4 PV o a Ferita Profonda arretra nella vegetazione fitta. Fonte: Needle Blight, pp. 31–32.',
   },
   {
     id: 'avvizzito-rampicante', nome: 'Avvizzito rampicante',
@@ -138,7 +138,7 @@ const CREATURE = [
     note: 'AR 0; con Corteccia 3 Naturale e movimento 5/10/15 Q. Randello di legno Comune, una mano, FOR 3, PS Integrità 10, PI 5, già pronto (1d6 base +1 da DES già compreso); nessuna armatura o scudo. Oratoria 13 (nel manuale «Diplomazia 13»: l’Oratoria è la Abilità «per diplomazia e seduzione» del Giocatore). L’albero legato va definito nella scena: danni a quell’albero sono un motivo narrativo, non trasferiscono danni o Ferite alla Driade. Condotta: allontana chi danneggia il bosco, negozia o usa i passaggi arborei; sotto 6 PV o a Ferita Profonda cerca riparo. Fonte: Dryad, p. 121.',
   },
   {
-    id: 'cumulo-strisciante', nome: 'Cumulo strisciante', taglia: 'grande',
+    id: 'cumulo-strisciante', nome: 'Cumulo strisciante',
     caratteristiche: { FOR: 9, DES: 4, COS: 8, INT: 3, SAG: 5, CAR: 3 },
     pv: 60, pm: 8, ar: { totale: 3, magica: 0 }, difese: 7, iniziativa: -1,
     movimento: { passo: 4, corsa: 8, scatto: 12 }, spazio: '2 × 2 Q',
@@ -158,7 +158,7 @@ const CREATURE = [
     note: 'AR 3 biologica. Furtività 14 fra detriti vegetali compatibili. Condotta: attende fra detriti, poi Schianti o la sequenza Afferrare–Inglobare; sotto 15 PV o a Ferita Seria tenta di ritirarsi. Fonte: Shambling Mound, p. 270.',
   },
   {
-    id: 'treant', nome: 'Treant', taglia: 'grande',
+    id: 'treant', nome: 'Treant',
     caratteristiche: { FOR: 10, DES: 4, COS: 10, INT: 6, SAG: 8, CAR: 6 },
     pv: 76, pm: 16, ar: { totale: 4, magica: 0 }, difese: 8, iniziativa: -1,
     movimento: { passo: 6, corsa: 12, scatto: 18 }, spazio: '3 × 3 Q',
@@ -172,10 +172,10 @@ const CREATURE = [
       { nome: 'Rocce e assedio', effetto: 'Con Schianto o Roccia, contro oggetti e strutture inerti infligge danno ×2, risolvendo PS Integrità e PI (Armamenti §7.2.1); non raddoppia contro costrutti o creature per la sola grandezza; un Magistrale con assedio dà ×3, non ×4.' },
       { nome: 'Animare alberi', effetto: 'Una volta ogni 24 ore, 1 AzP e 6 PM, senza Prova di Potere: anima uno o due alberi ordinari viventi, visibili entro 12 Q, ciascuno in grado di occupare 3 × 3 Q (non bersaglia Treant, Alberi risvegliati, oggetti morti o creature con coscienza). Profilo temporaneo: i valori dell’Albero risvegliato con INT 1, CAR 1, PM —, Volontà — e nessun linguaggio (immune a danni psichici, controllo mentale e Terrorizzato); PV 40, AR 3; solo Schianto di ramo, movimento e Difese. Non agisce nel Round dell’attivazione; poi 1 AzP e 1 AzM per Round, con lo stesso risultato di INI, dopo il Treant, che dà gratuitamente un ordine semplice alla propria Iniziativa. Dura 10 Round senza Concentrazione; torna inerte a scadenza, se il Treant perde coscienza o muore, oltre 24 Q da lui o per congedo gratuito. Negare Potere: potenza 6, un albero alla volta. I due alberi sono già compresi nei 100 PX.', risorsa: '6 PM', azioni: { principali: 1 }, usi: { quanti: 1, per: 'giorno' } },
     ],
-    note: 'Altezza circa 7 Q. Tiro naturale 13 (nome del manuale non presente nel catalogo delle Abilità: vedi A.169; il VA della Roccia è già in tabella). Furtività 14 immobile fra alberi compatibili. Parla il linguaggio del bosco e una lingua di contatto. Condotta: ferma incendi e abbattimenti, distingue gli intrusi dalle minacce reali, può avvertire o trattare prima di attaccare; sotto 19 PV o a Ferita Seria ripiega. Fonte: Treant, p. 289.',
+    note: 'Altezza circa 7 Q. Il VA 13 è quello della Roccia, già in tabella: «Tiro naturale» non è un’Abilità (A.169, 18/10), non dà Armi da lancio né altre competenze. Furtività 14 immobile fra alberi compatibili. Parla il linguaggio del bosco e una lingua di contatto. Condotta: ferma incendi e abbattimenti, distingue gli intrusi dalle minacce reali, può avvertire o trattare prima di attaccare; sotto 19 PV o a Ferita Seria ripiega. Fonte: Treant, p. 289.',
   },
   {
-    id: 'pegaso', nome: 'Pegaso', taglia: 'grande',
+    id: 'pegaso', nome: 'Pegaso',
     caratteristiche: { FOR: 9, DES: 7, COS: 7, INT: 5, SAG: 7, CAR: 6 },
     pv: 38, pm: 8, ar: { totale: 1, magica: 0 }, difese: 11, iniziativa: 1,
     movimento: { passo: 12, corsa: 24, scatto: 36, volo: 18 }, spazio: '2 × 2 Q',
@@ -191,7 +191,7 @@ const CREATURE = [
     note: 'Può diventare un alleato o un trasportatore consenziente. Condotta: cerca una via aerea libera, protegge un compagno scelto, può rifiutare un ordine suicida; sotto 9 PV o a Ferita Profonda si allontana. Fonte: Pegasus, p. 250.',
   },
   {
-    id: 'unicorno', nome: 'Unicorno', taglia: 'grande',
+    id: 'unicorno', nome: 'Unicorno',
     caratteristiche: { FOR: 9, DES: 7, COS: 7, INT: 6, SAG: 8, CAR: 8 },
     pv: 50, pm: 20, ar: { totale: 1, magica: 0 }, difese: 11, iniziativa: 1,
     movimento: { passo: 10, corsa: 20, scatto: 30 }, spazio: '2 × 2 Q',
