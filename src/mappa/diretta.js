@@ -46,9 +46,9 @@ export function statoDiretta({ scena, token = null, modo, usato = 0, disponibili
     });
   }
   return {
-    versione: 1, scena: scena.id, token: token.id, q: [...token.q], ingombro: token.ingombro, modo, usato, disponibili, area,
+    versione: 1, scena: scena.id, token: token.id, q: [...token.q], ingombro: token.ingombro, ...(token.base ? { angolo: token.angolo, base: token.base } : {}), modo, usato, disponibili, area,
     percorso: percorso?.punti?.length ? { punti: percorso.punti.map((p) => [p[0], p[1]]), costo: percorso.costo, fascia: percorso.fascia ?? null } : null,
-    zoc: zoc ? zoc.map((a) => ({ token: a.token.id, q: [...a.token.q], ingombro: a.token.ingombro, portata: a.portata })) : null,
+    zoc: zoc ? zoc.map((a) => ({ token: a.token.id, q: [...a.token.q], ingombro: a.token.ingombro, ...(a.token.base ? { angolo: a.token.angolo, base: a.token.base } : {}), portata: a.portata })) : null,
     template, quando,
   };
 }
@@ -154,7 +154,7 @@ export function celleDellaDiretta(d, scena) {
 }
 
 /** Avversari della diretta nella forma di src/mappa/zoc.js ({ token: { q, ingombro }, portata }). */
-export const avversariDellaDiretta = (d) => (d?.zoc ?? []).map((a) => ({ token: { q: a.q, ingombro: a.ingombro }, portata: a.portata }));
+export const avversariDellaDiretta = (d) => (d?.zoc ?? []).map((a) => ({ token: { q: a.q, ingombro: a.ingombro, ...(a.base ? { angolo: a.angolo, base: a.base } : {}) }, portata: a.portata }));
 
 /** Q delle ZoC della diretta fuori dalla nebbia (Uint8Array per Q, 1 dentro), o null. */
 export function zocDellaDiretta(d, scena) {

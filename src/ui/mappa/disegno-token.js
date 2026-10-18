@@ -10,6 +10,7 @@ import { dimensioni, chiaveRif } from '../../mappa/token.js';
 import { direzioneDi, angoloImmagine, postiCerchietti } from '../../mappa/veicoli-mappa.js';
 import { inVolo, quotaDi } from '../../mappa/volo.js';
 import { angoloDi, formaDi, baseDaIngombro } from '../../mappa/forma.js';
+import { ruotabile } from '../../mappa/sagoma.js';
 import { scriviConBordo } from './disegno-aree.js';
 
 const SOGLIA_TESTO_PX = 16; // sotto questo lato in pixel di schermo niente testo né sigle
@@ -54,7 +55,8 @@ export function disegnaToken(c, { scena, cam, pezzi, colori, immagine, seleziona
   for (const t of ordinati) {
     const q = trascina?.id === t.id ? trascina.q : t.q;
     // 08/10: il veicolo si disegna nel suo riferimento, ruotato liscio verso il muso, con il triangolino del muso
-    if (t.rif.tipo === 'veicolo') { disegnaVeicolo(c, { t, q, g, cam, qs, pezzi, colori, immagine, scelto: t.id === selezionato, inMano: trascina?.id === t.id, bordo, alone, pv, ritrattoVerticale, zero }); continue; }
+    // A.167 (18/10): una creatura con la sagoma rettangolare si disegna come un veicolo, nel suo riferimento ruotato, senza muso
+    if (t.rif.tipo === 'veicolo' || (t.rif.tipo === 'partecipante' && ruotabile(t))) { disegnaVeicolo(c, { t, q, g, cam, qs, pezzi, colori, immagine, scelto: t.id === selezionato, inMano: trascina?.id === t.id, bordo, alone, pv, ritrattoVerticale, zero, volo }); continue; }
     const [w, h] = dimensioni(t.ingombro);
     const a = schermoDaMappa(cam, g.scosto_x + q[0] * g.q_px, g.scosto_y + q[1] * g.q_px);
     const box = { x: a.x, y: a.y, w: w * qs, h: h * qs };
@@ -95,7 +97,8 @@ export function disegnaToken(c, { scena, cam, pezzi, colori, immagine, seleziona
  * quadretti occupati seguono la regola «almeno metà». Scelto: i quadretti occupati con un contorno leggero. Il
  * triangolino sul lato anteriore, nel colore del proprietario, dice dove punta il muso. Chi è a bordo resta dritto.
  */
-function disegnaVeicolo(c, { t, q, g, cam, qs, pezzi, colori, immagine, scelto, inMano, bordo, alone, pv, ritrattoVerticale, zero }) {
+function disegnaVeicolo(c, { t, q, g, cam, qs, pezzi, colori, immagine, scelto, inMano, bordo, alone, pv, ritrattoVerticale, zero, volo = null }) {
+  const creatura = t.rif.tipo !== 'veicolo';
   const p = pezzi.get(chiaveRif(t.rif)) ?? null;
   const b = p ? bordo(p) : null;
   const f = formaDi(t);
@@ -126,7 +129,8 @@ function disegnaVeicolo(c, { t, q, g, cam, qs, pezzi, colori, immagine, scelto, 
   c.save();
   c.translate(s.x, s.y);
   c.rotate(ang);
-  disegnaUno(c, { t: { ...t, direzione: 's' }, p, box, colori, immagine, qs, scelto, inMano, b, alone, pv, ritrattoVerticale, zero });
+  disegnaUno(c, { t: { ...t, direzione: 's' }, p, box, colori, immagine, qs, scelto, inMano, b, alone, pv, ritrattoVerticale, zero, volo, rett: creatura });
+  if (creatura) { c.restore(); return; }
   // muso: triangolino sul lato anteriore, nel colore del proprietario, con il contorno per il contrasto
   const lato = Math.max(8, Math.min(box.w * 0.42, qs * 0.5));
   const y0 = box.y + box.h - Math.max(2, Math.min(6, Math.min(box.w, box.h) * 0.06)) * 0.5;
@@ -163,9 +167,11 @@ function disegnaVeicolo(c, { t, q, g, cam, qs, pezzi, colori, immagine, scelto, 
   });
 }
 
-function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alone, pv, ritrattoVerticale, zero, volo = null }) {
+function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alone, pv, ritrattoVerticale, zero, volo = null, rett = false }) {
   const colore = b?.colore ?? colori[p?.lato] ?? colori.testo;
   const veicolo = t.rif.tipo === 'veicolo';
+  // A.167: la sagoma rettangolare (veicolo o creatura) ha il contorno arrotondato invece del cerchio
+  const sag = veicolo || rett;
   const cx = box.x + box.w / 2, cy = box.y + box.h / 2;
   const r = Math.min(box.w, box.h) / 2 * 0.88;
   const bordo = Math.max(2, Math.min(6, r * 0.14));
@@ -190,20 +196,20 @@ function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alo
     c.save();
     c.strokeStyle = 'rgba(0, 0, 0, 0.55)';
     c.lineWidth = bordo * 2.8;
-    forma(c, veicolo, box, cx, cy, r + bordo * 1.5);
+    forma(c, sag, box, cx, cy, r + bordo * 1.5);
     c.stroke();
     c.shadowColor = alone;
     c.shadowBlur = Math.max(10, r * 0.8);
     c.strokeStyle = alone;
     c.lineWidth = bordo * 1.4;
-    forma(c, veicolo, box, cx, cy, r + bordo * 1.5);
+    forma(c, sag, box, cx, cy, r + bordo * 1.5);
     c.stroke();
     c.restore();
   }
   // corpo: ritratto o iniziali; a 0 PV in grigio
   if (p?.aZero) c.filter = 'grayscale(1)';
   c.save();
-  forma(c, veicolo, box, cx, cy, r);
+  forma(c, sag, box, cx, cy, r);
   // fase 2, lotto 5: l'immagine del veicolo (data/veicoli.json → profili[].mappa), ruotata con il muso del token
   const imgV = veicolo && p ? immagine(p.immagine ?? p.veicoloImmagine ?? null) : null;
   if (!imgV) { c.fillStyle = colori.fondo; c.fill(); }
@@ -218,6 +224,16 @@ function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alo
     // ruotato di 90° o 270° l'immagine (verticale) va disegnata con i lati scambiati
     const [dw, dh] = ang % 180 ? [hh, w] : [w, hh];
     c.drawImage(imgV, -dw / 2, -dh / 2, dw, dh);
+  } else if (img && rett) {
+    // A.167: il ritratto riempie la sagoma rettangolare (cover), allineato come nel cerchio
+    c.clip();
+    const w = img.naturalWidth, hh = img.naturalHeight;
+    const margine = Math.min(box.w, box.h) / 2 - r;
+    const bw = box.w - 2 * margine, bh = box.h - 2 * margine;
+    const scala = Math.max(bw / w, bh / hh);
+    const sw = bw / scala, sh = bh / scala;
+    const sx = (w - sw) / 2, sy = (hh - sh) * (hh > w ? ritrattoVerticale : 0.5);
+    c.drawImage(img, sx, sy, sw, sh, box.x + margine, box.y + margine, bw, bh);
   } else if (img) {
     // 07/10: il ritratto riempie il cerchio fino al bordo colorato, l'unica cornice; delle foto più alte che larghe si
     // tiene il quadrato verso l'alto (data/mappa.json → token.ritratto_verticale), dove sta il viso
@@ -232,7 +248,7 @@ function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alo
     c.globalAlpha /= 0.22;
     if (testo) {
       c.fillStyle = colori.testo;
-      c.font = `700 ${Math.round(Math.min(r * 0.8, (veicolo ? box.h : r * 2) * 0.42))}px system-ui, sans-serif`;
+      c.font = `700 ${Math.round(Math.min(r * 0.8, (sag ? box.h : r * 2) * 0.42))}px system-ui, sans-serif`;
       c.textAlign = 'center';
       c.textBaseline = 'middle';
       c.fillText(p?.iniziali ?? sigla(t.nome), cx, cy + 1);
@@ -247,25 +263,25 @@ function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alo
     c.strokeStyle = b.contorno;
     c.globalAlpha *= 0.85;
     c.lineWidth = w;
-    forma(c, veicolo, box, cx, cy, r + bordo / 2 + w / 2);
+    forma(c, sag, box, cx, cy, r + bordo / 2 + w / 2);
     c.stroke();
     c.globalAlpha /= 0.85;
   }
   c.lineWidth = bordo;
   if (b?.tratteggio) {
     c.strokeStyle = b.tratteggio;
-    forma(c, veicolo, box, cx, cy, r);
+    forma(c, sag, box, cx, cy, r);
     c.stroke();
     c.setLineDash([bordo * 1.8, bordo * 1.4]);
   }
   c.strokeStyle = colore;
-  forma(c, veicolo, box, cx, cy, r);
+  forma(c, sag, box, cx, cy, r);
   c.stroke();
   if (b?.doppio) {
     c.setLineDash([]);
     c.strokeStyle = b.contorno;
     c.lineWidth = Math.max(1, bordo * 0.3);
-    forma(c, veicolo, box, cx, cy, r);
+    forma(c, sag, box, cx, cy, r);
     c.stroke();
   }
   c.restore();
@@ -341,9 +357,9 @@ function disegnaUno(c, { t, p, box, colori, immagine, qs, scelto, inMano, b, alo
 }
 
 /** Cerchio per le creature, rettangolo arrotondato per i veicoli (percorso pronto per fill o stroke). */
-function forma(c, veicolo, box, cx, cy, r) {
+function forma(c, sag, box, cx, cy, r) {
   c.beginPath();
-  if (!veicolo) { c.arc(cx, cy, r, 0, Math.PI * 2); return; }
+  if (!sag) { c.arc(cx, cy, r, 0, Math.PI * 2); return; }
   // stesso margine del cerchio dentro il suo Q; r più grande (alone del turno) allarga il rettangolo di conseguenza
   const margine = Math.min(box.w, box.h) / 2 - r;
   const w = box.w - 2 * margine, hh = box.h - 2 * margine;

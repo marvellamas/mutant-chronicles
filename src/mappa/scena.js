@@ -205,11 +205,16 @@ export function validaScena(s, dati) {
       if (rifPartecipanti.has(t.rif.id)) return `${k}: il partecipante «${t.rif.id}» ha già un token`;
       rifPartecipanti.add(t.rif.id);
     }
+    // A.167 (18/10): anche le creature hanno l'ingombro della scheda, rettangolare e oltre 3 × 3 (data/mappa.json →
+    // token.creatura_ingombro_max); i veicoli restano al loro massimo; i token liberi ai lati ammessi
     const rettangolo = Array.isArray(t.ingombro);
-    if (rettangolo && (t.rif.tipo !== 'veicolo' || t.ingombro.length !== 2 || !t.ingombro.every((n) => isIntero(n) && n >= 1 && n <= D.token.veicolo_ingombro_max))) {
-      return `${k}.ingombro: [colonne, righe] solo per i veicoli, da 1 a ${D.token.veicolo_ingombro_max} Q`;
+    const massimo = t.rif.tipo === 'veicolo' ? D.token.veicolo_ingombro_max : D.token.creatura_ingombro_max;
+    if (rettangolo && (!['veicolo', 'partecipante'].includes(t.rif.tipo) || t.ingombro.length !== 2 || !t.ingombro.every((n) => isIntero(n) && n >= 1 && n <= massimo))) {
+      return `${k}.ingombro: [colonne, righe] solo per i veicoli e le creature, da 1 a ${massimo} Q`;
     }
-    if (!rettangolo && !D.token.ingombri_ammessi.includes(t.ingombro)) return `${k}.ingombro: ${D.token.ingombri_ammessi.join(', ')} Q per lato`;
+    if (!rettangolo && !D.token.ingombri_ammessi.includes(t.ingombro) && !(t.rif.tipo === 'partecipante' && isIntero(t.ingombro) && t.ingombro >= 1 && t.ingombro <= D.token.creatura_ingombro_max)) {
+      return `${k}.ingombro: ${D.token.ingombri_ammessi.join(', ')} Q per lato${t.rif.tipo === 'partecipante' ? ` (le creature fino a ${D.token.creatura_ingombro_max})` : ''}`;
+    }
     if (!isQ(t.q) || !tokenDentro(t, colonne, righe)) return `${k}.q: il token deve stare tutto dentro la griglia`;
     if (typeof t.nascosto !== 'boolean') return `${k}.nascosto: vero o falso`;
     { const e = erroreLuceToken(t.luce, dati); if (e) return `${k}.${e}`; }

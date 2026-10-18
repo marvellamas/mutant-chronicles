@@ -41,6 +41,19 @@ export function ingombroDaTaglia(scheda, dati) {
 }
 
 /**
+ * Ingombro vero del token di una creatura (A.126, A.167): quello del campo «spazio» del profilo, anche rettangolare e
+ * oltre 3 × 3 — un intero per un quadrato (lato), [colonne, righe] per un rettangolo, nell'orientamento scritto —; senza
+ * il campo, il lato della Taglia (come prima). Al massimo token.creatura_ingombro_max per lato.
+ */
+export function ingombroCreatura(scheda, dati) {
+  const dim = parseSpazio(spazioDi(scheda));
+  if (!dim) return ingombroDaTaglia(scheda, dati);
+  const max = dati?.mappa?.token?.creatura_ingombro_max ?? 12;
+  const [w, h] = dim.map((n) => Math.min(max, n));
+  return w === h ? w : [w, h];
+}
+
+/**
  * A.126, 16/10/2026: lo spazio che la pedina occupa davvero, con la provenienza — così la mini-scheda lo dice
  * sempre, anche per i profili che hanno solo la Taglia (segnalazione di Marcello: «Sgorbio delle Vasche»
  * Grande, pedina 2 × 2, mini-scheda muta).
@@ -48,10 +61,10 @@ export function ingombroDaTaglia(scheda, dati) {
  *   piccola dello spazio dichiarato
  */
 export function spazioEffettivo(scheda, dati) {
-  const lato = ingombroDaTaglia(scheda ?? null, dati);
   const dim = parseSpazio(spazioDi(scheda));
+  const lato = dim ? Math.max(...dim) : ingombroDaTaglia(scheda ?? null, dati);
   const dalProfilo = !!dim;
-  const ripiego = dalProfilo && !(dim[0] === lato && dim[1] === lato);
+  const ripiego = false; // dal 18/10 la pedina ha la sagoma dichiarata (A.167)
   return {
     lato,
     testo: dalProfilo ? spazioDi(scheda) : `${lato} × ${lato} Q`,

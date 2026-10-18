@@ -13,8 +13,8 @@ import { cella } from './celle.js';
 export function tokenNelRettangolo(scena, a, b) {
   const x0 = Math.min(a[0], b[0]), x1 = Math.max(a[0], b[0]), y0 = Math.min(a[1], b[1]), y1 = Math.max(a[1], b[1]);
   return scena.token.filter((t) => {
-    const [w, h] = dimensioni(t.ingombro);
-    return t.q[0] < x1 && t.q[0] + w > x0 && t.q[1] < y1 && t.q[1] + h > y0;
+    // A.167: i quadretti veri della sagoma, non il rettangolo che la contiene
+    return celleToken(t).some(([x, y]) => x < x1 && x + 1 > x0 && y < y1 && y + 1 > y0);
   }).map((t) => t.id);
 }
 

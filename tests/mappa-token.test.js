@@ -173,8 +173,9 @@ test('coerenza: orfani e senza token; token nuovo valido nella scena e nella vis
   assert.ok(pezziSenzaToken(conToken, pezziDellaScena({ scontro: conNuovo, viste: new Map(), veicoli: [scout] }, dati)).some((p) => p.chiave === 'partecipante:nem:predone:3'));
   // il veicolo rettangolare passa il filtro della vista giocatori (celle del rettangolo)
   assert.equal(vistaGiocatori(conToken).token.length, 4);
-  // solo i veicoli hanno un ingombro rettangolare; il 3 × 3 si può indicare a mano
-  assert.match(validaScena({ ...conToken, token: [{ ...conToken.token[0], ingombro: [2, 1] }] }, dati), /solo per i veicoli/);
+  // veicoli e creature (A.167) hanno un ingombro rettangolare; il 3 × 3 si può indicare a mano
+  assert.equal(validaScena({ ...conToken, token: [{ ...conToken.token[0], ingombro: [2, 1] }] }, dati), null);
+  assert.match(validaScena({ ...conToken, token: [{ ...conToken.token[0], ingombro: [13, 1] }] }, dati), /veicoli e le creature/);
   assert.equal(validaScena({ ...conToken, token: [{ ...conToken.token[1], ingombro: 3 }] }, dati), null);
 });
 

@@ -13,6 +13,7 @@
 // prima, con `direzione`, restano valide. Funzioni pure.
 import { dimensioni, liberoPer, tokenDentro, chiaveRif, celleToken } from './token.js';
 import { ruotaDi, erroreForma, angoloDi } from './forma.js';
+import { ruotabile } from './sagoma.js';
 
 /** Direzioni del muso in senso orario: in basso, a sinistra, in alto, a destra. */
 export const DIREZIONI = ['s', 'o', 'n', 'e'];
@@ -62,7 +63,7 @@ export function ruotaVeicolo(t, verso, { colonne, righe }) {
  */
 export function ruotaSeLibero(scena, idVeicolo, gradi, muro = () => false) {
   const t = scena.token.find((x) => x.id === idVeicolo);
-  if (!t || t.rif.tipo !== 'veicolo') return { errore: 'non è un veicolo' };
+  if (!t || !(t.rif.tipo === 'veicolo' || (t.rif.tipo === 'partecipante' && ruotabile(t)))) return { errore: 'non è un veicolo né una creatura con una sagoma rettangolare' };
   const g = scena.griglia;
   const r = ruotaDi(t, gradi, g);
   if (!tokenDentro(r, g.colonne, g.righe)) return { errore: 'girato non sta nella griglia' };
@@ -221,7 +222,7 @@ export function erroreBordo(t, D) {
   for (const [i, p] of t.passeggeri.entries()) {
     if (!p || typeof p.id !== 'string' || p.rif?.tipo !== 'partecipante' || typeof p.rif.id !== 'string') return `passeggeri[${i}]: id e partecipante`;
     if (!RUOLI.includes(p.ruolo)) return `passeggeri[${i}].ruolo: ${RUOLI.join(' o ')}`;
-    if (typeof p.nascosto !== 'boolean' || !D.token.ingombri_ammessi.includes(p.ingombro)) return `passeggeri[${i}]: ingombro e nascosto`;
+    if (typeof p.nascosto !== 'boolean' || !(D.token.ingombri_ammessi.includes(p.ingombro) || (Array.isArray(p.ingombro) && p.ingombro.length === 2 && p.ingombro.every((n) => Number.isInteger(n) && n >= 1 && n <= D.token.creatura_ingombro_max)) || (Number.isInteger(p.ingombro) && p.ingombro >= 1 && p.ingombro <= D.token.creatura_ingombro_max))) return `passeggeri[${i}]: ingombro e nascosto`;
     if (p.q !== undefined) return `passeggeri[${i}]: chi è a bordo non ha un Q`;
   }
   if (t.passeggeri.filter((p) => p.ruolo === 'conducente').length > 1) return 'passeggeri: un solo conducente';

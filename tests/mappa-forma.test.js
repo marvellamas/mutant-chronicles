@@ -138,7 +138,9 @@ test('scene di prima (direzione a 90°): stessi quadretti, validazione, e alla p
   // errori di forma
   assert.match(erroreForma({ ...girato, ingombro: [2, 2] }), /ingombro/);
   assert.match(erroreForma({ ...girato, angolo: 400 }), /angolo/);
-  assert.match(erroreForma({ ...girato, rif: { tipo: 'partecipante', id: 'x' } }), /solo per i veicoli/);
+  // A.167 (18/10): anche una creatura con la sagoma rettangolare si gira; una quadrata no
+  assert.equal(erroreForma({ ...girato, rif: { tipo: 'partecipante', id: 'x' } }), null);
+  assert.match(erroreForma({ ...girato, rif: { tipo: 'partecipante', id: 'x' }, base: [3, 3], angolo: 0, ingombro: [3, 3] }), /quadrata non si gira/);
   assert.match(validaScena({ ...s, token: [{ ...girato, angolo: 33, ingombro: [9, 9] }] }, dati), /ingombro/);
   assert.ok(inBase64);
 });

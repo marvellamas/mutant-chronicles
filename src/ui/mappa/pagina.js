@@ -34,7 +34,7 @@ import { scegliColore, chiedi, chiediTesto, informa, apri as apriFinestrella } f
 import { calibraDaQuadretto, applicaGriglia, dimensioniMappa, lineeVisibili, testoScala, spessoreGriglia, scostoNitido } from '../../mappa/griglia.js';
 import { creaTela } from './canvas.js';
 import { leggiScena, salvaScena, caricaImmagine, controllaFile, preparaRidotta } from './api.js';
-import { agganciaQ, centroToken, tokenSottoPunto, disponiInFila, sovrapposti, chiaveRif, dimensioni, celleToken as celleTokenQ } from '../../mappa/token.js';
+import { agganciaQ, centroToken, tokenSottoPunto, disponiInFila, sovrapposti, chiaveRif, dimensioni, celleToken as celleTokenQ, tokenDentro } from '../../mappa/token.js';
 import { pezziDellaScena, pezziSenzaToken, tokenOrfani, tokenPerPezzo } from '../../mappa/partecipanti.js';
 import { daBase64, inBase64, cella, conta, impostaCella } from '../../mappa/celle.js';
 import { ostacoliVista, lineaDiTiro, testoCopertura, apriNebbiaConPg } from '../../mappa/visuale.js';
@@ -71,7 +71,8 @@ import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
 import { componiMenu, unisciMenu } from '../../mappa/menu.js';
 import { diTurno, ordineIniziativa } from '../../scontro.js';
 import { statoMovimento, muoviVeicolo, cambiaConducente, scegliAndatura } from '../../veicoli-registro.js';
-import { formaRuotata, normaAngolo, baseDaIngombro, angoloDi } from '../../mappa/forma.js';
+import { formaRuotata, normaAngolo, baseDaIngombro, angoloDi, ruotaDi } from '../../mappa/forma.js';
+import { ruotabile } from '../../mappa/sagoma.js';
 import { ruotaSeLibero, sali, scendi, qPerScendere, veicoliVicini, aBordo, veicoloDi, veicoloFermo } from '../../mappa/veicoli-mappa.js';
 import { rigaMovimentoLibero, rigaOpportunita, senzaOpportunitaDelMovimento, rigaPorta, rigaTemplateTolti, rigaGruppo, registraRiga } from '../../scontro.js';
 import { tokenNelRettangolo, alternaSelezione, spostaGruppo } from '../../mappa/gruppo.js';
@@ -891,13 +892,14 @@ export function renderMappa(radice, ctx) {
       nuovoTurnoTutti: () => nuovoTurnoUi(null),
       nascondi: () => cambiaToken(scelto.id, (x) => ({ ...x, nascosto: !x.nascosto })),
       volo: comandoVolo(scelto),
-      ingombro: (n) => cambiaToken(scelto.id, (x) => ({ ...x, ingombro: n, q: agganciaQ(st.scena.griglia, centroToken(st.scena.griglia, x).x, centroToken(st.scena.griglia, x).y, n) }), { controllaSovrapposti: true }),
+      ingombro: (n) => cambiaToken(scelto.id, (x) => ({ ...senzaSagoma(x), ingombro: n, q: agganciaQ(st.scena.griglia, centroToken(st.scena.griglia, x).x, centroToken(st.scena.griglia, x).y, n) }), { controllaSovrapposti: true }),
       togli: () => togliToken(scelto.id),
       // fase 2, lotto 5: veicolo
       rigaAndature: () => (recordVeicolo(scelto) ? rigaAndature(ctx.dati, recordVeicolo(scelto).mezzo, (id) => andaturaUi(scelto, id), { classe: 'mappa-andature' }) : null),
       ruota: (verso, fine = false) => ruotaVeicoloUi(scelto.id, verso, fine),
       passiRotazione: [passoRotazione(false), passoRotazione(true)],
-      angolo: scelto?.rif?.tipo === 'veicolo' ? angoloDi(scelto) : null,
+      angolo: scelto && (scelto.rif.tipo === 'veicolo' || haSagoma(scelto)) ? angoloDi(scelto) : null,
+      base: scelto && haSagoma(scelto) ? (Array.isArray(scelto.base) ? scelto.base : baseDaIngombro(scelto.ingombro)) : null,
       aBordo: aBordo(scelto).map((x) => ({ id: x.id, nome: nomeTok(x), ruolo: x.ruolo })),
       scendi: (id) => iniziaScendi(scelto.id, id),
       lineaPasseggero: (id) => lineaPasseggero(scelto.id, id),
@@ -1341,6 +1343,7 @@ export function renderMappa(radice, ctx) {
       ['🔊 (clic: cursori Musica / Effetti e «Muto»)', 'volumi e muto generale su questo PC (ricordati); il pulsante diventa 🔇 con l’audio muto; la campanella suona a ogni nuovo Round. Strumenti → «Suoni anche nella vista giocatori» per il televisore con le casse'],
       ['Avviso «clic per attivare l’audio»', 'il browser blocca i suoni finché non tocchi la pagina: un clic qualunque li sblocca'],
       ['Clic destro → «In volo» (gruppo Movimento; anche pannello e carta)', 'icona e ombra sul token: passa sopra terreno difficile e token (senza fermarsi su un altro token), muri e porte chiuse restano; niente token in mezzo né Copertura Leggera o Media; i giocatori lo vedono anche sotto la nebbia se un PG ha una linea senza muri. «Quota…» per l’etichetta in Q. Un nemico che sa volare lo propone quando lo metti in mappa'],
+      ['Creatura rettangolare (Madre 3 × 10, Regina Comandante 2 × 3…): ← →', `la pedina ha la sagoma della scheda e si gira di ${passoRotazione(false)}° (Maiusc: ${passoRotazione(true)}°) attorno al centro, anche in diagonale; occupa solo i quadretti che la sagoma copre. Se la posizione non è valida avvisa e lascia «Procedi comunque»; anche clic destro → «Ruota» e i pulsanti ↺ ↻ del pannello. Ctrl+Z annulla (A.167)`],
       ['Veicolo da mettere o scelto: ← → (Maiusc: passo fine)', `gira il veicolo di ${passoRotazione(false)}° attorno al centro — gli otto orientamenti della A.147, anche in diagonale — e con Maiusc di ${passoRotazione(true)}°, per un orientamento libero; anche clic destro → «Ruota». Il triangolino indica il muso; girare non consuma Q. Ctrl+Z annulla`],
       ['Veicolo scelto: riga «Andatura» del pannello (o clic destro → «Movimento»)', 'Fermo, Controllata, Veloce, Massima con i Q del Round; l’area si aggiorna subito. Nello scontro una fascia per Round (Veicoli §2.1): il resto resta scelto per i Round dopo. Con l’andatura Fermo il veicolo non si muove e un avviso lo dice, con le andature come pulsanti'],
       ['Veicolo: muoverlo', 'trascinalo o clic sul quadretto di arrivo, come un token; una volta per Round'],
@@ -1476,6 +1479,12 @@ export function renderMappa(radice, ctx) {
       const ingombro = formaRuotata(base, angolo).ingombro;
       const { direzione: _d, ...tok } = tokenPerPezzo({ ...pz, ingombro }, agganciaQ(st.scena.griglia, m.x, m.y, ingombro));
       t = { ...tok, angolo, base };
+    } else if (haSagoma({ rif: { tipo: pz.tipo }, ingombro: pz.ingombro }) && st.angPiazza !== null && st.angPiazza !== undefined && normaAngolo(st.angPiazza) !== angoloDi({ ingombro: pz.ingombro })) {
+      // A.167: una creatura rettangolare entra con l'orientamento scelto con ← → (di norma quello scritto nella scheda)
+      const base = baseDaIngombro(pz.ingombro);
+      const angolo = normaAngolo(st.angPiazza);
+      const ingombro = formaRuotata(base, angolo).ingombro;
+      t = { ...tokenPerPezzo({ ...pz, ingombro }, agganciaQ(st.scena.griglia, m.x, m.y, ingombro)), angolo, base };
     } else t = tokenPerPezzo(pz, agganciaQ(st.scena.griglia, m.x, m.y, pz.ingombro));
     st.angPiazza = null;
     st.scena = cambiaTokenAnnullabile(st.scena, null, t, ctx.dati);
@@ -1512,6 +1521,10 @@ export function renderMappa(radice, ctx) {
    * anche in diagonale; con Maiusc il passo fine, per l'orientamento libero scelto dal master.
    * Dati: data/mappa.json → token.rotazione_veicoli.
    */
+  /** A.167: una creatura con la sagoma rettangolare (non quadrata) si gira come un veicolo. */
+  const haSagoma = (t) => t?.rif?.tipo === 'partecipante' && ruotabile(t);
+  /** Il token senza la sagoma ruotata (angolo, base, perno): torna un rettangolo allineato. */
+  const senzaSagoma = (x) => { const { angolo: _a, base: _b, perno: _p, ...resto } = x; return resto; };
   const passoRotazione = (fine) => ctx.dati.mappa.token.rotazione_veicoli[fine ? 'passo_fine_gradi' : 'passo_gradi'];
   /**
    * Gira il veicolo attorno al suo centro (Ctrl+Z annulla) di un passo (verso +1 orario, −1 antiorario); non su muri o
@@ -1521,10 +1534,24 @@ export function renderMappa(radice, ctx) {
     const prima = st.scena.token.find((t) => t.id === id);
     if (!prima) return;
     // A.147: l'ingombro si controlla nell'orientamento effettivo, anche in diagonale
-    const r = ruotaSeLibero(st.scena, id, verso * passoRotazione(fine), muroQ());
-    if (r.errore) { avvisoErrore(`${nomeTok(prima)} non si gira: ${r.errore}.`); return; }
+    const gradi = verso * passoRotazione(fine);
+    const r = ruotaSeLibero(st.scena, id, gradi, muroQ());
+    const veicolo = prima.rif.tipo === 'veicolo';
+    if (r.errore) {
+      // «avvisa, non blocca» (CLAUDE.md): il Direttore ha l'ultima parola — Procedi comunque, se la sagoma sta nella griglia
+      const forzata = ruotaDi(prima, gradi, st.scena.griglia);
+      if (!tokenDentro(forzata, st.scena.griglia.colonne, st.scena.griglia.righe)) { avvisoErrore(`${nomeTok(prima)} non si gira: ${r.errore}.`); return; }
+      avviso(`${nomeTok(prima)} non si gira liberamente: ${r.errore}.`, { tipo: 'info', chiave: 'ruota-veicolo', durata: 12000, azioni: [{ testo: 'Procedi comunque', fai: () => {
+        const ora = st.scena.token.find((x) => x.id === id);
+        if (!ora) return;
+        st.scena = cambiaTokenAnnullabile(st.scena, ora, ruotaDi(ora, gradi, st.scena.griglia), ctx.dati);
+        avvisaSovrapposti([id]);
+        dopoCambioToken();
+      } }] });
+      return;
+    }
     st.scena = cambiaTokenAnnullabile(st.scena, prima, r.token, ctx.dati);
-    avviso(`${nomeTok(prima)}: muso a ${r.token.angolo}° (0° in alto; Ctrl+Z annulla).`, { tipo: 'info', chiave: 'ruota-veicolo' });
+    avviso(`${nomeTok(prima)}: ${veicolo ? 'muso' : 'asse lungo'} a ${r.token.angolo}° (0° in alto; Ctrl+Z annulla).`, { tipo: 'info', chiave: 'ruota-veicolo' });
     dopoCambioToken();
   }
   /** 12/10: ← → girano anche un token libero selezionato (richiesta di Davide: un carro, una panca, una statua). */
@@ -1548,14 +1575,15 @@ export function renderMappa(radice, ctx) {
     if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return false;
     const verso = e.key === 'ArrowRight' ? 1 : -1;
     const daMettere = st.daPiazzare ? st.mappaPezzi.get(st.daPiazzare) : null;
-    if (daMettere?.tipo === 'veicolo') {
+    if (daMettere?.tipo === 'veicolo' || (daMettere && haSagoma({ rif: { tipo: daMettere.tipo }, ingombro: daMettere.ingombro }))) {
       e.preventDefault();
-      st.angPiazza = normaAngolo((st.angPiazza ?? 180) + verso * passoRotazione(e.shiftKey));
-      avviso(`${daMettere.nome}: muso a ${st.angPiazza}° (0° in alto); clic sulla mappa per metterlo.`, { tipo: 'info', chiave: 'ruota-veicolo' });
+      const prima = st.angPiazza ?? (daMettere.tipo === 'veicolo' ? 180 : angoloDi({ ingombro: daMettere.ingombro }));
+      st.angPiazza = normaAngolo(prima + verso * passoRotazione(e.shiftKey));
+      avviso(`${daMettere.nome}: ${daMettere.tipo === 'veicolo' ? 'muso' : 'asse lungo'} a ${st.angPiazza}° (0° in alto); clic sulla mappa per metterlo.`, { tipo: 'info', chiave: 'ruota-veicolo' });
       return true;
     }
     const t = st.selezionato && !st.gruppo.size && !st.trascina ? st.scena.token.find((x) => x.id === st.selezionato) : null;
-    if (t?.rif.tipo !== 'veicolo') return false;
+    if (!t || !(t.rif.tipo === 'veicolo' || haSagoma(t))) return false;
     e.preventDefault();
     ruotaVeicoloUi(t.id, verso, e.shiftKey);
     return true;
@@ -2084,7 +2112,16 @@ export function renderMappa(radice, ctx) {
   function disegnaSelezioneGruppo(c) {
     const g = st.scena.griglia;
     const col = ctx.dati.mappa.colori.selezione_gruppo;
-    const rett = (q, ingombro, tratteggio) => {
+    const rett = (q, ingombro, tratteggio, forma = null) => {
+      // A.167: una sagoma ruotata si contorna sui suoi quadretti veri
+      if (forma && Number.isInteger(forma.angolo) && Array.isArray(forma.base)) {
+        c.setLineDash(tratteggio);
+        for (const [x, y] of celleTokenQ({ q, ingombro, angolo: forma.angolo, base: forma.base })) {
+          const p0 = schermoDaMappa(st.cam, g.scosto_x + x * g.q_px, g.scosto_y + y * g.q_px);
+          c.strokeRect(p0.x + 1, p0.y + 1, g.q_px * st.cam.scala - 2, g.q_px * st.cam.scala - 2);
+        }
+        return;
+      }
       const [w, h2] = dimensioni(ingombro);
       const a = schermoDaMappa(st.cam, g.scosto_x + q[0] * g.q_px, g.scosto_y + q[1] * g.q_px);
       const b = schermoDaMappa(st.cam, g.scosto_x + (q[0] + w) * g.q_px, g.scosto_y + (q[1] + h2) * g.q_px);
@@ -2098,8 +2135,8 @@ export function renderMappa(radice, ctx) {
     const delta = t?.modo === 'token' && t.diGruppo && t.q0 ? [t.q[0] - t.q0[0], t.q[1] - t.q0[1]] : null;
     for (const tok of st.scena.token) {
       if (!st.gruppo.has(tok.id)) continue;
-      rett(tok.q, tok.ingombro, [6, 4]);
-      if (delta && (delta[0] || delta[1]) && tok.id !== t.token) { c.globalAlpha = 0.7; rett([tok.q[0] + delta[0], tok.q[1] + delta[1]], tok.ingombro, [2, 3]); c.globalAlpha = 1; }
+      rett(tok.q, tok.ingombro, [6, 4], tok);
+      if (delta && (delta[0] || delta[1]) && tok.id !== t.token) { c.globalAlpha = 0.7; rett([tok.q[0] + delta[0], tok.q[1] + delta[1]], tok.ingombro, [2, 3], tok); c.globalAlpha = 1; }
     }
     if ((t?.modo === 'selezione' || t?.modo === 'riquadro') && t.mosso) {
       const a = schermoDaMappa(st.cam, t.da.x, t.da.y), b = schermoDaMappa(st.cam, t.a.x, t.a.y);
@@ -2215,7 +2252,7 @@ export function renderMappa(radice, ctx) {
   function zocDelPercorso(per) {
     const id = st.trascina?.modo === 'token' ? st.trascina.token : st.selezionato;
     if (!st.mostraZoc || mappaSemplice(st.scena) || !id || !per?.punti?.length) return null;
-    return passiInZoc(per.punti, per.ingombro, avversariZoc(st.scena, st.pezzi, id, ctx.dati));
+    return passiInZoc(per.punti, per.ingombro, avversariZoc(st.scena, st.pezzi, id, ctx.dati), st.scena.token.find((x) => x.id === id) ?? null);
   }
   /** «Mostra PV sui token»: interruttore ricordato (localStorage); vale solo per la vista master. */
   function cambiaMostraPv(v = !st.mostraPv) {
@@ -2962,7 +2999,7 @@ export function renderMappa(radice, ctx) {
     const giaAvuto = giaInQuestoRound(scontro, st.opportunita, st.movimentiRitirati);
     const eccezioni = (pz.scheda?.capacita ?? []).filter((c) => String(c.effetto ?? '').includes(ctx.dati.mappa.zoc.frase_eccezione)).map((c) => c.nome);
     const righeRegistro = [];
-    for (const a of attacchiDiOpportunita(punti, t.ingombro, avv)) {
+    for (const a of attacchiDiOpportunita(punti, t.ingombro, avv, t)) {
       const idDa = a.token.rif.id;
       const gia = giaAvuto.has(idDa);
       const righe = [testoOpportunita(pz.nome, a.pezzo.nome),
@@ -3667,7 +3704,7 @@ export function renderMappa(radice, ctx) {
         if (!rec) return null;
         return ctx.dati.veicoli.andature.elenco.map((a) => ({ testo: `Andatura ${a.nome}`, chiave: `andatura:${a.id}`, scelta: rec.mezzo?.andatura === a.id, titolo: rec.mezzo?.andatura === a.id ? 'Andatura attuale' : 'Nello scontro: una fascia per Round (Veicoli §2.1)', azione: () => andaturaUi(tok, a.id) }));
       },
-      ruota_veicolo: () => (tok.rif.tipo === 'veicolo' ? [
+      ruota_veicolo: () => (tok.rif.tipo === 'veicolo' || haSagoma(tok) ? [
         { testo: `Ruota di ${passoRotazione(false)}° a sinistra`, tasto: '←', chiave: 'ruota:-1', azione: () => ruotaVeicoloUi(tok.id, -1) },
         { testo: `Ruota di ${passoRotazione(false)}° a destra`, tasto: '→', chiave: 'ruota:1', azione: () => ruotaVeicoloUi(tok.id, 1) },
         { testo: `Ruota di ${passoRotazione(true)}° a sinistra`, tasto: 'Maiusc+←', chiave: 'ruota:-45', azione: () => ruotaVeicoloUi(tok.id, -1, true) },

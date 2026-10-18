@@ -97,7 +97,7 @@ export function areaGiocatore({ scena, token, pezzo, pezzi, scontro = null, fasc
   const area = areaRaggiungibile({
     colonne: g.colonne, righe: g.righe, muri, terreno, linee: lineeEffettive(scena, { perGiocatori, larghezza: dati.mappa.porte.larghezza_q }),
     token: scena.token.filter(ostacolo).map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: perChiave.get(chiaveRif(x.rif))?.lato ?? null, blocca: !!x.blocca })),
-    chi: { id: token.id, q: token.q, ingombro: token.ingombro, lato: pezzo.lato }, massimo: totale, regole: regoleMovimento(token, dati),
+    chi: { id: token.id, q: token.q, ingombro: token.ingombro, angolo: token.angolo, base: token.base, lato: pezzo.lato }, massimo: totale, regole: regoleMovimento(token, dati),
   });
   const scelta = sf.chiusa ?? [...FASCE.slice(0, fascia)].reverse().find((f) => rimaste[f] !== null);
   const quando = scontro ? 'del Round' : 'del turno';
@@ -168,7 +168,7 @@ export function provaMovimento({ scena, pezzi, scontro = null, chiavePg, a, fasc
   const f = fasciaDi(costo, vera.rimaste);
   // ZoC (Giocatore §5.3): tutti gli avversari contano; al tablet si nomina solo chi si vede
   const avv = avversariZoc(scena, pezzi, token.id, dati);
-  const opportunita = attacchiDiOpportunita(punti, token.ingombro, avv).map((x) => ({
+  const opportunita = attacchiDiOpportunita(punti, token.ingombro, avv, token).map((x) => ({
     da: x.token.rif.id, nomeDa: x.pezzo.nome, visibile: visibileAiGiocatori(x.token, scena, nebbia),
   }));
   const visibili = punti.map((q) => (visibileAiGiocatori({ q, ingombro: token.ingombro, nascosto: false }, scena, nebbia) ? q : null));

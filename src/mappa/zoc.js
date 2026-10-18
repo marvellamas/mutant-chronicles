@@ -8,7 +8,7 @@
 // Quindi: la ZoC di un avversario è la fascia profonda quanto la sua portata attorno al suo ingombro; il movimento che
 // esce da quella fascia (anche dopo esserci entrato: attraversare) provoca; entrare o fermarsi dentro no. La ZoC non
 // blocca: segnala. Parametri in data/mappa.json → zoc. Funzioni pure.
-import { dimensioni, chiaveRif } from './token.js';
+import { dimensioni, chiaveRif, celleToken } from './token.js';
 import { stessaParte } from './area.js';
 import { quotaDi } from './volo.js';
 
@@ -72,8 +72,19 @@ export function avversariZocInattivi(scena, pezzi, idChi, dati) {
     .map((x) => ({ ...x, portata: portataDi(x.pezzo, dati), stato: statoCheImpedisce(x.pezzo, dati) }));
 }
 
-/** Distanza in Q fra due ingombri (Chebyshev fra rettangoli: 1 = adiacenti, 0 = sovrapposti). */
-export function distanzaIngombri(qa, ia, qb, ib) {
+// A.167 (18/10): una creatura con la sagoma ruotata ha la ZoC e le distanze sui suoi quadretti veri, non sul
+// rettangolo che la contiene. `forma` = un oggetto con angolo e base (il token stesso), o null.
+const conForma = (f) => (Number.isInteger(f?.angolo) && Array.isArray(f?.base) ? { angolo: f.angolo, base: f.base } : null);
+const celleDi = (q, ingombro, f) => celleToken({ q, ingombro, ...(conForma(f) ?? {}) });
+
+/** Distanza in Q fra due ingombri (Chebyshev fra rettangoli: 1 = adiacenti, 0 = sovrapposti; sulle sagome vere se ruotate). */
+export function distanzaIngombri(qa, ia, qb, ib, fa = null, fb = null) {
+  if (conForma(fa) || conForma(fb)) {
+    const cb = celleDi(qb, ib, fb);
+    let d = Infinity;
+    for (const [x, y] of celleDi(qa, ia, fa)) for (const [u, v] of cb) d = Math.min(d, Math.max(Math.abs(x - u), Math.abs(y - v)));
+    return d;
+  }
   const [wa, ha] = dimensioni(ia), [wb, hb] = dimensioni(ib);
   const dx = Math.max(0, qb[0] - (qa[0] + wa - 1), qa[0] - (qb[0] + wb - 1));
   const dy = Math.max(0, qb[1] - (qa[1] + ha - 1), qa[1] - (qb[1] + hb - 1));
@@ -81,13 +92,24 @@ export function distanzaIngombri(qa, ia, qb, ib) {
 }
 
 /** Il token che sta in `q` con il suo ingombro è dentro la portata dell'avversario `a`? */
-export const inPortata = (q, ingombro, a) => Math.max(distanzaIngombri(q, ingombro, a.token.q, a.token.ingombro), a.dz ?? 0) <= a.portata;
+export const inPortata = (q, ingombro, a, forma = null) => Math.max(distanzaIngombri(q, ingombro, a.token.q, a.token.ingombro, forma, a.token), a.dz ?? 0) <= a.portata;
 
 /** Q delle ZoC degli avversari (fuori dai loro ingombri): Uint8Array per Q della griglia, 1 = dentro una ZoC. */
 export function celleZoc(scena, avversari) {
   const { colonne: C, righe: R } = scena.griglia;
   const m = new Uint8Array(C * R);
   for (const a of avversari) {
+    if (conForma(a.token)) {
+      // sagoma ruotata: i Q entro la portata dai suoi quadretti veri, esclusi i suoi
+      const sue = celleToken(a.token);
+      const propri = new Set(sue.map(([x, y]) => `${x},${y}`));
+      for (const [cx, cy] of sue) {
+        for (let y = Math.max(0, cy - a.portata); y <= Math.min(R - 1, cy + a.portata); y++) {
+          for (let x = Math.max(0, cx - a.portata); x <= Math.min(C - 1, cx + a.portata); x++) if (!propri.has(`${x},${y}`)) m[y * C + x] = 1;
+        }
+      }
+      continue;
+    }
     const [w, h] = dimensioni(a.token.ingombro);
     const [x0, y0] = a.token.q;
     for (let y = Math.max(0, y0 - a.portata); y < Math.min(R, y0 + h + a.portata); y++) {
@@ -101,8 +123,8 @@ export function celleZoc(scena, avversari) {
 }
 
 /** Posizioni del percorso in cui almeno un Q del token sta in una ZoC (per evidenziarle). */
-export function passiInZoc(percorso, ingombro, avversari) {
-  return percorso.map((q) => avversari.some((a) => inPortata(q, ingombro, a)));
+export function passiInZoc(percorso, ingombro, avversari, forma = null) {
+  return percorso.map((q) => avversari.some((a) => inPortata(q, ingombro, a, forma)));
 }
 
 /**
@@ -110,12 +132,12 @@ export function passiInZoc(percorso, ingombro, avversari) {
  * in cui il token, che era nella sua portata, ne esce. `percorso`: posizioni dalla partenza all'arrivo, comprese.
  * @returns [{ token, pezzo, portata, passo }]
  */
-export function attacchiDiOpportunita(percorso, ingombro, avversari) {
+export function attacchiDiOpportunita(percorso, ingombro, avversari, forma = null) {
   const r = [];
   for (const a of avversari) {
-    let dentro = percorso.length ? inPortata(percorso[0], ingombro, a) : false;
+    let dentro = percorso.length ? inPortata(percorso[0], ingombro, a, forma) : false;
     for (let i = 1; i < percorso.length; i++) {
-      const ora = inPortata(percorso[i], ingombro, a);
+      const ora = inPortata(percorso[i], ingombro, a, forma);
       if (dentro && !ora) { r.push({ ...a, passo: i }); break; }
       dentro = ora;
     }

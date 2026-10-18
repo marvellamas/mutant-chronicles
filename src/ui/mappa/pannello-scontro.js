@@ -63,6 +63,8 @@ export function sezioneScontro(v, a) {
 export function sezioneToken(t, p, dati, a) {
   if (!t) return h('section', { class: 'mappa-sezione', 'aria-label': 'Token' }, h('h2', {}, 'Token'), h('p', { class: 'nota' }, 'Clic su un token per sceglierlo e aprire la sua mini-scheda; trascinalo per spostarlo.'));
   const creatura = t.rif.tipo !== 'veicolo';
+  // A.167 (18/10): una creatura con la sagoma rettangolare (angolo dato da pagina.js) si gira come un veicolo
+  const sagoma = creatura && a.angolo !== null && a.angolo !== undefined;
   const dettagli = [
     p ? `${NOMI_LATO[p.lato] ?? p.lato}${p.tipo === 'veicolo' ? ' · veicolo' : ''}` : 'fuori dallo scontro',
     p?.pv ? `PV ${p.pv.attuali}/${p.pv.massimo}${p.aZero ? ' (a terra)' : ''}` : null,
@@ -79,20 +81,20 @@ export function sezioneToken(t, p, dati, a) {
       h('button', { type: 'button', role: 'switch', 'aria-checked': String(a.volo.attivo), class: `interruttore-mappa${a.volo.attivo ? ' acceso' : ''}`, title: a.volo.sa ? `Sa volare: Passo in volo ${a.volo.passo} Q` : 'Il volo lo concede una capacità, un Incantesimo o un Artefatto (Giocatore §5.2.3)', onclick: () => a.volo.cambia() },
         h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `In volo: ${a.volo.attivo ? 'sì' : 'no'}${a.volo.sa && !a.volo.attivo ? ' (sa volare)' : ''}`),
       a.volo.attivo ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => a.volo.cambiaQuota() }, a.volo.quota ? `Quota ${a.volo.quota} Q…` : 'Quota…') : null) : null,
-    creatura ? h('label', { class: 'mappa-campo' }, h('span', {}, 'Ingombro'),
+    creatura && !sagoma ? h('label', { class: 'mappa-campo' }, h('span', {}, 'Ingombro'),
       h('select', { onchange: (e) => a.ingombro(Number(e.target.value)) },
         dati.mappa.token.ingombri_ammessi.map((n) => h('option', { value: String(n), selected: t.ingombro === n }, `${n} × ${n} Q${n === p?.ingombro ? ' (dalla Taglia)' : ''}`))),
       h('small', { class: 'nota' }, 'Il 3 × 3 solo se indicato (A.126).'))
-      : h('p', { class: 'nota' }, `Ingombro ${testoIngombro(t.ingombro)} dal profilo del veicolo.`),
+      : h('p', { class: 'nota' }, sagoma ? `Sagoma ${testoIngombro(a.base ?? t.ingombro)} dalla scheda: si gira con ← →, anche a 45° (Ctrl+Z annulla).` : `Ingombro ${testoIngombro(t.ingombro)} dal profilo del veicolo.`),
     // fase 2, lotto 5: girare il mezzo e chi è a bordo (conducente e passeggeri), con «Scendi» e la linea di tiro
-    creatura ? null : h('div', { class: 'mappa-azioni-token' },
+    creatura && !sagoma ? null : h('div', { class: 'mappa-azioni-token' },
       // A.147 (15/10/2026): di base gli otto orientamenti a 45° (← →); con Maiusc il passo fine, per un
       // orientamento libero scelto dal master. Girare non consuma Q.
-      h('button', { type: 'button', class: 'btn btn-piccolo', title: `Gira il veicolo di ${a.passiRotazione?.[0] ?? 45}° in senso antiorario (←): gli otto orientamenti della A.147, anche in diagonale`, onclick: () => a.ruota(-1) }, `↺ ${a.passiRotazione?.[0] ?? 45}°`),
+      h('button', { type: 'button', class: 'btn btn-piccolo', title: `Gira ${sagoma ? 'la pedina' : 'il veicolo'} di ${a.passiRotazione?.[0] ?? 45}° in senso antiorario (←): gli otto orientamenti, anche in diagonale`, onclick: () => a.ruota(-1) }, `↺ ${a.passiRotazione?.[0] ?? 45}°`),
       h('button', { type: 'button', class: 'btn btn-piccolo btn-fine', title: `Passo fine: gira il veicolo di ${a.passiRotazione?.[1] ?? 10}° in senso antiorario (Maiusc+←)`, onclick: () => a.ruota(-1, true) }, `↺ ${a.passiRotazione?.[1] ?? 10}°`),
-      a.angolo !== null && a.angolo !== undefined ? h('span', { class: 'nota', title: 'Direzione del muso: 0° in alto, in senso orario' }, ` ${a.angolo}° `) : null,
+      a.angolo !== null && a.angolo !== undefined ? h('span', { class: 'nota', title: sagoma ? 'Orientamento dell’asse lungo: 0° in alto, in senso orario' : 'Direzione del muso: 0° in alto, in senso orario' }, ` ${a.angolo}° `) : null,
       h('button', { type: 'button', class: 'btn btn-piccolo btn-fine', title: `Passo fine: gira il veicolo di ${a.passiRotazione?.[1] ?? 10}° in senso orario (Maiusc+→)`, onclick: () => a.ruota(1, true) }, `${a.passiRotazione?.[1] ?? 10}° ↻`),
-      h('button', { type: 'button', class: 'btn btn-piccolo', title: `Gira il veicolo di ${a.passiRotazione?.[0] ?? 45}° in senso orario (→): gli otto orientamenti della A.147, anche in diagonale`, onclick: () => a.ruota(1) }, `${a.passiRotazione?.[0] ?? 45}° ↻`)),
+      h('button', { type: 'button', class: 'btn btn-piccolo', title: `Gira ${sagoma ? 'la pedina' : 'il veicolo'} di ${a.passiRotazione?.[0] ?? 45}° in senso orario (→): gli otto orientamenti, anche in diagonale`, onclick: () => a.ruota(1) }, `${a.passiRotazione?.[0] ?? 45}° ↻`)),
     creatura ? null : h('div', { class: 'mappa-a-bordo' },
       h('h3', {}, `A bordo (${a.aBordo.length}${p?.posti ? ` su ${p.posti.conducente + p.posti.passeggeri} posti` : ''})`),
       // ritocchi del 08/10: chi è a bordo, poi le discese tutte insieme, poi le linee di tiro tutte insieme

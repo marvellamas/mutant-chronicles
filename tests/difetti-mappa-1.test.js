@@ -53,8 +53,9 @@ test('lo Scout 4 × 2 si salva in una scena con 7 PG, e il suo spostamento resta
   assert.deepEqual(riletta.token[0].q, [5, 5]);
   // compatibile con le scene già salvate: veicolo con ingombro quadrato, creature 1/2/3
   assert.equal(validaScena({ ...s, token: [{ ...s.token[7], ingombro: 3 }] }, dati), null);
-  // i limiti restano: rettangoli solo per i veicoli, entro veicolo_ingombro_max
-  assert.match(validaScena({ ...s, token: [{ ...s.token[0], ingombro: [2, 1] }] }, dati), /solo per i veicoli/);
+  // A.167 (18/10): anche le creature possono avere un ingombro rettangolare; i limiti restano per lato
+  assert.equal(validaScena({ ...s, token: [{ ...s.token[0], ingombro: [2, 1] }] }, dati), null);
+  assert.match(validaScena({ ...s, token: [{ ...s.token[0], ingombro: [dati.mappa.token.creatura_ingombro_max + 1, 2] }] }, dati), /veicoli e le creature/);
   assert.match(validaScena({ ...s, token: [{ ...s.token[7], ingombro: [dati.mappa.token.veicolo_ingombro_max + 1, 2] }] }, dati), /veicoli/);
 });
 

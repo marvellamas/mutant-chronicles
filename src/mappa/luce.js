@@ -10,7 +10,7 @@
 // fermano la luce: nessun calcolo d'ombra, scelta voluta per semplicità.
 import { daBase64, inBase64, nuovaMaschera, pennello, rettangolo } from './celle.js';
 import { tratto } from './nebbia.js';
-import { dimensioni } from './token.js';
+import { celleToken } from './token.js';
 
 /** Le categorie in ordine (indice 0 = Luce sufficiente), con nome e riga dalla regola (regole.json → illuminazione). */
 export function categorieLuce(dati) {
@@ -44,10 +44,12 @@ export function luceQ(scena, dati) {
   const luce = Math.max(0, cat.indexOf(dati.mappa.luci.predefinita));
   for (const t of scena.token ?? []) {
     if (!(Number.isFinite(t.luce) && t.luce > 0)) continue;
-    const [w, h] = dimensioni(t.ingombro);
+    // A.167: dai quadretti veri della sagoma (anche ruotata), non dal rettangolo che la contiene
     const r = Math.floor(t.luce);
-    for (let y = Math.max(0, t.q[1] - r); y < Math.min(R, t.q[1] + h + r); y++) {
-      for (let x = Math.max(0, t.q[0] - r); x < Math.min(C, t.q[0] + w + r); x++) m[y * C + x] = luce;
+    for (const [cx, cy] of celleToken(t)) {
+      for (let y = Math.max(0, cy - r); y <= Math.min(R - 1, cy + r); y++) {
+        for (let x = Math.max(0, cx - r); x <= Math.min(C - 1, cx + r); x++) m[y * C + x] = luce;
+      }
     }
   }
   return m;
@@ -62,9 +64,8 @@ export function luceDi(scena, q, dati, mappa = luceQ(scena, dati)) {
 /** La luce di un ingombro: la peggiore fra i suoi Q (il bersaglio grande in parte al buio è in parte nascosto). */
 export function luceIngombro(scena, t, dati, mappa = luceQ(scena, dati)) {
   const { colonne: C, righe: R } = scena.griglia;
-  const [w, h] = dimensioni(t.ingombro);
   let peggiore = 0;
-  for (let y = t.q[1]; y < Math.min(R, t.q[1] + h); y++) for (let x = t.q[0]; x < Math.min(C, t.q[0] + w); x++) peggiore = Math.max(peggiore, mappa[y * C + x]);
+  for (const [x, y] of celleToken(t)) if (x >= 0 && y >= 0 && x < C && y < R) peggiore = Math.max(peggiore, mappa[y * C + x]);
   return dati.mappa.luci.categorie[peggiore];
 }
 

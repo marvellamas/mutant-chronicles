@@ -16,7 +16,7 @@ export function salvaIniziale(scena, adesso = new Date()) {
     ...scena,
     iniziale: {
       quando: adesso.toISOString(),
-      token: scena.token.map((t) => ({ id: t.id, rif: t.rif, q: [...t.q], ingombro: t.ingombro, nascosto: !!t.nascosto, ...(t.nome ? { nome: t.nome } : {}) })),
+      token: scena.token.map((t) => ({ id: t.id, rif: t.rif, q: [...t.q], ingombro: t.ingombro, ...(Number.isInteger(t.angolo) && Array.isArray(t.base) ? { angolo: t.angolo, base: [...t.base], ...(t.perno ? { perno: [...t.perno] } : {}) } : {}), nascosto: !!t.nascosto, ...(t.nome ? { nome: t.nome } : {}) })),
       porte: (scena.porte ?? []).map((p) => ({ ...p, q: [...p.q] })),
       template: scena.template.map((t) => ({ ...t, origine: [...t.origine] })),
       nebbia: scena.nebbia.coperti,
@@ -47,7 +47,8 @@ export function ripristinaIniziale(scena, { chiaviPresenti = null, scontro = nul
   const nuovi = scena.token.filter((t) => !idSalvati.has(t.id) && !chiaviSalvate.has(chiaveRif(t.rif)));
   const attuali = new Map(scena.token.map((t) => [t.id, t]));
   const token = [
-    ...salvati.map((t) => ({ ...(attuali.get(t.id) ?? {}), ...t, q: [...t.q] })),
+    // A.167: la sagoma ruotata fa parte della posizione iniziale (angolo, base e perno); se allora non c'era, il token torna allineato
+    ...salvati.map((t) => { const ora = attuali.get(t.id) ?? {}; const { angolo: _a, base: _b, perno: _p, ...resto } = ora; return { ...(ora.base ? resto : ora), ...t, q: [...t.q] }; }),
     ...nuovi,
   ];
   const template = ini.template.map((t) => (t.durata === null || t.durata === undefined ? t : { ...t, scontro, fine_round: fineRound(t.durata, round) }));

@@ -190,7 +190,7 @@ export function lineaDiTiro(scena, da, verso, ost, regole, { contaToken = () => 
   }
   const inMezzo = tokenInMezzo({ ...scena, token: [da, a, ...candidati].filter((t) => t.id) }, da, a, regole);
   return {
-    distanza: distanzaIngombri(da.q, da.ingombro, a.q, a.ingombro),
+    distanza: distanzaIngombri(da.q, da.ingombro, a.q, a.ingombro, da, a),
     copertura: cop.livello, bloccate: cop.bloccate, linee: cop.linee, origine: cop.origine,
     vista: cop.livello === 'totale' ? 'bloccata' : cop.livello === 'nessuna' ? 'libera' : 'parziale',
     inMezzo,

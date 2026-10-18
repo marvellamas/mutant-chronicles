@@ -122,7 +122,9 @@ export function erroreForma(t) {
     if (t.base !== undefined) return 'base: solo per i veicoli';
     return t.angolo === null || (Number.isFinite(t.angolo) && t.angolo >= 0 && t.angolo < 360) ? null : 'angolo: da 0 a 359 gradi';
   }
-  if (t.rif?.tipo !== 'veicolo') return 'angolo e base: solo per i veicoli';
+  // A.167 (18/10): anche le creature con una sagoma rettangolare (base non quadrata) si girano di 45°
+  if (t.rif?.tipo !== 'veicolo' && t.rif?.tipo !== 'partecipante') return 'angolo e base: solo per i veicoli e le creature';
+  if (t.rif?.tipo === 'partecipante' && Array.isArray(t.base) && t.base[0] === t.base[1]) return 'base: una creatura quadrata non si gira';
   if (!Number.isInteger(t.angolo) || t.angolo < 0 || t.angolo > 359) return 'angolo: intero da 0 a 359';
   if (!Array.isArray(t.base) || t.base.length !== 2 || !t.base.every((n) => Number.isInteger(n) && n >= 1) || t.base[0] < t.base[1]) return 'base: [lungo, largo] interi, lungo ≥ largo';
   if (t.direzione !== undefined) return 'direzione e angolo insieme: basta l’angolo';

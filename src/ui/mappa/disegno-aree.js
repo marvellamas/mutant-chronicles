@@ -7,6 +7,7 @@
 //   - percorso del token scelto verso il quadretto sotto il puntatore, con i Q che costa.
 import { schermoDaMappa, rettangoloVisibile } from '../../mappa/camera.js';
 import { dimensioni } from '../../mappa/token.js';
+import { formaDi } from '../../mappa/forma.js';
 import { trattiCoperti } from '../../mappa/nebbia.js';
 
 /** Limiti dei Q visibili nel riquadro, per non scorrere tutta la griglia a ogni disegno. */
@@ -407,7 +408,8 @@ function banda(g, cam, p, larghezzaQ, regole) {
 export function disegnaLineaTiro(c, { scena, cam, da, a, copertura, etichetta, colori, linee = null, origine = null }) {
   const g = scena.griglia;
   const sch = ([x, y]) => schermoDaMappa(cam, g.scosto_x + x * g.q_px, g.scosto_y + y * g.q_px);
-  const centro = (t) => { const [w, h] = dimensioni(t.ingombro); return sch([t.q[0] + w / 2, t.q[1] + h / 2]); };
+  // A.167: il centro vero della sagoma (anche ruotata), non quello del rettangolo che la contiene
+  const centro = (t) => { const fm = formaDi(t); if (fm) return sch([t.q[0] + fm.centro[0], t.q[1] + fm.centro[1]]); const [w, h] = dimensioni(t.ingombro); return sch([t.q[0] + w / 2, t.q[1] + h / 2]); };
   const colore = colori[copertura] ?? colori.nessuna;
   c.save();
   if (linee) {

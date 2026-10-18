@@ -10,7 +10,7 @@
 import { diTurno } from '../scontro.js';
 import { stessaChiave, partecipanteConducente } from '../veicoli-registro.js';
 import { profiloVeicolo, movimentoMassimo } from '../veicoli.js';
-import { ingombroDaTaglia, ingombroVeicolo, iniziali, chiaveRif } from './token.js';
+import { ingombroCreatura, ingombroVeicolo, iniziali, chiaveRif } from './token.js';
 import { postiDi, ingombroOrientato } from './veicoli-mappa.js';
 
 /** Immagine del nemico sul token (A.131): la copia ridotta in mappe/, se c'è; altrimenti le iniziali. */
@@ -68,8 +68,8 @@ function pezzoNemico(p, dati) {
   const stato = nomeStato(dati);
   return {
     chiave: chiaveRif({ tipo: 'partecipante', id: p.id }), rif: { tipo: 'partecipante', id: p.id }, tipo: 'nemico', nemico: p.nemico ?? null,
-    // A.126: il lato del token viene dal campo «spazio» del profilo, altrimenti dalla Taglia (come prima)
-    nome: p.nome, lato: p.lato === 'alleato' ? 'alleato' : 'avversario', ingombro: ingombroDaTaglia(p.scheda ?? null, dati),
+    // A.126, A.167: l'ingombro del token viene dal campo «spazio» del profilo (anche rettangolare), altrimenti dalla Taglia
+    nome: p.nome, lato: p.lato === 'alleato' ? 'alleato' : 'avversario', ingombro: ingombroCreatura(p.scheda ?? null, dati),
     iniziali: iniziali(p.scheda?.nome ?? p.nome, p.numero ?? null), ritratto: urlImmagineNemico(p.scheda?.immagine), pv: p.pv ?? null,
     aZero: (p.pv?.attuali ?? 1) <= 0, stati: (p.stati ?? []).map(stato), ferite: null,
     movimento: movimentoNemico(p.scheda, p.stati, dati),
