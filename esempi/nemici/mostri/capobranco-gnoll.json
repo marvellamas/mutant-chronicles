@@ -1,0 +1,151 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "capobranco-gnoll",
+  "nome": "Capobranco gnoll",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Capi e varianti dei popoli guerrieri",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 6,
+    "COS": 6,
+    "INT": 5,
+    "SAG": 5,
+    "CAR": 5
+  },
+  "pv": 40,
+  "pm": 9,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 5,
+    "corsa": 11,
+    "scatto": 17
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 33,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 10,
+    "volonta": 9,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1,
+    "eccezioni": "più l’eventuale AzP aggiuntiva della Frenesia gnoll, utilizzabile solo per un Morso"
+  },
+  "attacchi": [
+    {
+      "nome": "Arma inastata pesante",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ]
+    },
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d4+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ],
+      "note": "Naturale: non concede Parata naturale a chi lo usa; nessuna Salvezza o infezione aggiuntiva."
+    },
+    {
+      "nome": "Arco da guerra",
+      "tipo": "distanza",
+      "va": 11,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "gittata_q": 100,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 12
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 11
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 12
+    },
+    {
+      "nome": "Oratoria",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e Azioni",
+      "effetto": "Natura Comune, con mente e PM personali; respira, mangia, beve e dorme; cure biologiche e normali Stati applicabili. Non appartiene alla Covata. A 0 PV si continua col §4.2 (non Svenuto né morto automaticamente; un ulteriore danno finale positivo a 0 PV richiede Tempra e la procedura delle Ferite; l’eccedenza del colpo che esaurisce i PV non genera da sola Ferite); a 0 PM personali Svenuto dopo la risoluzione completa dell’azione. INI modifica 1d10; AzP e unica AzM sono il budget dell’intero Round; ogni attacco costa 1 AzP e produce AC 1; i danni in tabella comprendono i bonus fissi personali (non sommare ancora FOR, DES, Forza brutale o Furia). Più armi, ali o arti non concedono altre Azioni. Una sola Opportunità ordinaria per Round, prima dell’uscita dalla portata, con un’arma ravvicinata pronta (o morso/artiglio consentito); comandi, Urlo e magia non sono Opportunità; con un tetto agli attacchi, Opportunità e attacco ordinato lo consumano. Parata: 1 AzP, arma o scudo idonei, successo dimezza per eccesso prima dell’AR, Magistrale annulla; nessuna Parata naturale; armi ravvicinate −8 VA per parare a distanza, Scudo piccolo o medio −4 con ulteriore −2 contro Raffica. Schivata: 1 AzP, 1 AzM, consapevolezza e spazio. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica. Estrarre, riporre o recuperare un oggetto costa 1 AzP (abbandonarlo è gratuito). Armatura Media: −1 ai VA degli attacchi, alla Schivata e alle Prove fisiche ostacolate e −1 Q al budget scelto; Pesante −2 VA e −2 Q (Parata, Percezione e PS non ricevono questi malus; i valori pronti li comprendono già; a 0 PI la protezione perde AR ma mantiene le penalità)."
+    },
+    {
+      "nome": "Catena di comando",
+      "effetto": "Un ordine ordinario non costringe un alleato a obbedire: richiede comprensione e un rapporto di comando o accordo effettivi; non è telepatia né controllo mentale. Le capacità funzionano solo sui beneficiari indicati; un alleato non ottiene conoscenze che il capo non possiede né può colpire un bersaglio fuori portata o non localizzato."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    },
+    {
+      "nome": "Frenesia gnoll",
+      "passiva": true,
+      "limiti": "Una volta per Round; il Morso di Frenesia non può attivare un’altra Frenesia.",
+      "effetto": "Se un proprio attacco ravvicinato alla propria Iniziativa rende un nemico Svenuto, Morente o morto, ottiene subito 1 AzP aggiuntiva utilizzabile soltanto per un Morso contro un altro nemico in portata. Può prima spendere la propria AzM del Round, se ancora disponibile; nessuna AzM aggiuntiva. 0 PV senza tali esiti, resa o fuga non bastano."
+    },
+    {
+      "nome": "Dotazione",
+      "effetto": "Arma inastata pesante a due mani FOR 6 PI 6; Arco da guerra a due mani FOR 5 PI 6 con 20 frecce; Armatura media AR 3 FOR 5 PI 8. Tutto Comune, PS Integrità 10. Inizia con l’arma inastata, senza Scudo. Incoccare è compreso nell’attacco con arco pronto; il cambio d’arma segue le AzP ordinarie. Al massimo due attacchi normali per Round, Opportunità e colpo ordinato compresi, più l’unico Morso eventualmente ottenuto da Frenesia. I 33 PX comprendono la dotazione."
+    },
+    {
+      "nome": "Incitare la Frenesia",
+      "azioni": {
+        "principali": 1
+      },
+      "risorsa": "2 PM",
+      "limiti": "Una volta per Round, alla propria Iniziativa.",
+      "effetto": "Un altro alleato con la capacità Frenesia gnoll, visibile entro 6 Q e capace di udire e comprendere il richiamo, può effettuare subito un singolo attacco ravvicinato pagando 1 propria AzP ancora disponibile. Non concede un’AzP, un nuovo Morso gratuito o un attacco con l’arco. Ordini fuori Iniziativa: incitare la Frenesia permette un singolo attacco immediato pagato dal destinatario con 1 AzP ancora disponibile del Round (non è una nuova Iniziativa, non concede Movimento e non attiva Frenesia); lo stesso destinatario riceve al massimo un attacco ordinato per Round da qualsiasi numero di capi, conserva la propria Opportunità se il tetto del profilo lo consente e non può spendere un’AzP di Frenesia non ancora ottenuta."
+    }
+  ],
+  "note": "Parata 11 (valore delle Difese), Schivata / Elusione 10. La Media è già inclusa: rimossa recupera +1 ai VA fisici penalizzati e Movimento 6 / 12 / 18 Q. Parla Comune e Gnoll. Coordina il branco con richiami e assalti ravvicinati. Condotta: sotto 10 PV o a Ferita Profonda cerca di riunire i superstiti e ripiegare. Fonte: Gnoll Pack Lord, p. 163."
+}

@@ -1,0 +1,141 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "capoguerra-orco",
+  "nome": "Capoguerra orco",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Capi e varianti dei popoli guerrieri",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 5,
+    "COS": 8,
+    "INT": 6,
+    "SAG": 5,
+    "CAR": 8
+  },
+  "pv": 56,
+  "pm": 11,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 12,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 5,
+    "corsa": 11,
+    "scatto": 17
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 55,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 10,
+    "volonta": 12,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Ascia bipenne",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "2d6+5",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ]
+    },
+    {
+      "nome": "Lancia a una mano",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d6+5",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    },
+    {
+      "nome": "Lancia a due mani",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d6+7",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 13
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Oratoria",
+      "va": 14
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e Azioni",
+      "effetto": "Natura Comune, con mente e PM personali; respira, mangia, beve e dorme; cure biologiche e normali Stati applicabili. Non appartiene alla Covata. A 0 PV si continua col §4.2 (non Svenuto né morto automaticamente; un ulteriore danno finale positivo a 0 PV richiede Tempra e la procedura delle Ferite; l’eccedenza del colpo che esaurisce i PV non genera da sola Ferite); a 0 PM personali Svenuto dopo la risoluzione completa dell’azione. INI modifica 1d10; AzP e unica AzM sono il budget dell’intero Round; ogni attacco costa 1 AzP e produce AC 1; i danni in tabella comprendono i bonus fissi personali (non sommare ancora FOR, DES, Forza brutale o Furia). Più armi, ali o arti non concedono altre Azioni. Una sola Opportunità ordinaria per Round, prima dell’uscita dalla portata, con un’arma ravvicinata pronta (o morso/artiglio consentito); comandi, Urlo e magia non sono Opportunità; con un tetto agli attacchi, Opportunità e attacco ordinato lo consumano. Parata: 1 AzP, arma o scudo idonei, successo dimezza per eccesso prima dell’AR, Magistrale annulla; nessuna Parata naturale; armi ravvicinate −8 VA per parare a distanza, Scudo piccolo o medio −4 con ulteriore −2 contro Raffica. Schivata: 1 AzP, 1 AzM, consapevolezza e spazio. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica. Estrarre, riporre o recuperare un oggetto costa 1 AzP (abbandonarlo è gratuito). Armatura Media: −1 ai VA degli attacchi, alla Schivata e alle Prove fisiche ostacolate e −1 Q al budget scelto; Pesante −2 VA e −2 Q (Parata, Percezione e PS non ricevono questi malus; i valori pronti li comprendono già; a 0 PI la protezione perde AR ma mantiene le penalità)."
+    },
+    {
+      "nome": "Catena di comando",
+      "effetto": "Un ordine ordinario non costringe un alleato a obbedire: richiede comprensione e un rapporto di comando o accordo effettivi; non è telepatia né controllo mentale. Le capacità funzionano solo sui beneficiari indicati; un alleato non ottiene conoscenze che il capo non possiede né può colpire un bersaglio fuori portata o non localizzato."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    },
+    {
+      "nome": "Dotazione e Furia",
+      "effetto": "Ascia bipenne a due mani FOR 6 PI 6; Lancia FOR 5 PI 6; Armatura media AR 3 FOR 5 PI 8. Tutto Comune, PS Integrità 10. Inizia con la Bipenne pronta, senza Scudo. Furia: +2 al danno personale delle armi del profilo, già inclusi (non dà Natura Magica, non si trasferisce all’arma, non modifica danni periodici). La Lancia non ha un profilo di lancio e non si usa come Giavellotto. Al massimo due attacchi per Round, Opportunità e colpo ordinato compresi. I 55 PX comprendono la dotazione."
+    },
+    {
+      "nome": "Avanzata aggressiva",
+      "limiti": "Una volta per Round.",
+      "effetto": "Può usare la propria AzM come Passo verso un nemico visibile con budget 7 Q anziché 5. Il percorso non può allontanarlo dal nemico e deve terminare più vicino. Nessun’altra AzM né aumento a Corsa, Scatto, Schivata o Carica; Opportunità normali. Rimuovendo la Media il Passo aggressivo arriva a 8 Q."
+    },
+    {
+      "nome": "Urlo di guerra",
+      "azioni": {
+        "principali": 1
+      },
+      "risorsa": "2 PM",
+      "usi": {
+        "quanti": 1,
+        "per": "scontro"
+      },
+      "limiti": "Alla propria Iniziativa; la scena deve essere conclusa prima di recuperare l’uso (allontanarsi per un Round o cambiare bersaglio non basta); i PM spesi non tornano con l’uso.",
+      "effetto": "Sceglie fino a quattro altri alleati consenzienti visibili entro 6 Q che possano udire e comprendere il richiamo (il Capoguerra non è un beneficiario). L’effetto inizia dopo l’attivazione e termina all’inizio della successiva Iniziativa del Capoguerra (se non può avvenire, allo stesso conteggio d’Iniziativa del Round successivo). +2 al VA dei tiri per colpire dei beneficiari: nessun bonus a Difese, Potere, PS, danni o Azioni; nessun attacco immediato, movimento fuori turno o opportunità aggiuntive; non esegue il colpo gratuito della fonte. Fra Urli vale il maggiore; per la stessa Prova non si somma a Disciplina hobgoblin, Benedizione, Efficienza o altri bonus magici (vale il maggiore); le Tattiche di branco non si contano due volte come stesso vantaggio numerico. Dopo il richiamo non occorre restare in gittata; la perdita di coscienza del Capoguerra non cancella l’impeto. Non è controllo mentale: la paura impone ancora i propri divieti. Negare Potere non lo rimuove. Il favore attribuito a Gruumsh è rappresentato da Furia e Urlo, senza altri effetti spirituali."
+    }
+  ],
+  "note": "Parata 12 (valore delle Difese), Schivata / Elusione 9. I VA includono già −1 da Media; rimossa si recupera +1 ai VA fisici penalizzati e Passo / Corsa / Scatto tornano 6 / 12 / 18 Q. Parla Comune e Orchesco. Veterano che concentra un assalto con un richiamo; non rappresenta automaticamente tutti gli Orchi; nessuna Frenesia gnoll. Condotta: sotto 14 PV o a Ferita Profonda può cercare una posizione protetta, trattare o ritirarsi. Fonte: Orc War Chief, p. 246."
+}

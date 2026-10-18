@@ -1,0 +1,147 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "capitano-hobgoblin",
+  "nome": "Capitano hobgoblin",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Capi e varianti dei popoli guerrieri",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 6,
+    "COS": 7,
+    "INT": 6,
+    "SAG": 5,
+    "CAR": 7
+  },
+  "pv": 44,
+  "pm": 10,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 12,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 5,
+    "corsa": 11,
+    "scatto": 17
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 55,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 10,
+    "volonta": 11,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Spadone",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ]
+    },
+    {
+      "nome": "Giavellotto a mano",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    },
+    {
+      "nome": "Giavellotto lanciato",
+      "tipo": "distanza",
+      "va": 10,
+      "danno": "1d6",
+      "natura": "Naturale",
+      "gittata_q": 21,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 12
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Oratoria",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e Azioni",
+      "effetto": "Natura Comune, con mente e PM personali; respira, mangia, beve e dorme; cure biologiche e normali Stati applicabili. Non appartiene alla Covata. A 0 PV si continua col §4.2 (non Svenuto né morto automaticamente; un ulteriore danno finale positivo a 0 PV richiede Tempra e la procedura delle Ferite; l’eccedenza del colpo che esaurisce i PV non genera da sola Ferite); a 0 PM personali Svenuto dopo la risoluzione completa dell’azione. INI modifica 1d10; AzP e unica AzM sono il budget dell’intero Round; ogni attacco costa 1 AzP e produce AC 1; i danni in tabella comprendono i bonus fissi personali (non sommare ancora FOR, DES, Forza brutale o Furia). Più armi, ali o arti non concedono altre Azioni. Una sola Opportunità ordinaria per Round, prima dell’uscita dalla portata, con un’arma ravvicinata pronta (o morso/artiglio consentito); comandi, Urlo e magia non sono Opportunità; con un tetto agli attacchi, Opportunità e attacco ordinato lo consumano. Parata: 1 AzP, arma o scudo idonei, successo dimezza per eccesso prima dell’AR, Magistrale annulla; nessuna Parata naturale; armi ravvicinate −8 VA per parare a distanza, Scudo piccolo o medio −4 con ulteriore −2 contro Raffica. Schivata: 1 AzP, 1 AzM, consapevolezza e spazio. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica. Estrarre, riporre o recuperare un oggetto costa 1 AzP (abbandonarlo è gratuito). Armatura Media: −1 ai VA degli attacchi, alla Schivata e alle Prove fisiche ostacolate e −1 Q al budget scelto; Pesante −2 VA e −2 Q (Parata, Percezione e PS non ricevono questi malus; i valori pronti li comprendono già; a 0 PI la protezione perde AR ma mantiene le penalità)."
+    },
+    {
+      "nome": "Catena di comando",
+      "effetto": "Un ordine ordinario non costringe un alleato a obbedire: richiede comprensione e un rapporto di comando o accordo effettivi; non è telepatia né controllo mentale. Le capacità funzionano solo sui beneficiari indicati; un alleato non ottiene conoscenze che il capo non possiede né può colpire un bersaglio fuori portata o non localizzato."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    },
+    {
+      "nome": "Disciplina hobgoblin",
+      "azioni": {
+        "principali": 1
+      },
+      "usi": {
+        "quanti": 1,
+        "per": "scontro"
+      },
+      "limiti": "Alla propria Iniziativa; dura fino alla fine del terzo Round successivo all’attivazione, salvo interruzione. Consuma una delle AzP del comandante.",
+      "effetto": "A ogni singolo evento, fino a quattro alleati consenzienti entro 6 Q, visibili al comandante e capaci di udire e comprendere le sue istruzioni, ricevono +1 al VA dei tiri per colpire e delle PS; il comandante è escluso. Non migliora Difese, Potere, danni, AR, Movimento o Azioni. Fra più Discipline vale solo +1; come bonus di comando non si somma a Benedizione, Efficienza o altri bonus magici alla stessa Prova (si usa il maggiore). Uscire dai requisiti sospende il beneficio per quell’evento; rientrare non prolunga la durata. Il comandante deve poter parlare ed essere cosciente e operativo: Svenuto, Stordito, Paralizzato o impossibilità di comunicare interrompono l’attivazione. Negare Potere non rimuove un ordine non magico."
+    },
+    {
+      "nome": "Attacco coordinato",
+      "passiva": true,
+      "effetto": "Una volta per Round +3 danni a un singolo colpo d’arma riuscito se un proprio alleato cosciente, capace di attaccare, minaccia in mischia la vittima da entro 1 Q. Si aggiunge prima di moltiplicatori, Difese e AR, alla stessa AC (anche su Opportunità o colpo ordinato, se non già usato nel Round). Il +3 non è incluso nei danni in tabella. Numero di alleati, più AC e ulteriori colpi non moltiplicano il beneficio; nessuno spende Azioni per concederlo."
+    },
+    {
+      "nome": "Dotazione",
+      "effetto": "Spadone a due mani FOR 6 PI 6; due Giavellotti della sentinella FOR 3 PI 4; Armatura media AR 3 FOR 5 PI 8. Tutto Comune, PS Integrità 10. Inizia con lo Spadone pronto, senza Scudo. Un lancio richiede di liberare una mano e preparare il Giavellotto (la mano libera non rende pronto quello riposto). Al massimo due attacchi per Round, Opportunità e colpo ordinato compresi. Attivare la Disciplina consuma una delle sue due AzP. I 55 PX comprendono la dotazione."
+    }
+  ],
+  "note": "Parata 12 (valore delle Difese); Schivata / Elusione 10. I VA pronti includono la Media: rimuovendola si recuperano +1 ai VA fisici penalizzati e Movimento 6 / 12 / 18 Q; Parata e PS restano invariate. Parla Comune e Goblin. Coordina una pattuglia e apre un varco con lo Spadone. Condotta: sotto 11 PV o a Ferita Profonda cerca una ritirata ordinata; resa o trattativa restano possibili. Fonte: Hobgoblin Captain, p. 186."
+}

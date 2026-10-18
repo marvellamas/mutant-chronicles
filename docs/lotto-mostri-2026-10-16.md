@@ -250,11 +250,16 @@ Scelte del blocco: danno misto (per esempio Taglio + Gelo): la prima componente 
 
 Scelte del blocco: AR «con scudo» nel campo (Orrore in elmo 6, 4 senza Scudo in nota); PM — e Volontà — del Golem di argilla e del Guardiano con `pm` assente e `senza_salvezza`; immunità negli Stati solo per Avvelenato, Sanguinamento, Terrorizzato, Stordito, Accecato e Assordato (Sonno, soffocamento, Paralizzato, Affaticamento, fascinazione e pietrificazione nella capacità «Corpo animato»); i Modron, viventi, senza immunità; armi della dotazione come attacchi (Giavellotto lanciato e Arco con gittata); Sguardo terribile, Gas paralizzante (3 dosi al giorno), Accelerazione, Furia, Colpo maledetto, trasferimento del danno e carica preparata del Guardiano come capacità con `azioni`, `risorsa` e `usi`; Schianto dei Golem di natura Magica; PX non tondi dei Modron (11, 22, 33) riportati così; Taglia non dedotta dall'ingombro (A.167). Test: `tests/mostri-modron.test.js`.
 
+## Catalogo, blocco «Capi e varianti dei popoli guerrieri» — cap. 8 (18/10, Mostri 0.23)
+
+`tools/genera_mostri_capi.mjs` → `esempi/nemici/mostri/`: Capo goblin, Capitano hobgoblin, Signore della guerra hobgoblin, Capobanda bugbear, Coboldo alato, Capobranco gnoll, Zanna di Yeenoghu, Capoguerra orco, Occhio di Gruumsh, Mezzogre (Ogrillon).
+
+Scelte del blocco: Difese = Parata dove il manuale la dà (Schivata / Elusione nelle note) e AR «con scudo» nel campo (senza scudo nelle note); i bonus personali (Forza brutale, Furia) già nei danni e quindi nessuna capacità che li aggiunga; armi della dotazione come attacchi (Giavellotti e Arco con gittata e modalità S; Lancia a una e a due mani come due attacchi); Disciplina hobgoblin, Attacco coordinato (+3 non incluso nei danni), Frenesia gnoll, Incitare la Frenesia, Urlo di guerra, Agguato, Protezione opportunista, Sgusciare, Avanzata aggressiva e Urto di Scudo come capacità con `azioni`, `risorsa` e `usi`; Tossina della Zanna come evento separato dal Morso; repertorio chiuso dell'Occhio (Benedizione 3, Comando 3, Dardo Spirituale 3) come capacità, come per la Driade; GS «Elite» (Signore della guerra) e PX non tondi (11, 22, 33, 77) riportati così; Taglia non dedotta dall'ingombro (Mezzogre 2 × 2 Q senza Taglia). Test: `tests/mostri-capi.test.js`.
+
 ## Che cosa resta del catalogo (Mostri 0.23)
 
-Il catalogo del cap. 8 ha 215 creature in 21 blocchi; ne sono fatte 175. Restano 40, in 4 blocchi, da fare nei prossimi lotti:
+Il catalogo del cap. 8 ha 215 creature in 21 blocchi; ne sono fatte 185. Restano 30, in 3 blocchi, da fare nei prossimi lotti:
 
-- **Capi e varianti dei popoli guerrieri** (10 creature);
 - **Predatori straordinari** (10 creature);
 - **Popoli delle terre selvagge** (10 creature);
 - **Fauna delle terre aperte** (10 creature).

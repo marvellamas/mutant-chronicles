@@ -1,0 +1,135 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "zanna-di-yeenoghu",
+  "nome": "Zanna di Yeenoghu",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Capi e varianti dei popoli guerrieri",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 6,
+    "COS": 7,
+    "INT": 5,
+    "SAG": 5,
+    "CAR": 6
+  },
+  "pv": 54,
+  "pm": 10,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 55,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 11,
+    "volonta": 11,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 3,
+    "movimento": 1,
+    "eccezioni": "più l’eventuale AzP aggiuntiva della Frenesia gnoll, utilizzabile solo per un Morso"
+  },
+  "attacchi": [
+    {
+      "nome": "Artiglio",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ],
+      "note": "Parte del corpo: non concede Parata."
+    },
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ],
+      "note": "Più tossina se applicabile: vedi «Tossina». Parte del corpo: non concede Parata."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    },
+    {
+      "nome": "Oratoria",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e Azioni",
+      "effetto": "Natura Comune, con mente e PM personali; respira, mangia, beve e dorme; cure biologiche e normali Stati applicabili. Non appartiene alla Covata. A 0 PV si continua col §4.2 (non Svenuto né morto automaticamente; un ulteriore danno finale positivo a 0 PV richiede Tempra e la procedura delle Ferite; l’eccedenza del colpo che esaurisce i PV non genera da sola Ferite); a 0 PM personali Svenuto dopo la risoluzione completa dell’azione. INI modifica 1d10; AzP e unica AzM sono il budget dell’intero Round; ogni attacco costa 1 AzP e produce AC 1; i danni in tabella comprendono i bonus fissi personali (non sommare ancora FOR, DES, Forza brutale o Furia). Più armi, ali o arti non concedono altre Azioni. Una sola Opportunità ordinaria per Round, prima dell’uscita dalla portata, con un’arma ravvicinata pronta (o morso/artiglio consentito); comandi, Urlo e magia non sono Opportunità; con un tetto agli attacchi, Opportunità e attacco ordinato lo consumano. Parata: 1 AzP, arma o scudo idonei, successo dimezza per eccesso prima dell’AR, Magistrale annulla; nessuna Parata naturale; armi ravvicinate −8 VA per parare a distanza, Scudo piccolo o medio −4 con ulteriore −2 contro Raffica. Schivata: 1 AzP, 1 AzM, consapevolezza e spazio. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica. Estrarre, riporre o recuperare un oggetto costa 1 AzP (abbandonarlo è gratuito). Armatura Media: −1 ai VA degli attacchi, alla Schivata e alle Prove fisiche ostacolate e −1 Q al budget scelto; Pesante −2 VA e −2 Q (Parata, Percezione e PS non ricevono questi malus; i valori pronti li comprendono già; a 0 PI la protezione perde AR ma mantiene le penalità)."
+    },
+    {
+      "nome": "Catena di comando",
+      "effetto": "Un ordine ordinario non costringe un alleato a obbedire: richiede comprensione e un rapporto di comando o accordo effettivi; non è telepatia né controllo mentale. Le capacità funzionano solo sui beneficiari indicati; un alleato non ottiene conoscenze che il capo non possiede né può colpire un bersaglio fuori portata o non localizzato."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    },
+    {
+      "nome": "Frenesia gnoll",
+      "passiva": true,
+      "limiti": "Una volta per Round; il Morso di Frenesia non può attivare un’altra Frenesia.",
+      "effetto": "Se un proprio attacco ravvicinato alla propria Iniziativa rende un nemico Svenuto, Morente o morto, ottiene subito 1 AzP aggiuntiva utilizzabile soltanto per un Morso contro un altro nemico in portata. Può prima spendere la propria AzM del Round, se ancora disponibile; nessuna AzM aggiuntiva. 0 PV senza tali esiti, resa o fuga non bastano."
+    },
+    {
+      "nome": "Attacchi e dotazione",
+      "effetto": "Armatura leggera Comune AR 1 FOR 3 PI 6, PS Integrità 10; nessuna arma impugnata. Al massimo tre attacchi normali per Round, dei quali non più di due Artigli e un Morso, Opportunità e colpo ordinato compresi. Il Morso di Frenesia può aggiungersi ed è l’unica eccezione al limite di un Morso; non genera un’altra Frenesia. I 55 PX comprendono la dotazione."
+    },
+    {
+      "nome": "Tossina",
+      "prova": "PS di Tempra senza modificatore",
+      "limiti": "Una sola volta per Round, sul primo Morso che infligge almeno 1 danno fisico finale a una vittima biologicamente vulnerabile.",
+      "effetto": "Tempra senza modificatore: fallimento 1d6 Naturale da veleno immediato, senza ulteriore tiro per colpire; successo evita. Non incontra di nuovo l’AR ordinaria della ferita (si applicano protezioni specifiche contro veleno). È un evento separato dal morso, non moltiplicato dal suo Magistrale e capace di richiedere Tempra per Ferite se raggiunge una vittima a 0 PV. L’uso si consuma quando il primo Morso produce la PS, anche se la vittima la supera; un bersaglio immune o privo di fisiologia compatibile non riceve la tossina e non consuma l’uso. Il Morso di Frenesia la inietta solo se non già applicata nel Round. Veleno naturale di Pericolosità II, Importante; l’immunità al veleno o ad Avvelenato la evita. Nessuno Stato Avvelenato persistente, dosi periodiche o danni retroattivi; Cura Avvelenamenti non restituisce PV né annulla Ferite. Se il danno fisico del Morso è interamente assorbito non c’è esposizione."
+    },
+    {
+      "nome": "Influenza spirituale",
+      "passiva": true,
+      "effetto": "La possessione demoniaca all’origine del campione è conservata come influenza su una creatura vivente: nessun secondo avversario annidato, riserva esterna o trasferimento alla morte; nessuna Natura Oscura Simmetria, CROS, immunità o danno Etereo. Conserva mente e PM: Dardo Psichico, Dardo Spirituale e influenze mentali la raggiungono secondo le proprie schede; la fedeltà al culto non è un’immunità. Nessun contagio: morso, sangue, vicinanza o uccisione non trasferiscono la condizione né aumentano CROS; altri campioni, un demone autonomo o un esorcismo richiedono un effetto o un’avventura definiti separatamente. Negare Potere non cancella artigli, Frenesia o addestramento."
+    }
+  ],
+  "note": "Nessuna immunità biologica o mentale. Parla Gnoll e Abissale. Variante dal morso tossico e dagli artigli sviluppati: la scheda ne definisce solo il corpo combattente. Condotta: sotto 14 PV o a Ferita Profonda può ripiegare verso il branco oppure obbedire a una consegna fanatica fissata dal Direttore; nessun bonus o PX per il solo appellativo demoniaco. Fonte: Gnoll Fang of Yeenoghu, pp. 162–163."
+}

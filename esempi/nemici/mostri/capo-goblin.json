@@ -1,0 +1,143 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "capo-goblin",
+  "nome": "Capo goblin",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Capi e varianti dei popoli guerrieri",
+  "caratteristiche": {
+    "FOR": 4,
+    "DES": 7,
+    "COS": 5,
+    "INT": 6,
+    "SAG": 5,
+    "CAR": 6
+  },
+  "pv": 26,
+  "pm": 8,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 2,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 22,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 11,
+    "volonta": 10,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Spada leggera",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ]
+    },
+    {
+      "nome": "Giavellotto a mano",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d6",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    },
+    {
+      "nome": "Giavellotto lanciato",
+      "tipo": "distanza",
+      "va": 11,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "gittata_q": 12,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 11
+    },
+    {
+      "nome": "Armi da guerra",
+      "va": 10
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Oratoria",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e Azioni",
+      "effetto": "Natura Comune, con mente e PM personali; respira, mangia, beve e dorme; cure biologiche e normali Stati applicabili. Non appartiene alla Covata. A 0 PV si continua col §4.2 (non Svenuto né morto automaticamente; un ulteriore danno finale positivo a 0 PV richiede Tempra e la procedura delle Ferite; l’eccedenza del colpo che esaurisce i PV non genera da sola Ferite); a 0 PM personali Svenuto dopo la risoluzione completa dell’azione. INI modifica 1d10; AzP e unica AzM sono il budget dell’intero Round; ogni attacco costa 1 AzP e produce AC 1; i danni in tabella comprendono i bonus fissi personali (non sommare ancora FOR, DES, Forza brutale o Furia). Più armi, ali o arti non concedono altre Azioni. Una sola Opportunità ordinaria per Round, prima dell’uscita dalla portata, con un’arma ravvicinata pronta (o morso/artiglio consentito); comandi, Urlo e magia non sono Opportunità; con un tetto agli attacchi, Opportunità e attacco ordinato lo consumano. Parata: 1 AzP, arma o scudo idonei, successo dimezza per eccesso prima dell’AR, Magistrale annulla; nessuna Parata naturale; armi ravvicinate −8 VA per parare a distanza, Scudo piccolo o medio −4 con ulteriore −2 contro Raffica. Schivata: 1 AzP, 1 AzM, consapevolezza e spazio. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica. Estrarre, riporre o recuperare un oggetto costa 1 AzP (abbandonarlo è gratuito). Armatura Media: −1 ai VA degli attacchi, alla Schivata e alle Prove fisiche ostacolate e −1 Q al budget scelto; Pesante −2 VA e −2 Q (Parata, Percezione e PS non ricevono questi malus; i valori pronti li comprendono già; a 0 PI la protezione perde AR ma mantiene le penalità)."
+    },
+    {
+      "nome": "Catena di comando",
+      "effetto": "Un ordine ordinario non costringe un alleato a obbedire: richiede comprensione e un rapporto di comando o accordo effettivi; non è telepatia né controllo mentale. Le capacità funzionano solo sui beneficiari indicati; un alleato non ottiene conoscenze che il capo non possiede né può colpire un bersaglio fuori portata o non localizzato."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    },
+    {
+      "nome": "Dotazione",
+      "effetto": "Spada leggera FOR 3 PI 5; due Giavellotti della sentinella FOR 3 PI 4; Armatura leggera AR 1 FOR 3 PI 6; Scudo piccolo AR +1 FOR 3 PI 4. Tutto Comune, PS Integrità 10. Inizia con Spada e Scudo pronti. Al massimo due attacchi per Round, Opportunità e colpo ordinato compresi; il secondo tiro per colpire del Round ha −2 VA, qualunque sia la sua origine. I 22 PX comprendono la dotazione."
+    },
+    {
+      "nome": "Sgusciare",
+      "limiti": "Una volta per Round, prima di iniziare il proprio Passo.",
+      "effetto": "Sceglie un nemico visibile: il movimento non provoca la sua Opportunità (può provocare quelle degli altri). Corsa, Scatto e Carica non ricevono il beneficio. Se termina quel Passo in condizioni adatte può effettuare Furtività per nascondersi senza un’ulteriore AzP; non diventa invisibile. Conserva lo Sgusciare del Goblin senza Movimento aggiuntivo."
+    },
+    {
+      "nome": "Protezione opportunista",
+      "azioni": {
+        "principali": 1
+      },
+      "limiti": "Una volta per Round, solo se ha ancora una AzP disponibile.",
+      "effetto": "Prima del tiro per colpire di un attacco diretto solo contro il Capo, può farsi sostituire da un altro Goblin consenziente entro 1 Q. Deve percepire l’attacco; entrambi coscienti, mobili e in condizioni di reagire; il sostituto deve avere spazio per occupare la posizione e non può essere trattenuto, Immobilizzato o incapace di muoversi. I due scambiano la posizione (unico Movimento concesso, non consuma l’AzM del sostituto; non supera barriere né occupa un Q impraticabile; nessuna Opportunità per questa sola sostituzione). Il sostituto diventa il bersaglio solo se nella posizione del Capo è ancora valido per lo stesso attacco; si ricalcolano i modificatori e si tira; fa le proprie Difese senza ereditare quelle del Capo; il danno si applica a lui. Non si usa dopo aver conosciuto tiro, danni o Salvezza; non devia Aree, Raffiche, attacchi a più bersagli o effetti senza tiro per colpire; non assorbe un colpo già risolto né trasferisce Stati. Se mancano i requisiti non si spende l’AzP. Il sostituto non spende AzP; il consenso non nasce dalla sola intimidazione o dalla stessa specie e può venir meno se la banda abbandona il capo."
+    }
+  ],
+  "note": "AR 2 con Scudo piccolo, 1 senza. Parla Comune e Goblin. Guida con agguati, minacce e vie di fuga; preferisce farsi proteggere dai seguaci. Condotta: sotto 7 PV, a Ferita Profonda o senza seguaci cerca una via di fuga o offre informazioni. Fonte: Goblin Boss, p. 166."
+}

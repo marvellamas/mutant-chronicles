@@ -1,0 +1,140 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "coboldo-alato",
+  "nome": "Coboldo alato",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Capi e varianti dei popoli guerrieri",
+  "caratteristiche": {
+    "FOR": 3,
+    "DES": 6,
+    "COS": 4,
+    "INT": 5,
+    "SAG": 4,
+    "CAR": 4
+  },
+  "pv": 12,
+  "pm": 5,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18,
+    "volo": 6
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 11,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 8,
+    "riflessi": 10,
+    "volonta": 8,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Pugnale a mano",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d4+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    },
+    {
+      "nome": "Pugnale lanciato",
+      "tipo": "distanza",
+      "va": 9,
+      "danno": "1d4+2",
+      "natura": "Naturale",
+      "gittata_q": 9,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    },
+    {
+      "nome": "Pietra lasciata cadere",
+      "tipo": "distanza",
+      "va": 9,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "gittata_q": 6,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ],
+      "note": "Bersaglio visibile direttamente sotto la verticale, senza ostacoli; non è un’Area."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 9
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 9
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Tecnologia",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e Azioni",
+      "effetto": "Natura Comune, con mente e PM personali; respira, mangia, beve e dorme; cure biologiche e normali Stati applicabili. Non appartiene alla Covata. A 0 PV si continua col §4.2 (non Svenuto né morto automaticamente; un ulteriore danno finale positivo a 0 PV richiede Tempra e la procedura delle Ferite; l’eccedenza del colpo che esaurisce i PV non genera da sola Ferite); a 0 PM personali Svenuto dopo la risoluzione completa dell’azione. INI modifica 1d10; AzP e unica AzM sono il budget dell’intero Round; ogni attacco costa 1 AzP e produce AC 1; i danni in tabella comprendono i bonus fissi personali (non sommare ancora FOR, DES, Forza brutale o Furia). Più armi, ali o arti non concedono altre Azioni. Una sola Opportunità ordinaria per Round, prima dell’uscita dalla portata, con un’arma ravvicinata pronta (o morso/artiglio consentito); comandi, Urlo e magia non sono Opportunità; con un tetto agli attacchi, Opportunità e attacco ordinato lo consumano. Parata: 1 AzP, arma o scudo idonei, successo dimezza per eccesso prima dell’AR, Magistrale annulla; nessuna Parata naturale; armi ravvicinate −8 VA per parare a distanza, Scudo piccolo o medio −4 con ulteriore −2 contro Raffica. Schivata: 1 AzP, 1 AzM, consapevolezza e spazio. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica. Estrarre, riporre o recuperare un oggetto costa 1 AzP (abbandonarlo è gratuito). Armatura Media: −1 ai VA degli attacchi, alla Schivata e alle Prove fisiche ostacolate e −1 Q al budget scelto; Pesante −2 VA e −2 Q (Parata, Percezione e PS non ricevono questi malus; i valori pronti li comprendono già; a 0 PI la protezione perde AR ma mantiene le penalità)."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    },
+    {
+      "nome": "Dotazione e attacchi",
+      "effetto": "Tre Pugnali Comuni FOR 2 PI 4, PS Integrità 10, e tre pietre; una pietra già pronta in una mano, un Pugnale nell’altra. La pietra è una munizione improvvisata di questo profilo, non un’arma recuperabile con proprietà speciali. Ogni lancio o caduta consuma un oggetto pronto; prepararne un altro costa 1 AzP. Al massimo un attacco per Round, Opportunità e colpo ordinato compresi; l’Opportunità usa solo il Pugnale impugnato. I 11 PX comprendono la dotazione."
+    },
+    {
+      "nome": "Branco e sole",
+      "passiva": true,
+      "effetto": "+2 al VA del tiro per colpire se un alleato cosciente e capace di attaccare minaccia la vittima in mischia da entro 1 Q (nessun secondo vantaggio numerico per la stessa circostanza). −2 ai tiri per colpire e a Percezione basata sulla vista se il Coboldo oppure il bersaglio è sotto sole diretto (una sola penalità anche se entrambi lo sono; luce diffusa o artificiale non basta)."
+    },
+    {
+      "nome": "Volo",
+      "effetto": "Ali e spazio funzionali necessari; può sostenersi battendole senza percorso minimo. Corsa e Scatto in volo richiedono Atletica −2 e −4; quota, decollo e atterraggio usano l’unica AzM; perdita del sostegno o incoscienza possono farlo cadere."
+    }
+  ],
+  "note": "Tecnologia 10 vale solo per trappole semplici. Variante alata del Coboldo che passa sopra gli ostacoli e lascia cadere pietre; vulnerabilità al sole e tattiche di branco restano. Parla Comune e Draconico. Condotta: sotto 3 PV o isolato cerca un riparo o fugge. Fonte: Winged Kobold, p. 195."
+}

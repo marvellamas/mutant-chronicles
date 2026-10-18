@@ -1,0 +1,152 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "occhio-di-gruumsh",
+  "nome": "Occhio di Gruumsh",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Capi e varianti dei popoli guerrieri",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 5,
+    "COS": 7,
+    "INT": 5,
+    "SAG": 7,
+    "CAR": 6
+  },
+  "pv": 36,
+  "pm": 18,
+  "ar": {
+    "totale": 5,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 5,
+    "corsa": 11,
+    "scatto": 17
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 33,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 9,
+    "volonta": 11,
+    "magia": 11
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Lancia a una mano",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+4",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    },
+    {
+      "nome": "Lancia a due mani",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+6",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ],
+      "note": "Richiede di riporre o abbandonare lo Scudo (AR scende a 3)."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Oratoria",
+      "va": 12
+    },
+    {
+      "nome": "Occultismo",
+      "va": 11
+    },
+    {
+      "nome": "Potere",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e Azioni",
+      "effetto": "Natura Comune, con mente e PM personali; respira, mangia, beve e dorme; cure biologiche e normali Stati applicabili. Non appartiene alla Covata. A 0 PV si continua col §4.2 (non Svenuto né morto automaticamente; un ulteriore danno finale positivo a 0 PV richiede Tempra e la procedura delle Ferite; l’eccedenza del colpo che esaurisce i PV non genera da sola Ferite); a 0 PM personali Svenuto dopo la risoluzione completa dell’azione. INI modifica 1d10; AzP e unica AzM sono il budget dell’intero Round; ogni attacco costa 1 AzP e produce AC 1; i danni in tabella comprendono i bonus fissi personali (non sommare ancora FOR, DES, Forza brutale o Furia). Più armi, ali o arti non concedono altre Azioni. Una sola Opportunità ordinaria per Round, prima dell’uscita dalla portata, con un’arma ravvicinata pronta (o morso/artiglio consentito); comandi, Urlo e magia non sono Opportunità; con un tetto agli attacchi, Opportunità e attacco ordinato lo consumano. Parata: 1 AzP, arma o scudo idonei, successo dimezza per eccesso prima dell’AR, Magistrale annulla; nessuna Parata naturale; armi ravvicinate −8 VA per parare a distanza, Scudo piccolo o medio −4 con ulteriore −2 contro Raffica. Schivata: 1 AzP, 1 AzM, consapevolezza e spazio. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica. Estrarre, riporre o recuperare un oggetto costa 1 AzP (abbandonarlo è gratuito). Armatura Media: −1 ai VA degli attacchi, alla Schivata e alle Prove fisiche ostacolate e −1 Q al budget scelto; Pesante −2 VA e −2 Q (Parata, Percezione e PS non ricevono questi malus; i valori pronti li comprendono già; a 0 PI la protezione perde AR ma mantiene le penalità)."
+    },
+    {
+      "nome": "Catena di comando",
+      "effetto": "Un ordine ordinario non costringe un alleato a obbedire: richiede comprensione e un rapporto di comando o accordo effettivi; non è telepatia né controllo mentale. Le capacità funzionano solo sui beneficiari indicati; un alleato non ottiene conoscenze che il capo non possiede né può colpire un bersaglio fuori portata o non localizzato."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    },
+    {
+      "nome": "Dotazione e Furia",
+      "effetto": "Lancia FOR 5 PI 6; Armatura media AR 3 FOR 5 PI 8; Scudo medio AR +2 FOR 5 PI 6. Tutto Comune, PS Integrità 10. Focus personale semplice già sintonizzato, senza PM o bonus (Equipaggiamento §5.8). Inizia con Lancia a una mano e Scudo. La Lancia non è un Giavellotto. Un solo attacco d’arma per Round, Opportunità e colpo ordinato compresi; il lancio di un incantesimo usa l’AzP e non aggiunge un attacco d’arma. Furia: +2 ai danni personali della Lancia, già inclusi, senza Natura Magica. I 33 PX comprendono la dotazione."
+    },
+    {
+      "nome": "Avanzata aggressiva",
+      "limiti": "Una volta per Round.",
+      "effetto": "Proprio Passo 7 Q con Media verso un nemico visibile, senza allontanarsi lungo il percorso e terminando più vicino. Nessuna AzM aggiuntiva o aumento delle altre andature. Opportunità normali. Rimossa la Media il Passo aggressivo arriva a 8 Q."
+    },
+    {
+      "nome": "Repertorio e lancio",
+      "effetto": "Utilizzatore autorizzato con repertorio chiuso: soltanto Benedizione 3, Comando 3 e Dardo Spirituale 3, nelle versioni qui indicate; nessun Addestramento Taumaturgo, Contromagia, Anticipazione, Meditazione o Convertire Potere; nessun altro livello, rituale o presagio, né una creatura armata evocata. Ogni lancio richiede 1 AzP e 3 PM, pagati prima della Prova. Potere base 12, con −3 da Armatura media: VA di lancio 9 anche al livello 3; Ingaggio −2 quando pertinente (7); mancanza di Focus, Gesti o Invocazione dà ciascuna il normale −2 (fino a −6); per Comando la voce è obbligatoria. Fallimento consuma AzP e PM; Magistrale e Maldestro seguono la Magia. Nessuna esclusione delle Componenti: deve liberare una mano per i Gesti (abbandonare la Lancia è gratuito, riprenderla costa 1 AzP; per la Lancia a due mani deve riporre lo Scudo, perdendone l’AR); il Focus semplice non è una batteria e può omettere i Gesti accettando la penalità dove consentito. Gli effetti istantanei non restano disponibili per una dissoluzione successiva."
+    },
+    {
+      "nome": "Benedizione 3",
+      "azioni": {
+        "principali": 1
+      },
+      "risorsa": "3 PM",
+      "prova": "VA di lancio 9 (Potere 12 −3 Media)",
+      "effetto": "Magia §23.3: fino a due beneficiari consenzienti visibili entro 6 Q, sé stesso compreso (se due, concatenati entro 2 Q al lancio). +1 alle Prove di Abilità, Caratteristica e alle quattro PS per 10 Round, senza Concentrazione né PS iniziale; nessun bonus a danni, AR, PV, PM, Azioni o Movimento. Uscire dalla gittata non lo elimina. Si usa il maggiore bonus magico pertinente e non si somma a Disciplina o Urlo sulla stessa Prova. Durata 10 applicata nel Round R: termina a fine Round R + 10; incoscienza o morte dell’Occhio non la cancellano; Negare Potere la rimuove da un beneficiario (potenza 3)."
+    },
+    {
+      "nome": "Comando 3",
+      "azioni": {
+        "principali": 1
+      },
+      "risorsa": "3 PM",
+      "prova": "PS di Volontà del bersaglio",
+      "effetto": "Magia §19.2: un bersaglio visibile entro 6 Q, capace di udire e comprendere un singolo ordine di massimo tre parole; Volontà senza modificatore evita (Barriera Mentale migliora la PS). Nessun tiro per colpire, AR, Parata, Schivata o Elusione. Fallita la PS, tenta l’ordine nel primo proprio turno successivo entro al massimo 1 AzP e l’AzM disponibili, senza ottenerne altre; l’effetto scade alla fine di quel turno. Non impone autolesionismo diretto, tradimento di principi morali profondi o lealtà, uso di incantesimi o spesa di PM e PE. «Fermo» impedisce il Movimento volontario ma conserva AzP e Difese; «Cadi» costa al bersaglio 1 AzP per andare A Terra e impedisce di rialzarsi in quel turno. Il tentativo soddisfa l’ordine anche se fallisce. Un comando palesemente impossibile al lancio consuma PM senza effetto; un’impossibilità sopravvenuta applica la perdita del turno, senza Stordito. Un solo Comando attivo per vittima (un nuovo lancio con PS fallita sostituisce il precedente); i danni non lo terminano; Negare Potere 3 lo rimuove prima dell’esecuzione. Nessuna preparazione gratuita con Oratoria."
+    },
+    {
+      "nome": "Dardo Spirituale 3",
+      "azioni": {
+        "principali": 1
+      },
+      "risorsa": "3 PM",
+      "prova": "PS di Magia del bersaglio",
+      "effetto": "Magia §23.5: una creatura vivente o entità spirituale ammessa, visibile entro 6 Q. Infligge 1d4 danni Eterei ai PV e sottrae 1 PM personale; Magia senza modificatore dimezza separatamente per eccesso il danno (il singolo PM è comunque perso salvo protezioni specifiche). Nessun tiro per colpire o Difesa attiva. Una AC per i PV: l’AR magica assorbe, quella ordinaria no. La perdita di PM è distinta, non ridotta dall’AR e non ricevuta dall’Occhio. Non colpisce oggetti, dispositivi, Ectoplasma o costrutti puramente meccanici salvo eccezioni del Bestiario; PM — non è 0 PM. Scudo Spirituale modifica la PS e la perdita di PM; Barriera Mentale non protegge. A 0 PM personali l’incoscienza si verifica dopo la risoluzione completa dell’azione."
+    }
+  ],
+  "note": "AR 5 con Scudo medio, 3 senza; Parata 11 (valore delle Difese), Schivata / Elusione 9. Rimossa la Media recupera +1 ai VA fisici penalizzati, lancio Potere 12 e Movimento 6 / 12 / 18 Q. Il valore di Percezione rappresenta già il profilo con un occhio: nessuna penalità generica permanente; titolo e menomazione rituale non concedono immunità. Parla Comune e Orchesco. Ministro di un culto guerriero. Condotta: sotto 9 PV o a Ferita Profonda cerca protezione o si arrende secondo il culto e la situazione. Fonte: Orc Eye of Gruumsh, p. 247."
+}
