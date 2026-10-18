@@ -1,0 +1,91 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "mulo",
+  "nome": "Mulo",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Cavalcature e animali da lavoro",
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 5,
+    "COS": 6,
+    "INT": 2,
+    "SAG": 5,
+    "CAR": 3
+  },
+  "pv": 18,
+  "pm": 5,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 8,
+  "iniziativa": -1,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 9,
+    "volonta": 7,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Zoccoli",
+      "tipo": "ravvicinato",
+      "va": 8,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 8
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 7
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Animale da lavoro",
+      "effetto": "Natura Comune, vivente, con mente e PM personali (a 0 PM Svenuto); nessun incantesimo o potere magico attivo. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente (nessuna morte o incoscienza automatica); le cure biologiche seguono le procedure normali. Nessuna Parata naturale: denti, corna e zoccoli non sono scudi. Una sola Opportunità ordinaria gratuita per Round, con l’attacco normale della scheda (non Impeto né Calpestare). Respira aria (COS Round di fiato). Vista, udito e olfatto ordinari, nessuna Scurovisione innata. Non comprende linguaggi. Testa = capo, fauci e corna; Torace = tronco; Braccia = arti anteriori; Gambe = posteriori. Non garantisce addestramento, disponibilità a farsi cavalcare né adattamento alle Terre del Fuoco; i profili non includono bardature, selle, finimenti o carri. Cavaliere e animale restano distinti per Azioni, risorse, attacchi e bersagli: Impeto e danni dell’animale non si trasferiscono all’arma del cavaliere, e stare in sella non dà AR, Copertura o Difese condivise."
+    },
+    {
+      "nome": "Trasporto robusto",
+      "effetto": "Soglie 120 kg ordinari, 240 kg massimi trasportabili, 480 kg di spinta o trascinamento (comprendono cavaliere, dotazione e attrezzatura dell’animale). Soglie anatomiche raddoppiate (FOR × 20 / 40 / 80 kg): non aumentano FOR, attacchi, danni o numero di passeggeri; serve una sistemazione realmente utilizzabile per il carico. Sovraccarico oltre l’ordinario e fino al massimo: −2 VA alle Prove fisiche (non alle PS), solo Passo con −2 Q e peggioramento di Affaticamento per ogni ora completa di trasporto gravoso; oltre il massimo Movimento 0 finché il carico non è ridotto. La spinta vale su terreno piano e senza ostacoli (Giocatore §5.2.6); ruote, pendenze e tiro di più animali richiedono un mezzo definito. Nonostante lo spazio di 1 × 1 Q usa le soglie anatomiche raddoppiate; non concede il Talento Mulo da Soma del Giocatore (effetti distinti sulle Prove)."
+    },
+    {
+      "nome": "Piede saldo",
+      "effetto": "+2 alle PS di Tempra o Riflessi e alle Prove di FOR o DES espressamente richieste per evitare A Terra; si aggiunge alla Prova pertinente, non ai valori permanenti. Non introduce una Prova se l’effetto non la concede, non evita ogni spostamento forzato, non vale per le PS per Ferite e non dà aderenza a superfici lisce o immunità alle Cadute."
+    }
+  ],
+  "note": "Cerca un appoggio stabile e può colpire con gli zoccoli quando qualcuno lo stringe senza via di fuga. Un attacco di Zoccoli per Round, Opportunità compresa. Condotta: può fermarsi davanti a un ostacolo concreto; sotto 4 PV o a Ferita Profonda tende a cercare un riparo. Fonte: Mule, p. 333."
+}

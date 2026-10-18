@@ -1,0 +1,122 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "alce",
+  "nome": "Alce",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Cavalcature e animali da lavoro",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 5,
+    "COS": 5,
+    "INT": 2,
+    "SAG": 5,
+    "CAR": 3
+  },
+  "pv": 22,
+  "pm": 5,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": -1,
+  "movimento": {
+    "passo": 10,
+    "corsa": 20,
+    "scatto": 30
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 9,
+    "volonta": 7,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Corna",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ]
+    },
+    {
+      "nome": "Corna in Impeto",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ],
+      "note": "Dopo 4 Q di Passo rettilineo; sostituisce il danno ordinario: vedi la capacità «Impeto»."
+    },
+    {
+      "nome": "Zoccoli",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ],
+      "note": "Richiede una vittima già A Terra non maggiore di 1 × 1 Q e un appoggio che consenta il colpo; non colpisce dopo averla atterrata."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 7
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Animale da lavoro",
+      "effetto": "Natura Comune, vivente, con mente e PM personali (a 0 PM Svenuto); nessun incantesimo o potere magico attivo. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente (nessuna morte o incoscienza automatica); le cure biologiche seguono le procedure normali. Nessuna Parata naturale: denti, corna e zoccoli non sono scudi. Una sola Opportunità ordinaria gratuita per Round, con l’attacco normale della scheda (non Impeto né Calpestare). Respira aria (COS Round di fiato). Vista, udito e olfatto ordinari, nessuna Scurovisione innata. Non comprende linguaggi. Testa = capo, fauci e corna; Torace = tronco; Braccia = arti anteriori; Gambe = posteriori. Non garantisce addestramento, disponibilità a farsi cavalcare né adattamento alle Terre del Fuoco; i profili non includono bardature, selle, finimenti o carri. Cavaliere e animale restano distinti per Azioni, risorse, attacchi e bersagli: Impeto e danni dell’animale non si trasferiscono all’arma del cavaliere, e stare in sella non dà AR, Copertura o Difese condivise."
+    },
+    {
+      "nome": "Trasporto robusto",
+      "effetto": "Soglie 160 kg ordinari, 320 kg massimi trasportabili, 640 kg di spinta o trascinamento (comprendono cavaliere, dotazione e attrezzatura dell’animale). Soglie anatomiche raddoppiate (FOR × 20 / 40 / 80 kg): non aumentano FOR, attacchi, danni o numero di passeggeri; serve una sistemazione realmente utilizzabile per il carico. Sovraccarico oltre l’ordinario e fino al massimo: −2 VA alle Prove fisiche (non alle PS), solo Passo con −2 Q e peggioramento di Affaticamento per ogni ora completa di trasporto gravoso; oltre il massimo Movimento 0 finché il carico non è ridotto. La spinta vale su terreno piano e senza ostacoli (Giocatore §5.2.6); ruote, pendenze e tiro di più animali richiedono un mezzo definito. È una capacità anatomica, non addestramento come cavalcatura."
+    },
+    {
+      "nome": "Impeto",
+      "effetto": "Richiede almeno 4 Q di Passo rettilineo verso la vittima nella stessa Iniziativa (usa l’AzM ordinaria e l’AzP del colpo; si dichiara prima del tiro; non si combina con Carica, Corsa, Scatto o altre manovre offensive). Il danno speciale sostituisce quello normale, senza il ×2 della Carica. Con almeno 1 danno finale: Tempra senza modificatore a una creatura non maggiore di 1 × 1 Q; fallimento → A Terra. Il Magistrale non ne peggiora la Salvezza. Sostituisce il danno ordinario con 2d6+2 (un solo 1d6 da slancio). Nessun ×2 aggiuntivo da Carica."
+    },
+    {
+      "nome": "Un solo colpo",
+      "effetto": "Sceglie Corna, Corna in Impeto oppure Zoccoli per l’unico attacco del Round. L’Opportunità usa solo Corna ordinarie e consuma il limite offensivo."
+    }
+  ],
+  "note": "Distinto dall’Alce gigante già nel catalogo: non riceve le sue Azioni aggiuntive né la maggiore portata. Non ha Piede saldo speciale né sensi acuti. Condotta: sotto 5 PV o a Ferita Profonda tende a cercare il branco o spazio libero, salvo la necessità di proteggere piccoli vicini. Fonte: Elk, p. 322."
+}

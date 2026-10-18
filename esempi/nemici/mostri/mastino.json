@@ -1,0 +1,99 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "mastino",
+  "nome": "Mastino",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Cavalcature e animali da lavoro",
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 7,
+    "COS": 5,
+    "INT": 3,
+    "SAG": 6,
+    "CAR": 4
+  },
+  "pv": 12,
+  "pm": 5,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 11,
+    "volonta": 8,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 9
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Animale da lavoro",
+      "effetto": "Natura Comune, vivente, con mente e PM personali (a 0 PM Svenuto); nessun incantesimo o potere magico attivo. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente (nessuna morte o incoscienza automatica); le cure biologiche seguono le procedure normali. Nessuna Parata naturale: denti, corna e zoccoli non sono scudi. Una sola Opportunità ordinaria gratuita per Round, con l’attacco normale della scheda (non Impeto né Calpestare). Respira aria (COS Round di fiato). Vista, udito e olfatto ordinari, nessuna Scurovisione innata. Non comprende linguaggi. Testa = capo, fauci e corna; Torace = tronco; Braccia = arti anteriori; Gambe = posteriori. Non garantisce addestramento, disponibilità a farsi cavalcare né adattamento alle Terre del Fuoco; i profili non includono bardature, selle, finimenti o carri. Cavaliere e animale restano distinti per Azioni, risorse, attacchi e bersagli: Impeto e danni dell’animale non si trasferiscono all’arma del cavaliere, e stare in sella non dà AR, Copertura o Difese condivise."
+    },
+    {
+      "nome": "Carico",
+      "effetto": "Soglie 50 kg ordinari, 100 kg massimi trasportabili, 200 kg di spinta o trascinamento (comprendono cavaliere, dotazione e attrezzatura dell’animale). Soglie ordinarie del Giocatore (FOR × 10 / 20 / 40 kg). Sovraccarico oltre l’ordinario e fino al massimo: −2 VA alle Prove fisiche (non alle PS), solo Passo con −2 Q e peggioramento di Affaticamento per ogni ora completa di trasporto gravoso; oltre il massimo Movimento 0 finché il carico non è ridotto. La spinta vale su terreno piano e senza ostacoli (Giocatore §5.2.6); ruote, pendenze e tiro di più animali richiedono un mezzo definito. Un impiego come cavalcatura richiede cavaliere piccolo, peso e anatomia compatibili e addestramento specifico."
+    },
+    {
+      "nome": "Atterrare",
+      "effetto": "Un Morso con almeno 1 danno finale contro una creatura non maggiore di 1 × 1 Q impone Tempra senza modificatore: fallimento → A Terra. Il Morso non afferra automaticamente, non impedisce il movimento e non infligge un secondo danno. È un effetto del normale colpo penetrante e può verificarsi anche nell’Opportunità."
+    },
+    {
+      "nome": "Udito e olfatto",
+      "effetto": "+2 a Percezione quando udito oppure olfatto sono determinanti (una sola volta per Prova). Per seguire una traccia usa Sopravvivenza 9 con indizi accessibili; il bonus di Percezione non si trasferisce a quell’Abilità. Nessuna Scurovisione o individuazione oltre ogni ostacolo."
+    }
+  ],
+  "note": "Cane robusto addestrabile a guardia, ricerca e accompagnamento: non riconosce automaticamente intenzioni o appartenenze. Un Morso per Round, Opportunità compresa; non trasmette malattie automaticamente. Può apprendere segnali. Condotta: sotto 3 PV o a Ferita Profonda tende a ritirarsi o tornare al conduttore. Fonte: Mastiff, p. 332."
+}

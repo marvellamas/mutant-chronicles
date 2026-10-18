@@ -1,0 +1,92 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "cavallo-da-sella",
+  "nome": "Cavallo da sella",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Cavalcature e animali da lavoro",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 6,
+    "COS": 5,
+    "INT": 2,
+    "SAG": 5,
+    "CAR": 4
+  },
+  "pv": 22,
+  "pm": 5,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 12,
+    "corsa": 24,
+    "scatto": 36
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 10,
+    "volonta": 8,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Zoccoli",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 6
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Animale da lavoro",
+      "effetto": "Natura Comune, vivente, con mente e PM personali (a 0 PM Svenuto); nessun incantesimo o potere magico attivo. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente (nessuna morte o incoscienza automatica); le cure biologiche seguono le procedure normali. Nessuna Parata naturale: denti, corna e zoccoli non sono scudi. Una sola Opportunità ordinaria gratuita per Round, con l’attacco normale della scheda (non Impeto né Calpestare). Respira aria (COS Round di fiato). Vista, udito e olfatto ordinari, nessuna Scurovisione innata. Non comprende linguaggi. Testa = capo, fauci e corna; Torace = tronco; Braccia = arti anteriori; Gambe = posteriori. Non garantisce addestramento, disponibilità a farsi cavalcare né adattamento alle Terre del Fuoco; i profili non includono bardature, selle, finimenti o carri. Cavaliere e animale restano distinti per Azioni, risorse, attacchi e bersagli: Impeto e danni dell’animale non si trasferiscono all’arma del cavaliere, e stare in sella non dà AR, Copertura o Difese condivise."
+    },
+    {
+      "nome": "Trasporto robusto",
+      "effetto": "Soglie 160 kg ordinari, 320 kg massimi trasportabili, 640 kg di spinta o trascinamento (comprendono cavaliere, dotazione e attrezzatura dell’animale). Soglie anatomiche raddoppiate (FOR × 20 / 40 / 80 kg): non aumentano FOR, attacchi, danni o numero di passeggeri; serve una sistemazione realmente utilizzabile per il carico. Sovraccarico oltre l’ordinario e fino al massimo: −2 VA alle Prove fisiche (non alle PS), solo Passo con −2 Q e peggioramento di Affaticamento per ogni ora completa di trasporto gravoso; oltre il massimo Movimento 0 finché il carico non è ridotto. La spinta vale su terreno piano e senza ostacoli (Giocatore §5.2.6); ruote, pendenze e tiro di più animali richiedono un mezzo definito. Cavaliere, sua dotazione, sella e bagagli entrano nello stesso peso."
+    },
+    {
+      "nome": "Andatura",
+      "effetto": "Usa l’AzM dell’animale e le distanze riportate, ridotte da carico, terreno o lesioni. L’abitudine alla sella non gli concede Impeto, Calpestare, immunità a Terrorizzato o una Difesa gratuita. Un attacco di Zoccoli per Round, Opportunità compresa; la portata degli Zoccoli non diventa quella dell’arma del cavaliere."
+    }
+  ],
+  "note": "La velocità non implica la capacità di affrontare volontariamente fiamme, spari o una carica. Condotta: cerca uno spazio aperto e una direzione conosciuta; sotto 5 PV o a Ferita Profonda tende alla fuga. Fonte: Riding Horse, p. 336."
+}

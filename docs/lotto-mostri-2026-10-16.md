@@ -232,11 +232,16 @@ Scelte del blocco: Passo di volo in `movimento.volo` (Corsa e Scatto in volo con
 
 Scelte del blocco: gli Sciami sono un solo avversario da 1 × 1 Q condivisibile, con i due profili di danno per fascia di PV come due attacchi (quello ridotto sostituisce l'altro); «Corpo distribuito» (resistenza fisica dimezzata per eccesso, nessun recupero di PV), «Spazio condiviso» e «Ferite e dispersione» come capacità comuni, immune ad A Terra, Immobilizzato, Stordito e Terrorizzato negli Stati (fascinazione, paralisi e pietrificazione nel testo); portata 0 Q condiviso resa come 1 Q con la condizione in nota (nuova A.171); Quipper senza moto a terra, Frenesia del sangue e Imitazione del Corvo come capacità; veleno ofidico dello Sciame di serpenti con Tempra senza modificatore. Test: `tests/mostri-sciami.test.js`.
 
+## Catalogo, blocco «Cavalcature e animali da lavoro» — cap. 8 (18/10, Mostri 0.23)
+
+`tools/genera_mostri_cavalcature.mjs` → `esempi/nemici/mostri/`: Cammello, Cavallo da tiro, Cavallo da sella, Cavallo da guerra, Mulo, Pony, Mastino, Capra, Capra gigante, Alce.
+
+Scelte del blocco: soglie di carico (ordinario / massimo / spinta) della tabella finale del blocco come capacità «Carico» o «Trasporto robusto» per creatura, con sovraccarico e rapporto cavaliere-animale nella capacità comune «Animale da lavoro»; Impeto del Cavallo da guerra come capacità, mentre Cornata in Impeto (Capra, Capra gigante) e Corna in Impeto dell'Alce, con formula propria, restano attacchi con la condizione nella nota; Calpestare e Zoccoli dell'Alce su vittima A Terra come attacchi con la condizione; Piede saldo (+2 circoscritto) e Atterrare del Mastino come capacità; cammello, cavalli, capra gigante e alce 2 × 2 Q di taglia Grande. Test: `tests/mostri-cavalcature.test.js`.
+
 ## Che cosa resta del catalogo (Mostri 0.23)
 
-Il catalogo del cap. 8 ha 215 creature in 21 blocchi; ne sono fatte 145. Restano 70, in 7 blocchi, da fare nei prossimi lotti:
+Il catalogo del cap. 8 ha 215 creature in 21 blocchi; ne sono fatte 155. Restano 60, in 6 blocchi, da fare nei prossimi lotti:
 
-- **Cavalcature e animali da lavoro** (10 creature);
 - **Mephit e creature elementali** (10 creature);
 - **Costrutti e Modron** (10 creature);
 - **Capi e varianti dei popoli guerrieri** (10 creature);

@@ -1,0 +1,92 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "cammello",
+  "nome": "Cammello",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Cavalcature e animali da lavoro",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 4,
+    "COS": 6,
+    "INT": 2,
+    "SAG": 4,
+    "CAR": 3
+  },
+  "pv": 24,
+  "pm": 5,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 8,
+  "iniziativa": -2,
+  "movimento": {
+    "passo": 10,
+    "corsa": 20,
+    "scatto": 30
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 8,
+    "volonta": 7,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 8,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 8
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    },
+    {
+      "nome": "Furtività",
+      "va": 5
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Animale da lavoro",
+      "effetto": "Natura Comune, vivente, con mente e PM personali (a 0 PM Svenuto); nessun incantesimo o potere magico attivo. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente (nessuna morte o incoscienza automatica); le cure biologiche seguono le procedure normali. Nessuna Parata naturale: denti, corna e zoccoli non sono scudi. Una sola Opportunità ordinaria gratuita per Round, con l’attacco normale della scheda (non Impeto né Calpestare). Respira aria (COS Round di fiato). Vista, udito e olfatto ordinari, nessuna Scurovisione innata. Non comprende linguaggi. Testa = capo, fauci e corna; Torace = tronco; Braccia = arti anteriori; Gambe = posteriori. Non garantisce addestramento, disponibilità a farsi cavalcare né adattamento alle Terre del Fuoco; i profili non includono bardature, selle, finimenti o carri. Cavaliere e animale restano distinti per Azioni, risorse, attacchi e bersagli: Impeto e danni dell’animale non si trasferiscono all’arma del cavaliere, e stare in sella non dà AR, Copertura o Difese condivise."
+    },
+    {
+      "nome": "Trasporto robusto",
+      "effetto": "Soglie 160 kg ordinari, 320 kg massimi trasportabili, 640 kg di spinta o trascinamento (comprendono cavaliere, dotazione e attrezzatura dell’animale). Soglie anatomiche raddoppiate (FOR × 20 / 40 / 80 kg): non aumentano FOR, attacchi, danni o numero di passeggeri; serve una sistemazione realmente utilizzabile per il carico. Sovraccarico oltre l’ordinario e fino al massimo: −2 VA alle Prove fisiche (non alle PS), solo Passo con −2 Q e peggioramento di Affaticamento per ogni ora completa di trasporto gravoso; oltre il massimo Movimento 0 finché il carico non è ridotto. La spinta vale su terreno piano e senza ostacoli (Giocatore §5.2.6); ruote, pendenze e tiro di più animali richiedono un mezzo definito."
+    },
+    {
+      "nome": "Viaggio",
+      "effetto": "Il profilo non assegna un consumo fisso di acqua né un’esenzione dall’Affaticamento: si valutano clima, sforzo e disponibilità con le regole comuni. L’adattamento a un ambiente arido non protegge da lava, Fuoco o gas delle Terre del Fuoco."
+    }
+  ],
+  "note": "Un Morso per Round, Opportunità compresa; nessun attacco di sputo in questa scheda. Condotta: può fermarsi, arretrare o cercare il gruppo; sotto 6 PV o a Ferita Profonda tende a sottrarsi (se è carico, la fuga conserva gli impedimenti). Fonte: Camel, p. 320."
+}

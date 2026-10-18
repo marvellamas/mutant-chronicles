@@ -1,0 +1,108 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "capra",
+  "nome": "Capra",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Cavalcature e animali da lavoro",
+  "caratteristiche": {
+    "FOR": 4,
+    "DES": 5,
+    "COS": 5,
+    "INT": 2,
+    "SAG": 5,
+    "CAR": 3
+  },
+  "pv": 8,
+  "pm": 4,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 8,
+  "iniziativa": -1,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 9,
+    "volonta": 7,
+    "magia": 7
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Cornata",
+      "tipo": "ravvicinato",
+      "va": 8,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ]
+    },
+    {
+      "nome": "Cornata in Impeto",
+      "tipo": "ravvicinato",
+      "va": 8,
+      "danno": "2d4+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ],
+      "note": "Dopo 4 Q di Passo rettilineo; sostituisce la Cornata normale: vedi la capacità «Impeto»."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 8
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 9
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Animale da lavoro",
+      "effetto": "Natura Comune, vivente, con mente e PM personali (a 0 PM Svenuto); nessun incantesimo o potere magico attivo. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente (nessuna morte o incoscienza automatica); le cure biologiche seguono le procedure normali. Nessuna Parata naturale: denti, corna e zoccoli non sono scudi. Una sola Opportunità ordinaria gratuita per Round, con l’attacco normale della scheda (non Impeto né Calpestare). Respira aria (COS Round di fiato). Vista, udito e olfatto ordinari, nessuna Scurovisione innata. Non comprende linguaggi. Testa = capo, fauci e corna; Torace = tronco; Braccia = arti anteriori; Gambe = posteriori. Non garantisce addestramento, disponibilità a farsi cavalcare né adattamento alle Terre del Fuoco; i profili non includono bardature, selle, finimenti o carri. Cavaliere e animale restano distinti per Azioni, risorse, attacchi e bersagli: Impeto e danni dell’animale non si trasferiscono all’arma del cavaliere, e stare in sella non dà AR, Copertura o Difese condivise."
+    },
+    {
+      "nome": "Carico",
+      "effetto": "Soglie 40 kg ordinari, 80 kg massimi trasportabili, 160 kg di spinta o trascinamento (comprendono cavaliere, dotazione e attrezzatura dell’animale). Soglie ordinarie del Giocatore (FOR × 10 / 20 / 40 kg). Sovraccarico oltre l’ordinario e fino al massimo: −2 VA alle Prove fisiche (non alle PS), solo Passo con −2 Q e peggioramento di Affaticamento per ogni ora completa di trasporto gravoso; oltre il massimo Movimento 0 finché il carico non è ridotto. La spinta vale su terreno piano e senza ostacoli (Giocatore §5.2.6); ruote, pendenze e tiro di più animali richiedono un mezzo definito."
+    },
+    {
+      "nome": "Piede saldo",
+      "effetto": "+2 alle PS di Tempra o Riflessi e alle Prove di FOR o DES espressamente richieste per evitare A Terra; si aggiunge alla Prova pertinente, non ai valori permanenti. Non introduce una Prova se l’effetto non la concede, non evita ogni spostamento forzato, non vale per le PS per Ferite e non dà aderenza a superfici lisce o immunità alle Cadute."
+    },
+    {
+      "nome": "Impeto",
+      "effetto": "Richiede almeno 4 Q di Passo rettilineo verso la vittima nella stessa Iniziativa (usa l’AzM ordinaria e l’AzP del colpo; si dichiara prima del tiro; non si combina con Carica, Corsa, Scatto o altre manovre offensive). Il danno speciale sostituisce quello normale, senza il ×2 della Carica. Con almeno 1 danno finale: Tempra senza modificatore a una creatura non maggiore di 1 × 1 Q; fallimento → A Terra. Il Magistrale non ne peggiora la Salvezza. Usa 2d4+1 al posto del danno normale (un solo 1d4 da slancio). Una Cornata per Round, normale oppure in Impeto; l’Opportunità usa soltanto quella normale. Nessuna arrampicata speciale né aderenza ai soffitti."
+    }
+  ],
+  "note": "Un percorso roccioso resta una difficoltà concreta anche per un animale dal passo sicuro. Capacità di trasporto e disponibilità a portare una persona restano distinte. Condotta: può minacciare, allontanarsi o difendere i piccoli; sotto 2 PV o a Ferita Profonda tende a cercare un appoggio protetto o il branco. Fonte: Goat, p. 330."
+}
