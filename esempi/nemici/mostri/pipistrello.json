@@ -1,0 +1,96 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "pipistrello",
+  "nome": "Pipistrello",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Sciami e piccola fauna",
+  "caratteristiche": {
+    "FOR": 1,
+    "DES": 7,
+    "COS": 4,
+    "INT": 2,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "pv": 3,
+  "pm": 3,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 1,
+    "corsa": 2,
+    "scatto": 3,
+    "volo": 6
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 8,
+    "riflessi": 11,
+    "volonta": 7,
+    "magia": 7
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 6,
+      "danno": "1",
+      "natura": "Naturale",
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ],
+      "portata_q": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 6
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Natura e risorse",
+      "effetto": "Natura Comune, vivente, senza incantesimi né poteri magici attivi. 1 AzP e 1 AzM per Round; un attacco costa 1 AzP e produce AC 1; al massimo un attacco per Round, Opportunità compresa. Nessuna Parata naturale. Schivata: 1 AzP, 1 AzM e spostamento realmente possibile. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente (nessuna morte o incoscienza automatica); a 0 PM Svenuto. Nessuna immunità generica agli effetti spirituali. Respira aria (COS Round di fiato). Naturale e Magico incontrano tutta l’AR pertinente, Etereo solo quella magica."
+    },
+    {
+      "nome": "Animale singolo",
+      "effetto": "Segue integralmente PV, PM, Ferite, Menomazioni e cure biologiche. Non comprende linguaggi. Un animale incontrato non è automaticamente una minaccia: cibo, rifugio, rumori, uova e accessi al nido spiegano la condotta. Il gruppo ostile ha un profilo separato (Sciame)."
+    },
+    {
+      "nome": "Ecolocalizzazione",
+      "effetto": "Entro 12 Q in aria comunicante usa Percezione 9 per distinguere corpi e ostacoli quando può emettere e ricevere gli echi. Assordato o un impedimento reale alla propagazione del suono la interrompono. Conserva la vista ordinaria; nessuna Scurovisione. Non distingue colori o scritte."
+    },
+    {
+      "nome": "Udito acuto",
+      "effetto": "+2 a Percezione quando l’udito è determinante, anche per una Prova di ecolocalizzazione che richieda di distinguere un suono (una sola volta; non riattiva il senso da Assordato). Il semplice rumore non lo stordisce automaticamente."
+    }
+  ],
+  "note": "Braccia = ali; Gambe = arti posteriori; lo spazio tattico non ne rappresenta la larghezza reale. Il Morso non trasmette automaticamente malattie né suzione di sangue. Non ha volo stazionario: decollo, dislivello e atterraggio consumano la stessa AzM. Condotta: cerca normalmente una fuga in volo; a Ferita Superficiale tende ad abbandonare lo scontro. Fonte: Bat, p. 318."
+}

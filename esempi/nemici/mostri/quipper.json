@@ -1,0 +1,100 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "quipper",
+  "nome": "Quipper",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Sciami e piccola fauna",
+  "caratteristiche": {
+    "FOR": 1,
+    "DES": 7,
+    "COS": 4,
+    "INT": 1,
+    "SAG": 3,
+    "CAR": 2
+  },
+  "pv": 3,
+  "pm": 2,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 0,
+    "corsa": "non_consentito",
+    "scatto": "non_consentito"
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 8,
+    "riflessi": 11,
+    "volonta": 6,
+    "magia": 6
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1",
+      "natura": "Naturale",
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ],
+      "note": "Solo in acqua.",
+      "portata_q": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 7
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Natura e risorse",
+      "effetto": "Natura Comune, vivente, senza incantesimi né poteri magici attivi. 1 AzP e 1 AzM per Round; un attacco costa 1 AzP e produce AC 1; al massimo un attacco per Round, Opportunità compresa. Nessuna Parata naturale. Schivata: 1 AzP, 1 AzM e spostamento realmente possibile. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente (nessuna morte o incoscienza automatica); a 0 PM Svenuto. Nessuna immunità generica agli effetti spirituali. Respira soltanto acqua. Naturale e Magico incontrano tutta l’AR pertinente, Etereo solo quella magica."
+    },
+    {
+      "nome": "Animale singolo",
+      "effetto": "Segue integralmente PV, PM, Ferite, Menomazioni e cure biologiche. Non comprende linguaggi. Un animale incontrato non è automaticamente una minaccia: cibo, rifugio, rumori, uova e accessi al nido spiegano la condotta. Il gruppo ostile ha un profilo separato (Sciame). Usa questa scheda per un esemplare isolato e quella dello Sciame per il branco compatto ostile."
+    },
+    {
+      "nome": "Nuoto",
+      "effetto": "Nuoto 8 / 16 / 24 Q effettivi (eccezione al costo ordinario 2 dell’acqua: nel solo Nuoto si percorrono le distanze scritte; percorsi misti: budget unico del §5.2.4). Nessun moto a terra: fuori dall’acqua non si sposta, segue la riserva di fiato di COS Round e il soffocamento, e non attacca oltre il mezzo che raggiunge."
+    },
+    {
+      "nome": "Frenesia del sangue",
+      "effetto": "+2 VA al Morso (VA 11) contro un organismo vivente con PV inferiori al massimo oppure con Sanguinamento attivo. Non si somma per più ferite, tracce o alleati e non aumenta il danno; il Morso non procura Sanguinamento automaticamente."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    }
+  ],
+  "note": "Un Morso per Round, Opportunità compresa. Testa e Torace = capo e tronco; Braccia = pinne anteriori; Gambe = apparato propulsivo posteriore. Non comprende linguaggi. L’adattamento a un’acqua fredda non concede immunità al Gelo. Condotta: a Ferita Superficiale tende a sottrarsi nella vegetazione o nell’acqua più profonda, se raggiungibile. Fonte: Quipper, p. 335."
+}

@@ -226,11 +226,16 @@ nuoto nelle capacità; **Tigre 2 × 1 Q** fuori dal campo Spazio (nota con A.167
 
 Scelte del blocco: Passo di volo in `movimento.volo` (Corsa e Scatto in volo con Atletica −2 e −4 nella capacità «Ali e volo»); quattro creature 2 × 2 Q di taglia Grande; i veleni minori (Vespa, Centopiedi, i due Serpenti, Ragno lupo) come capacità con Tempra senza modificatore, danno interno e durata dal manuale, e «poi veleno» nella nota dell'attacco; ecolocalizzazione, percezione di prossimità e luce biologica come capacità; Passaggio in volo solo del Gufo; Ali vibranti della Vespa. Test: `tests/mostri-alate.test.js`.
 
+## Catalogo, blocco «Sciami e piccola fauna» — cap. 8 (18/10, Mostri 0.23)
+
+`tools/genera_mostri_sciami.mjs` → `esempi/nemici/mostri/`: Pipistrello, Corvo, Ratto, Quipper, Sciame di pipistrelli, Sciame di corvi, Sciame di ratti, Sciame di insetti, Sciame di quipper, Sciame di serpenti velenosi.
+
+Scelte del blocco: gli Sciami sono un solo avversario da 1 × 1 Q condivisibile, con i due profili di danno per fascia di PV come due attacchi (quello ridotto sostituisce l'altro); «Corpo distribuito» (resistenza fisica dimezzata per eccesso, nessun recupero di PV), «Spazio condiviso» e «Ferite e dispersione» come capacità comuni, immune ad A Terra, Immobilizzato, Stordito e Terrorizzato negli Stati (fascinazione, paralisi e pietrificazione nel testo); portata 0 Q condiviso resa come 1 Q con la condizione in nota (nuova A.171); Quipper senza moto a terra, Frenesia del sangue e Imitazione del Corvo come capacità; veleno ofidico dello Sciame di serpenti con Tempra senza modificatore. Test: `tests/mostri-sciami.test.js`.
+
 ## Che cosa resta del catalogo (Mostri 0.23)
 
-Il catalogo del cap. 8 ha 215 creature in 21 blocchi; ne sono fatte 135. Restano 80, in 8 blocchi, da fare nei prossimi lotti:
+Il catalogo del cap. 8 ha 215 creature in 21 blocchi; ne sono fatte 145. Restano 70, in 7 blocchi, da fare nei prossimi lotti:
 
-- **Sciami e piccola fauna** (10 creature);
 - **Cavalcature e animali da lavoro** (10 creature);
 - **Mephit e creature elementali** (10 creature);
 - **Costrutti e Modron** (10 creature);

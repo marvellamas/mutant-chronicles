@@ -1,0 +1,104 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "corvo",
+  "nome": "Corvo",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Sciami e piccola fauna",
+  "caratteristiche": {
+    "FOR": 1,
+    "DES": 6,
+    "COS": 4,
+    "INT": 2,
+    "SAG": 6,
+    "CAR": 4
+  },
+  "pv": 4,
+  "pm": 4,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 2,
+    "corsa": 4,
+    "scatto": 6,
+    "volo": 10
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 8,
+    "riflessi": 10,
+    "volonta": 8,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Becco",
+      "tipo": "ravvicinato",
+      "va": 8,
+      "danno": "1",
+      "natura": "Naturale",
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ],
+      "portata_q": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 8
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    },
+    {
+      "nome": "Raggirare",
+      "va": 8
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Natura e risorse",
+      "effetto": "Natura Comune, vivente, senza incantesimi né poteri magici attivi. 1 AzP e 1 AzM per Round; un attacco costa 1 AzP e produce AC 1; al massimo un attacco per Round, Opportunità compresa. Nessuna Parata naturale. Schivata: 1 AzP, 1 AzM e spostamento realmente possibile. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente (nessuna morte o incoscienza automatica); a 0 PM Svenuto. Nessuna immunità generica agli effetti spirituali. Respira aria (COS Round di fiato). Naturale e Magico incontrano tutta l’AR pertinente, Etereo solo quella magica."
+    },
+    {
+      "nome": "Animale singolo",
+      "effetto": "Segue integralmente PV, PM, Ferite, Menomazioni e cure biologiche. Non comprende linguaggi. Un animale incontrato non è automaticamente una minaccia: cibo, rifugio, rumori, uova e accessi al nido spiegano la condotta. Il gruppo ostile ha un profilo separato (Sciame)."
+    },
+    {
+      "nome": "Imitazione",
+      "azioni": {
+        "principali": 1
+      },
+      "risorsa": "AzP",
+      "effetto": "Con 1 AzP ripete un breve suono semplice già udito. Se un ascoltatore cerca di riconoscere l’imitazione, si risolve Raggirare 8 del Corvo contrapposto alla sua Percezione, con le regole ordinarie; il successo dell’ascoltatore svela l’origine imitata. Non costruisce discorsi nuovi né comprende un linguaggio per il solo fatto di ripeterne un suono. Il richiamo non applica Stati né garantisce Sorpresa."
+    },
+    {
+      "nome": "Sensi e corpo",
+      "effetto": "Vista e udito ordinari, senza Scurovisione innata. Braccia = ali; Gambe = arti posteriori. Nessun volo stazionario né Passaggio in volo: lasciare una portata nemica può provocare Opportunità. Può trasportare solo ciò che anatomia e carico consentono."
+    }
+  ],
+  "note": "Un Becco per Round, Opportunità compresa. Può cercare cibo, attirare l’attenzione o difendere il nido; un oggetto sottratto richiede comunque un’azione e un accesso praticabile. Condotta: a Ferita Superficiale tende a raggiungere un posatoio sicuro. Fonte: Raven, p. 335."
+}

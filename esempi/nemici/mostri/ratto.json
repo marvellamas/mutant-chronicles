@@ -1,0 +1,95 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "ratto",
+  "nome": "Ratto",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Sciami e piccola fauna",
+  "caratteristiche": {
+    "FOR": 1,
+    "DES": 5,
+    "COS": 4,
+    "INT": 2,
+    "SAG": 5,
+    "CAR": 3
+  },
+  "pv": 3,
+  "pm": 3,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 8,
+  "iniziativa": -1,
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 8,
+    "riflessi": 9,
+    "volonta": 7,
+    "magia": 7
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 6,
+      "danno": "1",
+      "natura": "Naturale",
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ],
+      "portata_q": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 6
+    },
+    {
+      "nome": "Atletica",
+      "va": 8
+    },
+    {
+      "nome": "Percezione",
+      "va": 8
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Natura e risorse",
+      "effetto": "Natura Comune, vivente, senza incantesimi né poteri magici attivi. 1 AzP e 1 AzM per Round; un attacco costa 1 AzP e produce AC 1; al massimo un attacco per Round, Opportunità compresa. Nessuna Parata naturale. Schivata: 1 AzP, 1 AzM e spostamento realmente possibile. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente (nessuna morte o incoscienza automatica); a 0 PM Svenuto. Nessuna immunità generica agli effetti spirituali. Respira aria (COS Round di fiato). Naturale e Magico incontrano tutta l’AR pertinente, Etereo solo quella magica."
+    },
+    {
+      "nome": "Animale singolo",
+      "effetto": "Segue integralmente PV, PM, Ferite, Menomazioni e cure biologiche. Non comprende linguaggi. Un animale incontrato non è automaticamente una minaccia: cibo, rifugio, rumori, uova e accessi al nido spiegano la condotta. Il gruppo ostile ha un profilo separato (Sciame). Può fuggire davanti a una creatura più grande o mordere se bloccato; la sua presenza non dichiara un’infestazione."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 6 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    },
+    {
+      "nome": "Olfatto e passaggi",
+      "effetto": "+2 a Percezione quando l’olfatto è determinante: un odore accessibile può rivelare una traccia, ma non localizza ogni creatura oltre pareti o in un ambiente saturo di altri odori (restano le Prove per seguire una pista). Può usare un varco adatto al suo corpo reale; una fessura chiusa non diventa percorribile perché occupa una pedina. Nessuna aderenza a pareti lisce."
+    }
+  ],
+  "note": "Un Morso per Round, Opportunità compresa; non inocula veleno o malattie automaticamente e non ha Tattiche di branco. Testa e Torace = capo e tronco; Braccia = zampe anteriori; Gambe = posteriori. Condotta: cerca un anfratto libero; a Ferita Superficiale tende alla fuga. Fonte: Rat, p. 335."
+}

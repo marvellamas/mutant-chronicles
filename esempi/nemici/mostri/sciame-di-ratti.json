@@ -1,0 +1,123 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "sciame-di-ratti",
+  "nome": "Sciame di ratti",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Sciami e piccola fauna",
+  "caratteristiche": {
+    "FOR": 4,
+    "DES": 5,
+    "COS": 5,
+    "INT": 2,
+    "SAG": 5,
+    "CAR": 3
+  },
+  "pv": 24,
+  "pm": 5,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 8,
+  "iniziativa": -1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 9,
+    "volonta": 7,
+    "magia": 7
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morsi (PV 13–24)",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ],
+      "portata_q": 1,
+      "note": "Portata 0 Q nel manuale (attacca solo nello spazio condiviso con la vittima): il formato ammette portate da 1 Q, quindi qui 1 Q con questa condizione (A.171)."
+    },
+    {
+      "nome": "Morsi (PV 0–12)",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d3+1",
+      "natura": "Naturale",
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ],
+      "portata_q": 1,
+      "note": "Portata 0 Q nel manuale (attacca solo nello spazio condiviso con la vittima): il formato ammette portate da 1 Q, quindi qui 1 Q con questa condizione (A.171)."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Natura e risorse",
+      "effetto": "Natura Comune, vivente, senza incantesimi né poteri magici attivi. 1 AzP e 1 AzM per Round; un attacco costa 1 AzP e produce AC 1; al massimo un attacco per Round, Opportunità compresa. Nessuna Parata naturale. Schivata: 1 AzP, 1 AzM e spostamento realmente possibile. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente (nessuna morte o incoscienza automatica); a 0 PM Svenuto. Nessuna immunità generica agli effetti spirituali. Respira aria (COS Round di fiato). Naturale e Magico incontrano tutta l’AR pertinente, Etereo solo quella magica."
+    },
+    {
+      "nome": "Corpo distribuito",
+      "effetto": "Dimezza per eccesso i danni fisici da Taglio, Perforazione e Contusione di qualunque Natura, dopo Difesa o Salvezza e prima dell’AR, anche per una componente fisica ad Area (non per Fuoco, Gelo, Elettricità, veleno o danno psichico; un attacco misto separa le componenti, e la resistenza non si ripete per il numero di animali). Immune ad A Terra, Immobilizzato, Stordito e Terrorizzato e a fascinazione, paralisi e pietrificazione (i danni associati si risolvono); non è immune a Rallentato, Accecato, Assordato, Avvelenato, Incendiato, Sanguinamento, Svenuto né a ogni effetto mentale e spirituale. Conta come una sola creatura biologica per bersagli, Azioni ed effetti, con una sola riserva di PV e PM; non recupera PV né riceve PV temporanei (nemmeno da una cura) e spostarlo o disperderlo non ripristina le risorse. Un’Area risolve sullo Sciame un solo bersaglio, senza moltiplicare colpi o danni."
+    },
+    {
+      "nome": "Spazio condiviso",
+      "effetto": "Occupa 1 × 1 Q e può condividere lo spazio di altre creature. Per attaccare deve condividere con la vittima almeno un Q e il relativo volume (un gruppo in quota non morde chi è al suolo); portata 0 Q, e anche un’Opportunità richiede che il bersaglio sia ancora nello spazio condiviso all’innesco. Entrare o restare nel Q non infligge danno automatico. Attraversa solo aperture percorribili da un suo componente, come un’unica pedina; non si divide in unità con nuove Azioni o risorse. Pareti, vetri e contenitori chiusi lo fermano; vestiti e armature non sono ignorati dai morsi e l’AR della vittima resta efficace."
+    },
+    {
+      "nome": "Ferite e dispersione",
+      "effetto": "A 0 PV si continua con Tempra e fasce delle Ferite del §4.2. Menomazioni: Testa = orientamento e sensi, Torace = coesione centrale, Braccia = componenti offensive, Gambe = locomozione (compresi Volo o Nuoto); si applicano alla funzione interessata. Svenuto arresta l’azione del gruppo; Morente mantiene il contatore di COS Round. La morte della scheda è la distruzione del gruppo come unità. La soglia di metà PV sostituisce solo il danno fisico con il profilo ridotto; la fuga usa Movimento, accessi e Opportunità ordinari (non teletrasporta i componenti). Rappresentare un superstite con la scheda individuale non ricrea lo Sciame né dà un secondo premio per la stessa minaccia."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 6 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    },
+    {
+      "nome": "Olfatto",
+      "effetto": "+2 a Percezione quando l’olfatto è determinante. Il bonus non concede localizzazione oltre ogni ostacolo né una pista in assenza di indizi. Gli accessi devono consentire il passaggio reale di un ratto, non soltanto di un odore."
+    }
+  ],
+  "immunita": [
+    "a-terra",
+    "immobilizzato",
+    "stordito",
+    "terrorizzato"
+  ],
+  "note": "I due profili di Morsi/Becchi sono le fasce di danno per PV: quello ridotto sostituisce l’altro e non è un attacco separato. Spazio 1 × 1 Q condivisibile con altre creature (portata 0 Q: attacca solo nello spazio condiviso; vedi A.171). Può costringere a cambiare strada senza che ogni ratto debba essere eliminato. Il contatto con più gambe nello stesso Q non moltiplica l’attacco. Non ha Tattiche di branco, Scavo né aderenza a pareti lisce; i morsi non inoculano malattie automaticamente. Condotta: può abbandonare una minaccia per un riparo o cibo più accessibile; a 12 PV o meno oppure a Ferita Profonda tende a disperdersi. Fonte: Swarm of Rats, p. 339."
+}
