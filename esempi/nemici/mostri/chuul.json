@@ -1,0 +1,122 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "chuul",
+  "nome": "Chuul",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Creature delle acque e popoli sommersi",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 5,
+    "COS": 8,
+    "INT": 3,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "pv": 56,
+  "pm": 8,
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 8,
+  "iniziativa": -1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 9,
+    "volonta": 8,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Chela",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 7
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Vita acquatica",
+      "effetto": "Natura Comune, biologicamente vivente, con mente e PM personali (a 0 PM Svenuto); a 0 PV valgono Tempra, Ferite, Menomazioni e Morente (non scatta morte, incoscienza o rilascio di una presa). Nessuna Parata naturale. Il fiato ordinario dura COS Round, poi §5.23. A Terra non si applica a chi nuota senza appoggio. Respirare acqua non dà resistenza a correnti, pressione o temperature estreme. I sensi alternativi valgono solo nel mezzo e nella distanza indicati, senza attraversare solidi né rivelare chi è nascosto."
+    },
+    {
+      "nome": "Nuoto",
+      "effetto": "Nuoto 6 / 12 / 18 Q effettivi (eccezione espressa al costo ordinario 2 dell’acqua: nel solo Nuoto si percorrono le distanze indicate). Nei percorsi misti si segue il budget unico del §5.2.4, con costo 1 sulla terra e 2 in acqua, senza superare la distanza indicata per ogni modalità. Immobilizzato impedisce il Nuoto. Respira aria e acqua; a terra 6/12/18 Q."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né oscurità soprannaturale."
+    },
+    {
+      "nome": "Sequenza e Afferrare",
+      "effetto": "Fino a due attacchi di Chela o Stringere per Round, 1 AzP ciascuno; i Tentacoli velenosi costano 1 AzP e ne sostituiscono uno. L’Opportunità usa solo una Chela libera, entro il limite di due. Una Chela con almeno 1 danno finale contro una creatura ≤ 2 × 2 Q impone Riflessi senza modificatore: fallimento → Immobilizzato (mani non bloccate). Fino a due vittime, una per chela; la chela occupata non attacca altri. Non si sposta mentre trattiene qualcuno."
+    },
+    {
+      "nome": "Stringere",
+      "effetto": "1 AzP, VA 14, sulla vittima già presa: Corpo a corpo 14 contrapposto a Corpo a corpo o Atletica (−4 di Immobilizzato); successo 1d8+2 Naturale da Contusione, fallimento o pareggio nessun danno. Liberare: la vittima o un alleato adiacente inizia la stessa opposizione con 1 AzP. Rilascio gratuito; incoscienza, morte o perdita della chela interrompono la presa.",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Tentacoli velenosi (tossina paralizzante)",
+      "effetto": "1 AzP, su una vittima biologicamente vivente già trattenuta da una chela ed entro 1 Q dalla bocca (una protezione sigillata blocca l’inoculazione); nessun tiro per colpire né Difesa; consuma la dose anche se la vittima resiste. Tre dosi in ogni periodo di 24 ore. Tempra −2: successo evita del tutto; fallimento → Avvelenato e Paralizzato per 3 Round (in sostituzione del dimezzamento ordinario). A fine di ogni propria Iniziativa la vittima può ripetere gratis Tempra senza modificatore: successo termina entrambi. Paralizzato: cosciente, senza AzP, Movimento o Difese attive; conserva le PS (nessun −4); non cade Svenuta né perde PM; conta come incapace di reagire (per esempio Tiro a Bruciapelo). Nuove dosi non sommano Stati. Veleno naturale di Pericolosità IV, Seria: antidoto o Cura Avvelenamenti (liv. 5) lo terminano; Cura Spirituale no. Le dosi non sono veleni commerciabili.",
+      "risorsa": "1 dose",
+      "azioni": {
+        "principali": 1
+      },
+      "usi": {
+        "quanti": 3,
+        "per": "giorno"
+      }
+    },
+    {
+      "nome": "Percezione delle emanazioni",
+      "effetto": "Senso biologico (nessun PM o Concentrazione): avverte emanazioni di incantesimi attivi e artefatti entro 24 Q, Rilevazione 6 per il confronto con gli occultamenti; solo presenza e direzione delle fonti non protette (non Q esatto, numero, nome, cariche, livello). Con 1 AzP esamina un solo Q visibile o noto entro 12 Q e ne localizza l’emanazione senza riconoscerla. Nascondere Aura, Alterare Aura e contenitori schermanti seguono le loro schede; una barriera solida lo impedisce. Negare Potere non elimina il senso."
+    }
+  ],
+  "immunita": [
+    "avvelenato"
+  ],
+  "note": "Immune ai danni da veleno e ad Avvelenato; non a malattie, Fuoco, Ghiaccio o influenze mentali. Testa = occhi, bocca e tentacoli velenosi; Torace = carapace; Braccia = chele; Gambe = zampe. Nessuna Parata con il guscio. Comprende una lingua scelta per la sua origine ma non parla; un eventuale legame con un Aboleth va stabilito nella scena. Condotta: sotto 14 PV o a Ferita Seria lascia le prede o si ritira. I 50 PX comprendono sensi, due chele e tossina. Fonte: Chuul, p. 40."
+}

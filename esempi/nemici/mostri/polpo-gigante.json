@@ -1,0 +1,110 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "polpo-gigante",
+  "nome": "Polpo gigante",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Creature delle acque e popoli sommersi",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 6,
+    "COS": 6,
+    "INT": 2,
+    "SAG": 5,
+    "CAR": 3
+  },
+  "pv": 38,
+  "pm": 5,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 2,
+    "corsa": 4,
+    "scatto": 6
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 10,
+    "volonta": 7,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Tentacoli",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "portata_q": 3,
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Vita acquatica",
+      "effetto": "Natura Comune, biologicamente vivente, con mente e PM personali (a 0 PM Svenuto); a 0 PV valgono Tempra, Ferite, Menomazioni e Morente (non scatta morte, incoscienza o rilascio di una presa). Nessuna Parata naturale. Il fiato ordinario dura COS Round, poi §5.23. A Terra non si applica a chi nuota senza appoggio. Respirare acqua non dà resistenza a correnti, pressione o temperature estreme. I sensi alternativi valgono solo nel mezzo e nella distanza indicati, senza attraversare solidi né rivelare chi è nascosto."
+    },
+    {
+      "nome": "Nuoto",
+      "effetto": "Nuoto 12 / 24 / 36 Q effettivi (eccezione espressa al costo ordinario 2 dell’acqua: nel solo Nuoto si percorrono le distanze indicate). Nei percorsi misti si segue il budget unico del §5.2.4, con costo 1 sulla terra e 2 in acqua, senza superare la distanza indicata per ogni modalità. Immobilizzato impedisce il Nuoto."
+    },
+    {
+      "nome": "Respiro",
+      "effetto": "Respira soltanto acqua; fuori può trattenere il fiato per 1 ora, poi §5.23; un Round di respirazione in acqua ripristina la riserva. Scurovisione 12 Q, senza visione attraverso inchiostro o torbidità. Testa = occhi e bocca, Torace = mantello, Braccia e Gambe = gruppi anteriore e posteriore di tentacoli."
+    },
+    {
+      "nome": "Avvolgere e presa",
+      "effetto": "Tentacoli con almeno 1 danno finale contro una creatura ≤ 2 × 2 Q impongono Riflessi senza modificatore: fallimento → Immobilizzato (mani non bloccate). Una sola vittima, e finché la conserva non attacca altri con i Tentacoli. Stringere: 1 AzP, VA 12, Corpo a corpo 12 contrapposto a Corpo a corpo o Atletica: successo 2d6+2 Naturale da Contusione, pareggio conserva la presa senza danno. Liberarsi o aiutare: 1 AzP con la stessa opposizione. Rilascio gratuito; incoscienza, morte o Menomazione prensile interrompono. Fermo mentre trattiene: non trascina in profondità. Le otto appendici non danno otto attacchi, PV o premi.",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Nube di inchiostro",
+      "effetto": "1 AzP, solo immerso, una volta ogni 24 ore (non si riempie cambiando incontro o con i PV; nessun PM; sostituisce l’attacco del Round): nube non magica di raggio 4 Q centrata sul proprio corpo, fissa (segue le correnti dichiarate), per 5 Round. Chi cerca di vedere attraverso è Accecato per quelle attività finché la linea visiva attraversa la nube (nessun Riflessi); la Scurovisione ordinaria non basta, sensi diversi dalla vista sì. Coinvolge anche il Polpo e i suoi alleati; nessun danno, nessuna Ritirata gratuita. Una corrente forte la disperde; Negare Potere non la dissolve.",
+      "azioni": {
+        "principali": 1
+      },
+      "usi": {
+        "quanti": 1,
+        "per": "giorno"
+      }
+    }
+  ],
+  "note": "Furtività 13 immerso, con copertura. Non comprende linguaggi. Condotta: sotto 9 PV o a Ferita Profonda rilascia la preda e fugge (l’Inchiostro usa la sua AzP). Fonte: Giant Octopus, p. 326."
+}

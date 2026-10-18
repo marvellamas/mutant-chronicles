@@ -1,0 +1,158 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "kuo-toa",
+  "nome": "Kuo-toa",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Creature delle acque e popoli sommersi",
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 5,
+    "COS": 5,
+    "INT": 5,
+    "SAG": 5,
+    "CAR": 4
+  },
+  "pv": 22,
+  "pm": 6,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": -1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 22,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 9,
+    "volonta": 8,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    },
+    {
+      "nome": "Lancia a una mano",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    },
+    {
+      "nome": "Lancia a due mani",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d6+3",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    },
+    {
+      "nome": "Lancia scagliata",
+      "tipo": "distanza",
+      "va": 9,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "gittata_q": 4,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ],
+      "note": "Massimo 4 Q in aria; 2 Q in acqua."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 9
+    },
+    {
+      "nome": "Armi da guerra",
+      "va": 9
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Vita acquatica",
+      "effetto": "Natura Comune, biologicamente vivente, con mente e PM personali (a 0 PM Svenuto); a 0 PV valgono Tempra, Ferite, Menomazioni e Morente (non scatta morte, incoscienza o rilascio di una presa). Nessuna Parata naturale. Il fiato ordinario dura COS Round, poi §5.23. A Terra non si applica a chi nuota senza appoggio. Respirare acqua non dà resistenza a correnti, pressione o temperature estreme. I sensi alternativi valgono solo nel mezzo e nella distanza indicati, senza attraversare solidi né rivelare chi è nascosto."
+    },
+    {
+      "nome": "Nuoto",
+      "effetto": "Nuoto 6 / 12 / 18 Q effettivi (eccezione espressa al costo ordinario 2 dell’acqua: nel solo Nuoto si percorrono le distanze indicate). Nei percorsi misti si segue il budget unico del §5.2.4, con costo 1 sulla terra e 2 in acqua, senza superare la distanza indicata per ogni modalità. Immobilizzato impedisce il Nuoto. Respira aria e acqua; a terra 6/12/18 Q. Scurovisione 24 Q."
+    },
+    {
+      "nome": "Mani e attacchi",
+      "effetto": "Al massimo due attacchi per Round, non più di un Morso, un attacco di Lancia e un lancio di Rete. Lancia a due mani e Rete richiedono entrambe le mani libere (non con lo Scudo impugnato). L’Opportunità è solo Morso o Lancia in mischia. Parata ravvicinata senza bonus; a distanza −4 VA con lo Scudo o −8 con la Lancia, 1 AzP."
+    },
+    {
+      "nome": "Rete",
+      "effetto": "1 AzP, VA 9, Armi da lancio, massimo 2 Q anche immersa, due mani; una sola Rete pronta; bersaglio ≤ 2 × 2 Q. Schivata consentita, la Parata non ferma la rete. Un successo non evitato applica Immobilizzato (nessun danno, mani non bloccate; l’AR non impedisce il legame; un Magistrale non aggiunge nulla). Aprire o rompere: 1 AzP, Atletica senza modificatore con mani o strumenti adatti (il −4 solo alla vittima); oppure si attacca la Rete come oggetto (AR 0, PI 2, PS Integrità 10). Il Kuo-toa non la controlla dopo il lancio.",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Scudo adesivo",
+      "effetto": "Una volta per Round, dopo una propria Parata ravvicinata riuscita con lo Scudo contro un’arma materiale entro 1 Q, può spendere un’altra AzP per tentare di trattenerla: Atletica 10 contrapposta all’Atletica dell’attaccante; successo blocca l’arma contro lo Scudo. Non cattura proiettili, parti del corpo, lame incorporee o aree. L’arma bloccata non attacca; chi la tiene non si allontana oltre la portata ma non è Immobilizzato; staccarla: 1 AzP, Atletica senza modificatore (o lo stesso Kuo-toa, 1 AzP). A 0 PI lo Scudo perde AR e adesività; la secrezione va rinnovata prima di un nuovo incontro.",
+      "usi": {
+        "quanti": 1,
+        "per": "Round"
+      }
+    },
+    {
+      "nome": "Pelle e percezione",
+      "effetto": "+2 VA alle sole Prove fisiche per liberarsi da una presa o legatura. Percezione 12 può avvertire creature invisibili o incorporee entro 6 Q senza attraversare solidi: se si muovono ne localizza il Q, se immobili solo presenza e direzione; non le rende visibili né colpibili. Non legge menti, non identifica poteri."
+    },
+    {
+      "nome": "Sole",
+      "effetto": "In luce solare diretta −2 VA agli attacchi e alla Percezione visiva (non alle PS)."
+    }
+  ],
+  "note": "AR 3 = 1 biologica + 2 dello Scudo Medio (senza Scudo 1). Dotazione Comune: Lancia e Scudo Medio (FOR 5, PI 6, PS Integrità 10 ciascuno) più una Rete (FOR 3, due mani, PI 2); le formule comprendono bonus personale 0; i 22 PX comprendono la dotazione. Parla una lingua della sua comunità. Condotta: sotto 5 PV o a Ferita Profonda può fuggire, cedere o cercare aiuto. Fonte: Kuo-toa, p. 199."
+}

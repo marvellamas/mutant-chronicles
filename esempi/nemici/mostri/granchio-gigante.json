@@ -1,0 +1,102 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "granchio-gigante",
+  "nome": "Granchio gigante",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Creature delle acque e popoli sommersi",
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 6,
+    "COS": 5,
+    "INT": 1,
+    "SAG": 4,
+    "CAR": 2
+  },
+  "pv": 18,
+  "pm": 4,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 10,
+    "volonta": 6,
+    "magia": 7
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Chela",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Vita acquatica",
+      "effetto": "Natura Comune, biologicamente vivente, con mente e PM personali (a 0 PM Svenuto); a 0 PV valgono Tempra, Ferite, Menomazioni e Morente (non scatta morte, incoscienza o rilascio di una presa). Nessuna Parata naturale. Il fiato ordinario dura COS Round, poi §5.23. A Terra non si applica a chi nuota senza appoggio. Respirare acqua non dà resistenza a correnti, pressione o temperature estreme. I sensi alternativi valgono solo nel mezzo e nella distanza indicati, senza attraversare solidi né rivelare chi è nascosto."
+    },
+    {
+      "nome": "Nuoto",
+      "effetto": "Nuoto 6 / 12 / 18 Q effettivi (eccezione espressa al costo ordinario 2 dell’acqua: nel solo Nuoto si percorrono le distanze indicate). Nei percorsi misti si segue il budget unico del §5.2.4, con costo 1 sulla terra e 2 in acqua, senza superare la distanza indicata per ogni modalità. Immobilizzato impedisce il Nuoto. Respira aria e acqua."
+    },
+    {
+      "nome": "Afferrare",
+      "effetto": "Una Chela con almeno 1 danno finale contro una creatura ≤ 1 × 1 Q impone Riflessi senza modificatore: fallimento → Immobilizzato (mani non bloccate). Può trattenere due vittime, una per chela; la chela occupata non attacca altri. Limite: un solo attacco di Chela o Stringere per Round, Opportunità comprese."
+    },
+    {
+      "nome": "Stringere",
+      "effetto": "1 AzP, VA 9, sulla vittima già presa: Corpo a corpo 9 contrapposto a Corpo a corpo o Atletica (−4 di Immobilizzato); successo 1d6+1 Naturale da Contusione, pareggio o fallimento nessun danno. La stessa contrapposta, iniziata dalla vittima o da un soccorritore con 1 AzP, libera. Rilascio gratuito; incoscienza, morte o perdita della chela interrompono la presa. Fermo mentre trattiene: non trascina sott’acqua.",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Sensi",
+      "effetto": "Percezione tattile di vibrazioni entro 6 Q nel mezzo fisico comunicante, senza attraversare pareti né distinguere colori e scritte."
+    }
+  ],
+  "note": "Testa = occhi e apparato boccale, Torace = carapace, Braccia = chele, Gambe = zampe. Non comprende linguaggi. Condotta: cibo o difesa di un rifugio; sotto 4 PV o a Ferita Profonda si ritira. Fonte: Giant Crab, p. 324."
+}

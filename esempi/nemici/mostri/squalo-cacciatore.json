@@ -1,0 +1,96 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "squalo-cacciatore",
+  "nome": "Squalo cacciatore",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Creature delle acque e popoli sommersi",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 6,
+    "COS": 7,
+    "INT": 1,
+    "SAG": 5,
+    "CAR": 3
+  },
+  "pv": 40,
+  "pm": 5,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 0,
+    "corsa": "non_consentito",
+    "scatto": "non_consentito"
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 10,
+    "volonta": 7,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 9
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Vita acquatica",
+      "effetto": "Natura Comune, biologicamente vivente, con mente e PM personali (a 0 PM Svenuto); a 0 PV valgono Tempra, Ferite, Menomazioni e Morente (non scatta morte, incoscienza o rilascio di una presa). Nessuna Parata naturale. Il fiato ordinario dura COS Round, poi §5.23. A Terra non si applica a chi nuota senza appoggio. Respirare acqua non dà resistenza a correnti, pressione o temperature estreme. I sensi alternativi valgono solo nel mezzo e nella distanza indicati, senza attraversare solidi né rivelare chi è nascosto."
+    },
+    {
+      "nome": "Nuoto",
+      "effetto": "Nuoto 8 / 16 / 24 Q effettivi (eccezione espressa al costo ordinario 2 dell’acqua: nel solo Nuoto si percorrono le distanze indicate). Nei percorsi misti si segue il budget unico del §5.2.4, con costo 1 sulla terra e 2 in acqua, senza superare la distanza indicata per ogni modalità. Immobilizzato impedisce il Nuoto. Nessun moto a terra."
+    },
+    {
+      "nome": "Frenesia del sangue",
+      "effetto": "+2 VA al Morso (VA 14) contro una creatura biologicamente vivente con meno PV del proprio massimo o con Sanguinamento attivo. Non si moltiplica per danni, Ferite o alleati, non aumenta il danno; una Lesione senza deficit di PV né sangue attivo non basta. Non è un obbligo di attaccare, né un’immunità a Terrorizzato, né un bonus alle Difese; non localizza chi sanguina oltre i sensi disponibili."
+    },
+    {
+      "nome": "Sensi, corpo e condotta",
+      "effetto": "Respira soltanto acqua; fuori dall’acqua COS Round di fiato e §5.23. Percezione alternativa entro 6 Q nell’acqua comunicante, senza attraversare scafi o pareti né individuare automaticamente chi è nascosto o ogni perdita di sangue. Il Morso non afferra, trascina o inghiotte, non applica Sanguinamento e il limite è un Morso per Round, Opportunità compresa. Per danneggiare una barca serve una parte di scafo raggiungibile, con AR, PS Integrità e PI della struttura. Testa = fauci, Torace = corpo, Braccia = pinne anteriori, Gambe = posteriori e coda (una coda lesa compromette la propulsione); le pinne non impugnano armi né parano. Percezione 12."
+    }
+  ],
+  "note": "Di norma caccia da solo. Non comprende linguaggi. Condotta: può interrompere la caccia per una preda più semplice, una barriera o un avversario troppo rischioso; sotto 10 PV o a Ferita Profonda si ritira verso acqua libera. La distanza in pianta non consente di attraversare una rete o uno scafo. Fonte: Hunter Shark, p. 330."
+}

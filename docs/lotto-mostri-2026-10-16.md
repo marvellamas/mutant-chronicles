@@ -196,13 +196,25 @@ spire, soffio e inghiottimento complessi come capacità; **Drago tartaruga 4 × 
 Spazio → `spazio` vuoto, nota con A.167, taglia Grande (nell'app compare come pedina 2 × 2 «dalla Taglia»). Test:
 `tests/mostri-rettili.test.js`.
 
+## Catalogo, blocco «Creature delle acque e popoli sommersi» — cap. 8 (18/10, Mostri 0.23)
+
+`tools/genera_mostri_acque.mjs` → `esempi/nemici/mostri/`: Granchio gigante, Polpo gigante, Squalo delle
+scogliere, Squalo cacciatore, Squalo gigante, Marinide, Merrow, Sahuagin, Kuo-toa, Chuul.
+
+Scelte del blocco: il **Nuoto** (non è nel movimento del formato) è una capacità con la terna del manuale, e i pesci
+senza moto a terra («Terra 0 Q») hanno passo 0 e Corsa/Scatto non consentiti; lance a una mano, a due mani e
+scagliate come tre voci (la scagliata è un attacco a distanza con gittata 4 Q e «2 Q in acqua» nella nota); Stringere,
+Rete del Kuo-toa (cattura senza danno), Nube di inchiostro, Tentacoli velenosi e Comando degli squali come
+capacità; Chuul con tre dosi di tossina al giorno e immune ad Avvelenato; Kuo-toa AR 3 = 1 biologica + 2 dello Scudo
+(senza Scudo 1, nella nota); Marinide: «Diplomazia» → Oratoria (A.169). Test: `tests/mostri-acque.test.js`.
+
 ## Che cosa resta del catalogo (Mostri 0.23)
 
-Il catalogo del cap. 8 ha 215 creature in 21 blocchi; ne sono fatte 105 (dieci blocchi da dieci più le quindici
-della prima parte). Restano 110, in undici blocchi da dieci, da fare nei prossimi lotti:
+Il catalogo del cap. 8 ha 215 creature in 21 blocchi; ne sono fatte 115 (undici blocchi da dieci più le quindici
+della prima parte). Restano 100, in dieci blocchi da dieci, da fare nei prossimi lotti:
 
-- dei blocchi già nella 0.16: **Creature delle acque e popoli sommersi**, **Predatori e grandi erbivori**,
-  **Creature alate e piccoli predatori**, **Sciami e piccola fauna**;
+- dei blocchi già nella 0.16: **Predatori e grandi erbivori**, **Creature alate e piccoli predatori**,
+  **Sciami e piccola fauna**;
 - della 0.18: **Cavalcature e animali da lavoro** e **Mephit e creature elementali**;
 - nuovi della 0.23: **Costrutti e Modron**, **Capi e varianti dei popoli guerrieri**, **Predatori straordinari**,
   **Popoli delle terre selvagge**, **Fauna delle terre aperte**.

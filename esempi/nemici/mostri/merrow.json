@@ -1,0 +1,156 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "merrow",
+  "nome": "Merrow",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Creature delle acque e popoli sommersi",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 5,
+    "COS": 7,
+    "INT": 4,
+    "SAG": 5,
+    "CAR": 4
+  },
+  "pv": 40,
+  "pm": 6,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 8,
+  "iniziativa": -1,
+  "movimento": {
+    "passo": 2,
+    "corsa": 4,
+    "scatto": 6
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 33,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 9,
+    "volonta": 8,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    },
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ],
+      "note": "Richiede una mano disponibile."
+    },
+    {
+      "nome": "Arpione in mischia",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+3",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    },
+    {
+      "nome": "Arpione scagliato",
+      "tipo": "distanza",
+      "va": 11,
+      "danno": "1d6+3",
+      "natura": "Naturale",
+      "gittata_q": 4,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ],
+      "note": "Massimo 4 Q in aria; 2 Q in acqua. Sagola lunga 4 Q."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Armi da guerra",
+      "va": 12
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Vita acquatica",
+      "effetto": "Natura Comune, biologicamente vivente, con mente e PM personali (a 0 PM Svenuto); a 0 PV valgono Tempra, Ferite, Menomazioni e Morente (non scatta morte, incoscienza o rilascio di una presa). Nessuna Parata naturale. Il fiato ordinario dura COS Round, poi §5.23. A Terra non si applica a chi nuota senza appoggio. Respirare acqua non dà resistenza a correnti, pressione o temperature estreme. I sensi alternativi valgono solo nel mezzo e nella distanza indicati, senza attraversare solidi né rivelare chi è nascosto."
+    },
+    {
+      "nome": "Nuoto",
+      "effetto": "Nuoto 8 / 16 / 24 Q effettivi (eccezione espressa al costo ordinario 2 dell’acqua: nel solo Nuoto si percorrono le distanze indicate). Nei percorsi misti si segue il budget unico del §5.2.4, con costo 1 sulla terra e 2 in acqua, senza superare la distanza indicata per ogni modalità. Immobilizzato impedisce il Nuoto. Respira aria e acqua. A terra 2/4/6 Q. Scurovisione 12 Q."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Al massimo un Morso e un attacco di Artigli oppure Arpione per Round, 1 AzP ciascuno; l’Opportunità usa un attacco ravvicinato entro tali limiti. Tirare la sagola richiede la propria AzP e non si somma gratis al colpo."
+    },
+    {
+      "nome": "Aggancio dell’arpione",
+      "effetto": "Prima di un attacco con l’Arpione dichiara se cerca di agganciare (bersaglio ≤ 2 × 2 Q). Dopo almeno 1 danno finale, Riflessi senza modificatore: fallimento → agganciato (non Immobilizzato, nessun Sanguinamento). Un solo aggancio, una sola sagola (4 Q, percorso libero); l’arma resta al bersaglio finché non la recupera. Per allontanarsi oltre la lunghezza la vittima deve prima liberarsi o rompere il filo."
+    },
+    {
+      "nome": "Tirare",
+      "effetto": "1 AzP, al massimo una volta per Round, con una mano sulla sagola e appoggio o propulsione reali: Atletica 13 contrapposta a Corpo a corpo o Atletica della vittima; successo la avvicina fino a 2 Q lungo il filo, pareggio o fallimento no. Nessun danno aggiuntivo; non oltre FOR × 40 kg (360 kg) con l’equipaggiamento. Prima di un bordo o di immergere le vie respiratorie la vittima fa Riflessi senza modificatore: successo ferma il trascinamento all’ultimo spazio sicuro. Nessun passaggio attraverso scafi o varchi troppo stretti.",
+      "azioni": {
+        "principali": 1
+      },
+      "usi": {
+        "quanti": 1,
+        "per": "Round"
+      }
+    },
+    {
+      "nome": "Liberarsi dall’arpione",
+      "effetto": "1 AzP della vittima o di un alleato adiacente: Atletica senza modificatore con mani o strumenti adatti; successo libera. In alternativa si recide la sagola (AR 0, PI 2, PS Integrità 10, come oggetto). Il Merrow può lasciare il filo gratis alla propria Iniziativa; per superare la lunghezza la vittima può iniziare con 1 AzP la contrapposta del trascinamento: successo fa mollare il filo."
+    }
+  ],
+  "note": "Arpione Comune con sagola: FOR 5, una mano, portata 2 Q, PI 6, PS Integrità 10; per danni, Abilità e Parata usa il profilo della Lancia a una mano (+2 personale già incluso), senza Versatile; la sagola richiede l’altra mano. I 33 PX comprendono questa dotazione. Anatomia umanoide con la coda al posto delle Gambe. Comprende e parla due lingue della comunità. Le origini demoniache della fonte non sono assunte per Iris. Condotta: minaccia, tratta o si ritira; sotto 10 PV o a Ferita Profonda interrompe una caccia pericolosa. Fonte: Merrow, p. 219."
+}
