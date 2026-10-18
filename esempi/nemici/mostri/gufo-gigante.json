@@ -1,0 +1,101 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "gufo-gigante",
+  "nome": "Gufo gigante",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Creature alate e piccoli predatori",
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 7,
+    "COS": 6,
+    "INT": 4,
+    "SAG": 7,
+    "CAR": 5
+  },
+  "pv": 22,
+  "pm": 8,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 1,
+    "corsa": 2,
+    "scatto": 3,
+    "volo": 12
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 11,
+    "volonta": 10,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d8+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 14
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Natura e risorse",
+      "effetto": "Natura Comune, organismo vivente con mente e PM personali (a 0 PM Svenuto); nessun incantesimo appreso o potere magico innato. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente, senza morte o incoscienza automatica; le cure biologiche si applicano. Nessuna Parata naturale. Una sola Opportunità ordinaria gratuita per Round, su un’occasione concreta e nei limiti offensivi della voce. Respira aria (COS Round di fiato). Le capacità non garantiscono Sorpresa o ostilità al primo avvistamento."
+    },
+    {
+      "nome": "Ali e volo",
+      "effetto": "In volo Corsa e Scatto richiedono Atletica rispettivamente a −2 e −4 (esiti e altre penalità: Giocatore §5.2). Una sola AzM comprende decollo, dislivello, tragitto e atterraggio; nei percorsi misti vale il budget unico del §5.2.4. Nessun volo stazionario in questa conversione (salvo la Vespa); servono spazio per le ali e una traiettoria libera. Svenuto o perdita della funzione alare possono causare Caduta; l’effetto A Terra da solo non abbatte chi vola senza appoggio (§5.2.5). Trasportare qualcuno richiede presa reale, Azioni e capacità di carico. Braccia = ali; Gambe = arti posteriori; una Menomazione dell’ala si applica al Volo."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 24 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    },
+    {
+      "nome": "Passaggio in volo",
+      "effetto": "Non provoca Opportunità quando abbandona la portata di un nemico con il proprio Volo. L’eccezione riguarda solo quell’uscita in volo: non rende gratuiti attacchi, tragitti a terra o altre attività rischiose. Può dividere il Passo prima e dopo l’attacco entro la distanza complessiva disponibile, senza una seconda AzM. Senza spazio per le ali non attraversa il solido."
+    },
+    {
+      "nome": "Sensi e linguaggi",
+      "effetto": "+2 a Percezione quando vista o udito sono determinanti (una sola volta per Prova). Furtività 14 richiede la possibilità reale di occultarsi: non è invisibile né perfettamente silenzioso; la vista notturna non rivela automaticamente chi è nascosto. Parla il linguaggio dei Gufi giganti e comprende altre tre lingue della sua comunità (senza poterle necessariamente parlare). Può fare da sentinella o negoziare un passaggio; nessun potere silvano o vincolo con esseri fatati per il solo nome."
+    }
+  ],
+  "note": "Un solo attacco di Artigli per Round, Opportunità compresa; non afferra automaticamente la preda. Condotta: sotto 5 PV o a Ferita Profonda tende a raggiungere un posatoio protetto. Fonte: Giant Owl, p. 327."
+}

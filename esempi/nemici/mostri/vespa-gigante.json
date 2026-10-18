@@ -1,0 +1,98 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "vespa-gigante",
+  "nome": "Vespa gigante",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Creature alate e piccoli predatori",
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 6,
+    "COS": 5,
+    "INT": 1,
+    "SAG": 5,
+    "CAR": 2
+  },
+  "pv": 18,
+  "pm": 4,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 2,
+    "corsa": 4,
+    "scatto": 6,
+    "volo": 10
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 10,
+    "volonta": 6,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Pungiglione",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "note": "Poi veleno: vedi la capacità «Veleno di vespa II»."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 8
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Natura e risorse",
+      "effetto": "Natura Comune, organismo vivente con mente e PM personali (a 0 PM Svenuto); nessun incantesimo appreso o potere magico innato. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente, senza morte o incoscienza automatica; le cure biologiche si applicano. Nessuna Parata naturale. Una sola Opportunità ordinaria gratuita per Round, su un’occasione concreta e nei limiti offensivi della voce. Respira aria (COS Round di fiato). Le capacità non garantiscono Sorpresa o ostilità al primo avvistamento."
+    },
+    {
+      "nome": "Ali e volo",
+      "effetto": "In volo Corsa e Scatto richiedono Atletica rispettivamente a −2 e −4 (esiti e altre penalità: Giocatore §5.2). Una sola AzM comprende decollo, dislivello, tragitto e atterraggio; nei percorsi misti vale il budget unico del §5.2.4. Nessun volo stazionario in questa conversione (salvo la Vespa); servono spazio per le ali e una traiettoria libera. Svenuto o perdita della funzione alare possono causare Caduta; l’effetto A Terra da solo non abbatte chi vola senza appoggio (§5.2.5). Trasportare qualcuno richiede presa reale, Azioni e capacità di carico. Braccia = ali; Gambe = arti posteriori; una Menomazione dell’ala si applica al Volo."
+    },
+    {
+      "nome": "Veleno di vespa II",
+      "effetto": "Danno tossico 1d6 Naturale interno; fallimento: Avvelenato (−2 ai VA fisici) per 5 Round. Origine naturale, Pericolosità II, Importante, Tempra senza modificatore. Si inocula solo dopo almeno 1 danno fisico finale a un vivente (non attraversa una protezione che ha assorbito l’intero danno fisico); prima si risolvono attacco, Difesa, AR, PV e Ferite, poi la tossina. Non costa PM o AzP oltre all’attacco. Fallimento: danno tossico immediato (ignora l’AR) e −2 ai VA delle azioni fisiche per la durata indicata; successo: metà per eccesso del solo danno tossico e nessuna penalità. A fine di ogni propria Iniziativa la vittima ripete gratis Tempra senza modificatore: successo termina la penalità; il danno non si ripete. Scadenza a fine Round R + N. Se la stessa tossina è già attiva, una nuova inoculazione rinnova solo la durata (nessuna PS iniziale né altro danno tossico); tossine diverse coesistono. Il Magistrale raddoppia solo il danno fisico. Un antidoto adeguato o Cura Avvelenamenti dal livello 2 la neutralizza; Cura Spirituale no. A 0 PV non dà paralisi, Svenuto o stabilizzazione. Nessuna dose commerciale recuperabile dal cadavere."
+    },
+    {
+      "nome": "Ali vibranti",
+      "effetto": "Può restare sospesa in aria usando le ali funzionali, senza un movimento minimo: eccezione anatomica al volo non stazionario delle altre creature del blocco (non è sostegno magico). Perdita di coscienza, blocco del battito o Menomazione che impedisca il Volo possono farla cadere. Non ha Passaggio in volo."
+    },
+    {
+      "nome": "Corpo",
+      "effetto": "Un Pungiglione per Round, Opportunità compresa. Testa comprende antenne e mandibole; Torace il corpo e l’apparato alare; Braccia le zampe anteriori e Gambe quelle posteriori con la funzione del pungiglione; la localizzazione individua la parte effettivamente lesa. Nessuna resistenza innata al Fuoco o al calore delle Terre del Fuoco."
+    }
+  ],
+  "note": "Le sue colonie non coincidono con la Covata. Sensi ordinari, senza Scurovisione; non comprende linguaggi. Condotta: può difendere il nido e interrompere l’inseguimento quando la minaccia si allontana; sotto 4 PV o a Ferita Profonda tende a ritirarsi. Fonte: Giant Wasp, p. 329."
+}

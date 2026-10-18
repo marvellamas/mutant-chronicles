@@ -1,0 +1,93 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "serpente-velenoso",
+  "nome": "Serpente velenoso",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Creature alate e piccoli predatori",
+  "caratteristiche": {
+    "FOR": 1,
+    "DES": 7,
+    "COS": 4,
+    "INT": 1,
+    "SAG": 5,
+    "CAR": 2
+  },
+  "pv": 8,
+  "pm": 3,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 8,
+    "riflessi": 11,
+    "volonta": 6,
+    "magia": 7
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "note": "Poi veleno: vedi la capacità «Veleno ofidico II»."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Natura e risorse",
+      "effetto": "Natura Comune, organismo vivente con mente e PM personali (a 0 PM Svenuto); nessun incantesimo appreso o potere magico innato. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente, senza morte o incoscienza automatica; le cure biologiche si applicano. Nessuna Parata naturale. Una sola Opportunità ordinaria gratuita per Round, su un’occasione concreta e nei limiti offensivi della voce. Respira aria (COS Round di fiato). Le capacità non garantiscono Sorpresa o ostilità al primo avvistamento."
+    },
+    {
+      "nome": "Veleno ofidico II",
+      "effetto": "Stessa tossina del Serpente velenoso gigante. Danno tossico 1d4 Naturale interno; fallimento: Avvelenato (−2 ai VA fisici) per 5 Round. Origine naturale, Pericolosità II, Importante, Tempra senza modificatore. Si inocula solo dopo almeno 1 danno fisico finale a un vivente (non attraversa una protezione che ha assorbito l’intero danno fisico); prima si risolvono attacco, Difesa, AR, PV e Ferite, poi la tossina. Non costa PM o AzP oltre all’attacco. Fallimento: danno tossico immediato (ignora l’AR) e −2 ai VA delle azioni fisiche per la durata indicata; successo: metà per eccesso del solo danno tossico e nessuna penalità. A fine di ogni propria Iniziativa la vittima ripete gratis Tempra senza modificatore: successo termina la penalità; il danno non si ripete. Scadenza a fine Round R + N. Se la stessa tossina è già attiva, una nuova inoculazione rinnova solo la durata (nessuna PS iniziale né altro danno tossico); tossine diverse coesistono. Il Magistrale raddoppia solo il danno fisico. Un antidoto adeguato o Cura Avvelenamenti dal livello 2 la neutralizza; Cura Spirituale no. A 0 PV non dà paralisi, Svenuto o stabilizzazione. Nessuna dose commerciale recuperabile dal cadavere."
+    },
+    {
+      "nome": "Sensi e acqua",
+      "effetto": "Percezione non visiva di prossimità entro 2 Q (Percezione 10), senza attraversare solidi; non legge immagini o intenzioni. Nessuna Scurovisione innata. Nuoto nativo 6 / 12 / 18 Q (già effettivo; percorsi misti: budget unico e costi del Giocatore §5.2.4). Respira aria e non ignora il soffocamento."
+    },
+    {
+      "nome": "Corpo e morso",
+      "effetto": "Un Morso per Round, Opportunità compresa. Testa = capo e fauci; Torace = corpo; Braccia e Gambe = gruppi di zampe (o porzioni) anteriori e posteriori che sostengono la locomozione. Nessun arto prensile, attacco di Costrizione o capacità di inghiottire un personaggio."
+    }
+  ],
+  "note": "Non comprende linguaggi. Spazio tattico 1 × 1 Q: non rappresenta le sue dimensioni reali e non lo trasforma in uno sciame. Condotta: preferisce una via di fuga a un avversario troppo grande; il morso può essere una difesa del rifugio; sotto 2 PV o a Ferita Profonda tende a sottrarsi. Fonte: Poisonous Snake, p. 334."
+}

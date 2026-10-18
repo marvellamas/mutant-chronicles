@@ -1736,11 +1736,7 @@ diverso dalle regole già approvate **non si è cambiato**: vedi A.167 qui sotto
   Poi il blocco **«Predatori e grandi erbivori»** (Pantera, Tigre, Tigre dai denti a sciabola, Orso polare,
   Rinoceronte, Elefante, Mammut, Alce gigante, Scimmione, Scimmione gigante): Assalto/Impeto come capacità con
   Tempra e dimensione massima dal manuale; Impeto, Calpestare e Zoccoli con formula propria come attacchi con la
-  condizione nella nota; Masso e Pietra a distanza; Tigre 2 × 1 Q fuori dal campo Spazio (A.167). Bestiario online
-  rigenerato. **Restano** 90 creature del cap. 8, in nove blocchi: «Creature alate e piccoli predatori»,
-  «Sciami e piccola fauna», «Cavalcature e animali da lavoro», «Mephit e creature elementali», «Costrutti e
-  Modron», «Capi e varianti dei popoli guerrieri», «Predatori straordinari», «Popoli delle terre selvagge»,
-  «Fauna delle terre aperte»: a blocchi nei prossimi lotti.
+  condizione nella nota; Masso e Pietra a distanza; Tigre 2 × 1 Q fuori dal campo Spazio (A.167). Poi il blocco **«Creature alate e piccoli predatori»** (Aquila gigante, Gufo gigante, Avvoltoio gigante, Pipistrello gigante, Vespa gigante, Scarabeo di fuoco gigante, Centopiedi gigante, Serpente velenoso, Serpente velenoso gigante, Ragno lupo gigante): Passo di volo in `movimento.volo` (Corsa e Scatto in volo con Atletica −2 e −4 nella capacità «Ali e volo»); quattro creature 2 × 2 Q di taglia Grande; i veleni minori (Vespa, Centopiedi, i due Serpenti, Ragno lupo) come capacità con Tempra senza modificatore, danno interno e durata dal manuale, e «poi veleno» nella nota dell'attacco; ecolocalizzazione, percezione di prossimità e luce biologica come capacità; Passaggio in volo solo del Gufo; Ali vibranti della Vespa. Bestiario online rigenerato. **Restano** 80 creature del cap. 8, in 8 blocchi: «Sciami e piccola fauna», «Cavalcature e animali da lavoro», «Mephit e creature elementali», «Costrutti e Modron», «Capi e varianti dei popoli guerrieri», «Predatori straordinari», «Popoli delle terre selvagge», «Fauna delle terre aperte»: a blocchi nei prossimi lotti.
 
 ## Domande aperte dalla ricognizione del 15 ottobre 2026
 

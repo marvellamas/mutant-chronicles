@@ -1,0 +1,113 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "aquila-gigante",
+  "nome": "Aquila gigante",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Creature alate e piccoli predatori",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 7,
+    "COS": 6,
+    "INT": 4,
+    "SAG": 7,
+    "CAR": 5
+  },
+  "pv": 28,
+  "pm": 8,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 2,
+    "corsa": 4,
+    "scatto": 6,
+    "volo": 16
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 11,
+    "volonta": 10,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Becco",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    },
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 8
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Natura e risorse",
+      "effetto": "Natura Comune, organismo vivente con mente e PM personali (a 0 PM Svenuto); nessun incantesimo appreso o potere magico innato. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente, senza morte o incoscienza automatica; le cure biologiche si applicano. Nessuna Parata naturale. Una sola Opportunità ordinaria gratuita per Round, su un’occasione concreta e nei limiti offensivi della voce. Respira aria (COS Round di fiato). Le capacità non garantiscono Sorpresa o ostilità al primo avvistamento."
+    },
+    {
+      "nome": "Ali e volo",
+      "effetto": "In volo Corsa e Scatto richiedono Atletica rispettivamente a −2 e −4 (esiti e altre penalità: Giocatore §5.2). Una sola AzM comprende decollo, dislivello, tragitto e atterraggio; nei percorsi misti vale il budget unico del §5.2.4. Nessun volo stazionario in questa conversione (salvo la Vespa); servono spazio per le ali e una traiettoria libera. Svenuto o perdita della funzione alare possono causare Caduta; l’effetto A Terra da solo non abbatte chi vola senza appoggio (§5.2.5). Trasportare qualcuno richiede presa reale, Azioni e capacità di carico. Braccia = ali; Gambe = arti posteriori; una Menomazione dell’ala si applica al Volo."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Al massimo una Beccata e un attacco di Artigli per Round, 1 AzP ciascuno, Opportunità comprese. I due artigli non producono due applicazioni di danno nello stesso colpo. Può conservare un’Azione per Difesa invece di completare la sequenza."
+    },
+    {
+      "nome": "Vista e parola",
+      "effetto": "Vista acuta +2 (+2 a Percezione quando la vista è determinante); nessuna Scurovisione innata. Parla il linguaggio delle Aquile giganti e comprende altre due lingue assegnate alla comunità o all’origine (comprenderle non le dà la capacità di pronunciarle). Può valutare una richiesta, senza obbligo di aiutare o attaccare."
+    },
+    {
+      "nome": "Volo e artigli",
+      "effetto": "Non ha Passaggio in volo: lasciare una portata nemica può provocare Opportunità. Un attacco riuscito di Artigli non solleva o trasporta la vittima: occorrono manovra prensile praticabile e i normali limiti di carico; le Azioni impegnate nella presa non restano disponibili per attacchi incompatibili."
+    }
+  ],
+  "note": "Difende piccoli e posatoi, può indicare una direzione o chiedere agli intrusi di allontanarsi. Condotta: sotto 7 PV o a Ferita Profonda tende a cercare quota e un riparo; un accesso troppo stretto può impedirle di raggiungere la preda. Fonte: Giant Eagle, p. 324."
+}

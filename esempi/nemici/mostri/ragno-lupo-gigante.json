@@ -1,0 +1,97 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "ragno-lupo-gigante",
+  "nome": "Ragno lupo gigante",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Creature alate e piccoli predatori",
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 7,
+    "COS": 6,
+    "INT": 2,
+    "SAG": 6,
+    "CAR": 2
+  },
+  "pv": 14,
+  "pm": 4,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 11,
+    "volonta": 6,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "note": "Poi veleno: vedi la capacità «Veleno aracnide naturale II»."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 14
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Natura e risorse",
+      "effetto": "Natura Comune, organismo vivente con mente e PM personali (a 0 PM Svenuto); nessun incantesimo appreso o potere magico innato. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente, senza morte o incoscienza automatica; le cure biologiche si applicano. Nessuna Parata naturale. Una sola Opportunità ordinaria gratuita per Round, su un’occasione concreta e nei limiti offensivi della voce. Respira aria (COS Round di fiato). Le capacità non garantiscono Sorpresa o ostilità al primo avvistamento."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    },
+    {
+      "nome": "Veleno aracnide naturale II",
+      "effetto": "Lo stesso veleno aracnide di Ettercap e Ragno gigante. Danno tossico 1d4 Naturale interno; fallimento: Avvelenato (−2 ai VA fisici) per 10 Round. Origine naturale, Pericolosità II, Importante, Tempra senza modificatore. Si inocula solo dopo almeno 1 danno fisico finale a un vivente (non attraversa una protezione che ha assorbito l’intero danno fisico); prima si risolvono attacco, Difesa, AR, PV e Ferite, poi la tossina. Non costa PM o AzP oltre all’attacco. Fallimento: danno tossico immediato (ignora l’AR) e −2 ai VA delle azioni fisiche per la durata indicata; successo: metà per eccesso del solo danno tossico e nessuna penalità. A fine di ogni propria Iniziativa la vittima ripete gratis Tempra senza modificatore: successo termina la penalità; il danno non si ripete. Scadenza a fine Round R + N. Se la stessa tossina è già attiva, una nuova inoculazione rinnova solo la durata (nessuna PS iniziale né altro danno tossico); tossine diverse coesistono. Il Magistrale raddoppia solo il danno fisico. Un antidoto adeguato o Cura Avvelenamenti dal livello 2 la neutralizza; Cura Spirituale no. A 0 PV non dà paralisi, Svenuto o stabilizzazione. Nessuna dose commerciale recuperabile dal cadavere."
+    },
+    {
+      "nome": "Superfici e seta",
+      "effetto": "Può muoversi fino a 8 Q per AzM al Passo su pareti e soffitti aderenti senza Atletica ordinaria; superfici friabili o scivolose richiedono la valutazione pertinente. Attraversa normali ragnatele senza il loro costo aggiuntivo di terreno. Non ha Getto di seta né reti predisposte da cattura."
+    },
+    {
+      "nome": "Sensi di vibrazione",
+      "effetto": "Entro 2 Q avverte una creatura in movimento attraverso un supporto continuo condiviso (Percezione 11); non chi vola, è isolato dal supporto o rimane immobile. Toccando una rete continua localizza entro 6 Q chi la muove, senza ricavarne identità o intenzioni; fili interrotti fermano il segnale. Nessuno di questi sensi attraversa pareti."
+    }
+  ],
+  "note": "Un Morso per Round, Opportunità compresa. Non comprende linguaggi. Testa = fauci e sensori; Torace = corpo; Braccia e Gambe = gruppi di zampe (o porzioni) anteriori e posteriori che sostengono la locomozione. Condotta: sotto 3 PV o a Ferita Profonda tende a raggiungere una fessura. Fonte: Giant Wolf Spider, p. 330."
+}

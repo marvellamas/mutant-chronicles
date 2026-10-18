@@ -1,0 +1,93 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "centopiedi-gigante",
+  "nome": "Centopiedi gigante",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Creature alate e piccoli predatori",
+  "caratteristiche": {
+    "FOR": 3,
+    "DES": 6,
+    "COS": 5,
+    "INT": 1,
+    "SAG": 3,
+    "CAR": 2
+  },
+  "pv": 10,
+  "pm": 3,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 10,
+    "volonta": 6,
+    "magia": 7
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "note": "Poi veleno: vedi la capacità «Veleno di miriapode II»."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 8
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Natura e risorse",
+      "effetto": "Natura Comune, organismo vivente con mente e PM personali (a 0 PM Svenuto); nessun incantesimo appreso o potere magico innato. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente, senza morte o incoscienza automatica; le cure biologiche si applicano. Nessuna Parata naturale. Una sola Opportunità ordinaria gratuita per Round, su un’occasione concreta e nei limiti offensivi della voce. Respira aria (COS Round di fiato). Le capacità non garantiscono Sorpresa o ostilità al primo avvistamento."
+    },
+    {
+      "nome": "Veleno di miriapode II",
+      "effetto": "Tossina distinta da quella della Vespa. Danno tossico 1d4 Naturale interno; fallimento: Avvelenato (−2 ai VA fisici) per 5 Round. Origine naturale, Pericolosità II, Importante, Tempra senza modificatore. Si inocula solo dopo almeno 1 danno fisico finale a un vivente (non attraversa una protezione che ha assorbito l’intero danno fisico); prima si risolvono attacco, Difesa, AR, PV e Ferite, poi la tossina. Non costa PM o AzP oltre all’attacco. Fallimento: danno tossico immediato (ignora l’AR) e −2 ai VA delle azioni fisiche per la durata indicata; successo: metà per eccesso del solo danno tossico e nessuna penalità. A fine di ogni propria Iniziativa la vittima ripete gratis Tempra senza modificatore: successo termina la penalità; il danno non si ripete. Scadenza a fine Round R + N. Se la stessa tossina è già attiva, una nuova inoculazione rinnova solo la durata (nessuna PS iniziale né altro danno tossico); tossine diverse coesistono. Il Magistrale raddoppia solo il danno fisico. Un antidoto adeguato o Cura Avvelenamenti dal livello 2 la neutralizza; Cura Spirituale no. A 0 PV non dà paralisi, Svenuto o stabilizzazione. Nessuna dose commerciale recuperabile dal cadavere."
+    },
+    {
+      "nome": "Superfici e sensi",
+      "effetto": "Arrampicata fino a 6 Q per AzM al Passo su appigli adatti; non aderisce automaticamente a superfici lisce o soffitti. Entro 6 Q su un supporto continuo usa Percezione 8 per avvertire vibrazioni, senza attraversare pareti o percepire chi è sospeso in aria; non sostituisce una pista assente con un’individuazione automatica."
+    },
+    {
+      "nome": "Corpo segmentato",
+      "effetto": "Un solo Morso per Round, Opportunità compresa. Testa = apparato boccale e antenne; Torace = corpo; Braccia e Gambe = gruppi di zampe (o porzioni) anteriori e posteriori che sostengono la locomozione. Segmenti e numerose zampe non hanno PV separati, attacchi simultanei o premi distinti."
+    }
+  ],
+  "note": "Non comprende linguaggi. Condotta: può attaccare una creatura che ostacola il rifugio e poi sottrarsi negli anfratti accessibili; sotto 2 PV o a Ferita Profonda tende a nascondersi. Fonte: Giant Centipede, p. 323."
+}

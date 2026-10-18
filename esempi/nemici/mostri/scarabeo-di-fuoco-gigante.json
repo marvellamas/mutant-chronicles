@@ -1,0 +1,95 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "scarabeo-di-fuoco-gigante",
+  "nome": "Scarabeo di fuoco gigante",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Creature alate e piccoli predatori",
+  "caratteristiche": {
+    "FOR": 3,
+    "DES": 5,
+    "COS": 4,
+    "INT": 1,
+    "SAG": 3,
+    "CAR": 2
+  },
+  "pv": 8,
+  "pm": 3,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 8,
+  "iniziativa": -1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 8,
+    "riflessi": 9,
+    "volonta": 6,
+    "magia": 7
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 7,
+      "danno": "1d4",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 7
+    },
+    {
+      "nome": "Atletica",
+      "va": 7
+    },
+    {
+      "nome": "Percezione",
+      "va": 8
+    },
+    {
+      "nome": "Furtività",
+      "va": 7
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Natura e risorse",
+      "effetto": "Natura Comune, organismo vivente con mente e PM personali (a 0 PM Svenuto); nessun incantesimo appreso o potere magico innato. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente, senza morte o incoscienza automatica; le cure biologiche si applicano. Nessuna Parata naturale. Una sola Opportunità ordinaria gratuita per Round, su un’occasione concreta e nei limiti offensivi della voce. Respira aria (COS Round di fiato). Le capacità non garantiscono Sorpresa o ostilità al primo avvistamento."
+    },
+    {
+      "nome": "Luce biologica",
+      "effetto": "Le ghiandole emettono luce piena entro 2 Q e debole per altri 2 Q. Emissione continua, senza Azioni né PM, non magica; un contenitore realmente opaco la scherma. Può rivelarne la presenza: Furtività non nasconde automaticamente una sorgente luminosa esposta."
+    },
+    {
+      "nome": "Ghiandole estratte",
+      "effetto": "Dopo la morte effettiva (non per i soli 0 PV) la coppia può continuare a illuminare per 1d6 giorni (un solo tiro per entrambe). Estrarla da un cadavere accessibile richiede un minuto e strumenti adatti. La coppia integra mantiene la stessa emissione; dividerla non moltiplica le sorgenti. Scaduto il tempo non si ricarica con PM."
+    },
+    {
+      "nome": "Sensi e corpo",
+      "effetto": "Percezione non visiva di prossimità entro 6 Q (Percezione 8), senza attraversare solidi; non identifica automaticamente creature nascoste. Testa = mandibole e sensori, Torace = carapace con le ghiandole, Braccia e Gambe = gruppi anteriori e posteriori di zampe. Non ha Volo nonostante il nome."
+    }
+  ],
+  "note": "Il nome si riferisce al bagliore, non a un attacco incendiario: non emette Fuoco o calore dannoso e non ha resistenza speciale a Fuoco o Ghiaccio. Un Morso per Round, Opportunità compresa; non comprende linguaggi. Condotta: sotto 2 PV o a Ferita Profonda tende a cercare un anfratto; può essere una fonte di luce o un incontro ambientale senza combattimento obbligatorio. Fonte: Giant Fire Beetle, p. 325."
+}

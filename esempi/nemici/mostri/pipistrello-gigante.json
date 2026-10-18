@@ -1,0 +1,97 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "pipistrello-gigante",
+  "nome": "Pipistrello gigante",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Creature alate e piccoli predatori",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 7,
+    "COS": 5,
+    "INT": 1,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "pv": 18,
+  "pm": 5,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 2,
+    "corsa": 4,
+    "scatto": 6,
+    "volo": 12
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 11,
+    "volonta": 7,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Natura e risorse",
+      "effetto": "Natura Comune, organismo vivente con mente e PM personali (a 0 PM Svenuto); nessun incantesimo appreso o potere magico innato. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente, senza morte o incoscienza automatica; le cure biologiche si applicano. Nessuna Parata naturale. Una sola Opportunità ordinaria gratuita per Round, su un’occasione concreta e nei limiti offensivi della voce. Respira aria (COS Round di fiato). Le capacità non garantiscono Sorpresa o ostilità al primo avvistamento."
+    },
+    {
+      "nome": "Ali e volo",
+      "effetto": "In volo Corsa e Scatto richiedono Atletica rispettivamente a −2 e −4 (esiti e altre penalità: Giocatore §5.2). Una sola AzM comprende decollo, dislivello, tragitto e atterraggio; nei percorsi misti vale il budget unico del §5.2.4. Nessun volo stazionario in questa conversione (salvo la Vespa); servono spazio per le ali e una traiettoria libera. Svenuto o perdita della funzione alare possono causare Caduta; l’effetto A Terra da solo non abbatte chi vola senza appoggio (§5.2.5). Trasportare qualcuno richiede presa reale, Azioni e capacità di carico. Braccia = ali; Gambe = arti posteriori; una Menomazione dell’ala si applica al Volo."
+    },
+    {
+      "nome": "Ecolocalizzazione",
+      "effetto": "Entro 12 Q in aria comunicante usa Percezione 11 per distinguere corpi e ostacoli senza vista, quando può emettere e ricevere gli echi. Assordato o un impedimento reale all’emissione o alla propagazione del suono la interrompono. Conserva la vista ordinaria (nessuna Scurovisione). Non attraversa muri o scafi, non legge scritte e non scopre automaticamente un essere nascosto; il Direttore verifica il mezzo reale. Il buio da solo non impone Accecato contro una posizione che questo senso percepisce validamente."
+    },
+    {
+      "nome": "Volo e morso",
+      "effetto": "Un solo Morso per Round, Opportunità compresa. Non ha Passaggio in volo e non trasmette automaticamente malattie né risucchia sangue. Non rimane sospeso gratuitamente senza avanzare. Una Menomazione delle ali membranose può compromettere il Volo."
+    }
+  ],
+  "note": "Non comprende linguaggi. Un rumore ordinario non lo stordisce automaticamente. Condotta: può disimpegnarsi se il rifugio resta accessibile o se trova una preda meno rischiosa; sotto 4 PV o a Ferita Profonda tende a tornare al riparo. Fonte: Giant Bat, p. 323."
+}

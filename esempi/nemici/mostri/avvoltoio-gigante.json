@@ -1,0 +1,113 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "avvoltoio-gigante",
+  "nome": "Avvoltoio gigante",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Creature alate e piccoli predatori",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 5,
+    "COS": 6,
+    "INT": 3,
+    "SAG": 6,
+    "CAR": 4
+  },
+  "pv": 28,
+  "pm": 6,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": -1,
+  "movimento": {
+    "passo": 2,
+    "corsa": 4,
+    "scatto": 6,
+    "volo": 12
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 9,
+    "volonta": 8,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Becco",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    },
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d8+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 7
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Natura e risorse",
+      "effetto": "Natura Comune, organismo vivente con mente e PM personali (a 0 PM Svenuto); nessun incantesimo appreso o potere magico innato. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente, senza morte o incoscienza automatica; le cure biologiche si applicano. Nessuna Parata naturale. Una sola Opportunità ordinaria gratuita per Round, su un’occasione concreta e nei limiti offensivi della voce. Respira aria (COS Round di fiato). Le capacità non garantiscono Sorpresa o ostilità al primo avvistamento."
+    },
+    {
+      "nome": "Ali e volo",
+      "effetto": "In volo Corsa e Scatto richiedono Atletica rispettivamente a −2 e −4 (esiti e altre penalità: Giocatore §5.2). Una sola AzM comprende decollo, dislivello, tragitto e atterraggio; nei percorsi misti vale il budget unico del §5.2.4. Nessun volo stazionario in questa conversione (salvo la Vespa); servono spazio per le ali e una traiettoria libera. Svenuto o perdita della funzione alare possono causare Caduta; l’effetto A Terra da solo non abbatte chi vola senza appoggio (§5.2.5). Trasportare qualcuno richiede presa reale, Azioni e capacità di carico. Braccia = ali; Gambe = arti posteriori; una Menomazione dell’ala si applica al Volo."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Al massimo una Beccata e un attacco di Artigli per Round, 1 AzP ciascuno; le Opportunità rientrano nei limiti. La preda ferita non concede un attacco aggiuntivo e il Becco non dà Sanguinamento come proprietà automatica."
+    },
+    {
+      "nome": "Branco",
+      "effetto": "+2 VA agli attacchi ravvicinati contro una vittima quando un alleato cosciente e capace di agire è entro 1 Q da lei e può realmente minacciarla (il VA diventa 13, prima degli altri modificatori). Più alleati non aumentano il bonus. Non ottiene anche la Frenesia del sangue degli squali."
+    },
+    {
+      "nome": "Vista e fiuto",
+      "effetto": "+2 a Percezione quando vista o olfatto sono determinanti (una sola volta per Prova); nessuna Scurovisione innata. Può seguire tracce accessibili ma non localizza ogni morente a distanza illimitata. Comprende una lingua assegnata alla sua origine, senza parlarla. Non ha Passaggio in volo: le normali Opportunità continuano a valere."
+    }
+  ],
+  "note": "Può seguire un gruppo e aspettare un’occasione, o abbandonarlo per una carcassa più accessibile. Condotta: sotto 7 PV o a Ferita Profonda tende a riprendere quota. Fonte: Giant Vulture, p. 329."
+}

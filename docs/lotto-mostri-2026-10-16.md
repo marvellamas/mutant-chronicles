@@ -220,18 +220,26 @@ condizione nella nota; Masso (20 Q, 2 AzP) e Pietra (6 Q) dello Scimmione come a
 nuoto nelle capacità; **Tigre 2 × 1 Q** fuori dal campo Spazio (nota con A.167, taglia normale). Test:
 `tests/mostri-predatori.test.js`.
 
+## Catalogo, blocco «Creature alate e piccoli predatori» — cap. 8 (18/10, Mostri 0.23)
+
+`tools/genera_mostri_alate.mjs` → `esempi/nemici/mostri/`: Aquila gigante, Gufo gigante, Avvoltoio gigante, Pipistrello gigante, Vespa gigante, Scarabeo di fuoco gigante, Centopiedi gigante, Serpente velenoso, Serpente velenoso gigante, Ragno lupo gigante.
+
+Scelte del blocco: Passo di volo in `movimento.volo` (Corsa e Scatto in volo con Atletica −2 e −4 nella capacità «Ali e volo»); quattro creature 2 × 2 Q di taglia Grande; i veleni minori (Vespa, Centopiedi, i due Serpenti, Ragno lupo) come capacità con Tempra senza modificatore, danno interno e durata dal manuale, e «poi veleno» nella nota dell'attacco; ecolocalizzazione, percezione di prossimità e luce biologica come capacità; Passaggio in volo solo del Gufo; Ali vibranti della Vespa. Test: `tests/mostri-alate.test.js`.
+
 ## Che cosa resta del catalogo (Mostri 0.23)
 
-Il catalogo del cap. 8 ha 215 creature in 21 blocchi; ne sono fatte 125 (dodici blocchi da dieci più le quindici
-della prima parte). Restano 90, in nove blocchi da dieci, da fare nei prossimi lotti:
+Il catalogo del cap. 8 ha 215 creature in 21 blocchi; ne sono fatte 135. Restano 80, in 8 blocchi, da fare nei prossimi lotti:
 
-- dei blocchi già nella 0.16: **Creature alate e piccoli predatori** e **Sciami e piccola fauna**;
-- della 0.18: **Cavalcature e animali da lavoro** e **Mephit e creature elementali**;
-- nuovi della 0.23: **Costrutti e Modron**, **Capi e varianti dei popoli guerrieri**, **Predatori straordinari**,
-  **Popoli delle terre selvagge**, **Fauna delle terre aperte**.
+- **Sciami e piccola fauna** (10 creature);
+- **Cavalcature e animali da lavoro** (10 creature);
+- **Mephit e creature elementali** (10 creature);
+- **Costrutti e Modron** (10 creature);
+- **Capi e varianti dei popoli guerrieri** (10 creature);
+- **Predatori straordinari** (10 creature);
+- **Popoli delle terre selvagge** (10 creature);
+- **Fauna delle terre aperte** (10 creature).
 
-Nota: gli sciami avranno meccaniche proprie (spazio, dispersione) da trascrivere a mano come gli altri blocchi,
-senza automatismi.
+Nota: gli sciami avranno meccaniche proprie (spazio, dispersione) da trascrivere a mano come gli altri blocchi, senza automatismi.
 
 ## 5. Cosa trova di nuovo il master
 

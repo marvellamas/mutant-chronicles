@@ -1,0 +1,93 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "serpente-velenoso-gigante",
+  "nome": "Serpente velenoso gigante",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Creature alate e piccoli predatori",
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 8,
+    "COS": 6,
+    "INT": 1,
+    "SAG": 5,
+    "CAR": 2
+  },
+  "pv": 20,
+  "pm": 4,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 2,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 12,
+    "volonta": 6,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "note": "Poi veleno: vedi la capacità «Veleno ofidico II». Colpisce entro 2 Q solo lungo un percorso libero per il capo."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Natura e risorse",
+      "effetto": "Natura Comune, organismo vivente con mente e PM personali (a 0 PM Svenuto); nessun incantesimo appreso o potere magico innato. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente, senza morte o incoscienza automatica; le cure biologiche si applicano. Nessuna Parata naturale. Una sola Opportunità ordinaria gratuita per Round, su un’occasione concreta e nei limiti offensivi della voce. Respira aria (COS Round di fiato). Le capacità non garantiscono Sorpresa o ostilità al primo avvistamento."
+    },
+    {
+      "nome": "Veleno ofidico II",
+      "effetto": "Stessa tossina del Serpente velenoso: una dose gigante non somma altro danno mentre è già attiva. Danno tossico 1d6 Naturale interno; fallimento: Avvelenato (−2 ai VA fisici) per 5 Round. Origine naturale, Pericolosità II, Importante, Tempra senza modificatore. Si inocula solo dopo almeno 1 danno fisico finale a un vivente (non attraversa una protezione che ha assorbito l’intero danno fisico); prima si risolvono attacco, Difesa, AR, PV e Ferite, poi la tossina. Non costa PM o AzP oltre all’attacco. Fallimento: danno tossico immediato (ignora l’AR) e −2 ai VA delle azioni fisiche per la durata indicata; successo: metà per eccesso del solo danno tossico e nessuna penalità. A fine di ogni propria Iniziativa la vittima ripete gratis Tempra senza modificatore: successo termina la penalità; il danno non si ripete. Scadenza a fine Round R + N. Se la stessa tossina è già attiva, una nuova inoculazione rinnova solo la durata (nessuna PS iniziale né altro danno tossico); tossine diverse coesistono. Il Magistrale raddoppia solo il danno fisico. Un antidoto adeguato o Cura Avvelenamenti dal livello 2 la neutralizza; Cura Spirituale no. A 0 PV non dà paralisi, Svenuto o stabilizzazione. Nessuna dose commerciale recuperabile dal cadavere."
+    },
+    {
+      "nome": "Portata",
+      "effetto": "Un solo Morso per Round, Opportunità compresa. Non attraversa pareti o protezioni. Il Morso non crea una presa e non usa il profilo del Serpente costrittore gigante. La dose maggiore è già espressa in 1d6, senza moltiplicatore aggiuntivo."
+    },
+    {
+      "nome": "Sensi e respiro",
+      "effetto": "Percezione non visiva di prossimità entro 2 Q (Percezione 11), senza Scurovisione né individuazione automatica di un essere nascosto. Nuoto nativo 6 / 12 / 18 Q (già effettivo; percorsi misti e respirazione come la specie minore). Nessuna respirazione acquatica, resistenza al Fuoco o immunità generica ai veleni."
+    }
+  ],
+  "note": "Non comprende linguaggi. Localizzazioni funzionali come nel Serpente velenoso, senza arti prensili. Condotta: può evitare un confronto se gli viene lasciato un passaggio; sotto 5 PV o a Ferita Profonda tende a cercare riparo o acqua libera. Fonte: Giant Poisonous Snake, p. 327."
+}
