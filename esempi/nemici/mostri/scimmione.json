@@ -1,0 +1,115 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "scimmione",
+  "nome": "Scimmione",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Predatori e grandi erbivori",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 6,
+    "COS": 6,
+    "INT": 3,
+    "SAG": 6,
+    "CAR": 4
+  },
+  "pv": 24,
+  "pm": 6,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 10,
+    "volonta": 8,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Pugno",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ]
+    },
+    {
+      "nome": "Pietra",
+      "tipo": "distanza",
+      "va": 10,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "gittata_q": 6,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ],
+      "note": "Una mano; serve una pietra pronta (circa 1 kg)."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 8
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Bestia selvaggia",
+      "effetto": "Natura Comune, biologicamente vivente, con mente e PM personali (a 0 PM Svenuta); nessun incantesimo o potere magico innato. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente (non morte o incoscienza automatica). Nessuna Parata naturale: artigli, corna, proboscide e pugni non sostituiscono un’arma o uno scudo. L’Opportunità è un solo attacco ravvicinato normale gratuito, entro i limiti offensivi della scheda; non include Assalto, Impeto, Calpestare, lanci o altre manovre. Nei quadrupedi Testa = capo e collo, Torace = corpo, Braccia = arti anteriori, Gambe = posteriori con la coda. Respira aria (COS Round di fiato). Una via di fuga, una distanza di sicurezza o il cibo possono risolvere la scena; la sua presenza non applica Terrorizzato ai personaggi. Non comprende linguaggi (salvo dove detto)."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Fino a due Pugni per Round, 1 AzP ciascuno, oppure un solo lancio di Pietra con 1 AzP; nel Round di un lancio al massimo un Pugno. Le Opportunità usano solo il Pugno. Una mano occupata (presa, sostegno) non è disponibile per il Pugno di quella mano."
+    },
+    {
+      "nome": "Arrampicata",
+      "effetto": "Fino a 6 Q per AzM al Passo con appigli e sostegno adeguati al peso; Atletica per difficoltà reali; niente aderenza a pareti lisce. La postura sulle nocche non cambia le funzioni per le Menomazioni."
+    },
+    {
+      "nome": "Pietre",
+      "effetto": "Il lancio richiede una pietra pronta e una mano libera; raccogliere una pietra accessibile entro 1 Q costa 1 AzP (non è incorporabile nel tiro); estrarre un proiettile già trasportato segue il §5.1.1 (−4 VA per una sola estrazione incorporata). Il Direttore stabilisce prima della scena le pietre raggiungibili; roccia compatta o terreno senza pietre non sono una riserva. Ogni tiro richiede un nuovo proiettile; il danno non si replica sui bersagli adiacenti; nessuna Parata naturale."
+    }
+  ],
+  "note": "Non comprende linguaggi nel profilo selvatico; può apprendere segnali tramite un rapporto stabilito nella scena. Condotta: minaccia con richiami e posture prima dello scontro; sotto 6 PV o a Ferita Profonda raggiunge il gruppo o un riparo. Fonte: Ape, p. 317."
+}

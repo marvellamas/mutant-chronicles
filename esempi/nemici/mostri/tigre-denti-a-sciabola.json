@@ -1,0 +1,108 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "tigre-denti-a-sciabola",
+  "nome": "Tigre dai denti a sciabola",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Predatori e grandi erbivori",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 6,
+    "COS": 7,
+    "INT": 2,
+    "SAG": 6,
+    "CAR": 4
+  },
+  "pv": 42,
+  "pm": 6,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "taglia": "grande",
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 10,
+    "volonta": 8,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ]
+    },
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d10+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Bestia selvaggia",
+      "effetto": "Natura Comune, biologicamente vivente, con mente e PM personali (a 0 PM Svenuta); nessun incantesimo o potere magico innato. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente (non morte o incoscienza automatica). Nessuna Parata naturale: artigli, corna, proboscide e pugni non sostituiscono un’arma o uno scudo. L’Opportunità è un solo attacco ravvicinato normale gratuito, entro i limiti offensivi della scheda; non include Assalto, Impeto, Calpestare, lanci o altre manovre. Nei quadrupedi Testa = capo e collo, Torace = corpo, Braccia = arti anteriori, Gambe = posteriori con la coda. Respira aria (COS Round di fiato). Una via di fuga, una distanza di sicurezza o il cibo possono risolvere la scena; la sua presenza non applica Terrorizzato ai personaggi. Non comprende linguaggi (salvo dove detto)."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Al massimo un attacco di Artigli e un Morso per Round, 1 AzP ciascuno, Opportunità comprese. Le zanne sono parte del Morso (la formula ne include la potenza): non danno due danni separati né Perforante, Sanguinamento o Ferite dirette."
+    },
+    {
+      "nome": "Assalto",
+      "effetto": "Richiede almeno 4 Q di Passo rettilineo verso la vittima nella stessa Iniziativa (usa l’AzM ordinaria e l’AzP del colpo; si dichiara prima del tiro; non si combina con Carica, Corsa, Scatto o altre manovre offensive; bersaglio e percorso realmente raggiungibili). Con almeno 1 danno finale: Tempra −2 a una creatura non maggiore di 2 × 2 Q: fallimento → A Terra (solo con appoggio; chi nuota o vola senza appoggio segue il §5.2.5; nessuno spostamento, Stordito o presa; un bersaglio già A Terra non cade di nuovo). Le AzP successive si pagano normalmente, senza raddoppio del danno."
+    },
+    {
+      "nome": "Sensi e corpo",
+      "effetto": "Fiuto +2; vista e udito ordinari, senza Scurovisione. Una lesione della funzione delle fauci può impedire il Morso; gli Artigli restano se gli arti sono integri. L’Assalto non si somma alla Carica ordinaria."
+    }
+  ],
+  "note": "Condotta: cerca prede raggiungibili, può restare presso una carcassa senza attaccare chiunque avvisti; sotto 10 PV o a Ferita Seria si ritira; la difesa di piccoli o nutrimento può trattenerla (senza immunità a Terrorizzato). Fonte: Saber-Toothed Tiger, p. 336."
+}

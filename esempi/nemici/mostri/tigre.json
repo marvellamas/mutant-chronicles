@@ -1,0 +1,110 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "tigre",
+  "nome": "Tigre",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Predatori e grandi erbivori",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 7,
+    "COS": 6,
+    "INT": 2,
+    "SAG": 6,
+    "CAR": 4
+  },
+  "pv": 32,
+  "pm": 6,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 11,
+    "volonta": 8,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ]
+    },
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Bestia selvaggia",
+      "effetto": "Natura Comune, biologicamente vivente, con mente e PM personali (a 0 PM Svenuta); nessun incantesimo o potere magico innato. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente (non morte o incoscienza automatica). Nessuna Parata naturale: artigli, corna, proboscide e pugni non sostituiscono un’arma o uno scudo. L’Opportunità è un solo attacco ravvicinato normale gratuito, entro i limiti offensivi della scheda; non include Assalto, Impeto, Calpestare, lanci o altre manovre. Nei quadrupedi Testa = capo e collo, Torace = corpo, Braccia = arti anteriori, Gambe = posteriori con la coda. Respira aria (COS Round di fiato). Una via di fuga, una distanza di sicurezza o il cibo possono risolvere la scena; la sua presenza non applica Terrorizzato ai personaggi. Non comprende linguaggi (salvo dove detto)."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli, fumo o oscurità soprannaturale."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Al massimo un attacco di Artigli e un Morso per Round, 1 AzP ciascuno, Opportunità comprese. Il Morso non Immobilizza, trascina o soffoca automaticamente."
+    },
+    {
+      "nome": "Assalto",
+      "effetto": "Richiede almeno 4 Q di Passo rettilineo verso la vittima nella stessa Iniziativa (usa l’AzM ordinaria e l’AzP del colpo; si dichiara prima del tiro; non si combina con Carica, Corsa, Scatto o altre manovre offensive; bersaglio e percorso realmente raggiungibili). Con almeno 1 danno finale: Tempra senza modificatore a una creatura non maggiore di 2 × 2 Q: fallimento → A Terra (solo con appoggio; chi nuota o vola senza appoggio segue il §5.2.5; nessuno spostamento, Stordito o presa; un bersaglio già A Terra non cade di nuovo). Le AzP successive si pagano normalmente, senza raddoppio del danno."
+    },
+    {
+      "nome": "Fiuto",
+      "effetto": "Fiuto +2. Acqua o un odore forte possono rendere inservibile una traccia olfattiva; il bonus non crea una pista assente. Può mordere anche una vittima ancora in piedi, pagando l’attacco ordinario."
+    }
+  ],
+  "note": "Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). Condotta: caccia spesso da sola, può difendere territorio o piccoli; sotto 8 PV o a Ferita Profonda cerca copertura. Fonte: Tiger, p. 339."
+}

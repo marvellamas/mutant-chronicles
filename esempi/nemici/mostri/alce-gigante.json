@@ -1,0 +1,118 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "alce-gigante",
+  "nome": "Alce gigante",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Predatori e grandi erbivori",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 7,
+    "COS": 7,
+    "INT": 4,
+    "SAG": 7,
+    "CAR": 5
+  },
+  "pv": 42,
+  "pm": 8,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 12,
+    "corsa": 24,
+    "scatto": 36
+  },
+  "taglia": "grande",
+  "spazio": "3 × 3 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 11,
+    "volonta": 10,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Corna",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ]
+    },
+    {
+      "nome": "Corna in Impeto",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "3d6+2",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ],
+      "note": "Dopo almeno 4 Q di Passo rettilineo; comprende un solo 1d6 da slancio. Almeno 1 danno finale: Tempra senza modificatore a una creatura ≤ 2 × 2 Q, fallimento → A Terra. Non riceve anche la Carica ordinaria."
+    },
+    {
+      "nome": "Zoccoli",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "2d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ],
+      "note": "Solo contro una creatura A Terra non maggiore di 2 × 2 Q, con un appoggio che permetta il colpo; serve la seconda AzP e la portata di 1 Q."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 7
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Bestia selvaggia",
+      "effetto": "Natura Comune, biologicamente vivente, con mente e PM personali (a 0 PM Svenuta); nessun incantesimo o potere magico innato. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente (non morte o incoscienza automatica). Nessuna Parata naturale: artigli, corna, proboscide e pugni non sostituiscono un’arma o uno scudo. L’Opportunità è un solo attacco ravvicinato normale gratuito, entro i limiti offensivi della scheda; non include Assalto, Impeto, Calpestare, lanci o altre manovre. Nei quadrupedi Testa = capo e collo, Torace = corpo, Braccia = arti anteriori, Gambe = posteriori con la coda. Respira aria (COS Round di fiato). Una via di fuga, una distanza di sicurezza o il cibo possono risolvere la scena; la sua presenza non applica Terrorizzato ai personaggi. Non comprende linguaggi (salvo dove detto)."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Al massimo un attacco di Corna, ordinario oppure in Impeto, e un attacco di Zoccoli per Round, 1 AzP ciascuno. L’Opportunità usa solo le Corna ordinarie, entro il limite di un attacco con esse. Le corna non impugnano armi né parano."
+    },
+    {
+      "nome": "Linguaggio e sensi",
+      "effetto": "Parla il linguaggio degli Alci giganti e comprende altre due lingue assegnate alla comunità o all’origine (non le parla automaticamente). Vista e udito ordinari. Il Direttore può dare significati culturali alla sua comparsa, ma la scheda non manifesta divinità, non concede profezie e non rende una caccia maledetta."
+    }
+  ],
+  "note": "Erbivoro senziente. Condotta: può indicare una via sicura, negare un passaggio o proteggere altri animali; sotto 10 PV o a Ferita Profonda si disimpegna; la sua comprensione permette una trattativa compatibile con il linguaggio. Fonte: Giant Elk, p. 325."
+}

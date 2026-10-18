@@ -1733,10 +1733,14 @@ diverso dalle regole già approvate **non si è cambiato**: vedi A.167 qui sotto
   Drago tartaruga 4 × 4 Q fuori dal campo Spazio (A.167). Poi il blocco **«Creature delle acque e popoli sommersi»** (Granchio gigante, Polpo gigante, Squalo delle
   scogliere / cacciatore / gigante, Marinide, Merrow, Sahuagin, Kuo-toa, Chuul): Nuoto come capacità, squali senza
   moto a terra, lance a una/due mani/scagliate, Rete, Stringere, Inchiostro e Tentacoli velenosi come capacità.
-  Bestiario online rigenerato. **Restano** 100 creature del cap. 8, in dieci blocchi: «Predatori e grandi
-  erbivori», «Creature alate e piccoli predatori», «Sciami e piccola fauna», «Cavalcature e animali da lavoro»,
-  «Mephit e creature elementali», «Costrutti e Modron», «Capi e varianti dei popoli guerrieri», «Predatori
-  straordinari», «Popoli delle terre selvagge», «Fauna delle terre aperte»: a blocchi nei prossimi lotti.
+  Poi il blocco **«Predatori e grandi erbivori»** (Pantera, Tigre, Tigre dai denti a sciabola, Orso polare,
+  Rinoceronte, Elefante, Mammut, Alce gigante, Scimmione, Scimmione gigante): Assalto/Impeto come capacità con
+  Tempra e dimensione massima dal manuale; Impeto, Calpestare e Zoccoli con formula propria come attacchi con la
+  condizione nella nota; Masso e Pietra a distanza; Tigre 2 × 1 Q fuori dal campo Spazio (A.167). Bestiario online
+  rigenerato. **Restano** 90 creature del cap. 8, in nove blocchi: «Creature alate e piccoli predatori»,
+  «Sciami e piccola fauna», «Cavalcature e animali da lavoro», «Mephit e creature elementali», «Costrutti e
+  Modron», «Capi e varianti dei popoli guerrieri», «Predatori straordinari», «Popoli delle terre selvagge»,
+  «Fauna delle terre aperte»: a blocchi nei prossimi lotti.
 
 ## Domande aperte dalla ricognizione del 15 ottobre 2026
 

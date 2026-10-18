@@ -208,13 +208,24 @@ Rete del Kuo-toa (cattura senza danno), Nube di inchiostro, Tentacoli velenosi e
 capacità; Chuul con tre dosi di tossina al giorno e immune ad Avvelenato; Kuo-toa AR 3 = 1 biologica + 2 dello Scudo
 (senza Scudo 1, nella nota); Marinide: «Diplomazia» → Oratoria (A.169). Test: `tests/mostri-acque.test.js`.
 
+## Catalogo, blocco «Predatori e grandi erbivori» — cap. 8 (18/10, Mostri 0.23)
+
+`tools/genera_mostri_predatori.mjs` → `esempi/nemici/mostri/`: Pantera, Tigre, Tigre dai denti a sciabola, Orso polare,
+Rinoceronte, Elefante, Mammut, Alce gigante, Scimmione, Scimmione gigante.
+
+Scelte del blocco: **Assalto / Impeto** (almeno 4 Q di Passo rettilineo, poi Tempra e A Terra) come una capacità per
+creatura, con la Tempra e la dimensione massima del bersaglio dal manuale; le versioni con formula propria (Corno in
+Impeto del Rinoceronte, Corna in Impeto e Zoccoli dell'Alce, Calpestare di Elefante e Mammut) restano attacchi con la
+condizione nella nota; Masso (20 Q, 2 AzP) e Pietra (6 Q) dello Scimmione come attacchi a distanza; arrampicata e
+nuoto nelle capacità; **Tigre 2 × 1 Q** fuori dal campo Spazio (nota con A.167, taglia normale). Test:
+`tests/mostri-predatori.test.js`.
+
 ## Che cosa resta del catalogo (Mostri 0.23)
 
-Il catalogo del cap. 8 ha 215 creature in 21 blocchi; ne sono fatte 115 (undici blocchi da dieci più le quindici
-della prima parte). Restano 100, in dieci blocchi da dieci, da fare nei prossimi lotti:
+Il catalogo del cap. 8 ha 215 creature in 21 blocchi; ne sono fatte 125 (dodici blocchi da dieci più le quindici
+della prima parte). Restano 90, in nove blocchi da dieci, da fare nei prossimi lotti:
 
-- dei blocchi già nella 0.16: **Predatori e grandi erbivori**, **Creature alate e piccoli predatori**,
-  **Sciami e piccola fauna**;
+- dei blocchi già nella 0.16: **Creature alate e piccoli predatori** e **Sciami e piccola fauna**;
 - della 0.18: **Cavalcature e animali da lavoro** e **Mephit e creature elementali**;
 - nuovi della 0.23: **Costrutti e Modron**, **Capi e varianti dei popoli guerrieri**, **Predatori straordinari**,
   **Popoli delle terre selvagge**, **Fauna delle terre aperte**.

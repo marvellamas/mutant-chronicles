@@ -1,0 +1,116 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "scimmione-gigante",
+  "nome": "Scimmione gigante",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Predatori e grandi erbivori",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 6,
+    "COS": 9,
+    "INT": 4,
+    "SAG": 6,
+    "CAR": 4
+  },
+  "pv": 80,
+  "pm": 8,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "taglia": "grande",
+  "spazio": "3 × 3 Q",
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 10,
+    "volonta": 9,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Pugno",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "2d6+3",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ]
+    },
+    {
+      "nome": "Masso",
+      "tipo": "distanza",
+      "va": 14,
+      "danno": "3d6+3",
+      "natura": "Naturale",
+      "gittata_q": 20,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ],
+      "note": "Costa 2 AzP; due mani e un masso pronto (fino a 20 kg). VA 14 entro 10 Q, 12 da 11 a 20 Q, prima degli altri modificatori. Il costo di 2 AzP resta anche entro 10 Q."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 15
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 16
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 6
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Bestia selvaggia",
+      "effetto": "Natura Comune, biologicamente vivente, con mente e PM personali (a 0 PM Svenuta); nessun incantesimo o potere magico innato. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente (non morte o incoscienza automatica). Nessuna Parata naturale: artigli, corna, proboscide e pugni non sostituiscono un’arma o uno scudo. L’Opportunità è un solo attacco ravvicinato normale gratuito, entro i limiti offensivi della scheda; non include Assalto, Impeto, Calpestare, lanci o altre manovre. Nei quadrupedi Testa = capo e collo, Torace = corpo, Braccia = arti anteriori, Gambe = posteriori con la coda. Respira aria (COS Round di fiato). Una via di fuga, una distanza di sicurezza o il cibo possono risolvere la scena; la sua presenza non applica Terrorizzato ai personaggi. Non comprende linguaggi (salvo dove detto)."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Fino a due Pugni per Round, 1 AzP ciascuno, oppure un solo Masso che costa 2 AzP. Nel Round in cui lancia non può fare Pugni, nemmeno come Opportunità; se ne ha già fatto uno, il Masso non è disponibile. Non afferra né schiaccia automaticamente chi colpisce."
+    },
+    {
+      "nome": "Massi",
+      "effetto": "Un masso fino a 20 kg pronto e due mani disponibili: un singolo masso, AC 1, contro una sola vittima (nessuna Area d’impatto). Raccogliere un masso accessibile entro 1 Q costa 1 AzP e richiede le mani; le 2 AzP del Masso comprendono il gesto e il lancio, senza raccolta gratuita. Il Direttore stabilisce prima le pietre raggiungibili e una riserva non si aggiunge a posteriori. Il masso non torna in mano. Difese concretamente valide contro un proiettile materiale (non è un’esplosione); nessun Sbalzante, Sbilanciante o Perforante. Per colpire scafi, porte o strutture si dichiarano bersaglio, AR, PS Integrità e PI; il Masso non usa una creatura come proiettile."
+    },
+    {
+      "nome": "Appigli e corpo",
+      "effetto": "Arrampicata fino a 8 Q per AzM al Passo su sostegni che lo reggano; non aderisce a soffitti né conserva due mani libere mentre è sospeso. Bipede: una Menomazione del braccio può rendere impossibile il Masso lasciando un Pugno con l’arto valido."
+    }
+  ],
+  "note": "Sensi ordinari. Non comprende linguaggi nel profilo selvatico ma riconosce segnali appresi e reagisce a offerte o minacce. Con soli Pugni infligge più danno nel Round; il Masso minaccia una posizione lontana consumando entrambe le AzP. Condotta: sotto 20 PV o a Ferita Seria si ritira verso un accesso protetto. Fonte: Giant Ape, p. 323."
+}
