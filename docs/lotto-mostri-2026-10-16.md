@@ -262,11 +262,16 @@ Scelte del blocco: Difese = Parata dove il manuale la dà (Schivata / Elusione n
 
 Scelte del blocco: Soffi (Lupo invernale, Segugio infernale) come capacità da 2 AzP con cadenza R + 3 e PS di Elusione, non attacchi; danno misto del Morso ardente con la prima componente in `danno` e il Fuoco nella nota (una AC); Digestione, presa delle fauci, Inghiottire, Presa e trasporto del Roc, malattia del Cane della morte, veleno e Passaggio di fase del Ragno e Balzo del Cane intermittente come capacità; immunità negli Stati solo per Incendiato (Segugio e Remorhaz), il Gelo e le altre nelle capacità; Worg 2 × 1 Q e Roc 6 × 6 Q fuori dal campo Spazio, con l'ingombro nelle note e il rimando ad A.167 (approvata il 18/10, in implementazione), e nessuna Taglia dedotta dall'ingombro. Test: `tests/mostri-straordinari.test.js`.
 
+## Catalogo, blocco «Popoli delle terre selvagge» — cap. 8 (18/10, Mostri 0.23)
+
+`tools/genera_mostri_selvagge.mjs` → `esempi/nemici/mostri/`: Bullywug, Centauro, Kenku, Satiro, Lucertoloide, Sciamano lucertoloide, Re o Regina lucertoloide, Quaggoth, Quaggoth Thonot, Orog.
+
+Scelte del blocco: Difese = Parata per l'Orog (Schivata in nota) e AR «con scudo» nel campo (Bullywug 2, Lucertoloide 3; senza scudo in nota); Lancia a una e a due mani come due attacchi; armi della dotazione con gittata e modalità S; Nuoto nativo, apnea di 15 minuti (150 Round), Salto del Bullywug, Carica del Centauro, Agguato e Imitazione del Kenku, Impalare del Re e Avanzata aggressiva dell'Orog come capacità; i repertori dello Sciamano lucertoloide (tre incantesimi) e del Quaggoth Thonot (cinque, più Caduta protetta) come capacità con `azioni` e `risorsa` in PM, come per la Driade e l'Occhio di Gruumsh; la forma di Coccodrillo dello Sciamano come capacità sulla stessa scheda (un solo corpo, stesse risorse); immunità negli Stati solo per Avvelenato (Quaggoth e Thonot) e Terrorizzato (Re o Regina); Taglia non dedotta dall'ingombro (Centauro 2 × 2 Q senza Taglia). Test: `tests/mostri-selvagge.test.js`.
+
 ## Che cosa resta del catalogo (Mostri 0.23)
 
-Il catalogo del cap. 8 ha 215 creature in 21 blocchi; ne sono fatte 195. Restano 20, in 2 blocchi, da fare nei prossimi lotti:
+Il catalogo del cap. 8 ha 215 creature in 21 blocchi; ne sono fatte 205. Restano 10, in 1 blocchi, da fare nei prossimi lotti:
 
-- **Popoli delle terre selvagge** (10 creature);
 - **Fauna delle terre aperte** (10 creature).
 
 Nota: gli sciami avranno meccaniche proprie (spazio, dispersione) da trascrivere a mano come gli altri blocchi, senza automatismi.

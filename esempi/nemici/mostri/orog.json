@@ -1,0 +1,135 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "orog",
+  "nome": "Orog",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Popoli delle terre selvagge",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 5,
+    "COS": 8,
+    "INT": 6,
+    "SAG": 5,
+    "CAR": 6
+  },
+  "pv": 42,
+  "pm": 8,
+  "ar": {
+    "totale": 5,
+    "magica": 0
+  },
+  "difese": 12,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 4,
+    "corsa": 10,
+    "scatto": 16
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 55,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 10,
+    "volonta": 10,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Ascia bipenne",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "2d6+3",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ]
+    },
+    {
+      "nome": "Giavellotto a mano",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    },
+    {
+      "nome": "Giavellotto lanciato",
+      "tipo": "distanza",
+      "va": 10,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "gittata_q": 24,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 12
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 7
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 12
+    },
+    {
+      "nome": "Oratoria",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e Azioni",
+      "effetto": "Natura Comune, mente e PM personali; respira, mangia, beve e riposa; cure biologiche, malattie e Stati applicabili salvo protezioni esplicite. A 0 PV non Svenuto né morto automaticamente: un ulteriore danno finale positivo a 0 PV richiede Tempra e le Ferite del §4.2 (l’eccedenza del colpo che esaurisce i PV non genera da sola Ferite); a 0 PM personali Svenuto dopo la risoluzione completa dell’azione; cambiare forma, entrare in Furia o ricevere PV temporanei non cura Ferite, Menomazioni o Morente. INI modifica 1d10; AzP e unica AzM valgono per l’intero Round; ogni attacco normale costa 1 AzP, produce AC 1 e usa il danno già completo della tabella (non aggiungere FOR o DES). I tetti offensivi comprendono Opportunità e attacchi ordinati; una sola Opportunità ordinaria per Round con un’arma ravvicinata pronta o un attacco naturale ammesso (niente Carica, incantesimo, trasformazione o Manovra offensiva gratuita). Parata: 1 AzP, arma o scudo idonei, successo dimezza per eccesso prima dell’AR, Magistrale annulla; nessuna Parata naturale; armi ravvicinate −8 VA per parare a distanza, Scudo piccolo −4 con ulteriore −2 contro Raffica. Schivata: 1 AzP, 1 AzM, consapevolezza e spazio. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica; nessuna AR magica. Dotazione: oggetti Comuni, PS Integrità 10; recuperare un’arma non trasferisce i bonus personali; incoccare è compreso nell’attacco con Arco pronto (ogni tiro consuma una freccia); estrarre, riporre o recuperare un oggetto costa 1 AzP (abbandonarlo è gratuito); le mani occupate restano occupate durante Difese e lanci. Taglia e numero di arti non concedono danni, PI, portata o Azioni maggiori."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    },
+    {
+      "nome": "Dotazione",
+      "effetto": "Ascia bipenne a due mani FOR 6 PI 6; due Giavellotti della sentinella FOR 3 PI 4; Armatura pesante AR 5 FOR 7 PI 10. Inizia con la Bipenne pronta, senza Scudo. Al massimo due attacchi per Round, di cui non più di un lancio di Giavellotto, Opportunità e attacco ordinato compresi. Estrarre il Giavellotto e cambiare arma richiedono le Azioni ordinarie. I 55 PX comprendono la dotazione. I VA pronti comprendono la Pesante (−2 ai VA di attacco, Schivata e Prove fisiche ostacolate, −2 Q a ciascuna andatura; Parata, Percezione e PS non ricevono questi malus; a 0 PI perde AR ma mantiene le penalità)."
+    },
+    {
+      "nome": "Avanzata aggressiva",
+      "limiti": "Una volta per Round.",
+      "effetto": "Può usare la propria AzM come Passo di 6 Q anziché 4 verso un nemico visibile. Il percorso non può allontanarlo da quel nemico e deve terminare più vicino. Nessuna AzM aggiuntiva o aumento a Corsa, Scatto, Carica e Schivata; Opportunità normali. Non ha Furia di Gruumsh, Urlo di guerra o Frenesia gnoll."
+    }
+  ],
+  "note": "Parata 12 (valore delle Difese), Schivata / Elusione 8. Rimossa la Pesante recupera +2 ai VA fisici penalizzati e Movimento 6 / 12 / 18 Q (Passo aggressivo 8 Q); Parata, Percezione e PS restano invariate. Parla Comune e Orchesco. Variante dell’Orco, combattente robusto e disciplinato che valuta terreno e ritirata; non acquisisce i poteri del Capoguerra o dell’Occhio di Gruumsh. Condotta: sotto 11 PV o a Ferita Profonda può arretrare per salvare il reparto o trattare. Fonte: Orog, p. 247."
+}

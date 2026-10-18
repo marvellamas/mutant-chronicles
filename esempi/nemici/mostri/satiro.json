@@ -1,0 +1,140 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "satiro",
+  "nome": "Satiro",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Popoli delle terre selvagge",
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 7,
+    "COS": 5,
+    "INT": 6,
+    "SAG": 5,
+    "CAR": 7
+  },
+  "pv": 26,
+  "pm": 10,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 2,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 22,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 11,
+    "volonta": 11,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Corna",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ],
+      "note": "Non concedono Parata, atterramento o Carica gratuiti."
+    },
+    {
+      "nome": "Spada leggera",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ]
+    },
+    {
+      "nome": "Arco da guerra",
+      "tipo": "distanza",
+      "va": 10,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "gittata_q": 100,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 10
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 10
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    },
+    {
+      "nome": "Intrattenere",
+      "va": 14
+    },
+    {
+      "nome": "Oratoria",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e Azioni",
+      "effetto": "Natura Comune, mente e PM personali; respira, mangia, beve e riposa; cure biologiche, malattie e Stati applicabili salvo protezioni esplicite. A 0 PV non Svenuto né morto automaticamente: un ulteriore danno finale positivo a 0 PV richiede Tempra e le Ferite del §4.2 (l’eccedenza del colpo che esaurisce i PV non genera da sola Ferite); a 0 PM personali Svenuto dopo la risoluzione completa dell’azione; cambiare forma, entrare in Furia o ricevere PV temporanei non cura Ferite, Menomazioni o Morente. INI modifica 1d10; AzP e unica AzM valgono per l’intero Round; ogni attacco normale costa 1 AzP, produce AC 1 e usa il danno già completo della tabella (non aggiungere FOR o DES). I tetti offensivi comprendono Opportunità e attacchi ordinati; una sola Opportunità ordinaria per Round con un’arma ravvicinata pronta o un attacco naturale ammesso (niente Carica, incantesimo, trasformazione o Manovra offensiva gratuita). Parata: 1 AzP, arma o scudo idonei, successo dimezza per eccesso prima dell’AR, Magistrale annulla; nessuna Parata naturale; armi ravvicinate −8 VA per parare a distanza, Scudo piccolo −4 con ulteriore −2 contro Raffica. Schivata: 1 AzP, 1 AzM, consapevolezza e spazio. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica; nessuna AR magica. Dotazione: oggetti Comuni, PS Integrità 10; recuperare un’arma non trasferisce i bonus personali; incoccare è compreso nell’attacco con Arco pronto (ogni tiro consuma una freccia); estrarre, riporre o recuperare un oggetto costa 1 AzP (abbandonarlo è gratuito); le mani occupate restano occupate durante Difese e lanci. Taglia e numero di arti non concedono danni, PI, portata o Azioni maggiori."
+    },
+    {
+      "nome": "Dotazione",
+      "effetto": "Spada leggera FOR 3 PI 5; Arco da guerra a due mani FOR 5 PI 6 con 20 frecce; Armatura leggera AR 1 FOR 3 PI 6. Un flauto ordinario non magico accompagna l’esemplare. Inizia con la Spada pronta. Un solo attacco per Round, Opportunità e attacco ordinato compresi. I 22 PX comprendono la dotazione."
+    },
+    {
+      "nome": "Resistenza mistica",
+      "passiva": true,
+      "effetto": "+2 alla PS effettivamente richiesta da un incantesimo o da una capacità espressamente magica, senza creare una PS dove non esiste. Vale anche se il danno dell’incantesimo è Naturale; non concede AR, immunità o riduzione del danno; non si applica a un normale veleno o colpo d’arma. Con altri bonus magici alla stessa Prova si usa il maggiore pertinente."
+    },
+    {
+      "nome": "Musica e lingue",
+      "effetto": "Il flauto ordinario usa Intrattenere e non impone Sonno, Terrorizzato o fascinazione; la variante dei Flauti magici della fonte non è compresa. Parla Comune, Elfico e Silvano; nessuna Scurovisione innata. Gambe = arti caprini."
+    }
+  ],
+  "note": "Abitante silvano legato a musica e incontri sociali; la propensione alla festa non elimina responsabilità o capacità di scelta. Condotta: sotto 7 PV o a Ferita Profonda può allontanarsi o trattare. Fonte: Satyr, p. 267."
+}

@@ -1,0 +1,165 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "quaggoth-thonot",
+  "nome": "Quaggoth Thonot",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Popoli delle terre selvagge",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 5,
+    "COS": 7,
+    "INT": 3,
+    "SAG": 6,
+    "CAR": 4
+  },
+  "pv": 40,
+  "pm": 18,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 10,
+    "volonta": 10,
+    "magia": 11
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Artiglio",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ],
+      "note": "Con Furia ferita (PV ≤ 10): VA 15 e danno 1d6+4."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 9
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 12
+    },
+    {
+      "nome": "Potere",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e Azioni",
+      "effetto": "Natura Comune, mente e PM personali; respira, mangia, beve e riposa; cure biologiche, malattie e Stati applicabili salvo protezioni esplicite. A 0 PV non Svenuto né morto automaticamente: un ulteriore danno finale positivo a 0 PV richiede Tempra e le Ferite del §4.2 (l’eccedenza del colpo che esaurisce i PV non genera da sola Ferite); a 0 PM personali Svenuto dopo la risoluzione completa dell’azione; cambiare forma, entrare in Furia o ricevere PV temporanei non cura Ferite, Menomazioni o Morente. INI modifica 1d10; AzP e unica AzM valgono per l’intero Round; ogni attacco normale costa 1 AzP, produce AC 1 e usa il danno già completo della tabella (non aggiungere FOR o DES). I tetti offensivi comprendono Opportunità e attacchi ordinati; una sola Opportunità ordinaria per Round con un’arma ravvicinata pronta o un attacco naturale ammesso (niente Carica, incantesimo, trasformazione o Manovra offensiva gratuita). Parata: 1 AzP, arma o scudo idonei, successo dimezza per eccesso prima dell’AR, Magistrale annulla; nessuna Parata naturale; armi ravvicinate −8 VA per parare a distanza, Scudo piccolo −4 con ulteriore −2 contro Raffica. Schivata: 1 AzP, 1 AzM, consapevolezza e spazio. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica; nessuna AR magica. Dotazione: oggetti Comuni, PS Integrità 10; recuperare un’arma non trasferisce i bonus personali; incoccare è compreso nell’attacco con Arco pronto (ogni tiro consuma una freccia); estrarre, riporre o recuperare un oggetto costa 1 AzP (abbandonarlo è gratuito); le mani occupate restano occupate durante Difese e lanci. Taglia e numero di arti non concedono danni, PI, portata o Azioni maggiori."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 24 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    },
+    {
+      "nome": "Fisiologia",
+      "effetto": "Conserva immunità a veleno e Avvelenato (non alle malattie), Scurovisione 24 Q, Sottocomune e arrampicata 6 Q al Passo del Quaggoth. Al massimo due Artigli per Round, Opportunità e colpo ordinato compresi; nessuna Parata naturale. Furia ferita con PV ordinari fino a 10: +2 VA e +2 danni solo agli Artigli (VA 15 e 1d6+4 prima di altre penalità); non migliora Potere, PS o altri danni. Dotazione: nessuna; psionico non significa privo di mente né immune a Dardo Psichico."
+    },
+    {
+      "nome": "Repertorio",
+      "effetto": "Telecinesi 1, Cura Ferite 3, Irrobustire 3, Colpo Elementale di Fuoco 3 e Illusione 3. Un solo lancio del repertorio per Round. Manifestazioni innate senza Focus, Gesti o Invocazione (nessuna penalità per componenti assenti), ma sempre Potere 11 e PM; nessun uso illimitato né ricarica giornaliera della fonte. Nessun Addestramento Taumaturgo, Anticipazione, Contromagia o Convertire Potere. Ogni lancio costa 1 AzP e i PM del livello, prima di Potere 11 (colonna degli altri utilizzatori autorizzati); Ingaggio −2 e altre interferenze restano pertinenti; Corsa o Scatto nella stessa Iniziativa impediscono il lancio; fallimento consuma AzP e PM; Magistrale e Maldestro seguono la Magia; a 0 PM Svenuto dopo la completa risoluzione."
+    },
+    {
+      "nome": "Telecinesi 1",
+      "azioni": {
+        "principali": 1
+      },
+      "risorsa": "1 PM",
+      "prova": "Potere 11",
+      "effetto": "Magia §17.1: un oggetto visibile fino a 0,5 kg entro 6 Q, percorso libero. Durata fissa 10 Round oppure Concentrazione ordinaria fino a 10 minuti. Movimento dell’oggetto fino a 6 Q per Round, sempre visibile e in gittata (altrimenti cessa il sostegno). La prima manipolazione semplice è inclusa nel lancio; a durata fissa le successive costano 1 AzP; in Concentrazione una manipolazione non offensiva per propria Iniziativa è compresa, ma senza AzP e con Passo al massimo 6 Q. Non bersaglia creature né le trasporta tramite un oggetto; un possessore che trattiene l’oggetto effettua Tempra senza modificatore per non perderlo; oggetti fissati vanno prima liberati. Solo a durata fissa può scagliare l’oggetto: Armi da lancio 9 con il normale +2 (VA 11 prima degli altri modificatori), 1d4 Naturale, AC 1, normali Difese e AR; il primo colpo può rientrare nel lancio, i successivi costano 1 AzP; l’oggetto non ritorna e il suo danno è sostituito da quello del potere. Negare Potere (potenza 1) lo rimuove."
+    },
+    {
+      "nome": "Cura Ferite 3",
+      "azioni": {
+        "principali": 1
+      },
+      "risorsa": "3 PM",
+      "prova": "Potere 11",
+      "effetto": "Magia §21.1: Contatto con un vivente consenziente o un incosciente soccorso; recupera 1d4+2 PV fino al massimo ordinario. Ogni 2 punti di cura possono invece ridurre Sanguinamento di 1, anche parzialmente. Non cura Ferite, Menomazioni, malattie, veleno o Morente, non resuscita e non ripara un corpo puramente meccanico."
+    },
+    {
+      "nome": "Irrobustire 3",
+      "azioni": {
+        "principali": 1
+      },
+      "risorsa": "3 PM",
+      "prova": "Potere 11",
+      "effetto": "Magia §16.1: Contatto con un consenziente, sé stesso incluso, 6 PV temporanei per 20 Round, senza Concentrazione. Difese e AR precedono la riserva; non cura PV ordinari o Ferite. Più Irrobustire si sostituiscono, non si sommano. Nessun aumento di FOR, taglia, portata o danno. Dardo Psichico ignora i PV temporanei. Negare Potere (potenza 3) lo rimuove."
+    },
+    {
+      "nome": "Colpo Elementale di Fuoco 3",
+      "azioni": {
+        "principali": 1
+      },
+      "risorsa": "3 PM",
+      "prova": "Potere 11",
+      "effetto": "Gittata 6 Q, colpo automatico 1d6+2 Naturale da Fuoco, AC 1; Parata o Schivata ordinarie ammesse, Elusione no; AR pertinente; dopo Fuoco residuo oltre protezioni e Ignifugo, Riflessi senza modificatore evita Incendiato per 1+1d3 Round. Non può scegliere altri elementi."
+    },
+    {
+      "nome": "Illusione 3",
+      "azioni": {
+        "principali": 1
+      },
+      "risorsa": "3 PM",
+      "prova": "Potere 11",
+      "effetto": "Magia §19.4: centro fisso visibile entro 6 Q, scena entro raggio 2 Q anche in verticale, durata 5 minuti senza Concentrazione. Immagine statica semplice (come una cassa o una parete), con eventuali suoni e odori semplici; non una copia animata del Thonot. Non crea materia, luce reale, attacchi, AR o bonus automatici alle Difese. Cambiare la scena nei limiti del livello costa 1 AzP, con centro visibile in gittata. Nessuna PS per la sola osservazione: esaminare deliberatamente costa 1 AzP e concede Magia senza modificatore; un indizio concreto o un’interazione fisica concede la PS immediata senza AzP; successo riconosce l’inganno per quel lancio, fallimento richiede un nuovo indizio per riprovare; Barriera Mentale dà il proprio bonus; sensori e osservazione su schermo rilevano la realtà. Negare Potere (potenza 3) la rimuove."
+    },
+    {
+      "nome": "Caduta protetta",
+      "azioni": {
+        "principali": 1
+      },
+      "risorsa": "2 PM",
+      "limiti": "Al massimo una volta per Round, anche fuori dalla propria Iniziativa; consuma il medesimo budget di AzP dei lanci del repertorio.",
+      "effetto": "Capacità innata distinta (nessun Potere né componente; non un lancio del repertorio): quando sé stesso o un’altra creatura consenziente visibile entro 6 Q inizia a cadere, da dichiarare prima del danno. Un solo beneficiario per attivazione scende verticalmente di 6 Q subito e poi all’inizio delle proprie Iniziative (al massimo una discesa per Round); se raggiunge prima un appoggio praticabile atterra senza danni da quella caduta. Dura fino all’atterraggio o a fine del terzo Round successivo all’attivazione. Non concede Volo, risalita, spostamento orizzontale, immunità ad attacchi o superfici letali; se termina a mezz’aria la Caduta riprende dalla quota attuale. Senza coscienza o risorse non può attivarla e non annulla una caduta già risolta. Cambiare quota non interrompe Incendiato, prese o Stati personali; l’incoscienza del Thonot dopo l’attivazione non la cancella; Negare Potere (potenza 3) può rimuovere il rallentamento; riattivarla sostituisce, non somma; non trasporta creature appese al beneficiario."
+    }
+  ],
+  "immunita": [
+    "avvelenato"
+  ],
+  "note": "Raro esemplare capace di manipolazioni e manifestazioni psioniche, spesso custode di conoscenze della comunità; il potere non si trasferisce consumandone il corpo. Condotta: può sostenere i compagni o usare coperture e inganni; a Ferita Seria o se la comunità è al sicuro può ripiegare. Fonte: Quaggoth Thonot, p. 256."
+}

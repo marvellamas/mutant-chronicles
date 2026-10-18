@@ -1,0 +1,173 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "sciamano-lucertoloide",
+  "nome": "Sciamano lucertoloide",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Popoli delle terre selvagge",
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 5,
+    "COS": 6,
+    "INT": 5,
+    "SAG": 7,
+    "CAR": 5
+  },
+  "pv": 28,
+  "pm": 16,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 33,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 9,
+    "volonta": 10,
+    "magia": 11
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso umanoide",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    },
+    {
+      "nome": "Artigli umanoidi",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ],
+      "note": "Richiedono una mano libera; nessuna Parata naturale."
+    },
+    {
+      "nome": "Morso di Coccodrillo",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ],
+      "note": "Solo nella forma di Coccodrillo: vedi «Forma di Coccodrillo»."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 13
+    },
+    {
+      "nome": "Occultismo",
+      "va": 11
+    },
+    {
+      "nome": "Potere",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e Azioni",
+      "effetto": "Natura Comune, mente e PM personali; respira, mangia, beve e riposa; cure biologiche, malattie e Stati applicabili salvo protezioni esplicite. A 0 PV non Svenuto né morto automaticamente: un ulteriore danno finale positivo a 0 PV richiede Tempra e le Ferite del §4.2 (l’eccedenza del colpo che esaurisce i PV non genera da sola Ferite); a 0 PM personali Svenuto dopo la risoluzione completa dell’azione; cambiare forma, entrare in Furia o ricevere PV temporanei non cura Ferite, Menomazioni o Morente. INI modifica 1d10; AzP e unica AzM valgono per l’intero Round; ogni attacco normale costa 1 AzP, produce AC 1 e usa il danno già completo della tabella (non aggiungere FOR o DES). I tetti offensivi comprendono Opportunità e attacchi ordinati; una sola Opportunità ordinaria per Round con un’arma ravvicinata pronta o un attacco naturale ammesso (niente Carica, incantesimo, trasformazione o Manovra offensiva gratuita). Parata: 1 AzP, arma o scudo idonei, successo dimezza per eccesso prima dell’AR, Magistrale annulla; nessuna Parata naturale; armi ravvicinate −8 VA per parare a distanza, Scudo piccolo −4 con ulteriore −2 contro Raffica. Schivata: 1 AzP, 1 AzM, consapevolezza e spazio. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica; nessuna AR magica. Dotazione: oggetti Comuni, PS Integrità 10; recuperare un’arma non trasferisce i bonus personali; incoccare è compreso nell’attacco con Arco pronto (ogni tiro consuma una freccia); estrarre, riporre o recuperare un oggetto costa 1 AzP (abbandonarlo è gratuito); le mani occupate restano occupate durante Difese e lanci. Taglia e numero di arti non concedono danni, PI, portata o Azioni maggiori."
+    },
+    {
+      "nome": "Nuoto nativo",
+      "effetto": "Nel solo Nuoto percorre le distanze effettive indicate (6 / 12 / 18 Q in forma umanoide), come eccezione al costo 2 dell’acqua; Corsa e Scatto mantengono Prove, modificatori ed esiti del Giocatore §5.2. Nei percorsi misti vale il budget unico del §5.2.4 (costo 1 a terra e 2 in acqua, senza superare il limite per ciascuna modalità); entrare in acqua, immergersi e riemergere non rinnovano l’AzM."
+    },
+    {
+      "nome": "Apnea",
+      "effetto": "Respira aria e può trattenere il fiato per 15 minuti (150 Round) al posto della normale riserva pari a COS. Esaurita, seguono PS, coscienza e danni del §5.23; un Round respirando normalmente ripristina il fiato. Acqua irrespirabile o contaminata resta un pericolo."
+    },
+    {
+      "nome": "Dotazione",
+      "effetto": "Focus personale semplice Comune già sintonizzato, senza bonus o PM (Equipaggiamento §5.8); nessuna arma, armatura o scudo. In forma umanoide ha mani libere per Gesti e contatti. Al massimo un Morso e un Artigli per Round, Opportunità e colpo ordinato compresi. I 33 PX comprendono la dotazione."
+    },
+    {
+      "nome": "Repertorio",
+      "effetto": "Accesso solo a Colpo Elementale di Fuoco 3, Catene di Forza 3 e Controllo Elementale dell’Acqua 3, modalità ordinaria. Un solo lancio di repertorio per Round, pagato con una delle proprie AzP. Usa la colonna degli altri utilizzatori autorizzati: Potere 12 sempre necessario. Nessun Addestramento Taumaturgo, Contromagia, Anticipazione o Convertire Potere. Ogni incantesimo costa 1 AzP e 3 PM, pagati prima di Potere 12; Focus, Gesto e Invocazione ordinari (ogni componente mancante −2, fino a −6); Ingaggio −2 quando pertinente; Corsa o Scatto nella stessa Iniziativa impediscono il lancio; fallimento consuma AzP e PM; Magistrale e Maldestro seguono la Magia. In forma di Coccodrillo non può lanciare. Per gli effetti mantenuti: senza Concentrazione Operativa non usa AzP mentre concentra e il Passo è al massimo 6 Q; dopo la prima fonte di danno del Round, Volontà per mantenerla; incoscienza la termina; Negare Potere (potenza 3) rimuove gli effetti attivi (non il danno istantaneo già risolto). Uno Stato di durata N applicato nel Round R termina a fine R + N; Incendiato infligge subito 1d4 e poi all’Iniziativa della fonte (una volta per Round), −2 alle Abilità e non alle PS, ignora l’AR non magica generica; più applicazioni non sommano lo Stato."
+    },
+    {
+      "nome": "Colpo Elementale di Fuoco 3",
+      "azioni": {
+        "principali": 1
+      },
+      "risorsa": "3 PM",
+      "prova": "Potere 12",
+      "effetto": "Magia §13.1: una creatura o altro bersaglio valido visibile entro 6 Q, percorso libero; colpo automatico da 1d6+2 Naturale da Fuoco, AC 1. Dopo il lancio riuscito non occorre tiro per colpire: Parata o Schivata ordinarie sono ammesse, Elusione no. Si applica l’AR pertinente. Dopo Fuoco residuo oltre protezioni e Ignifugo, Riflessi senza modificatore evita Incendiato per 1+1d3 Round; la PS non riduce il danno iniziale."
+    },
+    {
+      "nome": "Catene di Forza 3",
+      "azioni": {
+        "principali": 1
+      },
+      "risorsa": "3 PM",
+      "prova": "Potere 12; PS di Tempra del bersaglio",
+      "effetto": "Magia §17.6: una creatura visibile entro 6 Q, Tempra senza modificatore evita. Fallimento: Rallentato per 3 Round, senza Concentrazione; nessun danno, tiro per colpire o Difesa attiva. Passo 3 Q, niente Corsa o Scatto, −2 alle Prove fisiche e alle Difese, arti ancora utilizzabili. Liberarsi costa 1 AzP e una nuova Tempra senza modificatore. La prima volta per Round che subisce almeno 1 danno finale, Riflessi senza modificatore evita A Terra se poggia su un appoggio. Negare Potere può rimuovere il vincolo (potenza 3)."
+    },
+    {
+      "nome": "Controllo Elementale dell’Acqua 3",
+      "azioni": {
+        "principali": 1
+      },
+      "risorsa": "3 PM",
+      "prova": "Potere 12",
+      "effetto": "Magia §13.2, sola manipolazione ordinaria: sfera fissa di raggio 1 Q, centro visibile entro 10 Q, al massimo 1 kg d’acqua o umidità disponibile. Un comportamento semplice dichiarato dura 5 minuti senza Concentrazione; per modificarlo attivamente occorre Concentrazione ordinaria, fino a 10 minuti. Non crea acqua, flora, danno, ghiaccio imprigionante o una nube automaticamente oscurante. Eco Elementale non è preparato."
+    },
+    {
+      "nome": "Forma di Coccodrillo",
+      "azioni": {
+        "principali": 1
+      },
+      "risorsa": "3 PM",
+      "limiti": "Alla propria Iniziativa, soltanto su sé stesso; durata 10 Round senza Concentrazione. Ritorno volontario 1 AzP; scadenza, Svenuto o morte fanno tornare alla forma umanoide senza altro costo.",
+      "effetto": "Assume un Coccodrillo di spazio 2 × 2 Q (abilità del profilo, non Trasformazione Totale né un effetto condivisibile; Negare Potere la termina, potenza 3). Un solo corpo: Caratteristiche, Abilità, Difese, PS, INI, PV e PM restano quelli della scheda; conserva PV attuali, PM spesi, Ferite, Menomazioni e Stati; AR biologica sempre 1; non acquista i PV o gli attacchi del Coccodrillo gigante e non recupera il fiato (una sola riserva per entrambe le forme). Gambe e Braccia diventano i gruppi posteriori e anteriori di zampe. Movimento: terra 4 / 8 / 12 Q, Nuoto nativo 6 / 12 / 18 Q; 2 AzP e 1 AzM, ma al massimo un Morso di Coccodrillo per Round, Opportunità e colpo ordinato compresi; nessun Artigli, Coda, arma, lancio del repertorio o Parata naturale; nessuna resistenza al Fuoco o al Gelo né ulteriori immunità. Presa delle mascelle: dopo almeno 1 danno finale di Morso a una creatura fino a 1 × 1 Q, Riflessi senza modificatore; fallimento Immobilizzato (mani non specificamente bloccate); una sola preda, e finché la tiene non morde altre vittime; la vittima o un alleato presso le mascelle spende 1 AzP e contrappone Corpo a corpo o Atletica a Corpo a corpo 11 (il prigioniero con −4 fisico): successo libera, pareggio conserva; nessuno Stringere o danno periodico. Rilascio volontario gratuito alla propria Iniziativa; ritorno umanoide, incoscienza o perdita delle mascelle sciolgono la presa; trascinare la preda consente solo il Passo con distanze dimezzate, senza attraversare solidi; la vittima non perde il fiato per il solo aggancio (se immersa usa la propria riserva e il §5.23). Gli oggetti non si trasformano: deve liberarsi prima di indumenti o vincoli incompatibili; il Focus lasciato a terra non torna in mano. Una presa, un’ancora esterna o uno spazio insufficiente impediscono di iniziare la trasformazione, che non strappa catene né cura lesioni."
+    }
+  ],
+  "note": "Parla Draconico; nessuna Scurovisione innata. Custode di riti e conoscenze della comunità: il repertorio è convertito in tre incantesimi di Simply RPG. Condotta: sotto 7 PV o a Ferita Profonda cerca riparo o la via d’acqua; la forma animale non rende innocuo l’aspetto, non cura e non crea una seconda riserva. Fonte: Lizardfolk Shaman, p. 205."
+}

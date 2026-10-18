@@ -1,0 +1,104 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "quaggoth",
+  "nome": "Quaggoth",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Popoli delle terre selvagge",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 5,
+    "COS": 7,
+    "INT": 3,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "pv": 38,
+  "pm": 7,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 9,
+    "volonta": 8,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Artiglio",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ],
+      "note": "Con Furia ferita (PV ≤ 9): VA 14 e danno 1d6+4."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 9
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e Azioni",
+      "effetto": "Natura Comune, mente e PM personali; respira, mangia, beve e riposa; cure biologiche, malattie e Stati applicabili salvo protezioni esplicite. A 0 PV non Svenuto né morto automaticamente: un ulteriore danno finale positivo a 0 PV richiede Tempra e le Ferite del §4.2 (l’eccedenza del colpo che esaurisce i PV non genera da sola Ferite); a 0 PM personali Svenuto dopo la risoluzione completa dell’azione; cambiare forma, entrare in Furia o ricevere PV temporanei non cura Ferite, Menomazioni o Morente. INI modifica 1d10; AzP e unica AzM valgono per l’intero Round; ogni attacco normale costa 1 AzP, produce AC 1 e usa il danno già completo della tabella (non aggiungere FOR o DES). I tetti offensivi comprendono Opportunità e attacchi ordinati; una sola Opportunità ordinaria per Round con un’arma ravvicinata pronta o un attacco naturale ammesso (niente Carica, incantesimo, trasformazione o Manovra offensiva gratuita). Parata: 1 AzP, arma o scudo idonei, successo dimezza per eccesso prima dell’AR, Magistrale annulla; nessuna Parata naturale; armi ravvicinate −8 VA per parare a distanza, Scudo piccolo −4 con ulteriore −2 contro Raffica. Schivata: 1 AzP, 1 AzM, consapevolezza e spazio. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica; nessuna AR magica. Dotazione: oggetti Comuni, PS Integrità 10; recuperare un’arma non trasferisce i bonus personali; incoccare è compreso nell’attacco con Arco pronto (ogni tiro consuma una freccia); estrarre, riporre o recuperare un oggetto costa 1 AzP (abbandonarlo è gratuito); le mani occupate restano occupate durante Difese e lanci. Taglia e numero di arti non concedono danni, PI, portata o Azioni maggiori."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 24 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    },
+    {
+      "nome": "Furia ferita",
+      "passiva": true,
+      "effetto": "Finché cosciente e con PV ordinari non superiori a 9, +2 al VA degli Artigli e +2 al loro danno (VA 14, 1d6+4). Si verifica prima di ogni attacco e cessa appena i PV superano la soglia. Le penalità di Ferite e Stati continuano, così come Tempra a 0 PV. Non dà AzP, immunità, PV o bonus ai lanci e alle PS."
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Immune a danni da veleno e ad Avvelenato, senza immunità ad acido, malattie, soffocamento o Corruzione. Arrampicata 6 Q al Passo: si arrampica su pareti con appigli senza Atletica ordinaria (superfici scivolose o precarie richiedono Prove; non aderisce a soffitti lisci e non attraversa roccia). Parla Sottocomune. Al massimo due Artigli per Round, Opportunità e colpo ordinato compresi; richiedono arti anteriori liberi e non concedono Parata naturale. Dotazione: nessuna."
+    }
+  ],
+  "immunita": [
+    "avvelenato"
+  ],
+  "note": "Abitante delle caverne dal corpo robusto e dagli artigli sviluppati; origine e rapporti con altri popoli si definiscono nell’avventura, senza imporre le inimicizie della fonte. Condotta: a Ferita Seria o se la consegna lo permette può ritirarsi; la Furia non lo obbliga a inseguire fino alla morte. Fonte: Quaggoth, p. 256."
+}

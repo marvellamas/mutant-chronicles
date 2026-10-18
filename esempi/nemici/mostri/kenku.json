@@ -1,0 +1,124 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "kenku",
+  "nome": "Kenku",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Popoli delle terre selvagge",
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 7,
+    "COS": 5,
+    "INT": 6,
+    "SAG": 5,
+    "CAR": 5
+  },
+  "pv": 16,
+  "pm": 6,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 2,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 11,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 11,
+    "volonta": 9,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Spada leggera",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ]
+    },
+    {
+      "nome": "Arco da guerra",
+      "tipo": "distanza",
+      "va": 10,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "gittata_q": 100,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 10
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Raggirare",
+      "va": 12
+    },
+    {
+      "nome": "Intrattenere",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e Azioni",
+      "effetto": "Natura Comune, mente e PM personali; respira, mangia, beve e riposa; cure biologiche, malattie e Stati applicabili salvo protezioni esplicite. A 0 PV non Svenuto né morto automaticamente: un ulteriore danno finale positivo a 0 PV richiede Tempra e le Ferite del §4.2 (l’eccedenza del colpo che esaurisce i PV non genera da sola Ferite); a 0 PM personali Svenuto dopo la risoluzione completa dell’azione; cambiare forma, entrare in Furia o ricevere PV temporanei non cura Ferite, Menomazioni o Morente. INI modifica 1d10; AzP e unica AzM valgono per l’intero Round; ogni attacco normale costa 1 AzP, produce AC 1 e usa il danno già completo della tabella (non aggiungere FOR o DES). I tetti offensivi comprendono Opportunità e attacchi ordinati; una sola Opportunità ordinaria per Round con un’arma ravvicinata pronta o un attacco naturale ammesso (niente Carica, incantesimo, trasformazione o Manovra offensiva gratuita). Parata: 1 AzP, arma o scudo idonei, successo dimezza per eccesso prima dell’AR, Magistrale annulla; nessuna Parata naturale; armi ravvicinate −8 VA per parare a distanza, Scudo piccolo −4 con ulteriore −2 contro Raffica. Schivata: 1 AzP, 1 AzM, consapevolezza e spazio. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica; nessuna AR magica. Dotazione: oggetti Comuni, PS Integrità 10; recuperare un’arma non trasferisce i bonus personali; incoccare è compreso nell’attacco con Arco pronto (ogni tiro consuma una freccia); estrarre, riporre o recuperare un oggetto costa 1 AzP (abbandonarlo è gratuito); le mani occupate restano occupate durante Difese e lanci. Taglia e numero di arti non concedono danni, PI, portata o Azioni maggiori."
+    },
+    {
+      "nome": "Dotazione",
+      "effetto": "Spada leggera FOR 3 PI 5; Arco da guerra a due mani FOR 5 PI 6 con 20 frecce; nessuna armatura o scudo. Inizia con la Spada pronta. Un solo attacco per Round, Opportunità e attacco ordinato compresi. Passare all’Arco richiede di liberare entrambe le mani e prepararlo con le Azioni ordinarie; il becco non concede un attacco aggiuntivo. I 11 PX comprendono la dotazione."
+    },
+    {
+      "nome": "Agguato",
+      "usi": {
+        "quanti": 1,
+        "per": "scontro"
+      },
+      "limiti": "Nel primo Round cui partecipa; si consuma anche mancando.",
+      "effetto": "+2 al VA di un proprio attacco contro una vittima che non lo aveva individuato prima del tiro; si dichiara prima. Vincere l’Iniziativa non dimostra da solo il requisito. Non aggiunge danni e non si applica a tutti i bersagli del Round."
+    },
+    {
+      "nome": "Imitazione",
+      "prova": "Raggirare 12 contro Percezione dell’ascoltatore",
+      "effetto": "Riproduce una voce, un rumore o un breve insieme di suoni ascoltato adeguatamente, con il volume e i limiti fisici della propria voce; non impara ricordi, lingue, password o informazioni non udite; usa frammenti conosciuti e codici, senza creare liberamente una nuova frase con la voce di una persona; nessuna registrazione tecnologica né rumori da un’altra posizione. Quando tenta di far credere che il suono provenga dalla fonte imitata, Raggirare 12 si oppone a Percezione (Prove opposte; ambiente, familiarità con la voce e indizi possono modificare); non occorre tirare senza una posta o se l’origine è evidente; il successo rende credibile il suono, non obbliga a obbedire. Un richiamo breve compatibile con le normali comunicazioni non costa AzP; preparare un falso dialogo, una distrazione o una Manovra sociale usa tempi e costi appropriati. Si ode solo dove il suono arriva (Assordato, isolamento acustico e rumore lo impediscono). Chi lo vede non scambia il suo corpo per la voce imitata (serve un travestimento per l’identità visiva); un fallimento non giustifica ritiri ripetuti senza un nuovo indizio. Copiare una grafia richiede un campione e strumenti adatti; falsificare un documento resta una Prova di Raggirare; non sostituisce chiavi o autorizzazioni; non è Comando, fascinazione o magia."
+    }
+  ],
+  "note": "Comprende Comune e Auran. Non ha Volo o Scurovisione innati; Braccia = arti manipolatori, privi di ali funzionali. Può lavorare come messaggero, esploratore o imitatore senza essere vincolato alla vita criminale della fonte. Condotta: sotto 4 PV o a Ferita Profonda cerca copertura, una via di fuga o una trattativa. Fonte: Kenku, p. 194."
+}

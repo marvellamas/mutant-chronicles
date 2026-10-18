@@ -1,0 +1,128 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "bullywug",
+  "nome": "Bullywug",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Popoli delle terre selvagge",
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 5,
+    "COS": 5,
+    "INT": 4,
+    "SAG": 5,
+    "CAR": 4
+  },
+  "pv": 14,
+  "pm": 5,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 11,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 9,
+    "volonta": 8,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Lancia a una mano",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    },
+    {
+      "nome": "Lancia a due mani",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d6+3",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ],
+      "note": "Richiede di liberarsi dello Scudo (AR scende a 1)."
+    },
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 8,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 9
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 8
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e Azioni",
+      "effetto": "Natura Comune, mente e PM personali; respira, mangia, beve e riposa; cure biologiche, malattie e Stati applicabili salvo protezioni esplicite. A 0 PV non Svenuto né morto automaticamente: un ulteriore danno finale positivo a 0 PV richiede Tempra e le Ferite del §4.2 (l’eccedenza del colpo che esaurisce i PV non genera da sola Ferite); a 0 PM personali Svenuto dopo la risoluzione completa dell’azione; cambiare forma, entrare in Furia o ricevere PV temporanei non cura Ferite, Menomazioni o Morente. INI modifica 1d10; AzP e unica AzM valgono per l’intero Round; ogni attacco normale costa 1 AzP, produce AC 1 e usa il danno già completo della tabella (non aggiungere FOR o DES). I tetti offensivi comprendono Opportunità e attacchi ordinati; una sola Opportunità ordinaria per Round con un’arma ravvicinata pronta o un attacco naturale ammesso (niente Carica, incantesimo, trasformazione o Manovra offensiva gratuita). Parata: 1 AzP, arma o scudo idonei, successo dimezza per eccesso prima dell’AR, Magistrale annulla; nessuna Parata naturale; armi ravvicinate −8 VA per parare a distanza, Scudo piccolo −4 con ulteriore −2 contro Raffica. Schivata: 1 AzP, 1 AzM, consapevolezza e spazio. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica; nessuna AR magica. Dotazione: oggetti Comuni, PS Integrità 10; recuperare un’arma non trasferisce i bonus personali; incoccare è compreso nell’attacco con Arco pronto (ogni tiro consuma una freccia); estrarre, riporre o recuperare un oggetto costa 1 AzP (abbandonarlo è gratuito); le mani occupate restano occupate durante Difese e lanci. Taglia e numero di arti non concedono danni, PI, portata o Azioni maggiori."
+    },
+    {
+      "nome": "Nuoto nativo",
+      "effetto": "Nel solo Nuoto percorre le distanze effettive indicate (8 / 16 / 24 Q), come eccezione al costo 2 dell’acqua; Corsa e Scatto mantengono Prove, modificatori ed esiti del Giocatore §5.2. Nei percorsi misti vale il budget unico del §5.2.4 (costo 1 a terra e 2 in acqua, senza superare il limite per ciascuna modalità); entrare in acqua, immergersi e riemergere non rinnovano l’AzM."
+    },
+    {
+      "nome": "Dotazione",
+      "effetto": "Lancia FOR 5 PI 6; Armatura leggera AR 1 FOR 3 PI 6; Scudo piccolo AR +1 FOR 3 PI 4. Inizia con Lancia a una mano e Scudo pronti. La Lancia non è un Giavellotto e non ha un profilo scagliato. Un solo attacco per Round, Opportunità e attacco ordinato compresi; Morso e Lancia non si risolvono insieme con l’unica AzP. I 11 PX comprendono la dotazione."
+    },
+    {
+      "nome": "Salto",
+      "effetto": "Come parte della propria AzM al Passo può compiere un salto da fermo lungo fino a 4 Q oppure alto fino a 2 Q, senza rincorsa e senza Prova in condizioni ordinarie. Il percorso reale consuma il budget disponibile (salita e discesa comprese). Occorre un arrivo libero, praticabile e sostenuto; ostacoli eccezionali, terreno precario o carico richiedono le normali valutazioni. Non è Volo né una Schivata gratuita."
+    },
+    {
+      "nome": "Palude e parola",
+      "effetto": "Respira aria e acqua. In palude +2 a Furtività quando pelle, vegetazione e fango aiutano a occultarlo. Parla Bullywug e può comunicare concetti semplici a rane e rospi che lo sentano (non li comanda magicamente, non condivide sensi, non raggiunge distanze illimitate). Vista ordinaria, senza Scurovisione innata né attacchi velenosi."
+    }
+  ],
+  "note": "AR 2 con Scudo piccolo, 1 senza. Abitante delle paludi: alterna sponde, acqua e salti brevi; titoli, consuetudini e rapporti con gli estranei dipendono dalla comunità. Condotta: può chiedere un tributo, indicare una via o allontanare intrusi; non riceve una cavalcatura gratis; sotto 4 PV o a Ferita Profonda cerca acqua e riparo. Fonte: Bullywug, p. 35."
+}

@@ -1,0 +1,139 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "centauro",
+  "nome": "Centauro",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Popoli delle terre selvagge",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 6,
+    "COS": 7,
+    "INT": 5,
+    "SAG": 6,
+    "CAR": 6
+  },
+  "pv": 40,
+  "pm": 8,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 10,
+    "corsa": 20,
+    "scatto": 30
+  },
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 33,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 11,
+    "volonta": 10,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Picca",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+3",
+      "natura": "Naturale",
+      "portata_q": 3,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    },
+    {
+      "nome": "Zoccoli",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Contusione"
+      ],
+      "note": "Non concedono Parata né un terzo attacco per gli arti posteriori."
+    },
+    {
+      "nome": "Arco da guerra",
+      "tipo": "distanza",
+      "va": 11,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "gittata_q": 100,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 12
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 11
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 13
+    },
+    {
+      "nome": "Oratoria",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e Azioni",
+      "effetto": "Natura Comune, mente e PM personali; respira, mangia, beve e riposa; cure biologiche, malattie e Stati applicabili salvo protezioni esplicite. A 0 PV non Svenuto né morto automaticamente: un ulteriore danno finale positivo a 0 PV richiede Tempra e le Ferite del §4.2 (l’eccedenza del colpo che esaurisce i PV non genera da sola Ferite); a 0 PM personali Svenuto dopo la risoluzione completa dell’azione; cambiare forma, entrare in Furia o ricevere PV temporanei non cura Ferite, Menomazioni o Morente. INI modifica 1d10; AzP e unica AzM valgono per l’intero Round; ogni attacco normale costa 1 AzP, produce AC 1 e usa il danno già completo della tabella (non aggiungere FOR o DES). I tetti offensivi comprendono Opportunità e attacchi ordinati; una sola Opportunità ordinaria per Round con un’arma ravvicinata pronta o un attacco naturale ammesso (niente Carica, incantesimo, trasformazione o Manovra offensiva gratuita). Parata: 1 AzP, arma o scudo idonei, successo dimezza per eccesso prima dell’AR, Magistrale annulla; nessuna Parata naturale; armi ravvicinate −8 VA per parare a distanza, Scudo piccolo −4 con ulteriore −2 contro Raffica. Schivata: 1 AzP, 1 AzM, consapevolezza e spazio. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica; nessuna AR magica. Dotazione: oggetti Comuni, PS Integrità 10; recuperare un’arma non trasferisce i bonus personali; incoccare è compreso nell’attacco con Arco pronto (ogni tiro consuma una freccia); estrarre, riporre o recuperare un oggetto costa 1 AzP (abbandonarlo è gratuito); le mani occupate restano occupate durante Difese e lanci. Taglia e numero di arti non concedono danni, PI, portata o Azioni maggiori."
+    },
+    {
+      "nome": "Dotazione e sequenza",
+      "effetto": "Picca a due mani FOR 6 PI 6; Arco da guerra a due mani FOR 5 PI 6 con 20 frecce; nessuna armatura o scudo. Inizia con la Picca pronta. Per Round: al massimo una Picca e uno Zoccoli, oppure due tiri d’Arco, Opportunità e attacco ordinato compresi; non combina due frecce e altri due colpi. I 33 PX comprendono la dotazione."
+    },
+    {
+      "nome": "Carica",
+      "azioni": {
+        "principali": 1,
+        "movimento": 1
+      },
+      "effetto": "Almeno 3 Q rettilinei su percorso praticabile, entro il budget di Corsa di 20 Q. Un singolo attacco con Picca, fermandosi alla portata valida: −2 VA tra 3 e 6 Q, −4 da 7 Q; danno ×2, oppure ×3 complessivo con Magistrale. Non aggiunge altri dadi o Zoccoli gratuiti; le altre Azioni rimaste seguono i limiti della sequenza."
+    },
+    {
+      "nome": "Corpo e passeggeri",
+      "effetto": "Testa e Braccia umanoidi, Torace comprendente entrambe le masse corporee, Gambe agli arti equini. Un passeggero richiede consenso, appoggio e carico compatibili, senza condividere Azioni né rinnovare il Movimento del Centauro. Scale e passaggi stretti devono essere concretamente percorribili. Parla Elfico e Silvano; nessuna Scurovisione innata."
+    }
+  ],
+  "note": "Viaggiatore dal corpo equino e tronco umanoide che sa usare armi e leggere le piste; la mobilità non lo rende una cavalcatura disponibile a chiunque. Condotta: sotto 10 PV o a Ferita Profonda cerca spazio per ripiegare. Fonte: Centaur, p. 38."
+}
