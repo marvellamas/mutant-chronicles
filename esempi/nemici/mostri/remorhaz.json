@@ -1,0 +1,121 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "remorhaz",
+  "nome": "Remorhaz",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Predatori straordinari",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 6,
+    "COS": 10,
+    "INT": 2,
+    "SAG": 5,
+    "CAR": 3
+  },
+  "pv": 102,
+  "pm": 10,
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "3 × 3 Q",
+  "gs_px": {
+    "gs": "Leggenda",
+    "px": 100,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 15,
+    "riflessi": 11,
+    "volonta": 9,
+    "magia": 11
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso ardente",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "2d8+3",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ],
+      "note": "Aggiunge 1d6 Fuoco Naturale (una AC, componenti miste): solo il residuo di Fuoco può innescare Incendiato. La presa si innesca dopo il danno: vedi «Presa delle fauci»."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 16
+    },
+    {
+      "nome": "Atletica",
+      "va": 16
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 9
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo vivente",
+      "effetto": "Natura Comune, mente e PM personali; respira, mangia, beve e riposa; veleni, malattie e cure biologiche possono interessarlo salvo immunità esplicite. Non appartiene alla Covata né ne applica il disorientamento da freddo. A 0 PV non è automaticamente morto o Svenuto: §4.2 (un nuovo danno finale positivo a 0 PV richiede Tempra e le normali Ferite; l’eccedenza del colpo che esaurisce i PV non genera da sola Ferite). A 0 PM personali Svenuto dopo la risoluzione completa dell’azione. INI modifica 1d10; AzP e unica AzM valgono per tutto il Round; ogni attacco normale costa 1 AzP e produce AC 1; il danno in tabella è già completo (non aggiungere FOR o DES). Una sola Opportunità ordinaria per Round (Morso, Becco, Corna o Artigli ammessi: non Soffi, teletrasporto, inghiottimento o Manovre offensive); i limiti offensivi comprendono Opportunità e attacchi ordinati. Nessuna Parata naturale; Schivata: 1 AzP e 1 AzM, consapevolezza, spazio e una funzione locomotoria. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica; nessuna AR magica. Un senso acuto dà +2 a Percezione quando è determinante, una sola volta per Prova. Corsa e Scatto in volo richiedono Atletica −2 e −4; ali, quota e spazio necessari, nessun volo stazionario; perdita del sostegno o incoscienza possono causare Caduta. Testa = bocca e sensori, Torace = corpo, Braccia e Gambe = gruppi di arti (per Peryton e Roc le Braccia sono le ali). Stato di durata N applicato nel Round R: termina a fine R + N. Dotazione: nessuna."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    },
+    {
+      "nome": "Corpo incandescente",
+      "passiva": true,
+      "effetto": "Una creatura che tocca direttamente il corpo, vi mantiene una presa o lo colpisce con un attacco ravvicinato da entro 1 Q riceve 1d6+2 Fuoco Naturale: contatto termico distinto, senza tiro per colpire né Difesa attiva (AR e protezioni specifiche si applicano; il residuo di Fuoco verifica anche Incendiato). Al massimo una applicazione per creatura e Round, condivisa per il medesimo Remorhaz (mantenendo il contatto, all’Iniziativa del Remorhaz nei Round successivi); non è un’aura; essere morsi o trattenuti nelle fauci non la innesca. Un’arma da oltre 1 Q, un arco, proiettili e incantesimi a distanza non la provocano. Svenuto non spegne il calore; dopo la morte effettiva cessa a fine del Round successivo; nessuna esplosione. Immune a Fuoco, Incendiato e Gelo di qualunque Natura. Le pinne presso il capo non concedono Volo."
+    },
+    {
+      "nome": "Vibrazioni e scavo",
+      "effetto": "Percezione delle vibrazioni entro 12 Q sul medesimo supporto continuo (nessuna identità, pensiero o scritta; non scopre Furtività; non raggiunge chi vola, è immobile o isolato; non attraverso un muro). L’unica AzM può essere un Passo di scavo fino a 4 Q in neve, suolo o ghiaccio non strutturale, senza Corsa o Scatto sotterranei né roccia, muri o scafi integri; un corpo di 3 × 3 Q richiede una sezione realmente praticabile. Il calore può produrre vapore e segni nel ghiaccio, senza Area oscurante o crollo automatici; l’immunità elementale non dà aria respirabile."
+    },
+    {
+      "nome": "Presa delle fauci",
+      "prova": "PS di Riflessi senza modificatore",
+      "effetto": "Dopo almeno 1 danno finale da Morso a una creatura di spazio non superiore a 2 × 2 Q: Riflessi senza modificatore; successo evita; fallimento Immobilizzato nelle fauci (mani e braccia non specificamente bloccate). Una sola vittima esterna; Morso e aggancio sono la stessa AC (nessun danno o AzP gratuita per stringere). Mantenere non costa Azioni nei Round successivi ma occupa le fauci: non può mordere altri bersagli; la vittima subisce −4 alle Prove fisiche (non alle PS), può attaccare il corpo a portata con strumenti praticabili. Liberarsi: la vittima o un alleato presso le fauci spende 1 AzP e contrappone Corpo a corpo o Atletica a Corpo a corpo 16 del Remorhaz (il prigioniero con −4 fisico, l’alleato non Immobilizzato no); successo termina la presa, pareggio la mantiene; serve poter raggiungere e fare leva. Non scava né trascina la preda attraverso solidi; su terreno libero può usare solo il Passo e solo se la vittima può seguirlo, senza danni da trascinamento. Perdita di coscienza, morte o Menomazione della funzione delle fauci sciolgono la presa (0 PV da soli no). Può lasciare la preda gratuitamente alla propria Iniziativa in uno spazio libero e sostenuto adiacente alle fauci."
+    },
+    {
+      "nome": "Inghiottire",
+      "azioni": {
+        "principali": 1
+      },
+      "prova": "Morso ordinario contro la vittima già nelle fauci",
+      "effetto": "Solo una vittima già nelle fauci fino a 1 × 1 Q: Morso ordinario (tiro, Difese praticabili e AR normali; il danno non si applica due volte; lo stesso limite di un Morso per Round). Dopo almeno 1 danno finale la vittima è inghiottita e termina la presa esterna; una sola vittima fra presa esterna e stomaco. All’interno: Immobilizzato (mani non specificamente bloccate), Accecato verso l’esterno, copertura totale; segue il corpo; inizia il soffocamento del §5.23 se priva di respirazione autonoma adeguata; può attaccare il corpo dall’interno con strumenti utilizzabili e −4 fisico (il Remorhaz non Schiva tali attacchi mantenendo l’inghiottimento). Uscita: 1 AzP della vittima, Corpo a corpo o Atletica contro Atletica 16 con −4 di Immobilizzato: successo la espelle nel più vicino spazio libero adiacente alle fauci, pareggio resta dentro; un alleato presso le fauci con strumenti adatti usa la stessa opposizione senza il malus. Rigurgito: almeno 12 danni finali dall’interno nello stesso Round impongono al Remorhaz Tempra senza modificatore a fine dell’Iniziativa della vittima (una volta per Round); fallimento: espulsione A Terra entro 2 Q dalle fauci. Perdita di coscienza o morte cessano la compressione (uscire costa 1 AzM intera della vittima o 1 AzP di un alleato con strumenti adatti, senza opposizione). Dopo il soccorso terminano Immobilizzato, cecità e ostruzione; un Round di respirazione ripristina il fiato; Svenuto per soffocamento si risolve in 1d3 Round. Rilascio volontario dallo stomaco: 1 AzP alla propria Iniziativa."
+    },
+    {
+      "nome": "Digestione",
+      "azioni": {
+        "principali": 1
+      },
+      "limiti": "Al massimo una volta per Round; solo contro la vittima inghiottita; non è un’Opportunità né è gratuita a inizio turno.",
+      "effetto": "2d6 Naturale da acido, con AR ordinaria pertinente; nessun tiro per colpire o Difesa attiva; non danneggia automaticamente i PI e non ha Corrosivo. All’interno il calore di contatto è sostituito dalla Digestione (nessuna seconda applicazione passiva). Il Soffio di un’altra creatura non raggiunge automaticamente l’interno."
+    }
+  ],
+  "immunita": [
+    "incendiato"
+  ],
+  "note": "Grande predatore artico che emerge dal ghiaccio. Un solo Morso per Round, Opportunità e colpo ordinato compresi; con una vittima esterna nelle fauci non morde altre creature. Nessun linguaggio né Parata naturale. Testa comprende le fauci, Torace il corpo e lo stomaco. Condotta: sotto 26 PV o a Ferita Seria tende a ritirarsi. Fonte: Remorhaz, p. 258."
+}

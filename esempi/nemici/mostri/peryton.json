@@ -1,0 +1,119 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "peryton",
+  "nome": "Peryton",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Predatori straordinari",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 6,
+    "COS": 6,
+    "INT": 5,
+    "SAG": 6,
+    "CAR": 5
+  },
+  "pv": 32,
+  "pm": 8,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12,
+    "volo": 12
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 11,
+    "volonta": 10,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Corna",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    },
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ],
+      "note": "Gli Artigli riusciti non afferrano automaticamente la vittima."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo vivente",
+      "effetto": "Natura Comune, mente e PM personali; respira, mangia, beve e riposa; veleni, malattie e cure biologiche possono interessarlo salvo immunità esplicite. Non appartiene alla Covata né ne applica il disorientamento da freddo. A 0 PV non è automaticamente morto o Svenuto: §4.2 (un nuovo danno finale positivo a 0 PV richiede Tempra e le normali Ferite; l’eccedenza del colpo che esaurisce i PV non genera da sola Ferite). A 0 PM personali Svenuto dopo la risoluzione completa dell’azione. INI modifica 1d10; AzP e unica AzM valgono per tutto il Round; ogni attacco normale costa 1 AzP e produce AC 1; il danno in tabella è già completo (non aggiungere FOR o DES). Una sola Opportunità ordinaria per Round (Morso, Becco, Corna o Artigli ammessi: non Soffi, teletrasporto, inghiottimento o Manovre offensive); i limiti offensivi comprendono Opportunità e attacchi ordinati. Nessuna Parata naturale; Schivata: 1 AzP e 1 AzM, consapevolezza, spazio e una funzione locomotoria. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica; nessuna AR magica. Un senso acuto dà +2 a Percezione quando è determinante, una sola volta per Prova. Corsa e Scatto in volo richiedono Atletica −2 e −4; ali, quota e spazio necessari, nessun volo stazionario; perdita del sostegno o incoscienza possono causare Caduta. Testa = bocca e sensori, Torace = corpo, Braccia e Gambe = gruppi di arti (per Peryton e Roc le Braccia sono le ali). Stato di durata N applicato nel Round R: termina a fine R + N. Dotazione: nessuna."
+    },
+    {
+      "nome": "Resistenza e sensi",
+      "passiva": true,
+      "effetto": "Dimezza per eccesso i danni Naturali da Contusione, Perforazione e Taglio prima dell’AR; non vale contro Magico, Etereo, Fuoco, Gelo o acido. Vista e olfatto acuti +2, senza sommarli; nessuna Scurovisione innata. Comprende Comune ed Elfico senza parlarli. L’ombra umanoide è visibile quando la luce la produce: non è una creatura, un’illusione controllabile o un potere di paura."
+    },
+    {
+      "nome": "Passaggio in volo",
+      "passiva": true,
+      "effetto": "Al massimo un attacco di Corna e uno di Artigli per Round, Opportunità e attacco ordinato compresi. Uscire dalla portata di un nemico usando il proprio Volo non provoca Opportunità; non concede altre AzM, non scioglie prese e non permette di attraversare il solido. Per attaccare e allontanarsi divide il Passo entro il budget complessivo."
+    },
+    {
+      "nome": "Picchiata",
+      "azioni": {
+        "principali": 1,
+        "movimento": 1
+      },
+      "effetto": "Carica in volo: traiettoria rettilinea praticabile di almeno 3 Q, con discesa verticale di almeno 6 Q per la Picchiata. Un solo attacco di Corna: −2 VA fino a 6 Q, −4 da 7 Q; danno ×2 (×3 complessivo con Magistrale). Nessun ulteriore dado da picchiata né secondo colpo nella Carica."
+    }
+  ],
+  "note": "Rapace con capo e corna da cervo; caccia dalle alture e può tornare su una preda abbandonata. Condotta: sotto 8 PV o a Ferita Profonda può disimpegnarsi per tornare a cacciare. Fonte: Peryton, p. 251."
+}

@@ -1,0 +1,106 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "ragno-di-fase",
+  "nome": "Ragno di fase",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Predatori straordinari",
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 7,
+    "COS": 6,
+    "INT": 4,
+    "SAG": 5,
+    "CAR": 3
+  },
+  "pv": 30,
+  "pm": 12,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 12,
+  "iniziativa": 2,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 12,
+    "volonta": 8,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ],
+      "note": "Poi veleno: vedi «Veleno di fase naturale III». Solo corporeo."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 14
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo vivente",
+      "effetto": "Natura Comune, mente e PM personali; respira, mangia, beve e riposa; veleni, malattie e cure biologiche possono interessarlo salvo immunità esplicite. Non appartiene alla Covata né ne applica il disorientamento da freddo. A 0 PV non è automaticamente morto o Svenuto: §4.2 (un nuovo danno finale positivo a 0 PV richiede Tempra e le normali Ferite; l’eccedenza del colpo che esaurisce i PV non genera da sola Ferite). A 0 PM personali Svenuto dopo la risoluzione completa dell’azione. INI modifica 1d10; AzP e unica AzM valgono per tutto il Round; ogni attacco normale costa 1 AzP e produce AC 1; il danno in tabella è già completo (non aggiungere FOR o DES). Una sola Opportunità ordinaria per Round (Morso, Becco, Corna o Artigli ammessi: non Soffi, teletrasporto, inghiottimento o Manovre offensive); i limiti offensivi comprendono Opportunità e attacchi ordinati. Nessuna Parata naturale; Schivata: 1 AzP e 1 AzM, consapevolezza, spazio e una funzione locomotoria. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica; nessuna AR magica. Un senso acuto dà +2 a Percezione quando è determinante, una sola volta per Prova. Corsa e Scatto in volo richiedono Atletica −2 e −4; ali, quota e spazio necessari, nessun volo stazionario; perdita del sostegno o incoscienza possono causare Caduta. Testa = bocca e sensori, Torace = corpo, Braccia e Gambe = gruppi di arti (per Peryton e Roc le Braccia sono le ali). Stato di durata N applicato nel Round R: termina a fine R + N. Dotazione: nessuna."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    },
+    {
+      "nome": "Veleno di fase naturale III",
+      "prova": "PS di Tempra senza modificatore",
+      "effetto": "Distinto dal veleno aracnide II. Dopo almeno 1 danno fisico finale a un vivente vulnerabile: Tempra senza modificatore; successo dimezza per eccesso 2d4 Naturale interni e impedisce la penalità; fallimento lascia il danno intero e applica Avvelenato con −2 alle Prove fisiche per 10 Round. Il danno tossico ignora l’AR ordinaria e non riceve il Magistrale del Morso; si applicano protezioni specifiche; nessuna paralisi o stabilizzazione a 0 PV. Finché la tossina è attiva, nuove esposizioni rinnovano solo i 10 Round (nessuna nuova PS iniziale, danno tossico o malus cumulato). A fine di ogni propria Iniziativa una Tempra senza modificatore riuscita termina la tossina. Antidoto appropriato o Cura Avvelenamenti dal livello 3 la rimuovono (restano i danni); l’immunità al veleno o ad Avvelenato la impedisce."
+    },
+    {
+      "nome": "Passaggio di fase",
+      "azioni": {
+        "principali": 1
+      },
+      "risorsa": "2 PM",
+      "limiti": "Alla propria Iniziativa, al massimo una volta per Round, solo se corporeo e non Immobilizzato, preso o ancorato fisicamente all’esterno.",
+      "effetto": "Diventa incorporeo fino all’inizio della propria Iniziativa successiva (il ritorno è automatico, senza Azioni o PM; può anticiparlo alla propria Iniziativa con 1 AzP). L’attivazione non comprende Movimento, attacco o occultamento. Nessun Potere, componenti o Concentrazione. Rimane visibile come sagoma tenue nella posizione reale e localizzabile con i sensi pertinenti; Furtività richiede ripari effettivi. I danni Naturali lo attraversano senza effetto; Magici ed Eterei possono colpirlo (Magico incontra AR 1, Etereo AR magica 0). Durante la fase non morde, non afferra, non manipola oggetti solidi né trasporta creature; mente, spirito, PM e Natura non cambiano. Con l’AzM al Passo percorre fino a 6 Q complessivi anche attraverso corpi e pareti spesse non più di 1 Q: il solido resta opaco e deve conoscere da un’osservazione attendibile il punto libero d’uscita; termina ogni AzM in uno spazio libero e sostenuto; nessun Volo o Corsa di fase. Uscire da una portata provoca Opportunità, ma un colpo Naturale non può danneggiarlo mentre è incorporeo. Svenuto, morte o 0 PM dopo l’azione terminano la fase nello spazio già valido. Negare Potere può terminare la fase (potenza 3) senza cancellare l’abilità; Contromagia non la interrompe; barriere che vietano spostamenti incorporei prevalgono; non scioglie Immobilizzato, prese o catene."
+    },
+    {
+      "nome": "Superfici",
+      "effetto": "Arrampicata 6 Q al Passo: su pareti e soffitti aderenti si muove al Passo senza Atletica ordinaria (superfici friabili o scivolose richiedono valutazione). Attraversa normali ragnatele senza il costo aggiuntivo, ma non ha Getto di seta o reti da cattura. Un solo Morso per Round, Opportunità e colpo ordinato compresi, soltanto corporeo. Nessun linguaggio."
+    }
+  ],
+  "note": "Grande ragno che alterna corpo solido e fase incorporea; si sposta durante la fase (non ha il Balzo del Cane intermittente). Condotta: sotto 8 PV o a Ferita Profonda cerca una fessura. Fonte: Phase Spider, p. 334."
+}

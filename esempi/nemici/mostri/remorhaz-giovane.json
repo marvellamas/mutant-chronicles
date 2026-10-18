@@ -1,0 +1,108 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "remorhaz-giovane",
+  "nome": "Remorhaz giovane",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Predatori straordinari",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 6,
+    "COS": 8,
+    "INT": 2,
+    "SAG": 5,
+    "CAR": 3
+  },
+  "pv": 62,
+  "pm": 8,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 10,
+    "volonta": 8,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso ardente",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d10+3",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ],
+      "note": "Aggiunge 1d4 Fuoco Naturale (una AC, componenti miste): solo il residuo di Fuoco può innescare Incendiato. Nessuna presa automatica né inghiottimento."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 9
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo vivente",
+      "effetto": "Natura Comune, mente e PM personali; respira, mangia, beve e riposa; veleni, malattie e cure biologiche possono interessarlo salvo immunità esplicite. Non appartiene alla Covata né ne applica il disorientamento da freddo. A 0 PV non è automaticamente morto o Svenuto: §4.2 (un nuovo danno finale positivo a 0 PV richiede Tempra e le normali Ferite; l’eccedenza del colpo che esaurisce i PV non genera da sola Ferite). A 0 PM personali Svenuto dopo la risoluzione completa dell’azione. INI modifica 1d10; AzP e unica AzM valgono per tutto il Round; ogni attacco normale costa 1 AzP e produce AC 1; il danno in tabella è già completo (non aggiungere FOR o DES). Una sola Opportunità ordinaria per Round (Morso, Becco, Corna o Artigli ammessi: non Soffi, teletrasporto, inghiottimento o Manovre offensive); i limiti offensivi comprendono Opportunità e attacchi ordinati. Nessuna Parata naturale; Schivata: 1 AzP e 1 AzM, consapevolezza, spazio e una funzione locomotoria. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica; nessuna AR magica. Un senso acuto dà +2 a Percezione quando è determinante, una sola volta per Prova. Corsa e Scatto in volo richiedono Atletica −2 e −4; ali, quota e spazio necessari, nessun volo stazionario; perdita del sostegno o incoscienza possono causare Caduta. Testa = bocca e sensori, Torace = corpo, Braccia e Gambe = gruppi di arti (per Peryton e Roc le Braccia sono le ali). Stato di durata N applicato nel Round R: termina a fine R + N. Dotazione: nessuna."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    },
+    {
+      "nome": "Corpo incandescente",
+      "passiva": true,
+      "effetto": "Una creatura che tocca direttamente il corpo, vi mantiene una presa o lo colpisce con un attacco ravvicinato da entro 1 Q riceve 1d6 Fuoco Naturale: contatto termico distinto, senza tiro per colpire né Difesa attiva (AR pertinente e protezioni specifiche si applicano; il residuo di Fuoco verifica anche Incendiato). Al massimo una applicazione per creatura e Round, condivisa per il medesimo Remorhaz, dopo il contatto o l’attacco (mantenendo il contatto, all’Iniziativa del Remorhaz nei Round successivi). Non è un’aura per chi gli sta accanto; essere morsi nelle fauci non la innesca (il Fuoco del Morso è già nel suo danno). Un’arma da oltre 1 Q, un arco, proiettili e incantesimi a distanza non provocano il danno. Svenuto non spegne il calore; dopo la morte effettiva cessa a fine del Round successivo; nessuna esplosione né danno ai PI. Immune a Fuoco, Incendiato e Gelo di qualunque Natura, senza guarigione per assorbimento."
+    },
+    {
+      "nome": "Vibrazioni",
+      "passiva": true,
+      "effetto": "Percezione delle vibrazioni entro 12 Q per localizzare corpi in movimento sul medesimo supporto continuo. Non legge identità, pensieri o scritte, non scopre Furtività e non raggiunge chi vola, rimane immobile o è isolato dal supporto; un muro non diventa trasparente e non si attacca attraverso il solido. Non dà Scurovisione aggiuntiva."
+    },
+    {
+      "nome": "Scavo",
+      "azioni": {
+        "movimento": 1
+      },
+      "effetto": "L’unica AzM può essere un Passo di scavo fino a 4 Q in neve, suolo o ghiaccio non strutturale; non attraversa roccia, muri o scafi integri. Nessuna Corsa o Scatto sotterranei né secondo Movimento. Un corpo di 2 × 2 Q richiede una sezione realmente praticabile; non si presume una galleria sicura per gli inseguitori. Il calore può produrre vapore e segni nel ghiaccio, senza Area oscurante o crollo automatici. L’immunità elementale non dà aria respirabile né immunità al soffocamento."
+    }
+  ],
+  "immunita": [
+    "incendiato"
+  ],
+  "note": "Predatore artico segmentato che attende sotto neve e ghiaccio; non ha ancora la capacità d’inghiottire dell’adulto. Un solo Morso per Round, Opportunità e attacco ordinato compresi; nessuna Parata naturale; non comprende linguaggi. Condotta: sotto 16 PV o a Ferita Seria cerca terreno scavabile e riparo. Fonte: Young Remorhaz, p. 258."
+}

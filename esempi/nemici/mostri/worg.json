@@ -1,0 +1,100 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "worg",
+  "nome": "Worg",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Predatori straordinari",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 6,
+    "COS": 6,
+    "INT": 5,
+    "SAG": 5,
+    "CAR": 4
+  },
+  "pv": 28,
+  "pm": 7,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 10,
+    "corsa": 20,
+    "scatto": 30
+  },
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 11,
+    "volonta": 9,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo vivente",
+      "effetto": "Natura Comune, mente e PM personali; respira, mangia, beve e riposa; veleni, malattie e cure biologiche possono interessarlo salvo immunità esplicite. Non appartiene alla Covata né ne applica il disorientamento da freddo. A 0 PV non è automaticamente morto o Svenuto: §4.2 (un nuovo danno finale positivo a 0 PV richiede Tempra e le normali Ferite; l’eccedenza del colpo che esaurisce i PV non genera da sola Ferite). A 0 PM personali Svenuto dopo la risoluzione completa dell’azione. INI modifica 1d10; AzP e unica AzM valgono per tutto il Round; ogni attacco normale costa 1 AzP e produce AC 1; il danno in tabella è già completo (non aggiungere FOR o DES). Una sola Opportunità ordinaria per Round (Morso, Becco, Corna o Artigli ammessi: non Soffi, teletrasporto, inghiottimento o Manovre offensive); i limiti offensivi comprendono Opportunità e attacchi ordinati. Nessuna Parata naturale; Schivata: 1 AzP e 1 AzM, consapevolezza, spazio e una funzione locomotoria. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica; nessuna AR magica. Un senso acuto dà +2 a Percezione quando è determinante, una sola volta per Prova. Corsa e Scatto in volo richiedono Atletica −2 e −4; ali, quota e spazio necessari, nessun volo stazionario; perdita del sostegno o incoscienza possono causare Caduta. Testa = bocca e sensori, Torace = corpo, Braccia e Gambe = gruppi di arti (per Peryton e Roc le Braccia sono le ali). Stato di durata N applicato nel Round R: termina a fine R + N. Dotazione: nessuna."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    },
+    {
+      "nome": "Abbattere la preda",
+      "prova": "PS di Tempra senza modificatore",
+      "limiti": "Una volta per Round.",
+      "effetto": "Dopo almeno 1 danno finale di Morso a una creatura su un appoggio e di spazio non superiore a 2 × 2 Q: Tempra senza modificatore; fallimento A Terra nel proprio spazio; successo mantiene l’appoggio. Nessuna presa, spinta o seconda AC. Una vittima già A Terra non ripete la PS. Non atterra chi vola o nuota senza appoggio."
+    },
+    {
+      "nome": "Sensi e parola",
+      "effetto": "Udito e olfatto acuti +2 a Percezione, senza sommarli. Parla Goblin e Worg. Non ha Branco, telepatia o controllo sui Goblin. Un solo Morso per Round, Opportunità e attacco ordinato compresi."
+    }
+  ],
+  "note": "Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). Canide senziente che può collaborare con Goblin e Hobgoblin ma non è un animale obbediente per definizione. Cavalcatura solo con accordo, addestramento, attrezzatura e carico compatibili; il suo Movimento non diventa quello del cavaliere e non dà Azioni condivise. Condotta: sotto 7 PV o a Ferita Profonda cerca una via di fuga oppure tratta. Fonte: Worg, p. 341."
+}

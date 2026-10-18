@@ -1,0 +1,111 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "lupo-invernale",
+  "nome": "Lupo invernale",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Predatori straordinari",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 6,
+    "COS": 7,
+    "INT": 5,
+    "SAG": 6,
+    "CAR": 5
+  },
+  "pv": 50,
+  "pm": 9,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 1,
+  "movimento": {
+    "passo": 10,
+    "corsa": 20,
+    "scatto": 30
+  },
+  "spazio": "2 × 2 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 11,
+    "volonta": 10,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+3",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ],
+      "note": "Non aggiunge danno da Gelo."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo vivente",
+      "effetto": "Natura Comune, mente e PM personali; respira, mangia, beve e riposa; veleni, malattie e cure biologiche possono interessarlo salvo immunità esplicite. Non appartiene alla Covata né ne applica il disorientamento da freddo. A 0 PV non è automaticamente morto o Svenuto: §4.2 (un nuovo danno finale positivo a 0 PV richiede Tempra e le normali Ferite; l’eccedenza del colpo che esaurisce i PV non genera da sola Ferite). A 0 PM personali Svenuto dopo la risoluzione completa dell’azione. INI modifica 1d10; AzP e unica AzM valgono per tutto il Round; ogni attacco normale costa 1 AzP e produce AC 1; il danno in tabella è già completo (non aggiungere FOR o DES). Una sola Opportunità ordinaria per Round (Morso, Becco, Corna o Artigli ammessi: non Soffi, teletrasporto, inghiottimento o Manovre offensive); i limiti offensivi comprendono Opportunità e attacchi ordinati. Nessuna Parata naturale; Schivata: 1 AzP e 1 AzM, consapevolezza, spazio e una funzione locomotoria. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica; nessuna AR magica. Un senso acuto dà +2 a Percezione quando è determinante, una sola volta per Prova. Corsa e Scatto in volo richiedono Atletica −2 e −4; ali, quota e spazio necessari, nessun volo stazionario; perdita del sostegno o incoscienza possono causare Caduta. Testa = bocca e sensori, Torace = corpo, Braccia e Gambe = gruppi di arti (per Peryton e Roc le Braccia sono le ali). Stato di durata N applicato nel Round R: termina a fine R + N. Dotazione: nessuna."
+    },
+    {
+      "nome": "Branco",
+      "passiva": true,
+      "effetto": "+2 ai tiri per colpire se un alleato cosciente e capace di attaccare minaccia la vittima in mischia da entro 1 Q (nessun secondo vantaggio numerico per la stessa circostanza). Non modifica Soffi o PS."
+    },
+    {
+      "nome": "Soffio gelido",
+      "azioni": {
+        "principali": 2
+      },
+      "prova": "Elusione: Riflessi senza modificatore",
+      "limiti": "Dopo l’uso nel Round R non si può soffiare prima di R + 3; nessun costo in PM e nessuna ricarica casuale (cambiare bersaglio, recuperare PV, curarsi o entrare in un nuovo tratto della scena non azzerano l’intervallo). Sostituisce entrambe le AzP, senza Morso aggiuntivo.",
+      "effetto": "3d6 Gelo Naturale. Cono lungo 3 Q dalle fauci (larghezza 1, 2 e 3 Q a distanza 1, 2 e 3 Q, centrato sulla direzione scelta) lungo un percorso libero; pareti e solidi fermano le parti schermate; colpisce tutte le creature nell’Area, alleati compresi. Nessun tiro per colpire; non si applica Branco. Per ogni vittima Riflessi senza modificatore per Eludere (se concretamente possibile): successo dimezza per eccesso il danno prima dell’AR, fallimento o impossibilità lo lascia intero; non consuma AzP o AzM; le Coperture pertinenti modificano la PS; nessuna Parata, Schivata o altro tiro contro lo stesso soffio; una sola AC per vittima. Dopo almeno 1 danno elementale residuo oltre Difesa, AR e Contromisura pertinente: Tempra senza modificatore contro Rallentato (PS di Stato distinta da Elusione): successo evita, fallimento lo applica per 1+1d3 Round; Ignifugo e Termico non riducono i PV persi ma possono impedire lo Stato (Giocatore §5.24)."
+    },
+    {
+      "nome": "Morso e abbattimento",
+      "effetto": "Al massimo un Morso per Round, Opportunità e colpo ordinato compresi. Dopo almeno 1 danno finale può abbattere una vittima su appoggio fino a 2 × 2 Q: Tempra senza modificatore evita A Terra, come per il Worg."
+    },
+    {
+      "nome": "Gelo e neve",
+      "passiva": true,
+      "effetto": "Immune a danni e conseguenze del Gelo di qualunque Natura; non è vulnerabile automaticamente al Fuoco. Udito e olfatto acuti +2. Sulla neve +2 a Furtività quando il manto bianco aiuta realmente a nascondersi (nessuna invisibilità né cancellazione delle impronte). Nessuna Scurovisione innata. Non guadagna altri Soffi restando al freddo e non assorbe il Gelo per curarsi."
+    }
+  ],
+  "note": "Parla Comune, Gigante e il linguaggio dei Lupi invernali. Segue tracce sulla neve; può servire come guardiano per accordo o addestramento. Condotta: sotto 13 PV o a Ferita Profonda può proteggere il branco ripiegando. Fonte: Winter Wolf, pp. 340–341."
+}

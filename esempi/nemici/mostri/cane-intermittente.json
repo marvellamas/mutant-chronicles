@@ -1,0 +1,100 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "cane-intermittente",
+  "nome": "Cane intermittente",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Predatori straordinari",
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 7,
+    "COS": 5,
+    "INT": 6,
+    "SAG": 6,
+    "CAR": 5
+  },
+  "pv": 20,
+  "pm": 10,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 12,
+  "iniziativa": 2,
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 12,
+    "volonta": 10,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 13
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo vivente",
+      "effetto": "Natura Comune, mente e PM personali; respira, mangia, beve e riposa; veleni, malattie e cure biologiche possono interessarlo salvo immunità esplicite. Non appartiene alla Covata né ne applica il disorientamento da freddo. A 0 PV non è automaticamente morto o Svenuto: §4.2 (un nuovo danno finale positivo a 0 PV richiede Tempra e le normali Ferite; l’eccedenza del colpo che esaurisce i PV non genera da sola Ferite). A 0 PM personali Svenuto dopo la risoluzione completa dell’azione. INI modifica 1d10; AzP e unica AzM valgono per tutto il Round; ogni attacco normale costa 1 AzP e produce AC 1; il danno in tabella è già completo (non aggiungere FOR o DES). Una sola Opportunità ordinaria per Round (Morso, Becco, Corna o Artigli ammessi: non Soffi, teletrasporto, inghiottimento o Manovre offensive); i limiti offensivi comprendono Opportunità e attacchi ordinati. Nessuna Parata naturale; Schivata: 1 AzP e 1 AzM, consapevolezza, spazio e una funzione locomotoria. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica; nessuna AR magica. Un senso acuto dà +2 a Percezione quando è determinante, una sola volta per Prova. Corsa e Scatto in volo richiedono Atletica −2 e −4; ali, quota e spazio necessari, nessun volo stazionario; perdita del sostegno o incoscienza possono causare Caduta. Testa = bocca e sensori, Torace = corpo, Braccia e Gambe = gruppi di arti (per Peryton e Roc le Braccia sono le ali). Stato di durata N applicato nel Round R: termina a fine R + N. Dotazione: nessuna."
+    },
+    {
+      "nome": "Balzo intermittente",
+      "azioni": {
+        "principali": 1
+      },
+      "risorsa": "2 PM",
+      "limiti": "Alla propria Iniziativa, al massimo una volta per Round. Non comprende un Morso gratuito: con due AzP può combinare un Morso e un Balzo oppure conservare Azioni per Difese.",
+      "effetto": "Sceglie uno spazio libero visibile entro 8 Q, capace di contenerne il corpo e con appoggio sicuro. Capacità innata (nessuna Prova Potere, Focus o componente), non un lancio interrompibile con Contromagia. Scompare dall’origine e riappare alla destinazione senza percorrere i Q intermedi; non provoca Opportunità per il solo abbandono della portata durante il salto; non attraversa fisicamente muri o creature; ostacoli opachi impediscono la scelta di uno spazio non visibile (una vetrata trasparente può permetterla). Viaggiano solo il Cane e oggetti non viventi indossati o fissati al corpo, entro il suo carico ordinario: non porta una seconda creatura, un cavaliere o un nemico che lo trattiene. È impedito da un’ancora fisica non trasportabile, catene fissate, una presa o Immobilizzato; non è una fuga automatica da un vincolo. Non è una Reazione, una Schivata gratuita né annulla un attacco già dichiarato. Gli Stati personali lo seguono (Incendiato non si spegne). L’AzM non viene spesa né rinnovata. A 0 PM dopo la completa risoluzione compare alla destinazione e diventa Svenuto. La traslazione è istantanea: Negare Potere non la annulla dopo l’arrivo; barriere che vietano espressamente la traslazione prevalgono; non rimuove una Prigione Dimensionale. Non insegna Teletrasporto."
+    },
+    {
+      "nome": "Sensi e parola",
+      "effetto": "Udito e olfatto acuti +2, nessuna Scurovisione innata. Parla il linguaggio dei Cani intermittenti e comprende Silvano senza pronunciarlo; può comunicare, cooperare o rifiutare. La rivalità con le Bestie distorcenti è uno spunto di comportamento, non un obbligo cosmologico. Un solo Morso per Round, Opportunità e attacco ordinato compresi. Non è invisibile fra i Balzi, non vede attraverso i muri e non resta in una dimensione separata."
+    }
+  ],
+  "note": "Cacciatore che scompare da un punto e riappare in un altro visibile; il corpo resta vivente e materiale. Condotta: sotto 5 PV o a Ferita Profonda cerca un punto visibile riparato. Fonte: Blink Dog, p. 318."
+}

@@ -1,0 +1,114 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "segugio-infernale",
+  "nome": "Segugio infernale",
+  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Predatori straordinari",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 5,
+    "COS": 7,
+    "INT": 4,
+    "SAG": 6,
+    "CAR": 4
+  },
+  "pv": 44,
+  "pm": 9,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 10,
+  "iniziativa": 0,
+  "movimento": {
+    "passo": 10,
+    "corsa": 20,
+    "scatto": 30
+  },
+  "spazio": "1 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 10,
+    "volonta": 9,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Morso ardente",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ],
+      "note": "Aggiunge 1d4 Fuoco Naturale (una AC, componenti miste): Difesa e protezioni a ciascuna componente, residui aggregati per una sola applicazione a PV e Ferite; solo il residuo di Fuoco può innescare Incendiato. Il Fuoco del Morso è intrinseco, non un incantesimo né una seconda applicazione fisica."
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo vivente",
+      "effetto": "Natura Comune, mente e PM personali; respira, mangia, beve e riposa; veleni, malattie e cure biologiche possono interessarlo salvo immunità esplicite. Non appartiene alla Covata né ne applica il disorientamento da freddo. A 0 PV non è automaticamente morto o Svenuto: §4.2 (un nuovo danno finale positivo a 0 PV richiede Tempra e le normali Ferite; l’eccedenza del colpo che esaurisce i PV non genera da sola Ferite). A 0 PM personali Svenuto dopo la risoluzione completa dell’azione. INI modifica 1d10; AzP e unica AzM valgono per tutto il Round; ogni attacco normale costa 1 AzP e produce AC 1; il danno in tabella è già completo (non aggiungere FOR o DES). Una sola Opportunità ordinaria per Round (Morso, Becco, Corna o Artigli ammessi: non Soffi, teletrasporto, inghiottimento o Manovre offensive); i limiti offensivi comprendono Opportunità e attacchi ordinati. Nessuna Parata naturale; Schivata: 1 AzP e 1 AzM, consapevolezza, spazio e una funzione locomotoria. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica; nessuna AR magica. Un senso acuto dà +2 a Percezione quando è determinante, una sola volta per Prova. Corsa e Scatto in volo richiedono Atletica −2 e −4; ali, quota e spazio necessari, nessun volo stazionario; perdita del sostegno o incoscienza possono causare Caduta. Testa = bocca e sensori, Torace = corpo, Braccia e Gambe = gruppi di arti (per Peryton e Roc le Braccia sono le ali). Stato di durata N applicato nel Round R: termina a fine R + N. Dotazione: nessuna."
+    },
+    {
+      "nome": "Scurovisione",
+      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+    },
+    {
+      "nome": "Branco",
+      "passiva": true,
+      "effetto": "+2 ai tiri per colpire se un alleato cosciente e capace di attaccare minaccia la vittima in mischia da entro 1 Q (nessun secondo vantaggio numerico per la stessa circostanza). Non modifica Soffi o PS."
+    },
+    {
+      "nome": "Soffio di Fuoco",
+      "azioni": {
+        "principali": 2
+      },
+      "prova": "Elusione: Riflessi senza modificatore",
+      "limiti": "Dopo l’uso nel Round R non si può soffiare prima di R + 3; nessun costo in PM e nessuna ricarica casuale (cambiare bersaglio, recuperare PV, curarsi o entrare in un nuovo tratto della scena non azzerano l’intervallo). Sostituisce entrambe le AzP, senza Morso aggiuntivo.",
+      "effetto": "3d6 Fuoco Naturale. Cono lungo 3 Q dalle fauci (larghezza 1, 2 e 3 Q a distanza 1, 2 e 3 Q, centrato sulla direzione scelta) lungo un percorso libero; pareti e solidi fermano le parti schermate; colpisce tutte le creature nell’Area, alleati compresi. Nessun tiro per colpire; non si applica Branco. Per ogni vittima Riflessi senza modificatore per Eludere (se concretamente possibile): successo dimezza per eccesso il danno prima dell’AR, fallimento o impossibilità lo lascia intero; non consuma AzP o AzM; le Coperture pertinenti modificano la PS; nessuna Parata, Schivata o altro tiro contro lo stesso soffio; una sola AC per vittima. Dopo almeno 1 danno elementale residuo oltre Difesa, AR e Contromisura pertinente: Riflessi senza modificatore contro Incendiato (PS di Stato distinta da Elusione): successo evita, fallimento lo applica per 1+1d3 Round; Ignifugo e Termico non riducono i PV persi ma possono impedire lo Stato (Giocatore §5.24)."
+    },
+    {
+      "nome": "Immunità e sensi",
+      "passiva": true,
+      "effetto": "Immune al Fuoco di qualunque Natura e a Incendiato; non assorbe fiamme per recuperare PV. Non è immune al Gelo, ai danni psichici o ai veleni compatibili. Udito e olfatto acuti +2. Comprende Infernale senza parlarlo (capire una lingua non equivale ad accettare ordini). Il nome non assegna Natura Oscura Simmetria, CROS, Corruzione o un legame con un Apostolo. Al massimo un Morso per Round, Opportunità e attacco ordinato compresi. Alla morte effettiva il corpo si consuma in fumo e braci senza esplosione, Area dannosa o nuovo Stato; a 0 PV o PM non scompare; non libera un secondo avversario."
+    }
+  ],
+  "immunita": [
+    "incendiato"
+  ],
+  "note": "Canide intelligente dalle fauci incandescenti. Condotta: sotto 11 PV o a Ferita Profonda può ripiegare o cambiare preda. Fonte: Hell Hound, p. 182."
+}

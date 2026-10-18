@@ -256,11 +256,16 @@ Scelte del blocco: AR «con scudo» nel campo (Orrore in elmo 6, 4 senza Scudo i
 
 Scelte del blocco: Difese = Parata dove il manuale la dà (Schivata / Elusione nelle note) e AR «con scudo» nel campo (senza scudo nelle note); i bonus personali (Forza brutale, Furia) già nei danni e quindi nessuna capacità che li aggiunga; armi della dotazione come attacchi (Giavellotti e Arco con gittata e modalità S; Lancia a una e a due mani come due attacchi); Disciplina hobgoblin, Attacco coordinato (+3 non incluso nei danni), Frenesia gnoll, Incitare la Frenesia, Urlo di guerra, Agguato, Protezione opportunista, Sgusciare, Avanzata aggressiva e Urto di Scudo come capacità con `azioni`, `risorsa` e `usi`; Tossina della Zanna come evento separato dal Morso; repertorio chiuso dell'Occhio (Benedizione 3, Comando 3, Dardo Spirituale 3) come capacità, come per la Driade; GS «Elite» (Signore della guerra) e PX non tondi (11, 22, 33, 77) riportati così; Taglia non dedotta dall'ingombro (Mezzogre 2 × 2 Q senza Taglia). Test: `tests/mostri-capi.test.js`.
 
+## Catalogo, blocco «Predatori straordinari» — cap. 8 (18/10, Mostri 0.23)
+
+`tools/genera_mostri_straordinari.mjs` → `esempi/nemici/mostri/`: Worg, Lupo invernale, Segugio infernale, Cane della morte, Cane intermittente, Ragno di fase, Remorhaz giovane, Remorhaz, Peryton, Roc.
+
+Scelte del blocco: Soffi (Lupo invernale, Segugio infernale) come capacità da 2 AzP con cadenza R + 3 e PS di Elusione, non attacchi; danno misto del Morso ardente con la prima componente in `danno` e il Fuoco nella nota (una AC); Digestione, presa delle fauci, Inghiottire, Presa e trasporto del Roc, malattia del Cane della morte, veleno e Passaggio di fase del Ragno e Balzo del Cane intermittente come capacità; immunità negli Stati solo per Incendiato (Segugio e Remorhaz), il Gelo e le altre nelle capacità; Worg 2 × 1 Q e Roc 6 × 6 Q fuori dal campo Spazio, con l'ingombro nelle note e il rimando ad A.167 (approvata il 18/10, in implementazione), e nessuna Taglia dedotta dall'ingombro. Test: `tests/mostri-straordinari.test.js`.
+
 ## Che cosa resta del catalogo (Mostri 0.23)
 
-Il catalogo del cap. 8 ha 215 creature in 21 blocchi; ne sono fatte 185. Restano 30, in 3 blocchi, da fare nei prossimi lotti:
+Il catalogo del cap. 8 ha 215 creature in 21 blocchi; ne sono fatte 195. Restano 20, in 2 blocchi, da fare nei prossimi lotti:
 
-- **Predatori straordinari** (10 creature);
 - **Popoli delle terre selvagge** (10 creature);
 - **Fauna delle terre aperte** (10 creature).
 
