@@ -1787,6 +1787,9 @@ diverso dalle regole già approvate **non si è cambiato**: vedi A.167 qui sotto
   ×5, Leggenda 20+ ×6. Sostituiscono le fasce del gestore (Inesperto 4–6, Esperto 7–10, Veterano 11–14, Eroe
   15–18, Leggenda 19–20). Titolo del PG, soglie cumulative di PX e Grado di Sfida dell’avversario restano dati
   distinti. Effetto: i livelli 7, 11, 15 e 19 scendono di un Titolo (fattore −1); gli altri non cambiano.
+  **Riassegnazione (18/10, richiesta di Marcello):** il Titolo di una partita dipende dai PX che il PG aveva prima
+  di quella assegnazione (`pxPrima`, salvato alla prima assegnazione e riusato nelle correzioni; il Direttore può
+  cambiarlo a mano dal menu «Titolo»), così il premio della stessa partita non sposta il PG in una fascia più alta.
 - **A.170 — Il resto dei fattori dei PX** (seguito della A.168). Il Manuale del Direttore §9.3 non è fra i Doc che
   controlliamo e Davide ha confermato solo le fasce dei Titoli. Restano da confermare: (a) le soglie cumulative
   dei livelli 1–20 `[0, 50, 110, 180, 340, 520, 720, 1050, 1410, 1800, 2220, 2820, 3460, 4140, 4860, 5810, 6810,
