@@ -26,6 +26,7 @@
     "scatto": "non_consentito"
   },
   "taglia": "grande",
+  "spazio": "3 × 10 Q",
   "gs_px": {
     "gs": "—",
     "px": 0,
@@ -77,5 +78,5 @@
       "effetto": "Un effetto di freddo che la raggiunge la disorienta per 1 Round (dal Round R alla fine di R+1), anche se l’AR assorbe tutto il danno: non può spostarsi né attaccare (neppure Attacchi di Opportunità), ma può difendersi spendendo AzP e AzM. Un colpo schivato non lo attiva. Nuove esposizioni tengono la scadenza più lontana senza sommare Round."
     }
   ],
-  "note": "Casta non combattente: nessun attacco, Parata naturale o Attacco di Opportunità; nessuna Onda psichica offensiva. Massa paragonabile a un veicolo per Sbalzante (taglia Grande). La sua morte non uccide gli altri membri. Spazio sulla mappa 3 × 10 Q (dal manuale): pedine quadrate nell’app (A.167). Covata (Mostri cap. 7): insettoide vivente di Natura Comune; nessuno Stato iniziale, nessun incantesimo. Resistenza al Fuoco e Ignifugo 6 di carapace (Contromisura, A.73). A 0 PV può continuare ad agire; le Ferite arrivano solo con danno positivo già a 0 PV (§5.14). PM personali anche senza poteri; a 0 PM Svenuto."
+  "note": "Casta non combattente: nessun attacco, Parata naturale o Attacco di Opportunità; nessuna Onda psichica offensiva. Massa paragonabile a un veicolo per Sbalzante (taglia Grande). La sua morte non uccide gli altri membri.  Covata (Mostri cap. 7): insettoide vivente di Natura Comune; nessuno Stato iniziale, nessun incantesimo. Resistenza al Fuoco e Ignifugo 6 di carapace (Contromisura, A.73). A 0 PV può continuare ad agire; le Ferite arrivano solo con danno positivo già a 0 PV (§5.14). PM personali anche senza poteri; a 0 PM Svenuto."
 }

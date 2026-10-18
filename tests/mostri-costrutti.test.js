@@ -55,16 +55,16 @@ test('immunità come Stati del formato; costrutti senza mente immuni a Stordito'
   }
 });
 
-test('movimento: Spada volante e Aria in volo (passo 0); Tappeto 2×1 fuori dal campo Spazio con A.167', () => {
+test('movimento: Spada volante e Aria in volo (passo 0); Tappeto 2×1 Q nel campo Spazio (A.167)', () => {
   for (const id of ['spada-volante', 'elementale-aria-maggiore']) {
     const mv = leggi(id).movimento;
     assert.equal(mv.passo, 0);
     assert.ok(Number.isInteger(mv.volo) && mv.volo > 0, `${id} vola`);
   }
   const tap = leggi('tappeto-soffocante');
-  assert.equal(tap.spazio, undefined, 'Tappeto 2×1 non quadrato: campo vuoto');
-  assert.equal(tap.taglia, undefined, '2 × 1 Q non contiene un 2 × 2 Q: taglia normale');
-  assert.ok(/2 × 1 Q/.test(tap.note) && /A\.167/.test(tap.note));
+  assert.equal(tap.spazio, '2 × 1 Q', 'Tappeto 2×1 nel campo');
+  assert.equal(tap.taglia, undefined);
+  assert.ok(!/A\.167/.test(tap.note));
   // gli Elementali 2×2 sono Grandi
   for (const id of ['elementale-acqua-maggiore', 'elementale-terra-maggiore']) {
     assert.equal(leggi(id).spazio, '2 × 2 Q');

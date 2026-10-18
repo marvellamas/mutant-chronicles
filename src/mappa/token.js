@@ -8,39 +8,56 @@
 // Funzioni pure.
 import { formaDi } from './forma.js';
 
-/**
- * Lato del token in Q dal profilo della creatura (A.126, risposta approvata il 15/10/2026): si usa il campo
- * «spazio» (data/formato_nemici.json → spazio: «1 Q», «2 × 2 Q», «3 × 3 Q»; tabella in data/mappa.json →
- * token.spazio_lato), che non si deduce dalla Taglia. Un profilo senza il campo tiene il lato della Taglia
- * (token.ingombro_per_taglia), come prima: i nemici di sempre non cambiano. Il master può sempre cambiarlo
- * sul token.
- * @param scheda il profilo del nemico, oppure la sola Taglia (come prima)
- */
-export function ingombroDaTaglia(scheda, dati) {
-  const T = dati?.mappa?.token ?? {};
-  const profilo = scheda !== null && typeof scheda === 'object' ? scheda : { taglia: scheda };
-  const dallo = T.spazio_lato?.[profilo?.spazio];
-  if (Number.isInteger(dallo)) return dallo;
-  return T.ingombro_per_taglia?.[profilo?.taglia] ?? 1;
+/** «2 × 3 Q» → [2, 3]; «1 Q» → [1, 1]; altro → null (A.126, A.167: anche rettangolare e oltre 3 × 3). */
+export function parseSpazio(testo) {
+  const m = /^(?:1 Q|([1-9][0-9]?) × ([1-9][0-9]?) Q)$/.exec(String(testo ?? ''));
+  if (!m) return null;
+  return m[1] ? [Number(m[1]), Number(m[2])] : [1, 1];
 }
 
 /** Il nome dello spazio di un profilo («2 × 2 Q»), o null se non lo indica (A.126). */
 export const spazioDi = (scheda) => (typeof scheda?.spazio === 'string' && scheda.spazio ? scheda.spazio : null);
 
 /**
+ * Lato del token in Q dal profilo della creatura (A.126, A.167): si usa il campo «spazio» (data/formato_nemici.json,
+ * «1 Q» o «larghezza × lunghezza Q»), che non si deduce dalla Taglia. Un profilo senza il campo tiene il lato della
+ * Taglia (token.ingombro_per_taglia), come prima: i nemici di sempre non cambiano. Il master può sempre cambiarlo sul
+ * token.
+ * Ripiego (18/10, finché la mappa non disegna le sagome vere): per uno spazio che non è un quadrato ammesso (6 × 6,
+ * 2 × 1, 3 × 10…) il quadrato ammesso più grande che non supera l'ingombro dichiarato — un mostro enorme che occupa
+ * un quadretto è peggio di uno un po' troppo piccolo.
+ * @param scheda il profilo del nemico, oppure la sola Taglia (come prima)
+ */
+export function ingombroDaTaglia(scheda, dati) {
+  const T = dati?.mappa?.token ?? {};
+  const profilo = scheda !== null && typeof scheda === 'object' ? scheda : { taglia: scheda };
+  const dim = parseSpazio(profilo?.spazio);
+  if (dim) {
+    const minimo = Math.min(...dim);
+    const ammessi = (T.ingombri_ammessi ?? [1]).filter((n) => n <= minimo);
+    return ammessi.length ? Math.max(...ammessi) : 1;
+  }
+  return T.ingombro_per_taglia?.[profilo?.taglia] ?? 1;
+}
+
+/**
  * A.126, 16/10/2026: lo spazio che la pedina occupa davvero, con la provenienza — così la mini-scheda lo dice
  * sempre, anche per i profili che hanno solo la Taglia (segnalazione di Marcello: «Sgorbio delle Vasche»
  * Grande, pedina 2 × 2, mini-scheda muta).
- * @returns {{ lato, testo, dalProfilo, fonte }} fonte: 'profilo' | 'taglia'
+ * @returns {{ lato, testo, dalProfilo, fonte, ripiego }} fonte: 'profilo' | 'taglia'; ripiego: la pedina è più
+ *   piccola dello spazio dichiarato
  */
 export function spazioEffettivo(scheda, dati) {
   const lato = ingombroDaTaglia(scheda ?? null, dati);
-  const dalProfilo = !!spazioDi(scheda) && dati?.mappa?.token?.spazio_lato?.[spazioDi(scheda)] === lato;
+  const dim = parseSpazio(spazioDi(scheda));
+  const dalProfilo = !!dim;
+  const ripiego = dalProfilo && !(dim[0] === lato && dim[1] === lato);
   return {
     lato,
     testo: dalProfilo ? spazioDi(scheda) : `${lato} × ${lato} Q`,
     dalProfilo,
     fonte: dalProfilo ? 'profilo' : 'taglia',
+    ripiego,
   };
 }
 

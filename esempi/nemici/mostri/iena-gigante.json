@@ -25,6 +25,7 @@
     "corsa": 20,
     "scatto": 30
   },
+  "spazio": "2 × 1 Q",
   "gs_px": {
     "gs": "Inesperto",
     "px": 20,
@@ -87,5 +88,5 @@
       "effetto": "Non applica il bonus di Branco: il vantaggio del gruppo nasce da posizioni e numero. La propria AzP ordinaria resta necessaria per Schivare. Denti e mascelle non sono una Parata naturale e non infliggono Corrosivo o Sanguinamento automatici. Il riso e i richiami sono comunicazione, non un attacco che impone Terrorizzato."
     }
   ],
-  "note": "Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). Condotta: segue una preda indebolita, contende carcasse; sotto 8 PV, a Ferita Profonda o separata dal gruppo interrompe l’inseguimento."
+  "note": "Condotta: segue una preda indebolita, contende carcasse; sotto 8 PV, a Ferita Profonda o separata dal gruppo interrompe l’inseguimento."
 }

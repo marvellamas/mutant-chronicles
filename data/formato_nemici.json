@@ -172,14 +172,10 @@
       "descrizione": "Normale se manca. Grande: occupa 2 × 2 Q o più, Sbalzante non lo sposta (Bestiario §3.1.1); nessun bonus generico per chi lo attacca (A.95, E&L del 05/10/2026)."
     },
     "spazio": {
-      "tipo": "scelta",
-      "valori": [
-        "1 Q",
-        "2 × 2 Q",
-        "3 × 3 Q"
-      ],
+      "tipo": "testo",
+      "modello": "^1 Q$|^[1-9][0-9]? × [1-9][0-9]? Q$",
       "obbligatorio": false,
-      "descrizione": "Spazio occupato sulla mappa, in Q (A.126, risposta approvata il 15/10/2026): si usa l’ingombro indicato nel profilo e non si deduce dalla Taglia. Serve a rappresentare la pedina e a verificarne passaggio e posizionamento; resta distinto dalla portata degli attacchi (A.133). Se manca vale il lato dalla Taglia, come prima (1 Q di norma)."
+      "descrizione": "Spazio occupato sulla mappa, in Q: «1 Q» oppure «larghezza × lunghezza Q», anche rettangolare e oltre 3 × 3 (A.126, A.167 del 18/10/2026: Corazzato 1 × 2 Q, Regina Comandante 2 × 3 Q, Incubatrice 3 × 5 Q, Madre 3 × 10 Q), entro token.creatura_ingombro_max per lato. Si usa l’ingombro indicato nel profilo e non si deduce dalla Taglia; la sagoma resta quella dichiarata (una 3 × 10 occupa 30 Q) e può ruotare. Resta distinto dalla Taglia e dalla portata degli attacchi: una pedina più lunga non guadagna portata (A.133). Se manca vale il lato dalla Taglia, come prima (1 Q di norma)."
     },
     "gs_px": {
       "tipo": "oggetto",

@@ -2448,6 +2448,11 @@ export function validaNemico(nemico, dati, file = 'nemico') {
       case 'testo':
         if (!isTesto(v)) err(k, 'testo non vuoto');
         else if (s.modello && !new RegExp(s.modello).test(v)) err(k, `«${v}» non segue il modello ${s.modello}`);
+        else if (k === 'spazio') {
+          // A.167: larghezza × lunghezza entro creatura_ingombro_max per lato (data/mappa.json → token)
+          const max = dati?.mappa?.token?.creatura_ingombro_max;
+          if (Number.isInteger(max) && (v.match(/\d+/g) ?? []).some((n) => Number(n) > max)) err(k, `«${v}»: al massimo ${max} Q per lato`);
+        }
         return;
       case 'intero':
         // «oppure»: valori testuali ammessi al posto del numero (movimento «non_consentito», A.73)
@@ -3155,12 +3160,8 @@ function validaMappa(dati, err) {
     if (!ammessi.includes(T?.ingombro_per_taglia?.[t])) err(F, `token.ingombro_per_taglia.${t}`, `manca o non è fra gli ingombri ammessi (Taglia di formato_nemici.json)`);
   }
   for (const t of Object.keys(T?.ingombro_per_taglia ?? {})) if (!taglie.includes(t)) err(F, `token.ingombro_per_taglia.${t}`, 'Taglia che formato_nemici.json non conosce');
-  // A.126: ogni valore del campo «spazio» del formato dei nemici ha il suo lato in Q, fra gli ingombri ammessi
-  const spazi = dati.formato_nemici?.campi?.spazio?.valori ?? [];
-  for (const s of spazi) {
-    if (!ammessi.includes(T?.spazio_lato?.[s])) err(F, `token.spazio_lato["${s}"]`, 'manca o non è fra gli ingombri ammessi (campo «spazio» di formato_nemici.json, A.126)');
-  }
-  for (const s of Object.keys(T?.spazio_lato ?? {})) if (!spazi.includes(s)) err(F, `token.spazio_lato["${s}"]`, 'spazio che formato_nemici.json non conosce');
+  // A.126, A.167: il campo «spazio» dei nemici ammette larghezza × lunghezza entro creatura_ingombro_max per lato
+  if (!isIntero(T?.creatura_ingombro_max) || T.creatura_ingombro_max < Math.max(...ammessi, 1)) err(F, 'token.creatura_ingombro_max', 'intero non minore dei lati ammessi (ingombri_ammessi)');
   if (!['partecipante', 'veicolo', 'segnaposto'].every((r) => T?.riferimenti?.includes(r))) err(F, 'token.riferimenti', 'partecipante, veicolo e segnaposto attesi');
   if (!isIntero(T?.veicolo_ingombro_max) || T.veicolo_ingombro_max < 1) err(F, 'token.veicolo_ingombro_max', 'intero da 1 in su');
   const vp = T?.veicolo_predefinito;

@@ -24,6 +24,7 @@
     "corsa": 4,
     "scatto": 6
   },
+  "spazio": "2 × 1 Q",
   "gs_px": {
     "gs": "Esperto",
     "px": 30,
@@ -99,5 +100,5 @@
     "sanguinamento",
     "stordito"
   ],
-  "note": "PM —: nessuna riserva. Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). Immobile sembra un tappeto (+4 Furtività). Comportamento: protegge un’area o un accesso; interrompere l’animazione apre una finestra per salvare la vittima."
+  "note": "PM —: nessuna riserva. Immobile sembra un tappeto (+4 Furtività). Comportamento: protegge un’area o un accesso; interrompere l’animazione apre una finestra per salvare la vittima."
 }

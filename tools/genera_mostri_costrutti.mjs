@@ -66,6 +66,7 @@ const CREATURE = [
   },
   {
     id: 'tappeto-soffocante', nome: 'Tappeto soffocante',
+    spazio: '2 × 1 Q',
     caratteristiche: { FOR: 7, DES: 6, COS: 6, INT: 1, SAG: 3, CAR: 1 },
     pv: 28, ar: { totale: 0, magica: 0 }, difese: 10, iniziativa: 0,
     movimento: { passo: 2, corsa: 4, scatto: 6 },
@@ -81,7 +82,7 @@ const CREATURE = [
       { nome: 'Sopprimere l’animazione', effetto: 'Negare Potere sull’animazione (potenza 4); inerte fino alla fine del terzo Round successivo.' },
       SCUROVISIONE, NON_BIOLOGICO,
     ],
-    note: 'PM —: nessuna riserva. Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). Immobile sembra un tappeto (+4 Furtività). Comportamento: protegge un’area o un accesso; interrompere l’animazione apre una finestra per salvare la vittima.',
+ note: 'PM —: nessuna riserva. Immobile sembra un tappeto (+4 Furtività). Comportamento: protegge un’area o un accesso; interrompere l’animazione apre una finestra per salvare la vittima.',
   },
   {
     id: 'gargoyle', nome: 'Gargoyle',

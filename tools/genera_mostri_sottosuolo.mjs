@@ -166,6 +166,7 @@ const CREATURE = [
   },
   {
     id: 'vermeiena', nome: 'Vermeiena',
+    spazio: '1 × 2 Q',
     caratteristiche: { FOR: 7, DES: 6, COS: 8, INT: 1, SAG: 6, CAR: 3 },
     pv: 34, pm: 6, ar: { totale: 2, magica: 0 }, difese: 10, iniziativa: 0,
     movimento: { passo: 6, corsa: 12, scatto: 18 },
@@ -178,7 +179,7 @@ const CREATURE = [
       { nome: 'Veleno', effetto: 'Dopo almeno 1 danno finale dei Tentacoli a un organismo vivente, Tempra senza modificatore: fallimento → Avvelenato e Immobilizzato (movimento 0, −4 alle azioni fisiche, mani libere) per 1+1d3 Round, senza danni periodici. La vittima ripete Tempra a fine di ogni propria Iniziativa (senza Azioni): il successo termina. Nuove esposizioni tengono la scadenza più lontana, senza cumulo. Veleno naturale di Pericolosità II; Cura Avvelenamenti (liv. 2) o un antidoto lo eliminano. Un’AR che azzera il danno impedisce l’inoculazione. Non è una presa: per trascinare deve prima Immobilizzare con la manovra ordinaria.' },
       { nome: 'Sensi e aderenza', effetto: 'Scurovisione 12 Q; olfatto 14 (sangue e cadaveri lo attirano). Aderisce a pareti e soffitti solidi (6/12/18 Q); non è immune a cadute o al cedimento del supporto. Braccia sono i tentacoli del capo.' },
     ],
-    note: 'Spazio sulla mappa 1 × 2 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). Percezione 14 con l’olfatto. Comportamento: preferisce un cadavere a una preda che può ferirlo; sotto 9 PV o a Ferita Profonda si ritira.',
+ note: 'Percezione 14 con l’olfatto. Comportamento: preferisce un cadavere a una preda che può ferirlo; sotto 9 PV o a Ferita Profonda si ritira.',
   },
 ];
 

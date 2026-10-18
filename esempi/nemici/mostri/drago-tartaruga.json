@@ -25,7 +25,7 @@
     "corsa": 8,
     "scatto": 12
   },
-  "taglia": "grande",
+  "spazio": "4 × 4 Q",
   "gs_px": {
     "gs": "Leggenda",
     "px": 100,
@@ -128,5 +128,5 @@
       "effetto": "Artigli, Morso e Coda possono colpire una parte di scafo raggiungibile, con profilo, protezioni, PS Integrità e PI della struttura (i PV della creatura non si convertono in PI di una nave). La Coda non sposta né capovolge un veicolo senza una procedura del mezzo; in assenza di un profilo lo definisce il Direttore."
     }
   ],
-  "note": "Spazio sulla mappa 4 × 4 Q (dal manuale): ingombro non ammesso dal campo (1 Q, 2 × 2, 3 × 3), pedine quadrate nell’app (A.167). Furtività 10 immerso e immobile su un fondale adatto. Parla due lingue assegnate all’ambiente. Può intimidire, chiedere un’offerta o scacciare una nave; un accordo risolve l’incontro. Condotta: sotto 27 PV o a Ferita Seria cerca profondità o un accordo. Fonte: Dragon Turtle, p. 119."
+  "note": "Furtività 10 immerso e immobile su un fondale adatto. Parla due lingue assegnate all’ambiente. Può intimidire, chiedere un’offerta o scacciare una nave; un accordo risolve l’incontro. Condotta: sotto 27 PV o a Ferita Seria cerca profondità o un accordo. Fonte: Dragon Turtle, p. 119."
 }

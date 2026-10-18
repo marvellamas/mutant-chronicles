@@ -20,9 +20,10 @@ const tok = (q, ingombro) => ({ id: `t${q.join('')}`, rif: { tipo: 'partecipante
 
 test('A.126: il lato della pedina viene dal campo «spazio» del profilo, non dalla Taglia', () => {
   const campo = dati.formato_nemici.campi.spazio;
-  assert.deepEqual(campo.valori, ['1 Q', '2 × 2 Q', '3 × 3 Q']);
+  assert.equal(campo.tipo, 'testo');
+  assert.ok(new RegExp(campo.modello).test('2 × 3 Q') && new RegExp(campo.modello).test('3 × 10 Q') && new RegExp(campo.modello).test('1 Q') && !new RegExp(campo.modello).test('2 Q'));
   assert.equal(campo.obbligatorio, false);
-  assert.deepEqual(dati.mappa.token.spazio_lato, { '1 Q': 1, '2 × 2 Q': 2, '3 × 3 Q': 3 });
+  assert.equal(dati.mappa.token.creatura_ingombro_max, 12);
   assert.equal(ingombroDaTaglia({ spazio: '3 × 3 Q' }, dati), 3);
   assert.equal(ingombroDaTaglia({ spazio: '2 × 2 Q' }, dati), 2);
   assert.equal(ingombroDaTaglia({ spazio: '1 Q', taglia: 'grande' }, dati), 1, 'vale il profilo, non la Taglia');
@@ -204,4 +205,37 @@ test('A.126: «Crea nemico» scrive lo spazio nel profilo, non fra le capacità'
   assert.equal(gigante.spazio, '3 × 3 Q');
   assert.equal(gigante.capacita.some((c) => c.nome === 'Spazio'), false);
   assert.equal(ingombroDaTaglia(gigante, dati), 3);
+});
+
+// --- A.167 (18/10): spazio rettangolare e ripiego del quadrato ammesso più grande ---------------------------------
+
+test('A.167: parseSpazio legge «1 Q» e «larghezza × lunghezza Q»; altro è null', async () => {
+  const { parseSpazio } = await import('../src/mappa/token.js');
+  assert.deepEqual(parseSpazio('1 Q'), [1, 1]);
+  assert.deepEqual(parseSpazio('2 × 3 Q'), [2, 3]);
+  assert.deepEqual(parseSpazio('3 × 10 Q'), [3, 10]);
+  assert.equal(parseSpazio('2 Q'), null);
+  assert.equal(parseSpazio('3x3'), null);
+  assert.equal(parseSpazio(undefined), null);
+});
+
+test('A.167, ripiego: il quadrato ammesso più grande che non supera l’ingombro dichiarato (mai 1 × 1 per un mostro enorme)', () => {
+  const lato = (spazio) => ingombroDaTaglia({ spazio }, dati);
+  assert.equal(lato('6 × 6 Q'), 3, 'Roc');
+  assert.equal(lato('4 × 4 Q'), 3, 'Drago tartaruga');
+  assert.equal(lato('3 × 10 Q'), 3, 'Madre');
+  assert.equal(lato('3 × 5 Q'), 3, 'Incubatrice');
+  assert.equal(lato('2 × 3 Q'), 2, 'Regina Comandante');
+  assert.equal(lato('3 × 2 Q'), 2, 'Coccodrillo gigante');
+  assert.equal(lato('2 × 1 Q'), 1, 'Worg');
+  assert.equal(lato('1 × 2 Q'), 1, 'Corazzato');
+});
+
+test('A.167: il campo spazio dei nemici ammette i rettangoli e il validatore ne controlla il massimo', async () => {
+  const { validaNemico } = await import('../src/validate.js');
+  const { readFileSync } = await import('node:fs');
+  const base = JSON.parse(readFileSync(new URL('../esempi/nemici/mostri/roc.json', import.meta.url), 'utf8'));
+  assert.deepEqual(validaNemico({ ...base, spazio: '3 × 10 Q' }, dati, 'x'), []);
+  assert.equal(validaNemico({ ...base, spazio: '2 Q' }, dati, 'x').length, 1);
+  assert.match(validaNemico({ ...base, spazio: '13 × 2 Q' }, dati, 'x')[0].problema, /al massimo 12 Q per lato/);
 });

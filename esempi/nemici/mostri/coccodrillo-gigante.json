@@ -25,7 +25,7 @@
     "corsa": 12,
     "scatto": 18
   },
-  "taglia": "grande",
+  "spazio": "3 × 2 Q",
   "gs_px": {
     "gs": "Eroe",
     "px": 70,
@@ -97,5 +97,5 @@
       "effetto": "Nuoto 10 / 20 / 30 Q. Apnea 30 minuti (sostituisce i Round pari a COS, senza respirazione acquatica); esaurita, PS, perdita di coscienza e danni del §5.23, un Round d’aria la ripristina. +2 a Furtività nell’acqua con riparo (Furtività 13). Per trascinare una preda riluttante mentre tiene (niente Corsa/Scatto/Carica): 1 AzP e l’AzM intera, nuova opposizione, poi fino a 2 Q a terra o 4 Q a nuoto; percorso misto con budget 4 (1 Q a terra = 2, 1 Q a nuoto = 1). Prima di un pericolo letale la vittima effettua la normale PS Riflessi."
     }
   ],
-  "note": "Spazio sulla mappa 3 × 2 Q (dal manuale): pedine quadrate nell’app (A.167). Condotta: sfrutta occultamento e sponde senza sorpresa automatica; sotto 16 PV o a Ferita Seria rilascia la preda e cerca acqua profonda."
+  "note": "Condotta: sfrutta occultamento e sponde senza sorpresa automatica; sotto 16 PV o a Ferita Seria rilascia la preda e cerca acqua profonda."
 }

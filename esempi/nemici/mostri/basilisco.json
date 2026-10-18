@@ -25,6 +25,7 @@
     "corsa": 8,
     "scatto": 12
   },
+  "spazio": "2 × 1 Q",
   "gs_px": {
     "gs": "Veterano",
     "px": 50,
@@ -87,5 +88,5 @@
       "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
     }
   ],
-  "note": "Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). AR 3 naturale. Non è immune al proprio sguardo riflesso. Nessuna Parata naturale. Otto zampe (Braccia = gruppo anteriore, Gambe = posteriore). Nome originale: Basilisk, p. 24. Comportamento: preferisce incontrare lo sguardo di un intruso e attendere che rallenti; a Ferita Seria cerca riparo."
+  "note": "AR 3 naturale. Non è immune al proprio sguardo riflesso. Nessuna Parata naturale. Otto zampe (Braccia = gruppo anteriore, Gambe = posteriore). Nome originale: Basilisk, p. 24. Comportamento: preferisce incontrare lo sguardo di un intruso e attendere che rallenti; a Ferita Seria cerca riparo."
 }

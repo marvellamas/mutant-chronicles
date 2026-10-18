@@ -26,6 +26,7 @@
     "scatto": 6
   },
   "taglia": "grande",
+  "spazio": "2 × 3 Q",
   "gs_px": {
     "gs": "Eroe",
     "px": 70,
@@ -173,5 +174,5 @@
       "effetto": "Entro 1,6 km dalla tana il Direttore può collocare superfici scivolose e fangose (Terreno Difficile sulla mappa) e fonti contaminate imbevibili; svaniscono in 3d10 giorni dopo la morte dell’Aboleth. Non sono attacchi ogni Round."
     }
   ],
-  "note": "Spazio sulla mappa 2 × 3 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). Massa paragonabile a quella di un veicolo ai fini del limite di Sbalzante (taglia Grande). GS e PX con modulo tana attivo (solo quando incide davvero sull’incontro): Leggenda, 100 PX. Braccia = gruppi di tentacoli laterali; Gambe = porzioni locomotorie. Natura Comune (la malvagità dell’originale non dà Oscura Simmetria). Fonte: pp. 13–14. Comportamento: tratta e inganna prima di combattere; a 20 PV o Ferita Profonda cerca una via sommersa."
+  "note": "Massa paragonabile a quella di un veicolo ai fini del limite di Sbalzante (taglia Grande). GS e PX con modulo tana attivo (solo quando incide davvero sull’incontro): Leggenda, 100 PX. Braccia = gruppi di tentacoli laterali; Gambe = porzioni locomotorie. Natura Comune (la malvagità dell’originale non dà Oscura Simmetria). Fonte: pp. 13–14. Comportamento: tratta e inganna prima di combattere; a 20 PV o Ferita Profonda cerca una via sommersa."
 }

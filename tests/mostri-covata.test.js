@@ -36,12 +36,13 @@ test('Spazio e portata dai dati, GS/PX informativo', () => {
   assert.equal(regina.attacchi.find((a) => a.nome === 'Coda').portata_q, 2);
   assert.equal(regina.taglia, 'grande', 'massa paragonabile a un veicolo (Sbalzante)');
   assert.deepEqual(regina.gs_px, { gs: 'Eroe', px: 70, per_pg: 4 });
-  // A.167: gli ingombri non quadrati/ >3×3 restano fuori dal campo spazio e sono nelle note
-  assert.equal(regina.spazio, undefined);
-  assert.match(regina.note, /2 × 3 Q.*A\.167/);
+  // A.167: gli ingombri rettangolari e oltre 3 × 3 sono nel campo spazio
+  assert.equal(regina.spazio, '2 × 3 Q');
+  assert.ok(!/A.167/.test(regina.note));
   const madre = leggi('covata-regina-madre.json');
-  assert.equal(madre.spazio, undefined);
-  assert.match(madre.note, /3 × 10 Q.*A\.167/);
+  assert.equal(madre.spazio, '3 × 10 Q');
+  assert.equal(leggi('covata-regina-incubatrice.json').spazio, '3 × 5 Q');
+  assert.equal(leggi('covata-corazzato.json').spazio, '1 × 2 Q');
   // il Lorath occupa 2 × 2 Q (ammesso)
   assert.equal(leggi('lorath.json').spazio, '2 × 2 Q');
 });

@@ -22,7 +22,7 @@ test('le quindici schede ci sono, sono valide e vengono dal cap. 8', () => {
   }
 });
 
-test('Spazio: quadrato nel campo; Aboleth 2×3, Basilisco 2×1, Grick 1×2 nelle note con A.167', () => {
+test('Spazio: quadrato nel campo; Aboleth 2×3, Basilisco 2×1, Grick 1×2 nel campo (A.167)', () => {
   for (const id of ['aarakocra', 'arpia', 'cockatrice', 'ettercap']) assert.equal(leggi(id).spazio, '1 Q', id);
   for (const id of ['ankheg', 'bestia-distorcente', 'bulette', 'chimera', 'grifone', 'ippogrifo', 'manticora', 'orsogufo']) {
     assert.equal(leggi(id).spazio, '2 × 2 Q', id);
@@ -30,8 +30,8 @@ test('Spazio: quadrato nel campo; Aboleth 2×3, Basilisco 2×1, Grick 1×2 nelle
   }
   for (const [id, ingombro] of [['aboleth', '2 × 3 Q'], ['basilisco', '2 × 1 Q'], ['grick', '1 × 2 Q']]) {
     const n = leggi(id);
-    assert.equal(n.spazio, undefined, `${id} senza spazio quadrato`);
-    assert.ok(n.note.includes(ingombro) && n.note.includes('A.167'), `${id} ingombro e A.167`);
+    assert.equal(n.spazio, ingombro, `${id} spazio`);
+    assert.ok(!n.note.includes('A.167'), `${id} nessuna nota di ripiego`);
   }
   // Taglia Grande: l'Aboleth perché il manuale lo dice (massa pari a un veicolo); Basilisco e Grick no (ingombro piccolo)
   assert.equal(leggi('aboleth').taglia, 'grande');

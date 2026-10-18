@@ -41,6 +41,7 @@ const CREATURE = [
   },
   {
     id: 'tigre', nome: 'Tigre',
+    spazio: '2 × 1 Q',
     caratteristiche: { FOR: 8, DES: 7, COS: 6, INT: 2, SAG: 6, CAR: 4 },
     pv: 32, pm: 6, ar: { totale: 1, magica: 0 }, difese: 11, iniziativa: 1,
     movimento: { passo: 8, corsa: 16, scatto: 24 },
@@ -54,7 +55,7 @@ const CREATURE = [
       assalto('Assalto', 'senza modificatore', '2 × 2 Q'),
       { nome: 'Fiuto', effetto: 'Fiuto +2. Acqua o un odore forte possono rendere inservibile una traccia olfattiva; il bonus non crea una pista assente. Può mordere anche una vittima ancora in piedi, pagando l’attacco ordinario.' },
     ],
-    note: 'Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). Condotta: caccia spesso da sola, può difendere territorio o piccoli; sotto 8 PV o a Ferita Profonda cerca copertura. Fonte: Tiger, p. 339.',
+ note: 'Condotta: caccia spesso da sola, può difendere territorio o piccoli; sotto 8 PV o a Ferita Profonda cerca copertura. Fonte: Tiger, p. 339.',
   },
   {
     id: 'tigre-denti-a-sciabola', nome: 'Tigre dai denti a sciabola',

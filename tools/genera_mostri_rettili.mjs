@@ -191,7 +191,8 @@ const CREATURE = [
     note: 'Cerca prede isolate e accessi difficili, ma può comunicare o valutare un’offerta; non eredita inimicizie cosmologiche della fonte. Condotta: sotto 22 PV o a Ferita Seria tenta di ritirarsi. Fonte: Behir, p. 25.',
   },
   {
-    id: 'drago-tartaruga', nome: 'Drago tartaruga', taglia: 'grande',
+    id: 'drago-tartaruga', nome: 'Drago tartaruga',
+    spazio: '4 × 4 Q',
     caratteristiche: { FOR: 10, DES: 5, COS: 10, INT: 5, SAG: 6, CAR: 6 },
     pv: 110, pm: 16, ar: { totale: 6, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 4, corsa: 8, scatto: 12 },
@@ -211,7 +212,7 @@ const CREATURE = [
       { nome: 'Soffio di vapore', effetto: '2 AzP, nessun PM: cono lungo 12 Q dalle fauci su percorsi liberi (aria o acqua, non attraverso pareti o scafi integri). Ogni creatura risolve Elusione con Riflessi −2: successo dimezza per eccesso 5d6 Naturale da Fuoco prima di resistenze e AR, fallimento (o Elusione impossibile) danno completo. Nessun tiro per colpire, Parata o Schivata, né Magistrale. L’immersione non dà riduzioni speciali. Niente nube persistente, Accecato o Incendiato automatico. Dopo un soffio nel Round R il successivo non prima di R + 3.', azioni: { principali: 2 } },
       { nome: 'Imbarcazioni', effetto: 'Artigli, Morso e Coda possono colpire una parte di scafo raggiungibile, con profilo, protezioni, PS Integrità e PI della struttura (i PV della creatura non si convertono in PI di una nave). La Coda non sposta né capovolge un veicolo senza una procedura del mezzo; in assenza di un profilo lo definisce il Direttore.' },
     ],
-    note: 'Spazio sulla mappa 4 × 4 Q (dal manuale): ingombro non ammesso dal campo (1 Q, 2 × 2, 3 × 3), pedine quadrate nell’app (A.167). Furtività 10 immerso e immobile su un fondale adatto. Parla due lingue assegnate all’ambiente. Può intimidire, chiedere un’offerta o scacciare una nave; un accordo risolve l’incontro. Condotta: sotto 27 PV o a Ferita Seria cerca profondità o un accordo. Fonte: Dragon Turtle, p. 119.',
+ note: 'Furtività 10 immerso e immobile su un fondale adatto. Parla due lingue assegnate all’ambiente. Può intimidire, chiedere un’offerta o scacciare una nave; un accordo risolve l’incontro. Condotta: sotto 27 PV o a Ferita Seria cerca profondità o un accordo. Fonte: Dragon Turtle, p. 119.',
   },
 ];
 

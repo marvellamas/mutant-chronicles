@@ -25,6 +25,7 @@
     "corsa": 16,
     "scatto": 24
   },
+  "spazio": "2 × 1 Q",
   "gs_px": {
     "gs": "Esperto",
     "px": 30,
@@ -106,5 +107,5 @@
       "effetto": "Fiuto +2. Acqua o un odore forte possono rendere inservibile una traccia olfattiva; il bonus non crea una pista assente. Può mordere anche una vittima ancora in piedi, pagando l’attacco ordinario."
     }
   ],
-  "note": "Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). Condotta: caccia spesso da sola, può difendere territorio o piccoli; sotto 8 PV o a Ferita Profonda cerca copertura. Fonte: Tiger, p. 339."
+  "note": "Condotta: caccia spesso da sola, può difendere territorio o piccoli; sotto 8 PV o a Ferita Profonda cerca copertura. Fonte: Tiger, p. 339."
 }

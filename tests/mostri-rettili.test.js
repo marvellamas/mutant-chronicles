@@ -22,14 +22,14 @@ test('i dieci profili ci sono, sono validi e vengono dal cap. 8', () => {
   }
 });
 
-test('Spazio: quadrato dai dati; il Drago tartaruga 4 × 4 Q resta fuori dal campo, con la nota e A.167', () => {
+test('Spazio: quadrato dai dati; il Drago tartaruga 4 × 4 Q è nel campo (A.167), senza Taglia', () => {
   assert.equal(leggi('pteranodonte').spazio, '1 Q');
   for (const id of ['allosauro', 'plesiosauro', 'viverna']) { assert.equal(leggi(id).spazio, '2 × 2 Q', id); assert.equal(leggi(id).taglia, undefined); }
   for (const id of ['anchilosauro', 'triceratopo', 'tirannosauro', 'idra', 'behir']) assert.equal(leggi(id).spazio, '3 × 3 Q', id);
   const d = leggi('drago-tartaruga');
-  assert.equal(d.spazio, undefined);
-  assert.equal(d.taglia, 'grande');
-  assert.ok(/4 × 4 Q/.test(d.note) && /A\.167/.test(d.note));
+  assert.equal(d.spazio, '4 × 4 Q');
+  assert.equal(d.taglia, undefined);
+  assert.ok(!/A.167/.test(d.note));
 });
 
 test('soffi e prese sono capacità, non attacchi; Behir e Tirannosauro con le procedure complete', () => {

@@ -23,13 +23,12 @@ test('i dieci profili ci sono, sono validi e vengono dal cap. 8', () => {
   }
 });
 
-test('Spazio: quadrato dai dati; Worg 2 × 1 Q e Roc 6 × 6 Q nelle note con A.167; nessuna Taglia dedotta', () => {
+test('Spazio: quadrato dai dati; Worg 2 × 1 Q e Roc 6 × 6 Q nel campo (A.167); nessuna Taglia dedotta', () => {
   assert.deepEqual(Object.fromEntries(PREDATORI.map((id) => [id, leggi(id).spazio])), {
-    worg: undefined, 'lupo-invernale': '2 × 2 Q', 'segugio-infernale': '1 Q', 'cane-della-morte': '1 Q', 'cane-intermittente': '1 Q',
-    'ragno-di-fase': '2 × 2 Q', 'remorhaz-giovane': '2 × 2 Q', remorhaz: '3 × 3 Q', peryton: '1 Q', roc: undefined,
+    worg: '2 × 1 Q', 'lupo-invernale': '2 × 2 Q', 'segugio-infernale': '1 Q', 'cane-della-morte': '1 Q', 'cane-intermittente': '1 Q',
+    'ragno-di-fase': '2 × 2 Q', 'remorhaz-giovane': '2 × 2 Q', remorhaz: '3 × 3 Q', peryton: '1 Q', roc: '6 × 6 Q',
   });
-  assert.match(leggi('worg').note, /2 × 1 Q.*A\.167/);
-  assert.match(leggi('roc').note, /6 × 6 Q.*A\.167/);
+  assert.ok(!/A.167/.test(leggi('worg').note) && !/A.167/.test(leggi('roc').note));
   for (const id of PREDATORI) assert.equal(leggi(id).taglia, undefined, id);
 });
 

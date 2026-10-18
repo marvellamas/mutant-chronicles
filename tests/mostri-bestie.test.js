@@ -22,18 +22,15 @@ test('le dieci Bestie ci sono, sono valide e vengono dal cap. 8', () => {
   }
 });
 
-test('Spazio dai dati: quadrati nel campo, non quadrati nelle note con A.167', () => {
+test('Spazio dai dati: anche rettangolare (A.167), senza Taglia dedotta dall’ingombro', () => {
   assert.equal(leggi('lupo').spazio, '1 Q');
   assert.equal(leggi('orso-bruno').spazio, '2 × 2 Q');
   assert.equal(leggi('serpente-costrittore-gigante').spazio, '3 × 3 Q');
-  // 2 × 1 Q e 3 × 2 Q non sono ammessi dal formato (A.126): campo vuoto, ingombro nelle note (A.167)
-  for (const [id, ingombro] of [['lupo-feroce', '2 × 1 Q'], ['leone', '2 × 1 Q'],
-    ['iena-gigante', '2 × 1 Q'], ['coccodrillo-gigante', '3 × 2 Q']]) {
+  for (const [id, ingombro] of [['lupo-feroce', '2 × 1 Q'], ['leone', '2 × 1 Q'], ['iena-gigante', '2 × 1 Q'], ['coccodrillo-gigante', '3 × 2 Q']]) {
     const n = leggi(id);
-    assert.equal(n.spazio, undefined, `${id} senza spazio quadrato`);
-    // Taglia Grande solo se l’ingombro contiene 2 × 2 Q (formato dei nemici): il 3 × 2 Q sì, il 2 × 1 Q no
-    assert.equal(n.taglia, ingombro === '3 × 2 Q' ? 'grande' : undefined, `${id} taglia`);
-    assert.ok(n.note.includes(ingombro) && n.note.includes('A.167'), `${id} ingombro e A.167 nelle note`);
+    assert.equal(n.spazio, ingombro, `${id} spazio`);
+    assert.equal(n.taglia, undefined, `${id}: la Taglia non si deduce dall’ingombro`);
+    assert.ok(!/A.167/.test(n.note), `${id}: nessuna nota di ripiego`);
   }
 });
 

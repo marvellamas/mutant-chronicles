@@ -92,6 +92,7 @@ const CREATURE = [
   },
   {
     id: 'covata-corazzato', nome: 'Corazzato',
+    spazio: '1 × 2 Q',
     caratteristiche: { FOR: 8, DES: 4, COS: 8, INT: 2, SAG: 5, CAR: 1 },
     pv: 40, pm: 6, ar: { totale: 5, magica: 0 }, difese: 8, iniziativa: -4,
     movimento: { passo: 5, corsa: 10, scatto: 15 }, // spazio 1 × 2 Q: A.167
@@ -107,7 +108,7 @@ const CREATURE = [
       { nome: 'Sfondamento', effetto: 'Il Rostro infligge +4 danni contro porte, barricate e strutture immobili (totale 1d10+6 prima di Difese e AR); si risolvono AR e Integrità del bersaglio. Non ignora la corazza dei veicoli né abbatte muri senza scheda. Il +4 si aggiunge dopo l’eventuale moltiplicatore della Carica.' },
       { nome: 'Carica', effetto: 'Carica ordinaria con il Rostro (requisiti, costi, penalità e moltiplicatori del §5.6); nessun secondo impatto gratuito.' },
     ],
-    note: 'Spazio sulla mappa 1 × 2 Q (dal manuale): l’app usa pedine quadrate, ingombro non rappresentabile (A.167). Può Schivare ed Elusione; nessuna Parata naturale.',
+ note: 'Può Schivare ed Elusione; nessuna Parata naturale.',
   },
   {
     id: 'covata-tagliente', nome: 'Tagliente',
@@ -130,6 +131,7 @@ const CREATURE = [
   },
   {
     id: 'covata-regina-comandante', nome: 'Regina Comandante', taglia: 'grande',
+    spazio: '2 × 3 Q',
     caratteristiche: { FOR: 9, DES: 6, COS: 9, INT: 6, SAG: 7, CAR: 6 },
     pv: 70, pm: 18, ar: { totale: 4, magica: 0 }, difese: 11, iniziativa: 2,
     movimento: { passo: 6, corsa: 12, scatto: 18 }, // spazio 2 × 3 Q: A.167
@@ -146,10 +148,11 @@ const CREATURE = [
       { nome: 'Comando telepatico', effetto: 'Raggio 6 km, senza costo in PM: alla propria Iniziativa comunica gratis un ordine semplice alle unità della colonia (proteggere, raggiungere un punto, attaccare un bersaglio identificato, ripiegare), senza linea di vista, attraverso ostacoli ordinari. Con 1 AzP assegna ordini diversi a un massimo di tre gruppi. I destinatari agiscono alla propria Iniziativa con le Azioni rimaste.', costo: 'gratis (1 AzP per ordini a tre gruppi)' },
       { nome: 'Onda psichica', effetto: 'Capacità innata: fino a 3 nemici visibili e dotati di mente entro 6 Q; 1d4+2 psichico diretto per bersaglio (un unico tiro condiviso) che ignora AR e PV temporanei, come Dardo Psichico. PS Volontà senza modificatore: successo dimezza per eccesso ed evita il disturbo; fallimento subisce danno pieno e −2 VA alla prossima Prova di Abilità entro fine del Round successivo. Niente Parata, Schivata o Elusione; nessuna Prova di Potere. Il freddo la impedisce (è un attacco). A 0 PM sviene dopo la risoluzione.', costo: '1 AzP e 4 PM', azioni: { principali: 1 }, prova: 'PS Volontà (dei bersagli)', risorsa: '4 PM', usi: { quanti: 1, per: 'Round' } },
     ],
-    note: 'Massa paragonabile a un veicolo per Sbalzante (taglia Grande, A.95). Con un arto anteriore integro para solo in Ravvicinato (1 AzP, Difese 11). Spazio sulla mappa 2 × 3 Q (dal manuale): pedine quadrate nell’app (A.167).',
+ note: 'Massa paragonabile a un veicolo per Sbalzante (taglia Grande, A.95). Con un arto anteriore integro para solo in Ravvicinato (1 AzP, Difese 11). ',
   },
   {
     id: 'covata-regina-incubatrice', nome: 'Regina Incubatrice', taglia: 'grande',
+    spazio: '3 × 5 Q',
     caratteristiche: { FOR: 8, DES: 2, COS: 10, INT: 4, SAG: 6, CAR: 3 },
     pv: 100, pm: 12, ar: { totale: 3, magica: 0 }, difese: 6, iniziativa: -4,
     movimento: { passo: 1, corsa: 'non_consentito', scatto: 'non_consentito' }, // spazio 3 × 5 Q: A.167
@@ -162,10 +165,11 @@ const CREATURE = [
       { nome: 'Incubazione', effetto: 'Genera le caste col normale ciclo riproduttivo: durante uno scontro non produce combattenti adulti, non richiama rinforzi gratuiti e non trasforma istantaneamente gli esemplari presenti.' },
       { nome: 'Collegamento della camera', effetto: 'Mentre è cosciente riceve informazioni dalle regine della colonia connesse al nido, senza Azioni o PM. Non è comando tattico né percezione remota degli intrusi.', costo: 'gratis' },
     ],
-    note: 'Casta non combattente: nessun attacco, Parata naturale o Attacco di Opportunità. Massa paragonabile a un veicolo per Sbalzante (taglia Grande). Il Passo serve a piccoli riposizionamenti nella camera. Spazio sulla mappa 3 × 5 Q (dal manuale): pedine quadrate nell’app (A.167).',
+ note: 'Casta non combattente: nessun attacco, Parata naturale o Attacco di Opportunità. Massa paragonabile a un veicolo per Sbalzante (taglia Grande). Il Passo serve a piccoli riposizionamenti nella camera. ',
   },
   {
     id: 'covata-regina-madre', nome: 'Regina Madre', taglia: 'grande',
+    spazio: '3 × 10 Q',
     caratteristiche: { FOR: 10, DES: 1, COS: 10, INT: 7, SAG: 8, CAR: 8 },
     pv: 150, pm: 24, ar: { totale: 4, magica: 0 }, difese: 5, iniziativa: -2,
     movimento: { passo: 1, corsa: 'non_consentito', scatto: 'non_consentito' }, // spazio 3 × 10 Q: A.167
@@ -178,7 +182,7 @@ const CREATURE = [
       { nome: 'Generazione delle regine', effetto: 'Produce regine incubatrici e comandanti; con popolazione eccessiva genera una nuova Regina Madre che parte a fondare un’altra colonia (profilo distinto per il viaggio).' },
       { nome: 'Governo della colonia', effetto: 'Stabilisce priorità di crescita, nutrimento e difesa; comunica con le altre regine del complesso senza Azioni o PM. Le comandanti traducono le direttive; la madre non concede Azioni aggiuntive a distanza.', costo: 'gratis' },
     ],
-    note: 'Casta non combattente: nessun attacco, Parata naturale o Attacco di Opportunità; nessuna Onda psichica offensiva. Massa paragonabile a un veicolo per Sbalzante (taglia Grande). La sua morte non uccide gli altri membri. Spazio sulla mappa 3 × 10 Q (dal manuale): pedine quadrate nell’app (A.167).',
+ note: 'Casta non combattente: nessun attacco, Parata naturale o Attacco di Opportunità; nessuna Onda psichica offensiva. Massa paragonabile a un veicolo per Sbalzante (taglia Grande). La sua morte non uccide gli altri membri. ',
   },
   {
     id: 'lorath', nome: 'Lorath',

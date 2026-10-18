@@ -25,6 +25,7 @@
     "corsa": 12,
     "scatto": 18
   },
+  "spazio": "1 × 2 Q",
   "gs_px": {
     "gs": "Esperto",
     "px": 30,
@@ -93,5 +94,5 @@
       "effetto": "Scurovisione 12 Q; olfatto 14 (sangue e cadaveri lo attirano). Aderisce a pareti e soffitti solidi (6/12/18 Q); non è immune a cadute o al cedimento del supporto. Braccia sono i tentacoli del capo."
     }
   ],
-  "note": "Spazio sulla mappa 1 × 2 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). Percezione 14 con l’olfatto. Comportamento: preferisce un cadavere a una preda che può ferirlo; sotto 9 PV o a Ferita Profonda si ritira."
+  "note": "Percezione 14 con l’olfatto. Comportamento: preferisce un cadavere a una preda che può ferirlo; sotto 9 PV o a Ferita Profonda si ritira."
 }

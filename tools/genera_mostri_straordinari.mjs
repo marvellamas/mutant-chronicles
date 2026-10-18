@@ -22,6 +22,7 @@ const soffio = (nome, elemento, stato, tipoPs) => ({ nome, azioni: { principali:
 const CREATURE = [
   {
     id: 'worg', nome: 'Worg',
+    spazio: '2 × 1 Q',
     caratteristiche: { FOR: 7, DES: 6, COS: 6, INT: 5, SAG: 5, CAR: 4 },
     pv: 28, pm: 7, ar: { totale: 1, magica: 0 }, difese: 11, iniziativa: 1,
     movimento: { passo: 10, corsa: 20, scatto: 30 },
@@ -34,7 +35,7 @@ const CREATURE = [
       { nome: 'Abbattere la preda', prova: 'PS di Tempra senza modificatore', limiti: 'Una volta per Round.', effetto: 'Dopo almeno 1 danno finale di Morso a una creatura su un appoggio e di spazio non superiore a 2 × 2 Q: Tempra senza modificatore; fallimento A Terra nel proprio spazio; successo mantiene l’appoggio. Nessuna presa, spinta o seconda AC. Una vittima già A Terra non ripete la PS. Non atterra chi vola o nuota senza appoggio.' },
       { nome: 'Sensi e parola', effetto: 'Udito e olfatto acuti +2 a Percezione, senza sommarli. Parla Goblin e Worg. Non ha Branco, telepatia o controllo sui Goblin. Un solo Morso per Round, Opportunità e attacco ordinato compresi.' },
     ],
-    note: 'Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). Canide senziente che può collaborare con Goblin e Hobgoblin ma non è un animale obbediente per definizione. Cavalcatura solo con accordo, addestramento, attrezzatura e carico compatibili; il suo Movimento non diventa quello del cavaliere e non dà Azioni condivise. Condotta: sotto 7 PV o a Ferita Profonda cerca una via di fuga oppure tratta. Fonte: Worg, p. 341.',
+ note: 'Canide senziente che può collaborare con Goblin e Hobgoblin ma non è un animale obbediente per definizione. Cavalcatura solo con accordo, addestramento, attrezzatura e carico compatibili; il suo Movimento non diventa quello del cavaliere e non dà Azioni condivise. Condotta: sotto 7 PV o a Ferita Profonda cerca una via di fuga oppure tratta. Fonte: Worg, p. 341.',
   },
   {
     id: 'lupo-invernale', nome: 'Lupo invernale',
@@ -176,6 +177,7 @@ const CREATURE = [
   },
   {
     id: 'roc', nome: 'Roc',
+    spazio: '6 × 6 Q',
     caratteristiche: { FOR: 10, DES: 5, COS: 10, INT: 2, SAG: 6, CAR: 4 },
     pv: 128, pm: 12, ar: { totale: 2, magica: 0 }, difese: 10, iniziativa: 0,
     movimento: { passo: 4, corsa: 8, scatto: 12, volo: 24 },
@@ -188,7 +190,7 @@ const CREATURE = [
       { nome: 'Volo e ingombro', effetto: 'Vista acuta +2, nessuna Scurovisione innata; nessun linguaggio. Apertura alare indicativa circa 40 Q: spazio del corpo e margine per battere le ali sono distinti. Non può raggiungere una vittima sotto un tetto o fra strutture che impediscano fisicamente il passaggio; non sfonda automaticamente costruzioni. Al massimo una Beccata e un attacco di Artigli per Round, Opportunità e attacco ordinato compresi; le due zampe non producono due AC nel medesimo attacco; un bersaglio colpito non viene sollevato o scagliato automaticamente.' },
       { nome: 'Presa e trasporto', prova: 'PS di Riflessi senza modificatore', effetto: 'Aggancio: dopo almeno 1 danno finale di Artigli a una creatura fino a 3 × 3 Q, Riflessi senza modificatore evita; fallimento Immobilizzato (mani non specificamente bloccate), trattenuta da una o entrambe le zampe. Una sola vittima esterna; finché la tiene non usa Artigli contro altri bersagli; mantenerla non costa Azioni né altri danni; può Beccarla con un normale attacco a portata. Liberarsi: la vittima o un alleato a contatto con gli artigli spende 1 AzP e contrappone Corpo a corpo o Atletica a Corpo a corpo 16 del Roc (il prigioniero con −4 fisico): successo termina la presa, pareggio la conserva; un attrezzo deve essere adatto; un attacco riuscito non spezza la presa. Capacità specifica: può sollevare una sola preda fino a 3 × 3 Q e non oltre 1.000 kg complessivi (oggetti indossati inclusi); con preda sollevata il Volo è limitato al Passo di 12 Q, senza Corsa o Scatto (decollo e quota rientrano nell’unica AzM). Non trascina la preda attraverso solidi, Q occupati o passaggi troppo stretti; la vittima segue il Roc e agisce nei limiti della presa. Liberarsi in quota termina Immobilizzato ma non dà Volo né un atterraggio sicuro (valgono le regole di Caduta). Rilascio: gratuito alla propria Iniziativa, senza tiro o lancio offensivo aggiuntivo; senza appoggio la vittima cade verticalmente. Svenuto, morte o Menomazione che impedisca la presa la sciolgono (0 PV da soli no); interrompere il Volo può far precipitare entrambi. Un passeggero consenziente, un’imbracatura o un carico esterno richiedono attrezzatura, accordo e condizioni proprie. La capacità non vale per altre grandi aquile o creature di FOR 10.' },
     ],
-    note: 'Spazio sulla mappa 6 × 6 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167, approvata il 18/10, in implementazione). Uccello enorme, il cui nido domina pareti e vette isolate; predilige prede grandi o lente e può ignorare chi trova riparo sotto una copertura adatta. Condotta: sotto 32 PV o a Ferita Seria può abbandonare una preda e cercare un posatoio; difende nido e piccoli, ma non riceve un’ira senza limiti, una Carica gratuita o danni maggiori per la sola taglia; non è una cavalcatura addestrata per definizione. Eventuali resti e tesori nel nido appartengono alla scena. Fonte: Roc, p. 260.',
+ note: 'Uccello enorme, il cui nido domina pareti e vette isolate; predilige prede grandi o lente e può ignorare chi trova riparo sotto una copertura adatta. Condotta: sotto 32 PV o a Ferita Seria può abbandonare una preda e cercare un posatoio; difende nido e piccoli, ma non riceve un’ira senza limiti, una Carica gratuita o danni maggiori per la sola taglia; non è una cavalcatura addestrata per definizione. Eventuali resti e tesori nel nido appartengono alla scena. Fonte: Roc, p. 260.',
   },
 ];
 

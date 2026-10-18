@@ -54,11 +54,11 @@ test('Masso (20 Q, 2 AzP) e Pietra (6 Q) sono attacchi a distanza', () => {
   assert.deepEqual([pietra.tipo, pietra.gittata_q], ['distanza', 6]);
 });
 
-test('Spazio: Tigre 2 × 1 Q nelle note con A.167 (taglia normale); Pantera 1; sciabola e gli altri 2 × 2 o 3 × 3 Grandi', () => {
+test('Spazio: Tigre 2 × 1 Q nel campo (taglia normale); Pantera 1; sciabola e gli altri 2 × 2 o 3 × 3 Grandi', () => {
   const t = leggi('tigre');
-  assert.equal(t.spazio, undefined);
+  assert.equal(t.spazio, '2 × 1 Q');
   assert.equal(t.taglia, undefined);
-  assert.ok(/2 × 1 Q/.test(t.note) && /A\.167/.test(t.note));
+  assert.ok(!/A.167/.test(t.note));
   assert.equal(leggi('pantera').spazio, '1 Q');
   assert.equal(leggi('scimmione').spazio, '1 Q');
   for (const id of ['tigre-denti-a-sciabola', 'orso-polare', 'rinoceronte']) assert.equal(leggi(id).spazio, '2 × 2 Q', id);

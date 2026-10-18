@@ -47,6 +47,7 @@ const CREATURE = [
   },
   {
     id: 'aboleth', nome: 'Aboleth', taglia: 'grande',
+    spazio: '2 × 3 Q',
     caratteristiche: { FOR: 9, DES: 4, COS: 8, INT: 9, SAG: 8, CAR: 8 },
     pv: 70, pm: 24, ar: { totale: 4, magica: 0 }, difese: 9, iniziativa: 3,
     movimento: { passo: 2, corsa: 4, scatto: 6 },
@@ -70,7 +71,7 @@ const CREATURE = [
       { nome: 'Proiezione remota (modulo tana)', effetto: '1 AzP e 3 PM: immagine illusoria propria entro 1,6 km in un luogo già visto o visto da una vittima assoggettata, a Concentrazione, massimo 10 minuti; percepisce, parla e comunica entro 24 Q ma non attacca né usa altre capacità. Il contatto fisico la dissolve. Negare Potere: potenza 6. Una sola attiva.', risorsa: '3 PM', azioni: { principali: 1 } },
       { nome: 'Segni del territorio (modulo tana)', effetto: 'Entro 1,6 km dalla tana il Direttore può collocare superfici scivolose e fangose (Terreno Difficile sulla mappa) e fonti contaminate imbevibili; svaniscono in 3d10 giorni dopo la morte dell’Aboleth. Non sono attacchi ogni Round.' },
     ],
-    note: 'Spazio sulla mappa 2 × 3 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). Massa paragonabile a quella di un veicolo ai fini del limite di Sbalzante (taglia Grande). GS e PX con modulo tana attivo (solo quando incide davvero sull’incontro): Leggenda, 100 PX. Braccia = gruppi di tentacoli laterali; Gambe = porzioni locomotorie. Natura Comune (la malvagità dell’originale non dà Oscura Simmetria). Fonte: pp. 13–14. Comportamento: tratta e inganna prima di combattere; a 20 PV o Ferita Profonda cerca una via sommersa.',
+ note: 'Massa paragonabile a quella di un veicolo ai fini del limite di Sbalzante (taglia Grande). GS e PX con modulo tana attivo (solo quando incide davvero sull’incontro): Leggenda, 100 PX. Braccia = gruppi di tentacoli laterali; Gambe = porzioni locomotorie. Natura Comune (la malvagità dell’originale non dà Oscura Simmetria). Fonte: pp. 13–14. Comportamento: tratta e inganna prima di combattere; a 20 PV o Ferita Profonda cerca una via sommersa.',
   },
   {
     id: 'ankheg', nome: 'Ankheg',
@@ -109,6 +110,7 @@ const CREATURE = [
   },
   {
     id: 'basilisco', nome: 'Basilisco',
+    spazio: '2 × 1 Q',
     caratteristiche: { FOR: 7, DES: 4, COS: 7, INT: 1, SAG: 4, CAR: 3 },
     pv: 32, pm: 8, ar: { totale: 3, magica: 0 }, difese: 8, iniziativa: -5,
     movimento: { passo: 4, corsa: 8, scatto: 12 },
@@ -122,7 +124,7 @@ const CREATURE = [
       { nome: 'Contromisure', effetto: 'Distogliere gli occhi: chi conosce il pericolo e non è Sorpreso può evitare il contatto visivo prima di essere bersagliato, senza AzP (non vede il Basilisco e ne subisce le conseguenze sensoriali). Specchio: un riflesso nitido entro 6 Q può essere scambiato per un rivale; se usa lo Sguardo su di esso risolve su di sé entrambe le Tempra. Presentare lo specchio: 1 AzP.' },
       scuro(12),
     ],
-    note: 'Spazio sulla mappa 2 × 1 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). AR 3 naturale. Non è immune al proprio sguardo riflesso. Nessuna Parata naturale. Otto zampe (Braccia = gruppo anteriore, Gambe = posteriore). Nome originale: Basilisk, p. 24. Comportamento: preferisce incontrare lo sguardo di un intruso e attendere che rallenti; a Ferita Seria cerca riparo.',
+ note: 'AR 3 naturale. Non è immune al proprio sguardo riflesso. Nessuna Parata naturale. Otto zampe (Braccia = gruppo anteriore, Gambe = posteriore). Nome originale: Basilisk, p. 24. Comportamento: preferisce incontrare lo sguardo di un intruso e attendere che rallenti; a Ferita Seria cerca riparo.',
   },
   {
     id: 'bestia-distorcente', nome: 'Bestia distorcente',
@@ -215,6 +217,7 @@ const CREATURE = [
   },
   {
     id: 'grick', nome: 'Grick',
+    spazio: '1 × 2 Q',
     caratteristiche: { FOR: 6, DES: 6, COS: 5, INT: 2, SAG: 6, CAR: 2 },
     pv: 24, pm: 5, ar: { totale: 1, magica: 0 }, difese: 10, iniziativa: -2,
     movimento: { passo: 6, corsa: 12, scatto: 18 },
@@ -228,7 +231,7 @@ const CREATURE = [
       { nome: 'Arrampicata', effetto: 'Arrampicata 4 Q al Passo su superfici con appigli, non su ogni soffitto liscio.' },
       scuro(12),
     ],
-    note: 'Spazio sulla mappa 1 × 2 Q (dal manuale): pedine quadrate nell’app, ingombro non rappresentabile (A.167). Furtività 13 immobile fra rocce in ambiente adatto (non è invisibilità). Il profilo è il Grick comune, non l’Alfa. Braccia = tentacoli; Testa = becco e capo. Nessuna Parata naturale. Nome originale: Grick, p. 173. Comportamento: preda vicina; a Ferita Profonda si ritrae in una fessura.',
+ note: 'Furtività 13 immobile fra rocce in ambiente adatto (non è invisibilità). Il profilo è il Grick comune, non l’Alfa. Braccia = tentacoli; Testa = becco e capo. Nessuna Parata naturale. Nome originale: Grick, p. 173. Comportamento: preda vicina; a Ferita Profonda si ritrae in una fessura.',
   },
   {
     id: 'grifone', nome: 'Grifone',

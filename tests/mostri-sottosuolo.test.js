@@ -45,15 +45,15 @@ test('capacità con PM e Azioni dai dati (Oscuramento 2 PM, Sguardo perturbante 
   assert.deepEqual(sg.usi, { quanti: 1, per: 'Round' });
 });
 
-test('Spazio: quadrato nel campo; Roper, Umber Hulk, Orrore uncinato 2 × 2 Grandi; Vermeiena 1 × 2 nelle note', () => {
+test('Spazio: quadrato nel campo; Roper, Umber Hulk, Orrore uncinato 2 × 2 Grandi; Vermeiena 1 × 2 nel campo', () => {
   for (const id of ['mantoscuro', 'perforatore', 'rugginofago', 'grimlock', 'troglodita', 'stirge']) assert.equal(leggi(id).spazio, '1 Q');
   for (const id of ['roper', 'umber-hulk', 'orrore-uncinato']) {
     assert.equal(leggi(id).spazio, '2 × 2 Q', `${id} 2×2`);
     assert.equal(leggi(id).taglia, undefined);
   }
   const v = leggi('vermeiena');
-  assert.equal(v.spazio, undefined);
-  assert.ok(/1 × 2 Q/.test(v.note) && /A\.167/.test(v.note));
+  assert.equal(v.spazio, '1 × 2 Q');
+  assert.ok(!/A.167/.test(v.note));
 });
 
 test('movimento: volo del Mantoscuro e della Stirge, con il Passo a terra', () => {

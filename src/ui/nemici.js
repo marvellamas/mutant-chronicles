@@ -343,7 +343,7 @@ export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false,
       n.taglia === 'grande' ? [' ', h('span', { class: 'etichetta tratto-nemico', title: dati.formato_nemici.campi.taglia?.descrizione ?? null }, 'Taglia Grande')] : null,
       // A.126 (16/10): lo Spazio che la pedina occupa davvero, sempre, con la provenienza (profilo o Taglia)
       (() => { const sp = spazioEffettivo(n, dati); return [' ', h('span', { class: 'etichetta tratto-nemico', title: dati.formato_nemici.campi.spazio?.descrizione ?? null },
-        `Spazio ${sp.testo}${sp.dalProfilo ? '' : ' (dalla Taglia)'}`)]; })(),
+        `Spazio ${sp.testo}${sp.dalProfilo ? '' : ' (dalla Taglia)'}${sp.ripiego ? ` · pedina ${sp.lato} × ${sp.lato}` : ''}`)]; })(),
       // A.161 (16/10/2026): GS e PX del Manuale dei Mostri, valore informativo (nessun calcolo)
       n.gs_px?.gs ? [' ', h('span', { class: 'etichetta tratto-nemico tratto-gspx', title: dati.formato_nemici.campi.gs_px?.descrizione ?? null }, `GS ${n.gs_px.gs}`, Number.isInteger(n.gs_px.px) ? ` · ${n.gs_px.px} PX${n.gs_px.per_pg ? ` per ${n.gs_px.per_pg} PG` : ''}` : '')] : null),
     // A.164 (16/10/2026): Morente del nemico, con lo stesso riquadro dei PG (src/morente.js)
