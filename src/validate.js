@@ -2926,6 +2926,8 @@ function validaGalleria(dati, err) {
     }
   }
   if (!(typeof g.massimo_mb === 'number' && g.massimo_mb > 0)) err(F, 'massimo_mb', 'numero positivo (MB)');
+  // 19/10: peso oltre il quale una GIF animata chiede conferma prima di andare ai giocatori
+  if (!(typeof g.gif?.peso_avviso_mb === 'number' && g.gif.peso_avviso_mb > 0)) err(F, 'gif.peso_avviso_mb', 'numero positivo (MB)');
   for (const k of ['ridotta', 'miniatura']) {
     const c = g[k];
     if (!isOggetto(c)) { err(F, k, 'oggetto mancante'); continue; }
@@ -2947,7 +2949,7 @@ function validaGalleria(dati, err) {
       visti.add(c?.id);
     });
   }
-  for (const k of ['fascia', 'nascondi', 'vuota', 'vuota_giocatori']) if (!isTesto(g.testi?.[k])) err(F, `testi.${k}`, 'testo mancante');
+  for (const k of ['fascia', 'nascondi', 'vuota', 'vuota_giocatori', 'gif_pesante']) if (!isTesto(g.testi?.[k])) err(F, `testi.${k}`, 'testo mancante');
   if (isTesto(g.testi?.fascia) && !g.testi.fascia.includes('{nome}')) err(F, 'testi.fascia', '{nome} atteso (il nome dell’immagine mostrata)');
 }
 

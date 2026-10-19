@@ -98,14 +98,50 @@ export function galleriaGiocatori(indice) {
   return (indice?.immagini ?? [])
     .filter((v) => v.mostrata && v.daiGiocatori !== false)
     .sort((a, b) => b.mostrata - a.mostrata)
-    .map((v) => ({ file: v.file, nome: v.nome, categoria: v.categoria, ridotta: v.ridotta, mini: v.mini, mostrata: v.mostrata }));
+    .map((v) => ({ file: v.file, nome: v.nome, categoria: v.categoria, ridotta: ridottaPerGiocatori(v), mini: v.mini, mostrata: v.mostrata }));
+}
+
+/** Il file è una GIF? */
+export const eGif = (nome) => /.gif$/i.test(String(nome ?? ''));
+
+/**
+ * La GIF non ha la copia ridotta (19/10): la copia si fa con un canvas, che ne tiene il primo fotogramma e ferma
+ * l'animazione. Ai giocatori va l'originale; la miniatura della griglia del master può essere ferma.
+ */
+export const conCopiaRidotta = (nome) => !eGif(nome);
+
+/** La copia ridotta che vale per i giocatori: mai quella di una GIF (anche se un file «-ridotta» è rimasto in cartella). */
+export const ridottaPerGiocatori = (v) => (eGif(v?.file) ? null : v?.ridotta ?? null);
+
+/**
+ * Quanti fotogrammi ha una GIF (conta i descrittori di immagine, saltando le estensioni e i dati): più di uno =
+ * animata. Legge solo i byte, niente browser.
+ */
+export function fotogrammiGif(bytes) {
+  const b = bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes);
+  if (b.length < 13 || String.fromCharCode(...b.subarray(0, 3)) !== 'GIF') return 0;
+  let p = 13;
+  if (b[10] & 0x80) p += 3 * (2 ** ((b[10] & 7) + 1));
+  const salta = () => { while (p < b.length && b[p] !== 0) p += b[p] + 1; p += 1; };
+  let n = 0;
+  while (p < b.length) {
+    const t = b[p++];
+    if (t === 0x3B) break;
+    if (t === 0x21) { p += 1; salta(); } else if (t === 0x2C) {
+      n += 1;
+      const locale = b[p + 8] & 0x80 ? 3 * (2 ** ((b[p + 8] & 7) + 1)) : 0;
+      p += 9 + locale + 1;
+      salta();
+    } else break;
+  }
+  return n;
 }
 
 /** Quello che si manda ai giocatori quando si mostra un'immagine (la copia ridotta, se c'è). */
 export function immagineAiGiocatori(indice, file = indice?.mostrata) {
   const v = (indice?.immagini ?? []).find((x) => x.file === file);
   if (!v) return null;
-  return { file: v.file, nome: v.nome, ridotta: v.ridotta, mini: v.mini, quando: v.mostrata ?? null };
+  return { file: v.file, nome: v.nome, ridotta: ridottaPerGiocatori(v), mini: v.mini, quando: v.mostrata ?? null };
 }
 
 /** «Mostra ai giocatori»: l'immagine diventa quella mostrata (sostituisce la precedente) ed entra nella loro galleria. */

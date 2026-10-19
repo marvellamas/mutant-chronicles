@@ -7,10 +7,11 @@
 // il master non ha ancora mostrato (src/galleria.js → galleriaGiocatori).
 import { h } from './dom.js';
 import { apri } from './finestrella.js';
+import { ridottaPerGiocatori } from '../galleria.js';
 
 const url = (file) => `api/galleria/img/${encodeURIComponent(file)}`;
 /** Quella che si fa vedere: la copia ridotta se c'è, altrimenti l'originale. */
-export const urlPerGiocatori = (v) => (v ? url(v.ridotta ?? v.file) : null);
+export const urlPerGiocatori = (v) => (v ? url(ridottaPerGiocatori(v) ?? v.file) : null);
 
 /** Lo stato della galleria per questo schermo: l'immagine mostrata adesso e l'elenco di quelle già mostrate. */
 export async function statoGalleriaGiocatori() {

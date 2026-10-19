@@ -12,7 +12,7 @@ import { h } from './dom.js';
 import { avviso, avvisoErrore } from './avvisi.js';
 import { chiedi, apri } from './finestrella.js';
 import { preparaRidotta } from './mappa/api.js';
-import { vociPerMaster, categorieGalleria, nomeDaFile } from '../galleria.js';
+import { vociPerMaster, categorieGalleria, nomeDaFile, conCopiaRidotta, ridottaPerGiocatori, eGif } from '../galleria.js';
 
 const errore = async (r) => Object.assign(new Error((await r.json().catch(() => ({}))).errore ?? `errore ${r.status}`), { stato: r.status });
 
@@ -54,6 +54,7 @@ async function caricaFile(blob, { nome, variante = null, di = null }) {
  * server non c'è nessuna libreria di immagini. Se il browser non ce la fa, resta l'originale.
  */
 export async function caricaImmagineGalleria(file, dati) {
+  // 19/10: una GIF non ha la copia ridotta (il canvas la fermerebbe al primo fotogramma): ai giocatori va l'originale
   const G = dati.galleria;
   const mb = file.size / (1024 * 1024);
   if (mb > G.massimo_mb) throw new Error(`«${file.name}» pesa ${mb.toFixed(1).replace('.', ',')} MB: il limite è ${G.massimo_mb} MB (data/galleria.json).`);
@@ -68,21 +69,31 @@ export async function caricaImmagineGalleria(file, dati) {
       ultimo = (await caricaFile(blob, { nome, variante, di: salvato })).indice;
     } catch { /* senza copia si usa l'originale: la galleria funziona lo stesso */ }
   };
-  await copia('ridotta', G.ridotta.lato_massimo_px);
+  if (conCopiaRidotta(file.name)) await copia('ridotta', G.ridotta.lato_massimo_px);
   await copia('mini', G.miniatura.lato_massimo_px);
   return { file: salvato, indice: ultimo };
 }
 
+/** Il peso in MB di una GIF della cartella (null se non è una GIF o non si legge): serve ad avvisare prima di mostrarla. */
+async function pesoGifMb(file) {
+  if (!eGif(file)) return null;
+  try {
+    const r = await fetch(urlGalleria(file), { cache: 'force-cache' });
+    return r.ok ? (await r.blob()).size / (1024 * 1024) : null;
+  } catch { return null; }
+}
+
 /** Le copie che mancano a un'immagine già nella cartella (per esempio copiata a mano): si fanno al volo. */
 export async function completaCopie(voce, dati) {
-  if (voce.ridotta && voce.mini) return null;
+  const serveRidotta = conCopiaRidotta(voce.file);
+  if ((voce.ridotta || !serveRidotta) && voce.mini) return null;
   const G = dati.galleria;
   const r = await fetch(urlGalleria(voce.file), { cache: 'force-cache' });
   if (!r.ok) return null;
   const blob = await r.blob();
   let indice = null;
   for (const [variante, conf] of [['ridotta', G.ridotta], ['mini', G.miniatura]]) {
-    if (voce[variante]) continue;
+    if (voce[variante] || (variante === 'ridotta' && !serveRidotta)) continue;
     try {
       const copia = await preparaRidotta(blob, { mappa: { immagini: { ridotta: conf, tipi: G.tipi } } }, { latoMassimo: conf.lato_massimo_px });
       if (!copia) continue;
@@ -108,6 +119,9 @@ export function pannelloGalleria(ctx, st, az) {
     try { aggiorna(await fai()); } catch (e) { avvisoErrore(`${cosa}: ${e.message}. Controlla che la finestra di avvia-server.bat sia aperta.`); }
   };
   const mostra = (v) => conErrore(`«${v.nome}» non mostrata`, async () => {
+    // 19/10: una GIF pesante va a tutti i tablet così com'è (resta animata): il Direttore è avvisato, non bloccato
+    const mb = await pesoGifMb(v.file);
+    if (mb !== null && mb > G.gif.peso_avviso_mb && !await chiedi({ titolo: 'GIF pesante', testo: G.testi.gif_pesante.replace('{nome}', v.nome).replace('{mb}', mb.toFixed(1).replace('.', ',')), si: 'Mostra comunque' })) return null;
     const r = await mostraAiGiocatori(v.file);
     avviso(`Ai giocatori: ${v.nome}.`, { chiave: 'galleria' });
     return r.indice;
@@ -131,7 +145,7 @@ export function pannelloGalleria(ctx, st, az) {
   categorie.map((c) => h('option', { value: c, selected: v.categoria === c }, c)));
 
   const anteprima = (v) => apri('finestrella-galleria', v.nome, (fine) => [
-    h('img', { class: 'galleria-grande', src: urlGalleria(v.ridotta ?? v.file), alt: v.nome }),
+    h('img', { class: 'galleria-grande', src: urlGalleria(ridottaPerGiocatori(v) ?? v.file), alt: v.nome }),
     h('p', { class: 'nota' }, 'Questa anteprima la vedi solo tu: ai giocatori arriva con «Mostra ai giocatori».'),
     h('div', { class: 'riga-azioni finestrella-azioni' },
       h('button', { type: 'button', class: 'btn', onclick: () => fine(true) }, 'Chiudi'),
@@ -189,7 +203,11 @@ export function pannelloGalleria(ctx, st, az) {
     az.ridisegna();
     let ultimo = null;
     for (const f of immagini) {
-      try { ultimo = (await caricaImmagineGalleria(f, ctx.dati)).indice; } catch (e) { avvisoErrore(`«${f.name}» non caricata: ${e.message}`); }
+      try {
+        ultimo = (await caricaImmagineGalleria(f, ctx.dati)).indice;
+        // 19/10: una GIF pesante va ai giocatori com'è: lo si dice subito, senza bloccare
+        if (eGif(f.name) && f.size / (1024 * 1024) > G.gif.peso_avviso_mb) avviso(`«${f.name}» è una GIF da ${(f.size / (1024 * 1024)).toFixed(1).replace('.', ',')} MB: ai giocatori va com'è (resta animata) e su più tablet può pesare.`, { tipo: 'info', chiave: 'galleria-gif', durata: 12000 });
+      } catch (e) { avvisoErrore(`«${f.name}» non caricata: ${e.message}`); }
     }
     st.inCorso = false;
     if (ultimo) { avviso(`Galleria: ${immagini.length === 1 ? 'immagine caricata' : `${immagini.length} immagini caricate`}.`, { chiave: 'galleria' }); aggiorna(ultimo); } else az.ridisegna();
