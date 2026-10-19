@@ -1837,11 +1837,13 @@ diverso dalle regole già approvate **non si è cambiato**: vedi A.167 qui sotto
   sopravvive (Punto Eroe, cure immediate, intervento del Direttore). *Decisione di Marcello del 13/10, «puoi
   rivederla»:* valgono i malus di Grave (−8). Serve una conferma o una regola diversa.
 
-## 19 ottobre 2026 — Equipaggiamento 0.8 §§10.8–10.11: Hachimaki e Tomo nel catalogo (nessuna domanda nuova)
+## 19 ottobre 2026 — Equipaggiamento 0.8 §§10.8–10.11: Hachimaki e Tomo nel catalogo (una domanda aperta: A.173)
 
-Nessuna risposta di Davide: il lavoro applica schede già scritte nel manuale (Equipaggiamento 0.8 §10.10 e §10.11, Magia 1.5 §28.1 e §28.4), con la ricerca dei possessori in `docs/hachimaki-tomo-2026-10-19.md`.
+Nessuna risposta di Davide: il lavoro applica schede già scritte nel manuale (Equipaggiamento 0.8 §10.10 e §10.11, Magia 1.5 §28.1 e §28.4), con la ricerca dei possessori in `docs/hachimaki-tomo-2026-10-19.md`. Le tre regole dello sconto (minimo 1 PM, Tecnica gratuita invariata, nessun cumulo) sono **nel manuale**, con le frasi citate in quel documento; solo l'estensione alle opzioni di costo di Imposizione della Mano Curativa è nostra: **A.173**.
 
 - **Chi li possiede:** nessun PG, nemico, bozza o scontro salvato (ricerca per nomi interi, parziali e storpiati). Il catalogo non assegna nulla a nessuno.
 - **Hachimaki della Disciplina Interiore** (§10.10): Grado II, Non comune, SnT 1 (passiva con +1 per il beneficio), nessuna riserva, 0,05 kg, PS Integrità 12, 2 PI, Molto Rara, 1.500 cr indicativi. Il −1 PM vale solo per le Tecniche Interiori personali, con la fascia indossata e sintonizzata, minimo 1 PM per un costo positivo, Tecnica gratuita invariata, nessun cumulo (vale la fonte più favorevole). Si vede nel costo («4 PM della scheda − 1 per Hachimaki»), non è applicato di nascosto.
 - **Tomo dei Guardiani** (§10.11): reliquia di campagna; peso, SnT, riserva e Integrità non definiti dal manuale: peso «da definire» (carico parziale), Integrità «da definire» (A.162), `TODO(Davide)` nel dato. Non concede Incantesimi, bonus o riserve.
 - **Già nel catalogo:** pergamene (§10.8, A.155), Scrigno (§10.12), Contenitori del Silenzio (§10.13, A.163), CyberArma (§10.9, A.158/A.166).
+
+- **A.173 — Hachimaki della Disciplina Interiore e Tecniche con più costi (Equipaggiamento §10.10, Magia §28.1).** *(aperta, 19/10/2026)* Il manuale dice che il costo di una Tecnica scende di 1 PM (minimo 1 PM se il costo è positivo; gratuita resta gratuita). Imposizione della Mano Curativa non ha un costo solo ma una tabella di quattro usi (1, 2, 4 e 10 PM). **Nel frattempo** l'app toglie 1 PM a ciascun uso, con il minimo di 1 PM: 1, 1, 3 e 9 PM (visibile nel pannello «Attiva»: «N PM della scheda − 1 per Hachimaki»). Se la riduzione deve valere diversamente (per esempio solo sull'uso scelto, o non sul primo), basta dirlo.
