@@ -1371,6 +1371,13 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
       if (o.capacita_cartucce !== undefined && !(isIntero(o.capacita_cartucce) && o.capacita_cartucce >= 1)) err(F, `${k}.capacita_cartucce`, 'intero ≥ 1');
       if (o.effetto !== undefined && !isTesto(o.effetto)) err(F, `${k}.effetto`, 'testo');
       if (o.uno_per_personaggio !== undefined && !isTesto(o.uno_per_personaggio)) err(F, `${k}.uno_per_personaggio`, 'testo (gruppo)');
+      // Equipaggiamento §10.10, Magia §28.1: sconto sul costo in PM delle Tecniche Interiori (Hachimaki della Disciplina Interiore)
+      if (o.sconto_tecniche !== undefined) {
+        const s = o.sconto_tecniche;
+        if (!isOggetto(s) || !isIntero(s.pm) || s.pm < 1 || !isIntero(s.minimo) || s.minimo < 0 || typeof s.richiede_sintonizzazione !== 'boolean' || !isTesto(s.fonte)) err(F, `${k}.sconto_tecniche`, 'serve { pm ≥ 1, minimo ≥ 0, richiede_sintonizzazione: vero/falso, fonte }');
+        else if (s.richiede_sintonizzazione && !(o.artefatto?.sintonizzabile === true)) err(F, `${k}.sconto_tecniche`, 'con richiede_sintonizzazione l’oggetto deve essere un Artefatto sintonizzabile');
+        if (o.tipo !== 'artefatto' || o.indossabile !== true) err(F, `${k}.sconto_tecniche`, 'lo sconto vale solo con l’oggetto in uso: un Artefatto indossabile');
+      }
       // §7.19: applicazioni dei kit sanitari e ricarica
       if (o.applicazioni !== undefined && !(isIntero(o.applicazioni) && o.applicazioni >= 1)) err(F, `${k}.applicazioni`, 'intero ≥ 1');
       if (o.ricarica !== undefined && !(isOggetto(o.ricarica) && isIntero(o.ricarica.applicazioni) && isIntero(o.ricarica.costo))) err(F, `${k}.ricarica`, 'serve { applicazioni, costo }');
@@ -1601,6 +1608,12 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
     if (a.infusi !== undefined && !(Array.isArray(a.infusi) && a.infusi.every((x) => isOggetto(x) && isTesto(x.incantesimo) && isIntero(x.livello)))) err(F, `${k}.infusi`, 'serve [{ incantesimo, livello }]');
     // §7.10: con almeno una proprietà attiva SnT della potenza e sintonizzazione; con sole passive SnT 0, senza
     if (typeof a.proprieta_attive !== 'boolean') err(F, `${k}.proprieta_attive`, 'true o false: con sole proprietà passive la SnT è 0 (§7.10)');
+    // Equipaggiamento §10.10, Magia §28.1: proprietà passiva con SnT 1 «per il beneficio» (Hachimaki): sintonizzabile, senza riserva
+    if (a.snt_beneficio === true) {
+      if (a.proprieta_attive !== false || a.sintonizzabile !== true || a.sintonizzazione < 1) err(F, k, 'snt_beneficio: proprietà passive (proprieta_attive false), sintonizzabile true e SnT ≥ 1 (Magia §28.1)');
+      if (a.contenitore !== undefined) err(F, `${k}.contenitore`, 'nessuna riserva');
+      continue;
+    }
     if (a.proprieta_attive === false) {
       if (a.sintonizzabile !== false) err(F, `${k}.sintonizzabile`, 'con sole proprietà passive deve valere false (§7.10)');
       if (sntSoloPassive !== null && a.sintonizzazione !== sntSoloPassive) err(F, `${k}.sintonizzazione`, `con sole proprietà passive la SnT è ${sntSoloPassive} (§7.10), trovato ${a.sintonizzazione}`);

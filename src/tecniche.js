@@ -50,6 +50,20 @@ export function costoTecnica(t, opzione = 0) {
   return Number.isInteger(t?.costo_pm) ? t.costo_pm : 0;
 }
 
+/**
+ * Costo in PM di una Tecnica con lo sconto di un oggetto in uso (scheda.equipaggiamento.scontoTecniche: Hachimaki della
+ * Disciplina Interiore, Equipaggiamento §10.10, Magia §28.1): -N PM, non sotto il minimo (1) per un costo positivo, una Tecnica
+ * gratuita resta gratuita. Vale solo per le Tecniche Interiori: gli altri costi in PM non passano di qui.
+ * @returns { costo, base, sconto, fonte }
+ */
+export function costoEffettivo(scheda, t, opzione = 0) {
+  const base = costoTecnica(t, opzione);
+  const s = scheda?.equipaggiamento?.scontoTecniche;
+  if (!s || !(s.pm > 0) || !(base > 0)) return { costo: base, base, sconto: 0, fonte: null };
+  const costo = Math.max(s.minimo ?? 1, base - s.pm);
+  return { costo, base, sconto: base - costo, fonte: s.nome };
+}
+
 /** Round attuale della sessione (≥ 1). */
 export const roundAttuale = (sessione) => (Number.isInteger(sessione?.round) && sessione.round >= 1 ? sessione.round : 1);
 
@@ -81,7 +95,7 @@ export function testoFine(t, attiva) {
  */
 export function statoAttivazione(scheda, sessione, t, dati, { opzione = 0, silenzioMentale = false } = {}) {
   const A = dati.tecniche_interiori?.attivazione ?? {};
-  const costo = costoTecnica(t, opzione);
+  const { costo, base, sconto, fonte } = costoEffettivo(scheda, t, opzione);
   const pm = Number.isInteger(sessione?.pmAttuali) ? sessione.pmAttuali : (scheda?.pm ?? 0);
   const round = roundAttuale(sessione);
   const pmDopo = pm - costo;
@@ -99,7 +113,10 @@ export function statoAttivazione(scheda, sessione, t, dati, { opzione = 0, silen
   const potere = silenzioMentale && A.silenzio_mentale
     ? `Sotto Silenzio Mentale: ${A.silenzio_mentale.testo} (${A.silenzio_mentale.fonte}). La PS si risolve al tavolo.`
     : 'Nessuna Prova di Potere (§8.9.1).';
-  return { possibile: !motivo, motivo, costo, pm, pmDopo, round, svenimento, conferma: svenimento, potere, avvisi };
+  const inattivi = scheda?.equipaggiamento?.scontoTecniche?.inattivi ?? [];
+  if (!sconto && costo > 0 && inattivi.length) avvisi.push(`${inattivi.join(', ')}: in uso ma non sintonizzat${inattivi.length > 1 ? 'i' : 'o'}, non riduce il costo (Equipaggiamento §10.10).`);
+  if (sconto) avvisi.push(`Costo ${costo} PM: ${base} PM della scheda − ${sconto} per ${fonte} (Equipaggiamento §10.10).`);
+  return { possibile: !motivo, motivo, costo, base, sconto, pm, pmDopo, round, svenimento, conferma: svenimento, potere, avvisi };
 }
 
 /**

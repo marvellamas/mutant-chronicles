@@ -7,13 +7,16 @@ import { conAvviso } from './procedi.js';
 import { h } from './dom.js';
 import { info } from './tooltip.js';
 import { rigaScelte, interruttore, pannelloPassi } from './pannello-passi.js';
-import { haRisorseInteriori, tecnicaDi, statoAttivazione, roundAttuale, inScadenza, testoFine, costoTecnica, gruppoTecnica, ordineGruppo, tecnicheInCorso, righeInCorso, sintesiTecnica, curaTecnica } from '../tecniche.js';
+import { haRisorseInteriori, tecnicaDi, statoAttivazione, costoEffettivo, roundAttuale, inScadenza, testoFine, costoTecnica, gruppoTecnica, ordineGruppo, tecnicheInCorso, righeInCorso, sintesiTecnica, curaTecnica } from '../tecniche.js';
 
 const etichettaTecnica = (gruppo) => h('span', { class: 'etichetta-macro' }, gruppoTecnica(gruppo).etichetta);
 
 /** Costo in testo: «4 PM», per Imposizione «1–10 PM». */
-const testoCosto = (t) => (Array.isArray(t.opzioni_costo)
-  ? `${Math.min(...t.opzioni_costo.map((o) => o.pm))}–${Math.max(...t.opzioni_costo.map((o) => o.pm))} PM` : `${t.costo_pm} PM`);
+// con lo sconto di un oggetto in uso (Hachimaki, Equipaggiamento §10.10) il costo mostrato è quello effettivo
+const testoCosto = (t, scheda = null) => {
+  const costi = Array.isArray(t.opzioni_costo) ? t.opzioni_costo.map((_, i) => costoEffettivo(scheda, t, i).costo) : [costoEffettivo(scheda, t).costo];
+  return costi.length > 1 ? `${Math.min(...costi)}–${Math.max(...costi)} PM` : `${costi[0]} PM`;
+};
 
 /**
  * Sezione «Risorse Interiori» della tab Poteri: solo per chi ha Risorse Interiori (Talento Libero
@@ -76,14 +79,14 @@ function schedaTecnica(ctx, t) {
   const st = statoAttivazione(ctx.tab.scheda, ctx.sessione, t, ctx.dati, { opzione: minima });
   return h('article', { class: 'incantesimo-scheda macro-tecnica scheda-tecnica' },
     h('div', { class: 'arma-testa' },
-      h('h4', {}, info('tecnica', t.id, t.nome), ' ', etichettaTecnica(t.gruppo), h('span', { class: 'sigla' }, ` · ${testoCosto(t)}`)),
+      h('h4', {}, info('tecnica', t.id, t.nome), ' ', etichettaTecnica(t.gruppo), h('span', { class: 'sigla' }, ` · ${testoCosto(t, ctx.tab.scheda)}`)),
       h('button', {
         type: 'button', class: `btn primario btn-attacca${st.possibile ? '' : ' con-avviso'}`, title: ctx.roundScontro && st.motivo ? st.motivo.replace('«Nuovo Round» per la prossima', 'la prossima quando il master passa al Round dopo, dalla plancia') : st.motivo,
         onclick: () => { ctx.ui.tecnica = { id: t.id, passo: 0, opzione: minima, silenzio: false, conferma: false }; ctx.azioni.ridisegna(); },
       }, 'Attiva')),
     st.motivo ? h('p', { class: 'nota motivo' }, `Avviso: ${st.motivo}. Si può attivare comunque.`) : null,
     h('dl', { class: 'voci griglia-voci voci-tecnica' },
-      [['Costo', t.costo], ['Azione', t.azione], ['Bersaglio', t.bersaglio], ['Durata', t.durata]]
+      [['Costo', t.costo], ...(costoEffettivo(ctx.tab.scheda, t, minima).sconto ? [['Costo con la fascia', `${testoCosto(t, ctx.tab.scheda)} (${costoEffettivo(ctx.tab.scheda, t, minima).fonte}: −${costoEffettivo(ctx.tab.scheda, t, minima).sconto} PM, Equipaggiamento §10.10)`]] : []), ['Azione', t.azione], ['Bersaglio', t.bersaglio], ['Durata', t.durata]]
         .map(([k, v]) => h('div', {}, h('dt', {}, k), h('dd', {}, v)))),
     h('details', { class: 'testo-tecnica' }, h('summary', {}, 'Testo della scheda'),
       String(t.testo).split('\n').map((p) => h('p', { class: 'piccolo' }, p))));
@@ -112,8 +115,8 @@ export function pannelloTecnica(ctx, t) {
       contenuto: [
         h('p', { class: 'nota' }, h('strong', {}, `${t.nome}. `), `${t.costo} · ${t.azione} · ${t.bersaglio} · ${t.durata}.`),
         Array.isArray(t.opzioni_costo) ? rigaScelte('Uso (tabella della scheda)', t.opzioni_costo.map((o, i) => ({
-          valore: i, etichetta: `${o.pm} PM`, riga: `${o.tempo} · ${o.effetto}`,
-          motivo: o.pm > ctx.sessione.pmAttuali ? `servono ${o.pm} PM personali, ne hai ${ctx.sessione.pmAttuali}` : null,
+          valore: i, etichetta: `${costoEffettivo(ctx.tab.scheda, t, i).costo} PM`, riga: `${o.tempo} · ${o.effetto}${costoEffettivo(ctx.tab.scheda, t, i).sconto ? ` (${o.pm} PM − ${costoEffettivo(ctx.tab.scheda, t, i).sconto} per ${costoEffettivo(ctx.tab.scheda, t, i).fonte})` : ''}`,
+          motivo: costoEffettivo(ctx.tab.scheda, t, i).costo > ctx.sessione.pmAttuali ? `servono ${costoEffettivo(ctx.tab.scheda, t, i).costo} PM personali, ne hai ${ctx.sessione.pmAttuali}` : null,
         })), u.opzione, (i) => imposta({ opzione: i, conferma: false })) : null,
         cura ? rigaScelte('Su chi', [
           { valore: 'se', etichetta: 'Su me stesso', riga: 'l’effetto si applica alla scheda' },
@@ -132,7 +135,7 @@ export function pannelloTecnica(ctx, t) {
       contenuto: [
         !st.possibile ? h('div', { class: 'riquadro errore', role: 'alert' }, h('p', {}, h('strong', {}, 'Non si può attivare. '), st.motivo, '.')) : null,
         h('div', { class: 'attacco-risultato' },
-          h('p', { class: 'costo-lancio' }, h('strong', {}, `${st.costo} PM personali`), ` · PM ${st.pm} → ${Math.max(0, st.pmDopo)}`),
+          h('p', { class: 'costo-lancio' }, h('strong', {}, `${st.costo} PM personali`), st.sconto ? ` (${st.base} PM della scheda − ${st.sconto} per ${costoEffettivo(ctx.tab.scheda, t, u.opzione).fonte})` : '', ` · PM ${st.pm} → ${Math.max(0, st.pmDopo)}`),
           h('dl', { class: 'voci griglia-voci' },
             h('div', {}, h('dt', {}, 'Azioni'), h('dd', {}, opz ? opz.tempo : t.azione)),
             h('div', {}, h('dt', {}, 'Durata'), h('dd', {}, fine)),
@@ -161,4 +164,4 @@ export function pannelloTecnica(ctx, t) {
 }
 
 /** Costo minimo di una Tecnica (per i testi brevi). */
-export const costoMinimo = (t) => (Array.isArray(t.opzioni_costo) ? Math.min(...t.opzioni_costo.map((o) => o.pm)) : costoTecnica(t));
+export const costoMinimo = (t, scheda = null) => (Array.isArray(t.opzioni_costo) ? Math.min(...t.opzioni_costo.map((_, i) => costoEffettivo(scheda, t, i).costo)) : costoEffettivo(scheda, t).costo);

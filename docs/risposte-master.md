@@ -1836,3 +1836,12 @@ diverso dalle regole già approvate **non si è cambiato**: vedi A.167 qui sotto
   penalità cumulativa e dice che oltre Grave è la morte, senza dire che cosa vale se il personaggio
   sopravvive (Punto Eroe, cure immediate, intervento del Direttore). *Decisione di Marcello del 13/10, «puoi
   rivederla»:* valgono i malus di Grave (−8). Serve una conferma o una regola diversa.
+
+## 19 ottobre 2026 — Equipaggiamento 0.8 §§10.8–10.11: Hachimaki e Tomo nel catalogo (nessuna domanda nuova)
+
+Nessuna risposta di Davide: il lavoro applica schede già scritte nel manuale (Equipaggiamento 0.8 §10.10 e §10.11, Magia 1.5 §28.1 e §28.4), con la ricerca dei possessori in `docs/hachimaki-tomo-2026-10-19.md`.
+
+- **Chi li possiede:** nessun PG, nemico, bozza o scontro salvato (ricerca per nomi interi, parziali e storpiati). Il catalogo non assegna nulla a nessuno.
+- **Hachimaki della Disciplina Interiore** (§10.10): Grado II, Non comune, SnT 1 (passiva con +1 per il beneficio), nessuna riserva, 0,05 kg, PS Integrità 12, 2 PI, Molto Rara, 1.500 cr indicativi. Il −1 PM vale solo per le Tecniche Interiori personali, con la fascia indossata e sintonizzata, minimo 1 PM per un costo positivo, Tecnica gratuita invariata, nessun cumulo (vale la fonte più favorevole). Si vede nel costo («4 PM della scheda − 1 per Hachimaki»), non è applicato di nascosto.
+- **Tomo dei Guardiani** (§10.11): reliquia di campagna; peso, SnT, riserva e Integrità non definiti dal manuale: peso «da definire» (carico parziale), Integrità «da definire» (A.162), `TODO(Davide)` nel dato. Non concede Incantesimi, bonus o riserve.
+- **Già nel catalogo:** pergamene (§10.8, A.155), Scrigno (§10.12), Contenitori del Silenzio (§10.13, A.163), CyberArma (§10.9, A.158/A.166).

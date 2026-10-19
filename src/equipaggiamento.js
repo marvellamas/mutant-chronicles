@@ -1405,6 +1405,19 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     if (usata > capacita) avvisi.push(`Sintonizzazioni oltre la capacità: ${usata} su ${capacita}. Il personaggio sceglie quali interrompere (§7.10).`);
   }
 
+  // Equipaggiamento §10.10, Magia §28.1 (Hachimaki della Disciplina Interiore): sconto sul costo in PM delle Tecniche Interiori
+  // personali, solo con l'oggetto in uso (indossato) e sintonizzato; più fonti non si sommano, vale la più favorevole
+  const scontoTecniche = (() => {
+    const fonti = oggetti.filter((o) => o.attivo && o.def?.sconto_tecniche).map((o) => {
+      const s = o.def.sconto_tecniche;
+      const sint = sintonizzazione?.artefatti.find((e) => e.uid === o.uid)?.sintonizzato === true;
+      return { uid: o.uid, nome: o.nome, pm: s.pm, minimo: s.minimo ?? 1, fonte: s.fonte ?? null, attivo: s.richiede_sintonizzazione === false || sint };
+    });
+    const valide = fonti.filter((f) => f.attivo).sort((a, b) => b.pm - a.pm);
+    return valide.length ? { ...valide[0], inattivi: fonti.filter((f) => !f.attivo).map((f) => f.nome), doppioni: valide.slice(1).map((f) => f.nome) }
+      : fonti.length ? { pm: 0, inattivi: fonti.map((f) => f.nome), doppioni: [], uid: null, nome: null } : null;
+  })();
+
   // Equipaggiamento §7.10: chip senza Processore installato; un solo chip alla volta nell'alloggiamento
   const chip = oggetti.filter((x) => x.attivo && x.def?.richiede_innesto);
   for (const x of chip.filter((o) => !conInnesto(o))) avvisi.push(`${x.nome}: nessun effetto senza un Processore neurale di Abilità installato (Equipaggiamento §7.10).`);
@@ -1460,6 +1473,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     lancioPotere,
     forMancanteArmature,
     sintonizzazione,
+    scontoTecniche,
     avvisi,
   };
 }

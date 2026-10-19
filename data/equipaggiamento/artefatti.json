@@ -2495,6 +2495,59 @@
       "effetto_breve": "Scrigno indistruttibile: il danneggiamento non lo apre. Le autorizzazioni di apertura seguono la sua scheda.",
       "proprieta": [],
       "_nota": "Artefatto di campagna del Manuale della Magia §28.2. Peso, prezzo e Reperibilità non sono indicati dai manuali: restano da completare. La schermatura dei Contenitori del Silenzio è un’altra cosa (A.163, §10.13)."
+    },
+    {
+      "id": "hachimaki-della-disciplina-interiore",
+      "nome": "Hachimaki della Disciplina Interiore",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Artefatti",
+      "nomi_alternativi": [
+        "Hachimaki Equip"
+      ],
+      "note_manuale": "Fascia rossa della Mishima con il simbolo della corporazione al centro e kanji mistici neri; microframmenti di Chroma Verde nel ricamo, senza formare una riserva. Artefatto Mistico per chi utilizza Risorse Interiori. Respiro Disciplinato (passiva) riduce di 1 PM il costo delle Tecniche Interiori personali mentre la fascia è indossata e sintonizzata: una Tecnica con costo positivo non scende sotto 1 PM, una già gratuita resta gratuita. Non richiede Azioni, Prove o Concentrazione, non cambia il limite di una Tecnica per Round e non concede nuove Tecniche. Non riguarda Incantesimi, Rituali, ricariche o attivazioni di altri Artefatti. Più fasce o altre riduzioni dello stesso costo non si sommano: vale la più favorevole. Senza sintonizzazione non riduce i costi. Materiali di creazione 800 cr con il progetto disponibile; progetto nuovo 200 cr in più; progetto ordinario 1.000 cr (ricetta in Magia §28.1.1). Riparazione: base 200 cr, materiali ordinari 10 cr per PI recuperato.",
+      "paragrafo": "Equipaggiamento §10.10; Magia §28.1",
+      "versione_manuale": "Equipaggiamento 0.8 / Magia 1.5 (15/10/2026)",
+      "costo": 1500,
+      "indossabile": true,
+      "artefatto": {
+        "tipologia": "Accessori",
+        "potenza": "Non Comune",
+        "sintonizzazione": 1,
+        "sintonizzabile": true,
+        "proprieta_attive": false,
+        "snt_beneficio": true
+      },
+      "sconto_tecniche": {
+        "pm": 1,
+        "minimo": 1,
+        "richiede_sintonizzazione": true,
+        "fonte": "Equipaggiamento §10.10; Magia §28.1"
+      },
+      "effetto_breve": "−1 PM al costo delle Tecniche Interiori (minimo 1 PM) se indossata e sintonizzata.",
+      "proprieta": [],
+      "reperibilita": "MR",
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "pi": 2,
+      "peso": 0.05
+    },
+    {
+      "id": "tomo-dei-guardiani",
+      "nome": "Tomo dei Guardiani",
+      "tipo": "artefatto",
+      "catalogo": "Artefatti di campagna",
+      "famiglia": "Artefatti",
+      "nomi_alternativi": [],
+      "paragrafo": "Equipaggiamento §10.11; Magia §28.4",
+      "versione_manuale": "Equipaggiamento 0.8 / Magia 1.5 (15/10/2026)",
+      "peso": null,
+      "costo": null,
+      "integrita": "da_definire",
+      "effetto_breve": "Reliquia di campagna: non concede Incantesimi, bonus o riserve di PM. Le conoscenze che rivela seguono gli eventi della campagna.",
+      "proprieta": [],
+      "TODO(Davide)": "Dimensioni, peso, Integrità, SnT e profilo commerciale del Tomo non sono ancora fissati (Equipaggiamento §10.11, Magia §28.4): il peso resta «da definire» e il carico totale parziale (§1.6); per l’Integrità, se necessaria, vale il §1.7. Eventuali funzioni richiedono una scheda specifica.",
+      "_nota": "Reliquia di Nathaniel legata al primo rituale e ai cinque Sigilli Spezzati; la descrizione delle visioni (copertina di metallo scuro incisa, albero e clessidra, pagine di lamine metalliche con scrittura runica) non attribuisce effetti meccanici. Il vincolo di apertura dello Scrigno del Primo Giuramento non si trasferisce al Tomo."
     }
   ],
   "fuori_scala": {
