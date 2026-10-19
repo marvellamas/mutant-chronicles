@@ -138,7 +138,7 @@ function movimentoPerGiocatori(d, scena) {
     const z = scena.token.find((x) => x.id === a.token);
     return z && visibileAiGiocatori({ ...z, q: a.q }, scena, nebbia) ? [{ q: a.q, ingombro: z.ingombro, portata: a.portata }] : [];
   });
-  return { token: d.token, q: d.q, ingombro: t.ingombro, modo: d.modo, usato: d.usato, disponibili: d.disponibili, area, percorso, zoc };
+  return { token: d.token, q: d.q, ingombro: t.ingombro, ...(t.base ? { angolo: t.angolo, base: t.base } : {}), modo: d.modo, usato: d.usato, disponibili: d.disponibili, area, percorso, zoc };
 }
 
 /** Dalla diretta filtrata: Int8Array per Q con 1 Passo, 2 Corsa, 3 Scatto (per disegnaArea), o null. */

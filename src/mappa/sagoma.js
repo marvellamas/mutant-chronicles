@@ -107,6 +107,24 @@ export function ruotabile(t) {
   return w !== h;
 }
 
+/**
+ * Come si gira un token (19/10): null = non si gira (nessun comando di rotazione: né frecce, né pulsanti, né voce di menu);
+ * { fine } = si gira di passo_gradi (45°), e col passo fine (10°) solo se `fine` è vero. Un veicolo ha anche il passo
+ * fine; una creatura solo i 45° della scheda (una 3 × 10 a 37° non corrisponde a nulla del manuale); una creatura
+ * quadrata (1 × 1, 4 × 4, 6 × 6…) non gira.
+ */
+export function rotazioneDi(t) {
+  if (t?.rif?.tipo === 'veicolo') return { fine: true };
+  if (t?.rif?.tipo === 'partecipante' && ruotabile(t)) return { fine: false };
+  return null;
+}
+
+/** I gradi di un passo di rotazione di `t` (data/mappa.json → token.rotazione_veicoli): il fine solo dove è ammesso. */
+export function passoGradi(t, fine, dati) {
+  const r = dati.mappa.token.rotazione_veicoli;
+  return fine && rotazioneDi(t)?.fine ? r.passo_fine_gradi : r.passo_gradi;
+}
+
 /** L'orientamento è uno degli otto di base (multipli di 45°)? */
 export const orientamentoDiBase = (a) => ORIENTAMENTI.includes(normaAngolo(a));
 

@@ -91,9 +91,9 @@ export function sezioneToken(t, p, dati, a) {
       // A.147 (15/10/2026): di base gli otto orientamenti a 45° (← →); con Maiusc il passo fine, per un
       // orientamento libero scelto dal master. Girare non consuma Q.
       h('button', { type: 'button', class: 'btn btn-piccolo', title: `Gira ${sagoma ? 'la pedina' : 'il veicolo'} di ${a.passiRotazione?.[0] ?? 45}° in senso antiorario (←): gli otto orientamenti, anche in diagonale`, onclick: () => a.ruota(-1) }, `↺ ${a.passiRotazione?.[0] ?? 45}°`),
-      h('button', { type: 'button', class: 'btn btn-piccolo btn-fine', title: `Passo fine: gira il veicolo di ${a.passiRotazione?.[1] ?? 10}° in senso antiorario (Maiusc+←)`, onclick: () => a.ruota(-1, true) }, `↺ ${a.passiRotazione?.[1] ?? 10}°`),
+      a.passiRotazione?.[1] === null ? null : h('button', { type: 'button', class: 'btn btn-piccolo btn-fine', title: `Passo fine: gira il veicolo di ${a.passiRotazione?.[1] ?? 10}° in senso antiorario (Maiusc+←)`, onclick: () => a.ruota(-1, true) }, `↺ ${a.passiRotazione?.[1] ?? 10}°`),
       a.angolo !== null && a.angolo !== undefined ? h('span', { class: 'nota', title: sagoma ? 'Orientamento dell’asse lungo: 0° in alto, in senso orario' : 'Direzione del muso: 0° in alto, in senso orario' }, ` ${a.angolo}° `) : null,
-      h('button', { type: 'button', class: 'btn btn-piccolo btn-fine', title: `Passo fine: gira il veicolo di ${a.passiRotazione?.[1] ?? 10}° in senso orario (Maiusc+→)`, onclick: () => a.ruota(1, true) }, `${a.passiRotazione?.[1] ?? 10}° ↻`),
+      a.passiRotazione?.[1] === null ? null : h('button', { type: 'button', class: 'btn btn-piccolo btn-fine', title: `Passo fine: gira il veicolo di ${a.passiRotazione?.[1] ?? 10}° in senso orario (Maiusc+→)`, onclick: () => a.ruota(1, true) }, `${a.passiRotazione?.[1] ?? 10}° ↻`),
       h('button', { type: 'button', class: 'btn btn-piccolo', title: `Gira ${sagoma ? 'la pedina' : 'il veicolo'} di ${a.passiRotazione?.[0] ?? 45}° in senso orario (→): gli otto orientamenti, anche in diagonale`, onclick: () => a.ruota(1) }, `${a.passiRotazione?.[0] ?? 45}° ↻`)),
     creatura ? null : h('div', { class: 'mappa-a-bordo' },
       h('h3', {}, `A bordo (${a.aBordo.length}${p?.posti ? ` su ${p.posti.conducente + p.posti.passeggeri} posti` : ''})`),

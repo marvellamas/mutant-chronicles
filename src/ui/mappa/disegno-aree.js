@@ -185,11 +185,15 @@ export function disegnaZoc(c, { scena, cam, info, celle, stile, inattiva = false
 }
 
 /** Percorso del token (posizioni del Q in alto a sinistra) con il costo in Q all'arrivo; `inZoc`: passi in una ZoC. */
-export function disegnaPercorso(c, { scena, cam, percorso, ingombro, costo, fascia, colori, inZoc = null, coloreZoc = '#e03131' }) {
+// 19/10 (A.167): con `forma` ({ angolo, base }) la sagoma ruotata: il filo passa per il suo centro vero e in fondo c'è il
+// fantasma dei quadretti che occuperebbe, non il rettangolo che la contiene.
+export function disegnaPercorso(c, { scena, cam, percorso, ingombro, forma = null, costo, fascia, colori, inZoc = null, coloreZoc = '#e03131' }) {
   if (!percorso?.length) return;
   const g = scena.griglia;
   const [w, h] = dimensioni(ingombro);
-  const centro = ([x, y]) => schermoDaMappa(cam, g.scosto_x + (x + w / 2) * g.q_px, g.scosto_y + (y + h / 2) * g.q_px);
+  const fm = forma && Array.isArray(forma.base) ? formaDi({ ingombro, angolo: forma.angolo, base: forma.base }) : null;
+  const [dx, dy] = fm ? fm.centro : [w / 2, h / 2];
+  const centro = ([x, y]) => schermoDaMappa(cam, g.scosto_x + (x + dx) * g.q_px, g.scosto_y + (y + dy) * g.q_px);
   const colore = colori[fascia] ?? colori.passo;
   c.save();
   c.strokeStyle = colore;
@@ -200,6 +204,19 @@ export function disegnaPercorso(c, { scena, cam, percorso, ingombro, costo, fasc
   c.beginPath();
   percorso.forEach((p, i) => { const s = centro(p); if (i) c.lineTo(s.x, s.y); else c.moveTo(s.x, s.y); });
   c.stroke();
+  if (fm) {
+    const lato = g.q_px * cam.scala;
+    const [qx, qy] = percorso.at(-1);
+    c.save();
+    c.globalAlpha = 0.85;
+    c.setLineDash([4, 3]);
+    c.lineWidth = 2;
+    for (const [cx, cy] of fm.celle) {
+      const p0 = schermoDaMappa(cam, g.scosto_x + (qx + cx) * g.q_px, g.scosto_y + (qy + cy) * g.q_px);
+      c.strokeRect(p0.x + 1, p0.y + 1, lato - 2, lato - 2);
+    }
+    c.restore();
+  }
   // i passi dentro una ZoC: un quadrato rosso attorno al Q (la ZoC non blocca, segnala)
   if (inZoc?.some(Boolean)) {
     const lato = g.q_px * cam.scala;

@@ -185,14 +185,14 @@ export function renderGiocatori(radice, ctx) {
       if (st.prova && st.io?.token) {
         const mio = s.token.find((t) => t.id === st.io.token);
         const tratti = trattiPercorso(st.prova.percorso);
-        tratti.forEach((t, i) => disegnaPercorso(c, { scena: s, cam: st.cam, percorso: t, ingombro: mio?.ingombro ?? 1, costo: i === tratti.length - 1 ? st.prova.costo : null, fascia: st.prova.fascia, colori: coloriAree(el.riquadro) }));
+        tratti.forEach((t, i) => disegnaPercorso(c, { scena: s, cam: st.cam, percorso: t, ingombro: mio?.ingombro ?? 1, forma: mio?.base ? mio : null, costo: i === tratti.length - 1 ? st.prova.costo : null, fascia: st.prova.fascia, colori: coloriAree(el.riquadro) }));
       }
       // percorso del master, a tratti fra le interruzioni della nebbia; il costo all'ultimo tratto
       if (d?.percorso && !mio) {
         const tratti = trattiPercorso(d.percorso.punti);
         const avv = avversariDellaDiretta(d);
         const colori = coloriAree(el.riquadro);
-        tratti.forEach((t, i) => disegnaPercorso(c, { scena: s, cam: st.cam, percorso: t, ingombro: d.ingombro, costo: i === tratti.length - 1 ? d.percorso.costo : null, fascia: d.percorso.fascia, colori, inZoc: avv.length ? passiInZoc(t, d.ingombro, avv) : null, coloreZoc: ctx.dati.mappa.zoc.colore }));
+        tratti.forEach((t, i) => disegnaPercorso(c, { scena: s, cam: st.cam, percorso: t, ingombro: d.ingombro, forma: d.base ? d : null, costo: i === tratti.length - 1 ? d.percorso.costo : null, fascia: d.percorso.fascia, colori, inZoc: avv.length ? passiInZoc(t, d.ingombro, avv) : null, coloreZoc: ctx.dati.mappa.zoc.colore }));
       }
     },
   });
