@@ -1175,6 +1175,15 @@ function validaSchedaDigitale(dati, err) {
     err(F, 'interfaccia.barre_pv_pm', 'servono verde_sopra e rosso_sotto fra 0 e 1, con rosso_sotto < verde_sopra');
   }
   validaTabelleConsultazione(dati, err); // 19/10/2026: tabelle di consultazione (src/ui/tabelle.js)
+  // 20/10/2026: recupero dei PM per «Medita» (src/medita.js)
+  const rp = dati.regole.recupero_pm;
+  const fasiOk = isOggetto(rp) && Array.isArray(rp.fasi) && ['pesante', 'leggera', 'breve', 'completo'].every((id) => rp.fasi.some((f) => f.id === id && isIntero(f.pm_per_ora) && f.pm_per_ora >= 0 && isTesto(f.nome)));
+  if (!fasiOk) err(F, 'recupero_pm.fasi', 'servono le fasi pesante, leggera, breve e completo, ciascuna con nome e pm_per_ora intero ≥ 0');
+  else {
+    if (!isOggetto(rp.recupero_mistico) || !isTesto(rp.recupero_mistico.talento) || !isIntero(rp.recupero_mistico.pm_per_ora) || !Array.isArray(rp.recupero_mistico.escluse)) err(F, 'recupero_pm.recupero_mistico', 'servono talento, pm_per_ora ed escluse');
+    else if (!(dati.talenti_liberi?.talenti ?? []).some((t) => t.id === rp.recupero_mistico.talento)) err(F, 'recupero_pm.recupero_mistico.talento', `"${rp.recupero_mistico.talento}" non è un Talento di talenti_liberi.json`);
+    if (!isOggetto(rp.conversione) || !isTesto(rp.conversione.azioni)) err(F, 'recupero_pm.conversione', 'servono azioni, esiti e nomi_esiti');
+  }
   // 20/10/2026: incantesimi liberi aggiunti a mano (src/incantesimi-a-mano.js)
   const iam = dati.regole.incantesimi_a_mano;
   if (!isOggetto(iam) || !Array.isArray(iam.origini) || iam.origini.length < 2 || !iam.origini.every((o) => isOggetto(o) && isTesto(o.id) && isTesto(o.nome)) || !['a_mano', 'direttore'].every((id) => iam.origini.some((o) => o.id === id))) err(F, 'incantesimi_a_mano', 'servono le origini a_mano e direttore, ciascuna con id e nome');

@@ -4258,5 +4258,58 @@
       }
     ],
     "_nota": "Incantesimi liberi aggiunti e tolti a mano dalla tab Poteri (src/incantesimi-a-mano.js, scelte.incantesimiAMano): un maestro, un ritrovamento, una concessione del Direttore. Non contano nelle quote di Classe né nei liberi dell'avanzamento; l'app avvisa se il livello base supera il livello massimo, senza bloccare. 20/10/2026."
+  },
+  "recupero_pm": {
+    "fonte": "Manuale della Magia, «Recupero naturale dei Punti Magia», «Meditazione», «Talenti di Meditazione» e sez. 6 «Convertire Potere, ricaricare e prelevare»",
+    "fasi": [
+      {
+        "id": "pesante",
+        "nome": "Attività pesante",
+        "pm_per_ora": 0,
+        "esempi": "Combattimento, fuga, marcia forzata, lavoro pesante, esplorazione ostile, sorveglianza in allarme, lavoro mentale intenso."
+      },
+      {
+        "id": "leggera",
+        "nome": "Attività leggera",
+        "pm_per_ora": 1,
+        "esempi": "Passeggiata, viaggio comodo da passeggero, mansioni ordinarie e sedentarie, esplorazione in sicurezza."
+      },
+      {
+        "id": "breve",
+        "nome": "Riposo breve",
+        "pm_per_ora": 2,
+        "esempi": "Riposo tranquillo, pasto rilassato, conversazione o lettura ricreativa senza attività impegnative."
+      },
+      {
+        "id": "completo",
+        "nome": "Riposo completo",
+        "pm_per_ora": 3,
+        "esempi": "Sonno comodo e indisturbato: 6 ore consentono di recuperare 18 PM."
+      }
+    ],
+    "recupero_mistico": {
+      "talento": "recupero-mistico",
+      "pm_per_ora": 1,
+      "escluse": [
+        "pesante"
+      ],
+      "nota": "Recupero Mistico aggiunge 1 PM per ogni ora completa in cui il recupero naturale è consentito (Attività pesante 0 PM); non aumenta la Meditazione."
+    },
+    "conversione": {
+      "azioni": "1 AzP per l'operazione (Magia sez. 6): un gruppo è automatico, due o più gruppi richiedono una sola Prova di Potere per l'intera operazione",
+      "esiti": [
+        "successo",
+        "magistrale",
+        "fallimento",
+        "maldestro"
+      ],
+      "nomi_esiti": {
+        "successo": "Successo",
+        "magistrale": "Successo Magistrale",
+        "fallimento": "Fallimento",
+        "maldestro": "Fallimento Maldestro"
+      }
+    },
+    "_nota": "Numeri per il pulsante «Medita» (src/medita.js): il recupero naturale per ora e per fase, il Talento Recupero Mistico; i rapporti di conversione e la Prova per gruppi sono già in chroma.conversione. La Meditazione (PM per ora, ore al giorno) è calcolata dalla scheda (scheda.magia.meditazione, regole.json → meditazione). 20/10/2026."
   }
 }

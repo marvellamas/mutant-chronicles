@@ -39,6 +39,7 @@ import { bloccoControNemico } from './attacco-pg.js';
 import { registraIncantesimo, terminaIncantesimo, concentrazioniInterrotte } from '../durate-incantesimi.js';
 import { usaConsumabile, consumabiliMistici, applicaCreazione } from '../consumabili-mistici.js';
 import { rigaStorico, testoProcedi } from '../storico.js';
+import { applicaMedita } from '../medita.js';
 import { aggiungiTiro } from '../tiri-scheda.js';
 import { conAvviso } from './procedi.js';
 import { chiedi } from './finestrella.js';
@@ -1905,6 +1906,13 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
         if (avvisi.length) stato.messaggioScheda = { tipo: 'attenzione', testo: avvisi.join(' ') };
         persisti();
         renderScheda({ mantieniScorrimento: true });
+      },
+      // «Medita» (src/medita.js): il recupero dei PM (e, se scelto, il versamento nel cristallo con la conversione) in una modifica
+      // annullabile sola, con una riga nel registro del personaggio; il conto lo ha già mostrato il pannello
+      medita: (piano) => {
+        const nuova = applicaMedita(stato.sessione, piano, massimi);
+        cambiaSessione(rigaStorico(nuova, piano.registro));
+        avviso(piano.registro, { tipo: 'ok' });
       },
       // Poteri: incantesimi liberi aggiunti o tolti a mano (src/incantesimi-a-mano.js); in modalità master la modifica entra
       // anche nel registro del master, e sempre una riga nello storico del personaggio

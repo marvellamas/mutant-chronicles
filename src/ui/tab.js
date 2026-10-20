@@ -10,6 +10,7 @@ import { datiTestata, statiAttiviVista, contoVa, modificatoriAttivi, sintesiMani
 import { informa, chiedi } from './finestrella.js';
 import { tabellaRecuperoPm, tabellaRecuperoPv } from './tabelle.js';
 import { incantesimiDaOggetti, incantesimoDiOggetto, attivazioneOggetto } from '../incantesimi-artefatti.js';
+import { pannelloMedita, pulsanteMedita } from './medita.js';
 import { aggiungiIncantesimoAMano, togliIncantesimoAMano, avvisoLivelloAMano, origini, dataLeggibile, rigaRegistro as rigaRegistroAMano } from '../incantesimi-a-mano.js';
 import { fasciaMaster, toccoMaster, notaCorrezione, sezioneRegistro, conMotivoMaster } from './master.js';
 import { apriTiro, sezioneTiri } from './tira-valore.js';
@@ -245,6 +246,7 @@ export function renderTab(ctx) {
       }
     })() : null,
     tecAttiva ? pannelloTecnica(ctx, tecAttiva) : null,
+    ctx.ui?.medita ? pannelloMedita(ctx) : null,
     ctx.ui?.attivaCalendario ? pannelloAttivazione(ctx) : null,
     ctx.ui?.importaCalendario ? pannelloImportaCalendario(ctx) : null];
 }
@@ -504,7 +506,7 @@ function riquadriPvPm(ctx, { compatti = false, ferite = false } = {}) {
       // 13/10 (Marcello): sotto i PM personali anche gli Artefatti con PM spendibili (riserve, batterie, schegge,
       // guanti…), ognuno con i suoi tasti; non si sommano mai alla riserva personale (A.112, A.20)
       ? (m.pm || cristalli(ctx).length || ctx.master
-        ? contatoreTavolo(ctx, { titolo: 'Punti Magia', campo: 'pmAttuali', attuale: s.pmAttuali, massimo: m.pm, barra: true, classe: `riquadro-pm${classe}`, extra: [notaCorrezione(cm.pm), cristalliCompatti(ctx)], accanto: toccoPm })
+        ? contatoreTavolo(ctx, { titolo: 'Punti Magia', campo: 'pmAttuali', attuale: s.pmAttuali, massimo: m.pm, barra: true, classe: `riquadro-pm${classe}`, extra: [notaCorrezione(cm.pm), cristalliCompatti(ctx)], accanto: [toccoPm, m.pm ? pulsanteMedita(ctx) : null] })
         : null)
       : riquadroPM(ctx),
   ];
@@ -891,6 +893,7 @@ function riquadroPM(ctx) {
     : null;
   return contatoreTavolo(ctx, {
     titolo: 'Punti Magia', campo: 'pmAttuali', attuale: s.pmAttuali, massimo: ctx.massimi.pm, barra: true, classe: 'riquadro-pm',
+    accanto: ctx.massimi.pm ? pulsanteMedita(ctx) : null,
     nota: med ? `Recupero PM con Meditazione: ${med.pmPerOra} PM/ora, ${med.orePerGiorno} ${med.orePerGiorno === 1 ? 'ora' : 'ore'}/giorno` : null,
     extra: contenitori.length ? h('div', { class: 'cristalli' },
       h('h4', {}, 'Cristalli e riserve di Chroma'),

@@ -1851,3 +1851,11 @@ Nessuna risposta di Davide: il lavoro applica schede già scritte nel manuale (E
 ## 20 ottobre 2026 — difetti del tablet del 19/10 (nessuna domanda nuova)
 
 Dettagli in `docs/tablet-2026-10-19.md`. Ammalato e le Prove Salvezza: già escluso dalla **A.119** (risposta di Davide, 05/10/2026, decisione 127), verificato con un test; nessuna A.174.
+
+## 20 ottobre 2026 — incantesimi dagli oggetti, incantesimi aggiunti a mano, «Medita»: domande aperte A.174–A.176
+
+Dettagli e regole del manuale con i paragrafi in `docs/incantesimi-medita-2026-10-20.md`. Nessuna risposta di Davide da applicare (controllo del 20/10: manuali invariati, «per-davide.md» del 19/10 senza risposte nuove).
+
+- **A.174 — «Medita» e la ricarica dei cristalli** (Magia, «Meditazione» e sez. 6). *(aperta)* Il manuale non ammette di ricaricare contenitori durante la Meditazione, dice che la ricarica non avviene automaticamente durante il recupero personale e che ricaricare richiede 1 AzP, il contatto e, da due gruppi, una Prova di Potere. **Nel frattempo** il pulsante «Medita» mostra un conto unico (recupero, PM spesi, PM entrati nel cristallo, rapporto e Talento) e dopo la conferma lo applica: i PM recuperati si versano nel cristallo man mano, anche quelli oltre il massimo personale; per due o più gruppi l'esito della Prova lo indica chi gioca; le ore giornaliere di Meditazione non si contano da sole (campo «già fatte oggi»).
+- **A.175 — Guanti da Combattimento Mistico e incantesimo infuso** (Magia §26.6.2, Armamenti §7.24). *(aperta)* I manuali non dicono da quale Incantesimo derivi la loro proprietà attiva. **Nel frattempo** l'attivazione (3 PM, 1 AzP, 5 RND) sta nello stesso elenco degli incantesimi dagli oggetti, senza scheda di Incantesimo.
+- **A.176 — Incantesimi aggiunti a mano.** *(aperta)* Se contano come «conosciuti» per gli altri usi e come si lancia senza accesso alla magia. **Nel frattempo** fuori dalle quote e dai liberi, non tolti dal passaggio di livello, validi per infondere un Consumabile, lanciati con la scala di Potere del Taumaturgo con avviso di livello.
