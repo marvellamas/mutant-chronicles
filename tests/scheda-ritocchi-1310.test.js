@@ -89,7 +89,7 @@ test('nel riquadro laterale «Punti Magia» ci sono anche gli Artefatti con PM, 
   // PM attuali su massimi e i tasti per spendere o ricaricare, come nella tab Artefatti
   assert.match(blocco.textContent, /\d+ \/ \d+/);
   const tasti = righe[0].tutti().filter((n) => n.tagName === 'BUTTON');
-  assert.deepEqual(tasti.map((b) => b.textContent), ['−1', '+1']);
+  assert.deepEqual(tasti.map((b) => b.textContent), ['−1', '+1', 'Applica']); // 19/10: più il campo ±N con «Applica»
   // non si sommano ai PM del personaggio
   const pm = r.classe('riquadro-pm')[0];
   assert.match(pm.textContent, /non si sommano ai PM personali/);

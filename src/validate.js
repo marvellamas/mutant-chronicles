@@ -1171,6 +1171,9 @@ function validaSchedaDigitale(dati, err) {
   if (!isOggetto(b) || !frazione(b.verde_sopra) || !frazione(b.rosso_sotto) || b.rosso_sotto >= b.verde_sopra) {
     err(F, 'interfaccia.barre_pv_pm', 'servono verde_sopra e rosso_sotto fra 0 e 1, con rosso_sotto < verde_sopra');
   }
+  // 19/10/2026: pulsante «torna in cima» (src/ui/scorrimento.js)
+  const ts = dati.regole.interfaccia?.torna_sopra;
+  if (!isOggetto(ts) || !isIntero(ts.soglia_px) || ts.soglia_px < 100 || !isTesto(ts.etichetta)) err(F, 'interfaccia.torna_sopra', 'servono soglia_px (intero ≥ 100) e etichetta');
   const mf = dati.regole.modalita_di_fuoco;
   if (!isOggetto(mf)) { err(F, 'modalita_di_fuoco', 'blocco mancante (§5.10)'); return; }
   for (const [sigla, m] of Object.entries(mf)) {

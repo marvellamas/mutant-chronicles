@@ -188,3 +188,14 @@ export function preselezioneAggiungi(idSezione) {
 export function inColonne(lista, risoltaDi) {
   return COLONNE_INVENTARIO.map((c) => ({ ...c, voci: (lista ?? []).filter((x) => colonnaInventario(risoltaDi(x)) === c.id) }));
 }
+
+/**
+ * Variazione scritta a mano nel campo dei PM di un cristallo (19/10/2026): «5» e «+5» aggiungono 5, «-3» o «−3» tolgono 3.
+ * null se il testo non è un numero intero di al più tre cifre, o se vale 0.
+ */
+export function variazioneDaTesto(testo) {
+  const m = /^([+\-−]?)\s*(\d{1,3})$/.exec(String(testo ?? '').trim());
+  if (!m) return null;
+  const n = Number(m[2]);
+  return n === 0 ? null : m[1] === '-' || m[1] === '−' ? -n : n;
+}

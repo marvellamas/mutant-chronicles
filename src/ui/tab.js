@@ -6,7 +6,7 @@
 // Le penalità di Ferite, Affaticamento e Stati sono solo promemoria: i VA mostrati non le
 // includono (le regole del cap. 5 sono situazionali).
 import { allineaStorico } from '../storico.js';
-import { datiTestata, statiAttiviVista, contoVa, modificatoriAttivi, sintesiMani, sintesiProtezioni, sintesiSintonizzazione, inColonne } from '../scheda-vista.js';
+import { datiTestata, statiAttiviVista, contoVa, modificatoriAttivi, sintesiMani, sintesiProtezioni, sintesiSintonizzazione, inColonne, variazioneDaTesto } from '../scheda-vista.js';
 import { informa } from './finestrella.js';
 import { fasciaMaster, toccoMaster, notaCorrezione, sezioneRegistro, conMotivoMaster } from './master.js';
 import { apriTiro, sezioneTiri } from './tira-valore.js';
@@ -2320,7 +2320,29 @@ function rigaCristallo(ctx, c) {
         h('small', { class: 'sigla' }, ` · ${esausto ? `Trasparente (alone ${c.energia})` : `Chroma ${c.energia}`}${pronto ? '' : c.sintonizzato ? ' · non trasportato' : ' · non sintonizzato'}`))),
     h('div', { class: 'cristallo-valori' },
       barraRisorsa(ctx, '', pm, c.capacita),
-      pulsante(-1), pulsante(1)));
+      pulsante(-1), pulsante(1)),
+    // 19/10: più PM in un colpo solo: «5» o «+5» aggiungono, «-3» tolgono (il tocco da ±1 resta)
+    campoVariazionePm(ctx, c, pm));
+}
+
+/**
+ * Campo «±N» accanto ai tocchi da ±1: recuperare 12 PM a tocchi da 1 è una pena. Invio o «Applica»; il valore finale
+ * resta nei limiti 0–capacità (src/sessione.js → variaChroma).
+ */
+function campoVariazionePm(ctx, c, pm) {
+  const campo = h('input', {
+    type: 'text', inputmode: 'numeric', class: 'campo-variazione-pm', placeholder: '±N', size: 4, maxlength: 4,
+    'aria-label': `Aggiungi o togli più PM a ${c.nome}: 5 o +5 aggiunge, -3 toglie`,
+    title: '5 o +5: aggiunge 5 PM · -3: toglie 3 PM',
+    onkeydown: (e) => { if (e.key === 'Enter') { e.preventDefault(); applica(); } },
+  });
+  const applica = () => {
+    const d = variazioneDaTesto(campo.value);
+    if (d === null) { campo.className = 'campo-variazione-pm non-valido'; campo.setAttribute('aria-invalid', 'true'); return; }
+    ctx.azioni.chroma(c.uid, Math.max(-pm, Math.min(c.capacita - pm, d)));
+  };
+  return h('div', { class: 'cristallo-variazione' }, campo,
+    h('button', { type: 'button', class: 'btn btn-piccolo', onclick: applica, 'aria-label': `Applica la variazione di PM a ${c.nome}` }, 'Applica'));
 }
 
 /** Riserva di Chroma: la riga del cristallo, con la nota su cosa alimenta e come si ricarica. */

@@ -2,6 +2,7 @@
 // livello" o stampa. Stato: le scelte della creazione, i livelli acquisiti (cap. 8) e i valori
 // di sessione (modalità tavolo) del personaggio aperto; tutto il resto si ricalcola a ogni
 // disegno con calcolaScheda / anteprima.
+import { conScorrimentoFisso, montaTornaSopra } from './scorrimento.js';
 import { caricaDati, versioniPersonaggio, FILE_SOLO_TAVOLO } from '../rules.js';
 import { impiantiAttivabili, statoProcessore, attivaChip, terminaChip } from '../impianti.js';
 import { formattaErrore, trovaTodo } from '../validate.js';
@@ -117,6 +118,8 @@ async function avvia() {
   if (risultato.errori.length) return mostraErroriDati(risultato.errori);
   stato.avvisiDati = risultato.avvisi ?? [];
   inizializzaTooltip(stato.dati);
+  // pulsante fisso «torna in cima» per le pagine lunghe (regole.json → interfaccia.torna_sopra)
+  montaTornaSopra(stato.dati.regole.interfaccia.torna_sopra);
   await caricaImmagini(stato.dati);
   stato.sfondi = cercaSfondi(stato.dati.corporazioni.corporazioni);
   // cartella dei personaggi (server.mjs): se il server non c'è l'app resta com'era
@@ -1547,7 +1550,16 @@ function azioniMaster() {
   };
 }
 
-function renderScheda({ mantieniScorrimento = false } = {}) {
+/**
+ * Ridisegna la scheda. Con `mantieniScorrimento` (ogni modifica di un valore) la pagina resta dov'è: sul tablet il
+ * ridisegno la riportava in cima a ogni tocco (src/ui/scorrimento.js).
+ */
+function renderScheda(opzioni = {}) {
+  if (!opzioni.mantieniScorrimento) return renderSchedaInterna(opzioni);
+  return conScorrimentoFisso(radice, () => renderSchedaInterna(opzioni));
+}
+
+function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
   nascondiTooltip();
   const y = window.scrollY;
   const { dati } = stato;
