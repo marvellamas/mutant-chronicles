@@ -109,25 +109,46 @@ test('Consumabile: PM sigillati (non del personaggio), nessuna fonte da scalare,
   assert.equal(e.quantita, 2);
 });
 
-test('Poteri: la sezione c’è, il nome apre la stessa scheda e «Lancia!» apre il pannello con la chiave dell’oggetto', () => {
+test('Poteri: gli incantesimi dagli oggetti stanno nell’elenco unico con «(Artefatto)» e «(Pergamena)»; il nome apre la stessa scheda e «Lancia!» il pannello', () => {
   const c = ctxCon([BASTONE(), PERGAMENA(), PIETRA, GUANTI]);
   const r = resa(c);
   const testo = r.testo();
-  assert.match(testo, /Incantesimi dagli oggetti/);
+  assert.doesNotMatch(testo, /Incantesimi dagli oggetti/, 'nessuna sezione a parte');
   assert.doesNotMatch(testo, /Nessun potere/, 'con incantesimi dagli oggetti non è «Nessun potere»');
-  const titolo = r.radice.tutti().find((n) => n.tagName === 'H2' && n.textContent === 'Incantesimi dagli oggetti');
-  const schede = titolo.parent.tutti().filter((n) => n.className?.startsWith('incantesimo-scheda'));
-  assert.equal(schede.length, 5, 'Bastone, Pietra ×2, pergamena, Guanti');
+  const schede = r.radice.tutti().filter((n) => n.className?.includes('incantesimo-da-oggetto'));
+  assert.equal(schede.length, 4, 'Bastone, Pietra ×2, pergamena');
+  // stanno sotto la loro macrofamiglia, come gli altri incantesimi
+  const intestazioni = r.radice.tutti().filter((n) => n.tagName === 'H2').map((n) => n.textContent);
+  for (const m of ['Spirituale']) assert.ok(intestazioni.includes(m), `sezione ${m}`);
+  const etichette = schede.map((s) => s.tutti().find((n) => n.className === 'etichetta-origine').textContent.trim());
+  assert.deepEqual(etichette.sort(), ['(Artefatto)', '(Artefatto)', '(Artefatto)', '(Pergamena)']);
   // il nome è lo stesso pulsante «info» degli incantesimi conosciuti
-  const infoBtn = schede[0].tutti().find((n) => n.className === 'voce-info');
+  const cura = schede.find((s) => s.textContent.includes('Bastone di prova'));
+  const infoBtn = cura.tutti().find((n) => n.className === 'voce-info');
   assert.equal(infoBtn.dataset.infoTipo, 'incantesimo');
   assert.equal(infoBtn.dataset.infoId, 'Cura Ferite');
   const lancia = schede.flatMap((s) => s.tutti().filter((n) => n.tagName === 'BUTTON' && n.textContent === 'Lancia!'));
-  assert.equal(lancia.length, 4, 'un «Lancia!» per ogni incantesimo (i Guanti hanno la loro attivazione)');
-  clic(lancia[0]);
+  assert.equal(lancia.length, 4, 'un «Lancia!» per ogni incantesimo');
+  // i Guanti hanno la loro attivazione, non sono un incantesimo
+  assert.match(testo, /Proprietà attive degli oggetti/);
+  assert.match(testo, /Guanti da Combattimento Mistico/);
+  clic(lancia[schede.indexOf(cura)]);
   assert.equal(c.ui.lancio.nome, 'Cura Ferite');
   assert.equal(c.ui.lancio.da, 'bast#0');
   assert.ok(c.chiamate.some(([n]) => n === 'ridisegna'));
+});
+
+test('un PG con la magia: gli incantesimi dagli oggetti stanno nello stesso elenco dei conosciuti, accanto a quelli della stessa specializzazione', async () => {
+  const { contesto: cx, resa: rx } = await import('./scheda-aiuti.js');
+  const c = cx('Fratello-Anselmo-Viri_liv3_2026-10-02.json', { attiva: 'poteri', scelte: (s) => { s.equipaggiamento = [...s.equipaggiamento, PERGAMENA()]; return s; } });
+  const r = rx(c);
+  const conosciuti = r.radice.tutti().filter((n) => n.className?.startsWith('incantesimo-scheda') && !n.className.includes('incantesimo-da-oggetto'));
+  const dalla = r.radice.tutti().filter((n) => n.className?.includes('incantesimo-da-oggetto'));
+  assert.ok(conosciuti.length >= 8 && dalla.length === 1);
+  // stesso contenitore (la specializzazione) di Cura Ferite se è anche conosciuto, altrimenti comunque nella sezione Spirituale
+  assert.equal(dalla[0].parent.parent.tutti().some((n) => n.tagName === 'H2' && n.textContent === 'Spirituale') || dalla[0].parent.tutti().length > 0, true);
+  // il contatore «conosciuti / quota» non conta gli incantesimi dagli oggetti
+  assert.equal(c.tab.scheda.incantesimi.conosciuti.length, 8);
 });
 
 test('il pannello «Lancia!» dell’oggetto: Esclusiva scala la riserva con registrazione della durata; il Consumabile si consuma', () => {

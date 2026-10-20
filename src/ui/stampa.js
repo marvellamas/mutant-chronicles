@@ -1045,7 +1045,7 @@ function righeOltre(tbody, contenitore) {
 
 function schedaIncantesimo(i) {
   return h('article', { class: `scheda-incantesimo tinta-${tintaMacro(i.macrofamiglia)}` },
-    h('header', {}, h('span', { class: 'nome-incantesimo' }, i.nome), ' ', pallini(i.livelloBase),
+    h('header', {}, h('span', { class: 'nome-incantesimo' }, i.nome, i.aggiunto ? ' (Aggiunto)' : null), ' ', pallini(i.livelloBase),
       h('span', { class: 'sigla' }, ` ${i.macrofamiglia} · ${i.specializzazione} · livello base ${i.livelloBase}`)),
     h('div', { class: 'corpo-scheda' },
       i.intestazione ? h('p', { class: 'intestazione' }, i.intestazione) : null,

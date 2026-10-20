@@ -151,7 +151,8 @@ function tecnicheStampa(s, dati) {
 /** Il foglio Poteri si stampa solo se il personaggio ha accesso agli incantesimi. */
 export function haMagia(scheda) {
   const inc = scheda.incantesimi;
-  return !!inc && (inc.quote.totale > 0 || inc.conosciuti.length > 0);
+  // gli incantesimi aggiunti a mano (inc.aMano) stanno nell'elenco insieme agli altri, con «(Aggiunto)»
+  return !!inc && (inc.quote.totale > 0 || inc.conosciuti.length > 0 || (inc.aMano?.length ?? 0) > 0);
 }
 
 /** Elenco dell'equipaggiamento dal campo di testo libero: una voce per riga (o per «;»). */
@@ -407,7 +408,9 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
       nome: m.nome,
       specializzazioni: m.specializzazioni.map((sp) => ({
         nome: sp,
-        incantesimi: inc.conosciuti.filter((i) => i.macrofamiglia === m.nome && i.specializzazione === sp).map((i) => {
+        // 20/10: gli incantesimi aggiunti a mano stanno nello stesso elenco, con il segno «aggiunto» (origine, data, nota); non
+        // entrano nei conteggi («conosciuti» e «quota» qui sotto restano quelli di prima)
+        incantesimi: [...inc.conosciuti, ...(inc.aMano ?? []).map((x) => ({ ...dati.incantesimi.incantesimi.find((c) => c.nome === x.nome), __aggiunto: x }))].filter((i) => i.macrofamiglia === m.nome && i.specializzazione === sp).map((i) => {
           const righe = versioniAccessibili(i, inc.livelloMassimo);
           const base = rigaAlLivello(i, i.livello_base) ?? {};
           // valore della colonna al livello base; l'unità nel nome della colonna («Gittata Q») va sul numero
@@ -418,6 +421,7 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
           };
           return {
             nome: i.nome,
+            ...(i.__aggiunto ? { aggiunto: { origine: i.__aggiunto.nomeOrigine, quando: i.__aggiunto.quando, ...(i.__aggiunto.nota ? { nota: i.__aggiunto.nota } : {}), avviso: i.__aggiunto.avviso ?? null } } : {}),
             livelloBase: i.livello_base,
             macrofamiglia: i.macrofamiglia,
             // SS, foglio 4: indice per il tavolo e scheda completa (descrizione e regole)
@@ -872,7 +876,7 @@ export function righeElencoIncantesimi(macrofamiglie) {
     return [
       { tipo: 'macro', nome: m.nome, tinta, numero: incantesimi.length },
       ...incantesimi.map((i) => ({
-        tipo: 'incantesimo', nome: i.nome, livello: i.livelloBase, pm: i.indice.pm, gittata: i.indice.gittata, durata: i.indice.durata,
+        tipo: 'incantesimo', nome: i.aggiunto ? `${i.nome} (Aggiunto)` : i.nome, livello: i.livelloBase, pm: i.indice.pm, gittata: i.indice.gittata, durata: i.indice.durata,
         scheda: i.scheda ?? '—', macrofamiglia: i.macrofamiglia ?? m.nome, tinta: COLORI_MACROFAMIGLIE[i.macrofamiglia ?? m.nome] ?? tinta,
       })),
     ];

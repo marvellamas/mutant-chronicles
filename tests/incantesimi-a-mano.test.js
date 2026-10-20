@@ -115,11 +115,12 @@ function ctxPoteri(opzioni = {}, scelte = (s) => s) {
 }
 const sezioneDi = (r) => r.radice.tutti().find((n) => n.tagName === 'DETAILS' && n.className?.includes('incantesimi-a-mano'));
 
-test('Poteri: la sezione c’è, con il modulo per aggiungere; origine proposta «Aggiunto a mano», «Concesso dal Direttore» dal PC del Direttore', () => {
+test('Poteri: il modulo per aggiungere c’è, chiuso; origine proposta «Aggiunto a mano», «Concesso dal Direttore» dal PC del Direttore', () => {
   const c = ctxPoteri();
   const s = sezioneDi(resa(c));
-  assert.ok(s, 'sezione «Incantesimi aggiunti a mano»');
-  assert.match(s.textContent, /Incantesimi aggiunti a mano/);
+  assert.ok(s, 'modulo «Aggiungi un incantesimo a mano»');
+  assert.match(s.textContent, /Aggiungi un incantesimo a mano/);
+  assert.ok(!s.open, 'chiuso: non è una sezione in più da guardare');
   assert.ok(s.tutti().some((n) => n.tagName === 'INPUT' && n.getAttribute('list') === 'elenco-incantesimi-a-mano'));
   const scelta = s.tutti().filter((n) => n.tagName === 'BUTTON' && /scelta-btn/.test(n.className));
   assert.deepEqual(scelta.map((b) => b.textContent), ['Aggiunto a mano', 'Concesso dal Direttore']);
@@ -158,23 +159,38 @@ test('Poteri: scritto il nome, «Aggiungi» chiama l’azione con la lista e la 
   assert.ok(c.chiamate.length >= n);
 });
 
-test('Poteri: gli aggiunti a mano compaiono con origine e data, il nome apre la stessa scheda, «Lancia!» il pannello e «Togli» c’è', () => {
+test('Poteri: gli aggiunti a mano stanno nell’elenco con «(Aggiunto)»; origine, data e nota nella scheda; «Lancia!» e «Togli»', () => {
   const extra = [{ nome: 'Cura Ferite', origine: 'direttore', quando: '2026-10-19', nota: 'dal maestro' }, { nome: 'Scudo', origine: 'a_mano', quando: '2026-10-20' }];
   const c = ctxPoteri({}, (s) => { s.incantesimiAMano = extra; return s; });
-  const s = sezioneDi(resa(c));
-  assert.ok(s.open, 'con incantesimi dentro la sezione è aperta');
-  const schede = s.tutti().filter((n) => n.className?.includes('incantesimo-a-mano'));
+  const r = resa(c);
+  assert.doesNotMatch(r.testo(), /Incantesimi aggiunti a mano/, 'nessuna sezione a parte');
+  const schede = r.radice.tutti().filter((n) => n.className?.includes('incantesimo-a-mano'));
   assert.equal(schede.length, 2);
-  for (const pezzo of ['Concesso dal Direttore', 'il 19 ottobre 2026', 'dal maestro', 'fuori dalle quote di Classe']) assert.ok(schede[0].textContent.includes(pezzo), pezzo);
-  for (const pezzo of ['Aggiunto a mano', 'il 20 ottobre 2026']) assert.ok(schede[1].textContent.includes(pezzo), pezzo);
-  const infoBtn = schede[0].tutti().find((n) => n.className === 'voce-info');
+  const tutte = r.radice.tutti().filter((n) => n.className?.startsWith('incantesimo-scheda'));
+  assert.ok(tutte.length > schede.length, 'sono mescolati ai conosciuti, nello stesso elenco');
+  // l'etichetta «(Aggiunto)» accanto al nome, con il suggerimento che dice origine, data e nota
+  for (const s of schede) {
+    const et = s.tutti().find((n) => n.className === 'etichetta-origine');
+    assert.equal(et.textContent.trim(), '(Aggiunto)');
+  }
+  const cura = schede.find((s) => s.textContent.includes('Cura Ferite'));
+  assert.match(cura.tutti().find((n) => n.className === 'etichetta-origine').getAttribute('title'), /Concesso dal Direttore il 19 ottobre 2026 · dal maestro/);
+  for (const pezzo of ['Concesso dal Direttore', 'il 19 ottobre 2026', 'dal maestro', 'fuori dalle quote di Classe']) assert.ok(cura.textContent.includes(pezzo), pezzo);
+  const scudo = schede.find((s) => s.textContent.includes('Scudo'));
+  for (const pezzo of ['Aggiunto a mano', 'il 20 ottobre 2026']) assert.ok(scudo.textContent.includes(pezzo), pezzo);
+  const infoBtn = cura.tutti().find((n) => n.className === 'voce-info');
   assert.deepEqual([infoBtn.dataset.infoTipo, infoBtn.dataset.infoId], ['incantesimo', 'Cura Ferite']);
-  assert.ok(schede[0].tutti().some((n) => n.tagName === 'BUTTON' && n.textContent === 'Togli'));
-  clic(schede[1].tutti().find((n) => n.tagName === 'BUTTON' && n.textContent === 'Lancia!'));
+  assert.ok(cura.tutti().some((n) => n.tagName === 'BUTTON' && n.textContent === 'Togli'));
+  clic(scudo.tutti().find((n) => n.tagName === 'BUTTON' && n.textContent === 'Lancia!'));
   assert.deepEqual([c.ui.lancio.nome, c.ui.lancio.da], ['Scudo', undefined]);
-  // non finiscono fra gli incantesimi conosciuti: il contatore «conosciuti / quota» è quello di prima
+  // i conosciuti normali non hanno l'etichetta
+  const normali = tutte.filter((n) => !n.className.includes('incantesimo-a-mano'));
+  assert.ok(normali.every((n) => !n.tutti().some((x) => x.className === 'etichetta-origine')));
+  // il contatore «conosciuti / quota» è quello di prima
   const riposo = ctxPoteri();
   assert.equal(c.tab.scheda.incantesimi.conosciuti.length, riposo.tab.scheda.incantesimi.conosciuti.length);
+  assert.equal(c.tab.tab.find((t) => t.id === 'poteri').dati.conosciuti, riposo.tab.tab.find((t) => t.id === 'poteri').dati.conosciuti);
+  assert.equal(c.tab.tab.find((t) => t.id === 'poteri').dati.quota, riposo.tab.tab.find((t) => t.id === 'poteri').dati.quota);
 });
 
 test('per un personaggio senza magia: niente «Nessun potere» se ha incantesimi aggiunti a mano, e il modulo c’è lo stesso', () => {
@@ -195,4 +211,22 @@ test('modifica del master: il registro descrive «incantesimi aggiunti a mano» 
   const prima = { creazione: p.creazione, livelli: p.livelli };
   const dopo = { creazione: { ...p.creazione, incantesimiAMano: [{ nome: 'Scudo', origine: 'direttore', quando: '2026-10-20' }] }, livelli: p.livelli };
   assert.equal(descriviScelte(prima, dopo), 'Creazione: incantesimi aggiunti a mano');
+});
+
+test('stampa: gli aggiunti a mano sono nell’elenco con «(Aggiunto)», e «conosciuti» e «quota» restano quelli di prima', async () => {
+  const { righeElencoIncantesimi } = await import('../src/stampa.js');
+  const p = carica();
+  const creazione = applicaModifica(p.creazione, { incantesimiAMano: [{ nome: 'Scudo', origine: 'direttore', quando: '2026-10-20', nota: 'dal maestro' }] }, dati).scelte;
+  const prima = preparaTab({ creazione: p.creazione, livelli: p.livelli }, dati).tab.find((t) => t.id === 'poteri').dati;
+  const dopo = preparaTab({ creazione, livelli: p.livelli }, dati).tab.find((t) => t.id === 'poteri').dati;
+  assert.equal(dopo.conosciuti, prima.conosciuti);
+  assert.equal(dopo.quota, prima.quota);
+  const righe = righeElencoIncantesimi(dopo.macrofamiglie).filter((r) => r.tipo === 'incantesimo');
+  const righePrima = righeElencoIncantesimi(prima.macrofamiglie).filter((r) => r.tipo === 'incantesimo');
+  assert.equal(righe.length, righePrima.length + 1);
+  const riga = righe.find((r) => r.nome === 'Scudo (Aggiunto)');
+  assert.ok(riga, 'riga «Scudo (Aggiunto)»');
+  assert.deepEqual(righePrima.map((r) => r.nome), righe.filter((r) => r !== riga).map((r) => r.nome), 'gli altri invariati');
+  const sch = dopo.macrofamiglie.flatMap((m) => m.specializzazioni.flatMap((s) => s.incantesimi)).find((i) => i.nome === 'Scudo');
+  assert.deepEqual([sch.aggiunto.origine, sch.aggiunto.quando, sch.aggiunto.nota], ['Concesso dal Direttore', '2026-10-20', 'dal maestro']);
 });

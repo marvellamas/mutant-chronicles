@@ -2532,11 +2532,11 @@ function tabPoteri(ctx, d) {
   if (d && d.conMagia === false) d = null;
   return [
     riquadroCircostanze(ctx),
-    ...(d ? tabMagia(ctx, d) : risorse || (ctx.tab.scheda.incantesimi?.aMano?.length ?? 0) || incantesimiDaOggetti({ voci: ctx.scelte.equipaggiamento ?? [], scheda: ctx.tab.scheda }, ctx.dati).length ? [] : [h('section', { class: 'riquadro nessun-potere' }, h('h2', {}, 'Nessun potere'), p.nessuno ? h('p', { class: 'nota' }, p.nessuno) : null)]),
+    ...(d ? tabMagia(ctx, d) : elencoUnificato(ctx, null, { vuoto: false }).length ? elencoUnificato(ctx, null, { vuoto: false }) : risorse || (ctx.tab.scheda.incantesimi?.aMano?.length ?? 0) || incantesimiDaOggetti({ voci: ctx.scelte.equipaggiamento ?? [], scheda: ctx.tab.scheda }, ctx.dati).length ? [] : [h('section', { class: 'riquadro nessun-potere' }, h('h2', {}, 'Nessun potere'), p.nessuno ? h('p', { class: 'nota' }, p.nessuno) : null)]),
     // Risorse Interiori (Giocatore §8.9; richiesta di Davide del 02/10): le Tecniche con «Attiva»
     risorse,
+    sezioneProprietaDaOggetti(ctx),
     sezioneIncantesimiAMano(ctx),
-    sezioneIncantesimiDaOggetti(ctx),
     // senza la magia propria (nessuna tab Magia) gli incantesimi lanciati da un oggetto hanno comunque i loro «in corso»
     !d && incantesimiInCorso(ctx.sessione).length ? riquadroIncantesimiInCorso(ctx) : null,
     sezioneDaArtefatti(ctx),
@@ -2573,32 +2573,13 @@ function sezioneIncantesimiAMano(ctx) {
     Object.assign(u, { nome: '', nota: '', errore: null });
     ctx.azioni.incantesimiAMano(nuova, rigaRegistroAMano('aggiunto', x, ctx.dati));
   };
-  const togli = async (x) => {
-    const ok = await chiedi({ titolo: `Togli ${x.nome}`, testo: `${x.nome} (${x.nomeOrigine.toLowerCase()} il ${dataLeggibile(x.quando)}) esce dagli incantesimi del personaggio. Non cambia le quote di Classe.`, si: 'Togli', no: 'Lascia' });
-    if (!ok) return;
-    const nuova = togliIncantesimoAMano(attuali, x.nome);
-    if (nuova) ctx.azioni.incantesimiAMano(nuova, rigaRegistroAMano('tolto', { ...x, quando: x.quando }, ctx.dati));
-  };
-  const scheda = (x) => {
-    const inc = catalogoInc.find((i) => i.nome === x.nome);
-    const st = inc ? statoPulsanteLancio(inc, ctx.tab.scheda, ctx.dati) : { disabilitato: true, motivo: 'incantesimo non più nel catalogo' };
-    return h('article', { class: `incantesimo-scheda ${classeMacrofamiglia(x.macrofamiglia)} incantesimo-a-mano` },
-      h('div', { class: 'arma-testa' },
-        h('h4', {}, info('incantesimo', x.nome), ' ', pallini(x.livello_base), ' ', etichettaMacro(x.macrofamiglia), h('span', { class: 'sigla' }, ` · livello base ${x.livello_base} · scheda ${x.scheda}`)),
-        h('button', { type: 'button', class: `btn primario btn-attacca${st.disabilitato ? ' con-avviso' : ''}`, disabled: !inc || !(inc.versioni ?? []).length, title: st.motivo,
-          onclick: () => { ctx.ui.lancio = { nome: x.nome, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Lancia!'),
-        h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Toglie l’incantesimo dalla scheda (non cambia le quote)', onclick: () => togli(x) }, 'Togli')),
-      h('p', { class: 'piccolo' }, h('strong', {}, x.nomeOrigine), ` il ${dataLeggibile(x.quando)}`, x.nota ? ` · ${x.nota}` : '', ' · fuori dalle quote di Classe.'),
-      x.avviso ? h('p', { class: 'nota motivo' }, `Avviso: ${x.avviso}`) : null);
-  };
   return h('details', {
-    class: 'sezione-tab incantesimi-a-mano', open: u.aperto || lista.length > 0 || undefined,
+    class: 'sezione-tab incantesimi-a-mano', open: u.aperto || undefined,
     ontoggle: (e) => { u.aperto = e.target.open; },
   },
-  h('summary', {}, h('h2', {}, 'Incantesimi aggiunti a mano'), h('span', { class: 'sigla' }, ` · ${lista.length}`)),
+  h('summary', {}, h('h2', {}, 'Aggiungi un incantesimo a mano'), lista.length ? h('span', { class: 'sigla' }, ` · ${lista.length} già aggiunt${lista.length === 1 ? 'o' : 'i'}, nell’elenco con «(Aggiunto)»`) : null),
   h('div', { class: 'corpo-consulta' },
-    h('p', { class: 'nota' }, 'Un incantesimo imparato fuori dall’avanzamento (un maestro, un ritrovamento, una concessione del Direttore). Non conta nelle quote né nei liberi e il passaggio di livello non lo toglie. L’app avvisa se il livello è alto, ma non blocca.'),
-    lista.length ? h('div', { class: 'incantesimi-griglia' }, lista.map(scheda)) : null,
+    h('p', { class: 'nota' }, 'Un incantesimo imparato fuori dall’avanzamento (un maestro, un ritrovamento, una concessione del Direttore). Va nell’elenco degli incantesimi con «(Aggiunto)»; «Togli» è nella sua scheda. Non conta nelle quote né nei liberi e il passaggio di livello non lo toglie. L’app avvisa se il livello è alto, ma non blocca.'),
     h('div', { class: 'aggiungi-a-mano' },
       h('label', { class: 'campo' }, h('span', {}, 'Incantesimo del catalogo, per nome'),
         h('input', {
@@ -2619,51 +2600,115 @@ function sezioneIncantesimiAMano(ctx) {
 }
 
 /**
- * «Incantesimi dagli oggetti» (Poteri, 20/10/2026): gli incantesimi che arrivano da un artefatto (incantesimo infuso,
- * Magia §24.2) o da un Consumabile (§27) si lanciano come quelli conosciuti: stessa scheda (il nome apre la stessa
- * finestra), stesso pannello «Lancia!» con costo, Azioni, durata e bersagli, e un effetto a durata finisce fra gli
- * «Incantesimi in corso». Restano legati all'oggetto: non sono conosciuti dal personaggio e, se l'oggetto esce
- * dall'Inventario, spariscono dalla scheda (src/incantesimi-artefatti.js). Per i Guanti da Combattimento Mistico, la cui
- * proprietà attiva i manuali non legano a un Incantesimo, c'è la loro attivazione.
+ * Elenco unico degli incantesimi della tab Poteri (20/10/2026, prova di Marcello: un posto solo dove guardare): gli
+ * incantesimi conosciuti, quelli aggiunti a mano («(Aggiunto)») e quelli che arrivano da un oggetto («(Artefatto)»,
+ * «(Pergamena)»), tutti sotto la loro macrofamiglia e specializzazione, con lo stesso aspetto e lo stesso «Lancia!».
+ * Origine, data e nota stanno nella scheda e nel suggerimento dell'etichetta. I conti non cambiano: «conosciuti / quota»
+ * conta solo i conosciuti e le quote non vedono gli altri (src/incantesimi-a-mano.js, src/incantesimi-artefatti.js).
+ * @param d dati del foglio Poteri (con le macrofamiglie dei conosciuti e degli aggiunti), o null senza la magia propria
+ * @param vuoto se mostrare «Nessun incantesimo scelto» quando non c'è nulla
  */
-function sezioneIncantesimiDaOggetti(ctx) {
-  const elenco = incantesimiDaOggetti({ voci: ctx.scelte.equipaggiamento ?? [], scheda: ctx.tab.scheda }, ctx.dati);
+function elencoUnificato(ctx, d, { vuoto = true } = {}) {
+  const oggetti = incantesimiDaOggetti({ voci: ctx.scelte.equipaggiamento ?? [], scheda: ctx.tab.scheda }, ctx.dati).filter((e) => e.origine !== 'proprieta');
+  const noti = d?.macrofamiglie ?? [];
+  const gruppi = ctx.dati.incantesimi.macrofamiglie.map((m) => ({
+    nome: m.nome,
+    specializzazioni: m.specializzazioni.map((sp) => ({
+      nome: sp,
+      noti: noti.find((x) => x.nome === m.nome)?.specializzazioni.find((y) => y.nome === sp)?.incantesimi ?? [],
+      oggetti: oggetti.filter((e) => { const inc = incantesimoDiOggetto(e, ctx.dati); return inc?.macrofamiglia === m.nome && inc?.specializzazione === sp; }),
+    })).filter((s) => s.noti.length || s.oggetti.length),
+  })).filter((m) => m.specializzazioni.length);
+  if (!gruppi.length) return vuoto ? [sezione('Incantesimi', h('p', { class: 'vuoto' }, 'Nessun incantesimo scelto.'))] : [];
+  return gruppi.map((mf) => sezione(mf.nome,
+    mf.specializzazioni.map((sp) => h('div', { class: 'incantesimi-griglia' },
+      h('h3', { class: 'spec' }, sp.nome),
+      sp.noti.map((i) => articoloIncantesimo(ctx, i, mf.nome)),
+      sp.oggetti.map((e) => regioneVivaSe(['pmAttuali', `chroma:${e.riserva?.uid ?? e.uid}`], () => schedaDaOggetto(ctx, e)))))));
+}
+
+/** «Togli» di un incantesimo aggiunto a mano: conferma, poi l'azione (con la riga nel registro). */
+async function chiediTogliAMano(ctx, x) {
+  const ok = await chiedi({ titolo: `Togli ${x.nome}`, testo: `${x.nome} (${x.origine.toLowerCase()} il ${dataLeggibile(x.quando)}) esce dagli incantesimi del personaggio. Non cambia le quote di Classe.`, si: 'Togli', no: 'Lascia' });
+  if (!ok) return;
+  const nuova = togliIncantesimoAMano(ctx.scelte.incantesimiAMano ?? [], x.nome);
+  if (nuova) ctx.azioni.incantesimiAMano(nuova, rigaRegistroAMano('tolto', { nome: x.nome, origine: (ctx.scelte.incantesimiAMano ?? []).find((y) => y.nome === x.nome)?.origine ?? 'a_mano', quando: x.quando }, ctx.dati));
+}
+
+/** La scheda di un incantesimo nell'elenco: conosciuto, oppure aggiunto a mano (`i.aggiunto`: origine, data, nota, avviso). */
+function articoloIncantesimo(ctx, i, nomeMacro) {
+  const agg = i.aggiunto ?? null;
+  return h('article', { class: `incantesimo-scheda ${classeMacrofamiglia(nomeMacro)}${agg ? ' incantesimo-a-mano' : ''}` },
+    h('div', { class: 'arma-testa' },
+      h('h4', {}, info('incantesimo', i.nome),
+        agg ? h('small', { class: 'etichetta-origine', title: `${agg.origine} il ${dataLeggibile(agg.quando)}${agg.nota ? ` · ${agg.nota}` : ''} · fuori dalle quote di Classe` }, ' (Aggiunto)') : null,
+        ' ', pallini(i.livelloBase), ' ', etichettaMacro(nomeMacro), h('span', { class: 'sigla' }, ` · livello base ${i.livelloBase} · scheda ${i.scheda}`)),
+      (() => {
+        // senza versioni accessibili il pulsante resta, disabilitato con il motivo (mai un pulsante muto)
+        const inc = ctx.dati.incantesimi.incantesimi.find((x) => x.nome === i.nome);
+        const st = inc ? statoPulsanteLancio(inc, ctx.tab.scheda, ctx.dati) : { disabilitato: true, motivo: 'incantesimo non più nel catalogo' };
+        // N2: senza versioni accessibili (livello, Ritualista) il pannello si apre lo stesso, con l'avviso; fermo solo senza dati
+        return h('button', { type: 'button', class: `btn primario btn-attacca${st.disabilitato ? ' con-avviso' : ''}`, disabled: !inc || !(inc.versioni ?? []).length, title: st.motivo,
+          onclick: () => { ctx.ui.lancio = { nome: i.nome, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Lancia!');
+      })(),
+      agg ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Toglie l’incantesimo dalla scheda (non cambia le quote)', onclick: () => chiediTogliAMano(ctx, { nome: i.nome, origine: agg.origine, quando: agg.quando }) }, 'Togli') : null),
+    agg ? h('p', { class: 'piccolo origine-aggiunto' }, h('strong', {}, agg.origine), ` il ${dataLeggibile(agg.quando)}`, agg.nota ? ` · ${agg.nota}` : '', ' · fuori dalle quote di Classe.') : null,
+    agg?.avviso ? h('p', { class: 'nota motivo' }, `Avviso: ${agg.avviso}`) : null,
+    i.intestazione ? h('p', { class: 'piccolo' }, i.intestazione) : null,
+    i.lancio ? h('p', { class: 'piccolo' }, i.lancio) : null,
+    i.righe.length ? h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
+      h('thead', {}, h('tr', {}, i.colonne.map((c) => h('th', {}, c)))),
+      h('tbody', {}, i.righe.map((r) => h('tr', {}, r.map((v) => h('td', {}, v)))))))
+      : h('p', { class: 'nota' }, `Tabella non disponibile: Manuale della Magia, scheda ${i.scheda}.`));
+}
+
+/**
+ * La scheda di un incantesimo che arriva da un oggetto, nell'elenco unico: «(Artefatto)», «(Pergamena)» o «(Consumabile)»
+ * accanto al nome, l'oggetto nel suggerimento e nella riga sotto. Il «Lancia!» apre il pannello dell'oggetto (src/ui/lancio.js).
+ */
+function schedaDaOggetto(ctx, e) {
+  const rotti = new Set(ctx.tab.scheda.equipaggiamento?.rotti ?? []);
+  const inc = incantesimoDiOggetto(e, ctx.dati);
+  const a = attivazioneOggetto(e, { sessione: ctx.sessione, inScontro: !!ctx.roundScontro, rotti }, ctx.dati);
+  const riga = (inc?.versioni ?? []).find((v) => livelloVersione(v) === e.livello) ?? null;
+  const consumabile = e.origine === 'consumabile';
+  const etichetta = consumabile ? (/pergamena/i.test(e.oggetto) ? '(Pergamena)' : '(Consumabile)') : '(Artefatto)';
+  return h('article', { class: `incantesimo-scheda ${classeMacrofamiglia(inc?.macrofamiglia)} incantesimo-da-oggetto` },
+    h('div', { class: 'arma-testa' },
+      h('h4', {}, info('incantesimo', e.incantesimo), h('small', { class: 'etichetta-origine', title: `Da ${e.oggetto}: legato all’oggetto, non è un incantesimo conosciuto` }, ` ${etichetta}`), ' ',
+        inc ? etichettaMacro(inc.macrofamiglia) : null,
+        h('span', { class: 'sigla' }, ` · livello ${e.livello} · da ${e.oggetto}${consumabile ? ` (× ${e.quantita})` : ''}`)),
+      h('button', {
+        type: 'button', class: `btn primario btn-attacca${a?.motivo ? ' con-avviso' : ''}`, disabled: !inc || !riga, title: a?.motivo ?? (inc ? null : 'incantesimo non più nel catalogo'),
+        onclick: () => { ctx.ui.lancio = { nome: e.incantesimo, passo: 0, da: e.chiave }; ctx.azioni.ridisegna(); },
+      }, 'Lancia!')),
+    h('p', { class: 'piccolo' }, consumabile
+      ? `Consumabile: ${a.pm} PM sigillati (non sono PM tuoi) · ${a.tempo} · si consuma al completamento (Magia §27.1).`
+      : `${a?.pm ?? '—'} PM ${a?.universale ? 'dalla riserva e, se non bastano, personali' : 'dalla riserva interna'} · ${a?.tempo ?? '—'} · senza Prova di Potere (Magia §24.2).`),
+    a?.motivo ? h('p', { class: 'nota motivo' }, `Avviso: ${a.motivo}. Si può lanciare comunque.`) : null,
+    riga ? h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
+      h('thead', {}, h('tr', {}, Object.keys(riga).map((c) => h('th', {}, c)))),
+      h('tbody', {}, h('tr', {}, Object.values(riga).map((v) => h('td', {}, String(v))))))) : h('p', { class: 'nota motivo' }, `La scheda di ${e.incantesimo} non ha la versione di livello ${e.livello}.`));
+}
+
+/**
+ * Proprietà attive degli oggetti che i manuali non legano a un Incantesimo (Guanti da Combattimento Mistico, Magia
+ * §26.6.2, Armamenti §7.24; A.175): non sono nell'elenco degli incantesimi, hanno la loro attivazione.
+ */
+function sezioneProprietaDaOggetti(ctx) {
+  const elenco = incantesimiDaOggetti({ voci: ctx.scelte.equipaggiamento ?? [], scheda: ctx.tab.scheda }, ctx.dati).filter((e) => e.origine === 'proprieta');
   if (!elenco.length) return null;
   const cat = catalogo(ctx.dati);
   const st = ctx.tab.scheda.equipaggiamento?.sintonizzazione;
   const contenitori = ctx.tab.scheda.equipaggiamento?.contenitori ?? [];
-  const rotti = new Set(ctx.tab.scheda.equipaggiamento?.rotti ?? []);
-  const scheda = (e) => {
-    if (e.origine === 'proprieta') {
+  return sezione('Proprietà attive degli oggetti',
+    h('div', { class: 'incantesimi-griglia' }, elenco.map((e) => {
       const x = st?.artefatti.find((y) => y.uid === e.uid);
       const r = risolvi((ctx.scelte.equipaggiamento ?? []).find((v) => v.uid === e.uid), cat);
       return h('article', { class: 'incantesimo-scheda macro-oggetto' },
         h('div', { class: 'arma-testa' }, h('h4', {}, e.oggetto, h('span', { class: 'sigla' }, ' · proprietà attiva (nessun Incantesimo)'))),
         x ? attivazioneArtefattoUi(ctx, x, r, contenitori.find((c) => c.uid === e.uid && c.integrato)) : null);
-    }
-    const inc = incantesimoDiOggetto(e, ctx.dati);
-    const a = attivazioneOggetto(e, { sessione: ctx.sessione, inScontro: !!ctx.roundScontro, rotti }, ctx.dati);
-    const riga = (inc?.versioni ?? []).find((v) => livelloVersione(v) === e.livello) ?? null;
-    const consumabile = e.origine === 'consumabile';
-    return h('article', { class: `incantesimo-scheda ${classeMacrofamiglia(inc?.macrofamiglia)}` },
-      h('div', { class: 'arma-testa' },
-        h('h4', {}, info('incantesimo', e.incantesimo), ' ', inc ? etichettaMacro(inc.macrofamiglia) : null,
-          h('span', { class: 'sigla' }, ` · livello ${e.livello} · da ${e.oggetto}${consumabile ? ` (× ${e.quantita})` : ''}`)),
-        h('button', {
-          type: 'button', class: `btn primario btn-attacca${a?.motivo ? ' con-avviso' : ''}`, disabled: !inc || !riga, title: a?.motivo ?? (inc ? null : 'incantesimo non più nel catalogo'),
-          onclick: () => { ctx.ui.lancio = { nome: e.incantesimo, passo: 0, da: e.chiave }; ctx.azioni.ridisegna(); },
-        }, 'Lancia!')),
-      h('p', { class: 'piccolo' }, consumabile
-        ? `Consumabile: ${a.pm} PM sigillati (non sono PM tuoi) · ${a.tempo} · si consuma al completamento (Magia §27.1).`
-        : `${a?.pm ?? '—'} PM ${a?.universale ? 'dalla riserva e, se non bastano, personali' : 'dalla riserva interna'} · ${a?.tempo ?? '—'} · senza Prova di Potere (Magia §24.2).`),
-      a?.motivo ? h('p', { class: 'nota motivo' }, `Avviso: ${a.motivo}. Si può lanciare comunque.`) : null,
-      riga ? h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
-        h('thead', {}, h('tr', {}, Object.keys(riga).map((c) => h('th', {}, c)))),
-        h('tbody', {}, h('tr', {}, Object.values(riga).map((v) => h('td', {}, String(v))))))) : h('p', { class: 'nota motivo' }, `La scheda di ${e.incantesimo} non ha la versione di livello ${e.livello}.`));
-  };
-  return sezione('Incantesimi dagli oggetti',
-    h('p', { class: 'nota' }, 'Legati all’oggetto: non sono incantesimi conosciuti dal personaggio e spariscono se l’oggetto esce dall’Inventario. «Lancia!» apre il pannello di attivazione.'),
-    h('div', { class: 'incantesimi-griglia' }, elenco.map((e) => regioneVivaSe(['pmAttuali', `chroma:${e.riserva?.uid ?? e.uid}`], () => scheda(e)))));
+    })));
 }
 
 /**
@@ -3044,27 +3089,7 @@ function tabMagia(ctx, d) {
     contenitori.length ? sezione('Riserve esterne',
       h('p', { class: 'nota' }, `Magia sez. 6: il costo di un lancio si paga con i PM personali, con ${perLancio === 1 ? 'un solo contenitore' : `al massimo ${perLancio} contenitori`} trasportato, sintonizzato e compatibile, o con entrambi. Possedere PM in un contenitore non evita lo svenimento a 0 PM personali. I PM dei cristalli si modificano nel riquadro Punti Magia, qui sopra.`),
       h('div', { class: 'armi-tab' }, contenitori.map((c) => schedaContenitore(ctx, c)))) : null,
-    d.macrofamiglie.length ? d.macrofamiglie.map((mf) => sezione(mf.nome,
-      mf.specializzazioni.map((sp) => h('div', { class: 'incantesimi-griglia' },
-        h('h3', { class: 'spec' }, sp.nome),
-        sp.incantesimi.map((i) => h('article', { class: `incantesimo-scheda ${classeMacrofamiglia(mf.nome)}` },
-          h('div', { class: 'arma-testa' },
-            h('h4', {}, info('incantesimo', i.nome), ' ', pallini(i.livelloBase), ' ', etichettaMacro(mf.nome), h('span', { class: 'sigla' }, ` · livello base ${i.livelloBase} · scheda ${i.scheda}`)),
-            (() => {
-              // senza versioni accessibili il pulsante resta, disabilitato con il motivo (mai un pulsante muto)
-              const inc = ctx.dati.incantesimi.incantesimi.find((x) => x.nome === i.nome);
-              const st = inc ? statoPulsanteLancio(inc, ctx.tab.scheda, ctx.dati) : { disabilitato: true, motivo: 'incantesimo non più nel catalogo' };
-              // N2: senza versioni accessibili (livello, Ritualista) il pannello si apre lo stesso, con l'avviso; fermo solo senza dati
-              return h('button', { type: 'button', class: `btn primario btn-attacca${st.disabilitato ? ' con-avviso' : ''}`, disabled: !inc || !(inc.versioni ?? []).length, title: st.motivo,
-                onclick: () => { ctx.ui.lancio = { nome: i.nome, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Lancia!');
-            })()),
-          i.intestazione ? h('p', { class: 'piccolo' }, i.intestazione) : null,
-          i.lancio ? h('p', { class: 'piccolo' }, i.lancio) : null,
-          i.righe.length ? h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
-            h('thead', {}, h('tr', {}, i.colonne.map((c) => h('th', {}, c)))),
-            h('tbody', {}, i.righe.map((r) => h('tr', {}, r.map((v) => h('td', {}, v)))))))
-            : h('p', { class: 'nota' }, `Tabella non disponibile: Manuale della Magia, scheda ${i.scheda}.`)))))))
-      : sezione('Incantesimi', h('p', { class: 'vuoto' }, 'Nessun incantesimo scelto.')),
+    ...elencoUnificato(ctx, d),
   ];
 }
 
