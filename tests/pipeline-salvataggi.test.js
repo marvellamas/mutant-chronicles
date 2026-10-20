@@ -190,6 +190,7 @@ test('fuori dalla sessione i personaggi non si toccano: preparare nemici e scont
 });
 
 test('la pulizia: il rapporto dice quale file è l’originale e quali andrebbero in storico, senza toccare niente', async () => {
+  // NB: il rapporto che guarda dentro i file (segni, casi dubbi) è provato in tests/copia-di-lavoro.test.js
   const prova = mkdtempSync(join(tmpdir(), 'mutant-pulizia-'));
   const pg = 'pg-7777777777777777aaaa7777';
   mkdirSync(join(prova), { recursive: true });
@@ -197,7 +198,7 @@ test('la pulizia: il rapporto dice quale file è l’originale e quali andrebber
   writeFileSync(join(prova, 'Aiko_liv5_2026-10-13.json'), testo('Aiko', pg));
   writeFileSync(join(prova, 'Altro_liv5_2026-10-02.json'), testo('Altro', ALTRO));
   writeFileSync(join(prova, 'note.txt'), 'non è un personaggio');
-  // date di modifica diverse: l'originale è il file modificato più di recente
+  // date di modifica diverse: a parità di segni dentro, l'originale è il file modificato più di recente
   const quando = (f, g) => utimesSync(join(prova, f), new Date(`2026-10-${g}T10:00:00Z`), new Date(`2026-10-${g}T10:00:00Z`));
   quando('Aiko_liv5_2026-10-01.json', '01');
   quando('Aiko_liv5_2026-10-13.json', '13');
@@ -206,11 +207,11 @@ test('la pulizia: il rapporto dice quale file è l’originale e quali andrebber
   assert.equal(r.totale, 3);
   assert.equal(r.dopo, 2, 'due personaggi: due file dopo la pulizia');
   const aiko = r.personaggi.find((p) => p.id === pg);
-  assert.equal(aiko.file.length, 2);
-  assert.equal(aiko.originale.file, 'Aiko_liv5_2026-10-13.json', 'il più recente è l’originale proposto');
+  assert.equal(aiko.segni.length, 2);
+  assert.equal(aiko.proposto.file, 'Aiko_liv5_2026-10-13.json', 'a parità di segni, il più recente');
   assert.deepEqual(aiko.altri.map((x) => x.file), ['Aiko_liv5_2026-10-01.json']);
   const testoR = testoRapporto(r);
-  assert.match(testoR, /originale proposto: Aiko_liv5_2026-10-13\.json/);
+  assert.match(testoR, /Propongo Aiko_liv5_2026-10-13.json/);
   assert.match(testoR, /Niente è stato toccato/);
   // il rapporto non sposta niente
   assert.equal(readdirSync(prova).filter((x) => x.endsWith('.json')).length, 3);
@@ -221,7 +222,7 @@ test('la pulizia: il rapporto dice quale file è l’originale e quali andrebber
   assert.equal(readdirSync(join(prova, CARTELLA_STORICO, pg)).length, 1);
   assert.ok(readdirSync(prova).includes('note.txt'), 'ciò che non è un personaggio non si tocca');
   rmSync(prova, { recursive: true, force: true });
-});
+});;
 
 test('elenco dei personaggi: «Apri» e «Modifica master» su ogni riga (solo sul PC del master, con la cartella)', () => {
   const app = readFileSync(new URL('../src/ui/app.js', import.meta.url), 'utf8');

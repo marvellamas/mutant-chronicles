@@ -1,5 +1,17 @@
 # I personaggi dopo il lotto «un originale solo» (20/10/2026)
 
+## Chi tiene l'originale (chiarimento di Marcello, 20/10 sera)
+
+**I personaggi veri stanno sul PC del Direttore.** Quella è l'unica cartella `personaggi/` che conta.
+
+- Ogni altra installazione (il portatile di chi sviluppa, una copia per provare) è una **copia di lavoro**: serve a provare, non a custodire. I 26 file analizzati nella ricognizione qui sotto erano di una copia di lavoro, non gli originali.
+- **I personaggi non viaggiano da una copia di lavoro all'originale** se non con un'operazione esplicita e dichiarata. Mai in automatico, mai di nascosto dentro un ripristino.
+- **Come si marca una copia di lavoro:** un file `COPIA-DI-LAVORO.txt` nella cartella dell'app o in `personaggi/`; la prima riga è una nota libera. Basta crearlo, senza toccare il codice, e non è tracciato da git (su un'altra installazione sarebbe un avviso falso). Dove c'è, in cima a ogni pagina — scheda, Tavolo, plancia, mappa, tablet dei giocatori — compare la riga «Copia di lavoro — i personaggi veri sono sul PC del Direttore». Sul PC del Direttore non compare niente.
+- **Prima di sovrascrivere** (ripristino, caricamento di un salvataggio) si dice da dove arrivano i dati e che cosa sostituiscono. Se i dati vengono da una copia di lavoro e la destinazione è l'originale, l'avviso è forte e la conferma si scrive per esteso (`SOVRASCRIVI`). Il marcatore dentro `personaggi/` viaggia nello zip del salvataggio: è così che il ripristino sa da dove vengono i dati.
+- **Scegliere l'originale fra più file** non si fa con la data del file: cinque PG su sette avevano la stessa ora perché riscritti insieme da un recupero. Si guardano i segni dentro — livello, PX, calendario di gioco — e dove non concordano si dichiara **caso dubbio** invece di scegliere (`src/confronto-personaggi.js`).
+
+Per i due prompt successivi: il tablet è una vista dell'originale, non un'altra copia; e il rientro dall'offline è un'operazione esplicita verso l'originale, quindi segue le regole di questa sezione.
+
 Prima parte della pipeline dei salvataggi decisa con Marcello il 20/10. Le altre due — il tablet come vista, l'offline e il rientro — vengono dopo, una per volta. Questo documento è la mappa da cui partono.
 
 > La specifica completa (`claude/pipeline-salvataggi.md`) non è nel repo: ho lavorato sui punti A–G del prompt. Se il documento contiene decisioni che qui non compaiono, vanno rilette prima della seconda parte.

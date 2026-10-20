@@ -1869,3 +1869,11 @@ Lavoro tecnico deciso con Marcello il 20/10, senza regole del manuale in gioco: 
 - **Si salva a ogni modifica** (400 ms, e subito quando la pagina si chiude o si nasconde): spegnere il server non perde più niente.
 - **«Apri» e «Modifica master»** su ogni riga dell'elenco dei personaggi, senza passare dalle mini-schede di uno scontro.
 - **Fermato:** rinominare i file in `personaggi/<id>.json`. Il nome del file è oggi la chiave con cui i PG sono scritti dentro `tavolo/sessione.json`, gli scontri (anche archiviati), le scene e i veicoli: rinominare romperebbe quei riferimenti. Va disaccoppiata prima la chiave del tavolo; il documento spiega come.
+
+## 20 ottobre 2026, sera — chi tiene l'originale dei personaggi (nessuna domanda nuova)
+
+Chiarimento di Marcello: i personaggi veri stanno sul PC di Davide; le altre installazioni sono copie di lavoro. Niente da chiedere a Davide (restano aperte A.171, A.172 e A.174–A.176). Dettagli in `docs/personaggi-pipeline-2026-10-20.md`.
+
+- **Marcatore `COPIA-DI-LAVORO.txt`:** dove c'è, una riga in cima a ogni pagina lo dice (scheda, Tavolo, plancia, mappa, tablet). Sul PC del Direttore non compare niente. Non è tracciato da git.
+- **Prima di sovrascrivere** (ripristino, salvataggio caricato) si dice da dove arrivano i dati; da una copia di lavoro verso l'originale serve la conferma scritta `SOVRASCRIVI`.
+- **Il rapporto della pulizia guarda dentro i file** (livello, PX, PV, PM, oggetti, crediti, calendario di gioco, Ferite, Affaticamento, Stati), non solo la data: dove i segni non concordano dichiara un **caso dubbio** e non sceglie. Per Davide c'è `distribuzione\4_controlla_personaggi.bat`, che stampa il rapporto, lo scrive in un file di testo e chiede «SI» solo alla fine.

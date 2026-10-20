@@ -26,7 +26,10 @@ after(() => { server.close(); rmSync(cartella, { recursive: true, force: true })
 test('server: ping, file dell’app con gli header di serve.json, niente uscite dalla cartella', async () => {
   const ping = await (await fetch(`${base}/api/ping`)).json();
   // dice anche chi è (versione, ora di avvio, pid): un nuovo avvio lo riconosce (src/porta-occupata.js)
-  assert.deepEqual({ ...ping, versione: undefined, avviato: undefined, pid: undefined }, { ok: true, app: 'mutant', cartella: 'personaggi', versione: undefined, avviato: undefined, pid: undefined, master: true });
+  // copiaDiLavoro/notaCopia dipendono dall'installazione su cui girano i test (20/10: il marcatore COPIA-DI-LAVORO.txt,
+  // che sulla macchina di chi sviluppa c'è e sul PC del Direttore no): qui non si guardano
+  assert.deepEqual({ ...ping, versione: undefined, avviato: undefined, pid: undefined, copiaDiLavoro: undefined, notaCopia: undefined },
+    { ok: true, app: 'mutant', cartella: 'personaggi', versione: undefined, avviato: undefined, pid: undefined, master: true, copiaDiLavoro: undefined, notaCopia: undefined });
   assert.equal(ping.pid, process.pid);
   assert.match(ping.avviato, /^\d{4}-\d\d-\d\dT/);
   const indice = await fetch(`${base}/`);
