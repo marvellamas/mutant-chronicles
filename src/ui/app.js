@@ -4,6 +4,7 @@
 // disegno con calcolaScheda / anteprima.
 import { conScorrimentoFisso, montaTornaSopra } from './scorrimento.js';
 import { aggiornaVivi } from './vivi.js';
+import { leggiStatoInstallazione, montaFasciaCopia } from './copia-di-lavoro.js';
 import { caricaDati, versioniPersonaggio, FILE_SOLO_TAVOLO } from '../rules.js';
 import { impiantiAttivabili, statoProcessore, attivaChip, terminaChip } from '../impianti.js';
 import { formattaErrore, trovaTodo } from '../validate.js';
@@ -129,6 +130,9 @@ async function avvia() {
   stato.sfondi = cercaSfondi(stato.dati.corporazioni.corporazioni);
   // cartella dei personaggi (server.mjs): se il server non c'è l'app resta com'era
   stato.cartella = await serverCartella();
+  // 20/10: su una copia di lavoro una riga in cima a ogni pagina lo dice (src/ui/copia-di-lavoro.js). Sul PC del
+  // Direttore non compare niente: dove si gioca non si aggiunge rumore.
+  if (stato.cartella) montaFasciaCopia(await leggiStatoInstallazione());
   // «Modifica master»: contesto master = pagina aperta sul PC del server; il tasto MUTANT (S1) solo lì
   stato.master = contestoMasterQui();
   // 13/10: perché non si è master, per la riga di stato del Tavolo (il server vecchio non lo dice)

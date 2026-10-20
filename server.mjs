@@ -122,6 +122,7 @@ import { validaScontro, rigaOpportunita, rigaAiutoMaster, diTurno, registraRiga,
 import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
 import { NOME_FILE, fileProvvisorio, ultimiPerPersonaggio, chiaveDaFile, chiavePersonaggio } from './src/cartella.js';
 import { conMetadati, serveCopia, copieDaTogliere, idPersonaggio, cartellaStorico, nomeCopiaStorica, CARTELLA_STORICO } from './src/storico-personaggi.js';
+import { NOME_MARCATORE, statoInstallazione } from './src/copia-di-lavoro.js';
 import { validaRecord, ID_VEICOLO, migraVeicoli, eRiferimento, stessaChiave } from './src/veicoli-registro.js';
 import { normalizzaVeicoli } from './src/veicoli.js';
 import { caricaDati } from './src/rules.js';
@@ -193,6 +194,18 @@ async function personaggioDelFile(dove, s = null) {
 }
 /** Nome di file per il confronto: Windows non distingue le maiuscole; gli accenti confondono chi legge. */
 const formaFile = (f) => String(f).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+/**
+ * Questa installazione è una copia di lavoro? (20/10/2026) Lo dice il file COPIA-DI-LAVORO.txt, nella cartella
+ * dell'applicazione o in quella dei personaggi: basta crearlo, senza toccare il codice. Sul PC del Direttore non c'è.
+ * La prima riga del file è una nota libera che l'app mostra accanto all'avviso.
+ */
+function leggiMarcatore(radice, cartella) {
+  for (const dove of [join(radice, NOME_MARCATORE), join(cartella, NOME_MARCATORE)]) {
+    try { return statoInstallazione(readFileSync(dove, 'utf8')); } catch { /* non c'è: si prova il posto dopo */ }
+  }
+  return statoInstallazione(null);
+}
+
 /**
  * «Un originale solo» (20/10/2026): la copia del file prima di sovrascriverlo, in `personaggi/storico/<id>/<data-ora>.json`.
  * L'id è quello stabile del personaggio (il suo `pg`, o il «Nome» del file per i file di prima). Si tiene una copia ogni
@@ -1736,7 +1749,12 @@ export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA),
       const percorso = decodeURI(new URL(req.url, 'http://x').pathname);
       // contesto master: la richiesta arriva dal PC dove gira il server (lo stesso controllo di «Spegni Mutant»)
       req.mutantMaster = eMaster(req);
-      if (percorso === '/api/ping') return json(res, 200, { ok: true, app: 'mutant', cartella: CARTELLA, ...identita, master: req.mutantMaster });
+      if (percorso === '/api/ping') {
+        // 20/10: l'app deve dire su quale installazione sta girando (src/copia-di-lavoro.js). Il marcatore si legge a
+        // ogni ping: metterlo o toglierlo ha effetto ricaricando la pagina, senza riavviare il server.
+        const c = leggiMarcatore(radice, cartella);
+        return json(res, 200, { ok: true, app: 'mutant', cartella: CARTELLA, ...identita, master: req.mutantMaster, ...(c.copiaDiLavoro ? { copiaDiLavoro: true, notaCopia: c.nota } : {}) });
+      }
       // Cartella dei personaggi vuota all'avvio (12/10/2026): il Tavolo lo dice al master, con il percorso in uso
       if (percorso === '/api/avvio') return json(res, 200, avvio ? avvio() : { vuota: false, percorso: cartella, salvataggi: [], testo: '' });
       if (percorso === '/api/backup-master' || percorso.startsWith('/api/backup-master/')) return await apiBackupMaster(req, res, percorso, backupMaster, req.mutantMaster);

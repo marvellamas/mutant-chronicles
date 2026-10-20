@@ -2869,3 +2869,19 @@ p.riga-chroma-viva { display: block; }
 /* 20/10/2026 — «Modifica master» nell'elenco dei personaggi (pagina iniziale): come il pulsante della plancia */
 .elenco-personaggi .btn-modifica-master { border-color: var(--accento); color: var(--accento); }
 .elenco-personaggi .btn-modifica-master:hover, .elenco-personaggi .btn-modifica-master:focus-visible { background: var(--accento); color: var(--accento-testo); }
+
+/* 20/10/2026 — «Copia di lavoro»: la riga in cima a ogni pagina (scheda, Tavolo, plancia, mappa, tablet dei giocatori).
+   Si legge da un metro: larga quanto la pagina, ferma in alto, con i colori dell'attenzione. Sul PC del Direttore non c'è. */
+.fascia-copia-di-lavoro {
+  position: sticky; top: 0; z-index: var(--z-barre);
+  background: var(--attenzione); color: var(--accento-testo);
+  padding: 0.5rem 1rem; text-align: center; font-size: 1.05rem; line-height: 1.3;
+  border-bottom: 3px solid var(--accento);
+}
+.fascia-copia-di-lavoro strong { font-size: 1.1rem; letter-spacing: 0.01em; }
+.fascia-copia-di-lavoro .nota-copia { opacity: 0.9; }
+@media (max-width: 600px) { .fascia-copia-di-lavoro { font-size: 0.95rem; padding: 0.4rem 0.6rem; } }
+/* la mappa occupa tutta l'altezza della finestra: con la riga sopra, tanto meno */
+body:has(.mappa-pagina) .fascia-copia-di-lavoro { position: static; }
+body.con-fascia-copia:has(.mappa-pagina) { height: auto; min-height: 100dvh; }
+@media print { .fascia-copia-di-lavoro { display: none; } }

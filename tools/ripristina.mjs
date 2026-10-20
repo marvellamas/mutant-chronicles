@@ -12,6 +12,7 @@ import { existsSync, readdirSync, statSync, readFileSync, openSync, readSync, cl
 import { mkdir, writeFile, rename, rm, copyFile, readFile } from 'node:fs/promises';
 import { join, dirname, normalize, sep } from 'node:path';
 import { CARTELLE, cartelleDi, raccogli, creaZip, leggiZip, nomeLibero, dimensione, cartellaDrive } from './salva-sessione.mjs';
+import { NOME_MARCATORE, statoInstallazione, avvisoSovrascrittura } from '../src/copia-di-lavoro.js';
 
 const due = (n) => String(n).padStart(2, '0');
 /** prima-del-ripristino_AAAA-MM-GG_hhmm.zip */
@@ -219,7 +220,11 @@ export function contenutoSalvataggio(buf) {
     (perCartella[cartella] ??= []).push({ rel, dati });
   }
   if (!Object.keys(perCartella).length) throw new Error('lo zip non contiene nessuna delle cartelle di Mutant');
-  return { perCartella, estranei };
+  // 20/10: da dove arrivano questi dati? Il marcatore COPIA-DI-LAVORO.txt viaggia dentro lo zip con la cartella dei
+  // personaggi: se c'è, il salvataggio è stato fatto su una copia di lavoro e non sul PC del Direttore.
+  const marcatore = (perCartella.personaggi ?? []).find((x) => x.rel === NOME_MARCATORE);
+  const da = marcatore ? statoInstallazione(Buffer.from(marcatore.dati).toString('utf8')) : statoInstallazione(null);
+  return { perCartella, estranei, origine: da.copiaDiLavoro ? 'copia' : 'sconosciuta', notaOrigine: da.nota };
 }
 
 const ERRORI = new Set(['EPERM', 'EACCES', 'EBUSY']);

@@ -14,6 +14,7 @@ import { fileURLToPath } from 'node:url';
 import { createInterface } from 'node:readline/promises';
 import { cartelleDi, perConsole } from './salva-sessione.mjs';
 import { elencoSalvataggi, rigaSalvataggio, quando, statoServer, spegniServer, ripristina, contenutoSalvataggio, avvisoCartellaVuota, postiSalvataggi, contenutoPerElenco } from './ripristina.mjs';
+import { NOME_MARCATORE, statoInstallazione, avvisoSovrascrittura } from '../src/copia-di-lavoro.js';
 import { leggiConfig, dimensione } from './salva-sessione.mjs';
 import { statoImpostazioni, testoAvvisi, testoDrive, argomentoGruppo, salvaAvvisi, salvaDrive, posizioniDrive, notificaDiProva, erroriNuovi, FILE_REGISTRO } from './impostazioni.mjs';
 import { hostname } from 'node:os';
@@ -52,6 +53,13 @@ export function preparaImpostazioni(radiceApp = radice) {
  * Domande nella finestra nera, una riga per risposta. Le righe arrivate prima della domanda restano in coda (anche
  * con l'input da un file o da una pipe, come nelle prove); a fine input ogni risposta è vuota, cioè «annulla».
  */
+/** Questa installazione è una copia di lavoro? (20/10/2026, src/copia-di-lavoro.js) */
+function marcatoreQui(radice) {
+  for (const dove of [join(radice, NOME_MARCATORE), join(radice, 'personaggi', NOME_MARCATORE)]) {
+    try { return statoInstallazione(readFileSync(dove, 'utf8')); } catch { /* non c'è */ }
+  }
+  return statoInstallazione(null);
+}
 function lettore() {
   const rl = createInterface({ input: process.stdin });
   const coda = [];
@@ -135,7 +143,20 @@ async function voceRipristina() {
     }
     console.log('\n Queste cartelle di Mutant verranno sostituite. Prima faccio una copia di sicurezza di come sono');
     console.log(' adesso (salvataggi\\prima-del-ripristino_....zip), da cui si puo\' tornare indietro con questa stessa voce.');
-    if (!si(await chiedi(' Procedo? [S/N] '))) { console.log(' Annullato: non ho toccato nulla.'); return; }
+    // 20/10: da dove arrivano i dati e che cosa sostituiscono. Se vengono da una copia di lavoro e qui è
+    // l'installazione del Direttore (i personaggi veri), l'avviso è forte e la conferma si scrive per esteso.
+    const qui = marcatoreQui(radice);
+    const av = avvisoSovrascrittura({
+      origine: contenuto.origine, destinazione: qui.copiaDiLavoro ? 'copia' : 'originale',
+      che: `le cartelle di gioco di questa installazione (${Object.keys(contenuto.perCartella).join(', ')})`,
+      daDove: `${scelto.nome}${contenuto.notaOrigine ? ` — ${contenuto.notaOrigine}` : ''}`,
+    });
+    console.log(`\n ${perConsole(av.titolo)}`);
+    for (const r of av.righe) console.log(`   ${perConsole(r)}`);
+    if (av.confermaScritta) {
+      const scritto = (await chiedi(` Per procedere scrivi ${av.confermaScritta} (qualunque altra cosa annulla): `)).trim();
+      if (scritto !== av.confermaScritta) { console.log(' Annullato: non ho toccato nulla.'); return; }
+    } else if (!si(await chiedi(' Procedo? [S/N] '))) { console.log(' Annullato: non ho toccato nulla.'); return; }
     const e = await ripristina({ zip: scelto.percorso, cartelle: cartelleDi(radice), salvataggi, serverAcceso: async () => (await statoServer(porta)).acceso });
     if (e.copiaSicurezza) console.log(`\n Copia di sicurezza: ${e.copiaSicurezza}`);
     for (const x of e.rimesse ?? []) console.log(` Rimessa la cartella ${x.cartella} (${x.file} file).`);

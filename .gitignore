@@ -90,3 +90,9 @@ galleria/*
 # campagna e roster; dati di gioco, nei backup di «Salva sessione»; si traccia solo il LEGGIMI
 px/*
 !px/LEGGIMI.txt
+
+# «Copia di lavoro» (20/10/2026, src/copia-di-lavoro.js): il marcatore è di questa installazione, non del progetto.
+# Se finisse in git comparirebbe anche sul PC del Direttore, dove i personaggi sono gli originali e l'avviso
+# sarebbe falso. Chi vuole marcare la propria installazione crea il file a mano.
+COPIA-DI-LAVORO.txt
+personaggi/COPIA-DI-LAVORO.txt
