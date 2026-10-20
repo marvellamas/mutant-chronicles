@@ -2865,3 +2865,7 @@ textarea.cal-testo { min-height: calc(4 * 1.4em + 0.8rem); line-height: 1.4; fon
 /* 20/10/2026 — zone vive (src/ui/vivi.js): non cambiano l'impaginazione di ciò che avvolgono */
 .regione-viva, .riga-chroma-viva { display: contents; }
 p.riga-chroma-viva { display: block; }
+
+/* 20/10/2026 — «Modifica master» nell'elenco dei personaggi (pagina iniziale): come il pulsante della plancia */
+.elenco-personaggi .btn-modifica-master { border-color: var(--accento); color: var(--accento); }
+.elenco-personaggi .btn-modifica-master:hover, .elenco-personaggi .btn-modifica-master:focus-visible { background: var(--accento); color: var(--accento-testo); }
