@@ -14,7 +14,7 @@ import { togliRound, roundRimasti } from '../morente.js';
 import { vistaPlancia, testoConSessione, sessioneDaFile, pgDaAggiungere } from '../tavolo.js';
 import { riallinea, alRound, terminaDurate, collegamentoScontro, durateCarta, testoDurata } from '../round-scontro.js';
 import { rigaDurate } from './durate.js';
-import { ultimiPerPersonaggio, chiaveDaFile, nomiCheSiConfondono } from '../cartella.js';
+import { ultimiPerPersonaggio, ultimiPerPg, chiaveDaFile, nomiCheSiConfondono } from '../cartella.js';
 import { elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, creaInCartella } from './cartella.js';
 import { apriColpo, specDaFormula } from './colpo.js';
 import { tira } from '../tiri.js';
@@ -466,7 +466,8 @@ export function renderTavolo(radice, ctx) {
     // PX della partita (A.161): la tab, solo sul PC del master e non dentro la mappa
     const px = (ctx.master && !ctx.inMappa && stato.db) ? pannelloPx(ctx, {
       db: stato.db, dati: ctx.dati, uiPx: stato.uiPx, pxGiocatori: pxGiocatori(),
-      schede: stato.elenco, scontri: stato.scontro ? [stato.scontro] : [],
+      // 20/10: un personaggio una volta sola nel menu (prima c'erano tutti i file datati: tre o quattro copie per PG)
+      schede: ultimiPerPg(stato.elenco), scontri: stato.scontro ? [stato.scontro] : [],
     }, { salva: salvaPxDb, ridisegna: disegna, assegna: assegnaPx }) : null;
     const bestiario = pannelloBestiario(ctx, stato.bestiario, {
       aperto: stato.bestiarioAperto,

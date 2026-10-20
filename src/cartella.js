@@ -206,3 +206,20 @@ export function attesaRitentativo(dati) {
   const s = dati.regole.interfaccia.salvataggio.ritenta_ogni_s;
   return Math.max(1, Number(s) || 5) * 1000;
 }
+
+/**
+ * Un personaggio una volta sola (20/10/2026, «un originale solo»): per ogni identificativo `pg` il file più recente,
+ * nell'ordine dell'elenco (i più recenti prima). I file di prima senza `pg` si raggruppano per «Nome» del file, come
+ * facevano. È quello che devono mostrare gli elenchi visibili (menu dei PX, scelta del PG): nella cartella possono
+ * restare più file datati dello stesso personaggio finché la pulizia non li sposta in `storico/`, ma chi guarda ne
+ * vede uno solo. Chi deve ragionare su TUTTI i file (nomeFileLibero, nomiCheSiConfondono) continua a usare l'elenco intero.
+ */
+export function ultimiPerPg(lista) {
+  const gruppo = (f) => (f.pg ? `pg:${f.pg}` : `nome:${formaNome(chiaveDaFile(f.file))}`);
+  const ultimi = new Map();
+  for (const f of lista ?? []) {
+    const k = gruppo(f);
+    if (!ultimi.has(k) || f.mtime > ultimi.get(k).mtime) ultimi.set(k, f);
+  }
+  return [...ultimi.values()].sort((a, b) => b.mtime - a.mtime);
+}
