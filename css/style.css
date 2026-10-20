@@ -2848,3 +2848,14 @@ body:has(.pos-basso) .torna-sopra { bottom: calc(5rem + env(safe-area-inset-bott
 /* 19/10/2026 — Calendario: campo delle note a più righe, che cresce con il testo; le note mostrano gli a capo */
 textarea.cal-testo { min-height: calc(4 * 1.4em + 0.8rem); line-height: 1.4; font-family: inherit; resize: none; overflow: hidden; display: block; }
 .cal-testo-riga { white-space: pre-wrap; }
+
+/* 19/10/2026 — tabelle di consultazione (recupero PM nei Poteri, recupero PV nel Combattimento): chiuse di default */
+.tabella-consultazione > summary { cursor: pointer; min-height: 44px; display: flex; align-items: baseline; gap: 0.4rem; flex-wrap: wrap; padding: 0.4rem 0; }
+.tabella-consultazione > summary h2 { display: inline; font-size: 1.05rem; margin: 0; }
+.tabella-consultazione .corpo-consulta { display: grid; gap: 0.5rem; padding-bottom: 0.5rem; }
+.tabella-consultazione h3 { margin: 0.4rem 0 0; font-size: 0.95rem; }
+.tabella-consulta { width: 100%; }
+.tabella-consulta th, .tabella-consulta td { text-align: left; vertical-align: top; padding: 0.25rem 0.4rem; }
+.tabella-consulta tr.riga-tua { background: var(--pe-tenue); font-weight: 600; }
+.note-consulta { margin: 0; padding-left: 1.1rem; display: grid; gap: 0.25rem; }
+.tua-riga { margin: 0; }

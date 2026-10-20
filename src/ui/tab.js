@@ -8,6 +8,7 @@
 import { allineaStorico } from '../storico.js';
 import { datiTestata, statiAttiviVista, contoVa, modificatoriAttivi, sintesiMani, sintesiProtezioni, sintesiSintonizzazione, inColonne, variazioneDaTesto } from '../scheda-vista.js';
 import { informa } from './finestrella.js';
+import { tabellaRecuperoPm, tabellaRecuperoPv } from './tabelle.js';
 import { fasciaMaster, toccoMaster, notaCorrezione, sezioneRegistro, conMotivoMaster } from './master.js';
 import { apriTiro, sezioneTiri } from './tira-valore.js';
 import { circostanzeMasterAttive } from '../correzioni-master.js';
@@ -1703,6 +1704,8 @@ function tabCombattimento(ctx, d) {
       h('aside', { class: 'colonna-stati colonna-equip', 'aria-label': 'Protezioni e Armi' },
         riquadroProtezioni(ctx, d),
         riquadroArmi(ctx, d, mani))),
+    // 19/10: tabella di consultazione del recupero dei PV, richiudibile e chiusa (sola lettura)
+    tabellaRecuperoPv(ctx),
   ];
 }
 
@@ -2463,6 +2466,8 @@ function tabPoteri(ctx, d) {
     // Risorse Interiori (Giocatore §8.9; richiesta di Davide del 02/10): le Tecniche con «Attiva»
     risorse,
     sezioneDaArtefatti(ctx),
+    // 19/10: tabella di consultazione del recupero dei PM, richiudibile e chiusa (sola lettura), per chi ha una riserva di PM
+    ctx.massimi.pm ? tabellaRecuperoPm(ctx) : null,
     ...(p.in_arrivo ?? []).map((x) => h('details', { class: 'sezione-tab in-arrivo' },
       h('summary', {}, h('h2', {}, x.nome)), h('p', { class: 'nota' }, x.nota))),
   ];

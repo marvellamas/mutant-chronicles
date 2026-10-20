@@ -4050,5 +4050,200 @@
     "non_elimina": "La schermatura contiene le emanazioni e il potere corruttivo del contenuto: non elimina la Corruzione dell’oggetto né quella già accumulata dai personaggi.",
     "nessun_calcolo": "L’app mostra l’indicazione e la regola; non calcola la Corruzione e non cambia valori. Lo stato «chiuso» e «contenuto riposto» si cambiano con un tocco nella riga dell’oggetto.",
     "capienza": "Dimensioni e capienza restano quelle del contenitore: niente spazio extradimensionale, niente alleggerimento. Il peso del contenuto si somma a quello del contenitore."
+  },
+  "tabelle_consultazione": {
+    "_nota": "Tabelle di sola lettura per il tavolo (19/10/2026, richiesta dal tablet): recupero dei PM nella tab Poteri, recupero dei PV nella tab Combattimento, ciascuna in un blocco richiudibile e chiuso. I valori sono quelli dei manuali, senza calcoli dell'app (src/ui/tabelle.js); tests/tablet-tabelle.test.js li confronta con il testo dei manuali in docs/manuali-txt/.",
+    "recupero_pm": {
+      "titolo": "Recupero dei PM",
+      "fonte": "Manuale della Magia, «Recupero naturale dei Punti Magia» e «Meditazione»",
+      "colonne": [
+        "Fase",
+        "PM recuperati",
+        "Esempi"
+      ],
+      "righe": [
+        {
+          "fase": "Attività pesante",
+          "valore": "0 per ora",
+          "esempi": "Combattimento, fuga, marcia forzata, lavoro pesante, esplorazione ostile, sorveglianza in allarme, lavoro mentale intenso."
+        },
+        {
+          "fase": "Attività leggera",
+          "valore": "1 per ora",
+          "esempi": "Passeggiata, viaggio comodo da passeggero, mansioni ordinarie e sedentarie, esplorazione in sicurezza."
+        },
+        {
+          "fase": "Riposo breve",
+          "valore": "2 per ora",
+          "esempi": "Riposo tranquillo, pasto rilassato, conversazione o lettura ricreativa senza attività impegnative."
+        },
+        {
+          "fase": "Riposo completo",
+          "valore": "3 per ora",
+          "esempi": "Sonno comodo e indisturbato: 6 ore consentono di recuperare 18 PM."
+        }
+      ],
+      "meditazione": {
+        "titolo": "Con la Meditazione",
+        "accesso": "Accessibile con l'Addestramento Taumaturgo, con Recupero Meditativo o con una capacità che la conceda espressamente. Usufruitore di Magia, da solo, non la concede.",
+        "colonne": [
+          "Parametro",
+          "Regola"
+        ],
+        "righe": [
+          {
+            "parametro": "Recupero per ora completa",
+            "regola": "3 + Mod SAG PM, con un minimo di 3 PM."
+          },
+          {
+            "parametro": "Ore utili al giorno",
+            "regola": "2 + Mod SAG + Mod COS, con un minimo di 1 ora."
+          },
+          {
+            "parametro": "Prova",
+            "regola": "Nessuna."
+          },
+          {
+            "parametro": "Condizioni",
+            "regola": "Fermo e tranquillo; nessuna esplorazione, sorveglianza, ricarica o Concentrazione su un Incantesimo."
+          }
+        ],
+        "note": [
+          "La Meditazione sostituisce il recupero naturale della stessa ora: i due recuperi non si sommano.",
+          "Meditazione Migliorata aggiunge 2 PM al recupero di ogni ora completa, dopo il minimo di 3. Meditazione Estesa raddoppia le ore giornaliere utili, dopo il minimo di 1 ora."
+        ]
+      },
+      "note": [
+        "Il recupero richiede un'ora intera e continuativa nella condizione indicata. Un'interruzione fa perdere la frazione d'ora non completata; i PM recuperati nelle ore precedenti restano acquisiti.",
+        "Un combattimento di 10–15 Round è Attività pesante: non concede recupero e interrompe l'ora in corso, ma non viene conteggiato automaticamente come un'ora intera.",
+        "Con Recupero Mistico si aggiunge 1 PM per ogni ora completa in cui il recupero naturale è consentito: Attività pesante 0 PM, Attività leggera 2 PM, Riposo breve 3 PM, Riposo completo 4 PM.",
+        "Questi recuperi riguardano soltanto la riserva personale, fino al massimo di PM. Un personaggio svenuto può recuperare PM e riprende conoscenza quando raggiunge almeno 1 PM."
+      ]
+    },
+    "recupero_pv": {
+      "titolo": "Recupero dei PV",
+      "fonte": "Manuale del Giocatore, §5.16.1 e §5.15",
+      "colonne": [
+        "Condizione",
+        "Recupero",
+        "Limite"
+      ],
+      "righe": [
+        {
+          "condizione": "Attività pesante",
+          "recupero": "Nessuno",
+          "limite": "Marce, lavori pesanti e viaggi scomodi."
+        },
+        {
+          "condizione": "Attività leggera",
+          "recupero": "Mod COS PV per ora, minimo 0",
+          "limite": "Massimo 4 ore al giorno."
+        },
+        {
+          "condizione": "Riposo breve",
+          "recupero": "1d6 + Mod COS PV per ora, minimo 1",
+          "limite": "Massimo 3 ore al giorno."
+        },
+        {
+          "condizione": "Riposo completo",
+          "recupero": "Secondo la tabella seguente",
+          "limite": "Una volta al giorno, dopo 6 ore di sonno confortevole."
+        }
+      ],
+      "riposo_completo": {
+        "titolo": "Riposo completo, per COS",
+        "colonne": [
+          "COS",
+          "Mod COS",
+          "PV recuperati"
+        ],
+        "righe": [
+          {
+            "cos": 1,
+            "mod": -4,
+            "pv": 1
+          },
+          {
+            "cos": 2,
+            "mod": -3,
+            "pv": 1
+          },
+          {
+            "cos": 3,
+            "mod": -2,
+            "pv": 1
+          },
+          {
+            "cos": 4,
+            "mod": -1,
+            "pv": 5
+          },
+          {
+            "cos": 5,
+            "mod": 0,
+            "pv": 10
+          },
+          {
+            "cos": 6,
+            "mod": 1,
+            "pv": 20
+          },
+          {
+            "cos": 7,
+            "mod": 2,
+            "pv": 30
+          },
+          {
+            "cos": 8,
+            "mod": 3,
+            "pv": 40
+          },
+          {
+            "cos": 9,
+            "mod": 4,
+            "pv": 50
+          },
+          {
+            "cos": 10,
+            "mod": 5,
+            "pv": 60
+          }
+        ]
+      },
+      "note": [
+        "I recuperi non superano i PV massimi e possono cumularsi nello stesso giorno se il tempo viene realmente trascorso nelle diverse condizioni. Un Sanguinamento attivo impedisce il recupero.",
+        "Il Riposo completo richiede il completamento delle sei ore e non cura le Ferite."
+      ],
+      "in_combattimento": {
+        "titolo": "In combattimento: Medicina e kit (Sanguinamento)",
+        "fonte": "Manuale del Giocatore, §5.15",
+        "colonne": [
+          "Kit",
+          "Successo",
+          "Successo Magistrale"
+        ],
+        "righe": [
+          {
+            "kit": "Improvvisato",
+            "successo": "Sospende il Sanguinamento per 10 Round.",
+            "magistrale": "Arresta il Sanguinamento."
+          },
+          {
+            "kit": "Standard",
+            "successo": "Arresta il Sanguinamento.",
+            "magistrale": "Arresta il Sanguinamento e recupera 1d4 PV."
+          },
+          {
+            "kit": "Professionale",
+            "successo": "Arresta il Sanguinamento e recupera 1d4 PV.",
+            "magistrale": "Arresta il Sanguinamento e recupera il doppio del risultato di un unico 1d4."
+          }
+        ],
+        "note": [
+          "Arrestare il Sanguinamento con Medicina richiede un minuto continuativo, pari a 10 Round, un kit utilizzabile e accesso al paziente. Si consuma un'applicazione all'inizio. Il soccorritore resta adiacente e impiega la propria AzP in ogni Round; può effettuare soltanto Passo. Durante il trattamento il Sanguinamento è sospeso; un'interruzione lo fa riprendere, senza Prova finale e senza restituire i materiali.",
+          "Il recupero non supera i PV massimi."
+        ]
+      }
+    }
   }
 }

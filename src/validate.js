@@ -1,6 +1,7 @@
 // Validatore dei dati delle regole (data/*.json).
 // Controlla gli invarianti dei manuali e restituisce errori leggibili: file, chiave, problema.
 // Non lancia eccezioni: un file malformato produce errori, non un crash.
+import { validaTabelleConsultazione } from './validate-tabelle.js';
 import { TIPI as TIPI_EQUIP, STATI } from './equipaggiamento.js';
 import { FILE_MAPPA } from './mappa/scena.js';
 import { erroreMenu, erroreStrumenti } from './mappa/menu.js';
@@ -1173,6 +1174,7 @@ function validaSchedaDigitale(dati, err) {
   if (!isOggetto(b) || !frazione(b.verde_sopra) || !frazione(b.rosso_sotto) || b.rosso_sotto >= b.verde_sopra) {
     err(F, 'interfaccia.barre_pv_pm', 'servono verde_sopra e rosso_sotto fra 0 e 1, con rosso_sotto < verde_sopra');
   }
+  validaTabelleConsultazione(dati, err); // 19/10/2026: tabelle di consultazione (src/ui/tabelle.js)
   // 19/10/2026: pulsante «torna in cima» (src/ui/scorrimento.js)
   const ts = dati.regole.interfaccia?.torna_sopra;
   if (!isOggetto(ts) || !isIntero(ts.soglia_px) || ts.soglia_px < 100 || !isTesto(ts.etichetta)) err(F, 'interfaccia.torna_sopra', 'servono soglia_px (intero ≥ 100) e etichetta');
