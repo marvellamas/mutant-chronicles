@@ -3,6 +3,7 @@
 // di sessione (modalità tavolo) del personaggio aperto; tutto il resto si ricalcola a ogni
 // disegno con calcolaScheda / anteprima.
 import { conScorrimentoFisso, montaTornaSopra } from './scorrimento.js';
+import { aggiornaVivi } from './vivi.js';
 import { caricaDati, versioniPersonaggio, FILE_SOLO_TAVOLO } from '../rules.js';
 import { impiantiAttivabili, statoProcessore, attivaChip, terminaChip } from '../impianti.js';
 import { formattaErrore, trovaTodo } from '../validate.js';
@@ -1603,6 +1604,16 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
 
   // Ogni modifica di sessione salva subito e tiene da parte lo stato precedente per «Annulla».
   const ricordaPrecedente = () => { stato.precedenteTavolo = { sessione: stato.sessione, calendario: stato.calendario }; };
+  // Valori vivi (src/ui/vivi.js): PV e PM del personaggio e PM di un cristallo cambiano SENZA ridisegnare la scheda: si
+  // aggiornano i soli nodi che li mostrano, così la pagina, il fuoco e la tastiera restano dove sono (tablet vero, 20/10/2026)
+  const cambiaVivo = (nuova, chiavi) => {
+    if (!nuova) return;
+    ricordaPrecedente();
+    stato.sessione = nuova;
+    persisti();
+    if (stato.ctxScheda) { stato.ctxScheda.sessione = nuova; stato.ctxScheda.puoAnnullareSessione = true; }
+    aggiornaVivi([...chiavi, 'annullabile']);
+  };
   const cambiaSessione = (nuova, { ridisegna = true } = {}) => {
     if (!nuova) return;
     ricordaPrecedente();
@@ -1611,7 +1622,8 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
     if (ridisegna) renderScheda({ mantieniScorrimento: true });
   };
 
-  svuota(radice, ...renderTab({
+  // `ctxScheda` resta in `stato`: una modifica di valore lo aggiorna e rilegge solo i nodi che lo mostrano (src/ui/vivi.js)
+  const ctxScheda = {
     dati,
     tab,
     attiva,
@@ -1697,7 +1709,9 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
         persisti();
         renderScheda({ mantieniScorrimento: true });
       },
-      varia: (campo, delta) => cambiaSessione(variaSessione(stato.sessione, campo, delta, massimi)),
+      varia: (campo, delta) => (['pvAttuali', 'pmAttuali'].includes(campo)
+        ? cambiaVivo(variaSessione(stato.sessione, campo, delta, massimi), [campo])
+        : cambiaSessione(variaSessione(stato.sessione, campo, delta, massimi))),
       imposta: (campo, valore) => cambiaSessione(modificaSessione(stato.sessione, { [campo]: valore }, massimi)),
       // A.163: «chiuso» e «contenuto riposto» di un Contenitore del Silenzio (src/schermatura.js)
       contenitore: (uid, campo) => cambiaSessione(commutaContenitoreSessione(stato.sessione, uid, campo, massimi)),
@@ -1982,7 +1996,7 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
         persisti();
         renderScheda({ mantieniScorrimento: true });
       },
-      chroma: (uid, delta) => cambiaSessione(variaChroma(stato.sessione, uid, delta, massimi)),
+      chroma: (uid, delta) => cambiaVivo(variaChroma(stato.sessione, uid, delta, massimi), [`chroma:${uid}`]),
       integrita: (uid, delta) => cambiaSessione(variaIntegrita(stato.sessione, uid, delta, massimi)),
       // riserva di un NEC (Equipaggiamento §5.4): ore, usi o Lx
       nec: (chiave, delta) => cambiaSessione(variaNec(stato.sessione, chiave, delta, massimi)),
@@ -2012,6 +2026,8 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
         renderScheda({ mantieniScorrimento: true });
       },
     },
-  }));
+  };
+  stato.ctxScheda = ctxScheda;
+  svuota(radice, ...renderTab(ctxScheda));
   if (mantieniScorrimento) window.scrollTo(0, y);
 }

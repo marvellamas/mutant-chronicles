@@ -2834,12 +2834,14 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .campo-variazione-pm.non-valido { border-color: var(--errore, #c0392b); }
 .torna-sopra {
   position: fixed; right: 1rem; bottom: calc(1rem + env(safe-area-inset-bottom)); z-index: var(--z-barre);
-  width: 3rem; height: 3rem; padding: 0; border-radius: 50%; border: 1px solid var(--bordo);
-  background: var(--superficie); color: var(--testo); font-size: 1.5rem; line-height: 1; cursor: pointer;
-  box-shadow: 0 2px 10px #0006; opacity: 0.92;
+  width: 3.25rem; height: 3.25rem; padding: 0; border-radius: 50%;
+  /* come gli altri pulsanti dell'app (.btn.primario): il colore d'accento del foglio di stile, con il suo testo, nei due temi;
+     l'anello del colore di fondo lo stacca dai contenuti chiari e scuri */
+  background: var(--accento); border: 2px solid var(--accento); color: var(--accento-testo); font-size: 1.6rem; font-weight: 700; line-height: 1; cursor: pointer;
+  box-shadow: 0 0 0 3px var(--superficie), 0 3px 12px #0009; opacity: 1;
 }
 .torna-sopra[hidden] { display: none; }
-.torna-sopra:hover, .torna-sopra:focus-visible { opacity: 1; border-color: var(--accento); }
+.torna-sopra:hover, .torna-sopra:focus-visible { filter: brightness(1.12); }
 /* con le tab fisse in basso il pulsante sta sopra la barra */
 body:has(.pos-basso) .torna-sopra { bottom: calc(5rem + env(safe-area-inset-bottom)); }
 @media (max-width: 899.98px) { body:has(.pos-automatica) .torna-sopra { bottom: calc(5rem + env(safe-area-inset-bottom)); } }
@@ -2859,3 +2861,7 @@ textarea.cal-testo { min-height: calc(4 * 1.4em + 0.8rem); line-height: 1.4; fon
 .tabella-consulta tr.riga-tua { background: var(--pe-tenue); font-weight: 600; }
 .note-consulta { margin: 0; padding-left: 1.1rem; display: grid; gap: 0.25rem; }
 .tua-riga { margin: 0; }
+
+/* 20/10/2026 — zone vive (src/ui/vivi.js): non cambiano l'impaginazione di ciò che avvolgono */
+.regione-viva, .riga-chroma-viva { display: contents; }
+p.riga-chroma-viva { display: block; }

@@ -79,8 +79,8 @@ test('PM di un cristallo: 12 PM in un colpo solo, entro 0 e la capacità', () =>
   assert.equal(s.chroma.p.pmAttuali, 0);
   // il tocco da ±1 resta
   const tab = readFileSync(new URL('../src/ui/tab.js', import.meta.url), 'utf8');
-  assert.match(tab, /pulsante\(-1\), pulsante\(1\)\),\s*\/\/ 19\/10/);
-  assert.match(tab, /campoVariazionePm\(ctx, c, pm\)/);
+  assert.match(tab, /bm, bp\),\s*\/\/ 19\/10/);
+  assert.match(tab, /campoVariazionePm\(ctx, c\)/);
 });
 
 test('«torna in cima»: compare solo oltre la soglia dei dati', () => {
@@ -122,14 +122,14 @@ test('PM di un cristallo: il campo ±N chiama l’azione con la variazione scrit
   assert.equal(uno, 1);
   const capacita = c.tab.scheda.equipaggiamento.contenitori.find((x) => x.uid === uid).capacita;
   const pm = c.sessione.chroma?.[uid]?.pmAttuali ?? 0;
-  // «+5»: aggiunge 5 (ma non oltre la capacità)
+  // «+5»: l'UI passa 5 così com'è; il limite 0–capacità lo tiene variaChroma (provato sopra), così la scheda non rilegge niente
   campo.value = '+5';
   clic(applica);
-  assert.deepEqual(c.chiamate.at(-1), ['chroma', uid, Math.min(5, capacita - pm)]);
-  // «-3» con Invio: toglie 3 (ma non sotto zero)
+  assert.deepEqual(c.chiamate.at(-1), ['chroma', uid, 5]);
+  // «-3» con Invio
   campo.value = '-3';
   campo.ascolti.keydown[0]({ key: 'Enter', preventDefault() {} });
-  assert.deepEqual(c.chiamate.at(-1), ['chroma', uid, -Math.min(3, pm)]);
+  assert.deepEqual(c.chiamate.at(-1), ['chroma', uid, -3]);
   // testo non valido: nessuna azione, il campo si segna
   const n = c.chiamate.length;
   campo.value = 'abc';

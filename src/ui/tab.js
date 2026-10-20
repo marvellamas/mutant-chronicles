@@ -8,6 +8,7 @@
 import { allineaStorico } from '../storico.js';
 import { datiTestata, statiAttiviVista, contoVa, modificatoriAttivi, sintesiMani, sintesiProtezioni, sintesiSintonizzazione, inColonne, variazioneDaTesto } from '../scheda-vista.js';
 import { informa, chiedi } from './finestrella.js';
+import { registraVivo, azzeraVivi, regioneVivaSe } from './vivi.js';
 import { tabellaRecuperoPm, tabellaRecuperoPv } from './tabelle.js';
 import { incantesimiDaOggetti, incantesimoDiOggetto, attivazioneOggetto } from '../incantesimi-artefatti.js';
 import { pannelloMedita, pulsanteMedita } from './medita.js';
@@ -130,6 +131,7 @@ function riquadroScontro(ctx) {
 }
 
 export function renderTab(ctx) {
+  azzeraVivi(); // i nodi della scheda sono nuovi: i valori vivi si registrano di nuovo (src/ui/vivi.js)
   const { tab, attiva, azioni } = ctx;
   // P4: se la scheda è stata aperta dalla linea di tiro, si mette sul Combattimento e apre «Attacca!» da sola
   apriDallaLineaDiTiro(ctx);
@@ -151,8 +153,8 @@ export function renderTab(ctx) {
       // riepilogo sempre visibile, in ogni tab: PV e PM attuali con la barra
       h('div', { class: 'riepilogo-risorse' },
         // il bordo dice «che cos'è» (palette: PV rosso, PM blu), la barra «come sta»
-        barraRisorsa(ctx, 'PV', ctx.sessione.pvAttuali, ctx.massimi.pv, { classe: 'risorsa-pv' }),
-        ctx.massimi.pm ? barraRisorsa(ctx, 'PM', ctx.sessione.pmAttuali, ctx.massimi.pm, { classe: 'risorsa-pm' }) : null)),
+        barraRisorsa(ctx, 'PV', ctx.sessione.pvAttuali, ctx.massimi.pv, { classe: 'risorsa-pv', viva: { chiave: 'pvAttuali', leggi: () => ctx.sessione.pvAttuali } }),
+        ctx.massimi.pm ? barraRisorsa(ctx, 'PM', ctx.sessione.pmAttuali, ctx.massimi.pm, { classe: 'risorsa-pm', viva: { chiave: 'pmAttuali', leggi: () => ctx.sessione.pmAttuali } }) : null)),
     h('div', { class: 'barra-azioni' },
       // aperta dalla plancia del Tavolo del Master (src/ui/ritorno.js)
       ctx.tornaAlTavolo ? h('button', { type: 'button', class: 'btn btn-torna-tavolo', onclick: ctx.tornaAlTavolo, title: 'Torna alla plancia del Tavolo del Master, allo stesso punto' }, '← Torna al tavolo') : null,
@@ -166,7 +168,12 @@ export function renderTab(ctx) {
       // Round collegato allo scontro (src/round-scontro.js): in ogni tab
       ctx.roundScontro ? h('span', { class: 'etichetta round-scontro-testa', role: 'status', title: `Scontro «${ctx.roundScontro.nome}»: il Round lo fa avanzare il master dalla plancia; le durate di Tecniche e Stati scadono con quel Round.` },
         `Round ${ctx.roundScontro.round} · dallo scontro`) : null,
-      ctx.puoAnnullareSessione ? h('button', { type: 'button', class: 'btn', onclick: azioni.annullaSessione, title: 'Annulla l’ultima modifica ai valori di sessione o al calendario' }, '↶ Annulla') : null,
+      (() => {
+        // sempre nel DOM e nascosto se non c'è niente da annullare: una modifica di valore non deve ridisegnare la scheda
+        const annulla = h('button', { type: 'button', class: 'btn', hidden: !ctx.puoAnnullareSessione || undefined, onclick: azioni.annullaSessione, title: 'Annulla l’ultima modifica ai valori di sessione o al calendario' }, '↶ Annulla');
+        registraVivo('annullabile', () => { annulla.hidden = !ctx.puoAnnullareSessione; });
+        return annulla;
+      })(),
       id.livello < livelloMax
         // N2: punti in eccesso (A.108) e riassegnazioni in sospeso (A.107) sono un avviso con «Procedi comunque»
         ? h('button', { type: 'button', class: `btn primario${ctx.avvisoSalita ? ' con-avviso' : ''}`, disabled: !!ctx.motivoNoSalita, title: ctx.motivoNoSalita ?? ctx.avvisoSalita, onclick: azioni.sali }, `Sali al livello ${id.livello + 1}`)
@@ -385,35 +392,59 @@ function menuImpostazioni(ctx) {
  * giallo, rosso; soglie in regole.json → interfaccia.barre_pv_pm). Il numero resta sempre accanto,
  * così si legge anche senza colore.
  */
-function barraRisorsa(ctx, etichetta, attuale, massimo, { classe = '' } = {}) {
+function barraRisorsa(ctx, etichetta, attuale, massimo, { classe = '', viva = null } = {}) {
   const col = colore(attuale, massimo, ctx.dati.regole.interfaccia.barre_pv_pm);
+  const riempimentoEl = h('span', { class: `barra-riempimento ${col ?? ''}`.trim(), style: `width: ${riempimento(attuale, massimo)}%` });
+  const traccia = h('span', {
+    class: 'barra-traccia', role: 'meter', 'aria-label': etichetta || 'riserva',
+    'aria-valuemin': 0, 'aria-valuemax': massimo, 'aria-valuenow': attuale,
+  }, riempimentoEl);
+  const numeroEl = h('span', { class: 'barra-numero' }, `${attuale} / ${massimo}`);
+  // valore vivo (src/ui/vivi.js): la barra si aggiorna da sola, senza ridisegnare la scheda
+  if (viva) {
+    registraVivo(viva.chiave, () => {
+      const x = viva.leggi();
+      const c = colore(x, massimo, ctx.dati.regole.interfaccia.barre_pv_pm);
+      traccia.setAttribute('aria-valuenow', x);
+      riempimentoEl.className = `barra-riempimento ${c ?? ''}`.trim();
+      if (riempimentoEl.style) riempimentoEl.style.width = `${riempimento(x, massimo)}%`;
+      numeroEl.textContent = `${x} / ${massimo}`;
+    });
+  }
   return h('div', { class: `barra-risorsa ${classe}`.trim() },
     etichetta ? h('span', { class: 'barra-etichetta' }, etichetta) : null,
-    h('span', {
-      class: 'barra-traccia', role: 'meter', 'aria-label': etichetta || 'riserva',
-      'aria-valuemin': 0, 'aria-valuemax': massimo, 'aria-valuenow': attuale,
-    }, h('span', { class: `barra-riempimento ${col ?? ''}`.trim(), style: `width: ${riempimento(attuale, massimo)}%` })),
-    h('span', { class: 'barra-numero' }, `${attuale} / ${massimo}`));
+    traccia,
+    numeroEl);
 }
-
 function contatoreTavolo(ctx, { titolo, campo, attuale, massimo, passi = [1, 5], nota = null, barra = false, extra = null, classe = '', accanto = null }) {
-  const b = (delta) => h('button', {
-    type: 'button', class: 'btn-tavolo', onclick: () => ctx.azioni.varia(campo, delta),
-    disabled: (delta < 0 && attuale <= 0) || (massimo !== null && delta > 0 && attuale >= massimo),
-    'aria-label': `${delta > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(delta)} a ${titolo}`,
-  }, delta > 0 ? `+${delta}` : `−${-delta}`);
+  const pulsanti = [];
+  const b = (delta) => {
+    const el = h('button', {
+      type: 'button', class: 'btn-tavolo', onclick: () => ctx.azioni.varia(campo, delta),
+      disabled: (delta < 0 && attuale <= 0) || (massimo !== null && delta > 0 && attuale >= massimo),
+      'aria-label': `${delta > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(delta)} a ${titolo}`,
+    }, delta > 0 ? `+${delta}` : `−${-delta}`);
+    pulsanti.push([el, delta]);
+    return el;
+  };
   const meno = [...passi].reverse().map((p) => b(-p));
   const piu = passi.map((p) => b(p));
+  const numeroEl = h('strong', {}, String(attuale));
+  // valore vivo (src/ui/vivi.js): numero, barra e tasti si aggiornano senza ridisegnare la scheda
+  registraVivo(campo, () => {
+    const x = ctx.sessione[campo];
+    numeroEl.textContent = String(x);
+    for (const [el, delta] of pulsanti) el.disabled = (delta < 0 && x <= 0) || (massimo !== null && delta > 0 && x >= massimo);
+  });
   return h('div', { class: `contatore-tavolo ${classe}`.trim() },
     h('h3', {}, titolo, accanto),
     h('p', { class: 'valore-tavolo', 'aria-live': 'polite' },
-      h('strong', {}, String(attuale)), massimo !== null ? h('span', {}, ` / ${massimo}`) : null),
-    barra && massimo ? barraRisorsa(ctx, '', attuale, massimo, { classe: 'grande' }) : null,
+      numeroEl, massimo !== null ? h('span', {}, ` / ${massimo}`) : null),
+    barra && massimo ? barraRisorsa(ctx, '', attuale, massimo, { classe: 'grande', viva: { chiave: campo, leggi: () => ctx.sessione[campo] } }) : null,
     h('div', { class: 'pulsanti-tavolo' }, meno, piu),
     nota ? h('p', { class: 'nota' }, nota) : null,
     extra);
 }
-
 /**
  * Riquadri dei Punti Vita e dei Punti Magia con barra, bordo colorato e +/−. Compatti nella colonna
  * di sinistra (senza l'elenco dei cristalli, che resta nella tab Magia).
@@ -1882,6 +1913,11 @@ function manifestazioneUi(ctx, a) {
  * Per le Classi che non la possono usare è un avviso, non un blocco: decide il tavolo.
  */
 function attivazioneArmaUi(ctx, a) {
+  // zona viva (src/ui/vivi.js): l'avviso «hai N PM, ne servono M» si rilegge quando cambiano i PM
+  return regioneVivaSe(['pmAttuali', `chroma:${a.uid}`], () => attivazioneArmaUiCorpo(ctx, a), { tag: 'span' });
+}
+
+function attivazioneArmaUiCorpo(ctx, a) {
   if (!a.usoPerClasse) return null;
   const u = testoAttivazione({ uso_per_classe: a.usoPerClasse }, ctx.tab.scheda, ctx.sessione, a.uid);
   if (!u) return null;
@@ -2313,54 +2349,79 @@ function testoAlimenta(c) {
  * sintonizzati sono in grigio.
  */
 function rigaCristallo(ctx, c) {
-  const pm = ctx.sessione.chroma?.[c.uid]?.pmAttuali ?? 0;
+  const chiave = `chroma:${c.uid}`;
+  const leggi = () => ctx.sessione.chroma?.[c.uid]?.pmAttuali ?? 0;
+  const pm = leggi();
   const esausto = pm === 0;
   const pronto = c.trasportato && c.sintonizzato;
-  const pulsante = (d) => h('button', {
-    type: 'button', class: 'btn-tavolo', disabled: d < 0 ? pm <= 0 : pm >= c.capacita,
-    'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(d)} PM a ${c.nome}`,
-    onclick: () => ctx.azioni.chroma(c.uid, d),
-  }, d > 0 ? `+${d}` : `−${-d}`);
+  const pulsanti = [];
+  const pulsante = (d) => {
+    const el = h('button', {
+      type: 'button', class: 'btn-tavolo', disabled: d < 0 ? pm <= 0 : pm >= c.capacita,
+      'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(d)} PM a ${c.nome}`,
+      onclick: () => ctx.azioni.chroma(c.uid, d),
+    }, d > 0 ? `+${d}` : `−${-d}`);
+    pulsanti.push([el, d]);
+    return el;
+  };
+  const stato = (x) => (x === 0 ? `Trasparente (alone ${c.energia})` : `Chroma ${c.energia}`) + (pronto ? '' : c.sintonizzato ? ' · non trasportato' : ' · non sintonizzato');
+  const punto = h('span', { class: `chroma-punto chroma-${c.energia.toLowerCase()}${esausto ? ' esausto' : ''}`, 'aria-hidden': 'true' });
+  const sigla = h('small', { class: 'sigla' }, ` · ${stato(pm)}`);
+  const bm = pulsante(-1);
+  const bp = pulsante(1);
+  // valore vivo (src/ui/vivi.js): numero, barra, alone e tasti di QUESTA riga si aggiornano; nient'altro si tocca
+  registraVivo(chiave, () => {
+    const x = leggi();
+    punto.className = `chroma-punto chroma-${c.energia.toLowerCase()}${x === 0 ? ' esausto' : ''}`;
+    sigla.textContent = ` · ${stato(x)}`;
+    for (const [el, d] of pulsanti) el.disabled = d < 0 ? x <= 0 : x >= c.capacita;
+  });
   return h('div', { class: `riga-cristallo${pronto ? '' : ' inattivo'}` },
     h('div', { class: 'cristallo-testa' },
-      h('span', { class: `chroma-punto chroma-${c.energia.toLowerCase()}${esausto ? ' esausto' : ''}`, 'aria-hidden': 'true' }),
-      h('span', { class: 'cristallo-nome' }, c.nome,
-        h('small', { class: 'sigla' }, ` · ${esausto ? `Trasparente (alone ${c.energia})` : `Chroma ${c.energia}`}${pronto ? '' : c.sintonizzato ? ' · non trasportato' : ' · non sintonizzato'}`))),
+      punto,
+      h('span', { class: 'cristallo-nome' }, c.nome, sigla)),
     h('div', { class: 'cristallo-valori' },
-      barraRisorsa(ctx, '', pm, c.capacita),
-      pulsante(-1), pulsante(1)),
+      barraRisorsa(ctx, '', pm, c.capacita, { viva: { chiave, leggi } }),
+      bm, bp),
     // 19/10: più PM in un colpo solo: «5» o «+5» aggiungono, «-3» tolgono (il tocco da ±1 resta)
-    campoVariazionePm(ctx, c, pm));
+    campoVariazionePm(ctx, c));
 }
-
 /**
  * Campo «±N» accanto ai tocchi da ±1: recuperare 12 PM a tocchi da 1 è una pena. Invio o «Applica»; il valore finale
  * resta nei limiti 0–capacità (src/sessione.js → variaChroma).
  */
-function campoVariazionePm(ctx, c, pm) {
+function campoVariazionePm(ctx, c) {
   const campo = h('input', {
     type: 'text', inputmode: 'numeric', class: 'campo-variazione-pm', placeholder: '±N', size: 4, maxlength: 4,
     'aria-label': `Aggiungi o togli più PM a ${c.nome}: 5 o +5 aggiunge, -3 toglie`,
     title: '5 o +5: aggiunge 5 PM · -3: toglie 3 PM',
+    oninput: () => { campo.className = 'campo-variazione-pm'; campo.removeAttribute?.('aria-invalid'); },
     onkeydown: (e) => { if (e.key === 'Enter') { e.preventDefault(); applica(); } },
   });
+  // il fuoco resta nel campo, con il testo selezionato: si scrive subito il valore successivo (20/10/2026, dal tablet vero)
+  const tieniFuoco = () => { campo.focus?.(); campo.select?.(); };
   const applica = () => {
     const d = variazioneDaTesto(campo.value);
-    if (d === null) { campo.className = 'campo-variazione-pm non-valido'; campo.setAttribute('aria-invalid', 'true'); return; }
-    ctx.azioni.chroma(c.uid, Math.max(-pm, Math.min(c.capacita - pm, d)));
+    if (d === null) { campo.className = 'campo-variazione-pm non-valido'; campo.setAttribute('aria-invalid', 'true'); tieniFuoco(); return; }
+    // variaChroma tiene il valore fra 0 e la capacità; la scheda non si ridisegna (valore vivo)
+    ctx.azioni.chroma(c.uid, d);
+    tieniFuoco();
   };
   return h('div', { class: 'cristallo-variazione' }, campo,
-    h('button', { type: 'button', class: 'btn btn-piccolo', onclick: applica, 'aria-label': `Applica la variazione di PM a ${c.nome}` }, 'Applica'));
+    // il tocco su «Applica» non deve togliere il fuoco al campo (si chiuderebbe la tastiera e la pagina si sposterebbe)
+    h('button', { type: 'button', class: 'btn btn-piccolo', onpointerdown: (e) => e.preventDefault(), onmousedown: (e) => e.preventDefault(), onclick: applica, 'aria-label': `Applica la variazione di PM a ${c.nome}` }, 'Applica'));
 }
-
 /** Riserva di Chroma: la riga del cristallo, con la nota su cosa alimenta e come si ricarica. */
 function pannelloChroma(ctx, c, { conPulsanti = true } = {}) {
   if (!c) return null;
   const pm = ctx.sessione.chroma?.[c.uid]?.pmAttuali ?? 0;
   return h('div', { class: 'munizioni-tavolo chroma-tavolo' },
     conPulsanti ? rigaCristallo(ctx, c)
-      : h('p', {}, h('span', { class: `chroma-punto chroma-${c.energia.toLowerCase()}${pm === 0 ? ' esausto' : ''}`, 'aria-hidden': 'true' }),
-        pm === 0 ? `Trasparente (alone ${c.energia}) ` : `Chroma ${c.energia} `, h('strong', {}, String(pm)), ` / ${c.capacita} PM`),
+      : regioneVivaSe(`chroma:${c.uid}`, () => {
+        const x = ctx.sessione.chroma?.[c.uid]?.pmAttuali ?? 0;
+        return [h('span', { class: `chroma-punto chroma-${c.energia.toLowerCase()}${x === 0 ? ' esausto' : ''}`, 'aria-hidden': 'true' }),
+          x === 0 ? `Trasparente (alone ${c.energia}) ` : `Chroma ${c.energia} `, h('strong', {}, String(x)), ` / ${c.capacita} PM`];
+      }, { tag: 'p', classe: 'riga-chroma-viva' }),
     h('small', { class: 'nota' }, [
       testoAlimenta(c),
       'Si ricarica solo con Convertire Potere (Magia sez. 6): «Nuova sessione» e il riposo non la riempiono.',
@@ -2372,6 +2433,10 @@ function pannelloChroma(ctx, c, { conPulsanti = true } = {}) {
  * interna e la condizione accesa in una modifica sola; «Termina» la spegne. L'effetto entra in «Attacca!».
  */
 function attivazioneArtefattoUi(ctx, x, r, riserva) {
+  return regioneVivaSe([`chroma:${riserva?.uid ?? x.uid}`], () => attivazioneArtefattoUiCorpo(ctx, x, r, riserva));
+}
+
+function attivazioneArtefattoUiCorpo(ctx, x, r, riserva) {
   const at = r?.def?.attivazione_artefatto;
   if (!at) return null;
   const chiave = `attivazione:${x.uid}`;
@@ -2598,7 +2663,7 @@ function sezioneIncantesimiDaOggetti(ctx) {
   };
   return sezione('Incantesimi dagli oggetti',
     h('p', { class: 'nota' }, 'Legati all’oggetto: non sono incantesimi conosciuti dal personaggio e spariscono se l’oggetto esce dall’Inventario. «Lancia!» apre il pannello di attivazione.'),
-    h('div', { class: 'incantesimi-griglia' }, elenco.map(scheda)));
+    h('div', { class: 'incantesimi-griglia' }, elenco.map((e) => regioneVivaSe(['pmAttuali', `chroma:${e.riserva?.uid ?? e.uid}`], () => scheda(e)))));
 }
 
 /**
@@ -3016,7 +3081,11 @@ function attivazioneInfusaUi(ctx, x, r, riserva, opz) {
   return infusi.length === 1 ? attivazioneInfusaRiga(ctx, x, infusi[0], riserva, { ...opz, indice: 0 }) : h('div', {}, infusi.map((i, n) => attivazioneInfusaRiga(ctx, x, i, riserva, { ...opz, indice: n })));
 }
 
-function attivazioneInfusaRiga(ctx, x, infuso, riserva, { conPulsante, indice = 0 }) {
+function attivazioneInfusaRiga(ctx, x, infuso, riserva, opzioni) {
+  return regioneVivaSe(['pmAttuali', `chroma:${riserva?.uid ?? x.uid}`], () => attivazioneInfusaRigaCorpo(ctx, x, infuso, riserva, opzioni));
+}
+
+function attivazioneInfusaRigaCorpo(ctx, x, infuso, riserva, { conPulsante, indice = 0 }) {
   const pm = riserva ? ctx.sessione.chroma?.[riserva.uid]?.pmAttuali ?? 0 : 0;
   const a = attivazioneInfusa(infuso, riserva ?? null, { pm, personali: ctx.sessione.pmAttuali, sintonizzato: x.sintonizzato, deposito: x.deposito }, ctx.dati);
   if (!a) return h('p', { class: 'nota motivo' }, `Incantesimo infuso «${infuso.incantesimo}» non trovato fra gli incantesimi.`);

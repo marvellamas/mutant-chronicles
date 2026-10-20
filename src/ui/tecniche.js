@@ -5,6 +5,7 @@
 // «Lancia!» (src/ui/pannello-passi.js), con due passi.
 import { conAvviso } from './procedi.js';
 import { h } from './dom.js';
+import { registraVivo, regioneViva } from './vivi.js';
 import { info } from './tooltip.js';
 import { rigaScelte, interruttore, pannelloPassi } from './pannello-passi.js';
 import { haRisorseInteriori, tecnicaDi, statoAttivazione, costoEffettivo, roundAttuale, inScadenza, testoFine, costoTecnica, gruppoTecnica, ordineGruppo, tecnicheInCorso, righeInCorso, sintesiTecnica, curaTecnica } from '../tecniche.js';
@@ -47,7 +48,11 @@ export function sezioneRisorseInteriori(ctx) {
         h('p', { class: 'nota' }, ultima ? `Questo Round: ${ultima.nome}. La prossima Tecnica dal Round ${round + 1} (§8.9.1).` : 'Nessuna Tecnica attivata in questo Round: se ne può attivare una (§8.9.1).',
           scadono.length ? (ctx.roundScontro ? ` Al prossimo Round dello scontro scade: ${scadono.join(', ')}.` : ` Con «Nuovo Round» scade: ${scadono.join(', ')}.`) : null)),
       h('div', { class: 'contatore-tavolo riquadro-pm' }, h('h3', {}, 'PM personali'),
-        h('p', { class: 'valore-tavolo' }, h('strong', {}, String(s.pmAttuali)), h('span', {}, ` / ${ctx.massimi.pm}`)),
+        (() => {
+          const numero = h('strong', {}, String(s.pmAttuali));
+          registraVivo('pmAttuali', () => { numero.textContent = String(ctx.sessione.pmAttuali); });
+          return h('p', { class: 'valore-tavolo' }, numero, h('span', {}, ` / ${ctx.massimi.pm}`));
+        })(),
         h('p', { class: 'nota' }, 'Le Tecniche si pagano solo con i PM personali, non con batterie o riserve di Chroma (§8.9.1).')),
       tecnicheAttive(ctx)),
     umn ? h('p', { class: 'riquadro attenzione' }, `Umanità ${scheda.umanita.valore}: le Tecniche dipendenti da Risorse Interiori non sono utilizzabili (§8.9.1, §5.21).`) : null,
@@ -76,15 +81,15 @@ function tecnicheAttive(ctx) {
 function schedaTecnica(ctx, t) {
   // con una tabella di costi il controllo usa l'opzione più economica: il costo si sceglie nel pannello
   const minima = Array.isArray(t.opzioni_costo) ? t.opzioni_costo.reduce((m, o, i, a) => (o.pm < a[m].pm ? i : m), 0) : 0;
-  const st = statoAttivazione(ctx.tab.scheda, ctx.sessione, t, ctx.dati, { opzione: minima });
+  const stato = () => statoAttivazione(ctx.tab.scheda, ctx.sessione, t, ctx.dati, { opzione: minima });
   return h('article', { class: 'incantesimo-scheda macro-tecnica scheda-tecnica' },
     h('div', { class: 'arma-testa' },
       h('h4', {}, info('tecnica', t.id, t.nome), ' ', etichettaTecnica(t.gruppo), h('span', { class: 'sigla' }, ` · ${testoCosto(t, ctx.tab.scheda)}`)),
-      h('button', {
+      regioneViva(['pmAttuali'], () => { const st = stato(); return h('button', {
         type: 'button', class: `btn primario btn-attacca${st.possibile ? '' : ' con-avviso'}`, title: ctx.roundScontro && st.motivo ? st.motivo.replace('«Nuovo Round» per la prossima', 'la prossima quando il master passa al Round dopo, dalla plancia') : st.motivo,
         onclick: () => { ctx.ui.tecnica = { id: t.id, passo: 0, opzione: minima, silenzio: false, conferma: false }; ctx.azioni.ridisegna(); },
-      }, 'Attiva')),
-    st.motivo ? h('p', { class: 'nota motivo' }, `Avviso: ${st.motivo}. Si può attivare comunque.`) : null,
+      }, 'Attiva'); }, { tag: 'span' })),
+    regioneViva(['pmAttuali'], () => { const st = stato(); return st.motivo ? h('p', { class: 'nota motivo' }, `Avviso: ${st.motivo}. Si può attivare comunque.`) : null; }),
     h('dl', { class: 'voci griglia-voci voci-tecnica' },
       [['Costo', t.costo], ...(costoEffettivo(ctx.tab.scheda, t, minima).sconto ? [['Costo con la fascia', `${testoCosto(t, ctx.tab.scheda)} (${costoEffettivo(ctx.tab.scheda, t, minima).fonte}: −${costoEffettivo(ctx.tab.scheda, t, minima).sconto} PM, Equipaggiamento §10.10)`]] : []), ['Azione', t.azione], ['Bersaglio', t.bersaglio], ['Durata', t.durata]]
         .map(([k, v]) => h('div', {}, h('dt', {}, k), h('dd', {}, v)))),
