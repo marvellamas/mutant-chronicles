@@ -1175,6 +1175,9 @@ function validaSchedaDigitale(dati, err) {
     err(F, 'interfaccia.barre_pv_pm', 'servono verde_sopra e rosso_sotto fra 0 e 1, con rosso_sotto < verde_sopra');
   }
   validaTabelleConsultazione(dati, err); // 19/10/2026: tabelle di consultazione (src/ui/tabelle.js)
+  // 20/10/2026: attesa fra la modifica e la scrittura nella cartella (src/ui/app.js)
+  const att = dati.regole.interfaccia?.salvataggio?.attesa_ms;
+  if (!isIntero(att) || att < 0 || att > 2000) err(F, 'interfaccia.salvataggio.attesa_ms', 'intero fra 0 e 2000: si salva a ogni modifica, l’attesa serve solo a unire i tocchi ravvicinati');
   // 20/10/2026: recupero dei PM per «Medita» (src/medita.js)
   const rp = dati.regole.recupero_pm;
   const fasiOk = isOggetto(rp) && Array.isArray(rp.fasi) && ['pesante', 'leggera', 'breve', 'completo'].every((id) => rp.fasi.some((f) => f.id === id && isIntero(f.pm_per_ora) && f.pm_per_ora >= 0 && isTesto(f.nome)));

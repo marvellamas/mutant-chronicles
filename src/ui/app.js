@@ -119,6 +119,9 @@ async function avvia() {
   versioni.title = versioni.textContent; // la riga si tronca con «…»: il testo intero nel tooltip
   if (risultato.errori.length) return mostraErroriDati(risultato.errori);
   stato.avvisiDati = risultato.avvisi ?? [];
+  // 20/10: quanto è in attesa di essere scritto nella cartella si salva appena la pagina si nasconde o si chiude
+  addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') salvaSubitoSeInAttesa(); });
+  addEventListener('pagehide', salvaSubitoSeInAttesa);
   inizializzaTooltip(stato.dati);
   // pulsante fisso «torna in cima» per le pagine lunghe (regole.json → interfaccia.torna_sopra)
   montaTornaSopra(stato.dati.regole.interfaccia.torna_sopra);
@@ -411,11 +414,22 @@ function mostraMessaggioScheda(id) {
 }
 
 const attesaCartella = new Map();
-function programmaCartella(id) {
+function programmaCartella(id, { subito = false } = {}) {
   clearTimeout(attesaCartella.get(id));
   // pezzo 6: con un aggiornamento del master in attesa di una scelta la scheda non scrive
   if (id === stato.id && stato.collegamento.conflitto) return;
-  attesaCartella.set(id, setTimeout(() => { attesaCartella.delete(id); scriviInCartella(id, { revisione: id === stato.id }); }, 1500));
+  // 20/10: si salva a ogni modifica, non alla chiusura. L'attesa (regole.json → interfaccia.salvataggio.attesa_ms)
+  // unisce i tocchi ravvicinati in una scrittura sola; con `subito` (la pagina si chiude o si nasconde) si scrive ora.
+  const attesa = subito ? 0 : stato.dati?.regole?.interfaccia?.salvataggio?.attesa_ms ?? 400;
+  attesaCartella.set(id, setTimeout(() => { attesaCartella.delete(id); scriviInCartella(id, { revisione: id === stato.id }); }, attesa));
+}
+
+/**
+ * La pagina si chiude, si nasconde o il tablet passa a un'altra app: ciò che è in attesa si scrive subito (20/10/2026).
+ * Spegnere il server o chiudere la scheda non deve poter perdere una modifica già fatta.
+ */
+function salvaSubitoSeInAttesa() {
+  for (const id of [...attesaCartella.keys()]) programmaCartella(id, { subito: true });
 }
 
 /**
@@ -875,7 +889,7 @@ function renderHome(unito = null) {
         iconaPagina('combattimento', '96', { classe: 'icona-pulsante', lato: 24 }), 'Tavolo del Master') : null,
       inputFile),
     righe.length
-      ? h('ul', { class: 'elenco-personaggi' }, righe.map((r) => (r.voce ? rigaPersonaggio(r.voce, r.origine) : rigaCartella(r.remoto))))
+      ? h('ul', { class: 'elenco-personaggi' }, righe.map((r) => (r.voce ? rigaPersonaggio(r.voce, r.origine, r.remoto) : rigaCartella(r.remoto))))
       : h('p', { class: 'vuoto' }, stato.cartella ? 'Nessun personaggio nel browser né nella cartella personaggi/.' : 'Nessun personaggio salvato in questo browser.'),
     h('p', { class: 'nota' }, stato.cartella
       ? 'I personaggi si salvano in questo browser e nella cartella personaggi/ del progetto (server di Mutant): i file sono gli stessi di «SALVA PG». Se le due copie differiscono vince la più recente, con un avviso.'
@@ -898,7 +912,22 @@ const SPIEGA_ORIGINI = {
   cartella: 'Solo cartella: il file è in personaggi/ ma non è mai stato aperto in questo browser. Aprilo per lavorarci.',
 };
 
-function rigaPersonaggio(p, origine = 'browser') {
+/**
+ * «Modifica master» nell'elenco dei personaggi (20/10/2026): prima il Direttore doveva passare dalle mini-schede di uno
+ * scontro per correggere un PG. Compare solo sul PC del server (contesto master) e solo con la cartella: apre la scheda
+ * in modalità master, dove ogni valore si corregge con ✎ e ogni modifica resta nel registro.
+ * `remoto`: la voce della cartella del personaggio, o null se è solo nel browser (non si può aprire in modalità master).
+ */
+function pulsanteModificaMaster(remoto) {
+  if (!stato.cartella || !stato.master || !remoto) return null;
+  return h('button', {
+    type: 'button', class: 'btn btn-modifica-master',
+    title: 'Apre la scheda in modalità master: ogni valore si può correggere, e ogni modifica resta nel registro del personaggio',
+    onclick: () => apriDaCartella(remoto, { master: true }),
+  }, 'Modifica master');
+}
+
+function rigaPersonaggio(p, origine = 'browser', remoto = null) {
   const s = p.scelte ?? {};
   const livelli = Array.isArray(p.livelli) ? p.livelli : [];
   const data = p.aggiornato ? new Date(p.aggiornato).toLocaleString('it-IT', { dateStyle: 'short', timeStyle: 'short' }) : '';
@@ -909,6 +938,7 @@ function rigaPersonaggio(p, origine = 'browser') {
       h('p', { class: 'nota' }, `Modificato ${data}`, p.cartella?.file ? ` · cartella: ${p.cartella.file}` : '')),
     h('div', { class: 'riga-azioni' },
       h('button', { type: 'button', class: 'btn primario', onclick: () => vai(p.passo === PASSO_SCHEDA ? `#/p/${p.id}` : `#/p/${p.id}/${p.passo ?? 0}`) }, 'Apri'),
+      pulsanteModificaMaster(remoto),
       h('button', { type: 'button', class: 'btn', onclick: () => esporta(normalizza(s, stato.dati).scelte, livelli, p.sessione ?? null, normalizzaCalendario(p.calendario, stato.dati), assicuraPg(p.id)) }, 'SALVA PG (Esporta JSON)'),
       h('button', { type: 'button', class: 'btn pericolo', onclick: () => {
         if (confirm(`Eliminare «${s.nome?.trim() || 'Senza nome'}» da questo browser? L’operazione non si annulla (esporta prima il file se vuoi conservarlo).`)) {
@@ -962,7 +992,9 @@ function rigaCartella(r) {
         : h('span', { class: 'etichetta origine-personaggio', title: SPIEGA_ORIGINI.cartella }, ORIGINI.cartella)),
       h('p', {}, h('strong', {}, `Livello ${r.livello}`), ' · ', r.file),
       h('p', { class: 'nota' }, `Modificato ${data}`)),
-    h('div', { class: 'riga-azioni' }, h('button', { type: 'button', class: 'btn primario', onclick: apri }, 'Apri')));
+    h('div', { class: 'riga-azioni' },
+      h('button', { type: 'button', class: 'btn primario', onclick: apri }, 'Apri'),
+      pulsanteModificaMaster(r)));
 }
 
 function nuovoPersonaggio() {
