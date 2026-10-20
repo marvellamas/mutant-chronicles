@@ -1847,3 +1847,7 @@ Nessuna risposta di Davide: il lavoro applica schede già scritte nel manuale (E
 - **Già nel catalogo:** pergamene (§10.8, A.155), Scrigno (§10.12), Contenitori del Silenzio (§10.13, A.163), CyberArma (§10.9, A.158/A.166).
 
 - **A.173 — Hachimaki della Disciplina Interiore e Tecniche con più costi (Equipaggiamento §10.10, Magia §28.1).** *(aperta, 19/10/2026)* Il manuale dice che il costo di una Tecnica scende di 1 PM (minimo 1 PM se il costo è positivo; gratuita resta gratuita). Imposizione della Mano Curativa non ha un costo solo ma una tabella di quattro usi (1, 2, 4 e 10 PM). **Nel frattempo** l'app toglie 1 PM a ciascun uso, con il minimo di 1 PM: 1, 1, 3 e 9 PM (visibile nel pannello «Attiva»: «N PM della scheda − 1 per Hachimaki»). Se la riduzione deve valere diversamente (per esempio solo sull'uso scelto, o non sul primo), basta dirlo.
+
+## 20 ottobre 2026 — difetti del tablet del 19/10 (nessuna domanda nuova)
+
+Dettagli in `docs/tablet-2026-10-19.md`. Ammalato e le Prove Salvezza: già escluso dalla **A.119** (risposta di Davide, 05/10/2026, decisione 127), verificato con un test; nessuna A.174.
