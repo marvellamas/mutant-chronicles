@@ -28,7 +28,8 @@ function ctxCon(equip = [ROSSO], { pm = null, chroma = {}, talentiLiberi = [] } 
   if (talentiLiberi.length) c.tab.scheda.talentiLiberi = [...(c.tab.scheda.talentiLiberi ?? []), ...talentiLiberi.map((id) => ({ id }))];
   return c;
 }
-const piano = (c, scelta) => pianoMedita({ scheda: c.tab.scheda, sessione: c.sessione, massimi: c.massimi }, scelta, dati);
+// per i test dei conti l'esito della Prova è «successo» salvo diversa indicazione; senza esito la conversione resta in attesa (provato a parte)
+const piano = (c, scelta) => pianoMedita({ scheda: c.tab.scheda, sessione: c.sessione, massimi: c.massimi }, { esito: 'successo', ...scelta }, dati);
 
 test('dati: il blocco recupero_pm c’è, validato, e i numeri sono quelli del Manuale della Magia', () => {
   assert.deepEqual(validaDati(dati), []);
@@ -229,7 +230,7 @@ test('la scheda: «Medita» nei riquadri dei PM; il pannello a tre passi mostra 
   assert.equal(c.ui.medita.modo, 'meditazione');
   assert.equal(c.ui.medita.destinazione, 'personali');
   // pannello aperto, con il cristallo scelto e il conto
-  Object.assign(c.ui.medita, { modo: 'completo', ore: 3, destinazione: 'rosso', passo: 2 });
+  Object.assign(c.ui.medita, { modo: 'completo', ore: 3, destinazione: 'rosso', esito: 'successo', passo: 2 });
   const r2 = resa(c);
   const pannello = r2.radice.tutti().find((n) => n.className?.includes('medita-pannello'));
   assert.ok(pannello, 'pannello Medita aperto');

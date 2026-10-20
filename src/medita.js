@@ -137,10 +137,17 @@ export function pianoMedita({ scheda, sessione, massimi }, scelta, dati) {
       if (gruppi > perPm) { gruppi = perPm; avvisi.push(`Servono ${rapporto} PM personali per gruppo: con ${pool} PM si possono convertire ${perPm} ${perPm === 1 ? 'gruppo' : 'gruppi'}.`); }
       if (motivo) avvisi.push(`${c.nome}: ${motivo}. Si può procedere comunque: l’ultima parola è del Direttore.`);
       const prova = provaGruppi(gruppi, dati);
-      const esito = prova.richiesta ? (rp.conversione.esiti.includes(scelta?.esito) ? scelta.esito : 'successo') : 'successo';
-      let convertiti = gruppi;
-      let spesa = gruppi * rapporto;
-      if (esito === 'fallimento') { convertiti = 0; spesa = 0; }
+      // la Prova di Potere (da due gruppi in su) non si salta e non ha un esito di comodo: finché chi gioca non indica come è andata
+      // la conversione resta «in attesa» (nessun PM spostato). Un gruppo solo è automatico.
+      const esito = prova.richiesta ? (rp.conversione.esiti.includes(scelta?.esito) ? scelta.esito : null) : 'successo';
+      const inAttesa = esito === null;
+      const potere = scheda?.abilita?.find((a) => a.nome === 'Potere');
+      const vaPotere = potere ? (potere.effettivo ?? potere.totale) : null;
+      if (prova.richiesta) Object.assign(prova, { va: vaPotere, totale: vaPotere === null ? null : vaPotere + prova.penalita });
+      let convertiti = inAttesa ? 0 : gruppi;
+      let spesa = inAttesa ? 0 : gruppi * rapporto;
+      if (inAttesa) { /* niente si sposta finché non c'è l'esito */ }
+      else if (esito === 'fallimento') { convertiti = 0; spesa = 0; }
       else if (esito === 'maldestro') { convertiti = 0; }
       else if (esito === 'magistrale') {
         const extra = gruppi + 1 <= spazio && pool - spesa >= rapporto ? 1 : 0;
@@ -149,16 +156,21 @@ export function pianoMedita({ scheda, sessione, massimi }, scelta, dati) {
       const entrano = Math.min(convertiti, spazio);
       finale = { personali: Math.min(max, pool - spesa), cristallo: pmC + entrano };
       sprecati = pool - spesa - finale.personali;
-      if (prova.richiesta) avvisi.push(`Una sola Prova di Potere per l’intera operazione (${gruppi} gruppi: Potere ${prova.penalita}, Magia sez. 6): l’app non tira, indica tu l’esito.`);
+      if (prova.richiesta) avvisi.push(inAttesa
+        ? `Prova di Potere da fare: una sola per l’intera operazione, ${gruppi} gruppi, Potere ${prova.penalita}${prova.totale !== null ? ` (VA ${prova.va} ${prova.penalita} = ${prova.totale})` : ''}. L’app non tira: indica l’esito qui sotto; finché non lo fai la conversione non si applica (Magia sez. 6).`
+        : `Una sola Prova di Potere per l’intera operazione (${gruppi} gruppi: Potere ${prova.penalita}, Magia sez. 6): esito indicato, ${rp.conversione.nomi_esiti[esito]}.`);
       if (gruppi > 0) avvisi.push('Ricaricare richiede 1 AzP e il contatto con il contenitore: nel manuale non avviene durante la Meditazione, ma subito dopo, con la propria Azione (Magia sez. 6).');
       if (finale.personali === 0 && spesa > 0) avvisi.push('I PM personali arrivano a 0: Svenuto al termine dell’intera azione, dopo averne risolto l’esito (Magia sez. 6).');
       conversione = {
         uid: c.uid, nome: c.nome, energia: c.energia, capacita: c.capacita, pmPrima: pmC, spazio, rapporto, fonteRapporto: fonteRapporto(cv, c.energia), talenti: cv.talenti,
-        gruppiRichiesti: richiesti, gruppi, convertiti, spesa, entrano, prova, esito, motivo,
+        gruppiRichiesti: richiesti, gruppi, convertiti, spesa, entrano, prova, esito, inAttesa, motivo,
       };
       righe.push(
         { etichetta: `Conversione ${rapporto}:1`, valore: `${gruppi} ${gruppi === 1 ? 'gruppo' : 'gruppi'}`, nota: fonteRapporto(cv, c.energia) },
-        { etichetta: 'PM personali spesi', valore: `−${spesa}`, nota: gruppi ? `${convertiti} × ${rapporto}${esito !== 'successo' ? ` (${rp.conversione.nomi_esiti[esito]})` : ''}` : null },
+        // i costi della ricarica fatta da sola, tutti nel conto: l'Azione, il contatto, la Prova (Magia sez. 6)
+        ...(gruppi > 0 ? [{ etichetta: 'Azione', valore: '1 AzP', nota: 'contatto con il cristallo sintonizzato; si spende dopo il recupero, non durante la Meditazione' }] : []),
+        ...(prova.richiesta ? [{ etichetta: 'Prova di Potere', valore: prova.totale !== null ? `VA ${prova.va} ${prova.penalita} = ${prova.totale}` : `Potere ${prova.penalita}`, nota: inAttesa ? 'esito da indicare' : rp.conversione.nomi_esiti[esito] }] : [{ etichetta: 'Prova di Potere', valore: 'automatica', nota: 'un gruppo solo' }]),
+        { etichetta: 'PM personali spesi', valore: `−${spesa}`, nota: gruppi && !inAttesa ? `${convertiti} × ${rapporto}${esito !== 'successo' ? ` (${rp.conversione.nomi_esiti[esito]})` : ''}` : inAttesa ? 'in attesa dell’esito' : null },
         { etichetta: `Entrano in ${c.nome}`, valore: `+${entrano}`, nota: `${pmC} → ${pmC + entrano} / ${c.capacita}` },
         { etichetta: 'PM personali alla fine', valore: `${finale.personali} / ${max}`, nota: null },
       );

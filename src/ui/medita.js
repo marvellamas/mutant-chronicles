@@ -3,6 +3,7 @@
 // conto in chiaro con la regola o il Talento che si applica, e «Conferma» che applica tutto in una modifica annullabile e
 // lascia una riga nel registro del personaggio. Le regole stanno in src/medita.js.
 import { h } from './dom.js';
+import { conAvviso } from './procedi.js';
 import { rigaScelte, pannelloPassi } from './pannello-passi.js';
 import { modiMedita, pianoMedita, motivoRicarica } from '../medita.js';
 import { rapportoConversione } from '../equipaggiamento.js';
@@ -53,14 +54,14 @@ export function pannelloMedita(ctx) {
         rigaScelte('Dove vanno i PM', [
           { valore: 'personali', etichetta: 'Ai miei PM personali' },
           ...contenitori.map((x) => ({ valore: x.uid, etichetta: `${x.nome} · ${ctx.sessione.chroma?.[x.uid]?.pmAttuali ?? 0}/${x.capacita}`, motivo: motivoRicarica(x, cv) })),
-        ], u.destinazione, (x) => imposta({ destinazione: x, gruppi: null, esito: 'successo' })),
+        ], u.destinazione, (x) => imposta({ destinazione: x, gruppi: null, esito: null })),
         contenitori.length ? null : h('p', { class: 'nota' }, 'Nessun cristallo o riserva di Chroma nell’inventario: il recupero va ai PM personali.'),
         c ? [
           h('p', { class: 'nota' }, `Rapporto ${c.rapporto}:1 — ${c.fonteRapporto}. Ogni gruppo costa ${c.rapporto} PM personali e aggiunge 1 PM al cristallo (non oltre ${c.capacita}).`),
           h('label', { class: 'campo-dado' }, `Gruppi da convertire (vuoto = quanti ne stanno: ${Math.min(Math.floor(piano.pmDopoRecupero / c.rapporto), c.spazio)}) `,
             numero(u.gruppi, (n) => imposta({ gruppi: n }), { 'aria-label': 'Gruppi da convertire', placeholder: 'auto' })),
-          c.prova.richiesta ? rigaScelte(`Esito della Prova di Potere (${c.gruppi} gruppi: Potere ${c.prova.penalita}) — l’app non tira`,
-            dati.regole.recupero_pm.conversione.esiti.map((e) => ({ valore: e, etichetta: dati.regole.recupero_pm.conversione.nomi_esiti[e] })), u.esito, (x) => imposta({ esito: x })) : null,
+          c.prova.richiesta ? rigaScelte(`Esito della Prova di Potere (${c.gruppi} gruppi: Potere ${c.prova.penalita}${c.prova.totale !== null ? `, VA ${c.prova.va} ${c.prova.penalita} = ${c.prova.totale}` : ''}) — l’app non tira, indica come è andata`,
+            dati.regole.recupero_pm.conversione.esiti.map((e) => ({ valore: e, etichetta: dati.regole.recupero_pm.conversione.nomi_esiti[e] })), u.esito ?? null, (x) => imposta({ esito: x })) : null,
         ] : null,
       ],
     },
@@ -74,9 +75,13 @@ export function pannelloMedita(ctx) {
           h('p', { class: 'nota' }, `Resta nel registro: «${piano.registro}»`),
           h('div', { class: 'attacco-azioni' },
             h('button', {
-              type: 'button', class: `btn primario btn-grande${piano.vuoto ? ' con-avviso' : ''}`, title: piano.vuoto ? 'Non cambia nessun valore' : null,
-              onclick: () => { ctx.ui.medita = null; ctx.azioni.medita(piano); }, // prima si chiude: l'azione ridisegna la scheda
-            }, piano.vuoto ? 'Conferma (nessuna modifica)' : 'Conferma e applica'),
+              type: 'button', class: `btn primario btn-grande${piano.vuoto || c?.motivo ? ' con-avviso' : ''}`, disabled: !!c?.inAttesa,
+              title: c?.inAttesa ? 'Indica prima l’esito della Prova di Potere (Magia sez. 6)' : c?.motivo ?? (piano.vuoto ? 'Non cambia nessun valore' : null),
+              // un requisito della ricarica che manca (Addestramento Taumaturgo, contatto, sintonizzazione) avvisa e si può superare
+              // con «Procedi comunque», con la riga nel registro: la scorciatoia non è più permissiva dei due passaggi separati
+              onclick: () => { const fai = () => { ctx.ui.medita = null; ctx.azioni.medita(piano); }; // prima si chiude: l'azione ridisegna la scheda
+                if (c?.motivo && c.gruppi > 0) conAvviso(ctx.azioni.storico, { azione: `ricaricare ${c.nome} con Medita`, motivo: c.motivo, fai }); else fai(); },
+            }, piano.vuoto ? 'Conferma (nessuna modifica)' : c?.motivo && c.gruppi > 0 ? 'Conferma comunque…' : 'Conferma e applica'),
             h('small', { class: 'nota' }, 'Il conto è un promemoria del manuale: se al tavolo si decide altro, il Direttore ha l’ultima parola. «Annulla» nell’intestazione annulla tutto in un colpo.'))),
       ],
     },
