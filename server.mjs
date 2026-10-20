@@ -121,6 +121,7 @@ import { bordoToken } from './src/mappa/colori.js';
 import { validaScontro, rigaOpportunita, rigaAiutoMaster, diTurno, registraRiga, scontroPerGiocatori } from './src/scontro.js';
 import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
 import { NOME_FILE, fileProvvisorio, ultimiPerPersonaggio, chiaveDaFile, chiavePersonaggio } from './src/cartella.js';
+import { conMetadati, serveCopia, copieDaTogliere, idPersonaggio, cartellaStorico, nomeCopiaStorica, CARTELLA_STORICO } from './src/storico-personaggi.js';
 import { validaRecord, ID_VEICOLO, migraVeicoli, eRiferimento, stessaChiave } from './src/veicoli-registro.js';
 import { normalizzaVeicoli } from './src/veicoli.js';
 import { caricaDati } from './src/rules.js';
@@ -192,6 +193,26 @@ async function personaggioDelFile(dove, s = null) {
 }
 /** Nome di file per il confronto: Windows non distingue le maiuscole; gli accenti confondono chi legge. */
 const formaFile = (f) => String(f).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+/**
+ * «Un originale solo» (20/10/2026): la copia del file prima di sovrascriverlo, in `personaggi/storico/<id>/<data-ora>.json`.
+ * L'id è quello stabile del personaggio (il suo `pg`, o il «Nome» del file per i file di prima). Si tiene una copia ogni
+ * dieci minuti al massimo e si conservano le ultime quaranta (src/storico-personaggi.js). Nessun elenco dell'app mostra
+ * questa cartella: `storico` non passa il filtro NOME_FILE dei file dei personaggi.
+ */
+async function archivia(cartella, file, prima) {
+  if (!prima) return null;
+  const id = idPersonaggio(prima, chiaveDaFile(file));
+  if (!id) return null;
+  const dove = join(cartella, CARTELLA_STORICO, cartellaStorico(id));
+  await mkdir(dove, { recursive: true });
+  const ultime = await readdir(dove).catch(() => []);
+  if (!serveCopia(prima, { ultime })) return null;
+  const nome = nomeCopiaStorica();
+  await scriviAtomico(join(dove, nome), Buffer.from(`${JSON.stringify(prima, null, 2)}\n`, 'utf8'));
+  for (const x of copieDaTogliere([...ultime, nome])) await unlink(join(dove, x)).catch(() => null);
+  return nome;
+}
+
 /**
  * Motivo per non scrivere il personaggio `pg` nel file `file`, o null. Il file (o uno con lo stesso nome a meno
  * di maiuscole e accenti, che su Windows è lo stesso file) contiene un altro personaggio: identificativo diverso,
@@ -1602,6 +1623,13 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
         const p = proteggiBlocchiMaster(o, await fileAttualeDelPg(cartella, file, typeof o.pg === 'string' ? o.pg : null));
         if (p.ripristinato) { masterRipristinato = true; corpo = Buffer.from(JSON.stringify(p.file, null, 2), 'utf8'); }
       }
+      // «un originale solo» (20/10): il file che si sta per sovrascrivere va nello storico, e quello nuovo porta la sua
+      // versione, quando e da chi (src/storico-personaggi.js). Se qualcosa qui non riesce, la scrittura del personaggio
+      // si fa lo stesso: lo storico non deve mai impedire di salvare.
+      const prima = await leggiJson(dove).catch(() => null);
+      try { await archivia(cartella, file, prima); } catch (e) { console.warn(`Copia storica non riuscita (${file}): ${e.message}`); }
+      const chi = req.headers['x-mutant-da'] ?? (req.mutantMaster ? 'master' : 'giocatore');
+      corpo = Buffer.from(`${JSON.stringify(conMetadati(JSON.parse(corpo.toString('utf8')), prima, { chi }), null, 2)}\n`, 'utf8');
       // scrittura atomica: un file temporaneo e poi la rinomina, così una lettura non vede mai mezzo file
       await scriviAtomico(dove, corpo);
       const s = await stat(dove);

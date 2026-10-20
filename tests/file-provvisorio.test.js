@@ -48,8 +48,10 @@ test('server: scritto il file con il nome, il provvisorio dello stesso PG si tog
   const r = await scrivi('Lucas_liv1_2026-10-04.json', testo('Lucas', PG));
   assert.equal(r.status, 200);
   assert.deepEqual((await r.json()).rinominati, ['personaggio_liv1_2026-10-04.json']);
-  assert.deepEqual(readdirSync(cartella).sort(), ['Lucas_liv1_2026-10-04.json', 'personaggio-2_liv1_2026-10-04.json']);
+  // 20/10: accanto ai file c'è la cartella storico/ con le copie di prima, che non è un personaggio
+  const soliFile = () => readdirSync(cartella).filter((x) => x.endsWith('.json')).sort();
+  assert.deepEqual(soliFile(), ['Lucas_liv1_2026-10-04.json', 'personaggio-2_liv1_2026-10-04.json']);
   // riscrivere lo stesso file non tocca il provvisorio dell'altro PG
   assert.equal((await scrivi('Lucas_liv1_2026-10-04.json', testo('Lucas', PG))).status, 200);
-  assert.equal(readdirSync(cartella).length, 2);
+  assert.equal(soliFile().length, 2);
 });

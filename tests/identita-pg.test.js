@@ -104,7 +104,8 @@ test('server: l’elenco riporta l’identificativo; rifiuta la scrittura sopra 
   // con il suffisso va bene; lo stesso PG riscrive il suo file
   assert.equal((await scrivi('LUCAS-2_liv6_2026-10-04.json', testo('LUCAS', PG_NUOVO))).status, 200);
   assert.equal((await scrivi('Lucas_liv6_2026-10-04.json', testo('Lucas', PG_LUCAS))).status, 200);
-  assert.deepEqual(readdirSync(cartella).sort(), ['LUCAS-2_liv6_2026-10-04.json', 'Lucas_liv6_2026-10-04.json']);
+  // 20/10: storico/ (le copie di prima) sta accanto ai file e non è un personaggio
+  assert.deepEqual(readdirSync(cartella).filter((x) => x.endsWith('.json')).sort(), ['LUCAS-2_liv6_2026-10-04.json', 'Lucas_liv6_2026-10-04.json']);
 });
 
 test('server: un file di prima senza identificativo riceve quello del suo PG; un nome scritto diversamente no', async () => {

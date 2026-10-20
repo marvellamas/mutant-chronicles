@@ -1,5 +1,7 @@
 // Cartella dei personaggi (branch tavolo-direttore, pezzo 0a): server.mjs e src/cartella.js. Il server
-// serve l'app come `serve` e salva in personaggi/ il testo dell'export, byte per byte.
+// serve l'app come `serve` e salva in personaggi/ il testo dell'export. Dal 20/10/2026 («un originale solo») il file
+// porta in più i metadati del salvataggio: versione_salvataggio, aggiornato_il, aggiornato_da (src/storico-personaggi.js).
+// Tolti quelli, il contenuto è ancora esattamente quello dell'export.
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, mkdtempSync, rmSync, readdirSync } from 'node:fs';
@@ -42,7 +44,7 @@ test('server: ping, file dell’app con gli header di serve.json, niente uscite 
   }
 });
 
-test('salvataggio e ricaricamento via server: identici byte per byte all’export', async () => {
+test('salvataggio e ricaricamento via server: l’export con in più i metadati del salvataggio', async () => {
   // un personaggio d'esempio (esempi/, tools/genera_esempi.mjs): il testo è quello dell'export dell'app, si rifà qui
   const testo = readFileSync(new URL('../esempi/Nadia-Ferro_liv4_2026-10-02.json', import.meta.url), 'utf8');
   const p = deserializzaPersonaggio(testo);
@@ -56,9 +58,16 @@ test('salvataggio e ricaricamento via server: identici byte per byte all’expor
   assert.equal(r.file, file);
   assert.ok(r.mtime > 0);
   // sul disco e in lettura, lo stesso testo
-  assert.equal(readFileSync(join(cartella, file), 'utf8'), esportato);
+  // il file sul disco è l'export con i metadati in più (20/10): togliendoli torna identico
+  const senzaMetadati = (t) => { const { versione_salvataggio: _v, aggiornato_il: _i, aggiornato_da: _d, ...resto } = JSON.parse(t); return `${JSON.stringify(resto, null, 2)}\n`; };
+  const suDisco = readFileSync(join(cartella, file), 'utf8');
+  assert.equal(senzaMetadati(suDisco), `${esportato}\n`.replace(/\n\n$/, '\n'));
+  const meta = JSON.parse(suDisco);
+  assert.equal(meta.versione_salvataggio, 1, 'il primo salvataggio è la versione 1');
+  assert.match(meta.aggiornato_il, /^\d{4}-\d\d-\d\dT/);
+  assert.equal(meta.aggiornato_da, 'master');
   const letto = await (await fetch(`${base}/api/personaggi/${encodeURIComponent(file)}`)).text();
-  assert.equal(letto, esportato);
+  assert.equal(senzaMetadati(letto), senzaMetadati(suDisco));
   // ricaricato e riesportato: identico
   const q = deserializzaPersonaggio(letto);
   assert.equal(serializza(normalizza(q.creazione, dati).scelte, { versioniDati: JSON.parse(letto).versioni_dati, livelli: q.livelli, sessione: q.sessione }), testo);

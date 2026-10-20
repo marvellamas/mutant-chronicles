@@ -79,7 +79,10 @@ test('colpo su un PG: la plancia riscrive il file con la revisione; una revision
   assert.equal(vecchia.status, 409);
   // la scheda (e la plancia) rileggono il file: PV a 0
   const riletto = await (await fetch(url)).text();
-  assert.equal(riletto, nuovo);
+  // 20/10: il file porta in più i metadati del salvataggio (versione_salvataggio, aggiornato_il, aggiornato_da)
+  const senzaMetadati = (x) => { const { versione_salvataggio: _v, aggiornato_il: _i, aggiornato_da: _d, ...resto } = JSON.parse(x); return JSON.stringify(resto); };
+  assert.equal(senzaMetadati(riletto), senzaMetadati(nuovo));
+  assert.equal(JSON.parse(riletto).versione_salvataggio, 2, 'il contatore è salito');
   assert.equal(vistaPlancia(riletto, dati, FILE).pv.attuali, 0);
   assert.equal(deserializzaPersonaggio(riletto).sessione.pvAttuali, 0);
   // senza l'intestazione la scrittura resta quella di sempre (scheda digitale): nessun controllo
