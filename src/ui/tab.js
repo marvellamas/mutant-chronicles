@@ -9,6 +9,7 @@ import { allineaStorico } from '../storico.js';
 import { datiTestata, statiAttiviVista, contoVa, modificatoriAttivi, sintesiMani, sintesiProtezioni, sintesiSintonizzazione, inColonne, variazioneDaTesto } from '../scheda-vista.js';
 import { informa } from './finestrella.js';
 import { tabellaRecuperoPm, tabellaRecuperoPv } from './tabelle.js';
+import { incantesimiDaOggetti, incantesimoDiOggetto, attivazioneOggetto } from '../incantesimi-artefatti.js';
 import { fasciaMaster, toccoMaster, notaCorrezione, sezioneRegistro, conMotivoMaster } from './master.js';
 import { apriTiro, sezioneTiri } from './tira-valore.js';
 import { circostanzeMasterAttive } from '../correzioni-master.js';
@@ -49,7 +50,7 @@ import { pulsanteMuovi } from '../round-scontro.js';
 import { riquadroIncantesimiInCorso } from './incantesimi-in-corso.js';
 import { sezioneRisorseInteriori, pannelloTecnica } from './tecniche.js';
 import { tecnicaDi, testoFine } from '../tecniche.js';
-import { statoPulsanteLancio, attivazioneInfusa } from '../lancio.js';
+import { statoPulsanteLancio, attivazioneInfusa, livelloVersione } from '../lancio.js';
 import { nomeRiserva, nomeAlimentazione } from '../fonti.js';
 import { tabCalendario, pannelloAttivazione, pannelloImportaCalendario, pulsanteImportaCalendario } from './calendario.js';
 import { conOrdinale } from '../lingua.js';
@@ -2462,15 +2463,66 @@ function tabPoteri(ctx, d) {
   if (d && d.conMagia === false) d = null;
   return [
     riquadroCircostanze(ctx),
-    ...(d ? tabMagia(ctx, d) : risorse ? [] : [h('section', { class: 'riquadro nessun-potere' }, h('h2', {}, 'Nessun potere'), p.nessuno ? h('p', { class: 'nota' }, p.nessuno) : null)]),
+    ...(d ? tabMagia(ctx, d) : risorse || incantesimiDaOggetti({ voci: ctx.scelte.equipaggiamento ?? [], scheda: ctx.tab.scheda }, ctx.dati).length ? [] : [h('section', { class: 'riquadro nessun-potere' }, h('h2', {}, 'Nessun potere'), p.nessuno ? h('p', { class: 'nota' }, p.nessuno) : null)]),
     // Risorse Interiori (Giocatore §8.9; richiesta di Davide del 02/10): le Tecniche con «Attiva»
     risorse,
+    sezioneIncantesimiDaOggetti(ctx),
+    // senza la magia propria (nessuna tab Magia) gli incantesimi lanciati da un oggetto hanno comunque i loro «in corso»
+    !d && incantesimiInCorso(ctx.sessione).length ? riquadroIncantesimiInCorso(ctx) : null,
     sezioneDaArtefatti(ctx),
     // 19/10: tabella di consultazione del recupero dei PM, richiudibile e chiusa (sola lettura), per chi ha una riserva di PM
     ctx.massimi.pm ? tabellaRecuperoPm(ctx) : null,
     ...(p.in_arrivo ?? []).map((x) => h('details', { class: 'sezione-tab in-arrivo' },
       h('summary', {}, h('h2', {}, x.nome)), h('p', { class: 'nota' }, x.nota))),
   ];
+}
+
+/**
+ * «Incantesimi dagli oggetti» (Poteri, 20/10/2026): gli incantesimi che arrivano da un artefatto (incantesimo infuso,
+ * Magia §24.2) o da un Consumabile (§27) si lanciano come quelli conosciuti: stessa scheda (il nome apre la stessa
+ * finestra), stesso pannello «Lancia!» con costo, Azioni, durata e bersagli, e un effetto a durata finisce fra gli
+ * «Incantesimi in corso». Restano legati all'oggetto: non sono conosciuti dal personaggio e, se l'oggetto esce
+ * dall'Inventario, spariscono dalla scheda (src/incantesimi-artefatti.js). Per i Guanti da Combattimento Mistico, la cui
+ * proprietà attiva i manuali non legano a un Incantesimo, c'è la loro attivazione.
+ */
+function sezioneIncantesimiDaOggetti(ctx) {
+  const elenco = incantesimiDaOggetti({ voci: ctx.scelte.equipaggiamento ?? [], scheda: ctx.tab.scheda }, ctx.dati);
+  if (!elenco.length) return null;
+  const cat = catalogo(ctx.dati);
+  const st = ctx.tab.scheda.equipaggiamento?.sintonizzazione;
+  const contenitori = ctx.tab.scheda.equipaggiamento?.contenitori ?? [];
+  const rotti = new Set(ctx.tab.scheda.equipaggiamento?.rotti ?? []);
+  const scheda = (e) => {
+    if (e.origine === 'proprieta') {
+      const x = st?.artefatti.find((y) => y.uid === e.uid);
+      const r = risolvi((ctx.scelte.equipaggiamento ?? []).find((v) => v.uid === e.uid), cat);
+      return h('article', { class: 'incantesimo-scheda macro-oggetto' },
+        h('div', { class: 'arma-testa' }, h('h4', {}, e.oggetto, h('span', { class: 'sigla' }, ' · proprietà attiva (nessun Incantesimo)'))),
+        x ? attivazioneArtefattoUi(ctx, x, r, contenitori.find((c) => c.uid === e.uid && c.integrato)) : null);
+    }
+    const inc = incantesimoDiOggetto(e, ctx.dati);
+    const a = attivazioneOggetto(e, { sessione: ctx.sessione, inScontro: !!ctx.roundScontro, rotti }, ctx.dati);
+    const riga = (inc?.versioni ?? []).find((v) => livelloVersione(v) === e.livello) ?? null;
+    const consumabile = e.origine === 'consumabile';
+    return h('article', { class: `incantesimo-scheda ${classeMacrofamiglia(inc?.macrofamiglia)}` },
+      h('div', { class: 'arma-testa' },
+        h('h4', {}, info('incantesimo', e.incantesimo), ' ', inc ? etichettaMacro(inc.macrofamiglia) : null,
+          h('span', { class: 'sigla' }, ` · livello ${e.livello} · da ${e.oggetto}${consumabile ? ` (× ${e.quantita})` : ''}`)),
+        h('button', {
+          type: 'button', class: `btn primario btn-attacca${a?.motivo ? ' con-avviso' : ''}`, disabled: !inc || !riga, title: a?.motivo ?? (inc ? null : 'incantesimo non più nel catalogo'),
+          onclick: () => { ctx.ui.lancio = { nome: e.incantesimo, passo: 0, da: e.chiave }; ctx.azioni.ridisegna(); },
+        }, 'Lancia!')),
+      h('p', { class: 'piccolo' }, consumabile
+        ? `Consumabile: ${a.pm} PM sigillati (non sono PM tuoi) · ${a.tempo} · si consuma al completamento (Magia §27.1).`
+        : `${a?.pm ?? '—'} PM ${a?.universale ? 'dalla riserva e, se non bastano, personali' : 'dalla riserva interna'} · ${a?.tempo ?? '—'} · senza Prova di Potere (Magia §24.2).`),
+      a?.motivo ? h('p', { class: 'nota motivo' }, `Avviso: ${a.motivo}. Si può lanciare comunque.`) : null,
+      riga ? h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
+        h('thead', {}, h('tr', {}, Object.keys(riga).map((c) => h('th', {}, c)))),
+        h('tbody', {}, h('tr', {}, Object.values(riga).map((v) => h('td', {}, String(v))))))) : h('p', { class: 'nota motivo' }, `La scheda di ${e.incantesimo} non ha la versione di livello ${e.livello}.`));
+  };
+  return sezione('Incantesimi dagli oggetti',
+    h('p', { class: 'nota' }, 'Legati all’oggetto: non sono incantesimi conosciuti dal personaggio e spariscono se l’oggetto esce dall’Inventario. «Lancia!» apre il pannello di attivazione.'),
+    h('div', { class: 'incantesimi-griglia' }, elenco.map(scheda)));
 }
 
 /**
@@ -2885,10 +2937,10 @@ function attivazioneInfusaUi(ctx, x, r, riserva, opz) {
   const infusi = infusiDi(info);
   if (!infusi.length) return null;
   // più proprietà infuse (Pietra della Vigilanza): una riga per ciascuna, la riserva è condivisa
-  return infusi.length === 1 ? attivazioneInfusaRiga(ctx, x, infusi[0], riserva, opz) : h('div', {}, infusi.map((i) => attivazioneInfusaRiga(ctx, x, i, riserva, opz)));
+  return infusi.length === 1 ? attivazioneInfusaRiga(ctx, x, infusi[0], riserva, { ...opz, indice: 0 }) : h('div', {}, infusi.map((i, n) => attivazioneInfusaRiga(ctx, x, i, riserva, { ...opz, indice: n })));
 }
 
-function attivazioneInfusaRiga(ctx, x, infuso, riserva, { conPulsante }) {
+function attivazioneInfusaRiga(ctx, x, infuso, riserva, { conPulsante, indice = 0 }) {
   const pm = riserva ? ctx.sessione.chroma?.[riserva.uid]?.pmAttuali ?? 0 : 0;
   const a = attivazioneInfusa(infuso, riserva ?? null, { pm, personali: ctx.sessione.pmAttuali, sintonizzato: x.sintonizzato, deposito: x.deposito }, ctx.dati);
   if (!a) return h('p', { class: 'nota motivo' }, `Incantesimo infuso «${infuso.incantesimo}» non trovato fra gli incantesimi.`);
@@ -2898,10 +2950,9 @@ function attivazioneInfusaRiga(ctx, x, infuso, riserva, { conPulsante }) {
   return h('div', { class: 'attivazione-infusa' },
     h('p', {}, h('strong', {}, `${a.incantesimo} ${a.livello}: `), `${quote} · ${a.tempo} · nessuna Prova (Magia §24.2${a.energie ? ', §25.4' : ''}) · proprietà ${nomeAlimentazione(a.alimentazione, ctx.dati)} (§26.2).`),
     a.motivo ? h('p', { class: 'nota motivo' }, `Avviso: ${a.motivo}. Si può attivare comunque.`) : null,
-    conPulsante ? h('button', { type: 'button', class: `btn${a.motivo ? ' con-avviso' : ''}`, title: a.motivo ?? 'Scala i PM; «Annulla» li restituisce',
-      onclick: () => conAvviso(ctx.azioni.storico, { azione: `attivare ${a.incantesimo} di ${x.nome}`, motivo: a.motivo, fai: (forza) => (universale && a.pagamento?.personali
-        ? ctx.azioni.lancia({ personali: a.pagamento.personali, contenitore: riserva && a.pagamento.interna ? { uid: riserva.uid, pm: a.pagamento.interna } : null }, null, forza)
-        : riserva ? ctx.azioni.chroma(riserva.uid, -a.pm) : null) }) }, `Attiva (−${a.pm} PM)`) : null);
+    // 20/10: «Lancia!» apre lo stesso pannello degli incantesimi conosciuti (src/ui/lancio.js → pannelloLancioOggetto)
+    conPulsante ? h('button', { type: 'button', class: `btn primario${a.motivo ? ' con-avviso' : ''}`, title: a.motivo ?? 'Apre il pannello di attivazione: costo, Azioni, durata e bersagli',
+      onclick: () => { ctx.ui.lancio = { nome: a.incantesimo, passo: 0, da: `${x.uid}#${indice}` }; ctx.azioni.ridisegna(); } }, 'Lancia!') : null);
 }
 
 /**

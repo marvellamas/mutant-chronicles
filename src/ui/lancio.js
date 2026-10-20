@@ -7,7 +7,8 @@ import { h } from './dom.js';
 import { pillola } from './attacco.js';
 import { listaProvenienza } from './tooltip.js';
 import { riquadroDanno, rigaScelte, interruttore, pannelloPassi } from './pannello-passi.js';
-import { calcolaLancio, dichiarazioneLancio, versioniLancio, contenitoriLancio } from '../lancio.js';
+import { calcolaLancio, dichiarazioneLancio, versioniLancio, contenitoriLancio, livelloVersione } from '../lancio.js';
+import { incantesimiDaOggetti, trovaIncantesimoOggetto, attivazioneOggetto } from '../incantesimi-artefatti.js';
 import { classeMacrofamiglia } from '../palette.js';
 import { avviso } from './avvisi.js';
 import { durataLancio, opzioniDurata, arIncantesimo } from '../durate-incantesimi.js';
@@ -26,6 +27,14 @@ const segno = (n) => (n > 0 ? `+${n}` : numero(n));
 const CONCENTRAZIONE = { no: 'nessuna', obbligatoria: 'obbligatoria, fino alla durata massima', a_scelta: 'a scelta: Concentrazione o durata fissa', durante_il_lancio: 'durante il lancio (procedura)' };
 
 export function pannelloLancio(ctx, incantesimo) {
+  // 20/10: un incantesimo che arriva da un oggetto (artefatto o Consumabile) ha il suo pannello, con le regole dell'oggetto
+  if (ctx.ui.lancio?.da) {
+    const e = trovaIncantesimoOggetto(incantesimiDaOggetti({ voci: ctx.scelte.equipaggiamento, scheda: ctx.tab.scheda }, ctx.dati), ctx.ui.lancio.da);
+    if (e && !ctx.calcola) return pannelloLancioOggetto(ctx, incantesimo, e);
+    // l'oggetto è uscito dall'Inventario (o il Consumabile è finito): il pannello si chiude da sé
+    ctx.ui.lancio = null;
+    return null;
+  }
   const chiudi = () => { ctx.ui.lancio = null; ctx.azioni.ridisegna(); };
   return corpo(ctx, incantesimo, {
     etichetta: `Lancio di ${incantesimo.nome}`, titolo: `Lancia! · ${incantesimo.nome}`, chiudi, etichettaNav: 'Passi del lancio',
@@ -318,4 +327,83 @@ function risultatoRituale(ctx, inc, r, d, imposta) {
         }, `Con Successo Magistrale (−${M.officiante} PM)`),
         h('small', { class: 'nota' }, 'Tira 1d20 al tavolo alla fine della celebrazione. Successo o fallimento consumano i PM; se la celebrazione si interrompe prima della Prova non si spendono. «Annulla» nell’intestazione annulla la spesa.'))),
   ];
+}
+
+// ---------------------------------------------------------------------------
+// «Lancia!» di un incantesimo che arriva da un oggetto (20/10/2026): artefatto con un incantesimo infuso o Consumabile.
+// Stesso pannello a passi degli incantesimi conosciuti (Versione, PM, Risultato), con le regole dell'oggetto al posto
+// di quelle del lancio personale: attivazione automatica, nessuna Prova di Potere (Magia §24.2, §27.1), PM dalla riserva
+// dell'artefatto (Esclusiva) o anche personali (Universale, §26.2); un Consumabile non spende PM del personaggio e si
+// consuma al completamento. Le regole stanno in src/incantesimi-artefatti.js.
+
+const FRASE_ARTEFATTO = 'Attivazione automatica, senza Prova di Potere, Componenti né Canali (Magia §24.2). Restano tempo di esecuzione, gittata, bersagli, durata, Concentrazione, Prove per colpire, Salvezze e limiti della versione infusa.';
+const FRASE_CONSUMABILE = 'Attivazione automatica, senza Prove di Potere né Rituali; si consuma al completamento (Magia §27.1). Restano tempo di esecuzione, gittata, bersagli, durata, Concentrazione, Prove per colpire, Difese e Salvezze della versione infusa.';
+
+/** Concentrazione della scheda, in parole (stesse parole del lancio personale). */
+function testoConcentrazione(inc) {
+  const d = inc.meccanica?.durata;
+  if (opzioniDurata(inc).concentrazioneAScelta) return CONCENTRAZIONE.a_scelta;
+  if (d && d.tipo === 'durata' && !d.colonna && d.concentrazione) return CONCENTRAZIONE.obbligatoria;
+  return CONCENTRAZIONE.no;
+}
+
+export function pannelloLancioOggetto(ctx, inc, e) {
+  const chiudi = () => { ctx.ui.lancio = null; ctx.azioni.ridisegna(); };
+  const consumabile = e.origine === 'consumabile';
+  const a = attivazioneOggetto(e, { sessione: ctx.sessione, inScontro: !!ctx.roundScontro, rotti: new Set(ctx.tab?.scheda?.equipaggiamento?.rotti ?? []) }, ctx.dati);
+  const stato = (ctx.ui.lancio ??= { nome: inc.nome, passo: 0 });
+  const riga = (inc.versioni ?? []).find((v) => livelloVersione(v) === e.livello) ?? null;
+  const durata = bloccoDurata(ctx, inc, { livello: e.livello, anticipazione: null });
+  const origine = `da ${e.oggetto}`;
+  const doveSpesa = consumabile ? `${a.pm} PM sigillati nel Consumabile (non sono PM tuoi)`
+    : [a.fonte?.personali ? `${a.fonte.personali} personali` : null, a.fonte?.contenitore ? `${a.fonte.contenitore.pm} da ${e.riserva?.nome ?? e.oggetto}` : null].filter(Boolean).join(' + ') || '—';
+  const danni = riga ? Object.entries(riga).filter(([k]) => /^(Danno|Cura)/i.test(k)).map(([k, v]) => ({ etichetta: k, valore: String(v) })) : [];
+  const passi = {
+    Versione: [
+      h('p', { class: 'nota' }, h('strong', {}, `${inc.nome} ${e.livello}`), ` ${origine}: la versione infusa è fissata dall’oggetto (Magia §24.2); non si sceglie.`),
+      riga ? h('dl', { class: 'voci griglia-voci riga-versione' }, Object.entries(riga).map(([k, x]) => h('div', {}, h('dt', {}, k), h('dd', {}, x)))) : h('p', { class: 'nota motivo' }, `La scheda di ${inc.nome} non ha la versione di livello ${e.livello}.`),
+    ],
+    PM: [
+      h('p', { class: 'nota' }, consumabile
+        ? `Costo: ${a.pm} PM, già sigillati nel Consumabile in Cariche Esclusive: non si estraggono e non sono una riserva del personaggio (Magia §27.1).`
+        : `Costo: ${a.pm ?? '—'} PM · ${a.universale ? 'proprietà Universale (§26.2): la riserva dell’Artefatto per quanto ha, il resto con i PM personali' : 'proprietà Esclusiva (§26.2): solo la riserva interna dell’Artefatto'}.`),
+      consumabile ? null : h('p', { class: 'nota' }, e.riserva
+        ? `Riserva dell’oggetto: ${ctx.sessione.chroma?.[e.riserva.uid]?.pmAttuali ?? 0} / ${e.riserva.capacita} PM · personali ${ctx.sessione.pmAttuali} / ${ctx.massimi.pm}.`
+        : `Nessuna riserva integrata · personali ${ctx.sessione.pmAttuali} / ${ctx.massimi.pm}.`),
+      a.frasi?.length ? h('p', { class: 'nota' }, a.frasi.join(' ')) : null,
+    ],
+    Risultato: [
+      a.motivo ? h('div', { class: 'riquadro attenzione', role: 'alert' }, h('p', {}, h('strong', {}, 'Avviso: '), `${a.motivo}. `, 'Si può procedere comunque: l’ultima parola è del Direttore.')) : null,
+      h('div', { class: 'attacco-risultato' },
+        riquadroDanno(danni),
+        h('p', { class: 'costo-lancio' }, h('strong', {}, `${a.pm ?? '—'} PM`), ` · ${doveSpesa}`),
+        h('p', { class: 'va-attacco' }, h('strong', {}, 'Prova di Potere: non richiesta'), h('small', { class: 'nota' }, consumabile ? ' (Consumabile, Magia §27.1)' : ' (attivazione automatica, Magia §24.2)')),
+        h('dl', { class: 'voci griglia-voci' },
+          h('div', {}, h('dt', {}, 'Azioni'), h('dd', {}, a.tempo ?? '—')),
+          h('div', {}, h('dt', {}, 'Concentrazione'), h('dd', {}, testoConcentrazione(inc))),
+          riga?.Gittata ? h('div', {}, h('dt', {}, 'Gittata'), h('dd', {}, String(riga.Gittata))) : null),
+        h('ul', { class: 'promemoria-attacco' }, h('li', {}, consumabile ? FRASE_CONSUMABILE : FRASE_ARTEFATTO)),
+        durata.elemento,
+        h('div', { class: 'attacco-azioni' },
+          h('button', {
+            type: 'button', class: `btn primario btn-grande${a.motivo ? ' con-avviso' : ''}`, title: a.motivo ?? null,
+            onclick: () => {
+              const reg = durata.registrazione();
+              const registrazione = reg ? { ...reg, nome: `${inc.nome} (${e.oggetto})` } : null;
+              return conAvviso(ctx.azioni.storico, {
+                azione: consumabile ? `usare ${e.oggetto}` : `lanciare ${inc.nome} da ${e.oggetto}`, motivo: a.motivo,
+                fai: (forza) => (consumabile ? ctx.azioni.usaConsumabile(e.uid, registrazione, forza) : lanciaConAvviso(ctx, `${inc.nome} (${e.oggetto})`, a.fonte, registrazione, forza)),
+              });
+            },
+          }, consumabile ? 'Attivazione completata (consuma 1 esemplare)' : `Lancia (−${a.pm ?? 0} PM)`),
+          h('small', { class: 'nota' }, consumabile
+            ? 'Se l’attivazione si interrompe prima del completamento non si consuma nulla: chiudi il pannello. Il Consumabile finito sparisce dall’Inventario.'
+            : 'Tira 1d20 al tavolo solo per le Prove per colpire e le Salvezze della scheda. «Annulla» nell’intestazione annulla la spesa.'))),
+    ],
+  };
+  return pannelloPassi({
+    etichetta: `Lancio di ${inc.nome} ${origine}`, titolo: `Lancia! · ${inc.nome} ${origine}`, chiudi, etichettaNav: 'Passi del lancio',
+    classe: `lancio-pannello ${classeMacrofamiglia(inc.macrofamiglia)}`,
+    passi: ['Versione', 'PM', 'Risultato'].map((t) => ({ titolo: t, contenuto: passi[t] })), stato, ridisegna: ctx.azioni.ridisegna,
+  });
 }
