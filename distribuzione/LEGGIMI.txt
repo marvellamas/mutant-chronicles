@@ -13,12 +13,13 @@ normale, per esempio C:\Mutant (vedi "Metti la cartella al suo posto").
 COSA C'È IN QUESTA CARTELLA
 --------------------------------------------------------------
 
-Ci sono quattro file:
+Ci sono cinque file:
 
-  LEGGIMI.txt                    questa guida.
-  1_scarica_o_aggiorna_app.bat   scarica l'app da internet (e la aggiorna).
-  2_installa_node.bat            installa Node.js, il programma che fa girare l'app.
-  3_avvia.bat                    accende l'app e la apre nel browser.
+  LEGGIMI.txt                     questa guida.
+  1_scarica_o_aggiorna_app.bat    scarica l'app da internet (e la aggiorna).
+  2_installa_node.bat             installa Node.js, il programma che fa girare l'app.
+  3_avvia.bat                     accende l'app e la apre nel browser.
+  4_controlla_personaggi.bat      controlla i file dei personaggi (si usa di rado).
 
 I file che finiscono con ".bat" sono piccoli programmi.
 Si usano con un doppio clic.
@@ -263,3 +264,35 @@ La pagina del browser è bianca o dice "impossibile raggiungere il sito"
   Controlla che la finestra nera sia aperta. Aspetta qualche secondo e premi F5.
 
 Per tutto il resto: scrivi a Marcello e, se puoi, manda una foto della finestra nera.
+
+CONTROLLARE I FILE DEI PERSONAGGI (passo 4, si usa di rado)
+--------------------------------------------------------------
+
+Con il tempo, nella cartella dei personaggi restano più file dello stesso
+personaggio: uno per ogni giorno in cui ci hai giocato. Non è un problema,
+ma rende l'elenco confuso.
+
+"4_controlla_personaggi.bat" guarda dentro ogni file e ti dice che cosa
+contiene: livello, Punti Esperienza, PV, PM, oggetti, crediti e a che giorno
+arriva il calendario della campagna. Poi, dove ci sono più file dello stesso
+personaggio, ti propone quale tenere e ti spiega il perché.
+
+Come si usa:
+
+1. Doppio clic su 4_controlla_personaggi.bat.
+2. Leggi l'elenco che compare. Lo stesso testo viene scritto anche in
+   "rapporto-personaggi.txt", accanto a questo file: puoi aprirlo con il
+   Blocco note e mandarlo a Marcello.
+3. Alla fine ti viene chiesto se vuoi mettere via i file vecchi.
+   - Se scrivi SI e premi Invio: resta un file per personaggio e gli altri
+     vanno in mutant\personaggi\storico\. Niente viene cancellato.
+   - Se premi solo Invio, o se chiudi la finestra: non viene toccato niente.
+
+Se per qualche personaggio il programma scrive "CASO DUBBIO", vuol dire che
+non è riuscito a capire da solo quale file sia l'ultimo (per esempio uno ha
+più Punti Esperienza e un altro un calendario più avanti). In quel caso non
+tocca niente e lascia la scelta a te: guarda i valori e, se non sei sicuro,
+manda il rapporto a Marcello.
+
+L'app può restare accesa: il controllo legge soltanto. Per lo spostamento,
+meglio chiudere prima la finestra di Mutant.

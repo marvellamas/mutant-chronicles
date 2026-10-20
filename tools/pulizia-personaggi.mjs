@@ -1,30 +1,36 @@
-// Pulizia della cartella dei personaggi (20/10/2026, lotto «un originale solo», parte F): i file datati dello stesso
-// personaggio vanno in `personaggi/storico/<id>/`, così in `personaggi/` resta un file per personaggio.
+// Pulizia della cartella dei personaggi (20/10/2026, lotto «un originale solo», parte F; rifatto lo stesso giorno con
+// la parte C di «chi tiene l'originale»): i file datati dello stesso personaggio vanno in `personaggi/storico/<id>/`,
+// così in `personaggi/` resta un file per personaggio.
 //
 // Lo strumento NON sposta niente da solo: il primo comando produce un rapporto e si ferma. Lo spostamento avviene solo
-// con il secondo comando, dopo che Marcello ha letto il rapporto.
+// con il secondo comando, dopo che il rapporto è stato letto.
 //
 //   node tools/pulizia-personaggi.mjs                  rapporto, non tocca niente
-//   node tools/pulizia-personaggi.mjs --cartella X      rapporto su un'altra cartella (prove)
-//   node tools/pulizia-personaggi.mjs --sposta          sposta davvero (dopo l'ok), con il rapporto di ciò che fa
+//   node tools/pulizia-personaggi.mjs --cartella X     rapporto su un'altra cartella (prove)
+//   node tools/pulizia-personaggi.mjs --sposta         sposta davvero, con il rapporto di ciò che fa
+//   node tools/pulizia-personaggi.mjs --su FILE        scrive il rapporto anche in un file di testo
 //
-// Che cosa fa lo spostamento: per ogni personaggio tiene in `personaggi/` il file modificato più di recente e sposta
-// gli altri in `personaggi/storico/<id>/<data-ora>.json` (la data-ora è quella di modifica del file). Niente viene
-// cancellato. I file che non sono personaggi di Mutant e quelli di personaggi diversi non si toccano.
-import { readdir, stat, readFile, mkdir, rename } from 'node:fs/promises';
+// Il rapporto guarda DENTRO i file, non solo la data: livello, PX, PV e PM, oggetti e crediti, l'ultima data del
+// calendario di gioco, Ferite, Affaticamento e Stati (src/confronto-personaggi.js). La data del file dice quando è
+// stato toccato, non quanto è avanti il personaggio: cinque PG su sette avevano la stessa ora, riscritti insieme da un
+// recupero. Dove i segni non concordano, il personaggio è dichiarato **caso dubbio** e non si sceglie: lo guarda il Direttore.
+//
+// Lo spostamento non cancella niente e scrive una copia in `storico/` prima di muovere il file.
+import { readdir, stat, readFile, mkdir, rename, copyFile, writeFile } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { NOME_FILE, chiaveDaFile } from '../src/cartella.js';
 import { idPersonaggio, cartellaStorico, CARTELLA_STORICO } from '../src/storico-personaggi.js';
+import { segniDi, rigaSegni, proponiOriginale } from '../src/confronto-personaggi.js';
 
 const RADICE = dirname(dirname(fileURLToPath(import.meta.url)));
 const quando = (ms) => new Date(ms).toLocaleString('it-IT', { dateStyle: 'short', timeStyle: 'short' });
 const nomeDaMtime = (ms) => `${new Date(ms).toISOString().slice(0, 19).replace(/:/g, '-')}.json`;
 
 /**
- * Esamina la cartella: per ogni personaggio (id stabile) i suoi file, quale è l'originale proposto (il più recente) e
- * quali andrebbero in storico. Non tocca niente.
- * @returns {{ personaggi: [{ id, nome, originale, altri, file }], ignorati: string[], totale, dopo }}
+ * Esamina la cartella: per ogni personaggio (id stabile) i suoi file con i segni che stanno dentro, quale si propone
+ * come originale e perché, e i casi dubbi. Non tocca niente.
+ * @returns {{ personaggi: [{ id, nome, segni, proposto, motivo, dubbio, altri }], ignorati, totale, dopo, dubbi }}
  */
 export async function rapporto(cartella) {
   const nomi = (await readdir(cartella).catch(() => [])).filter((f) => NOME_FILE.test(f));
@@ -36,7 +42,7 @@ export async function rapporto(cartella) {
     let o = null;
     try { o = JSON.parse(await readFile(dove, 'utf8')); } catch { /* rovinato */ }
     if (o?.formato !== 'mutant-personaggio') { ignorati.push(f); continue; }
-    file.push({ file: f, mtime: s.mtimeMs, id: idPersonaggio(o, chiaveDaFile(f)), nome: o.scelte?.nome?.trim() || chiaveDaFile(f), dimensione: s.size });
+    file.push({ id: idPersonaggio(o, chiaveDaFile(f)), ...segniDi(o, { file: f, mtime: s.mtimeMs }) });
   }
   const per = new Map();
   for (const x of file) {
@@ -44,50 +50,84 @@ export async function rapporto(cartella) {
     per.get(x.id).push(x);
   }
   const personaggi = [...per.entries()].map(([id, suoi]) => {
-    const ordinati = [...suoi].sort((a, b) => b.mtime - a.mtime);
-    return { id, nome: ordinati[0].nome, originale: ordinati[0], altri: ordinati.slice(1), file: ordinati };
+    const segni = [...suoi].sort((a, b) => b.mtime - a.mtime);
+    const p = proponiOriginale(segni);
+    return {
+      id, nome: segni.find((g) => g.nome)?.nome ?? chiaveDaFile(segni[0].file), segni,
+      proposto: p.proposto, motivo: p.motivo, dubbio: p.dubbio, confronti: p.confronti,
+      altri: p.proposto ? segni.filter((g) => g.file !== p.proposto.file) : [],
+    };
   }).sort((a, b) => a.nome.localeCompare(b.nome, 'it'));
-  return { personaggi, ignorati, totale: file.length, dopo: personaggi.length };
+  return { personaggi, ignorati, totale: file.length, dopo: personaggi.length, dubbi: personaggi.filter((p) => p.dubbio) };
 }
 
-/** Il rapporto in parole, una riga per personaggio. */
+/** Il rapporto in parole: per ogni personaggio i segni di ogni file, la proposta e il motivo. */
 export function testoRapporto(r, { sposta = false } = {}) {
-  const righe = [`${r.totale} file di personaggio in cartella, ${r.dopo} personaggi: dopo la pulizia resterebbero ${r.dopo} file.`, ''];
+  const righe = [
+    `${r.totale} file di personaggio, ${r.dopo} personaggi.`,
+    'Per ogni file: livello · PX · PV · PM · oggetti · crediti · calendario di gioco · condizioni — data del file — nome.',
+    '',
+  ];
   for (const p of r.personaggi) {
-    righe.push(`${p.nome} (${p.id}): ${p.file.length} file.`);
-    righe.push(`  originale proposto: ${p.originale.file} — ${quando(p.originale.mtime)}`);
-    for (const a of p.altri) righe.push(`  ${sposta ? 'spostato' : 'in storico'}: ${a.file} — ${quando(a.mtime)}`);
+    righe.push(`${p.nome} (${p.id}): ${p.segni.length} file`);
+    for (const g of p.segni) {
+      const segno = p.proposto && g.file === p.proposto.file ? '  → ' : '    ';
+      righe.push(segno + rigaSegni(g, { quando }));
+    }
+    if (p.dubbio) {
+      righe.push(`    ⚠ CASO DUBBIO: ${p.dubbio}.`);
+      righe.push('      Non propongo niente: questo lo guarda il Direttore. Per ora restano tutti i file.');
+    } else if (p.segni.length > 1) {
+      righe.push(`    Propongo ${p.proposto.file}, perché ${p.motivo}.`);
+      righe.push(`    ${sposta ? 'Spostati' : 'Andrebbero'} in storico: ${p.altri.map((g) => g.file).join(', ')}.`);
+    }
+    righe.push('');
   }
-  if (r.ignorati.length) righe.push('', `Non sono personaggi di Mutant (non toccati): ${r.ignorati.join(', ')}.`);
-  righe.push('', sposta ? 'Spostamento eseguito: niente è stato cancellato, le copie stanno in personaggi/storico/.'
+  if (r.dubbi.length) {
+    righe.push(`${r.dubbi.length} caso${r.dubbi.length === 1 ? '' : 'i'} dubbio${r.dubbi.length === 1 ? '' : 'i'}: ${r.dubbi.map((p) => p.nome).join(', ')}. I loro file non si toccano.`);
+    righe.push('');
+  }
+  righe.push(sposta
+    ? 'Spostamento eseguito. Niente è stato cancellato: una copia di ogni file spostato è in personaggi/storico/.'
     : 'Niente è stato toccato. Per spostare davvero: node tools/pulizia-personaggi.mjs --sposta');
   return righe.join('\n');
 }
 
-/** Sposta in `storico/<id>/` tutti i file tranne l'originale di ogni personaggio. Restituisce gli spostamenti fatti. */
+/**
+ * Sposta in `storico/<id>/` i file che non sono l'originale proposto. I casi dubbi non si toccano.
+ * Prima di muovere, ne scrive una copia nella stessa cartella dello storico: niente si perde nemmeno se lo
+ * spostamento si interrompe a metà.
+ */
 export async function sposta(cartella, r) {
   const fatti = [];
   for (const p of r.personaggi) {
-    for (const a of p.altri) {
+    if (p.dubbio || !p.proposto) continue;
+    for (const g of p.altri) {
       const dove = join(cartella, CARTELLA_STORICO, cartellaStorico(p.id));
       await mkdir(dove, { recursive: true });
-      const nome = nomeDaMtime(a.mtime);
-      await rename(join(cartella, a.file), join(dove, nome));
-      fatti.push({ da: a.file, a: `${CARTELLA_STORICO}/${cartellaStorico(p.id)}/${nome}` });
+      const nome = nomeDaMtime(g.mtime);
+      // prima la copia, poi lo spostamento: se qualcosa va storto il file è già al sicuro
+      await copyFile(join(cartella, g.file), join(dove, nome));
+      await rename(join(cartella, g.file), join(dove, nome));
+      fatti.push({ da: g.file, a: `${CARTELLA_STORICO}/${cartellaStorico(p.id)}/${nome}` });
     }
   }
   return fatti;
 }
 
-if (import.meta.url === `file://${process.argv[1].replace(/\\/g, '/')}` || process.argv[1]?.endsWith('pulizia-personaggi.mjs')) {
-  const i = process.argv.indexOf('--cartella');
-  const cartella = i > 0 ? process.argv[i + 1] : join(RADICE, 'personaggi');
+const arg = (nome) => { const i = process.argv.indexOf(nome); return i > 0 ? process.argv[i + 1] : null; };
+
+if (process.argv[1]?.endsWith('pulizia-personaggi.mjs')) {
+  const cartella = arg('--cartella') ?? join(RADICE, 'personaggi');
   const r = await rapporto(cartella);
   const fare = process.argv.includes('--sposta');
-  console.log(`Cartella: ${cartella}\n`);
-  console.log(testoRapporto(r, { sposta: fare }));
+  const testo = `Cartella: ${cartella}\n\n${testoRapporto(r, { sposta: fare })}`;
+  console.log(testo);
+  const su = arg('--su');
+  if (su) await writeFile(su, `${testo}\n`, 'utf8');
   if (fare) {
     const fatti = await sposta(cartella, r);
     console.log(`\n${fatti.length} file spostati.`);
+    if (su) await writeFile(su, `${testo}\n\n${fatti.length} file spostati.\n`, 'utf8');
   }
 }

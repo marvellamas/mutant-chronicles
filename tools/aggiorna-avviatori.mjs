@@ -23,7 +23,7 @@ import { fileURLToPath } from 'node:url';
 const RADICE = fileURLToPath(new URL('..', import.meta.url));
 
 /** I file del pacchetto da tenere allineati: quelli di distribuzione/, tranne lo script della copia. */
-export const AVVIATORI = ['1_scarica_o_aggiorna_app.bat', '2_installa_node.bat', '3_avvia.bat', 'LEGGIMI.txt', 'aggiorna-da-zip.ps1'];
+export const AVVIATORI = ['1_scarica_o_aggiorna_app.bat', '2_installa_node.bat', '3_avvia.bat', '4_controlla_personaggi.bat', 'LEGGIMI.txt', 'aggiorna-da-zip.ps1'];
 
 /** Due file hanno lo stesso contenuto? (byte per byte; un file che non c'è è «diverso») */
 export function uguali(a, b) {
