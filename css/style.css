@@ -1459,12 +1459,14 @@ body.con-sfondo::before {
 /* tablet: la colonna resta a destra, più stretta; la tabella nasconde le colonne di dettaglio e mostra
    la formula sotto il nome (come sul telefono) */
 @container (max-width: 52rem) {
-  .abilita-layout { grid-template-columns: minmax(0, 1fr) 12.5rem; gap: 0 0.75rem; }
+  .abilita-layout { grid-template-columns: minmax(0, 1fr) minmax(13rem, 14rem); gap: 0 0.75rem; }
   .abilita-layout .abilita-tab .dettaglio { display: none; }
   .abilita-layout .abilita-tab .formula { display: block; }
 }
-/* pannello stretto (telefono): una colonna, le Condizioni sotto la tabella */
-@container (max-width: 30rem) {
+/* 19/10/2026, dal tablet: due colonne solo se restano leggibili entrambe (tabella almeno ~24rem, Condizioni almeno 13rem);
+   sotto ~40rem di pannello (tablet in verticale, telefono) le Condizioni attive vanno sotto la tabella, a tutta
+   larghezza, invece di schiacciare l'una o l'altra */
+@container (max-width: 40rem) {
   .abilita-layout { grid-template-columns: minmax(0, 1fr); }
   .colonna-condizioni { position: static; }
 }
