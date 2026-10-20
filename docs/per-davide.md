@@ -1,6 +1,6 @@
-# **Per Davide — domande aperte ed errata dei manuali**
+> > # **Per Davide — domande aperte ed errata dei manuali**
 
-*Aggiornato al 18 ottobre 2026, sera.*
+*Aggiornato al 19 ottobre 2026\.*
 
 **Istruzioni per Davide (e per l’AI che usi per rispondere)**
 
@@ -16,27 +16,31 @@
 
 **Sezioni:** 1\. Domande che bloccano un lavoro in corso · 2\. Domande aperte · 3\. Risposte ricevute, in implementazione · 4\. Da correggere nei manuali · 5\. Manuali che l’app aspetta · 6\. Risolte · 7\. Risposte di Davide · 8\. Prove da fare.
 
----
+> > ---
 
-## **1\. Domande che bloccano un lavoro in corso**
+> > ## **1\. Domande che bloccano un lavoro in corso**
 
 Nessuna, al momento. Grazie per l’aggiornamento cumulativo dell’8 ottobre.
 
----
+> > ---
 
-## **2\. Domande aperte (l’app ha già un’ipotesi ragionevole)**
+> > ## **2\. Domande aperte (l’app ha già un’ipotesi ragionevole)**
 
-### **Bestiario**
+> > ### **Bestiario**
 
 **A.171 — Portata degli attacchi degli Sciami (Manuale dei Mostri 0.23, cap. 8).** Gli Sciami attaccano solo chi condivide il loro spazio: la portata è 0 Q. Il formato dei dati dell’app accetta però portate da 1 Q in su. *Nel frattempo:* la portata è 1 Q, con la condizione («solo nello spazio condiviso») nella nota dell’attacco. Se preferisci, il formato può accettare anche lo 0\.
 
-### **Mappa**
+> > ### **Mappa**
 
 **A.172 — Quadretti occupati da una sagoma ruotata (seguito della A.167).** Con la sagoma ruotata a 45° un quadretto si considera occupato se la sagoma lo copre per almeno metà: è la stessa regola dei veicoli (A.147) e dei template. Così una creatura 3 × 10 Q a 45° occupa 28 Q, mentre a 0° ne occupa 30\. Va bene? Inoltre la portata degli attacchi si misura dai quadretti occupati e non dal centro, e un attacco che parte da una sagoma lunga parte dal suo quadretto più favorevole, come già per le creature 2 × 2 Q. *Nel frattempo:* si usa questa regola.
 
----
+> > ### **Artefatti**
 
-## **3\. Risposte ricevute, in implementazione**
+**A.173 — Hachimaki della Disciplina Interiore e Tecniche con più costi (Equipaggiamento §10.10, Magia §28.1).** Il manuale dice che la fascia abbassa di 1 PM il costo di una Tecnica Interiore (minimo 1 PM se il costo è positivo; una Tecnica già gratuita resta gratuita; più riduzioni dello stesso costo non si sommano). Non dice però come leggerla quando una Tecnica ha più costi: Imposizione della Mano Curativa ha una tabella di quattro usi (1, 2, 4, 10 PM). *Nel frattempo:* −1 PM a ciascun uso, con il minimo di 1, cioè 1, 1, 3 e 9, mostrato in «Attiva» con la base e la riduzione. Se deve valere diversamente — solo sull’uso più basso, o una sola volta per attivazione — basta dirlo.
+
+> > ---
+
+> > ## **3\. Risposte ricevute, in implementazione**
 
 Le tue risposte sono nella sezione 7\. Qui c’è cosa fa l’app finché l’implementazione non è finita; poi la voce passa fra le Risolte.
 
@@ -48,9 +52,9 @@ Le tue risposte sono nella sezione 7\. Qui c’è cosa fa l’app finché l’im
 
 > > •             **A.128 — Terreno difficile.** Coincide con quello che la mappa già fa. Passa fra le Risolte quando la mappa è in uso al tavolo.
 
----
+> > ---
 
-## **4\. Da correggere nella prossima edizione dei manuali**
+> > ## **4\. Da correggere nella prossima edizione dei manuali**
 
 Decisioni già prese o errori evidenti: l’app segue la decisione, il testo dice ancora altro. Le voci barrate sono già sistemate nel manuale condiviso.
 
@@ -84,6 +88,8 @@ Decisioni già prese o errori evidenti: l’app segue la decisione, il testo dic
 
 **Manuale degli Armamenti**
 
+> > •             §7.10 (e Magia §24.2), SnT degli Artefatti con sole proprietà passive: dicono SnT 0 senza eccezioni, mentre Equipaggiamento §10.10 e Magia §28.1 danno all’Hachimaki della Disciplina Interiore SnT 1 (0 \+ 1 per il beneficio sui PM). L’app segue le schede specifiche dell’oggetto (§10.10 e §28.1). Da correggere: aggiungere l’eccezione ai §7.10 e §24.2, oppure togliere la maggiorazione dalla scheda.
+
 > > •             §7.1.9, §7.8, §7.9: «Imperiali» e «Imperial» (§7.4.8, §7.14). L’app usa «Imperial».
 
 > > •             §7.9: mancano le tabelle prezzi delle armi a distanza di Fratellanza, Imperial e Mishima (i prezzi sono nelle schede del §7.8; le 146 righe presenti coincidono).
@@ -112,9 +118,9 @@ Decisioni già prese o errori evidenti: l’app segue la decisione, il testo dic
 
 > > •             **Talenti nella stampa**: il foglio 2 stampa la prima frase di ogni Talento. Se preferisci un riassunto tuo, si aggiunge un campo.
 
----
+> > ---
 
-## **5\. Manuali che l’app aspetta**
+> > ## **5\. Manuali che l’app aspetta**
 
 > > •             Dal 26/09 i manuali sono Google Doc condivisi: l’app li rilegge a ogni sessione, non servono più i PDF.
 
@@ -126,9 +132,9 @@ Decisioni già prese o errori evidenti: l’app segue la decisione, il testo dic
 
 > > •             Manuale del Direttore: regole dettagliate di malattie e cure (A.119).
 
----
+> > ---
 
-## **6\. Risolte**
+> > ## **6\. Risolte**
 
 Voci con risposta recepita e funzione implementata nell’app (o chiuse). La data è quella dell’implementazione.
 
@@ -468,9 +474,11 @@ Voci con risposta recepita e funzione implementata nell’app (o chiuse). La dat
 
 > > •             **A.170 — Soglie, Atti e fattori di calcolo dei PX.** Risposta del 18/10, verificata il 18/10. Il calcolatore già faceva tutto come confermato: soglie cumulative dei livelli 1–20, limiti e premi degli Atti, correttivo max(0,5; 1 \+ 0,1 × (4 − n)), voti × Titolo con il raddoppio dei soli voti nelle partite lunghe, bonus eccezionale × Titolo senza raddoppio, incontri e premi degli Atti senza Titolo, Titolo posseduto all’inizio della partita, nessun fattore per l’equipaggiamento. L’unica aggiunta: se i presenti hanno già ricevuto il premio dello stesso Atto in un’altra partita, l’app **avvisa** (non blocca).
 
----
+> > •             **Manuale dell’Equipaggiamento 0.8, §§10.8–10.11** — Pergamene, CyberArma, Hachimaki della Disciplina Interiore e Tomo dei Guardiani nel catalogo degli Artefatti, con i valori del manuale. Nessun personaggio, nemico o scontro salvato possedeva l’Hachimaki o il Tomo: sono in catalogo come oggetti acquistabili, senza assegnarli a nessuno. L’Hachimaki abbassa di 1 PM il costo delle Tecniche Interiori quando è indossato **e** sintonizzato, e la scheda mostra sempre la base e la riduzione («4 PM della scheda − 1 per Hachimaki»); indossato ma non sintonizzato, l’app avvisa e il costo non cambia. Il Tomo ha peso, SnT e Integrità «da definire», come scrive il manuale, e il carico risulta parziale. *Implementato il 19/10.* Una domanda aperta: A.173.
 
-## **7\. Risposte di Davide**
+> > ---
+
+> > ## **7\. Risposte di Davide**
 
 Scrivi qui, in coda, una risposta per blocco: numero della domanda, data, testo. Va bene anche rispondere nel Doc E\&L.  
  Le risposte qui sotto sono riportate dal documento «Per Davide» del 28/09, che non si usa più.  
@@ -568,7 +576,7 @@ Scrivi qui, in coda, una risposta per blocco: numero della domanda, data, testo.
  **Risposta approvata A.13** — Rainy Dayer (§7.14.6): il profilo di tiro appartiene alla Specializzazione Carabine, che conferisce \+1 al VA e \+1 al danno. L’Abilità utilizzata rimane Armi medie; il tiro richiede due mani sia con l’ombrello aperto sia con l’ombrello chiuso, con gittata massima di 30 Q.  
  La funzione difensiva segue le regole già presenti: aperta, la Rainy Dayer fornisce AR \+1 e permette la Parata con Difese. La Specializzazione Carabine riguarda il tiro e non aumenta questa protezione.
 
-### **Allineamento delle risposte approvate — regole tecniche e Stati**
+> > ### **Allineamento delle risposte approvate — regole tecniche e Stati**
 
 Aggiornamento del ott 6, 2026  
  Fonte delle decisioni: [*E\&L – Risposte e correzioni approvate*](https://docs.google.com/document/d/1VaqZaAe4NK5P8A956Eahua_ZT60eh3ohnR2xSqh-tVs/edit)  
@@ -576,7 +584,7 @@ Aggiornamento del ott 6, 2026
  Stato delle risposte: A.107, A.108, A.110, A.114, A.116, A.119, A.120, A.124, A.127, A.128 e A.129 sono definite nei limiti esplicitati; A.111, A.122 e A.125 hanno ancora dati o sottopunti da chiarire, indicati in fondo. Le regole dettagliate delle malattie restano destinate al Manuale del Direttore.  
  «Risposta approvata» non significa «implementata nell’app». Le domande originali e le annotazioni del collaboratore sono conservate: le ipotesi «Nel frattempo» corrispondenti sono superate dalle risposte riportate qui. Il passaggio alla sezione 6 richiede la verifica del recepimento nell’app.
 
-#### **A.107 — Correzioni retroattive dell’avanzamento**
+> > #### **A.107 — Correzioni retroattive dell’avanzamento**
 
 Approvato il ott 5, 2026  
  È consentito correggere un evento precedente dell’avanzamento. L’app ricalcola in ordine cronologico tutti gli eventi successivi.  
@@ -584,14 +592,14 @@ Approvato il ott 5, 2026
  La salita a nuovi livelli resta bloccata finché la ricostruzione e le riassegnazioni necessarie non sono completate.  
  Questa regola riguarda la correzione della cronologia: un punto legittimo quando assegnato non viene restituito soltanto perché un successivo aumento automatico di Caratteristica o Classe supera legittimamente il limite.
 
-#### **A.108 — Punti Abilità liberi in eccesso**
+> > #### **A.108 — Punti Abilità liberi in eccesso**
 
 Approvato il ott 5, 2026  
  Si confermano 7 Punti Abilità liberi a ogni Grado, compreso il primo. I punti residui della precedente assegnazione di 10 per Grado devono essere eliminati e bloccano ulteriori passaggi di livello finché la scheda non è riconciliata.  
  Quando l’eccesso è stato speso, il giocatore sceglie quali assegnazioni rimuovere; l’app non cancella arbitrariamente punti da un’Abilità. I punti eccedenti sono eliminati, non riassegnati. La cronologia viene poi ricalcolata secondo A.107.  
  Esempi: se sono stati spesi 10 punti dove ne spettavano 7, occorre rimuovere 3 punti dalle assegnazioni; se sono stati spesi 7 punti e ne restano 3 non assegnati, si eliminano quei 3 senza modificare le Abilità.
 
-#### **A.110 — Indossare e togliere protezioni**
+> > #### **A.110 — Indossare e togliere protezioni**
 
 Approvato il ott 5, 2026  
  «Combattimento con armatura» indica la gestione delle protezioni nella vista di Combattimento dell’app, non una nuova manovra o modalità di combattimento.  
@@ -608,7 +616,7 @@ Approvato il ott 5, 2026
  Il montaggio o smontaggio dei rinforzi strutturali avviene sull’armatura tolta, con gli strumenti appropriati. Su componenti integri e compatibili non richiede normalmente una Prova, salvo la scheda. I tempi per togliere e rimettere l’armatura si conteggiano separatamente. Un rinforzo già montato non aggiunge tempo al normale indossare o togliere l’armatura.  
  Restano il limite di un rinforzo, le compatibilità, i profili autonomi della A.80 e le eccezioni espresse delle schede.
 
-#### **A.111 — Recuperi di Umanità pregressi e impianti rimossi**
+> > #### **A.111 — Recuperi di Umanità pregressi e impianti rimossi**
 
 Approvato il ott 5, 2026  
  I recuperi pregressi realmente concessi e confermati dal Direttore restano validi e inclusi nel calcolo, anche se non derivano dalla rimozione di un impianto. Si registrano come «Recupero straordinario di Umanità — concessione del Direttore», distintamente dalla riabilitazione ordinaria.  
@@ -617,7 +625,7 @@ Approvato il ott 5, 2026
  L’assenza di un impianto dall’inventario non prova una rimozione chirurgica e non restituisce automaticamente UMN. Le concessioni straordinarie pregresse non autorizzano l’app ad assegnare nuovi recuperi automatici fuori dalla procedura ordinaria.  
  La conferma generale non risolve il caso fattuale di Pablo Zaion: resta da verificare perché l’Interfaccia neurale, associata alla perdita di 2 UMN, non compare più nell’inventario.
 
-#### **A.114 — Chip del Processore e strumenti**
+> > #### **A.114 — Chip del Processore e strumenti**
 
 Approvato il ott 5, 2026  
  Il bonus pertinente di un chip del Processore si somma al modificatore degli strumenti. Il chip non è un secondo modificatore degli strumenti.  
@@ -625,7 +633,7 @@ Approvato il ott 5, 2026
  Esempio: Medicina 10, chip di assistenza \+2 e Kit trauma Professionale \+2 producono VA 14 quando tutti i benefici sono pertinenti.  
  Restano i limiti ordinari del Processore: un chip attivo, durata 30 minuti e una attivazione ogni 24 ore; nessun beneficio ad attacchi, Difese, manovre di combattimento o prove di magia. È superata l’ipotesi provvisoria dell’app che applicava soltanto il maggiore tra chip e strumenti.
 
-#### **A.116 — Luce e attività pratiche che richiedono visione**
+> > #### **A.116 — Luce e attività pratiche che richiedono visione**
 
 Approvato il ott 5, 2026  
  La penalità dipende dall’impiego concreto, non dal nome dell’Abilità o dalla Caratteristica scelta. Non si applica indistintamente a tutte le prove di una stessa Abilità.  
@@ -634,13 +642,13 @@ Approvato il ott 5, 2026
  Si applicano −2 in penombra, −4 con luce molto scarsa e gli effetti sensoriali di Accecato nel buio totale: −8 per ciò che resta possibile, impossibilità per attività esclusivamente visive.  
  L’app deve poter qualificare il singolo uso come «richiede la vista», con correzione del Direttore. Il modificatore si applica una sola volta, dopo aver considerato illuminazione effettiva e capacità visive, senza duplicarlo con la medesima penalità già applicata alla prova.
 
-#### **Stati — Sintesi operative approvate per l’app**
+> > #### **Stati — Sintesi operative approvate per l’app**
 
 Approvato il ott 5, 2026  
  Sono approvate le seguenti sintesi degli undici Stati del Manuale del Giocatore, §§5.5, 5.15 e 5.18. Sono testi operativi ricostruiti dal manuale e approvati uno alla volta: non è stato possibile confrontarli con le undici righe originarie dell’app, non disponibili.  
  Il precedente promemoria che indicava le sintesi ancora da approvare è superato da questo blocco. Ammalato è disciplinato separatamente dalla nuova A.119 riportata oltre.
 
-#### **Stato 1/11 — A Terra**
+> > #### **Stato 1/11 — A Terra**
 
 −4 VA agli attacchi ravvicinati, alle Difese e alle prove che richiedono equilibrio. La penalità non si estende automaticamente a tutte le attività fisiche.  
  Può usare attacchi a distanza senza penalità propria dello Stato, se la posizione lo consente.  
@@ -648,7 +656,7 @@ Approvato il ott 5, 2026
  Non può Correre o Scattare; può strisciare di 3 Q con un’AzM. Buttarsi a terra o rialzarsi richiede un’AzM oppure un’AzP.  
  Dura finché si rialza: non si applica la durata generica di 1+1d3 Round.
 
-#### **Stato 2/11 — Accecato**
+> > #### **Stato 2/11 — Accecato**
 
 −8 VA alle prove che richiedono la vista, compresi attacchi e Difese contro avversari non percepiti. Le attività esclusivamente visive falliscono automaticamente.  
  Non può effettuare Tiro Mirato o Colpo Mirato. Può attaccare soltanto conoscendo almeno la posizione approssimativa del bersaglio.  
@@ -656,7 +664,7 @@ Approvato il ott 5, 2026
  Durata ordinaria 1+1d3 Round, salvo la fonte. Solo quando la fonte consente una PS Riflessi, il successo dimezza la durata per eccesso; il fallimento conserva la durata intera.  
  Quando l’impossibilità di vedere dipende dal buio totale, dura finché permane la condizione ambientale: non si tira una durata casuale.
 
-#### **Stato 3/11 — Assordato**
+> > #### **Stato 3/11 — Assordato**
 
 Le prove basate esclusivamente sull’udito falliscono automaticamente. −4 VA alle prove in cui l’udito è importante ma non indispensabile.  
  Non riceve ordini, avvertimenti o informazioni trasmessi soltanto a voce. Può parlare, ma controlla male il volume.  
@@ -664,7 +672,7 @@ Le prove basate esclusivamente sull’udito falliscono automaticamente. −4 VA 
  Durata ordinaria 1+1d3 Round, salvo la fonte. Nessuna PS generale: si effettua soltanto se la fonte la consente.  
  Il −4 non si applica automaticamente a tutti gli attacchi e alle Difese: conta quanto l’azione dipende dall’udito.
 
-#### **Stato 4/11 — Avvelenato**
+> > #### **Stato 4/11 — Avvelenato**
 
 All’esposizione si effettua PS Tempra con il modificatore del veleno. Il successo dimezza per eccesso ciascun danno periodico; se il veleno non provoca danni, dimezza invece la durata, salvo la fonte.  
  Danni, frequenza, penalità, altri Stati e durata dipendono dal veleno. Non esiste una penalità generale comune a tutti i veleni.  
@@ -672,7 +680,7 @@ All’esposizione si effettua PS Tempra con il modificatore del veleno. Il succe
  Una nuova esposizione allo stesso veleno rinnova la durata senza sommare i danni periodici. Veleni diversi possono coesistere.  
  L’antidoto appropriato interrompe immediatamente l’effetto. Medicina permette di identificarlo e trattarne i sintomi, ma non elimina automaticamente lo Stato.
 
-#### **Stato 5/11 — Immobilizzato**
+> > #### **Stato 5/11 — Immobilizzato**
 
 Non può spostarsi, Correre o Scattare. Subisce −4 VA alle azioni fisiche ancora possibili; gli arti bloccati non possono essere utilizzati.  
  Liberarsi segue la fonte. Per la manovra Immobilizzare, il tentativo richiede 1 AzP e una Prova contrapposta.  
@@ -680,7 +688,7 @@ Non può spostarsi, Correre o Scattare. Subisce −4 VA alle azioni fisiche anco
  Mantenere una presa non costa Azioni, ma impegna le mani utilizzate. Chi la mantiene può spendere 1 AzP ed effettuare una nuova Prova contrapposta per infliggere il proprio danno senz’armi; il fallimento non interrompe la presa.  
  Il −4 non si applica automaticamente alle PS o alle attività mentali.
 
-#### **Stato 6/11 — Incendiato**
+> > #### **Stato 6/11 — Incendiato**
 
 PS Riflessi iniziale, salvo esplicita eccezione della fonte: il successo evita lo Stato. Durata ordinaria 1+1d3 Round, salvo la fonte.  
  Infligge immediatamente 1d4 PV da fuoco, poi all’Iniziativa della fonte nei Round successivi, al massimo una volta per Round. Il danno iniziale non viene ripetuto nello stesso Round.  
@@ -690,7 +698,7 @@ PS Riflessi iniziale, salvo esplicita eccezione della fonte: il successo evita l
  Il danno ignora AR generica non magica. AR magica pertinente può ridurlo a 0; protezioni specifiche contro il Fuoco seguono la propria descrizione. Ignifugo X è una contromisura preventiva e non si sottrae al danno.  
  Ridurre il danno a 0 non spegne le fiamme e non elimina il −2 VA. Restano le precisazioni della A.50 su natura dell’AR e protezioni contro il Fuoco.
 
-#### **Stato 7/11 — Rallentato**
+> > #### **Stato 7/11 — Rallentato**
 
 Passo ridotto a 3 Q; non può Correre o Scattare. Se un altro effetto impone movimento inferiore, prevale il limite più restrittivo.  
  −2 VA alle prove fisiche e alle Difese; non si applica automaticamente ad attività mentali o PS.  
@@ -698,7 +706,7 @@ Passo ridotto a 3 Q; non può Correre o Scattare. Se un altro effetto impone mov
  Durata ordinaria 1+1d3 Round, salvo la fonte. Applicazioni ripetute non sommano le penalità; si mantiene la durata maggiore.  
  Continuano ad applicarsi i normali costi di terreno e modalità di movimento, compreso il Nuoto.
 
-#### **Stato 8/11 — Sanguinamento**
+> > #### **Stato 8/11 — Sanguinamento**
 
 Possiede un valore X indicato dalla fonte. Perde subito X PV ignorando Armatura, Parata e Schivata; la perdita si ripete all’Iniziativa della fonte, al massimo una volta per Round, contando l’applicazione iniziale.  
  La perdita non porta sotto 0 PV. Quella che porta a 0 non provoca immediatamente una Ferita. Se il personaggio è già a 0 PV, effettua PS Tempra: successo, nessuna nuova Ferita; fallimento, 1 Ferita.  
@@ -712,14 +720,14 @@ Possiede un valore X indicato dalla fonte. Perde subito X PV ignorando Armatura,
  Interruzione o fallimento fanno riprendere il Sanguinamento; l’interruzione non concede prova finale né restituisce materiali. Con Maldestro il paziente perde anche 1d4 PV, senza scendere sotto 0 né subire una Ferita diretta.  
  Ripresa e sospensione rispettano il limite di una perdita periodica per Round. Restano le condizioni di applicazione della proprietà e gli altri chiarimenti della A.76.
 
-#### **Stato 9/11 — Stordito**
+> > #### **Stato 9/11 — Stordito**
 
 Può effettuare soltanto Passo; non può compiere Azioni Principali. Conserva PS e Prove contrapposte passive, ma non può utilizzare Difese che richiedono Azioni.  
  Durata ordinaria 1+1d3 Round, salvo la fonte. Applicazioni ripetute non si sommano; si mantiene la durata maggiore.  
  Quando diventa Stordito, effettua immediatamente PS Volontà per mantenere la Concentrazione e Prova di Potere per mantenere la Focalizzazione, se pertinenti. Le prove sono senza costo in Azioni: il successo mantiene l’effetto, il fallimento lo interrompe.  
  Queste verifiche sono richieste anche senza danni e non si ripetono ogni Round per la sola permanenza dello Stato.
 
-#### **Stato 10/11 — Svenuto**
+> > #### **Stato 10/11 — Svenuto**
 
 Non può compiere Azioni né muoversi e cade A Terra. Non può usare Difese attive e normalmente non percepisce l’ambiente; è incapace di reagire per le regole che richiedono questa condizione.  
  Perde immediatamente Concentrazione e tutte le Focalizzazioni, senza prove per mantenerle.  
@@ -727,7 +735,7 @@ Non può compiere Azioni né muoversi e cade A Terra. Non può usare Difese atti
  A 0 PM lo svenimento permane finché recupera almeno 1 PM: non termina per la semplice scadenza di Round.  
  Se sta volando o nuotando si applicano le conseguenze delle rispettive regole di movimento.
 
-#### **Stato 11/11 — Terrorizzato**
+> > #### **Stato 11/11 — Terrorizzato**
 
 Una PS Volontà iniziale riuscita evita lo Stato. Durante lo Stato: −4 a tutte le prove, comprese le PS. Il −4 non si applica alla PS iniziale per evitarlo.  
  Non può avvicinarsi volontariamente alla fonte della paura e deve usare il Movimento per fuggire lungo il percorso ragionevolmente più sicuro.  
@@ -735,7 +743,7 @@ Una PS Volontà iniziale riuscita evita lo Stato. Durante lo Stato: −4 a tutte
  Durata ordinaria 1+1d3 Round, salvo la fonte. Applicazioni ripetute non sommano le penalità; si mantiene la durata maggiore.  
  Un alleato adiacente può spendere 1 AzP ed effettuare Oratoria: con successo lo Stato termina. Termina immediatamente anche quando la scomparsa della fonte della paura è evidente al personaggio.
 
-#### **A.119 — Ammalato: intensità ed effetti nell’app**
+> > #### **A.119 — Ammalato: intensità ed effetti nell’app**
 
 Approvato il ott 6, 2026  
  Ammalato ha sei intensità selezionabili nell’app, con penalità rispettivamente −1, −2, −4, −6, −8 e −10.  
@@ -745,7 +753,7 @@ Approvato il ott 6, 2026
  Contagio, incubazione, progressione, durata e guarigione saranno definiti nel Manuale del Direttore. Non si introducono ora frequenze, tiri o cure automatiche aggiuntive.  
  È superata la proposta di lasciare Ammalato come semplice indicatore privo di effetti, così come il comportamento provvisorio dell’app che lo segnava senza applicare penalità.
 
-#### **A.120 — COS e SAG temporanee: PV e PM**
+> > #### **A.120 — COS e SAG temporanee: PV e PM**
 
 Approvato il ott 6, 2026  
  Bonus e malus temporanei a COS non modificano automaticamente i PV massimi. Bonus e malus temporanei a SAG non modificano automaticamente i PM massimi.  
@@ -754,7 +762,7 @@ Approvato il ott 6, 2026
  Un effetto può modificare direttamente PV o PM soltanto se lo dichiara espressamente. Gli aumenti permanenti, compresi quelli dell’avanzamento, conservano le rispettive regole.  
  Esempio: COS 6 e 25/40 PV; con \+2 COS temporaneo si usa COS 8 per gli effetti pertinenti, ma la riserva resta 25/40. La scadenza del bonus non sottrae PV. È confermata l’ipotesi dell’app sui massimi invariati.
 
-#### **A.122 — Priorità delle funzioni della mappa**
+> > #### **A.122 — Priorità delle funzioni della mappa**
 
 Approvato il ott 6, 2026  
  Funzioni indispensabili: immagine della mappa e griglia in Q; pedine, dimensioni e rotazione; Iniziativa e indicazione del turno; misurazione di distanze e movimento; muri e porte; nebbia ed esplorazione delle zone; luci e linea di vista; template delle aree degli effetti.  
@@ -762,7 +770,7 @@ Approvato il ott 6, 2026
  «Aiuto-master» resta da precisare: il quesito non specifica quali funzioni comprenda.  
  La parte relativa ai veicoli sulla mappa rimane rimandata.
 
-#### **A.124 — Azioni extra, movimento e diagonali sulla mappa**
+> > #### **A.124 — Azioni extra, movimento e diagonali sulla mappa**
 
 Approvato il ott 6, 2026  
  La mappa segue il Manuale del Giocatore. Livelli 1–11: 1 AzM e 1 AzP per Round. Livelli 12–20: 1 AzM e 2 AzP per Round.  
@@ -771,7 +779,7 @@ Approvato il ott 6, 2026
  Ogni diagonale costa 1 Q, come uno spostamento orizzontale o verticale su terreno normale. Questo non permette di attraversare muri o passaggi ostruiti.  
  Divisione del movimento e costi di Corsa e Scatto sono precisati nella A.129.
 
-#### **A.125 — Porte e illuminazione sulla mappa**
+> > #### **A.125 — Porte e illuminazione sulla mappa**
 
 Approvato il ott 6, 2026  
  Parte porte approvata. Aprire o chiudere una normale porta accessibile e non bloccata costa 1 AzP, senza prova. Per azionarla manualmente occorre essere adiacenti e avere una mano libera.  
@@ -781,7 +789,7 @@ Approvato il ott 6, 2026
  Le normali lampade del catalogo hanno una sola portata. Un bersaglio effettivamente illuminato non beneficia delle penalità per mancanza di luce. Muri, ostacoli e capacità visive speciali conservano i propri effetti.  
  La domanda sul movimento dei veicoli rimane rimandata: questa risposta non chiude quella parte della A.125.
 
-#### **A.127 — Attraversamento dei quadretti occupati**
+> > #### **A.127 — Attraversamento dei quadretti occupati**
 
 Approvato il ott 6, 2026  
  I quadretti degli alleati sono attraversabili pagando il normale costo di movimento, senza sovrapprezzo per la sola presenza dell’alleato.  
@@ -790,7 +798,7 @@ Approvato il ott 6, 2026
  Attraversare un alleato non evita gli Attacchi di Opportunità: restano le regole dell’Ingaggio. Capacità speciali e spostamenti forzati conservano le proprie regole; poter attraversare un quadretto occupato non autorizza automaticamente a fermarvisi.  
  Esempio: si può passare attraverso un compagno e raggiungere uno spazio libero oltre di lui, ma non attaccare restando sovrapposti.
 
-#### **A.128 — Terreno difficile**
+> > #### **A.128 — Terreno difficile**
 
 Approvato il ott 6, 2026  
  Ogni quadretto percorso su terreno difficile costa 2 Q di movimento, anche in diagonale. Il Direttore identifica le zone, per esempio macerie, fango profondo o vegetazione fitta.  
@@ -799,7 +807,7 @@ Approvato il ott 6, 2026
  Con i valori ordinari e un percorso interamente difficile: Passo 6 Q disponibili → 3 quadretti effettivi; Corsa 12 Q → 6 quadretti; Scatto 18 Q → 9 quadretti. Questi valori precedono ulteriori modificatori e gli esiti delle prove di movimento.  
  Esempio: 2 quadretti normali e 2 difficili consumano 2 \+ 4 \= 6 Q, esaurendo il Passo ordinario.
 
-#### **A.129 — Movimento diviso, Corsa e Scatto**
+> > #### **A.129 — Movimento diviso, Corsa e Scatto**
 
 Approvato il ott 6, 2026  
  Passo: distanza ordinaria 6 Q, costo 1 AzM; può essere diviso prima, fra e dopo le AzP, entro la disponibilità complessiva.  
@@ -812,7 +820,7 @@ Approvato il ott 6, 2026
  Esempio: al Passo si possono percorrere 2 Q, attaccare e completare i 4 Q restanti; non si può correre 6 Q, attaccare e completare gli altri 6 Q.  
  L’ipotesi provvisoria «movimento diviso consentito entro il totale» va quindi limitata al Passo, salvo eccezioni espresse.
 
-#### **Quesiti sospesi e dati ancora da fornire**
+> > #### **Quesiti sospesi e dati ancora da fornire**
 
 Stato verificato al ott 6, 2026  
  A.109 — Anticipazione: sospensione superata dall’approvazione dell’8 ottobre 2026\. Tutti i 32 aspetti sono definiti nella sezione «A.109 — Anticipazione: regola comune ai 32 aspetti» e nei punti 1/32–32/32 di questo documento. Restano valide quelle risposte; non occorre un nuovo elenco o allegato. Rettifica dello stato registrata il 16 ottobre 2026\.  
@@ -826,13 +834,13 @@ Stato verificato al ott 6, 2026
  Le regole dettagliate di malattie e cure della A.119 sono destinate al Manuale del Direttore. Ammalato ha già la scala operativa approvata per l’app.  
  Questo aggiornamento registra le risposte approvate; non dichiara completati il recepimento nei manuali o l’implementazione nell’app. Le domande del collaboratore non sono state spostate o cancellate.
 
-### **Aggiornamento cumulativo — risposte tecniche approvate**
+> > ### **Aggiornamento cumulativo — risposte tecniche approvate**
 
 Approvato il ott 8, 2026
 
 Risposte approvate in conversazione e destinate al recepimento nell’app e nei manuali. Questo aggiornamento supera, per i punti trattati, le precedenti ipotesi provvisorie e le annotazioni di quesito ancora aperto. Le domande originali sono conservate per tracciabilità. «Approvato» non significa «già implementato»: il recepimento nell’app deve essere verificato separatamente.
 
-#### **A.135 — Ricarica delle armi, revolver e accessori**
+> > #### **A.135 — Ricarica delle armi, revolver e accessori**
 
 Approvato il ott 8, 2026
 
@@ -848,7 +856,7 @@ Esempio: un revolver da 6 colpi vuoto richiede 3 AzP normalmente, 2 AzP con Rica
 
 Modelli confermati: HD14M con serbatoio interno; SA SG2001, Airbrush e Mandible con caricatore amovibile. Peso, Qualità, Integrità e Reperibilità dei nuovi accessori non sono stati definiti da questa decisione.
 
-#### **A.136 — Passaggio a Corsa/Scatto e Prova facoltativa di Atletica**
+> > #### **A.136 — Passaggio a Corsa/Scatto e Prova facoltativa di Atletica**
 
 Approvato il ott 8, 2026
 
@@ -870,13 +878,13 @@ Maldestro: Corsa −6 / 0; Scatto −10 / 0\.
 
 Sono superati i precedenti aumenti o riduzioni dei Q legati all’esito e i modificatori \+4/−4 alla Prova successiva. Questa decisione non introduce nuovi modificatori specifici per nuoto, volo o altre manovre.
 
-#### **A.137 — Aree con raggio in quadratini**
+> > #### **A.137 — Aree con raggio in quadratini**
 
 Approvato il ott 8, 2026
 
 Si usa la distanza sulla griglia con diagonale pari a 1 Q. Un raggio di 1 Q comprende un’area 3×3 Q centrata sul Q di origine; raggio 2 Q corrisponde a 5×5 Q; raggio 3 Q a 7×7 Q. Le aree di raggio risultano quindi quadrate sulla griglia. Restano le regole di ostacoli e propagazione dell’effetto. Questa regola non modifica i coni.
 
-#### **A.138 — Template a cono lineare**
+> > #### **A.138 — Template a cono lineare**
 
 Approvato il ott 8, 2026
 
@@ -884,13 +892,13 @@ Il vertice parte dal centro del Q occupato da chi usa il template. Si scelgono d
 
 Un Q è colpito quando almeno metà della sua superficie è attraversata dal template. Il Q di origine è escluso dal proprio cono, salvo eccezione espressa. Non si usano file a larghezza prefissata né una preferenza automatica verso destra o sinistra. L’origine per creature di ingombro maggiore resta da raccordare alle regole sulle taglie.
 
-#### **A.139 — Apertura e chiusura delle porte**
+> > #### **A.139 — Apertura e chiusura delle porte**
 
 Approvato il ott 8, 2026
 
 Una porta può essere aperta o chiusa anche da un Q adiacente in diagonale, purché sia fisicamente raggiungibile dal proprio lato. Una normale porta non bloccata richiede 1 AzP e una mano libera. Non si può interagire attraverso una parete. Attraversare la porta è movimento distinto; serrature e altri blocchi richiedono prima la relativa procedura.
 
-#### **A.140 — Copertura e ostacoli**
+> > #### **A.140 — Copertura e ostacoli**
 
 Approvato il ott 8, 2026
 
@@ -900,7 +908,7 @@ Una linea conta come bloccata solo se attraversa effettivamente l’ostacolo: il
 
 Sviluppo successivo richiesto: definire valori automatici di Copertura per tipo e altezza dell’ostacolo, anche se blocca una sola linea, tenendo conto della postura del bersaglio; esempio, un ostacolo alto circa 1 metro. La tabella specifica resta rinviata.
 
-#### **A.142 — Illuminazione e visibilità ordinaria**
+> > #### **A.142 — Illuminazione e visibilità ordinaria**
 
 Approvato il ott 8, 2026
 
@@ -908,7 +916,7 @@ Piena luce: nessun limite fisso in Q. Penombra: 10 Q. Luce scarsa: 5 Q. Buio com
 
 Conta l’illuminazione della zona osservata: chi è al buio può vedere una stanza illuminata oltre un corridoio oscuro, senza che questo renda visibile il corridoio. Pareti, porte chiuse e altre occlusioni restano efficaci; la visibilità non rivela automaticamente creature nascoste. I sensi speciali seguono A.143.
 
-#### **A.143 — Sensi speciali e rivelazione della mappa**
+> > #### **A.143 — Sensi speciali e rivelazione della mappa**
 
 Approvato il ott 8, 2026
 
@@ -920,7 +928,7 @@ Vista Felina: 20 Q nel buio naturale, con percezione delle forme e della profond
 
 Quando attivi, questi sensi rivelano automaticamente solo le parti della mappa effettivamente percepite entro il rispettivo limite. Pareti e porte chiuse li bloccano; le creature nascoste richiedono le normali verifiche. Le portate dei sensi non accorciano la normale visione in piena luce. Attivazione, costo, durata e interazioni con nebbia, fumo e oscurità soprannaturale seguono le rispettive schede.
 
-#### **A.144 / A.141 — Bersaglio ingaggiato e creature interposte**
+> > #### **A.144 / A.141 — Bersaglio ingaggiato e creature interposte**
 
 Approvato il ott 8, 2026
 
@@ -930,7 +938,7 @@ Una creatura che interferisce con la linea di tiro applica invece soltanto −2,
 
 La stessa creatura già considerata nella penalità per bersaglio ingaggiato non produce anche un ulteriore −2. Una diversa creatura interposta può aggiungerlo. Esempio: interposizione −2 e Copertura Leggera −2 danno −4 totale. Le regole specifiche degli ostaggi non sono modificate da questa risposta.
 
-#### **A.148 — Volo e Copertura**
+> > #### **A.148 — Volo e Copertura**
 
 Approvato il ott 8, 2026
 
@@ -940,7 +948,7 @@ Una creatura interposta dà −2 solo se interferisce davvero con la traiettoria
 
 Finché non sono definiti gli automatismi sulle altezze, il Direttore può confermare o correggere la Copertura. Il contrassegno «in volo» non deve disattivare tutte le Coperture.
 
-#### **A.149 — Distanza verticale, portata e attacchi di opportunità**
+> > #### **A.149 — Distanza verticale, portata e attacchi di opportunità**
 
 Approvato il ott 8, 2026
 
@@ -948,7 +956,7 @@ La distanza in Q è il maggiore fra distanza orizzontale sulla griglia e differe
 
 Salire volontariamente da una posizione entro portata a una fuori portata può provocare un attacco di opportunità prima di uscire, secondo le normali condizioni. Chi era già fuori portata non lo provoca soltanto allontanandosi ulteriormente.
 
-#### **A.150 — Visibilità dei bersagli in volo**
+> > #### **A.150 — Visibilità dei bersagli in volo**
 
 Approvato il ott 8, 2026
 
@@ -956,7 +964,7 @@ Si applicano le stesse regole di illuminazione, sensi, occlusione e occultamento
 
 Un osservatore al buio può vedere un bersaglio in volo sopra una zona illuminata; non vede automaticamente un bersaglio non illuminato solo perché è in aria. Il Direttore può rivelarlo manualmente quando le circostanze lo giustificano, per esempio una sagoma contro un cielo luminoso.
 
-#### **A.122 — Funzioni dell’Aiuto-master**
+> > #### **A.122 — Funzioni dell’Aiuto-master**
 
 Approvato il ott 8, 2026
 
@@ -964,7 +972,7 @@ Si mantiene il ruolo opzionale di Aiuto-master, assegnabile e revocabile dal Dir
 
 Vede la mappa nella visuale dei giocatori, senza informazioni segrete del Direttore. Non può modificare schede, risorse, Iniziativa o configurazione della scena. Gli spostamenti eccezionali oltre i limiti restano riservati al Direttore.
 
-#### **A.111 — Pablo Zaion: annullamento di una perdita di Umanità inserita per prova**
+> > #### **A.111 — Pablo Zaion: annullamento di una perdita di Umanità inserita per prova**
 
 Approvato il ott 8, 2026
 
@@ -972,13 +980,13 @@ Pablo non possiede e non ha mai posseduto Interfacce neurali. La perdita di 2 UM
 
 Correzione richiesta al collaboratore: eliminare la registrazione errata della perdita di 2 UMN e ricalcolare l’Umanità, conservando una nota della correzione. Non registrare rimozioni di impianti né recuperi o riabilitazioni fittizi. Il caso concreto è chiarito; resta valida la regola generale già approvata per i veri recuperi pregressi.
 
-#### **A.112 — Riserve effettive degli artefatti di Lucas e Dimitri**
+> > #### **A.112 — Riserve effettive degli artefatti di Lucas e Dimitri**
 
 Approvato il ott 8, 2026
 
 Confermati come riserve effettive i valori già presenti nei file: Guanti 10; Pietra della Vigilanza 10; due Batterie Matrice da 10 ciascuna; quattro Schegge da 5 ciascuna. Gli artefatti risultano completamente carichi. Mantenere questi valori senza correzioni: non sono semplici valori iniziali in attesa di ricostruire i consumi.
 
-#### **A.109 — Anticipazione: regola comune ai 32 aspetti**
+> > #### **A.109 — Anticipazione: regola comune ai 32 aspetti**
 
 Approvato il ott 8, 2026
 
@@ -986,55 +994,55 @@ Tutti i 32 aspetti elencati di seguito sono definiti. È superata la sospensione
 
 Per ogni lancio si anticipa un solo aspetto di un solo gradino consentito. Si parte da una versione accessibile dell’incantesimo; i PM base raddoppiano e la Prova di Potere è obbligatoria, con difficoltà di una categoria superiore, fatte salve le eccezioni dei Talenti. Il livello dichiarato e tutti i parametri non espressamente anticipati restano invariati. Non si combinano due aspetti nello stesso lancio.
 
-##### **A.109 — Punto 1/32: Muro Elementale, numero di elementi (§13.3)**
+> > ##### **A.109 — Punto 1/32: Muro Elementale, numero di elementi (§13.3)**
 
 Approvato il ott 8, 2026
 
 Anticipazione: \+1 elemento, da 1 a 2 oppure da 2 a 3; massimo 3\. Non è possibile passare direttamente da 1 a 3\. L’elemento primario determina struttura e natura del danno; gli altri apportano gli effetti secondari previsti. Gli altri parametri non cambiano.
 
-##### **A.109 — Punto 2/32: Armatura Elementale, numero di elementi (§13.5)**
+> > ##### **A.109 — Punto 2/32: Armatura Elementale, numero di elementi (§13.5)**
 
 Approvato il ott 8, 2026
 
 Anticipazione: \+1 elemento, 1→2 oppure 2→3, massimo 3\. Tutti gli elementi scelti forniscono la protezione elementale prevista dalla scheda; il primario determina il danno reattivo e gli altri gli effetti secondari. Non aumenta contemporaneamente il Mod. PS.
 
-##### **A.109 — Punto 3/32: Armatura Elementale, Mod. PS (§13.5)**
+> > ##### **A.109 — Punto 3/32: Armatura Elementale, Mod. PS (§13.5)**
 
 Approvato il ott 8, 2026
 
 Si peggiora di un gradino di −2 il Mod. PS previsto dalla versione: livelli 3 e 6, da 0 a −2; livelli 9 e 12, da −2 a −4; livelli 15 e 18, da −4 a −6. Il limite della tabella è −6. Gli effetti automatici che non prevedono PS restano automatici; non se ne aggiunge una.
 
-##### **A.109 — Punto 4/32: Esplosione Elementale, numero di elementi (§13.6)**
+> > ##### **A.109 — Punto 4/32: Esplosione Elementale, numero di elementi (§13.6)**
 
 Approvato il ott 8, 2026
 
 Anticipazione: \+1 elemento, 1→2 oppure 2→3, massimo 3\. Non modifica contemporaneamente danno, area, Mod. PS o altri parametri.
 
-##### **A.109 — Punto 5/32: Cono Elementale, numero di elementi (§13.7)**
+> > ##### **A.109 — Punto 5/32: Cono Elementale, numero di elementi (§13.7)**
 
 Approvato il ott 8, 2026
 
 Anticipazione: \+1 elemento, 1→2 oppure 2→3, massimo 3\. Dimensioni e geometria del cono non cambiano; per il template si applica la A.138.
 
-##### **A.109 — Punto 6/32: Devastazione Elementale, elemento aggiuntivo (§13.10)**
+> > ##### **A.109 — Punto 6/32: Devastazione Elementale, elemento aggiuntivo (§13.10)**
 
 Approvato il ott 8, 2026
 
 Anticipazione: \+1 elemento, fino al massimo di 3, con un solo passaggio 1→2 oppure 2→3. Non si anticipa nello stesso lancio anche il Mod. PS.
 
-##### **A.109 — Punto 7/32: Devastazione Elementale, Mod. PS (§13.10)**
+> > ##### **A.109 — Punto 7/32: Devastazione Elementale, Mod. PS (§13.10)**
 
 Approvato il ott 8, 2026
 
 Un solo gradino: da −2 a −4 oppure da −4 a −6. Il massimo è −6; non è consentito un ulteriore passaggio a −8.
 
-##### **A.109 — Punto 8/32: Catene di Forza, Salvezze (§17.6)**
+> > ##### **A.109 — Punto 8/32: Catene di Forza, Salvezze (§17.6)**
 
 Approvato il ott 8, 2026
 
 Un solo gradino lungo la scala 0→−2→−4→−6. Il nuovo modificatore si applica alla Tempra iniziale, alla Tempra per liberarsi e ai Riflessi per mantenere l’equilibrio: costituiscono un unico aspetto anticipato. Stato inflitto, durata e altri parametri restano invariati.
 
-##### **A.109 — Punto 9/32: Piattaforma Levitante, dimensioni (§17.7)**
+> > ##### **A.109 — Punto 9/32: Piattaforma Levitante, dimensioni (§17.7)**
 
 Approvato il ott 8, 2026
 
@@ -1042,7 +1050,7 @@ Si passa alla dimensione successiva: livello 3, 1×1→2×1 Q; livello 6, 2×1�
 
 La portata in peso è un aspetto distinto e non cambia: per esempio, al livello 9 resta 400 kg anche con piattaforma 3×2 Q. Movimento, durata e stabilità rimangono quelli della versione scelta.
 
-##### **A.109 — Punto 10/32: Alterare Immagine, capacità (§19.1)**
+> > ##### **A.109 — Punto 10/32: Alterare Immagine, capacità (§19.1)**
 
 Approvato il ott 8, 2026
 
@@ -1050,7 +1058,7 @@ Le capacità sono cumulative: volto generico → identità precisa → voce e po
 
 L’identità deve essere conosciuta o adeguatamente osservata; per riprodurre precisamente una voce bisogna averla udita. L’equipaggiamento mantiene forma e volume. Non si acquisiscono ricordi o conoscenze della persona imitata.
 
-##### **A.109 — Punto 11/32: Terrore, PS della modalità (§19.7)**
+> > ##### **A.109 — Punto 11/32: Terrore, PS della modalità (§19.7)**
 
 Approvato il ott 8, 2026
 
@@ -1058,7 +1066,7 @@ Si applica un ulteriore −2 alla PS Volontà della modalità scelta. Livelli 3 
 
 Massimo −8 per la modalità mirata e −6 per l’aura. Il −4 proprio dello Stato Terrorizzato rimane invariato, così come durata, raggio e bersagli.
 
-##### **A.109 — Punto 12/32: Presenza, precisione del conteggio (§20.3)**
+> > ##### **A.109 — Punto 12/32: Presenza, precisione del conteggio (§20.3)**
 
 Approvato il ott 8, 2026
 
@@ -1068,7 +1076,7 @@ Approssimata: nessuna mente, una, 2–5, 6 o più. Generica: nessuna, una, 2–5
 
 Esatta è il massimo. Non aumentano informazioni individuali, portata o durata. Le menti protette e non rilevabili non entrano automaticamente nel conteggio.
 
-##### **A.109 — Punto 13/32: Presenza, informazioni individuali (§20.3)**
+> > ##### **A.109 — Punto 13/32: Presenza, informazioni individuali (§20.3)**
 
 Approvato il ott 8, 2026
 
@@ -1076,7 +1084,7 @@ Si anticipa la riga informativa successiva, cumulativamente: versione di livello
 
 Per creature senza Classe o Addestramento valgono le alternative Domestico/Selvatico e Predatore/Preda previste dalla scheda. La precisione del conteggio resta quella della versione: per esempio, al livello 6 rimane Precisa.
 
-##### **A.109 — Punto 14/32: Psicometria, numero di impressioni (§20.7)**
+> > ##### **A.109 — Punto 14/32: Psicometria, numero di impressioni (§20.7)**
 
 Approvato il ott 8, 2026
 
@@ -1084,7 +1092,7 @@ Si aggiunge 1 impressione per lancio, fino a un massimo di 11; non si passa dire
 
 Il numero è un massimo, non garantisce l’esistenza di altre tracce. Periodo retrospettivo e tempo di lettura non cambiano.
 
-##### **A.109 — Punto 15/32: Marchio Psichico, entrambe le modalità (§20.8)**
+> > ##### **A.109 — Punto 15/32: Marchio Psichico, entrambe le modalità (§20.8)**
 
 Approvato il ott 8, 2026
 
@@ -1092,7 +1100,7 @@ Un unico gradino permette di attivare insieme Tracciamento e Combattimento; cias
 
 Esempio al livello 6: Tracciamento entro 1 km per 1 ora e Combattimento con \+1 VA e \+1 danno per 5 Round. Terminato il Combattimento, il Tracciamento continua per la durata restante. Non si aumentano altri parametri e non si combina l’assegnazione a un alleato.
 
-##### **A.109 — Punto 16/32: Marchio Psichico, alleato beneficiario (§20.8)**
+> > ##### **A.109 — Punto 16/32: Marchio Psichico, alleato beneficiario (§20.8)**
 
 Approvato il ott 8, 2026
 
@@ -1100,7 +1108,7 @@ Si può scegliere al lancio un alleato consenziente, visibile ed entro portata c
 
 L’incantatore paga i PM ed effettua la Prova di Potere, ma non riceve i benefici. Il beneficiario resta lo stesso per tutto il lancio. Questo usa l’intera Anticipazione e non permette anche entrambe le modalità. Esempio: al livello 9, l’alleato riceve \+2 VA e \+2 danni contro il marchiato per 5 Round.
 
-##### **A.109 — Punto 17/32: Sesto Senso, Difese automatiche (§20.9)**
+> > ##### **A.109 — Punto 17/32: Sesto Senso, Difese automatiche (§20.9)**
 
 Approvato il ott 8, 2026
 
@@ -1108,7 +1116,7 @@ Si aggiunge 1 Difesa automatica alla riserva totale dell’intera durata, non un
 
 Rimane il limite di una per Round anche con più lanci. Restano le condizioni richieste per Parata o Schivata. Durata, Iniziativa ed Elusione non cambiano.
 
-##### **A.109 — Punto 18/32: Cura Malattie, pericolosità (§21.2)**
+> > ##### **A.109 — Punto 18/32: Cura Malattie, pericolosità (§21.2)**
 
 Approvato il ott 8, 2026
 
@@ -1116,13 +1124,13 @@ Si aumenta di un solo grado la pericolosità trattabile lungo I→II→III→IV�
 
 L’origine è distinta dalla pericolosità: per esempio, la versione di livello 3 passa da III a IV, ma continua a trattare malattie naturali o artificiali, senza acquisire quelle mistiche. Numero di malattie, beneficiari e portata non cambiano; il lancio resta di 10 minuti.
 
-##### **A.109 — Punto 19/32: Cura Avvelenamenti, pericolosità (§21.3)**
+> > ##### **A.109 — Punto 19/32: Cura Avvelenamenti, pericolosità (§21.3)**
 
 Approvato il ott 8, 2026
 
 Si aumenta di un solo grado la pericolosità trattabile lungo I→II→III→IV→V→VI; VI è il massimo. L’origine ammessa resta invariata: per esempio, al livello 5 si passa da IV a V, mantenendo veleni naturali o artificiali. Numero, beneficiari e portata non cambiano; il lancio resta di 1 AzP.
 
-##### **A.109 — Punto 20/32: Cura Spirituale, Stati trattabili (§21.4)**
+> > ##### **A.109 — Punto 20/32: Cura Spirituale, Stati trattabili (§21.4)**
 
 Approvato il ott 8, 2026
 
@@ -1130,7 +1138,7 @@ Si anticipa il gruppo di capacità successivo, cumulativamente, lungo le soglie 
 
 Il numero di Stati rimossi non cambia: al livello 3 resta uno Stato su un beneficiario entro 3 Q. Restano i limiti relativi a cause persistenti e menomazioni.
 
-##### **A.109 — Punto 21/32: Recupero Rapido, numero di menomazioni (§21.7)**
+> > ##### **A.109 — Punto 21/32: Recupero Rapido, numero di menomazioni (§21.7)**
 
 Approvato il ott 8, 2026
 
@@ -1138,7 +1146,7 @@ Si anticipa il numero di menomazioni temporanee trattate per beneficiario: 1→2
 
 I gradini di recupero per ciascuna menomazione non aumentano: per esempio, al livello 3 si trattano due menomazioni di un gradino ciascuna. Le permanenti restano escluse, salvo conversione in temporanee. Lancio di 10 minuti e massimo di un’applicazione efficace ogni 24 ore per beneficiario invariati.
 
-##### **A.109 — Punto 22/32: Sigillo, numero di sigilli (§22.3)**
+> > ##### **A.109 — Punto 22/32: Sigillo, numero di sigilli (§22.3)**
 
 Approvato il ott 8, 2026
 
@@ -1146,7 +1154,7 @@ Si aggiunge 1 sigillo per lancio: livelli 1, 3 e 6, 1→2; livelli 9 e 12, 2→3
 
 Il costo del singolo lancio anticipato comprende tutti i sigilli. La preparazione resta 1 minuto complessivo e tutti i punti da sigillare devono essere toccati durante quel tempo. Gli altri parametri non cambiano.
 
-##### **A.109 — Punto 23/32: Sigillo, Avviso e Blocco prima del livello 6 (§22.3)**
+> > ##### **A.109 — Punto 23/32: Sigillo, Avviso e Blocco prima del livello 6 (§22.3)**
 
 Approvato il ott 8, 2026
 
@@ -1154,7 +1162,7 @@ Alle versioni di livello 1 e 3 l’Anticipazione permette di avere contemporanea
 
 Il Blocco richiede una chiusura fisica; un passaggio aperto permette soltanto Avviso. Dal livello 6 la combinazione è già ordinaria e non offre un ulteriore gradino.
 
-##### **A.109 — Punto 24/32: Trappola Mistica, numero di trappole (§22.4)**
+> > ##### **A.109 — Punto 24/32: Trappola Mistica, numero di trappole (§22.4)**
 
 Approvato il ott 8, 2026
 
@@ -1162,7 +1170,7 @@ Si aggiunge 1 trappola al lancio: 1→2, 2→3 oppure 3→4. Il totale delle tra
 
 La preparazione costa 1 minuto per ogni trappola, compresa quella aggiuntiva. Il costo del lancio anticipato di Trappola Mistica copre tutte le trappole, ma l’eventuale incantesimo caricato va pagato separatamente per ciascuna. Gli altri parametri non cambiano.
 
-##### **A.109 — Punto 25/32: Trappola Mistica, danno della Scarica (§22.4)**
+> > ##### **A.109 — Punto 25/32: Trappola Mistica, danno della Scarica (§22.4)**
 
 Approvato il ott 8, 2026
 
@@ -1170,7 +1178,7 @@ Si anticipa la riga successiva del danno della Scarica propria della trappola: l
 
 Non aumenta il danno dell’incantesimo eventualmente caricato. Numero di trappole e Mod. PS restano invariati.
 
-##### **A.109 — Punto 26/32: Trappola Mistica, Interferenza (§22.4)**
+> > ##### **A.109 — Punto 26/32: Trappola Mistica, Interferenza (§22.4)**
 
 Approvato il ott 8, 2026
 
@@ -1178,7 +1186,7 @@ La penalità peggiora di 1, fino a −5: livelli 1, 3 e 6, −2→−3; livelli 
 
 Dopo una PS Magia fallita, la penalità riguarda le prove di Abilità, compresi attacchi, Difese e Potere. Non modifica PS, prove di Caratteristica, danni o movimento. Durata e modificatore della PS restano invariati.
 
-##### **A.109 — Punto 27/32: Trappola Mistica, livello massimo caricato (§22.4)**
+> > ##### **A.109 — Punto 27/32: Trappola Mistica, livello massimo caricato (§22.4)**
 
 Approvato il ott 8, 2026
 
@@ -1188,7 +1196,7 @@ Le versioni 1 e 3 non acquisiscono la capacità di caricare incantesimi tramite 
 
 Il raddoppio dei PM riguarda soltanto Trappola Mistica. Ogni incantesimo caricato si paga separatamente e produce la singola applicazione istantanea prevista dalle regole di caricamento. Numero di trappole e altri parametri restano invariati.
 
-##### **A.109 — Punto 28/32: Luce Mistica, sorgente su oggetto (§23.2)**
+> > ##### **A.109 — Punto 28/32: Luce Mistica, sorgente su oggetto (§23.2)**
 
 Approvato il ott 8, 2026
 
@@ -1196,7 +1204,7 @@ Un unico gradino permette di ancorare la sorgente a un oggetto toccato al lancio
 
 Raggio, durata, penalità e PS non cambiano. Una copertura opaca blocca luce ed effetto. Questo impiega l’intera Anticipazione.
 
-##### **A.109 — Punto 29/32: Nascondere Aura, Potenza di Occultamento (§23.7)**
+> > ##### **A.109 — Punto 29/32: Nascondere Aura, Potenza di Occultamento (§23.7)**
 
 Approvato il ott 8, 2026
 
@@ -1204,7 +1212,7 @@ Si avanza di un solo gradino lungo 3→6→9→12→15→18→21. La versione di
 
 Il miglioramento vale soltanto nei confronti di rilevazione pertinenti, come Presenza. Il livello dichiarato dell’incantesimo non cambia, anche ai fini di Negare Potere. Gli altri parametri restano invariati.
 
-##### **A.109 — Punto 30/32: Premonizione, numero di usi (§23.8)**
+> > ##### **A.109 — Punto 30/32: Premonizione, numero di usi (§23.8)**
 
 Approvato il ott 8, 2026
 
@@ -1212,7 +1220,7 @@ Si aggiunge 1 uso alla riserva totale, massimo 7: livello 6, 3→4; livelli 9 e 
 
 Rimane il massimo di un uso per Round, anche effettuando nuovi lanci, e di un solo rilancio sullo stesso evento anche in presenza di altre capacità. Non migliora la scelta del risultato da tenere; durata e portata non cambiano. Gli usi rimasti si perdono alla scadenza.
 
-##### **A.109 — Punto 31/32: Premonizione, scelta del risultato prima del livello 12 (§23.8)**
+> > ##### **A.109 — Punto 31/32: Premonizione, scelta del risultato prima del livello 12 (§23.8)**
 
 Approvato il ott 8, 2026
 
@@ -1220,7 +1228,7 @@ Alle versioni di livello 6 e 9 un unico gradino consente di scegliere il risulta
 
 La riserva resta 3 usi al livello 6 e 4 al livello 9, con durata 5 Round, massimo un uso per Round e un solo rilancio per tiro. Dal livello 12 la scelta è già ordinaria e non offre un ulteriore gradino.
 
-##### **A.109 — Punto 32/32: Individuare, informazioni approfondite (§23.9)**
+> > ##### **A.109 — Punto 32/32: Individuare, informazioni approfondite (§23.9)**
 
 Approvato il ott 8, 2026
 
@@ -1230,7 +1238,7 @@ Le altre categorie mantengono la soglia originaria. Esempio: una versione di liv
 
 Non aumentano Potenza di Individuazione, raggio, portata, area o durata. Resta l’analisi di una sola fonte e di una sola categoria per Round.
 
-#### **Conferme già definite e argomenti rinviati**
+> > #### **Conferme già definite e argomenti rinviati**
 
 Approvato il ott 8, 2026
 
@@ -1240,11 +1248,11 @@ Restano rinviati i temi relativi a bestiario e veicoli: A.113, A.115, parte veic
 
 Le regole dettagliate delle malattie e delle cure restano destinate al Manuale del Direttore; non sono introdotte qui nuove procedure. Le altre regole già approvate conservano validità dove non espressamente superate da questo aggiornamento.
 
-### **Ripristino delle risposte A.151–A.152 già approvate il 9 ottobre 2026**
+> > ### **Ripristino delle risposte A.151–A.152 già approvate il 9 ottobre 2026**
 
 Riportate il 10 ottobre 2026 dal documento «E\&L – Risposte e correzioni approvate». Le decisioni e la loro data di approvazione restano invariate.
 
-#### **A.151 — Carichini: peso, Qualità, Integrità e Reperibilità**
+> > #### **A.151 — Carichini: peso, Qualità, Integrità e Reperibilità**
 
 Approvato il 9 ottobre 2026\.
 
@@ -1256,7 +1264,7 @@ Sono accessori meccanici riutilizzabili, compatibili con lo specifico modello d�
 
 Restano validi capacità, costi, preparazione e funzionamento della A.135. Questi dati completano quelli allora lasciati da definire.
 
-#### **A.152 — Colt Hammershot: munizioni e correzione della dotazione**
+> > #### **A.152 — Colt Hammershot: munizioni e correzione della dotazione**
 
 Approvato il 9 ottobre 2026\.
 
@@ -1268,11 +1276,11 @@ Nella scheda del manuale va sostituita la vecchia indicazione del tamburo comple
 
 Risposta approvata; la correzione del file del PG e l’eventuale aggiornamento dell’app restano da applicare e verificare dal collaboratore.
 
-### **Risposte approvate ai quesiti dell’app A.153–A.157 — 10 ottobre 2026**
+> > ### **Risposte approvate ai quesiti dell’app A.153–A.157 — 10 ottobre 2026**
 
 Le cinque risposte seguenti sono state approvate da Davide il 10 ottobre 2026\. Sostituiscono le corrispondenti ipotesi provvisorie «Nel frattempo». L’approvazione della regola è distinta dal suo recepimento nell’app, che deve essere verificato dal collaboratore.
 
-#### **A.153 — A Terra e Copertura a distanza**
+> > #### **A.153 — A Terra e Copertura a distanza**
 
 Approvato il 10 ottobre 2026\.
 
@@ -1284,7 +1292,7 @@ La Copertura deve essere effettivamente presente rispetto alla linea di tiro. Se
 
 La risposta conferma il comportamento provvisorio dichiarato dall’app; il recepimento della risposta resta da verificare.
 
-#### **A.154 — Peso della cartuccia del decontaminante**
+> > #### **A.154 — Peso della cartuccia del decontaminante**
 
 Approvato il 10 ottobre 2026\.
 
@@ -1294,7 +1302,7 @@ Per semplicità, il peso conteggiato resta 0,5 kg finché la cartuccia rimane ne
 
 Nell’app il campo del peso va valorizzato a 0,5 kg e incluso nel carico. Risposta approvata; aggiornamento dell’app da applicare e verificare.
 
-#### **A.155 — Dati fisici delle pergamene standard**
+> > #### **A.155 — Dati fisici delle pergamene standard**
 
 Approvato il 10 ottobre 2026\.
 
@@ -1306,7 +1314,7 @@ A 0 PI la pergamena è inutilizzabile e non può essere attivata. La sua distruz
 
 Questi dati completano il campionario del Manuale della Magia, §27.3. Nell’app peso e Integrità vanno registrati per ciascun esemplare. Risposta approvata; aggiornamento dell’app da applicare e verificare.
 
-#### **A.156 — PM persi quando fallisce l’infusione di un Consumabile**
+> > #### **A.156 — PM persi quando fallisce l’infusione di un Consumabile**
 
 Approvato il 10 ottobre 2026\.
 
@@ -1318,7 +1326,7 @@ Gli eventuali effetti ulteriori del Fallimento Maldestro restano quelli previsti
 
 La risposta chiarisce i §§27.2 e 24.5 del Manuale della Magia e conferma il comportamento provvisorio dichiarato dall’app; il recepimento della risposta resta da verificare.
 
-#### **A.157 — «Rituale: non consentito» e infusione nei supporti**
+> > #### **A.157 — «Rituale: non consentito» e infusione nei supporti**
 
 Approvato il 10 ottobre 2026\.
 
@@ -1330,7 +1338,7 @@ Il chiarimento si applica anche alle sette schede citate nel quesito: §§13.1, 
 
 L’app può consentire l’infusione e sostituire l’avviso di dubbio nel modulo «Crea consumabile» con questa spiegazione. Risposta approvata; recepimento e aggiornamento dell’avviso da verificare.
 
-#### **A.158 — CyberArma: risposta completa approvata**
+> > #### **A.158 — CyberArma: risposta completa approvata**
 
 Approvato il 13 ottobre 2026\. Risposta al quesito dell’app A.158 (Manuale degli Armamenti §7.25). Le decisioni seguenti completano i parametri mancanti e sostituiscono le formulazioni precedenti incompatibili, in particolare il divieto di utilizzo da parte delle altre Classi anche dopo l’installazione della batteria. Risposta approvata; recepimento nei manuali e implementazione nell’app da applicare e verificare.  
  **1\. Modello originale: Grado, sintonizzazione e profilo fisico**  
@@ -1367,7 +1375,7 @@ Approvato il 13 ottobre 2026\. Risposta al quesito dell’app A.158 (Manuale deg
  Integrare la scheda del Manuale degli Armamenti §7.25 e i rimandi pertinenti del Giocatore, della Magia e dell’Equipaggiamento. Sostituire il precedente limite che riservava anche il modello con batteria soltanto a Custodi e Tecnomanti con l’accesso delle altre Classi a −2 VA qui approvato. Registrare un’unica istanza dell’oggetto nelle categorie Armi e Artefatti, senza duplicare peso, Integrità, riserva o SnT.  
  Nell’app distinguere modello originale e configurazione con Batteria Verde da 5 cariche, applicare requisiti, profili e −2 alle altre Classi, mostrare il saldo in cariche e impedirne l’uso come PM per altri effetti. Conservare separati costo della creazione/ricarica e cariche disponibili. A.158 ha ricevuto risposta completa; l’effettivo recepimento nell’app e nei manuali resta da verificare e non è attestato dalla presente registrazione.
 
-#### **A.159 — Ferite, Morente e stabilizzazione: risposta completa approvata**
+> > #### **A.159 — Ferite, Morente e stabilizzazione: risposta completa approvata**
 
 Approvato il 14 ottobre 2026, a conclusione delle decisioni del 13–14 ottobre. Risposta al quesito dell’app A.159 (Manuale del Giocatore §5.14), con raccordi alle cure del Giocatore, della Magia e dell’Equipaggiamento. La seguente regola sostituisce la morte immediata per il solo superamento di Grave e la gestione provvisoria «Oltre Grave» come semplice avviso al Direttore. Risposta approvata; il recepimento nei manuali e l’implementazione nell’app devono essere applicati e verificati separatamente.  
  **1\. Da Grave a Morente**  
@@ -1414,35 +1422,35 @@ Approvato il 14 ottobre 2026, a conclusione delle decisioni del 13–14 ottobre.
  A.159 ha ricevuto risposta completa. Raccordare il Manuale del Giocatore (§5.14, Svenuto, soccorso, Talenti medici e Sanguinamento), il Manuale della Magia (Guarigione, Stasi e rimandi alle cure) e il Manuale dell’Equipaggiamento (Cartuccia Stabilizzante, UMC e dispositivi compatibili). Le normali regole delle Ferite, delle Menomazioni e delle cure non modificate da questa risposta restano valide.  
  Questa registrazione consolida le decisioni approvate nei due documenti di risposta. Non attesta che i manuali siano già stati aggiornati o che Marcello abbia già implementato le nuove funzioni nell’app. La domanda originale resta nel documento del collaboratore per il normale recepimento e passaggio di stato.
 
-#### **A.115 — Capacità specifiche dei nemici**
+> > #### **A.115 — Capacità specifiche dei nemici**
 
 Approvato e registrato il 15 ottobre 2026\.  
  L’app deve mostrare la descrizione completa della capacità e gestire le Prove, i costi in Azioni, il consumo di risorse e i limiti d’uso espressamente previsti dal profilo. Il solo testo descrittivo non sostituisce questi dati quando la capacità richiede un’attivazione o una risoluzione.  
  Le capacità passive non richiedono Azioni soltanto quando sono dichiarate tali. Per quelle attive valgono costo, risorsa, bersagli, momento d’impiego, Prove, durata e condizioni scritti nella scheda o richiamati da una regola comune. Non si assegnano costi, Prove o effetti aggiuntivi per analogia quando mancano i dati.  
  Raccordo al Manuale dei Mostri, §§3.1–3.2: usare i dati del profilo corrente, conservando distinguibili la descrizione e i parametri necessari alla risoluzione.
 
-#### **A.126 — Ingombro delle creature e campo Spazio**
+> > #### **A.126 — Ingombro delle creature e campo Spazio**
 
 Risposta sull’ingombro registrata il 15 ottobre 2026; raccordo con l’origine dei coni completato dalla risposta integrativa A.126–A.138 del 15 ottobre 2026, riportata in coda.  
  La scheda deve avere un campo specifico per lo spazio occupato sulla mappa, espresso in Q: per esempio 1 × 1, 2 × 2 o 3 × 3 Q. Si utilizza l’ingombro indicato nel profilo della creatura; 3 × 3 Q non deriva automaticamente dall’etichetta di Taglia.  
  L’ingombro serve a rappresentare la pedina e verificarne il passaggio e il posizionamento. Rimane distinto dalla portata degli attacchi, regolata dalla A.133.  
  Il punto d’origine del cono per creature che occupano più Q è definito nella risposta integrativa A.126–A.138 del 15 ottobre 2026, riportata in coda. Il precedente rinvio su questo punto è superato; il recepimento nell’app resta distinto dall’approvazione della regola.
 
-#### **A.133 — Portata delle creature grandi**
+> > #### **A.133 — Portata delle creature grandi**
 
 Approvato e registrato il 15 ottobre 2026\.  
  Si usa la portata indicata nel profilo del singolo attacco, misurata attorno all’ingombro della creatura. La distanza non si misura soltanto dal centro della pedina.  
  Occupare 2 × 2 o 3 × 3 Q non porta automaticamente la portata a 2 o 3 Q. Se il profilo indica 1 Q, la portata resta 1 Q attorno allo spazio occupato. Una portata maggiore richiede una previsione esplicita della scheda.  
  Restano le normali condizioni per controllare una zona ed effettuare Attacchi di Opportunità, compresi portata effettiva, ostacoli e condizioni del combattente.
 
-#### **A.113 — Veicoli: permessi, sincronizzazione e denominazioni**
+> > #### **A.113 — Veicoli: permessi, sincronizzazione e denominazioni**
 
 Approvato e registrato il 15 ottobre 2026\.  
  Il Direttore può modificare tutti i veicoli della campagna, compresi quelli personali dei PG: danni, riparazioni, consumi, dotazioni e caratteristiche. La proprietà del mezzo rimane assegnata al personaggio.  
  Senza collegamento al server, il veicolo condiviso resta in sola lettura e si consulta l’ultima copia disponibile. Per registrare modifiche occorre ristabilire il collegamento, evitando versioni discordanti fra i giocatori.  
  Le tre denominazioni ufficiali sono Corpo principale, Propulsione e Motore. L’app deve usare questi nomi; Carrozzeria non sostituisce il nome generale Corpo principale.
 
-#### **A.145 — Azioni sui veicoli: regole generali e categorie**
+> > #### **A.145 — Azioni sui veicoli: regole generali e categorie**
 
 Decisioni approvate il 15 ottobre 2026 e consolidate dopo la conclusione dei quesiti sui veicoli.  
  Il veicolo si muove all’Iniziativa del conducente. Gli altri occupanti agiscono alle proprie Iniziative; essere trasportati non consuma la loro AzM. Un cambio di conducente non concede al mezzo un secondo movimento né ripristina il movimento già effettuato nello stesso Round.  
@@ -1488,7 +1496,7 @@ Decisioni approvate il 15 ottobre 2026 e consolidate dopo la conclusione dei que
 | Astronavi | Azionare un comando semplice di bordo | 1 AzP dalla postazione appropriata; le operazioni articolate seguono la propria procedura. |
 | Astronavi | Navigazione automatica e ripresa del controllo | Un sistema disponibile e attivo che mantiene autonomamente la rotta non richiede l’AzM del pilota ogni Round. Riprendere il controllo manuale: 1 AzP, poi i normali costi di pilotaggio. |
 
-#### **A.146 — Veicoli e Attacchi di Opportunità**
+> > #### **A.146 — Veicoli e Attacchi di Opportunità**
 
 Approvato il 15 ottobre 2026\. Sostituisce l’ipotesi provvisoria «no in entrambi i casi».  
  Un veicolo che esce dalla portata di un nemico può provocare un Attacco di Opportunità secondo le normali condizioni, se il nemico può effettivamente raggiungerlo in mischia.  
@@ -1500,7 +1508,7 @@ Approvato il 15 ottobre 2026\. Sostituisce l’ipotesi provvisoria «no in entra
  Il movimento del mezzo accanto a un nemico fermo non concede agli occupanti Attacchi di Opportunità contro quel nemico: spostare la propria zona di controllo non equivale a un disimpegno dell’avversario.  
  Esempio: accanto a una moto che riparte si può colpire la moto oppure il motociclista esposto, se ricorrono le condizioni. Accanto a un’auto chiusa si può colpire il mezzo, ma non direttamente il conducente effettivamente protetto.
 
-#### **A.147 — Curve, rotazioni e posizionamento a 45°**
+> > #### **A.147 — Curve, rotazioni e posizionamento a 45°**
 
 Approvato il 15 ottobre 2026, con integrazione esplicita: l’app deve permettere il posizionamento dei veicoli anche a 45 gradi.  
  Curva ordinaria: compresa nell’AzM di conduzione. Si contano i Q effettivamente percorsi lungo la curva, senza un supplemento per la rotazione.  
@@ -1516,7 +1524,7 @@ Approvato il 15 ottobre 2026, con integrazione esplicita: l’app deve permetter
  Nessun costo automatico del tipo «1 Q ogni 45°». L’app conteggia il percorso e permette al Direttore di classificare la manovra come ordinaria, Sterzata stretta o Inversione rapida, con i relativi costi e la Prova. La disponibilità del comando di rotazione non autorizza una manovra altrimenti impossibile.  
  Stato del recepimento: queste risposte registrano le decisioni approvate. L’aggiornamento dei manuali e l’implementazione nell’app devono essere applicati e verificati separatamente; non sono attestati dalla presente registrazione. Le domande originali restano invariate per il normale recepimento del collaboratore.
 
-#### **A.126–A.138 — Origine dei coni delle creature grandi: completamento approvato**
+> > #### **A.126–A.138 — Origine dei coni delle creature grandi: completamento approvato**
 
 Approvato e registrato il 15 ottobre 2026\.  
  Il cono parte dal centro di un quadretto periferico della creatura, sul lato da cui viene emesso l’effetto. Questa integrazione completa il raccordo fra ingombro delle creature e template a cono, senza modificare la geometria lineare già approvata nella A.138.  
@@ -1533,7 +1541,7 @@ Approvato e registrato il 15 ottobre 2026\.
  Requisito dell’app. Selezionando il cono di una creatura grande, si deve poter scegliere il quadretto periferico d’origine e orientare il template, anche in diagonale. La selezione deve rispettare lato dell’emissione, anatomia ed eventuali indicazioni della scheda; l’asse non attraversa altri quadretti del proprio ingombro.  
  Stato della risposta. Il raccordo sull’origine dei coni delle creature grandi è ora definito e approvato. Questa risposta completa la A.126 e integra la A.138, superando il precedente rinvio su questo punto. Non attesta l’avvenuto aggiornamento dei manuali né l’implementazione nell’app, che restano da applicare e verificare separatamente.
 
-#### **A.160 — Punti Abilità liberi degli avversari costruiti come PG**
+> > #### **A.160 — Punti Abilità liberi degli avversari costruiti come PG**
 
 Approvato e registrato il 16 ottobre 2026\.  
  Il riferimento a 5 punti Abilità liberi è un refuso. Gli avversari costruiti con le regole dei personaggi ricevono 7 punti Abilità liberi alla creazione e a ogni successivo Grado di Classe, rispettando i normali limiti di assegnazione. Non è prevista una distribuzione diversa per il solo fatto di essere nemici.  
@@ -1541,7 +1549,7 @@ Approvato e registrato il 16 ottobre 2026\.
  Raccordo alla A.90: il comportamento descritto nell’app, 7 punti per Grado per i personaggi costruiti con queste regole, è corretto.  
  Recepimento nel manuale: corretto e verificato nel Google Doc del Manuale dei Mostri v0.4, §5.2, il valore da 5 a 7\. Le altre regole del paragrafo restano invariate. La domanda originale rimane al suo posto per il normale recepimento del collaboratore.
 
-#### **A.161 — Approvato: assegnazione manuale dei PX e calcolatore di partita**
+> > #### **A.161 — Approvato: assegnazione manuale dei PX e calcolatore di partita**
 
 Flusso di assegnazione dei PX e proposta di integrazione nel Tavolo del Direttore approvati da Davide il 16 ottobre 2026\. L’approvazione riguarda la specifica funzionale riportata qui sotto.  
  Decisione sull’assegnazione. L’app non deve assegnare automaticamente PX dopo ogni scontro. È il Direttore che, al termine di ogni partita, stabilisce e assegna il totale dei PX al singolo giocatore/personaggio. La conclusione di uno scontro, la sconfitta di un nemico o il semplice calcolo di un premio non devono modificare i PX delle schede.  
@@ -1552,7 +1560,7 @@ Flusso di assegnazione dei PX e proposta di integrazione nel Tavolo del Direttor
  Archivio e riepilogo. Conservare per partita il dettaglio del calcolo e gli importi effettivamente assegnati a ciascun giocatore. I totali delle schede devono sommare soltanto gli importi assegnati dal Direttore. Evitare duplicazioni quando si riapre, ricalcola o corregge una partita già registrata; le correzioni devono aggiornare la precedente assegnazione, non aggiungerne una seconda. I premi di fine Atto si includono solo quando disposti dal Direttore, evitando di contarli più volte.  
  Stato: flusso di assegnazione e proposta di integrazione approvati da Davide il 16 ottobre 2026, da recepire nello sviluppo. Nessuna modifica al codice dell’app effettuata in questo passaggio.
 
-#### **A.164 — Morente, morte e stabilizzazione dei nemici**
+> > #### **A.164 — Morente, morte e stabilizzazione dei nemici**
 
 Risposta approvata da Davide il 16 ottobre 2026\.  
  Anche i nemici del Tavolo del Direttore seguono la condizione Morente secondo la procedura già approvata nella A.159. Superare Grave provoca Svenuto, mantiene la penalità −8 e avvia il contatore. Il solo raggiungimento di 0 PV non provoca automaticamente Svenuto, Morente o morte. Restano valide le eventuali eccezioni esplicite della scheda e le cause che stabiliscono espressamente morte diretta o distruzione.  
@@ -1562,7 +1570,7 @@ Risposta approvata da Davide il 16 ottobre 2026\.
  Raccordo ai manuali: il Manuale dei Mostri v0.5, §4.2, applica già Morente alle creature; il §3.1 chiarisce che una Caratteristica assente non vale 0\. Questa risposta conferma il comportamento da recepire nell’app e supera la soluzione provvisoria «nessun contatore per i nemici».  
  Stato: risposta approvata e registrata per il recepimento nello sviluppo. L’implementazione nell’app resta da eseguire o verificare separatamente; la registrazione non attesta una modifica al codice.
 
-#### **A.162 — Proprietà Indistruttibile e Integrità degli oggetti**
+> > #### **A.162 — Proprietà Indistruttibile e Integrità degli oggetti**
 
 Risposta approvata da Davide il 16 ottobre 2026\.  
  L’app deve prevedere una proprietà esplicita «Indistruttibile». Un valore PI assente non è sufficiente a rappresentarla e non deve essere interpretato come indistruttibilità o come oggetto già rotto.  
@@ -1572,7 +1580,7 @@ Risposta approvata da Davide il 16 ottobre 2026\.
  Riferimenti: Manuale dell’Equipaggiamento §§1.7 e 10.12; Manuale della Magia §28.2. La soluzione provvisoria «nessun PI e una nota» viene sostituita dalla proprietà esplicita, mantenendo le note necessarie a descrivere le regole particolari.  
  Stato: risposta approvata e registrata per il recepimento nello sviluppo. L’implementazione nell’app resta da eseguire o verificare separatamente; questa registrazione non attesta una modifica al codice.
 
-#### **A.163 — Precisazione di Davide: schermatura estesa a qualsiasi contenuto**
+> > #### **A.163 — Precisazione di Davide: schermatura estesa a qualsiasi contenuto**
 
 Indicazione esplicita di Davide, registrata il 16 ottobre 2026\.  
  I Contenitori del Silenzio schermano qualsiasi cosa venga messa al loro interno, non soltanto gli oggetti di Park. La proprietà di schermatura appartiene al contenitore e si applica alle emanazioni e al potere corruttivo di qualunque contenuto interamente riposto al suo interno.  
@@ -1582,7 +1590,7 @@ Indicazione esplicita di Davide, registrata il 16 ottobre 2026\.
  Raccordo editoriale da recepire: Manuale dell’Equipaggiamento §10.13 e Manuale della Magia §28.3. Le formulazioni «oggetti previsti» e «oggetti per cui sono predisposti», quando intese come limitazioni della schermatura ai soli oggetti di Park, sono superate da questa precisazione. Le descrizioni degli alloggiamenti e gli esempi d’uso restano utili per la capienza fisica.  
  Stato: precisazione registrata per il recepimento nei manuali e nello sviluppo; questa registrazione non attesta un aggiornamento dei manuali o del codice dell’app.
 
-#### **A.166 — Manifestazioni della CyberArma, Abilità e Specializzazioni**
+> > #### **A.166 — Manifestazioni della CyberArma, Abilità e Specializzazioni**
 
 Risposta approvata da Davide il 16 ottobre 2026\. Sostituisce la proposta di distinguere rigidamente un modello a lama da una CyberFrusta personale con forma fissa.  
  Utilizzo da parte dei Custodi. Un Custode può manifestare con la CyberArma qualsiasi tipo di arma ravvicinata: per esempio frusta, spada, ascia o lancia. L’esemplare utilizzato da Park non costituisce un limite alla forma che può manifestare un Custode.  
@@ -1595,14 +1603,14 @@ Risposta approvata da Davide il 16 ottobre 2026\. Sostituisce la proposta di dis
  Raccordo editoriale: Manuale degli Armamenti §7.25, profili della CyberArma nell’app e rimandi alla Classe Custode e alle Specializzazioni. La soluzione provvisoria che associa ogni CyberArma alle Spade deve essere sostituita dall’associazione alla manifestazione effettiva.  
  Stato: risposta approvata per il recepimento nei manuali e nello sviluppo. Questa registrazione non attesta un aggiornamento dei manuali o del codice dell’app.
 
-#### **A.165 — Anticipazione: rettifica dello stato della A.109**
+> > #### **A.165 — Anticipazione: rettifica dello stato della A.109**
 
 Rettifica editoriale registrata il 16 ottobre 2026 sulla base delle risposte già approvate da Davide l’8 ottobre 2026\.  
  La A.109 è risolta: la regola comune e tutti i punti 1/32–32/32 sono già presenti sia in questo documento sia in «E\&L – Risposte e correzioni approvate». Il confronto dei testi conferma che le regole coincidono.  
  Le precedenti note di sospensione per mancanza dell’elenco sono state aggiornate in entrambi i documenti. Non occorre un nuovo elenco o allegato e non vengono riaperti o modificati i gradini già approvati.  
  Indicazione per lo sviluppo: mantenere le 32 risposte dell’8 ottobre 2026\. La presente rettifica riguarda lo stato editoriale della A.109; non attesta una verifica o una modifica del codice dell’app.
 
-#### **A.168 — Correzione delle fasce dei Titoli e dei moltiplicatori PX**
+> > #### **A.168 — Correzione delle fasce dei Titoli e dei moltiplicatori PX**
 
 Indicazione esplicita di Davide, registrata il 18 ottobre 2026\. Per il Titolo del personaggio si applicano le seguenti fasce di livello e i relativi moltiplicatori.
 
@@ -1619,7 +1627,7 @@ Applicazione nel calcolatore: usare queste fasce per ricavare il moltiplicatore 
  Ambito: Titolo del personaggio, soglie cumulative di PX e Grado di Sfida dell’avversario sono dati distinti. Questa precisazione corregge soltanto le fasce dei Titoli e conferma i moltiplicatori indicati.  
  Stato: correzione registrata per il recepimento nel calcolatore. Le altre parti delle proposte A.167 e A.168 restano da confermare.
 
-#### **A.169 — Abilità del Bestiario, VA degli attacchi e Prove di Caratteristica**
+> > #### **A.169 — Abilità del Bestiario, VA degli attacchi e Prove di Caratteristica**
 
 Approvazione di Davide: 18 ottobre 2026\.  
  Normalizzazione delle Abilità: Mischia → Armi da mischia; Lancio → Armi da lancio; Guerra → Armi da guerra; Diplomazia → Oratoria. I valori restano invariati. Per la Driade: Armi da mischia 9 e Oratoria 13\.  
@@ -1628,7 +1636,7 @@ Approvazione di Davide: 18 ottobre 2026\.
  Regola generale: le Abilità effettive adottano i nomi del catalogo; i VA degli attacchi specifici rimangono negli attacchi; le Prove di Caratteristica restano separate. Questa normalizzazione non modifica la potenza delle creature né i valori numerici delle schede.  
  Stato: risposta approvata, da recepire nei manuali e nello sviluppo. La registrazione non attesta l’avvenuto aggiornamento dei manuali o dell’app.
 
-#### **A.167 — Ingombri rettangolari e orientamento delle creature**
+> > #### **A.167 — Ingombri rettangolari e orientamento delle creature**
 
 Approvazione di Davide: 18 ottobre 2026\.  
  Le pedine rispettano larghezza e lunghezza indicate nella scheda, ammettendo ingombri rettangolari e dimensioni superiori a 3 × 3 Q. I formati quadrati della A.126 non sono un elenco esclusivo. Esempi: Corazzato 1 × 2 Q; Regina Comandante 2 × 3 Q; Incubatrice 3 × 5 Q; Madre 3 × 10 Q.  
@@ -1636,7 +1644,7 @@ Approvazione di Davide: 18 ottobre 2026\.
  Taglia, spazio occupato e portata degli attacchi sono dati distinti. Non si assegna automaticamente «Grande» soltanto perché la sagoma contiene un’area di 2 × 2 Q: la Taglia deriva dalla scheda. Una pedina più lunga non ottiene automaticamente una maggiore portata.  
  Stato: risposta approvata, da recepire nello sviluppo e nei testi pertinenti; questa registrazione non attesta l’avvenuta implementazione.
 
-#### **A.170 — Soglie, Atti e fattori di calcolo dei PX**
+> > #### **A.170 — Soglie, Atti e fattori di calcolo dei PX**
 
 Approvazione di Davide: 18 ottobre 2026\.  
  Soglie cumulative dei PX per i livelli 1–20: 1 → 0; 2 → 50; 3 → 110; 4 → 180; 5 → 340; 6 → 520; 7 → 720; 8 → 1.050; 9 → 1.410; 10 → 1.800; 11 → 2.220; 12 → 2.820; 13 → 3.460; 14 → 4.140; 15 → 4.860; 16 → 5.810; 17 → 6.810; 18 → 7.860; 19 → 8.960; 20 → 10.340. Sono totali da raggiungere, non costi da pagare a ogni passaggio.  
@@ -1648,13 +1656,13 @@ Approvazione di Davide: 18 ottobre 2026\.
  Il calcolatore propone un risultato nel tavolo del Direttore. Il Direttore stabilisce e assegna il totale dei PX della partita a ciascun giocatore. Nessun accredito automatico dopo gli scontri.  
  Stato: risposta approvata, da recepire nei testi e nel calcolatore; questa registrazione non attesta l’avvenuto aggiornamento dei manuali o dell’app.
 
----
+> > ---
 
-## **8\. Prove da fare**
+> > ## **8\. Prove da fare**
 
 Prove non ancora fatte al tavolo, con il percorso completo dal primo clic. Nessuna è urgente: servono solo a non lasciare difetti nascosti. Fai quelle che riesci e segnala soltanto cosa **non** funziona.
 
-### **1\. PX della partita**
+> > ### **1\. PX della partita**
 
 > > 1\.          Lancia avvia-server.bat, poi apri http\://localhost:3000.
 
@@ -1672,7 +1680,7 @@ Prove non ancora fatte al tavolo, con il percorso completo dal primo clic. Nessu
 
 > > 8\.          Nelle **impostazioni** dello stesso pannello ci sono i **PX iniziali** dei PG: se non corrispondono a quelli veri della campagna, correggili tu — sono quelli che contano.
 
-### **2\. Le creature del Manuale dei Mostri**
+> > ### **2\. Le creature del Manuale dei Mostri**
 
 > > 1\.          **Tavolo del Master** → **Prepara scontro** → **Aggiungi nemico** → **Bestiario proposto**.
 
@@ -1680,7 +1688,7 @@ Prove non ancora fatte al tavolo, con il percorso completo dal primo clic. Nessu
 
 > > 3\.          Mettine due in uno scontro e guarda le **mini-schede** nella plancia: controlla che i numeri siano quelli del manuale.
 
-### **3\. Sagome rettangolari e rotazione**
+> > ### **3\. Sagome rettangolari e rotazione**
 
 > > 1\.          **Tavolo del Master** → **Mappa** → apri una scena con uno scontro.
 
@@ -1692,7 +1700,7 @@ Prove non ancora fatte al tavolo, con il percorso completo dal primo clic. Nessu
 
 > > 5\.          Da un tablet collegato apri la mappa dei giocatori: la Madre deve apparire girata.
 
-### **4\. Il tablet dei giocatori**
+> > ### **4\. Il tablet dei giocatori**
 
 > > 1\.          Apri uno scontro dal **Tavolo del Master** e fai collegare un giocatore col suo **tablet** (o aprilo da un secondo dispositivo).
 
@@ -1702,7 +1710,7 @@ Prove non ancora fatte al tavolo, con il percorso completo dal primo clic. Nessu
 
 > > 4\.          Metti un bersaglio dietro un muro e usa **«Attacca questo bersaglio»**: deve avvisare della **Copertura Totale**, lasciando il «Procedi comunque».
 
-### **5\. Gli avvisi sul telefono**
+> > ### **5\. Gli avvisi sul telefono**
 
 Serve a far arrivare una notifica quando qualcuno avvia il server o lascia un messaggio.
 
@@ -1712,9 +1720,11 @@ Serve a far arrivare una notifica quando qualcuno avvia il server o lascia un me
 
 > > 3\.          Avvia il server sul PC: deve arrivare la notifica. Se non arriva, segnalalo.
 
-### **6\. Galleria**
+> > ### **6\. Galleria**
 
 > > 1\.          **Tavolo del Master** → **Galleria** → carica una **GIF animata**.
 
 > > 2\.          Mandala ai giocatori: controlla se sui loro schermi si **muove** o se arriva ferma.
+
+> > 
 
