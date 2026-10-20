@@ -9,7 +9,9 @@ const css = readFileSync(new URL('../css/style.css', import.meta.url), 'utf8');
 const rem = (v) => Number(v);
 
 test('Abilità: sotto 40rem di pannello le Condizioni attive vanno sotto la tabella, a tutta larghezza', () => {
-  const m = /@container \(max-width: (\d+)rem\) \{\s*\.abilita-layout \{ grid-template-columns: minmax\(0, 1fr\); \}\s*\.colonna-condizioni \{ position: static; \}/.exec(css);
+  // 20/10/2026: la riga «.colonna-condizioni { position: static; }» non c’è più perché la colonna non è mai
+  // posizionata (tests/condizioni-sovrapposizione.test.js). Resta la soglia di impilamento, che non è cambiata.
+  const m = /@container \(max-width: (\d+)rem\) \{\s*\.abilita-layout \{ grid-template-columns: minmax\(0, 1fr\); \}/.exec(css);
   assert.ok(m, 'regola di impilamento delle colonne');
   assert.ok(rem(m[1]) >= 38, `soglia ${m[1]}rem: alta abbastanza perché la tabella non si schiacci (≥ 24rem di tabella + 13rem di Condizioni)`);
   // nessuna regola più vecchia e più bassa che lasci le due colonne strette

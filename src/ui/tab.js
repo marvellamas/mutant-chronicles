@@ -1346,6 +1346,10 @@ function tabAbilita(ctx, d) {
   // S8 (11/10/2026): nella riga solo il nome e il VA grande, con accanto bonus e malus attivi e le spunte «a
   // condizione»; Mod, Base, Corp, Avanz ed Equip stanno nel «Calcolo» (finestrella con il conto del VA)
   const tabella = (categorie) => h('table', { class: 'tabella compatta abilita-tab abilita-sintesi' },
+    // 20/10/2026: colonne fisse (con `table-layout: fixed` in css/style.css). Senza di queste la tabella non scendeva
+    // sotto la propria larghezza minima, sforava la colonna e il pulsante «Calcolo» finiva fuori, sotto il riquadro
+    // delle Condizioni attive. La colonna del «Calcolo» ha la larghezza del pulsante: così c'è sempre per intero.
+    h('colgroup', {}, h('col', { class: 'col-abilita' }), h('col', { class: 'col-va' }), h('col', { class: 'col-calcolo' })),
     h('thead', {}, h('tr', {}, h('th', {}, 'Abilità'), h('th', {}, 'VA'), h('th', {}, h('span', { class: 'sr' }, 'Calcolo')))),
     categorie.map((cat) => h('tbody', {},
       h('tr', { class: 'categoria' }, h('th', { colspan: 3 }, cat.nome)),

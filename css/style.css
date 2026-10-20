@@ -1452,8 +1452,17 @@ body.con-sfondo::before {
 .abilita-layout { display: grid; grid-template-columns: minmax(0, 1fr) 17rem; gap: 0 1.25rem; align-items: start; }
 .abilita-layout .sezione-tab { margin-top: 0.5rem; }
 .abilita-layout .abilita-tab th, .abilita-layout .abilita-tab td { padding: 0.15rem 0.35rem; }
+/* 20/10/2026: con «table-layout: auto» la tabella non scende sotto la propria larghezza minima e sfora la colonna
+   (28 px a 1180 px, con le due tabelle affiancate): la colonna «Calcolo» finiva fuori. Qui la tabella vale esattamente
+   la sua colonna e le tre colonne sono fisse (colgroup in src/ui/tab.js), così «Calcolo» è sempre intero e si tocca. */
+.abilita-layout .abilita-tab, .abilita-affiancate .abilita-tab { width: 100%; table-layout: fixed; }
+.abilita-tab .col-calcolo { width: 5.8rem; }
 .abilita-layout .abilita-tab tr.categoria th { padding-top: 0.35rem; }
-.colonna-condizioni { position: sticky; top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem; }
+/* 20/10/2026, dalla fotografia del tablet: il riquadro NON è posizionato. Con «position: sticky» era un elemento
+   posizionato, quindi si disegnava sopra la tabella (che sfora la sua colonna di qualche pixel attorno a 1180 px,
+   dove le due tabelle stanno affiancate) e sopra i pulsanti sotto il layout, e se era più alto dello schermo il suo
+   fondo non si raggiungeva più scorrendo. In flusso occupa il suo spazio, cresce con il testo e non copre niente. */
+.colonna-condizioni { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem; }
 .colonna-condizioni .condizioni-attive { margin: 0; }
 .colonna-condizioni .pillole-condizionali { flex-direction: column; align-items: stretch; }
 /* tablet: la colonna resta a destra, più stretta; la tabella nasconde le colonne di dettaglio e mostra
@@ -1468,14 +1477,15 @@ body.con-sfondo::before {
    larghezza, invece di schiacciare l'una o l'altra */
 @container (max-width: 40rem) {
   .abilita-layout { grid-template-columns: minmax(0, 1fr); }
-  .colonna-condizioni { position: static; }
 }
 
 /* Combattimento (docs/layout-sd.md, pezzo 3): colonna principale e, a destra, Ferite · Affaticamento ·
    Corruzione · Stati in riquadri compatti; sotto ~52rem la colonna si stringe, sotto ~30rem scende */
 .combattimento-layout { display: grid; grid-template-columns: minmax(0, 1fr) 17rem; gap: 0 1.25rem; align-items: start; }
 .combattimento-principale > .sezione-tab { margin-top: 0.75rem; }
-.colonna-stati { position: sticky; top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.75rem; }
+/* 20/10/2026: come le Condizioni attive, in flusso. Era sticky e, più alto dello schermo (930 px su 820),
+   lasciava il proprio fondo fuori portata. */
+.colonna-stati { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.75rem; }
 .riquadro-gradi { margin: 0; padding: 0.45rem 0.6rem; }
 .testa-gradi { display: flex; align-items: baseline; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.35rem; }
 .testa-gradi h3 { margin: 0; font-size: 0.95rem; flex: 1 1 auto; }
@@ -1510,7 +1520,6 @@ body.con-sfondo::before {
 }
 @container (max-width: 30rem) {
   .combattimento-layout { grid-template-columns: minmax(0, 1fr); }
-  .colonna-stati { position: static; }
 }
 
 /* Poteri (docs/layout-sd.md, pezzo 4): senza magia, sezioni in arrivo, Da artefatti */
@@ -2429,7 +2438,7 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .abilita-sintesi td.cella-va { text-align: left; white-space: normal; width: auto; }
 .abilita-sintesi .va-con-usi { display: flex; flex-wrap: wrap; align-items: center; gap: 0.2rem 0.4rem; }
 .abilita-sintesi .pillola-va { font-size: 1.25rem; min-width: 2.2rem; text-align: center; }
-.abilita-sintesi td.cella-calcolo { width: 1%; text-align: right; }
+.abilita-sintesi td.cella-calcolo { width: auto; text-align: right; }
 .btn-calcolo { min-height: 30px; }
 .modificatore-attivo { font-size: 0.75rem; padding: 0 0.3rem; border-radius: 4px; border: 1px solid var(--bordo); white-space: nowrap; }
 .modificatore-attivo.malus { color: var(--errore); border-color: var(--errore); }
