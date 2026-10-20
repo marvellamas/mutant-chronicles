@@ -482,6 +482,8 @@ function validaRegole(r, err, dati = {}) {
       err(F, 'calendario.bandierine', 'servono rosso, giallo e verde, in quest’ordine, ognuna con il suo nome (i colori sono in css/palette.css)');
     }
     if (!isTesto(cal.ricordare?.sigla) || !isTesto(cal.ricordare?.nome)) err(F, 'calendario.ricordare', 'servono sigla e nome');
+    // 19/10/2026: campo di scrittura delle note a più righe
+    if (!isOggetto(cal.campo_note) || !isIntero(cal.campo_note.righe_minime) || cal.campo_note.righe_minime < 4 || !isIntero(cal.campo_note.colonne_stimate) || cal.campo_note.colonne_stimate < 10) err(F, 'calendario.campo_note', 'servono righe_minime (intero ≥ 4) e colonne_stimate (intero ≥ 10)');
   }
   // §2.16.28: crediti iniziali = fisso + (dadi)d(facce) × moltiplicatore
   const cr = r.crediti_iniziali;

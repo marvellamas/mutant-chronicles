@@ -7,7 +7,7 @@ import { h } from './dom.js';
 import {
   COLORI, SENZA_BANDIERINA, fasce, aggiungiGiorni, aggiungiMesi, giorniSettimana, grigliaMese, stessoMese,
   nomeData, nomeMese, GIORNI, noteDi, riepilogo, filtraNote, filtroVuoto, contaNote,
-  avanzaFascia, avanzaGiorno, aggiungiNota, modificaNota, eliminaNota, attivaCalendario, dataValida,
+  avanzaFascia, avanzaGiorno, aggiungiNota, modificaNota, eliminaNota, attivaCalendario, dataValida, righeCampo,
 } from '../calendario.js';
 
 const VISTE = [
@@ -178,11 +178,7 @@ function vistaGiorno(ctx, u, cambia) {
       h('h4', {}, f.nome, eOra ? h('span', { class: 'cal-ora' }, ' · Oggi, adesso') : null),
       note.length ? h('ul', { class: 'cal-note' }, note.map((n) => (u.modifica?.id === n.id ? notaInModifica(ctx, u, cambia) : notaRiga(ctx, u, n, cambia)))) : null,
       h('div', { class: 'cal-aggiungi' },
-        h('input', {
-          type: 'text', class: 'cal-testo', value: b.testo, placeholder: `Nuova nota (${f.nome.toLowerCase()})`, 'aria-label': `Nuova nota: ${f.nome}`,
-          oninput: (e) => { b.testo = e.target.value; },
-          onkeydown: (e) => { if (e.key === 'Enter') { e.preventDefault(); aggiungi(); } },
-        }),
+        areaNota(ctx, { valore: b.testo, segnaposto: `Nuova nota (${f.nome.toLowerCase()})`, etichetta: `Nuova nota: ${f.nome}`, cambia: (t) => { b.testo = t; }, salva: aggiungi }),
         sceltaBandierina(dati, b.colore, (c) => { b.colore = c; ctx.azioni.ridisegna(); }),
         h('div', { class: 'scelta-pulsanti' },
           sceltaM(dati, b.ricordare, () => { b.ricordare = !b.ricordare; ctx.azioni.ridisegna(); }),
@@ -202,6 +198,23 @@ function notaRiga(ctx, u, n, cambia) {
       }, 'Elimina')));
 }
 
+/**
+ * Campo di scrittura delle note (19/10/2026, dal tablet): più righe, che si allargano mentre si scrive invece di far
+ * scorrere il testo dentro il campo. Invio va a capo; Ctrl+Invio (o Cmd+Invio) salva, come «Aggiungi».
+ */
+function areaNota(ctx, { valore, segnaposto, etichetta, cambia, salva }) {
+  const adatta = (el) => { if (!el.style) return; el.style.height = 'auto'; el.style.height = `${el.scrollHeight + (el.offsetHeight - el.clientHeight)}px`; }; // il bordo non è nello scrollHeight
+  const area = h('textarea', {
+    class: 'cal-testo cal-area', rows: righeCampo(valore, ctx.dati.regole.calendario.campo_note), value: valore ?? '',
+    placeholder: `${segnaposto} — Invio va a capo, Ctrl+Invio salva`, 'aria-label': etichetta,
+    oninput: (e) => { cambia(e.target.value); adatta(e.target); },
+    onkeydown: (e) => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); salva(); } },
+  });
+  // il testo già scritto si mostra tutto subito (la scheda si ridisegna a ogni cambio di bandierina o di fascia)
+  if (typeof requestAnimationFrame === 'function') requestAnimationFrame(() => adatta(area));
+  return area;
+}
+
 function notaInModifica(ctx, u, cambia) {
   const { dati } = ctx;
   const m = u.modifica;
@@ -214,7 +227,7 @@ function notaInModifica(ctx, u, cambia) {
     cambia(nuovo);
   };
   return h('li', { class: 'cal-nota in-modifica' },
-    h('input', { type: 'text', class: 'cal-testo', value: m.testo, 'aria-label': 'Testo della nota', oninput: (e) => { m.testo = e.target.value; }, onkeydown: (e) => { if (e.key === 'Enter') { e.preventDefault(); salva(); } } }),
+    areaNota(ctx, { valore: m.testo, segnaposto: 'Testo della nota', etichetta: 'Testo della nota', cambia: (t) => { m.testo = t; }, salva }),
     sceltaBandierina(dati, m.colore, (c) => { m.colore = c; ctx.azioni.ridisegna(); }),
     sceltaM(dati, m.ricordare, () => { m.ricordare = !m.ricordare; ctx.azioni.ridisegna(); }),
     h('div', { class: 'cal-sposta' },

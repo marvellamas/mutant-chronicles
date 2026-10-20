@@ -2842,3 +2842,7 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 body:has(.pos-basso) .torna-sopra { bottom: calc(5rem + env(safe-area-inset-bottom)); }
 @media (max-width: 899.98px) { body:has(.pos-automatica) .torna-sopra { bottom: calc(5rem + env(safe-area-inset-bottom)); } }
 @media print { .torna-sopra { display: none; } }
+
+/* 19/10/2026 — Calendario: campo delle note a più righe, che cresce con il testo; le note mostrano gli a capo */
+textarea.cal-testo { min-height: calc(4 * 1.4em + 0.8rem); line-height: 1.4; font-family: inherit; resize: none; overflow: hidden; display: block; }
+.cal-testo-riga { white-space: pre-wrap; }

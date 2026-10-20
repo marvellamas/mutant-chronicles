@@ -174,6 +174,18 @@ export function aggiungiNota(c, { data, fascia, testo, colore = null, ricordare 
 }
 
 /**
+ * Quante righe dare al campo di scrittura di una nota (19/10/2026): almeno `righe_minime` (regole.json →
+ * calendario.campo_note), altrimenti quante ne servono al testo già scritto: ogni a capo conta, e una riga più lunga
+ * di `colonne_stimate` si spezza. Il browser poi lo fa crescere con il testo (src/ui/calendario.js).
+ */
+export function righeCampo(testo, cfg) {
+  const minime = Number.isInteger(cfg?.righe_minime) ? cfg.righe_minime : 4;
+  const colonne = Number.isInteger(cfg?.colonne_stimate) && cfg.colonne_stimate > 0 ? cfg.colonne_stimate : 36;
+  const necessarie = String(testo ?? '').split('\n').reduce((s, riga) => s + Math.max(1, Math.ceil(riga.length / colonne)), 0);
+  return Math.max(minime, necessarie);
+}
+
+/**
  * Modifica i campi di una nota (testo, colore, ricordare, data, fascia): spostarla in un'altra
  * fascia o in un altro giorno è una modifica di data e fascia. null se il risultato non è valido.
  */

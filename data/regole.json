@@ -4016,6 +4016,11 @@
     "ricordare": {
       "sigla": "M",
       "nome": "Da ricordare"
+    },
+    "campo_note": {
+      "righe_minime": 4,
+      "colonne_stimate": 36,
+      "_nota": "Campo di scrittura delle note (src/ui/calendario.js → areaNota): almeno righe_minime righe, che crescono con il testo senza scorrere dentro sé stesse; colonne_stimate serve a contare le righe di un testo già scritto prima che il browser lo misuri (src/calendario.js → righeCampo). Invio va a capo; Ctrl+Invio (o «Aggiungi») salva. 19/10/2026, dal tablet."
     }
   },
   "schermatura": {
