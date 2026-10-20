@@ -9,6 +9,7 @@
 //   grado: { classe: 'Agente' }, tiroPV: {valore, origine}, tiroPM: {valore, origine} | assente,
 //   talentoClasse: 'Reazione Operativa' (Gradi II, IV, VI), puntiAbilita: { Furtività: 2 }   "grado_classe"
 //   incantesimi: [nomi], tecniche: [id]                    quando una quota cresce
+import { risolviIncantesimiAMano } from './incantesimi-a-mano.js';
 import { applicaCorrezioni, sessioneConCircostanzeMaster } from './correzioni-master.js';
 import { modificatoriAttivi } from './temporanei.js';
 import {
@@ -1319,6 +1320,8 @@ function schedaARiposo(personaggio, dati) {
     tecnicheAmmesse: tecnicheAmmesse(stato),
     incantesimi: {
       conosciuti: q.noti,
+      // 20/10: aggiunti a mano (src/incantesimi-a-mano.js): non entrano nei conosciuti né nelle quote
+      aMano: risolviIncantesimiAMano(personaggio.creazione?.incantesimiAMano, { livelloMassimo: q.livelloMassimo, accesso: q.accesso }, dati),
       livelloMassimo: q.livelloMassimo,
       quote: { perMacro: q.perMacro, liberi: q.liberi, totale: q.totale, liberiUsati: q.liberiUsati },
       scalaPotere: q.scalaPotere,

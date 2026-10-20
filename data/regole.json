@@ -4245,5 +4245,18 @@
         ]
       }
     }
+  },
+  "incantesimi_a_mano": {
+    "origini": [
+      {
+        "id": "a_mano",
+        "nome": "Aggiunto a mano"
+      },
+      {
+        "id": "direttore",
+        "nome": "Concesso dal Direttore"
+      }
+    ],
+    "_nota": "Incantesimi liberi aggiunti e tolti a mano dalla tab Poteri (src/incantesimi-a-mano.js, scelte.incantesimiAMano): un maestro, un ritrovamento, una concessione del Direttore. Non contano nelle quote di Classe né nei liberi dell'avanzamento; l'app avvisa se il livello base supera il livello massimo, senza bloccare. 20/10/2026."
   }
 }

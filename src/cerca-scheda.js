@@ -45,6 +45,7 @@ export function vociScheda(scheda, sessione = {}, dati = null) {
   // Poteri: Tecniche Interiori e Incantesimi conosciuti
   for (const x of scheda.tecniche ?? []) agg('Tecnica Interiore', x.nome, x.costo ?? null, 'poteri', { testo: x.effetto ?? null });
   for (const x of scheda.incantesimi?.conosciuti ?? []) agg('Incantesimo', x.nome ?? x, x.livello ? `livello ${x.livello}` : null, 'poteri');
+  for (const x of scheda.incantesimi?.aMano ?? []) agg('Incantesimo', x.nome, `${x.nomeOrigine.toLowerCase()}`, 'poteri');
   // Equipaggiamento: armi, protezioni, oggetti con bonus, Artefatti con PM
   for (const a of scheda.equipaggiamento?.armi ?? []) agg('Arma', a.nome, a.va !== null && a.va !== undefined ? num(a.vaEffettivo ?? a.va) : null, 'combattimento');
   for (const p of scheda.equipaggiamento?.protezioni ?? []) agg('Protezione', p.nome, p.ar?.totale !== undefined ? `AR ${p.ar.totale}` : null, 'combattimento');

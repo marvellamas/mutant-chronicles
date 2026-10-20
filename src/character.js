@@ -13,6 +13,7 @@ import { ritrattoValido } from './ritratto.js';
 import { normalizzaDotazione } from './dotazioni.js';
 import { registraInstallazioni } from './umanita.js';
 import { normalizzaVeicoli } from './veicoli.js';
+import { normalizzaIncantesimiAMano } from './incantesimi-a-mano.js';
 
 // Personaggio a livelli { creazione, livelli } (cap. 8): modello e funzioni in avanzamento.js.
 export {
@@ -72,6 +73,9 @@ export function nuoveScelte() {
     classe: null,
     puntiAbilitaLiberi: {},
     incantesimi: [],
+    // Incantesimi liberi aggiunti e tolti a mano (20/10/2026, src/incantesimi-a-mano.js): [{ nome, origine, quando, nota? }];
+    // fuori dalle quote di Classe e dai liberi dell'avanzamento; nel file solo se non vuoto
+    incantesimiAMano: [],
     puntiEroe: null, // { valore, origine: 'app' | 'manuale' }
     equipaggiamento: [], // voci { uid, rif, personalizzato?, stato, quantita, montato_su?, note } (src/equipaggiamento.js)
     dotazione: null, // §2.16: scelte dell'equipaggiamento iniziale e tiro dei crediti (src/dotazioni.js)
@@ -243,6 +247,7 @@ export function normalizza(scelteIn, dati) {
   for (const k of ['puntiCaratteristica', 'puntiAbilitaLiberi', 'parametriTalenti']) if (!isOggetto(s[k])) s[k] = {};
   for (const [k, v] of Object.entries(s.parametriTalenti)) if (typeof v !== 'string' || !v) delete s.parametriTalenti[k];
   if (!Array.isArray(s.incantesimi)) s.incantesimi = [];
+  s.incantesimiAMano = normalizzaIncantesimiAMano(s.incantesimiAMano, dati, avvisi);
 
   // Riferimenti ai dati
   const riferimenti = [
@@ -469,6 +474,7 @@ export function serializza(scelte, { versioniDati, livelli, sessione, calendario
   if (pulite.dotazione === null) delete pulite.dotazione;
   if (pulite.umanita === null) delete pulite.umanita;
   if (!Array.isArray(pulite.veicoli) || !pulite.veicoli.length) delete pulite.veicoli;
+  if (!Array.isArray(pulite.incantesimiAMano) || !pulite.incantesimiAMano.length) delete pulite.incantesimiAMano;
   // i blocchi del master stanno a parte, fuori dalle scelte (e solo se non vuoti: i file di prima restano identici)
   const correzioni = normalizzaCorrezioni(pulite.correzioniMaster);
   const circostanze = normalizzaCircostanzeMaster(pulite.circostanzeMaster);

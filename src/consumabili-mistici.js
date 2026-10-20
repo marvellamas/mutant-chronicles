@@ -150,7 +150,8 @@ export function pmVersione(inc, livello) {
  */
 export function versioniCreabili(scheda, dati, { conosciutaDaAltri = false } = {}) {
   const max = scheda?.incantesimi?.livelloMassimo ?? 0;
-  const noti = new Set((scheda?.incantesimi?.conosciuti ?? []).map((i) => i.nome ?? i));
+  // anche gli incantesimi aggiunti a mano (src/incantesimi-a-mano.js) sono imparati: si possono infondere
+  const noti = new Set([...(scheda?.incantesimi?.conosciuti ?? []), ...(scheda?.incantesimi?.aMano ?? [])].map((i) => i.nome ?? i));
   return (dati?.incantesimi?.incantesimi ?? []).filter((i) => conosciutaDaAltri || noti.has(i.nome)).map((inc) => ({
     incantesimo: inc.nome, macrofamiglia: inc.macrofamiglia, ritualeNonConsentito: /Rituale: non consentito/.test(inc.intestazione ?? ''),
     versioni: (inc.versioni ?? []).map(livelloRiga).filter((l) => Number.isInteger(l) && gradoVersione(l, dati)).map((livello) => {

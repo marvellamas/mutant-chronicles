@@ -1175,6 +1175,9 @@ function validaSchedaDigitale(dati, err) {
     err(F, 'interfaccia.barre_pv_pm', 'servono verde_sopra e rosso_sotto fra 0 e 1, con rosso_sotto < verde_sopra');
   }
   validaTabelleConsultazione(dati, err); // 19/10/2026: tabelle di consultazione (src/ui/tabelle.js)
+  // 20/10/2026: incantesimi liberi aggiunti a mano (src/incantesimi-a-mano.js)
+  const iam = dati.regole.incantesimi_a_mano;
+  if (!isOggetto(iam) || !Array.isArray(iam.origini) || iam.origini.length < 2 || !iam.origini.every((o) => isOggetto(o) && isTesto(o.id) && isTesto(o.nome)) || !['a_mano', 'direttore'].every((id) => iam.origini.some((o) => o.id === id))) err(F, 'incantesimi_a_mano', 'servono le origini a_mano e direttore, ciascuna con id e nome');
   // 19/10/2026: pulsante «torna in cima» (src/ui/scorrimento.js)
   const ts = dati.regole.interfaccia?.torna_sopra;
   if (!isOggetto(ts) || !isIntero(ts.soglia_px) || ts.soglia_px < 100 || !isTesto(ts.etichetta)) err(F, 'interfaccia.torna_sopra', 'servono soglia_px (intero ≥ 100) e etichetta');

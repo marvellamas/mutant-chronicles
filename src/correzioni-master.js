@@ -201,7 +201,7 @@ export function ripristinoDiretta(x, { sessione = null, equipaggiamento = [] } =
 
 const NOMI_CAMPI = {
   nome: 'nome', corporazione: 'Corporazione', addestramento: 'Addestramento', classe: 'Classe', caratteristiche: 'Caratteristiche', avanzamento: 'Abilità',
-  talentoLibero: 'Talento Libero', incantesimi: 'Incantesimi', equipaggiamento: 'equipaggiamento', dotazione: 'dotazione iniziale', umanita: 'Umanità',
+  talentoLibero: 'Talento Libero', incantesimi: 'Incantesimi', incantesimiAMano: 'incantesimi aggiunti a mano', equipaggiamento: 'equipaggiamento', dotazione: 'dotazione iniziale', umanita: 'Umanità',
   concetto: 'Background', ritratto: 'ritratto', puntiEroe: 'Punti Eroe iniziali', parametriTalenti: 'parametri dei Talenti', veicoli: 'veicoli',
 };
 const SOLO_MASTER = ['correzioniMaster', 'circostanzeMaster'];

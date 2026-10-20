@@ -1906,6 +1906,16 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
         persisti();
         renderScheda({ mantieniScorrimento: true });
       },
+      // Poteri: incantesimi liberi aggiunti o tolti a mano (src/incantesimi-a-mano.js); in modalità master la modifica entra
+      // anche nel registro del master, e sempre una riga nello storico del personaggio
+      incantesimiAMano: (lista, riga = null) => {
+        const { scelte, avvisi } = applicaModifica(stato.scelte, { incantesimiAMano: lista }, dati);
+        stato.scelte = scelte;
+        if (riga) stato.sessione = rigaStorico(stato.sessione, riga);
+        stato.messaggioScheda = avvisi.length ? { tipo: 'attenzione', testo: avvisi.join(' ') } : riga ? { tipo: 'ok', testo: riga } : null;
+        persisti();
+        renderScheda({ mantieniScorrimento: true });
+      },
       // tab Inventario (docs/layout-sd.md, pezzo 2): acquisto al tavolo, oggetto e crediti insieme
       compra: (voce, costo) => {
         const { scelte, avvisi } = applicaModifica(stato.scelte, { equipaggiamento: [...stato.scelte.equipaggiamento, voce] }, dati);

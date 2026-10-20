@@ -7,9 +7,10 @@
 // includono (le regole del cap. 5 sono situazionali).
 import { allineaStorico } from '../storico.js';
 import { datiTestata, statiAttiviVista, contoVa, modificatoriAttivi, sintesiMani, sintesiProtezioni, sintesiSintonizzazione, inColonne, variazioneDaTesto } from '../scheda-vista.js';
-import { informa } from './finestrella.js';
+import { informa, chiedi } from './finestrella.js';
 import { tabellaRecuperoPm, tabellaRecuperoPv } from './tabelle.js';
 import { incantesimiDaOggetti, incantesimoDiOggetto, attivazioneOggetto } from '../incantesimi-artefatti.js';
+import { aggiungiIncantesimoAMano, togliIncantesimoAMano, avvisoLivelloAMano, origini, dataLeggibile, rigaRegistro as rigaRegistroAMano } from '../incantesimi-a-mano.js';
 import { fasciaMaster, toccoMaster, notaCorrezione, sezioneRegistro, conMotivoMaster } from './master.js';
 import { apriTiro, sezioneTiri } from './tira-valore.js';
 import { circostanzeMasterAttive } from '../correzioni-master.js';
@@ -2463,9 +2464,10 @@ function tabPoteri(ctx, d) {
   if (d && d.conMagia === false) d = null;
   return [
     riquadroCircostanze(ctx),
-    ...(d ? tabMagia(ctx, d) : risorse || incantesimiDaOggetti({ voci: ctx.scelte.equipaggiamento ?? [], scheda: ctx.tab.scheda }, ctx.dati).length ? [] : [h('section', { class: 'riquadro nessun-potere' }, h('h2', {}, 'Nessun potere'), p.nessuno ? h('p', { class: 'nota' }, p.nessuno) : null)]),
+    ...(d ? tabMagia(ctx, d) : risorse || (ctx.tab.scheda.incantesimi?.aMano?.length ?? 0) || incantesimiDaOggetti({ voci: ctx.scelte.equipaggiamento ?? [], scheda: ctx.tab.scheda }, ctx.dati).length ? [] : [h('section', { class: 'riquadro nessun-potere' }, h('h2', {}, 'Nessun potere'), p.nessuno ? h('p', { class: 'nota' }, p.nessuno) : null)]),
     // Risorse Interiori (Giocatore §8.9; richiesta di Davide del 02/10): le Tecniche con «Attiva»
     risorse,
+    sezioneIncantesimiAMano(ctx),
     sezioneIncantesimiDaOggetti(ctx),
     // senza la magia propria (nessuna tab Magia) gli incantesimi lanciati da un oggetto hanno comunque i loro «in corso»
     !d && incantesimiInCorso(ctx.sessione).length ? riquadroIncantesimiInCorso(ctx) : null,
@@ -2475,6 +2477,77 @@ function tabPoteri(ctx, d) {
     ...(p.in_arrivo ?? []).map((x) => h('details', { class: 'sezione-tab in-arrivo' },
       h('summary', {}, h('h2', {}, x.nome)), h('p', { class: 'nota' }, x.nota))),
   ];
+}
+
+/**
+ * «Incantesimi aggiunti a mano» (Poteri, 20/10/2026): un incantesimo del catalogo, scelto per nome, fuori dalle quote
+ * normali — un maestro, un ritrovamento, una concessione del Direttore — e il modo di toglierlo. Resta segnato da dove
+ * viene («Aggiunto a mano» o «Concesso dal Direttore») con la data, e si lancia come un conosciuto («Lancia!»). Non
+ * conta nelle quote di Classe né nei liberi dell'avanzamento e il passaggio di livello non lo tocca
+ * (src/incantesimi-a-mano.js). L'app avvisa se il livello base supera il massimo del personaggio, ma non blocca.
+ * Dal PC del Direttore (modalità master) l'origine proposta è «Concesso dal Direttore» e la modifica entra nel
+ * registro delle modifiche del master; sempre, una riga va nello storico del personaggio.
+ */
+function sezioneIncantesimiAMano(ctx) {
+  const sc = ctx.tab.scheda.incantesimi ?? null;
+  const lista = sc?.aMano ?? [];
+  const catalogoInc = ctx.dati.incantesimi.incantesimi;
+  const u = (ctx.ui.incantesimoAMano ??= { nome: '', origine: ctx.master ? 'direttore' : 'a_mano', nota: '', aperto: false, errore: null });
+  const contesto = { livelloMassimo: sc?.livelloMassimo ?? 0, accesso: !!sc?.scalaPotere };
+  const scelto = catalogoInc.find((i) => i.nome === u.nome.trim()) ?? null;
+  const avvisoScelto = scelto ? avvisoLivelloAMano(scelto, contesto) : null;
+  const attuali = ctx.scelte.incantesimiAMano ?? [];
+  const aggiungi = () => {
+    const nome = u.nome.trim();
+    const nuova = aggiungiIncantesimoAMano(attuali, nome, { origine: u.origine, nota: u.nota }, ctx.dati);
+    if (!nuova) { u.errore = scelto || !nome ? (nome ? 'È già fra quelli aggiunti a mano.' : 'Scrivi il nome di un incantesimo.') : `«${nome}» non è nel catalogo degli incantesimi.`; ctx.azioni.ridisegna(); return; }
+    const x = nuova.find((y) => y.nome === nome);
+    Object.assign(u, { nome: '', nota: '', errore: null });
+    ctx.azioni.incantesimiAMano(nuova, rigaRegistroAMano('aggiunto', x, ctx.dati));
+  };
+  const togli = async (x) => {
+    const ok = await chiedi({ titolo: `Togli ${x.nome}`, testo: `${x.nome} (${x.nomeOrigine.toLowerCase()} il ${dataLeggibile(x.quando)}) esce dagli incantesimi del personaggio. Non cambia le quote di Classe.`, si: 'Togli', no: 'Lascia' });
+    if (!ok) return;
+    const nuova = togliIncantesimoAMano(attuali, x.nome);
+    if (nuova) ctx.azioni.incantesimiAMano(nuova, rigaRegistroAMano('tolto', { ...x, quando: x.quando }, ctx.dati));
+  };
+  const scheda = (x) => {
+    const inc = catalogoInc.find((i) => i.nome === x.nome);
+    const st = inc ? statoPulsanteLancio(inc, ctx.tab.scheda, ctx.dati) : { disabilitato: true, motivo: 'incantesimo non più nel catalogo' };
+    return h('article', { class: `incantesimo-scheda ${classeMacrofamiglia(x.macrofamiglia)} incantesimo-a-mano` },
+      h('div', { class: 'arma-testa' },
+        h('h4', {}, info('incantesimo', x.nome), ' ', pallini(x.livello_base), ' ', etichettaMacro(x.macrofamiglia), h('span', { class: 'sigla' }, ` · livello base ${x.livello_base} · scheda ${x.scheda}`)),
+        h('button', { type: 'button', class: `btn primario btn-attacca${st.disabilitato ? ' con-avviso' : ''}`, disabled: !inc || !(inc.versioni ?? []).length, title: st.motivo,
+          onclick: () => { ctx.ui.lancio = { nome: x.nome, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Lancia!'),
+        h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Toglie l’incantesimo dalla scheda (non cambia le quote)', onclick: () => togli(x) }, 'Togli')),
+      h('p', { class: 'piccolo' }, h('strong', {}, x.nomeOrigine), ` il ${dataLeggibile(x.quando)}`, x.nota ? ` · ${x.nota}` : '', ' · fuori dalle quote di Classe.'),
+      x.avviso ? h('p', { class: 'nota motivo' }, `Avviso: ${x.avviso}`) : null);
+  };
+  return h('details', {
+    class: 'sezione-tab incantesimi-a-mano', open: u.aperto || lista.length > 0 || undefined,
+    ontoggle: (e) => { u.aperto = e.target.open; },
+  },
+  h('summary', {}, h('h2', {}, 'Incantesimi aggiunti a mano'), h('span', { class: 'sigla' }, ` · ${lista.length}`)),
+  h('div', { class: 'corpo-consulta' },
+    h('p', { class: 'nota' }, 'Un incantesimo imparato fuori dall’avanzamento (un maestro, un ritrovamento, una concessione del Direttore). Non conta nelle quote né nei liberi e il passaggio di livello non lo toglie. L’app avvisa se il livello è alto, ma non blocca.'),
+    lista.length ? h('div', { class: 'incantesimi-griglia' }, lista.map(scheda)) : null,
+    h('div', { class: 'aggiungi-a-mano' },
+      h('label', { class: 'campo' }, h('span', {}, 'Incantesimo del catalogo, per nome'),
+        h('input', {
+          type: 'text', list: 'elenco-incantesimi-a-mano', value: u.nome, placeholder: 'es. Cura Ferite', autocomplete: 'off', 'aria-label': 'Nome dell’incantesimo da aggiungere',
+          onchange: (e) => { u.nome = e.target.value; u.errore = null; ctx.azioni.ridisegna(); },
+          onkeydown: (e) => { if (e.key === 'Enter') { u.nome = e.target.value; e.preventDefault(); aggiungi(); } },
+        })),
+      h('datalist', { id: 'elenco-incantesimi-a-mano' }, [...catalogoInc].sort((a, b) => a.nome.localeCompare(b.nome, 'it')).map((i) => h('option', { value: i.nome }, `${i.macrofamiglia} · livello base ${i.livello_base}`))),
+      h('div', { class: 'scelta-pulsanti', role: 'group', 'aria-label': 'Come l’ha avuto' }, origini(ctx.dati).map((o) => h('button', {
+        type: 'button', class: `btn scelta-btn${u.origine === o.id ? ' scelta' : ''}`, 'aria-pressed': String(u.origine === o.id), onclick: () => { u.origine = o.id; ctx.azioni.ridisegna(); },
+      }, o.nome))),
+      h('label', { class: 'campo' }, h('span', {}, 'Nota (facoltativa)'),
+        h('input', { type: 'text', maxlength: 160, value: u.nota, placeholder: 'es. insegnato dal maestro Oshi', oninput: (e) => { u.nota = e.target.value; } })),
+      avvisoScelto ? h('p', { class: 'nota motivo' }, `Avviso: ${avvisoScelto}`) : null,
+      u.errore ? h('p', { class: 'nota motivo', role: 'alert' }, u.errore) : null,
+      h('button', { type: 'button', class: `btn primario${avvisoScelto ? ' con-avviso' : ''}`, onclick: aggiungi, title: avvisoScelto ?? 'Aggiunge l’incantesimo con l’origine e la data di oggi' },
+        avvisoScelto ? 'Aggiungi comunque' : 'Aggiungi'))));
 }
 
 /**
