@@ -159,7 +159,45 @@ Quattro cose rimaste aperte dai due lotti precedenti, chiuse prima dell'offline 
 | PX con l'identificativo stabile | `src/px-partita.js` → `migraGiocatoriAPgStabile`, `fileDelGiocatore`; `src/cartella.js` → `idStabileDiFile`, `fileDiPgStabile` |
 | Test | `tests/dispositivi.test.js`, `tests/dispositivi-server.test.js`, `tests/stato-tablet.test.js`, `tests/collega-dispositivi.test.js`, `tests/px-pg-stabile.test.js`, `tests/sforamento-caratteristiche.test.js`, `tests/cartella.test.js` |
 
-### Resta solo per la quarta parte
-
-- L'offline con il giornale delle operazioni e la schermata di rientro: sostituire il gate largo «tablet-sola-lettura» con qualcosa che permetta di scrivere offline in un giornale locale, e lo applichi al rientro con una conferma.
 - Decidere che cosa succede se due dispositivi diversi risultano associati allo stesso personaggio (oggi: l'ultimo che sceglie vince, senza avviso all'altro) — non toccato in questo lotto, non richiesto.
+
+## Quarta parte: si può modificare offline, e al rientro Davide approva (21/10/2026, pomeriggio)
+
+Tolta la misura temporanea della terza parte («offline → sola lettura»): un tablet senza connessione **continua a scrivere**, in un giornale locale che si somma a quello che è successo nel frattempo quando torna in linea. **Fatte le parti A, B e C (il motore, la coda, il confronto a tre lato server). Non fatta la parte D** (la schermata di rientro sul PC del Direttore): si è fermato qui per restare dentro il permesso esplicito di Marcello di chiudere a metà, lasciando la schermata al prossimo prompt.
+
+### A. Il giornale delle operazioni
+
+`src/giornale.js` (puro): non registra lo stato finale, registra **operazioni** — ciascuna con un identificativo, un momento, e uno di tre tipi:
+
+- **`somma`** (`delta`): un numero che si aggiunge a quello che c'è, non lo sostituisce. È il tipo di default per ogni valore numerico (PV, PM, PX, crediti, munizioni…): due modifiche indipendenti alla stessa cosa si sommano sempre, senza mai essere un conflitto.
+- **`insieme`** (aggiunta/rimozione per identità): il tipo di default per ogni campo che è un elenco (oggetti posseduti, Stati attivi…): aggiungere o togliere un elemento è idempotente (lo stesso elemento tolto due volte resta tolto) e due dispositivi che toccano elementi diversi dello stesso elenco non si scontrano mai.
+- **`assegna`** (`nuovo`, con `visto`, il valore con cui il tablet era partito): per tutto il resto — un testo, una nota, una scelta — che non ha senso sommare. Qui, e solo qui, un conflitto è possibile: se il server ha un valore diverso da quello che il tablet aveva visto, vince la domanda, non l'automatismo.
+
+**La classificazione è per tipo, non per un elenco di campi scritto a mano** (`tipoCampo` in `src/giornale.js`): un numero è sempre `somma`, un array è sempre `insieme`, il resto è `assegna`. Questo è deliberato — un elenco di campi va aggiornato ogni volta che nasce un valore nuovo e prima o poi invecchia; la regola per tipo si applica da sola anche ai campi di domani. Ci sono due sole eccezioni dichiarate (`ECCEZIONI_ASSEGNA`): `sessione.round` (un numero, ma è «il Round in corso», non una somma di modifiche — vale l'ultimo che l'ha scritto) e `scelte.puntiEsperienza` (idem, è un contatore assoluto del Direttore). **Qui è dove si sbaglia**, per chi tocca questo file in futuro: prima di aggiungere un nuovo campo numerico o ad elenco con una semantica «assoluta» invece che «incrementale», va aggiunto alle eccezioni.
+
+`operazioniDaDiff(prima, dopo)` genera le operazioni confrontando due stati (il modo in cui il client costruisce il giornale: non si scrive a mano un'operazione per ogni pulsante, si confronta lo stato prima e dopo il tocco). `applicaOperazione` le rimette sopra uno stato. `unisciGiornale(serverAttuale, operazioni, applicate)` è il confronto a tre: applica sempre `somma` e `insieme`, applica `assegna` solo se il valore attuale del server coincide con quello che l'operazione aveva visto (altrimenti va in `conflitti`), e non riapplica un'operazione il cui identificativo è già in `applicate` (idempotenza: ripresentare lo stesso giornale dopo un errore di rete non duplica nulla).
+
+### B. Si modifica offline, e si vede che si sta modificando offline
+
+`src/ui/coda-offline.js`: ogni personaggio ha una coda nel `localStorage` di questo dispositivo (`leggiCoda`/`accoda`/`togliDallaCoda`), con un'etichetta leggibile per operazione («−5 PV», «+1 Pergamena di Cura Ferite», «Stato Sanguinamento acceso»). `leggiBase`/`fissaBase` tengono la «base» nota — l'ultimo stato visto dal server — per costruire il diff solo di quello che è cambiato da lì: fissata dopo ogni scrittura riuscita, dopo ogni ricaricamento dal server (`ricaricaDaCartella`) e alla primissima apertura di un personaggio (`src/ui/app.js` → `daIndirizzo`), altrimenti la primissima modifica offline confronterebbe con il vuoto e la coda sarebbe un diluvio di operazioni finte.
+
+`src/stato-tablet.js` non spegne più i comandi offline (`modificabile` è sempre `true`): la fascia di stato dice «offline da {tempo} · {N} modifiche in attesa · le vedrà il Direttore quando torni collegato», o, a coda vuota, «offline da {tempo} · puoi continuare a modificare». «Vedi la coda (N)» (`src/ui/stato-tablet.js`) apre un pannello con le righe in attesa e una ✕ per toglierne una prima che arrivi al Direttore (il tocco sbagliato). **L'unico motivo di sola lettura rimasto** è guardare un personaggio che non è il proprio, online o offline — mai l'essere offline in sé.
+
+### C. Il rientro: il confronto a tre
+
+Quando il tablet torna in linea (`aggiorna()` in `src/ui/stato-tablet.js` nota la transizione offline→online), manda subito la coda a `POST /api/personaggi/<file>/giornale` (`inviaGiornale` in `src/ui/cartella.js`). Il server (`server.mjs` → `apiGiornale`) applica lo stesso controllo «scrive solo il proprio» di `PUT`, chiama `unisciGiornale`, scrive il file solo se qualcosa è stato applicato, e **mette da parte i conflitti veri** in `tavolo/rientro.json` (per pgId: `applicate`, l'elenco idempotente, capato a 2000; `inSospeso`, i conflitti in attesa della schermata di rientro). Risponde `{ applicati, conflitti }`: il tablet toglie dalla sua coda solo quello che il server ha confermato, mostra un avviso («N modifiche viste dal Direttore» / «N in attesa: il Direttore deve scegliere»), e **le operazioni in conflitto restano nella coda del tablet** finché Davide non risponde (la parte D, non fatta).
+
+### D. La schermata di rientro — non fatta
+
+`tavolo/rientro.json` esiste già e si riempie (parte C), ma **non c'è ancora una pagina che lo mostri e lasci Davide approvare o scartare**. Finché non c'è: i conflitti veri (un'assegnazione cambiata da entrambe le parti — una nota, una scelta, mai un numero o un elenco) restano parcheggiati nel file e nella coda del tablet, senza bloccare nient'altro — le variazioni e le assegnazioni non in conflitto arrivano comunque, normalmente. È il prossimo lotto: una pagina separata (non un angolo della plancia), con l'elenco per personaggio in ordine di tempo, «Approva»/«Scarta» a riga o in blocco, la domanda esplicita per ogni conflitto con le due versioni affiancate, e **mai** un'apparizione fuori dal rientro di un tablet che ha lavorato offline.
+
+### Che cosa è stato provato davvero
+
+- **Automatico:** `tests/giornale.test.js` (14 prove sul motore puro: classificazione, idempotenza, i tre scenari dell'incarico — somma che convive con una modifica del Direttore, assegnazione cambiata da entrambe le parti che diventa conflitto vero, operazione ripresentata due volte che non si applica due volte); `tests/coda-offline.test.js` (9 prove sulla coda del browser, con un `localStorage` finto: etichette, rimozione di una riga, sopravvivenza a una chiusura, isolamento fra personaggi); `tests/giornale-server.test.js` (5 prove end-to-end con due server veri, uno «Direttore» e uno «tablet», sullo stesso endpoint che userebbe il browser). Tutta `npm test` (2227 prove) verde, validatore e `verifica_frasi.mjs` verdi.
+- **A mano, nel browser:** due server veri sulla stessa cartella di prova (uno con `eMaster` forzato a `false`, per vedere davvero il comportamento del tablet — sullo stesso PC, qualunque browser connesso a `localhost` viene riconosciuto come il PC del Direttore, quindi non basta una seconda finestra). Confermato: con il server di prova spento, la fascia passa a «offline» e un tocco che modifica (−5 PV) non spegne il comando, il banner resta modificabile. Il tentativo di completare il giro fino al rientro (riaccendere il server, vedere la coda svuotarsi) si è fermato su un disallineamento dell'identificativo `pg` della prova stessa (un personaggio d'esempio importato due volte in due browser finisce con due `pg` diversi) — un problema della prova, non del codice: lo stesso percorso (`POST .../giornale`) è quello già verificato da `tests/giornale-server.test.js` con lo stesso identificativo su entrambi i lati.
+
+### Resta per la quinta parte
+
+- La schermata di rientro sul PC del Direttore (parte D sopra): approva/scarta, conflitti con le due versioni, mai un'apparizione per un tablet sempre collegato.
+- Chiudere a mano il giro «offline → rientro → coda svuotata» nel browser reale, con un tablet vero (non due server sullo stesso PC): non riprovato dopo il disallineamento descritto sopra.
+- CSS del pannello della coda (`.coda-offline-pannello`, `.coda-offline-elenco`) aggiunto ma non ancora visto da Marcello su un tablet vero, piccolo.
