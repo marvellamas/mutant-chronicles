@@ -1,15 +1,16 @@
-// Riga di stato del tablet (21/10/2026, lotto «il tablet è una vista, non un proprietario», parte D): monta una
-// volta, fuori da #app (come la fascia «Copia di lavoro», src/ui/copia-di-lavoro.js), così resta anche quando la
-// pagina cambia. Solo con il server e fuori dal PC del Direttore (src/ui/app.js la monta con quella condizione):
-// il Direttore ha già la sua fascia e il tasto MUTANT, qui serve solo ai tablet dei giocatori.
+// Riga di stato del tablet (21/10/2026, lotto «il tablet è una vista, non un proprietario», parte D; estesa lo
+// stesso giorno, quarto lotto, «si può modificare offline, e al rientro Davide approva»): monta una volta,
+// fuori da #app (come la fascia «Copia di lavoro»), così resta anche quando la pagina cambia. Solo con il
+// server e fuori dal PC del Direttore: il Direttore ha già la sua fascia e il tasto MUTANT.
 import { h, svuota } from './dom.js';
 import { apri } from './finestrella.js';
 import { avviso, avvisoErrore } from './avvisi.js';
-import { rigaStatoTablet, motivoOffline } from '../stato-tablet.js';
+import { rigaStatoTablet, motivoSolaLettura } from '../stato-tablet.js';
 import { idPersonaggio } from '../storico-personaggi.js';
-import { chiaveDaFile, ultimiPerPg } from '../cartella.js';
+import { chiaveDaFile, ultimiPerPg, fileDiPgStabile } from '../cartella.js';
 import { leggiAssociazione, scegliAssociazione } from './dispositivo.js';
-import { elencoCartella } from './cartella.js';
+import { elencoCartella, inviaGiornale } from './cartella.js';
+import { leggiCoda, togliDallaCoda, confermaRisposta, inCoda as contaInCoda } from './coda-offline.js';
 
 let dati = null;
 let pg = null; // { pgId, pgNome } | null: null anche finché il primo controllo non è arrivato
@@ -18,37 +19,53 @@ let pgAperto = null; // l'identificativo del PG che la scheda sta mostrando ades
 let elemento = null;
 let timer = null;
 let scegliendo = false; // la finestrella è aperta: non riaprirla una seconda volta dal poll
+let codaVisibile = false;
+let inviandoGiornale = false;
 
-/** Il tablet può modificare adesso quello che sta mostrando? false offline, o guardando un PG che non è il
-    proprio (parte C: «gli altri li vede, in sola lettura»). */
-export const puoModificare = () => {
-  if (!dati) return true;
-  if (!rigaStatoTablet({ pg, collegamento }, dati).modificabile) return false;
-  return !pg || !pgAperto || pgAperto === pg.pgId;
-};
+/** Il tablet può modificare adesso quello che sta mostrando? L'unico motivo di sola lettura (parte C): guardare
+    un personaggio che non è il proprio — sempre, online o offline (dal 21/10 pomeriggio l'offline non spegne
+    più i comandi: si accodano, src/ui/coda-offline.js). */
+export const puoModificare = () => !pg || !pgAperto || pgAperto === pg.pgId;
+/** Il server non risponde adesso? src/ui/app.js la usa per accodare invece di tentare una scrittura che
+    fallirebbe comunque (parte B). false finché il monitoraggio non è partito (non un tablet, o server assente). */
+export const eOffline = () => !collegamento.ok && dati !== null;
 /** Il motivo da mettere nel titolo di un comando spento. */
-export function motivoSpento() {
-  if (!dati) return '';
-  if (!rigaStatoTablet({ pg, collegamento }, dati).modificabile) return motivoOffline(dati);
-  return 'Questo tablet può scrivere solo il personaggio che ha scelto: qui stai solo guardando.';
-}
+export const motivoSpento = () => (dati ? motivoSolaLettura(dati) : '');
 /** Il personaggio di questo tablet (null se non ha ancora scelto), per aprirlo da solo all'avvio. */
 export const pgDiQuestoTablet = () => pg;
 /** La scheda apre un personaggio (o nessuno): src/ui/app.js lo dichiara, per il gate del punto sopra. */
 export function impostaPgAperto(pgId) { pgAperto = pgId ?? null; applica(); }
 
+function righeCoda() {
+  if (!pg) return [];
+  return leggiCoda(pg.pgId);
+}
+
+function pannelloCoda() {
+  const righe = righeCoda();
+  if (!righe.length) return null;
+  return h('div', { class: 'coda-offline-pannello' },
+    h('p', { class: 'nota' }, 'In attesa di essere viste dal Direttore. Hai sbagliato tocco? Toglila prima che arrivi.'),
+    h('ul', { class: 'coda-offline-elenco' }, righe.map((op) => h('li', {},
+      h('span', {}, op.etichetta), h('small', { class: 'nota' }, ` (${new Date(op.quando).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })})`),
+      h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Togli questa modifica dalla coda', onclick: () => { togliDallaCoda(pg.pgId, op.id); applica(); } }, '✕')))));
+}
+
 function applica() {
   if (!elemento) return;
-  const r = rigaStatoTablet({ pg, collegamento }, dati);
+  const n = pg ? contaInCoda(pg.pgId) : 0;
+  const r = rigaStatoTablet({ pg, collegamento, inCoda: n }, dati);
   elemento.className = `fascia-stato-tablet stato-${r.stato}`;
   svuota(elemento,
-    h('span', {}, r.testo),
-    r.stato === 'senza_pg' ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: apriScelta }, 'Scegli') : null,
-    r.stato !== 'senza_pg' && pg ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Scrivi da questo tablet un altro personaggio', onclick: apriScelta }, 'Cambia') : null,
+    h('div', { class: 'fascia-stato-tablet-riga' },
+      h('span', {}, r.testo),
+      n > 0 ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { codaVisibile = !codaVisibile; applica(); } }, `${codaVisibile ? 'Nascondi' : 'Vedi'} la coda (${n})`) : null,
+      r.stato === 'senza_pg' ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: apriScelta }, 'Scegli') : null,
+      r.stato !== 'senza_pg' && pg ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Scrivi da questo tablet un altro personaggio', onclick: apriScelta }, 'Cambia') : null,
+    ),
+    codaVisibile && n > 0 ? pannelloCoda() : null,
   );
-  // comandi spenti offline, o guardando un PG che non è il proprio (parte C/D, temporaneo finché non c'è il
-  // lotto del rientro): un gate largo, non comando per comando — ogni singolo pulsante avrebbe richiesto di
-  // toccare l'intera interfaccia della scheda
+  // il solo gate che resta: guardare un personaggio che non è il proprio (parte C), mai per l'offline
   document.body.classList.toggle('tablet-sola-lettura', !puoModificare());
 }
 
@@ -81,6 +98,7 @@ async function apriScelta() {
     if (!scelto) return;
     const r = await scegliAssociazione(scelto);
     pg = r;
+    codaVisibile = false;
     applica();
     avviso(`Questo tablet ora mostra e può modificare «${r.pgNome ?? scelto}».`, { tipo: 'ok' });
     // un cambio di personaggio con una scheda diversa già aperta non ha senso restarci sopra: torna alla pagina iniziale
@@ -92,12 +110,43 @@ async function apriScelta() {
   }
 }
 
+/**
+ * Il rientro (parte C): manda la coda del proprio personaggio al server. Le variazioni e le assegnazioni non
+ * in conflitto si tolgono dalla coda (il Direttore le ha già viste nel file); quelle in conflitto restano, in
+ * attesa della sua schermata di rientro (il prossimo lotto). Non manda niente se la coda è vuota, se questo
+ * dispositivo non ha ancora scelto un personaggio, o se un invio precedente è ancora in corso.
+ */
+async function inviaCoda() {
+  if (inviandoGiornale || !pg) return;
+  const coda = leggiCoda(pg.pgId);
+  if (!coda.length) return;
+  inviandoGiornale = true;
+  try {
+    const lista = await elencoCartella();
+    const file = lista ? fileDiPgStabile(lista, pg.pgId)?.file : null;
+    if (!file) return; // il server non risponde, o il personaggio non c'è più: si riprova al giro successivo
+    const r = await inviaGiornale(file, coda);
+    confermaRisposta(pg.pgId, r);
+    if (r.applicati?.length) avviso(`${r.applicati.length} modific${r.applicati.length === 1 ? 'a' : 'he'} viste dal Direttore.`, { tipo: 'ok' });
+    if (r.conflitti?.length) avviso(`${r.conflitti.length} modific${r.conflitti.length === 1 ? 'a' : 'he'} in attesa: il Direttore deve scegliere (cambiat${r.conflitti.length === 1 ? 'a' : 'e'} anche da lui).`, { tipo: 'attenzione', durata: 9000 });
+    applica();
+  } catch (e) {
+    // offline per davvero, o il server è tornato ma risponde male: la coda resta, si riprova al giro successivo
+    console.warn(`Rientro non riuscito: ${e.message}`);
+  } finally {
+    inviandoGiornale = false;
+  }
+}
+
 async function aggiorna() {
   const lista = await elencoCartella();
   const adesso = Date.now();
+  const eraOffline = !collegamento.ok;
   if (lista) {
     collegamento = { ok: true, ultimoOk: adesso };
     pg = await leggiAssociazione();
+    // «quando il tablet torna in linea, si confronta» (parte C): appena si riconnette, non al giro dopo
+    if (eraOffline) await inviaCoda();
   } else {
     collegamento = { ok: false, ultimoOk: collegamento.ultimoOk ?? adesso };
   }

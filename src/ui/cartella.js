@@ -106,3 +106,18 @@ export async function leggiBackupMaster(file) {
   if (!r.ok) throw new Error((await r.json().catch(() => ({}))).errore ?? `errore ${r.status}`);
   return r.text();
 }
+
+/**
+ * Il rientro (21/10/2026, quarto lotto, src/giornale.js): manda il giornale delle operazioni accodate offline.
+ * Il server applica le variazioni (sempre) e le assegnazioni non in conflitto, scrive il file se cambia
+ * qualcosa, e risponde { applicati: [id,…], conflitti: [{operazione, attuale}] }. Idempotente: ripresentarlo
+ * (per esempio dopo un errore di rete) non riapplica le operazioni già fatte.
+ */
+export async function inviaGiornale(file, operazioni) {
+  const r = await fetch(`api/personaggi/${encodeURIComponent(file)}/giornale`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json', ...intestazioneDispositivo() }, body: JSON.stringify({ operazioni }),
+  });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.errore ?? `errore ${r.status}`);
+  return j;
+}

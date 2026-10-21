@@ -25,7 +25,8 @@ import { descriviVoce } from '../avanzamento.js';
 import { segnaModalitaMaster, modalitaMasterDi, esciModalitaMaster } from './ritorno.js';
 import { statoSalvataggioMaster, controllaRemoto, revisioneDaScrivere, differenzeSessione, testoScelta, indicatoreCollegamento, impronta } from '../collegamento.js';
 import { messaggioConflittoVersione } from '../stato-tablet.js';
-import { montaStatoTablet, impostaPgAperto } from './stato-tablet.js';
+import { montaStatoTablet, impostaPgAperto, eOffline } from './stato-tablet.js';
+import { accoda, fissaBase } from './coda-offline.js';
 import { difeseNemico } from '../nemico-attacco.js';
 import { leggiScontroAperto, leggiScontro, rigaScontro, leggiMovimentoRound } from './scontro.js';
 import { elencoUnito, confronta, chiaveDaFile, chiavePersonaggio, messaggioSalvataggio, attesaRitentativo, nomeFileLibero, haNome, fileProvvisorio } from '../cartella.js';
@@ -309,6 +310,9 @@ function daIndirizzo() {
     stato.livelli = Array.isArray(salvato.livelli) ? salvato.livelli : [];
     stato.sessione = salvato.sessione ?? null;
     stato.calendario = normalizzaCalendario(salvato.calendario, stato.dati);
+    // la prima apertura di un personaggio è anche la prima base nota per le differenze offline (parte B): senza
+    // questo, la primissima modifica accodata offline confronterebbe col vuoto e la coda sarebbe un diluvio
+    if (stato.cartella && !stato.master) fissaBase(id, stato.scelte, stato.sessione, stato.calendario);
     stato.opzioniStampa = normalizzaOpzioniStampa(salvato.stampa);
     stato.precedenteTavolo = null;
     stato.collegamento.conflitto = null;
@@ -461,6 +465,13 @@ async function scriviInCartella(id, { revisione = false, mtime = null } = {}) {
   try { elenco = await elencoCartella(); } catch { elenco = null; }
   assicuraPg(id, elenco);
   const p = archivio.carica(id);
+  // «si può modificare offline» (21/10/2026 pomeriggio, parte B): un tablet (mai il PC del Direttore) che sa di
+  // essere offline non tenta la scrittura — fallirebbe comunque — accoda invece le operazioni (src/giornale.js,
+  // src/ui/coda-offline.js), che al rientro si sommano a quello che è successo nel frattempo.
+  if (stato.cartella && !stato.master && eOffline()) {
+    accoda(id, p.scelte, p.sessione, normalizzaCalendario(p.calendario, stato.dati));
+    return null;
+  }
   const { scelte } = normalizza(p.scelte, stato.dati);
   const radice = elenco ? nomeFileLibero({ ...p, scelte }, elenco) : null;
   const { file, testo } = fileEsportazione(scelte, p.livelli ?? [], p.sessione ?? null, normalizzaCalendario(p.calendario, stato.dati), p.pg, radice);
@@ -478,6 +489,8 @@ async function scriviInCartella(id, { revisione = false, mtime = null } = {}) {
     }
     const r = await scriviCartella(file, testo, { mtime: rev });
     archivio.segnaCartella(id, { file: r.file, mtime: r.mtime, salvato: p.aggiornato, impronta: impronta(testo) });
+    // la scrittura è andata a buon fine: questa è la nuova base nota per le differenze offline (parte B)
+    if (stato.cartella && !stato.master) fissaBase(id, scelte, p.sessione, normalizzaCalendario(p.calendario, stato.dati));
     // «Modifica master»: il server ha tenuto le correzioni del master al posto di quelle (vecchie) di questa scheda
     if (r.masterRipristinato && id === stato.id) await ricaricaDaCartella();
     if (id === stato.id) aggiornaIndicatoreSalvataggio();
@@ -724,6 +737,9 @@ async function ricaricaDaCartella(v = null) {
   stato.livelli = ora.livelli ?? [];
   stato.sessione = ora.sessione;
   stato.calendario = normalizzaCalendario(ora.calendario, stato.dati);
+  // quello che arriva dal server è la nuova base nota per le differenze offline (parte B): non solo dopo una
+  // scrittura riuscita, anche dopo un ricaricamento come questo
+  if (stato.cartella && !stato.master) fissaBase(id, stato.scelte, stato.sessione, stato.calendario);
   // «Annulla» riporterebbe i valori di prima del master
   stato.precedenteTavolo = null;
   // modalità master: ciò che arriva dalla cartella non è una modifica del master da registrare

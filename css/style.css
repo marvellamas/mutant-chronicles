@@ -2950,13 +2950,25 @@ body.con-fascia-copia:has(.mappa-pagina) { height: auto; min-height: 100dvh; }
 .fascia-stato-tablet.stato-senza_pg { background: var(--attenzione-tenue); color: var(--attenzione); border-bottom-color: var(--attenzione); }
 .fascia-stato-tablet.stato-offline { background: var(--errore-tenue); color: var(--errore); border-bottom-color: var(--errore); font-weight: 700; }
 .fascia-stato-tablet .btn-piccolo { min-height: 26px; padding: 0 0.55rem; font-size: 0.82rem; }
+.fascia-stato-tablet-riga { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; }
 body:has(.mappa-pagina) .fascia-stato-tablet { position: static; }
 @media print { .fascia-stato-tablet { display: none; } }
 
-/* offline (parte D, temporaneo finché il lotto del rientro non porta il giornale delle operazioni): i comandi
-   che modificano si spengono, con il motivo nella fascia sopra. Un controllo largo (tutto #app, mai la fascia
-   stessa né i link di navigazione) invece che comando per comando: toccare ogni pulsante della scheda in questo
-   lotto avrebbe allargato troppo il lavoro (vedi il riepilogo). */
+/* 21/10/2026 pomeriggio — «si può modificare offline»: la coda di questo dispositivo, vista aprendo «Vedi la
+   coda (N)» nella fascia. Un pannello stretto sotto la fascia, non un'altra pagina: ci si sta solo un attimo
+   per togliere un tocco sbagliato prima che arrivi al Direttore. */
+.coda-offline-pannello {
+  width: 100%; max-width: 32rem; margin: 0.35rem auto 0; padding: 0.5rem 0.75rem;
+  background: var(--superficie); border: 1px solid var(--bordo); border-radius: var(--raggio); text-align: left;
+}
+.coda-offline-pannello .nota { margin: 0 0 0.4rem; font-size: 0.82rem; }
+.coda-offline-elenco { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.25rem; }
+.coda-offline-elenco li { display: flex; align-items: center; gap: 0.4rem; font-size: 0.88rem; }
+.coda-offline-elenco li span { flex: 1 1 auto; }
+
+/* guardare un personaggio che non è il proprio (parte C): l'unico motivo di sola lettura rimasto — offline non
+   spegne più niente, dal 21/10 pomeriggio le operazioni si accodano invece (src/ui/coda-offline.js). Un
+   controllo largo (tutto #app, mai la fascia stessa né i link di navigazione) invece che comando per comando. */
 body.tablet-sola-lettura #app button:not(.tab-bottone, .btn-torna-sopra), body.tablet-sola-lettura #app input, body.tablet-sola-lettura #app select,
 body.tablet-sola-lettura #app textarea {
   pointer-events: none; opacity: 0.55; cursor: not-allowed; filter: grayscale(0.3);

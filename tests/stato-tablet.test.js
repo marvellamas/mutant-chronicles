@@ -1,8 +1,9 @@
-// src/stato-tablet.js: la riga di stato del tablet (21/10/2026, parte D) e il messaggio del conflitto di
-// versione (parte E).
+// src/stato-tablet.js: la riga di stato del tablet (21/10/2026, parte D; estesa lo stesso giorno, quarto lotto,
+// «si può modificare offline»: offline non spegne più i comandi, mostra invece quante modifiche sono in coda)
+// e il messaggio del conflitto di versione (parte E).
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { rigaStatoTablet, tempoTrascorso, oraBreve, messaggioConflittoVersione, motivoOffline } from '../src/stato-tablet.js';
+import { rigaStatoTablet, tempoTrascorso, oraBreve, messaggioConflittoVersione, motivoSolaLettura } from '../src/stato-tablet.js';
 import { datiReali } from './helpers.js';
 
 const { dati } = await datiReali();
@@ -36,12 +37,25 @@ test('rigaStatoTablet: collegato ma senza personaggio scelto', () => {
   assert.equal(r.modificabile, true);
 });
 
-test('rigaStatoTablet: offline da 3 minuti, non modificabile — l\'esempio del Direttore', () => {
+test('rigaStatoTablet: offline da 3 minuti con 4 modifiche in coda — ancora modificabile (non più una misura temporanea)', () => {
   const adesso = Date.now();
-  const r = rigaStatoTablet({ pg: { pgId: 'pg-1', pgNome: 'Aiko' }, collegamento: { ok: false, ultimoOk: adesso - 3 * 60_000, adesso } }, dati);
+  const r = rigaStatoTablet({ pg: { pgId: 'pg-1', pgNome: 'Aiko' }, collegamento: { ok: false, ultimoOk: adesso - 3 * 60_000, adesso }, inCoda: 4 }, dati);
   assert.equal(r.stato, 'offline');
-  assert.equal(r.testo, 'offline da 3 minuti · stai vedendo una copia · non puoi modificare');
-  assert.equal(r.modificabile, false);
+  assert.equal(r.testo, 'offline da 3 minuti · 4 modifiche in attesa · le vedrà il Direttore quando torni collegato');
+  assert.equal(r.modificabile, true);
+});
+
+test('rigaStatoTablet: offline senza ancora nessuna modifica, un testo diverso (non «0 modifiche»)', () => {
+  const adesso = Date.now();
+  const r = rigaStatoTablet({ pg: { pgId: 'pg-1', pgNome: 'Aiko' }, collegamento: { ok: false, ultimoOk: adesso - 60_000, adesso }, inCoda: 0 }, dati);
+  assert.match(r.testo, /^offline da un minuto · puoi continuare a modificare/);
+  assert.equal(r.modificabile, true);
+});
+
+test('rigaStatoTablet: con una sola modifica, il singolare («1 modifica», non «1 modifiche»)', () => {
+  const r = rigaStatoTablet({ pg: { pgId: 'pg-1', pgNome: 'Aiko' }, collegamento: { ok: false, ultimoOk: Date.now() - 60_000, adesso: Date.now() }, inCoda: 1 }, dati);
+  assert.match(r.testo, /1 modifica in attesa/);
+  assert.doesNotMatch(r.testo, /1 modifiche/);
 });
 
 test('rigaStatoTablet: offline prevale su «senza personaggio» (l\'avviso più urgente)', () => {
@@ -49,8 +63,8 @@ test('rigaStatoTablet: offline prevale su «senza personaggio» (l\'avviso più 
   assert.equal(r.stato, 'offline');
 });
 
-test('motivoOffline: il testo da mettere nel titolo dei comandi spenti', () => {
-  assert.ok(motivoOffline(dati).length > 10);
+test('motivoSolaLettura: il testo da mettere nel titolo di un comando spento guardando un PG non proprio', () => {
+  assert.ok(motivoSolaLettura(dati).length > 10);
 });
 
 test('messaggioConflittoVersione: il testo esatto dell\'esempio', () => {

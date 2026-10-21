@@ -114,6 +114,14 @@
 //   PUT /api/personaggi/<file> rifiuta (403) la scrittura di chi ha dichiarato X-Mutant-Da: giocatore e porta
 //   un X-Mutant-Dispositivo associato a un personaggio diverso, o nessuno ancora; senza l'uno o l'altro intestazione
 //   (client di prima, strumenti, test) il controllo non si applica, come le altre migrazioni silenziose.
+//   «Si può modificare offline, e al rientro Davide approva» (21/10/2026, quarto lotto, src/giornale.js,
+//   tavolo/rientro.json): un tablet offline accoda le OPERAZIONI (non lo stato finale), col suo identificativo.
+//   POST /api/personaggi/<file>/giornale  corpo { operazioni }: applica le variazioni (sempre) e le
+//                                      assegnazioni non in conflitto, scrive il file se cambia qualcosa, tiene
+//                                      da parte i conflitti veri (la schermata di rientro è il prossimo lotto);
+//                                      idempotente (ripresentare lo stesso giornale non riapplica le operazioni
+//                                      già fatte); risponde { applicati: [id,…], conflitti: [{operazione,
+//                                      attuale}] }. Stesso controllo «scrive solo il proprio» di PUT.
 // Nessuna cancellazione dal server: i file vecchi si tolgono a mano dalla cartella.
 import { proteggiBlocchiMaster } from './src/correzioni-master.js';
 import { createServer } from 'node:http';
@@ -135,6 +143,7 @@ import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
 import { NOME_FILE, fileProvvisorio, ultimiPerPersonaggio, ultimiPerPg, chiaveDaFile, chiavePersonaggio } from './src/cartella.js';
 import { conMetadati, serveCopia, copieDaTogliere, idPersonaggio, cartellaStorico, nomeCopiaStorica, CARTELLA_STORICO } from './src/storico-personaggi.js';
 import { associazioneDi, dispositivoVisto, conAssociazione, senzaAssociazione, puoScrivere, elencoDispositivi } from './src/dispositivi.js';
+import { unisciGiornale } from './src/giornale.js';
 import { NOME_MARCATORE, statoInstallazione } from './src/copia-di-lavoro.js';
 import { validaRecord, ID_VEICOLO, migraVeicoli, eRiferimento, stessaChiave } from './src/veicoli-registro.js';
 import { normalizzaVeicoli } from './src/veicoli.js';
@@ -171,7 +180,10 @@ const GALLERIA = 'galleria'; // N1: le immagini da mostrare ai giocatori
 const PX = 'px'; // A.161: calcolatore e archivio «PX della partita» del Direttore (solo master)
 const FILE_PX = 'px.json';
 const FILE_DISPOSITIVI = 'dispositivi.json'; // 21/10: dentro tavolo/, come sessione.json
+const FILE_RIENTRO = 'rientro.json'; // 21/10 pomeriggio: il giornale delle operazioni in sospeso, dentro tavolo/
+const MASSIMO_APPLICATE = 2000; // identificativi di operazioni già applicate tenuti per personaggio (idempotenza)
 const ID_DISPOSITIVO = /^[A-Za-z0-9_-]{6,64}$/;
+const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const ID_NEMICO = /^[a-z0-9-]{1,60}$/;
 
 const TIPI = {
@@ -1419,6 +1431,58 @@ function trovaPg(lista, pgId) {
 }
 
 /**
+ * Il giornale delle operazioni, al rientro di un tablet (21/10/2026, quarto lotto, src/giornale.js): applica le
+ * variazioni (sempre, senza chiedere) e le assegnazioni non in conflitto, scrive il file se è cambiato
+ * qualcosa, tiene da parte i conflitti veri (la schermata di rientro per Davide è il prossimo lotto: qui si
+ * mettono al sicuro, non si perdono né si inventano). Idempotente: ripresentare lo stesso giornale (per
+ * esempio dopo un errore di rete) non riapplica le operazioni già fatte (`tavolo/rientro.json` → `applicate`).
+ */
+async function apiGiornale(req, res, file, cartella, tavolo) {
+  if (req.method !== 'POST') return json(res, 405, { errore: 'metodo non ammesso' });
+  if (!NOME_FILE.test(file)) return json(res, 400, { errore: 'nome di file non ammesso' });
+  let corpo;
+  try { corpo = JSON.parse((await leggiCorpo(req)).toString('utf8')); } catch (e) { return json(res, 400, { errore: e.message }); }
+  const operazioni = Array.isArray(corpo?.operazioni) ? corpo.operazioni : null;
+  if (!operazioni) return json(res, 400, { errore: 'manca «operazioni» (l’elenco del giornale)' });
+  const dove = join(cartella, file);
+  const o = await leggiJson(dove).catch(() => null);
+  if (!o || o.formato !== 'mutant-personaggio') return json(res, 404, { errore: 'file non trovato' });
+  const pgId = idPersonaggio(o, chiaveDaFile(file));
+  // stesso controllo di PUT /api/personaggi/<file>: un dispositivo scrive solo il proprio personaggio
+  const chiDichiarato = req.headers['x-mutant-da'];
+  const idDispositivo = req.headers['x-mutant-dispositivo'];
+  if (!req.mutantMaster && chiDichiarato === 'giocatore' && typeof idDispositivo === 'string' && ID_DISPOSITIVO.test(idDispositivo)) {
+    let dbDisp; try { dbDisp = await leggiJson(join(tavolo, FILE_DISPOSITIVI)); } catch { dbDisp = { versione: 1, dispositivi: {} }; }
+    if (!pgId || !puoScrivere(dbDisp, idDispositivo, pgId)) {
+      return json(res, 403, { errore: 'Questo tablet può scrivere solo il personaggio che ha scelto.', nonAutorizzato: true });
+    }
+  }
+  const doveRientro = join(tavolo, FILE_RIENTRO);
+  return inCoda(dove, async () => {
+    const o2 = await leggiJson(dove).catch(() => null); // rilegge dentro la coda: niente scritture sovrapposte
+    if (!o2) return json(res, 404, { errore: 'file non trovato' });
+    let rientro; try { rientro = await leggiJson(doveRientro); } catch { rientro = { versione: 1, personaggi: {} }; }
+    if (!isOggetto(rientro?.personaggi)) rientro = { versione: 1, personaggi: {} };
+    const stato = rientro.personaggi[pgId] ?? { applicate: [], inSospeso: [] };
+    const applicatePrima = new Set(stato.applicate ?? []);
+    const { risultato, applicati, conflitti } = unisciGiornale({ scelte: o2.scelte, sessione: o2.sessione, calendario: o2.calendario }, operazioni, applicatePrima);
+    // i conflitti nuovi (non già in sospeso con lo stesso identificativo di operazione) si aggiungono all'elenco
+    const giaInSospeso = new Set((stato.inSospeso ?? []).map((c) => c.operazione?.id));
+    const inSospeso = [...(stato.inSospeso ?? []), ...conflitti.filter((c) => !giaInSospeso.has(c.operazione.id)).map((c) => ({ ...c, quando: new Date().toISOString() }))];
+    const applicate = [...applicatePrima, ...applicati].slice(-MASSIMO_APPLICATE);
+    await mkdir(tavolo, { recursive: true });
+    await scriviJson(doveRientro, { ...rientro, personaggi: { ...rientro.personaggi, [pgId]: { applicate, inSospeso } } });
+    if (applicati.length) {
+      const prima = o2;
+      try { await archivia(cartella, file, prima); } catch (e) { console.warn(`Copia storica non riuscita (${file}): ${e.message}`); }
+      const nuovo = conMetadati({ ...o2, scelte: risultato.scelte, sessione: risultato.sessione, calendario: risultato.calendario }, prima, { chi: req.mutantMaster ? 'master' : 'giocatore' });
+      await scriviAtomico(dove, Buffer.from(`${JSON.stringify(nuovo, null, 2)}\n`, 'utf8'));
+    }
+    return json(res, 200, { applicati, conflitti: conflitti.map((c) => ({ operazione: c.operazione, attuale: c.attuale })) });
+  });
+}
+
+/**
  * «Il tablet è una vista» (21/10/2026, src/dispositivi.js): un dispositivo (tablet) sceglie il suo personaggio e
  * da lì in avanti può scrivere solo quello (il controllo vero è in PUT /api/personaggi/<file>, qui solo
  * l'abbinamento). GET e POST per sé stesso (ogni dispositivo, nessun controllo master: è un'azione del
@@ -1673,6 +1737,8 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
   }
   if (percorso === '/api/personaggi' && req.method === 'GET') return json(res, 200, await elencoPersonaggi(cartella));
   if (percorso === '/api/dispositivo' || percorso.startsWith('/api/dispositivi')) return await apiDispositivo(req, res, percorso, tavolo, cartella);
+  const mg = /^\/api\/personaggi\/([^/]+)\/giornale$/.exec(percorso);
+  if (mg) return await apiGiornale(req, res, decodeURIComponent(mg[1]), cartella, tavolo);
   const m = /^\/api\/personaggi\/([^/]+)$/.exec(percorso);
   if (!m) return json(res, 404, { errore: 'API sconosciuta' });
   const file = decodeURIComponent(m[1]);
