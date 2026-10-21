@@ -757,6 +757,12 @@ dl.voci.in-linea dt::after { content: ":"; }
 .sezione-tab > h2 { font-size: 1.1rem; margin: 0 0 0.5rem; padding-bottom: 0.25rem; border-bottom: 1px solid var(--bordo); }
 details.sezione-tab > summary { font-weight: 700; cursor: pointer; min-height: 44px; display: flex; align-items: center; }
 .griglia-due { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 0 1.5rem; }
+/* 21/10/2026, terzo lotto «le code dell'originale», parte D: stesso «min-width: auto» degli ultimi due lotti,
+   su un elemento diverso (.controllo-temporaneo, la tabella delle Caratteristiche in «Modifica master»). Il
+   figlio diretto della griglia (.sezione-tab) non scendeva sotto il contenuto della sua tabella, e a 820–912 px
+   (due colonne da 17 rem che qui ci stanno appena) la usciva dalla propria colonna invece di scorrere dentro
+   .tabella-scorre, che ce l'ha già apposta. */
+.griglia-due > * { min-width: 0; }
 .abilita-affiancate { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(25rem, 100%), 1fr)); /* 25rem: la tabella a 7 colonne; sotto, una colonna sola larga quanto lo schermo */ gap: 0 1.5rem; align-items: start; }
 .anagrafica { display: grid; grid-template-columns: auto 1fr; gap: 0.35rem 1rem; margin: 0 0 0.75rem; align-items: center; }
 .anagrafica dt { font-weight: 600; }
