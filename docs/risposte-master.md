@@ -1887,3 +1887,12 @@ Lavoro tecnico deciso con Marcello il 21/10, senza regole del manuale in gioco: 
 - **Riga di stato su ogni pagina del tablet** (non sul PC del Direttore): «collegato · Aiko · aggiornata 21:14» o «offline da 3 minuti · stai vedendo una copia · non puoi modificare». Il controllo gira ogni 15 secondi e quando il tablet torna in primo piano. Offline, o guardando un personaggio che non è il proprio, i comandi che modificano si spengono (un controllo largo sull'intera scheda, non comando per comando: **temporaneo**, il prossimo lotto — offline con il giornale delle operazioni e la schermata di rientro — lo sostituisce con qualcosa di più preciso).
 - **Il messaggio del conflitto di versione** è leggibile: «"Aiko" è stata modificata da il Direttore un minuto fa. Ricarica e riprova.» (riquadro già esistente «Il master ha aggiornato», con «Aggiorna» e «Tieni la mia»: non sovrascrive, non fonde, non inventa).
 - **Non toccato in questo lotto** (fuori perimetro, segnalato nel riepilogo): uno sforamento della tabella delle Caratteristiche in «Modifica master» a 820–912 px, trovato dalla rete di sicurezza del lotto precedente mentre si provava questo — stesso meccanismo («min-width: auto»), elemento diverso.
+
+## 21 ottobre 2026, pomeriggio — le code dell'originale (nessuna domanda nuova)
+
+Quattro cose rimaste aperte dai due lotti precedenti, chiuse prima dell'offline e del rientro. Lavoro tecnico: niente da chiedere a Davide (restano A.171, A.172 e A.174–A.176). Dettagli in `docs/personaggi-pipeline-2026-10-20.md`.
+
+- **Il server vince sempre:** aprendo un personaggio, se la cartella è cambiata vince sempre lei, anche scartando una modifica del browser non ancora scritta (prima vinceva «il più recente»: era il principio paritario da cui si esce).
+- **«Tablet e personaggi scelti»** nel Tavolo del Master, dentro «Collega i giocatori»: chi è collegato, a quale personaggio, da quanto tempo si è fatto vivo; si riassegna o si stacca da lì, senza riga di comando.
+- **Il pannello PX usa l'identificativo stabile del personaggio**, non più il nome del file: un livello o un nuovo nome non stacca più l'abbinamento. La migrazione di quello che c'era prima è andata a buon fine per tutte le righe con un PG riconoscibile; le righe che non si risolvono (il file non è più nell'elenco) sono segnalate, non indovinate.
+- **Chiuso lo sforamento** della tabella delle Caratteristiche in «Modifica master» a 820–912 px (stesso «min-width: auto» del resto): rigirata la rete di sicurezza del lotto «condizioni attive» (112 combinazioni), pulita ovunque.

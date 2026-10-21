@@ -125,19 +125,41 @@ Il controllo di versione (409, revisione rifiutata) **esisteva già** dal pezzo 
 
 Quello che **ho aggiunto**: il messaggio leggibile, con chi e da quanto tempo, come richiesto. `versioneRemota()` (src/ui/app.js) ora legge anche `aggiornato_da` e `aggiornato_il` dal file remoto; `messaggioConflittoVersione()` (src/stato-tablet.js) li trasforma in «"Aiko" è stata modificata da il Direttore un minuto fa. Ricarica e riprova.» — «il Direttore» per `master`, «un altro tuo dispositivo» per `giocatore` (con l'abbinamento di C, un conflitto fra giocatori sullo stesso file può venire solo dallo stesso giocatore da un secondo dispositivo, mai da un estraneo), «il calcolo dei PX» per `px`. Il riquadro esistente (`avvisoMaster` in `src/ui/tab.js`) mostra questo messaggio al posto del precedente «Il master ha aggiornato… alle HH:MM:SS», con «Aggiorna» (= ricarica) e «Tieni la mia» (in più rispetto alla richiesta: prova a salvare comunque, se nel frattempo nessuno ha scritto ancora).
 
-### Resta per la terza parte (offline con il giornale delle operazioni e la schermata di rientro)
+## Terza parte: le code dell'originale (21/10/2026, pomeriggio)
 
-- Sostituire il gate largo «tablet-sola-lettura» con qualcosa che permetta di scrivere offline in un giornale locale, e lo applichi al rientro con una conferma (non più solo lettura finché non si torna online).
-- Decidere che cosa succede se due dispositivi diversi risultano associati allo stesso personaggio (oggi: l'ultimo che sceglie vince, senza avviso all'altro).
-- Lo sforamento trovato dalla rete di sicurezza del lotto «condizioni attive» nella tabella delle Caratteristiche di «Modifica master» a 820–912 px (stesso «min-width: auto» del resto, mai sistemato perché fuori da quel lotto): va bene affrontarlo insieme, dato che tocca lo stesso genere di difetto.
+Quattro cose rimaste aperte dai due lotti precedenti, chiuse prima dell'offline e del rientro (altrimenti il giornale delle operazioni avrebbe ereditato il difetto di trattare una copia come l'originale).
 
-### Dove guardare, per la terza parte
+### A. Il server vince sempre
+
+`confronta()` (`src/cartella.js`) non guarda più la data per decidere chi vince quando **sia** il browser **sia** la cartella sono cambiati: vince sempre la cartella, anche scartando una modifica del browser più recente ma non ancora scritta (con un avviso che lo dice, invece del vecchio «la copia nella cartella era più recente»). Il browser scrive solo quando la cartella **non** è cambiata: è il salvataggio normale, non un conflitto. L'unica eccezione legittima resta il tablet offline (terzo lotto, non scrive ancora). **Non si è rotto niente**: aprire la scheda senza server continua a funzionare com'era (`confronta()` entra in gioco solo quando risponde `GET /api/personaggi`).
+
+### B. Il riquadro degli abbinamenti, nel Tavolo del Master
+
+«Tablet e personaggi scelti», dentro «Collega i giocatori» (non una tab nuova): elenco dei dispositivi, il personaggio (o «tablet non ancora assegnato»), da quanto tempo si è fatto vivo, una tendina per riassegnare e «Stacca». Per farlo comparire anche un dispositivo che si è collegato ma non ha ancora scelto, `GET /api/dispositivo` ora crea il suo record al primo contatto (`src/dispositivi.js` → `dispositivoVisto`) invece di restare senza traccia finché non sceglie; «Stacca» svuota il personaggio ma non cancella il dispositivo, altrimenti sparirebbe dall'elenco invece di restare correggibile.
+
+### C. Il pannello PX usa l'identificativo, non il nome del file
+
+`giocatori[].pgFile` (nome di file, invecchia) → `pgStabile` (l'identificativo stabile, come altrove): `idStabileDiFile`/`fileDiPgStabile` in `src/cartella.js` (condivise con l'abbinamento dei tablet), `migraGiocatoriAPgStabile` in `src/px-partita.js` per la migrazione silenziosa di quello che c'è già — una sola volta, quando il Tavolo rilegge `px/px.json`. Le righe che non si risolvono (il file non è più nell'elenco) **non si indovinano**: restano come sono, segnalate sia nel riepilogo sia in un avviso dentro «Impostazioni» del pannello PX, per Marcello.
+
+### D. Lo sforamento in Identità
+
+`.griglia-due` (Caratteristiche + Prove Salvezza): stesso `min-width: auto` degli ultimi due lotti, su `.controllo-temporaneo` invece che sulla tabella delle Abilità o `.riquadro-mano`. Lo stesso rimedio: `min-width: 0` sui figli diretti della griglia. La rete di sicurezza del lotto «condizioni attive» (112 combinazioni: 8 tab × 7 larghezze × 2 orientamenti) è stata rigirata con una scheda di prova completa: pulita ovunque, compreso questo punto.
+
+### Dove guardare, per la quarta parte (offline con il giornale delle operazioni e la schermata di rientro)
 
 | Cosa | Dove |
 |---|---|
 | Identità del dispositivo | `src/ui/dispositivo.js` |
-| Abbinamento dispositivo → PG | `src/dispositivi.js`, `server.mjs` → `apiDispositivo`, `tavolo/dispositivi.json` |
+| Abbinamento dispositivo → PG, «si è fatto vivo» | `src/dispositivi.js`, `server.mjs` → `apiDispositivo`, `tavolo/dispositivi.json` |
+| Il riquadro del Direttore | `src/ui/collega.js` → `elencoDispositivi`, `src/ui/dispositivi-tavolo.js`, `src/ui/tavolo.js` → `aggiornaDispositivi` |
 | Controllo «scrive solo il proprio» | `server.mjs`, `PUT /api/personaggi/<file>` (cerca «il tablet è una vista») |
+| «Il server vince sempre» | `src/cartella.js` → `confronta`, `src/ui/app.js` → `sincronizzaCartella` |
 | Riga di stato, offline, sola lettura | `src/stato-tablet.js`, `src/ui/stato-tablet.js`, `css/style.css` → `.fascia-stato-tablet`, `.tablet-sola-lettura` |
 | Messaggio del conflitto | `src/stato-tablet.js` → `messaggioConflittoVersione`, `src/ui/app.js` → `versioneRemota`, `src/ui/tab.js` → `avvisoMaster` |
-| Test | `tests/dispositivi.test.js`, `tests/dispositivi-server.test.js`, `tests/stato-tablet.test.js` |
+| PX con l'identificativo stabile | `src/px-partita.js` → `migraGiocatoriAPgStabile`, `fileDelGiocatore`; `src/cartella.js` → `idStabileDiFile`, `fileDiPgStabile` |
+| Test | `tests/dispositivi.test.js`, `tests/dispositivi-server.test.js`, `tests/stato-tablet.test.js`, `tests/collega-dispositivi.test.js`, `tests/px-pg-stabile.test.js`, `tests/sforamento-caratteristiche.test.js`, `tests/cartella.test.js` |
+
+### Resta solo per la quarta parte
+
+- L'offline con il giornale delle operazioni e la schermata di rientro: sostituire il gate largo «tablet-sola-lettura» con qualcosa che permetta di scrivere offline in un giornale locale, e lo applichi al rientro con una conferma.
+- Decidere che cosa succede se due dispositivi diversi risultano associati allo stesso personaggio (oggi: l'ultimo che sceglie vince, senza avviso all'altro) — non toccato in questo lotto, non richiesto.
