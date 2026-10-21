@@ -2375,6 +2375,16 @@ body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 .collega-tablet-nome { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
 .collega-tablet-voce .btn-campanello { margin-left: auto; white-space: nowrap; }
 
+/* 21/10/2026, parte B del lotto «le code dell'originale»: «Tablet e personaggi scelti», dentro «Collega i
+   giocatori» (non una tab nuova: Davide non userà mai curl per /api/dispositivi). Stesso stile di «Tablet collegati». */
+.collega-dispositivi { margin: 0.6rem 0 0.5rem; border-top: 1px solid var(--bordo); padding-top: 0.5rem; }
+.collega-dispositivi h3 { margin: 0 0 0.35rem; font-size: 1rem; }
+.collega-dispositivi-elenco { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.3rem; max-height: 34rem; overflow-y: auto; }
+.collega-dispositivo-voce { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; min-width: 0; padding: 0.3rem; border-radius: 6px; background: var(--superficie); }
+.collega-dispositivo-nome { flex: 1 1 auto; min-width: 8rem; font-weight: 600; }
+.collega-dispositivo-nome.senza-pg { font-weight: 400; font-style: italic; color: var(--tenue); }
+.collega-dispositivo-voce select { min-height: 32px; }
+
 /* 08/10: pagina dopo «Spegni Mutant» (src/ui/salvataggio.js) */
 .pagina-spento { max-width: 40rem; margin: 3rem auto; padding: 0 1rem; }
 .pagina-spento h1 { margin-bottom: 1rem; }

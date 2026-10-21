@@ -31,7 +31,7 @@ import { pannelloBestiario, elencoNemici, cartaNemico } from './nemici.js';
 import { pannelloGalleria, fasciaGalleria, leggiGalleria, nascondiATutti } from './galleria.js';
 // PX della partita (A.161): calcolatore e archivio del Direttore, solo sul PC del master
 import { pannelloPx, leggiPx, salvaPx, patchPgAssegnazione, dbIniziale } from './px-partita.js';
-import { deltaAssegnazione, partitaAssegnata } from '../px-partita.js';
+import { deltaAssegnazione, partitaAssegnata, migraGiocatoriAPgStabile, fileDelGiocatore } from '../px-partita.js';
 import { chiudi as chiudiScontro, cambiaMusica, diTurno, ordineIniziativa, registraIniziative, senzaIniziativaNuovi, avanti, indietro, anteprimaIndietro, reimpostaIniziativa, reimpostaIniziativaDi, dadoIniziativa, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico, confermaRegimeNemico, aggiungiNemici, registraRiga, cambiaStatoNemico } from '../scontro.js';
 import { vociBestiario } from '../nemici.js';
 import { creaCustode } from './ridisegno.js';
@@ -39,6 +39,7 @@ import { avviso, avvisoErrore } from './avvisi.js';
 import { apriCreaNemico, apriDaBestiario } from './crea-nemico.js';
 import { apriPreparazione, iniziaBozzaDallaMappa } from './preparazione.js';
 import { riquadroCollega, leggiRete } from './collega.js';
+import { leggiDispositivi } from './dispositivi-tavolo.js';
 import { leggiAvvioVuoto, fasciaCartellaVuota } from './cartella-vuota.js';
 import { cartaVeicoloPlancia } from './veicoli.js';
 import { stessaChiave } from '../veicoli-registro.js';
@@ -126,6 +127,10 @@ export function renderTavolo(radice, ctx) {
     scene: statoScene({ aperto: !ctx.inMappa }),
     // «Collega i giocatori»: indirizzi della rete (server.mjs → /api/rete), riquadro aperto finché non lo si chiude
     rete: null,
+    // 21/10/2026, parte B: dispositivi (tablet) collegati e il loro abbinamento (src/dispositivi.js), per
+    // «Tablet e personaggi scelti» dentro «Collega i giocatori»; solo sul PC del master
+    dispositivi: null,
+    firmaDispositivi: null,
     collegaAperto: !ctx.inMappa,
     // 12/10: cartella dei personaggi vuota all'avvio (server.mjs → /api/avvio)
     avvioVuoto: null,
@@ -438,7 +443,14 @@ export function renderTavolo(radice, ctx) {
       return { chiave, nome, ritratto: v?.ritratto ?? null, iniziali: iniz(nome), collegato: (stato.tablet ?? []).some((k) => stessaChiave(k, chiave)),
         nelloScontro: (stato.scontro?.partecipanti ?? []).some((p) => p.tipo === 'pg' && stessaChiave(p.chiave, chiave)) };
     });
-    const collega = riquadroCollega(stato.rete, { aperto: stato.collegaAperto, onToggle: (v) => { stato.collegaAperto = v; }, tablet: { pg: tabletPg, chiama: stato.scontro ? (p) => chiamaTablet(p) : null, aiuto: { attuale: stato.aiutoMaster?.chiave ?? null, rendi: stato.scontro?.stato === 'aperto' ? (p) => rendiAiuto(p) : null, revoca: (p) => revocaAiuto(p) } } });
+    const collega = riquadroCollega(stato.rete, {
+      aperto: stato.collegaAperto, onToggle: (v) => { stato.collegaAperto = v; },
+      tablet: { pg: tabletPg, chiama: stato.scontro ? (p) => chiamaTablet(p) : null, aiuto: { attuale: stato.aiutoMaster?.chiave ?? null, rendi: stato.scontro?.stato === 'aperto' ? (p) => rendiAiuto(p) : null, revoca: (p) => revocaAiuto(p) } },
+      // 21/10/2026, parte B: solo sul PC del master (l'API rifiuta gli altri comunque)
+      // dopo una correzione si rilegge subito (non si aspetta il giro da 3 secondi): altrimenti l'elenco
+      // mostrerebbe per un momento l'abbinamento di prima
+      dispositivi: ctx.master ? { elenco: stato.dispositivi, schede: ultimiPerPg(stato.elenco), ridisegna: async () => { await aggiornaDispositivi(); disegna(); } } : null,
+    });
     const scelta = stato.sceltaAperta ? sceltaAlTavolo(stato, ultimi, async (nuova) => {
       try {
         stato.selezione = await scriviSelezione(nuova);
@@ -468,6 +480,8 @@ export function renderTavolo(radice, ctx) {
       db: stato.db, dati: ctx.dati, uiPx: stato.uiPx, pxGiocatori: pxGiocatori(),
       // 20/10: un personaggio una volta sola nel menu (prima c'erano tutti i file datati: tre o quattro copie per PG)
       schede: ultimiPerPg(stato.elenco), scontri: stato.scontro ? [stato.scontro] : [],
+      // 21/10/2026, parte C: righe non migrate da pgFile a pgStabile (il file non c'è più nell'elenco)
+      pxNonMigrati: stato.pxNonMigrati ?? [],
     }, { salva: salvaPxDb, ridisegna: disegna, assegna: assegnaPx }) : null;
     const bestiario = pannelloBestiario(ctx, stato.bestiario, {
       aperto: stato.bestiarioAperto,
@@ -949,24 +963,33 @@ export function renderTavolo(radice, ctx) {
   const pxDaFile = new Map();
   const aggiornaPx = async () => {
     const letto = await leggiPx();
-    const db = letto ?? dbIniziale(ctx.dati);
+    let db = letto ?? dbIniziale(ctx.dati);
+    // «le code dell'originale» (21/10/2026), parte C: giocatori[].pgFile (nome di file, invecchia) → pgStabile
+    // (identificativo stabile): migrazione silenziosa, una volta sola, non indovinando le righe irrisolvibili
+    // (il file non c'è più nell'elenco: restano com'erano, in stato.pxNonMigrati per il pannello)
+    const migrazione = migraGiocatoriAPgStabile(db, stato.elenco);
+    stato.pxNonMigrati = migrazione.nonMigrate;
+    if (migrazione.cambiato) {
+      db = migrazione.db;
+      try { await salvaPx(db); } catch { /* si ritenta al giro successivo: niente si perde, pgFile resta intatto */ }
+    }
     for (const g of db.giocatori ?? []) {
-      const r = stato.elenco.find((x) => x.file === g.pgFile);
-      if (!r || pxDaFile.get(g.pgFile)?.mtime === r.mtime) continue;
+      const r = fileDelGiocatore(stato.elenco, g);
+      if (!r || pxDaFile.get(g.id)?.mtime === r.mtime) continue;
       try {
-        const res = await fetch(`api/personaggi/${encodeURIComponent(g.pgFile)}`, { cache: 'no-store' });
+        const res = await fetch(`api/personaggi/${encodeURIComponent(r.file)}`, { cache: 'no-store' });
         const o = res.ok ? await res.json() : null;
-        pxDaFile.set(g.pgFile, { mtime: r.mtime, px: Number.isFinite(Number(o?.scelte?.puntiEsperienza)) ? Number(o.scelte.puntiEsperienza) : null });
+        pxDaFile.set(g.id, { mtime: r.mtime, px: Number.isFinite(Number(o?.scelte?.puntiEsperienza)) ? Number(o.scelte.puntiEsperienza) : null });
       } catch { /* resta il valore di prima */ }
     }
-    const firma = JSON.stringify([db, [...pxDaFile].map(([file, v]) => [file, v.px])]);
+    const firma = JSON.stringify([db, [...pxDaFile].map(([id, v]) => [id, v.px])]);
     if (firma === stato.firmaPx) return false;
     stato.firmaPx = firma;
     stato.db = db;
     return true;
   };
   // i PX attuali di ogni giocatore, dal file del suo PG (scelte.puntiEsperienza); altrimenti i PX iniziali comuni
-  const pxGiocatori = () => Object.fromEntries((stato.db?.giocatori ?? []).map((g) => [g.id, pxDaFile.get(g.pgFile)?.px ?? stato.db?.impostazioni?.baseline ?? 0]));
+  const pxGiocatori = () => Object.fromEntries((stato.db?.giocatori ?? []).map((g) => [g.id, pxDaFile.get(g.id)?.px ?? stato.db?.impostazioni?.baseline ?? 0]));
   const salvaPxDb = async () => { try { await salvaPx(stato.db); stato.firmaPx = JSON.stringify(stato.db); } catch (e) { avvisoErrore(`PX della partita non salvati: ${e.message}. Controlla che avvia-server.bat sia aperto.`); } };
   // «Assegna PX della partita»: applica i delta ai PG presenti come Modifica master «diretta» su puntiEsperienza
   const assegnaPx = async (partita) => {
@@ -977,13 +1000,14 @@ export function renderTavolo(radice, ctx) {
     const senzaPg = [];
     for (const [id, d] of Object.entries(delta)) {
       const g = stato.db.giocatori.find((x) => x.id === id);
-      if (!g?.pgFile) { senzaPg.push(g?.pg || id); continue; }
-      const r = await fetch(`api/personaggi/${encodeURIComponent(g.pgFile)}`, { cache: 'no-store' });
-      if (!r.ok) { senzaPg.push(g.pg || id); continue; }
-      const pg = await r.json();
+      const r = g ? fileDelGiocatore(stato.elenco, g) : null;
+      if (!r) { senzaPg.push(g?.pg || id); continue; }
+      const res = await fetch(`api/personaggi/${encodeURIComponent(r.file)}`, { cache: 'no-store' });
+      if (!res.ok) { senzaPg.push(g.pg || id); continue; }
+      const pg = await res.json();
       const dopo = patchPgAssegnazione(pg, d, etichetta);
-      const put = await fetch(`api/personaggi/${encodeURIComponent(g.pgFile)}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(dopo) });
-      if (!put.ok) throw new Error((await put.json().catch(() => ({}))).errore ?? `errore ${put.status} su ${g.pgFile}`);
+      const put = await fetch(`api/personaggi/${encodeURIComponent(r.file)}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(dopo) });
+      if (!put.ok) throw new Error((await put.json().catch(() => ({}))).errore ?? `errore ${put.status} su ${r.file}`);
     }
     const idx = stato.db.partite.findIndex((m) => m.id === partita.id);
     if (idx >= 0) stato.db.partite[idx] = partitaAssegnata(partita, pxPrima, new Date().toISOString().slice(0, 10), p);
@@ -991,6 +1015,18 @@ export function renderTavolo(radice, ctx) {
     avviso(senzaPg.length ? `PX assegnati. Senza PG associato (non aggiornati): ${senzaPg.join(', ')}. Collegali in «Impostazioni».` : 'PX della partita assegnati ai PG presenti (Modifica master).', { tipo: senzaPg.length ? 'info' : 'ok', durata: 8000 });
     await aggiorna(true);
     disegna();
+  };
+
+  // 21/10/2026, parte B: dispositivi (tablet) collegati, per «Tablet e personaggi scelti» (si ridisegna solo se
+  // cambia: un nuovo tablet, un nuovo abbinamento, o il tempo trascorso che cambia la parola — «un minuto» → «2 minuti»)
+  const aggiornaDispositivi = async () => {
+    const elenco = await leggiDispositivi();
+    if (!elenco) return false;
+    const firma = JSON.stringify(elenco);
+    if (firma === stato.firmaDispositivi) return false;
+    stato.firmaDispositivi = firma;
+    stato.dispositivi = elenco;
+    return true;
   };
 
   const nascondiGalleria = async () => {
@@ -1172,6 +1208,10 @@ export function renderTavolo(radice, ctx) {
     try {
       if (await aggiornaTablet()) cambiato = true;
     } catch { /* senza server dei tablet: nessun indicatore */ }
+    try {
+      // 21/10/2026, parte B: solo sul PC del master (l'API rifiuta gli altri)
+      if (ctx.master && await aggiornaDispositivi()) cambiato = true;
+    } catch { /* non master o senza server: il riquadro resta com'era */ }
     // 12/10: scontri in corso con la loro scena, per la testa del Tavolo («Apri la mappa e continua lo scontro»)
     try {
       if (!ctx.inMappa && await aggiornaInCorso()) cambiato = true;

@@ -54,10 +54,15 @@ test('GET /api/dispositivo senza l’intestazione: 400', async () => {
   assert.equal(r.status, 400);
 });
 
-test('GET /api/dispositivo con un dispositivo che non ha ancora scelto: null', async () => {
+test('GET /api/dispositivo con un dispositivo che non ha ancora scelto: si è fatto vivo, ma pgId è null', async () => {
+  // 21/10/2026 pomeriggio, parte B: il GET crea il record (si è fatto vivo), per «da quanto tempo» del Direttore;
+  // il personaggio resta null finché non sceglie.
   const r = await fetch(`${baseTablet}/api/dispositivo`, { headers: { 'X-Mutant-Dispositivo': ID1 } });
   assert.equal(r.status, 200);
-  assert.equal(await r.json(), null);
+  const j = await r.json();
+  assert.equal(j.pgId, null);
+  assert.equal(j.pgNome, null);
+  assert.match(j.aggiornato, /^\d{4}-\d\d-\d\dT/);
 });
 
 test('POST /api/dispositivo con un pgId che non esiste: 404', async () => {
@@ -174,8 +179,10 @@ test('PUT /api/dispositivi/<id>: il Direttore corregge l’abbinamento, e lo pu�
     method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ pgId: null }),
   });
   assert.equal(tolto.status, 200);
+  // staccato: il dispositivo resta nell'elenco, senza personaggio (non sparisce)
+  assert.equal((await tolto.json()).pgId, null);
   const get = await fetch(`${baseTablet}/api/dispositivo`, { headers: { 'X-Mutant-Dispositivo': ID1 } });
-  assert.equal(await get.json(), null);
+  assert.equal((await get.json()).pgId, null);
   // da un tablet, PUT /api/dispositivi/<id> è negato (solo il Direttore corregge un abbinamento altrui)
   const negato = await fetch(`${baseTablet}/api/dispositivi/${encodeURIComponent(ID1)}`, {
     method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ pgId: p.pg }),

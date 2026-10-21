@@ -12,6 +12,8 @@
 //   premio di fine Atto = solo se disposto, una volta
 //   totale suggerito   = pxVoti + pxBonus + pxIncontri + premio ; il Direttore lo può correggere a mano.
 
+import { idStabileDiFile, fileDiPgStabile } from './cartella.js';
+
 const num = (n) => (Number.isFinite(Number(n)) ? Number(n) : 0);
 const arrotonda = (n) => Math.round(num(n));
 
@@ -248,6 +250,41 @@ export function csvRiepilogo(righe, p) {
  * Normalizza alle nostre partite SENZA riassegnare: le partite importate risultano già «assegnate» con i loro
  * importi, così un successivo «Assegna» calcola delta 0. Ritorna { impostazioni, giocatori, partite, avvisi }.
  */
+// ---------------------------------------------------------------------------------------------
+// «Le code dell'originale» (21/10/2026), parte C: `giocatori[].pgFile` legava un giocatore a un NOME DI FILE,
+// che invecchia (un livello o un nuovo nome cambia il file, e l'abbinamento si stacca in silenzio portandosi
+// dietro i PX — lo stesso difetto già tolto altrove con l'identificativo stabile). Qui: `pgStabile`,
+// l'identificativo che non cambia mai (src/cartella.js → idStabileDiFile/fileDiPgStabile, condivise con
+// l'abbinamento dei tablet, src/dispositivi.js), e come migrare quello che c'è già. Si chiama «pgStabile» e non
+// «pgId» perché in questo file `pgId` è già preso: è la chiave del giocatore dentro
+// `partita.partecipanti`/`pxGiocatori` (vedi sopra), un'altra cosa.
+
+/**
+ * Migrazione silenziosa di `giocatori[]` da `pgFile` (nome di file) a `pgStabile` (identificativo stabile): le
+ * righe che si risolvono (il loro `pgFile` è ancora nell'elenco) restano collegate allo stesso personaggio anche
+ * dopo un livello o un nuovo nome. Quelle che non si risolvono (il file non c'è più nell'elenco, per esempio
+ * spostato a mano in `storico/`) non si indovinano: restano come sono, per Marcello.
+ * @returns { db, cambiato, nonMigrate: [{ id, giocatore, pgFile }] }
+ */
+export function migraGiocatoriAPgStabile(db, elenco) {
+  const nonMigrate = [];
+  let cambiato = false;
+  const giocatori = (db?.giocatori ?? []).map((g) => {
+    if (g.pgStabile || !g.pgFile) return g; // già migrato, o nessun PG associato: niente da fare
+    const f = (elenco ?? []).find((x) => x.file === g.pgFile);
+    if (!f) { nonMigrate.push({ id: g.id, giocatore: g.giocatore ?? '', pgFile: g.pgFile }); return g; }
+    cambiato = true;
+    return { ...g, pgStabile: idStabileDiFile(f) };
+  });
+  return { db: cambiato ? { ...db, giocatori } : db, cambiato, nonMigrate };
+}
+
+/** Il file attuale del PG di una riga `giocatori[]`: per `pgStabile` se c'è (si risolve da solo dopo un livello
+    o un nuovo nome), altrimenti per `pgFile` (righe non ancora migrate). null se non si trova. */
+export function fileDelGiocatore(elenco, g) {
+  return (g?.pgStabile ? fileDiPgStabile(elenco, g.pgStabile) : null) ?? (elenco ?? []).find((f) => f.file === g?.pgFile) ?? null;
+}
+
 export function importaArchivio(gestore, p) {
   const avvisi = [];
   if (!gestore || typeof gestore !== 'object') return { impostazioni: null, giocatori: [], partite: [], avvisi: ['File non riconosciuto.'] };

@@ -134,7 +134,7 @@ import { validaScontro, rigaOpportunita, rigaAiutoMaster, diTurno, registraRiga,
 import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
 import { NOME_FILE, fileProvvisorio, ultimiPerPersonaggio, ultimiPerPg, chiaveDaFile, chiavePersonaggio } from './src/cartella.js';
 import { conMetadati, serveCopia, copieDaTogliere, idPersonaggio, cartellaStorico, nomeCopiaStorica, CARTELLA_STORICO } from './src/storico-personaggi.js';
-import { normalizzaDispositivi, associazioneDi, conAssociazione, senzaAssociazione, puoScrivere, elencoDispositivi } from './src/dispositivi.js';
+import { associazioneDi, dispositivoVisto, conAssociazione, senzaAssociazione, puoScrivere, elencoDispositivi } from './src/dispositivi.js';
 import { NOME_MARCATORE, statoInstallazione } from './src/copia-di-lavoro.js';
 import { validaRecord, ID_VEICOLO, migraVeicoli, eRiferimento, stessaChiave } from './src/veicoli-registro.js';
 import { normalizzaVeicoli } from './src/veicoli.js';
@@ -1430,7 +1430,15 @@ async function apiDispositivo(req, res, percorso, tavolo, cartella) {
   if (percorso === '/api/dispositivo') {
     const id = req.headers['x-mutant-dispositivo'];
     if (typeof id !== 'string' || !ID_DISPOSITIVO.test(id)) return json(res, 400, { errore: 'manca l’intestazione X-Mutant-Dispositivo, o non è valida' });
-    if (req.method === 'GET') return json(res, 200, associazioneDi(await leggi(), id));
+    if (req.method === 'GET') {
+      // «si è fatto vivo» (parte B del 21/10 pomeriggio): il riquadro del Direttore mostra da quanto tempo un
+      // tablet si è fatto vivo, non solo quando ha scelto l'ultima volta. Scrittura breve, un controllo ogni
+      // 15 secondi per tablet: accettabile per il numero di dispositivi di un tavolo.
+      let v;
+      await mkdir(tavolo, { recursive: true });
+      await inCoda(dove, async () => { v = dispositivoVisto(await leggi(), id); await scriviJson(dove, v); });
+      return json(res, 200, associazioneDi(v, id));
+    }
     if (req.method === 'POST') {
       let corpo;
       try { corpo = JSON.parse((await leggiCorpo(req)).toString('utf8')); } catch (e) { return json(res, 400, { errore: e.message }); }
@@ -1460,8 +1468,9 @@ async function apiDispositivo(req, res, percorso, tavolo, cartella) {
     await mkdir(tavolo, { recursive: true });
     let v;
     if (corpo?.pgId === null) {
+      // «Stacca» (parte B): il dispositivo resta nell'elenco, senza personaggio, non sparisce
       await inCoda(dove, async () => { v = senzaAssociazione(await leggi(), id); await scriviJson(dove, v); });
-      return json(res, 200, null);
+      return json(res, 200, associazioneDi(v, id));
     }
     const pgId = typeof corpo?.pgId === 'string' ? corpo.pgId.trim() : '';
     if (!pgId) return json(res, 400, { errore: 'manca pgId (o pgId: null per togliere l’abbinamento)' });
@@ -1707,7 +1716,7 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
       const pgId = idPersonaggio(o, chiaveDaFile(file));
       let db; try { db = await leggiJson(join(tavolo, FILE_DISPOSITIVI)); } catch { db = { versione: 1, dispositivi: {} }; }
       const associazione = associazioneDi(db, idDispositivo);
-      if (!associazione) return json(res, 403, { errore: 'Questo tablet non ha ancora scelto un personaggio: sceglilo prima di scrivere.', nonAutorizzato: true });
+      if (!associazione?.pgId) return json(res, 403, { errore: 'Questo tablet non ha ancora scelto un personaggio: sceglilo prima di scrivere.', nonAutorizzato: true });
       if (!pgId || !puoScrivere(db, idDispositivo, pgId)) {
         return json(res, 403, { errore: `Questo tablet può scrivere solo «${associazione.pgNome ?? 'il personaggio scelto'}», non questo.`, nonAutorizzato: true });
       }

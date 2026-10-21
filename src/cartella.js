@@ -15,6 +15,7 @@
 //   sincronizzazione (`cartella: { file, mtime, salvato }`): se è cambiata solo una delle due copie vince
 //   quella; se sono cambiate entrambe vince la più recente.
 import { nomeFileEsportazione } from './character.js';
+import { idPersonaggio } from './storico-personaggi.js';
 
 const SUFFISSO = /_liv(\d+)_(\d{4}-\d{2}-\d{2})\.json$/;
 /** Nome di un file personaggio: lo stesso dell'export, «Nome_livN_AAAA-MM-GG.json» (src/character.js). */
@@ -33,6 +34,16 @@ export const formaNome = (nome) => String(nome ?? '').normalize('NFD').replace(/
 
 /** Il file più recente di un elenco (o null). */
 const piuRecente = (lista) => lista.reduce((m, f) => (!m || f.mtime > m.mtime ? f : m), null);
+
+/** L'identificativo stabile del personaggio di una riga dell'elenco (GET /api/personaggi): il suo «pg», o il
+    ripiego sul «Nome» del file per i personaggi di prima (src/storico-personaggi.js → idPersonaggio). */
+export const idStabileDiFile = (f) => idPersonaggio({ pg: f?.pg ?? null }, chiaveDaFile(f?.file ?? ''));
+
+/** Il file più recente dell'elenco con questo identificativo stabile, o null (per esempio il PG non c'è più). */
+export function fileDiPgStabile(elenco, pgStabile) {
+  if (!pgStabile) return null;
+  return piuRecente((elenco ?? []).filter((f) => idStabileDiFile(f) === pgStabile));
+}
 
 /**
  * Il file del personaggio di una voce del browser (il più recente), riconosciuto dall'identificativo:
@@ -123,17 +134,25 @@ const TOLLERANZA_MS = 2000; // orologi e scritture ravvicinate: due secondi non 
 
 /**
  * Che cosa fare con un personaggio presente nel browser e nella cartella.
+ *
+ * «Il server vince sempre» (21/10/2026, «le code dell'originale», parte A): la cartella sul PC del Direttore è
+ * l'originale, il browser è solo una cache. Se la cartella è cambiata, si ricarica da lì — anche se nel
+ * frattempo il browser aveva anche lui una modifica non ancora scritta: quella si perde, perché il principio
+ * paritario «vince il più recente» era proprio la malattia da cui si esce (prima si confrontavano le date e
+ * poteva vincere il browser). L'unica eccezione legittima sarebbe il tablet offline, che però non scrive
+ * ancora (lotto del giornale delle operazioni e del rientro). Il browser scrive solo quando la cartella NON è
+ * cambiata: è il caso normale del salvataggio, non un conflitto.
  * @param locale voce del browser { aggiornato (ISO), cartella?: { file, mtime, salvato } }
  * @param remoto voce del server { file, mtime }
- * @returns {{ azione: 'niente'|'scrivi'|'leggi', conflitto: boolean }}
+ * @returns {{ azione: 'niente'|'scrivi'|'leggi', conflitto: boolean }} `conflitto`: il browser aveva una
+ *   modifica non salvata che la lettura dal server scarta (per l'avviso, non cambia che cosa si fa)
  */
 export function confronta(locale, remoto) {
   const agg = Date.parse(locale?.aggiornato ?? '') || 0;
   const ultima = locale?.cartella ?? null;
   const cambiatoRemoto = !ultima || remoto.file !== ultima.file || remoto.mtime > ultima.mtime + TOLLERANZA_MS;
   const cambiatoLocale = !ultima || agg > (Date.parse(ultima.salvato ?? '') || 0) + TOLLERANZA_MS;
-  if (cambiatoRemoto && cambiatoLocale) return { azione: remoto.mtime > agg + TOLLERANZA_MS ? 'leggi' : agg > remoto.mtime + TOLLERANZA_MS ? 'scrivi' : 'niente', conflitto: !!ultima };
-  if (cambiatoRemoto) return { azione: 'leggi', conflitto: false };
+  if (cambiatoRemoto) return { azione: 'leggi', conflitto: cambiatoLocale && !!ultima };
   if (cambiatoLocale) return { azione: 'scrivi', conflitto: false };
   return { azione: 'niente', conflitto: false };
 }

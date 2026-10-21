@@ -15,6 +15,7 @@ import { registraDiretta } from '../correzioni-master.js';
 import {
   calcolaPartita, deltaAssegnazione, partitaAssegnata, premioGiaDato, riepilogo, csvRiepilogo, componentiGiocatore, presentiNella,
 } from '../px-partita.js';
+import { idStabileDiFile } from '../cartella.js';
 
 const errore = async (r) => Object.assign(new Error((await r.json().catch(() => ({}))).errore ?? `errore ${r.status}`), { stato: r.status });
 
@@ -253,10 +254,18 @@ function vistaImpostazioni(st, az, salva) {
   const schede = st.schede ?? []; // { file, nome, pg }
   const righeGioc = (db.giocatori ?? []).map((g, i) => h('div', { class: 'px-gioc-riga' },
     h('input', { value: g.giocatore ?? '', placeholder: 'Giocatore', oninput: (e) => { g.giocatore = e.target.value; az.salva(); } }),
-    h('select', { title: 'Personaggio (i PX stanno sul PG)', onchange: (e) => { g.pgFile = e.target.value || null; g.pg = schede.find((s) => s.file === e.target.value)?.nome || g.pg; az.salva(); } },
+    h('select', { title: 'Personaggio (i PX stanno sul PG)', onchange: (e) => {
+      const s = schede.find((x) => x.file === e.target.value);
+      g.pgFile = e.target.value || null;
+      // identificativo stabile (21/10/2026, parte C): resta collegato allo stesso PG anche dopo un livello o un nuovo nome
+      g.pgStabile = s ? idStabileDiFile(s) : null;
+      g.pg = s?.nome || g.pg;
+      az.salva();
+    } },
       h('option', { value: '' }, '— PG —'),
-      ...schede.map((s) => h('option', { value: s.file, selected: g.pgFile === s.file }, `${s.nome} (liv ${s.livello})`))),
+      ...schede.map((s) => h('option', { value: s.file, selected: g.pgStabile ? idStabileDiFile(s) === g.pgStabile : g.pgFile === s.file }, `${s.nome} (liv ${s.livello})`))),
     h('button', { class: 'icon-btn', title: 'Togli il giocatore', onclick: () => { db.giocatori.splice(i, 1); salva(); } }, '✕')));
+  const nonMigrati = st.pxNonMigrati ?? [];
   return h('div', { class: 'px-impostazioni' },
     h('label', { class: 'px-campo' }, h('span', {}, 'Atto corrente'),
       h('select', { onchange: (e) => { imp.atto = e.target.value; salva(); } }, ...p(st).atti.map((a) => h('option', { value: a.nome, selected: imp.atto === a.nome }, `Atto ${a.nome} (fino al livello ${a.limite_livello})`)))),
@@ -264,6 +273,9 @@ function vistaImpostazioni(st, az, salva) {
       h('input', { type: 'number', value: imp.baseline, oninput: (e) => { imp.baseline = Number(e.target.value); az.salva(); } })),
     h('h4', {}, 'Giocatori e personaggi'),
     h('p', { class: 'nota' }, 'I PX stanno sul PG: cambiare il nome del giocatore non sposta i punti.'),
+    nonMigrati.length ? h('p', { class: 'riquadro attenzione' },
+      `${nonMigrati.length === 1 ? 'Un abbinamento è' : `${nonMigrati.length} abbinamenti sono`} rimasto scollegato (il file del PG non c'è più nella cartella): `,
+      nonMigrati.map((n) => n.giocatore || n.pgFile).join(', '), '. Scegli di nuovo il PG qui sotto, se serve.') : null,
     ...righeGioc,
     h('button', { class: 'btn small', onclick: () => { db.giocatori.push({ id: `g-${Date.now().toString(36)}`, giocatore: '', pg: '', pgFile: null }); salva(); } }, '+ Giocatore'));
 }

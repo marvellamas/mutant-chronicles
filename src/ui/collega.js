@@ -5,6 +5,9 @@ import { h } from './dom.js';
 import { avviso, avvisoErrore } from './avvisi.js';
 import { svgQR } from '../qr.js';
 import { stessaChiave } from '../veicoli-registro.js';
+import { tempoTrascorso } from '../stato-tablet.js';
+import { correggiDispositivo } from './dispositivi-tavolo.js';
+import { idStabileDiFile } from '../cartella.js';
 
 /** Indirizzi dal server: { porta, soloLocale, indirizzi, altri, tuttiPerDubbio }, o null se non risponde. */
 export async function leggiRete() {
@@ -53,12 +56,46 @@ function elencoTablet({ pg, chiama, aiuto = null }) {
 }
 
 /**
- * @param rete risposta di /api/rete (null finché non arriva)
- * @param opzioni { aperto, onToggle, tablet? }: tablet (08/10) = { pg: [{ chiave, nome, ritratto, iniziali, collegato }],
- *   chiama(p) | null, aiuto? { attuale: chiave | null, rendi(p) | null, revoca(p) } }: l'elenco «Tablet collegati» dei PG al
- *   tavolo, con «🔔 Chiedi di muovere» e «Rendi Aiuto-master» (A.122) se c'è uno scontro aperto
+ * «Tablet e personaggi scelti» (21/10/2026, «le code dell'originale», parte B): l'abbinamento dispositivo → PG di
+ * src/dispositivi.js, qui dentro «Collega i giocatori» invece che in una tab nuova — Davide non userà mai
+ * GET/PUT /api/dispositivi con curl. Comprensibile senza sapere cos'è un identificativo: un dispositivo senza
+ * personaggio si legge «tablet non ancora assegnato», mai un codice.
+ * @param elenco risposta di GET /api/dispositivi: [{ id, pgId, pgNome, aggiornato }], o null prima che arrivi
+ * @param schede personaggi attuali (src/cartella.js → ultimiPerPg), per la tendina di riassegnazione
+ * @param ridisegna richiamata dopo una correzione riuscita (il prossimo giro la rilegge da sola comunque)
  */
-export function riquadroCollega(rete, { aperto, onToggle, tablet = null }) {
+function elencoDispositivi({ elenco: dispositivi, schede, ridisegna }) {
+  if (!dispositivi) return null;
+  const riassegna = async (id, pgStabile) => {
+    try {
+      await correggiDispositivo(id, pgStabile);
+      avviso(pgStabile ? 'Abbinamento aggiornato.' : 'Abbinamento tolto: il tablet dovrà scegliere di nuovo.', { tipo: 'ok' });
+      ridisegna();
+    } catch (e) { avvisoErrore(`Non riuscito: ${e.message}`); }
+  };
+  return h('section', { class: 'collega-dispositivi', 'aria-label': 'Tablet e personaggi scelti' },
+    h('h3', {}, 'Tablet e personaggi scelti'),
+    !dispositivi.length ? h('p', { class: 'nota' }, 'Nessun tablet si è ancora collegato.')
+      : h('ul', { class: 'collega-dispositivi-elenco' }, dispositivi.map((d) => {
+        const quando = Number.isFinite(Date.parse(d.aggiornato)) ? `si è fatto vivo ${tempoTrascorso(Date.now() - Date.parse(d.aggiornato))} fa` : null;
+        return h('li', { class: 'collega-dispositivo-voce' },
+          h('span', { class: `collega-dispositivo-nome${d.pgNome ? '' : ' senza-pg'}` }, '📱 ', d.pgNome ?? 'tablet non ancora assegnato'),
+          quando ? h('small', { class: 'nota' }, quando) : null,
+          h('select', { 'aria-label': `Cambia il personaggio di questo tablet (${d.pgNome ?? 'non ancora assegnato'})`, title: 'Cambia il personaggio di questo tablet', onchange: (e) => riassegna(d.id, e.target.value || null) },
+            h('option', { value: '' }, '— nessuno —'),
+            ...schede.map((s) => h('option', { value: idStabileDiFile(s), selected: idStabileDiFile(s) === d.pgId }, s.nome))),
+          h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Stacca questo tablet: alla prossima pagina dovrà scegliere di nuovo', onclick: () => riassegna(d.id, null) }, 'Stacca'));
+      })));
+}
+
+/**
+ * @param rete risposta di /api/rete (null finché non arriva)
+ * @param opzioni { aperto, onToggle, tablet?, dispositivi? }: tablet (08/10) = { pg: [{ chiave, nome, ritratto, iniziali, collegato }],
+ *   chiama(p) | null, aiuto? { attuale: chiave | null, rendi(p) | null, revoca(p) } }: l'elenco «Tablet collegati» dei PG al
+ *   tavolo, con «🔔 Chiedi di muovere» e «Rendi Aiuto-master» (A.122) se c'è uno scontro aperto. `dispositivi` (21/10,
+ *   parte B) = { elenco, schede, ridisegna } per «Tablet e personaggi scelti»
+ */
+export function riquadroCollega(rete, { aperto, onToggle, tablet = null, dispositivi = null }) {
   if (!rete) return null;
   const { indirizzi = [], altri = [], tuttiPerDubbio, soloLocale, porta } = rete;
   // 08/10 (screenshot di Marcello): compatto, non più alto del riquadro «Scontro»: per ogni indirizzo il QR piccolo, l'URL
@@ -83,5 +120,7 @@ export function riquadroCollega(rete, { aperto, onToggle, tablet = null }) {
         ],
     // 08/10: chi ha il tablet collegato (scheda o mappa aperta), lo stesso dato dell'elenco dell'Iniziativa; con «Rendi
     // Aiuto-master» (A.122). Anche con --solo-locale, per un secondo schermo o una finestra su questo computer
-    tablet?.pg?.length ? elencoTablet(tablet) : null);
+    tablet?.pg?.length ? elencoTablet(tablet) : null,
+    // 21/10/2026, parte B: «Tablet e personaggi scelti» (src/dispositivi.js), anche con --solo-locale
+    dispositivi ? elencoDispositivi(dispositivi) : null);
 }

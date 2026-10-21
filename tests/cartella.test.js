@@ -104,21 +104,26 @@ test('stesso personaggio = stesso nome del file; per ogni nome il file più rece
   assert.deepEqual([...u].map(([k, v]) => [k, v.file]), [['Lucas', 'Lucas_liv6_2026-10-01.json'], ['Ada', 'Ada_liv1_2026-10-01.json']]);
 });
 
-test('conflitti: vince il più recente; una sola copia cambiata vince quella', () => {
+test('«il server vince sempre» (21/10/2026): la cartella cambiata vince sempre, anche su un browser cambiato dopo', () => {
   const t = (s) => new Date(Date.UTC(2026, 9, 1, 12, 0, s)).toISOString();
   const ms = (s) => Date.parse(t(s));
   const sinc = { file: 'Ada_liv1_2026-10-01.json', mtime: ms(0), salvato: t(0) };
   // nessuna modifica
   assert.deepEqual(confronta({ aggiornato: t(0), cartella: sinc }, { file: sinc.file, mtime: ms(0) }), { azione: 'niente', conflitto: false });
-  // cambiato solo il browser → si scrive; cambiata solo la cartella → si legge
+  // cambiato solo il browser (la cartella è ferma): si scrive, non è un conflitto
   assert.deepEqual(confronta({ aggiornato: t(30), cartella: sinc }, { file: sinc.file, mtime: ms(0) }), { azione: 'scrivi', conflitto: false });
+  // cambiata solo la cartella: si legge
   assert.deepEqual(confronta({ aggiornato: t(0), cartella: sinc }, { file: sinc.file, mtime: ms(30) }), { azione: 'leggi', conflitto: false });
-  // cambiati entrambi: il più recente, con il conflitto da segnalare
-  assert.deepEqual(confronta({ aggiornato: t(40), cartella: sinc }, { file: sinc.file, mtime: ms(30) }), { azione: 'scrivi', conflitto: true });
+  // cambiati entrambi: vince SEMPRE la cartella, anche se il browser è cambiato dopo (prima vinceva il più
+  // recente: è la malattia da cui si esce). «conflitto» resta vero solo per l'avviso: la modifica del browser si perde.
+  assert.deepEqual(confronta({ aggiornato: t(40), cartella: sinc }, { file: sinc.file, mtime: ms(30) }), { azione: 'leggi', conflitto: true });
   assert.deepEqual(confronta({ aggiornato: t(30), cartella: sinc }, { file: 'Ada_liv2_2026-10-02.json', mtime: ms(50) }), { azione: 'leggi', conflitto: true });
-  // mai sincronizzato: vince il più recente
+  // mai sincronizzato: vince comunque la cartella
   assert.equal(confronta({ aggiornato: t(10) }, { file: sinc.file, mtime: ms(50) }).azione, 'leggi');
-  assert.equal(confronta({ aggiornato: t(50) }, { file: sinc.file, mtime: ms(10) }).azione, 'scrivi');
+  assert.equal(confronta({ aggiornato: t(50) }, { file: sinc.file, mtime: ms(10) }).azione, 'leggi');
+  // mai sincronizzato, e la cartella non ha niente di diverso da proporre (stesso file, stessa ora): si scrive
+  // (è la prima volta che questo browser porta il personaggio nella cartella)
+  assert.equal(confronta({ aggiornato: t(10) }, { file: 'Nuovo_liv1_2026-10-05.json', mtime: ms(10) }).azione, 'leggi');
 });
 
 test('elenco della pagina iniziale: origine browser, cartella o entrambi; senza server come oggi', () => {

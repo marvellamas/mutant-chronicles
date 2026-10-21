@@ -827,7 +827,11 @@ function salvaDaTesto(testo, id = archivio.nuovoId(), passo = null) {
 }
 
 /**
- * Sincronizza browser e cartella (src/cartella.js → confronta): vince il più recente, con un avviso.
+ * Sincronizza browser e cartella (src/cartella.js → confronta). «Il server vince sempre» (21/10/2026, «le
+ * code dell'originale», parte A): la cartella sul PC del Direttore è l'originale, il browser è una cache —
+ * se la cartella è cambiata si ricarica da lì, anche scartando una modifica del browser non ancora scritta
+ * (con un avviso che lo dice). Il browser scrive solo quando la cartella non è cambiata: è il salvataggio
+ * normale, non un conflitto.
  * @returns elenco unito per la pagina iniziale, con gli avvisi
  */
 async function sincronizzaCartella() {
@@ -840,18 +844,16 @@ async function sincronizzaCartella() {
     if (azione === 'leggi') {
       try {
         const testo = await leggiCartella(r.remoto.file);
-        const prima = r.voce.aggiornato;
         salvaDaTesto(testo, r.voce.id, r.voce.passo);
         segnaSincronizzato(r.voce.id, r.remoto.file, r.remoto.mtime);
-        avvisi.push(conflitto || prima
-          ? `«${nome}»: la copia nella cartella (${r.remoto.file}) era più recente di quella del browser ed è stata caricata.`
+        avvisi.push(conflitto
+          ? `«${nome}»: la cartella (${r.remoto.file}) è cambiata altrove; la modifica non ancora salvata di questo browser è stata scartata e sostituita con quella della cartella.`
           : `«${nome}»: caricata dalla cartella (${r.remoto.file}).`);
       } catch (e) {
         avvisi.push(`«${nome}»: file ${r.remoto.file} non leggibile (${e.message}); resta la copia del browser.`);
       }
     } else if (azione === 'scrivi') {
-      const w = await scriviInCartella(r.voce.id);
-      if (w && conflitto) avvisi.push(`«${nome}»: la copia del browser era più recente di quella nella cartella ed è stata salvata come ${w.file}.`);
+      await scriviInCartella(r.voce.id);
     }
   }
   // personaggi del browser mai salvati nella cartella (creati prima del server): ci vanno ora; chi è già
