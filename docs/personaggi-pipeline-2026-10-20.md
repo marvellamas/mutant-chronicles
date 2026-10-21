@@ -10,11 +10,11 @@
 - **Prima di sovrascrivere** (ripristino, caricamento di un salvataggio) si dice da dove arrivano i dati e che cosa sostituiscono. Se i dati vengono da una copia di lavoro e la destinazione è l'originale, l'avviso è forte e la conferma si scrive per esteso (`SOVRASCRIVI`). Il marcatore dentro `personaggi/` viaggia nello zip del salvataggio: è così che il ripristino sa da dove vengono i dati.
 - **Scegliere l'originale fra più file** non si fa con la data del file: cinque PG su sette avevano la stessa ora perché riscritti insieme da un recupero. Si guardano i segni dentro — livello, PX, calendario di gioco — e dove non concordano si dichiara **caso dubbio** invece di scegliere (`src/confronto-personaggi.js`).
 
-Per i due prompt successivi: il tablet è una vista dell'originale, non un'altra copia; e il rientro dall'offline è un'operazione esplicita verso l'originale, quindi segue le regole di questa sezione.
+Per il terzo prompt: il rientro dall'offline è un'operazione esplicita verso l'originale, quindi segue le regole di questa sezione.
 
-Prima parte della pipeline dei salvataggi decisa con Marcello il 20/10. Le altre due — il tablet come vista, l'offline e il rientro — vengono dopo, una per volta. Questo documento è la mappa da cui partono.
+Prima parte della pipeline dei salvataggi decisa con Marcello il 20/10; la seconda («il tablet è una vista, non un proprietario») è in coda a questo documento. La terza — l'offline e il rientro — viene dopo.
 
-> La specifica completa (`claude/pipeline-salvataggi.md`) non è nel repo: ho lavorato sui punti A–G del prompt. Se il documento contiene decisioni che qui non compaiono, vanno rilette prima della seconda parte.
+> La specifica completa (`claude/pipeline-salvataggi.md`) non è nel repo: ho lavorato sui punti A–G del prompt. Se il documento contiene decisioni che qui non compaiono, vanno rilette prima della terza parte.
 
 ## A. Ricognizione: com'era prima di questo lotto
 
@@ -89,3 +89,55 @@ Ogni riga dell'elenco dei personaggi (pagina iniziale) ha «Apri» e, **solo sul
 | Chiave del tavolo da disaccoppiare | `chiaveDaFile` in `src/ui/tavolo.js`, `src/tavolo.js`, `server.mjs` |
 | Pulizia | `tools/pulizia-personaggi.mjs` |
 | Test | `tests/pipeline-salvataggi.test.js` |
+
+## Seconda parte: il tablet è una vista, non un proprietario (21/10/2026)
+
+### A. Ricognizione: com'era prima di questo lotto
+
+**Come un tablet sapeva quale personaggio mostrare.** Non lo sapeva: non c'era un concetto di «questo tablet». Chiunque apriva l'app con il server vedeva l'elenco di `GET /api/personaggi` (già un file solo per `pg`, parte 1), poteva aprire **qualunque** personaggio, e da quel momento in poi lo editava come se fosse il proprio — niente lo impediva. L'unica cosa che decideva «chi vince» in caso di scrittura concorrente era la data del file (`X-Mutant-Mtime`, già presente, pezzo 6 del Tavolo del Master): un conflitto apriva il riquadro «Il master ha aggiornato» con «Aggiorna» e «Tieni la mia».
+
+**Dove teneva la sua copia.** Nel `localStorage` del browser (`archivio.js`), esattamente come il browser del Direttore: nessuna differenza di ruolo. Aprire un personaggio dalla cartella lo portava lì (`apriDaCartella`), e da quel momento la copia locale veniva trattata come paritaria all'originale: `sincronizzaCartella()` fa vincere «il più recente» fra browser e cartella, con un avviso — per un tablet questo significa che una copia locale rimasta indietro poteva, in teoria, vincere su una più recente scritta altrove, anche se **in pratica non succede mai in silenzio**: il controllo di versione (sotto) rifiuta comunque una scrittura basata su una revisione vecchia.
+
+**Che cosa succedeva con una versione più recente sul server.** Già gestito bene: `scriviCartella` manda la revisione letta (`X-Mutant-Mtime`), il server rifiuta con 409 se è cambiata, e la scheda (ogni 3 secondi, `controllaScheda`) se ne accorge da sola e apre il riquadro del conflitto — **non sovrascrive mai in silenzio**. Era basato sulla data del file (`mtime`), non su `versione_salvataggio` (che pure esiste dalla parte 1); il messaggio non diceva chi avesse scritto né da quanto tempo.
+
+**Quali scritture poteva mandare.** Tutte: `PUT /api/personaggi/<file>` non aveva alcun controllo su CHI stesse scrivendo, solo SE il file che stava per sovrascrivere era quello letto (parte 1) o uno esistente (bug del 04/10). Un tablet poteva scrivere qualunque personaggio della cartella.
+
+### B+C. Il personaggio arriva dal server; ciascuno scrive solo il proprio
+
+- **Identità del dispositivo:** un identificativo generato dal browser stesso (`crypto.randomUUID()`), tenuto nel suo `localStorage` (`src/ui/dispositivo.js`), mandato come intestazione `X-Mutant-Dispositivo` a ogni scrittura (`src/ui/cartella.js` → `scriviCartella`, `creaInCartella`). Non viaggia nel personaggio, non si esporta: un browser svuotato, o un tablet nuovo, sceglie di nuovo.
+- **L'abbinamento dispositivo → personaggio** sta in `tavolo/dispositivi.json` (`src/dispositivi.js`, funzioni pure; `server.mjs` → `apiDispositivo` lo legge e scrive): `GET`/`POST /api/dispositivo` per sé stessi (ogni dispositivo, nessun controllo del Direttore: è la scelta del giocatore), `GET /api/dispositivi` e `PUT /api/dispositivi/<id>` solo dal PC del Direttore (per vedere chi è collegato e correggere un abbinamento sbagliato).
+- **Il controllo vero è nel server:** `PUT /api/personaggi/<file>` rifiuta (403, `nonAutorizzato: true`) una scrittura che dichiara `X-Mutant-Da: giocatore` con un dispositivo associato a un **altro** personaggio, o non ancora associato a nessuno. **Il PC del Direttore (`req.mutantMaster`) non è mai soggetto al controllo**, qualunque intestazione porti: resta sempre autorizzato, come oggi (Modifica master, PX della partita, «Colpito» dalla plancia). Senza `X-Mutant-Dispositivo` (client di prima, strumenti, `node --test`) il controllo non si applica: migrazione silenziosa, come le altre di questo progetto.
+- **Il pannello PX (`px/px.json` → `giocatori[]`) non è stato raddoppiato:** traccia nome del giocatore + file del PG per i Punti Esperienza, un'altra cosa (e un altro problema: il suo `pgFile` è un nome di file, che può restare indietro dopo un livello — non toccato in questo lotto, fuori perimetro). L'abbinamento dispositivo→PG di questa parte usa l'identificativo stabile (`pg`), non un nome di file, proprio per non avere lo stesso problema.
+- **La scelta del personaggio** è un pulsante nella riga di stato (sotto), con una finestrella che elenca i personaggi del server (sempre dal server, mai dal browser): «Scegli» quando non ha ancora scelto, «Cambia» da lì in avanti. Non blocca la navigazione: si può guardare la pagina iniziale senza aver scelto, ma non si può scrivere.
+- **Non fatto in questo lotto** (deliberatamente, per non allargare il lavoro): riscrivere `sincronizzaCartella()`/`apriDaCartella` per far «vincere sempre il server» invece di «vince il più recente». Non serve per la sicurezza — il controllo di versione (parte E) impedisce comunque a una copia locale vecchia di sovrascrivere una più recente — ma resta un pezzo di codice che tratta concettualmente la copia del browser come paritaria. Se Marcello lo vuole comunque più esplicito, è un intervento piccolo da fare a parte.
+
+### D. La riga di stato
+
+`src/stato-tablet.js` (puro: il testo, l'orologio) + `src/ui/stato-tablet.js` (il DOM, il `fetch`, la finestrella di scelta). Montata una volta fuori da `#app`, come la fascia «Copia di lavoro» (stesso punto d'aggancio): resta visibile cambiando pagina. **Solo per i tablet** (`stato.cartella && !stato.master`): il PC del Direttore ha già la sua fascia e il tasto MUTANT.
+
+- **«collegato · Aiko · aggiornata 21:14»** quando va tutto bene; **«collegato · scegli il tuo personaggio»** se non ha ancora scelto; **«offline da 3 minuti · stai vedendo una copia · non puoi modificare»** quando il server non risponde. Le frasi sono in `regole.json` → `interfaccia.dispositivo` (come il resto dei messaggi di salvataggio), non nel codice.
+- **Il controllo gira ogni 15 secondi** (`intervallo_controllo_s`) e **al ritorno in primo piano** (`visibilitychange`): niente da aspettare riaprendo il tablet dopo che è stato in sfondo.
+- **Offline, o guardando un personaggio che non è il proprio**, i comandi che modificano si spengono: una classe sul `<body>` (`tablet-sola-lettura`) e una regola CSS larga (`pointer-events: none` su bottoni, campi e select dentro `#app`), non un controllo per ciascuno dei tanti comandi della scheda — l'avrebbe allargato troppo. **È una misura temporanea**: il terzo lotto (offline con il giornale delle operazioni e la schermata di rientro) la sostituirà con qualcosa di più preciso (per esempio lasciare scrivere offline in un giornale locale, e farlo passare al rientro).
+
+### E. Ogni scrittura dichiara la versione che ha visto
+
+Il controllo di versione (409, revisione rifiutata) **esisteva già** dal pezzo 6 del Tavolo del Master (basato su `X-Mutant-Mtime`, la data del file) e funzionava correttamente: non sovrascrive, non fonde, apre un riquadro con la scelta del giocatore. Non l'ho sostituito con `versione_salvataggio`: il meccanismo (confronto di una revisione, 409 se cambiata) è lo stesso, solo la chiave è diversa, e cambiarla avrebbe voluto dire toccare `src/collegamento.js` e i suoi test senza un beneficio pratico — `versione_salvataggio` esiste già nel file per chi la vuole leggere (il registro, lo storico).
+
+Quello che **ho aggiunto**: il messaggio leggibile, con chi e da quanto tempo, come richiesto. `versioneRemota()` (src/ui/app.js) ora legge anche `aggiornato_da` e `aggiornato_il` dal file remoto; `messaggioConflittoVersione()` (src/stato-tablet.js) li trasforma in «"Aiko" è stata modificata da il Direttore un minuto fa. Ricarica e riprova.» — «il Direttore» per `master`, «un altro tuo dispositivo» per `giocatore` (con l'abbinamento di C, un conflitto fra giocatori sullo stesso file può venire solo dallo stesso giocatore da un secondo dispositivo, mai da un estraneo), «il calcolo dei PX» per `px`. Il riquadro esistente (`avvisoMaster` in `src/ui/tab.js`) mostra questo messaggio al posto del precedente «Il master ha aggiornato… alle HH:MM:SS», con «Aggiorna» (= ricarica) e «Tieni la mia» (in più rispetto alla richiesta: prova a salvare comunque, se nel frattempo nessuno ha scritto ancora).
+
+### Resta per la terza parte (offline con il giornale delle operazioni e la schermata di rientro)
+
+- Sostituire il gate largo «tablet-sola-lettura» con qualcosa che permetta di scrivere offline in un giornale locale, e lo applichi al rientro con una conferma (non più solo lettura finché non si torna online).
+- Decidere che cosa succede se due dispositivi diversi risultano associati allo stesso personaggio (oggi: l'ultimo che sceglie vince, senza avviso all'altro).
+- Lo sforamento trovato dalla rete di sicurezza del lotto «condizioni attive» nella tabella delle Caratteristiche di «Modifica master» a 820–912 px (stesso «min-width: auto» del resto, mai sistemato perché fuori da quel lotto): va bene affrontarlo insieme, dato che tocca lo stesso genere di difetto.
+
+### Dove guardare, per la terza parte
+
+| Cosa | Dove |
+|---|---|
+| Identità del dispositivo | `src/ui/dispositivo.js` |
+| Abbinamento dispositivo → PG | `src/dispositivi.js`, `server.mjs` → `apiDispositivo`, `tavolo/dispositivi.json` |
+| Controllo «scrive solo il proprio» | `server.mjs`, `PUT /api/personaggi/<file>` (cerca «il tablet è una vista») |
+| Riga di stato, offline, sola lettura | `src/stato-tablet.js`, `src/ui/stato-tablet.js`, `css/style.css` → `.fascia-stato-tablet`, `.tablet-sola-lettura` |
+| Messaggio del conflitto | `src/stato-tablet.js` → `messaggioConflittoVersione`, `src/ui/app.js` → `versioneRemota`, `src/ui/tab.js` → `avvisoMaster` |
+| Test | `tests/dispositivi.test.js`, `tests/dispositivi-server.test.js`, `tests/stato-tablet.test.js` |
