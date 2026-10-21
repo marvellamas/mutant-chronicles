@@ -2921,3 +2921,27 @@ p.riga-chroma-viva { display: block; }
 body:has(.mappa-pagina) .fascia-copia-di-lavoro { position: static; }
 body.con-fascia-copia:has(.mappa-pagina) { height: auto; min-height: 100dvh; }
 @media print { .fascia-copia-di-lavoro { display: none; } }
+
+/* 21/10/2026 — «il tablet è una vista»: riga di stato in cima a ogni pagina del tablet (non sul PC del
+   Direttore, che ha già la sua fascia). Grigia quando è tutto a posto, gialla senza personaggio scelto, rossa
+   offline — gli stessi colori del resto dell'app (var(--attenzione), var(--errore)), non nuovi significati. */
+.fascia-stato-tablet {
+  position: sticky; top: 0; z-index: var(--z-barre);
+  background: var(--superficie); color: var(--tenue); border-bottom: 1px solid var(--bordo);
+  padding: 0.35rem 1rem; text-align: center; font-size: 0.9rem; line-height: 1.3;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.5rem;
+}
+.fascia-stato-tablet.stato-senza_pg { background: var(--attenzione-tenue); color: var(--attenzione); border-bottom-color: var(--attenzione); }
+.fascia-stato-tablet.stato-offline { background: var(--errore-tenue); color: var(--errore); border-bottom-color: var(--errore); font-weight: 700; }
+.fascia-stato-tablet .btn-piccolo { min-height: 26px; padding: 0 0.55rem; font-size: 0.82rem; }
+body:has(.mappa-pagina) .fascia-stato-tablet { position: static; }
+@media print { .fascia-stato-tablet { display: none; } }
+
+/* offline (parte D, temporaneo finché il lotto del rientro non porta il giornale delle operazioni): i comandi
+   che modificano si spengono, con il motivo nella fascia sopra. Un controllo largo (tutto #app, mai la fascia
+   stessa né i link di navigazione) invece che comando per comando: toccare ogni pulsante della scheda in questo
+   lotto avrebbe allargato troppo il lavoro (vedi il riepilogo). */
+body.tablet-sola-lettura #app button:not(.tab-bottone, .btn-torna-sopra), body.tablet-sola-lettura #app input, body.tablet-sola-lettura #app select,
+body.tablet-sola-lettura #app textarea {
+  pointer-events: none; opacity: 0.55; cursor: not-allowed; filter: grayscale(0.3);
+}

@@ -3135,11 +3135,12 @@ function attivazioneInfusaRigaCorpo(ctx, x, infuso, riserva, { conPulsante, indi
  */
 function avvisoMaster(a) {
   if (!a) return null;
-  const ora = a.ora.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
   return h('div', { class: 'riquadro attenzione avviso-master', role: 'alert' },
-    // quale PG e quale file: chi legge capisce se è davvero il suo personaggio (bug del 04/10/2026)
-    h('p', {}, h('strong', {}, `Il master ha aggiornato la scheda di ${a.nome ?? 'questo personaggio'}`), a.file ? ` (file ${a.file})` : null,
-      ` alle ${ora}, mentre avevi una modifica non ancora salvata nella cartella.`),
+    // parte E (21/10/2026): il messaggio leggibile, «"Aiko" è stata modificata da … … fa» — non sovrascrive,
+    // non fonde, non inventa: il giocatore sceglie. Quale PG e quale file (bug del 04/10/2026): chi legge
+    // capisce se è davvero il suo personaggio, e c'era una modifica non ancora salvata nella cartella.
+    h('p', {}, h('strong', {}, a.messaggio), a.file ? ` (file ${a.file})` : null,
+      ' Avevi una modifica non ancora salvata nella cartella.'),
     a.differenze.length ? h('p', {}, 'Nella versione del master: ', a.differenze.join('; '), '.') : null,
     h('div', { class: 'riga-azioni' },
       h('button', { type: 'button', class: 'btn primario', onclick: a.aggiorna, title: 'Prende la versione del master; la tua ultima modifica si perde' }, 'Aggiorna'),

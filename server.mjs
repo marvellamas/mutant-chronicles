@@ -102,6 +102,18 @@
 //                                      risponde con l'esito ({ ok, riga, drive, ntfy, … })
 //   POST /api/spegni                   «Spegni Mutant», solo da questo PC (403 dagli altri): salvataggio completo,
 //                                      esito, poi il server si spegne (codice 42: avvia-server.bat chiude la finestra)
+//   «Il tablet è una vista» (21/10/2026, src/dispositivi.js, tavolo/dispositivi.json): un dispositivo (tablet) è
+//   identificato dall'intestazione X-Mutant-Dispositivo (generata una volta dal browser, src/ui/dispositivo.js);
+//   può scrivere solo il personaggio che ha scelto.
+//   GET /api/dispositivo               con X-Mutant-Dispositivo: { pgId, pgNome } | null (non ha ancora scelto)
+//   POST /api/dispositivo              con X-Mutant-Dispositivo, corpo { pgId, pgNome? }: sceglie (o cambia) il
+//                                      personaggio di questo dispositivo; pgId deve esistere fra i personaggi
+//   GET /api/dispositivi               solo dal PC del master: l'elenco di chi è collegato e a quale PG
+//   PUT /api/dispositivi/<id>          solo dal PC del master, corpo { pgId, pgNome? } o { pgId: null } per
+//                                      togliere l'abbinamento: corregge l'associazione di quel dispositivo
+//   PUT /api/personaggi/<file> rifiuta (403) la scrittura di chi ha dichiarato X-Mutant-Da: giocatore e porta
+//   un X-Mutant-Dispositivo associato a un personaggio diverso, o nessuno ancora; senza l'uno o l'altro intestazione
+//   (client di prima, strumenti, test) il controllo non si applica, come le altre migrazioni silenziose.
 // Nessuna cancellazione dal server: i file vecchi si tolgono a mano dalla cartella.
 import { proteggiBlocchiMaster } from './src/correzioni-master.js';
 import { createServer } from 'node:http';
@@ -120,8 +132,9 @@ import { avvisoCartellaVuota, postiSalvataggi, rigaSalvataggio } from './tools/r
 import { bordoToken } from './src/mappa/colori.js';
 import { validaScontro, rigaOpportunita, rigaAiutoMaster, diTurno, registraRiga, scontroPerGiocatori } from './src/scontro.js';
 import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
-import { NOME_FILE, fileProvvisorio, ultimiPerPersonaggio, chiaveDaFile, chiavePersonaggio } from './src/cartella.js';
+import { NOME_FILE, fileProvvisorio, ultimiPerPersonaggio, ultimiPerPg, chiaveDaFile, chiavePersonaggio } from './src/cartella.js';
 import { conMetadati, serveCopia, copieDaTogliere, idPersonaggio, cartellaStorico, nomeCopiaStorica, CARTELLA_STORICO } from './src/storico-personaggi.js';
+import { normalizzaDispositivi, associazioneDi, conAssociazione, senzaAssociazione, puoScrivere, elencoDispositivi } from './src/dispositivi.js';
 import { NOME_MARCATORE, statoInstallazione } from './src/copia-di-lavoro.js';
 import { validaRecord, ID_VEICOLO, migraVeicoli, eRiferimento, stessaChiave } from './src/veicoli-registro.js';
 import { normalizzaVeicoli } from './src/veicoli.js';
@@ -157,6 +170,8 @@ const MUSICA = 'musica';
 const GALLERIA = 'galleria'; // N1: le immagini da mostrare ai giocatori
 const PX = 'px'; // A.161: calcolatore e archivio «PX della partita» del Direttore (solo master)
 const FILE_PX = 'px.json';
+const FILE_DISPOSITIVI = 'dispositivi.json'; // 21/10: dentro tavolo/, come sessione.json
+const ID_DISPOSITIVO = /^[A-Za-z0-9_-]{6,64}$/;
 const ID_NEMICO = /^[a-z0-9-]{1,60}$/;
 
 const TIPI = {
@@ -1383,6 +1398,81 @@ async function apiGalleria(req, res, percorso, galleria, radice, canale) {
   return res.end(await readFile(join(galleria, file)));
 }
 
+/** L'elenco dei personaggi in `cartella`, come risponde GET /api/personaggi (estratto il 21/10 perché serve
+    anche a risolvere l'identificativo di un personaggio nel lotto «il tablet è una vista»). */
+async function elencoPersonaggi(cartella) {
+  await mkdir(cartella, { recursive: true });
+  const nomi = (await readdir(cartella)).filter((f) => NOME_FILE.test(f));
+  const lista = await Promise.all(nomi.map(async (file) => {
+    const s = await stat(join(cartella, file));
+    const m = /^(.*)_liv(\d+)_(\d{4}-\d{2}-\d{2})\.json$/.exec(file);
+    // `pg`: identificativo del personaggio nel file (null nei file di prima)
+    const { pg } = await personaggioDelFile(join(cartella, file), s);
+    return { file, nome: m[1], livello: Number(m[2]), data: m[3], mtime: s.mtimeMs, dimensione: s.size, pg };
+  }));
+  return lista.sort((a, b) => b.mtime - a.mtime);
+}
+
+/** Il file (un solo per personaggio, src/cartella.js → ultimiPerPg) il cui identificativo stabile è `pgId`, o null. */
+function trovaPg(lista, pgId) {
+  return ultimiPerPg(lista).find((f) => idPersonaggio({ pg: f.pg }, chiaveDaFile(f.file)) === pgId) ?? null;
+}
+
+/**
+ * «Il tablet è una vista» (21/10/2026, src/dispositivi.js): un dispositivo (tablet) sceglie il suo personaggio e
+ * da lì in avanti può scrivere solo quello (il controllo vero è in PUT /api/personaggi/<file>, qui solo
+ * l'abbinamento). GET e POST per sé stesso (ogni dispositivo, nessun controllo master: è un'azione del
+ * giocatore); GET dell'elenco e PUT di un abbinamento altrui solo dal PC del Direttore.
+ */
+async function apiDispositivo(req, res, percorso, tavolo, cartella) {
+  const dove = join(tavolo, FILE_DISPOSITIVI);
+  const leggi = async () => { try { return await leggiJson(dove); } catch { return { versione: 1, dispositivi: {} }; } };
+  if (percorso === '/api/dispositivo') {
+    const id = req.headers['x-mutant-dispositivo'];
+    if (typeof id !== 'string' || !ID_DISPOSITIVO.test(id)) return json(res, 400, { errore: 'manca l’intestazione X-Mutant-Dispositivo, o non è valida' });
+    if (req.method === 'GET') return json(res, 200, associazioneDi(await leggi(), id));
+    if (req.method === 'POST') {
+      let corpo;
+      try { corpo = JSON.parse((await leggiCorpo(req)).toString('utf8')); } catch (e) { return json(res, 400, { errore: e.message }); }
+      const pgId = typeof corpo?.pgId === 'string' ? corpo.pgId.trim() : '';
+      if (!pgId) return json(res, 400, { errore: 'manca pgId' });
+      const trovato = trovaPg(await elencoPersonaggi(cartella), pgId);
+      if (!trovato) return json(res, 404, { errore: 'nessun personaggio con questo identificativo: scegli dall’elenco di /api/personaggi' });
+      await mkdir(tavolo, { recursive: true });
+      let v;
+      await inCoda(dove, async () => { v = conAssociazione(await leggi(), id, pgId, trovato.nome); await scriviJson(dove, v); });
+      return json(res, 200, associazioneDi(v, id));
+    }
+    return json(res, 405, { errore: 'metodo non ammesso' });
+  }
+  if (!req.mutantMaster) return json(res, 403, { errore: 'L’elenco dei dispositivi collegati lo vede solo il PC del Direttore.' });
+  if (percorso === '/api/dispositivi' && req.method === 'GET') {
+    const lista = await elencoPersonaggi(cartella);
+    // nome aggiornato (non quello salvato al momento della scelta, che può essere vecchio dopo un livello o un nuovo nome)
+    return json(res, 200, elencoDispositivi(await leggi()).map((d) => ({ ...d, pgNome: trovaPg(lista, d.pgId)?.nome ?? d.pgNome })));
+  }
+  const m = /^\/api\/dispositivi\/([^/]+)$/.exec(percorso);
+  if (m && req.method === 'PUT') {
+    const id = decodeURIComponent(m[1]);
+    if (!ID_DISPOSITIVO.test(id)) return json(res, 400, { errore: 'identificativo di dispositivo non valido' });
+    let corpo;
+    try { corpo = JSON.parse((await leggiCorpo(req)).toString('utf8')); } catch (e) { return json(res, 400, { errore: e.message }); }
+    await mkdir(tavolo, { recursive: true });
+    let v;
+    if (corpo?.pgId === null) {
+      await inCoda(dove, async () => { v = senzaAssociazione(await leggi(), id); await scriviJson(dove, v); });
+      return json(res, 200, null);
+    }
+    const pgId = typeof corpo?.pgId === 'string' ? corpo.pgId.trim() : '';
+    if (!pgId) return json(res, 400, { errore: 'manca pgId (o pgId: null per togliere l’abbinamento)' });
+    const trovato = trovaPg(await elencoPersonaggi(cartella), pgId);
+    if (!trovato) return json(res, 404, { errore: 'nessun personaggio con questo identificativo' });
+    await inCoda(dove, async () => { v = conAssociazione(await leggi(), id, pgId, trovato.nome); await scriviJson(dove, v); });
+    return json(res, 200, associazioneDi(v, id));
+  }
+  return json(res, 404, { errore: 'API sconosciuta' });
+}
+
 // A.161: calcolatore e archivio «PX della partita». Un solo file px/px.json (impostazioni di campagna,
 // roster e archivio delle partite); SOLO il PC del master lo legge e lo scrive (contiene i nomi dei giocatori
 // e gli importi assegnati). L'assegnazione vera ai PG passa dalla «Modifica master» sul file del PG.
@@ -1572,18 +1662,8 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
     }
     return json(res, 405, { errore: 'metodo non ammesso' });
   }
-  if (percorso === '/api/personaggi' && req.method === 'GET') {
-    await mkdir(cartella, { recursive: true });
-    const nomi = (await readdir(cartella)).filter((f) => NOME_FILE.test(f));
-    const lista = await Promise.all(nomi.map(async (file) => {
-      const s = await stat(join(cartella, file));
-      const m = /^(.*)_liv(\d+)_(\d{4}-\d{2}-\d{2})\.json$/.exec(file);
-      // `pg`: identificativo del personaggio nel file (null nei file di prima)
-      const { pg } = await personaggioDelFile(join(cartella, file), s);
-      return { file, nome: m[1], livello: Number(m[2]), data: m[3], mtime: s.mtimeMs, dimensione: s.size, pg };
-    }));
-    return json(res, 200, lista.sort((a, b) => b.mtime - a.mtime));
-  }
+  if (percorso === '/api/personaggi' && req.method === 'GET') return json(res, 200, await elencoPersonaggi(cartella));
+  if (percorso === '/api/dispositivo' || percorso.startsWith('/api/dispositivi')) return await apiDispositivo(req, res, percorso, tavolo, cartella);
   const m = /^\/api\/personaggi\/([^/]+)$/.exec(percorso);
   if (!m) return json(res, 404, { errore: 'API sconosciuta' });
   const file = decodeURIComponent(m[1]);
@@ -1616,6 +1696,22 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
     // mai sopra un altro personaggio (bug del 04/10/2026): identificativo diverso, o un file scritto diversamente
     const altro = await altroPersonaggio(cartella, file, typeof o.pg === 'string' ? o.pg : null);
     if (altro) return json(res, 409, { errore: altro, altroPersonaggio: true });
+    // «il tablet è una vista» (21/10/2026): chi dichiara X-Mutant-Da: giocatore e porta un identificativo di
+    // dispositivo scrive solo il personaggio che ha scelto. Senza l'una o l'altra intestazione (client di
+    // prima, strumenti, test) il controllo non si applica: migrazione silenziosa, come le altre di questo
+    // progetto. Il PC del Direttore (req.mutantMaster) non ci passa MAI, qualunque intestazione porti: è
+    // sempre autorizzato, come oggi (Modifica master, PX della partita, «Colpito» dalla plancia).
+    const chiDichiarato = req.headers['x-mutant-da'];
+    const idDispositivo = req.headers['x-mutant-dispositivo'];
+    if (!req.mutantMaster && chiDichiarato === 'giocatore' && typeof idDispositivo === 'string' && ID_DISPOSITIVO.test(idDispositivo)) {
+      const pgId = idPersonaggio(o, chiaveDaFile(file));
+      let db; try { db = await leggiJson(join(tavolo, FILE_DISPOSITIVI)); } catch { db = { versione: 1, dispositivi: {} }; }
+      const associazione = associazioneDi(db, idDispositivo);
+      if (!associazione) return json(res, 403, { errore: 'Questo tablet non ha ancora scelto un personaggio: sceglilo prima di scrivere.', nonAutorizzato: true });
+      if (!pgId || !puoScrivere(db, idDispositivo, pgId)) {
+        return json(res, 403, { errore: `Questo tablet può scrivere solo «${associazione.pgNome ?? 'il personaggio scelto'}», non questo.`, nonAutorizzato: true });
+      }
+    }
     // revisione (Tavolo del Master, pezzo 4): la plancia scrive solo se il file è quello che ha letto
     // «Aggiungi PG al tavolo»: un file nuovo non sovrascrive mai quello che c'è già
     // in coda sul file: controllo della data (revisione) e scrittura senza sovrapposizioni

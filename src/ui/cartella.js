@@ -1,6 +1,7 @@
 // Collegamento con il server della cartella dei personaggi (server.mjs, branch tavolo-direttore). Se il
 // server non c'è (npx serve, GitHub Pages) ogni funzione risponde «niente server» e l'app resta com'era:
 // localStorage più export e import.
+import { intestazioneDispositivo } from './dispositivo.js';
 
 let disponibile = null; // null: non ancora chiesto
 // «Modifica master» (12/10): la pagina è aperta sul PC dove gira il server? Lo dice il server in /api/ping («master»)
@@ -56,7 +57,7 @@ export async function leggiCartella(file) {
 
 /** «Aggiungi PG al tavolo»: scrive il file solo se non c'è già. { scritto: true } oppure { esiste: true }. */
 export async function creaInCartella(file, testo) {
-  const r = await fetch(`api/personaggi/${encodeURIComponent(file)}`, { method: 'PUT', body: testo, headers: { 'Content-Type': 'application/json', 'X-Mutant-Nuovo': '1' } });
+  const r = await fetch(`api/personaggi/${encodeURIComponent(file)}`, { method: 'PUT', body: testo, headers: { 'Content-Type': 'application/json', 'X-Mutant-Nuovo': '1', ...intestazioneDispositivo() } });
   const j = await r.json().catch(() => ({}));
   if (r.status === 409 && j.esiste) return { esiste: true };
   if (!r.ok) throw new Error(j.errore ?? `errore ${r.status}`);
@@ -76,12 +77,18 @@ export async function leggiCartellaConRevisione(file) {
  * personaggio il server rifiuta: errore con `altroPersonaggio: true`.
  */
 export async function scriviCartella(file, testo, { mtime } = {}) {
-  const headers = { 'Content-Type': 'application/json', ...(mtime ? { 'X-Mutant-Mtime': String(mtime) } : {}) };
+  // «il tablet è una vista» (21/10/2026): l'identificativo del dispositivo, così il server sa chi scrive e
+  // può rifiutare chi prova a scrivere un personaggio che non è il proprio. Sul PC del Direttore non ha
+  // effetto (server.mjs → req.mutantMaster resta sempre autorizzato, qualunque intestazione porti).
+  const headers = { 'Content-Type': 'application/json', ...(mtime ? { 'X-Mutant-Mtime': String(mtime) } : {}), ...intestazioneDispositivo() };
   const r = await fetch(`api/personaggi/${encodeURIComponent(file)}`, { method: 'PUT', body: testo, headers });
   const j = await r.json().catch(() => ({}));
   // `altroPersonaggio`: il file contiene un altro PG (bug del 04/10/2026): non è un conflitto di revisione, il
   // riquadro «Il master ha aggiornato» non si apre; il messaggio del server dice che cosa fare
-  if (!r.ok) throw Object.assign(new Error(j.errore ?? `errore ${r.status}`), { conflitto: r.status === 409 && !j.altroPersonaggio, altroPersonaggio: !!j.altroPersonaggio });
+  // `nonAutorizzato` (21/10/2026): questo dispositivo non può scrivere questo personaggio (non l'ha scelto, o ne
+  // ha scelto un altro). Nemmeno questo è un conflitto di revisione: non si ritenta da soli, il messaggio resta
+  // finché il giocatore non sceglie il personaggio giusto (o il Direttore corregge l'abbinamento).
+  if (!r.ok) throw Object.assign(new Error(j.errore ?? `errore ${r.status}`), { conflitto: r.status === 409 && !j.altroPersonaggio, altroPersonaggio: !!j.altroPersonaggio, nonAutorizzato: !!j.nonAutorizzato });
   return j;
 }
 

@@ -555,6 +555,16 @@
       "soglia_px": 600,
       "etichetta": "Torna in cima",
       "_nota": "Pulsante fisso in basso a destra (src/ui/scorrimento.js → montaTornaSopra): compare solo quando la pagina è scesa di più di soglia_px, non occupa spazio nel flusso. 19/10/2026, richiesta dal tavolo (tablet)."
+    },
+    "dispositivo": {
+      "intervallo_controllo_s": 15,
+      "testo_collegato": "collegato · {nome} · aggiornata {ora}",
+      "testo_senza_pg": "collegato · scegli il tuo personaggio",
+      "testo_offline": "offline da {tempo} · stai vedendo una copia · non puoi modificare",
+      "motivo_offline": "Sei offline: questo comando è spento finché non torni collegato.",
+      "conflitto_versione": "«{nome}» è stata modificata da {chi} {quando} fa. Ricarica e riprova.",
+      "pulsante_ricarica": "Ricarica",
+      "_nota": "Il tablet è una vista, non un proprietario (21/10/2026, src/ui/dispositivo.js, src/ui/stato-tablet.js): riga di stato sempre visibile su ogni pagina del tablet (collegato/offline), il controllo gira ogni intervallo_controllo_s secondi e quando il tablet torna in primo piano. {nome}, {ora}, {tempo}, {chi}, {quando} si sostituiscono nel testo. Offline i comandi che modificano sono spenti, con motivo_offline nel titolo. conflitto_versione è il messaggio quando una scrittura arriva da una versione_salvataggio più vecchia di quella sul server (src/collegamento.js)."
     }
   },
   "modalita_di_fuoco": {

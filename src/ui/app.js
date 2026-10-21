@@ -24,6 +24,8 @@ import { modalitaMaster, mostraMarchio, statoContestoMaster, registro as registr
 import { descriviVoce } from '../avanzamento.js';
 import { segnaModalitaMaster, modalitaMasterDi, esciModalitaMaster } from './ritorno.js';
 import { statoSalvataggioMaster, controllaRemoto, revisioneDaScrivere, differenzeSessione, testoScelta, indicatoreCollegamento, impronta } from '../collegamento.js';
+import { messaggioConflittoVersione } from '../stato-tablet.js';
+import { montaStatoTablet, impostaPgAperto } from './stato-tablet.js';
 import { difeseNemico } from '../nemico-attacco.js';
 import { leggiScontroAperto, leggiScontro, rigaScontro, leggiMovimentoRound } from './scontro.js';
 import { elencoUnito, confronta, chiaveDaFile, chiavePersonaggio, messaggioSalvataggio, attesaRitentativo, nomeFileLibero, haNome, fileProvvisorio } from '../cartella.js';
@@ -138,6 +140,9 @@ async function avvia() {
   // 13/10: perché non si è master, per la riga di stato del Tavolo (il server vecchio non lo dice)
   stato.statoMaster = statoContestoMaster({ server: stato.cartella, daQuestoPc: stato.master, pingMaster: pingMasterQui(), serverVecchio: document.getElementById('barra-server-vecchio') !== null });
   document.body.classList.toggle('senza-marchio', !mostraMarchio({ server: stato.cartella, daQuestoPc: stato.master }));
+  // «il tablet è una vista» (21/10/2026): la riga di stato su ogni pagina, solo per i tablet dei giocatori (il
+  // Direttore ha già la sua fascia e il tasto MUTANT, qui aggiungerebbe solo rumore)
+  if (stato.cartella && !stato.master) montaStatoTablet(stato.dati);
   // pezzo 6: con il server la scheda aperta controlla il proprio file (come la plancia, ogni 3 secondi)
   if (stato.cartella) setInterval(controllaScheda, INTERVALLO_COLLEGAMENTO_MS);
   window.addEventListener('hashchange', daIndirizzo);
@@ -192,6 +197,9 @@ function daIndirizzo() {
   }
   esciDallaStampa();
   applicaSfondo(null); // lo sfondo scelto vale solo nella SD (renderScheda)
+  // «il tablet è una vista» (21/10/2026): fuori da una scheda non c'è niente da proteggere; il ramo della scheda
+  // qui sotto lo imposta di nuovo con il PG vero, appena aperta
+  if (stato.cartella && !stato.master) impostaPgAperto(null);
   // Tavolo del Master (docs/tavolo-direttore.md, pezzo 1): uscendo si ferma l'aggiornamento periodico
   stato.fermaTavolo?.();
   stato.fermaTavolo = null;
@@ -288,6 +296,9 @@ function daIndirizzo() {
     }
     const { scelte, avvisi } = normalizza(salvato.scelte, stato.dati);
     stato.id = id;
+    // «il tablet è una vista» (21/10/2026, parte C): il PG che la scheda mostra adesso, per spegnere i comandi
+    // quando non è il proprio («gli altri li vede, in sola lettura»)
+    if (stato.cartella && !stato.master) impostaPgAperto(salvato.pg ?? null);
     // un PG di prima riceve l'identificativo alla prima apertura (bug del 04/10/2026), senza cambiare altro: con il
     // server si prende quello del suo file, se c'è già, e il file lo registra subito
     if (!salvato.pg) {
@@ -680,7 +691,14 @@ async function versioneRemota() {
   const { testo, mtime } = await leggiCartellaConRevisione(remoto.file);
   const p = deserializzaPersonaggio(testo);
   const { scelte } = normalizza(p.creazione, stato.dati);
-  return { file: remoto.file, mtime: Number(mtime), testo, nome: String(scelte.nome ?? '').trim() || 'Senza nome', sessione: sessioneAllineata(scelte, p.livelli ?? [], p.sessione) };
+  // chi ha scritto questa versione (src/storico-personaggi.js → conMetadati): per il messaggio leggibile del
+  // conflitto, «"Aiko" è stata modificata da … … fa» (parte E, 21/10/2026)
+  const o = JSON.parse(testo);
+  return {
+    file: remoto.file, mtime: Number(mtime), testo, nome: String(scelte.nome ?? '').trim() || 'Senza nome',
+    sessione: sessioneAllineata(scelte, p.livelli ?? [], p.sessione),
+    chi: typeof o?.aggiornato_da === 'string' ? o.aggiornato_da : null, quando: typeof o?.aggiornato_il === 'string' ? o.aggiornato_il : null,
+  };
 }
 
 /**
@@ -1689,6 +1707,11 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
       // quale PG e quale file (bug del 04/10/2026): chi legge capisce se è davvero il suo
       nome: stato.collegamento.conflitto.nome ?? null,
       file: stato.collegamento.conflitto.file ?? null,
+      // parte E (21/10/2026): il messaggio leggibile, «"Aiko" è stata modificata da … … fa»
+      messaggio: messaggioConflittoVersione({
+        nome: stato.collegamento.conflitto.nome, chi: stato.collegamento.conflitto.chi ?? 'master',
+        quando: stato.collegamento.conflitto.quando ?? stato.collegamento.conflitto.mtime,
+      }, stato.dati),
       aggiorna: () => sceltaConflitto('aggiorna'),
       tieni: () => sceltaConflitto('tieni'),
     } : null,
