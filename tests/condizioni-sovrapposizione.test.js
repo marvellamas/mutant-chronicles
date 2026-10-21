@@ -9,10 +9,17 @@
 //   2. `.colonna-condizioni` era `position: sticky`, cioè un elemento posizionato: si disegnava sopra la parte di
 //      tabella uscita dalla colonna (e, più alto dello schermo, lasciava il proprio fondo fuori portata).
 //
-// NB (onestà sui limiti): `node --test` non ha un motore di layout, quindi qui si prova il *contratto* — nessun
-// posizionamento che tolga il riquadro dal flusso, nessun ritaglio del suo contenuto, e la tabella legata alla
-// larghezza della sua colonna con le colonne fisse. La misura vera dei rettangoli (riquadro contro ogni «Calcolo»,
-// a 768, 800, 820, 912, 1024, 1180 e 1280 px) è stata fatta nel browser con getBoundingClientRect: è nel riepilogo.
+// 21/10/2026 (seguito, «l'incollato torna, ma in sicurezza»): Marcello conferma che l'incollato serve al tavolo — si
+// scorre l'elenco delle Abilità ed è esattamente lì che servono i malus attivi. Il difetto non era l'incollato in
+// sé: era un riquadro incollato più alto dello schermo, il cui fondo diventava irraggiungibile. Ora l'incollato ha
+// un'altezza massima (mai più alto della finestra), scorre al suo interno con la barra visibile, e una sfumatura
+// (le «ombre di scorrimento» via CSS puro, senza JavaScript) segnala se c'è altro sopra o sotto. Resta spento dove
+// le colonne si impilano: incollare un blocco a tutta larghezza sotto il contenuto non aiuterebbe nessuno.
+//
+// NB (onestà sui limiti): `node --test` non ha un motore di layout, quindi qui si prova il *contratto* — l'incollato
+// ha sempre un'altezza massima e un proprio scorrimento, è spento dove le colonne si impilano, e la tabella resta
+// legata alla larghezza della sua colonna con le colonne fisse. La misura vera dei rettangoli (a 768, 800, 820, 912,
+// 1024, 1180 e 1280 px, verticale e orizzontale) è stata fatta nel browser con getBoundingClientRect: è nel riepilogo.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -29,22 +36,56 @@ function dichiarazioni(classe) {
   for (const m of CSS.matchAll(re)) fuori.push({ selettore: m[1].trim(), corpo: m[2] });
   return fuori;
 }
+/** Il testo del blocco «@container (...) { ... }» che inizia a quell'indice, parentesi bilanciate. */
+function bloccoDa(indiceGraffaApertura) {
+  let profondita = 0;
+  for (let i = indiceGraffaApertura; i < CSS.length; i++) {
+    if (CSS[i] === '{') profondita++;
+    else if (CSS[i] === '}') { profondita--; if (profondita === 0) return CSS.slice(indiceGraffaApertura + 1, i); }
+  }
+  throw new Error('parentesi graffa non chiusa');
+}
 
-for (const colonna of ['colonna-condizioni', 'colonna-stati']) {
-  test(`${colonna}: nessun posizionamento che la tolga dal flusso`, () => {
-    const blocchi = dichiarazioni(colonna);
-    assert.ok(blocchi.length, `nessuna regola per .${colonna}`);
+/** I blocchi dentro un «@container (max-width: …)»: dove le colonne si impilano. Niente regex lazy che scavalca
+    graffe nidificate (c'è più di un «@container (max-width: 30rem)» nel foglio): si cercano le graffe vere. */
+function dentroImpilamento(classe) {
+  const corpi = [];
+  const reApertura = /@container \(max-width:[^)]*\)\s*\{/g;
+  let m;
+  while ((m = reApertura.exec(CSS))) {
+    const corpoContainer = bloccoDa(m.index + m[0].length - 1);
+    const reRegola = new RegExp(`\\.${classe}\\s*\\{([^}]*)\\}`);
+    const r = reRegola.exec(corpoContainer);
+    if (r) corpi.push(r[1]);
+  }
+  return corpi;
+}
+
+for (const [colonna, soglia] of [['colonna-condizioni', '40rem'], ['colonna-stati', '30rem']]) {
+  test(`${colonna}: l'incollato ha sempre un'altezza massima e il proprio scorrimento`, () => {
+    const blocchi = dichiarazioni(colonna).filter((b) => /position\s*:\s*sticky/.test(b.corpo));
+    assert.ok(blocchi.length, `.${colonna} non è mai «position: sticky»: l'incollato è sparito di nuovo`);
     for (const b of blocchi) {
-      const pos = b.corpo.match(/(^|;)\s*position\s*:\s*([a-z-]+)/);
-      if (!pos) continue;
-      assert.ok(['static', 'relative'].includes(pos[2]),
-        `.${colonna} con «position: ${pos[2]}» (${b.selettore}): sarebbe un elemento posizionato e si disegnerebbe sopra la tabella`);
+      assert.match(b.corpo, /max-height\s*:\s*calc\(100vh/, `.${colonna} sticky senza un'altezza massima (${b.selettore}): il fondo tornerebbe fuori portata`);
+      assert.match(b.corpo, /overflow-y\s*:\s*auto/, `.${colonna} sticky senza scorrimento proprio (${b.selettore})`);
+      assert.match(b.corpo, /scrollbar-width\s*:\s*thin/, `.${colonna} sticky con la barra di scorrimento invadente (${b.selettore})`);
     }
   });
 
-  test(`${colonna}: non ritaglia il proprio contenuto`, () => {
+  test(`${colonna}: spento dove le colonne si impilano (sotto ${soglia})`, () => {
+    const blocchi = dentroImpilamento(colonna);
+    assert.ok(blocchi.length, `manca la regola che spegne .${colonna} sotto ${soglia}`);
+    for (const corpo of blocchi) {
+      assert.match(corpo, /position\s*:\s*static/, `.${colonna} impilato non torna «static»: incollerebbe un blocco a tutta larghezza sotto il contenuto`);
+      assert.match(corpo, /max-height\s*:\s*none/, `.${colonna} impilato tiene ancora l'altezza massima`);
+    }
+  });
+
+  test(`${colonna}: non ritaglia il proprio contenuto fuori dall'incollato`, () => {
     for (const b of dichiarazioni(colonna)) {
-      assert.ok(!/(^|;)\s*max-height\s*:/.test(b.corpo), `.${colonna} con max-height (${b.selettore}): il contenuto resterebbe tagliato`);
+      if (/position\s*:\s*sticky/.test(b.corpo)) continue; // l'incollato ha il suo scorrimento apposta: va bene
+      // fuori dall'incollato, «max-height: none» (lo spegnimento nell'impilamento) va bene; un valore vero no
+      assert.ok(!/(^|;)\s*max-height\s*:(?!\s*none\b)/.test(b.corpo), `.${colonna} con max-height fuori dall'incollato (${b.selettore}): il contenuto resterebbe tagliato`);
       assert.ok(!/(^|;)\s*overflow(-y)?\s*:\s*hidden/.test(b.corpo), `.${colonna} con overflow nascosto (${b.selettore})`);
     }
   });
@@ -117,4 +158,37 @@ test('il riquadro delle Condizioni attive sta in una colonna sua, non sopra la t
 test('tab.js: il commento dice perché le colonne sono fisse', () => {
   assert.match(TAB_JS, /colgroup/, 'manca il colgroup nella tabella delle Abilità');
   assert.match(TAB_JS, /sforava la colonna|sforava/, 'manca la nota sul perché');
+});
+
+// ---------------------------------------------------------------------------------------------
+// Parte B (21/10/2026): gli sforamenti nel Combattimento a 768 e 912 px. Stesso meccanismo: un figlio di griglia
+// o di flex non scende, per difetto, sotto la larghezza del proprio contenuto («min-width: auto»), anche se la sua
+// TRACCIA è «minmax(0, 1fr)» — il min-width:0 del figlio va dato a parte (lo stesso idioma di «.stati-compatti li»
+// del 12/10). E i due/tre colonne di «.griglia-valori» (Difese, Prove Salvezza, Iniziativa, Movimento, Azioni, Luce)
+// erano decise da un «@media (min-width: …)» legato alla larghezza della FINESTRA, non a quella disponibile alla
+// griglia — che con la colonna degli Stati accanto è molto più stretta: a 768 px di finestra dava comunque due
+// colonne in uno spazio che ne aveva per una sola.
+
+test('.riquadro-mano può restringersi sotto il contenuto della sua scheda (min-width: 0)', () => {
+  const blocchi = dichiarazioni('riquadro-mano').filter((b) => !b.selettore.includes('.riquadro-mano.'));
+  assert.ok(blocchi.some((b) => /min-width\s*:\s*0/.test(b.corpo)), '.riquadro-mano senza «min-width: 0»: tornerebbe a sforare la sua cella della griglia');
+});
+
+test('.griglia-valori sceglie 2/3 colonne dallo spazio vero (container), non dalla finestra (media)', () => {
+  assert.doesNotMatch(CSS, /@media \(min-width: 600px\) \{ \.griglia-valori/, 'la soglia delle due colonne è ancora legata alla finestra');
+  assert.doesNotMatch(CSS, /@media \(min-width: 1100px\) \{ \.griglia-valori/, 'la soglia delle tre colonne è ancora legata alla finestra');
+  assert.match(CSS, /@container \(min-width: [\d.]+rem\) \{ \.griglia-valori \{ grid-template-columns: repeat\(2,/, 'manca la soglia a container per le due colonne');
+  assert.match(CSS, /@container \(min-width: [\d.]+rem\) \{ \.griglia-valori \{ grid-template-columns: repeat\(3,/, 'manca la soglia a container per le tre colonne');
+  // e il contenitore che la griglia usa come riferimento è dichiarato (altrimenti il @container userebbe
+  // il pannello intero, che include la colonna degli Stati: la stessa svista di prima)
+  assert.match(CSS, /\.combattimento-principale \{ container-type: inline-size; \}/, 'manca il contenitore proprio della colonna principale');
+});
+
+test('la scheda rende .riquadro-mano e .griglia-valori dentro il Combattimento, con le regole sopra applicabili', () => {
+  const ctx = contesto(ESEMPIO, {
+    attiva: 'combattimento',
+    cambia: (s) => { s.statiAttivi = ['Accecato']; },
+  });
+  const { radice } = resa(ctx);
+  assert.ok(radice.querySelectorAll('.griglia-valori').length >= 1, 'manca la griglia dei sei valori');
 });
