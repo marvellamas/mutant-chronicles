@@ -76,6 +76,7 @@ test('proprietà Universale: la riserva interna per quanto ha, il resto dai PM p
 
 test('Tecniche Interiori: invariate, solo PM personali (Giocatore §8.9.1)', () => {
   const t = tecnicaDi('aura-di-resistenza', dati);
-  const st = statoAttivazione({ tecniche: [{ id: t.id }], pm: 20 }, { pmAttuali: 3, round: 1, chroma: { b: { pmAttuali: 30 } } }, t, dati);
+  // un PM meno del costo della scheda: la batteria piena non aiuta (il costo viene dai dati, 0.49 compresa)
+  const st = statoAttivazione({ tecniche: [{ id: t.id }], pm: 20 }, { pmAttuali: t.costo_pm - 1, round: 1, chroma: { b: { pmAttuali: 30 } } }, t, dati);
   assert.match(st.motivo, /solo i PM personali/);
 });

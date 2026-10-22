@@ -21,7 +21,10 @@ const scheda = (ids) => ({ tecniche: ids.map((id) => ({ id })), tecnicheAmmesse:
 const sessione = (extra = {}) => ({ pmAttuali: 20, round: 1, ultimaTecnica: null, tecnicheAttive: [], statiAttivi: [], chroma: {}, ...extra });
 const vivo = (valore) => ({ valore, origine: 'manuale' });
 const sc = scheda(['aura-di-resistenza', 'pelle-di-rinoceronte']);
-const aura = tecnicaDi('aura-di-resistenza', dati); // durata 3 Round
+const aura = tecnicaDi('aura-di-resistenza', dati);
+// la durata viene dai dati, non scritta a mano: qui si prova il meccanismo R + N, non il numero del manuale
+// (0.49: Aura di Resistenza passa da 3 a 5 Round)
+const N = aura.durata_round;
 
 /** Scontro con Aiko (PG) e un avversario a mano, con l'Iniziativa tirata: Round 1, di turno il primo. */
 function scontroConAiko() {
@@ -40,23 +43,24 @@ test('regola nei dati: durate dal Round R alla fine del Round R + N, il Round di
   assert.equal(fineDurata(2, 3, conta), 4); // se Davide decidesse diversamente, cambia il dato, non il codice
 });
 
-test('Tecnica attivata al Round 2 dello scontro con durata R + 3: scade al Round giusto avanzando dalla plancia', () => {
+test('Tecnica attivata al Round 2 dello scontro con durata R + N: scade al Round giusto avanzando dalla plancia', () => {
   let s = finoAlRound(scontroConAiko(), 2);
   let coll = collegamentoScontro(s, 'Aiko-Tenzan');
   assert.deepEqual([coll.round, coll.nome], [2, s.nome]);
   // la scheda attiva sulla sua sessione vista al Round dello scontro
   const pg = attivaTecnica(sc, alRound(sessione(), coll.round), aura, dati);
-  assert.deepEqual(pg.tecnicheAttive, [{ id: 'aura-di-resistenza', dal: 2, al: 5 }]);
+  const al = 2 + N;
+  assert.deepEqual(pg.tecnicheAttive, [{ id: 'aura-di-resistenza', dal: 2, al }]);
   assert.deepEqual(pg.ultimaTecnica, { id: 'aura-di-resistenza', round: 2 });
-  // la plancia avanza: Round 3, 4, 5 in corso, con i Round che restano; al Round 6 scaduta
-  for (const [r, restano] of [[3, 3], [4, 2], [5, 1]]) {
+  // la plancia avanza: in corso fino al Round 2 + N, con i Round che restano; al Round dopo è scaduta
+  for (let r = 3; r <= al; r++) {
     s = finoAlRound(s, r);
     coll = collegamentoScontro(s, 'Aiko-Tenzan');
     const v = alRound(pg, coll.round);
-    assert.deepEqual(durateCarta(v, coll, dati).map(testoDurata), [`Aura di Resistenza · ${restano} Round`], `Round ${r}`);
+    assert.deepEqual(durateCarta(v, coll, dati).map(testoDurata), [`Aura di Resistenza · ${al - r + 1} Round`], `Round ${r}`);
   }
-  s = finoAlRound(s, 6);
-  assert.deepEqual(tecnicheScadute(alRound(pg, 5), 5, 6, dati), ['Aura di Resistenza']);
+  s = finoAlRound(s, al + 1);
+  assert.deepEqual(tecnicheScadute(alRound(pg, al), al, al + 1, dati), ['Aura di Resistenza']);
   assert.deepEqual(alRound(pg, collegamentoScontro(s, 'Aiko-Tenzan').round).tecnicheAttive, []);
 });
 
@@ -70,26 +74,27 @@ test('due attivazioni nello stesso Round dello scontro: la seconda è rifiutata;
 });
 
 test('fine dello scontro con una durata ancora attiva: resta con i Round che restano, poi segue il contatore della scheda', () => {
-  const pg = attivaTecnica(sc, alRound(sessione(), 4), aura, dati); // Round 4–7
+  const pg = attivaTecnica(sc, alRound(sessione(), 4), aura, dati); // dal Round 4 alla fine del Round 4 + N
+  const al = 4 + N;
   let s = finoAlRound(scontroConAiko(), 6);
   s = chiudi(s, T0);
   assert.equal(collegamentoScontro(s, 'Aiko-Tenzan'), null); // scontro chiuso: la scheda torna al suo contatore
   const fine = alRound(pg, s.round); // la plancia porta la sessione al Round finale (6)
-  assert.deepEqual([fine.round, fine.tecnicheAttive], [6, [{ id: 'aura-di-resistenza', dal: 4, al: 7 }]]);
-  assert.deepEqual(durateCarta(fine, null, dati).map(testoDurata), ['Aura di Resistenza · 2 Round']);
-  // non si azzera da sola; «Nuovo Round» della scheda la fa scadere al Round 8, «Termina le durate» subito
+  assert.deepEqual([fine.round, fine.tecnicheAttive], [6, [{ id: 'aura-di-resistenza', dal: 4, al }]]);
+  assert.deepEqual(durateCarta(fine, null, dati).map(testoDurata), [`Aura di Resistenza · ${al - 6 + 1} Round`]);
+  // non si azzera da sola; «Nuovo Round» della scheda la fa scadere al Round al + 1, «Termina le durate» subito
   const m = { pv: 20, pm: 20, puntiEroe: 3, tecniche: ['aura-di-resistenza', 'pelle-di-rinoceronte'] };
-  let x = nuovoRoundSessione(fine, m);
-  assert.equal(x.tecnicheAttive.length, 1);
+  let x = fine;
+  while (x.round < al) { x = nuovoRoundSessione(x, m); assert.equal(x.tecnicheAttive.length, 1, `Round ${x.round}`); }
   x = nuovoRoundSessione(x, m);
-  assert.deepEqual([x.round, x.tecnicheAttive], [8, []]);
+  assert.deepEqual([x.round, x.tecnicheAttive], [al + 1, []]);
   assert.deepEqual(terminaDurate(fine).tecnicheAttive, []);
 });
 
 test('inizio dello scontro: le durate già in corso passano sul Round 1 dello scontro con i Round che restano', () => {
-  const pg = attivaTecnica(sc, sessione({ round: 7 }), aura, dati); // contatore della scheda: Round 7–10
+  const pg = attivaTecnica(sc, sessione({ round: 7 }), aura, dati); // contatore della scheda: dal Round 7 a 7 + N
   const r = riallinea(pg, 1);
-  assert.deepEqual([r.round, r.tecnicheAttive, r.ultimaTecnica], [1, [{ id: 'aura-di-resistenza', dal: 1, al: 4 }], { id: 'aura-di-resistenza', round: 1 }]);
+  assert.deepEqual([r.round, r.tecnicheAttive, r.ultimaTecnica], [1, [{ id: 'aura-di-resistenza', dal: 1, al: 1 + N }], { id: 'aura-di-resistenza', round: 1 }]);
   assert.deepEqual(durateCarta(pg, null, dati).map(testoDurata), durateCarta(r, null, dati).map(testoDurata));
   assert.equal(riallinea(r, 1), r); // idempotente
 });
@@ -114,11 +119,12 @@ test('senza server, o con il PG fuori dallo scontro: la sessione resta la stessa
   assert.equal(collegamentoScontro(scontroConAiko(), 'Altro-Pg'), null);
   assert.equal(alRound(pg, undefined), pg);
   assert.equal(alRound(pg, 1), pg); // un Round più indietro non cambia nulla
-  // il contatore della scheda fa quello che faceva: Aura dal Round 2 alla fine del Round 5
+  // il contatore della scheda fa quello che faceva: Aura dal Round 2 alla fine del Round 2 + N
   const m = { pv: 20, pm: 20, puntiEroe: 3, tecniche: ['aura-di-resistenza'] };
+  const al = 2 + N;
   let x = pg;
-  for (let i = 0; i < 3; i++) x = nuovoRoundSessione(x, m);
-  assert.deepEqual([x.round, x.tecnicheAttive.length], [5, 1]);
+  while (x.round < al) x = nuovoRoundSessione(x, m);
+  assert.deepEqual([x.round, x.tecnicheAttive.length], [al, 1]);
   assert.deepEqual(nuovoRoundSessione(x, m).tecnicheAttive, []);
 });
 

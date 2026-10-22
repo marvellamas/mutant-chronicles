@@ -26,6 +26,11 @@ const attiva = (sess, id, opz = {}) => attivaTecnica(conTecniche(scheda(sess), [
 const ab = (s, n) => s.abilita.find((a) => a.nome === n);
 const uso = (s, abilita, u) => ab(s, abilita).usiSpecifici.find((x) => x.uso === u) ?? null;
 const avanti = (sess, n) => Array.from({ length: n }).reduce((s) => nuovoRound(s), sess);
+// durata in Round dai dati, non scritta a mano: così una nuova edizione del manuale non fa ingiallire i test
+// (0.49: Pelle di Rinoceronte, Aura di Resistenza, Corsa di Nomura e le altre passano da 3 a 5 Round)
+const durata = (id) => T(id).durata_round;
+/** L'ultimo Round in cui vale una Tecnica attivata nel Round `dal` (R + N). */
+const fineRound = (id, dal = 1) => dal + durata(id);
 
 test('dati: 28 Tecniche con effetti; numeri in breve, frasi controllate, nessun TODO (A.81 e A.82 decise il 03/10)', () => {
   const t = dati.tecniche_interiori.tecniche;
@@ -49,7 +54,7 @@ test('Pelle di Rinoceronte: +2 danno ravvicinato, +3 FOR e manovre di forza solo
   const a1 = scheda(s1);
   const senz = profiloSenzArmi(a1, dati);
   assert.notEqual(senz.danno.una_mano, dannoRiposo);
-  assert.ok(senz.provenienzaDanno.righe.some((r) => r.fonte === 'Tecnica: Pelle di Rinoceronte (fino al Round 4)' && r.valore === 2));
+  assert.ok(senz.provenienzaDanno.righe.some((r) => r.fonte === `Tecnica: Pelle di Rinoceronte (fino al Round ${fineRound('pelle-di-rinoceronte')})` && r.valore === 2));
   // A.81: Atletica per lo sforzo di forza e per le Prove di Immobilizzare e Sbilanciare; Corpo a corpo nelle manovre
   assert.equal(uso(a1, 'Atletica', 'Sforzo di forza').modificatore, 3);
   assert.equal(uso(a1, 'Atletica', 'Immobilizzare e opposizione a Sbilanciare').modificatore, 3);
@@ -65,21 +70,25 @@ test('Pelle di Rinoceronte: +2 danno ravvicinato, +3 FOR e manovre di forza solo
   assert.deepEqual(a1.usiCaratteristicheTalenti.map((x) => [x.caratteristiche, x.valore, x.uso]), [[['FOR'], 3, 'prove di FOR']]);
   // «Bonus dei Talenti» spento: le Tecniche restano (sono attivazioni, non Talenti passivi)
   assert.equal(profiloSenzArmi(scheda({ ...s1, bonusTalenti: false }), dati).provenienzaDanno.righe.some((r) => /Pelle di Rinoceronte/.test(r.fonte)), true);
-  // in corso fino alla fine del Round 4; dal Round 5 i valori tornano quelli a riposo
-  const s4 = avanti(s1, 3);
-  assert.equal(uso(scheda(s4), 'Atletica', 'Sforzo di forza').modificatore, 3);
-  const a5 = scheda(avanti(s1, 4));
+  // in corso fino alla fine del Round 1 + N; dal Round dopo i valori tornano quelli a riposo
+  const n = durata('pelle-di-rinoceronte');
+  const sUltimo = avanti(s1, n);
+  assert.equal(uso(scheda(sUltimo), 'Atletica', 'Sforzo di forza').modificatore, 3);
+  const a5 = scheda(avanti(s1, n + 1));
   assert.equal(profiloSenzArmi(a5, dati).danno.una_mano, dannoRiposo);
   assert.equal(uso(a5, 'Atletica', 'Sforzo di forza'), null);
   assert.deepEqual(a5.usiCaratteristicheTalenti, []);
 });
 
-test('Aura di Resistenza: +1 AR magica solo finché è in corso (A.48), con la provenienza della Tecnica', () => {
+test('Aura di Resistenza: l’AR magica della scheda solo finché è in corso (A.48), con la provenienza della Tecnica', () => {
   const ar = (s) => scheda(s).equipaggiamento.arEffettiva;
+  // quanto vale e quanto dura vengono dai dati (0.49: +2 AR magica per 5 Round, era +1 per 3)
+  const bonus = dati.regole.ar.tecniche.find((t) => t.tecnica === 'aura-di-resistenza').totale;
+  const n = durata('aura-di-resistenza');
   const s1 = attiva(riposo(), 'aura-di-resistenza');
-  assert.equal(ar(s1).totale, ar(riposo()).totale + 1);
-  assert.equal(ar(avanti(s1, 3)).totale, ar(riposo()).totale + 1);
-  assert.equal(ar(avanti(s1, 4)).totale, ar(riposo()).totale);
+  assert.equal(ar(s1).totale, ar(riposo()).totale + bonus);
+  assert.equal(ar(avanti(s1, n)).totale, ar(riposo()).totale + bonus);
+  assert.equal(ar(avanti(s1, n + 1)).totale, ar(riposo()).totale);
 });
 
 test('Vista Felina: il senso compare solo mentre è attiva; durata a tempo, si termina a mano', () => {
@@ -152,7 +161,9 @@ test('Imposizione della Mano Curativa: Sanguinamento, PV e Ferite applicati al p
   // arresta il Sanguinamento
   const s1 = attiva(base, imp.id, { opzione: 1 });
   assert.deepEqual(s1.statiAttivi, []);
-  assert.equal(s1.pmAttuali, m.pm - 2);
+  // i costi dei quattro usi vengono dalla tabella dei dati (0.49: 1/2/2/4 PM, erano 1/2/4/10)
+  const pmUso = (i) => imp.opzioni_costo[i].pm;
+  assert.equal(s1.pmAttuali, m.pm - pmUso(1));
   // Round dopo: 1d4 (3) + Mod SAG (3) = 6 PV
   const s2 = attiva(nuovoRound(s1), imp.id, { opzione: 2, cura: { dado: 3 } });
   assert.equal(s2.pvAttuali, 16);
@@ -166,7 +177,7 @@ test('Imposizione della Mano Curativa: Sanguinamento, PV e Ferite applicati al p
   // su un altro personaggio: solo i PM, l'effetto è un promemoria
   const altro = attiva(base, imp.id, { opzione: 3, cura: { bersaglio: 'altro' } });
   assert.equal(altro.ferite, 2);
-  assert.equal(altro.pmAttuali, m.pm - 10);
+  assert.equal(altro.pmAttuali, m.pm - pmUso(3));
   assert.ok(curaTecnica(a, base, imp, 3, dati, { bersaglio: 'altro' }).righe.some((x) => /sulla sua scheda/.test(x)));
 });
 
@@ -174,7 +185,7 @@ test('Corsa di Nomura raddoppia il movimento; Radici della Montagna lo porta a 0
   const r = scheda(riposo()).tavolo.movimento;
   const n = scheda(attiva(riposo(), 'corsa-di-nomura')).tavolo.movimento;
   assert.deepEqual([n.passo.effettivo, n.corsa.effettivo, n.scatto.effettivo], [r.passo.effettivo * 2, r.corsa.effettivo * 2, r.scatto.effettivo * 2]);
-  assert.ok(n.passo.provenienza.righe.some((x) => x.fonte === 'Tecnica: Corsa di Nomura (fino al Round 4) (×2)'));
+  assert.ok(n.passo.provenienza.righe.some((x) => x.fonte === `Tecnica: Corsa di Nomura (fino al Round ${fineRound('corsa-di-nomura')}) (×2)`));
   const z = scheda(attiva(riposo(), 'radici-della-montagna')).tavolo.movimento;
   assert.deepEqual([z.passo.effettivo, z.corsa.effettivo, z.scatto.effettivo], [0, 0, 0]);
 });

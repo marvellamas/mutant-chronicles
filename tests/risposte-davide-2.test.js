@@ -70,12 +70,15 @@ test('A.48: Corazza Potenziata solo con protezione Artefatto (Guardie Sacre sì,
   const prot = (rif) => calcolaScheda({ creazione: { ...MISHIMA_AGENTE, equipaggiamento: [voce('s', rif, 'imbracciato')] }, livelli: [] }, dati).equipaggiamento.protezioni[0];
   assert.equal(prot('scudi:scudo-delle-guardie-sacre').artefatto, true);
   assert.equal(prot('scudi:scudo-dei-sacri-guerrieri').artefatto, false);
-  // l'esempio di Davide: tutte e tre attive → +3 contro il ravvicinato, +2 contro gli altri, +2 magica
+  // l'esempio di Davide, con i valori del Giocatore 0.49: Aura di Resistenza passa a +2 AR magica, quindi tutte
+  // e tre attive danno +4 contro il Ravvicinato, +3 contro gli altri e +3 magica (§5.13 della 0.49 li scrive
+  // così; con la 0.48 erano +3, +2 e +2). La regola del cumulo, che è quello che la A.48 ha approvato, non cambia.
   const eq = { protezioni: [{ uid: 's', nome: 'Scudo delle Guardie Sacre', tipo: 'scudo', ar: { totale: 2, magica: 0 }, artefatto: true }], effettiOggetti: [] };
   const accesi = new Set(['tecnica:aura-di-resistenza', 'tecnica:pelle-di-rinoceronte']);
   const ar = calcolaAR(eq, dati, { talenti: ['Corazza Potenziata'], accesi, tecniche: ['aura-di-resistenza', 'pelle-di-rinoceronte'] });
-  assert.deepEqual([ar.totale - 2, ar.magica], [2, 2]);
-  assert.deepEqual(ar.contro.map((c) => [c.contro, c.totale - 2]), [['ravvicinato', 3]]);
+  const aura = dati.regole.ar.tecniche.find((t) => t.tecnica === 'aura-di-resistenza');
+  assert.deepEqual([ar.totale - 2, ar.magica], [1 + aura.totale, 1 + aura.magica]); // Corazza Potenziata + Aura
+  assert.deepEqual(ar.contro.map((c) => [c.contro, c.totale - 2]), [['ravvicinato', 1 + aura.totale + 1]]); // + Pelle di Rinoceronte
   // una Tecnica non posseduta non conta, anche se accesa
   assert.equal(calcolaAR(eq, dati, { accesi, tecniche: [] }).totale, 2);
 });

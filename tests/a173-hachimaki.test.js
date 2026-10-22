@@ -8,11 +8,13 @@
 // Questo file è la verifica chiesta il 22/10: conferma che l'app faccia esattamente così. Nessun dato è stato
 // cambiato — era già tutto a posto.
 //
-// NB sulla tabella: i cinque costi della risposta sono quelli del Manuale del Giocatore 0.48. La 0.49, uscita
-// lo stesso 21/10 ma cinque ore dopo la risposta, porta la tabella di Imposizione della Mano Curativa a
-// 1 / 2 / 2 / 4 PM (quindi 1 / 1 / 1 / 3 con l'Hachimaki). Qui si prova la REGOLA sui costi che i dati hanno
-// adesso; l'adeguamento alla 0.49 è un lotto a parte e una domanda a Davide (A.178,
-// docs/diff-manuali-2026-10-22.md).
+// NB sulla tabella: i cinque costi elencati nella risposta sono quelli del Manuale del Giocatore 0.48. La 0.49,
+// uscita lo stesso 21/10 ma cinque ore dopo, porta la tabella di Imposizione della Mano Curativa a 1 / 2 / 2 / 4
+// PM, e quindi con l'Hachimaki a 1 / 1 / 1 / 3. **La regola non è cambiata, sono cambiati i costi a cui si
+// applica**: recepita il 22/10 (A.178, in attesa della conferma di Davide). Per questo le prove qui sotto
+// provano la REGOLA — i cinque esempi della risposta restano validi come esempi della regola, perché dicono
+// che cosa fa la riduzione su un costo di 0, 1, 2, 4 e 10 PM, non che quei costi esistano ancora nella scheda.
+// I costi veri della Tecnica si leggono SEMPRE dai dati, mai scritti qui.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { costoEffettivo } from '../src/tecniche.js';
@@ -44,10 +46,31 @@ test('A.173: la riduzione si applica all’uso scelto, non a tutti insieme (Impo
   const costi = t.opzioni_costo.map((o) => o.pm);
   // i quattro usi sono alternative: si sceglie l'effetto e si paga quel costo ridotto, uno solo per attivazione
   const ridotti = costi.map((_, i) => costoEffettivo(con, t, i).costo);
-  assert.deepEqual(costi, [1, 2, 4, 10], 'costi del Giocatore 0.48, quelli che cita la risposta');
-  assert.deepEqual(ridotti, [1, 1, 3, 9]);
+  // l'attesa NON è una tabella scritta a mano: è la regola applicata ai costi che la scheda ha adesso, così
+  // una prossima edizione del manuale cambia i dati e questa prova continua a dire la verità
+  const perRegola = costi.map((pm) => (pm > 0 ? Math.max(1, pm - 1) : 0));
+  assert.deepEqual(ridotti, perRegola);
   // senza la fascia i costi restano quelli della scheda
   assert.deepEqual(costi.map((_, i) => costoEffettivo(senza, t, i).costo), costi);
+});
+
+test('A.178: con il Giocatore 0.49 la tabella è 1/2/2/4 e con l’Hachimaki diventa 1/1/1/3', () => {
+  // qui i numeri ci sono apposta: è la prova che fissa il valore del manuale di oggi, ed è il punto su cui
+  // Davide deve dire l'ultima parola (la sua risposta A.173 citava i costi della 0.48)
+  const t = dati.tecniche_interiori.tecniche.find((x) => x.nome === 'Imposizione della Mano Curativa');
+  assert.deepEqual(t.opzioni_costo.map((o) => o.pm), [1, 2, 2, 4], 'tabella del Giocatore 0.49');
+  assert.deepEqual(t.opzioni_costo.map((_, i) => costoEffettivo(con, t, i).costo), [1, 1, 1, 3]);
+  // e il 1/1/1/3 esce dal calcolo, non da una tabella: la base e lo sconto sono quelli di ogni uso
+  const dettaglio = t.opzioni_costo.map((_, i) => costoEffettivo(con, t, i));
+  assert.deepEqual(dettaglio.map((d) => d.base), [1, 2, 2, 4]);
+  assert.deepEqual(dettaglio.map((d) => d.sconto), [0, 1, 1, 1], 'sul costo da 1 PM non c’è niente da togliere');
+});
+
+test('A.178: il limite di 24 ore per la riduzione della Ferita è registrato come promemoria', () => {
+  // regola nuova della 0.49: l'app la ricorda, non la conta (il limite è condiviso con Guarigione e lo tiene
+  // il tavolo, non la scheda)
+  const t = dati.tecniche_interiori.tecniche.find((x) => x.nome === 'Imposizione della Mano Curativa');
+  assert.ok((t.effetti.promemoria ?? []).some((f) => /una sola volta ogni 24 ore per beneficiario/.test(f)));
 });
 
 test('A.173: più riduzioni dello stesso costo non si sommano (vale la più favorevole, non la somma)', () => {

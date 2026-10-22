@@ -64,8 +64,10 @@ test('provenienza dell’AR: Aura di Resistenza nel totale, Pelle di Rinoceronte
   const eq = { protezioni: [{ uid: 'a', nome: 'Giubbotto', tipo: 'armatura', ar: { totale: 2, magica: 0 } }], effettiOggetti: [] };
   const ar = calcolaAR(eq, dati, { tecniche: ['aura-di-resistenza', 'pelle-di-rinoceronte'], accesi: new Set(['tecnica:aura-di-resistenza', 'tecnica:pelle-di-rinoceronte']) });
   const [tot, , rav] = ar.valori;
-  assert.equal(tot.valore, 3);
-  assert.equal(sommaRighe(tot.provenienza.righe), 3);
+  // 2 dal Giubbotto più l'AR dell'Aura dai dati (0.49: +2 magica, era +1)
+  const atteso = 2 + dati.regole.ar.tecniche.find((t) => t.tecnica === 'aura-di-resistenza').totale;
+  assert.equal(tot.valore, atteso);
+  assert.equal(sommaRighe(tot.provenienza.righe), atteso);
   const pelle = tot.provenienza.righe.find((r) => r.fonte === 'Pelle di Rinoceronte');
   assert.deepEqual([pelle.escluso, pelle.nota], [true, 'solo ravvicinato']);
   assert.equal(rav.etichetta, 'contro ravvicinato');
