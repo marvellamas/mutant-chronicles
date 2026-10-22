@@ -3053,19 +3053,19 @@
     "tecniche": [
       {
         "tecnica": "aura-di-resistenza",
-        "totale": 1,
-        "magica": 1,
+        "totale": 2,
+        "magica": 2,
         "contro": null,
-        "durata": "3 Round",
-        "fonte": "Giocatore §8.9; risposta A.48"
+        "durata": "5 Round",
+        "fonte": "Giocatore §5.13 e §8.9.1 (0.49); risposta A.48"
       },
       {
         "tecnica": "pelle-di-rinoceronte",
         "totale": 1,
         "magica": 0,
         "contro": "ravvicinato",
-        "durata": "3 Round",
-        "fonte": "Giocatore §8.9; risposta A.48"
+        "durata": "5 Round",
+        "fonte": "Giocatore §5.13 e §8.9.1 (0.49); risposta A.48"
       }
     ],
     "incantesimi": [

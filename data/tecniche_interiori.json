@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Giocatore 0.45",
+  "versione_manuale": "Giocatore 0.49",
   "fonte": "§8.9 (8.9.1 regole comuni, 8.9.2 generiche, 8.9.3 Scuole Mishima, 8.9.4 Lottatore); durate di Vipera dal Cappuccio, Presa dell’Anima e Contraccolpo Interiore dal Google Doc del 26/09/2026 (master, docs/risposte-master.md, decisione 11)",
   "regole_comuni": [
     "Le Tecniche Interiori impiegano l’energia personale per produrre effetti fisici, percettivi e spirituali. Non sono Incantesimi. Si apprendono attraverso Risorse Interiori o una capacità che ne conceda espressamente l’accesso; il Lottatore segue il §3.5.5. I Talenti di accesso e apprendimento, con le incompatibilità rispetto alla magia, sono nel §8.6.10.",
@@ -28,15 +28,15 @@
       "altri_campi": {
         "Limite": "1 + Mod SAG + Mod COS ore al giorno, minimo 1"
       },
-      "testo": "Durante la trance, ogni ora completa recupera 3 PV, 2 PM e 1 punto di recupero dell’Affaticamento. Sono i recuperi specifici della Tecnica. Non si aggiunge anche il recupero ordinario della medesima ora. Restano i massimi personali, il limite ordinario di tre ore utili giornaliere al recupero dei PV mediante Riposo breve e il divieto di recuperare PV durante un Sanguinamento attivo. Le eventuali ore successive consentite dalla Tecnica recuperano soltanto PM e punti di recupero dell’Affaticamento.\nI punti di recupero dell’Affaticamento si spendono secondo le normali soglie degli stati; quelli residui ottenuti con la Tecnica non si perdono interrompendo la trance e possono sommarsi agli altri ottenuti prima del ripristino giornaliero. Gli avanzi insufficienti a migliorare lo stato vengono persi al ripristino, senza annullare miglioramenti già ottenuti. Un’ora incompleta non produce recupero.\nNon richiede Recupero Meditativo né una prova e non è modificata da Meditazione Migliorata.",
+      "testo": "Durante la trance, ogni ora completa recupera 1d6 + Mod COS PV (minimo 1, come nel Riposo breve), 3 PM e 2 punti di recupero dell’Affaticamento. Sono i recuperi specifici della Tecnica. Non si aggiunge anche il recupero ordinario della medesima ora. Restano i massimi personali, il limite ordinario di tre ore utili giornaliere al recupero dei PV mediante Riposo breve e il divieto di recuperare PV durante un Sanguinamento attivo. Le eventuali ore successive consentite dalla Tecnica recuperano soltanto PM e punti di recupero dell’Affaticamento.\nI punti di recupero dell’Affaticamento si spendono secondo le normali soglie degli stati; quelli residui ottenuti con la Tecnica non si perdono interrompendo la trance e possono sommarsi agli altri ottenuti prima del ripristino giornaliero. Gli avanzi insufficienti a migliorare lo stato vengono persi al ripristino, senza annullare miglioramenti già ottenuti. Un’ora incompleta non produce recupero.\nNon richiede Recupero Meditativo né una prova e non è modificata da Meditazione Migliorata.",
       "costo_pm": 0,
       "durata_tipo": "tempo",
       "effetti": {
         "fonte": "Giocatore §8.9",
         "promemoria": [
-          "Durante la trance, ogni ora completa recupera 3 PV, 2 PM e 1 punto di recupero dell’Affaticamento."
+          "Durante la trance, ogni ora completa recupera 1d6 + Mod COS PV (minimo 1, come nel Riposo breve), 3 PM e 2 punti di recupero dell’Affaticamento."
         ],
-        "breve": "3 PV, 2 PM, 1 rec. Aff. per ora"
+        "breve": "1d6 + Mod COS PV, 3 PM, 2 rec. Aff. per ora"
       }
     },
     {
@@ -47,7 +47,7 @@
       "azione": "variabile",
       "bersaglio": "se stesso oppure una creatura vivente adiacente, mediante contatto",
       "durata": "istantanea, salvo la sospensione del Sanguinamento",
-      "testo": "Tabella — Costo: 1 PM; Tempo: 1 AzP; Effetto: Sospende il Sanguinamento per 10 Round. / Costo: 2 PM; Tempo: 1 AzP; Effetto: Arresta il Sanguinamento. / Costo: 4 PM; Tempo: 1 AzP; Effetto: Recupera 1d4 + Mod SAG PV, minimo 0. / Costo: 10 PM; Tempo: 5 minuti; Effetto: Migliora di uno stato la Ferita; una Superficiale guarisce.\nL’effetto è automatico e non richiede prove o kit. I cinque minuti sono il tempo di esecuzione dell’ultima opzione. Il recupero non supera i PV massimi e non avviene durante Sanguinamento attivo. Curare una Ferita non elimina Menomazioni e non ricostruisce parti mancanti. Ogni opzione produce soltanto l’effetto indicato.\nLe applicazioni possono essere ripetute pagando nuovamente PM e tempo. Il limite settimanale di Intervento Mirato e Terapia Intensiva non si applica alla Tecnica.",
+      "testo": "Tabella — Costo: 1 PM; Tempo: 1 AzP; Effetto: Sospende il Sanguinamento per 10 Round. / Costo: 2 PM; Tempo: 1 AzP; Effetto: Arresta il Sanguinamento. / Costo: 2 PM; Tempo: 1 AzP; Effetto: Recupera 1d4 + Mod SAG PV, minimo 0. / Costo: 4 PM; Tempo: 5 minuti; Effetto: Migliora di uno stato la Ferita; una Superficiale guarisce.\nL’effetto è automatico e non richiede prove o kit. I cinque minuti sono il tempo di esecuzione dell’ultima opzione. Il recupero non supera i PV massimi e non avviene durante Sanguinamento attivo. Curare una Ferita non elimina Menomazioni e non ricostruisce parti mancanti. Ogni opzione produce soltanto l’effetto indicato.\nLe opzioni che sospendono o arrestano il Sanguinamento e quella che recupera PV possono essere ripetute pagando nuovamente PM e tempo. La riduzione della Ferita è consentita una sola volta ogni 24 ore per beneficiario: il limite è condiviso con Guarigione, indipendentemente dall’utilizzatore o dalla capacità impiegata, e una nuova Ferita non lo azzera. Il limite settimanale di Intervento Mirato e Terapia Intensiva non si applica alla Tecnica.",
       "durata_tipo": "istantanea",
       "opzioni_costo": [
         {
@@ -61,12 +61,12 @@
           "effetto": "Arresta il Sanguinamento."
         },
         {
-          "pm": 4,
+          "pm": 2,
           "tempo": "1 AzP",
           "effetto": "Recupera 1d4 + Mod SAG PV, minimo 0."
         },
         {
-          "pm": 10,
+          "pm": 4,
           "tempo": "5 minuti",
           "effetto": "Migliora di uno stato la Ferita; l’effetto è automatico e non richiede prove o kit."
         }
@@ -96,7 +96,10 @@
           "Il recupero non supera i PV massimi e non avviene durante Sanguinamento attivo.",
           "Curare una Ferita non elimina Menomazioni e non ricostruisce parti mancanti."
         ],
-        "breve": "Sanguinamento; 1d4 + SAG PV; Ferita −1"
+        "breve": "Sanguinamento; 1d4 + SAG PV; Ferita −1",
+        "promemoria": [
+          "La riduzione della Ferita è consentita una sola volta ogni 24 ore per beneficiario: il limite è condiviso con Guarigione, indipendentemente dall’utilizzatore o dalla capacità impiegata, e una nuova Ferita non lo azzera."
+        ]
       }
     },
     {
@@ -152,7 +155,7 @@
       "azione": "1 AzP",
       "bersaglio": "se stesso",
       "durata": "10 minuti",
-      "testo": "Concede +5 VA a Percezione per distinguere camuffamenti visivi, illusioni, immagini artificiali e alterazioni osservabili direttamente prodotte dall’Oscura Simmetria. Si applicano le regole d’individuazione o dell’illusione pertinente; non concede una Prova che la fonte esclude espressamente. In assenza di una procedura specifica si usa una normale Prova di Percezione.\nRiconoscere un’anomalia non rivela automaticamente origine, intenzioni o capacità. Non dissolve illusioni per gli altri, non individua persone soltanto corrotte o eretiche, non legge mente o aura, non supera automaticamente Velo Psichico o Nascondere Aura e non vede attraverso Copertura Totale. Le Prove Salvezza contro le conseguenze dell’Oscura Simmetria rimangono distinte.",
+      "testo": "Concede +5 VA a Percezione per distinguere camuffamenti visivi, illusioni, immagini artificiali e alterazioni osservabili direttamente prodotte dall’Oscura Simmetria. Concede inoltre +5 alle PS Magia espressamente previste per riconoscere illusioni visive. Il bonus non rende automatico il riconoscimento. Si applicano le regole d’individuazione o dell’illusione pertinente; non concede una Prova che la fonte esclude espressamente. In assenza di una procedura specifica si usa una normale Prova di Percezione.\nRiconoscere un’anomalia non rivela automaticamente origine, intenzioni o capacità. Non dissolve illusioni per gli altri, non individua persone soltanto corrotte o eretiche, non legge mente o aura, non supera automaticamente Velo Psichico o Nascondere Aura e non vede attraverso Copertura Totale. Le Prove Salvezza contro le conseguenze dell’Oscura Simmetria rimangono distinte.",
       "costo_pm": 5,
       "durata_tipo": "tempo",
       "effetti": {
@@ -164,9 +167,17 @@
             "ambito": "uso_specifico",
             "uso": "camuffamenti, illusioni e alterazioni dell’Oscura Simmetria",
             "condizione": "Concede +5 VA a Percezione per distinguere camuffamenti visivi, illusioni, immagini artificiali e alterazioni osservabili direttamente prodotte dall’Oscura Simmetria."
+          },
+          {
+            "tipo": "salvezza",
+            "salvezza": "magia",
+            "valore": 5,
+            "ambito": "uso_specifico",
+            "uso": "riconoscere illusioni visive",
+            "condizione": "Concede inoltre +5 alle PS Magia espressamente previste per riconoscere illusioni visive."
           }
         ],
-        "breve": "+5 Percezione (illusioni)"
+        "breve": "+5 Percezione e +5 PS Magia (illusioni)"
       }
     },
     {
@@ -280,25 +291,25 @@
       "id": "aura-di-resistenza",
       "nome": "Aura di Resistenza",
       "gruppo": "generica",
-      "costo": "4 PM",
+      "costo": "3 PM",
       "azione": "1 AzP",
       "bersaglio": "se stesso",
-      "durata": "3 Round",
-      "testo": "Concede +1 AR di natura magica, efficace contro danni Naturali, Magici ed Eterei secondo le normali regole. Si aggiunge alle protezioni indossate; più applicazioni della stessa Tecnica non si sommano. Il +1 si cumula anche con Corazza Potenziata e con il +1 non magico di Pelle di Rinoceronte, nei rispettivi ambiti (§5.13).\nNon modifica le PS o le Contromisure e non protegge dagli effetti che ignorano espressamente anche questa componente d’Armatura.",
-      "costo_pm": 4,
+      "durata": "5 Round",
+      "testo": "Concede +2 AR di natura magica, efficace contro danni Naturali, Magici ed Eterei secondo le normali regole. Si aggiunge alle protezioni indossate; più applicazioni della stessa Tecnica non si sommano. Il +2 si cumula anche con Corazza Potenziata e con il +1 non magico di Pelle di Rinoceronte, nei rispettivi ambiti (§5.13).\nNon modifica le PS o le Contromisure e non protegge dagli effetti che ignorano espressamente anche questa componente d’Armatura.",
+      "costo_pm": 3,
       "durata_tipo": "round",
-      "durata_round": 3,
+      "durata_round": 5,
       "effetti": {
         "fonte": "Giocatore §8.9",
         "ar": true,
-        "breve": "+1 AR magica"
+        "breve": "+2 AR magica"
       }
     },
     {
       "id": "salto-della-tigre",
       "nome": "Salto della Tigre",
       "gruppo": "generica",
-      "costo": "6 PM",
+      "costo": "4 PM",
       "azione": "durante la propria Iniziativa, senza Azioni aggiuntive",
       "bersaglio": "se stesso",
       "durata": "istantanea",
@@ -306,7 +317,7 @@
         "Gittata": "6 Q"
       },
       "testo": "Si trasferisce in un Q libero visibile, fisicamente accessibile e con una superficie capace di sostenerlo. Deve esserci linea d’effetto libera: niente pareti, porte chiuse, vetri integri o altre barriere solide. Ignora terreno, dislivelli e Q intermedi; trasporta il proprio equipaggiamento indossato o impugnato, non altre creature.\nNon consuma AzM o movimento, non provoca Attacchi di Opportunità ed è utilizzabile mentre Ingaggiato. Non conta come distanza percorsa per Carica, Corsa, Scatto o altre manovre.",
-      "costo_pm": 6,
+      "costo_pm": 4,
       "durata_tipo": "istantanea",
       "effetti": {
         "fonte": "Giocatore §8.9",
@@ -410,14 +421,14 @@
       "id": "pelle-di-rinoceronte",
       "nome": "Pelle di Rinoceronte",
       "gruppo": "scuola:Sole",
-      "costo": "6 PM",
+      "costo": "4 PM",
       "azione": "1 AzP",
       "bersaglio": "se stesso",
-      "durata": "3 Round",
+      "durata": "5 Round",
       "testo": "Concede +1 AR non magica contro attacchi Ravvicinati Naturali o Magici, +3 alle prove di FOR, +3 ad Atletica e alle prove di Corpo a Corpo nelle manovre in cui si impiega direttamente la forza fisica, e +2 al danno Ravvicinato. Il +3 alle manovre non è un bonus generale alle prove per colpire. La protezione non si applica ai danni Eterei.\nNon aumenta FOR e non ricalcola modificatori o capacità di carico. È compatibile con Aura di Resistenza, Corazza Potenziata e le altre protezioni consentite dal §5.13; applicazioni multiple della stessa Tecnica non si sommano.",
-      "costo_pm": 6,
+      "costo_pm": 4,
       "durata_tipo": "round",
-      "durata_round": 3,
+      "durata_round": 5,
       "effetti": {
         "fonte": "Giocatore §8.9",
         "ar": true,
@@ -487,12 +498,12 @@
       "id": "vipera-dal-cappuccio",
       "nome": "Vipera dal Cappuccio",
       "gruppo": "scuola:Sole",
-      "costo": "6 PM",
+      "costo": "5 PM",
       "azione": "1 AzP",
       "bersaglio": "creatura adiacente",
       "durata": "istantanea (un singolo attacco); l’eventuale Sanguinamento 2 prosegue secondo le regole dello Stato",
       "testo": "Colpo Singolo senz’armi o con Coltello, Pugnale, Daga, Pugnale da Combattimento, Spada leggera, Randello, Tonfa o Artigli, comprese le varianti dello stesso profilo. Non può essere Parato con arma o scudo; restano la protezione passiva dello scudo, Schivata e altre difese compatibili, compreso Passo della Mangusta se disponibile. La prova per colpire è normale.\nSe infligge almeno 1 danno dopo AR applica Sanguinamento 2 secondo le sue regole, senza durata arbitraria. A danno nullo o con attacco fallito non applica Sanguinamento; i PM restano spesi.",
-      "costo_pm": 6,
+      "costo_pm": 5,
       "durata_tipo": "istantanea",
       "effetti": {
         "fonte": "Giocatore §8.9",
@@ -531,11 +542,11 @@
       "costo": "5 PM",
       "azione": "AzM, compresa nello spostamento",
       "bersaglio": "se stesso",
-      "durata": "3 Round",
+      "durata": "5 Round",
       "testo": "Si attiva usando l’AzM per Passo, Corsa o Scatto. Il personaggio è incorporeo soltanto mentre si muove e ritorna corporeo alla fine dello spostamento. Nei Round successivi torna incorporeo durante il nuovo movimento senza un’altra attivazione o spesa di PM.\nDurante l’incorporeità non produce rumori di movimento, attraversa Q occupati e aperture come grate, sbarre o porte socchiuse e non attiva sensori acustici, a contatto o a pressione. È danneggiabile soltanto da attacchi Magici o Eterei; i primi incontrano l’AR pertinente, i secondi soltanto la componente magica. Gli Attacchi di Opportunità vengono provocati normalmente, ma quelli Naturali lo attraversano senza effetto.\nRimane visibile e rilevabile da sensori ottici, termici, mistici o di prossimità. Non attraversa superfici solide continue, non vola e non termina in un Q occupato o senza sostegno. Un’azione compiuta durante lo spostamento, inclusa l’attivazione di un’altra Tecnica, interrompe l’incorporeità prima della sua risoluzione; la durata complessiva continua. Dopo tale interruzione non torna incorporeo per il resto della medesima AzM, neppure riprendendo un segmento di Passo. Una nuova AzM nei Round successivi segue normalmente la Tecnica.",
       "costo_pm": 5,
       "durata_tipo": "round",
-      "durata_round": 3,
+      "durata_round": 5,
       "effetti": {
         "fonte": "Giocatore §8.9",
         "promemoria": [
@@ -551,11 +562,11 @@
       "costo": "6 PM",
       "azione": "durante la propria Iniziativa, senza Azioni aggiuntive",
       "bersaglio": "se stesso",
-      "durata": "3 Round",
+      "durata": "5 Round",
       "testo": "Raddoppia il movimento attuale: con valori base, Passo 12 Q, Corsa 24 Q, Scatto 36 Q. Consente di percorrere liquidi e pareti verticali e di superare aperture e superfici instabili entro il movimento disponibile; considera normale il Terreno Difficile.\nQueste capacità non richiedono prove aggiuntive per la superficie, ma Corsa e Scatto mantengono le proprie prove di Atletica (rispettivamente senza penalità propria e −2), gli esiti e i modificatori. Occorre terminare su una superficie capace di sostenere il personaggio, altrimenti cade o affonda. Non attraversa solidi e non evita Attacchi di Opportunità.",
       "costo_pm": 6,
       "durata_tipo": "round",
-      "durata_round": 3,
+      "durata_round": 5,
       "effetti": {
         "fonte": "Giocatore §8.9",
         "valori": [
@@ -576,14 +587,14 @@
       "id": "illusione-lunare",
       "nome": "Illusione Lunare",
       "gruppo": "scuola:Luna",
-      "costo": "5 PM",
+      "costo": "3 PM",
       "azione": "durante la propria Iniziativa, senza Azioni aggiuntive",
       "bersaglio": "se stesso",
-      "durata": "3 Round",
+      "durata": "5 Round",
       "testo": "In ciascun Round in cui percorre volontariamente almeno 2 Q con Passo, Corsa o Scatto, il primo attacco diretto contro di lui prima della propria Iniziativa successiva subisce −3 VA. Dopo quell’attacco le immagini si disperdono; il movimento idoneo di un Round successivo può generarle di nuovo. Non si accumulano più protezioni.\nVale contro attacchi Ravvicinati e a Distanza; se una Raffica usa un’unica prova, penalizza quella prova. Non rimborsa munizioni. Non agisce contro aree, effetti inevitabili, effetti senza prova per colpire o contro chi individua il personaggio senza la vista o vede oltre l’illusione. Movimenti forzati e teletrasporti non la attivano.",
-      "costo_pm": 5,
+      "costo_pm": 3,
       "durata_tipo": "round",
-      "durata_round": 3,
+      "durata_round": 5,
       "effetti": {
         "fonte": "Giocatore §8.9",
         "promemoria": [
@@ -596,7 +607,7 @@
       "id": "mani-di-yorama",
       "nome": "Mani di Yorama",
       "gruppo": "scuola:Luna",
-      "costo": "5 PM",
+      "costo": "3 PM",
       "azione": "reazione a un attacco fisico diretto, senza Azioni aggiuntive, anche fuori dalla propria Iniziativa",
       "bersaglio": "se stesso",
       "durata": "istantanea",
@@ -604,7 +615,7 @@
         "Requisito": "almeno una mano libera"
       },
       "testo": "Effettua Difese per Parata a mani nude: senza penalità propria contro un attacco Ravvicinato, a −5 VA contro un singolo proiettile fisico di Pistola, arma da lancio, arco o balestra. Non richiede Parata a Distanza. Restano gli altri modificatori pertinenti, compreso quello contro Raffica.\nUna Parata riuscita con la Tecnica annulla il singolo colpo. Contro un attacco Magistrale è necessaria una Parata Magistrale. Contro una Raffica neutralizza un solo colpo consentito dalla Tecnica; gli altri si risolvono normalmente.\nCon Magistrale contro un’arma Ravvicinata, oltre a deviare il colpo, la fa cadere in un Q a sua scelta entro 2 Q dall’attaccante, compreso quello occupato dall’attaccante. Fallimento e Maldestro seguono le conseguenze della Parata.\nNon devia attacchi energetici, Eterei, esplosioni, coni, aree, proiettili di armi pesanti o attacchi non percepiti. Essendo una Tecnica Interiore, non permette Contraccolpo Interiore nello stesso Round.",
-      "costo_pm": 5,
+      "costo_pm": 3,
       "durata_tipo": "istantanea",
       "effetti": {
         "fonte": "Giocatore §8.9",
@@ -631,17 +642,17 @@
       "id": "radici-della-montagna",
       "nome": "Radici della Montagna",
       "gruppo": "scuola:Terra",
-      "costo": "4 PM",
+      "costo": "2 PM",
       "azione": "durante la propria Iniziativa, senza Azioni aggiuntive",
       "bersaglio": "se stesso",
-      "durata": "3 Round",
+      "durata": "5 Round",
       "altri_campi": {
         "Requisito": "contatto con superficie solida"
       },
       "testo": "Il personaggio si ancora: non può essere Sbilanciato, fatto cadere A Terra, spinto, trascinato o spostato fisicamente; è immune allo spostamento da Sbalzante e supera le prove richieste esclusivamente per mantenere la posizione. Il movimento disponibile diventa 0.\nSubisce normalmente danni e altre conseguenze degli attacchi. Voler muoversi termina la Tecnica prima del movimento; termina anche se il sostegno viene distrutto o viene meno. Non impedisce trasferimenti dimensionali o teletrasporti.",
-      "costo_pm": 4,
+      "costo_pm": 2,
       "durata_tipo": "round",
-      "durata_round": 3,
+      "durata_round": 5,
       "effetti": {
         "fonte": "Giocatore §8.9",
         "valori": [
@@ -736,12 +747,12 @@
       "id": "onda-interiore",
       "nome": "Onda Interiore",
       "gruppo": "lottatore",
-      "costo": "5 PM",
+      "costo": "3 PM",
       "azione": "1 AzP",
       "bersaglio": "creatura entro 6 Q",
       "durata": "istantanea",
       "testo": "Una prova di Corpo a Corpo per colpire proietta il pugno a distanza. Entro 6 Q nessuna penalità propria di Gittata; restano copertura e altri modificatori. Vettore Distanza, danno Magico assorbito normalmente, non Etereo. Schivabile secondo le regole degli attacchi a distanza, non Parabile con un’arma ordinaria.\nInfligge il danno senz’armi della propria Disciplina e del Grado nella Classe, più i bonus pertinenti al singolo attacco.\nTabella — Disciplina: Potenza; Gradi I–II: 1d8; Gradi III–IV: 1d10; Gradi V–VI: 1d12 / Disciplina: Rapidità; Gradi I–II: 1d4; Gradi III–IV: 1d6; Gradi V–VI: 1d8 / Disciplina: Controllo; Gradi I–II: 1d4; Gradi III–IV: 1d6; Gradi V–VI: 1d8 / Disciplina: Guardia; Gradi I–II: 1d6; Gradi III–IV: 1d8; Gradi V–VI: 1d10\nNormali esiti della prova per colpire. Un singolo attacco: non estende a distanza Raffica di Colpi o Combattimento Multiplo.",
-      "costo_pm": 5,
+      "costo_pm": 3,
       "durata_tipo": "istantanea",
       "effetti": {
         "fonte": "Giocatore §8.9",
@@ -846,12 +857,12 @@
       "id": "corpo-infrangibile",
       "nome": "Corpo Infrangibile",
       "gruppo": "lottatore",
-      "costo": "4 PM",
+      "costo": "3 PM",
       "azione": "dopo AR, prima di sottrarre PV, anche fuori Iniziativa, senza Azioni aggiuntive",
       "bersaglio": "se stesso",
       "durata": "istantanea",
       "testo": "Riduce una sola applicazione di danno Naturale o Magico di 1d4 + Mod COS, riduzione minima 1; il danno non scende sotto 0. Non riduce Etereo, Sanguinamento, danni continuati o perdite da Affaticamento, sostanze o ambiente. Contro Raffiche e altri attacchi multipli si sceglie un solo colpo.\nSe il danno viene azzerato, non si attivano conseguenze che richiedono un danno effettivamente subito. Le Contromisure seguono le proprie regole e non sono trattate come un’ulteriore riduzione del danno.",
-      "costo_pm": 4,
+      "costo_pm": 3,
       "durata_tipo": "istantanea",
       "effetti": {
         "fonte": "Giocatore §8.9",
