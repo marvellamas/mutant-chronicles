@@ -879,7 +879,9 @@ export function dichiarazioneRavvicinato(d = {}) {
       alleatoAdiacente: !!b.alleatoAdiacente,
       copertura: ['leggera', 'media', 'totale'].includes(b.copertura) ? b.copertura : 'nessuna',
       coperturaMigliorata: !!b.coperturaMigliorata,
-      distanza: Number.isFinite(b.distanza) && b.distanza >= 1 ? Math.round(b.distanza) : 1,
+      // A.171: la distanza 0 Q esiste — è lo spazio condiviso (uno Sciame sopra la sua vittima). Prima il
+      // minimo era 1 e uno Sciame non avrebbe mai potuto dichiarare il suo unico attacco possibile.
+      distanza: Number.isFinite(b.distanza) && b.distanza >= 0 ? Math.round(b.distanza) : 1,
     },
     manovra: manovra.length ? manovra : ['normale'],
     bersagli: [2, 3].includes(d.bersagli) ? d.bersagli : 2,
@@ -1151,7 +1153,13 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
   if (statoATerra) promemoria.push('Sei A Terra: il −4 è già nel VA dallo Stato della sessione (§5.5).');
   const b = d.bersaglio;
   if (b.aTerra) aggiungi(situazione, 'Bersaglio A Terra', AT.bersaglio, 'bersaglio', AT.paragrafo);
-  if (b.distanza > vincoli.portata && !d.controcarica) blocca(`Bersaglio a ${b.distanza} Q, oltre la portata dell’arma (${vincoli.portata} Q).`);
+  // A.171: con portata 0 Q (gli Sciami) il motivo non è «oltre la portata» ma «non condivide lo spazio»: al
+  // tavolo è un'altra cosa, e il Direttore deve capire subito che cosa manca
+  if (b.distanza > vincoli.portata && !d.controcarica) {
+    blocca(vincoli.portata === 0
+      ? `Bersaglio a ${b.distanza} Q: questo attacco colpisce solo chi condivide almeno un quadretto (portata 0 Q).`
+      : `Bersaglio a ${b.distanza} Q, oltre la portata dell’arma (${vincoli.portata} Q).`);
+  }
   if (b.copertura === 'totale') blocca('Il bersaglio in Copertura Totale non può essere attaccato direttamente (§5.8).');
   else if (b.copertura !== 'nessuna') {
     // §5.8 (E&L 13): vale se l'ostacolo protegge davvero dalla direzione dell'attacco

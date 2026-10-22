@@ -13,7 +13,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
 import { validaNemico } from '../src/validate.js';
-import { statoPortata } from '../src/attacco.js';
+import { statoPortata, dichiarazioneRavvicinato } from '../src/attacco.js';
 import { sagoma, celle, distanza, posizioneValida, sovrappone } from '../src/mappa/sagoma.js';
 import { celleToken, celleToccateToken } from '../src/mappa/token.js';
 import { celleToccate, formaRuotata } from '../src/mappa/forma.js';
@@ -170,4 +170,12 @@ test('A.172: il quadretto più favorevole non permette di colpire attraverso un 
   const linea = lineaDiTiro(scena, scena.token[0], scena.token[1], muri, dati.mappa.visuale);
   assert.equal(linea.distanza, 3, 'la distanza si misura dal quadretto occupato più favorevole, non dal centro');
   assert.equal(linea.vista, 'bloccata', 'il muro invalicabile resta in mezzo: non si colpisce attraverso');
+});
+
+test('A.171: la dichiarazione accetta la distanza 0 (lo spazio condiviso esiste)', () => {
+  // prima il minimo era 1 Q e uno Sciame non avrebbe mai potuto dichiarare il suo unico attacco possibile
+  assert.equal(dichiarazioneRavvicinato({ bersaglio: { distanza: 0 } }).bersaglio.distanza, 0);
+  assert.equal(dichiarazioneRavvicinato({ bersaglio: { distanza: 2 } }).bersaglio.distanza, 2);
+  assert.equal(dichiarazioneRavvicinato({}).bersaglio.distanza, 1, 'senza indicazioni resta il Contatto');
+  assert.equal(dichiarazioneRavvicinato({ bersaglio: { distanza: -3 } }).bersaglio.distanza, 1, 'una distanza negativa non esiste');
 });
