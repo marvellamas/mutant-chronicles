@@ -4,7 +4,7 @@
 
 ## Regole della magia e novanta incantesimi
 
-**EDIZIONE 1.5**
+**EDIZIONE 1.6**
 
 Ottobre 2026
 
@@ -30,65 +30,65 @@ Q indica un quadrato di 1,5 metri; RND un round; AP un’Azione Principale; AC u
 
 I rimandi esterni indicano il nome del manuale e il paragrafo da consultare. I rimandi alle sezioni di questo volume riguardano il Manuale della Magia. Il sommario e le pagine del repertorio sono collegamenti interni utilizzabili nella versione digitale.
 
-La voce Rituale indica l’ammissibilità di una versione rituale. La creazione degli Artefatti e delle batterie è disciplinata dalla sezione 24; Rigenerazione dalla sezione 25. Cristalli Matrice, Batterie Matrice, Schegge instabili, tipi di riserva e Artefatti di campagna sono nella sezione 26. Le altre conversioni rituali richiedono una procedura espressamente definita. Gli impieghi specifici concessi dai Talenti seguono le rispettive descrizioni nel Manuale del Giocatore, capitolo 3 e §8.6.
+La voce Rituale indica l’ammissibilità di una versione rituale. La creazione degli Artefatti e delle batterie è disciplinata dalla sezione 24; Rigenerazione dalla sezione 25\. Cristalli Matrice, Batterie Matrice, Schegge instabili, tipi di riserva e Artefatti di campagna sono nella sezione 26\. Le altre conversioni rituali richiedono una procedura espressamente definita. Gli impieghi specifici concessi dai Talenti seguono le rispettive descrizioni nel Manuale del Giocatore, capitolo 3 e §8.6.
 
 **Sommario**
 
 Sezioni e pagine di consultazione
 
-[**1 Motore del lancio e accesso alla magia** **4**](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit#bookmark=id.d843mafgtfnw)
+[**1 Motore del lancio e accesso alla magia**](#bookmark=id.d843mafgtfnw)	**[4](#bookmark=id.d843mafgtfnw)**
 
-[**2 Componenti concentrazione e manovre** ](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit#bookmark=id.8xvdpqor3tme)**12**
+[**2 Componenti concentrazione e manovre**](#bookmark=id.8xvdpqor3tme)	**12**
 
-[**3 Bersagli gittate e risoluzione degli effetti** ](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit#bookmark=id.u9gqkqeypbyw)**14**
+[**3 Bersagli gittate e risoluzione degli effetti**](#bookmark=id.u9gqkqeypbyw)	**14**
 
-[**4 Danno difese e protezioni** ](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit#bookmark=id.8ztkmj78qrjv)**15**
+[**4 Danno difese e protezioni**](#bookmark=id.8ztkmj78qrjv)	**15**
 
-[**5 Risultati naturali e Fallimento Maldestro** ](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit#bookmark=id.ygf9v5veat2l)**15**
+[**5 Risultati naturali e Fallimento Maldestro**](#bookmark=id.ygf9v5veat2l)	**15**
 
-[**6 Punti Magia Chroma e recupero** ](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit#bookmark=id.im6gqrs4037o)**16**
+[**6 Punti Magia Chroma e recupero**](#bookmark=id.im6gqrs4037o)	**16**
 
-[**7 Cumulo prove ripetute e aree persistenti** ](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit#bookmark=id.t6orwwsvk90r)**21**
+[**7 Cumulo prove ripetute e aree persistenti**](#bookmark=id.t6orwwsvk90r)	**21**
 
-[**8 Individuazione e occultamento** ](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit#bookmark=id.1k62dg70ault)**23**
+[**8 Individuazione e occultamento**](#bookmark=id.1k62dg70ault)	**23**
 
-[**9 Impronte trappole e barriere** ](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit#bookmark=id.3c4jb5au16qe)**24**
+[**9 Impronte trappole e barriere**](#bookmark=id.3c4jb5au16qe)	**24**
 
-[**10 Cure Stati e rimozione degli effetti** ](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit#bookmark=id.ze8o5feg9efu)**25**
+[**10 Cure Stati e rimozione degli effetti**](#bookmark=id.ze8o5feg9efu)	**25**
 
-[**11 Indice degli incantesimi** ](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit#bookmark=id.g1a3gk9n3efz)**27**
+[**11 Indice degli incantesimi**](#bookmark=id.g1a3gk9n3efz)	**27**
 
-[**12 Regole elementali** ](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit#bookmark=id.attf9aqj1m86)**30**
+[**12 Regole elementali**](#bookmark=id.attf9aqj1m86)	**30**
 
-[**13 Incantesimi della specializzazione Elementi** ](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit#bookmark=id.26x0purqxjav)**34**
+[**13 Incantesimi della specializzazione Elementi**](#bookmark=id.26x0purqxjav)	**34**
 
-[**14 Schede degli elementali** ](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit#bookmark=id.34z0vf6ehey)**47**
+[**14 Schede degli elementali**](#bookmark=id.34z0vf6ehey)	**47**
 
-[**15 Rimandi alle regole generali** ](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit#bookmark=id.6auhjdb6pakm)**61**
+[**15 Rimandi alle regole generali**](#bookmark=id.6auhjdb6pakm)	**61**
 
-[**16 Incantesimi della specializzazione Cambiamento** ](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit#bookmark=id.6yuyp5hynyt2)**62**
+[**16 Incantesimi della specializzazione Cambiamento**](#bookmark=id.6yuyp5hynyt2)	**62**
 
-[**17 Incantesimi della specializzazione Manifestazione** ](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit#bookmark=id.nqtfox29ggt4)**71**
+[**17 Incantesimi della specializzazione Manifestazione**](#bookmark=id.nqtfox29ggt4)	**71**
 
-[**18 Incantesimi della specializzazione Psionica** ](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit#bookmark=id.tlf9smn6nu2p)**81**
+[**18 Incantesimi della specializzazione Psionica**](#bookmark=id.tlf9smn6nu2p)	**81**
 
-[**19 Incantesimi della specializzazione Influenza** ](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit#bookmark=id.g2mlre7l8xwu)**93**
+[**19 Incantesimi della specializzazione Influenza**](#bookmark=id.g2mlre7l8xwu)	**93**
 
-[**20 Incantesimi della specializzazione Sintonia** ](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit#bookmark=id.o1kdjrq533i0)**108**
+[**20 Incantesimi della specializzazione Sintonia**](#bookmark=id.o1kdjrq533i0)	**108**
 
-[**21 Incantesimi della specializzazione Esorcismo** ](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit#bookmark=id.a8o8p98179z7)**120**
+[**21 Incantesimi della specializzazione Esorcismo**](#bookmark=id.a8o8p98179z7)	**120**
 
-[**22 Incantesimi della specializzazione Incantamento** ](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit#bookmark=id.27o85hv40bcc)**133**
+[**22 Incantesimi della specializzazione Incantamento**](#bookmark=id.27o85hv40bcc)	**133**
 
-[**23 Incantesimi della specializzazione Trascendenza** ](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit#bookmark=id.qo0sx89v139z)**147**
+[**23 Incantesimi della specializzazione Trascendenza**](#bookmark=id.qo0sx89v139z)	**147**
 
-[**24 Creazione di artefatti e batterie mistiche** **160**](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit#heading=h.ord9l02y3102)
+[**24 Creazione di artefatti e batterie mistiche	160**](#24-creazione-di-artefatti-e-batterie-mistiche)
 
-[**25 Rigenerazione: rituale e artefatti** **165**](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit#heading=h.gyfw4bnpls5p)
+[**25 Rigenerazione: rituale e artefatti	165**](#25-rigenerazione:-rituale-e-artefatti)
 
 26 Cristalli Matrice e riserve mistiche
 
-[**27 Artefatti consumabili**](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit#heading=h.8hk2zx1yvmy8)
+[**27 Artefatti consumabili**](#27-artefatti-consumabili)
 
 28 Artefatti e contenitori di campagna
 
@@ -98,9 +98,8 @@ Potere è l’Abilità usata per lanciare gli incantesimi e si basa su Saggezza.
 
 Ogni incantesimo presenta versioni complete. Livello dichiarato e costo ordinario in PM coincidono. Si sceglie una versione indicata nella scheda; i livelli intermedi sono disponibili soltanto quando espressamente previsti. L’Anticipazione, descritta nella sezione 12, modifica un solo aspetto consentito senza aumentare il livello dichiarato.
 
-|  |  |  |
-| :-: | :-: | :-: |
-| \*\*Livello dichiarato\*\* | \*\*Addestramento Taumaturgo\*\* | \*\*Altri utilizzatori autorizzati\*\* |
+| Livello dichiarato | Addestramento Taumaturgo | Altri utilizzatori autorizzati |
+| ----- | ----- | ----- |
 | 1–3 | Nessuna Prova, salvo eccezioni | Potere senza penalità di livello |
 | 4–6 | Potere senza penalità di livello | Potere −2 VA |
 | 7–9 | Potere −2 VA | Potere −4 VA |
@@ -114,9 +113,9 @@ Per Round, Iniziativa e Azioni disponibili, consultare il Manuale del Giocatore,
 
 ## **Conoscenza e livello massimo**
 
-L’Addestramento Taumaturgo concede accesso e 2 + Mod INT incantesimi liberi, minimo 1, una sola volta. Le Classi aggiungono le proprie quote. Le versioni di un incantesimo conosciuto diventano disponibili automaticamente entro il limite dei Gradi taumaturgici complessivi: I Grado livello 3; II livello 8; III livello 11; IV livello 14; V livello 17; VI livello 18. Nel multiclasse si sommano i Gradi taumaturgici per questo limite.
+L’Addestramento Taumaturgo concede accesso e 2 \+ Mod INT incantesimi liberi, minimo 1, una sola volta. Le Classi aggiungono le proprie quote. Le versioni di un incantesimo conosciuto diventano disponibili automaticamente entro il limite dei Gradi taumaturgici complessivi: I Grado livello 3; II livello 8; III livello 11; IV livello 14; V livello 17; VI livello 18\. Nel multiclasse si sommano i Gradi taumaturgici per questo limite.
 
-Usufruitore di Magia concede agli altri personaggi 2 + Mod INT incantesimi, minimo 1, e accesso fino al livello 3. Potenziale Mistico Migliorato è riservato a chi possiede Usufruitore di Magia: aumenta il limite di 3 per acquisizione, fino a cinque acquisizioni e a un massimo di 18, mantenendo sempre la scala più difficile. Per esempio, Usufruitore di Magia e quattro acquisizioni di Potenziale Mistico Migliorato consentono il livello massimo 15; la quinta acquisizione porta il limite a 18.
+Usufruitore di Magia concede agli altri personaggi 2 \+ Mod INT incantesimi, minimo 1, e accesso fino al livello 3\. Potenziale Mistico Migliorato è riservato a chi possiede Usufruitore di Magia: aumenta il limite di 3 per acquisizione, fino a cinque acquisizioni e a un massimo di 18, mantenendo sempre la scala più difficile. Per esempio, Usufruitore di Magia e quattro acquisizioni di Potenziale Mistico Migliorato consentono il livello massimo 15; la quinta acquisizione porta il limite a 18\.
 
 Incrementare Incantesimi aggiunge due incantesimi conosciuti ed è acquisibile fino a cinque volte. Gli apprendimenti concessi da Addestramento, Classe o Talento sono automatici. Gli aumenti permanenti di Mod INT incrementano la relativa quota; quelli temporanei non concedono incantesimi.
 
@@ -126,7 +125,7 @@ I 32 Talenti magici e mistici seguenti si acquisiscono con le normali scelte di 
 
 Tipo: Passivo. Prerequisiti: non possedere l’Addestramento Taumaturgo né Risorse Interiori. Acquisizione: una sola volta.
 
-Il personaggio acquisisce la capacità personale di lanciare Incantesimi e apprende 2 + Mod INT Incantesimi, minimo 1, scelti liberamente fra le famiglie magiche. Può utilizzare le versioni degli Incantesimi conosciuti fino al livello 3, rispettando i requisiti delle rispettive schede.
+Il personaggio acquisisce la capacità personale di lanciare Incantesimi e apprende 2 \+ Mod INT Incantesimi, minimo 1, scelti liberamente fra le famiglie magiche. Può utilizzare le versioni degli Incantesimi conosciuti fino al livello 3, rispettando i requisiti delle rispettive schede.
 
 Il lancio richiede sempre una Prova di Potere, anche ai livelli 1–3. Si applicano i normali costi in Azioni e PM, le Componenti e gli altri modificatori previsti.
 
@@ -140,9 +139,9 @@ Sintonizzazione del Focus. Chi possiede Usufruitore di Magia può sintonizzare i
 
 Tipo: Passivo. Prerequisito: Usufruitore di Magia. Acquisizione: fino a cinque volte.
 
-Ogni acquisizione aumenta di 3 il livello massimo degli Incantesimi accessibili tramite Usufruitore di Magia, fino a un massimo di 18. È riservato a chi possiede Usufruitore di Magia e non aumenta il limite dei personaggi con Addestramento Taumaturgo.
+Ogni acquisizione aumenta di 3 il livello massimo degli Incantesimi accessibili tramite Usufruitore di Magia, fino a un massimo di 18\. È riservato a chi possiede Usufruitore di Magia e non aumenta il limite dei personaggi con Addestramento Taumaturgo.
 
-Partendo dal limite iniziale di 3, le cinque acquisizioni portano il limite rispettivamente a 6, 9, 12, 15 e 18.
+Partendo dal limite iniziale di 3, le cinque acquisizioni portano il limite rispettivamente a 6, 9, 12, 15 e 18\.
 
 Il personaggio può utilizzare le versioni degli Incantesimi già conosciuti comprese nel nuovo limite, rispettando le rispettive schede. Il Talento non concede nuovi Incantesimi né PM aggiuntivi.
 
@@ -170,7 +169,7 @@ La Prova di Potere rimane obbligatoria, anche per gli Incantesimi di livello 1�
 
 Tipo: Passivo. Prerequisito: possedere la capacità personale di lanciare Incantesimi. Acquisizione: una sola volta.
 
-Quando utilizza la manovra Focalizzazione, il personaggio ottiene +6 al VA di Potere, anziché +4, per l’Incantesimo e il livello dichiarati.
+Quando utilizza la manovra Focalizzazione, il personaggio ottiene \+6 al VA di Potere, anziché \+4, per l’Incantesimo e il livello dichiarati.
 
 La preparazione richiede 1 Azione Principale, senza Prova né consumo di PM. Il lancio deve occupare la successiva Azione Principale disponibile; impiegarla diversamente fa perdere il beneficio. Fra preparazione e lancio è consentito soltanto Passo.
 
@@ -212,7 +211,7 @@ Restano valide le condizioni, i costi e la Prova di Potere previsti da Contromag
 
 Tipo: Passivo. Prerequisito: possedere la capacità personale di lanciare Incantesimi. Acquisizione: una sola volta.
 
-Quando un Incantesimo richiede un tiro per colpire con Armi da lancio, il personaggio ottiene un ulteriore +2 al VA, portando il bonus previsto per questo tiro da +2 a +4.
+Quando un Incantesimo richiede un tiro per colpire con Armi da lancio, il personaggio ottiene un ulteriore \+2 al VA, portando il bonus previsto per questo tiro da \+2 a \+4.
 
 Il beneficio si applica esclusivamente al tiro per colpire con Armi da lancio. Non modifica la Prova di Potere né i tiri di Corpo a corpo richiesti dagli Incantesimi a Contatto.
 
@@ -234,9 +233,9 @@ Tipo: Passivo. Prerequisito: non possedere già la capacità di Meditazione. Acq
 
 Il personaggio acquisisce la capacità di Meditazione.
 
-Ogni ora completa permette di recuperare 3 + Mod SAG PM, con un minimo di 3 PM, senza effettuare Prove.
+Ogni ora completa permette di recuperare 3 \+ Mod SAG PM, con un minimo di 3 PM, senza effettuare Prove.
 
-Le ore giornaliere utili al recupero sono 2 + Mod SAG + Mod COS, con un minimo di 1 ora.
+Le ore giornaliere utili al recupero sono 2 \+ Mod SAG \+ Mod COS, con un minimo di 1 ora.
 
 Durante la Meditazione il personaggio deve restare fermo e tranquillo: non può esplorare, sorvegliare, ricaricare contenitori o mantenere la Concentrazione su un Incantesimo.
 
@@ -254,7 +253,7 @@ Restano invariati il numero di ore giornaliere disponibili e le condizioni della
 
 Tipo: Passivo. Prerequisito: possedere la capacità di Meditazione. Acquisizione: una sola volta.
 
-Il personaggio raddoppia le ore giornaliere di Meditazione utili al recupero dei PM. Il raddoppio si applica dopo aver calcolato 2 + Mod SAG + Mod COS, con un minimo iniziale di 1 ora. Il minimo finale diventa quindi 2 ore giornaliere.
+Il personaggio raddoppia le ore giornaliere di Meditazione utili al recupero dei PM. Il raddoppio si applica dopo aver calcolato 2 \+ Mod SAG \+ Mod COS, con un minimo iniziale di 1 ora. Il minimo finale diventa quindi 2 ore giornaliere.
 
 Il Talento non richiede Meditazione Migliorata. Possedendoli entrambi, si applicano sia il raddoppio delle ore sia il bonus di 2 PM per ora completa.
 
@@ -280,9 +279,9 @@ Il beneficio di Magia Occultata è sempre attivo e non richiede Azioni o PM aggi
 
 Passivo. Requisito: possedere una riserva personale di PM. Acquisibile fino a tre volte.
 
-Aumenta permanentemente i PM Massimi di 5 per acquisizione, fino a +15. Il beneficio si aggiunge alla riserva personale calcolata con SAG, Gradi di Classe e altri incrementi, prima della riduzione dovuta all’Umanità.
+Aumenta permanentemente i PM Massimi di 5 per acquisizione, fino a \+15. Il beneficio si aggiunge alla riserva personale calcolata con SAG, Gradi di Classe e altri incrementi, prima della riduzione dovuta all’Umanità.
 
-Aumentare il massimo non recupera PM: i PM Attuali restano invariati. Per esempio, 12 PM Attuali su 20 Massimi diventano 12 su 25. Il Talento non aumenta la capacità di batterie, cristalli o altre riserve esterne e non concede Incantesimi né accesso alla Meditazione. Può beneficiare anche chi usa Tecniche Interiori.
+Aumentare il massimo non recupera PM: i PM Attuali restano invariati. Per esempio, 12 PM Attuali su 20 Massimi diventano 12 su 25\. Il Talento non aumenta la capacità di batterie, cristalli o altre riserve esterne e non concede Incantesimi né accesso alla Meditazione. Può beneficiare anche chi usa Tecniche Interiori.
 
 ## **Recupero Mistico**
 
@@ -324,7 +323,7 @@ La Manovra Focalizzazione rimane utilizzabile normalmente anche senza Focus: il 
 
 Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.
 
-Ottiene +3 VA alle Prove Salvezza di Volontà effettuate per mantenere la Concentrazione su un Incantesimo. Si applica soltanto alle Prove già previste dalle regole, senza introdurne di nuove né modificarne la frequenza.
+Ottiene \+3 VA alle Prove Salvezza di Volontà effettuate per mantenere la Concentrazione su un Incantesimo. Si applica soltanto alle Prove già previste dalle regole, senza introdurne di nuove né modificarne la frequenza.
 
 Il beneficio non si applica alle altre PS di Volontà, alle Prove di Potere per il lancio o alle Prove per mantenere una Focalizzazione preparatoria. Non consente di mantenere più Incantesimi e non impedisce l’interruzione automatica per incoscienza, morte o perdita dei requisiti necessari.
 
@@ -410,7 +409,7 @@ Attivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una 
 
 Una volta per combattimento, dopo un lancio riuscito, anche automatico, e dopo l’eventuale Prova per colpire riuscita, può massimizzare una sola determinazione iniziale di danno o guarigione dell’Incantesimo. Dichiara l’uso prima di tirare i dadi dell’effetto.
 
-Ogni dado della determinazione scelta assume il proprio risultato massimo, poi si applicano i normali modificatori fissi. Per esempio, 3d6 + 2 produce 20 prima delle protezioni.
+Ogni dado della determinazione scelta assume il proprio risultato massimo, poi si applicano i normali modificatori fissi. Per esempio, 3d6 \+ 2 produce 20 prima delle protezioni.
 
 Se una sola determinazione è condivisa da più bersagli, tutti usano il risultato massimizzato. Se l’Incantesimo prevede più Colpi o determinazioni distinte, ne sceglie una sola. Non massimizza effetti periodici successivi, Durata, PV delle creature evocate, Prove Salvezza o altre Prove.
 
@@ -464,13 +463,13 @@ Durante la Concentrazione si può effettuare soltanto Passo fino a 6 Q e non si 
 
 Con Concentrazione Operativa si possono utilizzare le normali Azioni e andature mentre si mantiene un solo Incantesimo. Non si può lanciare alcun altro Incantesimo, neppure istantaneo o a Durata: occorre interrompere la Concentrazione prima del nuovo tentativo. Contromagia e Convertire Potere restano utilizzabili ai normali costi e requisiti. Restano le Prove di mantenimento, le interruzioni automatiche e le Azioni espressamente richieste per controllare o utilizzare l’effetto.
 
-Dopo la prima fonte di danno subita nel Round si effettua una PS di Volontà: con fallimento la Concentrazione termina. Concentrazione Migliorata concede +3 VA a questa PS e alle altre PS previste per mantenerla. Le ulteriori fonti di soli danni nello stesso Round non richiedono altre Prove; acquisire Stordito in un evento successivo richiede invece una nuova PS, secondo la sezione 5. Una Concentrazione interrotta richiede un nuovo lancio e un nuovo pagamento.
+Dopo la prima fonte di danno subita nel Round si effettua una PS di Volontà: con fallimento la Concentrazione termina. Concentrazione Migliorata concede \+3 VA a questa PS e alle altre PS previste per mantenerla. Le ulteriori fonti di soli danni nello stesso Round non richiedono altre Prove; acquisire Stordito in un evento successivo richiede invece una nuova PS, secondo la sezione 5\. Una Concentrazione interrotta richiede un nuovo lancio e un nuovo pagamento.
 
 ## **Le tre manovre magiche**
 
 Lanciare un Incantesimo segue la procedura ordinaria. Durante l’Ingaggio richiede sempre Potere, anche ai livelli 1–3, con un ulteriore −2 VA. Non provoca Attacchi di Opportunità. Lancio in Combattimento elimina il −2 da Ingaggio, mantenendo l’obbligo della Prova.
 
-Focalizzazione impiega 1 Azione Principale preparatoria, senza Prova né PM, e concede +4 VA a Potere per l’incantesimo e il livello dichiarati. Il lancio deve occupare la successiva Azione Principale disponibile; impiegarla diversamente fa perdere il beneficio. Fra preparazione e lancio è consentito soltanto Passo. Non si cumula. Focalizzazione Migliorata porta il bonus a +6. Se non serve Potere, non produce un vantaggio.
+Focalizzazione impiega 1 Azione Principale preparatoria, senza Prova né PM, e concede \+4 VA a Potere per l’incantesimo e il livello dichiarati. Il lancio deve occupare la successiva Azione Principale disponibile; impiegarla diversamente fa perdere il beneficio. Fra preparazione e lancio è consentito soltanto Passo. Non si cumula. Focalizzazione Migliorata porta il bonus a \+6. Se non serve Potere, non produce un vantaggio.
 
 Contromagia richiede il Talento omonimo, 1 Azione Principale disponibile e visibilità del lancio entro 10 Q dal lanciatore avversario. Non richiede preparazione. Occorre conoscere l’Incantesimo da contrastare; il riconoscimento non richiede una Prova. Solo se il lanciatore possiede Magia Occultata è necessaria una Prova di Occultismo senza costo in Azioni: con un fallimento non si può procedere. Contromagia Universale elimina il requisito della conoscenza dell’Incantesimo, ma mantiene la Prova di Occultismo quando il lanciatore possiede Magia Occultata. Si pagano PM pari al livello dell’incantesimo da contrastare e si effettua sempre Potere, con penalità di livello e un ulteriore −2 VA. Il successo annulla l’incantesimo; Azioni e PM restano spesi. Contromagia Migliorata elimina il −2 aggiuntivo. Si possono contrastare livelli superiori al proprio accesso se si hanno i PM necessari.
 
@@ -480,17 +479,16 @@ Gli effetti già attivi possono essere rimossi con Negare Potere nei limiti dell
 
 ## **Lancio e colpire sono passaggi distinti**
 
-La scheda stabilisce se occorre colpire. Se lo richiede, si tira Armi da lancio +2 anche senza Copertura; Incantesimi da Lancio aggiunge un ulteriore +2, per un totale di +4. Le penalità di livello si applicano a Potere, non al tiro per colpire. Entrambe le Prove appartengono alla stessa Azione e allo stesso costo. Un tiro mancato non restituisce PM.
+La scheda stabilisce se occorre colpire. Se lo richiede, si tira Armi da lancio \+2 anche senza Copertura; Incantesimi da Lancio aggiunge un ulteriore \+2, per un totale di \+4. Le penalità di livello si applicano a Potere, non al tiro per colpire. Entrambe le Prove appartengono alla stessa Azione e allo stesso costo. Un tiro mancato non restituisce PM.
 
-Per un incantesimo a Contatto contro un bersaglio non consenziente occorre prima raggiungerlo ed entrare in Ingaggio. Dopo il lancio riuscito si effettua Corpo a corpo +4 per toccarlo. Contro un bersaglio consenziente il tiro di contatto non serve. La Salvezza si effettua soltanto se prevista dall’incantesimo.
+Per un incantesimo a Contatto contro un bersaglio non consenziente occorre prima raggiungerlo ed entrare in Ingaggio. Dopo il lancio riuscito si effettua Corpo a corpo \+4 per toccarlo. Contro un bersaglio consenziente il tiro di contatto non serve. La Salvezza si effettua soltanto se prevista dall’incantesimo.
 
 ## **Gittate e geometria**
 
 Le gittate sono Personale, Contatto oppure una misura in Q dal lanciatore al bersaglio o all’origine dell’Area. Normalmente un bersaglio individuale deve essere visibile; per un’Area deve essere visibile l’origine. Un effetto che raggiunge bersagli nascosti o remoti deve dichiararlo.
 
-|  |  |
-| :-: | :-: |
-| \*\*Forma\*\* | \*\*Misura\*\* |
+| Forma | Misura |
+| :---- | :---- |
 | Raggio | Distanza dal centro al limite; es. raggio 2 Q. |
 | Linea | Lunghezza × larghezza, normalmente 1 Q; es. 6 × 1 Q. |
 | Cono | Lunghezza × larghezza finale, con apertura progressiva; es. 6 × 3 Q. |
@@ -525,27 +523,26 @@ Le Contromisure seguono il Manuale del Giocatore, §5.24, «Contromisure». Le i
 
 **1 naturale su Potere:** Successo Magistrale, lancio riuscito e costo dimezzato per difetto, minimo 1 PM. Un lancio automatico non genera risultati naturali. 20 naturale: Fallimento Maldestro, nessun effetto, normale spesa di PM e consultazione della tabella seguente.
 
-Tirare 1d20 + Mod SAG e limitare il risultato finale fra 1 e 20. L’aumento permanente del massimo dei PM si applica ogni volta che si raggiunge 20, senza un limite di frequenza.
+Tirare 1d20 \+ Mod SAG e limitare il risultato finale fra 1 e 20\. L’aumento permanente del massimo dei PM si applica ogni volta che si raggiunge 20, senza un limite di frequenza.
 
-|  |  |
-| :-: | :-: |
-| \*\*Risultato\*\* | \*\*Conseguenza\*\* |
+| Risultato | Conseguenza |
+| :---- | :---- |
 | 20 | Recupera tutti i PM e aumenta permanentemente di 1 il massimo dei PM. |
 | 19 | Recupera tutti i PM. |
-| 18–16 | I PM rimasti si riducono a 1. |
+| 18–16 | I PM rimasti si riducono a 1\. |
 | 15–13 | PM a 1; −2 VA ai lanci per 1d3 giorni. |
 | 12–10 | PM a 1; −4 VA ai lanci per 1d3 giorni. |
 | 9–8 | Perde tutti i PM e sviene fino a recuperarne almeno 1; −2 VA ai lanci per 1d4+1 giorni. |
 | 7–6 | Perde tutti i PM e sviene fino a recuperarne almeno 1; −2 VA ai lanci per 1d8+1 giorni. |
 | 5–4 | Perde tutti i PM e sviene fino a recuperarne almeno 1; −2 VA ai lanci per 1d6 settimane. |
 | 3–2 | Muore. |
-| 1 | Muore esplodendo. Le creature entro 3 Q perdono PM pari al livello dell’incantesimo + 1d6. Salvezza di Magia: perdita dimezzata per eccesso. |
+| 1 | Muore esplodendo. Le creature entro 3 Q perdono PM pari al livello dell’incantesimo \+ 1d6. Salvezza di Magia: perdita dimezzata per eccesso. |
 
 ## **Prove per colpire**
 
 I risultati naturali delle Prove per colpire seguono il Manuale del Giocatore, §1.6; le Difese contro un attacco magistrale seguono il §5.9. Un Successo Magistrale su Potere modifica il lancio, senza rendere più difficile difendersi dall’attacco.
 
-Un 20 in Armi da lancio richiede la tabella delle Complicazioni ravvicinate del Manuale del Giocatore, §5.17, con 1d20 + Mod DES; non si consulta nuovamente quella magica. Si ignorano caduta o danneggiamento dell’arma, ma restano danni, Ferite, caduta del personaggio e penalità. Il Focus non sostituisce automaticamente l’arma nella tabella.
+Un 20 in Armi da lancio richiede la tabella delle Complicazioni ravvicinate del Manuale del Giocatore, §5.17, con 1d20 \+ Mod DES; non si consulta nuovamente quella magica. Si ignorano caduta o danneggiamento dell’arma, ma restano danni, Ferite, caduta del personaggio e penalità. Il Focus non sostituisce automaticamente l’arma nella tabella.
 
 ## **Punti Eroe e Distintivi**
 
@@ -553,7 +550,7 @@ Punti Eroe e Distintivi si applicano alle Prove magiche secondo il Manuale del G
 
 ## **Scadenze e interruzione degli effetti**
 
-Salvo una scadenza specifica nella scheda, il RND del lancio non si conta nella durata e l’effetto termina alla fine dell’ultimo RND previsto. Un effetto di 5 RND lanciato nel RND 2 termina alla fine del RND 7. Le durate definite come numero di applicazioni o con il RND del lancio incluso seguono la propria indicazione.
+Salvo una scadenza specifica nella scheda, il RND del lancio non si conta nella durata e l’effetto termina alla fine dell’ultimo RND previsto. Un effetto di 5 RND lanciato nel RND 2 termina alla fine del RND 7\. Le durate definite come numero di applicazioni o con il RND del lancio incluso seguono la propria indicazione.
 
 Un effetto a durata continua normalmente anche se il lanciatore perde conoscenza o muore, salvo eccezioni esplicite quali Evoca Elementale ed Ectoplasma. Per interrompere volontariamente un proprio incantesimo a durata occorre 1 AP, salvo cessazione gratuita concessa dalla scheda. Per interromperne solo una parte si dichiara la selezione e si effettua Potere −2 per ciascun bersaglio o Q da escludere: un fallimento termina tutto l’incantesimo. Non si annullano conseguenze già prodotte.
 
@@ -563,15 +560,14 @@ Movimenti forzati e A Terra non interrompono da soli Concentrazione o Focalizzaz
 
 # **6 Punti Magia Chroma e recupero**
 
-Il personaggio possiede una sola riserva personale di PM universali. I PM attuali non possono superare il massimo e non scendono sotto 0. I cristalli e gli altri contenitori conservano riserve esterne: non introducono riserve personali Fisiche, Mentali o Spirituali.
+Il personaggio possiede una sola riserva personale di PM universali. I PM attuali non possono superare il massimo e non scendono sotto 0\. I cristalli e gli altri contenitori conservano riserve esterne: non introducono riserve personali Fisiche, Mentali o Spirituali.
 
-L’Umanità può ridurre i PM Massimi personali secondo il Manuale del Giocatore, §5.21, «Umanità», fino a un minimo di 1. I PM Attuali eccedenti il nuovo massimo vengono abbassati; un aumento del massimo non ripristina PM Attuali. Le riserve esterne mantengono la propria capacità, ma l’uso delle Batterie richiede la sintonizzazione entro la capacità risultante dopo la riduzione per UMN. Le Schegge instabili costituiscono l’eccezione senza SnT e seguono il §26.5. Potere Mistico aumenta la riserva personale di 5 PM Massimi per acquisizione, fino a tre acquisizioni: questi incrementi si applicano prima della riduzione dovuta all’Umanità e non recuperano PM Attuali.
+L’Umanità può ridurre i PM Massimi personali secondo il Manuale del Giocatore, §5.21, «Umanità», fino a un minimo di 1\. I PM Attuali eccedenti il nuovo massimo vengono abbassati; un aumento del massimo non ripristina PM Attuali. Le riserve esterne mantengono la propria capacità, ma l’uso delle Batterie richiede la sintonizzazione entro la capacità risultante dopo la riduzione per UMN. Le Schegge instabili costituiscono l’eccezione senza SnT e seguono il §26.5. Potere Mistico aumenta la riserva personale di 5 PM Massimi per acquisizione, fino a tre acquisizioni: questi incrementi si applicano prima della riduzione dovuta all’Umanità e non recuperano PM Attuali.
 
 Se, al termine della risoluzione completa di un’azione, il personaggio rimane a 0 PM personali, sviene finché non recupera almeno 1 PM. Prima si risolvono gli effetti dell’azione, gli eventuali rimborsi e la tabella del Fallimento Maldestro. Possedere PM in un contenitore esterno non impedisce lo svenimento.
 
-|  |  |  |
-| :-: | :-: | :-: |
-| \*\*Aspetto del Chroma\*\* | \*\*Energia\*\* | \*\*Uso\*\* |
+| Aspetto del Chroma | Energia | Uso |
+| ----- | ----- | :---- |
 | Bianco | Universale | Può alimentare qualunque Incantesimo accessibile. |
 | Rosso | Fisica | Alimenta Incantesimi Fisici e riserve mistiche Rosse. |
 | Blu | Mentale | Alimenta Incantesimi Mentali. |
@@ -587,22 +583,21 @@ Una riserva integrata di tipo Batteria alimenta le proprietà dell’Artefatto e
 
 ## **Utilizzare una riserva esterna**
 
-  - Il contenitore deve essere trasportato e sintonizzato. Il suo costo, determinato dalla classificazione di potenza, occupa la capacità complessiva di sintonizzazione; l’energia deve essere compatibile con l’Incantesimo.
-  - Il costo di un lancio può essere pagato con PM personali, con un solo contenitore compatibile o combinando queste due fonti. Non si possono usare due contenitori per lo stesso lancio.
-  - Attingere al contenitore per pagare l’Incantesimo è compreso nell’Azione di lancio e non richiede una Prova aggiuntiva. Non cambia livello, penalità, conoscenza o requisiti dell’Incantesimo.
-  - Il Tecnomante beneficia della sintonizzazione automatica e del +2 alla capacità complessiva previsti da Architetto TecnoMistico (Manuale del Giocatore, §3.9.5, «Tecnomante»), ma usa comunque al massimo un contenitore per ciascun lancio.
-  - La presenza di un cristallo integrato in un’arma non determina automaticamente un secondo costo separato di sintonizzazione. La scheda dell’oggetto ne indica la classificazione, il costo complessivo e il modo in cui le proprietà e la riserva sono integrate.
+* Il contenitore deve essere trasportato e sintonizzato. Il suo costo, determinato dalla classificazione di potenza, occupa la capacità complessiva di sintonizzazione; l’energia deve essere compatibile con l’Incantesimo.  
+* Il costo di un lancio può essere pagato con PM personali, con un solo contenitore compatibile o combinando queste due fonti. Non si possono usare due contenitori per lo stesso lancio.  
+* Attingere al contenitore per pagare l’Incantesimo è compreso nell’Azione di lancio e non richiede una Prova aggiuntiva. Non cambia livello, penalità, conoscenza o requisiti dell’Incantesimo.  
+* Il Tecnomante beneficia della sintonizzazione automatica e del \+2 alla capacità complessiva previsti da Architetto TecnoMistico (Manuale del Giocatore, §3.9.5, «Tecnomante»), ma usa comunque al massimo un contenitore per ciascun lancio.  
+* La presenza di un cristallo integrato in un’arma non determina automaticamente un secondo costo separato di sintonizzazione. La scheda dell’oggetto ne indica la classificazione, il costo complessivo e il modo in cui le proprietà e la riserva sono integrate.
 
 ## **Convertire Potere, ricaricare e prelevare**
 
-|  |  |  |
-| :-: | :-: | :-: |
-| \*\*Operazione\*\* | \*\*Ordinario\*\* | \*\*Con i Talenti\*\* |
-| PM personali → Chroma Rosso, Blu o Verde | 3:1 | \*\*Uno dei due:\*\* 2:1  &#10;Entrambi: 1:1 |
-| Chroma Rosso, Blu o Verde → PM personali | 3:1 | \*\*Uno dei due:\*\* 2:1  &#10;Entrambi: 1:1 |
-| PV personali → PM personali | 3:1 | \*\*Uno dei due:\*\* 2:1  &#10;Entrambi: 1:1 |
-| PM personali → Chroma Bianco | 2:1 | \*\*Rimane 2:\*\*1 |
-| Chroma Bianco → PM personali | 2:1 | \*\*Rimane 2:\*\*1 |
+| Operazione | Ordinario | Con i Talenti |
+| :---- | ----- | ----- |
+| PM personali → Chroma Rosso, Blu o Verde | 3:1 | **Uno dei due:** 2:1Entrambi: 1:1 |
+| Chroma Rosso, Blu o Verde → PM personali | 3:1 | **Uno dei due:** 2:1Entrambi: 1:1 |
+| PV personali → PM personali | 3:1 | **Uno dei due:** 2:1Entrambi: 1:1 |
+| PM personali → Chroma Bianco | 2:1 | **Rimane 2:**1 |
+| Chroma Bianco → PM personali | 2:1 | **Rimane 2:**1 |
 
 ## **Convertire Potere**
 
@@ -612,10 +607,9 @@ I PV vengono prelevati dai Punti Vita disponibili e non dalle Ferite. Non è pos
 
 **Prima di spendere l’AzP si dichiara quanti gruppi convertire:** ogni gruppo produce 1 PM e richiede 3, 2 o 1 punti della risorsa di origine, secondo il rapporto applicabile. Occorrono risorse sufficienti per tutti i gruppi dichiarati e spazio nella destinazione per tutti i PM ottenibili. Un solo gruppo riesce automaticamente, anche in combattimento. Per due o più gruppi si effettua una sola Prova di Potere per l’intera operazione, con la penalità della tabella e gli altri modificatori pertinenti.
 
-|  |  |
-| :-: | :-: |
-| \*\*Gruppi dichiarati nella stessa AzP\*\* | \*\*Prova unica\*\* |
-| 1 | \*\*Automatica:\*\* nessuna Prova |
+| Gruppi dichiarati nella stessa AzP | Prova unica |
+| :---- | :---- |
+| 1 | **Automatica:** nessuna Prova |
 | 2 | Potere |
 | 3 | Potere −2 |
 | 4 | Potere −4 |
@@ -625,9 +619,8 @@ I PV vengono prelevati dai Punti Vita disponibili e non dalle Ferite. Non è pos
 
 **L’esito si applica a tutti i gruppi dichiarati:** il primo gruppo è garantito soltanto quando viene convertito da solo. Si applicano le normali regole sul VA finale; con VA pari o inferiore a 0 la Prova fallisce automaticamente. In tutti gli esiti l’AzP è consumata.
 
-|  |  |  |
-| :-: | :-: | :-: |
-| \*\*Esito della Prova\*\* | \*\*PM ottenuti\*\* | \*\*Risorse di origine spese\*\* |
+| Esito della Prova | PM ottenuti | Risorse di origine spese |
+| ----- | ----- | ----- |
 | Successo | Tutti i gruppi dichiarati. | Costo completo dei gruppi dichiarati. |
 | Fallimento | Nessuno. | Nessuna. |
 | Successo Magistrale | Tutti i gruppi dichiarati; si può aggiungere un gruppo se riserva e spazio lo consentono. | Costo completo dei gruppi effettivamente convertiti, compreso l’eventuale gruppo aggiuntivo. |
@@ -657,9 +650,9 @@ Il Chroma Viola è saturo di Energia Oscura: la sola vicinanza può corrompere u
 
 Si effettua una PS di Magia ogni ora cumulativa di esposizione. La prima avviene al completamento della prima ora. Uscire dal raggio sospende il conteggio senza azzerarlo; cambiare distanza non richiede una PS aggiuntiva. Per ogni ora si usa la fascia più intensa incontrata.
 
-Contatto: esposizione Intensa, −2 alla PS, 2 Stati di Corruzione con fallimento. Entro 1 Q senza contatto: Normale, nessun modificatore, 1 Stato. Oltre 1 Q e fino a 6 Q: Debole, +2 alla PS, 1 Stato. Oltre 6 Q e fino a 12 Q: Flebile, +4 alla PS, 1 Stato.
+Contatto: esposizione Intensa, −2 alla PS, 2 Stati di Corruzione con fallimento. Entro 1 Q senza contatto: Normale, nessun modificatore, 1 Stato. Oltre 1 Q e fino a 6 Q: Debole, \+2 alla PS, 1 Stato. Oltre 6 Q e fino a 12 Q: Flebile, \+4 alla PS, 1 Stato.
 
-Con Successo non si acquisisce Corruzione; con Fallimento si applica la quantità della fascia; con Maldestro si aggiunge 1 Stato. Il Magistrale concede +4 alla successiva PS contro la Corruzione nella stessa Scena, una sola volta, secondo la regola generale. Si applicano le penalità pertinenti di Umanità e Corruzione Oscura del Manuale del Giocatore.
+Con Successo non si acquisisce Corruzione; con Fallimento si applica la quantità della fascia; con Maldestro si aggiunge 1 Stato. Il Magistrale concede \+4 alla successiva PS contro la Corruzione nella stessa Scena, una sola volta, secondo la regola generale. Si applicano le penalità pertinenti di Umanità e Corruzione Oscura del Manuale del Giocatore.
 
 Esempio: 10 minuti a contatto e 50 minuti a 8 Q completano un’ora; si effettua la PS della fascia Intensa, −2, con 2 Stati in caso di fallimento. Gli impieghi energetici del Chroma Viola restano da definire.
 
@@ -669,17 +662,16 @@ Sono convertibili soltanto i PV ordinari del Taumaturgo. PV temporanei, riserve 
 
 Si annotano i PV sacrificati ancora da recuperare. Le cure magiche, Medicina e altri effetti di guarigione possono riportare i PV soltanto fino al massimo ordinario meno questo valore. I punti sacrificati si recuperano esclusivamente con il recupero naturale dei PV descritto nel Manuale del Giocatore, §5.16.1: ogni punto recuperato naturalmente cancella prima un punto sacrificato e restituisce quel PV; gli eventuali punti restanti recuperano le altre perdite. Non si ottiene un doppio recupero.
 
-**Esempio:** con 20 PV massimi, sacrificarne 6 porta a 14 PV e fissa a 14 il limite raggiungibile dalle cure. Recuperando naturalmente 2 PV, il conteggio sacrificato scende a 4, si recuperano quei 2 PV e il limite delle cure sale a 16. Eventuali lesioni subite nel frattempo restano perdite distinte.
+**Esempio:** con 20 PV massimi, sacrificarne 6 porta a 14 PV e fissa a 14 il limite raggiungibile dalle cure. Recuperando naturalmente 2 PV, il conteggio sacrificato scende a 4, si recuperano quei 2 PV e il limite delle cure sale a 16\. Eventuali lesioni subite nel frattempo restano perdite distinte.
 
 ## **Recupero naturale dei Punti Magia**
 
-|  |  |  |
-| :-: | :-: | :-: |
-| \*\*Fase\*\* | \*\*PM recuperati\*\* | \*\*Esempi\*\* |
+| Fase | PM recuperati | Esempi |
+| ----- | ----- | :---- |
 | Attività pesante | 0 per ora | Combattimento, fuga, marcia forzata, lavoro pesante, esplorazione ostile, sorveglianza in allarme, lavoro mentale intenso. |
 | Attività leggera | 1 per ora | Passeggiata, viaggio comodo da passeggero, mansioni ordinarie e sedentarie, esplorazione in sicurezza. |
 | Riposo breve | 2 per ora | Riposo tranquillo, pasto rilassato, conversazione o lettura ricreativa senza attività impegnative. |
-| Riposo completo | 3 per ora | \*\*Sonno comodo e indisturbato:\*\* 6 ore consentono di recuperare 18 PM. |
+| Riposo completo | 3 per ora | **Sonno comodo e indisturbato:** 6 ore consentono di recuperare 18 PM. |
 
 Il recupero richiede un’ora intera e continuativa nella condizione indicata. Un’interruzione che impedisce il riposo o cambia la condizione fa perdere la frazione d’ora non completata; i PM recuperati nelle ore precedenti restano acquisiti. Terminata l’interruzione, inizia un nuovo periodo.
 
@@ -695,11 +687,10 @@ Questi recuperi riguardano soltanto la riserva personale e proseguono per tutte 
 
 La Meditazione è accessibile con l’Addestramento Taumaturgo, con Recupero Meditativo o con una capacità che la conceda espressamente. Usufruitore di Magia, da solo, non concede questa possibilità.
 
-|  |  |
-| :-: | :-: |
-| \*\*Parametro\*\* | \*\*Regola\*\* |
-| Recupero per ora completa | 3 + Mod SAG PM, con un minimo di 3 PM. |
-| Ore utili al giorno | 2 + Mod SAG + Mod COS, con un minimo di 1 ora. |
+| Parametro | Regola |
+| :---- | :---- |
+| Recupero per ora completa | 3 \+ Mod SAG PM, con un minimo di 3 PM. |
+| Ore utili al giorno | 2 \+ Mod SAG \+ Mod COS, con un minimo di 1 ora. |
 | Prova | Nessuna. |
 | Condizioni | Fermo e tranquillo; nessuna esplorazione, sorveglianza, ricarica o Concentrazione su un Incantesimo. |
 
@@ -707,13 +698,12 @@ La Meditazione sostituisce il recupero naturale della stessa ora: i due recuperi
 
 ## **Talenti di Meditazione**
 
-Meditazione Migliorata richiede accesso alla Meditazione, è acquisibile una sola volta e aggiunge 2 PM al recupero di ogni ora completa, dopo aver applicato il minimo di 3.
+Meditazione Migliorata richiede accesso alla Meditazione, è acquisibile una sola volta e aggiunge 2 PM al recupero di ogni ora completa, dopo aver applicato il minimo di 3\.
 
 Meditazione Estesa richiede accesso alla Meditazione e raddoppia le ore giornaliere utili al recupero, dopo aver applicato il minimo di 1 ora. Non richiede Meditazione Migliorata. Permette inoltre ritiri meditativi che possono protrarsi per più giorni, mantenendo le normali necessità di sostentamento: le ore oltre il limite giornaliero raddoppiato non concedono ulteriori PM in quel giorno.
 
-|  |  |  |
-| :-: | :-: | :-: |
-| \*\*Esempio: Mod SAG +2, Mod COS +1\*\* | \*\*PM per ora\*\* | \*\*Ore utili al giorno\*\* |
+| Esempio: Mod SAG \+2, Mod COS \+1 | PM per ora | Ore utili al giorno |
+| ----- | ----- | ----- |
 | Meditazione ordinaria | 5 | 5 |
 | Con Meditazione Migliorata | 7 | 5 |
 | Con Meditazione Estesa | 5 | 10 |
@@ -721,7 +711,7 @@ Meditazione Estesa richiede accesso alla Meditazione e raddoppia le ore giornali
 
 ## **Creature senza riserva PM**
 
-PM 0 indica una riserva personale esaurita; PM — indica una riserva inesistente. Una statistica non riportata non equivale automaticamente a 0. Essere privi di incantesimi non significa essere privi di PM. Elementali evocati ed Ectoplasma hanno PM —. Dardo Spirituale non provoca svenimento per esaurimento dei PM a una creatura che non possiede tale riserva e non converte la perdita impossibile in altri danni. Forma Elementale conserva i PM personali del Taumaturgo.
+PM 0 indica una riserva personale esaurita; PM — indica una riserva inesistente. Una statistica non riportata non equivale automaticamente a 0\. Essere privi di incantesimi non significa essere privi di PM. Elementali evocati ed Ectoplasma hanno PM —. Dardo Spirituale non provoca svenimento per esaurimento dei PM a una creatura che non possiede tale riserva e non converte la perdita impossibile in altri danni. Forma Elementale conserva i PM personali del Taumaturgo.
 
 # **7 Cumulo prove ripetute e aree persistenti**
 
@@ -731,7 +721,7 @@ Alla stessa prova si applicano il maggiore bonus magico e la maggiore penalità 
 
 La difficoltà ordinaria del livello, le componenti mancanti, l’Ingaggio e le circostanze non sono penalità magiche concorrenti. Il modificatore PS proprio dell’incantesimo si applica separatamente. Il −2 alla PS Volontà ottenuto con la preparazione di Oratoria si aggiunge espressamente agli altri modificatori. Fra Silenzio Mentale, Maledizione, Distrazione e interferenze di barriere vale invece soltanto la maggiore penalità magica applicabile. I benefici personali dei Talenti, fra cui Focalizzazione e Occhio Interiore, si applicano separatamente e non sono sostituiti dal maggiore bonus magico.
 
-**Esempi:** Volontà 10 contro Comando con Mod PS −2, Maledizione −2, Barriera Mentale +4, Benedizione +2 e Oratoria −2 dà VA 8: il +2 di Benedizione è sostituito dal +4 della barriera. Potere 14, livello 9 −2, Silenzio −3, interferenza −4 e Benedizione +2 dà VA 10: si usa −4 e non −7.
+**Esempi:** Volontà 10 contro Comando con Mod PS −2, Maledizione −2, Barriera Mentale \+4, Benedizione \+2 e Oratoria −2 dà VA 8: il \+2 di Benedizione è sostituito dal \+4 della barriera. Potere 14, livello 9 −2, Silenzio −3, interferenza −4 e Benedizione \+2 dà VA 10: si usa −4 e non −7.
 
 Questa regola riguarda i modificatori alle prove. Armature, recuperi, PV temporanei, Contromisure e bonus al danno seguono le proprie compatibilità specifiche.
 
@@ -749,11 +739,11 @@ Ogni bersaglio subisce al massimo una esposizione valida per RND globale di comb
 
 **Resta il momento di applicazione indicato nella scheda:** non si aggiunge un danno alla creazione se non è previsto. L’esplosione iniziale di Devastazione Elementale conta come esposizione e impedisce il suo danno persistente nello stesso RND. Colpi multipli e AC multiple di un attacco mantengono invece la propria risoluzione.
 
-Lanci distinti, interamente pagati e compatibili con i limiti di mantenimento, producono esposizioni indipendenti. Ogni esposizione applica separatamente Difese, PS, AR e Contromisure. Due danni di 5 e 3 contro AR 4 lasciano 1 e 0, non 4. Gli Stati già applicati, come Incendiato, seguono la propria periodicità e possono coesistere con il danno della fonte; più applicazioni dello stesso Stato non ne moltiplicano il danno.
+Lanci distinti, interamente pagati e compatibili con i limiti di mantenimento, producono esposizioni indipendenti. Ogni esposizione applica separatamente Difese, PS, AR e Contromisure. Due danni di 5 e 3 contro AR 4 lasciano 1 e 0, non 4\. Gli Stati già applicati, come Incendiato, seguono la propria periodicità e possono coesistere con il danno della fonte; più applicazioni dello stesso Stato non ne moltiplicano il danno.
 
 ## **Armature e riserve**
 
-Si sommano l’AR pertinente dell’equipaggiamento, il maggiore contributo applicabile fra Pelle Corazzata, Armatura di Forza e bonus di Armatura Mistica, un solo scudo e l’eventuale Armatura Elementale contro l’elemento protetto. Armatura Mistica converte solo l’equipaggiamento interessato: non rende magiche Pelle Corazzata, Scudo o altre protezioni. Il totale si ricalcola per ciascuna AC e natura del danno. L’AR è complessiva, non suddivisa per parti anatomiche; ogni AC indica una distinta applicazione di danno alla quale sottrarre separatamente la protezione. Corazza Potenziata, Aura di Resistenza e Pelle di Rinoceronte si sommano fra loro e alle protezioni compatibili: rispettivamente +1 magica, +1 magica e +1 non magica contro il Ravvicinato Naturale o Magico. Non appartengono al gruppo del solo maggiore contributo. Restano requisiti, durate e divieto di sommare più applicazioni della stessa Tecnica.
+Si sommano l’AR pertinente dell’equipaggiamento, il maggiore contributo applicabile fra Pelle Corazzata, Armatura di Forza e bonus di Armatura Mistica, un solo scudo e l’eventuale Armatura Elementale contro l’elemento protetto. Armatura Mistica converte solo l’equipaggiamento interessato: non rende magiche Pelle Corazzata, Scudo o altre protezioni. Il totale si ricalcola per ciascuna AC e natura del danno. L’AR è complessiva, non suddivisa per parti anatomiche; ogni AC indica una distinta applicazione di danno alla quale sottrarre separatamente la protezione. Corazza Potenziata, Aura di Resistenza e Pelle di Rinoceronte si sommano fra loro e alle protezioni compatibili: rispettivamente \+1 magica, \+2 magica e \+1 non magica contro il Ravvicinato Naturale o Magico. Non appartengono al gruppo del solo maggiore contributo. Restano requisiti, durate e divieto di sommare più applicazioni della stessa Tecnica.
 
 Un nuovo lancio può rinnovare una riserva quando la scheda lo consente, pagando nuovamente costi e azione. Non somma la riserva precedente né rinnova altre riserve, azioni o limiti per RND. Sono distinti i limiti di un elementale evocato e di un ectoplasma: possono coesistere.
 
@@ -761,9 +751,8 @@ Un nuovo lancio può rinnovare una riserva quando la scheda lo consente, pagando
 
 Eco Elementale, modalità di Controllo Elementale, legge segnali materiali; Presenza legge le menti; Individuare legge le emanazioni spirituali e gli effetti mistici. Ogni rilevazione resta limitata a gittata, area, informazioni e requisiti della propria scheda. Individuare una posizione non concede automaticamente vista diretta o capacità di colpire una presenza incorporea.
 
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| \*\*Rilevazione\*\* | \*\*Mimetismo\*\* | \*\*Velo Psichico\*\* | \*\*Nascondere Aura\*\* |
+| Rilevazione | Mimetismo | Velo Psichico | Nascondere Aura |
+| :---: | :---: | :---: | :---: |
 | Eco Elementale | Bloccata | Confronto | Non ostacolata |
 | Presenza | Non ostacolata | Bloccata | Confronto |
 | Individuare | Confronto | Non ostacolata | Bloccata |
@@ -772,9 +761,8 @@ Bloccata significa che quella protezione non è superabile con questa rilevazion
 
 Nel Confronto si usano il Potere di Rilevazione e quello di Occultamento: inferiore non supera; superiore supera; a parità l’osservatore effettua PS Magia e supera soltanto con successo. Si effettua una sola PS per osservatore e coppia di lanci, valida per tutti i beneficiari della coppia. Nuove scansioni o rientri non concedono ritiri. L’eventuale Anticipazione modifica solo il potere espressamente indicato.
 
-|  |  |
-| :-: | :-: |
-| \*\*Occultamenti contemporanei\*\* | \*\*Rilevazione ancora possibile\*\* |
+| Occultamenti contemporanei | Rilevazione ancora possibile |
+| :---- | :---- |
 | Mimetismo e Velo Psichico | Individuare, con confronto contro Mimetismo |
 | Mimetismo e Nascondere Aura | Presenza, con confronto contro Nascondere Aura |
 | Velo Psichico e Nascondere Aura | Eco Elementale, con confronto contro Velo Psichico |
@@ -802,13 +790,12 @@ Teletrasporto caricato usa una destinazione prefissata, ancora valida, entro la 
 
 Nella Trappola Mistica l’incantesimo caricato si riduce a una sola applicazione istantanea. Restano le conseguenze prodotte da quell’impatto: danni, perdite di PM, cure, spostamenti, A Terra, effetti elementali e svenimento da Dardo Psichico mantengono le proprie regole. La trappola non mantiene invece una creatura, una protezione, una Concentrazione o un controllo a durata.
 
-|  |  |
-| :-: | :-: |
-| \*\*Incantesimo caricato\*\* | \*\*Applicazione della trappola\*\* |
+| Incantesimo caricato | Applicazione della trappola |
+| :---- | :---- |
 | Devastazione Elementale | Sola esplosione iniziale; nessuna zona persistente |
 | Psicometabolismo | Solo recupero immediato pari alla COS; nessun recupero periodico |
 | Sovraccarico Sinaptico | Solo danno iniziale; nessun Rallentamento o Stordimento mantenuto |
-| Corpo Adattivo | \*\*Nessun recupero immediato:\*\* il primo recupero futuro non viene anticipato |
+| Corpo Adattivo | **Nessun recupero immediato:** il primo recupero futuro non viene anticipato |
 | Armature potenziamenti Sonno Terrore Comando Catene | Nessun beneficio o controllo persistente |
 | Evocazioni ed Ectoplasma | Nessuna creatura mantenuta e nessuna azione futura |
 
@@ -828,7 +815,7 @@ Un Dardo Psichico caricato resta bloccato da Barriera Mentale, mentre l’assorb
 
 Cura Ferite, Corpo Adattivo e Psicometabolismo curano organismi biologicamente viventi. Nei cyborg recuperano i PV viventi, senza riparare impianti. Non curano elementali evocati, Ectoplasma, costrutti puramente meccanici o entità spirituali, salvo eccezione esplicita del Bestiario del Manuale del Direttore. Durante Forma Elementale non curano né la riserva della forma né il corpo originario sospeso: gli eventuali recuperi periodici trascorrono senza effetto e riprendono al ritorno se resta durata.
 
-Gli impianti singoli e la riparazione dei loro PI sono nel Manuale dell’Equipaggiamento, capitolo 7. I chip del Processore neurale di Abilità (§7.10 di quel volume) non migliorano Incantesimi, Risorse Interiori, Sintonizzazione o altre applicazioni magiche. Il loro impiego è limitato a una attivazione ogni 24 ore, indipendente dal riposo; i costi UMN seguono il Manuale del Giocatore, §5.21.
+Gli impianti singoli e la riparazione dei loro PI sono nel Manuale dell’Equipaggiamento, capitolo 7\. I chip del Processore neurale di Abilità (§7.10 di quel volume) non migliorano Incantesimi, Risorse Interiori, Sintonizzazione o altre applicazioni magiche. Il loro impiego è limitato a una attivazione ogni 24 ore, indipendente dal riposo; i costi UMN seguono il Manuale del Giocatore, §5.21.
 
 Le cure immediate sono compatibili con quelle periodiche. Fra i recuperi periodici concorrenti di Corpo Adattivo e Psicometabolismo si applica il maggiore. Se Corpo Adattivo sacrifica un’applicazione per ridurre Sanguinamento, Psicometabolismo può recuperare i propri PV in quel turno. Nessuna cura ordinaria supera il limite ridotto dai PV sacrificati con Convertire Potere.
 
@@ -836,181 +823,171 @@ Tocco Sacro massimizza i dadi di Cura Ferite a contatto. Canale Vitale aggiunge 
 
 ## **Rimuovere uno Stato**
 
-|  |  |
-| :-: | :-: |
-| \*\*Condizione o causa\*\* | \*\*Rimozione pertinente\*\* |
+| Condizione o causa | Rimozione pertinente |
+| :---- | :---- |
 | Disorientato Rallentato Terrorizzato temporanei | Cura Spirituale dal livello 1, salvo causa ancora attiva |
 | Accecato Assordato temporanei | Cura Spirituale dal livello 3, salvo causa ancora attiva |
 | Stordito Svenuto Paralizzato temporanei e Sonno magico | Cura Spirituale dal livello 6, salvo causa ancora attiva |
 | Veleni e droghe | Cura Avvelenamenti; gli Stati dipendenti seguono la rimozione della causa |
 | Malattie | Cura Malattie; lesioni e menomazioni già prodotte richiedono cure pertinenti |
-| Sanguinamento | \*\*Cura Ferite:\*\* 2 punti di cura per ogni punto di Sanguinamento; Corpo Adattivo secondo la sua scheda |
+| Sanguinamento | **Cura Ferite:** 2 punti di cura per ogni punto di Sanguinamento; Corpo Adattivo secondo la sua scheda |
 | Incendiato | Spegnimento: Manuale del Giocatore, §5.18, «Incendiato». |
 | Congelato o immobilizzazione materiale | Rimuovere o sciogliere il vincolo materiale; Controllo Elementale nei propri limiti |
 | A Terra | Rialzarsi: Manuale del Giocatore, §5.5. |
 | Menomazione temporanea | Recupero Rapido; trattamenti nel Manuale del Giocatore, §§5.16.3–5.16.6. |
-| Menomazione permanente | Rigenerazione: vedere la scheda 21.10 e la procedura della sezione 25. |
+| Menomazione permanente | Rigenerazione: vedere la scheda 21.10 e la procedura della sezione 25\. |
 | Svenuto per PM 0 | Recuperare almeno 1 PM personale |
 
 Prima si identifica la causa. Cura Spirituale non elimina una malattia, un veleno, una menomazione anatomica o un mantenimento magico ancora attivo. Sovraccarico Sinaptico richiede la cessazione della Concentrazione o Negare Potere. Indurre Sonno può essere rimosso da Cura Spirituale 6, Negare Potere oppure due RND di scuotimento energico; i danni non svegliano. Rimuovere Terrore non consente alla stessa aura di riapplicarlo.
 
 Rimuovere completamente il Ghiaccio materiale termina sia Congelato sia il Rallentamento dovuto a quel gelo. Alla sola scadenza naturale di Congelato segue invece il Rallentamento di 1 RND previsto. Cura Spirituale 1 può rimuovere un Rallentamento temporaneo non più sostenuto da un vincolo materiale; non scioglie un blocco di ghiaccio.
 
-Cura Spirituale 6 può far riprendere conoscenza dopo Dardo Psichico senza restituire PV; non risolve lo svenimento da PM 0. Negare Potere termina magia attiva e recuperi futuri, senza annullare ferite, fuoco reale, Sanguinamento o risultati istantanei già prodotti.
+Cura Spirituale 6 può far riprendere conoscenza dopo Dardo Psichico senza restituire PV; non risolve lo svenimento da PM 0\. Negare Potere termina magia attiva e recuperi futuri, senza annullare ferite, fuoco reale, Sanguinamento o risultati istantanei già prodotti.
 
 ## **Dissoluzione esorcismo e vincoli**
 
-Negare Potere usa un potere pari al livello dichiarato; Esorcizzare Possessione usa livello +3, massimo 21; Rompere Vincolo usa il livello dichiarato. Dopo il lancio riuscito, un potere superiore rimuove, inferiore non rimuove e uguale richiede una PS Volontà del Taumaturgo. Un’unica PS per lancio vale per tutti i confronti a parità; nessun’altra parte effettua una PS difensiva.
+Negare Potere usa un potere pari al livello dichiarato; Esorcizzare Possessione usa livello \+3, massimo 21; Rompere Vincolo usa il livello dichiarato. Dopo il lancio riuscito, un potere superiore rimuove, inferiore non rimuove e uguale richiede una PS Volontà del Taumaturgo. Un’unica PS per lancio vale per tutti i confronti a parità; nessun’altra parte effettua una PS difensiva.
 
 Negare Potere tratta incantesimi attivi; Esorcizzare Possessione tratta possessioni magiche o innate ed emanazioni di Mente Disincarnata; Rompere Vincolo tratta i legami degli oggetti, comprese le maledizioni incorporate. Livelli intermedi e Anticipazione seguono le rispettive schede. Una possessione autonoma e una maledizione dell’oggetto possono costituire effetti distinti: rimuovere l’una non elimina automaticamente l’altra.
 
 # **11 Indice degli incantesimi**
 
-Ogni specializzazione contiene quattro incantesimi di livello base 1, tre di livello base 3, due di livello base 6 e uno di livello base 9. Il livello base indica l’accesso iniziale; le versioni superiori sono nella scheda. La colonna Pagina conduce alla scheda completa dell’incantesimo.
+Ogni specializzazione contiene quattro incantesimi di livello base 1, tre di livello base 3, due di livello base 6 e uno di livello base 9\. Il livello base indica l’accesso iniziale; le versioni superiori sono nella scheda. La colonna Pagina conduce alla scheda completa dell’incantesimo.
 
 ## **Fisica Elementi**
 
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| \*\*Scheda\*\* | \*\*Incantesimo\*\* | \*\*Livello base\*\* | \*\*Pagina\*\* |
-| 13.1 | \[Colpo Elementale\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.l2fhf2v1uiba) | 1 | \[24\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.l2fhf2v1uiba) |
-| 13.2 | \[Controllo Elementale\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.jwwy56p46rii) | 1 | \[25\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.jwwy56p46rii) |
-| 13.3 | \[Muro Elementale\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.v2yhavchsb0) | 1 | \[27\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.v2yhavchsb0) |
-| 13.4 | \[Protezione dagli Elementi\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.yth8h5a4n4o4) | 1 | \[28\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.yth8h5a4n4o4) |
-| 13.5 | \[Armatura Elementale\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.slg5u6lq5pks) | 3 | \[28\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.slg5u6lq5pks) |
-| 13.6 | \[Esplosione Elementale\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.d2s28zh8kv6p) | 3 | \[29\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.d2s28zh8kv6p) |
-| 13.7 | \[Cono Elementale\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.a1dtewtfsofy) | 3 | \[30\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.a1dtewtfsofy) |
-| 13.8 | \[Evoca Elementale\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.2p9f95bxjdpb) | 6 | \[31\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.2p9f95bxjdpb) |
-| 13.9 | \[Forma Elementale\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.mejq9w4p1ls1) | 6 | \[32\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.mejq9w4p1ls1) |
-| 13.10 | \[Devastazione Elementale\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.a64wm6792wp6) | 9 | \[33\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.a64wm6792wp6) |
+| Scheda | Incantesimo | Livello base | Pagina |
+| :---: | :---- | :---: | :---: |
+| 13.1 | [Colpo Elementale](#bookmark=id.l2fhf2v1uiba) | 1 | [24](#bookmark=id.l2fhf2v1uiba) |
+| 13.2 | [Controllo Elementale](#bookmark=id.jwwy56p46rii) | 1 | [25](#bookmark=id.jwwy56p46rii) |
+| 13.3 | [Muro Elementale](#bookmark=id.v2yhavchsb0) | 1 | [27](#bookmark=id.v2yhavchsb0) |
+| 13.4 | [Protezione dagli Elementi](#bookmark=id.yth8h5a4n4o4) | 1 | [28](#bookmark=id.yth8h5a4n4o4) |
+| 13.5 | [Armatura Elementale](#bookmark=id.slg5u6lq5pks) | 3 | [28](#bookmark=id.slg5u6lq5pks) |
+| 13.6 | [Esplosione Elementale](#bookmark=id.d2s28zh8kv6p) | 3 | [29](#bookmark=id.d2s28zh8kv6p) |
+| 13.7 | [Cono Elementale](#bookmark=id.a1dtewtfsofy) | 3 | [30](#bookmark=id.a1dtewtfsofy) |
+| 13.8 | [Evoca Elementale](#bookmark=id.2p9f95bxjdpb) | 6 | [31](#bookmark=id.2p9f95bxjdpb) |
+| 13.9 | [Forma Elementale](#bookmark=id.mejq9w4p1ls1) | 6 | [32](#bookmark=id.mejq9w4p1ls1) |
+| 13.10 | [Devastazione Elementale](#bookmark=id.a64wm6792wp6) | 9 | [33](#bookmark=id.a64wm6792wp6) |
 
 ## **Fisica Cambiamento**
 
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| \*\*Scheda\*\* | \*\*Incantesimo\*\* | \*\*Livello base\*\* | \*\*Pagina\*\* |
-| 16.1 | \[Irrobustire\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.o59pqyal52sj) | 1 | \[50\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.o59pqyal52sj) |
-| 16.2 | \[Agilità Mutata\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.h7rr176u498k) | 1 | \[51\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.h7rr176u498k) |
-| 16.3 | \[Resistenza Fisica\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.80a083ccana) | 1 | \[52\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.80a083ccana) |
-| 16.4 | \[Respiro Adattivo\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.9sx3pm12jqmu) | 1 | \[53\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.9sx3pm12jqmu) |
-| 16.5 | \[Efficienza\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.h1778tr51unk) | 3 | \[54\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.h1778tr51unk) |
-| 16.6 | \[Pelle Corazzata\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.rxfzwf59a20n) | 3 | \[55\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.rxfzwf59a20n) |
-| 16.7 | \[Riflessi Potenziati\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.l86moe1808zd) | 3 | \[56\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.l86moe1808zd) |
-| 16.8 | \[Corpo Adattivo\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.c9rpli3k126u) | 6 | \[57\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.c9rpli3k126u) |
-| 16.9 | \[Mimetismo\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.s9p0ltudbura) | 6 | \[58\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.s9p0ltudbura) |
-| 16.10 | \[Trasformazione Totale\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.al1d93wcz568) | 9 | \[59\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.al1d93wcz568) |
+| Scheda | Incantesimo | Livello base | Pagina |
+| :---: | :---- | :---: | :---: |
+| 16.1 | [Irrobustire](#bookmark=id.o59pqyal52sj) | 1 | [50](#bookmark=id.o59pqyal52sj) |
+| 16.2 | [Agilità Mutata](#bookmark=id.h7rr176u498k) | 1 | [51](#bookmark=id.h7rr176u498k) |
+| 16.3 | [Resistenza Fisica](#bookmark=id.80a083ccana) | 1 | [52](#bookmark=id.80a083ccana) |
+| 16.4 | [Respiro Adattivo](#bookmark=id.9sx3pm12jqmu) | 1 | [53](#bookmark=id.9sx3pm12jqmu) |
+| 16.5 | [Efficienza](#bookmark=id.h1778tr51unk) | 3 | [54](#bookmark=id.h1778tr51unk) |
+| 16.6 | [Pelle Corazzata](#bookmark=id.rxfzwf59a20n) | 3 | [55](#bookmark=id.rxfzwf59a20n) |
+| 16.7 | [Riflessi Potenziati](#bookmark=id.l86moe1808zd) | 3 | [56](#bookmark=id.l86moe1808zd) |
+| 16.8 | [Corpo Adattivo](#bookmark=id.c9rpli3k126u) | 6 | [57](#bookmark=id.c9rpli3k126u) |
+| 16.9 | [Mimetismo](#bookmark=id.s9p0ltudbura) | 6 | [58](#bookmark=id.s9p0ltudbura) |
+| 16.10 | [Trasformazione Totale](#bookmark=id.al1d93wcz568) | 9 | [59](#bookmark=id.al1d93wcz568) |
 
 ## **Fisica Manifestazione**
 
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| \*\*Scheda\*\* | \*\*Incantesimo\*\* | \*\*Livello base\*\* | \*\*Pagina\*\* |
-| 17.1 | \[Telecinesi\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.tl3hmoyn0f9n) | 1 | \[60\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.tl3hmoyn0f9n) |
-| 17.2 | \[Scudo\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.cxs1nxtn3dsf) | 1 | \[61\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.cxs1nxtn3dsf) |
-| 17.3 | \[Armatura di Forza\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.19fllpqxoivw) | 1 | \[62\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.19fllpqxoivw) |
-| 17.4 | \[Respingere\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.3pvvdjy68ac6) | 1 | \[63\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.3pvvdjy68ac6) |
-| 17.5 | \[Barriera di Forza\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.7co8hnqzorxg) | 3 | \[64\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.7co8hnqzorxg) |
-| 17.6 | \[Catene di Forza\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.86pro8qlu6so) | 3 | \[65\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.86pro8qlu6so) |
-| 17.7 | \[Piattaforma Levitante\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.dctoxwxhaxvo) | 3 | \[66\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.dctoxwxhaxvo) |
-| 17.8 | \[Campo di Forza\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.bs4ocz8tq7g) | 6 | \[67\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.bs4ocz8tq7g) |
-| 17.9 | \[Teletrasporto\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.x60k9xke6gq5) | 6 | \[68\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.x60k9xke6gq5) |
-| 17.10 | \[Prigione Dimensionale\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.1mg9aa2gqqek) | 9 | \[69\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.1mg9aa2gqqek) |
+| Scheda | Incantesimo | Livello base | Pagina |
+| :---: | :---- | :---: | :---: |
+| 17.1 | [Telecinesi](#bookmark=id.tl3hmoyn0f9n) | 1 | [60](#bookmark=id.tl3hmoyn0f9n) |
+| 17.2 | [Scudo](#bookmark=id.cxs1nxtn3dsf) | 1 | [61](#bookmark=id.cxs1nxtn3dsf) |
+| 17.3 | [Armatura di Forza](#bookmark=id.19fllpqxoivw) | 1 | [62](#bookmark=id.19fllpqxoivw) |
+| 17.4 | [Respingere](#bookmark=id.3pvvdjy68ac6) | 1 | [63](#bookmark=id.3pvvdjy68ac6) |
+| 17.5 | [Barriera di Forza](#bookmark=id.7co8hnqzorxg) | 3 | [64](#bookmark=id.7co8hnqzorxg) |
+| 17.6 | [Catene di Forza](#bookmark=id.86pro8qlu6so) | 3 | [65](#bookmark=id.86pro8qlu6so) |
+| 17.7 | [Piattaforma Levitante](#bookmark=id.dctoxwxhaxvo) | 3 | [66](#bookmark=id.dctoxwxhaxvo) |
+| 17.8 | [Campo di Forza](#bookmark=id.bs4ocz8tq7g) | 6 | [67](#bookmark=id.bs4ocz8tq7g) |
+| 17.9 | [Teletrasporto](#bookmark=id.x60k9xke6gq5) | 6 | [68](#bookmark=id.x60k9xke6gq5) |
+| 17.10 | [Prigione Dimensionale](#bookmark=id.1mg9aa2gqqek) | 9 | [69](#bookmark=id.1mg9aa2gqqek) |
 
 ## **Mentale Psionica**
 
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| \*\*Scheda\*\* | \*\*Incantesimo\*\* | \*\*Livello base\*\* | \*\*Pagina\*\* |
-| 18.1 | \[Ampliare Sensi\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.hcbpjhb98fa7) | 1 | \[70\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.hcbpjhb98fa7) |
-| 18.2 | \[Barriera Mentale\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.tuno39jdygfm) | 1 | \[71\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.tuno39jdygfm) |
-| 18.3 | \[Biomanipolazione\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.r5km9crctobq) | 1 | \[72\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.r5km9crctobq) |
-| 18.4 | \[Dardo Psichico\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.pnnjchfhsb8n) | 1 | \[73\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.pnnjchfhsb8n) |
-| 18.5 | \[Ectoplasma\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.y52f2lqhksb9) | 3 | \[74\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.y52f2lqhksb9) |
-| 18.6 | \[Indurre Sonno\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.bpviofl4tgva) | 3 | \[75\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.bpviofl4tgva) |
-| 18.7 | \[Psicometabolismo\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.c7is0xrqx1p) | 3 | \[76\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.c7is0xrqx1p) |
-| 18.8 | \[Telemeccanica\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.g69wjwsvbibf) | 6 | \[77\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.g69wjwsvbibf) |
-| 18.9 | \[Sovraccarico Sinaptico\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.i9sinmwaiqzy) | 6 | \[78\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.i9sinmwaiqzy) |
-| 18.10 | \[Mente Disincarnata\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.96u9vvj6hoq2) | 9 | \[79\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.96u9vvj6hoq2) |
+| Scheda | Incantesimo | Livello base | Pagina |
+| :---: | :---- | :---: | :---: |
+| 18.1 | [Ampliare Sensi](#bookmark=id.hcbpjhb98fa7) | 1 | [70](#bookmark=id.hcbpjhb98fa7) |
+| 18.2 | [Barriera Mentale](#bookmark=id.tuno39jdygfm) | 1 | [71](#bookmark=id.tuno39jdygfm) |
+| 18.3 | [Biomanipolazione](#bookmark=id.r5km9crctobq) | 1 | [72](#bookmark=id.r5km9crctobq) |
+| 18.4 | [Dardo Psichico](#bookmark=id.pnnjchfhsb8n) | 1 | [73](#bookmark=id.pnnjchfhsb8n) |
+| 18.5 | [Ectoplasma](#bookmark=id.y52f2lqhksb9) | 3 | [74](#bookmark=id.y52f2lqhksb9) |
+| 18.6 | [Indurre Sonno](#bookmark=id.bpviofl4tgva) | 3 | [75](#bookmark=id.bpviofl4tgva) |
+| 18.7 | [Psicometabolismo](#bookmark=id.c7is0xrqx1p) | 3 | [76](#bookmark=id.c7is0xrqx1p) |
+| 18.8 | [Telemeccanica](#bookmark=id.g69wjwsvbibf) | 6 | [77](#bookmark=id.g69wjwsvbibf) |
+| 18.9 | [Sovraccarico Sinaptico](#bookmark=id.i9sinmwaiqzy) | 6 | [78](#bookmark=id.i9sinmwaiqzy) |
+| 18.10 | [Mente Disincarnata](#bookmark=id.96u9vvj6hoq2) | 9 | [79](#bookmark=id.96u9vvj6hoq2) |
 
 ## **Mentale Influenza**
 
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| \*\*Scheda\*\* | \*\*Incantesimo\*\* | \*\*Livello base\*\* | \*\*Pagina\*\* |
-| 19.1 | \[Alterare Immagine\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.18uxtix1ge86) | 1 | \[83\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.18uxtix1ge86) |
-| 19.2 | \[Comando\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.4lwqvpokowr3) | 1 | \[84\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.4lwqvpokowr3) |
-| 19.3 | \[Distrazione\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.ufr1cfb583o1) | 1 | \[86\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.ufr1cfb583o1) |
-| 19.4 | \[Illusione\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.h8padpbji278) | 1 | \[87\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.h8padpbji278) |
-| 19.5 | \[Memoria\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.2lgjsgu2p495) | 3 | \[88\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.2lgjsgu2p495) |
-| 19.6 | \[Silenzio Mentale\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.8kfdpvz3sdk) | 3 | \[89\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.8kfdpvz3sdk) |
-| 19.7 | \[Terrore\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.d8qjj5fzsgn9) | 3 | \[91\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.d8qjj5fzsgn9) |
-| 19.8 | \[Ipnosi\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.b6x3ysayyder) | 6 | \[92\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.b6x3ysayyder) |
-| 19.9 | \[Velo Psichico\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.vyqri5tajsrt) | 6 | \[93\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.vyqri5tajsrt) |
-| 19.10 | \[Possessione\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.pn5zm2wgak32) | 9 | \[95\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.pn5zm2wgak32) |
+| Scheda | Incantesimo | Livello base | Pagina |
+| :---: | :---- | :---: | :---: |
+| 19.1 | [Alterare Immagine](#bookmark=id.18uxtix1ge86) | 1 | [83](#bookmark=id.18uxtix1ge86) |
+| 19.2 | [Comando](#bookmark=id.4lwqvpokowr3) | 1 | [84](#bookmark=id.4lwqvpokowr3) |
+| 19.3 | [Distrazione](#bookmark=id.ufr1cfb583o1) | 1 | [86](#bookmark=id.ufr1cfb583o1) |
+| 19.4 | [Illusione](#bookmark=id.h8padpbji278) | 1 | [87](#bookmark=id.h8padpbji278) |
+| 19.5 | [Memoria](#bookmark=id.2lgjsgu2p495) | 3 | [88](#bookmark=id.2lgjsgu2p495) |
+| 19.6 | [Silenzio Mentale](#bookmark=id.8kfdpvz3sdk) | 3 | [89](#bookmark=id.8kfdpvz3sdk) |
+| 19.7 | [Terrore](#bookmark=id.d8qjj5fzsgn9) | 3 | [91](#bookmark=id.d8qjj5fzsgn9) |
+| 19.8 | [Ipnosi](#bookmark=id.b6x3ysayyder) | 6 | [92](#bookmark=id.b6x3ysayyder) |
+| 19.9 | [Velo Psichico](#bookmark=id.vyqri5tajsrt) | 6 | [93](#bookmark=id.vyqri5tajsrt) |
+| 19.10 | [Possessione](#bookmark=id.pn5zm2wgak32) | 9 | [95](#bookmark=id.pn5zm2wgak32) |
 
 ## **Mentale Sintonia**
 
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| \*\*Scheda\*\* | \*\*Incantesimo\*\* | \*\*Livello base\*\* | \*\*Pagina\*\* |
-| 20.1 | \[Empatia\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.29rijlecw2t8) | 1 | \[98\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.29rijlecw2t8) |
-| 20.2 | \[Linguaggi\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.tijy5muul52o) | 1 | \[99\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.tijy5muul52o) |
-| 20.3 | \[Presenza\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.fwxd0hbt00sr) | 1 | \[100\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.fwxd0hbt00sr) |
-| 20.4 | \[Telepatia\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.7yrxz4122pd5) | 1 | \[102\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.7yrxz4122pd5) |
-| 20.5 | \[Armonia Animale\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.zcryecpwiwbe) | 3 | \[103\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.zcryecpwiwbe) |
-| 20.6 | \[Comunione\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.ak585f1ui60e) | 3 | \[104\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.ak585f1ui60e) |
-| 20.7 | \[Psicometria\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.kf2hayv75noc) | 3 | \[106\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.kf2hayv75noc) |
-| 20.8 | \[Marchio Psichico\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.hnj8whg4ukxh) | 6 | \[107\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.hnj8whg4ukxh) |
-| 20.9 | \[Sesto Senso\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.x1c3xslxk5go) | 6 | \[108\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.x1c3xslxk5go) |
-| 20.10 | \[Vista Superiore\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.7b390ndzpf5n) | 9 | \[109\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.7b390ndzpf5n) |
+| Scheda | Incantesimo | Livello base | Pagina |
+| :---: | :---- | :---: | :---: |
+| 20.1 | [Empatia](#bookmark=id.29rijlecw2t8) | 1 | [98](#bookmark=id.29rijlecw2t8) |
+| 20.2 | [Linguaggi](#bookmark=id.tijy5muul52o) | 1 | [99](#bookmark=id.tijy5muul52o) |
+| 20.3 | [Presenza](#bookmark=id.fwxd0hbt00sr) | 1 | [100](#bookmark=id.fwxd0hbt00sr) |
+| 20.4 | [Telepatia](#bookmark=id.7yrxz4122pd5) | 1 | [102](#bookmark=id.7yrxz4122pd5) |
+| 20.5 | [Armonia Animale](#bookmark=id.zcryecpwiwbe) | 3 | [103](#bookmark=id.zcryecpwiwbe) |
+| 20.6 | [Comunione](#bookmark=id.ak585f1ui60e) | 3 | [104](#bookmark=id.ak585f1ui60e) |
+| 20.7 | [Psicometria](#bookmark=id.kf2hayv75noc) | 3 | [106](#bookmark=id.kf2hayv75noc) |
+| 20.8 | [Marchio Psichico](#bookmark=id.hnj8whg4ukxh) | 6 | [107](#bookmark=id.hnj8whg4ukxh) |
+| 20.9 | [Sesto Senso](#bookmark=id.x1c3xslxk5go) | 6 | [108](#bookmark=id.x1c3xslxk5go) |
+| 20.10 | [Vista Superiore](#bookmark=id.7b390ndzpf5n) | 9 | [109](#bookmark=id.7b390ndzpf5n) |
 
 ## **Spirituale Esorcismo**
 
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| \*\*Scheda\*\* | \*\*Incantesimo\*\* | \*\*Livello base\*\* | \*\*Pagina\*\* |
-| 21.1 | \[Cura Ferite\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.51i1exencpsm) | 1 | \[112\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.51i1exencpsm) |
-| 21.2 | \[Cura Malattie\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.upemgqjtvnh4) | 1 | \[114\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.upemgqjtvnh4) |
-| 21.3 | \[Cura Avvelenamenti\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.989ode3b2w7u) | 1 | \[115\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.989ode3b2w7u) |
-| 21.4 | \[Cura Spirituale\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.jatgylbs3o8e) | 1 | \[116\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.jatgylbs3o8e) |
-| 21.5 | \[Esorcizzare Corruzione\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.wz81c9p3gqfr) | 3 | \[117\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.wz81c9p3gqfr) |
-| 21.6 | \[Guarigione\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.zcqjsxik7io3) | 3 | \[118\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.zcqjsxik7io3) |
-| 21.7 | \[Recupero Rapido\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.nlly8stpksij) | 3 | \[119\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.nlly8stpksij) |
-| 21.8 | \[Esorcizzare Oscurità\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.3ox2u8wy6x63) | 6 | \[120\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.3ox2u8wy6x63) |
-| 21.9 | \[Esorcizzare Possessione\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.dv89pr4awim7) | 6 | \[121\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.dv89pr4awim7) |
-| 21.10 | \[Rigenerazione\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.xa3wm07ak3e5) | 9 | \[122\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.xa3wm07ak3e5) |
+| Scheda | Incantesimo | Livello base | Pagina |
+| :---: | :---- | :---: | :---: |
+| 21.1 | [Cura Ferite](#bookmark=id.51i1exencpsm) | 1 | [112](#bookmark=id.51i1exencpsm) |
+| 21.2 | [Cura Malattie](#bookmark=id.upemgqjtvnh4) | 1 | [114](#bookmark=id.upemgqjtvnh4) |
+| 21.3 | [Cura Avvelenamenti](#bookmark=id.989ode3b2w7u) | 1 | [115](#bookmark=id.989ode3b2w7u) |
+| 21.4 | [Cura Spirituale](#bookmark=id.jatgylbs3o8e) | 1 | [116](#bookmark=id.jatgylbs3o8e) |
+| 21.5 | [Esorcizzare Corruzione](#bookmark=id.wz81c9p3gqfr) | 3 | [117](#bookmark=id.wz81c9p3gqfr) |
+| 21.6 | [Guarigione](#bookmark=id.zcqjsxik7io3) | 3 | [118](#bookmark=id.zcqjsxik7io3) |
+| 21.7 | [Recupero Rapido](#bookmark=id.nlly8stpksij) | 3 | [119](#bookmark=id.nlly8stpksij) |
+| 21.8 | [Esorcizzare Oscurità](#bookmark=id.3ox2u8wy6x63) | 6 | [120](#bookmark=id.3ox2u8wy6x63) |
+| 21.9 | [Esorcizzare Possessione](#bookmark=id.dv89pr4awim7) | 6 | [121](#bookmark=id.dv89pr4awim7) |
+| 21.10 | [Rigenerazione](#bookmark=id.xa3wm07ak3e5) | 9 | [122](#bookmark=id.xa3wm07ak3e5) |
 
 ## **Spirituale Incantamento**
 
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| \*\*Scheda\*\* | \*\*Incantesimo\*\* | \*\*Livello base\*\* | \*\*Pagina\*\* |
-| 22.1 | \[Arma Mistica\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.45op5q89sl1o) | 1 | \[125\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.45op5q89sl1o) |
-| 22.2 | \[Armatura Mistica\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.k47sum4lmgaz) | 1 | \[126\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.k47sum4lmgaz) |
-| 22.3 | \[Sigillo\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.cu6t5xkonh4f) | 1 | \[127\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.cu6t5xkonh4f) |
-| 22.4 | \[Trappola Mistica\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.mc5za8oem1cw) | 1 | \[128\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.mc5za8oem1cw) |
-| 22.5 | \[Barriera Mistica\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.669bf344foxy) | 3 | \[130\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.669bf344foxy) |
-| 22.6 | \[Batteria Mistica\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.rs839xwoqv2y) | 3 | \[131\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.rs839xwoqv2y) |
-| 22.7 | \[Identificare Potere\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.dt8u2bnbf65b) | 3 | \[132\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.dt8u2bnbf65b) |
-| 22.8 | \[Rompere Vincolo\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.a9t1n41lco94) | 6 | \[133\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.a9t1n41lco94) |
-| 22.9 | \[Vincolo Spirituale\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.pl4oph3o47sz) | 6 | \[134\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.pl4oph3o47sz) |
-| 22.10 | \[Impronta Mistica\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.4crsqe7pzwic) | 9 | \[135\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.4crsqe7pzwic) |
+| Scheda | Incantesimo | Livello base | Pagina |
+| :---: | :---- | :---: | :---: |
+| 22.1 | [Arma Mistica](#bookmark=id.45op5q89sl1o) | 1 | [125](#bookmark=id.45op5q89sl1o) |
+| 22.2 | [Armatura Mistica](#bookmark=id.k47sum4lmgaz) | 1 | [126](#bookmark=id.k47sum4lmgaz) |
+| 22.3 | [Sigillo](#bookmark=id.cu6t5xkonh4f) | 1 | [127](#bookmark=id.cu6t5xkonh4f) |
+| 22.4 | [Trappola Mistica](#bookmark=id.mc5za8oem1cw) | 1 | [128](#bookmark=id.mc5za8oem1cw) |
+| 22.5 | [Barriera Mistica](#bookmark=id.669bf344foxy) | 3 | [130](#bookmark=id.669bf344foxy) |
+| 22.6 | [Batteria Mistica](#bookmark=id.rs839xwoqv2y) | 3 | [131](#bookmark=id.rs839xwoqv2y) |
+| 22.7 | [Identificare Potere](#bookmark=id.dt8u2bnbf65b) | 3 | [132](#bookmark=id.dt8u2bnbf65b) |
+| 22.8 | [Rompere Vincolo](#bookmark=id.a9t1n41lco94) | 6 | [133](#bookmark=id.a9t1n41lco94) |
+| 22.9 | [Vincolo Spirituale](#bookmark=id.pl4oph3o47sz) | 6 | [134](#bookmark=id.pl4oph3o47sz) |
+| 22.10 | [Impronta Mistica](#bookmark=id.4crsqe7pzwic) | 9 | [135](#bookmark=id.4crsqe7pzwic) |
 
 ## **Spirituale Trascendenza**
 
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| \*\*Scheda\*\* | \*\*Incantesimo\*\* | \*\*Livello base\*\* | \*\*Pagina\*\* |
-| 23.1 | \[Scudo Spirituale\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.dr22ku7itl1u) | 1 | \[139\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.dr22ku7itl1u) |
-| 23.2 | \[Luce Mistica\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.1ztpc6c9sx6b) | 1 | \[140\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.1ztpc6c9sx6b) |
-| 23.3 | \[Benedizione\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.r2o7awoz86ix) | 1 | \[141\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.r2o7awoz86ix) |
-| 23.4 | \[Maledizione\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.vnom4v2vt5fa) | 1 | \[142\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.vnom4v2vt5fa) |
-| 23.5 | \[Dardo Spirituale\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.j4yb6i8ogpu0) | 3 | \[143\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.j4yb6i8ogpu0) |
-| 23.6 | \[Negare Potere\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.wkba5x3cdt4l) | 3 | \[144\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.wkba5x3cdt4l) |
-| 23.7 | \[Nascondere Aura\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.p7jvg8vtz0x1) | 3 | \[146\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.p7jvg8vtz0x1) |
-| 23.8 | \[Premonizione\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.51rgg8j2hckz) | 6 | \[147\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.51rgg8j2hckz) |
-| 23.9 | \[Individuare\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.2xdso07gnn4u) | 6 | \[148\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.2xdso07gnn4u) |
-| 23.10 | \[Alterare Aura\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.60h5vsrfhfxt) | 9 | \[150\](https://docs.google.com/document/d/1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY/edit\#bookmark=id.60h5vsrfhfxt) |
+| Scheda | Incantesimo | Livello base | Pagina |
+| :---: | :---- | :---: | :---: |
+| 23.1 | [Scudo Spirituale](#bookmark=id.dr22ku7itl1u) | 1 | [139](#bookmark=id.dr22ku7itl1u) |
+| 23.2 | [Luce Mistica](#bookmark=id.1ztpc6c9sx6b) | 1 | [140](#bookmark=id.1ztpc6c9sx6b) |
+| 23.3 | [Benedizione](#bookmark=id.r2o7awoz86ix) | 1 | [141](#bookmark=id.r2o7awoz86ix) |
+| 23.4 | [Maledizione](#bookmark=id.vnom4v2vt5fa) | 1 | [142](#bookmark=id.vnom4v2vt5fa) |
+| 23.5 | [Dardo Spirituale](#bookmark=id.j4yb6i8ogpu0) | 3 | [143](#bookmark=id.j4yb6i8ogpu0) |
+| 23.6 | [Negare Potere](#bookmark=id.wkba5x3cdt4l) | 3 | [144](#bookmark=id.wkba5x3cdt4l) |
+| 23.7 | [Nascondere Aura](#bookmark=id.p7jvg8vtz0x1) | 3 | [146](#bookmark=id.p7jvg8vtz0x1) |
+| 23.8 | [Premonizione](#bookmark=id.51rgg8j2hckz) | 6 | [147](#bookmark=id.51rgg8j2hckz) |
+| 23.9 | [Individuare](#bookmark=id.2xdso07gnn4u) | 6 | [148](#bookmark=id.2xdso07gnn4u) |
+| 23.10 | [Alterare Aura](#bookmark=id.60h5vsrfhfxt) | 9 | [150](#bookmark=id.60h5vsrfhfxt) |
 
 # **12 Regole elementali**
 
@@ -1020,9 +997,8 @@ Le regole seguenti valgono per gli incantesimi della specializzazione Elementi e
 
 Gli effetti secondari richiedono almeno 1 danno residuo e il superamento dell’eventuale Contromisura pertinente, salvo eccezione esplicita. Le Contromisure seguono il Manuale del Giocatore, §5.24. Protezione dagli Elementi crea una protezione autonoma che non richiede il contributo di un’Armatura.
 
-|  |  |  |
-| :-: | :-: | :-: |
-| \*\*Elemento\*\* | \*\*Prova\*\* | \*\*Effetto\*\* |
+| Elemento | Prova | Effetto |
+| ----- | ----- | ----- |
 | Fuoco | Riflessi | Incendiato per 1+1d3 RND |
 | Acqua | Nessuna | Sbalzante 1 |
 | Ghiaccio | Tempra | Rallentato per 1+1d3 RND; progressione a Congelato |
@@ -1052,7 +1028,7 @@ Un unico tiro di danno vale per tutti i bersagli della medesima manifestazione a
 
 Geometria Arcana esclude dall’area le creature consentite dal talento, pari al bonus INT con minimo 1, per tutta la durata. Calcolo Arcano, una volta per scena, prende Gittata, Area oppure Durata dalla versione successiva già accessibile. Incantesimi Aggressivi aggiunge il danno una sola volta per bersaglio e per lancio, non a ogni round persistente. Le creature evocate usano le proprie schede, senza ricevere i bonus offensivi del lanciatore. I benefici dei Talenti sull’Anticipazione non si combinano con Calcolo Arcano sullo stesso lancio: si sceglie la modalità utilizzata.
 
-Ai danni degli Incantesimi si aggiunge il bonus di SAG con i tetti di livello del Manuale del Giocatore, §5.13: 0 con SAG 1–5, +1 con 6–7, +2 con 8–9, +3 con 10; massimo +1 ai livelli 1–7, +2 ai livelli 8–14, +3 dal 15°. Si applica a ogni colpo o applicazione di danno, prima di moltiplicatori, Difese e Armatura. Le capacità che limitano espressamente il proprio bonus alla prima applicazione conservano tale limite.
+Ai danni degli Incantesimi si aggiunge il bonus di SAG con i tetti di livello del Manuale del Giocatore, §5.13: 0 con SAG 1–5, \+1 con 6–7, \+2 con 8–9, \+3 con 10; massimo \+1 ai livelli 1–7, \+2 ai livelli 8–14, \+3 dal 15°. Si applica a ogni colpo o applicazione di danno, prima di moltiplicatori, Difese e Armatura. Le capacità che limitano espressamente il proprio bonus alla prima applicazione conservano tale limite.
 
 ## **12 3 Anticipazione**
 
@@ -1064,9 +1040,8 @@ Anticipazione Migliorata elimina soltanto l’aumento di una categoria di diffic
 
 Queste eccezioni ai costi e alla difficoltà valgono per tutte le schede del manuale, anche quando la voce Anticipazione riepiloga i costi ordinari. Non si combinano con Calcolo Arcano sullo stesso lancio.
 
-|  |  |  |
-| :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*Potere ordinario del Taumaturgo\*\* | \*\*Con Anticipazione\*\* |
+| Livello | Potere ordinario del Taumaturgo | Con Anticipazione |
+| ----- | ----- | ----- |
 | 1–3 | Automatico, salvo obblighi | Prova necessaria, 0 |
 | 4–6 | 0 | −2 |
 | 7–9 | −2 | −4 |
@@ -1078,15 +1053,14 @@ Restano applicabili le ulteriori penalità per componenti mancanti, Ingaggio o a
 
 ## **12 4 Ammissibilità dei Rituali**
 
-La voce Rituale indica se l’incantesimo ammette una versione rituale. Le procedure complete per la creazione di Artefatti e batterie sono nella sezione 24; quelle di Rigenerazione nella sezione 25. Le altre conversioni rituali richiedono una procedura espressamente definita.
+La voce Rituale indica se l’incantesimo ammette una versione rituale. Le procedure complete per la creazione di Artefatti e batterie sono nella sezione 24; quelle di Rigenerazione nella sezione 25\. Le altre conversioni rituali richiedono una procedura espressamente definita.
 
 Ritualista Minore permette di apprendere ed eseguire Rituali di Grado I–III come Officiante o Canale, senza richiedere l’Addestramento Taumaturgo. Ritualista Maggiore richiede Ritualista Minore ed estende l’accesso ai Gradi IV–VI. Non si apprendono automaticamente le procedure e non si ottengono bonus numerici automatici al contributo del Canale: restano requisiti, tempi, materiali e costi del singolo Rituale.
 
 Gli utilizzi specifici già autorizzati da una capacità, come Purificazione, continuano a seguire la propria descrizione. Il possesso dell’Abilità Rituali, da solo, non concede ogni procedura.
 
-|  |  |
-| :-: | :-: |
-| \*\*Incantesimo\*\* | \*\*Rituale\*\* |
+| Incantesimo | Rituale |
+| :---- | :---- |
 | Colpo Elementale | Non consentito |
 | Controllo Elementale | Consentito |
 | Muro Elementale | Consentito |
@@ -1112,9 +1086,8 @@ Un colpo concentrato di energia elementale raggiunge uno o più bersagli secondo
 
 I colpi possono essere concentrati o distribuiti. La distribuzione e la combinazione elementale si dichiarano prima del lancio. Ogni colpo applica separatamente danno, AR e protezioni; gli effetti secondari si verificano una sola volta per tipo e per bersaglio nell’intero lancio.
 
-|  |  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata Q\*\* | \*\*Colpi\*\* | \*\*Danno per colpo\*\* | \*\*Natura\*\* | \*\*Elementi max\*\* | \*\*Mod PS\*\* |
+| Livello | PM | Gittata Q | Colpi | Danno per colpo | Natura | Elementi max | Mod PS |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 1 | 1 | 6 | 1 | 1d6 | Naturale | 1 | 0 |
 | 2 | 2 | 6 | 1 | 1d6+1 | Naturale | 1 | 0 |
 | 3 | 3 | 6 | 1 | 1d6+2 | Naturale | 1 | 0 |
@@ -1129,7 +1102,7 @@ I colpi possono essere concentrati o distribuiti. La distribuzione e la combinaz
 | 15 | 15 | 30 | 3 | 5d6+5 | Magico | 2 | −4 |
 | 18 | 18 | 35 | 4 | 5d6+5 | Magico | 3 | −4 |
 
-**Anticipazione:** un solo aspetto di un gradino, con PM raddoppiati e Potere più difficile di una categoria. Si sceglie Colpi 1 → 2 → 3 → 4, natura Naturale → Magico, elementi 1 → 2 → 3 oppure Mod. PS peggiorato di 2. Il danno non è anticipabile. I massimi sono 5d6+5 per colpo, 4 Colpi e natura Magica: non si ottiene danno Etereo. Al livello 18 resta anticipabile soltanto il Mod. PS. La PS resta assente per gli effetti automatici.
+**Anticipazione:** un solo aspetto di un gradino, con PM raddoppiati e Potere più difficile di una categoria. Si sceglie Colpi 1 → 2 → 3 → 4, natura Naturale → Magico, elementi 1 → 2 → 3 oppure Mod. PS peggiorato di 2\. Il danno non è anticipabile. I massimi sono 5d6+5 per colpo, 4 Colpi e natura Magica: non si ottiene danno Etereo. Al livello 18 resta anticipabile soltanto il Mod. PS. La PS resta assente per gli effetti automatici.
 
 Il Mod. PS di Colpo Elementale riguarda soltanto le Salvezze degli effetti secondari dell’elemento, dopo il danno. Non concede una Salvezza per evitare il colpo o il danno; gli effetti automatici restano tali.
 
@@ -1143,9 +1116,8 @@ Il Taumaturgo controlla fenomeni elementali a scopo pratico e narrativo. Modella
 
 L’area è una sfera fissa entro gittata; la massa è il totale controllabile. Un comportamento semplice dichiarato al lancio può proseguire senza Concentrazione. Modificare attivamente l’effetto richiede Concentrazione. Non comprende il controllo della flora.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello e PM\*\* | \*\*Gittata Q\*\* | \*\*Raggio Q\*\* | \*\*Massa\*\* | \*\*Elementi max\*\* | \*\*Con Concentrazione\*\* | \*\*Senza Concentrazione\*\* |
+| Livello e PM | Gittata Q | Raggio Q | Massa | Elementi max | Con Concentrazione | Senza Concentrazione |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 1 | 6 | 1 | 500 g | 1 | 20 RND | 10 RND |
 | 3 | 10 | 1 | 1 kg | 1 | 10 min | 5 min |
 | 6 | 15 | 2 | 5 kg | 2 | 30 min | 15 min |
@@ -1156,7 +1128,7 @@ L’area è una sfera fissa entro gittata; la massa è il totale controllabile. 
 
 **Fulmine:** produce scintille innocue oppure una luce di raggio fisso 2 Q. Con Concentrazione la luce può essere guidata fino a 6 Q per turno, senza AP aggiuntive, restando visibile ed entro gittata. Senza Concentrazione resta ferma oppure segue il Taumaturgo, secondo la scelta dichiarata al lancio.
 
-**Anticipazione:** +1 elemento entro il massimo di 3 oppure una sola delle due durate al gradino successivo della propria colonna. Oltre l’ultima riga: 4 ore con Concentrazione oppure 2 ore senza. Il raggio della luce resta 2 Q.
+**Anticipazione:** \+1 elemento entro il massimo di 3 oppure una sola delle due durate al gradino successivo della propria colonna. Oltre l’ultima riga: 4 ore con Concentrazione oppure 2 ore senza. Il raggio della luce resta 2 Q.
 
 ### **Controllo Elementale Eco Elementale**
 
@@ -1164,9 +1136,8 @@ L’area è una sfera fissa entro gittata; la massa è il totale controllabile. 
 
 Il Taumaturgo invia e riceve segnali attraverso gli elementi presenti, ricostruendo l’ambiente da vibrazioni, discontinuità e movimenti. Occorre un mezzo materiale; l’eco non si propaga nel vuoto. Lo spessore indica il totale dei solidi interposti lungo il percorso, senza moltiplicare la capacità per ogni parete. Massa manipolabile e numero di elementi della modalità ordinaria non limitano l’Eco.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Raggio Q\*\* | \*\*Solidi cm\*\* | \*\*Durata max Con\*\* | \*\*Potere rilevazione\*\* |
+| Livello | PM | Raggio Q | Solidi cm | Durata max Con | Potere rilevazione |
+| ----- | ----- | :---: | :---: | :---: | :---: |
 | 1 | 1 | 6 | 15 | 1 min | 1 |
 | 2 | 2 | 6 | 20 | 1 min | 2 |
 | 3 | 3 | 6 | 25 | 2 min | 3 |
@@ -1185,7 +1156,7 @@ Il Taumaturgo invia e riceve segnali attraverso gli elementi presenti, ricostrue
 | 16 | 16 | 25 | 90 | 10 min | 16 |
 | 17 | 17 | 25 | 95 | 10 min | 17 |
 | 18 | 18 | 30 | 100 | 15 min | 18 |
-| \*\*Dal livello\*\* | \*\*Informazioni disponibili, cumulative\*\* |  |  |  |  |
+| **Dal livello** | **Informazioni disponibili, cumulative** |  |  |  |  |
 | 1 | Presenza e direzione approssimata di corpi e ostacoli. |  |  |  |  |
 | 3 | Distinzione fra corpo, oggetto, cavità e discontinuità strutturale. |  |  |  |  |
 | 6 | Q esatto, ingombro, sagoma generale e movimento. |  |  |  |  |
@@ -1196,9 +1167,9 @@ Il Taumaturgo invia e riceve segnali attraverso gli elementi presenti, ricostrue
 
 **Limiti:** non rivela colori, scritte, identità, intenzioni ostili, livello, aura o diagnosi. Un battito o una cavità sono indizi materiali. La localizzazione non equivale alla vista diretta richiesta da altri incantesimi e non rende visibile un bersaglio ai sensi ordinari.
 
-**Occultamenti:** Mimetismo blocca l’Eco indipendentemente dal livello; Nascondere Aura non la ostacola. Contro Velo Psichico si confrontano i poteri: inferiore non supera, superiore supera, parità richiede PS Magia dell’osservatore. Una sola PS per osservatore e coppia di lanci vale per tutti i beneficiari: scansioni, uscite e rientri non concedono ritiri. Per cumuli e limiti si applica la sezione 8.
+**Occultamenti:** Mimetismo blocca l’Eco indipendentemente dal livello; Nascondere Aura non la ostacola. Contro Velo Psichico si confrontano i poteri: inferiore non supera, superiore supera, parità richiede PS Magia dell’osservatore. Una sola PS per osservatore e coppia di lanci vale per tutti i beneficiari: scansioni, uscite e rientri non concedono ritiri. Per cumuli e limiti si applica la sezione 8\.
 
-**Anticipazione:** un solo aspetto, PM raddoppiati e Potere più difficile di una categoria. Si sceglie spessore +5 cm (massimo 105 cm); Potere di Rilevazione +3, soltanto per il confronto; raggio 6 → 10 → 15 → 20 → 25 → 30 → 40 Q; informazioni della soglia successiva, massimo livello 18; oppure durata 1 → 2 → 3 → 5 → 7 → 10 → 15 → 20 minuti. Non concede mai una durata senza Concentrazione.
+**Anticipazione:** un solo aspetto, PM raddoppiati e Potere più difficile di una categoria. Si sceglie spessore \+5 cm (massimo 105 cm); Potere di Rilevazione \+3, soltanto per il confronto; raggio 6 → 10 → 15 → 20 → 25 → 30 → 40 Q; informazioni della soglia successiva, massimo livello 18; oppure durata 1 → 2 → 3 → 5 → 7 → 10 → 15 → 20 minuti. Non concede mai una durata senza Concentrazione.
 
 **Muro Elementale**
 
@@ -1210,9 +1181,8 @@ Crea segmenti contigui, ciascuno lungo 1 Q, spesso 1 Q e alto 2 Q, sostenuti dal
 
 Terra e Ghiaccio formano muri solidi che bloccano corpi e proiettili: Terra è opaca, Ghiaccio trasparente. Acqua e Fuoco ostacolano la vista attraverso il muro, imponendo −2 ai tiri per colpire; Aria impone −2 ai proiettili materiali; Fulmine è trasparente. La struttura dipende dall’elemento principale.
 
-|  |  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello e PM\*\* | \*\*Gittata Q\*\* | \*\*Segmenti\*\* | \*\*Durata\*\* | \*\*Danno\*\* | \*\*Natura\*\* | \*\*Elementi max\*\* | \*\*Mod FOR e PS\*\* |
+| Livello e PM | Gittata Q | Segmenti | Durata | Danno | Natura | Elementi max | Mod FOR e PS |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 1 | 6 | 3 | 10 RND | 1d4 | Naturale | 1 | 0 |
 | 3 | 10 | 4 | 20 RND | 1d4+2 | Naturale | 1 | 0 |
 | 6 | 10 | 6 | 5 min | 1d4+5 | Magico | 1 | 0 |
@@ -1221,13 +1191,12 @@ Terra e Ghiaccio formano muri solidi che bloccano corpi e proiettili: Terra è o
 | 15 | 25 | 12 | 1 ora | 4d4+5 | Etereo | 2 | −4 |
 | 18 | 30 | 15 | 2 ore | 5d4+5 | Etereo | 3 | −4 |
 
-Attraversare Acqua o Aria richiede una prova di FOR pari a 10 + Mod FOR, con il modificatore della tabella. È movimento difficile; il fallimento termina il Movimento davanti al muro. Fuoco e Fulmine si attraversano con il costo ordinario di movimento. L’Acqua spinge nella direzione di attraversamento, dopo l’uscita.
+Attraversare Acqua o Aria richiede una prova di FOR pari a 10 \+ Mod FOR, con il modificatore della tabella. È movimento difficile; il fallimento termina il Movimento davanti al muro. Fuoco e Fulmine si attraversano con il costo ordinario di movimento. L’Acqua spinge nella direzione di attraversamento, dopo l’uscita.
 
 **Danno:** un muro solido danneggia per contatto corporeo, non per il semplice colpo portato contro di esso con un’arma. Un muro non solido danneggia chi lo attraversa o vi inizia il turno. Ogni creatura subisce danno una sola volta per round dallo stesso lancio. Si applicano AR, Contromisure e PS pertinenti. Nei nuovi round gli effetti secondari possono riapplicarsi e il Ghiaccio può progredire anche dallo stesso muro.
 
-|  |  |  |
-| :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PV per segmento di Ghiaccio\*\* | \*\*PV per segmento di Terra\*\* |
+| Livello | PV per segmento di Ghiaccio | PV per segmento di Terra |
+| ----- | ----- | ----- |
 | 1 | 20 | 30 |
 | 3 | 30 | 40 |
 | 6 | 40 | 60 |
@@ -1250,9 +1219,8 @@ Conferisce una Contromisura magica autonoma contro gli elementi scelti. Funziona
 
 Si sceglie la stessa protezione elementale per tutti i beneficiari. I bersagli multipli seguono la catena di 2 Q al lancio e poi possono muoversi liberamente. Un bersaglio non consenziente può rifiutare con Magia senza modificatori.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello e PM\*\* | \*\*Gittata\*\* | \*\*Beneficiari\*\* | \*\*Elementi\*\* | \*\*Contromisura\*\* | \*\*Durata\*\* |
+| Livello e PM | Gittata | Beneficiari | Elementi | Contromisura | Durata |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 1 | Contatto | 1 | 1 | 2 | 10 RND |
 | 3 | 3 Q | 1 | 1 | 3 | 5 min |
 | 6 | 6 Q | 2 | 2 | 5 | 10 min |
@@ -1263,7 +1231,7 @@ Si sceglie la stessa protezione elementale per tutti i beneficiari. I bersagli m
 
 Si confronta la Contromisura con il danno residuo della singola applicazione o AC. Per lo stesso elemento si usa soltanto la Contromisura più alta, senza sommare questa protezione a equipaggiamento o altri lanci.
 
-**Anticipazione:** Contromisura al gradino successivo (2 → 3 → 5 → 7 → 10 → 12 → 15 → 20), +1 elemento fino a 6 oppure durata al gradino successivo, fino a 8 ore oltre l’ultima riga.
+**Anticipazione:** Contromisura al gradino successivo (2 → 3 → 5 → 7 → 10 → 12 → 15 → 20), \+1 elemento fino a 6 oppure durata al gradino successivo, fino a 8 ore oltre l’ultima riga.
 
 **Armatura Elementale**
 
@@ -1275,16 +1243,15 @@ Protegge beneficiari consenzienti soltanto dai danni degli elementi scelti. Un�
 
 L’elemento principale determina il danno reattivo; gli altri aggiungono effetti secondari e tutti quelli scelti forniscono protezione. Combinazione e modalità dell’aura sono uguali per i beneficiari del lancio.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello e PM\*\* | \*\*Gittata\*\* | \*\*Beneficiari\*\* | \*\*Durata\*\* | \*\*AR\*\* | \*\*Natura AR\*\* |
+| Livello e PM | Gittata | Beneficiari | Durata | AR | Natura AR |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 3 | Contatto | 1 | 10 RND | 3 | Naturale |
 | 6 | Contatto | 1 | 20 RND | 4 | Naturale |
 | 9 | 6 Q | 2 | 5 min | 5 | Magica |
 | 12 | 10 Q | 2 | 10 min | 6 | Magica |
 | 15 | 15 Q | 3 | 30 min | 7 | Magica |
 | 18 | 20 Q | 3 | 1 ora | 8 | Magica |
-| \*\*Livello\*\* | \*\*Danno\*\* | \*\*Natura danno\*\* | \*\*Elementi max\*\* | \*\*Aura massima\*\* | \*\*Mod PS\*\* |
+| **Livello** | **Danno** | **Natura danno** | **Elementi max** | **Aura massima** | **Mod PS** |
 | 3 | 1d6 | Naturale | 1 | Contatto | 0 |
 | 6 | 1d6+1 | Naturale | 1 | Raggio 1 Q | 0 |
 | 9 | 1d6+2 | Magico | 2 | Raggio 1 Q | −2 |
@@ -1304,13 +1271,12 @@ Scheda 13.6 • Macrofamiglia Fisica • Specializzazione Elementi • Rituale: 
 
 **Lancio:** 1 AP. Componenti: Focus, Gesto e Invocazione. Costo ordinario: PM pari al livello dichiarato. Si applicano le prove Potere e le regole comuni, salvo eccezioni esplicite.
 
-Un’esplosione istantanea investe l’area attorno a un punto visibile entro gittata. Dopo Potere, si effettua Armi da lancio +2 per colpire il Q dichiarato. Il talento Incantesimi da Lancio aggiunge il proprio +2. Il tiro appartiene alla stessa AP e allo stesso costo; il fallimento ordinario applica lo scarto delle granate.
+Un’esplosione istantanea investe l’area attorno a un punto visibile entro gittata. Dopo Potere, si effettua Armi da lancio \+2 per colpire il Q dichiarato. Il talento Incantesimi da Lancio aggiunge il proprio \+2. Il tiro appartiene alla stessa AP e allo stesso costo; il fallimento ordinario applica lo scarto delle granate.
 
 Tutte le creature raggiunte, inclusi alleati e Taumaturgo, sono coinvolte; le barriere solide bloccano la propagazione. È consentita Elusione, non Parata o Schivata.
 
-|  |  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata Q\*\* | \*\*Raggio Q\*\* | \*\*Danno per AC\*\* | \*\*Natura\*\* | \*\*Elementi max\*\* | \*\*Mod PS\*\* |
+| Livello | PM | Gittata Q | Raggio Q | Danno per AC | Natura | Elementi max | Mod PS |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 3 | 3 | 6 | 2 | 1d4+2 | Naturale | 1 | 0 |
 | 4 | 4 | 6 | 2 | 1d4+3 | Naturale | 1 | 0 |
 | 5 | 5 | 6 | 2 | 1d4+4 | Naturale | 1 | 0 |
@@ -1340,9 +1306,8 @@ Un cono istantaneo parte dal bordo dello spazio del Taumaturgo nella direzione d
 
 Non richiede un tiro per colpire. Colpisce 1 AC per bersaglio. Un unico tiro di danno vale per tutta l’area. Consente soltanto Elusione: il modificatore PS si applica a questa prova e alle eventuali PS secondarie. L’Acqua spinge allontanando dal Taumaturgo.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello e PM\*\* | \*\*Lunghezza Q\*\* | \*\*Larghezza finale Q\*\* | \*\*Danno\*\* | \*\*Natura\*\* | \*\*Elementi max\*\* | \*\*Mod PS\*\* |
+| Livello e PM | Lunghezza Q | Larghezza finale Q | Danno | Natura | Elementi max | Mod PS |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 3 | 3 | 2 | 1d6+2 | Naturale | 1 | 0 |
 | 4 | 3 | 2 | 1d6+3 | Naturale | 1 | 0 |
 | 5 | 3 | 2 | 1d6+4 | Naturale | 1 | 0 |
@@ -1366,9 +1331,8 @@ Evoca una creatura elementale in uno spazio libero e visibile entro gittata, abb
 
 L’elementale agisce immediatamente dopo il Taumaturgo, anche nel turno in cui viene evocato. Le sue azioni sono autonome rispetto a quelle del personaggio. Spiritello, Servitore e Minore hanno 1 Movimento e 1 AP; il Maggiore ha 1 Movimento e 2 AP. Sostituire l’elementale con un nuovo lancio non concede un nuovo turno né rinnova Movimento, AP o capacità limitate per RND: nel RND globale la nuova creatura usa soltanto quanto resta dopo ciò che ha già consumato la precedente. Il limite di un elementale è distinto da quello di Ectoplasma.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello e PM\*\* | \*\*Categoria\*\* | \*\*Gittata\*\* | \*\*Ordini entro\*\* | \*\*Durata\*\* | \*\*Composizione\*\* |
+| Livello e PM | Categoria | Gittata | Ordini entro | Durata | Composizione |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 6 | Spiritello | 3 Q | 10 Q | 10 RND | Puro |
 | 9 | Servitore | 6 Q | 15 Q | 20 RND | Puro o ibrido |
 | 12 | Minore | 10 Q | 20 Q | 5 min | Puro o ibrido |
@@ -1379,15 +1343,14 @@ Una volta nel proprio turno il Taumaturgo impartisce un ordine mentale semplice 
 
 Fuori dalla distanza degli ordini la creatura continua l’ultimo compito e, una volta concluso, cerca di tornare dal Taumaturgo. La sola distanza non termina l’evocazione. La creatura scompare a fine durata, a 0 PV, se il Taumaturgo perde conoscenza o muore, per congedo volontario senza AP nel proprio turno oppure per un effetto che annulla l’incantesimo. Sonno e svenimento per PM personali a 0 sono perdite di conoscenza e terminano l’evocazione. Le durate trascorrono anche quando non si possono impartire ordini. Gli oggetti portati dalla creatura rimangono e cadono se privi di sostegno.
 
-|  |  |
-| :-: | :-: |
-| \*\*Elementi\*\* | \*\*Creatura\*\* |
-| Acqua + Aria | Ghiaccio |
-| Acqua + Fuoco | Vapore |
-| Acqua + Terra | Fango |
-| Aria + Fuoco | Fumo con caratteristiche del Fulmine |
-| Aria + Terra | Polvere |
-| Fuoco + Terra | Magma |
+| Elementi | Creatura |
+| :---- | :---- |
+| Acqua \+ Aria | Ghiaccio |
+| Acqua \+ Fuoco | Vapore |
+| Acqua \+ Terra | Fango |
+| Aria \+ Fuoco | Fumo con caratteristiche del Fulmine |
+| Aria \+ Terra | Polvere |
+| Fuoco \+ Terra | Magma |
 
 **Ogni ibrido usa la propria scheda della sezione 14:** non somma le statistiche dei genitori. Ogni attacco è una fonte distinta, usa i propri valori e non riceve i bonus offensivi del lanciatore. Le protezioni, i movimenti e le capacità sono quelli della categoria evocata.
 
@@ -1401,17 +1364,16 @@ Scheda 13.9 • Macrofamiglia Fisica • Specializzazione Elementi • Rituale: 
 
 **Lancio:** 1 AP. Componenti: Focus, Gesto e Invocazione. Costo ordinario: PM pari al livello dichiarato. Si applicano le prove Potere e le regole comuni, salvo eccezioni esplicite.
 
-Trasforma il Taumaturgo in una delle forme elementali della sezione 14. Bersaglio e gittata Personale; nessuna PS per trasformarsi. Durata fissa senza Concentrazione. La forma si sceglie al lancio e deve trovare spazio sufficiente: 1 Q per Spiritello e Servitore, 2 × 2 Q per Minore e Maggiore.
+Trasforma il Taumaturgo in una delle forme elementali della sezione 14\. Bersaglio e gittata Personale; nessuna PS per trasformarsi. Durata fissa senza Concentrazione. La forma si sceglie al lancio e deve trovare spazio sufficiente: 1 Q per Spiritello e Servitore, 2 × 2 Q per Minore e Maggiore.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Categoria\*\* | \*\*Composizione\*\* | \*\*Durata\*\* |
+| Livello | PM | Categoria | Composizione | Durata |
+| ----- | ----- | :---: | :---: | :---: |
 | 6 | 6 | Spiritello | Puro | 10 RND |
 | 9 | 9 | Servitore | Puro o ibrido | 20 RND |
 | 12 | 12 | Minore | Puro o ibrido | 5 min |
 | 15 | 15 | Maggiore | Puro o ibrido | 10 min |
 | 18 | 18 | Maggiore | Puro o ibrido | 30 min |
-| \*\*Aspetto\*\* | \*\*Durante la forma\*\* |  |  |  |
+| **Aspetto** | **Durante la forma** |  |  |  |
 | FOR COS DES | Valori della forma |  |  |  |
 | INT SAG CAR | Valori del personaggio |  |  |  |
 | PV | Riserva separata pari ai PV della forma |  |  |  |
@@ -1425,7 +1387,7 @@ Trasforma il Taumaturgo in una delle forme elementali della sezione 14. Bersagli
 
 I VA delle schede delle creature servono agli elementali evocati. Il personaggio trasformato conserva le proprie competenze e aggiorna soltanto i modificatori delle caratteristiche cambiate. Per esempio, DES da 5 a 7 aumenta di 2 le Abilità basate su DES e Riflessi.
 
-Acquisisce gli attacchi e le capacità della forma con i danni, le gittate, le aree, le AC, gli effetti e i modificatori PS della scheda. Usa il proprio Corpo a corpo per gli attacchi ravvicinati e Armi da lancio per quelli a distanza, aggiornati alle nuove caratteristiche. Gli attacchi ad area mantengono l’eventuale assenza di tiro per colpire. Ogni attacco costa 1 AP, senza PM aggiuntivi; non riceve il +2 previsto per colpire con un incantesimo.
+Acquisisce gli attacchi e le capacità della forma con i danni, le gittate, le aree, le AC, gli effetti e i modificatori PS della scheda. Usa il proprio Corpo a corpo per gli attacchi ravvicinati e Armi da lancio per quelli a distanza, aggiornati alle nuove caratteristiche. Gli attacchi ad area mantengono l’eventuale assenza di tiro per colpire. Ogni attacco costa 1 AP, senza PM aggiuntivi; non riceve il \+2 previsto per colpire con un incantesimo.
 
 L’AP del lancio rientra nelle azioni del turno; dopo la trasformazione si possono usare quelle rimaste. Chi dispone di 2 AP le conserva anche in una forma inferiore al Maggiore. Può continuare a lanciare gli incantesimi conosciuti della specializzazione Elementi con il proprio Potere e pagando normalmente i PM.
 
@@ -1437,7 +1399,7 @@ La forma consente Gesto e Invocazione. Il Focus incorporato resta valido come co
 
 Gli Stati già presenti incompatibili con le immunità della forma sono sospesi: le durate continuano a trascorrere e riprendono al ritorno soltanto se ancora in corso. La trasformazione termina per durata, ritorno volontario senza AP nel proprio turno, esaurimento dei PV della forma, perdita di conoscenza o annullamento dell’incantesimo. Un nuovo lancio riuscito sostituisce la forma precedente. Sostituire la forma non rinnova azioni, limiti di capacità o tetto di rigenerazione del RND globale. A 0 PM personali il Taumaturgo sviene e ritorna al corpo originario. Cura Ferite, Corpo Adattivo e Psicometabolismo non curano né la riserva della forma né il corpo sospeso; i recuperi periodici trascorrono senza effetto, riprendendo al ritorno se resta durata.
 
-**Anticipazione:** composizione da puro a ibrido di due elementi oppure durata al gradino successivo, fino a 1 ora oltre la riga di livello 18. La categoria resta quella della versione scelta: il livello 6 anticipato a 12 PM concede uno Spiritello ibrido per 10 RND.
+**Anticipazione:** composizione da puro a ibrido di due elementi oppure durata al gradino successivo, fino a 1 ora oltre la riga di livello 18\. La categoria resta quella della versione scelta: il livello 6 anticipato a 12 PM concede uno Spiritello ibrido per 10 RND.
 
 **Devastazione Elementale**
 
@@ -1449,14 +1411,13 @@ Una deflagrazione iniziale crea una zona elementale persistente. L’origine è 
 
 Le barriere solide bloccano la propagazione. La zona rimane nella posizione scelta anche se il Taumaturgo si allontana.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello e PM\*\* | \*\*Gittata Q\*\* | \*\*Raggio Q\*\* | \*\*Danno iniziale per AC\*\* | \*\*Danno persistente su 1 AC\*\* | \*\*Durata\*\* |
+| Livello e PM | Gittata Q | Raggio Q | Danno iniziale per AC | Danno persistente su 1 AC | Durata |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 9 | 15 | 4 | 2d6 | 1d6 | 5 RND |
 | 12 | 20 | 5 | 3d6 | 1d6+1 | 5 RND |
 | 15 | 25 | 6 | 4d6 | 1d6+2 | 10 RND |
 | 18 | 30 | 8 | 5d6 | 1d6+3 | 10 RND |
-| \*\*Livello\*\* | \*\*Natura di entrambi i danni\*\* | \*\*Elementi max\*\* | \*\*Mod PS\*\* |  |  |
+| **Livello** | **Natura di entrambi i danni** | **Elementi max** | **Mod PS** |  |  |
 | 9 | Magico | 1 | −2 |  |  |
 | 12 | Magico | 2 | −2 |  |  |
 | 15 | Etereo | 2 | −4 |  |  |
@@ -1466,14 +1427,13 @@ Le barriere solide bloccano la propagazione. La zona rimane nella posizione scel
 
 **Danno persistente:** colpisce 1 AC quando il bersaglio entra nell’area, anche per movimento forzato, oppure vi inizia il turno. Ogni bersaglio subisce una sola esposizione per round da questo lancio; la deflagrazione iniziale conta come esposizione e impedisce anche il danno persistente nello stesso round. Il danno persistente si tira una sola volta per round, alla prima applicazione, e vale per tutti gli esposti di quel round. È consentita Elusione quando fisicamente possibile, prima dell’AR. Ogni esposizione applica normalmente le protezioni.
 
-|  |  |  |
-| :-: | :-: | :-: |
-| \*\*Elemento principale\*\* | \*\*Ambiente\*\* | \*\*Effetto secondario\*\* |
+| Elemento principale | Ambiente | Effetto secondario |
+| ----- | ----- | ----- |
 | Acqua | Acqua tumultuosa sulle superfici; movimento difficile al suolo | Sbalzante 1 dal centro, nessuna PS |
-| Ghiaccio | Lastre di ghiaccio; movimento difficile al suolo | \*\*Tempra:\*\* Rallentato 1+1d3 RND e progressione a Congelato |
-| Aria | Venti impetuosi; movimento difficile anche in volo | \*\*Riflessi:\*\* A Terra |
-| Fuoco | Fiamme e correnti incandescenti | \*\*Riflessi:\*\* Incendiato 1+1d3 RND |
-| Fulmine | Scariche continue | \*\*Tempra:\*\* Disorientato 1+1d3 RND; 20 naturale Stordito 1 RND |
+| Ghiaccio | Lastre di ghiaccio; movimento difficile al suolo | **Tempra:** Rallentato 1+1d3 RND e progressione a Congelato |
+| Aria | Venti impetuosi; movimento difficile anche in volo | **Riflessi:** A Terra |
+| Fuoco | Fiamme e correnti incandescenti | **Riflessi:** Incendiato 1+1d3 RND |
+| Fulmine | Scariche continue | **Tempra:** Disorientato 1+1d3 RND; 20 naturale Stordito 1 RND |
 | Terra | Suolo sconnesso, detriti e schegge; movimento difficile al suolo | Sanguinamento 1, nessuna PS |
 
 L’elemento principale determina danno e ambiente. Gli elementi aggiuntivi conferiscono soltanto i propri effetti secondari. Movimento difficile significa che ogni Q percorso costa 2 Q di Movimento; Acqua, Ghiaccio e Terra ostacolano chi si sposta sulla superficie, Aria anche chi vola.
@@ -1482,19 +1442,19 @@ Il modificatore PS si applica a Elusione e alle PS secondarie che prevedono una 
 
 Un Taumaturgo può avere una sola Devastazione Elementale attiva. Un nuovo lancio riuscito termina la precedente; può anche interromperla senza AP nel proprio turno. Al termine cessano le alterazioni ambientali imposte; restano i danni già inflitti e gli Stati seguono la propria durata.
 
-**Anticipazione:** natura del danno da Magico a Etereo per entrambe le componenti; +1 elemento fino a 3; modificatore PS da −2 a −4 oppure da −4 a −6; durata da 5 a 10 RND oppure da 10 a 20 RND. Le 1d3 AC iniziali e la singola AC persistente restano fisse.
+**Anticipazione:** natura del danno da Magico a Etereo per entrambe le componenti; \+1 elemento fino a 3; modificatore PS da −2 a −4 oppure da −4 a −6; durata da 5 a 10 RND oppure da 10 a 20 RND. Le 1d3 AC iniziali e la singola AC persistente restano fisse.
 
 # **14 Schede degli elementali**
 
 Le colonne indicano Spiritello, Servitore, Minore e Maggiore. I livelli minimi sono 6, 9, 12 e 15; la versione 18 usa ancora il Maggiore. Lo Spiritello ibrido è disponibile soltanto anticipando la composizione del livello 6, con 12 PM e prova Potere più difficile di una categoria. Durata e ordini restano quelli dell’incantesimo.
 
-Tutti hanno INT, SAG e CAR pari a 4 / 4 / 5 / 5; Volontà 6 / 7 / 9 / 10 e Magia 8 / 9 / 11 / 12. Occupano 1 Q / 1 Q / 2 × 2 Q / 2 × 2 Q. Dispongono di 1 Movimento e 1 / 1 / 1 / 2 AP. Ogni attacco costa 1 AP, senza PM aggiuntivi. Le schede riportano nuovamente questi valori per facilitarne l’uso al tavolo. La riserva PM degli elementali evocati è indicata con —, non 0: non possiedono PM personali da sottrarre. Dardo Spirituale può danneggiarne i PV, ma non drena il creatore e non provoca svenimento da PM esauriti. Le cure biologiche ordinarie non li guariscono.
+Tutti hanno INT, SAG e CAR pari a 4 / 4 / 5 / 5; Volontà 6 / 7 / 9 / 10 e Magia 8 / 9 / 11 / 12\. Occupano 1 Q / 1 Q / 2 × 2 Q / 2 × 2 Q. Dispongono di 1 Movimento e 1 / 1 / 1 / 2 AP. Ogni attacco costa 1 AP, senza PM aggiuntivi. Le schede riportano nuovamente questi valori per facilitarne l’uso al tavolo. La riserva PM degli elementali evocati è indicata con —, non 0: non possiedono PM personali da sottrarre. Dardo Spirituale può danneggiarne i PV, ma non drena il creatore e non provoca svenimento da PM esauriti. Le cure biologiche ordinarie non li guariscono.
 
 **Immunità comuni:** Veleni, Malattie, Sanguinamento, Sonno, Paralizzato, Disorientato, Stordito e A Terra. Il Ghiaccio può comunque rendere Rallentato o Congelato un elementale privo di immunità specifica al Ghiaccio. Gli elementali non hanno bisogno di respirare. Ogni attacco è una fonte distinta; gli effetti ad area colpiscono anche gli alleati ma escludono la creatura che li genera, e sono bloccati da barriere solide.
 
 Il danno Naturale è dimezzato da Minore e Maggiore, salvo immunità o assorbimenti più favorevoli. Più resistenze che dimezzano non si moltiplicano fra loro; AR e vulnerabilità seguono l’ordine ordinario. La natura degli attacchi è Naturale / Magico / Magico / Magico. L’AR è Naturale per lo Spiritello, quando presente, e Magica per le altre categorie.
 
-**Nuoto e volo degli elementali:** le velocità delle schede indicano il Passo; Corsa e Scatto le moltiplicano rispettivamente per 2 e per 3. I modificatori delle andature sono nel Manuale del Giocatore, §5.2. Il nuoto ordinario dell’elementale non richiede una Prova; correnti o ostacoli possono richiederla. Il sostentamento elementale consente di muoversi in ogni direzione, anche in verticale, e di restare sospesi senza AP. Movimento 0 non fa perdere quota finché il sostentamento permane. Questa capacità non concede automaticamente il trasporto di altre creature.
+**Nuoto e volo degli elementali:** le velocità delle schede indicano il Passo; Corsa e Scatto le moltiplicano rispettivamente per 2 e per 3\. I modificatori delle andature sono nel Manuale del Giocatore, §5.2. Il nuoto ordinario dell’elementale non richiede una Prova; correnti o ostacoli possono richiederla. Il sostentamento elementale consente di muoversi in ogni direzione, anche in verticale, e di restare sospesi senza AP. Movimento 0 non fa perdere quota finché il sostentamento permane. Questa capacità non concede automaticamente il trasporto di altre creature.
 
 **Rigenerazione degli ibridi:** gli attacchi da uno dei due elementi costitutivi vengono assorbiti. Si calcola il danno dopo riduzioni e AR ignorando soltanto l’assorbimento; il residuo si trasforma in recupero di PV, fino al massimo complessivo per round di 1 / 2 / 3 / 4 PV. Il limite comprende insieme entrambi gli elementi e tutte le fonti del round. Non si superano i PV massimi e le esposizioni innocue non attivano la rigenerazione. Le immunità aggiuntive a Ghiaccio o Fulmine annullano il danno ma non curano.
 
@@ -1506,9 +1466,8 @@ Il danno Naturale è dimezzato da Minore e Maggiore, salvo immunità o assorbime
 
 **Elemento puro Acqua. Rituale:** quello dell’incantesimo che evoca o trasforma; nessuna procedura rituale autonoma è qui definita.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Caratteristica\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| Caratteristica | Spiritello | Servitore | Minore | Maggiore |
+| :---: | :---: | :---: | :---: | :---: |
 | Livello minimo | 6 | 9 | 12 | 15 |
 | FOR | 6 | 7 | 8 | 9 |
 | COS | 7 | 8 | 9 | 10 |
@@ -1527,7 +1486,7 @@ Il danno Naturale è dimezzato da Minore e Maggiore, salvo immunità o assorbime
 | Passo Q | 3 | 3 | 4 | 4 |
 | Spazio occupato | 1 Q | 1 Q | 2 × 2 Q | 2 × 2 Q |
 | AP oltre al Movimento | 1 | 1 | 1 | 2 |
-| \*\*Attacco o parametro\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| **Attacco o parametro** | **Spiritello** | **Servitore** | **Minore** | **Maggiore** |
 | Passo in nuoto Q | 6 | 6 | 10 | 12 |
 | Schiaffo | 1d4+2 | 1d6+2 | 1d6+4 | 2d6+4 |
 | Portata Q | 1 | 1 | 1 | 1 |
@@ -1537,9 +1496,8 @@ Il danno Naturale è dimezzato da Minore e Maggiore, salvo immunità o assorbime
 
 Schiaffo usa Corpo a corpo; Dardo usa Attacco a distanza. Si applicano le difese pertinenti. Entrambi infliggono danno da Acqua e Sbalzante 1 dopo residuo e Contromisura, senza PS. Il Maggiore può spingere con entrambi gli attacchi; il primo spostamento può però portare il bersaglio fuori dalla portata del secondo.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Danno ricevuto\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| Danno ricevuto | Spiritello | Servitore | Minore | Maggiore |
+| :---: | :---: | :---: | :---: | :---: |
 | Acqua | Immune | Immune | Immune | Immune |
 | Fuoco | Dimezzato | Dimezzato | Dimezzato | Immune |
 | Ghiaccio | ×2 | ×2 | ×2 | Normale |
@@ -1559,9 +1517,8 @@ Liberarsi richiede 1 AP e una nuova contrapposta di Corpo a corpo oppure Atletic
 
 **Elemento puro Aria. Rituale:** quello dell’incantesimo che evoca o trasforma; nessuna procedura rituale autonoma è qui definita.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Caratteristica\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| Caratteristica | Spiritello | Servitore | Minore | Maggiore |
+| :---: | :---: | :---: | :---: | :---: |
 | Livello minimo | 6 | 9 | 12 | 15 |
 | FOR | 5 | 6 | 7 | 8 |
 | COS | 6 | 7 | 8 | 9 |
@@ -1580,7 +1537,7 @@ Liberarsi richiede 1 AP e una nuova contrapposta di Corpo a corpo oppure Atletic
 | Passo in volo Q | 6 | 6 | 8 | 12 |
 | Spazio occupato | 1 Q | 1 Q | 2 × 2 Q | 2 × 2 Q |
 | AP oltre al Movimento | 1 | 1 | 1 | 2 |
-| \*\*Attacco o parametro\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| **Attacco o parametro** | **Spiritello** | **Servitore** | **Minore** | **Maggiore** |
 | Folata | 1d4+1 | 1d6+1 | 1d6+3 | 2d6+3 |
 | Portata Q | 1 | 1 | 1 | 1 |
 | Dardo | 1d4 | 1d4+2 | 1d6+3 | 2d6+2 |
@@ -1590,9 +1547,8 @@ Liberarsi richiede 1 AP e una nuova contrapposta di Corpo a corpo oppure Atletic
 
 Folata usa Corpo a corpo e Dardo usa Attacco a distanza. Colpiscono un solo bersaglio su 1 AC e consentono le difese pertinenti. Entrambi infliggono danno da Aria: dopo residuo e Contromisura, una PS Riflessi fallita applica A Terra. Un bersaglio già A Terra non subisce effetti ulteriori.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Danno ricevuto\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| Danno ricevuto | Spiritello | Servitore | Minore | Maggiore |
+| :---: | :---: | :---: | :---: | :---: |
 | Aria | Immune | Immune | Immune | Immune |
 | Fulmine | Immune | Immune | Immune | Immune |
 | Natura Naturale | Normale | Normale | Dimezzato | Dimezzato |
@@ -1603,9 +1559,8 @@ Le immunità ad Aria e Fulmine comprendono i rispettivi effetti secondari. Non h
 
 **Elemento puro Fuoco. Rituale:** quello dell’incantesimo che evoca o trasforma; nessuna procedura rituale autonoma è qui definita.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Caratteristica\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| Caratteristica | Spiritello | Servitore | Minore | Maggiore |
+| :---: | :---: | :---: | :---: | :---: |
 | Livello minimo | 6 | 9 | 12 | 15 |
 | FOR | 6 | 7 | 8 | 9 |
 | COS | 6 | 7 | 8 | 9 |
@@ -1623,7 +1578,7 @@ Le immunità ad Aria e Fulmine comprendono i rispettivi effetti secondari. Non h
 | Passo Q | 3 | 3 | 4 | 5 |
 | Spazio occupato | 1 Q | 1 Q | 2 × 2 Q | 2 × 2 Q |
 | AP oltre al Movimento | 1 | 1 | 1 | 2 |
-| \*\*Attacco o parametro\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| **Attacco o parametro** | **Spiritello** | **Servitore** | **Minore** | **Maggiore** |
 | Tocco Ustionante | 1d6+1 | 1d6+3 | 2d6+3 | 2d6+5 |
 | Portata Q | 1 | 1 | 1 | 1 |
 | Fiammata | 1d4 | 1d4+2 | 1d6+3 | 2d6+2 |
@@ -1633,9 +1588,8 @@ Le immunità ad Aria e Fulmine comprendono i rispettivi effetti secondari. Non h
 
 Tocco Ustionante usa Corpo a corpo e consente le normali difese. Fiammata parte dal bordo dello spazio in una direzione dichiarata: non richiede tiro per colpire, investe tutte le creature lungo la linea ed è fermata dai solidi. Si tira una sola volta il danno per tutti; ogni bersaglio può usare Elusione con il modificatore indicato. Entrambi gli attacchi applicano Fuoco e, dopo residuo e Contromisura, una distinta PS Riflessi contro Incendiato per 1+1d3 RND.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Danno ricevuto\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| Danno ricevuto | Spiritello | Servitore | Minore | Maggiore |
+| :---: | :---: | :---: | :---: | :---: |
 | Fuoco | Immune | Immune | Immune | Immune |
 | Acqua | ×2 | ×2 | Normale | Normale |
 | Ghiaccio | ×2 | ×2 | ×2 | Normale |
@@ -1647,9 +1601,8 @@ Tocco Ustionante usa Corpo a corpo e consente le normali difese. Fiammata parte 
 
 **Elemento puro Terra. Rituale:** quello dell’incantesimo che evoca o trasforma; nessuna procedura rituale autonoma è qui definita.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Caratteristica\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| Caratteristica | Spiritello | Servitore | Minore | Maggiore |
+| :---: | :---: | :---: | :---: | :---: |
 | Livello minimo | 6 | 9 | 12 | 15 |
 | FOR | 7 | 8 | 9 | 10 |
 | COS | 7 | 8 | 9 | 10 |
@@ -1667,7 +1620,7 @@ Tocco Ustionante usa Corpo a corpo e consente le normali difese. Fiammata parte 
 | Passo Q | 4 | 4 | 6 | 8 |
 | Spazio occupato | 1 Q | 1 Q | 2 × 2 Q | 2 × 2 Q |
 | AP oltre al Movimento | 1 | 1 | 1 | 2 |
-| \*\*Attacco o parametro\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| **Attacco o parametro** | **Spiritello** | **Servitore** | **Minore** | **Maggiore** |
 | Pugno di Pietra | 1d6+2 | 1d6+4 | 2d6+4 | 2d6+6 |
 | Portata Q | 1 | 1 | 1 | 1 |
 | Terremoto | 1d4 | 1d6 | 1d8 | 1d10 |
@@ -1679,23 +1632,21 @@ Pugno di Pietra usa Corpo a corpo, con difese ordinarie, e infligge danno da Ter
 
 Terremoto costa 1 AP ed è utilizzabile una sola volta per round; il Maggiore può usare l’altra AP per Pugno o altre azioni. Richiede che la creatura poggi su terreno o pavimento e coinvolge i bersagli nel raggio appoggiati sulla stessa superficie continua e sullo stesso livello, compresi gli alleati. Non richiede tiro per colpire. Un tiro di danno vale per tutti; Elusione su Riflessi dimezza prima dell’AR. Dopo residuo e Contromisura, una distinta PS Riflessi evita A Terra, che sostituisce Sanguinamento per questo attacco. Il danno e la Contromisura restano di Terra.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Danno ricevuto\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| Danno ricevuto | Spiritello | Servitore | Minore | Maggiore |
+| :---: | :---: | :---: | :---: | :---: |
 | Terra | Immune | Immune | Immune | Immune |
 | Fuoco | Dimezzato | Dimezzato | Dimezzato | Dimezzato |
 | Fulmine | Dimezzato | Dimezzato | Dimezzato | Dimezzato |
 | Natura Naturale | Normale | Normale | Dimezzato | Dimezzato |
 
-È immune anche agli effetti secondari di Terra e non ha vulnerabilità ×2. Può spostare rocce, ostacoli e carichi secondo la propria FOR. Le prove di FOR hanno valore 12 / 13 / 14 / 15, pari a 10 + Mod FOR. Non è stata aggiunta una capacità speciale di attraversare il terreno o uno scavo automatico.
+È immune anche agli effetti secondari di Terra e non ha vulnerabilità ×2. Può spostare rocce, ostacoli e carichi secondo la propria FOR. Le prove di FOR hanno valore 12 / 13 / 14 / 15, pari a 10 \+ Mod FOR. Non è stata aggiunta una capacità speciale di attraversare il terreno o uno scavo automatico.
 
 ## **14 5 Elementale del Ghiaccio**
 
-**Ibrido di Acqua + Aria. Rituale:** quello dell’incantesimo che evoca o trasforma; nessuna procedura rituale autonoma è qui definita.
+**Ibrido di Acqua \+ Aria. Rituale:** quello dell’incantesimo che evoca o trasforma; nessuna procedura rituale autonoma è qui definita.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Caratteristica\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| Caratteristica | Spiritello | Servitore | Minore | Maggiore |
+| ----- | :---: | :---: | :---: | :---: |
 | Livello minimo | 6 con Anticipazione | 9 | 12 | 15 |
 | FOR | 6 | 7 | 8 | 9 |
 | COS | 7 | 8 | 9 | 10 |
@@ -1715,7 +1666,7 @@ Terremoto costa 1 AP ed è utilizzabile una sola volta per round; il Maggiore pu
 | Spazio occupato | 1 Q | 1 Q | 2 × 2 Q | 2 × 2 Q |
 | AP oltre al Movimento | 1 | 1 | 1 | 2 |
 | Rigenerazione max PV per RND | 1 | 2 | 3 | 4 |
-| \*\*Attacco o parametro\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| **Attacco o parametro** | **Spiritello** | **Servitore** | **Minore** | **Maggiore** |
 | Tocco Gelido | 1d4+2 | 1d6+2 | 1d6+4 | 2d6+4 |
 | Portata Q | 1 | 1 | 1 | 1 |
 | AC del Tocco | 1 | 1 | 1 | 1 |
@@ -1728,9 +1679,8 @@ Tocco Gelido usa Corpo a corpo e consente le normali difese. Raffica Glaciale us
 
 Entrambi infliggono danno da Ghiaccio. Dopo residuo e Contromisura, una PS Tempra fallita applica Rallentato per 1+1d3 RND; un nuovo fallimento mentre è già Rallentato dal Ghiaccio provoca Congelato fino al termine del turno successivo, poi Rallentato per 1 RND. I due attacchi del Maggiore sono fonti distinte e possono produrre la progressione nello stesso turno.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Danno ricevuto\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| Danno ricevuto | Spiritello | Servitore | Minore | Maggiore |
+| :---: | :---: | :---: | :---: | :---: |
 | Ghiaccio | Immune | Immune | Immune | Immune |
 | Acqua o Aria | Assorbito | Assorbito | Assorbito | Assorbito |
 | Fuoco | ×2 | ×2 | ×2 | ×2 |
@@ -1740,11 +1690,10 @@ Entrambi infliggono danno da Ghiaccio. Dopo residuo e Contromisura, una PS Tempr
 
 ## **14 6 Elementale del Vapore**
 
-**Ibrido di Acqua + Fuoco. Rituale:** quello dell’incantesimo che evoca o trasforma; nessuna procedura rituale autonoma è qui definita.
+**Ibrido di Acqua \+ Fuoco. Rituale:** quello dell’incantesimo che evoca o trasforma; nessuna procedura rituale autonoma è qui definita.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Caratteristica\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| Caratteristica | Spiritello | Servitore | Minore | Maggiore |
+| ----- | :---: | :---: | :---: | :---: |
 | Livello minimo | 6 con Anticipazione | 9 | 12 | 15 |
 | FOR | 6 | 7 | 8 | 9 |
 | COS | 6 | 7 | 8 | 9 |
@@ -1763,7 +1712,7 @@ Entrambi infliggono danno da Ghiaccio. Dopo residuo e Contromisura, una PS Tempr
 | Spazio occupato | 1 Q | 1 Q | 2 × 2 Q | 2 × 2 Q |
 | AP oltre al Movimento | 1 | 1 | 1 | 2 |
 | Rigenerazione max PV per RND | 1 | 2 | 3 | 4 |
-| \*\*Attacco o parametro\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| **Attacco o parametro** | **Spiritello** | **Servitore** | **Minore** | **Maggiore** |
 | Esplosione di Vapore per AC | 1d4 | 1d4+1 | 1d4+2 | 1d6+2 |
 | Estensione dal corpo Q | 1 | 1 | 1 | 1 |
 | AC dell’Esplosione | 1d3 | 1d3 | 1d3 | 1d3 |
@@ -1778,9 +1727,8 @@ Esplosione di Vapore si estende di 1 Q dal bordo dello spazio occupato. Un unico
 
 Sbuffo Bollente percorre la linea dichiarata dal bordo dello spazio e colpisce 1 AC per bersaglio. Dopo residuo e Contromisura, una distinta PS Riflessi evita Accecato per 1 RND, fino al termine del turno successivo. I modificatori PS si applicano sia a Elusione sia a queste prove secondarie.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Danno ricevuto\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| Danno ricevuto | Spiritello | Servitore | Minore | Maggiore |
+| :---: | :---: | :---: | :---: | :---: |
 | Acqua o Fuoco | Assorbito | Assorbito | Assorbito | Assorbito |
 | Aria | ×2 | ×2 | ×2 | ×2 |
 | Altra natura Naturale | Normale | Normale | Dimezzato | Dimezzato |
@@ -1789,11 +1737,10 @@ Sbuffo Bollente percorre la linea dichiarata dal bordo dello spazio e colpisce 1
 
 ## **14 7 Elementale del Fango**
 
-**Ibrido di Acqua + Terra. Rituale:** quello dell’incantesimo che evoca o trasforma; nessuna procedura rituale autonoma è qui definita.
+**Ibrido di Acqua \+ Terra. Rituale:** quello dell’incantesimo che evoca o trasforma; nessuna procedura rituale autonoma è qui definita.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Caratteristica\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| Caratteristica | Spiritello | Servitore | Minore | Maggiore |
+| ----- | :---: | :---: | :---: | :---: |
 | Livello minimo | 6 con Anticipazione | 9 | 12 | 15 |
 | FOR | 7 | 8 | 9 | 10 |
 | COS | 7 | 8 | 9 | 10 |
@@ -1812,7 +1759,7 @@ Sbuffo Bollente percorre la linea dichiarata dal bordo dello spazio e colpisce 1
 | Spazio occupato | 1 Q | 1 Q | 2 × 2 Q | 2 × 2 Q |
 | AP oltre al Movimento | 1 | 1 | 1 | 2 |
 | Rigenerazione max PV per RND | 1 | 2 | 3 | 4 |
-| \*\*Attacco o parametro\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| **Attacco o parametro** | **Spiritello** | **Servitore** | **Minore** | **Maggiore** |
 | Frusta di Fango | 1d4+1 | 1d4+2 | 1d6+3 | 2d6+2 |
 | Portata Q | 2 | 2 | 2 | 2 |
 | AC della Frusta | 1 | 1 | 1 | 1 |
@@ -1827,9 +1774,8 @@ Sabbie Mobili richiede che l’elementale poggi su terreno o pavimento. Colpisce
 
 **Sabbie Mobili blocca gli arti inferiori:** Movimento 0 e −4 VA alle azioni fisiche, con braccia e mani utilizzabili. La vittima può liberarsi con 1 AP e Atletica, applicando il −4; un alleato a contatto può spendere 1 AP e usare la propria Atletica con i propri modificatori. Il modificatore PS dell’attacco non si applica a queste prove. Il Maggiore può ripetere gli attacchi; gli Stati mantengono la scadenza più lontana senza cumulo.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Danno ricevuto\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| Danno ricevuto | Spiritello | Servitore | Minore | Maggiore |
+| :---: | :---: | :---: | :---: | :---: |
 | Acqua o Terra | Assorbito | Assorbito | Assorbito | Assorbito |
 | Fuoco | Dimezzato | Dimezzato | Dimezzato | Dimezzato |
 | Aria | ×2 | ×2 | ×2 | ×2 |
@@ -1839,11 +1785,10 @@ Sabbie Mobili richiede che l’elementale poggi su terreno o pavimento. Colpisce
 
 ## **14 8 Elementale del Fumo**
 
-**Ibrido di Aria + Fuoco. Rituale:** quello dell’incantesimo che evoca o trasforma; nessuna procedura rituale autonoma è qui definita.
+**Ibrido di Aria \+ Fuoco. Rituale:** quello dell’incantesimo che evoca o trasforma; nessuna procedura rituale autonoma è qui definita.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Caratteristica\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| Caratteristica | Spiritello | Servitore | Minore | Maggiore |
+| ----- | :---: | :---: | :---: | :---: |
 | Livello minimo | 6 con Anticipazione | 9 | 12 | 15 |
 | FOR | 5 | 6 | 7 | 8 |
 | COS | 6 | 7 | 8 | 9 |
@@ -1865,9 +1810,8 @@ Sabbie Mobili richiede che l’elementale poggi su terreno o pavimento. Colpisce
 
 L’elementale del Fumo è una nube scura attraversata da scariche elettriche. I suoi attacchi infliggono danno da Fulmine.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Attacco o parametro\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| Attacco o parametro | Spiritello | Servitore | Minore | Maggiore |
+| :---: | :---: | :---: | :---: | :---: |
 | Nube Elettrica | 1d4+1 | 1d6+1 | 1d6+3 | 2d6+3 |
 | Estensione dal corpo Q | 1 | 1 | 1 | 1 |
 | Soffio Folgorante | 1d4 | 1d4+2 | 1d6+3 | 2d6+2 |
@@ -1879,9 +1823,8 @@ Entrambi infliggono danno da Fulmine, senza tiro per colpire. Nube Elettrica è 
 
 Dopo residuo e Contromisura contro Fulmine, una distinta PS Tempra evita Disorientato per 1+1d3 RND. Un 20 naturale provoca invece Stordito per 1 RND, fino al termine del turno successivo. Il modificatore indicato vale per Elusione e Tempra. Il Maggiore può usare entrambe le AP per attaccare; le nuove applicazioni mantengono la scadenza più lontana senza sommare le penalità.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Danno ricevuto\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| Danno ricevuto | Spiritello | Servitore | Minore | Maggiore |
+| :---: | :---: | :---: | :---: | :---: |
 | Aria o Fuoco | Assorbito | Assorbito | Assorbito | Assorbito |
 | Fulmine | Immune | Immune | Immune | Immune |
 | Acqua | ×2 | ×2 | ×2 | ×2 |
@@ -1893,11 +1836,10 @@ Dopo residuo e Contromisura contro Fulmine, una distinta PS Tempra evita Disorie
 
 ## **14 9 Elementale della Polvere**
 
-**Ibrido di Aria + Terra. Rituale:** quello dell’incantesimo che evoca o trasforma; nessuna procedura rituale autonoma è qui definita.
+**Ibrido di Aria \+ Terra. Rituale:** quello dell’incantesimo che evoca o trasforma; nessuna procedura rituale autonoma è qui definita.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Caratteristica\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| Caratteristica | Spiritello | Servitore | Minore | Maggiore |
+| ----- | :---: | :---: | :---: | :---: |
 | Livello minimo | 6 con Anticipazione | 9 | 12 | 15 |
 | FOR | 6 | 7 | 8 | 9 |
 | COS | 7 | 8 | 9 | 10 |
@@ -1917,7 +1859,7 @@ Dopo residuo e Contromisura contro Fulmine, una distinta PS Tempra evita Disorie
 | Spazio occupato | 1 Q | 1 Q | 2 × 2 Q | 2 × 2 Q |
 | AP oltre al Movimento | 1 | 1 | 1 | 2 |
 | Rigenerazione max PV per RND | 1 | 2 | 3 | 4 |
-| \*\*Attacco o parametro\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| **Attacco o parametro** | **Spiritello** | **Servitore** | **Minore** | **Maggiore** |
 | Vortice di Detriti | 1d4+1 | 1d6+1 | 1d6+3 | 2d6+3 |
 | Estensione dal corpo Q | 1 | 1 | 1 | 1 |
 | AC del Vortice | 1 | 1 | 1 | 1 |
@@ -1930,9 +1872,8 @@ Entrambi infliggono danno da Terra con effetti specifici al posto di Sanguinamen
 
 Turbine di Sabbia usa Attacco a distanza su un singolo bersaglio, con Parata e Schivata pertinenti, senza Elusione. Si tirano una sola volta 1d3 per le AC e una sola volta il danno, uguale su ogni AC. Le protezioni si applicano separatamente e i residui non si sommano per la Contromisura. Se almeno un’AC supera la soglia, una sola PS Riflessi per attacco evita Accecato per 1 RND, fino al termine del turno successivo. Il Maggiore può ripetere gli attacchi; nuove applicazioni mantengono la scadenza più lontana.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Danno ricevuto\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| Danno ricevuto | Spiritello | Servitore | Minore | Maggiore |
+| :---: | :---: | :---: | :---: | :---: |
 | Aria o Terra | Assorbito | Assorbito | Assorbito | Assorbito |
 | Fuoco | ×2 | ×2 | ×2 | ×2 |
 | Altra natura Naturale | Normale | Normale | Dimezzato | Dimezzato |
@@ -1941,11 +1882,10 @@ Turbine di Sabbia usa Attacco a distanza su un singolo bersaglio, con Parata e S
 
 ## **14 10 Elementale del Magma**
 
-**Ibrido di Fuoco + Terra. Rituale:** quello dell’incantesimo che evoca o trasforma; nessuna procedura rituale autonoma è qui definita.
+**Ibrido di Fuoco \+ Terra. Rituale:** quello dell’incantesimo che evoca o trasforma; nessuna procedura rituale autonoma è qui definita.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Caratteristica\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| Caratteristica | Spiritello | Servitore | Minore | Maggiore |
+| ----- | :---: | :---: | :---: | :---: |
 | Livello minimo | 6 con Anticipazione | 9 | 12 | 15 |
 | FOR | 7 | 8 | 9 | 10 |
 | COS | 7 | 8 | 9 | 10 |
@@ -1965,7 +1905,7 @@ Turbine di Sabbia usa Attacco a distanza su un singolo bersaglio, con Parata e S
 | Spazio occupato | 1 Q | 1 Q | 2 × 2 Q | 2 × 2 Q |
 | AP oltre al Movimento | 1 | 1 | 1 | 2 |
 | Rigenerazione max PV per RND | 1 | 2 | 3 | 4 |
-| \*\*Attacco o parametro\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| **Attacco o parametro** | **Spiritello** | **Servitore** | **Minore** | **Maggiore** |
 | Eruzione | 1d4+1 | 1d6+1 | 1d6+3 | 2d6+3 |
 | Estensione dal corpo Q | 1 | 1 | 1 | 1 |
 | Lapillo | 1d6+1 | 1d6+3 | 2d6+3 | 2d6+5 |
@@ -1977,9 +1917,8 @@ Entrambi infliggono danno da Fuoco e possono applicare Incendiato. Eruzione espe
 
 Lapillo è un proiettile contro un singolo bersaglio entro gittata: usa Attacco a distanza, consente Parata e Schivata pertinenti, colpisce 1 AC e non consente Elusione. Dopo residuo e Contromisura, entrambi gli attacchi richiedono una PS Riflessi contro Incendiato per 1+1d3 RND; per Eruzione è distinta dall’Elusione. Si applicano danno periodico, spegnimento e non cumulo della regola comune. Il Maggiore può ripetere gli attacchi con entrambe le AP.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Danno ricevuto\*\* | \*\*Spiritello\*\* | \*\*Servitore\*\* | \*\*Minore\*\* | \*\*Maggiore\*\* |
+| Danno ricevuto | Spiritello | Servitore | Minore | Maggiore |
+| :---: | :---: | :---: | :---: | :---: |
 | Fuoco o Terra | Assorbito | Assorbito | Assorbito | Assorbito |
 | Acqua | ×2 | ×2 | ×2 | ×2 |
 | Altra natura Naturale | Normale | Normale | Dimezzato | Dimezzato |
@@ -1992,9 +1931,8 @@ Lapillo è un proiettile contro un singolo bersaglio entro gittata: usa Attacco 
 
 Le regole generali si consultano nei manuali indicati nella tabella. Gli incantesimi e le capacità elementali specificano le proprie applicazioni ed eccezioni.
 
-|  |  |
-| :-: | :-: |
-| \*\*Regola\*\* | \*\*Manuale e sezione\*\* |
+| Regola | Manuale e sezione |
+| :---- | :---- |
 | Prove e Valore Abilità | Manuale del Giocatore, §§1.2 e 4.2. |
 | Prove Salvezza | Manuale del Giocatore, §2.11. |
 | Risultati naturali e Punti Eroe | Manuale del Giocatore, §§1.6 e 1.8. |
@@ -2024,9 +1962,8 @@ Scheda 16.1 • Macrofamiglia Fisica • Specializzazione Cambiamento • Ritual
 
 Muscoli e ossa diventano più resistenti. Ogni beneficiario riceve una riserva di PV temporanei, consumata prima dei PV ordinari.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Beneficiari\*\* | \*\*PV temporanei ciascuno\*\* | \*\*Durata\*\* |
+| Livello | PM | Gittata | Beneficiari | PV temporanei ciascuno | Durata |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 1 | 1 | Contatto | 1 | 4 | 10 RND |
 | 2 | 2 | Contatto | 1 | 5 | 10 RND |
 | 3 | 3 | Contatto | 1 | 6 | 20 RND |
@@ -2052,7 +1989,7 @@ I beneficiari multipli seguono la normale disposizione a catena entro 2 Q al mom
 
 **Anticipazione:** un solo gradino nella quantità di PV temporanei oppure nella durata; costo base raddoppiato e Potere più difficile di una categoria. Livello e altri parametri restano invariati.
 
-Per i PV si prende il valore della riga successiva; oltre 24 si arriva a 28. Per la durata si usa la scala distinta: 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore. Esempio: livello 5 anticipato a 10 PM, 10 PV temporanei, Contatto, 1 beneficiario, 20 RND.
+Per i PV si prende il valore della riga successiva; oltre 24 si arriva a 28\. Per la durata si usa la scala distinta: 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore. Esempio: livello 5 anticipato a 10 PM, 10 PV temporanei, Contatto, 1 beneficiario, 20 RND.
 
 **Agilità Mutata**
 
@@ -2062,16 +1999,15 @@ Scheda 16.2 • Macrofamiglia Fisica • Specializzazione Cambiamento • Ritual
 
 Il corpo acquista mobilità e flessibilità. Il beneficiario aumenta il Passo ed è più difficile da colpire con attacchi diretti.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Beneficiari\*\* | \*\*Bonus al Passo\*\* | \*\*VA degli attaccanti\*\* | \*\*Durata\*\* |
-| 1 | 1 | Contatto | 1 | \\+1 Q | −1 | 10 RND |
-| 3 | 3 | Contatto | 1 | \\+1 Q | −1 | 20 RND |
-| 6 | 6 | 3 Q | 1 | \\+2 Q | −1 | 5 minuti |
-| 9 | 9 | 6 Q | 2 | \\+2 Q | −2 | 10 minuti |
-| 12 | 12 | 10 Q | 2 | \\+3 Q | −2 | 30 minuti |
-| 15 | 15 | 15 Q | 3 | \\+3 Q | −3 | 1 ora |
-| 18 | 18 | 20 Q | 3 | \\+4 Q | −3 | 2 ore |
+| Livello | PM | Gittata | Beneficiari | Bonus al Passo | VA degli attaccanti | Durata |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 1 | 1 | Contatto | 1 | \+1 Q | −1 | 10 RND |
+| 3 | 3 | Contatto | 1 | \+1 Q | −1 | 20 RND |
+| 6 | 6 | 3 Q | 1 | \+2 Q | −1 | 5 minuti |
+| 9 | 9 | 6 Q | 2 | \+2 Q | −2 | 10 minuti |
+| 12 | 12 | 10 Q | 2 | \+3 Q | −2 | 30 minuti |
+| 15 | 15 | 15 Q | 3 | \+3 Q | −3 | 1 ora |
+| 18 | 18 | 20 Q | 3 | \+4 Q | −3 | 2 ore |
 
 **Beneficiari multipli:** si verificano gittata e visibilità al lancio e si usa la disposizione a catena entro 2 Q; successivamente i beneficiari possono muoversi liberamente.
 
@@ -2083,7 +2019,7 @@ Il corpo acquista mobilità e flessibilità. Il beneficiario aumenta il Passo ed
 
 **Compatibilità:** non concede AR, Azioni aggiuntive o bonus alle PS. Più lanci non si sommano; un nuovo lancio può sostituire il precedente. Fra benefici magici sullo stesso parametro si applica il maggiore, separatamente per Passo e penalità agli attaccanti.
 
-**Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 Q al Passo, un ulteriore −1 al VA degli attaccanti oppure la durata successiva. Oltre i massimi ordinari si può raggiungere +5 Q al Passo oppure −4 al VA degli attaccanti. Scala della durata: 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore.
+**Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie \+1 Q al Passo, un ulteriore −1 al VA degli attaccanti oppure la durata successiva. Oltre i massimi ordinari si può raggiungere \+5 Q al Passo oppure −4 al VA degli attaccanti. Scala della durata: 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore.
 
 **Resistenza Fisica**
 
@@ -2093,16 +2029,15 @@ Scheda 16.3 • Macrofamiglia Fisica • Specializzazione Cambiamento • Ritual
 
 Si sceglie una delle due modalità al lancio, identica per tutti i beneficiari. Ogni beneficiario può avere una sola modalità attiva di questo incantesimo.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Beneficiari\*\* | \*\*Tempra generale o mirata\*\* | \*\*Durata A\*\* | \*\*Durata B\*\* |
-| 1 | 1 | Contatto | 1 | \\+1 / +3 | 10 minuti | 1 giorno |
-| 3 | 3 | Contatto | 1 | \\+1 / +3 | 30 minuti | 1 giorno |
-| 6 | 6 | 3 Q | 1 | \\+2 / +4 | 1 ora | 2 giorni |
-| 9 | 9 | 6 Q | 2 | \\+2 / +4 | 2 ore | 2 giorni |
-| 12 | 12 | 10 Q | 2 | \\+3 / +5 | 4 ore | 3 giorni |
-| 15 | 15 | 15 Q | 3 | \\+3 / +5 | 8 ore | 3 giorni |
-| 18 | 18 | 20 Q | 3 | \\+4 / +6 | 12 ore | 4 giorni |
+| Livello | PM | Gittata | Beneficiari | Tempra generale o mirata | Durata A | Durata B |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 1 | 1 | Contatto | 1 | \+1 / \+3 | 10 minuti | 1 giorno |
+| 3 | 3 | Contatto | 1 | \+1 / \+3 | 30 minuti | 1 giorno |
+| 6 | 6 | 3 Q | 1 | \+2 / \+4 | 1 ora | 2 giorni |
+| 9 | 9 | 6 Q | 2 | \+2 / \+4 | 2 ore | 2 giorni |
+| 12 | 12 | 10 Q | 2 | \+3 / \+5 | 4 ore | 3 giorni |
+| 15 | 15 | 15 Q | 3 | \+3 / \+5 | 8 ore | 3 giorni |
+| 18 | 18 | 20 Q | 3 | \+4 / \+6 | 12 ore | 4 giorni |
 
 **Beneficiari multipli:** si verificano gittata e visibilità al lancio e si usa la disposizione a catena entro 2 Q; successivamente i beneficiari possono muoversi liberamente.
 
@@ -2116,7 +2051,7 @@ Questa modalità non impedisce perdite di PV, svenimenti o altre conseguenze del
 
 **Compatibilità:** un nuovo lancio può sostituire quello precedente, anche cambiando modalità. I bonus magici alla stessa PS non si sommano: si usa il maggiore.
 
-**Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 al bonus Tempra selezionato oppure un gradino nella durata della modalità attiva. Durata A: 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore → 12 ore → 24 ore. Durata B: 1 → 2 → 3 → 4 → 5 giorni. Le righe con la stessa durata non costituiscono un nuovo gradino.
+**Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie \+1 al bonus Tempra selezionato oppure un gradino nella durata della modalità attiva. Durata A: 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore → 12 ore → 24 ore. Durata B: 1 → 2 → 3 → 4 → 5 giorni. Le righe con la stessa durata non costituiscono un nuovo gradino.
 
 **Respiro Adattivo**
 
@@ -2126,9 +2061,8 @@ Scheda 16.4 • Macrofamiglia Fisica • Specializzazione Cambiamento • Ritual
 
 Il beneficiario non ha bisogno di respirare per tutta la durata dell’incantesimo.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Beneficiari\*\* | \*\*Durata\*\* |
+| Livello | PM | Gittata | Beneficiari | Durata |
+| :---: | :---: | :---: | :---: | :---: |
 | 1 | 1 | Contatto | 1 | 10 minuti |
 | 3 | 3 | Contatto | 1 | 30 minuti |
 | 6 | 6 | 3 Q | 1 | 1 ora |
@@ -2161,15 +2095,14 @@ Scheda 16.5 • Macrofamiglia Fisica • Specializzazione Cambiamento • Ritual
 
 Si sceglie una delle due modalità al lancio, identica per tutti i beneficiari. La modalità operativa sostiene attività fisiche, intellettuali e sociali; quella combattiva migliora gli attacchi.
 
-|  |  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Beneficiari\*\* | \*\*Bonus A\*\* | \*\*Attacco e danno B\*\* | \*\*Durata A\*\* | \*\*Durata B\*\* |
-| 3 | 3 | Contatto | 1 | \\+3 | \\+1 / +1 | 10 minuti | 20 RND |
-| 6 | 6 | 3 Q | 1 | \\+3 | \\+1 / +2 | 30 minuti | 5 minuti |
-| 9 | 9 | 6 Q | 2 | \\+4 | \\+2 / +2 | 1 ora | 10 minuti |
-| 12 | 12 | 10 Q | 2 | \\+4 | \\+2 / +3 | 2 ore | 30 minuti |
-| 15 | 15 | 15 Q | 3 | \\+5 | \\+3 / +3 | 4 ore | 1 ora |
-| 18 | 18 | 20 Q | 3 | \\+5 | \\+3 / +4 | 8 ore | 2 ore |
+| Livello | PM | Gittata | Beneficiari | Bonus A | Attacco e danno B | Durata A | Durata B |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 3 | 3 | Contatto | 1 | \+3 | \+1 / \+1 | 10 minuti | 20 RND |
+| 6 | 6 | 3 Q | 1 | \+3 | \+1 / \+2 | 30 minuti | 5 minuti |
+| 9 | 9 | 6 Q | 2 | \+4 | \+2 / \+2 | 1 ora | 10 minuti |
+| 12 | 12 | 10 Q | 2 | \+4 | \+2 / \+3 | 2 ore | 30 minuti |
+| 15 | 15 | 15 Q | 3 | \+5 | \+3 / \+3 | 4 ore | 1 ora |
+| 18 | 18 | 20 Q | 3 | \+5 | \+3 / \+4 | 8 ore | 2 ore |
 
 **Beneficiari multipli:** si verificano gittata e visibilità al lancio e si usa la disposizione a catena entro 2 Q; successivamente i beneficiari possono muoversi liberamente.
 
@@ -2181,9 +2114,9 @@ Il beneficio può valere anche durante un combattimento se la prova non rientra 
 
 Il bonus al danno non si applica a esplosioni, danni periodici o danni degli incantesimi. Nel lancio di una granata può migliorare la Prova per colpire, ma non il danno dell’esplosione.
 
-**Compatibilità:** non concede Azioni aggiuntive ed è compatibile con Agilità Mutata. Un nuovo Efficienza sostituisce il precedente, anche cambiando modalità. I bonus magici allo stesso parametro non si sommano: ad esempio, +3 da Efficienza e +1 da un altro incantesimo danno +3.
+**Compatibilità:** non concede Azioni aggiuntive ed è compatibile con Agilità Mutata. Un nuovo Efficienza sostituisce il precedente, anche cambiando modalità. I bonus magici allo stesso parametro non si sommano: ad esempio, \+3 da Efficienza e \+1 da un altro incantesimo danno \+3.
 
-**Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 al bonus operativo, +1 al VA degli attacchi, +1 al danno oppure un gradino nella durata attiva. Durata A: 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore → 12 ore. Durata B: 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore.
+**Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie \+1 al bonus operativo, \+1 al VA degli attacchi, \+1 al danno oppure un gradino nella durata attiva. Durata A: 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore → 12 ore. Durata B: 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore.
 
 **Pelle Corazzata**
 
@@ -2193,9 +2126,8 @@ Scheda 16.6 • Macrofamiglia Fisica • Specializzazione Cambiamento • Ritual
 
 La pelle si ispessisce visibilmente e assume un aspetto coriaceo, roccioso o chitinoso, a scelta estetica. Fornisce AR Naturale a tutte le Aree Colpite.
 
-|  |  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Beneficiari\*\* | \*\*AR\*\* | \*\*Natura AR\*\* | \*\*Passo\*\* | \*\*Durata\*\* |
+| Livello | PM | Gittata | Beneficiari | AR | Natura AR | Passo | Durata |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 3 | 3 | Contatto | 1 | 3 | Naturale | −1 Q | 20 RND |
 | 6 | 6 | 3 Q | 1 | 4 | Naturale | −2 Q | 5 minuti |
 | 9 | 9 | 6 Q | 2 | 5 | Naturale | −2 Q | 10 minuti |
@@ -2217,7 +2149,7 @@ La pelle si ispessisce visibilmente e assume un aspetto coriaceo, roccioso o chi
 
 **Armatura Elementale:** la sua protezione specifica si può sommare a Pelle Corazzata quando il danno appartiene a un elemento da essa protetto. Restano le condizioni previste da Armatura Elementale.
 
-**Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 AR, fino a 9 con l’Anticipazione della versione massima, oppure un gradino di durata: 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore. Se aumenta l’AR si ricalcola la penalità al Passo. La natura dell’AR non può essere anticipata a Magica.
+**Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie \+1 AR, fino a 9 con l’Anticipazione della versione massima, oppure un gradino di durata: 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore. Se aumenta l’AR si ricalcola la penalità al Passo. La natura dell’AR non può essere anticipata a Magica.
 
 **Riflessi Potenziati**
 
@@ -2227,19 +2159,18 @@ Scheda 16.7 • Macrofamiglia Fisica • Specializzazione Cambiamento • Ritual
 
 Il beneficiario reagisce più rapidamente e dispone di una difesa gratuita nell’intera durata dell’incantesimo.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Beneficiari\*\* | \*\*Bonus INI\*\* | \*\*Bonus Schivata\*\* | \*\*Durata\*\* |
-| 3 | 3 | Contatto | 1 | \\+3 | \\+3 | 20 RND |
-| 6 | 6 | 3 Q | 1 | \\+3 | \\+3 | 5 minuti |
-| 9 | 9 | 6 Q | 2 | \\+4 | \\+4 | 10 minuti |
-| 12 | 12 | 10 Q | 2 | \\+4 | \\+4 | 30 minuti |
-| 15 | 15 | 15 Q | 3 | \\+5 | \\+5 | 1 ora |
-| 18 | 18 | 20 Q | 3 | \\+5 | \\+5 | 2 ore |
+| Livello | PM | Gittata | Beneficiari | Bonus INI | Bonus Schivata | Durata |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 3 | 3 | Contatto | 1 | \+3 | \+3 | 20 RND |
+| 6 | 6 | 3 Q | 1 | \+3 | \+3 | 5 minuti |
+| 9 | 9 | 6 Q | 2 | \+4 | \+4 | 10 minuti |
+| 12 | 12 | 10 Q | 2 | \+4 | \+4 | 30 minuti |
+| 15 | 15 | 15 Q | 3 | \+5 | \+5 | 1 ora |
+| 18 | 18 | 20 Q | 3 | \+5 | \+5 | 2 ore |
 
 **Beneficiari multipli:** si verificano gittata e visibilità al lancio e si usa la disposizione a catena entro 2 Q; successivamente i beneficiari possono muoversi liberamente.
 
-**Bonus:** si applicano all’Iniziativa e al VA di Difese soltanto per Schivare. Non migliorano il VA delle Parate, le PS Riflessi o l’Elusione. Esempio contro un attacco a distanza: Difese 12, Schivata −8 e bonus +3 danno VA 7.
+**Bonus:** si applicano all’Iniziativa e al VA di Difese soltanto per Schivare. Non migliorano il VA delle Parate, le PS Riflessi o l’Elusione. Esempio contro un attacco a distanza: Difese 12, Schivata −8 e bonus \+3 danno VA 7\.
 
 **Difesa gratuita:** ciascun beneficiario può effettuare una sola Parata oppure Schivata nell’intera durata senza spendere AP o Movimento, anche se li ha già consumati. Il numero resta uno a tutti i livelli.
 
@@ -2249,7 +2180,7 @@ Si applicano la prova, le penalità e i requisiti ordinari della difesa scelta. 
 
 **Nuovo lancio:** può sostituire l’effetto, rinnovarne la durata e concedere una nuova difesa gratuita. Resta il limite di una sola difesa gratuita ottenuta da questo incantesimo per beneficiario nello stesso round, anche attraverso lanci diversi.
 
-**Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 all’Iniziativa, +1 al bonus Schivata oppure un gradino di durata: 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore. Il numero di difese gratuite non può essere aumentato.
+**Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie \+1 all’Iniziativa, \+1 al bonus Schivata oppure un gradino di durata: 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore. Il numero di difese gratuite non può essere aumentato.
 
 **Corpo Adattivo**
 
@@ -2259,9 +2190,8 @@ Scheda 16.8 • Macrofamiglia Fisica • Specializzazione Cambiamento • Ritual
 
 Il corpo recupera progressivamente PV ordinari. La durata ordinaria è sempre 10 RND; cresce la quantità recuperabile in ciascun round.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Beneficiari\*\* | \*\*PV per RND\*\* | \*\*Durata\*\* | \*\*PV massimi ciascuno\*\* |
+| Livello | PM | Gittata | Beneficiari | PV per RND | Durata | PV massimi ciascuno |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 6 | 6 | Contatto | 1 | 1 | 10 RND | 10 |
 | 9 | 9 | 3 Q | 1 | 2 | 10 RND | 20 |
 | 12 | 12 | 6 Q | 2 | 3 | 10 RND | 30 |
@@ -2274,17 +2204,17 @@ Il corpo recupera progressivamente PV ordinari. La durata ordinaria è sempre 10
 
 Non si supera il massimo dei PV ordinari e l’eccedenza non diventa PV temporanei. Se il beneficiario è già al massimo, quel recupero è perso; l’effetto rimane attivo e può curare lesioni successive finché dura.
 
-**Sanguinamento:** prima della relativa perdita di PV si può sacrificare interamente l’applicazione periodica. Sanguinamento si riduce di tanti punti quanti sarebbero i PV normalmente recuperati in quel RND, fino a 0: 1 / 2 / 3 / 4 / 5 secondo la versione, incluso l’eventuale +1 dell’Anticipazione. Quell’applicazione non recupera PV e non conserva eccedenze. Il +1 una tantum di Canale Vitale non aumenta la riduzione. La procedura è utilizzabile anche contro un nuovo Sanguinamento.
+**Sanguinamento:** prima della relativa perdita di PV si può sacrificare interamente l’applicazione periodica. Sanguinamento si riduce di tanti punti quanti sarebbero i PV normalmente recuperati in quel RND, fino a 0: 1 / 2 / 3 / 4 / 5 secondo la versione, incluso l’eventuale \+1 dell’Anticipazione. Quell’applicazione non recupera PV e non conserva eccedenze. Il \+1 una tantum di Canale Vitale non aumenta la riduzione. La procedura è utilizzabile anche contro un nuovo Sanguinamento.
 
 Un Sanguinamento fermato in questo modo non ricompare alla scadenza. I massimi in tabella presuppongono che tutte e dieci le applicazioni siano usate interamente per recuperare PV.
 
 **Esempio:** Corpo Adattivo 9 su Sanguinamento 3 sacrifica la prima applicazione per ridurlo a 1 e la seconda per arrestarlo. Le otto applicazioni rimaste possono recuperare 2 PV ciascuna, per un massimo di 16 PV.
 
-**Limiti:** funziona anche a 0 PV se il beneficiario è vivo, ma non rimuove Ferite o menomazioni e non fa rivivere un morto. Richiede un organismo biologicamente vivente: nei cyborg cura i PV viventi, senza riparare gli impianti; esclude elementali evocati, Ectoplasma, costrutti puramente meccanici ed entità spirituali salvo eccezioni del Bestiario del Manuale del Direttore. Durante Forma Elementale le applicazioni trascorrono senza curare la forma o il corpo sospeso. Le cure rispettano il limite dei PV sacrificati nella conversione della sezione 6.
+**Limiti:** funziona anche a 0 PV se il beneficiario è vivo, ma non rimuove Ferite o menomazioni e non fa rivivere un morto. Richiede un organismo biologicamente vivente: nei cyborg cura i PV viventi, senza riparare gli impianti; esclude elementali evocati, Ectoplasma, costrutti puramente meccanici ed entità spirituali salvo eccezioni del Bestiario del Manuale del Direttore. Durante Forma Elementale le applicazioni trascorrono senza curare la forma o il corpo sospeso. Le cure rispettano il limite dei PV sacrificati nella conversione della sezione 6\.
 
-**Compatibilità:** più lanci non sommano il recupero; un nuovo lancio può sostituire e rinnovare l’effetto. Fra recuperi periodici concorrenti si applica il maggiore. Le cure istantanee possono essere ricevute normalmente. Se Corpo Adattivo usa un’applicazione per fermare il Sanguinamento, Psicometabolismo può comunque applicare il proprio recupero periodico. Canale Vitale concede +1 PV una sola volta per beneficiario e lancio, nella prima applicazione che recupera effettivamente PV; non aumenta le applicazioni successive né l’emostasi.
+**Compatibilità:** più lanci non sommano il recupero; un nuovo lancio può sostituire e rinnovare l’effetto. Fra recuperi periodici concorrenti si applica il maggiore. Le cure istantanee possono essere ricevute normalmente. Se Corpo Adattivo usa un’applicazione per fermare il Sanguinamento, Psicometabolismo può comunque applicare il proprio recupero periodico. Canale Vitale concede \+1 PV una sola volta per beneficiario e lancio, nella prima applicazione che recupera effettivamente PV; non aumenta le applicazioni successive né l’emostasi.
 
-**Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 PV recuperabile per RND oppure la durata da 10 a 15 RND. Restano le stesse regole per Sanguinamento, limite dei PV e inizio del recupero.
+**Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie \+1 PV recuperabile per RND oppure la durata da 10 a 15 RND. Restano le stesse regole per Sanguinamento, limite dei PV e inizio del recupero.
 
 **Mimetismo**
 
@@ -2294,9 +2224,8 @@ Scheda 16.9 • Macrofamiglia Fisica • Specializzazione Cambiamento • Ritual
 
 Il corpo e l’equipaggiamento indossato o impugnato diventano invisibili alla vista e alla rilevazione termica. Gli oggetti lasciati o lanciati tornano visibili; altre creature trasportate non vengono occultate. La schermatura materiale impedisce anche la rilevazione tramite Eco Elementale, a qualsiasi livello.
 
-|  |  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Beneficiari\*\* | \*\*Mod Percezione\*\* | \*\*Azioni consentite\*\* | \*\*Durata con Conc\*\* | \*\*Durata fissa\*\* |
+| Livello | PM | Gittata | Beneficiari | Mod Percezione | Azioni consentite | Durata con Conc | Durata fissa |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 6 | 6 | Contatto | 1 | 0 | 0 | 10 minuti | 10 RND |
 | 9 | 9 | 3 Q | 1 | −2 | 1 | 30 minuti | 5 minuti |
 | 12 | 12 | 6 Q | 2 | −2 | 2 | 1 ora | 10 minuti |
@@ -2309,7 +2238,7 @@ Il corpo e l’equipaggiamento indossato o impugnato diventano invisibili alla v
 
 Il successo rivela sagoma e posizione a quell’osservatore fino all’inizio del turno successivo del beneficiario, purché mantenga la linea di vista. Non termina Mimetismo e non rivela automaticamente il beneficiario agli altri. La stessa procedura vale per un osservatore che usi una telecamera.
 
-Rumori, odori, impronte e interazioni ambientali restano percepibili; Furtività continua a essere utile. Il modificatore riguarda soltanto la distorsione visiva, non ascolto o tracce. Presenza non è ostacolata; Individuare deve superare il confronto con il Potere di Occultamento pari al livello di Mimetismo. A parità l’osservatore effettua PS Magia una sola volta per coppia di lanci. Rilevare non dissolve l’occultamento. Per sovrapposizioni si applica la matrice della sezione 8.
+Rumori, odori, impronte e interazioni ambientali restano percepibili; Furtività continua a essere utile. Il modificatore riguarda soltanto la distorsione visiva, non ascolto o tracce. Presenza non è ostacolata; Individuare deve superare il confronto con il Potere di Occultamento pari al livello di Mimetismo. A parità l’osservatore effettua PS Magia una sola volta per coppia di lanci. Rilevare non dissolve l’occultamento. Per sovrapposizioni si applica la matrice della sezione 8\.
 
 **Azioni consentite:** il Movimento ordinario non consuma la disponibilità. Ogni altra Azione conta, comprese Parate o Schivate gratuite; le prove comprese nel movimento, come Furtività, non costituiscono Azioni separate. La quota è individuale e vale per l’intera durata.
 
@@ -2321,7 +2250,7 @@ Esaurita la quota, l’Azione successiva si risolve e poi termina Mimetismo per 
 
 **Nuovo lancio:** sostituisce il precedente e rinnova durata e quota di Azioni; gli effetti non si sommano.
 
-**Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie un ulteriore −2 alla Percezione, +1 Azione consentita oppure un gradino della durata scelta. Concentrazione: 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore. Fissa: 10 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore.
+**Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie un ulteriore −2 alla Percezione, \+1 Azione consentita oppure un gradino della durata scelta. Concentrazione: 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore. Fissa: 10 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore.
 
 **Trasformazione Totale**
 
@@ -2331,13 +2260,12 @@ Scheda 16.10 • Macrofamiglia Fisica • Specializzazione Cambiamento • Ritua
 
 Il corpo entra in uno stato di intensa prestazione fisica per pochi round. L’incantesimo non cambia specie o forma del beneficiario.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Beneficiari\*\* | \*\*Bonus fisico\*\* | \*\*Bonus danno\*\* | \*\*Durata\*\* |
-| 9 | 9 | Contatto | 1 | \\+3 | \\+2 | 5 RND |
-| 12 | 12 | 3 Q | 1 | \\+4 | \\+3 | 5 RND |
-| 15 | 15 | 6 Q | 1 | \\+4 | \\+4 | 10 RND |
-| 18 | 18 | 10 Q | 1 | \\+5 | \\+5 | 10 RND |
+| Livello | PM | Gittata | Beneficiari | Bonus fisico | Bonus danno | Durata |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 9 | 9 | Contatto | 1 | \+3 | \+2 | 5 RND |
+| 12 | 12 | 3 Q | 1 | \+4 | \+3 | 5 RND |
+| 15 | 15 | 6 Q | 1 | \+4 | \+4 | 10 RND |
+| 18 | 18 | 10 Q | 1 | \+5 | \+5 | 10 RND |
 
 **Bonus fisico:** si applica alle Prove di Caratteristica e di Abilità basate su FOR, COS o DES; a tutti gli attacchi con armi o a mani nude, indipendentemente dalla Caratteristica; a Difese e alle PS Tempra e Riflessi. Si applica una sola volta alla stessa prova anche se questa rientra in più categorie.
 
@@ -2347,7 +2275,7 @@ Non aumenta direttamente le Caratteristiche, i PV massimi, il movimento o le Azi
 
 **Ferite:** per la durata sono sospese tutte le loro penalità numeriche, comprese quelle di nuove Ferite. Le Ferite non guariscono e possono aggravarsi. Restano menomazioni funzionali, Sanguinamento e altri stati: il beneficiario può ancora essere immobilizzato, svenire o morire.
 
-**Esempio:** con una Ferita Seria da −6, la versione di livello 9 sospende quel −6 e concede il proprio +3 alle prove fisiche per 5 RND.
+**Esempio:** con una Ferita Seria da −6, la versione di livello 9 sospende quel −6 e concede il proprio \+3 alle prove fisiche per 5 RND.
 
 **Fine dell’effetto:** anche se interrotto anticipatamente, il beneficiario accumula 1 livello di Affaticamento (+1 AFT) e subisce −3 al VA di tutte le Prove di Abilità e alle Prove Salvezza per 10 RND. Tornano inoltre ad applicarsi le penalità delle Ferite ancora presenti.
 
@@ -2357,7 +2285,7 @@ Il malus −3 ha causa magica e non è sospeso dalla modalità B di Resistenza F
 
 **Compatibilità:** con Efficienza, Riflessi Potenziati o altri incantesimi si usa il bonus magico più alto per ciascun parametro, senza sommarli. Protezioni ed effetti distinti continuano a funzionare normalmente.
 
-**Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 al bonus fisico, +1 al bonus al danno oppure un gradino di durata: 5 → 10 → 15 RND. Restano +1 AFT al termine e il contraccolpo −3 per 10 RND.
+**Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie \+1 al bonus fisico, \+1 al bonus al danno oppure un gradino di durata: 5 → 10 → 15 RND. Restano \+1 AFT al termine e il contraccolpo −3 per 10 RND.
 
 # **17 Incantesimi della specializzazione Manifestazione**
 
@@ -2369,9 +2297,8 @@ Scheda 17.1 • Macrofamiglia Fisica • Specializzazione Manifestazione • Rit
 
 Una forza invisibile solleva e manipola un oggetto visibile.
 
-|  |  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Peso max\*\* | \*\*Danno naturale\*\* | \*\*Durata Con\*\* | \*\*Durata fissa\*\* | \*\*Mod. PS\*\* |
+| Livello | PM | Gittata | Peso max | Danno naturale | Durata Con | Durata fissa | Mod. PS |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 1 | 1 | 6 Q | 0,5 kg | 1d4 | 10 minuti | 10 RND | 0 |
 | 3 | 3 | 6 Q | 2 kg | 1d4+1 | 30 minuti | 20 RND | 0 |
 | 6 | 6 | 10 Q | 5 kg | 1d6+1 | 1 ora | 5 minuti | 0 |
@@ -2388,7 +2315,7 @@ Si possono compiere manipolazioni semplici, come girare una chiave, aprire una s
 
 **Oggetti posseduti:** un oggetto libero non concede PS. Il possessore di un oggetto trattenuto effettua Tempra con il modificatore in tabella: con successo mantiene la presa, con fallimento viene disarmato. Ogni nuovo tentativo richiede una manipolazione. Un oggetto indossato deve essere fisicamente sfilabile; cinghie, ancoraggi e fissaggi devono essere liberati, non vengono strappati.
 
-**Uso offensivo:** possibile soltanto a durata fissa. Si usa Armi da Lancio con il normale +2 e si applicano le Difese e l’AR pertinenti. Il primo attacco può essere incluso nel lancio; ogni attacco successivo costa 1 AP. Il danno della tabella, Naturale a ogni livello, colpisce una sola AC e sostituisce quello proprio dell’oggetto, senza ulteriori bonus dovuti ad arma, forma o peso.
+**Uso offensivo:** possibile soltanto a durata fissa. Si usa Armi da Lancio con il normale \+2 e si applicano le Difese e l’AR pertinenti. Il primo attacco può essere incluso nel lancio; ogni attacco successivo costa 1 AP. Il danno della tabella, Naturale a ogni livello, colpisce una sola AC e sostituisce quello proprio dell’oggetto, senza ulteriori bonus dovuti ad arma, forma o peso.
 
 **L’oggetto lanciato non ritorna automaticamente:** una successiva manipolazione può recuperarlo se è ancora visibile ed entro gittata.
 
@@ -2402,16 +2329,15 @@ Scheda 17.2 • Macrofamiglia Fisica • Specializzazione Manifestazione • Rit
 
 Un disco di forza fluttua accanto a ogni beneficiario, lasciandone libere le mani.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Beneficiari\*\* | \*\*AR naturale\*\* | \*\*Bonus Parata\*\* | \*\*Durata fissa\*\* |
+| Livello | PM | Gittata | Beneficiari | AR naturale | Bonus Parata | Durata fissa |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 1 | 1 | Contatto | 1 | 2 | 0 | 5 RND |
 | 3 | 3 | Contatto | 1 | 2 | 0 | 10 RND |
-| 6 | 6 | 3 Q | 1 | 2 | \\+1 | 20 RND |
-| 9 | 9 | 6 Q | 2 | 3 | \\+1 | 5 minuti |
-| 12 | 12 | 10 Q | 2 | 3 | \\+2 | 10 minuti |
-| 15 | 15 | 15 Q | 3 | 3 | \\+2 | 30 minuti |
-| 18 | 18 | 20 Q | 3 | 3 | \\+3 | 1 ora |
+| 6 | 6 | 3 Q | 1 | 2 | \+1 | 20 RND |
+| 9 | 9 | 6 Q | 2 | 3 | \+1 | 5 minuti |
+| 12 | 12 | 10 Q | 2 | 3 | \+2 | 10 minuti |
+| 15 | 15 | 15 Q | 3 | 3 | \+2 | 30 minuti |
+| 18 | 18 | 20 Q | 3 | 3 | \+3 | 1 ora |
 
 **Beneficiari multipli:** disposizione a catena entro 2 Q al lancio, con gittata e visibilità verificate in quel momento; poi possono muoversi liberamente.
 
@@ -2425,7 +2351,7 @@ Il bonus riguarda soltanto la Parata effettuata con questo disco; non migliora S
 
 **Concentrazione:** la durata massima è il doppio della durata fissa in tabella. Il Taumaturgo segue i normali limiti del mantenimento; gli altri beneficiari agiscono normalmente. La perdita della Concentrazione termina l’intero lancio, senza trasformarlo in un effetto a durata fissa.
 
-**Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 AR, fino a un massimo di 4, +1 al bonus Parata oppure un gradino della durata scelta. Durata fissa: 5 RND → 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore. In Concentrazione si raddoppiano questi valori, fino a 4 ore con Anticipazione. L’AR rimane Naturale e non può essere anticipata a Magica.
+**Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie \+1 AR, fino a un massimo di 4, \+1 al bonus Parata oppure un gradino della durata scelta. Durata fissa: 5 RND → 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore. In Concentrazione si raddoppiano questi valori, fino a 4 ore con Anticipazione. L’AR rimane Naturale e non può essere anticipata a Magica.
 
 **Armatura di Forza**
 
@@ -2435,9 +2361,8 @@ Scheda 17.3 • Macrofamiglia Fisica • Specializzazione Manifestazione • Rit
 
 Un rivestimento di forza protegge tutte le aree corporee del beneficiario.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Beneficiari\*\* | \*\*AR magica\*\* | \*\*Durata\*\* |
+| Livello | PM | Gittata | Beneficiari | AR magica | Durata |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 1 | 1 | Contatto | 1 | 2 | 5 RND |
 | 3 | 3 | Contatto | 1 | 2 | 10 RND |
 | 6 | 6 | 3 Q | 1 | 3 | 20 RND |
@@ -2456,9 +2381,9 @@ Un rivestimento di forza protegge tutte le aree corporee del beneficiario.
 
 Più lanci di Armatura di Forza non sommano le protezioni; un nuovo lancio può sostituire o rinnovare l’effetto precedente.
 
-**Esempio:** equipaggiamento con AR Naturale 5, Armatura di Forza con AR Magica 3 e Scudo con AR Naturale 2 forniscono AR 10 contro danni Naturali e Magici. Contro danni Eterei si applica soltanto AR 3.
+**Esempio:** equipaggiamento con AR Naturale 5, Armatura di Forza con AR Magica 3 e Scudo con AR Naturale 2 forniscono AR 10 contro danni Naturali e Magici. Contro danni Eterei si applica soltanto AR 3\.
 
-**Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 AR, fino a un massimo di 8, oppure un gradino nella durata: 5 RND → 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore.
+**Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie \+1 AR, fino a un massimo di 8, oppure un gradino nella durata: 5 RND → 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore.
 
 **Respingere**
 
@@ -2468,9 +2393,8 @@ Scheda 17.4 • Macrofamiglia Fisica • Specializzazione Manifestazione • Rit
 
 Un impulso di forza danneggia le creature e le spinge lontano dal Taumaturgo.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Bersagli\*\* | \*\*Danno magico\*\* | \*\*Spinta con PS fallita\*\* | \*\*Mod. PS\*\* |
+| Livello | PM | Gittata | Bersagli | Danno magico | Spinta con PS fallita | Mod. PS |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 1 | 1 | 6 Q | 1 | 1d4 | 3 Q | 0 |
 | 3 | 3 | 6 Q | 1 | 1d4+1 | 3 Q | 0 |
 | 6 | 6 | 10 Q | 1 | 1d4+2 | 4 Q | 0 |
@@ -2491,7 +2415,7 @@ Un impulso di forza danneggia le creature e le spinge lontano dal Taumaturgo.
 
 **Ingaggio:** si applica il normale −2 a Potere, che obbliga alla prova anche per versioni di livello 1–3. Una spinta sufficiente può interrompere l’Ingaggio.
 
-**Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie il danno della riga successiva (oltre 1d8+4: 1d8+5), +1 Q alla spinta con Tempra fallita oppure un gradino del modificatore PS (0 → −2 → −4 → −6). La spinta con Tempra riuscita rimane sempre 1 Q.
+**Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie il danno della riga successiva (oltre 1d8+4: 1d8+5), \+1 Q alla spinta con Tempra fallita oppure un gradino del modificatore PS (0 → −2 → −4 → −6). La spinta con Tempra riuscita rimane sempre 1 Q.
 
 **Barriera di Forza**
 
@@ -2501,9 +2425,8 @@ Scheda 17.5 • Macrofamiglia Fisica • Specializzazione Manifestazione • Rit
 
 Una parete trasparente, verticale e rettilinea ostacola il passaggio di corpi e oggetti.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Lunghezza max\*\* | \*\*PV per segmento\*\* | \*\*Durata\*\* |
+| Livello | PM | Gittata | Lunghezza max | PV per segmento | Durata |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 3 | 3 | 6 Q | 4 Q | 60 | 10 RND |
 | 6 | 6 | 10 Q | 6 Q | 80 | 20 RND |
 | 9 | 9 | 15 Q | 8 Q | 100 | 5 minuti |
@@ -2525,7 +2448,7 @@ Lanciare contro la barriera stessa non applica la penalità di attraversamento; 
 
 **Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie il valore successivo di PV per segmento (oltre 180: 220), lunghezza (oltre 15 Q: 18 Q), durata (oltre 1 ora: 2 ore) oppure interferenza magica, da −2 a −4 a Potere. L’altezza rimane 2 Q.
 
-**Magia conservata:** l’interferenza non introduce una Prova Potere nell’attivazione di Impronta Mistica o Trappola Mistica già caricata che non la richiede. Restano blocchi, assorbimenti e interdizioni della barriera. Per i normali lanci l’interferenza può rendere necessaria Potere anche ai livelli 1–3; fra penalità magiche concorrenti vale la maggiore, secondo le sezioni 7 e 9.
+**Magia conservata:** l’interferenza non introduce una Prova Potere nell’attivazione di Impronta Mistica o Trappola Mistica già caricata che non la richiede. Restano blocchi, assorbimenti e interdizioni della barriera. Per i normali lanci l’interferenza può rendere necessaria Potere anche ai livelli 1–3; fra penalità magiche concorrenti vale la maggiore, secondo le sezioni 7 e 9\.
 
 **Catene di Forza**
 
@@ -2535,9 +2458,8 @@ Scheda 17.6 • Macrofamiglia Fisica • Specializzazione Manifestazione • Rit
 
 Catene luminose ostacolano o bloccano gli arti delle creature colpite.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Bersagli\*\* | \*\*Stato\*\* | \*\*Durata max\*\* | \*\*Mod. PS\*\* |
+| Livello | PM | Gittata | Bersagli | Stato | Durata max | Mod. PS |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 3 | 3 | 6 Q | 1 | Rallentato | 3 RND | 0 |
 | 6 | 6 | 10 Q | 1 | Rallentato | 5 RND | 0 |
 | 9 | 9 | 15 Q | 2 | Immobilizzato | 5 RND | −2 |
@@ -2569,19 +2491,18 @@ Scheda 17.7 • Macrofamiglia Fisica • Specializzazione Manifestazione • Rit
 
 Una superficie orizzontale di forza sostiene e trasporta creature e carichi.
 
-|  |  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Dimensioni\*\* | \*\*Carico max\*\* | \*\*Bonus stabilità\*\* | \*\*Durata Con\*\* | \*\*Durata fissa\*\* |
+| Livello | PM | Gittata | Dimensioni | Carico max | Bonus stabilità | Durata Con | Durata fissa |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 3 | 3 | 3 Q | 1 × 1 Q | 100 kg | 0 | 10 minuti | 10 RND |
 | 6 | 6 | 6 Q | 2 × 1 Q | 200 kg | 0 | 30 minuti | 20 RND |
-| 9 | 9 | 10 Q | 2 × 2 Q | 400 kg | \\+1 | 1 ora | 5 minuti |
-| 12 | 12 | 15 Q | 2 × 2 Q | 600 kg | \\+1 | 2 ore | 10 minuti |
-| 15 | 15 | 20 Q | 3 × 2 Q | 900 kg | \\+2 | 4 ore | 30 minuti |
-| 18 | 18 | 25 Q | 3 × 3 Q | 1.200 kg | \\+2 | 8 ore | 1 ora |
+| 9 | 9 | 10 Q | 2 × 2 Q | 400 kg | \+1 | 1 ora | 5 minuti |
+| 12 | 12 | 15 Q | 2 × 2 Q | 600 kg | \+1 | 2 ore | 10 minuti |
+| 15 | 15 | 20 Q | 3 × 2 Q | 900 kg | \+2 | 4 ore | 30 minuti |
+| 18 | 18 | 25 Q | 3 × 3 Q | 1.200 kg | \+2 | 8 ore | 1 ora |
 
 **Creazione e carico:** l’intera superficie deve essere visibile ed entro gittata, senza intersecare corpi o solidi. Può apparire sotto i piedi di creature già appoggiate su una superficie. Il carico comprende creature, equipaggiamento e oggetti; gli occupanti devono avere il normale spazio richiesto sulla griglia. Non può sollevare un carico eccessivo; se sovraccaricata mentre è sospesa, collassa e scompare.
 
-**Movimento:** una volta per proprio turno, il Taumaturgo dispone di un budget di 6 Q per spostarla lungo un percorso libero. Ogni Q orizzontale costa 1; ogni Q verticale, in salita o discesa, costa 2. Può quindi percorrere 6 Q orizzontali, 3 Q verticali oppure combinare i due (per esempio 2 Q orizzontali e 2 verticali). Non usa Corsa o Scatto.
+**Movimento:** una volta per proprio turno, il Taumaturgo dispone di un budget di 6 Q per spostarla lungo un percorso libero. Ogni Q orizzontale costa 1; ogni Q verticale, in salita o discesa, costa 2\. Può quindi percorrere 6 Q orizzontali, 3 Q verticali oppure combinare i due (per esempio 2 Q orizzontali e 2 verticali). Non usa Corsa o Scatto.
 
 Il trasporto non consuma il Movimento degli occupanti, che possono agire e muoversi normalmente a bordo.
 
@@ -2591,7 +2512,7 @@ Il trasporto non consuma il Movimento degli occupanti, che possono agire e muove
 
 **Fine dell’effetto:** scadenza, dissoluzione o perdita della Concentrazione fanno scomparire la piattaforma. Chi rimane senza sostegno cade secondo le regole ordinarie, con 1d6 ogni 2 Q completi e AR ignorata. La piattaforma non concede AR, copertura o bonus alle Difese e non funziona come Barriera di Forza.
 
-**Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie il carico successivo (oltre 1.200 kg: 1.600 kg), le dimensioni (1 × 1 → 2 × 1 → 2 × 2 → 3 × 2 → 3 × 3 → 4 × 3 Q), il budget di movimento da 6 a 8 Q, +1 al bonus stabilità oppure la durata scelta (oltre 8 ore Con: 12 ore; oltre 1 ora fissa: 2 ore). Il movimento verticale costa sempre 2; dimensioni e carico restano aspetti distinti.
+**Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie il carico successivo (oltre 1.200 kg: 1.600 kg), le dimensioni (1 × 1 → 2 × 1 → 2 × 2 → 3 × 2 → 3 × 3 → 4 × 3 Q), il budget di movimento da 6 a 8 Q, \+1 al bonus stabilità oppure la durata scelta (oltre 8 ore Con: 12 ore; oltre 1 ora fissa: 2 ore). Il movimento verticale costa sempre 2; dimensioni e carico restano aspetti distinti.
 
 **Campo di Forza**
 
@@ -2601,9 +2522,8 @@ Scheda 17.8 • Macrofamiglia Fisica • Specializzazione Manifestazione • Rit
 
 Un involucro trasparente e chiuso delimita un volume immobile, ostacolando il passaggio e attenuando gli attacchi.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Dimensioni max\*\* | \*\*Durata\*\* | \*\*Mod. Tempra\*\* |
+| Livello | PM | Gittata | Dimensioni max | Durata | Mod. Tempra |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 6 | 6 | 10 Q | 2 × 2 × 2 Q | 5 RND | 0 |
 | 9 | 9 | 15 Q | 3 × 3 × 3 Q | 5 RND | −2 |
 | 12 | 12 | 20 Q | 4 × 4 × 4 Q | 10 RND | −2 |
@@ -2628,7 +2548,7 @@ Teletrasporto supera il campo senza la PS di attraversamento o la penalità Pote
 
 **Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie la dimensione cubica successiva (oltre 6 × 6 × 6 Q: 7 × 7 × 7 Q), durata (5 → 10 → 20 → 30 RND), modificatore Tempra (0 → −2 → −4 → −6) oppure interferenza magica da −4 a −6. Restano due turni per attraversare e il dimezzamento del danno pertinente.
 
-**Magia conservata:** l’interferenza non introduce una Prova Potere nell’attivazione di Impronta Mistica o Trappola Mistica già caricata che non la richiede. Restano blocchi, assorbimenti e interdizioni della barriera. Per i normali lanci l’interferenza può rendere necessaria Potere anche ai livelli 1–3; fra penalità magiche concorrenti vale la maggiore, secondo le sezioni 7 e 9.
+**Magia conservata:** l’interferenza non introduce una Prova Potere nell’attivazione di Impronta Mistica o Trappola Mistica già caricata che non la richiede. Restano blocchi, assorbimenti e interdizioni della barriera. Per i normali lanci l’interferenza può rendere necessaria Potere anche ai livelli 1–3; fra penalità magiche concorrenti vale la maggiore, secondo le sezioni 7 e 9\.
 
 **Teletrasporto**
 
@@ -2638,14 +2558,13 @@ Scheda 17.9 • Macrofamiglia Fisica • Specializzazione Manifestazione • Rit
 
 L’incantesimo trasferisce istantaneamente un oggetto oppure il Taumaturgo con eventuali passeggeri.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Oggetto max\*\* | \*\*Trasporto di creature\*\* | \*\*Mod. PS\*\* |
+| Livello | PM | Gittata | Oggetto max | Trasporto di creature | Mod. PS |
+| :---: | :---: | :---: | :---: | ----- | :---: |
 | 6 | 6 | 10 Q | 5 kg | Non disponibile | 0 |
 | 9 | 9 | 15 Q | 10 kg | Solo Taumaturgo | −2 |
-| 12 | 12 | 20 Q | 25 kg | Taumaturgo + 1 passeggero | −2 |
-| 15 | 15 | 25 Q | 50 kg | Taumaturgo + 2 passeggeri | −4 |
-| 18 | 18 | 30 Q | 100 kg | Taumaturgo + 3 passeggeri | −4 |
+| 12 | 12 | 20 Q | 25 kg | Taumaturgo \+ 1 passeggero | −2 |
+| 15 | 15 | 25 Q | 50 kg | Taumaturgo \+ 2 passeggeri | −4 |
+| 18 | 18 | 30 Q | 100 kg | Taumaturgo \+ 3 passeggeri | −4 |
 
 **Destinazione:** deve essere direttamente visibile dal Taumaturgo, entro gittata e sufficientemente libera per ospitare quanto viene trasferito. Non è possibile materializzarsi dentro corpi, solidi o spazi occupati. Il trasferimento non percorre lo spazio intermedio e può superare ostacoli quando la destinazione resta visibile.
 
@@ -2661,7 +2580,7 @@ Dal livello 12 può includere passeggeri consenzienti, anche incoscienti se tras
 
 **Azioni e conseguenze:** l’AP di lancio include il trasferimento, senza consumare Movimento. Non concede azioni aggiuntive o gratuite fuori turno, non annulla danni o effetti già risolti e non impedisce una normale Caduta se si arriva senza sostegno.
 
-**Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie peso (5 → 10 → 25 → 50 → 100 → 200 kg), gittata (10 → 15 → 20 → 25 → 30 → 40 Q), trasporto di creature (nessuno → solo Taumaturgo → +1 → +2 → +3 → +4 passeggeri) oppure PS Magia (0 → −2 → −4 → −6). Esempio: la versione di livello 6 anticipata sul trasporto costa 12 PM e permette al Taumaturgo di trasferirsi entro 10 Q, con Potere più difficile di una categoria e gli altri parametri invariati.
+**Anticipazione:** si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie peso (5 → 10 → 25 → 50 → 100 → 200 kg), gittata (10 → 15 → 20 → 25 → 30 → 40 Q), trasporto di creature (nessuno → solo Taumaturgo → \+1 → \+2 → \+3 → \+4 passeggeri) oppure PS Magia (0 → −2 → −4 → −6). Esempio: la versione di livello 6 anticipata sul trasporto costa 12 PM e permette al Taumaturgo di trasferirsi entro 10 Q, con Potere più difficile di una categoria e gli altri parametri invariati.
 
 **Prigione Dimensionale**
 
@@ -2671,9 +2590,8 @@ Scheda 17.10 • Macrofamiglia Fisica • Specializzazione Manifestazione • Ri
 
 Una tasca dimensionale confina una creatura fuori dal campo di battaglia, impedendole di agire e di essere raggiunta dall’esterno.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Bersagli max\*\* | \*\*Durata\*\* | \*\*Mod. PS\*\* |
+| Livello | PM | Gittata | Bersagli max | Durata | Mod. PS |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 9 | 9 | 10 Q | 1 | 3 RND | 0 |
 | 12 | 12 | 15 Q | 1 | 3 RND | −2 |
 | 15 | 15 | 20 Q | 2 | 5 RND | −2 |
@@ -2707,16 +2625,15 @@ Scheda 18.1 • Macrofamiglia Mentale • Specializzazione Psionica • Rituale:
 
 Aumenta l’acutezza dei sensi esistenti, aiutando a cogliere dettagli e segnali realmente percepibili.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Beneficiari\*\* | \*\*Bonus\*\* | \*\*Durata\*\* |
-| 1 | 1 | Personale | 1 | \\+3 | 10 RND |
-| 3 | 3 | Contatto | 1 | \\+3 | 20 RND |
-| 6 | 6 | 3 Q | 1 | \\+4 | 5 minuti |
-| 9 | 9 | 6 Q | 2 | \\+4 | 10 minuti |
-| 12 | 12 | 10 Q | 2 | \\+5 | 30 minuti |
-| 15 | 15 | 15 Q | 3 | \\+5 | 1 ora |
-| 18 | 18 | 20 Q | 3 | \\+6 | 2 ore |
+| Livello | PM | Gittata | Beneficiari | Bonus | Durata |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| 1 | 1 | Personale | 1 | \+3 | 10 RND |
+| 3 | 3 | Contatto | 1 | \+3 | 20 RND |
+| 6 | 6 | 3 Q | 1 | \+4 | 5 minuti |
+| 9 | 9 | 6 Q | 2 | \+4 | 10 minuti |
+| 12 | 12 | 10 Q | 2 | \+5 | 30 minuti |
+| 15 | 15 | 15 Q | 3 | \+5 | 1 ora |
+| 18 | 18 | 20 Q | 3 | \+6 | 2 ore |
 
 **Bersagli multipli:** al lancio tutti devono essere visibili ed entro gittata e formare una catena entro 2 Q. Per gli effetti benefici persistenti, possono poi muoversi liberamente.
 
@@ -2730,7 +2647,7 @@ Non modifica Iniziativa, attacchi, Difese, Potere o PS. I bonus magici alla stes
 
 **Interazioni:** contro Mimetismo migliora soltanto le prove di Percezione già consentite, compresa la distorsione in movimento; non concede tentativi aggiuntivi o individuazione automatica. Non supera Velo Psichico; gli indizi non coperti dal Velo restano valutabili secondo le sue regole. Nascondere Aura riguarda soltanto l’emanazione spirituale e non ostacola i sensi fisici ampliati.
 
-**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 al bonus, fino a +7, oppure un gradino di durata: 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore. Gittata e beneficiari non cambiano.
+**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie \+1 al bonus, fino a \+7, oppure un gradino di durata: 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore. Gittata e beneficiari non cambiano.
 
 **Barriera Mentale**
 
@@ -2740,26 +2657,25 @@ Scheda 18.2 • Macrofamiglia Mentale • Specializzazione Psionica • Rituale:
 
 Protegge la volontà, ostacola le influenze mentali e rende completamente immuni a Dardo Psichico mentre è attiva. Non fornisce AR o assorbimento del danno.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Beneficiari\*\* | \*\*Bonus PS\*\* | \*\*Durata\*\* |
-| 1 | 1 | Contatto | 1 | \\+3 | 10 RND |
-| 3 | 3 | Contatto | 1 | \\+3 | 20 RND |
-| 6 | 6 | 3 Q | 1 | \\+4 | 5 minuti |
-| 9 | 9 | 6 Q | 2 | \\+4 | 10 minuti |
-| 12 | 12 | 10 Q | 2 | \\+5 | 30 minuti |
-| 15 | 15 | 15 Q | 3 | \\+5 | 1 ora |
-| 18 | 18 | 20 Q | 3 | \\+6 | 2 ore |
+| Livello | PM | Gittata | Beneficiari | Bonus PS | Durata |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| 1 | 1 | Contatto | 1 | \+3 | 10 RND |
+| 3 | 3 | Contatto | 1 | \+3 | 20 RND |
+| 6 | 6 | 3 Q | 1 | \+4 | 5 minuti |
+| 9 | 9 | 6 Q | 2 | \+4 | 10 minuti |
+| 12 | 12 | 10 Q | 2 | \+5 | 30 minuti |
+| 15 | 15 | 15 Q | 3 | \+5 | 1 ora |
+| 18 | 18 | 20 Q | 3 | \+6 | 2 ore |
 
 **Bersagli multipli:** al lancio tutti devono essere visibili ed entro gittata e formare una catena entro 2 Q. Per gli effetti benefici persistenti, possono poi muoversi liberamente.
 
-**Salvezze:** il bonus vale per tutte le PS Volontà, comprese paura ordinaria e mantenimento della Concentrazione dopo danni. Vale per Magia soltanto contro effetti diretti sulla mente: lettura mentale, suggestione, controllo, memorie e illusioni della percezione mentale. Non vale per Tempra o Riflessi e non protegge genericamente da ogni incantesimo; non modifica la PS contro Prigione Dimensionale. Normalmente non concede nuove PS; contro Presenza concede specificamente una PS Volontà con il proprio bonus e il modificatore di Presenza, come descritto nella sezione 20.
+**Salvezze:** il bonus vale per tutte le PS Volontà, comprese paura ordinaria e mantenimento della Concentrazione dopo danni. Vale per Magia soltanto contro effetti diretti sulla mente: lettura mentale, suggestione, controllo, memorie e illusioni della percezione mentale. Non vale per Tempra o Riflessi e non protegge genericamente da ogni incantesimo; non modifica la PS contro Prigione Dimensionale. Normalmente non concede nuove PS; contro Presenza concede specificamente una PS Volontà con il proprio bonus e il modificatore di Presenza, come descritto nella sezione 20\.
 
 **Dardo Psichico:** immunità completa, indipendentemente dai livelli dei due incantesimi. Il dardo non sottrae PV, non richiede PS e non provoca svenimento. Contro Indurre Sonno si applica soltanto il bonus alla PS Volontà, senza immunità. Deve essere già attiva quando arriva il dardo: non restituisce PV già persi né risveglia da uno svenimento già prodotto.
 
 **Persistenza e cumulo:** non dissolve un controllo già attivo, ma aiuta le successive PS per liberarsi, se previste. Più barriere e i bonus magici alla stessa PS non si sommano; si applica il maggiore.
 
-**Anticipazione:** un solo aspetto di un gradino, PM raddoppiati e Potere più difficile di una categoria. Si sceglie +1 al bonus PS, massimo +7, oppure durata 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore. Non si ampliano le categorie protette.
+**Anticipazione:** un solo aspetto di un gradino, PM raddoppiati e Potere più difficile di una categoria. Si sceglie \+1 al bonus PS, massimo \+7, oppure durata 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore. Non si ampliano le categorie protette.
 
 **Biomanipolazione**
 
@@ -2769,9 +2685,8 @@ Scheda 18.3 • Macrofamiglia Mentale • Specializzazione Psionica • Rituale:
 
 Provoca sensazioni e alterazioni biologiche temporanee, senza infliggere direttamente danni.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Bersagli\*\* | \*\*Effetti diversi\*\* | \*\*Durata\*\* | \*\*Mod. PS\*\* |
+| Livello | PM | Gittata | Bersagli | Effetti diversi | Durata | Mod. PS |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 1 | 1 | 6 Q | 1 | 1 | 3 RND | 0 |
 | 3 | 3 | 6 Q | 1 | 1 | 5 RND | 0 |
 | 6 | 6 | 10 Q | 1 | 1 | 5 RND | 0 |
@@ -2784,17 +2699,17 @@ Provoca sensazioni e alterazioni biologiche temporanee, senza infliggere diretta
 
 **Scelta degli effetti:** prima del lancio si dichiarano uno o due effetti diversi, secondo la tabella, uguali per tutti i bersagli. Si sceglie fra Affaticamento, Fame, Sete e Dolore.
 
-Affaticamento aggiunge temporaneamente +1 AFT, secondo il Manuale del Giocatore, §5.19, «Affaticamento». Fame e Sete producono sensazioni intense; le conseguenze situazionali seguono le condizioni stabilite dal Direttore, senza consumare risorse biologiche né causare vera disidratazione o denutrizione. Mangiare e bere non terminano l’effetto. Dolore impone −3 VA alle prove di Abilità fisiche, compresi attacchi e Difese, ma non a Potere o PS.
+Affaticamento aggiunge temporaneamente \+1 AFT, secondo il Manuale del Giocatore, §5.19, «Affaticamento». Fame e Sete producono sensazioni intense; le conseguenze situazionali seguono le condizioni stabilite dal Direttore, senza consumare risorse biologiche né causare vera disidratazione o denutrizione. Mangiare e bere non terminano l’effetto. Dolore impone −3 VA alle prove di Abilità fisiche, compresi attacchi e Difese, ma non a Potere o PS.
 
 **Risoluzione:** dopo Potere ogni bersaglio effettua una sola PS, scegliendo Tempra o Volontà e applicando il modificatore in tabella. Il successo evita tutti gli effetti scelti; il fallimento li applica tutti. Non occorre colpire, non sono consentite Parata, Schivata o Elusione e l’AR non interviene. Non sottrae PV e non infligge direttamente Ferite, menomazioni o Sanguinamento.
 
 **Cessazione:** non concede nuove PS automatiche; termina alla scadenza o con Negare Potere. Scompaiono soltanto AFT e sensazioni prodotti dall’incantesimo; le condizioni reali restano.
 
-**Sovrapposizioni:** sullo stesso soggetto possono agire al massimo due effetti diversi di Biomanipolazione, anche attraverso più lanci. Lo stesso effetto conserva la durata residua maggiore e non somma l’intensità: AFT resta +1 e Dolore −3. Gli altri stati seguono le normali compatibilità.
+**Sovrapposizioni:** sullo stesso soggetto possono agire al massimo due effetti diversi di Biomanipolazione, anche attraverso più lanci. Lo stesso effetto conserva la durata residua maggiore e non somma l’intensità: AFT resta \+1 e Dolore −3. Gli altri stati seguono le normali compatibilità.
 
 **Barriera Mentale:** aiuta soltanto se il bersaglio sceglie Volontà; non modifica Tempra.
 
-**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie effetti 1 → 2 (massimo 2), durata 3 → 5 → 10 → 20 → 30 RND, modificatore PS 0 → −2 → −4 → −6 oppure Dolore da −3 a −4. Affaticamento resta +1 AFT.
+**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie effetti 1 → 2 (massimo 2), durata 3 → 5 → 10 → 20 → 30 RND, modificatore PS 0 → −2 → −4 → −6 oppure Dolore da −3 a −4. Affaticamento resta \+1 AFT.
 
 **Dardo Psichico**
 
@@ -2804,9 +2719,8 @@ Scheda 18.4 • Macrofamiglia Mentale • Specializzazione Psionica • Rituale:
 
 Un attacco diretto alla mente esaurisce i PV ordinari e può provocare svenimento, senza infliggere Ferite.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Bersagli\*\* | \*\*Danno psichico\*\* | \*\*Mod. Volontà\*\* |
+| Livello | PM | Gittata | Bersagli | Danno psichico | Mod. Volontà |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 1 | 1 | 6 Q | 1 | 1d4 | 0 |
 | 2 | 2 | 6 Q | 1 | 1d4+1 | 0 |
 | 3 | 3 | 6 Q | 1 | 1d4+2 | 0 |
@@ -2836,7 +2750,7 @@ I PV non diventano negativi. Il danno eccedente viene ignorato e non produce mai
 
 **Svenuto:** nessun Movimento o AP, nessuna Difesa attiva, perdita della Concentrazione e caduta A Terra se necessario. Si applicano le condizioni ordinarie dello stato, anche per gli attacchi a bruciapelo. Alla scadenza si riprende conoscenza anche a 0 PV, salvo altre cause di svenimento.
 
-**Esempio:** un bersaglio con 6 PV riceve un danno tirato di 15. Supera la prima PS e subisce 8 danni: scende a 0 PV e deve comunque effettuare la seconda PS per evitare lo svenimento.
+**Esempio:** un bersaglio con 6 PV riceve un danno tirato di 15\. Supera la prima PS e subisce 8 danni: scende a 0 PV e deve comunque effettuare la seconda PS per evitare lo svenimento.
 
 **Barriere di forza:** Barriera di Forza e Campo di Forza non impongono la propria penalità Potere di attraversamento a Dardo Psichico. Rimangono necessari visibilità e validità del bersaglio: una parete opaca impedisce di sceglierlo.
 
@@ -2850,9 +2764,8 @@ Scheda 18.5 • Macrofamiglia Mentale • Specializzazione Psionica • Rituale:
 
 Crea un servitore visibile e materiale, privo di mente autonoma, capace di semplici compiti fisici.
 
-|  |  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Creazione\*\* | \*\*PV\*\* | \*\*VA operativo\*\* | \*\*Danno naturale\*\* | \*\*Carico\*\* | \*\*Durata\*\* |
+| Livello | PM | Creazione | PV | VA operativo | Danno naturale | Carico | Durata |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 3 | 3 | 3 Q | 10 | 8 | 1d4 | 10 kg | 5 minuti |
 | 6 | 6 | 6 Q | 15 | 9 | 1d4+1 | 20 kg | 10 minuti |
 | 9 | 9 | 10 Q | 20 | 10 | 1d4+2 | 40 kg | 30 minuti |
@@ -2880,7 +2793,7 @@ Non possiede una mente autonoma ed è immune agli effetti che richiedono una men
 
 **Un solo servitore:** ogni Taumaturgo può avere un solo Ectoplasma attivo, distinto dal limite di Evoca Elementale. Un nuovo lancio riuscito dissolve il precedente e crea la nuova riserva di PV. Non concede però un nuovo turno né rinnova Movimento, AP o capacità limitate per RND: si sottrae quanto il servitore precedente ha già consumato nel RND globale. Termina alla scadenza, a 0 PV, se il Taumaturgo perde conoscenza, si addormenta, esaurisce i PM personali o muore, con Negare Potere oppure per congedo gratuito nel proprio turno. Gli oggetti portati rimangono e cadono se privi di sostegno. La durata trascorre anche quando gli ordini sono impossibili.
 
-**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie PV alla riga successiva (oltre 40: 50), +1 VA operativo (massimo 14), +1 al danno che resta Naturale, carico 10 → 20 → 40 → 70 → 100 → 150 → 200 kg oppure durata 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore. Numero di servitori, Movimento, azioni e natura del danno non aumentano.
+**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie PV alla riga successiva (oltre 40: 50), \+1 VA operativo (massimo 14), \+1 al danno che resta Naturale, carico 10 → 20 → 40 → 70 → 100 → 150 → 200 kg oppure durata 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore. Numero di servitori, Movimento, azioni e natura del danno non aumentano.
 
 **Indurre Sonno**
 
@@ -2890,9 +2803,8 @@ Scheda 18.6 • Macrofamiglia Mentale • Specializzazione Psionica • Rituale:
 
 Induce un sonno magico profondo che i danni non interrompono.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Bersagli\*\* | \*\*Durata\*\* | \*\*Mod. Volontà\*\* |
+| Livello | PM | Gittata | Bersagli | Durata | Mod. Volontà |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 3 | 3 | 6 Q | 1 | 5 RND | 0 |
 | 6 | 6 | 10 Q | 1 | 10 RND | 0 |
 | 9 | 9 | 15 Q | 2 | 20 RND | −2 |
@@ -2902,7 +2814,7 @@ Induce un sonno magico profondo che i danni non interrompono.
 
 **Bersagli multipli:** al lancio tutti devono essere visibili ed entro gittata e formare una catena entro 2 Q. Il successivo allontanamento non termina il sonno.
 
-**Risoluzione:** dopo Potere ogni bersaglio effettua Volontà con il modificatore in tabella. Il successo evita l’effetto; il fallimento provoca sonno immediato. Non occorre colpire, non sono consentite Parata, Schivata o Elusione e non si sottraggono PV o PM. Un bersaglio cosciente già in combattimento o esposto a un pericolo concreto e immediato riceve +4 situazionale a questa PS Volontà. Il semplice servizio di guardia o un sospetto generico non bastano. Il bonus si verifica al lancio e non concede nuove PS durante il sonno.
+**Risoluzione:** dopo Potere ogni bersaglio effettua Volontà con il modificatore in tabella. Il successo evita l’effetto; il fallimento provoca sonno immediato. Non occorre colpire, non sono consentite Parata, Schivata o Elusione e non si sottraggono PV o PM. Un bersaglio cosciente già in combattimento o esposto a un pericolo concreto e immediato riceve \+4 situazionale a questa PS Volontà. Il semplice servizio di guardia o un sospetto generico non bastano. Il bonus si verifica al lancio e non concede nuove PS durante il sonno.
 
 **Condizione:** si applicano gli effetti di Svenuto, con le condizioni di risveglio qui indicate. Nessun Movimento, AP, percezione o Difesa attiva; la Concentrazione termina. Chi è in piedi cade A Terra. Valgono le normali conseguenze ambientali e gli attacchi contro un soggetto incapace di reagire.
 
@@ -2924,29 +2836,28 @@ Scheda 18.7 • Macrofamiglia Mentale • Specializzazione Psionica • Rituale:
 
 Produce un recupero immediato pari alla COS del beneficiario, seguito da cinque applicazioni di recupero periodico.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*PV immediati\*\* | \*\*PV per RND\*\* | \*\*Durata periodica\*\* | \*\*Totale massimo\*\* |
-| 3 | 3 | Personale | COS | 1 | 5 RND | COS + 5 |
-| 6 | 6 | Personale | COS | 2 | 5 RND | COS + 10 |
-| 9 | 9 | Contatto | COS | 3 | 5 RND | COS + 15 |
-| 12 | 12 | Contatto | COS | 4 | 5 RND | COS + 20 |
-| 15 | 15 | 3 Q | COS | 5 | 5 RND | COS + 25 |
-| 18 | 18 | 3 Q | COS | 6 | 5 RND | COS + 30 |
+| Livello | PM | Gittata | PV immediati | PV per RND | Durata periodica | Totale massimo |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 3 | 3 | Personale | COS | 1 | 5 RND | COS \+ 5 |
+| 6 | 6 | Personale | COS | 2 | 5 RND | COS \+ 10 |
+| 9 | 9 | Contatto | COS | 3 | 5 RND | COS \+ 15 |
+| 12 | 12 | Contatto | COS | 4 | 5 RND | COS \+ 20 |
+| 15 | 15 | 3 Q | COS | 5 | 5 RND | COS \+ 25 |
+| 18 | 18 | 3 Q | COS | 6 | 5 RND | COS \+ 30 |
 
 **Recupero:** il valore immediato è pari alla COS del beneficiario, non al modificatore, e si applica una sola volta dopo il lancio riuscito. Il recupero periodico avviene all’inizio dei cinque turni successivi del beneficiario, prima del Sanguinamento, senza azioni o prove.
 
 Gittata e contatto si verificano soltanto al lancio; il recupero prosegue anche se il beneficiario si allontana. Ai livelli 3 e 6 l’effetto è esclusivamente Personale.
 
-**Limiti:** recupera soltanto PV ordinari fino al massimo; l’eccedenza viene persa e non diventa PV temporanei. Funziona su una creatura viva a 0 PV, ma non rimuove Ferite, menomazioni, Affaticamento, veleni, malattie o stati magici e non recupera PM. Non sveglia chi è sotto Indurre Sonno o lo svenimento di Dardo Psichico. Funziona soltanto su organismi biologicamente viventi; nei cyborg cura i PV viventi, non gli impianti. Sono esclusi elementali evocati, Ectoplasma, costrutti puramente meccanici ed entità spirituali salvo eccezioni del Bestiario del Manuale del Direttore. Durante Forma Elementale non cura forma o corpo sospeso; le applicazioni periodiche trascorrono senza effetto. Rispetta il limite dei PV sacrificati nella conversione, sezione 6. Canale Vitale aggiunge 1 PV una sola volta per beneficiario e lancio al recupero immediato pari alla COS.
+**Limiti:** recupera soltanto PV ordinari fino al massimo; l’eccedenza viene persa e non diventa PV temporanei. Funziona su una creatura viva a 0 PV, ma non rimuove Ferite, menomazioni, Affaticamento, veleni, malattie o stati magici e non recupera PM. Non sveglia chi è sotto Indurre Sonno o lo svenimento di Dardo Psichico. Funziona soltanto su organismi biologicamente viventi; nei cyborg cura i PV viventi, non gli impianti. Sono esclusi elementali evocati, Ectoplasma, costrutti puramente meccanici ed entità spirituali salvo eccezioni del Bestiario del Manuale del Direttore. Durante Forma Elementale non cura forma o corpo sospeso; le applicazioni periodiche trascorrono senza effetto. Rispetta il limite dei PV sacrificati nella conversione, sezione 6\. Canale Vitale aggiunge 1 PV una sola volta per beneficiario e lancio al recupero immediato pari alla COS.
 
-**Sanguinamento:** continua normalmente e non viene arrestato da Psicometabolismo. Per esempio, con 0 PV, Sanguinamento 1 e recupero 2, il beneficiario recupera 2 PV e poi ne perde 1.
+**Sanguinamento:** continua normalmente e non viene arrestato da Psicometabolismo. Per esempio, con 0 PV, Sanguinamento 1 e recupero 2, il beneficiario recupera 2 PV e poi ne perde 1\.
 
 **Corpo Adattivo:** fra recuperi periodici concorrenti si applica il maggiore, senza sommarli. Se Corpo Adattivo usa la propria applicazione per fermare Sanguinamento, Psicometabolismo può comunque recuperare i suoi PV periodici. Il recupero immediato si applica normalmente anche in presenza di Corpo Adattivo.
 
 **Nuovo lancio e dissoluzione:** un nuovo lancio concede nuovamente il recupero immediato e può sostituire il recupero periodico, senza cumularne le applicazioni. Negare Potere interrompe i recuperi futuri e non annulla i PV già recuperati.
 
-**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 PV per RND, fino a 7 al livello 18, oppure durata periodica da 5 a 10 RND. Il recupero immediato resta pari alla COS, non è anticipabile e si applica una sola volta per lancio.
+**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie \+1 PV per RND, fino a 7 al livello 18, oppure durata periodica da 5 a 10 RND. Il recupero immediato resta pari alla COS, non è anticipabile e si applica una sola volta per lancio.
 
 **Telemeccanica**
 
@@ -2956,14 +2867,13 @@ Scheda 18.8 • Macrofamiglia Mentale • Specializzazione Psionica • Rituale:
 
 Stabilisce un collegamento mentale con dispositivi meccanici o elettronici per utilizzarne a distanza le normali funzioni.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Dispositivi\*\* | \*\*Bonus utilizzo\*\* | \*\*Durata\*\* |
-| 6 | 6 | 6 Q | 1 | \\+1 | 10 RND |
-| 9 | 9 | 10 Q | 1 | \\+2 | 5 minuti |
-| 12 | 12 | 15 Q | 2 | \\+3 | 10 minuti |
-| 15 | 15 | 20 Q | 2 | \\+4 | 30 minuti |
-| 18 | 18 | 25 Q | 3 | \\+6 | 1 ora |
+| Livello | PM | Gittata | Dispositivi | Bonus utilizzo | Durata |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| 6 | 6 | 6 Q | 1 | \+1 | 10 RND |
+| 9 | 9 | 10 Q | 1 | \+2 | 5 minuti |
+| 12 | 12 | 15 Q | 2 | \+3 | 10 minuti |
+| 15 | 15 | 20 Q | 2 | \+4 | 30 minuti |
+| 18 | 18 | 25 Q | 3 | \+6 | 1 ora |
 
 **Collegamento:** i dispositivi si scelgono al lancio; per sostituirli serve un nuovo lancio. L’attivazione del collegamento è compresa nell’AP di lancio e mantenerlo non costa azioni. Per impartire comandi il dispositivo deve restare visibile ed entro gittata; perdere un requisito interrompe il relativo collegamento.
 
@@ -2977,7 +2887,7 @@ Stabilisce un collegamento mentale con dispositivi meccanici o elettronici per u
 
 **Limiti:** il sistema deve poter compiere materialmente l’operazione. L’incantesimo non fornisce energia, ripara guasti, ricarica armi o supera blocchi fisici. Consente di utilizzare le funzioni interne del dispositivo; Telecinesi ne manipola invece fisicamente gli elementi.
 
-**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie dispositivi 1 → 2 → 3 → 4, bonus utilizzo +1 → +2 → +3 → +4 → +6 → +8 oppure durata 10 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore. Numero di azioni ed esclusioni restano invariati.
+**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie dispositivi 1 → 2 → 3 → 4, bonus utilizzo \+1 → \+2 → \+3 → \+4 → \+6 → \+8 oppure durata 10 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore. Numero di azioni ed esclusioni restano invariati.
 
 **Sovraccarico Sinaptico**
 
@@ -2987,9 +2897,8 @@ Scheda 18.9 • Macrofamiglia Mentale • Specializzazione Psionica • Rituale:
 
 Una scarica iniziale danneggia fisicamente il bersaglio; l’interferenza mantenuta sul suo sistema nervoso ne ostacola progressivamente il controllo motorio.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Danno fisico Etereo\*\* | \*\*Mod. Tempra\*\* | \*\*Durata max Con\*\* |
+| Livello | PM | Gittata | Danno fisico Etereo | Mod. Tempra | Durata max Con |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 6 | 6 | 6 Q | 1d6+5 | 0 | 5 RND |
 | 9 | 9 | 10 Q | 2d6+5 | −2 | 5 RND |
 | 12 | 12 | 15 Q | 3d6+5 | −2 | 7 RND |
@@ -3000,9 +2909,8 @@ Una scarica iniziale danneggia fisicamente il bersaglio; l’interferenza manten
 
 La PS Tempra determina soltanto l’interferenza motoria e non dimezza il danno. Assorbire tutto il danno non evita l’interferenza. Barriera Mentale non protegge: il danno non è psichico e la PS non è Volontà.
 
-|  |  |  |
-| :-: | :-: | :-: |
-| \*\*Condizione prima della PS\*\* | \*\*Tempra riuscita\*\* | \*\*Tempra fallita\*\* |
+| Condizione prima della PS | Tempra riuscita | Tempra fallita |
+| ----- | ----- | ----- |
 | Nessuna alterazione | Nessuna alterazione | Rallentato |
 | Rallentato | Nessuna alterazione | Stordito |
 | Stordito | Rallentato | Rimane Stordito |
@@ -3023,7 +2931,7 @@ La condizione dura fino alla PS successiva oppure alla fine dell’incantesimo. 
 
 **Fine dell’effetto:** cessano immediatamente Rallentamento e Stordimento prodotti da questo lancio; i danni già inflitti rimangono. Un nuovo lancio riparte dalla prima fase e non eredita la progressione di un lancio terminato.
 
-**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 al danno iniziale oppure modificatore PS 0 → −2 → −4 → −6. Durata, numero di bersagli e passaggi fra gli stati non sono anticipabili.
+**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie \+1 al danno iniziale oppure modificatore PS 0 → −2 → −4 → −6. Durata, numero di bersagli e passaggi fra gli stati non sono anticipabili.
 
 **Mente Disincarnata**
 
@@ -3033,9 +2941,8 @@ Scheda 18.10 • Macrofamiglia Mentale • Specializzazione Psionica • Rituale
 
 La coscienza lascia temporaneamente il corpo e si manifesta come emanazione psichica incorporea, capace di esplorare a distanza e comunicare.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Distanza max dal corpo\*\* | \*\*Durata\*\* | \*\*Compagni collegati\*\* |
+| Livello | PM | Distanza max dal corpo | Durata | Compagni collegati |
+| :---: | :---: | :---: | :---: | :---: |
 | 9 | 9 | 1 km | 10 minuti | 1 |
 | 12 | 12 | 3 km | 30 minuti | 2 |
 | 15 | 15 | 6 km | 1 ora | 3 |
@@ -3065,16 +2972,15 @@ Il danno trasferito consuma direttamente i PV ordinari del Taumaturgo, senza un 
 
 Corpo ed emanazione sono una sola persona e condividono PV e PM. Una protezione non viene duplicata dalla proiezione. Le assegnazioni si fissano all’avvio della proiezione e restano tali per la sua durata.
 
-|  |  |
-| :-: | :-: |
-| \*\*Protezione\*\* | \*\*Applicazione durante la proiezione\*\* |
+| Protezione | Applicazione durante la proiezione |
+| :---- | :---- |
 | Equipaggiamento, Pelle Corazzata, Scudo, Irrobustire | Soltanto sul corpo. I PV temporanei non assorbono danni all’emanazione. |
 | Armatura Elementale e sua aura; Mimetismo | Rimangono sul corpo. |
 | Armatura di Forza | Si designa corpo oppure emanazione; in assenza di scelta, corpo. |
 | Barriera Mentale | Protegge la mente unica e conserva immunità a Dardo Psichico e bonus alle PS pertinenti. |
 | Scudo Spirituale | Protegge le PS pertinenti e l’unica riserva PM personale. |
 | Nascondere Aura e Alterare Aura | Ogni applicazione protegge corpo oppure emanazione, scelto alla proiezione; mai entrambi. |
-| Benedizione e Premonizione | \*\*Una sola persona:\*\* modificatori pertinenti e un’unica disponibilità di ritiri. |
+| Benedizione e Premonizione | **Una sola persona:** modificatori pertinenti e un’unica disponibilità di ritiri. |
 | Velo Psichico già attivo | L’aura rimane centrata sul corpo; le altre aure conservano la propria origine. |
 
 **Aree:** se una stessa applicazione può colpire contemporaneamente corpo ed emanazione, si risolve soltanto sul corpo, con le sue protezioni e l’eventuale PS Volontà. Se soltanto l’emanazione è un bersaglio valido, si risolve su di essa. Esposizioni successive allo stesso lancio nello stesso RND globale non duplicano il danno passando dall’uno all’altra. Attacchi distinti restano applicazioni separate.
@@ -3089,9 +2995,8 @@ Corpo ed emanazione sono una sola persona e condividono PV e PM. Una protezione 
 
 ### **Interdizioni e bandimenti**
 
-|  |  |
-| :-: | :-: |
-| \*\*Effetto avversario\*\* | \*\*Interazione con l’emanazione\*\* |
+| Effetto avversario | Interazione con l’emanazione |
+| :---- | :---- |
 | Blocco esclusivamente fisico | Non la blocca automaticamente. |
 | Interdizione a presenze spirituali o incorporee | Impedisce il passaggio secondo le condizioni dell’effetto. |
 | Espulsione da un’area | La allontana secondo le proprie regole; non termina automaticamente la proiezione. |
@@ -3100,7 +3005,7 @@ Corpo ed emanazione sono una sola persona e condividono PV e PM. Una protezione 
 
 **Bandimento:** non recide il legame vitale e non distrugge l’anima. Interrompe la proiezione; eventuali danni devono essere espressamente previsti dall’incantesimo che bandisce.
 
-**Esorcizzare Possessione:** può colpire l’emanazione identificata e direttamente percepita. Si confrontano il suo potere di esorcismo e il livello attivo di Mente Disincarnata: se il potere è superiore, l’emanazione termina; a parità, soltanto l’esorcista effettua una PS Volontà e la termina se riesce; se inferiore, non la rimuove. Non effettua PS il Taumaturgo proiettato. La cessazione riporta immediatamente al corpo e interrompe i collegamenti con i compagni, senza danni aggiuntivi. Barriera Mistica richiede invece una PS Magia al Taumaturgo proiettato per entrare: un fallimento ferma l’emanazione al confine, senza terminarla né infliggere danni; il ritorno al corpo resta sempre possibile. La barriera non espelle emanazioni già presenti. Le interazioni con Barriera Mistica sono descritte nella sua scheda, sezione 22 di questo manuale; Negare Potere segue la propria scheda nella sezione 23.
+**Esorcizzare Possessione:** può colpire l’emanazione identificata e direttamente percepita. Si confrontano il suo potere di esorcismo e il livello attivo di Mente Disincarnata: se il potere è superiore, l’emanazione termina; a parità, soltanto l’esorcista effettua una PS Volontà e la termina se riesce; se inferiore, non la rimuove. Non effettua PS il Taumaturgo proiettato. La cessazione riporta immediatamente al corpo e interrompe i collegamenti con i compagni, senza danni aggiuntivi. Barriera Mistica richiede invece una PS Magia al Taumaturgo proiettato per entrare: un fallimento ferma l’emanazione al confine, senza terminarla né infliggere danni; il ritorno al corpo resta sempre possibile. La barriera non espelle emanazioni già presenti. Le interazioni con Barriera Mistica sono descritte nella sua scheda, sezione 22 di questo manuale; Negare Potere segue la propria scheda nella sezione 23\.
 
 # **19 Incantesimi della specializzazione Influenza**
 
@@ -3132,9 +3037,8 @@ Scheda 19.1 • Macrofamiglia Mentale • Specializzazione Influenza • Rituale
 
 Un travestimento percettivo segue il beneficiario e modifica come viene visto e, dalle versioni appropriate, udito. L’aspetto viene scelto al lancio; per cambiarlo serve un nuovo lancio.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Beneficiari\*\* | \*\*Durata\*\* | \*\*Mod. PS\*\* |
+| Livello | PM | Gittata | Beneficiari | Durata | Mod. PS |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 1 | 1 | Contatto | 1 | 10 RND | 0 |
 | 3 | 3 | Contatto | 1 | 5 minuti | 0 |
 | 6 | 6 | 3 Q | 1 | 10 minuti | 0 |
@@ -3145,9 +3049,8 @@ Un travestimento percettivo segue il beneficiario e modifica come viene visto e,
 
 **Beneficiari:** al lancio devono essere visibili e nella gittata, con concatenazione entro 2 Q; successivamente possono separarsi. Ciascuno riceve l’aspetto scelto per lui.
 
-|  |  |
-| :-: | :-: |
-| \*\*Dal livello\*\* | \*\*Capacità cumulativa\*\* |
+| Dal livello | Capacità cumulativa |
+| :---- | :---- |
 | 1 | Modifica lineamenti, carnagione, occhi, capelli, barba ed età apparente, creando un volto generico. |
 | 3 | Può imitare l’aspetto di una persona conosciuta o osservata adeguatamente. |
 | 6 | Può alterare voce, accento e postura apparente. Per imitare una voce precisa deve averla ascoltata. |
@@ -3177,9 +3080,8 @@ Scheda 19.2 • Macrofamiglia Mentale • Specializzazione Influenza • Rituale
 
 Impone un singolo ordine comportamentale da tentare nel successivo turno del bersaglio. La preparazione con Oratoria può imporre il −2 aggiuntivo alla PS iniziale.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Bersagli\*\* | \*\*Parole massime\*\* | \*\*Mod. PS\*\* |
+| Livello | PM | Gittata | Bersagli | Parole massime | Mod. PS |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 1 | 1 | 6 Q | 1 | 1 | 0 |
 | 2 | 2 | 6 Q | 1 | 2 | 0 |
 | 3 | 3 | 6 Q | 1 | 3 | 0 |
@@ -3197,16 +3099,15 @@ Impone un singolo ordine comportamentale da tentare nel successivo turno del ber
 
 ### **Ordini e limiti di esecuzione**
 
-|  |  |
-| :-: | :-: |
-| \*\*Comando\*\* | \*\*Effetto operativo\*\* |
+| Comando | Effetto operativo |
+| :---- | :---- |
 | Fermo | Rimane nel proprio Q per quel turno; conserva le normali AP e Difese. |
 | Lascia | Spende 1 AP per lasciare un oggetto impugnato e non può riprenderlo nello stesso turno. Se non specificato, sceglie quale. |
 | Indietro o Avvicinati | Usa il Passo disponibile per allontanarsi o avvicinarsi al Taumaturgo lungo un percorso praticabile e sicuro; conserva le AP. |
 | Taci | Non parla per quel turno. Può omettere l’Invocazione negli incantesimi che lo permettono, con normale −2 a Potere e Prova obbligatoria; non può usare Comando o Ipnosi senza la voce richiesta. |
 | Cadi | Spende 1 AP per andare A Terra e non può rialzarsi nello stesso turno; le altre azioni consentite restano disponibili. |
-| Difendimi | Valido dal livello 1. Il bersaglio sceglie un modo praticabile per proteggere il Taumaturgo, entro 1 AP e 1 Movimento e nei propri limiti morali. |
-| Attacca il tuo compagno | \*\*Quattro parole:\*\* valido dal livello 4, se non viola i principi morali e la lealtà del bersaglio. |
+| Difendimi | Valido dal livello 1\. Il bersaglio sceglie un modo praticabile per proteggere il Taumaturgo, entro 1 AP e 1 Movimento e nei propri limiti morali. |
+| Attacca il tuo compagno | **Quattro parole:** valido dal livello 4, se non viola i principi morali e la lealtà del bersaglio. |
 
 **Difendimi:** può comportare frapporsi, chiudere una porta, usare una capacità protettiva posseduta o attaccare un aggressore quando consentito. Non concede intercettazioni automatiche, trasferimento di danni, nuove capacità o Difese gratuite.
 
@@ -3230,9 +3131,8 @@ Scheda 19.3 • Macrofamiglia Mentale • Specializzazione Influenza • Rituale
 
 Interferisce con l’attenzione del bersaglio e penalizza tutte le sue Prove di Abilità per la durata.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Bersagli\*\* | \*\*Penalità VA\*\* | \*\*Durata\*\* | \*\*Mod. PS\*\* |
+| Livello | PM | Gittata | Bersagli | Penalità VA | Durata | Mod. PS |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 1 | 1 | 6 Q | 1 | −1 | 3 RND | 0 |
 | 2 | 2 | 6 Q | 1 | −2 | 3 RND | 0 |
 | 3 | 3 | 6 Q | 1 | −3 | 3 RND | 0 |
@@ -3264,9 +3164,8 @@ Scheda 19.4 • Macrofamiglia Mentale • Specializzazione Influenza • Rituale
 
 Crea una scena percepita dalle menti degli osservatori in un’area dal centro fisso. L’immagine e gli altri stimoli non possiedono sostanza fisica.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Raggio\*\* | \*\*Durata\*\* | \*\*Mod. PS\*\* |
+| Livello | PM | Gittata | Raggio | Durata | Mod. PS |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 1 | 1 | 6 Q | 2 Q | 10 RND | 0 |
 | 3 | 3 | 6 Q | 2 Q | 5 minuti | 0 |
 | 6 | 6 | 10 Q | 2 Q | 10 minuti | 0 |
@@ -3277,10 +3176,9 @@ Crea una scena percepita dalle menti degli osservatori in un’area dal centro f
 
 **Area:** l’intero volume della scena, compresa l’estensione verticale, deve rientrare nel raggio. Il centro non si sposta e le animazioni rimangono nell’area. Il raggio delimita la scena, non la posizione degli osservatori: anche chi è all’esterno può subirne la percezione, se normalmente vedrebbe o udirebbe quanto rappresentato.
 
-|  |  |
-| :-: | :-: |
-| \*\*Dal livello\*\* | \*\*Complessità cumulativa\*\* |
-| 1 | \*\*Stimolo semplice non figurativo:\*\* rumore, passi, odore, bagliore o temperatura apparente. |
+| Dal livello | Complessità cumulativa |
+| :---- | :---- |
+| 1 | **Stimolo semplice non figurativo:** rumore, passi, odore, bagliore o temperatura apparente. |
 | 3 | Immagine statica semplice, come cassa, porta, parete o insegna, con eventuali suoni e odori semplici. |
 | 6 | Immagine statica complessa, come persona, veicolo, gruppo o parte di una stanza, con vista, udito, odori e temperatura apparente coordinati. |
 | 9 | Scena animata, come pattuglia, conversazione, incendio o macchinario in funzione. |
@@ -3313,9 +3211,8 @@ Scheda 19.5 • Macrofamiglia Mentale • Specializzazione Influenza • Rituale
 
 Nasconde, sostituisce o modifica ricordi relativi a un intervallo continuo della vita del bersaglio. L’intervallo può essere remoto e il Taumaturgo può intervenire solo su determinati episodi o dettagli al suo interno.
 
-|  |  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Bersagli\*\* | \*\*Periodo massimo\*\* | \*\*Lancio minuti\*\* | \*\*Durata alterazione\*\* | \*\*Mod. PS\*\* |
+| Livello | PM | Gittata | Bersagli | Periodo massimo | Lancio minuti | Durata alterazione | Mod. PS |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 3 | 3 | Contatto | 1 | 1 ora | 10 | 1 giorno | 0 |
 | 4 | 4 | Contatto | 1 | 2 ore | 10 | 1 giorno | 0 |
 | 5 | 5 | Contatto | 1 | 2 ore | 10 | 2 giorni | 0 |
@@ -3359,9 +3256,8 @@ Scheda 19.6 • Macrofamiglia Mentale • Specializzazione Influenza • Rituale
 
 Ostacola l’attivazione degli incantesimi, delle Tecniche Interiori e degli effetti che richiedono il Potere personale. Una PS riuscita riduce l’effetto a una difficoltà di attivazione, senza evitarlo del tutto.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Bersagli\*\* | \*\*Durata\*\* | \*\*Penalità Potere con PS riuscita\*\* | \*\*Mod. PS\*\* |
+| Livello | PM | Gittata | Bersagli | Durata | Penalità Potere con PS riuscita | Mod. PS |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 3 | 3 | 6 Q | 1 | 3 RND | −1 | 0 |
 | 6 | 6 | 10 Q | 1 | 5 RND | −2 | 0 |
 | 9 | 9 | 15 Q | 2 | 5 RND | −3 | −2 |
@@ -3373,9 +3269,9 @@ Ostacola l’attivazione degli incantesimi, delle Tecniche Interiori e degli eff
 
 **PS riuscita:** ogni nuovo lancio o Tecnica Interiore richiede obbligatoriamente Potere con la penalità in tabella, anche ai livelli 1–3 normalmente automatici. Le attivazioni di artefatti che già richiedono Potere ricevono la penalità. Riuscire consente soltanto quell’attivazione e non termina Silenzio Mentale. L’attivazione senza Potere di un’Impronta già caricata resta consentita.
 
-**Prova unica:** le normali penalità di livello e situazione si aggiungono alla maggiore penalità magica pertinente fra Silenzio Mentale e gli altri effetti. Un tentativo possibile paga PM e azioni normalmente; il fallimento della prova consuma tali risorse. L’omissione delle componenti non aggira l’effetto. Il +4 della Focalizzazione può contribuire a rendere possibile il tentativo, rispettandone tempi e requisiti.
+**Prova unica:** le normali penalità di livello e situazione si aggiungono alla maggiore penalità magica pertinente fra Silenzio Mentale e gli altri effetti. Un tentativo possibile paga PM e azioni normalmente; il fallimento della prova consuma tali risorse. L’omissione delle componenti non aggira l’effetto. Il \+4 della Focalizzazione può contribuire a rendere possibile il tentativo, rispettandone tempi e requisiti.
 
-**Valori estremi:** il VA finale si determina prima di pagare. Se è pari o inferiore a 0, l’attivazione è impossibile e non si obbliga a spendere PM per tentarla. Con VA almeno 20 la prova rimane obbligatoria e conserva i risultati naturali di 1 e 20.
+**Valori estremi:** il VA finale si determina prima di pagare. Se è pari o inferiore a 0, l’attivazione è impossibile e non si obbliga a spendere PM per tentarla. Con VA almeno 20 la prova rimane obbligatoria e conserva i risultati naturali di 1 e 20\.
 
 ### **Tecniche Interiori ed effetti già attivi**
 
@@ -3387,7 +3283,7 @@ Ostacola l’attivazione degli incantesimi, delle Tecniche Interiori e degli eff
 
 **Azioni consentite:** parlare, muoversi, attaccare, difendersi, usare altre Abilità e capacità non collegate a incantesimi, Potere o Tecniche Interiori resta possibile. Il solo fatto che una capacità spenda PM non basta a vietarla.
 
-**Artefatti e magia conservata:** Impronte già caricate che non richiedono Potere, Trappole autonome, proprietà automatiche ed effetti passivi restano utilizzabili anche con PS fallita. Un effetto a Concentrazione liberato da un’Impronta può essere mantenuto; gli ordini mentali ai servitori restano consentiti. Non si introduce una nuova prova Potere dove l’attivazione non la prevede. Restano blocchi, assorbimenti e interdizioni delle barriere, secondo la sezione 9.
+**Artefatti e magia conservata:** Impronte già caricate che non richiedono Potere, Trappole autonome, proprietà automatiche ed effetti passivi restano utilizzabili anche con PS fallita. Un effetto a Concentrazione liberato da un’Impronta può essere mantenuto; gli ordini mentali ai servitori restano consentiti. Non si introduce una nuova prova Potere dove l’attivazione non la prevede. Restano blocchi, assorbimenti e interdizioni delle barriere, secondo la sezione 9\.
 
 **Interazioni:** Barriera Mentale concede il bonus alla PS Volontà iniziale, senza ridurre il malus a Potere o dissolvere un Silenzio già attivo. Negare Potere può rimuovere l’effetto. Un bersaglio che ha superato la PS può tentarlo applicando il malus; chi subisce il blocco totale non può lanciarlo personalmente.
 
@@ -3403,9 +3299,8 @@ Scheda 19.7 • Macrofamiglia Mentale • Specializzazione Influenza • Rituale
 
 Il Taumaturgo diventa la fonte di un terrore soprannaturale. La versione mirata raggiunge creature scelte; l’aura rimane attiva e coinvolge anche chi entra successivamente nel suo raggio.
 
-|  |  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata mirata\*\* | \*\*Bersagli mirati\*\* | \*\*Raggio aura\*\* | \*\*Durata\*\* | \*\*Mod. PS mirata\*\* | \*\*Mod. PS aura\*\* |
+| Livello | PM | Gittata mirata | Bersagli mirati | Raggio aura | Durata | Mod. PS mirata | Mod. PS aura |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 3 | 3 | 6 Q | 1 | 1 Q | 1 RND | −2 | 0 |
 | 6 | 6 | 10 Q | 1 | 2 Q | 3 RND | −2 | 0 |
 | 9 | 9 | 15 Q | 2 | 2 Q | 3 RND | −4 | −2 |
@@ -3431,7 +3326,7 @@ Il Taumaturgo diventa la fonte di un terrore soprannaturale. La versione mirata 
 
 **Rimozione:** un compagno adiacente può spendere 1 AP e superare Oratoria per terminare lo stato. Lo termina anche l’evidente scomparsa della fonte. Negare Potere o altri mezzi pertinenti possono rimuoverlo. Il bersaglio può tentare una propria capacità di rimozione consentita, applicando il −4 alle prove pertinenti. Non ottiene PS automatiche ogni round e i danni non lo fanno cessare.
 
-**Protezioni:** Barriera Mentale concede il bonus alla PS Volontà. Addestramento Militare del Soldato concede +3 alle PS Volontà contro la paura. Sangue Freddo del Cacciatore, secondo il suo limite di una volta al giorno, può ridurre di 2 la penalità: rimangono −2 e i vincoli di condotta. Guida Morale del Predicatore permette di ripetere una PS fallita secondo i propri requisiti e limiti. Le immunità alla paura impediscono l’effetto.
+**Protezioni:** Barriera Mentale concede il bonus alla PS Volontà. Addestramento Militare del Soldato concede \+3 alle PS Volontà contro la paura. Sangue Freddo del Cacciatore, secondo il suo limite di una volta al giorno, può ridurre di 2 la penalità: rimangono −2 e i vincoli di condotta. Guida Morale del Predicatore permette di ripetere una PS fallita secondo i propri requisiti e limiti. Le immunità alla paura impediscono l’effetto.
 
 **Sovrapposizione:** nuovi lanci richiedono le proprie PS. Le penalità di Terrorizzato non si sommano e si mantiene la durata residua maggiore fra gli effetti applicabili.
 
@@ -3445,9 +3340,8 @@ Scheda 19.8 • Macrofamiglia Mentale • Specializzazione Influenza • Rituale
 
 Introduce preferenze, avversioni e abitudini circoscritte. Il bersaglio conserva la gestione delle proprie azioni e segue spontaneamente i condizionamenti quando si presentano le situazioni previste. La preparazione con Oratoria può imporre il −2 aggiuntivo alla PS iniziale.
 
-|  |  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Bersagli\*\* | \*\*Condizionamenti ciascuno\*\* | \*\*Tempo di lancio\*\* | \*\*Durata\*\* | \*\*Mod. PS\*\* |
+| Livello | PM | Gittata | Bersagli | Condizionamenti ciascuno | Tempo di lancio | Durata | Mod. PS |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 6 | 6 | Contatto | 1 | 1 | 10 minuti | 1 giorno | 0 |
 | 9 | 9 | 3 Q | 1 | 1 | 20 minuti | 3 giorni | −2 |
 | 12 | 12 | 3 Q | 1 | 2 | 30 minuti | 7 giorni | −2 |
@@ -3460,9 +3354,8 @@ Introduce preferenze, avversioni e abitudini circoscritte. Il bersaglio conserva
 
 **Più bersagli:** ricevono gli stessi condizionamenti principali. Il tempo di lancio vale per l’intera procedura e non viene moltiplicato per il numero dei bersagli.
 
-|  |  |
-| :-: | :-: |
-| \*\*Condizionamento\*\* | \*\*Esempio valido\*\* |
+| Condizionamento | Esempio valido |
+| :---- | :---- |
 | Preferenza | Quando decide dove trascorrere la serata, preferisce una determinata locanda. |
 | Avversione | Evita di entrare in un determinato magazzino abbandonato. |
 | Abitudine | Prima di lasciare il laboratorio controlla che la finestra sia chiusa. |
@@ -3492,9 +3385,8 @@ Scheda 19.9 • Macrofamiglia Mentale • Specializzazione Influenza • Rituale
 
 L’aura influenza direttamente le menti degli osservatori al suo interno, inducendole a ignorare il Taumaturgo e gli eventuali compagni designati. Le presenze occultate rimangono fisicamente visibili. Non occorre parlare agli osservatori e la preparazione con Oratoria non si applica.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Raggio aura\*\* | \*\*Presenze occultate\*\* | \*\*Durata max Con\*\* | \*\*Durata fissa\*\* | \*\*Mod. PS\*\* |
+| Livello | PM | Raggio aura | Presenze occultate | Durata max Con | Durata fissa | Mod. PS |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 6 | 6 | 6 Q | 1 | 10 minuti | 10 RND | 0 |
 | 9 | 9 | 10 Q | 2 | 30 minuti | 5 minuti | −2 |
 | 12 | 12 | 15 Q | 4 | 1 ora | 10 minuti | −2 |
@@ -3519,9 +3411,8 @@ L’aura influenza direttamente le menti degli osservatori al suo interno, induc
 
 **Alterazioni persistenti:** rimangono percepibili e, quando notate, costituiscono indizi per una nuova PS Magia. «Persistente» indica una conseguenza che rimane dopo l’azione, anche se in seguito può essere rimossa.
 
-|  |  |
-| :-: | :-: |
-| \*\*Situazione\*\* | \*\*Osservatore influenzato\*\* |
+| Situazione | Osservatore influenzato |
+| :---- | :---- |
 | Porta aperta, attraversata e richiusa | Ignora l’intero passaggio; l’evento non concede una nuova PS. |
 | Porta lasciata aperta | Percepisce la porta aperta; accorgersi del cambiamento consente una nuova PS. |
 | Oggetto spostato e lasciato altrove | La nuova posizione o l’assenza dal posto precedente può costituire un indizio. |
@@ -3543,7 +3434,7 @@ L’aura influenza direttamente le menti degli osservatori al suo interno, induc
 
 **Tecnologia:** telecamere, microfoni e sensori registrano normalmente le persone e gli eventi. Chi osserva attraverso uno schermo vede la realtà. Il Velo non altera registrazioni né dati biometrici.
 
-**Protezioni e individuazione:** Barriera Mentale concede il bonus alla PS Magia ordinaria contro il Velo. Ampliare Sensi aiuta soltanto sugli indizi realmente percepibili. Presenza è completamente bloccata, senza PS per superare il Velo; Individuare non è ostacolato nei propri limiti. Eco Elementale deve confrontare il proprio Potere di Rilevazione con il livello del Velo: inferiore fallisce, superiore supera, parità richiede una sola PS Magia dell’osservatore per coppia di lanci. Il confronto non sostituisce la PS ordinaria del Velo, non lo dissolve e non restituisce i sensi ordinari. Mimetismo si risolve separatamente. Negare Potere può rimuovere l’effetto validamente localizzato; vale la matrice della sezione 8.
+**Protezioni e individuazione:** Barriera Mentale concede il bonus alla PS Magia ordinaria contro il Velo. Ampliare Sensi aiuta soltanto sugli indizi realmente percepibili. Presenza è completamente bloccata, senza PS per superare il Velo; Individuare non è ostacolato nei propri limiti. Eco Elementale deve confrontare il proprio Potere di Rilevazione con il livello del Velo: inferiore fallisce, superiore supera, parità richiede una sola PS Magia dell’osservatore per coppia di lanci. Il confronto non sostituisce la PS ordinaria del Velo, non lo dissolve e non restituisce i sensi ordinari. Mimetismo si risolve separatamente. Negare Potere può rimuovere l’effetto validamente localizzato; vale la matrice della sezione 8\.
 
 **Posizione conosciuta:** sapere quale Q è occupato senza riuscire a percepire il beneficiario permette attacchi con arma alla posizione con −4 VA. Non equivale a vederlo per gli incantesimi che richiedono acquisizione visiva; gli effetti ad area si risolvono normalmente.
 
@@ -3559,9 +3450,8 @@ Scheda 19.10 • Macrofamiglia Mentale • Specializzazione Influenza • Ritual
 
 Il Taumaturgo controlla direttamente le azioni di uno o più corpi e ne condivide vista e udito. Rimane nel proprio corpo e dedica la Concentrazione a dirigere i posseduti. Gli impulsi sono mentali: non occorre parlare ai bersagli o condividere una lingua, e Oratoria non si applica.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata e controllo max\*\* | \*\*Bersagli\*\* | \*\*Durata max Con\*\* | \*\*Mod. PS\*\* |
+| Livello | PM | Gittata e controllo max | Bersagli | Durata max Con | Mod. PS |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 9 | 9 | 15 Q | 1 | 3 RND | −2 |
 | 12 | 12 | 20 Q | 1 | 5 RND | −2 |
 | 15 | 15 | 25 Q | 2 | 5 RND | −4 |
@@ -3573,9 +3463,8 @@ Il Taumaturgo controlla direttamente le azioni di uno o più corpi e ne condivid
 
 **Economia delle azioni:** non si concedono turni o azioni aggiuntivi. Se il bersaglio ha già agito, si attende il suo prossimo turno. Se il controllo termina durante il turno, torna a scegliere liberamente come impiegare soltanto le risorse ancora disponibili. Con più bersagli si possono assegnare azioni differenti a ciascuno.
 
-|  |  |
-| :-: | :-: |
-| \*\*Azione diretta\*\* | \*\*Risoluzione\*\* |
+| Azione diretta | Risoluzione |
+| :---- | :---- |
 | Movimento e postura | Secondo capacità e limiti del corpo posseduto. |
 | Attacchi con armi o Corpo a Corpo | Normali prove del bersaglio; danni e Difese si risolvono normalmente. |
 | Parate, Schivate e altre Difese | Usano le azioni e le capacità effettivamente disponibili al bersaglio. |
@@ -3619,9 +3508,8 @@ Il Taumaturgo controlla direttamente le azioni di uno o più corpi e ne condivid
 
 Le dieci schede permettono di percepire, comunicare e creare legami mentali. Le versioni indicano separatamente portata, informazioni accessibili e durata. Tutte utilizzano PM universali o mentali e ammettono il Rituale; le procedure rituali verranno integrate successivamente nel Manuale della Magia.
 
-|  |  |
-| :-: | :-: |
-| \*\*Livello base\*\* | \*\*Incantesimi\*\* |
+| Livello base | Incantesimi |
+| :---- | :---- |
 | 1 | Empatia; Linguaggi; Presenza; Telepatia |
 | 3 | Armonia Animale; Comunione; Psicometria |
 | 6 | Marchio Psichico; Sesto Senso |
@@ -3639,9 +3527,8 @@ Scheda 20.1 • Macrofamiglia Mentale • Specializzazione Sintonia • Rituale:
 
 Percepisce emozioni e, dal livello 9, pensieri spontanei superficiali. Il Taumaturgo distingue la provenienza delle impressioni ricevute dai diversi bersagli.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Bersagli\*\* | \*\*Durata max Con\*\* | \*\*Durata fissa\*\* | \*\*Mod. PS\*\* |
+| Livello | PM | Gittata | Bersagli | Durata max Con | Durata fissa | Mod. PS |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 1 | 1 | 6 Q | 1 | 5 minuti | 10 RND | 0 |
 | 3 | 3 | 6 Q | 1 | 10 minuti | 20 RND | 0 |
 | 6 | 6 | 10 Q | 1 | 30 minuti | 5 minuti | 0 |
@@ -3670,9 +3557,8 @@ Scheda 20.2 • Macrofamiglia Mentale • Specializzazione Sintonia • Rituale:
 
 Trasferisce temporaneamente competenze linguistiche dalla mente di una o più fonti ai beneficiari. Il collegamento è autonomo e non richiede Empatia o Telepatia.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Beneficiari\*\* | \*\*Lingue max\*\* | \*\*Durata\*\* | \*\*Mod. PS\*\* |
+| Livello | PM | Gittata | Beneficiari | Lingue max | Durata | Mod. PS |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 1 | 1 | Contatto | Solo sé | 1 | 10 minuti | 0 |
 | 3 | 3 | Contatto | 1 | 1 | 30 minuti | 0 |
 | 6 | 6 | 3 Q | 1 | 2 | 1 ora | 0 |
@@ -3703,9 +3589,8 @@ Scheda 20.3 • Macrofamiglia Mentale • Specializzazione Sintonia • Rituale:
 
 Incantesimo di Divinazione. Rileva le menti presenti nell’aura e, nelle versioni superiori, permette di analizzarne progressivamente livello e formazione oppure classificazione della creatura.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Raggio\*\* | \*\*Durata max Con\*\* | \*\*Durata fissa\*\* | \*\*Mod. PS¹\*\* |
+| Livello | PM | Raggio | Durata max Con | Durata fissa | Mod. PS¹ |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 1 | 1 | 6 Q | 5 minuti | 10 RND | 0 |
 | 3 | 3 | 6 Q | 10 minuti | 20 RND | 0 |
 | 6 | 6 | 10 Q | 30 minuti | 5 minuti | 0 |
@@ -3716,25 +3601,23 @@ Incantesimo di Divinazione. Rileva le menti presenti nell’aura e, nelle versio
 
 ¹ Il modificatore riguarda esclusivamente la PS Volontà concessa da Barriera Mentale. Le presenze prive di questa protezione non effettuano una PS.
 
-|  |  |  |
-| :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*Precisione del numero\*\* | \*\*Informazioni individuali cumulative\*\* |
+| Livello | Precisione del numero | Informazioni individuali cumulative |
+| ----- | ----- | :---- |
 | 1 | Approssimata | Presenza e direzione approssimativa. |
-| 3 | Generica | \*\*Livello in fasce di 5:\*\* 1–5, 6–10, 11–15, 16–20 e così via. |
+| 3 | Generica | **Livello in fasce di 5:** 1–5, 6–10, 11–15, 16–20 e così via. |
 | 6 | Precisa | Addestramento iniziale; per creature senza Classi o Addestramento, Domestica o Selvaggia. |
-| 9 | Esatta | \*\*Livello in fasce di 2:\*\* 1–2, 3–4, 5–6 e così via. |
+| 9 | Esatta | **Livello in fasce di 2:** 1–2, 3–4, 5–6 e così via. |
 | 12 | Esatta | Classe predominante; per creature senza Classi o Addestramento, Predatore o Preda. |
 | 15 | Esatta | Livello esatto del personaggio o della creatura. |
 | 18 | Esatta | Tutte le Classi con i rispettivi Gradi; per le creature prive di Classi restano le informazioni già accessibili. |
 
 ### **Conteggio e analisi delle presenze**
 
-|  |  |
-| :-: | :-: |
-| \*\*Precisione\*\* | \*\*Informazione sul numero di menti rilevabili\*\* |
+| Precisione | Informazione sul numero di menti rilevabili |
+| :---- | :---- |
 | Approssimata | Nessuna; una; poche (2–5); numerose (6 o più). |
-| Generica | Nessuna; una; 2–5; 6–10; 11–20; oltre 20. |
-| Precisa | \*\*Numero esatto fino a 10; oltre 10, intervalli di 5:\*\* 11–15, 16–20 e così via. |
+| Generica | Nessuna; una; 2–5; 6–10; 11–20; oltre 20\. |
+| Precisa | **Numero esatto fino a 10; oltre 10, intervalli di 5:** 11–15, 16–20 e così via. |
 | Esatta | Numero esatto di tutte le menti rilevabili nell’aura. |
 
 **Percezione continua:** il numero, le direzioni e gli ingressi o le uscite si aggiornano senza AP. Le direzioni possono indicare anche sopra o sotto, ma non distanza esatta, Q occupato o acquisizione visiva. L’aura attraversa ostacoli solidi ordinari e non richiede linea di vista. Le presenze fuori dal raggio non vengono seguite.
@@ -3751,9 +3634,9 @@ Incantesimo di Divinazione. Rileva le menti presenti nell’aura e, nelle versio
 
 **Creature senza Classi o Addestramento:** al livello 6 si distingue Domestica o Selvaggia; al livello 12 si aggiunge Predatore o Preda. Sono classificazioni indipendenti, riportate nelle schede del Bestiario del Manuale del Direttore, che verranno integrate successivamente. Quando il ruolo prevalente comprende entrambe le funzioni, il Bestiario del Manuale del Direttore può indicare Misto. Domestica non significa amichevole, Selvaggia non significa aggressiva e Predatore non significa attualmente ostile.
 
-**Livelli delle creature:** seguono la stessa precisione dei personaggi, con fasce di 5 dal livello 3, fasce di 2 dal livello 9 e valore esatto dal livello 15. Le schede del Bestiario del Manuale del Direttore, con i livelli delle creature, verranno integrate successivamente nel Manuale del Direttore. Dal livello 18 una creatura priva di Classi non rivela dati di Classe inesistenti; restano utili il raggio e le durate superiori.
+**Livelli delle creature:** seguono la stessa precisione dei personaggi, con fasce di 5 dal livello 3, fasce di 2 dal livello 9 e valore esatto dal livello 15\. Le schede del Bestiario del Manuale del Direttore, con i livelli delle creature, verranno integrate successivamente nel Manuale del Direttore. Dal livello 18 una creatura priva di Classi non rivela dati di Classe inesistenti; restano utili il raggio e le durate superiori.
 
-**Esempio:** un personaggio di livello 14, Addestramento iniziale Combattente, Soldato III ed Esploratore I, risulta di livello 11–15 con Presenza 3; Combattente con Presenza 6; livello 13–14 con Presenza 9; Soldato come Classe predominante con Presenza 12; livello 14 con Presenza 15; Soldato III ed Esploratore I con Presenza 18.
+**Esempio:** un personaggio di livello 14, Addestramento iniziale Combattente, Soldato III ed Esploratore I, risulta di livello 11–15 con Presenza 3; Combattente con Presenza 6; livello 13–14 con Presenza 9; Soldato come Classe predominante con Presenza 12; livello 14 con Presenza 15; Soldato III ed Esploratore I con Presenza 18\.
 
 ### **Protezioni contro Presenza**
 
@@ -3763,7 +3646,7 @@ Incantesimo di Divinazione. Rileva le menti presenti nell’aura e, nelle versio
 
 **Frequenza della PS:** una sola per creatura e per lancio di Presenza, al primo tentativo di rilevazione mentre Barriera Mentale è attiva. Vale anche se la barriera viene attivata dopo Presenza. Uscire e rientrare nell’aura non concede nuovi tentativi.
 
-**Altre interazioni:** Mimetismo non ostacola Presenza. Nascondere Aura richiede invece un confronto: Presenza usa il proprio livello come Potere di Rilevazione; inferiore non supera, superiore supera, parità richiede PS Magia dell’osservatore, una sola per coppia di lanci e valida per tutti i beneficiari. Questo confronto è distinto dalla PS Volontà concessa da Barriera Mentale. Alterare Aura non falsifica le informazioni mentali. Rilevare non dissolve gli occultamenti; si applica la matrice della sezione 8. Occhio Interiore segue le proprie regole al lancio.
+**Altre interazioni:** Mimetismo non ostacola Presenza. Nascondere Aura richiede invece un confronto: Presenza usa il proprio livello come Potere di Rilevazione; inferiore non supera, superiore supera, parità richiede PS Magia dell’osservatore, una sola per coppia di lanci e valida per tutti i beneficiari. Questo confronto è distinto dalla PS Volontà concessa da Barriera Mentale. Alterare Aura non falsifica le informazioni mentali. Rilevare non dissolve gli occultamenti; si applica la matrice della sezione 8\. Occhio Interiore segue le proprie regole al lancio.
 
 **Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie raggio 6 → 10 → 15 → 20 → 25 → 30 → 40 Q; precisione del numero Approssimata → Generica → Precisa → Esatta; profondità delle informazioni individuali alla riga successiva, mantenendo quelle già accessibili; durata a Concentrazione 5 → 10 → 30 minuti → 1 → 2 → 4 → 8 → 12 ore; oppure durata fissa 10 → 20 RND → 5 → 10 → 30 minuti → 1 → 2 → 4 ore. Il conteggio esatto e le informazioni individuali del livello 18 sono i rispettivi limiti. Il Mod. PS non è anticipabile. Esempio: Presenza 6 può anticipare il conteggio esatto oppure le fasce di livello di 2, senza ottenere entrambi.
 
@@ -3775,9 +3658,8 @@ Scheda 20.4 • Macrofamiglia Mentale • Specializzazione Sintonia • Rituale:
 
 Consente comunicazioni mentali volontarie con destinatari identificati. Non legge automaticamente i pensieri e non obbliga a rispondere o obbedire.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Portata max\*\* | \*\*Destinatari\*\* | \*\*Durata max Con\*\* | \*\*Durata fissa\*\* | \*\*Mod. PS\*\* |
+| Livello | PM | Portata max | Destinatari | Durata max Con | Durata fissa | Mod. PS |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 1 | 1 | Planetaria | 1 | — | Istantanea | 0 |
 | 3 | 3 | Planetaria | 1 | — | Istantanea con risposta | 0 |
 | 6 | 6 | Planetaria | 1 | 10 minuti | 10 RND | 0 |
@@ -3788,9 +3670,8 @@ Consente comunicazioni mentali volontarie con destinatari identificati. Non legg
 
 **Destinatari:** il numero è aggiuntivo rispetto al Taumaturgo. Sono scelti al lancio e non sostituibili. Non occorrono visibilità, conoscenza della posizione o concatenazione entro 2 Q.
 
-|  |  |
-| :-: | :-: |
-| \*\*Dal livello\*\* | \*\*Capacità cumulativa\*\* |
+| Dal livello | Capacità cumulativa |
+| :---- | :---- |
 | 1 | Invia un messaggio mentale di non più di 25 parole, senza risposta inclusa. |
 | 3 | Il destinatario può inviare una risposta di non più di 25 parole, senza AP o PM aggiuntivi. |
 | 6 | Un’immagine mentale statica può sostituire messaggio o risposta; è disponibile il collegamento continuativo. |
@@ -3808,12 +3689,11 @@ Consente comunicazioni mentali volontarie con destinatari identificati. Non legg
 
 **Requisito per interplanetario e intersistema:** tra Taumaturgo e ciascun destinatario deve essere già avvenuto un collegamento planetario riuscito mediante Telepatia. La sola conoscenza personale, un altro incantesimo mentale o un tentativo bloccato non soddisfano il requisito.
 
-|  |  |  |
-| :-: | :-: | :-: |
-| \*\*Distanza effettiva\*\* | \*\*Ritardo per singolo invio\*\* | \*\*Andata e risposta immediata\*\* |
-| \*\*Planetaria:\*\* stesso corpo celeste e sua orbita | Nessuno | Nessuno |
-| \*\*Interplanetaria:\*\* corpi diversi nello stesso sistema | 30 minuti | 1 ora |
-| \*\*Intersistema:\*\* sistemi stellari diversi | 1 ora | 2 ore |
+| Distanza effettiva | Ritardo per singolo invio | Andata e risposta immediata |
+| :---- | ----- | ----- |
+| **Planetaria:** stesso corpo celeste e sua orbita | Nessuno | Nessuno |
+| **Interplanetaria:** corpi diversi nello stesso sistema | 30 minuti | 1 ora |
+| **Intersistema:** sistemi stellari diversi | 1 ora | 2 ore |
 
 **Ritardo:** dipende dalla distanza effettiva, non dal livello scelto. Una Telepatia di livello 18 tra due persone sullo stesso pianeta non introduce il ritardo intersistema. Superare la portata massima termina il collegamento.
 
@@ -3823,13 +3703,13 @@ Consente comunicazioni mentali volontarie con destinatari identificati. Non legg
 
 **Finestre di trasmissione:** la finestra del Taumaturgo dura quanto indicato e inizia al lancio. Quella del destinatario ha la medesima durata e inizia quando il collegamento gli arriva. I messaggi partiti entro le rispettive finestre arrivano anche dopo la loro chiusura. Nella modalità a Concentrazione il Taumaturgo la mantiene per la propria finestra, non durante il successivo viaggio dei messaggi.
 
-**Esempio interplanetario:** con livello 15 a durata fissa, il Taumaturgo trasmette dal minuto 0 al 30; il destinatario riceve il collegamento al minuto 30 e può trasmettere fino al minuto 60. Le risposte arrivano al Taumaturgo fra i minuti 60 e 90.
+**Esempio interplanetario:** con livello 15 a durata fissa, il Taumaturgo trasmette dal minuto 0 al 30; il destinatario riceve il collegamento al minuto 30 e può trasmettere fino al minuto 60\. Le risposte arrivano al Taumaturgo fra i minuti 60 e 90\.
 
 **Salvezza:** il successo blocca il collegamento per quel lancio; il fallimento non impone una risposta. Silenzio o assenza di risposta non rivelano se il destinatario sia vivo, dove si trovi o perché non risponda. Barriera Mentale concede il bonus alla PS Volontà.
 
 **Voce e tecnologia:** le comunicazioni non sono intercettabili da dispositivi ordinari, ma le normali componenti del lancio possono essere notate. Le parole mentali non sostituiscono la componente vocale obbligatoria di Comando, Ipnosi o altri effetti che richiedono di essere uditi.
 
-**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie destinatari 1 → 2 → 4 → 6 → 8 → 10; durata continuativa a Concentrazione 10 → 30 minuti → 1 → 2 → 4 → 8 ore; durata fissa 10 RND → 5 → 10 → 30 minuti → 1 → 2 ore; oppure Mod. PS 0 → −2 → −4 → −6. Non anticipa portata, capacità sbloccate o ritardi; non concede il collegamento continuativo prima del livello 6.
+**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie destinatari 1 → 2 → 4 → 6 → 8 → 10; durata continuativa a Concentrazione 10 → 30 minuti → 1 → 2 → 4 → 8 ore; durata fissa 10 RND → 5 → 10 → 30 minuti → 1 → 2 ore; oppure Mod. PS 0 → −2 → −4 → −6. Non anticipa portata, capacità sbloccate o ritardi; non concede il collegamento continuativo prima del livello 6\.
 
 **Armonia Animale**
 
@@ -3839,9 +3719,8 @@ Scheda 20.5 • Macrofamiglia Mentale • Specializzazione Sintonia • Rituale:
 
 Crea un rapporto amichevole e una comunicazione mentale bidirezionale con animali domestici, selvaggi o alieni dotati di una mente animale. La sola somiglianza fisica con un animale non basta.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Animali\*\* | \*\*Durata\*\* | \*\*Mod. PS\*\* |
+| Livello | PM | Gittata | Animali | Durata | Mod. PS |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 3 | 3 | 3 Q | 1 | 5 minuti | 0 |
 | 6 | 6 | 6 Q | 2 | 10 minuti | 0 |
 | 9 | 9 | 10 Q | 3 | 30 minuti | −2 |
@@ -3873,9 +3752,8 @@ Scheda 20.6 • Macrofamiglia Mentale • Specializzazione Sintonia • Rituale:
 
 Crea legami durevoli fra il Taumaturgo e i partecipanti, permettendo di avvertirne lo stato fisico ed emotivo. Il Taumaturgo percepisce separatamente ciascun partecipante; ogni partecipante percepisce il Taumaturgo, non automaticamente gli altri.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Partecipanti oltre al Taumaturgo\*\* | \*\*Durata\*\* | \*\*Portata max\*\* |
+| Livello | PM | Partecipanti oltre al Taumaturgo | Durata | Portata max |
+| :---: | :---: | :---: | :---: | :---: |
 | 3 | 3 | 1 | 1 giorno | Planetaria |
 | 6 | 6 | 1 | 3 giorni | Planetaria |
 | 9 | 9 | 2 | 7 giorni | Planetaria |
@@ -3907,9 +3785,8 @@ Scheda 20.7 • Macrofamiglia Mentale • Specializzazione Sintonia • Rituale:
 
 Incantesimo di Divinazione. Percepisce tracce emotive e psichiche lasciate dalle esperienze passate di chi ha interagito con un oggetto o un luogo.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Passato massimo esplorabile\*\* | \*\*Impressioni max\*\* | \*\*Tempo di lettura\*\* |
+| Livello | PM | Passato massimo esplorabile | Impressioni max | Tempo di lettura |
+| :---: | :---: | :---: | :---: | :---: |
 | 3 | 3 | Ultime 3 ore | 2 | 3 RND |
 | 4 | 4 | Ultime 6 ore | 3 | 3 RND |
 | 5 | 5 | Ultime 12 ore | 3 | 3 RND |
@@ -3941,7 +3818,7 @@ Incantesimo di Divinazione. Percepisce tracce emotive e psichiche lasciate dalle
 
 **Interazioni:** Occhio Interiore si applica alle Prove Potere richieste per Divinazione, senza rendere obbligatorio un tiro altrimenti automatico.
 
-**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie passato massimo alla riga successiva, senza superare 1 anno, oppure un’impressione massima aggiuntiva, fino a 11. Il tempo di lettura rimane quello della versione effettivamente lanciata. Non si anticipano raggio o velocità di lettura. Esempio: livello 8 con passato anticipato costa 16 PM, richiede 10 RND ed esplora gli ultimi 7 giorni per un massimo di 5 impressioni.
+**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie passato massimo alla riga successiva, senza superare 1 anno, oppure un’impressione massima aggiuntiva, fino a 11\. Il tempo di lettura rimane quello della versione effettivamente lanciata. Non si anticipano raggio o velocità di lettura. Esempio: livello 8 con passato anticipato costa 16 PM, richiede 10 RND ed esplora gli ultimi 7 giorni per un massimo di 5 impressioni.
 
 **Marchio Psichico**
 
@@ -3951,20 +3828,19 @@ Scheda 20.8 • Macrofamiglia Mentale • Specializzazione Sintonia • Rituale:
 
 Appone un marchio mentale per seguire una creatura oppure migliorare gli attacchi diretti contro di essa. Si sceglie al lancio una sola modalità, comune a tutti i bersagli.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata di lancio\*\* | \*\*Bersagli\*\* | \*\*Mod. PS\*\* |  |
+| Livello | PM | Gittata di lancio | Bersagli | Mod. PS |  |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 6 | 6 | 6 Q | 1 | 0 |  |
 | 9 | 9 | 10 Q | 1 | −2 |  |
 | 12 | 12 | 15 Q | 2 | −2 |  |
 | 15 | 15 | 20 Q | 2 | −4 |  |
 | 18 | 18 | 25 Q | 3 | −4 |  |
-| \*\*Livello\*\* | \*\*Portata inseguimento\*\* | \*\*Durata inseguimento\*\* | \*\*Bonus VA attacco\*\* | \*\*Bonus danno\*\* | \*\*Durata combattimento\*\* |
-| 6 | 1 km | 1 ora | \\+1 | \\+1 | 5 RND |
-| 9 | 10 km | 2 ore | \\+2 | \\+2 | 5 RND |
-| 12 | 100 km | 4 ore | \\+3 | \\+3 | 7 RND |
-| 15 | 1.000 km | 8 ore | \\+4 | \\+4 | 7 RND |
-| 18 | Planetaria | 24 ore | \\+5 | \\+5 | 10 RND |
+| **Livello** | **Portata inseguimento** | **Durata inseguimento** | **Bonus VA attacco** | **Bonus danno** | **Durata combattimento** |
+| 6 | 1 km | 1 ora | \+1 | \+1 | 5 RND |
+| 9 | 10 km | 2 ore | \+2 | \+2 | 5 RND |
+| 12 | 100 km | 4 ore | \+3 | \+3 | 7 RND |
+| 15 | 1.000 km | 8 ore | \+4 | \+4 | 7 RND |
+| 18 | Planetaria | 24 ore | \+5 | \+5 | 10 RND |
 
 **Acquisizione:** i bersagli devono essere visibili, entro gittata e concatenati entro 2 Q. Ciascuno effettua la propria PS quando richiesta. Chi riesce blocca il marchio e avverte un’intrusione, senza identificare automaticamente il Taumaturgo. Chi fallisce non si accorge automaticamente del marchio, ma può avere notato il lancio.
 
@@ -3986,7 +3862,7 @@ Appone un marchio mentale per seguire una creatura oppure migliorare gli attacch
 
 **Beneficiario alternativo:** si designa un alleato consenziente, visibile e nella gittata al lancio. Non conta fra i bersagli marchiati. Riceve i benefici della modalità scelta al posto del Taumaturgo; la portata dell’inseguimento viene misurata da lui. Il Taumaturgo paga i PM ed effettua Potere, ma non riceve gli stessi benefici. La scelta dura per tutto il lancio.
 
-**Un solo aspetto:** assegnare il beneficio a un alleato occupa l’intera Anticipazione e non si combina con entrambe le modalità o con altri aumenti. Esempio: livello 9, 18 PM, un alleato riceve +2 VA e +2 danno contro il marchiato per 5 RND.
+**Un solo aspetto:** assegnare il beneficio a un alleato occupa l’intera Anticipazione e non si combina con entrambe le modalità o con altri aumenti. Esempio: livello 9, 18 PM, un alleato riceve \+2 VA e \+2 danno contro il marchiato per 5 RND.
 
 **Sesto Senso**
 
@@ -3996,14 +3872,13 @@ Scheda 20.9 • Macrofamiglia Mentale • Specializzazione Sintonia • Rituale:
 
 Anticipa il pericolo immediato, impedisce di essere Sorpreso e offre risorse di difesa automatica. Non rivela genericamente il futuro né identifica automaticamente chi minaccia il Taumaturgo.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Bonus INI\*\* | \*\*Difese automatiche totali\*\* | \*\*Bonus Elusione\*\* | \*\*Durata\*\* |
-| 6 | 6 | \\+3 | 1 | \\+2 | 5 RND |
-| 9 | 9 | \\+4 | 1 | \\+2 | 5 RND |
-| 12 | 12 | \\+4 | 2 | \\+2 | 7 RND |
-| 15 | 15 | \\+5 | 2 | \\+2 | 7 RND |
-| 18 | 18 | \\+5 | 3 | \\+2 | 10 RND |
+| Livello | PM | Bonus INI | Difese automatiche totali | Bonus Elusione | Durata |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| 6 | 6 | \+3 | 1 | \+2 | 5 RND |
+| 9 | 9 | \+4 | 1 | \+2 | 5 RND |
+| 12 | 12 | \+4 | 2 | \+2 | 7 RND |
+| 15 | 15 | \+5 | 2 | \+2 | 7 RND |
+| 18 | 18 | \+5 | 3 | \+2 | 10 RND |
 
 **Avvertimento:** finché è attivo il Taumaturgo non può essere Sorpreso e avverte minacce fisiche imminenti, anche nascoste o fuori dal campo visivo. Non ne ricava automaticamente identità dell’aggressore o posizione esatta.
 
@@ -4019,13 +3894,13 @@ Anticipa il pericolo immediato, impedisce di essere Sorpreso e offre risorse di 
 
 **Limite:** al massimo una difesa automatica per RND, entro il totale disponibile per l’intera durata. Può rispondere soltanto ad attacchi che ammettano Parata o Schivata; non protegge da Dardo Psichico. La percezione del pericolo può permettere una difesa da un attacco fisico nascosto, senza rivelare l’aggressore.
 
-**Elusione:** contro aree, esplosioni e trappole fisicamente evitabili concede +2 alla PS Riflessi di Elusione. Si applicano requisiti ed esiti ordinari, senza consumare le difese automatiche. Il bonus non si estende alle altre PS e non trasforma in evitabile un effetto che non lo è.
+**Elusione:** contro aree, esplosioni e trappole fisicamente evitabili concede \+2 alla PS Riflessi di Elusione. Si applicano requisiti ed esiti ordinari, senza consumare le difese automatiche. Il bonus non si estende alle altre PS e non trasforma in evitabile un effetto che non lo è.
 
 **Esaurimento e nuovi lanci:** finite le difese automatiche, rimangono avvertimento, immunità a Sorpreso, bonus INI e bonus Elusione per il tempo restante. Un nuovo lancio sostituisce il precedente e ripristina la propria riserva; il limite di una difesa automatica per RND vale anche fra lanci diversi.
 
 **Riflessi Potenziati:** i bonus magici all’Iniziativa non si sommano; si usa il maggiore. La sua difesa gratuita ordinaria conserva la propria Prova ed è una risorsa distinta. Rimane consentita una sola Difesa contro lo stesso attacco.
 
-**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie +1 al bonus INI, una difesa automatica totale aggiuntiva oppure durata 5 → 7 → 10 → 15 RND. Il limite di una difesa automatica per RND e il bonus fisso +2 a Elusione rimangono invariati.
+**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie \+1 al bonus INI, una difesa automatica totale aggiuntiva oppure durata 5 → 7 → 10 → 15 RND. Il limite di una difesa automatica per RND e il bonus fisso \+2 a Elusione rimangono invariati.
 
 **Vista Superiore**
 
@@ -4035,9 +3910,8 @@ Scheda 20.10 • Macrofamiglia Mentale • Specializzazione Sintonia • Rituale
 
 Permette di percepire forme, posizioni e movimenti nel buio completo e attraverso ostacoli ordinari, fumo e nebbia, entro i limiti della versione.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Portata\*\* | \*\*Spessore solido totale\*\* | \*\*Fumo o nebbia\*\* | \*\*Durata max Con\*\* | \*\*Durata fissa\*\* |
+| Livello | PM | Portata | Spessore solido totale | Fumo o nebbia | Durata max Con | Durata fissa |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 9 | 9 | 6 Q | 30 cm | 1 Q | 5 minuti | 10 RND |
 | 12 | 12 | 10 Q | 50 cm | 2 Q | 10 minuti | 20 RND |
 | 15 | 15 | 15 Q | 1 m | 3 Q | 30 minuti | 5 minuti |
@@ -4069,9 +3943,8 @@ Le dieci schede seguenti impiegano PM universali o spirituali per curare e purif
 
 Cura Malattie e Cura Avvelenamenti distinguono le Affezioni per tipo (malattia, veleno o droga), origine (naturale, artificiale o mistica) e Pericolosità. Questi parametri determinano quali cause possono essere rimosse dalla versione scelta. Universale è una capacità della cura, non un’origine dell’Affezione.
 
-|  |  |  |
-| :-: | :-: | :-: |
-| \*\*Classe\*\* | \*\*Pericolosità\*\* | \*\*Indicazione generale\*\* |
+| Classe | Pericolosità | Indicazione generale |
+| ----- | ----- | :---- |
 | I | Superficiale | Disturbi contenuti e conseguenze normalmente limitate. |
 | II | Importante | Compromette sensibilmente alcune attività o capacità. |
 | III | Profonda | Interferisce con più funzioni o provoca un’incapacità significativa. |
@@ -4089,15 +3962,14 @@ Le schede delle singole malattie, dei veleni e delle droghe verranno integrate s
 
 ### **Quale cura rimuove lo Stato**
 
-|  |  |
-| :-: | :-: |
-| \*\*Stato o causa\*\* | \*\*Rimozione\*\* |
-| Sanguinamento | \*\*Cura Ferite:\*\* 2 punti di guarigione per ridurre Sanguinamento di 1. Corpo Adattivo: sacrificare un’applicazione riduce Sanguinamento del recupero normale di quel RND. |
+| Stato o causa | Rimozione |
+| :---- | :---- |
+| Sanguinamento | **Cura Ferite:** 2 punti di guarigione per ridurre Sanguinamento di 1\. Corpo Adattivo: sacrificare un’applicazione riduce Sanguinamento del recupero normale di quel RND. |
 | Avvelenato; effetti mantenuti da veleno o droga | Cura Avvelenamenti, entro i limiti di origine e Pericolosità. |
 | Effetti mantenuti da una malattia | Cura Malattie, entro i limiti di origine e Pericolosità. |
 | Disorientato, Rallentato, Terrorizzato temporanei | Cura Spirituale dal livello 1, salvo cause persistenti da eliminare. |
 | Accecato e Assordato temporanei | Cura Spirituale dalla capacità del livello 3, salvo cause persistenti. |
-| Stordito, Svenuto e Paralizzato temporanei, compreso il sonno magico | Cura Spirituale dalla capacità del livello 6. A 0 PM occorre invece recuperare almeno 1 PM. |
+| Stordito, Svenuto e Paralizzato temporanei, compreso il sonno magico | Cura Spirituale dalla capacità del livello 6\. A 0 PM occorre invece recuperare almeno 1 PM. |
 | Immobilizzato da presa o legami materiali | Liberazione: Manuale del Giocatore, §§5.12 e 5.18, «Immobilizzato». |
 | Immobilizzato da un incantesimo ancora attivo | Negare Potere, quando applicabile alla fonte. |
 | Incendiato | Spegnimento nel Manuale del Giocatore, §5.18; un incantesimo può spegnere il fuoco se ne ha la capacità. |
@@ -4114,9 +3986,8 @@ Scheda 21.1 • Macrofamiglia Spirituale • Specializzazione Esorcismo • Ritu
 
 Ripristina i Punti Vita e permette di destinare parte della guarigione ad arrestare o ridurre Sanguinamento. Non riduce Ferite né Menomazioni.
 
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Guarigione\*\* |
+| Livello | PM | Gittata | Guarigione |
+| :---: | :---: | :---: | :---: |
 | 1 | 1 | Contatto | 1d4 |
 | 2 | 2 | Contatto | 1d4+1 |
 | 3 | 3 | Contatto | 1d4+2 |
@@ -4130,15 +4001,14 @@ Ripristina i Punti Vita e permette di destinare parte della guarigione ad arrest
 | 11 | 11 | 6 Q | 6d4+5 |
 | 12 | 12 | 10 Q | 7d4+5 |
 
-**Risoluzione:** si determina la guarigione complessiva, inclusi eventuali Talenti. I punti non destinati a Sanguinamento recuperano PV fino al massimo ordinario; l’eccesso non diventa PV temporanei. Il bersaglio a distanza deve essere visibile. Qualsiasi versione può essere usata a Contatto. Il massimo curabile è ridotto dai PV sacrificati ancora da recuperare naturalmente con Convertire Potere, secondo la sezione 6.
+**Risoluzione:** si determina la guarigione complessiva, inclusi eventuali Talenti. I punti non destinati a Sanguinamento recuperano PV fino al massimo ordinario; l’eccesso non diventa PV temporanei. Il bersaglio a distanza deve essere visibile. Qualsiasi versione può essere usata a Contatto. Il massimo curabile è ridotto dai PV sacrificati ancora da recuperare naturalmente con Convertire Potere, secondo la sezione 6\.
 
 ### **Guarigione e Sanguinamento**
 
-**Assegnazione:** il Taumaturgo può usare ogni 2 punti di guarigione per ridurre Sanguinamento di 1. Arrestare completamente Sanguinamento X costa quindi 2 × X punti. È possibile una riduzione parziale; i punti rimanenti recuperano PV.
+**Assegnazione:** il Taumaturgo può usare ogni 2 punti di guarigione per ridurre Sanguinamento di 1\. Arrestare completamente Sanguinamento X costa quindi 2 × X punti. È possibile una riduzione parziale; i punti rimanenti recuperano PV.
 
-|  |  |  |
-| :-: | :-: | :-: |
-| \*\*Condizione\*\* | \*\*Guarigione ottenuta\*\* | \*\*Assegnazione ed esito\*\* |
+| Condizione | Guarigione ottenuta | Assegnazione ed esito |
+| ----- | ----- | :---- |
 | Sanguinamento 2 | 5 | 4 punti arrestano Sanguinamento; 1 punto recupera 1 PV. |
 | Sanguinamento 2 | 3 | 2 punti lo riducono a Sanguinamento 1; 1 punto recupera 1 PV. |
 | Sanguinamento 2 e 0 PV | 4 | Destinando tutti i punti ad arrestarlo, il bersaglio resta a 0 PV. |
@@ -4153,7 +4023,7 @@ Ripristina i Punti Vita e permette di destinare parte della guarigione ad arrest
 
 **Esempio:** Cura Ferite 9 con Tocco Sacro produce 21 punti, oppure 22 con Canale Vitale; successivamente si decide quanti usarne per Sanguinamento e quanti per PV. Flusso Sacro richiede una riduzione effettiva di Ferite e non si attiva con Cura Ferite.
 
-**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie guarigione alla riga immediatamente successiva, con 8d4+5 come gradino aggiuntivo dopo il livello 12; gittata Contatto → 3 → 6 → 10 → 15 Q; oppure beneficiari da 1 a 2.
+**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie guarigione alla riga immediatamente successiva, con 8d4+5 come gradino aggiuntivo dopo il livello 12; gittata Contatto → 3 → 6 → 10 → 15 Q; oppure beneficiari da 1 a 2\.
 
 **Due beneficiari:** devono essere entrambi visibili, nella gittata ed entro 2 Q fra loro; a Contatto occorre toccarli entrambi. Si effettua un unico tiro di guarigione, applicandolo a ciascuno. L’assegnazione a Sanguinamento si risolve separatamente. Tocco Sacro si applica soltanto al beneficiario effettivamente toccato.
 
@@ -4165,9 +4035,8 @@ Scheda 21.2 • Macrofamiglia Spirituale • Specializzazione Esorcismo • Ritu
 
 Elimina le malattie compatibili con la versione utilizzata. Origine e Pericolosità devono entrambe rientrare nei limiti indicati.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Benef.\*\* | \*\*Numero per beneficiario\*\* | \*\*Pericolosità massima\*\* | \*\*Origini curabili\*\* |
+| Livello | PM | Gittata | Benef. | Numero per beneficiario | Pericolosità massima | Origini curabili |
+| :---: | :---: | :---: | :---: | :---: | :---: | ----- |
 | 1 | 1 | Contatto | 1 | 1 | I • Superficiale | Naturale |
 | 2 | 2 | Contatto | 1 | 1 | II • Importante | Naturale |
 | 3 | 3 | Contatto | 1 | 1 | III • Profonda | Naturale, artificiale |
@@ -4201,9 +4070,8 @@ Scheda 21.3 • Macrofamiglia Spirituale • Specializzazione Esorcismo • Ritu
 
 Neutralizza nell’organismo veleni e droghe attivi. Origine e Pericolosità devono entrambe rientrare nei limiti della versione.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Benef.\*\* | \*\*Numero per beneficiario\*\* | \*\*Pericolosità massima\*\* | \*\*Origini curabili\*\* |
+| Livello | PM | Gittata | Benef. | Numero per beneficiario | Pericolosità massima | Origini curabili |
+| :---: | :---: | :---: | :---: | :---: | :---: | ----- |
 | 1 | 1 | Contatto | 1 | 1 | I • Superficiale | Naturale |
 | 2 | 2 | Contatto | 1 | 1 | II • Importante | Naturale |
 | 3 | 3 | Contatto | 1 | 1 | III • Profonda | Naturale, artificiale |
@@ -4237,9 +4105,8 @@ Scheda 21.4 • Macrofamiglia Spirituale • Specializzazione Esorcismo • Ritu
 
 Rimuove Stati temporanei compatibili con le capacità della versione. Il Taumaturgo sceglie separatamente quali Stati rimuovere a ciascun beneficiario.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Beneficiari\*\* | \*\*Stati rimossi ciascuno\*\* |
+| Livello | PM | Gittata | Beneficiari | Stati rimossi ciascuno |
+| ----- | ----- | :---: | :---: | :---: |
 | 1 | 1 | Contatto | 1 | 1 |
 | 3 | 3 | 3 Q | 1 | 1 |
 | 6 | 6 | 6 Q | 1 | 2 |
@@ -4247,7 +4114,7 @@ Rimuove Stati temporanei compatibili con le capacità della versione. Il Taumatu
 | 12 | 12 | 15 Q | 4 | 3 |
 | 15 | 15 | 20 Q | 6 | Tutti consentiti |
 | 18 | 18 | 25 Q | 8 | Tutti consentiti |
-| \*\*Dal livello\*\* | \*\*Stati curabili, cumulativi\*\* |  |  |  |
+| **Dal livello** | **Stati curabili, cumulativi** |  |  |  |
 | 1 | Disorientato, Rallentato, Terrorizzato |  |  |  |
 | 3 | Si aggiungono Accecato e Assordato |  |  |  |
 | 6 | Si aggiungono Stordito, Svenuto e Paralizzato temporanei, compreso il sonno magico |  |  |  |
@@ -4268,7 +4135,7 @@ Rimuove Stati temporanei compatibili con le capacità della versione. Il Taumatu
 
 **Altri limiti:** non annulla Comando, Ipnosi, Possessione, Distrazione o Silenzio Mentale. Non restituisce azioni già perse, non ripristina la Concentrazione, non rialza da A Terra e non recupera PV, PM o Affaticamento. Non cura Corruzione, dipendenza o Menomazioni.
 
-**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e gli altri parametri rimangono invariati. Si sceglie beneficiari 1 → 2 → 4 → 6 → 8 (massimo 8); numero di Stati 1 → 2 → 3 → tutti consentiti; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 → 30 Q; oppure gruppo di capacità livello 1 → livello 3 → livello 6. Aumentare il numero non sblocca contemporaneamente nuovi tipi di Stato.
+**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e gli altri parametri rimangono invariati. Si sceglie beneficiari 1 → 2 → 4 → 6 → 8 (massimo 8); numero di Stati 1 → 2 → 3 → tutti consentiti; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 → 30 Q; oppure gruppo di capacità livello 1 → livello 3 → livello 6\. Aumentare il numero non sblocca contemporaneamente nuovi tipi di Stato.
 
 **Esempio:** al livello 3, spendendo 6 PM per anticipare il gruppo di capacità, si può rimuovere un solo Stordito oppure risvegliare un solo beneficiario a 3 Q.
 
@@ -4280,9 +4147,8 @@ Scheda 21.5 • Macrofamiglia Spirituale • Specializzazione Esorcismo • Ritu
 
 Riduce gli Stati di Corruzione (CROS) entro il massimo stato attuale trattabile. Il numero di passaggi rimossi e il massimo stato curabile sono limiti distinti.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Benef.\*\* | \*\*Stati rimossi ciascuno\*\* | \*\*Massimo stato curabile\*\* |
+| Livello | PM | Gittata | Benef. | Stati rimossi ciascuno | Massimo stato curabile |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 3 | 3 | Contatto | 1 | 1 | Infetto |
 | 6 | 6 | Contatto | 1 | 1 | Corrotto |
 | 9 | 9 | 3 Q | 1 | 2 | Eretico |
@@ -4320,9 +4186,8 @@ Scheda 21.6 • Macrofamiglia Spirituale • Specializzazione Esorcismo • Ritu
 
 Riduce le Ferite di una creatura vivente. Non rimuove le Menomazioni, che richiedono Recupero Rapido o Rigenerazione secondo il loro tipo.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Beneficiari\*\* | \*\*Stati di Ferita rimossi\*\* |
+| Livello | PM | Gittata | Beneficiari | Stati di Ferita rimossi |
+| :---: | :---: | :---: | :---: | :---: |
 | 3 | 3 | Contatto | 1 | 1 |
 | 6 | 6 | Contatto | 1 | 2 |
 | 9 | 9 | 3 Q | 1 | 3 |
@@ -4337,13 +4202,13 @@ Riduce le Ferite di una creatura vivente. Non rimuove le Menomazioni, che richie
 
 ### **Frequenza e interazioni con le altre cure**
 
-**Una volta ogni 24 ore:** si applica il limite per creatura, indipendentemente da Taumaturgo o versione. Una nuova Ferita non azzera il limite. Un lancio fallito non lo consuma; i PM seguono le normali regole.
+**Una volta ogni 24 ore: si applica un unico limite per creatura, condiviso con l’opzione di Imposizione della Mano Curativa che riduce la Ferita, indipendentemente dall’utilizzatore, dalla capacità o dalla versione impiegata. Una nuova Ferita non azzera il limite. Un lancio fallito non lo consuma; i PM seguono le normali regole. Le altre opzioni di Imposizione della Mano Curativa non consumano questo limite e rimangono ripetibili secondo la propria scheda.**
 
 **Sanguinamento e conseguenze:** Sanguinamento non viene arrestato. La cura può essere effettuata mentre è attivo, ma i danni successivi continuano ad applicarsi. Restano le Menomazioni, le Affezioni, l’Affaticamento e le altre cause indipendenti.
 
-**Talenti:** Tocco Sacro non modifica il numero fisso di passaggi rimossi. Canale Vitale aggiunge 1 PV al recupero, per un totale di 2 PV se il beneficiario era a 0. Flusso Sacro, quando viene effettivamente curata una Ferita, permette al Taumaturgo di recuperare 1 PM una volta al giorno secondo il Talento.
+**Talenti:** Tocco Sacro non modifica il numero fisso di passaggi rimossi. Canale Vitale aggiunge 1 PV al recupero, per un totale di 2 PV se il beneficiario era a 0\. Flusso Sacro, quando viene effettivamente curata una Ferita, permette al Taumaturgo di recuperare 1 PM una volta al giorno secondo il Talento.
 
-**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e gli altri parametri rimangono invariati. Si sceglie passaggi rimossi 1 → 2 → 3 → 4 → 5, senza superare cinque; gittata Contatto → 3 → 6 → 10 → 15 Q; oppure beneficiari 1 → 2. Entrambi ricevono l’intera cura, rispettando gittata, visibilità, contatto quando necessario e concatenazione entro 2 Q; il limite delle 24 ore resta individuale.
+**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e gli altri parametri rimangono invariati. Si sceglie passaggi rimossi 1 → 2 → 3 → 4 → 5, senza superare cinque; gittata Contatto → 3 → 6 → 10 → 15 Q; oppure beneficiari 1 → 2\. Entrambi ricevono l’intera cura, rispettando gittata, visibilità, contatto quando necessario e concatenazione entro 2 Q; il limite delle 24 ore resta individuale.
 
 **Esempio:** Guarigione di livello 9 porta una creatura Grave a Importante e, se era a 0 PV, a 1 PV. Un’eventuale Menomazione al braccio rimane.
 
@@ -4355,9 +4220,8 @@ Scheda 21.7 • Macrofamiglia Spirituale • Specializzazione Esorcismo • Ritu
 
 Accelera il recupero delle sole Menomazioni temporanee. Ogni Menomazione scelta riceve tutti i passaggi previsti; i passaggi non sono una riserva da distribuire.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Benef.\*\* | \*\*Menomazioni ciascuno\*\* | \*\*Passaggi per Menomazione\*\* |
+| Livello | PM | Gittata | Benef. | Menomazioni ciascuno | Passaggi per Menomazione |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 3 | 3 | Contatto | 1 | 1 | 1 |
 | 6 | 6 | Contatto | 1 | 1 | 2 |
 | 9 | 9 | 3 Q | 1 | 2 | 2 |
@@ -4393,9 +4257,8 @@ Scheda 21.8 • Macrofamiglia Spirituale • Specializzazione Esorcismo • Ritu
 
 Un impulso spirituale danneggia e respinge tutte le creature compatibili nel raggio, alleati compresi. Il Taumaturgo è escluso; non può risparmiare singoli bersagli.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Raggio\*\* | \*\*Danno\*\* | \*\*Natura\*\* | \*\*Spinta\*\* | \*\*Mod. PS\*\* |
+| Livello | PM | Raggio | Danno | Natura | Spinta | Mod. PS |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 6 | 6 | 3 Q | 2d6+5 | Magico | 3 Q | 0 |
 | 9 | 9 | 3 Q | 3d6+5 | Magico | 3 Q | −2 |
 | 12 | 12 | 4 Q | 4d6+5 | Magico | 4 Q | −2 |
@@ -4418,7 +4281,7 @@ Un impulso spirituale danneggia e respinge tutte le creature compatibili nel rag
 
 **Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e gli altri parametri rimangono invariati. Si sceglie raggio 3 → 4 → 5 → 6 → 7 Q; spinta 3 → 4 → 5 → 6 → 7 Q; natura Magico → Etereo; oppure Mod. PS 0 → −2 → −4 → −6. Il danno non è anticipabile.
 
-**Esempio:** al livello 9 il tiro comune produce 17 danni. Un bersaglio con AR pertinente 4 e PS riuscita subisce 5 danni (17 dimezzato per eccesso = 9, meno 4); con PS fallita subisce 13 danni ed è spinto di 3 Q.
+**Esempio:** al livello 9 il tiro comune produce 17 danni. Un bersaglio con AR pertinente 4 e PS riuscita subisce 5 danni (17 dimezzato per eccesso \= 9, meno 4); con PS fallita subisce 13 danni ed è spinto di 3 Q.
 
 **Esorcizzare Possessione**
 
@@ -4428,9 +4291,8 @@ Scheda 21.9 • Macrofamiglia Spirituale • Specializzazione Esorcismo • Ritu
 
 Interrompe una Possessione mentale o spirituale e può bandire l’emanazione di Mente Disincarnata. Non richiede appartenenza all’Oscura Simmetria né uno stato di Corruzione.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Bersagli\*\* | \*\*Potere di esorcismo\*\* |
+| Livello | PM | Gittata | Bersagli | Potere di esorcismo |
+| :---: | :---: | :---: | :---: | :---: |
 | 6 | 6 | Contatto | 1 | 9 |
 | 7 | 7 | Contatto | 1 | 10 |
 | 8 | 8 | Contatto | 1 | 11 |
@@ -4445,13 +4307,12 @@ Interrompe una Possessione mentale o spirituale e può bandire l’emanazione di
 | 17 | 17 | 10 Q | 2 | 20 |
 | 18 | 18 | 15 Q | 3 | 21 |
 
-**Confronto:** dopo il normale lancio riuscito, si confronta il potere di esorcismo con il livello dell’effetto di Possessione attivo, non con il livello del personaggio che lo ha prodotto. Per creature con possessione innata, la scheda deve indicare il livello dell’effetto. Sono disponibili tutti i livelli interi da 6 a 18, con PM pari al livello. Il Potere di esorcismo è livello +3, massimo 21; gli altri parametri mantengono l’ultima soglia raggiunta. Si confronta il livello effettivo del lancio avversario, non i PM pagati o un singolo parametro anticipato.
+**Confronto:** dopo il normale lancio riuscito, si confronta il potere di esorcismo con il livello dell’effetto di Possessione attivo, non con il livello del personaggio che lo ha prodotto. Per creature con possessione innata, la scheda deve indicare il livello dell’effetto. Sono disponibili tutti i livelli interi da 6 a 18, con PM pari al livello. Il Potere di esorcismo è livello \+3, massimo 21; gli altri parametri mantengono l’ultima soglia raggiunta. Si confronta il livello effettivo del lancio avversario, non i PM pagati o un singolo parametro anticipato.
 
-|  |  |
-| :-: | :-: |
-| \*\*Potere rispetto al livello attivo\*\* | \*\*Esito\*\* |
+| Potere rispetto al livello attivo | Esito |
+| :---- | :---- |
 | Superiore | La Possessione o l’emanazione termina automaticamente. |
-| Uguale | \*\*Soltanto l’esorcista effettua una PS Volontà:\*\* con successo termina l’effetto; con fallimento l’effetto rimane. |
+| Uguale | **Soltanto l’esorcista effettua una PS Volontà:** con successo termina l’effetto; con fallimento l’effetto rimane. |
 | Inferiore | Non termina l’effetto. |
 
 **PS di parità:** usa i normali modificatori personali, senza una penalità aggiuntiva per la parità. È distinta dalla Prova Potere. Si effettua una sola PS Volontà per lancio e il suo esito vale per tutti i bersagli selezionati di pari potere. Non tirano né il posseduto né il possessore; non c’è una prova contrapposta.
@@ -4468,7 +4329,7 @@ Interrompe una Possessione mentale o spirituale e può bandire l’emanazione di
 
 **Conseguenze:** non infligge danni aggiuntivi e non impone Stordito o Svenuto. Non concede azioni: chi è liberato usa le risorse ancora disponibili nel normale ordine dei turni. Non rimuove Comando, Ipnosi, Terrore, alterazioni della memoria o altri effetti che non siano una Possessione; non riduce CROS. Non concede immunità a una successiva Possessione, che segue le proprie regole.
 
-**Anticipazione:** un solo aspetto di un gradino, PM raddoppiati e Potere più difficile di una categoria. Si sceglie Potere di esorcismo +3, massimo 21, anche ai livelli intermedi; gittata Contatto → 3 → 6 → 10 → 15 → 20 Q; oppure bersagli 1 → 2 → 3 → 4. Se il Potere di esorcismo è già 21 non si può anticipare questo aspetto, ma restano quelli consentiti non al massimo. Il potere non aumenta il livello dichiarato dell’incantesimo.
+**Anticipazione:** un solo aspetto di un gradino, PM raddoppiati e Potere più difficile di una categoria. Si sceglie Potere di esorcismo \+3, massimo 21, anche ai livelli intermedi; gittata Contatto → 3 → 6 → 10 → 15 → 20 Q; oppure bersagli 1 → 2 → 3 → 4\. Se il Potere di esorcismo è già 21 non si può anticipare questo aspetto, ma restano quelli consentiti non al massimo. Il potere non aumenta il livello dichiarato dell’incantesimo.
 
 **Esempio:** contro Possessione 12, Esorcizzare Possessione 9 ha potere 12 e richiede la PS Volontà dell’esorcista; la versione 10 ha potere 13 e rimuove automaticamente dopo il lancio riuscito. Una maledizione di un oggetto e una Possessione autonoma possono essere effetti distinti: liberare il corpo non elimina automaticamente la maledizione.
 
@@ -4480,22 +4341,20 @@ Lancio diretto: esclusivamente mediante il Rituale della sezione 25, con contatt
 
 Ripara Menomazioni permanenti e, alle versioni appropriate, rigenera parti mancanti. Il tempo in tabella decorre dal completamento del Rituale, non ne rappresenta il tempo di esecuzione.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM base\*\* | \*\*Beneficiari\*\* | \*\*Menomazioni ciascuno\*\* | \*\*Tempo dopo il Rituale\*\* |
+| Livello | PM base | Beneficiari | Menomazioni ciascuno | Tempo dopo il Rituale |
+| :---: | :---: | :---: | :---: | :---: |
 | 9 | 9 | 1 | 1 | 120 ore • 5 giorni |
 | 10 | 10 | 1 | 1 | 72 ore • 3 giorni |
 | 12 | 12 | 1 | 1 | 48 ore • 2 giorni |
 | 15 | 15 | 2 | 2 | 24 ore • 1 giorno |
 | 18 | 18 | 3 | Tutte consentite | 12 ore |
 
-**PM: il valore in tabella è il costo totale della versione, prima dell’eventuale Successo Magistrale del Rituale. Tempi di celebrazione, reagenti ed esiti sono nella sezione 25. La versione di livello 10 conserva capacità, beneficiari e Menomazioni del livello 9 e riduce il tempo di rigenerazione. L’Artefatto paga tutti i PM con la propria riserva, secondo il §25.4.**
+**PM: il valore in tabella è il costo totale della versione, prima dell’eventuale Successo Magistrale del Rituale. Tempi di celebrazione, reagenti ed esiti sono nella sezione 25\. La versione di livello 10 conserva capacità, beneficiari e Menomazioni del livello 9 e riduce il tempo di rigenerazione. L’Artefatto paga tutti i PM con la propria riserva, secondo il §25.4.**
 
-|  |  |
-| :-: | :-: |
-| \*\*Dal livello\*\* | \*\*Capacità cumulativa\*\* |
+| Dal livello | Capacità cumulativa |
+| :---- | :---- |
 | 9 | Ripara una Menomazione permanente quando la parte è ancora presente, restituendone la funzione. Il livello 10 conserva questa capacità. |
-| 12 | \*\*Può ricreare parti mancanti circoscritte:\*\* dita, mano, piede, occhio o orecchio. |
+| 12 | **Può ricreare parti mancanti circoscritte:** dita, mano, piede, occhio o orecchio. |
 | 15 | Può ricreare un braccio o una gamba interi, oppure un organo interno se il beneficiario è ancora vivente. |
 | 18 | Può ricostituire tutte le parti danneggiate o mancanti necessarie a risolvere le Menomazioni trattate. |
 
@@ -4521,9 +4380,8 @@ Ripara Menomazioni permanenti e, alle versioni appropriate, rigenera parti manca
 
 Le dieci schede seguenti definiscono potenziamenti dell’equipaggiamento, protezioni, riserve, identificazione, vincoli e impronte. Tutte utilizzano PM universali o spirituali e consentono il Rituale; le procedure rituali verranno integrate successivamente nel Manuale della Magia. I costi degli eventuali incantesimi caricati sono aggiuntivi e richiedono PM compatibili con la loro categoria.
 
-|  |  |
-| :-: | :-: |
-| \*\*Livello base\*\* | \*\*Incantesimi\*\* |
+| Livello base | Incantesimi |
+| :---- | :---- |
 | 1 | Arma Mistica; Armatura Mistica; Sigillo; Trappola Mistica |
 | 3 | Barriera Mistica; Batteria Mistica; Identificare Potere |
 | 6 | Rompere Vincolo; Vincolo Spirituale |
@@ -4531,9 +4389,8 @@ Le dieci schede seguenti definiscono potenziamenti dell’equipaggiamento, prote
 
 ### **Rarità e livello degli oggetti**
 
-|  |  |  |
-| :-: | :-: | :-: |
-| \*\*Rarità\*\* | \*\*Livello\*\* | \*\*Costo di sintonizzazione\*\* |
+| Rarità | Livello | Costo di sintonizzazione |
+| ----- | ----- | ----- |
 | Comune | 3 | 1 |
 | Non Comune | 6 | 2 |
 | Raro | 9 | 3 |
@@ -4553,7 +4410,7 @@ L’incantesimo Maledizione è definito nella sezione 23 e può essere rimosso d
 
 **Costi e svantaggi ordinari:** peso, consumo di PM, requisiti e penalità funzionali dell’equipaggiamento non sono maledizioni e non possono essere eliminati con Rompere Vincolo.
 
-**Esempio:** un anello concede +1 alla PS Magia, ma una maledizione impedisce di toglierlo e impone −2 al VA Potere. Identificare Potere rivela l’intera proprietà; Rompere Vincolo elimina insieme l’obbligo e il −2, conservando il +1 alla PS Magia.
+**Esempio:** un anello concede \+1 alla PS Magia, ma una maledizione impedisce di toglierlo e impone −2 al VA Potere. Identificare Potere rivela l’intera proprietà; Rompere Vincolo elimina insieme l’obbligo e il −2, conservando il \+1 alla PS Magia.
 
 **Arma Mistica**
 
@@ -4563,16 +4420,15 @@ Scheda 22.1 • Macrofamiglia Spirituale • Specializzazione Incantamento • L
 
 Incanta armi esistenti, modificando la natura del danno diretto e attribuendo i bonus della versione scelta.
 
-|  |  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Armi\*\* | \*\*Natura\*\* | \*\*Bonus VA\*\* | \*\*Bonus danno\*\* | \*\*Durata\*\* |
+| Livello | PM | Gittata | Armi | Natura | Bonus VA | Bonus danno | Durata |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 1 | 1 | Contatto | 1 | Magico | 0 | 0 | 3 RND |
-| 3 | 3 | Contatto | 1 | Magico | \\+1 | \\+1 | 5 RND |
-| 6 | 6 | 3 Q | 1 | Magico | \\+1 | \\+1 | 10 RND |
-| 9 | 9 | 6 Q | 2 | Magico | \\+2 | \\+2 | 15 RND |
-| 12 | 12 | 10 Q | 2 | Magico | \\+2 | \\+2 | 20 RND |
-| 15 | 15 | 15 Q | 3 | Etereo | \\+3 | \\+3 | 30 RND |
-| 18 | 18 | 20 Q | 3 | Etereo | \\+3 | \\+3 | 40 RND |
+| 3 | 3 | Contatto | 1 | Magico | \+1 | \+1 | 5 RND |
+| 6 | 6 | 3 Q | 1 | Magico | \+1 | \+1 | 10 RND |
+| 9 | 9 | 6 Q | 2 | Magico | \+2 | \+2 | 15 RND |
+| 12 | 12 | 10 Q | 2 | Magico | \+2 | \+2 | 20 RND |
+| 15 | 15 | 15 Q | 3 | Etereo | \+3 | \+3 | 30 RND |
+| 18 | 18 | 20 Q | 3 | Etereo | \+3 | \+3 | 40 RND |
 
 **Bersagli:** al lancio devono essere visibili e in gittata, con concatenazione entro 2 Q quando sono multipli. Dopo il lancio possono separarsi e cambiare utilizzatore senza perdere l’effetto.
 
@@ -4586,7 +4442,7 @@ Incanta armi esistenti, modificando la natura del danno diretto e attribuendo i 
 
 **Cumulo:** i bonus magici allo stesso parametro non si sommano con Efficienza, Trasformazione Totale o Marchio Psichico. Si usa separatamente il maggiore bonus applicabile al VA e al danno; la conversione della natura rimane attiva.
 
-**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie armi 1 → 2 → 3 → 4; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 Q; durata al gradino successivo della progressione; bonus VA 0 → +1 → +2 → +3 → +4; oppure bonus danno con la stessa scala. VA e danno sono aspetti distinti. La natura Magico → Etereo è anticipabile soltanto dal livello 12, spendendo 24 PM.
+**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie armi 1 → 2 → 3 → 4; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 Q; durata al gradino successivo della progressione; bonus VA 0 → \+1 → \+2 → \+3 → \+4; oppure bonus danno con la stessa scala. VA e danno sono aspetti distinti. La natura Magico → Etereo è anticipabile soltanto dal livello 12, spendendo 24 PM.
 
 **Armatura Mistica**
 
@@ -4596,16 +4452,15 @@ Scheda 22.2 • Macrofamiglia Spirituale • Specializzazione Incantamento • L
 
 Incanta un’armatura fisica indossata, convertendone l’AR in Magica e attribuendo il bonus indicato. I pezzi che compongono una stessa armatura costituiscono un solo bersaglio.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Armature\*\* | \*\*Bonus AR\*\* | \*\*Natura AR\*\* | \*\*Durata\*\* |
+| Livello | PM | Gittata | Armature | Bonus AR | Natura AR | Durata |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 1 | 1 | Contatto | 1 | 0 | Magica | 3 RND |
-| 3 | 3 | Contatto | 1 | \\+1 | Magica | 5 RND |
-| 6 | 6 | 3 Q | 1 | \\+1 | Magica | 10 RND |
-| 9 | 9 | 6 Q | 2 | \\+2 | Magica | 15 RND |
-| 12 | 12 | 10 Q | 2 | \\+2 | Magica | 20 RND |
-| 15 | 15 | 15 Q | 3 | \\+3 | Magica | 30 RND |
-| 18 | 18 | 20 Q | 3 | \\+3 | Magica | 40 RND |
+| 3 | 3 | Contatto | 1 | \+1 | Magica | 5 RND |
+| 6 | 6 | 3 Q | 1 | \+1 | Magica | 10 RND |
+| 9 | 9 | 6 Q | 2 | \+2 | Magica | 15 RND |
+| 12 | 12 | 10 Q | 2 | \+2 | Magica | 20 RND |
+| 15 | 15 | 15 Q | 3 | \+3 | Magica | 30 RND |
+| 18 | 18 | 20 Q | 3 | \+3 | Magica | 40 RND |
 
 **Bersagli:** al lancio devono essere visibili e in gittata, con concatenazione entro 2 Q quando sono multipli. Dopo il lancio possono separarsi e cambiare utilizzatore senza perdere l’effetto.
 
@@ -4615,9 +4470,9 @@ Incanta un’armatura fisica indossata, convertendone l’AR in Magica e attribu
 
 **Cumulo:** la conversione dell’AR fisica in Magica permane anche con altre protezioni. Il bonus aggiuntivo di Armatura Mistica non si somma con Armatura di Forza o Pelle Corazzata: si usa il maggiore contributo applicabile, aggiunto all’AR base dell’equipaggiamento convertita. Restano le compatibilità con Scudo e Armatura Elementale. La conversione riguarda soltanto l’equipaggiamento incantato e non cambia la natura di Pelle Corazzata, Scudo o altre protezioni. L’equipaggiamento assorbito in Forma Elementale non fornisce questo beneficio.
 
-**Esempio:** un’armatura con AR 5, incantata al livello 3, raggiunge AR Magica 6. Con Armatura di Forza AR 3 raggiunge AR Magica 8: 5 dell’equipaggiamento convertito più il contributo maggiore di 3, non 9.
+**Esempio:** un’armatura con AR 5, incantata al livello 3, raggiunge AR Magica 6\. Con Armatura di Forza AR 3 raggiunge AR Magica 8: 5 dell’equipaggiamento convertito più il contributo maggiore di 3, non 9\.
 
-**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie bonus AR 0 → +1 → +2 → +3 → +4; armature 1 → 2 → 3 → 4; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 Q; oppure durata 3 → 5 → 10 → 15 → 20 → 30 → 40 → 60 RND. La natura dell’AR resta Magica.
+**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie bonus AR 0 → \+1 → \+2 → \+3 → \+4; armature 1 → 2 → 3 → 4; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 Q; oppure durata 3 → 5 → 10 → 15 → 20 → 30 → 40 → 60 RND. La natura dell’AR resta Magica.
 
 **Sigillo**
 
@@ -4627,9 +4482,8 @@ Scheda 22.3 • Macrofamiglia Spirituale • Specializzazione Incantamento • L
 
 Applica sigilli a oggetti, chiusure o passaggi. Ciascuno protegge un singolo accesso o un’interazione oggettivamente definita. Il costo del lancio copre tutti i sigilli della versione.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Sigilli\*\* | \*\*Durata\*\* | \*\*Penalità FOR\*\* | \*\*Portata avviso\*\* |
+| Livello | PM | Sigilli | Durata | Penalità FOR | Portata avviso |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 1 | 1 | 1 | 1 giorno | 0 | 1 km |
 | 3 | 3 | 1 | 2 giorni | −1 | 3 km |
 | 6 | 6 | 1 | 3 giorni | −2 | 10 km |
@@ -4664,9 +4518,8 @@ Scheda 22.4 • Macrofamiglia Spirituale • Specializzazione Incantamento • L
 
 Prepara trappole autonome su oggetti, chiusure o singoli Q. Ciascuna si consuma alla prima attivazione, anche se il bersaglio supera la PS. Il costo in tabella copre tutte le trappole del lancio; è possibile scegliere condizioni ed effetti diversi.
 
-|  |  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Trappole\*\* | \*\*Attesa\*\* | \*\*Scarica Magica\*\* | \*\*Interferenza VA\*\* | \*\*Durata interfer.\*\* | \*\*Mod. PS\*\* |
+| Livello | PM | Trappole | Attesa | Scarica Magica | Interferenza VA | Durata interfer. | Mod. PS |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 1 | 1 | 1 | 1 giorno | 1d6 | −2 | 3 RND | 0 |
 | 3 | 3 | 1 | 2 giorni | 1d6+2 | −2 | 3 RND | 0 |
 | 6 | 6 | 1 | 3 giorni | 2d6+2 | −2 | 5 RND | 0 |
@@ -4689,9 +4542,8 @@ Prepara trappole autonome su oggetti, chiusure o singoli Q. Ciascuna si consuma 
 
 ### **Incantesimo caricato**
 
-|  |  |
-| :-: | :-: |
-| \*\*Livello della trappola\*\* | \*\*Livello massimo caricabile\*\* |
+| Livello della trappola | Livello massimo caricabile |
+| :---- | :---- |
 | 6 | 3 |
 | 9 | 6 |
 | 12 | 9 |
@@ -4712,7 +4564,7 @@ Prepara trappole autonome su oggetti, chiusure o singoli Q. Ciascuna si consuma 
 
 **Limiti e rimozione:** massimo SAG trappole attive complessivamente fra tutti i lanci del Taumaturgo; per superare il limite deve far terminare una precedente trappola. Un solo effetto Trappola Mistica attivo per Q. Invisibile all’osservazione ordinaria; identificazione e individuazione seguono le rispettive schede. Negare Potere può rimuoverla; un avviso al creatore richiede Sigillo separato.
 
-**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie una trappola aggiuntiva entro il limite SAG; attesa al gradino successivo fino a 180 giorni; danno proprio alla riga successiva, massimo il valore di livello 18; penalità di Interferenza peggiorata di 1, massimo −5; durata di Interferenza 3 → 5 → 7 → 10 → 15 RND; Mod. PS 0 → −2 → −4 → −6; oppure, dal livello 6, livello massimo caricabile 3 → 6 → 9 → 12 → 15 → 18. Il raddoppio riguarda soltanto il costo della trappola; il caricamento si paga separatamente.
+**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie una trappola aggiuntiva entro il limite SAG; attesa al gradino successivo fino a 180 giorni; danno proprio alla riga successiva, massimo il valore di livello 18; penalità di Interferenza peggiorata di 1, massimo −5; durata di Interferenza 3 → 5 → 7 → 10 → 15 RND; Mod. PS 0 → −2 → −4 → −6; oppure, dal livello 6, livello massimo caricabile 3 → 6 → 9 → 12 → 15 → 18\. Il raddoppio riguarda soltanto il costo della trappola; il caricamento si paga separatamente.
 
 **Barriera Mistica**
 
@@ -4722,9 +4574,8 @@ Scheda 22.5 • Macrofamiglia Spirituale • Specializzazione Incantamento • L
 
 Crea una sfera chiusa, immobile, con centro visibile in gittata, che si estende anche sotto il terreno. Filtra gli incantesimi provenienti dall’esterno, assorbe parte del Danno Etereo in ingresso e ostacola determinate presenze. Non segue il Taumaturgo.
 
-|  |  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Raggio\*\* | \*\*Durata\*\* | \*\*Malus Potere\*\* | \*\*Assorb. Etereo\*\* | \*\*Mod. PS ingresso\*\* |
+| Livello | PM | Gittata | Raggio | Durata | Malus Potere | Assorb. Etereo | Mod. PS ingresso |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 3 | 3 | Contatto | 2 Q | 10 RND | −2 | 3 | 0 |
 | 6 | 6 | 3 Q | 3 Q | 20 RND | −3 | 4 | 0 |
 | 9 | 9 | 6 Q | 3 Q | 5 minuti | −4 | 5 | −2 |
@@ -4740,7 +4591,7 @@ Crea una sfera chiusa, immobile, con centro visibile in gittata, che si estende 
 
 **Assorbimento:** il Danno Etereo proveniente dall’esterno viene ridotto del valore indicato, dopo eventuali riduzioni dovute a Difese e PS e prima dell’Armatura personale. Si applica una volta per applicazione di danno, fino a un minimo di 0; comprende i colpi delle armi Eteree. Il danno delle armi Naturali o Magiche non viene ridotto da questa funzione.
 
-**Esempio:** un attacco infligge 12 danni Eterei in ingresso. Una barriera di livello 9 ne assorbe 5; rimangono 7. Un’AR Magica personale di 3 riduce la perdita finale a 4 PV.
+**Esempio:** un attacco infligge 12 danni Eterei in ingresso. Una barriera di livello 9 ne assorbe 5; rimangono 7\. Un’AR Magica personale di 3 riduce la perdita finale a 4 PV.
 
 ### **Attraversamento e presenze spirituali**
 
@@ -4756,7 +4607,7 @@ Crea una sfera chiusa, immobile, con centro visibile in gittata, che si estende 
 
 **Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie raggio 2 → 3 → 4 → 5 → 6 → 7 Q; durata 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore; malus Potere −2 → −3 → −4 → −5 → −6 → −8 → −10; assorbimento 3 → 4 → 5 → 6 → 8 → 10 → 12; oppure Mod. PS d’ingresso 0 → −2 → −4 → −6.
 
-**Magia conservata:** l’interferenza non introduce una Prova Potere nell’attivazione di Impronta Mistica o Trappola Mistica già caricata che non la richiede. Restano blocchi, assorbimenti e interdizioni della barriera. Per i normali lanci l’interferenza può rendere necessaria Potere anche ai livelli 1–3; fra penalità magiche concorrenti vale la maggiore, secondo le sezioni 7 e 9.
+**Magia conservata:** l’interferenza non introduce una Prova Potere nell’attivazione di Impronta Mistica o Trappola Mistica già caricata che non la richiede. Restano blocchi, assorbimenti e interdizioni della barriera. Per i normali lanci l’interferenza può rendere necessaria Potere anche ai livelli 1–3; fra penalità magiche concorrenti vale la maggiore, secondo le sezioni 7 e 9\.
 
 **Batteria Mistica**
 
@@ -4766,23 +4617,21 @@ Scheda 22.6 • Macrofamiglia Spirituale • Specializzazione Incantamento • L
 
 Espande temporaneamente la capacità di una batteria esistente. La capacità aggiuntiva è inizialmente vuota: l’incantesimo non crea PM e non ricarica automaticamente il contenitore. La creazione di batterie permanenti segue la sezione 24 e non è un effetto di questo incantesimo; costruzione, infusione e ricarica restano operazioni distinte.
 
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Capacità aggiuntiva\*\* | \*\*Durata\*\* |
-| 3 | 3 | \\+5 PM | 3 giorni |
-| 6 | 6 | \\+8 PM | 5 giorni |
-| 9 | 9 | \\+12 PM | 7 giorni |
-| 12 | 12 | \\+16 PM | 15 giorni |
-| 15 | 15 | \\+20 PM | 30 giorni |
-| 18 | 18 | \\+25 PM | 60 giorni |
+| Livello | PM | Capacità aggiuntiva | Durata |
+| :---: | :---: | :---: | :---: |
+| 3 | 3 | \+5 PM | 3 giorni |
+| 6 | 6 | \+8 PM | 5 giorni |
+| 9 | 9 | \+12 PM | 7 giorni |
+| 12 | 12 | \+16 PM | 15 giorni |
+| 15 | 15 | \+20 PM | 30 giorni |
+| 18 | 18 | \+25 PM | 60 giorni |
 
 **Capacità:** si somma a quella propria del contenitore, senza cambiare i PM già presenti. Una batteria con 3/5 PM, potenziata al livello 3, diventa 3/10 PM. Può essere utilizzata e ricaricata più volte durante la durata, che decorre dal completamento del lancio.
 
 **Chroma:** sono consentiti Rosso, Blu, Verde e Bianco, anche esausti; il colore e il tipo di energia rimangono invariati. Rosso conserva PM Fisici, Blu Mentali, Verde Spirituali e Bianco Universali. Il Chroma Viola non è utilizzabile con questo incantesimo. Il costo di lancio di Batteria Mistica usa comunque PM universali o spirituali.
 
-|  |  |
-| :-: | :-: |
-| \*\*Ricarica da PM personali\*\* | \*\*Rapporto\*\* |
+| Ricarica da PM personali | Rapporto |
+| :---- | :---- |
 | Chroma Rosso, Blu o Verde senza Talenti | 3 PM spesi per 1 immagazzinato |
 | Ricarica Efficiente oppure Conversione Migliorata | 2 PM spesi per 1 immagazzinato |
 | Entrambi i Talenti | 1 PM speso per 1 immagazzinato |
@@ -4796,7 +4645,7 @@ Espande temporaneamente la capacità di una batteria esistente. La capacità agg
 
 **Esempio di preparazione:** al livello 3 si spendono 3 PM per ottenere cinque posti aggiuntivi; riempirli con rapporto ordinario richiede altri 15 PM, eventualmente distribuiti fra più momenti. La durata di tre giorni permette di preparare la riserva e recuperare i PM personali prima dell’impiego.
 
-**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie capacità aggiuntiva +5 → +8 → +12 → +16 → +20 → +25 → +30 PM; oppure durata 3 → 5 → 7 → 15 → 30 → 60 → 90 giorni.
+**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie capacità aggiuntiva \+5 → \+8 → \+12 → \+16 → \+20 → \+25 → \+30 PM; oppure durata 3 → 5 → 7 → 15 → 30 → 60 → 90 giorni.
 
 **Identificare Potere**
 
@@ -4806,9 +4655,8 @@ Scheda 22.7 • Macrofamiglia Spirituale • Specializzazione Incantamento • L
 
 Identifica completamente un oggetto entro il limite di livello, determinato dalla rarità, oppure un incantesimo attivo di livello compatibile. Un solo lancio riuscito rivela tutte le proprietà: non si selezionano informazioni e non si divide l’identificazione in più lanci.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Bersagli\*\* | \*\*Livello massimo\*\* | \*\*Rarità massima\*\* |
+| Livello | PM | Gittata | Bersagli | Livello massimo | Rarità massima |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 3 | 3 | Contatto | 1 | 3 | Comune |
 | 6 | 6 | 3 Q | 1 | 6 | Non Comune |
 | 9 | 9 | 6 Q | 1 | 9 | Raro |
@@ -4830,7 +4678,7 @@ Identifica completamente un oggetto entro il limite di livello, determinato dall
 
 **Interazione con Artefatti: l’analisi del Tecnomante rivela struttura, proprietà e riserva energetica secondo il Manuale del Giocatore, §3.9.5, «Architetto TecnoMistico», e il Manuale degli Armamenti, §7.10, «Analizzare e identificare». Identificare Potere rende disponibili tutti i dati esatti della scheda quando il livello è sufficiente, senza richiedere l’analisi preventiva.**
 
-**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie livello massimo identificabile 3 → 6 → 9 → 12 → 15 → 18; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 Q; oppure bersagli 1 → 2 → 3 → 4. Al livello 3, spendendo 6 PM per anticipare il limite a 6, si identifica completamente un oggetto Non Comune mantenendo Contatto e un bersaglio.
+**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie livello massimo identificabile 3 → 6 → 9 → 12 → 15 → 18; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 Q; oppure bersagli 1 → 2 → 3 → 4\. Al livello 3, spendendo 6 PM per anticipare il limite a 6, si identifica completamente un oggetto Non Comune mantenendo Contatto e un bersaglio.
 
 **Rompere Vincolo**
 
@@ -4840,9 +4688,8 @@ Scheda 22.8 • Macrofamiglia Spirituale • Specializzazione Incantamento • L
 
 Recide un legame mistico che collega un oggetto a una persona, a un altro oggetto o a una condizione obbligante, comprese le maledizioni vincolanti incorporate nelle proprietà. Preserva le proprietà estranee al vincolo.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Oggetti\*\* | \*\*Potere di rottura\*\* |
+| Livello | PM | Gittata | Oggetti | Potere di rottura |
+| :---: | :---: | :---: | :---: | :---: |
 | 6 | 6 | Contatto | 1 | 6 |
 | 7 | 7 | Contatto | 1 | 7 |
 | 8 | 8 | Contatto | 1 | 8 |
@@ -4859,16 +4706,15 @@ Recide un legame mistico che collega un oggetto a una persona, a un altro oggett
 
 **Bersagli:** oggetti percepibili in gittata, concatenati entro 2 Q se multipli. Per ciascuno si sceglie un vincolo conosciuto oppure tutti quelli presenti, confrontandoli separatamente con il potere di rottura.
 
-|  |  |
-| :-: | :-: |
-| \*\*Confronto dopo il lancio riuscito\*\* | \*\*Esito\*\* |
+| Confronto dopo il lancio riuscito | Esito |
+| :---- | :---- |
 | Potere di rottura superiore al livello del vincolo | Il vincolo termina automaticamente. |
 | Potere di rottura uguale | Termina con una PS Volontà riuscita del Taumaturgo. |
 | Potere di rottura inferiore | Il vincolo rimane attivo. |
 
 **Parità:** una sola PS Volontà del Taumaturgo per lancio vale per tutti i vincoli di pari livello, distinta dalla Prova Potere. Proprietario, creatore del vincolo e persona vincolata non tirano.
 
-**Livello del vincolo: per un incantesimo applicato all’oggetto vale il livello dell’effetto attivo; per una proprietà incorporata vale quello della rarità dell’oggetto, da Comune 3 a Leggendario 18. Un vincolo di livello 15 applicato successivamente a un oggetto Comune rimane di livello 15. Sono disponibili tutti i livelli interi da 6 a 18: PM e Potere di rottura sono pari al livello, mentre gittata e oggetti conservano l’ultima soglia raggiunta. Un’Anticipazione di un singolo parametro avversario non aumenta il livello del vincolo da confrontare.**
+**Livello del vincolo: per un incantesimo applicato all’oggetto vale il livello dell’effetto attivo; per una proprietà incorporata vale quello della rarità dell’oggetto, da Comune 3 a Leggendario 18\. Un vincolo di livello 15 applicato successivamente a un oggetto Comune rimane di livello 15\. Sono disponibili tutti i livelli interi da 6 a 18: PM e Potere di rottura sono pari al livello, mentre gittata e oggetti conservano l’ultima soglia raggiunta. Un’Anticipazione di un singolo parametro avversario non aumenta il livello del vincolo da confrontare.**
 
 **Legami rimovibili:** Vincolo Spirituale; maledizioni che vietano di togliere, abbandonare o cedere un oggetto o puniscono la separazione; vincoli mistici fra oggetti o fra oggetto e proprietario.
 
@@ -4878,9 +4724,9 @@ Recide un legame mistico che collega un oggetto a una persona, a un altro oggett
 
 **Interazioni:** non concede sintonizzazione né aggira i requisiti dell’oggetto. Possessione e Mente Disincarnata restano nell’ambito di Esorcizzare Possessione. Sigillo, Trappola Mistica e gli altri effetti attivi che non costituiscono legami seguono le proprie rimozioni e Negare Potere. Pesi, costi e svantaggi funzionali dell’equipaggiamento non sono maledizioni. Rimuovere una maledizione dell’oggetto non termina automaticamente una Possessione autonoma coesistente: si identificano e risolvono gli effetti distinti.
 
-**Anticipazione:** un solo aspetto di un gradino, PM raddoppiati e Potere più difficile di una categoria. Si sceglie Potere di rottura +3, massimo 21, anche ai livelli intermedi; gittata Contatto → 3 → 6 → 10 → 15 → 20 Q; oppure oggetti 1 → 2 → 3 → 4. Il potere anticipato vale soltanto per il confronto e non aumenta il livello dichiarato.
+**Anticipazione:** un solo aspetto di un gradino, PM raddoppiati e Potere più difficile di una categoria. Si sceglie Potere di rottura \+3, massimo 21, anche ai livelli intermedi; gittata Contatto → 3 → 6 → 10 → 15 → 20 Q; oppure oggetti 1 → 2 → 3 → 4\. Il potere anticipato vale soltanto per il confronto e non aumenta il livello dichiarato.
 
-**Esempio:** una maledizione vincolante incorporata in una spada Rara ha livello 9. Rompere Vincolo 9 richiede la PS Volontà; già la versione 10 la rimuove automaticamente dopo il normale lancio riuscito, preservando le proprietà estranee e senza attivare la punizione del vincolo.
+**Esempio:** una maledizione vincolante incorporata in una spada Rara ha livello 9\. Rompere Vincolo 9 richiede la PS Volontà; già la versione 10 la rimuove automaticamente dopo il normale lancio riuscito, preservando le proprietà estranee e senza attivare la punizione del vincolo.
 
 **Vincolo Spirituale**
 
@@ -4890,9 +4736,8 @@ Scheda 22.9 • Macrofamiglia Spirituale • Specializzazione Incantamento • L
 
 Lega un oggetto a un proprietario designato e ne protegge l’utilizzo. Chi non è autorizzato deve superare la resistenza del vincolo, altrimenti non può usare l’oggetto e riceve una scarica magica. Le regole dei vincoli permanenti verranno integrate successivamente con i Rituali nel Manuale della Magia.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Oggetti\*\* | \*\*Durata\*\* | \*\*Danno Magico\*\* | \*\*Mod. PS\*\* |
+| Livello | PM | Gittata | Oggetti | Durata | Danno Magico | Mod. PS |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 6 | 6 | Contatto | 1 | 1 giorno | 1d6 | 0 |
 | 9 | 9 | 3 Q | 1 | 3 giorni | 1d6+1 | −2 |
 | 12 | 12 | 6 Q | 2 | 7 giorni | 1d6+2 | −2 |
@@ -4929,9 +4774,8 @@ Scheda 22.10 • Macrofamiglia Spirituale • Specializzazione Incantamento • 
 
 Imprime in un oggetto una Memoria oppure un Incantesimo dormiente. Il costo della tabella copre tutte le impronte create dal lancio; ciascun oggetto può avere un contenuto diverso. Le regole della conservazione permanente e degli utilizzi ripetuti verranno integrate successivamente con i Rituali nel Manuale della Magia.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Oggetti\*\* | \*\*Conservazione Memoria\*\* | \*\*Conservazione incantesimo\*\* | \*\*Contenuto Memoria max\*\* | \*\*Livello caricato max\*\* |
+| Livello | PM | Oggetti | Conservazione Memoria | Conservazione incantesimo | Contenuto Memoria max | Livello caricato max |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 9 | 9 | 1 | 1 mese | 7 giorni | 1 minuto | 6 |
 | 12 | 12 | 1 | 3 mesi | 15 giorni | 5 minuti | 9 |
 | 15 | 15 | 2 | 6 mesi | 30 giorni | 10 minuti | 12 |
@@ -4955,9 +4799,8 @@ Imprime in un oggetto una Memoria oppure un Incantesimo dormiente. Il costo dell
 
 **Durata e Concentrazione:** un effetto a durata conserva la durata completa. Un effetto a Concentrazione viene mantenuto dall’utilizzatore, con le normali limitazioni e con la propria PS Volontà per le verifiche di mantenimento. La conservazione indica soltanto entro quando si può attivare l’impronta: l’incantesimo già liberato prosegue secondo la propria durata, anche oltre quella scadenza.
 
-|  |  |  |
-| :-: | :-: | :-: |
-| \*\*Livello dell’impronta\*\* | \*\*Classificazione temporanea\*\* | \*\*Costo di sintonizzazione\*\* |
+| Livello dell’impronta | Classificazione temporanea | Costo di sintonizzazione |
+| ----- | ----- | ----- |
 | 9 | Raro | 3 |
 | 12 | Molto Raro | 4 |
 | 15 | Epico | 5 |
@@ -4971,17 +4814,16 @@ Imprime in un oggetto una Memoria oppure un Incantesimo dormiente. Il costo dell
 
 **Limiti:** una sola Impronta Mistica per oggetto. Il Taumaturgo può mantenere contemporaneamente un numero di Incantesimi dormienti pari alla SAG; per crearne uno oltre il limite deve far terminare un precedente. Messaggi e ricordi non occupano questo limite, anche quando si conservano per mesi o anni.
 
-**Interazioni:** Identificare Potere rivela contenuto e funzionamento a livello sufficiente. Negare Potere può rimuovere l’impronta ancora presente secondo le proprie regole. La modalità dormiente è volontaria e può mantenere durata e Concentrazione; Trappola Mistica usa invece un innesco e risolve il caricamento in un solo istante. Silenzio Mentale e le interferenze delle barriere non introducono Potere nell’attivazione senza prova di un’Impronta già caricata, né impediscono di mantenere la Concentrazione così attivata. Restano però i blocchi fisici, gli assorbimenti e le interdizioni specifiche; si applica la sezione 9.
+**Interazioni:** Identificare Potere rivela contenuto e funzionamento a livello sufficiente. Negare Potere può rimuovere l’impronta ancora presente secondo le proprie regole. La modalità dormiente è volontaria e può mantenere durata e Concentrazione; Trappola Mistica usa invece un innesco e risolve il caricamento in un solo istante. Silenzio Mentale e le interferenze delle barriere non introducono Potere nell’attivazione senza prova di un’Impronta già caricata, né impediscono di mantenere la Concentrazione così attivata. Restano però i blocchi fisici, gli assorbimenti e le interdizioni specifiche; si applica la sezione 9\.
 
-**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie oggetti 1 → 2 → 3 → 4; conservazione Memoria 1 mese → 3 mesi → 6 mesi → 1 anno → 2 anni; conservazione dell’incantesimo 7 → 15 → 30 → 60 → 90 giorni; durata del contenuto Memoria 1 → 5 → 10 → 30 → 60 minuti; oppure livello massimo caricabile 6 → 9 → 12 → 15 → 18. Le due conservazioni sono aspetti distinti. Il raddoppio riguarda Impronta Mistica; ogni incantesimo caricato si paga separatamente.
+**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie oggetti 1 → 2 → 3 → 4; conservazione Memoria 1 mese → 3 mesi → 6 mesi → 1 anno → 2 anni; conservazione dell’incantesimo 7 → 15 → 30 → 60 → 90 giorni; durata del contenuto Memoria 1 → 5 → 10 → 30 → 60 minuti; oppure livello massimo caricabile 6 → 9 → 12 → 15 → 18\. Le due conservazioni sono aspetti distinti. Il raddoppio riguarda Impronta Mistica; ogni incantesimo caricato si paga separatamente.
 
 # **23 Incantesimi della specializzazione Trascendenza**
 
 Le dieci schede completano il catalogo dei 90 incantesimi. Definiscono protezioni, benedizioni e maledizioni, attacchi spirituali, dissoluzione, alterazione delle aure e divinazione. Tutte utilizzano PM universali o spirituali. Il Rituale è consentito salvo dove espressamente escluso; le relative procedure verranno integrate successivamente nel Manuale della Magia.
 
-|  |  |
-| :-: | :-: |
-| \*\*Livello base\*\* | \*\*Incantesimi\*\* |
+| Livello base | Incantesimi |
+| :---- | :---- |
 | 1 | Scudo Spirituale; Luce Mistica; Benedizione; Maledizione |
 | 3 | Dardo Spirituale; Negare Potere; Nascondere Aura |
 | 6 | Premonizione; Individuare |
@@ -4989,7 +4831,7 @@ Le dieci schede completano il catalogo dei 90 incantesimi. Definiscono protezion
 
 ### **Livelli intermedi e confronti**
 
-Negare Potere può essere lanciato a ogni livello intero da 3 a 18; Individuare da 6 a 18; Alterare Aura da 9 a 18. Il costo ordinario in PM e il rispettivo potere di confronto corrispondono al livello effettivamente dichiarato. Gli altri parametri cambiano soltanto alle soglie indicate nelle tabelle. La Prova Potere segue sempre il livello effettivo, comprese le normali categorie di difficoltà.
+Negare Potere può essere lanciato a ogni livello intero da 3 a 18; Individuare da 6 a 18; Alterare Aura da 9 a 18\. Il costo ordinario in PM e il rispettivo potere di confronto corrispondono al livello effettivamente dichiarato. Gli altri parametri cambiano soltanto alle soglie indicate nelle tabelle. La Prova Potere segue sempre il livello effettivo, comprese le normali categorie di difficoltà.
 
 L’Anticipazione del potere di confronto aggiunge 3 a quel solo valore. Non aumenta il livello dell’incantesimo, non migliora gli altri parametri e non cambia il livello usato da un avversario per dissolverlo con Negare Potere.
 
@@ -5007,28 +4849,27 @@ Scheda 23.1 • Macrofamiglia Spirituale • Specializzazione Trascendenza • L
 
 Protegge dalle influenze spirituali e riduce le perdite ostili di PM personali, senza attribuire Armatura.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Benef.\*\* | \*\*Bonus PS\*\* | \*\*Protezione PM\*\* | \*\*Durata\*\* |
-| 1 | 1 | Contatto | 1 | \\+3 | 1 | 10 RND |
-| 3 | 3 | Contatto | 1 | \\+3 | 1 | 20 RND |
-| 6 | 6 | 3 Q | 1 | \\+4 | 2 | 5 minuti |
-| 9 | 9 | 6 Q | 2 | \\+4 | 2 | 10 minuti |
-| 12 | 12 | 10 Q | 2 | \\+5 | 3 | 30 minuti |
-| 15 | 15 | 15 Q | 3 | \\+5 | 3 | 1 ora |
-| 18 | 18 | 20 Q | 3 | \\+6 | 4 | 2 ore |
+| Livello | PM | Gittata | Benef. | Bonus PS | Protezione PM | Durata |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 1 | 1 | Contatto | 1 | \+3 | 1 | 10 RND |
+| 3 | 3 | Contatto | 1 | \+3 | 1 | 20 RND |
+| 6 | 6 | 3 Q | 1 | \+4 | 2 | 5 minuti |
+| 9 | 9 | 6 Q | 2 | \+4 | 2 | 10 minuti |
+| 12 | 12 | 10 Q | 2 | \+5 | 3 | 30 minuti |
+| 15 | 15 | 15 Q | 3 | \+5 | 3 | 1 ora |
+| 18 | 18 | 20 Q | 3 | \+6 | 4 | 2 ore |
 
 **Beneficiari:** consenzienti, incluso il Taumaturgo; visibili e in gittata al lancio, con concatenazione entro 2 Q se multipli. Possono poi separarsi senza perdere l’effetto.
 
 **Prove Salvezza:** il bonus riguarda tutte le PS Magia, comprese quelle contro la Corruzione; le PS Volontà contro paura e Possessione, qualunque ne sia l’origine; le altre PS Volontà difensive contro effetti Spirituali. Non riguarda Tempra o Riflessi e non concede nuove PS contro effetti già applicati.
 
-**Protezione dei PM:** dopo l’eventuale PS, sottrae il valore indicato da ogni perdita ostile di PM personali, fino a un minimo di 0. Se l’effetto infligge anche danni ai PV, questa protezione riduce soltanto la componente PM. Esempio: una perdita di 5 PM dopo la PS, contro uno scudo di livello 9, diventa 3 PM.
+**Protezione dei PM:** dopo l’eventuale PS, sottrae il valore indicato da ogni perdita ostile di PM personali, fino a un minimo di 0\. Se l’effetto infligge anche danni ai PV, questa protezione riduce soltanto la componente PM. Esempio: una perdita di 5 PM dopo la PS, contro uno scudo di livello 9, diventa 3 PM.
 
 **Limiti:** non riduce costi volontari, ricariche o trasferimenti e non protegge le riserve esterne. Non recupera PM. Se i PM personali raggiungono comunque 0, si applicano le normali conseguenze.
 
 **Interazioni:** con Barriera Mentale o il Talento Scudo Spirituale si usa il maggiore bonus applicabile alla singola PS; le altre funzioni delle protezioni restano distinte. Non dissolve effetti, non cura la Corruzione e può essere rimosso da Negare Potere.
 
-**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie bonus PS aumentato di 1, massimo +7; protezione PM aumentata di 1, massimo 5; oppure durata 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore.
+**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie bonus PS aumentato di 1, massimo \+7; protezione PM aumentata di 1, massimo 5; oppure durata 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore.
 
 **Luce Mistica**
 
@@ -5038,9 +4879,8 @@ Scheda 23.2 • Macrofamiglia Spirituale • Specializzazione Trascendenza • L
 
 Una luce segue il Taumaturgo, illumina il buio ordinario e ostacola le creature legate all’Oscura Simmetria. Non infligge danni.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Raggio\*\* | \*\*Penalità VA\*\* | \*\*Durata\*\* | \*\*Mod. PS\*\* |
+| Livello | PM | Raggio | Penalità VA | Durata | Mod. PS |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 1 | 1 | 3 Q | −1 | 10 RND | 0 |
 | 3 | 3 | 3 Q | −1 | 20 RND | 0 |
 | 6 | 6 | 4 Q | −2 | 5 minuti | 0 |
@@ -5069,16 +4909,15 @@ Scheda 23.3 • Macrofamiglia Spirituale • Specializzazione Trascendenza • L
 
 Favorisce i beneficiari nelle Prove per tutta la durata.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Beneficiari\*\* | \*\*Bonus\*\* | \*\*Durata\*\* |
-| 1 | 1 | 6 Q | 1 | \\+1 | 5 RND |
-| 3 | 3 | 6 Q | 2 | \\+1 | 10 RND |
-| 6 | 6 | 10 Q | 3 | \\+2 | 10 RND |
-| 9 | 9 | 15 Q | 4 | \\+2 | 15 RND |
-| 12 | 12 | 20 Q | 5 | \\+3 | 20 RND |
-| 15 | 15 | 25 Q | 6 | \\+3 | 30 RND |
-| 18 | 18 | 30 Q | 8 | \\+4 | 40 RND |
+| Livello | PM | Gittata | Beneficiari | Bonus | Durata |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| 1 | 1 | 6 Q | 1 | \+1 | 5 RND |
+| 3 | 3 | 6 Q | 2 | \+1 | 10 RND |
+| 6 | 6 | 10 Q | 3 | \+2 | 10 RND |
+| 9 | 9 | 15 Q | 4 | \+2 | 15 RND |
+| 12 | 12 | 20 Q | 5 | \+3 | 20 RND |
+| 15 | 15 | 25 Q | 6 | \+3 | 30 RND |
+| 18 | 18 | 30 Q | 8 | \+4 | 40 RND |
 
 **Beneficiari:** consenzienti, incluso il Taumaturgo; visibili e in gittata al lancio, con concatenazione entro 2 Q se multipli. Possono poi separarsi senza perdere l’effetto.
 
@@ -5090,7 +4929,7 @@ Favorisce i beneficiari nelle Prove per tutta la durata.
 
 **Cessazione:** i danni e l’allontanamento non terminano l’effetto. Negare Potere può rimuoverlo da ciascun beneficiario secondo la propria scheda.
 
-**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie bonus aumentato di 1, massimo +5; beneficiari 1 → 2 → 3 → 4 → 5 → 6 → 8 → 10; gittata 6 → 10 → 15 → 20 → 25 → 30 → 40 Q; oppure durata 5 → 10 → 15 → 20 → 30 → 40 → 60 RND.
+**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie bonus aumentato di 1, massimo \+5; beneficiari 1 → 2 → 3 → 4 → 5 → 6 → 8 → 10; gittata 6 → 10 → 15 → 20 → 25 → 30 → 40 Q; oppure durata 5 → 10 → 15 → 20 → 30 → 40 → 60 RND.
 
 **Maledizione**
 
@@ -5100,9 +4939,8 @@ Scheda 23.4 • Macrofamiglia Spirituale • Specializzazione Trascendenza • L
 
 Impone una penalità generale alle Prove dei bersagli che falliscono la PS.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Bersagli\*\* | \*\*Penalità\*\* | \*\*Durata\*\* | \*\*Mod. PS\*\* |
+| Livello | PM | Gittata | Bersagli | Penalità | Durata | Mod. PS |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 1 | 1 | 6 Q | 1 | −1 | 5 RND | 0 |
 | 3 | 3 | 6 Q | 1 | −1 | 10 RND | 0 |
 | 6 | 6 | 10 Q | 1 | −2 | 10 RND | 0 |
@@ -5117,7 +4955,7 @@ Impone una penalità generale alle Prove dei bersagli che falliscono la PS.
 
 **Durata:** non concede nuove PS automatiche. Danni e uscita dalla gittata non la terminano.
 
-**Cumulo:** vale la maggiore penalità magica applicabile alla Prova. Distrazione −4 e Maledizione −2 producono −4 alle Abilità e −2 alle Caratteristiche e PS. Benedizione +2 e Maledizione −3 danno invece un modificatore finale di −1.
+**Cumulo:** vale la maggiore penalità magica applicabile alla Prova. Distrazione −4 e Maledizione −2 producono −4 alle Abilità e −2 alle Caratteristiche e PS. Benedizione \+2 e Maledizione −3 danno invece un modificatore finale di −1.
 
 **Interazioni:** Scudo Spirituale può migliorare la PS iniziale; AR e Difese attive non bloccano l’effetto. Negare Potere lo rimuove. Non produce maledizioni liberamente inventate né modifica CROS. Rompere Vincolo riguarda i legami con oggetti e non questo lancio diretto su una creatura.
 
@@ -5131,9 +4969,8 @@ Scheda 23.5 • Macrofamiglia Spirituale • Specializzazione Trascendenza • L
 
 Colpisce creature viventi ed entità spirituali ammesse, compresi gli elementali evocati. Danneggia i PV e sottrae PM personali quando la riserva esiste. Esclude normali oggetti, dispositivi, costrutti puramente meccanici ed Ectoplasma, salvo eccezioni esplicite del Bestiario del Manuale del Direttore.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Bersagli\*\* | \*\*Danno PV\*\* | \*\*Perdita PM\*\* | \*\*Mod. PS\*\* |
+| Livello | PM | Gittata | Bersagli | Danno PV | Perdita PM | Mod. PS |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 3 | 3 | 6 Q | 1 | 1d4 | 1 | 0 |
 | 4 | 4 | 6 Q | 1 | 1d4+1 | 1 | 0 |
 | 5 | 5 | 6 Q | 1 | 1d4+2 | 1 | 0 |
@@ -5151,7 +4988,7 @@ Colpisce creature viventi ed entità spirituali ammesse, compresi gli elementali
 
 **PV:** il danno interessa una sola AC per bersaglio, determinata normalmente. È Etereo: ignora AR Naturale, mentre AR Magica assorbe normalmente. Si applicano i PV temporanei e possono essere prodotte Ferite.
 
-**PM:** si sottraggono soltanto quelli personali, mai batterie o Chroma. Il Taumaturgo non riceve i PM sottratti. La perdita non viene ridotta dall’AR ed è indipendente dai PV: si applica anche quando tutto il danno ai PV viene assorbito. I PM non scendono sotto 0; l’eccedenza non causa ulteriori danni e a 0 si applica lo svenimento ordinario. PM — indica una riserva inesistente: non si applica perdita di PM né svenimento per questo motivo, e non si converte la perdita impossibile in danno ai PV. Non si drenano mai i PM del creatore di un bersaglio evocato. Forma Elementale conserva invece i PM personali e termina con lo svenimento a 0. Ogni nuovo lancio richiede una nuova PS e può sottrarre altri PM.
+**PM:** si sottraggono soltanto quelli personali, mai batterie o Chroma. Il Taumaturgo non riceve i PM sottratti. La perdita non viene ridotta dall’AR ed è indipendente dai PV: si applica anche quando tutto il danno ai PV viene assorbito. I PM non scendono sotto 0; l’eccedenza non causa ulteriori danni e a 0 si applica lo svenimento ordinario. PM — indica una riserva inesistente: non si applica perdita di PM né svenimento per questo motivo, e non si converte la perdita impossibile in danno ai PV. Non si drenano mai i PM del creatore di un bersaglio evocato. Forma Elementale conserva invece i PM personali e termina con lo svenimento a 0\. Ogni nuovo lancio richiede una nuova PS e può sottrarre altri PM.
 
 ### **Dardo Spirituale e protezioni**
 
@@ -5159,7 +4996,7 @@ Scudo Spirituale concede il bonus alla PS Magia e riduce la perdita di PM dopo i
 
 **Barriere:** si applicano le penalità a Potere per attraversare Barriera di Forza e Campo di Forza. Barriera Mistica applica la penalità d’ingresso e il proprio assorbimento del Danno Etereo ai PV; non assorbe la perdita di PM. Se il dardo proviene da un’Impronta o Trappola già caricata, le interferenze non aggiungono Potere all’attivazione; gli assorbimenti pertinenti restano validi.
 
-**Esempio:** al livello 12, il tiro comune produce 13 danni e la perdita base è 4 PM. Un bersaglio supera la PS e possiede AR Magica 3 e protezione PM 2: perde 4 PV, cioè 7 meno 3, e nessun PM, cioè 2 meno 2.
+**Esempio:** al livello 12, il tiro comune produce 13 danni e la perdita base è 4 PM. Un bersaglio supera la PS e possiede AR Magica 3 e protezione PM 2: perde 4 PV, cioè 7 meno 3, e nessun PM, cioè 2 meno 2\.
 
 **Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie danno ai PV al successivo valore distinto della tabella, fino a 6d4+5 oltre il livello 18; perdita di PM aumentata di 1, massimo 7; bersagli 1 → 2 → 3 → 4; oppure Mod. PS 0 → −2 → −4 → −6. Danno ai PV e perdita di PM sono aspetti separati.
 
@@ -5171,9 +5008,8 @@ Scheda 23.6 • Macrofamiglia Spirituale • Specializzazione Trascendenza • L
 
 Rimuove incantesimi già attivi mediante il confronto fra il proprio Potere di Negazione e il livello dell’effetto. È distinto dalla reazione Contromagia, che interviene durante un lancio.
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Potere di Negazione\*\* | \*\*Gittata\*\* | \*\*Effetti\*\* |
+| Livello | PM | Potere di Negazione | Gittata | Effetti |
+| :---: | :---: | :---: | :---: | :---: |
 | 3 | 3 | 3 | 6 Q | 1 |
 | 4 | 4 | 4 | 6 Q | 1 |
 | 5 | 5 | 5 | 6 Q | 1 |
@@ -5191,11 +5027,10 @@ Rimuove incantesimi già attivi mediante il confronto fra il proprio Potere di N
 | 17 | 17 | 17 | 25 Q | 3 |
 | 18 | 18 | 18 | 30 Q | 3 |
 
-**Livelli intermedi:** sono consentiti tutti gli interi della tabella. Il costo e il Potere di Negazione seguono il livello effettivo; gittata e numero di effetti cambiano soltanto alle soglie 3, 6, 9, 12, 15 e 18.
+**Livelli intermedi:** sono consentiti tutti gli interi della tabella. Il costo e il Potere di Negazione seguono il livello effettivo; gittata e numero di effetti cambiano soltanto alle soglie 3, 6, 9, 12, 15 e 18\.
 
-|  |  |
-| :-: | :-: |
-| \*\*Confronto dopo il lancio riuscito\*\* | \*\*Esito\*\* |
+| Confronto dopo il lancio riuscito | Esito |
+| :---- | :---- |
 | Negazione superiore al livello dell’effetto | L’effetto termina. |
 | Negazione pari al livello dell’effetto | Soltanto chi lancia Negare Potere effettua una PS Volontà; con successo termina l’effetto. |
 | Negazione inferiore al livello dell’effetto | L’effetto rimane attivo. |
@@ -5234,9 +5069,8 @@ Scheda 23.7 • Macrofamiglia Spirituale • Specializzazione Trascendenza • L
 
 Occulta esclusivamente l’emanazione spirituale dei beneficiari. Non nasconde l’impronta psichica, la visibilità fisica, i suoni o gli odori.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Benef.\*\* | \*\*Concentrazione massima\*\* | \*\*Durata fissa\*\* |
+| Livello | PM | Gittata | Benef. | Concentrazione massima | Durata fissa |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 3 | 3 | Contatto | 1 | 10 minuti | 10 RND |
 | 6 | 6 | 3 Q | 2 | 30 minuti | 20 RND |
 | 9 | 9 | 6 Q | 3 | 1 ora | 5 minuti |
@@ -5252,7 +5086,7 @@ Occulta esclusivamente l’emanazione spirituale dei beneficiari. Non nasconde l
 
 **Confronto:** una sola PS per osservatore e per coppia di lanci di rilevazione e occultamento, valida per tutti i beneficiari della coppia. Uscire e rientrare non concede nuovi tentativi. Un successo non dissolve l’occultamento, non lo supera per gli altri osservatori e non concede informazioni oltre quelle del rilevatore.
 
-**Percezioni:** Eco Elementale non è ostacolata. Sensi fisici, tecnologia e visione ordinaria seguono le proprie regole; Identificare Potere può esaminare un bersaglio validamente localizzato. Nascondere Aura può coesistere con Mimetismo e Velo Psichico, secondo la matrice della sezione 8. Alterare Aura resta una falsificazione distinta. L’occultamento non concede immunità agli attacchi.
+**Percezioni:** Eco Elementale non è ostacolata. Sensi fisici, tecnologia e visione ordinaria seguono le proprie regole; Identificare Potere può esaminare un bersaglio validamente localizzato. Nascondere Aura può coesistere con Mimetismo e Velo Psichico, secondo la matrice della sezione 8\. Alterare Aura resta una falsificazione distinta. L’occultamento non concede immunità agli attacchi.
 
 ### **Nascondere Aura e cessazione**
 
@@ -5262,7 +5096,7 @@ Occulta esclusivamente l’emanazione spirituale dei beneficiari. Non nasconde l
 
 **Natura reale:** non cambia Natura Oscura Simmetria o CROS e non concede immunità ad attacchi mentali o spirituali. Luce Mistica, Esorcizzare Oscurità e le interdizioni fondate sulla natura reale continuano a funzionare. Negare Potere può rimuovere l’effetto da un beneficiario validamente localizzato, conteggiandolo separatamente.
 
-**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie beneficiari 1 → 2 → 3 → 4 → 6 → 8 → 10; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 Q; Concentrazione 10 minuti → 30 minuti → 1 → 2 → 4 → 8 → 12 ore; durata fissa 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore; oppure Potere di Occultamento 3 → 6 → 9 → 12 → 15 → 18 → 21. Quest’ultimo modifica soltanto il confronto con le rilevazioni, non il livello contro Negare Potere.
+**Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie beneficiari 1 → 2 → 3 → 4 → 6 → 8 → 10; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 Q; Concentrazione 10 minuti → 30 minuti → 1 → 2 → 4 → 8 → 12 ore; durata fissa 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore; oppure Potere di Occultamento 3 → 6 → 9 → 12 → 15 → 18 → 21\. Quest’ultimo modifica soltanto il confronto con le rilevazioni, non il livello contro Negare Potere.
 
 **Premonizione**
 
@@ -5272,9 +5106,8 @@ Scheda 23.8 • Macrofamiglia Spirituale • Specializzazione Trascendenza • D
 
 Concede una riserva di utilizzi per ritirare i propri dadi dopo averne visto il risultato e prima di applicarne le conseguenze.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*PM\*\* | \*\*Gittata\*\* | \*\*Utilizzi\*\* | \*\*Durata\*\* | \*\*Risultato da conservare\*\* |
+| Livello | PM | Gittata | Utilizzi | Durata | Risultato da conservare |
+| :---: | :---: | :---: | :---: | :---: | ----- |
 | 6 | 6 | Personale | 3 | 5 RND | Il risultato del ritiro |
 | 9 | 9 | Personale | 4 | 5 RND | Il risultato del ritiro |
 | 12 | 12 | Contatto | 4 | 7 RND | A scelta fra i due risultati |
@@ -5287,9 +5120,9 @@ Concede una riserva di utilizzi per ritirare i propri dadi dopo averne visto il 
 
 **Procedura:** si spende un utilizzo dopo aver visto il risultato e prima delle conseguenze. Si ripete la stessa formula con gli stessi modificatori e condizioni. Non richiede AP, non ripete l’azione e non fa pagare nuovamente i suoi costi. Massimo un utilizzo per RND e un solo ritiro sullo stesso tiro, anche combinando capacità diverse.
 
-**Più dadi:** si ritira l’intera combinazione che produce un unico risultato. Per 3d6+5 si ritirano tutti i tre dadi, mantenendo +5; non si mescolano dadi del primo e secondo tiro. Se il tiro è comune a più bersagli o AC, il risultato conservato si applica a tutti.
+**Più dadi:** si ritira l’intera combinazione che produce un unico risultato. Per 3d6+5 si ritirano tutti i tre dadi, mantenendo \+5; non si mescolano dadi del primo e secondo tiro. Se il tiro è comune a più bersagli o AC, il risultato conservato si applica a tutti.
 
-**Esempio:** un danno di 1d6+1 produce 2 sul dado, per un totale di 3. Premonizione consente di ritirare: esce 5 e il totale diventa 6. Se invece uscisse 1, ai livelli 6 e 9 si conserverebbe il nuovo totale di 2; dal livello 12 si potrebbe conservare il precedente totale di 3.
+**Esempio:** un danno di 1d6+1 produce 2 sul dado, per un totale di 3\. Premonizione consente di ritirare: esce 5 e il totale diventa 6\. Se invece uscisse 1, ai livelli 6 e 9 si conserverebbe il nuovo totale di 2; dal livello 12 si potrebbe conservare il precedente totale di 3\.
 
 ### **Premonizione e altri modificatori**
 
@@ -5311,9 +5144,8 @@ Scheda 23.9 • Macrofamiglia Spirituale • Specializzazione Trascendenza • D
 
 Un unico incantesimo consente di alternare una percezione estesa e generica con un’analisi dettagliata di un’area limitata. È attiva una sola modalità alla volta.
 
-|  |  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello e PM\*\* | \*\*Potere rilevaz.\*\* | \*\*Raggio percez.\*\* | \*\*Gittata analisi\*\* | \*\*Area totale\*\* | \*\*Concentr. massima\*\* | \*\*Durata fissa\*\* |
+| Livello e PM | Potere rilevaz. | Raggio percez. | Gittata analisi | Area totale | Concentr. massima | Durata fissa |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 6 | 6 | 10 Q | 10 Q | 1 Q | 10 minuti | 5 RND |
 | 7 | 7 | 10 Q | 10 Q | 1 Q | 10 minuti | 5 RND |
 | 8 | 8 | 10 Q | 10 Q | 1 Q | 10 minuti | 5 RND |
@@ -5332,9 +5164,9 @@ Un unico incantesimo consente di alternare una percezione estesa e generica con 
 
 **Percezione:** aura centrata sul Taumaturgo e mobile con lui. Segnala genericamente presenza e direzione delle emanazioni, anche sopra o sotto, nonché movimenti, ingressi e uscite. Emanazioni vicine o sovrapposte possono apparire come una sola fonte. Non fornisce conteggio preciso, tipo della fonte, livello o Q esatto.
 
-**Analisi:** si selezionano i Q dell’area entro la gittata indicata, in posizioni visibili o note. Il valore è il numero totale di Q, non un raggio né il lato di un quadrato. I Q devono essere contigui per lato e tutti in gittata; 4 Q possono formare un quadrato 2 × 2 oppure una fila 1 × 4.
+**Analisi:** si selezionano i Q dell’area entro la gittata indicata, in posizioni visibili o note. Il valore è il numero totale di Q, non un raggio né il lato di un quadrato. I Q devono essere contigui per lato e tutti in gittata; 4 Q possono formare un quadrato 2 × 2 oppure una fila 1 × 4\.
 
-**Esame:** nell’area si localizzano esattamente e si distinguono le emanazioni già dal livello 6. Ogni RND si analizza una fonte in una delle categorie Aura, Incantesimi o Artefatti. La prima analisi è compresa nel lancio se si inizia in questa modalità. L’area può essere riposizionata all’inizio del proprio turno senza AP o PM aggiuntivi.
+**Esame:** nell’area si localizzano esattamente e si distinguono le emanazioni già dal livello 6\. Ogni RND si analizza una fonte in una delle categorie Aura, Incantesimi o Artefatti. La prima analisi è compresa nel lancio se si inizia in questa modalità. L’area può essere riposizionata all’inizio del proprio turno senza AP o PM aggiuntivi.
 
 ### **Individuare e informazioni di analisi**
 
@@ -5378,7 +5210,7 @@ Un unico incantesimo consente di alternare una percezione estesa e generica con 
 
 **Alterare Aura:** si confronta il Potere di Rilevazione con il Potere di Falsificazione, con la stessa procedura inferiore / parità / superiore. Se non lo supera, si leggono le informazioni false; se lo supera, si legge il profilo reale e si riconosce l’alterazione entro i limiti informativi della versione. La falsificazione è distinta dagli occultamenti: non si ottengono informazioni su una fonte che questi impediscono di rilevare.
 
-**Altre protezioni:** nessuna rilevazione dissolve Mimetismo o Velo Psichico. Barriera Mentale non blocca la lettura spirituale. La sovrapposizione dei tre occultamenti segue la matrice della sezione 8. Negare Potere può terminare Individuare; Occhio Interiore si applica al lancio secondo le proprie regole.
+**Altre protezioni:** nessuna rilevazione dissolve Mimetismo o Velo Psichico. Barriera Mentale non blocca la lettura spirituale. La sovrapposizione dei tre occultamenti segue la matrice della sezione 8\. Negare Potere può terminare Individuare; Occhio Interiore si applica al lancio secondo le proprie regole.
 
 **Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie raggio di Percezione 10 → 15 → 20 → 25 → 30 → 40 Q; gittata di Analisi con la stessa scala; area totale di Analisi 1 → 2 → 4 → 6 → 8 Q; informazioni della soglia successiva in una sola categoria scelta, fino al livello 18; Concentrazione 10 minuti → 30 minuti → 1 → 2 → 4 → 8 ore; durata fissa 5 RND → 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti; oppure Potere di Rilevazione aumentato di 3, anche ai livelli intermedi. L’area non può superare 8 Q. Raggio, gittata, area, informazioni e potere di confronto sono aspetti distinti.
 
@@ -5390,9 +5222,8 @@ Scheda 23.10 • Macrofamiglia Spirituale • Specializzazione Trascendenza • 
 
 Mantiene percepibile l’emanazione spirituale ma ne falsifica il profilo, facendo apparire un potenziale magico, un’impronta oscura e uno stato CROS diversi da quelli reali.
 
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Livello e PM\*\* | \*\*Potere falsificaz.\*\* | \*\*Gittata\*\* | \*\*Benef.\*\* | \*\*Concentrazione massima\*\* | \*\*Durata fissa\*\* |
+| Livello e PM | Potere falsificaz. | Gittata | Benef. | Concentrazione massima | Durata fissa |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 9 | 9 | Personale | 1 | 2 ore | 30 minuti |
 | 10 | 10 | Personale | 1 | 2 ore | 30 minuti |
 | 11 | 11 | Personale | 1 | 2 ore | 30 minuti |
@@ -5416,18 +5247,17 @@ Mantiene percepibile l’emanazione spirituale ma ne falsifica il profilo, facen
 
 ### **Alterare Aura e confronto con la rilevazione**
 
-|  |  |
-| :-: | :-: |
-| \*\*Potere di Rilevazione\*\* | \*\*Informazioni ottenute\*\* |
+| Potere di Rilevazione | Informazioni ottenute |
+| :---- | :---- |
 | Inferiore alla Falsificazione | Profilo falso, entro le capacità informative del rilevatore. |
-| Pari alla Falsificazione | \*\*L’osservatore effettua una PS Magia:\*\* successo rivela il profilo reale e l’alterazione; fallimento restituisce il profilo falso. |
+| Pari alla Falsificazione | **L’osservatore effettua una PS Magia:** successo rivela il profilo reale e l’alterazione; fallimento restituisce il profilo falso. |
 | Superiore alla Falsificazione | Profilo reale e riconoscimento dell’alterazione, entro le capacità informative del rilevatore. |
 
 **Una sola PS:** per osservatore e per coppia di lanci di rilevazione e falsificazione, valida per tutti i beneficiari coinvolti. Cambiare modalità o categoria di Analisi non concede nuovi tentativi. Superare la falsificazione non dissolve l’incantesimo né lo rivela automaticamente ad altri osservatori.
 
-**Limiti informativi:** anche dopo aver superato l’alterazione, Individuare rivela soltanto ciò che il proprio livello consente. Al livello 12 distingue Corruzione presente o assente; lo stato CROS esatto richiede il livello 18.
+**Limiti informativi:** anche dopo aver superato l’alterazione, Individuare rivela soltanto ciò che il proprio livello consente. Al livello 12 distingue Corruzione presente o assente; lo stato CROS esatto richiede il livello 18\.
 
-**Esempio:** Alterare Aura lanciato al livello 10 ha Falsificazione 10. Individuare 9 legge il profilo falso; Individuare 10 permette la PS Magia dell’osservatore; Individuare 11 supera la falsificazione. In tutti i casi, le informazioni disponibili restano quelle della soglia 9.
+**Esempio:** Alterare Aura lanciato al livello 10 ha Falsificazione 10\. Individuare 9 legge il profilo falso; Individuare 10 permette la PS Magia dell’osservatore; Individuare 11 supera la falsificazione. In tutti i casi, le informazioni disponibili restano quelle della soglia 9\.
 
 **Realtà invariata:** non modifica Caratteristiche, PM, capacità, penalità CROS, mutazioni o natura effettiva. Non cura la Corruzione e non attribuisce poteri. Presenza legge normalmente la mente; sensi fisici e tecnologia rilevano normalmente la realtà.
 
@@ -5437,7 +5267,7 @@ Mantiene percepibile l’emanazione spirituale ma ne falsifica il profilo, facen
 
 **Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie Potere di Falsificazione aumentato di 3, anche ai livelli intermedi, massimo 21; massimo potenziale magico apparente aumentato di 3, fino a 18; beneficiari 1 → 2 → 3 → 4; gittata Personale → Contatto → 3 Q → 6 Q → 10 Q → 15 Q; Concentrazione 2 → 4 → 8 → 16 → 24 ore; oppure durata fissa 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore. Il Potere di Falsificazione anticipato non aumenta il livello dell’effetto ai fini di Negare Potere.
 
-# **24 Creazione di artefatti e batterie mistiche**
+# **24 Creazione di artefatti e batterie mistiche** {#24-creazione-di-artefatti-e-batterie-mistiche}
 
 La creazione comprende tre fasi distinte: Artefatti per il progetto, Tecnologia per costruire o adattare il supporto e Rituali per l’infusione mistica. Il progetto è obbligatorio prima della costruzione e può essere stato realizzato da altri. Le tre fasi possono essere svolte da persone diverse; ciascuna deve possedere i requisiti della propria fase. Le procedure e i costi di questo capitolo costituiscono la base approvata per il playtest.
 
@@ -5455,11 +5285,8 @@ Durante l’infusione deve essere presente chi conosce e può utilizzare ciascun
 
 Si parte dagli incantesimi esistenti: ciascuna proprietà riproduce una versione completa della relativa scheda. Un insieme di bonus appartenenti alla stessa versione conta come una sola proprietà. Non si combinano liberamente valori presi da righe diverse. Le ricette specifiche espressamente approvate, come i Guanti da Combattimento Mistico (§26.6.2), riportano il proprio Grado senza introdurre una facoltà generale di scomporre gli Incantesimi.
 
-  
-
-|  |  |  |
-| :-: | :-: | :-: |
-| \*\*Livello della versione\*\* | \*\*Grado\*\* | \*\*Potenza\*\* |
+| Livello della versione | Grado | Potenza |
+| :---- | :---- | :---- |
 | 1–3 | I | Comune |
 | 4–8 | II | Non Comune |
 | 9–11 | III | Rara |
@@ -5467,11 +5294,9 @@ Si parte dagli incantesimi esistenti: ciascuna proprietà riproduce una versione
 | 15–17 | V | Epica |
 | 18 | VI | Leggendaria |
 
-  
+Grado delle proprietà \= Grado della proprietà più elevata \+ 1 per ogni ulteriore proprietà. Una proprietà permanente sul supporto e una funzione separatamente attivabile, anche derivate dallo stesso incantesimo, contano come due proprietà. Il Grado finale dell’artefatto è il maggiore fra Grado delle proprietà e Grado della riserva. Le configurazioni superiori al VI richiedono una ricetta eccezionale: non vengono ricondotte automaticamente al VI.
 
-Grado delle proprietà = Grado della proprietà più elevata + 1 per ogni ulteriore proprietà. Una proprietà permanente sul supporto e una funzione separatamente attivabile, anche derivate dallo stesso incantesimo, contano come due proprietà. Il Grado finale dell’artefatto è il maggiore fra Grado delle proprietà e Grado della riserva. Le configurazioni superiori al VI richiedono una ricetta eccezionale: non vengono ricondotte automaticamente al VI.
-
-SnT indica il costo di Sintonizzazione ed è distinta da SIN, Sistema di Interfaccia Neurale. Un manufatto con sole proprietà passive ha SnT 0. Se possiede almeno una proprietà attiva, la SnT è pari al Grado finale, comprendendo l’eventuale riserva. Fanno eccezione gli Artefatti consumabili monouso del §27, che hanno SnT 0. Una batteria autonoma ha SnT pari al proprio Grado. Le proprietà passive di un artefatto misto restano utilizzabili secondo i propri requisiti anche senza sintonizzazione. Per il beneficio passivo sui PM dell’Hachimaki si applica l’eccezione del §28.1: SnT 1 e sintonizzazione necessaria.
+SnT indica il costo di Sintonizzazione ed è distinta da SIN, Sistema di Interfaccia Neurale. Un manufatto con sole proprietà passive ha SnT 0\. Se possiede almeno una proprietà attiva, la SnT è pari al Grado finale, comprendendo l’eventuale riserva. Fanno eccezione gli Artefatti consumabili monouso del §27, che hanno SnT 0\. Una batteria autonoma ha SnT pari al proprio Grado. Le proprietà passive di un artefatto misto restano utilizzabili secondo i propri requisiti anche senza sintonizzazione. Per il beneficio passivo sui PM dell’Hachimaki si applica l’eccezione del §28.1: SnT 1 e sintonizzazione necessaria.
 
 Una proprietà ad attivazione conserva effetti, PM, tempo di esecuzione, gittata, bersagli, durata, Concentrazione, Prove Salvezza, cumuli e limitazioni della versione infusa. Dopo la Sintonizzazione l’attivazione è automatica e non richiede Potere né Componenti, salvo un’eccezione espressamente prevista dalla specifica proprietà. Restano le eventuali Prove per colpire, Difese e Salvezze. L’utilizzatore non deve conoscere l’incantesimo. Per Rigenerazione infusa si applica il §25.4.
 
@@ -5481,19 +5306,16 @@ Una proprietà permanente migliora l’uso o la natura del supporto al quale vie
 
 Per una proprietà permanente si sceglie la versione minima completa che fornisce i benefici desiderati sul supporto. Miglioramenti di gittata, durata o numero di bersagli inutilizzabili su quell’unico oggetto non obbligano a una versione superiore. Restano requisiti d’impiego e limiti di cumulo.
 
-Arma Mistica permanente: livello 1, danno Magico senza bonus; livello 3, danno Magico e +1 al VA degli attacchi e al danno; livello 9, danno Magico e +2/+2; livello 15, danno Etereo e +3/+3. I bonus al VA non si applicano alla Parata. Le versioni 6, 12 e 18 non aggiungono benefici permanenti rispetto, rispettivamente, a 3, 9 e 15.
+Arma Mistica permanente: livello 1, danno Magico senza bonus; livello 3, danno Magico e \+1 al VA degli attacchi e al danno; livello 9, danno Magico e \+2/+2; livello 15, danno Etereo e \+3/+3. I bonus al VA non si applicano alla Parata. Le versioni 6, 12 e 18 non aggiungono benefici permanenti rispetto, rispettivamente, a 3, 9 e 15\.
 
-Armatura Mistica permanente: la componente fisica dell’AR dell’armatura diventa Magica; il bonus aggiuntivo è 0 al livello 1, +1 al livello 3, +2 al livello 9 e +3 al livello 15. Le versioni 6, 12 e 18 equivalgono alle precedenti ai fini del beneficio permanente. Sono esclusi scudi, pelle naturale e protezioni create da incantesimi. Le altre applicazioni permanenti richiedono una compatibilità esplicita con il supporto e con la scheda dell’incantesimo.
+Armatura Mistica permanente: la componente fisica dell’AR dell’armatura diventa Magica; il bonus aggiuntivo è 0 al livello 1, \+1 al livello 3, \+2 al livello 9 e \+3 al livello 15\. Le versioni 6, 12 e 18 equivalgono alle precedenti ai fini del beneficio permanente. Sono esclusi scudi, pelle naturale e protezioni create da incantesimi. Le altre applicazioni permanenti richiedono una compatibilità esplicita con il supporto e con la scheda dell’incantesimo.
 
 ## **24.3 Progettazione e commercio dei progetti**
 
 Un progetto riuscito è permanente, riutilizzabile, copiabile e vendibile. Non viene consumato costruendo l’oggetto. Possedere un progetto già pronto permette di passare alla costruzione senza ripetere la Prova di Artefatti.
 
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| \*\*Grado\*\* | \*\*Artefatti\*\* | \*\*Lavoro\*\* | \*\*Risorse per tentativo\*\* |
+| Grado | Artefatti | Lavoro | Risorse per tentativo |
+| :---- | :---- | :---- | :---- |
 | I | 0 VA | 4 ore | 100 cr |
 | II | −2 VA | 8 ore | 200 cr |
 | III | −4 VA | 16 ore | 400 cr |
@@ -5501,17 +5323,12 @@ Un progetto riuscito è permanente, riutilizzabile, copiabile e vendibile. Non v
 | V | −8 VA | 64 ore | 1.600 cr |
 | VI | −10 VA | 128 ore | 3.200 cr |
 
-  
-
 Si svolgono normalmente fino a 8 ore di lavoro produttivo al giorno e la progettazione può essere ripartita su più giornate. Le risorse indicate vengono consumate anche se il progetto fallisce; non comprendono il supporto fisico, il Chroma o i reagenti d’infusione.
 
-Successo: progetto ordinario. Successo Magistrale: progetto magistrale, che conserva per sempre +2 VA alle Prove di Tecnologia per realizzarlo, anche nelle copie e nelle costruzioni successive. Il bonus non si applica direttamente alla Prova di Rituali. Fallimento: un nuovo tentativo richiede metà del tempo base e tutte le risorse di progettazione. Fallimento Maldestro: un nuovo tentativo richiede l’intero tempo base e tutte le risorse.
+Successo: progetto ordinario. Successo Magistrale: progetto magistrale, che conserva per sempre \+2 VA alle Prove di Tecnologia per realizzarlo, anche nelle copie e nelle costruzioni successive. Il bonus non si applica direttamente alla Prova di Rituali. Fallimento: un nuovo tentativo richiede metà del tempo base e tutte le risorse di progettazione. Fallimento Maldestro: un nuovo tentativo richiede l’intero tempo base e tutte le risorse.
 
-  
-
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Grado\*\* | \*\*Ordinario\*\* | \*\*REP ordinario\*\* | \*\*Magistrale\*\* | \*\*REP magistrale\*\* |
+| Grado | Ordinario | REP ordinario | Magistrale | REP magistrale |
+| :---- | :---- | :---- | :---- | :---- |
 | I | 500 cr | Rara | 1.500 cr | Molto Rara |
 | II | 1.000 cr | Molto Rara | 3.000 cr | Leggendaria |
 | III | 2.000 cr | Molto Rara | 6.000 cr | Leggendaria |
@@ -5519,47 +5336,35 @@ Successo: progetto ordinario. Successo Magistrale: progetto magistrale, che cons
 | V | 8.000 cr | Leggendaria | 24.000 cr | Leggendaria |
 | VI | 16.000 cr | Leggendaria | 48.000 cr | Leggendaria |
 
-  
-
 Il prezzo ordinario di riferimento è cinque volte il costo delle risorse di progettazione; quello magistrale è tre volte l’ordinario. Sono valori provvisori da verificare con il playtest. La reperibilità parte da Rara; il possesso di un progetto o della sua copia non garantisce un compratore né una vendita al prezzo di riferimento.
 
 ## **24.4 Costruzione o adattamento**
 
 Tecnologia realizza il supporto previsto dal progetto oppure adatta un oggetto esistente. La complessità fisica è indipendente dal Grado mistico. Le procedure specifiche di fabbricazione dell’oggetto prevalgono sulla seguente scala generale di lavorazione.
 
-  
-
-|  |  |  |
-| :-: | :-: | :-: |
-| \*\*Complessità\*\* | \*\*Tecnologia\*\* | \*\*Lavoro\*\* |
+| Complessità | Tecnologia | Lavoro |
+| :---- | :---- | :---- |
 | Semplice | 0 VA | 4 ore |
 | Ordinaria | −2 VA | 8 ore |
 | Complessa | −4 VA | 16 ore |
 | Molto complessa | −6 VA | 32 ore |
 
-  
-
 Il costo dei materiali fisici è indicato dalla ricetta o dal preventivo di lavorazione e si aggiunge all’eventuale acquisto del supporto. Gli esempi di base prevedono 100 cr e lavorazione Semplice per un supporto di batteria, oppure 200 cr e lavorazione Ordinaria per l’adattamento di un’arma o di uno scudo. Il costo di 200 cr non è una tariffa universale per ogni oggetto.
 
-Successo: supporto pronto per l’infusione. Successo Magistrale: +2 VA alla Prova di Rituali d’infusione di quell’esemplare. Il beneficio resta disponibile nei nuovi tentativi se il supporto è integro o viene riparato fedelmente. Fallimento: nuovo tentativo con metà del tempo base e materiali aggiuntivi pari al 25% del costo di lavorazione. Fallimento Maldestro: nuovo tentativo con tempo intero e costo intero dei materiali di lavorazione; supporto di base e Chroma restano recuperabili.
+Successo: supporto pronto per l’infusione. Successo Magistrale: \+2 VA alla Prova di Rituali d’infusione di quell’esemplare. Il beneficio resta disponibile nei nuovi tentativi se il supporto è integro o viene riparato fedelmente. Fallimento: nuovo tentativo con metà del tempo base e materiali aggiuntivi pari al 25% del costo di lavorazione. Fallimento Maldestro: nuovo tentativo con tempo intero e costo intero dei materiali di lavorazione; supporto di base e Chroma restano recuperabili.
 
 ## **24.5 Infusione mistica**
 
 L’infusione comprende in un unico rituale tutte le proprietà e l’eventuale riserva del manufatto. Si usa il Grado finale. La durata è continua e la Prova di Rituali si effettua al termine; i PM richiesti sono personali e vengono spesi alla risoluzione finale.
 
-  
-
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Grado\*\* | \*\*Rituali\*\* | \*\*Durata\*\* | \*\*PM totali\*\* | \*\*Reagenti\*\* |
+| Grado | Rituali | Durata | PM totali | Reagenti |
+| :---- | :---- | :---- | :---- | :---- |
 | I | 0 VA | 1 ora | 3 | 250 cr |
 | II | −2 VA | 2 ore | 6 | 500 cr |
 | III | −4 VA | 3 ore | 9 | 1.000 cr |
 | IV | −6 VA | 4 ore | 12 | 2.000 cr |
 | V | −8 VA | 6 ore | 15 | 4.000 cr |
 | VI | −10 VA | 8 ore | 18 | 8.000 cr |
-
-  
 
 Per una batteria mistica autonoma i reagenti costano invece 50 cr per Grado. Restano la durata, la penalità e i PM della tabella. Questa eccezione non si applica alla riserva integrata in un artefatto dotato di altre funzioni.
 
@@ -5573,20 +5378,15 @@ Oltre all’Officiante possono partecipare al massimo tanti Canali quanto il Gra
 
 L’Officiante versa normalmente almeno tanti PM personali quanto il Grado. Le quote si ripartiscono prima della celebrazione e insieme costituiscono il costo totale: non si aggiungono nuovamente i PM del rituale. I PM devono essere disponibili al momento della Prova finale.
 
-  
+| VA pertinente del Canale | Aiuto al VA dell’Officiante |
+| :---- | :---- |
+| 0 o inferiore | \+0 |
+| 1–8 | \+1 |
+| 9–14 | \+2 |
+| 15–19 | \+3 |
+| 20 o superiore | \+4 |
 
-|  |  |
-| :-: | :-: |
-| \*\*VA pertinente del Canale\*\* | \*\*Aiuto al VA dell’Officiante\*\* |
-| 0 o inferiore | \\+0 |
-| 1–8 | \\+1 |
-| 9–14 | \\+2 |
-| 15–19 | \\+3 |
-| 20 o superiore | \\+4 |
-
-  
-
-I Canali non effettuano tiri separati. Si sommano gli aiuti fino a un massimo complessivo di +5 VA. Il +2 dovuto al supporto costruito con Successo Magistrale si aggiunge a questo limite durante l’infusione. Il bonus del progetto magistrale appartiene invece alla Prova di Tecnologia.
+I Canali non effettuano tiri separati. Si sommano gli aiuti fino a un massimo complessivo di \+5 VA. Il \+2 dovuto al supporto costruito con Successo Magistrale si aggiunge a questo limite durante l’infusione. Il bonus del progetto magistrale appartiene invece alla Prova di Tecnologia.
 
 Con un Successo Magistrale si dimezza il totale dei PM una sola volta, arrotondando per eccesso, poi si ripartisce il consumo effettivo senza aumentare la quota dichiarata di alcun partecipante. Il minimo dell’Officiante diventa metà del Grado, arrotondata per eccesso.
 
@@ -5594,11 +5394,8 @@ Con un Successo Magistrale si dimezza il totale dei PM una sola volta, arrotonda
 
 Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti.
 
-  
-
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Capacità\*\* | \*\*Grado colorato\*\* | \*\*Grado Bianco\*\* | \*\*Batteria colorata finita\*\* | \*\*Batteria Bianca finita\*\* |
+| Capacità | Grado colorato | Grado Bianco | Batteria colorata finita | Batteria Bianca finita |
+| :---- | :---- | :---- | :---- | :---- |
 | 5 PM | I | II | 1.000 cr | 5.000 cr |
 | 10 PM | II | III | 2.000 cr | 10.000 cr |
 | 15 PM | III | IV | 3.000 cr | 15.000 cr |
@@ -5606,11 +5403,9 @@ Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e i
 | 25 PM | V | VI | 5.000 cr | 25.000 cr |
 | 30 PM | VI | Fuori scala ordinaria | 6.000 cr | Ricetta eccezionale |
 
-  
-
 Chroma grezzo: 100 cr per PM di capacità per Rosso, Blu e Verde; 400 cr per PM per il Bianco. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. Questi prezzi di riferimento restano soggetti al playtest. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza.
 
-Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Il costo di creazione comprende progetto se necessario, supporto e lavorazione, Chroma grezzo e reagenti; non coincide automaticamente con il prezzo di vendita del manufatto finito.
+Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3\. Il costo di creazione comprende progetto se necessario, supporto e lavorazione, Chroma grezzo e reagenti; non coincide automaticamente con il prezzo di vendita del manufatto finito.
 
 La ricarica delle riserve colorate usa normalmente 3 PM personali per ottenere 1 PM immagazzinato. Ricarica Efficiente oppure Conversione Migliorata porta il rapporto a 2:1; entrambe lo portano a 1:1. Il Chroma Bianco conserva il rapporto 2:1 in entrambi i sensi. La ricarica non richiede una nuova spesa in crediti e rispetta accesso, compatibilità e procedure del §6. Il recupero dei PM personali non ricarica automaticamente le riserve esterne.
 
@@ -5618,7 +5413,7 @@ Per un singolo Incantesimo o attivazione si può usare una sola riserva esterna,
 
 ## **24.8 Riparazioni e modifiche**
 
-Una riparazione ordinaria richiede 1 ora e una Prova di Tecnologia: successo recupera 1 PI; Successo Magistrale 2 PI; fallimento nessun PI; Fallimento Maldestro perde 1 PI, fino a un minimo di 0. Per ogni PI effettivamente riparato si spendono materiali pari al 5% del valore fisico del supporto: oggetto di base e materiali di adattamento, escludendo progetto, Chroma e infusione.
+Una riparazione ordinaria richiede 1 ora e una Prova di Tecnologia: successo recupera 1 PI; Successo Magistrale 2 PI; fallimento nessun PI; Fallimento Maldestro perde 1 PI, fino a un minimo di 0\. Per ogni PI effettivamente riparato si spendono materiali pari al 5% del valore fisico del supporto: oggetto di base e materiali di adattamento, escludendo progetto, Chroma e infusione.
 
 A 0 PI l’oggetto non è utilizzabile, ma Chroma, PM residui e infusione non sono automaticamente distrutti. Se le parti mistiche sono integre, basta riparare il supporto senza ripetere il rituale. La sostituzione di un componente mistico o del Chroma distrutto richiede il progetto originale, la lavorazione effettivamente necessaria e una nuova infusione completa.
 
@@ -5628,9 +5423,9 @@ Aggiungere o potenziare una proprietà, oppure aumentare la capacità della rise
 
 La scheda riporta nome e natura del supporto; funzionamento Riutilizzabile o Consumabile; progetto e sua qualità; proprietà con riferimento all’incantesimo e versione; impiego permanente o attivo; Grado delle proprietà, Grado della riserva e Grado finale; SnT; Chroma, capacità e PM presenti; tipo di riserva Batteria o Cariche e alimentazione Esclusiva o Universale di ogni proprietà; eventuale Matrice d’origine; tempi, costi e condizioni d’attivazione; effetti e limitazioni; valore fisico rilevante per le riparazioni; PI e componenti da preservare. I dati derivano dalle scelte del progetto e dalle normali schede di incantesimi e oggetti.
 
-Esempio: una spada con Arma Mistica 3 permanente riceve danno Magico, +1 VA agli attacchi e +1 danno come un’unica proprietà di Grado I, con SnT 0 e nessuna riserva. Con supporto e progetto già disponibili, l’adattamento esemplificativo di 200 cr e i reagenti di 250 cr danno 450 cr di creazione; sviluppare il progetto aggiunge 100 cr. Se si aggiunge una funzione separata di Cura Ferite 3, il Grado delle proprietà diventa II; una riserva Verde da 5 PM è di Grado I e il manufatto finale ha Grado II e SnT 2.
+Esempio: una spada con Arma Mistica 3 permanente riceve danno Magico, \+1 VA agli attacchi e \+1 danno come un’unica proprietà di Grado I, con SnT 0 e nessuna riserva. Con supporto e progetto già disponibili, l’adattamento esemplificativo di 200 cr e i reagenti di 250 cr danno 450 cr di creazione; sviluppare il progetto aggiunge 100 cr. Se si aggiunge una funzione separata di Cura Ferite 3, il Grado delle proprietà diventa II; una riserva Verde da 5 PM è di Grado I e il manufatto finale ha Grado II e SnT 2\.
 
-# **25 Rigenerazione: rituale e artefatti**
+# **25 Rigenerazione: rituale e artefatti** {#25-rigenerazione:-rituale-e-artefatti}
 
 Questo capitolo completa la procedura della scheda 21.10. L’esecuzione diretta richiede un Rituale; un artefatto che contiene la proprietà permette invece l’attivazione automatica descritta al §25.4. Le capacità e i limiti della versione infusa restano quelli di Rigenerazione.
 
@@ -5638,20 +5433,15 @@ Questo capitolo completa la procedura della scheda 21.10. L’esecuzione diretta
 
 L’Officiante deve conoscere la procedura e possedere Ritualista Minore per le versioni di Grado III oppure Ritualista Maggiore per quelle di Grado IV–VI. Occorre mantenere il contatto con i beneficiari durante l’intera celebrazione. I beneficiari sono viventi e consenzienti, oppure incoscienti soccorsi; non effettuano una Prova Salvezza.
 
-  
-
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Versione\*\* | \*\*Rituali\*\* | \*\*Celebrazione\*\* | \*\*PM totali\*\* | \*\*Reagenti\*\* | \*\*Rigenerazione successiva\*\* |
+| Versione | Rituali | Celebrazione | PM totali | Reagenti | Rigenerazione successiva |
+| :---- | :---- | :---- | :---- | :---- | :---- |
 | 9 · Grado III | −4 VA | 3 ore | 9 | 1.500 cr | 5 giorni |
 | 10 · Grado III | −4 VA | 3 ore | 10 | 1.500 cr | 3 giorni |
 | 12 · Grado IV | −6 VA | 4 ore | 12 | 2.000 cr | 2 giorni |
 | 15 · Grado V | −8 VA | 6 ore | 15 | 2.500 cr | 1 giorno |
 | 18 · Grado VI | −10 VA | 8 ore | 18 | 3.000 cr | 12 ore |
 
-  
-
-I reagenti costano 500 cr per Grado e coprono tutti i beneficiari consentiti dalla versione. Il costo in PM della tabella è il totale del rituale: non si aggiungono i PM dell’infusione. Si applicano i Canali del §24.6, compresi il massimo di partecipanti, il limite di +5 VA, le quote personali e il minimo dell’Officiante pari al Grado.
+I reagenti costano 500 cr per Grado e coprono tutti i beneficiari consentiti dalla versione. Il costo in PM della tabella è il totale del rituale: non si aggiungono i PM dell’infusione. Si applicano i Canali del §24.6, compresi il massimo di partecipanti, il limite di \+5 VA, le quote personali e il minimo dell’Officiante pari al Grado.
 
 I reagenti vengono predisposti all’inizio. Prima della celebrazione si dichiarano le quote di PM, che devono essere disponibili alla Prova finale. L’Officiante effettua un’unica Prova di Rituali al termine. Il tempo di rigenerazione indicato nell’ultima colonna decorre dal successo finale e si aggiunge alla celebrazione.
 
@@ -5677,27 +5467,22 @@ Le competenze per infondere Rigenerazione riguardano il creatore. Qualsiasi pers
 
 Se Rigenerazione è infusa come proprietà Esclusiva, l’intero costo viene pagato dalla riserva interna compatibile Verde o Bianca e non servono PM personali. Se è Universale, si possono usare anche PM personali o un’altra fonte esterna compatibile, secondo il §26.2. La creazione segue le normali tre fasi e i costi del §24; i 500 cr per Grado sono reagenti dell’esecuzione diretta del rituale e non un costo per utilizzare l’Artefatto.
 
-La durata della celebrazione diventa il tempo di attivazione continua dell’oggetto: 3 ore per le versioni 9–10, 4 ore per la 12, 6 ore per la 15 e 8 ore per la 18. Per tutto il tempo si devono rispettare contatto e condizioni della versione. Al completamento si consumano i PM e inizia il processo autonomo di rigenerazione. Un’interruzione precedente impedisce l’effetto senza consumare PM.
+La durata della celebrazione diventa il tempo di attivazione continua dell’oggetto: 3 ore per le versioni 9–10, 4 ore per la 12, 6 ore per la 15 e 8 ore per la 18\. Per tutto il tempo si devono rispettare contatto e condizioni della versione. Al completamento si consumano i PM e inizia il processo autonomo di rigenerazione. Un’interruzione precedente impedisce l’effetto senza consumare PM.
 
 Beneficiari, capacità, tempi successivi e limiti restano quelli della versione infusa. L’attivazione automatica non genera Successi Magistrali, fallimenti di prova o Fallimenti Maldestri; gli esiti del §25.2 appartengono al rituale eseguito direttamente da un Officiante.
 
-Esempio: un anello con la sola Rigenerazione 9 Esclusiva e Cariche Verdi da 10 PM è di Grado III, con SnT 3. Ogni utilizzo consuma 9 PM dalla riserva dopo 3 ore di attivazione continua e avvia la riparazione di una Menomazione permanente quando la parte è ancora presente; il completamento richiede ulteriori 5 giorni. Il personaggio sintonizzato non deve essere un Ritualista.
-
-  
+Esempio: un anello con la sola Rigenerazione 9 Esclusiva e Cariche Verdi da 10 PM è di Grado III, con SnT 3\. Ogni utilizzo consuma 9 PM dalla riserva dopo 3 ore di attivazione continua e avvia la riparazione di una Menomazione permanente quando la parte è ancora presente; il completamento richiede ulteriori 5 giorni. Il personaggio sintonizzato non deve essere un Ritualista.
 
 # **26 Cristalli Matrice e riserve mistiche**
 
-Queste regole completano la creazione degli Artefatti del §24 e disciplinano la capacità di sintonizzazione, le fonti energetiche e i cristalli non lavorati. Le schede commerciali sono nel Manuale dell’Equipaggiamento, capitolo 10. Livello di un Incantesimo, livello di un Cristallo Matrice, Grado dell’Artefatto, Qualità fisica e Reperibilità sono valori distinti.
+Queste regole completano la creazione degli Artefatti del §24 e disciplinano la capacità di sintonizzazione, le fonti energetiche e i cristalli non lavorati. Le schede commerciali sono nel Manuale dell’Equipaggiamento, capitolo 10\. Livello di un Incantesimo, livello di un Cristallo Matrice, Grado dell’Artefatto, Qualità fisica e Reperibilità sono valori distinti.
 
 ## **26.1 Capacità di sintonizzazione**
 
-La capacità complessiva dipende dai Gradi complessivi del personaggio ed è uguale per tutti gli Addestramenti. Architetto TecnoMistico aggiunge +2 una sola volta. Si applicano poi le riduzioni dovute all’Umanità, fino a un minimo di 0. Questa progressione sostituisce la precedente capacità ordinaria da 4 a 9.
+La capacità complessiva dipende dai Gradi complessivi del personaggio ed è uguale per tutti gli Addestramenti. Architetto TecnoMistico aggiunge \+2 una sola volta. Si applicano poi le riduzioni dovute all’Umanità, fino a un minimo di 0\. Questa progressione sostituisce la precedente capacità ordinaria da 4 a 9\.
 
-  
-
-|  |  |  |
-| :-: | :-: | :-: |
-| \*\*Grado complessivo\*\* | \*\*Capacità ordinaria\*\* | \*\*Con Architetto TecnoMistico\*\* |
+| Grado complessivo | Capacità ordinaria | Con Architetto TecnoMistico |
+| :---- | ----- | ----- |
 | I | 8 | 10 |
 | II | 9 | 11 |
 | III | 10 | 12 |
@@ -5705,37 +5490,25 @@ La capacità complessiva dipende dai Gradi complessivi del personaggio ed è ugu
 | V | 12 | 14 |
 | VI | 13 | 15 |
 
-  
+Il costo SnT del singolo oggetto non cambia: è pari al suo Grado quando occorre sintonizzarsi per usarne le funzioni attive; un oggetto soltanto passivo ha SnT 0\. Anche gli Artefatti consumabili monouso del §27 hanno SnT 0 e non richiedono sintonizzazione. Le proprietà passive restano utilizzabili senza sintonizzazione anche negli oggetti che possiedono proprietà attive. La somma degli SnT degli oggetti sintonizzati non può superare la capacità effettiva. Non occorre possedere il medesimo Grado dell’oggetto: anche un personaggio di basso Grado può usare un Artefatto potente se ne soddisfa i requisiti e dispone di sufficiente capacità. Per il beneficio passivo sui PM dell’Hachimaki si applica l’eccezione del §28.1: SnT 1 e sintonizzazione necessaria.
 
-Il costo SnT del singolo oggetto non cambia: è pari al suo Grado quando occorre sintonizzarsi per usarne le funzioni attive; un oggetto soltanto passivo ha SnT 0. Anche gli Artefatti consumabili monouso del §27 hanno SnT 0 e non richiedono sintonizzazione. Le proprietà passive restano utilizzabili senza sintonizzazione anche negli oggetti che possiedono proprietà attive. La somma degli SnT degli oggetti sintonizzati non può superare la capacità effettiva. Non occorre possedere il medesimo Grado dell’oggetto: anche un personaggio di basso Grado può usare un Artefatto potente se ne soddisfa i requisiti e dispone di sufficiente capacità. Per il beneficio passivo sui PM dell’Hachimaki si applica l’eccezione del §28.1: SnT 1 e sintonizzazione necessaria.
-
-La sintonizzazione richiede un minuto a contatto e una Prova di Artefatti; Architetto TecnoMistico rende automatica la Prova, non elimina il tempo né il limite. Una Batteria Matrice Rossa da 10 PM (SnT 3), la Pietra della Vigilanza (SnT 3) e i Guanti da Combattimento Mistico (SnT 2) occupano insieme 8 punti: sono utilizzabili contemporaneamente al I Grado, in assenza di riduzioni della capacità.
+La sintonizzazione richiede un minuto a contatto e una Prova di Artefatti; Architetto TecnoMistico rende automatica la Prova, non elimina il tempo né il limite. Una Batteria Matrice Rossa da 10 PM (SnT 3), la Pietra della Vigilanza (SnT 3\) e i Guanti da Combattimento Mistico (SnT 2\) occupano insieme 8 punti: sono utilizzabili contemporaneamente al I Grado, in assenza di riduzioni della capacità.
 
 ## **26.2 Riserve e alimentazione delle proprietà**
 
 Il progetto e la scheda indicano due scelte indipendenti: il tipo di riserva dell’oggetto e il tipo di alimentazione di ogni proprietà infusa. Queste etichette non costituiscono da sole Incantesimi aggiuntivi e non aggiungono Gradi. Devono però essere previste nel progetto; trasformare un oggetto già costruito segue le regole di modifica del §24.8.
 
-  
-
-|  |  |
-| :-: | :-: |
-| \*\*Tipo di riserva\*\* | \*\*Impiego\*\* |
+| Tipo di riserva | Impiego |
+| :---- | :---- |
 | Batteria | Alimenta l’Artefatto ed è una fonte esterna per gli Incantesimi compatibili del personaggio; segue le normali regole di conversione. |
 | Cariche | Alimenta soltanto il proprio Artefatto. Non si possono prelevare PM per Incantesimi personali o convertirli in PM personali. |
 
-  
-
 Sia Batterie sia Cariche si misurano in PM. Si registra sempre una sola coppia PM attuali/PM massimi. Le Cariche si ricaricano con la procedura ordinaria del colore pertinente, salvo eccezioni espresse nella scheda.
 
-  
-
-|  |  |
-| :-: | :-: |
-| \*\*Proprietà infusa\*\* | \*\*Fonti ammesse\*\* |
+| Proprietà infusa | Fonti ammesse |
+| :---- | :---- |
 | Esclusiva | Soltanto la riserva interna del medesimo oggetto, sia essa Batteria o Cariche. |
 | Universale | Riserva interna, PM personali oppure un’altra fonte esterna compatibile, secondo i limiti ordinari. |
-
-  
 
 Universale descrive l’accesso alle fonti, non un cambiamento di colore: Rosso per energia Fisica, Blu per Mentale, Verde per Spirituale; Bianco e PM personali sono universali. In un singolo lancio o attivazione si usa al massimo una riserva esterna, eventualmente integrata con PM personali. La riserva dell’Artefatto è esterna rispetto al personaggio: non può essere sommata a un’altra Batteria nello stesso pagamento.
 
@@ -5747,11 +5520,8 @@ Le schede anteriori a questa distinzione che prevedono una riserva utilizzabile 
 
 I Cristalli Matrice sono cristalli puri Bianchi, Rossi, Verdi o Blu, dotati di proprietà leggendarie. Il loro controllo e la loro realizzazione non sono attualmente accessibili ai personaggi. Ciò non impedisce ai PG di beneficiare della loro influenza o di utilizzare schegge ricevute in gioco. Il livello da 1 a 20 indica dimensioni e raggio di influenza e non coincide con il Grado I–VI degli Artefatti.
 
-  
-
-|  |  |  |  |
-| :-: | :-: | :-: | :-: |
-| \*\*Livello\*\* | \*\*Altezza m\*\* | \*\*Larghezza m\*\* | \*\*Raggio\*\* |
+| Livello | Altezza m | Larghezza m | Raggio |
+| ----- | ----- | ----- | ----- |
 | 1 | 1 | 0,4 | 100 m |
 | 2 | 1,5 | 0,6 | 500 m |
 | 3 | 2 | 0,8 | 1 km |
@@ -5773,15 +5543,13 @@ I Cristalli Matrice sono cristalli puri Bianchi, Rossi, Verdi o Blu, dotati di p
 | 19 | 650 | 260 | 10.000 km |
 | 20 | 1.000 | 400 | 20.000 km |
 
-  
-
 Il Cristallo Matrice Rosso della chiesa di Sant’Elias è di livello 1: altezza 1 m, larghezza 0,4 m e raggio 100 m. Quello di Rettungsanker, richiamato anche come Rettung o Rutteng nelle note di campagna, è Rosso di livello 6: circa 6 m per 2,5 m, raggio 15 km. Le dimensioni sono misure di riferimento; il raggio è quello indicato dal livello.
 
 ## **26.4 Batterie Matrice**
 
 Una Batteria Matrice è una Batteria costruita con schegge di un Cristallo Matrice. Conserva il colore e l’identità della Matrice d’origine. A parità di colore e capacità, il suo Grado e il suo SnT sono superiori di uno rispetto a una Batteria Mistica ordinaria. La potenza segue il nuovo Grado; la Reperibilità sale di una fascia. La Qualità fisica del contenitore non aumenta automaticamente.
 
-Le Batterie colorate passano da REP Molto Rara a Epica. Le Bianche, già Leggendarie, richiedono una disponibilità eccezionale stabilita dal Direttore di Gioco: non si crea una fascia commerciale ordinaria oltre Leggendaria. Quando il +1 porta oltre il Grado VI, la configurazione richiede una ricetta eccezionale; non si arrotonda al VI e non si applicano automaticamente le normali tabelle di creazione.
+Le Batterie colorate passano da REP Molto Rara a Epica. Le Bianche, già Leggendarie, richiedono una disponibilità eccezionale stabilita dal Direttore di Gioco: non si crea una fascia commerciale ordinaria oltre Leggendaria. Quando il \+1 porta oltre il Grado VI, la configurazione richiede una ricetta eccezionale; non si arrotonda al VI e non si applicano automaticamente le normali tabelle di creazione.
 
 Entro il raggio della propria Matrice d’origine, la Batteria recupera automaticamente 2 PM all’ora. Entro quello di un’altra Matrice dello stesso colore recupera 1 PM all’ora. Una Matrice di colore diverso non la ricarica: anche il Bianco ricarica soltanto Batterie Matrice Bianche. Il recupero non richiede Prove, spesa di PM personali o sintonizzazione e non supera la capacità massima. In zone sovrapposte si applica soltanto la velocità migliore, senza sommare le fonti. Il livello della Matrice modifica il raggio, non la velocità.
 
@@ -5795,11 +5563,8 @@ Le Schegge instabili sono frammenti di Chroma non ancora lavorati per l’inseri
 
 Prima di prelevare PM si dichiara quanti prelevarne, senza superare quelli presenti. Si effettua una Prova di Potere obbligatoria, con penalità determinata dai soli PM estratti dalla scheggia, non dall’intero costo dell’Incantesimo se integrato con PM personali.
 
-  
-
-|  |  |
-| :-: | :-: |
-| \*\*PM estratti\*\* | \*\*Modificatore a Potere\*\* |
+| PM estratti | Modificatore a Potere |
+| ----- | ----- |
 | 1–3 | −2 VA |
 | 4–6 | −4 VA |
 | 7–9 | −6 VA |
@@ -5811,8 +5576,6 @@ Prima di prelevare PM si dichiara quanti prelevarne, senza superare quelli prese
 | 25–27 | −18 VA |
 | 28–30 | −20 VA |
 
-  
-
 La penalità prosegue di −2 VA per ogni ulteriore gruppo di 3 PM o frazione. Se la Prova fallisce, i PM dichiarati vengono dispersi dalla scheggia: l’Incantesimo non viene lanciato e non si effettua la Prova di lancio. Gli altri PM della scheggia restano disponibili; i PM personali che si intendeva aggiungere non sono ancora spesi.
 
 Se l’estrazione riesce, si passa separatamente alla Prova di Potere per lanciare l’Incantesimo personale. In questa procedura le due Prove sono distinte e obbligatorie, anche quando il normale lancio sarebbe automatico; alla seconda si applicano i modificatori ordinari dell’Incantesimo, senza ripetere la penalità di estrazione. Se la seconda fallisce, il lancio fallisce e i PM impegnati sono consumati secondo le regole del lancio. I PM già estratti non vengono sottratti una seconda volta. Per alimentare invece una proprietà Universale di un Artefatto, dopo l’estrazione si segue l’attivazione della scheda, normalmente automatica (§26.2).
@@ -5823,19 +5586,14 @@ Non si possono sommare più schegge per pagare uno stesso lancio: vale il limite
 
 Si applica la normale procedura di ricarica del colore, compresi requisiti, tempo e rapporti di conversione. La Prova di Potere è sempre obbligatoria, anche per 1 PM, e subisce un ulteriore −2 VA rispetto alla normale ricarica. Questa scala è diversa da quella dell’estrazione.
 
-  
-
-|  |  |
-| :-: | :-: |
-| \*\*PM da immagazzinare\*\* | \*\*Modificatore a Potere\*\* |
+| PM da immagazzinare | Modificatore a Potere |
+| ----- | ----- |
 | 1 | −2 VA |
 | 2 | −2 VA |
 | 3 | −4 VA |
 | 4 | −6 VA |
 | 5 | −8 VA |
 | 6 | −10 VA |
-
-  
 
 Oltre 6 PM la penalità peggiora di −2 VA per ogni PM aggiuntivo. I PM della tabella sono quelli da immagazzinare, dopo la conversione. Per le schegge colorate resta il rapporto ordinario 3 PM personali per 1 PM immagazzinato, ridotto a 2:1 con uno dei Talenti pertinenti e a 1:1 con entrambi; per il Bianco resta 2:1 in entrambi i sensi. I requisiti di Addestramento e Talenti restano quelli della ricarica delle Batterie.
 
@@ -5845,13 +5603,13 @@ Se la ricarica fallisce, tutti i PM personali impegnati vengono consumati e disp
 
 ### **26.6.1 Pietra della Vigilanza**
 
-La Pietra della Vigilanza è un Artefatto Mistico e una Batteria Mistica Verde da 10 PM. Possiede due proprietà attive Universali: Individuare 6 ed Esorcizzare Corruzione 6. Entrambe richiedono la sintonizzazione alla Pietra, ma non la conoscenza degli Incantesimi né una Prova di Potere per attivarle.
+La Pietra della Vigilanza è un Artefatto Mistico e una Batteria Mistica Verde da 10 PM. Possiede due proprietà attive Universali: Individuare 6 ed Esorcizzare Corruzione 6\. Entrambe richiedono la sintonizzazione alla Pietra, ma non la conoscenza degli Incantesimi né una Prova di Potere per attivarle.
 
 Potenza Rara, Grado III, SnT 3 complessivi. I due effetti di Grado II portano le proprietà al Grado III; la riserva da 10 PM è di Grado II e non aggiunge un costo separato di SnT. Qualità fisica Non Comune, PS Integrità 12, 4 PI, peso 0,2 kg. Prezzo indicativo 4.000 cr; REP Molto Rara. Prezzo e profilo fisico sono parametri di catalogo da verificare in playtest.
 
-Individuare 6. Attivazione 1 AzP, costo 6 PM. Potenza di individuazione 6; percezione entro 10 Q (15 m) oppure analisi di una zona di 1 Q entro tale portata. Si sceglie una modalità alla volta. Durata: Concentrazione fino a 10 minuti oppure durata fissa di 5 RND. La percezione segnala presenza e direzione; l’analisi localizza ed esamina una fonte e una categoria per RND. Può riconoscere una firma della Simmetria Oscura, ma non certifica lo Stato personale di CROS: la diagnosi di Corruzione richiede Individuare 12.
+Individuare 6\. Attivazione 1 AzP, costo 6 PM. Potenza di individuazione 6; percezione entro 10 Q (15 m) oppure analisi di una zona di 1 Q entro tale portata. Si sceglie una modalità alla volta. Durata: Concentrazione fino a 10 minuti oppure durata fissa di 5 RND. La percezione segnala presenza e direzione; l’analisi localizza ed esamina una fonte e una categoria per RND. Può riconoscere una firma della Simmetria Oscura, ma non certifica lo Stato personale di CROS: la diagnosi di Corruzione richiede Individuare 12\.
 
-Esorcizzare Corruzione 6. Costo 6 PM pagati all’inizio; 10 minuti fuori dal combattimento, Concentrazione e contatto con una creatura vivente consenziente o incapacitata. Riduce di uno Stato la CROS, fino allo Stato iniziale Corrotto incluso: Corrotto passa a Infetto. Può avere effetto una sola volta ogni 24 ore sul medesimo destinatario, considerando insieme tutti gli utilizzatori e le fonti. Un’interruzione impedisce l’effetto senza restituire i PM. Non cura lo Stato Oscuro, non rimuove mutazioni permanenti e non espelle possessioni.
+Esorcizzare Corruzione 6\. Costo 6 PM pagati all’inizio; 10 minuti fuori dal combattimento, Concentrazione e contatto con una creatura vivente consenziente o incapacitata. Riduce di uno Stato la CROS, fino allo Stato iniziale Corrotto incluso: Corrotto passa a Infetto. Può avere effetto una sola volta ogni 24 ore sul medesimo destinatario, considerando insieme tutti gli utilizzatori e le fonti. Un’interruzione impedisce l’effetto senza restituire i PM. Non cura lo Stato Oscuro, non rimuove mutazioni permanenti e non espelle possessioni.
 
 Riserva e alimentazione. I 10 PM sono condivisi fra le due proprietà e gli altri impieghi della Batteria. La Pietra può alimentare gli Incantesimi spirituali del personaggio secondo le regole ordinarie. Le proprietà Universali possono usare PM personali, la riserva interna oppure un’altra fonte esterna compatibile; per ogni attivazione resta il limite di una fonte esterna, eventualmente integrata con PM personali. Esempio: 4 PM dalla Pietra e 2 PM personali pagano un’attivazione da 6 PM. Non si possono combinare nello stesso pagamento i PM della Pietra e quelli di un’altra Batteria.
 
@@ -5865,19 +5623,19 @@ Classificazione e mani. Arma ravvicinata, famiglia Armi da pugno, tipo Guanti da
 
 Impiego in combattimento. Quando il portatore sferra un pugno usa il profilo dei Guanti; quando attacca con un’arma impugnata usa il profilo di quell’arma. I pugni con i Guanti conservano il danno senz’armi e i benefici pertinenti, compresi Arti Marziali e il dado del Lottatore. Il danno fisso dei Tirapugni commerciali non sostituisce quello del personaggio. I poteri dei Guanti mantengono le applicazioni e i limiti descritti nella scheda e non si trasferiscono alle armi impugnate.
 
-Proprietà passiva. Conferiscono +1 VA alle Prove per colpire con i pugni e alle Prove per colpire in corpo a corpo richieste dagli Incantesimi. Il beneficio passivo funziona anche senza sintonizzazione. Non concede danno passivo aggiuntivo e non si applica a calci, armi impugnate, attacchi a distanza, Prove di Potere per lanciare Incantesimi o danni degli Incantesimi.
+Proprietà passiva. Conferiscono \+1 VA alle Prove per colpire con i pugni e alle Prove per colpire in corpo a corpo richieste dagli Incantesimi. Il beneficio passivo funziona anche senza sintonizzazione. Non concede danno passivo aggiuntivo e non si applica a calci, armi impugnate, attacchi a distanza, Prove di Potere per lanciare Incantesimi o danni degli Incantesimi.
 
 Riserva. Cariche Verdi da 10 PM, utilizzabili soltanto per alimentare i Guanti. Non sono una Batteria per il personaggio. La parola Cariche indica una riserva in PM: non significa dieci attivazioni.
 
-Proprietà attiva Esclusiva. Spendendo 3 PM dalla riserva interna e 1 AzP, per 5 RND i danni dei pugni diventano Magici e ottengono +1 al danno. L’attivazione richiede sintonizzazione, è automatica e non richiede Concentrazione. Non cambia il bonus passivo di +1 a colpire. L’effetto non potenzia il danno degli Incantesimi e non si cumula con ulteriori attivazioni della stessa proprietà; una nuova attivazione rinnova la durata. I Guanti pieni consentono tre attivazioni e conservano 1 PM.
+Proprietà attiva Esclusiva. Spendendo 3 PM dalla riserva interna e 1 AzP, per 5 RND i danni dei pugni diventano Magici e ottengono \+1 al danno. L’attivazione richiede sintonizzazione, è automatica e non richiede Concentrazione. Non cambia il bonus passivo di \+1 a colpire. L’effetto non potenzia il danno degli Incantesimi e non si cumula con ulteriori attivazioni della stessa proprietà; una nuova attivazione rinnova la durata. I Guanti pieni consentono tre attivazioni e conservano 1 PM.
 
 Ricarica. Le Cariche si ricaricano con la normale procedura delle riserve Verdi: stessi requisiti, rapporti di conversione e Prove delle Batterie Mistiche. L’utilizzatore non può pagare l’attivazione Esclusiva con PM personali o Batterie esterne.
 
-Creazione. La ricetta approvata tratta il beneficio passivo come Grado I e l’attivazione come Grado I; la combinazione porta le proprietà al Grado II. Anche la riserva da 10 PM è di Grado II: il risultato resta Grado II e SnT 2. Questa ricetta specifica non autorizza a scomporre liberamente altri Incantesimi per abbassarne il Grado. Supporto 100 cr, adattamento 200 cr, Chroma Verde 1.000 cr e reagenti 500 cr: 1.800 cr con progetto posseduto; 2.000 cr progettando un nuovo schema, comprese 200 cr di risorse. Un progetto standard acquistato costa invece 1.000 cr. Costruzione Ordinaria: Tecnologia −2 VA, 8 ore. Infusione: Rituali −2 VA, 6 PM e 2 ore; valgono gli aiuti e gli esiti ordinari. La riserva appena creata è vuota.
+Creazione. La ricetta approvata tratta il beneficio passivo come Grado I e l’attivazione come Grado I; la combinazione porta le proprietà al Grado II. Anche la riserva da 10 PM è di Grado II: il risultato resta Grado II e SnT 2\. Questa ricetta specifica non autorizza a scomporre liberamente altri Incantesimi per abbassarne il Grado. Supporto 100 cr, adattamento 200 cr, Chroma Verde 1.000 cr e reagenti 500 cr: 1.800 cr con progetto posseduto; 2.000 cr progettando un nuovo schema, comprese 200 cr di risorse. Un progetto standard acquistato costa invece 1.000 cr. Costruzione Ordinaria: Tecnologia −2 VA, 8 ore. Infusione: Rituali −2 VA, 6 PM e 2 ore; valgono gli aiuti e gli esiti ordinari. La riserva appena creata è vuota.
 
 ## **26.7 Registrazione delle dotazioni**
 
-Il gruppo possiede due Batterie Matrice Rosse da 10 PM, create con le schegge del Cristallo Matrice di Rettungsanker donate da Sorella Iolanda. Ognuna ha Grado III, potenza Rara e SnT 3. Da vuota a piena impiega 5 ore presso la Matrice d’origine oppure 10 ore presso quella di Sant’Elias. Le due Batterie si ricaricano contemporaneamente e restano due riserve distinte.
+Il gruppo possiede due Batterie Matrice Rosse da 10 PM, create con le schegge del Cristallo Matrice di Rettungsanker donate da Sorella Iolanda. Ognuna ha Grado III, potenza Rara e SnT 3\. Da vuota a piena impiega 5 ore presso la Matrice d’origine oppure 10 ore presso quella di Sant’Elias. Le due Batterie si ricaricano contemporaneamente e restano due riserve distinte.
 
 Il gruppo possiede inoltre quattro Schegge instabili Verdi da 5 PM ciascuna: SnT 0 e capacità complessiva 20 PM, distribuita in quattro oggetti separati. Il totale non permette di prelevare 20 PM da una singola fonte. I PM attuali delle Batterie, delle Schegge e degli Artefatti posseduti si registrano secondo lo stato effettivo in campagna, senza presumere che siano pieni.
 
@@ -5885,7 +5643,7 @@ Ogni oggetto ha un’unica scheda e un’unica istanza nell’inventario. La ste
 
 Classificazione degli oggetti. La funzione e la natura si registrano separatamente: un oggetto può essere contemporaneamente un’Arma e un Artefatto Mistico o TecnoMistico. Quando è utilizzabile come arma, la scheda indica famiglia, Abilità e profilo d’attacco. La modalità di impiego distingue gli oggetti impugnati da quelli indossati e ne indica le mani occupate. Le categorie sono viste della stessa istanza: quantità, peso, Integrità, riserve e SnT si conteggiano una sola volta.
 
-# **27 Artefatti consumabili**
+# **27 Artefatti consumabili** {#27-artefatti-consumabili}
 
 Un Artefatto consumabile contiene una versione definita di un Incantesimo e si dissolve dopo un solo utilizzo. Le pergamene sono un esempio di supporto: la regola può essere applicata ad altri oggetti progettati per consumarsi. La distinzione Riutilizzabile o Consumabile è indipendente dalla natura Mistica o TecnoMistica, che continua a dipendere dalla costruzione.
 
@@ -5905,17 +5663,14 @@ Per Esorcizzare Corruzione su pergamena si applica questa regola specifica di co
 
 ## **27.2 Creazione e risorse**
 
-Restano le tre fasi del §24: Artefatti per il progetto obbligatorio, Tecnologia per il supporto, Rituali per l’infusione. Possono intervenire persone diverse. Il progetto usa requisiti, costi, tempi e Prove ordinari del proprio Grado: è permanente, riutilizzabile e vendibile. Un progetto Magistrale conserva il +2 a Tecnologia anche per gli esemplari successivi.
+Restano le tre fasi del §24: Artefatti per il progetto obbligatorio, Tecnologia per il supporto, Rituali per l’infusione. Possono intervenire persone diverse. Il progetto usa requisiti, costi, tempi e Prove ordinari del proprio Grado: è permanente, riutilizzabile e vendibile. Un progetto Magistrale conserva il \+2 a Tecnologia anche per gli esemplari successivi.
 
 Il supporto di una pergamena standard costa 25 cr. La costruzione è Semplice: Tecnologia senza penalità e 4 ore di lavoro. La complessità e il costo di un supporto diverso dipendono dalla sua costruzione effettiva; non si presume che ogni altro oggetto costi 25 cr.
 
 L’infusione mantiene accesso, penalità, durata, partecipazione dei Canali e aiuti al VA finale del §24. I reagenti costano un quinto di quelli di un Artefatto ordinario dello stesso Grado. Comprendono il Chroma preparato per consumarsi, per esempio polvere dispersa negli inchiostri rituali: non si aggiunge il prezzo di un cristallo integro o di una Batteria riutilizzabile.
 
-  
-
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Grado\*\* | \*\*Reagenti cr\*\* | \*\*Creazione cr\*\* | \*\*Vendita cr\*\* | \*\*REP\*\* |
+| Grado | Reagenti cr | Creazione cr | Vendita cr | REP |
+| :---- | :---- | :---- | :---- | :---- |
 | I | 50 | 75 | 150 | Molto Rara |
 | II | 100 | 125 | 250 | Molto Rara |
 | III | 200 | 225 | 450 | Molto Rara |
@@ -5923,33 +5678,26 @@ L’infusione mantiene accesso, penalità, durata, partecipazione dei Canali e a
 | V | 800 | 825 | 1650 | Leggendaria |
 | VI | 1600 | 1625 | 3250 | Leggendaria |
 
-  
-
-Creazione = 25 cr di supporto + reagenti, con progetto già disponibile e senza compensi per manodopera esterna. Vendita = doppio di tale costo: prezzo indicativo da playtest, distinto dal valore di rivendita e dalla possibilità concreta di trovare un’offerta. La reperibilità è Molto Rara ai Gradi I–III e Leggendaria ai Gradi IV–VI.
+Creazione \= 25 cr di supporto \+ reagenti, con progetto già disponibile e senza compensi per manodopera esterna. Vendita \= doppio di tale costo: prezzo indicativo da playtest, distinto dal valore di rivendita e dalla possibilità concreta di trovare un’offerta. La reperibilità è Molto Rara ai Gradi I–III e Leggendaria ai Gradi IV–VI.
 
 I PM richiesti per creare il Consumabile sono 3 × Grado per il lavoro d’infusione, più l’intero costo base in PM della versione da sigillare. Le quote dei partecipanti seguono le normali regole rituali. Questi PM vengono forniti durante la creazione: il Consumabile completato è pronto all’uso e costituisce un’eccezione alle riserve appena costruite normalmente vuote.
 
 Con un Successo Magistrale si dimezzano, arrotondando per eccesso, i PM di lavoro e i reagenti; i PM sigillati dell’Incantesimo restano interi. Il supporto da 25 cr e il progetto non ricevono questo sconto. Fallimenti, Maldestri e interruzioni dell’infusione seguono gli esiti ordinari del §24.5; sono distinti dall’interruzione dell’attivazione di un Consumabile già pronto.
 
-Esempio: una pergamena di Cura Ferite 3 è di Grado I. Con progetto disponibile costa 25 + 50 = 75 cr, richiede 4 ore di costruzione e 1 ora d’infusione. I PM totali sono 3 per il lavoro + 3 sigillati = 6. Con infusione Magistrale il lavoro costa 2 PM, i reagenti 25 cr e i 3 PM sigillati restano necessari: totale 5 PM e 50 cr di materiali.
+Esempio: una pergamena di Cura Ferite 3 è di Grado I. Con progetto disponibile costa 25 \+ 50 \= 75 cr, richiede 4 ore di costruzione e 1 ora d’infusione. I PM totali sono 3 per il lavoro \+ 3 sigillati \= 6\. Con infusione Magistrale il lavoro costa 2 PM, i reagenti 25 cr e i 3 PM sigillati restano necessari: totale 5 PM e 50 cr di materiali.
 
 ## **27.3 Campionario di pergamene**
 
 Artefatti Mistici consumabili, monouso, con SnT 0 e Cariche Esclusive sigillate Verdi. I PM sono già inclusi nell’oggetto: l’utilizzatore non deve fornirli, conoscere l’Incantesimo o possedere Ritualista. L’attivazione è automatica, salvo eccezioni espresse; restano eventuali Prove per colpire, Difese e Salvezze.
 
-  
-
-|  |  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| \*\*Pergamena\*\* | \*\*Grado\*\* | \*\*PM\*\* | \*\*Attivazione\*\* | \*\*Creazione cr\*\* | \*\*Vendita cr\*\* |
+| Pergamena | Grado | PM | Attivazione | Creazione cr | Vendita cr |
+| :---- | :---- | :---- | :---- | :---- | :---- |
 | Cura Ferite 3 | I | 3 | 1 AP | 75 | 150 |
 | Arma Mistica 3 | I | 3 | 1 AP | 75 | 150 |
 | Armatura Mistica 3 | I | 3 | 1 AP | 75 | 150 |
 | Individuare 6 | II | 6 | 1 AP | 125 | 250 |
 | Esorcizzare Corruzione 6 | II | 6 | 10 minuti | 125 | 250 |
 | Rigenerazione 9 | III | 9 | 3 ore continuative | 225 | 450 |
-
-  
 
 Tutti i sei esemplari sono di REP Molto Rara. I costi di creazione presuppongono il progetto già disponibile. I PM della tabella sono sigillati, non un costo personale di attivazione. Restano validi tutti i limiti delle schede originali.
 
@@ -5959,15 +5707,15 @@ A contatto, restituisce 1d4+2 PV a una creatura vivente consenziente, oppure inc
 
 ### **27.3.2 Pergamena di Arma Mistica 3**
 
-Incanta un’arma toccata per 5 RND, senza Concentrazione. I danni diventano Magici; conferisce +1 al VA degli attacchi e +1 al danno. Il bonus al VA non si applica alla Parata. Restano i limiti di cumulo della scheda; ripetere l’effetto non somma i bonus. Riferimento: scheda 22.1.
+Incanta un’arma toccata per 5 RND, senza Concentrazione. I danni diventano Magici; conferisce \+1 al VA degli attacchi e \+1 al danno. Il bonus al VA non si applica alla Parata. Restano i limiti di cumulo della scheda; ripetere l’effetto non somma i bonus. Riferimento: scheda 22.1.
 
 ### **27.3.3 Pergamena di Armatura Mistica 3**
 
-Incanta un’armatura fisica indossata e toccata per 5 RND, senza Concentrazione. Converte la sua AR in Magica e aggiunge +1 AR. Non ripara l’armatura. Sono esclusi scudi, pelle naturale e protezioni generate da Incantesimi; restano i normali limiti di cumulo. Riferimento: scheda 22.2.
+Incanta un’armatura fisica indossata e toccata per 5 RND, senza Concentrazione. Converte la sua AR in Magica e aggiunge \+1 AR. Non ripara l’armatura. Sono esclusi scudi, pelle naturale e protezioni generate da Incantesimi; restano i normali limiti di cumulo. Riferimento: scheda 22.2.
 
 ### **27.3.4 Pergamena di Individuare 6**
 
-Potere di Rilevazione 6. Permette la percezione delle emanazioni entro 10 Q (15 m), oppure l’analisi di un’area totale di 1 Q entro la stessa gittata. Una sola modalità alla volta. Si sceglie Concentrazione fino a 10 minuti oppure durata fissa di 5 RND. Percezione, analisi, cambi di modalità e occultamenti seguono la scheda. Riconosce l’impronta dell’Oscura Simmetria, ma non certifica la Corruzione personale di una creatura. Riferimento: scheda 23.9.
+Potere di Rilevazione 6\. Permette la percezione delle emanazioni entro 10 Q (15 m), oppure l’analisi di un’area totale di 1 Q entro la stessa gittata. Una sola modalità alla volta. Si sceglie Concentrazione fino a 10 minuti oppure durata fissa di 5 RND. Percezione, analisi, cambi di modalità e occultamenti seguono la scheda. Riconosce l’impronta dell’Oscura Simmetria, ma non certifica la Corruzione personale di una creatura. Riferimento: scheda 23.9.
 
 ### **27.3.5 Pergamena di Esorcizzare Corruzione 6**
 
@@ -6001,8 +5749,6 @@ Le seguenti schede raccolgono le proprietà mistiche della fascia, dello scrigno
 
 **CyberArma originale** — SnT: Da definire; Riserva: Nessuna; usa PM personali; Scheda di equipaggiamento: §10.9; Armamenti §7.25
 
-  
-
 Ogni esemplare ha un’unica voce di inventario, consultabile nelle categorie pertinenti. Peso, PI, riserva e SnT si conteggiano una sola volta. Un contenitore e il suo contenuto restano oggetti distinti: si sommano i loro pesi e si annota dove è riposto ciascun oggetto. Le schede di catalogo non assegnano automaticamente nuovi esemplari ai personaggi.
 
 ## **28.1 Hachimaki e Respiro Disciplinato**
@@ -6013,7 +5759,7 @@ Respiro Disciplinato riduce di 1 PM il costo delle Tecniche Interiori personali.
 
 La riduzione non si applica a Incantesimi, Rituali, ricariche o attivazioni di altri Artefatti. Non concede nuove Tecniche. Più esemplari o altre riduzioni del medesimo costo non si sommano: si usa soltanto il beneficio più favorevole. Esempio: una Tecnica da 3 PM costa 2 PM; una da 1 PM continua a costare 1 PM.
 
-Sintonizzazione: SnT 1. La proprietà passiva ha base 0, cui si aggiunge +1 per il beneficio sui PM. Questa maggiorazione si applica una volta all’oggetto e non per ogni Tecnica utilizzata. Il beneficio resta inattivo senza la sintonizzazione ordinaria del §26.1. Il Grado dell’oggetto rimane II.
+Sintonizzazione: SnT 1\. La proprietà passiva ha base 0, cui si aggiunge \+1 per il beneficio sui PM. Questa maggiorazione si applica una volta all’oggetto e non per ogni Tecnica utilizzata. Il beneficio resta inattivo senza la sintonizzazione ordinaria del §26.1. Il Grado dell’oggetto rimane II.
 
 ### **28.1.1 Ricetta di creazione**
 
@@ -6021,11 +5767,9 @@ Si applicano le tre fasi del §24. Occorre l’accesso rituale alla creazione di
 
 **Progetto nuovo** — Prova e tempo: Artefatti −2; 8 ore; Risorse: 200 cr consumati; progetto permanente
 
-**Costruzione** — Prova e tempo: Tecnologia −2; 8 ore; Risorse: 50 cr supporto + 150 cr adattamento e ricamo + 100 cr Chroma Verde lavorato
+**Costruzione** — Prova e tempo: Tecnologia −2; 8 ore; Risorse: 50 cr supporto \+ 150 cr adattamento e ricamo \+ 100 cr Chroma Verde lavorato
 
 **Infusione** — Prova e tempo: Rituali −2; 2 ore; Risorse: 500 cr reagenti; 6 PM di lavoro
-
-  
 
 Materiali con progetto disponibile: 800 cr. Con un nuovo progetto riuscito: 1.000 cr complessivi. Acquistando un progetto ordinario da 1.000 cr: prima realizzazione 1.800 cr. Le copie successive riutilizzano il progetto; manodopera esterna e relativi compensi sono separati. Aiuti, progetto Magistrale ed esiti delle Prove seguono le regole generali.
 
@@ -6045,11 +5789,11 @@ La struttura definitiva è a base quadrata, con rinforzi agli spigoli, piedini, 
 
 Custodia, Zaino e Cofanetto del Silenzio condividono la stessa proprietà di contenimento, applicata agli oggetti per cui sono predisposti. La Custodia accoglie la CyberArma disattivata; lo Zaino un’armatura riposta; il Cofanetto un anello e un amuleto in alloggiamenti separati.
 
-La schermatura è passiva e funziona quando il contenuto è interamente riposto e il contenitore è chiuso e integro. Contiene le emanazioni e il potere corruttivo degli oggetti previsti, con Corruzione 1. Non rimuove la Corruzione: aprire il contenitore o compromettere la chiusura o il rivestimento mistico fa cessare la schermatura. Richiuderlo integro ripristina la protezione senza Prove né spesa di PM.
+La schermatura è passiva e funziona quando il contenuto è interamente riposto e il contenitore è chiuso e integro. Contiene le emanazioni e il potere corruttivo degli oggetti previsti, con Corruzione 1\. Non rimuove la Corruzione: aprire il contenitore o compromettere la chiusura o il rivestimento mistico fa cessare la schermatura. Richiuderlo integro ripristina la protezione senza Prove né spesa di PM.
 
 SnT 0; nessuna Batteria, Carica o riserva di PM. La lavorazione mistica è nascosta all’interno; l’esterno non presenta rune, scritte o segni riconoscibili. Il contenitore può essere individuato come oggetto magico: la schermatura non equivale a invisibilità alla magia. Cuoio e legno seguono le normali regole di Integrità e non sono indistruttibili. Capacità e peso restano ordinari, senza spazio extradimensionale né alleggerimento del contenuto.
 
-Il Cofanetto contiene contemporaneamente le emanazioni dei due gioielli, ciascuno con Corruzione 1. Il profilo non stabilisce una capacità superiore per oggetti di Corruzione maggiore. Lo Zaino deve contenere interamente l’armatura e chiudersi normalmente; la Custodia deve contenere interamente impugnatura e condensatore della CyberArma disattivata.
+Il Cofanetto contiene contemporaneamente le emanazioni dei due gioielli, ciascuno con Corruzione 1\. Il profilo non stabilisce una capacità superiore per oggetti di Corruzione maggiore. Lo Zaino deve contenere interamente l’armatura e chiudersi normalmente; la Custodia deve contenere interamente impugnatura e condensatore della CyberArma disattivata.
 
 Ritirare un oggetto ne ripristina le normali condizioni d’uso e di esposizione; la custodia non ne modifica il profilo, l’alimentazione o i requisiti. Le Azioni per aprire, recuperare ed equipaggiare seguono il Manuale dell’Equipaggiamento, §1.4, e le regole specifiche degli Armamenti. Dimensioni, pesi e descrizioni dei tre modelli sono nel Manuale dell’Equipaggiamento, §10.13.
 
@@ -6059,4 +5803,3 @@ Il Tomo è una reliquia realizzata da Nathaniel e legata al primo rituale e ai c
 
 Il vincolo che permette ai sette PG e a Nathaniel di aprire lo Scrigno riguarda lo Scrigno stesso. Non si estende al Tomo in assenza di una regola specifica. La descrizione simbolica delle visioni non costituisce da sola un elenco di poteri utilizzabili.
 
-  

@@ -4,7 +4,7 @@
 
 ## Personaggi e regole di gioco
 
-**EDIZIONE CONSULTABILE 0.48**
+**EDIZIONE CONSULTABILE 0.49**
 
 Ottobre 2026
 
@@ -4202,7 +4202,7 @@ I danni Naturali e Magici sono assorbiti da qualsiasi protezione pertinente. I d
 
 L’Armatura è un unico valore complessivo, con la componente magica annotata separatamente; non viene suddivisa per parti anatomiche. Le AC indicano applicazioni distinte del danno: l’AR pertinente si sottrae separatamente a ciascuna. AR 6, di cui 2 magica, assorbe 6 danni Naturali o Magici e 2 danni Eterei, salvo eccezioni specifiche.
 
-Corazza Potenziata (+1 AR magica), Aura di Resistenza (+1 AR magica) e Pelle di Rinoceronte (+1 AR non magica contro attacchi Ravvicinati Naturali o Magici) si sommano fra loro e alle protezioni compatibili. Insieme concedono \+3 contro il Ravvicinato Naturale o Magico, \+2 contro gli altri danni Naturali o Magici e \+2 contro l’Etereo. Restano durate e requisiti; più applicazioni della stessa Tecnica non si sommano.
+Corazza Potenziata (+1 AR magica), Aura di Resistenza (+2 AR magica) e Pelle di Rinoceronte (+1 AR non magica contro attacchi Ravvicinati Naturali o Magici) si sommano fra loro e alle protezioni compatibili. Insieme concedono \+4 contro il Ravvicinato Naturale o Magico, \+3 contro gli altri danni Naturali o Magici e \+3 contro l’Etereo. Restano durate e requisiti; più applicazioni della stessa Tecnica non si sommano.
 
 Si usa invece soltanto il maggiore contributo applicabile fra Pelle Corazzata, Armatura di Forza e il bonus aggiuntivo di Armatura Mistica. La conversione dell’AR dell’equipaggiamento operata da Armatura Mistica resta distinta e si conta una sola volta; non cambia la natura delle altre protezioni.
 
@@ -5773,7 +5773,7 @@ Le durate in Round iniziano all’attivazione e terminano alla fine del Round R 
 
 **Costo:** 0 PM. **Tempo:** almeno un’ora completa. **Bersaglio:** se stesso. **Durata:** fino all’interruzione. **Limite:** 1 \+ Mod SAG \+ Mod COS ore al giorno, minimo 1\.
 
-Durante la trance, ogni ora completa recupera **3 PV, 2 PM e 1 punto di recupero dell’Affaticamento**. Sono i recuperi specifici della Tecnica. Non si aggiunge anche il recupero ordinario della medesima ora. Restano i massimi personali, il limite ordinario di tre ore utili giornaliere al recupero dei PV mediante Riposo breve e il divieto di recuperare PV durante un Sanguinamento attivo. Le eventuali ore successive consentite dalla Tecnica recuperano soltanto PM e punti di recupero dell’Affaticamento.
+Durante la trance, ogni ora completa recupera **1d6 \+ Mod COS PV (minimo 1, come nel Riposo breve), 3 PM e 2 punti di recupero dell’Affaticamento**. Sono i recuperi specifici della Tecnica. Non si aggiunge anche il recupero ordinario della medesima ora. Restano i massimi personali, il limite ordinario di tre ore utili giornaliere al recupero dei PV mediante Riposo breve e il divieto di recuperare PV durante un Sanguinamento attivo. Le eventuali ore successive consentite dalla Tecnica recuperano soltanto PM e punti di recupero dell’Affaticamento.
 
 I punti di recupero dell’Affaticamento si spendono secondo le normali soglie degli stati; quelli residui ottenuti con la Tecnica non si perdono interrompendo la trance e possono sommarsi agli altri ottenuti prima del ripristino giornaliero. Gli avanzi insufficienti a migliorare lo stato vengono persi al ripristino, senza annullare miglioramenti già ottenuti. Un’ora incompleta non produce recupero.
 
@@ -5787,12 +5787,12 @@ Non richiede Recupero Meditativo né una prova e non è modificata da Meditazion
 | :---- | :---- | :---- |
 | 1 PM | 1 AzP | Sospende il Sanguinamento per 10 Round. |
 | 2 PM | 1 AzP | Arresta il Sanguinamento. |
-| 4 PM | 1 AzP | Recupera 1d4 \+ Mod SAG PV, minimo 0\. |
-| 10 PM | 5 minuti | Migliora di uno stato la Ferita; una Superficiale guarisce. |
+| 2 PM | 1 AzP | Recupera 1d4 \+ Mod SAG PV, minimo 0\. |
+| 4 PM | 5 minuti | Migliora di uno stato la Ferita; una Superficiale guarisce. |
 
 L’effetto è automatico e non richiede prove o kit. I cinque minuti sono il tempo di esecuzione dell’ultima opzione. Il recupero non supera i PV massimi e non avviene durante Sanguinamento attivo. Curare una Ferita non elimina Menomazioni e non ricostruisce parti mancanti. Ogni opzione produce soltanto l’effetto indicato.
 
-Le applicazioni possono essere ripetute pagando nuovamente PM e tempo. Il limite settimanale di Intervento Mirato e Terapia Intensiva non si applica alla Tecnica.
+Le opzioni che sospendono o arrestano il Sanguinamento e quella che recupera PV possono essere ripetute pagando nuovamente PM e tempo. La riduzione della Ferita è consentita una sola volta ogni 24 ore per beneficiario: il limite è condiviso con Guarigione, indipendentemente dall’utilizzatore o dalla capacità impiegata, e una nuova Ferita non lo azzera. Il limite settimanale di Intervento Mirato e Terapia Intensiva non si applica alla Tecnica.
 
 #### Purificazione del Corpo
 
@@ -5814,7 +5814,7 @@ Trasforma quel fallimento in un successo. Non modifica un Maldestro, non interro
 
 **Costo:** 5 PM. **Azione:** 1 AzP. **Bersaglio:** se stesso. **Durata:** 10 minuti.
 
-Concede \+5 VA a Percezione per distinguere camuffamenti visivi, illusioni, immagini artificiali e alterazioni osservabili direttamente prodotte dall’Oscura Simmetria. Si applicano le regole d’individuazione o dell’illusione pertinente; non concede una Prova che la fonte esclude espressamente. In assenza di una procedura specifica si usa una normale Prova di Percezione.
+Concede \+5 VA a Percezione per distinguere camuffamenti visivi, illusioni, immagini artificiali e alterazioni osservabili direttamente prodotte dall’Oscura Simmetria. Concede inoltre \+5 alle PS Magia espressamente previste per riconoscere illusioni visive. Il bonus non rende automatico il riconoscimento. Si applicano le regole d’individuazione o dell’illusione pertinente; non concede una Prova che la fonte esclude espressamente. In assenza di una procedura specifica si usa una normale Prova di Percezione.
 
 Riconoscere un’anomalia non rivela automaticamente origine, intenzioni o capacità. Non dissolve illusioni per gli altri, non individua persone soltanto corrotte o eretiche, non legge mente o aura, non supera automaticamente Velo Psichico o Nascondere Aura e non vede attraverso Copertura Totale. Le Prove Salvezza contro le conseguenze dell’Oscura Simmetria rimangono distinte.
 
@@ -5860,9 +5860,9 @@ Richiede di percepire l’attacco e di poter raggiungere un Q adiacente libero. 
 
 #### Aura di Resistenza
 
-**Costo:** 4 PM. **Azione:** 1 AzP. **Bersaglio:** se stesso. **Durata:** 3 Round.
+**Costo:** 3 PM. **Azione:** 1 AzP. **Bersaglio:** se stesso. **Durata:** 5 Round.
 
-Concede **\+1 AR di natura magica**, efficace contro danni Naturali, Magici ed Eterei secondo le normali regole. Si aggiunge alle protezioni indossate; più applicazioni della stessa Tecnica non si sommano. Il \+1 si cumula anche con Corazza Potenziata e con il \+1 non magico di Pelle di Rinoceronte, nei rispettivi ambiti (§5.13).
+Concede **\+2 AR di natura magica**, efficace contro danni Naturali, Magici ed Eterei secondo le normali regole. Si aggiunge alle protezioni indossate; più applicazioni della stessa Tecnica non si sommano. Il \+2 si cumula anche con Corazza Potenziata e con il \+1 non magico di Pelle di Rinoceronte, nei rispettivi ambiti (§5.13).
 
 Non modifica le PS o le Contromisure e non protegge dagli effetti che ignorano espressamente anche questa componente d’Armatura.
 
@@ -5870,7 +5870,7 @@ Non modifica le PS o le Contromisure e non protegge dagli effetti che ignorano e
 
 **Attivazione:** durante la propria Iniziativa, senza Azioni aggiuntive.
 
-**Costo:** 6 PM. **Bersaglio:** se stesso. **Gittata:** 6 Q. **Durata:** istantanea.
+**Costo:** 4 PM. **Bersaglio:** se stesso. **Gittata:** 6 Q. **Durata:** istantanea.
 
 Si trasferisce in un Q libero visibile, fisicamente accessibile e con una superficie capace di sostenerlo. Deve esserci linea d’effetto libera: niente pareti, porte chiuse, vetri integri o altre barriere solide. Ignora terreno, dislivelli e Q intermedi; trasporta il proprio equipaggiamento indossato o impugnato, non altre creature.
 
@@ -5914,7 +5914,7 @@ Ogni creatura può essere sottoposta allo Sguardo dello stesso utilizzatore una 
 
 #### Pelle di Rinoceronte
 
-**Costo:** 6 PM. **Azione:** 1 AzP. **Bersaglio:** se stesso. **Durata:** 3 Round.
+**Costo:** 4 PM. **Azione:** 1 AzP. **Bersaglio:** se stesso. **Durata:** 5 Round.
 
 Concede \+1 AR non magica contro attacchi Ravvicinati Naturali o Magici, \+3 alle prove di FOR, \+3 ad Atletica e alle prove di Corpo a Corpo nelle manovre in cui si impiega direttamente la forza fisica, e \+2 al danno Ravvicinato. Il \+3 alle manovre non è un bonus generale alle prove per colpire. La protezione non si applica ai danni Eterei.
 
@@ -5922,7 +5922,7 @@ Non aumenta FOR e non ricalcola modificatori o capacità di carico. È compatibi
 
 #### Vipera dal Cappuccio
 
-**Costo:** 6 PM. **Azione:** 1 AzP. **Bersaglio:** creatura adiacente. **Durata:** istantanea (un singolo attacco); l’eventuale Sanguinamento 2 prosegue secondo le regole dello Stato.
+**Costo:** 5 PM. **Azione:** 1 AzP. **Bersaglio:** creatura adiacente. **Durata:** istantanea (un singolo attacco); l’eventuale Sanguinamento 2 prosegue secondo le regole dello Stato.
 
 Colpo Singolo senz’armi o con Coltello, Pugnale, Daga, Pugnale da Combattimento, Spada leggera, Randello, Tonfa o Artigli, comprese le varianti dello stesso profilo. Non può essere Parato con arma o scudo; restano la protezione passiva dello scudo, Schivata e altre difese compatibili, compreso Passo della Mangusta se disponibile. La prova per colpire è normale.
 
@@ -5932,7 +5932,7 @@ Se infligge almeno 1 danno dopo AR applica Sanguinamento 2 secondo le sue regole
 
 #### Passo dell’Ombra
 
-**Costo:** 5 PM. **Azione:** AzM, compresa nello spostamento. **Bersaglio:** se stesso. **Durata:** 3 Round.
+**Costo:** 5 PM. **Azione:** AzM, compresa nello spostamento. **Bersaglio:** se stesso. **Durata:** 5 Round.
 
 Si attiva usando l’AzM per Passo, Corsa o Scatto. Il personaggio è incorporeo soltanto mentre si muove e ritorna corporeo alla fine dello spostamento. Nei Round successivi torna incorporeo durante il nuovo movimento senza un’altra attivazione o spesa di PM.
 
@@ -5944,7 +5944,7 @@ Rimane visibile e rilevabile da sensori ottici, termici, mistici o di prossimit�
 
 **Attivazione:** durante la propria Iniziativa, senza Azioni aggiuntive.
 
-**Costo:** 6 PM. **Bersaglio:** se stesso. **Durata:** 3 Round.
+**Costo:** 6 PM. **Bersaglio:** se stesso. **Durata:** 5 Round.
 
 Raddoppia il movimento attuale: con valori base, Passo 12 Q, Corsa 24 Q, Scatto 36 Q. Consente di percorrere liquidi e pareti verticali e di superare aperture e superfici instabili entro il movimento disponibile; considera normale il Terreno Difficile.
 
@@ -5954,7 +5954,7 @@ Queste capacità non richiedono prove aggiuntive per la superficie, ma **Corsa e
 
 **Attivazione:** durante la propria Iniziativa, senza Azioni aggiuntive.
 
-**Costo:** 5 PM. **Bersaglio:** se stesso. **Durata:** 3 Round.
+**Costo:** 3 PM. **Bersaglio:** se stesso. **Durata:** 5 Round.
 
 In ciascun Round in cui percorre volontariamente almeno 2 Q con Passo, Corsa o Scatto, il primo attacco diretto contro di lui prima della propria Iniziativa successiva subisce **−3 VA**. Dopo quell’attacco le immagini si disperdono; il movimento idoneo di un Round successivo può generarle di nuovo. Non si accumulano più protezioni.
 
@@ -5962,7 +5962,7 @@ Vale contro attacchi Ravvicinati e a Distanza; se una Raffica usa un’unica pro
 
 #### Mani di Yorama
 
-**Costo:** 5 PM. **Attivazione:** reazione a un attacco fisico diretto, senza Azioni aggiuntive, anche fuori dalla propria Iniziativa. **Bersaglio:** se stesso. **Durata:** istantanea. **Requisito:** almeno una mano libera.
+**Costo:** 3 PM. **Attivazione:** reazione a un attacco fisico diretto, senza Azioni aggiuntive, anche fuori dalla propria Iniziativa. **Bersaglio:** se stesso. **Durata:** istantanea. **Requisito:** almeno una mano libera.
 
 Effettua Difese per Parata a mani nude: senza penalità propria contro un attacco Ravvicinato, a −5 VA contro un singolo proiettile fisico di Pistola, arma da lancio, arco o balestra. Non richiede Parata a Distanza. Restano gli altri modificatori pertinenti, compreso quello contro Raffica.
 
@@ -5978,7 +5978,7 @@ Non devia attacchi energetici, Eterei, esplosioni, coni, aree, proiettili di arm
 
 **Attivazione:** durante la propria Iniziativa, senza Azioni aggiuntive.
 
-**Costo:** 4 PM. **Bersaglio:** se stesso. **Durata:** 3 Round. **Requisito:** contatto con superficie solida.
+**Costo:** 2 PM. **Bersaglio:** se stesso. **Durata:** 5 Round. **Requisito:** contatto con superficie solida.
 
 Il personaggio si ancora: non può essere Sbilanciato, fatto cadere A Terra, spinto, trascinato o spostato fisicamente; è immune allo spostamento da Sbalzante e supera le prove richieste esclusivamente per mantenere la posizione. Il movimento disponibile diventa 0\.
 
@@ -6014,7 +6014,7 @@ Le Tecniche seguenti richiedono l’accesso alle Risorse Interiori del Lottatore
 
 #### Onda Interiore
 
-**Costo:** 5 PM. **Azione:** 1 AzP. **Bersaglio:** creatura entro 6 Q. **Durata:** istantanea.
+**Costo:** 3 PM. **Azione:** 1 AzP. **Bersaglio:** creatura entro 6 Q. **Durata:** istantanea.
 
 Una prova di Corpo a Corpo per colpire proietta il pugno a distanza. Entro 6 Q nessuna penalità propria di Gittata; restano copertura e altri modificatori. Vettore Distanza, danno Magico assorbito normalmente, non Etereo. Schivabile secondo le regole degli attacchi a distanza, non Parabile con un’arma ordinaria.
 
@@ -6047,7 +6047,7 @@ Consente un singolo attacco senz’armi con normale prova e normale danno, senza
 
 #### Corpo Infrangibile
 
-**Costo:** 4 PM. **Bersaglio:** se stesso. **Attivazione:** dopo AR, prima di sottrarre PV, anche fuori Iniziativa, senza Azioni aggiuntive. **Durata:** istantanea.
+**Costo:** 3 PM. **Bersaglio:** se stesso. **Attivazione:** dopo AR, prima di sottrarre PV, anche fuori Iniziativa, senza Azioni aggiuntive. **Durata:** istantanea.
 
 Riduce una sola applicazione di danno Naturale o Magico di **1d4 \+ Mod COS**, riduzione minima 1; il danno non scende sotto 0\. Non riduce Etereo, Sanguinamento, danni continuati o perdite da Affaticamento, sostanze o ambiente. Contro Raffiche e altri attacchi multipli si sceglie un solo colpo.
 
