@@ -289,8 +289,9 @@
           },
           "portata_q": {
             "tipo": "intero",
-            "min": 1,
+            "min": 0,
             "obbligatorio": false,
+            "descrizione": "Portata dell'attacco ravvicinato, in Q. Da 1 Q in su è la distanza massima fra i quadretti occupati dall'attaccante e quelli del bersaglio. **0 Q** (A.171, risposta di Davide del 21/10/2026: gli Sciami) vuol dire «solo nello spazio condiviso»: l'attacco è valido soltanto contro un bersaglio con cui l'attaccante condivide almeno un quadretto occupato, e un bersaglio soltanto adiacente non è valido.",
             "richiesto_se": {
               "tipo": "ravvicinato"
             },

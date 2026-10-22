@@ -13,7 +13,7 @@ import {
   calcolaAttaccoDistanza, vincoliDistanza, dichiarazioneDistanza, richiedeImbracciatura, talentiAttacco, descriviModalita, descriviManovraDistanza,
   calcolaAttaccoRavvicinato, vincoliRavvicinato, dichiarazioneRavvicinato, manovreRavvicinate, descriviManovraRavvicinata,
   modificatoriDistanza, vaDueArmi, effettiSituazionaliAttacco, fasciaCarica,
-  ESITI_ATLETICA, conProvaAtletica, penalitaMovimento, esitoAtletica, senzArmiDisponibile, SENZ_ARMI,
+  ESITI_ATLETICA, conProvaAtletica, penalitaMovimento, esitoAtletica, senzArmiDisponibile, SENZ_ARMI, statoPortata,
 } from '../attacco.js';
 import { specTiro, tira } from '../tiri.js';
 import { riquadroDanno, rigaScelte, interruttore, pannelloSintetico, pulsanteCommuta } from './pannello-passi.js';
@@ -320,11 +320,19 @@ function corpoRavvicinato(ctx, a, intestazione) {
         h('div', { class: 'scelta-pulsanti' }, [1, 3, 6, 8].map((q) => h('button', { type: 'button', class: `btn scelta-btn${d.attaccanti === q ? ' scelta' : ''}`, onclick: () => imposta({ attaccanti: q }) }, q === 8 ? '8+' : String(q))))),
       rigaScelte('Circostanza del Direttore (§1.4)', R.circostanze.valori.map((x) => ({ valore: x, etichetta: x ? segno(x) : 'Normale' })), d.circostanza, (x) => imposta({ circostanza: x })),
       h('div', { class: 'scelta-attacco scelta-distanza' },
-        h('label', { class: 'scelta-titolo', for: `dist-${a.uid}` }, `Distanza in Q (portata ${v.portata} Q)`),
-        h('div', { class: 'distanza-riga' },
-          h('input', { id: `dist-${a.uid}`, type: 'number', min: 1, step: 1, inputmode: 'numeric', value: d.bersaglio.distanza, class: 'input-distanza', onchange: (e) => { const n = Number(e.target.value); if (Number.isFinite(n) && n >= 1) b({ distanza: Math.round(n) }); } }),
-          h('span', { class: `fascia${d.bersaglio.distanza > v.portata ? ' malus' : ''}` }, d.bersaglio.distanza > v.portata ? 'oltre la portata' : d.bersaglio.distanza === 1 ? 'Contatto' : 'entro la portata')),
-        h('div', { class: 'scelta-pulsanti' }, [...new Set([1, 2, 3, v.portata, 6])].sort((x, y) => x - y).map((q) => h('button', { type: 'button', class: `btn scelta-btn${d.bersaglio.distanza === q ? ' scelta' : ''}`, onclick: () => b({ distanza: q }) }, String(q))))),
+        h('label', { class: 'scelta-titolo', for: `dist-${a.uid}` }, v.portata === 0
+          ? 'Distanza in Q (portata 0 Q: solo nello spazio condiviso)'
+          : `Distanza in Q (portata ${v.portata} Q)`),
+        // A.171: con portata 0 Q (Sciami) il bersaglio è valido solo nello spazio condiviso, quindi la distanza
+        // scende fino a 0 e la fascia lo dice con parole sue invece di «oltre la portata»
+        (() => {
+          const p = statoPortata(d.bersaglio.distanza, v.portata);
+          const minimo = v.portata === 0 ? 0 : 1;
+          return h('div', { class: 'distanza-riga' },
+            h('input', { id: `dist-${a.uid}`, type: 'number', min: minimo, step: 1, inputmode: 'numeric', value: d.bersaglio.distanza, class: 'input-distanza', onchange: (e) => { const n = Number(e.target.value); if (Number.isFinite(n) && n >= minimo) b({ distanza: Math.round(n) }); } }),
+            h('span', { class: `fascia${p.ok ? '' : ' malus'}` }, p.testo));
+        })(),
+        h('div', { class: 'scelta-pulsanti' }, [...new Set([v.portata === 0 ? 0 : 1, 1, 2, 3, v.portata, 6])].sort((x, y) => x - y).map((q) => h('button', { type: 'button', class: `btn scelta-btn${d.bersaglio.distanza === q ? ' scelta' : ''}`, onclick: () => b({ distanza: q }) }, String(q))))),
     ] },
     { titolo: 'Manovre', contenuto: [
       // «Attacco normale» e «Colpo Mirato» stanno in cima, fra le modalità (S20): qui le altre

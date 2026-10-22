@@ -5,7 +5,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';
 import { formaRuotata, formaDi, ruotaDi, erroreForma, angoloDi, CAMPIONI, normaAngolo } from '../src/mappa/forma.js';
-import { celleToken, tokenSottoPunto } from '../src/mappa/token.js';
+import { celleToken, celleToccateToken, tokenSottoPunto } from '../src/mappa/token.js';
 import { ruotaSeLibero, qPerScendere, sali, distanzaToken } from '../src/mappa/veicoli-mappa.js';
 import { areaRaggiungibile, costoVerso, celleArea } from '../src/mappa/area.js';
 import { tokenInMezzo } from '../src/mappa/visuale.js';
@@ -48,25 +48,44 @@ test('rotazione a passi attorno al centro: dodici passi di 30° tornano al punto
   assert.deepEqual(t.q, [10, 10]);
 });
 
-test('collisioni: girato a 30° non entra in un muro che tocca la sua forma; il muro nell’angolo vuoto del rettangolo non conta', () => {
+test('collisioni: girato a 30° non entra in un muro che tocca la sua forma, nemmeno con un angolo (A.172)', () => {
   const scena = { griglia: { colonne: 20, righe: 20 }, token: [scout([5, 5], 0)] };
   const r = ruotaSeLibero(scena, 'v', 30);
   assert.ok(r.token);
   const piena = celleToken(r.token);
+  const toccate = celleToccateToken(r.token);
+  const dentro = (lista, [x, y]) => lista.some(([a, b]) => a === x && b === y);
   const [x0, y0] = r.token.q;
   const [w, h] = r.token.ingombro;
-  const vuota = [];
-  for (let y = y0; y < y0 + h; y++) for (let x = x0; x < x0 + w; x++) if (!piena.some(([a, b]) => a === x && b === y)) vuota.push([x, y]);
-  assert.ok(vuota.length >= 2, 'a 30° il rettangolo che contiene il mezzo ha angoli vuoti');
+  // tre categorie di quadretto nel rettangolo che contiene il mezzo, e i due criteri di A.172 le distinguono:
+  // occupati (coperti per almeno metà), soltanto sfiorati (meno di metà) e del tutto fuori dalla sagoma
+  const sfiorate = [];
+  const fuori = [];
+  for (let y = y0 - 1; y < y0 + h + 1; y++) {
+    for (let x = x0 - 1; x < x0 + w + 1; x++) {
+      if (dentro(piena, [x, y])) continue;
+      (dentro(toccate, [x, y]) ? sfiorate : fuori).push([x, y]);
+    }
+  }
+  assert.ok(sfiorate.length >= 1, 'a 30° la sagoma sfiora quadretti che non occupa');
   const [mx, my] = piena[0];
   assert.match(ruotaSeLibero(scena, 'v', 30, (x, y) => x === mx && y === my).errore, /muro/);
-  assert.ok(ruotaSeLibero(scena, 'v', 30, (x, y) => x === vuota[0][0] && y === vuota[0][1]).token, 'un muro nell’angolo vuoto non blocca');
+  // il cuore della A.172: un muro sotto un angolo che copre MENO di metà quadretto blocca lo stesso, altrimenti
+  // la rotazione farebbe attraversare il muro a quell'angolo senza che nessuno al tavolo se ne accorga
+  const [sx, sy] = sfiorate[0];
+  assert.match(ruotaSeLibero(scena, 'v', 30, (x, y) => x === sx && y === sy).errore ?? '', /muro/, 'un angolo che sfiora un muro non lo attraversa');
+  // un quadretto che la sagoma non tocca affatto continua a non bloccare: il criterio è la sagoma vera, non il
+  // rettangolo che la contiene
+  assert.ok(fuori.length >= 1);
+  assert.ok(ruotaSeLibero(scena, 'v', 30, (x, y) => x === fuori[0][0] && y === fuori[0][1]).token, 'un muro fuori dalla sagoma non blocca');
+  const vuota = [...sfiorate, ...fuori];
   // un altro token sulla forma blocca
   const con = { ...scena, token: [...scena.token, { id: 'p', rif: { tipo: 'partecipante', id: 'pg:A' }, q: [mx, my], ingombro: 1, nascosto: false }] };
   assert.match(ruotaSeLibero(con, 'v', 30).errore, /altro token/);
   // clic: nell'angolo vuoto non si prende il veicolo
   const gr = { scosto_x: 0, scosto_y: 0, q_px: 10 };
-  assert.equal(tokenSottoPunto(gr, r.token, vuota[0][0] * 10 + 5, vuota[0][1] * 10 + 5), false);
+  assert.ok(vuota.length >= 2);
+  assert.equal(tokenSottoPunto(gr, r.token, fuori[0][0] * 10 + 5, fuori[0][1] * 10 + 5), false);
   assert.equal(tokenSottoPunto(gr, r.token, mx * 10 + 5, my * 10 + 5), true);
 });
 

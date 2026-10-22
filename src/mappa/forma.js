@@ -92,6 +92,62 @@ export function formaRuotata(base, angolo, campioni = CAMPIONI) {
 export const formaDi = (t) => (ruotato(t) ? formaRuotata(t.base, t.angolo) : null);
 
 /**
+ * I quadretti **toccati** dalla sagoma vera, anche per un pelo (A.172, risposta di Davide del 21/10/2026).
+ *
+ * Sono una cosa diversa dai quadretti *occupati* di `formaRuotata` (quelli coperti per almeno metà), e servono a
+ * una cosa sola: **le collisioni**. Davide distingue i due criteri:
+ *   - quadretti occupati e portata → copertura di almeno metà quadretto (`celle` di formaRuotata);
+ *   - collisioni con muri, ostacoli e altre pedine → «la sagoma geometrica effettiva, comprese le parti che
+ *     coprono meno di metà quadretto. La rotazione non deve consentire di attraversare un muro con un angolo
+ *     della pedina».
+ * Senza questa distinzione l'angolo di una 3 × 10 ruotata passa dentro un muro senza che nessuno se ne accorga,
+ * perché quel quadretto è coperto per meno di metà e quindi non risultava suo.
+ *
+ * I quadretti toccati sono sempre un sovrainsieme di quelli occupati, quindi le collisioni diventano soltanto
+ * più prudenti: niente che prima era vietato diventa permesso. Per un rettangolo allineato (nessuna rotazione)
+ * i due insiemi coincidono esattamente.
+ *
+ * Il contatto di solo bordo non conta (due rettangoli appoggiati non si attraversano): serve sovrapposizione
+ * d'area. Il controllo è esatto — separazione fra due poligoni convessi, il rettangolo ruotato e il quadretto —
+ * non campionato, perché una scheggia sottile sfuggirebbe ai campioni.
+ * @returns le celle [[dx, dy], …] relative allo stesso Q in alto a sinistra di `formaRuotata`
+ */
+export function celleToccate(base, angolo) {
+  const a = normaAngolo(angolo);
+  const chiave = `tocca:${base[0]}x${base[1]}@${a}`;
+  if (cache.has(chiave)) return cache.get(chiave);
+  const f = formaRuotata(base, a);
+  const vs = f.vertici;
+  const EPS = 1e-9;
+  const x0 = Math.floor(Math.min(...vs.map((v) => v[0])) - EPS), x1 = Math.ceil(Math.max(...vs.map((v) => v[0])) + EPS);
+  const y0 = Math.floor(Math.min(...vs.map((v) => v[1])) - EPS), y1 = Math.ceil(Math.max(...vs.map((v) => v[1])) + EPS);
+  const celle = [];
+  for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) if (sovrappone(vs, [[x, y], [x + 1, y], [x + 1, y + 1], [x, y + 1]], EPS)) celle.push([x, y]);
+  cache.set(chiave, celle);
+  return celle;
+}
+
+/**
+ * Due poligoni convessi si sovrappongono con area positiva? Teorema degli assi separatori: basta un asse
+ * (perpendicolare a un lato) su cui le due proiezioni non si toccano. Con `eps` il contatto di solo bordo conta
+ * come separazione.
+ */
+function sovrappone(a, b, eps) {
+  for (const poly of [a, b]) {
+    for (let i = 0; i < poly.length; i++) {
+      const [px, py] = poly[i];
+      const [qx, qy] = poly[(i + 1) % poly.length];
+      const nx = -(qy - py), ny = qx - px; // normale al lato
+      let minA = Infinity, maxA = -Infinity, minB = Infinity, maxB = -Infinity;
+      for (const [x, y] of a) { const d = x * nx + y * ny; if (d < minA) minA = d; if (d > maxA) maxA = d; }
+      for (const [x, y] of b) { const d = x * nx + y * ny; if (d < minB) minB = d; if (d > maxB) maxB = d; }
+      if (maxA <= minB + eps || maxB <= minA + eps) return false;
+    }
+  }
+  return true;
+}
+
+/**
  * Il veicolo girato di `gradi` (positivi in senso orario) attorno al suo centro, dentro la griglia. Le scene di prima
  * (direzione e ingombro) passano alla forma con angolo e base. Restituisce il token nuovo, senza controllare ostacoli.
  */

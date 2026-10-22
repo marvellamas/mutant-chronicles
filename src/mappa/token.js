@@ -6,7 +6,7 @@
 // Ingombro: un intero (lato di un quadrato: creature) oppure [colonne, righe] (veicoli, rettangolari). Un veicolo
 // ruotato (08/10, src/mappa/forma.js: angolo e base) occupa solo i quadretti della sua forma, dentro quel rettangolo.
 // Funzioni pure.
-import { formaDi } from './forma.js';
+import { formaDi, ruotato, celleToccate } from './forma.js';
 
 /** «2 × 3 Q» → [2, 3]; «1 Q» → [1, 1]; altro → null (A.126, A.167: anche rettangolare e oltre 3 × 3). */
 export function parseSpazio(testo) {
@@ -92,7 +92,10 @@ export function ingombroVeicolo(profilo, dati) {
 /** Ingombro come [colonne, righe]. */
 export const dimensioni = (ingombro) => (Array.isArray(ingombro) ? [ingombro[0], ingombro[1]] : [ingombro ?? 1, ingombro ?? 1]);
 
-/** Q occupati dal token: [[x, y], …] (per un veicolo ruotato, i quadretti della sua forma). */
+/**
+ * Q **occupati** dal token: [[x, y], …] (per un token ruotato, i quadretti coperti per almeno metà).
+ * È il criterio dell'occupazione e della portata (A.172). Per le collisioni serve `celleToccateToken`.
+ */
 export function celleToken(t) {
   const [x0, y0] = t.q;
   const f = formaDi(t);
@@ -101,6 +104,18 @@ export function celleToken(t) {
   const r = [];
   for (let y = y0; y < y0 + h; y++) for (let x = x0; x < x0 + w; x++) r.push([x, y]);
   return r;
+}
+
+/**
+ * Q **toccati** dalla sagoma vera del token, anche per un pelo: il criterio delle **collisioni** (muri,
+ * ostacoli, altre pedine) secondo A.172 — «comprese le parti che coprono meno di metà quadretto», perché «la
+ * rotazione non deve consentire di attraversare un muro con un angolo della pedina».
+ * Per un token non ruotato coincide con `celleToken`; per uno ruotato ne è un sovrainsieme.
+ */
+export function celleToccateToken(t) {
+  const [x0, y0] = t.q;
+  if (!ruotato(t)) return celleToken(t);
+  return celleToccate(t.base, t.angolo).map(([dx, dy]) => [x0 + dx, y0 + dy]);
 }
 
 /** Il token sta tutto dentro la griglia? */
@@ -169,13 +184,16 @@ export function sovrapposti(token) {
   return coppie;
 }
 
-/** I Q dove un token di questo ingombro, in q, starebbe sopra un altro token (escluso `tranne`) o su un muro. */
+/**
+ * I Q dove un token di questo ingombro, in q, starebbe sopra un altro token (escluso `tranne`) o su un muro.
+ * A.172: è una **collisione**, quindi si guarda la sagoma vera (quadretti toccati), non solo quelli occupati.
+ */
 export function liberoPer(q, ingombro, { token = [], tranne = null, muro = () => false, colonne, righe, come = null }) {
   // come (08/10): il token di cui si prova la posizione, per la forma di un veicolo ruotato (angolo e base)
   const t = { ...(come ? { angolo: come.angolo, base: come.base } : {}), q, ingombro };
   if (!tokenDentro(t, colonne, righe)) return false;
-  const occupate = new Set(token.filter((x) => x.id !== tranne).flatMap((x) => celleToken(x).map(([a, b]) => `${a},${b}`)));
-  return celleToken(t).every(([x, y]) => !occupate.has(`${x},${y}`) && !muro(x, y));
+  const occupate = new Set(token.filter((x) => x.id !== tranne).flatMap((x) => celleToccateToken(x).map(([a, b]) => `${a},${b}`)));
+  return celleToccateToken(t).every(([x, y]) => !occupate.has(`${x},${y}`) && !muro(x, y));
 }
 
 /**

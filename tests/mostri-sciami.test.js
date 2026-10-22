@@ -32,7 +32,9 @@ test('Sciami: due fasce di danno per PV (quello ridotto sostituisce l’altro), 
   for (const [id, [alto, basso]] of Object.entries(attesi)) {
     const n = leggi(id);
     assert.deepEqual(n.attacchi.map((a) => a.danno), [alto, basso], id);
-    assert.ok(n.attacchi.every((a) => /Portata 0 Q/.test(a.note) && a.portata_q === 1 && a.ac === 1), `${id} portata 0 Q in nota`);
+    // A.171 (risposta di Davide del 21/10/2026): portata 0 Q nei dati, non più 1 Q con la condizione in nota
+    assert.ok(n.attacchi.every((a) => a.portata_q === 0 && a.ac === 1), `${id} portata 0 Q`);
+    assert.ok(n.attacchi.every((a) => !/A\.171|il formato ammette/.test(a.note ?? '')), `${id} senza la nota di ripiego`);
     assert.deepEqual(n.immunita, ['a-terra', 'immobilizzato', 'stordito', 'terrorizzato'], id);
     assert.match(cap(id, 'Corpo distribuito').effetto, /Dimezza per eccesso/);
     assert.match(cap(id, 'Spazio condiviso').effetto, /1 × 1 Q/);

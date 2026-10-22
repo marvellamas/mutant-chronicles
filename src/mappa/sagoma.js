@@ -1,14 +1,23 @@
 // Sagome delle pedine sulla mappa di battaglia (A.167, risposta di Davide del 18/10/2026): le creature rispettano
 // larghezza e lunghezza della scheda, anche rettangolari e oltre il 3 × 3 (una 3 × 10 occupa 30 Q, non 100), e si
-// posizionano anche a 45°. Ingombro, sovrapposizioni e passaggio fra gli ostacoli seguono la sagoma effettivamente
-// ruotata — i quadretti che il rettangolo ruotato copre per almeno metà (src/mappa/forma.js) — non il centro della
-// pedina. Taglia, spazio e portata restano dati distinti: una pedina più lunga non guadagna portata.
+// posizionano anche a 45°. Taglia, spazio e portata restano dati distinti: una pedina più lunga non guadagna portata.
+//
+// **Due criteri diversi, che non vanno confusi** (A.172, risposta di Davide del 21/10/2026):
+//   - *occupazione e portata* — un quadretto conta quando la sagoma ne copre almeno metà (`celle`, `area`,
+//     `distanza`): è accettabile che una 3 × 10 ruotata risulti occupare 28 Q invece di 30, perché cambia la
+//     rappresentazione sulla griglia, non le dimensioni fisiche;
+//   - *collisioni* con muri, ostacoli e altre pedine — la sagoma geometrica effettiva, comprese le parti che
+//     coprono meno di metà quadretto (`sovrappone`, `posizioneValida`, `puoPassare`): la rotazione non deve
+//     consentire a un angolo della pedina di attraversare un muro.
+// Fino al 21/10 tutti e due usavano il primo criterio, e un angolo passava dentro un muro senza che nessuno al
+// tavolo se ne accorgesse. I quadretti toccati sono sempre un sovrainsieme di quelli occupati, quindi la
+// separazione rende le collisioni solo più prudenti, mai più permissive.
 //
 // Questo modulo è puro (nessun browser, nessun disegno) e riusa la geometria dei veicoli ruotati: un token con
 // `angolo` e `base` [lungo, largo] ha la forma ruotata; senza, è il rettangolo allineato `ingombro`.
 // Un «token» qui è { q, ingombro, angolo?, base? } (q = Q in alto a sinistra dell'ingombro).
 import { formaRuotata, normaAngolo, retto, baseDaIngombro } from './forma.js';
-import { celleToken, dimensioni } from './token.js';
+import { celleToken, celleToccateToken, dimensioni } from './token.js';
 
 /** Gli otto orientamenti di base (passo di 45°, data/mappa.json → token.rotazione_veicoli.passo_gradi). */
 export const ORIENTAMENTI = [0, 45, 90, 135, 180, 225, 270, 315];
@@ -36,22 +45,33 @@ export const area = (t) => celleToken(t).length;
 
 const chiave = ([x, y]) => `${x},${y}`;
 
-/** Due token occupano almeno un Q in comune? (sulle sagome vere, non sui rettangoli che le contengono) */
+/**
+ * Due token si scontrano? (A.172: è una **collisione fra pedine**, quindi sulle sagome geometriche vere — anche
+ * un angolo che copre meno di metà quadretto —, non sui quadretti occupati né sui rettangoli che li contengono)
+ */
 export function sovrappone(a, b) {
-  const occupate = new Set(celleToken(a).map(chiave));
-  return celleToken(b).some((c) => occupate.has(chiave(c)));
+  const toccate = new Set(celleToccateToken(a).map(chiave));
+  return celleToccateToken(b).some((c) => toccate.has(chiave(c)));
 }
 
 /**
  * La posizione del token è lecita? Dentro la griglia, senza muri sotto nessun quadretto della sagoma e senza altri
  * token sopra. { ok, motivo?: 'fuori' | 'muro' | 'token', celle?: i quadretti in conflitto }
+ *
+ * A.172: sono tutte **collisioni**, quindi si guardano i quadretti toccati dalla sagoma vera, non quelli
+ * occupati per almeno metà — «la rotazione non deve consentire di attraversare un muro con un angolo della
+ * pedina». Girare una 3 × 10 accanto a un muro, con un angolo che entra nel muro per un terzo di quadretto,
+ * adesso è una posizione non valida (con l'avviso e il «Procedi comunque» di sempre: l'app avvisa, non blocca).
  */
 export function posizioneValida(t, { colonne, righe, muro = () => false, altri = [] }) {
-  const mie = celleToken(t);
-  if (mie.some(([x, y]) => x < 0 || y < 0 || x >= colonne || y >= righe)) return { ok: false, motivo: 'fuori' };
+  // il bordo della griglia non è un muro che un angolo possa attraversare: è il limite del foglio, e si misura
+  // sui quadretti occupati (quelli dell'ingombro), altrimenti una sagoma ruotata non potrebbe mai appoggiarsi
+  // al bordo
+  if (celleToken(t).some(([x, y]) => x < 0 || y < 0 || x >= colonne || y >= righe)) return { ok: false, motivo: 'fuori' };
+  const mie = celleToccateToken(t).filter(([x, y]) => x >= 0 && y >= 0 && x < colonne && y < righe);
   const dentroMuro = mie.filter(([x, y]) => muro(x, y));
   if (dentroMuro.length) return { ok: false, motivo: 'muro', celle: dentroMuro };
-  const occupate = new Set(altri.flatMap((o) => celleToken(o).map(chiave)));
+  const occupate = new Set(altri.flatMap((o) => celleToccateToken(o).map(chiave)));
   const sopra = mie.filter((c) => occupate.has(chiave(c)));
   if (sopra.length) return { ok: false, motivo: 'token', celle: sopra };
   return { ok: true };

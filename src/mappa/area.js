@@ -15,7 +15,7 @@
 // Funzioni pure. Con griglie da 300 × 300 Q e 300 token resta sotto i 50 ms (tests/mappa-area.test.js).
 import { dimensioni, celleToken } from './token.js';
 import { attraversa } from './muri-linee.js';
-import { formaDi } from './forma.js';
+import { ruotato, celleToccate } from './forma.js';
 
 /** Somme prefisse 2D di una maschera di Q (Uint8Array 0/1, un byte per Q): conteggio in un rettangolo in O(1). */
 function prefisse(valori, C, R) {
@@ -113,8 +113,12 @@ export function areaRaggiungibile({ colonne: C, righe: R, muri, terreno, token, 
   }
   const nMuro = prefisse(muro, C, R), nTerr = prefisse(terr, C, R), nAvv = prefisse(avv, C, R), nAll = prefisse(all, C, R);
   const dentro = (x, y) => x >= 0 && y >= 0 && x + w <= C && y + h <= R;
-  // veicolo ruotato (08/10): i conteggi si fanno sui soli quadretti della forma, non su tutto il rettangolo
-  const forma = formaDi(chi)?.celle ?? null;
+  // veicolo ruotato (08/10): i conteggi si fanno sui soli quadretti della forma, non su tutto il rettangolo.
+  // A.172 (22/10): muoversi vuol dire scontrarsi con muri, ostacoli e pedine, quindi qui vale il criterio delle
+  // collisioni — la sagoma geometrica vera, comprese le parti che coprono meno di metà quadretto — non quello
+  // dell'occupazione. Altrimenti una 3 × 10 a 45° infila un angolo in un muro passando per un corridoio che non
+  // la lascerebbe passare.
+  const forma = ruotato(chi) ? celleToccate(chi.base, chi.angolo) : null;
   const contaIn = (m, n) => (forma ? (x, y) => { let k = 0; for (const [dx, dy] of forma) k += m[(y + dy) * C + x + dx]; return k; } : (x, y) => n(x, y, w, h));
   const inMuro = contaIn(muro, nMuro), inTerr = contaIn(terr, nTerr), inAvv = contaIn(avv, nAvv), inAll = contaIn(all, nAll);
   // posizione attraversabile: niente muri; avversari e alleati secondo le regole

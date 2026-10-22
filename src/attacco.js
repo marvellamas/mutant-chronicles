@@ -833,6 +833,29 @@ export function senzArmiDisponibile(scheda, dati) {
   return (scheda?.classi ?? []).some((c) => c.nome === 'Lottatore');
 }
 
+/**
+ * Com'è messo il bersaglio rispetto alla portata di un attacco ravvicinato (A.171, risposta di Davide del
+ * 21/10/2026). La portata 0 Q non è «nessuna portata»: vuol dire **solo nello spazio condiviso** — è il caso
+ * degli Sciami, che attaccano soltanto chi occupa almeno un quadretto in comune con loro. Un bersaglio
+ * soltanto adiacente (distanza 1 Q) non è valido per quell'attacco.
+ *
+ * La distanza è quella fra i quadretti occupati (src/mappa/zoc.js → distanzaIngombri): 0 = spazio condiviso,
+ * 1 = adiacenti. L'app non blocca niente (CLAUDE.md: avvisa, non blocca): dice com'è messa la cosa, e il
+ * master decide.
+ * @returns { ok, testo, soloSpazioCondiviso }
+ */
+export function statoPortata(distanza, portata) {
+  const p = Number.isInteger(portata) && portata >= 0 ? portata : 1;
+  const d = Number.isFinite(distanza) ? distanza : 1;
+  if (p === 0) {
+    return d <= 0
+      ? { ok: true, testo: 'nello spazio condiviso', soloSpazioCondiviso: true }
+      : { ok: false, testo: 'serve lo spazio condiviso: qui la portata è 0 Q', soloSpazioCondiviso: true };
+  }
+  if (d > p) return { ok: false, testo: 'oltre la portata', soloSpazioCondiviso: false };
+  return { ok: true, testo: d <= 0 ? 'nello spazio condiviso' : d === 1 ? 'Contatto' : 'entro la portata', soloSpazioCondiviso: false };
+}
+
 /** Dichiarazione completa del corpo a corpo, con i valori predefiniti (Attacco normale, a Contatto). */
 export function dichiarazioneRavvicinato(d = {}) {
   const b = d.bersaglio ?? {};

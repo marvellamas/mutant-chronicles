@@ -49,8 +49,8 @@
       "danno": "2d6",
       "natura": "Naturale",
       "ac": 1,
-      "note": "Poi veleno: vedi la capacità «Veleno ofidico II». Portata 0 Q nel manuale (attacca solo nello spazio condiviso con la vittima): il formato ammette portate da 1 Q, quindi qui 1 Q con questa condizione (A.171).",
-      "portata_q": 1
+      "note": "Poi veleno: vedi la capacità «Veleno ofidico II».",
+      "portata_q": 0
     },
     {
       "nome": "Morsi (PV 0–18)",
@@ -59,8 +59,8 @@
       "danno": "1d6",
       "natura": "Naturale",
       "ac": 1,
-      "note": "Poi veleno: vedi la capacità «Veleno ofidico II». Portata 0 Q nel manuale (attacca solo nello spazio condiviso con la vittima): il formato ammette portate da 1 Q, quindi qui 1 Q con questa condizione (A.171).",
-      "portata_q": 1
+      "note": "Poi veleno: vedi la capacità «Veleno ofidico II».",
+      "portata_q": 0
     }
   ],
   "abilita": [
@@ -113,5 +113,5 @@
     "stordito",
     "terrorizzato"
   ],
-  "note": "I due profili di Morsi/Becchi sono le fasce di danno per PV: quello ridotto sostituisce l’altro e non è un attacco separato. Spazio 1 × 1 Q condivisibile con altre creature (portata 0 Q: attacca solo nello spazio condiviso; vedi A.171). A 18 PV o meno riduce soltanto il danno fisico a 1d6; i morsi restano AC 1 e non ignorano l’AR. Non ha Costrizione, prese automatiche né immunità generica al veleno. La conversione mantiene una sola inoculazione per attacco. Condotta: a 18 PV o meno oppure a Ferita Profonda tende a raggiungere fessure o acqua libera; non ha bisogno di un comandante telepatico per restare operativo. Fonte: Swarm of Poisonous Snakes, p. 338."
+  "note": "I due profili di Morsi/Becchi sono le fasce di danno per PV: quello ridotto sostituisce l’altro e non è un attacco separato. Spazio 1 × 1 Q condivisibile con altre creature (portata 0 Q: attacca solo nello spazio condiviso). A 18 PV o meno riduce soltanto il danno fisico a 1d6; i morsi restano AC 1 e non ignorano l’AR. Non ha Costrizione, prese automatiche né immunità generica al veleno. La conversione mantiene una sola inoculazione per attacco. Condotta: a 18 PV o meno oppure a Ferita Profonda tende a raggiungere fessure o acqua libera; non ha bisogno di un comandante telepatico per restare operativo. Fonte: Swarm of Poisonous Snakes, p. 338."
 }

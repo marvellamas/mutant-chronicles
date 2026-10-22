@@ -53,8 +53,7 @@
       "proprieta": [
         "Perforazione"
       ],
-      "portata_q": 1,
-      "note": "Portata 0 Q nel manuale (attacca solo nello spazio condiviso con la vittima): il formato ammette portate da 1 Q, quindi qui 1 Q con questa condizione (A.171)."
+      "portata_q": 0
     },
     {
       "nome": "Becchi (PV 0–12)",
@@ -66,8 +65,7 @@
       "proprieta": [
         "Perforazione"
       ],
-      "portata_q": 1,
-      "note": "Portata 0 Q nel manuale (attacca solo nello spazio condiviso con la vittima): il formato ammette portate da 1 Q, quindi qui 1 Q con questa condizione (A.171)."
+      "portata_q": 0
     }
   ],
   "abilita": [
@@ -120,5 +118,5 @@
     "stordito",
     "terrorizzato"
   ],
-  "note": "I due profili di Morsi/Becchi sono le fasce di danno per PV: quello ridotto sostituisce l’altro e non è un attacco separato. Spazio 1 × 1 Q condivisibile con altre creature (portata 0 Q: attacca solo nello spazio condiviso; vedi A.171). Le ali possono nascondere parti della scena, ma la scheda non crea un’oscurità magica; il numero di becchi non concede colpi aggiuntivi, accecamento automatico o danni a tutte le creature attraversate. Condotta: può cercare un posatoio o ripiegare verso il nido; a 12 PV o meno oppure a Ferita Profonda tende alla dispersione. Fonte: Swarm of Ravens, p. 339."
+  "note": "I due profili di Morsi/Becchi sono le fasce di danno per PV: quello ridotto sostituisce l’altro e non è un attacco separato. Spazio 1 × 1 Q condivisibile con altre creature (portata 0 Q: attacca solo nello spazio condiviso). Le ali possono nascondere parti della scena, ma la scheda non crea un’oscurità magica; il numero di becchi non concede colpi aggiuntivi, accecamento automatico o danni a tutte le creature attraversate. Condotta: può cercare un posatoio o ripiegare verso il nido; a 12 PV o meno oppure a Ferita Profonda tende alla dispersione. Fonte: Swarm of Ravens, p. 339."
 }

@@ -3,7 +3,7 @@
 // gruppo è sempre libero: niente conteggio dei Q, niente ZoC né Attacchi di Opportunità; la formazione resta; un token il
 // cui quadretto d'arrivo è fuori dalla griglia, murato o occupato va al quadretto libero più vicino. Una sola voce di
 // Ctrl+Z per tutto il gruppo. Funzioni pure.
-import { dimensioni, celleToken } from './token.js';
+import { dimensioni, celleToken, celleToccateToken } from './token.js';
 import { cella } from './celle.js';
 
 /**
@@ -38,12 +38,14 @@ export function spostaGruppo(scena, ids, delta, ostacoli, dati, adesso = new Dat
   const gruppo = scena.token.filter((t) => nelGruppo.has(t.id));
   if (!gruppo.length || (!dx && !dy)) return { scena, mossi: [], aggiustati: [], fermi: [] };
   // Q occupati da chi non si muove; quelli del gruppo si liberano e si riempiono man mano
-  const occupati = new Set(scena.token.filter((t) => !nelGruppo.has(t.id)).flatMap((t) => celleToken(t).map(([x, y]) => `${x},${y}`)));
+  // A.172: chi si scontra con chi è una collisione, quindi sulle sagome vere (anche le parti che coprono meno di
+  // metà quadretto), non sui soli quadretti occupati
+  const occupati = new Set(scena.token.filter((t) => !nelGruppo.has(t.id)).flatMap((t) => celleToccateToken(t).map(([x, y]) => `${x},${y}`)));
   const libera = (t, q) => {
     const [w, h] = dimensioni(t.ingombro);
     if (q[0] < 0 || q[1] < 0 || q[0] + w > C || q[1] + h > R) return false;
     // i quadretti veri (anche di un veicolo ruotato, 08/10)
-    for (const [x, y] of celleToken({ ...t, q })) if (occupati.has(`${x},${y}`) || cella(ostacoli, C, R, x, y)) return false;
+    for (const [x, y] of celleToccateToken({ ...t, q })) if (occupati.has(`${x},${y}`) || cella(ostacoli, C, R, x, y)) return false;
     return true;
   };
   // il quadretto libero più vicino a quello voluto: anelli crescenti (diagonale 1 Q), a parità il più vicino in linea retta
@@ -69,7 +71,7 @@ export function spostaGruppo(scena, ids, delta, ostacoli, dati, adesso = new Dat
     if (!a) { a = t.q; fermi.push(t.id); }
     else if (a !== voluto) aggiustati.push({ id: t.id, voluto, a });
     nuove.set(t.id, a);
-    for (const [x, y] of celleToken({ ...t, q: a })) occupati.add(`${x},${y}`);
+    for (const [x, y] of celleToccateToken({ ...t, q: a })) occupati.add(`${x},${y}`);
     if (a[0] !== t.q[0] || a[1] !== t.q[1]) mossi.push({ id: t.id, da: [...t.q], a: [...a] });
   }
   if (!mossi.length) return { scena, mossi, aggiustati, fermi };

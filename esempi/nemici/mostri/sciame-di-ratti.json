@@ -52,8 +52,7 @@
       "proprieta": [
         "Perforazione"
       ],
-      "portata_q": 1,
-      "note": "Portata 0 Q nel manuale (attacca solo nello spazio condiviso con la vittima): il formato ammette portate da 1 Q, quindi qui 1 Q con questa condizione (A.171)."
+      "portata_q": 0
     },
     {
       "nome": "Morsi (PV 0–12)",
@@ -65,8 +64,7 @@
       "proprieta": [
         "Perforazione"
       ],
-      "portata_q": 1,
-      "note": "Portata 0 Q nel manuale (attacca solo nello spazio condiviso con la vittima): il formato ammette portate da 1 Q, quindi qui 1 Q con questa condizione (A.171)."
+      "portata_q": 0
     }
   ],
   "abilita": [
@@ -119,5 +117,5 @@
     "stordito",
     "terrorizzato"
   ],
-  "note": "I due profili di Morsi/Becchi sono le fasce di danno per PV: quello ridotto sostituisce l’altro e non è un attacco separato. Spazio 1 × 1 Q condivisibile con altre creature (portata 0 Q: attacca solo nello spazio condiviso; vedi A.171). Può costringere a cambiare strada senza che ogni ratto debba essere eliminato. Il contatto con più gambe nello stesso Q non moltiplica l’attacco. Non ha Tattiche di branco, Scavo né aderenza a pareti lisce; i morsi non inoculano malattie automaticamente. Condotta: può abbandonare una minaccia per un riparo o cibo più accessibile; a 12 PV o meno oppure a Ferita Profonda tende a disperdersi. Fonte: Swarm of Rats, p. 339."
+  "note": "I due profili di Morsi/Becchi sono le fasce di danno per PV: quello ridotto sostituisce l’altro e non è un attacco separato. Spazio 1 × 1 Q condivisibile con altre creature (portata 0 Q: attacca solo nello spazio condiviso). Può costringere a cambiare strada senza che ogni ratto debba essere eliminato. Il contatto con più gambe nello stesso Q non moltiplica l’attacco. Non ha Tattiche di branco, Scavo né aderenza a pareti lisce; i morsi non inoculano malattie automaticamente. Condotta: può abbandonare una minaccia per un riparo o cibo più accessibile; a 12 PV o meno oppure a Ferita Profonda tende a disperdersi. Fonte: Swarm of Rats, p. 339."
 }

@@ -52,8 +52,8 @@
       "proprieta": [
         "Perforazione"
       ],
-      "note": "Solo in acqua. Portata 0 Q nel manuale (attacca solo nello spazio condiviso con la vittima): il formato ammette portate da 1 Q, quindi qui 1 Q con questa condizione (A.171).",
-      "portata_q": 1
+      "note": "Solo in acqua.",
+      "portata_q": 0
     },
     {
       "nome": "Morsi (PV 0–14)",
@@ -65,8 +65,8 @@
       "proprieta": [
         "Perforazione"
       ],
-      "note": "Solo in acqua. Portata 0 Q nel manuale (attacca solo nello spazio condiviso con la vittima): il formato ammette portate da 1 Q, quindi qui 1 Q con questa condizione (A.171).",
-      "portata_q": 1
+      "note": "Solo in acqua.",
+      "portata_q": 0
     }
   ],
   "abilita": [
@@ -123,5 +123,5 @@
     "stordito",
     "terrorizzato"
   ],
-  "note": "I due profili di Morsi/Becchi sono le fasce di danno per PV: quello ridotto sostituisce l’altro e non è un attacco separato. Spazio 1 × 1 Q condivisibile con altre creature (portata 0 Q: attacca solo nello spazio condiviso; vedi A.171). Passa al danno ridotto a 14 PV o meno. La densità del gruppo sostiene l’offensiva senza creare attacchi per ciascun pesce; il numero dei pesci non concede immunità al Gelo. Condotta: può interrompere l’inseguimento se manca il passaggio; a 14 PV o meno oppure a Ferita Profonda tende a raggiungere acqua libera. Fonte: Swarm of Quippers, p. 338."
+  "note": "I due profili di Morsi/Becchi sono le fasce di danno per PV: quello ridotto sostituisce l’altro e non è un attacco separato. Spazio 1 × 1 Q condivisibile con altre creature (portata 0 Q: attacca solo nello spazio condiviso). Passa al danno ridotto a 14 PV o meno. La densità del gruppo sostiene l’offensiva senza creare attacchi per ciascun pesce; il numero dei pesci non concede immunità al Gelo. Condotta: può interrompere l’inseguimento se manca il passaggio; a 14 PV o meno oppure a Ferita Profonda tende a raggiungere acqua libera. Fonte: Swarm of Quippers, p. 338."
 }
