@@ -1,7 +1,10 @@
 # Controllo dei manuali del 22 ottobre 2026
 
-Ricognizione soltanto: **nessun dato è stato applicato**. Qui c'è che cosa è cambiato e, per ogni
-cambiamento di regola, che cosa andrà fatto in `data/*.json`.
+> **Stato: applicato il 22/10 pomeriggio.** Questa ricognizione è nata senza applicare niente; il lotto
+> successivo dello stesso giorno ha recepito tutta la 0.49. Che cosa è stato fatto davvero, e due errori di
+> questa ricognizione, sono in fondo: «Che cosa è stato applicato».
+
+Qui c'è che cosa è cambiato e, per ogni cambiamento di regola, che cosa andrà fatto in `data/*.json`.
 
 ## Che cosa è cambiato davvero
 
@@ -158,3 +161,51 @@ nel Mostri.
    `pelle-di-rinoceronte` a `durata: "5 Round"`.
 6. `data/tecniche_interiori.json` → `versione_manuale`: da «Giocatore 0.45» a «Giocatore 0.49».
 7. Da decidere: la tabella dell'Hachimaki della A.173 va ricalcolata sui costi nuovi (1, 1, 1, 3).
+
+---
+
+## Che cosa è stato applicato (22 ottobre, pomeriggio)
+
+Tutta la 0.49, con la regola di sempre: **l'app segue l'ultima versione del manuale**. La A.178 nel Doc resta
+aperta come conferma a Davide, non come blocco.
+
+I numeri non sono stati ricopiati a mano: tre script usa e getta hanno letto le schede del manuale in
+`docs/manuali-txt/giocatore.md` e scritto i dati, e `tests/giocatore-049.test.js` rilegge il manuale scheda per
+scheda per controllare che costo e durata di **ogni** Tecnica combacino.
+
+| Blocco | Fatto |
+|---|---|
+| 11 Tecniche riequilibrate | `costo_pm` e `durata_round` dal manuale (17 valori) |
+| Imposizione della Mano Curativa | tabella 1/2/**2**/**4**; con l'Hachimaki **1/1/1/3**, calcolati dalla regola |
+| Limite nuovo delle 24 ore | promemoria della Tecnica (l'app lo ricorda, non lo conta: è un limite del tavolo, condiviso con Guarigione) |
+| Meditazione Profonda | recupero «1d6 + Mod COS PV (minimo 1), 3 PM, 2 punti di Affaticamento» in `testo`, `promemoria` e `breve` |
+| Aura di Resistenza | `ar.tecniche` → `totale` e `magica` a **2**, durata **5 Round**; Pelle di Rinoceronte durata 5 Round |
+| Visione del Vero | effetto nuovo: **+5 alle PS Magia** per riconoscere illusioni visive |
+| `versione_manuale` | «Giocatore 0.45» → «Giocatore 0.49» |
+
+### Due errori di questa ricognizione, corretti applicando
+
+1. **«Rivelare l'Inganno» non esiste.** La Tecnica che guadagna il +5 alle PS Magia è **Visione del Vero**
+   (§8.9.1). Il nome sbagliato era mio: nel manuale quella Tecnica non c'è e non c'è mai stata.
+2. **Mancava un punto dall'elenco dei dati da aggiornare:** i campi di testo `costo`, `azione`, `bersaglio` e
+   `durata` di ogni Tecnica — quelli che la tab Poteri stampa nella riga di consultazione. Erano rimasti alla
+   0.48 mentre `costo_pm` e `durata_round` erano già passati alla 0.49, quindi la scheda avrebbe scritto
+   «4 PM» accanto a un costo di 3. Quindici campi allineati, e ora una prova lo impedisce
+   (`tests/giocatore-049.test.js`, «la riga di consultazione non può contraddire i numeri»).
+
+### I personaggi già esistenti: nessuna migrazione
+
+Nel file di un PG le Tecniche sono **solo identificativi** (`"tecniche": ["aura-di-resistenza", …]` dentro la
+voce del livello): costi, durate ed effetti si leggono dal catalogo a ogni calcolo. Cambiando il catalogo si
+aggiornano da soli, anche i personaggi salvati con la 0.45. Verificato su Aiko Tenzan (otto Tecniche prese ai
+livelli 4 e 5, file del 02/10): il file non contiene né `costo_pm` né `durata_round`, e la scheda calcolata oggi
+dà l'Aura di Resistenza a 3 PM. **Nessun PG reale è stato aperto né scritto.**
+
+### Una decisione approvata che il manuale supera: A.179
+
+La **decisione 41** di `docs/risposte-master.md` (risposta A.48 di Davide) fissava «Aura di Resistenza +1 AR
+magica per 3 Round; Pelle di Rinoceronte +1 non magica… 3 Round. Insieme: +3 contro il ravvicinato, +2 contro
+il resto, +2 magica». Il §5.13 della 0.49 dice +2, 5 Round e insieme +4 / +3 / +3.
+
+Come da istruzione, **la decisione non è stata riscritta**: resta il verbale di quello che Davide approvò il
+29/09. L'app segue il manuale, che è più recente, e la differenza diventa la domanda **A.179**.
