@@ -5,16 +5,35 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { tipoCampo, operazioniDaDiff, applicaOperazione, unisciGiornale } from '../src/giornale.js';
 
-test('tipoCampo: un numero è una somma, un elenco è un insieme, il resto è un\'assegnazione', () => {
+test('tipoCampo: si somma solo un contatore dichiarato; un elenco è un insieme, il resto è un\'assegnazione', () => {
   assert.equal(tipoCampo(['sessione', 'pvAttuali'], 8), 'somma');
   assert.equal(tipoCampo(['sessione', 'statiAttivi'], ['Sanguinamento']), 'insieme');
   assert.equal(tipoCampo(['scelte', 'nome'], 'Aiko'), 'assegna');
   assert.equal(tipoCampo(['sessione', 'bonusTalenti'], true), 'assegna');
+  // chiavi dinamiche: i modelli con «*»
+  assert.equal(tipoCampo(['sessione', 'integrita', 'uid-1'], 4), 'somma');
+  assert.equal(tipoCampo(['sessione', 'munizioni', 'uid-1', 'colpi'], 6), 'somma');
 });
 
-test('tipoCampo: le due eccezioni (un numero che non si somma)', () => {
+test('tipoCampo: un numero che NON è un contatore si assegna (il danno silenzioso del 22/10)', () => {
+  // il caso dell'esempio: FOR da 10 a 12 non è «+2» da sommare a quello che ha fatto Davide
+  assert.equal(tipoCampo(['scelte', 'puntiCaratteristica', 'FOR'], 12), 'assegna');
+  assert.equal(tipoCampo(['scelte', 'puntiAbilitaLiberi', 'Furtività'], 3), 'assegna');
+  // gradini e indici: 3 + 2 non è un gradino di Ferita che esiste
+  assert.equal(tipoCampo(['sessione', 'ferite'], 3), 'assegna');
+  assert.equal(tipoCampo(['sessione', 'affaticamento'], 2), 'assegna');
+  assert.equal(tipoCampo(['sessione', 'corruzione'], 1), 'assegna');
+  // riferimenti temporali e valori scritti interi
   assert.equal(tipoCampo(['sessione', 'round'], 3), 'assegna');
   assert.equal(tipoCampo(['scelte', 'puntiEsperienza'], 1900), 'assegna');
+  assert.equal(tipoCampo(['sessione', 'caricoExtra'], 12), 'assegna');
+  // un campo numerico nuovo, che nessuno ha ancora classificato: assegnazione, mai somma
+  assert.equal(tipoCampo(['sessione', 'campoNuovoDiDomani'], 7), 'assegna');
+});
+
+test('tipoCampo: i due elenchi di numeri dichiarati non sono insiemi (due carichini da 3 colpi sono due cose)', () => {
+  assert.equal(tipoCampo(['sessione', 'carichini', 'uid-1'], [3, 3]), 'assegna');
+  assert.equal(tipoCampo(['sessione', 'munizioni', 'uid-1', 'parziali'], [2, 2]), 'assegna');
 });
 
 test('operazioniDaDiff: una variazione di PV, con l\'etichetta', () => {
@@ -104,6 +123,56 @@ test('un\'assegnazione cambiata da entrambe le parti è un conflitto vero: non s
   assert.equal(conflitti.length, 1);
   assert.equal(conflitti[0].operazione.id, 'op-2');
   assert.equal(conflitti[0].attuale, 'cambiata da Davide');
+});
+
+test('FOR cambiata da entrambe le parti è un conflitto, non una somma (il caso del 22/10)', () => {
+  // il tablet è partito da FOR con 2 punti assegnati e li ha portati a 4; nel frattempo il Direttore li ha
+  // portati a 3. Sommare darebbe 5: un numero che nessuno dei due ha mai scritto. Deve essere una domanda.
+  const prima = { scelte: { puntiCaratteristica: { FOR: 2 } } };
+  const dopo = { scelte: { puntiCaratteristica: { FOR: 4 } } };
+  const [op] = operazioniDaDiff(prima, dopo);
+  assert.equal(op.tipo, 'assegna');
+  assert.equal(op.visto, 2);
+  assert.equal(op.nuovo, 4);
+  const server = { scelte: { puntiCaratteristica: { FOR: 3 } } };
+  const { risultato, applicati, conflitti } = unisciGiornale(server, [{ ...op, id: 'op-for' }]);
+  assert.equal(risultato.scelte.puntiCaratteristica.FOR, 3); // non toccata, non sommata
+  assert.deepEqual(applicati, []);
+  assert.equal(conflitti.length, 1);
+  assert.equal(conflitti[0].attuale, 3);
+});
+
+test('i PV cambiati da entrambe le parti si sommano (il contrario di FOR)', () => {
+  const prima = { sessione: { pvAttuali: 20 } };
+  const dopo = { sessione: { pvAttuali: 15 } }; // il giocatore ha subito 5 danni offline
+  const [op] = operazioniDaDiff(prima, dopo);
+  assert.equal(op.tipo, 'somma');
+  // nel frattempo il Direttore ne ha tolti 3 dalla plancia: il server è a 17
+  const { risultato, conflitti } = unisciGiornale({ sessione: { pvAttuali: 17 } }, [{ ...op, id: 'op-pv' }]);
+  assert.equal(risultato.sessione.pvAttuali, 12); // 17 − 5: tutti e due i danni contano
+  assert.equal(conflitti.length, 0);
+});
+
+test('una nota del calendario riscritta da entrambe le parti è un conflitto (elemento cambiato dentro)', () => {
+  // senza il ramo «aggiorna» questa modifica sparirebbe in silenzio: l'id della nota c'è prima e dopo, quindi
+  // non è né un'aggiunta né una rimozione
+  const prima = { calendario: { note: [{ id: 'n1', testo: 'incontro al porto' }] } };
+  const dopo = { calendario: { note: [{ id: 'n1', testo: 'incontro al porto, rimandato' }] } };
+  const [op] = operazioniDaDiff(prima, dopo);
+  assert.equal(op.tipo, 'insieme');
+  assert.equal(op.azione, 'aggiorna');
+  assert.equal(op.identita, 'n1');
+  // il Direttore ha riscritto la stessa nota: conflitto vero, con le due versioni
+  const server = { calendario: { note: [{ id: 'n1', testo: 'incontro al porto, annullato' }] } };
+  const { risultato, applicati, conflitti } = unisciGiornale(server, [{ ...op, id: 'op-nota' }]);
+  assert.deepEqual(risultato.calendario.note, server.calendario.note);
+  assert.deepEqual(applicati, []);
+  assert.equal(conflitti[0].attuale.testo, 'incontro al porto, annullato');
+  assert.equal(conflitti[0].operazione.nuovo.testo, 'incontro al porto, rimandato');
+  // se invece il Direttore non l'ha toccata, si applica senza chiedere
+  const pulito = unisciGiornale(prima, [{ ...op, id: 'op-nota' }]);
+  assert.equal(pulito.risultato.calendario.note[0].testo, 'incontro al porto, rimandato');
+  assert.equal(pulito.conflitti.length, 0);
 });
 
 test('un\'assegnazione NON cambiata sul server si applica senza chiedere', () => {

@@ -5,39 +5,137 @@
 // riapplicarla due volte non la conta due volte, e il rientro può sommare invece di confrontare numeri nudi.
 //
 // Due categorie di operazione, che si comportano diversamente:
-//  - VARIAZIONE («somma» un numero, «insieme» entra/esce da un elenco): si somma a quello che è successo nel
+//  - VARIAZIONE («somma» un contatore, «insieme» entra/esce da un elenco): si somma a quello che è successo nel
 //    frattempo. Mai un conflitto: se il giocatore toglie 5 PV e il Direttore ne aggiunge 10 da un'altra parte,
 //    il risultato giusto è +5. «insieme» è idempotente: aggiungere chi c'è già, o togliere chi non c'è, non fa
 //    niente — ripetere l'operazione non la conta due volte anche senza l'identificativo.
-//  - ASSEGNAZIONE («assegna»): sostituisce un valore (un testo, una scelta, un nome). Qui il conflitto è vero
-//    solo se il valore è cambiato ANCHE sul server rispetto a quello che il tablet aveva visto: va chiesto,
-//    non deciso in automatico.
+//  - ASSEGNAZIONE («assegna», e «insieme» con azione «aggiorna», cioè un elemento dell'elenco cambiato dentro:
+//    una nota del calendario riscritta, la quantità di un oggetto): sostituisce un valore. Qui il conflitto è
+//    vero solo se il valore è cambiato ANCHE sul server rispetto a quello che il tablet aveva visto: va
+//    chiesto, non deciso in automatico.
 //
-// Come si classifica un campo (src/sessione.js, src/character.js): la regola di base guarda il TIPO del
-// valore — un numero è una somma, un elenco è un insieme, tutto il resto (testo, booleano, un oggetto assegnato
-// in blocco) è un'assegnazione. Due sole eccezioni, dove il tipo da solo sbaglierebbe:
-//   - `sessione.round` è un numero ma non lo decide il giocatore (lo fa avanzare lo scontro): assegnazione.
-//   - `scelte.puntiEsperienza` è un numero ma la scheda lo tratta come un totale scritto a mano (il campo
-//     «Punti esperienza» dell'Identità), non come «ne ho guadagnati N»: assegnazione. I PX dati da Davide
-//     passano da «Modifica master» o dal pannello PX, non da qui.
-// Non c'è una lista da tenere aggiornata per ogni campo nuovo della sessione: un campo nuovo si classifica da
-// solo, dal suo tipo, finché non è una delle due eccezioni.
+// COME SI CLASSIFICA UN CAMPO (22/10/2026, revisione decisa da Marcello: «è lì che si fa il danno silenzioso»).
+// Fino al 21/10 la regola era «ogni numero è una somma, salvo due eccezioni». Era sbagliata nella direzione
+// pericolosa: FOR, il livello, i PV massimi, un VA, un gradino di Ferita sono numeri ma NON sono contatori.
+// Portare FOR da 10 a 12 offline non è «+2» da sommare a quello che ha fatto Davide: è una sostituzione. Se
+// tutti e due toccano quel valore e l'app li somma, esce un numero che nessuno dei due ha mai scritto, su una
+// scheda che resta plausibile: nessuno se ne accorge.
+//
+// Quindi il default è rovesciato: **si somma solo ciò che è dichiarato contatore (CONTATORI); tutto il resto
+// assegna**, e gli elenchi restano insiemi. Sbagliare in questa direzione produce una domanda in più al
+// Direttore; sbagliare nell'altra produce una Caratteristica falsa.
+//
+// Due registri, che sono anche la documentazione della classificazione (docs/personaggi-pipeline-2026-10-20.md):
+//   - CONTATORI: i percorsi che si sommano. Un campo nuovo NON entra qui da solo.
+//   - ASSEGNA_DICHIARATI: i numeri (e i pochi elenchi) su cui qualcuno ha *deciso* che non sono contatori. Non
+//     cambiano il comportamento — il default li coprirebbe comunque — servono perché un numero non classificato
+//     fa fallire `tests/giornale-campi.test.js` (campiNonClassificati): nessuno aggiunge un campo numerico
+//     senza decidere che cos'è.
+// I percorsi sono modelli: `*` è una chiave qualunque (un uid, una sigla, il nome di un'Abilità), `**` è tutto
+// il sottoalbero.
 //
 // Funzioni pure: leggono e scrivono oggetti già caricati (scelte/sessione/calendario), non il disco né la rete.
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const EPSILON = 1e-9;
 
-/** I percorsi (in punti, «sessione.round») che il tipo del valore classificherebbe male. */
-const ECCEZIONI_ASSEGNA = new Set(['sessione.round', 'scelte.puntiEsperienza']);
+/**
+ * I contatori: numeri che si sommano, perché ogni modifica è «quanto è cambiato», non «quanto vale». Due
+ * modifiche indipendenti si sommano e non sono mai un conflitto (il giocatore toglie 5 PV mentre il Direttore
+ * ne aggiunge 10: il risultato giusto è +5).
+ */
+export const CONTATORI = [
+  'sessione.pvAttuali', // danni e cure, −5 / +3
+  'sessione.pmAttuali', // PM spesi e recuperati
+  'sessione.puntiEroe', // spesi e concessi
+  'sessione.distintivi', // guadagnati e convertiti
+  'sessione.crediti', // spesi e incassati
+  'sessione.munizioni.*.colpi', // colpi nel caricatore: sparati e ricaricati
+  'sessione.munizioni.*.riserve', // caricatori pieni di scorta
+  'sessione.munizioni.*.vuoti', // caricatori vuoti messi via
+  'sessione.scorte.*', // munizioni sciolte consumate
+  'sessione.chroma.*.pmAttuali', // PM di un contenitore: spesi e ricaricati
+  'sessione.integrita.*', // PI di un oggetto: persi e riparati
+  'sessione.nec.*', // riserva di un NEC: consumata e ricaricata
+  'sessione.impianti.cartucce.*', // cartucce di un iniettore: somministrate e rifornite
+];
 
-/** Com'è fatto un valore (dopo la risoluzione delle eccezioni): 'somma' | 'insieme' | 'assegna'. */
+/**
+ * I numeri (e i due elenchi) su cui si è deciso che NON sono contatori. Elenco ragionato, non un ripiego: il
+ * comportamento sarebbe lo stesso anche senza, ma senza non si saprebbe che qualcuno ci ha pensato.
+ */
+export const ASSEGNA_DICHIARATI = [
+  // gradini e indici di uno stato: 3 + 2 non è «Profonda più Importante», è un gradino che non esiste
+  'sessione.ferite',
+  'sessione.affaticamento',
+  'sessione.corruzione',
+  'sessione.intensitaStati.*',
+  // valori che si scrivono interi in un campo, non si incrementano
+  'sessione.caricoExtra', // kg: il giocatore scrive il totale trasportato
+  'sessione.creditiIniziali', // istantanea del saldo iniziale visto, non una somma di spese
+  'sessione.chroma.*.iniziale', // PM impostati per un contenitore trovato (E&L 2): un'istantanea, non una ricarica
+  'scelte.puntiEsperienza', // il totale dei PX, scritto a mano nell'Identità
+  // riferimenti temporali: un Round non è il contatore di nessuno (lo fa avanzare lo scontro)
+  'sessione.round',
+  'sessione.ultimaTecnica.round',
+  'sessione.morente.dal',
+  'sessione.morente.turno',
+  'sessione.morente.iniziale',
+  'sessione.morente.tolti',
+  'sessione.attivazioniArmi.*.dal',
+  'sessione.attivazioniArmi.*.round',
+  // elenchi di numeri uguali fra loro: due carichini da 3 colpi sono due cose, non una (un insieme li fonderebbe)
+  'sessione.carichini.*',
+  'sessione.munizioni.*.parziali',
+  // memoria dei pannelli «Attacca!» e «Lancia!»: scelte dell'ultima volta, si sostituiscono in blocco
+  'sessione.attacchi.**',
+  'sessione.lanci.**',
+  // scelte del personaggio: sono assegnazioni, mai somme. È il caso di FOR dell'esempio: i punti assegnati a una
+  // Caratteristica o a un'Abilità sono «quanto vale», non «quanto è cambiato»
+  'scelte.puntiCaratteristica.*',
+  'scelte.puntiAbilitaLiberi.*',
+  'scelte.puntiEroe.valore', // il tiro dei Punti Eroe iniziali (§2.15)
+  'scelte.dotazione.**', // equipaggiamento iniziale: tiro dei crediti, opzioni, acquisti (§2.16)
+];
+
+/** Un percorso corrisponde a un modello con `*` (una chiave) e `**` (tutto il sottoalbero)? */
+function corrisponde(percorso, modello) {
+  const m = modello.split('.');
+  for (let i = 0; i < m.length; i++) {
+    if (m[i] === '**') return percorso.length >= i;
+    if (i >= percorso.length) return false;
+    if (m[i] !== '*' && m[i] !== percorso[i]) return false;
+  }
+  return percorso.length === m.length;
+}
+
+const eContatore = (percorso) => CONTATORI.some((m) => corrisponde(percorso, m));
+const eDichiarato = (percorso) => ASSEGNA_DICHIARATI.some((m) => corrisponde(percorso, m));
+
+/**
+ * Com'è fatto un valore: 'somma' (solo i CONTATORI), 'insieme' (un elenco, salvo i due dichiarati) o
+ * 'assegna' (tutto il resto, compreso ogni numero non dichiarato contatore).
+ */
 export function tipoCampo(percorso, valore) {
-  const chiave = percorso.join('.');
-  if (ECCEZIONI_ASSEGNA.has(chiave)) return 'assegna';
-  if (typeof valore === 'number' && Number.isFinite(valore)) return 'somma';
+  if (eDichiarato(percorso)) return 'assegna';
+  if (typeof valore === 'number' && Number.isFinite(valore)) return eContatore(percorso) ? 'somma' : 'assegna';
   if (Array.isArray(valore)) return 'insieme';
   return 'assegna';
+}
+
+/**
+ * I percorsi numerici di uno stato che nessuno ha classificato: né contatori né assegnazioni dichiarate. Al
+ * tavolo si comportano come assegnazioni (il default sicuro), ma `tests/giornale-campi.test.js` fallisce finché
+ * ci sono, così un campo numerico nuovo non entra nel modello senza che qualcuno decida che cos'è.
+ */
+export function campiNonClassificati(stato) {
+  const fuori = [];
+  for (const [percorso, valore] of foglie(stato)) {
+    if (typeof valore !== 'number' || !Number.isFinite(valore)) continue;
+    if (eContatore(percorso) || eDichiarato(percorso)) continue;
+    fuori.push(percorso.join('.'));
+  }
+  return [...new Set(fuori)];
 }
 
 /** L'identificativo di un elemento di un insieme: il suo `uid`/`id` se è un oggetto, altrimenti il valore
@@ -107,6 +205,15 @@ export function operazioniDaDiff(prima, dopo, { quando = new Date(), etichette =
       const idDopo = new Map(dopoArr.map((x) => [identitaElemento(x), x]));
       for (const [id, x] of idDopo) if (!idPrima.has(id)) op.push({ id: nuovoId(quando), quando: new Date(quando).toISOString(), percorso, tipo, azione: 'aggiungi', valore: x, identita: id, etichetta: etichetta(percorso, { azione: 'aggiungi', valore: x }) });
       for (const [id, x] of idPrima) if (!idDopo.has(id)) op.push({ id: nuovoId(quando), quando: new Date(quando).toISOString(), percorso, tipo, azione: 'togli', valore: x, identita: id, etichetta: etichetta(percorso, { azione: 'togli', valore: x }) });
+      // stesso elemento (stesso uid o id) cambiato dentro: una nota del calendario riscritta, la quantità di un
+      // oggetto, i PI di un veicolo. Senza questo ramo la modifica sparirebbe in silenzio (l'identità c'è prima
+      // e dopo, quindi non è né un'aggiunta né una rimozione): è un'assegnazione sull'elemento, e può andare in
+      // conflitto se anche il Direttore ha toccato lo stesso elemento.
+      for (const [id, x] of idDopo) {
+        const prima = idPrima.get(id);
+        if (prima === undefined || ugualeValore(prima, x)) continue;
+        op.push({ id: nuovoId(quando), quando: new Date(quando).toISOString(), percorso, tipo, azione: 'aggiorna', identita: id, visto: prima, nuovo: x, etichetta: etichetta(percorso, { azione: 'aggiorna', valore: x, visto: prima, nuovo: x }) });
+      }
     } else {
       if (ugualeValore(valorePrima, valoreDopo)) continue;
       op.push({ id: nuovoId(quando), quando: new Date(quando).toISOString(), percorso, tipo, visto: valorePrima, nuovo: valoreDopo, etichetta: etichetta(percorso, { visto: valorePrima, nuovo: valoreDopo }) });
@@ -120,6 +227,18 @@ export function operazioniDaDiff(prima, dopo, { quando = new Date(), etichette =
     op.push({ id: nuovoId(quando), quando: new Date(quando).toISOString(), percorso, tipo: 'assegna', visto: valorePrima, nuovo: undefined, etichetta: etichetta(percorso, { visto: valorePrima, nuovo: undefined }) });
   }
   return op;
+}
+
+/**
+ * Il valore che un'operazione di assegnazione sta per sostituire, com'è adesso: il campo stesso, oppure
+ * l'elemento dell'elenco con quell'identità (azione «aggiorna»); undefined se non c'è più.
+ */
+export function valoreToccato(stato, op) {
+  if (op.tipo === 'insieme' && op.azione === 'aggiorna') {
+    const arr = leggi(stato, op.percorso);
+    return (Array.isArray(arr) ? arr : []).find((x) => identitaElemento(x) === op.identita);
+  }
+  return leggi(stato, op.percorso);
 }
 
 /**
@@ -138,6 +257,9 @@ export function applicaOperazione(stato, op) {
     const arr = Array.isArray(attuale) ? attuale : [];
     const presente = arr.some((x) => identitaElemento(x) === op.identita);
     if (op.azione === 'aggiungi') return presente ? stato : scrivi(stato, op.percorso, [...arr, op.valore]);
+    // «aggiorna»: lo stesso elemento cambiato dentro. Se non c'è più (il Direttore l'ha tolto) non lo si
+    // resuscita: la decisione è sua, e unisciGiornale l'ha già segnalato come conflitto.
+    if (op.azione === 'aggiorna') return presente ? scrivi(stato, op.percorso, arr.map((x) => (identitaElemento(x) === op.identita ? op.nuovo : x))) : stato;
     return presente ? scrivi(stato, op.percorso, arr.filter((x) => identitaElemento(x) !== op.identita)) : stato;
   }
   return scrivi(stato, op.percorso, op.nuovo);
@@ -160,11 +282,13 @@ export function unisciGiornale(serverAttuale, operazioni, applicate = new Set())
   const conflitti = [];
   for (const op of operazioni ?? []) {
     if (applicate.has(op.id)) continue; // già fatto in un giro precedente: non riapplicare
-    if (op.tipo === 'somma' || op.tipo === 'insieme') {
+    if (op.tipo === 'somma' || (op.tipo === 'insieme' && op.azione !== 'aggiorna')) {
       risultato = applicaOperazione(risultato, op);
       applicati.push(op.id);
     } else {
-      const attuale = leggi(risultato, op.percorso);
+      // assegnazione (un valore, o un elemento dell'elenco cambiato dentro): si applica solo se il server è
+      // ancora com'era quando il tablet l'ha visto; altrimenti è un conflitto vero e lo decide Davide
+      const attuale = valoreToccato(risultato, op);
       if (ugualeValore(attuale, op.visto)) {
         risultato = applicaOperazione(risultato, op);
         applicati.push(op.id);

@@ -49,28 +49,51 @@ function etichettaSomma(percorso, delta) {
   return `${segno(delta)} ${chiave}`;
 }
 
+const NOMI_ELENCO = {
+  'scelte.equipaggiamento': 'Oggetto', 'scelte.veicoli': 'Veicolo', 'calendario.note': 'Nota del calendario',
+  'sessione.circostanze': 'Bonus di circostanza', 'scelte.incantesimi': 'Incantesimo',
+};
+
 function etichettaInsieme(percorso, azione, valore) {
   const chiave = percorso.join('.');
-  const nome = typeof valore === 'string' ? valore : valore?.nome ?? valore?.rif ?? valore?.uid ?? JSON.stringify(valore);
+  const nome = typeof valore === 'string' ? valore : valore?.nome ?? valore?.testo ?? valore?.rif ?? valore?.uid ?? JSON.stringify(valore);
+  // un elemento cambiato dentro (una nota riscritta, la quantità di un oggetto): non è né un'aggiunta né una rimozione
+  if (azione === 'aggiorna') return `${NOMI_ELENCO[chiave] ?? chiave} cambiato: ${nome}`;
   if (chiave === 'sessione.statiAttivi') return `Stato ${nome} ${azione === 'aggiungi' ? 'acceso' : 'spento'}`;
   if (chiave === 'scelte.equipaggiamento') return `${azione === 'aggiungi' ? '+1' : '−1'} ${nome}`;
   if (chiave === 'sessione.talentiAccesi') return `Talento ${nome} ${azione === 'aggiungi' ? 'acceso' : 'spento'}`;
+  if (NOMI_ELENCO[chiave]) return `${NOMI_ELENCO[chiave]} ${azione === 'aggiungi' ? 'aggiunto' : 'tolto'}: ${nome}`;
   return `${chiave}: ${azione} ${nome}`;
 }
 
-function etichettaAssegna(percorso) {
+// Assegnazioni: il nome leggibile del valore sostituito. Dal 22/10 sono la maggioranza (ogni numero che non è
+// un contatore), quindi l'etichetta dice anche «da X a Y»: nella schermata di rientro il Direttore legge
+// «FOR: da 10 a 12», non «scelte.puntiCaratteristica.FOR».
+const NOMI_ASSEGNA = {
+  'scelte.nome': 'Nome del personaggio', 'sessione.note': 'Note del personaggio',
+  'sessione.ferite': 'Ferite', 'sessione.affaticamento': 'Affaticamento', 'sessione.corruzione': 'Corruzione',
+  'sessione.caricoExtra': 'kg di carico extra', 'scelte.puntiEsperienza': 'Punti esperienza',
+  'sessione.round': 'Round', 'scelte.concetto': 'Concetto', 'sessione.luce': 'Luce sul bersaglio',
+};
+
+function etichettaAssegna(percorso, visto, nuovo) {
   const chiave = percorso.join('.');
-  if (chiave === 'scelte.nome') return 'Nome del personaggio';
-  if (chiave === 'sessione.note') return 'Note del personaggio';
+  const breve = (v) => (v === undefined || v === null || v === '' ? '(vuoto)' : typeof v === 'string' ? (v.length > 30 ? `${v.slice(0, 30)}…` : v) : JSON.stringify(v));
+  const daA = (nome) => (typeof nuovo === 'number' || typeof visto === 'number' ? `${nome}: da ${breve(visto)} a ${breve(nuovo)}` : nome);
+  if (NOMI_ASSEGNA[chiave]) return daA(NOMI_ASSEGNA[chiave]);
   if (chiave.startsWith('calendario.')) return 'Nota del calendario';
-  return chiave;
+  const car = /^scelte\.puntiCaratteristica\.(\w+)$/.exec(chiave);
+  if (car) return `${car[1]} (punti assegnati): da ${breve(visto)} a ${breve(nuovo)}`;
+  const ab = /^scelte\.puntiAbilitaLiberi\.(.+)$/.exec(chiave);
+  if (ab) return `${ab[1]} (punti liberi): da ${breve(visto)} a ${breve(nuovo)}`;
+  return daA(chiave);
 }
 
 const ETICHETTE = new Proxy({}, {
   get: (_, chiave) => (info) => {
     if (info.delta !== undefined) return etichettaSomma(chiave.split('.'), info.delta);
     if (info.azione !== undefined) return etichettaInsieme(chiave.split('.'), info.azione, info.valore);
-    return etichettaAssegna(chiave.split('.'));
+    return etichettaAssegna(chiave.split('.'), info.visto, info.nuovo);
   },
 });
 
