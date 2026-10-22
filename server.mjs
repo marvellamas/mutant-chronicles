@@ -114,14 +114,19 @@
 //   PUT /api/personaggi/<file> rifiuta (403) la scrittura di chi ha dichiarato X-Mutant-Da: giocatore e porta
 //   un X-Mutant-Dispositivo associato a un personaggio diverso, o nessuno ancora; senza l'uno o l'altro intestazione
 //   (client di prima, strumenti, test) il controllo non si applica, come le altre migrazioni silenziose.
-//   «Si può modificare offline, e al rientro Davide approva» (21/10/2026, quarto lotto, src/giornale.js,
+//   «Si può modificare offline, e al rientro Davide approva» (21–22/10/2026, src/giornale.js, src/rientro.js,
 //   tavolo/rientro.json): un tablet offline accoda le OPERAZIONI (non lo stato finale), col suo identificativo.
-//   POST /api/personaggi/<file>/giornale  corpo { operazioni }: applica le variazioni (sempre) e le
-//                                      assegnazioni non in conflitto, scrive il file se cambia qualcosa, tiene
-//                                      da parte i conflitti veri (la schermata di rientro è il prossimo lotto);
-//                                      idempotente (ripresentare lo stesso giornale non riapplica le operazioni
-//                                      già fatte); risponde { applicati: [id,…], conflitti: [{operazione,
-//                                      attuale}] }. Stesso controllo «scrive solo il proprio» di PUT.
+//   POST /api/personaggi/<file>/giornale  corpo { operazioni }: NON applica niente — mette le operazioni in
+//                                      attesa del Direttore; idempotente (ripresentarle non le duplica, e una
+//                                      già decisa non torna in attesa); risponde { inAttesa: [id,…], decise:
+//                                      { id: 'approvata' | 'scartata' } }, cioè che cosa è passato e che cosa
+//                                      no. Stesso controllo «scrive solo il proprio» di PUT.
+//   GET  /api/rientro                  (solo dal PC del Direttore) l'elenco per la schermata di rientro:
+//                                      personaggio per personaggio, in ordine di ora, con le due versioni dei
+//                                      conflitti veri.
+//   POST /api/rientro                  (solo dal PC del Direttore) corpo { pgId, decisioni: { id: 'approva' |
+//                                      'scarta' } }: applica le approvate al file e registra gli esiti. Quello
+//                                      che non è nelle decisioni resta in attesa: chiudere non è scartare.
 // Nessuna cancellazione dal server: i file vecchi si tolgono a mano dalla cartella.
 import { proteggiBlocchiMaster } from './src/correzioni-master.js';
 import { createServer } from 'node:http';
@@ -143,7 +148,7 @@ import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
 import { NOME_FILE, fileProvvisorio, ultimiPerPersonaggio, ultimiPerPg, chiaveDaFile, chiavePersonaggio } from './src/cartella.js';
 import { conMetadati, serveCopia, copieDaTogliere, idPersonaggio, cartellaStorico, nomeCopiaStorica, CARTELLA_STORICO } from './src/storico-personaggi.js';
 import { associazioneDi, dispositivoVisto, conAssociazione, senzaAssociazione, puoScrivere, elencoDispositivi } from './src/dispositivi.js';
-import { unisciGiornale } from './src/giornale.js';
+import { aggiungiOperazioni, normalizzaRientro, rigaOperazione, applicaDecisioni, registraDecisioni, inAttesaDi } from './src/rientro.js';
 import { NOME_MARCATORE, statoInstallazione } from './src/copia-di-lavoro.js';
 import { validaRecord, ID_VEICOLO, migraVeicoli, eRiferimento, stessaChiave } from './src/veicoli-registro.js';
 import { normalizzaVeicoli } from './src/veicoli.js';
@@ -180,8 +185,7 @@ const GALLERIA = 'galleria'; // N1: le immagini da mostrare ai giocatori
 const PX = 'px'; // A.161: calcolatore e archivio «PX della partita» del Direttore (solo master)
 const FILE_PX = 'px.json';
 const FILE_DISPOSITIVI = 'dispositivi.json'; // 21/10: dentro tavolo/, come sessione.json
-const FILE_RIENTRO = 'rientro.json'; // 21/10 pomeriggio: il giornale delle operazioni in sospeso, dentro tavolo/
-const MASSIMO_APPLICATE = 2000; // identificativi di operazioni già applicate tenuti per personaggio (idempotenza)
+const FILE_RIENTRO = 'rientro.json'; // le modifiche fatte offline, in attesa del Direttore (src/rientro.js), dentro tavolo/
 const ID_DISPOSITIVO = /^[A-Za-z0-9_-]{6,64}$/;
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const ID_NEMICO = /^[a-z0-9-]{1,60}$/;
@@ -1431,11 +1435,12 @@ function trovaPg(lista, pgId) {
 }
 
 /**
- * Il giornale delle operazioni, al rientro di un tablet (21/10/2026, quarto lotto, src/giornale.js): applica le
- * variazioni (sempre, senza chiedere) e le assegnazioni non in conflitto, scrive il file se è cambiato
- * qualcosa, tiene da parte i conflitti veri (la schermata di rientro per Davide è il prossimo lotto: qui si
- * mettono al sicuro, non si perdono né si inventano). Idempotente: ripresentare lo stesso giornale (per
- * esempio dopo un errore di rete) non riapplica le operazioni già fatte (`tavolo/rientro.json` → `applicate`).
+ * Il giornale delle operazioni, al rientro di un tablet (src/giornale.js, src/rientro.js). **Niente si applica
+ * qui**: le operazioni fatte offline vanno in attesa in `tavolo/rientro.json` e il personaggio non cambia di un
+ * punto finché Davide non le guarda nella schermata di rientro (apiRientro). Idempotente due volte: ripresentare
+ * lo stesso giornale (il tablet lo rimanda a ogni giro finché non sa com'è andata) non duplica niente, e
+ * un'operazione già decisa non torna in attesa — torna nella risposta, così il tablet svuota la sua coda e dice
+ * al giocatore che cosa è passato e che cosa no.
  */
 async function apiGiornale(req, res, file, cartella, tavolo) {
   if (req.method !== 'POST') return json(res, 405, { errore: 'metodo non ammesso' });
@@ -1458,28 +1463,69 @@ async function apiGiornale(req, res, file, cartella, tavolo) {
     }
   }
   const doveRientro = join(tavolo, FILE_RIENTRO);
-  return inCoda(dove, async () => {
-    const o2 = await leggiJson(dove).catch(() => null); // rilegge dentro la coda: niente scritture sovrapposte
-    if (!o2) return json(res, 404, { errore: 'file non trovato' });
-    let rientro; try { rientro = await leggiJson(doveRientro); } catch { rientro = { versione: 1, personaggi: {} }; }
-    if (!isOggetto(rientro?.personaggi)) rientro = { versione: 1, personaggi: {} };
-    const stato = rientro.personaggi[pgId] ?? { applicate: [], inSospeso: [] };
-    const applicatePrima = new Set(stato.applicate ?? []);
-    const { risultato, applicati, conflitti } = unisciGiornale({ scelte: o2.scelte, sessione: o2.sessione, calendario: o2.calendario }, operazioni, applicatePrima);
-    // i conflitti nuovi (non già in sospeso con lo stesso identificativo di operazione) si aggiungono all'elenco
-    const giaInSospeso = new Set((stato.inSospeso ?? []).map((c) => c.operazione?.id));
-    const inSospeso = [...(stato.inSospeso ?? []), ...conflitti.filter((c) => !giaInSospeso.has(c.operazione.id)).map((c) => ({ ...c, quando: new Date().toISOString() }))];
-    const applicate = [...applicatePrima, ...applicati].slice(-MASSIMO_APPLICATE);
+  return inCoda(doveRientro, async () => {
+    const prima = await leggiJson(doveRientro).catch(() => null);
+    const { rientro, inAttesa, decise } = aggiungiOperazioni(prima, pgId, operazioni, { nome: o.scelte?.nome ?? null });
     await mkdir(tavolo, { recursive: true });
-    await scriviJson(doveRientro, { ...rientro, personaggi: { ...rientro.personaggi, [pgId]: { applicate, inSospeso } } });
-    if (applicati.length) {
-      const prima = o2;
-      try { await archivia(cartella, file, prima); } catch (e) { console.warn(`Copia storica non riuscita (${file}): ${e.message}`); }
-      const nuovo = conMetadati({ ...o2, scelte: risultato.scelte, sessione: risultato.sessione, calendario: risultato.calendario }, prima, { chi: req.mutantMaster ? 'master' : 'giocatore' });
+    await scriviJson(doveRientro, rientro);
+    return json(res, 200, { inAttesa, decise });
+  });
+}
+
+/**
+ * La schermata di rientro, sul PC del Direttore (22/10/2026). Solo dal suo PC (`req.mutantMaster`, lo stesso
+ * controllo di «Spegni Mutant»): le modifiche in attesa di un tablet non sono affari degli altri tablet.
+ *   GET  /api/rientro  → { personaggi: [ { pgId, nome, file, righe: [ { etichetta, quando, conflitto? } ] } ] }
+ *   POST /api/rientro  → { pgId, decisioni: { <id>: 'approva' | 'scarta' } }: applica le approvate al file del
+ *                        personaggio, in ordine di quando sono state fatte, e registra gli esiti. Quello che
+ *                        non è nelle decisioni resta in attesa (chiudere la schermata non è scartare).
+ */
+async function apiRientro(req, res, cartella, tavolo) {
+  if (!req.mutantMaster) return json(res, 403, { errore: 'Il rientro dei tablet si guarda solo dal PC dove gira Mutant.' });
+  const doveRientro = join(tavolo, FILE_RIENTRO);
+  if (req.method === 'GET') {
+    const rientro = normalizzaRientro(await leggiJson(doveRientro).catch(() => null));
+    const lista = await elencoPersonaggi(cartella);
+    const personaggi = [];
+    for (const [pgId, pg] of Object.entries(rientro.personaggi)) {
+      if (!pg.inAttesa.length) continue;
+      const f = trovaPg(lista, pgId);
+      const o = f ? await leggiJson(join(cartella, f.file)).catch(() => null) : null;
+      const stato = o ? { scelte: o.scelte, sessione: o.sessione, calendario: o.calendario } : {};
+      personaggi.push({
+        pgId,
+        nome: o?.scelte?.nome || pg.nome || 'Personaggio',
+        file: f?.file ?? null,
+        righe: pg.inAttesa.map((op) => rigaOperazione(op, stato)),
+      });
+    }
+    return json(res, 200, { personaggi });
+  }
+  if (req.method !== 'POST') return json(res, 405, { errore: 'metodo non ammesso' });
+  let corpo;
+  try { corpo = JSON.parse((await leggiCorpo(req)).toString('utf8')); } catch (e) { return json(res, 400, { errore: e.message }); }
+  const pgId = typeof corpo?.pgId === 'string' ? corpo.pgId : null;
+  const decisioni = isOggetto(corpo?.decisioni) ? corpo.decisioni : null;
+  if (!pgId || !decisioni) return json(res, 400, { errore: 'servono «pgId» e «decisioni»' });
+  const lista = await elencoPersonaggi(cartella);
+  const f = trovaPg(lista, pgId);
+  if (!f) return json(res, 404, { errore: 'personaggio non trovato nella cartella' });
+  const dove = join(cartella, f.file);
+  return inCoda(dove, async () => inCoda(doveRientro, async () => {
+    const o = await leggiJson(dove).catch(() => null);
+    if (!o) return json(res, 404, { errore: 'file non trovato' });
+    const rientro = normalizzaRientro(await leggiJson(doveRientro).catch(() => null));
+    const attesa = inAttesaDi(rientro, pgId);
+    const { risultato, approvate, scartate } = applicaDecisioni({ scelte: o.scelte, sessione: o.sessione, calendario: o.calendario }, attesa, decisioni);
+    if (approvate.length) {
+      try { await archivia(cartella, f.file, o); } catch (e) { console.warn(`Copia storica non riuscita (${f.file}): ${e.message}`); }
+      const nuovo = conMetadati({ ...o, scelte: risultato.scelte, sessione: risultato.sessione, calendario: risultato.calendario }, o, { chi: 'master' });
       await scriviAtomico(dove, Buffer.from(`${JSON.stringify(nuovo, null, 2)}\n`, 'utf8'));
     }
-    return json(res, 200, { applicati, conflitti: conflitti.map((c) => ({ operazione: c.operazione, attuale: c.attuale })) });
-  });
+    await mkdir(tavolo, { recursive: true });
+    await scriviJson(doveRientro, registraDecisioni(rientro, pgId, { approvate, scartate }));
+    return json(res, 200, { approvate, scartate, restano: inAttesaDi(registraDecisioni(rientro, pgId, { approvate, scartate }), pgId).length });
+  }));
 }
 
 /**
@@ -1737,6 +1783,7 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
   }
   if (percorso === '/api/personaggi' && req.method === 'GET') return json(res, 200, await elencoPersonaggi(cartella));
   if (percorso === '/api/dispositivo' || percorso.startsWith('/api/dispositivi')) return await apiDispositivo(req, res, percorso, tavolo, cartella);
+  if (percorso === '/api/rientro') return await apiRientro(req, res, cartella, tavolo);
   const mg = /^\/api\/personaggi\/([^/]+)\/giornale$/.exec(percorso);
   if (mg) return await apiGiornale(req, res, decodeURIComponent(mg[1]), cartella, tavolo);
   const m = /^\/api\/personaggi\/([^/]+)$/.exec(percorso);

@@ -25,8 +25,9 @@ import { descriviVoce } from '../avanzamento.js';
 import { segnaModalitaMaster, modalitaMasterDi, esciModalitaMaster } from './ritorno.js';
 import { statoSalvataggioMaster, controllaRemoto, revisioneDaScrivere, differenzeSessione, testoScelta, indicatoreCollegamento, impronta } from '../collegamento.js';
 import { messaggioConflittoVersione } from '../stato-tablet.js';
-import { montaStatoTablet, impostaPgAperto, eOffline } from './stato-tablet.js';
-import { accoda, fissaBase } from './coda-offline.js';
+import { montaStatoTablet, impostaPgAperto, eOffline, impostaRicaricaScheda } from './stato-tablet.js';
+import { montaRientro } from './rientro.js';
+import { accoda, fissaBase, inCoda } from './coda-offline.js';
 import { difeseNemico } from '../nemico-attacco.js';
 import { leggiScontroAperto, leggiScontro, rigaScontro, leggiMovimentoRound } from './scontro.js';
 import { elencoUnito, confronta, chiaveDaFile, chiavePersonaggio, messaggioSalvataggio, attesaRitentativo, nomeFileLibero, haNome, fileProvvisorio } from '../cartella.js';
@@ -143,7 +144,14 @@ async function avvia() {
   document.body.classList.toggle('senza-marchio', !mostraMarchio({ server: stato.cartella, daQuestoPc: stato.master }));
   // «il tablet è una vista» (21/10/2026): la riga di stato su ogni pagina, solo per i tablet dei giocatori (il
   // Direttore ha già la sua fascia e il tasto MUTANT, qui aggiungerebbe solo rumore)
-  if (stato.cartella && !stato.master) montaStatoTablet(stato.dati);
+  if (stato.cartella && !stato.master) {
+    montaStatoTablet(stato.dati);
+    // quando il Direttore risponde al rientro, la scheda aperta si riallinea a quello che ha deciso
+    impostaRicaricaScheda(() => (stato.id ? ricaricaDaCartella() : null));
+  }
+  // 22/10/2026: la schermata di rientro, solo sul PC del Direttore. Non compare mai se nessun tablet ha
+  // lavorato offline: si apre da sé quando c'è qualcosa in attesa, dovunque Davide si trovi nell'app.
+  if (stato.cartella && stato.master) montaRientro();
   // pezzo 6: con il server la scheda aperta controlla il proprio file (come la plancia, ogni 3 secondi)
   if (stato.cartella) setInterval(controllaScheda, INTERVALLO_COLLEGAMENTO_MS);
   window.addEventListener('hashchange', daIndirizzo);
@@ -312,7 +320,7 @@ function daIndirizzo() {
     stato.calendario = normalizzaCalendario(salvato.calendario, stato.dati);
     // la prima apertura di un personaggio è anche la prima base nota per le differenze offline (parte B): senza
     // questo, la primissima modifica accodata offline confronterebbe col vuoto e la coda sarebbe un diluvio
-    if (stato.cartella && !stato.master) fissaBase(id, stato.scelte, stato.sessione, stato.calendario);
+    if (stato.cartella && !stato.master) fissaBase(chiaveCoda(salvato, id), stato.scelte, stato.sessione, stato.calendario);
     stato.opzioniStampa = normalizzaOpzioniStampa(salvato.stampa);
     stato.precedenteTavolo = null;
     stato.collegamento.conflitto = null;
@@ -456,6 +464,14 @@ function salvaSubitoSeInAttesa() {
  * non è cambiato dall'ultima sincronizzazione, come la plancia (pezzo 4): altrimenti apre il conflitto.
  * `mtime`: revisione da usare al posto di quella ricordata («Tieni la mia»).
  */
+/**
+ * La chiave della coda offline e della sua base (src/ui/coda-offline.js): l'identificativo STABILE del
+ * personaggio, non quello della voce del browser. Deve essere lo stesso con cui la riga di stato legge la coda
+ * (src/ui/stato-tablet.js → pg.pgId, da src/storico-personaggi.js → idPersonaggio): con due chiavi diverse la
+ * coda si riempirebbe da una parte e si leggerebbe dall'altra, cioè non partirebbe mai.
+ */
+const chiaveCoda = (p, id) => p?.pg ?? id;
+
 async function scriviInCartella(id, { revisione = false, mtime = null } = {}) {
   if (!archivio.carica(id)) return null;
   // un PG senza nome resta nel browser (05/10/2026): nella cartella va un solo file, con il nome giusto
@@ -465,11 +481,14 @@ async function scriviInCartella(id, { revisione = false, mtime = null } = {}) {
   try { elenco = await elencoCartella(); } catch { elenco = null; }
   assicuraPg(id, elenco);
   const p = archivio.carica(id);
-  // «si può modificare offline» (21/10/2026 pomeriggio, parte B): un tablet (mai il PC del Direttore) che sa di
-  // essere offline non tenta la scrittura — fallirebbe comunque — accoda invece le operazioni (src/giornale.js,
-  // src/ui/coda-offline.js), che al rientro si sommano a quello che è successo nel frattempo.
-  if (stato.cartella && !stato.master && eOffline()) {
-    accoda(id, p.scelte, p.sessione, normalizzaCalendario(p.calendario, stato.dati));
+  // «Si può modificare offline, e al rientro Davide approva» (21–22/10/2026): un tablet (mai il PC del
+  // Direttore) scrive il file solo quando è collegato E non ha niente in attesa. Offline accoda le operazioni
+  // (src/giornale.js, src/ui/coda-offline.js); e **finché la coda non è vuota continua ad accodare anche da
+  // collegato**, altrimenti le modifiche successive scavalcherebbero la fila e finirebbero nel file senza che
+  // Davide le abbia viste — mentre quelle di prima aspettano la sua risposta. Quando ha risposto, la coda si
+  // svuota, la scheda si riallinea al server e si torna a scrivere normalmente.
+  if (stato.cartella && !stato.master && (eOffline() || inCoda(chiaveCoda(p, id)))) {
+    accoda(chiaveCoda(p, id), p.scelte, p.sessione, normalizzaCalendario(p.calendario, stato.dati));
     return null;
   }
   const { scelte } = normalizza(p.scelte, stato.dati);
@@ -490,7 +509,7 @@ async function scriviInCartella(id, { revisione = false, mtime = null } = {}) {
     const r = await scriviCartella(file, testo, { mtime: rev });
     archivio.segnaCartella(id, { file: r.file, mtime: r.mtime, salvato: p.aggiornato, impronta: impronta(testo) });
     // la scrittura è andata a buon fine: questa è la nuova base nota per le differenze offline (parte B)
-    if (stato.cartella && !stato.master) fissaBase(id, scelte, p.sessione, normalizzaCalendario(p.calendario, stato.dati));
+    if (stato.cartella && !stato.master) fissaBase(chiaveCoda(p, id), scelte, p.sessione, normalizzaCalendario(p.calendario, stato.dati));
     // «Modifica master»: il server ha tenuto le correzioni del master al posto di quelle (vecchie) di questa scheda
     if (r.masterRipristinato && id === stato.id) await ricaricaDaCartella();
     if (id === stato.id) aggiornaIndicatoreSalvataggio();
@@ -739,7 +758,7 @@ async function ricaricaDaCartella(v = null) {
   stato.calendario = normalizzaCalendario(ora.calendario, stato.dati);
   // quello che arriva dal server è la nuova base nota per le differenze offline (parte B): non solo dopo una
   // scrittura riuscita, anche dopo un ricaricamento come questo
-  if (stato.cartella && !stato.master) fissaBase(id, stato.scelte, stato.sessione, stato.calendario);
+  if (stato.cartella && !stato.master) fissaBase(chiaveCoda(ora, id), stato.scelte, stato.sessione, stato.calendario);
   // «Annulla» riporterebbe i valori di prima del master
   stato.precedenteTavolo = null;
   // modalità master: ciò che arriva dalla cartella non è una modifica del master da registrare

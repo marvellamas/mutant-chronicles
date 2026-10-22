@@ -120,12 +120,22 @@ export function togliDallaCoda(id, opId) {
   scrivi(CHIAVE_CODA(id), leggiCoda(id).filter((o) => o.id !== opId));
 }
 
-/** Dopo una risposta del server: le operazioni applicate (accettate) si tolgono dalla coda; quelle in
-    conflitto restano, così il giocatore sa che sono ancora in attesa del Direttore. Aggiorna anche la base al
-    nuovo stato scritto sul server (`risultato`), per le differenze successive. */
-export function confermaRisposta(id, { applicati = [], risultato = null } = {}) {
-  if (applicati.length) scrivi(CHIAVE_CODA(id), leggiCoda(id).filter((o) => !applicati.includes(o.id)));
-  if (risultato) scrivi(CHIAVE_BASE(id), statoDi(risultato.scelte, risultato.sessione, risultato.calendario));
+/**
+ * Dopo una risposta del server (22/10/2026): si tolgono dalla coda **solo** le operazioni che il Direttore ha
+ * deciso — approvate o scartate che siano. Tutto il resto resta qui: le modifiche sono in attesa sul suo PC,
+ * ma finché non ha risposto il giocatore le vede ancora nella sua coda, e se il tablet si spegne non si perde
+ * niente (il server le ha già prese in carico, e ripresentarle non le duplica).
+ * @param decise { <idOperazione>: 'approvata' | 'scartata' } dalla risposta del server
+ * @returns { approvate: [etichetta], scartate: [etichetta] } per dirlo al giocatore
+ */
+export function confermaRisposta(id, { decise = {} } = {}) {
+  const coda = leggiCoda(id);
+  const ids = Object.keys(decise);
+  if (!ids.length) return { approvate: [], scartate: [] };
+  const etichette = (esito) => coda.filter((o) => decise[o.id] === esito).map((o) => o.etichetta ?? o.id);
+  const esito = { approvate: etichette('approvata'), scartate: etichette('scartata') };
+  scrivi(CHIAVE_CODA(id), coda.filter((o) => !ids.includes(o.id)));
+  return esito;
 }
 
 /** Quante operazioni sono in coda (per la riga di stato: «4 modifiche in attesa»). */

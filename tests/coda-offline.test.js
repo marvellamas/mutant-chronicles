@@ -65,16 +65,34 @@ test('togliDallaCoda: il giocatore toglie una riga prima che arrivi al Direttore
   assert.equal(inCoda(ID), 0);
 });
 
-test('confermaRisposta: le operazioni applicate si tolgono, quelle in conflitto restano', () => {
+test('confermaRisposta: escono dalla coda solo le righe che il Direttore ha deciso (approvate o scartate)', () => {
   fissaBase(ID, {}, { pvAttuali: 15, pmAttuali: 10 }, null);
   accoda(ID, {}, { pvAttuali: 10, pmAttuali: 10 }, null); // −5 PV
   const opPm = accoda(ID, {}, { pvAttuali: 10, pmAttuali: 7 }, null); // −3 PM, operazione separata
   assert.equal(inCoda(ID), 2);
-  // il server ha applicato solo la prima (−5 PV); la seconda resta (per esempio in conflitto, o non ancora vista)
+  // il Direttore ha deciso solo la prima: la seconda è ancora sul suo tavolo, quindi resta anche qui
   const primaOp = leggiCoda(ID)[0];
-  confermaRisposta(ID, { applicati: [primaOp.id] });
+  const esito = confermaRisposta(ID, { decise: { [primaOp.id]: 'approvata' } });
+  assert.deepEqual(esito.approvate, [primaOp.etichetta]);
+  assert.deepEqual(esito.scartate, []);
   assert.equal(inCoda(ID), 1);
   assert.equal(leggiCoda(ID)[0].id, opPm[0].id);
+});
+
+test('confermaRisposta: una riga scartata esce dalla coda e si dice al giocatore che non è passata', () => {
+  fissaBase(ID, {}, { pvAttuali: 15 }, null);
+  const [op] = accoda(ID, {}, { pvAttuali: 10 }, null);
+  const esito = confermaRisposta(ID, { decise: { [op.id]: 'scartata' } });
+  assert.deepEqual(esito.scartate, [op.etichetta]);
+  assert.equal(inCoda(ID), 0);
+});
+
+test('confermaRisposta: senza risposta del Direttore la coda non si tocca (chiudere non è scartare)', () => {
+  fissaBase(ID, {}, { pvAttuali: 15 }, null);
+  accoda(ID, {}, { pvAttuali: 10 }, null);
+  const esito = confermaRisposta(ID, { decise: {} });
+  assert.deepEqual(esito, { approvate: [], scartate: [] });
+  assert.equal(inCoda(ID), 1);
 });
 
 test('la coda sopravvive a un "riavvio" (un nuovo localStorage con lo stesso contenuto sottostante)', () => {

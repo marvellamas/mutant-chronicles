@@ -1,6 +1,7 @@
-// POST /api/personaggi/<file>/giornale (21/10/2026, quarto lotto «si può modificare offline, e al rientro
-// Davide approva»): applica le variazioni e le assegnazioni non in conflitto, tiene da parte i conflitti veri,
-// idempotente, stesso controllo «scrive solo il proprio» di PUT /api/personaggi/<file>.
+// Il rientro di un tablet, dal server (21–22/10/2026): POST /api/personaggi/<file>/giornale mette le modifiche
+// fatte offline IN ATTESA (non applica niente), GET e POST /api/rientro sono la schermata del Direttore, e solo
+// dal suo PC. Tutto il giro: quattro modifiche offline di cui una in conflitto, approvazione parziale, chiusura
+// senza rispondere, e la risposta che torna al tablet.
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, readFileSync } from 'node:fs';
@@ -50,63 +51,153 @@ async function associa(id, pgId) {
   assert.equal(r.status, 200, await r.text());
 }
 
-test('una variazione si somma a quello che è successo nel frattempo (il Direttore ha cambiato i PV)', async () => {
+const letto = (file) => JSON.parse(readFileSync(join(c.personaggi, file), 'utf8'));
+
+/** Il tablet manda il suo giornale, come al rientro. */
+function manda(file, operazioni) {
+  return fetch(`${baseTablet}/api/personaggi/${encodeURIComponent(file)}/giornale`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Mutant-Da': 'giocatore', 'X-Mutant-Dispositivo': ID1 }, body: JSON.stringify({ operazioni }),
+  });
+}
+
+/** Il Direttore risponde dalla sua schermata. */
+function decidi(pgId, decisioni) {
+  return fetch(`${baseMaster}/api/rientro`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ pgId, decisioni }) });
+}
+
+test('le modifiche offline restano in attesa: il personaggio non cambia finché Davide non risponde', async () => {
   const p = await metti('Fratello-Anselmo-Viri_liv3_2026-10-02.json');
   await associa(ID1, p.pg);
-  // il Direttore cambia i PV direttamente (come se li avesse corretti dal Tavolo), dal suo PC
-  const letto = JSON.parse(readFileSync(join(c.personaggi, p.file), 'utf8'));
-  const dopoDirettore = { ...letto, sessione: { ...letto.sessione, pvAttuali: (letto.sessione.pvAttuali ?? 0) + 10 } };
-  await fetch(`${baseMaster}/api/personaggi/${encodeURIComponent(p.file)}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(dopoDirettore) });
-  const pvDopoDirettore = JSON.parse(readFileSync(join(c.personaggi, p.file), 'utf8')).sessione.pvAttuali;
-
-  const op = { id: 'op-pv-1', tipo: 'somma', percorso: ['sessione', 'pvAttuali'], delta: -5, etichetta: '−5 PV' };
-  const r = await fetch(`${baseTablet}/api/personaggi/${encodeURIComponent(p.file)}/giornale`, {
-    method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Mutant-Da': 'giocatore', 'X-Mutant-Dispositivo': ID1 }, body: JSON.stringify({ operazioni: [op] }),
-  });
+  const pvPrima = letto(p.file).sessione.pvAttuali;
+  const op = { id: 'op-pv-1', tipo: 'somma', percorso: ['sessione', 'pvAttuali'], delta: -5, etichetta: '−5 PV', quando: '2026-10-21T21:40:00.000Z' };
+  const r = await manda(p.file, [op]);
   const j = await r.json();
   assert.equal(r.status, 200, JSON.stringify(j));
-  assert.deepEqual(j.applicati, ['op-pv-1']);
-  assert.equal(j.conflitti.length, 0);
-  const file = JSON.parse(readFileSync(join(c.personaggi, p.file), 'utf8'));
-  assert.equal(file.sessione.pvAttuali, pvDopoDirettore - 5);
+  assert.deepEqual(j.inAttesa, ['op-pv-1']);
+  assert.deepEqual(j.decise, {});
+  assert.equal(letto(p.file).sessione.pvAttuali, pvPrima, 'il file non deve cambiare prima della conferma');
+
+  // approvata dal Direttore: ADESSO si applica
+  const d = await decidi(p.pg, { 'op-pv-1': 'approva' });
+  const dj = await d.json();
+  assert.equal(d.status, 200, JSON.stringify(dj));
+  assert.deepEqual(dj.approvate, ['op-pv-1']);
+  assert.equal(letto(p.file).sessione.pvAttuali, pvPrima - 5);
 });
 
-test('un\'assegnazione cambiata anche sul server diventa un conflitto vero: non si applica, resta in sospeso', async () => {
+test('la schermata non compare se nessun tablet ha lavorato offline', async () => {
+  // niente in attesa per nessuno: l'elenco è vuoto, quindi l'interfaccia non apre niente
+  await decidiTutto();
+  const r = await fetch(`${baseMaster}/api/rientro`);
+  const j = await r.json();
+  assert.equal(r.status, 200);
+  assert.deepEqual(j.personaggi, []);
+});
+
+/** Svuota l'attesa di tutti (le prove che seguono partono da una schermata vuota). */
+async function decidiTutto() {
+  const r = await fetch(`${baseMaster}/api/rientro`);
+  const j = await r.json();
+  for (const pg of j.personaggi) await decidi(pg.pgId, Object.fromEntries(pg.righe.map((x) => [x.id, 'scarta'])));
+}
+
+test('quattro modifiche offline di cui una in conflitto: l\'elenco del Direttore le mostra in ordine di ora', async () => {
   const p = await metti('Nadia-Ferro_liv4_2026-10-02.json');
   await associa(ID1, p.pg);
-  const visto = JSON.parse(readFileSync(join(c.personaggi, p.file), 'utf8')).sessione.note ?? '';
-  // il Direttore cambia le note mentre il tablet era offline
-  const letto = JSON.parse(readFileSync(join(c.personaggi, p.file), 'utf8'));
-  await fetch(`${baseMaster}/api/personaggi/${encodeURIComponent(p.file)}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...letto, sessione: { ...letto.sessione, note: 'nota del Direttore' } }) });
+  const notePrima = letto(p.file).sessione.note ?? '';
+  // mentre il tablet era offline, il Direttore ha riscritto le note: l'assegnazione del tablet sarà un conflitto
+  const o = letto(p.file);
+  await fetch(`${baseMaster}/api/personaggi/${encodeURIComponent(p.file)}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...o, sessione: { ...o.sessione, note: 'nota del Direttore' } }) });
 
-  const op = { id: 'op-nota-1', tipo: 'assegna', percorso: ['sessione', 'note'], visto, nuovo: 'nota dal tablet' };
-  const r = await fetch(`${baseTablet}/api/personaggi/${encodeURIComponent(p.file)}/giornale`, {
-    method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Mutant-Da': 'giocatore', 'X-Mutant-Dispositivo': ID1 }, body: JSON.stringify({ operazioni: [op] }),
-  });
-  assert.equal(r.status, 200);
-  const j = await r.json();
-  assert.deepEqual(j.applicati, []);
-  assert.equal(j.conflitti.length, 1);
-  assert.equal(j.conflitti[0].operazione.id, 'op-nota-1');
-  assert.equal(j.conflitti[0].attuale, 'nota del Direttore');
-  // il file non è stato toccato dal conflitto
-  assert.equal(JSON.parse(readFileSync(join(c.personaggi, p.file), 'utf8')).sessione.note, 'nota del Direttore');
+  const ops = [
+    { id: 'q1', tipo: 'somma', percorso: ['sessione', 'pvAttuali'], delta: -5, etichetta: '−5 PV', quando: '2026-10-21T21:40:00.000Z' },
+    { id: 'q2', tipo: 'somma', percorso: ['sessione', 'pmAttuali'], delta: -3, etichetta: '−3 PM', quando: '2026-10-21T21:44:00.000Z' },
+    { id: 'q3', tipo: 'insieme', percorso: ['sessione', 'statiAttivi'], azione: 'aggiungi', valore: 'sanguinamento', identita: 'sanguinamento', etichetta: 'Stato sanguinamento acceso', quando: '2026-10-21T21:53:00.000Z' },
+    { id: 'q4', tipo: 'assegna', percorso: ['sessione', 'note'], visto: notePrima, nuovo: 'dal tablet', etichetta: 'Note del personaggio', quando: '2026-10-21T21:58:00.000Z' },
+  ];
+  // mandate in disordine: la schermata le rimette in ordine di quando sono state fatte
+  const r = await manda(p.file, [ops[3], ops[1], ops[0], ops[2]]);
+  assert.equal(r.status, 200, await r.text());
+
+  const lista = await (await fetch(`${baseMaster}/api/rientro`)).json();
+  const pg = lista.personaggi.find((x) => x.pgId === p.pg);
+  assert.ok(pg, 'il personaggio deve comparire nella schermata di rientro');
+  assert.equal(pg.nome, 'Nadia Ferro');
+  assert.deepEqual(pg.righe.map((x) => x.id), ['q1', 'q2', 'q3', 'q4']);
+  assert.equal(pg.righe[0].etichetta, '−5 PV');
+  // le prime tre sono variazioni: nessun conflitto
+  for (const x of pg.righe.slice(0, 3)) assert.equal(x.conflitto, undefined);
+  // la quarta è un'assegnazione cambiata anche dal Direttore: le due versioni, per la domanda esplicita
+  assert.equal(pg.righe[3].conflitto.sulServer, 'nota del Direttore');
+  assert.equal(pg.righe[3].conflitto.dalTablet, 'dal tablet');
 });
 
-test('la stessa operazione ripresentata due volte non si applica due volte (idempotenza)', async () => {
-  const p = await metti('Fratello-Anselmo-Viri_liv3_2026-10-02.json');
+test('approvazione parziale: quello che Davide non decide resta in attesa, e il resto si applica', async () => {
+  const p = await metti('Rhea-Valdis_liv5_2026-10-02.json');
   await associa(ID1, p.pg);
-  const prima = JSON.parse(readFileSync(join(c.personaggi, p.file), 'utf8')).sessione.pmAttuali ?? 0;
-  const op = { id: 'op-pm-ripetuta', tipo: 'somma', percorso: ['sessione', 'pmAttuali'], delta: -3 };
-  const invia = () => fetch(`${baseTablet}/api/personaggi/${encodeURIComponent(p.file)}/giornale`, {
-    method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Mutant-Da': 'giocatore', 'X-Mutant-Dispositivo': ID1 }, body: JSON.stringify({ operazioni: [op] }),
-  });
-  const r1 = await invia();
-  assert.deepEqual((await r1.json()).applicati, ['op-pm-ripetuta']);
-  const r2 = await invia(); // stesso identificativo, stesso giornale: come un ritentativo dopo un errore di rete
-  assert.deepEqual((await r2.json()).applicati, []); // niente di nuovo applicato
-  const dopo = JSON.parse(readFileSync(join(c.personaggi, p.file), 'utf8')).sessione.pmAttuali;
-  assert.equal(dopo, prima - 3); // non -6
+  const prima = letto(p.file).sessione;
+  const ops = [
+    { id: 'p1', tipo: 'somma', percorso: ['sessione', 'pvAttuali'], delta: -4, etichetta: '−4 PV', quando: '2026-10-21T22:00:00.000Z' },
+    { id: 'p2', tipo: 'somma', percorso: ['sessione', 'pmAttuali'], delta: -2, etichetta: '−2 PM', quando: '2026-10-21T22:01:00.000Z' },
+    { id: 'p3', tipo: 'somma', percorso: ['sessione', 'distintivi'], delta: 1, etichetta: '+1 Distintivi', quando: '2026-10-21T22:02:00.000Z' },
+  ];
+  await manda(p.file, ops);
+  // ne approva una, ne scarta una, della terza non dice niente (chiude la schermata)
+  const d = await (await decidi(p.pg, { p1: 'approva', p2: 'scarta' })).json();
+  assert.deepEqual(d.approvate, ['p1']);
+  assert.deepEqual(d.scartate, ['p2']);
+  assert.equal(d.restano, 1);
+  const dopo = letto(p.file).sessione;
+  assert.equal(dopo.pvAttuali, prima.pvAttuali - 4); // approvata
+  assert.equal(dopo.pmAttuali, prima.pmAttuali); // scartata: non applicata
+  assert.equal(dopo.distintivi, prima.distintivi); // non decisa: ancora in attesa
+
+  // la terza si ripresenta: chiudere non è scartare
+  const lista = await (await fetch(`${baseMaster}/api/rientro`)).json();
+  const pg = lista.personaggi.find((x) => x.pgId === p.pg);
+  assert.deepEqual(pg.righe.map((x) => x.id), ['p3']);
+
+  // e il tablet, ripresentando la sua coda, impara com'è andata per le altre due
+  const r = await (await manda(p.file, ops)).json();
+  assert.deepEqual(r.decise, { p1: 'approvata', p2: 'scartata' });
+  assert.deepEqual(r.inAttesa, ['p3']);
+});
+
+test('una riga approvata due volte si applica una volta sola', async () => {
+  const p = await metti('Torvald-Krane_liv6_2026-10-02.json');
+  await associa(ID1, p.pg);
+  const prima = letto(p.file).sessione.pvAttuali;
+  const op = { id: 'due-volte', tipo: 'somma', percorso: ['sessione', 'pvAttuali'], delta: -6, etichetta: '−6 PV', quando: '2026-10-21T22:10:00.000Z' };
+  await manda(p.file, [op]);
+  await decidi(p.pg, { 'due-volte': 'approva' });
+  assert.equal(letto(p.file).sessione.pvAttuali, prima - 6);
+  // il tablet ripresenta la stessa operazione (non aveva ricevuto la risposta) e Davide riapprova dalla sua
+  // schermata rimasta aperta: niente deve succedere una seconda volta
+  const r = await (await manda(p.file, [op])).json();
+  assert.deepEqual(r.inAttesa, []);
+  assert.deepEqual(r.decise, { 'due-volte': 'approvata' });
+  const d = await (await decidi(p.pg, { 'due-volte': 'approva' })).json();
+  assert.deepEqual(d.approvate, []);
+  assert.equal(letto(p.file).sessione.pvAttuali, prima - 6); // non −12
+});
+
+test('niente si perde se il tablet si spegne: il deposito è sul server, non nella memoria del processo', async () => {
+  const p = await metti('Aiko-Tenzan_liv5_2026-10-02.json');
+  await associa(ID1, p.pg);
+  const op = { id: 'sopravvive', tipo: 'somma', percorso: ['sessione', 'puntiEroe'], delta: -1, etichetta: '−1 Punti Eroe', quando: '2026-10-21T22:20:00.000Z' };
+  await manda(p.file, [op]);
+  // il file su disco contiene l'attesa: un riavvio del server la ritrova (è lo stesso file che legge la schermata)
+  const deposito = JSON.parse(readFileSync(join(c.tavolo, 'rientro.json'), 'utf8'));
+  assert.ok(deposito.personaggi[p.pg].inAttesa.some((x) => x.id === 'sopravvive'));
+  const lista = await (await fetch(`${baseMaster}/api/rientro`)).json();
+  assert.ok(lista.personaggi.find((x) => x.pgId === p.pg).righe.some((x) => x.id === 'sopravvive'));
+});
+
+test('la schermata di rientro è solo del PC del Direttore (un tablet non la vede e non decide)', async () => {
+  const g = await fetch(`${baseTablet}/api/rientro`);
+  assert.equal(g.status, 403);
+  const d = await fetch(`${baseTablet}/api/rientro`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ pgId: 'pg-x', decisioni: {} }) });
+  assert.equal(d.status, 403);
 });
 
 test('un tablet non associato a questo personaggio viene rifiutato', async () => {
@@ -114,19 +205,17 @@ test('un tablet non associato a questo personaggio viene rifiutato', async () =>
   const due = await metti('Nadia-Ferro_liv4_2026-10-02.json');
   await associa(ID1, uno.pg);
   const op = { id: 'op-x', tipo: 'somma', percorso: ['sessione', 'pvAttuali'], delta: -1 };
-  const r = await fetch(`${baseTablet}/api/personaggi/${encodeURIComponent(due.file)}/giornale`, {
-    method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Mutant-Da': 'giocatore', 'X-Mutant-Dispositivo': ID1 }, body: JSON.stringify({ operazioni: [op] }),
-  });
+  const r = await manda(due.file, [op]);
   assert.equal(r.status, 403);
 });
 
-test('dal PC del master il controllo non si applica', async () => {
+test('dal PC del master il controllo «scrive solo il proprio» non si applica', async () => {
   const p = await metti('Nadia-Ferro_liv4_2026-10-02.json');
-  const prima = JSON.parse(readFileSync(join(c.personaggi, p.file), 'utf8')).sessione.pvAttuali ?? 0;
-  const op = { id: 'op-master-1', tipo: 'somma', percorso: ['sessione', 'pvAttuali'], delta: 2 };
+  const op = { id: 'op-master-1', tipo: 'somma', percorso: ['sessione', 'pvAttuali'], delta: 2, quando: '2026-10-21T23:00:00.000Z' };
   const r = await fetch(`${baseMaster}/api/personaggi/${encodeURIComponent(p.file)}/giornale`, {
     method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ operazioni: [op] }),
   });
-  assert.equal(r.status, 200, await r.text());
-  assert.equal(JSON.parse(readFileSync(join(c.personaggi, p.file), 'utf8')).sessione.pvAttuali, prima + 2);
+  const j = await r.json();
+  assert.equal(r.status, 200, JSON.stringify(j));
+  assert.ok(j.inAttesa.includes('op-master-1')); // insieme a quelle che questo personaggio aveva già in attesa
 });

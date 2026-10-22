@@ -108,15 +108,34 @@ export async function leggiBackupMaster(file) {
 }
 
 /**
- * Il rientro (21/10/2026, quarto lotto, src/giornale.js): manda il giornale delle operazioni accodate offline.
- * Il server applica le variazioni (sempre) e le assegnazioni non in conflitto, scrive il file se cambia
- * qualcosa, e risponde { applicati: [id,…], conflitti: [{operazione, attuale}] }. Idempotente: ripresentarlo
- * (per esempio dopo un errore di rete) non riapplica le operazioni già fatte.
+ * Il rientro (src/giornale.js, src/rientro.js): manda il giornale delle operazioni fatte offline. Il server
+ * **non applica niente**: le mette in attesa del Direttore e risponde { inAttesa: [id,…], decise: { id:
+ * 'approvata' | 'scartata' } }, cioè che cosa ha già deciso fra quelle presentate. Idempotente: ripresentare
+ * lo stesso giornale (lo si rimanda a ogni giro, finché non si sa com'è andata) non duplica niente.
  */
 export async function inviaGiornale(file, operazioni) {
   const r = await fetch(`api/personaggi/${encodeURIComponent(file)}/giornale`, {
     method: 'POST', headers: { 'Content-Type': 'application/json', ...intestazioneDispositivo() }, body: JSON.stringify({ operazioni }),
   });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.errore ?? `errore ${r.status}`);
+  return j;
+}
+
+/** Le modifiche offline in attesa, per la schermata di rientro (solo dal PC del Direttore; null se non si legge). */
+export async function leggiRientro() {
+  if (!(await serverCartella())) return null;
+  try {
+    const r = await fetch('api/rientro', { cache: 'no-store' });
+    return r.ok ? await r.json() : null;
+  } catch {
+    return null;
+  }
+}
+
+/** La risposta del Direttore: { <idOperazione>: 'approva' | 'scarta' }. Quello che non c'è resta in attesa. */
+export async function decidiRientro(pgId, decisioni) {
+  const r = await fetch('api/rientro', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ pgId, decisioni }) });
   const j = await r.json().catch(() => ({}));
   if (!r.ok) throw new Error(j.errore ?? `errore ${r.status}`);
   return j;

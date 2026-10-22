@@ -21,6 +21,10 @@ let timer = null;
 let scegliendo = false; // la finestrella è aperta: non riaprirla una seconda volta dal poll
 let codaVisibile = false;
 let inviandoGiornale = false;
+let ricaricaScheda = null; // src/ui/app.js la fornisce: rilegge la scheda aperta dal server
+
+/** Come si rilegge la scheda dal server, quando il Direttore ha risposto (src/ui/app.js → ricaricaDaCartella). */
+export function impostaRicaricaScheda(fn) { ricaricaScheda = fn; }
 
 /** Il tablet può modificare adesso quello che sta mostrando? L'unico motivo di sola lettura (parte C): guardare
     un personaggio che non è il proprio — sempre, online o offline (dal 21/10 pomeriggio l'offline non spegne
@@ -44,11 +48,17 @@ function righeCoda() {
 function pannelloCoda() {
   const righe = righeCoda();
   if (!righe.length) return null;
+  // la ✕ c'è solo finché la riga non è partita: «togliere una riga prima che arrivi al Direttore». Una volta
+  // mandata, la decisione è sua — toglierla di qui non la toglierebbe dalla sua schermata, la nasconderebbe
+  // soltanto al giocatore.
+  const partite = collegamento.ok;
   return h('div', { class: 'coda-offline-pannello' },
-    h('p', { class: 'nota' }, 'In attesa di essere viste dal Direttore. Hai sbagliato tocco? Toglila prima che arrivi.'),
+    h('p', { class: 'nota' }, partite
+      ? 'Mandate al Direttore: le vedrà nella sua schermata di rientro e deciderà se tenerle. Qui restano finché non risponde.'
+      : 'In attesa: partiranno quando torni collegato. Hai sbagliato tocco? Toglila prima che arrivi al Direttore.'),
     h('ul', { class: 'coda-offline-elenco' }, righe.map((op) => h('li', {},
       h('span', {}, op.etichetta), h('small', { class: 'nota' }, ` (${new Date(op.quando).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })})`),
-      h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Togli questa modifica dalla coda', onclick: () => { togliDallaCoda(pg.pgId, op.id); applica(); } }, '✕')))));
+      partite ? null : h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Togli questa modifica dalla coda', onclick: () => { togliDallaCoda(pg.pgId, op.id); applica(); } }, '✕')))));
 }
 
 function applica() {
@@ -111,10 +121,12 @@ async function apriScelta() {
 }
 
 /**
- * Il rientro (parte C): manda la coda del proprio personaggio al server. Le variazioni e le assegnazioni non
- * in conflitto si tolgono dalla coda (il Direttore le ha già viste nel file); quelle in conflitto restano, in
- * attesa della sua schermata di rientro (il prossimo lotto). Non manda niente se la coda è vuota, se questo
- * dispositivo non ha ancora scelto un personaggio, o se un invio precedente è ancora in corso.
+ * Il rientro: manda la coda del proprio personaggio al server, che la mette in attesa del Direttore (niente si
+ * applica prima della sua conferma, src/rientro.js). La coda resta sul tablet finché lui non risponde: quando
+ * risponde, le righe decise escono e il giocatore legge che cosa è passato e che cosa no. Si rimanda a ogni
+ * giro proprio per raccogliere quella risposta — ripresentare lo stesso giornale non duplica niente.
+ * Non manda niente se la coda è vuota, se questo dispositivo non ha ancora scelto un personaggio, o se un
+ * invio precedente è ancora in corso.
  */
 async function inviaCoda() {
   if (inviandoGiornale || !pg) return;
@@ -126,9 +138,12 @@ async function inviaCoda() {
     const file = lista ? fileDiPgStabile(lista, pg.pgId)?.file : null;
     if (!file) return; // il server non risponde, o il personaggio non c'è più: si riprova al giro successivo
     const r = await inviaGiornale(file, coda);
-    confermaRisposta(pg.pgId, r);
-    if (r.applicati?.length) avviso(`${r.applicati.length} modific${r.applicati.length === 1 ? 'a' : 'he'} viste dal Direttore.`, { tipo: 'ok' });
-    if (r.conflitti?.length) avviso(`${r.conflitti.length} modific${r.conflitti.length === 1 ? 'a' : 'he'} in attesa: il Direttore deve scegliere (cambiat${r.conflitti.length === 1 ? 'a' : 'e'} anche da lui).`, { tipo: 'attenzione', durata: 9000 });
+    const { approvate, scartate } = confermaRisposta(pg.pgId, r);
+    if (approvate.length) avviso(`Il Direttore ha approvato: ${approvate.join('; ')}.`, { tipo: 'ok', durata: 9000 });
+    if (scartate.length) avviso(`Il Direttore NON ha tenuto: ${scartate.join('; ')}.`, { tipo: 'attenzione', durata: 12000 });
+    // il Direttore ha risposto: la scheda si riallinea a quello che ha deciso. Senza questo, una modifica
+    // scartata resterebbe sullo schermo del giocatore (e tornerebbe nel file alla prima scrittura normale).
+    if (approvate.length || scartate.length) await ricaricaScheda?.();
     applica();
   } catch (e) {
     // offline per davvero, o il server è tornato ma risponde male: la coda resta, si riprova al giro successivo
@@ -144,9 +159,15 @@ async function aggiorna() {
   const eraOffline = !collegamento.ok;
   if (lista) {
     collegamento = { ok: true, ultimoOk: adesso };
-    pg = await leggiAssociazione();
-    // «quando il tablet torna in linea, si confronta» (parte C): appena si riconnette, non al giro dopo
-    if (eraOffline) await inviaCoda();
+    // dal 21/10 pomeriggio il server crea il record del dispositivo al primo contatto (per farlo comparire nel
+    // riquadro del Direttore anche prima che scelga), quindi risponde { pgId: null } invece di niente: senza
+    // personaggio è come non avere l'abbinamento — la riga deve dire «scegli il tuo personaggio» e offrire «Scegli».
+    const abbinamento = await leggiAssociazione();
+    pg = abbinamento?.pgId ? abbinamento : null;
+    // appena si riconnette, non al giro dopo. E poi a ogni giro finché la coda non è vuota: non per rimandare le
+    // stesse operazioni (il server le ha già in attesa e non le duplica) ma per raccogliere la risposta del
+    // Direttore quando arriva, e dire al giocatore che cosa è passato.
+    if (eraOffline || contaInCoda(pg?.pgId ?? '')) await inviaCoda();
   } else {
     collegamento = { ok: false, ultimoOk: collegamento.ultimoOk ?? adesso };
   }

@@ -10,6 +10,7 @@
   --z-menu: 40;       /* menu a tendina */
   --z-pannelli: 60;   /* pannelli in sovrimpressione */
   --z-tooltip: 100;   /* tooltip unico (src/ui/tooltip.js) */
+  --z-rientro: 1100;  /* la schermata di rientro dei tablet, sul PC del Direttore (src/ui/rientro.js) */
   --z-galleria: 1200; /* N1: l'immagine mostrata ai giocatori, sopra ogni barra (la ✕ resta raggiungibile) */
   --sfondo: #f7f6f3;
   --superficie: #ffffff;
@@ -2965,6 +2966,45 @@ body:has(.mappa-pagina) .fascia-stato-tablet { position: static; }
 .coda-offline-elenco { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.25rem; }
 .coda-offline-elenco li { display: flex; align-items: center; gap: 0.4rem; font-size: 0.88rem; }
 .coda-offline-elenco li span { flex: 1 1 auto; }
+
+/* 22/10/2026 — la schermata di rientro, sul PC del Direttore (src/ui/rientro.js). Una schermata a parte, sopra
+   tutto il resto: quello che un tablet ha fatto senza collegamento va guardato, non intravisto. Non esiste
+   finché non c'è niente in attesa. I colori sono quelli di sempre: niente di nuovo per dire «attenzione». */
+.schermata-rientro {
+  position: fixed; inset: 0; z-index: var(--z-rientro);
+  background: color-mix(in srgb, var(--sfondo) 85%, black); backdrop-filter: blur(2px);
+  display: flex; align-items: flex-start; justify-content: center; overflow: auto; padding: 1rem;
+}
+.schermata-rientro[hidden] { display: none; }
+.rientro-foglio {
+  background: var(--superficie); border: 2px solid var(--attenzione); border-radius: var(--raggio);
+  width: min(56rem, 100%); margin: auto; box-shadow: 0 8px 32px rgb(0 0 0 / 35%);
+}
+.rientro-testa { position: relative; padding: 1rem 3rem 0.75rem 1rem; border-bottom: 1px solid var(--bordo); }
+.rientro-testa h2 { margin: 0 0 0.35rem; }
+.rientro-testa .nota { margin: 0; }
+.rientro-testa .btn-chiudi { position: absolute; top: 0.75rem; right: 0.75rem; }
+.rientro-corpo { padding: 0.75rem 1rem 1rem; display: flex; flex-direction: column; gap: 1rem; }
+.rientro-pg { border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 0.75rem; }
+.rientro-pg-testa { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 0.75rem; margin-bottom: 0.5rem; }
+.rientro-pg-testa h3 { margin: 0; }
+.rientro-tutte { margin-left: auto; display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.rientro-elenco { list-style: none; margin: 0 0 0.75rem; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+.rientro-riga {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;
+  padding: 0.4rem 0.5rem; border: 1px solid var(--bordo); border-radius: var(--raggio); background: var(--sfondo);
+}
+.rientro-riga-testo { flex: 1 1 14rem; min-width: 0; }
+.rientro-etichetta { font-weight: 600; }
+.rientro-azioni { display: flex; gap: 0.35rem; margin-left: auto; }
+/* un conflitto vero: le due versioni affiancate e una scelta esplicita, mai un automatismo */
+.rientro-riga-conflitto { border-color: var(--attenzione); background: var(--attenzione-tenue); }
+.rientro-conflitto { flex: 1 1 100%; }
+.rientro-conflitto .nota { margin: 0 0 0.3rem; }
+.rientro-versioni { display: grid; grid-template-columns: 1fr; gap: 0.3rem; }
+@media (min-width: 40rem) { .rientro-versioni { grid-template-columns: 1fr 1fr; } }
+.rientro-versione { padding: 0.3rem 0.45rem; border: 1px solid var(--bordo); border-radius: var(--raggio); background: var(--superficie); overflow-wrap: anywhere; }
+@media print { .schermata-rientro { display: none; } }
 
 /* guardare un personaggio che non è il proprio (parte C): l'unico motivo di sola lettura rimasto — offline non
    spegne più niente, dal 21/10 pomeriggio le operazioni si accodano invece (src/ui/coda-offline.js). Un
