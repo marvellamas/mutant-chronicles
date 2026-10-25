@@ -219,3 +219,32 @@ test('dal PC del master il controllo «scrive solo il proprio» non si applica',
   assert.equal(r.status, 200, JSON.stringify(j));
   assert.ok(j.inAttesa.includes('op-master-1')); // insieme a quelle che questo personaggio aveva già in attesa
 });
+
+test('«NO», «NOT», «NOTE»: il tablet manda la voce sostituita e poi quella nuova — il Direttore vede UNA riga per le note', async () => {
+  const p = await metti('Rhea-Valdis_liv5_2026-10-02.json');
+  await associa(ID1, p.pg);
+  const nota = (id, nuovo, extra = {}) => ({ id, tipo: 'assegna', percorso: ['sessione', 'note'], visto: '', nuovo, etichetta: 'Note del personaggio', quando: '2026-10-24T20:00:00.000Z', ...extra });
+  await manda(p.file, [nota('nota-1', 'NO')]); // la prima voce è partita…
+  // …e il giocatore continua a scrivere: la voce nuova sostituisce quella già partita
+  const r = await (await manda(p.file, [nota('nota-2', 'NOTE', { sostituisce: ['nota-1'] })])).json();
+  assert.ok(r.inAttesa.includes('nota-2') && !r.inAttesa.includes('nota-1'), 'la voce nuova c’è, quella sostituita no');
+  const lista = await (await fetch(`${baseMaster}/api/rientro`)).json();
+  const righe = lista.personaggi.find((x) => x.pgId === p.pg).righe.filter((x) => x.percorso === 'sessione.note');
+  assert.equal(righe.length, 1, 'una sola riga per le note, non tre');
+  assert.equal(righe[0].id, 'nota-2');
+  // approvata, scrive il testo finale
+  await decidi(p.pg, { 'nota-2': 'approva' });
+  assert.equal(letto(p.file).sessione.note, 'NOTE');
+});
+
+test('«ritira»: il tablet toglie dall\'attesa una voce già partita (la modifica è tornata com\'era)', async () => {
+  const p = await metti('Torvald-Krane_liv6_2026-10-02.json');
+  await associa(ID1, p.pg);
+  await manda(p.file, [{ id: 'da-ritirare', tipo: 'somma', percorso: ['sessione', 'pvAttuali'], delta: -2, etichetta: '−2 PV', quando: '2026-10-24T20:00:00.000Z' }]);
+  const r = await (await fetch(`${baseTablet}/api/personaggi/${encodeURIComponent(p.file)}/giornale`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Mutant-Da': 'giocatore', 'X-Mutant-Dispositivo': ID1 }, body: JSON.stringify({ operazioni: [], ritira: ['da-ritirare'] }),
+  })).json();
+  assert.deepEqual(r.inAttesa, []);
+  const lista = await (await fetch(`${baseMaster}/api/rientro`)).json();
+  assert.equal(lista.personaggi.find((x) => x.pgId === p.pg), undefined, 'il Direttore non ha più niente per questo personaggio');
+});

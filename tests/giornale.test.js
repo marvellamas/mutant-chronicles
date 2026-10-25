@@ -215,3 +215,68 @@ test('più operazioni in ordine: variazioni e un\'assegnazione insieme, idempote
   assert.deepEqual(rifatto.risultato, risultato);
   assert.equal(rifatto.applicati.length, 0);
 });
+
+// --- una modifica, una voce (25/10/2026, segnalazione di Davide: «NO», «NOT», «NOTE» erano tre voci) ---------
+
+import { fondiOperazioni } from '../src/giornale.js';
+
+const nota = (visto, nuovo, extra = {}) => ({ id: `n-${nuovo}`, tipo: 'assegna', percorso: ['sessione', 'note'], visto, nuovo, quando: `2026-10-24T20:0${nuovo.length}:00.000Z`, etichetta: 'Note del personaggio', ...extra });
+
+test('fondiOperazioni: «NO», «NOT», «NOTE» battuti piano sono UNA voce, con il valore finale e il punto di partenza', () => {
+  // ogni tasto, a una pausa più lunga dell'attesa del salvataggio, produce un diff nuovo rispetto alla base appena avanzata
+  let coda = [];
+  for (const [visto, nuovo] of [['', 'NO'], ['NO', 'NOT'], ['NOT', 'NOTE']]) coda = fondiOperazioni(coda, [nota(visto, nuovo)]).coda;
+  assert.equal(coda.length, 1, 'una sola voce per la modifica completata');
+  assert.equal(coda[0].visto, '', 'parte da quello che il tablet aveva visto davvero, non da un testo intermedio');
+  assert.equal(coda[0].nuovo, 'NOTE');
+  assert.equal(coda[0].quando, '2026-10-24T20:04:00.000Z', 'con l\'ora della modifica finita');
+});
+
+test('fondiOperazioni: se il testo torna com\'era la voce sparisce (niente da proporre al Direttore)', () => {
+  let coda = fondiOperazioni([], [nota('', 'NO')]).coda;
+  coda = fondiOperazioni(coda, [nota('NO', '')]).coda;
+  assert.deepEqual(coda, []);
+});
+
+test('fondiOperazioni: una voce GIÀ PARTITA non si cambia sul posto — se ne fa una che la sostituisce, e il server la toglie dall\'attesa', () => {
+  const partita = { ...nota('', 'NO'), inviata: true };
+  const { coda, ritirate } = fondiOperazioni([partita], [nota('NO', 'NOTE', { id: 'n-nuova' })]);
+  assert.equal(coda.length, 1);
+  assert.equal(coda[0].id, 'n-nuova');
+  assert.equal(coda[0].visto, '', 'il punto di partenza resta quello di prima');
+  assert.deepEqual(coda[0].sostituisce, [partita.id]);
+  assert.deepEqual(ritirate, []);
+});
+
+test('fondiOperazioni: una voce già partita che torna com\'era si RITIRA dal server', () => {
+  const partita = { ...nota('', 'NO'), inviata: true };
+  const { coda, ritirate } = fondiOperazioni([partita], [nota('NO', '')]);
+  assert.deepEqual(coda, []);
+  assert.deepEqual(ritirate, [partita.id]);
+});
+
+test('fondiOperazioni: campi diversi restano voci diverse, e le somme non si toccano (ogni tocco è un gesto)', () => {
+  const pv = (delta, id) => ({ id, tipo: 'somma', percorso: ['sessione', 'pvAttuali'], delta, etichetta: `${delta} PV`, quando: '2026-10-24T20:00:00.000Z' });
+  const nome = { id: 'nm', tipo: 'assegna', percorso: ['scelte', 'nome'], visto: 'Aiko', nuovo: 'Aiko T.', etichetta: 'Nome del personaggio', quando: '2026-10-24T20:00:00.000Z' };
+  const { coda } = fondiOperazioni([pv(-1, 'a'), nome], [pv(-1, 'b'), nota('', 'X')]);
+  assert.deepEqual(coda.map((o) => o.id), ['a', 'nm', 'b', 'n-X']);
+});
+
+test('fondiOperazioni: un elemento di un elenco cambiato dentro più volte è una voce sola (il testo di una nota del calendario)', () => {
+  const agg = (visto, nuovo, id) => ({ id, tipo: 'insieme', azione: 'aggiorna', percorso: ['calendario', 'note'], identita: 'n1', visto: { id: 'n1', testo: visto }, nuovo: { id: 'n1', testo: nuovo }, quando: '2026-10-24T20:00:00.000Z', etichetta: 'x' });
+  let coda = [agg('porto', 'porto, r', 'u1')];
+  coda = fondiOperazioni(coda, [agg('porto, r', 'porto, rimandato', 'u2')]).coda;
+  assert.equal(coda.length, 1);
+  assert.equal(coda[0].visto.testo, 'porto');
+  assert.equal(coda[0].nuovo.testo, 'porto, rimandato');
+});
+
+test('fondiOperazioni: la nota del calendario appena AGGIUNTA e poi scritta resta un\'aggiunta sola, col testo finale', () => {
+  const aggiungi = { id: 'ag', tipo: 'insieme', azione: 'aggiungi', percorso: ['calendario', 'note'], identita: 'n9', valore: { id: 'n9', testo: '' }, quando: '2026-10-24T20:00:00.000Z', etichetta: 'x' };
+  const aggiorna = (t, id) => ({ id, tipo: 'insieme', azione: 'aggiorna', percorso: ['calendario', 'note'], identita: 'n9', visto: { id: 'n9', testo: '' }, nuovo: { id: 'n9', testo: t }, quando: '2026-10-24T20:01:00.000Z', etichetta: 'x' });
+  let coda = [aggiungi];
+  for (const t of ['I', 'In', 'Incontro']) coda = fondiOperazioni(coda, [aggiorna(t, `u-${t}`)]).coda;
+  assert.equal(coda.length, 1);
+  assert.equal(coda[0].azione, 'aggiungi');
+  assert.equal(coda[0].valore.testo, 'Incontro');
+});

@@ -299,3 +299,61 @@ export function unisciGiornale(serverAttuale, operazioni, applicate = new Set())
   }
   return { risultato, applicati, conflitti };
 }
+
+/**
+ * Una modifica, una voce (25/10/2026, segnalazione di Davide del 24/10: «NO», «NOT», «NOTE» erano tre voci).
+ *
+ * Un campo di testo salva a ogni tasto; ogni salvataggio, offline, calcolava un diff nuovo rispetto alla base che
+ * il salvataggio prima aveva appena fatto avanzare, e produceva una voce nuova con il testo parziale. Il giornale
+ * deve dire invece che cosa è cambiato **a modifica finita**: «Note: da "" a "NOTE"».
+ *
+ * Questa funzione unisce le operazioni nuove a quelle già in coda. Vale solo per le ASSEGNAZIONI — un valore che si
+ * sostituisce, dove conta soltanto quello finale — e per un elemento di un elenco cambiato dentro (azione
+ * «aggiorna»: il testo di una nota del calendario). Le somme (−1 PV, −1 PV) e le aggiunte o rimozioni a un
+ * elenco restano voci separate: ognuna è un gesto del giocatore, e le somme si sommano comunque.
+ *
+ *  - stessa assegnazione già in coda e NON ancora partita: la voce si aggiorna (resta il suo `visto` di partenza,
+ *    cambia `nuovo` e l'ora); se il valore finale torna a quello di partenza, la voce sparisce;
+ *  - stessa assegnazione già partita (il Direttore l'ha in attesa): una voce nuova che la SOSTITUISCE (`sostituisce`
+ *    porta gli id sostituiti, e il server toglie quelle dalla sua attesa); se torna a quello di partenza, la voce
+ *    vecchia va RITIRATA dal server (`ritirate`);
+ *  - modifica di un elemento aggiunto da una voce non ancora partita: si cambia direttamente l'elemento aggiunto.
+ * @param coda le voci già in coda (con `inviata: true` quelle che il server ha già preso in carico)
+ * @param nuove le voci appena calcolate da operazioniDaDiff
+ * @param etichetta (op) → testo: ricalcola l'etichetta di una voce il cui valore è cambiato
+ * @returns { coda, ritirate: [id] }
+ */
+export function fondiOperazioni(coda, nuove, { etichetta = null } = {}) {
+  const risultato = [...(coda ?? [])];
+  const ritirate = [];
+  const chiave = (op) => {
+    if (op.tipo === 'assegna') return `assegna:${op.percorso.join('.')}`;
+    if (op.tipo === 'insieme' && op.azione === 'aggiorna') return `aggiorna:${op.percorso.join('.')}:${op.identita}`;
+    return null;
+  };
+  const ri = (op, campi) => (etichetta ? { ...op, ...campi, etichetta: etichetta({ ...op, ...campi }) } : { ...op, ...campi });
+  for (const op of nuove ?? []) {
+    const k = chiave(op);
+    if (!k) { risultato.push(op); continue; }
+    // un elemento appena aggiunto e non ancora partito: la modifica è parte dell'aggiunta
+    if (op.tipo === 'insieme') {
+      const j = risultato.findIndex((x) => x.tipo === 'insieme' && x.azione === 'aggiungi' && !x.inviata && x.identita === op.identita && x.percorso.join('.') === op.percorso.join('.'));
+      if (j >= 0) { risultato[j] = ri(risultato[j], { valore: op.nuovo, quando: op.quando }); continue; }
+    }
+    let i = -1;
+    for (let n = risultato.length - 1; n >= 0; n--) if (chiave(risultato[n]) === k) { i = n; break; }
+    if (i < 0) { risultato.push(op); continue; }
+    const prec = risultato[i];
+    if (ugualeValore(prec.visto, op.nuovo)) {
+      // la modifica è tornata al punto di partenza: non c'è più niente da proporre
+      risultato.splice(i, 1);
+      if (prec.inviata) ritirate.push(prec.id);
+    } else if (!prec.inviata) {
+      risultato[i] = ri(prec, { nuovo: op.nuovo, quando: op.quando });
+    } else {
+      risultato.splice(i, 1);
+      risultato.push(ri(op, { visto: prec.visto, sostituisce: [prec.id, ...(prec.sostituisce ?? [])] }));
+    }
+  }
+  return { coda: risultato, ritirate };
+}

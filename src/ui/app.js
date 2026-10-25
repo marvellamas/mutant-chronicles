@@ -476,6 +476,17 @@ async function scriviInCartella(id, { revisione = false, mtime = null } = {}) {
   if (!archivio.carica(id)) return null;
   // un PG senza nome resta nel browser (05/10/2026): nella cartella va un solo file, con il nome giusto
   if (!haNome(archivio.carica(id).scelte)) return null;
+  // Offline, o con modifiche già in coda, un tablet non scrive il file: accoda (vedi sotto). Lo si decide PRIMA di
+  // chiedere l'elenco al server: con il WiFi spento la richiesta può restare appesa a lungo e la modifica non
+  // finirebbe in coda finché non scade. L'identificativo stabile c'è già nelle schede aperte dalla cartella; se
+  // manca (un PG di prima) si prosegue col percorso lungo, che lo ricava dall'elenco.
+  {
+    const v = archivio.carica(id);
+    if (stato.cartella && !stato.master && v.pg && (eOffline() || inCoda(chiaveCoda(v, id)))) {
+      accoda(chiaveCoda(v, id), v.scelte, v.sessione, normalizzaCalendario(v.calendario, stato.dati));
+      return null;
+    }
+  }
   // il nome del file è unico per personaggio (src/cartella.js → nomeFileLibero): serve l'elenco della cartella
   let elenco = null;
   try { elenco = await elencoCartella(); } catch { elenco = null; }

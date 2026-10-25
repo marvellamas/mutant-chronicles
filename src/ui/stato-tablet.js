@@ -10,7 +10,7 @@ import { idPersonaggio } from '../storico-personaggi.js';
 import { chiaveDaFile, ultimiPerPg, fileDiPgStabile } from '../cartella.js';
 import { leggiAssociazione, scegliAssociazione } from './dispositivo.js';
 import { elencoCartella, inviaGiornale } from './cartella.js';
-import { leggiCoda, togliDallaCoda, confermaRisposta, inCoda as contaInCoda } from './coda-offline.js';
+import { leggiCoda, togliDallaCoda, confermaRisposta, confermaInvio, ritirateDaMandare, confermaRitirate, inCoda as contaInCoda } from './coda-offline.js';
 
 let dati = null;
 let pg = null; // { pgId, pgNome } | null: null anche finché il primo controllo non è arrivato
@@ -21,6 +21,7 @@ let timer = null;
 let scegliendo = false; // la finestrella è aperta: non riaprirla una seconda volta dal poll
 let codaVisibile = false;
 let inviandoGiornale = false;
+let ultimoInvio = { errore: null }; // com'è andato l'ultimo tentativo di mandare la coda: il pannello lo dice com'è
 let ricaricaScheda = null; // src/ui/app.js la fornisce: rilegge la scheda aperta dal server
 
 /** Come si rilegge la scheda dal server, quando il Direttore ha risposto (src/ui/app.js → ricaricaDaCartella). */
@@ -48,17 +49,23 @@ function righeCoda() {
 function pannelloCoda() {
   const righe = righeCoda();
   if (!righe.length) return null;
-  // la ✕ c'è solo finché la riga non è partita: «togliere una riga prima che arrivi al Direttore». Una volta
-  // mandata, la decisione è sua — toglierla di qui non la toglierebbe dalla sua schermata, la nasconderebbe
-  // soltanto al giocatore.
-  const partite = collegamento.ok;
+  // Dice com'è DAVVERO (25/10/2026): prima scriveva «Mandate al Direttore» solo perché il tablet era collegato, anche
+  // se l'invio non era mai riuscito. Una voce è «partita» solo quando il server l'ha presa in carico (inviata);
+  // la ✕ c'è finché non è partita — dopo, la decisione è del Direttore e toglierla di qui la nasconderebbe soltanto
+  // al giocatore.
+  const tutte = righe.every((o) => o.inviata);
+  const nessuna = righe.every((o) => !o.inviata);
+  const motivo = ultimoInvio.errore ? ` (ultimo tentativo: ${ultimoInvio.errore})` : '';
+  const testo = tutte
+    ? 'Arrivate al Direttore: le vedrà nella sua schermata di rientro e deciderà se tenerle. Qui restano finché non risponde.'
+    : !collegamento.ok
+      ? 'In attesa: partiranno quando torni collegato. Hai sbagliato tocco? Toglila prima che arrivi al Direttore.'
+      : `${nessuna ? 'Non ancora arrivate' : 'Alcune non ancora arrivate'} al Direttore: le rimando appena possibile${motivo}.`;
   return h('div', { class: 'coda-offline-pannello' },
-    h('p', { class: 'nota' }, partite
-      ? 'Mandate al Direttore: le vedrà nella sua schermata di rientro e deciderà se tenerle. Qui restano finché non risponde.'
-      : 'In attesa: partiranno quando torni collegato. Hai sbagliato tocco? Toglila prima che arrivi al Direttore.'),
-    h('ul', { class: 'coda-offline-elenco' }, righe.map((op) => h('li', {},
-      h('span', {}, op.etichetta), h('small', { class: 'nota' }, ` (${new Date(op.quando).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })})`),
-      partite ? null : h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Togli questa modifica dalla coda', onclick: () => { togliDallaCoda(pg.pgId, op.id); applica(); } }, '✕')))));
+    h('p', { class: 'nota' }, testo),
+    h('ul', { class: 'coda-offline-elenco' }, righe.map((op) => h('li', { class: op.inviata ? 'arrivata' : 'in-attesa' },
+      h('span', {}, op.etichetta), h('small', { class: 'nota' }, ` (${new Date(op.quando).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })})${op.inviata ? ' · arrivata' : ''}`),
+      op.inviata ? null : h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Togli questa modifica dalla coda', onclick: () => { togliDallaCoda(pg.pgId, op.id); applica(); } }, '✕')))));
 }
 
 function applica() {
@@ -131,13 +138,20 @@ async function apriScelta() {
 async function inviaCoda() {
   if (inviandoGiornale || !pg) return;
   const coda = leggiCoda(pg.pgId);
-  if (!coda.length) return;
+  const ritira = ritirateDaMandare(pg.pgId);
+  if (!coda.length && !ritira.length) return;
   inviandoGiornale = true;
   try {
     const lista = await elencoCartella();
-    const file = lista ? fileDiPgStabile(lista, pg.pgId)?.file : null;
-    if (!file) return; // il server non risponde, o il personaggio non c'è più: si riprova al giro successivo
-    const r = await inviaGiornale(file, coda);
+    // ogni motivo per cui non parte si ricorda e si dice nel pannello della coda: prima restava in silenzio
+    if (!lista) { ultimoInvio = { errore: 'il server non risponde' }; return; }
+    const file = fileDiPgStabile(lista, pg.pgId)?.file;
+    if (!file) { ultimoInvio = { errore: 'il server non ha il file di questo personaggio: chiedi al Direttore' }; return; }
+    const r = await inviaGiornale(file, coda, ritira);
+    ultimoInvio = { errore: null };
+    // il server ha preso in carico queste voci (e ha preso atto dei ritiri): da qui in poi si sa che sono arrivate
+    confermaRitirate(pg.pgId, ritira);
+    confermaInvio(pg.pgId, [...(r.inAttesa ?? []), ...Object.keys(r.decise ?? {})]);
     const { approvate, scartate } = confermaRisposta(pg.pgId, r);
     if (approvate.length) avviso(`Il Direttore ha approvato: ${approvate.join('; ')}.`, { tipo: 'ok', durata: 9000 });
     if (scartate.length) avviso(`Il Direttore NON ha tenuto: ${scartate.join('; ')}.`, { tipo: 'attenzione', durata: 12000 });
@@ -147,6 +161,7 @@ async function inviaCoda() {
     applica();
   } catch (e) {
     // offline per davvero, o il server è tornato ma risponde male: la coda resta, si riprova al giro successivo
+    ultimoInvio = { errore: e.message };
     console.warn(`Rientro non riuscito: ${e.message}`);
   } finally {
     inviandoGiornale = false;
@@ -167,7 +182,7 @@ async function aggiorna() {
     // appena si riconnette, non al giro dopo. E poi a ogni giro finché la coda non è vuota: non per rimandare le
     // stesse operazioni (il server le ha già in attesa e non le duplica) ma per raccogliere la risposta del
     // Direttore quando arriva, e dire al giocatore che cosa è passato.
-    if (eraOffline || contaInCoda(pg?.pgId ?? '')) await inviaCoda();
+    if (eraOffline || contaInCoda(pg?.pgId ?? '') || ritirateDaMandare(pg?.pgId ?? '').length) await inviaCoda();
   } else {
     collegamento = { ok: false, ultimoOk: collegamento.ultimoOk ?? adesso };
   }

@@ -113,9 +113,9 @@ export async function leggiBackupMaster(file) {
  * 'approvata' | 'scartata' } }, cioè che cosa ha già deciso fra quelle presentate. Idempotente: ripresentare
  * lo stesso giornale (lo si rimanda a ogni giro, finché non si sa com'è andata) non duplica niente.
  */
-export async function inviaGiornale(file, operazioni) {
+export async function inviaGiornale(file, operazioni, ritira = []) {
   const r = await fetch(`api/personaggi/${encodeURIComponent(file)}/giornale`, {
-    method: 'POST', headers: { 'Content-Type': 'application/json', ...intestazioneDispositivo() }, body: JSON.stringify({ operazioni }),
+    method: 'POST', headers: { 'Content-Type': 'application/json', ...intestazioneDispositivo() }, body: JSON.stringify({ operazioni, ...(ritira.length ? { ritira } : {}) }),
   });
   const j = await r.json().catch(() => ({}));
   if (!r.ok) throw new Error(j.errore ?? `errore ${r.status}`);

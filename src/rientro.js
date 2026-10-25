@@ -12,7 +12,7 @@
 //   rientro = { versione: 2, personaggi: { <pgId>: {
 //                 nome,                       // l'ultimo nome visto, per leggere l'elenco senza aprire i file
 //                 inAttesa: [ operazione ],   // il giornale in attesa, in ordine di quando è stato fatto
-//                 decise: { <idOperazione>: 'approvata' | 'scartata' } } } }
+//                 decise: { <idOperazione>: 'approvata' | 'scartata' | 'ritirata' } } } }
 //
 // `decise` è anche l'idempotenza: un'operazione già decisa non torna in attesa se il tablet ripresenta il suo
 // giornale (succede a ogni giro finché non ha ricevuto la risposta), e approvarla due volte non la applica due
@@ -26,7 +26,9 @@ const uguale = (a, b) => (typeof a === 'number' && typeof b === 'number' ? Math.
 export const VERSIONE_RIENTRO = 2;
 /** Quante decisioni si ricordano per personaggio (per non riapplicare ciò che è già stato deciso). */
 export const MASSIMO_DECISE = 2000;
-const ESITI = ['approvata', 'scartata'];
+// «ritirata»: la voce l'ha tolta il giocatore stesso (la modifica è tornata com'era, o l'ha scartata dal tablet, o l'ha
+// sostituita con una più recente): non è una decisione del Direttore, e non si ripresenta se il tablet la rimanda
+const ESITI = ['approvata', 'scartata', 'ritirata'];
 
 export const rientroVuoto = () => ({ versione: VERSIONE_RIENTRO, personaggi: {} });
 
@@ -67,17 +69,21 @@ const statoPg = (rientro, pgId) => rientro.personaggi[pgId] ?? { inAttesa: [], d
  * @returns { rientro, inAttesa: [id] (tutte quelle in attesa adesso, anche di prima), decise: { id: esito }
  *   (fra quelle appena presentate: è la risposta che il tablet aspetta per svuotare la sua coda) }
  */
-export function aggiungiOperazioni(rientro, pgId, operazioni, { nome = null } = {}) {
+export function aggiungiOperazioni(rientro, pgId, operazioni, { nome = null, ritira = [] } = {}) {
   const r = normalizzaRientro(rientro);
   const pg = statoPg(r, pgId);
+  const elenco = (Array.isArray(operazioni) ? operazioni : []).filter((o) => isOggetto(o) && typeof o.id === 'string' && Array.isArray(o.percorso));
+  // le voci che il tablet ha ritirato, e quelle che una voce nuova sostituisce (la stessa modifica, finita): escono
+  // dall'attesa e si ricordano come «ritirate», così se un tablet le rimanda non rientrano
+  const daTogliere = new Set([...(Array.isArray(ritira) ? ritira : []), ...elenco.flatMap((o) => (Array.isArray(o.sostituisce) ? o.sostituisce : []))].filter((x) => typeof x === 'string'));
+  const decise0 = { ...pg.decise };
+  for (const id of daTogliere) if (!decise0[id]) decise0[id] = 'ritirata';
   const presenti = new Set(pg.inAttesa.map((o) => o.id));
-  const nuove = (Array.isArray(operazioni) ? operazioni : [])
-    .filter((o) => isOggetto(o) && typeof o.id === 'string' && Array.isArray(o.percorso))
-    .filter((o) => !presenti.has(o.id) && !pg.decise[o.id]);
-  const inAttesa = ordinate([...pg.inAttesa, ...nuove]);
+  const nuove = elenco.filter((o) => !presenti.has(o.id) && !decise0[o.id]);
+  const inAttesa = ordinate([...pg.inAttesa.filter((o) => !daTogliere.has(o.id)), ...nuove]);
   const decise = {};
-  for (const o of Array.isArray(operazioni) ? operazioni : []) if (o?.id && pg.decise[o.id]) decise[o.id] = pg.decise[o.id];
-  const aggiornato = { ...pg, ...(nome ? { nome } : {}), inAttesa };
+  for (const o of elenco) if (o.id && decise0[o.id]) decise[o.id] = decise0[o.id];
+  const aggiornato = { ...pg, ...(nome ? { nome } : {}), inAttesa, decise: Object.fromEntries(Object.entries(decise0).slice(-MASSIMO_DECISE)) };
   return {
     rientro: { ...r, personaggi: { ...r.personaggi, [pgId]: aggiornato } },
     inAttesa: inAttesa.map((o) => o.id),

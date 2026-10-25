@@ -116,7 +116,7 @@
 //   (client di prima, strumenti, test) il controllo non si applica, come le altre migrazioni silenziose.
 //   «Si può modificare offline, e al rientro Davide approva» (21–22/10/2026, src/giornale.js, src/rientro.js,
 //   tavolo/rientro.json): un tablet offline accoda le OPERAZIONI (non lo stato finale), col suo identificativo.
-//   POST /api/personaggi/<file>/giornale  corpo { operazioni }: NON applica niente — mette le operazioni in
+//   POST /api/personaggi/<file>/giornale  corpo { operazioni, ritira? }: NON applica niente — mette le operazioni in
 //                                      attesa del Direttore; idempotente (ripresentarle non le duplica, e una
 //                                      già decisa non torna in attesa); risponde { inAttesa: [id,…], decise:
 //                                      { id: 'approvata' | 'scartata' } }, cioè che cosa è passato e che cosa
@@ -1450,6 +1450,8 @@ async function apiGiornale(req, res, file, cartella, tavolo) {
   try { corpo = JSON.parse((await leggiCorpo(req)).toString('utf8')); } catch (e) { return json(res, 400, { errore: e.message }); }
   const operazioni = Array.isArray(corpo?.operazioni) ? corpo.operazioni : null;
   if (!operazioni) return json(res, 400, { errore: 'manca «operazioni» (l’elenco del giornale)' });
+  // 25/10/2026: le voci che il tablet ha ritirato (una modifica tornata com'era, «Scarta le mie modifiche»): escono dall'attesa
+  const ritira = Array.isArray(corpo?.ritira) ? corpo.ritira.filter((x) => typeof x === 'string').slice(0, 5000) : [];
   const dove = join(cartella, file);
   const o = await leggiJson(dove).catch(() => null);
   if (!o || o.formato !== 'mutant-personaggio') return json(res, 404, { errore: 'file non trovato' });
@@ -1466,7 +1468,7 @@ async function apiGiornale(req, res, file, cartella, tavolo) {
   const doveRientro = join(tavolo, FILE_RIENTRO);
   return inCoda(doveRientro, async () => {
     const prima = await leggiJson(doveRientro).catch(() => null);
-    const { rientro, inAttesa, decise } = aggiungiOperazioni(prima, pgId, operazioni, { nome: o.scelte?.nome ?? null });
+    const { rientro, inAttesa, decise } = aggiungiOperazioni(prima, pgId, operazioni, { nome: o.scelte?.nome ?? null, ritira });
     await mkdir(tavolo, { recursive: true });
     await scriviJson(doveRientro, rientro);
     return json(res, 200, { inAttesa, decise });

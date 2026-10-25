@@ -3,10 +3,12 @@
 // «la coda resta sul dispositivo finché non riceve una risposta»), e l'ultima base nota — lo stato (scelte,
 // sessione, calendario) dell'ultima volta che si è saputo allineati al server — da cui si calcola la prossima
 // differenza (src/giornale.js → operazioniDaDiff).
-import { operazioniDaDiff } from '../giornale.js';
+import { operazioniDaDiff, fondiOperazioni } from '../giornale.js';
 
 const CHIAVE_BASE = (id) => `mutant.coda.base.${id}`;
 const CHIAVE_CODA = (id) => `mutant.coda.operazioni.${id}`;
+// le voci già partite verso il Direttore e poi ritirate (una modifica tornata com'era): da dire al server alla prossima occasione
+const CHIAVE_RITIRATE = (id) => `mutant.coda.ritirate.${id}`;
 
 const leggi = (chiave, ripiego) => { try { const v = localStorage.getItem(chiave); return v ? JSON.parse(v) : ripiego; } catch { return ripiego; } };
 const scrivi = (chiave, valore) => { try { localStorage.setItem(chiave, JSON.stringify(valore)); return true; } catch { return false; } };
@@ -97,6 +99,13 @@ const ETICHETTE = new Proxy({}, {
   },
 });
 
+/** L'etichetta leggibile di una voce (rifatta quando una voce si aggiorna: «FOR: da 10 a 12», non il valore di prima). */
+function etichettaDi(op) {
+  const chiave = op.percorso.join('.');
+  if (op.tipo === 'insieme') return ETICHETTE[chiave]({ azione: op.azione, valore: op.nuovo ?? op.valore, visto: op.visto, nuovo: op.nuovo });
+  return ETICHETTE[chiave]({ visto: op.visto, nuovo: op.nuovo });
+}
+
 /**
  * Accoda le operazioni fra la base nota e lo stato attuale (se ce ne sono: senza modifiche non si accoda
  * niente). Aggiorna la base al nuovo stato, così la prossima differenza riparte da qui — la coda cresce di
@@ -109,7 +118,11 @@ export function accoda(id, scelte, sessione, calendario, { quando = new Date() }
   const dopo = statoDi(scelte, sessione, calendario);
   const nuove = operazioniDaDiff(base, dopo, { quando, etichette: ETICHETTE });
   if (nuove.length) {
-    scrivi(CHIAVE_CODA(id), [...leggiCoda(id), ...nuove]);
+    // una modifica, una voce (25/10/2026): un campo di testo salva a ogni tasto, ma in coda deve finire il valore
+    // finale, non «NO», «NOT», «NOTE» (src/giornale.js → fondiOperazioni)
+    const { coda, ritirate } = fondiOperazioni(leggiCoda(id), nuove, { etichetta: etichettaDi });
+    scrivi(CHIAVE_CODA(id), coda);
+    if (ritirate.length) scrivi(CHIAVE_RITIRATE(id), [...new Set([...ritirateDaMandare(id), ...ritirate])]);
     scrivi(CHIAVE_BASE(id), dopo);
   }
   return nuove;
@@ -136,6 +149,31 @@ export function confermaRisposta(id, { decise = {} } = {}) {
   const esito = { approvate: etichette('approvata'), scartate: etichette('scartata') };
   scrivi(CHIAVE_CODA(id), coda.filter((o) => !ids.includes(o.id)));
   return esito;
+}
+
+/**
+ * Il server ha preso in carico queste voci (risposta di POST …/giornale: `inAttesa` e `decise`): si segnano come
+ * partite. Da quel momento una modifica allo stesso campo non le cambia più sul posto: ne fa una nuova che le
+ * sostituisce (src/giornale.js → fondiOperazioni), perché il Direttore potrebbe già averle davanti.
+ */
+export function confermaInvio(id, ids) {
+  const presi = new Set(ids ?? []);
+  if (!presi.size) return;
+  const coda = leggiCoda(id);
+  if (coda.some((o) => presi.has(o.id) && !o.inviata)) scrivi(CHIAVE_CODA(id), coda.map((o) => (presi.has(o.id) ? { ...o, inviata: true } : o)));
+}
+
+/** Le voci già partite e poi ritirate, che il server non sa ancora: si dicono con il prossimo invio. */
+export function ritirateDaMandare(id) {
+  const r = leggi(CHIAVE_RITIRATE(id), []);
+  return Array.isArray(r) ? r : [];
+}
+
+/** Il server ha preso atto del ritiro: si tolgono dall'elenco da mandare. */
+export function confermaRitirate(id, ids) {
+  const fatte = new Set(ids ?? []);
+  if (!fatte.size) return;
+  scrivi(CHIAVE_RITIRATE(id), ritirateDaMandare(id).filter((x) => !fatte.has(x)));
 }
 
 /** Quante operazioni sono in coda (per la riga di stato: «4 modifiche in attesa»). */

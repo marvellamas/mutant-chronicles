@@ -128,3 +128,47 @@ test('personaggi diversi non si mescolano', () => {
   const dopo = registraDecisioni(r, 'pg-uno', { approvate: ['a'], scartate: [] });
   assert.deepEqual(inAttesaDi(dopo, 'pg-due').map((x) => x.id), ['b']); // l'altro non è stato toccato
 });
+
+// --- una modifica, una voce: sostituzioni e ritiri (25/10/2026) -------------------------------------------------
+
+test('una voce che SOSTITUISCE un\'altra la toglie dall\'attesa: il Direttore vede una riga sola per le note', () => {
+  const nota = (id, visto, nuovo, extra = {}) => ({ id, tipo: 'assegna', percorso: ['sessione', 'note'], visto, nuovo, etichetta: 'Note del personaggio', quando: '2026-10-24T20:00:00.000Z', ...extra });
+  let r = aggiungiOperazioni(rientroVuoto(), PG, [nota('n1', '', 'NO')]).rientro;
+  assert.deepEqual(inAttesaDi(r, PG).map((x) => x.nuovo), ['NO']);
+  // il giocatore continua a scrivere: il tablet manda la voce nuova, che porta l'id di quella che sostituisce
+  const dopo = aggiungiOperazioni(r, PG, [nota('n2', '', 'NOTE', { sostituisce: ['n1'] })]);
+  assert.deepEqual(inAttesaDi(dopo.rientro, PG).map((x) => [x.id, x.nuovo]), [['n2', 'NOTE']]);
+  assert.deepEqual(dopo.inAttesa, ['n2']);
+});
+
+test('se un tablet rimanda la voce sostituita, non rientra in attesa (resta «ritirata»)', () => {
+  const nota = (id, nuovo, extra = {}) => ({ id, tipo: 'assegna', percorso: ['sessione', 'note'], visto: '', nuovo, etichetta: 'Note', quando: '2026-10-24T20:00:00.000Z', ...extra });
+  let r = aggiungiOperazioni(rientroVuoto(), PG, [nota('n1', 'NO')]).rientro;
+  r = aggiungiOperazioni(r, PG, [nota('n2', 'NOTE', { sostituisce: ['n1'] })]).rientro;
+  const ancora = aggiungiOperazioni(r, PG, [nota('n1', 'NO'), nota('n2', 'NOTE', { sostituisce: ['n1'] })]);
+  assert.deepEqual(ancora.inAttesa, ['n2']);
+  assert.equal(ancora.decise.n1, 'ritirata', 'e il tablet lo sa, così la toglie dalla sua coda senza dire che il Direttore l\'ha scartata');
+});
+
+test('«ritira»: il giocatore toglie le sue voci dall\'attesa (una modifica tornata com\'era, «Scarta le mie modifiche»)', () => {
+  let r = aggiungiOperazioni(rientroVuoto(), PG, [op('a'), op('b')]).rientro;
+  const x = aggiungiOperazioni(r, PG, [], { ritira: ['a'] });
+  assert.deepEqual(x.inAttesa, ['b']);
+  assert.equal(ciSonoModifiche(x.rientro), true, 'ne resta una');
+  const y = aggiungiOperazioni(x.rientro, PG, [], { ritira: ['b'] });
+  assert.equal(ciSonoModifiche(y.rientro), false, 'tolte tutte, la schermata di rientro non esiste più');
+});
+
+test('il ritiro non riscrive una decisione del Direttore: una voce già approvata resta approvata', () => {
+  let r = aggiungiOperazioni(rientroVuoto(), PG, [op('a')]).rientro;
+  r = registraDecisioni(r, PG, { approvate: ['a'], scartate: [] });
+  const x = aggiungiOperazioni(r, PG, [op('a')], { ritira: ['a'] });
+  assert.equal(x.decise.a, 'approvata');
+});
+
+test('il ritiro non tocca le voci di un altro personaggio', () => {
+  let r = aggiungiOperazioni(rientroVuoto(), 'pg-uno', [op('a')]).rientro;
+  r = aggiungiOperazioni(r, 'pg-due', [op('b')]).rientro;
+  r = aggiungiOperazioni(r, 'pg-uno', [], { ritira: ['a', 'b'] }).rientro;
+  assert.deepEqual(inAttesaDi(r, 'pg-due').map((x) => x.id), ['b']);
+});
