@@ -2877,7 +2877,13 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .px-finale { width: 5rem; font-weight: 600; }
 .px-comp { font-variant-numeric: tabular-nums; }
 .px-assente { opacity: 0.5; }
-.px-incontro { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin: 0.25rem 0; }
+.px-incontro { display: flex; flex-direction: column; gap: 0.4rem; margin: 0.4rem 0; }
+.px-incontro-testa, .px-nemico { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+.px-nemico { padding-left: 1rem; }
+.px-incontro-px { width: 5.5rem; }
+.px-incontro-totale { font-weight: 600; margin-left: auto; }
+.px-incontri-somma { font-weight: 600; }
+.px-salvataggio[data-stato='errore'] { color: var(--errore, #b3261e); font-weight: 600; }
 .px-archivio-riga, .px-gioc-riga { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin: 0.25rem 0; }
 .px-stato { font-size: 0.85rem; color: var(--ok, green); }
 

@@ -13,7 +13,7 @@ import { avviso, avvisoErrore } from './avvisi.js';
 import { chiedi } from './finestrella.js';
 import { registraDiretta } from '../correzioni-master.js';
 import {
-  calcolaPartita, deltaAssegnazione, partitaAssegnata, premioGiaDato, riepilogo, csvRiepilogo, componentiGiocatore, presentiNella,
+  calcolaPartita, pxIncontro, correttivoPg, deltaAssegnazione, partitaAssegnata, premioGiaDato, riepilogo, csvRiepilogo, componentiGiocatore, presentiNella,
 } from '../px-partita.js';
 import { idStabileDiFile } from '../cartella.js';
 
@@ -206,16 +206,42 @@ function vistaPartita(ctx, st, az, salva, partita) {
 }
 
 function incontriPartita(st, az, partita) {
-  const righe = (partita.incontri ?? []).map((inc, i) => h('div', { class: 'px-incontro' },
-    h('input', { value: inc.nome, oninput: (e) => { inc.nome = e.target.value; az.salva(); } }),
-    h('span', { class: 'nota' }, (inc.nemici ?? []).map((n) => `${n.nome}${n.principale ? ' ★' : ''} ×${n.qty} (${fmt(n.px ?? 0)})`).join(', ') || 'nessun nemico'),
-    h('button', { class: 'icon-btn', title: 'Togli l’incontro', onclick: () => { partita.incontri.splice(i, 1); az.salva(); az.ridisegna(); } }, '✕')));
+  const p = st.dati.px_partita;
+  const nPresenti = presentiNella(partita);
+  const numero = (valore, onInput, opz = {}) => h('input', { type: 'number', min: 0, step: 1, value: Number.isFinite(Number(valore)) && valore !== null && valore !== '' ? valore : '', class: 'px-voto px-incontro-px', ...opz,
+    oninput: (e) => { onInput(e.target.value === '' ? null : Number(e.target.value)); az.salva(); az.ridisegna?.(); } });
+  const righe = (partita.incontri ?? []).map((inc, i) => {
+    const calc = pxIncontro(inc, nPresenti, p);
+    const conNemici = (inc.nemici ?? []).length > 0;
+    return h('div', { class: 'px-incontro riquadro' },
+      h('div', { class: 'px-incontro-testa' },
+        h('input', { value: inc.nome, 'aria-label': 'Nome dell’incontro', oninput: (e) => { inc.nome = e.target.value; az.salva(); } }),
+        conNemici ? null : h('label', { class: 'px-campo' }, h('span', {}, 'PX dell’incontro (per 4 PG)'),
+          h('input', { type: 'number', min: 0, step: 1, class: 'px-voto px-incontro-px', 'aria-label': 'PX dell’incontro', value: Number.isFinite(Number(inc.pxDiretti)) ? inc.pxDiretti : '',
+            oninput: (e) => { inc.pxDiretti = e.target.value === '' ? undefined : Number(e.target.value); az.salva(); az.ridisegna(); } })),
+        h('span', { class: 'px-incontro-totale', title: `PX per 4 PG × correttivo per ${nPresenti} presenti (×${correttivoPg(nPresenti, p).toFixed(1).replace('.', ',')})` },
+          calc.errore ? calc.errore : `→ ${fmt(calc.px)} PX a testa`),
+        h('button', { class: 'icon-btn', title: 'Togli l’incontro', onclick: () => { partita.incontri.splice(i, 1); az.salva(); az.ridisegna(); } }, '✕')),
+      ...(inc.nemici ?? []).map((n, k) => h('div', { class: 'px-nemico' },
+        h('input', { value: n.nome ?? '', placeholder: 'Nemico', 'aria-label': 'Nome del nemico', oninput: (e) => { n.nome = e.target.value; az.salva(); } }),
+        h('label', { class: 'px-campo' }, h('span', {}, 'PX'), numero(n.px, (v) => { n.px = v ?? undefined; }, { 'aria-label': 'PX del nemico' })),
+        h('label', { class: 'px-campo' }, h('span', {}, '×'), numero(n.qty ?? 1, (v) => { n.qty = Math.max(1, v ?? 1); }, { min: 1, 'aria-label': 'Quanti' })),
+        h('label', { class: 'px-campo px-check', title: 'Il nemico principale conta al 100%, gli altri al 50%' },
+          h('input', { type: 'radio', name: `principale-${inc.id}`, checked: !!n.principale, onchange: () => { (inc.nemici ?? []).forEach((x, j) => { x.principale = j === k; }); az.salva(); az.ridisegna(); } }), h('span', {}, 'principale')),
+        h('button', { class: 'icon-btn', title: 'Togli il nemico', onclick: () => { inc.nemici.splice(k, 1); if (inc.nemici.length && !inc.nemici.some((x) => x.principale)) inc.nemici[0].principale = true; az.salva(); az.ridisegna(); } }, '✕'))),
+      h('button', { class: 'btn small ghost', title: 'Elenca i nemici uno per uno: il principale vale il 100%, gli altri il 50%', onclick: () => {
+        inc.nemici ??= []; inc.nemici.push({ nome: '', px: inc.nemici.length ? undefined : inc.pxDiretti, qty: 1, principale: !inc.nemici.length }); delete inc.pxDiretti; az.salva(); az.ridisegna();
+      } }, '+ Nemico'));
+  });
+  const totale = (partita.incontri ?? []).reduce((acc, inc) => acc + pxIncontro(inc, nPresenti, p).px, 0);
   const scontri = st.scontri ?? [];
   return h('div', { class: 'px-incontri' },
-    h('h4', {}, 'Incontri superati'),
+    h('h4', {}, 'Incontri e loro PX'),
+    h('p', { class: 'nota' }, 'I PX di ogni incontro si scrivono qui: sono quelli del Manuale dei Mostri («PX per 4 PG», dotazione già compresa); l’app li adegua al numero di giocatori presenti e li somma a ciascuno.'),
     ...righe,
+    righe.length ? h('p', { class: 'px-incontri-somma' }, `Totale incontri: ${fmt(totale)} PX a testa per ogni presente.`) : h('p', { class: 'vuoto' }, 'Nessun incontro: senza, nel calcolo c’è solo la parte dei voti.'),
     h('div', { class: 'px-incontri-azioni' },
-      h('button', { class: 'btn small', onclick: () => { partita.incontri.push(nuovoIncontro()); az.salva(); az.ridisegna(); } }, '+ Incontro a mano'),
+      h('button', { class: 'btn', onclick: () => { partita.incontri.push(nuovoIncontro()); az.salva(); az.ridisegna(); } }, '+ Incontro (scrivi i PX)'),
       ...scontri.map((s) => h('button', { class: 'btn small ghost', title: 'Importa i nemici di questo scontro', onclick: () => {
         const inc = nuovoIncontro(); inc.nome = s.nome || s.id; inc.nemici = nemiciDaScontro(s); partita.incontri.push(inc); az.salva(); az.ridisegna();
       } }, `↓ ${s.nome || s.id}`))));

@@ -305,3 +305,23 @@ test('voti.default: validato (intero fra min e max)', async () => {
   assert.ok(errori.some((e) => e.chiave === 'voti.default'), 'un voto di partenza fuori da min–max è un errore dei dati');
   assert.equal(validaDati(dati).filter((e) => e.file === 'px_partita.json').length, 0);
 });
+
+test('C (25/10): i PX di un incontro scritti a mano entrano nel calcolo, col correttivo dei presenti', () => {
+  // 4 presenti: correttivo ×1 → 300 PX; 3 presenti: ×1,1 → 330
+  assert.equal(pxIncontro({ nemici: [], pxDiretti: 300 }, 4, p).px, 300);
+  assert.equal(pxIncontro({ nemici: [], pxDiretti: 300 }, 3, p).px, 330);
+  assert.equal(pxIncontro({ nemici: [], pxDiretti: 0 }, 4, p).px, 0);
+  assert.equal(pxIncontro({ nemici: [] }, 4, p).px, 0, 'senza numero né nemici: 0');
+  // dentro la partita: sono nella componente «incontri» e nel totale suggerito di ogni presente
+  const partita = {
+    id: 'm', atto: 'I', durata: 1, incontri: [{ id: 'i1', nome: 'Imboscata', pxDiretti: 120 }, { id: 'i2', nome: 'Boss', pxDiretti: 80 }],
+    partecipanti: { a: { presente: true, partecipazione: 3, interpretazione: 3, contributo: 3, eccezionale: 0 }, b: { presente: false } },
+  };
+  const c = componentiGiocatore(partita, 'a', 0, p);
+  assert.equal(c.pxIncontri, arrotondaCorr(120, 1, p) + arrotondaCorr(80, 1, p));
+  assert.equal(c.totaleSuggerito, c.pxVoti + c.pxBonus + c.pxIncontri + c.premio);
+  assert.equal(componentiGiocatore(partita, 'b', 0, p).pxIncontri, 0, 'gli assenti non prendono i PX degli incontri');
+  // con i nemici elencati vale l'elenco, non il numero diretto
+  assert.equal(pxIncontro({ nemici: [{ px: 100, qty: 1, principale: true }], pxDiretti: 999 }, 4, p).px, 100);
+});
+function arrotondaCorr(n, presenti, p) { return Math.round(n * correttivoPg(presenti, p)); }

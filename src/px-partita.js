@@ -65,6 +65,12 @@ function unitaNemico(nemico, p) {
  */
 export function pxIncontro(incontro, nPresenti, p) {
   const nemici = incontro?.nemici ?? [];
+  // 25/10/2026: i PX di un incontro si possono scrivere a mano (`pxDiretti`, come nel Manuale dei Mostri: «PX per 4 PG»,
+  // dotazione già compresa) quando non si elencano i nemici; il correttivo per i PG presenti si applica uguale
+  if (!nemici.length && Number.isFinite(Number(incontro?.pxDiretti)) && Number(incontro.pxDiretti) > 0) {
+    const pesato = Number(incontro.pxDiretti);
+    return { px: arrotonda(pesato * correttivoPg(nPresenti, p)), pesato, errore: '' };
+  }
   const principali = nemici.filter((e) => e.principale);
   if (nemici.length && principali.length !== 1) {
     return { px: 0, pesato: 0, errore: 'Serve esattamente un nemico principale' };
