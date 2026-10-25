@@ -12,6 +12,9 @@ import { CARTELLA_STORICO } from '../src/storico-personaggi.js';
 import { rapporto, testoRapporto, sposta } from '../tools/pulizia-personaggi.mjs';
 import { deserializzaPersonaggio, normalizza, serializza } from '../src/character.js';
 import { installaDomFinto, togliDomFinto } from './dom-finto.js';
+
+// 25/10: il ruolo del PC (tools/ruolo-pc.mjs) sta nel profilo dell'utente: i test non devono leggere quello vero
+process.env.MUTANT_CONFIG_DIR = mkdtempSync(join(tmpdir(), 'mutant-profilo-cdl-'));
 import { datiReali } from './helpers.js';
 
 const { dati } = await datiReali();
@@ -248,21 +251,20 @@ test('senza --sposta non si muove niente, e lo strumento lo dice', async () => {
   rmSync(prova, { recursive: true, force: true });
 });
 
-test('il .bat per il Direttore: stampa il rapporto, lo scrive in un file e chiede SI solo alla fine', () => {
-  const bat = readFileSync(new URL('../distribuzione/4_controlla_personaggi.bat', import.meta.url), 'utf8');
-  // prima il rapporto (senza --sposta), poi la domanda, e solo dopo lo spostamento
-  const iRapporto = bat.indexOf('node tools\\pulizia-personaggi.mjs --su');
-  const iDomanda = bat.indexOf('set /p "RISPOSTA=');
-  const iSposta = bat.indexOf('--sposta');
+test('il controllo dei file per il Direttore è la voce 6 di Mutant.bat: rapporto, poi SI (25/10, «un ingresso solo»)', () => {
+  const con = readFileSync(new URL('../tools/console.mjs', import.meta.url), 'utf8');
+  const i = con.indexOf('export async function voceControlla');
+  const corpo = con.slice(i, con.indexOf('export async function voceTalenti'));
+  // prima il rapporto (senza spostare), poi la domanda, e solo dopo lo spostamento
+  const iRapporto = corpo.indexOf('rapportoPulizia(');
+  const iDomanda = corpo.indexOf('confermaSi(');
+  const iSposta = corpo.indexOf('spostaPulizia(');
   assert.ok(iRapporto > 0 && iDomanda > iRapporto && iSposta > iDomanda, 'rapporto, poi domanda, poi spostamento');
-  assert.match(bat, /if \/i not "%RISPOSTA%"=="SI"/, 'si muove solo scrivendo SI');
-  assert.match(bat, /non ho toccato niente/);
-  assert.match(bat, /chiudi pure questa finestra: non e' stato/, 'chiudendo la finestra non succede niente');
-  assert.match(bat, /rapporto-personaggi\.txt/, 'il rapporto finisce anche in un file di testo');
-  assert.match(bat, /pause/);
-  // viene aggiornato insieme agli altri file del pacchetto
+  assert.match(corpo, /non ho toccato niente/);
+  assert.match(readFileSync(new URL('../Mutant.bat', import.meta.url), 'utf8'), /:controlla\r?\nnode "%QUI%tools\\console\.mjs" controlla/);
+  // il vecchio .bat separato non c'è più, e l'aggiornamento lo toglie anche dal PC di Davide
   const avv = readFileSync(new URL('../tools/aggiorna-avviatori.mjs', import.meta.url), 'utf8');
-  assert.match(avv, /'4_controlla_personaggi\.bat'/);
+  assert.match(avv, /OBSOLETI = \[[^\]]*'4_controlla_personaggi\.bat'/);
 });
 
 test('il marcatore non finisce in git: su un’altra installazione sarebbe un avviso falso', () => {

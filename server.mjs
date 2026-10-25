@@ -151,7 +151,8 @@ import { NOME_FILE, fileProvvisorio, ultimiPerPersonaggio, ultimiPerPg, chiaveDa
 import { conMetadati, serveCopia, copieDaTogliere, idPersonaggio, cartellaStorico, nomeCopiaStorica, CARTELLA_STORICO } from './src/storico-personaggi.js';
 import { associazioneDi, dispositivoVisto, conAssociazione, senzaAssociazione, puoScrivere, elencoDispositivi } from './src/dispositivi.js';
 import { aggiungiOperazioni, normalizzaRientro, rigaOperazione, applicaDecisioni, registraDecisioni, inAttesaDi } from './src/rientro.js';
-import { NOME_MARCATORE, statoInstallazione } from './src/copia-di-lavoro.js';
+import { NOME_MARCATORE, statoInstallazione, statoDaRuolo } from './src/copia-di-lavoro.js';
+import { leggiRuolo } from './tools/ruolo-pc.mjs';
 import { validaRecord, ID_VEICOLO, migraVeicoli, eRiferimento, stessaChiave } from './src/veicoli-registro.js';
 import { normalizzaVeicoli } from './src/veicoli.js';
 import { caricaDati } from './src/rules.js';
@@ -233,10 +234,14 @@ const formaFile = (f) => String(f).normalize('NFD').replace(/[\u0300-\u036f]/g, 
  * La prima riga del file è una nota libera che l'app mostra accanto all'avviso.
  */
 function leggiMarcatore(radice, cartella) {
+  let marcatore = statoInstallazione(null);
   for (const dove of [join(radice, NOME_MARCATORE), join(cartella, NOME_MARCATORE)]) {
-    try { return statoInstallazione(readFileSync(dove, 'utf8')); } catch { /* non c'è: si prova il posto dopo */ }
+    try { marcatore = statoInstallazione(readFileSync(dove, 'utf8')); break; } catch { /* non c'è: si prova il posto dopo */ }
   }
-  return statoInstallazione(null);
+  // 25/10/2026 («un ingresso solo»): il ruolo scelto da Mutant.bat vale sopra il file; senza ruolo, come prima
+  let ruolo = null;
+  try { ruolo = leggiRuolo(radice); } catch { /* profilo non leggibile: come prima */ }
+  return statoDaRuolo(ruolo, marcatore);
 }
 
 /**
@@ -2010,7 +2015,7 @@ export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA),
         // 20/10: l'app deve dire su quale installazione sta girando (src/copia-di-lavoro.js). Il marcatore si legge a
         // ogni ping: metterlo o toglierlo ha effetto ricaricando la pagina, senza riavviare il server.
         const c = leggiMarcatore(radice, cartella);
-        return json(res, 200, { ok: true, app: 'mutant', cartella: CARTELLA, ...identita, master: req.mutantMaster, ...(c.copiaDiLavoro ? { copiaDiLavoro: true, notaCopia: c.nota } : {}) });
+        return json(res, 200, { ok: true, app: 'mutant', cartella: CARTELLA, ...identita, master: req.mutantMaster, ...(c.copiaDiLavoro ? { copiaDiLavoro: true, notaCopia: c.nota, ...(c.nomePc ? { nomePc: c.nomePc } : {}) } : {}) });
       }
       // Cartella dei personaggi vuota all'avvio (12/10/2026): il Tavolo lo dice al master, con il percorso in uso
       if (percorso === '/api/avvio') return json(res, 200, avvio ? avvio() : { vuota: false, percorso: cartella, salvataggi: [], testo: '' });
