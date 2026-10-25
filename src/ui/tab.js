@@ -220,6 +220,8 @@ export function renderTab(ctx) {
     h('div', { class: 'titolo-tab' }, badge, h('h2', {}, corrente.titolo), testataComune(ctx)),
     ctx.messaggio ? h('p', { class: `riquadro ${ctx.messaggio.tipo}`, role: 'status' }, ctx.messaggio.testo) : null,
     avvisoMaster(ctx.avvisoMaster),
+    // Talenti v1.0 (lotto 2): «Da scegliere», in alto in ogni tab finché ci sono posti vuoti (src/ui/talenti-scelta.js)
+    ctx.talenti ? ctx.talenti.disegna(ctx.talenti) : null,
     riquadroScontro(ctx),
     // punti liberi in eccesso: nella tab Abilità l'avviso sta sopra la tabella, con le Abilità segnate
     avvisoRegoleAggiornate(ctx, tab.scheda, { eccesso: corrente.id !== 'abilita' }),
@@ -2321,7 +2323,7 @@ function pannelloMunizioni(ctx, a, { riserveModificabili = true } = {}) {
     h('small', { class: 'nota' }, [
       info?.modo ? `Ricarica: ${info.singolo ? ctx.dati.equipaggiamento.file.munizioni.ricarica.inserimento_singolo?.testo ?? MODI_RICARICA.singolo : MODI_RICARICA[info.modo]}${info.singolo && info.perOperazione > 2 ? ` (tu: ${info.perOperazione}, Ricarica Migliorata)` : ''}.` : null,
       // Ricarica Rapida (Giocatore §8.6.4): una operazione gratuita per Round
-      info?.modo && (ctx.tab.scheda.talentiLiberi ?? []).some((t) => t.id === ctx.dati.equipaggiamento.file.munizioni.ricarica.ricarica_rapida?.talento) ? ctx.dati.equipaggiamento.file.munizioni.ricarica.ricarica_rapida.promemoria : null,
+      info?.modo && (ctx.tab.scheda.talentiLiberi ?? []).some((t) => (ctx.dati.equipaggiamento.file.munizioni.ricarica.ricarica_rapida?.talenti ?? []).includes(t.id)) ? ctx.dati.equipaggiamento.file.munizioni.ricarica.ricarica_rapida.promemoria : null,
       capacita === null ? 'Nessun caricatore nella scheda dell’arma: contatore libero.' : null,
       a.munizioni?.ricarica ? `Ricarica: ${a.munizioni.ricarica}.` : null,
       a.munizioni?.consumo ? `${a.munizioni.consumo.replace(/^./, (c) => c.toUpperCase())}.` : null,

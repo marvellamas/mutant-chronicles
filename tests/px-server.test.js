@@ -59,7 +59,8 @@ test('prima di sovrascrivere, px/px.json va nello storico (una copia al minuto, 
   await put({ versione: 1, giocatori: [{ id: 'z', pg: 'Secondo' }], partite: [] });
   await put({ versione: 1, giocatori: [{ id: 'z', pg: 'Terzo' }], partite: [] });
   const copie = readdirSync(storico).filter((n) => /^px-\d{8}-\d{6}\.json$/.test(n));
-  assert.equal(copie.length, prima + 1, 'la seconda e la terza scrittura cadono nello stesso minuto: una copia sola');
+  // una copia al minuto: le tre scritture di fila danno una copia, due se cavalcano il cambio di minuto (mai tre)
+  assert.ok(copie.length - prima >= 1 && copie.length - prima <= 2, `copie nuove: ${copie.length - prima}`);
   const ultima = JSON.parse(readFileSync(join(storico, copie.at(-1)), 'utf8'));
   assert.ok(ultima.giocatori[0].pg, 'la copia è un archivio leggibile');
 });

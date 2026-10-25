@@ -213,7 +213,7 @@ test('tooltip delle modalità e delle manovre: riga compatta e regola dai dati (
   const rb = descriviModalita('RB', d).info;
   assert.equal(rb.titolo, 'Raffica Breve');
   assert.deepEqual(rb.sezioni.map((s) => s.etichetta), ['Munizioni consumate', 'Colpi a segno', 'VA', 'Azioni', 'Manovre compatibili', 'Regola', 'Note']);
-  assert.match(rb.sezioni.find((s) => s.etichetta === 'VA').testo, /Raffica Breve Migliorata: \+4/);
+  assert.match(rb.sezioni.find((s) => s.etichetta === 'VA').testo, /Raffiche Migliorate: \+4/);
   // con il Talento: VA migliorato nella riga
   const T = [{ nome: 'Raffica Breve Migliorata', e: { modalita: { RB: { va: 4 } } } }];
   assert.equal(descriviModalita('RB', d, T).riga, '3 colpi · 1 a segno · +4 VA');

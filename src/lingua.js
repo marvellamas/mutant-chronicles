@@ -11,3 +11,6 @@ const ELISE = { al: 'all’', Al: 'All’', del: 'dell’', Del: 'Dell’', dal:
 export function conOrdinale(prep, n) {
   return (n === 8 || n === 11) && ELISE[prep] ? `${ELISE[prep]}${n}°` : `${prep} ${n}°`;
 }
+
+/** «del Tecnomante», «dell’Assaltatore»: la preposizione articolata davanti al nome di una Classe. */
+export const delNome = (nome) => (/^[aeiou]/i.test(String(nome)) ? `dell’${nome}` : `del ${nome}`);

@@ -370,18 +370,25 @@
       ],
       "per_operazione": 2,
       "migliorata": {
-        "talento": "ricarica-migliorata",
         "nome": "Ricarica Migliorata",
-        "per_operazione": 4
+        "per_operazione": 4,
+        "talenti": [
+          "ricarica-migliorata",
+          "ricarica-esperta"
+        ],
+        "_nota_talenti": "Ricarica Migliorata (personaggi del regime vecchio) e Ricarica Esperta (Talenti v1.0): A.182 aperta, vale la decisione 139 (4 cartucce), non il «fino a tre» del file."
       },
       "decisione": "A.135 (risposta di Davide dell’08/10/2026, decisione 139 di docs/risposte-master.md): modelli confermati: HD14M con serbatoio interno; SA SG2001, Airbrush e Mandible con caricatore amovibile.",
       "testo": "fino a 2 cartucce per operazione (1 AzP), 4 con Ricarica Migliorata, senza superare la capacità (A.135)"
     },
     "ricarica_rapida": {
-      "talento": "ricarica-rapida",
       "nome": "Ricarica Rapida",
       "promemoria": "Ricarica Rapida (A.135): una sola operazione di ricarica gratuita per Round, alla tua Iniziativa: 2 cartucce (4 con Ricarica Migliorata), fino a 6 con un carichino preparato, oppure il cambio di un caricatore o di una cella; servono mani disponibili e accessibilità.",
-      "decisione": "A.135 (risposta di Davide dell’08/10/2026, decisione 139 di docs/risposte-master.md): una sola operazione gratuita per Round, alla propria Iniziativa."
+      "decisione": "A.135 (risposta di Davide dell’08/10/2026, decisione 139 di docs/risposte-master.md): una sola operazione gratuita per Round, alla propria Iniziativa.",
+      "talenti": [
+        "ricarica-rapida",
+        "ricarica-esperta"
+      ]
     },
     "famiglie_celle": [
       "Celle energetiche"

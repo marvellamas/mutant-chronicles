@@ -331,6 +331,9 @@ function foglioAbilita(d) {
   const talento = (t, dettagli) => h('li', {}, h('strong', {}, t.nome), dettagli, ` — ${t.frase}`,
     t.rif ? h('span', { class: 'sigla' }, ` (${t.rif})${t.daVerificare ? ' *' : ''}`) : null,
     t.daRedigere ? h('em', { class: 'sigla' }, ' (sintesi da redigere)') : null);
+  // una voce degli elenchi dei Talenti Liberi e delle Maestrie (Talenti v1.0: due elenchi con il regime nuovo)
+  const voceTalentoStampa = (t) => talento(t, [t.parametro ? ` (${t.parametro})` : null, t.annotazione ? ` — ${t.annotazione}` : null,
+    h('span', { class: 'sigla' }, ` ${t.livello}° liv.`), t.provvisorio ? h('em', {}, ' provvisorio') : null]);
   const legendaSintesi = [...d.talentiClasse, ...d.talentiLiberi].some((t) => t.daVerificare)
     ? h('p', { class: 'piccolo' }, '* sintesi da verificare con il Direttore di Gioco; il testo completo è nel manuale indicato.') : null;
   return h('div', { class: 'f2-griglia' },
@@ -344,13 +347,18 @@ function foglioAbilita(d) {
     h('div', { class: 'colonna' },
       box({ titolo: 'Talenti di Classe' }, h('ul', { class: 'elenco-talenti-stampa' }, d.talentiClasse.map((t) =>
         talento(t, h('span', { class: 'sigla' }, ` ${t.classe} ${t.grado}${t.scelto ? ', a scelta' : ''}`))))),
-      d.talentiLiberi.length ? box({ titolo: 'Talenti Liberi' }, h('ul', { class: 'elenco-talenti-stampa' }, d.talentiLiberi.map((t) =>
-        talento(t, [t.parametro ? ` (${t.parametro})` : null, t.annotazione ? ` — ${t.annotazione}` : null,
-          h('span', { class: 'sigla' }, ` ${t.livello}° liv.`), t.provvisorio ? h('em', {}, ' provvisorio') : null])))) : null,
+      // Talenti v1.0 (lotto 2): regime nuovo, due elenchi (Talenti Liberi e Maestrie) più le Specializzazioni sotto;
+      // regime vecchio, l'elenco unico di sempre
+      ...(d.regimeTalenti === 'nuovo'
+        ? [['Talenti Liberi', 'talento_libero'], ['Maestrie', 'maestria']].map(([titolo, cat]) => {
+          const lista = d.talentiLiberi.filter((t) => t.categoria === cat);
+          return box({ titolo }, lista.length ? h('ul', { class: 'elenco-talenti-stampa' }, lista.map((t) => voceTalentoStampa(t))) : h('p', { class: 'piccolo' }, 'Nessuno.'));
+        })
+        : [d.talentiLiberi.length ? box({ titolo: 'Talenti Liberi' }, h('ul', { class: 'elenco-talenti-stampa' }, d.talentiLiberi.map((t) => voceTalentoStampa(t)))) : null]),
       legendaSintesi,
       // dal foglio 3 (pezzo 2): Specializzazioni e Tecniche Interiori, come nella tab Abilità della SD
-      d.specializzazioni.length ? box({ titolo: 'Specializzazioni', classe: 'f2-spostabile' }, h('ul', { class: 'elenco-talenti-stampa' }, d.specializzazioni.map((x) => h('li', {},
-        h('strong', {}, x.nome), ` — ${x.abilita}; ${x.effetto}`)))) : null,
+      d.specializzazioni.length || d.regimeTalenti === 'nuovo' ? box({ titolo: 'Specializzazioni', classe: 'f2-spostabile' }, d.specializzazioni.length ? h('ul', { class: 'elenco-talenti-stampa' }, d.specializzazioni.map((x) => h('li', {},
+        h('strong', {}, x.nome), x.annotazione ? ` — ${x.annotazione}` : null, ` — ${x.abilita}; ${x.effetto}`, d.regimeTalenti === 'nuovo' ? h('span', { class: 'sigla' }, ` ${x.livello}° liv.${x.classe ? ` (${x.classe})` : ''}`) : null))) : h('p', { class: 'piccolo' }, 'Nessuna.')) : null,
       // Tecniche Interiori: nel foglio 5 (Poteri), come nella SD (richiesta di Davide del 02/10)
       box({ titolo: 'Annotazioni', riempitivo: true, classe: 'f2-annotazioni' }, righeGuida())));
 }

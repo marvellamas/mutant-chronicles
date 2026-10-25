@@ -10,7 +10,7 @@ import { info, etichettaMacro, pallini } from './tooltip.js';
 import { classeMacrofamiglia } from '../palette.js';
 import { componenteTiro } from './tiro.js';
 import { dettagli, bottoneScelta, contatore, stepper, sceltaParametroTalento, competenzeClasse } from './passi.js';
-import { conOrdinale } from '../lingua.js';
+import { conOrdinale, delNome } from '../lingua.js';
 import { barraPassi } from './navigazione.js';
 
 const trova = (lista, nome) => lista.find((x) => x.nome === nome);
@@ -22,6 +22,8 @@ const normalizzaTesto = (s) => String(s).normalize('NFD').replace(/[̀-ͯ]/g, ''
 export const CAMPI_PASSO = {
   caratteristiche: ['caratteristiche'],
   talento: ['talentoLibero'],
+  maestria: ['maestria'],
+  specializzazione: ['specializzazione'],
   grado: ['grado', 'tiroPV', 'tiroPM', 'talentoClasse', 'parametriTalenti'],
   tecniche: ['tecniche', 'scuolaMishima'],
   incantesimi: ['incantesimi'],
@@ -70,6 +72,12 @@ export function renderSali(ctx) {
   const corpo = {
     caratteristiche: passoCaratteristiche,
     talento: passoTalento,
+    // Talenti v1.0 (lotto 2): le opzioni vengono da prossimoLivello, cioè dal controllo unico (controllaSceltaTalento)
+    maestria: (x) => passoTalento(x, { campo: 'maestria', candidati: x.prossimo.maestrie ?? [], guida: 'Una Maestria: perfeziona una manovra o una capacità. Le Maestrie non acquisibili restano nell’elenco con il motivo.' }),
+    specializzazione: (x) => passoTalento(x, {
+      campo: 'specializzazione', candidati: x.prossimo.specializzazioni?.[x.voce.grado?.classe] ?? [],
+      guida: x.voce.grado?.classe ? `Una Specializzazione dall’elenco ${delNome(x.voce.grado.classe)}, la Classe che hai appena aumentato.` : 'Scegli prima la Classe nel passo «Grado di Classe»: la Specializzazione si prende dal suo elenco.',
+    }),
     grado: passoGrado,
     tecniche: passoTecniche,
     incantesimi: passoIncantesimi,
@@ -170,12 +178,12 @@ function gruppoDi(id, dati) {
   return `spec:${dati.specializzazioni.specializzazioni.find((x) => x.id === id)?.gruppo}`;
 }
 
-function passoTalento(c) {
+function passoTalento(c, { campo = 'talentoLibero', candidati: daMostrare = null, guida = null } = {}) {
   const { dati, voce, prossimo, ui } = c;
   ui.filtroTalenti ??= { gruppo: 'tutti', testo: '' };
   const f = ui.filtroTalenti;
-  const candidati = prossimo.talentiLiberi;
-  const scelto = voce.talentoLibero?.id ? candidati.find((t) => t.id === voce.talentoLibero.id) : null;
+  const candidati = daMostrare ?? prossimo.talentiLiberi;
+  const scelto = voce[campo]?.id ? candidati.find((t) => t.id === voce[campo].id) : null;
   const gruppi = gruppiTalenti(dati);
   const titoloGruppo = Object.fromEntries(gruppi.map((g) => [g.id, g.titolo]));
 
@@ -185,7 +193,7 @@ function passoTalento(c) {
     const visibili = candidati.filter((t) => (f.gruppo === 'tutti' || gruppoDi(t.id, dati) === f.gruppo)
       && (!testo || normalizzaTesto(t.nome).includes(testo)));
     elenco.replaceChildren(...(visibili.length ? visibili.map((t) => {
-      const sel = voce.talentoLibero?.id === t.id;
+      const sel = voce[campo]?.id === t.id;
       return h('li', { class: `voce-talento${t.ammesso ? '' : ' bloccato'}${sel ? ' selezionata' : ''}` },
         h('div', {},
           info('talento', t.id, t.nome),
@@ -193,7 +201,7 @@ function passoTalento(c) {
           f.gruppo === 'tutti' ? h('small', { class: 'sigla' }, ` · ${titoloGruppo[gruppoDi(t.id, dati)] ?? ''}`) : null,
           !t.ammesso ? h('small', { class: 'motivo' }, t.motivo) : null),
         t.ammesso || sel ? bottoneScelta(sel, () => c.aggiornaVoce({
-          talentoLibero: { id: t.id, ...(t.parametri?.length === 1 ? { parametro: t.parametri[0] } : {}) },
+          [campo]: { id: t.id, ...(t.parametri?.length === 1 ? { parametro: t.parametri[0] } : {}) },
           tecniche: undefined, scuolaMishima: undefined,
         })) : null);
     }) : [h('li', { class: 'vuoto' }, 'Nessun Talento corrisponde alla ricerca.')]));
@@ -201,8 +209,10 @@ function passoTalento(c) {
   disegnaElenco();
 
   return [
-    h('p', { class: 'guida' }, 'Un Talento Libero o una Specializzazione. I Talenti non acquisibili restano nell’elenco con il motivo.'),
-    scelto ? pannelloTalentoScelto(c, scelto) : h('p', { class: 'contatore attenzione' }, 'Nessun Talento scelto'),
+    h('p', { class: 'guida' }, guida ?? (prossimo.regimeTalenti === 'nuovo'
+      ? 'Un Talento Libero (Talenti v1.0). I Talenti non acquisibili restano nell’elenco con il motivo.'
+      : 'Un Talento Libero o una Specializzazione. I Talenti non acquisibili restano nell’elenco con il motivo.')),
+    scelto ? pannelloTalentoScelto(c, scelto, campo) : h('p', { class: 'contatore attenzione' }, 'Nessuna scelta'),
     h('div', { class: 'filtri' },
       h('label', { class: 'campo-inline' }, 'Sezione ',
         h('select', { onchange: (e) => { f.gruppo = e.target.value; disegnaElenco(); } },
@@ -214,23 +224,23 @@ function passoTalento(c) {
   ];
 }
 
-function pannelloTalentoScelto(c, scelto) {
+function pannelloTalentoScelto(c, scelto, campo = 'talentoLibero') {
   const { dati, voce } = c;
-  const def = dati.talenti_liberi.talenti.find((x) => x.id === scelto.id);
-  const tl = voce.talentoLibero;
+  const def = dati.talenti_liberi.talenti.find((x) => x.id === scelto.id) ?? dati.specializzazioni.specializzazioni.find((x) => x.id === scelto.id);
+  const tl = voce[campo];
   const nomeParam = (p) => dati.caratteristiche.salvezze.find((s) => s.id === p)?.nome
     ?? dati.caratteristiche.caratteristiche.find((s) => s.sigla === p)?.nome ?? p;
   return h('section', { class: 'riquadro ok' },
     h('h3', {}, 'Scelto: ', info('talento', scelto.id, scelto.nome)),
     scelto.provvisorio ? h('p', { class: 'nota' }, 'Talento provvisorio: ricavato dalle citazioni del Manuale della Magia, prerequisiti da definire con il master.') : null,
     def?.parametro ? h('label', { class: 'campo-inline' }, def.parametro === 'salvezza' ? 'Salvezza ' : 'Caratteristica ',
-      h('select', { onchange: (e) => c.aggiornaVoce({ talentoLibero: { ...tl, parametro: e.target.value || undefined } }) },
+      h('select', { onchange: (e) => c.aggiornaVoce({ [campo]: { ...tl, parametro: e.target.value || undefined } }) },
         h('option', { value: '' }, '— scegli —'),
         (scelto.parametri ?? []).map((p) => h('option', { value: p, selected: tl.parametro === p }, nomeParam(p))))) : null,
     def?.annotazione ? h('label', { class: 'campo-inline' }, `Indica ${def.annotazione}: `,
       h('input', { type: 'text', value: tl.annotazione ?? '', maxlength: 80,
-        onchange: (e) => c.aggiornaVoce({ talentoLibero: { ...tl, annotazione: e.target.value.trim() || undefined } }) })) : null,
-    h('button', { type: 'button', class: 'btn', onclick: () => c.aggiornaVoce({ talentoLibero: undefined, tecniche: undefined, scuolaMishima: undefined }) }, 'Togli la scelta'));
+        onchange: (e) => c.aggiornaVoce({ [campo]: { ...tl, annotazione: e.target.value.trim() || undefined } }) })) : null,
+    h('button', { type: 'button', class: 'btn', onclick: () => c.aggiornaVoce({ [campo]: undefined, tecniche: undefined, scuolaMishima: undefined }) }, 'Togli la scelta'));
 }
 
 // ---------------------------------------------------------------------------

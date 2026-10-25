@@ -261,9 +261,12 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     talentiClasse: s.classi.flatMap((cl) => cl.talenti.map((t) => ({
       nome: t.parametroNome ? `${t.nome} (${t.parametroNome})` : t.nome, classe: cl.nome, grado: GRADI_ROMANI[t.grado] ?? String(t.grado), scelto: !!t.scelto, ...talentoSS(t),
     }))),
+    // Talenti v1.0 (lotto 2): con il regime nuovo la stampa ha tre elenchi (Talenti Liberi, Maestrie, Specializzazioni)
+    regimeTalenti: s.regimeTalenti ?? 'vecchio',
     talentiLiberi: s.talentiLiberi.map((t) => ({
       id: t.id,
       nome: t.nome,
+      categoria: t.categoria ?? null,
       parametro: t.parametro ? (dati.caratteristiche.salvezze.some((x) => x.id === t.parametro) ? nomeSalvezza(t.parametro, dati) : t.parametro) : null,
       annotazione: t.annotazione ?? null,
       livello: t.livello,
@@ -276,6 +279,8 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
       abilita: x.abilita.length ? x.abilita.join(', ') : 'Abilità della scheda dell’arma',
       effetto: effettoSpecializzazione(x.effetto),
       livello: x.livello,
+      classe: x.classe ?? null,
+      annotazione: x.annotazione ?? null,
     })),
     tecniche: s.tecniche.map((t) => ({ id: t.id, nome: t.nome, costo: t.costo, azione: t.azione, durata: t.durata })),
     tecnicheAmmesse: s.tecnicheAmmesse,

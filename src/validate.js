@@ -63,7 +63,9 @@ export function validaDati(dati) {
   validaClassi(dati.classi, nomiAddestramenti, nomiAbilita, macrofamiglie, dati.regole, err);
   validaAvanzamento(dati.regole, err);
   const idSpec = validaSpecializzazioni(dati.specializzazioni, nomiAbilita, err);
-  validaTalentiLiberi(dati.talenti_liberi, idSpec, err, (dati.addestramenti?.addestramenti ?? []).map((a) => a.nome));
+  validaTalentiLiberi(dati.talenti_liberi, idSpec, err, (dati.addestramenti?.addestramenti ?? []).map((a) => a.nome), dati.classi?.classi ?? []);
+  validaSpecializzazioniPerClasse(dati, idSpec, err);
+  validaProgressioneTalenti(dati, err);
   validaTecniche(dati.tecniche_interiori, err);
   validaSintesiTalenti(dati, err);
   validaCircostanza(dati, err);
@@ -778,6 +780,13 @@ export function avvisiDati(dati) {
       if (isTodo(x?.[campo])) avv('incantesimi', `incantesimi[${i}] (${x.nome}).${campo}`, 'da completare (TODO)');
     }
   });
+  // Talenti v1.0 (25/10/2026): un valore che il file non dà si segna «da_definire» (elenco di che cosa manca) e diventa
+  // un avviso, mai un errore; vale per Talenti e Specializzazioni
+  const daDefinire = (file, lista, nome) => (lista ?? []).forEach((x, i) => {
+    for (const d of Array.isArray(x?.da_definire) ? x.da_definire : x?.da_definire ? [x.da_definire] : []) avv(file, `${nome}[${i}] (${x.nome})`, `da definire: ${d}`);
+  });
+  daDefinire('talenti_liberi', dati?.talenti_liberi?.talenti, 'talenti');
+  daDefinire('specializzazioni', dati?.specializzazioni?.specializzazioni, 'specializzazioni');
   (dati?.talenti_liberi?.talenti ?? []).forEach((x, i) => {
     if (x?.provvisorio) avv('talenti_liberi', `talenti[${i}] (${x.nome})`, 'Talento provvisorio: ricavato dalle citazioni del Manuale della Magia, prerequisiti da definire (TODO)');
     else if (isTodo(x?.tipo)) avv('talenti_liberi', `talenti[${i}] (${x.nome}).tipo`, 'passivo o attivo da definire (TODO)');
@@ -872,8 +881,55 @@ function validaSpecializzazioni(s, nomiAbilita, err) {
     if (x.gruppo !== 'armi' && !(x.abilita?.length)) err(F, `${k}.abilita`, 'serve almeno un’Abilità interessata');
     if (!isTesto(x.ambito)) err(F, `${k}.ambito`, 'ambito mancante');
     if (!isOggetto(x.effetto)) err(F, `${k}.effetto`, 'effetto mancante');
+    // Talenti v1.0 (25/10/2026): ogni voce dice la sua categoria
+    if (x.categoria !== 'specializzazione') err(F, `${k}.categoria`, 'atteso "specializzazione"');
   });
+  if (isIntero(s.attesi?.specializzazioni) && lista.length !== s.attesi.specializzazioni) err(F, 'specializzazioni', `attese ${s.attesi.specializzazioni} Specializzazioni (campo "attesi"), trovate ${lista.length}`);
   return ids;
+}
+
+// Talenti v1.0 (25/10/2026): ogni Classe ha il suo elenco di Specializzazioni, ogni voce esiste, ogni Specializzazione
+// sta in almeno un elenco; i gruppi e gli accessi da Talento puntano a voci esistenti
+function validaSpecializzazioniPerClasse(dati, idSpec, err) {
+  const s = dati.specializzazioni;
+  if (!isOggetto(s)) return;
+  const F = 'specializzazioni';
+  const pc = isOggetto(s.per_classe) ? s.per_classe : null;
+  if (!pc) { err(F, 'per_classe', 'elenchi delle Specializzazioni per Classe mancanti'); return; }
+  const usate = new Set();
+  for (const c of dati.classi?.classi ?? []) {
+    const l = pc[c.nome];
+    if (!Array.isArray(l) || !l.length) { err(F, `per_classe.${c.nome}`, 'la Classe non ha il suo elenco di Specializzazioni'); continue; }
+    for (const id of l) { if (!idSpec.has(id)) err(F, `per_classe.${c.nome}`, `"${id}" non è una Specializzazione`); usate.add(id); }
+    if (new Set(l).size !== l.length) err(F, `per_classe.${c.nome}`, 'voci ripetute');
+  }
+  for (const k of Object.keys(pc)) if (!k.startsWith('_') && !(dati.classi?.classi ?? []).some((c) => c.nome === k)) err(F, `per_classe.${k}`, `"${k}" non è una Classe`);
+  for (const id of idSpec) if (!usate.has(id)) err(F, 'per_classe', `"${id}" non sta nell’elenco di nessuna Classe`);
+  for (const [g, l] of Object.entries(isOggetto(s.gruppi) ? s.gruppi : {})) {
+    if (g.startsWith('_')) continue;
+    if (!Array.isArray(l) || !l.every((id) => idSpec.has(id))) err(F, `gruppi.${g}`, 'elenco di id di Specializzazioni atteso');
+  }
+  const idTal = new Set((dati.talenti_liberi?.talenti ?? []).map((t) => t.id));
+  (Array.isArray(s.accessi_da_talenti) ? s.accessi_da_talenti : []).forEach((a, i) => {
+    if (!Array.isArray(a?.talenti) || !a.talenti.every((id) => idTal.has(id))) err(F, `accessi_da_talenti[${i}].talenti`, 'id di Talenti esistenti attesi');
+    if (!Array.isArray(s.gruppi?.[a?.gruppo])) err(F, `accessi_da_talenti[${i}].gruppo`, `"${a?.gruppo}" non è un gruppo di «gruppi»`);
+  });
+}
+
+// regole.json → avanzamento.progressione_talenti: tre categorie, livelli distinti, una scelta per livello (p. 1 del file)
+function validaProgressioneTalenti(dati, err) {
+  const P = dati.regole?.avanzamento?.progressione_talenti;
+  if (P === undefined) return;
+  const F = 'regole';
+  const max = dati.regole.avanzamento.livello_massimo;
+  const tutti = [];
+  for (const c of ['talento_libero', 'maestria', 'specializzazione']) {
+    const l = P[c];
+    if (!Array.isArray(l) || !l.length || !l.every((n) => isIntero(n) && n >= 1 && n <= max)) { err(F, `avanzamento.progressione_talenti.${c}`, `elenco di livelli fra 1 e ${max}`); continue; }
+    tutti.push(...l);
+  }
+  if (new Set(tutti).size !== tutti.length) err(F, 'avanzamento.progressione_talenti', 'un livello compare in più categorie: una scelta per livello');
+  if (!P.specializzazione?.includes(1)) err(F, 'avanzamento.progressione_talenti.specializzazione', 'la Specializzazione del Grado iniziale (1° livello) manca');
 }
 
 const MOLTEPLICITA = { una: null, per_caratteristica: 'caratteristica', per_salvezza_max2: 'salvezza', illimitata: null, limitata: null };
@@ -918,7 +974,8 @@ function validaSintesiTalenti(dati, err) {
   (dati.talenti_liberi?.talenti ?? []).forEach((t, i) => controlla('talenti_liberi', `talenti[${i}] (${t?.nome})`, t?.sintesi));
 }
 
-function validaTalentiLiberi(t, idSpec, err, addestramenti = []) {
+const CATEGORIE_TALENTO = ['talento_libero', 'maestria', 'superato'];
+function validaTalentiLiberi(t, idSpec, err, addestramenti = [], classi = []) {
   if (!isOggetto(t)) return;
   const F = 'talenti_liberi';
   const lista = Array.isArray(t.talenti) ? t.talenti : [];
@@ -936,6 +993,9 @@ function validaTalentiLiberi(t, idSpec, err, addestramenti = []) {
     else {
       if (v.addestramento !== undefined && !addestramenti.includes(v.addestramento)) err(F, `condizioni_prerequisiti.${c}.addestramento`, `"${v.addestramento}" non è un Addestramento`);
       for (const id of v.talenti ?? []) if (!ids.has(id)) err(F, `condizioni_prerequisiti.${c}.talenti`, `"${id}" non è un Talento`);
+      // Talenti v1.0: un Talento di Classe che dà accesso (Arti Marziali Migliorate: Addestramento al Combattimento Senz’Armi)
+      const nomiClasse = new Set(classi.flatMap((k) => [...(k.talenti_fissi ?? []), ...(k.talenti_a_scelta ?? [])].map((x) => x.nome)));
+      for (const n of v.talenti_di_classe ?? []) if (!nomiClasse.has(n)) err(F, `condizioni_prerequisiti.${c}.talenti_di_classe`, `"${n}" non è un Talento di Classe`);
     }
   }
   // un prerequisito è un Talento o una Specializzazione, una condizione, «addestramento:<nome>»; «non:» lo nega
@@ -957,6 +1017,18 @@ function validaTalentiLiberi(t, idSpec, err, addestramenti = []) {
       err(F, `${k}.prerequisiti`, 'lista di id (vuota se nessun prerequisito); "TODO(Davide)" solo per i Talenti provvisori');
     }
     if (!(x.molteplicita in MOLTEPLICITA)) err(F, `${k}.molteplicita`, `"${x.molteplicita}" sconosciuta`);
+    // Talenti v1.0 (25/10/2026): categoria; le voci superate dicono da che cosa
+    if (!CATEGORIE_TALENTO.includes(x.categoria)) err(F, `${k}.categoria`, `attesa una fra ${CATEGORIE_TALENTO.join(', ')}`);
+    if (x.categoria === 'superato') {
+      if (!(ids.has(x.sostituito_da) || idSpec.has(x.sostituito_da))) err(F, `${k}.sostituito_da`, `"${x.sostituito_da}" non è un Talento né una Specializzazione`);
+      if (x.solo_regime_nuovo) err(F, `${k}.solo_regime_nuovo`, 'una voce superata non può essere solo del regime nuovo');
+    } else if (x.sostituito_da !== undefined) err(F, `${k}.sostituito_da`, 'solo le voci superate hanno «sostituito_da»');
+    if (x.solo_regime_nuovo && Array.isArray(x.prerequisiti)) {
+      for (const p of x.prerequisiti) {
+        const base = p.startsWith('non:') ? p.slice(4) : p;
+        if (lista.find((y) => y.id === base)?.categoria === 'superato') err(F, `${k}.prerequisiti`, `"${p}" è una voce superata: il prerequisito va riferito alla voce nuova`);
+      }
+    }
     else if ((MOLTEPLICITA[x.molteplicita] ?? null) !== (x.parametro ?? null)) {
       err(F, `${k}.parametro`, `con molteplicità "${x.molteplicita}" il parametro deve essere ${JSON.stringify(MOLTEPLICITA[x.molteplicita])}`);
     }
@@ -977,6 +1049,11 @@ function validaTalentiLiberi(t, idSpec, err, addestramenti = []) {
       if (!/^(addestramento|classi|talenti):.+$/.test(inc)) err(F, `${k}.incompatibile_con`, `"${inc}": atteso "addestramento:…", "classi:…" o "talenti:…"`);
     }
   });
+  for (const [c, n] of Object.entries(t.attesi_categorie ?? {})) {
+    if (c.startsWith('_')) continue;
+    const trovati = lista.filter((x) => x?.categoria === c).length;
+    if (trovati !== n) err(F, 'talenti', `attese ${n} voci di categoria "${c}" (campo "attesi_categorie"), trovate ${trovati}`);
+  }
   for (const [sez, n] of Object.entries(t.attesi ?? {})) {
     if (sez.startsWith('_')) continue;
     const trovati = lista.filter((x) => x?.sezione === sez || x?.sezione?.startsWith(`${sez}.`)).length;
@@ -2142,7 +2219,11 @@ function validaRicarica(dati, err) {
   for (const a of ins.armi ?? []) if (!rif.has(a)) err(F, 'ricarica.inserimento_singolo.armi', `"${a}" non esiste nel catalogo`);
   for (const a of ins.caricatore_amovibile ?? []) if (!rif.has(a)) err(F, 'ricarica.inserimento_singolo.caricatore_amovibile', `"${a}" non esiste nel catalogo`);
   if (ins.per_operazione !== undefined && !(isIntero(ins.per_operazione) && ins.per_operazione >= 1)) err(F, 'ricarica.inserimento_singolo.per_operazione', 'intero ≥ 1 atteso');
-  if (ins.migliorata !== undefined && !(isOggetto(ins.migliorata) && isIntero(ins.migliorata.per_operazione) && (dati.talenti_liberi?.talenti ?? []).some((t) => t.id === ins.migliorata.talento))) err(F, 'ricarica.inserimento_singolo.migliorata', 'serve { talento (id di talenti_liberi.json), per_operazione }');
+  // Talenti nuovi (25/10/2026): «talenti», gli id di Ricarica Migliorata (regime vecchio) e di Ricarica Esperta
+  const idTal = new Set((dati.talenti_liberi?.talenti ?? []).map((t) => t.id));
+  const tuttiTalenti = (x) => Array.isArray(x?.talenti) && x.talenti.length > 0 && x.talenti.every((id) => idTal.has(id));
+  if (ins.migliorata !== undefined && !(isOggetto(ins.migliorata) && isIntero(ins.migliorata.per_operazione) && tuttiTalenti(ins.migliorata))) err(F, 'ricarica.inserimento_singolo.migliorata', 'serve { talenti: [id di talenti_liberi.json], per_operazione }');
+  if (r.ricarica_rapida !== undefined && !tuttiTalenti(r.ricarica_rapida)) err(F, 'ricarica.ricarica_rapida.talenti', 'serve un elenco di id di talenti_liberi.json');
   // A.135: carichini rapidi (tipo → oggetto del catalogo con «carichino», famiglie e armi a inserimento)
   const CR = r.carichini;
   if (CR !== undefined) {

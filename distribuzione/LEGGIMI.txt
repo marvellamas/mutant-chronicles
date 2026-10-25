@@ -20,6 +20,8 @@ Ci sono cinque file:
   2_installa_node.bat             installa Node.js, il programma che fa girare l'app.
   3_avvia.bat                     accende l'app e la apre nel browser.
   4_controlla_personaggi.bat      controlla i file dei personaggi (si usa di rado).
+  5_passa_ai_talenti_nuovi.bat    passa i personaggi ai Talenti nuovi (una volta sola;
+                                  se serve, rimette com'era prima).
 
 I file che finiscono con ".bat" sono piccoli programmi.
 Si usano con un doppio clic.

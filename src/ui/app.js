@@ -21,7 +21,8 @@ import { elencoVeicoli, migraNelRegistro } from './veicoli-registro.js';
 import { eRiferimento } from '../veicoli-registro.js';
 import { serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, contestoMasterQui, pingMasterQui, salvaBackupMaster, leggiBackupMaster } from './cartella.js';
 import { modalitaMaster, mostraMarchio, statoContestoMaster, registro as registroMaster, nuovaCorrezione, aggiungiCorrezione, annullaCorrezione, avvisoAnnulla, registraDiretta, differenzeDirette, differenzeOggetti, ripristinoDiretta, descriviScelte, soloScelte, ripristinaScelte, masterDiverso, normalizzaCircostanzeMaster } from '../correzioni-master.js';
-import { descriviVoce } from '../avanzamento.js';
+import { descriviVoce, postiTalenti, applicaSceltaTalento } from '../avanzamento.js';
+import { riquadroTalenti } from './talenti-scelta.js';
 import { segnaModalitaMaster, modalitaMasterDi, esciModalitaMaster } from './ritorno.js';
 import { statoSalvataggioMaster, controllaRemoto, revisioneDaScrivere, differenzeSessione, testoScelta, indicatoreCollegamento, impronta } from '../collegamento.js';
 import { messaggioConflittoVersione } from '../stato-tablet.js';
@@ -1090,7 +1091,8 @@ function rigaCartella(r) {
 function nuovoPersonaggio() {
   const id = archivio.nuovoId();
   // l'identificativo nasce con il personaggio (src/character.js → nuovoPg): non dipende dal nome
-  if (!archivio.salva({ id, scelte: nuoveScelte(), passo: 0, pg: nuovoPg() })) {
+  // Talenti v1.0 (lotto 2, 25/10/2026): un personaggio nuovo nasce con le tre categorie (Specializzazione al 1° livello)
+  if (!archivio.salva({ id, scelte: { ...nuoveScelte(), regimeTalenti: 2 }, passo: 0, pg: nuovoPg() })) {
     stato.messaggioHome = { tipo: 'attenzione', testo: 'Il browser non permette di salvare: il personaggio andrà perso chiudendo la pagina. Usa Esporta per conservarlo.' };
   }
   stato.id = null;
@@ -1114,7 +1116,8 @@ function contesto() {
     avvisoSalita: schedaPersonaggio.eccessi?.length ? motivoEccesso(schedaPersonaggio.eccessi)
       : schedaPersonaggio.completamenti?.length ? motivoCompletamento(schedaPersonaggio.completamenti) : null,
     motivoNoSalita: !scheda.completa ? 'Completa la creazione (passi precedenti) prima di salire di livello.'
-        : schedaPersonaggio.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
+        : schedaPersonaggio.errori.some(ePostoTalentoVuoto) ? 'Scegli prima i Talenti nel riquadro «Da scegliere» della scheda.'
+        : schedaPersonaggio.errori.filter((e) => !eSceltaTalento(e)).length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
     saliDiLivello,
     stampa: () => vai(`#/p/${stato.id}/stampa`),
     annullaUltimoLivello: annullaLivello,
@@ -1595,6 +1598,70 @@ function registraModificheMaster() {
   }
 }
 
+// ---------------------------------------------------------------------------
+// Talenti v1.0 (lotto 2, 25/10/2026): la scelta guidata nella scheda. Il conto dei posti e il controllo delle scelte
+// sono di postiTalenti / controllaSceltaTalento (src/avanzamento.js); qui si applica la scelta e si salva come ogni
+// altra modifica (il server ricontrolla le scelte dei tablet: src/talenti-tablet.js).
+
+/** Un errore che è solo un posto dei Talenti v1.0 ancora vuoto (lo mostra il riquadro, non l'elenco degli errori). */
+const eSceltaTalento = (e) => stato.scelte?.regimeTalenti === 2 && /(^|.)(talentoLibero|maestria|specializzazione|specializzazioneIniziale)$/.test(e.campo ?? '');
+const ePostoTalentoVuoto = (e) => eSceltaTalento(e) && e.tipo === 'incompleto';
+// una scelta non ammessa c'è solo se l'ha forzata il Direttore (il server non la accetta da un tablet): il riquadro la
+// mostra come tale, e non blocca niente (l'app avvisa, non blocca)
+
+/** Perché, adesso, da qui non si sceglie: senza connessione, o con modifiche offline in attesa del Direttore. */
+function talentiBloccati() {
+  if (!stato.cartella || stato.master) return null;
+  if (eOffline()) return 'Per scegliere i Talenti serve la connessione con il PC del Direttore: adesso il tablet è offline. Riprova quando torna collegato.';
+  const v = archivio.carica(stato.id);
+  if (v && inCoda(chiaveCoda(v, stato.id))) return 'Ci sono modifiche fatte offline in attesa del Direttore: i Talenti si scelgono quando lui le ha decise («Vedi la coda»).';
+  return null;
+}
+
+function contestoTalenti(inMaster) {
+  if (stato.scelte?.regimeTalenti !== 2) return null;
+  if (stato.uiTalenti?.id !== stato.id) stato.uiTalenti = { id: stato.id, aperto: false, posto: null, filtro: '' };
+  let posti;
+  try { posti = postiTalenti(personaggio(), stato.dati); } catch { return null; }
+  const ridisegna = ({ fuoco = null } = {}) => {
+    renderScheda({ mantieniScorrimento: true });
+    if (fuoco) { const el = document.getElementById(fuoco); if (el) { el.focus(); el.setSelectionRange?.(el.value.length, el.value.length); } }
+  };
+  const nome = (id) => stato.dati.talenti_liberi.talenti.find((t) => t.id === id)?.nome ?? stato.dati.specializzazioni.specializzazioni.find((s) => s.id === id)?.nome ?? id;
+  const applica = (posto, scelta) => {
+    const p = applicaSceltaTalento(personaggio(), posto, scelta);
+    stato.scelte = { ...stato.scelte, specializzazioneIniziale: p.creazione.specializzazioneIniziale ?? null };
+    cambiaLivelli(p.livelli);
+  };
+  return {
+    posti, dati: stato.dati, ui: stato.uiTalenti, master: !!inMaster, bloccato: talentiBloccati(),
+    azioni: {
+      ridisegna,
+      scegli: (posto, scelta, { forzata = null } = {}) => {
+        if (talentiBloccati()) { ridisegna(); return; }
+        // la forzatura (solo in «Modifica master») finisce nel registro del master con il motivo
+        if (forzata) stato.masterMotivo = `Talento forzato dal Direttore: ${nome(scelta.id)} al ${posto.livello}° livello (${forzata})`;
+        applica(posto, scelta);
+        stato.uiTalenti.posto = null;
+        stato.uiTalenti.filtro = '';
+        stato.messaggioScheda = { tipo: 'ok', testo: `Scelto: ${nome(scelta.id)} (${posto.livello}° livello). L’effetto è già nella scheda.` };
+        persisti();
+        ridisegna();
+      },
+      svuota: (posto) => {
+        applica(posto, null);
+        stato.uiTalenti.posto = `${posto.categoria}:${posto.livello}`;
+        stato.uiTalenti.aperto = true;
+        persisti();
+        ridisegna();
+      },
+      chiudi: () => { stato.scelte = { ...stato.scelte, talentiChiusiFino: 1 + stato.livelli.length }; persisti(); ridisegna(); },
+      riapri: () => { stato.scelte = { ...stato.scelte, talentiChiusiFino: null }; persisti(); ridisegna(); },
+    },
+    disegna: riquadroTalenti,
+  };
+}
+
 /** Le azioni della modalità master per la scheda (ctx.master). */
 function azioniMaster() {
   const ridisegna = () => renderScheda({ mantieniScorrimento: true });
@@ -1697,6 +1764,9 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
   if (tab.tab.length && calendarioAttivo(stato.calendario)) tab.tab.push({ id: 'calendario', titolo: 'Calendario', contatore: testoNote(contaNote(stato.calendario)) });
   // gli otto tab fissi (docs/layout-sd.md): preparaTab non cambia, la stampa resta com'è
   if (tab.tab.length) tab.tab = tabFissi(tab.tab);
+  // Talenti v1.0 (lotto 2): i posti vuoti li dice il riquadro «Da scegliere», non l'elenco degli errori
+  const talentiDaScegliere = tab.errori?.some(ePostoTalentoVuoto) ?? false;
+  if (tab.errori) tab.errori = tab.errori.filter((e) => !eSceltaTalento(e));
   document.title = `${stato.scelte.nome.trim() || 'Personaggio'} — Scheda · Mutant`;
   if (!tab.tab.length) {
     svuota(radice, h('section', { class: 'passo' },
@@ -1799,6 +1869,7 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
     avvisoSalita: tab.scheda.eccessi?.length ? motivoEccesso(tab.scheda.eccessi)
       : tab.scheda.completamenti?.length ? motivoCompletamento(tab.scheda.completamenti) : null,
     motivoNoSalita: !schedaCreazione.completa ? 'Completa la creazione prima di salire di livello.'
+        : talentiDaScegliere ? 'Scegli prima i Talenti nel riquadro «Da scegliere».'
         : tab.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
     // regole aggiornate (regole.json → regole_aggiornate): punti da completare e in eccesso
     avvisoRegole: dati.regole.regole_aggiornate?.punti_abilita ?? 'Regole aggiornate',
@@ -1814,6 +1885,8 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
     // «Modifiche del master» (tab Identità): tutti lo leggono; in modalità master si annulla
     registroMaster: registroMaster(stato.scelte.correzioniMaster),
     master: inMaster ? azioniMaster() : null,
+    // Talenti v1.0 (lotto 2): il riquadro «Da scegliere» (src/ui/talenti-scelta.js); i posti da postiTalenti, il conto unico
+    talenti: contestoTalenti(inMaster),
     azioni: {
       vaiTab,
       // 08/10: «Muovi il PG sulla mappa» (riquadro «Scontro in corso»): la vista tablet della scena dello scontro, con il PG

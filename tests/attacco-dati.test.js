@@ -19,7 +19,8 @@ test('§5.11: fasce di distanza e Azioni come nel manuale', () => {
 
 test('Talenti con effetti sull’attacco a distanza: Liberi e di Classe', () => {
   const liberi = dati.talenti_liberi.talenti.filter((t) => t.effetti?.attacco_distanza).map((t) => t.id);
-  assert.equal(liberi.length, 16);
+  // 16 di prima + Preparazione Rapida, Raffiche Migliorate e Tiro Ravvicinato Migliorato dei Talenti v1.0 (25/10/2026)
+  assert.equal(liberi.length, 19);
   const classe = dati.classi.classi.flatMap((c) => [...c.talenti_fissi, ...c.talenti_a_scelta].filter((t) => t.effetti?.attacco_distanza).map((t) => `${c.nome}: ${t.nome}`));
   assert.equal(classe.length, 12); // con Bersaglio Designato e Reazione Operativa (censimento dei Talenti)
 });
