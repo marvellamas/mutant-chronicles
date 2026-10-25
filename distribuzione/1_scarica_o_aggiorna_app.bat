@@ -102,7 +102,7 @@ if errorlevel 1 goto dati_mancanti
 
 rem I file fuori dalla cartella "mutant" (questo compreso) si rimettono al passo con l'app: altrimenti
 rem restano per sempre quelli del primo scaricamento. Questo file e' in uso adesso, quindi si salta:
-rem lo aggiorna 3_avvia.bat al prossimo avvio.
+rem lo aggiorna la voce 2 di Mutant.bat (aggiorna.bat lo rimette al passo appena questo finisce).
 if exist "%DEST%\tools\aggiorna-avviatori.mjs" node "%DEST%\tools\aggiorna-avviatori.mjs" --radice=%DEST% --fuori=%~dp0. --salta=1_scarica_o_aggiorna_app.bat
 
 echo.
@@ -111,8 +111,9 @@ rem Riavvio del server dopo l'aggiornamento (13/10/2026, tools\riavvia.mjs): se 
 rem salvando e lo riaccende con la versione nuova; se era spento lo lascia spento e lo dice qui sotto.
 where node >nul 2>nul
 if not errorlevel 1 if exist "%DEST%\tools\riavvia.mjs" node "%DEST%\tools\riavvia.mjs" --radice="%DEST%"
-echo  Se Mutant non e' ripartito da solo: doppio clic su 3_avvia.bat
-echo  (se Node.js non e' ancora installato, prima fai doppio clic su 2_installa_node.bat).
+echo  Per usare Mutant: apri la cartella "mutant" e fai doppio clic su Mutant.bat
+echo  (se Node.js non c'e', Mutant.bat lo installa; poi dal menu: 9 Impostazioni, 5 collegamento sul desktop).
+echo  Da qui in avanti anche l'aggiornamento si fa da Mutant.bat, voce 2.
 echo.
 pause
 exit /b 0
@@ -152,7 +153,7 @@ where node >nul 2>nul
 if not errorlevel 1 if exist "%DEST%\tools\aggiorna-avviatori.mjs" node "%DEST%\tools\aggiorna-avviatori.mjs" --radice=%DEST% --fuori=%~dp0. --salta=1_scarica_o_aggiorna_app.bat
 echo.
 echo  L'app e' gia' aggiornata: non c'e' niente da scaricare.
-echo  Per usarla fai doppio clic su 3_avvia.bat
+echo  Per usarla: Mutant.bat nella cartella "mutant" (o il collegamento "Mutant" sul desktop).
 echo.
 pause
 exit /b 0
@@ -161,7 +162,7 @@ exit /b 0
 echo.
 echo  ERRORE: non riesco a collegarmi a internet.
 echo  Controlla la connessione (Wi-Fi o cavo) e fai di nuovo doppio clic su questo file.
-if exist "%DEST%\index.html" echo  L'app gia' scaricata funziona lo stesso: puoi usare 3_avvia.bat.
+if exist "%DEST%\index.html" echo  L'app gia' scaricata funziona lo stesso: apri Mutant.bat.
 goto fine_errore
 
 :errore_sito
@@ -199,7 +200,7 @@ goto fine_errore
 echo.
 echo  ERRORE: non riesco a copiare i file nella cartella "mutant".
 echo  I dati di questo PC non sono stati toccati (copia anche in mutant\backup-prima-aggiornamento).
-echo  Se l'app e' accesa, chiudi la finestra nera di 3_avvia.bat e riprova.
+echo  Se l'app e' accesa, chiudi la sua finestra nera e riprova.
 goto fine_errore
 
 :fine_errore

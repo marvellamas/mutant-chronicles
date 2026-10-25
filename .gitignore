@@ -50,7 +50,7 @@ nemici/*
 veicoli/*
 !veicoli/LEGGIMI.txt
 
-# Copie di fine sessione (salva-sessione.bat, tools/salva-sessione.mjs): dati di gioco; si traccia solo il LEGGIMI
+# Copie di fine sessione (Mutant.bat voce 3, tools/salva-sessione.mjs): dati di gioco; si traccia solo il LEGGIMI
 salvataggi/*
 !salvataggi/LEGGIMI.txt
 # Salvataggio automatico del server ogni 5 minuti (tools/salva-sessione.mjs, 08/10): dati di gioco; si traccia solo il LEGGIMI
@@ -96,3 +96,7 @@ px/*
 # sarebbe falso. Chi vuole marcare la propria installazione crea il file a mano.
 COPIA-DI-LAVORO.txt
 personaggi/COPIA-DI-LAVORO.txt
+
+# Una copia dell'app installata con 1_scarica_o_aggiorna_app.bat dentro la cartella distribuzione del repository
+# (prova del pacchetto zip): e' un'installazione, non sorgente.
+distribuzione/mutant/

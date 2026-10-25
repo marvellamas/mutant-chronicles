@@ -7,7 +7,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { AVVIATORI, daFare, aggiornaAvviatori, testoEsito, uguali } from '../tools/aggiorna-avviatori.mjs';
+import { AVVIATORI, OBSOLETI, togliObsoleti, daFare, aggiornaAvviatori, testoEsito, uguali } from '../tools/aggiorna-avviatori.mjs';
 import { statoLocali, svuotate, leggiStatoPrima } from '../tools/dati-locali.mjs';
 
 const REPO = fileURLToPath(new URL('..', import.meta.url));
@@ -38,15 +38,15 @@ test('i file fuori dalla cartella mutant si rimettono al passo, tranne quello in
   const e = aggiornaAvviatori({ radice: app, fuori: r, salta: ['1_scarica_o_aggiorna_app.bat'] });
 
   assert.deepEqual(e.saltati, ['1_scarica_o_aggiorna_app.bat']);
-  assert.deepEqual(e.aggiornati.sort(), ['2_installa_node.bat', '3_avvia.bat', '4_controlla_personaggi.bat', '5_passa_ai_talenti_nuovi.bat', 'LEGGIMI.txt', 'aggiorna-da-zip.ps1']);
+  assert.deepEqual(e.aggiornati.sort(), ['LEGGIMI.txt', 'aggiorna-da-zip.ps1']);
   assert.equal(e.errori.length, 0);
-  assert.equal(readFileSync(join(r, '3_avvia.bat'), 'utf8'), 'nuovo 3_avvia.bat\n');
+  assert.equal(readFileSync(join(r, 'LEGGIMI.txt'), 'utf8'), 'nuovo LEGGIMI.txt\n');
   assert.equal(readFileSync(join(r, '1_scarica_o_aggiorna_app.bat'), 'utf8'), 'vecchio 1_scarica_o_aggiorna_app.bat\n');
   // della copia di prima resta una sola traccia, per sicurezza
-  assert.equal(readFileSync(join(r, '3_avvia.bat.precedente'), 'utf8'), 'vecchio 3_avvia.bat\n');
+  assert.equal(readFileSync(join(r, 'LEGGIMI.txt.precedente'), 'utf8'), 'vecchio LEGGIMI.txt\n');
 
-  // al giro dopo (3_avvia.bat all'avvio) tocca a quello che prima era in uso
-  const e2 = aggiornaAvviatori({ radice: app, fuori: r, salta: ['3_avvia.bat'] });
+  // al giro dopo (aggiorna.bat, appena 1_scarica ha finito) tocca a quello che prima era in uso
+  const e2 = aggiornaAvviatori({ radice: app, fuori: r, salta: [] });
   assert.deepEqual(e2.aggiornati, ['1_scarica_o_aggiorna_app.bat']);
   assert.equal(readFileSync(join(r, '1_scarica_o_aggiorna_app.bat'), 'utf8'), 'nuovo 1_scarica_o_aggiorna_app.bat\n');
   // e al terzo giro non c'è più niente da fare
@@ -69,8 +69,31 @@ test('file già uguali: non si tocca niente e non si dice niente', () => {
   const e = aggiornaAvviatori({ radice: app, fuori: r });
   assert.deepEqual(e.aggiornati, []);
   assert.equal(testoEsito(e), '');
-  assert.ok(uguali(join(app, 'distribuzione', '3_avvia.bat'), join(r, '3_avvia.bat')));
+  assert.ok(uguali(join(app, 'distribuzione', 'LEGGIMI.txt'), join(r, 'LEGGIMI.txt')));
+  assert.equal(existsSync(join(r, 'LEGGIMI.txt.precedente')), false);
+});
+
+test('un ingresso solo (25/10): i programmi che non si usano più si tolgono dalla cartella di fuori, e lo si dice', () => {
+  const r = tmp();
+  pacchetto(r);
+  for (const n of OBSOLETI) scrivi(join(r, n), `vecchio ${n}\n`);
+  scrivi(join(r, '3_avvia.bat.precedente'), 'ancora piu vecchio\n');
+  scrivi(join(r, 'avvia.log'), 'registro di 3_avvia\n');
+  const tolti = togliObsoleti({ fuori: r });
+  assert.deepEqual(tolti.sort(), [...OBSOLETI].sort());
+  for (const n of OBSOLETI) assert.equal(existsSync(join(r, n)), false, n);
   assert.equal(existsSync(join(r, '3_avvia.bat.precedente')), false);
+  assert.ok(existsSync(join(r, 'avvia.log')), 'gli altri file non si toccano');
+  assert.ok(existsSync(join(r, '1_scarica_o_aggiorna_app.bat')), 'il programma di installazione resta');
+  const t = testoEsito({ aggiornati: [], saltati: [], errori: [], tolti });
+  assert.match(t, /Tolti i programmi che non si usano piu'/);
+  assert.match(t, /si usa solo Mutant\.bat/);
+  assert.doesNotMatch(t, /[àèéìòù]/);
+  // senza il pacchetto accanto (per esempio la cartella sopra un repository) non si tocca niente
+  const altra = tmp();
+  scrivi(join(altra, '3_avvia.bat'), 'non mio\n');
+  assert.deepEqual(togliObsoleti({ fuori: altra }), []);
+  assert.ok(existsSync(join(altra, '3_avvia.bat')));
 });
 
 test('il messaggio dice che cosa è stato aggiornato e che cosa resta al prossimo avvio, senza accenti', () => {
@@ -100,15 +123,19 @@ test('aggiorna.bat: copia prima, controllo dopo, proposta di rimettere, tutto su
   assert.doesNotMatch(t, /[àèéìòù]/);
 });
 
-test('1_scarica_o_aggiorna_app.bat e 3_avvia.bat: controllo e file esterni', () => {
+test('1_scarica_o_aggiorna_app.bat: controllo e file esterni; aggiorna.bat lo chiama per lo zip', () => {
   const uno = readFileSync(join(REPO, 'distribuzione', '1_scarica_o_aggiorna_app.bat'), 'utf8');
   assert.match(uno, /dati-locali\.mjs" dopo --radice=%DEST%/);
   assert.match(uno, /dati-locali\.mjs" rimetti --radice=%DEST%/);
   assert.match(uno, /aggiorna-avviatori\.mjs" --radice=%DEST% --fuori=%~dp0\. --salta=1_scarica_o_aggiorna_app\.bat/);
   assert.doesNotMatch(uno, /[àèéìòù]/);
-  const tre = readFileSync(join(REPO, 'distribuzione', '3_avvia.bat'), 'utf8');
-  assert.match(tre, /aggiorna-avviatori\.mjs" --radice=%APP% --fuori=%QUI%\. --salta=3_avvia\.bat/);
-  assert.doesNotMatch(tre, /[àèéìòù]/);
+  assert.doesNotMatch(uno, /3_avvia|2_installa_node/, 'i messaggi parlano di Mutant.bat');
+  // la copia scaricata come zip si aggiorna dalla voce 2 di Mutant.bat: aggiorna.bat chiama 1_scarica, in una riga sola
+  const agg = readFileSync(join(REPO, 'aggiorna.bat'), 'utf8');
+  const riga = agg.split(/\r?\n/).find((l) => l.includes('call "%~dp0..\\1_scarica_o_aggiorna_app.bat"'));
+  assert.ok(riga, 'la voce 2 aggiorna anche la copia scaricata come zip');
+  assert.match(riga, /esito-aggiornamento\.mjs prima[\s\S]*1_scarica[\s\S]*aggiorna-avviatori[\s\S]*esito-aggiornamento\.mjs" dopo[\s\S]*exit \/b 0\)$/);
+  assert.doesNotMatch(agg, /[àèéìòù]/);
 });
 
 // --- lo zip scrive lo stato di prima, come lo scrive Node ----------------------------------------------------

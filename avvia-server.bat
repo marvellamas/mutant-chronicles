@@ -31,7 +31,7 @@ echo  Se la pagina resta vuota, aspetta qualche secondo e premi F5.
 echo  Gli indirizzi per i giocatori (telefoni e PC sulla stessa Wi-Fi) compaiono qui sotto,
 echo  fra le righe di uguali, e nella plancia nel riquadro "Collega i giocatori".
 echo  Se Windows chiede il permesso per Node.js: consenti le "reti private".
-echo  avvia.bat non serve: questa finestra basta per tutto.
+echo  Questa e' la finestra di Mutant: la apre la voce 1 del menu di Mutant.bat.
 echo  Salvataggio automatico ogni 5 minuti nella cartella autosave.
 echo  Per spegnere a fine serata: "Spegni Mutant" nel Tavolo del Master (salva, manda la copia
 echo  e chiude questa finestra). Chiudendo questa finestra con la X Mutant prova comunque a salvare.

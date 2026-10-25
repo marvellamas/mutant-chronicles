@@ -1,5 +1,5 @@
 // «Salva sessione» e «Spegni Mutant» del Tavolo del Master (richiesta di Marcello dell'08/10/2026): la stessa
-// procedura di salva-sessione.bat, eseguita dal server (server.mjs → POST /api/salva-sessione e /api/spegni,
+// procedura della voce 3 di Mutant.bat (tools/salva-sessione.mjs), eseguita dal server (server.mjs → POST /api/salva-sessione e /api/spegni,
 // tools/salva-sessione.mjs): zip in salvataggi/, copia nella cartella di Google Drive, notifica ntfy a Marcello.
 // L'esito si mostra in una riga («Sessione salvata: zip 812 KB · Drive ✓ · ntfy ✓»), con gli errori sotto: mai
 // bloccanti, lo zip locale c'è sempre. «Spegni Mutant» funziona solo dal PC del server e chiede conferma.
@@ -36,7 +36,7 @@ export function pulsanteSalvaSessione() {
         const e = await chiama('api/salva-sessione');
         avviso(righeEsito(e), { tipo: tipoEsito(e), chiave: 'salva-sessione', durata: tipoEsito(e) === 'ok' ? 8000 : 15000 });
       } catch (err) {
-        avviso(`Sessione NON salvata: ${err.message}. Si può usare salva-sessione.bat nella cartella di Mutant.`, { tipo: 'errore', chiave: 'salva-sessione' });
+        avviso(`Sessione NON salvata: ${err.message}. Si può usare la voce 3 «Salva la sessione» di Mutant.bat.`, { tipo: 'errore', chiave: 'salva-sessione' });
       } finally {
         b.disabled = false;
         b.textContent = 'Salva sessione';

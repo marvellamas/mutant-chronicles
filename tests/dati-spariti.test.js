@@ -179,7 +179,7 @@ test('caso 5: il server legge le cartelle accanto a server.mjs, non da dove è s
   assert.match(t, /const RADICE = fileURLToPath\(new URL\('\.', import\.meta\.url\)\);/);
   assert.doesNotMatch(t, /process\.cwd\(\)/, 'il server non deve dipendere dalla cartella di lancio');
   // e i .bat si spostano sempre nella propria cartella prima di fare qualunque cosa
-  for (const n of ['avvia-server.bat', 'avvia.bat', 'aggiorna.bat', 'salva-sessione.bat']) {
+  for (const n of ['avvia-server.bat', 'aggiorna.bat']) {
     assert.match(readFileSync(join(REPO, n), 'utf8'), /cd \/d "%~dp0"/, n);
   }
   assert.match(readFileSync(join(REPO, 'Mutant.bat'), 'utf8'), /cd \/d "%QUI%\."/);

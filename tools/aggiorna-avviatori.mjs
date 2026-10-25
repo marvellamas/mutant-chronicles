@@ -1,10 +1,9 @@
 // I file del pacchetto che stanno FUORI dalla cartella «mutant» si rimettono al passo con l'app (12/10/2026).
 //
-// Il pacchetto zip è fatto così:
-//   <cartella di Davide>\1_scarica_o_aggiorna_app.bat   <- li apre lui
-//   <cartella di Davide>\2_installa_node.bat
-//   <cartella di Davide>\3_avvia.bat
+// Il pacchetto zip è fatto così (dal 25/10/2026, «un ingresso solo»):
+//   <cartella di Davide>\1_scarica_o_aggiorna_app.bat   <- installa l'app la prima volta (poi aggiorna Mutant.bat)
 //   <cartella di Davide>\LEGGIMI.txt
+//   <cartella di Davide>\mutant\Mutant.bat              <- l'unico programma da aprire (collegamento sul desktop)
 //   <cartella di Davide>\mutant\...                      <- l'app, che si aggiorna
 //   <cartella di Davide>\mutant\distribuzione\...        <- le copie nuove degli stessi file
 // Aggiornando, le copie nuove finiscono in mutant\distribuzione\ e NON sopra quelle che Davide apre: per questo
@@ -14,16 +13,40 @@
 //   node tools/aggiorna-avviatori.mjs [--radice=<cartella dell'app>] [--salta=a.bat,b.bat] [--prova]
 //
 // Un file in esecuzione non si può sostituire mentre gira: chi chiama passa il proprio nome in --salta.
-// Lo chiamano distribuzione\1_scarica_o_aggiorna_app.bat alla fine (saltando se stesso) e
-// distribuzione\3_avvia.bat all'avvio (saltando se stesso): fra i due giri si aggiornano tutti.
-import { readFileSync, writeFileSync, existsSync, copyFileSync, statSync } from 'node:fs';
+// Lo chiamano distribuzione\1_scarica_o_aggiorna_app.bat alla fine (saltando se stesso) e aggiorna.bat (voce 2 di
+// Mutant.bat) dopo di lui, senza saltare niente: così si aggiorna anche 1_scarica_o_aggiorna_app.bat.
+// I programmi che non si usano più (OBSOLETI) si tolgono dalla cartella di fuori, con la riga che lo dice.
+import { readFileSync, writeFileSync, existsSync, copyFileSync, statSync, unlinkSync } from 'node:fs';
 import { join, dirname, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const RADICE = fileURLToPath(new URL('..', import.meta.url));
 
 /** I file del pacchetto da tenere allineati: quelli di distribuzione/, tranne lo script della copia. */
-export const AVVIATORI = ['1_scarica_o_aggiorna_app.bat', '2_installa_node.bat', '3_avvia.bat', '4_controlla_personaggi.bat', '5_passa_ai_talenti_nuovi.bat', 'LEGGIMI.txt', 'aggiorna-da-zip.ps1'];
+export const AVVIATORI = ['1_scarica_o_aggiorna_app.bat', 'LEGGIMI.txt', 'aggiorna-da-zip.ps1'];
+
+/**
+ * I programmi che non ci sono più (25/10/2026, «un ingresso solo»): ogni loro funzione è una voce del menu di
+ * Mutant.bat. Si tolgono dalla cartella di fuori (con le loro copie «.precedente»), solo se accanto c'è il pacchetto
+ * (1_scarica_o_aggiorna_app.bat): mai altrove.
+ *   2_installa_node.bat → Mutant.bat lo installa da sé se manca; 3_avvia.bat → voce 1; 4_controlla_personaggi.bat →
+ *   voce 6; 5_passa_ai_talenti_nuovi.bat → voci 7 e 8.
+ */
+export const OBSOLETI = ['2_installa_node.bat', '3_avvia.bat', '4_controlla_personaggi.bat', '5_passa_ai_talenti_nuovi.bat'];
+
+/** Toglie i programmi obsoleti dalla cartella di fuori. @returns [nomi tolti] */
+export function togliObsoleti({ fuori, prova = false } = {}) {
+  if (!fuori || !existsSync(join(fuori, '1_scarica_o_aggiorna_app.bat'))) return [];
+  const tolti = [];
+  for (const nome of OBSOLETI) {
+    for (const f of [nome, `${nome}.precedente`]) {
+      const p = join(fuori, f);
+      if (!existsSync(p)) continue;
+      try { if (!prova) unlinkSync(p); if (f === nome) tolti.push(nome); } catch { /* in uso: si toglie la volta dopo */ }
+    }
+  }
+  return tolti;
+}
 
 /** Due file hanno lo stesso contenuto? (byte per byte; un file che non c'è è «diverso») */
 export function uguali(a, b) {
@@ -72,8 +95,14 @@ export function aggiornaAvviatori({ radice = RADICE, fuori = dirname(radice), sa
 }
 
 /** Le righe da mettere a schermo. Niente lettere accentate: la console di Windows non è in UTF-8. */
-export function testoEsito({ aggiornati, saltati, errori }) {
+export function testoEsito({ aggiornati, saltati, errori, tolti = [] }) {
   const righe = [];
+  if (tolti.length) {
+    righe.push(`  Tolti i programmi che non si usano piu': ${tolti.join(', ')}.`);
+    righe.push('  Da adesso si usa solo Mutant.bat (nella cartella mutant): ogni funzione e\' una voce del suo menu.');
+    righe.push('  Se avevi un collegamento sul desktop a uno di quei file, non funziona piu\': apri Mutant.bat,');
+    righe.push('  scegli 9 (Impostazioni) e poi 5 (collegamento "Mutant" sul desktop).');
+  }
   if (aggiornati.length) righe.push(`  Aggiornati anche i file fuori dalla cartella mutant: ${aggiornati.join(', ')}`);
   if (saltati.length) righe.push(`  Da aggiornare al prossimo avvio (adesso e' in uso): ${saltati.join(', ')}`);
   for (const e of errori) righe.push(`  Non sono riuscito ad aggiornare ${e.nome} (${e.errore}).`);
@@ -86,6 +115,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const fuori = arg('fuori') || dirname(radice);
   const salta = (arg('salta') || '').split(',').map((s) => s.trim()).filter(Boolean);
   const esito = aggiornaAvviatori({ radice, fuori, salta, prova: process.argv.includes('--prova') });
+  esito.tolti = togliObsoleti({ fuori, prova: process.argv.includes('--prova') });
   const testo = testoEsito(esito);
   if (testo) console.log(testo);
   process.exit(esito.errori.length ? 1 : 0);

@@ -166,7 +166,8 @@ test('console: all’avvio di un’installazione nuova propone le impostazioni e
     let o = '';
     p.stdout.on('data', (d) => { o += d; });
     p.on('close', () => ok(o));
-    p.stdin.end(['S', '1', 'S', '', 'PC di Davide', '4', ''].join('\n'));
+    // 25/10: prima la domanda del ruolo di questo PC (Invio = decidi un'altra volta), poi le impostazioni
+    p.stdin.end(['', 'S', '1', 'S', '', 'PC di Davide', '6', ''].join('\n'));
   });
   assert.match(out, /le impostazioni di Mutant non ci sono ancora/);
   assert.match(out, /Salvato: avvisi ACCESI/);

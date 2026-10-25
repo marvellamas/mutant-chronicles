@@ -8,7 +8,7 @@
 //    interrotto lascia sempre almeno l'ultimo buono. Resta sul PC: niente rete.
 //
 // 2. Salvataggio completo (`salvataggioCompleto`): una procedura sola, chiamata da tre punti: «Salva sessione» nel
-//    Tavolo del Master (server.mjs → POST /api/salva-sessione), salva-sessione.bat (questo file da riga di comando,
+//    Tavolo del Master (server.mjs → POST /api/salva-sessione), la voce 3 di Mutant.bat (questo file da riga di comando,
 //    con il server acceso o spento) e lo spegnimento (POST /api/spegni, chiusura della finestra del server). Crea
 //    salvataggi/sessione_AAAA-MM-GG_hhmm.zip (mai sovrascritto) e lo manda fuori dal PC alle destinazioni di
 //    config-salvataggi.json (non tracciato; modello in config-salvataggi.esempio.json):
@@ -350,7 +350,7 @@ export async function salvataggioCompleto({ cartelle, salvataggi, config = {}, a
   // GitHub (facoltativo, 06/10): non alla chiusura della finestra, che non dà il tempo
   let github;
   if (!config.github?.cartella) github = { stato: 'spento', messaggio: 'Copia su GitHub non configurata: saltata.' };
-  else if (veloce) github = { stato: 'errore', messaggio: 'GitHub: saltato alla chiusura della finestra (non c’è il tempo); si fa con salva-sessione.bat.' };
+  else if (veloce) github = { stato: 'errore', messaggio: 'GitHub: saltato alla chiusura della finestra (non c’è il tempo); si fa con la voce 3 di Mutant.bat.' };
   else {
     let g;
     try { g = await pushGithub(archivio, config.github); } catch (e) { g = { fatto: false, messaggio: `GitHub: ${e.message}. Saltata.` }; }
@@ -365,7 +365,7 @@ export async function salvataggioCompleto({ cartelle, salvataggi, config = {}, a
 /**
  * Il gestore dei salvataggi del server (server.mjs): una coda (un salvataggio alla volta), l'ultimo salvataggio
  * completo di questa accensione e l'autosave che non si sovrappone a se stesso. Lo usano «Salva sessione», «Spegni
- * Mutant» e la chiusura della finestra: la stessa procedura di salva-sessione.bat (salvataggioCompleto).
+ * Mutant» e la chiusura della finestra: la stessa procedura della voce 3 di Mutant.bat (salvataggioCompleto).
  * @param config, avvisi funzioni che rileggono la configurazione a ogni salvataggio (si cambia senza riavviare)
  */
 export function creaGestore({ cartelle, salvataggi, autosave: dirAutosave, config = () => ({}), avvisi = () => null, log = console.log, fetchFn = fetch, registra = null }) {
@@ -419,7 +419,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const radice = arg('radice') ?? RADICE;
   try {
     const imp = impostazioniDi(radice, arg('config') ? { config: arg('config') } : {});
-    const r = await salvataggioCompleto({ ...imp, origine: 'salva-sessione.bat', registra: (x) => registraErrore(radice, x) });
+    const r = await salvataggioCompleto({ ...imp, origine: 'Mutant.bat (Salva la sessione)', registra: (x) => registraErrore(radice, x) });
     console.log(` ${perConsole(r.riga)}`);
     console.log('');
     for (const m of r.messaggi) console.log(` ${m}`);

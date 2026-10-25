@@ -13,5 +13,5 @@ che impedisce di sovrascrivere le modifiche fatte altrove.
 - Il server non cancella nulla: un veicolo che non serve piu' si toglie a mano.
 - I file di questa cartella non vanno su GitHub (.gitignore): sono dati di gioco.
 
-Senza il server (avvia.bat, npx serve, GitHub Pages) questa cartella non si usa: il veicolo resta
+Senza il server (npm start, npx serve, GitHub Pages) questa cartella non si usa: il veicolo resta
 nel file del personaggio, come copia locale.

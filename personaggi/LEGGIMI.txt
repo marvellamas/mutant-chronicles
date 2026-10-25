@@ -14,5 +14,5 @@ nell'app. Ogni file e' identico a quello di "SALVA PG (Esporta JSON)":
   recente e l'app lo dice con un avviso.
 - I file di questa cartella non vanno su GitHub (.gitignore): sono dati dei giocatori.
 
-Senza il server (avvia.bat, npx serve, GitHub Pages) questa cartella non si usa: i personaggi
+Senza il server (npm start, npx serve, GitHub Pages) questa cartella non si usa: i personaggi
 restano nel browser e si spostano con Esporta e Importa, come sempre.

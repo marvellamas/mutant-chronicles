@@ -1,5 +1,5 @@
 // Passaggio dei personaggi ai Talenti v1.0 (lotto 2, 25/10/2026), sul PC del Direttore. Si usa con
-// distribuzione\5_passa_ai_talenti_nuovi.bat, come la pulizia: il primo comando fa solo il rapporto, il secondo
+// le voci 7 e 8 del menu di Mutant.bat (tools/console.mjs): il primo comando fa solo il rapporto, il secondo
 // (dopo che Davide ha scritto SI) fa il passaggio. Niente si tocca senza --applica o --ripristina.
 //
 //   node tools/migra-talenti.mjs                       rapporto, PG per PG; non tocca niente
@@ -77,6 +77,28 @@ export function copiaZip({ cartella, salvataggi, quando = new Date() }) {
 export function zipDelPassaggio(salvataggi) {
   if (!existsSync(salvataggi)) return [];
   return readdirSync(salvataggi).filter((n) => n.startsWith(PREFISSO) && n.endsWith('.zip')).sort().reverse().map((n) => join(salvataggi, n));
+}
+
+/** Data e ora di uno zip del passaggio, dal suo nome (prima-dei-talenti-nuovi_AAAA-MM-GG_hhmmss.zip). */
+export function quandoDelloZip(percorso) {
+  const m = /(\d{4})-(\d{2})-(\d{2})_(\d{2})(\d{2})(\d{2})(?:_\d+)?\.zip$/.exec(String(percorso));
+  return m ? new Date(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]) : null;
+}
+
+/**
+ * A che punto è il passaggio (la riga del menu di Mutant.bat): quanti personaggi sono già nei Talenti nuovi, su quanti,
+ * e quando è stato fatto (lo zip più recente del passaggio). Un personaggio con più file datati conta una volta.
+ * @returns {{ totale, passati, quando: Date | null, copie }}
+ */
+export function statoPassaggio({ cartella, salvataggi }) {
+  const per = new Map();
+  for (const { file, o } of existsSync(cartella) ? personaggi(cartella) : []) {
+    const id = typeof o.pg === 'string' ? o.pg : file.replace(/_liv\d+_\d{4}-\d{2}-\d{2}\.json$/, '');
+    per.set(id, per.get(id) || o?.scelte?.regimeTalenti === 2);
+  }
+  const zip = zipDelPassaggio(salvataggi);
+  const passati = [...per.values()].filter(Boolean).length;
+  return { totale: per.size, passati, quando: passati && zip.length ? quandoDelloZip(zip[0]) : null, copie: zip.length };
 }
 
 /** Il server per scrivere: quello acceso sul PC, se c'è, altrimenti uno avviato qui sulla stessa cartella. */

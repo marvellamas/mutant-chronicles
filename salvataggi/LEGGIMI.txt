@@ -8,7 +8,7 @@ tutti i personaggi, del Tavolo e delle mappe in quel momento.
 Il salvataggio completo e' uno solo e parte da tre punti:
 - «Salva sessione» nel Tavolo del Master (anche dalla mappa, gruppo «Scontro»);
 - «Spegni Mutant» nel Tavolo del Master: salva, mostra l'esito e spegne il server;
-- salva-sessione.bat (doppio clic, con il server acceso o spento).
+- la voce 3 «Salva la sessione» del menu di Mutant.bat (con il server acceso o spento).
 Anche chiudendo la finestra nera del server con la X Mutant prova a salvare (Windows lascia pochi
 secondi: lo zip qui e su Drive di solito si fa, la notifica non sempre).
 
@@ -33,7 +33,7 @@ Impostare la copia su Google Drive (una volta sola)
    le posizioni di Google Drive che trova (per esempio G:\Il mio Drive\Mutant salvataggi), controlla
    che la cartella esista e, se manca, la crea. Si puo' anche scrivere il percorso a mano.
    (La console lo scrive in config-salvataggi.json, "cartella_drive": non serve aprire il file.)
-4. Fai doppio clic su salva-sessione.bat: deve dire «Drive ✓». Lo zip compare nella cartella di
+4. Apri Mutant.bat e scegli 3 (Salva la sessione): deve dire «Drive ✓». Lo zip compare nella cartella di
    Drive e, dopo qualche minuto, anche sul Drive di Marcello.
 
 
@@ -50,7 +50,7 @@ cartelle che il salvataggio non contiene restano come sono.
 
 A mano, se servisse:
 1. Spegni Mutant («Spegni Mutant» o chiudi la finestra nera).
-2. Fai doppio clic su salva-sessione.bat: e' la copia di sicurezza di come sono le cose adesso,
+2. Apri Mutant.bat e scegli 3 (Salva la sessione): e' la copia di sicurezza di come sono le cose adesso,
    se poi volessi tornare indietro.
 3. Apri lo zip scelto con un doppio clic: si vedono le cartelle personaggi, veicoli, scontri,
    nemici, tavolo, scene e mappe.

@@ -11,7 +11,7 @@ cambia in config-salvataggi.json, "autosave_minuti"), solo se qualcosa e' cambia
 
 Dentro lo zip ci sono le cartelle personaggi, veicoli, scontri, nemici, tavolo, scene e mappe.
 L'autosave resta su questo PC: non va su Drive e non manda notifiche. La copia fuori dal PC la fa
-il salvataggio completo («Salva sessione», «Spegni Mutant», salva-sessione.bat), nella cartella
+il salvataggio completo («Salva sessione», «Spegni Mutant», Mutant.bat voce 3), nella cartella
 salvataggi (vedi salvataggi\LEGGIMI.txt, anche per rimettere a posto una sessione).
 
 I file di questa cartella non vanno su GitHub con l'app (.gitignore): sono dati di gioco.

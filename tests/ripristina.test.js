@@ -174,5 +174,7 @@ test('impostazioni: i file mancanti si creano dagli esempi, quelli presenti non 
   assert.equal(preparaImpostazioni(r)[0].creato, false);
   assert.equal(testoVersione(r), 'sconosciuta');
   scrivi(r, 'versione.json', '{"versione":"abc123","data":"2026-10-09 10:00"}');
-  assert.equal(testoVersione(r), 'abc123 del 2026-10-09 10:00');
+  assert.equal(testoVersione(r), 'Versione del 09/10 (abc123)');
+  scrivi(r, 'novita.json', '{"titolo":"Talenti nuovi"}');
+  assert.equal(testoVersione(r), 'Versione del 09/10 · Talenti nuovi (abc123)');
 });

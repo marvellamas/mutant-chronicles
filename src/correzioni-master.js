@@ -403,7 +403,7 @@ export function senzaCircostanzeDelloScontro(blocchi, idScontro, adesso = new Da
 export function statoContestoMaster({ server = false, daQuestoPc = false, pingMaster = undefined, serverVecchio = false } = {}) {
   if (!server) {
     return { master: false, stato: 'senza_server', testo: NON_MASTER,
-      motivo: 'questa è la versione senza server (avvia.bat, GitHub Pages o un server statico): non c’è il Tavolo del Master.',
+      motivo: 'questa è la versione senza server (npm start, GitHub Pages o un server statico): non c’è il Tavolo del Master.',
       cosaFare: 'Apri Mutant con avvia-server.bat sul PC del master (o con Mutant.bat → «Avvia»).' };
   }
   if (daQuestoPc) return { master: true, stato: 'master', testo: 'Questo PC è il master', motivo: null, cosaFare: null };

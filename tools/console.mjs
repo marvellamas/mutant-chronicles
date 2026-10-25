@@ -1,5 +1,10 @@
-// Parti in Node della console di Mutant (Mutant.bat, richiesta di Marcello del 09/10/2026). Il menu sta nel .bat;
-// qui ciò che in un .bat sarebbe fragile:
+// Parti in Node della console di Mutant (Mutant.bat, richiesta di Marcello del 09/10/2026). Dal 25/10/2026 («un
+// ingresso solo») Mutant.bat è l'unico programma da aprire: le voci del menu stanno in tools/menu.mjs, e qui ciò che in
+// un .bat sarebbe fragile:
+//   node tools/console.mjs menu           intestazione (versione in parole, server, ruolo del PC) e voci del menu
+//   node tools/console.mjs controlla      voce 6: rapporto sui file dei personaggi, con SI mette via i vecchi
+//   node tools/console.mjs talenti        voce 7: passaggio ai Talenti nuovi (rapporto, SI, tools/migra-talenti.mjs)
+//   node tools/console.mjs talenti-ripristina   voce 8: torna a com'era prima del passaggio (SI)
 //   node tools/console.mjs intestazione   versione installata e stato del server (acceso/spento)
 //   node tools/console.mjs ripristina     voce 4: elenco dei salvataggi, scelta, server spento, copia di sicurezza,
 //                                         ripristino (tools/ripristina.mjs)
@@ -18,17 +23,30 @@ import { NOME_MARCATORE, statoInstallazione, avvisoSovrascrittura } from '../src
 import { leggiConfig, dimensione } from './salva-sessione.mjs';
 import { statoImpostazioni, testoAvvisi, testoDrive, argomentoGruppo, salvaAvvisi, salvaDrive, posizioniDrive, notificaDiProva, erroriNuovi, FILE_REGISTRO } from './impostazioni.mjs';
 import { hostname } from 'node:os';
+import { spawnSync } from 'node:child_process';
+import { righeMenu, ascii } from './menu.mjs';
+import { leggiRuolo, scriviRuolo, testoRuolo, RUOLI } from './ruolo-pc.mjs';
+import { statoDaRuolo } from '../src/copia-di-lavoro.js';
+import { leggiVersione, leggiNovita, versioneInParole } from '../src/versione.js';
+import { rapporto as rapportoTalenti, applica as applicaTalenti, ripristina as ripristinaTalenti, zipDelPassaggio, statoPassaggio, quandoDelloZip } from './migra-talenti.mjs';
+import { rapporto as rapportoPulizia, testoRapporto as testoPulizia, sposta as spostaPulizia } from './pulizia-personaggi.mjs';
 
 const RADICE = fileURLToPath(new URL('..', import.meta.url));
 const arg = (k) => process.argv.find((x) => x.startsWith(`--${k}=`))?.slice(k.length + 3);
 const radice = arg('radice') ?? RADICE;
 const porta = Number(arg('porta') ?? 3000);
 
-/** Versione installata (versione.json): «76c6097817 del 2026-10-08 13:49», o «sconosciuta». */
+/**
+ * Versione installata in parole (25/10/2026, parte D), la stessa del piè di pagina dell'app: «Versione del 25/10 ·
+ * Talenti nuovi (02d2cab396)». «sconosciuta» se versione.json non si legge.
+ */
 export function testoVersione(radiceApp = radice) {
   try {
-    const v = JSON.parse(readFileSync(join(radiceApp, 'versione.json'), 'utf8'));
-    return v.data ? `${v.versione} del ${v.data}` : String(v.versione);
+    const v = leggiVersione(JSON.parse(readFileSync(join(radiceApp, 'versione.json'), 'utf8')));
+    if (!v) return 'sconosciuta';
+    let titolo = null;
+    try { titolo = leggiNovita(JSON.parse(readFileSync(join(radiceApp, 'novita.json'), 'utf8'))); } catch { /* senza titolo */ }
+    return `${versioneInParole(v, titolo)} (${v.versione})`;
   } catch { return 'sconosciuta'; }
 }
 
@@ -55,10 +73,12 @@ export function preparaImpostazioni(radiceApp = radice) {
  */
 /** Questa installazione è una copia di lavoro? (20/10/2026, src/copia-di-lavoro.js) */
 function marcatoreQui(radice) {
+  let m = statoInstallazione(null);
   for (const dove of [join(radice, NOME_MARCATORE), join(radice, 'personaggi', NOME_MARCATORE)]) {
-    try { return statoInstallazione(readFileSync(dove, 'utf8')); } catch { /* non c'è */ }
+    try { m = statoInstallazione(readFileSync(dove, 'utf8')); break; } catch { /* non c'è */ }
   }
-  return statoInstallazione(null);
+  // 25/10: il ruolo scelto da Mutant.bat vale sopra il file (src/copia-di-lavoro.js → statoDaRuolo)
+  try { return statoDaRuolo(leggiRuolo(radice), m); } catch { return m; }
 }
 function lettore() {
   const rl = createInterface({ input: process.stdin });
@@ -168,6 +188,123 @@ async function voceRipristina() {
 }
 
 // ---------------------------------------------------------------------------
+// Voci che cambiano i personaggi (25/10/2026, «un ingresso solo»): prima il rapporto, poi SI scritto per esteso.
+// Chiudendo la finestra, o rispondendo altro, non si fa niente.
+
+const cartellePg = (r = radice) => ({ cartella: join(r, 'personaggi'), salvataggi: join(r, 'salvataggi') });
+const confermaSi = async (rl, domanda) => (await rl.chiedi(domanda)).trim().toUpperCase() === 'SI';
+
+/** Voce 6: controllo dei file dei personaggi (tools/pulizia-personaggi.mjs). */
+export async function voceControlla({ radice: r = radice, rl: esterno = null } = {}) {
+  const rl = esterno ?? lettore();
+  try {
+    const { cartella } = cartellePg(r);
+    console.log('\n Controllo dei file dei personaggi: adesso leggo soltanto, non cambio niente.\n');
+    const rap = await rapportoPulizia(cartella);
+    console.log(ascii(testoPulizia(rap)));
+    const daSpostare = rap.personaggi.filter((p) => !p.dubbio && p.altri.length).reduce((n, p) => n + p.altri.length, 0);
+    if (!daSpostare) { console.log('\n Non c\'e\' niente da mettere via: un file per personaggio.'); return { fatti: [] }; }
+    console.log(`\n Con SI metto ${daSpostare} file vecchi in personaggi\\storico (non cancello niente). I casi dubbi non si toccano.`);
+    if (!await confermaSi(rl, ' Scrivi SI e premi Invio per metterli via (altrimenti Invio e basta): ')) { console.log(' Va bene: non ho toccato niente.'); return { fatti: [] }; }
+    const fatti = await spostaPulizia(cartella, rap);
+    console.log(` Fatto: ${fatti.length} file messi in personaggi\\storico.`);
+    return { fatti };
+  } finally { if (!esterno) rl.chiudi(); }
+}
+
+/** Voce 7: passaggio ai Talenti nuovi (tools/migra-talenti.mjs). */
+export async function voceTalenti({ radice: r = radice, rl: esterno = null, porta: p = porta } = {}) {
+  const rl = esterno ?? lettore();
+  try {
+    const dove = cartellePg(r);
+    console.log('\n PASSAGGIO AI TALENTI NUOVI: adesso leggo soltanto, non cambio niente.\n');
+    const rap = await rapportoTalenti({ cartella: dove.cartella });
+    for (const riga of rap.righe) console.log(` ${ascii(riga)}`);
+    if (!rap.daFare.length) { console.log(' Nessun personaggio da passare: il passaggio e\' gia\' fatto (o la cartella e\' vuota).'); return { fatto: false }; }
+    console.log(' Se scrivi SI:');
+    console.log('   1. faccio prima una copia zip di tutta la cartella personaggi (in salvataggi, con data e ora);');
+    console.log('   2. a ogni personaggio tolgo i Talenti di oggi e li scrivo nel registro "Modifiche del master";');
+    console.log('   3. poi ogni giocatore sceglie i Talenti nuovi dalla scheda, nel riquadro "Da scegliere".');
+    console.log(' Se chiudi questa finestra adesso, non e\' stato fatto niente.');
+    if (!await confermaSi(rl, ' Scrivi SI e premi Invio per fare il passaggio (altrimenti Invio e basta): ')) { console.log(' Va bene: non ho toccato niente.'); return { fatto: false }; }
+    const e = await applicaTalenti({ ...dove, porta: p });
+    console.log(`\n Copia di sicurezza fatta: ${e.copia.zip} (${e.copia.file} file).`);
+    console.log(e.serverAcceso ? ' Scritto attraverso Mutant acceso: i tablet collegati vedono subito le schede nuove.' : ' Scritto con il salvataggio normale di Mutant (avviato solo per il passaggio).');
+    console.log(` Passati ai Talenti nuovi: ${e.fatti.length ? ascii(e.fatti.join(', ')) : 'nessuno'}.`);
+    for (const x of e.errori) console.log(` NON passato (resta com'era): ${ascii(x)}`);
+    console.log(' Per tornare indietro: voce 8 del menu.');
+    return { fatto: true, ...e };
+  } finally { if (!esterno) rl.chiudi(); }
+}
+
+/** Voce 8: torna a com'era prima del passaggio (lo zip più recente del passaggio). */
+export async function voceTalentiRipristina({ radice: r = radice, rl: esterno = null } = {}) {
+  const rl = esterno ?? lettore();
+  try {
+    const dove = cartellePg(r);
+    const zip = zipDelPassaggio(dove.salvataggi)[0];
+    if (!zip) { console.log('\n Non trovo la copia di un passaggio ai Talenti nuovi: non c\'e\' niente da rimettere.'); return { fatto: false }; }
+    const q = quandoDelloZip(zip);
+    console.log(`\n Copia fatta prima del passaggio${q ? ` del ${q.toLocaleDateString('it-IT')} alle ${q.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })}` : ''}:\n   ${zip}`);
+    console.log(' Se scrivi SI rimetto i file dei personaggi com\'erano in quella copia (prima faccio una copia di come sono adesso).');
+    console.log(' Le scelte dei Talenti fatte dopo il passaggio si perdono. Se chiudi questa finestra, non e\' stato fatto niente.');
+    if (!await confermaSi(rl, ' Scrivi SI e premi Invio per tornare a com\'era prima (altrimenti Invio e basta): ')) { console.log(' Va bene: non ho toccato niente.'); return { fatto: false }; }
+    const e = ripristinaTalenti({ ...dove, zip });
+    console.log(` Fatto: rimessi ${e.rimessi} file. Com'era prima del ripristino e' in ${e.sicurezza}.`);
+    console.log(' Se Mutant e\' acceso, le schede aperte si ricaricano da sole con i Talenti di prima.');
+    return { fatto: true, ...e };
+  } finally { if (!esterno) rl.chiudi(); }
+}
+
+/** Il collegamento «Mutant» sul desktop (era crea-collegamento.bat). */
+export function creaCollegamento(radiceApp = radice) {
+  const ps = "$q=$env:MUTANT_QUI; $d=if ($env:MUTANT_DESKTOP) { $env:MUTANT_DESKTOP } else { [Environment]::GetFolderPath('Desktop') }; $p=Join-Path $d 'Mutant.lnk'; if (Test-Path -LiteralPath $p) { Remove-Item -LiteralPath $p -Force }; $s=(New-Object -ComObject WScript.Shell).CreateShortcut($p); $s.TargetPath=(Join-Path $q 'Mutant.bat'); $s.WorkingDirectory=$q.TrimEnd('\\'); $s.IconLocation=(Join-Path $q 'tools\\mutant.ico'); $s.Description='Mutant'; $s.Save(); Write-Host (' Fatto: collegamento Mutant in ' + $d)";
+  const r = spawnSync('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-Command', ps], { stdio: 'inherit', env: { ...process.env, MUTANT_QUI: radiceApp.endsWith('\\') ? radiceApp : `${radiceApp}\\` } });
+  if (r.status !== 0) console.log(' Non sono riuscito a creare il collegamento. In alternativa: tasto destro su Mutant.bat, "Invia a", "Desktop (crea collegamento)".');
+  return r.status === 0;
+}
+
+/**
+ * Il ruolo di questo PC (25/10/2026, parte C): la domanda, una risposta per riga. Invio senza risposta non salva niente
+ * (la domanda torna la volta dopo, e l'app intanto si comporta come prima).
+ */
+export async function voceRuolo({ radice: r = radice, rl: esterno = null } = {}) {
+  const rl = esterno ?? lettore();
+  try {
+    const attuale = leggiRuolo(r);
+    console.log('\n Che cosa e\' questo PC?');
+    console.log(`   1. Il PC del Direttore: si gioca qui, e i personaggi di questa cartella sono quelli veri (${RUOLI.originale}).`);
+    console.log('   2. Una copia di prova: serve a provare; i personaggi veri sono sul PC del Direttore.');
+    console.log(`   Nome di questo PC (letto da Windows): ${ascii(attuale.nomePc)}`);
+    if (attuale.ruolo) console.log(`   Adesso: ${ascii(testoRuolo(attuale))}`);
+    const risposta = (await rl.chiedi(' Scrivi 1 o 2 e premi Invio (Invio e basta = decidi un\'altra volta): ')).trim();
+    if (risposta !== '1' && risposta !== '2') { console.log(' Va bene: non ho cambiato niente.'); return attuale; }
+    const nuovo = scriviRuolo(r, risposta === '1' ? 'originale' : 'prova');
+    console.log(nuovo.ruolo === 'originale'
+      ? ' Salvato: questo e\' il PC del Direttore. L\'app non mostra nessuna fascia.'
+      : ` Salvato: copia di prova. L'app mostra in alto "Copia di prova su ${ascii(nuovo.nomePc)} - i personaggi veri sono sul PC del Direttore".`);
+    console.log(' La scelta resta anche dopo gli aggiornamenti (e\' salvata nel profilo di Windows). Si cambia da Impostazioni.');
+    return nuovo;
+  } finally { if (!esterno) rl.chiudi(); }
+}
+
+/** Le righe del menu, con lo stato di adesso. */
+export async function testoMenu(radiceApp = radice, portaServer = porta) {
+  const s = await statoServer(portaServer);
+  let ruolo = null;
+  try { ruolo = testoRuolo(leggiRuolo(radiceApp)); } catch { /* profilo non leggibile */ }
+  let talenti = null;
+  try { talenti = statoPassaggio(cartellePg(radiceApp)); } catch { /* cartella non leggibile */ }
+  return righeMenu({
+    versione: testoVersione(radiceApp),
+    server: s.acceso ? (s.mutant ? `ACCESO (http://localhost:${portaServer})` : `porta ${portaServer} occupata da un altro programma`) : 'spento',
+    ruolo: ruolo ? `${ruolo} - nome del PC: ${hostname()}` : null,
+    impostazioni: rigaImpostazioni(radiceApp),
+    talenti,
+  });
+}
+
+// ---------------------------------------------------------------------------
 // Impostazioni guidate (voce 6, 09/10/2026)
 
 /** Riga breve per l'intestazione del menu: «Avvisi: accesi (PC di Davide) · Backup su Drive: G:/… ». */
@@ -234,10 +371,14 @@ export async function voceImpostazioni(esterno = null) {
       console.log(`  1. Avvisi ntfy: ${testoAvvisi(s.avvisi, radice)}`);
       console.log(`  2. Cartella Drive per i backup: ${testoDrive(s.drive)}`);
       console.log('  3. Manda una notifica di prova');
-      console.log('  4. Torna al menu');
+      console.log(`  4. Ruolo di questo PC: ${ascii(testoRuolo(leggiRuolo(radice)))}`);
+      console.log('  5. Metti il collegamento "Mutant" sul desktop');
+      console.log('  6. Torna al menu');
       const r = (await chiedi('\n Scegli un numero (Invio = torna al menu): ')).trim();
       if (r === '1') await voceAvvisi(chiedi);
       else if (r === '2') await voceDrive(chiedi);
+      else if (r === '4') await voceRuolo({ rl });
+      else if (r === '5') creaCollegamento();
       else if (r === '3') {
         console.log('\n Invio della notifica di prova...');
         const p = await notificaDiProva(radice);
@@ -252,6 +393,15 @@ export async function voceImpostazioni(esterno = null) {
 /** All'apertura della console: installazione nuova e invii non riusciti dall'ultima volta. */
 async function voceAvvio() {
   const rl = lettore();
+  // 25/10/2026 (parte C): il ruolo del PC si chiede all'avvio finché non c'è una risposta; senza, l'app resta come prima
+  let senzaRuolo = false;
+  try { senzaRuolo = !leggiRuolo(radice).ruolo; } catch { /* profilo non leggibile: non si chiede */ }
+  if (senzaRuolo) {
+    console.log('\n ==============================================================');
+    console.log('  Una domanda, una volta sola: su questo PC non so ancora che ruolo ha.');
+    console.log(' ==============================================================');
+    await voceRuolo({ rl });
+  }
   const s = statoImpostazioni(radice);
   const nuovi = erroriNuovi(radice, { segna: true });
   let detto = false;
@@ -292,8 +442,21 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
     await voceImpostazioni();
   } else if (comando === 'avvio') {
     await voceAvvio();
+  } else if (comando === 'menu') {
+    for (const r of await testoMenu()) console.log(r);
+    for (const r of righeCartellaVuota()) console.log(r);
+  } else if (comando === 'controlla') {
+    await voceControlla();
+  } else if (comando === 'talenti') {
+    await voceTalenti();
+  } else if (comando === 'talenti-ripristina') {
+    await voceTalentiRipristina();
+  } else if (comando === 'ruolo') {
+    await voceRuolo();
+  } else if (comando === 'collegamento') {
+    creaCollegamento();
   } else {
-    console.error('Comandi: intestazione, stato, ripristina, impostazioni, avvio');
+    console.error('Comandi: menu, intestazione, stato, ripristina, impostazioni, avvio, controlla, talenti, talenti-ripristina, ruolo, collegamento');
     process.exitCode = 2;
   }
 }
