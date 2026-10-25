@@ -220,3 +220,17 @@ test('creazione: la Specializzazione del 1° livello, subito dopo la Classe, sol
   assert.equal(PASSI[i].completo({ scelte: { ...p.creazione, specializzazioneIniziale: null }, dati }), false);
   assert.equal(PASSI[i].completo({ scelte: { ...p.creazione, specializzazioneIniziale: { id: 'specializzazione-spade' } }, dati }), false);
 });
+
+test('stampa: con i Talenti v1.0 tre elenchi (Talenti Liberi, Maestrie, Specializzazioni); con quelli di prima come sempre', async () => {
+  const { preparaStampa } = await import('../src/stampa.js');
+  const cerca = (o, k) => { if (!o || typeof o !== 'object') return null; if (k in o && 'talentiClasse' in o) return o; for (const v of Object.values(o)) { const r = cerca(v, k); if (r) return r; } return null; };
+  const d = cerca(preparaStampa(dimitriNuovo(), dati, { completo: true }), 'regimeTalenti');
+  assert.equal(d.regimeTalenti, 'nuovo');
+  assert.deepEqual(d.talentiLiberi.filter((t) => t.categoria === 'talento_libero').map((t) => t.nome), ['Ritualista Minore', 'Buona Costituzione']);
+  assert.deepEqual(d.talentiLiberi.filter((t) => t.categoria === 'maestria').map((t) => t.nome), ['Parata Istintiva', 'Ritualista Maggiore']);
+  assert.deepEqual(d.specializzazioni.map((x) => [x.nome, x.livello, x.classe]), [['Specializzazione in Informatica', 1, 'Tecnomante'], ['Specializzazione in Cerimoniale', 4, 'Tecnomante']]);
+  assert.equal(cerca(preparaStampa(dimitri(), dati, { completo: true }), 'regimeTalenti').regimeTalenti, 'vecchio');
+  // il foglio 2: due elenchi con il regime nuovo, l'elenco unico di sempre con quello vecchio
+  const ui = readFileSync(new URL('../src/ui/stampa.js', import.meta.url), 'utf8');
+  assert.ok(ui.includes("d.regimeTalenti === 'nuovo'") && ui.includes("[['Talenti Liberi', 'talento_libero'], ['Maestrie', 'maestria']]"));
+});
