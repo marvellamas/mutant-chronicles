@@ -182,3 +182,41 @@ test('validatore: categoria, prerequisiti esistenti, elenco per Classe; «da def
   assert.ok(avvisiDati(x).some((a) => /Ricarica Esperta\).*|da definire: quante munizioni/.test(`${a.chiave} ${a.problema}`)));
   assert.equal(avvisiDati(dati).filter((a) => /da definire:/.test(a.problema)).length, 0, 'oggi nessun valore da definire');
 });
+
+test('Sali di livello nel regime nuovo: solo le categorie che spettano a quel livello (lotto 2)', async () => {
+  const { passiDelLivello, validaLivello } = await import('../src/avanzamento.js');
+  const tronca = (n) => { const p = dimitriNuovo(); return { ...p, livelli: p.livelli.slice(0, n - 1) }; };
+  // dal 3° al 4°: Grado e Specializzazione dall'elenco della Classe; niente Maestria né Talento Libero
+  const al4 = passiDelLivello(tronca(3), {}, dati).passi.map((x) => x.id);
+  assert.ok(al4.includes('grado') && al4.includes('specializzazione'));
+  assert.ok(!al4.includes('maestria') && !al4.includes('talento'));
+  assert.ok(al4.indexOf('specializzazione') === al4.indexOf('grado') + 1, 'subito dopo il Grado');
+  const pl4 = prossimoLivello(tronca(3), dati);
+  assert.deepEqual(new Set(pl4.specializzazioni.Tecnomante.filter((o) => o.ammesso).map((o) => o.id)), new Set(dati.specializzazioni.per_classe.Tecnomante.filter((id) => id !== 'specializzazione-informatica')));
+  // dal 5° al 6°: Caratteristiche e Maestria
+  const al6 = passiDelLivello(tronca(5), {}, dati).passi.map((x) => x.id);
+  assert.deepEqual(al6.filter((x) => ['caratteristiche', 'maestria', 'talento', 'specializzazione'].includes(x)), ['caratteristiche', 'maestria']);
+  assert.ok(prossimoLivello(tronca(5), dati).maestrie.some((o) => o.id === 'ritualista-maggiore' && o.ammesso));
+  // la voce del livello con la Maestria scelta è valida; senza, è incompleta
+  const voce6 = { ...dimitriNuovo().livelli[4] };
+  assert.equal(validaLivello(tronca(5), voce6, dati).filter((e) => e.tipo !== 'eccesso').length, 0);
+  delete voce6.maestria;
+  assert.ok(validaLivello(tronca(5), voce6, dati).some((e) => e.campo === 'maestria' && e.tipo === 'incompleto'));
+  // regime vecchio: i passi di sempre
+  const vecchio = dimitri();
+  assert.ok(!passiDelLivello({ ...vecchio, livelli: vecchio.livelli.slice(0, 2) }, {}, dati).passi.some((x) => x.id === 'specializzazione'));
+});
+
+test('creazione: la Specializzazione del 1° livello, subito dopo la Classe, solo nel regime nuovo (A.185)', async () => {
+  const { installaDomFinto } = await import('./dom-finto.js');
+  installaDomFinto();
+  const { PASSI } = await import('../src/ui/passi.js');
+  const i = PASSI.findIndex((p) => p.titolo === 'Specializzazione');
+  assert.equal(PASSI[i - 1].titolo, 'Classe');
+  const p = dimitriNuovo();
+  assert.equal(PASSI[i].visibile({ scelte: p.creazione }), true);
+  assert.equal(PASSI[i].visibile({ scelte: { ...p.creazione, regimeTalenti: null } }), false);
+  assert.equal(PASSI[i].completo({ scelte: p.creazione, dati }), true);
+  assert.equal(PASSI[i].completo({ scelte: { ...p.creazione, specializzazioneIniziale: null }, dati }), false);
+  assert.equal(PASSI[i].completo({ scelte: { ...p.creazione, specializzazioneIniziale: { id: 'specializzazione-spade' } }, dati }), false);
+});

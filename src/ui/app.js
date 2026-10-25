@@ -1116,6 +1116,7 @@ function contesto() {
     avvisoSalita: schedaPersonaggio.eccessi?.length ? motivoEccesso(schedaPersonaggio.eccessi)
       : schedaPersonaggio.completamenti?.length ? motivoCompletamento(schedaPersonaggio.completamenti) : null,
     motivoNoSalita: !scheda.completa ? 'Completa la creazione (passi precedenti) prima di salire di livello.'
+        : schedaPersonaggio.errori.some(ePostoTalentoVuoto) ? 'Scegli prima i Talenti nel riquadro «Da scegliere» della scheda.'
         : schedaPersonaggio.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
     saliDiLivello,
     stampa: () => vai(`#/p/${stato.id}/stampa`),
@@ -1602,6 +1603,9 @@ function registraModificheMaster() {
 // sono di postiTalenti / controllaSceltaTalento (src/avanzamento.js); qui si applica la scelta e si salva come ogni
 // altra modifica (il server ricontrolla le scelte dei tablet: src/talenti-tablet.js).
 
+/** Un errore che è solo un posto dei Talenti v1.0 ancora vuoto (lo mostra il riquadro, non l'elenco degli errori). */
+const ePostoTalentoVuoto = (e) => stato.scelte?.regimeTalenti === 2 && e.tipo === 'incompleto' && /(^|.)(talentoLibero|maestria|specializzazione|specializzazioneIniziale)$/.test(e.campo ?? '');
+
 /** Perché, adesso, da qui non si sceglie: senza connessione, o con modifiche offline in attesa del Direttore. */
 function talentiBloccati() {
   if (!stato.cartella || stato.master) return null;
@@ -1757,6 +1761,9 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
   if (tab.tab.length && calendarioAttivo(stato.calendario)) tab.tab.push({ id: 'calendario', titolo: 'Calendario', contatore: testoNote(contaNote(stato.calendario)) });
   // gli otto tab fissi (docs/layout-sd.md): preparaTab non cambia, la stampa resta com'è
   if (tab.tab.length) tab.tab = tabFissi(tab.tab);
+  // Talenti v1.0 (lotto 2): i posti vuoti li dice il riquadro «Da scegliere», non l'elenco degli errori
+  const talentiDaScegliere = tab.errori?.some(ePostoTalentoVuoto) ?? false;
+  if (tab.errori) tab.errori = tab.errori.filter((e) => !ePostoTalentoVuoto(e));
   document.title = `${stato.scelte.nome.trim() || 'Personaggio'} — Scheda · Mutant`;
   if (!tab.tab.length) {
     svuota(radice, h('section', { class: 'passo' },
@@ -1859,6 +1866,7 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
     avvisoSalita: tab.scheda.eccessi?.length ? motivoEccesso(tab.scheda.eccessi)
       : tab.scheda.completamenti?.length ? motivoCompletamento(tab.scheda.completamenti) : null,
     motivoNoSalita: !schedaCreazione.completa ? 'Completa la creazione prima di salire di livello.'
+        : talentiDaScegliere ? 'Scegli prima i Talenti nel riquadro «Da scegliere».'
         : tab.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
     // regole aggiornate (regole.json → regole_aggiornate): punti da completare e in eccesso
     avvisoRegole: dati.regole.regole_aggiornate?.punti_abilita ?? 'Regole aggiornate',

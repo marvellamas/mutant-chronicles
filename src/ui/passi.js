@@ -12,6 +12,8 @@ import { valoreTiro } from '../tiri.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
 import { renderDotazione } from './dotazione.js';
 import { dotazioneApplicata } from '../dotazioni.js';
+import { postiTalenti } from '../avanzamento.js';
+import { rigaEffetto } from './talenti-scelta.js';
 
 const trova = (lista, nome) => lista.find((x) => x.nome === nome);
 const GRADI = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI' };
@@ -50,6 +52,15 @@ export const PASSI = [
     requisito: ({ scelte }) => (scelte.addestramento ? null : 'Scegli prima l’Addestramento.'),
     completo: ({ scheda }) => !scheda.errori.some((e) => e.campo === 'classe' || e.campo.startsWith('parametriTalenti')),
     render: passoClasse,
+  },
+  {
+    // Talenti v1.0 (lotto 2, 25/10/2026): la Specializzazione del Grado iniziale, dall'elenco della Classe. La A.185 è
+    // aperta (in quale fase del §2.0): nel frattempo si sceglie subito dopo la Classe.
+    titolo: 'Specializzazione', rif: 'Talenti v1.0 (A.185)',
+    visibile: ({ scelte }) => scelte.regimeTalenti === 2,
+    requisito: ({ scelte }) => (scelte.classe ? null : 'Scegli prima la Classe.'),
+    completo: ({ scelte, dati }) => postoIniziale(scelte, dati, { opzioni: false })?.valida === true,
+    render: passoSpecializzazioneIniziale,
   },
   {
     titolo: 'Abilità', rif: '§2.13',
@@ -298,6 +309,36 @@ export function competenzeClasse(ctx, classe, { primaClasse = true } = {}) {
     h('dd', {}, elencoInfo('abilita', classe.competenze?.[cat] ?? [])))));
 }
 
+/** Il posto della Specializzazione del 1° livello, dal conto unico (postiTalenti). */
+function postoIniziale(scelte, dati, opz = {}) {
+  if (!scelte.classe) return null;
+  try { return postiTalenti({ creazione: scelte, livelli: [] }, dati, opz).posti.find((x) => x.livello === 1 && x.categoria === 'specializzazione') ?? null; } catch { return null; }
+}
+
+function passoSpecializzazioneIniziale(ctx) {
+  const { dati, scelte } = ctx;
+  const scelta = scelte.specializzazioneIniziale;
+  // le opzioni si calcolano sul posto vuoto: con una scelta fatta, si mostrano lo stesso tutte quelle dell'elenco
+  const posto = postoIniziale({ ...scelte, specializzazioneIniziale: null }, dati);
+  const corrente = postoIniziale(scelte, dati, { opzioni: false });
+  const def = (id) => dati.specializzazioni.specializzazioni.find((s) => s.id === id);
+  const ammesse = (posto?.opzioni ?? []).filter((o) => o.ammesso);
+  return [
+    h('p', { class: 'guida' }, `Una Specializzazione dall’elenco del ${scelte.classe}, la tua Classe iniziale (Talenti v1.0: le sei Specializzazioni accompagnano i Gradi di Classe, compreso il primo). Dà +2 VA nelle prove pertinenti, +1 VA e +1 danno con una categoria di armi, oppure +1 VA e −1 PM con una sottofamiglia di Potere.`),
+    h('p', { class: 'nota' }, 'In attesa della risposta di Davide (A.185) si sceglie qui, subito dopo la Classe.'),
+    scelta ? h('p', { class: corrente?.valida ? 'contatore ok' : 'contatore errore' }, `Scelta: Specializzazione in ${def(scelta.id)?.nome ?? scelta.id}${scelta.annotazione ? ` — ${scelta.annotazione}` : ''}${corrente?.valida ? '' : ` (${corrente?.problemi?.[0]?.problema ?? 'non ammessa'})`}`)
+      : h('p', { class: 'contatore attenzione' }, 'Nessuna Specializzazione scelta'),
+    scelta && def(scelta.id)?.annotazione ? h('label', { class: 'campo-inline' }, `Indica ${def(scelta.id).annotazione}: `,
+      h('input', { type: 'text', value: scelta.annotazione ?? '', maxlength: 60, onchange: (e) => ctx.aggiorna({ specializzazioneIniziale: { id: scelta.id, ...(e.target.value.trim() ? { annotazione: e.target.value.trim() } : {}) } }) })) : null,
+    h('ul', { class: 'elenco-talenti' }, ammesse.map((o) => {
+      const sel = scelta?.id === o.id;
+      return h('li', { class: `voce-talento${sel ? ' selezionata' : ''}` },
+        h('div', {}, h('strong', {}, o.nome), h('small', { class: 'nota' }, ` ${rigaEffetto(o.id, dati)}`)),
+        bottoneScelta(sel, () => ctx.aggiorna({ specializzazioneIniziale: { id: o.id } })));
+    })),
+  ];
+}
+
 function passoClasse(ctx) {
   const { dati, scelte } = ctx;
   const classi = dati.classi.classi.filter((c) => c.addestramento === scelte.addestramento);
@@ -309,7 +350,7 @@ function passoClasse(ctx) {
       const sel = scelte.classe === c.nome;
       const pv1 = c.pv_per_grado.fisso + c.pv_per_grado.dado;
       return carta(sel,
-        h('header', {}, h('h3', {}, c.nome), bottoneScelta(sel, () => ctx.aggiorna({ classe: c.nome, parametriTalenti: {} }))),
+        h('header', {}, h('h3', {}, c.nome), bottoneScelta(sel, () => ctx.aggiorna({ classe: c.nome, parametriTalenti: {}, ...(scelte.regimeTalenti === 2 ? { specializzazioneIniziale: null } : {}) }))),
         h('p', { class: 'identita' }, c.specializzazioni.join(' / ')),
         h('p', {}, h('strong', {}, 'Abilità di Classe: '), elencoInfo('abilita', c.abilita)),
         // §2.3: le categorie che distinguono le Classi si vedono senza aprire il riquadro (04/10/2026: Davide non

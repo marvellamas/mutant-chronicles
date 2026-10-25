@@ -1585,11 +1585,20 @@ export function passiDelLivello(personaggio, voce, dati) {
   const passi = [];
   const informazioni = [];
   let puntiAbilita = 0;
+  // Talenti v1.0 (regime nuovo): la Maestria dopo le Caratteristiche, la Specializzazione dopo il Grado
+  const nuovo = prima.regime === 'nuovo';
+  const conMaestria = nuovo && livelliCategoria('maestria', n, dati).includes(n);
+  const conSpecializzazione = nuovo && livelliCategoria('specializzazione', n, dati).includes(n);
   for (const e of eventi) {
     let m;
-    if ((m = /^caratteristiche:\+(\d+)$/.exec(e))) passi.push({ id: 'caratteristiche', titolo: 'Caratteristiche', rif: '§8.2', punti: Number(m[1]) });
-    else if (e === 'talento_libero') passi.push({ id: 'talento', titolo: 'Talento Libero', rif: '§8.6, §8.8' });
-    else if (e === 'grado_classe') passi.push({ id: 'grado', titolo: 'Grado di Classe', rif: '§8.7, cap. 3' });
+    if ((m = /^caratteristiche:\+(\d+)$/.exec(e))) {
+      passi.push({ id: 'caratteristiche', titolo: 'Caratteristiche', rif: '§8.2', punti: Number(m[1]) });
+      if (conMaestria) passi.push({ id: 'maestria', titolo: 'Maestria', rif: 'Talenti v1.0' });
+    } else if (e === 'talento_libero') passi.push({ id: 'talento', titolo: 'Talento Libero', rif: nuovo ? 'Talenti v1.0' : '§8.6, §8.8' });
+    else if (e === 'grado_classe') {
+      passi.push({ id: 'grado', titolo: 'Grado di Classe', rif: '§8.7, cap. 3' });
+      if (conSpecializzazione) passi.push({ id: 'specializzazione', titolo: 'Specializzazione', rif: 'Talenti v1.0' });
+    }
     else if ((m = /^punti_abilita:(\d+)$/.exec(e))) puntiAbilita = Number(m[1]);
     else if ((m = /^salvezze:\+(\d+)$/.exec(e))) informazioni.push(`+${m[1]} a tutte le Prove Salvezza (§8.1.1)`);
     else if ((m = /^azione_principale:\+(\d+)$/.exec(e))) {
@@ -1597,6 +1606,7 @@ export function passiDelLivello(personaggio, voce, dati) {
       informazioni.push(`Azioni Principali per Round: ${totale} (§8.5)`);
     }
   }
+  if (conMaestria && !passi.some((x) => x.id === 'maestria')) passi.splice(0, 0, { id: 'maestria', titolo: 'Maestria', rif: 'Talenti v1.0' });
   const dopo = applicaVoce(prima, v, dati);
   if (tecnicheAmmesse(dopo) > tecnicheAmmesse(prima) || (Array.isArray(v.tecniche) && v.tecniche.length)) {
     passi.push({ id: 'tecniche', titolo: 'Tecniche Interiori', rif: '§8.9' });
