@@ -286,3 +286,40 @@ Entrambi hanno un test che li ferma (`tests/rientro-tablet.test.js`).
 - **Automatico:** `npm test`, 2258 prove verdi, validatore e `verifica_frasi.mjs` verdi. Fra queste: la classificazione campo per campo (`giornale-campi`), FOR cambiata da tutt'e due che diventa un conflitto e i PV che invece si sommano, la nota del calendario riscritta da tutt'e due, il deposito e le decisioni (`rientro`), il giro completo lato server con due server veri «Direttore» e «tablet» (`giornale-server`: niente si applica prima della conferma, approvazione parziale, chiusura senza rispondere, doppia approvazione, 403 per i tablet).
 - **A mano, nel browser:** due server veri sulla stessa cartella di prova (uno con `eMaster` forzato a `false`: sullo stesso PC qualunque browser su `localhost` è riconosciuto come il PC del Direttore, quindi una seconda finestra non basta). Giro completo: tablet collegato che scrive normalmente → server spento → fascia «offline da pochi secondi · 4 modifiche in attesa», comandi ancora attivi → quattro modifiche (−5 PV, −5 PM, +1 Distintivo, le note) → il Direttore riscrive le note dal suo PC → server riacceso → il file **non** cambia e la schermata si apre da sola sul PC del Direttore con le quattro righe in ordine di ora e il conflitto con le due versioni → approvate due, scartata una, conflitto risolto a favore del server → il file diventa PV 19, PM 16 (scartata), Distintivi 1, note del Direttore → il tablet svuota la coda e la sua scheda mostra esattamente quei valori. Sforamenti: schermata e pannello della coda misurati a 360, 480, 600, 768, 820, 912 e 1100 px, nessun elemento fuori dalla finestra.
 - **Non provato:** l'avviso che il tablet mostra al giocatore («Il Direttore ha approvato: …») è stato visto solo per i suoi effetti (la coda si svuota, la scheda si riallinea): il messaggio era già scaduto quando l'ho guardato. Da vedere con un tablet vero.
+
+## Prova al tavolo del 24/10 e correzioni del 25/10 (parti A–D)
+
+Davide ha provato la pipeline con un tablet vero. Due cose che i lotti 111–114 davano per chiuse non funzionavano; una terza e una quarta sono saltate fuori provando.
+
+### A. Il conflitto non si apriva
+
+**Dove la strada si biforcava.** Due meccanismi che non si conoscevano: il «server vince sempre» del 112 (`controllaScheda` → `controllaRemoto` → `ricaricaDaCartella` / `apriConflitto`) e il giornale con approvazione dei 113/114 (`accoda`, schermata di rientro). Quando il tablet torna in rete la modifica offline **arrivava** al giornale (non era scartata da `sincronizzaCartella()`), ma in parallelo la scheda vedeva il file cambiato e lo ricaricava con un banner verde fisso, «Il master ha aggiornato la tua scheda»:
+- uguale sul tablet e sulla pagina del Direttore (a scrivere poteva essere stato un tablet);
+- senza dire che c'erano modifiche in attesa;
+- il riquadro «Aggiorna / Tieni la mia» prometteva di perdere la modifica, ma le voci restavano in coda e partivano lo stesso; «Tieni la mia» avrebbe sovrascritto il file scavalcando il Direttore.
+In più la pagina del Direttore si dichiarava «giocatore» nell'intestazione (`X-Mutant-Da`), e il server le crede: ogni sua scrittura risultava fatta da un tablet.
+
+**Cosa è cambiato.**
+- `src/aggiornamento-scheda.js` (puro; testi in `regole.json` → `interfaccia.dispositivo`): il banner dice chi ha scritto (`aggiornato_da`), su quale pagina siamo, e — se ci sono modifiche in attesa — diventa un avviso («Hai ancora N modifiche fatte offline in attesa…»), non più un verde rassicurante.
+- Con modifiche in coda il tablet non ha più «Aggiorna / Tieni la mia» ma **due scelte vere**: «Vedi la scheda del Direttore» (le tue restano in attesa) e «Scarta le mie N modifiche» (tolte dalla coda **e dal rientro del Direttore**, via `ritira` / `sostituisce` sul giornale).
+- La pagina del Direttore non dichiara più «giocatore» (`impostaPaginaDelDirettore`).
+- «Tieni la mia» resta solo per chi non ha modifiche in coda (nessun cambiamento lì).
+
+**Domanda aperta per Davide: A.180** — finché il Direttore non ha deciso, la scheda del tablet deve mostrare la versione del server (scelta attuale: coerente con «niente si applica prima della conferma») o quella del giocatore con le sue modifiche? E il giocatore può ritirare una modifica già arrivata al Direttore?
+
+### B. Il pulsante «Rientro dei tablet» non compariva
+
+Difetto diverso dal 114 (chiave della coda). Il pulsante stava solo nella pagina del Tavolo; con la scheda o la mappa aperta sul PC del Direttore non c'era nulla. Ora è una **fascia su ogni pagina** del Direttore (`#fascia-rientro`, `fasciaRientro` in `src/rientro.js`), presente quando — e solo quando — c'è qualcosa in attesa. Le voci già decise o ritirate non contano.
+
+### C. Una modifica, tre voci
+
+Digitando «NOTE» in una nota nascevano «NO», «NOT», «NOTE». Il tablet non scriveva a ogni tasto, ma la coda sì, una voce per ogni salvataggio intermedio. Soluzione più forte di un ritardo sul campo: `fondiOperazioni` (`src/giornale.js`) fonde in coda le assegnazioni e gli aggiornamenti sullo stesso campo — una voce sola con il `visto` originale; se la voce era già partita ne nasce una nuova che **sostituisce** la vecchia (ritirata sul server); se il valore torna a quello di partenza la voce sparisce. I contatori (PV, PM…) restano somme separate.
+
+### D. Avvisi NTFY persi a ogni aggiornamento
+
+Non ho riprodotto la perdita (nessun passo dell'aggiornamento tocca `avvisi/avvisi.json`), ma il file stava dentro la cartella dell'app, dove un `git pull` o un pacchetto di distribuzione possono sostituirlo. Ora la configurazione sta nel profilo dell'utente (`%APPDATA%\Mutant\avvisi.json`, altrimenti `~/.config/mutant/avvisi.json`; `MUTANT_CONFIG_DIR` per cambiarla), con migrazione silenziosa del vecchio file al primo uso (`tools/config-avvisi.mjs`, chiamato da `aggiorna.bat`). Stessa esposizione per `config-salvataggi.json`: non toccato, segnalato.
+
+### Prova
+
+Automatica: `npm test` verde (2332). Nel browser, due server veri sulla stessa cartella (uno con `eMaster` forzato a `false`): tablet offline → −3 PV e una nota battuta lettera per lettera = **una voce** → il Direttore cambia la scheda → il tablet riavviato apre il riquadro con le voci in coda e le due scelte → «Scarta» svuota la coda e il rientro del Direttore.
+Non provato: il banner con un tablet vero e il caso «Vedi la scheda» seguito da approvazione.
