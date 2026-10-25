@@ -32,7 +32,7 @@ import { pannelloGalleria, fasciaGalleria, leggiGalleria, nascondiATutti } from 
 // PX della partita (A.161): calcolatore e archivio del Direttore, solo sul PC del master
 import { pannelloPx, leggiPx, salvaPx, patchPgAssegnazione, dbIniziale } from './px-partita.js';
 import { creaArchivioPx, testoSalvataggio } from '../px-archivio.js';
-import { deltaAssegnazione, partitaAssegnata, migraGiocatoriAPgStabile, fileDelGiocatore } from '../px-partita.js';
+import { deltaAssegnazione, passaggiDiLivello, frasePassaggio, partitaAssegnata, migraGiocatoriAPgStabile, fileDelGiocatore } from '../px-partita.js';
 import { chiudi as chiudiScontro, cambiaMusica, diTurno, ordineIniziativa, registraIniziative, senzaIniziativaNuovi, avanti, indietro, anteprimaIndietro, reimpostaIniziativa, reimpostaIniziativaDi, dadoIniziativa, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico, confermaRegimeNemico, aggiungiNemici, registraRiga, cambiaStatoNemico } from '../scontro.js';
 import { vociBestiario } from '../nemici.js';
 import { creaCustode } from './ridisegno.js';
@@ -1016,6 +1016,8 @@ export function renderTavolo(radice, ctx) {
     const p = ctx.dati.px_partita;
     const pxPrima = pxGiocatori(); // gli stessi PX per il delta e per gli importi registrati (un aggiornamento in mezzo non li sposta)
     const delta = deltaAssegnazione(partita, pxPrima, p);
+    // 25/10/2026: chi supera la soglia del livello successivo (solo un avviso, calcolato sui PX di prima)
+    const livelli = passaggiDiLivello(partita, pxPrima, p).map((x) => frasePassaggio(x, stato.db.giocatori.find((g) => g.id === x.id)?.pg || x.id));
     const etichetta = `PX della partita del ${partita.data || new Date().toISOString().slice(0, 10)}`;
     const senzaPg = [];
     for (const [id, d] of Object.entries(delta)) {
@@ -1034,6 +1036,7 @@ export function renderTavolo(radice, ctx) {
     archivioPx.modifica();
     await archivioPx.salva();
     avviso(senzaPg.length ? `PX assegnati. Senza PG associato (non aggiornati): ${senzaPg.join(', ')}. Collegali in «Impostazioni».` : 'PX della partita assegnati ai PG presenti (Modifica master).', { tipo: senzaPg.length ? 'info' : 'ok', durata: 8000 });
+    if (livelli.length) avviso(`⚠ ${livelli.join(' ')}`, { tipo: 'info', durata: 15000 });
     await aggiorna(true);
     disegna();
   };

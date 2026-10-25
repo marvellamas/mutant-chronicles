@@ -214,6 +214,32 @@ export function deltaAssegnazione(partita, pxGiocatori, p) {
 }
 
 /**
+ * Chi, con questa assegnazione, supera la soglia del livello successivo (le soglie cumulative di `soglie_px`,
+ * A.170). Solo un avviso per chi assegna (25/10/2026): non blocca e non cambia nulla — il livello del PG lo sale il
+ * giocatore con «Sali di livello». `limitatoDallAtto` dice che l'Atto corrente non consente ancora di salire fin lì.
+ * @returns [{ id, da, a, pxPrima, pxDopo, limitatoDallAtto }] con `da` e `a` livelli dai PX (senza il limite dell'Atto)
+ */
+export function passaggiDiLivello(partita, pxGiocatori, p) {
+  const delta = deltaAssegnazione(partita, pxGiocatori, p);
+  const passaggi = [];
+  for (const [id, d] of Object.entries(delta)) {
+    const pxPrima = num(pxGiocatori?.[id]);
+    const pxDopo = pxPrima + d;
+    const da = livelloDaPx(pxPrima, p);
+    const a = livelloDaPx(pxDopo, p);
+    if (a > da) passaggi.push({ id, da, a, pxPrima, pxDopo, limitatoDallAtto: a > limiteAtto(partita?.atto, p) });
+  }
+  return passaggi;
+}
+
+/** La frase per chi assegna: «Aiko passa dal livello 5 al 6.» (con l'Atto che frena, se è il caso). */
+export function frasePassaggio(passaggio, nome) {
+  const cosa = passaggio.a - passaggio.da > 1 ? `le soglie dal livello ${passaggio.da} al ${passaggio.a}` : `la soglia del livello ${passaggio.a}`;
+  const atto = passaggio.limitatoDallAtto ? ' (l’Atto corrente non lo consente ancora: i PX restano e valgono quando si sblocca)' : '';
+  return `${nome} supera ${cosa}${atto}.`;
+}
+
+/**
  * Partita dopo l'assegnazione: registra gli importi finali in `assegnato`, lo stato e la data. I totali finali
  * si rileggono dal calcolo (con i px attuali). Idempotente a parità di px e di totali finali.
  */

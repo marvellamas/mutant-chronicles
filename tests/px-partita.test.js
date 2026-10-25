@@ -366,3 +366,28 @@ test('D (25/10): il premio di fine Atto è dell’Atto — si dà anche a un ass
   assert.equal(r[0].px, 250);
   assert.equal(r[0].partite, 0);
 });
+
+test('E (25/10): l’assegnazione che supera la soglia del livello successivo lo segnala — solo un avviso', async () => {
+  const { passaggiDiLivello, frasePassaggio } = await import('../src/px-partita.js');
+  const part = { presente: true, partecipazione: 3, interpretazione: 3, contributo: 3, eccezionale: 0 };
+  // Aiko a 500 PX (livello 5, soglia del 6 = 520) e Bea a 0: la partita dà a ciascuno 9 voti × fattore × durata + 40 PX d'incontro
+  const partita = { id: 'm', atto: 'I', durata: 1, incontri: [{ id: 'i', pxDiretti: 40 }], finali: { a: 30, b: 30 }, partecipanti: { a: part, b: part } };
+  let r = passaggiDiLivello(partita, { a: 500, b: 0 }, p);
+  assert.deepEqual(r.map((x) => [x.id, x.da, x.a]), [['a', 5, 6]], 'a 500 + 30 = 530 ≥ 520: sale; Bea a 30 PX resta al 1');
+  assert.equal(r[0].limitatoDallAtto, false);
+  assert.match(frasePassaggio(r[0], 'Aiko'), /Aiko supera la soglia del livello 6/);
+  // sotto la soglia: niente
+  assert.deepEqual(passaggiDiLivello(partita, { a: 480, b: 0 }, p), []);
+  // più livelli insieme, e l'Atto che frena (Atto I: limite 8)
+  const grande = { ...partita, finali: { a: 2000, b: 0 } };
+  r = passaggiDiLivello(grande, { a: 500, b: 0 }, p);
+  assert.equal(r[0].da, 5);
+  assert.equal(r[0].a, livelloDaPx(2500, p));
+  assert.equal(r[0].limitatoDallAtto, true);
+  assert.match(frasePassaggio(r[0], 'Aiko'), /dal livello 5 al \d+ .*Atto/);
+  // non cambia nulla da sola: la funzione è pura, i PX e la partita restano com'erano
+  assert.equal(grande.finali.a, 2000);
+  // correzione di una partita già assegnata: conta solo la differenza
+  const assegnata = partitaAssegnata(grande, { a: 500, b: 0 }, '2026-10-25', p);
+  assert.deepEqual(passaggiDiLivello(assegnata, { a: 2500, b: 0 }, p), [], 'già assegnata e già nei PX: nessun passaggio nuovo');
+});

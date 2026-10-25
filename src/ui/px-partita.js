@@ -13,7 +13,7 @@ import { avviso, avvisoErrore } from './avvisi.js';
 import { chiedi } from './finestrella.js';
 import { registraDiretta } from '../correzioni-master.js';
 import {
-  calcolaPartita, haPremio, premiDellaPartita, premiPerAtto, pxIncontro, correttivoPg, deltaAssegnazione, partitaAssegnata, premioGiaDato, riepilogo, csvRiepilogo, componentiGiocatore, presentiNella,
+  calcolaPartita, passaggiDiLivello, frasePassaggio, haPremio, premiDellaPartita, premiPerAtto, pxIncontro, correttivoPg, deltaAssegnazione, partitaAssegnata, premioGiaDato, riepilogo, csvRiepilogo, componentiGiocatore, presentiNella,
 } from '../px-partita.js';
 import { idStabileDiFile } from '../cartella.js';
 
@@ -167,6 +167,7 @@ function vistaPartita(ctx, st, az, salva, partita) {
     ? h('p', { class: 'riquadro attenzione' }, `Il premio dell’Atto ${partita.atto} risulta già dato a ${giaDatoA.join(', ')} in un’altra partita: va dato una sola volta per personaggio (decide il Direttore).`) : null;
 
   const calc = calcolaPartita(partita, st.pxGiocatori, p(st));
+  const passaggi = Object.fromEntries(passaggiDiLivello(partita, st.pxGiocatori, p(st)).map((x) => [x.id, x]));
   const nPresenti = presentiNella(partita);
 
   const righeGiocatori = (db.giocatori ?? []).map((g) => {
@@ -191,7 +192,8 @@ function vistaPartita(ctx, st, az, salva, partita) {
         onchange: (e) => { const m = premiDellaPartita(partita); if (e.target.checked) m[g.id] = true; else delete m[g.id]; partita.premiAtto = m; delete partita.premioAtto; salva(); } })),
       h('td', { class: 'px-comp', title: `voti ${fmt(c.pxVoti)} · bonus ${fmt(c.pxBonus)} · incontri ${fmt(c.pxIncontri)} · premio ${fmt(c.premio)}` }, fmt(c.totaleSuggerito)),
       h('td', {}, conta ? h('input', { type: 'number', class: 'px-finale', value: Number.isFinite(Number(finaleVal)) ? finaleVal : c.totaleSuggerito,
-        oninput: (e) => { partita.finali = { ...partita.finali, [g.id]: Number(e.target.value) }; az.salva(); } }) : '—'));
+        oninput: (e) => { partita.finali = { ...partita.finali, [g.id]: Number(e.target.value) }; az.salva(); az.ridisegna(); } }) : '—',
+        passaggi[g.id] ? h('span', { class: 'px-livello', role: 'status', title: frasePassaggio(passaggi[g.id], g.pg || g.id) }, ` ↑ liv ${passaggi[g.id].a}${passaggi[g.id].limitatoDallAtto ? ' (Atto)' : ''}`) : null));
   });
 
   const tabella = h('table', { class: 'px-tabella' },
@@ -204,7 +206,9 @@ function vistaPartita(ctx, st, az, salva, partita) {
     const nomi = Object.keys(delta);
     if (!nomi.length) { avviso('Niente da assegnare: i totali sono già quelli assegnati.', { tipo: 'info' }); return; }
     const testo = nomi.map((id) => `${(db.giocatori.find((g) => g.id === id)?.pg) || id}: ${delta[id] > 0 ? '+' : ''}${fmt(delta[id])}`).join('\n');
-    if (!await chiedi({ titolo: `Assegni i PX di «${partita.titolo}»?`, testo: `${testo}\n\nAggiorna i PG interessati (Modifica master).`, si: 'Assegna' })) return;
+    // 25/10/2026: chi con questa assegnazione supera la soglia del livello successivo lo si dice qui — avviso, non blocco
+    const livelli = passaggiDiLivello(partita, st.pxGiocatori, p(st)).map((x) => frasePassaggio(x, (db.giocatori.find((g) => g.id === x.id)?.pg) || x.id));
+    if (!await chiedi({ titolo: `Assegni i PX di «${partita.titolo}»?`, testo: `${testo}${livelli.length ? `\n\n⚠ ${livelli.join('\n⚠ ')}` : ''}\n\nAggiorna i PG interessati (Modifica master).`, si: 'Assegna' })) return;
     try { await az.assegna(partita); } catch (e) { avvisoErrore(e.message ?? String(e)); }
   } }, partita.statoAssegnazione === 'assegnata' ? 'Ri-assegna (correzione)' : 'Assegna PX della partita');
 
