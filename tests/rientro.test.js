@@ -172,3 +172,50 @@ test('il ritiro non tocca le voci di un altro personaggio', () => {
   r = aggiungiOperazioni(r, 'pg-uno', [], { ritira: ['a', 'b'] }).rientro;
   assert.deepEqual(inAttesaDi(r, 'pg-due').map((x) => x.id), ['b']);
 });
+
+// --- la fascia fissa del Direttore (25/10/2026, Test 6: «non compare il pulsante “Rientro dei tablet”») -------------
+
+import { riassuntoRientro, fasciaRientro } from '../src/rientro.js';
+
+const lista = (...p) => p.map(([nome, n]) => ({ pgId: nome, nome, righe: Array.from({ length: n }, (_, i) => ({ id: `${nome}-${i}` })) }));
+
+test('la fascia compare quando — e solo quando — c\'è qualcosa in attesa', () => {
+  assert.equal(fasciaRientro({ personaggi: [] }), null, 'nessun tablet ha lavorato offline: il Direttore non vede niente');
+  assert.equal(fasciaRientro({ personaggi: undefined }), null);
+  assert.equal(fasciaRientro({ personaggi: lista(['Aiko', 0]) }), null, 'un personaggio senza righe non conta');
+  const f = fasciaRientro({ personaggi: lista(['Aiko Tenzan', 4]) });
+  assert.equal(f.n, 4);
+  assert.match(f.testo, /4 modifiche fatte senza collegamento/);
+  assert.match(f.testo, /Aiko Tenzan/);
+});
+
+test('con la schermata aperta la fascia non c\'è (la schermata è lei stessa l\'avviso)', () => {
+  assert.equal(fasciaRientro({ personaggi: lista(['Aiko', 3]), aperta: true }), null);
+});
+
+test('chiudere la schermata senza rispondere NON perde niente e la fascia la riporta: stesso conteggio prima e dopo', () => {
+  const personaggi = lista(['Aiko', 4]);
+  assert.equal(fasciaRientro({ personaggi, aperta: true }), null);
+  const dopoLaChiusura = fasciaRientro({ personaggi, aperta: false });
+  assert.equal(dopoLaChiusura.n, 4, 'le quattro righe ci sono ancora e si possono riaprire');
+});
+
+test('più personaggi: il conteggio è il totale e il testo dice quanti personaggi', () => {
+  const f = riassuntoRientro(lista(['Aiko', 4], ['Lucas', 2]));
+  assert.equal(f.n, 6);
+  assert.equal(f.personaggi, 2);
+  assert.match(f.testo, /6 modifiche/);
+  assert.match(f.testo, /2 personaggi/);
+});
+
+test('una modifica sola: singolare', () => {
+  assert.match(riassuntoRientro(lista(['Aiko', 1])).testo, /1 modifica fatta senza collegamento/);
+});
+
+test('la fascia legge dalla stessa struttura che la coda del tablet scrive (non una chiave sua)', () => {
+  // dal deposito: aggiungiOperazioni (come lo scrive POST …/giornale) → lo stesso elenco che GET /api/rientro serve
+  // alla schermata e alla fascia. Il difetto del 21/10 era una coda scritta con una chiave e letta con un'altra.
+  const { rientro } = aggiungiOperazioni(rientroVuoto(), PG, [op('a'), op('b')], { nome: 'Aiko Tenzan' });
+  const serviti = [{ pgId: PG, nome: 'Aiko Tenzan', righe: inAttesaDi(rientro, PG).map((o) => rigaOperazione(o, {})) }];
+  assert.equal(fasciaRientro({ personaggi: serviti }).n, 2);
+});

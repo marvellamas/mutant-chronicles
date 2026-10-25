@@ -2967,6 +2967,23 @@ body:has(.mappa-pagina) .fascia-stato-tablet { position: static; }
 .coda-offline-elenco li { display: flex; align-items: center; gap: 0.4rem; font-size: 0.88rem; }
 .coda-offline-elenco li span { flex: 1 1 auto; }
 
+/* 25/10/2026 — la fascia che riporta alla schermata di rientro, su ogni pagina del Direttore (src/ui/rientro.js →
+   disegnaFascia). Compare solo con modifiche dei tablet in attesa e la schermata chiusa: è l'unico modo per riaprirla
+   dopo averla chiusa («chiudere non è scartare»). Sulla mappa, che occupa tutta l'altezza, non spinge giù niente:
+   diventa una pillola in basso a sinistra. */
+.fascia-rientro {
+  position: sticky; top: 0; z-index: var(--z-barre);
+  background: var(--attenzione-tenue); color: var(--attenzione); border-bottom: 2px solid var(--attenzione);
+  padding: 0.35rem 1rem; text-align: center; font-size: 0.95rem; font-weight: 700; line-height: 1.3;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.5rem 0.75rem;
+}
+.fascia-rientro .btn-piccolo { min-height: 28px; padding: 0 0.8rem; }
+body:has(.mappa-pagina) .fascia-rientro {
+  position: fixed; top: auto; bottom: 0.75rem; left: 0.75rem; right: auto; max-width: min(28rem, calc(100vw - 1.5rem));
+  border: 2px solid var(--attenzione); border-radius: var(--raggio); box-shadow: 0 4px 16px rgb(0 0 0 / 30%); z-index: var(--z-rientro);
+}
+@media print { .fascia-rientro { display: none; } }
+
 /* 22/10/2026 — la schermata di rientro, sul PC del Direttore (src/ui/rientro.js). Una schermata a parte, sopra
    tutto il resto: quello che un tablet ha fatto senza collegamento va guardato, non intravisto. Non esiste
    finché non c'è niente in attesa. I colori sono quelli di sempre: niente di nuovo per dire «attenzione». */

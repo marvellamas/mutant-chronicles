@@ -17,6 +17,7 @@
 import { h, svuota } from './dom.js';
 import { avviso, avvisoErrore } from './avvisi.js';
 import { leggiRientro, decidiRientro } from './cartella.js';
+import { fasciaRientro } from '../rientro.js';
 
 const INTERVALLO_MS = 10_000;
 
@@ -114,6 +115,7 @@ async function applica(pg, scelte) {
 
 function disegna() {
   if (!elemento) return;
+  disegnaFascia();
   elemento.hidden = !aperta;
   document.body.classList.toggle('con-rientro', aperta);
   if (!aperta) { svuota(elemento); return; }
@@ -153,16 +155,25 @@ async function aggiorna() {
   const firma = firmaDi(dati);
   if (!inAttesaTotali()) { aperta = false; chiusaSu = ''; } else if (!aperta && firma !== chiusaSu) aperta = true; // qualcosa di nuovo: si ripresenta
   disegna();
-  aggiornaPulsante();
 }
 
-/** Il pulsante nella testata del Tavolo, se c'è (resta anche a schermata chiusa: «si riapre dopo»). */
-function aggiornaPulsante() {
-  const el = document.getElementById('rientro-pulsante');
-  if (!el) return;
-  const n = inAttesaTotali();
-  el.hidden = n === 0;
-  el.textContent = `Rientro dei tablet (${n})`;
+/**
+ * La fascia fissa in cima alla pagina (25/10/2026): «Rientro dei tablet: 4 modifiche… [Apri]». Sta fuori da #app, come
+ * la fascia «Copia di lavoro», quindi c'è su ogni pagina del Direttore — scheda, Tavolo, mappa — e non sparisce
+ * quando la pagina si ridisegna. C'è solo con modifiche in attesa e la schermata chiusa (src/rientro.js → fasciaRientro).
+ */
+function disegnaFascia() {
+  const f = fasciaRientro({ personaggi: dati.personaggi, aperta });
+  let el = document.getElementById('fascia-rientro');
+  if (!f) { el?.remove(); return; }
+  if (!el) {
+    el = h('div', { id: 'fascia-rientro', class: 'fascia-rientro', role: 'status' });
+    const copia = document.getElementById('fascia-copia-di-lavoro');
+    if (copia) copia.after(el); else document.body.prepend(el);
+  }
+  svuota(el,
+    h('span', { class: 'fascia-rientro-testo' }, f.testo),
+    h('button', { type: 'button', class: 'btn primario btn-piccolo', title: 'Apre la schermata del rientro: approvi o scarti le modifiche, o le lasci in attesa', onclick: () => apriRientro() }, 'Apri'));
 }
 
 /**

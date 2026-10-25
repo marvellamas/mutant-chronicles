@@ -38,7 +38,6 @@ import { creaCustode } from './ridisegno.js';
 import { avviso, avvisoErrore } from './avvisi.js';
 import { apriCreaNemico, apriDaBestiario } from './crea-nemico.js';
 import { apriPreparazione, iniziaBozzaDallaMappa } from './preparazione.js';
-import { apriRientro, inAttesaTotali } from './rientro.js';
 import { riquadroCollega, leggiRete } from './collega.js';
 import { leggiDispositivi } from './dispositivi-tavolo.js';
 import { leggiAvvioVuoto, fasciaCartellaVuota } from './cartella-vuota.js';
@@ -411,15 +410,12 @@ export function renderTavolo(radice, ctx) {
     const btnPrepara = h('button', { type: 'button', class: 'btn', title: 'Bozze di scontro: nemici, quanti, note, difficoltà; «Inizia» le apre e chiede l’Iniziativa', onclick: preparaScontro }, 'Prepara scontro');
     const btnCrea = h('button', { type: 'button', class: 'btn', title: 'Procedura guidata dal Bestiario (base, grado, moduli), oppure tutto a caso', onclick: () => creaNemico() }, 'Crea nemico');
     const btnPersonaggi = h('button', { type: 'button', class: 'btn', title: 'L’elenco dei personaggi', onclick: () => ctx.azioni.personaggi() }, 'Personaggi');
-    // 22/10: le modifiche fatte da un tablet senza collegamento, in attesa della risposta del Direttore
-    // (src/ui/rientro.js). Il pulsante è nascosto finché non ce ne sono: a tavolo normale non si vede niente.
-    const btnRientro = h('button', { type: 'button', id: 'rientro-pulsante', class: 'btn con-avviso', hidden: inAttesaTotali() === 0, title: 'Modifiche fatte da un tablet senza collegamento, in attesa della tua risposta', onclick: () => apriRientro() }, `Rientro dei tablet (${inAttesaTotali()})`);
     // i pezzi della plancia nella barra della mappa (ritocchi del 06/10: a gruppi; lì le scene stanno già nel gruppo
     // «Mappa» e la guida nel pannello «?»)
     const azioniPlancia = h('div', { class: 'riga-azioni' },
       // lotto 6: la plancia a pagina intera resta, con «Torna alla mappa»
       ctx.inMappa ? h('button', { type: 'button', class: 'btn', title: 'La plancia a pagina intera, con «Torna alla mappa»', onclick: () => ctx.azioni.planciaIntera() }, 'Plancia intera') : null,
-      aggiornato, btnChi, btnAggiungi, sceltaFile, btnEsempi, btnPrepara, btnCrea, btnPersonaggi, btnRientro,
+      aggiornato, btnChi, btnAggiungi, sceltaFile, btnEsempi, btnPrepara, btnCrea, btnPersonaggi,
       // 08/10: salvataggio completo (zip, Drive, ntfy), anche dalla mappa
       pulsanteSalvaSessione());
     /**

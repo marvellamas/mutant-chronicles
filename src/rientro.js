@@ -152,3 +152,28 @@ export function registraDecisioni(rientro, pgId, { approvate = [], scartate = []
   const limitate = Object.fromEntries(Object.entries(decise).slice(-MASSIMO_DECISE));
   return { ...r, personaggi: { ...r.personaggi, [pgId]: { ...pg, inAttesa: pg.inAttesa.filter((o) => !fatte.has(o.id)), decise: limitate } } };
 }
+
+/**
+ * Il riassunto per la fascia fissa del Direttore (25/10/2026): quante modifiche sono in attesa e di chi. null se non
+ * c'è niente: allora la fascia non esiste (a tavolo normale, con i tablet collegati, Davide non deve vedere niente).
+ * @param personaggi quello che risponde GET /api/rientro: [{ nome, righe: [...] }]
+ */
+export function riassuntoRientro(personaggi) {
+  const lista = (Array.isArray(personaggi) ? personaggi : []).filter((p) => Array.isArray(p?.righe) && p.righe.length);
+  const n = lista.reduce((t, p) => t + p.righe.length, 0);
+  if (!n) return null;
+  const di = lista.length === 1 ? (lista[0].nome || 'un personaggio') : `${lista.length} personaggi`;
+  return { n, personaggi: lista.length, testo: `Rientro dei tablet: ${n === 1 ? '1 modifica fatta' : `${n} modifiche fatte`} senza collegamento, in attesa della tua risposta (${di})` };
+}
+
+/**
+ * La fascia fissa in cima alla pagina del Direttore: c'è quando — e solo quando — ci sono modifiche in attesa e la
+ * schermata di rientro è chiusa (se è aperta è lei stessa a dirlo). È l'unico modo per riaprirla dopo averla
+ * chiusa: chiudere non è scartare, quello che non si decide resta e deve restare raggiungibile da qualunque pagina
+ * (la scheda, il Tavolo, la mappa), non solo da una. Il 24/10 il pulsante stava soltanto nella barra compatta
+ * della mappa e nella testata del Tavolo non c'era: chi chiudeva la schermata non aveva più modo di riaprirla.
+ */
+export function fasciaRientro({ personaggi, aperta = false } = {}) {
+  if (aperta) return null;
+  return riassuntoRientro(personaggi);
+}
