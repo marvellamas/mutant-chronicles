@@ -1,6 +1,9 @@
 @echo off
-rem Aggiornamento di Mutant per chi ha la copia con Git (git clone): doppio clic su questo file,
-rem poi avvia.bat. Chi ha scaricato lo zip usa invece distribuzione\1_scarica_o_aggiorna_app.bat.
+rem Aggiornamento di Mutant: lo fa la voce 2 di Mutant.bat (25/10/2026, "un ingresso solo": non aprirlo a mano).
+rem Con la copia Git (git clone) fa il pull; con la copia scaricata come zip chiama 1_scarica_o_aggiorna_app.bat,
+rem che sta accanto alla cartella mutant. Prima dice la versione di adesso e fa la copia di sicurezza; alla fine dice
+rem in chiaro che cosa e' cambiato (tools\esito-aggiornamento.mjs). Con Git mostra il branch e, se ci sono modifiche
+rem non salvate, si ferma senza toccare niente.
 rem Niente lettere accentate: la console di Windows non e' in UTF-8.
 rem
 rem ATTENZIONE: il pull sostituisce QUESTO file mentre gira. cmd legge il .bat riga per riga, per
@@ -8,10 +11,10 @@ rem posizione: se le righe cambiano, dopo il pull riprenderebbe nel punto sbagli
 rem l'aggiornamento sta su UNA RIGA SOLA (cmd la legge per intero prima di eseguirla) e il resto sta
 rem in sottoprogrammi, che cmd ritrova per nome anche nel file nuovo. Non spezzare quella riga.
 rem
-rem avvia.bat rigenera versione.json e l'importmap di index.html (docs/cache.md): se l'impronta
+rem avvia-server.bat rigenera versione.json e l'importmap di index.html (docs/cache.md): se l'impronta
 rem calcolata qui e' diversa da quella su GitHub, Git vede quei due file come modificati e il pull
 rem si rifiuterebbe. Prima del pull si scartano quindi le rigenerazioni locali di quei due soli
-rem file (avvia.bat le rifa' subito dopo); nessun altro file viene toccato.
+rem file (avvia-server.bat le rifa' subito dopo); nessun altro file viene toccato.
 rem
 rem Rete di sicurezza dei dati di questo PC (12/10/2026, docs/diagnosi-dati-spariti-2026-10-12.md):
 rem PRIMA una copia zip di tutte le cartelle locali in backup-prima-aggiornamento\; se non riesce non
@@ -25,13 +28,32 @@ where git >nul 2>nul
 if errorlevel 1 goto senza_git
 if not exist ".git\" goto senza_git
 
-rem «exit /b» e non «exit»: la voce 2 della console chiama questo file con «call» e deve poter riaprire il menu.
+rem "exit /b" e non "exit": la voce 2 della console chiama questo file con "call" e deve poter riaprire il menu.
 (call :prima & if not errorlevel 1 (git checkout -- versione.json index.html & git pull --ff-only & if errorlevel 1 (call :errore_pull) else (call :dopo)) & echo. & pause & exit /b 0)
 
 rem ---------------------------------------------------------------------------------------------
 rem Copia di sicurezza dei dati di questo PC, prima di toccare qualunque cosa.
 :prima
 echo.
+rem 25/10/2026: su una copia con Git si dice il branch e, con modifiche non salvate ai file dell'app, ci si ferma
+rem (il pull le rifiuterebbe a meta' o, peggio, le mescolerebbe). versione.json e index.html si rigenerano da soli.
+set "BRANCH="
+for /f "delims=" %%B in ('git rev-parse --abbrev-ref HEAD 2^>nul') do set "BRANCH=%%B"
+echo  Copia con Git, branch: %BRANCH%
+set "SPORCHI="
+for /f "delims=" %%M in ('git status --porcelain --untracked-files^=no 2^>nul ^| findstr /v /c:" versione.json" /c:" index.html"') do set "SPORCHI=1"
+if defined SPORCHI (
+  echo.
+  echo  ==============================================================
+  echo   Non aggiorno: in questa cartella ci sono modifiche non salvate.
+  echo  ==============================================================
+  git status --short --untracked-files=no
+  echo.
+  echo  Salvale ^(commit^) o mettile da parte ^(git stash^), poi rifai l'aggiornamento.
+  echo  Non ho toccato niente.
+  exit /b 1
+)
+if exist "tools\esito-aggiornamento.mjs" node tools\esito-aggiornamento.mjs prima
 echo  Metto al sicuro i dati di questo PC...
 set "RETE=1"
 where node >nul 2>nul || set "RETE="
@@ -71,18 +93,18 @@ call :avviso aggiornato
 rem Salvataggi (salvataggi\LEGGIMI.txt, 08/10): la prima volta la configurazione si crea dall'esempio
 if not exist "config-salvataggi.json" if exist "config-salvataggi.esempio.json" copy /y "config-salvataggi.esempio.json" "config-salvataggi.json" >nul 2>nul
 rem File dell'app spariti (per esempio messi in quarantena dall'antivirus, 09/10): si rimettono dalla copia di Git
-for %%F in (Mutant.bat avvia-server.bat salva-sessione.bat crea-collegamento.bat avvia.bat server.mjs) do if not exist "%%F" git checkout -- "%%F" >nul 2>nul && echo  Rimesso il file mancante %%F
-rem Pacchetto zip: i file fuori dalla cartella mutant (1_scarica..., 3_avvia...) si rimettono al passo
+for %%F in (Mutant.bat avvia-server.bat server.mjs) do if not exist "%%F" git checkout -- "%%F" >nul 2>nul && echo  Rimesso il file mancante %%F
+rem Pacchetto zip: i file fuori dalla cartella mutant (1_scarica..., LEGGIMI) si rimettono al passo
 if exist "tools\aggiorna-avviatori.mjs" node tools\aggiorna-avviatori.mjs
 
 rem Riavvio del server dopo l'aggiornamento (13/10/2026, tools\riavvia.mjs): se Mutant era acceso lo spegne
 rem salvando (come "Spegni Mutant") e lo riaccende con la versione nuova; se era spento lo lascia spento; se
 rem l'aggiornamento non ha cambiato niente non lo tocca. La porta la legge dall'ambiente (MUTANT_PORTA o PORTA).
-echo.
-echo  Fatto: Mutant e' aggiornato.
 if exist "tools\riavvia.mjs" node tools\riavvia.mjs
+rem 25/10/2026: in chiaro, che cosa e' cambiato (o che era gia' aggiornato)
+if exist "tools\esito-aggiornamento.mjs" node tools\esito-aggiornamento.mjs dopo
 echo.
-echo  Se Mutant non e' acceso: apri Mutant.bat (o il collegamento del desktop) e scegli 1.
+echo  Se Mutant non e' acceso: nel menu di Mutant.bat scegli 1.
 exit /b 0
 
 rem ---------------------------------------------------------------------------------------------
@@ -123,15 +145,21 @@ echo.
 echo  Stato della cartella:
 git status --short --branch
 echo.
-echo  L'app gia' presente funziona lo stesso: puoi usare avvia.bat.
+echo  L'app gia' presente funziona lo stesso: nel menu di Mutant.bat scegli 1.
 echo  I tuoi dati non sono stati toccati; la copia di sicurezza e' in backup-prima-aggiornamento.
 exit /b 0
 
 :senza_git
-call :avviso non-aggiornato "cartella senza Git o Git non installato"
+rem 25/10/2026: la copia scaricata come zip si aggiorna da qui, con 1_scarica_o_aggiorna_app.bat (accanto alla
+rem cartella "mutant", dove l'ha messo l'installazione). Anche questa riga e' una sola: il programma sostituisce
+rem questo file mentre gira.
+set "NOMEQUI="
+for %%A in ("%~dp0.") do set "NOMEQUI=%%~nxA"
+if /i "%NOMEQUI%"=="mutant" if exist "%~dp0..\1_scarica_o_aggiorna_app.bat" ((if exist "tools\esito-aggiornamento.mjs" node tools\esito-aggiornamento.mjs prima) & call "%~dp0..\1_scarica_o_aggiorna_app.bat" & (if exist "%~dp0tools\aggiorna-avviatori.mjs" node "%~dp0tools\aggiorna-avviatori.mjs" --radice="%~dp0." --fuori="%~dp0..") & (if exist "%~dp0tools\esito-aggiornamento.mjs" node "%~dp0tools\esito-aggiornamento.mjs" dopo --radice="%~dp0.") & echo. & pause & exit /b 0)
+call :avviso non-aggiornato "cartella senza Git e senza il programma di aggiornamento dallo zip"
 echo.
-echo  Questa cartella non e' una copia con Git (oppure Git non e' installato).
-echo  Per aggiornare usa distribuzione\1_scarica_o_aggiorna_app.bat
+echo  Questa cartella non e' una copia con Git, e accanto non trovo 1_scarica_o_aggiorna_app.bat
+echo  per aggiornarla dallo zip. Manda questo schermo a Marcello.
 echo.
 pause
 exit /b 1
