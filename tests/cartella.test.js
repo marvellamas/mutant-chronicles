@@ -27,9 +27,10 @@ test('server: ping, file dell’app con gli header di serve.json, niente uscite 
   const ping = await (await fetch(`${base}/api/ping`)).json();
   // dice anche chi è (versione, ora di avvio, pid): un nuovo avvio lo riconosce (src/porta-occupata.js)
   // copiaDiLavoro/notaCopia dipendono dall'installazione su cui girano i test (20/10: il marcatore COPIA-DI-LAVORO.txt,
-  // che sulla macchina di chi sviluppa c'è e sul PC del Direttore no): qui non si guardano
-  assert.deepEqual({ ...ping, versione: undefined, avviato: undefined, pid: undefined, copiaDiLavoro: undefined, notaCopia: undefined },
-    { ok: true, app: 'mutant', cartella: 'personaggi', versione: undefined, avviato: undefined, pid: undefined, master: true, copiaDiLavoro: undefined, notaCopia: undefined });
+  // che sulla macchina di chi sviluppa c'è e sul PC del Direttore no; dal 25/10 anche il ruolo scelto da Mutant.bat, con il
+  // nome del PC): qui non si guardano
+  assert.deepEqual({ ...ping, versione: undefined, avviato: undefined, pid: undefined, copiaDiLavoro: undefined, notaCopia: undefined, nomePc: undefined },
+    { ok: true, app: 'mutant', cartella: 'personaggi', versione: undefined, avviato: undefined, pid: undefined, master: true, copiaDiLavoro: undefined, notaCopia: undefined, nomePc: undefined });
   assert.equal(ping.pid, process.pid);
   assert.match(ping.avviato, /^\d{4}-\d\d-\d\dT/);
   const indice = await fetch(`${base}/`);

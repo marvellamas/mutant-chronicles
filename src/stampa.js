@@ -23,6 +23,7 @@ import { gruppoTecnica, ordineGruppo, tecnicaDi, sintesiTecnica } from './tecnic
 import { vistaVeicoloPersonaggio, pilotareDelPersonaggio } from './veicoli.js';
 import { eRiferimento, stessaChiave } from './veicoli-registro.js';
 import { consumabiliMistici } from './consumabili-mistici.js';
+import { rigaBreve, primaFraseUtile } from './talenti-testi.js';
 
 /** Limiti di impaginazione (non regole di gioco): lunghezze massime dei testi stampati. */
 export const LIMITI_STAMPA = {
@@ -206,7 +207,9 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
   const testo = (t) => String(t ?? '').trim();
   const frase = (t) => (completo ? testo(t) : primaFrase(t));
   // Talenti (decisione 112): la sintesi operativa dai dati; senza, la prima frase con «sintesi da redigere»
-  const talentoSS = (t) => (completo ? { frase: testo(t.testo) } : t.sintesi ? { frase: t.sintesi.testo, rif: t.sintesi.rif, daVerificare: t.sintesi.stato !== 'approvata' } : { frase: primaFrase(t.testo), daRedigere: true });
+  // 25/10 sera: senza sintesi, la riga breve del catalogo (src/talenti-testi.js), che salta «Passivo.», «Requisito: …» e simili
+  const corta = (f) => (f.length > LIMITI_STAMPA.frase ? tronca(f, LIMITI_STAMPA.frase) : f);
+  const talentoSS = (t) => (completo ? { frase: testo(t.testo) } : t.sintesi ? { frase: t.sintesi.testo, rif: t.sintesi.rif, daVerificare: t.sintesi.stato !== 'approvata' } : { frase: corta((t.id && rigaBreve(t.id, dati)) || primaFraseUtile(t.testo) || primaFrase(t.testo)), daRedigere: true });
   const bg = String(c.concetto ?? '').trim().replace(/\s+/g, ' ');
   const equip = elencoZaino(s.equipaggiamento?.zaino ?? []);
 
@@ -278,6 +281,8 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
       nome: `Specializzazione in ${x.nome}`,
       abilita: x.abilita.length ? x.abilita.join(', ') : 'Abilità della scheda dell’arma',
       effetto: effettoSpecializzazione(x.effetto),
+      // 25/10 sera: che cosa fa, in una riga (bonus, Abilità, ambito), come nel riquadro «Da scegliere»
+      riga: rigaBreve(x.id, dati),
       livello: x.livello,
       classe: x.classe ?? null,
       annotazione: x.annotazione ?? null,

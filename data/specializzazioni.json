@@ -1195,7 +1195,8 @@
       "annotazione": "disciplina sportiva scelta all’acquisizione",
       "solo_regime_nuovo": true,
       "fonte_regole": "talenti_nuovi",
-      "categoria": "specializzazione"
+      "categoria": "specializzazione",
+      "riga": "+3 VA ad Atletica in una sola disciplina sportiva scelta all’acquisizione, anche fuori dalle competizioni; non vale per attacchi, Difese o Prove Salvezza."
     }
   ],
   "per_classe": {

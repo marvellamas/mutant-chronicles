@@ -1412,7 +1412,7 @@ function tabAbilita(ctx, d) {
       t.provvisorio ? h('p', { class: 'nota' }, 'Talento provvisorio: ricavato dal Manuale della Magia, prerequisiti da definire con il master.') : null,
       paragrafi(t.frase)))) : null),
     d.specializzazioni.length ? sezione('Specializzazioni', h('ul', {}, d.specializzazioni.map((x) => h('li', {},
-      info('talento', x.id, x.nome), ` — ${x.abilita}; ${x.effetto} (${x.livello}° livello)`)))) : null,
+      info('talento', x.id, x.nome), x.annotazione ? ` (${x.annotazione})` : null, ` — ${x.riga || `${x.abilita}; ${x.effetto}`} (${x.livello}° livello)`)))) : null,
     // Tecniche Interiori: nella tab Poteri, con «Attiva» (richiesta di Davide del 02/10)
     d.tecniche.length || d.tecnicheAmmesse ? h('p', { class: 'nota rimando-tecniche' }, `Tecniche Interiori (${d.tecniche.length} / ${d.tecnicheAmmesse}): vedi Poteri.`) : null,
   ];

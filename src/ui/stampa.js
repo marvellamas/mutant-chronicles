@@ -358,7 +358,7 @@ function foglioAbilita(d) {
       legendaSintesi,
       // dal foglio 3 (pezzo 2): Specializzazioni e Tecniche Interiori, come nella tab Abilità della SD
       d.specializzazioni.length || d.regimeTalenti === 'nuovo' ? box({ titolo: 'Specializzazioni', classe: 'f2-spostabile' }, d.specializzazioni.length ? h('ul', { class: 'elenco-talenti-stampa' }, d.specializzazioni.map((x) => h('li', {},
-        h('strong', {}, x.nome), x.annotazione ? ` — ${x.annotazione}` : null, ` — ${x.abilita}; ${x.effetto}`, d.regimeTalenti === 'nuovo' ? h('span', { class: 'sigla' }, ` ${x.livello}° liv.${x.classe ? ` (${x.classe})` : ''}`) : null))) : h('p', { class: 'piccolo' }, 'Nessuna.')) : null,
+        h('strong', {}, x.nome), x.annotazione ? ` — ${x.annotazione}` : null, ` — ${x.riga || `${x.abilita}; ${x.effetto}`}`, d.regimeTalenti === 'nuovo' ? h('span', { class: 'sigla' }, ` ${x.livello}° liv.${x.classe ? ` (${x.classe})` : ''}`) : null))) : h('p', { class: 'piccolo' }, 'Nessuna.')) : null,
       // Tecniche Interiori: nel foglio 5 (Poteri), come nella SD (richiesta di Davide del 02/10)
       box({ titolo: 'Annotazioni', riempitivo: true, classe: 'f2-annotazioni' }, righeGuida())));
 }

@@ -1131,7 +1131,8 @@
         ]
       },
       "categoria": "superato",
-      "sostituito_da": "maestria-arti-marziali-migliorate"
+      "sostituito_da": "maestria-arti-marziali-migliorate",
+      "riga": "+1 VA agli attacchi senz’armi e alle Prove di Difese contro attacchi Ravvicinati mentre combatte senz’armi; da solo non permette di parare a mani nude."
     },
     {
       "id": "colpo-di-opportunita-istintivo",
