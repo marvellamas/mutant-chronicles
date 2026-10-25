@@ -780,6 +780,13 @@ export function avvisiDati(dati) {
       if (isTodo(x?.[campo])) avv('incantesimi', `incantesimi[${i}] (${x.nome}).${campo}`, 'da completare (TODO)');
     }
   });
+  // Talenti v1.0 (25/10/2026): un valore che il file non dà si segna «da_definire» (elenco di che cosa manca) e diventa
+  // un avviso, mai un errore; vale per Talenti e Specializzazioni
+  const daDefinire = (file, lista, nome) => (lista ?? []).forEach((x, i) => {
+    for (const d of Array.isArray(x?.da_definire) ? x.da_definire : x?.da_definire ? [x.da_definire] : []) avv(file, `${nome}[${i}] (${x.nome})`, `da definire: ${d}`);
+  });
+  daDefinire('talenti_liberi', dati?.talenti_liberi?.talenti, 'talenti');
+  daDefinire('specializzazioni', dati?.specializzazioni?.specializzazioni, 'specializzazioni');
   (dati?.talenti_liberi?.talenti ?? []).forEach((x, i) => {
     if (x?.provvisorio) avv('talenti_liberi', `talenti[${i}] (${x.nome})`, 'Talento provvisorio: ricavato dalle citazioni del Manuale della Magia, prerequisiti da definire (TODO)');
     else if (isTodo(x?.tipo)) avv('talenti_liberi', `talenti[${i}] (${x.nome}).tipo`, 'passivo o attivo da definire (TODO)');

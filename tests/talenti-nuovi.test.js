@@ -164,3 +164,21 @@ test('file del personaggio: regime e Specializzazione iniziale scritti solo se c
   assert.deepEqual(scritto.specializzazioneIniziale, { id: 'specializzazione-informatica' });
   assert.equal(normalizza({ ...nuovo.creazione, regimeTalenti: 3 }, dati).scelte.regimeTalenti, null);
 });
+
+test('validatore: categoria, prerequisiti esistenti, elenco per Classe; «da definire» è un avviso, non un errore', async () => {
+  const { validaDati, avvisiDati } = await import('../src/validate.js');
+  assert.deepEqual(validaDati(dati), []);
+  const x = structuredClone(dati);
+  const t = x.talenti_liberi.talenti;
+  delete t.find((y) => y.id === 'pistolero').categoria;
+  t.find((y) => y.id === 'ritualista-maggiore').prerequisiti = ['ritualista-minimo'];
+  delete x.specializzazioni.per_classe.Agente;
+  t.find((y) => y.id === 'ricarica-esperta').da_definire = ['quante munizioni per operazione (A.182)'];
+  const e = validaDati(x).map((y) => `${y.chiave}: ${y.problema}`).join('\n');
+  assert.match(e, /pistolero\)\.categoria: attesa una fra talento_libero, maestria, superato/i);
+  assert.match(e, /"ritualista-minimo" non è un Talento/);
+  assert.match(e, /per_classe\.Agente: la Classe non ha il suo elenco/);
+  assert.doesNotMatch(e, /da definire/);
+  assert.ok(avvisiDati(x).some((a) => /Ricarica Esperta\).*|da definire: quante munizioni/.test(`${a.chiave} ${a.problema}`)));
+  assert.equal(avvisiDati(dati).filter((a) => /da definire:/.test(a.problema)).length, 0, 'oggi nessun valore da definire');
+});
