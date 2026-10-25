@@ -28,6 +28,7 @@ cosa fa. Premi il numero e basta (non serve Invio).
    7. Passa ai Talenti nuovi
    8. Torna a com'era prima dei Talenti nuovi
    9. Impostazioni
+   P. Cerca i personaggi
    C. Controlla lo stato
    0. Esci
 
@@ -202,6 +203,10 @@ Quando Marcello ti dice che c'e' una versione nuova:
       25/10 (Talenti nuovi)."
      "Era gia' aggiornato: sei alla versione del 25/10 (Talenti nuovi).
       Non e' cambiato niente."
+   Sotto, in verde, deve esserci anche:
+     "Personaggi: 7 in C:\...\personaggi, PX invariati."
+   Se invece c'e' qualcosa in ROSSO (personaggi o PX cambiati): non giocare e
+   non fare la voce 7. Premi P "Cerca i personaggi" (vedi sotto).
 4. Premi un tasto: si riapre il menu, con la versione nuova scritta in alto.
 
 Se Mutant era acceso, lo riaccende da solo con la versione nuova.
@@ -336,6 +341,23 @@ Voce 8 - Torna a com'era prima dei Talenti nuovi
   (prima fa un'altra copia di come sono adesso). Le scelte fatte dopo il
   passaggio si perdono. Chiede SI.
 
+
+SE DOPO UN AGGIORNAMENTO MANCANO PERSONAGGI O PX
+--------------------------------------------------------------
+
+Dal 26/10/2026 Mutant ricorda in quale cartella stanno i tuoi personaggi
+(e PX, tavolo, salvataggi): e' un'impostazione di questo PC, che nessun
+aggiornamento cambia. Se pero' qualcosa manca:
+
+1. Apri Mutant.bat e premi P "Cerca i personaggi". Legge soltanto: non
+   sposta e non cancella niente.
+2. Per ogni personaggio vedi in cima la versione piu' recente, con dove sta,
+   la data, il livello e i PX. Sotto ci sono il pannello dei PX della
+   partita e l'elenco delle cartelle con personaggi, dalla piu' recente.
+3. Scrivi il numero della cartella con i personaggi giusti (quella con i PX
+   dell'ultima serata) e Invio, poi SI e Invio.
+4. Se Mutant e' acceso, chiudi la sua finestra nera e riaccendilo con la
+   voce 1. Poi premi C "Controlla lo stato": devono esserci i PX giusti.
 
 SE QUALCOSA NON VA
 --------------------------------------------------------------

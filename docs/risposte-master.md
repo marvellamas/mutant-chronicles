@@ -2068,3 +2068,16 @@ Nessuna regola nuova e nessuna domanda per Davide. Diagnosi e correzioni in `doc
 Nessuna regola nuova. Dettaglio in `docs/diff-talenti-leggibili-2026-10-25.md`. Nei dati: il testo di ogni Talento è il
 corpo della sua scheda nel manuale, con la riga d'intestazione (tipo, requisiti, acquisizioni) in `intestazione`;
 Successo Magistrale Migliorato era la versione di prima. Le voci del 7/10 tengono il testo del file.
+
+## 26 ottobre 2026 — I personaggi non si perdono più con un aggiornamento
+
+Nessuna regola nuova e nessuna domanda per Davide. Diagnosi e correzione in
+`docs/diagnosi-personaggi-dopo-aggiornamento-2026-10-26.md`.
+
+- Dove sono i dati di Mutant (personaggi, PX, tavolo, salvataggi) è un'impostazione di questo PC, nel profilo di Windows
+  (`%APPDATA%\Mutant\dati.json`, `tools/dati-pc.mjs`), come ruolo e avvisi: qualunque copia dell'app, nuova o vecchia,
+  usa la stessa cartella; nessun aggiornamento la tocca.
+- La voce 2 annota personaggi e PX prima di aggiornare e li ricontrolla dopo, dal server (verde o rosso con i nomi);
+  la voce 7 mostra cartella e PX prima del SI; la voce C mostra i PX.
+- Voce nuova P «Cerca i personaggi»: legge soltanto, trova le copie (cartelle, zip, storici, Drive, file esportati) e il
+  pannello PX, e con numero e SI sceglie quale cartella usa questo PC.

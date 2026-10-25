@@ -47,7 +47,7 @@ pagina dell'app.
 | | Voce | Che cosa fa | Chiede SI? |
 |---|---|---|---|
 | **1** | Avvia Mutant | Accende il server nella sua finestra nera e apre il browser. Il menu resta libero. Se è già acceso, lo dice. | no |
-| **2** | Aggiorna Mutant | Scarica la versione nuova (con Git o con lo zip, da sé). Prima scrive la versione di adesso e fa la copia zip dei dati («Copia di sicurezza … fatta»); dopo ricontrolla le cartelle e dice in chiaro: «Aggiornato: prima eri alla versione del 22/10, ora sei a quella del 25/10 (Talenti nuovi).» oppure «Era gia' aggiornato». Con Git dice il branch e, se ci sono modifiche non salvate, non aggiorna e le elenca. Non apre finestre. | no |
+| **2** | Aggiorna Mutant | Prima annota dove sono i personaggi, quanti e con quanti PX; dopo li rilegge dal server e scrive in verde «Personaggi: 7 in <cartella>, PX invariati», o in rosso che cosa è cambiato, con i nomi. Scarica la versione nuova (con Git o con lo zip, da sé). Prima scrive la versione di adesso e fa la copia zip dei dati («Copia di sicurezza … fatta»); dopo ricontrolla le cartelle e dice in chiaro: «Aggiornato: prima eri alla versione del 22/10, ora sei a quella del 25/10 (Talenti nuovi).» oppure «Era gia' aggiornato». Con Git dice il branch e, se ci sono modifiche non salvate, non aggiorna e le elenca. Non apre finestre. | no |
 | **3** | Salva la sessione | Zip di personaggi, tavolo, scontri, mappe… in `salvataggi\` (e su Drive, se impostato). | no |
 | **4** | Ripristina un salvataggio | Elenca i salvataggi di quattro posti; si sceglie il numero; prima fa una copia di com'è adesso. Se Mutant è acceso, si offre di spegnerlo. | S/N |
 | **5** | Apri la cartella dei salvataggi | Apre Esplora risorse su `salvataggi\`. **È l'unica voce che apre una finestra di Esplora risorse.** | no |
@@ -55,7 +55,8 @@ pagina dell'app.
 | **7** | Passa ai Talenti nuovi | Rapporto PG per PG (un personaggio una volta, il suo file attuale); con SI copia zip di `personaggi\`, poi a ogni PG toglie i Talenti di oggi (registro del master). Alla fine il controllo sul server, come lo vede l'app: «Controllato sul server: 7 personaggi su 7 con i Talenti nuovi» in verde, oppure in rosso con i nomi che non tornano (e allora non scrive «fatto»). Se sono già tutti passati, non fa niente. Accanto alla voce: «[Talenti nuovi: non ancora fatto]» o «[Talenti nuovi: fatto il 26/10 alle 21:10 (7 personaggi su 7)]». | **SI** |
 | **8** | Torna a com'era prima dei Talenti nuovi | Rimette i file dalla copia della voce 7 (prima ne fa un'altra di com'è adesso); toglie i file scritti dopo il passaggio, perché non restino due file per lo stesso personaggio. Usa lo zip più recente che ha davvero i Talenti di prima. Alla fine il controllo sul server: «0 personaggi su 7 con i Talenti nuovi». | **SI** |
 | **9** | Impostazioni | Ruolo di questo PC, avvisi ntfy, cartella di Google Drive, notifica di prova, collegamento «Mutant» sul desktop. | — |
-| **C** | Controlla lo stato | In parole semplici: la cartella dei personaggi che usa Mutant; per ogni personaggio quanti file ha, quale è l'attuale, Talenti vecchi o nuovi; il passaggio e lo zip da cui torna la voce 8. Lo scrive anche in `stato-mutant.txt`, da mandare a Marcello. Legge e basta. | no |
+| **P** | Cerca i personaggi | Se dopo un aggiornamento mancano personaggi o PX: li cerca nelle copie dell'app, negli zip dei salvataggi e delle copie di sicurezza, negli storici, su Drive e nei file esportati, e mostra per ciascuno la versione più recente (dove, data, livello, PX), più il pannello PX. Legge soltanto; con il numero di una cartella e SI, Mutant su questo PC userà quella. | **SI** |
+| **C** | Controlla lo stato | In parole semplici: la cartella dei personaggi che usa Mutant; per ogni personaggio i PX, quanti file ha, quale è l'attuale, Talenti vecchi o nuovi; il passaggio e lo zip da cui torna la voce 8. Lo scrive anche in `stato-mutant.txt`, da mandare a Marcello. Legge e basta. | no |
 | **0** | Esci | Chiude il menu; se Mutant è acceso resta acceso. | no |
 
 Se Node.js manca, `Mutant.bat` lo dice prima del menu e lo installa (con S).
@@ -88,3 +89,7 @@ Sul PC di Davide i quattro file numerati li toglie il primo aggiornamento (`tool
 - Il ruolo è in `tools/ruolo-pc.mjs`; la fascia della copia di prova in `src/copia-di-lavoro.js` → `statoDaRuolo`.
   Senza ruolo vale il vecchio `COPIA-DI-LAVORO.txt`, se c'è.
 - Il testo del menu e della console è senza lettere accentate: la console di Windows non è in UTF-8.
+
+## Dove sono i dati
+
+Dal 26/10/2026 la cartella dei dati di Mutant su questo PC (personaggi, PX, tavolo, salvataggi) è scritta nel profilo di Windows, `%APPDATA%\Mutant\dati.json` (`tools/dati-pc.mjs`). Qualunque copia dell'app la usa, e nessun aggiornamento la cambia; la sceglie la voce P. La prima volta la scrive da sé la copia dell'app che ha già i personaggi.
