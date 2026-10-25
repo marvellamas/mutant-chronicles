@@ -147,7 +147,7 @@ import { avvisoCartellaVuota, postiSalvataggi, rigaSalvataggio } from './tools/r
 import { bordoToken } from './src/mappa/colori.js';
 import { validaScontro, rigaOpportunita, rigaAiutoMaster, diTurno, registraRiga, scontroPerGiocatori } from './src/scontro.js';
 import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
-import { NOME_FILE, fileProvvisorio, ultimiPerPersonaggio, ultimiPerPg, chiaveDaFile, chiavePersonaggio } from './src/cartella.js';
+import { NOME_FILE, fileProvvisorio, ultimiPerPersonaggio, ultimiPerPg, fileAttuale, chiaveDaFile, chiavePersonaggio } from './src/cartella.js';
 import { conMetadati, serveCopia, copieDaTogliere, idPersonaggio, cartellaStorico, nomeCopiaStorica, CARTELLA_STORICO } from './src/storico-personaggi.js';
 import { associazioneDi, dispositivoVisto, conAssociazione, senzaAssociazione, puoScrivere, elencoDispositivi } from './src/dispositivi.js';
 import { aggiungiOperazioni, normalizzaRientro, rigaOperazione, applicaDecisioni, registraDecisioni, inAttesaDi } from './src/rientro.js';
@@ -218,10 +218,13 @@ async function personaggioDelFile(dove, s = null) {
   const st = s ?? await stat(dove);
   const c = cacheFile.get(dove);
   if (c && c.mtime === st.mtimeMs && c.dimensione === st.size) return c.pg;
-  let pg = { pg: null, nome: null };
+  let pg = { pg: null, nome: null, aggiornato: null };
   try {
     const o = JSON.parse(await readFile(dove, 'utf8'));
-    pg = { pg: typeof o?.pg === 'string' ? o.pg : null, nome: typeof o?.scelte?.nome === 'string' ? o.scelte.nome.trim() : null };
+    // `aggiornato`: quando il server ha scritto il file (nel file, quindi resta anche dopo uno zip e un ripristino):
+    // serve a capire quale file è l'attuale (src/cartella.js → fileAttuale)
+    pg = { pg: typeof o?.pg === 'string' ? o.pg : null, nome: typeof o?.scelte?.nome === 'string' ? o.scelte.nome.trim() : null,
+      aggiornato: typeof o?.aggiornato_il === 'string' ? o.aggiornato_il : null };
   } catch { /* file illeggibile: senza identificativo */ }
   cacheFile.set(dove, { mtime: st.mtimeMs, dimensione: st.size, pg });
   return pg;
@@ -292,15 +295,17 @@ async function fileAttualeDelPg(cartella, file, pg) {
   if (!pg) return null;
   let nomi;
   try { nomi = await readdir(cartella); } catch { return null; }
-  let migliore = null;
+  const suoi = [];
   for (const x of nomi.filter((n) => NOME_FILE.test(n))) {
     const dove = join(cartella, x);
     let st;
     try { st = await stat(dove); } catch { continue; }
-    if ((await personaggioDelFile(dove, st)).pg !== pg) continue;
-    if (!migliore || st.mtimeMs > migliore.mtime) migliore = { nome: x, mtime: st.mtimeMs };
+    const d = await personaggioDelFile(dove, st);
+    if (d.pg === pg) suoi.push({ file: x, mtime: st.mtimeMs, pg, aggiornato: d.aggiornato });
   }
-  return migliore ? leggi(migliore.nome) : null;
+  // 25/10 sera: quale file è l'attuale lo dice una funzione sola (src/cartella.js → fileAttuale), come per l'app e il menu
+  const migliore = fileAttuale(suoi);
+  return migliore ? leggi(migliore.file) : null;
 }
 
 // «Modifica master»: copie del file di un PG prima di una modifica alle sue scelte (cartella fuori da git, con rotazione)
@@ -1430,8 +1435,8 @@ async function elencoPersonaggi(cartella) {
     const s = await stat(join(cartella, file));
     const m = /^(.*)_liv(\d+)_(\d{4}-\d{2}-\d{2})\.json$/.exec(file);
     // `pg`: identificativo del personaggio nel file (null nei file di prima)
-    const { pg } = await personaggioDelFile(join(cartella, file), s);
-    return { file, nome: m[1], livello: Number(m[2]), data: m[3], mtime: s.mtimeMs, dimensione: s.size, pg };
+    const { pg, aggiornato } = await personaggioDelFile(join(cartella, file), s);
+    return { file, nome: m[1], livello: Number(m[2]), data: m[3], mtime: s.mtimeMs, dimensione: s.size, pg, aggiornato };
   }));
   return lista.sort((a, b) => b.mtime - a.mtime);
 }

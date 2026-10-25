@@ -32,8 +32,32 @@ export const chiavePersonaggio = (nome) => chiaveDaFile(nomeFileEsportazione(nom
  */
 export const formaNome = (nome) => String(nome ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[\s_-]+/g, '');
 
-/** Il file più recente di un elenco (o null). */
-const piuRecente = (lista) => lista.reduce((m, f) => (!m || f.mtime > m.mtime ? f : m), null);
+/**
+ * Quale file di un personaggio è l'attuale (25/10/2026 sera, diagnosi sul fisso). È LA funzione: la usano l'app, il
+ * server e il menu di Mutant.bat (voci 7, 8 e «Controlla lo stato»), nessuno rifà il conto per conto suo.
+ * Conta prima quando il server ha scritto il file (`aggiornato`, da `aggiornato_il` dentro il file: resta uguale dopo
+ * uno zip e un ripristino), poi la data di modifica; a parità la data e il livello nel nome, poi il nome. La sola data
+ * di modifica non basta: il ripristino riscrive tutti i file nello stesso millisecondo, e allora decideva l'ordine in
+ * cui la cartella li elenca. Un file scritto dal server viene prima di uno di prima, senza `aggiornato`.
+ * @param lista righe dell'elenco (GET /api/personaggi): { file, mtime, aggiornato? }
+ */
+export function fileAttuale(lista) {
+  return (lista ?? []).reduce((m, f) => (!m || confrontaAttuale(f, m) > 0 ? f : m), null);
+}
+const istante = (f) => Date.parse(f?.aggiornato ?? '') || 0;
+const nelNome = (f) => /_liv(\d+)_(\d{4}-\d{2}-\d{2})\.json$/.exec(String(f?.file ?? '')) ?? [null, '0', ''];
+/** > 0 se `a` è più attuale di `b`. */
+export function confrontaAttuale(a, b) {
+  const [, livA, dataA] = nelNome(a);
+  const [, livB, dataB] = nelNome(b);
+  return (istante(a) > 0) - (istante(b) > 0)
+    || istante(a) - istante(b)
+    || (Number(a?.mtime) || 0) - (Number(b?.mtime) || 0)
+    || dataA.localeCompare(dataB)
+    || Number(livA) - Number(livB)
+    || String(a?.file ?? '').localeCompare(String(b?.file ?? ''));
+}
+const piuRecente = (lista) => fileAttuale(lista);
 
 /** L'identificativo stabile del personaggio di una riga dell'elenco (GET /api/personaggi): il suo «pg», o il
     ripiego sul «Nome» del file per i personaggi di prima (src/storico-personaggi.js → idPersonaggio). */
@@ -125,7 +149,7 @@ export function ultimiPerPersonaggio(lista) {
   const out = new Map();
   for (const f of lista ?? []) {
     const k = chiaveDaFile(f.file);
-    if (!out.has(k) || f.mtime > out.get(k).mtime) out.set(k, f);
+    if (!out.has(k) || confrontaAttuale(f, out.get(k)) > 0) out.set(k, f);
   }
   return out;
 }
@@ -168,7 +192,7 @@ export function elencoUnito(locali, remoti) {
   // gruppo di un file: il suo identificativo, oppure il «Nome» per i file di prima
   const gruppo = (f) => (f.pg ? `pg:${f.pg}` : `nome:${chiaveDaFile(f.file)}`);
   const ultimi = new Map();
-  for (const f of remoti) if (!ultimi.has(gruppo(f)) || f.mtime > ultimi.get(gruppo(f)).mtime) ultimi.set(gruppo(f), f);
+  for (const f of remoti) if (!ultimi.has(gruppo(f)) || confrontaAttuale(f, ultimi.get(gruppo(f))) > 0) ultimi.set(gruppo(f), f);
   const usati = new Set();
   const out = locali.map((voce) => {
     const f = fileDelPg(voce, remoti);
@@ -238,7 +262,7 @@ export function ultimiPerPg(lista) {
   const ultimi = new Map();
   for (const f of lista ?? []) {
     const k = gruppo(f);
-    if (!ultimi.has(k) || f.mtime > ultimi.get(k).mtime) ultimi.set(k, f);
+    if (!ultimi.has(k) || confrontaAttuale(f, ultimi.get(k)) > 0) ultimi.set(k, f);
   }
   return [...ultimi.values()].sort((a, b) => b.mtime - a.mtime);
 }

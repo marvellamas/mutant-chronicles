@@ -16,6 +16,7 @@ import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSy
 import { join, dirname, relative, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { creaZip, leggiZip } from './salva-sessione.mjs';
+import { elencoDaDisco, perPersonaggio, rigaDi, statoDalServer, esitoControllo } from './stato-personaggi.mjs';
 
 const RADICE = dirname(dirname(fileURLToPath(import.meta.url)));
 const PREFISSO = 'prima-dei-talenti-nuovi_';
@@ -37,11 +38,15 @@ function tuttiIFile(dir, base = dir) {
   });
 }
 
-/** I personaggi della cartella (solo il primo livello, come il server): [{ file, o }] */
+/**
+ * I personaggi della cartella: uno per identificativo, con il suo file attuale (src/cartella.js → fileAttuale, la stessa
+ * scelta dell'app e del server). Fino al 25/10 si prendeva ogni file per conto suo: con più file datati dello stesso
+ * personaggio si passavano anche le copie vecchie, e quale fosse l'attuale lo decideva l'ordine delle scritture.
+ * [{ file, o, files }]
+ */
 function personaggi(cartella) {
-  return readdirSync(cartella).filter((f) => NOME_FILE.test(f) && f !== 'LEGGIMI.txt').sort().flatMap((f) => {
-    try { const o = JSON.parse(readFileSync(join(cartella, f), 'utf8')); return o?.formato === 'mutant-personaggio' ? [{ file: f, o }] : []; } catch { return []; }
-  });
+  return perPersonaggio(elencoDaDisco(cartella).filter((r) => r.o?.formato === 'mutant-personaggio'))
+    .map((g) => ({ file: g.attuale.file, o: g.attuale.o, files: g.files.length }));
 }
 
 /** Il rapporto (righe) e i piani, PG per PG. */
@@ -79,6 +84,35 @@ export function zipDelPassaggio(salvataggi) {
   return readdirSync(salvataggi).filter((n) => n.startsWith(PREFISSO) && n.endsWith('.zip')).sort().reverse().map((n) => join(salvataggi, n));
 }
 
+/**
+ * Lo zip da cui la voce 8 torna indietro: il più recente in cui almeno un personaggio (il suo file attuale) ha ancora i
+ * Talenti di prima. Una voce 7 rifatta su personaggi già passati faceva uno zip dello stato già passato, e il ripristino
+ * da quello «non cambiava niente» (25/10, fisso di Marcello). null se non ce n'è.
+ */
+export function zipDaRipristinare(salvataggi) {
+  for (const z of zipDelPassaggio(salvataggi)) {
+    let voci;
+    try { voci = leggiZip(readFileSync(z)); } catch { continue; }
+    const righe = Object.entries(voci).filter(([n]) => !n.includes('/') && NOME_FILE.test(n)).map(([n, b]) => rigaDi(n, b.toString('utf8'), 0));
+    if (perPersonaggio(righe).some((g) => g.attuale.o?.formato === 'mutant-personaggio' && g.attuale.o?.scelte?.regimeTalenti !== 2)) return z;
+  }
+  return null;
+}
+
+/**
+ * Il controllo finale delle voci 7 e 8 (25/10 sera): come vede ogni personaggio il server, per la stessa strada
+ * dell'app. Se Mutant è spento se ne avvia uno solo per il controllo, sulla stessa cartella, raggiungibile solo da
+ * questo PC. { ok, totale, nuovi, nonTornano, righe, serverAcceso } — ok: false anche se il server non risponde.
+ */
+export async function controllaSulServer({ cartella, porta = 3000, attesi }) {
+  const s = await serverPerScrivere({ cartella, porta });
+  try {
+    const stato = await statoDalServer(s.base);
+    if (!stato) return { ok: false, totale: 0, nuovi: 0, nonTornano: [], righe: ['Il server di Mutant non risponde: non ho potuto controllare.'], serverAcceso: s.acceso };
+    return { ...esitoControllo(stato, attesi), serverAcceso: s.acceso };
+  } finally { await s.chiudi(); }
+}
+
 /** Data e ora di uno zip del passaggio, dal suo nome (prima-dei-talenti-nuovi_AAAA-MM-GG_hhmmss.zip). */
 export function quandoDelloZip(percorso) {
   const m = /(\d{4})-(\d{2})-(\d{2})_(\d{2})(\d{2})(\d{2})(?:_\d+)?\.zip$/.exec(String(percorso));
@@ -91,14 +125,11 @@ export function quandoDelloZip(percorso) {
  * @returns {{ totale, passati, quando: Date | null, copie }}
  */
 export function statoPassaggio({ cartella, salvataggi }) {
-  const per = new Map();
-  for (const { file, o } of existsSync(cartella) ? personaggi(cartella) : []) {
-    const id = typeof o.pg === 'string' ? o.pg : file.replace(/_liv\d+_\d{4}-\d{2}-\d{2}\.json$/, '');
-    per.set(id, per.get(id) || o?.scelte?.regimeTalenti === 2);
-  }
+  // il file attuale di ognuno (prima: «passato» se lo era almeno uno dei suoi file)
+  const pg = existsSync(cartella) ? personaggi(cartella) : [];
   const zip = zipDelPassaggio(salvataggi);
-  const passati = [...per.values()].filter(Boolean).length;
-  return { totale: per.size, passati, quando: passati && zip.length ? quandoDelloZip(zip[0]) : null, copie: zip.length };
+  const passati = pg.filter((x) => x.o?.scelte?.regimeTalenti === 2).length;
+  return { totale: pg.length, passati, quando: passati && zip.length ? quandoDelloZip(zip[0]) : null, copie: zip.length };
 }
 
 /** Il server per scrivere: quello acceso sul PC, se c'è, altrimenti uno avviato qui sulla stessa cartella. */
@@ -120,11 +151,14 @@ async function serverPerScrivere({ cartella, porta }) {
 
 /** Il passaggio: prima lo zip, poi ogni PG dal salvataggio normale. */
 export async function applica({ cartella, salvataggi, porta = 3000, d = null, quando = new Date() }) {
-  const copia = copiaZip({ cartella, salvataggi, quando });
   const { daFare } = await rapporto({ cartella, d, quando });
+  // tutti già passati: nessuno zip nuovo (sarebbe la copia di uno stato già passato, e la voce 8 ci tornerebbe)
+  if (!daFare.length) return { copia: null, fatti: [], errori: [], giaFatto: true, controllo: await controllaSulServer({ cartella, porta, attesi: 'nuovi' }) };
+  const copia = copiaZip({ cartella, salvataggi, quando });
   const s = await serverPerScrivere({ cartella, porta });
   const fatti = [];
   const errori = [];
+  let stato = null;
   try {
     for (const p of daFare) {
       const r = await fetch(`${s.base}/api/personaggi/${encodeURIComponent(p.file)}`, {
@@ -132,14 +166,17 @@ export async function applica({ cartella, salvataggi, porta = 3000, d = null, qu
       });
       if (r.ok) fatti.push(p.nome); else errori.push(`${p.nome}: ${(await r.json().catch(() => ({}))).errore ?? r.status}`);
     }
+    // il controllo: come li vede adesso il server (lo stesso che ha scritto), per la strada dell'app
+    stato = await statoDalServer(s.base);
   } finally { await s.chiudi(); }
-  return { copia, fatti, errori, serverAcceso: s.acceso };
+  const controllo = stato ? esitoControllo(stato, 'nuovi') : { ok: false, totale: 0, nuovi: 0, nonTornano: [], righe: ['Il server di Mutant non risponde: non ho potuto controllare.'] };
+  return { copia, fatti, errori, serverAcceso: s.acceso, controllo };
 }
 
 /** Rimette la cartella com'era nello zip: prima una copia di com'è adesso, poi i file dello zip sopra quelli di adesso. */
 export function ripristina({ cartella, salvataggi, zip = null, quando = new Date() }) {
-  const scelto = zip ?? zipDelPassaggio(salvataggi)[0];
-  if (!scelto || !existsSync(scelto)) throw new Error('non trovo una copia del passaggio ai Talenti nuovi');
+  const scelto = zip ?? zipDaRipristinare(salvataggi);
+  if (!scelto || !existsSync(scelto)) throw new Error('non trovo una copia di prima del passaggio ai Talenti nuovi');
   const voci = leggiZip(readFileSync(scelto));
   const adesso = tuttiIFile(cartella).map((f) => ({ nome: f.nome, dati: readFileSync(f.file), mtime: statSync(f.file).mtime }));
   mkdirSync(salvataggi, { recursive: true });
