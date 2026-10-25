@@ -2062,3 +2062,9 @@ Nessuna regola nuova e nessuna domanda per Davide. Diagnosi e correzioni in `doc
   torna dallo zip più recente che ha davvero i Talenti di prima.
 - Le voci 7 e 8 finiscono con il controllo sul server, come lo vede l'app («Controllato sul server: 7 personaggi su 7 con
   i Talenti nuovi»), e scrivono «fatto» solo se torna. Voce nuova C «Controlla lo stato», anche in `stato-mutant.txt`.
+
+## 25 ottobre 2026, notte — Talenti: testo completo dal manuale, nome che si apre, elenco dei posti
+
+Nessuna regola nuova. Dettaglio in `docs/diff-talenti-leggibili-2026-10-25.md`. Nei dati: il testo di ogni Talento è il
+corpo della sua scheda nel manuale, con la riga d'intestazione (tipo, requisiti, acquisizioni) in `intestazione`;
+Successo Magistrale Migliorato era la versione di prima. Le voci del 7/10 tengono il testo del file.
