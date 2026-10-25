@@ -24,6 +24,9 @@ let inviandoGiornale = false;
 let ultimoInvio = { errore: null }; // com'è andato l'ultimo tentativo di mandare la coda: il pannello lo dice com'è
 let ricaricaScheda = null; // src/ui/app.js la fornisce: rilegge la scheda aperta dal server
 
+/** Manda subito la coda (e i ritiri) senza aspettare il giro dei 15 secondi: dopo «Scarta le mie modifiche». */
+export function sollecitaInvio() { void inviaCoda(); }
+
 /** Come si rilegge la scheda dal server, quando il Direttore ha risposto (src/ui/app.js → ricaricaDaCartella). */
 export function impostaRicaricaScheda(fn) { ricaricaScheda = fn; }
 

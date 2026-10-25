@@ -27,7 +27,11 @@ import { statoSalvataggioMaster, controllaRemoto, revisioneDaScrivere, differenz
 import { messaggioConflittoVersione } from '../stato-tablet.js';
 import { montaStatoTablet, impostaPgAperto, eOffline, impostaRicaricaScheda } from './stato-tablet.js';
 import { montaRientro } from './rientro.js';
-import { accoda, fissaBase, inCoda } from './coda-offline.js';
+import { accoda, fissaBase, inCoda, leggiCoda } from './coda-offline.js';
+import { impostaPaginaDelDirettore } from './dispositivo.js';
+import { testoAggiornamento, conflittoConCoda } from '../aggiornamento-scheda.js';
+import { ritiraTutte } from './coda-offline.js';
+import { sollecitaInvio } from './stato-tablet.js';
 import { difeseNemico } from '../nemico-attacco.js';
 import { leggiScontroAperto, leggiScontro, rigaScontro, leggiMovimentoRound } from './scontro.js';
 import { elencoUnito, confronta, chiaveDaFile, chiavePersonaggio, messaggioSalvataggio, attesaRitentativo, nomeFileLibero, haNome, fileProvvisorio } from '../cartella.js';
@@ -139,6 +143,7 @@ async function avvia() {
   if (stato.cartella) montaFasciaCopia(await leggiStatoInstallazione());
   // «Modifica master»: contesto master = pagina aperta sul PC del server; il tasto MUTANT (S1) solo lì
   stato.master = contestoMasterQui();
+  impostaPaginaDelDirettore(stato.master);
   // 13/10: perché non si è master, per la riga di stato del Tavolo (il server vecchio non lo dice)
   stato.statoMaster = statoContestoMaster({ server: stato.cartella, daQuestoPc: stato.master, pingMaster: pingMasterQui(), serverVecchio: document.getElementById('barra-server-vecchio') !== null });
   document.body.classList.toggle('senza-marchio', !mostraMarchio({ server: stato.cartella, daQuestoPc: stato.master }));
@@ -444,7 +449,7 @@ const attesaCartella = new Map();
 function programmaCartella(id, { subito = false } = {}) {
   clearTimeout(attesaCartella.get(id));
   // pezzo 6: con un aggiornamento del master in attesa di una scelta la scheda non scrive
-  if (id === stato.id && stato.collegamento.conflitto) return;
+  if (id === stato.id && stato.collegamento.conflitto && !stato.collegamento.conflitto.inCoda) return;
   // 20/10: si salva a ogni modifica, non alla chiusura. L'attesa (regole.json → interfaccia.salvataggio.attesa_ms)
   // unisce i tocchi ravvicinati in una scrittura sola; con `subito` (la pagina si chiude o si nasconde) si scrive ora.
   const attesa = subito ? 0 : stato.dati?.regole?.interfaccia?.salvataggio?.attesa_ms ?? 400;
@@ -757,6 +762,7 @@ async function ricaricaDaCartella(v = null) {
   }
   if (!v || id !== stato.id) return false;
   const prima = stato.sessione;
+  const inAttesa = stato.cartella && !stato.master ? leggiCoda(chiaveCoda(archivio.carica(id), id)).length : 0;
   clearTimeout(attesaCartella.get(id));
   attesaCartella.delete(id);
   const voce = archivio.carica(id);
@@ -776,7 +782,8 @@ async function ricaricaDaCartella(v = null) {
   stato.masterVisto = null;
   stato.collegamento.conflitto = null;
   const diff = differenzeSessione(prima, stato.sessione, nomeStato);
-  stato.messaggioScheda = { tipo: 'ok', testo: `Il master ha aggiornato la tua scheda${diff.length ? `: ${diff.join('; ')}` : ''}.` };
+  // 25/10: chi ha scritto, su quale pagina, e se il giocatore ha modifiche offline in attesa (src/aggiornamento-scheda.js)
+  stato.messaggioScheda = testoAggiornamento({ chi: v.chi, perMaster: !!stato.master, differenze: diff, inCoda: inAttesa }, stato.dati);
   if (inScheda()) renderScheda({ mantieniScorrimento: true });
   return true;
 }
@@ -786,7 +793,8 @@ async function apriConflitto() {
   const id = stato.id;
   // nessuna modifica vera (il contenuto è quello già sincronizzato): si ricarica e basta
   const voce = archivio.carica(id);
-  if (!stato.collegamento.conflitto && voce?.cartella?.impronta && voce.cartella.impronta === improntaLocale(id)) return ricaricaDaCartella();
+  const righeInCoda = stato.cartella && !stato.master ? leggiCoda(chiaveCoda(voce, id)) : [];
+  if (!stato.collegamento.conflitto && !righeInCoda.length && voce?.cartella?.impronta && voce.cartella.impronta === improntaLocale(id)) return ricaricaDaCartella();
   let v;
   try {
     v = await versioneRemota();
@@ -796,7 +804,7 @@ async function apriConflitto() {
   if (!v || id !== stato.id) return;
   // «Modifica master» (12/10): se nel file ci sono modifiche del master che questa scheda non ha, non si sceglie: la
   // scheda prende la versione del master (un tablet con dati vecchi non la sovrascrive)
-  if (masterIntervenuto(id, v.testo)) {
+  if (!righeInCoda.length && masterIntervenuto(id, v.testo)) {
     if (await ricaricaDaCartella(v)) { stato.messaggioScheda = { tipo: 'attenzione', testo: 'Il master ha modificato la tua scheda mentre la stavi cambiando: è stata aggiornata con la sua versione. Controlla i valori e rifai l’ultima modifica, se serve.' }; if (inScheda()) renderScheda({ mantieniScorrimento: true }); }
     return;
   }
@@ -804,7 +812,8 @@ async function apriConflitto() {
   attesaCartella.delete(id);
   const c = stato.collegamento.conflitto;
   if (c && c.file === v.file && c.mtime === v.mtime) return;
-  stato.collegamento.conflitto = v;
+  // tablet con modifiche offline in attesa: niente «Tieni la mia» (niente si applica prima del Direttore)
+  stato.collegamento.conflitto = righeInCoda.length ? { ...v, inCoda: righeInCoda.length } : v;
   if (inScheda()) renderScheda({ mantieniScorrimento: true });
 }
 
@@ -828,6 +837,17 @@ async function sceltaConflitto(scelta) {
   const c = stato.collegamento.conflitto;
   if (!c) return;
   const nome = stato.scelte.nome.trim() || 'Personaggio';
+  if (scelta === 'vedi' || scelta === 'scarta') {
+    const chiave = chiaveCoda(archivio.carica(stato.id), stato.id);
+    const righe = leggiCoda(chiave);
+    const testo = conflittoConCoda({ conflitto: c, righe }, stato.dati).scartate;
+    if (scelta === 'scarta') { ritiraTutte(chiave); sollecitaInvio(); }
+    if (await ricaricaDaCartella()) {
+      if (scelta === 'scarta') stato.messaggioScheda = { tipo: 'ok', testo };
+      if (inScheda()) renderScheda({ mantieniScorrimento: true });
+    }
+    return;
+  }
   if (scelta === 'aggiorna') {
     const diff = differenzeSessione(stato.sessione, c.sessione, nomeStato);
     // la versione più recente del file, se nel frattempo è cambiata ancora
@@ -1760,6 +1780,9 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
         nome: stato.collegamento.conflitto.nome, chi: stato.collegamento.conflitto.chi ?? 'master',
         quando: stato.collegamento.conflitto.quando ?? stato.collegamento.conflitto.mtime,
       }, stato.dati),
+      conCoda: stato.collegamento.conflitto.inCoda ? conflittoConCoda({ conflitto: stato.collegamento.conflitto, righe: leggiCoda(chiaveCoda(archivio.carica(stato.id), stato.id)) }, stato.dati) : null,
+      vedi: () => sceltaConflitto('vedi'),
+      scarta: () => sceltaConflitto('scarta'),
       aggiorna: () => sceltaConflitto('aggiorna'),
       tieni: () => sceltaConflitto('tieni'),
     } : null,

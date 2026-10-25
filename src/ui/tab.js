@@ -3135,6 +3135,17 @@ function attivazioneInfusaRigaCorpo(ctx, x, infuso, riserva, { conPulsante, indi
  */
 function avvisoMaster(a) {
   if (!a) return null;
+  if (a.conCoda) {
+    const c = a.conCoda;
+    return h('div', { class: 'riquadro attenzione avviso-master', role: 'alert' },
+      h('p', {}, h('strong', {}, c.messaggio)),
+      h('ul', { class: 'nota' }, ...c.righe.map((r) => h('li', {}, r))),
+      a.differenze.length ? h('p', {}, 'Nella versione del Direttore: ', a.differenze.join('; '), '.') : null,
+      h('p', { class: 'nota' }, c.spiegazione),
+      h('div', { class: 'riga-azioni' },
+        h('button', { type: 'button', class: 'btn primario', onclick: a.vedi, title: c.vediTitolo }, c.vedi),
+        h('button', { type: 'button', class: 'btn', onclick: a.scarta, title: c.scartaTitolo }, c.scarta)));
+  }
   return h('div', { class: 'riquadro attenzione avviso-master', role: 'alert' },
     // parte E (21/10/2026): il messaggio leggibile, «"Aiko" è stata modificata da … … fa» — non sovrascrive,
     // non fonde, non inventa: il giocatore sceglie. Quale PG e quale file (bug del 04/10/2026): chi legge

@@ -565,7 +565,33 @@
       "_nota": "Il tablet è una vista, non un proprietario (21/10/2026, src/ui/dispositivo.js, src/ui/stato-tablet.js): riga di stato sempre visibile su ogni pagina del tablet, il controllo gira ogni intervallo_controllo_s secondi e quando il tablet torna in primo piano. {nome}, {ora}, {tempo}, {chi}, {quando}, {modifiche} si sostituiscono nel testo. conflitto_versione è il messaggio quando una scrittura arriva da una versione_salvataggio più vecchia di quella sul server (src/collegamento.js). Dal 21/10/2026 pomeriggio (quarto lotto, src/giornale.js): offline NON spegne più i comandi — si accodano le operazioni (src/ui/coda-offline.js) e al rientro si sommano o, per le assegnazioni in conflitto, restano in sospeso per Davide. motivo_sola_lettura resta per l'unico altro motivo di sola lettura: un tablet che guarda un personaggio diverso dal proprio (sempre, online o offline).",
       "testo_offline_coda": "offline da {tempo} · {modifiche} in attesa · le vedrà il Direttore quando torni collegato",
       "testo_offline_coda_vuota": "offline da {tempo} · puoi continuare a modificare: le vedrà il Direttore quando torni collegato",
-      "motivo_sola_lettura": "Questo tablet può scrivere solo il personaggio che ha scelto: qui stai solo guardando."
+      "motivo_sola_lettura": "Questo tablet può scrivere solo il personaggio che ha scelto: qui stai solo guardando.",
+      "aggiornamento_scheda": {
+        "_nota": "25/10/2026 (segnalazione di Davide del 24/10, Test 4): chi ha riscritto la scheda dice chi è. Prima il banner verde diceva sempre «Il master ha aggiornato la tua scheda», anche sulla pagina del Direttore quando era stato un tablet. {modifiche} = «1 modifica» / «4 modifiche».",
+        "tablet": {
+          "master": "Il Direttore ha aggiornato la tua scheda",
+          "giocatore": "La tua scheda è stata aggiornata da un altro tuo dispositivo",
+          "px": "I PX della partita hanno aggiornato la tua scheda",
+          "altro": "La tua scheda è stata aggiornata"
+        },
+        "pagina_direttore": {
+          "giocatore": "Un tablet ha aggiornato questa scheda",
+          "master": "Questa scheda è stata aggiornata da un’altra finestra del Direttore",
+          "px": "I PX della partita hanno aggiornato questa scheda",
+          "altro": "Questa scheda è stata aggiornata"
+        },
+        "con_coda": " Hai ancora {modifiche} fatte offline in attesa del Direttore: le vedi in «Vedi la coda»."
+      },
+      "conflitto_con_coda": {
+        "_nota": "Un tablet con modifiche offline in attesa NON ha la scelta «Aggiorna / Tieni la mia» del conflitto normale: niente si applica prima della conferma del Direttore, quindi «Tieni la mia» non avrebbe potuto fare quello che dice, e «Aggiorna» lasciava le modifiche in coda mentre prometteva di perderle (provato il 25/10/2026: la scheda mostrava il valore del Direttore e le sei voci partivano lo stesso). Le due scelte vere sono queste.",
+        "messaggio": "«{nome}» è stata modificata da {chi} {quando} fa, mentre avevi {modifiche} fatte offline in attesa di lui.",
+        "spiegazione": "Le tue modifiche non sono ancora sulla scheda del Direttore: le decide lui. Nel frattempo puoi vedere la scheda com’è adesso (le tue restano in attesa), oppure scartare le tue.",
+        "vedi": "Vedi la scheda del Direttore",
+        "vedi_titolo": "Mostra la scheda com’è adesso sul PC del Direttore. Le tue modifiche restano in attesa: le decide lui.",
+        "scarta": "Scarta {modifiche}",
+        "scarta_titolo": "Le toglie dalla coda e dalla schermata di rientro del Direttore: non arriveranno mai. Poi la scheda mostra la sua versione.",
+        "scartate": "Hai scartato {modifiche}: non arriveranno al Direttore."
+      }
     }
   },
   "modalita_di_fuoco": {

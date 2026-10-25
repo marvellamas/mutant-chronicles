@@ -59,5 +59,14 @@ export async function scegliAssociazione(pgId) {
  */
 export function intestazioneDispositivo() {
   const id = idDispositivo();
-  return id ? { 'X-Mutant-Da': 'giocatore', 'X-Mutant-Dispositivo': id } : {};
+  if (!id) return {};
+  // La pagina del Direttore NON si dichiara «giocatore» (25/10/2026, Test 4 di Davide): il server crede a quello che la
+  // pagina dice di sé, e ogni scrittura dal suo PC risultava «giocatore» — quindi il messaggio diceva «modificata da un
+  // altro tuo dispositivo» e sulla pagina del Direttore compariva «Il master ha aggiornato la tua scheda». Senza la
+  // dichiarazione il server, per una richiesta dal suo PC, registra «master» da sé (server.mjs → conMetadati).
+  return paginaDelDirettore ? { 'X-Mutant-Dispositivo': id } : { 'X-Mutant-Da': 'giocatore', 'X-Mutant-Dispositivo': id };
 }
+
+let paginaDelDirettore = false;
+/** src/ui/app.js lo dichiara all'avvio, appena sa se la pagina è aperta sul PC del server (contestoMasterQui). */
+export function impostaPaginaDelDirettore(vero) { paginaDelDirettore = !!vero; }

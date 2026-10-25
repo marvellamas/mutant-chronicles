@@ -130,7 +130,26 @@ export function accoda(id, scelte, sessione, calendario, { quando = new Date() }
 
 /** Il giocatore toglie una riga dalla propria coda (ha sbagliato tocco e lo sa, prima che arrivi al Direttore). */
 export function togliDallaCoda(id, opId) {
-  scrivi(CHIAVE_CODA(id), leggiCoda(id).filter((o) => o.id !== opId));
+  const coda = leggiCoda(id);
+  const voce = coda.find((o) => o.id === opId);
+  scrivi(CHIAVE_CODA(id), coda.filter((o) => o.id !== opId));
+  // una voce che ne sostituiva altre già partite: quelle il server ce le ha ancora, e vanno ritirate con lei
+  const dalServer = [...(voce?.sostituisce ?? []), ...(voce?.inviata ? [voce.id] : [])];
+  if (dalServer.length) scrivi(CHIAVE_RITIRATE(id), [...new Set([...ritirateDaMandare(id), ...dalServer])]);
+}
+
+/**
+ * «Scarta le mie modifiche» (25/10/2026): tutte le voci in coda escono. Quelle già partite — e quelle che ne
+ * sostituivano di partite — si ritirano dal server con il prossimo invio (ritirateDaMandare): senza, scartarle qui
+ * le nasconderebbe soltanto al giocatore e il Direttore se le vedrebbe arrivare lo stesso.
+ * @returns quante voci erano in coda
+ */
+export function ritiraTutte(id) {
+  const coda = leggiCoda(id);
+  const dalServer = coda.flatMap((o) => [...(o.sostituisce ?? []), ...(o.inviata ? [o.id] : [])]);
+  scrivi(CHIAVE_CODA(id), []);
+  if (dalServer.length) scrivi(CHIAVE_RITIRATE(id), [...new Set([...ritirateDaMandare(id), ...dalServer])]);
+  return coda.length;
 }
 
 /**
