@@ -1260,6 +1260,8 @@ export function postiTalenti(personaggio, dati, { opzioni = true } = {}) {
       const problemi = prima ? controllaSceltaTalento(prima, cat, scelta, dati, { classe }).filter((e) => e.tipo !== 'incompleto' || scelta) : [];
       posti.push({
         categoria: cat, livello: n, classe, scelta: scelta ?? null,
+        // chiuso dal Direttore: il giocatore non lo cambia più (lo cambia solo «Modifica master»)
+        chiuso: Number.isInteger(p.creazione?.talentiChiusiFino) && n <= p.creazione.talentiChiusiFino,
         valida: !!scelta && !problemi.some((e) => e.tipo === 'violazione'), problemi: scelta ? problemi : [],
         opzioni: opzioni && !scelta && prima ? opzioniCategoria(prima, cat, dati, { classe }) : null,
       });
@@ -1278,6 +1280,35 @@ export function postiTalenti(personaggio, dati, { opzioni = true } = {}) {
     return { ...t, nome: def?.nome ?? t.id, categoria: categoriaDi(dopo), sostituitoDa: def?.categoria === 'superato' ? def.sostituito_da : null };
   });
   return { regime: nuovo ? 'nuovo' : 'vecchio', livello, categorie, posti, prossimo: posti.find((x) => !x.scelta) ?? null, vecchi };
+}
+
+/**
+ * Talenti v1.0: il personaggio con la scelta `scelta` nel posto `posto` ({ categoria, livello }), oppure con il posto
+ * svuotato se `scelta` è null (per cambiarla). Non controlla niente: il controllo è controllaSceltaTalento (via
+ * postiTalenti), e la scheda lo rifà a ogni calcolo. Pura.
+ */
+export function applicaSceltaTalento(personaggio, posto, scelta) {
+  const p = migraPersonaggio(personaggio);
+  const pulita = isOggetto(scelta) && scelta.id ? {
+    id: scelta.id,
+    ...(scelta.parametro ? { parametro: scelta.parametro } : {}),
+    ...(typeof scelta.annotazione === 'string' && scelta.annotazione.trim() ? { annotazione: scelta.annotazione.trim() } : {}),
+  } : null;
+  if (posto.livello === 1) {
+    if (posto.categoria !== 'specializzazione') throw new Error('al 1° livello c’è solo la Specializzazione');
+    return { ...p, creazione: { ...p.creazione, specializzazioneIniziale: pulita } };
+  }
+  const i = posto.livello - 2;
+  if (!p.livelli[i]) throw new Error(`il personaggio non ha il ${posto.livello}° livello`);
+  const campo = CAMPO_CATEGORIA[posto.categoria];
+  const voce = { ...p.livelli[i] };
+  if (pulita) voce[campo] = pulita; else delete voce[campo];
+  return { ...p, livelli: p.livelli.map((v, k) => (k === i ? voce : v)) };
+}
+
+/** Le scelte dei Talenti di un personaggio, posto per posto ({ «categoria:livello»: scelta }): per confrontare due versioni. */
+export function sceltePerPosto(personaggio, dati) {
+  return Object.fromEntries(postiTalenti(personaggio, dati, { opzioni: false }).posti.map((x) => [`${x.categoria}:${x.livello}`, x.scelta ? JSON.stringify(x.scelta) : null]));
 }
 
 function salvezzeDi(stato, dati) {

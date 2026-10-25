@@ -87,6 +87,8 @@ export function nuoveScelte() {
     regimeTalenti: null,
     // Specializzazione del Grado iniziale (1° livello), regime nuovo: { id, annotazione? }
     specializzazioneIniziale: null,
+    // Talenti v1.0: le scelte dei posti fino a questo livello le ha chiuse il Direttore (il giocatore non le cambia più)
+    talentiChiusiFino: null,
     // Giocatore §5.21: { perdite: [{ uid, rif, nome, umn }], recuperi: [{ punti, nota }] } (src/umanita.js)
     umanita: null,
     // Veicoli posseduti (lotto 3 dei Veicoli; A.91 provvisoria: nel file del PG che li possiede, veicoli.json →
@@ -253,6 +255,7 @@ export function normalizza(scelteIn, dati) {
   for (const [k, v] of Object.entries(s.parametriTalenti)) if (typeof v !== 'string' || !v) delete s.parametriTalenti[k];
   // Talenti v1.0: regime e Specializzazione iniziale (i file di prima non li hanno: restano Talenti vecchi)
   if (s.regimeTalenti !== 2) s.regimeTalenti = null;
+  if (!(Number.isInteger(s.talentiChiusiFino) && s.talentiChiusiFino >= 1)) s.talentiChiusiFino = null;
   if (!(isOggetto(s.specializzazioneIniziale) && typeof s.specializzazioneIniziale.id === 'string' && s.specializzazioneIniziale.id)) s.specializzazioneIniziale = null;
   else s.specializzazioneIniziale = { id: s.specializzazioneIniziale.id, ...(typeof s.specializzazioneIniziale.annotazione === 'string' && s.specializzazioneIniziale.annotazione.trim() ? { annotazione: s.specializzazioneIniziale.annotazione.trim() } : {}) };
   if (!Array.isArray(s.incantesimi)) s.incantesimi = [];
@@ -493,6 +496,7 @@ export function serializza(scelte, { versioniDati, livelli, sessione, calendario
   // Talenti v1.0: scritti solo se ci sono, così i file di prima restano identici
   if (pulite.regimeTalenti !== 2) delete pulite.regimeTalenti;
   if (!pulite.specializzazioneIniziale) delete pulite.specializzazioneIniziale;
+  if (!pulite.talentiChiusiFino) delete pulite.talentiChiusiFino;
   const file = { formato: FORMATO_FILE, versione: VERSIONE_FORMATO };
   // identificativo del personaggio (nuovoPg): scritto solo se c'è, così i file di prima restano identici
   if (isPg(pg)) file.pg = pg;

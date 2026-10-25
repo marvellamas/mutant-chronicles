@@ -38,7 +38,7 @@ test('i file fuori dalla cartella mutant si rimettono al passo, tranne quello in
   const e = aggiornaAvviatori({ radice: app, fuori: r, salta: ['1_scarica_o_aggiorna_app.bat'] });
 
   assert.deepEqual(e.saltati, ['1_scarica_o_aggiorna_app.bat']);
-  assert.deepEqual(e.aggiornati.sort(), ['2_installa_node.bat', '3_avvia.bat', '4_controlla_personaggi.bat', 'LEGGIMI.txt', 'aggiorna-da-zip.ps1']);
+  assert.deepEqual(e.aggiornati.sort(), ['2_installa_node.bat', '3_avvia.bat', '4_controlla_personaggi.bat', '5_passa_ai_talenti_nuovi.bat', 'LEGGIMI.txt', 'aggiorna-da-zip.ps1']);
   assert.equal(e.errori.length, 0);
   assert.equal(readFileSync(join(r, '3_avvia.bat'), 'utf8'), 'nuovo 3_avvia.bat\n');
   assert.equal(readFileSync(join(r, '1_scarica_o_aggiorna_app.bat'), 'utf8'), 'vecchio 1_scarica_o_aggiorna_app.bat\n');

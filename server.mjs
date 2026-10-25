@@ -129,6 +129,7 @@
 //                                      che non è nelle decisioni resta in attesa: chiudere non è scartare.
 // Nessuna cancellazione dal server: i file vecchi si tolgono a mano dalla cartella.
 import { proteggiBlocchiMaster } from './src/correzioni-master.js';
+import { controllaTalentiDaTablet } from './src/talenti-tablet.js';
 import { createServer } from 'node:http';
 import { readFileSync, createReadStream } from 'node:fs';
 import { readFile, writeFile, readdir, stat, mkdir, rename, copyFile, unlink, constants } from 'node:fs/promises';
@@ -1873,6 +1874,14 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
       if (attesa !== undefined) {
         const attuale = await stat(dove).then((s) => String(s.mtimeMs), () => null);
         if (attuale !== attesa) return json(res, 409, { errore: 'il personaggio è stato cambiato altrove: rileggi', mtime: attuale });
+      }
+      // Talenti v1.0 (lotto 2, 25/10/2026): un tablet non torna ai Talenti di prima dopo la migrazione, non cambia le
+      // scelte chiuse dal Direttore e non sceglie un'opzione non ammessa (src/talenti-tablet.js)
+      if (!req.mutantMaster) {
+        const disco = await leggiJson(dove).catch(() => null);
+        const { dati } = await datiDelServer(radice);
+        const t = controllaTalentiDaTablet(o, disco, dati);
+        if (!t.ok) return json(res, t.stato, { errore: t.errore, talenti: true });
       }
       await mkdir(cartella, { recursive: true });
       // «Modifica master» (12/10): un salvataggio che non arriva dal PC del master (il tablet di un giocatore) non cambia
