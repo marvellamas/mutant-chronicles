@@ -7,7 +7,7 @@
 // - Con il server di Mutant: se il server è stato acceso con una versione più vecchia di quella dei file
 //   (aggiornamento senza riavvio), barra rossa «Riavvia avvia-server.bat» (src/versione.js → serverDaRiavviare).
 // Non tocca il localStorage: i personaggi restano dove sono.
-import { leggiVersione, serveAggiornamento, urlRicarica, testoVersione, INTERVALLO_CONTROLLO_MS, serverDaRiavviare } from '../versione.js';
+import { leggiVersione, serveAggiornamento, urlRicarica, testoVersione, INTERVALLO_CONTROLLO_MS, serverDaRiavviare, versioneInParole, leggiNovita } from '../versione.js';
 
 const caricata = document.querySelector('meta[name="mutant-versione"]')?.content || null;
 let mostrata = null;
@@ -69,9 +69,20 @@ async function controlla() {
 }
 
 const piede = document.getElementById('versione-app');
-controlla().then((v) => {
-  // nel piè di pagina la versione caricata; la data solo se è quella del server
-  if (piede) piede.textContent = testoVersione(caricata ? { versione: caricata, data: v?.versione === caricata ? v.data : null } : v);
+/** Il titolo della versione (novita.json, scritto a mano): «Talenti nuovi». */
+async function titoloVersione() {
+  try {
+    const r = await fetch('novita.json', { cache: 'no-store' });
+    return r.ok ? leggiNovita(await r.json()) : null;
+  } catch { return null; }
+}
+Promise.all([controlla(), titoloVersione()]).then(([v, titolo]) => {
+  if (!piede) return;
+  // 25/10/2026 («un ingresso solo», parte D): la versione in parole, la stessa del menu di Mutant.bat. La data e il
+  // titolo valgono solo se il server ha la versione caricata; altrimenti l'impronta (la barra dice di ricaricare)
+  const uguale = !caricata || v?.versione === caricata;
+  piede.textContent = uguale && v ? versioneInParole(v, titolo) : testoVersione(caricata ? { versione: caricata, data: null } : v);
+  piede.title = `Impronta della versione: ${caricata ?? v?.versione ?? 'sconosciuta'}`;
 });
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') controlla(); });
 setInterval(controlla, INTERVALLO_CONTROLLO_MS);

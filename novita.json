@@ -1,0 +1,4 @@
+{
+  "_nota": "Il nome della versione in parole, scritto a mano a ogni aggiornamento che conta (25/10/2026, «un ingresso solo», parte D). Lo mostrano il piè di pagina dell'app e il menu di Mutant.bat: «Versione del 25/10 · Talenti nuovi». La data viene da versione.json (tools/versione.mjs), il titolo da qui.",
+  "titolo": "Talenti nuovi"
+}

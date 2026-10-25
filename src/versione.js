@@ -26,6 +26,23 @@ export function urlRicarica(href, versione) {
   return `${u.pathname}${u.search}${u.hash}`;
 }
 
+/** Il titolo della versione da novita.json (scritto a mano), o null. */
+export function leggiNovita(o) {
+  const t = o && typeof o === 'object' && typeof o.titolo === 'string' ? o.titolo.trim() : '';
+  return t ? t.slice(0, 60) : null;
+}
+
+/**
+ * La versione in parole semplici (25/10/2026, «un ingresso solo», parte D), la stessa nell'app e in Mutant.bat:
+ * «Versione del 25/10 · Talenti nuovi». La data è quella di versione.json, il titolo quello di novita.json. Senza data,
+ * l'impronta.
+ */
+export function versioneInParole(v, titolo = null) {
+  if (!v) return '';
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(v.data ?? '');
+  return `Versione ${m ? `del ${m[3]}/${m[2]}` : v.versione}${titolo ? ` · ${titolo}` : ''}`;
+}
+
 /** Testo per il piè di pagina: «Versione 746c34f047 · 2026-09-30 14:52». */
 export const testoVersione = (v) => (v ? `Versione ${v.versione}${v.data ? ` · ${v.data}` : ''}` : '');
 
