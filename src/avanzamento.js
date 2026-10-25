@@ -9,6 +9,10 @@
 //   grado: { classe: 'Agente' }, tiroPV: {valore, origine}, tiroPM: {valore, origine} | assente,
 //   talentoClasse: 'Reazione Operativa' (Gradi II, IV, VI), puntiAbilita: { Furtività: 2 }   "grado_classe"
 //   incantesimi: [nomi], tecniche: [id]                    quando una quota cresce
+// Talenti v1.0 (07/10/2026), solo per i personaggi con scelte.regimeTalenti = 2 (regole.json → progressione_talenti):
+//   maestria: { id, parametro?, annotazione? }             livelli 2, 6, 10, 14, 18
+//   specializzazione: { id, annotazione? }                 livelli con il Grado (4, 8, …); al 1° in scelte.specializzazioneIniziale
+//   talentoLibero vale solo per i Talenti Liberi (le Specializzazioni non sono più Talenti Liberi)
 import { risolviIncantesimiAMano } from './incantesimi-a-mano.js';
 import { applicaCorrezioni, sessioneConCircostanzeMaster } from './correzioni-master.js';
 import { modificatoriAttivi } from './temporanei.js';
@@ -164,7 +168,97 @@ function talentoLiberoDef(id, dati) {
   const t = dati.talenti_liberi.talenti.find((x) => x.id === id);
   if (t) return { ...t, specializzazione: false };
   const s = dati.specializzazioni.specializzazioni.find((x) => x.id === id);
-  return s ? { ...s, specializzazione: true, molteplicita: 'una', parametro: null, prerequisiti: [] } : null;
+  return s ? { ...s, specializzazione: true, categoria: 'specializzazione', molteplicita: 'una', parametro: null, prerequisiti: [] } : null;
+}
+
+// ---------------------------------------------------------------------------
+// Talenti v1.0 (07/10/2026): tre categorie con acquisizioni separate. «Nuova progressione di Talenti
+// Specializzazioni e Maestrie» (docs/talenti-nuovi-v1.0.txt), che sui Talenti vale sul Manuale del Giocatore.
+// Un personaggio è del regime nuovo solo con scelte.regimeTalenti = 2: quelli salvati prima restano con i Talenti
+// vecchi (un solo evento «talento_libero» ai livelli dispari, Specializzazioni comprese) e si calcolano come prima.
+
+export const CATEGORIE_TALENTI = ['specializzazione', 'maestria', 'talento_libero'];
+const CAMPO_CATEGORIA = { talento_libero: 'talentoLibero', maestria: 'maestria', specializzazione: 'specializzazione' };
+const NOME_CATEGORIA = { talento_libero: 'Talento Libero', maestria: 'Maestria', specializzazione: 'Specializzazione' };
+
+/** Il personaggio usa le tre categorie dei Talenti v1.0? */
+export const regimeTalentiNuovo = (creazione) => creazione?.regimeTalenti === 2;
+
+/** Categoria di una voce: «specializzazione», «maestria», «talento_libero» o «superato». */
+const categoriaDi = (def) => (def?.specializzazione ? 'specializzazione' : def?.categoria ?? 'talento_libero');
+
+/** La voce si può scegliere nel regime dato? Regime vecchio: le voci di prima (non quelle solo nuove); nuovo: non le superate. */
+const sceglibile = (def, nuovo) => !!def && (nuovo ? def.categoria !== 'superato' : !def.solo_regime_nuovo);
+
+/** Livelli della categoria fino a `livello` compreso (regole.json → avanzamento.progressione_talenti). */
+function livelliCategoria(categoria, livello, dati) {
+  return (dati.regole.avanzamento.progressione_talenti?.[categoria] ?? []).filter((n) => n <= livello);
+}
+
+/**
+ * Specializzazioni che si possono scegliere al Grado della Classe `classe` (p. 2 e 7–9 del file): l'elenco della
+ * Classe appena aumentata, più i gruppi aperti da un Talento posseduto (Usufruitore di Magia → Potere; Ritualista
+ * Minore o Maggiore → Rituali).
+ */
+function specializzazioniAmmesse(stato, classe, dati) {
+  const S = dati.specializzazioni;
+  const ammesse = new Set(S.per_classe?.[classe] ?? []);
+  for (const a of S.accessi_da_talenti ?? []) if ((a.talenti ?? []).some((id) => possiede(stato, id))) for (const id of S.gruppi?.[a.gruppo] ?? []) ammesse.add(id);
+  return ammesse;
+}
+
+/**
+ * Il controllo unico di una scelta di Talento, per tutte e tre le categorie: lo usano la validazione dei livelli,
+ * la creazione e postiTalenti (la scelta guidata del lotto 2). Errori nel formato di controllaTalentoLibero, con
+ * il campo della categoria.
+ * @param stato lo stato del personaggio PRIMA della scelta (prerequisiti in ordine di livello)
+ * @param classe per le Specializzazioni: la Classe appena aumentata (al 1° livello la Classe iniziale)
+ */
+export function controllaSceltaTalento(stato, categoria, scelta, dati, { classe = null } = {}) {
+  const campo = CAMPO_CATEGORIA[categoria] ?? 'talentoLibero';
+  const errori = [];
+  const err = (problema, tipo = 'violazione') => errori.push({ campo, problema, tipo });
+  const nuovo = stato.regime === 'nuovo';
+  if (!isOggetto(scelta) || !scelta.id) { err(`scegli ${categoria === 'maestria' ? 'una Maestria' : categoria === 'specializzazione' ? 'una Specializzazione' : 'un Talento Libero'}`, 'incompleto'); return errori; }
+  const def = talentoLiberoDef(scelta.id, dati);
+  if (def && !sceglibile(def, nuovo)) {
+    err(def.categoria === 'superato'
+      ? `${def.nome} non c’è più con i Talenti nuovi: ${talentoLiberoDef(def.sostituito_da, dati)?.nome ?? def.sostituito_da} ne prende il posto`
+      : `${def.nome} è dei Talenti nuovi: questo personaggio usa ancora quelli di prima`);
+    return errori;
+  }
+  if (nuovo && def) {
+    const cat = categoriaDi(def);
+    if (cat !== categoria) { err(`${def.nome} è ${cat === 'maestria' ? 'una Maestria' : cat === 'specializzazione' ? 'una Specializzazione' : 'un Talento Libero'}, non ${categoria === 'maestria' ? 'una Maestria' : categoria === 'specializzazione' ? 'una Specializzazione' : 'un Talento Libero'}`); return errori; }
+    if (categoria === 'specializzazione' && !specializzazioniAmmesse(stato, classe, dati).has(def.id)) {
+      err(`Specializzazione in ${def.nome} non è nell’elenco ${classe ? `del ${classe}` : 'della Classe'} (Talenti v1.0: si sceglie dalla Classe appena aumentata)`);
+    }
+  }
+  // molteplicità, parametro, annotazione, prerequisiti, Risorse Interiori: le regole di sempre
+  errori.push(...controllaTalentoLibero(stato, scelta, dati).map((e) => ({ ...e, campo })));
+  return errori;
+}
+
+/**
+ * Le voci di una categoria con l'esito del controllo nello stato dato: [{ id, nome, categoria, ammesso, motivo,
+ * parametri }]. Contano solo le violazioni: l'annotazione mancante (Sport) si completa dopo la scelta.
+ */
+function opzioniCategoria(stato, categoria, dati, { classe = null } = {}) {
+  const nuovo = stato.regime === 'nuovo';
+  const candidati = [
+    ...dati.talenti_liberi.talenti.map((t) => ({ ...t, specializzazione: false })),
+    ...dati.specializzazioni.specializzazioni.map((s) => ({ ...s, specializzazione: true, parametro: null })),
+  ].filter((t) => sceglibile(t, nuovo) && (!nuovo || categoriaDi(t) === categoria));
+  const valori = { caratteristica: Object.keys(stato.car), salvezza: dati.caratteristiche.salvezze.map((s) => s.id) };
+  const violazioni = (scelta) => controllaSceltaTalento(stato, categoria, scelta, dati, { classe }).filter((e) => e.tipo === 'violazione');
+  return candidati.map((t) => {
+    const parametri = t.parametro ? valori[t.parametro].filter((p) => !violazioni({ id: t.id, parametro: p }).length) : null;
+    const errori = t.parametro ? (parametri.length ? [] : violazioni({ id: t.id, parametro: valori[t.parametro][0] })) : violazioni({ id: t.id });
+    return {
+      id: t.id, nome: t.specializzazione ? `Specializzazione in ${t.nome}` : t.nome, categoria: categoriaDi(t), specializzazione: t.specializzazione,
+      provvisorio: !!t.provvisorio, ammesso: !errori.length, motivo: errori[0]?.problema ?? null, parametri,
+    };
+  });
 }
 
 /** Stato dopo la creazione (1° livello), dalle scelte v1 già validate da calc.js. */
@@ -191,6 +285,8 @@ function statoCreazione(creazione, dati) {
       contributiPV: [{ livello: 1, classe: classe.nome, valore: pvCreazione }],
       contributiPM: [{ livello: 1, classe: classe.nome, valore: pmCreazione }],
       talentiLiberi: [],
+      // Talenti v1.0: 'nuovo' con scelte.regimeTalenti = 2, altrimenti i Talenti di prima
+      regime: regimeTalentiNuovo(creazione) ? 'nuovo' : 'vecchio',
       dotazioniTecniche: [],
       tecniche: [],
       incantesimi: [...(creazione.incantesimi ?? [])],
@@ -230,7 +326,10 @@ function soddisfaPrerequisito(stato, p, dati) {
   if (p.startsWith('addestramento:')) return stato.addestr.nome === p.slice('addestramento:'.length);
   const c = dati.talenti_liberi.condizioni_prerequisiti?.[p];
   // «sempre»: condizione che ogni personaggio soddisfa (la riserva personale di PM, Magia sez. 1)
-  if (c) return c.sempre === true || (c.addestramento && stato.addestr.nome === c.addestramento) || (c.talenti ?? []).some((id) => possiede(stato, id));
+  // Talenti v1.0: «talenti_di_classe», un Talento di Classe che dà accesso (Arti Marziali Migliorate: Addestramento al
+  // Combattimento Senz’Armi del Lottatore, che consente l’accesso e non assegna il dado di danno di Arti Marziali)
+  if (c) return c.sempre === true || (c.addestramento && stato.addestr.nome === c.addestramento) || (c.talenti ?? []).some((id) => possiede(stato, id))
+    || (c.talenti_di_classe ?? []).some((n) => nomiTalentiClasse(stato).includes(n));
   return possiede(stato, p);
 }
 
@@ -364,6 +463,11 @@ function applicaVoce(prima, voce, dati) {
     });
     aggiungiDotazione(stato, v.talentoLibero.id, n, 'libero', dati);
   }
+  // Talenti v1.0: Maestria e Specializzazione del livello (solo regime nuovo; la validazione è in controllaVoce)
+  if (stato.regime === 'nuovo') {
+    if (isOggetto(v.maestria) && talentoLiberoDef(v.maestria.id, dati)) aggiungiTalento(stato, 'maestria', v.maestria, n, null, dati, true);
+    if (isOggetto(v.specializzazione) && talentoLiberoDef(v.specializzazione.id, dati)) aggiungiTalento(stato, 'specializzazione', v.specializzazione, n, v.grado?.classe ?? null, dati, true);
+  }
 
   // §8.3: Punti Abilità Liberi, dopo Caratteristiche e Grado del livello; entrano solo quelli che
   // aumentano il VA personale, gli altri restano inattivi (da riassegnare, non accantonati)
@@ -379,6 +483,17 @@ function applicaVoce(prima, voce, dati) {
   for (const i of Array.isArray(v.incantesimi) ? v.incantesimi : []) if (!stato.incantesimi.includes(i)) stato.incantesimi.push(i);
   for (const t of Array.isArray(v.tecniche) ? v.tecniche : []) if (!stato.tecniche.some((x) => x.id === t)) stato.tecniche.push({ id: t, livello: n });
   return stato;
+}
+
+/** Un Talento delle categorie nuove nello stato (sul posto se `sulPosto`, altrimenti in una copia). */
+function aggiungiTalento(stato, categoria, scelta, livello, classe, dati, sulPosto = false) {
+  const s = sulPosto ? stato : { ...stato, talentiLiberi: [...stato.talentiLiberi], dotazioniTecniche: [...stato.dotazioniTecniche] };
+  s.talentiLiberi.push({
+    id: scelta.id, parametro: scelta.parametro ?? null, livello, categoria, ...(classe ? { classe } : {}),
+    ...(typeof scelta.annotazione === 'string' && scelta.annotazione.trim() ? { annotazione: scelta.annotazione.trim() } : {}),
+  });
+  aggiungiDotazione(s, scelta.id, livello, categoria, dati);
+  return s;
 }
 
 /** Risorse Interiori: 2 + Mod SAG (min 1) fissato all'acquisizione; Supplementari: +3 (§8.6.10). */
@@ -405,6 +520,8 @@ export function controllaTalentoLibero(stato, scelta, dati) {
   if (!isOggetto(scelta) || !scelta.id) { err('scegli un Talento Libero', 'incompleto'); return errori; }
   const def = talentoLiberoDef(scelta.id, dati);
   if (!def) { err(`"${scelta.id}" non è un Talento Libero né una Specializzazione`); return errori; }
+  // Talenti v1.0: le voci nuove non sono per i personaggi con i Talenti di prima
+  if (stato.regime !== 'nuovo' && def.solo_regime_nuovo) { err(`${def.nome} è dei Talenti nuovi: questo personaggio usa ancora quelli di prima`); return errori; }
   const nome = def.specializzazione ? `Specializzazione in ${def.nome}` : def.nome;
   const presi = stato.talentiLiberi.filter((t) => t.id === def.id);
   const parametro = scelta.parametro ?? null;
@@ -466,6 +583,12 @@ function controllaVoce(prima, voce, dati) {
   const ammesse = new Set(['livello', 'incantesimi', 'tecniche', 'scuolaMishima']);
   if (kCar) ammesse.add('caratteristiche');
   if (conTalento) ammesse.add('talentoLibero');
+  // Talenti v1.0 (regime nuovo): Maestria e Specializzazione nei livelli della progressione
+  const nuovo = prima.regime === 'nuovo';
+  const conMaestria = nuovo && livelliCategoria('maestria', n, dati).includes(n);
+  const conSpecializzazione = nuovo && conGrado && livelliCategoria('specializzazione', n, dati).includes(n);
+  if (conMaestria) ammesse.add('maestria');
+  if (conSpecializzazione) ammesse.add('specializzazione');
   if (conGrado) for (const k of ['grado', 'tiroPV', 'tiroPM', 'talentoClasse', 'parametriTalenti']) ammesse.add(k);
   if (kAbil) ammesse.add('puntiAbilita');
   for (const k of Object.keys(v)) if (!ammesse.has(k)) err(k, `${conOrdinale('al', n)} livello non si sceglie «${k}» (eventi: ${eventi.join(', ') || 'nessuno'})`);
@@ -538,8 +661,10 @@ function controllaVoce(prima, voce, dati) {
     }
   }
 
-  // §8.6: Talento Libero
-  if (conTalento) errori.push(...controllaTalentoLibero(conCar, v.talentoLibero, dati));
+  // §8.6: Talento Libero (Talenti v1.0, regime nuovo: le tre categorie, con il controllo unico)
+  if (conTalento) errori.push(...(nuovo ? controllaSceltaTalento(conCar, 'talento_libero', v.talentoLibero, dati) : controllaTalentoLibero(conCar, v.talentoLibero, dati)));
+  if (conMaestria) errori.push(...controllaSceltaTalento(conCar, 'maestria', v.maestria, dati));
+  if (conSpecializzazione) errori.push(...controllaSceltaTalento(conCar, 'specializzazione', v.specializzazione, dati, { classe: v.grado?.classe ?? null }));
 
   // §8.3 e §2.13: Punti Abilità Liberi dopo i punti fissi della Classe
   const conGradoApplicato = applicaVoce(prima, { caratteristiche: v.caratteristiche, grado: v.grado, talentoClasse: v.talentoClasse, tiroPV: v.tiroPV, tiroPM: v.tiroPM }, dati);
@@ -657,6 +782,14 @@ function ricalcola(personaggio, dati, finoA = Infinity) {
   const { stato: iniziale, errori } = statoCreazione(p.creazione, dati);
   if (!iniziale) return { stato: null, errori, completamenti: [], eccessi: [] };
   let stato = iniziale;
+  // Talenti v1.0: la Specializzazione del Grado iniziale, dall'elenco della Classe iniziale (p. 2 del file)
+  if (stato.regime === 'nuovo' && livelliCategoria('specializzazione', 1, dati).includes(1)) {
+    const scelta = p.creazione.specializzazioneIniziale;
+    const classe = stato.classi[0]?.nome ?? null;
+    errori.push(...controllaSceltaTalento(stato, 'specializzazione', scelta, dati, { classe })
+      .map((e) => ({ ...e, livello: 1, campo: 'creazione.specializzazioneIniziale' })));
+    if (isOggetto(scelta) && talentoLiberoDef(scelta.id, dati)) stato = aggiungiTalento(stato, 'specializzazione', scelta, 1, classe, dati);
+  }
   p.livelli.slice(0, finoA).forEach((voce, i) => {
     const e = controllaVoce(stato, voce, dati);
     errori.push(...e.map((x) => ({ ...x, livello: stato.livello + 1, campo: `livelli[${i}].${x.campo}` })));
@@ -1067,25 +1200,84 @@ export function prossimoLivello(personaggio, dati) {
       });
     }
   }
-  if (eventi.includes('talento_libero')) {
-    const candidati = [
-      ...dati.talenti_liberi.talenti.map((t) => ({ ...t, specializzazione: false })),
-      ...dati.specializzazioni.specializzazioni.map((s) => ({ ...s, specializzazione: true, parametro: null })),
-    ];
-    const valori = { caratteristica: Object.keys(stato.car), salvezza: dati.caratteristiche.salvezze.map((s) => s.id) };
-    // Contano solo le violazioni: l'annotazione mancante (es. Sport) si completa dopo la scelta.
-    const violazioni = (scelta) => controllaTalentoLibero(stato, scelta, dati).filter((e) => e.tipo === 'violazione');
-    for (const t of candidati) {
-      const parametri = t.parametro ? valori[t.parametro].filter((p) => !violazioni({ id: t.id, parametro: p }).length) : null;
-      const errori = t.parametro ? (parametri.length ? [] : violazioni({ id: t.id, parametro: valori[t.parametro][0] }))
-        : violazioni({ id: t.id });
-      out.talentiLiberi.push({
-        id: t.id, nome: t.specializzazione ? `Specializzazione in ${t.nome}` : t.nome, specializzazione: t.specializzazione,
-        provvisorio: !!t.provvisorio, ammesso: !errori.length, motivo: errori[0]?.problema ?? null, parametri,
-      });
+  // §8.6 e Talenti v1.0: le opzioni vengono dal controllo unico (controllaSceltaTalento). Regime vecchio: Talenti
+  // Liberi e Specializzazioni insieme, come prima; regime nuovo: le tre categorie, ciascuna nel suo livello.
+  if (eventi.includes('talento_libero')) out.talentiLiberi = opzioniCategoria(stato, 'talento_libero', dati);
+  if (stato.regime === 'nuovo') {
+    out.regimeTalenti = 'nuovo';
+    if (livelliCategoria('maestria', n, dati).includes(n)) out.maestrie = opzioniCategoria(stato, 'maestria', dati);
+    // la Specializzazione dipende dalla Classe aumentata: un elenco per ciascuna Classe ammessa
+    if (eventi.includes('grado_classe') && livelliCategoria('specializzazione', n, dati).includes(n)) {
+      out.specializzazioni = Object.fromEntries(out.classi.filter((c) => c.ammessa).map((c) => [c.nome, opzioniCategoria(stato, 'specializzazione', dati, { classe: c.nome })]));
     }
   }
   return out;
+}
+
+/**
+ * Talenti v1.0 — i posti dei Talenti di un personaggio: quanti gliene spettano per categoria al suo livello, quali
+ * sono già scelti e, per ogni posto, le scelte valide con i prerequisiti in ordine di livello (lo stato è quello
+ * subito prima del posto: contano le scelte dei livelli precedenti, non quelle dei successivi).
+ * È l'unico punto in cui si fa questo conto: lo usa la scelta guidata (lotto 2) e la migrazione dei PG.
+ *
+ * Regime vecchio (PG salvati prima dei Talenti v1.0): i posti sono quelli del regime nuovo, tutti vuoti, e i
+ * Talenti di oggi stanno in `vecchi` con la categoria nuova suggerita (la migrazione li toglie e li riscrive);
+ * le opzioni si calcolano come se il personaggio fosse già nel regime nuovo, senza quei Talenti.
+ * @returns {{ regime, livello, categorie: { [cat]: { nome, spettanti, scelti, mancanti } }, posti: [{ categoria,
+ *   livello, classe, scelta, valida, problemi, opzioni }], prossimo, vecchi }}
+ */
+export function postiTalenti(personaggio, dati, { opzioni = true } = {}) {
+  const p = migraPersonaggio(personaggio);
+  const livello = 1 + p.livelli.length;
+  const nuovo = regimeTalentiNuovo(p.creazione);
+  // il personaggio come sarebbe nel regime nuovo: nel vecchio, senza i Talenti Liberi di prima (stanno in «vecchi»)
+  const base = nuovo ? p : {
+    ...p,
+    creazione: { ...p.creazione, regimeTalenti: 2, specializzazioneIniziale: null },
+    livelli: p.livelli.map((v) => { const x = { ...v }; delete x.talentoLibero; delete x.maestria; delete x.specializzazione; return x; }),
+  };
+  const sceltaDi = (cat, n) => (n === 1 ? (cat === 'specializzazione' ? base.creazione.specializzazioneIniziale : null) : base.livelli[n - 2]?.[CAMPO_CATEGORIA[cat]]) ?? null;
+  const classeDi = (cat, n) => (cat !== 'specializzazione' ? null : n === 1 ? base.creazione.classe ?? null : base.livelli[n - 2]?.grado?.classe ?? null);
+  // lo stato subito prima del posto (livello n, categoria cat): eventi fino a n − 1, poi le Caratteristiche di n
+  const senzaDaQui = (n) => ({
+    ...base,
+    creazione: n === 1 ? { ...base.creazione, specializzazioneIniziale: null } : base.creazione,
+    livelli: base.livelli.slice(0, Math.max(0, n - 2)),
+  });
+  const statoPrima = (n) => {
+    const { stato } = ricalcola(senzaDaQui(n), dati);
+    if (!stato || n === 1) return stato;
+    const conCar = applicaVoce(stato, { caratteristiche: base.livelli[n - 2]?.caratteristiche }, dati);
+    conCar.livello = stato.livello;
+    return conCar;
+  };
+  const posti = [];
+  for (const cat of CATEGORIE_TALENTI) {
+    for (const n of livelliCategoria(cat, livello, dati)) {
+      const scelta = sceltaDi(cat, n);
+      const classe = classeDi(cat, n);
+      const prima = (opzioni || scelta) ? statoPrima(n) : null;
+      const problemi = prima ? controllaSceltaTalento(prima, cat, scelta, dati, { classe }).filter((e) => e.tipo !== 'incompleto' || scelta) : [];
+      posti.push({
+        categoria: cat, livello: n, classe, scelta: scelta ?? null,
+        valida: !!scelta && !problemi.some((e) => e.tipo === 'violazione'), problemi: scelta ? problemi : [],
+        opzioni: opzioni && !scelta && prima ? opzioniCategoria(prima, cat, dati, { classe }) : null,
+      });
+    }
+  }
+  posti.sort((a, b) => a.livello - b.livello || CATEGORIE_TALENTI.indexOf(a.categoria) - CATEGORIE_TALENTI.indexOf(b.categoria));
+  const categorie = Object.fromEntries(CATEGORIE_TALENTI.map((cat) => {
+    const miei = posti.filter((x) => x.categoria === cat);
+    const scelti = miei.filter((x) => x.scelta).length;
+    return [cat, { nome: NOME_CATEGORIA[cat], spettanti: miei.length, scelti, mancanti: miei.length - scelti }];
+  }));
+  // regime vecchio: i Talenti di oggi, con la categoria che hanno nei Talenti v1.0 (o la voce che li sostituisce)
+  const vecchi = nuovo ? [] : p.livelli.flatMap((v, i) => (isOggetto(v.talentoLibero) ? [{ livello: i + 2, ...v.talentoLibero }] : [])).map((t) => {
+    const def = talentoLiberoDef(t.id, dati);
+    const dopo = def?.categoria === 'superato' ? talentoLiberoDef(def.sostituito_da, dati) : def;
+    return { ...t, nome: def?.nome ?? t.id, categoria: categoriaDi(dopo), sostituitoDa: def?.categoria === 'superato' ? def.sostituito_da : null };
+  });
+  return { regime: nuovo ? 'nuovo' : 'vecchio', livello, categorie, posti, prossimo: posti.find((x) => !x.scelta) ?? null, vecchi };
 }
 
 function salvezzeDi(stato, dati) {
@@ -1308,13 +1500,15 @@ function schedaARiposo(personaggio, dati) {
     azioni: { movimento: r.azioni_primo_livello.movimento, principali: r.azioni_primo_livello.principali + cumulato('azione_principale', n, dati) },
     vantaggio: stato.addestr.vantaggio,
     talenti: stato.classi.flatMap((c) => talentiClasse.get(c.nome).map((t) => ({ ...t, classe: c.nome }))),
+    // Talenti v1.0: "nuovo" (tre categorie) o "vecchio" (i Talenti di prima)
+    regimeTalenti: stato.regime,
     talentiLiberi: stato.talentiLiberi.filter((t) => !talentoLiberoDef(t.id, dati).specializzazione).map((t) => {
       const d = talentoLiberoDef(t.id, dati);
-      return { id: t.id, nome: d.nome, parametro: t.parametro, annotazione: t.annotazione ?? null, livello: t.livello, provvisorio: !!d.provvisorio, testo: d.testo, sintesi: d.sintesi ?? null };
+      return { id: t.id, nome: d.nome, categoria: categoriaDi(d), parametro: t.parametro, annotazione: t.annotazione ?? null, livello: t.livello, provvisorio: !!d.provvisorio, testo: d.testo, sintesi: d.sintesi ?? null };
     }),
     specializzazioni: stato.talentiLiberi.filter((t) => talentoLiberoDef(t.id, dati).specializzazione).map((t) => {
       const d = talentoLiberoDef(t.id, dati);
-      return { id: t.id, nome: d.nome, abilita: d.abilita, effetto: d.effetto, livello: t.livello };
+      return { id: t.id, nome: d.nome, abilita: d.abilita, effetto: d.effetto, livello: t.livello, ...(t.classe ? { classe: t.classe } : {}), ...(t.annotazione ? { annotazione: t.annotazione } : {}) };
     }),
     tecniche: stato.tecniche.map((x) => ({ ...catalogoTec.find((t) => t.id === x.id), livello: x.livello })),
     tecnicheAmmesse: tecnicheAmmesse(stato),

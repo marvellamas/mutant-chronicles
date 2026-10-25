@@ -82,6 +82,11 @@ export function nuoveScelte() {
     ritratto: null, // data URL JPEG o PNG, ridimensionato nel browser (src/ritratto.js)
     // parametri dei Talenti di Classe del 1° livello: { nome del Talento: id dell'opzione } (Disciplina del Lottatore, §3.5.5)
     parametriTalenti: {},
+    // Talenti v1.0 (07/10/2026): 2 = il personaggio usa le tre categorie (Talenti Liberi, Maestrie, Specializzazioni);
+    // null = i Talenti di prima (un solo evento «talento_libero» ai livelli dispari). Lo imposta la migrazione (lotto 2).
+    regimeTalenti: null,
+    // Specializzazione del Grado iniziale (1° livello), regime nuovo: { id, annotazione? }
+    specializzazioneIniziale: null,
     // Giocatore §5.21: { perdite: [{ uid, rif, nome, umn }], recuperi: [{ punti, nota }] } (src/umanita.js)
     umanita: null,
     // Veicoli posseduti (lotto 3 dei Veicoli; A.91 provvisoria: nel file del PG che li possiede, veicoli.json →
@@ -246,6 +251,10 @@ export function normalizza(scelteIn, dati) {
   }
   for (const k of ['puntiCaratteristica', 'puntiAbilitaLiberi', 'parametriTalenti']) if (!isOggetto(s[k])) s[k] = {};
   for (const [k, v] of Object.entries(s.parametriTalenti)) if (typeof v !== 'string' || !v) delete s.parametriTalenti[k];
+  // Talenti v1.0: regime e Specializzazione iniziale (i file di prima non li hanno: restano Talenti vecchi)
+  if (s.regimeTalenti !== 2) s.regimeTalenti = null;
+  if (!(isOggetto(s.specializzazioneIniziale) && typeof s.specializzazioneIniziale.id === 'string' && s.specializzazioneIniziale.id)) s.specializzazioneIniziale = null;
+  else s.specializzazioneIniziale = { id: s.specializzazioneIniziale.id, ...(typeof s.specializzazioneIniziale.annotazione === 'string' && s.specializzazioneIniziale.annotazione.trim() ? { annotazione: s.specializzazioneIniziale.annotazione.trim() } : {}) };
   if (!Array.isArray(s.incantesimi)) s.incantesimi = [];
   s.incantesimiAMano = normalizzaIncantesimiAMano(s.incantesimiAMano, dati, avvisi);
 
@@ -481,6 +490,9 @@ export function serializza(scelte, { versioniDati, livelli, sessione, calendario
   delete pulite.correzioniMaster;
   delete pulite.circostanzeMaster;
   if (!Object.keys(pulite.parametriTalenti ?? {}).length) delete pulite.parametriTalenti;
+  // Talenti v1.0: scritti solo se ci sono, così i file di prima restano identici
+  if (pulite.regimeTalenti !== 2) delete pulite.regimeTalenti;
+  if (!pulite.specializzazioneIniziale) delete pulite.specializzazioneIniziale;
   const file = { formato: FORMATO_FILE, versione: VERSIONE_FORMATO };
   // identificativo del personaggio (nuovoPg): scritto solo se c'è, così i file di prima restano identici
   if (isPg(pg)) file.pg = pg;
