@@ -11,7 +11,7 @@ import { spawn, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { cartellaDati, migraSeServe, leggiImpostazione, scriviImpostazione, percorsoImpostazione } from '../tools/dati-pc.mjs';
 import { annotaPrima, confrontaPersonaggi, personaggiDalServer, personaggiAdesso } from '../tools/esito-aggiornamento.mjs';
-import { cerca } from '../tools/cerca-personaggi.mjs';
+import { cerca, radiciDischi, copieDellApp } from '../tools/cerca-personaggi.mjs';
 import { voceCerca } from '../tools/console.mjs';
 import { creaZip } from '../tools/salva-sessione.mjs';
 
@@ -210,4 +210,15 @@ test('D: «Cerca i personaggi» li ritrova nelle altre cartelle, negli zip e il 
   assert.equal(leggiImpostazione().cartella, vecchia);
   assert.equal(cartellaDati(nuova).cartella, vecchia);
   assert.equal(personaggiAdesso(nuova).personaggi.length, fixture.length);
+});
+
+test('D: «Cerca» guarda anche pochi livelli sotto la radice dei dischi (per esempio D:\\Mutant\\mutant)', () => {
+  assert.deepEqual(radiciDischi('F:\\REPOS\\mutant', { home: 'C:\\Users\\davide' }), ['F:\\', 'C:\\']);
+  // una radice con la sua profondità: la copia a due livelli si trova, una più giù no
+  const r = tmp();
+  const vicina = copiaConDati(join(r, 'Mutant'));
+  const lontana = copiaConDati(join(r, 'a', 'b', 'c'));
+  const trovate = copieDellApp([[r, 2]]);
+  assert.ok(trovate.includes(vicina));
+  assert.ok(!trovate.includes(lontana));
 });

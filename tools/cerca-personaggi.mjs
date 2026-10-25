@@ -12,7 +12,7 @@
 // Per ogni personaggio (identificativo `pg`, o il nome per i file di prima) mette in cima la versione più recente: quando
 // il server l'ha scritta (`aggiornato_il`) o, senza, la data del file.
 import { readdirSync, readFileSync, statSync, existsSync } from 'node:fs';
-import { join, resolve, dirname, basename } from 'node:path';
+import { join, resolve, dirname, basename, parse } from 'node:path';
 import { homedir } from 'node:os';
 import { leggiZip } from './salva-sessione.mjs';
 import { talentiDi } from './stato-personaggi.mjs';
@@ -29,10 +29,20 @@ export function radiciDiRicerca(radiceApp, { dati = null, home = homedir(), extr
   return cand.filter(Boolean).filter((p) => existsSync(p) && !visti.has(norma(p)) && visti.add(norma(p)));
 }
 
-/** Le copie dell'app (cartelle che contengono personaggi\ con almeno un file personaggio), cercando sotto le radici. */
+/** Le radici dei dischi dell'app e dell'utente (C:\, D:\…): si guardano solo pochi livelli sotto (per esempio D:\Mutant\mutant). */
+export function radiciDischi(radiceApp, { home = homedir() } = {}) {
+  const visti = new Set();
+  return [parse(resolve(radiceApp)).root, parse(resolve(home)).root].filter((r) => r && !visti.has(r.toLowerCase()) && visti.add(r.toLowerCase()));
+}
+
+/**
+ * Le copie dell'app (cartelle che contengono personaggi\ con almeno un file personaggio), cercando sotto le radici.
+ * `radici`: percorsi, oppure [percorso, profondità] per guardare meno livelli (le radici dei dischi).
+ */
 export function copieDellApp(radici, { profondita = 4, massimo = 40000 } = {}) {
   const trovate = new Map();
   let visitate = 0;
+  const visitaFino = (dir, max) => { const prima = profondita; profondita = max; visita(dir, 0); profondita = prima; };
   const visita = (dir, livello) => {
     if (visitate++ > massimo) return;
     let voci;
@@ -43,7 +53,7 @@ export function copieDellApp(radici, { profondita = 4, massimo = 40000 } = {}) {
     if (livello >= profondita) return;
     for (const v of voci) if (v.isDirectory() && !SALTA.has(v.name) && !v.name.startsWith('.') && v.name !== 'personaggi') visita(join(dir, v.name), livello + 1);
   };
-  for (const r of radici) visita(r, 0);
+  for (const r of radici) { if (Array.isArray(r)) visitaFino(r[0], r[1]); else visita(r, 0); }
   return [...trovate.values()];
 }
 
@@ -75,7 +85,7 @@ function riassuntoPx(testo, mtime) {
  *   px: [{ dove, quando, partite }], zipDrive: [percorsi] }} — versioni dal più recente: { dove, tipo, quando, livello, px }
  */
 export function cerca({ radiceApp, dati = null, radici = null, home = homedir() } = {}) {
-  const copie = copieDellApp(radici ?? radiciDiRicerca(radiceApp, { dati, home }));
+  const copie = copieDellApp(radici ?? [...radiciDiRicerca(radiceApp, { dati, home }), ...radiciDischi(radiceApp, { home }).map((r) => [r, 2])]);
   if (dati && existsSync(join(dati, 'personaggi')) && !copie.some((c) => norma(c) === norma(dati))) copie.unshift(resolve(dati));
   const versioni = [];
   const px = [];
