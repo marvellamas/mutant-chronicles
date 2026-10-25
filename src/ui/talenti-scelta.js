@@ -15,7 +15,8 @@
 import { h } from './dom.js';
 import { chiedi } from './finestrella.js';
 import { delNome } from '../lingua.js';
-import { voceTalento, rigaBreve, testoCompleto, testoPrerequisiti, scelteAperte, nomeCategoria, testiIncantesimo, testiTecnica } from '../talenti-testi.js';
+import { voceTalento, rigaBreve, schedaTalento, testoPrerequisiti, scelteAperte, nomeCategoria, testiIncantesimo, testiTecnica } from '../talenti-testi.js';
+import { nomeCheSiApre } from './talento-leggibile.js';
 
 const NOMI = {
   talento_libero: ['Talento Libero', 'Talenti Liberi'],
@@ -44,12 +45,8 @@ export function testoDaScegliere(categorie, successive = []) {
 /** La riga d'effetto di un Talento o di una Specializzazione (sempre un testo). La usa anche la creazione. */
 export const rigaEffetto = (id, dati) => rigaBreve(id, dati);
 
-/** «Dettagli»: il testo completo, a paragrafi, chiuso finché non lo si apre. */
-function dettagli(testo, etichetta = 'Dettagli') {
-  if (!testo) return null;
-  return h('details', { class: 'dettagli-talento' }, h('summary', {}, etichetta),
-    ...String(testo).split('\n').filter(Boolean).map((p) => h('p', {}, p)));
-}
+/** Una scheda { intestazione, paragrafi } da un testo a paragrafi (incantesimi e Tecniche). */
+const comeScheda = (testo) => ({ intestazione: '', paragrafi: String(testo ?? '').split('\n').map((p) => p.trim()).filter(Boolean) });
 
 /** Categoria, prerequisiti e scelte che apre: le righe piccole sotto il nome. */
 function righeInfo(id, dati) {
@@ -118,15 +115,16 @@ function corpo(t, P, succ) {
       type: 'button', class: `posto-talento${x === attivo.posto ? ' attuale' : ''}${x.scelta ? ' scelto' : ''}${x.scelta && !x.valida ? ' non-valido' : ''}`,
       'aria-current': x === attivo.posto ? 'step' : null,
       onclick: () => { ui.posto = chiave(x); ui.filtro = ''; t.azioni.ridisegna(); },
-    }, `${x.livello}° · ${nomeDi(x.categoria)}${x.scelta ? ` · ${descriviScelta(x.scelta, t.dati)}` : ' · da scegliere'}${x.chiuso ? ' 🔒' : ''}`) })),
+    }, `${x.livello}° ${nomeDi(x.categoria)}${x.scelta ? `: ${descriviScelta(x.scelta, t.dati)}` : ''}${x.chiuso ? ' 🔒' : ''}`, x === attivo.posto ? h('strong', { class: 'adesso' }, ' ← adesso') : null) })),
     ...succ.map((s) => ({ livello: s.livello, ordine: 1, el: h('button', {
       type: 'button', class: `posto-talento successiva${s === attivo.successiva ? ' attuale' : ''}`,
       'aria-current': s === attivo.successiva ? 'step' : null,
       onclick: () => { ui.posto = chiaveSuccessiva(s); ui.filtro = ''; t.azioni.ridisegna(); },
-    }, `${s.livello}° · ${nomeSucc(s.tipo, 2)} · ${s.quanti} da scegliere`) })),
+    }, `${s.livello}° ${nomeSucc(s.tipo, 2)}: ${s.quanti} da scegliere`, s === attivo.successiva ? h('strong', { class: 'adesso' }, ' ← adesso') : null) })),
   ].sort((a, b) => a.livello - b.livello || a.ordine - b.ordine);
   return h('div', { class: 'scelta-talenti' },
-    h('ol', { class: 'posti-talenti' }, voci.map((v) => h('li', {}, v.el))),
+    h('p', { class: 'nota percorso-talenti' }, 'I tuoi posti, in ordine (tocca un posto già scelto per cambiarlo):'),
+    h('ol', { class: 'posti-talenti', 'aria-label': 'I posti dei Talenti, in ordine' }, voci.map((v) => h('li', {}, v.el))),
     attivo.successiva ? passoSuccessivo(t, attivo.successiva) : postoAttivo(t, attivo.posto, succ));
 }
 
@@ -135,9 +133,9 @@ function postoAttivo(t, x, succ) {
   if (x.scelta) {
     const puo = !x.chiuso || t.master;
     const aperte = succ.filter((s) => s.livello === x.livello);
+    const n = nomeCheSiApre(descriviScelta(x.scelta, t.dati), schedaTalento(x.scelta.id, t.dati));
     return h('div', { class: 'posto-attivo' }, titolo,
-      h('p', {}, h('strong', {}, descriviScelta(x.scelta, t.dati)), ' — ', rigaBreve(x.scelta.id, t.dati)),
-      dettagli(testoCompleto(x.scelta.id, t.dati)),
+      h('div', { class: 'opzione-testo' }, n.nome, h('span', { class: 'riga-talento' }, rigaBreve(x.scelta.id, t.dati)), n.scheda),
       aperte.map((s) => h('p', { class: 'nota motivo' }, `${s.quanti === 1 ? 'Resta' : 'Restano'} ${s.quanti} ${nomeSucc(s.tipo, s.quanti)} da scegliere `,
         h('button', { type: 'button', class: 'btn primario', onclick: () => { t.ui.posto = chiaveSuccessiva(s); t.ui.filtro = ''; t.azioni.ridisegna(); } }, 'Scegli'))),
       !x.valida ? h('p', { class: 'nota motivo' }, `Non ammessa dalle regole: ${x.problemi.find((e) => e.tipo === 'violazione')?.problema ?? ''}${t.master ? '' : ' (l’ha forzata il Direttore)'}`) : null,
@@ -180,13 +178,15 @@ function opzione(t, posto, o, ammessa) {
     });
     if (ok) t.azioni.scegli(posto, scelta(), { forzata: o.motivo });
   };
+  // 25/10 notte: il nome si tocca e apre la scheda intera del Talento, sotto, sul posto (src/ui/talento-leggibile.js)
+  const n = nomeCheSiApre(o.nome, schedaTalento(o.id, t.dati), { dopo: h('span', { class: 'sigla' }, ` · ${nomeCategoria(def?.categoria) || nomeDi(posto.categoria)}`) });
   return h('li', { class: `opzione-talento${ammessa ? '' : ' bloccato'}` },
     h('div', { class: 'opzione-testo' },
-      h('strong', {}, o.nome), h('span', { class: 'sigla' }, ` · ${nomeCategoria(def?.categoria) || nomeDi(posto.categoria)}`),
+      n.nome,
       h('span', { class: 'riga-talento' }, rigaBreve(o.id, t.dati)),
       ...righeInfo(o.id, t.dati),
       ammessa ? null : h('small', { class: 'motivo' }, ` ${o.motivo}`),
-      dettagli(testoCompleto(o.id, t.dati))),
+      n.scheda),
     h('div', { class: 'opzione-azioni' }, selPar, annot,
       ammessa ? h('button', { type: 'button', class: 'btn primario', onclick: vai }, 'Scegli')
         : t.master ? h('button', { type: 'button', class: 'btn', onclick: vai }, 'Forza…') : null));
@@ -212,12 +212,13 @@ function passoSuccessivo(t, s) {
       });
       if (ok) t.azioni.scegliSuccessiva(s, o.id, { forzata: o.motivo });
     };
+    const n = nomeCheSiApre(o.nome, comeScheda(tx.testo), { dopo: h('span', { class: 'sigla' }, ` · ${o.gruppo}${o.livelloBase ? ` · liv. base ${o.livelloBase}` : ''}`) });
     return h('li', { class: `opzione-talento${ammessa ? '' : ' bloccato'}` },
       h('div', { class: 'opzione-testo' },
-        h('strong', {}, o.nome), h('span', { class: 'sigla' }, ` · ${o.gruppo}${o.livelloBase ? ` · liv. base ${o.livelloBase}` : ''}`),
+        n.nome,
         tx.riga ? h('span', { class: 'riga-talento' }, tx.riga) : null,
         ammessa ? null : h('small', { class: 'motivo' }, ` ${o.motivo}`),
-        dettagli(tx.testo)),
+        n.scheda),
       h('div', { class: 'opzione-azioni' },
         ammessa ? h('button', { type: 'button', class: 'btn primario', onclick: vai }, 'Scegli')
           : t.master ? h('button', { type: 'button', class: 'btn', onclick: vai }, 'Forza…') : null));

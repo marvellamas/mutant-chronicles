@@ -39,6 +39,8 @@ import { assegnaMani, legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, N
 import { dotazioneApplicata, crediti } from '../dotazioni.js';
 import { provenienzaCarico } from '../carico.js';
 import { talentiSituazionali } from '../talenti.js';
+import { schedaTalento } from '../talenti-testi.js';
+import { nomeCheSiApre } from './talento-leggibile.js';
 import { gradiTaumaturgici } from '../incantesimi.js';
 import { statoRicarica, disponibili, carichiniDi } from '../ricarica.js';
 import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
@@ -1406,13 +1408,19 @@ function tabAbilita(ctx, d) {
     sezione('Talenti di Classe', d.talentiClasse.map((t) => h('div', { class: 'talento' },
       h('h3', {}, t.nome, h('span', { class: 'sigla' }, ` · ${t.classe} ${t.grado}${t.scelto ? ', a scelta' : ''}`)),
       paragrafi(t.frase)))),
-    d.talentiLiberi.length ? sezione('Talenti Liberi', d.talentiLiberi.map((t) => h('div', { class: 'talento' },
-      h('h3', {}, info('talento', t.id, t.nome), t.parametro ? ` (${t.parametro})` : null, t.annotazione ? ` — ${t.annotazione}` : null,
-        h('span', { class: 'sigla' }, ` · ${t.livello}° livello`), t.provvisorio ? h('span', { class: 'etichetta' }, 'provvisorio') : null),
-      t.provvisorio ? h('p', { class: 'nota' }, 'Talento provvisorio: ricavato dal Manuale della Magia, prerequisiti da definire con il master.') : null,
-      paragrafi(t.frase)))) : null),
-    d.specializzazioni.length ? sezione('Specializzazioni', h('ul', {}, d.specializzazioni.map((x) => h('li', {},
-      info('talento', x.id, x.nome), x.annotazione ? ` (${x.annotazione})` : null, ` — ${x.riga || `${x.abilita}; ${x.effetto}`} (${x.livello}° livello)`)))) : null,
+    // 25/10 notte: il nome si tocca e apre la scheda intera del Talento, sotto, come nel riquadro «Da scegliere»
+    d.talentiLiberi.length ? sezione('Talenti Liberi', d.talentiLiberi.map((t) => {
+      const n = nomeCheSiApre(t.nome, schedaTalento(t.id, ctx.dati));
+      return h('div', { class: 'talento' },
+        h('h3', {}, n.nome, t.parametro ? ` (${t.parametro})` : null, t.annotazione ? ` — ${t.annotazione}` : null,
+          h('span', { class: 'sigla' }, ` · ${t.livello}° livello`), t.provvisorio ? h('span', { class: 'etichetta' }, 'provvisorio') : null),
+        t.provvisorio ? h('p', { class: 'nota' }, 'Talento provvisorio: ricavato dal Manuale della Magia, prerequisiti da definire con il master.') : null,
+        paragrafi(t.frase), n.scheda);
+    })) : null),
+    d.specializzazioni.length ? sezione('Specializzazioni', h('ul', {}, d.specializzazioni.map((x) => {
+      const n = nomeCheSiApre(x.nome, schedaTalento(x.id, ctx.dati));
+      return h('li', {}, n.nome, x.annotazione ? ` (${x.annotazione})` : null, ` — ${x.riga || `${x.abilita}; ${x.effetto}`} (${x.livello}° livello)`, n.scheda);
+    }))) : null,
     // Tecniche Interiori: nella tab Poteri, con «Attiva» (richiesta di Davide del 02/10)
     d.tecniche.length || d.tecnicheAmmesse ? h('p', { class: 'nota rimando-tecniche' }, `Tecniche Interiori (${d.tecniche.length} / ${d.tecnicheAmmesse}): vedi Poteri.`) : null,
   ];

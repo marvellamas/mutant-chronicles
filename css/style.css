@@ -3054,9 +3054,18 @@ body.tablet-sola-lettura #app textarea {
 .opzione-talento.bloccato { opacity: 0.6; }
 .opzione-talento .motivo { display: block; }
 /* 25/10 sera: che cosa fa, requisiti, scelte che apre e «Dettagli» con il testo completo */
-.opzione-talento .riga-talento { display: block; margin: 0.15rem 0; }
+.opzione-talento .riga-talento, .posto-attivo .riga-talento { display: block; margin: 0.15rem 0; }
 .opzione-talento .info-talento { display: block; }
-.dettagli-talento { margin-top: 0.2rem; }
-.dettagli-talento summary { cursor: pointer; color: var(--accento, #c8a24a); font-size: 0.85rem; min-height: 32px; display: flex; align-items: center; }
-.dettagli-talento p { margin: 0.25rem 0; font-size: 0.9rem; }
+/* 25/10 notte: il nome si tocca e apre la scheda intera sotto, sul posto; ▸/▾ e la sottolineatura dicono che si tocca */
+.nome-talento { background: none; border: 0; padding: 0.2rem 0; margin: 0; color: inherit; font: inherit; text-align: left; cursor: pointer; min-height: 36px; }
+.nome-talento strong { text-decoration: underline dotted; text-underline-offset: 0.22em; text-decoration-thickness: 1.5px; }
+.nome-talento:hover strong, .nome-talento:focus-visible strong { color: var(--accento, #c8a24a); }
+.nome-talento .segno-apri { color: var(--accento, #c8a24a); display: inline-block; font-size: 1.15em; width: 1.1em; }
+.scheda-talento { margin: 0.35rem 0 0.4rem; padding: 0.5rem 0.75rem; border-left: 3px solid var(--accento, #c8a24a); background: var(--superficie); border-radius: var(--raggio); font-size: 1rem; line-height: 1.5; max-width: 70ch; overflow-wrap: break-word; hyphens: auto; }
+.scheda-talento p { margin: 0.35rem 0; font-size: 1rem; }
+.scheda-talento .intestazione-talento { color: var(--testo-tenue, inherit); }
+.scheda-talento[hidden] { display: none; }
+.posto-talento.attuale { background: var(--accento, #c8a24a); color: var(--accento-testo, #17171a); }
+.posto-talento .adesso { white-space: nowrap; }
+.percorso-talenti { margin: 0.5rem 0 0; }
 .posto-talento.successiva { border-style: dashed; }

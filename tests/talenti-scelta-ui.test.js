@@ -84,7 +84,7 @@ test('un’opzione non ammessa: il giocatore non la può prendere, il Direttore 
   const rm = g.el.querySelectorAll('.opzione-talento').find((x) => /Ritualista Maggiore/.test(testo(x)));
   assert.ok(rm.className.includes('bloccato'));
   assert.match(testo(rm), /richiede Ritualista Minore/);
-  assert.equal(tutti(rm).filter((x) => x.tagName === 'BUTTON').length, 0, 'il giocatore non ha un pulsante');
+  assert.equal(tutti(rm).filter((x) => x.tagName === 'BUTTON' && x.className !== 'nome-talento').length, 0, 'il giocatore non ha un pulsante per sceglierla (il nome si tocca solo per leggere)');
   // il Direttore: «Forza…» chiede conferma (finestrella) e poi sceglie, con il motivo
   const m = banco({ master: true });
   m.apri('maestria:2');
@@ -136,7 +136,7 @@ test('la riga d’effetto: sintesi o prima frase utile; Specializzazioni con il 
   assert.equal(rigaEffetto('potere-mistico', dati), 'Aumenta permanentemente i PM Massimi di 5 per acquisizione, fino a +15.');
 });
 
-test('25/10 sera: ogni opzione dice categoria, che cosa fa, requisiti, che cosa apre, e ha «Dettagli» con il testo completo', () => {
+test('25/10 notte: il nome dell’opzione si tocca, apre sotto la scheda intera del manuale e la richiude; niente «Dettagli»', () => {
   const b = banco();
   b.apri('talento_libero:3');
   const voce = (re) => b.el.querySelectorAll('.opzione-talento').find((x) => re.test(testo(x)));
@@ -145,9 +145,24 @@ test('25/10 sera: ogni opzione dice categoria, che cosa fa, requisiti, che cosa 
   assert.match(testo(inc), /Ogni acquisizione permette di apprendere automaticamente due nuovi Incantesimi/);
   assert.match(testo(inc), /Requisiti: la capacità personale di lanciare Incantesimi/);
   assert.match(testo(inc), /Poi: 2 Incantesimi da scegliere/);
-  const det = tutti(inc).find((x) => x.tagName === 'DETAILS');
-  assert.ok(det, 'c’è «Dettagli»');
-  assert.match(testo(det), /Il Talento non aumenta il livello massimo degli Incantesimi accessibili/);
+  assert.equal(tutti(inc).find((x) => x.tagName === 'DETAILS'), undefined, '«Dettagli» non c’è più: lo fa il nome');
+  const nome = inc.querySelector('.nome-talento');
+  const scheda = inc.querySelector('.scheda-talento');
+  assert.equal(nome.tagName, 'BUTTON');
+  assert.match(testo(nome), /^▸ Incrementare Incantesimi/, 'il segno ▸ dice che si tocca');
+  assert.equal(scheda.hidden, true, 'chiusa all’inizio');
+  // la scheda sta dentro l'opzione, sotto il nome: non è una finestra sopra la lista
+  assert.ok(tutti(inc).includes(scheda));
+  clic(nome);
+  assert.equal(scheda.hidden, false);
+  assert.equal(nome.getAttribute('aria-expanded'), 'true');
+  assert.match(testo(nome), /^▾ /);
+  // tutto il paragrafo del manuale, con l'intestazione (tipo, requisito, quante volte)
+  assert.match(testo(scheda), /Tipo: Passivo\. Prerequisito: possedere la capacità personale di lanciare Incantesimi\. Acquisizione: fino a cinque volte\./);
+  assert.match(testo(scheda), /Il Talento non aumenta il livello massimo degli Incantesimi accessibili e non concede PM aggiuntivi\./);
+  clic(nome);
+  assert.equal(scheda.hidden, true, 'si richiude toccando di nuovo il nome');
+  assert.equal(nome.getAttribute('aria-expanded'), 'false');
   // nessuna opzione con un oggetto stampato come testo o una riga vuota, in nessun posto
   for (const posto of postiTalenti(b.p, dati).posti) {
     b.apri(`${posto.categoria}:${posto.livello}`);
@@ -157,6 +172,35 @@ test('25/10 sera: ogni opzione dice categoria, che cosa fa, requisiti, che cosa 
       assert.ok(riga && testo(riga).trim().length > 10, `riga vuota: ${testo(o).slice(0, 60)}`);
     }
   }
+});
+
+test('25/10 notte: in alto l’elenco di tutti i posti in ordine, l’attuale «← adesso», gli scelti con il nome; un posto scelto si tocca e si cambia', () => {
+  const b = banco();
+  clic(pulsante(b.el, 'Scegli'));
+  const posti = () => b.el.querySelectorAll('.posto-talento').map((x) => testo(x));
+  assert.deepEqual(posti(), [
+    '1° Specializzazione ← adesso', '2° Maestria', '3° Talento Libero', '4° Specializzazione', '5° Talento Libero', '6° Maestria',
+  ]);
+  assert.match(testo(b.el), /I tuoi posti, in ordine/);
+  // scelto il primo, l'elenco si aggiorna: il 1° ha il nome, l'attuale passa al 2°
+  const info = b.el.querySelectorAll('.opzione-talento').find((x) => /Specializzazione in Informatica/.test(testo(x)));
+  clic(tutti(info).find((x) => x.tagName === 'BUTTON' && x.textContent === 'Scegli'));
+  assert.deepEqual(posti().slice(0, 2), ['1° Specializzazione: Informatica', '2° Maestria ← adesso']);
+  assert.equal(b.el.querySelectorAll('.posto-talento').filter((x) => x.className.split(' ').includes('attuale')).length, 1, 'uno solo evidenziato');
+  // toccando il posto già scelto si torna lì, con il nome che apre la scheda e «Cambia questa scelta»
+  clic(b.el.querySelectorAll('.posto-talento').find((x) => /^1°/.test(testo(x))));
+  assert.match(posti()[0], /← adesso$/);
+  assert.match(testo(b.el), /Specializzazione del 1° livello/);
+  assert.ok(b.el.querySelector('.posto-attivo').querySelector('.nome-talento'), 'anche la scelta fatta si legge toccando il nome');
+  clic(pulsante(b.el, 'Cambia questa scelta'));
+  assert.equal(b.p.creazione.specializzazioneIniziale, null);
+  assert.equal(posti()[0], '1° Specializzazione ← adesso');
+});
+
+test('25/10 notte: l’elenco dei Talenti della scheda usa lo stesso tocco sul nome', () => {
+  const tab = readFileSync(new URL('../src/ui/tab.js', import.meta.url), 'utf8');
+  assert.match(tab, /nomeCheSiApre\(t\.nome, schedaTalento\(t\.id, ctx\.dati\)\)/);
+  assert.match(tab, /nomeCheSiApre\(x\.nome, schedaTalento\(x\.id, ctx\.dati\)\)/);
 });
 
 test('app.js: la scelta passa dal salvataggio normale; offline e coda bloccano; i PG nuovi nascono nei Talenti v1.0', () => {
@@ -191,7 +235,7 @@ test('25/10 sera: Incrementare Incantesimi apre i 2 incantesimi come passo segue
   assert.match(testo(b.el), /Da scegliere: .*2 Incantesimi/);
   assert.ok(pulsante(b.el, 'Scegli'), 'il pulsante per risolverlo');
   clic(pulsante(b.el, 'Scegli'));
-  clic(tutti(b.el).find((x) => x.tagName === 'BUTTON' && /3° · Incantesimi · 2 da scegliere/.test(x.textContent)));
+  clic(tutti(b.el).find((x) => x.tagName === 'BUTTON' && /^3° Incantesimi: 2 da scegliere/.test(x.textContent)));
   for (let k = 0; k < 2; k++) {
     const primo = b.el.querySelectorAll('.opzione-talento').find((x) => !x.className.includes('bloccato'));
     clic(tutti(primo).find((x) => x.tagName === 'BUTTON' && x.textContent === 'Scegli'));
