@@ -27,8 +27,8 @@ export async function leggiPx() {
 }
 
 /** Salva l'intero archivio «PX della partita». */
-export async function salvaPx(db) {
-  const r = await fetch('api/px', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(db) });
+export async function salvaPx(db, { keepalive = false } = {}) {
+  const r = await fetch('api/px', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(db), keepalive });
   if (!r.ok) throw await errore(r);
   return r.json();
 }
@@ -124,6 +124,7 @@ export function pannelloPx(ctx, st, az) {
 
   return h('section', { class: 'px-pannello pannello' },
     h('h3', {}, 'PX della partita'),
+    h('p', { class: 'px-salvataggio nota', role: 'status', 'aria-live': 'polite', 'data-stato': st.salvataggio?.tipo ?? 'ok' }, st.salvataggio?.testo ?? ''),
     h('p', { class: 'nota' }, 'A fine partita: il calcolatore propone, tu correggi il totale finale, poi «Assegna PX della partita». I PX veri stanno sui PG. (A.161; fattori in data/px_partita.json.)'),
     nav, corpo);
 }

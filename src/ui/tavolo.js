@@ -31,6 +31,7 @@ import { pannelloBestiario, elencoNemici, cartaNemico } from './nemici.js';
 import { pannelloGalleria, fasciaGalleria, leggiGalleria, nascondiATutti } from './galleria.js';
 // PX della partita (A.161): calcolatore e archivio del Direttore, solo sul PC del master
 import { pannelloPx, leggiPx, salvaPx, patchPgAssegnazione, dbIniziale } from './px-partita.js';
+import { creaArchivioPx, testoSalvataggio } from '../px-archivio.js';
 import { deltaAssegnazione, partitaAssegnata, migraGiocatoriAPgStabile, fileDelGiocatore } from '../px-partita.js';
 import { chiudi as chiudiScontro, cambiaMusica, diTurno, ordineIniziativa, registraIniziative, senzaIniziativaNuovi, avanti, indietro, anteprimaIndietro, reimpostaIniziativa, reimpostaIniziativaDi, dadoIniziativa, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico, confermaRegimeNemico, aggiungiNemici, registraRiga, cambiaStatoNemico } from '../scontro.js';
 import { vociBestiario } from '../nemici.js';
@@ -482,6 +483,7 @@ export function renderTavolo(radice, ctx) {
       schede: ultimiPerPg(stato.elenco), scontri: stato.scontro ? [stato.scontro] : [],
       // 21/10/2026, parte C: righe non migrate da pgFile a pgStabile (il file non c'è più nell'elenco)
       pxNonMigrati: stato.pxNonMigrati ?? [],
+      salvataggio: testoSalvataggio(archivioPx.stato),
     }, { salva: salvaPxDb, ridisegna: disegna, assegna: assegnaPx }) : null;
     const bestiario = pannelloBestiario(ctx, stato.bestiario, {
       aperto: stato.bestiarioAperto,
@@ -961,17 +963,35 @@ export function renderTavolo(radice, ctx) {
   // PX attuali dai file dei PG associati, anche se non sono al tavolo (il Titolo dipende dal livello): si rileggono
   // solo se il file è cambiato (mtime dell'elenco della cartella)
   const pxDaFile = new Map();
+  // 25/10/2026: l'archivio è uno solo, in src/px-archivio.js (salva da solo, una richiesta alla volta, e il giro di
+  // aggiornamento non lo sostituisce mai mentre ci sono modifiche da scrivere)
+  const archivioPx = creaArchivioPx({
+    scrivi: (db, opz) => salvaPx(db, opz),
+    aCambio: (s) => {
+      const el = radice.querySelector('.px-salvataggio');
+      if (el) { const t = testoSalvataggio(s); el.textContent = t.testo; el.dataset.stato = t.tipo; }
+      if (s.stato === 'errore' && !stato.avvisatoErrorePx) { stato.avvisatoErrorePx = true; avvisoErrore(`PX della partita non salvati: ${s.errore}. Ci riprovo da solo; controlla che avvia-server.bat sia aperto.`); }
+      if (s.stato === 'salvato') stato.avvisatoErrorePx = false;
+    },
+  });
+  // chiudere la pagina o cambiare app non deve perdere l'ultima modifica
+  const salvaPxSubito = () => { void archivioPx.salva({ keepalive: true }); };
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') salvaPxSubito(); });
+  window.addEventListener('pagehide', salvaPxSubito);
   const aggiornaPx = async () => {
+    const gettone = archivioPx.gettone();
     const letto = await leggiPx();
-    let db = letto ?? dbIniziale(ctx.dati);
+    archivioPx.sincronizza(letto, gettone, () => dbIniziale(ctx.dati));
+    let db = archivioPx.db;
     // «le code dell'originale» (21/10/2026), parte C: giocatori[].pgFile (nome di file, invecchia) → pgStabile
     // (identificativo stabile): migrazione silenziosa, una volta sola, non indovinando le righe irrisolvibili
     // (il file non c'è più nell'elenco: restano com'erano, in stato.pxNonMigrati per il pannello)
     const migrazione = migraGiocatoriAPgStabile(db, stato.elenco);
     stato.pxNonMigrati = migrazione.nonMigrate;
     if (migrazione.cambiato) {
+      // si migra l'archivio che c'è in memoria (non la copia appena letta) e lo si salva come ogni altra modifica
       db = migrazione.db;
-      try { await salvaPx(db); } catch { /* si ritenta al giro successivo: niente si perde, pgFile resta intatto */ }
+      archivioPx.modifica(db);
     }
     for (const g of db.giocatori ?? []) {
       const r = fileDelGiocatore(stato.elenco, g);
@@ -990,7 +1010,7 @@ export function renderTavolo(radice, ctx) {
   };
   // i PX attuali di ogni giocatore, dal file del suo PG (scelte.puntiEsperienza); altrimenti i PX iniziali comuni
   const pxGiocatori = () => Object.fromEntries((stato.db?.giocatori ?? []).map((g) => [g.id, pxDaFile.get(g.id)?.px ?? stato.db?.impostazioni?.baseline ?? 0]));
-  const salvaPxDb = async () => { try { await salvaPx(stato.db); stato.firmaPx = JSON.stringify(stato.db); } catch (e) { avvisoErrore(`PX della partita non salvati: ${e.message}. Controlla che avvia-server.bat sia aperto.`); } };
+  const salvaPxDb = () => archivioPx.modifica();
   // «Assegna PX della partita»: applica i delta ai PG presenti come Modifica master «diretta» su puntiEsperienza
   const assegnaPx = async (partita) => {
     const p = ctx.dati.px_partita;
@@ -1011,7 +1031,8 @@ export function renderTavolo(radice, ctx) {
     }
     const idx = stato.db.partite.findIndex((m) => m.id === partita.id);
     if (idx >= 0) stato.db.partite[idx] = partitaAssegnata(partita, pxPrima, new Date().toISOString().slice(0, 10), p);
-    await salvaPxDb();
+    archivioPx.modifica();
+    await archivioPx.salva();
     avviso(senzaPg.length ? `PX assegnati. Senza PG associato (non aggiornati): ${senzaPg.join(', ')}. Collegali in «Impostazioni».` : 'PX della partita assegnati ai PG presenti (Modifica master).', { tipo: senzaPg.length ? 'info' : 'ok', durata: 8000 });
     await aggiorna(true);
     disegna();
@@ -1245,7 +1266,7 @@ export function renderTavolo(radice, ctx) {
   aggiorna().then(() => { disegna(); if (Number.isFinite(ctx.scorrimento)) window.scrollTo(0, ctx.scorrimento); });
   const giro = setInterval(() => aggiorna(), INTERVALLO_MS);
   const orologio = setInterval(aggiornaIndicatore, 1000);
-  const ferma = () => { stato.attivo = false; clearInterval(giro); clearInterval(orologio); custode.smonta(); };
+  const ferma = () => { void archivioPx.salva(); stato.attivo = false; clearInterval(giro); clearInterval(orologio); custode.smonta(); };
   // la mappa ridisegna la carta sola quando cambia il token scelto
   ferma.ridisegna = () => disegna();
   // lotto 6: un solo «Avanti» per mappa, plancia e vista giocatori: la barra dell'Iniziativa usa questo, con la stessa

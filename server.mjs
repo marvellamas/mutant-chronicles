@@ -1598,6 +1598,26 @@ async function apiDispositivo(req, res, percorso, tavolo, cartella) {
 // A.161: calcolatore e archivio «PX della partita». Un solo file px/px.json (impostazioni di campagna,
 // roster e archivio delle partite); SOLO il PC del master lo legge e lo scrive (contiene i nomi dei giocatori
 // e gli importi assegnati). L'assegnazione vera ai PG passa dalla «Modifica master» sul file del PG.
+const COPIE_PX = 60;
+async function copiaStoricaPx(px, dove) {
+  const prima = await readFile(dove, 'utf8').catch(() => null);
+  if (!prima) return;
+  const cartella = join(px, 'storico');
+  await mkdir(cartella, { recursive: true });
+  const elenco = (await readdir(cartella)).filter((n) => /^px-d{8}-d{6}.json$/.test(n)).sort();
+  const ultima = elenco.at(-1);
+  const adesso = new Date();
+  if (ultima) {
+    const m = /^px-(d{4})(d{2})(d{2})-(d{2})(d{2})(d{2}).json$/.exec(ultima);
+    if (m && adesso - new Date(+m[1], m[2] - 1, +m[3], +m[4], +m[5], +m[6]) < 60_000) return;
+    if (await readFile(join(cartella, ultima), 'utf8').catch(() => null) === prima) return;
+  }
+  const p2 = (n) => String(n).padStart(2, '0');
+  const nome = `px-${adesso.getFullYear()}${p2(adesso.getMonth() + 1)}${p2(adesso.getDate())}-${p2(adesso.getHours())}${p2(adesso.getMinutes())}${p2(adesso.getSeconds())}.json`;
+  await writeFile(join(cartella, nome), prima, 'utf8');
+  for (const vecchio of elenco.slice(0, Math.max(0, elenco.length + 1 - COPIE_PX))) await unlink(join(cartella, vecchio)).catch(() => {});
+}
+
 async function apiPx(req, res, px, master) {
   if (!master) return json(res, 403, { errore: 'I PX della partita li gestisce solo il PC del master.' });
   const dove = join(px, FILE_PX);
@@ -1609,7 +1629,12 @@ async function apiPx(req, res, px, master) {
     try { d = JSON.parse((await leggiCorpo(req)).toString('utf8')); } catch (e) { return json(res, 400, { errore: e.message }); }
     if (!d || typeof d !== 'object' || Array.isArray(d)) return json(res, 400, { errore: 'il corpo è l’oggetto dei PX della partita' });
     await mkdir(px, { recursive: true });
-    await inCoda(dove, () => scriviJson(dove, d));
+    await inCoda(dove, async () => {
+      // 25/10/2026: prima di sovrascrivere, una copia di quello che c'è (al massimo una al minuto, le ultime 60):
+      // l'archivio dei PX è scritto a mano dal Direttore e un salvataggio sbagliato non deve poterlo perdere
+      try { await copiaStoricaPx(px, dove); } catch (e) { console.warn(`Copia storica dei PX non riuscita: ${e.message}`); }
+      await scriviJson(dove, d);
+    });
     return json(res, 200, d);
   }
   return json(res, 405, { errore: 'metodo non ammesso' });

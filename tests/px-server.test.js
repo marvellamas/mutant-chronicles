@@ -2,7 +2,7 @@
 // master li legge e li scrive. GET vuoto → null; PUT salva; dai tablet (non master) 403.
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, rmSync, mkdirSync, existsSync, readFileSync } from 'node:fs';
+import { mkdtempSync, rmSync, mkdirSync, existsSync, readFileSync, readdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { creaServer } from '../server.mjs';
@@ -49,4 +49,17 @@ test('dai tablet (non master) GET e PUT rispondono 403', async () => {
   assert.equal(get.status, 403);
   const put = await fetch(`${baseTablet}/api/px`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: '{}' });
   assert.equal(put.status, 403);
+});
+
+test('prima di sovrascrivere, px/px.json va nello storico (una copia al minuto, senza duplicati)', async () => {
+  const put = (d) => fetch(`${baseMaster}/api/px`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) });
+  const storico = join(c.px, 'storico');
+  const prima = existsSync(storico) ? readdirSync(storico).length : 0;
+  await put({ versione: 1, giocatori: [{ id: 'z', pg: 'Primo' }], partite: [] });
+  await put({ versione: 1, giocatori: [{ id: 'z', pg: 'Secondo' }], partite: [] });
+  await put({ versione: 1, giocatori: [{ id: 'z', pg: 'Terzo' }], partite: [] });
+  const copie = readdirSync(storico).filter((n) => /^px-\d{8}-\d{6}\.json$/.test(n));
+  assert.equal(copie.length, prima + 1, 'la seconda e la terza scrittura cadono nello stesso minuto: una copia sola');
+  const ultima = JSON.parse(readFileSync(join(storico, copie.at(-1)), 'utf8'));
+  assert.ok(ultima.giocatori[0].pg, 'la copia è un archivio leggibile');
 });
