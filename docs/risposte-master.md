@@ -2032,3 +2032,21 @@ Nessuna regola di gioco cambia e nessuna domanda nuova per Davide. Dettaglio in
   del Direttore nessuna.
 - La sequenza di lunedì per Davide è nel pacchetto `docs/pacchetto-per-davide-2026-10-25-ingresso-unico.md` (sezione 8),
   al posto di quella del lotto 2 dei Talenti.
+
+## 25 ottobre 2026, sera — Talenti v1.0: la scelta nel riquadro «Da scegliere»
+
+Nessuna regola nuova e nessuna domanda nuova per Davide (niente A.186: ogni scelta che un Talento apre è spiegata dalle
+regole). Dettaglio in `docs/diff-talenti-scelta-2026-10-25.md`.
+
+- Ogni opzione dice che cosa fa, la categoria, i requisiti e le scelte che apre; «Dettagli» apre il testo completo del
+  catalogo (cioè del manuale; per le voci nuove o cambiate, del file del 7/10). Due righe brevi sono riassunte dal testo
+  della scheda: Arti Marziali Migliorate e Sport.
+- Le scelte aperte da un Talento (gli Incantesimi di Usufruitore di Magia e di Incrementare Incantesimi, le Tecniche di
+  Risorse Interiori e di Tecniche Interiori Supplementari) si fanno nel riquadro, subito dopo il Talento o più tardi.
+  Si registrano nel livello del Talento, come in «Sali di livello». Caratteristica, Salvezza, disciplina di Sport e lingue
+  di Poliglotta si chiedono insieme al Talento.
+- A.184 (aperta), nel frattempo: le Tecniche e gli Incantesimi rimasti da un Talento tolto nel passaggio contano quando il
+  giocatore riprende quel Talento (Oshi riprende Risorse Interiori: le sue tre Tecniche restano e non se ne scelgono altre).
+  Se il Talento non si riprende, restano come prima e decide il Direttore.
+- Non aprono scelte: Potenziale Mistico Migliorato («non concede nuovi Incantesimi») e Ritualista Minore e Maggiore (le
+  procedure dei Rituali si apprendono una per una).
