@@ -17,6 +17,7 @@
 //
 // Lo spostamento non cancella niente e scrive una copia in `storico/` prima di muovere il file.
 import { readdir, stat, readFile, mkdir, rename, copyFile, writeFile } from 'node:fs/promises';
+import { cartellaDati } from './dati-pc.mjs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { NOME_FILE, chiaveDaFile } from '../src/cartella.js';
@@ -118,7 +119,7 @@ export async function sposta(cartella, r) {
 const arg = (nome) => { const i = process.argv.indexOf(nome); return i > 0 ? process.argv[i + 1] : null; };
 
 if (process.argv[1]?.endsWith('pulizia-personaggi.mjs')) {
-  const cartella = arg('--cartella') ?? join(RADICE, 'personaggi');
+  const cartella = arg('--cartella') ?? join(cartellaDati(RADICE).cartella, 'personaggi'); // 26/10: tools/dati-pc.mjs
   const r = await rapporto(cartella);
   const fare = process.argv.includes('--sposta');
   const testo = `Cartella: ${cartella}\n\n${testoRapporto(r, { sposta: fare })}`;

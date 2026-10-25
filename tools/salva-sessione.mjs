@@ -21,6 +21,7 @@
 // Zip senza dipendenze (zlib di Node): deflate per i file di testo, «stored» per immagini e audio, già compressi.
 //   node tools/salva-sessione.mjs [--radice=<cartella dell'app>] [--config=<file>]
 import { readFileSync, existsSync, mkdirSync, readdirSync, statSync, constants } from 'node:fs';
+import { cartellaDati } from './dati-pc.mjs';
 import { readFile, writeFile, rename, copyFile, mkdir, unlink } from 'node:fs/promises';
 import { join, relative, sep, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -416,7 +417,8 @@ export function impostazioniDi(radice, { config: fileConfig = join(radice, 'conf
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const arg = (k) => process.argv.find((x) => x.startsWith(`--${k}=`))?.slice(k.length + 3);
-  const radice = arg('radice') ?? RADICE;
+  // 26/10: la cartella dei dati di questo PC (tools/dati-pc.mjs), non per forza quella dell'app
+  const radice = arg('radice') ?? cartellaDati(RADICE).cartella;
   try {
     const imp = impostazioniDi(radice, arg('config') ? { config: arg('config') } : {});
     const r = await salvataggioCompleto({ ...imp, origine: 'Mutant.bat (Salva la sessione)', registra: (x) => registraErrore(radice, x) });

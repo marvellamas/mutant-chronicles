@@ -16,6 +16,7 @@ import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSy
 import { join, dirname, relative, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { creaZip, leggiZip } from './salva-sessione.mjs';
+import { cartellaDati } from './dati-pc.mjs';
 import { elencoDaDisco, perPersonaggio, rigaDi, statoDalServer, esitoControllo } from './stato-personaggi.mjs';
 
 const RADICE = dirname(dirname(fileURLToPath(import.meta.url)));
@@ -133,7 +134,7 @@ export function statoPassaggio({ cartella, salvataggi }) {
 }
 
 /** Il server per scrivere: quello acceso sul PC, se c'è, altrimenti uno avviato qui sulla stessa cartella. */
-async function serverPerScrivere({ cartella, porta }) {
+export async function serverPerScrivere({ cartella, porta }) {
   try {
     const r = await fetch(`http://127.0.0.1:${porta}/versione.json`, { signal: AbortSignal.timeout(1500) });
     if (r.headers.get('x-mutant-server')) return { base: `http://127.0.0.1:${porta}`, chiudi: async () => {}, acceso: true };
@@ -207,8 +208,9 @@ export function ripristina({ cartella, salvataggi, zip = null, quando = new Date
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const a = process.argv.slice(2);
   const valore = (k, d) => { const i = a.indexOf(k); return i >= 0 && a[i + 1] && !a[i + 1].startsWith('--') ? a[i + 1] : d; };
-  const cartella = valore('--cartella', join(RADICE, 'personaggi'));
-  const salvataggi = valore('--salvataggi', join(RADICE, 'salvataggi'));
+  const DATI = cartellaDati(RADICE).cartella; // 26/10: la cartella dei dati di questo PC (tools/dati-pc.mjs)
+  const cartella = valore('--cartella', join(DATI, 'personaggi'));
+  const salvataggi = valore('--salvataggi', join(DATI, 'salvataggi'));
   const porta = Number(valore('--porta', 3000));
   const su = valore('--su', null);
   const scrivi = (righe) => { const t = righe.join('\n'); console.log(t); if (su) writeFileSync(su, `${t}\n`); };

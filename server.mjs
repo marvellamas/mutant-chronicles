@@ -153,6 +153,7 @@ import { associazioneDi, dispositivoVisto, conAssociazione, senzaAssociazione, p
 import { aggiungiOperazioni, normalizzaRientro, rigaOperazione, applicaDecisioni, registraDecisioni, inAttesaDi } from './src/rientro.js';
 import { NOME_MARCATORE, statoInstallazione, statoDaRuolo } from './src/copia-di-lavoro.js';
 import { leggiRuolo } from './tools/ruolo-pc.mjs';
+import { cartellaDati, migraSeServe } from './tools/dati-pc.mjs';
 import { validaRecord, ID_VEICOLO, migraVeicoli, eRiferimento, stessaChiave } from './src/veicoli-registro.js';
 import { normalizzaVeicoli } from './src/veicoli.js';
 import { caricaDati } from './src/rules.js';
@@ -2054,16 +2055,23 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const host = soloLocale ? '127.0.0.1' : '0.0.0.0';
   // --cartella=… e --tavolo=…: altre cartelle (prove, più campagne); di norma quelle del progetto
   const arg = (k) => process.argv.find((x) => x.startsWith(`--${k}=`))?.slice(k.length + 3);
-  const cartella = arg('cartella') ? normalize(arg('cartella')) : join(RADICE, CARTELLA);
-  const tavolo = arg('tavolo') ? normalize(arg('tavolo')) : join(RADICE, TAVOLO);
-  const scontri = arg('scontri') ? normalize(arg('scontri')) : join(RADICE, SCONTRI);
-  const nemici = arg('nemici') ? normalize(arg('nemici')) : join(RADICE, NEMICI);
-  const veicoli = arg('veicoli') ? normalize(arg('veicoli')) : join(RADICE, VEICOLI);
-  const scene = arg('scene') ? normalize(arg('scene')) : join(RADICE, SCENE);
-  const mappe = arg('mappe') ? normalize(arg('mappe')) : join(RADICE, MAPPE);
-  const musica = arg('musica') ? normalize(arg('musica')) : join(RADICE, MUSICA);
-  const galleria = arg('galleria') ? normalize(arg('galleria')) : join(RADICE, GALLERIA);
-  const px = arg('px') ? normalize(arg('px')) : join(RADICE, PX);
+  // 26/10/2026: la cartella dei dati di questo PC (personaggi, PX, tavolo, salvataggi…) è un'impostazione del profilo di
+  // Windows (tools/dati-pc.mjs), non la cartella dell'app: una copia nuova dell'app, ovunque sia, trova gli stessi
+  // personaggi. La prima volta la scrive da sé la copia che ha già i personaggi. Con --cartella=… (prove) non si usa.
+  if (!arg('cartella')) { try { migraSeServe(RADICE); } catch (e) { console.log(`Attenzione: ${e.message}`); } }
+  const dati = arg('cartella') ? { cartella: RADICE, fonte: 'app', problema: null } : cartellaDati(RADICE);
+  const DATI = dati.cartella;
+  if (dati.problema) console.log(`Attenzione: ${dati.problema}. Uso la cartella dell'app: ${RADICE}. Per ritrovare i personaggi: Mutant.bat, voce P «Cerca i personaggi».`);
+  const cartella = arg('cartella') ? normalize(arg('cartella')) : join(DATI, CARTELLA);
+  const tavolo = arg('tavolo') ? normalize(arg('tavolo')) : join(DATI, TAVOLO);
+  const scontri = arg('scontri') ? normalize(arg('scontri')) : join(DATI, SCONTRI);
+  const nemici = arg('nemici') ? normalize(arg('nemici')) : join(DATI, NEMICI);
+  const veicoli = arg('veicoli') ? normalize(arg('veicoli')) : join(DATI, VEICOLI);
+  const scene = arg('scene') ? normalize(arg('scene')) : join(DATI, SCENE);
+  const mappe = arg('mappe') ? normalize(arg('mappe')) : join(DATI, MAPPE);
+  const musica = arg('musica') ? normalize(arg('musica')) : join(DATI, MUSICA);
+  const galleria = arg('galleria') ? normalize(arg('galleria')) : join(DATI, GALLERIA);
+  const px = arg('px') ? normalize(arg('px')) : join(DATI, PX);
   // avvisi a Marcello (tools/avvisi.mjs, avvisi/LEGGIMI.txt): solo dal server avviato da qui, mai nei test né con cartelle
   // di prova (--cartella=…) o con --senza-avvisi; in silenzio
   const senzaAvvisi = process.argv.includes('--senza-avvisi') || !!arg('cartella');
@@ -2071,7 +2079,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   // Salvataggi (08/10, tools/salva-sessione.mjs, salvataggi/LEGGIMI.txt): con cartelle di prova (--cartella=…) i
   // salvataggi, l'autosave e la configurazione stanno accanto alla cartella di prova, mai in quelli dell'app
   const prova = !!arg('cartella');
-  const baseSalvataggi = prova ? dirname(cartella) : RADICE;
+  const baseSalvataggi = prova ? dirname(cartella) : DATI;
   const dirSalvataggi = arg('salvataggi') ? normalize(arg('salvataggi')) : join(baseSalvataggi, 'salvataggi');
   const dirAutosave = arg('autosave') ? normalize(arg('autosave')) : join(baseSalvataggi, 'autosave');
   const fileConfig = arg('config-salvataggi') ? normalize(arg('config-salvataggi')) : join(baseSalvataggi, 'config-salvataggi.json');
@@ -2126,7 +2134,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   sorvegliaFinestra(esci);
   const avvia = () => server.listen(porta, host, () => {
     console.log(testoAvvio(indirizziRete(networkInterfaces(), porta), porta, { soloLocale }));
-    console.log(`Personaggi salvati in ${cartella}`);
+    console.log(`Personaggi salvati in ${cartella}${dati.fonte === 'profilo' ? ' (la cartella dei dati di questo PC)' : ''}`);
     console.log(minuti ? `Salvataggio automatico ogni ${minuti} minuti in ${dirAutosave}; «Salva sessione» e «Spegni Mutant» nel Tavolo del Master.` : 'Salvataggio automatico spento (config-salvataggi.json → autosave_minuti: 0).');
     // Cartella dei personaggi vuota (12/10/2026, docs/diagnosi-dati-spariti-2026-10-12.md): lo si dice subito,
     // con il percorso in uso e i salvataggi da cui si può ripartire. Lo stesso avviso arriva al Tavolo (/api/avvio).
