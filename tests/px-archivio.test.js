@@ -127,3 +127,14 @@ test('il testo di stato: salvataggio, errore e «salvato»', () => {
   assert.match(testoSalvataggio({ stato: 'errore', errore: 'x' }).testo, /^Non salvato: x/);
   assert.match(testoSalvataggio({ stato: 'salvato', quando: new Date() }).testo, /Salvato ora/);
 });
+
+test('con i timer veri (senza timer finto) si salva: setTimeout non va chiamato come metodo di un oggetto', async () => {
+  const scritture = [];
+  const a = creaArchivioPx({ scrivi: async (db) => { scritture.push(JSON.parse(JSON.stringify(db))); }, attesaMs: 5 });
+  a.sincronizza(null, a.gettone(), vuoto);
+  a.db.giocatori.push({ id: 'g1' });
+  a.modifica();
+  await new Promise((r) => setTimeout(r, 60));
+  assert.equal(scritture.length, 1);
+  assert.equal(a.stato.stato, 'salvato');
+});

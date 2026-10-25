@@ -27,7 +27,7 @@ const uguali = (a, b) => JSON.stringify(a) === JSON.stringify(b);
  * @param aCambio (stato) → void, chiamata a ogni cambio di stato: { stato, errore, quando }
  * @param timer { imposta, annulla }: sostituibile nei test
  */
-export function creaArchivioPx({ scrivi, attesaMs = 500, ritentaMs = 3000, aCambio = () => {}, timer = { imposta: setTimeout, annulla: clearTimeout } } = {}) {
+export function creaArchivioPx({ scrivi, attesaMs = 500, ritentaMs = 3000, aCambio = () => {}, timer = { imposta: (f, ms) => setTimeout(f, ms), annulla: (id) => clearTimeout(id) } } = {}) {
   let db = null;
   let rev = 0; // cresce a ogni modifica
   let revScritta = 0; // l'ultima `rev` che il server ha confermato
