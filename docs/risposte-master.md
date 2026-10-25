@@ -1989,3 +1989,16 @@ Nessun dato applicato: è una ricognizione (`docs/talenti-nuovi-ricognizione-202
   se no, si riscelgono?
 - **A.185 — Specializzazione del 1° livello nella creazione.** *(aperta)* In quale fase del §2.0, e per i Taumaturghi
   già con le nove di Potere?
+
+## 25 ottobre 2026, sera — Talenti v1.0 nell'app: dati e motore (lotto 1, branch `talenti-nuovi`)
+
+Applicato sul branch `talenti-nuovi` (non in `main`: il PC di Davide resta com'è finché il passaggio non è completo).
+Dettaglio in `docs/diff-talenti-2026-10-25.md`. Nessuna domanda nuova: restano aperte A.181–A.185.
+
+- **Catalogo**: 39 Talenti Liberi, 72 Maestrie, 86 Specializzazioni (con Sport), elenchi delle 25 Classi dal file del
+  7/10; le voci accorpate o cambiate restano come «superate» per i personaggi salvati prima.
+- **Progressione**: Talenti Liberi 3…19, Maestrie 2/6/10/14/18, Specializzazioni a ogni Grado dall'elenco della Classe
+  aumentata, per i personaggi con `scelte.regimeTalenti = 2`; gli altri restano con i Talenti di prima, identici.
+- **Ricarica Esperta (A.182, aperta)**: finché Davide non risponde vale la **decisione 139** (A.135): 4 cartucce per
+  operazione a inserimento con il Talento, 2 senza. Il «fino a tre» del file non è applicato; lo dice la scheda del
+  Talento.
