@@ -51,7 +51,9 @@ export function talentiDi(o) {
   const nuovi = o?.scelte?.regimeTalenti === 2;
   const livelli = Array.isArray(o?.livelli) ? o.livelli : [];
   const presi = livelli.filter((v) => v?.talentoLibero || v?.maestria || v?.specializzazione).length + (o?.scelte?.specializzazioneIniziale ? 1 : 0);
-  return { nuovi, presi, vecchi: livelli.filter((v) => v?.talentoLibero).length };
+  // i PX del personaggio (A.161: li assegna il Direttore con «Modifica master», scelte.puntiEsperienza)
+  const px = typeof o?.scelte?.puntiEsperienza === 'number' && Number.isFinite(o.scelte.puntiEsperienza) ? o.scelte.puntiEsperienza : null;
+  return { nuovi, presi, vecchi: livelli.filter((v) => v?.talentoLibero).length, px, livello: 1 + livelli.length };
 }
 
 /** Ogni personaggio come lo vede l'app: dal server. null se il server non risponde. */

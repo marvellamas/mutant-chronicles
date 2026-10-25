@@ -36,6 +36,25 @@ echo  ad esempio C:\Mutant, e riprova da li'.
 echo.
 
 :prepara
+rem 26/10/2026: i dati di Mutant (personaggi, PX, tavolo, salvataggi) su questo PC stanno nella cartella scritta nel
+rem profilo di Windows (tools\dati-pc.mjs), non per forza qui. Se questo file sta creando una copia NUOVA dell'app in
+rem un altro posto, lo diciamo: la copia nuova usera' gli stessi personaggi, ma di solito si aggiorna dalla voce 2.
+set "PROFILO=%MUTANT_CONFIG_DIR%"
+if not defined PROFILO set "PROFILO=%APPDATA%\Mutant"
+set "DATIPC="
+if exist "%PROFILO%\dati.json" for /f "usebackq delims=" %%C in (`powershell -NoProfile -Command "(Get-Content -Raw -LiteralPath '%PROFILO%\dati.json' | ConvertFrom-Json).cartella"`) do set "DATIPC=%%C"
+rem (salti e non un blocco fra parentesi: un percorso come "Mutant (2)" romperebbe il blocco)
+if not defined DATIPC goto dopo_avviso_dati
+if exist "%DEST%\server.mjs" goto dopo_avviso_dati
+echo  ATTENZIONE: su questo PC Mutant c'e' gia', con i personaggi in:
+echo     %DATIPC%
+echo  Qui sto creando una copia nuova dell'app, in %DEST%: usera' gli stessi personaggi.
+echo  Di solito si aggiorna dalla copia che usi gia': Mutant.bat, voce 2.
+echo.
+:dopo_avviso_dati
+rem prima dell'aggiornamento: dove sono i personaggi, quanti e con quanti PX (lo fa gia' la voce 2 se arriva da li')
+if not defined MUTANT_DA_AGGIORNA if exist "%DEST%\tools\esito-aggiornamento.mjs" node "%DEST%\tools\esito-aggiornamento.mjs" prima --radice="%DEST%"
+
 echo  [1/5] Preparo una cartella di lavoro temporanea...
 if exist "%LAVORO%" rmdir /s /q "%LAVORO%"
 mkdir "%LAVORO%"
@@ -111,6 +130,8 @@ rem Riavvio del server dopo l'aggiornamento (13/10/2026, tools\riavvia.mjs): se 
 rem salvando e lo riaccende con la versione nuova; se era spento lo lascia spento e lo dice qui sotto.
 where node >nul 2>nul
 if not errorlevel 1 if exist "%DEST%\tools\riavvia.mjs" node "%DEST%\tools\riavvia.mjs" --radice="%DEST%"
+rem dopo: i personaggi riletti dal server e confrontati con quelli di prima (verde: tutto uguale; rosso: con i nomi)
+if not defined MUTANT_DA_AGGIORNA if exist "%DEST%\tools\esito-aggiornamento.mjs" node "%DEST%\tools\esito-aggiornamento.mjs" dopo --radice="%DEST%"
 echo  Per usare Mutant: apri la cartella "mutant" e fai doppio clic su Mutant.bat
 echo  (se Node.js non c'e', Mutant.bat lo installa; poi dal menu: 9 Impostazioni, 5 collegamento sul desktop).
 echo  Da qui in avanti anche l'aggiornamento si fa da Mutant.bat, voce 2.

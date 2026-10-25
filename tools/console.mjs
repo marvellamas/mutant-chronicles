@@ -28,6 +28,8 @@ import { spawnSync } from 'node:child_process';
 import { righeMenu, ascii } from './menu.mjs';
 import { leggiRuolo, scriviRuolo, testoRuolo, RUOLI } from './ruolo-pc.mjs';
 import { statoDalServer, statoDaDisco } from './stato-personaggi.mjs';
+import { cartellaDati, migraSeServe, scriviImpostazione } from './dati-pc.mjs';
+import { cerca } from './cerca-personaggi.mjs';
 import { statoDaRuolo } from '../src/copia-di-lavoro.js';
 import { leggiVersione, leggiNovita, versioneInParole } from '../src/versione.js';
 import { rapporto as rapportoTalenti, applica as applicaTalenti, ripristina as ripristinaTalenti, zipDelPassaggio, zipDaRipristinare, controllaSulServer, statoPassaggio, quandoDelloZip } from './migra-talenti.mjs';
@@ -101,6 +103,8 @@ function lettore() {
 }
 
 const si = (r) => /^\s*(s|si|sì|y|yes)\s*$/i.test(r ?? '');
+/** La cartella dei dati di questo PC per la copia dell'app in `r` (tools/dati-pc.mjs): dove stanno personaggi, PX, salvataggi. */
+const dati = (r = radice) => cartellaDati(r).cartella;
 
 /**
  * «Non trovo personaggi in questa cartella» (12/10/2026, docs/diagnosi-dati-spariti-2026-10-12.md): le righe
@@ -110,8 +114,9 @@ const si = (r) => /^\s*(s|si|sì|y|yes)\s*$/i.test(r ?? '');
 export function righeCartellaVuota(radiceApp = radice) {
   let a;
   try {
-    const config = (() => { try { return leggiConfig(join(radiceApp, 'config-salvataggi.json')); } catch { return {}; } })();
-    a = avvisoCartellaVuota({ cartella: join(radiceApp, 'personaggi'), ...postiSalvataggi(radiceApp, config) });
+    const d = dati(radiceApp);
+    const config = (() => { try { return leggiConfig(join(d, 'config-salvataggi.json')); } catch { return {}; } })();
+    a = avvisoCartellaVuota({ cartella: join(d, 'personaggi'), ...postiSalvataggi(d, config) });
   } catch { return []; }
   if (!a.vuota) return [];
   const righe = ['', ' ==============================================================', ` ${perConsole(a.testo)}`];
@@ -126,8 +131,8 @@ async function voceRipristina() {
   const rl = lettore();
   const chiedi = (d) => rl.chiedi(d);
   try {
-    const config = (() => { try { return leggiConfig(join(radice, 'config-salvataggi.json')); } catch { return {}; } })();
-    const posti = postiSalvataggi(radice, config);
+    const config = (() => { try { return leggiConfig(join(dati(), 'config-salvataggi.json')); } catch { return {}; } })();
+    const posti = postiSalvataggi(dati(), config);
     const salvataggi = posti.salvataggi;
     const elenco = elencoSalvataggi(posti);
     console.log('\n Ripristina un salvataggio\n');
@@ -179,7 +184,7 @@ async function voceRipristina() {
       const scritto = (await chiedi(` Per procedere scrivi ${av.confermaScritta} (qualunque altra cosa annulla): `)).trim();
       if (scritto !== av.confermaScritta) { console.log(' Annullato: non ho toccato nulla.'); return; }
     } else if (!si(await chiedi(' Procedo? [S/N] '))) { console.log(' Annullato: non ho toccato nulla.'); return; }
-    const e = await ripristina({ zip: scelto.percorso, cartelle: cartelleDi(radice), salvataggi, serverAcceso: async () => (await statoServer(porta)).acceso });
+    const e = await ripristina({ zip: scelto.percorso, cartelle: cartelleDi(dati()), salvataggi, serverAcceso: async () => (await statoServer(porta)).acceso });
     if (e.copiaSicurezza) console.log(`\n Copia di sicurezza: ${e.copiaSicurezza}`);
     for (const x of e.rimesse ?? []) console.log(` Rimessa la cartella ${x.cartella} (${x.file} file).`);
     if (e.lasciate?.length) console.log(` Lasciate come sono (non erano nel salvataggio): ${e.lasciate.join(', ')}.`);
@@ -193,7 +198,8 @@ async function voceRipristina() {
 // Voci che cambiano i personaggi (25/10/2026, «un ingresso solo»): prima il rapporto, poi SI scritto per esteso.
 // Chiudendo la finestra, o rispondendo altro, non si fa niente.
 
-const cartellePg = (r = radice) => ({ cartella: join(r, 'personaggi'), salvataggi: join(r, 'salvataggi') });
+// 26/10: i dati stanno nella cartella dei dati di questo PC (tools/dati-pc.mjs), non per forza in quella dell'app
+const cartellePg = (r = radice) => ({ cartella: join(dati(r), 'personaggi'), salvataggi: join(dati(r), 'salvataggi') });
 const confermaSi = async (rl, domanda) => (await rl.chiedi(domanda)).trim().toUpperCase() === 'SI';
 
 /** Voce 6: controllo dei file dei personaggi (tools/pulizia-personaggi.mjs). */
@@ -279,7 +285,7 @@ export async function voceStato({ radice: r = radice, porta: p = porta, scrivi =
     `Cartella dei personaggi: ${cartella}`,
     '',
     `Personaggi: ${stato.length}`,
-    ...stato.map((x) => `  ${String(x.nome).padEnd(22)} ${`${x.files} file`}  ${!x.letto ? 'NON LEGGIBILE' : x.nuovi ? `Talenti nuovi (${x.presi} scelti)` : 'Talenti vecchi'}   attuale: ${x.file}`),
+    ...stato.map((x) => `  ${String(x.nome).padEnd(22)} ${`${x.px === null || x.px === undefined ? 'senza PX' : `${x.px} PX`}`.padEnd(9)} ${`${x.files} file`}  ${!x.letto ? 'NON LEGGIBILE' : x.nuovi ? `Talenti nuovi (${x.presi} scelti)` : 'Talenti vecchi'}   attuale: ${x.file}`),
     '',
     passaggio.passati
       ? `Passaggio ai Talenti nuovi: ${passaggio.passati} personaggi su ${passaggio.totale}${passaggio.quando ? `, fatto il ${passaggio.quando.toLocaleDateString('it-IT')} alle ${passaggio.quando.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })}` : ''}.`
@@ -296,6 +302,52 @@ export async function voceStato({ radice: r = radice, porta: p = porta, scrivi =
   return { daServer, cartella, stato, passaggio, zip, righe };
 }
 
+/**
+ * Voce P «Cerca i personaggi» (26/10/2026): dove possono essere finiti personaggi e PX (tools/cerca-personaggi.mjs).
+ * Legge soltanto; alla fine, con un numero e poi SI, imposta quale cartella usa questo PC (tools/dati-pc.mjs).
+ */
+export async function voceCerca({ radice: r = radice, rl: esterno = null, home = undefined, radici = undefined } = {}) {
+  const rl = esterno ?? lettore();
+  try {
+    const dd = cartellaDati(r);
+    console.log('\n CERCA I PERSONAGGI: adesso leggo soltanto, non cambio niente.');
+    console.log(` Cartella dei personaggi usata adesso: ${join(dd.cartella, 'personaggi')}${dd.fonte === 'profilo' ? ' (impostata su questo PC)' : ''}`);
+    if (dd.problema) console.log(rosso(` ${ascii(dd.problema)}`));
+    console.log(' Cerco nelle copie dell\'app, nei salvataggi, negli storici, su Drive e nei file esportati: puo\' volerci un minuto...');
+    const t = cerca({ radiceApp: r, dati: dd.cartella, ...(home ? { home } : {}), ...(radici ? { radici } : {}) });
+    const giorno = (ms) => (ms ? new Date(ms).toLocaleString('it-IT', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '?');
+    const pxDi = (v) => (v.px === null || v.px === undefined ? 'senza PX' : `${v.px} PX`);
+    if (!t.personaggi.length) { console.log('\n Non ho trovato nessun personaggio. Manda a Marcello una foto di questa finestra.'); return { trovati: 0, scelta: null }; }
+    console.log(`\n PERSONAGGI TROVATI: ${t.personaggi.length}. Per ciascuno, in cima, la versione piu' recente.`);
+    for (const p of t.personaggi) {
+      const [v, ...altre] = p.versioni;
+      console.log(`\n  ${ascii(p.nome)}  -  livello ${v.livello}  -  ${pxDi(v)}  -  ${giorno(v.quando)}`);
+      console.log(`     dove: ${ascii(v.dove)}`);
+      for (const a of altre.slice(0, 3)) console.log(`     anche: ${giorno(a.quando)}  ${pxDi(a)}  ${ascii(a.dove)}`);
+      if (altre.length > 3) console.log(`     (e altre ${altre.length - 3} copie piu' vecchie)`);
+    }
+    if (t.px.length) {
+      console.log('\n PX DELLA PARTITA (il pannello PX), dal piu\' recente:');
+      for (const x of t.px.slice(0, 6)) console.log(`   ${giorno(x.quando)}  ${x.partite} ${x.partite === 1 ? 'partita registrata' : 'partite registrate'}  ${ascii(x.dove)}`);
+    }
+    console.log('\n CARTELLE CON PERSONAGGI (dalla piu\' recente):');
+    t.copie.forEach((c, i) => console.log(`   ${i + 1}. ${ascii(c.cartella)}  -  ${c.quanti} personaggi, l'ultimo salvato il ${giorno(c.ultima)}${c.inUso ? '   <- IN USO ADESSO' : ''}`));
+    const recentiInZip = t.personaggi.filter((p) => p.versioni[0].tipo === 'zip' || p.versioni[0].tipo === 'export').map((p) => p.nome);
+    if (recentiInZip.length) console.log(`\n Per ${ascii(recentiInZip.join(', '))} la versione piu' recente e' in uno zip o in un file esportato: si rimette con la voce 4 (Ripristina) o con "Importa file JSON" nell'app.`);
+    const scelta = (await rl.chiedi('\n Quale cartella vuoi usare? Scrivi il suo numero e Invio (Invio e basta = nessuna, non cambio niente): ')).trim();
+    const n = Number(scelta);
+    if (!scelta || !Number.isInteger(n) || n < 1 || n > t.copie.length) { console.log(' Va bene: non ho cambiato niente.'); return { trovati: t.personaggi.length, scelta: null, ...t }; }
+    const c = t.copie[n - 1];
+    if (c.inUso) { console.log(' E\' gia\' quella in uso: non cambio niente.'); return { trovati: t.personaggi.length, scelta: null, ...t }; }
+    console.log(`\n Da adesso Mutant su questo PC usera' i personaggi di:\n   ${ascii(c.cartella)}\n Non sposto e non cancello nessun file: cambia solo la cartella che Mutant guarda.`);
+    if (!await confermaSi(rl, ' Scrivi SI e premi Invio per usarla (altrimenti Invio e basta): ')) { console.log(' Va bene: non ho cambiato niente.'); return { trovati: t.personaggi.length, scelta: null, ...t }; }
+    scriviImpostazione(c.cartella, { perche: 'scelta con «Cerca i personaggi»' });
+    console.log(`\x1b[32m Fatto: Mutant usa i personaggi di ${ascii(c.cartella)}.\x1b[0m`);
+    console.log(' Se Mutant e\' acceso, chiudi la sua finestra nera e riaccendilo con la voce 1. Poi premi C "Controlla lo stato" e guarda i PX.');
+    return { trovati: t.personaggi.length, scelta: c.cartella, ...t };
+  } finally { if (!esterno) rl.chiudi(); }
+}
+
 /** Voce 7: passaggio ai Talenti nuovi (tools/migra-talenti.mjs). */
 export async function voceTalenti({ radice: r = radice, rl: esterno = null, porta: p = porta } = {}) {
   const rl = esterno ?? lettore();
@@ -305,6 +357,10 @@ export async function voceTalenti({ radice: r = radice, rl: esterno = null, port
     const rap = await rapportoTalenti({ cartella: dove.cartella });
     for (const riga of rap.righe) console.log(` ${ascii(riga)}`);
     if (!rap.daFare.length) { console.log(' Nessun personaggio da passare: il passaggio e\' gia\' fatto (o la cartella e\' vuota).'); return { fatto: false }; }
+    // 26/10: prima del SI, dove sono i personaggi e i loro PX: chi lancia il passaggio vede se sono quelli giusti
+    console.log(` Cartella dei personaggi: ${dove.cartella}`);
+    for (const p of statoDaDisco(dove.cartella)) console.log(`   ${ascii(String(p.nome)).padEnd(22)} ${p.px === null ? 'senza PX' : `${p.px} PX`}`);
+    console.log(' Se non sono i personaggi giusti (per esempio mancano i PX dell\'ultima serata), NON scrivere SI: premi Invio e usa la voce P "Cerca i personaggi".');
     console.log(' Se scrivi SI:');
     console.log('   1. faccio prima una copia zip di tutta la cartella personaggi (in salvataggi, con data e ora);');
     console.log('   2. a ogni personaggio tolgo i Talenti di oggi e li scrivo nel registro "Modifiche del master";');
@@ -482,6 +538,11 @@ export async function voceImpostazioni(esterno = null) {
 
 /** All'apertura della console: installazione nuova e invii non riusciti dall'ultima volta. */
 async function voceAvvio() {
+  // 26/10/2026: la cartella dei dati di questo PC (tools/dati-pc.mjs). La prima volta, in silenzio: se questa copia
+  // dell'app ha i personaggi, diventa lei la cartella dei dati; una copia vuota non scrive niente.
+  try { migraSeServe(radice); } catch { /* profilo non scrivibile: si continua come prima */ }
+  const dd = cartellaDati(radice);
+  if (dd.problema) console.log(`\n ATTENZIONE: ${ascii(dd.problema)}\n Premi P "Cerca i personaggi" per ritrovarli.`);
   const rl = lettore();
   // 25/10/2026 (parte C): il ruolo del PC si chiede all'avvio finché non c'è una risposta; senza, l'app resta come prima
   let senzaRuolo = false;
@@ -541,6 +602,8 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
     await voceTalenti();
   } else if (comando === 'talenti-ripristina') {
     await voceTalentiRipristina();
+  } else if (comando === 'cerca') {
+    await voceCerca();
   } else if (comando === 'stato-personaggi') {
     await voceStato();
   } else if (comando === 'ruolo') {
@@ -548,7 +611,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   } else if (comando === 'collegamento') {
     creaCollegamento();
   } else {
-    console.error('Comandi: menu, intestazione, stato, ripristina, impostazioni, avvio, controlla, talenti, talenti-ripristina, stato-personaggi, ruolo, collegamento');
+    console.error('Comandi: menu, intestazione, stato, ripristina, impostazioni, avvio, controlla, talenti, talenti-ripristina, stato-personaggi, cerca, ruolo, collegamento');
     process.exitCode = 2;
   }
 }

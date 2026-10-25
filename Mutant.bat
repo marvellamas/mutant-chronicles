@@ -49,9 +49,10 @@ echo.
 node "%QUI%tools\console.mjs" menu --porta=%MUTANT_PORTA%
 for %%A in ("%QUI%") do echo  Cartella di Mutant: %%~A
 echo.
-choice /c 123456789C0 /n /m "  Scegli un numero (o C): "
-if errorlevel 11 goto esci
-if errorlevel 10 goto stato
+choice /c 123456789PC0 /n /m "  Scegli un numero (o P, C): "
+if errorlevel 12 goto esci
+if errorlevel 11 goto stato
+if errorlevel 10 goto cerca
 if errorlevel 9 goto impostazioni
 if errorlevel 8 goto talenti-ripristina
 if errorlevel 7 goto talenti
@@ -133,6 +134,13 @@ goto menu
 
 :talenti-ripristina
 node "%QUI%tools\console.mjs" talenti-ripristina --porta=%MUTANT_PORTA%
+echo.
+pause
+goto menu
+
+:cerca
+rem "Cerca i personaggi": legge soltanto; con un numero e SI sceglie quale cartella usa questo PC (tools\dati-pc.mjs)
+node "%QUI%tools\console.mjs" cerca --porta=%MUTANT_PORTA%
 echo.
 pause
 goto menu

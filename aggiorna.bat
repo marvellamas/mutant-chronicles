@@ -155,7 +155,7 @@ rem cartella "mutant", dove l'ha messo l'installazione). Anche questa riga e' un
 rem questo file mentre gira.
 set "NOMEQUI="
 for %%A in ("%~dp0.") do set "NOMEQUI=%%~nxA"
-if /i "%NOMEQUI%"=="mutant" if exist "%~dp0..\1_scarica_o_aggiorna_app.bat" ((if exist "tools\esito-aggiornamento.mjs" node tools\esito-aggiornamento.mjs prima) & call "%~dp0..\1_scarica_o_aggiorna_app.bat" & (if exist "%~dp0tools\aggiorna-avviatori.mjs" node "%~dp0tools\aggiorna-avviatori.mjs" --radice="%~dp0." --fuori="%~dp0..") & (if exist "%~dp0tools\esito-aggiornamento.mjs" node "%~dp0tools\esito-aggiornamento.mjs" dopo --radice="%~dp0.") & echo. & pause & exit /b 0)
+if /i "%NOMEQUI%"=="mutant" if exist "%~dp0..\1_scarica_o_aggiorna_app.bat" ((set "MUTANT_DA_AGGIORNA=1") & (if exist "tools\esito-aggiornamento.mjs" node tools\esito-aggiornamento.mjs prima) & call "%~dp0..\1_scarica_o_aggiorna_app.bat" & (if exist "%~dp0tools\aggiorna-avviatori.mjs" node "%~dp0tools\aggiorna-avviatori.mjs" --radice="%~dp0." --fuori="%~dp0..") & (if exist "%~dp0tools\esito-aggiornamento.mjs" node "%~dp0tools\esito-aggiornamento.mjs" dopo --radice="%~dp0.") & echo. & pause & exit /b 0)
 call :avviso non-aggiornato "cartella senza Git e senza il programma di aggiornamento dallo zip"
 echo.
 echo  Questa cartella non e' una copia con Git, e accanto non trovo 1_scarica_o_aggiorna_app.bat
