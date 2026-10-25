@@ -5,7 +5,13 @@ Quando aggiorni Mutant (aggiorna.bat) o lo avvii con avvia-server.bat, a Marcell
 telefono un avviso con il nome di questo PC e la versione dell'app: serve a sapere se stai provando
 l'ultima. Non parte nient'altro: nessun personaggio, nessuna scena, nessuno scontro.
 
-- avvisi.json: la configurazione di questo PC. Si imposta da Mutant.bat, voce 6 «Impostazioni»
+- La configurazione di questo PC sta FUORI da questa cartella, nel profilo dell'utente (dal 25/10/2026):
+    Windows:  %APPDATA%\Mutant\avvisi.json      altrove: ~/.config/mutant/avvisi.json
+  Un aggiornamento di Mutant (git pull, zip, cartella rifatta) non la tocca mai: non va reimpostata.
+  Chi aveva gia' avvisi/avvisi.json lo ritrova copiato nel profilo alla prima lettura (console, server,
+  aggiorna.bat), senza fare niente. avvisi/avvisi.json resta come copia per gli strumenti di prima: se i due
+  differiscono vale quello del profilo. "node tools/config-avvisi.mjs percorso" dice dove sta il file.
+- (la configurazione:) Si imposta da Mutant.bat, voce 6 «Impostazioni»
   (avvisi accesi o spenti, argomento ntfy del gruppo, nome di questo PC nelle notifiche, per esempio
   «PC di Davide»), con «Manda una notifica di prova». aggiorna.bat la crea da avvisi.esempio.json se
   manca e non la sovrascrive mai. Le chiavi:
@@ -25,4 +31,4 @@ l'ultima. Non parte nient'altro: nessun personaggio, nessuna scena, nessuno scon
   in config-salvataggi.json. L'allegato resta scaricabile su ntfy.sh per qualche ora.
 - Senza rete o se l'invio non riesce, Mutant funziona lo stesso: l'avviso non parte e il motivo va in
   registro.txt.
-- avvisi.json e stato.json non vanno su GitHub (.gitignore).
+- avvisi.json (la copia qui), stato.json e registro.txt non vanno su GitHub (.gitignore).

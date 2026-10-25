@@ -11,6 +11,7 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync, statSync } from 'no
 import { join, dirname } from 'node:path';
 import { hostname } from 'node:os';
 import { configurazione, inviaHttp, dataOra, ARGOMENTO, registraErrore, FILE_REGISTRO } from './avvisi.mjs';
+import { leggiConfigAvvisi, scriviConfigAvvisi } from './config-avvisi.mjs';
 
 export { registraErrore, FILE_REGISTRO };
 
@@ -35,18 +36,19 @@ export function argomentoGruppo(radice) {
  * drive.stato: 'mancante' (nessun config-salvataggi.json), 'vuota', 'inesistente', 'ok'.
  */
 export function statoImpostazioni(radice) {
-  const fa = join(radice, FILE_AVVISI);
-  const ga = existsSync(fa) ? leggi(fa) : null;
+  // 25/10/2026: la configurazione degli avvisi sta nel profilo dell'utente, non nella cartella dell'app (tools/config-avvisi.mjs)
+  const letta = leggiConfigAvvisi(radice);
+  const ga = letta?.conf ?? null;
   const argomento = String(ga?.ntfy_argomento ?? '').trim();
   const avvisi = {
-    file: existsSync(fa), attivo: ga?.attivo === true, argomento, nomePc: String(ga?.nome_pc ?? '').trim() || null,
-    stato: !existsSync(fa) || !ga ? 'mancante' : ga.attivo !== true ? 'spento' : !argomento ? 'argomento_vuoto' : !configurazione(ga) ? 'argomento_non_valido' : 'acceso',
+    file: !!letta, attivo: ga?.attivo === true, argomento, nomePc: String(ga?.nome_pc ?? '').trim() || null,
+    stato: !letta || !ga ? 'mancante' : ga.attivo !== true ? 'spento' : !argomento ? 'argomento_vuoto' : !configurazione(ga) ? 'argomento_non_valido' : 'acceso',
   };
   const fc = join(radice, FILE_CONFIG);
   const gc = existsSync(fc) ? leggi(fc) : null;
   const percorso = String(gc?.cartella_drive ?? gc?.copia_in ?? '').trim() || null;
   const drive = { file: existsSync(fc), percorso, esiste: !!percorso && cartella(percorso), stato: !existsSync(fc) ? 'mancante' : !percorso ? 'vuota' : cartella(percorso) ? 'ok' : 'inesistente' };
-  return { avvisi, drive, mancanti: [FILE_AVVISI, FILE_CONFIG].filter((f) => !existsSync(join(radice, f))), nuova: !existsSync(fa) && !existsSync(fc) };
+  return { avvisi, drive, mancanti: [...(letta ? [] : [FILE_AVVISI]), ...(existsSync(fc) ? [] : [FILE_CONFIG])], nuova: !letta && !existsSync(fc) };
 }
 
 /** Testo di una riga per lo stato degli avvisi. */
@@ -85,12 +87,12 @@ export function salvaAvvisi(radice, { attivo, argomento, nomePc }) {
   const a = String(argomento ?? '').trim();
   if (attivo && !a) return { ok: false, errore: 'l’argomento ntfy è vuoto: senza argomento non parte nessun avviso' };
   if (a && !ARGOMENTO.test(a)) return { ok: false, errore: `«${a}» non è un argomento valido (lettere minuscole, cifre, - e _, da 12 a 64 caratteri)` };
-  const v = daEsempio(radice, FILE_AVVISI, ESEMPIO_AVVISI);
+  const v = leggiConfigAvvisi(radice)?.conf ?? leggi(join(radice, ESEMPIO_AVVISI)) ?? {};
   v.attivo = !!attivo;
   v.ntfy_argomento = a;
   const n = String(nomePc ?? '').trim().slice(0, 40);
   if (n) v.nome_pc = n; else delete v.nome_pc;
-  scrivi(join(radice, FILE_AVVISI), v);
+  scriviConfigAvvisi(radice, v);
   return { ok: true };
 }
 

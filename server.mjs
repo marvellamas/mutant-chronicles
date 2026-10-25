@@ -140,6 +140,7 @@ import { createInterface } from 'node:readline/promises';
 import { chiOccupa, testoDomanda, risposteSi, fermaMutant, sorvegliaFinestra } from './src/porta-occupata.js';
 import { indirizziRete, testoAvvio } from './src/rete.js';
 import { avvisa, registraErrore } from './tools/avvisi.mjs';
+import { leggiConfigAvvisi } from './tools/config-avvisi.mjs';
 import { creaGestore, leggiConfig } from './tools/salva-sessione.mjs';
 import { avvisoCartellaVuota, postiSalvataggi, rigaSalvataggio } from './tools/ripristina.mjs';
 import { bordoToken } from './src/mappa/colori.js';
@@ -2032,7 +2033,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
     salvataggi: dirSalvataggi,
     autosave: dirAutosave,
     config: () => { try { return leggiConfig(fileConfig); } catch (e) { console.log(`Attenzione: ${e.message}`); return {}; } },
-    avvisi: () => { if (senzaAvvisi) return null; try { return JSON.parse(readFileSync(join(RADICE, 'avvisi', 'avvisi.json'), 'utf8')); } catch { return null; } },
+    avvisi: () => { if (senzaAvvisi) return null; try { return leggiConfigAvvisi(RADICE)?.conf ?? null; } catch { return null; } },
     // backup su Drive o notifica non riusciti: nel registro (avvisi/registro.txt) che la console mostra all'avvio
     registra: (x) => registraErrore(baseSalvataggi, x),
   });

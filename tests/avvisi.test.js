@@ -11,6 +11,8 @@ import { configurazione, messaggio, daMandare, avvisa, inviaNtfy, dataOra, INTER
 const T0 = new Date('2026-10-08T19:05:00Z');
 const radice = (conf, versione = '32fef0e927') => {
   const r = mkdtempSync(join(tmpdir(), 'mutant-avvisi-'));
+  // 25/10/2026: la configurazione degli avvisi sta nel profilo dell'utente (tools/config-avvisi.mjs): ogni radice di prova ne ha uno suo
+  process.env.MUTANT_CONFIG_DIR = join(r, 'profilo');
   writeFileSync(join(r, 'versione.json'), JSON.stringify({ versione, data: '2026-10-08 21:00' }));
   if (conf !== undefined) { mkdirSync(join(r, 'avvisi')); writeFileSync(join(r, 'avvisi', 'avvisi.json'), typeof conf === 'string' ? conf : JSON.stringify(conf)); }
   return r;

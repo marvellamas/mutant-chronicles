@@ -11,18 +11,22 @@ import {
   statoImpostazioni, salvaAvvisi, salvaDrive, posizioniDrive, notificaDiProva, erroriNuovi, righeRegistro, argomentoGruppo, testoAvvisi,
 } from '../tools/impostazioni.mjs';
 import { avvisa } from '../tools/avvisi.mjs';
+import { scriviConfigAvvisi } from '../tools/config-avvisi.mjs';
 import { salvataggioCompleto } from '../tools/salva-sessione.mjs';
 
 const REPO = new URL('..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
 const nuova = () => {
   const r = mkdtempSync(join(tmpdir(), 'mutant-imp-'));
+  // 25/10/2026: la configurazione degli avvisi sta nel profilo dell'utente (tools/config-avvisi.mjs): ogni radice di prova ne ha uno suo
+  process.env.MUTANT_CONFIG_DIR = join(r, 'profilo');
   mkdirSync(join(r, 'avvisi'));
   copyFileSync(join(REPO, 'avvisi', 'avvisi.esempio.json'), join(r, 'avvisi', 'avvisi.esempio.json'));
   copyFileSync(join(REPO, 'config-salvataggi.esempio.json'), join(r, 'config-salvataggi.esempio.json'));
   writeFileSync(join(r, 'versione.json'), JSON.stringify({ versione: 'prova12345' }));
   return r;
 };
-const scriviAvvisi = (r, v) => writeFileSync(join(r, 'avvisi', 'avvisi.json'), JSON.stringify(v));
+// la fonte è il profilo (tools/config-avvisi.mjs), non più avvisi/avvisi.json: la prova scrive dove legge l'app
+const scriviAvvisi = (r, v) => { process.env.MUTANT_CONFIG_DIR = join(r, 'profilo'); scriviConfigAvvisi(r, v); };
 const T0 = new Date('2026-10-09T15:00:00Z');
 
 // server ntfy finto su 127.0.0.1
@@ -148,7 +152,8 @@ test('backup su Drive non riuscito: nel registro', async () => {
 test('aggiorna.bat crea le impostazioni solo se mancano, non le sovrascrive mai', () => {
   const righe = readFileSync(join(REPO, 'aggiorna.bat'), 'utf8').split(/\r?\n/).filter((l) => /avvisi\.json"|config-salvataggi\.json"/.test(l) && /copy/i.test(l));
   assert.equal(righe.length, 2);
-  for (const l of righe) assert.match(l, /^if not exist "(avvisi\\avvisi\.json|config-salvataggi\.json)" /, l);
+  // (dal 25/10 la riga degli avvisi è il ripiego senza Node: la configurazione vera sta nel profilo, tools/config-avvisi.mjs)
+  for (const l of righe) assert.match(l, /^(if not defined RETE )?if not exist "(avvisi\\avvisi\.json|config-salvataggi\.json)" /, l);
   // nessun'altra scrittura su quei file
   const tutte = readFileSync(join(REPO, 'aggiorna.bat'), 'utf8').split(/\r?\n/).filter((l) => !/^rem /i.test(l) && /avvisi\.json|config-salvataggi\.json/.test(l));
   assert.equal(tutte.length, 2);

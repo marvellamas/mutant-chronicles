@@ -62,7 +62,11 @@ if defined RETE node tools\dati-locali.mjs dopo
 if defined RETE if errorlevel 1 goto dati_mancanti
 rem Avvisi a Marcello (tools\avvisi.mjs, avvisi\LEGGIMI.txt): la prima volta la configurazione si crea
 rem dall'esempio; poi una notifica con il nome del PC e la versione. Mai bloccante, mai errori a schermo.
-if not exist "avvisi\avvisi.json" if exist "avvisi\avvisi.esempio.json" copy /y "avvisi\avvisi.esempio.json" "avvisi\avvisi.json" >nul 2>nul
+rem (25/10/2026: la configurazione sta nel profilo dell'utente, FUORI dalla cartella dell'app, e nessun
+rem aggiornamento la tocca; qui si mette al sicuro quella che c'e' gia' dentro la cartella, oppure la si crea
+rem dall'esempio la prima volta. Senza Node si fa come prima.)
+if defined RETE node tools\config-avvisi.mjs assicura
+if not defined RETE if not exist "avvisi\avvisi.json" if exist "avvisi\avvisi.esempio.json" copy /y "avvisi\avvisi.esempio.json" "avvisi\avvisi.json" >nul 2>nul
 call :avviso aggiornato
 rem Salvataggi (salvataggi\LEGGIMI.txt, 08/10): la prima volta la configurazione si crea dall'esempio
 if not exist "config-salvataggi.json" if exist "config-salvataggi.esempio.json" copy /y "config-salvataggi.esempio.json" "config-salvataggi.json" >nul 2>nul

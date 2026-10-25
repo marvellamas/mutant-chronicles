@@ -19,6 +19,7 @@ import { readFileSync, writeFileSync, mkdirSync, appendFileSync } from 'node:fs'
 import { join, dirname } from 'node:path';
 import { hostname } from 'node:os';
 import { execFile } from 'node:child_process';
+import { leggiConfigAvvisi } from './config-avvisi.mjs';
 import { fileURLToPath } from 'node:url';
 
 export const RADICE = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -126,7 +127,8 @@ export function registraErrore(radice, { tipo, testo = '', errore }, adesso = ne
 export async function avvisa(evento, { radice = RADICE, adesso = new Date(), motivo = '', pc = hostname(), invia = inviaHttp } = {}) {
   try {
     const cartella = join(radice, CARTELLA_AVVISI);
-    const conf = configurazione(leggiJson(join(cartella, 'avvisi.json')));
+    // la configurazione sta nel profilo dell'utente, fuori dalla cartella dell'app (tools/config-avvisi.mjs)
+    const conf = configurazione(leggiConfigAvvisi(radice)?.conf ?? null);
     if (!conf) return { mandato: false, motivo: 'spento' };
     const fileStato = join(cartella, 'stato.json');
     const { manda, stato } = daMandare(evento, leggiJson(fileStato), adesso);
