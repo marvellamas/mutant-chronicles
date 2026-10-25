@@ -2321,7 +2321,7 @@ function pannelloMunizioni(ctx, a, { riserveModificabili = true } = {}) {
     h('small', { class: 'nota' }, [
       info?.modo ? `Ricarica: ${info.singolo ? ctx.dati.equipaggiamento.file.munizioni.ricarica.inserimento_singolo?.testo ?? MODI_RICARICA.singolo : MODI_RICARICA[info.modo]}${info.singolo && info.perOperazione > 2 ? ` (tu: ${info.perOperazione}, Ricarica Migliorata)` : ''}.` : null,
       // Ricarica Rapida (Giocatore §8.6.4): una operazione gratuita per Round
-      info?.modo && (ctx.tab.scheda.talentiLiberi ?? []).some((t) => t.id === ctx.dati.equipaggiamento.file.munizioni.ricarica.ricarica_rapida?.talento) ? ctx.dati.equipaggiamento.file.munizioni.ricarica.ricarica_rapida.promemoria : null,
+      info?.modo && (ctx.tab.scheda.talentiLiberi ?? []).some((t) => (ctx.dati.equipaggiamento.file.munizioni.ricarica.ricarica_rapida?.talenti ?? []).includes(t.id)) ? ctx.dati.equipaggiamento.file.munizioni.ricarica.ricarica_rapida.promemoria : null,
       capacita === null ? 'Nessun caricatore nella scheda dell’arma: contatore libero.' : null,
       a.munizioni?.ricarica ? `Ricarica: ${a.munizioni.ricarica}.` : null,
       a.munizioni?.consumo ? `${a.munizioni.consumo.replace(/^./, (c) => c.toUpperCase())}.` : null,

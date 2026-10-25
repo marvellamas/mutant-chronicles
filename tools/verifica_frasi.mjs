@@ -11,6 +11,15 @@ const RADICE = new URL('../', import.meta.url);
 /** Testo confrontabile: senza escape e grassetti del Markdown esportato, spazi compattati. */
 export const normalizza = (t) => String(t).replace(/\\/g, '').replace(/\*\*/g, '').replace(/\s+/g, ' ').trim();
 
+/**
+ * Testo del file dei Talenti nuovi (v1.0 del 07/10/2026, docs/talenti-nuovi-v1.0.txt, estratto dal PDF di
+ * docs/Talenti-nuovi/): sui Talenti vale sul Manuale del Giocatore (docs/manuali-drive.md, «Regola di precedenza»),
+ * quindi le frasi dei Talenti che vengono da lì si cercano lì, non nei manuali.
+ */
+export function testoTalentiNuovi() {
+  return normalizza(readFileSync(new URL('docs/talenti-nuovi-v1.0.txt', RADICE), 'utf8'));
+}
+
 /** Testo dei manuali, normalizzato. */
 export function testoManuali() {
   const cartella = new URL('docs/manuali-txt/', RADICE);
@@ -38,7 +47,9 @@ export function frasiEffetti() {
   }
   // Talenti Liberi e di Classe: effetti.valori (docs/censimento-talenti.md)
   for (const t of leggi('data/talenti_liberi.json').talenti) {
-    (t.effetti?.valori ?? []).forEach((e, i) => { for (const k of ['condizione', 'nota']) if (e[k]) out.push({ dove: `talenti_liberi:${t.id} effetti.valori[${i}].${k}`, frase: e[k] }); });
+    // Talenti v1.0 (25/10/2026): le voci scritte dal file dei Talenti nuovi si confrontano con quel file
+    const fonte = t.fonte_regole === 'talenti_nuovi' ? 'talenti_nuovi' : 'manuali';
+    (t.effetti?.valori ?? []).forEach((e, i) => { for (const k of ['condizione', 'nota']) if (e[k]) out.push({ dove: `talenti_liberi:${t.id} effetti.valori[${i}].${k}`, frase: e[k], fonte }); });
   }
   for (const c of leggi('data/classi.json').classi) {
     for (const t of [...c.talenti_fissi, ...c.talenti_a_scelta]) {
@@ -117,13 +128,14 @@ export function frasiEffetti() {
 /** Frasi che non compaiono nei manuali. */
 export function frasiMancanti() {
   const testo = testoManuali();
-  return frasiEffetti().filter((x) => !testo.includes(normalizza(x.frase)));
+  const talenti = testoTalentiNuovi();
+  return frasiEffetti().filter((x) => !(x.fonte === 'talenti_nuovi' ? talenti : testo).includes(normalizza(x.frase)));
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const tutte = frasiEffetti();
   const mancanti = frasiMancanti();
   for (const m of mancanti) console.log(`NON TROVATA  ${m.dove}\n  «${m.frase}»`);
-  console.log(`${tutte.length - mancanti.length} frasi su ${tutte.length} trovate nei manuali.`);
+  console.log(`${tutte.length - mancanti.length} frasi su ${tutte.length} trovate nei manuali (quelle dei Talenti v1.0 nel file dei Talenti nuovi).`);
   process.exitCode = mancanti.length ? 1 : 0;
 }

@@ -128,7 +128,8 @@ export function perOperazione(info, idTalenti, dati) {
   if (!info?.singolo) return null;
   const ins = regole(dati)?.inserimento_singolo ?? {};
   const mig = ins.migliorata;
-  return mig && (idTalenti ?? []).includes(mig.talento) ? mig.per_operazione : ins.per_operazione ?? 1;
+  // Ricarica Migliorata (regime vecchio) o Ricarica Esperta (Talenti v1.0): A.182 aperta, vale la decisione 139
+  return mig && (mig.talenti ?? []).some((id) => (idTalenti ?? []).includes(id)) ? mig.per_operazione : ins.per_operazione ?? 1;
 }
 
 /**

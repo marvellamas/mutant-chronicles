@@ -185,7 +185,8 @@ test('conteggi del cap. 8: 87 Talenti del §8.6 + 32 Talenti magici e mistici, 8
   assert.ok(magia.some((x) => x.id === 'contromagia-universale') && magia.some((x) => x.id === 'magia-occultata'));
   assert.ok(magia.every((x) => !x.provvisorio && Array.isArray(x.prerequisiti) && ['passivo', 'attivo'].includes(x.tipo)));
   assert.ok(t.every((x) => ['passivo', 'attivo'].includes(x.tipo)));
-  assert.equal(dati.specializzazioni.specializzazioni.length, 85);
+  // 85 + Sport, che i Talenti v1.0 (07/10/2026) spostano fra le Specializzazioni
+  assert.equal(dati.specializzazioni.specializzazioni.length, 86);
   assert.equal(dati.tecniche_interiori.tecniche.length, 28);
   assert.equal(dati.regole.avanzamento.eventi.length, 20);
 });

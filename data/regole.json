@@ -530,7 +530,36 @@
     "livello_massimo_incantesimi": 18,
     "_nota_incantesimi": "Livello massimo per Gradi taumaturgici: tabella regole.taumaturgo.livello_massimo_per_gradi. Questo è il tetto assoluto (anche per Usufruitore di Magia con Potenziale Mistico Migliorato, Magia sezione 1).",
     "tetto_salvezza": 18,
-    "_nota_tetto_salvezza": "§1.2.3, §8.6.2–8.6.3: valore strutturale + Prova Salvezza Migliorata + Resistenza specifica ≤ 18. La Resistenza è un bonus situazionale: la scheda applica il tetto a strutturale + Migliorata."
+    "_nota_tetto_salvezza": "§1.2.3, §8.6.2–8.6.3: valore strutturale + Prova Salvezza Migliorata + Resistenza specifica ≤ 18. La Resistenza è un bonus situazionale: la scheda applica il tetto a strutturale + Migliorata.",
+    "progressione_talenti": {
+      "_nota": "Talenti, Specializzazioni e Maestrie v1.0 (07/10/2026), p. 1: «Si ottiene una scelta a ogni livello, per un totale di 20». Vale per i personaggi del regime nuovo (scelte.regimeTalenti = 2); quelli salvati prima restano con l’evento «talento_libero» dei livelli dispari, Specializzazioni comprese, finché non si migrano.",
+      "talento_libero": [
+        3,
+        5,
+        7,
+        9,
+        11,
+        13,
+        15,
+        17,
+        19
+      ],
+      "maestria": [
+        2,
+        6,
+        10,
+        14,
+        18
+      ],
+      "specializzazione": [
+        1,
+        4,
+        8,
+        12,
+        16,
+        20
+      ]
+    }
   },
   "interfaccia": {
     "barre_pv_pm": {
@@ -617,8 +646,9 @@
       "regola": "Ogni Raffica consuma un’Azione Principale e una sola Prova. Con successo produce il numero fisso di colpi indicato; con fallimento nessuno. Contro una Raffica si effettua una sola Prova per la Difesa scelta, pagando una sola volta il relativo costo. Una Parata riuscita dimezza per eccesso il danno di ciascun colpo; una Schivata riuscita evita tutti i colpi. Il danno viene determinato separatamente per ciascun colpo e l’Armatura si applica a ciascuno di essi.",
       "note": "Raffica Breve Migliorata porta il bonus a +4 VA. Raffica Breve non è disponibile per alcun profilo che impieghi granate, razzi o altri esplosivi. Tiro Mirato è compatibile soltanto con Tiro Singolo e Raffica Breve; Tiro Rapido è incompatibile. Dal 12° livello si possono effettuare due Raffiche, una per Azione Principale.",
       "migliorata": {
-        "talento": "Raffica Breve Migliorata",
-        "modificatore_va": 4
+        "talento": "Raffiche Migliorate",
+        "modificatore_va": 4,
+        "talento_regime_vecchio": "Raffica Breve Migliorata"
       },
       "paragrafo": "§5.10"
     },
@@ -631,8 +661,9 @@
       "regola": "Ogni Raffica consuma un’Azione Principale e una sola Prova. Con successo produce il numero fisso di colpi indicato; con fallimento nessuno. Contro una Raffica si effettua una sola Prova per la Difesa scelta, pagando una sola volta il relativo costo. Una Parata riuscita dimezza per eccesso il danno di ciascun colpo; una Schivata riuscita evita tutti i colpi. Il danno viene determinato separatamente per ciascun colpo e l’Armatura si applica a ciascuno di essi.",
       "note": "Raffica Media Migliorata porta il modificatore a 0. Un’arma deve possedere la modalità appropriata; se le munizioni non bastano si usa una modalità inferiore o il Tiro Singolo. Dal 12° livello si possono effettuare due Raffiche, una per Azione Principale.",
       "migliorata": {
-        "talento": "Raffica Media Migliorata",
-        "modificatore_va": 0
+        "talento": "Raffiche Migliorate",
+        "modificatore_va": 0,
+        "talento_regime_vecchio": "Raffica Media Migliorata"
       },
       "paragrafo": "§5.10"
     },
@@ -645,8 +676,9 @@
       "regola": "Ogni Raffica consuma un’Azione Principale e una sola Prova. Con successo produce il numero fisso di colpi indicato; con fallimento nessuno. Contro una Raffica si effettua una sola Prova per la Difesa scelta, pagando una sola volta il relativo costo. Una Parata riuscita dimezza per eccesso il danno di ciascun colpo; una Schivata riuscita evita tutti i colpi. Il danno viene determinato separatamente per ciascun colpo e l’Armatura si applica a ciascuno di essi.",
       "note": "Raffica Lunga Migliorata porta la penalità a −4 VA. Un’arma deve possedere la modalità appropriata; se le munizioni non bastano si usa una modalità inferiore o il Tiro Singolo. Dal 12° livello si possono effettuare due Raffiche, una per Azione Principale.",
       "migliorata": {
-        "talento": "Raffica Lunga Migliorata",
-        "modificatore_va": -4
+        "talento": "Raffiche Migliorate",
+        "modificatore_va": -4,
+        "talento_regime_vecchio": "Raffica Lunga Migliorata"
       },
       "paragrafo": "§5.10"
     },
