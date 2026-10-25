@@ -2002,3 +2002,20 @@ Dettaglio in `docs/diff-talenti-2026-10-25.md`. Nessuna domanda nuova: restano a
 - **Ricarica Esperta (A.182, aperta)**: finché Davide non risponde vale la **decisione 139** (A.135): 4 cartucce per
   operazione a inserimento con il Talento, 2 senza. Il «fino a tre» del file non è applicato; lo dice la scheda del
   Talento.
+
+## 25 ottobre 2026, notte — Talenti v1.0: scelta guidata e passaggio dei PG (lotto 2)
+
+Dettaglio in `docs/diff-talenti-lotto2-2026-10-25.md`. Nessuna domanda nuova. Le aperte restano con il loro «nel
+frattempo»:
+
+- **A.181** (adozione del file): nel frattempo vale il file v1.0 (regola di precedenza del 25/10).
+- **A.182** (Ricarica Esperta): nel frattempo 4 cartucce, decisione 139.
+- **A.183** (ordine dei prerequisiti nei PG esistenti): nel frattempo **ordine di livello**, come per un PG nuovo; il
+  Direttore può forzare da «Modifica master» (Dimitri: Ritualista Maggiore va al 6°, oppure si forza al 2°).
+- **A.184** (Tecniche e incantesimi legati a un Talento tolto): nel frattempo **non si toccano**; la scheda avvisa
+  «Tecniche conosciute N, ammesse M» e decide il Direttore (Oshi: riprendendo Risorse Interiori l'avviso sparisce).
+- **A.185** (Specializzazione del 1° livello): nel frattempo si sceglie **subito dopo la Classe**.
+
+Scelte di funzionamento (non regole): il giocatore sceglie solo opzioni ammesse; il Direttore può forzare (resta nel
+registro) e chiudere le scelte; senza connessione non si sceglie; il passaggio si fa con
+`distribuzione\5_passa_ai_talenti_nuovi.bat` e si annulla con lo stesso programma.
