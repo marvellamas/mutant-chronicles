@@ -13,11 +13,17 @@ test('dbIniziale: impostazioni di campagna di default dai dati', () => {
   assert.deepEqual([db.giocatori, db.partite], [[], []]);
 });
 
-test('nuovaPartita: tutti presenti, voti al minimo, bozza', () => {
+test('nuovaPartita: tutti presenti, le tre categorie di voto partono a 3 (voti.default), bozza', () => {
   const m = nuovaPartita(dati, [{ id: 'a', pg: 'A' }, { id: 'b', pg: 'B' }]);
   assert.deepEqual(Object.keys(m.partecipanti), ['a', 'b']);
   assert.equal(m.partecipanti.a.presente, true);
-  assert.equal(m.partecipanti.a.partecipazione, dati.px_partita.voti.min);
+  assert.equal(dati.px_partita.voti.default, 3, 'il voto di partenza sta nei dati');
+  for (const g of ['a', 'b']) {
+    assert.equal(m.partecipanti[g].partecipazione, 3);
+    assert.equal(m.partecipanti[g].interpretazione, 3);
+    assert.equal(m.partecipanti[g].contributo, 3);
+    assert.equal(m.partecipanti[g].eccezionale, 0);
+  }
   assert.equal(m.statoAssegnazione, 'bozza');
   assert.equal(m.durata, 1);
   assert.deepEqual(m.incontri, []);

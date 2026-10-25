@@ -296,3 +296,12 @@ test('il premio di fine Atto va dato una sola volta per personaggio: avviso sugl
   assert.deepEqual(premioGiaDato({ ...adesso, atto: 'V' }, [prima, adesso]), []);
   assert.deepEqual(premioGiaDato(adesso, [{ ...prima, premioAtto: false }, adesso]), []);
 });
+
+test('voti.default: validato (intero fra min e max)', async () => {
+  const { validaDati } = await import('../src/validate.js');
+  const copia = structuredClone(dati);
+  copia.px_partita.voti.default = 9;
+  const errori = validaDati(copia).filter((e) => e.file === 'px_partita.json');
+  assert.ok(errori.some((e) => e.chiave === 'voti.default'), 'un voto di partenza fuori da min–max è un errore dei dati');
+  assert.equal(validaDati(dati).filter((e) => e.file === 'px_partita.json').length, 0);
+});

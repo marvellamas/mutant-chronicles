@@ -2903,6 +2903,7 @@ function validaPxPartita(dati, err) {
   // voti
   const v = p.voti;
   if (!isOggetto(v) || !isIntero(v.min) || !isIntero(v.max) || v.min >= v.max) err(F, 'voti', 'min e max interi con min < max');
+  if (isOggetto(v) && (!isIntero(v.default) || v.default < v.min || v.default > v.max)) err(F, 'voti.default', 'intero fra min e max: il voto di partenza di ogni giocatore');
   if (!Array.isArray(v?.componenti) || v.componenti.length !== 3 || !v.componenti.every(isTesto)) err(F, 'voti.componenti', 'tre nomi di componenti');
   // durata
   if (!Array.isArray(p.durata?.opzioni) || !p.durata.opzioni.length) err(F, 'durata.opzioni', 'almeno una durata');

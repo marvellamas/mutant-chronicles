@@ -47,11 +47,11 @@ export function dbIniziale(dati) {
 const oggi = () => new Date().toISOString().slice(0, 10);
 const idPartita = () => `partita-${Date.now().toString(36)}`;
 
-/** Una partita vuota con tutti i giocatori presenti e i voti al minimo. */
+/** Una partita vuota con tutti i giocatori presenti e i voti al valore di partenza (data/px_partita.json → voti.default). */
 export function nuovaPartita(dati, giocatori) {
   const p = dati.px_partita;
   const partecipanti = {};
-  for (const g of giocatori ?? []) partecipanti[g.id] = { presente: true, partecipazione: p.voti.min, interpretazione: p.voti.min, contributo: p.voti.min, eccezionale: 0 };
+  for (const g of giocatori ?? []) partecipanti[g.id] = { presente: true, partecipazione: p.voti.default, interpretazione: p.voti.default, contributo: p.voti.default, eccezionale: 0 };
   return {
     id: idPartita(), data: oggi(), titolo: 'Nuova partita', durata: 1, atto: p.campagna.atto_default,
     premioAtto: false, note: '', partecipanti, incontri: [], finali: {}, statoAssegnazione: 'bozza',
@@ -166,7 +166,7 @@ function vistaPartita(ctx, st, az, salva, partita) {
   const nPresenti = presentiNella(partita);
 
   const righeGiocatori = (db.giocatori ?? []).map((g) => {
-    const part = partita.partecipanti[g.id] ?? (partita.partecipanti[g.id] = { presente: false, partecipazione: p(st).voti.min, interpretazione: p(st).voti.min, contributo: p(st).voti.min, eccezionale: 0 });
+    const part = partita.partecipanti[g.id] ?? (partita.partecipanti[g.id] = { presente: false, partecipazione: p(st).voti.default, interpretazione: p(st).voti.default, contributo: p(st).voti.default, eccezionale: 0 });
     const c = calc.perGiocatore[g.id] ?? componentiGiocatore(partita, g.id, st.pxGiocatori?.[g.id] ?? 0, p(st));
     const voto = (chiave) => h('input', { type: 'number', min: p(st).voti.min, max: p(st).voti.max, value: part[chiave], class: 'px-voto',
       oninput: (e) => { part[chiave] = Number(e.target.value); az.salva(); az.ridisegna(); } });
