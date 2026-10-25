@@ -103,3 +103,6 @@ distribuzione/mutant/
 
 # rapporto della voce 6 di Mutant.bat (tools/console.mjs)
 rapporto-personaggi.txt
+
+# «Controlla lo stato» (voce C di Mutant.bat)
+stato-mutant.txt

@@ -5,6 +5,7 @@
 //   node tools/console.mjs controlla      voce 6: rapporto sui file dei personaggi, con SI mette via i vecchi
 //   node tools/console.mjs talenti        voce 7: passaggio ai Talenti nuovi (rapporto, SI, tools/migra-talenti.mjs)
 //   node tools/console.mjs talenti-ripristina   voce 8: torna a com'era prima del passaggio (SI)
+//   node tools/console.mjs stato-personaggi     voce C: «Controlla lo stato» (anche in stato-mutant.txt)
 //   node tools/console.mjs intestazione   versione installata e stato del server (acceso/spento)
 //   node tools/console.mjs ripristina     voce 4: elenco dei salvataggi, scelta, server spento, copia di sicurezza,
 //                                         ripristino (tools/ripristina.mjs)
@@ -26,9 +27,10 @@ import { hostname } from 'node:os';
 import { spawnSync } from 'node:child_process';
 import { righeMenu, ascii } from './menu.mjs';
 import { leggiRuolo, scriviRuolo, testoRuolo, RUOLI } from './ruolo-pc.mjs';
+import { statoDalServer, statoDaDisco } from './stato-personaggi.mjs';
 import { statoDaRuolo } from '../src/copia-di-lavoro.js';
 import { leggiVersione, leggiNovita, versioneInParole } from '../src/versione.js';
-import { rapporto as rapportoTalenti, applica as applicaTalenti, ripristina as ripristinaTalenti, zipDelPassaggio, statoPassaggio, quandoDelloZip } from './migra-talenti.mjs';
+import { rapporto as rapportoTalenti, applica as applicaTalenti, ripristina as ripristinaTalenti, zipDelPassaggio, zipDaRipristinare, controllaSulServer, statoPassaggio, quandoDelloZip } from './migra-talenti.mjs';
 import { rapporto as rapportoPulizia, testoRapporto as testoPulizia, sposta as spostaPulizia } from './pulizia-personaggi.mjs';
 
 const RADICE = fileURLToPath(new URL('..', import.meta.url));
@@ -218,6 +220,82 @@ export async function voceControlla({ radice: r = radice, rl: esterno = null } =
   } finally { if (!esterno) rl.chiudi(); }
 }
 
+const ROSSO = '\x1b[31m';
+const VERDE = '\x1b[32m';
+const NORMALE = '\x1b[0m';
+const rosso = (t) => `${ROSSO}${t}${NORMALE}`;
+
+/**
+ * Il controllo finale delle voci 7 e 8 (25/10 sera), in parole: in verde se tutti tornano, in rosso con i nomi se anche
+ * uno solo non torna. Restituisce true solo se torna tutto.
+ */
+export function stampaControllo(c, { serverAcceso, attesi }) {
+  console.log('');
+  if (!serverAcceso) console.log(' Mutant era spento: per il controllo l\'ho acceso solo per un momento, sulla stessa cartella, e poi spento. Per giocare: voce 1.');
+  if (!c?.totale) {
+    console.log(rosso(` ${ascii(c?.righe?.[0] ?? 'Non ho potuto controllare.')}`));
+    console.log(rosso(' NON scrivo "fatto": accendi Mutant con la voce 1 e guarda la voce C "Controlla lo stato".'));
+    return false;
+  }
+  const [prima, ...resto] = c.righe.map((x) => ` ${ascii(x)}`);
+  if (c.ok) {
+    console.log(`${VERDE}${prima}${NORMALE}`);
+    if (attesi === 'vecchi') console.log(`${VERDE} Tutti di nuovo con i Talenti di prima.${NORMALE}`);
+    return true;
+  }
+  console.log(rosso(prima));
+  for (const x of resto) console.log(rosso(x));
+  console.log(rosso(' NON e\' fatto: manda a Marcello il risultato della voce C "Controlla lo stato".'));
+  return false;
+}
+
+/**
+ * Voce C «Controlla lo stato» (25/10/2026 sera): in parole semplici, la cartella dei personaggi che usa il server; per
+ * ogni personaggio quanti file ha, quale è l'attuale e se è sui Talenti vecchi o nuovi; se il passaggio è fatto e da
+ * quale zip torna indietro la voce 8. Con Mutant acceso legge dal server, per la stessa strada dell'app; spento, dalla
+ * cartella, con la stessa scelta del file attuale. Lo scrive anche in stato-mutant.txt, da mandare a Marcello.
+ */
+export async function voceStato({ radice: r = radice, porta: p = porta, scrivi = true } = {}) {
+  const dove = cartellePg(r);
+  const acceso = await statoServer(p);
+  const base = `http://127.0.0.1:${p}`;
+  let stato = null;
+  let cartella = dove.cartella;
+  if (acceso.mutant) {
+    stato = await statoDalServer(base);
+    try { cartella = (await (await fetch(`${base}/api/avvio`, { signal: AbortSignal.timeout(3000) })).json()).percorso || cartella; } catch { /* resta quella di qui */ }
+  }
+  const daServer = !!stato;
+  if (!stato) stato = statoDaDisco(dove.cartella);
+  const passaggio = statoPassaggio(dove);
+  const zip = zipDaRipristinare(dove.salvataggi);
+  const ora = new Date();
+  const righe = [
+    `STATO DI MUTANT - ${ora.toLocaleDateString('it-IT')} ${ora.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })} - PC ${hostname()}`,
+    `Versione: ${testoVersione(r)}`,
+    daServer ? `Mutant e' acceso (porta ${p}): i personaggi sono letti dal server, come li vede l'app.`
+      : acceso.acceso ? `La porta ${p} e' occupata da un altro programma: i personaggi sono letti dalla cartella.`
+        : 'Mutant e\' spento: i personaggi sono letti dalla cartella (con la stessa scelta del file attuale che fa l\'app).',
+    `Cartella dei personaggi: ${cartella}`,
+    '',
+    `Personaggi: ${stato.length}`,
+    ...stato.map((x) => `  ${String(x.nome).padEnd(22)} ${`${x.files} file`}  ${!x.letto ? 'NON LEGGIBILE' : x.nuovi ? `Talenti nuovi (${x.presi} scelti)` : 'Talenti vecchi'}   attuale: ${x.file}`),
+    '',
+    passaggio.passati
+      ? `Passaggio ai Talenti nuovi: ${passaggio.passati} personaggi su ${passaggio.totale}${passaggio.quando ? `, fatto il ${passaggio.quando.toLocaleDateString('it-IT')} alle ${passaggio.quando.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })}` : ''}.`
+      : 'Passaggio ai Talenti nuovi: non fatto (tutti con i Talenti vecchi).',
+    !passaggio.passati ? 'Niente da annullare con la voce 8.'
+      : zip ? `Per tornare indietro (voce 8) si usa: ${zip}` : 'Per tornare indietro (voce 8): nessuna copia di prima del passaggio.',
+  ].map(ascii);
+  console.log('');
+  for (const x of righe) console.log(` ${x}`);
+  if (scrivi) {
+    const file = join(r, 'stato-mutant.txt');
+    try { writeFileSync(file, `﻿${righe.join('\r\n')}\r\n`); console.log(`\n Lo stesso testo e' in ${file}: si puo' mandare a Marcello.`); } catch { /* a schermo basta */ }
+  }
+  return { daServer, cartella, stato, passaggio, zip, righe };
+}
+
 /** Voce 7: passaggio ai Talenti nuovi (tools/migra-talenti.mjs). */
 export async function voceTalenti({ radice: r = radice, rl: esterno = null, porta: p = porta } = {}) {
   const rl = esterno ?? lettore();
@@ -234,32 +312,37 @@ export async function voceTalenti({ radice: r = radice, rl: esterno = null, port
     console.log(' Se chiudi questa finestra adesso, non e\' stato fatto niente.');
     if (!await confermaSi(rl, ' Scrivi SI e premi Invio per fare il passaggio (altrimenti Invio e basta): ')) { console.log(' Va bene: non ho toccato niente.'); return { fatto: false }; }
     const e = await applicaTalenti({ ...dove, porta: p });
-    console.log(`\n Copia di sicurezza fatta: ${e.copia.zip} (${e.copia.file} file).`);
+    if (e.copia) console.log(`\n Copia di sicurezza fatta: ${e.copia.zip} (${e.copia.file} file).`);
     console.log(e.serverAcceso ? ' Scritto attraverso Mutant acceso: i tablet collegati vedono subito le schede nuove.' : ' Scritto con il salvataggio normale di Mutant (avviato solo per il passaggio).');
-    console.log(` Passati ai Talenti nuovi: ${e.fatti.length ? ascii(e.fatti.join(', ')) : 'nessuno'}.`);
-    for (const x of e.errori) console.log(` NON passato (resta com'era): ${ascii(x)}`);
-    console.log(' Per tornare indietro: voce 8 del menu.');
-    return { fatto: true, ...e };
+    for (const x of e.errori) console.log(rosso(` NON passato (resta com'era): ${ascii(x)}`));
+    // 25/10 sera: «fatto» lo dice il controllo sul server, non il conto delle scritture
+    const ok = stampaControllo(e.controllo, { serverAcceso: e.serverAcceso, attesi: 'nuovi' });
+    if (ok) console.log(' Fatto. Per tornare indietro: voce 8 del menu.');
+    return { fatto: ok, ...e };
   } finally { if (!esterno) rl.chiudi(); }
 }
 
 /** Voce 8: torna a com'era prima del passaggio (lo zip più recente del passaggio). */
-export async function voceTalentiRipristina({ radice: r = radice, rl: esterno = null } = {}) {
+export async function voceTalentiRipristina({ radice: r = radice, rl: esterno = null, porta: p = porta } = {}) {
   const rl = esterno ?? lettore();
   try {
     const dove = cartellePg(r);
-    const zip = zipDelPassaggio(dove.salvataggi)[0];
-    if (!zip) { console.log('\n Non trovo la copia di un passaggio ai Talenti nuovi: non c\'e\' niente da rimettere.'); return { fatto: false }; }
+    // lo zip di prima del passaggio: il più recente che ha davvero i Talenti di prima (tools/migra-talenti.mjs)
+    const zip = zipDaRipristinare(dove.salvataggi);
+    if (!zip) { console.log(`\n Non trovo la copia di prima del passaggio ai Talenti nuovi: non c'e' niente da rimettere.${zipDelPassaggio(dove.salvataggi).length ? ' (Le copie che ci sono hanno gia\' i Talenti nuovi.)' : ''}`); return { fatto: false }; }
     const q = quandoDelloZip(zip);
     console.log(`\n Copia fatta prima del passaggio${q ? ` del ${q.toLocaleDateString('it-IT')} alle ${q.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })}` : ''}:\n   ${zip}`);
     console.log(' Se scrivi SI rimetto i file dei personaggi com\'erano in quella copia (prima faccio una copia di come sono adesso).');
     console.log(' Le scelte dei Talenti fatte dopo il passaggio si perdono. Se chiudi questa finestra, non e\' stato fatto niente.');
     if (!await confermaSi(rl, ' Scrivi SI e premi Invio per tornare a com\'era prima (altrimenti Invio e basta): ')) { console.log(' Va bene: non ho toccato niente.'); return { fatto: false }; }
     const e = ripristinaTalenti({ ...dove, zip });
-    console.log(` Fatto: rimessi ${e.rimessi} file. Com'era prima del ripristino e' in ${e.sicurezza}.`);
+    console.log(` Rimessi ${e.rimessi} file. Com'era prima del ripristino e' in ${e.sicurezza}.`);
     if (e.tolti?.length) console.log(` Tolti i file scritti dopo il passaggio (sono nella copia qui sopra): ${e.tolti.join(', ')}.`);
-    console.log(' Se Mutant e\' acceso, le schede aperte si ricaricano da sole con i Talenti di prima.');
-    return { fatto: true, ...e };
+    // 25/10 sera: il controllo sul server, per la strada dell'app: tutti di nuovo con i Talenti di prima?
+    const controllo = await controllaSulServer({ cartella: dove.cartella, porta: p, attesi: 'vecchi' });
+    const ok = stampaControllo(controllo, { serverAcceso: controllo.serverAcceso, attesi: 'vecchi' });
+    if (ok) console.log(' Fatto: tutti con i Talenti di prima. Se Mutant e\' acceso, le schede aperte si ricaricano da sole.');
+    return { fatto: ok, ...e, controllo };
   } finally { if (!esterno) rl.chiudi(); }
 }
 
@@ -458,12 +541,14 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
     await voceTalenti();
   } else if (comando === 'talenti-ripristina') {
     await voceTalentiRipristina();
+  } else if (comando === 'stato-personaggi') {
+    await voceStato();
   } else if (comando === 'ruolo') {
     await voceRuolo();
   } else if (comando === 'collegamento') {
     creaCollegamento();
   } else {
-    console.error('Comandi: menu, intestazione, stato, ripristina, impostazioni, avvio, controlla, talenti, talenti-ripristina, ruolo, collegamento');
+    console.error('Comandi: menu, intestazione, stato, ripristina, impostazioni, avvio, controlla, talenti, talenti-ripristina, stato-personaggi, ruolo, collegamento');
     process.exitCode = 2;
   }
 }

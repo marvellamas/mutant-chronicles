@@ -49,8 +49,9 @@ echo.
 node "%QUI%tools\console.mjs" menu --porta=%MUTANT_PORTA%
 for %%A in ("%QUI%") do echo  Cartella di Mutant: %%~A
 echo.
-choice /c 1234567890 /n /m "  Scegli un numero: "
-if errorlevel 10 goto esci
+choice /c 123456789C0 /n /m "  Scegli un numero (o C): "
+if errorlevel 11 goto esci
+if errorlevel 10 goto stato
 if errorlevel 9 goto impostazioni
 if errorlevel 8 goto talenti-ripristina
 if errorlevel 7 goto talenti
@@ -131,7 +132,14 @@ pause
 goto menu
 
 :talenti-ripristina
-node "%QUI%tools\console.mjs" talenti-ripristina
+node "%QUI%tools\console.mjs" talenti-ripristina --porta=%MUTANT_PORTA%
+echo.
+pause
+goto menu
+
+:stato
+rem "Controlla lo stato": come stanno i personaggi, anche in stato-mutant.txt (si legge e basta)
+node "%QUI%tools\console.mjs" stato-personaggi --porta=%MUTANT_PORTA%
 echo.
 pause
 goto menu
