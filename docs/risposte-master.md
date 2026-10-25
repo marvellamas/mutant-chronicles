@@ -2050,3 +2050,15 @@ regole). Dettaglio in `docs/diff-talenti-scelta-2026-10-25.md`.
   Se il Talento non si riprende, restano come prima e decide il Direttore.
 - Non aprono scelte: Potenziale Mistico Migliorato («non concede nuovi Incantesimi») e Ritualista Minore e Maggiore (le
   procedure dei Rituali si apprendono una per una).
+
+## 25 ottobre 2026, sera tardi — Il passaggio ai Talenti nuovi sull'installazione vera
+
+Nessuna regola nuova e nessuna domanda per Davide. Diagnosi e correzioni in `docs/diagnosi-passaggio-talenti-2026-10-25.md`.
+
+- Quale file di un personaggio è «l'attuale» lo dice una funzione sola (`src/cartella.js → fileAttuale`), per l'app, il
+  server e il menu: conta quando il server ha scritto il file (`aggiornato_il`), che resta uguale dopo uno zip e un
+  ripristino.
+- La voce 7 passa ogni personaggio una volta (il suo file attuale) e, se sono già tutti passati, non fa niente; la voce 8
+  torna dallo zip più recente che ha davvero i Talenti di prima.
+- Le voci 7 e 8 finiscono con il controllo sul server, come lo vede l'app («Controllato sul server: 7 personaggi su 7 con
+  i Talenti nuovi»), e scrivono «fatto» solo se torna. Voce nuova C «Controlla lo stato», anche in `stato-mutant.txt`.

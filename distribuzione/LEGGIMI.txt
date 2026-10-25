@@ -28,6 +28,7 @@ cosa fa. Premi il numero e basta (non serve Invio).
    7. Passa ai Talenti nuovi
    8. Torna a com'era prima dei Talenti nuovi
    9. Impostazioni
+   C. Controlla lo stato
    0. Esci
 
 Le voci che cambiano i personaggi (6, 7, 8) prima ti fanno vedere che cosa
@@ -322,6 +323,14 @@ Voce 7 - Passa ai Talenti nuovi
   nel registro "Modifiche del master" della scheda. Poi ogni giocatore sceglie i
   Talenti nuovi dalla sua scheda, nel riquadro "Da scegliere".
 
+Alla fine la voce 7 controlla da sola come vede i personaggi l'app e scrive,
+in verde:
+  Controllato sul server: 7 personaggi su 7 con i Talenti nuovi.
+  Fatto. Per tornare indietro: voce 8 del menu.
+Se anche un solo personaggio non torna, lo scrive in rosso con il nome e non
+scrive "Fatto": allora premi C (Controlla lo stato) e manda a Marcello il file
+stato-mutant.txt che trovi nella cartella mutant.
+
 Voce 8 - Torna a com'era prima dei Talenti nuovi
   Rimette i file dei personaggi com'erano nella copia fatta dalla voce 7
   (prima fa un'altra copia di come sono adesso). Le scelte fatte dopo il
@@ -330,6 +339,10 @@ Voce 8 - Torna a com'era prima dei Talenti nuovi
 
 SE QUALCOSA NON VA
 --------------------------------------------------------------
+
+Per prima cosa premi C (Controlla lo stato) nel menu: scrive come stanno i
+personaggi e mette lo stesso testo nel file stato-mutant.txt, nella cartella
+mutant. Manda quel file a Marcello.
 
 La finestra si chiude subito
   Riapri Mutant.bat: le finestre degli errori restano aperte e dicono cosa fare.

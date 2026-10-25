@@ -37,8 +37,11 @@ avevi un collegamento sul desktop a uno di loro, cancellalo.
    per ogni personaggio i Talenti di oggi, la loro categoria nuova, i posti da riempire e i casi da guardare (Oshi: le
    Tecniche Interiori; Dimitri: Ritualista Maggiore va al 6° livello).
 5. Scrivi **SI** e Invio. Fa prima una copia zip di tutti i personaggi, poi a ognuno toglie i Talenti e li scrive nel
-   registro «Modifiche del master» della scheda. Se chiudi la finestra senza SI, non succede niente. Tornato al menu,
-   accanto alla voce 7 leggi «[Talenti nuovi: fatto il … alle … (7 personaggi su 7)]».
+   registro «Modifiche del master» della scheda. Se chiudi la finestra senza SI, non succede niente. **Alla fine deve
+   scrivere, in verde, «Controllato sul server: 7 personaggi su 7 con i Talenti nuovi.» e «Fatto».** Se scrive qualcosa in
+   rosso (un nome che non torna), non andare avanti: premi **C** «Controlla lo stato» e manda a Marcello il file
+   `stato-mutant.txt` della cartella mutant. Tornato al menu, accanto alla voce 7 leggi «[Talenti nuovi: fatto il … alle
+   … (7 personaggi su 7)]».
 6. **Voce 1 «Avvia Mutant».** Si apre la finestra nera del server e il browser. In fondo a ogni pagina, in piccolo:
    «Versione del 25/10 · Talenti nuovi». Nessuna fascia in alto: è il PC del Direttore.
 7. Ogni giocatore, dal suo tablet collegato, apre la sua scheda: in alto c'è **«Da scegliere: 2 Talenti Liberi,
@@ -47,8 +50,9 @@ avevi un collegamento sul desktop a uno di loro, cancellalo.
 8. Tu, dal PC, con «Modifica master» sulla scheda di un giocatore puoi scegliere per lui, **forzare** una voce in
    grigio (chiede conferma e resta nel registro) e, quando il tavolo ha finito, **Chiudi le scelte**.
 9. Se qualcosa va storto: nel menu di Mutant.bat **voce 8 «Torna a com'era prima dei Talenti nuovi»**, scrivi **SI**:
-   i personaggi tornano com'erano prima del passaggio (prima fa un'altra copia di come sono adesso). Le schede aperte
-   si ricaricano da sole.
+   i personaggi tornano com'erano prima del passaggio (prima fa un'altra copia di come sono adesso). Alla fine deve
+   scrivere «Controllato sul server: 0 personaggi su 7 con i Talenti nuovi.» e «Tutti di nuovo con i Talenti di prima».
+   Le schede aperte si ricaricano da sole.
 10. A fine serata: «Spegni Mutant» nel Tavolo del Master (salva e spegne), oppure la voce 3.
 
 Da controllare: dopo il passo 5 le schede hanno meno bonus (è normale finché i posti sono vuoti); a ogni scelta i
