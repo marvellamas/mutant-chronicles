@@ -10,7 +10,7 @@ import { info, etichettaMacro, pallini } from './tooltip.js';
 import { classeMacrofamiglia } from '../palette.js';
 import { componenteTiro } from './tiro.js';
 import { dettagli, bottoneScelta, contatore, stepper, sceltaParametroTalento, competenzeClasse } from './passi.js';
-import { conOrdinale } from '../lingua.js';
+import { conOrdinale, delNome } from '../lingua.js';
 import { barraPassi } from './navigazione.js';
 
 const trova = (lista, nome) => lista.find((x) => x.nome === nome);
@@ -76,7 +76,7 @@ export function renderSali(ctx) {
     maestria: (x) => passoTalento(x, { campo: 'maestria', candidati: x.prossimo.maestrie ?? [], guida: 'Una Maestria: perfeziona una manovra o una capacità. Le Maestrie non acquisibili restano nell’elenco con il motivo.' }),
     specializzazione: (x) => passoTalento(x, {
       campo: 'specializzazione', candidati: x.prossimo.specializzazioni?.[x.voce.grado?.classe] ?? [],
-      guida: x.voce.grado?.classe ? `Una Specializzazione dall’elenco del ${x.voce.grado.classe}, la Classe che hai appena aumentato.` : 'Scegli prima la Classe nel passo «Grado di Classe»: la Specializzazione si prende dal suo elenco.',
+      guida: x.voce.grado?.classe ? `Una Specializzazione dall’elenco ${delNome(x.voce.grado.classe)}, la Classe che hai appena aumentato.` : 'Scegli prima la Classe nel passo «Grado di Classe»: la Specializzazione si prende dal suo elenco.',
     }),
     grado: passoGrado,
     tecniche: passoTecniche,

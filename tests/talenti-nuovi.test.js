@@ -234,3 +234,13 @@ test('stampa: con i Talenti v1.0 tre elenchi (Talenti Liberi, Maestrie, Speciali
   const ui = readFileSync(new URL('../src/ui/stampa.js', import.meta.url), 'utf8');
   assert.ok(ui.includes("d.regimeTalenti === 'nuovo'") && ui.includes("[['Talenti Liberi', 'talento_libero'], ['Maestrie', 'maestria']]"));
 });
+
+test('una scelta forzata dal Direttore avvisa e non blocca la salita di livello («Procedi comunque»)', async () => {
+  const { validaLivello } = await import('../src/avanzamento.js');
+  const p = dimitriNuovo({ m2: { id: 'ritualista-maggiore' }, m6: { id: 'parata-istintiva' } }); // forzata al 2°
+  const senza = validaLivello(p, {}, dati);
+  assert.equal(senza.length, 1);
+  assert.equal(senza[0].procedibile, true);
+  assert.match(senza[0].problema, /forzata dal Direttore/);
+  assert.ok(!validaLivello(p, {}, dati, { procedi: true }).some((e) => /forzata dal Direttore/.test(e.problema)));
+});

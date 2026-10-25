@@ -83,6 +83,11 @@ test('un tablet con la copia di prima del passaggio non rimette i Talenti tolti'
     assert.equal(r.status, 409);
     assert.match((await r.json()).errore, /prima del passaggio ai Talenti nuovi/);
     assert.equal(leggi(f), dopo, 'il file resta quello del passaggio');
+    // anche scrivendo un file con un nome nuovo (la data di oggi): il confronto è con il file attuale del personaggio
+    const nuovoNome = f.replace(/_\d{4}-\d{2}-\d{2}\.json$/, '_2026-10-27.json');
+    const r2 = await fetch(`http://127.0.0.1:${srv.address().port}/api/personaggi/${encodeURIComponent(nuovoNome)}`, { method: 'PUT', body: vecchio });
+    assert.equal(r2.status, 409);
+    assert.equal(existsSync(join(cartella, nuovoNome)), false, 'nessun file nuovo con i Talenti di prima');
   } finally { await new Promise((ok) => srv.close(ok)); }
 });
 

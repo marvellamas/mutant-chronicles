@@ -1878,7 +1878,9 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
       // Talenti v1.0 (lotto 2, 25/10/2026): un tablet non torna ai Talenti di prima dopo la migrazione, non cambia le
       // scelte chiuse dal Direttore e non sceglie un'opzione non ammessa (src/talenti-tablet.js)
       if (!req.mutantMaster) {
-        const disco = await leggiJson(dove).catch(() => null);
+        // il file attuale del personaggio, anche se il tablet scrive in un file con un nome nuovo (la data di oggi):
+        // altrimenti un tablet con la copia di prima aggirerebbe il controllo scrivendo un file nuovo
+        const disco = await fileAttualeDelPg(cartella, file, typeof o.pg === 'string' ? o.pg : null);
         const { dati } = await datiDelServer(radice);
         const t = controllaTalentiDaTablet(o, disco, dati);
         if (!t.ok) return json(res, t.stato, { errore: t.errore, talenti: true });

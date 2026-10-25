@@ -22,7 +22,7 @@ import {
 } from './calc.js';
 import { specTiro, valoreTiro, motivoFuoriIntervallo } from './tiri.js';
 import { calcolaEquipaggiamento, normalizzaEquipaggiamento } from './equipaggiamento.js';
-import { conOrdinale } from './lingua.js';
+import { conOrdinale, delNome } from './lingua.js';
 import { saldoIniziale, contiDotazione, crediti } from './dotazioni.js';
 import { applicaCondizioni } from './condizioni.js';
 import { umanita, pmConUmanita } from './umanita.js';
@@ -231,7 +231,7 @@ export function controllaSceltaTalento(stato, categoria, scelta, dati, { classe 
     const cat = categoriaDi(def);
     if (cat !== categoria) { err(`${def.nome} è ${cat === 'maestria' ? 'una Maestria' : cat === 'specializzazione' ? 'una Specializzazione' : 'un Talento Libero'}, non ${categoria === 'maestria' ? 'una Maestria' : categoria === 'specializzazione' ? 'una Specializzazione' : 'un Talento Libero'}`); return errori; }
     if (categoria === 'specializzazione' && !specializzazioniAmmesse(stato, classe, dati).has(def.id)) {
-      err(`Specializzazione in ${def.nome} non è nell’elenco ${classe ? `del ${classe}` : 'della Classe'} (Talenti v1.0: si sceglie dalla Classe appena aumentata)`);
+      err(`Specializzazione in ${def.nome} non è nell’elenco ${classe ? delNome(classe) : 'della Classe'} (Talenti v1.0: si sceglie dalla Classe appena aumentata)`);
     }
   }
   // molteplicità, parametro, annotazione, prerequisiti, Risorse Interiori: le regole di sempre
@@ -1149,7 +1149,11 @@ export function validaLivello(personaggio, scelte, dati, { procedi = false } = {
   // N2 (l'app avvisa, non blocca): con `procedi` il master ha deciso di salire lo stesso («Procedi comunque», riga nello storico)
   if (eccessi.length && !procedi) return [{ campo: 'livelli', problema: motivoEccesso(eccessi), tipo: 'violazione', procedibile: true }];
   if (completamenti.length && !procedi) return [{ campo: 'livelli', problema: motivoCompletamento(completamenti), tipo: 'violazione', procedibile: true }];
-  const bloccanti = errori.filter((e) => e.tipo === 'violazione');
+  // Talenti v1.0: una scelta non ammessa c'è solo se l'ha forzata il Direttore; avvisa con «Procedi comunque», non blocca
+  const sceltaTalento = (e) => stato.regime === 'nuovo' && /(^|.)(talentoLibero|maestria|specializzazione|specializzazioneIniziale)$/.test(e.campo ?? '');
+  const forzate = errori.filter((e) => e.tipo === 'violazione' && sceltaTalento(e));
+  const bloccanti = errori.filter((e) => e.tipo === 'violazione' && !sceltaTalento(e));
+  if (forzate.length && !bloccanti.length && !procedi) return [{ campo: 'livelli', problema: `una scelta dei Talenti non è ammessa dalle regole (forzata dal Direttore: ${forzate[0].problema})`, tipo: 'violazione', procedibile: true }];
   if (bloccanti.length) {
     return [{ campo: 'livelli', problema: `i livelli già acquisiti contengono errori (${bloccanti[0].problema}): annulla l’ultimo livello e correggilo`, tipo: 'violazione' }];
   }

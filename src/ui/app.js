@@ -1117,7 +1117,7 @@ function contesto() {
       : schedaPersonaggio.completamenti?.length ? motivoCompletamento(schedaPersonaggio.completamenti) : null,
     motivoNoSalita: !scheda.completa ? 'Completa la creazione (passi precedenti) prima di salire di livello.'
         : schedaPersonaggio.errori.some(ePostoTalentoVuoto) ? 'Scegli prima i Talenti nel riquadro «Da scegliere» della scheda.'
-        : schedaPersonaggio.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
+        : schedaPersonaggio.errori.filter((e) => !eSceltaTalento(e)).length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
     saliDiLivello,
     stampa: () => vai(`#/p/${stato.id}/stampa`),
     annullaUltimoLivello: annullaLivello,
@@ -1604,7 +1604,10 @@ function registraModificheMaster() {
 // altra modifica (il server ricontrolla le scelte dei tablet: src/talenti-tablet.js).
 
 /** Un errore che è solo un posto dei Talenti v1.0 ancora vuoto (lo mostra il riquadro, non l'elenco degli errori). */
-const ePostoTalentoVuoto = (e) => stato.scelte?.regimeTalenti === 2 && e.tipo === 'incompleto' && /(^|.)(talentoLibero|maestria|specializzazione|specializzazioneIniziale)$/.test(e.campo ?? '');
+const eSceltaTalento = (e) => stato.scelte?.regimeTalenti === 2 && /(^|.)(talentoLibero|maestria|specializzazione|specializzazioneIniziale)$/.test(e.campo ?? '');
+const ePostoTalentoVuoto = (e) => eSceltaTalento(e) && e.tipo === 'incompleto';
+// una scelta non ammessa c'è solo se l'ha forzata il Direttore (il server non la accetta da un tablet): il riquadro la
+// mostra come tale, e non blocca niente (l'app avvisa, non blocca)
 
 /** Perché, adesso, da qui non si sceglie: senza connessione, o con modifiche offline in attesa del Direttore. */
 function talentiBloccati() {
@@ -1763,7 +1766,7 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
   if (tab.tab.length) tab.tab = tabFissi(tab.tab);
   // Talenti v1.0 (lotto 2): i posti vuoti li dice il riquadro «Da scegliere», non l'elenco degli errori
   const talentiDaScegliere = tab.errori?.some(ePostoTalentoVuoto) ?? false;
-  if (tab.errori) tab.errori = tab.errori.filter((e) => !ePostoTalentoVuoto(e));
+  if (tab.errori) tab.errori = tab.errori.filter((e) => !eSceltaTalento(e));
   document.title = `${stato.scelte.nome.trim() || 'Personaggio'} — Scheda · Mutant`;
   if (!tab.tab.length) {
     svuota(radice, h('section', { class: 'passo' },

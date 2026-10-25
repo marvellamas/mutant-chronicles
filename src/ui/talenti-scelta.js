@@ -8,6 +8,7 @@
 // Senza connessione, o con modifiche offline in attesa, il riquadro lo dice invece di accettare una scelta che si perde.
 import { h } from './dom.js';
 import { chiedi } from './finestrella.js';
+import { delNome } from '../lingua.js';
 
 const NOMI = {
   talento_libero: ['Talento Libero', 'Talenti Liberi'],
@@ -87,7 +88,7 @@ function corpo(t, P) {
 }
 
 function postoAttivo(t, x) {
-  const titolo = h('h3', {}, `${nomeDi(x.categoria)} del ${x.livello}° livello${x.classe ? ` · elenco del ${x.classe}` : ''}`);
+  const titolo = h('h3', {}, `${nomeDi(x.categoria)} del ${x.livello}° livello${x.classe ? ` · elenco ${delNome(x.classe)}` : ''}`);
   if (x.scelta) {
     const puo = !x.chiuso || t.master;
     return h('div', { class: 'posto-attivo' }, titolo,

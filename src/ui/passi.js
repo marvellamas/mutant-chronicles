@@ -14,6 +14,7 @@ import { renderDotazione } from './dotazione.js';
 import { dotazioneApplicata } from '../dotazioni.js';
 import { postiTalenti } from '../avanzamento.js';
 import { rigaEffetto } from './talenti-scelta.js';
+import { delNome } from '../lingua.js';
 
 const trova = (lista, nome) => lista.find((x) => x.nome === nome);
 const GRADI = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI' };
@@ -324,7 +325,7 @@ function passoSpecializzazioneIniziale(ctx) {
   const def = (id) => dati.specializzazioni.specializzazioni.find((s) => s.id === id);
   const ammesse = (posto?.opzioni ?? []).filter((o) => o.ammesso);
   return [
-    h('p', { class: 'guida' }, `Una Specializzazione dall’elenco del ${scelte.classe}, la tua Classe iniziale (Talenti v1.0: le sei Specializzazioni accompagnano i Gradi di Classe, compreso il primo). Dà +2 VA nelle prove pertinenti, +1 VA e +1 danno con una categoria di armi, oppure +1 VA e −1 PM con una sottofamiglia di Potere.`),
+    h('p', { class: 'guida' }, `Una Specializzazione dall’elenco ${delNome(scelte.classe)}, la tua Classe iniziale (Talenti v1.0: le sei Specializzazioni accompagnano i Gradi di Classe, compreso il primo). Dà +2 VA nelle prove pertinenti, +1 VA e +1 danno con una categoria di armi, oppure +1 VA e −1 PM con una sottofamiglia di Potere.`),
     h('p', { class: 'nota' }, 'In attesa della risposta di Davide (A.185) si sceglie qui, subito dopo la Classe.'),
     scelta ? h('p', { class: corrente?.valida ? 'contatore ok' : 'contatore errore' }, `Scelta: Specializzazione in ${def(scelta.id)?.nome ?? scelta.id}${scelta.annotazione ? ` — ${scelta.annotazione}` : ''}${corrente?.valida ? '' : ` (${corrente?.problemi?.[0]?.problema ?? 'non ammessa'})`}`)
       : h('p', { class: 'contatore attenzione' }, 'Nessuna Specializzazione scelta'),
