@@ -4,7 +4,9 @@ Dal 26 settembre 2026 i manuali vivono come Google Doc nella cartella Drive di D
 
 ## Registro
 
-Ultimo controllo: **22 ottobre 2026, pomeriggio** (secondo giro, prima di applicare la 0.49):
+Ultimo controllo: **25 ottobre 2026** — manuali, E&L e «per-davide.md» invariati (Giocatore 21/10 12:08, Magia 21/10 12:09, Armamenti e Equipaggiamento 15/10, E&L 15/10 23:21, per-davide 24/10 21:50, già scaricato). **Regola di precedenza nuova per i Talenti**: vedi «Regola di precedenza: Talenti, Specializzazioni e Maestrie» qui sotto.
+
+Precedente: **22 ottobre 2026, pomeriggio** (secondo giro, prima di applicare la 0.49):
 **nessun Doc cambiato dal giro del mattino** — nessuna 0.50, nessun altro manuale toccato, nessuna risposta
 nuova nella sezione 7 del Doc «per-davide.md» (che risulta modificato alle 09:31 perché Cowork vi ha applicato
 il pacchetto del mattino: A.171–A.173 fra le Risolte, A.178 aperta). **Versione applicata nell’app:
@@ -53,6 +55,26 @@ La colonna "Ultima modifica vista" è la data di modifica del Doc (`modifiedTime
 - **regola:** profilo di competenza dell'**Incursore** (§3.7): *Armi da guerra* passa da Generica a Professionale e *Armi da mischia* da Professionale a Generica (i conteggi 2 S / 6 P / 12 G / 4 N restano). ✔ Applicato in `data/classi.json` → `competenze` (commit e210fa7).
 
 Differenza chiusa il 04/10/2026: 7 punti (Davide a Marcello, risposta alla A.90; `docs/risposte-master.md`, decisione 92), applicati nei dati; data vista del Giocatore aggiornata al 03/10 19:16:29.
+
+## Regola di precedenza: Talenti, Specializzazioni e Maestrie (25/10/2026)
+
+**Sui Talenti vale il file `docs/Talenti-nuovi/SIMPLY_RPG_Proposta_Talenti_Specializzazioni_Maestrie_v1.0.pdf`**
+(«Nuova progressione di Talenti Specializzazioni e Maestrie», v1.0 del 7 ottobre 2026), **non il Manuale del Giocatore.**
+Lo ha deciso Davide (riferito da Marcello il 25/10): Davide incollerà lo stesso testo nel manuale appena può; fino ad
+allora la fonte è il file.
+
+- Dove il file e il Manuale del Giocatore dicono cose diverse sui Talenti (categorie, livelli di acquisizione,
+  cataloghi, elenchi delle Specializzazioni per Classe, schede riscritte), **vale il file**.
+- Le schede che il file non riscrive restano quelle del manuale («per le capacità non riscritte qui rimangono gli
+  effetti, i limiti e i requisiti delle rispettive schede»).
+- **Un lotto futuro non deve «correggere» l'app tornando al manuale** perché nel controllo dei manuali il §8 del
+  Giocatore risulta diverso dall'app: è atteso finché Davide non aggiorna il Doc.
+- **Quando il Giocatore cambierà nella parte dei Talenti**, il controllo dei manuali deve confrontare il testo nuovo
+  con il file, voce per voce. Se coincidono, questa regola si toglie e la fonte torna il manuale; se no, le differenze
+  diventano domande per Davide.
+- La regola **non scavalca `docs/risposte-master.md`**: dove il file contraddice una decisione approvata, si chiede a
+  Davide (A.182: Ricarica Esperta contro la A.135). Conferma dell'adozione: A.181.
+- Ricognizione: `docs/talenti-nuovi-ricognizione-2026-10-25.md`.
 
 ## Procedura di controllo (all'inizio di ogni sessione, o su richiesta)
 

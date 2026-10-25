@@ -1962,3 +1962,30 @@ Nessuna domanda nuova per Davide: sono correzioni e una precisazione già approv
 - **Premio di fine Atto per Atto** (precisazione alla **A.170**, già approvata): è dell'Atto, non della partita. Si dispone giocatore per giocatore (`partita.premiAtto`), anche a chi è assente da quella partita (da assente prende solo il premio); il vecchio interruttore unico vale ancora per i presenti. La traccia per Atto (ricevuto / disposto in bozza, in quale partita) si ricava da tutte le partite e si vede da qualunque partita e nell'Archivio; l'avviso «già dato» vale per Atto e per giocatore. Un premio da assente non conta come partita giocata nel riepilogo.
 - **Avviso di passaggio di livello** (richiesta): chi con l'assegnazione supera la soglia del livello successivo (`soglie_px`, A.170) è segnalato nella riga, nella conferma di «Assegna» e dopo; solo un avviso, non blocca né cambia nulla, e dice se l'Atto frena il livello.
 - **PX riservati al Direttore** (richiesta): `scelte.puntiEsperienza` era un'«assegnazione dichiarata» del giornale (lotto 114) e quindi un tablet poteva accodarla e un salvataggio normale poteva scriverla. Ora: nessuna operazione nasce da un tablet (`NON_ACCODABILI` in `src/giornale.js`), una che arriva lo stesso è scartata dal server, il server tiene i PX del disco in ogni scrittura che non viene dal PC del Direttore (`proteggiPuntiEsperienza`), e la scheda del tablet li mostra in sola lettura.
+
+## 25 ottobre 2026 — Talenti, Specializzazioni e Maestrie: regola di precedenza (domande nuove: A.181–A.185)
+
+**Regola di precedenza.** Davide ha riscritto i Talenti, ora divisi in Talenti Liberi, Maestrie e Specializzazioni
+(`docs/Talenti-nuovi/SIMPLY_RPG_Proposta_Talenti_Specializzazioni_Maestrie_v1.0.pdf`, v1.0 del 7/10/2026). **Sui Talenti
+quel file sovrascrive il Manuale del Giocatore**, finché Davide non incolla lo stesso testo nel manuale (riferito da
+Marcello il 25/10). Dove i due differiscono vale il file; dove il file non riscrive una scheda, vale la scheda del
+manuale. Nessun lotto futuro deve riportare l'app al §8 del manuale; quando il manuale sarà aggiornato, se ne controlla
+la coincidenza con il file (`docs/manuali-drive.md`, «Regola di precedenza: Talenti»).
+
+**Fra le fonti:** questo documento resta sopra sia il manuale sia il file. La **decisione 139 (A.135, 4 cartucce con
+Ricarica Migliorata)** contraddice la Ricarica Esperta del file («fino a tre»): non è cambiata, e la scelta è chiesta
+nella A.182.
+
+Nessun dato applicato: è una ricognizione (`docs/talenti-nuovi-ricognizione-2026-10-25.md`).
+
+- **A.181 — Il file sui Talenti è adottato?** *(aperta)* Il PDF dice ancora «proposta, da discutere prima
+  dell'eventuale adozione». Si conferma che la versione 1.0 è definitiva e vale da lunedì 26/10?
+- **A.182 — Ricarica Esperta: «fino a tre» munizioni (file) o 2/4 cartucce per AzP (A.135)?** *(aperta)* Anche per
+  l'operazione gratuita per Round.
+- **A.183 — Conversione dei PG esistenti.** *(aperta)* (a) Prerequisiti in ordine di livello (la Maestria del 2° non
+  può richiedere un Talento del 3°) o tutto insieme al livello attuale? (b) La Specializzazione del 1° dall'elenco della
+  prima Classe e quella del 4° dall'elenco della Classe del Grado II?
+- **A.184 — Incantesimi e Tecniche legati a un Talento tolto.** *(aperta)* Restano se il Talento si riprende, si perdono
+  se no, si riscelgono?
+- **A.185 — Specializzazione del 1° livello nella creazione.** *(aperta)* In quale fase del §2.0, e per i Taumaturghi
+  già con le nove di Potere?
