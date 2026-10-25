@@ -8,18 +8,25 @@ UN AGGIORNAMENTO LE CARTELLE SEMBRANO VUOTE», «RIPRISTINARE UN SALVATAGGIO»).
 
 ## Due installazioni, due modi di aggiornare
 
-| | Com'è fatta | Come si aggiorna |
+Dal 25/10/2026 («un ingresso solo», `docs/come-si-usa-mutant.md`) **per tutti e due si aggiorna dalla voce 2 del
+menu di `Mutant.bat`**; cambia solo che cosa succede dietro.
+
+| | Com'è fatta | Che cosa fa la voce 2 |
 |---|---|---|
-| **Pacchetto zip** (Davide) | `<cartella>\1_scarica_o_aggiorna_app.bat`, `2_installa_node.bat`, `3_avvia.bat`, `LEGGIMI.txt` e, accanto, la cartella `mutant\` con l'app | doppio clic su **`1_scarica_o_aggiorna_app.bat`**, e basta |
-| **Copia con Git** (Marcello) | un `git clone` del repository | **`aggiorna.bat`**, oppure la voce 2 della console (`Mutant.bat`) |
+| **Pacchetto zip** (Davide) | `<cartella>\1_scarica_o_aggiorna_app.bat`, `LEGGIMI.txt`, `aggiorna-da-zip.ps1` e, accanto, la cartella `mutant\` con l'app | `aggiorna.bat` vede che non c'è Git e chiama `..\1_scarica_o_aggiorna_app.bat`, poi rimette al passo i file di fuori |
+| **Copia con Git** (Marcello) | un `git clone` del repository | `aggiorna.bat`: mostra il branch, si ferma se ci sono modifiche non salvate, poi `git pull --ff-only` |
 
-**Un solo modo per ciascuno.** Chi ha il pacchetto zip non usa `aggiorna.bat` (non c'è `.git`); chi ha la copia
-con Git non usa il pacchetto.
+In tutti e due i casi si annota la versione prima e alla fine si dice in chiaro che cosa è cambiato
+(`tools/esito-aggiornamento.mjs`): «Aggiornato: prima eri alla versione del 22/10, ora sei a quella del 25/10
+(Talenti nuovi).», «l'app resta alla versione …; sono cambiati solo i programmi di servizio», oppure «Era gia'
+aggiornato». Nessun passo dell'aggiornamento apre finestre: Esplora risorse lo apre solo la voce 5, se la si sceglie.
 
-I file del pacchetto che stanno **fuori** da `mutant\` non venivano mai aggiornati: la copia nuova finiva in
-`mutant\distribuzione\`. Dal 12/10 ci pensa `tools/aggiorna-avviatori.mjs`, chiamato con il nome del file in uso
-in `--salta=` (un file non si può sostituire mentre gira): `1_scarica_o_aggiorna_app.bat` aggiorna gli altri
-alla fine, `3_avvia.bat` aggiorna lui al primo avvio. Della copia di prima resta un `.precedente` accanto.
+`1_scarica_o_aggiorna_app.bat` resta come **programma d'installazione** per un PC nuovo (e lo usa la voce 2).
+I file del pacchetto che stanno **fuori** da `mutant\` li rimette al passo `tools/aggiorna-avviatori.mjs`
+(dal 12/10), con il nome del file in uso in `--salta=` (un file non si può sostituire mentre gira); della copia di
+prima resta un `.precedente`. Dal 25/10 toglie anche i programmi che non si usano più (`OBSOLETI`:
+`2_installa_node.bat`, `3_avvia.bat`, `4_controlla_personaggi.bat`, `5_passa_ai_talenti_nuovi.bat`), solo se
+accanto c'è il pacchetto.
 
 ## I tre passi di ogni aggiornamento
 

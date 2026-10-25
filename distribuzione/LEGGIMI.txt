@@ -10,18 +10,48 @@ Le cartelle sincronizzate impediscono all'app di partire. Usa una cartella
 normale, per esempio C:\Mutant (vedi "Metti la cartella al suo posto").
 
 
+IN BREVE: SI USA UN PROGRAMMA SOLO
+--------------------------------------------------------------
+
+Dal 25/10/2026 Mutant si usa da UN SOLO programma: Mutant.bat, nella
+cartella "mutant" (o il collegamento "Mutant" sul desktop).
+
+Si apre un menu con dei numeri. Ogni voce ha sotto una riga che dice che
+cosa fa. Premi il numero e basta (non serve Invio).
+
+   1. Avvia Mutant
+   2. Aggiorna Mutant
+   3. Salva la sessione
+   4. Ripristina un salvataggio
+   5. Apri la cartella dei salvataggi
+   6. Controlla i file dei personaggi
+   7. Passa ai Talenti nuovi
+   8. Torna a com'era prima dei Talenti nuovi
+   9. Impostazioni
+   0. Esci
+
+Le voci che cambiano i personaggi (6, 7, 8) prima ti fanno vedere che cosa
+faranno e poi chiedono di scrivere SI. Se chiudi la finestra prima, non
+succede niente.
+
+In alto il menu dice la versione (per esempio "Versione del 25/10 - Talenti
+nuovi"), se Mutant è acceso, e che ruolo ha questo PC.
+
+I vecchi programmi numerati (2_installa_node.bat, 3_avvia.bat,
+4_controlla_personaggi.bat, 5_passa_ai_talenti_nuovi.bat) non ci sono più:
+il primo aggiornamento li toglie da solo. Se avevi sul desktop un collegamento
+a uno di loro, cancellalo e metti quello nuovo (voce 9, poi 5).
+
+
 COSA C'È IN QUESTA CARTELLA
 --------------------------------------------------------------
 
-Ci sono cinque file:
-
   LEGGIMI.txt                     questa guida.
-  1_scarica_o_aggiorna_app.bat    scarica l'app da internet (e la aggiorna).
-  2_installa_node.bat             installa Node.js, il programma che fa girare l'app.
-  3_avvia.bat                     accende l'app e la apre nel browser.
-  4_controlla_personaggi.bat      controlla i file dei personaggi (si usa di rado).
-  5_passa_ai_talenti_nuovi.bat    passa i personaggi ai Talenti nuovi (una volta sola;
-                                  se serve, rimette com'era prima).
+  1_scarica_o_aggiorna_app.bat    il programma d'installazione: si usa solo la
+                                  prima volta, su un PC nuovo. Dopo si aggiorna
+                                  dalla voce 2 del menu.
+  aggiorna-da-zip.ps1             un pezzo dell'aggiornamento: non si apre.
+  mutant                          la cartella dell'app. Dentro c'è Mutant.bat.
 
 I file che finiscono con ".bat" sono piccoli programmi.
 Si usano con un doppio clic.
@@ -42,7 +72,7 @@ PRIMA DI TUTTO: METTI LA CARTELLA AL SUO POSTO
    NON in Dropbox, OneDrive, Google Drive o iCloud, e nemmeno sul Desktop o in
    Documenti se il computer li sincronizza con OneDrive (succede spesso con
    Windows 11: nell'indirizzo della cartella compare la parola "OneDrive").
-   Se la cartella è sincronizzata, i file .bat lo dicono con un avviso.
+   Se la cartella è sincronizzata, i programmi lo dicono con un avviso.
 3. Non lanciare i file da dentro lo zip: prima estraili.
 
 
@@ -53,37 +83,52 @@ Passo 1 - Scarica l'app
   Fai doppio clic su 1_scarica_o_aggiorna_app.bat
   Serve la connessione a internet.
   Accanto ai file compare una nuova cartella chiamata "mutant".
-  Dentro c'è l'app: non serve aprirla né toccare i file.
   Alla fine la finestra dice "Fatto". Premi un tasto per chiuderla.
 
-Passo 2 - Installa Node.js
-  Fai doppio clic su 2_installa_node.bat
-  Se Node.js c'è già, la finestra lo dice e hai finito questo passo.
-  Altrimenti lo scarica dal sito ufficiale (circa 30 MB) e apre l'installazione.
-  Nella finestra di installazione:
+Passo 2 - Apri Mutant.bat
+  Apri la cartella "mutant" e fai doppio clic su Mutant.bat.
+  Se Node.js (il programma che fa girare l'app) non c'è, Mutant.bat lo dice
+  e chiede "Procedo? [S/N]": premi S. Lo scarica dal sito ufficiale e apre
+  l'installazione:
     - premi "Next" in ogni schermata;
     - accetta la licenza;
     - lascia tutte le opzioni come sono;
     - se Windows chiede "Consentire a questa app di apportare modifiche?", rispondi "Sì";
     - alla fine premi "Finish".
-  Poi chiudi tutte le finestre nere aperte.
+  Poi chiudi la finestra nera e riapri Mutant.bat.
 
-Passo 3 - Accendi l'app
-  Fai doppio clic su 3_avvia.bat
-  La prima volta installa alcuni componenti: serve circa un minuto e internet.
-  Poi si apre il browser con l'app.
-  Se la pagina resta bianca, aspetta qualche secondo e premi F5.
+Passo 3 - Una domanda, una volta sola
+  La prima volta Mutant.bat chiede che cosa è questo PC:
+     1. Il PC del Direttore: si gioca qui, e i personaggi di questa
+        cartella sono quelli veri.
+     2. Una copia di prova: serve a provare; i personaggi veri sono sul
+        PC del Direttore.
+  Sotto c'è il nome del PC, letto da Windows.
+  Sul PC dove si gioca scrivi 1 e premi Invio.
+  Se premi solo Invio, la domanda torna la volta dopo (intanto tutto
+  funziona come sempre).
+  La risposta resta anche dopo gli aggiornamenti. Si cambia dalla voce 9.
+
+Passo 4 - Il collegamento sul desktop
+  Nel menu scegli 9 (Impostazioni), poi 5 ("Metti il collegamento Mutant sul
+  desktop"). Da lì in avanti basta il doppio clic su "Mutant" del desktop.
 
 
 USO DI TUTTI I GIORNI
 --------------------------------------------------------------
 
-Per accendere l'app: doppio clic su 3_avvia.bat
-Per spegnere l'app: chiudi la finestra nera (la X in alto a destra).
+Per accendere l'app: Mutant.bat, voce 1.
+  Si apre una seconda finestra nera (quella del server) e il browser.
+  Il menu resta libero per le altre voci.
+Per spegnere l'app: "Spegni Mutant" nel Tavolo del Master (salva e chiude),
+  oppure chiudi la finestra nera del server.
 
-Finché la finestra nera è aperta, l'app funziona.
+Finché la finestra nera del server è aperta, l'app funziona.
 Se la chiudi, l'app si spegne: la pagina nel browser smette di rispondere.
 I personaggi non si perdono quando spegni: restano salvati (vedi sotto).
+
+In fondo a ogni pagina dell'app, in piccolo, c'è la versione: per esempio
+"Versione del 25/10 · Talenti nuovi". È la stessa del menu.
 
 
 SE WINDOWS MOSTRA "WINDOWS HA PROTETTO IL PC" (SMARTSCREEN)
@@ -108,18 +153,19 @@ Alla prima accensione Windows può chiedere:
 - Spunta "Reti private" (casa, Wi-Fi di fiducia).
 - Premi "Consenti".
 
-Serve per usare l'app dal telefono. Se premi "Annulla", l'app funziona
-lo stesso sul computer, ma non dal telefono.
+Serve per usare l'app dai tablet e dai telefoni. Se premi "Annulla", l'app
+funziona lo stesso sul computer, ma non dagli altri dispositivi.
 
 
-USARE L'APP DAL TELEFONO
+USARE L'APP DAL TELEFONO O DAL TABLET
 --------------------------------------------------------------
 
 Il telefono deve essere collegato alla stessa Wi-Fi del computer.
-L'app deve essere accesa sul computer (finestra nera aperta).
+L'app deve essere accesa sul computer (voce 1, finestra nera aperta).
 
-1. Guarda la finestra nera: sotto "Dal telefono" c'è un indirizzo
-   come http://192.168.1.23:3000
+1. Guarda la finestra nera del server: c'è un indirizzo
+   come http://192.168.1.23:3000 (lo trovi anche nel Tavolo del Master,
+   riquadro "Collega i giocatori", con il QR da inquadrare).
 2. Scrivi quell'indirizzo nel browser del telefono, così com'è.
 
 Se vedi più indirizzi, prova prima quello che comincia con 192.168.
@@ -131,63 +177,61 @@ Se non funziona:
 DOVE STANNO I PERSONAGGI
 --------------------------------------------------------------
 
-I personaggi si salvano da soli, dentro il browser che usi.
-Non stanno nella cartella "mutant".
+Con Mutant acceso dalla voce 1, i personaggi stanno nella cartella
+mutant\personaggi di questo PC e si salvano da soli a ogni modifica.
+Ogni 5 minuti c'è anche un salvataggio automatico (cartella autosave).
 
-Attenzione:
-- un altro browser o un altro computer non li vede;
-- se cancelli i dati di navigazione del browser, i personaggi si perdono.
-
-Per tenerli al sicuro usa "SALVA PG (Esporta JSON)":
-1. apri il personaggio;
-2. apri il menu "Azioni" e scegli "SALVA PG (Esporta JSON)";
-3. il browser scarica un file: tienilo in una cartella sicura.
-
-Per rimetterli nell'app (anche su un altro computer o telefono):
-nella pagina iniziale premi "Importa file JSON" e scegli il file.
-
-Consiglio: esporta i personaggi dopo ogni sessione di gioco.
+A fine serata: voce 3 ("Salva la sessione"), oppure "Spegni Mutant" nel
+Tavolo del Master, che salva e spegne. Fa uno zip di tutto nella cartella
+salvataggi (e su Google Drive, se l'hai impostato dalla voce 9).
+Per vedere quella cartella: voce 5.
 
 
 AGGIORNARE L'APP
 --------------------------------------------------------------
 
-C'e' UN SOLO MODO di aggiornare, ed e' questo. Non usarne altri.
+C'e' UN SOLO MODO di aggiornare: Mutant.bat, voce 2.
 
 Quando Marcello ti dice che c'e' una versione nuova:
 
-1. Spegni l'app (chiudi la finestra nera, se e' aperta).
-2. Fai doppio clic su 1_scarica_o_aggiorna_app.bat
-   - Se c'e' una versione nuova, la scarica e sostituisce la vecchia.
-   - Se non c'e' niente di nuovo, la finestra dice "gia' aggiornata".
-3. Riaccendi con 3_avvia.bat
+1. Apri Mutant.bat (o il collegamento "Mutant" sul desktop).
+2. Premi 2 ("Aggiorna Mutant").
+3. Leggi la riga in fondo. Dice una di queste cose:
+     "Aggiornato: prima eri alla versione del 22/10, ora sei a quella del
+      25/10 (Talenti nuovi)."
+     "Era gia' aggiornato: sei alla versione del 25/10 (Talenti nuovi).
+      Non e' cambiato niente."
+4. Premi un tasto: si riapre il menu, con la versione nuova scritta in alto.
 
-Questo file e 3_avvia.bat si aggiornano da soli insieme all'app: non devi fare
-niente. (Solo la prima volta, se il tuo 1_scarica_o_aggiorna_app.bat e' piu'
-vecchio del 12/10/2026, chiedi a Marcello quello nuovo: il vecchio cancellava i
-dati del server. Basta sostituirlo una volta.)
+Se Mutant era acceso, lo riaccende da solo con la versione nuova.
+L'aggiornamento non apre altre finestre.
+
+(Solo la prima volta dopo il 25/10/2026: se il tuo Mutant.bat è quello vecchio,
+la voce 2 ti può dire di usare 1_scarica_o_aggiorna_app.bat. Fai doppio clic su
+quello: è l'ultima volta. Da lì in avanti vale la voce 2.)
 
 CHE COSA FA L'AGGIORNAMENTO, IN ORDINE
 
-a. Fa una copia zip di tutti i tuoi dati in
-   "mutantackup-prima-aggiornamento" (tiene le ultime 5).
+a. Scrive la versione di adesso.
+b. Fa una copia zip di tutti i tuoi dati in
+   "mutant\backup-prima-aggiornamento" (tiene le ultime 5) e lo dice:
+   "Copia di sicurezza dei dati di questo PC: ...".
    Se la copia non riesce, non aggiorna niente e te lo dice.
-b. Sostituisce solo i file dell'app.
-c. Ricontrolla i tuoi dati. Se una cartella che prima aveva dei file adesso e'
+c. Sostituisce solo i file dell'app.
+d. Ricontrolla i tuoi dati. Se una cartella che prima aveva dei file adesso e'
    vuota, si FERMA, scrive quale cartella e ti chiede:
    "Rimetto adesso la copia fatta prima dell'aggiornamento? [S/N]"
    Rispondi S: i dati tornano al loro posto.
-d. Se Mutant era acceso, lo riaccende da solo con la versione nuova.
+e. Dice che cosa è cambiato (la riga del punto 3 qui sopra).
 
-I personaggi del browser non si toccano mai: stanno nel browser, non nella
-cartella. I dati del server (personaggi, tavolo, scontri, nemici, veicoli, scene,
+I dati del server (personaggi, tavolo, scontri, nemici, veicoli, scene,
 mappe, musica, galleria, salvataggi, autosave, avvisi, config-salvataggi.json e
 backup-master) stanno nella cartella "mutant" e l'aggiornamento non li cancella.
 
 Se avevi modificato i file delle regole (la cartella "data" dentro "mutant"),
 l'aggiornamento li sostituisce con quelli nuovi. La tua versione non si perde:
-viene copiata nella cartella "backup_dati", accanto ai file .bat, con la data
-e l'ora dell'aggiornamento. La finestra nera lo dice quando succede.
+viene copiata nella cartella "backup_dati", accanto a 1_scarica_o_aggiorna_app.bat,
+con la data e l'ora dell'aggiornamento. La finestra nera lo dice quando succede.
 
 
 SE DOPO UN AGGIORNAMENTO LE CARTELLE SEMBRANO VUOTE
@@ -201,7 +245,8 @@ Quando accendi Mutant, la finestra nera e la pagina del Tavolo lo dicono subito:
 
 Il percorso scritto li' e' la cartella che Mutant sta usando davvero.
 Controlla che sia quella giusta: se hai due copie dell'app, puoi averne
-aggiornata una e aperta un'altra.
+aggiornata una e aperta un'altra. (Anche il menu, in fondo, scrive
+"Cartella di Mutant: ...".)
 
 Poi rimetti un salvataggio, come qui sotto.
 
@@ -209,10 +254,9 @@ Poi rimetti un salvataggio, come qui sotto.
 RIPRISTINARE UN SALVATAGGIO
 --------------------------------------------------------------
 
-1. Spegni Mutant (chiudi la finestra nera; se e' acceso, la console si offre
-   di spegnerlo lei).
-2. Apri Mutant.bat (o il collegamento "Mutant" sul desktop).
-3. Scegli "4. Ripristina un salvataggio".
+1. Apri Mutant.bat (o il collegamento "Mutant" sul desktop).
+2. Scegli 4 ("Ripristina un salvataggio"). Se Mutant è acceso, la voce si
+   offre di spegnerlo lei (salvando prima).
 
 Vedi l'elenco di TUTTI i salvataggi, dal piu' recente. Per ognuno c'e':
   data e ora - nome - che tipo e' - dove sta - quanto e' grande - cosa contiene
@@ -222,79 +266,97 @@ Per esempio:
       sessione - cartella dei salvataggi - 11,6 MB - 7 personaggi - 1 scontro - 4 mappe
 
 I salvataggi si cercano in quattro posti:
-  - "salvataggi": quelli di fine serata ("Salva sessione", "Spegni Mutant");
+  - "salvataggi": quelli di fine serata (voce 3, "Spegni Mutant");
   - "backup-prima-aggiornamento": le copie fatte prima di ogni aggiornamento;
   - "autosave": il salvataggio automatico (ogni 5 minuti) e quello prima;
   - la cartella di Google Drive, se l'hai impostata nelle Impostazioni.
 
-4. Scrivi il numero di quello che vuoi. NON devi per forza prendere l'ultimo:
+3. Scrivi il numero di quello che vuoi. NON devi per forza prendere l'ultimo:
    se l'ultimo e' di dopo il guaio, prendi quello di prima.
-5. La console dice che cosa c'e' dentro e chiede conferma. Prima di rimettere
+4. Il menu dice che cosa c'e' dentro e chiede conferma. Prima di rimettere
    qualunque cosa fa comunque una copia di com'e' adesso
    ("salvataggi\prima-del-ripristino_....zip"): se sbagli salvataggio puoi
    tornare indietro con questa stessa voce.
-6. Rispondi S. Alla fine riaccendi Mutant con la voce 1.
+5. Rispondi S. Alla fine riaccendi Mutant con la voce 1.
    Se un tablet chiede "Aggiorna" o "Tieni la mia", premi "Aggiorna".
 
 
-SE QUALCOSA NON VA
---------------------------------------------------------------
-
-La finestra si chiude subito
-  Riapri il file: le finestre degli errori restano aperte e dicono cosa fare.
-
-"Non riesco a collegarmi a internet"
-  Controlla la Wi-Fi o il cavo, poi riprova.
-
-"Node.js non risulta installato" (anche dopo averlo installato)
-  Chiudi tutte le finestre nere e riapri 3_avvia.bat.
-  Se non basta, riavvia il computer.
-
-"La porta 3000 è già in uso"
-  L'app è già accesa in un'altra finestra nera. Usa quella.
-
-"Mutant si è fermato per un errore imprevisto"
-  Manda a Marcello una foto della finestra nera, oppure il file avvia.log
-  che trovi accanto a 3_avvia.bat: contiene tutto quello che è successo
-  nell'ultimo avvio.
-
-"Questa cartella è sincronizzata da Dropbox" (o OneDrive, Google Drive, iCloud)
-  L'app prova a partire lo stesso, ma se non funziona sposta tutta la cartella
-  in C:\Mutant e rifai doppio clic su 3_avvia.bat.
-
-La pagina del browser è bianca o dice "impossibile raggiungere il sito"
-  Controlla che la finestra nera sia aperta. Aspetta qualche secondo e premi F5.
-
-Per tutto il resto: scrivi a Marcello e, se puoi, manda una foto della finestra nera.
-
-CONTROLLARE I FILE DEI PERSONAGGI (passo 4, si usa di rado)
+CONTROLLARE I FILE DEI PERSONAGGI (voce 6, si usa di rado)
 --------------------------------------------------------------
 
 Con il tempo, nella cartella dei personaggi restano più file dello stesso
 personaggio: uno per ogni giorno in cui ci hai giocato. Non è un problema,
 ma rende l'elenco confuso.
 
-"4_controlla_personaggi.bat" guarda dentro ogni file e ti dice che cosa
-contiene: livello, Punti Esperienza, PV, PM, oggetti, crediti e a che giorno
-arriva il calendario della campagna. Poi, dove ci sono più file dello stesso
+La voce 6 guarda dentro ogni file e ti dice che cosa contiene: livello,
+Punti Esperienza, PV, PM, oggetti, crediti e a che giorno arriva il
+calendario della campagna. Poi, dove ci sono più file dello stesso
 personaggio, ti propone quale tenere e ti spiega il perché.
 
-Come si usa:
-
-1. Doppio clic su 4_controlla_personaggi.bat.
+1. Nel menu premi 6.
 2. Leggi l'elenco che compare. Lo stesso testo viene scritto anche in
-   "rapporto-personaggi.txt", accanto a questo file: puoi aprirlo con il
+   "rapporto-personaggi.txt", nella cartella mutant: puoi aprirlo con il
    Blocco note e mandarlo a Marcello.
 3. Alla fine ti viene chiesto se vuoi mettere via i file vecchi.
    - Se scrivi SI e premi Invio: resta un file per personaggio e gli altri
      vanno in mutant\personaggi\storico\. Niente viene cancellato.
    - Se premi solo Invio, o se chiudi la finestra: non viene toccato niente.
 
-Se per qualche personaggio il programma scrive "CASO DUBBIO", vuol dire che
-non è riuscito a capire da solo quale file sia l'ultimo (per esempio uno ha
-più Punti Esperienza e un altro un calendario più avanti). In quel caso non
-tocca niente e lascia la scelta a te: guarda i valori e, se non sei sicuro,
-manda il rapporto a Marcello.
+Se per qualche personaggio c'è scritto "CASO DUBBIO", il programma non è
+riuscito a capire da solo quale file sia l'ultimo. In quel caso non tocca
+niente e lascia la scelta a te: guarda i valori e, se non sei sicuro, manda il
+rapporto a Marcello.
 
-L'app può restare accesa: il controllo legge soltanto. Per lo spostamento,
-meglio chiudere prima la finestra di Mutant.
+
+I TALENTI NUOVI (voci 7 e 8, una volta sola)
+--------------------------------------------------------------
+
+Accanto alla voce 7 il menu dice se il passaggio è già stato fatto:
+  [Talenti nuovi: non ancora fatto]
+  [Talenti nuovi: fatto il 26/10 alle 21:10 (7 personaggi su 7)]
+
+Voce 7 - Passa ai Talenti nuovi
+  Mostra, personaggio per personaggio, i Talenti di oggi, i posti da riempire
+  e i casi da guardare. Se scrivi SI fa prima una copia zip di tutti i
+  personaggi (in salvataggi), poi a ognuno toglie i Talenti di oggi e li scrive
+  nel registro "Modifiche del master" della scheda. Poi ogni giocatore sceglie i
+  Talenti nuovi dalla sua scheda, nel riquadro "Da scegliere".
+
+Voce 8 - Torna a com'era prima dei Talenti nuovi
+  Rimette i file dei personaggi com'erano nella copia fatta dalla voce 7
+  (prima fa un'altra copia di come sono adesso). Le scelte fatte dopo il
+  passaggio si perdono. Chiede SI.
+
+
+SE QUALCOSA NON VA
+--------------------------------------------------------------
+
+La finestra si chiude subito
+  Riapri Mutant.bat: le finestre degli errori restano aperte e dicono cosa fare.
+
+"Non riesco a collegarmi a internet"
+  Controlla la Wi-Fi o il cavo, poi riprova.
+
+"Per usare Mutant serve Node.js" (anche dopo averlo installato)
+  Chiudi tutte le finestre nere e riapri Mutant.bat.
+  Se non basta, riavvia il computer.
+
+"Mutant e' gia' acceso"
+  L'app è già accesa nella sua finestra nera. Usa quella.
+
+"Manca ... nella cartella"
+  Forse l'antivirus ha messo un file in quarantena. La finestra dice dove
+  guardare; oppure scegli 2 (Aggiorna), che rimette i file mancanti.
+
+"Mutant si è fermato per un errore imprevisto"
+  Manda a Marcello una foto della finestra nera del server.
+
+"Questa cartella è sincronizzata da Dropbox" (o OneDrive, Google Drive, iCloud)
+  L'app prova a partire lo stesso, ma se non funziona sposta tutta la cartella
+  in C:\Mutant e riapri Mutant.bat.
+
+La pagina del browser è bianca o dice "impossibile raggiungere il sito"
+  Controlla che la finestra nera del server sia aperta. Aspetta qualche
+  secondo e premi F5.
+
+Per tutto il resto: scrivi a Marcello e, se puoi, manda una foto della finestra nera.

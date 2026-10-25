@@ -2019,3 +2019,16 @@ frattempo»:
 Scelte di funzionamento (non regole): il giocatore sceglie solo opzioni ammesse; il Direttore può forzare (resta nel
 registro) e chiudere le scelte; senza connessione non si sceglie; il passaggio si fa con
 `distribuzione\5_passa_ai_talenti_nuovi.bat` e si annulla con lo stesso programma.
+
+## 25 ottobre 2026, notte — Un ingresso solo: `Mutant.bat` e basta
+
+Nessuna regola di gioco cambia e nessuna domanda nuova per Davide. Dettaglio in
+`docs/diff-ingresso-unico-2026-10-25.md`; la pagina per chi usa Mutant è `docs/come-si-usa-mutant.md`.
+
+- Tutto si fa dal menu di `Mutant.bat`: il passaggio ai Talenti nuovi è la **voce 7** e si annulla con la **voce 8**
+  (prima erano `distribuzione\5_passa_ai_talenti_nuovi.bat` e la sua risposta «RIPRISTINA», qui sopra); il controllo
+  dei file dei PG è la voce 6. I `.bat` separati non ci sono più.
+- Il ruolo del PC si sceglie una volta (PC del Direttore o copia di prova); sulle copie l'app mostra una fascia, sul PC
+  del Direttore nessuna.
+- La sequenza di lunedì per Davide è nel pacchetto `docs/pacchetto-per-davide-2026-10-25-ingresso-unico.md` (sezione 8),
+  al posto di quella del lotto 2 dei Talenti.
