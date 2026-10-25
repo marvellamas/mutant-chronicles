@@ -109,6 +109,16 @@ function corrisponde(percorso, modello) {
   return percorso.length === m.length;
 }
 
+/**
+ * I campi che un tablet NON può accodare né far approvare (25/10/2026, pannello PX): li cambia soltanto il Direttore.
+ * I PX (`scelte.puntiEsperienza`: assegnazione, correzione, PX iniziali) sono nel giornale come «assegnazione
+ * dichiarata» perché il campo esiste nella scheda, ma non devono mai partire da un tablet: nemmeno come voce in
+ * attesa di conferma. Si escludono qui, alla nascita dell'operazione (`operazioniDaDiff`), e di nuovo al rientro
+ * (`aggiungiOperazioni` in src/rientro.js e `unisciGiornale`): un tablet con il codice di prima non le fa passare.
+ */
+export const NON_ACCODABILI = ['scelte.puntiEsperienza'];
+export const eAccodabile = (percorso) => !NON_ACCODABILI.some((m) => corrisponde(Array.isArray(percorso) ? percorso : String(percorso).split('.'), m));
+
 const eContatore = (percorso) => CONTATORI.some((m) => corrisponde(percorso, m));
 const eDichiarato = (percorso) => ASSEGNA_DICHIARATI.some((m) => corrisponde(percorso, m));
 
@@ -192,6 +202,7 @@ export function operazioniDaDiff(prima, dopo, { quando = new Date(), etichette =
   for (const [percorso, valoreDopo] of foglie(dopo)) {
     const chiave = percorso.join('.');
     viste.add(chiave);
+    if (!eAccodabile(percorso)) continue;
     const valorePrima = prime.get(chiave);
     const tipo = tipoCampo(percorso, valoreDopo);
     if (tipo === 'somma') {
@@ -223,6 +234,7 @@ export function operazioniDaDiff(prima, dopo, { quando = new Date(), etichette =
   for (const [chiave, valorePrima] of prime) {
     if (viste.has(chiave) || valorePrima === undefined) continue;
     const percorso = chiave.split('.');
+    if (!eAccodabile(percorso)) continue;
     if (tipoCampo(percorso, valorePrima) === 'insieme') continue; // un insieme sparito del tutto: niente da togliere qui, lo gestisce il ramo sopra se «dopo» ha ancora la chiave (anche vuota)
     op.push({ id: nuovoId(quando), quando: new Date(quando).toISOString(), percorso, tipo: 'assegna', visto: valorePrima, nuovo: undefined, etichetta: etichetta(percorso, { visto: valorePrima, nuovo: undefined }) });
   }
@@ -282,6 +294,7 @@ export function unisciGiornale(serverAttuale, operazioni, applicate = new Set())
   const conflitti = [];
   for (const op of operazioni ?? []) {
     if (applicate.has(op.id)) continue; // già fatto in un giro precedente: non riapplicare
+    if (!eAccodabile(op.percorso)) continue; // i PX non si cambiano da un tablet, nemmeno se l'operazione arriva lo stesso
     if (op.tipo === 'somma' || (op.tipo === 'insieme' && op.azione !== 'aggiorna')) {
       risultato = applicaOperazione(risultato, op);
       applicati.push(op.id);

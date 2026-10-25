@@ -327,11 +327,30 @@ export const masterDiverso = (a, b) => JSON.stringify(blocchiMaster(a)) !== JSON
  * @returns {{ file, ripristinato: boolean }}
  */
 export function proteggiBlocchiMaster(nuovo, disco) {
-  const ripristinato = masterDiverso(nuovo, disco ?? {});
-  if (!ripristinato) return { file: nuovo, ripristinato: false };
-  const file = { ...nuovo };
+  const px = proteggiPuntiEsperienza(nuovo, disco);
+  const base = px.file;
+  const ripristinato = masterDiverso(base, disco ?? {});
+  if (!ripristinato) return { file: base, ripristinato: px.ripristinato };
+  const file = { ...base };
   for (const k of CHIAVI_FILE) delete file[k];
   return { file: { ...file, ...blocchiMaster(disco ?? {}) }, ripristinato: true };
+}
+
+/**
+ * I PX (`scelte.puntiEsperienza`: assegnazione, correzione, PX iniziali) li cambia solo il Direttore (25/10/2026, pannello
+ * PX). Un salvataggio che non arriva dal suo PC non può cambiarli: nel file che si scrive resta il valore che c'è già
+ * sul disco (o nessuno, se il file è nuovo). Vale per ogni strada, non solo per il giornale offline: un tablet con dati
+ * vecchi non cancella i PX appena assegnati, e un giocatore non se li scrive da solo.
+ * @returns {{ file, ripristinato: boolean }}
+ */
+export function proteggiPuntiEsperienza(nuovo, disco) {
+  const vuoto = (v) => v === undefined || v === null || v === '';
+  const attuale = disco?.scelte?.puntiEsperienza;
+  const voluto = nuovo?.scelte?.puntiEsperienza;
+  if ((vuoto(attuale) && vuoto(voluto)) || attuale === voluto) return { file: nuovo, ripristinato: false };
+  const scelte = { ...(nuovo?.scelte ?? {}) };
+  if (vuoto(attuale)) delete scelte.puntiEsperienza; else scelte.puntiEsperienza = attuale;
+  return { file: { ...nuovo, scelte }, ripristinato: true };
 }
 
 /**

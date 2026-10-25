@@ -17,7 +17,7 @@
 // `decise` è anche l'idempotenza: un'operazione già decisa non torna in attesa se il tablet ripresenta il suo
 // giornale (succede a ogni giro finché non ha ricevuto la risposta), e approvarla due volte non la applica due
 // volte. Si tiene limitata (MASSIMO_DECISE per personaggio), perché è un registro, non uno storico.
-import { applicaOperazione, valoreToccato } from './giornale.js';
+import { applicaOperazione, valoreToccato, eAccodabile } from './giornale.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const EPSILON = 1e-9;
@@ -72,22 +72,28 @@ const statoPg = (rientro, pgId) => rientro.personaggi[pgId] ?? { inAttesa: [], d
 export function aggiungiOperazioni(rientro, pgId, operazioni, { nome = null, ritira = [] } = {}) {
   const r = normalizzaRientro(rientro);
   const pg = statoPg(r, pgId);
-  const elenco = (Array.isArray(operazioni) ? operazioni : []).filter((o) => isOggetto(o) && typeof o.id === 'string' && Array.isArray(o.percorso));
+  const tutte = (Array.isArray(operazioni) ? operazioni : []).filter((o) => isOggetto(o) && typeof o.id === 'string' && Array.isArray(o.percorso));
+  // 25/10/2026: le operazioni su campi riservati al Direttore (i PX) non entrano mai in attesa: si rispondono «scartate»,
+  // così un tablet col codice di prima svuota la sua coda e non le rimanda
+  const elenco = tutte.filter((o) => eAccodabile(o.percorso));
+  const rifiutate = tutte.filter((o) => !eAccodabile(o.percorso)).map((o) => o.id);
   // le voci che il tablet ha ritirato, e quelle che una voce nuova sostituisce (la stessa modifica, finita): escono
   // dall'attesa e si ricordano come «ritirate», così se un tablet le rimanda non rientrano
   const daTogliere = new Set([...(Array.isArray(ritira) ? ritira : []), ...elenco.flatMap((o) => (Array.isArray(o.sostituisce) ? o.sostituisce : []))].filter((x) => typeof x === 'string'));
   const decise0 = { ...pg.decise };
+  for (const id of rifiutate) decise0[id] = 'scartata';
   for (const id of daTogliere) if (!decise0[id]) decise0[id] = 'ritirata';
   const presenti = new Set(pg.inAttesa.map((o) => o.id));
   const nuove = elenco.filter((o) => !presenti.has(o.id) && !decise0[o.id]);
   const inAttesa = ordinate([...pg.inAttesa.filter((o) => !daTogliere.has(o.id)), ...nuove]);
   const decise = {};
-  for (const o of elenco) if (o.id && decise0[o.id]) decise[o.id] = decise0[o.id];
+  for (const o of [...elenco, ...tutte.filter((x) => rifiutate.includes(x.id))]) if (o.id && decise0[o.id]) decise[o.id] = decise0[o.id];
   const aggiornato = { ...pg, ...(nome ? { nome } : {}), inAttesa, decise: Object.fromEntries(Object.entries(decise0).slice(-MASSIMO_DECISE)) };
   return {
     rientro: { ...r, personaggi: { ...r.personaggi, [pgId]: aggiornato } },
     inAttesa: inAttesa.map((o) => o.id),
     decise,
+    rifiutate,
   };
 }
 

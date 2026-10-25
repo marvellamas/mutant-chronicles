@@ -1769,6 +1769,8 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
     collegamento: indicatoreCollegamento(stato.cartella, stato.collegamento.stato === 'collegato'),
     // verifica del 06/10/2026: dove sta la scheda (src/collegamento.js → statoSalvataggioMaster)
     salvataggioMaster: indicatoreSalvataggio(stato.id),
+    // 25/10/2026: con il server della cartella i PX li cambia solo il Direttore (il server li protegge comunque)
+    pxSoloDirettore: !!stato.cartella && !stato.master,
     avvisoMaster: stato.cartella && stato.collegamento.conflitto ? {
       differenze: differenzeSessione(stato.sessione, stato.collegamento.conflitto.sessione, nomeStato),
       ora: new Date(stato.collegamento.conflitto.mtime),

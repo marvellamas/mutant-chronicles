@@ -1236,7 +1236,9 @@ function tabIdentita(ctx, d) {
         h('div', {}, h('dt', {}, 'Livello'), h('dd', {}, String(d.livello))),
         d.anagrafica.map((x) => h('div', {}, h('dt', {}, x.etichetta), h('dd', { class: x.valore ? null : 'vuoto' }, x.valore || '—'))),
         h('div', {}, h('dt', {}, h('label', { for: 'px' }, 'Punti esperienza')),
-          h('dd', {}, h('input', {
+          ctx.pxSoloDirettore
+            ? h('dd', { id: 'px', title: 'I punti esperienza li assegna il Direttore dal Tavolo: da qui non si cambiano' }, d.puntiEsperienza ?? '—')
+            : h('dd', {}, h('input', {
             id: 'px', type: 'number', inputmode: 'numeric', step: 'any', class: 'input-px', value: d.puntiEsperienza ?? '',
             onchange: (e) => ctx.azioni.puntiEsperienza(e.target.value === '' || !Number.isFinite(Number(e.target.value)) ? null : Number(e.target.value)),
           })))),

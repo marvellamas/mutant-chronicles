@@ -1468,10 +1468,10 @@ async function apiGiornale(req, res, file, cartella, tavolo) {
   const doveRientro = join(tavolo, FILE_RIENTRO);
   return inCoda(doveRientro, async () => {
     const prima = await leggiJson(doveRientro).catch(() => null);
-    const { rientro, inAttesa, decise } = aggiungiOperazioni(prima, pgId, operazioni, { nome: o.scelte?.nome ?? null, ritira });
+    const { rientro, inAttesa, decise, rifiutate } = aggiungiOperazioni(prima, pgId, operazioni, { nome: o.scelte?.nome ?? null, ritira });
     await mkdir(tavolo, { recursive: true });
     await scriviJson(doveRientro, rientro);
-    return json(res, 200, { inAttesa, decise });
+    return json(res, 200, { inAttesa, decise, ...(rifiutate.length ? { rifiutate } : {}) });
   });
 }
 
