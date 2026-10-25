@@ -7,7 +7,7 @@
 //  - un posto chiuso dal Direttore non si cambia; una scelta nuova o cambiata dev'essere fra quelle ammesse
 //    (postiTalenti → controllaSceltaTalento, il controllo unico). Le forzature le fa solo il Direttore.
 // Funzione pura: i due file come oggetti (l'export di src/character.js → serializza).
-import { postiTalenti } from './avanzamento.js';
+import { postiTalenti, erroriScelteSuccessive } from './avanzamento.js';
 
 const regime = (o) => (o?.scelte?.regimeTalenti === 2 ? 2 : null);
 const chiusi = (o) => (Number.isInteger(o?.scelte?.talentiChiusiFino) ? o.scelte.talentiChiusiFino : null);
@@ -46,6 +46,18 @@ export function controllaTalentiDaTablet(nuovo, disco, dati) {
       const motivo = x.problemi.find((e) => e.tipo === 'violazione')?.problema ?? 'scelta non ammessa';
       return { ok: false, stato: 403, errore: `${motivo}. Una scelta non ammessa la può fare solo il Direttore.` };
     }
+  }
+  // 25/10 sera: le scelte aperte da un Talento (Incantesimi, Tecniche Interiori) cambiate da un tablet devono essere ammesse
+  // dalle regole del loro livello (controllaIncantesimi, controllaTecniche); le forzature le fa solo il Direttore
+  const campi = ['incantesimi', 'tecniche', 'scuolaMishima'];
+  const livelliNuovi = Array.isArray(nuovo?.livelli) ? nuovo.livelli : [];
+  const livelliDisco = Array.isArray(disco?.livelli) ? disco.livelli : [];
+  const cambiati = livelliNuovi.flatMap((v, i) => campi.filter((c) => JSON.stringify(v?.[c] ?? null) !== JSON.stringify(livelliDisco[i]?.[c] ?? null)).map((c) => `livelli[${i}].${c}`));
+  if (cambiati.length) {
+    let errori = [];
+    try { errori = erroriScelteSuccessive(personaggio(nuovo), dati); } catch { return { ok: true }; }
+    const e = errori.find((x) => x.tipo === 'violazione' && cambiati.includes(x.campo));
+    if (e) return { ok: false, stato: 403, errore: `${e.problema}. Una scelta non ammessa la può fare solo il Direttore.` };
   }
   return { ok: true };
 }

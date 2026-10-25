@@ -10,7 +10,7 @@ import { datiReali } from './helpers.js';
 import { rapporto, applica, ripristina, zipDelPassaggio } from '../tools/migra-talenti.mjs';
 import { pianoMigrazione } from '../src/migrazione-talenti.js';
 import { controllaTalentiDaTablet } from '../src/talenti-tablet.js';
-import { postiTalenti, applicaSceltaTalento } from '../src/avanzamento.js';
+import { postiTalenti, applicaSceltaTalento, scelteSuccessive, applicaSceltaSuccessiva } from '../src/avanzamento.js';
 import { creaServer } from '../server.mjs';
 
 const { dati } = await datiReali();
@@ -113,6 +113,26 @@ test('dal tablet: solo opzioni ammesse, niente nei posti chiusi; il Direttore pu
   assert.equal(controllaTalentiDaTablet({ ...vecchio, scelte: { ...vecchio.scelte, regimeTalenti: 2 } }, vecchio, dati).stato, 403);
   // un PG di prima resta com'era: nessun controllo nuovo sui suoi salvataggi
   assert.equal(controllaTalentiDaTablet(vecchio, vecchio, dati).ok, true);
+});
+
+test('25/10 sera, dal tablet: gli Incantesimi aperti da un Talento solo se ammessi (quota, livello massimo); il Direttore può forzare', () => {
+  const f = pg.find((x) => x.startsWith('Dimitri'));
+  const disco0 = JSON.parse(leggi(f));
+  // sul disco: Incrementare Incantesimi al 3° livello, i 2 incantesimi ancora da scegliere
+  const p0 = applicaSceltaTalento({ creazione: disco0.scelte, livelli: disco0.livelli }, { categoria: 'talento_libero', livello: 3 }, { id: 'incrementare-incantesimi' });
+  const disco = { ...disco0, scelte: p0.creazione, livelli: p0.livelli };
+  const s = scelteSuccessive(p0, dati).find((x) => x.tipo === 'incantesimi' && x.livello === 3);
+  assert.equal(s.quanti, 2);
+  const ammesso = s.opzioni.find((o) => o.ammesso);
+  const troppoAlto = s.opzioni.find((o) => !o.ammesso && /oltre il livello massimo/.test(o.motivo));
+  const conIncantesimo = (nome) => { const n = applicaSceltaSuccessiva(p0, s, nome); return { ...disco, livelli: n.livelli }; };
+  assert.equal(controllaTalentiDaTablet(conIncantesimo(ammesso.id), disco, dati).ok, true);
+  const no = controllaTalentiDaTablet(conIncantesimo(troppoAlto.id), disco, dati);
+  assert.equal(no.stato, 403);
+  assert.match(no.errore, /oltre il livello massimo.*solo il Direttore/);
+  // tre al posto di due: oltre la quota
+  const tre = s.opzioni.filter((o) => o.ammesso).slice(0, 3).reduce((q, o) => applicaSceltaSuccessiva(q, s, o.id), p0);
+  assert.equal(controllaTalentiDaTablet({ ...disco, livelli: tre.livelli }, disco, dati).stato, 403);
 });
 
 test('il piano non cambia un PG già passato; i casi sono quelli della regola di ogni domanda aperta', () => {

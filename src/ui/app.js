@@ -21,7 +21,7 @@ import { elencoVeicoli, migraNelRegistro } from './veicoli-registro.js';
 import { eRiferimento } from '../veicoli-registro.js';
 import { serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, contestoMasterQui, pingMasterQui, salvaBackupMaster, leggiBackupMaster } from './cartella.js';
 import { modalitaMaster, mostraMarchio, statoContestoMaster, registro as registroMaster, nuovaCorrezione, aggiungiCorrezione, annullaCorrezione, avvisoAnnulla, registraDiretta, differenzeDirette, differenzeOggetti, ripristinoDiretta, descriviScelte, soloScelte, ripristinaScelte, masterDiverso, normalizzaCircostanzeMaster } from '../correzioni-master.js';
-import { descriviVoce, postiTalenti, applicaSceltaTalento } from '../avanzamento.js';
+import { descriviVoce, postiTalenti, applicaSceltaTalento, scelteSuccessive, applicaSceltaSuccessiva, adattaScelteSuccessive } from '../avanzamento.js';
 import { riquadroTalenti } from './talenti-scelta.js';
 import { segnaModalitaMaster, modalitaMasterDi, esciModalitaMaster } from './ritorno.js';
 import { statoSalvataggioMaster, controllaRemoto, revisioneDaScrivere, differenzeSessione, testoScelta, indicatoreCollegamento, impronta } from '../collegamento.js';
@@ -1116,8 +1116,8 @@ function contesto() {
     avvisoSalita: schedaPersonaggio.eccessi?.length ? motivoEccesso(schedaPersonaggio.eccessi)
       : schedaPersonaggio.completamenti?.length ? motivoCompletamento(schedaPersonaggio.completamenti) : null,
     motivoNoSalita: !scheda.completa ? 'Completa la creazione (passi precedenti) prima di salire di livello.'
-        : schedaPersonaggio.errori.some(ePostoTalentoVuoto) ? 'Scegli prima i Talenti nel riquadro «Da scegliere» della scheda.'
-        : schedaPersonaggio.errori.filter((e) => !eSceltaTalento(e)).length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
+        : restaDaScegliere(schedaPersonaggio.errori) ? 'Scegli prima i Talenti nel riquadro «Da scegliere» della scheda.'
+        : schedaPersonaggio.errori.filter((e) => !eSceltaTalento(e) && !eSceltaSuccessivaVuota(e)).length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
     saliDiLivello,
     stampa: () => vai(`#/p/${stato.id}/stampa`),
     annullaUltimoLivello: annullaLivello,
@@ -1606,6 +1606,19 @@ function registraModificheMaster() {
 /** Un errore che è solo un posto dei Talenti v1.0 ancora vuoto (lo mostra il riquadro, non l'elenco degli errori). */
 const eSceltaTalento = (e) => stato.scelte?.regimeTalenti === 2 && /(^|\.)(talentoLibero|maestria|specializzazione|specializzazioneIniziale)$/.test(e.campo ?? '');
 const ePostoTalentoVuoto = (e) => eSceltaTalento(e) && e.tipo === 'incompleto';
+// 25/10 sera: «restano N incantesimi / Tecniche da scegliere» di un livello: con i Talenti nuovi lo dice il riquadro, con il
+// suo «Scegli» (un avviso senza un modo per sistemarlo non serve)
+const eSceltaSuccessivaVuota = (e) => stato.scelte?.regimeTalenti === 2 && e.tipo === 'incompleto' && /^livelli\[\d+\]\.(incantesimi|tecniche)$/.test(e.campo ?? '');
+/**
+ * Resta qualcosa da scegliere nel riquadro: un posto dei Talenti vuoto o una scelta successiva aperta. Le scelte successive
+ * vengono da scelteSuccessive, che conta anche quelle già fatte in un livello dopo (le Tecniche rimaste dal passaggio,
+ * A.184): il messaggio del singolo livello no, e da solo bloccherebbe «Sali di livello» senza niente da scegliere.
+ */
+function restaDaScegliere(errori) {
+  if (errori.some(ePostoTalentoVuoto)) return true;
+  if (stato.scelte?.regimeTalenti !== 2 || !errori.some(eSceltaSuccessivaVuota)) return false;
+  try { return scelteSuccessive(personaggio(), stato.dati, { opzioni: false }).length > 0; } catch { return false; }
+}
 // una scelta non ammessa c'è solo se l'ha forzata il Direttore (il server non la accetta da un tablet): il riquadro la
 // mostra come tale, e non blocca niente (l'app avvisa, non blocca)
 
@@ -1622,7 +1635,9 @@ function contestoTalenti(inMaster) {
   if (stato.scelte?.regimeTalenti !== 2) return null;
   if (stato.uiTalenti?.id !== stato.id) stato.uiTalenti = { id: stato.id, aperto: false, posto: null, filtro: '' };
   let posti;
+  let successive = [];
   try { posti = postiTalenti(personaggio(), stato.dati); } catch { return null; }
+  try { successive = scelteSuccessive(personaggio(), stato.dati); } catch { successive = []; }
   const ridisegna = ({ fuoco = null } = {}) => {
     renderScheda({ mantieniScorrimento: true });
     if (fuoco) { const el = document.getElementById(fuoco); if (el) { el.focus(); el.setSelectionRange?.(el.value.length, el.value.length); } }
@@ -1634,7 +1649,7 @@ function contestoTalenti(inMaster) {
     cambiaLivelli(p.livelli);
   };
   return {
-    posti, dati: stato.dati, ui: stato.uiTalenti, master: !!inMaster, bloccato: talentiBloccati(),
+    posti, successive, dati: stato.dati, ui: stato.uiTalenti, master: !!inMaster, bloccato: talentiBloccati(),
     azioni: {
       ridisegna,
       scegli: (posto, scelta, { forzata = null } = {}) => {
@@ -1644,12 +1659,37 @@ function contestoTalenti(inMaster) {
         applica(posto, scelta);
         stato.uiTalenti.posto = null;
         stato.uiTalenti.filtro = '';
-        stato.messaggioScheda = { tipo: 'ok', testo: `Scelto: ${nome(scelta.id)} (${posto.livello}° livello). L’effetto è già nella scheda.` };
+        // 25/10 sera: se il Talento apre una scelta (Incantesimi, Tecniche), è il passo seguente, subito
+        let aperta = null;
+        try { aperta = scelteSuccessive(personaggio(), stato.dati, { opzioni: false }).find((s) => s.livello === posto.livello) ?? null; } catch { aperta = null; }
+        if (aperta) stato.uiTalenti.posto = `succ:${aperta.tipo}:${aperta.livello}`;
+        stato.messaggioScheda = { tipo: 'ok', testo: `Scelto: ${nome(scelta.id)} (${posto.livello}° livello). L’effetto è già nella scheda.${aperta ? ` Adesso scegli ${aperta.quanti} ${aperta.tipo === 'incantesimi' ? (aperta.quanti === 1 ? 'Incantesimo' : 'Incantesimi') : (aperta.quanti === 1 ? 'Tecnica Interiore' : 'Tecniche Interiori')}.` : ''}` };
+        persisti();
+        ridisegna();
+      },
+      // 25/10 sera: un Incantesimo o una Tecnica aperti da un Talento, nella voce del livello (come in «Sali di livello»)
+      scegliSuccessiva: (s, id, { forzata = null } = {}) => {
+        if (talentiBloccati()) { ridisegna(); return; }
+        const nomeScelta = s.tipo === 'tecniche' ? stato.dati.tecniche_interiori.tecniche.find((x) => x.id === id)?.nome ?? id : id;
+        if (forzata) stato.masterMotivo = `Scelta forzata dal Direttore: ${nomeScelta} al ${s.livello}° livello (${forzata})`;
+        const p = applicaSceltaSuccessiva(personaggio(), s, id);
+        cambiaLivelli(p.livelli);
+        stato.uiTalenti.filtro = '';
+        const resta = s.quanti - 1;
+        if (!resta) stato.uiTalenti.posto = null;
+        stato.messaggioScheda = { tipo: 'ok', testo: `Scelto: ${nomeScelta} (${s.livello}° livello).${resta ? ` Ne ${resta === 1 ? 'resta' : 'restano'} ${resta}.` : ''}` };
         persisti();
         ridisegna();
       },
       svuota: (posto) => {
         applica(posto, null);
+        // gli Incantesimi e le Tecniche che quel Talento dava e che le quote non ammettono più si tolgono, e lo si dice
+        let tolti = [];
+        if (posto.livello >= 2) {
+          const a = adattaScelteSuccessive(personaggio(), posto.livello, stato.dati);
+          if (a.tolti.length) { cambiaLivelli(a.personaggio.livelli); tolti = a.tolti; }
+        }
+        if (tolti.length) stato.messaggioScheda = { tipo: 'attenzione', testo: `Tolti anche ${tolti.join(', ')}: li dava il Talento che hai tolto.` };
         stato.uiTalenti.posto = `${posto.categoria}:${posto.livello}`;
         stato.uiTalenti.aperto = true;
         persisti();
@@ -1765,8 +1805,8 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
   // gli otto tab fissi (docs/layout-sd.md): preparaTab non cambia, la stampa resta com'è
   if (tab.tab.length) tab.tab = tabFissi(tab.tab);
   // Talenti v1.0 (lotto 2): i posti vuoti li dice il riquadro «Da scegliere», non l'elenco degli errori
-  const talentiDaScegliere = tab.errori?.some(ePostoTalentoVuoto) ?? false;
-  if (tab.errori) tab.errori = tab.errori.filter((e) => !eSceltaTalento(e));
+  const talentiDaScegliere = tab.errori ? restaDaScegliere(tab.errori) : false;
+  if (tab.errori) tab.errori = tab.errori.filter((e) => !eSceltaTalento(e) && !eSceltaSuccessivaVuota(e));
   document.title = `${stato.scelte.nome.trim() || 'Personaggio'} — Scheda · Mutant`;
   if (!tab.tab.length) {
     svuota(radice, h('section', { class: 'passo' },

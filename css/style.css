@@ -3053,3 +3053,10 @@ body.tablet-sola-lettura #app textarea {
 .opzione-talento .opzione-azioni button { min-height: 40px; }
 .opzione-talento.bloccato { opacity: 0.6; }
 .opzione-talento .motivo { display: block; }
+/* 25/10 sera: che cosa fa, requisiti, scelte che apre e «Dettagli» con il testo completo */
+.opzione-talento .riga-talento { display: block; margin: 0.15rem 0; }
+.opzione-talento .info-talento { display: block; }
+.dettagli-talento { margin-top: 0.2rem; }
+.dettagli-talento summary { cursor: pointer; color: var(--accento, #c8a24a); font-size: 0.85rem; min-height: 32px; display: flex; align-items: center; }
+.dettagli-talento p { margin: 0.25rem 0; font-size: 0.9rem; }
+.posto-talento.successiva { border-style: dashed; }

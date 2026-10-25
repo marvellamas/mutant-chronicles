@@ -1310,6 +1310,156 @@ export function applicaSceltaTalento(personaggio, posto, scelta) {
   return { ...p, livelli: p.livelli.map((v, k) => (k === i ? voce : v)) };
 }
 
+// ---------------------------------------------------------------------------
+// Talenti v1.0 (25/10/2026, sera): le scelte che un Talento apre dopo averlo preso. Oggi sono gli Incantesimi (Usufruitore di
+// Magia, Incrementare Incantesimi; Magia sez. 1) e le Tecniche Interiori (Risorse Interiori, Tecniche Interiori
+// Supplementari; §8.6.10). Il conto è quello della validazione dei livelli (controllaIncantesimi, controllaTecniche):
+// a un livello in cui la quota sale restano da scegliere quelli che mancano. Si registrano nella voce di quel livello
+// (livelli[i].incantesimi, livelli[i].tecniche), come in «Sali di livello». La Caratteristica, la Salvezza e la nota
+// (Sport, Poliglotta) si chiedono invece insieme al Talento, prima di sceglierlo.
+
+/** Gli stati del personaggio livello per livello: [dopo la creazione, dopo il 2°, …]. */
+function statiPerLivello(p, dati) {
+  const { stato: iniziale } = ricalcola(p, dati, 0);
+  if (!iniziale) return null;
+  const stati = [iniziale];
+  for (const v of p.livelli) stati.push(applicaVoce(stati.at(-1), v, dati));
+  return stati;
+}
+
+/** Perché la quota è salita a questo livello: i Talenti presi qui che la danno, o il Grado, o l'Intelligenza. */
+function fontiAumento(prima, dopo, n, tipo, dati) {
+  const talenti = dopo.talentiLiberi.filter((t) => t.livello === n && talentoLiberoDef(t.id, dati)?.effetti?.[tipo] !== undefined)
+    .map((t) => talentoLiberoDef(t.id, dati).nome);
+  if (talenti.length) return talenti;
+  const classe = dopo.classi.find((c) => (prima.classi.find((x) => x.nome === c.nome)?.grado ?? 0) < c.grado);
+  if (classe) return [`${classe.nome}, Grado ${GRADI_ROMANI[classe.grado] ?? classe.grado}`];
+  return [tipo === 'incantesimi' ? 'Intelligenza più alta' : 'Saggezza più alta'];
+}
+
+/**
+ * Le opzioni di un incantesimo da scegliere: livello massimo, già conosciuti, quote di Classe e liberi.
+ * `notiAltrove`: conosciuti in qualunque livello (anche successivo), che non si offrono di nuovo.
+ */
+function opzioniIncantesimi(dopo, dati, notiAltrove = []) {
+  const q = statoQuote(dopo, dati);
+  const noti = new Set([...dopo.incantesimi, ...notiAltrove]);
+  const perMacro = Object.fromEntries(Object.keys(q.perMacro).map((m) => [m, q.noti.filter((i) => i.macrofamiglia === m).length]));
+  return dati.incantesimi.incantesimi.filter((i) => !noti.has(i.nome)).map((i) => {
+    const motivo = !q.accesso ? 'il personaggio non ha accesso alla magia'
+      : i.livello_base > q.livelloMassimo ? `livello base ${i.livello_base} oltre il livello massimo ${q.livelloMassimo}`
+        : perMacro[i.macrofamiglia] >= (q.perMacro[i.macrofamiglia] ?? 0) && q.liberiUsati >= q.liberi ? `quota ${i.macrofamiglia} e incantesimi liberi esauriti` : null;
+    return { id: i.nome, nome: i.nome, gruppo: `${i.macrofamiglia} · ${i.specializzazione}`, livelloBase: i.livello_base, ammesso: !motivo, motivo };
+  });
+}
+
+/** Le opzioni di una Tecnica Interiore da scegliere (§8.9.2–8.9.4). */
+function opzioniTecniche(dopo, dati, notiAltrove = []) {
+  const noti = new Set([...dopo.tecniche.map((t) => t.id), ...notiAltrove]);
+  return dati.tecniche_interiori.tecniche.filter((t) => !noti.has(t.id)).map((t) => {
+    const scuola = t.gruppo.startsWith('scuola:') ? t.gruppo.slice(7) : null;
+    const motivo = t.gruppo === 'lottatore' && !dopo.classi.some((c) => c.nome === 'Lottatore') ? 'è una Tecnica del Lottatore (§8.9.4)'
+      : scuola && dopo.corp.nome !== 'Mishima' ? `appartiene alla Scuola Mishima ${scuola}: serve la Corporazione Mishima (§8.9.3)`
+        : scuola && dopo.scuola?.nome !== scuola ? `serve l’iniziazione alla Scuola ${scuola}, da concordare con il Direttore (§8.9.3)` : null;
+    return { id: t.id, nome: t.nome, gruppo: scuola ? `Scuola ${scuola}` : t.gruppo === 'lottatore' ? 'Lottatore' : 'generica', ammesso: !motivo, motivo };
+  });
+}
+
+/**
+ * Le scelte aperte da un Talento (o da un aumento di quota) e non ancora fatte, livello per livello.
+ * @returns {[{ tipo: 'incantesimi'|'tecniche', livello, quanti, fonti: string[], livelloMassimo?, opzioni }]}
+ */
+export function scelteSuccessive(personaggio, dati, { opzioni = true } = {}) {
+  const p = migraPersonaggio(personaggio);
+  if (!p.livelli.length) return [];
+  let stati;
+  try { stati = statiPerLivello(p, dati); } catch { return []; }
+  if (!stati) return [];
+  const out = [];
+  let incPrima = 0;
+  let tecPrima = 0;
+  // la scheda finita: quelli già conosciuti in un livello successivo (per esempio le Tecniche rimaste da un Talento tolto
+  // nel passaggio, A.184) contano, e non si offrono di nuovo; non si chiede mai più di quanto manca alla fine
+  const finale = stati.at(-1);
+  const qF = statoQuote(finale, dati);
+  const mancaIncFinale = qF.totale - qF.noti.length;
+  const mancaTecFinale = tecnicheAmmesse(finale) - finale.tecniche.length;
+  const incFinali = finale.incantesimi;
+  const tecFinali = finale.tecniche.map((t) => t.id);
+  p.livelli.forEach((_, i) => {
+    const prima = stati[i];
+    const dopo = stati[i + 1];
+    const n = i + 2;
+    const qP = statoQuote(prima, dati);
+    const qD = statoQuote(dopo, dati);
+    const mancaInc = Math.min(qD.totale - qD.noti.length, mancaIncFinale) - incPrima;
+    if (qD.totale > qP.totale && mancaInc > 0) {
+      const quanti = Math.min(mancaInc, qD.totale - qP.totale);
+      out.push({ tipo: 'incantesimi', livello: n, quanti, fonti: fontiAumento(prima, dopo, n, 'incantesimi', dati), livelloMassimo: qD.livelloMassimo, opzioni: opzioni ? opzioniIncantesimi(dopo, dati, incFinali) : null });
+      incPrima += quanti;
+    }
+    const ammP = tecnicheAmmesse(prima);
+    const ammD = tecnicheAmmesse(dopo);
+    const mancaTec = Math.min(ammD - dopo.tecniche.length, mancaTecFinale) - tecPrima;
+    if (ammD > ammP && mancaTec > 0) {
+      const quanti = Math.min(mancaTec, ammD - ammP);
+      out.push({ tipo: 'tecniche', livello: n, quanti, fonti: fontiAumento(prima, dopo, n, 'tecniche', dati), opzioni: opzioni ? opzioniTecniche(dopo, dati, tecFinali) : null });
+      tecPrima += quanti;
+    }
+  });
+  return out;
+}
+
+/** Il personaggio con l'incantesimo (nome) o la Tecnica (id) aggiunti alla voce del livello. Pura, senza controlli. */
+export function applicaSceltaSuccessiva(personaggio, { tipo, livello }, id) {
+  if (tipo !== 'incantesimi' && tipo !== 'tecniche') throw new Error(`scelta successiva sconosciuta: ${tipo}`);
+  const p = migraPersonaggio(personaggio);
+  const i = livello - 2;
+  if (!p.livelli[i]) throw new Error(`il personaggio non ha il ${livello}° livello`);
+  const voce = { ...p.livelli[i] };
+  const lista = Array.isArray(voce[tipo]) ? voce[tipo] : [];
+  if (!lista.includes(id)) voce[tipo] = [...lista, id];
+  return { ...p, livelli: p.livelli.map((v, k) => (k === i ? voce : v)) };
+}
+
+/**
+ * Dopo aver tolto o cambiato un Talento del livello: gli Incantesimi e le Tecniche scelti in quel livello che le quote
+ * non ammettono più si tolgono, dagli ultimi scelti. Restituisce { personaggio, tolti: [nomi] }. Pura.
+ */
+export function adattaScelteSuccessive(personaggio, livello, dati) {
+  let p = migraPersonaggio(personaggio);
+  const i = livello - 2;
+  if (!p.livelli[i]) return { personaggio: p, tolti: [] };
+  const tolti = [];
+  let stati;
+  try { stati = statiPerLivello(p, dati); } catch { return { personaggio: p, tolti }; }
+  if (!stati) return { personaggio: p, tolti };
+  const voce = { ...p.livelli[i] };
+  const inc = [...(Array.isArray(voce.incantesimi) ? voce.incantesimi : [])];
+  const tec = [...(Array.isArray(voce.tecniche) ? voce.tecniche : [])];
+  const prima = stati[i];
+  const oltre = () => {
+    const d = applicaVoce(prima, { ...voce, incantesimi: inc, tecniche: tec }, dati);
+    const q = statoQuote(d, dati);
+    return { inc: q.noti.length > q.totale || q.liberiUsati > q.liberi, tec: d.tecniche.length > tecnicheAmmesse(d) };
+  };
+  for (let o = oltre(); o.inc && inc.length; o = oltre()) tolti.push(inc.pop());
+  for (let o = oltre(); o.tec && tec.length; o = oltre()) {
+    const id = tec.pop();
+    tolti.push(dati.tecniche_interiori.tecniche.find((t) => t.id === id)?.nome ?? id);
+  }
+  if (!tolti.length) return { personaggio: p, tolti };
+  if (inc.length) voce.incantesimi = inc; else delete voce.incantesimi;
+  if (tec.length) voce.tecniche = tec; else delete voce.tecniche;
+  p = { ...p, livelli: p.livelli.map((v, k) => (k === i ? voce : v)) };
+  return { personaggio: p, tolti };
+}
+
+/** Gli errori che le regole danno sulle scelte successive (Incantesimi, Tecniche) di ogni livello: per il server. */
+export function erroriScelteSuccessive(personaggio, dati) {
+  return ricalcola(personaggio, dati).errori.filter((e) => /^livelli\[\d+\]\.(incantesimi|tecniche|scuolaMishima)$/.test(e.campo ?? ''));
+}
+
 /** Le scelte dei Talenti di un personaggio, posto per posto ({ «categoria:livello»: scelta }): per confrontare due versioni. */
 export function sceltePerPosto(personaggio, dati) {
   return Object.fromEntries(postiTalenti(personaggio, dati, { opzioni: false }).posti.map((x) => [`${x.categoria}:${x.livello}`, x.scelta ? JSON.stringify(x.scelta) : null]));

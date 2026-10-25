@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { installaDomFinto } from './dom-finto.js';
 import { datiReali } from './helpers.js';
-import { postiTalenti, applicaSceltaTalento } from '../src/avanzamento.js';
+import { postiTalenti, applicaSceltaTalento, scelteSuccessive, applicaSceltaSuccessiva, adattaScelteSuccessive, erroriScelteSuccessive } from '../src/avanzamento.js';
 import { deserializzaPersonaggio, normalizza } from '../src/character.js';
 
 installaDomFinto();
@@ -29,11 +29,17 @@ function banco({ master = false, bloccato = null, p = dimitri() } = {}) {
   const b = { p, ui: { aperto: false, posto: null, filtro: '' }, scelte: [], el: null };
   const disegna = () => {
     b.el = riquadroTalenti({
-      posti: postiTalenti(b.p, dati), dati, ui: b.ui, master, bloccato,
+      posti: postiTalenti(b.p, dati), successive: scelteSuccessive(b.p, dati), dati, ui: b.ui, master, bloccato,
       azioni: {
         ridisegna: disegna,
-        scegli: (posto, scelta, o = {}) => { b.scelte.push({ posto, scelta, ...o }); b.p = applicaSceltaTalento(b.p, posto, scelta); b.ui.posto = null; disegna(); },
-        svuota: (posto) => { b.p = applicaSceltaTalento(b.p, posto, null); b.ui.posto = `${posto.categoria}:${posto.livello}`; disegna(); },
+        // come app.js: se il Talento apre una scelta, è il passo seguente
+        scegli: (posto, scelta, o = {}) => {
+          b.scelte.push({ posto, scelta, ...o }); b.p = applicaSceltaTalento(b.p, posto, scelta);
+          const aperta = scelteSuccessive(b.p, dati, { opzioni: false }).find((x) => x.livello === posto.livello);
+          b.ui.posto = aperta ? `succ:${aperta.tipo}:${aperta.livello}` : null; disegna();
+        },
+        scegliSuccessiva: (x, id, o = {}) => { b.scelte.push({ successiva: x, id, ...o }); b.p = applicaSceltaSuccessiva(b.p, x, id); if (x.quanti === 1) b.ui.posto = null; disegna(); },
+        svuota: (posto) => { b.p = adattaScelteSuccessive(applicaSceltaTalento(b.p, posto, null), posto.livello, dati).personaggio; b.ui.posto = `${posto.categoria}:${posto.livello}`; disegna(); },
         chiudi: () => { b.p = { ...b.p, creazione: { ...b.p.creazione, talentiChiusiFino: 6 } }; disegna(); },
         riapri: () => { b.p = { ...b.p, creazione: { ...b.p.creazione, talentiChiusiFino: null } }; disegna(); },
       },
@@ -119,10 +125,38 @@ test('senza connessione nessuna scelta: il riquadro lo dice e non offre «Scegli
   assert.equal(di_nuovo.el.querySelectorAll('.opzione-talento').length, 0);
 });
 
-test('la riga d’effetto: sintesi o prima frase; Specializzazioni con il bonus', () => {
-  assert.match(rigaEffetto('specializzazione-pistole', dati), /^\+1 VA, \+1 danno/);
-  assert.ok(rigaEffetto('buona-costituzione', dati).length > 10);
-  assert.match(rigaEffetto('raffiche-migliorate', dati), /Sostituisce Raffica Breve/);
+test('la riga d’effetto: sintesi o prima frase utile; Specializzazioni con il bonus', () => {
+  assert.equal(rigaEffetto('specializzazione-pistole', dati), '+1 VA e +1 danno: Armi della categoria Pistole.');
+  assert.equal(rigaEffetto('buona-costituzione', dati), 'Aumenta di 5 i PV massimi del personaggio.');
+  // «Sostituisce …» non dice che cosa fa: la riga è la frase dopo
+  assert.match(rigaEffetto('raffiche-migliorate', dati), /^Migliora di 2 VA la modalità impiegata/);
+  // 25/10 sera: la sintesi è un oggetto { testo, rif, stato }: la riga è il suo testo, non «[object Object]»
+  assert.match(rigaEffetto('sempre-allerta', dati), /^\+3 VA a Percezione contro imboscate/);
+  // i Talenti di magia cominciano con «Passivo. Requisito: …»: la riga è la frase che dice che cosa fanno
+  assert.equal(rigaEffetto('potere-mistico', dati), 'Aumenta permanentemente i PM Massimi di 5 per acquisizione, fino a +15.');
+});
+
+test('25/10 sera: ogni opzione dice categoria, che cosa fa, requisiti, che cosa apre, e ha «Dettagli» con il testo completo', () => {
+  const b = banco();
+  b.apri('talento_libero:3');
+  const voce = (re) => b.el.querySelectorAll('.opzione-talento').find((x) => re.test(testo(x)));
+  const inc = voce(/Incrementare Incantesimi/);
+  assert.match(testo(inc), /· Talento Libero/);
+  assert.match(testo(inc), /Ogni acquisizione permette di apprendere automaticamente due nuovi Incantesimi/);
+  assert.match(testo(inc), /Requisiti: la capacità personale di lanciare Incantesimi/);
+  assert.match(testo(inc), /Poi: 2 Incantesimi da scegliere/);
+  const det = tutti(inc).find((x) => x.tagName === 'DETAILS');
+  assert.ok(det, 'c’è «Dettagli»');
+  assert.match(testo(det), /Il Talento non aumenta il livello massimo degli Incantesimi accessibili/);
+  // nessuna opzione con un oggetto stampato come testo o una riga vuota, in nessun posto
+  for (const posto of postiTalenti(b.p, dati).posti) {
+    b.apri(`${posto.categoria}:${posto.livello}`);
+    for (const o of b.el.querySelectorAll('.opzione-talento')) {
+      assert.doesNotMatch(testo(o), /\[object|undefined|NaN/, testo(o).slice(0, 80));
+      const riga = tutti(o).find((x) => x.className === 'riga-talento');
+      assert.ok(riga && testo(riga).trim().length > 10, `riga vuota: ${testo(o).slice(0, 60)}`);
+    }
+  }
 });
 
 test('app.js: la scelta passa dal salvataggio normale; offline e coda bloccano; i PG nuovi nascono nei Talenti v1.0', () => {
@@ -131,4 +165,67 @@ test('app.js: la scelta passa dal salvataggio normale; offline e coda bloccano; 
   assert.match(a, /scegli: \(posto, scelta[\s\S]*if \(talentiBloccati\(\)\)[\s\S]*persisti\(\)/);
   assert.match(a, /scelte: \{ \.\.\.nuoveScelte\(\), regimeTalenti: 2 \}/);
   assert.match(readFileSync(new URL('../src/ui/tab.js', import.meta.url), 'utf8'), /ctx\.talenti \? ctx\.talenti\.disegna\(ctx\.talenti\)/);
+});
+
+test('25/10 sera: Incrementare Incantesimi apre i 2 incantesimi come passo seguente; rimandati restano con «Scegli»', () => {
+  const b = banco();
+  b.apri('talento_libero:3');
+  const inc = b.el.querySelectorAll('.opzione-talento').find((x) => /Incrementare Incantesimi/.test(testo(x)));
+  clic(tutti(inc).find((x) => x.tagName === 'BUTTON' && x.textContent === 'Scegli'));
+  // subito il passo seguente: gli incantesimi del 3° livello, già filtrati (livello massimo, già conosciuti)
+  assert.match(testo(b.el), /Incantesimi del 3° livello/);
+  assert.match(testo(b.el), /Da Incrementare Incantesimi: ne restano 2. Livello massimo degli incantesimi: 3/);
+  assert.match(testo(b.el), /2 Incantesimi/, 'il conto in testa');
+  const noti = new Set(b.p.livelli.flatMap((v) => v.incantesimi ?? []));
+  const ammessi = b.el.querySelectorAll('.opzione-talento').filter((x) => !x.className.includes('bloccato') && x.parentNode?.parentNode?.tagName !== 'DETAILS');
+  assert.ok(ammessi.length > 10);
+  for (const o of ammessi) {
+    const nome = tutti(o).find((x) => x.tagName === 'STRONG').textContent;
+    assert.ok(!noti.has(nome), `${nome} è già conosciuto`);
+    const i = dati.incantesimi.incantesimi.find((x) => x.nome === nome);
+    assert.ok(i.livello_base <= 3, `${nome}: livello base ${i.livello_base}`);
+    assert.doesNotMatch(testo(o), /\[object|undefined|NaN/);
+  }
+  // «Più tardi»: si chiude, e il riquadro lo ricorda con il suo «Scegli»
+  clic(pulsante(b.el, 'Più tardi'));
+  assert.match(testo(b.el), /Da scegliere: .*2 Incantesimi/);
+  assert.ok(pulsante(b.el, 'Scegli'), 'il pulsante per risolverlo');
+  clic(pulsante(b.el, 'Scegli'));
+  clic(tutti(b.el).find((x) => x.tagName === 'BUTTON' && /3° · Incantesimi · 2 da scegliere/.test(x.textContent)));
+  for (let k = 0; k < 2; k++) {
+    const primo = b.el.querySelectorAll('.opzione-talento').find((x) => !x.className.includes('bloccato'));
+    clic(tutti(primo).find((x) => x.tagName === 'BUTTON' && x.textContent === 'Scegli'));
+  }
+  assert.equal(scelteSuccessive(b.p, dati).length, 0, 'scelti tutti e due');
+  assert.equal(b.p.livelli[1].incantesimi.length, (dimitri().livelli[1].incantesimi ?? []).length + 2, 'nella voce del 3° livello');
+  assert.deepEqual(erroriScelteSuccessive(b.p, dati).filter((e) => e.livello === 3), [], 'niente «restano N incantesimi»');
+  assert.match(testo(b.el), /Da scegliere: 1 Talento Libero, 2 Maestrie, 2 SpecializzazioniLa scheda/, 'niente più Incantesimi in testa');
+  // cambiando il Talento, gli incantesimi che dava si tolgono
+  b.apri('talento_libero:3');
+  clic(pulsante(b.el, 'Cambia questa scelta'));
+  assert.equal(b.p.livelli[1].incantesimi?.length ?? 0, (dimitri().livelli[1].incantesimi ?? []).length);
+});
+
+test('25/10 sera: Oshi riprende Risorse Interiori: le Tecniche rimaste dal passaggio contano e non si offrono di nuovo', () => {
+  const p0 = deserializzaPersonaggio(readFileSync(new URL('./fixtures/talenti-vecchi/OSHI-NAGATA_liv6_2026-10-07.json', import.meta.url), 'utf8'));
+  const oshi = { creazione: { ...normalizza(p0.creazione, dati).scelte, regimeTalenti: 2 }, livelli: p0.livelli.map((v) => { const x = { ...v }; delete x.talentoLibero; return x; }) };
+  const vecchie = oshi.livelli.flatMap((v) => v.tecniche ?? []);
+  assert.ok(vecchie.length > 0, 'Oshi ha Tecniche dal passaggio');
+  // ripresa al 3° livello (prima del livello in cui stanno le Tecniche): niente da scegliere in più
+  const al3 = applicaSceltaTalento(oshi, { categoria: 'talento_libero', livello: 3 }, { id: 'risorse-interiori' });
+  assert.deepEqual(scelteSuccessive(al3, dati).filter((s) => s.tipo === 'tecniche'), []);
+  assert.deepEqual(erroriScelteSuccessive(al3, dati).filter((e) => e.tipo === 'violazione'), [], 'niente «già conosciuta» né oltre la quota');
+  // con Tecniche Interiori Supplementari si scelgono 3 Tecniche in più, nessuna fra quelle già conosciute
+  const sup = applicaSceltaTalento(al3, { categoria: 'talento_libero', livello: 5 }, { id: 'tecniche-interiori-supplementari' });
+  const s = scelteSuccessive(sup, dati).find((x) => x.tipo === 'tecniche');
+  assert.equal(s?.quanti, 3);
+  assert.ok(s.opzioni.every((o) => !vecchie.includes(o.id)));
+});
+
+test('25/10 sera: app.js mette le scelte successive nel riquadro e toglie dagli errori il loro «restano N … da scegliere»', () => {
+  const a = readFileSync(new URL('../src/ui/app.js', import.meta.url), 'utf8');
+  assert.ok(a.includes('successive = scelteSuccessive(personaggio(), stato.dati)'));
+  assert.match(a, /scegliSuccessiva: \(s, id[\s\S]*if \(talentiBloccati\(\)\)[\s\S]*applicaSceltaSuccessiva[\s\S]*persisti\(\)/);
+  assert.match(a, /const eSceltaSuccessivaVuota = /);
+  assert.ok(a.includes('tab.errori.filter((e) => !eSceltaTalento(e) && !eSceltaSuccessivaVuota(e))'));
 });
