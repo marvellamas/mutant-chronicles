@@ -4,7 +4,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';
-import { rigaBreve, testoCompleto, infoTalento, scelteAperte, testoPrerequisiti, testiIncantesimo, testiTecnica, primaFraseUtile } from '../src/talenti-testi.js';
+import { rigaBreve, testoCompleto, schedaTalento, infoTalento, scelteAperte, testoPrerequisiti, testiIncantesimo, testiTecnica, primaFraseUtile } from '../src/talenti-testi.js';
+import { schedaDelManuale, INTESTAZIONI_7_10 } from '../tools/lotti/lotto_testi_completi_talenti.mjs';
 
 const { dati } = await datiReali();
 const SPORCO = /\[object|undefined|NaN/;
@@ -46,6 +47,41 @@ test('le righe che il 25/10 erano «[object Object]» o «Passivo.»', () => {
   assert.match(rigaBreve('arti-marziali-migliorate', dati), /^\+1 VA agli attacchi senz’armi/);
   // il testo completo di una Specializzazione dice anche la regola del suo gruppo
   assert.match(testoCompleto('specializzazione-pistole', dati), /Armi: \+1 VA e \+1 danno nell’impiego delle armi della categoria/);
+});
+
+test('25/10 notte: il testo completo c’è per ogni voce e non è il riassunto (eccezioni: tre schede di una frase sola)', () => {
+  // nel manuale queste tre schede sono una frase sola: il testo completo le dice con la loro intestazione
+  const UNA_FRASE = ['Iniziativa Migliorata', 'Resistenza alle Malattie', 'Resistenza alla Paura'];
+  const n = (s) => s.replace(/\s+/g, ' ').trim();
+  const uguali = [];
+  for (const v of sceglibili) {
+    const s = schedaTalento(v.id, dati);
+    const riga = rigaBreve(v.id, dati);
+    assert.ok(s.intestazione.length > 10, `${v.nome}: manca l’intestazione (tipo, requisiti, acquisizioni)`);
+    assert.ok(s.paragrafi.length >= 1 && s.paragrafi.every((p) => typeof p === 'string' && p.trim() && !SPORCO.test(p)), v.nome);
+    assert.notEqual(n(testoCompleto(v.id, dati)), n(riga), `${v.nome}: il testo completo è il riassunto`);
+    if (n(s.paragrafi.join(' ')) === n(riga)) uguali.push(v.nome);
+  }
+  assert.deepEqual(uguali, UNA_FRASE);
+});
+
+test('25/10 notte: ogni Talento con la sua scheda nel manuale ha il testo del manuale, parola per parola', () => {
+  const nuovi7_10 = new Set([...Object.keys(INTESTAZIONI_7_10), ...dati.talenti_liberi.talenti.filter((t) => t.fonte_regole === 'talenti_nuovi').map((t) => t.id)]);
+  let confrontati = 0;
+  for (const t of dati.talenti_liberi.talenti.filter((x) => x.categoria !== 'superato' && !nuovi7_10.has(x.id))) {
+    const s = schedaDelManuale(t.nome);
+    assert.ok(s, `${t.nome}: non trovo la scheda nel manuale`);
+    assert.equal(t.testo, s.corpo, `${t.nome}: testo diverso dal manuale`);
+    assert.equal(t.intestazione, s.intestazione, `${t.nome}: intestazione diversa dal manuale`);
+    confrontati++;
+  }
+  assert.ok(confrontati >= 100, `confrontati ${confrontati}`);
+  // Successo Magistrale Migliorato era la versione di prima del manuale
+  assert.match(dati.talenti_liberi.talenti.find((t) => t.id === 'successo-magistrale-migliorato').testo, /anche sotto VA finale 21/);
+  // le voci del 7/10: il testo è quello del file, con la sua intestazione
+  const hacker = dati.talenti_liberi.talenti.find((t) => t.id === 'maestria-hacker');
+  assert.match(hacker.testo, /Il precedente limite di un utilizzo per sessione per ciascun sistema viene eliminato/);
+  assert.equal(hacker.intestazione, 'Maestria passiva, acquisibile una sola volta, senza prerequisiti aggiuntivi.');
 });
 
 test('prerequisiti e scelte aperte in parole', () => {

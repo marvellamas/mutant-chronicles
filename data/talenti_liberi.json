@@ -102,7 +102,8 @@
       "parametro": null,
       "testo": "Il personaggio può dichiarare l’attivazione di una proprietà a carica della propria arma dopo aver conosciuto l’esito della Prova per colpire, ma prima delle Difese e della determinazione del danno. L’attivazione conserva i costi ordinari e non richiede Azioni aggiuntive. Il Talento non modifica retroattivamente la Prova già effettuata. Le regole generali delle proprietà a carica sono descritte nel Manuale degli Armamenti, §7.1.4.",
       "_nota_tipo": "Il manuale non indica Passivo o Attivo: l'intestazione è «Talento Libero. Prerequisiti: nessuno aggiuntivo. Acquisibile una sola volta.»",
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Prerequisiti: nessuno aggiuntivo. Acquisibile una sola volta."
     },
     {
       "id": "ambidestro",
@@ -120,7 +121,8 @@
           }
         }
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "iniziativa-migliorata",
@@ -134,7 +136,8 @@
       "effetti": {
         "iniziativa": 3
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "sempre-allerta",
@@ -162,7 +165,8 @@
         "rif": "Giocatore §8.6.1",
         "stato": "da_verificare"
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "sonno-leggero",
@@ -173,7 +177,8 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Il personaggio si sveglia immediatamente quando percepisce un rumore, un movimento o un evento anomalo. Se è necessaria una Prova di Percezione, deve comunque superarla. Il risveglio non identifica automaticamente la minaccia e non concede immunità alla Sorpresa.",
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "buona-costituzione",
@@ -187,7 +192,8 @@
       "effetti": {
         "pv": 5
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "struttura-robusta",
@@ -211,7 +217,8 @@
           }
         ]
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "duro-a-morire",
@@ -240,7 +247,8 @@
         "rif": "Giocatore §8.6.1",
         "stato": "da_verificare"
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "guarigione-migliorata",
@@ -250,8 +258,9 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Dimezza, arrotondando per eccesso, i giorni necessari per migliorare di uno Stato di Ferita con il recupero ordinario: attività mista 4 giorni anziché 7; riposo assoluto 3 anziché 5; degenza ospedaliera 2 anziché 3. L’attività pesante continua a non consentire questo recupero. Restano le interruzioni previste dalle regole: una nuova Ferita azzera il periodo in corso e il Sanguinamento impedisce la guarigione. Il Talento non modifica il recupero dei PV, quello delle Menomazioni, la rimozione diretta di Ferite mediante cure o Incantesimi, né il limite di un tentativo medico ogni sette giorni.",
-      "categoria": "talento_libero"
+      "testo": "Dimezza, arrotondando per eccesso, i giorni necessari per migliorare di uno Stato di Ferita con il recupero ordinario: attività mista 4 giorni anziché 7; riposo assoluto 3 anziché 5; degenza ospedaliera 2 anziché 3. L’attività pesante continua a non consentire questo recupero.\nRestano le interruzioni previste dalle regole: una nuova Ferita azzera il periodo in corso e il Sanguinamento impedisce la guarigione. Il Talento non modifica il recupero dei PV, quello delle Menomazioni, la rimozione diretta di Ferite mediante cure o Incantesimi, né il limite di un tentativo medico ogni sette giorni.",
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "mulo-da-soma",
@@ -261,7 +270,7 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Ottiene +3 VA alle Prove di Atletica per sollevare, sostenere, spingere, trascinare o trasportare carichi. Ottiene inoltre +3 alle PS di Tempra effettivamente richieste per resistere all’Affaticamento dovuto al trasporto di un carico. Il Talento non concede una Prova quando il peggioramento dell’Affaticamento è automatico. Non modifica i limiti di peso, la Forza, il danno o i requisiti delle armi e non riduce ulteriormente le penalità del carico.",
+      "testo": "Ottiene +3 VA alle Prove di Atletica per sollevare, sostenere, spingere, trascinare o trasportare carichi. Ottiene inoltre +3 alle PS di Tempra effettivamente richieste per resistere all’Affaticamento dovuto al trasporto di un carico.\nIl Talento non concede una Prova quando il peggioramento dell’Affaticamento è automatico. Non modifica i limiti di peso, la Forza, il danno o i requisiti delle armi e non riduce ulteriormente le penalità del carico.",
       "effetti": {
         "valori": [
           {
@@ -283,7 +292,8 @@
           }
         ]
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "sport",
@@ -319,7 +329,8 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Riduce di 3 punti complessivi, fino a un minimo di 0, le penalità alle Prove di Percezione visiva dovute a distanza, scarsa illuminazione, fumo o nebbia. Rimane necessaria una possibilità concreta di vedere. Il Talento non permette di vedere attraverso ostacoli, nel buio totale o attraverso l’invisibilità e non modifica le penalità alle Prove per colpire.",
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "controllo-del-fallimento",
@@ -330,7 +341,8 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Annullare un proprio 20 naturale costa 2 Punti Eroe anziché 3, secondo il §1.8.2. Il risultato diventa un fallimento normale e conserva il Distintivo. Lo sconto riguarda soltanto il proprio Fallimento Maldestro; annullare il Successo Magistrale di un avversario continua a costare 3 Punti Eroe. Non è previsto un limite di utilizzi distinto dalla disponibilità di Punti Eroe.",
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "successo-magistrale-migliorato",
@@ -340,13 +352,14 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Un 2 naturale che supera la Prova viene considerato un Successo Magistrale. Il beneficio si applica a tutti i tipi di Prova. Con Valore finale 1, un risultato di 2 rimane un fallimento. Il 2 naturale non assegna Distintivi.\nSi applicano gli effetti ordinari del Magistrale previsti dalla Prova, comprese le regole sulle applicazioni multiple del danno: il danno normalmente ×2 diventa ×3, mentre un ×3 già previsto non aumenta ulteriormente. Il Talento non consente tiri volontari per attività automatiche o prive di incertezza.\nUn avversario direttamente coinvolto può spendere 3 Punti Eroe per trasformare questo Magistrale in un successo normale, alle stesse condizioni previste per un Magistrale ottenuto con 1 naturale (§1.8.2).",
+      "testo": "Un 2 naturale che supera la Prova viene considerato un Successo Magistrale anche sotto VA finale 21. Il beneficio si applica a tutti i tipi di Prova. Con Valore finale 1, un risultato di 2 rimane un fallimento. Da VA finale 21, il 2 è già Magistrale nelle Prove di Abilità per la regola generale: il Talento non amplia ulteriormente la soglia al 3 naturale e non concede un beneficio aggiuntivo sullo stesso risultato. Il 2 naturale non assegna Distintivi.\nSi applicano gli effetti ordinari del Magistrale previsti dalla Prova, comprese le regole sulle applicazioni multiple del danno: il danno normalmente ×2 diventa ×3, mentre un ×3 già previsto non aumenta ulteriormente. Il Talento non consente tiri volontari per attività automatiche o prive di incertezza.\nUn avversario direttamente coinvolto può spendere 3 Punti Eroe per trasformare questo Magistrale in un successo normale, alle stesse condizioni previste per un Magistrale ottenuto con 1 naturale (§1.8.2).",
       "effetti": {
         "attacco_ravvicinato": {
           "promemoria": "sempre"
         }
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "prova-di-caratteristica-migliorata",
@@ -372,7 +385,8 @@
           }
         ]
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una volta per ciascuna Caratteristica."
     },
     {
       "id": "prova-salvezza-migliorata",
@@ -386,7 +400,8 @@
       "effetti": {
         "salvezza": 1
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile fino a due volte per ciascuna Salvezza."
     },
     {
       "id": "resistenza-ai-veleni",
@@ -411,7 +426,8 @@
           }
         ]
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "resistenza-alle-malattie",
@@ -436,7 +452,8 @@
           }
         ]
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "resistenza-all-affaticamento",
@@ -461,7 +478,8 @@
           }
         ]
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "resistenza-alla-paura",
@@ -486,7 +504,8 @@
           }
         ]
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "resistenza-al-controllo-mentale",
@@ -511,7 +530,8 @@
           }
         ]
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "resistenza-alla-corruzione",
@@ -541,7 +561,8 @@
         "rif": "Giocatore §8.6.3",
         "stato": "da_verificare"
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "mezzofondista",
@@ -551,8 +572,9 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Una volta al giorno, quando sta per subire un peggioramento dell’Affaticamento dovuto a Corsa o Scatto prolungati, marcia forzata o viaggio continuativo, può ridurlo di uno Stato, fino a un minimo di 0. Dichiara l’uso quando il peggioramento deve essere applicato; un aumento di due Stati diventa di uno. Il beneficio vale anche per un peggioramento automatico. Non recupera Affaticamento già accumulato e non si applica a fame, sete, privazione del sonno o altre cause.",
-      "categoria": "talento_libero"
+      "testo": "Una volta al giorno, quando sta per subire un peggioramento dell’Affaticamento dovuto a Corsa o Scatto prolungati, marcia forzata o viaggio continuativo, può ridurlo di uno Stato, fino a un minimo di 0. Dichiara l’uso quando il peggioramento deve essere applicato; un aumento di due Stati diventa di uno. Il beneficio vale anche per un peggioramento automatico.\nNon recupera Affaticamento già accumulato e non si applica a fame, sete, privazione del sonno o altre cause.",
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "movimento-fluido",
@@ -570,7 +592,8 @@
           }
         }
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "scattante",
@@ -586,7 +609,8 @@
           "scatto": 6
         }
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "carica-migliorata",
@@ -604,7 +628,8 @@
           }
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "imboscata-migliorata",
@@ -622,7 +647,8 @@
           }
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "incalzare-migliorato",
@@ -642,7 +668,8 @@
           }
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "movimento-evasivo-migliorato",
@@ -653,7 +680,8 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Quando effettua Movimento Evasivo, le penalità degli avversari per colpirlo diventano −4 VA al Passo, −6 in Corsa e −8 in Scatto. Restano i costi, le penalità personali e le eventuali Prove di Movimento. Non evita gli attacchi di opportunità (§5.2).",
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "ritirata-migliorata",
@@ -664,7 +692,8 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Durante il Movimento effettuato con Ritirata evita tutti gli attacchi di opportunità, anche quelli di avversari con cui non era impegnato all’inizio del Movimento. Si applicano gli altri costi, limiti e incompatibilità di Ritirata (§5.2).",
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "estrazione-rapida",
@@ -750,7 +779,8 @@
           }
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "duellante",
@@ -774,7 +804,8 @@
         "rif": "Giocatore §8.6.5",
         "stato": "da_verificare"
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "raffica-breve-migliorata",
@@ -847,7 +878,7 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Consuma 5 munizioni anziché 10 quando effettua Fuoco di Soppressione. Restano necessari un’arma capace di Raffica Lunga, 1 AzP e la Prova a −4 VA; Area, durata ed effetti non cambiano. Le cinque munizioni sono consumate anche in caso di fallimento. La manovra è utilizzabile anche con sole cinque munizioni rimaste nell’arma. Ottimizzare Proiettili dell’Artigliere stabilisce invece un consumo di otto. Con entrambi i Talenti si applica il consumo più favorevole, cinque, senza sommare le riduzioni. Ottimizzare Proiettili conserva i propri benefici sulle Raffiche.",
+      "testo": "Consuma 5 munizioni anziché 10 quando effettua Fuoco di Soppressione. Restano necessari un’arma capace di Raffica Lunga, 1 AzP e la Prova a −4 VA; Area, durata ed effetti non cambiano. Le cinque munizioni sono consumate anche in caso di fallimento. La manovra è utilizzabile anche con sole cinque munizioni rimaste nell’arma.\nOttimizzare Proiettili dell’Artigliere stabilisce invece un consumo di otto. Con entrambi i Talenti si applica il consumo più favorevole, cinque, senza sommare le riduzioni. Ottimizzare Proiettili conserva i propri benefici sulle Raffiche.",
       "effetti": {
         "attacco_distanza": {
           "modalita": {
@@ -857,7 +888,8 @@
           }
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "tiro-ravvicinato-istintivo",
@@ -913,7 +945,8 @@
           }
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "tiro-rapido-migliorato",
@@ -933,7 +966,8 @@
           }
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "tiro-mirato-migliorato",
@@ -957,7 +991,8 @@
         "rif": "Giocatore §8.6.5",
         "stato": "da_verificare"
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "tiro-a-lunga-distanza",
@@ -981,7 +1016,8 @@
         "rif": "Giocatore §8.6.5",
         "stato": "da_verificare"
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "mira-rapida",
@@ -991,7 +1027,7 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Riduce di 1, fino a un minimo di 1, le Azioni Principali complessivamente richieste dalla distanza e dal mirino. Non riduce l’Azione aggiuntiva necessaria per Tiro Mirato. Un tiro a 800 Q richiede normalmente tre AzP; con Mira Rapida ne richiede due. Aggiungendo Tiro Mirato il totale diventa tre AzP. La preparazione segue le normali condizioni del §5.11.",
+      "testo": "Riduce di 1, fino a un minimo di 1, le Azioni Principali complessivamente richieste dalla distanza e dal mirino. Non riduce l’Azione aggiuntiva necessaria per Tiro Mirato.\nUn tiro a 800 Q richiede normalmente tre AzP; con Mira Rapida ne richiede due. Aggiungendo Tiro Mirato il totale diventa tre AzP. La preparazione segue le normali condizioni del §5.11.",
       "effetti": {
         "attacco_distanza": {
           "azioni_distanza": -1
@@ -1002,7 +1038,8 @@
         "rif": "Giocatore §8.6.5",
         "stato": "da_verificare"
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "fuoco-di-precisione",
@@ -1021,7 +1058,8 @@
           }
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "schermidore",
@@ -1045,7 +1083,8 @@
         "rif": "Giocatore §8.6.6",
         "stato": "da_verificare"
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "affondo-migliorato",
@@ -1066,7 +1105,8 @@
           }
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "apertura-tattica",
@@ -1077,7 +1117,8 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Una volta per Round, quando un alleato colpisce un bersaglio adiacente al personaggio, può spendere 1 AzP ancora disponibile per effettuare immediatamente un Colpo Singolo Ravvicinato contro lo stesso bersaglio. È consentito anche prima o dopo la propria Iniziativa. Usa la normale Prova per colpire e il normale danno; non concede un’Azione aggiuntiva.",
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Attivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "arti-marziali",
@@ -1100,7 +1141,8 @@
         "rif": "Giocatore §8.6.6",
         "stato": "da_verificare"
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "arti-marziali-migliorate",
@@ -1148,7 +1190,8 @@
           "promemoria": "opportunita"
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "colpo-mirato-migliorato",
@@ -1169,7 +1212,8 @@
           }
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "combattere-alla-cieca",
@@ -1196,7 +1240,8 @@
           }
         ]
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "disarmare-migliorato",
@@ -1216,7 +1261,8 @@
           }
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "immobilizzare-istintivo",
@@ -1274,7 +1320,8 @@
           }
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "spazzata-migliorata",
@@ -1294,7 +1341,8 @@
           }
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "stordire-migliorato",
@@ -1314,7 +1362,8 @@
           }
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "copertura-migliorata",
@@ -1325,7 +1374,8 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Quando beneficia di Copertura Leggera, la penalità avversaria per colpirlo diventa −4 VA e il bonus pertinente a Riflessi +4; con Copertura Media diventano −6 VA e +6. Non rende evitabile un effetto che ignora la copertura e non modifica Copertura Totale.",
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "copertura-tattica",
@@ -1343,7 +1393,8 @@
           }
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "difesa-con-due-armi",
@@ -1356,7 +1407,8 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Mentre impugna due armi ravvicinate a una mano, gli attacchi Ravvicinati contro di lui subiscono −2 VA. Non costituisce una Prova di Parata e non concede Difese aggiuntive.",
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Requisito: Schermidore. Acquisibile una sola volta."
     },
     {
       "id": "parata-a-distanza",
@@ -1380,7 +1432,8 @@
           }
         ]
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "parata-istintiva",
@@ -1396,7 +1449,8 @@
         "rif": "Giocatore §8.6.7",
         "stato": "da_verificare"
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "parata-migliorata",
@@ -1412,7 +1466,8 @@
         "rif": "Giocatore §8.6.7",
         "stato": "da_verificare"
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "parata-multipla",
@@ -1425,7 +1480,8 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Porta a due il numero complessivo di Parate gratuite per Round concesso da Parata Istintiva. Restano i requisiti e il divieto di tentare due Difese contro lo stesso attacco.",
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Requisito: Parata Istintiva. Acquisibile una sola volta."
     },
     {
       "id": "schivata-istintiva",
@@ -1436,7 +1492,8 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Una volta per Round effettua una Schivata spendendo soltanto l’AzM, anche prima o dopo la propria Iniziativa. Restano la Prova, la possibilità fisica di spostarsi e le penalità pertinenti.",
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "schivata-migliorata",
@@ -1447,7 +1504,8 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "La penalità alla Schivata contro attacchi a Distanza diventa −4 VA; contro una Raffica diventa −6 VA. Restano il costo della Difesa e gli altri requisiti.",
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "schivata-multipla",
@@ -1460,7 +1518,8 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Dopo la Schivata concessa da Schivata Istintiva, può effettuare una seconda Schivata nello stesso Round spendendo 1 AzP ancora disponibile. Non consente un secondo tentativo contro il medesimo attacco.",
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Requisito: Schivata Istintiva. Acquisibile una sola volta."
     },
     {
       "id": "hacker",
@@ -1500,7 +1559,8 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Riduce di 2, fino a un minimo di 0, la penalità degli strumenti improvvisati nelle prove di Tecnologia e di Furtività per scasso meccanico. Servono comunque strumenti almeno parzialmente adatti; non sostituisce materiali indispensabili. Se un’altra capacità riduce la stessa penalità, come Addestramento di Bottega, si usa la riduzione migliore senza sommarle.",
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "ingegneria-d-emergenza",
@@ -1511,7 +1571,8 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Una volta per sessione, con 1 AzP e una Prova riuscita di Tecnologia, rende temporaneamente funzionante per 1d6 Round un dispositivo Rotto, anche a 0 PI. Le prove per utilizzarlo subiscono −2 VA. Non recupera PI e non funziona su un oggetto Distrutto o privo di componenti indispensabili. L’utilizzo si consuma con il tentativo.",
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Attivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "commerciante-esperto",
@@ -1524,7 +1585,8 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Negli scambi ordinari di beni dal prezzo negoziabile acquista al 10% in meno e vende al 10% in più rispetto al prezzo applicabile. Non richiede una Prova aggiuntiva e non modifica prezzi imposti o non negoziabili. Fra benefici diretti sul medesimo prezzo si applica il più favorevole, senza sommarli.",
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Requisito: Specializzazione in Commercio. Acquisibile una sola volta."
     },
     {
       "id": "diligente",
@@ -1535,7 +1597,8 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Riduce del 25% il tempo di una ricerca strutturata. Non riduce tempi minimi espressamente obbligatori e non garantisce il successo. Fra riduzioni del tempo della stessa attività si applica la migliore: Metodo di Ricerca dell’Accademico conserva il proprio dimezzamento e il bonus alla Prova.",
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "lettura-veloce",
@@ -1546,7 +1609,8 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Legge un testo in un terzo del tempo ordinario. Comprensione, traduzione e individuazione delle informazioni conservano le relative prove e condizioni. Non rivela automaticamente indizi. Sullo stesso tempo non moltiplica il beneficio di Diligente: si applica quello più favorevole.",
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "poliglotta",
@@ -1558,7 +1622,8 @@
       "parametro": null,
       "testo": "Apprende due lingue aggiuntive. Non concede un bonus generale per comprendere qualsiasi lingua sconosciuta.",
       "annotazione": "le due lingue apprese",
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "autosufficiente",
@@ -1569,7 +1634,8 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Una volta al giorno, quando sta per subire un peggioramento dell’Affaticamento dovuto a fame, sete o sonno insufficiente, lo riduce di uno stato, fino a un minimo di 0. Non recupera Affaticamento già accumulato e non sostituisce cibo, acqua o riposo.",
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "tiratore-imboscato",
@@ -1591,7 +1657,8 @@
           }
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "controllo-d-emergenza",
@@ -1607,7 +1674,8 @@
         "rif": "Giocatore §8.6.9",
         "stato": "da_verificare"
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "inseguimento",
@@ -1617,7 +1685,7 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Ottiene +2 VA a Pilotare per inseguire o seminare un altro mezzo, indipendentemente dal tipo di veicolo. Si somma alla Specializzazione pertinente al veicolo, per +4 complessivo. Non impone penalità automatiche all’avversario. Il beneficio riguarda le manovre effettuate per mantenere o interrompere l’inseguimento; non aumenta il Movimento, non modifica Percezione e non si estende automaticamente a tutte le Prove della scena (Manuale dei Veicoli, §6.1).",
+      "testo": "Ottiene +2 VA a Pilotare per inseguire o seminare un altro mezzo, indipendentemente dal tipo di veicolo. Si somma alla Specializzazione pertinente al veicolo, per +4 complessivo. Non impone penalità automatiche all’avversario.\nIl beneficio riguarda le manovre effettuate per mantenere o interrompere l’inseguimento; non aumenta il Movimento, non modifica Percezione e non si estende automaticamente a tutte le Prove della scena (Manuale dei Veicoli, §6.1).",
       "effetti": {
         "valori": [
           {
@@ -1635,7 +1703,8 @@
         "rif": "Giocatore §8.6.9",
         "stato": "da_verificare"
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "pilotaggio-acrobatico",
@@ -1646,7 +1715,8 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Una volta per scena, dichiarandolo prima della Prova, ottiene un normale successo automatico in una singola manovra acrobatica possibile del veicolo, come passaggio stretto, atterraggio o inversione. Restano Azioni e risorse richieste. Non vale per attacchi, Difese, Prove contrapposte o manovre impossibili e non produce un Magistrale.",
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Attivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "risorse-interiori",
@@ -1656,7 +1726,7 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Si applicano le incompatibilità descritte in questa sezione. Il personaggio apprende 2 + Mod SAG Tecniche Interiori, minimo 1, scelte fra le Tecniche generiche e quelle delle Scuole Mishima alle quali possiede accesso. Il numero si determina al momento dell’acquisizione: successivi aumenti di SAG non concedono automaticamente nuove Tecniche. Le Tecniche utilizzano i PM personali secondo le rispettive schede (§8.9). Il Talento non aumenta la riserva di PM.",
+      "testo": "Il personaggio apprende 2 + Mod SAG Tecniche Interiori, minimo 1, scelte fra le Tecniche generiche e quelle delle Scuole Mishima alle quali possiede accesso. Il numero si determina al momento dell’acquisizione: successivi aumenti di SAG non concedono automaticamente nuove Tecniche.\nLe Tecniche utilizzano i PM personali secondo le rispettive schede (§8.9). Il Talento non aumenta la riserva di PM.",
       "_nota_tipo": "Il manuale non indica Passivo o Attivo: l'intestazione è «Talento Libero. Nessun requisito numerico di Caratteristica. Acquisibile una sola volta.»",
       "effetti": {
         "tecniche": {
@@ -1677,7 +1747,8 @@
         "rif": "Giocatore §8.6.10",
         "stato": "da_verificare"
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun requisito numerico di Caratteristica. Acquisibile una sola volta. Si applicano le incompatibilità descritte in questa sezione."
     },
     {
       "id": "tecniche-interiori-supplementari",
@@ -1699,7 +1770,8 @@
         "rif": "Giocatore §8.6.10",
         "stato": "da_verificare"
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Requisito: Risorse Interiori. Acquisibile più volte."
     },
     {
       "id": "usufruitore-di-magia",
@@ -1724,7 +1796,8 @@
         },
         "livelloMax": 3
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Tipo: Passivo. Prerequisiti: non possedere l’Addestramento Taumaturgo né Risorse Interiori. Acquisizione: una sola volta."
     },
     {
       "id": "potenziale-mistico-migliorato",
@@ -1742,7 +1815,8 @@
       "effetti": {
         "livelloMaxIncantesimi": 3
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Talento Libero, con requisito Usufruitore di Magia e fino a cinque acquisizioni."
     },
     {
       "id": "incrementare-incantesimi",
@@ -1760,7 +1834,8 @@
       "effetti": {
         "incantesimi": 2
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Tipo: Passivo. Prerequisito: possedere la capacità personale di lanciare Incantesimi. Acquisizione: fino a cinque volte."
     },
     {
       "id": "lancio-in-combattimento",
@@ -1779,7 +1854,8 @@
           "penalita_ingaggio": 0
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Tipo: Passivo. Prerequisito: possedere la capacità personale di lanciare Incantesimi. Acquisizione: una sola volta."
     },
     {
       "id": "focalizzazione-migliorata",
@@ -1798,7 +1874,8 @@
           "focalizzazione_va": 6
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Tipo: Passivo. Prerequisito: possedere la capacità personale di lanciare Incantesimi. Acquisizione: una sola volta."
     },
     {
       "id": "contromagia",
@@ -1817,7 +1894,8 @@
           "contromagia": true
         }
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Tipo: Attivo. Prerequisito: possedere la capacità personale di lanciare Incantesimi. Acquisizione: una sola volta."
     },
     {
       "id": "contromagia-universale",
@@ -1836,7 +1914,8 @@
           "contromagia_senza_conoscenza": true
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Tipo: Passivo. Prerequisito: Contromagia. Acquisizione: una sola volta."
     },
     {
       "id": "contromagia-migliorata",
@@ -1855,7 +1934,8 @@
           "penalita_contromagia": 0
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Tipo: Passivo. Prerequisito: Contromagia. Acquisizione: una sola volta."
     },
     {
       "id": "incantesimi-da-lancio",
@@ -1874,7 +1954,8 @@
           "tiro_armi_da_lancio": 2
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Tipo: Passivo. Prerequisito: possedere la capacità personale di lanciare Incantesimi. Acquisizione: una sola volta."
     },
     {
       "id": "magia-occultata",
@@ -1893,7 +1974,8 @@
           "occultata": true
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Tipo: Passivo. Prerequisito: capacità personale di lanciare Incantesimi. Acquisizione: una sola volta."
     },
     {
       "id": "conversione-migliorata",
@@ -1907,7 +1989,8 @@
       "parametro": null,
       "testo": "Nelle operazioni di Convertire Potere e ricarica dei contenitori, il rapporto ordinario migliora da 3:1 a 2:1: ogni gruppo produce 1 PM consumando 2 punti della risorsa di origine.\nSe il personaggio possiede anche Ricarica Efficiente, il rapporto diventa 1:1.\nI trasferimenti con il Chroma Bianco mantengono il rapporto 2:1 in entrambe le direzioni, anche possedendo entrambi i Talenti.\nIl Talento modifica il costo di ciascun gruppo. Restano invariati la procedura, le Azioni richieste, le Prove, le penalità, gli esiti e i limiti delle riserve.",
       "fonte": "Manuale della Magia, sezione 1: scheda approvata dal master il 26/09/2026 (docs/risposte-master.md)",
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Tipo: Passivo. Prerequisito: Addestramento Taumaturgo. Acquisizione: una sola volta."
     },
     {
       "id": "recupero-meditativo",
@@ -1926,7 +2009,8 @@
           "accesso": true
         }
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Tipo: Passivo. Prerequisito: non possedere già la capacità di Meditazione. Acquisizione: una sola volta."
     },
     {
       "id": "meditazione-migliorata",
@@ -1945,7 +2029,8 @@
           "pm_per_ora": 2
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Tipo: Passivo. Prerequisito: possedere la capacità di Meditazione. Acquisizione: una sola volta."
     },
     {
       "id": "meditazione-estesa",
@@ -1964,7 +2049,8 @@
           "moltiplicatore_ore": 2
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Tipo: Passivo. Prerequisito: possedere la capacità di Meditazione. Acquisizione: una sola volta."
     },
     {
       "id": "potere-mistico",
@@ -1977,12 +2063,13 @@
       "molteplicita": "limitata",
       "max_acquisizioni": 3,
       "parametro": null,
-      "testo": "Passivo. Requisito: possedere una riserva personale di PM. Acquisibile fino a tre volte.\nAumenta permanentemente i PM Massimi di 5 per acquisizione, fino a +15. Il beneficio si aggiunge alla riserva personale calcolata con SAG, Gradi di Classe e altri incrementi, prima della riduzione dovuta all’Umanità.\nAumentare il massimo non recupera PM: i PM Attuali restano invariati. Per esempio, 12 PM Attuali su 20 Massimi diventano 12 su 25. Il Talento non aumenta la capacità di batterie, cristalli o altre riserve esterne e non concede Incantesimi né accesso alla Meditazione. Può beneficiare anche chi usa Tecniche Interiori.",
+      "testo": "Aumenta permanentemente i PM Massimi di 5 per acquisizione, fino a +15. Il beneficio si aggiunge alla riserva personale calcolata con SAG, Gradi di Classe e altri incrementi, prima della riduzione dovuta all’Umanità.\nAumentare il massimo non recupera PM: i PM Attuali restano invariati. Per esempio, 12 PM Attuali su 20 Massimi diventano 12 su 25. Il Talento non aumenta la capacità di batterie, cristalli o altre riserve esterne e non concede Incantesimi né accesso alla Meditazione. Può beneficiare anche chi usa Tecniche Interiori.",
       "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
       "effetti": {
         "pm": 5
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Requisito: possedere una riserva personale di PM. Acquisibile fino a tre volte."
     },
     {
       "id": "recupero-mistico",
@@ -1994,9 +2081,10 @@
       ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Passivo. Requisito: possedere una riserva personale di PM. Acquisibile una sola volta.\nPer ogni ora completa in cui è consentito il recupero naturale dei PM, recupera 1 PM aggiuntivo. I recuperi orari diventano: Attività pesante 0 PM; Attività leggera 2 PM; Riposo breve 3 PM; Riposo completo 4 PM.\nRestano le condizioni dell’ora completa e ininterrotta, le interruzioni e il limite dei PM Massimi. Il beneficio vale anche durante sonno o incoscienza quando il recupero naturale è consentito. Non richiede attivazione e non ha un limite di utilizzi giornalieri.\nNon si aggiunge alla Meditazione, che sostituisce il recupero naturale della stessa ora, né ad altri recuperi specifici sostitutivi, come la trance di Meditazione Profonda, salvo un’eccezione espressa.",
+      "testo": "Per ogni ora completa in cui è consentito il recupero naturale dei PM, recupera 1 PM aggiuntivo. I recuperi orari diventano: Attività pesante 0 PM; Attività leggera 2 PM; Riposo breve 3 PM; Riposo completo 4 PM.\nRestano le condizioni dell’ora completa e ininterrotta, le interruzioni e il limite dei PM Massimi. Il beneficio vale anche durante sonno o incoscienza quando il recupero naturale è consentito. Non richiede attivazione e non ha un limite di utilizzi giornalieri.\nNon si aggiunge alla Meditazione, che sostituisce il recupero naturale della stessa ora, né ad altri recuperi specifici sostitutivi, come la trance di Meditazione Profonda, salvo un’eccezione espressa.",
       "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Requisito: possedere una riserva personale di PM. Acquisibile una sola volta."
     },
     {
       "id": "escludere-la-componente-somatica",
@@ -2008,14 +2096,15 @@
       ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nPuò lanciare i propri Incantesimi senza eseguire gesti, anche con le mani occupate o con il movimento delle mani impedito. L’assenza della Componente Somatica non infligge −2 VA e, da sola, non rende obbligatoria la Prova di Potere per un lancio altrimenti automatico.\nRestano le altre Componenti, i costi, le Azioni e le altre circostanze che richiedono la Prova. Il Talento non elimina un eventuale contatto richiesto con il bersaglio e non permette di agire quando uno Stato o un altro effetto lo impedisce.",
+      "testo": "Può lanciare i propri Incantesimi senza eseguire gesti, anche con le mani occupate o con il movimento delle mani impedito. L’assenza della Componente Somatica non infligge −2 VA e, da sola, non rende obbligatoria la Prova di Potere per un lancio altrimenti automatico.\nRestano le altre Componenti, i costi, le Azioni e le altre circostanze che richiedono la Prova. Il Talento non elimina un eventuale contatto richiesto con il bersaglio e non permette di agire quando uno Stato o un altro effetto lo impedisce.",
       "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
       "effetti": {
         "lancio": {
           "escludi_componente": "gesto"
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta."
     },
     {
       "id": "escludere-l-invocazione",
@@ -2027,14 +2116,15 @@
       ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nPuò lanciare i propri Incantesimi senza usare la voce. L’assenza dell’Invocazione non infligge −2 VA e, da sola, non rende obbligatoria la Prova di Potere per un lancio altrimenti automatico.\nRestano le altre Componenti, i costi, le Azioni e le altre circostanze che richiedono la Prova. Non vengono eliminate le parole che costituiscono una parte necessaria dell’effetto, come un ordine che il bersaglio deve udire. Gesti, Focus e manifestazioni dell’Incantesimo restano percepibili normalmente.",
+      "testo": "Può lanciare i propri Incantesimi senza usare la voce. L’assenza dell’Invocazione non infligge −2 VA e, da sola, non rende obbligatoria la Prova di Potere per un lancio altrimenti automatico.\nRestano le altre Componenti, i costi, le Azioni e le altre circostanze che richiedono la Prova. Non vengono eliminate le parole che costituiscono una parte necessaria dell’effetto, come un ordine che il bersaglio deve udire. Gesti, Focus e manifestazioni dell’Incantesimo restano percepibili normalmente.",
       "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
       "effetti": {
         "lancio": {
           "escludi_componente": "invocazione"
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta."
     },
     {
       "id": "escludere-il-focus",
@@ -2046,14 +2136,15 @@
       ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nPuò lanciare i propri Incantesimi senza il Focus personale. La sua assenza non infligge −2 VA e, da sola, non rende obbligatoria la Prova di Potere per un lancio altrimenti automatico.\nRestano le altre Componenti, i costi, le Azioni e le altre circostanze che richiedono la Prova. Il Talento non sostituisce oggetti bersaglio, materiali speciali o componenti espressamente richiesti dalla scheda dell’Incantesimo. Le proprietà aggiuntive di un Focus o Artefatto richiedono l’oggetto e le relative condizioni d’uso.\nLa Manovra Focalizzazione rimane utilizzabile normalmente anche senza Focus: il Focus personale e la preparazione mediante Focalizzazione sono due elementi distinti.",
+      "testo": "Può lanciare i propri Incantesimi senza il Focus personale. La sua assenza non infligge −2 VA e, da sola, non rende obbligatoria la Prova di Potere per un lancio altrimenti automatico.\nRestano le altre Componenti, i costi, le Azioni e le altre circostanze che richiedono la Prova. Il Talento non sostituisce oggetti bersaglio, materiali speciali o componenti espressamente richiesti dalla scheda dell’Incantesimo. Le proprietà aggiuntive di un Focus o Artefatto richiedono l’oggetto e le relative condizioni d’uso.\nLa Manovra Focalizzazione rimane utilizzabile normalmente anche senza Focus: il Focus personale e la preparazione mediante Focalizzazione sono due elementi distinti.",
       "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
       "effetti": {
         "lancio": {
           "escludi_componente": "focus"
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta."
     },
     {
       "id": "concentrazione-migliorata",
@@ -2065,7 +2156,7 @@
       ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nOttiene +3 VA alle Prove Salvezza di Volontà effettuate per mantenere la Concentrazione su un Incantesimo. Si applica soltanto alle Prove già previste dalle regole, senza introdurne di nuove né modificarne la frequenza.\nIl beneficio non si applica alle altre PS di Volontà, alle Prove di Potere per il lancio o alle Prove per mantenere una Focalizzazione preparatoria. Non consente di mantenere più Incantesimi e non impedisce l’interruzione automatica per incoscienza, morte o perdita dei requisiti necessari.",
+      "testo": "Ottiene +3 VA alle Prove Salvezza di Volontà effettuate per mantenere la Concentrazione su un Incantesimo. Si applica soltanto alle Prove già previste dalle regole, senza introdurne di nuove né modificarne la frequenza.\nIl beneficio non si applica alle altre PS di Volontà, alle Prove di Potere per il lancio o alle Prove per mantenere una Focalizzazione preparatoria. Non consente di mantenere più Incantesimi e non impedisce l’interruzione automatica per incoscienza, morte o perdita dei requisiti necessari.",
       "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
       "effetti": {
         "valori": [
@@ -2080,7 +2171,8 @@
           }
         ]
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta."
     },
     {
       "id": "concentrazione-operativa",
@@ -2092,9 +2184,10 @@
       ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nMentre mantiene la Concentrazione su un solo Incantesimo, può utilizzare le normali Azioni del Round e le andature consentite: attaccare, muoversi, usare oggetti e Abilità o svolgere altre attività compatibili con le proprie condizioni.\nNon può lanciare un altro Incantesimo finché mantiene la Concentrazione, neppure se il nuovo Incantesimo è istantaneo o ha una Durata che non richiede Concentrazione. Deve interrompere volontariamente l’effetto mantenuto prima di tentare il nuovo lancio.\nContromagia e Convertire Potere rimangono utilizzabili, perché sono Manovre e non il lancio di un nuovo Incantesimo; seguono i propri requisiti, costi e Azioni.\nRestano le normali PS per mantenere la Concentrazione, le interruzioni automatiche e i requisiti di distanza, contatto o controllo dell’effetto. Il Talento non rende gratuite le Azioni espressamente richieste per guidare o utilizzare l’Incantesimo. Non richiede Concentrazione Migliorata e non aumenta il numero di Incantesimi mantenibili.",
+      "testo": "Mentre mantiene la Concentrazione su un solo Incantesimo, può utilizzare le normali Azioni del Round e le andature consentite: attaccare, muoversi, usare oggetti e Abilità o svolgere altre attività compatibili con le proprie condizioni.\nNon può lanciare un altro Incantesimo finché mantiene la Concentrazione, neppure se il nuovo Incantesimo è istantaneo o ha una Durata che non richiede Concentrazione. Deve interrompere volontariamente l’effetto mantenuto prima di tentare il nuovo lancio.\nContromagia e Convertire Potere rimangono utilizzabili, perché sono Manovre e non il lancio di un nuovo Incantesimo; seguono i propri requisiti, costi e Azioni.\nRestano le normali PS per mantenere la Concentrazione, le interruzioni automatiche e i requisiti di distanza, contatto o controllo dell’effetto. Il Talento non rende gratuite le Azioni espressamente richieste per guidare o utilizzare l’Incantesimo. Non richiede Concentrazione Migliorata e non aumenta il numero di Incantesimi mantenibili.",
       "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta."
     },
     {
       "id": "incantesimi-ampliati",
@@ -2106,14 +2199,15 @@
       ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nQuando Anticipa l’Area di un Incantesimo, non raddoppia il suo costo base in PM. L’Area passa al successivo scatto espressamente consentito; il Talento non cambia la forma dell’Area né altri parametri.\nL’Anticipazione riguarda un solo aspetto e un solo scatto consentito dallo schema, senza cambiare il livello dichiarato. Restano tutti i limiti e i divieti dell’Incantesimo. La Prova di Potere è obbligatoria, anche se il lancio sarebbe automatico, e la sua difficoltà aumenta di una categoria; Anticipazione Migliorata può eliminare soltanto questo aumento. Non è cumulabile con Calcolo Arcano sullo stesso lancio.",
+      "testo": "Quando Anticipa l’Area di un Incantesimo, non raddoppia il suo costo base in PM. L’Area passa al successivo scatto espressamente consentito; il Talento non cambia la forma dell’Area né altri parametri.\nL’Anticipazione riguarda un solo aspetto e un solo scatto consentito dallo schema, senza cambiare il livello dichiarato. Restano tutti i limiti e i divieti dell’Incantesimo. La Prova di Potere è obbligatoria, anche se il lancio sarebbe automatico, e la sua difficoltà aumenta di una categoria; Anticipazione Migliorata può eliminare soltanto questo aumento. Non è cumulabile con Calcolo Arcano sullo stesso lancio.",
       "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
       "effetti": {
         "lancio": {
           "anticipazione_senza_raddoppio": "area"
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta."
     },
     {
       "id": "incantesimi-estesi",
@@ -2125,7 +2219,7 @@
       ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nQuando Anticipa la Durata di un Incantesimo, non raddoppia il suo costo base in PM. La Durata passa al successivo scatto espressamente consentito. Il Talento non rende persistente un effetto istantaneo; se l’effetto richiede Concentrazione, questa deve essere mantenuta anche durante il tempo aggiuntivo.\nL’Anticipazione riguarda un solo aspetto e un solo scatto consentito dallo schema, senza cambiare il livello dichiarato. Restano tutti i limiti e i divieti dell’Incantesimo. La Prova di Potere è obbligatoria, anche se il lancio sarebbe automatico, e la sua difficoltà aumenta di una categoria; Anticipazione Migliorata può eliminare soltanto questo aumento. Non è cumulabile con Calcolo Arcano sullo stesso lancio.",
+      "testo": "Quando Anticipa la Durata di un Incantesimo, non raddoppia il suo costo base in PM. La Durata passa al successivo scatto espressamente consentito. Il Talento non rende persistente un effetto istantaneo; se l’effetto richiede Concentrazione, questa deve essere mantenuta anche durante il tempo aggiuntivo.\nL’Anticipazione riguarda un solo aspetto e un solo scatto consentito dallo schema, senza cambiare il livello dichiarato. Restano tutti i limiti e i divieti dell’Incantesimo. La Prova di Potere è obbligatoria, anche se il lancio sarebbe automatico, e la sua difficoltà aumenta di una categoria; Anticipazione Migliorata può eliminare soltanto questo aumento. Non è cumulabile con Calcolo Arcano sullo stesso lancio.",
       "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
       "effetti": {
         "lancio": {
@@ -2137,7 +2231,8 @@
         "rif": "Magia, Talenti di magia",
         "stato": "da_verificare"
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta."
     },
     {
       "id": "incantesimi-proiettati",
@@ -2149,14 +2244,15 @@
       ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nQuando Anticipa la Gittata di un Incantesimo, non raddoppia il suo costo base in PM. La Gittata passa al successivo scatto espressamente consentito. Una Gittata Personale o a Contatto può diventare a distanza soltanto se la scheda lo permette espressamente.\nRestano i requisiti di visibilità, individuazione del bersaglio e assenza di ostacoli previsti dall’Incantesimo.\nL’Anticipazione riguarda un solo aspetto e un solo scatto consentito dallo schema, senza cambiare il livello dichiarato. Restano tutti i limiti e i divieti dell’Incantesimo. La Prova di Potere è obbligatoria, anche se il lancio sarebbe automatico, e la sua difficoltà aumenta di una categoria; Anticipazione Migliorata può eliminare soltanto questo aumento. Non è cumulabile con Calcolo Arcano sullo stesso lancio.",
+      "testo": "Quando Anticipa la Gittata di un Incantesimo, non raddoppia il suo costo base in PM. La Gittata passa al successivo scatto espressamente consentito. Una Gittata Personale o a Contatto può diventare a distanza soltanto se la scheda lo permette espressamente.\nRestano i requisiti di visibilità, individuazione del bersaglio e assenza di ostacoli previsti dall’Incantesimo.\nL’Anticipazione riguarda un solo aspetto e un solo scatto consentito dallo schema, senza cambiare il livello dichiarato. Restano tutti i limiti e i divieti dell’Incantesimo. La Prova di Potere è obbligatoria, anche se il lancio sarebbe automatico, e la sua difficoltà aumenta di una categoria; Anticipazione Migliorata può eliminare soltanto questo aumento. Non è cumulabile con Calcolo Arcano sullo stesso lancio.",
       "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
       "effetti": {
         "lancio": {
           "anticipazione_senza_raddoppio": "gittata"
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta."
     },
     {
       "id": "incantesimi-plurimi",
@@ -2168,7 +2264,7 @@
       ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nQuando Anticipa il numero di Bersagli di un Incantesimo, non raddoppia il suo costo base in PM. Il numero passa al successivo scatto espressamente consentito. Il Talento non aumenta i Colpi, non permette più impatti sullo stesso bersaglio e non modifica le regole di distribuzione dell’effetto.\nOgni bersaglio deve soddisfare i requisiti previsti e conserva le proprie Difese e Prove Salvezza.\nL’Anticipazione riguarda un solo aspetto e un solo scatto consentito dallo schema, senza cambiare il livello dichiarato. Restano tutti i limiti e i divieti dell’Incantesimo. La Prova di Potere è obbligatoria, anche se il lancio sarebbe automatico, e la sua difficoltà aumenta di una categoria; Anticipazione Migliorata può eliminare soltanto questo aumento. Non è cumulabile con Calcolo Arcano sullo stesso lancio.",
+      "testo": "Quando Anticipa il numero di Bersagli di un Incantesimo, non raddoppia il suo costo base in PM. Il numero passa al successivo scatto espressamente consentito. Il Talento non aumenta i Colpi, non permette più impatti sullo stesso bersaglio e non modifica le regole di distribuzione dell’effetto.\nOgni bersaglio deve soddisfare i requisiti previsti e conserva le proprie Difese e Prove Salvezza.\nL’Anticipazione riguarda un solo aspetto e un solo scatto consentito dallo schema, senza cambiare il livello dichiarato. Restano tutti i limiti e i divieti dell’Incantesimo. La Prova di Potere è obbligatoria, anche se il lancio sarebbe automatico, e la sua difficoltà aumenta di una categoria; Anticipazione Migliorata può eliminare soltanto questo aumento. Non è cumulabile con Calcolo Arcano sullo stesso lancio.",
       "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
       "effetti": {
         "lancio": {
@@ -2180,7 +2276,8 @@
         "rif": "Magia, Talenti di magia",
         "stato": "da_verificare"
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta."
     },
     {
       "id": "incantesimi-intensificati",
@@ -2192,14 +2289,15 @@
       ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nQuando Anticipa un valore numerico di danno, guarigione o bonus espressamente ammesso dallo schema di un Incantesimo, non raddoppia il suo costo base in PM.\nNon si applica a Gittata, Area, Durata, Bersagli, Colpi o modificatori delle Prove Salvezza. Non cambia la natura del danno, le informazioni ottenute o le capacità concesse e non rende anticipabile un valore che la scheda esclude.\nL’Anticipazione riguarda un solo aspetto e un solo scatto consentito dallo schema, senza cambiare il livello dichiarato. Restano tutti i limiti e i divieti dell’Incantesimo. La Prova di Potere è obbligatoria, anche se il lancio sarebbe automatico, e la sua difficoltà aumenta di una categoria; Anticipazione Migliorata può eliminare soltanto questo aumento. Non è cumulabile con Calcolo Arcano sullo stesso lancio.",
+      "testo": "Quando Anticipa un valore numerico di danno, guarigione o bonus espressamente ammesso dallo schema di un Incantesimo, non raddoppia il suo costo base in PM.\nNon si applica a Gittata, Area, Durata, Bersagli, Colpi o modificatori delle Prove Salvezza. Non cambia la natura del danno, le informazioni ottenute o le capacità concesse e non rende anticipabile un valore che la scheda esclude.\nL’Anticipazione riguarda un solo aspetto e un solo scatto consentito dallo schema, senza cambiare il livello dichiarato. Restano tutti i limiti e i divieti dell’Incantesimo. La Prova di Potere è obbligatoria, anche se il lancio sarebbe automatico, e la sua difficoltà aumenta di una categoria; Anticipazione Migliorata può eliminare soltanto questo aumento. Non è cumulabile con Calcolo Arcano sullo stesso lancio.",
       "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
       "effetti": {
         "lancio": {
           "anticipazione_senza_raddoppio": "valori"
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta."
     },
     {
       "id": "anticipazione-migliorata",
@@ -2211,14 +2309,15 @@
       ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nQuando usa l’Anticipazione, non aumenta di una categoria la difficoltà della Prova di Potere: usa quella del livello dichiarato, con gli altri modificatori applicabili. La Prova resta obbligatoria anche per un lancio normalmente automatico.\nIl costo base in PM resta raddoppiato, salvo il beneficio di Incantesimi Ampliati, Estesi, Proiettati, Plurimi o Intensificati per l’aspetto interessato. Con il Talento pertinente, il lancio conserva costo base e difficoltà ordinari, ma richiede comunque la Prova di Potere.\nRestano il limite di un solo aspetto, un solo scatto consentito e tutti i divieti della scheda. Non si combina con Calcolo Arcano sullo stesso lancio. Non modifica i livelli di Incantesimo accessibili e resta distinto da Potenziale Mistico Migliorato.",
+      "testo": "Quando usa l’Anticipazione, non aumenta di una categoria la difficoltà della Prova di Potere: usa quella del livello dichiarato, con gli altri modificatori applicabili. La Prova resta obbligatoria anche per un lancio normalmente automatico.\nIl costo base in PM resta raddoppiato, salvo il beneficio di Incantesimi Ampliati, Estesi, Proiettati, Plurimi o Intensificati per l’aspetto interessato. Con il Talento pertinente, il lancio conserva costo base e difficoltà ordinari, ma richiede comunque la Prova di Potere.\nRestano il limite di un solo aspetto, un solo scatto consentito e tutti i divieti della scheda. Non si combina con Calcolo Arcano sullo stesso lancio. Non modifica i livelli di Incantesimo accessibili e resta distinto da Potenziale Mistico Migliorato.",
       "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
       "effetti": {
         "lancio": {
           "anticipazione_senza_difficolta": true
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta."
     },
     {
       "id": "incantesimi-inarrestabili",
@@ -2230,14 +2329,15 @@
       ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nLe Prove Salvezza con cui i bersagli resistono ai suoi Incantesimi subiscono −1 VA aggiuntivo, cumulabile con il modificatore previsto dall’Incantesimo e gli altri modificatori applicabili. Vale anche per le PS successive volte a liberarsi dall’effetto e quando la PS serve a risolvere Elusione.\nNon introduce una PS dove non è prevista e non modifica Parata, Schivata, Prove per colpire, Prove contrapposte, riconoscimento o Contromagia. Non si applica alle PS dell’incantatore per mantenere la Concentrazione. Non richiede PM o Azioni aggiuntivi.",
+      "testo": "Le Prove Salvezza con cui i bersagli resistono ai suoi Incantesimi subiscono −1 VA aggiuntivo, cumulabile con il modificatore previsto dall’Incantesimo e gli altri modificatori applicabili. Vale anche per le PS successive volte a liberarsi dall’effetto e quando la PS serve a risolvere Elusione.\nNon introduce una PS dove non è prevista e non modifica Parata, Schivata, Prove per colpire, Prove contrapposte, riconoscimento o Contromagia. Non si applica alle PS dell’incantatore per mantenere la Concentrazione. Non richiede PM o Azioni aggiuntivi.",
       "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
       "effetti": {
         "lancio": {
           "salvezza_bersaglio": -1
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta."
     },
     {
       "id": "incantesimi-massimizzati",
@@ -2249,7 +2349,7 @@
       ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Attivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nUna volta per combattimento, dopo un lancio riuscito, anche automatico, e dopo l’eventuale Prova per colpire riuscita, può massimizzare una sola determinazione iniziale di danno o guarigione dell’Incantesimo. Dichiara l’uso prima di tirare i dadi dell’effetto.\nOgni dado della determinazione scelta assume il proprio risultato massimo, poi si applicano i normali modificatori fissi. Per esempio, 3d6 + 2 produce 20 prima delle protezioni.\nSe una sola determinazione è condivisa da più bersagli, tutti usano il risultato massimizzato. Se l’Incantesimo prevede più Colpi o determinazioni distinte, ne sceglie una sola. Non massimizza effetti periodici successivi, Durata, PV delle creature evocate, Prove Salvezza o altre Prove.\nRestano Armatura, resistenze, riduzioni, PS e ogni altra mitigazione applicabile, oltre ai normali costi in PM e Azioni.",
+      "testo": "Una volta per combattimento, dopo un lancio riuscito, anche automatico, e dopo l’eventuale Prova per colpire riuscita, può massimizzare una sola determinazione iniziale di danno o guarigione dell’Incantesimo. Dichiara l’uso prima di tirare i dadi dell’effetto.\nOgni dado della determinazione scelta assume il proprio risultato massimo, poi si applicano i normali modificatori fissi. Per esempio, 3d6 + 2 produce 20 prima delle protezioni.\nSe una sola determinazione è condivisa da più bersagli, tutti usano il risultato massimizzato. Se l’Incantesimo prevede più Colpi o determinazioni distinte, ne sceglie una sola. Non massimizza effetti periodici successivi, Durata, PV delle creature evocate, Prove Salvezza o altre Prove.\nRestano Armatura, resistenze, riduzioni, PS e ogni altra mitigazione applicabile, oltre ai normali costi in PM e Azioni.",
       "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
       "effetti": {
         "lancio": {
@@ -2267,7 +2367,8 @@
           }
         ]
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Attivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta."
     },
     {
       "id": "manifestazioni-occultate",
@@ -2279,14 +2380,15 @@
       ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nAl lancio può occultare le manifestazioni visive e sonore puramente magiche del proprio Incantesimo. Chi avrebbe normalmente la possibilità di percepirle deve superare una Prova di Percezione con −2 VA per notarle.\nNon nasconde gesti, voce o Focus usati per lanciare, né creature evocate, muri, oggetti o altre presenze fisiche. Restano osservabili danni, movimenti e conseguenze dell’effetto. Non occulta le manifestazioni necessarie al suo funzionamento, come un comando che il bersaglio deve udire.\nUn attacco non percepito segue le normali regole delle Difese, senza ulteriori bonus o penalità automatici concessi dal Talento.\nÈ distinto da Magia Occultata: da solo non impone una Prova di Occultismo per la Contromagia. L’eventuale riconoscimento richiesto da Magia Occultata segue la scheda di quel Talento.",
+      "testo": "Al lancio può occultare le manifestazioni visive e sonore puramente magiche del proprio Incantesimo. Chi avrebbe normalmente la possibilità di percepirle deve superare una Prova di Percezione con −2 VA per notarle.\nNon nasconde gesti, voce o Focus usati per lanciare, né creature evocate, muri, oggetti o altre presenze fisiche. Restano osservabili danni, movimenti e conseguenze dell’effetto. Non occulta le manifestazioni necessarie al suo funzionamento, come un comando che il bersaglio deve udire.\nUn attacco non percepito segue le normali regole delle Difese, senza ulteriori bonus o penalità automatici concessi dal Talento.\nÈ distinto da Magia Occultata: da solo non impone una Prova di Occultismo per la Contromagia. L’eventuale riconoscimento richiesto da Magia Occultata segue la scheda di quel Talento.",
       "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
       "effetti": {
         "lancio": {
           "promemoria": "sempre"
         }
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta."
     },
     {
       "id": "ritualista-minore",
@@ -2296,14 +2398,15 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Passivo. Nessun prerequisito. Acquisibile una sola volta.\nConsente di apprendere ed eseguire Rituali di Grado I–III come Officiante oppure di contribuire come Canale, secondo la procedura del singolo Rituale. Non richiede l’Addestramento Taumaturgo e non concede accesso agli Incantesimi.\nIl Talento non fa conoscere automaticamente tutti i Rituali dei Gradi accessibili. Occorre apprendere ciascuna procedura e rispettarne requisiti, tempi, materiali e costi.\nIl contributo del Canale segue la procedura del Rituale; il Talento non assegna un bonus numerico automatico.",
+      "testo": "Consente di apprendere ed eseguire Rituali di Grado I–III come Officiante oppure di contribuire come Canale, secondo la procedura del singolo Rituale. Non richiede l’Addestramento Taumaturgo e non concede accesso agli Incantesimi.\nIl Talento non fa conoscere automaticamente tutti i Rituali dei Gradi accessibili. Occorre apprendere ciascuna procedura e rispettarne requisiti, tempi, materiali e costi.\nIl contributo del Canale segue la procedura del Rituale; il Talento non assegna un bonus numerico automatico.",
       "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32). Requisito dell’Officiante per i Gradi I–III (Minore) e IV–VI (Maggiore) nelle procedure della Magia §24.1 e §25.1 (Google Doc del 01/10/2026 sera; docs/risposte-master.md, decisione 69)",
       "sintesi": {
         "testo": "Apprende ed esegue Rituali di Grado I–III come Officiante o Canale. Ogni procedura si apprende a parte (requisiti, tempi, materiali, costi); nessun Incantesimo, nessun bonus automatico del Canale.",
         "rif": "Magia, Talenti di magia",
         "stato": "da_verificare"
       },
-      "categoria": "talento_libero"
+      "categoria": "talento_libero",
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
     },
     {
       "id": "ritualista-maggiore",
@@ -2315,14 +2418,15 @@
       ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Passivo. Requisito: Ritualista Minore. Acquisibile una sola volta.\nEstende ai Rituali di Grado IV–VI la possibilità di apprendimento ed esecuzione come Officiante o di partecipazione come Canale. Mantiene l’accesso ai Gradi I–III.\nNon concede automaticamente la conoscenza delle procedure né accesso agli Incantesimi. Per ciascun Rituale restano necessari apprendimento, requisiti, tempi, materiali e costi.\nIl contributo del Canale segue la procedura del Rituale; il Talento non assegna un bonus numerico automatico.",
+      "testo": "Estende ai Rituali di Grado IV–VI la possibilità di apprendimento ed esecuzione come Officiante o di partecipazione come Canale. Mantiene l’accesso ai Gradi I–III.\nNon concede automaticamente la conoscenza delle procedure né accesso agli Incantesimi. Per ciascun Rituale restano necessari apprendimento, requisiti, tempi, materiali e costi.\nIl contributo del Canale segue la procedura del Rituale; il Talento non assegna un bonus numerico automatico.",
       "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32). Requisito dell’Officiante per i Gradi I–III (Minore) e IV–VI (Maggiore) nelle procedure della Magia §24.1 e §25.1 (Google Doc del 01/10/2026 sera; docs/risposte-master.md, decisione 69)",
       "sintesi": {
         "testo": "Estende Ritualista Minore ai Rituali di Grado IV–VI (Officiante o Canale). Procedure da apprendere una per una; nessun Incantesimo né bonus automatico.",
         "rif": "Magia, Talenti di magia",
         "stato": "da_verificare"
       },
-      "categoria": "maestria"
+      "categoria": "maestria",
+      "intestazione": "Passivo. Requisito: Ritualista Minore. Acquisibile una sola volta."
     },
     {
       "id": "preparazione-rapida",
@@ -2342,7 +2446,8 @@
         }
       },
       "solo_regime_nuovo": true,
-      "fonte_regole": "talenti_nuovi"
+      "fonte_regole": "talenti_nuovi",
+      "intestazione": "Maestria. Si acquisisce una sola volta e occupa una scelta di Maestria. Restano le regole e le incompatibilità della manovra utilizzata."
     },
     {
       "id": "ricarica-esperta",
@@ -2356,7 +2461,8 @@
       "testo": "Sostituisce Ricarica Rapida e Ricarica Migliorata. Una volta per Round, durante la propria Iniziativa, permette una singola operazione di ricarica gratuita che normalmente richiede 1 AzM oppure 1 AzP.\nQuando l’arma si ricarica inserendo singole munizioni, ogni operazione può inserirne fino a tre, entro la capienza: vale anche per quella gratuita. Se l’operazione è incorporata nell’attacco restano il -4 VA e il limite di una sola operazione incorporata. Servono munizioni e mani disponibili. Non riduce procedure che richiedono più Azioni per una singola munizione e non modifica conversioni di PM o ricariche mistiche. Preparazione Rapida e Ricarica Esperta hanno utilizzi distinti.\nNell’app (25/10/2026): finché Davide non risponde alla A.182 vale la decisione approvata A.135 (decisione 139): con questo Talento un’operazione a inserimento singolo inserisce fino a 4 cartucce, come con Ricarica Migliorata (senza, 2), non «fino a tre».",
       "nota_app": "A.182 aperta: il file dice «fino a tre» munizioni per operazione, la decisione 139 (A.135) dice 4 cartucce per AzP con Ricarica Migliorata. Si tiene la decisione approvata (data/equipaggiamento/munizioni.json → ricarica).",
       "solo_regime_nuovo": true,
-      "fonte_regole": "talenti_nuovi"
+      "fonte_regole": "talenti_nuovi",
+      "intestazione": "Maestria. Si acquisisce una sola volta e occupa una scelta di Maestria. Restano le regole e le incompatibilità della manovra utilizzata."
     },
     {
       "id": "raffiche-migliorate",
@@ -2384,7 +2490,8 @@
         }
       },
       "solo_regime_nuovo": true,
-      "fonte_regole": "talenti_nuovi"
+      "fonte_regole": "talenti_nuovi",
+      "intestazione": "Maestria. Si acquisisce una sola volta e occupa una scelta di Maestria. Restano le regole e le incompatibilità della manovra utilizzata."
     },
     {
       "id": "maestria-tiro-ravvicinato-migliorato",
@@ -2405,7 +2512,8 @@
         }
       },
       "solo_regime_nuovo": true,
-      "fonte_regole": "talenti_nuovi"
+      "fonte_regole": "talenti_nuovi",
+      "intestazione": "Maestria. Si acquisisce una sola volta e occupa una scelta di Maestria. Restano le regole e le incompatibilità della manovra utilizzata."
     },
     {
       "id": "maestria-immobilizzare-migliorato",
@@ -2428,7 +2536,8 @@
         }
       },
       "solo_regime_nuovo": true,
-      "fonte_regole": "talenti_nuovi"
+      "fonte_regole": "talenti_nuovi",
+      "intestazione": "Maestria. Si acquisisce una sola volta e occupa una scelta di Maestria. Restano le regole e le incompatibilità della manovra utilizzata."
     },
     {
       "id": "maestria-hacker",
@@ -2454,7 +2563,8 @@
         ]
       },
       "solo_regime_nuovo": true,
-      "fonte_regole": "talenti_nuovi"
+      "fonte_regole": "talenti_nuovi",
+      "intestazione": "Maestria passiva, acquisibile una sola volta, senza prerequisiti aggiuntivi."
     },
     {
       "id": "maestria-arti-marziali-migliorate",
@@ -2487,7 +2597,8 @@
         ]
       },
       "solo_regime_nuovo": true,
-      "fonte_regole": "talenti_nuovi"
+      "fonte_regole": "talenti_nuovi",
+      "intestazione": "Maestria con requisito Arti Marziali oppure Addestramento al Combattimento Senz’Armi del Lottatore. Il requisito alternativo consente l’accesso e non assegna anche il dado di danno di Arti Marziali."
     }
   ],
   "condizioni_prerequisiti": {

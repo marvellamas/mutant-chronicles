@@ -68,19 +68,28 @@ export function rigaBreve(id, dati) {
   return primaFraseUtile(v.testo);
 }
 
-/** Il testo completo della scheda (paragrafi separati da «\n»). */
-export function testoCompleto(id, dati) {
+/**
+ * La scheda intera di una voce (25/10 notte): { intestazione, paragrafi }. Per un Talento, l'intestazione della scheda del
+ * manuale (tipo, requisiti, quante volte si acquisisce: `intestazione` nel dato) e tutti i paragrafi del testo; per una
+ * Specializzazione il bonus, l'ambito e la regola del suo gruppo (§8.8, §8.8.1, §8.8.2).
+ */
+export function schedaTalento(id, dati) {
   const v = typeof id === 'string' ? voceTalento(id, dati) : id;
-  if (!v) return '';
+  if (!v) return { intestazione: '', paragrafi: [] };
   if (eSpecializzazione(v)) {
     const bonus = bonusSpecializzazione(v);
-    // la regola del gruppo (§8.8, §8.8.1, §8.8.2), dalle regole del catalogo
     const regole = (dati?.specializzazioni?.regole ?? []).filter((r) => typeof r === 'string');
     const delGruppo = v.gruppo === 'armi' ? regole.find((r) => r.startsWith('Armi:'))
       : v.gruppo === 'mistiche' ? regole.find((r) => r.startsWith('Mistiche:')) : regole.find((r) => r.startsWith('Le Specializzazioni ordinarie'));
-    return [bonus ? `${bonus}.` : '', testo(v.ambito), delGruppo ?? ''].filter(Boolean).join('\n');
+    return { intestazione: 'Specializzazione: si acquisisce una sola volta (§8.8).', paragrafi: [bonus ? `${bonus}.` : '', ...testo(v.ambito).split('\n'), delGruppo ?? ''].map((p) => p.trim()).filter(Boolean) };
   }
-  return testo(v.testo).trim();
+  return { intestazione: testo(v.intestazione).trim(), paragrafi: testo(v.testo).split('\n').map((p) => p.trim()).filter(Boolean) };
+}
+
+/** Il testo completo della scheda (intestazione e paragrafi separati da «\n»). */
+export function testoCompleto(id, dati) {
+  const s = schedaTalento(id, dati);
+  return [s.intestazione, ...s.paragrafi].filter(Boolean).join('\n');
 }
 
 const NOMI_CATEGORIA = { talento_libero: 'Talento Libero', maestria: 'Maestria', specializzazione: 'Specializzazione' };
