@@ -12,7 +12,7 @@
 // dal master». Se il server di Mutant è acceso sul PC lo si usa (i tablet collegati vedono subito la versione
 // nuova); se è spento se ne avvia uno solo per il tempo del passaggio, sulla stessa cartella, raggiungibile solo da
 // questo PC. Il piano di ogni PG è in src/migrazione-talenti.js; il conto dei posti è quello di postiTalenti.
-import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from 'node:fs';
+import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSync, rmSync } from 'node:fs';
 import { join, dirname, relative, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { creaZip, leggiZip } from './salva-sessione.mjs';
@@ -153,7 +153,17 @@ export function ripristina({ cartella, salvataggi, zip = null, quando = new Date
     writeFileSync(p, buf);
     rimessi++;
   }
-  return { zip: scelto, rimessi, sicurezza };
+  // Dopo il passaggio il server può aver scritto un PG in un file nuovo (nome con la data del salvataggio): quel file
+  // non è nello zip e, lasciato lì, darebbe due file per lo stesso personaggio. Si toglie (è nella copia di sicurezza).
+  const idPg = (buf) => { try { const o = JSON.parse(buf.toString('utf8')); return o?.formato === 'mutant-personaggio' ? o.pg ?? null : null; } catch { return null; } };
+  const rimessiPg = new Set(Object.entries(voci).filter(([n]) => !n.includes('/')).map(([, b]) => idPg(b)).filter(Boolean));
+  const tolti = [];
+  for (const f of adesso) {
+    if (f.nome.includes('/') || !NOME_FILE.test(f.nome) || Object.hasOwn(voci, f.nome)) continue;
+    const id = idPg(f.dati);
+    if (id && rimessiPg.has(id)) { rmSync(join(cartella, f.nome)); tolti.push(f.nome); }
+  }
+  return { zip: scelto, rimessi, sicurezza, tolti };
 }
 
 // --- riga di comando -------------------------------------------------------------------------------------------

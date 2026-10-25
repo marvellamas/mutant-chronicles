@@ -13,7 +13,7 @@
 //   node tools/console.mjs avvio          all'apertura della console: installazione nuova (propone le impostazioni) e
 //                                         invii non riusciti dall'ultima volta (avvisi/registro.txt)
 //   --radice=<cartella dell'app> --porta=<porta del server> per le prove (di norma questa cartella e la 3000)
-import { readFileSync, existsSync, copyFileSync } from 'node:fs';
+import { readFileSync, existsSync, copyFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createInterface } from 'node:readline/promises';
@@ -202,6 +202,12 @@ export async function voceControlla({ radice: r = radice, rl: esterno = null } =
     console.log('\n Controllo dei file dei personaggi: adesso leggo soltanto, non cambio niente.\n');
     const rap = await rapportoPulizia(cartella);
     console.log(ascii(testoPulizia(rap)));
+    // come il vecchio 4_controlla_personaggi.bat: il rapporto anche in un file, da aprire col Blocco note o mandare a Marcello
+    try {
+      const file = join(r, 'rapporto-personaggi.txt');
+      writeFileSync(file, `\uFEFF${testoPulizia(rap).replace(/\r?\n/g, '\r\n')}\r\n`);
+      console.log(`\n Lo stesso rapporto e' in ${file}`);
+    } catch { /* il rapporto a schermo basta */ }
     const daSpostare = rap.personaggi.filter((p) => !p.dubbio && p.altri.length).reduce((n, p) => n + p.altri.length, 0);
     if (!daSpostare) { console.log('\n Non c\'e\' niente da mettere via: un file per personaggio.'); return { fatti: [] }; }
     console.log(`\n Con SI metto ${daSpostare} file vecchi in personaggi\\storico (non cancello niente). I casi dubbi non si toccano.`);
@@ -251,6 +257,7 @@ export async function voceTalentiRipristina({ radice: r = radice, rl: esterno = 
     if (!await confermaSi(rl, ' Scrivi SI e premi Invio per tornare a com\'era prima (altrimenti Invio e basta): ')) { console.log(' Va bene: non ho toccato niente.'); return { fatto: false }; }
     const e = ripristinaTalenti({ ...dove, zip });
     console.log(` Fatto: rimessi ${e.rimessi} file. Com'era prima del ripristino e' in ${e.sicurezza}.`);
+    if (e.tolti?.length) console.log(` Tolti i file scritti dopo il passaggio (sono nella copia qui sopra): ${e.tolti.join(', ')}.`);
     console.log(' Se Mutant e\' acceso, le schede aperte si ricaricano da sole con i Talenti di prima.');
     return { fatto: true, ...e };
   } finally { if (!esterno) rl.chiudi(); }
@@ -411,7 +418,7 @@ async function voceAvvio() {
     console.log(`  ATTENZIONE: ${nuovi.length === 1 ? 'un invio non e\' partito' : `${nuovi.length} invii non sono partiti`} dall'ultima volta.`);
     console.log(' ==============================================================');
     console.log(` L'ultimo: ${nuovi.at(-1).testo}`);
-    console.log(` Tutti in ${FILE_REGISTRO}. Prova le impostazioni con la voce 6 («Manda una notifica di prova»).`);
+    console.log(` Tutti in ${FILE_REGISTRO}. Prova le impostazioni: voce 9 "Impostazioni", poi 3 "Manda una notifica di prova".`);
   }
   if (s.nuova || s.avvisi.stato === 'mancante') {
     detto = true;
@@ -419,7 +426,7 @@ async function voceAvvio() {
     console.log(' e i backup non vanno su Google Drive.');
     const r = await rl.chiedi(' Le imposto adesso? [S/N] ');
     if (si(r)) { await voceImpostazioni(rl); rl.chiudi(); return; }
-    console.log(' Va bene: si impostano quando vuoi dalla voce 6 «Impostazioni».');
+    console.log(' Va bene: si impostano quando vuoi dalla voce 9 "Impostazioni" del menu.');
   }
   if (detto) await rl.chiedi('\n Invio per andare al menu... ');
   rl.chiudi();

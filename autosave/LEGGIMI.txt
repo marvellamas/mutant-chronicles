@@ -1,7 +1,7 @@
 Salvataggio automatico di Mutant
 ================================
 
-Con il server acceso (avvia-server.bat), Mutant salva da solo qui ogni 5 minuti (il numero si
+Con il server acceso (Mutant.bat, voce 1), Mutant salva da solo qui ogni 5 minuti (il numero si
 cambia in config-salvataggi.json, "autosave_minuti"), solo se qualcosa e' cambiato:
 
 - autosave.zip             l'ultimo salvataggio automatico;

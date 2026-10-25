@@ -8,7 +8,7 @@
 //
 // Senza ruolo scelto l'app si comporta come prima: decide il vecchio file COPIA-DI-LAVORO.txt, se c'è
 // (src/copia-di-lavoro.js → statoDaRuolo).
-import { readFileSync, writeFileSync, mkdirSync, renameSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, renameSync, realpathSync } from 'node:fs';
 import { join, resolve, dirname } from 'node:path';
 import { hostname } from 'node:os';
 import { cartellaProfilo } from './config-avvisi.mjs';
@@ -20,7 +20,11 @@ export const RUOLI = {
 
 export const percorsoRuoli = (opz = {}) => join(cartellaProfilo(opz), 'installazioni.json');
 /** La chiave di un'installazione: la sua cartella, senza differenze di maiuscole (Windows) né barre finali. */
-export const chiaveInstallazione = (radice) => resolve(radice).replace(/[\\/]+$/, '').toLowerCase();
+// il percorso reale: la stessa cartella scritta col nome corto (BEASTM~1) o lungo dà la stessa chiave
+function percorsoReale(radice) {
+  try { return realpathSync.native(resolve(radice)); } catch { return resolve(radice); }
+}
+export const chiaveInstallazione = (radice) => percorsoReale(radice).replace(/[\\/]+$/, '').toLowerCase();
 
 function leggiTutto(opz) {
   try {

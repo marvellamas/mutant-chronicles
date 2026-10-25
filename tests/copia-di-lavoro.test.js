@@ -261,6 +261,7 @@ test('il controllo dei file per il Direttore è la voce 6 di Mutant.bat: rapport
   const iSposta = corpo.indexOf('spostaPulizia(');
   assert.ok(iRapporto > 0 && iDomanda > iRapporto && iSposta > iDomanda, 'rapporto, poi domanda, poi spostamento');
   assert.match(corpo, /non ho toccato niente/);
+  assert.match(corpo, /rapporto-personaggi\.txt/, 'come il vecchio .bat, il rapporto finisce anche in un file di testo');
   assert.match(readFileSync(new URL('../Mutant.bat', import.meta.url), 'utf8'), /:controlla\r?\nnode "%QUI%tools\\console\.mjs" controlla/);
   // il vecchio .bat separato non c'è più, e l'aggiornamento lo toglie anche dal PC di Davide
   const avv = readFileSync(new URL('../tools/aggiorna-avviatori.mjs', import.meta.url), 'utf8');

@@ -15,14 +15,30 @@ import { leggiVersione, leggiNovita } from '../src/versione.js';
 const RADICE = fileURLToPath(new URL('..', import.meta.url));
 const FILE = join('backup-prima-aggiornamento', '.versione-prima.json');
 
-/** La versione installata: { versione, data, titolo } o null. */
+/** L'impronta del codice: lo sha dello zip (.versione, scritto da 1_scarica) o il commit di Git; null se non si sa. */
+export function codiceInstallato(radice) {
+  try {
+    const z = readFileSync(join(radice, '.versione'), 'utf8').trim();
+    if (z) return z;
+  } catch { /* non è una copia da zip */ }
+  try {
+    const head = readFileSync(join(radice, '.git', 'HEAD'), 'utf8').trim();
+    if (!head.startsWith('ref: ')) return head || null;
+    const ref = head.slice(5);
+    try { return readFileSync(join(radice, '.git', ref), 'utf8').trim() || null; } catch { /* nei packed-refs */ }
+    const riga = readFileSync(join(radice, '.git', 'packed-refs'), 'utf8').split(/\r?\n/).find((l) => l.endsWith(` ${ref}`));
+    return riga ? riga.split(' ')[0] : null;
+  } catch { return null; }
+}
+
+/** La versione installata: { versione, data, titolo, codice } o null. */
 export function versioneInstallata(radice) {
   try {
     const v = leggiVersione(JSON.parse(readFileSync(join(radice, 'versione.json'), 'utf8')));
     if (!v) return null;
     let titolo = null;
     try { titolo = leggiNovita(JSON.parse(readFileSync(join(radice, 'novita.json'), 'utf8'))); } catch { /* senza titolo */ }
-    return { ...v, titolo };
+    return { ...v, titolo, codice: codiceInstallato(radice) };
   } catch { return null; }
 }
 
@@ -34,7 +50,13 @@ export function testoEsito(prima, dopo) {
   if (!dopo) return 'Non riesco a leggere la versione installata: controlla che la cartella sia quella di Mutant.';
   const titolo = dopo.titolo ? ` (${dopo.titolo})` : '';
   if (!prima) return `Ora sei alla versione ${giorno(dopo) ? `del ${giorno(dopo)}` : dopo.versione}${titolo}.`;
-  if (prima.versione === dopo.versione) return `Era gia' aggiornato: sei alla versione ${giorno(dopo) ? `del ${giorno(dopo)}` : dopo.versione}${titolo}. Non e' cambiato niente.`;
+  const stessa = `${giorno(dopo) ? `del ${giorno(dopo)}` : dopo.versione}${titolo}`;
+  if (prima.versione === dopo.versione) {
+    // l'app è la stessa, ma possono essere cambiati i programmi di servizio (menu, aggiornamento, controlli)
+    if (prima.codice && dopo.codice && prima.codice !== dopo.codice) return `Aggiornato: l'app resta alla versione ${stessa}; sono cambiati solo i programmi di servizio (menu, aggiornamento, controlli).`;
+    return `Era gia' aggiornato: sei alla versione ${stessa}. Non e' cambiato niente.`;
+  }
+  if (giorno(prima) && giorno(prima) === giorno(dopo)) return `Aggiornato: eri gia' a una versione del ${giorno(dopo)}, ora sei all'ultima di quel giorno${titolo}.`;
   return `Aggiornato: prima eri alla versione ${giorno(prima) ? `del ${giorno(prima)}` : prima.versione}, ora sei a ${quale(dopo)}${titolo}.`;
 }
 

@@ -733,7 +733,7 @@ export function veicoliStampa(s, creazione, dati, registro = null) {
     if (!eRiferimento(v)) return vistaVeicoloPersonaggio(v, dati, { pilotare });
     visti.add(v.rif);
     const rec = record.find((x) => x.id === v.rif);
-    return rec ? daRecord(rec) : { nonRaggiungibile: true, nome: v.nome, rif: v.rif, motivo: registro?.errore ?? (registro ? 'non è nel registro di questo server' : 'serve il server di Mutant (avvia-server.bat)') };
+    return rec ? daRecord(rec) : { nonRaggiungibile: true, nome: v.nome, rif: v.rif, motivo: registro?.errore ?? (registro ? 'non è nel registro di questo server' : 'serve il server di Mutant (Mutant.bat, voce 1)') };
   });
   // anche quello che guida o che possiede senza riferimento nel file; un veicolo del gruppo si stampa solo nelle
   // schede che lo hanno nel file (altrimenti due pagine in più in ogni scheda del gruppo: collaudo del 05/10/2026)

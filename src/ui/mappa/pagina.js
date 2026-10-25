@@ -4179,7 +4179,7 @@ export function renderMappa(radice, ctx) {
           interruttore(imp.movimento === 'sempre', `Quando: ${imp.movimento === 'sempre' ? 'sempre' : 'solo al proprio turno'}`, 'Solo al proprio turno dello scontro aperto, oppure sempre', () => cambiaTablet('movimento')),
           interruttore(imp.avvisoTurno, `Avviso «Tocca a te»: ${imp.avvisoTurno ? 'sì' : 'no'}`, 'Il tablet del PG di turno mostra l’avviso grande, con suono e vibrazione', () => cambiaTablet('avvisoTurno')));
       })(),
-      rete?.soloLocale ? h('p', { class: 'nota' }, 'Server acceso con --solo-locale: dai tablet non si raggiunge. Riavvialo con avvia-server.bat.') : null);
+      rete?.soloLocale ? h('p', { class: 'nota' }, 'Server acceso con --solo-locale: dai tablet non si raggiunge. Spegnilo e riaccendilo da Mutant.bat (voce 1).') : null);
   }
 
   // ── Avvio ──

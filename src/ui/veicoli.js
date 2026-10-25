@@ -43,7 +43,7 @@ export function tabVeicoli(ctx) {
   const pilotare = pilotareDelPersonaggio(abilitaDellaTab(ctx), ctx.dati, { scheda: ctx.tab.scheda });
   const riferimenti = (ctx.scelte.veicoli ?? []).filter(eRiferimento);
   return [
-    h('p', { class: 'riquadro attenzione' }, 'Senza il server di Mutant (avvia-server.bat) il veicolo è una copia locale in questa scheda: la scheda unica condivisa con le altre schede e con il Tavolo del Master richiede il server (A.91).'),
+    h('p', { class: 'riquadro attenzione' }, 'Senza il server di Mutant (Mutant.bat, voce 1) il veicolo è una copia locale in questa scheda: la scheda unica condivisa con le altre schede e con il Tavolo del Master richiede il server (A.91).'),
     // A.113: i veicoli del registro restano consultabili, in sola lettura, nell'ultima copia ricevuta
     riferimenti.length ? h('p', { class: 'nota' }, `Nel registro dei veicoli del Tavolo: ${riferimenti.map((x) => x.nome).join(', ')}. Qui sotto l'ultima copia, in sola lettura (A.113); per cambiarli serve il server.`) : null,
     riferimenti.map((x) => schedaSolaLettura(ctx, x, pilotare)),

@@ -3,7 +3,7 @@
 // Tutto su copie in una cartella temporanea (i sette PG di tests/fixtures/talenti-vecchi/), mai su personaggi/.
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, rmSync, mkdirSync, readdirSync, readFileSync, copyFileSync, existsSync } from 'node:fs';
+import { mkdtempSync, rmSync, mkdirSync, readdirSync, readFileSync, copyFileSync, existsSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { datiReali } from './helpers.js';
@@ -124,8 +124,18 @@ test('il piano non cambia un PG già passato; i casi sono quelli della regola di
 });
 
 test('«Ripristina com’era prima»: i file tornano identici a prima del passaggio', () => {
+  // dopo il passaggio il server ha scritto un PG in un file nuovo (nome con la data del salvataggio): va tolto
+  const primo = JSON.parse(leggi(pg[0]));
+  const nuovo = pg[0].replace(/_\d{4}-\d{2}-\d{2}\.json$/, '_2026-10-26.json');
+  writeFileSync(join(cartella, nuovo), JSON.stringify({ ...primo, nome_prova: 'scelte dopo il passaggio' }));
+  // un file di un altro personaggio (non nello zip) resta
+  writeFileSync(join(cartella, 'Estraneo_liv1_2026-10-26.json'), JSON.stringify({ formato: 'mutant-personaggio', pg: 'pg-estraneo' }));
   const r = ripristina({ cartella, salvataggi });
   assert.equal(r.rimessi, 7);
+  assert.deepEqual(r.tolti, [nuovo]);
+  assert.equal(existsSync(join(cartella, nuovo)), false, 'niente due file per lo stesso personaggio');
+  assert.ok(existsSync(join(cartella, 'Estraneo_liv1_2026-10-26.json')));
+  rmSync(join(cartella, 'Estraneo_liv1_2026-10-26.json'));
   for (const f of pg) assert.equal(leggi(f), readFileSync(new URL(f, FIX), 'utf8'), `${f} identico`);
   assert.ok(existsSync(r.sicurezza), 'com’era prima del ripristino resta in una copia');
 });

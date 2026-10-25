@@ -1,6 +1,6 @@
 Cartella «PX della partita» (A.161) del Tavolo del Direttore.
 
-Qui il server (avvia-server.bat) tiene:
+Qui il server (Mutant.bat, voce 1) tiene:
 - px.json: impostazioni di campagna (Atto corrente, PX iniziali comuni, associazione giocatore–PG)
   e l'archivio delle partite con il dettaglio del calcolo e gli importi assegnati.
 

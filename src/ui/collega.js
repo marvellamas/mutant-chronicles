@@ -102,7 +102,7 @@ export function riquadroCollega(rete, { aperto, onToggle, tablet = null, disposi
   // su una riga sola e «Copia»; una riga di spiegazione e l'aiuto in «Non si collegano?»
   return h('details', { class: 'riquadro collega-giocatori', open: aperto, ontoggle: (e) => onToggle(e.target.open) },
     h('summary', {}, h('strong', {}, 'Collega i giocatori')),
-    soloLocale ? h('p', { class: 'riquadro attenzione' }, `Il server è acceso con --solo-locale: risponde solo a questo computer (http://localhost:${porta}). Riavvialo con avvia-server.bat per i giocatori.`)
+    soloLocale ? h('p', { class: 'riquadro attenzione' }, `Il server è acceso con --solo-locale: risponde solo a questo computer (http://localhost:${porta}). Spegnilo e riaccendilo da Mutant.bat (voce 1) per i giocatori.`)
       : !indirizzi.length ? h('p', { class: 'riquadro attenzione' }, 'Nessuna rete trovata: collega questo computer al Wi-Fi e riavvia avvia-server.bat.')
         : [
           h('p', { class: 'nota collega-spiega' }, 'Stessa rete Wi-Fi: aprite l’indirizzo o inquadrate il QR.'),

@@ -53,7 +53,7 @@ export async function statoPrimaDelRiavvio(porta, { fetchFn = fetch, timeoutMs =
  */
 export function serveRiavvio(stato, versioneFile) {
   if (!stato?.acceso) {
-    return { riavvia: false, stato: 'spento', testo: 'Aggiornato. Mutant non era acceso: avvialo con la voce 1 della console (o con avvia-server.bat).' };
+    return { riavvia: false, stato: 'spento', testo: 'Aggiornato. Mutant non era acceso: avvialo con la voce 1 del menu di Mutant.bat.' };
   }
   if (!stato.mutant) {
     return { riavvia: false, stato: 'altro_programma', testo: 'Aggiornato. Sulla porta risponde un altro programma, non Mutant: non ho toccato nulla.' };
@@ -67,7 +67,7 @@ export function serveRiavvio(stato, versioneFile) {
 /** Il messaggio quando il riavvio non riesce: sempre con che cosa fare. */
 export const testoRiavvioNonRiuscito = (motivo) => 'Aggiornato, ma non sono riuscito a riavviare Mutant'
   + `${motivo ? ` (${String(motivo).replace(/\s+/g, ' ').slice(0, 120)})` : ''}.`
-  + ' Chiudi la finestra nera di Mutant e riaprilo (console: voce 1, oppure avvia-server.bat).';
+  + ' Chiudi la finestra nera di Mutant e riaprilo (Mutant.bat, voce 1).';
 
 /** Attende che il server risponda di nuovo, al massimo `attesaMs`. @returns lo stato, o null se non risponde. */
 export async function attendiAcceso(porta, { attesaMs = 40000, passoMs = 500, fetchFn = fetch, adesso = () => Date.now(), dormi = (ms) => new Promise((ok) => setTimeout(ok, ms)) } = {}) {

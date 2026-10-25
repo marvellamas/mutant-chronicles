@@ -138,6 +138,14 @@ test('«Aggiorna» dice in chiaro che cosa è cambiato, o che era già aggiornat
   writeFileSync(join(radice, 'versione.json'), JSON.stringify({ versione: 'bbb222', data: '2026-10-25 14:01' }));
   writeFileSync(join(radice, 'novita.json'), JSON.stringify({ titolo: 'Talenti nuovi' }));
   assert.equal(esitoDopo(radice), 'Aggiornato: prima eri alla versione del 22/10, ora sei a quella del 25/10 (Talenti nuovi).');
+  assert.equal(testoEsito({ ...dopo, versione: 'ccc333', data: '2026-10-25 09:00' }, dopo), 'Aggiornato: eri gia\' a una versione del 25/10, ora sei all\'ultima di quel giorno (Talenti nuovi).');
+  // stessa app ma zip nuovo (cambiati solo menu o strumenti): non si dice «non è cambiato niente»
+  writeFileSync(join(radice, '.versione'), 'sha-vecchio\n');
+  annotaPrima(radice);
+  writeFileSync(join(radice, '.versione'), 'sha-nuovo\n');
+  assert.match(esitoDopo(radice), /^Aggiornato: l'app resta alla versione del 25\/10 \(Talenti nuovi\); sono cambiati solo i programmi di servizio/);
+  annotaPrima(radice);
+  assert.match(esitoDopo(radice), /^Era gia' aggiornato/);
   // aggiorna.bat: con Git dice il branch e si ferma con modifiche non salvate, prima di toccare qualunque cosa
   const agg = leggi('aggiorna.bat');
   const iBranch = agg.indexOf('git rev-parse --abbrev-ref HEAD');
