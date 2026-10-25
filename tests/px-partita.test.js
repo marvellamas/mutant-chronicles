@@ -325,3 +325,44 @@ test('C (25/10): i PX di un incontro scritti a mano entrano nel calcolo, col cor
   assert.equal(pxIncontro({ nemici: [{ px: 100, qty: 1, principale: true }], pxDiretti: 999 }, 4, p).px, 100);
 });
 function arrotondaCorr(n, presenti, p) { return Math.round(n * correttivoPg(presenti, p)); }
+
+test('D (25/10): il premio di fine Atto è dell’Atto — si dà anche a un assente, con la traccia per Atto', async () => {
+  const { haPremio, premiPerAtto, premiDellaPartita } = await import('../src/px-partita.js');
+  const part = (presente) => ({ presente, partecipazione: 3, interpretazione: 3, contributo: 3, eccezionale: 0 });
+  // partita 2: Bea è assente ma riceve il premio dell'Atto IV; Carlo è presente senza premio
+  const m2 = { id: 'm2', titolo: 'Seconda', data: '2026-10-24', atto: 'IV', durata: 1, incontri: [], premiAtto: { b: true },
+    partecipanti: { a: part(true), b: { presente: false }, c: part(true) } };
+  assert.equal(haPremio(m2, 'b'), true);
+  assert.equal(haPremio(m2, 'a'), false);
+  const comp = componentiGiocatore(m2, 'b', 0, p);
+  assert.equal(comp.presente, false);
+  assert.equal(comp.premio, 250, 'Atto IV: 250 PX');
+  assert.equal(comp.totaleSuggerito, 250, 'da assente prende solo il premio, non voti né incontri');
+  assert.equal(componentiGiocatore(m2, 'c', 0, p).premio, 0);
+  // l'assegnazione la comprende (delta = il premio), e registra l'importo
+  assert.deepEqual(deltaAssegnazione(m2, { a: 0, b: 0, c: 0 }, p).b, 250);
+  const fatta = partitaAssegnata(m2, { a: 0, b: 0, c: 0 }, '2026-10-24', p);
+  assert.equal(fatta.assegnato.b, 250);
+  assert.equal(deltaAssegnazione(fatta, { a: 0, b: 250, c: 0 }, p).b, undefined, 'una seconda assegnazione non raddoppia');
+  // togliere il premio dopo averlo assegnato: la correzione è −250
+  assert.equal(deltaAssegnazione({ ...fatta, premiAtto: {} }, { a: 0, b: 250, c: 0 }, p).b, -250);
+  // la traccia per Atto: indipendente dalla partita guardata
+  const m1 = { id: 'm1', titolo: 'Prima', data: '2026-10-10', atto: 'IV', statoAssegnazione: 'assegnata', premiAtto: { a: true }, partecipanti: { a: part(true) } };
+  const traccia = premiPerAtto([m1, fatta]);
+  assert.deepEqual(Object.keys(traccia.IV).sort(), ['a', 'b']);
+  assert.equal(traccia.IV.b[0].partitaId, 'm2');
+  assert.equal(traccia.IV.b[0].assegnato, true);
+  // l'avviso «già avuto» funziona con la nuova granularità: a ha il premio in m1 e di nuovo in m3 (assente)
+  const m3 = { id: 'm3', atto: 'IV', premiAtto: { a: true, c: true }, partecipanti: { a: { presente: false }, c: part(true) } };
+  assert.deepEqual(premioGiaDato(m3, [m1, fatta, m3]), ['a']);
+  assert.deepEqual(premioGiaDato({ ...m3, atto: 'V' }, [m1, m3]), [], 'un altro Atto è un altro premio');
+  // il vecchio interruttore (un'unica casella per partita) vale ancora, per i presenti
+  const vecchia = { id: 'v', atto: 'I', premioAtto: true, partecipanti: { a: part(true), b: { presente: false } } };
+  assert.equal(haPremio(vecchia, 'a'), true);
+  assert.equal(haPremio(vecchia, 'b'), false);
+  assert.deepEqual(premiDellaPartita(vecchia), { a: true });
+  // un premio da assente non conta come partita giocata nel riepilogo
+  const r = riepilogo([fatta], [{ id: 'b', pg: 'Bea' }], { baseline: 0, atto: 'IV' }, p);
+  assert.equal(r[0].px, 250);
+  assert.equal(r[0].partite, 0);
+});

@@ -96,15 +96,49 @@ export function presentiNella(partita) {
 }
 
 /**
- * A.170 (18/10): il premio di fine Atto va dato una sola volta per personaggio. Avviso, non blocco (decide il
- * Direttore): gli id dei giocatori presenti in `partita` che hanno già avuto il premio dello stesso Atto in
- * un'altra partita (assegnata, o in bozza con il premio disposto).
+ * Il premio di fine Atto è dell'ATTO, non della partita (25/10/2026, precisazione di Davide alla A.170): ogni
+ * personaggio lo prende una volta per Atto, anche se nella partita in cui lo si registra era assente. Per questo
+ * si dispone giocatore per giocatore: `partita.premiAtto = { <idGiocatore>: true }`.
+ * Il vecchio `partita.premioAtto === true` (un interruttore per tutta la partita) vale per i presenti.
+ */
+export function haPremio(partita, id) {
+  if (partita?.premiAtto && typeof partita.premiAtto === 'object') return !!partita.premiAtto[id];
+  return partita?.premioAtto === true && !!partita?.partecipanti?.[id]?.presente;
+}
+
+/** Il premio di una partita nella forma nuova (`premiAtto`), partendo dal vecchio interruttore se serve. Non muta. */
+export function premiDellaPartita(partita) {
+  if (partita?.premiAtto && typeof partita.premiAtto === 'object') return { ...partita.premiAtto };
+  if (partita?.premioAtto !== true) return {};
+  return Object.fromEntries(Object.entries(partita.partecipanti ?? {}).filter(([, v]) => v?.presente).map(([id]) => [id, true]));
+}
+
+/**
+ * La traccia dei premi di fine Atto, per Atto e per giocatore, ricavata da tutte le partite: non dipende da
+ * quale partita si sta registrando. { <atto>: { <idGiocatore>: [{ partitaId, titolo, data, assegnato }] } }, dove
+ * `assegnato` dice se la partita è già stata assegnata (il premio è nei PX del PG) o è ancora una bozza.
+ */
+export function premiPerAtto(partite) {
+  const atti = {};
+  for (const m of partite ?? []) {
+    for (const id of Object.keys(premiDellaPartita(m))) {
+      if (!haPremio(m, id)) continue;
+      ((atti[m.atto] ??= {})[id] ??= []).push({ partitaId: m.id, titolo: m.titolo ?? '', data: m.data ?? '', assegnato: m.statoAssegnazione === 'assegnata' });
+    }
+  }
+  return atti;
+}
+
+/**
+ * A.170 (18/10), come l'ha precisata Davide il 24/10: il premio di fine Atto va dato una sola volta per personaggio
+ * e per Atto. Avviso, non blocco (decide il Direttore): gli id a cui `partita` dà il premio e che l'hanno già avuto
+ * (o disposto) in un'altra partita dello stesso Atto — presenti o assenti in quella partita.
  */
 export function premioGiaDato(partita, partite) {
   const ids = new Set();
   for (const m of partite ?? []) {
-    if (m.id === partita?.id || m.atto !== partita?.atto || !m.premioAtto) continue;
-    for (const [id, part] of Object.entries(m.partecipanti ?? {})) if (part?.presente && partita?.partecipanti?.[id]?.presente) ids.add(id);
+    if (m.id === partita?.id || m.atto !== partita?.atto) continue;
+    for (const id of Object.keys(premiDellaPartita(m))) if (haPremio(m, id) && haPremio(partita, id)) ids.add(id);
   }
   return [...ids];
 }
@@ -135,7 +169,7 @@ export function componentiGiocatore(partita, pgId, pxPg, p) {
   const pxBonus = presente ? num(part.eccezionale) * fattore : 0;
   const pxIncontri = presente
     ? (partita?.incontri ?? []).reduce((acc, inc) => acc + pxIncontro(inc, nPresenti, p).px, 0) : 0;
-  const premio = presente && partita?.premioAtto ? premioAtto(partita.atto, p) : 0;
+  const premio = haPremio(partita, pgId) ? premioAtto(partita.atto, p) : 0; // anche da assente: è dell'Atto, non della partita
   const totaleSuggerito = pxVoti + pxBonus + pxIncontri + premio;
   return { presente, livello, titolo: titoloT.nome, titoloAutomatico: titoloPerLivello(livello, p).nome, fattore, voti, sommaVoti,
     pxVoti, pxBonus, pxIncontri, premio, totaleSuggerito };
@@ -158,6 +192,10 @@ export function calcolaPartita(partita, pxGiocatori, p) {
   return { perGiocatore };
 }
 
+/** Un giocatore entra nell'assegnazione se è presente, se la partita gli dà il premio di fine Atto (anche da assente),
+    o se gli aveva già assegnato qualcosa (una correzione deve poter togliere). */
+const contaNellaPartita = (partita, pgId, g) => !!g.presente || haPremio(partita, pgId) || Number.isFinite(Number(partita?.assegnato?.[pgId]));
+
 /**
  * Delta da applicare a ogni PG presente quando si preme «Assegna PX della partita»: la differenza fra il
  * totale finale scelto e quanto già assegnato da QUESTA partita (così correggere aggiorna, non raddoppia).
@@ -167,7 +205,7 @@ export function deltaAssegnazione(partita, pxGiocatori, p) {
   const { perGiocatore } = calcolaPartita(partita, pxGiocatori, p);
   const delta = {};
   for (const [pgId, g] of Object.entries(perGiocatore)) {
-    if (!g.presente) continue;
+    if (!contaNellaPartita(partita, pgId, g)) continue;
     const gia = num(partita?.assegnato?.[pgId]);
     const d = arrotonda(g.totaleFinale) - gia;
     if (d !== 0) delta[pgId] = d;
@@ -184,7 +222,7 @@ export function partitaAssegnata(partita, pxGiocatori, quando, p) {
   const assegnato = {};
   const pxPrima = { ...(partita?.pxPrima ?? {}) };
   for (const [pgId, g] of Object.entries(perGiocatore)) {
-    if (!g.presente) continue;
+    if (!contaNellaPartita(partita, pgId, g)) continue;
     assegnato[pgId] = arrotonda(g.totaleFinale);
     if (!Number.isFinite(Number(pxPrima[pgId]))) pxPrima[pgId] = num(pxGiocatori?.[pgId]); // solo alla prima assegnazione
   }
@@ -214,7 +252,7 @@ export function riepilogo(partite, giocatori, impostazioni, p) {
         somma.interpretazione += num(part.interpretazione);
         somma.contributo += num(part.contributo);
       }
-      if (m.assegnato && g.id in m.assegnato) nPartite += 1;
+      if (m.assegnato && g.id in m.assegnato && part?.presente) nPartite += 1; // un premio di Atto da assente non è una partita giocata
     }
     const livelloReale = livelloDaPx(px, p);
     const livello = Math.min(livelloReale, limiteAtto(atto, p));

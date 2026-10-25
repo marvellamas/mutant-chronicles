@@ -13,7 +13,7 @@ import { avviso, avvisoErrore } from './avvisi.js';
 import { chiedi } from './finestrella.js';
 import { registraDiretta } from '../correzioni-master.js';
 import {
-  calcolaPartita, pxIncontro, correttivoPg, deltaAssegnazione, partitaAssegnata, premioGiaDato, riepilogo, csvRiepilogo, componentiGiocatore, presentiNella,
+  calcolaPartita, haPremio, premiDellaPartita, premiPerAtto, pxIncontro, correttivoPg, deltaAssegnazione, partitaAssegnata, premioGiaDato, riepilogo, csvRiepilogo, componentiGiocatore, presentiNella,
 } from '../px-partita.js';
 import { idStabileDiFile } from '../cartella.js';
 
@@ -54,7 +54,7 @@ export function nuovaPartita(dati, giocatori) {
   for (const g of giocatori ?? []) partecipanti[g.id] = { presente: true, partecipazione: p.voti.default, interpretazione: p.voti.default, contributo: p.voti.default, eccezionale: 0 };
   return {
     id: idPartita(), data: oggi(), titolo: 'Nuova partita', durata: 1, atto: p.campagna.atto_default,
-    premioAtto: false, note: '', partecipanti, incontri: [], finali: {}, statoAssegnazione: 'bozza',
+    premiAtto: {}, note: '', partecipanti, incontri: [], finali: {}, statoAssegnazione: 'bozza',
   };
 }
 
@@ -155,12 +155,16 @@ function vistaPartita(ctx, st, az, salva, partita) {
     h('label', { class: 'px-campo' }, h('span', {}, 'Atto'),
       h('select', { onchange: (e) => { partita.atto = e.target.value; salva(); } },
         ...p(st).atti.map((a) => h('option', { value: a.nome, selected: partita.atto === a.nome }, `Atto ${a.nome}`)))),
-    h('label', { class: 'px-campo px-check' }, h('input', { type: 'checkbox', checked: !!partita.premioAtto, onchange: (e) => { partita.premioAtto = e.target.checked; salva(); } }),
-      h('span', {}, `Premio di fine Atto (${fmt(premioDi(st, partita.atto))})`)),
-    (() => {
-      const gia = partita.premioAtto ? premioGiaDato(partita, db.partite).map((id) => db.giocatori.find((g) => g.id === id)?.pg || id) : [];
-      return gia.length ? h('p', { class: 'nota' }, `Il premio dell’Atto ${partita.atto} è già stato dato a ${gia.join(', ')} in un’altra partita: va dato una sola volta per personaggio (decide il Direttore).`) : null;
-    })());
+    h('div', { class: 'px-campo px-premio-azioni' }, h('span', {}, `Premio di fine Atto ${partita.atto} (${fmt(premioDi(st, partita.atto))} PX)`),
+      h('div', { class: 'riga-azioni' },
+        h('button', { class: 'btn small', title: 'Dà il premio a tutti i personaggi presenti in questa partita', onclick: () => {
+          const m = premiDellaPartita(partita); for (const [id, v] of Object.entries(partita.partecipanti)) if (v?.presente) m[id] = true; partita.premiAtto = m; delete partita.premioAtto; salva();
+        } }, 'A tutti i presenti'),
+        h('button', { class: 'btn small ghost', onclick: () => { partita.premiAtto = {}; delete partita.premioAtto; salva(); } }, 'A nessuno')),
+      h('span', { class: 'nota' }, 'Il premio è dell’Atto: lo si può dare anche a chi oggi manca (casella «Premio» in tabella).')));
+  const giaDatoA = premioGiaDato(partita, db.partite).map((id) => db.giocatori.find((g) => g.id === id)?.pg || id);
+  const avvisoPremio = giaDatoA.length
+    ? h('p', { class: 'riquadro attenzione' }, `Il premio dell’Atto ${partita.atto} risulta già dato a ${giaDatoA.join(', ')} in un’altra partita: va dato una sola volta per personaggio (decide il Direttore).`) : null;
 
   const calc = calcolaPartita(partita, st.pxGiocatori, p(st));
   const nPresenti = presentiNella(partita);
@@ -171,7 +175,9 @@ function vistaPartita(ctx, st, az, salva, partita) {
     const voto = (chiave) => h('input', { type: 'number', min: p(st).voti.min, max: p(st).voti.max, value: part[chiave], class: 'px-voto',
       oninput: (e) => { part[chiave] = Number(e.target.value); az.salva(); az.ridisegna(); } });
     const finaleVal = partita.finali?.[g.id];
-    return h('tr', { class: part.presente ? '' : 'px-assente' },
+    const premio = haPremio(partita, g.id);
+    const conta = part.presente || premio;
+    return h('tr', { class: conta ? '' : 'px-assente' },
       h('td', {}, h('label', { class: 'px-check' }, h('input', { type: 'checkbox', checked: !!part.presente, onchange: (e) => { part.presente = e.target.checked; az.salva(); az.ridisegna(); } }), h('span', {}, g.pg || g.id)),
         part.presente ? h('select', { class: 'px-titolo', title: 'Titolo di questa partita (dai PX che il PG aveva prima dell’assegnazione); cambialo a mano se serve',
           onchange: (e) => { partita.titoliManuali = { ...partita.titoliManuali }; if (e.target.value) partita.titoliManuali[g.id] = e.target.value; else delete partita.titoliManuali[g.id]; salva(); } },
@@ -181,14 +187,16 @@ function vistaPartita(ctx, st, az, salva, partita) {
       h('td', {}, part.presente ? voto('interpretazione') : '—'),
       h('td', {}, part.presente ? voto('contributo') : '—'),
       h('td', {}, part.presente ? h('input', { type: 'number', value: part.eccezionale, class: 'px-voto', oninput: (e) => { part.eccezionale = Number(e.target.value); az.salva(); az.ridisegna(); } }) : '—'),
+      h('td', {}, h('input', { type: 'checkbox', class: 'px-premio', checked: premio, 'aria-label': `Premio di fine Atto per ${g.pg || g.id}${part.presente ? '' : ' (assente)'}`,
+        onchange: (e) => { const m = premiDellaPartita(partita); if (e.target.checked) m[g.id] = true; else delete m[g.id]; partita.premiAtto = m; delete partita.premioAtto; salva(); } })),
       h('td', { class: 'px-comp', title: `voti ${fmt(c.pxVoti)} · bonus ${fmt(c.pxBonus)} · incontri ${fmt(c.pxIncontri)} · premio ${fmt(c.premio)}` }, fmt(c.totaleSuggerito)),
-      h('td', {}, part.presente ? h('input', { type: 'number', class: 'px-finale', value: Number.isFinite(Number(finaleVal)) ? finaleVal : c.totaleSuggerito,
+      h('td', {}, conta ? h('input', { type: 'number', class: 'px-finale', value: Number.isFinite(Number(finaleVal)) ? finaleVal : c.totaleSuggerito,
         oninput: (e) => { partita.finali = { ...partita.finali, [g.id]: Number(e.target.value) }; az.salva(); } }) : '—'));
   });
 
   const tabella = h('table', { class: 'px-tabella' },
     h('thead', {}, h('tr', {}, h('th', {}, `Giocatore (${nPresenti} present${nPresenti === 1 ? 'e' : 'i'})`),
-      h('th', {}, 'Part.'), h('th', {}, 'Interp.'), h('th', {}, 'Contr.'), h('th', {}, 'Bonus'), h('th', {}, 'Suggerito'), h('th', {}, 'Finale'))),
+      h('th', {}, 'Part.'), h('th', {}, 'Interp.'), h('th', {}, 'Contr.'), h('th', {}, 'Bonus'), h('th', { title: `Premio di fine Atto ${partita.atto}: anche a chi è assente da questa partita` }, 'Premio'), h('th', {}, 'Suggerito'), h('th', {}, 'Finale'))),
     h('tbody', {}, ...righeGiocatori));
 
   const assegna = h('button', { class: 'btn', onclick: async () => {
@@ -196,13 +204,31 @@ function vistaPartita(ctx, st, az, salva, partita) {
     const nomi = Object.keys(delta);
     if (!nomi.length) { avviso('Niente da assegnare: i totali sono già quelli assegnati.', { tipo: 'info' }); return; }
     const testo = nomi.map((id) => `${(db.giocatori.find((g) => g.id === id)?.pg) || id}: ${delta[id] > 0 ? '+' : ''}${fmt(delta[id])}`).join('\n');
-    if (!await chiedi({ titolo: `Assegni i PX di «${partita.titolo}»?`, testo: `${testo}\n\nAggiorna i PG presenti (Modifica master).`, si: 'Assegna' })) return;
+    if (!await chiedi({ titolo: `Assegni i PX di «${partita.titolo}»?`, testo: `${testo}\n\nAggiorna i PG interessati (Modifica master).`, si: 'Assegna' })) return;
     try { await az.assegna(partita); } catch (e) { avvisoErrore(e.message ?? String(e)); }
   } }, partita.statoAssegnazione === 'assegnata' ? 'Ri-assegna (correzione)' : 'Assegna PX della partita');
 
-  return h('div', { class: 'px-partita' }, elenco, intest, incontriPartita(st, az, partita), tabella,
+  return h('div', { class: 'px-partita' }, elenco, intest, avvisoPremio, premiDellAtto(st, partita.atto), incontriPartita(st, az, partita), tabella,
     h('div', { class: 'px-azioni' }, assegna,
       partita.statoAssegnazione === 'assegnata' ? h('span', { class: 'px-stato' }, `Assegnata il ${partita.assegnataIl || '—'}`) : h('span', { class: 'nota' }, 'Bozza: i PX non sono ancora assegnati.')));
+}
+
+/**
+ * La traccia del premio di fine Atto per un Atto, la stessa da qualunque partita la si guardi: chi l'ha avuto
+ * (e in quale partita), chi è disposto in una bozza, chi non ancora.
+ */
+function premiDellAtto(st, atto) {
+  const db = st.db;
+  const traccia = premiPerAtto(db.partite)[atto] ?? {};
+  if (!db.giocatori.length) return null;
+  return h('details', { class: 'px-premi-atto', open: false },
+    h('summary', {}, `Premi di fine Atto ${atto} (${fmt(premioDi(st, atto))} PX): ${Object.keys(traccia).length} di ${db.giocatori.length}`),
+    h('ul', {}, ...db.giocatori.map((g) => {
+      const voci = traccia[g.id] ?? [];
+      const nome = g.pg || g.giocatore || g.id;
+      if (!voci.length) return h('li', {}, `${nome}: non ancora`);
+      return h('li', {}, `${nome}: `, voci.map((v) => `${v.assegnato ? 'ricevuto' : 'disposto (bozza)'} in «${v.titolo || 'partita'}»${v.data ? ` del ${v.data}` : ''}`).join('; '));
+    })));
 }
 
 function incontriPartita(st, az, partita) {
@@ -251,7 +277,7 @@ function vistaArchivio(st, az) {
   const db = st.db;
   const assegnate = db.partite.filter((m) => m.statoAssegnazione === 'assegnata');
   if (!assegnate.length) return h('p', { class: 'vuoto' }, 'Nessuna partita assegnata.');
-  return h('div', { class: 'px-archivio' }, ...assegnate.map((m) => h('div', { class: 'px-archivio-riga' },
+  return h('div', { class: 'px-archivio' }, ...st.dati.px_partita.atti.filter((a) => premiPerAtto(db.partite)[a.nome]).map((a) => premiDellAtto(st, a.nome)), ...assegnate.map((m) => h('div', { class: 'px-archivio-riga' },
     h('span', {}, `${m.data || 's.d.'} · ${m.titolo}`),
     h('span', { class: 'nota' }, Object.entries(m.assegnato ?? {}).map(([id, v]) => `${(db.giocatori.find((g) => g.id === id)?.pg) || id}: ${fmt(v)}`).join(', ')),
     h('button', { class: 'btn small', onclick: () => { st.uiPx.selezione = m.id; st.uiPx.vista = 'partita'; az.ridisegna(); } }, 'Modifica'))));
