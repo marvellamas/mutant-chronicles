@@ -91,11 +91,11 @@ l'unica cosa che scrive è la cartella dei dati di questo PC. Nessun file si spo
   - il guaio di stamattina (impostazione persa fra prima e dopo): il controllo lo dice in rosso, con i sette nomi e i
     PX; «Cerca i personaggi» mette in cima le versioni con i PX di ieri e la cartella giusta al numero 1; con 1 e SI il
     controllo torna verde.
-- **Sul fisso** (profilo di Windows vero): i dati del fisso copiati in F:mutant-dati-prova e impostati lì, PX 500–530
-  assegnati attraverso il server; voce 2 con Git sul repository e due aggiornamenti da zip della copia
-  distribuzionemutant: sempre «Personaggi: 7 in F:mutant-dati-provapersonaggi, PX invariati»; impostazione tolta fra
-  prima e dopo: rosso con i nomi e i PX; «Cerca» ha messo F:mutant-dati-prova al numero 1 con i PX 500–530; scelta con
-  SI, di nuovo verde. Alla fine il profilo del fisso è tornato su F:REPOSmutant.
+- **Sul fisso** (profilo di Windows vero): i dati del fisso copiati in `F:\mutant-dati-prova` e impostati lì, PX
+  500–530 assegnati attraverso il server; voce 2 con Git sul repository e due aggiornamenti da zip della copia
+  `distribuzione\mutant`: sempre «Personaggi: 7 in F:\mutant-dati-prova\personaggi, PX invariati»; impostazione tolta
+  fra prima e dopo: rosso con i nomi e i PX; «Cerca» ha messo `F:\mutant-dati-prova` al numero 1 con i PX 500–530;
+  scelta con SI, di nuovo verde. Alla fine il profilo del fisso è tornato su `F:\REPOS\mutant`.
 
 Trovati e corretti nella prova: in «Cerca» le copie negli zip e nello storico passavano davanti alle versioni vere,
-perché contava la data della copia; «Cerca» non guardava la radice dei dischi (una cartella come F:mutant-dati-prova o D:Mutant sfuggiva: ora guarda due livelli sotto la radice del disco dell'app e di quello dell'utente); la stessa cartella scritta con il nome corto (`BEASTM~1`) o lungo sembrava diversa.
+perché contava la data della copia; «Cerca» non guardava la radice dei dischi (una cartella come `F:\mutant-dati-prova` o `D:\Mutant` sfuggiva: ora guarda due livelli sotto la radice del disco dell'app e di quello dell'utente); la stessa cartella scritta con il nome corto (`BEASTM~1`) o lungo sembrava diversa.
