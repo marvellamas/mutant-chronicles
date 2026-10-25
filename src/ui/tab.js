@@ -220,6 +220,8 @@ export function renderTab(ctx) {
     h('div', { class: 'titolo-tab' }, badge, h('h2', {}, corrente.titolo), testataComune(ctx)),
     ctx.messaggio ? h('p', { class: `riquadro ${ctx.messaggio.tipo}`, role: 'status' }, ctx.messaggio.testo) : null,
     avvisoMaster(ctx.avvisoMaster),
+    // Talenti v1.0 (lotto 2): «Da scegliere», in alto in ogni tab finché ci sono posti vuoti (src/ui/talenti-scelta.js)
+    ctx.talenti ? ctx.talenti.disegna(ctx.talenti) : null,
     riquadroScontro(ctx),
     // punti liberi in eccesso: nella tab Abilità l'avviso sta sopra la tabella, con le Abilità segnate
     avvisoRegoleAggiornate(ctx, tab.scheda, { eccesso: corrente.id !== 'abilita' }),

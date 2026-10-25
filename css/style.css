@@ -3036,3 +3036,20 @@ body.tablet-sola-lettura #app button:not(.tab-bottone, .btn-torna-sopra), body.t
 body.tablet-sola-lettura #app textarea {
   pointer-events: none; opacity: 0.55; cursor: not-allowed; filter: grayscale(0.3);
 }
+
+/* Talenti v1.0 (lotto 2, 25/10/2026): il riquadro «Da scegliere» (src/ui/talenti-scelta.js) */
+.riquadro-talenti .riga-azioni { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.posti-talenti { list-style: none; display: flex; flex-wrap: wrap; gap: 0.35rem; padding: 0; margin: 0.6rem 0; }
+.posto-talento { border: 1px solid var(--bordo); border-radius: var(--raggio); background: var(--superficie); color: var(--testo); padding: 0.3rem 0.55rem; font-size: 0.85rem; min-height: 40px; }
+.posto-talento.attuale { outline: 2px solid var(--accento, #c8a24a); font-weight: 600; }
+.posto-talento.scelto { opacity: 0.85; }
+.posto-talento.non-valido { border-color: var(--errore, #c0392b); }
+.posto-attivo h3 { margin: 0.5rem 0; font-size: 1rem; }
+.posto-attivo input[type='search'] { width: 100%; max-width: 22rem; min-height: 40px; margin-bottom: 0.4rem; }
+.opzioni-talento { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.35rem; }
+.opzione-talento { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.4rem; border-bottom: 1px solid var(--bordo); padding: 0.35rem 0; }
+.opzione-talento .opzione-testo { flex: 1 1 18rem; }
+.opzione-talento .opzione-azioni { display: flex; gap: 0.35rem; align-items: center; }
+.opzione-talento .opzione-azioni button { min-height: 40px; }
+.opzione-talento.bloccato { opacity: 0.6; }
+.opzione-talento .motivo { display: block; }
