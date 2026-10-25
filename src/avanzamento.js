@@ -1150,7 +1150,7 @@ export function validaLivello(personaggio, scelte, dati, { procedi = false } = {
   if (eccessi.length && !procedi) return [{ campo: 'livelli', problema: motivoEccesso(eccessi), tipo: 'violazione', procedibile: true }];
   if (completamenti.length && !procedi) return [{ campo: 'livelli', problema: motivoCompletamento(completamenti), tipo: 'violazione', procedibile: true }];
   // Talenti v1.0: una scelta non ammessa c'è solo se l'ha forzata il Direttore; avvisa con «Procedi comunque», non blocca
-  const sceltaTalento = (e) => stato.regime === 'nuovo' && /(^|.)(talentoLibero|maestria|specializzazione|specializzazioneIniziale)$/.test(e.campo ?? '');
+  const sceltaTalento = (e) => stato.regime === 'nuovo' && /(^|\.)(talentoLibero|maestria|specializzazione|specializzazioneIniziale)$/.test(e.campo ?? '');
   const forzate = errori.filter((e) => e.tipo === 'violazione' && sceltaTalento(e));
   const bloccanti = errori.filter((e) => e.tipo === 'violazione' && !sceltaTalento(e));
   if (forzate.length && !bloccanti.length && !procedi) return [{ campo: 'livelli', problema: `una scelta dei Talenti non è ammessa dalle regole (forzata dal Direttore: ${forzate[0].problema})`, tipo: 'violazione', procedibile: true }];

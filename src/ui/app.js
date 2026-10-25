@@ -1604,7 +1604,7 @@ function registraModificheMaster() {
 // altra modifica (il server ricontrolla le scelte dei tablet: src/talenti-tablet.js).
 
 /** Un errore che è solo un posto dei Talenti v1.0 ancora vuoto (lo mostra il riquadro, non l'elenco degli errori). */
-const eSceltaTalento = (e) => stato.scelte?.regimeTalenti === 2 && /(^|.)(talentoLibero|maestria|specializzazione|specializzazioneIniziale)$/.test(e.campo ?? '');
+const eSceltaTalento = (e) => stato.scelte?.regimeTalenti === 2 && /(^|\.)(talentoLibero|maestria|specializzazione|specializzazioneIniziale)$/.test(e.campo ?? '');
 const ePostoTalentoVuoto = (e) => eSceltaTalento(e) && e.tipo === 'incompleto';
 // una scelta non ammessa c'è solo se l'ha forzata il Direttore (il server non la accetta da un tablet): il riquadro la
 // mostra come tale, e non blocca niente (l'app avvisa, non blocca)

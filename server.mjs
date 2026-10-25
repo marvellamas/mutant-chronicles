@@ -1605,11 +1605,11 @@ async function copiaStoricaPx(px, dove) {
   if (!prima) return;
   const cartella = join(px, 'storico');
   await mkdir(cartella, { recursive: true });
-  const elenco = (await readdir(cartella)).filter((n) => /^px-d{8}-d{6}.json$/.test(n)).sort();
+  const elenco = (await readdir(cartella)).filter((n) => /^px-\d{8}-\d{6}\.json$/.test(n)).sort();
   const ultima = elenco.at(-1);
   const adesso = new Date();
   if (ultima) {
-    const m = /^px-(d{4})(d{2})(d{2})-(d{2})(d{2})(d{2}).json$/.exec(ultima);
+    const m = /^px-(\d{4})(\d{2})(\d{2})-(\d{2})(\d{2})(\d{2})\.json$/.exec(ultima);
     if (m && adesso - new Date(+m[1], m[2] - 1, +m[3], +m[4], +m[5], +m[6]) < 60_000) return;
     if (await readFile(join(cartella, ultima), 'utf8').catch(() => null) === prima) return;
   }
