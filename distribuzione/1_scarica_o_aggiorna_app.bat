@@ -9,7 +9,9 @@ cd /d "%~dp0"
 rem Indirizzi. Le variabili MUTANT_ZIP_URL e MUTANT_API_URL servono solo per le prove.
 if not defined MUTANT_ZIP_URL set "MUTANT_ZIP_URL=https://github.com/marvellamas/mutant-chronicles/archive/refs/heads/main.zip"
 if not defined MUTANT_API_URL set "MUTANT_API_URL=https://api.github.com/repos/marvellamas/mutant-chronicles/commits/main"
-set "DEST=%~dp0mutant"
+rem C (27/10/2026, lotto 128): di norma DEST e' la cartella "mutant" accanto a questo file; chi chiama questo script
+rem per aggiornare una installazione che sta altrove (aggiorna.bat, voce 2) lo dice in modo esplicito.
+if defined MUTANT_DEST_ESPLICITA (set "DEST=%MUTANT_DEST_ESPLICITA%") else (set "DEST=%~dp0mutant")
 set "LAVORO=%TEMP%\mutant-scarico"
 rem Copia delle regole modificate a mano (cartella data) prima di sostituirle.
 set "BACKUP=%~dp0backup_dati"
@@ -37,21 +39,33 @@ echo.
 
 :prepara
 rem 26/10/2026: i dati di Mutant (personaggi, PX, tavolo, salvataggi) su questo PC stanno nella cartella scritta nel
-rem profilo di Windows (tools\dati-pc.mjs), non per forza qui. Se questo file sta creando una copia NUOVA dell'app in
-rem un altro posto, lo diciamo: la copia nuova usera' gli stessi personaggi, ma di solito si aggiorna dalla voce 2.
+rem profilo di Windows (tools\dati-pc.mjs), non per forza qui.
 set "PROFILO=%MUTANT_CONFIG_DIR%"
 if not defined PROFILO set "PROFILO=%APPDATA%\Mutant"
 set "DATIPC="
 if exist "%PROFILO%\dati.json" for /f "usebackq delims=" %%C in (`powershell -NoProfile -Command "(Get-Content -Raw -LiteralPath '%PROFILO%\dati.json' | ConvertFrom-Json).cartella"`) do set "DATIPC=%%C"
 rem (salti e non un blocco fra parentesi: un percorso come "Mutant (2)" romperebbe il blocco)
-if not defined DATIPC goto dopo_avviso_dati
-if exist "%DEST%\server.mjs" goto dopo_avviso_dati
-echo  ATTENZIONE: su questo PC Mutant c'e' gia', con i personaggi in:
-echo     %DATIPC%
-echo  Qui sto creando una copia nuova dell'app, in %DEST%: usera' gli stessi personaggi.
-echo  Di solito si aggiorna dalla copia che usi gia': Mutant.bat, voce 2.
+
+rem B (27/10/2026, lotto 128): questo pacchetto non crea MAI una seconda installazione. Se DEST esiste gia' (si sta
+rem aggiornando la stessa cartella, per esempio dalla voce 2 di Mutant.bat, MUTANT_DA_AGGIORNA) si va avanti come
+rem sempre. Altrimenti, se Mutant e' gia' da qualche parte su questo PC (l'impostazione del profilo, o una ricerca
+rem leggera nei Desktop/Documenti/Download, come la voce P del 127) non si installa niente: si dice dov'e'.
+if exist "%DEST%\server.mjs" goto dopo_controllo_installata
+if defined MUTANT_DA_AGGIORNA goto dopo_controllo_installata
+set "TROVATA="
+if defined DATIPC if exist "%DATIPC%\personaggi" set "TROVATA=%DATIPC%"
+if not defined TROVATA for /f "usebackq delims=" %%T in (`powershell -NoProfile -Command "$ProgressPreference='SilentlyContinue'; $qui=(Resolve-Path '%~dp0.').Path; $basi=New-Object System.Collections.Generic.List[string]; $basi.Add([Environment]::GetFolderPath('Desktop')); $basi.Add((Join-Path (Split-Path -Parent $env:USERPROFILE) 'Public\Desktop')); $basi.Add([Environment]::GetFolderPath('MyDocuments')); $basi.Add((Join-Path $env:USERPROFILE 'Downloads')); Get-ChildItem -LiteralPath $env:USERPROFILE -Directory -Filter 'OneDrive*' -ErrorAction SilentlyContinue | ForEach-Object { $basi.Add((Join-Path $_.FullName 'Desktop')); $basi.Add((Join-Path $_.FullName 'Documents')) }; foreach ($b in ($basi | Where-Object { $_ -and (Test-Path -LiteralPath $_) } | Select-Object -Unique)) { Get-ChildItem -LiteralPath $b -Recurse -Depth 4 -Filter 'Mutant.bat' -File -ErrorAction SilentlyContinue | Where-Object { $_.DirectoryName -ne $qui -and $_.DirectoryName -notlike ($qui + '*') } | Select-Object -First 1 -ExpandProperty DirectoryName }" 2^>nul`) do if not defined TROVATA set "TROVATA=%%T"
+if not defined TROVATA goto dopo_controllo_installata
+echo  ==============================================================
+echo   Mutant e' gia' installato in:
+echo     %TROVATA%
+echo  ==============================================================
+echo  Usa il collegamento "Mutant" sul desktop ^(apre quella installazione^). Questo pacchetto puoi
+echo  cancellarlo: serve solo la prima volta, su un PC dove Mutant non c'e' ancora.
 echo.
-:dopo_avviso_dati
+pause
+exit /b 0
+:dopo_controllo_installata
 rem prima dell'aggiornamento: dove sono i personaggi, quanti e con quanti PX (lo fa gia' la voce 2 se arriva da li')
 if not defined MUTANT_DA_AGGIORNA if exist "%DEST%\tools\esito-aggiornamento.mjs" node "%DEST%\tools\esito-aggiornamento.mjs" prima --radice="%DEST%"
 
