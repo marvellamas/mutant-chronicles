@@ -138,7 +138,8 @@
         "va": 1,
         "danno": 1
       },
-      "categoria": "specializzazione"
+      "categoria": "specializzazione",
+      "tavolo": "+1 VA e +1 danno con le armi della categoria Scudi: gli Scudi non hanno ancora un profilo d’attacco nei dati, si applica al tavolo."
     },
     {
       "id": "specializzazione-pistole",

@@ -274,6 +274,7 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
       annotazione: t.annotazione ?? null,
       livello: t.livello,
       provvisorio: t.provvisorio,
+      tavolo: t.tavolo ?? null,
       ...talentoSS(t),
     })),
     specializzazioni: s.specializzazioni.map((x) => ({
@@ -283,6 +284,7 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
       effetto: effettoSpecializzazione(x.effetto),
       // 25/10 sera: che cosa fa, in una riga (bonus, Abilità, ambito), come nel riquadro «Da scegliere»
       riga: rigaBreve(x.id, dati),
+      tavolo: x.tavolo ?? null,
       livello: x.livello,
       classe: x.classe ?? null,
       annotazione: x.annotazione ?? null,

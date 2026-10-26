@@ -1415,11 +1415,11 @@ function tabAbilita(ctx, d) {
         h('h3', {}, n.nome, t.parametro ? ` (${t.parametro})` : null, t.annotazione ? ` — ${t.annotazione}` : null,
           h('span', { class: 'sigla' }, ` · ${t.livello}° livello`), t.provvisorio ? h('span', { class: 'etichetta' }, 'provvisorio') : null),
         t.provvisorio ? h('p', { class: 'nota' }, 'Talento provvisorio: ricavato dal Manuale della Magia, prerequisiti da definire con il master.') : null,
-        paragrafi(t.frase), n.scheda);
+        paragrafi(t.frase), t.tavolo ? notaTavolo(t.tavolo) : null, n.scheda);
     })) : null),
     d.specializzazioni.length ? sezione('Specializzazioni', h('ul', {}, d.specializzazioni.map((x) => {
       const n = nomeCheSiApre(x.nome, schedaTalento(x.id, ctx.dati));
-      return h('li', {}, n.nome, x.annotazione ? ` (${x.annotazione})` : null, ` — ${x.riga || `${x.abilita}; ${x.effetto}`} (${x.livello}° livello)`, n.scheda);
+      return h('li', {}, n.nome, x.annotazione ? ` (${x.annotazione})` : null, ` — ${x.riga || `${x.abilita}; ${x.effetto}`} (${x.livello}° livello)`, x.tavolo ? notaTavolo(x.tavolo) : null, n.scheda);
     }))) : null,
     // Tecniche Interiori: nella tab Poteri, con «Attiva» (richiesta di Davide del 02/10)
     d.tecniche.length || d.tecnicheAmmesse ? h('p', { class: 'nota rimando-tecniche' }, `Tecniche Interiori (${d.tecniche.length} / ${d.tecnicheAmmesse}): vedi Poteri.`) : null,
@@ -1429,6 +1429,9 @@ function tabAbilita(ctx, d) {
 // ---------------------------------------------------------------------------
 // Iniziativa, Movimento e Azioni effettivi (scheda.tavolo, src/condizioni.js → valoriTavolo): stesse
 // pillole dei VA, con colore ▼/▲ rispetto ai valori da regole e la scomposizione nel tooltip.
+
+/** «Da applicare al tavolo: …» accanto a un Talento: ciò che il suo testo dice e l'app non calcola da sola. */
+const notaTavolo = (testo) => h('p', { class: 'nota da-applicare' }, h('strong', {}, 'Da applicare al tavolo: '), testo);
 
 function pillolaTavolo(titolo, parti, formato = numero, tira = null) {
   const peggio = parti.some((p) => p.v.effettivo === null || p.v.effettivo < p.v.daRegole);

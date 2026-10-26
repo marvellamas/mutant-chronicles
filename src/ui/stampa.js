@@ -330,7 +330,8 @@ function foglioAbilita(d) {
   // sintesi operativa (decisione 112) con il riferimento; * = sintesi da verificare con Davide
   const talento = (t, dettagli) => h('li', {}, h('strong', {}, t.nome), dettagli, ` — ${t.frase}`,
     t.rif ? h('span', { class: 'sigla' }, ` (${t.rif})${t.daVerificare ? ' *' : ''}`) : null,
-    t.daRedigere ? h('em', { class: 'sigla' }, ' (sintesi da redigere)') : null);
+    t.daRedigere ? h('em', { class: 'sigla' }, ' (sintesi da redigere)') : null,
+    t.tavolo ? h('em', { class: 'da-applicare' }, ` Da applicare al tavolo: ${t.tavolo}`) : null);
   // una voce degli elenchi dei Talenti Liberi e delle Maestrie (Talenti v1.0: due elenchi con il regime nuovo)
   const voceTalentoStampa = (t) => talento(t, [t.parametro ? ` (${t.parametro})` : null, t.annotazione ? ` — ${t.annotazione}` : null,
     h('span', { class: 'sigla' }, ` ${t.livello}° liv.`), t.provvisorio ? h('em', {}, ' provvisorio') : null]);
@@ -358,7 +359,8 @@ function foglioAbilita(d) {
       legendaSintesi,
       // dal foglio 3 (pezzo 2): Specializzazioni e Tecniche Interiori, come nella tab Abilità della SD
       d.specializzazioni.length || d.regimeTalenti === 'nuovo' ? box({ titolo: 'Specializzazioni', classe: 'f2-spostabile' }, d.specializzazioni.length ? h('ul', { class: 'elenco-talenti-stampa' }, d.specializzazioni.map((x) => h('li', {},
-        h('strong', {}, x.nome), x.annotazione ? ` — ${x.annotazione}` : null, ` — ${x.riga || `${x.abilita}; ${x.effetto}`}`, d.regimeTalenti === 'nuovo' ? h('span', { class: 'sigla' }, ` ${x.livello}° liv.${x.classe ? ` (${x.classe})` : ''}`) : null))) : h('p', { class: 'piccolo' }, 'Nessuna.')) : null,
+        h('strong', {}, x.nome), x.annotazione ? ` — ${x.annotazione}` : null, ` — ${x.riga || `${x.abilita}; ${x.effetto}`}`, d.regimeTalenti === 'nuovo' ? h('span', { class: 'sigla' }, ` ${x.livello}° liv.${x.classe ? ` (${x.classe})` : ''}`) : null,
+        x.tavolo ? h('em', { class: 'da-applicare' }, ` Da applicare al tavolo: ${x.tavolo}`) : null))) : h('p', { class: 'piccolo' }, 'Nessuna.')) : null,
       // Tecniche Interiori: nel foglio 5 (Poteri), come nella SD (richiesta di Davide del 02/10)
       box({ titolo: 'Annotazioni', riempitivo: true, classe: 'f2-annotazioni' }, righeGuida())));
 }

@@ -166,7 +166,8 @@
         "stato": "da_verificare"
       },
       "categoria": "talento_libero",
-      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta.",
+      "tavolo": "può fare la Prova di Percezione anche senza cercare attivamente la minaccia, se è concretamente percepibile: lo decide il Direttore."
     },
     {
       "id": "sonno-leggero",
@@ -330,7 +331,8 @@
       "parametro": null,
       "testo": "Riduce di 3 punti complessivi, fino a un minimo di 0, le penalità alle Prove di Percezione visiva dovute a distanza, scarsa illuminazione, fumo o nebbia. Rimane necessaria una possibilità concreta di vedere. Il Talento non permette di vedere attraverso ostacoli, nel buio totale o attraverso l’invisibilità e non modifica le penalità alle Prove per colpire.",
       "categoria": "talento_libero",
-      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta.",
+      "tavolo": ""
     },
     {
       "id": "controllo-del-fallimento",
@@ -593,7 +595,8 @@
         }
       },
       "categoria": "talento_libero",
-      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta.",
+      "tavolo": "riduce di 2 (minimo 0) le penalità di andatura, terreno e appoggi instabili in ogni Prova penalizzata (Corsa da −2 a 0, Scatto da −6 a −4); la scheda non le toglie dai VA."
     },
     {
       "id": "scattante",
@@ -1191,7 +1194,8 @@
         }
       },
       "categoria": "maestria",
-      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta.",
+      "tavolo": "due Attacchi di Opportunità gratuiti per Round, contro avversari diversi: il conto dei due attacchi si tiene al tavolo."
     },
     {
       "id": "colpo-mirato-migliorato",
@@ -2084,7 +2088,8 @@
       "testo": "Per ogni ora completa in cui è consentito il recupero naturale dei PM, recupera 1 PM aggiuntivo. I recuperi orari diventano: Attività pesante 0 PM; Attività leggera 2 PM; Riposo breve 3 PM; Riposo completo 4 PM.\nRestano le condizioni dell’ora completa e ininterrotta, le interruzioni e il limite dei PM Massimi. Il beneficio vale anche durante sonno o incoscienza quando il recupero naturale è consentito. Non richiede attivazione e non ha un limite di utilizzi giornalieri.\nNon si aggiunge alla Meditazione, che sostituisce il recupero naturale della stessa ora, né ad altri recuperi specifici sostitutivi, come la trance di Meditazione Profonda, salvo un’eccezione espressa.",
       "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
       "categoria": "talento_libero",
-      "intestazione": "Passivo. Requisito: possedere una riserva personale di PM. Acquisibile una sola volta."
+      "intestazione": "Passivo. Requisito: possedere una riserva personale di PM. Acquisibile una sola volta.",
+      "tavolo": ""
     },
     {
       "id": "escludere-la-componente-somatica",
@@ -2388,7 +2393,8 @@
         }
       },
       "categoria": "maestria",
-      "intestazione": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta."
+      "intestazione": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.",
+      "tavolo": "al lancio puoi occultare le manifestazioni visive e sonore puramente magiche: chi potrebbe percepirle fa una Prova di Percezione con −2 VA per notarle."
     },
     {
       "id": "ritualista-minore",
@@ -2406,7 +2412,8 @@
         "stato": "da_verificare"
       },
       "categoria": "talento_libero",
-      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta.",
+      "tavolo": ""
     },
     {
       "id": "ritualista-maggiore",
@@ -2426,7 +2433,8 @@
         "stato": "da_verificare"
       },
       "categoria": "maestria",
-      "intestazione": "Passivo. Requisito: Ritualista Minore. Acquisibile una sola volta."
+      "intestazione": "Passivo. Requisito: Ritualista Minore. Acquisibile una sola volta.",
+      "tavolo": ""
     },
     {
       "id": "preparazione-rapida",
@@ -2447,7 +2455,8 @@
       },
       "solo_regime_nuovo": true,
       "fonte_regole": "talenti_nuovi",
-      "intestazione": "Maestria. Si acquisisce una sola volta e occupa una scelta di Maestria. Restano le regole e le incompatibilità della manovra utilizzata."
+      "intestazione": "Maestria. Si acquisisce una sola volta e occupa una scelta di Maestria. Restano le regole e le incompatibilità della manovra utilizzata.",
+      "tavolo": "una volta per Round, nella propria Iniziativa, una sola operazione gratuita fra estrarre, cambiare arma o imbracciare: si segna al tavolo."
     },
     {
       "id": "ricarica-esperta",
@@ -2462,7 +2471,8 @@
       "nota_app": "A.182 aperta: il file dice «fino a tre» munizioni per operazione, la decisione 139 (A.135) dice 4 cartucce per AzP con Ricarica Migliorata. Si tiene la decisione approvata (data/equipaggiamento/munizioni.json → ricarica).",
       "solo_regime_nuovo": true,
       "fonte_regole": "talenti_nuovi",
-      "intestazione": "Maestria. Si acquisisce una sola volta e occupa una scelta di Maestria. Restano le regole e le incompatibilità della manovra utilizzata."
+      "intestazione": "Maestria. Si acquisisce una sola volta e occupa una scelta di Maestria. Restano le regole e le incompatibilità della manovra utilizzata.",
+      "tavolo": "una volta per Round, nella propria Iniziativa, una ricarica gratuita (1 AzM o 1 AzP): la scheda calcola le munizioni per operazione, l’uso gratuito si segna al tavolo."
     },
     {
       "id": "raffiche-migliorate",
@@ -2537,7 +2547,8 @@
       },
       "solo_regime_nuovo": true,
       "fonte_regole": "talenti_nuovi",
-      "intestazione": "Maestria. Si acquisisce una sola volta e occupa una scelta di Maestria. Restano le regole e le incompatibilità della manovra utilizzata."
+      "intestazione": "Maestria. Si acquisisce una sola volta e occupa una scelta di Maestria. Restano le regole e le incompatibilità della manovra utilizzata.",
+      "tavolo": "le Prove del bersaglio per liberarsi dalla tua Immobilizzazione subiscono −2 VA: si applica al tavolo (il danno senz’armi della presa è nell’«Attacca!»)."
     },
     {
       "id": "maestria-hacker",

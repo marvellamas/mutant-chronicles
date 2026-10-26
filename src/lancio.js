@@ -10,7 +10,7 @@ import { avvisiStati } from './condizioni.js';
 import { provenienza, righeDaScomposizione, rigaConDettaglio } from './provenienza.js';
 import { bonusDannoCaratteristica } from './calc.js';
 import { aggiungiDanno } from './equipaggiamento.js';
-import { effettiTalenti } from './talenti.js';
+import { effettiTalenti, specializzazioniDiLancio } from './talenti.js';
 import { valoreAnticipato } from './anticipazione.js';
 
 const GRADI_ROMANI = ['', 'I', 'II', 'III', 'IV', 'V', 'VI'];
@@ -219,6 +219,13 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
   if (aspetto && !senzaRaddoppio) { costo.push({ etichetta: `Anticipazione (${aspetto.nome ?? aspetto.etichetta}): ×${A.moltiplicatore_costo}`, valore: pm * (A.moltiplicatore_costo - 1) }); pm *= A.moltiplicatore_costo; }
   const minimo = Math.max(1, ...con('pm_minimo').map((t) => t.e.pm_minimo));
   for (const t of con('pm')) { const r = Math.max(minimo, pm + t.e.pm) - pm; if (r) { costo.push({ etichetta: t.nome, valore: r }); pm += r; } }
+  // Giocatore §8.8 (Talenti v1.0): la Specializzazione di una sottofamiglia dà −1 PM al costo (minimo 1), anche senza Prova;
+  // i dati stanno in specializzazioni.json → effetto (src/talenti.js → specializzazioniDiLancio)
+  const specLancio = specializzazioniDiLancio(scheda, incantesimo);
+  for (const sp of specLancio) {
+    const r = Math.max(Math.max(1, sp.effetto.pm_minimo ?? 1), pm + (sp.effetto.pm ?? 0)) - pm;
+    if (r) { costo.push({ etichetta: `Specializzazione in ${sp.nome}`, valore: r }); pm += r; }
+  }
   if (d.riservaTecnica) for (const t of con('pm_una_volta_per_scena')) { const r = Math.max(minimo, pm + t.e.pm_una_volta_per_scena) - pm; if (r) { costo.push({ etichetta: `${t.nome} (una volta per scena)`, valore: r }); pm += r; } }
 
   // 4. la Prova di Potere è richiesta? (sez. 1, 2, 12.3)
@@ -270,6 +277,7 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
   if (d.circostanza) scomposizione.push(voce('Circostanza (Direttore)', d.circostanza, 'circostanze', L.circostanze.paragrafo));
   const occhio = con('divinazione_va')[0];
   if (occhio && m.divinazione && prova) scomposizione.push(voce(occhio.nome, occhio.e.divinazione_va, 'talento', 'Mistico'));
+  for (const sp of specLancio) if (sp.effetto.va) scomposizione.push(voce(`Specializzazione in ${sp.nome}`, sp.effetto.va, 'talento', 'Giocatore §8.8'));
   // cumulo della sez. 7: il maggiore bonus magico e la maggiore penalità magica
   const bonus = d.effettiMagici.filter((e) => e.valore > 0).sort((a, b) => b.valore - a.valore);
   const malus = d.effettiMagici.filter((e) => e.valore < 0).sort((a, b) => a.valore - b.valore);

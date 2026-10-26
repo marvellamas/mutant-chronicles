@@ -547,3 +547,5 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 /* Foglio 2: bonus condizionali accanto al VA (docs/censimento-impianti.md) */
 .abilita-stampa td.va .cond-stampa { font-size: 6pt; font-weight: 600; color: var(--ss-grigio); line-height: 0; margin-left: 0.3mm; }
 .cond-legenda { margin: 0.6mm 0 0; }
+
+.foglio .da-applicare { font-size: var(--ss-font-small); color: var(--ss-grigio); }

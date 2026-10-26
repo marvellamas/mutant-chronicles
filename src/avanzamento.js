@@ -25,6 +25,7 @@ import { calcolaEquipaggiamento, normalizzaEquipaggiamento } from './equipaggiam
 import { conOrdinale, delNome } from './lingua.js';
 import { saldoIniziale, contiDotazione, crediti } from './dotazioni.js';
 import { applicaCondizioni } from './condizioni.js';
+import { notaDaApplicare } from './talenti.js';
 import { umanita, pmConUmanita } from './umanita.js';
 import { erroriParametriTalenti } from './calc.js';
 import { competenzaDi, baseIniziale, limiteAbilita, vaPersonale, puntiUtili } from './competenze.js';
@@ -1689,11 +1690,11 @@ function schedaARiposo(personaggio, dati) {
     regimeTalenti: stato.regime,
     talentiLiberi: stato.talentiLiberi.filter((t) => !talentoLiberoDef(t.id, dati).specializzazione).map((t) => {
       const d = talentoLiberoDef(t.id, dati);
-      return { id: t.id, nome: d.nome, categoria: categoriaDi(d), parametro: t.parametro, annotazione: t.annotazione ?? null, livello: t.livello, provvisorio: !!d.provvisorio, testo: d.testo, sintesi: d.sintesi ?? null };
+      return { id: t.id, nome: d.nome, categoria: categoriaDi(d), parametro: t.parametro, annotazione: t.annotazione ?? null, livello: t.livello, provvisorio: !!d.provvisorio, testo: d.testo, sintesi: d.sintesi ?? null, tavolo: notaDaApplicare(d) };
     }),
     specializzazioni: stato.talentiLiberi.filter((t) => talentoLiberoDef(t.id, dati).specializzazione).map((t) => {
       const d = talentoLiberoDef(t.id, dati);
-      return { id: t.id, nome: d.nome, abilita: d.abilita, effetto: d.effetto, livello: t.livello, ...(t.classe ? { classe: t.classe } : {}), ...(t.annotazione ? { annotazione: t.annotazione } : {}) };
+      return { id: t.id, nome: d.nome, abilita: d.abilita, effetto: d.effetto, tavolo: notaDaApplicare(d), livello: t.livello, ...(t.classe ? { classe: t.classe } : {}), ...(t.annotazione ? { annotazione: t.annotazione } : {}) };
     }),
     tecniche: stato.tecniche.map((x) => ({ ...catalogoTec.find((t) => t.id === x.id), livello: x.livello })),
     tecnicheAmmesse: tecnicheAmmesse(stato),

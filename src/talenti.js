@@ -20,6 +20,7 @@ export function effettiTalenti(scheda, dati) {
     const def = perId.get(t.id);
     for (const e of def?.effetti?.valori ?? []) out.push(sostituisci({ chiave: `libero:${t.id}:${i}`, talento: t.parametro ? `${t.nome} (${t.parametro})` : t.nome, ...e }, t));
   });
+  out.push(...effettiSpecializzazioni(scheda, dati));
   const perClasse = new Map((dati.classi?.classi ?? []).map((c) => [c.nome, c]));
   for (const c of scheda?.classi ?? []) {
     const def = perClasse.get(c.nome);
@@ -51,4 +52,51 @@ export function talentiSituazionali(effetti) {
     g.effetti.push(e);
   }
   return [...perChiave.values()];
+}
+
+/**
+ * Specializzazioni v1.0 con un bonus al VA (Giocatore §8.8): finora il motore leggeva gli effetti solo da
+ * talenti_liberi.json e le Specializzazioni (specializzazioni.json → effetto) restavano elencate e basta.
+ * Qui diventano usi specifici dell'Abilità (+N solo per l'uso descritto), come gli altri Talenti: le armi
+ * (+1 VA e danno) le applica equipaggiamento.js sulla scheda dell'arma, le Specializzazioni di una
+ * sottofamiglia di Incantesimi (−1 PM, +1 VA) le applica lancio.js.
+ */
+export function effettiSpecializzazioni(scheda, dati) {
+  const out = [];
+  // solo i Talenti nuovi: i personaggi salvati con i Talenti di prima restano identici (tests/talenti-vecchi-identici.test.js)
+  if (scheda?.regimeTalenti !== 'nuovo') return out;
+  const perId = new Map((dati.specializzazioni?.specializzazioni ?? []).map((s) => [s.id, s]));
+  (scheda?.specializzazioni ?? []).forEach((t, i) => {
+    const def = perId.get(t.id);
+    const e = def?.effetto;
+    if (!def || !e?.va || e.sottofamiglia || e.danno !== undefined || def.gruppo === 'armi') return;
+    const nome = `Specializzazione in ${def.nome}${t.annotazione ? ` (${t.annotazione})` : ''}`;
+    for (const abilita of def.abilita ?? []) {
+      out.push({
+        chiave: `specializzazione:${def.id}:${i}`, talento: nome, tipo: 'va', abilita, valore: e.va, ambito: 'uso_specifico',
+        uso: nome, condizione: def.ambito, fonte: 'Giocatore §8.8',
+      });
+    }
+  });
+  return out;
+}
+
+/** Le Specializzazioni della scheda che valgono per questo Incantesimo (stessa sottofamiglia), se «Bonus dei Talenti» è acceso. */
+export function specializzazioniDiLancio(scheda, incantesimo) {
+  if (scheda?.bonusTalenti === false || scheda?.regimeTalenti !== 'nuovo') return [];
+  return (scheda?.specializzazioni ?? []).filter((s) => s.effetto?.sottofamiglia && s.effetto.sottofamiglia === incantesimo?.specializzazione);
+}
+
+const TAGLIO_NOTA = 240;
+/**
+ * Che cosa del testo di un Talento l'app non applica da sola, da dire accanto al Talento: «da applicare al tavolo: …».
+ * Il campo `tavolo` della voce lo scrive a mano (stringa vuota: tutto ciò che il testo dice è calcolato); senza il
+ * campo, una voce senza effetti calcolati riporta il suo testo. Una voce non tace mai.
+ */
+export function notaDaApplicare(def) {
+  if (!def) return null;
+  if (typeof def.tavolo === 'string') return def.tavolo.trim() || null;
+  if (def.effetti || def.effetto) return null;
+  const t = String(def.sintesi?.testo ?? def.testo ?? def.ambito ?? '').trim();
+  return t ? (t.length > TAGLIO_NOTA ? `${t.slice(0, TAGLIO_NOTA - 1)}…` : t) : null;
 }
