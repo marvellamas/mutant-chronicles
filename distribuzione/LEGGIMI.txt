@@ -2,6 +2,9 @@
 Guida all'installazione e all'uso
 ==============================================================
 
+Usa sempre il collegamento "Mutant" sul desktop. Il pacchetto "distribuzione"
+(questi file) serve solo la prima volta, su un PC dove Mutant non c'è ancora.
+
 Questa guida è per chi non ha mai installato niente di simile.
 Segui i passi in ordine. Non serve sapere nulla di informatica.
 

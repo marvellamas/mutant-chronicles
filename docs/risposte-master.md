@@ -2094,3 +2094,15 @@ Nessuna regola nuova e nessuna domanda per Davide. Diagnosi e correzione in
   della cartella.
 - Si può anche scrivere (o incollare da Esplora risorse) il percorso della cartella, se la ricerca non la trova.
 - La voce C «Controlla lo stato» dice anche se sul PC ci sono altre copie di Mutant, e quali.
+
+## 27 ottobre 2026 — Una sola installazione: Mutant si accorge da solo di essere la copia sbagliata
+
+Nessuna regola nuova e nessuna domanda per Davide. Diagnosi e correzione in
+`docs/diff-una-installazione-2026-10-27.md`.
+
+- Il pacchetto `distribuzione` serve solo a installare Mutant la prima volta, su un PC dove non c'è ancora: se lo si
+  apre di nuovo e Mutant è già installato, non crea una seconda copia, dice dov'è la prima.
+- All'avvio (e quindi anche subito dopo un aggiornamento), se la cartella dei dati di questo PC è vuota, Mutant
+  cerca da sé un'altra installazione (o una copia: cloud, copia di sicurezza) con i personaggi: una domanda sola,
+  con SI si sistema da sola (cartella dei dati, collegamento sul desktop, codice dell'altra installazione messo al
+  passo); la copia vuota si rinomina in «…-NON-USARE» (mai cancellata) non appena non è più in uso.

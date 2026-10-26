@@ -1,5 +1,9 @@
 # Come si usa Mutant
 
+**Usa sempre il collegamento «Mutant» sul desktop. Il pacchetto `distribuzione` serve solo la prima volta**, su un
+PC dove Mutant non c'è ancora (27/10/2026, `docs/diff-una-installazione-2026-10-27.md`): da lì in avanti, anche per
+aggiornare, non si riapre mai più quel pacchetto.
+
 Dal 25/10/2026 Mutant ha **un ingresso solo**: `Mutant.bat`, nella cartella di Mutant, o il collegamento «Mutant»
 sul desktop. Tutto il resto è una voce del suo menu. Gli altri `.bat` non si aprono a mano.
 
