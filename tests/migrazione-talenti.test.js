@@ -50,7 +50,8 @@ test('il passaggio: copia zip, poi per ogni PG nota nel registro, Talenti tolti 
     assert.equal(o.scelte.regimeTalenti, 2, f);
     assert.ok(o.livelli.every((v) => !v.talentoLibero), `${f}: nessun talentoLibero`);
     const nota = o.correzioni_master.at(-1);
-    assert.match(nota.etichetta, /^Talenti prima del passaggio ai Talenti v1\.0 \(\d\d\/\d\d\/\d{4}\): .+ al 3° livello; .+ al 5° livello$/);
+    assert.match(nota.etichetta, /^Talenti prima del passaggio ai Talenti v1\.0 \(\d\d\/\d\d\/\d{4}\): 3° livello: .+ — ora .+; 5° livello: .+ — ora .+\./);
+    assert.equal(nota.talentiPrima.length, 2, `${f}: elenco strutturato`);
     assert.equal(nota.tipo, 'scelta');
     assert.equal(o.aggiornato_da, 'master', 'scritto dal salvataggio normale, come il master');
   }
@@ -139,7 +140,7 @@ test('il piano non cambia un PG già passato; i casi sono quelli della regola di
   const oshi = JSON.parse(readFileSync(new URL(pg.find((f) => f.startsWith('OSHI')), FIX), 'utf8'));
   const piano = pianoMigrazione(oshi, dati, { quando: new Date(2026, 9, 26, 20, 0) });
   assert.equal(piano.casi.length, 1, 'un caso solo, non ripetuto');
-  assert.equal(piano.nuovo.correzioni_master.at(-1).etichetta, 'Talenti prima del passaggio ai Talenti v1.0 (26/10/2026): Schermidore al 3° livello; Risorse Interiori al 5° livello');
+  assert.equal(piano.nuovo.correzioni_master.at(-1).etichetta, 'Talenti prima del passaggio ai Talenti v1.0 (26/10/2026): 3° livello: Schermidore — ora Maestria; 5° livello: Risorse Interiori — ora Talento Libero. Talenti di Classe (restano): 4° livello: Carica Brutale.');
   assert.equal(pianoMigrazione(piano.nuovo, dati).giaMigrato, true);
 });
 

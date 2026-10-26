@@ -65,6 +65,7 @@ import { impiantiAttivabili, cartucceDi, impostaCartucce, somministra, statoProc
 import { tabVeicoli, promemoriaConducente } from './veicoli.js';
 import { consumabiliScheda, schedaConsumabile, rigaConsumabile, pannelloCreaConsumabile } from './consumabili.js';
 import { incantesimiInCorso } from '../durate-incantesimi.js';
+import { talentiDiPrimaPerScheda, testoTalentoDiPrima } from '../talenti-prima.js';
 
 export const POSIZIONI_TAB = [
   { id: 'alto', etichetta: 'In alto, con Punti Eroe, PV e PM a sinistra (predefinita)' },
@@ -1421,6 +1422,8 @@ function tabAbilita(ctx, d) {
       const n = nomeCheSiApre(x.nome, schedaTalento(x.id, ctx.dati));
       return h('li', {}, n.nome, x.annotazione ? ` (${x.annotazione})` : null, ` — ${x.riga || `${x.abilita}; ${x.effetto}`} (${x.livello}° livello)`, x.tavolo ? notaTavolo(x.tavolo) : null, n.scheda);
     }))) : null,
+    // 27/10: i Talenti di prima del passaggio ai Talenti nuovi, letti dal registro del master; li vede ogni giocatore
+    riquadroTalentiDiPrima(ctx),
     // Tecniche Interiori: nella tab Poteri, con «Attiva» (richiesta di Davide del 02/10)
     d.tecniche.length || d.tecnicheAmmesse ? h('p', { class: 'nota rimando-tecniche' }, `Tecniche Interiori (${d.tecniche.length} / ${d.tecnicheAmmesse}): vedi Poteri.`) : null,
   ];
@@ -1429,6 +1432,25 @@ function tabAbilita(ctx, d) {
 // ---------------------------------------------------------------------------
 // Iniziativa, Movimento e Azioni effettivi (scheda.tavolo, src/condizioni.js → valoriTavolo): stesse
 // pillole dei VA, con colore ▼/▲ rispetto ai valori da regole e la scomposizione nel tooltip.
+
+/**
+ * I Talenti che il personaggio aveva prima del passaggio ai Talenti nuovi, in sola lettura: livello per livello, con la
+ * categoria nuova e se il posto è già stato riempito. Vengono dalla riga «Talenti prima del passaggio» del registro del
+ * master (src/talenti-prima.js): serve a chi li deve riscegliere dalla scheda, anche dal tablet.
+ */
+function riquadroTalentiDiPrima(ctx) {
+  const nota = talentiDiPrimaPerScheda(ctx.scelte?.correzioniMaster);
+  if (!nota) return null;
+  const scelti = new Set((ctx.tab.scheda.talentiLiberi ?? []).concat(ctx.tab.scheda.specializzazioni ?? []).map((t) => t.id));
+  return h('details', { class: 'sezione-tab talenti-di-prima', open: true },
+    h('summary', {}, 'Talenti di prima del passaggio'),
+    nota.liberi
+      ? h('ul', {}, nota.liberi.map((t) => h('li', {}, `${t.livello}° livello: ${testoTalentoDiPrima(t)}`,
+        scelti.has(t.id) ? h('span', { class: 'etichetta' }, 'già ripreso') : null)))
+      : h('p', {}, nota.testo),
+    nota.classe.length ? h('p', { class: 'nota' }, `Talenti di Classe (restano): ${nota.classe.map((c) => `${c.livello}° livello: ${c.nome}`).join('; ')}.`) : null,
+    h('p', { class: 'nota' }, 'Con i Talenti nuovi si riscelgono dal riquadro «Da scegliere»; il Direttore può aiutare a ritrovare i posti.'));
+}
 
 /** «Da applicare al tavolo: …» accanto a un Talento: ciò che il suo testo dice e l'app non calcola da sola. */
 const notaTavolo = (testo) => h('p', { class: 'nota da-applicare' }, h('strong', {}, 'Da applicare al tavolo: '), testo);

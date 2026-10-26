@@ -18,6 +18,7 @@ export const VOCI = [
   { tasto: '9', id: 'impostazioni', etichetta: 'Impostazioni', descrizione: 'ruolo di questo PC, avvisi ntfy, cartella Drive, collegamento sul desktop' },
   { tasto: 'P', id: 'cerca', etichetta: 'Cerca i personaggi', descrizione: 'se dopo un aggiornamento mancano personaggi o PX: li cerca in tutte le cartelle e nei salvataggi, e ti fa scegliere quella giusta (chiede SI)', cambiaPersonaggi: true },
   { tasto: 'C', id: 'stato', etichetta: 'Controlla lo stato', descrizione: 'dice in parole semplici come stanno i personaggi (file, Talenti vecchi o nuovi, passaggio); da mandare a Marcello se qualcosa non torna' },
+  { tasto: 'R', id: 'talenti-nota', etichetta: 'Ricostruisci la nota dei Talenti di prima', descrizione: 'rilegge la copia zip del passaggio e a ogni personaggio aggiunge la nota completa (livello per livello, categoria nuova); le scelte non cambiano (chiede SI)', cambiaPersonaggi: true },
   { tasto: '0', id: 'esci', etichetta: 'Esci', descrizione: 'chiude questa finestra (se Mutant e\' acceso resta acceso)' },
 ];
 

@@ -4,6 +4,7 @@
 //   node tools/console.mjs menu           intestazione (versione in parole, server, ruolo del PC) e voci del menu
 //   node tools/console.mjs controlla      voce 6: rapporto sui file dei personaggi, con SI mette via i vecchi
 //   node tools/console.mjs talenti        voce 7: passaggio ai Talenti nuovi (rapporto, SI, tools/migra-talenti.mjs)
+//   node tools/console.mjs talenti-nota        voce R: ricostruisce la nota dei Talenti di prima dalla copia del passaggio (SI)
 //   node tools/console.mjs talenti-ripristina   voce 8: torna a com'era prima del passaggio (SI)
 //   node tools/console.mjs stato-personaggi     voce C: «Controlla lo stato» (anche in stato-mutant.txt)
 //   node tools/console.mjs intestazione   versione installata e stato del server (acceso/spento)
@@ -33,7 +34,7 @@ import { cerca, risolviPercorsoManuale, installazioniMutant } from './cerca-pers
 import { controllaSeSbagliata, segnaCartellaVuota, eseguiRinominePendenti, copiaPersonaggiDentro, aggiornaCodiceAltra } from './ripara-installazione.mjs';
 import { statoDaRuolo } from '../src/copia-di-lavoro.js';
 import { leggiVersione, leggiNovita, versioneInParole } from '../src/versione.js';
-import { rapporto as rapportoTalenti, applica as applicaTalenti, ripristina as ripristinaTalenti, zipDelPassaggio, zipDaRipristinare, controllaSulServer, statoPassaggio, quandoDelloZip } from './migra-talenti.mjs';
+import { rapporto as rapportoTalenti, applica as applicaTalenti, ripristina as ripristinaTalenti, zipDelPassaggio, zipDaRipristinare, controllaSulServer, statoPassaggio, quandoDelloZip, pianoNota, righeNota, applicaNota } from './migra-talenti.mjs';
 import { rapporto as rapportoPulizia, testoRapporto as testoPulizia, sposta as spostaPulizia } from './pulizia-personaggi.mjs';
 
 const RADICE = fileURLToPath(new URL('..', import.meta.url));
@@ -495,6 +496,34 @@ export async function voceTalentiRipristina({ radice: r = radice, rl: esterno = 
   } finally { if (!esterno) rl.chiudi(); }
 }
 
+/**
+ * Voce R: ricostruisce la nota «Talenti prima del passaggio» di ogni personaggio dalla copia zip del passaggio.
+ * Dello zip legge soltanto; nei personaggi aggiunge la riga al registro e basta (le scelte del tavolo restano).
+ */
+export async function voceNotaTalenti({ radice: r = radice, rl: esterno = null, porta: p = porta } = {}) {
+  const rl = esterno ?? lettore();
+  try {
+    const dove = cartellePg(r);
+    console.log('\n NOTA DEI TALENTI DI PRIMA: adesso leggo soltanto, non cambio niente.\n');
+    const piano = await pianoNota({ cartella: dove.cartella, salvataggi: dove.salvataggi });
+    if (!piano.zip.length) { console.log(` Non trovo nessuna copia del passaggio (prima-dei-talenti-nuovi_...) in ${dove.salvataggi}: non c'e' da dove ricostruire.`); return { fatto: false }; }
+    for (const riga of righeNota(piano)) console.log(` ${ascii(riga)}`);
+    const daFare = piano.piani.filter((x) => x.riga && !x.giaCompleta);
+    if (!daFare.length) { console.log('\n Niente da aggiungere.'); return { fatto: false }; }
+    console.log('\n Se scrivi SI:');
+    console.log('   1. faccio prima una copia zip di tutta la cartella personaggi (in salvataggi);');
+    console.log('   2. a ogni personaggio aggiungo al registro "Modifiche del master" la nota completa, e basta: le scelte fatte al tavolo non cambiano;');
+    console.log('   3. i giocatori la leggono nella loro scheda, nella tab Abilita, sotto i Talenti ("Talenti di prima del passaggio").');
+    if (!await confermaSi(rl, ' Scrivi SI e premi Invio per ricostruire la nota (altrimenti Invio e basta): ')) { console.log(' Va bene: non ho toccato niente.'); return { fatto: false }; }
+    const e = await applicaNota({ ...dove, porta: p });
+    if (e.copia) console.log(`\n Copia di sicurezza fatta: ${e.copia.zip} (${e.copia.file} file).`);
+    for (const nome of e.fatti) console.log(`   nota completa scritta: ${ascii(nome)}`);
+    for (const x of e.errori) console.log(rosso(` NON scritta (resta com'era): ${ascii(x)}`));
+    console.log(e.errori.length ? ' Alcune note non sono state scritte.' : ' Fatto. Le scelte dei Talenti fatte al tavolo non sono state toccate.');
+    return { fatto: !e.errori.length, ...e };
+  } finally { if (!esterno) rl.chiudi(); }
+}
+
 /** Il collegamento «Mutant» sul desktop (era crea-collegamento.bat). */
 export function creaCollegamento(radiceApp = radice) {
   const ps = "$q=$env:MUTANT_QUI; $d=if ($env:MUTANT_DESKTOP) { $env:MUTANT_DESKTOP } else { [Environment]::GetFolderPath('Desktop') }; $p=Join-Path $d 'Mutant.lnk'; if (Test-Path -LiteralPath $p) { Remove-Item -LiteralPath $p -Force }; $s=(New-Object -ComObject WScript.Shell).CreateShortcut($p); $s.TargetPath=(Join-Path $q 'Mutant.bat'); $s.WorkingDirectory=$q.TrimEnd('\\'); $s.IconLocation=(Join-Path $q 'tools\\mutant.ico'); $s.Description='Mutant'; $s.Save(); Write-Host (' Fatto: collegamento Mutant in ' + $d)";
@@ -702,6 +731,8 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
     await voceTalenti();
   } else if (comando === 'talenti-ripristina') {
     await voceTalentiRipristina();
+  } else if (comando === 'talenti-nota') {
+    await voceNotaTalenti();
   } else if (comando === 'cerca') {
     await voceCerca();
   } else if (comando === 'stato-personaggi') {
@@ -711,7 +742,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   } else if (comando === 'collegamento') {
     creaCollegamento();
   } else {
-    console.error('Comandi: menu, intestazione, stato, ripristina, impostazioni, avvio, controlla, talenti, talenti-ripristina, stato-personaggi, cerca, ruolo, collegamento');
+    console.error('Comandi: menu, intestazione, stato, ripristina, impostazioni, avvio, controlla, talenti, talenti-nota, talenti-ripristina, stato-personaggi, cerca, ruolo, collegamento');
     process.exitCode = 2;
   }
 }

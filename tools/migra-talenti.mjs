@@ -13,16 +13,17 @@
 // nuova); se è spento se ne avvia uno solo per il tempo del passaggio, sulla stessa cartella, raggiungibile solo da
 // questo PC. Il piano di ogni PG è in src/migrazione-talenti.js; il conto dei posti è quello di postiTalenti.
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSync, rmSync } from 'node:fs';
-import { join, dirname, relative, sep } from 'node:path';
+import { join, dirname, relative, sep, basename } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { creaZip, leggiZip } from './salva-sessione.mjs';
 import { cartellaDati } from './dati-pc.mjs';
 import { elencoDaDisco, perPersonaggio, rigaDi, statoDalServer, esitoControllo } from './stato-personaggi.mjs';
+import { idStabileDiFile } from '../src/cartella.js';
 
 const RADICE = dirname(dirname(fileURLToPath(import.meta.url)));
 const PREFISSO = 'prima-dei-talenti-nuovi_';
 const due = (n) => String(n).padStart(2, '0');
-export const nomeZip = (d) => `${PREFISSO}${d.getFullYear()}-${due(d.getMonth() + 1)}-${due(d.getDate())}_${due(d.getHours())}${due(d.getMinutes())}${due(d.getSeconds())}.zip`;
+export const nomeZip = (d, prefisso = PREFISSO) => `${prefisso}${d.getFullYear()}-${due(d.getMonth() + 1)}-${due(d.getDate())}_${due(d.getHours())}${due(d.getMinutes())}${due(d.getSeconds())}.zip`;
 const NOME_FILE = /^[\w.()' -]+\.json$/;
 
 async function dati() {
@@ -68,11 +69,11 @@ export async function rapporto({ cartella, d = null, quando = new Date() }) {
 }
 
 /** Lo zip di tutta la cartella dei personaggi (storico compreso), riletto per controllo. */
-export function copiaZip({ cartella, salvataggi, quando = new Date() }) {
+export function copiaZip({ cartella, salvataggi, quando = new Date(), prefisso = PREFISSO }) {
   const voci = tuttiIFile(cartella).map((f) => ({ nome: f.nome, dati: readFileSync(f.file), mtime: statSync(f.file).mtime }));
   mkdirSync(salvataggi, { recursive: true });
-  let zip = join(salvataggi, nomeZip(quando));
-  for (let k = 2; existsSync(zip); k++) zip = join(salvataggi, nomeZip(quando).replace(/\.zip$/, `_${k}.zip`));
+  let zip = join(salvataggi, nomeZip(quando, prefisso));
+  for (let k = 2; existsSync(zip); k++) zip = join(salvataggi, nomeZip(quando, prefisso).replace(/\.zip$/, `_${k}.zip`));
   writeFileSync(zip, creaZip(voci), { flag: 'wx' });
   const letto = leggiZip(readFileSync(zip)); // dev'essere buona, altrimenti lancia e non si fa niente
   if (Object.keys(letto).length !== voci.length) throw new Error('la copia zip non contiene tutti i file');
@@ -236,4 +237,81 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     console.error(`Errore: ${e.message}. Non è stato fatto niente dopo questo punto.`);
     process.exitCode = 1;
   }
+}
+
+// ---------------------------------------------------------------------------
+// «Ricostruisci la nota dei Talenti di prima» (27/10/2026, docs/diagnosi-nota-talenti-2026-10-27.md): dalla copia zip
+// del passaggio si rilegge ogni personaggio com'era e nel registro del file attuale si aggiunge la riga completa.
+// Dello zip si legge soltanto; nel file attuale cambia solo `correzioni_master`: le scelte fatte al tavolo restano.
+export const PREFISSO_NOTA = 'prima-della-nota-talenti_';
+
+/**
+ * Che cosa farebbe la ricostruzione, PG per PG: per ogni personaggio della cartella, la copia (la più recente) in cui
+ * aveva ancora i Talenti di prima, la riga completa e se serve scriverla. Non tocca niente.
+ * @returns {{ piani: [{ nome, file, zip, riga, giaCompleta, motivo }], zip: string[] }}
+ */
+export async function pianoNota({ cartella, salvataggi, d = null, quando = new Date(), zip: soloQuesto = null }) {
+  const D = d ?? await dati();
+  const { rigaTalentiDiPrima } = await import(pathToFileURL(join(RADICE, 'src', 'migrazione-talenti.js')).href);
+  const zips = soloQuesto ? [soloQuesto] : zipDelPassaggio(salvataggi);
+  // per ogni personaggio (per identificativo) il file di prima, dalla copia più recente in cui ha i Talenti di prima
+  const dellaCopia = new Map();
+  for (const z of zips) {
+    let voci;
+    try { voci = leggiZip(readFileSync(z)); } catch { continue; }
+    const righe = Object.entries(voci).filter(([n]) => !n.includes('/') && NOME_FILE.test(n)).map(([n, b]) => rigaDi(n, b.toString('utf8'), 0));
+    for (const g of perPersonaggio(righe.filter((r) => r.o?.formato === 'mutant-personaggio'))) {
+      if (dellaCopia.has(g.id) || g.attuale.o?.scelte?.regimeTalenti === 2) continue;
+      dellaCopia.set(g.id, { zip: z, o: g.attuale.o });
+    }
+  }
+  const piani = personaggi(cartella).map(({ file, o }) => {
+    const id = idStabileDiFile(rigaDi(file, JSON.stringify(o), 0));
+    const nome = String(o?.scelte?.nome ?? '').trim() || file;
+    const c = dellaCopia.get(id);
+    if (!c) return { nome, file, o, zip: null, riga: null, giaCompleta: false, motivo: 'nessuna copia del passaggio con i suoi Talenti di prima' };
+    const riga = rigaTalentiDiPrima(c.o, D, quando, { ricostruita: true, origine: basename(c.zip) }, quandoDelloZip(c.zip) ?? quando);
+    const giaCompleta = (o.correzioni_master ?? []).some((x) => x.ricostruita === true && JSON.stringify(x.talentiPrima) === JSON.stringify(riga.talentiPrima));
+    return { nome, file, o, zip: c.zip, riga, giaCompleta, motivo: giaCompleta ? 'la nota completa c’è già' : null };
+  });
+  return { piani, zip: zips };
+}
+
+/** Le righe del rapporto: per ogni personaggio, la nota com'è adesso e com'è la nuova. */
+export function righeNota({ piani, zip }) {
+  const r = [`NOTA DEI TALENTI DI PRIMA — ${piani.length} personaggi, ${piani.filter((p) => p.riga && !p.giaCompleta).length} da completare. Copie del passaggio lette: ${zip.length}.`, ''];
+  for (const p of piani) {
+    r.push(p.nome);
+    if (!p.riga) { r.push(`    ${p.motivo}`); continue; }
+    if (p.giaCompleta) { r.push('    la nota completa c’è già: non la riscrivo'); continue; }
+    const adesso = (p.o.correzioni_master ?? []).filter((x) => x.migrazioneTalenti === true).map((x) => x.etichetta);
+    r.push(`    ora nel registro: ${adesso.length ? adesso.join(' | ') : 'nessuna nota'}`);
+    r.push(`    nota completa:    ${p.riga.etichetta}`);
+  }
+  return r;
+}
+
+/** La ricostruzione: copia zip di sicurezza, poi in ogni file attuale si aggiunge la riga (solo `correzioni_master`). */
+export async function applicaNota({ cartella, salvataggi, porta = 3000, d = null, quando = new Date() }) {
+  const { piani } = await pianoNota({ cartella, salvataggi, d, quando });
+  const { aggiungiCorrezione } = await import(pathToFileURL(join(RADICE, 'src', 'correzioni-master.js')).href);
+  const daFare = piani.filter((p) => p.riga && !p.giaCompleta);
+  if (!daFare.length) return { copia: null, fatti: [], errori: [], nulla: true };
+  const copia = copiaZip({ cartella, salvataggi, quando, prefisso: PREFISSO_NOTA });
+  const s = await serverPerScrivere({ cartella, porta });
+  const fatti = [];
+  const errori = [];
+  try {
+    for (const p of daFare) {
+      // il file di adesso, riletto un attimo prima di scrivere: le scelte fatte al tavolo restano com'erano
+      const adesso = JSON.parse(readFileSync(join(cartella, p.file), 'utf8'));
+      const nuovo = { ...adesso, correzioni_master: aggiungiCorrezione(adesso.correzioni_master, p.riga) };
+      const r = await fetch(`${s.base}/api/personaggi/${encodeURIComponent(p.file)}`, {
+        method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Mutant-Da': 'master' }, body: `${JSON.stringify(nuovo, null, 2)}
+`,
+      });
+      if (r.ok) fatti.push(p.nome); else errori.push(`${p.nome}: ${(await r.json().catch(() => ({}))).errore ?? r.status}`);
+    }
+  } finally { await s.chiudi(); }
+  return { copia, fatti, errori, serverAcceso: s.acceso };
 }

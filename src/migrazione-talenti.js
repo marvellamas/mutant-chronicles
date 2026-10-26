@@ -3,30 +3,35 @@
 // fa la copia di sicurezza, chiede SI e scrive è tools/migra-talenti.mjs.
 //
 // Per ogni personaggio dei Talenti di prima:
-//  - una riga nel registro «Modifiche del master» con data e «Talenti prima del passaggio: …» (dai «vecchi» di
-//    postiTalenti), che resta leggibile e che un tablet non toglie; con una modifica del master nel file la scheda di
+//  - una riga nel registro «Modifiche del master» con data e «Talenti prima del passaggio: …» (tutti i Talenti del
+//    file, livello per livello e con la categoria nuova: src/talenti-prima.js), che resta leggibile e che un tablet non toglie; con una modifica del master nel file la scheda di
 //    un tablet prende la versione del Direttore (non rimette i Talenti tolti);
 //  - via «talentoLibero» dalle voci di livello, e scelte.regimeTalenti = 2. I posti restano vuoti: li riempie la scelta
 //    guidata della scheda. Niente altro cambia: Tecniche e incantesimi legati a un Talento tolto restano (A.184).
 // Il conto dei posti è quello di postiTalenti, e non si rifà qui.
 import { postiTalenti, calcolaSchedaPersonaggio } from './avanzamento.js';
 import { nuovaCorrezione, aggiungiCorrezione } from './correzioni-master.js';
+import { talentiDiPrima, testoNota, elencoPerRiga } from './talenti-prima.js';
 
 const personaggio = (o) => ({ creazione: o?.scelte ?? {}, livelli: Array.isArray(o?.livelli) ? o.livelli : [] });
 const NOMI = { talento_libero: 'Talento Libero', maestria: 'Maestria', specializzazione: 'Specializzazione' };
 const conAccento = (n) => `${n}°`;
 
-/** Il file dopo il passaggio, senza controlli (pianoMigrazione li fa prima). */
-function migrato(o, vecchi, quando) {
-  const data = quando.toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  const elenco = vecchi.length
-    ? vecchi.map((v) => `${v.nome}${v.parametro ? ` (${v.parametro})` : ''}${v.annotazione ? ` [${v.annotazione}]` : ''} al ${conAccento(v.livello)} livello`).join('; ')
-    : 'nessuno';
-  const riga = nuovaCorrezione({
+/** La riga del registro con i Talenti di prima, completa: dal file (src/talenti-prima.js), non dall'elenco `vecchi` del calcolo. */
+export function rigaTalentiDiPrima(o, dati, quando, extra = {}, dataPassaggio = quando) {
+  const data = dataPassaggio.toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  const elenco = talentiDiPrima(o, dati);
+  return nuovaCorrezione({
     chiave: 'talenti', tipo: 'scelta', migrazioneTalenti: true,
-    etichetta: `Talenti prima del passaggio ai Talenti v1.0 (${data}): ${elenco}`,
+    etichetta: testoNota(elenco, data),
     motivo: 'Passaggio ai Talenti v1.0: i Talenti si riscelgono dalla scheda («Da scegliere»).',
+    ...elencoPerRiga(elenco), ...extra,
   }, quando);
+}
+
+/** Il file dopo il passaggio, senza controlli (pianoMigrazione li fa prima). */
+function migrato(o, dati, quando) {
+  const riga = rigaTalentiDiPrima(o, dati, quando);
   return {
     ...o,
     scelte: { ...o.scelte, regimeTalenti: 2 },
@@ -49,7 +54,7 @@ export function pianoMigrazione(o, dati, { quando = new Date() } = {}) {
   try { posti = postiTalenti(p, dati, { opzioni: false }); } catch (e) {
     return { nome, livello, giaMigrato: false, vecchi: [], posti: {}, casi: [`la scheda non si calcola (${e.message}): non lo tocco`], nuovo: null };
   }
-  const nuovo = migrato(o, posti.vecchi, quando);
+  const nuovo = migrato(o, dati, quando);
   const casi = [];
   // Tecniche e incantesimi legati a un Talento tolto (A.184: non si toccano, decide il Direttore)
   const dopo = calcolaSchedaPersonaggio(personaggio(nuovo), dati);

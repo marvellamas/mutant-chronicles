@@ -61,6 +61,7 @@ pagina dell'app.
 | **9** | Impostazioni | Ruolo di questo PC, avvisi ntfy, cartella di Google Drive, notifica di prova, collegamento «Mutant» sul desktop. | — |
 | **P** | Cerca i personaggi | Se dopo un aggiornamento mancano personaggi o PX: li cerca nelle copie dell'app, negli zip dei salvataggi e delle copie di sicurezza, negli storici, su Drive e nei file esportati — tutti i Desktop (utente, pubblico, OneDrive), Documenti e Download — e mostra per ciascuno la versione più recente (dove, data, livello, PX), più il pannello PX. Legge soltanto; con il numero di una cartella e SI, o scrivendo il percorso a mano, Mutant su questo PC userà quella. | **SI** |
 | **C** | Controlla lo stato | In parole semplici: la cartella dei personaggi che usa Mutant; per ogni personaggio i PX, quanti file ha, quale è l'attuale, Talenti vecchi o nuovi; il passaggio e lo zip da cui torna la voce 8. Lo scrive anche in `stato-mutant.txt`, da mandare a Marcello. Legge e basta. | no |
+| **R** | Ricostruisci la nota dei Talenti di prima | Rilegge gli zip `prima-dei-talenti-nuovi_…` di `salvataggi` e a ogni personaggio aggiunge al registro la nota completa (livello per livello, categoria nuova); dello zip legge soltanto, nei personaggi cambia solo il registro, le scelte fatte al tavolo restano. Copia zip prima (`prima-della-nota-talenti_…`). Il giocatore la legge nella tab Abilità. | **SI** |
 | **0** | Esci | Chiude il menu; se Mutant è acceso resta acceso. | no |
 
 Se Node.js manca, `Mutant.bat` lo dice prima del menu e lo installa (con S).
