@@ -2081,3 +2081,16 @@ Nessuna regola nuova e nessuna domanda per Davide. Diagnosi e correzione in
   la voce 7 mostra cartella e PX prima del SI; la voce C mostra i PX.
 - Voce nuova P «Cerca i personaggi»: legge soltanto, trova le copie (cartelle, zip, storici, Drive, file esportati) e il
   pannello PX, e con numero e SI sceglie quale cartella usa questo PC.
+
+## 26 ottobre 2026, sera — «Cerca i personaggi» guardava solo un desktop
+
+Nessuna regola nuova e nessuna domanda per Davide. Diagnosi e correzione in
+`docs/diff-cerca-personaggi-2026-10-26-sera.md`.
+
+- Due cartelle «distribuzione» viste insieme sullo stesso desktop vogliono dire che Explorer sta mostrando cartelle
+  diverse (utente, pubblica, OneDrive): la voce P guardava solo quella dell'utente. Ora guarda anche il desktop
+  pubblico e ogni cartella OneDrive del profilo (qualunque nome, anche aziendale), più Documenti e Download nelle
+  stesse varianti, ad almeno 5 livelli di profondità, riconoscendo i personaggi dal contenuto del file e non dal nome
+  della cartella.
+- Si può anche scrivere (o incollare da Esplora risorse) il percorso della cartella, se la ricerca non la trova.
+- La voce C «Controlla lo stato» dice anche se sul PC ci sono altre copie di Mutant, e quali.

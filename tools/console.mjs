@@ -15,7 +15,7 @@
 //                                         invii non riusciti dall'ultima volta (avvisi/registro.txt)
 //   --radice=<cartella dell'app> --porta=<porta del server> per le prove (di norma questa cartella e la 3000)
 import { readFileSync, existsSync, copyFileSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createInterface } from 'node:readline/promises';
 import { cartelleDi, perConsole } from './salva-sessione.mjs';
@@ -29,7 +29,7 @@ import { righeMenu, ascii } from './menu.mjs';
 import { leggiRuolo, scriviRuolo, testoRuolo, RUOLI } from './ruolo-pc.mjs';
 import { statoDalServer, statoDaDisco } from './stato-personaggi.mjs';
 import { cartellaDati, migraSeServe, scriviImpostazione } from './dati-pc.mjs';
-import { cerca } from './cerca-personaggi.mjs';
+import { cerca, risolviPercorsoManuale, installazioniMutant } from './cerca-personaggi.mjs';
 import { statoDaRuolo } from '../src/copia-di-lavoro.js';
 import { leggiVersione, leggiNovita, versioneInParole } from '../src/versione.js';
 import { rapporto as rapportoTalenti, applica as applicaTalenti, ripristina as ripristinaTalenti, zipDelPassaggio, zipDaRipristinare, controllaSulServer, statoPassaggio, quandoDelloZip } from './migra-talenti.mjs';
@@ -261,7 +261,7 @@ export function stampaControllo(c, { serverAcceso, attesi }) {
  * quale zip torna indietro la voce 8. Con Mutant acceso legge dal server, per la stessa strada dell'app; spento, dalla
  * cartella, con la stessa scelta del file attuale. Lo scrive anche in stato-mutant.txt, da mandare a Marcello.
  */
-export async function voceStato({ radice: r = radice, porta: p = porta, scrivi = true } = {}) {
+export async function voceStato({ radice: r = radice, porta: p = porta, scrivi = true, home = undefined, radici = undefined } = {}) {
   const dove = cartellePg(r);
   const acceso = await statoServer(p);
   const base = `http://127.0.0.1:${p}`;
@@ -275,6 +275,12 @@ export async function voceStato({ radice: r = radice, porta: p = porta, scrivi =
   if (!stato) stato = statoDaDisco(dove.cartella);
   const passaggio = statoPassaggio(dove);
   const zip = zipDaRipristinare(dove.salvataggi);
+  // (C, 26/10 sera): altre installazioni di Mutant su questo PC, per capire quale si sta usando (il collegamento sul
+  // desktop apre sempre la copia da cui si lancia questo comando, cioe' r, non per forza quella dei dati)
+  let installazioni = [];
+  try { installazioni = installazioniMutant(r, { ...(home ? { home } : {}), ...(radici ? { radici } : {}) }); } catch { /* ricerca non riuscita: non si blocca lo stato */ }
+  const quiNorm = resolve(r).toLowerCase();
+  const altreInstallazioni = installazioni.filter((p) => resolve(p).toLowerCase() !== quiNorm);
   const ora = new Date();
   const righe = [
     `STATO DI MUTANT - ${ora.toLocaleDateString('it-IT')} ${ora.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })} - PC ${hostname()}`,
@@ -282,7 +288,9 @@ export async function voceStato({ radice: r = radice, porta: p = porta, scrivi =
     daServer ? `Mutant e' acceso (porta ${p}): i personaggi sono letti dal server, come li vede l'app.`
       : acceso.acceso ? `La porta ${p} e' occupata da un altro programma: i personaggi sono letti dalla cartella.`
         : 'Mutant e\' spento: i personaggi sono letti dalla cartella (con la stessa scelta del file attuale che fa l\'app).',
+    `Questa copia di Mutant (quella aperta adesso): ${r}`,
     `Cartella dei personaggi: ${cartella}`,
+    ...(altreInstallazioni.length ? ['', `Su questo PC ci sono anche altre ${altreInstallazioni.length === 1 ? 'copia' : 'copie'} di Mutant:`, ...altreInstallazioni.map((p) => `  ${p}`)] : []),
     '',
     `Personaggi: ${stato.length}`,
     ...stato.map((x) => `  ${String(x.nome).padEnd(22)} ${`${x.px === null || x.px === undefined ? 'senza PX' : `${x.px} PX`}`.padEnd(9)} ${`${x.files} file`}  ${!x.letto ? 'NON LEGGIBILE' : x.nuovi ? `Talenti nuovi (${x.presi} scelti)` : 'Talenti vecchi'}   attuale: ${x.file}`),
@@ -299,12 +307,13 @@ export async function voceStato({ radice: r = radice, porta: p = porta, scrivi =
     const file = join(r, 'stato-mutant.txt');
     try { writeFileSync(file, `﻿${righe.join('\r\n')}\r\n`); console.log(`\n Lo stesso testo e' in ${file}: si puo' mandare a Marcello.`); } catch { /* a schermo basta */ }
   }
-  return { daServer, cartella, stato, passaggio, zip, righe };
+  return { daServer, cartella, stato, passaggio, zip, righe, installazioni };
 }
 
 /**
- * Voce P «Cerca i personaggi» (26/10/2026): dove possono essere finiti personaggi e PX (tools/cerca-personaggi.mjs).
- * Legge soltanto; alla fine, con un numero e poi SI, imposta quale cartella usa questo PC (tools/dati-pc.mjs).
+ * Voce P «Cerca i personaggi» (26/10/2026, ritocchi del 26/10 sera): dove possono essere finiti personaggi e PX
+ * (tools/cerca-personaggi.mjs). Legge soltanto; alla fine, con un numero (o un percorso scritto a mano) e poi SI,
+ * imposta quale cartella usa questo PC (tools/dati-pc.mjs).
  */
 export async function voceCerca({ radice: r = radice, rl: esterno = null, home = undefined, radici = undefined } = {}) {
   const rl = esterno ?? lettore();
@@ -313,38 +322,66 @@ export async function voceCerca({ radice: r = radice, rl: esterno = null, home =
     console.log('\n CERCA I PERSONAGGI: adesso leggo soltanto, non cambio niente.');
     console.log(` Cartella dei personaggi usata adesso: ${join(dd.cartella, 'personaggi')}${dd.fonte === 'profilo' ? ' (impostata su questo PC)' : ''}`);
     if (dd.problema) console.log(rosso(` ${ascii(dd.problema)}`));
-    console.log(' Cerco nelle copie dell\'app, nei salvataggi, negli storici, su Drive e nei file esportati: puo\' volerci un minuto...');
-    const t = cerca({ radiceApp: r, dati: dd.cartella, ...(home ? { home } : {}), ...(radici ? { radici } : {}) });
+    console.log(' Guardo tutti i Desktop (anche quello pubblico e quelli di OneDrive, con qualunque nome), Documenti e');
+    console.log(' Download, le copie dell\'app e i salvataggi, gli storici, Drive e i file esportati.');
+    // se impiega piu' di un minuto, dice ogni tanto dove sta guardando (non un segno di errore: solo un PC lento o
+    // pieno di file)
+    let ultimoAvviso = 0;
+    const onProgress = (p) => { const ora = Date.now(); if (ora - ultimoAvviso > 4900) { ultimoAvviso = ora; console.log(` ... ci sto ancora mettendo un po', sto guardando: ${ascii(p)}`); } };
+    const t = cerca({ radiceApp: r, dati: dd.cartella, onProgress, ...(home ? { home } : {}), ...(radici ? { radici } : {}) });
     const giorno = (ms) => (ms ? new Date(ms).toLocaleString('it-IT', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '?');
     const pxDi = (v) => (v.px === null || v.px === undefined ? 'senza PX' : `${v.px} PX`);
-    if (!t.personaggi.length) { console.log('\n Non ho trovato nessun personaggio. Manda a Marcello una foto di questa finestra.'); return { trovati: 0, scelta: null }; }
-    console.log(`\n PERSONAGGI TROVATI: ${t.personaggi.length}. Per ciascuno, in cima, la versione piu' recente.`);
-    for (const p of t.personaggi) {
-      const [v, ...altre] = p.versioni;
-      console.log(`\n  ${ascii(p.nome)}  -  livello ${v.livello}  -  ${pxDi(v)}  -  ${giorno(v.quando)}`);
-      console.log(`     dove: ${ascii(v.dove)}`);
-      for (const a of altre.slice(0, 3)) console.log(`     anche: ${giorno(a.quando)}  ${pxDi(a)}  ${ascii(a.dove)}`);
-      if (altre.length > 3) console.log(`     (e altre ${altre.length - 3} copie piu' vecchie)`);
+    if (t.personaggi.length) {
+      console.log(`\n PERSONAGGI TROVATI: ${t.personaggi.length}. Per ciascuno, in cima, la versione piu' recente.`);
+      for (const p of t.personaggi) {
+        const [v, ...altre] = p.versioni;
+        console.log(`\n  ${ascii(p.nome)}  -  livello ${v.livello}  -  ${pxDi(v)}  -  ${giorno(v.quando)}`);
+        console.log(`     dove: ${ascii(v.dove)}`);
+        for (const a of altre.slice(0, 3)) console.log(`     anche: ${giorno(a.quando)}  ${pxDi(a)}  ${ascii(a.dove)}`);
+        if (altre.length > 3) console.log(`     (e altre ${altre.length - 3} copie piu' vecchie)`);
+      }
+      if (t.px.length) {
+        console.log('\n PX DELLA PARTITA (il pannello PX), dal piu\' recente:');
+        for (const x of t.px.slice(0, 6)) console.log(`   ${giorno(x.quando)}  ${x.partite} ${x.partite === 1 ? 'partita registrata' : 'partite registrate'}  ${ascii(x.dove)}`);
+      }
+      // (A) prima le installazioni vere di Mutant (Mutant.bat o server.mjs), poi tutte le altre dalla piu' recente
+      console.log('\n CARTELLE CON PERSONAGGI (prima le installazioni vere di Mutant, poi dalla piu\' recente):');
+      t.copie.forEach((c, i) => console.log(`   ${i + 1}. ${ascii(c.cartella)}${c.appCopia ? ' [e\' un\'installazione di Mutant]' : ''}  -  ${c.quanti} personaggi, l'ultimo salvato il ${giorno(c.ultima)}${c.inUso ? '   <- IN USO ADESSO' : ''}`));
+      const recentiInZip = t.personaggi.filter((p) => p.versioni[0].tipo === 'zip' || p.versioni[0].tipo === 'export').map((p) => p.nome);
+      if (recentiInZip.length) console.log(`\n Per ${ascii(recentiInZip.join(', '))} la versione piu' recente e' in uno zip o in un file esportato: si rimette con la voce 4 (Ripristina) o con "Importa file JSON" nell'app.`);
+    } else {
+      console.log('\n Non ho trovato da solo nessun personaggio.');
     }
-    if (t.px.length) {
-      console.log('\n PX DELLA PARTITA (il pannello PX), dal piu\' recente:');
-      for (const x of t.px.slice(0, 6)) console.log(`   ${giorno(x.quando)}  ${x.partite} ${x.partite === 1 ? 'partita registrata' : 'partite registrate'}  ${ascii(x.dove)}`);
+    // (B) il percorso si puo' scrivere a mano, sempre: se la ricerca non ha trovato la cartella giusta, o se la sai gia'
+    console.log('\n Quale cartella vuoi usare?');
+    console.log('   - scrivi il numero di una delle cartelle qui sopra;');
+    console.log('   - oppure scrivi (o incolla da Esplora risorse, anche fra virgolette) il percorso della cartella con i personaggi giusti;');
+    console.log('   - Invio e basta per non cambiare niente.');
+    const risposta = (await rl.chiedi(' Numero o percorso: ')).trim();
+    if (!risposta) { console.log(' Va bene: non ho cambiato niente.'); return { trovati: t.personaggi.length, scelta: null, ...t }; }
+    let cartellaScelta;
+    if (/^\d+$/.test(risposta) && Number(risposta) >= 1 && Number(risposta) <= t.copie.length) {
+      const c = t.copie[Number(risposta) - 1];
+      if (c.inUso) { console.log(' E\' gia\' quella in uso: non cambio niente.'); return { trovati: t.personaggi.length, scelta: null, ...t }; }
+      cartellaScelta = c.cartella;
+    } else {
+      const m = risolviPercorsoManuale(risposta);
+      if (!m.ok) {
+        console.log(rosso(` Non va bene: ${ascii(m.motivo)}`));
+        console.log(' Scrivi il percorso della cartella che contiene i file dei personaggi (quella con dentro i file ..._liv6_....json), o della cartella sopra. Va bene: non ho cambiato niente.');
+        return { trovati: t.personaggi.length, scelta: null, ...t };
+      }
+      console.log(`\n In ${ascii(m.cartellaPersonaggi)} ci sono ${m.personaggi.length} ${m.personaggi.length === 1 ? 'personaggio' : 'personaggi'}:`);
+      for (const p of m.personaggi) console.log(`   ${ascii(String(p.nome)).padEnd(22)} ${p.px === null ? 'senza PX' : `${p.px} PX`}`);
+      if (resolve(m.dati).toLowerCase() === resolve(dd.cartella).toLowerCase()) { console.log(' E\' gia\' quella in uso: non cambio niente.'); return { trovati: t.personaggi.length, scelta: null, ...t }; }
+      cartellaScelta = m.dati;
     }
-    console.log('\n CARTELLE CON PERSONAGGI (dalla piu\' recente):');
-    t.copie.forEach((c, i) => console.log(`   ${i + 1}. ${ascii(c.cartella)}  -  ${c.quanti} personaggi, l'ultimo salvato il ${giorno(c.ultima)}${c.inUso ? '   <- IN USO ADESSO' : ''}`));
-    const recentiInZip = t.personaggi.filter((p) => p.versioni[0].tipo === 'zip' || p.versioni[0].tipo === 'export').map((p) => p.nome);
-    if (recentiInZip.length) console.log(`\n Per ${ascii(recentiInZip.join(', '))} la versione piu' recente e' in uno zip o in un file esportato: si rimette con la voce 4 (Ripristina) o con "Importa file JSON" nell'app.`);
-    const scelta = (await rl.chiedi('\n Quale cartella vuoi usare? Scrivi il suo numero e Invio (Invio e basta = nessuna, non cambio niente): ')).trim();
-    const n = Number(scelta);
-    if (!scelta || !Number.isInteger(n) || n < 1 || n > t.copie.length) { console.log(' Va bene: non ho cambiato niente.'); return { trovati: t.personaggi.length, scelta: null, ...t }; }
-    const c = t.copie[n - 1];
-    if (c.inUso) { console.log(' E\' gia\' quella in uso: non cambio niente.'); return { trovati: t.personaggi.length, scelta: null, ...t }; }
-    console.log(`\n Da adesso Mutant su questo PC usera' i personaggi di:\n   ${ascii(c.cartella)}\n Non sposto e non cancello nessun file: cambia solo la cartella che Mutant guarda.`);
+    console.log(`\n Da adesso Mutant su questo PC usera' i personaggi di:\n   ${ascii(cartellaScelta)}\n Non sposto e non cancello nessun file: cambia solo la cartella che Mutant guarda.`);
     if (!await confermaSi(rl, ' Scrivi SI e premi Invio per usarla (altrimenti Invio e basta): ')) { console.log(' Va bene: non ho cambiato niente.'); return { trovati: t.personaggi.length, scelta: null, ...t }; }
-    scriviImpostazione(c.cartella, { perche: 'scelta con «Cerca i personaggi»' });
-    console.log(`\x1b[32m Fatto: Mutant usa i personaggi di ${ascii(c.cartella)}.\x1b[0m`);
+    scriviImpostazione(cartellaScelta, { perche: 'scelta con «Cerca i personaggi»' });
+    console.log(`\x1b[32m Fatto: Mutant usa i personaggi di ${ascii(cartellaScelta)}.\x1b[0m`);
     console.log(' Se Mutant e\' acceso, chiudi la sua finestra nera e riaccendilo con la voce 1. Poi premi C "Controlla lo stato" e guarda i PX.');
-    return { trovati: t.personaggi.length, scelta: c.cartella, ...t };
+    return { trovati: t.personaggi.length, scelta: cartellaScelta, ...t };
   } finally { if (!esterno) rl.chiudi(); }
 }
 

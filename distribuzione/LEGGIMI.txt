@@ -349,15 +349,25 @@ Dal 26/10/2026 Mutant ricorda in quale cartella stanno i tuoi personaggi
 (e PX, tavolo, salvataggi): e' un'impostazione di questo PC, che nessun
 aggiornamento cambia. Se pero' qualcosa manca:
 
+Se sul desktop vedi due cartelle con lo stesso nome (es. due "distribuzione"),
+e' normale: Windows mostra insieme il tuo desktop, quello pubblico e quello
+di OneDrive (se c'e'). I personaggi possono stare in una qualunque delle tre:
+la ricerca qui sotto le guarda tutte da sola.
+
 1. Apri Mutant.bat e premi P "Cerca i personaggi". Legge soltanto: non
-   sposta e non cancella niente.
+   sposta e non cancella niente. Guarda tutti i Desktop, Documenti e
+   Download (anche quelli di OneDrive), non solo quello che apre il
+   collegamento.
 2. Per ogni personaggio vedi in cima la versione piu' recente, con dove sta,
    la data, il livello e i PX. Sotto ci sono il pannello dei PX della
    partita e l'elenco delle cartelle con personaggi, dalla piu' recente.
 3. Scrivi il numero della cartella con i personaggi giusti (quella con i PX
-   dell'ultima serata) e Invio, poi SI e Invio.
+   dell'ultima serata) e Invio, poi SI e Invio. Se la cartella giusta non
+   e' nell'elenco, puoi scrivere (o incollare da Esplora risorse) il suo
+   percorso al posto del numero.
 4. Se Mutant e' acceso, chiudi la sua finestra nera e riaccendilo con la
-   voce 1. Poi premi C "Controlla lo stato": devono esserci i PX giusti.
+   voce 1. Poi premi C "Controlla lo stato": devono esserci i PX giusti; se
+   sul PC c'e' anche un'altra copia di Mutant, te lo dice.
 
 SE QUALCOSA NON VA
 --------------------------------------------------------------

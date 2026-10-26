@@ -11,8 +11,8 @@ import { spawn, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { cartellaDati, migraSeServe, leggiImpostazione, scriviImpostazione, percorsoImpostazione } from '../tools/dati-pc.mjs';
 import { annotaPrima, confrontaPersonaggi, personaggiDalServer, personaggiAdesso } from '../tools/esito-aggiornamento.mjs';
-import { cerca, radiciDischi, copieDellApp } from '../tools/cerca-personaggi.mjs';
-import { voceCerca } from '../tools/console.mjs';
+import { cerca, radiciDischi, copieDellApp, risolviPercorsoManuale, installazioniMutant, puliscePercorso } from '../tools/cerca-personaggi.mjs';
+import { voceCerca, voceStato } from '../tools/console.mjs';
 import { creaZip } from '../tools/salva-sessione.mjs';
 
 const REPO = new URL('..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
@@ -221,4 +221,68 @@ test('D: «Cerca» guarda anche pochi livelli sotto la radice dei dischi (per es
   const trovate = copieDellApp([[r, 2]]);
   assert.ok(trovate.includes(vicina));
   assert.ok(!trovate.includes(lontana));
+});
+
+test('E: il caso di Davide — due "distribuzione" sul desktop (una vuota, una di OneDrive) più "Dati precedenti": Cerca propone per prima la copia giusta, prima le installazioni vere', async () => {
+  const r = tmp();
+  const home = join(r, 'utente');
+  // il collegamento sul desktop apre questa: vuota, come dopo un aggiornamento finito nel posto sbagliato
+  const vuota = copiaVuota(join(home, 'Desktop', 'distribuzione'), 'mutant');
+  // la stessa cartella "Desktop", vista da OneDrive: qui ci sono davvero i personaggi, con i PX
+  const oneDrive = copiaConDati(join(home, 'OneDrive', 'Desktop', 'distribuzione'), 'mutant');
+  // "Dati precedenti": una copia più vecchia, senza Mutant.bat né server.mjs (solo i file dei personaggi)
+  const vecchie = join(home, 'Dati precedenti', 'mutant');
+  for (const f2 of fixture) {
+    const o = JSON.parse(readFileSync(new URL(f2, FIX), 'utf8'));
+    scrivi(join(vecchie, 'personaggi', f2), JSON.stringify({ ...o, scelte: { ...o.scelte, puntiEsperienza: 1 }, aggiornato_il: '2026-10-01T10:00:00.000Z' }));
+  }
+  const t = cerca({ radiceApp: vuota, dati: vuota, home });
+  assert.equal(t.copie[0].cartella, oneDrive, 'in cima la copia con i personaggi veri (OneDrive), non quella vuota né la più vecchia');
+  assert.equal(t.copie[0].appCopia, true);
+  assert.ok(t.copie.some((c) => c.cartella === vecchie), '«Dati precedenti» si trova lo stesso, anche senza Mutant.bat o server.mjs');
+  assert.equal(t.copie.find((c) => c.cartella === vecchie).appCopia, false);
+  assert.equal(t.personaggi.length, fixture.length);
+  assert.ok(t.personaggi.every((p) => p.versioni[0].dove.includes('OneDrive')), 'per ogni personaggio, in cima la copia di OneDrive (la più recente)');
+
+  // B: il percorso a mano funziona, anche fra virgolette e incollando la cartella "personaggi" stessa
+  assert.equal(puliscePercorso(` "${oneDrive}" `), oneDrive);
+  const m = risolviPercorsoManuale(`"${join(oneDrive, 'personaggi')}"`);
+  assert.equal(m.ok, true);
+  assert.equal(m.dati, oneDrive);
+  assert.equal(m.personaggi.length, fixture.length);
+  // anche scrivendo la cartella sopra (quella dei dati), non quella "personaggi"
+  const m2 = risolviPercorsoManuale(oneDrive);
+  assert.equal(m2.ok, true);
+  assert.equal(m2.dati, oneDrive);
+  // un percorso che non esiste, o senza personaggi dentro (qui ci sono due livelli, non uno): errore chiaro, nessun crash
+  assert.equal(risolviPercorsoManuale(join(r, 'non-esiste')).ok, false);
+  assert.equal(risolviPercorsoManuale(join(home, 'Dati precedenti')).ok, false);
+
+  // C: la voce "Controlla lo stato" deve vedere le altre installazioni vere (non "Dati precedenti", senza marcatori)
+  const altre = installazioniMutant(vuota, { home }).filter((p) => p !== vuota);
+  assert.ok(altre.includes(oneDrive));
+  assert.ok(!altre.includes(vecchie));
+
+  // con il numero e poi SI, voceCerca imposta la cartella giusta
+  const risposte = (a) => { const coda = [...a]; return { chiedi: async () => coda.shift() ?? '', chiudi: () => {} }; };
+  const log = console.log; console.log = () => {};
+  const n = t.copie.findIndex((c) => c.cartella === oneDrive) + 1;
+  try { await voceCerca({ radice: vuota, rl: risposte([String(n), 'SI']), home }); } finally { console.log = log; }
+  assert.equal(leggiImpostazione().cartella, oneDrive);
+  assert.equal(cartellaDati(vuota).cartella, oneDrive);
+});
+
+test('E: la voce "Controlla lo stato" elenca le altre copie di Mutant trovate su questo PC', async () => {
+  const r = tmp();
+  const home = join(r, 'utente2');
+  const vuota = copiaVuota(join(home, 'Desktop', 'distribuzione'), 'mutant');
+  const oneDrive = copiaConDati(join(home, 'OneDrive', 'Desktop', 'distribuzione'), 'mutant');
+  scriviImpostazione(oneDrive);
+  const log = console.log; console.log = () => {};
+  let e;
+  try { e = await voceStato({ radice: vuota, porta: 1, scrivi: false, home }); } finally { console.log = log; }
+  assert.ok(e.installazioni.some((p) => p === vuota));
+  assert.ok(e.installazioni.some((p) => p === oneDrive));
+  assert.ok(e.righe.some((r2) => /altre? copi/i.test(r2)), e.righe.join('\n'));
+  assert.ok(e.righe.some((r2) => r2.includes(oneDrive)), e.righe.join('\n'));
 });
