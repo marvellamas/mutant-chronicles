@@ -30,6 +30,7 @@ import { leggiRuolo, scriviRuolo, testoRuolo, RUOLI } from './ruolo-pc.mjs';
 import { statoDalServer, statoDaDisco } from './stato-personaggi.mjs';
 import { cartellaDati, migraSeServe, scriviImpostazione } from './dati-pc.mjs';
 import { cerca, risolviPercorsoManuale, installazioniMutant } from './cerca-personaggi.mjs';
+import { controllaSeSbagliata, segnaCartellaVuota, eseguiRinominePendenti, copiaPersonaggiDentro, aggiornaCodiceAltra } from './ripara-installazione.mjs';
 import { statoDaRuolo } from '../src/copia-di-lavoro.js';
 import { leggiVersione, leggiNovita, versioneInParole } from '../src/versione.js';
 import { rapporto as rapportoTalenti, applica as applicaTalenti, ripristina as ripristinaTalenti, zipDelPassaggio, zipDaRipristinare, controllaSulServer, statoPassaggio, quandoDelloZip } from './migra-talenti.mjs';
@@ -385,6 +386,61 @@ export async function voceCerca({ radice: r = radice, rl: esterno = null, home =
   } finally { if (!esterno) rl.chiudi(); }
 }
 
+/** «oggi alle 23:10», «ieri alle 23:10», o la data intera se è più vecchio. */
+function giornoRelativo(ms) {
+  if (!ms) return 'non si sa quando';
+  const d = new Date(ms);
+  const ora = (x) => x.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });
+  const oggi = new Date();
+  const giorni = Math.round((new Date(oggi.getFullYear(), oggi.getMonth(), oggi.getDate()) - new Date(d.getFullYear(), d.getMonth(), d.getDate())) / 86400000);
+  if (giorni === 0) return `oggi alle ${ora(d)}`;
+  if (giorni === 1) return `ieri alle ${ora(d)}`;
+  return `il ${d.toLocaleDateString('it-IT')} alle ${ora(d)}`;
+}
+
+/**
+ * Mutant si accorge di essere la copia sbagliata (27/10/2026, lotto 128: il caso di Davide, due «distribuzione» sul
+ * desktop). All'avvio: se la cartella dei dati di questo PC è vuota e un'altra copia (vera installazione, o solo una
+ * cartella con i file: cloud, copia di sicurezza) ha i personaggi, una domanda sola; con SI si sistema da sola.
+ * `aggiornaCodice`/`faiCollegamento` iniettabili per le prove (di norma: aggiornaCodiceAltra, creaCollegamento).
+ */
+export async function proponiRiparazione({ radice: r = radice, rl: esterno = null, aggiornaCodice = aggiornaCodiceAltra, faiCollegamento = creaCollegamento, home = undefined, radici = undefined } = {}) {
+  let c;
+  try { c = controllaSeSbagliata(r, { ...(home ? { home } : {}), ...(radici ? { radici } : {}) }); } catch { return null; }
+  if (!c) return null;
+  const rl = esterno ?? lettore();
+  try {
+    const nomi = statoDaDisco(join(c.cartella, 'personaggi')).map((p) => `${p.nome} ${p.px === null || p.px === undefined ? 'senza PX' : `${p.px} PX`}`);
+    const elenco = nomi.length > 4 ? `${nomi.slice(0, 4).join(', ')}, ...` : nomi.join(', ');
+    console.log('\n ==============================================================');
+    console.log('  I tuoi personaggi non sono qui.');
+    console.log(' ==============================================================');
+    console.log(c.tipo === 'installazione'
+      ? ` Li ho trovati in un'altra installazione di Mutant su questo PC:\n   ${c.cartella}`
+      : ` Li ho trovati in una cartella che NON e' un'installazione di Mutant (per esempio una copia sul cloud):\n   ${c.cartella}`);
+    console.log(` ${ascii(elenco)}  (${c.quanti} ${c.quanti === 1 ? 'personaggio' : 'personaggi'}, ultimo salvataggio ${giornoRelativo(c.ultima)}).`);
+    if (c.altre?.length) console.log(` (su questo PC ci sono anche altre copie: ${c.altre.map((a) => ascii(a.cartella)).join('; ')})`);
+    console.log(c.tipo === 'installazione'
+      ? ' Uso quelli? Da adesso Mutant su questo PC usera\' quella installazione (rifaccio il collegamento sul desktop e la metto al passo se era indietro).'
+      : ' Li copio qui dentro (non li uso da dove sono: una cartella sul cloud non va usata mentre si gioca)?');
+    if (!await confermaSi(rl, ' Scrivi SI e premi Invio (altrimenti Invio e basta): ')) { console.log(' Va bene: non ho cambiato niente. Te lo richiedo alla prossima apertura.'); return { fatto: false }; }
+    if (c.tipo === 'installazione') {
+      scriviImpostazione(c.cartella, { perche: 'riparazione automatica: trovata un\'altra installazione con i personaggi' });
+      const codice = aggiornaCodice({ sorgente: r, destinazione: c.cartella });
+      if (codice.fatto) console.log(' Ho messo al passo anche il codice di quell\'installazione (i suoi dati non sono stati toccati).');
+      else if (!codice.ok) console.log(rosso(` Non sono riuscito a mettere al passo il codice di quell'installazione: ${ascii(codice.motivo)}. I dati vanno bene lo stesso.`));
+      faiCollegamento(c.cartella);
+      try { segnaCartellaVuota(r); } catch { /* non blocca la riparazione */ }
+      console.log(`\x1b[32m Fatto: Mutant su questo PC usa ${ascii(c.cartella)}.\x1b[0m`);
+      console.log(' Chiudi questa finestra e riapri Mutant dal collegamento sul desktop: da li\' in avanti apre quella installazione.');
+      return { fatto: true, riavviare: true, scelta: c.cartella };
+    }
+    const cp = copiaPersonaggiDentro({ daCartella: c.cartella, radiceApp: r });
+    console.log(`\x1b[32m Fatto: copiati ${cp.copiati} file dentro questa installazione.\x1b[0m`);
+    return { fatto: true, riavviare: false, copiati: cp.copiati };
+  } finally { if (!esterno) rl.chiudi(); }
+}
+
 /** Voce 7: passaggio ai Talenti nuovi (tools/migra-talenti.mjs). */
 export async function voceTalenti({ radice: r = radice, rl: esterno = null, porta: p = porta } = {}) {
   const rl = esterno ?? lettore();
@@ -578,9 +634,16 @@ async function voceAvvio() {
   // 26/10/2026: la cartella dei dati di questo PC (tools/dati-pc.mjs). La prima volta, in silenzio: se questa copia
   // dell'app ha i personaggi, diventa lei la cartella dei dati; una copia vuota non scrive niente.
   try { migraSeServe(radice); } catch { /* profilo non scrivibile: si continua come prima */ }
+  // 27/10/2026 (lotto 128): le copie vuote lasciate da una riparazione automatica, rinominate adesso che non è più
+  // questa la cartella in uso (mai se stessi: qui "radice" è la cartella da cui si è appena partiti).
+  try { eseguiRinominePendenti(radice); } catch { /* non blocca l'avvio */ }
   const dd = cartellaDati(radice);
   if (dd.problema) console.log(`\n ATTENZIONE: ${ascii(dd.problema)}\n Premi P "Cerca i personaggi" per ritrovarli.`);
   const rl = lettore();
+  // 27/10/2026 (lotto 128): se la cartella dei dati di questo PC è vuota, Mutant cerca da sé un'altra installazione
+  // (o una copia) che abbia i personaggi: una domanda sola, poi si sistema (tools/ripara-installazione.mjs).
+  const riparazione = await proponiRiparazione({ radice, rl });
+  if (riparazione?.riavviare) { rl.chiudi(); return; }
   // 25/10/2026 (parte C): il ruolo del PC si chiede all'avvio finché non c'è una risposta; senza, l'app resta come prima
   let senzaRuolo = false;
   try { senzaRuolo = !leggiRuolo(radice).ruolo; } catch { /* profilo non leggibile: non si chiede */ }
