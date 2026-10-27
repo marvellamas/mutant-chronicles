@@ -58,6 +58,7 @@ export const CONTATORI = [
   'sessione.integrita.*', // PI di un oggetto: persi e riparati
   'sessione.nec.*', // riserva di un NEC: consumata e ricaricata
   'sessione.impianti.cartucce.*', // cartucce di un iniettore: somministrate e rifornite
+  'sessione.usiTalenti.*.usati', // un Talento/vantaggio limitato usato un'altra volta (src/usi-talenti.js)
 ];
 
 /**

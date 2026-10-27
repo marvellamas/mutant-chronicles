@@ -31,6 +31,7 @@ import { statoMorente } from '../morente.js';
 import { testoAttivazione } from '../attivazione-arma.js';
 import { testoManifestazione } from '../manifestazione.js';
 import { descriviFerite } from '../sessione.js';
+import { statoUsiTalenti } from '../usi-talenti.js';
 import { statoIntegrita, oggettiRotti } from '../protezione.js';
 import { schermaQualcosa, statoContenitore, statoSchermatura } from '../schermatura.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
@@ -1684,6 +1685,53 @@ function riquadroCircostanze(ctx) {
     lista.length ? lista.map(riga) : h('p', { class: 'nota' }, 'Nessuno: «+ Aggiungi» per segnare un bonus o malus del master.'));
 }
 
+/**
+ * «Usi» (27/10/2026, lotto 129, dal tavolo del 26/10): Talenti, Specializzazioni/Maestrie o il vantaggio
+ * dell'Addestramento usabili solo un certo numero di volte per scontro, sessione o giorno (catalogo → campo
+ * «usi»: src/usi-talenti.js). Un contatore a tocco, come le munizioni; per scontro si azzera da solo a un
+ * nuovo scontro, per sessione o al giorno solo a mano con «↺». Niente se il personaggio non ne ha nessuno.
+ */
+function riquadroUsiTalenti(ctx) {
+  const scontro = ctx.roundScontro?.id ?? null;
+  const voci = statoUsiTalenti(ctx.tab.scheda, ctx.sessione, scontro);
+  if (!voci.length) return null;
+  const AMBITO = { scontro: 'per scontro', sessione: 'per sessione', giorno: 'al giorno' };
+  return h('section', { class: 'riquadro riquadro-usi-talenti', 'aria-label': 'Usi per scontro, sessione o giorno' },
+    h('header', { class: 'testa-gradi' }, h('h3', {}, 'Usi'),
+      infoValore('?', { titolo: 'Usi limitati', sezioni: [{ testo: 'Talenti, Specializzazioni, Maestrie o il vantaggio dell’Addestramento usabili solo un certo numero di volte. Un tocco sul numero segna un uso; per scontro torna disponibile da solo a un nuovo scontro, per sessione o al giorno solo con «↺».' }] }, { classe: 'info-gradi' })),
+    h('ul', { class: 'elenco-usi-talenti' }, voci.map((v) => {
+      const pieno = v.usati >= v.quantita;
+      return h('li', { class: `riga-uso-talento${pieno ? ' esaurito' : ''}` },
+        h('span', { class: 'nome-uso', title: `${v.nome} · una volta ${AMBITO[v.ambito] ?? v.ambito}` }, v.nome),
+        h('button', { type: 'button', class: 'btn btn-piccolo', disabled: pieno, title: pieno ? 'Già usato: tocca «↺» per rimetterlo' : `Segna un uso (${AMBITO[v.ambito] ?? v.ambito})`, onclick: () => ctx.azioni.usaUnaVoltaTalento(v, scontro) }, `${v.usati}/${v.quantita}`),
+        v.usati > 0 ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Azzera a mano', 'aria-label': `Azzera gli usi di ${v.nome}`, onclick: () => ctx.azioni.azzeraUsoTalento(v.chiave) }, '↺') : null);
+    })));
+}
+
+/**
+ * Bonus e malus condizionali sulle Abilità, da applicare al tavolo (27/10/2026, lotto 129): le Specializzazioni/
+ * Maestrie con una nota «Da applicare al tavolo» (non già calcolata, src/talenti.js → notaDaApplicare) elencano
+ * sempre un'Abilità (il loro stesso campo «abilita»): questa è la terza colonna della riga, accanto a Bonus di
+ * circostanza e Usi. Niente se nessuna ne ha una.
+ */
+function riquadroBonusAbilitaTavolo(ctx) {
+  const voci = (ctx.tab.scheda.specializzazioni ?? []).filter((s) => s.tavolo);
+  if (!voci.length) return null;
+  return h('section', { class: 'riquadro riquadro-bonus-abilita', 'aria-label': 'Bonus e malus condizionali sulle Abilità' },
+    h('header', { class: 'testa-gradi' }, h('h3', {}, 'Da applicare al tavolo')),
+    h('ul', { class: 'elenco-bonus-abilita' }, voci.map((s) => h('li', {},
+      h('strong', {}, s.nome), s.abilita?.length ? ` (${s.abilita.join(', ')})` : '', ': ', s.tavolo))));
+}
+
+/**
+ * La riga a tre: Bonus di circostanza, Usi, bonus condizionali sulle Abilità (lotto 129, parte B): tre riquadri
+ * affiancati sulla stessa riga, senza aggiungere altezza; sotto i 900 px la terza va a capo sotto le prime due
+ * (CSS: .riga-circostanze-usi). Ogni riquadro manca del tutto (null) se non ha niente da dire.
+ */
+function rigaCircostanzeEUsi(ctx) {
+  return h('div', { class: 'riga-circostanze-usi' }, riquadroCircostanze(ctx), riquadroUsiTalenti(ctx), riquadroBonusAbilitaTavolo(ctx));
+}
+
 /** Riga compatta di un riquadro della colonna destra: titolo, stato attuale e gradi cliccabili. */
 function gradiCompatti(ctx, { titolo, campo, attuale, gradi, nota, avviso = null }) {
   const g = gradi[attuale];
@@ -1719,9 +1767,10 @@ function tabCombattimento(ctx, d) {
   const mani = riquadriMani(ctx, d);
   const sanitari = consumabili(normalizzaEquipaggiamento(ctx.scelte.equipaggiamento), ctx.dati).filter((c) => c.gruppo === 'sanitario');
   return [
-    // S12 (11/10/2026): gli Stati in alto; sotto, i bonus di circostanza
+    // S12 (11/10/2026): gli Stati in alto; sotto, Bonus di circostanza, Usi e bonus condizionali sulle Abilità
+    // affiancati sulla stessa riga (lotto 129, parte B)
     riquadroStati(ctx, d),
-    riquadroCircostanze(ctx),
+    rigaCircostanzeEUsi(ctx),
     promemoriaPenalita(ctx),
     // conducente di un veicolo: andatura e penalità come promemoria, senza cambiare i VA (Veicoli §2.1, §3.1)
     promemoriaConducente(ctx),
@@ -2417,15 +2466,23 @@ function rigaCristallo(ctx, c) {
     sigla.textContent = ` · ${stato(x)}`;
     for (const [el, d] of pulsanti) el.disabled = d < 0 ? x <= 0 : x >= c.capacita;
   });
+  // 27/10 (lotto 129, parte D): «Ricarica dalla Matrice» anche da qui, non solo dalla tab Artefatti — stesso
+  // pannello (ricaricaMatriceUi), un solo calcolo; un tocco lo apre o lo richiude, per non allungare la riga.
+  const apertaRicarica = c.matrice && (ctx.ui.ricaricaSidebar ??= {})[c.uid];
   return h('div', { class: `riga-cristallo${pronto ? '' : ' inattivo'}` },
     h('div', { class: 'cristallo-testa' },
       punto,
-      h('span', { class: 'cristallo-nome' }, c.nome, sigla)),
+      h('span', { class: 'cristallo-nome' }, c.nome, sigla),
+      c.matrice ? h('button', {
+        type: 'button', class: 'btn btn-piccolo btn-ricarica-matrice', title: 'Ricarica dalla Matrice',
+        onclick: () => { ctx.ui.ricaricaSidebar[c.uid] = !apertaRicarica; ctx.azioni.ridisegna(); },
+      }, '⚡') : null),
     h('div', { class: 'cristallo-valori' },
       barraRisorsa(ctx, '', pm, c.capacita, { viva: { chiave, leggi } }),
       bm, bp),
     // 19/10: più PM in un colpo solo: «5» o «+5» aggiungono, «-3» tolgono (il tocco da ±1 resta)
-    campoVariazionePm(ctx, c));
+    campoVariazionePm(ctx, c),
+    apertaRicarica ? ricaricaMatriceUi(ctx, c) : null);
 }
 /**
  * Campo «±N» accanto ai tocchi da ±1: recuperare 12 PM a tocchi da 1 è una pena. Invio o «Applica»; il valore finale
@@ -2676,6 +2733,16 @@ async function chiediTogliAMano(ctx, x) {
   if (nuova) ctx.azioni.incantesimiAMano(nuova, rigaRegistroAMano('tolto', { nome: x.nome, origine: (ctx.scelte.incantesimiAMano ?? []).find((y) => y.nome === x.nome)?.origine ?? 'a_mano', quando: x.quando }, ctx.dati));
 }
 
+/**
+ * «Togli» di un incantesimo di Classe (27/10, lotto 129, parte C): ogni giocatore può togliere, in qualunque
+ * momento, anche gli incantesimi scelti alla creazione o a un livello, non solo quelli aggiunti a mano — conferma
+ * semplice, poi la scelta del personaggio cambia (le quote restano un avviso, mai un blocco).
+ */
+async function chiediTogliIncantesimoScelto(ctx, nome) {
+  const ok = await chiedi({ titolo: `Togli ${nome}`, testo: `${nome} esce dagli incantesimi del personaggio.`, si: 'Togli', no: 'Lascia' });
+  if (ok) ctx.azioni.togliIncantesimoScelto(nome);
+}
+
 /** La scheda di un incantesimo nell'elenco: conosciuto, oppure aggiunto a mano (`i.aggiunto`: origine, data, nota, avviso). */
 function articoloIncantesimo(ctx, i, nomeMacro) {
   const agg = i.aggiunto ?? null;
@@ -2692,7 +2759,9 @@ function articoloIncantesimo(ctx, i, nomeMacro) {
         return h('button', { type: 'button', class: `btn primario btn-attacca${st.disabilitato ? ' con-avviso' : ''}`, disabled: !inc || !(inc.versioni ?? []).length, title: st.motivo,
           onclick: () => { ctx.ui.lancio = { nome: i.nome, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Lancia!');
       })(),
-      agg ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Toglie l’incantesimo dalla scheda (non cambia le quote)', onclick: () => chiediTogliAMano(ctx, { nome: i.nome, origine: agg.origine, quando: agg.quando }) }, 'Togli') : null),
+      agg
+        ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Toglie l’incantesimo dalla scheda (non cambia le quote)', onclick: () => chiediTogliAMano(ctx, { nome: i.nome, origine: agg.origine, quando: agg.quando }) }, 'Togli')
+        : h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Toglie l’incantesimo dal personaggio', onclick: () => chiediTogliIncantesimoScelto(ctx, i.nome) }, 'Togli')),
     agg ? h('p', { class: 'piccolo origine-aggiunto' }, h('strong', {}, agg.origine), ` il ${dataLeggibile(agg.quando)}`, agg.nota ? ` · ${agg.nota}` : '', ' · fuori dalle quote di Classe.') : null,
     agg?.avviso ? h('p', { class: 'nota motivo' }, `Avviso: ${agg.avviso}`) : null,
     i.intestazione ? h('p', { class: 'piccolo' }, i.intestazione) : null,

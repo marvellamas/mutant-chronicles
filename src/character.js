@@ -349,21 +349,14 @@ export function normalizza(scelteIn, dati) {
       if (!trova(catalogo, n)) { avvisi.push(`L’incantesimo "${n}" non esiste nei dati attuali: rimosso.`); return false; }
       return true;
     });
+    // 27/10 (lotto 129, parte C, dal tavolo del 26/10): «il Direttore si fida dei giocatori». Livello massimo e
+    // quote di Classe restano un avviso (per esempio un cambio di Classe o di INT che non torna più), mai un
+    // blocco che toglie in silenzio la scelta del giocatore.
     const stato = statoIncantesimi(s, dati);
     if (stato) {
       const troppoAlti = s.incantesimi.filter((n) => trova(catalogo, n).livello_base > stato.livelloMassimo);
-      for (const n of troppoAlti) avvisi.push(`${n}: livello base oltre il massimo ${stato.livelloMassimo}, rimosso.`);
-      s.incantesimi = s.incantesimi.filter((n) => !troppoAlti.includes(n));
-      // Se le quote non bastano più (cambio di Classe o di INT) si tolgono gli ultimi aggiunti in eccesso.
-      const rimossi = [];
-      for (let st = statoIncantesimi(s, dati); st && (st.eccesso || st.scelti > st.totale); st = statoIncantesimi(s, dati)) {
-        const i = s.incantesimi.findLastIndex((n) => {
-          const m = st.perMacro[trova(catalogo, n).macrofamiglia];
-          return m.scelti > m.quota;
-        });
-        rimossi.push(...s.incantesimi.splice(i === -1 ? s.incantesimi.length - 1 : i, 1));
-      }
-      if (rimossi.length) avvisi.push(`Quote incantesimi superate: rimossi ${rimossi.join(', ')}.`);
+      for (const n of troppoAlti) avvisi.push(`${n}: livello base oltre il massimo ${stato.livelloMassimo}.`);
+      if (stato.eccesso || stato.scelti > stato.totale) avvisi.push(`Quote incantesimi superate: ${stato.scelti} scelti su ${stato.totale}.`);
     }
   }
 

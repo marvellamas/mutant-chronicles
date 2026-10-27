@@ -576,7 +576,8 @@
       "parametro": null,
       "testo": "Una volta al giorno, quando sta per subire un peggioramento dell’Affaticamento dovuto a Corsa o Scatto prolungati, marcia forzata o viaggio continuativo, può ridurlo di uno Stato, fino a un minimo di 0. Dichiara l’uso quando il peggioramento deve essere applicato; un aumento di due Stati diventa di uno. Il beneficio vale anche per un peggioramento automatico.\nNon recupera Affaticamento già accumulato e non si applica a fame, sete, privazione del sonno o altre cause.",
       "categoria": "talento_libero",
-      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta.",
+      "usi": { "ambito": "giorno", "quantita": 1 }
     },
     {
       "id": "movimento-fluido",
@@ -1576,7 +1577,8 @@
       "parametro": null,
       "testo": "Una volta per sessione, con 1 AzP e una Prova riuscita di Tecnologia, rende temporaneamente funzionante per 1d6 Round un dispositivo Rotto, anche a 0 PI. Le prove per utilizzarlo subiscono −2 VA. Non recupera PI e non funziona su un oggetto Distrutto o privo di componenti indispensabili. L’utilizzo si consuma con il tentativo.",
       "categoria": "maestria",
-      "intestazione": "Attivo. Nessun prerequisito. Acquisibile una sola volta."
+      "intestazione": "Attivo. Nessun prerequisito. Acquisibile una sola volta.",
+      "usi": { "ambito": "sessione", "quantita": 1 }
     },
     {
       "id": "commerciante-esperto",
@@ -1639,7 +1641,8 @@
       "parametro": null,
       "testo": "Una volta al giorno, quando sta per subire un peggioramento dell’Affaticamento dovuto a fame, sete o sonno insufficiente, lo riduce di uno stato, fino a un minimo di 0. Non recupera Affaticamento già accumulato e non sostituisce cibo, acqua o riposo.",
       "categoria": "talento_libero",
-      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta."
+      "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta.",
+      "usi": { "ambito": "giorno", "quantita": 1 }
     },
     {
       "id": "tiratore-imboscato",
@@ -2373,7 +2376,8 @@
         ]
       },
       "categoria": "maestria",
-      "intestazione": "Attivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta."
+      "intestazione": "Attivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.",
+      "usi": { "ambito": "scontro", "quantita": 1 }
     },
     {
       "id": "manifestazioni-occultate",

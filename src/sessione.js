@@ -56,6 +56,7 @@ import { allineaImpianti } from './impianti.js';
 import { allineaMorente, statoMorente, togliRound } from './morente.js';
 import { allineaAttivazioniArmi, attivaArma, terminaArma } from './attivazione-arma.js';
 import { allineaContenitori, commutaContenitore } from './schermatura.js';
+import { allineaUsiTalenti, usaUnaVolta, azzeraUso } from './usi-talenti.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const limita = (v, min, max) => Math.min(max, Math.max(min, v));
@@ -410,6 +411,8 @@ export function allineaSessione(sessione, m) {
     ...(() => { const v = isOggetto(sessione.vistaAbilita) ? Object.fromEntries(Object.entries(sessione.vistaAbilita).filter(([k, x]) => typeof k === 'string' && typeof x === 'boolean')) : {}; return Object.keys(v).length ? { vistaAbilita: v } : {}; })(),
     // circostanze del Direttore (src/circostanze.js): la chiave c'è solo se ce ne sono
     ...(() => { const c = normalizzaCircostanze(sessione.circostanze, m.circostanza); return c.length ? { circostanze: c } : {}; })(),
+    // usi limitati di Talenti/Specializzazioni e del vantaggio dell'Addestramento (27/10, src/usi-talenti.js)
+    ...(() => { const u = allineaUsiTalenti(sessione.usiTalenti); return Object.keys(u).length ? { usiTalenti: u } : {}; })(),
     ...(() => { const t = normalizzaTemporanei(sessione.caratteristicheTemporanee, m.temporanei, m.sigle); return t.length ? { caratteristicheTemporanee: t } : {}; })(),
     // N2: storico del personaggio («procedi comunque: …», src/storico.js); la chiave c'è solo se ci sono righe
     ...(() => { const st = allineaStorico(sessione.storico); return st.length ? { storico: st } : {}; })(),
@@ -625,6 +628,16 @@ export function attivaTecnicaSessione(sessione, scheda, id, dati, opz, m) {
 /** «Nuovo Round»: avanza il contatore e fa scadere le Tecniche finite (§8.9.1). */
 export function nuovoRoundSessione(sessione, m) {
   return allineaSessione(nuovoRound(allineaSessione(sessione, m)), m);
+}
+
+/** Un uso in più di un Talento/vantaggio limitato (tab Combattimento, src/usi-talenti.js). */
+export function usaUnaVoltaSessione(sessione, voce, scontroId, m) {
+  return allineaSessione(usaUnaVolta(allineaSessione(sessione, m), voce, scontroId), m);
+}
+
+/** «Azzera» a mano un contatore di usi (src/usi-talenti.js). */
+export function azzeraUsoSessione(sessione, chiave, m) {
+  return allineaSessione(azzeraUso(allineaSessione(sessione, m), chiave), m);
 }
 
 /** Termina a mano una Tecnica attiva (durate in minuti, ore, fino all'interruzione). */

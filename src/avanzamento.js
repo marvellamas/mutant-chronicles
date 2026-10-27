@@ -1690,11 +1690,11 @@ function schedaARiposo(personaggio, dati) {
     regimeTalenti: stato.regime,
     talentiLiberi: stato.talentiLiberi.filter((t) => !talentoLiberoDef(t.id, dati).specializzazione).map((t) => {
       const d = talentoLiberoDef(t.id, dati);
-      return { id: t.id, nome: d.nome, categoria: categoriaDi(d), parametro: t.parametro, annotazione: t.annotazione ?? null, livello: t.livello, provvisorio: !!d.provvisorio, testo: d.testo, sintesi: d.sintesi ?? null, tavolo: notaDaApplicare(d) };
+      return { id: t.id, nome: d.nome, categoria: categoriaDi(d), parametro: t.parametro, annotazione: t.annotazione ?? null, livello: t.livello, provvisorio: !!d.provvisorio, testo: d.testo, sintesi: d.sintesi ?? null, tavolo: notaDaApplicare(d), usi: d.usi ?? null };
     }),
     specializzazioni: stato.talentiLiberi.filter((t) => talentoLiberoDef(t.id, dati).specializzazione).map((t) => {
       const d = talentoLiberoDef(t.id, dati);
-      return { id: t.id, nome: d.nome, abilita: d.abilita, effetto: d.effetto, tavolo: notaDaApplicare(d), livello: t.livello, ...(t.classe ? { classe: t.classe } : {}), ...(t.annotazione ? { annotazione: t.annotazione } : {}) };
+      return { id: t.id, nome: d.nome, abilita: d.abilita, effetto: d.effetto, tavolo: notaDaApplicare(d), livello: t.livello, usi: d.usi ?? null, ...(t.classe ? { classe: t.classe } : {}), ...(t.annotazione ? { annotazione: t.annotazione } : {}) };
     }),
     tecniche: stato.tecniche.map((x) => ({ ...catalogoTec.find((t) => t.id === x.id), livello: x.livello })),
     tecnicheAmmesse: tecnicheAmmesse(stato),

@@ -220,6 +220,7 @@ Fuori perimetro per ora: tiri automatici fuori dalla plancia; manovre, inseguime
 Valgono per ogni prompt, anche quando il prompt non le ripete.
 
 - **Principio deciso da Marcello e Davide: l'app aiuta il tavolo e non lo rallenta.** Propone, non obbliga; avvisa, non blocca; l'ultima parola è del master. Ogni azione del Round si deve poter fare a mano in uno o due tocchi; nessuna automazione nuova che obblighi a passaggi.
+- **In alto nella scheda, il minimo spazio possibile** (26/10, dal tavolo): ogni riga in alto toglie spazio di lettura sotto, e sul tablet si sente subito. Le righe che al tavolo servono poco (collegamenti, impostazioni, avvisi già letti) diventano pulsanti piccoli o stanno altrove. Meglio più informazioni su una riga che una riga in più. Vale per ogni lotto, non solo per quello che l'ha scritta.
 - Rispondere sempre in italiano.
 - Un ambito per prompt: niente lavori fuori da quello chiesto (le cose notate si segnalano nel riepilogo).
 - Le regole stanno in `data/`, non nel codice.

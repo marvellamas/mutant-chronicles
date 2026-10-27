@@ -441,7 +441,6 @@ function passoIncantesimi(ctx) {
   const st = statoIncantesimi(scelte, dati);
   if (!st) return [h('p', { class: 'nota errore' }, 'Correggi prima le scelte precedenti.')];
   const catalogo = dati.incantesimi.incantesimi;
-  const nascosti = catalogo.filter((i) => i.livello_base > st.livelloMassimo).length;
   const cambia = (nome, aggiungi) => ctx.aggiorna({
     incantesimi: aggiungi ? [...scelte.incantesimi, nome] : scelte.incantesimi.filter((n) => n !== nome),
   });
@@ -455,18 +454,19 @@ function passoIncantesimi(ctx) {
       Object.entries(st.perMacro).map(([m, x]) => h('p', { class: 'contatore piccolo' },
         h('strong', {}, m), `: ${x.scelti} scelti, quota di Classe ${x.quota}`)),
       h('p', { class: 'contatore piccolo' }, h('strong', {}, 'Liberi'), `: ${st.liberiUsati} usati su ${st.liberi}`)),
-    nascosti ? h('p', { class: 'nota' }, `Nascosti ${nascosti} incantesimi con livello base oltre ${st.livelloMassimo}.`) : null,
+    // 27/10 (lotto 129, parte C): quote e livello massimo restano un avviso, mai un blocco — il Direttore si
+    // fida dei giocatori. Niente più incantesimi nascosti dalla lista: il motivo si legge e si sceglie lo stesso.
     dati.incantesimi.macrofamiglie.map((m) => h('section', { class: 'famiglia' },
       h('h3', {}, `${m.nome}`),
       m.specializzazioni.map((sp) => {
-        const lista = catalogo.filter((i) => i.macrofamiglia === m.nome && i.specializzazione === sp && i.livello_base <= st.livelloMassimo);
+        const lista = catalogo.filter((i) => i.macrofamiglia === m.nome && i.specializzazione === sp);
         return h('fieldset', { class: 'specializzazione' },
           h('legend', {}, sp),
           lista.map((i) => {
             const preso = scelte.incantesimi.includes(i.nome);
             const motivo = motivoBloccoIncantesimo(i, st, scelte);
-            return h('label', { class: `incantesimo ${classeMacrofamiglia(m.nome)}${motivo ? ' bloccato' : ''}` },
-              h('input', { type: 'checkbox', checked: preso, disabled: !!motivo, onchange: (e) => cambia(i.nome, e.target.checked) }),
+            return h('label', { class: `incantesimo ${classeMacrofamiglia(m.nome)}${motivo ? ' avviso' : ''}` },
+              h('input', { type: 'checkbox', checked: preso, onchange: (e) => cambia(i.nome, e.target.checked) }),
               h('span', {}, h('strong', {}, info('incantesimo', i.nome)), ' ', pallini(i.livello_base), ' ', etichettaMacro(m.nome), h('small', {}, ` liv. base ${i.livello_base} · scheda ${i.scheda}, p. ${i.pagina}`),
                 motivo ? h('small', { class: 'motivo' }, motivo) : null));
           }));

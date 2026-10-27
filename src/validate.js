@@ -21,6 +21,17 @@ const SPECIALIZZAZIONE_COMUNE = 'Comune'; // §3.2: due opzioni per Specializzaz
 const isIntero = (v) => Number.isInteger(v);
 const isTesto = (v) => typeof v === 'string' && v.trim() !== '';
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
+
+// 27/10/2026 (lotto 129): un Talento, una Specializzazione/Maestria o il vantaggio di un Addestramento usabile
+// solo un certo numero di volte per scontro, sessione o giorno (src/usi-talenti.js); «ambito» è letto da sessione
+// a scontro per azzerarsi da sola, dagli altri due no (si azzerano solo a mano).
+const AMBITI_USO = ['scontro', 'sessione', 'giorno'];
+function validaUsi(F, k, usi, err) {
+  if (usi === undefined) return;
+  if (!isOggetto(usi) || !AMBITI_USO.includes(usi.ambito) || !isIntero(usi.quantita) || usi.quantita < 1) {
+    err(F, `${k}.usi`, `serve { ambito: ${AMBITI_USO.join('|')}, quantita: intero ≥ 1 }`);
+  }
+}
 const isTodo = (v) => typeof v === 'string' && v.startsWith('TODO(');
 
 const FILE_VALIDATI = ['caratteristiche', 'abilita', 'corporazioni', 'addestramenti', 'classi', 'incantesimi', 'regole',
@@ -686,6 +697,7 @@ function validaAddestramenti(a, nomiAbilita, idSalvezze, regole, err) {
     // §2.2 del 29/09: le basi delle Abilità vengono dalla prima Classe (classi.json → competenze)
     if (x.valori_base !== undefined) err(F, `${k}.valori_base`, 'l’Addestramento non assegna più valori base alle Abilità: si ricavano dalla prima Classe (§2.3)');
     if (!isTesto(x.vantaggio?.nome) || !isTesto(x.vantaggio?.testo)) err(F, `${k}.vantaggio`, 'servono "nome" e "testo" (§2.10)');
+    validaUsi(F, `${k}.vantaggio`, x.vantaggio?.usi, err);
     validaSalvezzeBonus(F, `${k}.salvezze`, x.salvezze, idSalvezze, err);
   });
   return new Set(lista.map((x) => x.nome));
@@ -883,6 +895,7 @@ function validaSpecializzazioni(s, nomiAbilita, err) {
     if (!isOggetto(x.effetto)) err(F, `${k}.effetto`, 'effetto mancante');
     // Talenti v1.0 (25/10/2026): ogni voce dice la sua categoria
     if (x.categoria !== 'specializzazione') err(F, `${k}.categoria`, 'atteso "specializzazione"');
+    validaUsi(F, k, x.usi, err);
   });
   if (isIntero(s.attesi?.specializzazioni) && lista.length !== s.attesi.specializzazioni) err(F, 'specializzazioni', `attese ${s.attesi.specializzazioni} Specializzazioni (campo "attesi"), trovate ${lista.length}`);
   return ids;
@@ -1033,6 +1046,7 @@ function validaTalentiLiberi(t, idSpec, err, addestramenti = [], classi = []) {
       err(F, `${k}.parametro`, `con molteplicità "${x.molteplicita}" il parametro deve essere ${JSON.stringify(MOLTEPLICITA[x.molteplicita])}`);
     }
     if (x.molteplicita === 'limitata' && (!isIntero(x.max_acquisizioni) || x.max_acquisizioni < 2)) err(F, `${k}.max_acquisizioni`, 'intero ≥ 2 richiesto con molteplicità "limitata"');
+    validaUsi(F, k, x.usi, err);
     if (x.effetti !== undefined) {
       if (!isOggetto(x.effetti)) err(F, `${k}.effetti`, 'deve essere un oggetto');
       else for (const e of Object.keys(x.effetti)) {

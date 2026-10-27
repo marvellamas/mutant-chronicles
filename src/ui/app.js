@@ -68,7 +68,7 @@ import { caricaImmagini, iconaPagina } from './immagini.js';
 import { preparaStampa, preparaTab, normalizzaOpzioniStampa, versioniCompatte } from '../stampa.js';
 import { renderTab, tabFissi, ALIAS_TAB } from './tab.js';
 import {
-  massimiSessione, allineaSessione, variaSessione, modificaSessione, stabilizzaMorente, scalaMorente, attivaArmaSessione, terminaArmaSessione, commutaContenitoreSessione, commutaStato, commutaCondizioneOggetto, commutaTalento, commutaBonusTalenti, impostaCondizioneArma, riparaOggetto, spendiPmLancio, ricaricaMatrice, attivaArtefatto, attivaTecnicaSessione, nuovoRoundSessione, terminaTecnicaSessione, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
+  massimiSessione, allineaSessione, variaSessione, modificaSessione, stabilizzaMorente, scalaMorente, attivaArmaSessione, terminaArmaSessione, commutaContenitoreSessione, commutaStato, commutaCondizioneOggetto, commutaTalento, commutaBonusTalenti, impostaCondizioneArma, riparaOggetto, spendiPmLancio, ricaricaMatrice, attivaArtefatto, attivaTecnicaSessione, nuovoRoundSessione, terminaTecnicaSessione, usaUnaVoltaSessione, azzeraUsoSessione, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
   penalitaSessione, variaMunizioni, consumaColpi, scegliGranata, granateDiPartenza, ricaricaArma, caricaDaCarichino, preparaCarichino, variaChroma, variaIntegrita, variaNec,
 } from '../sessione.js';
 import { conOrdinale } from '../lingua.js';
@@ -2105,6 +2105,10 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
         cambiaSessione(dopo);
       },
       terminaTecnica: (id) => cambiaSessione(terminaTecnicaSessione(stato.sessione, id, massimi)),
+      // Usi limitati di Talenti/vantaggi (27/10, src/usi-talenti.js): un tocco sul contatore, come le munizioni;
+      // «scontro» lo passa la UI (ctx.roundScontro?.id), così si azzera da solo cambiando scontro.
+      usaUnaVoltaTalento: (voce, scontro) => cambiaSessione(usaUnaVoltaSessione(stato.sessione, voce, scontro, massimi)),
+      azzeraUsoTalento: (chiave) => cambiaSessione(azzeraUsoSessione(stato.sessione, chiave, massimi)),
       convertiDistintivi: () => cambiaSessione(convertiDistintivi(stato.sessione, massimi)),
       // le note si salvano a ogni tasto; l'annullamento riporta al testo di prima della modifica
       inizioNote: ricordaPrecedente,
@@ -2180,6 +2184,24 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
         stato.scelte = scelte;
         if (riga) stato.sessione = rigaStorico(stato.sessione, riga);
         stato.messaggioScheda = avvisi.length ? { tipo: 'attenzione', testo: avvisi.join(' ') } : riga ? { tipo: 'ok', testo: riga } : null;
+        persisti();
+        renderScheda({ mantieniScorrimento: true });
+      },
+      // Poteri (27/10, lotto 129, parte C): il giocatore aggiunge e toglie liberamente anche gli incantesimi di
+      // Classe (scelte.incantesimi), in qualunque momento, non solo alla creazione o a un livello; le quote
+      // restano un avviso (src/character.js → applicaModifica), mai un blocco.
+      aggiungiIncantesimoScelto: (nome) => {
+        if ((stato.scelte.incantesimi ?? []).includes(nome)) return;
+        const { scelte, avvisi } = applicaModifica(stato.scelte, { incantesimi: [...(stato.scelte.incantesimi ?? []), nome] }, dati);
+        stato.scelte = scelte;
+        stato.messaggioScheda = avvisi.length ? { tipo: 'attenzione', testo: avvisi.join(' ') } : null;
+        persisti();
+        renderScheda({ mantieniScorrimento: true });
+      },
+      togliIncantesimoScelto: (nome) => {
+        const { scelte, avvisi } = applicaModifica(stato.scelte, { incantesimi: (stato.scelte.incantesimi ?? []).filter((n) => n !== nome) }, dati);
+        stato.scelte = scelte;
+        stato.messaggioScheda = avvisi.length ? { tipo: 'attenzione', testo: avvisi.join(' ') } : { tipo: 'ok', testo: `${nome} tolto.` };
         persisti();
         renderScheda({ mantieniScorrimento: true });
       },

@@ -9,7 +9,8 @@
       "identita": "Versatilità, autonomia, esplorazione e adattamento agli ambienti ostili.",
       "vantaggio": {
         "nome": "Sopravvissuto",
-        "testo": "Una volta per sessione può ripetere una Prova fallita di Percezione o Sopravvivenza. Deve accettare il secondo risultato."
+        "testo": "Una volta per sessione può ripetere una Prova fallita di Percezione o Sopravvivenza. Deve accettare il secondo risultato.",
+        "usi": { "ambito": "sessione", "quantita": 1 }
       },
       "salvezze": {
         "tempra": 1,
@@ -24,7 +25,8 @@
       "identita": "Preparazione nelle armi, nella difesa e nelle attività operative dello scontro.",
       "vantaggio": {
         "nome": "Colpo Perentorio",
-        "testo": "Una volta per combattimento può massimizzare tutti i dadi di una singola istanza di danno inflitta da un proprio attacco. Si dichiara dopo aver colpito e prima di tirare i danni; i bonus fissi si applicano normalmente. In una Raffica vale per un solo colpo, in un attacco ad Area per un solo bersaglio."
+        "testo": "Una volta per combattimento può massimizzare tutti i dadi di una singola istanza di danno inflitta da un proprio attacco. Si dichiara dopo aver colpito e prima di tirare i danni; i bonus fissi si applicano normalmente. In una Raffica vale per un solo colpo, in un attacco ad Area per un solo bersaglio.",
+        "usi": { "ambito": "scontro", "quantita": 1 }
       },
       "salvezze": {
         "tempra": 1,
@@ -39,7 +41,8 @@
       "identita": "Competenza pratica, tecnica, produttiva e professionale.",
       "vantaggio": {
         "nome": "Mestiere Solido",
-        "testo": "Una volta per sessione può ripetere una Prova fallita di Atletica, Pilotare o Tecnologia. Deve accettare il secondo risultato."
+        "testo": "Una volta per sessione può ripetere una Prova fallita di Atletica, Pilotare o Tecnologia. Deve accettare il secondo risultato.",
+        "usi": { "ambito": "sessione", "quantita": 1 }
       },
       "salvezze": {
         "tempra": 1,
@@ -54,7 +57,8 @@
       "identita": "Conoscenza, analisi, ricerca e applicazione metodica del sapere.",
       "vantaggio": {
         "nome": "Mente Analitica",
-        "testo": "Una volta per sessione può ripetere una Prova fallita di Cultura, Medicina o Scienza. Deve accettare il secondo risultato."
+        "testo": "Una volta per sessione può ripetere una Prova fallita di Cultura, Medicina o Scienza. Deve accettare il secondo risultato.",
+        "usi": { "ambito": "sessione", "quantita": 1 }
       },
       "salvezze": {
         "tempra": 0,

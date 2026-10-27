@@ -341,7 +341,8 @@ dl.voci.in-linea dt::after { content: ":"; }
 .incantesimo:last-child { border-bottom: 0; }
 .incantesimo input { width: 1.2rem; height: 1.2rem; margin-top: 0.15rem; flex: none; }
 .incantesimo small { color: var(--tenue); }
-.incantesimo.bloccato { cursor: not-allowed; opacity: 0.7; }
+/* 27/10 (lotto 129): un avviso (quota o livello massimo superati), non più un blocco: resta scelto cliccando */
+.incantesimo.avviso .motivo { color: var(--attenzione); }
 .incantesimo .motivo { opacity: 1; }
 
 /* Macrofamiglie (css/palette.css, docs/palette.md): tinta leggera, barra laterale ed etichetta
@@ -712,7 +713,9 @@ dl.voci.in-linea dt::after { content: ":"; }
 .tab-nav [role="tablist"] { display: flex; gap: 0.3rem; }
 .tab-bottone {
   font: inherit; display: flex; align-items: center; gap: 0.5rem;
-  min-height: 48px; padding: 0.5rem 0.9rem;
+  /* 27/10 (lotto 129, «in alto il minimo spazio possibile»): 42px e non 48, restando sopra i 40px che il
+     tavolo chiede per toccare comodo col dito sul tablet */
+  min-height: 42px; padding: 0.4rem 0.9rem;
   border: 1px solid transparent; border-radius: var(--raggio);
   background: none; color: var(--testo); cursor: pointer; text-align: left;
 }
@@ -1013,6 +1016,9 @@ details.sezione-tab > summary { font-weight: 700; cursor: pointer; min-height: 4
 .riga-cristallo.inattivo { opacity: 0.55; }
 .cristallo-testa { display: flex; align-items: baseline; gap: 0.3rem; min-width: 0; }
 .cristallo-nome { min-width: 0; }
+/* 27/10 (lotto 129, parte D): «Ricarica dalla Matrice» anche dalla barra laterale, un tocco per aprirla */
+.btn-ricarica-matrice { min-height: 22px; padding: 0 0.4rem; font-size: 0.85rem; margin-left: auto; }
+.riga-cristallo .ricarica-matrice { margin-top: 0.3rem; font-size: 0.88rem; }
 .cristallo-valori { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 0.4rem; align-items: center; }
 
 /* Anagrafica: due colonne da desktop e tablet (le righe scendono per colonna), una su telefono */
@@ -1421,7 +1427,7 @@ body.con-sfondo::before {
 
 /* riga dei tab: il selezionato evidenziato, gli altri in secondo piano */
 .pos-alto .tab-nav [role="tablist"] { gap: 0.25rem; overflow-x: auto; scrollbar-width: thin; }
-.pos-alto .tab-bottone { flex: 1 1 auto; min-width: 0; justify-content: center; gap: 0.4rem; padding: 0.4rem 0.5rem; white-space: nowrap; opacity: 0.72; }
+.pos-alto .tab-bottone { flex: 1 1 auto; min-width: 0; justify-content: center; gap: 0.4rem; padding: 0.3rem 0.5rem; white-space: nowrap; opacity: 0.72; }
 .pos-alto .tab-bottone:hover, .pos-alto .tab-bottone:focus-visible { opacity: 1; }
 .pos-alto .tab-bottone.attiva { opacity: 1; box-shadow: 0 2px 0 var(--accento); }
 .pos-alto .tab-etichetta { overflow: hidden; text-overflow: ellipsis; }
@@ -1873,6 +1879,23 @@ body.con-sfondo::before {
 .casella-circostanza { white-space: nowrap; }
 .piede-circostanza { display: flex; gap: 0.4rem; align-items: center; min-width: 0; }
 .nota-circostanza { flex: 1 1 auto; min-width: 0; }
+
+/* Bonus di circostanza, Usi e bonus condizionali sulle Abilità affiancati (27/10/2026, lotto 129, parte B): tre
+   riquadri sulla stessa riga, senza aggiungere altezza; ogni riquadro manca del tutto se non ha niente da dire,
+   quindi la riga si adatta da una a tre colonne piene (minmax(0,1fr) evita che una colonna stringa le altre). */
+.riga-circostanze-usi { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; align-items: start; }
+/* fino a 900px (tablet): la terza colonna va a capo sotto le prime due, mai più alta di quanto serva */
+@media (max-width: 900px) {
+  .riga-circostanze-usi { grid-template-columns: 1fr 1fr; grid-auto-flow: row; }
+  .riga-circostanze-usi > :nth-child(3) { grid-column: 1 / -1; }
+}
+@media (max-width: 480px) { .riga-circostanze-usi { grid-template-columns: 1fr; } .riga-circostanze-usi > :nth-child(3) { grid-column: auto; } }
+.riquadro-usi-talenti .testa-gradi, .riquadro-bonus-abilita .testa-gradi { flex-wrap: wrap; }
+.elenco-usi-talenti, .elenco-bonus-abilita { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.3rem; }
+.riga-uso-talento { display: flex; align-items: center; gap: 0.4rem; font-size: 0.9rem; }
+.riga-uso-talento .nome-uso { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.riga-uso-talento.esaurito .nome-uso { opacity: 0.7; }
+.elenco-bonus-abilita li { font-size: 0.88rem; line-height: 1.3; }
 
 /* Modificatori temporanei di Caratteristica nella tab Identità (playtest del 05/10/2026, src/temporanei.js) */
 .controllo-temporaneo { display: inline-flex; align-items: center; gap: 0.25rem; white-space: nowrap; }
@@ -2958,6 +2981,10 @@ body.con-fascia-copia:has(.mappa-pagina) { height: auto; min-height: 100dvh; }
 .fascia-stato-tablet.stato-offline { background: var(--errore-tenue); color: var(--errore); border-bottom-color: var(--errore); font-weight: 700; }
 .fascia-stato-tablet .btn-piccolo { min-height: 26px; padding: 0 0.55rem; font-size: 0.82rem; }
 .fascia-stato-tablet-riga { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; }
+/* 27/10 (lotto 129): tutto a posto (PG scelto, online, niente in coda) → solo un pulsante piccolo, a destra, senza
+   sfondo né bordo: non è più una riga da leggere, è un comando da toccare solo per cambiare personaggio. */
+.fascia-stato-tablet.compatta { justify-content: flex-end; padding: 0.15rem 0.6rem; background: none; border-bottom-color: transparent; }
+.fascia-stato-tablet.compatta .btn-tablet-compatto { min-height: 24px; padding: 0 0.5rem; font-size: 0.78rem; }
 body:has(.mappa-pagina) .fascia-stato-tablet { position: static; }
 @media print { .fascia-stato-tablet { display: none; } }
 

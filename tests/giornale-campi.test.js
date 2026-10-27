@@ -63,6 +63,7 @@ const SESSIONE_COMPLETA = {
   condizioniArmi: { 'uid-arma': 'danneggiata' },
   condizioniOggetti: ['uid-corredo'], talentiAccesi: ['t1'], bonusTalenti: false,
   vistaAbilita: { Percezione: false }, luce: 'penombra', luceVisione: true, note: 'niente',
+  usiTalenti: { 'incantesimi-massimizzati': { usati: 1, scontro: 's1' }, vantaggio: { usati: 1 } },
 };
 
 test('ogni campo numerico dei blocchi facoltativi della sessione è classificato', () => {

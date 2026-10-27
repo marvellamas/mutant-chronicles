@@ -113,7 +113,7 @@ test('cambio di Corporazione: punti liberi su un’Abilità che scende sotto VA 
   assert.ok(r.avvisi.some((a) => /^Rituali:.*VA 0/.test(a)));
 });
 
-test('meno INT: gli incantesimi oltre la nuova quota vengono tolti, a partire dagli ultimi in eccesso', () => {
+test('meno INT: gli incantesimi oltre la nuova quota restano (27/10, lotto 129: mai un blocco), solo un avviso', () => {
   const st = statoIncantesimi(ARCANISTA, dati);
   assert.equal(st.liberi, 4); // 2 + Mod INT 2
   assert.equal(st.totale, 13); // 3 + 3 + 3 di Classe + 4 liberi
@@ -122,7 +122,7 @@ test('meno INT: gli incantesimi oltre la nuova quota vengono tolti, a partire da
   const s = { ...ARCANISTA, incantesimi: mentali };
   assert.deepEqual(normalizza(s, dati).avvisi, []);
   const r = applicaModifica(s, { puntiCaratteristica: { SAG: 1, COS: 2, DES: 2 } }, dati); // INT 5 → 2 liberi
-  assert.deepEqual(r.scelte.incantesimi, mentali.slice(0, 5));
+  assert.deepEqual(r.scelte.incantesimi, mentali); // nessuno tolto: il Direttore si fida dei giocatori
   assert.ok(r.avvisi.some((a) => /Quote incantesimi superate/.test(a)));
 });
 

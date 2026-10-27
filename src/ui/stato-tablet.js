@@ -75,15 +75,21 @@ function applica() {
   if (!elemento) return;
   const n = pg ? contaInCoda(pg.pgId) : 0;
   const r = rigaStatoTablet({ pg, collegamento, inCoda: n }, dati);
-  elemento.className = `fascia-stato-tablet stato-${r.stato}`;
+  // 27/10 (lotto 129, «in alto il minimo spazio possibile»): quando è tutto a posto (personaggio scelto, online,
+  // niente in coda) questa riga non deve più raccontarlo per intero: resta solo il pulsante per cambiare PG.
+  // Appena c'è qualcosa da dire davvero (nessun PG scelto, offline, roba in coda) torna la riga intera.
+  const compatta = r.stato === 'collegato' && n === 0;
+  elemento.className = `fascia-stato-tablet stato-${r.stato}${compatta ? ' compatta' : ''}`;
   svuota(elemento,
-    h('div', { class: 'fascia-stato-tablet-riga' },
-      h('span', {}, r.testo),
-      n > 0 ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { codaVisibile = !codaVisibile; applica(); } }, `${codaVisibile ? 'Nascondi' : 'Vedi'} la coda (${n})`) : null,
-      r.stato === 'senza_pg' ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: apriScelta }, 'Scegli') : null,
-      r.stato !== 'senza_pg' && pg ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Scrivi da questo tablet un altro personaggio', onclick: apriScelta }, 'Cambia') : null,
-    ),
-    codaVisibile && n > 0 ? pannelloCoda() : null,
+    compatta
+      ? h('button', { type: 'button', class: 'btn btn-piccolo btn-tablet-compatto', title: `Questo tablet scrive «${pg.pgNome}». Tocca per cambiare personaggio.`, onclick: apriScelta }, `📱 ${pg.pgNome}`)
+      : h('div', { class: 'fascia-stato-tablet-riga' },
+          h('span', {}, r.testo),
+          n > 0 ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { codaVisibile = !codaVisibile; applica(); } }, `${codaVisibile ? 'Nascondi' : 'Vedi'} la coda (${n})`) : null,
+          r.stato === 'senza_pg' ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: apriScelta }, 'Scegli') : null,
+          r.stato !== 'senza_pg' && pg ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Scrivi da questo tablet un altro personaggio', onclick: apriScelta }, 'Cambia') : null,
+        ),
+    !compatta && codaVisibile && n > 0 ? pannelloCoda() : null,
   );
   // il solo gate che resta: guardare un personaggio che non è il proprio (parte C), mai per l'offline
   document.body.classList.toggle('tablet-sola-lettura', !puoModificare());
