@@ -1,6 +1,6 @@
 > > # **Per Davide — domande aperte ed errata dei manuali**
 
-*Aggiornato al 19 ottobre 2026\.*
+*Aggiornato al 22 ottobre 2026\.*
 
 **Istruzioni per Davide (e per l’AI che usi per rispondere)**
 
@@ -26,17 +26,21 @@ Nessuna, al momento. Grazie per l’aggiornamento cumulativo dell’8 ottobre.
 
 > > ## **2\. Domande aperte (l’app ha già un’ipotesi ragionevole)**
 
-> > ### **Bestiario**
+> > ### **Magia**
 
-**A.171 — Portata degli attacchi degli Sciami (Manuale dei Mostri 0.23, cap. 8).** Gli Sciami attaccano solo chi condivide il loro spazio: la portata è 0 Q. Il formato dei dati dell’app accetta però portate da 1 Q in su. *Nel frattempo:* la portata è 1 Q, con la condizione («solo nello spazio condiviso») nella nota dell’attacco. Se preferisci, il formato può accettare anche lo 0\.
+**A.174 — «Medita» che carica direttamente un cristallo.** Il manuale dice che durante la Meditazione non si ricaricano i contenitori e che la ricarica non avviene da sola. Il pulsante «Medita» dell’app però può versare i PM recuperati direttamente in un cristallo. Non per aggirare la regola: è l’unione in un tocco di **due azioni entrambe lecite** — spendere i propri PM per ricaricare il cristallo, e meditare per recuperarli. Il risultato è identico, si risparmia solo il viavai. *Nel frattempo:* la strada breve fa pagare **tutti** i costi dei due passaggi separati — rapporto di conversione dei Talenti (3 PM per 1, 2 con Ricarica Efficiente o Conversione Migliorata, 1 con entrambi, Bianco sempre 2), Addestramento Taumaturgo, 1 AzP, contatto con un contenitore sintonizzato, limite di ore giornaliere, e la Prova di Potere dal secondo gruppo in su. Confermi che l’unione va bene?
 
-> > ### **Mappa**
+**A.175 — I Guanti da Combattimento Mistico e l’incantesimo infuso.** Ora gli artefatti che contengono un incantesimo lo possono lanciare dalla scheda, come gli altri. I manuali però non legano i Guanti a nessun Incantesimo: hanno solo la loro attivazione (3 PM, 1 AzP, 5 RND). *Nel frattempo:* restano fra le «Proprietà attive degli oggetti», senza scheda d’incantesimo e senza «Lancia\!». È giusto, o i Guanti dovrebbero contenere un incantesimo?
 
-**A.172 — Quadretti occupati da una sagoma ruotata (seguito della A.167).** Con la sagoma ruotata a 45° un quadretto si considera occupato se la sagoma lo copre per almeno metà: è la stessa regola dei veicoli (A.147) e dei template. Così una creatura 3 × 10 Q a 45° occupa 28 Q, mentre a 0° ne occupa 30\. Va bene? Inoltre la portata degli attacchi si misura dai quadretti occupati e non dal centro, e un attacco che parte da una sagoma lunga parte dal suo quadretto più favorevole, come già per le creature 2 × 2 Q. *Nel frattempo:* si usa questa regola.
+**A.176 — Incantesimi aggiunti a mano.** Si può aggiungere a un personaggio un incantesimo fuori dalle quote (un maestro, un ritrovamento, una concessione del Direttore), segnato «(Aggiunto)» con origine e data. Non contano nelle quote di Classe e il passaggio di livello non li tocca. *Nel frattempo:* si lanciano come un incantesimo conosciuto. Due dubbi: contano come «conosciuti» per gli altri usi delle regole (prerequisiti, creazione di consumabili, insegnamento)? E un personaggio **senza** accesso alla magia che riceve così un incantesimo lo lancia con quale Abilità e con quali PM?
 
-> > ### **Artefatti**
+> > ### **Personaggi e salvataggi**
 
-**A.173 — Hachimaki della Disciplina Interiore e Tecniche con più costi (Equipaggiamento §10.10, Magia §28.1).** Il manuale dice che la fascia abbassa di 1 PM il costo di una Tecnica Interiore (minimo 1 PM se il costo è positivo; una Tecnica già gratuita resta gratuita; più riduzioni dello stesso costo non si sommano). Non dice però come leggerla quando una Tecnica ha più costi: Imposizione della Mano Curativa ha una tabella di quattro usi (1, 2, 4, 10 PM). *Nel frattempo:* −1 PM a ciascun uso, con il minimo di 1, cioè 1, 1, 3 e 9, mostrato in «Attiva» con la base e la riduzione. Se deve valere diversamente — solo sull’uso più basso, o una sola volta per attivazione — basta dirlo.
+**A.177 — Modifiche fatte dal tablet dopo la fine della sessione.** Un giocatore può ora modificare la scheda anche senza connessione: il tablet si segna le operazioni e, quando torna in linea, il Direttore le vede e le approva una per una. *Nel frattempo:* le modifiche arrivano al Direttore qualunque sia l’ora in cui sono state fatte, e decide lui. Vuoi una regola diversa — per esempio che quelle fatte dopo la fine della sessione non contino, o che contino solo se le approvi espressamente?
+
+> > ### **Tecniche Interiori**
+
+**A.178 — Manuale del Giocatore 0.49 del 21/10 (cinque ore dopo la tua risposta A.173).** La nuova versione cambia la tabella di Imposizione della Mano Curativa da 1/2/4/10 a **1/2/2/4** — quindi con l’Hachimaki diventa 1/1/1/3 invece di 1/1/3/9 — e riequilibra 11 Tecniche su 28, il recupero della Meditazione e l’AR dell’Aura (+1 → \+2). *Nel frattempo:* l’app tiene ancora i valori della 0.48 e non abbiamo applicato nulla. Confermi che la 0.49 è quella buona e la recepiamo tutta?
 
 > > ---
 
@@ -88,7 +92,7 @@ Decisioni già prese o errori evidenti: l’app segue la decisione, il testo dic
 
 **Manuale degli Armamenti**
 
-> > •             §7.10 (e Magia §24.2), SnT degli Artefatti con sole proprietà passive: dicono SnT 0 senza eccezioni, mentre Equipaggiamento §10.10 e Magia §28.1 danno all’Hachimaki della Disciplina Interiore SnT 1 (0 \+ 1 per il beneficio sui PM). L’app segue le schede specifiche dell’oggetto (§10.10 e §28.1). Da correggere: aggiungere l’eccezione ai §7.10 e §24.2, oppure togliere la maggiorazione dalla scheda.
+> > •             §7.10, SnT degli Artefatti con sole proprietà passive — **correzione approvata da Davide il 21/10**: la regola «solo proprietà passive → SnT 0» va dichiarata soggetta alla maggiorazione prevista per i benefici sui PM. L’Hachimaki della Disciplina Interiore tiene quindi SnT 1 (0 di base \+ 1 per la riduzione del costo in PM). Da recepire nel §7.10 e in Magia §24.2; Equipaggiamento §10.10 e Magia §28.1 lo dicono già. L’app si comporta già così.
 
 > > •             §7.1.9, §7.8, §7.9: «Imperiali» e «Imperial» (§7.4.8, §7.14). L’app usa «Imperial».
 
@@ -475,6 +479,12 @@ Voci con risposta recepita e funzione implementata nell’app (o chiuse). La dat
 > > •             **A.170 — Soglie, Atti e fattori di calcolo dei PX.** Risposta del 18/10, verificata il 18/10. Il calcolatore già faceva tutto come confermato: soglie cumulative dei livelli 1–20, limiti e premi degli Atti, correttivo max(0,5; 1 \+ 0,1 × (4 − n)), voti × Titolo con il raddoppio dei soli voti nelle partite lunghe, bonus eccezionale × Titolo senza raddoppio, incontri e premi degli Atti senza Titolo, Titolo posseduto all’inizio della partita, nessun fattore per l’equipaggiamento. L’unica aggiunta: se i presenti hanno già ricevuto il premio dello stesso Atto in un’altra partita, l’app **avvisa** (non blocca).
 
 > > •             **Manuale dell’Equipaggiamento 0.8, §§10.8–10.11** — Pergamene, CyberArma, Hachimaki della Disciplina Interiore e Tomo dei Guardiani nel catalogo degli Artefatti, con i valori del manuale. Nessun personaggio, nemico o scontro salvato possedeva l’Hachimaki o il Tomo: sono in catalogo come oggetti acquistabili, senza assegnarli a nessuno. L’Hachimaki abbassa di 1 PM il costo delle Tecniche Interiori quando è indossato **e** sintonizzato, e la scheda mostra sempre la base e la riduzione («4 PM della scheda − 1 per Hachimaki»); indossato ma non sintonizzato, l’app avvisa e il costo non cambia. Il Tomo ha peso, SnT e Integrità «da definire», come scrive il manuale, e il carico risulta parziale. *Implementato il 19/10.* Una domanda aperta: A.173.
+
+> > •             **A.171 — Portata degli attacchi degli Sciami.** Risposta del 21/10, implementata il 22/10. Il formato accetta ora la portata **0 Q**: un attacco a portata 0 colpisce soltanto un bersaglio con cui l’attaccante condivide almeno un quadretto occupato, e un bersaglio soltanto adiacente non è valido. I sei Sciami del bestiario sono a 0 Q e la nota di ripiego è tolta. Se il bersaglio è troppo lontano l’app lo scrive in chiaro invece di proporre un attacco impossibile.
+
+> > •             **A.172 — Sagome ruotate, quadretti occupati e portata.** Risposta del 21/10, implementata il 22/10. Due criteri distinti, come hai chiesto: **occupazione e portata** contano un quadretto quando la sagoma ne copre almeno metà (una 3 × 10 Q ruotata ne occupa 28, e va bene); le **collisioni** con muri, ostacoli e altre pedine usano invece la sagoma geometrica piena, comprese le parti che coprono meno di metà quadretto, così la rotazione non permette a un angolo di attraversare un muro. La portata si misura dal quadretto occupato più favorevole, mai dal centro, restando valide linea di visuale e coperture. Il bordo della mappa resta sull’occupazione: non è un ostacolo fisico e una pedina ruotata deve potercisi appoggiare.
+
+> > •             **A.173 — Hachimaki, costi delle Tecniche e sintonizzazione.** Risposta del 21/10, verificata il 22/10. L’app faceva già esattamente così: la riduzione di 1 PM si applica al costo dell’**uso scelto** (i quattro usi della Mano Curativa sono alternative), minimo 1 PM sui costi positivi, una Tecnica gratuita resta gratuita, nessun cumulo, e la scheda mostra sempre costo base e costo finale. SnT 1 confermata. **Attenzione:** con il Manuale 0.49 del 21/10 i costi di quella tabella cambiano — vedi A.178.
 
 > > ---
 
@@ -1658,73 +1668,209 @@ Approvazione di Davide: 18 ottobre 2026\.
 
 > > ---
 
+> > #### **A.171 — Portata degli attacchi degli Sciami**
+
+Approvazione di Davide: 21 ottobre 2026\.
+
+L’app deve accettare portata 0 Q. Per gli attacchi che richiedono lo spazio condiviso, lo Sciame può colpire soltanto un bersaglio con cui condivide almeno un quadretto occupato. Registrare direttamente portata 0 Q, così che i bersagli soltanto adiacenti non risultino validi per questi attacchi.
+
+> > #### **A.172 — Sagome ruotate, quadretti occupati e portata**
+
+Approvazione di Davide: 21 ottobre 2026\.
+
+Per individuare i quadretti occupati ai fini del combattimento, un quadretto conta quando la sagoma ne copre almeno metà. È accettabile che una sagoma di 3 × 10 Q risulti occupare 28 quadretti dopo la rotazione: le sue dimensioni fisiche restano invariate; cambia soltanto la rappresentazione sulla griglia.
+
+Occupazione dei quadretti e portata: criterio della copertura di almeno metà quadretto. Collisioni con muri, ostacoli e altre pedine: controllo della sagoma geometrica effettiva, comprese le parti che coprono meno di metà quadretto. La rotazione non deve consentire di attraversare un muro con un angolo della pedina.
+
+La portata si misura dal quadretto occupato più favorevole, senza partire dal centro. Restano applicabili linea di visuale, coperture e impedimenti: non si può scegliere un punto d’origine che permetta di colpire attraverso un ostacolo invalicabile.
+
+> > #### **A.173 — Hachimaki, costi delle Tecniche e sintonizzazione**
+
+Approvazione di Davide: 21 ottobre 2026\.
+
+La riduzione di 1 PM si applica sul costo dell’uso scelto, ogni volta che si attiva la Tecnica. I costi positivi hanno minimo 1 PM; una Tecnica gratuita resta gratuita. Costo ordinario → costo con Hachimaki: 0 → 0 PM; 1 → 1 PM; 2 → 1 PM; 4 → 3 PM; 10 → 9 PM.
+
+I quattro usi di Imposizione della Mano Curativa sono alternative: si sceglie l’effetto e si paga il relativo costo ridotto. Non si applicano più riduzioni allo stesso costo. L’app mostra costo base e costo finale.
+
+Precisazione sulla sintonizzazione: l’Hachimaki mantiene SnT 1\. Nei paragrafi generali va esplicitato che la regola SnT 0 per gli artefatti esclusivamente passivi è soggetta alla maggiorazione prevista per i benefici sui PM. L’Hachimaki applica quindi 0 di base \+ 1 per la riduzione del costo in PM. Recepire la precisazione nei paragrafi generali Armamenti §7.10 e Magia §24.2, coerentemente con le schede specifiche Equipaggiamento §10.10 e Magia §28.1.
+
+> > ---
+
+#### A.174 — Meditazione e ricarica del cristallo
+
+Approvazione di Davide: 23 ottobre 2026\.
+
+È ammesso un comando unico, purché rispetti la sequenza delle due operazioni: il personaggio spende PM già disponibili per ricaricare il cristallo, poi medita per recuperarli. Devono essere applicati tutti i requisiti, rapporti di conversione, tempi, limiti e prove previsti per i due passaggi.
+
+Il recupero dipende dall’esito effettivo della Meditazione; un’interruzione non annulla una ricarica già completata. Il comando dovrebbe chiamarsi «Ricarica e medita» e mostrare PM spesi, carica ottenuta e PM effettivamente recuperati. Non deve consentire di spendere anticipatamente PM che il personaggio deve ancora recuperare.
+
+#### A.175 — Guanti da Combattimento Mistico
+
+Approvazione di Davide: 23 ottobre 2026\.
+
+Confermata la gestione come proprietà attiva dell’oggetto, con pulsante «Attiva», senza necessità di associare un Incantesimo del catalogo. Secondo il Manuale dell’Equipaggiamento, §10.6: 3 PM dalle cariche interne, 1 AzP, durata 5 Round; i pugni diventano Magici e ottengono \+1 al danno. L’attivazione richiede sintonizzazione, è automatica e non richiede Concentrazione.
+
+Restano validi tutti i limiti della scheda, compresa l’impossibilità di pagare questa attivazione con PM personali o Batterie esterne.
+
+#### A.176 — Incantesimi aggiunti manualmente
+
+Approvazione di Davide: 23 ottobre 2026\.
+
+Distinguere apprendimento effettivo e semplice annotazione. Un Incantesimo aggiunto dal Direttore come realmente appreso conta come conosciuto, anche per prerequisiti, creazione di consumabili e insegnamento. Per queste attività restano necessari tutti gli altri requisiti: conoscerlo, da solo, non basta.
+
+Il ritrovamento di una pergamena, di un testo o di un Artefatto non equivale automaticamente ad apprenderlo. L’aggiunta non concede da sola accesso alla magia, Abilità o PM. Il personaggio usa le normali regole del proprio accesso magico; se ne è privo, l’Incantesimo resta annotato e non lanciabile.
+
+Un’eventuale concessione speciale del Direttore deve indicare espressamente modalità di lancio, Abilità, fonte dei PM e limiti.
+
+#### A.177 — Modifiche dal tablet dopo la partita
+
+Approvazione di Davide: 23 ottobre 2026\.
+
+Confermata la procedura proposta: le modifiche possono essere inviate anche dopo la fine della sessione e diventano effettive soltanto dopo l’approvazione del Direttore.
+
+Ogni operazione deve mostrare quando è stata effettuata e quando è stata ricevuta. Se nel frattempo il dato è cambiato, l’app segnala il conflitto al Direttore prima di applicarla. La disconnessione non deve far perdere le richieste.
+
+#### A.178 — Recepimento del Manuale del Giocatore v0.49
+
+Approvazione di Davide: 23 ottobre 2026\.
+
+Confermato il recepimento completo della v0.49 per le Tecniche Interiori e i relativi raccordi: è l’aggiornamento approvato dopo il controllo di equilibrio.
+
+Imposizione della Mano Curativa: costi 1/2/2/4 PM, quindi 1/1/1/3 PM con Hachimaki. Aura di Resistenza: \+2 AR. Meditazione Profonda: recuperi e limiti specifici della nuova scheda, distinta dalla Meditazione ordinaria.
+
+La regola della A.173 rimane valida; i suoi esempi numerici vanno aggiornati ai nuovi costi. L’app deve recepire anche tempi, durate, limiti e condizioni delle schede, oltre ai valori numerici.
+
+#### Esiti dei test di Davide per Marcello — 24 ottobre 2026
+
+Segnalazioni e richieste di correzione comunicate da Davide. I riferimenti «Test 4», «Test 6» e «Test 7» seguono la numerazione dell’elenco completo usato da Davide, non quella dell’elenco sintetico della sezione 8\. Le osservazioni seguenti sono esiti riferiti da Davide; la loro registrazione non attesta una correzione già effettuata nell’app.
+
+#### Avvisi NTFY — configurazione persa dopo gli aggiornamenti
+
+Problema riscontrato: ogni volta che aggiorna il sistema, Davide deve reimpostare gli avvisi NTFY. Richiesta: conservare la configurazione degli avvisi fra gli aggiornamenti, senza richiederne ogni volta la reimpostazione.
+
+#### Test 4 — avviso di aggiornamento e scelta di scartare la modifica
+
+Sia sul tablet sia nella schermata della modifica del master compare un avviso verde che, in entrambi i casi, riporta «il master aggiornato la tua scheda». Non compare la scritta «scartare la propria modifica» prevista dalla prova. Verificare la gestione del conflitto e la disponibilità della scelta di scartare la propria modifica; l’avviso verde da solo non permette di completare il test previsto.
+
+#### Test 6 — note multiple, coda in attesa e Rientro dei tablet
+
+Per una sola modifica alle note del personaggio sono comparse tre modifiche distinte: la prima «NO», la seconda «NOT», la terza «NOTE». Il risultato atteso è una sola richiesta per la modifica completata, evitando richieste separate per questi testi intermedi.
+
+Nella schermata del master non compare il pulsante «Rientro dei tablet». Sul tablet compare invece «Vedi la coda»: aprendolo, i distintivi risultano ancora in attesa di approvazione, così come le due note sbagliate. Verificare l’accesso del Direttore alle richieste pendenti e le azioni di approvazione/scarto, in modo che possa gestire anche le richieste già accumulate.
+
+#### Test 7 — pannello PX: salvataggio, incontri, premi e permessi
+
+Problema riscontrato: il pannello PX perde in modo intermittente i dati inseriti. Succede associando giocatori e PG e scrivendo il nome della partita e degli incontri. Per tentare di salvarli occorre scrivere in «Impostazioni», passare a «Riepilogo» e talvolta tornare in «Impostazioni» a riscrivere. Davide è ora riuscito a registrare tutti i giocatori e i personaggi: conservare questi dati durante la correzione. Il salvataggio deve essere affidabile, senza richiedere il cambio di schermata come espediente.
+
+Voti iniziali: impostare di default il voto base 3 per tutte e tre le categorie, lasciando al Direttore la possibilità di modificarli.
+
+PX degli incontri: Davide non trova la possibilità di inserire i Punti Esperienza degli incontri. Rendere disponibile e individuabile l’inserimento dei PX degli incontri nel pannello, così da poter completare il calcolo della partita.
+
+Premio di fine Atto: deve poter essere assegnato anche ai personaggi dei giocatori assenti. Il diritto al premio non dipende dalla presenza nella singola partita; gestire l’assegnazione a livello di Atto, mantenendo traccia di chi lo ha già ricevuto. Questa precisazione integra A.170 e supera il vincolo della presenza nella partita per questa componente del premio.
+
+Passaggio di livello: l’app non lo segnala quando i PX assegnati fanno raggiungere la soglia. Aggiungere un avviso di passaggio di livello al raggiungimento dei requisiti applicabili.
+
+Permessi sui PX: i giocatori non devono poter modificare i PX. Assegnazione e correzione, inclusi i PX iniziali, sono riservate al Direttore; far rispettare il vincolo anche quando una modifica arriva da un tablet o dalla relativa coda.
+
+#### A.179 — AR delle Tecniche e sostituzione dei valori della A.48
+
+Approvazione di Davide: 25 ottobre 2026\.
+
+Confermato: il Manuale del Giocatore v0.49 sostituisce i precedenti valori della A.48. Aura di Resistenza concede \+2 AR magica e dura 5 Round; Pelle di Rinoceronte concede \+1 AR non magica contro attacchi Ravvicinati Naturali o Magici e dura 5 Round.
+
+Precisazione sui cumuli: Aura di Resistenza \+ Pelle di Rinoceronte concedono complessivamente \+3 contro il Ravvicinato Naturale o Magico, \+2 contro gli altri danni Naturali o Magici e \+2 contro l’Etereo. Aggiungendo anche Corazza Potenziata, i totali diventano rispettivamente \+4, \+3 e \+3. I totali \+4/+3/+3 comprendono dunque tutte e tre le protezioni, non soltanto Aura e Pelle.
+
+Questi sono contributi aggiuntivi alle altre protezioni compatibili. La precedente decisione resta nello storico, con indicazione che questi numeri sono stati sostituiti.
+
+#### A.180 — Scheda del tablet e modifiche in attesa
+
+Approvazione di Davide: 25 ottobre 2026\.
+
+La scheda principale deve mostrare i valori approvati dal Direttore. Le modifiche non ancora approvate devono restare visibili nella coda, con valore precedente, valore proposto e dicitura «In attesa di approvazione».
+
+Il giocatore può ritirare una propria richiesta finché è ancora pendente. Il ritiro deve risultare anche al Direttore e non deve modificare la scheda approvata. Dopo l’approvazione, un eventuale ripensamento costituisce una nuova richiesta.
+
+#### A.181 — Adozione della nuova progressione di Talenti, Maestrie e Specializzazioni
+
+Approvazione di Davide: 25 ottobre 2026\. Decorrenza: partita di lunedì 26 ottobre 2026\.
+
+Confermata l’adozione della versione 1.0 del documento sulla nuova progressione. Talenti Liberi ai livelli 3, 5, 7, 9, 11, 13, 15, 17 e 19; Maestrie ai livelli 2, 6, 10, 14 e 18; Specializzazioni ai livelli 1, 4, 8, 12, 16 e 20\.
+
+I Talenti di Classe mantengono la propria progressione separata. Al livello 6 spettano 2 Talenti Liberi, 2 Maestrie e 2 Specializzazioni, oltre ai Talenti di Classe.
+
+Il documento prevale per la riorganizzazione che introduce; le schede non riscritte seguono i manuali aggiornati. Si applica inoltre la correzione della A.182.
+
+#### A.182 — Ricarica Esperta e quantità di cartucce
+
+Approvazione di Davide: 25 ottobre 2026\.
+
+Mantenere la decisione più recente della A.135: senza Maestria, 2 cartucce per AzP nelle armi caricate direttamente; con Ricarica Esperta, fino a 4 cartucce per operazione. Anche l’unica operazione gratuita concessa dalla Maestria in ciascun Round permette di inserirne fino a 4\.
+
+La dicitura «fino a tre» del documento va corretta. Restano i limiti di capacità dell’arma; questi numeri non si applicano alla sostituzione di un caricatore amovibile.
+
+#### A.183 — Conversione dei personaggi esistenti
+
+Approvazione di Davide: 25 ottobre 2026\.
+
+Le scelte devono rispettare l’ordine dei livelli e i prerequisiti posseduti al momento dell’acquisizione. Per esempio, Dimitri può scegliere Ritualista Minore al 3° e Ritualista Maggiore come Maestria del 6°, ma non del 2°.
+
+La Specializzazione iniziale proviene dall’elenco della prima Classe; quella del 4° dall’elenco della Classe aumentata al Grado II. Si applicano le eccezioni di accesso già previste.
+
+La conversione sostituisce le vecchie scelte e non vi si somma. Conservare copia e riepilogo delle scelte precedenti; completare la nuova distribuzione con il giocatore prima di rendere definitiva la scheda convertita.
+
+#### A.184 — Incantesimi e Tecniche collegati ai Talenti nella conversione
+
+Approvazione di Davide: 25 ottobre 2026\.
+
+Se viene ripreso lo stesso Talento, si conservano le scelte già effettuate, entro le quote consentite.
+
+Se il Talento non viene ripreso, cessano le capacità e le quote che dipendevano esclusivamente da esso. Le vecchie scelte restano nello storico, senza effetti attivi. Quanto ottenuto da fonti indipendenti resta valido.
+
+Un diverso Talento concede soltanto quanto previsto dalla propria scheda. Le eventuali nuove scelte vengono effettuate nelle sue quote, senza duplicare quelle precedenti. Eventuali cambi delle scelte conservate richiedono l’approvazione del Direttore.
+
+#### A.185 — Specializzazione del primo livello nella creazione
+
+Approvazione di Davide: 25 ottobre 2026\.
+
+La Specializzazione si sceglie dopo aver definito la Classe iniziale, prima di completare i valori finali della scheda e la dotazione.
+
+Per le Classi taumaturgiche indicate nel documento sono già disponibili le nove Specializzazioni di Potere: sono nove alternative fra cui scegliere, non nove Specializzazioni assegnate automaticamente. Anche il Taumaturgo riceve una sola scelta iniziale.
+
+Per Usufruitore di Magia e Ritualista, gli ampliamenti dell’elenco diventano disponibili quando il relativo requisito è effettivamente posseduto.
+
 > > ## **8\. Prove da fare**
 
-Prove non ancora fatte al tavolo, con il percorso completo dal primo clic. Nessuna è urgente: servono solo a non lasciare difetti nascosti. Fai quelle che riesci e segnala soltanto cosa **non** funziona.
+Le prove in sospeso. Marcello ha l’elenco completo (diciannove, comprese quelle che si fanno solo dal tablet); qui ci sono quelle che puoi fare tu dal PC del Direttore, nessuna lunga più di qualche minuto.
 
-> > ### **1\. PX della partita**
+> > ### **1\. I tablet collegati**
 
-> > 1\.          Lancia avvia-server.bat, poi apri http\://localhost:3000.
+**Tavolo del Master** → **Collega i giocatori** → in fondo, **«Tablet e personaggi scelti»**. Senza tablet collegati dice «Nessun tablet si è ancora collegato». Quando un giocatore si collega e sceglie il suo personaggio, entro \~15 secondi deve comparire lì con il nome e «si è fatto vivo pochi secondi fa». Dalla tendina puoi cambiargli il personaggio; con «Stacca» torna a sceglierlo.
 
-> > 2\.          **Tavolo del Master** → in alto, pannello **«PX della partita»**.
+> > ### **2\. Il rientro di un tablet che ha lavorato offline**
 
-> > 3\.          In «Partita» crea o scegli una partita e segna **presente** un PG vicino a una soglia di livello (per esempio a 20 PX dal livello successivo).
+Se un giocatore modifica la scheda senza connessione, quando torna in linea si apre da sola sul tuo PC la schermata **«Rientro dei tablet»**: l’elenco di quello che ha fatto, in ordine di ora, con Approva o Scarta riga per riga. Dove avete cambiato la stessa cosa tutti e due, ti mostra le due versioni e ti chiede quale tenere. **Chiudere non è scartare**: quello che non decidi resta in attesa e si riapre dopo.
 
-> > 4\.          Metti i tre voti, premi **«Assegna PX della partita»** e conferma.
+> > ### **3\. I PX della partita**
 
-> > 5\.          Cambia uno dei voti e premi **«Ri-assegna (correzione)»**: il numero nella conferma deve essere **piccolo** (solo la differenza) e il **Titolo non deve salire** di fascia per merito del premio di quella stessa partita.
+**Tavolo del Master** → **PX della partita**. Due cose da provare: correggere i voti di una partita già assegnata (deve applicare **solo la differenza**, e il Titolo non deve salire di fascia per merito di quella stessa partita), e assegnare due volte il premio di fine Atto allo stesso personaggio (deve avvisarti che l’ha già avuto, senza bloccarti).
 
-> > 6\.          Nel menu accanto al nome del giocatore scegli un **Titolo diverso a mano**: la voce «Suggerito» deve ricalcolarsi.
+Nelle **Impostazioni** dello stesso pannello ci sono i **PX iniziali**: se non corrispondono a quelli veri della campagna, correggili tu — sono quelli che contano.
 
-> > 7\.          Crea una partita con la spunta **«Premio di fine Atto»** e assegnala; poi creane un’altra dello stesso Atto con gli stessi presenti: deve comparire l’**avviso** che il premio è già stato dato (un avviso, non un blocco).
+> > ### **4\. Lo Sciame**
 
-> > 8\.          Nelle **impostazioni** dello stesso pannello ci sono i **PX iniziali** dei PG: se non corrispondono a quelli veri della campagna, correggili tu — sono quelli che contano.
+**Prepara scontro** → **Aggiungi nemico** → Bestiario → **«Sciame di corvi»** → **Inizia**. Nella plancia, **Attacca** su un bersaglio adiacente: deve rifiutare spiegando che colpisce solo chi condivide un quadretto. Con il bersaglio nello stesso spazio, invece, passa.
 
-> > ### **2\. Le creature del Manuale dei Mostri**
+> > ### **5\. La Galleria e le GIF**
 
-> > 1\.          **Tavolo del Master** → **Prepara scontro** → **Aggiungi nemico** → **Bestiario proposto**.
+**Tavolo del Master** → **Galleria** → carica una **GIF animata** → «Mostra ai giocatori»: sui tablet deve **muoversi**. Sopra i 5 MB compare prima l’avviso «GIF pesante».
 
-> > 2\.          Cerca per esempio **Golem di argilla**, **Occhio di Gruumsh**, **Mephit**, **Cavallo da guerra**: devono comparire con Spazio, immunità, volo e note.
+> > ### **6\. Gli avvisi sul telefono**
 
-> > 3\.          Mettine due in uno scontro e guarda le **mini-schede** nella plancia: controlla che i numeri siano quelli del manuale.
+Installa **ntfy** sul telefono, iscriviti all’argomento delle istruzioni che ti ho mandato, e avvia il server: deve arrivarti una notifica. Se non arriva, dimmelo.
 
-> > ### **3\. Sagome rettangolari e rotazione**
+> > ### **7\. La pulizia dei file dei personaggi**
 
-> > 1\.          **Tavolo del Master** → **Mappa** → apri una scena con uno scontro.
-
-> > 2\.          **Prepara scontro**: aggiungi la **Regina Madre** (3 × 10 Q) e la **Regina Comandante** (2 × 3 Q) dal Bestiario proposto, poi mettile sulla mappa.
-
-> > 3\.          Clic sulla Madre, poi i tasti **← →**: deve girare di 45° e occupare solo i quadretti in diagonale. Prova anche il clic destro → **Ruota**.
-
-> > 4\.          Mettila contro un muro o un’altra pedina e gira ancora: deve comparire l’avviso con **«Procedi comunque»**.
-
-> > 5\.          Da un tablet collegato apri la mappa dei giocatori: la Madre deve apparire girata.
-
-> > ### **4\. Il tablet dei giocatori**
-
-> > 1\.          Apri uno scontro dal **Tavolo del Master** e fai collegare un giocatore col suo **tablet** (o aprilo da un secondo dispositivo).
-
-> > 2\.          Dal **PC del master**, col tablet aperto, dai **\+10 PV** a quel PG: il tablet deve aggiornarsi da solo, senza ricaricare.
-
-> > 3\.          Metti sulla mappa un **token libero**: dal tablet si deve **vedere** ma **non spostare**.
-
-> > 4\.          Metti un bersaglio dietro un muro e usa **«Attacca questo bersaglio»**: deve avvisare della **Copertura Totale**, lasciando il «Procedi comunque».
-
-> > ### **5\. Gli avvisi sul telefono**
-
-Serve a far arrivare una notifica quando qualcuno avvia il server o lascia un messaggio.
-
-> > 1\.          Installa **ntfy** sul telefono (Play Store o App Store).
-
-> > 2\.          Iscriviti all’argomento indicato nelle istruzioni in otto passi già inviate.
-
-> > 3\.          Avvia il server sul PC: deve arrivare la notifica. Se non arriva, segnalalo.
-
-> > ### **6\. Galleria**
-
-> > 1\.          **Tavolo del Master** → **Galleria** → carica una **GIF animata**.
-
-> > 2\.          Mandala ai giocatori: controlla se sui loro schermi si **muove** o se arriva ferma.
+Nella cartella distribuzione\\ c’è un programma che si apre con un doppio clic: produce un **rapporto** dei file dei personaggi, dicendo per ciascuno quanti ne ha trovati e quale propone come originale, guardando i valori **dentro** i file e non le date. Non sposta niente finché non scrivi SI. Se chiudi la finestra, non è stato fatto nulla.
 
 > > 
 
