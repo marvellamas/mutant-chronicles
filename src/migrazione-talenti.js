@@ -7,7 +7,7 @@
 //    file, livello per livello e con la categoria nuova: src/talenti-prima.js), che resta leggibile e che un tablet non toglie; con una modifica del master nel file la scheda di
 //    un tablet prende la versione del Direttore (non rimette i Talenti tolti);
 //  - via «talentoLibero» dalle voci di livello, e scelte.regimeTalenti = 2. I posti restano vuoti: li riempie la scelta
-//    guidata della scheda. Niente altro cambia: Tecniche e incantesimi legati a un Talento tolto restano (A.184).
+//    guidata della scheda. Niente altro cambia nel file: Tecniche e incantesimi legati a un Talento tolto restano scritti, ma la scheda li legge come storico, senza effetti (A.184).
 // Il conto dei posti è quello di postiTalenti, e non si rifà qui.
 import { postiTalenti, calcolaSchedaPersonaggio } from './avanzamento.js';
 import { nuovaCorrezione, aggiungiCorrezione } from './correzioni-master.js';
@@ -56,11 +56,13 @@ export function pianoMigrazione(o, dati, { quando = new Date() } = {}) {
   }
   const nuovo = migrato(o, dati, quando);
   const casi = [];
-  // Tecniche e incantesimi legati a un Talento tolto (A.184: non si toccano, decide il Direttore)
+  // Tecniche e incantesimi legati a un Talento tolto (A.184): senza il Talento le quote non ci sono più, le vecchie
+  // scelte vanno nello storico (leggibili, senza effetti) e tornano attive se il Talento viene ripreso, entro le quote
   const dopo = calcolaSchedaPersonaggio(personaggio(nuovo), dati);
-  for (const e of dopo.errori ?? []) {
-    if (/tecniche|incantesimi/.test(e.campo)) casi.push(`${e.problema} — legate a un Talento tolto: restano, decide il Direttore (A.184)`);
-  }
+  const nomiTec = (dopo.storico?.tecniche ?? []).map((t) => t.nome ?? t.id);
+  const nomiInc = dopo.storico?.incantesimi ?? [];
+  if (nomiTec.length) casi.push(`Tecniche Interiori in storico, senza effetti finché il Talento non viene ripreso: ${nomiTec.join(', ')} (A.184)`);
+  if (nomiInc.length) casi.push(`Incantesimi in storico, senza effetti finché il Talento non viene ripreso: ${nomiInc.join(', ')} (A.184)`);
   // i Talenti di oggi ripresi nella loro categoria, nei posti in ordine di livello: un prerequisito che non torna
   // si vede qui (A.183: vale l'ordine di livello; il Direttore può forzare da «Modifica master»)
   let prova = personaggio(nuovo);

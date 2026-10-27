@@ -412,6 +412,39 @@ function statoQuote(stato, dati) {
   return { ...q, noti, liberiUsati };
 }
 
+/**
+ * A.184: nei Talenti nuovi, le Tecniche e gli incantesimi oltre le quote che il personaggio ha adesso (perché il
+ * Talento da cui dipendevano non è stato ripreso) sono «storico»: restano leggibili, senza effetti. Si tengono attivi,
+ * nell'ordine in cui sono stati scelti, quelli che le quote coprono; la Tecnica di una fonte indipendente (Tecniche del
+ * Lottatore con la Classe, della Scuola Mishima a cui si è iniziati) resta sempre attiva.
+ * @returns null (Talenti di prima: niente cambia) oppure { tecniche: { attive, storico }, incantesimi: { attivi, storico } }
+ */
+function scelteInStorico(stato, dati) {
+  if (stato.regime !== 'nuovo') return null;
+  const catalogoTec = dati.tecniche_interiori.tecniche;
+  const indipendente = (x) => {
+    const g = catalogoTec.find((t) => t.id === x.id)?.gruppo ?? '';
+    return (g === 'lottatore' && stato.classi.some((c) => c.nome === 'Lottatore')) || (g.startsWith('scuola:') && stato.scuola?.nome === g.slice(7));
+  };
+  let posti = tecnicheAmmesse(stato);
+  const tecAttive = [];
+  const tecStorico = [];
+  for (const x of stato.tecniche) {
+    if (indipendente(x) || posti > 0) { tecAttive.push(x); if (!indipendente(x)) posti -= 1; } else tecStorico.push(x);
+  }
+  const q = statoQuote(stato, dati);
+  const perMacro = { ...q.perMacro };
+  let liberi = q.liberi;
+  const incAttivi = [];
+  const incStorico = [];
+  for (const nome of stato.incantesimi) {
+    const i = trova(dati.incantesimi.incantesimi, nome);
+    if (!i || !q.accesso) { incStorico.push(nome); continue; }
+    if ((perMacro[i.macrofamiglia] ?? 0) > 0) { perMacro[i.macrofamiglia] -= 1; incAttivi.push(nome); } else if (liberi > 0) { liberi -= 1; incAttivi.push(nome); } else incStorico.push(nome);
+  }
+  return { tecniche: { attive: tecAttive, storico: tecStorico }, incantesimi: { attivi: incAttivi, storico: incStorico } };
+}
+
 /** Tecniche Interiori che il personaggio può conoscere: dotazioni fissate all'acquisizione. */
 const tecnicheAmmesse = (stato) => stato.dotazioniTecniche.reduce((s, d) => s + d.numero, 0);
 
@@ -1535,8 +1568,13 @@ export function calcolaSchedaPersonaggio(personaggio, dati) {
 }
 
 function schedaARiposo(personaggio, dati) {
-  const { stato, errori, completamenti, eccessi } = ricalcola(personaggio, dati);
-  if (!stato) return { livello: 1, errori, completamenti, eccessi, completa: false };
+  const { stato: statoPieno, errori: erroriGrezzi, completamenti, eccessi } = ricalcola(personaggio, dati);
+  if (!statoPieno) return { livello: 1, errori: erroriGrezzi, completamenti, eccessi, completa: false };
+  // A.184 (Davide, 25/10/2026): le scelte che dipendevano da un Talento non ripreso escono dagli effetti attivi e restano
+  // leggibili come storico; ripreso il Talento, tornano attive entro le quote. Solo nei Talenti nuovi.
+  const storico = scelteInStorico(statoPieno, dati);
+  const stato = storico ? { ...statoPieno, tecniche: storico.tecniche.attive, incantesimi: storico.incantesimi.attivi } : statoPieno;
+  const errori = storico ? erroriGrezzi.filter((e) => !(/(^|.)(tecniche|incantesimi)$/.test(e.campo) && /^(Tecniche conosciute|incantesimi conosciuti)/.test(e.problema))) : erroriGrezzi;
   // modificatori temporanei di Caratteristica al tavolo (src/temporanei.js): la Caratteristica cambia prima di tutto
   // ciò che ne deriva (Abilità, Difese, Prove Salvezza, Iniziativa, danno, carico); i PV e PM massimi restano quelli
   // della Caratteristica base salvo regole.json → caratteristiche_temporanee.massimi_pv_pm (false: A.120, E&L del 06/10/2026)
@@ -1698,6 +1736,8 @@ function schedaARiposo(personaggio, dati) {
     }),
     tecniche: stato.tecniche.map((x) => ({ ...catalogoTec.find((t) => t.id === x.id), livello: x.livello })),
     tecnicheAmmesse: tecnicheAmmesse(stato),
+    // A.184: scelte legate a un Talento non ripreso, senza effetti attivi (solo lettura)
+    ...(storico && (storico.tecniche.storico.length || storico.incantesimi.storico.length) ? { storico: { tecniche: storico.tecniche.storico.map((x) => ({ ...catalogoTec.find((t) => t.id === x.id), livello: x.livello })), incantesimi: storico.incantesimi.storico } } : {}),
     incantesimi: {
       conosciuti: q.noti,
       // 20/10: aggiunti a mano (src/incantesimi-a-mano.js): non entrano nei conosciuti né nelle quote

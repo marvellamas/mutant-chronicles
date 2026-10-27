@@ -246,5 +246,12 @@ test('«ritira»: il tablet toglie dall\'attesa una voce già partita (la modifi
   })).json();
   assert.deepEqual(r.inAttesa, []);
   const lista = await (await fetch(`${baseMaster}/api/rientro`)).json();
-  assert.equal(lista.personaggi.find((x) => x.pgId === p.pg), undefined, 'il Direttore non ha più niente per questo personaggio');
+  // A.180 (25/10/2026): nulla da decidere, ma il ritiro risulta al Direttore finché non lo ha visto
+  const voce = lista.personaggi.find((x) => x.pgId === p.pg);
+  assert.deepEqual(voce.righe, [], 'il Direttore non ha più niente da decidere per questo personaggio');
+  assert.deepEqual(voce.ritirate.map((x) => [x.id, x.proposto, x.stato]), [['da-ritirare', '−2', 'Ritirata dal giocatore']]);
+  const visto = await (await fetch(`${baseMaster}/api/rientro`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ pgId: p.pg, decisioni: { 'da-ritirare': 'visto' } }) })).json();
+  assert.deepEqual(visto.viste, ['da-ritirare']);
+  const dopo = await (await fetch(`${baseMaster}/api/rientro`)).json();
+  assert.equal(dopo.personaggi.find((x) => x.pgId === p.pg), undefined, 'visto: non resta niente');
 });

@@ -28,10 +28,12 @@ let chiusaSu = ''; // la firma di ciò che c'era quando Davide ha chiuso: non si
 let inCorso = false;
 let timer = null;
 
-const firmaDi = (d) => (d?.personaggi ?? []).map((p) => `${p.pgId}:${p.righe.map((r) => r.id).join(',')}`).join('|');
+const firmaDi = (d) => (d?.personaggi ?? []).map((p) => `${p.pgId}:${p.righe.map((r) => r.id).join(',')}:${(p.ritirate ?? []).map((r) => r.id).join(',')}`).join('|');
 
 /** Quante modifiche sono in attesa in tutto (per il pulsante del Tavolo e per decidere se aprire). */
 export const inAttesaTotali = () => (dati.personaggi ?? []).reduce((n, p) => n + p.righe.length, 0);
+/** Le richieste ritirate dai giocatori che il Direttore non ha ancora visto (A.180). */
+export const ritirateTotali = () => (dati.personaggi ?? []).reduce((n, p) => n + (p.ritirate?.length ?? 0), 0);
 
 const ora = (q) => {
   if (!q) return '';
@@ -46,6 +48,23 @@ const testoValore = (v) => {
   return String(v);
 };
 
+const dettaglioTesto = (r) => (r.precedente === null || r.precedente === undefined ? `variazione ${r.proposto ?? ''}` : `valore precedente: ${r.precedente} · valore proposto: ${r.proposto}`);
+
+/** Le richieste ritirate dal giocatore (A.180): si leggono, non si decidono; «Visto» le toglie dall'elenco. */
+function ritirateDi(pg) {
+  if (!pg.ritirate?.length) return null;
+  return h('div', { class: 'rientro-ritirate' },
+    h('p', { class: 'nota' }, 'Ritirate dal giocatore (la scheda non è stata toccata):'),
+    h('ul', { class: 'rientro-elenco' }, pg.ritirate.map((r) => h('li', { class: 'rientro-riga rientro-riga-ritirata' },
+      h('div', { class: 'rientro-riga-testo' }, h('span', { class: 'rientro-etichetta' }, r.etichetta), r.ritirataIl ? h('span', { class: 'nota' }, ` (ritirata alle ${ora(r.ritirataIl)})`) : null),
+      h('div', { class: 'rientro-dettaglio nota' }, dettaglioTesto(r), h('strong', { class: 'rientro-stato' }, ` · ${r.stato}`)),
+      h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => visto(pg, r.id) }, 'Visto')))));
+}
+
+async function visto(pg, id) {
+  try { await decidiRientro(pg.pgId, { [id]: 'visto' }); await aggiorna(); } catch (e) { avvisoErrore(`Non riuscito: ${e.message}`); }
+}
+
 /** Una riga: l'etichetta già scritta in italiano dal tablet, l'ora, e i due pulsanti. */
 function riga(pg, r, scelte) {
   const scelta = scelte.get(r.id) ?? null;
@@ -58,7 +77,8 @@ function riga(pg, r, scelte) {
   return h('li', { class: `rientro-riga${r.conflitto ? ' rientro-riga-conflitto' : ''}` },
     h('div', { class: 'rientro-riga-testo' },
       h('span', { class: 'rientro-etichetta' }, r.etichetta),
-      r.quando ? h('span', { class: 'nota' }, ` (${ora(r.quando)})`) : null),
+      r.quando ? h('span', { class: 'nota' }, ` (fatta alle ${ora(r.quando)}${r.ricevuta ? `, ricevuta alle ${ora(r.ricevuta)}` : ''})`) : null),
+    h('div', { class: 'rientro-dettaglio nota' }, dettaglioTesto(r), h('strong', { class: 'rientro-stato' }, ` · ${r.stato ?? 'In attesa di approvazione'}`)),
     r.conflitto
       ? h('div', { class: 'rientro-conflitto' },
         h('p', { class: 'nota' }, 'Cambiato da tutt’e due: scegli quale tieni.'),
@@ -79,15 +99,16 @@ function bloccoPg(pg, scelte) {
     h('header', { class: 'rientro-pg-testa' },
       h('h3', {}, pg.nome),
       h('span', { class: 'nota' }, `${pg.righe.length} modific${pg.righe.length === 1 ? 'a' : 'he'} fuori linea`),
-      h('div', { class: 'rientro-tutte' },
+      !pg.righe.length ? null : h('div', { class: 'rientro-tutte' },
         h('button', { type: 'button', class: 'btn btn-piccolo', onclick: tutte('approva') }, 'Approva tutte'),
         h('button', { type: 'button', class: 'btn btn-piccolo', onclick: tutte('scarta') }, 'Scarta tutte'),
         h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { for (const r of pg.righe) scelte.delete(r.id); disegna(); } }, 'Lascia in attesa'))),
-    h('ul', { class: 'rientro-elenco' }, pg.righe.map((r) => riga(pg, r, scelte))),
-    h('div', { class: 'riga-azioni' },
+    pg.righe.length ? h('ul', { class: 'rientro-elenco' }, pg.righe.map((r) => riga(pg, r, scelte))) : null,
+    ritirateDi(pg),
+    pg.righe.length ? h('div', { class: 'riga-azioni' },
       h('button', { type: 'button', class: 'btn primario', disabled: decise === 0, onclick: () => applica(pg, scelte) },
         decise === 0 ? 'Scegli che cosa fare' : `Applica a ${pg.nome} (${decise} di ${pg.righe.length})`),
-      decise < pg.righe.length ? h('span', { class: 'nota' }, `${pg.righe.length - decise} resta${pg.righe.length - decise === 1 ? '' : 'no'} in attesa`) : null));
+      decise < pg.righe.length ? h('span', { class: 'nota' }, `${pg.righe.length - decise} resta${pg.righe.length - decise === 1 ? '' : 'no'} in attesa`) : null) : null);
 }
 
 const scelteDi = new Map(); // pgId → Map(idOperazione → 'approva' | 'scarta')
@@ -136,7 +157,7 @@ function chiudi() {
 
 /** Apre la schermata (dal pulsante del Tavolo, o da sola quando arriva qualcosa di nuovo). */
 export function apriRientro() {
-  if (!inAttesaTotali()) return false;
+  if (!inAttesaTotali() && !ritirateTotali()) return false;
   aperta = true;
   disegna();
   return true;
@@ -153,7 +174,7 @@ async function aggiorna() {
     for (const id of [...scelte.keys()]) if (!pg.righe.some((x) => x.id === id)) scelte.delete(id);
   }
   const firma = firmaDi(dati);
-  if (!inAttesaTotali()) { aperta = false; chiusaSu = ''; } else if (!aperta && firma !== chiusaSu) aperta = true; // qualcosa di nuovo: si ripresenta
+  if (!inAttesaTotali() && !ritirateTotali()) { aperta = false; chiusaSu = ''; } else if (!aperta && firma !== chiusaSu) aperta = true; // qualcosa di nuovo: si ripresenta
   disegna();
 }
 

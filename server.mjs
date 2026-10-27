@@ -150,7 +150,7 @@ import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
 import { NOME_FILE, fileProvvisorio, ultimiPerPersonaggio, ultimiPerPg, fileAttuale, chiaveDaFile, chiavePersonaggio } from './src/cartella.js';
 import { conMetadati, serveCopia, copieDaTogliere, idPersonaggio, cartellaStorico, nomeCopiaStorica, CARTELLA_STORICO } from './src/storico-personaggi.js';
 import { associazioneDi, dispositivoVisto, conAssociazione, senzaAssociazione, puoScrivere, elencoDispositivi } from './src/dispositivi.js';
-import { aggiungiOperazioni, normalizzaRientro, rigaOperazione, applicaDecisioni, registraDecisioni, inAttesaDi } from './src/rientro.js';
+import { aggiungiOperazioni, normalizzaRientro, rigaOperazione, applicaDecisioni, registraDecisioni, inAttesaDi, righeRitirate, vediRitirate } from './src/rientro.js';
 import { NOME_MARCATORE, statoInstallazione, statoDaRuolo } from './src/copia-di-lavoro.js';
 import { leggiRuolo } from './tools/ruolo-pc.mjs';
 import { cartellaDati, migraSeServe } from './tools/dati-pc.mjs';
@@ -1503,7 +1503,7 @@ async function apiRientro(req, res, cartella, tavolo) {
     const lista = await elencoPersonaggi(cartella);
     const personaggi = [];
     for (const [pgId, pg] of Object.entries(rientro.personaggi)) {
-      if (!pg.inAttesa.length) continue;
+      if (!pg.inAttesa.length && !pg.ritirate?.length) continue;
       const f = trovaPg(lista, pgId);
       const o = f ? await leggiJson(join(cartella, f.file)).catch(() => null) : null;
       const stato = o ? { scelte: o.scelte, sessione: o.sessione, calendario: o.calendario } : {};
@@ -1512,6 +1512,7 @@ async function apiRientro(req, res, cartella, tavolo) {
         nome: o?.scelte?.nome || pg.nome || 'Personaggio',
         file: f?.file ?? null,
         righe: pg.inAttesa.map((op) => rigaOperazione(op, stato)),
+        ritirate: righeRitirate(rientro, pgId),
       });
     }
     return json(res, 200, { personaggi });
@@ -1538,8 +1539,11 @@ async function apiRientro(req, res, cartella, tavolo) {
       await scriviAtomico(dove, Buffer.from(`${JSON.stringify(nuovo, null, 2)}\n`, 'utf8'));
     }
     await mkdir(tavolo, { recursive: true });
-    await scriviJson(doveRientro, registraDecisioni(rientro, pgId, { approvate, scartate }));
-    return json(res, 200, { approvate, scartate, restano: inAttesaDi(registraDecisioni(rientro, pgId, { approvate, scartate }), pgId).length });
+    // A.180: «visto» sulle richieste ritirate dal giocatore le toglie dall'elenco del Direttore
+    const viste = Object.entries(decisioni).filter(([, d]) => d === 'visto').map(([id]) => id);
+    const dopo = vediRitirate(registraDecisioni(rientro, pgId, { approvate, scartate }), pgId, viste);
+    await scriviJson(doveRientro, dopo);
+    return json(res, 200, { approvate, scartate, viste, restano: inAttesaDi(dopo, pgId).length });
   }));
 }
 

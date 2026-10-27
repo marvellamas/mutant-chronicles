@@ -209,7 +209,8 @@ export function operazioniDaDiff(prima, dopo, { quando = new Date(), etichette =
     if (tipo === 'somma') {
       const delta = (Number(valoreDopo) || 0) - (Number(valorePrima) || 0);
       if (Math.abs(delta) < EPSILON) continue;
-      op.push({ id: nuovoId(quando), quando: new Date(quando).toISOString(), percorso, tipo, delta, etichetta: etichetta(percorso, { delta }) });
+      // `prima` e `dopo` (A.180): per mostrare il valore precedente e quello proposto; l'applicazione usa solo il delta
+      op.push({ id: nuovoId(quando), quando: new Date(quando).toISOString(), percorso, tipo, delta, prima: Number(valorePrima) || 0, dopo: Number(valoreDopo) || 0, etichetta: etichetta(percorso, { delta }) });
     } else if (tipo === 'insieme') {
       const primaArr = Array.isArray(valorePrima) ? valorePrima : [];
       const dopoArr = valoreDopo;

@@ -32,7 +32,7 @@ test('il rapporto dice Talenti, categorie, posti e casi da guardare, e non scriv
   assert.equal(r.daFare.length, 7);
   const testo = r.righe.join('\n');
   assert.match(testo, /OSHI NAGATA — 6° livello\n.*Schermidore \(3°\) → Maestria; Risorse Interiori \(5°\) → Talento Libero/);
-  assert.match(testo, /Tecniche conosciute 3, ammesse 0.*A\.184/);
+  assert.match(testo, /Tecniche Interiori in storico, senza effetti finché il Talento non viene ripreso: Meditazione Profonda.*A\.184/);
   assert.match(testo, /Dimitri Orlav[\s\S]*Ritualista Maggiore richiede Ritualista Minore \(A\.183/);
   assert.match(testo, /Posti da riempire: 2 Specializzazione, 2 Maestria, 2 Talento Libero/);
   for (const f of pg) assert.equal(leggi(f), prima[f], `${f} non deve cambiare`);
@@ -62,7 +62,7 @@ test('il passaggio: copia zip, poi per ogni PG nota nel registro, Talenti tolti 
   const posti = postiTalenti({ creazione: oshi.scelte, livelli: oshi.livelli }, dati, { opzioni: false });
   assert.equal(posti.regime, 'nuovo');
   assert.deepEqual(Object.values(posti.categorie).map((c) => c.mancanti), [2, 2, 2]);
-  // le Tecniche di Oshi non si toccano (A.184)
+  // le Tecniche di Oshi restano scritte nel file (A.184: la scheda le legge come storico)
   assert.equal(oshi.livelli.flatMap((v) => v.tecniche ?? []).length, 3);
   // un secondo passaggio non rifà niente
   assert.equal((await rapporto({ cartella, d: dati })).daFare.length, 0);

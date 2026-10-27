@@ -10,6 +10,7 @@ import { idPersonaggio } from '../storico-personaggi.js';
 import { chiaveDaFile, ultimiPerPg, fileDiPgStabile } from '../cartella.js';
 import { leggiAssociazione, scegliAssociazione } from './dispositivo.js';
 import { elencoCartella, inviaGiornale } from './cartella.js';
+import { fraseDettaglio, DICITURA_ATTESA } from '../coda-dettaglio.js';
 import { leggiCoda, togliDallaCoda, confermaRisposta, confermaInvio, ritirateDaMandare, confermaRitirate, inCoda as contaInCoda } from './coda-offline.js';
 
 let dati = null;
@@ -54,8 +55,7 @@ function pannelloCoda() {
   if (!righe.length) return null;
   // Dice com'è DAVVERO (25/10/2026): prima scriveva «Mandate al Direttore» solo perché il tablet era collegato, anche
   // se l'invio non era mai riuscito. Una voce è «partita» solo quando il server l'ha presa in carico (inviata);
-  // la ✕ c'è finché non è partita — dopo, la decisione è del Direttore e toglierla di qui la nasconderebbe soltanto
-  // al giocatore.
+  // la ✕ c'è finché non è partita; dopo c'è «Ritira» (A.180): il ritiro lo raggiunge e risulta al Direttore.
   const tutte = righe.every((o) => o.inviata);
   const nessuna = righe.every((o) => !o.inviata);
   const motivo = ultimoInvio.errore ? ` (ultimo tentativo: ${ultimoInvio.errore})` : '';
@@ -68,7 +68,10 @@ function pannelloCoda() {
     h('p', { class: 'nota' }, testo),
     h('ul', { class: 'coda-offline-elenco' }, righe.map((op) => h('li', { class: op.inviata ? 'arrivata' : 'in-attesa' },
       h('span', {}, op.etichetta), h('small', { class: 'nota' }, ` (${new Date(op.quando).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })})${op.inviata ? ' · arrivata' : ''}`),
-      op.inviata ? null : h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Togli questa modifica dalla coda', onclick: () => { togliDallaCoda(pg.pgId, op.id); applica(); } }, '✕')))));
+      // A.180: valore precedente, valore proposto e la dicitura; la scheda sopra mostra i valori approvati
+      h('div', { class: 'coda-offline-dettaglio nota' }, fraseDettaglio(op), h('strong', {}, ` · ${DICITURA_ATTESA}`)),
+      // finché è pendente si ritira, anche se è già arrivata al Direttore: il ritiro lo raggiunge e la scheda non si tocca
+      h('button', { type: 'button', class: 'btn btn-piccolo', title: op.inviata ? 'Ritira la richiesta: il Direttore vedrà che l’hai ritirata' : 'Togli questa modifica dalla coda', onclick: () => { togliDallaCoda(pg.pgId, op.id); if (op.inviata) void inviaCoda(); applica(); } }, op.inviata ? 'Ritira' : '✕')))));
 }
 
 function applica() {

@@ -23,6 +23,22 @@ const testoCosto = (t, scheda = null) => {
  * Sezione «Risorse Interiori» della tab Poteri: solo per chi ha Risorse Interiori (Talento Libero
  * o di Classe del Lottatore). null altrimenti.
  */
+/**
+ * A.184 (Davide, 25/10/2026): le scelte che dipendevano da un Talento non ripreso restano leggibili come storico, senza
+ * effetti attivi. Un riquadro richiudibile e chiuso nella tab Poteri; null se non c'è niente.
+ */
+export function sezioneStoricoScelte(ctx) {
+  const st = ctx.tab.scheda.storico;
+  const tecniche = (st?.tecniche ?? []).map((x) => x.nome ?? x.id);
+  const incantesimi = st?.incantesimi ?? [];
+  if (!tecniche.length && !incantesimi.length) return null;
+  return h('details', { class: 'sezione-tab storico-scelte' },
+    h('summary', {}, `Scelte in storico (${tecniche.length + incantesimi.length}): senza effetti`),
+    h('p', { class: 'nota' }, 'Dipendevano da un Talento che non è stato ripreso: restano scritte ma non valgono. Se riprendi il Talento, tornano attive entro le quote.'),
+    tecniche.length ? h('p', {}, h('strong', {}, 'Tecniche Interiori: '), tecniche.join(', ')) : null,
+    incantesimi.length ? h('p', {}, h('strong', {}, 'Incantesimi: '), incantesimi.join(', ')) : null);
+}
+
 export function sezioneRisorseInteriori(ctx) {
   const scheda = ctx.tab.scheda;
   if (!haRisorseInteriori(scheda)) return null;

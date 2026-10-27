@@ -18,6 +18,7 @@
 // giornale (succede a ogni giro finché non ha ricevuto la risposta), e approvarla due volte non la applica due
 // volte. Si tiene limitata (MASSIMO_DECISE per personaggio), perché è un registro, non uno storico.
 import { applicaOperazione, valoreToccato, eAccodabile } from './giornale.js';
+import { dettaglioOperazione, DICITURA_ATTESA } from './coda-dettaglio.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const EPSILON = 1e-9;
@@ -26,6 +27,7 @@ const uguale = (a, b) => (typeof a === 'number' && typeof b === 'number' ? Math.
 export const VERSIONE_RIENTRO = 2;
 /** Quante decisioni si ricordano per personaggio (per non riapplicare ciò che è già stato deciso). */
 export const MASSIMO_DECISE = 2000;
+export const MASSIMO_RITIRATE = 50;
 // «ritirata»: la voce l'ha tolta il giocatore stesso (la modifica è tornata com'era, o l'ha scartata dal tablet, o l'ha
 // sostituita con una più recente): non è una decisione del Direttore, e non si ripresenta se il tablet la rimanda
 const ESITI = ['approvata', 'scartata', 'ritirata'];
@@ -53,7 +55,9 @@ export function normalizzaRientro(x) {
     for (const id of Array.isArray(v.applicate) ? v.applicate : []) if (typeof id === 'string' && !decise[id]) decise[id] = 'approvata';
     const visti = new Set();
     const tutte = [...inAttesa, ...vecchi].filter((o) => !decise[o.id] && !visti.has(o.id) && visti.add(o.id));
-    personaggi[pgId] = { ...(typeof v.nome === 'string' && v.nome ? { nome: v.nome } : {}), inAttesa: ordinate(tutte), decise };
+    // A.180: le richieste che il giocatore ha ritirato mentre erano pendenti, finché il Direttore non le ha viste
+    const ritirate = (Array.isArray(v.ritirate) ? v.ritirate : []).filter((o) => isOggetto(o) && typeof o.id === 'string').slice(-MASSIMO_RITIRATE);
+    personaggi[pgId] = { ...(typeof v.nome === 'string' && v.nome ? { nome: v.nome } : {}), inAttesa: ordinate(tutte), decise, ...(ritirate.length ? { ritirate } : {}) };
   }
   return { versione: VERSIONE_RIENTRO, personaggi };
 }
@@ -69,7 +73,7 @@ const statoPg = (rientro, pgId) => rientro.personaggi[pgId] ?? { inAttesa: [], d
  * @returns { rientro, inAttesa: [id] (tutte quelle in attesa adesso, anche di prima), decise: { id: esito }
  *   (fra quelle appena presentate: è la risposta che il tablet aspetta per svuotare la sua coda) }
  */
-export function aggiungiOperazioni(rientro, pgId, operazioni, { nome = null, ritira = [] } = {}) {
+export function aggiungiOperazioni(rientro, pgId, operazioni, { nome = null, ritira = [], adesso = new Date() } = {}) {
   const r = normalizzaRientro(rientro);
   const pg = statoPg(r, pgId);
   const tutte = (Array.isArray(operazioni) ? operazioni : []).filter((o) => isOggetto(o) && typeof o.id === 'string' && Array.isArray(o.percorso));
@@ -84,11 +88,20 @@ export function aggiungiOperazioni(rientro, pgId, operazioni, { nome = null, rit
   for (const id of rifiutate) decise0[id] = 'scartata';
   for (const id of daTogliere) if (!decise0[id]) decise0[id] = 'ritirata';
   const presenti = new Set(pg.inAttesa.map((o) => o.id));
-  const nuove = elenco.filter((o) => !presenti.has(o.id) && !decise0[o.id]);
+  // A.177 (Davide, 23/10/2026): ogni operazione mostra quando è stata fatta (`quando`, dal tablet) e quando è stata ricevuta
+  const ricevuta = new Date(adesso).toISOString();
+  const nuove = elenco.filter((o) => !presenti.has(o.id) && !decise0[o.id]).map((o) => ({ ...o, ricevuta: o.ricevuta ?? ricevuta }));
   const inAttesa = ordinate([...pg.inAttesa.filter((o) => !daTogliere.has(o.id)), ...nuove]);
   const decise = {};
   for (const o of [...elenco, ...tutte.filter((x) => rifiutate.includes(x.id))]) if (o.id && decise0[o.id]) decise[o.id] = decise0[o.id];
-  const aggiornato = { ...pg, ...(nome ? { nome } : {}), inAttesa, decise: Object.fromEntries(Object.entries(decise0).slice(-MASSIMO_DECISE)) };
+  // A.180: un ritiro esplicito del giocatore (non una voce sostituita da una più recente) risulta anche al Direttore,
+  // con la riga com'era; non tocca la scheda, che non è mai stata modificata
+  const esplicite = new Set((Array.isArray(ritira) ? ritira : []).filter((x) => typeof x === 'string'));
+  const ritirateOra = pg.inAttesa
+    .filter((o) => esplicite.has(o.id))
+    .map((o) => ({ ...o, ritirataIl: new Date(adesso).toISOString() }));
+  const ritirate = [...(pg.ritirate ?? []), ...ritirateOra].slice(-MASSIMO_RITIRATE);
+  const aggiornato = { ...pg, ...(nome ? { nome } : {}), inAttesa, decise: Object.fromEntries(Object.entries(decise0).slice(-MASSIMO_DECISE)), ...(ritirate.length ? { ritirate } : {}) };
   return {
     rientro: { ...r, personaggi: { ...r.personaggi, [pgId]: aggiornato } },
     inAttesa: inAttesa.map((o) => o.id),
@@ -121,8 +134,11 @@ export function rigaOperazione(op, stato) {
     id: op.id,
     etichetta: op.etichetta ?? op.percorso.join('.'),
     quando: op.quando ?? null,
+    ricevuta: op.ricevuta ?? null,
     percorso: op.percorso.join('.'),
     variazione,
+    ...dettaglioOperazione(op),
+    stato: DICITURA_ATTESA,
     ...(conflitto ? { conflitto: { sulServer: attuale ?? null, dalTablet: op.nuovo ?? null } } : {}),
   };
 }
@@ -159,17 +175,45 @@ export function registraDecisioni(rientro, pgId, { approvate = [], scartate = []
   return { ...r, personaggi: { ...r.personaggi, [pgId]: { ...pg, inAttesa: pg.inAttesa.filter((o) => !fatte.has(o.id)), decise: limitate } } };
 }
 
+/** Le richieste ritirate dal giocatore, come righe da mostrare al Direttore (A.180). */
+export function righeRitirate(rientro, pgId) {
+  return (statoPg(normalizzaRientro(rientro), pgId).ritirate ?? []).map((o) => ({
+    id: o.id,
+    etichetta: o.etichetta ?? o.percorso.join('.'),
+    quando: o.quando ?? null,
+    ritirataIl: o.ritirataIl ?? null,
+    ...dettaglioOperazione(o),
+    stato: 'Ritirata dal giocatore',
+  }));
+}
+
+/** Il Direttore ha letto che alcune richieste sono state ritirate: escono dall'elenco (la scheda non si tocca). */
+export function vediRitirate(rientro, pgId, ids) {
+  const r = normalizzaRientro(rientro);
+  const pg = statoPg(r, pgId);
+  const viste = new Set(ids ?? []);
+  const ritirate = (pg.ritirate ?? []).filter((o) => !viste.has(o.id));
+  const { ritirate: _prima, ...resto } = pg;
+  return { ...r, personaggi: { ...r.personaggi, [pgId]: { ...resto, ...(ritirate.length ? { ritirate } : {}) } } };
+}
+
 /**
  * Il riassunto per la fascia fissa del Direttore (25/10/2026): quante modifiche sono in attesa e di chi. null se non
  * c'è niente: allora la fascia non esiste (a tavolo normale, con i tablet collegati, Davide non deve vedere niente).
  * @param personaggi quello che risponde GET /api/rientro: [{ nome, righe: [...] }]
  */
 export function riassuntoRientro(personaggi) {
-  const lista = (Array.isArray(personaggi) ? personaggi : []).filter((p) => Array.isArray(p?.righe) && p.righe.length);
+  const tutti = Array.isArray(personaggi) ? personaggi : [];
+  const lista = tutti.filter((p) => Array.isArray(p?.righe) && p.righe.length);
   const n = lista.reduce((t, p) => t + p.righe.length, 0);
-  if (!n) return null;
+  // A.180: richieste ritirate dal giocatore, ancora da vedere
+  const conRitiri = tutti.filter((p) => Array.isArray(p?.ritirate) && p.ritirate.length);
+  const ritirate = conRitiri.reduce((t, p) => t + p.ritirate.length, 0);
+  const ritiriTesto = ritirate ? `${ritirate === 1 ? '1 richiesta ritirata' : `${ritirate} richieste ritirate`} dal giocatore` : '';
+  if (!n && !ritirate) return null;
+  if (!n) return { n: 0, ritirate, personaggi: conRitiri.length, testo: `Rientro dei tablet: ${ritiriTesto} (${conRitiri.length === 1 ? (conRitiri[0].nome || 'un personaggio') : `${conRitiri.length} personaggi`})` };
   const di = lista.length === 1 ? (lista[0].nome || 'un personaggio') : `${lista.length} personaggi`;
-  return { n, personaggi: lista.length, testo: `Rientro dei tablet: ${n === 1 ? '1 modifica fatta' : `${n} modifiche fatte`} senza collegamento, in attesa della tua risposta (${di})` };
+  return { n, ritirate, personaggi: lista.length, testo: `Rientro dei tablet: ${n === 1 ? '1 modifica fatta' : `${n} modifiche fatte`} senza collegamento, in attesa della tua risposta (${di})${ritirate ? `; ${ritiriTesto}` : ''}` };
 }
 
 /**

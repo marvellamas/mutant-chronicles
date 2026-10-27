@@ -55,7 +55,7 @@ import { pugniPotenziati, profiloSenzArmi, profiloOndaInteriore, senzArmiDisponi
 import { pannelloLancio } from './lancio.js';
 import { pulsanteMuovi } from '../round-scontro.js';
 import { riquadroIncantesimiInCorso } from './incantesimi-in-corso.js';
-import { sezioneRisorseInteriori, pannelloTecnica } from './tecniche.js';
+import { sezioneRisorseInteriori, sezioneStoricoScelte, pannelloTecnica } from './tecniche.js';
 import { tecnicaDi, testoFine } from '../tecniche.js';
 import { statoPulsanteLancio, attivazioneInfusa, livelloVersione } from '../lancio.js';
 import { nomeRiserva, nomeAlimentazione } from '../fonti.js';
@@ -2636,6 +2636,7 @@ function tabPoteri(ctx, d) {
     ...(d ? tabMagia(ctx, d) : elencoUnificato(ctx, null, { vuoto: false }).length ? elencoUnificato(ctx, null, { vuoto: false }) : risorse || (ctx.tab.scheda.incantesimi?.aMano?.length ?? 0) || incantesimiDaOggetti({ voci: ctx.scelte.equipaggiamento ?? [], scheda: ctx.tab.scheda }, ctx.dati).length ? [] : [h('section', { class: 'riquadro nessun-potere' }, h('h2', {}, 'Nessun potere'), p.nessuno ? h('p', { class: 'nota' }, p.nessuno) : null)]),
     // Risorse Interiori (Giocatore §8.9; richiesta di Davide del 02/10): le Tecniche con «Attiva»
     risorse,
+    sezioneStoricoScelte(ctx),
     sezioneProprietaDaOggetti(ctx),
     sezioneIncantesimiAMano(ctx),
     // senza la magia propria (nessuna tab Magia) gli incantesimi lanciati da un oggetto hanno comunque i loro «in corso»

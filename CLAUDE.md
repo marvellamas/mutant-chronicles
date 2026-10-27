@@ -194,6 +194,8 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 
 - PX e livello (27/10, `docs/diagnosi-px-livello-2026-10-27.md`): il solo conto "PX → livello" è `livelloDaPx` in `src/px-partita.js` (soglie cumulative di `px_partita.json`, A.170); il livello preso nella scheda non dipende dai PX e non si cambia da solo: `confrontoLivelloPx`/`fraseLivelloPx` lo segnalano in Identità e nella voce C (A.187 aperta). Tabella di controllo: `node tools/px-controllo.mjs [px.json]` (anche le partite che cambierebbero per il Titolo se il livello fosse sfalsato).
 
+- Risposte di Davide del 23 e 25/10 (27/10, lotto 133, `docs/diff-risposte-davide-2026-10-25.md`): la coda del tablet mostra per ogni modifica valore precedente, valore proposto e «In attesa di approvazione» (`src/coda-dettaglio.js`), il giocatore può «Ritirare» anche una voce già arrivata e il ritiro compare al Direttore come «Ritirata dal giocatore» con «Visto» (`ritirate` in `tavolo/rientro.json`, `src/rientro.js` → `righeRitirate`, `vediRitirate`; l'ora di ricezione in `ricevuta`, A.177); nei Talenti nuovi le Tecniche e gli incantesimi oltre le quote di cui il PG dispone sono «storico», senza effetti (`scheda.storico`, `scelteInStorico` in `src/avanzamento.js`, riquadro nella tab Poteri; A.184). Ancora da applicare, lotto a parte: A.174 («Ricarica e medita») e A.176 (incantesimi aggiunti a mano che contano come conosciuti). Aperta A.188 (scelte conservate: le cambia il giocatore o serve il Direttore?); nel frattempo vale la regola del tavolo.
+
 Fuori perimetro per ora: tiri automatici fuori dalla plancia; manovre, inseguimenti e collisioni dei veicoli al tavolo.
 
 ## Riferimenti
