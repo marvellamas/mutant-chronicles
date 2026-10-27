@@ -2115,3 +2115,13 @@ Nessuna regola nuova e nessuna domanda per Davide. Diagnosi in `docs/diagnosi-in
 - Il conto delle quote è uno solo (`src/quote-incantesimi.js`): quota di Classe più quote dei Talenti, meno gli incantesimi
   imparati; artefatti e aggiunti a mano non occupano posti. Quote e livello massimo sono un avviso, per tutti.
 - Gli incantesimi presi con un Talento si vedono, si tolgono e si sostituiscono dalla tab Poteri.
+
+## 27 ottobre 2026 (lotto 132) — PX e livello: nessuno sfalsamento nel conto, segnalato il livello in più
+
+Diagnosi in `docs/diagnosi-px-livello-2026-10-27.md`. Nessuna regola cambiata: il conto «PX → livello» (`livelloDaPx`) è
+uno solo e coincide con le soglie approvate (A.170) e con il Gestore PX di Davide; i livelli presi nella scheda non
+dipendono dai PX. Ora la scheda (Identità) e «Controlla lo stato» segnalano un personaggio con più livelli di quelli che
+gli danno i PX, senza toccare niente.
+
+- **A.187 — APERTA.** Un personaggio con un livello in più di quelli che danno i PX: che cosa si fa? (pacchetto
+  `docs/pacchetto-per-davide-2026-10-27-px-livello.md`; nel frattempo solo segnalato.)

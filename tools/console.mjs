@@ -33,6 +33,7 @@ import { cartellaDati, migraSeServe, scriviImpostazione } from './dati-pc.mjs';
 import { cerca, risolviPercorsoManuale, installazioniMutant } from './cerca-personaggi.mjs';
 import { controllaSeSbagliata, segnaCartellaVuota, eseguiRinominePendenti, copiaPersonaggiDentro, aggiornaCodiceAltra } from './ripara-installazione.mjs';
 import { statoDaRuolo } from '../src/copia-di-lavoro.js';
+import { confrontoLivelloPx } from '../src/px-partita.js';
 import { leggiVersione, leggiNovita, versioneInParole } from '../src/versione.js';
 import { rapporto as rapportoTalenti, applica as applicaTalenti, ripristina as ripristinaTalenti, zipDelPassaggio, zipDaRipristinare, controllaSulServer, statoPassaggio, quandoDelloZip, pianoNota, righeNota, applicaNota } from './migra-talenti.mjs';
 import { rapporto as rapportoPulizia, testoRapporto as testoPulizia, sposta as spostaPulizia } from './pulizia-personaggi.mjs';
@@ -283,6 +284,10 @@ export async function voceStato({ radice: r = radice, porta: p = porta, scrivi =
   try { installazioni = installazioniMutant(r, { ...(home ? { home } : {}), ...(radici ? { radici } : {}) }); } catch { /* ricerca non riuscita: non si blocca lo stato */ }
   const quiNorm = resolve(r).toLowerCase();
   const altreInstallazioni = installazioni.filter((p) => resolve(p).toLowerCase() !== quiNorm);
+  // lotto 132: i PX danno un livello (src/px-partita.js → confrontoLivelloPx); se la scheda ne ha di più lo dice, senza toccare niente
+  let pxP = null;
+  try { pxP = JSON.parse(readFileSync(join(r, 'data', 'px_partita.json'), 'utf8')); } catch { /* senza dati dei PX: niente confronto */ }
+  const rigaPx = (x) => { const c = pxP ? confrontoLivelloPx(x.livello, x.px, pxP) : null; return c ? ` (i PX danno il liv. ${c.livelloPx}${c.inPiu ? `: LA SCHEDA HA ${c.inPiu === 1 ? 'UN LIVELLO' : `${c.inPiu} LIVELLI`} IN PIU` : ''})` : ''; };
   const ora = new Date();
   const righe = [
     `STATO DI MUTANT - ${ora.toLocaleDateString('it-IT')} ${ora.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })} - PC ${hostname()}`,
@@ -295,7 +300,7 @@ export async function voceStato({ radice: r = radice, porta: p = porta, scrivi =
     ...(altreInstallazioni.length ? ['', `Su questo PC ci sono anche altre ${altreInstallazioni.length === 1 ? 'copia' : 'copie'} di Mutant:`, ...altreInstallazioni.map((p) => `  ${p}`)] : []),
     '',
     `Personaggi: ${stato.length}`,
-    ...stato.map((x) => `  ${String(x.nome).padEnd(22)} ${`${x.px === null || x.px === undefined ? 'senza PX' : `${x.px} PX`}`.padEnd(9)} ${`${x.files} file`}  ${!x.letto ? 'NON LEGGIBILE' : x.nuovi ? `Talenti nuovi (${x.presi} scelti)` : 'Talenti vecchi'}   attuale: ${x.file}`),
+    ...stato.map((x) => `  ${String(x.nome).padEnd(22)} ${`${x.px === null || x.px === undefined ? 'senza PX' : `${x.px} PX`}`.padEnd(9)} liv. ${x.livello}${rigaPx(x)} ${`${x.files} file`}  ${!x.letto ? 'NON LEGGIBILE' : x.nuovi ? `Talenti nuovi (${x.presi} scelti)` : 'Talenti vecchi'}   attuale: ${x.file}`),
     '',
     passaggio.passati
       ? `Passaggio ai Talenti nuovi: ${passaggio.passati} personaggi su ${passaggio.totale}${passaggio.quando ? `, fatto il ${passaggio.quando.toLocaleDateString('it-IT')} alle ${passaggio.quando.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })}` : ''}.`

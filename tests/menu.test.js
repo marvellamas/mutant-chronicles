@@ -181,8 +181,8 @@ test('le voci che cambiano i personaggi: niente senza SI; con SI il passaggio e 
     assert.equal(e.fatti.length, 7);
     assert.ok(existsSync(e.copia.zip));
     // il ritorno indietro: senza SI niente, con SI i file come prima
-    assert.equal((await voceTalentiRipristina({ radice, rl: rl('') })).fatto, false);
-    assert.equal((await voceTalentiRipristina({ radice, rl: rl('SI') })).fatto, true);
+    assert.equal((await voceTalentiRipristina({ radice, rl: rl(''), porta: 9 })).fatto, false);
+    assert.equal((await voceTalentiRipristina({ radice, rl: rl('SI'), porta: 9 })).fatto, true);
     for (const f of pg) assert.equal(readFileSync(join(radice, 'personaggi', f), 'utf8'), prima[f], `${f} identico`);
     // il controllo dei file: un file per personaggio, niente da mettere via e niente domande
     assert.deepEqual((await voceControlla({ radice, rl: rl('SI') })).fatti, []);

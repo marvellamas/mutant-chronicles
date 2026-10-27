@@ -32,6 +32,7 @@ import { testoAttivazione } from '../attivazione-arma.js';
 import { testoManifestazione } from '../manifestazione.js';
 import { descriviFerite } from '../sessione.js';
 import { statoUsiTalenti } from '../usi-talenti.js';
+import { confrontoLivelloPx, fraseLivelloPx } from '../px-partita.js';
 import { statoIntegrita, oggettiRotti } from '../protezione.js';
 import { schermaQualcosa, statoContenitore, statoSchermatura } from '../schermatura.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
@@ -1231,6 +1232,8 @@ function tabIdentita(ctx, d) {
           type: 'button', class: 'btn btn-piccolo', 'aria-expanded': String(espansa), 'aria-controls': 'anagrafica-dettaglio',
           onclick: () => { salvaImpostazioni({ ...leggiImpostazioni(), anagraficaEspansa: !espansa }); ctx.azioni.ridisegna(); },
         }, espansa ? 'Riduci' : 'Espandi')),
+      // lotto 132: se il livello preso supera quello che danno i PX lo si dice sempre, anche con l’anagrafica chiusa, senza cambiare niente (A.187)
+      (() => { const f = fraseLivelloPx(confrontoLivelloPx(d.livello, d.puntiEsperienza, ctx.dati.px_partita)); return f ? h('p', { class: 'nota motivo livello-oltre-px', role: 'status' }, f) : null; })(),
       espansa ? null : h('p', { class: 'anagrafica-riga', title: riga }, riga),
       espansa ? h('div', { id: 'anagrafica-dettaglio' },
       ctx.scelte.ritratto ? h('img', { class: 'ritratto-identita', src: ctx.scelte.ritratto, alt: `Ritratto di ${d.nome}` }) : null,

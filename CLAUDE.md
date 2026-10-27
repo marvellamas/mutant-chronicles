@@ -192,6 +192,8 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 
 - Incantesimi, scelta affidabile (27/10, `docs/diagnosi-incantesimi-2026-10-27.md`): ogni incantesimo del catalogo ha un `id` (validato) e l'interfaccia lo riconosce solo da quello; aggiunta a mano in tre passi (`cercaIncantesimi`, `incantesimoPerId` in `src/incantesimi-a-mano.js`); un solo conto delle quote (`src/quote-incantesimi.js`) usato da creazione, Sali di livello e «Da scegliere»; quote e livello massimo sono un avviso (errori di tipo `avviso`), mai un blocco, nemmeno dal tablet; gli incantesimi presi con un Talento stanno nell'elenco di Poteri con origine, «Togli» e «Sostituisci».
 
+- PX e livello (27/10, `docs/diagnosi-px-livello-2026-10-27.md`): il solo conto "PX → livello" è `livelloDaPx` in `src/px-partita.js` (soglie cumulative di `px_partita.json`, A.170); il livello preso nella scheda non dipende dai PX e non si cambia da solo: `confrontoLivelloPx`/`fraseLivelloPx` lo segnalano in Identità e nella voce C (A.187 aperta). Tabella di controllo: `node tools/px-controllo.mjs [px.json]` (anche le partite che cambierebbero per il Titolo se il livello fosse sfalsato).
+
 Fuori perimetro per ora: tiri automatici fuori dalla plancia; manovre, inseguimenti e collisioni dei veicoli al tavolo.
 
 ## Riferimenti

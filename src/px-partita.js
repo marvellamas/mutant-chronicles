@@ -31,6 +31,27 @@ export function livelloDaPx(px, p) {
   return liv;
 }
 
+/**
+ * Il confronto fra il livello preso nella scheda e quello che danno i PX (lotto 132, «i PX sembrano sfalsati di un
+ * livello»). È il solo punto in cui la scheda, la voce «Controlla lo stato» e il Tavolo mettono a confronto livello e PX:
+ * il livello dai PX è sempre `livelloDaPx`. Solo informazione: non cambia mai il livello del personaggio (lo decide il
+ * Direttore, A.187).
+ * @returns null senza PX; altrimenti { livelloPx, livelloScheda, inPiu (≥ 0: livelli presi oltre quelli dei PX), mancanti
+ *   (PX che servirebbero per il livello della scheda, 0 se i PX bastano) }
+ */
+export function confrontoLivelloPx(livelloScheda, px, p) {
+  if (px === null || px === undefined || px === '' || !Number.isFinite(Number(px))) return null;
+  const livelloPx = livelloDaPx(Number(px), p);
+  const inPiu = Math.max(0, num(livelloScheda) - livelloPx);
+  return { livelloPx, livelloScheda: num(livelloScheda), inPiu, mancanti: inPiu ? Math.max(0, p.soglie_px[Math.min(livelloScheda, p.soglie_px.length) - 1] - Number(px)) : 0 };
+}
+
+/** La frase per chi legge la scheda o lo stato: vuota se i livelli tornano. */
+export function fraseLivelloPx(c) {
+  if (!c || !c.inPiu) return '';
+  return `I PX danno il livello ${c.livelloPx}, la scheda è al ${c.livelloScheda}: ${c.inPiu === 1 ? 'un livello' : `${c.inPiu} livelli`} in più (mancano ${c.mancanti} PX). Non cambia niente da solo: decide il Direttore.`;
+}
+
 /** Limite di livello dell'Atto (l'ultimo livello dei Titoli se l'Atto non è noto). */
 export function limiteAtto(atto, p) {
   return p.atti.find((a) => a.nome === atto)?.limite_livello ?? p.titoli[p.titoli.length - 1].livello_max;
@@ -394,4 +415,43 @@ export function importaArchivio(gestore, p) {
   });
   if (!partite.length) avvisi.push('Nessuna partita nell’archivio.');
   return { impostazioni, giocatori: righeGioc, partite, avvisi };
+}
+
+/**
+ * Quali partite già assegnate risulterebbero diverse se il livello da cui si ricava il Titolo fosse sfalsato di `scarto`
+ * livelli (lotto 132: +1 = «il livello N letto come N+1»). Non corregge niente: serve a dire a Davide che cosa cambierebbe.
+ * Il Titolo (e il suo fattore) dipende dai PX che il PG aveva PRIMA della partita (`pxPrima`); la differenza è sulla
+ * componente che il fattore moltiplica (voti × durata e bonus eccezionale). Solo i PG con `pxPrima` registrato.
+ * @returns [{ partita, data, pg, pxPrima, livello, titolo, fattore, titoloSfalsato, fattoreSfalsato, deltaPx }] solo le diverse
+ */
+export function partiteDiverseSeSfalsato(partite, scarto, p) {
+  const out = [];
+  for (const m of partite ?? []) {
+    if (m?.statoAssegnazione !== 'assegnata') continue;
+    for (const [pgId, part] of Object.entries(m.partecipanti ?? {})) {
+      if (!part?.presente || !Number.isFinite(Number(m.pxPrima?.[pgId]))) continue;
+      const px = Number(m.pxPrima[pgId]);
+      const livello = livelloPg(px, m.atto, p);
+      const manuale = p.titoli.find((x) => x.nome === m.titoliManuali?.[pgId]);
+      if (manuale) continue; // il Titolo scelto a mano dal Direttore non dipende dal livello
+      const reale = titoloPerLivello(livello, p);
+      const falso = titoloPerLivello(Math.max(1, Math.min(p.soglie_px.length, livello + scarto)), p);
+      if (reale.fattore === falso.fattore) continue;
+      const base = (num(part.partecipazione) + num(part.interpretazione) + num(part.contributo)) * moltiplicatoreDurata(m.durata, p) + num(part.eccezionale);
+      out.push({ partita: m.id, data: m.data ?? null, pg: pgId, pxPrima: px, livello, titolo: reale.nome, fattore: reale.fattore, titoloSfalsato: falso.nome, fattoreSfalsato: falso.fattore, deltaPx: arrotonda(base * (falso.fattore - reale.fattore)) });
+    }
+  }
+  return out;
+}
+
+/** Le fasce di PX in cui il Titolo cambierebbe se il livello fosse sfalsato di `scarto`: [{ da, a, titolo, titoloSfalsato }]. */
+export function fasceDiversePerScarto(scarto, p) {
+  const s = p.soglie_px;
+  const out = [];
+  for (let l = 1; l <= s.length; l += 1) {
+    const reale = titoloPerLivello(l, p);
+    const falso = titoloPerLivello(Math.max(1, Math.min(s.length, l + scarto)), p);
+    if (reale.fattore !== falso.fattore) out.push({ livello: l, da: s[l - 1], a: l < s.length ? s[l] - 1 : null, titolo: reale.nome, titoloSfalsato: falso.nome });
+  }
+  return out;
 }
