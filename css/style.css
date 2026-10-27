@@ -3100,3 +3100,10 @@ body.tablet-sola-lettura #app textarea {
 /* Talenti: ciò che il testo dice e l'app non calcola (27/10/2026) */
 .da-applicare { font-style: italic; }
 p.da-applicare { margin: 0.2rem 0 0.5rem; }
+
+/* Aggiungere un incantesimo a mano (27/10/2026, lotto 131): si cerca, si tocca quello che si vuole, si conferma */
+.risultati-incantesimi { display: flex; flex-direction: column; gap: 0.25rem; margin: 0.4rem 0; max-height: 16rem; overflow-y: auto; }
+.risultato-incantesimo { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.4rem; justify-content: flex-start; text-align: left; min-height: 42px; }
+.risultato-incantesimo.scelto { border-color: var(--accento); background: var(--accento-tenue); }
+.scelta-incantesimo { font-size: 1rem; }
+.esito-aggiunta { color: var(--ok); }

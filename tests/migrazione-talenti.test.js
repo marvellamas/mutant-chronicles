@@ -116,7 +116,7 @@ test('dal tablet: solo opzioni ammesse, niente nei posti chiusi; il Direttore pu
   assert.equal(controllaTalentiDaTablet(vecchio, vecchio, dati).ok, true);
 });
 
-test('25/10 sera, dal tablet: gli Incantesimi aperti da un Talento solo se ammessi (quota, livello massimo); il Direttore può forzare', () => {
+test('27/10 (lotto 131), dal tablet: gli Incantesimi aperti da un Talento si scelgono sempre; quota e livello massimo sono un avviso, mai un blocco', () => {
   const f = pg.find((x) => x.startsWith('Dimitri'));
   const disco0 = JSON.parse(leggi(f));
   // sul disco: Incrementare Incantesimi al 3° livello, i 2 incantesimi ancora da scegliere
@@ -124,16 +124,20 @@ test('25/10 sera, dal tablet: gli Incantesimi aperti da un Talento solo se ammes
   const disco = { ...disco0, scelte: p0.creazione, livelli: p0.livelli };
   const s = scelteSuccessive(p0, dati).find((x) => x.tipo === 'incantesimi' && x.livello === 3);
   assert.equal(s.quanti, 2);
-  const ammesso = s.opzioni.find((o) => o.ammesso);
-  const troppoAlto = s.opzioni.find((o) => !o.ammesso && /oltre il livello massimo/.test(o.motivo));
+  // nessuna opzione è in grigio: tutte ammesse, con un avviso se oltre livello o quota
+  assert.ok(s.opzioni.every((o) => o.ammesso && o.motivo === null), 'nessun blocco');
+  const troppoAlto = s.opzioni.find((o) => /oltre il livello massimo/.test(o.avviso ?? ''));
+  assert.ok(troppoAlto, 'avviso del livello presente');
+  const ammesso = s.opzioni.find((o) => !o.avviso);
   const conIncantesimo = (nome) => { const n = applicaSceltaSuccessiva(p0, s, nome); return { ...disco, livelli: n.livelli }; };
   assert.equal(controllaTalentiDaTablet(conIncantesimo(ammesso.id), disco, dati).ok, true);
-  const no = controllaTalentiDaTablet(conIncantesimo(troppoAlto.id), disco, dati);
-  assert.equal(no.stato, 403);
-  assert.match(no.errore, /oltre il livello massimo.*solo il Direttore/);
-  // tre al posto di due: oltre la quota
-  const tre = s.opzioni.filter((o) => o.ammesso).slice(0, 3).reduce((q, o) => applicaSceltaSuccessiva(q, s, o.id), p0);
-  assert.equal(controllaTalentiDaTablet({ ...disco, livelli: tre.livelli }, disco, dati).stato, 403);
+  assert.equal(controllaTalentiDaTablet(conIncantesimo(troppoAlto.id), disco, dati).ok, true, 'oltre il livello massimo: avviso, il tablet scrive');
+  // tre al posto di due: oltre la quota, ma il tablet scrive lo stesso
+  const tre = s.opzioni.filter((o) => !o.avviso).slice(0, 3).reduce((q, o) => applicaSceltaSuccessiva(q, s, o.id), p0);
+  assert.equal(controllaTalentiDaTablet({ ...disco, livelli: tre.livelli }, disco, dati).ok, true);
+  // e anche con i posti chiusi dal Direttore
+  const chiuso = { ...disco, scelte: { ...disco.scelte, talentiChiusiFino: 99 } };
+  assert.equal(controllaTalentiDaTablet({ ...chiuso, livelli: conIncantesimo(ammesso.id).livelli }, chiuso, dati).ok, true, 'la chiusura non riguarda gli incantesimi');
 });
 
 test('il piano non cambia un PG già passato; i casi sono quelli della regola di ogni domanda aperta', () => {

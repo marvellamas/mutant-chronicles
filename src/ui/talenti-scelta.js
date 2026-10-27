@@ -217,7 +217,7 @@ function passoSuccessivo(t, s) {
       h('div', { class: 'opzione-testo' },
         n.nome,
         tx.riga ? h('span', { class: 'riga-talento' }, tx.riga) : null,
-        ammessa ? null : h('small', { class: 'motivo' }, ` ${o.motivo}`),
+        ammessa ? (o.avviso ? h('small', { class: 'motivo' }, ` Avviso: ${o.avviso}.`) : null) : h('small', { class: 'motivo' }, ` ${o.motivo}`),
         n.scheda),
       h('div', { class: 'opzione-azioni' },
         ammessa ? h('button', { type: 'button', class: 'btn primario', onclick: vai }, 'Scegli')

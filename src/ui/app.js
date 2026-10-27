@@ -2187,23 +2187,33 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
         persisti();
         renderScheda({ mantieniScorrimento: true });
       },
-      // Poteri (27/10, lotto 129, parte C): il giocatore aggiunge e toglie liberamente anche gli incantesimi di
-      // Classe (scelte.incantesimi), in qualunque momento, non solo alla creazione o a un livello; le quote
-      // restano un avviso (src/character.js → applicaModifica), mai un blocco.
-      aggiungiIncantesimoScelto: (nome) => {
-        if ((stato.scelte.incantesimi ?? []).includes(nome)) return;
-        const { scelte, avvisi } = applicaModifica(stato.scelte, { incantesimi: [...(stato.scelte.incantesimi ?? []), nome] }, dati);
+      // Poteri (lotto 129 e 131): il giocatore toglie e sostituisce sempre i propri incantesimi, anche quelli presi con
+      // un Talento (nella voce del livello), senza passare dal Direttore: la chiusura dei posti dei Talenti non li
+      // riguarda e le quote restano un avviso (src/quote-incantesimi.js)
+      togliIncantesimoScelto: (nome) => {
+        const livelli = stato.livelli.map((v) => {
+          if (!Array.isArray(v.incantesimi) || !v.incantesimi.includes(nome)) return v;
+          const { incantesimi, ...resto } = v;
+          const rimasti = incantesimi.filter((n) => n !== nome);
+          return rimasti.length ? { ...resto, incantesimi: rimasti } : resto;
+        });
+        if (livelli.some((v, i) => v !== stato.livelli[i])) cambiaLivelli(livelli);
+        const { scelte, avvisi } = applicaModifica(stato.scelte, { incantesimi: (stato.scelte.incantesimi ?? []).filter((n) => n !== nome) }, dati);
         stato.scelte = scelte;
-        stato.messaggioScheda = avvisi.length ? { tipo: 'attenzione', testo: avvisi.join(' ') } : null;
+        stato.messaggioScheda = avvisi.length ? { tipo: 'attenzione', testo: avvisi.join(' ') } : { tipo: 'ok', testo: `Tolto: ${nome}.` };
         persisti();
         renderScheda({ mantieniScorrimento: true });
       },
-      togliIncantesimoScelto: (nome) => {
-        const { scelte, avvisi } = applicaModifica(stato.scelte, { incantesimi: (stato.scelte.incantesimi ?? []).filter((n) => n !== nome) }, dati);
-        stato.scelte = scelte;
-        stato.messaggioScheda = avvisi.length ? { tipo: 'attenzione', testo: avvisi.join(' ') } : { tipo: 'ok', testo: `${nome} tolto.` };
+      sostituisciIncantesimoLivello: (livello, vecchio, nuovo) => {
+        const i = livello - 2;
+        const voce = stato.livelli[i];
+        if (!voce || !Array.isArray(voce.incantesimi) || !voce.incantesimi.includes(vecchio) || voce.incantesimi.includes(nuovo)) return false;
+        const livelli = stato.livelli.map((v, k) => (k === i ? { ...v, incantesimi: v.incantesimi.map((n) => (n === vecchio ? nuovo : n)) } : v));
+        cambiaLivelli(livelli);
+        stato.messaggioScheda = { tipo: 'ok', testo: `Sostituito: ${vecchio} con ${nuovo}.` };
         persisti();
         renderScheda({ mantieniScorrimento: true });
+        return true;
       },
       // tab Inventario (docs/layout-sd.md, pezzo 2): acquisto al tavolo, oggetto e crediti insieme
       compra: (voce, costo) => {

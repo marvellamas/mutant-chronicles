@@ -30,6 +30,7 @@
   ],
   "incantesimi": [
     {
+      "id": "colpo-elementale",
       "scheda": "13.1",
       "nome": "Colpo Elementale",
       "macrofamiglia": "Fisica",
@@ -303,6 +304,7 @@
       }
     },
     {
+      "id": "controllo-elementale",
       "scheda": "13.2",
       "nome": "Controllo Elementale",
       "macrofamiglia": "Fisica",
@@ -603,6 +605,7 @@
       }
     },
     {
+      "id": "muro-elementale",
       "scheda": "13.3",
       "nome": "Muro Elementale",
       "macrofamiglia": "Fisica",
@@ -814,6 +817,7 @@
       }
     },
     {
+      "id": "protezione-dagli-elementi",
       "scheda": "13.4",
       "nome": "Protezione dagli Elementi",
       "macrofamiglia": "Fisica",
@@ -961,6 +965,7 @@
       }
     },
     {
+      "id": "armatura-elementale",
       "scheda": "13.5",
       "nome": "Armatura Elementale",
       "macrofamiglia": "Fisica",
@@ -1192,6 +1197,7 @@
       }
     },
     {
+      "id": "esplosione-elementale",
       "scheda": "13.6",
       "nome": "Esplosione Elementale",
       "macrofamiglia": "Fisica",
@@ -1382,6 +1388,7 @@
       }
     },
     {
+      "id": "cono-elementale",
       "scheda": "13.7",
       "nome": "Cono Elementale",
       "macrofamiglia": "Fisica",
@@ -1562,6 +1569,7 @@
       }
     },
     {
+      "id": "evoca-elementale",
       "scheda": "13.8",
       "nome": "Evoca Elementale",
       "macrofamiglia": "Fisica",
@@ -1710,6 +1718,7 @@
       }
     },
     {
+      "id": "forma-elementale",
       "scheda": "13.9",
       "nome": "Forma Elementale",
       "macrofamiglia": "Fisica",
@@ -1868,6 +1877,7 @@
       }
     },
     {
+      "id": "devastazione-elementale",
       "scheda": "13.10",
       "nome": "Devastazione Elementale",
       "macrofamiglia": "Fisica",
@@ -2077,6 +2087,7 @@
       }
     },
     {
+      "id": "irrobustire",
       "scheda": "16.1",
       "nome": "Irrobustire",
       "macrofamiglia": "Fisica",
@@ -2266,6 +2277,7 @@
       }
     },
     {
+      "id": "agilita-mutata",
       "scheda": "16.2",
       "nome": "Agilità Mutata",
       "macrofamiglia": "Fisica",
@@ -2418,6 +2430,7 @@
       }
     },
     {
+      "id": "resistenza-fisica",
       "scheda": "16.3",
       "nome": "Resistenza Fisica",
       "macrofamiglia": "Fisica",
@@ -2586,6 +2599,7 @@
       }
     },
     {
+      "id": "respiro-adattivo",
       "scheda": "16.4",
       "nome": "Respiro Adattivo",
       "macrofamiglia": "Fisica",
@@ -2701,6 +2715,7 @@
       }
     },
     {
+      "id": "efficienza",
       "scheda": "16.5",
       "nome": "Efficienza",
       "macrofamiglia": "Fisica",
@@ -2874,6 +2889,7 @@
       }
     },
     {
+      "id": "pelle-corazzata",
       "scheda": "16.6",
       "nome": "Pelle Corazzata",
       "macrofamiglia": "Fisica",
@@ -3015,6 +3031,7 @@
       }
     },
     {
+      "id": "riflessi-potenziati",
       "scheda": "16.7",
       "nome": "Riflessi Potenziati",
       "macrofamiglia": "Fisica",
@@ -3156,6 +3173,7 @@
       }
     },
     {
+      "id": "corpo-adattivo",
       "scheda": "16.8",
       "nome": "Corpo Adattivo",
       "macrofamiglia": "Fisica",
@@ -3275,6 +3293,7 @@
       }
     },
     {
+      "id": "mimetismo",
       "scheda": "16.9",
       "nome": "Mimetismo",
       "macrofamiglia": "Fisica",
@@ -3407,6 +3426,7 @@
       }
     },
     {
+      "id": "trasformazione-totale",
       "scheda": "16.10",
       "nome": "Trasformazione Totale",
       "macrofamiglia": "Fisica",
@@ -3526,6 +3546,7 @@
       }
     },
     {
+      "id": "telecinesi",
       "scheda": "17.1",
       "nome": "Telecinesi",
       "macrofamiglia": "Fisica",
@@ -3746,6 +3767,7 @@
       }
     },
     {
+      "id": "scudo",
       "scheda": "17.2",
       "nome": "Scudo",
       "macrofamiglia": "Fisica",
@@ -3897,6 +3919,7 @@
       }
     },
     {
+      "id": "armatura-di-forza",
       "scheda": "17.3",
       "nome": "Armatura di Forza",
       "macrofamiglia": "Fisica",
@@ -4031,6 +4054,7 @@
       }
     },
     {
+      "id": "respingere",
       "scheda": "17.4",
       "nome": "Respingere",
       "macrofamiglia": "Fisica",
@@ -4190,6 +4214,7 @@
       }
     },
     {
+      "id": "barriera-di-forza",
       "scheda": "17.5",
       "nome": "Barriera di Forza",
       "macrofamiglia": "Fisica",
@@ -4352,6 +4377,7 @@
       }
     },
     {
+      "id": "catene-di-forza",
       "scheda": "17.6",
       "nome": "Catene di Forza",
       "macrofamiglia": "Fisica",
@@ -4516,6 +4542,7 @@
       }
     },
     {
+      "id": "piattaforma-levitante",
       "scheda": "17.7",
       "nome": "Piattaforma Levitante",
       "macrofamiglia": "Fisica",
@@ -4735,6 +4762,7 @@
       }
     },
     {
+      "id": "campo-di-forza",
       "scheda": "17.8",
       "nome": "Campo di Forza",
       "macrofamiglia": "Fisica",
@@ -4895,6 +4923,7 @@
       }
     },
     {
+      "id": "teletrasporto",
       "scheda": "17.9",
       "nome": "Teletrasporto",
       "macrofamiglia": "Fisica",
@@ -5052,6 +5081,7 @@
       }
     },
     {
+      "id": "prigione-dimensionale",
       "scheda": "17.10",
       "nome": "Prigione Dimensionale",
       "macrofamiglia": "Fisica",
@@ -5181,6 +5211,7 @@
       }
     },
     {
+      "id": "ampliare-sensi",
       "scheda": "18.1",
       "nome": "Ampliare Sensi",
       "macrofamiglia": "Mentale",
@@ -5315,6 +5346,7 @@
       }
     },
     {
+      "id": "barriera-mentale",
       "scheda": "18.2",
       "nome": "Barriera Mentale",
       "macrofamiglia": "Mentale",
@@ -5449,6 +5481,7 @@
       }
     },
     {
+      "id": "biomanipolazione",
       "scheda": "18.3",
       "nome": "Biomanipolazione",
       "macrofamiglia": "Mentale",
@@ -5622,6 +5655,7 @@
       }
     },
     {
+      "id": "dardo-psichico",
       "scheda": "18.4",
       "nome": "Dardo Psichico",
       "macrofamiglia": "Mentale",
@@ -5822,6 +5856,7 @@
       }
     },
     {
+      "id": "ectoplasma",
       "scheda": "18.5",
       "nome": "Ectoplasma",
       "macrofamiglia": "Mentale",
@@ -6010,6 +6045,7 @@
       }
     },
     {
+      "id": "indurre-sonno",
       "scheda": "18.6",
       "nome": "Indurre Sonno",
       "macrofamiglia": "Mentale",
@@ -6157,6 +6193,7 @@
       }
     },
     {
+      "id": "psicometabolismo",
       "scheda": "18.7",
       "nome": "Psicometabolismo",
       "macrofamiglia": "Mentale",
@@ -6283,6 +6320,7 @@
       }
     },
     {
+      "id": "telemeccanica",
       "scheda": "18.8",
       "nome": "Telemeccanica",
       "macrofamiglia": "Mentale",
@@ -6421,6 +6459,7 @@
       }
     },
     {
+      "id": "sovraccarico-sinaptico",
       "scheda": "18.9",
       "nome": "Sovraccarico Sinaptico",
       "macrofamiglia": "Mentale",
@@ -6557,6 +6596,7 @@
       }
     },
     {
+      "id": "mente-disincarnata",
       "scheda": "18.10",
       "nome": "Mente Disincarnata",
       "macrofamiglia": "Mentale",
@@ -6722,6 +6762,7 @@
       }
     },
     {
+      "id": "alterare-immagine",
       "scheda": "19.1",
       "nome": "Alterare Immagine",
       "macrofamiglia": "Mentale",
@@ -6945,6 +6986,7 @@
       }
     },
     {
+      "id": "comando",
       "scheda": "19.2",
       "nome": "Comando",
       "macrofamiglia": "Mentale",
@@ -7159,6 +7201,7 @@
       }
     },
     {
+      "id": "distrazione",
       "scheda": "19.3",
       "nome": "Distrazione",
       "macrofamiglia": "Mentale",
@@ -7323,6 +7366,7 @@
       }
     },
     {
+      "id": "illusione",
       "scheda": "19.4",
       "nome": "Illusione",
       "macrofamiglia": "Mentale",
@@ -7542,6 +7586,7 @@
       }
     },
     {
+      "id": "memoria",
       "scheda": "19.5",
       "nome": "Memoria",
       "macrofamiglia": "Mentale",
@@ -7766,6 +7811,7 @@
       }
     },
     {
+      "id": "silenzio-mentale",
       "scheda": "19.6",
       "nome": "Silenzio Mentale",
       "macrofamiglia": "Mentale",
@@ -7936,6 +7982,7 @@
       }
     },
     {
+      "id": "terrore",
       "scheda": "19.7",
       "nome": "Terrore",
       "macrofamiglia": "Mentale",
@@ -8126,6 +8173,7 @@
       }
     },
     {
+      "id": "ipnosi",
       "scheda": "19.8",
       "nome": "Ipnosi",
       "macrofamiglia": "Mentale",
@@ -8312,6 +8360,7 @@
       }
     },
     {
+      "id": "velo-psichico",
       "scheda": "19.9",
       "nome": "Velo Psichico",
       "macrofamiglia": "Mentale",
@@ -8530,6 +8579,7 @@
       }
     },
     {
+      "id": "possessione",
       "scheda": "19.10",
       "nome": "Possessione",
       "macrofamiglia": "Mentale",
@@ -8690,6 +8740,7 @@
       }
     },
     {
+      "id": "empatia",
       "scheda": "20.1",
       "nome": "Empatia",
       "macrofamiglia": "Mentale",
@@ -8874,6 +8925,7 @@
       }
     },
     {
+      "id": "linguaggi",
       "scheda": "20.2",
       "nome": "Linguaggi",
       "macrofamiglia": "Mentale",
@@ -9060,6 +9112,7 @@
       }
     },
     {
+      "id": "presenza",
       "scheda": "20.3",
       "nome": "Presenza",
       "macrofamiglia": "Mentale",
@@ -9348,6 +9401,7 @@
       }
     },
     {
+      "id": "telepatia",
       "scheda": "20.4",
       "nome": "Telepatia",
       "macrofamiglia": "Mentale",
@@ -9582,6 +9636,7 @@
       }
     },
     {
+      "id": "armonia-animale",
       "scheda": "20.5",
       "nome": "Armonia Animale",
       "macrofamiglia": "Mentale",
@@ -9735,6 +9790,7 @@
       }
     },
     {
+      "id": "comunione",
       "scheda": "20.6",
       "nome": "Comunione",
       "macrofamiglia": "Mentale",
@@ -9862,6 +9918,7 @@
       }
     },
     {
+      "id": "psicometria",
       "scheda": "20.7",
       "nome": "Psicometria",
       "macrofamiglia": "Mentale",
@@ -10019,6 +10076,7 @@
       }
     },
     {
+      "id": "marchio-psichico",
       "scheda": "20.8",
       "nome": "Marchio Psichico",
       "macrofamiglia": "Mentale",
@@ -10302,6 +10360,7 @@
       }
     },
     {
+      "id": "sesto-senso",
       "scheda": "20.9",
       "nome": "Sesto Senso",
       "macrofamiglia": "Mentale",
@@ -10434,6 +10493,7 @@
       }
     },
     {
+      "id": "vista-superiore",
       "scheda": "20.10",
       "nome": "Vista Superiore",
       "macrofamiglia": "Mentale",
@@ -10588,6 +10648,7 @@
       }
     },
     {
+      "id": "cura-ferite",
       "scheda": "21.1",
       "nome": "Cura Ferite",
       "macrofamiglia": "Spirituale",
@@ -10770,6 +10831,7 @@
       }
     },
     {
+      "id": "cura-malattie",
       "scheda": "21.2",
       "nome": "Cura Malattie",
       "macrofamiglia": "Spirituale",
@@ -10952,6 +11014,7 @@
       }
     },
     {
+      "id": "cura-avvelenamenti",
       "scheda": "21.3",
       "nome": "Cura Avvelenamenti",
       "macrofamiglia": "Spirituale",
@@ -11134,6 +11197,7 @@
       }
     },
     {
+      "id": "cura-spirituale",
       "scheda": "21.4",
       "nome": "Cura Spirituale",
       "macrofamiglia": "Spirituale",
@@ -11348,6 +11412,7 @@
       }
     },
     {
+      "id": "esorcizzare-corruzione",
       "scheda": "21.5",
       "nome": "Esorcizzare Corruzione",
       "macrofamiglia": "Spirituale",
@@ -11509,6 +11574,7 @@
       }
     },
     {
+      "id": "guarigione",
       "scheda": "21.6",
       "nome": "Guarigione",
       "macrofamiglia": "Spirituale",
@@ -11640,6 +11706,7 @@
       }
     },
     {
+      "id": "recupero-rapido",
       "scheda": "21.7",
       "nome": "Recupero Rapido",
       "macrofamiglia": "Spirituale",
@@ -11801,6 +11868,7 @@
       }
     },
     {
+      "id": "esorcizzare-oscurita",
       "scheda": "21.8",
       "nome": "Esorcizzare Oscurità",
       "macrofamiglia": "Spirituale",
@@ -11963,6 +12031,7 @@
       }
     },
     {
+      "id": "esorcizzare-possessione",
       "scheda": "21.9",
       "nome": "Esorcizzare Possessione",
       "macrofamiglia": "Spirituale",
@@ -12169,6 +12238,7 @@
       }
     },
     {
+      "id": "rigenerazione",
       "scheda": "21.10",
       "nome": "Rigenerazione",
       "macrofamiglia": "Spirituale",
@@ -12349,6 +12419,7 @@
       }
     },
     {
+      "id": "arma-mistica",
       "scheda": "22.1",
       "nome": "Arma Mistica",
       "macrofamiglia": "Spirituale",
@@ -12552,6 +12623,7 @@
       }
     },
     {
+      "id": "armatura-mistica",
       "scheda": "22.2",
       "nome": "Armatura Mistica",
       "macrofamiglia": "Spirituale",
@@ -12736,6 +12808,7 @@
       }
     },
     {
+      "id": "sigillo",
       "scheda": "22.3",
       "nome": "Sigillo",
       "macrofamiglia": "Spirituale",
@@ -12954,6 +13027,7 @@
       }
     },
     {
+      "id": "trappola-mistica",
       "scheda": "22.4",
       "nome": "Trappola Mistica",
       "macrofamiglia": "Spirituale",
@@ -13228,6 +13302,7 @@
       }
     },
     {
+      "id": "barriera-mistica",
       "scheda": "22.5",
       "nome": "Barriera Mistica",
       "macrofamiglia": "Spirituale",
@@ -13422,6 +13497,7 @@
       }
     },
     {
+      "id": "batteria-mistica",
       "scheda": "22.6",
       "nome": "Batteria Mistica",
       "macrofamiglia": "Spirituale",
@@ -13564,6 +13640,7 @@
       }
     },
     {
+      "id": "identificare-potere",
       "scheda": "22.7",
       "nome": "Identificare Potere",
       "macrofamiglia": "Spirituale",
@@ -13716,6 +13793,7 @@
       }
     },
     {
+      "id": "rompere-vincolo",
       "scheda": "22.8",
       "nome": "Rompere Vincolo",
       "macrofamiglia": "Spirituale",
@@ -13921,6 +13999,7 @@
       }
     },
     {
+      "id": "vincolo-spirituale",
       "scheda": "22.9",
       "nome": "Vincolo Spirituale",
       "macrofamiglia": "Spirituale",
@@ -14100,6 +14179,7 @@
       }
     },
     {
+      "id": "impronta-mistica",
       "scheda": "22.10",
       "nome": "Impronta Mistica",
       "macrofamiglia": "Spirituale",
@@ -14289,6 +14369,7 @@
       }
     },
     {
+      "id": "scudo-spirituale",
       "scheda": "23.1",
       "nome": "Scudo Spirituale",
       "macrofamiglia": "Spirituale",
@@ -14442,6 +14523,7 @@
       }
     },
     {
+      "id": "luce-mistica",
       "scheda": "23.2",
       "nome": "Luce Mistica",
       "macrofamiglia": "Spirituale",
@@ -14649,6 +14731,7 @@
       }
     },
     {
+      "id": "benedizione",
       "scheda": "23.3",
       "nome": "Benedizione",
       "macrofamiglia": "Spirituale",
@@ -14821,6 +14904,7 @@
       }
     },
     {
+      "id": "maledizione",
       "scheda": "23.4",
       "nome": "Maledizione",
       "macrofamiglia": "Spirituale",
@@ -15014,6 +15098,7 @@
       }
     },
     {
+      "id": "dardo-spirituale",
       "scheda": "23.5",
       "nome": "Dardo Spirituale",
       "macrofamiglia": "Spirituale",
@@ -15214,6 +15299,7 @@
       }
     },
     {
+      "id": "negare-potere",
       "scheda": "23.6",
       "nome": "Negare Potere",
       "macrofamiglia": "Spirituale",
@@ -15436,6 +15522,7 @@
       }
     },
     {
+      "id": "nascondere-aura",
       "scheda": "23.7",
       "nome": "Nascondere Aura",
       "macrofamiglia": "Spirituale",
@@ -15647,6 +15734,7 @@
       }
     },
     {
+      "id": "premonizione",
       "scheda": "23.8",
       "nome": "Premonizione",
       "macrofamiglia": "Spirituale",
@@ -15820,6 +15908,7 @@
       }
     },
     {
+      "id": "individuare",
       "scheda": "23.9",
       "nome": "Individuare",
       "macrofamiglia": "Spirituale",
@@ -16167,6 +16256,7 @@
       }
     },
     {
+      "id": "alterare-aura",
       "scheda": "23.10",
       "nome": "Alterare Aura",
       "macrofamiglia": "Spirituale",

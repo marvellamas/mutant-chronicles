@@ -148,5 +148,6 @@ test('A.108 e A.107 su una copia di Lucas del 28/09 (10 + 10 punti): togliere, p
   assert.deepEqual(conseguenzeCorrezione(p, 2, voce, dati), [{ livello: 4, evento: '4° livello', abilita: { 'Armi medie': 1 }, tornano: { 'Artefatti': 1 } }]);
   // senza l'incantesimo in più la correzione è incompleta; abbassando INT le quote dei livelli dopo non tornano
   assert.ok(validaCorrezione(p, 2, { ...voce, incantesimi: ['Piattaforma Levitante'] }, dati).some((e) => e.tipo === 'incompleto'));
-  assert.ok(validaCorrezione(p, 2, { incantesimi: ['Piattaforma Levitante'], caratteristiche: { SAG: 2 } }, dati).some((e) => /il 3° livello diventerebbe irregolare/.test(e.problema)));
+  // 27/10 (lotto 131): le quote degli incantesimi dei livelli dopo sono un avviso, mai un blocco: la correzione non è più «irregolare»
+  assert.ok(!validaCorrezione(p, 2, { incantesimi: ['Piattaforma Levitante'], caratteristiche: { SAG: 2 } }, dati).some((e) => /il 3° livello diventerebbe irregolare/.test(e.problema)));
 });

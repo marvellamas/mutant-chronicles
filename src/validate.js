@@ -714,6 +714,21 @@ function validaIncantesimi(inc, regole, err) {
   if (macro.size === 0) err(F, 'macrofamiglie', 'lista mancante');
 
   const lista = listaNominata(F, inc, 'incantesimi', err);
+  // 27/10/2026 (lotto 131): un incantesimo si riconosce dal suo «id», mai dal nome (un nome parziale o un ordine
+  // dell'elenco hanno già scambiato Esorcizzare Oscurità con Esorcizzare Corruzione). Id unico, stabile, e nomi che
+  // non si confondono fra loro.
+  const idVisti = new Map();
+  const senzaAccenti = (n) => String(n).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
+  const nomiVisti = new Map();
+  lista.forEach((x, i) => {
+    const k = `incantesimi[${i}] (${x?.nome})`;
+    if (!isTesto(x?.id) || !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(x.id)) err(F, `${k}.id`, 'serve un identificativo minuscolo senza spazi (es. esorcizzare-oscurita)');
+    else if (idVisti.has(x.id)) err(F, `${k}.id`, `identificativo "${x.id}" duplicato (anche in "${idVisti.get(x.id)}")`);
+    else idVisti.set(x.id, x.nome);
+    const n = senzaAccenti(x?.nome);
+    if (nomiVisti.has(n)) err(F, `${k}.nome`, `nome che si confonde con "${nomiVisti.get(n)}" (stesso nome senza accenti e maiuscole)`);
+    else nomiVisti.set(n, x?.nome);
+  });
   const perSpec = new Map();
   const schede = new Set();
   lista.forEach((x, i) => {

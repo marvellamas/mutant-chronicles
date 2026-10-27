@@ -28,6 +28,7 @@ import { applicaCondizioni } from './condizioni.js';
 import { notaDaApplicare } from './talenti.js';
 import { umanita, pmConUmanita } from './umanita.js';
 import { erroriParametriTalenti } from './calc.js';
+import { avvisoIncantesimo } from './quote-incantesimi.js';
 import { competenzaDi, baseIniziale, limiteAbilita, vaPersonale, puntiUtili } from './competenze.js';
 
 export const VERSIONE_PERSONAGGIO = 2;
@@ -731,11 +732,11 @@ function controllaIncantesimi(prima, dopo, v, dati) {
     if (!i) { err(`"${nome}" non è un incantesimo`); continue; }
     if (prima.incantesimi.includes(nome) || visti.has(nome)) err(`${nome} è già conosciuto`);
     visti.add(nome);
-    if (i.livello_base > q.livelloMassimo) err(`${nome}: livello base ${i.livello_base} oltre il livello massimo ${q.livelloMassimo} (tabella dei Gradi taumaturgici)`);
+    if (i.livello_base > q.livelloMassimo) err(`${nome}: livello base ${i.livello_base} oltre il livello massimo ${q.livelloMassimo} (tabella dei Gradi taumaturgici)`, 'avviso');
   }
-  if (nuovi.length && !q.accesso) err('il personaggio non ha accesso alla magia');
+  if (nuovi.length && !q.accesso) err('il personaggio non ha accesso alla magia', 'avviso');
   if (q.liberiUsati > q.liberi || q.noti.length > q.totale) {
-    err(`incantesimi conosciuti ${q.noti.length}, quote ${q.totale} (di Classe per macrofamiglia + ${q.liberi} liberi)`);
+    err(`incantesimi conosciuti ${q.noti.length}, quote ${q.totale} (di Classe per macrofamiglia + ${q.liberi} liberi)`, 'avviso');
   } else if (q.noti.length < q.totale && (nuovi.length || q.totale > statoQuote(prima, dati).totale)) {
     err(`restano ${q.totale - q.noti.length} incantesimi da scegliere`, 'incompleto');
   }
@@ -1345,13 +1346,12 @@ function fontiAumento(prima, dopo, n, tipo, dati) {
 function opzioniIncantesimi(dopo, dati, notiAltrove = []) {
   const q = statoQuote(dopo, dati);
   const noti = new Set([...dopo.incantesimi, ...notiAltrove]);
-  const perMacro = Object.fromEntries(Object.keys(q.perMacro).map((m) => [m, q.noti.filter((i) => i.macrofamiglia === m).length]));
-  return dati.incantesimi.incantesimi.filter((i) => !noti.has(i.nome)).map((i) => {
-    const motivo = !q.accesso ? 'il personaggio non ha accesso alla magia'
-      : i.livello_base > q.livelloMassimo ? `livello base ${i.livello_base} oltre il livello massimo ${q.livelloMassimo}`
-        : perMacro[i.macrofamiglia] >= (q.perMacro[i.macrofamiglia] ?? 0) && q.liberiUsati >= q.liberi ? `quota ${i.macrofamiglia} e incantesimi liberi esauriti` : null;
-    return { id: i.nome, nome: i.nome, gruppo: `${i.macrofamiglia} · ${i.specializzazione}`, livelloBase: i.livello_base, ammesso: !motivo, motivo };
-  });
+  const perMacro = Object.fromEntries(Object.keys(q.perMacro).map((m) => [m, { quota: q.perMacro[m] ?? 0, scelti: q.noti.filter((i) => i.macrofamiglia === m).length }]));
+  const conto = { livelloMassimo: q.livelloMassimo, accesso: q.accesso, perMacro, liberi: q.liberi, liberiUsati: q.liberiUsati };
+  // 27/10 (lotto 131): quote e livello massimo sono un avviso, mai un blocco: ogni opzione si può scegliere
+  return dati.incantesimi.incantesimi.filter((i) => !noti.has(i.nome)).map((i) => ({
+    id: i.nome, nome: i.nome, gruppo: `${i.macrofamiglia} · ${i.specializzazione}`, livelloBase: i.livello_base, ammesso: true, motivo: null, avviso: avvisoIncantesimo(i, conto),
+  }));
 }
 
 /** Le opzioni di una Tecnica Interiore da scegliere (§8.9.2–8.9.4). */

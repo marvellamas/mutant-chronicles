@@ -146,7 +146,7 @@ function conIncantesimi(personaggio, l, dati) {
   for (const inc of cat) {
     if (!manca(out)) break;
     const prova = { ...out, incantesimi: [...out.incantesimi, inc.nome] };
-    if (!validaLivello(personaggio, prova, dati).some((e) => e.campo === 'incantesimi' && e.tipo === 'violazione')) out = prova;
+    if (!validaLivello(personaggio, prova, dati).some((e) => e.campo === 'incantesimi' && e.tipo !== 'incompleto')) out = prova;
   }
   return out;
 }

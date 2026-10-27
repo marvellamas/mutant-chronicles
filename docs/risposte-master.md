@@ -2106,3 +2106,12 @@ Nessuna regola nuova e nessuna domanda per Davide. Diagnosi e correzione in
   cerca da sé un'altra installazione (o una copia: cloud, copia di sicurezza) con i personaggi: una domanda sola,
   con SI si sistema da sola (cartella dei dati, collegamento sul desktop, codice dell'altra installazione messo al
   passo); la copia vuota si rinomina in «…-NON-USARE» (mai cancellata) non appena non è più in uso.
+
+## 27 ottobre 2026 (lotto 131) — Incantesimi: scelta affidabile, un solo conto, quote sempre un avviso
+
+Nessuna regola nuova e nessuna domanda per Davide. Diagnosi in `docs/diagnosi-incantesimi-2026-10-27.md`.
+
+- Ogni incantesimo si riconosce dal suo `id` nel catalogo, non dal nome; aggiunta a mano in tre passi (cerca, tocca, conferma).
+- Il conto delle quote è uno solo (`src/quote-incantesimi.js`): quota di Classe più quote dei Talenti, meno gli incantesimi
+  imparati; artefatti e aggiunti a mano non occupano posti. Quote e livello massimo sono un avviso, per tutti.
+- Gli incantesimi presi con un Talento si vedono, si tolgono e si sostituiscono dalla tab Poteri.

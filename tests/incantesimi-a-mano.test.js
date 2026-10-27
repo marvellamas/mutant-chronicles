@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { contesto, resa, clic, dati } from './scheda-aiuti.js';
 import {
-  normalizzaIncantesimiAMano, aggiungiIncantesimoAMano, togliIncantesimoAMano, avvisoLivelloAMano, risolviIncantesimiAMano, rigaRegistro, nomeOrigine, dataLeggibile,
+  normalizzaIncantesimiAMano, aggiungiIncantesimoAMano, incantesimoPerId, cercaIncantesimi, togliIncantesimoAMano, avvisoLivelloAMano, risolviIncantesimiAMano, rigaRegistro, nomeOrigine, dataLeggibile,
 } from '../src/incantesimi-a-mano.js';
 import { statoIncantesimi } from '../src/incantesimi.js';
 import { deserializzaPersonaggio, serializza, normalizza, applicaModifica, nuoveScelte } from '../src/character.js';
@@ -25,20 +25,20 @@ test('dati: le due origini ci sono e il validatore le controlla', () => {
 });
 
 test('aggiungere: per nome del catalogo, con origine e data; due volte lo stesso o un nome sbagliato non si aggiunge', () => {
-  const l = aggiungiIncantesimoAMano([], 'Cura Ferite', { origine: 'direttore', quando: '2026-10-20', nota: 'dal maestro' }, dati);
+  const l = aggiungiIncantesimoAMano([], 'cura-ferite', { origine: 'direttore', quando: '2026-10-20', nota: 'dal maestro' }, dati);
   assert.deepEqual(l, [{ nome: 'Cura Ferite', origine: 'direttore', quando: '2026-10-20', nota: 'dal maestro' }]);
-  assert.equal(aggiungiIncantesimoAMano(l, 'Cura Ferite', { origine: 'a_mano' }, dati), null, 'già presente');
-  assert.equal(aggiungiIncantesimoAMano(l, 'Incantesimo Inventato', { origine: 'a_mano' }, dati), null, 'non è nel catalogo');
-  const due = aggiungiIncantesimoAMano(l, 'Scudo', { origine: 'a_mano', quando: '2026-10-21' }, dati);
+  assert.equal(aggiungiIncantesimoAMano(l, 'cura-ferite', { origine: 'a_mano' }, dati), null, 'già presente');
+  assert.equal(aggiungiIncantesimoAMano(l, 'incantesimo-inventato', { origine: 'a_mano' }, dati), null, 'non è nel catalogo');
+  const due = aggiungiIncantesimoAMano(l, 'scudo', { origine: 'a_mano', quando: '2026-10-21' }, dati);
   assert.deepEqual(due.map((x) => [x.nome, x.origine]), [['Cura Ferite', 'direttore'], ['Scudo', 'a_mano']]);
   // origine sconosciuta → aggiunto a mano; data mancante → oggi
-  const [x] = aggiungiIncantesimoAMano([], 'Scudo', { origine: '???' }, dati);
+  const [x] = aggiungiIncantesimoAMano([], 'scudo', { origine: '???' }, dati);
   assert.equal(x.origine, 'a_mano');
   assert.match(x.quando, /^\d{4}-\d{2}-\d{2}$/);
 });
 
 test('togliere: l’incantesimo esce, gli altri restano; uno che non c’è non cambia nulla', () => {
-  const l = aggiungiIncantesimoAMano(aggiungiIncantesimoAMano([], 'Cura Ferite', { origine: 'a_mano' }, dati), 'Scudo', { origine: 'a_mano' }, dati);
+  const l = aggiungiIncantesimoAMano(aggiungiIncantesimoAMano([], 'cura-ferite', { origine: 'a_mano' }, dati), 'scudo', { origine: 'a_mano' }, dati);
   assert.deepEqual(togliIncantesimoAMano(l, 'Scudo').map((x) => x.nome), ['Cura Ferite']);
   assert.equal(togliIncantesimoAMano(l, 'Altro'), null);
   assert.deepEqual(togliIncantesimoAMano(togliIncantesimoAMano(l, 'Scudo'), 'Cura Ferite'), []);
@@ -121,7 +121,7 @@ test('Poteri: il modulo per aggiungere c’è, chiuso; origine proposta «Aggiun
   assert.ok(s, 'modulo «Aggiungi un incantesimo a mano»');
   assert.match(s.textContent, /Aggiungi un incantesimo a mano/);
   assert.ok(!s.open, 'chiuso: non è una sezione in più da guardare');
-  assert.ok(s.tutti().some((n) => n.tagName === 'INPUT' && n.getAttribute('list') === 'elenco-incantesimi-a-mano'));
+  assert.ok(s.tutti().some((n) => n.tagName === 'INPUT' && n.getAttribute('type') === 'search'), 'campo di ricerca');
   const scelta = s.tutti().filter((n) => n.tagName === 'BUTTON' && /scelta-btn/.test(n.className));
   assert.deepEqual(scelta.map((b) => b.textContent), ['Aggiunto a mano', 'Concesso dal Direttore']);
   assert.match(scelta[0].className, /scelta(?!-)/);
@@ -133,30 +133,94 @@ test('Poteri: il modulo per aggiungere c’è, chiuso; origine proposta «Aggiun
   assert.equal(cm.ui.incantesimoAMano.origine, 'direttore');
 });
 
-test('Poteri: scritto il nome, «Aggiungi» chiama l’azione con la lista e la riga del registro; livello alto = «Aggiungi comunque»', async () => {
+const scrivi = (nodo, testo) => (nodo.ascolti.input ?? []).forEach((f) => f({ target: { value: testo } }));
+const campoCerca = (s) => s.tutti().find((n) => n.tagName === 'INPUT' && n.getAttribute('type') === 'search');
+const risultati = (s) => s.tutti().filter((n) => n.tagName === 'BUTTON' && /risultato-incantesimo/.test(n.className));
+const pulsanteAggiungi = (s) => s.tutti().find((n) => n.tagName === 'BUTTON' && /^(Aggiungi|Sostituisci)/.test(n.textContent) && /primario/.test(n.className));
+
+test('Poteri: cerca → tocca l’incantesimo → vedi quale hai scelto → conferma; livello alto = «Aggiungi comunque»', () => {
   const c = ctxPoteri();
   resa(c);
   const alto = dati.incantesimi.incantesimi.find((i) => i.livello_base >= 9);
-  c.ui.incantesimoAMano.nome = alto.nome;
+  let s = sezioneDi(resa(c));
+  clic(pulsanteAggiungi(s));
+  assert.equal(c.chiamate.filter(([n]) => n === 'incantesimiAMano').length, 0, 'senza scelta non si aggiunge niente (mai la prima voce)');
+  s = sezioneDi(resa(c));
+  const ridisegni = c.chiamate.filter(([n]) => n === 'ridisegna').length;
+  scrivi(campoCerca(s), alto.nome);
+  assert.equal(c.ui.incantesimoAMano.cerca, alto.nome);
+  assert.ok(risultati(s).some((r) => r.getAttribute('data-id') === alto.id), 'compare fra i risultati, con il suo id');
+  // il campo di ricerca non ridisegna la scheda (era la causa del clic perso su «Aggiungi»)
+  assert.equal(c.chiamate.filter(([n]) => n === 'ridisegna').length, ridisegni);
+  clic(risultati(s).find((r) => r.getAttribute('data-id') === alto.id));
+  assert.equal(c.ui.incantesimoAMano.id, alto.id);
   c.ui.incantesimoAMano.origine = 'direttore';
   c.ui.incantesimoAMano.nota = 'prova';
-  const s = sezioneDi(resa(c));
-  assert.match(s.textContent, /Avviso: Livello base \d+: oltre il livello massimo/);
-  const bottone = s.tutti().find((n) => n.tagName === 'BUTTON' && /^Aggiungi/.test(n.textContent));
-  assert.equal(bottone.textContent, 'Aggiungi comunque', 'avvisa, non blocca');
+  s = sezioneDi(resa(c));
+  assert.match(s.textContent, new RegExp(`Hai scelto: ${alto.nome}`));
+  assert.match(s.textContent, /Avviso: Livello base [0-9]+: oltre il livello massimo/);
+  const bottone = pulsanteAggiungi(s);
+  assert.equal(bottone.textContent, `Aggiungi comunque ${alto.nome}`, 'avvisa, non blocca');
   clic(bottone);
-  const [nomeAzione, lista, riga] = c.chiamate.at(-1);
+  const [nomeAzione, lista, riga] = c.chiamate.filter(([a]) => a === 'incantesimiAMano').at(-1);
   assert.equal(nomeAzione, 'incantesimiAMano');
   assert.deepEqual(lista.map((x) => [x.nome, x.origine, x.nota]), [[alto.nome, 'direttore', 'prova']]);
-  assert.match(lista[0].quando, /^\d{4}-\d{2}-\d{2}$/);
-  assert.match(riga, new RegExp(`^Incantesimo ${alto.nome}: Concesso dal Direttore il .* \\(prova\\)\\.$`));
-  // nome sbagliato: nessuna azione e un messaggio
-  const n = c.chiamate.length;
-  c.ui.incantesimoAMano.nome = 'Non Esiste';
-  clic(sezioneDi(resa(c)).tutti().find((x) => x.tagName === 'BUTTON' && /^Aggiungi/.test(x.textContent)));
-  assert.equal(c.chiamate.filter(([a]) => a === 'incantesimiAMano').length, 1);
-  assert.match(sezioneDi(resa(c)).textContent, /non è nel catalogo degli incantesimi/);
-  assert.ok(c.chiamate.length >= n);
+  assert.match(lista[0].quando, /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/);
+  assert.match(riga, /Concesso dal Direttore il .* \(prova\)\.$/);
+  assert.ok(riga.startsWith(`Incantesimo ${alto.nome}: `));
+  assert.equal(c.ui.incantesimoAMano.esito, `Aggiunto: ${alto.nome}`, 'dopo la conferma l’app dice quale ha aggiunto');
+  assert.match(sezioneDi(resa(c)).textContent, new RegExp(`Aggiunto: ${alto.nome}`));
+});
+
+test('lotto 131, caso A: Esorcizzare Oscurità si aggiunge davvero, e Esorcizzare Corruzione (dell’artefatto) non si tocca', () => {
+  // il personaggio ha Esorcizzare Corruzione da un artefatto (Pietra della Vigilanza) e impara Esorcizzare Oscurità
+  const c = ctxPoteri({}, (sc) => {
+    const pietra = dati.equipaggiamento?.oggetti?.find?.((o) => /Pietra della Vigilanza/.test(o.nome));
+    return sc;
+  });
+  let s = sezioneDi(resa(c));
+  scrivi(campoCerca(s), 'Esorcizzare');
+  const trovati = risultati(s).map((r) => r.getAttribute('data-id'));
+  assert.deepEqual(trovati.sort(), ['esorcizzare-corruzione', 'esorcizzare-oscurita', 'esorcizzare-possessione']);
+  clic(risultati(s).find((r) => r.getAttribute('data-id') === 'esorcizzare-oscurita'));
+  s = sezioneDi(resa(c));
+  assert.match(s.textContent, /Hai scelto: Esorcizzare Oscurità/);
+  assert.doesNotMatch(s.textContent, /Hai scelto: Esorcizzare Corruzione/);
+  clic(pulsanteAggiungi(s));
+  const [, lista] = c.chiamate.filter(([a]) => a === 'incantesimiAMano').at(-1);
+  assert.deepEqual(lista.map((x) => x.nome), ['Esorcizzare Oscurità']);
+});
+
+test('lotto 131, caso B: per OGNI incantesimo del catalogo, cercato per nome e scelto, quello aggiunto è proprio quello', () => {
+  for (const inc of dati.incantesimi.incantesimi) {
+    const c = ctxPoteri();
+    let s = sezioneDi(resa(c));
+    scrivi(campoCerca(s), inc.nome);
+    const r = risultati(s).find((x) => x.getAttribute('data-id') === inc.id);
+    assert.ok(r, `${inc.nome}: non compare nei risultati`);
+    // il nome esatto è sempre il primo risultato: «Scudo» non diventa «Scudo Spirituale»
+    assert.equal(risultati(s)[0].getAttribute('data-id'), inc.id, `${inc.nome}: non è il primo risultato`);
+    clic(r);
+    s = sezioneDi(resa(c));
+    clic(pulsanteAggiungi(s));
+    const [, lista] = c.chiamate.filter(([a]) => a === 'incantesimiAMano').at(-1);
+    assert.deepEqual(lista.map((x) => x.nome), [inc.nome], `${inc.nome}: è stato aggiunto un altro incantesimo`);
+  }
+});
+
+test('lotto 131: il catalogo ha id unici e nomi che non si confondono; nomi simili (Scudo / Scudo Spirituale, Cura …) restano distinti', () => {
+  const cat = dati.incantesimi.incantesimi;
+  assert.equal(new Set(cat.map((i) => i.id)).size, cat.length, 'id duplicati');
+  assert.equal(new Set(cat.map((i) => i.nome)).size, cat.length, 'nomi duplicati');
+  for (const [nome, id] of [['Scudo', 'scudo'], ['Scudo Spirituale', 'scudo-spirituale'], ['Cura Ferite', 'cura-ferite'], ['Cura Malattie', 'cura-malattie'], ['Esorcizzare Oscurità', 'esorcizzare-oscurita']]) {
+    assert.equal(incantesimoPerId(id, dati)?.nome, nome);
+  }
+  // mai per nome o per nome parziale
+  assert.equal(incantesimoPerId('Scudo', dati), null);
+  assert.equal(incantesimoPerId('esorcizzare', dati), null);
+  assert.deepEqual(cercaIncantesimi('', dati), [], 'senza testo non si propone la prima voce');
+  assert.deepEqual(cercaIncantesimi('scudo', dati).map((i) => i.id).slice(0, 2), ['scudo', 'scudo-spirituale']);
+  assert.deepEqual(cercaIncantesimi('oscurita esorc', dati).map((i) => i.id), ['esorcizzare-oscurita'], 'parole in qualunque ordine, senza accenti');
 });
 
 test('Poteri: gli aggiunti a mano stanno nell’elenco con «(Aggiunto)»; origine, data e nota nella scheda; «Lancia!» e «Togli»', () => {

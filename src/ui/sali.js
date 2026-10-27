@@ -3,6 +3,7 @@
 // restano in una bozza ("voce") e non si salva nulla. Tutti i controlli vengono da
 // validaLivello() e prossimoLivello() del motore.
 import { h, segno, dadi } from './dom.js';
+import { avvisoIncantesimo, contoDaScheda } from '../quote-incantesimi.js';
 import { calcolaScheda, validaLivello, modOrdinario } from '../calc.js';
 import { prossimoLivello, applicaLivello } from '../character.js';
 import { passiDelLivello, descriviVoce } from '../avanzamento.js';
@@ -360,31 +361,29 @@ function passoIncantesimi(c) {
   const q = dopo.incantesimi;
   const noti = new Set(prima.incantesimi.conosciuti.map((i) => i.nome));
   const nuovi = voce.incantesimi ?? [];
-  const perMacro = {};
-  for (const m of Object.keys(q.quote.perMacro)) perMacro[m] = q.conosciuti.filter((i) => i.macrofamiglia === m).length;
+  const conto = contoDaScheda(q);
   const catalogo = dati.incantesimi.incantesimi;
   const cambia = (nome, aggiungi) => c.aggiornaVoce({ incantesimi: aggiungi ? [...nuovi, nome] : nuovi.filter((n) => n !== nome) });
-  const nascosti = catalogo.filter((i) => i.livello_base > q.livelloMassimo).length;
+  // 27/10 (lotto 131): il conto è quello unico di src/quote-incantesimi.js; quote e livello massimo sono un avviso,
+  // mai un blocco, e nessun incantesimo si nasconde
   return [
-    h('p', { class: 'guida' }, `Quote di Classe per macrofamiglia (qualunque specializzazione) più ${q.quote.liberi} incantesimi liberi di qualunque famiglia. Livello massimo degli incantesimi conosciuti: ${q.livelloMassimo}.`),
+    h('p', { class: 'guida' }, `Quote di Classe per macrofamiglia (qualunque specializzazione) più ${q.quote.liberi} incantesimi liberi di qualunque famiglia (comprese quelle dei Talenti). Livello massimo degli incantesimi conosciuti: ${q.livelloMassimo}. Quote e livello sono un avviso: puoi scegliere comunque.`),
     h('div', { class: 'contatori' },
-      h('p', { class: `contatore ${q.conosciuti.length === q.quote.totale ? 'ok' : 'attenzione'}` }, h('strong', {}, `${q.conosciuti.length} / ${q.quote.totale}`), ' incantesimi conosciuti'),
-      Object.entries(q.quote.perMacro).map(([m, quota]) => h('p', { class: 'contatore piccolo' }, h('strong', {}, m), `: ${perMacro[m]} conosciuti, quota di Classe ${quota}`)),
-      h('p', { class: 'contatore piccolo' }, h('strong', {}, 'Liberi'), `: ${q.quote.liberiUsati} usati su ${q.quote.liberi}`)),
-    nascosti ? h('p', { class: 'nota' }, `Nascosti ${nascosti} incantesimi con livello base oltre ${q.livelloMassimo}.`) : null,
+      h('p', { class: `contatore ${conto.residuo === 0 ? 'ok' : 'attenzione'}` }, h('strong', {}, `${conto.imparati} / ${conto.totale}`), ' incantesimi conosciuti'),
+      Object.entries(conto.perMacro).map(([m, x]) => h('p', { class: 'contatore piccolo' }, h('strong', {}, m), `: ${x.scelti} conosciuti, quota di Classe ${x.quota}`)),
+      h('p', { class: 'contatore piccolo' }, h('strong', {}, 'Liberi'), `: ${conto.liberiUsati} usati su ${conto.liberi}`)),
     dati.incantesimi.macrofamiglie.map((m) => h('section', { class: 'famiglia' },
       h('h3', {}, m.nome),
       m.specializzazioni.map((sp) => h('fieldset', { class: 'specializzazione' },
         h('legend', {}, sp),
-        catalogo.filter((i) => i.macrofamiglia === m.nome && i.specializzazione === sp && i.livello_base <= q.livelloMassimo).map((i) => {
+        catalogo.filter((i) => i.macrofamiglia === m.nome && i.specializzazione === sp).map((i) => {
           const giaNoto = noti.has(i.nome);
           const preso = giaNoto || nuovi.includes(i.nome);
-          const pieno = perMacro[m.nome] >= (q.quote.perMacro[m.nome] ?? 0) && q.quote.liberiUsati >= q.quote.liberi;
-          const motivo = giaNoto ? null : !preso && pieno ? `Quota ${m.nome} e incantesimi liberi esauriti.` : null;
-          return h('label', { class: `incantesimo ${classeMacrofamiglia(m.nome)}${motivo ? ' bloccato' : ''}` },
-            h('input', { type: 'checkbox', checked: preso, disabled: giaNoto || !!motivo, onchange: (e) => cambia(i.nome, e.target.checked) }),
+          const avviso = preso ? null : avvisoIncantesimo(i, conto);
+          return h('label', { class: `incantesimo ${classeMacrofamiglia(m.nome)}${avviso ? ' avviso' : ''}` },
+            h('input', { type: 'checkbox', checked: preso, disabled: giaNoto, onchange: (e) => cambia(i.nome, e.target.checked) }),
             h('span', {}, h('strong', {}, info('incantesimo', i.nome)), ' ', pallini(i.livello_base), ' ', etichettaMacro(m.nome), h('small', {}, ` liv. base ${i.livello_base}${giaNoto ? ' · già conosciuto' : ''}`),
-              motivo ? h('small', { class: 'motivo' }, motivo) : null));
+              avviso ? h('small', { class: 'motivo' }, ` Avviso: ${avviso}.`) : null));
         }))))),
   ];
 }

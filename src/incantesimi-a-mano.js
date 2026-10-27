@@ -51,12 +51,38 @@ export function normalizzaIncantesimiAMano(lista, dati, avvisi = []) {
   return out;
 }
 
+/** L'incantesimo del catalogo con questo identificativo (mai per nome: un nome parziale o la posizione sbagliano), o null. */
+export const incantesimoPerId = (id, dati) => (typeof id === 'string' && id ? (dati?.incantesimi?.incantesimi ?? []).find((i) => i.id === id) ?? null : null);
+
+const normaTesto = (t) => String(t ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/s+/g, ' ').trim();
+
 /**
- * Aggiunge un incantesimo del catalogo, scelto per nome. null se non esiste o c'è già fra quelli aggiunti a mano.
+ * La ricerca nel catalogo (27/10/2026, lotto 131): le parole scritte devono comparire tutte nel nome (senza badare ad
+ * accenti e maiuscole); prima il nome uguale, poi quelli che cominciano così, poi gli altri. Restituisce voci del
+ * catalogo con il loro id: chi cerca sceglie una voce, non scrive un nome. Senza testo: nessuna (non si propone la prima).
+ */
+export function cercaIncantesimi(testo, dati, { max = 12 } = {}) {
+  const q = normaTesto(testo);
+  if (!q) return [];
+  const parole = q.split(' ');
+  const rango = (n) => (n === q ? 0 : n.startsWith(q) ? 1 : 2);
+  return (dati?.incantesimi?.incantesimi ?? [])
+    .map((i) => ({ i, n: normaTesto(i.nome) }))
+    .filter(({ n }) => parole.every((p) => n.includes(p)))
+    .sort((a, b) => rango(a.n) - rango(b.n) || a.n.localeCompare(b.n, 'it'))
+    .slice(0, max)
+    .map(({ i }) => i);
+}
+
+/**
+ * Aggiunge un incantesimo del catalogo, scelto per IDENTIFICATIVO (non per nome). null se non esiste o c'è già fra
+ * quelli aggiunti a mano.
  * @param extra { origine, quando?, nota? }
  */
-export function aggiungiIncantesimoAMano(lista, nome, extra, dati) {
-  if (!(dati?.incantesimi?.incantesimi ?? []).some((i) => i.nome === nome)) return null;
+export function aggiungiIncantesimoAMano(lista, id, extra, dati) {
+  const inc = incantesimoPerId(id, dati);
+  if (!inc) return null;
+  const nome = inc.nome;
   const attuale = Array.isArray(lista) ? lista : [];
   if (attuale.some((x) => x.nome === nome)) return null;
   const [r] = normalizzaIncantesimiAMano([{ nome, origine: extra?.origine, quando: extra?.quando ?? oggi(), nota: extra?.nota }], dati);
