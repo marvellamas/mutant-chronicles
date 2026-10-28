@@ -74,11 +74,15 @@ test('correzione retroattiva che renderebbe irregolare un livello dopo (A.107): 
   const { creazione, livelli } = deserializzaPersonaggio(readFileSync(new URL('collaudo/Lucas_liv6_2026-09-28 (2).json', import.meta.url), 'utf8'));
   let p = { creazione: normalizza(creazione, dati).scelte, livelli };
   p = applicaRimozione(applicaRimozione(p, 4, { 'Medicina': 3 }), 1, { 'Potere': 2, 'Occultismo': 1 });
-  // abbassando INT le quote degli incantesimi del 3° livello non tornano più: dal 27/10 (lotto 131) è un avviso sulla scheda,
-  // mai un blocco della correzione
+  // abbassando INT le quote degli incantesimi del 3° livello non tornano più: prima era un blocco, ora un avviso
   const voce = { incantesimi: ['Piattaforma Levitante'], caratteristiche: { SAG: 2 } };
   const err = validaCorrezione(p, 2, voce, dati);
-  assert.ok(!err.some((e) => /diventerebbe irregolare/.test(e.problema)), 'quote: niente più blocco sui livelli dopo');
+  const dopo = err.filter((e) => /il 3° livello diventerebbe irregolare/.test(e.problema));
+  assert.ok(dopo.length > 0 && dopo.every((e) => e.procedibile === true));
+  // con «procedi» quegli avvisi non fermano più; il resto degli errori non cambia
+  const forzata = validaCorrezione(p, 2, voce, dati, { procedi: true });
+  assert.ok(!forzata.some((e) => /diventerebbe irregolare/.test(e.problema)));
+  assert.deepEqual(forzata, err.filter((e) => !e.procedibile));
   // una correzione incompleta resta ferma anche con «procedi»: è un errore del livello stesso
   const incompleta = validaCorrezione(p, 2, { caratteristiche: { INT: 2 }, incantesimi: ['Piattaforma Levitante'] }, dati, { procedi: true });
   assert.ok(incompleta.some((e) => e.tipo === 'incompleto' && !e.procedibile));

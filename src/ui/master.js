@@ -1,7 +1,7 @@
 // «Modifica master» (12/10/2026): l'interfaccia della modalità master nella scheda di un PG. Le regole stanno in
 // src/correzioni-master.js (funzioni pure); qui la fascia in alto, il tocco su un valore con la sua finestrella, il
 // registro «Modifiche del master» della tab Identità e la finestrella del bonus di circostanza del Tavolo.
-// ctx.master (solo in modalità master, src/ui/app.js): { correggi, diretta, annulla, esci, togliCircostanza }.
+// ctx.master (solo in modalità master, src/ui/app.js): { correggi, diretta, annulla, esci, togliCircostanza, concediLivello, annullaUltimoLivello, scelteUltimoLivello }.
 import { h, segno } from './dom.js';
 import { apri } from './finestrella.js';
 
@@ -102,6 +102,8 @@ const quando = (iso) => { const d = new Date(iso); return Number.isNaN(d.getTime
  * @param righe registro(scelte.correzioniMaster) di src/correzioni-master.js
  */
 export function sezioneRegistro(ctx, righe) {
+  // A.187: le concessioni di livello le vede solo il Direttore
+  if (!ctx.master) righe = (righe ?? []).filter((x) => x.tipo !== 'concessione');
   if (!righe?.length && !ctx.master) return null;
   const attive = (righe ?? []).filter((x) => !x.annullata).length;
   return h('details', { class: 'sezione-tab registro-master', open: !!ctx.master || null },
@@ -168,4 +170,53 @@ export async function conMotivoMaster(ctx, { titolo, testo, conferma = 'Conferma
   if (!motivo) return;
   ctx.master.motivoProssima(motivo.motivo);
   fai();
+}
+
+/** Il motivo, obbligatorio: la finestrella non conferma a campo vuoto. @returns Promise<string | null> */
+function chiediMotivoObbligatorio({ titolo, testo, conferma }) {
+  return apri('finestrella-master', titolo, (fine) => {
+    const campo = h('input', { type: 'text', maxlength: 200, placeholder: 'es. recupero di una partita, deciso al tavolo…', 'aria-label': 'Motivo' });
+    const vai = h('button', { type: 'button', class: 'btn primario', disabled: true, onclick: () => fine(campo.value.trim()) }, conferma);
+    campo.addEventListener('input', () => { vai.disabled = !campo.value.trim(); });
+    return [
+      h('p', {}, testo),
+      h('label', { class: 'finestrella-campo' }, h('span', {}, 'Motivo (obbligatorio)'), campo),
+      h('div', { class: 'riga-azioni finestrella-azioni' }, h('button', { type: 'button', class: 'btn', onclick: () => fine(null) }, 'Annulla'), vai),
+    ];
+  });
+}
+
+/**
+ * A.187 (28/10/2026): lo spazio del Direttore sul passaggio di livello, solo in modalità master.
+ *  - «Concedi il passaggio al livello N»: quando i PX non bastano; chiede il motivo, lo scrive nel registro, i PX non cambiano;
+ *  - con un livello più dei PX: «Annulla l'ultimo livello» (prima mostra le scelte che si perdono) o «Tieni come concessione».
+ * @param ctx contesto della scheda (ctx.livelloPx, ctx.master, ctx.identita.livello) @returns elemento o null
+ */
+export function bloccoLivelloMaster(ctx, livello) {
+  if (!ctx.master || !ctx.livelloPx) return null;
+  const { permesso, oltre } = ctx.livelloPx;
+  const azioni = [];
+  if (oltre > 0 && livello > 1) {
+    azioni.push(h('button', { type: 'button', class: 'btn btn-piccolo', onclick: async () => {
+      const perse = ctx.master.scelteUltimoLivello();
+      const ok = await apri('finestrella-master', `Annullare il livello ${livello}?`, (fine) => [
+        h('p', {}, perse.length ? 'Si perdono queste scelte del livello:' : 'Il livello non ha scelte oltre al numero.'),
+        perse.length ? h('ul', {}, perse.map((x) => h('li', {}, x))) : null,
+        h('p', { class: 'nota' }, 'Il file di prima resta nelle copie del master (backup-master/) e la modifica va nel registro.'),
+        h('div', { class: 'riga-azioni finestrella-azioni' }, h('button', { type: 'button', class: 'btn', onclick: () => fine(false) }, 'Lascia com’è'),
+          h('button', { type: 'button', class: 'btn primario', onclick: () => fine(true) }, `Annulla il livello ${livello}`)),
+      ]);
+      if (ok) ctx.master.annullaUltimoLivello();
+    } }, 'Annulla l’ultimo livello'));
+    azioni.push(h('button', { type: 'button', class: 'btn btn-piccolo', onclick: async () => {
+      const motivo = await chiediMotivoObbligatorio({ titolo: 'Tieni come concessione', testo: `Il livello ${livello} resta: i PX non cambiano e il passaggio si registra come concesso dal Direttore.`, conferma: 'Tieni come concessione' });
+      if (motivo) ctx.master.concediLivello({ livello, motivo });
+    } }, 'Tieni come concessione'));
+  } else if (!permesso.ok && !permesso.concessione) {
+    azioni.push(h('button', { type: 'button', class: 'btn btn-piccolo', onclick: async () => {
+      const motivo = await chiediMotivoObbligatorio({ titolo: `Concedi il passaggio al livello ${permesso.prossimo}`, testo: 'Il giocatore potrà salire senza i PX richiesti. I PX non cambiano; il motivo va nel registro e il giocatore non lo vede.', conferma: `Concedi il livello ${permesso.prossimo}` });
+      if (motivo) ctx.master.concediLivello({ livello: permesso.prossimo, motivo });
+    } }, `Concedi il passaggio al livello ${permesso.prossimo}`));
+  }
+  return azioni.length ? h('div', { class: 'riga-azioni livello-master' }, h('small', { class: 'nota' }, 'Direttore:'), ...azioni) : null;
 }

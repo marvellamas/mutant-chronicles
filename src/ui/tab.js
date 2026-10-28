@@ -13,7 +13,7 @@ import { tabellaRecuperoPm, tabellaRecuperoPv } from './tabelle.js';
 import { incantesimiDaOggetti, incantesimoDiOggetto, attivazioneOggetto } from '../incantesimi-artefatti.js';
 import { pannelloMedita, pulsanteMedita } from './medita.js';
 import { aggiungiIncantesimoAMano, incantesimoPerId, cercaIncantesimi, togliIncantesimoAMano, avvisoLivelloAMano, origini, dataLeggibile, rigaRegistro as rigaRegistroAMano } from '../incantesimi-a-mano.js';
-import { fasciaMaster, toccoMaster, notaCorrezione, sezioneRegistro, conMotivoMaster } from './master.js';
+import { fasciaMaster, toccoMaster, notaCorrezione, sezioneRegistro, conMotivoMaster, bloccoLivelloMaster } from './master.js';
 import { apriTiro, sezioneTiri } from './tira-valore.js';
 import { circostanzeMasterAttive } from '../correzioni-master.js';
 import { conAvviso } from './procedi.js';
@@ -1247,7 +1247,11 @@ function tabIdentita(ctx, d) {
           onclick: () => { salvaImpostazioni({ ...leggiImpostazioni(), anagraficaEspansa: !espansa }); ctx.azioni.ridisegna(); },
         }, espansa ? 'Riduci' : 'Espandi')),
       // lotto 132: se il livello preso supera quello che danno i PX lo si dice sempre, anche con l’anagrafica chiusa, senza cambiare niente (A.187)
-      (() => { const f = fraseLivelloPx(confrontoLivelloPx(d.livello, d.puntiEsperienza, ctx.dati.px_partita)); return f ? h('p', { class: 'nota motivo livello-oltre-px', role: 'status' }, f) : null; })(),
+      // con una concessione del Direttore il livello in più non è più «in più» (A.187)
+      (() => { const f = ctx.livelloPx && ctx.livelloPx.oltre === 0 ? '' : fraseLivelloPx(confrontoLivelloPx(d.livello, d.puntiEsperienza, ctx.dati.px_partita)); return f ? h('p', { class: 'nota motivo livello-oltre-px', role: 'status' }, f) : null; })(),
+      // A.187: con il server si sale solo con i PX assegnati; il giocatore legge perché il pulsante è spento, il Direttore ha le sue scelte
+      (() => { const g = ctx.livelloPx?.permesso; return g && !g.ok && d.livello < ctx.dati.regole.avanzamento.livello_massimo ? h('p', { class: 'nota motivo livello-px-mancano', role: 'status' }, g.motivo) : null; })(),
+      bloccoLivelloMaster(ctx, d.livello),
       espansa ? null : h('p', { class: 'anagrafica-riga', title: riga }, riga),
       espansa ? h('div', { id: 'anagrafica-dettaglio' },
       ctx.scelte.ritratto ? h('img', { class: 'ritratto-identita', src: ctx.scelte.ritratto, alt: `Ritratto di ${d.nome}` }) : null,
@@ -2683,13 +2687,20 @@ function sezioneIncantesimiAMano(ctx) {
   const avvisoScelto = scelto ? avvisoLivelloAMano(scelto, contesto) : null;
   const attuali = ctx.scelte.incantesimiAMano ?? [];
   const sost = u.sostituisce;
+  // A.188: la sostituzione di un incantesimo di un livello segue le regole (quote, famiglie, livello massimo); il Direttore può forzare
+  const verifica = sost && scelto ? ctx.azioni.provaSostituzioneIncantesimo?.(sost.livello, sost.nome, scelto.nome) ?? null : null;
+  const fuoriRegole = !!verifica && !verifica.ok && !verifica.duplicato;
+  const sostituisci = (forza) => {
+    const prima = { ...u };
+    Object.assign(u, { cerca: '', id: null, nota: '', errore: null, sostituisce: null, esito: `Sostituito: ${sost.nome} con ${scelto.nome}${forza ? ' (forzato)' : ''}` });
+    if (!ctx.azioni.sostituisciIncantesimoLivello(sost.livello, sost.nome, scelto.nome, { forza })) { Object.assign(u, prima, { errore: `${scelto.nome} è già fra gli incantesimi del personaggio.` }); ctx.azioni.ridisegna(); }
+  };
   const aggiungi = () => {
     if (!scelto) { u.errore = 'Prima cerca e tocca l’incantesimo che vuoi.'; ctx.azioni.ridisegna(); return; }
     if (sost) {
-      const prima = { ...u };
-      Object.assign(u, { cerca: '', id: null, nota: '', errore: null, sostituisce: null, esito: `Sostituito: ${sost.nome} con ${scelto.nome}` });
-      if (!ctx.azioni.sostituisciIncantesimoLivello(sost.livello, sost.nome, scelto.nome)) { Object.assign(u, prima, { errore: `${scelto.nome} è già fra gli incantesimi del personaggio.` }); ctx.azioni.ridisegna(); }
-      return;
+      if (!fuoriRegole) return sostituisci(false);
+      if (!ctx.master) { u.errore = `Le regole non ammettono questa sostituzione: ${verifica.motivo}. La può forzare il Direttore.`; ctx.azioni.ridisegna(); return; }
+      return conMotivoMaster(ctx, { titolo: `Forzare la sostituzione di ${sost.nome}?`, testo: `Le regole non la ammettono: ${verifica.motivo}. L’app avvisa e non blocca: se la vuoi lo stesso, resta nel registro del master e nello storico come forzata.`, conferma: 'Forza la sostituzione' }, () => sostituisci(true));
     }
     const nuova = aggiungiIncantesimoAMano(attuali, scelto.id, { origine: u.origine, nota: u.nota }, ctx.dati);
     if (!nuova) { u.errore = `${scelto.nome} è già fra quelli aggiunti a mano.`; ctx.azioni.ridisegna(); return; }
@@ -2729,10 +2740,11 @@ function sezioneIncantesimiAMano(ctx) {
       }, o.nome))),
       sost ? null : h('label', { class: 'campo' }, h('span', {}, 'Nota (facoltativa)'),
         h('input', { type: 'text', maxlength: 160, value: u.nota, placeholder: 'es. insegnato dal maestro Oshi', oninput: (e) => { u.nota = e.target.value; } })),
-      avvisoScelto ? h('p', { class: 'nota motivo' }, `Avviso: ${avvisoScelto}`) : null,
+      fuoriRegole ? h('p', { class: 'nota motivo', role: 'status' }, `Non ammessa dalle regole: ${verifica.motivo}.${ctx.master ? ' Come Direttore puoi forzarla.' : ''}`) : null,
+      !sost && avvisoScelto ? h('p', { class: 'nota motivo' }, `Avviso: ${avvisoScelto}`) : null,
       u.errore ? h('p', { class: 'nota motivo', role: 'alert' }, u.errore) : null,
-      h('button', { type: 'button', class: `btn primario${avvisoScelto ? ' con-avviso' : ''}`, onclick: aggiungi, disabled: !scelto, title: avvisoScelto ?? (scelto ? `Aggiunge ${scelto.nome}` : 'Prima scegli un incantesimo') },
-        scelto ? `${sost ? 'Sostituisci con' : avvisoScelto ? 'Aggiungi comunque' : 'Aggiungi'} ${scelto.nome}` : 'Aggiungi'))));
+      h('button', { type: 'button', class: `btn primario${avvisoScelto || fuoriRegole ? ' con-avviso' : ''}`, onclick: aggiungi, disabled: !scelto || (fuoriRegole && !ctx.master), title: fuoriRegole ? verifica.motivo : avvisoScelto ?? (scelto ? `Aggiunge ${scelto.nome}` : 'Prima scegli un incantesimo') },
+        scelto ? `${sost ? (fuoriRegole ? (ctx.master ? 'Forza la sostituzione con' : 'Non ammessa:') : 'Sostituisci con') : avvisoScelto ? 'Aggiungi comunque' : 'Aggiungi'} ${scelto.nome}` : 'Aggiungi'))));
 }
 
 /**

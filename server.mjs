@@ -130,6 +130,7 @@
 // Nessuna cancellazione dal server: i file vecchi si tolgono a mano dalla cartella.
 import { proteggiBlocchiMaster } from './src/correzioni-master.js';
 import { controllaTalentiDaTablet } from './src/talenti-tablet.js';
+import { controllaLivelloDaTablet } from './src/livello-px.js';
 import { createServer } from 'node:http';
 import { readFileSync, createReadStream } from 'node:fs';
 import { readFile, writeFile, readdir, stat, mkdir, rename, copyFile, unlink, constants } from 'node:fs/promises';
@@ -1634,6 +1635,16 @@ async function copiaStoricaPx(px, dove) {
   for (const vecchio of elenco.slice(0, Math.max(0, elenco.length + 1 - COPIE_PX))) await unlink(join(cartella, vecchio)).catch(() => {});
 }
 
+/** L'Atto corrente della campagna (impostazioni dei PX del Direttore); se manca, quello di partenza (A.187). */
+async function attoCorrente(px, p) {
+  try {
+    const d = JSON.parse(await readFile(join(px, FILE_PX), 'utf8'));
+    const atto = d?.impostazioni?.atto;
+    if (p.atti.some((a) => a.nome === atto)) return atto;
+  } catch { /* nessun file dei PX: Atto di partenza */ }
+  return p.campagna.atto_default;
+}
+
 async function apiPx(req, res, px, master) {
   if (!master) return json(res, 403, { errore: 'I PX della partita li gestisce solo il PC del master.' });
   const dove = join(px, FILE_PX);
@@ -1899,6 +1910,11 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
         const { dati } = await datiDelServer(radice);
         const t = controllaTalentiDaTablet(o, disco, dati);
         if (!t.ok) return json(res, t.stato, { errore: t.errore, talenti: true });
+        // A.187 (28/10/2026): un livello in più si registra solo se i PX assegnati dal Direttore lo permettono (o se il
+        // Direttore l'ha concesso); il blocco sta qui, non solo nel pulsante della scheda
+        const atto = await attoCorrente(px, dati.px_partita);
+        const l = controllaLivelloDaTablet(o, disco, { atto, p: dati.px_partita });
+        if (!l.ok) return json(res, l.stato, { errore: l.errore, livelloPx: true });
       }
       await mkdir(cartella, { recursive: true });
       // «Modifica master» (12/10): un salvataggio che non arriva dal PC del master (il tablet di un giocatore) non cambia
@@ -2025,7 +2041,10 @@ export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA),
         // 20/10: l'app deve dire su quale installazione sta girando (src/copia-di-lavoro.js). Il marcatore si legge a
         // ogni ping: metterlo o toglierlo ha effetto ricaricando la pagina, senza riavviare il server.
         const c = leggiMarcatore(radice, cartella);
-        return json(res, 200, { ok: true, app: 'mutant', cartella: CARTELLA, ...identita, master: req.mutantMaster, ...(c.copiaDiLavoro ? { copiaDiLavoro: true, notaCopia: c.nota, ...(c.nomePc ? { nomePc: c.nomePc } : {}) } : {}) });
+        // A.187: l'Atto corrente (il limite di livello dei PX) lo conosce anche la scheda del giocatore, che non legge i PX
+        let atto = null;
+        try { atto = await attoCorrente(px, (await datiDelServer(base)).dati.px_partita); } catch { /* i dati non si leggono: la scheda usa l'Atto di partenza */ }
+        return json(res, 200, { ok: true, app: 'mutant', cartella: CARTELLA, ...identita, master: req.mutantMaster, ...(atto ? { atto } : {}), ...(c.copiaDiLavoro ? { copiaDiLavoro: true, notaCopia: c.nota, ...(c.nomePc ? { nomePc: c.nomePc } : {}) } : {}) });
       }
       // Cartella dei personaggi vuota all'avvio (12/10/2026): il Tavolo lo dice al master, con il percorso in uso
       if (percorso === '/api/avvio') return json(res, 200, avvio ? avvio() : { vuota: false, percorso: cartella, salvataggi: [], testo: '' });

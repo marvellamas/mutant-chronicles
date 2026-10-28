@@ -24,7 +24,7 @@ export function controllaTalentiDaTablet(nuovo, disco, dati) {
   }
   if (regime(disco) !== 2) {
     if (regime(nuovo) === 2) return { ok: false, stato: 403, errore: 'Il passaggio ai Talenti nuovi lo fa il Direttore.' };
-    return { ok: true };
+    return controllaIncantesimiDaTablet(nuovo, disco, dati);
   }
   if (chiusi(nuovo) !== chiusi(disco)) return { ok: false, stato: 403, errore: 'Chiudere o riaprire la scelta dei Talenti lo fa il Direttore.' };
   let prima;
@@ -47,17 +47,30 @@ export function controllaTalentiDaTablet(nuovo, disco, dati) {
       return { ok: false, stato: 403, errore: `${motivo}. Una scelta non ammessa la può fare solo il Direttore.` };
     }
   }
-  // 25/10 sera: le scelte aperte da un Talento (Incantesimi, Tecniche Interiori) cambiate da un tablet devono essere ammesse
-  // dalle regole del loro livello (controllaIncantesimi, controllaTecniche); le forzature le fa solo il Direttore
+  return controllaIncantesimiDaTablet(nuovo, disco, dati);
+}
+
+/**
+ * Incantesimi, Tecniche Interiori e Scuola Mishima scelti ai livelli: devono essere ammessi dalle regole del loro livello
+ * (controllaIncantesimi, controllaTecniche). Per gli incantesimi vale di nuovo il blocco anche per il giocatore
+ * (A.188, 28/10/2026): quote, famiglie accessibili, livello massimo; le forzature le fa solo il Direttore. Si rifiuta solo
+ * ciò che il tablet aggiunge di nuovo: una violazione che il file sul disco aveva già (un personaggio di prima della
+ * regola) non ferma una sostituzione che lascia le cose come stanno.
+ */
+export function controllaIncantesimiDaTablet(nuovo, disco, dati) {
+  if (!disco) return { ok: true };
   const campi = ['incantesimi', 'tecniche', 'scuolaMishima'];
   const livelliNuovi = Array.isArray(nuovo?.livelli) ? nuovo.livelli : [];
   const livelliDisco = Array.isArray(disco?.livelli) ? disco.livelli : [];
   const cambiati = livelliNuovi.flatMap((v, i) => campi.filter((c) => JSON.stringify(v?.[c] ?? null) !== JSON.stringify(livelliDisco[i]?.[c] ?? null)).map((c) => `livelli[${i}].${c}`));
-  if (cambiati.length) {
-    let errori = [];
-    try { errori = erroriScelteSuccessive(personaggio(nuovo), dati); } catch { return { ok: true }; }
-    const e = errori.find((x) => x.tipo === 'violazione' && cambiati.includes(x.campo));
-    if (e) return { ok: false, stato: 403, errore: `${e.problema}. Una scelta non ammessa la può fare solo il Direttore.` };
-  }
+  if (!cambiati.length) return { ok: true };
+  let errori = [];
+  let giaSuDisco = [];
+  try {
+    errori = erroriScelteSuccessive(personaggio(nuovo), dati);
+    giaSuDisco = erroriScelteSuccessive(personaggio(disco), dati).filter((x) => x.tipo === 'violazione').map((x) => `${x.campo}|${x.problema}`);
+  } catch { return { ok: true }; }
+  const e = errori.find((x) => x.tipo === 'violazione' && cambiati.includes(x.campo) && !(x.campo.endsWith('.incantesimi') && giaSuDisco.includes(`${x.campo}|${x.problema}`)));
+  if (e) return { ok: false, stato: 403, errore: `${e.problema}. Una scelta non ammessa la può fare solo il Direttore.` };
   return { ok: true };
 }

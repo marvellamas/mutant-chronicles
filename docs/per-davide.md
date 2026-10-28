@@ -1898,6 +1898,26 @@ Per Usufruitore di Magia e Ritualista, gli ampliamenti dell’elenco diventano d
 
 > > ---
 
+#### A.187 — Passaggio di livello vincolato ai PX e autorizzazione del Direttore
+
+Approvazione di Davide con precisazione vincolante: 28 ottobre 2026\.
+
+I giocatori non possono aumentare autonomamente il livello prima di aver maturato i PX necessari. Il pulsante «Sali di livello» / «Aumenta di livello» si abilita per il giocatore soltanto quando i PX effettivamente assegnati dal Direttore raggiungono la soglia cumulativa del livello successivo, nel rispetto degli altri limiti applicabili, compresi quelli dell’Atto. Un totale soltanto suggerito o non ancora assegnato non abilita il passaggio. Esempio: 600 PX non consentono il passaggio dal 6° al 7°; occorrono almeno 720 PX secondo la tabella approvata.
+
+Con PX insufficienti il pulsante resta bloccato; il divieto deve essere effettivo anche per le operazioni provenienti da tablet, salvataggi o richieste inviate al server, non soltanto un avviso grafico. I PX rimangono modificabili esclusivamente dal Direttore.
+
+Un passaggio di livello prematuro può essere deciso e autorizzato soltanto dal Direttore, mediante una propria funzione riservata, con registrazione della concessione. L’eccezione non deve essere disponibile al giocatore e non comporta un aumento automatico dei PX per giustificare il livello.
+
+Per discrepanze già esistenti fra livello e PX, l’app segnala il problema e lascia la decisione al Direttore, senza modificare automaticamente livello o PX. Se il livello è stato assegnato anticipatamente per errore, il Direttore può usare «Annulla l’ultimo livello», dopo aver verificato le scelte da rimuovere. Se è una concessione intenzionale può mantenerlo registrandone il motivo. I PX si correggono soltanto se il loro totale era effettivamente sbagliato.
+
+#### A.188 — Modifica autonoma degli incantesimi conservati dopo la conversione
+
+Approvazione di Davide: 28 ottobre 2026\.
+
+Confermata la libertà concessa al tavolo: il giocatore può cambiare autonomamente anche gli incantesimi conservati dopo la conversione, senza approvazione preventiva del Direttore. Restano applicabili quote, famiglie accessibili, livello massimo e requisiti. Le sostituzioni devono essere registrate nello storico, così da poter ricostruire eventuali errori.
+
+Questa disposizione sostituisce il requisito di approvazione della A.184 per gli incantesimi. Per cambiare le Tecniche Interiori conservate resta la procedura già approvata, finché non viene espressamente estesa anche a loro questa libertà.
+
 > > ## **8\. Prove da fare**
 
 Le prove in sospeso. Quelle che puoi fare tu dal PC del Direttore, nessuna lunga più di qualche minuto. Per tutte: prima **Mutant.bat → 2 «Aggiorna»**, poi **1 «Avvia»**.

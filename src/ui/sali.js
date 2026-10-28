@@ -53,7 +53,8 @@ export function renderSali(ctx) {
   const corr = ctx.correzione ?? null;
   // N2: con «Procedi comunque» (ctx.procedi) punti in eccesso e riassegnazioni in sospeso non fermano la salita
   const errori = corr ? corr.valida(voce) : validaLivello(personaggio, voce, dati, { procedi: !!ctx.procedi });
-  const bloccanti = errori.filter((e) => !e.procedibile);
+  // A.188: un incantesimo fuori dalle regole lo può forzare solo il Direttore (ctx.master); per gli altri blocca
+  const bloccanti = errori.filter((e) => !e.procedibile && !(ctx.master && e.campo === 'incantesimi' && e.tipo === 'violazione'));
   const c = {
     ...ctx, struttura, errori,
     prossimo: prossimoLivello(personaggio, dati),
@@ -364,10 +365,10 @@ function passoIncantesimi(c) {
   const conto = contoDaScheda(q);
   const catalogo = dati.incantesimi.incantesimi;
   const cambia = (nome, aggiungi) => c.aggiornaVoce({ incantesimi: aggiungi ? [...nuovi, nome] : nuovi.filter((n) => n !== nome) });
-  // 27/10 (lotto 131): il conto è quello unico di src/quote-incantesimi.js; quote e livello massimo sono un avviso,
-  // mai un blocco, e nessun incantesimo si nasconde
+  // A.188 (28/10): il conto è quello unico di src/quote-incantesimi.js; quote, famiglie e livello massimo valgono di nuovo:
+  // l'incantesimo fuori regola è in grigio con il motivo, e lo può forzare solo il Direttore
   return [
-    h('p', { class: 'guida' }, `Quote di Classe per macrofamiglia (qualunque specializzazione) più ${q.quote.liberi} incantesimi liberi di qualunque famiglia (comprese quelle dei Talenti). Livello massimo degli incantesimi conosciuti: ${q.livelloMassimo}. Quote e livello sono un avviso: puoi scegliere comunque.`),
+    h('p', { class: 'guida' }, `Quote di Classe per macrofamiglia (qualunque specializzazione) più ${q.quote.liberi} incantesimi liberi di qualunque famiglia (comprese quelle dei Talenti). Livello massimo degli incantesimi conosciuti: ${q.livelloMassimo}. Quelli fuori dalle quote, dalle famiglie o dal livello massimo sono in grigio con il motivo${c.master ? ' (come Direttore puoi forzarli)' : ''}.`),
     h('div', { class: 'contatori' },
       h('p', { class: `contatore ${conto.residuo === 0 ? 'ok' : 'attenzione'}` }, h('strong', {}, `${conto.imparati} / ${conto.totale}`), ' incantesimi conosciuti'),
       Object.entries(conto.perMacro).map(([m, x]) => h('p', { class: 'contatore piccolo' }, h('strong', {}, m), `: ${x.scelti} conosciuti, quota di Classe ${x.quota}`)),
@@ -379,11 +380,11 @@ function passoIncantesimi(c) {
         catalogo.filter((i) => i.macrofamiglia === m.nome && i.specializzazione === sp).map((i) => {
           const giaNoto = noti.has(i.nome);
           const preso = giaNoto || nuovi.includes(i.nome);
-          const avviso = preso ? null : avvisoIncantesimo(i, conto);
-          return h('label', { class: `incantesimo ${classeMacrofamiglia(m.nome)}${avviso ? ' avviso' : ''}` },
-            h('input', { type: 'checkbox', checked: preso, disabled: giaNoto, onchange: (e) => cambia(i.nome, e.target.checked) }),
+          const motivo = preso ? null : avvisoIncantesimo(i, conto);
+          return h('label', { class: `incantesimo ${classeMacrofamiglia(m.nome)}${motivo ? ' bloccato' : ''}` },
+            h('input', { type: 'checkbox', checked: preso, disabled: giaNoto || (!!motivo && !c.master), onchange: (e) => cambia(i.nome, e.target.checked) }),
             h('span', {}, h('strong', {}, info('incantesimo', i.nome)), ' ', pallini(i.livello_base), ' ', etichettaMacro(m.nome), h('small', {}, ` liv. base ${i.livello_base}${giaNoto ? ' · già conosciuto' : ''}`),
-              avviso ? h('small', { class: 'motivo' }, ` Avviso: ${avviso}.`) : null));
+              motivo ? h('small', { class: 'motivo' }, ` ${motivo}.`) : null));
         }))))),
   ];
 }

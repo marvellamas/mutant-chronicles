@@ -16,6 +16,7 @@
 //   tipo 'diretta'   → valore già «a mano» (Crediti, Punti Eroe, Ferite, quantità…) cambiato dal master: prima → dopo
 //   tipo 'scelta'    → scelte del personaggio cambiate (creazione o un livello): `copia` è il file salvato prima
 //   tipo 'gratis'    → oggetto dato dal DdG in «Compra», senza scalare i crediti
+//   tipo 'concessione' → passaggio di livello anticipato concesso dal DdG (A.187, src/livello-px.js): i PX non cambiano
 //   tipo 'circostanza' → bonus o malus di circostanza mandato dal Tavolo
 // Tutte funzioni pure: l'interfaccia è in src/ui/master.js, src/ui/tab.js e src/ui/tavolo.js.
 
@@ -23,7 +24,7 @@ const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v
 const segno = (n) => (n > 0 ? `+${n}` : n < 0 ? `−${-n}` : '0');
 
 export const TIPI_CALCOLO = ['aggiungi', 'imposta'];
-export const TIPI = [...TIPI_CALCOLO, 'diretta', 'scelta', 'gratis', 'circostanza'];
+export const TIPI = [...TIPI_CALCOLO, 'diretta', 'scelta', 'gratis', 'circostanza', 'concessione'];
 export const FONTE = 'Correzione del master';
 
 /** L'elenco pulito: solo righe ben formate, nell'ordine in cui sono state fatte. */

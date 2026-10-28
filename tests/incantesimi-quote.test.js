@@ -1,5 +1,6 @@
-// Lotto 131 (27/10/2026): il conto degli incantesimi è uno solo (src/quote-incantesimi.js), le quote sono un avviso e
-// gli incantesimi presi con un Talento stanno nell'elenco della tab Poteri, con la loro origine, «Togli» e «Sostituisci».
+// Lotto 131 (27/10/2026): il conto degli incantesimi è uno solo (src/quote-incantesimi.js) e gli incantesimi presi con un
+// Talento stanno nell'elenco della tab Poteri, con la loro origine, «Togli» e «Sostituisci». Dal 28/10 (A.188) quote, famiglie
+// e livello massimo valgono di nuovo per il giocatore: l'opzione fuori regola è in grigio con il motivo (tests/incantesimi-a188.test.js).
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
@@ -20,7 +21,7 @@ const al7 = () => {
   return { versione: 2, creazione: d.scelte, livelli: [...d.livelli, { livello: 7, talentoLibero: { id: 'incrementare-incantesimi' } }] };
 };
 
-test('C: Dimitri al 7° livello con Incrementare Incantesimi: la quota somma i 2 del Talento, restano 2 da scegliere e nessuna opzione è in grigio', () => {
+test('C: Dimitri al 7° livello con Incrementare Incantesimi: la quota somma i 2 del Talento, restano 2 da scegliere; le opzioni fuori regola sono in grigio con il motivo', () => {
   const prima = contoDaScheda(calcolaScheda({ versione: 2, creazione: dimitri().scelte, livelli: dimitri().livelli }, dati).incantesimi);
   const p = al7();
   const conto = contoDaScheda(calcolaScheda(p, dati).incantesimi);
@@ -30,16 +31,13 @@ test('C: Dimitri al 7° livello con Incrementare Incantesimi: la quota somma i 2
   const s = scelteSuccessive(p, dati).find((x) => x.tipo === 'incantesimi' && x.livello === 7);
   assert.equal(s.quanti, 2);
   assert.ok(s.opzioni.length > 20);
-  assert.ok(s.opzioni.every((o) => o.ammesso && o.motivo === null), 'mai in grigio');
-  assert.ok(s.opzioni.filter((o) => !o.avviso).length > 20, 'e quelli che rientrano non hanno nemmeno l’avviso');
+  assert.ok(s.opzioni.filter((o) => !o.ammesso).every((o) => typeof o.motivo === 'string' && o.motivo), 'in grigio sempre con il motivo');
+  assert.ok(s.opzioni.filter((o) => !o.ammesso).some((o) => /oltre il livello massimo/.test(o.motivo)), 'il livello massimo torna un blocco');
+  assert.ok(s.opzioni.filter((o) => o.ammesso).length > 5, 'quelli che rientrano si possono scegliere');
   // scelti i due, il conto torna pari
-  const due = s.opzioni.filter((o) => !o.avviso).slice(0, 2).reduce((q, o) => applicaSceltaSuccessiva(q, s, o.id), p);
+  const due = s.opzioni.filter((o) => o.ammesso).slice(0, 2).reduce((q, o) => applicaSceltaSuccessiva(q, s, o.id), p);
   const dopo = contoDaScheda(calcolaScheda(due, dati).incantesimi);
   assert.deepEqual([dopo.imparati, dopo.residuo], [conto.imparati + 2, 0]);
-  // un terzo: oltre la quota, ma si può (avviso, mai blocco)
-  const tre = applicaSceltaSuccessiva(due, s, s.opzioni.filter((o) => !o.avviso)[2].id);
-  const oltre = contoDaScheda(calcolaScheda(tre, dati).incantesimi);
-  assert.equal(oltre.residuo, -1);
 });
 
 test('C: gli incantesimi degli artefatti e quelli aggiunti a mano non occupano posti', () => {
@@ -57,7 +55,7 @@ test('C: un solo conto — il passo della creazione e la scheda dicono lo stesso
   assert.deepEqual([st.totale, st.liberiUsati], [conto.totale, conto.liberiUsati]);
 });
 
-test('C: l’avviso è un testo, mai un blocco: livello oltre il massimo, quota esaurita, nessun accesso', () => {
+test('C: il motivo è un testo chiaro: livello oltre il massimo, quota esaurita, nessun accesso', () => {
   const i = dati.incantesimi.incantesimi.find((x) => x.livello_base === 4) ?? dati.incantesimi.incantesimi.find((x) => x.livello_base > 3);
   const conto = { livelloMassimo: 3, accesso: true, perMacro: { [i.macrofamiglia]: { quota: 1, scelti: 1 } }, liberi: 2, liberiUsati: 2 };
   assert.match(avvisoIncantesimo(i, conto), /livello base [0-9]+ oltre il livello massimo 3/);
@@ -112,7 +110,7 @@ test('D: «Sostituisci» apre la scelta e sostituisce nella voce di quel livello
   const conferma = r.radice.tutti().find((n) => n.tagName === 'BUTTON' && /^Sostituisci con Barriera Mentale$/.test(n.textContent));
   assert.ok(conferma, 'il pulsante dice che cosa farà');
   clic(conferma);
-  assert.deepEqual(c.chiamate.find(([a]) => a === 'sostituisciIncantesimoLivello'), ['sostituisciIncantesimoLivello', 3, 'Terrore', 'Barriera Mentale']);
+  assert.deepEqual(c.chiamate.find(([a]) => a === 'sostituisciIncantesimoLivello'), ['sostituisciIncantesimoLivello', 3, 'Terrore', 'Barriera Mentale', { forza: false }]);
   assert.equal(c.ui.incantesimoAMano.sostituisce, null);
   assert.equal(c.ui.incantesimoAMano.esito, 'Sostituito: Terrore con Barriera Mentale');
 });

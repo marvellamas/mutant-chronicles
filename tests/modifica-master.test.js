@@ -472,7 +472,8 @@ test('server: il tablet con dati vecchi non sovrascrive la modifica del master, 
   const pgId = 'pg-0123456789abcdef01234567';
   // il tablet ha letto il file com'era
   const vecchio = serializza(p.creazione, { livelli: p.livelli, sessione: p.sessione, pg: pgId });
-  const primo = await (await metti(baseTablet, vecchio)).json();
+  // (A.187: il file di partenza lo scrive il PC del Direttore; un tablet non registra livelli senza PX)
+  const primo = await (await metti(base, vecchio)).json();
   // il master dà +10 PV
   const conMaster = serializza(con(p, piuDieciPv()).creazione, { livelli: p.livelli, sessione: p.sessione, pg: pgId });
   const delMaster = await metti(base, conMaster, primo.mtime);

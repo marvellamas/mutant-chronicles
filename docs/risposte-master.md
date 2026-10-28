@@ -2155,3 +2155,24 @@ Il Doc «per-davide.md» (modificato il 25/10 alle 22:32 UTC) contiene le rispos
 Risposta di Davide del 23/10 (sezione 7 del Doc «per-davide.md»). Manuali e risposte invariati dal controllo del 28/10 pomeriggio. Dettaglio in `docs/ricarica-medita-a174-2026-10-28.md`.
 
 - **A.174 — RISOLTA.** Il comando unico «Ricarica e medita» rispetta l'ordine dei due passaggi: **prima** la ricarica del cristallo con i PM che il personaggio ha adesso (rapporto dei Talenti: 3:1, 2:1 con Ricarica Efficiente o Conversione Migliorata, 1:1 con entrambi, Bianco sempre 2:1; entro la capacità; 1 AzP, contatto, sintonizzazione, Addestramento Taumaturgo e Prova di Potere dal secondo gruppo, come la ricarica fatta da sola), **poi** la Meditazione con il suo esito (completata, o interrotta con le sole ore complete). Un'interruzione non annulla la ricarica. Chiedere più gruppi di quanti ne paghino i PM di adesso non si può: l'app si ferma a quelli possibili e lo dice. Riepilogo in una riga: «Spesi 9 PM → cristallo +3 cariche · Meditazione: recuperati 6 PM». «Medita» senza cristallo resta com'era. **Prima del 28/10** la strada breve convertiva dai PM attuali **più** quelli che la Meditazione avrebbe recuperato, cioè spendeva in anticipo PM non ancora recuperati: è ciò che la A.174 esclude.
+
+## 28 ottobre 2026, sera — A.187 e A.188 applicate
+
+Risposte di Davide del 28/10 (sezione 7 del Doc «per-davide.md»). Manuali e risposte invariati dal controllo del 28/10.
+Dettaglio in `docs/diagnosi-a187-a188-2026-10-28.md`.
+
+- **A.187 — RISOLTA** *(approvazione di Davide con precisazione vincolante, 28/10/2026)*. Si sale di livello solo con i PX: «Sali di
+  livello» si abilita per il giocatore solo quando i PX **assegnati dal Direttore** raggiungono la soglia cumulativa del livello
+  successivo (A.170) e l'Atto lo consente; un totale soltanto suggerito o non assegnato non abilita il passaggio (600 PX al 6° livello:
+  non si va al 7°, ne servono 720). Il blocco vale anche sul server (richiesta da tablet, salvataggio, scrittura diretta). Il Direttore ha
+  in «Modifica master» il passaggio anticipato: motivo obbligatorio, scritto nel registro del personaggio, i PX non cambiano, il
+  giocatore non lo vede. Per i casi con un livello in più dei PX: segnalazione come prima, nulla toccato; per il Direttore «Annulla
+  l'ultimo livello» (dopo aver mostrato le scelte che si perderebbero) o «Tieni come concessione» (con motivo). I PX si correggono solo se
+  il totale era davvero sbagliato. App: `src/livello-px.js`, `server.mjs`, `src/ui/master.js`.
+- **A.188 — RISOLTA** *(approvazione di Davide, 28/10/2026)*. Il giocatore cambia da sé anche gli incantesimi conservati, **ma quote,
+  famiglie accessibili, livello massimo e requisiti restano applicabili**; le sostituzioni si registrano nello storico (data, ora,
+  provenienza). Sostituisce il requisito di approvazione della A.184 per gli incantesimi; per le Tecniche Interiori conservate resta la
+  procedura già approvata. **Riporta i blocchi dei lotti 130 e 131 a come erano il 25/10** (opzioni in grigio con il motivo, il Direttore
+  forza con conferma e registrazione, il server rifiuta da un tablet un incantesimo fuori regola). Gli incantesimi aggiunti a mano e
+  quelli degli artefatti restano fuori dalle quote; A.176 non è toccata. App: `src/incantesimi-regole.js`,
+  `src/avanzamento.js`, `src/talenti-tablet.js`, `src/ui/tab.js`, `src/ui/sali.js`.

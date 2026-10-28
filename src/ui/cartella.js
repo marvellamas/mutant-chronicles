@@ -18,6 +18,10 @@ export const pingMasterQui = () => pingMaster;
  * server.mjs risponde con l'intestazione X-Mutant-Server (così senza server nessuna richiesta fallisce e la
  * console resta pulita); poi /api/ping. Un secondo di attesa al massimo per ciascuna.
  */
+/** L'Atto corrente della campagna, come lo dice il server nel ping (A.187); null senza server. */
+let attoServer = null;
+export const attoCampagna = () => attoServer;
+
 export async function serverCartella() {
   if (disponibile !== null) return disponibile;
   try {
@@ -30,6 +34,7 @@ export async function serverCartella() {
     const j = r.ok ? await r.json() : null;
     disponibile = j?.ok === true && j.app === 'mutant';
     pingMaster = disponibile ? j.master : undefined;
+    attoServer = disponibile && typeof j.atto === 'string' ? j.atto : null;
     master = disponibile && j.master === true;
   } catch {
     disponibile = false;

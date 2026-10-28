@@ -221,8 +221,7 @@ test('25/10 sera: Incrementare Incantesimi apre i 2 incantesimi come passo segue
   assert.match(testo(b.el), /Da Incrementare Incantesimi: ne restano 2. Livello massimo degli incantesimi: 3/);
   assert.match(testo(b.el), /2 Incantesimi/, 'il conto in testa');
   const noti = new Set(b.p.livelli.flatMap((v) => v.incantesimi ?? []));
-  const ammessi = b.el.querySelectorAll('.opzione-talento').filter((x) => !x.className.includes('bloccato') && x.parentNode?.parentNode?.tagName !== 'DETAILS' && !/Avviso:/.test(testo(x)));
-  assert.ok(b.el.querySelectorAll('.opzione-talento').some((x) => /Avviso: livello base [0-9]+ oltre il livello massimo 3/.test(testo(x))), 'oltre il livello massimo: un avviso, non più un blocco');
+  const ammessi = b.el.querySelectorAll('.opzione-talento').filter((x) => !x.className.includes('bloccato') && x.parentNode?.parentNode?.tagName !== 'DETAILS');
   assert.ok(ammessi.length > 10);
   for (const o of ammessi) {
     const nome = tutti(o).find((x) => x.tagName === 'STRONG').textContent;
@@ -238,7 +237,7 @@ test('25/10 sera: Incrementare Incantesimi apre i 2 incantesimi come passo segue
   clic(pulsante(b.el, 'Scegli'));
   clic(tutti(b.el).find((x) => x.tagName === 'BUTTON' && /^3° Incantesimi: 2 da scegliere/.test(x.textContent)));
   for (let k = 0; k < 2; k++) {
-    const primo = b.el.querySelectorAll('.opzione-talento').find((x) => !x.className.includes('bloccato') && !/Avviso:/.test(testo(x)));
+    const primo = b.el.querySelectorAll('.opzione-talento').find((x) => !x.className.includes('bloccato'));
     clic(tutti(primo).find((x) => x.tagName === 'BUTTON' && x.textContent === 'Scegli'));
   }
   assert.equal(scelteSuccessive(b.p, dati).length, 0, 'scelti tutti e due');
@@ -272,5 +271,5 @@ test('25/10 sera: app.js mette le scelte successive nel riquadro e toglie dagli 
   assert.ok(a.includes('successive = scelteSuccessive(personaggio(), stato.dati)'));
   assert.match(a, /scegliSuccessiva: \(s, id[\s\S]*if \(talentiBloccati\(\)\)[\s\S]*applicaSceltaSuccessiva[\s\S]*persisti\(\)/);
   assert.match(a, /const eSceltaSuccessivaVuota = /);
-  assert.ok(a.includes('tab.errori.filter((e) => !eSceltaTalento(e) && !eSceltaSuccessivaVuota(e))'));
+  assert.ok(a.includes('tab.errori.filter((e) => !eSceltaTalento(e) && !eSceltaSuccessivaVuota(e) && !eIncantesimoFuoriRegola(e))'));
 });

@@ -19,7 +19,9 @@ import { h, svuota, scaricaFile } from './dom.js';
 import * as archivio from './storage.js';
 import { elencoVeicoli, migraNelRegistro } from './veicoli-registro.js';
 import { eRiferimento } from '../veicoli-registro.js';
-import { serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, contestoMasterQui, pingMasterQui, salvaBackupMaster, leggiBackupMaster } from './cartella.js';
+import { provaSostituzione, rigaIncantesimi, sorgenteModifica } from '../incantesimi-regole.js';
+import { permessoSalita, sfasamento, scelteDelLivello, TIPO_CONCESSIONE, CHIAVE_CONCESSIONE } from '../livello-px.js';
+import { attoCampagna, serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, contestoMasterQui, pingMasterQui, salvaBackupMaster, leggiBackupMaster } from './cartella.js';
 import { modalitaMaster, mostraMarchio, statoContestoMaster, registro as registroMaster, nuovaCorrezione, aggiungiCorrezione, annullaCorrezione, avvisoAnnulla, registraDiretta, differenzeDirette, differenzeOggetti, ripristinoDiretta, descriviScelte, soloScelte, ripristinaScelte, masterDiverso, normalizzaCircostanzeMaster } from '../correzioni-master.js';
 import { descriviVoce, postiTalenti, applicaSceltaTalento, scelteSuccessive, applicaSceltaSuccessiva, adattaScelteSuccessive } from '../avanzamento.js';
 import { riquadroTalenti } from './talenti-scelta.js';
@@ -1117,7 +1119,8 @@ function contesto() {
       : schedaPersonaggio.completamenti?.length ? motivoCompletamento(schedaPersonaggio.completamenti) : null,
     motivoNoSalita: !scheda.completa ? 'Completa la creazione (passi precedenti) prima di salire di livello.'
         : restaDaScegliere(schedaPersonaggio.errori) ? 'Scegli prima i Talenti nel riquadro «Da scegliere» della scheda.'
-        : schedaPersonaggio.errori.filter((e) => !eSceltaTalento(e) && !eSceltaSuccessivaVuota(e)).length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
+        : schedaPersonaggio.errori.filter((e) => !eSceltaTalento(e) && !eSceltaSuccessivaVuota(e) && !eIncantesimoFuoriRegola(e)).length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.'
+          : (permessoPx()?.motivo ?? null),
     saliDiLivello,
     stampa: () => vai(`#/p/${stato.id}/stampa`),
     annullaUltimoLivello: annullaLivello,
@@ -1257,6 +1260,8 @@ function registraStorico(testo) {
  * con «Procedi comunque» la salita si apre lo stesso e nello storico resta la riga.
  */
 async function saliDiLivello() {
+  const g = permessoPx();
+  if (g && !g.ok) { stato.messaggioScheda = { tipo: 'attenzione', testo: g.motivo }; return renderScheda({ mantieniScorrimento: true }); }
   const sp = calcolaScheda({ creazione: stato.scelte, livelli: stato.livelli }, stato.dati);
   const motivo = sp.eccessi?.length ? motivoEccesso(sp.eccessi) : sp.completamenti?.length ? motivoCompletamento(sp.completamenti) : null;
   await conAvviso(registraStorico, { azione: `Sali al livello ${2 + stato.livelli.length}`, motivo, fai: (forza) => {
@@ -1277,6 +1282,31 @@ function correggiLivello(livello) {
   vai(`#/p/${stato.id}/sali/0`);
 }
 
+/**
+ * A.187: si sale di livello solo con i PX assegnati dal Direttore (o con una sua concessione). Vale con il server, dove
+ * ci sono i PX della partita e l'Atto; senza server (nessun Direttore, nessun PX assegnato) il blocco non c'è.
+ */
+function datiLivelloPx() {
+  const p = stato.dati.px_partita;
+  if (!stato.cartella || !p || !stato.scelte) return null;
+  return { livello: 1 + stato.livelli.length, px: stato.scelte.puntiEsperienza, atto: attoCampagna() ?? p.campagna.atto_default, correzioni: stato.scelte.correzioniMaster ?? [] };
+}
+const permessoPx = () => { const d = datiLivelloPx(); return d ? permessoSalita(d, stato.dati.px_partita) : null; };
+const sfasamentoPx = () => { const d = datiLivelloPx(); return d ? sfasamento(d, stato.dati.px_partita) : null; };
+
+/** Per la scheda: il conto dei PX e, in modalità master, le due scelte sul livello in più (A.187). */
+function infoLivelloPx() {
+  const g = permessoPx();
+  if (!g) return null;
+  const s = sfasamentoPx();
+  return { permesso: g, oltre: s?.oltre ?? 0, livelloPx: s?.livelloPx ?? null };
+}
+
+/** A.188: da dove arriva la modifica agli incantesimi, per la riga dello storico (tablet, PC, Direttore, app). */
+const sorgenteIncantesimi = () => sorgenteModifica({ server: stato.cartella, daQuestoPc: stato.master, master: modalitaMaster({ server: stato.cartella, daQuestoPc: stato.master, aperta: modalitaMasterDi(sessionStorage), id: stato.id }) });
+/** Scrive nello storico del personaggio la riga di una modifica agli incantesimi, con data, ora e provenienza. */
+const storicoIncantesimi = (testo) => { stato.sessione = rigaStorico(stato.sessione, rigaIncantesimi(testo, sorgenteIncantesimi())); };
+
 /** Massimi di sessione del personaggio attuale (null se la scheda non si calcola). */
 function massimiAttuali() {
   const scheda = calcolaScheda(personaggio(), stato.dati);
@@ -1291,9 +1321,9 @@ function cambiaLivelli(livelli) {
   if (prima && dopo && stato.sessione) stato.sessione = sessioneDopoLivello(stato.sessione, prima, dopo);
 }
 
-function annullaLivello() {
+function annullaLivello({ conferma = true } = {}) {
   const n = 1 + stato.livelli.length;
-  if (!stato.livelli.length || !confirm(`Annullare ${conOrdinale('il', n)} livello? Le sue scelte andranno perse (si torna ${conOrdinale('al', n - 1)} livello).`)) return;
+  if (!stato.livelli.length || (conferma && !confirm(`Annullare ${conOrdinale('il', n)} livello? Le sue scelte andranno perse (si torna ${conOrdinale('al', n - 1)} livello).`))) return;
   cambiaLivelli(annullaUltimoLivello(personaggio()).livelli);
   persisti();
   stato.messaggioScheda = { tipo: 'ok', testo: `${n}° livello annullato.` };
@@ -1400,6 +1430,9 @@ function renderTogliPagina() {
 }
 
 function apriSali(passo) {
+  // A.187: l'indirizzo scritto a mano non aggira il blocco dei PX (la correzione di un livello passato non è una salita)
+  const g = !stato.sali ? permessoPx() : null;
+  if (g && !g.ok) { stato.messaggioScheda = { tipo: 'attenzione', testo: g.motivo }; return vai(`#/p/${stato.id}`); }
   if (!stato.sali) stato.sali = { voce: {}, passo: 0, ui: { aperti: new Set(), filtroTalenti: null } };
   stato.sali.passo = passo;
   renderSaliPagina();
@@ -1423,6 +1456,7 @@ function renderSaliPagina() {
     } : null,
     voce: bozza.voce,
     procedi: !!bozza.procedi,
+    master: modalitaMaster({ server: stato.cartella, daQuestoPc: stato.master, aperta: modalitaMasterDi(sessionStorage), id: stato.id }),
     passo: bozza.passo,
     ui: bozza.ui,
     aggiornaVoce(modifica) {
@@ -1454,7 +1488,12 @@ function renderSaliPagina() {
         if (!stato.salvataggioOk) alert(`Correzione fatta, ma non salvata nel browser. ${testoSalvataggioFallito()}`);
         return vai(`#/p/${stato.id}`);
       }
-      if (validaLivello(personaggio(), bozza.voce, dati, { procedi: !!bozza.procedi }).length) return renderSaliPagina();
+      const inMaster = modalitaMaster({ server: stato.cartella, daQuestoPc: stato.master, aperta: modalitaMasterDi(sessionStorage), id: stato.id });
+      // A.188: un incantesimo fuori dalle regole lo forza solo il Direttore, e resta nello storico
+      const errLivello = validaLivello(personaggio(), bozza.voce, dati, { procedi: !!bozza.procedi });
+      const forzati = inMaster ? errLivello.filter((e) => e.campo === 'incantesimi' && e.tipo === 'violazione') : [];
+      if (errLivello.length > forzati.length) return renderSaliPagina();
+      if (forzati.length) storicoIncantesimi(`Aggiunti ${(bozza.voce.incantesimi ?? []).join(', ')} (${2 + stato.livelli.length}° livello), forzato dal Direttore: ${forzati[0].problema}`);
       cambiaLivelli(applicaLivello(personaggio(), bozza.voce).livelli);
       stato.sali = null;
       stato.passo = PASSO_SCHEDA;
@@ -1605,6 +1644,8 @@ function registraModificheMaster() {
 
 /** Un errore che è solo un posto dei Talenti v1.0 ancora vuoto (lo mostra il riquadro, non l'elenco degli errori). */
 const eSceltaTalento = (e) => stato.scelte?.regimeTalenti === 2 && /(^|\.)(talentoLibero|maestria|specializzazione|specializzazioneIniziale)$/.test(e.campo ?? '');
+// A.188: un incantesimo fuori dalle regole (forzato dal Direttore, o di prima) è un avviso, non ferma la salita
+const eIncantesimoFuoriRegola = (e) => e.tipo === 'violazione' && /(^|\.)incantesimi$/.test(e.campo ?? '');
 const ePostoTalentoVuoto = (e) => eSceltaTalento(e) && e.tipo === 'incompleto';
 // 25/10 sera: «restano N incantesimi / Tecniche da scegliere» di un livello: con i Talenti nuovi lo dice il riquadro, con il
 // suo «Scegli» (un avviso senza un modo per sistemarlo non serve)
@@ -1674,6 +1715,7 @@ function contestoTalenti(inMaster) {
         if (forzata) stato.masterMotivo = `Scelta forzata dal Direttore: ${nomeScelta} al ${s.livello}° livello (${forzata})`;
         const p = applicaSceltaSuccessiva(personaggio(), s, id);
         cambiaLivelli(p.livelli);
+        if (s.tipo === 'incantesimi') storicoIncantesimi(`Aggiunto ${nomeScelta} (${s.livello}° livello)${forzata ? ', forzato dal Direttore' : ''}`);
         stato.uiTalenti.filtro = '';
         const resta = s.quanti - 1;
         if (!resta) stato.uiTalenti.posto = null;
@@ -1775,6 +1817,20 @@ function azioniMaster() {
       persisti();
       ridisegna();
     },
+    // A.187: passaggio di livello anticipato. Il motivo è obbligatorio, i PX non cambiano, il giocatore non lo vede come PX
+    concediLivello: ({ livello, motivo }) => {
+      const m = String(motivo ?? '').trim();
+      if (!m) return false;
+      scriviCorrezioni(aggiungiCorrezione(correzioniAttuali(), nuovaCorrezione({ chiave: CHIAVE_CONCESSIONE, etichetta: `Passaggio al livello ${livello} concesso dal Direttore (i PX non cambiano)`, tipo: TIPO_CONCESSIONE, motivo: m, livello })));
+      stato.messaggioScheda = { tipo: 'ok', testo: `Concesso il passaggio al livello ${livello}: il giocatore può salire.` };
+      persisti();
+      ridisegna();
+      return true;
+    },
+    // A.187: nelle schede con un livello più dei PX, il Direttore sceglie «Annulla l'ultimo livello» (dopo aver visto le
+    // scelte che si perdono) o «Tieni come concessione» (il motivo resta nel registro)
+    annullaUltimoLivello: () => annullaLivello({ conferma: false }),
+    scelteUltimoLivello: () => { try { return [descriviVoce(stato.livelli[stato.livelli.length - 1], stato.dati)].flat().map(String); } catch { return scelteDelLivello(stato.livelli[stato.livelli.length - 1]); } },
     // 13/10: il motivo scritto in una finestrella vale per la prossima modifica registrata (anche una scelta)
     motivoProssima: (motivo) => { stato.masterMotivo = motivo || null; },
     esci: () => { esciModalitaMaster(sessionStorage); stato.masterVisto = null; ridisegna(); },
@@ -1806,7 +1862,7 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
   if (tab.tab.length) tab.tab = tabFissi(tab.tab);
   // Talenti v1.0 (lotto 2): i posti vuoti li dice il riquadro «Da scegliere», non l'elenco degli errori
   const talentiDaScegliere = tab.errori ? restaDaScegliere(tab.errori) : false;
-  if (tab.errori) tab.errori = tab.errori.filter((e) => !eSceltaTalento(e) && !eSceltaSuccessivaVuota(e));
+  if (tab.errori) tab.errori = tab.errori.filter((e) => !eSceltaTalento(e) && !eSceltaSuccessivaVuota(e) && !eIncantesimoFuoriRegola(e));
   document.title = `${stato.scelte.nome.trim() || 'Personaggio'} — Scheda · Mutant`;
   if (!tab.tab.length) {
     svuota(radice, h('section', { class: 'passo' },
@@ -1910,7 +1966,8 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
       : tab.scheda.completamenti?.length ? motivoCompletamento(tab.scheda.completamenti) : null,
     motivoNoSalita: !schedaCreazione.completa ? 'Completa la creazione prima di salire di livello.'
         : talentiDaScegliere ? 'Scegli prima i Talenti nel riquadro «Da scegliere».'
-        : tab.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
+        : tab.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.'
+          : (permessoPx()?.motivo ?? null),
     // regole aggiornate (regole.json → regole_aggiornate): punti da completare e in eccesso
     avvisoRegole: dati.regole.regole_aggiornate?.punti_abilita ?? 'Regole aggiornate',
     avvisoMancanti: dati.regole.regole_aggiornate?.mancanti ?? null,
@@ -1925,6 +1982,8 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
     // «Modifiche del master» (tab Identità): tutti lo leggono; in modalità master si annulla
     registroMaster: registroMaster(stato.scelte.correzioniMaster),
     master: inMaster ? azioniMaster() : null,
+    // A.187: il conto dei PX per il livello (nota in Identità e scelte del Direttore)
+    livelloPx: infoLivelloPx(),
     // Talenti v1.0 (lotto 2): il riquadro «Da scegliere» (src/ui/talenti-scelta.js); i posti da postiTalenti, il conto unico
     talenti: contestoTalenti(inMaster),
     azioni: {
@@ -2182,7 +2241,7 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
       incantesimiAMano: (lista, riga = null) => {
         const { scelte, avvisi } = applicaModifica(stato.scelte, { incantesimiAMano: lista }, dati);
         stato.scelte = scelte;
-        if (riga) stato.sessione = rigaStorico(stato.sessione, riga);
+        if (riga) stato.sessione = rigaStorico(stato.sessione, rigaIncantesimi(riga.replace(/\.$/, ''), sorgenteIncantesimi()));
         stato.messaggioScheda = avvisi.length ? { tipo: 'attenzione', testo: avvisi.join(' ') } : riga ? { tipo: 'ok', testo: riga } : null;
         persisti();
         renderScheda({ mantieniScorrimento: true });
@@ -2200,14 +2259,20 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
         if (livelli.some((v, i) => v !== stato.livelli[i])) cambiaLivelli(livelli);
         const { scelte, avvisi } = applicaModifica(stato.scelte, { incantesimi: (stato.scelte.incantesimi ?? []).filter((n) => n !== nome) }, dati);
         stato.scelte = scelte;
+        storicoIncantesimi(`Tolto ${nome}`);
         stato.messaggioScheda = avvisi.length ? { tipo: 'attenzione', testo: avvisi.join(' ') } : { tipo: 'ok', testo: `Tolto: ${nome}.` };
         persisti();
         renderScheda({ mantieniScorrimento: true });
       },
-      sostituisciIncantesimoLivello: (livello, vecchio, nuovo) => {
+      // A.188: le regole valgono di nuovo (quote, famiglie, livello massimo): questo dice se la sostituzione è ammessa
+      provaSostituzioneIncantesimo: (livello, vecchio, nuovo) => provaSostituzione(personaggio(), livello, vecchio, nuovo, dati),
+      sostituisciIncantesimoLivello: (livello, vecchio, nuovo, { forza = false } = {}) => {
         const i = livello - 2;
         const voce = stato.livelli[i];
         if (!voce || !Array.isArray(voce.incantesimi) || !voce.incantesimi.includes(vecchio) || voce.incantesimi.includes(nuovo)) return false;
+        const prova = provaSostituzione(personaggio(), livello, vecchio, nuovo, dati);
+        if (!prova.ok && !forza) return false;
+        storicoIncantesimi(`Sostituito ${vecchio} con ${nuovo}${!prova.ok ? ', forzato dal Direttore' : ''}`);
         const livelli = stato.livelli.map((v, k) => (k === i ? { ...v, incantesimi: v.incantesimi.map((n) => (n === vecchio ? nuovo : n)) } : v));
         cambiaLivelli(livelli);
         stato.messaggioScheda = { tipo: 'ok', testo: `Sostituito: ${vecchio} con ${nuovo}.` };

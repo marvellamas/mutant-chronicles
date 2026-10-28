@@ -765,11 +765,11 @@ function controllaIncantesimi(prima, dopo, v, dati) {
     if (!i) { err(`"${nome}" non è un incantesimo`); continue; }
     if (prima.incantesimi.includes(nome) || visti.has(nome)) err(`${nome} è già conosciuto`);
     visti.add(nome);
-    if (i.livello_base > q.livelloMassimo) err(`${nome}: livello base ${i.livello_base} oltre il livello massimo ${q.livelloMassimo} (tabella dei Gradi taumaturgici)`, 'avviso');
+    if (i.livello_base > q.livelloMassimo) err(`${nome}: livello base ${i.livello_base} oltre il livello massimo ${q.livelloMassimo} (tabella dei Gradi taumaturgici)`);
   }
-  if (nuovi.length && !q.accesso) err('il personaggio non ha accesso alla magia', 'avviso');
+  if (nuovi.length && !q.accesso) err('il personaggio non ha accesso alla magia');
   if (q.liberiUsati > q.liberi || q.noti.length > q.totale) {
-    err(`incantesimi conosciuti ${q.noti.length}, quote ${q.totale} (di Classe per macrofamiglia + ${q.liberi} liberi)`, 'avviso');
+    err(`incantesimi conosciuti ${q.noti.length}, quote ${q.totale} (di Classe per macrofamiglia + ${q.liberi} liberi)`);
   } else if (q.noti.length < q.totale && (nuovi.length || q.totale > statoQuote(prima, dati).totale)) {
     err(`restano ${q.totale - q.noti.length} incantesimi da scegliere`, 'incompleto');
   }
@@ -1185,10 +1185,12 @@ export function validaLivello(personaggio, scelte, dati, { procedi = false } = {
   if (eccessi.length && !procedi) return [{ campo: 'livelli', problema: motivoEccesso(eccessi), tipo: 'violazione', procedibile: true }];
   if (completamenti.length && !procedi) return [{ campo: 'livelli', problema: motivoCompletamento(completamenti), tipo: 'violazione', procedibile: true }];
   // Talenti v1.0: una scelta non ammessa c'è solo se l'ha forzata il Direttore; avvisa con «Procedi comunque», non blocca
-  const sceltaTalento = (e) => stato.regime === 'nuovo' && /(^|\.)(talentoLibero|maestria|specializzazione|specializzazioneIniziale)$/.test(e.campo ?? '');
+  // A.188 (28/10): un incantesimo fuori da quote, famiglie o livello massimo c'è solo se l'ha forzato il Direttore (o è di prima
+  // della regola): avvisa con «Procedi comunque», non blocca la salita
+  const sceltaTalento = (e) => (stato.regime === 'nuovo' && /(^|\.)(talentoLibero|maestria|specializzazione|specializzazioneIniziale)$/.test(e.campo ?? '')) || /(^|\.)incantesimi$/.test(e.campo ?? '');
   const forzate = errori.filter((e) => e.tipo === 'violazione' && sceltaTalento(e));
   const bloccanti = errori.filter((e) => e.tipo === 'violazione' && !sceltaTalento(e));
-  if (forzate.length && !bloccanti.length && !procedi) return [{ campo: 'livelli', problema: `una scelta dei Talenti non è ammessa dalle regole (forzata dal Direttore: ${forzate[0].problema})`, tipo: 'violazione', procedibile: true }];
+  if (forzate.length && !bloccanti.length && !procedi) return [{ campo: 'livelli', problema: `una scelta dei Talenti o degli incantesimi non è ammessa dalle regole (forzata dal Direttore: ${forzate[0].problema})`, tipo: 'violazione', procedibile: true }];
   if (bloccanti.length) {
     return [{ campo: 'livelli', problema: `i livelli già acquisiti contengono errori (${bloccanti[0].problema}): annulla l’ultimo livello e correggilo`, tipo: 'violazione' }];
   }
@@ -1381,9 +1383,10 @@ function opzioniIncantesimi(dopo, dati, notiAltrove = []) {
   const noti = new Set([...dopo.incantesimi, ...notiAltrove]);
   const perMacro = Object.fromEntries(Object.keys(q.perMacro).map((m) => [m, { quota: q.perMacro[m] ?? 0, scelti: q.noti.filter((i) => i.macrofamiglia === m).length }]));
   const conto = { livelloMassimo: q.livelloMassimo, accesso: q.accesso, perMacro, liberi: q.liberi, liberiUsati: q.liberiUsati };
-  // 27/10 (lotto 131): quote e livello massimo sono un avviso, mai un blocco: ogni opzione si può scegliere
+  // A.188 (28/10): quote, famiglie accessibili e livello massimo valgono di nuovo per il giocatore (in grigio, con il motivo);
+  // il Direttore può forzare con conferma e registrazione. Il conto è quello di src/quote-incantesimi.js
   return dati.incantesimi.incantesimi.filter((i) => !noti.has(i.nome)).map((i) => ({
-    id: i.nome, nome: i.nome, gruppo: `${i.macrofamiglia} · ${i.specializzazione}`, livelloBase: i.livello_base, ammesso: true, motivo: null, avviso: avvisoIncantesimo(i, conto),
+    id: i.nome, nome: i.nome, gruppo: `${i.macrofamiglia} · ${i.specializzazione}`, livelloBase: i.livello_base, ...(() => { const motivo = avvisoIncantesimo(i, conto); return { ammesso: !motivo, motivo }; })(),
   }));
 }
 
