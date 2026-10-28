@@ -17,8 +17,10 @@
 //   (2 con Ricarica Efficiente o Conversione Migliorata, 1 con entrambi; Bianco sempre 2); un gruppo è automatico, due o
 //   più richiedono una sola Prova di Potere con penalità per gruppi (regole.json → chroma.conversione.prova_gruppi).
 //   Successo: tutti i gruppi; Fallimento: nessuno e nessuna spesa; Magistrale: si può aggiungere un gruppo se riserva e
-//   spazio lo consentono; Fallimento Maldestro: nessun PM e perdita del costo di tutti i gruppi. «La ricarica non avviene
-//   automaticamente durante il recupero personale»: qui è il giocatore che chiede l'operazione dopo il recupero.
+//   spazio lo consentono; Fallimento Maldestro: nessun PM e perdita del costo di tutti i gruppi.
+// - A.174 (Davide, 23/10/2026): «Ricarica e medita» è un comando unico che rispetta l'ordine dei due passaggi: prima la
+//   ricarica con i PM già disponibili, poi la Meditazione; il recupero dipende dall'esito effettivo; un'interruzione non
+//   annulla la ricarica; mai PM spesi in anticipo.
 import { rapportoConversione } from './equipaggiamento.js';
 import { allineaSessione, modificaSessione } from './sessione.js';
 
@@ -83,10 +85,19 @@ function fonteRapporto(cv, energia) {
 }
 
 /**
- * Il conto di «Medita», prima di confermare.
+ * Il conto di «Medita» e di «Ricarica e medita», prima di confermare.
+ *
+ * A.174 (Davide, 23/10/2026): il comando unico è ammesso purché rispetti l'ordine dei due passaggi. **Prima la
+ * ricarica**: il personaggio spende PM che ha già, adesso, con il rapporto di conversione, la Prova di Potere e i requisiti
+ * della ricarica fatta da sola; **poi la Meditazione**, il cui recupero dipende dall'esito effettivo (ore davvero
+ * completate). Un'interruzione non annulla la ricarica già fatta. Non si spendono in anticipo PM ancora da recuperare.
+ * (Fino al 28/10 il conto convertiva dai PM attuali più quelli recuperati: era proprio ciò che la A.174 esclude.)
+ *
  * @param ctx { scheda, sessione, massimi }
- * @param scelta { modo, ore, oreGia?, destinazione: 'personali' | uid del contenitore, gruppi?: number|null (null = quanti ne stanno), esito? }
- * @returns {{ modo, ore, oreEffettive, pmOra, recupero, pmPrima, pmDopoRecupero, sprecati, conversione, finale, righe, avvisi, registro, vuoto }}
+ * @param scelta { modo, ore, oreGia?, destinazione: 'personali' | uid del contenitore, gruppi?: number|null (null = quanti
+ *   ne stanno), esito? (della Prova di Potere), meditazione?: 'completata' | 'interrotta', oreCompletate? }
+ * @returns {{ modo, ore, oreEffettive, oreCompletate, interrotta, pmOra, recupero, pmPrima, pmDopoRicarica, pmDopoRecupero,
+ *   sprecati, conversione, finale, righe, avvisi, registro, riepilogo, nome, vuoto }}
  */
 export function pianoMedita({ scheda, sessione, massimi }, scelta, dati) {
   const rp = dati.regole.recupero_pm;
@@ -103,23 +114,16 @@ export function pianoMedita({ scheda, sessione, massimi }, scelta, dati) {
       if (ore > utili) { oreEffettive = utili; avvisi.push(`Oltre le ${modo.oreGiorno} ore utili al giorno non si recuperano PM: ${utili} ore su ${ore} contano (${oreGia ? `${oreGia} già fatte oggi` : 'limite giornaliero'}; Magia, «Meditazione»).`); }
     }
   }
+  if (ore === 0) avvisi.push('Indica almeno un’ora completa: una frazione d’ora non dà PM (Magia, «Recupero naturale dei Punti Magia»).');
   const pmOra = modo.disponibile ? modo.pmOra : 0;
-  const recupero = pmOra * oreEffettive;
   const pmPrima = sessione?.pmAttuali ?? 0;
   const max = massimi?.pm ?? 0;
-  // i PM recuperati si possono versare nel cristallo man mano (un'ora alla volta): per la conversione vale tutto ciò che si è
-  // recuperato; ai PM personali arriva solo ciò che sta entro il massimo (Magia, «Recupero naturale»: non si supera il massimo)
-  const pool = pmPrima + recupero;
-  const pmDopoRecupero = Math.min(max, pool);
-  let sprecati = pool - pmDopoRecupero;
-  if (ore === 0) avvisi.push('Indica almeno un’ora completa: una frazione d’ora non dà PM (Magia, «Recupero naturale dei Punti Magia»).');
-  const righe = [
-    { etichetta: `${modo.nome}: ${oreEffettive} ${oreEffettive === 1 ? 'ora' : 'ore'} × ${pmOra} PM`, valore: `+${recupero}`, nota: modo.extra ? `${modo.pmOra - modo.extra} + ${modo.extra} ${modo.nomeExtra}` : (modo.id === 'meditazione' ? 'valori della scheda' : null) },
-    { etichetta: 'PM personali', valore: `${pmPrima} → ${pmDopoRecupero} / ${max}`, nota: sprecati ? `${sprecati} oltre il massimo` : null },
-  ];
+  const righe = [];
 
+  // 1) la ricarica, prima: solo con i PM che il personaggio ha adesso (A.174)
   let conversione = null;
-  let finale = { personali: pmDopoRecupero, cristallo: null };
+  let pmDopoRicarica = pmPrima;
+  let cristallo = null;
   const dest = scelta?.destinazione ?? 'personali';
   if (dest !== 'personali') {
     const cv = rapportoConversione(scheda, dati);
@@ -129,16 +133,20 @@ export function pianoMedita({ scheda, sessione, massimi }, scelta, dati) {
       const rapporto = cv.fissi?.[c.energia] ?? cv.rapporto;
       const pmC = sessione?.chroma?.[c.uid]?.pmAttuali ?? 0;
       const spazio = Math.max(0, c.capacita - pmC);
-      const perPm = Math.floor(pool / rapporto);
+      const perPm = Math.floor(pmPrima / rapporto);
       const richiesti = scelta?.gruppi === null || scelta?.gruppi === undefined ? Math.min(perPm, spazio) : intero(scelta.gruppi, 0);
       let gruppi = richiesti;
-      if (spazio === 0) { gruppi = 0; avvisi.push(`${c.nome} è già pieno (${pmC} / ${c.capacita}): niente da versare, i PM restano nei personali.`); }
-      else if (gruppi > spazio) { gruppi = spazio; avvisi.push(`${c.nome} ha spazio per ${spazio} PM: mi fermo a ${spazio} gruppi, il resto resta nei PM personali.`); }
-      if (gruppi > perPm) { gruppi = perPm; avvisi.push(`Servono ${rapporto} PM personali per gruppo: con ${pool} PM si possono convertire ${perPm} ${perPm === 1 ? 'gruppo' : 'gruppi'}.`); }
+      if (spazio === 0) { gruppi = 0; avvisi.push(`${c.nome} è già pieno (${pmC} / ${c.capacita}): niente da ricaricare.`); }
+      else if (gruppi > spazio) { gruppi = spazio; avvisi.push(`${c.nome} ha spazio per ${spazio} PM: mi fermo a ${spazio} ${spazio === 1 ? 'gruppo' : 'gruppi'}.`); }
+      // A.174: «Non deve consentire di spendere anticipatamente PM che il personaggio deve ancora recuperare»
+      if (gruppi > perPm) {
+        avvisi.push(`Non si può: ${gruppi} ${gruppi === 1 ? 'gruppo costa' : 'gruppi costano'} ${gruppi * rapporto} PM e ne hai ${pmPrima} adesso. I PM che recupererai meditando non si spendono in anticipo (A.174): ${perPm ? `al massimo ${perPm} ${perPm === 1 ? 'gruppo' : 'gruppi'}` : 'nessun gruppo'}.`);
+        gruppi = perPm;
+      }
       if (motivo) avvisi.push(`${c.nome}: ${motivo}. Si può procedere comunque: l’ultima parola è del Direttore.`);
       const prova = provaGruppi(gruppi, dati);
-      // la Prova di Potere (da due gruppi in su) non si salta e non ha un esito di comodo: finché chi gioca non indica come è andata
-      // la conversione resta «in attesa» (nessun PM spostato). Un gruppo solo è automatico.
+      // la Prova di Potere (da due gruppi in su) non si salta e non ha un esito di comodo: finché chi gioca non indica come è
+      // andata la ricarica resta «in attesa» (nessun PM spostato). Un gruppo solo è automatico.
       const esito = prova.richiesta ? (rp.conversione.esiti.includes(scelta?.esito) ? scelta.esito : null) : 'successo';
       const inAttesa = esito === null;
       const potere = scheda?.abilita?.find((a) => a.nome === 'Potere');
@@ -150,39 +158,57 @@ export function pianoMedita({ scheda, sessione, massimi }, scelta, dati) {
       else if (esito === 'fallimento') { convertiti = 0; spesa = 0; }
       else if (esito === 'maldestro') { convertiti = 0; }
       else if (esito === 'magistrale') {
-        const extra = gruppi + 1 <= spazio && pool - spesa >= rapporto ? 1 : 0;
+        const extra = gruppi + 1 <= spazio && pmPrima - spesa >= rapporto ? 1 : 0;
         convertiti = gruppi + extra; spesa = convertiti * rapporto;
       }
       const entrano = Math.min(convertiti, spazio);
-      finale = { personali: Math.min(max, pool - spesa), cristallo: pmC + entrano };
-      sprecati = pool - spesa - finale.personali;
+      pmDopoRicarica = pmPrima - spesa;
+      cristallo = pmC + entrano;
       if (prova.richiesta) avvisi.push(inAttesa
-        ? `Prova di Potere da fare: una sola per l’intera operazione, ${gruppi} gruppi, Potere ${prova.penalita}${prova.totale !== null ? ` (VA ${prova.va} ${prova.penalita} = ${prova.totale})` : ''}. L’app non tira: indica l’esito qui sotto; finché non lo fai la conversione non si applica (Magia sez. 6).`
-        : `Una sola Prova di Potere per l’intera operazione (${gruppi} gruppi: Potere ${prova.penalita}, Magia sez. 6): esito indicato, ${rp.conversione.nomi_esiti[esito]}.`);
-      if (gruppi > 0) avvisi.push('Ricaricare richiede 1 AzP e il contatto con il contenitore: nel manuale non avviene durante la Meditazione, ma subito dopo, con la propria Azione (Magia sez. 6).');
-      if (finale.personali === 0 && spesa > 0) avvisi.push('I PM personali arrivano a 0: Svenuto al termine dell’intera azione, dopo averne risolto l’esito (Magia sez. 6).');
+        ? `Prova di Potere da fare: una sola per l’intera ricarica, ${gruppi} gruppi, Potere ${prova.penalita}${prova.totale !== null ? ` (VA ${prova.va} ${prova.penalita} = ${prova.totale})` : ''}. L’app non tira: indica l’esito qui sotto; finché non lo fai la ricarica non si applica (Magia sez. 6).`
+        : `Una sola Prova di Potere per l’intera ricarica (${gruppi} gruppi: Potere ${prova.penalita}, Magia sez. 6): esito indicato, ${rp.conversione.nomi_esiti[esito]}.`);
+      if (gruppi > 0) avvisi.push('Ricaricare richiede 1 AzP e il contatto con il contenitore sintonizzato; la Meditazione comincia dopo, a ricarica finita (Magia sez. 6; A.174).');
+      if (pmDopoRicarica === 0 && spesa > 0) avvisi.push('Dopo la ricarica i PM personali sono a 0: Svenuto al termine dell’azione (Magia sez. 6). Chi è svenuto non medita: decide il Direttore se e quando la Meditazione può cominciare.');
       conversione = {
         uid: c.uid, nome: c.nome, energia: c.energia, capacita: c.capacita, pmPrima: pmC, spazio, rapporto, fonteRapporto: fonteRapporto(cv, c.energia), talenti: cv.talenti,
-        gruppiRichiesti: richiesti, gruppi, convertiti, spesa, entrano, prova, esito, inAttesa, motivo,
+        gruppiRichiesti: richiesti, gruppiPossibili: perPm, gruppi, convertiti, spesa, entrano, prova, esito, inAttesa, motivo,
       };
       righe.push(
-        { etichetta: `Conversione ${rapporto}:1`, valore: `${gruppi} ${gruppi === 1 ? 'gruppo' : 'gruppi'}`, nota: fonteRapporto(cv, c.energia) },
-        // i costi della ricarica fatta da sola, tutti nel conto: l'Azione, il contatto, la Prova (Magia sez. 6)
-        ...(gruppi > 0 ? [{ etichetta: 'Azione', valore: '1 AzP', nota: 'contatto con il cristallo sintonizzato; si spende dopo il recupero, non durante la Meditazione' }] : []),
+        { etichetta: `1. Ricarica, conversione ${rapporto}:1`, valore: `${gruppi} ${gruppi === 1 ? 'gruppo' : 'gruppi'}`, nota: fonteRapporto(cv, c.energia) },
+        ...(gruppi > 0 ? [{ etichetta: 'Azione', valore: '1 AzP', nota: 'contatto con il cristallo sintonizzato' }] : []),
         ...(prova.richiesta ? [{ etichetta: 'Prova di Potere', valore: prova.totale !== null ? `VA ${prova.va} ${prova.penalita} = ${prova.totale}` : `Potere ${prova.penalita}`, nota: inAttesa ? 'esito da indicare' : rp.conversione.nomi_esiti[esito] }] : [{ etichetta: 'Prova di Potere', valore: 'automatica', nota: 'un gruppo solo' }]),
-        { etichetta: 'PM personali spesi', valore: `−${spesa}`, nota: gruppi && !inAttesa ? `${convertiti} × ${rapporto}${esito !== 'successo' ? ` (${rp.conversione.nomi_esiti[esito]})` : ''}` : inAttesa ? 'in attesa dell’esito' : null },
-        { etichetta: `Entrano in ${c.nome}`, valore: `+${entrano}`, nota: `${pmC} → ${pmC + entrano} / ${c.capacita}` },
-        { etichetta: 'PM personali alla fine', valore: `${finale.personali} / ${max}`, nota: null },
+        { etichetta: 'PM personali spesi', valore: `−${spesa}`, nota: gruppi && !inAttesa ? `${convertiti} × ${rapporto}${esito !== 'successo' ? ` (${rp.conversione.nomi_esiti[esito]})` : ''}; dai ${pmPrima} PM che hai adesso` : inAttesa ? 'in attesa dell’esito' : null },
+        { etichetta: `Entrano in ${c.nome}`, valore: `+${entrano}`, nota: `${pmC} → ${cristallo} / ${c.capacita}` },
       );
-    } else if (!c) avvisi.push(`Destinazione non trovata: i PM vanno ai personali.`);
+    } else if (!c) avvisi.push('Destinazione non trovata: niente da ricaricare.');
   }
-  if (sprecati > 0) avvisi.push(`${sprecati} PM oltre il massimo personale (${max}) non entrano: Magia, «Recupero naturale», «non si supera il massimo».${conversione ? '' : ' Versandoli in un cristallo si usano.'}`);
-  const quanto = `${oreEffettive} ${oreEffettive === 1 ? 'ora' : 'ore'}`;
+
+  // 2) la Meditazione (o il recupero naturale), dopo: conta l'esito vero, le ore davvero completate
+  const interrotta = scelta?.meditazione === 'interrotta';
+  const oreCompletate = interrotta ? Math.min(intero(scelta?.oreCompletate, 0), oreEffettive) : oreEffettive;
+  if (interrotta) avvisi.push(`${modo.nome} interrotta: contano ${oreCompletate} ${oreCompletate === 1 ? 'ora completa' : 'ore complete'} su ${oreEffettive}; la frazione d’ora si perde${conversione?.entrano ? ', la ricarica già fatta resta (A.174)' : ''}.`);
+  const recupero = pmOra * oreCompletate;
+  const pmDopoRecupero = Math.min(max, pmDopoRicarica + recupero);
+  const sprecati = pmDopoRicarica + recupero - pmDopoRecupero;
+  righe.push(
+    { etichetta: `${conversione ? '2. ' : ''}${modo.nome}: ${oreCompletate} ${oreCompletate === 1 ? 'ora' : 'ore'} × ${pmOra} PM`, valore: `+${recupero}`, nota: modo.extra ? `${modo.pmOra - modo.extra} + ${modo.extra} ${modo.nomeExtra}` : (modo.id === 'meditazione' ? 'valori della scheda' : null) },
+    { etichetta: 'PM personali', valore: `${pmPrima}${conversione ? ` → ${pmDopoRicarica}` : ''} → ${pmDopoRecupero} / ${max}`, nota: sprecati ? `${sprecati} oltre il massimo` : null },
+  );
+  if (sprecati > 0) avvisi.push(`${sprecati} PM oltre il massimo personale (${max}) non entrano: Magia, «Recupero naturale», «non si supera il massimo».`);
+  const finale = { personali: pmDopoRecupero, cristallo };
+
+  const nome = conversione ? 'Ricarica e medita' : 'Medita';
+  const quanto = `${oreCompletate} ${oreCompletate === 1 ? 'ora' : 'ore'}`;
+  // A.174: «mostrare PM spesi, carica ottenuta e PM effettivamente recuperati», in una riga
+  const riepilogo = conversione
+    ? `Spesi ${conversione.spesa} PM → ${conversione.nome} +${conversione.entrano} ${conversione.entrano === 1 ? 'carica' : 'cariche'} · ${modo.nome}: recuperati ${pmDopoRecupero - pmDopoRicarica} PM`
+    : `${modo.nome}: recuperati ${pmDopoRecupero - pmPrima} PM`;
   const registro = conversione
-    ? `Medita (${modo.nome}, ${quanto}): +${recupero} PM personali (PM ${pmPrima} → ${finale.personali}); ricarica ${conversione.nome}: ${conversione.gruppi} ${conversione.gruppi === 1 ? 'gruppo' : 'gruppi'} a ${conversione.rapporto}:1, −${conversione.spesa} PM personali, +${conversione.entrano} PM nel cristallo (${conversione.pmPrima} → ${conversione.pmPrima + conversione.entrano})${conversione.prova.richiesta ? `, esito ${rp.conversione.nomi_esiti[conversione.esito]}` : ''}.`
-    : `Medita (${modo.nome}, ${quanto}): +${recupero} PM personali (PM ${pmPrima} → ${pmDopoRecupero}).`;
+    ? `${nome} (${modo.nome}, ${quanto}${interrotta ? ', interrotta' : ''}): ${riepilogo}; PM ${pmPrima} → ${pmDopoRicarica} → ${pmDopoRecupero}; ${conversione.nome} ${conversione.pmPrima} → ${cristallo}, ${conversione.gruppi} ${conversione.gruppi === 1 ? 'gruppo' : 'gruppi'} a ${conversione.rapporto}:1${conversione.prova.richiesta ? `, esito ${rp.conversione.nomi_esiti[conversione.esito]}` : ''}.`
+    : `Medita (${modo.nome}, ${quanto}${interrotta ? ', interrotta' : ''}): +${recupero} PM personali (PM ${pmPrima} → ${pmDopoRecupero}).`;
   return {
-    modo: { id: modo.id, nome: modo.nome }, ore, oreEffettive, pmOra, recupero, pmPrima, pmDopoRecupero, sprecati, conversione, finale, righe, avvisi, registro,
+    modo: { id: modo.id, nome: modo.nome }, nome, ore, oreEffettive, oreCompletate, interrotta, pmOra, recupero, pmPrima, pmDopoRicarica, pmDopoRecupero, sprecati,
+    conversione, finale, righe, avvisi, registro, riepilogo,
     vuoto: recupero === 0 && (!conversione || (conversione.entrano === 0 && conversione.spesa === 0)),
   };
 }

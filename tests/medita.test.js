@@ -1,4 +1,4 @@
-// Parte C del 20/10/2026: «Medita». Il recupero dei PM calcolato con i valori del Manuale della Magia (recupero naturale,
+// Parte C del 20/10/2026: «Medita» (dal 28/10, A.174: «Ricarica e medita», prima la ricarica e poi il recupero). Il recupero dei PM calcolato con i valori del Manuale della Magia (recupero naturale,
 // Meditazione, Recupero Mistico) e il versamento in un cristallo con la conversione (rapporto dai dati e dai Talenti), con
 // il conto in chiaro, l'avviso sul cristallo pieno senza buttare via il resto, e il registro.
 import { test } from 'node:test';
@@ -120,40 +120,41 @@ test('conversione: rapporto dai dati e dai Talenti (3:1, 2:1, 1:1, Bianco sempre
   assert.equal(piano(spento, { modo: 'breve', ore: 0, destinazione: 'rosso', gruppi: 2 }).conversione.rapporto, dati.regole.chroma.conversione.rapporto_ordinario);
 });
 
-test('il conto unico: il recupero di Medita alimenta la conversione (PM recuperati, spesi, entrati)', () => {
+test('A.174: prima la ricarica con i PM di adesso, poi il recupero (PM spesi, carica ottenuta, PM recuperati)', () => {
   const c = ctxCon([ROSSO], { pm: 2, chroma: { rosso: { pmAttuali: 0 } } });
   const p = piano(c, { modo: 'completo', ore: 6, destinazione: 'rosso' }); // 18 PM
-  assert.equal(p.recupero, 18);
   const r = p.conversione;
-  assert.equal(p.pmDopoRecupero, Math.min(c.massimi.pm, 20));
-  // la conversione usa tutto ciò che si è recuperato (2 + 18), non solo ciò che entra nei PM personali
-  assert.equal(r.gruppi, Math.min(Math.floor(20 / r.rapporto), 10));
-  assert.deepEqual([p.finale.personali, p.finale.cristallo], [Math.min(c.massimi.pm, 20 - r.spesa), r.entrano]);
-  // le righe del conto dicono recupero, rapporto, spesa, ingresso
+  // la ricarica usa solo i 2 PM che il personaggio ha adesso, non i 18 che recupererà
+  assert.equal(r.gruppi, Math.floor(2 / r.rapporto));
+  assert.equal(p.pmDopoRicarica, 2 - r.spesa);
+  assert.equal(p.recupero, 18);
+  assert.equal(p.pmDopoRecupero, Math.min(c.massimi.pm, p.pmDopoRicarica + 18));
+  assert.deepEqual([p.finale.personali, p.finale.cristallo], [p.pmDopoRecupero, r.entrano]);
+  // le righe del conto, nell'ordine: ricarica, poi recupero
   const t = p.righe.map((x) => `${x.etichetta} ${x.valore}`).join(' | ');
-  assert.match(t, /Riposo completo: 6 ore × 3 PM \+18/);
-  assert.match(t, /Conversione \d:1/);
-  assert.match(t, /PM personali spesi −\d+/);
-  assert.match(t, /Entrano in .* \+\d+/);
+  assert.match(t, /^1\. Ricarica, conversione \d:1/);
+  assert.match(t, /2\. Riposo completo: 6 ore × 3 PM \+18/);
+  assert.ok(t.indexOf('Ricarica') < t.indexOf('Riposo completo'));
+  assert.match(p.riepilogo, /^Spesi \d+ PM → Batteria Matrice .* \+\d+ carich[ea] · Riposo completo: recuperati \d+ PM$/);
 });
 
 test('cristallo pieno o quasi: avvisa e si ferma a quanto ci sta, il resto resta nei PM personali', () => {
   const pieno = ctxCon([ROSSO], { pm: 15, chroma: { rosso: { pmAttuali: 10 } } });
   const p = piano(pieno, { modo: 'breve', ore: 0, destinazione: 'rosso' });
   assert.equal(p.conversione.gruppi, 0);
-  assert.ok(p.avvisi.join(' ').includes('è già pieno (10 / 10): niente da versare, i PM restano nei personali'));
+  assert.ok(p.avvisi.join(' ').includes('è già pieno (10 / 10): niente da ricaricare.'));
   assert.equal(p.finale.personali, 15, 'nessun PM buttato');
   assert.equal(p.finale.cristallo, 10);
   const quasi = ctxCon([ROSSO], { pm: 15, chroma: { rosso: { pmAttuali: 7 } } });
   const q = piano(quasi, { modo: 'breve', ore: 0, destinazione: 'rosso', gruppi: 8 });
   assert.equal(q.conversione.gruppi, 3);
-  assert.match(q.avvisi.join(' '), /ha spazio per 3 PM: mi fermo a 3 gruppi, il resto resta nei PM personali/);
+  assert.match(q.avvisi.join(' '), /ha spazio per 3 PM: mi fermo a 3 gruppi/);
   assert.equal(q.finale.cristallo, 10);
   // PM personali insufficienti per i gruppi chiesti
   const pochi = ctxCon([ROSSO], { pm: 4, chroma: { rosso: { pmAttuali: 0 } } });
   const k = piano(pochi, { modo: 'breve', ore: 0, destinazione: 'rosso', gruppi: 9 });
   assert.equal(k.conversione.gruppi, Math.floor(4 / k.conversione.rapporto));
-  assert.match(k.avvisi.join(' '), /si possono convertire \d+ grupp/);
+  assert.match(k.avvisi.join(' '), /Non si può: 9 gruppi costano \d+ PM e ne hai 4 adesso/);
 });
 
 test('Prova di Potere per i gruppi: un gruppo è automatico, poi la tabella del manuale; l’esito lo indica chi gioca', () => {
@@ -205,7 +206,10 @@ test('applicare: PM personali e cristallo cambiano insieme, il registro dice cos
   assert.equal(dopo.pmAttuali, p.finale.personali);
   assert.equal(dopo.chroma.rosso.pmAttuali, p.finale.cristallo);
   assert.equal(dopo.chroma.rosso.pmAttuali, 1 + p.conversione.entrano);
-  assert.match(p.registro, /^Medita \(Riposo completo, 4 ore\): \+12 PM personali \(PM 2 → \d+\); ricarica .*: 3 gruppi a \d:1, −\d+ PM personali, \+3 PM nel cristallo \(1 → 4\)/);
+  assert.equal(p.conversione.spesa, p.conversione.entrano * p.conversione.rapporto);
+  assert.ok(p.conversione.spesa <= 2, 'mai più dei PM di adesso');
+  // con 2 PM e il rapporto ordinario 3:1 non c'è niente da spendere: 0 gruppi (A.174)
+  assert.match(p.registro, /^Ricarica e medita \(Riposo completo, 4 ore\): Spesi \d+ PM → Batteria Matrice .*; PM 2 → \d+ → \d+;/);
   // solo ai personali: il cristallo non si tocca
   const pp = piano(c, { modo: 'breve', ore: 2, destinazione: 'personali' });
   const d2 = applicaMedita(allineaSessione(c.sessione, m), pp, m);
@@ -235,30 +239,29 @@ test('la scheda: «Medita» nei riquadri dei PM; il pannello a tre passi mostra 
   const pannello = r2.radice.tutti().find((n) => n.className?.includes('medita-pannello'));
   assert.ok(pannello, 'pannello Medita aperto');
   const t = pannello.textContent;
-  assert.match(t, /Medita · recupero dei PM/);
+  assert.match(t, /Ricarica e medita · prima la ricarica, poi il recupero/);
   assert.match(t, /Riposo completo: 3 ore × 3 PM/);
-  assert.match(t, /Conversione \d:1/);
+  assert.match(t, /Ricarica, conversione \d:1/);
   assert.match(t, /Entrano in Batteria Matrice/);
-  assert.match(t, /Resta nel registro: «Medita \(Riposo completo, 3 ore\)/);
-  const conferma = pannello.tutti().find((n) => n.tagName === 'BUTTON' && /^Conferma e applica$/.test(n.textContent));
+  assert.match(t, /Resta nel registro: «Ricarica e medita \(Riposo completo, 3 ore\)/);
+  const conferma = pannello.tutti().find((n) => n.tagName === 'BUTTON' && /^Conferma: Ricarica e medita$/.test(n.textContent));
   assert.ok(conferma);
   clic(conferma);
   const [nome, p] = c.chiamate.find(([n]) => n === 'medita');
   assert.equal(nome, 'medita');
   assert.equal(p.recupero, 9);
-  assert.ok(p.conversione.entrano > 0);
+  assert.ok(p.conversione.entrano > 0, 'con 3 PM adesso, un gruppo');
   assert.equal(c.ui.medita, null, 'il pannello si chiude dopo la conferma');
 });
 
-test('PM recuperati oltre il massimo personale: non si buttano se si versano nel cristallo; senza cristallo avvisa', () => {
+test('A.174: PM recuperati oltre il massimo personale si perdono anche con la ricarica, perché la ricarica viene prima', () => {
   const c = ctxCon([ROSSO], { pm: 15, chroma: { rosso: { pmAttuali: 0 } } });
   const med = c.tab.scheda.magia.meditazione;
   const senza = piano(c, { modo: 'meditazione', ore: 1, destinazione: 'personali' });
-  assert.equal(senza.sprecati, med.pmPerOra);
-  assert.match(senza.avvisi.join(' '), /Versandoli in un cristallo si usano/);
+  assert.equal(senza.sprecati, Math.max(0, 15 + med.pmPerOra - c.massimi.pm));
   const con = piano(c, { modo: 'meditazione', ore: 1, destinazione: 'rosso' });
   const r = con.conversione;
-  assert.equal(r.gruppi, Math.min(Math.floor((15 + med.pmPerOra) / r.rapporto), 10), 'la conversione usa anche i PM oltre il massimo');
-  assert.equal(con.finale.personali, Math.min(15, 15 + med.pmPerOra - r.spesa));
-  assert.equal(con.sprecati, 15 + med.pmPerOra - r.spesa - con.finale.personali);
+  assert.equal(r.gruppi, Math.min(Math.floor(15 / r.rapporto), 10), 'la ricarica usa solo i 15 PM di adesso');
+  assert.equal(con.finale.personali, Math.min(c.massimi.pm, 15 - r.spesa + med.pmPerOra));
+  assert.equal(con.sprecati, 15 - r.spesa + med.pmPerOra - con.finale.personali);
 });

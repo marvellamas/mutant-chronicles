@@ -59,7 +59,7 @@ test('2. Addestramento Taumaturgo: senza, la ricarica non si fa nemmeno meditand
   si.ui.medita = { modo: 'breve', ore: 0, oreGia: 0, destinazione: 'rosso', gruppi: 1, esito: 'successo', passo: 2 };
   const pann2 = resa(si).radice.tutti().find((n) => n.className?.includes('medita-pannello'));
   const conf2 = pann2.tutti().find((n) => n.tagName === 'BUTTON' && /^Conferma/.test(n.textContent));
-  assert.equal(conf2.textContent, 'Conferma e applica');
+  assert.equal(conf2.textContent, 'Conferma: Ricarica e medita');
   clic(conf2);
   assert.ok(si.chiamate.some(([n]) => n === 'medita'));
 });
@@ -90,9 +90,9 @@ test('4. limite di ore giornaliere della Meditazione: oltre non si recupera, e n
   const molte = piano(c, { modo: 'meditazione', ore: med.orePerGiorno + 5, oreGia: 0, destinazione: 'rosso', esito: 'successo' });
   assert.equal(molte.oreEffettive, med.orePerGiorno);
   assert.equal(molte.recupero, med.orePerGiorno * med.pmPerOra, 'solo le ore utili danno PM');
-  // la conversione parte da ciò che si è davvero recuperato (pool), non dalle ore chieste
+  // A.174: con 0 PM adesso non si ricarica niente, anche se la Meditazione ne recupererà
   const r = molte.conversione;
-  assert.ok(r.gruppi * r.rapporto <= molte.recupero, 'nessun PM versato che non sia stato recuperato');
+  assert.deepEqual([r.gruppi, r.spesa, r.entrano], [0, 0, 0], 'nessun PM speso in anticipo');
   // già fatte oggi: il limite si abbassa
   const gia = piano(c, { modo: 'meditazione', ore: 4, oreGia: med.orePerGiorno - 1, destinazione: 'rosso', esito: 'successo' });
   assert.equal(gia.oreEffettive, 1);
@@ -116,7 +116,7 @@ test('5. Prova di Potere dal secondo gruppo in su: nessun esito di comodo, la co
     assert.equal(p.conversione.inAttesa, true);
     assert.deepEqual([p.conversione.spesa, p.conversione.entrano, p.finale.personali, p.finale.cristallo], [0, 0, 15, 0], 'nulla si sposta');
     assert.equal(p.conversione.prova.penalita, provaGruppi(g, dati).penalita);
-    assert.match(p.avvisi.join(' '), /Prova di Potere da fare: una sola per l’intera operazione/);
+    assert.match(p.avvisi.join(' '), /Prova di Potere da fare: una sola per l’intera ricarica/);
   }
   // il conto mostra il VA di Potere con la penalità
   const p3 = piano(c, { modo: 'breve', ore: 0, destinazione: 'rosso', gruppi: 3 });
