@@ -4,7 +4,7 @@
 
 ## Strumenti dotazioni e regole di impiego
 
-**EDIZIONE 0.8**
+**EDIZIONE 0.13**
 
 Ottobre 2026
 
@@ -87,7 +87,7 @@ Armi, scudi e armature seguono le proprie regole di preparazione ed equipaggiame
 
 ## **1.5 Alimentazione e consumabili**
 
-La scheda indica alimentazione, compatibilità e autonomia, distinguendo cariche o applicazioni dagli usi continui. La principale fonte energetica è il NEC, nelle versioni Rossa, Blu e Verde (§5.4). Quantità, momento del consumo ed esiti seguono la procedura dell’oggetto. Le fonti a combustibile liquido non sono presenti.
+La scheda indica alimentazione, compatibilità e il contatore operativo necessario: cariche, colpi o autonomia. I NEC Rossi, Blu e Verdi seguono il §5.4. L’elettronica personale ordinaria non richiede un registro dei consumi; effetti speciali e dispositivi autonomi mantengono le risorse esplicite del modello. Le fonti a combustibile liquido non sono presenti.
 
 Un corredo può comprendere componenti riutilizzabili e materiali consumabili. Esauriti i materiali, restano possibili soltanto le attività che gli strumenti rimasti possono svolgere. Nel Kit trauma, per esempio, ogni tentativo di medicazione consuma un’applicazione all’inizio; una semplice diagnosi non la consuma (§6.1).
 
@@ -217,16 +217,16 @@ Pareti e ostacoli bloccano la luce; fumo e nebbia conservano i propri effetti. L
 
 ### **Alimentazione NEC**
 
-Torcia e Lampada frontale usano un NEC Verde compatto da 100 Lx: 1 Lx/h e 100 ore. La Lanterna usa un Verde standard da 1.000 Lx: 5 Lx/h e 200 ore. Il Bastoncino luminoso è monouso e non richiede NEC.
+Torcia, Lampada frontale e Lanterna usano NEC Verdi e rientrano nell’elettronica ordinaria senza conteggio energetico (§5.4.3). Il Bastoncino luminoso è monouso e non richiede NEC.
 
 | Voce | Regola |
 | :---- | :---- |
-| Ricarica completa | Un’ora con fonte e caricatore adeguati; 0,01 cr/Lx. |
+| Ricarica completa | Compresa nei normali rifornimenti; nessun conteggio ordinario (§5.4.3). |
 | Ricambio carico | Verde compatto 10 cr; Verde standard 100 cr; REP CO. |
 | Sostituzione | 1 AzP senza Prova, con ricambio pronto. |
 | Dotazione compresa | NEC carico, cavo e alimentatore. |
 
-Si annotano le ore effettive, anche non consecutive, senza conteggiarle per Round. Formati, ricarica e fonti mobili sono nel §5.4. I dispositivi del Capitolo 4 usano i NEC e le autonomie delle proprie schede.
+Non si annotano ore di funzionamento per l’illuminazione personale ordinaria. Eventuali emergenze energetiche seguono il §5.4.3; i dispositivi con autonomia speciale mantengono la propria scheda.
 
 ## **2.4 Abbigliamento**
 
@@ -296,11 +296,11 @@ Tende e teli ordinari non proteggono da tempeste estreme, allagamenti, atmosfere
 | Razione concentrata | Stesso nutrimento della razione normale, con metà del peso. | 0,25 kg | 40 |
 | Tanica da 10 litri | Trasporta acqua o altri liquidi. Peso indicato a vuoto. | 0,5 kg | 40 |
 | Corredo da cucina da campo | Fornello a Chroma, recipiente e stoviglie per quattro persone. Primo NEC Rosso standard compreso; dieci preparazioni da 30 minuti. | 1 kg | 150 |
-| NEC Rosso standard | 500 Lx: dieci preparazioni da 50 Lx, fino a quattro persone. Ricaricabile. | 0,15 kg | 50 |
+| NEC Rosso standard | NEC dedicato ricaricabile: dieci preparazioni, fino a quattro persone. | 0,15 kg | 50 |
 | Depuratore portatile | Tratta acqua dolce con impurità e contaminazioni biologiche ordinarie: 1 litro al minuto, mediante pompa manuale. Primo filtro compreso. | 0,5 kg | 300 |
 | Filtro di ricambio | Permette di trattare 100 litri prima della sostituzione. | 0,1 kg | 50 |
 
-Il fornello consuma 100 Lx/h durante l’uso. Una preparazione ordinaria richiede 30 minuti e 50 Lx; si segnano le preparazioni oppure le ore, senza doppio conteggio. Ricaricare il NEC Rosso costa 5 cr e richiede un’ora con fonte adeguata (§5.4).
+Il fornello dispone di dieci preparazioni ordinarie, ciascuna di 30 minuti e fino a quattro persone. Si segnano soltanto le preparazioni rimaste. Il NEC Rosso dedicato conserva il servizio specifico di ricarica: 5 cr e un’ora presso una stazione adeguata. Nel campo attrezzato il consumo della cucina ordinaria è compreso nella quota del §5.4.9 e non si conteggia una seconda volta.
 
 Tutto ha Reperibilità Comune, tranne depuratore e filtri, Non comune. Il peso del corredo da cucina comprende la prima cartuccia; quello del depuratore comprende il primo filtro, con capacità di 100 litri.
 
@@ -340,7 +340,7 @@ Permette di ritrovare un punto registrato e ripercorrere un itinerario memorizza
 
 Non rileva ostacoli, pericoli o passaggi sconosciuti. Se il percorso è interrotto, trovare una deviazione richiede le normali Prove. Tratti percorsi con il dispositivo spento e teletrasporti interrompono la continuità della registrazione: occorre ristabilire un riferimento noto.
 
-Peso 0,3 kg; costo 600 cr; REP NC; Qualità Comune, PS Integrità 10, 2 PI. Comprende NEC Verde compatto carico da 100 Lx, cavo e alimentatore: consumo 2 Lx/h, autonomia 50 ore. Ricambio carico 10 cr; sostituzione 1 AzP; ricarica completa un’ora e 1 cr con fonte adeguata (§5.4).
+Peso 0,3 kg; costo 600 cr; REP NC; Qualità Comune, PS Integrità 10, 2 PI. Comprende NEC Verde compatto carico, cavo e alimentatore. Rientra nell’elettronica ordinaria senza conteggio energetico (§5.4.3). Ricambio carico 10 cr; sostituzione 1 AzP.
 
 ## **3.4 Corredo di sopravvivenza ambientale**
 
@@ -412,7 +412,7 @@ Le dotazioni seguenti sostengono fino a 200 kg, compreso l’equipaggiamento del
 
 Predisporre ciascun oggetto richiede un minuto. Per la barella questo tempo comprende assicurare un paziente accessibile in posizione supina; il trasporto non lo stabilizza e non lo cura. Pericoli, instabilità o manovre difficili mantengono le normali Prove.
 
-Il verricello comprende cavo, imbracatura, gancio, comando, NEC Rosso standard carico e alimentatore. Consuma 100 Lx/h durante il movimento: cinque ore effettive con 500 Lx; nessun consumo per tenere fermo il carico. Sostituzione della cella: 1 AzP; ricarica completa: un’ora e 5 cr con fonte adeguata. Gli altri oggetti non richiedono NEC.
+Il verricello comprende cavo, imbracatura, gancio, comando, NEC Rosso dedicato carico e alimentatore. La riserva offre cinque ore effettive di movimento; mantenere fermo il carico non consuma autonomia. Si annotano soltanto le ore residue. Sostituzione della cella: 1 AzP; servizio specifico di ricarica completa: un’ora e 5 cr presso una stazione adeguata. Gli altri oggetti non richiedono NEC.
 
 | Oggetto | Qualità | PS Integrità | PI |
 | :---- | :---- | :---- | :---- |
@@ -485,7 +485,7 @@ Mentre è integra, chiusa e rifornita, permette di operare nel vuoto o in atmosf
 
 Indossarla e controllarne la chiusura richiede 5 minuti. Se già indossata e predisposta, chiudere il casco e attivare il supporto vitale richiede 1 AzP e due mani. La climatizzazione concede \+2 alle PS di Tempra contro caldo e freddo ambientali, quando richieste; si applica un solo beneficio dell’equipaggiamento contro lo stesso pericolo.
 
-Un NEC Verde standard da 1.000 Lx alimenta tutte le funzioni a 25 Lx/h, per 40 ore. Non si ricalcola il consumo spegnendo una singola funzione. Aria ed energia si annotano separatamente: 40 ore di batteria non aumentano le 4 ore d’aria. A NEC esaurito cessano climatizzazione, lampada, comunicazioni e indicatori; la tenuta passiva e l’erogazione meccanica dell’aria rimangono disponibili finché tuta e bombole sono integre.
+Il NEC Verde dedicato offre 40 ore di funzionamento complessivo, senza ricalcolare il consumo spegnendo una singola funzione. Aria ed energia si annotano separatamente: 40 ore di batteria non aumentano le 4 ore d’aria. A NEC esaurito cessano climatizzazione, lampada, comunicazioni e indicatori; la tenuta passiva e l’erogazione meccanica dell’aria rimangono disponibili finché tuta e bombole sono integre.
 
 Non concede AR e non protegge automaticamente da radiazioni, sostanze corrosive o attacchi di Fuoco e Gelo. Le toppe ripristinano la tenuta delle piccole lacerazioni compatibili senza recuperare PI.
 
@@ -497,7 +497,7 @@ Comprende involucro, telaio, pavimento isolante, ancoraggi, anticamera per una p
 
 Una persona impiega 10 minuti per montarlo o smontarlo. Occorrono una superficie adatta, ancoraggi utilizzabili e uno spazio di 2 × 2 Q; in condizioni ordinarie non serve una Prova. Entrare o uscire dall’anticamera richiede un minuto. Pressurizzazione iniziale e normali passaggi sono compresi nell’autonomia dichiarata.
 
-Il NEC Verde standard da 1.000 Lx alimenta il riparo a 50 Lx/h, per 20 ore indipendentemente dal numero degli occupanti. La climatizzazione concede \+2 alle PS di Tempra contro caldo e freddo ambientali all’interno. A batteria esaurita cessano le funzioni elettriche; l’involucro mantiene la tenuta e le bombole forniscono aria tramite il regolatore meccanico.
+Il NEC Verde dedicato alimenta il riparo per 20 ore, indipendentemente dal numero degli occupanti. La climatizzazione concede \+2 alle PS di Tempra contro caldo e freddo ambientali all’interno. A batteria esaurita cessano le funzioni elettriche; l’involucro mantiene la tenuta e le bombole forniscono aria tramite il regolatore meccanico.
 
 Offre condizioni adatte al riposo, ma non accelera il recupero e non costituisce una postazione medica. Protezione dalle radiazioni, difesa balistica e resistenza agli agenti corrosivi richiedono dotazioni specifiche.
 
@@ -553,7 +553,7 @@ Accendere, spegnere o cambiare canale richiede 1 AzP. Una volta attivo, ascoltar
 
 ### **Alimentazione e riservatezza**
 
-Il personale usa un Verde compatto: 1 Lx/h e 100 ore. Quello da squadra usa un Verde standard: 5 Lx/h e 200 ore. La stazione radio usa un Verde standard: 25 Lx/h e 40 ore. Il consumo comprende ascolto e trasmissione. Ricarica e ricambi seguono il §5.4; sostituzione in 1 AzP. Le comunicazioni ordinarie sono ascoltabili da ricevitori compatibili sul canale; la cifratura richiede il modulo del §4.4. Intercettazione specialistica e disturbo intenzionale non sono funzioni dei comunicatori ordinari.
+I comunicatori personali e da squadra e la stazione radio portatile ordinaria usano NEC Verdi, senza conteggio dell’ascolto, delle trasmissioni o delle ore (§5.4.3). Sostituzione del ricambio accessibile: 1 AzP. Le comunicazioni ordinarie sono ascoltabili da ricevitori compatibili sul canale; la cifratura richiede il modulo del §4.4. Intercettazione specialistica e disturbo intenzionale non sono funzioni dei comunicatori ordinari.
 
 ## **4.2 Strumenti ottici e visori**
 
@@ -580,7 +580,7 @@ Entrambi consentono di sfruttare la visione ottenuta negli attacchi, ma non aume
 
 ### **Impiego e alimentazione**
 
-Indossare e attivare un visore accessibile richiede 1 AzP e due mani; da indossato, accenderlo o spegnerlo richiede 1 AzP. Il mantenimento non richiede Azioni. Ogni visore comprende un Verde standard da 1.000 Lx, cavo e alimentatore: 10 Lx/h, 100 ore e sostituzione in 1 AzP. Ricarica e ricambi: §5.4. Binocolo e periscopio funzionano senza NEC.
+Indossare e attivare un visore accessibile richiede 1 AzP e due mani; da indossato, accenderlo o spegnerlo richiede 1 AzP. Il mantenimento non richiede Azioni. Ogni visore comprende NEC Verde standard carico, cavo e alimentatore; l’uso ordinario non richiede conteggi energetici (§5.4.3). Sostituzione della cella: 1 AzP. Binocolo e periscopio funzionano senza NEC.
 
 ## **4.3 Rilevamento e sorveglianza**
 
@@ -609,7 +609,7 @@ Una lettura richiede 1 AzP, senza Prova per comprendere gli avvisi ordinari. Lo 
 
 ### **Alimentazione e collegamenti**
 
-Registratore e Rilevatore ambientale usano un Verde compatto: 2 Lx/h e 50 ore. La videosorveglianza usa due Verdi compatti, uno per componente: ciascuno 2 Lx/h e 50 ore. L’allarme usa un Verde compatto per sensore e uno per avvisatore: ciascuno 1 Lx/h e 100 ore. Sono compresi NEC carichi, cavi e alimentatori. Ricarica: §5.4; sostituzione in 1 AzP. Ostacoli e interferenze possono interrompere i collegamenti remoti.
+Registratore e Rilevatore ambientale usano un Verde compatto. La videosorveglianza usa una cella per componente; l’allarme una per sensore e una per avvisatore. NEC carichi, cavi e alimentatori sono compresi. L’elettronica ordinaria non richiede conteggi energetici (§5.4.3); sostituzione del ricambio accessibile in 1 AzP. Ostacoli e interferenze possono interrompere i collegamenti remoti.
 
 ## **4.4 Comunicazioni protette e controsorveglianza**
 
@@ -629,7 +629,7 @@ Un’ispezione richiede 10 minuti per un locale fino a 4 × 4 Q, accesso alle su
 
 Non scopre automaticamente dispositivi spenti, osservatori esterni, strumenti puramente ottici o sorveglianza magica. Localizzare una microspia non la disattiva: rimozione o manomissione sono interventi separati. Il bonus non si somma a quello di altri strumenti sulla stessa Prova.
 
-Comprende NEC Verde standard carico, cavo e alimentatore: 1.000 Lx, 25 Lx/h e 40 ore effettive. Ricambio carico 100 cr; sostituzione 1 AzP; ricarica completa un’ora e 10 cr con fonte adeguata (§5.4).
+Comprende NEC Verde standard carico, cavo e alimentatore; l’uso ordinario non richiede un contatore energetico (§5.4.3). Ricambio carico 100 cr; sostituzione 1 AzP.
 
 | Oggetto | Peso | Costo cr | REP |
 | :---- | :---: | :---: | :---: |
@@ -660,9 +660,9 @@ La cassetta degli attrezzi comprende chiavi, cacciaviti, pinze, martello, lime e
 
 Il corredo artigianale professionale è dedicato a un mestiere, per esempio sartoria, pelletteria, falegnameria o lavorazione manuale dei metalli. Comprende gli utensili portatili e gli strumenti di misura pertinenti. Il \+2 vale soltanto per quel mestiere. Materiali da lavorare, ricambi, forge e macchinari pesanti sono separati.
 
-Il corredo di manutenzione da campo comprende utensili di precisione e strumenti diagnostici portatili. Mantiene il profilo del Manuale degli Armamenti, §7.13.7: 6 PI, Qualità Non comune e PS Integrità 12\. La diagnostica usa un NEC Verde standard da 1.000 Lx: 25 Lx/h e 40 ore di uso. NEC carico, cavo e alimentatore sono compresi; sostituzione in 1 AzP e ricarica secondo il §5.4. Gli utensili manuali restano utilizzabili anche senza alimentazione, per i lavori che possono svolgere.
+Il corredo di manutenzione da campo comprende utensili di precisione e strumenti diagnostici portatili. Mantiene il profilo del Manuale degli Armamenti, §7.13.7: 6 PI, Qualità Non comune e PS Integrità 12\. La diagnostica ordinaria usa un NEC Verde standard senza conteggio energetico (§5.4.3). NEC carico, cavo e alimentatore sono compresi; sostituzione in 1 AzP. Gli utensili manuali restano utilizzabili anche senza alimentazione, per i lavori che possono svolgere.
 
-La postazione di lavoro specializzata comprende banco, fissaggi, strumenti di misura e utensili per un’attività precisa, per esempio riparazione di armi, riparazione di circuiti elettronici o confezione di abiti. Il \+3 vale esclusivamente per l’attività scelta. Richiede una superficie stabile, uno spazio di 2 × 2 Q e alimentazione esterna. Montarla o smontarla richiede 10 minuti a una persona, senza Prova in condizioni ordinarie. Consuma 1.000 Lx/h: una rete adeguata o un Modulo Rosso esterno da 5.000 Lx la alimentano; il Modulo offre cinque ore e si acquista separatamente. Non sostituisce impianti industriali.
+La postazione di lavoro specializzata comprende banco, fissaggi, strumenti di misura e utensili per un’attività precisa, per esempio riparazione di armi, riparazione di circuiti elettronici o confezione di abiti. Il \+3 vale esclusivamente per l’attività scelta. Richiede una superficie stabile, uno spazio di 2 × 2 Q e alimentazione esterna. Montarla o smontarla richiede 10 minuti a una persona, senza Prova in condizioni ordinarie. Una rete adeguata o un Modulo Rosso esterno da 10 UER la alimentano: il Modulo offre cinque ore di lavoro e si acquista separatamente. Si annota l’autonomia; 2 UER ripristinano un’ora. Non sostituisce impianti industriali.
 
 ### **Regole comuni**
 
@@ -707,13 +707,13 @@ La valigetta non identifica automaticamente un colpevole: collegare una traccia 
 
 Si sceglie un campo preciso, per esempio analisi chimiche, biologiche, geologiche o forensi. Comprende banco, strumenti di misura, apparecchi d’esame e dotazione ordinaria per preparare i campioni.
 
-Richiede una superficie stabile, uno spazio di 2 × 2 Q e alimentazione esterna. Una persona lo prepara o lo smonta in 30 minuti, senza Prova in condizioni ordinarie. Consuma 1.000 Lx/h: un Modulo Rosso esterno da 5.000 Lx offre cinque ore di uso e si acquista separatamente.
+Richiede una superficie stabile, uno spazio di 2 × 2 Q e alimentazione esterna. Una persona lo prepara o lo smonta in 30 minuti, senza Prova in condizioni ordinarie. Un Modulo Rosso esterno da 10 UER offre cinque ore di lavoro e si acquista separatamente. Si annota l’autonomia; 2 UER ripristinano un’ora.
 
 Un’analisi ordinaria di laboratorio richiede normalmente 1 ora; analisi complesse possono richiedere più tempo. Il \+3 vale nel campo scelto. Il laboratorio non comprende automaticamente strumentazione clinica o chirurgica, contenimento avanzato o strumenti per analizzare fenomeni soprannaturali.
 
 ### **Impiego comune**
 
-Il corredo portatile e la valigetta comprendono ciascuno un NEC Verde standard carico, cavo e alimentatore: 1.000 Lx, 25 Lx/h e 40 ore di uso. Ricarica e ricambi seguono il §5.4; sostituzione in 1 AzP. Il kit di campionamento non richiede alimentazione. Pesi e prezzi comprendono la dotazione dichiarata.
+Il corredo portatile e la valigetta comprendono ciascuno un NEC Verde standard carico, cavo e alimentatore. L’elettronica diagnostica ordinaria non richiede un registro energetico (§5.4.3); sostituzione del ricambio accessibile in 1 AzP. Il kit di campionamento non richiede alimentazione. Pesi e prezzi comprendono la dotazione dichiarata.
 
 Si effettua una Prova quando l’esito è incerto. Si applica un solo modificatore degli strumenti alla Prova pertinente: corredo da \+2 e laboratorio da \+3 concedono complessivamente \+3. Percezione e Scienza si usano in base all’attività svolta, senza moltiplicare i tiri per lo stesso esame.
 
@@ -757,160 +757,137 @@ I modificatori degli strumenti e dei Talenti seguono il §1.2; si usa l’Abilit
 
 Sementi, concimi, trattamenti, mangimi e acqua sono risorse separate. Piccoli ricambi e materiali ordinari di pulizia rientrano nel normale rifornimento del corredo, senza contare ogni singolo utilizzo. Non si introducono registri quotidiani per colture o animali: le scorte si annotano quando quantità e disponibilità sono rilevanti per la partita.
 
-## **5.4 Nuclei Energetici Cromatici**
+## **5.4 NEC e gestione dell’energia**
 
-I Nuclei Energetici Cromatici, abbreviati NEC, sono la principale fonte energetica dell’ambientazione. Esistono tre tipi: Rosso, Blu e Verde. Il colore identifica il comportamento energetico, non la Qualità costruttiva. Le fonti a combustibile liquido non sono presenti.
+I Nuclei Energetici Cromatici, NEC, alimentano la tecnologia dell’ambientazione. Le riserve si esprimono in Unità Energetiche Rosse, Blu o Verdi: UER, UEB e UEV. Il colore identifica l’impiego energetico, non la Qualità costruttiva. Le fonti a combustibile liquido non sono presenti.
 
-### **5.4.1 Capacità ed erogazione**
+### **5.4.1 Colori e proprietà**
 
-L’energia si misura in Lux, Lx. Un Lx alimenta per un’ora la torcia di riferimento, che consuma 1 Lx/h. La capacità massima e la carica residua si misurano in Lx; l’erogazione continua massima in Lx/h. L’erogazione è un limite: il NEC fornisce soltanto quanto richiesto dal dispositivo.
+| Risorsa | Impieghi |
+| :---- | :---- |
+| UER · Rossa | Motori, macchinari e calore; Plasma, Fuoco e Laser. |
+| UEB · Blu | Scudi energetici, Elettricità, Concussivo, Gelo e sistemi di Traiettoria. |
+| UEV · Verde | Elettronica, sensori, comunicazioni, illuminazione e supporto vitale. |
 
-| NEC standard | Capacità | Erogazione continua | Impiego |
+Il colore consente di alimentare la funzione prevista dal dispositivo: non assegna tutte le proprietà della sua famiglia e non permette di cambiare effetto sostituendo la cella. Gli effetti del danno e le Contromisure seguono il Manuale del Giocatore, §5.24. Il danno tecnologico resta Naturale salvo eccezione espressa. Proprietà chimiche o meccaniche non richiedono automaticamente un NEC.
+
+### **5.4.2 Cariche e contatori**
+
+1 UE del colore appropriato permette di ripristinare 10 cariche personali. Si contano le cariche mancanti, non il numero degli accumulatori. Le UE dei tre colori sono riserve separate e non si convertono fra loro. La capacità di una UE dello stesso colore rimane costante in ogni impiego.
+
+Si usa un solo contatore per riserva: colpi o cariche per gli armamenti, autonomia per i dispositivi, chilometri, ore o punti per i veicoli, giorni per un campo. Se una riserva alimenta più funzioni, la scheda può esprimerla in punti e dichiara quante UE vale un punto per quell’impianto: il rapporto non è universale. Le UE servono al rifornimento e al trasferimento, senza duplicare il registro o annotare frazioni per Round. Un colpo ordinario di un’arma energetica personale consuma una carica; consumi maggiori sono dichiarati dal profilo.
+
+### **5.4.3 Elettronica personale ordinaria**
+
+Torce, comunicatori personali, mirini, visori, sensori, elettronica degli elmetti e diagnostica portatile ordinaria non richiedono conteggi energetici. Manutenzione e ricarica sono comprese nei normali rifornimenti. Due ore di combattimento non impongono di annotare ore o frazioni di consumo per questi oggetti. I benefici funzionano finché il dispositivo è integro, alimentato e utilizzato secondo il proprio profilo.
+
+In caso di isolamento prolungato, guasto agli impianti o emergenza, il Direttore può rendere rilevante l’alimentazione e comunica un’autonomia semplice, per esempio tre giorni. Non si ricostruiscono retroattivamente i consumi. Armi, scudi energetici, droni, propulsori, esoscheletri, utensili motorizzati e supporto vitale autonomo mantengono le risorse esplicite della scheda. Le applicazioni, i reagenti e le cartucce materiali si registrano anche quando l’elettronica non richiede un conteggio.
+
+### **5.4.4 Formati e ricambi**
+
+| Formato | Capacità | Gestione |
+| :---- | :---- | :---- |
+| Accumulatore personale | Cariche del modello | Si segnano cariche o colpi rimasti. |
+| Modulo energetico | 10 UE dello stesso colore | Riserva di servizio o autonomia indicata dal dispositivo. |
+| Banco energetico | 100 UE dello stesso colore | Impianti, veicoli e grandi riserve; contatore del profilo. |
+
+Gli apparecchi venduti con batteria comprendono il NEC carico dichiarato: non si somma di nuovo il prezzo del ricambio. Le celle e i pacchi d’arma dedicati seguono il Manuale degli Armamenti, §§7.20.5–7.20.6. I formati specialistici conservano gli alloggiamenti e le compatibilità della propria scheda.
+
+| Ricambio | Peso | REP | Prezzo carico |
 | :---- | :---- | :---- | :---- |
-| Rosso | 500 Lx | 100 Lx/h | Capacità ed erogazione medie; alimentazione ordinaria. |
-| Blu | 250 Lx | 200 Lx/h | Capacità bassa ed erogazione alta; richieste intense e brevi. |
-| Verde | 1.000 Lx | 50 Lx/h | Capacità alta ed erogazione bassa; lunga autonomia. |
+| Verde compatto per elettronica ordinaria | 15 g | CO | 10 cr |
+| Verde standard per elettronica ordinaria | 150 g | CO | 100 cr |
+| Rosso standard per utensili del catalogo | 150 g | CO | 50 cr |
+| Accumulatore ravvicinato comune da 5 cariche | 150 g | NC | 200 cr |
+| Modulo commerciale da 10 UE | 2 kg | NC | 600 cr |
+| Banco commerciale da 100 UE | 20 kg | RA | 6.000 cr |
 
-Una cella standard pesa 150 g e occupa circa 0,055 L. Il Verde compatto contiene 100 Lx, eroga fino a 5 Lx/h, pesa 15 g e occupa circa 0,0055 L. È una taglia dello stesso tipo Verde.
-
-Le scale maggiori usano kLx, MLx, GLx e TLx: ciascun passaggio moltiplica per 1.000. Un kLx equivale a 1.000 Lx; un MLx a un milione; un GLx a un miliardo; un TLx a mille miliardi. Il prefisso indica la quantità di energia, non un nuovo tipo di NEC. La scheda specifica capacità, erogazione e formato fisico.
-
-### **5.4.2 Ore di funzionamento e cariche**
-
-Per il funzionamento continuo valgono due regole: l’erogazione disponibile deve essere almeno pari al consumo e l’autonomia in ore è la carica residua divisa per il consumo. A 25 Lx/h un Verde standard pieno dura 40 ore. Una cella piena può essere inadatta quando non raggiunge l’erogazione richiesta.
-
-Gli impieghi a impulsi consumano Lx per attivazione. Il Blu standard, in un dispositivo predisposto, può erogare impulsi immediati da 50 Lx: la riserva di 250 Lx permette cinque attivazioni. Possono avvenire in successione secondo le normali Azioni dell’oggetto, senza ulteriori tempi di attesa. Questa capacità è distinta dal limite continuo di 200 Lx/h e non permette un funzionamento prolungato oltre quel limite. Altri formati dichiarano l’impulso ammesso.
-
-La scheda riporta ore oppure cariche: non occorre annotare entrambe queste misure e i Lx. Le ore sono effettive, anche non consecutive; non si contano per Round. Una carica è l’attivazione dell’oggetto, non un’unità energetica universale. I colpi delle quattro armi a energia del §7.20.5 del Manuale degli Armamenti consumano 25 Lx; una carica ravvicinata o un getto di lanciafiamme consuma 50 Lx.
-
-### **5.4.3 Celle e pacchi**
-
-«Batteria» è il termine generico; una cella è un singolo NEC. Un Modulo contiene 10 celle, un Banco 100 e una Matrice 10.000. Nei pacchi predisposti per il collegamento in parallelo si sommano capacità, carica residua ed erogazione delle celle operative. Una cella non operativa non contribuisce alla riserva utilizzabile o all’erogazione. Se l’erogazione rimasta non sostiene il carico, il dispositivo non funziona.
-
-| Formato | Celle | Massa delle sole celle | Volume delle sole celle |
-| :---- | :---- | :---- | :---- |
-| Cella | 1 | 150 g | 0,055 L |
-| Modulo | 10 | 1,5 kg | 0,55 L |
-| Banco | 100 | 15 kg | 5,5 L |
-| Matrice | 10.000 | 1,5 t | 550 L |
-
-Il catalogo indica separatamente il peso del pacco completo, comprensivo di involucro e collegamenti. I formati ad alta densità per navi e infrastrutture sono impianti su commessa: prezzo e caratteristiche appartengono alla scheda del mezzo o dell’impianto.
-
-### **5.4.4 Catalogo delle celle e dei pacchi**
-
-I prezzi sono in crediti e comprendono la prima carica. Gli apparecchi già venduti con batteria comprendono il NEC della loro scheda: il prezzo del ricambio non si aggiunge nuovamente al costo dell’oggetto.
-
-| Cella | Capacità | Erogazione continua massima | Peso | REP | Prezzo carica |
-| :---- | :---- | :---- | :---- | :---- | :---- |
-| Verde compatta | 100 Lx | 5 Lx/h | 15 g | CO | 10 cr |
-| Rossa standard | 500 Lx | 100 Lx/h | 150 g | CO | 50 cr |
-| Blu standard | 250 Lx | 200 Lx/h | 150 g | NC | 200 cr |
-| Verde standard | 1.000 Lx | 50 Lx/h | 150 g | CO | 100 cr |
-
-La Blu standard nel formato ravvicinato fornisce cinque attivazioni da 50 Lx. Le celle d’arma dedicate e i pacchi per lanciafiamme sono nel Manuale degli Armamenti, §§7.20.5–7.20.6.
-
-Un Modulo commerciale contiene dieci celle standard dello stesso tipo: costa quanto le celle più 100 cr per involucro e collegamenti e pesa 2 kg complessivi. Un Banco contiene dieci Moduli, pesa 20 kg e ha prezzo e valori energetici dieci volte superiori a quelli del Modulo.
-
-| Pacco completo | Capacità | Erogazione continua massima | Peso completo | REP | Prezzo carico |
-| :---- | :---- | :---- | :---- | :---- | :---- |
-| Modulo Rosso | 5.000 Lx | 1.000 Lx/h | 2 kg | NC | 600 cr |
-| Modulo Blu | 2.500 Lx | 2.000 Lx/h | 2 kg | NC | 2.100 cr |
-| Modulo Verde | 10.000 Lx | 500 Lx/h | 2 kg | NC | 1.100 cr |
-| Banco Rosso | 50.000 Lx | 10.000 Lx/h | 20 kg | RA | 6.000 cr |
-| Banco Blu | 25.000 Lx | 20.000 Lx/h | 20 kg | RA | 21.000 cr |
-| Banco Verde | 100.000 Lx | 5.000 Lx/h | 20 kg | RA | 11.000 cr |
-
-Un contenitore riutilizzabile vuoto costa 100 cr per Modulo o 1.000 cr per Banco con i dieci alloggiamenti. Le singole celle possono essere sostituite senza ricomprare il contenitore.
+L’energia sfusa costa 10 cr per UE, sia Rossa, Blu o Verde. Una ricarica parziale costa 10 cr per UE ripristinata e richiede un contenitore compatibile. Ogni Modulo o Banco contiene un solo colore. Il Modulo commerciale costa 500 cr vuoto e 600 cr carico; la ricarica completa costa 100 cr. Il Banco commerciale costa 5.000 cr vuoto e 6.000 cr carico; la ricarica completa costa 1.000 cr. Gli accumulatori specialistici conservano il proprio prezzo d’acquisto e le compatibilità dichiarate. Le celle per elettronica ordinaria non sono ricambi universali per armi o altri effetti speciali.
 
 ### **5.4.5 Compatibilità e sostituzione**
 
-L’alloggiamento indica formato e tipi di NEC accettati. Cella compatta, standard, formato d’arma e Modulo non sono automaticamente intercambiabili. Un NEC più capiente aumenta l’autonomia soltanto dove il formato è ammesso; non aumenta danni, bonus, portata o Azioni. Collegamenti esterni richiedono una predisposizione dichiarata.
+L’alloggiamento indica formato e colore accettati. Una cella compatta, un accumulatore d’arma, un Modulo e un Banco non sono automaticamente intercambiabili. Una riserva più capiente aumenta l’autonomia soltanto dove ammessa; non aumenta danni, bonus, portata o Azioni. Collegamenti esterni richiedono una predisposizione compatibile.
 
-Sostituire una cella o un Modulo accessibile con ricambio pronto e attacco rapido compatibile richiede 1 AzP. Installare o spostare un Banco richiede un minuto fuori dal combattimento; gli impianti specialistici mantengono i propri tempi. Aprire un involucro per ripararlo non è una sostituzione rapida.
+Sostituire una cella o un Modulo accessibile con ricambio pronto e attacco rapido compatibile richiede 1 AzP. Installare o spostare un Banco richiede un minuto fuori dal combattimento; gli impianti specialistici mantengono i propri tempi. Sostituire un accumulatore carico è distinto dal ricaricarne uno scarico.
 
-### **5.4.6 Ricarica**
+### **5.4.6 Ricarica degli effetti speciali**
 
-I NEC sono riutilizzabili. Celle e pacchi del catalogo si ricaricano normalmente in un’ora con caricatore e fonte adeguati. Mezza riserva richiede 30 minuti; una carica della Blu ravvicinata richiede 12 minuti. Il limite ordinario di ingresso è la capacità del pacco per ora, distinto dall’erogazione in uscita. Con una fonte meno potente la ricarica dura più a lungo.
+Le cariche si acquistano oppure si ripristinano con strumentazione industriale o un trasformatore dedicato. Un normale caricatore, un adattatore generico, i PM personali o la sola vicinanza a una Matrice non ricaricano gli accumulatori degli effetti speciali. Occorre una fonte compatibile dello stesso colore collegata attraverso l’impianto appropriato.
 
-| Caricatore | Formato | Trasferimento massimo | Peso | REP | Prezzo |
-| :---- | :---- | :---- | :---- | :---- | :---- |
-| Caricatore portatile | Una cella compatta, standard o ravvicinata | 1.000 Lx/h | 0,5 kg | NC | 500 cr |
-| Stazione per moduli | Un modulo o fino a dieci celle standard | 10.000 Lx/h totali | 3 kg | NC | 2.000 cr |
-| Stazione per banchi | Un banco o fino a dieci moduli | 100.000 Lx/h totali | 15 kg | RA | 8.000 cr |
+Il trasformatore preleva una UE dalla fonte e dispone di dieci cariche nel proprio accumulatore tampone. Trasferisce soltanto quelle necessarie e conserva il resto per i rifornimenti successivi. Una fonte finita perde l’unità prelevata. Il tampone si annota da 0 a 10 cariche; il modello multicromatico mantiene un resto separato per ogni colore. Il dispositivo non produce energia e non cambia il colore della fonte.
 
-I caricatori non contengono una riserva: richiedono rete o banchi compatibili. Il caricatore portatile comprende i connettori per le celle d’arma dedicate, pesa 0,5 kg e mantiene 4 PI, Qualità Comune e PS Integrità 10\. L’energia ricevuta dal NEC è sottratta alla fonte; non si contano perdite ordinarie di conversione. Cavi e alimentatori inclusi negli apparecchi permettono la ricarica del formato previsto con una fonte adeguata e non costituiscono una riserva.
-
-La tariffa ordinaria è 0,01 cr per Lx ripristinato. Una ricarica completa costa 1 cr per il Verde compatto, 5 cr per il Rosso standard, 2,5 cr per il Blu standard e 10 cr per il Verde standard. Per un Modulo i costi sono rispettivamente Rosso 50, Blu 25 e Verde 100 cr; per un Banco Rosso 500, Blu 250 e Verde 1.000 cr. Non si aggiungono i vecchi costi forfettari. Un servizio particolare può avere un sovrapprezzo dichiarato.
-
-I formati d’arma fino a 750 Lx si ricaricano in un’ora con caricatore portatile adeguatamente alimentato. Il pacco Gehemmapuker da 2.500 Lx richiede un’ora con stazione per Moduli oppure due ore e mezza con caricatore portatile a piena potenza. I dispositivi specialistici che dichiarano un proprio tempo di ricarica conservano quel tempo.
-
-### **5.4.7 Consumi dell’equipaggiamento**
-
-| Dispositivo | NEC | Riserva | Consumo | Autonomia |
-| :---- | :---- | :---- | :---- | :---- |
-| Torcia a mano di riferimento | Verde compatto | 100 Lx | 1 Lx/h | 100 ore |
-| Lampada frontale | Verde compatto | 100 Lx | 1 Lx/h | 100 ore |
-| Lanterna elettrica | Verde standard | 1.000 Lx | 5 Lx/h | 200 ore |
-| Comunicatore personale | Verde compatto | 100 Lx | 1 Lx/h | 100 ore |
-| Comunicatore da squadra | Verde standard | 1.000 Lx | 5 Lx/h | 200 ore |
-| Stazione radio portatile | Verde standard | 1.000 Lx | 25 Lx/h | 40 ore |
-| Visore notturno o termico autonomo | Verde standard | 1.000 Lx | 10 Lx/h | 100 ore |
-| Elmetto ASA Recon e altri elmetti elettronici | Verde standard | 1.000 Lx | 25 Lx/h complessivi | 40 ore |
-| Registratore audiovisivo | Verde compatto | 100 Lx | 2 Lx/h | 50 ore |
-| Kit di videosorveglianza | Due Verdi compatti, uno per componente | 100 Lx per componente | 2 Lx/h per componente | 50 ore per componente |
-| Kit di allarme perimetrale | Due Verdi compatti, sensore e avvisatore | 100 Lx per componente | 1 Lx/h per componente | 100 ore per componente |
-| Rilevatore ambientale | Verde compatto | 100 Lx | 2 Lx/h | 50 ore |
-| Scanner diagnostico portatile o Cybertronic | Verde standard | 1.000 Lx | 25 Lx/h | 40 ore di uso |
-| Utensile elettrico portatile di riferimento | Rosso standard | 500 Lx | 100 Lx/h durante l’uso | 5 ore di uso |
-| Drone leggero di riferimento | Rosso standard | 500 Lx | 100 Lx/h | 5 ore |
-| Postazione medica da campo | Modulo di 10 Rossi standard, oppure rete adeguata | 5.000 Lx nel modulo | 1.000 Lx/h | 5 ore con modulo |
-| Spada CSA 404 e altre armi con cella ravvicinata comune | Blu standard, formato ravvicinato | 250 Lx | 50 Lx per attivazione | 5 attivazioni |
-| Navigatore inerziale | Verde compatto | 100 Lx | 2 Lx/h | 50 ore |
-| Analizzatore alimentare portatile | Verde standard | 1.000 Lx | 25 Lx/h | 40 ore di uso |
-| Rilevatore di sorveglianza | Verde standard | 1.000 Lx | 25 Lx/h | 40 ore di uso |
-| Utensile laser da taglio e saldatura | Rosso standard | 500 Lx | 100 Lx/h | 5 ore di uso |
-| Tuta extraveicolare | Verde standard | 1.000 Lx | 25 Lx/h complessivi | 40 ore elettriche; aria separata |
-| Riparo pressurizzato | Verde standard | 1.000 Lx | 50 Lx/h complessivi | 20 ore elettriche; aria separata |
-| Modulo di cifratura | NEC del comunicatore | Condivisa | Compreso nel comunicatore | Quella del comunicatore |
-
-La Torcia tattica da 20 Q usa un Verde compatto, 2 Lx/h e 50 ore; i moduli di visione da arma seguono i visori autonomi. Diagnostica del Corredo di manutenzione, Corredo di analisi e Valigetta ASA usano ciascuno un Verde standard, 25 Lx/h e 40 ore. Postazione tecnica e Laboratorio da campo consumano 1.000 Lx/h: un Modulo Rosso esterno offre cinque ore. Il fornello del §3.2 usa un Rosso standard da dieci preparazioni.
-
-I comunicatori hanno un unico consumo operativo comprendente ascolto e trasmissione, senza contare le frasi. I kit con due componenti hanno una cella per componente. Il drone è un profilo leggero di riferimento: i robot già descritti conservano l’autonomia propria. I moduli esterni per le postazioni di questo paragrafo non sono compresi nel prezzo. Le postazioni medicochirurgiche del §6.8 includono invece i NEC dichiarati e seguono le proprie riserve per operazioni e giorni.
-
-Estintori, nastro tecnico, toppe, schiuma strutturale, decontaminanti e calzature magnetiche non richiedono NEC. I nuovi dispositivi seguono i profili della tabella; aria, test e cartucce materiali restano risorse separate dall’energia. Il modulo di cifratura condivide il consumo del comunicatore, senza una seconda riserva da annotare.
-
-### **5.4.8 Elmetto Recon e spada CSA 404**
-
-L’ASA Recon dell’Alleanza usa un Verde standard da 1.000 Lx. Visione notturna, Sensori 1 a vista e udito e Allerta tattica 1 condividono un consumo complessivo di 25 Lx/h e 40 ore di autonomia. Il Filtro respiratorio 2 è passivo. Non si ricalcola il consumo disattivando una sola funzione; spegnendo tutta l’elettronica il consumo si arresta. A riserva esaurita cessano i benefici elettronici, mentre il filtro resta disponibile. Un’Iniziativa già determinata non si ricalcola allo spegnimento. Gli altri elmetti elettronici usano lo stesso profilo energetico e conservano i propri benefici.
-
-La CSA 404 Cybertronic usa un Blu standard da 250 Lx: ogni carica consumata spende 50 Lx e aggiunge il previsto \+2d6 Elettricità. Le cinque cariche sono quote di una sola riserva. Gli attacchi ordinari non consumano energia; a zero cariche rimane il profilo non attivato. Dichiarazione, PS per risparmiare una carica dopo un attacco fallito ed eccezioni dei Talenti seguono il Manuale degli Armamenti, §7.1.4. La medesima cella alimenta tutte le armi del formato ravvicinato comune del §7.20.5; ciascuna conserva il proprio effetto.
-
-### **5.4.9 La Neverlost e gli altri impieghi**
-
-La Neverlost usa banchi Blu per entrare e uscire dalla traiettoria: alta erogazione immediata per pochi minuti. I Verdi sostengono a lungo il supporto vitale, che richiede potenza contenuta. I Rossi alimentano motori, scudi e gli altri sistemi ordinari. Durante la manovra i tre gruppi continuano ad alimentare i rispettivi impianti, con riserve distinte.
-
-| Famiglia | NEC adatto | Modalità di impiego |
+| Rifornimento Blu con tampone inizialmente vuoto | Prelievo | Resto |
 | :---- | :---- | :---- |
-| Diagnostica tecnica, analisi scientifica e kit investigativo ASA | Verde per i sensori; Rosso per eventuali strumenti motorizzati | Ore di uso; il consumo del kit comprende i componenti della configurazione dichiarata. |
-| Laboratori e postazioni tecniche | Rosso | Alimentazione continua da modulo, banco o rete durante il lavoro. |
-| UMC e iniettori sanitari elettronici | Verde | Alimentazione dei controlli e dell’erogatore; si mantengono le cartucce come unico consumo ordinario da segnare. |
-| Conservazione refrigerata di medicinali e campioni | Verde | Funzionamento continuo; occorre dimensionare il banco per la potenza richiesta. |
-| Fornelli e attrezzature di cottura a Chroma | Rosso | Consumo durante la preparazione; profilo del fornello al §3.2. |
-| Esoscheletri e robot | Rosso | Alimentazione dei motori durante il funzionamento; riserva e autonomia dipendono dal modello. |
-| Impianti cibernetici singoli | Solo se richiesto dalla scheda | Nessun consumo o autonomia da registrare salvo indicazione esplicita. L’interfaccia neurale usa la bioenergia del corpo; catalogo nel capitolo 7\. |
-| Propulsori personali e sistemi di salto | Blu | Erogazione elevata per una breve manovra; energia per uso e limite di erogazione vanno dimensionati per modello. |
-| Armi a energia a distanza | Blu | Consumo per colpo. I formati e le capacità sono: plasma commerciale 20, Hellblazer 30, KEP 808 10 e Intruder 30; 25 Lx per colpo per questi quattro modelli. |
-| Mezzi terrestri, motori e scudi delle navi | Rosso | Consumo durante il funzionamento; moduli o banchi secondo potenza e autonomia del mezzo. |
-| Supporto vitale di navi e habitat | Verde | Alimentazione continua di lunga durata, con riserva dedicata. |
-| Ingresso e uscita dalla traiettoria | Blu | Banchi dedicati alle richieste elevate durante i pochi minuti della manovra. |
-| Edifici e infrastrutture | Rosso per gli impianti generali; Verde per servizi a basso consumo e riserve prolungate | Alimentazione da rete o banchi dimensionati per ciascun servizio. |
-| Stazioni di ricarica | Rete o banchi NEC compatibili | Trasferiscono energia alle celle; una stazione priva di riserva propria richiede una fonte esterna. |
+| 3 cariche del Wächter | 1 UEB | 7 |
+| Altre 5 cariche | Nessuno | 2 |
+| Altre 2 cariche | Nessuno | 0 |
 
-### **5.4.10 Alimentazione tecnologica e riserve mistiche**
+Il trasformatore portatile ripristina una carica all’ora. La stazione industriale ripristina una carica ogni dieci minuti. La velocità è complessiva per apparecchio: collegare più accumulatori non la moltiplica. Una ricarica parziale richiede il tempo delle sole cariche ripristinate. Il normale utilizzo di un impianto funzionante non richiede prove ripetute.
 
-I NEC descritti qui alimentano tecnologia in Lx e non richiedono Sintonizzazione. I contenitori mistici conservano capacità in PM, Sintonizzazione e procedure del Manuale della Magia. Non esiste una conversione automatica Lx–PM: un caricatore tecnologico non ricarica una riserva mistica spendendo PM e una cella NEC non paga automaticamente un Incantesimo.
+| Cariche da ripristinare | Portatile | Industriale | Servizio commerciale |
+| :---- | :---- | :---- | :---- |
+| 3 | 3 ore | 30 minuti | 30 cr |
+| 5 | 5 ore | 50 minuti | 50 cr |
+| 10 | 10 ore | 1 ora e 40 minuti | 100 cr |
+| 20 | 20 ore | 3 ore e 20 minuti | 200 cr |
+| 30 | 30 ore | 5 ore | 300 cr |
 
-Abiti e protezioni passive, utensili manuali, corde, tende, binocoli e periscopi ottici non richiedono NEC. Antibagliore, Protezione acustica e Filtro respiratorio degli elmetti restano passivi. UMC e iniettori sanitari elettronici usano NEC Verdi, ma si mantengono le cartucce come unico consumo ordinario da segnare. Le postazioni medicochirurgiche registrano separatamente operazioni Rosse, giorni Verdi e consumabili (§6.8). Energia, medicinali, reagenti, ossigeno e munizioni materiali sono risorse distinte.
+La tariffa del servizio commerciale è 10 cr per carica personale ripristinata. L’accumulatore completo ha il prezzo del modello. Con il proprio trasformatore, 1 UE da 10 cr ripristina dieci cariche; il servizio commerciale per dieci cariche costa invece 100 cr. Il trasformatore conserva le cariche non trasferite nel tampone. I tempi di questa sezione riguardano le cariche personali: impianti veicolari, supporto vitale e profili specialistici hanno propri tempi di rifornimento.
+
+### **5.4.7 Trasformatori**
+
+| Apparecchio | Colori gestiti | Acquisto | Componenti |
+| :---- | :---- | :---- | :---- |
+| Portatile monocromatico | Un colore fissato alla costruzione | 3.000 cr | 1.800 cr |
+| Portatile multicromatico | Rosso, Blu o Verde; una lavorazione alla volta | 6.000 cr | 3.600 cr |
+| Stazione industriale multicromatica | Colori separati; velocità complessiva del §5.4.6 | 20.000 cr | 12.000 cr |
+
+| Modello | Peso | PI | Qualità | PS Integrità | REP |
+| :---- | :---- | :---- | :---- | :---- | :---- |
+| Portatile monocromatico | 2 kg | 4 | Non comune | 12 | NC |
+| Portatile multicromatico | 4 kg | 6 | Non comune | 12 | RA |
+| Stazione industriale multicromatica | 40 kg | 12 | Rara | 14 | RA |
+
+Un Tecnico o un Tecnomante può costruire il trasformatore con progetto, componenti, strumenti adeguati e una Prova di Tecnologia. La fonte energetica si procura separatamente e non è compresa nei prezzi. Questi apparecchi ricaricano accumulatori personali e non sostituiscono automaticamente un impianto di rifornimento navale o veicolare.
+
+Il peso comprende apparecchio, cavi e accumulatore tampone; la fonte energetica si aggiunge separatamente. Il portatile monocromatico con un Modulo pesa 4 kg; il multicromatico con tre Moduli, uno per colore, pesa 10 kg. La stazione industriale è una macchina da officina, installabile anche su un veicolo attrezzato.
+
+### **5.4.8 Autonomia dei dispositivi**
+
+Le schede mantengono i benefici e le Azioni del dispositivo. L’ASA Recon non richiede più ore di batteria da annotare per le sue funzioni elettroniche ordinarie; il Filtro respiratorio resta passivo. La spada CSA 404 mantiene invece cinque cariche Blu, ognuna per l’impulso Elettricità previsto: a zero cariche rimane il profilo non attivato. Dichiarazione e consumo seguono il Manuale degli Armamenti, §7.1.4.
+
+| Dispositivo | Contatore operativo |
+| :---- | :---- |
+| Utensile motorizzato, verricello e drone leggero di riferimento | 5 ore effettive con il NEC dedicato; profilo specifico per ricambi e rifornimento. |
+| Postazione tecnica, laboratorio e postazione medica da campo | 5 ore di lavoro con un Modulo Rosso esterno da 10 UER; 2 UER ripristinano un’ora. |
+| Fornello portatile del §3.2 | 10 preparazioni con il NEC dedicato; nessun secondo contatore orario. |
+| Tuta extraveicolare e riparo pressurizzato | Rispettivamente 40 e 20 ore elettriche; aria separata. |
+| Postazioni medicochirurgiche del §6.8 | Operazioni Rosse, giorni Verdi e consumabili secondo il modello. |
+| Robot, esoscheletri e propulsori | Autonomia e impieghi speciali della scheda. |
+
+Gli utensili manuali e le protezioni passive restano utilizzabili secondo il proprio profilo anche senza alimentazione. Gli impianti cibernetici singoli del capitolo 7 non richiedono NEC salvo indicazione espressa. Energia, medicinali, reagenti, aria e munizioni materiali sono risorse distinte.
+
+### **5.4.9 Veicoli campi e infrastrutture**
+
+Ogni veicolo dichiara riserve installate e autonomia già calcolata. Per l’autovettura civile di riferimento un Modulo Rosso da 10 UER offre 1.000 km; 1 UER ripristina 100 km. Si aggiorna soltanto l’autonomia al termine della tratta. Motore e servizi ordinari sono compresi, senza un secondo costo per fari o strumentazione. Il pieno da 1.000 km costa 100 cr.
+
+La Neverlost dispone di 20 Banchi Rossi, 10 Banchi Blu e 3 Banchi Verdi: Riserva Rossa 100 punti, Riserva Blu 10 punti e supporto vitale per 30 giorni fino a dieci occupanti. Un punto Rosso vale 20 UER; uno Blu 100 UEB. In Traiettoria si consumano un punto Rosso e un giorno Verde al giorno, più un punto Blu per ingresso e uno per uscita. I moduli di servizio personali sono separati. Viaggio, armamenti e scudo seguono il Manuale dei Veicoli.
+
+Un bivacco con tende e dotazione personale ordinaria non richiede un registro energetico. Un campo attrezzato comprende cucina elettrica, conservazione degli alimenti, illuminazione dell’area e comunicazioni comuni. Si aggiorna una volta al giorno; le funzioni comprese non si pagano di nuovo per ciascun utilizzatore.
+
+| Campo attrezzato con dotazione proporzionata | Consumo giornaliero |
+| :---- | :---- |
+| Fino a 10 persone | 1 UER \+ 1 UEV |
+| Fino a 100 persone | 10 UER \+ 10 UEV |
+| Fino a 1.000 persone | 1 Banco Rosso \+ 1 Banco Verde |
+
+Sette PG con 10 UER e 10 UEV hanno dieci giorni di autonomia ordinaria del campo: 200 cr di energia complessivi, pari a 20 cr al giorno per un campo fino a dieci persone. Se le riserve procedono insieme basta annotare i giorni rimasti; gli impieghi straordinari modificano la riserva interessata. Officine, ospedali, radar potenti, scudi e armamenti hanno dotazioni proprie. Per contingenti e città non gestiti dai PG il Direttore usa un solo valore di autonomia complessiva quando il rifornimento diventa rilevante.
+
+### **5.4.10 Fonti tecnologiche e riserve mistiche**
+
+I NEC tecnologici non richiedono Sintonizzazione. Le batterie e gli Artefatti mistici conservano capacità in PM e procedure del Manuale della Magia. Non esiste una conversione automatica UE–PM: un trasformatore tecnologico non ricarica una riserva mistica e un NEC non paga automaticamente un Incantesimo.
+
+Una fonte cristallina o una Matrice alimenta un impianto tecnologico soltanto attraverso un collegamento adatto e con il colore corrispondente. La presenza nel suo raggio non ricarica automaticamente i NEC. La disponibilità utilizzabile della fonte e l’impianto di estrazione devono essere definiti dal relativo profilo; non si deducono dai PM personali o dalla sola dimensione del cristallo.
 
 ## **5.5 Accesso e ispezione**
 
@@ -925,9 +902,9 @@ Il piede di porco richiede due mani e 1 AzP per un tentativo ordinario. Il bonus
 
 Entrambi i corredi da scasso comprendono grimaldelli, utensili di precisione, sonde meccaniche, interfaccia elettronica, cavi e adattatori. Si usa Furtività per serrature meccaniche e Tecnologia per quelle elettroniche. Un tentativo ordinario richiede un minuto, due mani e accesso alla serratura; per lavori complessi il Direttore stabilisce prima un tempo maggiore. Si applicano le normali regole sui nuovi tentativi. Aprire una serratura non disattiva automaticamente gli allarmi.
 
-Ogni corredo da scasso comprende un NEC Verde standard carico, cavo e alimentatore: 1.000 Lx, consumo complessivo 25 Lx/h, autonomia 40 ore effettive. Gli utensili manuali restano utilizzabili senza energia.
+Ogni corredo da scasso comprende un NEC Verde standard carico, cavo e alimentatore. L’interfaccia elettronica ordinaria non richiede un contatore energetico (§5.4.3). Gli utensili manuali restano utilizzabili senza energia.
 
-Inserire e usare la sonda attraverso un’apertura accessibile richiede 1 AzP e due mani. L’osservazione usa le normali regole di Percezione, senza bonus; la sonda non offre visione termica. Un Verde compatto da 100 Lx alimenta l’intero dispositivo a 2 Lx/h per 50 ore; NEC carico, cavo e alimentatore compresi. Sostituire una cella accessibile richiede 1 AzP.
+Inserire e usare la sonda attraverso un’apertura accessibile richiede 1 AzP e due mani. L’osservazione usa le normali regole di Percezione, senza bonus; la sonda non offre visione termica. L’intero dispositivo usa un Verde compatto, senza conteggio energetico ordinario (§5.4.3); NEC carico, cavo e alimentatore compresi. Sostituire una cella accessibile richiede 1 AzP.
 
 | Oggetto | Qualità | PS Integrità | PI |
 | :---- | :---- | :---- | :---- |
@@ -970,7 +947,7 @@ Ogni corredo comprende già un terminale tecnico, programmi di diagnostica e con
 
 Una diagnosi o configurazione ordinaria richiede dieci minuti; un intervento ordinario su una serratura elettronica richiede un minuto. Le riparazioni mantengono i tempi della propria procedura. Il \+2 Professionale si applica soltanto a Tecnologia pertinente e non si somma al bonus di un corredo da scasso sulla stessa Prova.
 
-Il palmare comprende un NEC Verde compatto da 100 Lx: 2 Lx/h, 50 ore. Ogni corredo usa un solo Verde standard da 1.000 Lx, alloggiato nel terminale, per tutti i componenti della configurazione: 25 Lx/h e 40 ore. NEC carichi, cavi e alimentatori compresi; sostituzione 1 AzP. Le autonomie indicate sostituiscono i precedenti formati dedicati da 24 ore per queste dotazioni.
+Il palmare comprende un NEC Verde compatto; ogni corredo usa un solo Verde standard alloggiato nel terminale per i componenti della configurazione. NEC carichi, cavi e alimentatori sono compresi. L’elettronica ordinaria non richiede un conteggio di autonomia (§5.4.3); sostituzione del ricambio accessibile in 1 AzP.
 
 | Oggetto | Qualità | PS Integrità | PI |
 | :---- | :---- | :---- | :---- |
@@ -1004,9 +981,9 @@ Il Corredo rituale richiede comunque i materiali specifici indicati dal singolo 
 
 ### **Alimentazione e impiego**
 
-Il terminale di ciascun Corredo di ricerca o amministrativo, il Terminale per produzione multimediale e lo Strumento musicale elettronico utilizzano ciascuno un NEC Verde compatto da 100 Lx: consumo 2 Lx/h e autonomia 50 ore effettive, anche non consecutive. NEC carico, cavo e alimentatore sono compresi. Il NEC del terminale è già parte del corredo e non si registra una seconda volta.
+Il terminale di ciascun Corredo di ricerca o amministrativo, il Terminale per produzione multimediale e lo Strumento musicale elettronico comprendono NEC Verde compatto carico, cavo e alimentatore. Rientrano nell’elettronica ordinaria senza conteggio energetico (§5.4.3). Il NEC del terminale è già parte del corredo e non si registra una seconda volta.
 
-Ricambio Verde compatto carico: 10 cr, REP CO. Sostituzione con ricambio accessibile: 1 AzP. Ricarica completa: un’ora e 1 cr con fonte e alimentatore adeguati, secondo il §5.4. Gli altri oggetti di questo paragrafo non richiedono NEC.
+Ricambio Verde compatto carico: 10 cr, REP CO. Sostituzione con ricambio accessibile: 1 AzP. Manutenzione e ricarica ordinaria sono comprese nei normali rifornimenti. Gli altri oggetti di questo paragrafo non richiedono NEC.
 
 Preparazione e utilizzo seguono il §1.4 e i tempi dell’attività svolta. Scrittura, ricerca, esecuzione artistica e Rituali mantengono le normali Prove quando l’esito è incerto. Cancelleria, trucco e materiali ordinari si reintegrano durante il normale rifornimento, senza registrare ogni singolo impiego; materiali speciali e componenti dei Rituali restano separati.
 
@@ -1018,7 +995,7 @@ Taglio. Taglia metalli ordinari fino a 1 cm di spessore con 10 minuti di lavoro 
 
 Saldatura. Fornisce lo strumento necessario ai lavori compatibili. Quando ripara un oggetto, si applicano Prova di Tecnologia, tempi, materiali e recupero dei PI ordinari. È uno strumento Standard, senza bonus aggiuntivo. La testina richiede di mantenere il fascio sullo stesso punto e non concede un profilo d’arma laser.
 
-Peso completo 2 kg; costo 1.500 cr; REP NC; Qualità Non comune, PS Integrità 12, 4 PI. Comprende NEC Rosso standard carico, cavo e alimentatore: 500 Lx, consumo 100 Lx/h, 5 ore effettive di lavoro anche non consecutive. Si annota l’autonomia residua. Ricambio carico 50 cr; sostituzione con ricambio accessibile 1 AzP; ricarica completa un’ora e 5 cr con fonte adeguata (§5.4).
+Peso completo 2 kg; costo 1.500 cr; REP NC; Qualità Non comune, PS Integrità 12, 4 PI. Comprende NEC Rosso standard carico, cavo e alimentatore: 5 ore effettive di lavoro anche non consecutive, registrate come unico contatore energetico. Si annota l’autonomia residua. Ricambio carico 50 cr; sostituzione con ricambio accessibile 1 AzP; ricarica completa un’ora e 5 cr con fonte adeguata (§5.4).
 
 ## **5.10 Analizzatore alimentare portatile**
 
@@ -1028,7 +1005,7 @@ Un esame richiede un campione, 10 minuti, una superficie di appoggio e un test m
 
 Il \+2 è un bonus degli strumenti e non si somma a quello di un altro corredo nella stessa analisi. La dotazione comprende dieci test; una confezione di dieci ricambi costa 100 cr. Inserire il test è compreso nei dieci minuti dell’esame.
 
-Peso completo 1 kg; costo 1.200 cr; REP NC; Qualità Non comune, PS Integrità 12, 4 PI. Comprende NEC Verde standard carico, cavo e alimentatore: 1.000 Lx, consumo 25 Lx/h, autonomia 40 ore effettive. Ricambio carico 100 cr; sostituzione 1 AzP; ricarica completa un’ora e 10 cr con fonte adeguata (§5.4). Si annotano ore residue e test disponibili separatamente.
+Peso completo 1 kg; costo 1.200 cr; REP NC; Qualità Non comune, PS Integrità 12, 4 PI. Comprende NEC Verde standard carico, cavo e alimentatore: elettronica ordinaria senza contatore energetico (§5.4.3). Ricambio carico 100 cr; sostituzione 1 AzP; ricarica completa un’ora e 10 cr con fonte adeguata (§5.4). Si annotano soltanto i test disponibili; gli eventuali consumabili restano separati.
 
 # **6 Equipaggiamento sanitario**
 
@@ -1179,7 +1156,7 @@ Spendendo 1 AzP e una dose, senza Prova, recupera 1d3 PV fino al massimo. Richie
 
 ### **Scanner diagnostico portatile**
 
-Richiede una mano e contatto con il corpo o con porte diagnostiche compatibili dell’armatura. Una scansione rapida di 1 AzP rileva automaticamente parametri vitali di base, come battito, respirazione e temperatura. Non identifica automaticamente la causa di un’anomalia. I due scanner diagnostici usano un Verde standard: 25 Lx/h e 40 ore di uso; NEC carico e alimentatore compresi (§5.4).
+Richiede una mano e contatto con il corpo o con porte diagnostiche compatibili dell’armatura. Una scansione rapida di 1 AzP rileva automaticamente parametri vitali di base, come battito, respirazione e temperatura. Non identifica automaticamente la causa di un’anomalia. I due scanner diagnostici usano un Verde standard senza conteggio energetico ordinario; NEC carico e alimentatore compresi (§5.4.3).
 
 Una diagnosi richiede almeno un minuto e una Prova di Medicina con \+2 VA degli strumenti, per lesioni e anomalie rilevabili dall’apparecchio. Analisi più approfondite possono richiedere tempo, campioni o un laboratorio. Il bonus vale per la diagnosi, non si trasferisce alla successiva cura e non si somma ad altri bonus degli strumenti alla stessa Prova.
 
@@ -1195,7 +1172,7 @@ Comprende cinque set di materiali per procedura. Un set viene consumato all’in
 
 ### **Postazione medica da campo**
 
-Richiede un’ora di montaggio da parte di due persone, un’area riparata di 2 × 2 Q e alimentazione continua da rete oppure Modulo Rosso separato: 1.000 Lx/h, cinque ore con un Modulo da 5.000 Lx. Accoglie un paziente alla volta. Comprende scanner diagnostico standard, strumenti chirurgici e cinque set di materiali per procedura; i ricambi seguono i prezzi del Kit chirurgico.
+Richiede un’ora di montaggio da parte di due persone, un’area riparata di 2 × 2 Q e alimentazione continua da rete oppure Modulo Rosso separato: cinque ore di lavoro con un Modulo da 10 UER. Si annota l’autonomia; 2 UER ripristinano un’ora. Accoglie un paziente alla volta. Comprende scanner diagnostico standard, strumenti chirurgici e cinque set di materiali per procedura; i ricambi seguono i prezzi del Kit chirurgico.
 
 Fornisce una struttura sanitaria utilizzabile per Terapia Intensiva e per trattamenti di Menomazioni permanenti compatibili con le attrezzature presenti e le competenze del personale. Concede \+3 VA a Medicina per chirurgia e trattamenti delle Ferite o delle Menomazioni; la diagnostica mantiene il \+2 del proprio scanner. Si applica un solo bonus degli strumenti per Prova, senza sommare postazione, scanner e kit. Restano tempi, consumi, Talenti e limiti delle procedure effettuate.
 
@@ -1283,7 +1260,7 @@ Mirato e intensivo condividono un tentativo ogni sette giorni per paziente con I
 
 ### **6.8.3 Energia e materiali chirurgici**
 
-Ogni postazione comprende un Modulo NEC Rosso carico, sufficiente per dieci operazioni, e cinque cartucce chirurgiche. Una singola procedura su una Ferita o una Menomazione è un’operazione: all’inizio consuma un ciclo energetico Rosso e una cartuccia chirurgica, anche se fallisce o viene interrotta. Curare una Ferita e una Menomazione richiede due operazioni. Si segnano operazioni residue e cartucce residue separatamente, senza conteggiare ore o Lx durante l’intervento.
+Ogni postazione comprende un Modulo NEC Rosso carico, sufficiente per dieci operazioni, e cinque cartucce chirurgiche. Una singola procedura su una Ferita o una Menomazione è un’operazione: all’inizio consuma un ciclo energetico Rosso e una cartuccia chirurgica, anche se fallisce o viene interrotta. Curare una Ferita e una Menomazione richiede due operazioni. Si segnano operazioni residue e cartucce residue separatamente, senza conteggiare ore durante l’intervento.
 
 La cartuccia chirurgica comprende anestetici ordinari, disinfettanti, suture e materiali da medicazione. Farmaci specifici, cartucce Curative, naniti, protesi e componenti speciali sono separati. Scansioni semplici e somministrazioni di farmaci non consumano un intero ciclo operatorio.
 
@@ -1357,16 +1334,16 @@ Cinque ricariche nutritive costano 250 cr e pesano 12,5 kg; dieci costano 500 cr
 
 | NEC di ricambio | Riserva assegnata | Peso | Carico | Ricarica completa |
 | :---- | :---- | :---- | :---- | :---- |
-| Modulo Rosso | 10 operazioni | 2 kg | 600 cr | 50 cr |
+| Modulo Rosso | 10 operazioni | 2 kg | 600 cr | 100 cr |
 | Modulo Verde | 10 giorni di degenza o stasi | 2 kg | 1.100 cr | 100 cr |
 
 | Modello | NEC compresi | Set di ricambio carico | Ricarica completa |
 | :---- | :---- | :---- | :---- |
-| Semiautomatica / Standard | 1 Rosso \+ 1 Verde | 1.700 cr | 150 cr |
-| Professionale | 1 Rosso \+ 2 Verdi | 2.800 cr | 250 cr |
-| Specializzata | 1 Rosso \+ 3 Verdi | 3.900 cr | 350 cr |
+| Semiautomatica / Standard | 1 Rosso \+ 1 Verde | 1.700 cr | 200 cr |
+| Professionale | 1 Rosso \+ 2 Verdi | 2.800 cr | 300 cr |
+| Specializzata | 1 Rosso \+ 3 Verdi | 3.900 cr | 400 cr |
 
-Tutti i Moduli sono riutilizzabili, REP NC. Il primo set è già compreso nel prezzo della postazione. I costi di ricarica corrispondono all’energia ripristinata alla tariffa ordinaria del §5.4; tempi e potenza disponibile seguono le regole generali, senza aggiungere un consumo orario alla gestione degli interventi.
+Tutti i Moduli sono riutilizzabili, REP NC, e contengono 10 UE del proprio colore. Il primo set è compreso nel prezzo della postazione. La ricarica costa 100 cr per Modulo, secondo la tariffa di 10 cr per UE; una stazione adeguata ricarica un Modulo in un’ora. I ricambi specialistici mantengono i prezzi d’acquisto della tabella. Il Rosso offre dieci operazioni, il Verde dieci giorni di supporto. Non si aggiunge un consumo orario durante gli interventi.
 
 # **7 Dispositivi specialistici**
 

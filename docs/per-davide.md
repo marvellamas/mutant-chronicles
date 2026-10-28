@@ -1,6 +1,6 @@
 > > # **Per Davide — domande aperte ed errata dei manuali**
 
-*Aggiornato al 22 ottobre 2026\.*
+*Aggiornato al 28 ottobre 2026\.*
 
 **Istruzioni per Davide (e per l’AI che usi per rispondere)**
 
@@ -26,21 +26,31 @@ Nessuna, al momento. Grazie per l’aggiornamento cumulativo dell’8 ottobre.
 
 > > ## **2\. Domande aperte (l’app ha già un’ipotesi ragionevole)**
 
-> > ### **Magia**
-
-**A.174 — «Medita» che carica direttamente un cristallo.** Il manuale dice che durante la Meditazione non si ricaricano i contenitori e che la ricarica non avviene da sola. Il pulsante «Medita» dell’app però può versare i PM recuperati direttamente in un cristallo. Non per aggirare la regola: è l’unione in un tocco di **due azioni entrambe lecite** — spendere i propri PM per ricaricare il cristallo, e meditare per recuperarli. Il risultato è identico, si risparmia solo il viavai. *Nel frattempo:* la strada breve fa pagare **tutti** i costi dei due passaggi separati — rapporto di conversione dei Talenti (3 PM per 1, 2 con Ricarica Efficiente o Conversione Migliorata, 1 con entrambi, Bianco sempre 2), Addestramento Taumaturgo, 1 AzP, contatto con un contenitore sintonizzato, limite di ore giornaliere, e la Prova di Potere dal secondo gruppo in su. Confermi che l’unione va bene?
-
-**A.175 — I Guanti da Combattimento Mistico e l’incantesimo infuso.** Ora gli artefatti che contengono un incantesimo lo possono lanciare dalla scheda, come gli altri. I manuali però non legano i Guanti a nessun Incantesimo: hanno solo la loro attivazione (3 PM, 1 AzP, 5 RND). *Nel frattempo:* restano fra le «Proprietà attive degli oggetti», senza scheda d’incantesimo e senza «Lancia\!». È giusto, o i Guanti dovrebbero contenere un incantesimo?
-
-**A.176 — Incantesimi aggiunti a mano.** Si può aggiungere a un personaggio un incantesimo fuori dalle quote (un maestro, un ritrovamento, una concessione del Direttore), segnato «(Aggiunto)» con origine e data. Non contano nelle quote di Classe e il passaggio di livello non li tocca. *Nel frattempo:* si lanciano come un incantesimo conosciuto. Due dubbi: contano come «conosciuti» per gli altri usi delle regole (prerequisiti, creazione di consumabili, insegnamento)? E un personaggio **senza** accesso alla magia che riceve così un incantesimo lo lancia con quale Abilità e con quali PM?
-
 > > ### **Personaggi e salvataggi**
 
-**A.177 — Modifiche fatte dal tablet dopo la fine della sessione.** Un giocatore può ora modificare la scheda anche senza connessione: il tablet si segna le operazioni e, quando torna in linea, il Direttore le vede e le approva una per una. *Nel frattempo:* le modifiche arrivano al Direttore qualunque sia l’ora in cui sono state fatte, e decide lui. Vuoi una regola diversa — per esempio che quelle fatte dopo la fine della sessione non contino, o che contino solo se le approvi espressamente?
+**A.187 — Un livello in più di quelli che danno i PX.** Il livello di un personaggio nella scheda è quello dei livelli presi con «Sali di livello», e non è legato ai PX (l’app propone, il Direttore decide). Il conto «PX → livello» è corretto e coincide con il tuo Gestore PX e con le soglie approvate (A.170): con 600 PX il 6° livello, con 720 il 7°. Se un personaggio risulta avere un livello in più di quelli che gli danno i PX (per esempio 7° con 600 PX perché ha preso il livello prima del tempo), che cosa si fa? (a) si lascia com’è, l’app lo segnala soltanto; (b) il Direttore toglie il livello in più con «Annulla l’ultimo livello» e il giocatore lo riprende quando i PX bastano; (c) i PX del personaggio si portano alla soglia del suo livello. *Nel frattempo:* l’app lo segnala (in Identità e in «Controlla lo stato») e non tocca niente.
 
-> > ### **Tecniche Interiori**
+**A.188 — Le scelte conservate dopo il passaggio ai Talenti nuovi: le cambia il giocatore o serve la tua approvazione?** L’A.184 dice che «eventuali cambi delle scelte conservate richiedono l’approvazione del Direttore». Il 26/10 al tavolo hai detto invece che ogni giocatore cambia sempre i propri incantesimi, perché ti fidi. Le due cose non stanno insieme. *Nel frattempo:* vale la regola del tavolo, che è più recente: gli incantesimi li cambia sempre il giocatore, senza passare da te. Confermi che vale anche per le scelte conservate dopo il passaggio, o per quelle serve la tua approvazione?
 
-**A.178 — Manuale del Giocatore 0.49 del 21/10 (cinque ore dopo la tua risposta A.173).** La nuova versione cambia la tabella di Imposizione della Mano Curativa da 1/2/4/10 a **1/2/2/4** — quindi con l’Hachimaki diventa 1/1/1/3 invece di 1/1/3/9 — e riequilibra 11 Tecniche su 28, il recupero della Meditazione e l’AR dell’Aura (+1 → \+2). *Nel frattempo:* l’app tiene ancora i valori della 0.48 e non abbiamo applicato nulla. Confermi che la 0.49 è quella buona e la recepiamo tutta?
+> > ### **Energia (NEC) dopo i manuali del 27–28/10**
+
+I manuali nuovi passano dai Lx alle Unità Energetiche (UER, UEB, UEV), con trasformatori e tampone. Quattro punti contraddicono decisioni che avevi già approvato, e due dati mancano. *Nel frattempo*, per tutti: **l’app tiene la decisione approvata** finché non rispondi.
+
+**A.189 — Il trasformatore e la regola del «niente travaso».** Con la A.67 (decisione 76\) avevi deciso che «l’energia di un NEC non si riversa in un altro: si sposta solo il NEC fisico». L’Equipaggiamento 0.13 (§5.4.6) introduce il trasformatore, che preleva 1 UE da una fonte e la trasferisce negli accumulatori, conservando il resto in un tampone. La regola del travaso è superata, e il trasferimento vale solo attraverso un trasformatore o una stazione industriale? *Nel frattempo:* niente travaso, come deciso.
+
+**A.190 — Il pacco del Gehemmapuker.** Con la A.67 (decisione 76\) il Gehemmapuker usava un Modulo Blu da 2.500 Lx (50 getti, cambio 1 AzP), una voce sola del catalogo. Gli Armamenti 0.65 (§7.20.6) dicono: pacco dedicato **Rosso** da 50 cariche, «non un Modulo generico da dieci UE», e tutti i lanciafiamme diventano Rossi. Confermi che la 0.65 sostituisce la decisione 76 su questo punto? *Nel frattempo:* Modulo Blu, 50 getti.
+
+**A.191 — La ricarica del NEC Blu IAS.** Con la A.64 (decisione 75\) la ricarica costava 50 cr in un’ora. Gli Armamenti 0.65 dicono 10 cr a carica (200 cr da vuota) e 20 ore col trasformatore portatile o 3 h 20 con la stazione industriale. Confermi i nuovi valori? *Nel frattempo:* 50 cr in un’ora.
+
+**A.192 — L’energia dello Scout in UE.** Con la A.101 (decisione 94\) avevi approvato per l’ASA Scout MK4: 200 Lx/km e 500 km di autonomia, 100 Lx/ora da fermo, Modulo Verde da 10.000 Lx con supporto vitale a 200 Lx/ora, aria 8 ore fisse più due bombole da 8\. La scheda 0.4 dice 2 Banchi Rossi \= 200 UER, ma «consumo e autonomia di viaggio da definire», «riserva Verde: formato e capacità da definire», bombole «da specificare». Quali valori vuoi in UE? Proposta: **500 km con i 200 UER** (1 UER \= 2,5 km, contro i 100 km dell’autovettura), **un Modulo Verde da 10 UEV** con le stesse 50 ore di supporto vitale, aria invariata (8 ore \+ 2 bombole da 8). *Nel frattempo:* i valori della A.101, letti in proporzione (la riserva piena resta piena).
+
+**A.193 — Le riserve già salvate in Lx.** Personaggi e veicoli hanno riserve salvate in Lx (celle d’arma, NEC dei dispositivi, banchi dei mezzi). Il Manuale dei Mostri dice che «l’equivalenza UER/Lx non è definita». Proposta: per l’elettronica ordinaria il conteggio sparisce; per armi, dispositivi e mezzi si riporta la **stessa frazione** (una cella Plasma a metà \= 10 colpi su 20; un banco dello Scout a 25.000 Lx su 50.000 \= 50 UER su 100). Va bene? *Nel frattempo:* l’app non converte niente.
+
+**A.194 — Il Dragomedusa: PX e GS.** Il profilo del 25/10 dice che GS (Leggenda) e PX (100) del vecchio adulto vanno rivalutati, e che i valori secondari del giovane sono ancora da definire. Per metterlo nel Bestiario del Tavolo servono almeno i PX dell’adulto. Quali? *Nel frattempo:* nel Bestiario solo l’adulto, con «PX da definire» (il Tavolo lascia scrivere i PX dell’incontro a mano), e il giovane come nota.
+
+**A.195 — Il Punisher Wächter: prezzo, reperibilità e Taglia.** La scheda nuova (Armamenti 0.65) lascia prezzo e REP «da definire» (il Punisher base: 6.000 cr, Molto rara) e dice Taglia «Medio o Grande», mentre il §7.4.1 dice Grande e la tabella dello stesso capitolo Medio. Quali valori? *Nel frattempo:* l’app non lo mette in vendita.
+
+**A.196 — La Neverlost nell’app.** Il Manuale dei Veicoli 0.8 ha la scheda completa della Neverlost (scale tattiche, riserve in punti, scudo ScE, armi navali, circuito tecnomistico). Vuoi che l’app la gestisca come i veicoli dei PG (tab Veicoli, plancia, mappa in Q Tattici), o per ora resta sulla scheda e l’app serve solo per i mezzi terrestri? *Nel frattempo:* resta sulla scheda.
 
 > > ---
 
@@ -55,6 +65,10 @@ Le tue risposte sono nella sezione 7\. Qui c’è cosa fa l’app finché l’im
 > > •             **A.127 — Attraversare i quadretti occupati.** Coincide con quello che la mappa già fa. Passa fra le Risolte quando la mappa è in uso al tavolo.
 
 > > •             **A.128 — Terreno difficile.** Coincide con quello che la mappa già fa. Passa fra le Risolte quando la mappa è in uso al tavolo.
+
+> > •             **A.174 — «Ricarica e medita».** Hai ammesso il comando unico: prima i PM già disponibili ricaricano il cristallo, poi si medita per recuperarli, con tutti i costi e i limiti dei due passaggi. L’app oggi ha «Medita» con la strada breve e fa già pagare tutti i costi; devono ancora cambiare il nome in «Ricarica e medita» e il riepilogo (PM spesi, carica ottenuta, PM effettivamente recuperati). Passa fra le Risolte quando sarà fatto.
+
+> > •             **A.176 — Incantesimi aggiunti a mano.** Hai distinto apprendimento effettivo (conta come conosciuto, anche per prerequisiti, consumabili e insegnamento) e semplice annotazione (non concede accesso alla magia, Abilità o PM). L’app oggi tiene gli incantesimi aggiunti a mano fuori dai conosciuti: da allineare. Passa fra le Risolte quando sarà fatto.
 
 > > ---
 
@@ -76,9 +90,11 @@ Decisioni già prese o errori evidenti: l’app segue la decisione, il testo dic
 
 > > •             §8.6 Attivazione Tempestiva: sta prima del §8.6.1, fuori da ogni sottosezione.
 
-> > •             §2.16.3 (Cacciatore) e §2.16.4 (Esploratore): «Il binocolo non richiede batterie.» Nel §2.16.2 (Agente) il testo dice già «Il binocolo non richiede NEC.»: uniformare a «non richiede NEC».
+> > •             ~~§2.16.3 (Cacciatore) e §2.16.4 (Esploratore): «Il binocolo non richiede batterie.» Nel §2.16.2 (Agente) il testo dice già «Il binocolo non richiede NEC.»: uniformare a «non richiede NEC».~~ — fatto nel Google Doc (verificato il 28/10).
 
-> > •             §8.6.1 e §1.6: con Successo Magistrale Migliorato il 3 naturale è Magistrale da VA finale 21 (correzione approvata il 02/10, E\&L decisione 3).
+> > •             ~~§8.6.1 e §1.6: con Successo Magistrale Migliorato il 3 naturale è Magistrale da VA finale 21 (correzione approvata il 02/10, E\&L decisione 3).~~ — fatto nel Google Doc (verificato il 27/10).
+
+> > •             Documento «Proposta di variazione al regolamento» v1.0 del 7/10 (Talenti, Maestrie e Specializzazioni), voce **Ricarica Esperta**: dice «fino a tre» munizioni per operazione; correzione approvata il 25/10 (A.182), si legge «fino a quattro». Il Manuale del Giocatore (§8.6.4, Ricarica Migliorata) dice già 4\.
 
 **Manuale della Magia**
 
@@ -110,15 +126,25 @@ Decisioni già prese o errori evidenti: l’app segue la decisione, il testo dic
 
 > > •             §7.8, schede di M310 e SA SG2001: indicare che usano un caricatore amovibile specifico e che la sostituzione con un caricatore pronto costa 1 AzP (E\&L 19: «va esplicitata nelle relative schede di catalogo»).
 
+> > •             §7.20.5, Trasformatori di ricarica NEC: «Peso, Integrità e Reperibilità dei nuovi modelli restano da definire», mentre l’Equipaggiamento §5.4.7 li dà (2 / 4 / 40 kg; 4 / 6 / 12 PI; Non comune / Non comune / Rara; PS 12 / 12 / 14; NC / RA / RA). Allineare il §7.20.5 al §5.4.7.
+
+> > •             Variante Punisher Wächter: Taglia «Medio o Grande» (vedi la voce già aperta sul Punisher e la A.195).
+
 **Manuale dell’Equipaggiamento**
 
 > > •             §4.1 Comunicatori: «Ogni modello comprende microfono, auricolare, batteria carica, cavo e alimentatore». Dalla 0.5 l’alimentazione è un NEC Verde (compatto per il comunicatore personale, standard per quello da squadra e per la stazione radio), come dice il paragrafo «Alimentazione e riservatezza» dello stesso §4.1. Sostituire «batteria carica» con «NEC Verde carico».
 
 **Manuale dei Mostri**
 
-> > •             §5.2: dice ancora «5 punti Abilità liberi a ogni Grado»; dopo la A.90 va portato a 7\.
+> > •             ~~§5.2: dice ancora «5 punti Abilità liberi a ogni Grado»; dopo la A.90 va portato a 7\.~~ — fatto nel Google Doc (verificato il 28/10).
+
+**Manuale dei Veicoli**
+
+> > •             Scheda «ASA Scout MK4»: il Doc si chiama «scheda v0.4», ma l’intestazione dentro dice ancora «Edizione 0.2».
 
 **Da rileggere (testi scritti da noi, non dal manuale)**
+
+> > •             **Righe brevi dei Talenti nuovi:** per **Arti Marziali Migliorate** e **Sport** il riquadro «Da scegliere» mostra una riga breve scritta da noi (il testo completo, preso dal manuale, si apre toccando il nome). Se la riga non ti va, la riscriviamo come vuoi.
 
 > > •             **Talenti nella stampa**: il foglio 2 stampa la prima frase di ogni Talento. Se preferisci un riassunto tuo, si aggiunge un campo.
 
@@ -130,17 +156,47 @@ Decisioni già prese o errori evidenti: l’app segue la decisione, il testo dic
 
 > > •             Manuale degli Armamenti 0.59 e Manuale del Giocatore 0.46: letti il 07/10 (requisiti di Forza, fucili a pallini, Tiro Rapido); le modifiche entrano nell’app a lotti. Restano rimandati dal manuale le Prove Salvezza, i tempi di ricarica e i ricambi del Cuirassier Attila (§7.18.1).
 
-> > •             Manuale dell’Equipaggiamento: recepiti i capitoli 1, 2, 3, 4 e 6\. Aspettiamo i capitoli 5, 7 e 8\.
+> > •             Manuale dell’Equipaggiamento: tutti i capitoli sono nell’app dalla 0.5; la 0.13 cambia la gestione dell’energia.
 
 > > •             Manuale dei Veicoli (in stesura).
 
 > > •             Manuale del Direttore: regole dettagliate di malattie e cure (A.119).
+
+> > •             Recepiti fino al 27/10: Giocatore 0.49, Magia 1.6, Armamenti 0.64, Equipaggiamento 0.8.
+
+> > •             **Lette il 28/10, da recepire a lotti:** Manuale del Giocatore 0.50, della Magia 1.7, degli Armamenti 0.65, dell’Equipaggiamento 0.13, dei Veicoli 0.8, scheda dell’ASA Scout MK4 0.4, Manuale dei Mostri 0.23 con il Dragomedusa del 25/10. Il filo comune è l’energia: niente più Lx, Unità Energetiche per colore (UER, UEB, UEV), elettronica ordinaria senza conteggi, trasformatori per ricaricare le cariche. Il Manuale del Giocatore 0.50 non contiene ancora il documento del 7/10 sui Talenti: per i Talenti resta valido il documento, con le A.181–A.185. E\&L invariato dal 15/10.
 
 > > ---
 
 > > ## **6\. Risolte**
 
 Voci con risposta recepita e funzione implementata nell’app (o chiuse). La data è quella dell’implementazione.
+
+> > •             **A.175 — Guanti da Combattimento Mistico** (risposta 23/10, app già così). I Guanti sono un oggetto con una proprietà attiva e il pulsante «Attiva», senza bisogno di un Incantesimo: 3 PM dalle cariche interne, 1 AzP, 5 Round; i pugni diventano Magici con \+1 al danno. Non si paga con PM personali né con Batterie esterne.
+
+> > •             **A.177 — Modifiche dal tablet dopo la partita** (risposta 23/10, ora completa). Le modifiche si possono mandare anche a sessione finita e valgono solo dopo la tua approvazione; se il dato è cambiato nel frattempo, l’app ti mostra il conflitto prima di applicare; una disconnessione non fa perdere niente. Accanto a ogni modifica vedi **quando è stata fatta e quando è stata ricevuta**.
+
+> > •             **A.178 — Manuale del Giocatore 0.49** (risposta 23/10, app già così dal 22/10). Imposizione della Mano Curativa 1/2/2/4 PM (1/1/1/3 con l’Hachimaki); Aura di Resistenza \+2; Meditazione Profonda distinta dalla Meditazione ordinaria; tempi, durate e limiti delle schede recepiti, non solo i numeri.
+
+> > •             **A.179 — AR di Aura e Pelle** (risposta 25/10, app già così). Vale la 0.49: Aura di Resistenza \+2 AR magica per 5 Round; Pelle di Rinoceronte \+1 AR non magica contro attacchi Ravvicinati Naturali o Magici per 5 Round. Insieme: \+3 contro il Ravvicinato, \+2 contro gli altri danni Naturali o Magici, \+2 contro l’Etereo; con Corazza Potenziata \+4, \+3, \+3 (comprendono tutte e tre le protezioni). I numeri della A.48 (+1 per 3 Round) restano nello storico, sostituiti.
+
+> > •             **A.180 — Scheda del tablet e modifiche in attesa** (risposta 25/10, app aggiornata). La scheda del tablet mostra i valori approvati. Le modifiche non ancora approvate stanno nella coda, ognuna con il valore di prima, il valore proposto e la scritta «In attesa di approvazione». Il giocatore può **ritirare** una richiesta finché è pendente, anche se è già arrivata a te: tu la vedi come «Ritirata dal giocatore» (con «Visto» per toglierla dall’elenco) e la scheda non cambia. Dopo l’approvazione un ripensamento è una richiesta nuova.
+
+> > •             **A.181 — Nuova progressione di Talenti, Maestrie e Specializzazioni** (risposta 25/10, app già così, in uso dalla partita del 26/10). Talenti Liberi ai livelli 3, 5, 7, 9, 11, 13, 15, 17, 19; Maestrie ai livelli 2, 6, 10, 14, 18; Specializzazioni ai livelli 1, 4, 8, 12, 16, 20\. I Talenti di Classe hanno la loro progressione separata.
+
+> > •             **A.182 — Ricarica Esperta** (risposta 25/10, app già così). Senza Maestria 2 cartucce per azione; con Ricarica Esperta fino a 4 per operazione, anche nell’operazione gratuita del Round. Restano i limiti di capacità dell’arma e non vale per sostituire un caricatore amovibile. Il testo dei Talenti nell’app ora dice «fino a quattro».
+
+> > •             **A.183 — Conversione dei personaggi esistenti** (risposta 25/10, app già così). Le scelte seguono l’ordine dei livelli e i prerequisiti posseduti in quel momento (Dimitri: Ritualista Minore al 3°, Ritualista Maggiore come Maestria del 6°); la Specializzazione iniziale viene dalla prima Classe, quella del 4° dalla Classe aumentata al Grado II; la conversione sostituisce le vecchie scelte (copia e riepilogo restano nel registro).
+
+> > •             **A.184 — Incantesimi e Tecniche legati ai Talenti** (risposta 25/10, app **cambiata**). Se si riprende lo stesso Talento, le scelte già fatte restano, entro le quote. Se il Talento non si riprende, le Tecniche e gli incantesimi che dipendevano solo da lui non funzionano più: nella tab Poteri compaiono in «Scelte in storico», senza effetti (niente AR dell’Aura, niente «Lancia\!»), e non c’è più l’avviso di quota. Riprendendo il Talento tornano attive. Le Tecniche che vengono da altre fonti (Lottatore, Scuola Mishima) restano.
+
+> > •             **A.185 — Specializzazione del primo livello** (risposta 25/10, app già così). Si sceglie dopo la Classe iniziale, prima dei valori finali e della dotazione; un Taumaturgo ha una sola scelta iniziale tra le nove Specializzazioni di Potere; gli ampliamenti di Usufruitore di Magia e di Ritualista si aprono solo con il requisito posseduto.
+
+> > •             **Esiti dei tuoi test del 24/10** (corretti il 25/10 e il 27/10). Avvisi NTFY: la configurazione sta fuori dalla cartella dell’app e non si perde con gli aggiornamenti. Test 4: conflitto con la coda a due scelte vere («Vedi la scheda del Direttore» o «Scarta le mie modifiche»). Test 6: una modifica \= una voce (le note «NO», «NOT», «NOTE» sono una richiesta sola) e il pulsante «Rientro dei tablet» c’è su ogni pagina. Test 7 (PX): salvataggio affidabile, voto base 3 per le tre categorie, PX di ogni incontro, premio di fine Atto per Atto anche a chi era assente, avviso di passaggio di livello, PX modificabili solo dal Direttore (anche dalla coda del tablet).
+
+> > •             **Incantesimi: scelta affidabile** (27/10, nessuna domanda). Ogni incantesimo si riconosce dal catalogo, non dal nome; si aggiunge a mano in tre passi; le quote (di Classe e dei Talenti) hanno un solo conto e sono sempre un avviso, mai un blocco; gli incantesimi presi con un Talento si vedono, si tolgono e si sostituiscono dalla tab Poteri.
+
+> > •             **I personaggi non si perdono con un aggiornamento** (26–27/10, nessuna domanda). I dati stanno in una cartella scritta nel profilo di Windows; una sola installazione di Mutant; se all’avvio i personaggi non ci sono, Mutant cerca da solo l’altra copia e con un SI si sistema (voci «P Cerca i personaggi» e «C Controlla lo stato» del menu).
 
 > > •             **Esploratore, Specializzazioni dei Talenti a scelta; «minimo 1» ai 2 \+ Mod INT incantesimi; quote di Classe per macrofamiglia; incantesimi liberi di qualunque famiglia; tabella del livello massimo degli incantesimi; dadi dei PV e dei PM massimizzati al 1° livello** — risolte e implementate prima del 26/09.
 
@@ -1696,7 +1752,7 @@ Precisazione sulla sintonizzazione: l’Hachimaki mantiene SnT 1\. Nei paragrafi
 
 > > ---
 
-#### A.174 — Meditazione e ricarica del cristallo
+> > #### **A.174 — Meditazione e ricarica del cristallo**
 
 Approvazione di Davide: 23 ottobre 2026\.
 
@@ -1704,7 +1760,7 @@ Approvazione di Davide: 23 ottobre 2026\.
 
 Il recupero dipende dall’esito effettivo della Meditazione; un’interruzione non annulla una ricarica già completata. Il comando dovrebbe chiamarsi «Ricarica e medita» e mostrare PM spesi, carica ottenuta e PM effettivamente recuperati. Non deve consentire di spendere anticipatamente PM che il personaggio deve ancora recuperare.
 
-#### A.175 — Guanti da Combattimento Mistico
+> > #### **A.175 — Guanti da Combattimento Mistico**
 
 Approvazione di Davide: 23 ottobre 2026\.
 
@@ -1712,7 +1768,7 @@ Confermata la gestione come proprietà attiva dell’oggetto, con pulsante «Att
 
 Restano validi tutti i limiti della scheda, compresa l’impossibilità di pagare questa attivazione con PM personali o Batterie esterne.
 
-#### A.176 — Incantesimi aggiunti manualmente
+> > #### **A.176 — Incantesimi aggiunti manualmente**
 
 Approvazione di Davide: 23 ottobre 2026\.
 
@@ -1722,7 +1778,7 @@ Il ritrovamento di una pergamena, di un testo o di un Artefatto non equivale aut
 
 Un’eventuale concessione speciale del Direttore deve indicare espressamente modalità di lancio, Abilità, fonte dei PM e limiti.
 
-#### A.177 — Modifiche dal tablet dopo la partita
+> > #### **A.177 — Modifiche dal tablet dopo la partita**
 
 Approvazione di Davide: 23 ottobre 2026\.
 
@@ -1730,7 +1786,7 @@ Confermata la procedura proposta: le modifiche possono essere inviate anche dopo
 
 Ogni operazione deve mostrare quando è stata effettuata e quando è stata ricevuta. Se nel frattempo il dato è cambiato, l’app segnala il conflitto al Direttore prima di applicarla. La disconnessione non deve far perdere le richieste.
 
-#### A.178 — Recepimento del Manuale del Giocatore v0.49
+> > #### **A.178 — Recepimento del Manuale del Giocatore v0.49**
 
 Approvazione di Davide: 23 ottobre 2026\.
 
@@ -1740,25 +1796,25 @@ Imposizione della Mano Curativa: costi 1/2/2/4 PM, quindi 1/1/1/3 PM con Hachima
 
 La regola della A.173 rimane valida; i suoi esempi numerici vanno aggiornati ai nuovi costi. L’app deve recepire anche tempi, durate, limiti e condizioni delle schede, oltre ai valori numerici.
 
-#### Esiti dei test di Davide per Marcello — 24 ottobre 2026
+> > #### **Esiti dei test di Davide per Marcello — 24 ottobre 2026**
 
 Segnalazioni e richieste di correzione comunicate da Davide. I riferimenti «Test 4», «Test 6» e «Test 7» seguono la numerazione dell’elenco completo usato da Davide, non quella dell’elenco sintetico della sezione 8\. Le osservazioni seguenti sono esiti riferiti da Davide; la loro registrazione non attesta una correzione già effettuata nell’app.
 
-#### Avvisi NTFY — configurazione persa dopo gli aggiornamenti
+> > #### **Avvisi NTFY — configurazione persa dopo gli aggiornamenti**
 
 Problema riscontrato: ogni volta che aggiorna il sistema, Davide deve reimpostare gli avvisi NTFY. Richiesta: conservare la configurazione degli avvisi fra gli aggiornamenti, senza richiederne ogni volta la reimpostazione.
 
-#### Test 4 — avviso di aggiornamento e scelta di scartare la modifica
+> > #### **Test 4 — avviso di aggiornamento e scelta di scartare la modifica**
 
 Sia sul tablet sia nella schermata della modifica del master compare un avviso verde che, in entrambi i casi, riporta «il master aggiornato la tua scheda». Non compare la scritta «scartare la propria modifica» prevista dalla prova. Verificare la gestione del conflitto e la disponibilità della scelta di scartare la propria modifica; l’avviso verde da solo non permette di completare il test previsto.
 
-#### Test 6 — note multiple, coda in attesa e Rientro dei tablet
+> > #### **Test 6 — note multiple, coda in attesa e Rientro dei tablet**
 
 Per una sola modifica alle note del personaggio sono comparse tre modifiche distinte: la prima «NO», la seconda «NOT», la terza «NOTE». Il risultato atteso è una sola richiesta per la modifica completata, evitando richieste separate per questi testi intermedi.
 
 Nella schermata del master non compare il pulsante «Rientro dei tablet». Sul tablet compare invece «Vedi la coda»: aprendolo, i distintivi risultano ancora in attesa di approvazione, così come le due note sbagliate. Verificare l’accesso del Direttore alle richieste pendenti e le azioni di approvazione/scarto, in modo che possa gestire anche le richieste già accumulate.
 
-#### Test 7 — pannello PX: salvataggio, incontri, premi e permessi
+> > #### **Test 7 — pannello PX: salvataggio, incontri, premi e permessi**
 
 Problema riscontrato: il pannello PX perde in modo intermittente i dati inseriti. Succede associando giocatori e PG e scrivendo il nome della partita e degli incontri. Per tentare di salvarli occorre scrivere in «Impostazioni», passare a «Riepilogo» e talvolta tornare in «Impostazioni» a riscrivere. Davide è ora riuscito a registrare tutti i giocatori e i personaggi: conservare questi dati durante la correzione. Il salvataggio deve essere affidabile, senza richiedere il cambio di schermata come espediente.
 
@@ -1772,7 +1828,7 @@ Passaggio di livello: l’app non lo segnala quando i PX assegnati fanno raggiun
 
 Permessi sui PX: i giocatori non devono poter modificare i PX. Assegnazione e correzione, inclusi i PX iniziali, sono riservate al Direttore; far rispettare il vincolo anche quando una modifica arriva da un tablet o dalla relativa coda.
 
-#### A.179 — AR delle Tecniche e sostituzione dei valori della A.48
+> > #### **A.179 — AR delle Tecniche e sostituzione dei valori della A.48**
 
 Approvazione di Davide: 25 ottobre 2026\.
 
@@ -1782,7 +1838,7 @@ Precisazione sui cumuli: Aura di Resistenza \+ Pelle di Rinoceronte concedono co
 
 Questi sono contributi aggiuntivi alle altre protezioni compatibili. La precedente decisione resta nello storico, con indicazione che questi numeri sono stati sostituiti.
 
-#### A.180 — Scheda del tablet e modifiche in attesa
+> > #### **A.180 — Scheda del tablet e modifiche in attesa**
 
 Approvazione di Davide: 25 ottobre 2026\.
 
@@ -1790,7 +1846,7 @@ La scheda principale deve mostrare i valori approvati dal Direttore. Le modifich
 
 Il giocatore può ritirare una propria richiesta finché è ancora pendente. Il ritiro deve risultare anche al Direttore e non deve modificare la scheda approvata. Dopo l’approvazione, un eventuale ripensamento costituisce una nuova richiesta.
 
-#### A.181 — Adozione della nuova progressione di Talenti, Maestrie e Specializzazioni
+> > #### **A.181 — Adozione della nuova progressione di Talenti, Maestrie e Specializzazioni**
 
 Approvazione di Davide: 25 ottobre 2026\. Decorrenza: partita di lunedì 26 ottobre 2026\.
 
@@ -1800,7 +1856,7 @@ I Talenti di Classe mantengono la propria progressione separata. Al livello 6 sp
 
 Il documento prevale per la riorganizzazione che introduce; le schede non riscritte seguono i manuali aggiornati. Si applica inoltre la correzione della A.182.
 
-#### A.182 — Ricarica Esperta e quantità di cartucce
+> > #### **A.182 — Ricarica Esperta e quantità di cartucce**
 
 Approvazione di Davide: 25 ottobre 2026\.
 
@@ -1808,7 +1864,7 @@ Mantenere la decisione più recente della A.135: senza Maestria, 2 cartucce per 
 
 La dicitura «fino a tre» del documento va corretta. Restano i limiti di capacità dell’arma; questi numeri non si applicano alla sostituzione di un caricatore amovibile.
 
-#### A.183 — Conversione dei personaggi esistenti
+> > #### **A.183 — Conversione dei personaggi esistenti**
 
 Approvazione di Davide: 25 ottobre 2026\.
 
@@ -1818,7 +1874,7 @@ La Specializzazione iniziale proviene dall’elenco della prima Classe; quella d
 
 La conversione sostituisce le vecchie scelte e non vi si somma. Conservare copia e riepilogo delle scelte precedenti; completare la nuova distribuzione con il giocatore prima di rendere definitiva la scheda convertita.
 
-#### A.184 — Incantesimi e Tecniche collegati ai Talenti nella conversione
+> > #### **A.184 — Incantesimi e Tecniche collegati ai Talenti nella conversione**
 
 Approvazione di Davide: 25 ottobre 2026\.
 
@@ -1828,7 +1884,7 @@ Se il Talento non viene ripreso, cessano le capacità e le quote che dipendevano
 
 Un diverso Talento concede soltanto quanto previsto dalla propria scheda. Le eventuali nuove scelte vengono effettuate nelle sue quote, senza duplicare quelle precedenti. Eventuali cambi delle scelte conservate richiedono l’approvazione del Direttore.
 
-#### A.185 — Specializzazione del primo livello nella creazione
+> > #### **A.185 — Specializzazione del primo livello nella creazione**
 
 Approvazione di Davide: 25 ottobre 2026\.
 
@@ -1838,39 +1894,41 @@ Per le Classi taumaturgiche indicate nel documento sono già disponibili le nove
 
 Per Usufruitore di Magia e Ritualista, gli ampliamenti dell’elenco diventano disponibili quando il relativo requisito è effettivamente posseduto.
 
+*27/10: tutte le risposte del 23/10 e del 25/10 sono state lette e recepite; l’unica cosa nuova da decidere è l’A.188.*
+
+> > ---
+
 > > ## **8\. Prove da fare**
 
-Le prove in sospeso. Marcello ha l’elenco completo (diciannove, comprese quelle che si fanno solo dal tablet); qui ci sono quelle che puoi fare tu dal PC del Direttore, nessuna lunga più di qualche minuto.
+Le prove in sospeso. Quelle che puoi fare tu dal PC del Direttore, nessuna lunga più di qualche minuto. Per tutte: prima **Mutant.bat → 2 «Aggiorna»**, poi **1 «Avvia»**.
 
-> > ### **1\. I tablet collegati**
+> > ### **1\. I personaggi e i PX sono quelli giusti**
 
-**Tavolo del Master** → **Collega i giocatori** → in fondo, **«Tablet e personaggi scelti»**. Senza tablet collegati dice «Nessun tablet si è ancora collegato». Quando un giocatore si collega e sceglie il suo personaggio, entro \~15 secondi deve comparire lì con il nome e «si è fatto vivo pochi secondi fa». Dalla tendina puoi cambiargli il personaggio; con «Stacca» torna a sceglierlo.
+**Mutant.bat → C «Controlla lo stato»**: per ogni personaggio una riga con PX, livello della scheda e livello che danno i PX. Devono essere i PX che hai assegnato. Se un personaggio ha scritto «LA SCHEDA HA UN LIVELLO IN PIU», è il caso dell’A.187: non cambia niente da solo. Se mancano personaggi, **P «Cerca i personaggi»**.
 
-> > ### **2\. Il rientro di un tablet che ha lavorato offline**
+> > ### **2\. Il rientro con valore precedente e proposto**
 
-Se un giocatore modifica la scheda senza connessione, quando torna in linea si apre da sola sul tuo PC la schermata **«Rientro dei tablet»**: l’elenco di quello che ha fatto, in ordine di ora, con Approva o Scarta riga per riga. Dove avete cambiato la stessa cosa tutti e due, ti mostra le due versioni e ti chiede quale tenere. **Chiudere non è scartare**: quello che non decidi resta in attesa e si riapre dopo.
+Da un tablet collegato fai cambiare a un giocatore i PV e metti il tablet offline (o chiudi il collegamento) prima di riconnetterlo. Sul tuo PC, nella schermata **«Rientro dei tablet»**, ogni riga deve dire «fatta alle … , ricevuta alle …», «valore precedente: … · valore proposto: …» e «In attesa di approvazione». Approva una riga: i PV cambiano.
 
-> > ### **3\. I PX della partita**
+> > ### **3\. Il ritiro**
 
-**Tavolo del Master** → **PX della partita**. Due cose da provare: correggere i voti di una partita già assegnata (deve applicare **solo la differenza**, e il Titolo non deve salire di fascia per merito di quella stessa partita), e assegnare due volte il premio di fine Atto allo stesso personaggio (deve avvisarti che l’ha già avuto, senza bloccarti).
+Sul tablet apri «Vedi la coda» e tocca **«Ritira»** su una richiesta già arrivata. Sul tuo PC la riga sparisce dalle modifiche da decidere e compare «Ritirata dal giocatore» (la scheda non cambia); **«Visto»** la toglie.
 
-Nelle **Impostazioni** dello stesso pannello ci sono i **PX iniziali**: se non corrispondono a quelli veri della campagna, correggili tu — sono quelli che contano.
+> > ### **4\. Le Tecniche senza il loro Talento**
 
-> > ### **4\. Lo Sciame**
+Apri la scheda di **Oshi Nagata** (tab **Poteri**): senza Risorse Interiori le tre Tecniche devono stare in **«Scelte in storico»**, chiuse, senza la sezione Risorse Interiori e senza avviso di quota. Con «Modifica master» dalla scheda scegli Risorse Interiori per un Talento Libero: le Tecniche tornano attive (tre, se la quota le copre).
 
-**Prepara scontro** → **Aggiungi nemico** → Bestiario → **«Sciame di corvi»** → **Inizia**. Nella plancia, **Attacca** su un bersaglio adiacente: deve rifiutare spiegando che colpisce solo chi condivide un quadretto. Con il bersaglio nello stesso spazio, invece, passa.
+> > ### **5\. Lo Sciame**
 
-> > ### **5\. La Galleria e le GIF**
+**Prepara scontro** → **Aggiungi nemico** → Bestiario → **«Sciame di corvi»** → **Inizia**. **Attacca** su un bersaglio adiacente: deve rifiutare spiegando che colpisce solo chi condivide un quadretto. Nello stesso spazio, invece, passa.
+
+> > ### **6\. La Galleria e le GIF**
 
 **Tavolo del Master** → **Galleria** → carica una **GIF animata** → «Mostra ai giocatori»: sui tablet deve **muoversi**. Sopra i 5 MB compare prima l’avviso «GIF pesante».
 
-> > ### **6\. Gli avvisi sul telefono**
+> > ### **7\. Gli avvisi sul telefono**
 
-Installa **ntfy** sul telefono, iscriviti all’argomento delle istruzioni che ti ho mandato, e avvia il server: deve arrivarti una notifica. Se non arriva, dimmelo.
-
-> > ### **7\. La pulizia dei file dei personaggi**
-
-Nella cartella distribuzione\\ c’è un programma che si apre con un doppio clic: produce un **rapporto** dei file dei personaggi, dicendo per ciascuno quanti ne ha trovati e quale propone come originale, guardando i valori **dentro** i file e non le date. Non sposta niente finché non scrivi SI. Se chiudi la finestra, non è stato fatto nulla.
+Installa **ntfy** sul telefono, iscriviti all’argomento delle istruzioni che ti ho mandato e avvia il server: deve arrivarti una notifica. Se non arriva, dimmelo.
 
 > > 
 

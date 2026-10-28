@@ -4,7 +4,7 @@
 
 ## Armi armature scudi e dotazioni operative
 
-**EDIZIONE 0.64**
+**EDIZIONE 0.65**
 
 Ottobre 2026
 
@@ -639,7 +639,7 @@ La Mushashi infligge danno Magico passivo, senza necessità di Sintonizzazione. 
 
 La Duskdealer e la Katana Ryūjin aggiungono \+1d6 Plasma quando si attiva una carica. Il Nunchaku elettrificato aggiunge \+1d4 Elettricità. Tutti e tre usano celle da cinque cariche e non richiedono Sintonizzazione. I due Nunchaku conservano il requisito di Contatto per Stordire, anche se la loro portata ordinaria è 2 Q.
 
-La Ryūjin conserva una lama metallica: a cella scarica usa il profilo ordinario della Katana. L’attivazione avvolge il filo con un impulso di plasma e porta il danno a 1d8+1+1d6, risolto come un unico colpo Naturale. Il prezzo comprende una cella ravvicinata comune NEC Blu da 250 Lx, carica: 5 attivazioni da 50 Lx. Dichiarazione, consumo e PS Riflessi seguono il §7.1.4; l’effetto Plasma segue il §7.5.1. Ricambio carico 200 cr; ricarica completa 2,5 cr in un’ora; sostituzione 1 AzP (§7.20.5).
+La Ryūjin conserva una lama metallica: a cella scarica usa il profilo ordinario della Katana. L’attivazione avvolge il filo con un impulso di plasma e porta il danno a 1d8+1+1d6, risolto come un unico colpo Naturale. Il prezzo comprende una cella ravvicinata comune NEC Rosso da cinque cariche. Dichiarazione, consumo e PS Riflessi seguono il §7.1.4; l’effetto Plasma segue il §7.5.1. Ricambio carico 200 cr; ricarica completa 50 cr, cinque ore con trasformatore portatile o cinquanta minuti con stazione industriale; sostituzione 1 AzP (§7.20.5).
 
 #### **Alleanza**
 
@@ -777,7 +777,7 @@ Si monta sulle armi a proiettile o a energia predisposte per l’accessorio. Mon
 
 Non elimina penalità di distanza, Copertura o visibilità e non conferisce visione notturna. Se il punto non è distinguibile, il bonus non si applica. Il punto visibile può segnalare che il bersaglio è sotto mira.
 
-Include un NEC Verde compatto carico da 100 Lx, cavo e alimentatore: consumo 1 Lx/h, autonomia 100 ore effettive. Ricarica e ricambi seguono il §7.3.4. A 0 PI o a cella scarica perde il beneficio.
+Include un NEC Verde compatto carico, cavo e alimentatore. Il mirino rientra nell’elettronica ordinaria: nessun consumo da annotare (§7.3.4). A 0 PI o senza alimentazione perde il beneficio.
 
 Il bonus segue il limite delle assistenze tecnologiche offensive equivalenti (§7.21.1): sulla stessa Prova si usa il maggiore, senza sommarlo all’assistenza equivalente di elmetti o impianti. Si somma invece al \+1 VA della Pistola Punisher utilizzata nell’alloggiamento dello Scudo Punisher (§7.4.1).
 
@@ -858,19 +858,17 @@ L’osservazione attraverso il mirino riguarda la direzione inquadrata e non con
 
 ### **7.3.4 NEC degli accessori**
 
-Gli accessori elettronici usano NEC Verdi ricaricabili. Ogni accessorio autonomo impiega la propria cella; le funzioni integrate nell’elmetto condividono invece il NEC dell’elmetto. Le ore sono effettive e non si contano per Round.
+Gli accessori elettronici ordinari usano NEC Verdi e non richiedono conteggi di ore, cariche o consumi giornalieri. Manutenzione e ricarica rientrano nei normali rifornimenti. Ogni accessorio autonomo ha la propria cella; le funzioni integrate nell’elmetto condividono quella dell’elmetto.
 
-| Dispositivo | NEC | Consumo | Autonomia |
-| :---- | :---- | :---- | :---- |
-| Torcia tattica | Verde compatto 100 Lx | 2 Lx/h | 50 ore |
-| Visione notturna o termica | Verde standard 1.000 Lx | 10 Lx/h | 100 ore |
-| Elmetto elettronico | Verde standard 1.000 Lx | 25 Lx/h | 40 ore |
+| Dispositivo | NEC | Gestione ordinaria |
+| :---- | :---- | :---- |
+| Torcia tattica e Mirino laser | Verde compatto | Nessun conteggio energetico |
+| Visione notturna o termica | Verde standard | Nessun conteggio energetico |
+| Elmetto elettronico | Verde standard | Nessun conteggio energetico |
 
-NEC carico, cavo e alimentatore sono compresi. Ricarica completa in un’ora con fonte adeguata, a 0,01 cr/Lx; un Verde compatto richiede 1 cr, uno standard 10 cr. Ricambio carico: 10 cr compatto, 100 cr standard, REP CO. Sostituire un NEC pronto richiede 1 AzP senza Prova. Il cavo non contiene una riserva.
+NEC carico, cavo e alimentatore sono compresi. Ricambio carico: 10 cr compatto, 100 cr standard, REP CO. Sostituire un NEC pronto richiede 1 AzP senza Prova. Guasti o isolamento prolungato possono imporre un’autonomia comunicata dal Direttore, senza conteggi retroattivi.
 
-Il Mirino laser usa un NEC Verde compatto da 100 Lx a 1 Lx/h: 100 ore effettive. Ricarica completa 1 cr in un’ora; ricambio carico 10 cr, REP CO.
-
-Gli elmetti del §7.21 hanno un consumo complessivo unico. Catalogo, formati e ricarica dei NEC sono nel Manuale dell’Equipaggiamento, §5.4. Celle d’arma e pacchi dei lanciafiamme sono nel §7.20. Robot, propulsori ed esoscheletri mantengono le autonomie specifiche; le riserve mistiche restano in PM.
+Le regole generali sono nel Manuale dell’Equipaggiamento, §5.4. Celle d’arma e pacchi dei lanciafiamme seguono il §7.20. Robot, propulsori ed esoscheletri mantengono le autonomie specifiche; le riserve mistiche restano in PM.
 
 ## **7.4 Scudi e protezioni**
 
@@ -930,6 +928,74 @@ Lo Scudo comprende un alloggiamento integrato per una sola Carabina Punisher opp
 Sparare attraverso l’alloggiamento non applica al portatore il −2 VA per attaccare dalla Copertura, né i costi aggiuntivi per mettersi in Copertura o esporsi e rientrare. Restano il normale costo dell’attacco, la preparazione richiesta da distanza o Tiro Mirato e gli altri modificatori pertinenti. L’AR passiva \+2 e le normali Parate dello Scudo continuano ad applicarsi.
 
 L’alloggiamento non ricarica l’arma: restano necessari munizioni accessibili, mani disponibili e le normali Azioni di ricarica. Sganciare l’arma o rendere lo Scudo inutilizzabile fa cessare i benefici della configurazione. Arma e Scudo conservano Integrità separata.
+
+#### **Variante Punisher Wächter**
+
+Variante tecnologica del Punisher dell’Alleanza, dotata di un generatore energetico portatile. Un comando sul lato interno permette di attivare una barriera personale oppure una cupola protettiva. Lo scudo non possiede proprietà magiche, non usa PM e non richiede Sintonizzazione.
+
+#### **Profilo fisico**
+
+| Taglia | Mani | AR | AR magica | FOR | PI | PS Integrità |
+| :---- | :---- | :---- | :---- | :---- | :---- | :---- |
+| Medio o Grande | 1 | \+2 | 0 | 5 | 8 | 14 |
+
+Qualità Rara. Nessuna penalità propria al MOV. I parametri fisici sono quelli del Punisher base; PI dello scudo, ScE del campo e cariche del generatore si registrano separatamente.
+
+Difensiva 1\. \+1 VA alle Parate ravvicinate effettuate con lo scudo; per le Parate a distanza il modificatore complessivo è \-3 VA prima degli altri modificatori. Restano i normali costi delle Difese. L’AR passiva \+2 si applica secondo le regole ordinarie.
+
+Attacco fisico. Armi da Guerra, una mano, 1d6+1 danni Naturali, portata 1 Q. Compatibile con Stordire e con le Manovre generali pertinenti.
+
+Alloggiamento originale. Accetta una Pistola Punisher oppure una Carabina Punisher, con benefici e requisiti del §7.4.1. Non comprende adattatori per la Colt Hammershot. La Colt può essere usata nella mano libera secondo le normali regole, senza i benefici riservati all’arma alloggiata.
+
+#### **Modalità del generatore**
+
+| Parametro | Barriera personale | Cupola protettiva |
+| :---- | :---- | :---- |
+| Attivazione | 1 AzP, senza Prova | 1 AzP, senza Prova |
+| Cariche consumate | 1 | 3 contemporaneamente |
+| ScE iniziali | 15 | 30 condivisi dall’intera cupola |
+| Durata massima | 3 Round | 3 Round |
+| Estensione | Frontale, aderente allo scudo e al portatore | Semisfera a 360°, raggio 1 Q (1,5 m), centrata sul portatore |
+| Movimento | Consentito | Portatore fermo; uno spostamento interrompe il campo |
+| Tiro e attraversamento | Feritoia libera; superficie energetica bilaterale | Superficie chiusa e bilaterale, feritoia compresa |
+
+#### **Barriera personale**
+
+Richiede lo scudo impugnato e utilizzabile. Il campo segue il profilo dello scudo e protegge il portatore dalle direzioni schermate. La feritoia resta realmente aperta: si può sparare attraverso di essa senza consumare ScE, con le Azioni, i requisiti e i modificatori ordinari dell’arma impiegata. Il tiro non spegne il campo.
+
+La feritoia non è un passaggio selettivo: la superficie lasciata aperta non è protetta dal campo. Nessuna nuova Copertura o bonus al tiro si aggiunge oltre a quanto previsto dal Punisher e dalla configurazione effettivamente usata.
+
+#### **Cupola protettiva**
+
+Richiede tre cariche disponibili e lo scudo impugnato e utilizzabile. Il generatore estende un campo semisferico chiuso di raggio 1 Q, centrato sul portatore. Tutti i soggetti all’interno condividono la stessa riserva di 30 ScE; non ricevono 30 ScE ciascuno.
+
+Il portatore deve rimanere fermo. Può ruotare sul posto e utilizzare le normali Difese, rispettandone i costi; uno spostamento volontario o forzato interrompe la cupola. Il campo non si può trasportare già attivo.
+
+Creature e oggetti non possono attraversare la superficie attiva in nessuna direzione. Chi si trova all’interno resta all’interno fino allo spegnimento o al collasso; chi è all’esterno non può entrare. Il campo non elimina ostacoli o creature già presenti nell’area.
+
+Gli attacchi che attraverserebbero la superficie, anche quelli del portatore o degli alleati dall’interno verso l’esterno, incontrano la barriera e ne consumano gli ScE quando il danno è intercettabile. Attacchi ed effetti risolti interamente all’interno non incontrano il campo. Il dispositivo non possiede la sincronizzazione con le armi della Neverlost.
+
+#### **Assorbimento e fine del campo**
+
+Ogni punto ScE assorbe 1 danno Naturale intercettato prima dell’Armatura del bersaglio. L’eventuale eccedenza prosegue e si risolve normalmente. Danni Magici ed Eterei non vengono assorbiti: la barriera tecnologica non è una protezione antimagia. L’impossibilità di attraversare fisicamente il campo resta distinta dalla sua capacità di assorbire danni.
+
+Si applica l’eventuale Difesa consentita, poi l’assorbimento del campo, quindi l’Armatura pertinente e infine i danni residui. La barriera non concede Difese gratuite. Gli ScE non si rigenerano durante l’utilizzo e non si sommano fra attivazioni.
+
+Il campo termina a 0 ScE, alla scadenza dei 3 Round, quando viene spento, oppure quando non sono più soddisfatte le condizioni d’impiego. Le cariche sono consumate all’attivazione: spegnimento anticipato, ScE avanzati o interruzione non le restituiscono. A generatore esaurito lo scudo fisico conserva le proprie normali funzioni finché utilizzabile.
+
+#### **Cariche e rifornimento**
+
+Il generatore contiene un accumulatore NEC Blu da tre cariche complessive. Ogni nuova attivazione consuma le cariche previste e genera soltanto gli ScE della modalità scelta. Cariche e ScE non sono la stessa riserva. Il ricambio compatibile nuovo e carico costa 120 cr; ripristinare tutte e tre le cariche presso un servizio commerciale costa 30 cr.
+
+La ricarica richiede una stazione industriale oppure un trasformatore dedicato realizzabile da un Tecnico o un Tecnomante, collegato a una fonte Blu. Il portatile impiega tre ore; la stazione industriale trenta minuti. Sostituire un accumulatore compatibile già carico richiede 1 AzP, con le mani necessarie disponibili. Un alimentatore generico o la sola vicinanza a una Matrice non bastano.
+
+1 UEB ripristina dieci cariche personali. Il trasformatore conserva nel proprio tampone quelle non trasferite: con tampone vuoto, ricaricare il Wächter preleva 1 UEB dalla fonte e lascia sette cariche Blu disponibili. Non produce energia, non cambia colore e non converte automaticamente PM. Regole generali e prezzi dei trasformatori: Manuale dell’Equipaggiamento, §5.4.
+
+#### **Parametri di catalogo ancora da completare**
+
+Prezzo e Reperibilità del Wächter completo restano da definire. Il generatore impiega NEC Blu; la capacità e la ricarica si gestiscono in cariche, senza una seconda unità energetica da annotare sulla scheda.
+
+Riferimento economico: il Punisher base costa 6.000 cr e ha reperibilità Molto rara; questi valori non costituiscono il prezzo già approvato del Wächter modificato.
 
 Le armature, i rinforzi e le proprietà specialistiche delle protezioni sono raccolti nel §7.11. Le regole di Integrità del §7.2.1 restano applicabili a ogni oggetto separatamente.
 
@@ -1198,7 +1264,7 @@ Esempio: armatura AR 3 e Scudo Medio AR \+2 forniscono AR totale 5\. Contro 10 d
 
 Le proprietà passive sono utilizzabili da tutti nei normali limiti dell’oggetto; le proprietà attive richiedono sintonizzazione e, una volta sintonizzati, si attivano automaticamente senza Componenti, rispettando costi e condizioni. Soltanto le proprietà che lo prevedono espressamente richiedono una Prova di attivazione. Il §7.10 distingue tipologia, classificazione di potenza e costo di sintonizzazione. La capacità ordinaria va da 8 a 13 secondo i Gradi complessivi; Architetto TecnoMistico aggiunge \+2 una sola volta. Al totale si applica la riduzione dovuta all’Umanità, fino a un minimo di 0 (§5.21); l’eventuale eccesso di sintonizzazioni si risolve secondo il §7.10. Ogni scheda deve riportare proprietà passive e attive, effetti, costo di sintonizzazione, eventuali PM, Azioni e requisiti; per le proprietà che richiedono una Prova di attivazione, ne specifica l’Abilità e le modalità di risoluzione. Progetto, costruzione e infusione seguono il Manuale della Magia, sezione 24\. SnT indica il costo di Sintonizzazione; SIN resta la sigla dell’interfaccia neurale.
 
-Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche NEC usano Lx, non richiedono Sintonizzazione e seguono i §§7.1.4 e 7.20.5. Non esiste una conversione automatica fra Lx e PM.
+Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche NEC usano cariche e UE, non richiedono Sintonizzazione e seguono i §§7.1.4 e 7.20.5. Non esiste una conversione automatica fra UE e PM.
 
 Le riserve integrate si distinguono in Batterie, che alimentano anche gli Incantesimi personali compatibili, e Cariche, riservate alle funzioni del proprio Artefatto. Una proprietà Esclusiva usa soltanto la riserva interna; una Universale può usare anche PM personali o un’altra fonte esterna compatibile. Per ogni pagamento vale il limite di una fonte esterna, eventualmente integrata con PM personali (Manuale della Magia, §26.2). Le Cariche mistiche si misurano in PM. Un oggetto acquistato ha la riserva piena; per un oggetto trovato decide il Direttore.
 
@@ -1456,7 +1522,7 @@ Arco da guerra. Incoccare è compreso nell’attacco; Tiro Rapido consuma due fr
 
 **Fucile al plasma. Proprietà:** Plasma. Include una cella standard da 20 colpi. Ogni colpo a segno applica AC 2\.
 
-**Lanciafiamme. Proprietà: Fuoco. Getto diretto contro un solo bersaglio, con Prova per Colpire e una Difesa ordinaria a distanza. Un getto è consumato anche se manca. Alloggiamento incluso; pacco NEC Blu separato (§7.20.6).**
+**Lanciafiamme. Proprietà: Fuoco. Getto diretto contro un solo bersaglio, con Prova per Colpire e una Difesa ordinaria a distanza. Un getto è consumato anche se manca. Alloggiamento incluso; pacco NEC Rosso separato (§7.20.6).**
 
 ### **Granate**
 
@@ -1585,7 +1651,7 @@ Lanciagranate Alleanza. Richiede Imbracciatura; si applica Postura. Munizione di
 | Nimrod Autocannon | Rara | 14 | MR | 98.000 |
 | Gehemmapuker | Rara | 14 | MR | 18.000 |
 
-**Gehemmapuker. Proprietà: Fuoco. Getto diretto contro un solo bersaglio; segue il Lanciafiamme commerciale. Pacco NEC Blu separato (§7.20.6).**
+**Gehemmapuker. Proprietà: Fuoco. Getto diretto contro un solo bersaglio; segue il Lanciafiamme commerciale. Pacco NEC Rosso separato (§7.20.6).**
 
 ### **Bauhaus**
 
@@ -2118,7 +2184,7 @@ Tutti i modelli e i moduli possiedono Purificatrice 1, con il bonus separato dai
 
 **Eliminator. Silenziatore incorporato:** lo sparo non è percepibile uditivamente. VA −2 e danno 1d6+1 comprendono già le penalità del dispositivo; non si applicano una seconda volta. Il costo di 6.500 comprende il Silenziatore. Resta Purificatrice 1 separata dal danno tabellare.
 
-I lanciagranate Nemesis 221 e Volcano usano granate standard a frammentazione, Fumogene ed Elettroshock (§7.20.3). I lanciafiamme Nemesis 214, Eruptor e Purifier producono un getto diretto contro un solo bersaglio e seguono il Lanciafiamme commerciale. Il modulo della Nemesis 214 è utilizzabile a una mano come eccezione esplicita. Pacco NEC Blu e munizioni si acquistano separatamente.
+I lanciagranate Nemesis 221 e Volcano usano granate standard a frammentazione, Fumogene ed Elettroshock (§7.20.3). I lanciafiamme Nemesis 214, Eruptor e Purifier producono un getto diretto contro un solo bersaglio e seguono il Lanciafiamme commerciale. Il modulo della Nemesis 214 è utilizzabile a una mano come eccezione esplicita. Pacco NEC Rosso e munizioni si acquistano separatamente.
 
 Nemesis 21 è una carabina a due mani. Il \+1 VA dei modelli Nemesis che lo riportano è già incluso nel profilo e non si aggiunge nuovamente come Precisa; la Nemesis 100 ha VA 0\. Justifier non impone penalità MOV; Purifier impone MOV −3 anche quando usa il modulo integrato.
 
@@ -2973,7 +3039,7 @@ Le armi pesanti di riferimento dell’Alleanza restano quelle del §7.8, compres
 
 #### **Valigetta investigativa ASA**
 
-\+2 VA a Percezione per esaminare tracce materiali mediante gli strumenti del corredo e a Scienza per analisi preliminari eseguibili con una dotazione portatile. Non concede un bonus generale alla vigilanza e non sostituisce un laboratorio completo. Il Verde standard incluso alimenta gli strumenti a 25 Lx/h per 40 ore; ricarica e ricambi nel Manuale dell’Equipaggiamento, §5.4.
+\+2 VA a Percezione per esaminare tracce materiali mediante gli strumenti del corredo e a Scienza per analisi preliminari eseguibili con una dotazione portatile. Non concede un bonus generale alla vigilanza e non sostituisce un laboratorio completo. Il Verde standard incluso alimenta gli strumenti senza conteggio energetico ordinario; ricarica e ricambi nel Manuale dell’Equipaggiamento, §5.4.
 
 #### **Corredo d’intrusione ASA**
 
@@ -3269,7 +3335,7 @@ Comprende pinne compatibili con l’armatura, bussola subacquea, sagola guida da
 
 #### **Corredo di manutenzione da campo**
 
-Comprende utensili, strumenti diagnostici e attrezzatura per interventi su armi, armature, propulsori ed esoscheletri compatibili. Concede \+2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo. La diagnostica usa un Verde standard incluso: 25 Lx/h e 40 ore; ricarica e ricambi nel Manuale dell’Equipaggiamento, §5.4.
+Comprende utensili, strumenti diagnostici e attrezzatura per interventi su armi, armature, propulsori ed esoscheletri compatibili. Concede \+2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo. La diagnostica usa un Verde standard incluso, senza conteggio energetico ordinario; ricarica e ricambi nel Manuale dell’Equipaggiamento, §5.4.
 
 Il corredo fornisce gli strumenti; pezzi di ricambio e materiali necessari si conteggiano separatamente. Restano tempi, Prove e limiti delle riparazioni: il corredo non ripristina automaticamente PI.
 
@@ -3680,7 +3746,7 @@ Non aumenta automaticamente la distanza percorribile. La corda protegge dalle Ca
 
 #### **Corredo di manutenzione Imperial**
 
-Comprende utensili, strumenti diagnostici e attrezzatura per interventi su armi, armature, propulsori ed esoscheletri compatibili. Concede \+2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo. La diagnostica usa un Verde standard incluso: 25 Lx/h e 40 ore; ricarica e ricambi nel Manuale dell’Equipaggiamento, §5.4.
+Comprende utensili, strumenti diagnostici e attrezzatura per interventi su armi, armature, propulsori ed esoscheletri compatibili. Concede \+2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo. La diagnostica usa un Verde standard incluso, senza conteggio energetico ordinario; ricarica e ricambi nel Manuale dell’Equipaggiamento, §5.4.
 
 Pezzi di ricambio e materiali necessari si conteggiano separatamente. Restano tempi, Prove e limiti delle riparazioni; il corredo non ripristina automaticamente PI.
 
@@ -3836,7 +3902,7 @@ I moduli sono equipaggiamenti speciali con PI propri; non aumentano l’AR o i P
 | IAS3400 Disturbatore metafisico | IA3000 Reaver | 6 | 14.000 |
 | Smorzatore acustico Silent | IA3000 Silent | 4 | 6.000 |
 
-Il NEC Blu nel formato specialistico IAS contiene 20 cariche tecnologiche. Una cella di ricambio costa 1.000; il servizio specifico di ricarica costa 50 e richiede un’ora. Sostituire la cella richiede un minuto con il dispositivo spento. Ogni modulo consuma secondo la propria scheda. Il servizio specifico non è la tariffa delle celle comuni; il consumo in Lx resta da dimensionare per il modello. Le cariche tecnologiche non sono PM e non richiedono Sintonizzazione. A 0 PI il modulo perde la propria funzione.
+Il NEC Blu nel formato specialistico IAS contiene 20 cariche tecnologiche. Una cella di ricambio carica costa 1.000 cr; il servizio di ricarica costa 10 cr per carica, 200 cr da vuota. Occorrono venti ore con trasformatore portatile o tre ore e venti minuti con stazione industriale. 1 UEB ripristina dieci cariche, con tampone per conservare il resto (Manuale dell’Equipaggiamento, §5.4). Sostituire la cella richiede un minuto con il dispositivo spento. Ogni modulo consuma secondo la propria scheda. Le cariche tecnologiche non sono PM e non richiedono Sintonizzazione. A 0 PI il modulo perde la propria funzione.
 
 #### **IAS3100 Generatore Blink**
 
@@ -4522,7 +4588,7 @@ Spendendo 1 AzP e una dose, senza Prova, recupera 1d3 PV fino al massimo. Richie
 
 #### **Scanner diagnostico portatile**
 
-Richiede una mano e contatto con il corpo o con porte diagnostiche compatibili dell’armatura. Una scansione rapida di 1 AzP rileva automaticamente parametri vitali di base, come battito, respirazione e temperatura. Non identifica automaticamente la causa di un’anomalia. Scanner standard e Cybertronic usano un Verde standard da 1.000 Lx: 25 Lx/h e 40 ore; NEC carico e alimentatore compresi.
+Richiede una mano e contatto con il corpo o con porte diagnostiche compatibili dell’armatura. Una scansione rapida di 1 AzP rileva automaticamente parametri vitali di base, come battito, respirazione e temperatura. Non identifica automaticamente la causa di un’anomalia. Scanner standard e Cybertronic usano un Verde standard senza conteggio energetico ordinario; NEC carico e alimentatore compresi.
 
 Una diagnosi richiede almeno un minuto e una Prova di Medicina con \+2 VA degli strumenti, per lesioni e anomalie rilevabili dall’apparecchio. Analisi più approfondite possono richiedere tempo, campioni o un laboratorio. Il bonus vale per la diagnosi, non si trasferisce alla successiva cura e non si somma ad altri bonus degli strumenti alla stessa Prova.
 
@@ -4538,7 +4604,7 @@ Comprende cinque set di materiali per procedura. Un set viene consumato all’in
 
 #### **Postazione medica da campo**
 
-Richiede un’ora di montaggio da parte di due persone, un’area riparata di 2 × 2 Q e alimentazione continua da rete oppure Modulo Rosso esterno: 1.000 Lx/h, cinque ore con 5.000 Lx. Accoglie un paziente alla volta. Comprende scanner diagnostico standard, strumenti chirurgici e cinque set di materiali per procedura; i ricambi seguono i prezzi del Kit chirurgico.
+Richiede un’ora di montaggio da parte di due persone, un’area riparata di 2 × 2 Q e alimentazione continua da rete oppure Modulo Rosso esterno: cinque ore con un Modulo da 10 UER. Si annota l’autonomia; 2 UER ripristinano un’ora. Accoglie un paziente alla volta. Comprende scanner diagnostico standard, strumenti chirurgici e cinque set di materiali per procedura; i ricambi seguono i prezzi del Kit chirurgico.
 
 Fornisce una struttura sanitaria utilizzabile per Terapia Intensiva e per trattamenti di Menomazioni permanenti compatibili con le attrezzature presenti e le competenze del personale. Concede \+3 VA a Medicina per chirurgia e trattamenti delle Ferite o delle Menomazioni; la diagnostica mantiene il \+2 del proprio scanner. Si applica un solo bonus degli strumenti per Prova, senza sommare postazione, scanner e kit. Restano tempi, consumi, Talenti e limiti delle procedure effettuate.
 
@@ -4674,17 +4740,17 @@ Il lanciatore stabilisce Abilità, VA, FOR, gittata, INC, CC e modalità di tiro
 
 ### **7.20.5 Celle energetiche**
 
-Le celle tecnologiche delle armi sono NEC Blu riutilizzabili e venduti carichi. L’energia si misura in Lx; il giocatore annota le cariche o i colpi. La ricarica costa 0,01 cr/Lx. Il produttore della cella non modifica danni, INC, SIN o proprietà dell’arma.
+Le celle tecnologiche sono NEC riutilizzabili e venduti carichi. Si annotano soltanto cariche o colpi rimasti. Rosso alimenta Plasma, Fuoco e Laser; Blu alimenta Elettricità, Concussivo, Gelo e Scudo energetico. Il colore deve corrispondere all’effetto e non cambia le proprietà dell’arma. La ricarica commerciale costa 10 cr per carica personale ripristinata. Il produttore non modifica danni, INC, SIN o proprietà.
 
-| Cella Blu | Capacità | Riserva Lx | Carica cr | Ricarica cr | REP |
-| :---- | :---: | :---: | :---: | :---: | :---: |
-| Ravvicinata comune | 5 attivazioni | 250 | 200 | 2,5 | NC |
-| Plasma commerciale | 20 colpi | 500 | 400 | 5 | RA |
-| Hellblazer | 30 colpi | 750 | 600 | 7,5 | RA |
-| KEP 808 | 10 colpi | 250 | 200 | 2,5 | RA |
-| Intruder | 30 colpi | 750 | 600 | 7,5 | RA |
+| Accumulatore | Capacità | NEC | Carico cr | Ricarica cr | REP |
+| :---- | :---- | :---- | :---- | :---- | :---- |
+| Ravvicinato comune | 5 attivazioni | Secondo effetto | 200 | 50 | NC |
+| Plasma commerciale | 20 colpi | Rosso | 400 | 200 | RA |
+| Hellblazer | 30 colpi | Rosso | 600 | 300 | RA |
+| KEP 808 | 10 colpi | Rosso | 200 | 100 | RA |
+| Intruder | 30 colpi | Rosso | 600 | 300 | RA |
 
-La ravvicinata comune usa una Blu standard da 250 Lx: cinque impulsi immediati da 50 Lx. Le quattro armi a distanza consumano 25 Lx per colpo e usano formati dedicati con una, due o tre celle secondo la riserva. Hellblazer e Intruder non sono intercambiabili. La cadenza resta quella dell’arma; un NEC più grande non aumenta i danni.
+La cella ravvicinata comune contiene cinque cariche: Rossa per Plasma o Fuoco, Blu per Elettricità o Concussivo. Le armi a distanza della tabella usano NEC Rossi e spendono una carica per colpo. Formati e connettori rimangono dedicati: Hellblazer e Intruder non sono intercambiabili. La cadenza resta quella dell’arma; una riserva maggiore non aumenta i danni.
 
 | Catalogo | Armi compatibili con la cella ravvicinata da 5 |
 | :---- | :---- |
@@ -4701,33 +4767,33 @@ Per le armi a energia a distanza ogni colpo sparato consuma una carica anche se 
 
 #### **Sostituzione e ricarica**
 
-Sostituire una cella compatibile già pronta richiede 1 AzP, senza Prova, disponendo delle mani necessarie. Ricaricare da vuota una delle celle in tabella richiede un’ora, un caricatore adatto e una fonte di energia adeguata. In condizioni ordinarie non occorre una Prova.
+Sostituire una cella compatibile già pronta richiede 1 AzP, senza Prova, disponendo delle mani necessarie. Ricaricare richiede un trasformatore dedicato e una fonte dello stesso colore oppure una stazione industriale: un caricatore domestico, i PM personali e la sola vicinanza a una Matrice non bastano.
 
-Tempo e costo della ricarica parziale sono proporzionali all’energia ripristinata. Si possono usare soltanto le cariche complete disponibili. La cella ravvicinata ripristina una carica ogni 12 minuti, al costo di 0,5 cr. Un attacco ordinario senza elettrificazione non consuma la carica.
+1 UE ripristina dieci cariche personali; il trasformatore conserva le cariche avanzate nel tampone, separato per colore. Il portatile ripristina una carica all’ora; la stazione industriale una ogni dieci minuti, come velocità complessiva. Cinque cariche richiedono cinque ore o cinquanta minuti e costano 50 cr presso un servizio commerciale. Ricariche parziali: tempo e prezzo delle sole cariche ripristinate. Un attacco ordinario senza attivazione non consuma cariche.
 
-#### **Caricatore da campo**
+#### **Trasformatori di ricarica NEC**
 
-Costa 500 cr, pesa 0,5 kg, REP NC, PI 4, Qualità Comune e PS Integrità 10\. Ricarica una cella alla volta, fino a 1.000 Lx/h, e comprende i connettori per le celle della tabella. Richiede una fonte esterna e non contiene una riserva. Ricarica i NEC tecnologici; non ricarica riserve mistiche in PM.
+Portatile monocromatico: 3.000 cr, componenti 1.800 cr. Portatile multicromatico: 6.000 cr, componenti 3.600 cr. Stazione industriale multicromatica: 20.000 cr, componenti 12.000 cr. La fonte è separata. Un Tecnico o un Tecnomante può costruirli con progetto, strumenti, componenti e una Prova di Tecnologia. Uso ordinario senza Prove ripetute. Peso, Integrità e Reperibilità dei nuovi modelli restano da definire. Il catalogo completo è nel Manuale dell’Equipaggiamento, §5.4.
 
-Le riserve mistiche mantengono il §7.5.1 e il Manuale della Magia. Robot, esoscheletri, propulsori e moduli specialistici conservano formati, autonomie e tempi delle proprie schede: non adottano automaticamente le celle comuni. Capacità o consumi in Lx non ancora dichiarati restano da dimensionare per il modello.
+Le riserve mistiche mantengono il §7.5.1 e il Manuale della Magia. Robot, esoscheletri, propulsori e moduli specialistici conservano formati e autonomie delle proprie schede: non adottano automaticamente le celle comuni. Consumi non ancora dichiarati restano da dimensionare per il modello in cariche, UE o autonomia, senza presumere energia gratuita.
 
 Le celle di trazione sono NEC Rossi riutilizzabili, ricaricabili e sostituibili. Formati, capacità e autonomie dei mezzi seguono le rispettive schede; non si trasferiscono automaticamente i tempi delle celle portatili. Regole comuni e catalogo NEC: Manuale dell’Equipaggiamento, §5.4.
 
 ### **7.20.6 Pacchi NEC dei lanciafiamme**
 
-I lanciafiamme sono emettitori termici alimentati da NEC Blu: non impiegano combustibile liquido. Un getto consuma 50 Lx. Ogni pacco ha un formato compatibile con il modello; l’alloggiamento fisso è compreso nell’arma, mentre il pacco carico si acquista separatamente.
+I lanciafiamme sono emettitori termici alimentati da NEC Rossi: non impiegano combustibile liquido. Un getto consuma una carica. Ogni pacco ha un formato compatibile con il modello; l’alloggiamento fisso è compreso nell’arma, mentre il pacco carico si acquista separatamente.
 
-| Arma | Getti | Riserva Lx | Pacco carico cr | Ricarica cr |
-| :---- | :---: | :---: | :---: | :---: |
-| Nemesis 214 | 5 | 250 | 200 | 2,5 |
-| Lanciafiamme commerciale | 10 | 500 | 400 | 5 |
-| Eruptor | 10 | 500 | 400 | 5 |
-| Purifier | 15 | 750 | 600 | 7,5 |
-| Gehemmapuker | 50 | 2.500 | 2.100 | 25 |
+| Arma | Getti | NEC | Pacco carico cr | Ricarica cr |
+| :---- | :---- | :---- | :---- | :---- |
+| Nemesis 214 | 5 | Rosso | 200 | 50 |
+| Lanciafiamme commerciale | 10 | Rosso | 400 | 100 |
+| Eruptor | 10 | Rosso | 400 | 100 |
+| Purifier | 15 | Rosso | 600 | 150 |
+| Gehemmapuker | 50 | Rosso | 2.100 | 500 |
 
-Ogni attacco consuma un getto anche se manca il bersaglio. AC 1d3 non moltiplica il consumo. Restano danno, proprietà Fuoco, gittata, INC e modalità del modello. I pacchi da 250, 500 e 750 Lx contengono una, due e tre celle Blu; il Gehemmapuker usa un Modulo Blu.
+Ogni attacco consuma una carica anche se manca il bersaglio. AC 1d3 non moltiplica il consumo. Restano danno, proprietà Fuoco, gittata, INC e modalità del modello. Il pacco dedicato del Gehemmapuker contiene cinquanta cariche; non è un Modulo generico da dieci UE.
 
-Sostituire un pacco compatibile pronto richiede 1 AzP, entrambe le mani e nessuna Prova. I pacchi fino a 750 Lx si ricaricano in un’ora con caricatore portatile e fonte adeguati. Il Gehemmapuker richiede un’ora con stazione per Moduli o due ore e mezza con caricatore portatile a piena potenza. Ricariche parziali proporzionali; prezzi e stazioni nel Manuale dell’Equipaggiamento, §5.4.
+Sostituire un pacco compatibile pronto richiede 1 AzP, entrambe le mani e nessuna Prova. Ricarica: una carica all’ora con trasformatore portatile, una ogni dieci minuti con stazione industriale. Le cariche mancanti determinano tempo e costo; 1 UER ne ripristina dieci, conservando il resto nel tampone. Per cinquanta cariche servono cinquanta ore o otto ore e venti minuti. Regole generali nel Manuale dell’Equipaggiamento, §5.4.
 
 ### **7.20.7 Munizioni balistiche speciali**
 
@@ -4933,7 +4999,7 @@ Ogni elmetto ha 4 PI propri. Lo standard ha Qualità Comune e PS Integrità 10\.
 
 Sensori, visione notturna, visione termica, interfacce di pilotaggio, SIN, Assistenza offensiva, Assistenza difensiva e Allerta tattica richiedono alimentazione. Antibagliore, Protezione acustica e Filtro respiratorio sono passivi.
 
-La prima modifica elettronica comprende un NEC Verde standard carico da 1.000 Lx, cavo e alimentatore; i modelli corporativi lo includono. Tutte le funzioni condividono un consumo complessivo di 25 Lx/h e 40 ore di autonomia, indipendentemente dal numero di funzioni attive. Spegnendo tutta l’elettronica il consumo si arresta. Ricarica in un’ora, costo 10 cr; ricambio carico 100 cr, REP CO; sostituzione in 1 AzP (§7.3.4).
+La prima modifica elettronica comprende un NEC Verde standard carico, cavo e alimentatore; i modelli corporativi lo includono. Le funzioni ordinarie dell’elmetto non richiedono conteggio energetico: la ricarica rientra nei normali rifornimenti. Ricambio carico 100 cr, REP CO; sostituzione in 1 AzP (§7.3.4). Eventuali effetti speciali con una riserva propria lo dichiarano espressamente.
 
 Accendere, spegnere o cambiare modalità richiede 1 AzP; il mantenimento non richiede Azioni. A batteria scarica cessano soltanto le funzioni elettroniche. I benefici passivi dell’elmetto e le dotazioni indipendenti dell’armatura restano disponibili.
 
@@ -5006,7 +5072,7 @@ Elmetto tattico integrato che coordina segnalazioni di minaccia, assistenza al p
 | Qualità / PS Integrità | Non comune / 12 |
 | Reperibilità | Molto rara |
 | Costo | 12.000 |
-| Alimentazione | NEC Verde standard; 25 Lx/h; 40 ore |
+| Alimentazione | NEC Verde standard; nessun conteggio ordinario |
 
 Non comprende automaticamente visione notturna, termica, filtri o altri accessori. Può riceverli come modifiche aggiuntive. I suoi bonus ad attacco, Difese/Elusione e Iniziativa sono già \+1: acquistare un secondo modulo equivalente non li porta a \+2.
 
@@ -5356,7 +5422,7 @@ Le differenze riguardano robustezza, protezioni specialistiche, discrezione e as
 
 ### **7.23.8 Alimentazione del CS-R20**
 
-Il CS-R20 è l’unico rinforzo di questo catalogo che alimenta una proprietà speciale. Usa un NEC Verde standard dedicato e indipendente dall’elmetto: 1.000 Lx, 25 Lx/h e 40 ore effettive. Ricarica in un’ora, costo 10 cr; ricambio carico 100 cr (§§7.3.4 e 7.21.3).
+Il CS-R20 usa un NEC Verde standard dedicato e indipendente dall’elmetto per l’assistenza elettronica prevista dal profilo. Questa funzione ordinaria non richiede un conteggio energetico. Ricarica compresa nei normali rifornimenti; ricambio carico 100 cr (§§7.3.4 e 7.21.3).
 
 Batteria carica, cavo e alimentatore sono compresi nei 3.500. Accensione, spegnimento o sostituzione con batteria pronta richiedono 1 AzP. Il mantenimento non richiede Azioni. A batteria scarica cessa il solo bonus SIN; l’AR ordinaria resta disponibile. Tutti gli altri modelli del catalogo funzionano passivamente.
 

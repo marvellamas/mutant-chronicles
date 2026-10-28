@@ -4,7 +4,7 @@
 
 ## Regole della magia e novanta incantesimi
 
-**EDIZIONE 1.6**
+**EDIZIONE 1.7**
 
 Ottobre 2026
 
@@ -575,7 +575,7 @@ Se, al termine della risoluzione completa di un’azione, il personaggio rimane 
 | Viola | Oscura | Saturo di Energia Oscura: la vicinanza provoca esposizione passiva alla Corruzione. Non è in commercio. Gli impieghi energetici saranno definiti con l’Oscura Simmetria. |
 | Trasparente | Nessuna energia residua | Cristallo esausto, ancora mistico e ricaricabile. |
 
-Un cristallo esausto conserva un alone del colore originario e mantiene capacità e sintonizzazione. I Nuclei Energetici Cromatici, NEC Rossi, Blu e Verdi, sono la principale fonte energetica tecnologica: usano Lx, sono ricaricabili e non richiedono Sintonizzazione (Manuale dell’Equipaggiamento, §5.4). Le riserve mistiche usano PM e le regole di questa sezione. Non esiste una conversione automatica Lx–PM. Le celle tecnologiche delle armi seguono il Manuale degli Armamenti, §§7.1.4 e 7.20.5; le riserve mistiche integrate il §7.5.1 dello stesso volume.
+Un cristallo esausto conserva un alone del colore originario e mantiene capacità e sintonizzazione. I Nuclei Energetici Cromatici, NEC Rossi, Blu e Verdi, sono la principale fonte energetica tecnologica: usano UE, sono ricaricabili e non richiedono Sintonizzazione (Manuale dell’Equipaggiamento, §5.4). Le riserve mistiche usano PM e le regole di questa sezione. Non esiste una conversione automatica UE–PM. Le celle tecnologiche delle armi seguono il Manuale degli Armamenti, §§7.1.4 e 7.20.5; le riserve mistiche integrate il §7.5.1 dello stesso volume. Le UE tecnologiche e i PM restano risorse distinte, senza conversione automatica. La fonte cristallina deve essere compatibile con il colore dell’impianto; per ricaricare cariche tecnologiche degli effetti speciali occorre una stazione o un trasformatore dedicato (Manuale dell’Equipaggiamento, §5.4). La semplice vicinanza a una Matrice non basta. I requisiti e i rapporti di trasferimento delle riserve mistiche restano invariati.
 
 Contenitore indica qualunque oggetto che racchiuda un Chroma, indipendentemente da forma e materiale. La scheda riporta tipo di energia, PM attuali e capacità massima: per esempio «Chroma Rosso, 6/10 PM».
 
