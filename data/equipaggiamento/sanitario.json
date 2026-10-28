@@ -438,9 +438,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Diagnostica e chirurgia",
       "nomi_alternativi": [],
-      "note_manuale": "Scanner diagnostico portatile Richiede una mano e contatto con il corpo o con porte diagnostiche compatibili dell’armatura. Una scansione rapida di 1 AzP rileva automaticamente parametri vitali di base, come battito, respirazione e temperatura. Non identifica automaticamente la causa di un’anomalia. Una diagnosi richiede almeno un minuto e una Prova di Medicina con +2 VA degli strumenti, per lesioni e anomalie rilevabili dall’apparecchio. Analisi più approfondite possono richiedere tempo, campioni o un laboratorio. Il bonus vale per la diagnosi, non si trasferisce alla successiva cura e non si somma ad altri bonus degli strumenti alla stessa Prova.",
+      "note_manuale": "Scanner diagnostico portatile Richiede una mano e contatto con il corpo o con porte diagnostiche compatibili dell’armatura. Una scansione rapida di 1 AzP rileva automaticamente parametri vitali di base, come battito, respirazione e temperatura. Non identifica automaticamente la causa di un’anomalia. Una diagnosi richiede almeno un minuto e una Prova di Medicina con +2 VA degli strumenti, per lesioni e anomalie rilevabili dall’apparecchio. Analisi più approfondite possono richiedere tempo, campioni o un laboratorio. Il bonus vale per la diagnosi, non si trasferisce alla successiva cura e non si somma ad altri bonus degli strumenti alla stessa Prova. I due scanner diagnostici usano un Verde standard senza conteggio energetico ordinario; NEC carico e alimentatore compresi (§5.4.3).",
       "paragrafo": "§7.19.5",
-      "versione_manuale": "Armamenti 0.50",
+      "versione_manuale": "Armamenti 0.65",
       "pi": 4,
       "qualita": "Non comune",
       "ps_int": 12,
@@ -464,9 +464,8 @@
       ],
       "alimentazione": {
         "nec": "nec:verde-standard",
-        "consumo_lxh": 25,
-        "autonomia_ore": 40,
-        "paragrafo": "§5.4.7"
+        "ordinaria": true,
+        "paragrafo": "§5.4.3"
       }
     },
     {
@@ -476,9 +475,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Diagnostica e chirurgia",
       "nomi_alternativi": [],
-      "note_manuale": "Scanner diagnostico Cybertronic Mantiene le funzioni e il +2 VA diagnostico del modello portatile; SIN 1 concede un ulteriore +1 alla Prova diagnostica con interfaccia compatibile attiva, per +3 complessivo prima di altri modificatori. Senza connessione mantiene +2. Una scansione automatica non riceve bonus numerici. Abbinamento e limite di un solo SIN per Prova seguono il §7.15.1.",
+      "note_manuale": "Scanner diagnostico Cybertronic Mantiene le funzioni e il +2 VA diagnostico del modello portatile; SIN 1 concede un ulteriore +1 alla Prova diagnostica con interfaccia compatibile attiva, per +3 complessivo prima di altri modificatori. Senza connessione mantiene +2. Una scansione automatica non riceve bonus numerici. Abbinamento e limite di un solo SIN per Prova seguono il §7.15.1. I due scanner diagnostici usano un Verde standard senza conteggio energetico ordinario; NEC carico e alimentatore compresi (§5.4.3).",
       "paragrafo": "§7.19.5",
-      "versione_manuale": "Armamenti 0.50",
+      "versione_manuale": "Armamenti 0.65",
       "pi": 4,
       "qualita": "Rara",
       "ps_int": 14,
@@ -502,9 +501,8 @@
       ],
       "alimentazione": {
         "nec": "nec:verde-standard",
-        "consumo_lxh": 25,
-        "autonomia_ore": 40,
-        "paragrafo": "§5.4.7"
+        "ordinaria": true,
+        "paragrafo": "§5.4.3"
       }
     },
     {
@@ -553,9 +551,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Diagnostica e chirurgia",
       "nomi_alternativi": [],
-      "note_manuale": "Postazione medica da campo Richiede un’ora di montaggio da parte di due persone, un’area riparata di 2 × 2 Q e alimentazione continua da rete oppure Modulo Rosso esterno: 1.000 Lx/h, cinque ore con 5.000 Lx. Accoglie un paziente alla volta. Comprende scanner diagnostico standard, strumenti chirurgici e cinque set di materiali per procedura; i ricambi seguono i prezzi del Kit chirurgico. Fornisce una struttura sanitaria utilizzabile per Terapia Intensiva e per trattamenti di Menomazioni permanenti compatibili con le attrezzature presenti e le competenze del personale. Concede +3 VA a Medicina per chirurgia e trattamenti delle Ferite o delle Menomazioni; la diagnostica mantiene il +2 del proprio scanner. Si applica un solo bonus degli strumenti per Prova, senza sommare postazione, scanner e kit. Restano tempi, consumi, Talenti e limiti delle procedure effettuate.",
+      "note_manuale": "Accoglie un paziente alla volta. Comprende scanner diagnostico standard, strumenti chirurgici e cinque set di materiali per procedura; i ricambi seguono i prezzi del Kit chirurgico. Fornisce una struttura sanitaria utilizzabile per Terapia Intensiva e per trattamenti di Menomazioni permanenti compatibili con le attrezzature presenti e le competenze del personale. Concede +3 VA a Medicina per chirurgia e trattamenti delle Ferite o delle Menomazioni; la diagnostica mantiene il +2 del proprio scanner. Si applica un solo bonus degli strumenti per Prova, senza sommare postazione, scanner e kit. Restano tempi, consumi, Talenti e limiti delle procedure effettuate. Richiede un’ora di montaggio da parte di due persone, un’area riparata di 2 × 2 Q e alimentazione continua da rete oppure Modulo Rosso separato: cinque ore di lavoro con un Modulo da 10 UER. Si annota l’autonomia; 2 UER ripristinano un’ora.",
       "paragrafo": "§7.19.5",
-      "versione_manuale": "Armamenti 0.58",
+      "versione_manuale": "Armamenti 0.65",
       "pi": 12,
       "qualita": "Rara",
       "ps_int": 14,
@@ -586,10 +584,10 @@
       ],
       "alimentazione": {
         "nec": "nec:modulo-rosso",
-        "consumo_lxh": 1000,
         "autonomia_ore": 5,
-        "paragrafo": "§5.4.7",
-        "esterna": true
+        "ue_per_ora": 2,
+        "esterna": true,
+        "paragrafo": "§5.4.8"
       }
     },
     {
@@ -799,7 +797,6 @@
           "nec": "nec:modulo-rosso",
           "usi": 10,
           "unita_usi": "operazioni",
-          "lx_per_uso": 500,
           "paragrafo": "§6.8.3"
         },
         {
@@ -807,7 +804,6 @@
           "moduli": 1,
           "usi": 10,
           "unita_usi": "giorni di degenza o stasi",
-          "lx_per_uso": 1000,
           "paragrafo": "§6.8.5"
         }
       ],
@@ -894,7 +890,6 @@
           "nec": "nec:modulo-rosso",
           "usi": 10,
           "unita_usi": "operazioni",
-          "lx_per_uso": 500,
           "paragrafo": "§6.8.3"
         },
         {
@@ -902,7 +897,6 @@
           "moduli": 1,
           "usi": 10,
           "unita_usi": "giorni di degenza o stasi",
-          "lx_per_uso": 1000,
           "paragrafo": "§6.8.5"
         }
       ],
@@ -989,7 +983,6 @@
           "nec": "nec:modulo-rosso",
           "usi": 10,
           "unita_usi": "operazioni",
-          "lx_per_uso": 500,
           "paragrafo": "§6.8.3"
         },
         {
@@ -997,7 +990,6 @@
           "moduli": 1,
           "usi": 10,
           "unita_usi": "giorni di degenza o stasi",
-          "lx_per_uso": 1000,
           "paragrafo": "§6.8.5"
         }
       ],
@@ -1073,7 +1065,6 @@
           "nec": "nec:modulo-rosso",
           "usi": 10,
           "unita_usi": "operazioni",
-          "lx_per_uso": 500,
           "paragrafo": "§6.8.3"
         },
         {
@@ -1081,7 +1072,6 @@
           "moduli": 1,
           "usi": 10,
           "unita_usi": "giorni di degenza o stasi",
-          "lx_per_uso": 1000,
           "paragrafo": "§6.8.5"
         }
       ],
@@ -1157,7 +1147,6 @@
           "nec": "nec:modulo-rosso",
           "usi": 10,
           "unita_usi": "operazioni",
-          "lx_per_uso": 500,
           "paragrafo": "§6.8.3"
         },
         {
@@ -1165,7 +1154,6 @@
           "moduli": 2,
           "usi": 20,
           "unita_usi": "giorni di degenza o stasi",
-          "lx_per_uso": 1000,
           "paragrafo": "§6.8.5"
         }
       ],
@@ -1241,7 +1229,6 @@
           "nec": "nec:modulo-rosso",
           "usi": 10,
           "unita_usi": "operazioni",
-          "lx_per_uso": 500,
           "paragrafo": "§6.8.3"
         },
         {
@@ -1249,7 +1236,6 @@
           "moduli": 2,
           "usi": 20,
           "unita_usi": "giorni di degenza o stasi",
-          "lx_per_uso": 1000,
           "paragrafo": "§6.8.5"
         }
       ],
@@ -1325,7 +1311,6 @@
           "nec": "nec:modulo-rosso",
           "usi": 10,
           "unita_usi": "operazioni",
-          "lx_per_uso": 500,
           "paragrafo": "§6.8.3"
         },
         {
@@ -1333,7 +1318,6 @@
           "moduli": 3,
           "usi": 30,
           "unita_usi": "giorni di degenza o stasi",
-          "lx_per_uso": 1000,
           "paragrafo": "§6.8.5"
         }
       ],
@@ -1409,7 +1393,6 @@
           "nec": "nec:modulo-rosso",
           "usi": 10,
           "unita_usi": "operazioni",
-          "lx_per_uso": 500,
           "paragrafo": "§6.8.3"
         },
         {
@@ -1417,7 +1400,6 @@
           "moduli": 3,
           "usi": 30,
           "unita_usi": "giorni di degenza o stasi",
-          "lx_per_uso": 1000,
           "paragrafo": "§6.8.5"
         }
       ],

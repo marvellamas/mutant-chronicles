@@ -926,7 +926,7 @@ const kg = (v) => `${String(Math.round(v * 100) / 100).replace('.', ',')} kg`;
  */
 export function quadratiniNec(r, nomeOggetto = r.nome) {
   const parte = r.nome !== nomeOggetto ? r.nome.slice(nomeOggetto.length).trim() : '';
-  const etichetta = `${r.unita === 'Lx' ? 'Riserva' : 'NEC'}${parte ? ` ${parte}` : ''}`;
+  const etichetta = `${r.unita === 'Lx' || r.chiaveLx ? 'Riserva' : 'NEC'}${parte ? ` ${parte}` : ''}`;
   if (r.massimo <= 50) return { etichetta, caselle: r.massimo, perCasella: 1, unita: r.unita, massimo: r.massimo };
   const perCasella = r.massimo / 10;
   return { etichetta, caselle: 10, perCasella, unita: r.unita, massimo: r.massimo };

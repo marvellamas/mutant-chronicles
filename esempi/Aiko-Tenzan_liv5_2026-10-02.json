@@ -311,10 +311,7 @@
       "dot-protezione-1": 6,
       "dot-pronto_soccorso-1": 4
     },
-    "nec": {
-      "dot-comune-5": 100,
-      "dot-comune-6": 100
-    },
+    "nec": {},
     "condizioniArmi": {},
     "round": 1,
     "ultimaTecnica": null,

@@ -160,22 +160,20 @@
       "catalogo": "Commerciale",
       "famiglia": "Viveri, acqua e cucina",
       "nomi_alternativi": [],
-      "note_manuale": "Fornello a Chroma, recipiente e stoviglie per quattro persone. Primo NEC Rosso standard compreso; dieci preparazioni da 30 minuti. Il fornello consuma 100 Lx/h durante l’uso. Una preparazione ordinaria richiede 30 minuti e 50 Lx; si segnano le preparazioni oppure le ore, senza doppio conteggio. Ricaricare il NEC Rosso costa 5 cr e richiede un’ora con fonte adeguata (§5.4).",
+      "note_manuale": "Fornello a Chroma, recipiente e stoviglie per quattro persone. Primo NEC Rosso standard compreso; dieci preparazioni da 30 minuti. Il fornello dispone di dieci preparazioni ordinarie, ciascuna di 30 minuti e fino a quattro persone. Si segnano soltanto le preparazioni rimaste.",
       "paragrafo": "§3.2",
-      "versione_manuale": "Equipaggiamento 0.5",
+      "versione_manuale": "Equipaggiamento 0.13",
       "peso": 1,
       "reperibilita": "CO",
       "costo": 150,
       "alimentazione": {
         "nec": "nec:rosso-standard",
-        "consumo_lxh": 100,
-        "lx_per_uso": 50,
         "usi": 10,
         "unita_usi": "preparazioni",
         "paragrafo": "§3.2"
       },
       "proprieta": [],
-      "decisione": "A.66 (E&L del 02/10/2026, decisione 19): un pasto semplice per fino a quattro persone in 30 minuti, senza Prova; 50 Lx a preparazione (10 con un NEC Rosso standard pieno); cambio del NEC 1 AzP; ricarica 1 ora, 5 cr. La sostituzione del filtro del depuratore resta un’operazione distinta da 1 minuto."
+      "decisione": "A.66 (E&L del 02/10/2026, decisione 19): un pasto semplice per fino a quattro persone in 30 minuti, senza Prova; dieci preparazioni con il NEC Rosso dedicato (Equipaggiamento 0.13, §3.2); cambio del NEC 1 AzP; ricarica 1 ora, 5 cr. La sostituzione del filtro del depuratore resta un’operazione distinta da 1 minuto."
     },
     {
       "id": "depuratore-portatile",
@@ -433,9 +431,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Mobilità e recupero",
       "nomi_alternativi": [],
-      "note_manuale": "Cavo da 20 Q; con 1 AzP sposta il carico di 2 Q in verticale. Il freno mantiene il carico senza energia. Il verricello comprende cavo, imbracatura, gancio, comando, NEC Rosso standard carico e alimentatore. Consuma 100 Lx/h durante il movimento: cinque ore effettive con 500 Lx; nessun consumo per tenere fermo il carico. Sostituzione della cella: 1 AzP; ricarica completa: un’ora e 5 cr con fonte adeguata.",
+      "note_manuale": "Cavo da 20 Q; con 1 AzP sposta il carico di 2 Q in verticale. Il freno mantiene il carico senza energia. Sostituzione della cella: 1 AzP. La riserva offre cinque ore effettive di movimento; mantenere fermo il carico non consuma autonomia.",
       "paragrafo": "§3.6",
-      "versione_manuale": "Equipaggiamento 0.5",
+      "versione_manuale": "Equipaggiamento 0.13",
       "peso": 6,
       "pi": 6,
       "qualita": "Non comune",
@@ -444,9 +442,8 @@
       "costo": 2500,
       "alimentazione": {
         "nec": "nec:rosso-standard",
-        "consumo_lxh": 100,
         "autonomia_ore": 5,
-        "paragrafo": "§3.6"
+        "paragrafo": "§5.4.8"
       },
       "proprieta": []
     },
@@ -475,9 +472,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Orientamento e arrampicata",
       "nomi_alternativi": [],
-      "note_manuale": "Un dispositivo palmare registra gli spostamenti mediante sensori interni. Sullo schermo mostra il percorso seguito, la direzione del punto di partenza e la distanza dai riferimenti memorizzati. Funziona anche sottoterra e in assenza di rete o satelliti. Permette di ritrovare un punto registrato e ripercorrere un itinerario memorizzato senza una Prova di orientamento, finché il percorso rimane riconoscibile e praticabile. Registrare il punto in cui ci si trova o consultare un riferimento richiede 1 AzP e una mano. Non rileva ostacoli, pericoli o passaggi sconosciuti. Comprende NEC Verde compatto carico da 100 Lx, cavo e alimentatore: consumo 2 Lx/h, autonomia 50 ore. Ricambio carico 10 cr; sostituzione 1 AzP; ricarica completa un’ora e 1 cr con fonte adeguata (§5.4).",
+      "note_manuale": "Un dispositivo palmare registra gli spostamenti mediante sensori interni. Sullo schermo mostra il percorso seguito, la direzione del punto di partenza e la distanza dai riferimenti memorizzati. Funziona anche sottoterra e in assenza di rete o satelliti. Permette di ritrovare un punto registrato e ripercorrere un itinerario memorizzato senza una Prova di orientamento, finché il percorso rimane riconoscibile e praticabile. Registrare il punto in cui ci si trova o consultare un riferimento richiede 1 AzP e una mano. Non rileva ostacoli, pericoli o passaggi sconosciuti. Ricambio carico 10 cr; sostituzione 1 AzP. Rientra nell’elettronica ordinaria senza conteggio energetico (§5.4.3).",
       "paragrafo": "§3.3.1",
-      "versione_manuale": "Equipaggiamento 0.6",
+      "versione_manuale": "Equipaggiamento 0.13",
       "peso": 0.3,
       "qualita": "Comune",
       "ps_int": 10,
@@ -486,9 +483,8 @@
       "costo": 600,
       "alimentazione": {
         "nec": "nec:verde-compatto",
-        "consumo_lxh": 2,
-        "autonomia_ore": 50,
-        "paragrafo": "§3.3.1"
+        "ordinaria": true,
+        "paragrafo": "§5.4.3"
       },
       "effetto_breve": "Ritrova un punto registrato e ripercorre un itinerario senza Prova di orientamento.",
       "proprieta": []
@@ -714,9 +710,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Attività extraveicolari",
       "nomi_alternativi": [],
-      "note_manuale": "Mentre è integra, chiusa e rifornita, permette di operare nel vuoto o in atmosfere irrespirabili. Isola il corpo dai contaminanti esterni trasmessi per inalazione o contatto. Comprende due bombole per 4 ore complessive d’aria, climatizzazione e controllo della pressione, comunicatore personale da 1 km, lampada frontale da 6 Q, indicatori e allarme di perdita, cinque toppe pressurizzate del §3.7 e anelli di ancoraggio. Indossarla e controllarne la chiusura richiede 5 minuti. Se già indossata e predisposta, chiudere il casco e attivare il supporto vitale richiede 1 AzP e due mani. Un NEC Verde standard da 1.000 Lx alimenta tutte le funzioni a 25 Lx/h, per 40 ore. Aria ed energia si annotano separatamente: 40 ore di batteria non aumentano le 4 ore d’aria. Non concede AR. Ricambi: bombola carica da 2 ore-persona 100 cr; sostituire una bombola richiede un minuto e due mani.",
+      "note_manuale": "Mentre è integra, chiusa e rifornita, permette di operare nel vuoto o in atmosfere irrespirabili. Isola il corpo dai contaminanti esterni trasmessi per inalazione o contatto. Comprende due bombole per 4 ore complessive d’aria, climatizzazione e controllo della pressione, comunicatore personale da 1 km, lampada frontale da 6 Q, indicatori e allarme di perdita, cinque toppe pressurizzate del §3.7 e anelli di ancoraggio. Indossarla e controllarne la chiusura richiede 5 minuti. Se già indossata e predisposta, chiudere il casco e attivare il supporto vitale richiede 1 AzP e due mani. Aria ed energia si annotano separatamente: 40 ore di batteria non aumentano le 4 ore d’aria. Non concede AR. Ricambi: bombola carica da 2 ore-persona 100 cr; sostituire una bombola richiede un minuto e due mani. Il NEC Verde dedicato offre 40 ore di funzionamento complessivo, senza ricalcolare il consumo spegnendo una singola funzione.",
       "paragrafo": "§3.8.1",
-      "versione_manuale": "Equipaggiamento 0.6",
+      "versione_manuale": "Equipaggiamento 0.13",
       "peso": 12,
       "qualita": "Non comune",
       "ps_int": 12,
@@ -725,9 +721,8 @@
       "costo": 8000,
       "alimentazione": {
         "nec": "nec:verde-standard",
-        "consumo_lxh": 25,
         "autonomia_ore": 40,
-        "paragrafo": "§3.8.1"
+        "paragrafo": "§5.4.8"
       },
       "applicazioni": 4,
       "nome_applicazioni": "ore d’aria",
@@ -757,9 +752,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Attività extraveicolari",
       "nomi_alternativi": [],
-      "note_manuale": "Un involucro ripiegabile si tende su un’intelaiatura leggera formando un ambiente ermetico. Ospita due persone con il normale equipaggiamento personale. Comprende quattro bombole, un NEC Verde standard carico e cinque toppe pressurizzate. Le bombole forniscono 8 ore-persona: 8 ore per un occupante oppure 4 ore per due occupanti. Una persona impiega 10 minuti per montarlo o smontarlo. Occorrono una superficie adatta, ancoraggi utilizzabili e uno spazio di 2 × 2 Q. Il NEC Verde standard da 1.000 Lx alimenta il riparo a 50 Lx/h, per 20 ore indipendentemente dal numero degli occupanti. Offre condizioni adatte al riposo, ma non accelera il recupero e non costituisce una postazione medica.",
+      "note_manuale": "Un involucro ripiegabile si tende su un’intelaiatura leggera formando un ambiente ermetico. Ospita due persone con il normale equipaggiamento personale. Comprende quattro bombole, un NEC Verde standard carico e cinque toppe pressurizzate. Le bombole forniscono 8 ore-persona: 8 ore per un occupante oppure 4 ore per due occupanti. Una persona impiega 10 minuti per montarlo o smontarlo. Occorrono una superficie adatta, ancoraggi utilizzabili e uno spazio di 2 × 2 Q. Offre condizioni adatte al riposo, ma non accelera il recupero e non costituisce una postazione medica. Il NEC Verde dedicato alimenta il riparo per 20 ore, indipendentemente dal numero degli occupanti.",
       "paragrafo": "§3.8.2",
-      "versione_manuale": "Equipaggiamento 0.6",
+      "versione_manuale": "Equipaggiamento 0.13",
       "peso": 26,
       "qualita": "Non comune",
       "ps_int": 12,
@@ -768,9 +763,8 @@
       "costo": 12000,
       "alimentazione": {
         "nec": "nec:verde-standard",
-        "consumo_lxh": 50,
         "autonomia_ore": 20,
-        "paragrafo": "§3.8.2"
+        "paragrafo": "§5.4.8"
       },
       "applicazioni": 8,
       "nome_applicazioni": "ore-persona d’aria",

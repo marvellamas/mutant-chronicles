@@ -1373,9 +1373,9 @@
       "nomi_alternativi": [
         "ASA Recon"
       ],
-      "note_manuale": "Elmetto specialistico (§7.21.5): Visione notturna; Sensori 1 a vista e udito; Filtro respiratorio 2; Allerta tattica 1. Non fornisce AR; sostituisce l’elmetto standard e si acquista per intero. Può ricevere modifiche aggiuntive compatibili.",
+      "note_manuale": "Elmetto specialistico (§7.21.5): Visione notturna; Sensori 1 a vista e udito; Filtro respiratorio 2; Allerta tattica 1. Non fornisce AR; sostituisce l’elmetto standard e si acquista per intero. Può ricevere modifiche aggiuntive compatibili. L’ASA Recon non richiede più ore di batteria da annotare per le sue funzioni elettroniche ordinarie; il Filtro respiratorio resta passivo.",
       "paragrafo": "§7.21.5",
-      "versione_manuale": "Armamenti 0.52",
+      "versione_manuale": "Armamenti 0.65",
       "ar": {
         "totale": 0,
         "magica": 0
@@ -1436,9 +1436,8 @@
       ],
       "alimentazione": {
         "nec": "nec:verde-standard",
-        "consumo_lxh": 25,
-        "autonomia_ore": 40,
-        "paragrafo": "§5.4.8"
+        "ordinaria": true,
+        "paragrafo": "§5.4.3"
       }
     },
     {

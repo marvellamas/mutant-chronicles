@@ -59,18 +59,18 @@
       "catalogo": "Commerciale",
       "famiglia": "Strumenti tecnici e artigianali",
       "nomi_alternativi": [],
-      "note_manuale": "+3 VA a Tecnologia per una specifica attività scelta all’acquisto, eseguibile con l’attrezzatura installata. La postazione di lavoro specializzata comprende banco, fissaggi, strumenti di misura e utensili per un’attività precisa, per esempio riparazione di armi, riparazione di circuiti elettronici o confezione di abiti. Il +3 vale esclusivamente per l’attività scelta. Richiede una superficie stabile, uno spazio di 2 × 2 Q e alimentazione esterna. Montarla o smontarla richiede 10 minuti a una persona, senza Prova in condizioni ordinarie. Consuma 1.000 Lx/h: una rete adeguata o un Modulo Rosso esterno da 5.000 Lx la alimentano; il Modulo offre cinque ore e si acquista separatamente. Non sostituisce impianti industriali. Si applica un solo modificatore degli strumenti: usare un corredo da +2 presso una postazione pertinente da +3 concede complessivamente +3.",
+      "note_manuale": "+3 VA a Tecnologia per una specifica attività scelta all’acquisto, eseguibile con l’attrezzatura installata. La postazione di lavoro specializzata comprende banco, fissaggi, strumenti di misura e utensili per un’attività precisa, per esempio riparazione di armi, riparazione di circuiti elettronici o confezione di abiti. Il +3 vale esclusivamente per l’attività scelta. Richiede una superficie stabile, uno spazio di 2 × 2 Q e alimentazione esterna. Montarla o smontarla richiede 10 minuti a una persona, senza Prova in condizioni ordinarie. Non sostituisce impianti industriali. Si applica un solo modificatore degli strumenti: usare un corredo da +2 presso una postazione pertinente da +3 concede complessivamente +3. Una rete adeguata o un Modulo Rosso esterno da 10 UER la alimentano: il Modulo offre cinque ore di lavoro e si acquista separatamente. Si annota l’autonomia; 2 UER ripristinano un’ora.",
       "paragrafo": "§5.1",
-      "versione_manuale": "Equipaggiamento 0.5",
+      "versione_manuale": "Equipaggiamento 0.13",
       "peso": 40,
       "reperibilita": "RA",
       "costo": 6000,
       "alimentazione": {
         "nec": "nec:modulo-rosso",
-        "consumo_lxh": 1000,
         "autonomia_ore": 5,
-        "paragrafo": "§5.4.7",
-        "esterna": true
+        "ue_per_ora": 2,
+        "esterna": true,
+        "paragrafo": "§5.4.8"
       },
       "proprieta": [],
       "effetto_breve": "+3 VA a Tecnologia per la specifica attività scelta all’acquisto.",
@@ -107,17 +107,16 @@
       "catalogo": "Commerciale",
       "famiglia": "Strumenti scientifici e investigativi",
       "nomi_alternativi": [],
-      "note_manuale": "+2 VA a Scienza per analisi preliminari nel campo scelto all’acquisto. Si sceglie un campo, per esempio chimica, biologia o geologia. Il corredo comprende piccoli strumenti di misura, ottiche e test pertinenti, oltre al necessario per i normali prelievi. Un’analisi preliminare richiede normalmente 10 minuti. Il corredo portatile e la valigetta comprendono ciascuno un NEC Verde standard carico, cavo e alimentatore: 1.000 Lx, 25 Lx/h e 40 ore di uso. Si applica un solo modificatore degli strumenti alla Prova pertinente: corredo da +2 e laboratorio da +3 concedono complessivamente +3.",
+      "note_manuale": "+2 VA a Scienza per analisi preliminari nel campo scelto all’acquisto. Si sceglie un campo, per esempio chimica, biologia o geologia. Il corredo comprende piccoli strumenti di misura, ottiche e test pertinenti, oltre al necessario per i normali prelievi. Un’analisi preliminare richiede normalmente 10 minuti. Si applica un solo modificatore degli strumenti alla Prova pertinente: corredo da +2 e laboratorio da +3 concedono complessivamente +3. Il corredo portatile e la valigetta comprendono ciascuno un NEC Verde standard carico, cavo e alimentatore. L’elettronica diagnostica ordinaria non richiede un registro energetico (§5.4.3); sostituzione del ricambio accessibile in 1 AzP.",
       "paragrafo": "§5.2",
-      "versione_manuale": "Equipaggiamento 0.5",
+      "versione_manuale": "Equipaggiamento 0.13",
       "peso": 3,
       "reperibilita": "NC",
       "costo": 1500,
       "alimentazione": {
         "nec": "nec:verde-standard",
-        "consumo_lxh": 25,
-        "autonomia_ore": 40,
-        "paragrafo": "§5.4.7"
+        "ordinaria": true,
+        "paragrafo": "§5.4.3"
       },
       "proprieta": [],
       "effetto_breve": "+2 VA a Scienza per analisi preliminari nel campo scelto all’acquisto.",
@@ -143,18 +142,18 @@
       "catalogo": "Commerciale",
       "famiglia": "Strumenti scientifici e investigativi",
       "nomi_alternativi": [],
-      "note_manuale": "+3 VA a Scienza per analisi nel campo scelto; permette anche esami che richiedono una postazione attrezzata, se compatibili con i suoi strumenti. Richiede una superficie stabile, uno spazio di 2 × 2 Q e alimentazione esterna. Una persona lo prepara o lo smonta in 30 minuti, senza Prova in condizioni ordinarie. Consuma 1.000 Lx/h: un Modulo Rosso esterno da 5.000 Lx offre cinque ore di uso e si acquista separatamente. Un’analisi ordinaria di laboratorio richiede normalmente 1 ora; analisi complesse possono richiedere più tempo. Il +3 vale nel campo scelto. Si applica un solo modificatore degli strumenti alla Prova pertinente: corredo da +2 e laboratorio da +3 concedono complessivamente +3.",
+      "note_manuale": "+3 VA a Scienza per analisi nel campo scelto; permette anche esami che richiedono una postazione attrezzata, se compatibili con i suoi strumenti. Richiede una superficie stabile, uno spazio di 2 × 2 Q e alimentazione esterna. Una persona lo prepara o lo smonta in 30 minuti, senza Prova in condizioni ordinarie. Un’analisi ordinaria di laboratorio richiede normalmente 1 ora; analisi complesse possono richiedere più tempo. Il +3 vale nel campo scelto. Si applica un solo modificatore degli strumenti alla Prova pertinente: corredo da +2 e laboratorio da +3 concedono complessivamente +3. Un Modulo Rosso esterno da 10 UER offre cinque ore di lavoro e si acquista separatamente. Si annota l’autonomia; 2 UER ripristinano un’ora.",
       "paragrafo": "§5.2",
-      "versione_manuale": "Equipaggiamento 0.5",
+      "versione_manuale": "Equipaggiamento 0.13",
       "peso": 60,
       "reperibilita": "RA",
       "costo": 12000,
       "alimentazione": {
         "nec": "nec:modulo-rosso",
-        "consumo_lxh": 1000,
         "autonomia_ore": 5,
-        "paragrafo": "§5.4.7",
-        "esterna": true
+        "ue_per_ora": 2,
+        "esterna": true,
+        "paragrafo": "§5.4.8"
       },
       "proprieta": [],
       "effetto_breve": "+3 VA a Scienza per analisi nel campo scelto.",
@@ -306,9 +305,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Accesso e ispezione",
       "nomi_alternativi": [],
-      "note_manuale": "Consente interventi su serrature meccaniche ed elettroniche compatibili; strumenti 0. Entrambi i corredi da scasso comprendono grimaldelli, utensili di precisione, sonde meccaniche, interfaccia elettronica, cavi e adattatori. Si usa Furtività per serrature meccaniche e Tecnologia per quelle elettroniche. Un tentativo ordinario richiede un minuto, due mani e accesso alla serratura; per lavori complessi il Direttore stabilisce prima un tempo maggiore. Ogni corredo da scasso comprende un NEC Verde standard carico, cavo e alimentatore: 1.000 Lx, consumo complessivo 25 Lx/h, autonomia 40 ore effettive. Gli utensili manuali restano utilizzabili senza energia.",
+      "note_manuale": "Consente interventi su serrature meccaniche ed elettroniche compatibili; strumenti 0. Entrambi i corredi da scasso comprendono grimaldelli, utensili di precisione, sonde meccaniche, interfaccia elettronica, cavi e adattatori. Si usa Furtività per serrature meccaniche e Tecnologia per quelle elettroniche. Un tentativo ordinario richiede un minuto, due mani e accesso alla serratura; per lavori complessi il Direttore stabilisce prima un tempo maggiore. Gli utensili manuali restano utilizzabili senza energia. Ogni corredo da scasso comprende un NEC Verde standard carico, cavo e alimentatore. L’interfaccia elettronica ordinaria non richiede un contatore energetico (§5.4.3).",
       "paragrafo": "§5.5",
-      "versione_manuale": "Equipaggiamento 0.5",
+      "versione_manuale": "Equipaggiamento 0.13",
       "peso": 2,
       "pi": 4,
       "qualita": "Comune",
@@ -317,9 +316,8 @@
       "costo": 800,
       "alimentazione": {
         "nec": "nec:verde-standard",
-        "consumo_lxh": 25,
-        "autonomia_ore": 40,
-        "paragrafo": "§5.4.7"
+        "ordinaria": true,
+        "paragrafo": "§5.4.3"
       },
       "proprieta": []
     },
@@ -330,9 +328,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Accesso e ispezione",
       "nomi_alternativi": [],
-      "note_manuale": "Come lo Standard, con +2 alla Prova pertinente. Entrambi i corredi da scasso comprendono grimaldelli, utensili di precisione, sonde meccaniche, interfaccia elettronica, cavi e adattatori. Si usa Furtività per serrature meccaniche e Tecnologia per quelle elettroniche. Un tentativo ordinario richiede un minuto, due mani e accesso alla serratura; per lavori complessi il Direttore stabilisce prima un tempo maggiore. Ogni corredo da scasso comprende un NEC Verde standard carico, cavo e alimentatore: 1.000 Lx, consumo complessivo 25 Lx/h, autonomia 40 ore effettive. Gli utensili manuali restano utilizzabili senza energia.",
+      "note_manuale": "Come lo Standard, con +2 alla Prova pertinente. Entrambi i corredi da scasso comprendono grimaldelli, utensili di precisione, sonde meccaniche, interfaccia elettronica, cavi e adattatori. Si usa Furtività per serrature meccaniche e Tecnologia per quelle elettroniche. Un tentativo ordinario richiede un minuto, due mani e accesso alla serratura; per lavori complessi il Direttore stabilisce prima un tempo maggiore. Gli utensili manuali restano utilizzabili senza energia. Ogni corredo da scasso comprende un NEC Verde standard carico, cavo e alimentatore. L’interfaccia elettronica ordinaria non richiede un contatore energetico (§5.4.3).",
       "paragrafo": "§5.5",
-      "versione_manuale": "Equipaggiamento 0.5",
+      "versione_manuale": "Equipaggiamento 0.13",
       "peso": 2,
       "pi": 4,
       "qualita": "Non comune",
@@ -341,9 +339,8 @@
       "costo": 2400,
       "alimentazione": {
         "nec": "nec:verde-standard",
-        "consumo_lxh": 25,
-        "autonomia_ore": 40,
-        "paragrafo": "§5.4.7"
+        "ordinaria": true,
+        "paragrafo": "§5.4.3"
       },
       "proprieta": [],
       "effetto_breve": "+2 alla Prova di scasso: Furtività per le serrature meccaniche, Tecnologia per quelle elettroniche.",
@@ -373,9 +370,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Accesso e ispezione",
       "nomi_alternativi": [],
-      "note_manuale": "Telecamera, luce e schermo; cavo da 2 Q, illuminazione fino a 1 Q davanti alla sonda. Inserire e usare la sonda attraverso un’apertura accessibile richiede 1 AzP e due mani. L’osservazione usa le normali regole di Percezione, senza bonus; la sonda non offre visione termica. Un Verde compatto da 100 Lx alimenta l’intero dispositivo a 2 Lx/h per 50 ore; NEC carico, cavo e alimentatore compresi.",
+      "note_manuale": "Telecamera, luce e schermo; cavo da 2 Q, illuminazione fino a 1 Q davanti alla sonda. Inserire e usare la sonda attraverso un’apertura accessibile richiede 1 AzP e due mani. L’osservazione usa le normali regole di Percezione, senza bonus; la sonda non offre visione termica. NEC carico, cavo e alimentatore compresi. L’intero dispositivo usa un Verde compatto, senza conteggio energetico ordinario (§5.4.3); NEC carico, cavo e alimentatore compresi.",
       "paragrafo": "§5.5",
-      "versione_manuale": "Equipaggiamento 0.5",
+      "versione_manuale": "Equipaggiamento 0.13",
       "peso": 0.5,
       "pi": 2,
       "qualita": "Non comune",
@@ -384,9 +381,8 @@
       "costo": 800,
       "alimentazione": {
         "nec": "nec:verde-compatto",
-        "consumo_lxh": 2,
-        "autonomia_ore": 50,
-        "paragrafo": "§5.4.7"
+        "ordinaria": true,
+        "paragrafo": "§5.4.3"
       },
       "proprieta": []
     },
@@ -502,9 +498,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Elettronica e informatica",
       "nomi_alternativi": [],
-      "note_manuale": "Consulta mappe, documenti e registrazioni; scambia dati con sistemi compatibili. Modificatore strumenti 0. Il palmare richiede una mano e 1 AzP per richiamare un’informazione nota, mostrarla o avviare un trasferimento. I dati devono essere disponibili e il collegamento utilizzabile; non comprende utensili per intervenire sui circuiti. Il palmare comprende un NEC Verde compatto da 100 Lx: 2 Lx/h, 50 ore.",
+      "note_manuale": "Consulta mappe, documenti e registrazioni; scambia dati con sistemi compatibili. Modificatore strumenti 0. Il palmare richiede una mano e 1 AzP per richiamare un’informazione nota, mostrarla o avviare un trasferimento. I dati devono essere disponibili e il collegamento utilizzabile; non comprende utensili per intervenire sui circuiti. Il palmare comprende un NEC Verde compatto; ogni corredo usa un solo Verde standard alloggiato nel terminale per i componenti della configurazione. L’elettronica ordinaria non richiede un conteggio di autonomia (§5.4.3); sostituzione del ricambio accessibile in 1 AzP.",
       "paragrafo": "§5.7",
-      "versione_manuale": "Equipaggiamento 0.5",
+      "versione_manuale": "Equipaggiamento 0.13",
       "peso": 0.3,
       "pi": 2,
       "qualita": "Comune",
@@ -513,9 +509,8 @@
       "costo": 400,
       "alimentazione": {
         "nec": "nec:verde-compatto",
-        "consumo_lxh": 2,
-        "autonomia_ore": 50,
-        "paragrafo": "§5.4.7"
+        "ordinaria": true,
+        "paragrafo": "§5.4.3"
       },
       "proprieta": []
     },
@@ -526,9 +521,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Elettronica e informatica",
       "nomi_alternativi": [],
-      "note_manuale": "Diagnostica, programmazione, configurazione e piccoli interventi elettronici compatibili; strumenti 0. Ogni corredo comprende già un terminale tecnico, programmi di diagnostica e configurazione, multimetro, sonde, utensili di precisione, cavi e adattatori per collegamenti fisici entro 2 Q. Non occorre comprare anche il palmare. Ogni corredo usa un solo Verde standard da 1.000 Lx, alloggiato nel terminale, per tutti i componenti della configurazione: 25 Lx/h e 40 ore.",
+      "note_manuale": "Diagnostica, programmazione, configurazione e piccoli interventi elettronici compatibili; strumenti 0. Ogni corredo comprende già un terminale tecnico, programmi di diagnostica e configurazione, multimetro, sonde, utensili di precisione, cavi e adattatori per collegamenti fisici entro 2 Q. Non occorre comprare anche il palmare. Il palmare comprende un NEC Verde compatto; ogni corredo usa un solo Verde standard alloggiato nel terminale per i componenti della configurazione. L’elettronica ordinaria non richiede un conteggio di autonomia (§5.4.3); sostituzione del ricambio accessibile in 1 AzP.",
       "paragrafo": "§5.7",
-      "versione_manuale": "Equipaggiamento 0.5",
+      "versione_manuale": "Equipaggiamento 0.13",
       "peso": 2.5,
       "pi": 4,
       "qualita": "Comune",
@@ -537,9 +532,8 @@
       "costo": 1000,
       "alimentazione": {
         "nec": "nec:verde-standard",
-        "consumo_lxh": 25,
-        "autonomia_ore": 40,
-        "paragrafo": "§5.4.7"
+        "ordinaria": true,
+        "paragrafo": "§5.4.3"
       },
       "proprieta": []
     },
@@ -550,9 +544,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Elettronica e informatica",
       "nomi_alternativi": [],
-      "note_manuale": "Come lo Standard; +2 a Tecnologia per lavori adeguati all’attrezzatura. Ogni corredo comprende già un terminale tecnico, programmi di diagnostica e configurazione, multimetro, sonde, utensili di precisione, cavi e adattatori per collegamenti fisici entro 2 Q. Non occorre comprare anche il palmare. Ogni corredo usa un solo Verde standard da 1.000 Lx, alloggiato nel terminale, per tutti i componenti della configurazione: 25 Lx/h e 40 ore. Il +2 Professionale si applica soltanto a Tecnologia pertinente e non si somma al bonus di un corredo da scasso sulla stessa Prova.",
+      "note_manuale": "Come lo Standard; +2 a Tecnologia per lavori adeguati all’attrezzatura. Ogni corredo comprende già un terminale tecnico, programmi di diagnostica e configurazione, multimetro, sonde, utensili di precisione, cavi e adattatori per collegamenti fisici entro 2 Q. Non occorre comprare anche il palmare. Il +2 Professionale si applica soltanto a Tecnologia pertinente e non si somma al bonus di un corredo da scasso sulla stessa Prova. Il palmare comprende un NEC Verde compatto; ogni corredo usa un solo Verde standard alloggiato nel terminale per i componenti della configurazione. L’elettronica ordinaria non richiede un conteggio di autonomia (§5.4.3); sostituzione del ricambio accessibile in 1 AzP.",
       "paragrafo": "§5.7",
-      "versione_manuale": "Equipaggiamento 0.5",
+      "versione_manuale": "Equipaggiamento 0.13",
       "peso": 2.5,
       "pi": 4,
       "qualita": "Non comune",
@@ -561,9 +555,8 @@
       "costo": 3000,
       "alimentazione": {
         "nec": "nec:verde-standard",
-        "consumo_lxh": 25,
-        "autonomia_ore": 40,
-        "paragrafo": "§5.4.7"
+        "ordinaria": true,
+        "paragrafo": "§5.4.3"
       },
       "proprieta": [],
       "effetto_breve": "+2 a Tecnologia per lavori adeguati all’attrezzatura.",
@@ -585,9 +578,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Strumenti culturali, artistici e rituali",
       "nomi_alternativi": [],
-      "note_manuale": "Terminale, riferimenti ordinari su un ambito scelto, taccuino e strumenti di scrittura. Permette consultazione e confronto delle fonti disponibili. Le versioni Standard hanno modificatore degli strumenti 0 al VA: rendono possibili le attività indicate, con le normali Abilità e Prove pertinenti. Il terminale di ciascun Corredo di ricerca o amministrativo, il Terminale per produzione multimediale e lo Strumento musicale elettronico utilizzano ciascuno un NEC Verde compatto da 100 Lx: consumo 2 Lx/h e autonomia 50 ore effettive, anche non consecutive.",
+      "note_manuale": "Terminale, riferimenti ordinari su un ambito scelto, taccuino e strumenti di scrittura. Permette consultazione e confronto delle fonti disponibili. Le versioni Standard hanno modificatore degli strumenti 0 al VA: rendono possibili le attività indicate, con le normali Abilità e Prove pertinenti. Rientrano nell’elettronica ordinaria senza conteggio energetico (§5.4.3).",
       "paragrafo": "§5.8",
-      "versione_manuale": "Equipaggiamento 0.5",
+      "versione_manuale": "Equipaggiamento 0.13",
       "peso": 1.5,
       "pi": 4,
       "qualita": "Comune",
@@ -596,9 +589,8 @@
       "costo": 600,
       "alimentazione": {
         "nec": "nec:verde-compatto",
-        "consumo_lxh": 2,
-        "autonomia_ore": 50,
-        "paragrafo": "§5.4.7"
+        "ordinaria": true,
+        "paragrafo": "§5.4.3"
       },
       "proprieta": []
     },
@@ -609,9 +601,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Strumenti culturali, artistici e rituali",
       "nomi_alternativi": [],
-      "note_manuale": "Terminale con programmi di scrittura, contabilità e gestione dati; cartella e cancelleria. Permette di elaborare documenti, bilanci e registri. Le versioni Standard hanno modificatore degli strumenti 0 al VA: rendono possibili le attività indicate, con le normali Abilità e Prove pertinenti. Il terminale di ciascun Corredo di ricerca o amministrativo, il Terminale per produzione multimediale e lo Strumento musicale elettronico utilizzano ciascuno un NEC Verde compatto da 100 Lx: consumo 2 Lx/h e autonomia 50 ore effettive, anche non consecutive.",
+      "note_manuale": "Terminale con programmi di scrittura, contabilità e gestione dati; cartella e cancelleria. Permette di elaborare documenti, bilanci e registri. Le versioni Standard hanno modificatore degli strumenti 0 al VA: rendono possibili le attività indicate, con le normali Abilità e Prove pertinenti. Rientrano nell’elettronica ordinaria senza conteggio energetico (§5.4.3).",
       "paragrafo": "§5.8",
-      "versione_manuale": "Equipaggiamento 0.5",
+      "versione_manuale": "Equipaggiamento 0.13",
       "peso": 1,
       "pi": 4,
       "qualita": "Comune",
@@ -620,9 +612,8 @@
       "costo": 500,
       "alimentazione": {
         "nec": "nec:verde-compatto",
-        "consumo_lxh": 2,
-        "autonomia_ore": 50,
-        "paragrafo": "§5.4.7"
+        "ordinaria": true,
+        "paragrafo": "§5.4.3"
       },
       "proprieta": []
     },
@@ -651,9 +642,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Strumenti culturali, artistici e rituali",
       "nomi_alternativi": [],
-      "note_manuale": "Uno strumento con riproduzione sonora integrata, custodia e accessori. Le versioni Standard hanno modificatore degli strumenti 0 al VA: rendono possibili le attività indicate, con le normali Abilità e Prove pertinenti. Il terminale di ciascun Corredo di ricerca o amministrativo, il Terminale per produzione multimediale e lo Strumento musicale elettronico utilizzano ciascuno un NEC Verde compatto da 100 Lx: consumo 2 Lx/h e autonomia 50 ore effettive, anche non consecutive.",
+      "note_manuale": "Uno strumento con riproduzione sonora integrata, custodia e accessori. Le versioni Standard hanno modificatore degli strumenti 0 al VA: rendono possibili le attività indicate, con le normali Abilità e Prove pertinenti. Rientrano nell’elettronica ordinaria senza conteggio energetico (§5.4.3).",
       "paragrafo": "§5.8",
-      "versione_manuale": "Equipaggiamento 0.5",
+      "versione_manuale": "Equipaggiamento 0.13",
       "peso": 3,
       "pi": 4,
       "qualita": "Comune",
@@ -662,9 +653,8 @@
       "costo": 800,
       "alimentazione": {
         "nec": "nec:verde-compatto",
-        "consumo_lxh": 2,
-        "autonomia_ore": 50,
-        "paragrafo": "§5.4.7"
+        "ordinaria": true,
+        "paragrafo": "§5.4.3"
       },
       "proprieta": []
     },
@@ -693,9 +683,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Strumenti culturali, artistici e rituali",
       "nomi_alternativi": [],
-      "note_manuale": "Dispositivo con programmi per scrittura, composizione e montaggio audio e video. Le riprese richiedono il registratore separato. Le versioni Standard hanno modificatore degli strumenti 0 al VA: rendono possibili le attività indicate, con le normali Abilità e Prove pertinenti. Il terminale di ciascun Corredo di ricerca o amministrativo, il Terminale per produzione multimediale e lo Strumento musicale elettronico utilizzano ciascuno un NEC Verde compatto da 100 Lx: consumo 2 Lx/h e autonomia 50 ore effettive, anche non consecutive.",
+      "note_manuale": "Dispositivo con programmi per scrittura, composizione e montaggio audio e video. Le riprese richiedono il registratore separato. Le versioni Standard hanno modificatore degli strumenti 0 al VA: rendono possibili le attività indicate, con le normali Abilità e Prove pertinenti. Rientrano nell’elettronica ordinaria senza conteggio energetico (§5.4.3).",
       "paragrafo": "§5.8",
-      "versione_manuale": "Equipaggiamento 0.5",
+      "versione_manuale": "Equipaggiamento 0.13",
       "peso": 0.5,
       "pi": 4,
       "qualita": "Comune",
@@ -704,9 +694,8 @@
       "costo": 800,
       "alimentazione": {
         "nec": "nec:verde-compatto",
-        "consumo_lxh": 2,
-        "autonomia_ore": 50,
-        "paragrafo": "§5.4.7"
+        "ordinaria": true,
+        "paragrafo": "§5.4.3"
       },
       "proprieta": []
     },
@@ -771,9 +760,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Strumenti tecnici e artigianali",
       "nomi_alternativi": [],
-      "note_manuale": "Taglio. Taglia metalli ordinari fino a 1 cm di spessore con 10 minuti di lavoro per un tratto fino a 1 Q. Un taglio semplice in condizioni adatte riesce senza Prova; lavori di precisione o condizioni difficili usano Tecnologia. Saldatura. Fornisce lo strumento necessario ai lavori compatibili. Quando ripara un oggetto, si applicano Prova di Tecnologia, tempi, materiali e recupero dei PI ordinari. È uno strumento Standard, senza bonus aggiuntivo. Richiede due mani, accesso diretto e un pezzo fermo. Comprende NEC Rosso standard carico, cavo e alimentatore: 500 Lx, consumo 100 Lx/h, 5 ore effettive di lavoro anche non consecutive. Ricambio carico 50 cr; sostituzione con ricambio accessibile 1 AzP; ricarica completa un’ora e 5 cr con fonte adeguata (§5.4).",
+      "note_manuale": "Taglio. Taglia metalli ordinari fino a 1 cm di spessore con 10 minuti di lavoro per un tratto fino a 1 Q. Un taglio semplice in condizioni adatte riesce senza Prova; lavori di precisione o condizioni difficili usano Tecnologia. Saldatura. Fornisce lo strumento necessario ai lavori compatibili. Quando ripara un oggetto, si applicano Prova di Tecnologia, tempi, materiali e recupero dei PI ordinari. È uno strumento Standard, senza bonus aggiuntivo. Richiede due mani, accesso diretto e un pezzo fermo. Ricambio carico 50 cr; sostituzione con ricambio accessibile 1 AzP; ricarica completa un’ora e 5 cr con fonte adeguata (§5.4). Comprende NEC Rosso standard carico, cavo e alimentatore: 5 ore effettive di lavoro anche non consecutive, registrate come unico contatore energetico.",
       "paragrafo": "§5.9",
-      "versione_manuale": "Equipaggiamento 0.6",
+      "versione_manuale": "Equipaggiamento 0.13",
       "peso": 2,
       "qualita": "Non comune",
       "ps_int": 12,
@@ -782,9 +771,8 @@
       "costo": 1500,
       "alimentazione": {
         "nec": "nec:rosso-standard",
-        "consumo_lxh": 100,
         "autonomia_ore": 5,
-        "paragrafo": "§5.9"
+        "paragrafo": "§5.4.8"
       },
       "effetto_breve": "Taglia metalli fino a 1 cm (10 minuti per 1 Q) e salda: strumento Standard, senza bonus.",
       "proprieta": []
@@ -796,9 +784,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Strumenti tecnici e artigianali",
       "nomi_alternativi": [],
-      "note_manuale": "Una piccola valigetta contiene un vano per campioni, sensori biochimici e un archivio di sostanze conosciute. Un esame richiede un campione, 10 minuti, una superficie di appoggio e un test monouso, consumato anche se la Prova fallisce. Con successo si ottengono le informazioni ricavabili dall’apparecchio; un fallimento dà un risultato inconcludente. Il +2 è un bonus degli strumenti e non si somma a quello di un altro corredo nella stessa analisi. La dotazione comprende dieci test; una confezione di dieci ricambi costa 100 cr. Comprende NEC Verde standard carico, cavo e alimentatore: 1.000 Lx, consumo 25 Lx/h, autonomia 40 ore effettive. Si annotano ore residue e test disponibili separatamente.",
+      "note_manuale": "Una piccola valigetta contiene un vano per campioni, sensori biochimici e un archivio di sostanze conosciute. Un esame richiede un campione, 10 minuti, una superficie di appoggio e un test monouso, consumato anche se la Prova fallisce. Con successo si ottengono le informazioni ricavabili dall’apparecchio; un fallimento dà un risultato inconcludente. Il +2 è un bonus degli strumenti e non si somma a quello di un altro corredo nella stessa analisi. La dotazione comprende dieci test; una confezione di dieci ricambi costa 100 cr. Comprende NEC Verde standard carico, cavo e alimentatore: elettronica ordinaria senza contatore energetico (§5.4.3).",
       "paragrafo": "§5.10",
-      "versione_manuale": "Equipaggiamento 0.6",
+      "versione_manuale": "Equipaggiamento 0.13",
       "peso": 1,
       "qualita": "Non comune",
       "ps_int": 12,
@@ -807,9 +795,8 @@
       "costo": 1200,
       "alimentazione": {
         "nec": "nec:verde-standard",
-        "consumo_lxh": 25,
-        "autonomia_ore": 40,
-        "paragrafo": "§5.10"
+        "ordinaria": true,
+        "paragrafo": "§5.4.3"
       },
       "applicazioni": 10,
       "nome_applicazioni": "test",

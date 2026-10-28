@@ -1820,40 +1820,40 @@
       "fonte": "E&L del 02/10/2026, decisione 14 (per-davide A.67); docs/risposte-master.md, decisione 76"
     },
     "paragrafo": "Equipaggiamento §5.4",
-    "unita": "Lx",
-    "tariffa_cr_per_lx": 0.01,
-    "ricarica": {
-      "ore": 1,
-      "mezza_riserva_minuti": 30,
-      "carica_blu_ravvicinata_minuti": 12
+    "unita": "UE",
+    "colori": {
+      "Rosso": {
+        "sigla": "UER",
+        "impieghi": "Motori, macchinari e calore; Plasma, Fuoco e Laser."
+      },
+      "Blu": {
+        "sigla": "UEB",
+        "impieghi": "Scudi energetici, Elettricità, Concussivo, Gelo e sistemi di Traiettoria."
+      },
+      "Verde": {
+        "sigla": "UEV",
+        "impieghi": "Elettronica, sensori, comunicazioni, illuminazione e supporto vitale."
+      }
+    },
+    "cariche_per_ue": 10,
+    "tariffa_cr_per_ue": 10,
+    "formati_ue": {
+      "modulo": 10,
+      "banco": 100
+    },
+    "elettronica_ordinaria": {
+      "paragrafo": "§5.4.3",
+      "testo": "Torce, comunicatori personali, mirini, visori, sensori, elettronica degli elmetti e diagnostica portatile ordinaria non richiedono conteggi energetici.",
+      "in_scheda": "NEC compreso · elettronica ordinaria, senza conteggio (§5.4.3)"
+    },
+    "da_convertire": {
+      "domanda": "A.193",
+      "testo": "riserva da convertire (A.193)",
+      "spiegazione": "La riserva salvata è in Lx; il manuale ora la conta in UE e l’equivalenza non è definita. Il valore resta nel file e si converte dopo la risposta di Davide (A.193)."
     },
     "sostituzione": {
       "cella_o_modulo_azp": 1,
       "banco_minuti": 1
-    },
-    "impulso_blu_lx": 50,
-    "colori": {
-      "Rosso": {
-        "capacita_lx": 500,
-        "erogazione_lxh": 100,
-        "impiego": "Capacità ed erogazione medie; alimentazione ordinaria."
-      },
-      "Blu": {
-        "capacita_lx": 250,
-        "erogazione_lxh": 200,
-        "impiego": "Capacità bassa ed erogazione alta; richieste intense e brevi."
-      },
-      "Verde": {
-        "capacita_lx": 1000,
-        "erogazione_lxh": 50,
-        "impiego": "Capacità alta ed erogazione bassa; lunga autonomia."
-      }
-    },
-    "formati": {
-      "cella": 1,
-      "modulo": 10,
-      "banco": 100,
-      "matrice": 10000
     },
     "passi_tavolo": {
       "ore": [
@@ -1870,17 +1870,49 @@
       "lx_grandi": [
         100,
         1000
+      ],
+      "ue": [
+        1,
+        10
       ]
     },
+    "lotto_2": {
+      "_nota": "Celle d’arma, pacchi, caricatori, trasformatori e IAS: Armamenti 0.65 §7.20.5–7.20.6, lotto 2 (docs/diff-manuali-2026-10-28.md), dopo le A.189–A.191. Fino ad allora queste voci restano in Lx con le regole qui sotto.",
+      "nec": [
+        "blu-standard",
+        "modulo-blu",
+        "stazione-per-moduli",
+        "stazione-per-banchi"
+      ],
+      "voci": [
+        "corredi_dispositivi:ias3100-generatore-blink",
+        "corredi_dispositivi:ias3200-imbracatura-antigravita",
+        "corredi_dispositivi:ias3300-mirrorshard",
+        "corredi_dispositivi:ias3400-disturbatore-metafisico",
+        "corredi_dispositivi:smorzatore-acustico-silent",
+        "armi_corporative:katana-ryujin",
+        "armi_corporative:csa-404"
+      ],
+      "file": [
+        "munizioni"
+      ],
+      "tariffa_cr_per_lx": 0.01,
+      "ricarica": {
+        "ore": 1,
+        "mezza_riserva_minuti": 30,
+        "carica_blu_ravvicinata_minuti": 12
+      },
+      "impulso_blu_lx": 50
+    },
     "frasi": [
-      "Per il funzionamento continuo valgono due regole: l’erogazione disponibile deve essere almeno pari al consumo e l’autonomia in ore è la carica residua divisa per il consumo.",
-      "La scheda riporta ore oppure cariche: non occorre annotare entrambe queste misure e i Lx. Le ore sono effettive, anche non consecutive; non si contano per Round.",
-      "I NEC sono riutilizzabili. Celle e pacchi del catalogo si ricaricano normalmente in un’ora con caricatore e fonte adeguati. Mezza riserva richiede 30 minuti; una carica della Blu ravvicinata richiede 12 minuti.",
-      "La tariffa ordinaria è 0,01 cr per Lx ripristinato.",
-      "Gli apparecchi già venduti con batteria comprendono il NEC della loro scheda: il prezzo del ricambio non si aggiunge nuovamente al costo dell’oggetto.",
-      "I NEC descritti qui alimentano tecnologia in Lx e non richiedono Sintonizzazione."
+      "Le riserve si esprimono in Unità Energetiche Rosse, Blu o Verdi: UER, UEB e UEV.",
+      "1 UE del colore appropriato permette di ripristinare 10 cariche personali.",
+      "Torce, comunicatori personali, mirini, visori, sensori, elettronica degli elmetti e diagnostica portatile ordinaria non richiedono conteggi energetici.",
+      "Gli apparecchi venduti con batteria comprendono il NEC carico dichiarato: non si somma di nuovo il prezzo del ricambio.",
+      "L’energia sfusa costa 10 cr per UE, sia Rossa, Blu o Verde.",
+      "I NEC tecnologici non richiedono Sintonizzazione."
     ],
-    "_nota": "Equipaggiamento 0.5, §5.4 (01/10/2026). Catalogo in data/equipaggiamento/nec.json; alimentazione degli oggetti nel campo «alimentazione» delle schede: NEC del catalogo (o descrizione per i NEC dedicati), consumo in Lx/h e autonomia in ore, oppure Lx per uso e numero di usi (§5.4.2: «ore oppure cariche»); «esterna»: l’oggetto non comprende il NEC (postazioni, laboratorio). Al tavolo si segna la riserva in ore o usi per gli apparecchi, in Lx per celle e pacchi; «Nuova sessione» non ricarica (serve caricatore e fonte, §5.4.6)."
+    "_nota": "Equipaggiamento 0.13, §5.4 (28/10/2026): riserve in Unità Energetiche per colore (UER, UEB, UEV); Modulo 10 UE, Banco 100 UE; l’elettronica personale ordinaria non si conta («alimentazione.ordinaria»). Al tavolo si segnano le ore o gli usi dei dispositivi che li hanno (verricello, utensile, tuta, riparo, fornello, postazioni medicochirurgiche) e le UE di Moduli e Banchi; le riserve salvate in Lx di un oggetto ora in UE restano nel file come «da convertire» (A.193). Catalogo in data/equipaggiamento/nec.json."
   },
   "umanita": {
     "paragrafo": "Giocatore §5.21 (0.45, 01/10/2026); Equipaggiamento §7.1",

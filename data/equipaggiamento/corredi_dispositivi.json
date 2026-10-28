@@ -91,9 +91,9 @@
       "catalogo": "Alleanza",
       "famiglia": "Corredi professionali",
       "nomi_alternativi": [],
-      "note_manuale": "+2 VA a Percezione per esaminare tracce materiali mediante gli strumenti del corredo e a Scienza per analisi preliminari eseguibili con una dotazione portatile. Non concede un bonus generale alla vigilanza e non sostituisce un laboratorio completo.",
+      "note_manuale": "+2 VA a Percezione per esaminare tracce materiali mediante gli strumenti del corredo e a Scienza per analisi preliminari eseguibili con una dotazione portatile. Non concede un bonus generale alla vigilanza e non sostituisce un laboratorio completo. Il corredo portatile e la valigetta comprendono ciascuno un NEC Verde standard carico, cavo e alimentatore. L’elettronica diagnostica ordinaria non richiede un registro energetico (§5.4.3); sostituzione del ricambio accessibile in 1 AzP.",
       "paragrafo": "§7.12",
-      "versione_manuale": "Armamenti 0.50",
+      "versione_manuale": "Armamenti 0.65",
       "pi": 4,
       "qualita": "Non comune",
       "ps_int": 12,
@@ -126,9 +126,8 @@
       ],
       "alimentazione": {
         "nec": "nec:verde-standard",
-        "consumo_lxh": 25,
-        "autonomia_ore": 40,
-        "paragrafo": "§5.2"
+        "ordinaria": true,
+        "paragrafo": "§5.4.3"
       }
     },
     {
@@ -423,9 +422,9 @@
       "nomi_alternativi": [
         "Manutenzione da campo"
       ],
-      "note_manuale": "Comprende utensili, strumenti diagnostici e attrezzatura per interventi su armi, armature, propulsori ed esoscheletri compatibili. Concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo. Il corredo fornisce gli strumenti; pezzi di ricambio e materiali necessari si conteggiano separatamente. Restano tempi, Prove e limiti delle riparazioni: il corredo non ripristina automaticamente PI.",
+      "note_manuale": "Comprende utensili, strumenti diagnostici e attrezzatura per interventi su armi, armature, propulsori ed esoscheletri compatibili. Concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo. Il corredo fornisce gli strumenti; pezzi di ricambio e materiali necessari si conteggiano separatamente. Restano tempi, Prove e limiti delle riparazioni: il corredo non ripristina automaticamente PI. La diagnostica ordinaria usa un NEC Verde standard senza conteggio energetico (§5.4.3).",
       "paragrafo": "§7.13.7",
-      "versione_manuale": "Armamenti 0.50",
+      "versione_manuale": "Armamenti 0.65",
       "pi": 6,
       "qualita": "Non comune",
       "ps_int": 12,
@@ -450,9 +449,8 @@
       ],
       "alimentazione": {
         "nec": "nec:verde-standard",
-        "consumo_lxh": 25,
-        "autonomia_ore": 40,
-        "paragrafo": "§5.1"
+        "ordinaria": true,
+        "paragrafo": "§5.4.3"
       }
     },
     {
@@ -462,9 +460,9 @@
       "catalogo": "Capitol",
       "famiglia": "Corredi professionali",
       "nomi_alternativi": [],
-      "note_manuale": "+2 VA a Percezione per esaminare tracce materiali mediante gli strumenti e a Scienza per analisi preliminari eseguibili con dotazione portatile. Non concede un bonus generale alla vigilanza e non sostituisce un laboratorio completo.",
+      "note_manuale": "+2 VA a Percezione per esaminare tracce materiali mediante gli strumenti e a Scienza per analisi preliminari eseguibili con dotazione portatile. Non concede un bonus generale alla vigilanza e non sostituisce un laboratorio completo. Il corredo portatile e la valigetta comprendono ciascuno un NEC Verde standard carico, cavo e alimentatore. L’elettronica diagnostica ordinaria non richiede un registro energetico (§5.4.3); sostituzione del ricambio accessibile in 1 AzP.",
       "paragrafo": "§7.13.8",
-      "versione_manuale": "Armamenti 0.50",
+      "versione_manuale": "Armamenti 0.65",
       "pi": 4,
       "qualita": "Non comune",
       "ps_int": 12,
@@ -497,9 +495,8 @@
       ],
       "alimentazione": {
         "nec": "nec:verde-standard",
-        "consumo_lxh": 25,
-        "autonomia_ore": 40,
-        "paragrafo": "§5.2"
+        "ordinaria": true,
+        "paragrafo": "§5.4.3"
       }
     },
     {

@@ -339,12 +339,7 @@
       "es-vis": 4,
       "es-pro": 4
     },
-    "nec": {
-      "dot-comune-6": 100,
-      "dot-strumenti_tecnici-1": 40,
-      "dot-attrezzatura_aggiuntiva-1": 40,
-      "dot-illuminazione-1": 100
-    },
+    "nec": {},
     "condizioniArmi": {},
     "round": 1,
     "ultimaTecnica": null,

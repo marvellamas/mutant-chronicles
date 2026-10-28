@@ -326,10 +326,7 @@
       "es-bordone": 6,
       "es-batteria-10": 3
     },
-    "nec": {
-      "dot-comune-5": 100,
-      "dot-comunicazioni-1": 200
-    },
+    "nec": {},
     "condizioniArmi": {},
     "round": 1,
     "ultimaTecnica": null,

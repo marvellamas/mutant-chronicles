@@ -1802,7 +1802,7 @@ function numeroOpz(F, k, v, min, max, err) {
 }
 
 // ---------------------------------------------------------------------------
-// Nuclei Energetici Cromatici (Equipaggiamento 0.5, §5.4): catalogo (nec.json), caricatori e campo
+// Nuclei Energetici Cromatici (Equipaggiamento 0.13, §5.4; prima 0.5): catalogo (nec.json), caricatori e campo
 // «alimentazione» degli oggetti; regole in regole.json → nec
 
 const COLORI_NEC = ['Rosso', 'Blu', 'Verde'];
@@ -1816,14 +1816,25 @@ function validaNec(dati, err) {
     if (conAlimentazione) err(FR, 'nec', 'regole dei NEC mancanti (Equipaggiamento §5.4): servono a ricarica e consumi');
     return;
   }
-  if (!(Number.isFinite(R.tariffa_cr_per_lx) && R.tariffa_cr_per_lx > 0)) err(FR, 'nec.tariffa_cr_per_lx', 'serve la tariffa di ricarica in cr per Lx (§5.4.6)');
+  // Equipaggiamento 0.13, §5.4: Unità Energetiche per colore, 10 cr per UE, Modulo 10 e Banco 100
+  if (R.unita !== 'UE') err(FR, 'nec.unita', 'dall’Equipaggiamento 0.13 le riserve si misurano in UE (§5.4)');
+  if (!(Number.isFinite(R.tariffa_cr_per_ue) && R.tariffa_cr_per_ue > 0)) err(FR, 'nec.tariffa_cr_per_ue', 'serve la tariffa in cr per UE (§5.4.4)');
+  if (!(isIntero(R.cariche_per_ue) && R.cariche_per_ue > 0)) err(FR, 'nec.cariche_per_ue', 'serve il numero di cariche personali per UE (§5.4.2)');
   for (const c of COLORI_NEC) {
     const x = R.colori?.[c];
-    if (!(isOggetto(x) && isIntero(x.capacita_lx) && x.capacita_lx > 0 && isIntero(x.erogazione_lxh) && x.erogazione_lxh > 0)) err(FR, `nec.colori.${c}`, 'servono capacita_lx ed erogazione_lxh interi positivi (§5.4.1)');
+    if (!(isOggetto(x) && isTesto(x.sigla) && isTesto(x.impieghi))) err(FR, `nec.colori.${c}`, 'servono sigla (UER, UEB, UEV) e impieghi (§5.4.1)');
   }
+  if (!(isIntero(R.formati_ue?.modulo) && isIntero(R.formati_ue?.banco))) err(FR, 'nec.formati_ue', 'servono le UE di Modulo e Banco (§5.4.4)');
+  if (!isTesto(R.elettronica_ordinaria?.in_scheda)) err(FR, 'nec.elettronica_ordinaria.in_scheda', 'serve la riga che la scheda scrive per l’elettronica ordinaria (§5.4.3)');
+  if (!isTesto(R.da_convertire?.testo)) err(FR, 'nec.da_convertire.testo', 'serve il testo per le riserve salvate in Lx (A.193)');
   for (const [u, passi] of Object.entries(R.passi_tavolo ?? {})) {
     if (!(Array.isArray(passi) && passi.length && passi.every((p) => isIntero(p) && p > 0))) err(FR, `nec.passi_tavolo.${u}`, 'elenco di passi interi positivi');
   }
+  // lotto 2 (A.189–A.191): voci che restano in Lx, con la tariffa di prima
+  const L2 = R.lotto_2 ?? {};
+  const lotto2Nec = new Set(L2.nec ?? []);
+  const lotto2Voci = new Set(L2.voci ?? []);
+  if (lotto2Nec.size && !(Number.isFinite(L2.tariffa_cr_per_lx) && L2.tariffa_cr_per_lx > 0)) err(FR, 'nec.lotto_2.tariffa_cr_per_lx', 'le voci del lotto 2 restano in Lx: serve la tariffa di prima');
   // catalogo
   const nec = new Map();
   for (const [fileId, f] of Object.entries(dati.equipaggiamento.file)) {
@@ -1832,15 +1843,28 @@ function validaNec(dati, err) {
       const F = `equipaggiamento/${fileId}`;
       const k = `oggetti (${o.id}).nec`;
       const n = o.nec;
-      if (!(isOggetto(n) && COLORI_NEC.includes(n.colore) && FORMATI_NEC.includes(n.formato) && isIntero(n.celle) && n.celle >= 1
-        && isIntero(n.capacita_lx) && n.capacita_lx > 0 && isIntero(n.erogazione_lxh) && n.erogazione_lxh > 0)) {
-        err(F, k, `serve { colore: ${COLORI_NEC.join('|')}, formato: ${FORMATI_NEC.join('|')}, celle ≥ 1, capacita_lx, erogazione_lxh } (§5.4.4)`);
+      if (!(isOggetto(n) && COLORI_NEC.includes(n.colore) && FORMATI_NEC.includes(n.formato))) {
+        err(F, k, `serve { colore: ${COLORI_NEC.join('|')}, formato: ${FORMATI_NEC.join('|')} } (§5.4.4)`);
         continue;
       }
-      // §5.4.6: «La tariffa ordinaria è 0,01 cr per Lx ripristinato»
-      const attesa = Math.round(n.capacita_lx * R.tariffa_cr_per_lx * 100) / 100;
-      if (o.ricarica_costo !== attesa) err(F, `oggetti (${o.id}).ricarica_costo`, `con ${n.capacita_lx} Lx a ${R.tariffa_cr_per_lx} cr/Lx la ricarica completa costa ${attesa} cr, trovato ${JSON.stringify(o.ricarica_costo)}`);
       nec.set(`${fileId}:${o.id}`, o);
+      if (lotto2Nec.has(o.id)) {
+        // schema di prima, in Lx (Equipaggiamento 0.8)
+        if (!(isIntero(n.capacita_lx) && n.capacita_lx > 0)) err(F, k, 'voce del lotto 2: serve ancora capacita_lx');
+        else if (o.ricarica_costo !== Math.round(n.capacita_lx * L2.tariffa_cr_per_lx * 100) / 100) err(F, `oggetti (${o.id}).ricarica_costo`, `con ${n.capacita_lx} Lx a ${L2.tariffa_cr_per_lx} cr/Lx la ricarica costa ${Math.round(n.capacita_lx * L2.tariffa_cr_per_lx * 100) / 100} cr`);
+        continue;
+      }
+      if (n.capacita_lx !== undefined || n.erogazione_lxh !== undefined) err(F, k, 'i Lx non si usano più (Equipaggiamento 0.13, §5.4): capacità in UE (capacita_ue) o elettronica ordinaria');
+      if (n.uso === 'elettronica_ordinaria') {
+        if (n.capacita_ue !== undefined) err(F, `${k}.capacita_ue`, 'un ricambio dell’elettronica ordinaria non ha capacità da contare (§5.4.3)');
+        continue;
+      }
+      // §5.4.4: Modulo 10 UE, Banco 100 UE; null = da definire
+      if (n.capacita_ue === null) continue;
+      const attesa = R.formati_ue?.[n.formato];
+      if (!(isIntero(n.capacita_ue) && n.capacita_ue > 0)) err(F, `${k}.capacita_ue`, 'intero positivo (UE), oppure null se il manuale non lo dice');
+      else if (attesa !== undefined && n.capacita_ue !== attesa) err(F, `${k}.capacita_ue`, `un ${n.formato} contiene ${attesa} UE (§5.4.4), trovato ${n.capacita_ue}`);
+      else if (o.ricarica_costo !== n.capacita_ue * R.tariffa_cr_per_ue) err(F, `oggetti (${o.id}).ricarica_costo`, `con ${n.capacita_ue} UE a ${R.tariffa_cr_per_ue} cr la ricarica completa costa ${n.capacita_ue * R.tariffa_cr_per_ue} cr, trovato ${JSON.stringify(o.ricarica_costo)}`);
     }
   }
   for (const [fileId, f] of Object.entries(dati.equipaggiamento.file)) {
@@ -1850,31 +1874,33 @@ function validaNec(dati, err) {
         err(F, `oggetti (${o.id}).caricatore`, 'serve { formato, trasferimento_lxh } (§5.4.6)');
       }
       if (o?.alimentazione === undefined) continue;
+      const lotto2 = lotto2Voci.has(`${fileId}:${o.id}`);
       // un oggetto o, con più NEC (postazioni medicochirurgiche: Rosso e Verdi, §6.8.3), un elenco
       const elenco = Array.isArray(o.alimentazione) ? o.alimentazione : [o.alimentazione];
       if (!elenco.length) err(F, `oggetti (${o.id}).alimentazione`, 'elenco vuoto');
       elenco.forEach((a, j) => {
-      const k = `oggetti (${o.id}).alimentazione${Array.isArray(o.alimentazione) ? `[${j}]` : ''}`;
-      if (!isOggetto(a)) { err(F, k, 'non è un oggetto'); return; }
-      if (a.moduli !== undefined && !(isIntero(a.moduli) && a.moduli >= 1)) err(F, `${k}.moduli`, 'intero ≥ 1 (numero di Moduli compresi)');
-      if (a.nec !== null && !nec.has(a.nec)) err(F, `${k}.nec`, `"${a.nec}" non è un NEC del catalogo (nec.json); per un NEC dedicato: nec null e «descrizione»`);
-      if (a.nec === null && !isTesto(a.descrizione)) err(F, `${k}.descrizione`, 'un NEC dedicato (nec: null) richiede la descrizione');
-      // §5.4.2: «La scheda riporta ore oppure cariche»
-      const conOre = a.autonomia_ore !== undefined;
-      const conUsi = a.usi !== undefined;
-      if (!conOre && !conUsi) err(F, k, 'serve autonomia_ore oppure usi (§5.4.2)');
-      if (conOre && !(isIntero(a.autonomia_ore) && a.autonomia_ore > 0)) err(F, `${k}.autonomia_ore`, 'intero positivo');
-      if (conUsi && !(isIntero(a.usi) && a.usi > 0 && isTesto(a.unita_usi) && isIntero(a.lx_per_uso) && a.lx_per_uso > 0)) err(F, k, 'con «usi» servono usi, unita_usi e lx_per_uso');
-      if (a.consumo_lxh !== undefined && !(isIntero(a.consumo_lxh) && a.consumo_lxh > 0)) err(F, `${k}.consumo_lxh`, 'intero positivo');
-      if (a.componenti !== undefined && !(Array.isArray(a.componenti) && a.componenti.length >= 2 && a.componenti.every(isTesto))) err(F, `${k}.componenti`, 'almeno due nomi di componente');
-      if (a.esterna !== undefined && a.esterna !== true) err(F, `${k}.esterna`, 'solo true (il NEC non è compreso)');
-      if (!isTesto(a.paragrafo)) err(F, `${k}.paragrafo`, 'paragrafo del manuale mancante');
-      // il NEC del catalogo deve bastare: «l’autonomia in ore è la carica residua divisa per il consumo» (§5.4.2)
-      const n = nec.get(a.nec)?.nec;
-      if (n && conOre && isIntero(a.consumo_lxh) && n.capacita_lx / a.consumo_lxh < a.autonomia_ore) err(F, k, `${a.autonomia_ore} ore a ${a.consumo_lxh} Lx/h superano i ${n.capacita_lx} Lx di ${a.nec}`);
-      if (n && isIntero(a.consumo_lxh) && n.erogazione_lxh < a.consumo_lxh && a.esterna !== true) err(F, k, `${a.nec} eroga ${n.erogazione_lxh} Lx/h, meno dei ${a.consumo_lxh} richiesti (§5.4.2)`);
-      // usi contati: la carica dei Moduli compresi deve bastare
-      if (n && conUsi && isIntero(a.lx_per_uso) && a.usi * a.lx_per_uso > n.capacita_lx * (a.moduli ?? 1)) err(F, k, `${a.usi} ${a.unita_usi} da ${a.lx_per_uso} Lx superano la carica di ${a.moduli ?? 1} × ${a.nec}`);
+        const k = `oggetti (${o.id}).alimentazione${Array.isArray(o.alimentazione) ? `[${j}]` : ''}`;
+        if (!isOggetto(a)) { err(F, k, 'non è un oggetto'); return; }
+        if (a.moduli !== undefined && !(isIntero(a.moduli) && a.moduli >= 1)) err(F, `${k}.moduli`, 'intero ≥ 1 (numero di Moduli compresi)');
+        if (a.nec !== null && !nec.has(a.nec)) err(F, `${k}.nec`, `"${a.nec}" non è un NEC del catalogo (nec.json); per un NEC dedicato: nec null e «descrizione»`);
+        if (a.nec === null && !isTesto(a.descrizione)) err(F, `${k}.descrizione`, 'un NEC dedicato (nec: null) richiede la descrizione');
+        if (!isTesto(a.paragrafo)) err(F, `${k}.paragrafo`, 'paragrafo del manuale mancante');
+        if (!lotto2 && (a.consumo_lxh !== undefined || a.lx_per_uso !== undefined)) err(F, k, 'i Lx non si usano più (Equipaggiamento 0.13, §5.4.2): ore, usi oppure «ordinaria»');
+        // §5.4.3: l'elettronica ordinaria non si conta
+        if (a.ordinaria !== undefined) {
+          if (a.ordinaria !== true) err(F, `${k}.ordinaria`, 'solo true');
+          if (a.autonomia_ore !== undefined || a.usi !== undefined) err(F, k, 'l’elettronica ordinaria non ha ore né usi da contare (§5.4.3)');
+          return;
+        }
+        // §5.4.2: un solo contatore per riserva, ore oppure usi
+        const conOre = a.autonomia_ore !== undefined;
+        const conUsi = a.usi !== undefined;
+        if (!conOre && !conUsi) err(F, k, 'serve autonomia_ore oppure usi (§5.4.2), oppure «ordinaria: true» (§5.4.3)');
+        if (conOre && !(isIntero(a.autonomia_ore) && a.autonomia_ore > 0)) err(F, `${k}.autonomia_ore`, 'intero positivo');
+        if (conUsi && !(isIntero(a.usi) && a.usi > 0 && isTesto(a.unita_usi))) err(F, k, 'con «usi» servono usi e unita_usi');
+        if (a.ue_per_ora !== undefined && !(isIntero(a.ue_per_ora) && a.ue_per_ora > 0)) err(F, `${k}.ue_per_ora`, 'intero positivo (UE che ripristinano un’ora, §5.4.8)');
+        if (a.componenti !== undefined && !(Array.isArray(a.componenti) && a.componenti.length >= 2 && a.componenti.every(isTesto))) err(F, `${k}.componenti`, 'almeno due nomi di componente');
+        if (a.esterna !== undefined && a.esterna !== true) err(F, `${k}.esterna`, 'solo true (il NEC non è compreso)');
       });
     }
   }

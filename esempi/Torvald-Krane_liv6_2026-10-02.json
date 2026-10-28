@@ -284,10 +284,7 @@
       "dot-arma_da_fuoco-1": 4,
       "dot-protezione-1": 8
     },
-    "nec": {
-      "dot-comune-5": 100,
-      "dot-comune-6": 100
-    },
+    "nec": {},
     "condizioniArmi": {},
     "round": 1,
     "ultimaTecnica": null,

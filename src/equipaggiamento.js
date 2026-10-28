@@ -306,15 +306,18 @@ export function coloriChroma(dati) {
  * lo stesso uid dell'oggetto e un solo costo di sintonizzazione, quello dell'oggetto.
  */
 /**
- * Riserve dei NEC da segnare al tavolo (Equipaggiamento 0.5, §5.4; regole.json → nec), come i PM dei
- * contenitori di Chroma ma con unità tecnologiche:
- * - celle e pacchi del catalogo (nec.json): la riserva in Lx (capacità × quantità);
- * - apparecchi con un NEC compreso (campo «alimentazione»): ore di autonomia o usi, come la scheda
- *   («La scheda riporta ore oppure cariche», §5.4.2); una riserva per componente (videosorveglianza,
- *   allarme). Le alimentazioni «esterne» (postazioni, laboratorio) non hanno riserva propria: conta il
- *   Modulo che le alimenta. Le celle d'arma restano colpi e cariche delle munizioni.
+ * Riserve dei NEC da segnare al tavolo (Equipaggiamento 0.13, §5.4; regole.json → nec), come i PM dei
+ * contenitori di Chroma ma con unità tecnologiche. Un solo contatore per riserva (§5.4.2):
+ * - Moduli e Banchi del catalogo (nec.json, capacita_ue): la riserva in UE del colore (UER, UEB, UEV) × quantità.
+ *   La chiave è «uid#ue»; `chiaveLx` è la chiave di prima, quando la riserva si segnava in Lx: se il file ha solo
+ *   quella, la riserva è «da convertire» (A.193) e la scheda non mostra un numero;
+ * - apparecchi con un NEC compreso (campo «alimentazione»): ore di autonomia o usi (preparazioni, operazioni,
+ *   giorni), come la scheda; una riserva per componente. L'elettronica ordinaria («ordinaria: true», §5.4.3) e le
+ *   alimentazioni «esterne» (postazioni, laboratorio: conta il Modulo che le alimenta) non hanno contatore;
+ * - le voci del lotto 2 (regole.json → nec.lotto_2: celle d'arma, Modulo Blu del Gehemmapuker; A.189–A.191) restano
+ *   in Lx, come prima. Le celle d'arma restano colpi e cariche delle munizioni.
  * `provenienza`: { totale, righe } come i valori calcolati (src/provenienza.js), per il tooltip.
- * @returns {{ chiave, uid, nome, unita, massimo, passi: number[], nec: string|null, provenienza }[]}
+ * @returns {{ chiave, chiaveLx?, uid, nome, unita, massimo, passi: number[], nec: string|null, provenienza }[]}
  */
 export function riserveNec(voci, dati) {
   const R = dati?.regole?.nec;
@@ -328,37 +331,68 @@ export function riserveNec(voci, dati) {
     if (r.fuoriCatalogo || !r.def) continue;
     const d = r.def;
     if (d.nec) {
-      // §5.4.1: «La capacità massima e la carica residua si misurano in Lx»
       const q = Math.max(1, Number.isInteger(v.quantita) ? v.quantita : 1);
-      const massimo = d.nec.capacita_lx * q;
-      out.push({
-        chiave: r.uid, uid: r.uid, nome: r.nome, unita: 'Lx', massimo, nec: d.rif,
-        passi: massimo > 10000 ? passi.lx_grandi ?? [100, 1000] : passi.lx ?? [10, 100],
-        provenienza: { totale: `${massimo.toLocaleString('it-IT')} Lx`, righe: [{ fonte: q > 1 ? `${d.nome} ×${q}` : d.nome, valore: `${d.nec.capacita_lx.toLocaleString('it-IT')} Lx`, nota: `erogazione fino a ${d.nec.erogazione_lxh.toLocaleString('it-IT')} Lx/h (${par(d.paragrafo)})` }] },
-      });
+      if (Number.isInteger(d.nec.capacita_ue)) {
+        // §5.4.4: «Modulo energetico | 10 UE dello stesso colore»; «Banco energetico | 100 UE»
+        const sigla = R.colori?.[d.nec.colore]?.sigla ?? 'UE';
+        const massimo = d.nec.capacita_ue * q;
+        out.push({
+          chiave: `${r.uid}#ue`, chiaveLx: r.uid, uid: r.uid, nome: r.nome, unita: sigla, massimo, nec: d.rif,
+          passi: massimo > 10 ? passi.ue ?? [1, 10] : [1],
+          provenienza: { totale: `${massimo} ${sigla}`, righe: [{ fonte: q > 1 ? `${d.nome} ×${q}` : d.nome, valore: `${d.nec.capacita_ue} ${sigla}`, nota: `${R.colori?.[d.nec.colore]?.impieghi ?? ''} (${par(d.paragrafo)})`.trim() }] },
+        });
+      } else if (Number.isInteger(d.nec.capacita_lx)) {
+        // lotto 2 (A.189–A.191): la riserva resta in Lx finché non risponde Davide
+        const massimo = d.nec.capacita_lx * q;
+        out.push({
+          chiave: r.uid, uid: r.uid, nome: r.nome, unita: 'Lx', massimo, nec: d.rif,
+          passi: massimo > 10000 ? passi.lx_grandi ?? [100, 1000] : passi.lx ?? [10, 100],
+          provenienza: { totale: `${massimo.toLocaleString('it-IT')} Lx`, righe: [{ fonte: q > 1 ? `${d.nome} ×${q}` : d.nome, valore: `${d.nec.capacita_lx.toLocaleString('it-IT')} Lx`, nota: `in Lx fino al lotto 2 (A.189–A.191; ${par(d.paragrafo)})` }] },
+        });
+      }
+      // elettronica ordinaria o capacità da definire: nessun contatore
       continue;
     }
     // un'alimentazione o più (postazioni medicochirurgiche: Rosso per le operazioni, Verdi per la degenza, §6.8)
     const alimentazioni = Array.isArray(d.alimentazione) ? d.alimentazione : d.alimentazione ? [d.alimentazione] : [];
     alimentazioni.forEach((a, j) => {
-    if (a.esterna) return;
-    const fonte = `${a.moduli > 1 ? `${a.moduli} × ` : ''}${a.nec ? cat.perRif.get(a.nec)?.nome ?? a.nec : a.descrizione}`;
-    const base = j ? `${r.uid}#a${j}` : r.uid;
-    const nomeBase = alimentazioni.length > 1 ? `${r.nome} (${a.unita_usi ?? 'ore'})` : r.nome;
-    const usi = a.usi !== undefined;
-    const massimo = usi ? a.usi : a.autonomia_ore;
-    const unita = usi ? a.unita_usi : 'ore';
-    const riga = usi
-      ? { fonte, valore: `${a.usi} ${a.unita_usi}`, nota: `${a.lx_per_uso} Lx per uso${a.consumo_lxh ? `, ${a.consumo_lxh} Lx/h durante l’uso` : ''} (${par(a.paragrafo)})` }
-      : { fonte, valore: `${a.autonomia_ore} ore`, nota: `${a.consumo_lxh ? `${a.consumo_lxh} Lx/h` : 'autonomia della scheda'} (${par(a.paragrafo)})` };
-    (a.componenti ?? [null]).forEach((comp, i) => out.push({
-      chiave: comp ? `${base}#${i}` : base, uid: r.uid, nome: comp ? `${nomeBase} (${comp})` : nomeBase, unita, massimo, nec: a.nec,
-      passi: usi ? passi.usi ?? [1] : passi.ore ?? [1, 5],
-      provenienza: { totale: `${massimo} ${unita}`, righe: [comp ? { ...riga, fonte: `${fonte}, ${comp}` } : riga] },
-    }));
+      // §5.4.3: «non richiedono conteggi energetici»; esterna: conta il Modulo che la alimenta
+      if (a.esterna || a.ordinaria) return;
+      const fonte = `${a.moduli > 1 ? `${a.moduli} × ` : ''}${a.nec ? cat.perRif.get(a.nec)?.nome ?? a.nec : a.descrizione}`;
+      const base = j ? `${r.uid}#a${j}` : r.uid;
+      const nomeBase = alimentazioni.length > 1 ? `${r.nome} (${a.unita_usi ?? 'ore'})` : r.nome;
+      const usi = a.usi !== undefined;
+      const massimo = usi ? a.usi : a.autonomia_ore;
+      const unita = usi ? a.unita_usi : 'ore';
+      const riga = { fonte, valore: `${massimo} ${unita}`, nota: `contatore della scheda (${par(a.paragrafo)})` };
+      (a.componenti ?? [null]).forEach((comp, i) => out.push({
+        chiave: comp ? `${base}#${i}` : base, uid: r.uid, nome: comp ? `${nomeBase} (${comp})` : nomeBase, unita, massimo, nec: a.nec,
+        passi: usi ? passi.usi ?? [1] : passi.ore ?? [1, 5],
+        provenienza: { totale: `${massimo} ${unita}`, righe: [comp ? { ...riga, fonte: `${fonte}, ${comp}` } : riga] },
+      }));
     });
   }
   return out;
+}
+
+/**
+ * Il NEC di un oggetto che non si conta (Equipaggiamento 0.13, §5.4.3), come informazione per l'Inventario e la stampa:
+ * «NEC Verde compatto compreso · elettronica ordinaria, senza conteggio (§5.4.3)», oppure la capacità da definire
+ * (Rosso standard degli utensili). null se l'oggetto non ha un NEC da descrivere, o se il NEC si conta.
+ * @returns {{ testo: string, nec: string|null }|null}
+ */
+export function infoNecSenzaConteggio(voce, dati) {
+  const R = dati?.regole?.nec;
+  if (!R) return null;
+  const cat = catalogo(dati);
+  const r = risolvi(voce, cat);
+  if (r.fuoriCatalogo || !r.def) return null;
+  const d = r.def;
+  if (d.nec?.uso === 'elettronica_ordinaria') return { testo: R.elettronica_ordinaria?.in_scheda ?? 'elettronica ordinaria, senza conteggio', nec: d.rif };
+  if (d.nec && d.nec.capacita_ue === null) return { testo: 'capacità in UE da definire (§5.4.4)', nec: d.rif };
+  const a = Array.isArray(d.alimentazione) ? null : d.alimentazione;
+  if (a?.ordinaria) return { testo: `${a.nec ? cat.perRif.get(a.nec)?.nome ?? a.nec : 'NEC'} compreso · ${R.elettronica_ordinaria?.in_scheda?.replace(/^NEC compreso · /, '') ?? 'senza conteggio'}`, nec: a.nec };
+  return null;
 }
 
 /**

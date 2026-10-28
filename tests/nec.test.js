@@ -1,4 +1,5 @@
-// Equipaggiamento 0.5, cap. 5: NEC (§5.4) e strumenti professionali (§§5.1–5.3, 5.5–5.8)
+// Equipaggiamento 0.5, cap. 5: NEC (§5.4, dal 28/10/2026 nell'edizione 0.13: UE ed elettronica ordinaria senza conteggi,
+// tools/lotti/lotto_nec_ue.mjs) e strumenti professionali (§§5.1–5.3, 5.5–5.8)
 // (tools/lotti/lotto_equipaggiamento_05.mjs, tools/lotti/lotto_equipaggiamento_03.mjs).
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -16,22 +17,23 @@ const cat = catalogo(dati);
 const r = (rif) => cat.perRif.get(rif);
 const voce = (uid, rif, extra = {}) => ({ uid, rif, stato: 'zaino', quantita: 1, note: '', ...extra });
 
-test('§5.4.4: catalogo NEC, quattro celle, sei pacchi; ricarica a 0,01 cr/Lx; regole in regole.json → nec', () => {
+test('§5.4.4 (Equipaggiamento 0.13): Moduli 10 UE e Banchi 100 UE; ricambi Verdi senza conteggio; lotto 2 ancora in Lx', () => {
   const nec = cat.oggetti.filter((o) => o.file === 'nec' && o.nec);
-  assert.deepEqual(nec.map((o) => [o.id, o.nec.colore, o.nec.capacita_lx, o.costo]), [
-    ['verde-compatto', 'Verde', 100, 10], ['rosso-standard', 'Rosso', 500, 50], ['blu-standard', 'Blu', 250, 200], ['verde-standard', 'Verde', 1000, 100],
-    ['modulo-rosso', 'Rosso', 5000, 600], ['modulo-blu', 'Blu', 2500, 2100], ['modulo-verde', 'Verde', 10000, 1100],
-    ['banco-rosso', 'Rosso', 50000, 6000], ['banco-blu', 'Blu', 25000, 21000], ['banco-verde', 'Verde', 100000, 11000],
+  assert.deepEqual(nec.map((o) => [o.id, o.nec.colore, o.nec.capacita_ue ?? o.nec.uso ?? (o.nec.capacita_lx ? 'lotto 2' : null), o.costo]), [
+    ['verde-compatto', 'Verde', 'elettronica_ordinaria', 10], ['rosso-standard', 'Rosso', 'utensili', 50], ['blu-standard', 'Blu', 'lotto 2', 200], ['verde-standard', 'Verde', 'elettronica_ordinaria', 100],
+    ['modulo-rosso', 'Rosso', 10, 600], ['modulo-blu', 'Blu', 'lotto 2', 2100], ['modulo-verde', 'Verde', 10, 600],
+    ['banco-rosso', 'Rosso', 100, 6000], ['banco-blu', 'Blu', 100, 6000], ['banco-verde', 'Verde', 100, 6000],
   ]);
-  for (const o of nec) assert.equal(o.ricarica_costo, o.nec.capacita_lx * dati.regole.nec.tariffa_cr_per_lx, o.id);
-  // la tabella dei tipi (§5.4.1) coincide con le celle standard del catalogo
-  for (const c of ['Rosso', 'Blu', 'Verde']) {
-    const s = nec.find((o) => o.nec.colore === c && o.nec.formato === 'standard');
-    assert.deepEqual([s.nec.capacita_lx, s.nec.erogazione_lxh], [dati.regole.nec.colori[c].capacita_lx, dati.regole.nec.colori[c].erogazione_lxh]);
-  }
-  // il caricatore portatile del §5.4.6 è il Caricatore da campo degli Armamenti (stessa scheda)
+  // §5.4.4: «L’energia sfusa costa 10 cr per UE»: ricarica completa del Modulo 100 cr, del Banco 1.000 cr
+  for (const o of nec.filter((x) => Number.isInteger(x.nec.capacita_ue))) assert.equal(o.ricarica_costo, o.nec.capacita_ue * dati.regole.nec.tariffa_cr_per_ue, o.id);
+  // il Rosso standard degli utensili: capacità in UE non indicata dal manuale, da definire
+  assert.equal(r('nec:rosso-standard').nec.capacita_ue, null);
+  // §5.4.1: sigle dei colori
+  assert.deepEqual(Object.values(dati.regole.nec.colori).map((c) => c.sigla), ['UER', 'UEB', 'UEV']);
+  // il lotto 2 (A.189–A.191) resta com'era: il caricatore da campo e la Blu standard in Lx
   assert.ok(r('munizioni:caricatore-da-campo').nomi_alternativi.includes('Caricatore portatile'));
   assert.equal(r('munizioni:caricatore-da-campo').caricatore.trasferimento_lxh, 1000);
+  assert.ok(dati.regole.nec.lotto_2.nec.includes('blu-standard'));
 });
 
 test('raccordo con il lotto 1: niente doppioni, gli apparecchi puntano al catalogo NEC', () => {
@@ -47,31 +49,45 @@ test('raccordo con il lotto 1: niente doppioni, gli apparecchi puntano al catalo
   for (const o of conAlimentazione) for (const a of [o.alimentazione].flat()) assert.ok(a.nec === null ? a.descrizione : r(a.nec)?.nec, o.rif);
   // la torcia della dotazione comune (Giocatore 0.45: NEC Verde compatto, 100 ore) e la scheda del §5.4.7
   const torcia = risolvi({ uid: 'dot-comune-5', rif: null, personalizzato: { nome: 'Torcia elettrica', tipo: 'altro' }, dotazione_id: 'torcia-elettrica', dotazione_iniziale: true, quantita: 1, note: '' }, cat);
-  assert.deepEqual(torcia.def.alimentazione, { nec: 'nec:verde-compatto', consumo_lxh: 1, autonomia_ore: 100, paragrafo: '§2.3' });
+  // Equipaggiamento 0.13, §5.4.3: elettronica ordinaria, nessun contatore
+  assert.deepEqual(torcia.def.alimentazione, { nec: 'nec:verde-compatto', ordinaria: true, paragrafo: '§5.4.3' });
   // le celle d'arma restano munizioni (colpi e cariche), con la stessa Blu del §5.4.4
   assert.deepEqual([r('munizioni:cella-ravvicinata-comune').cella.riserva_lx, r('munizioni:cella-ravvicinata-comune').costo], [r('nec:blu-standard').nec.capacita_lx, r('nec:blu-standard').costo]);
 });
 
-test('al tavolo la riserva di un NEC scende con − e +, con la provenienza; «Nuova sessione» non ricarica', () => {
-  const equipaggiamento = [voce('t', 'dotazioni_personali:torcia-elettrica'), voce('k', 'comunicazione:kit-di-videosorveglianza'), voce('c', 'nec:modulo-verde'), voce('p', 'strumenti_professionali:postazione-di-lavoro-specializzata')];
+test('al tavolo: elettronica ordinaria senza contatore; le UE di un Modulo e le ore della tuta scendono con − e +; «Nuova sessione» non ricarica', () => {
+  const equipaggiamento = [voce('t', 'dotazioni_personali:torcia-elettrica'), voce('k', 'comunicazione:kit-di-videosorveglianza'), voce('c', 'nec:modulo-verde'), voce('p', 'strumenti_professionali:postazione-di-lavoro-specializzata'), voce('e', 'esplorazione:tuta-extraveicolare')];
   const riserve = riserveNec(equipaggiamento, dati);
-  assert.deepEqual(riserve.map((x) => [x.chiave, x.massimo, x.unita]), [['t', 100, 'ore'], ['k#0', 50, 'ore'], ['k#1', 50, 'ore'], ['c', 10000, 'Lx']]);
-  const t = riserve[0];
-  assert.deepEqual(t.provenienza.righe[0], { fonte: 'NEC Verde compatto', valore: '100 ore', nota: '1 Lx/h (Equipaggiamento §2.3)' });
-  assert.equal(riserve[1].nome, 'Kit di videosorveglianza (videocamera)');
-  // la postazione non comprende il NEC (alimentazione esterna): nessuna riserva propria
-  assert.ok(!riserve.some((x) => x.uid === 'p'));
+  // torcia e videosorveglianza: nessun contatore (§5.4.3); la postazione: alimentazione esterna
+  assert.deepEqual(riserve.map((x) => [x.chiave, x.massimo, x.unita]), [['c#ue', 10, 'UEV'], ['e', 40, 'ore']]);
+  assert.equal(riserve[0].chiaveLx, 'c');
+  assert.deepEqual(riserve[1].provenienza.righe[0], { fonte: 'NEC Verde standard', valore: '40 ore', nota: 'contatore della scheda (Equipaggiamento §5.4.8)' });
   const creazione = { ...MISHIMA_AGENTE, equipaggiamento };
   const m = massimiSessione(calcolaScheda({ creazione, livelli: [] }, dati), creazione, dati);
   let s = allineaSessione(null, m);
-  assert.deepEqual(s.nec, { t: 100, 'k#0': 50, 'k#1': 50, c: 10000 }); // venduti carichi (§5.4.4)
-  s = variaNec(s, 't', -5, m);
-  s = variaNec(s, 'c', -1000, m);
-  assert.deepEqual([s.nec.t, s.nec.c], [95, 9000]);
-  assert.equal(variaNec(s, 't', 50, m).nec.t, 100); // mai oltre il massimo
-  assert.equal(nuovaSessione(s, m).nec.t, 95); // la ricarica richiede caricatore e fonte (§5.4.6)
-  // il fornello conta le preparazioni (§3.2: «si segnano le preparazioni oppure le ore»)
+  assert.deepEqual(s.nec, { 'c#ue': 10, e: 40 }); // venduti carichi (§5.4.4)
+  s = variaNec(s, 'e', -5, m);
+  s = variaNec(s, 'c#ue', -1, m);
+  assert.deepEqual([s.nec.e, s.nec['c#ue']], [35, 9]);
+  assert.equal(variaNec(s, 'e', 50, m).nec.e, 40); // mai oltre il massimo
+  assert.equal(variaNec(s, 't', -1, m).nec.t, undefined); // la torcia non ha contatore
+  assert.equal(nuovaSessione(s, m).nec.e, 35);
+  // il fornello conta le preparazioni (§3.2: «Si segnano soltanto le preparazioni rimaste»)
   assert.deepEqual(riserveNec([voce('f', 'esplorazione:corredo-da-cucina-da-campo')], dati).map((x) => [x.massimo, x.unita]), [[10, 'preparazioni']]);
+});
+
+test('C (A.193): una riserva salvata in Lx non si perde dal file; un Modulo ora in UE è «da convertire», senza numero', () => {
+  const equipaggiamento = [voce('t', 'dotazioni_personali:torcia-elettrica'), voce('c', 'nec:modulo-verde')];
+  const creazione = { ...MISHIMA_AGENTE, equipaggiamento };
+  const m = massimiSessione(calcolaScheda({ creazione, livelli: [] }, dati), creazione, dati);
+  // il file com'era: torcia a 87 ore, Modulo Verde a 6.000 Lx
+  const s = allineaSessione({ nec: { t: 87, c: 6000 } }, m);
+  assert.equal(s.nec.t, 87, 'la torcia non ha più contatore, ma il valore resta nel file');
+  assert.equal(s.nec.c, 6000, 'i Lx restano nel file');
+  assert.equal(s.nec['c#ue'], undefined, 'nessun numero inventato in UE');
+  assert.equal(variaNec(s, 'c#ue', -1, m).nec['c#ue'], undefined);
+  // un Modulo comprato dopo il passaggio parte carico in UE
+  assert.equal(allineaSessione({ nec: {} }, m).nec['c#ue'], 10);
 });
 
 test('strumenti professionali: uno strumento con effetto su una Prova (uso specifico accanto all’Abilità)', () => {
@@ -97,11 +113,11 @@ test('acquisti e sezioni: NEC e strumenti si comprano come le altre famiglie; se
   assert.equal(sezioneInventario(risolvi(voce('b', 'strumenti_professionali:terminale-palmare'), cat)).id, 'strumenti');
 });
 
-test('SS: quadratini della riserva, una casella per unità fino a 50, altrimenti dieci decimi', () => {
-  const [t] = riserveNec([voce('t', 'dotazioni_personali:torcia-elettrica')], dati);
-  assert.deepEqual(quadratiniNec(t, 'Torcia elettrica'), { etichetta: 'NEC', caselle: 10, perCasella: 10, unita: 'ore', massimo: 100 });
-  const [s] = riserveNec([voce('s', 'strumenti_professionali:corredo-da-scasso-standard')], dati);
-  assert.deepEqual(quadratiniNec(s, 'Corredo da scasso Standard'), { etichetta: 'NEC', caselle: 40, perCasella: 1, unita: 'ore', massimo: 40 });
-  const [m] = riserveNec([voce('m', 'nec:modulo-rosso')], dati);
-  assert.deepEqual(quadratiniNec(m, 'Modulo Rosso'), { etichetta: 'Riserva', caselle: 10, perCasella: 500, unita: 'Lx', massimo: 5000 });
+test('SS: quadratini della riserva, una casella per unità fino a 50, altrimenti dieci decimi; niente quadratini per l’elettronica ordinaria', () => {
+  assert.deepEqual(riserveNec([voce('t', 'dotazioni_personali:torcia-elettrica')], dati), []);
+  assert.deepEqual(riserveNec([voce('s', 'strumenti_professionali:corredo-da-scasso-standard')], dati), []);
+  const [e] = riserveNec([voce('e', 'esplorazione:tuta-extraveicolare')], dati);
+  assert.deepEqual(quadratiniNec(e, 'Tuta da lavoro extraveicolare'), { etichetta: 'NEC', caselle: 40, perCasella: 1, unita: 'ore', massimo: 40 });
+  const [m] = riserveNec([voce('m', 'nec:banco-rosso')], dati);
+  assert.deepEqual(quadratiniNec(m, 'Banco Rosso'), { etichetta: 'Riserva', caselle: 10, perCasella: 10, unita: 'UER', massimo: 100 });
 });

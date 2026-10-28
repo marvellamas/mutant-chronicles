@@ -551,7 +551,7 @@
       "catalogo": "Cybertronic",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
-      "note_manuale": "Il CS-R10 è un rivestimento protettivo con strati isolanti passivi. Il CS-R20 aggiunge sensori e assistenza reattiva collegati all’interfaccia neurale: il suo SIN riguarda soltanto Schivata. Il CS-R20 è l’unico rinforzo di questo catalogo che alimenta una proprietà speciale. Usa un NEC Verde standard dedicato e indipendente dall’elmetto: 1.000 Lx, 25 Lx/h e 40 ore effettive. Ricarica in un’ora, costo 10 cr; ricambio carico 100 cr (§§7.3.4 e 7.21.3). Batteria carica, cavo e alimentatore sono compresi nei 3.500. Accensione, spegnimento o sostituzione con batteria pronta richiedono 1 AzP. Il mantenimento non richiede Azioni. A batteria scarica cessa il solo bonus SIN; l’AR ordinaria resta disponibile. Tutti gli altri modelli del catalogo funzionano passivamente.",
+      "note_manuale": "Il CS-R10 è un rivestimento protettivo con strati isolanti passivi. Il CS-R20 aggiunge sensori e assistenza reattiva collegati all’interfaccia neurale: il suo SIN riguarda soltanto Schivata. ricambio carico 100 cr (§§7.3.4 e 7.21.3). Batteria carica, cavo e alimentatore sono compresi nei 3.500. Accensione, spegnimento o sostituzione con batteria pronta richiedono 1 AzP. Il mantenimento non richiede Azioni. A batteria scarica cessa il solo bonus SIN; l’AR ordinaria resta disponibile. Tutti gli altri modelli del catalogo funzionano passivamente. Il CS-R20 usa un NEC Verde standard dedicato e indipendente dall’elmetto per l’assistenza elettronica prevista dal profilo. Questa funzione ordinaria non richiede un conteggio energetico.",
       "paragrafo": "§7.23.6",
       "versione_manuale": "Armamenti 0.58",
       "pi": 6,

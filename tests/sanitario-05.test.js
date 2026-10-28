@@ -60,5 +60,6 @@ test('validatore: cura, postazione e alimentazione con più NEC danno errori leg
   assert.match(e((d) => { o(d, 'cartuccia-curativa').cura.pv = 'tanti'; }), /cura\.pv: dado dei PV recuperati/);
   assert.match(e((d) => { delete o(d, 'cartuccia-emostatica').cura.round; }), /cura\.round: la sospensione dura/);
   assert.match(e((d) => { o(d, 'postazione-semiautomatica-fissa').postazione.prova = { tipo: 'ia' }; }), /postazione: serve \{ modello/);
-  assert.match(e((d) => { o(d, 'postazione-semiautomatica-fissa').alimentazione[1].usi = 99; }), /alimentazione\[1\]: 99 giorni di degenza o stasi da 1000 Lx superano la carica/);
+  // Equipaggiamento 0.13: niente Lx nelle alimentazioni
+  assert.match(e((d) => { o(d, 'postazione-semiautomatica-fissa').alimentazione[1].lx_per_uso = 1000; }), /alimentazione\[1\]: i Lx non si usano più/);
 });

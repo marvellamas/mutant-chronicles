@@ -322,9 +322,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Illuminazione e visione",
       "nomi_alternativi": [],
-      "note_manuale": "Torcia tattica Si monta su un’arma predisposta e illumina nella direzione verso cui viene puntata, entro 20 Q. Contro un bersaglio effettivamente illuminato elimina le penalità causate esclusivamente dalla mancanza di luce. Non concede un bonus numerico per colpire. La luce è visibile anche agli altri: quando la sorgente è direttamente osservabile può rivelare la posizione del tiratore. La Torcia non applica automaticamente Accecato e non attraversa ostacoli. Montaggio attivazione e cumulo Ogni mirino può montare un solo modulo di visione. La Torcia tattica può essere presente insieme al modulo. Montare o rimuovere un accessorio compatibile richiede 1 AzP, entrambe le mani e nessuna Prova. Accenderlo o spegnerlo richiede 1 AzP; una volta attivo, non richiede Azioni per mantenerlo acceso. L’osservazione attraverso il mirino riguarda la direzione inquadrata e non conferisce una capacità sensoriale generale al personaggio. Preparazione del tiro e requisiti dell’ottica continuano ad applicarsi. Accessori e moduli hanno Integrità propria; a 0 PI perdono la funzione. Una batteria scarica interrompe la funzione alimentata; arma e mirino ancora integri conservano il proprio funzionamento ordinario. Gli accessori elettronici usano NEC Verdi ricaricabili. Ogni accessorio autonomo impiega la propria cella; le funzioni integrate nell’elmetto condividono invece il NEC dell’elmetto. Le ore sono effettive e non si contano per Round. Alimentazione: NEC Verde compatto 100 Lx, 2 Lx/h, 50 ore (§7.3.4).",
+      "note_manuale": "Torcia tattica Si monta su un’arma predisposta e illumina nella direzione verso cui viene puntata, entro 20 Q. Contro un bersaglio effettivamente illuminato elimina le penalità causate esclusivamente dalla mancanza di luce. Non concede un bonus numerico per colpire. La luce è visibile anche agli altri: quando la sorgente è direttamente osservabile può rivelare la posizione del tiratore. La Torcia non applica automaticamente Accecato e non attraversa ostacoli. Montaggio attivazione e cumulo Ogni mirino può montare un solo modulo di visione. La Torcia tattica può essere presente insieme al modulo. Montare o rimuovere un accessorio compatibile richiede 1 AzP, entrambe le mani e nessuna Prova. Accenderlo o spegnerlo richiede 1 AzP; una volta attivo, non richiede Azioni per mantenerlo acceso. L’osservazione attraverso il mirino riguarda la direzione inquadrata e non conferisce una capacità sensoriale generale al personaggio. Preparazione del tiro e requisiti dell’ottica continuano ad applicarsi. Accessori e moduli hanno Integrità propria; a 0 PI perdono la funzione. Una batteria scarica interrompe la funzione alimentata; arma e mirino ancora integri conservano il proprio funzionamento ordinario. Gli accessori elettronici ordinari usano NEC Verdi e non richiedono conteggi di ore, cariche o consumi giornalieri.",
       "paragrafo": "§7.3.3",
-      "versione_manuale": "Armamenti 0.58",
+      "versione_manuale": "Armamenti 0.65",
       "pi": 3,
       "qualita": "Comune",
       "ps_int": 10,
@@ -338,9 +338,8 @@
       "effetto_breve": "Si monta su un’arma predisposta e illumina nella direzione verso cui viene puntata, entro 20 Q.",
       "alimentazione": {
         "nec": "nec:verde-compatto",
-        "consumo_lxh": 2,
-        "autonomia_ore": 50,
-        "paragrafo": "§5.4.7"
+        "ordinaria": true,
+        "paragrafo": "§5.4.3"
       }
     },
     {
@@ -350,9 +349,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Illuminazione e visione",
       "nomi_alternativi": [],
-      "note_manuale": "Modulo di visione notturna Si applica a un mirino compatibile e permette di osservare e sparare attraverso di esso ignorando, entro 80 Q, le penalità dovute alla scarsa illuminazione. Richiede una minima luce ambientale, come chiaro di luna o illuminazione residua; non funziona nel buio completo. Fumo, nebbia e ostacoli conservano i propri effetti. Montaggio attivazione e cumulo Ogni mirino può montare un solo modulo di visione. La Torcia tattica può essere presente insieme al modulo. Montare o rimuovere un accessorio compatibile richiede 1 AzP, entrambe le mani e nessuna Prova. Accenderlo o spegnerlo richiede 1 AzP; una volta attivo, non richiede Azioni per mantenerlo acceso. L’osservazione attraverso il mirino riguarda la direzione inquadrata e non conferisce una capacità sensoriale generale al personaggio. Preparazione del tiro e requisiti dell’ottica continuano ad applicarsi. Accessori e moduli hanno Integrità propria; a 0 PI perdono la funzione. Una batteria scarica interrompe la funzione alimentata; arma e mirino ancora integri conservano il proprio funzionamento ordinario. Gli accessori elettronici usano NEC Verdi ricaricabili. Ogni accessorio autonomo impiega la propria cella; le funzioni integrate nell’elmetto condividono invece il NEC dell’elmetto. Le ore sono effettive e non si contano per Round. Alimentazione: NEC Verde standard 1.000 Lx, 10 Lx/h, 100 ore (§7.3.4).",
+      "note_manuale": "Modulo di visione notturna Si applica a un mirino compatibile e permette di osservare e sparare attraverso di esso ignorando, entro 80 Q, le penalità dovute alla scarsa illuminazione. Richiede una minima luce ambientale, come chiaro di luna o illuminazione residua; non funziona nel buio completo. Fumo, nebbia e ostacoli conservano i propri effetti. Montaggio attivazione e cumulo Ogni mirino può montare un solo modulo di visione. La Torcia tattica può essere presente insieme al modulo. Montare o rimuovere un accessorio compatibile richiede 1 AzP, entrambe le mani e nessuna Prova. Accenderlo o spegnerlo richiede 1 AzP; una volta attivo, non richiede Azioni per mantenerlo acceso. L’osservazione attraverso il mirino riguarda la direzione inquadrata e non conferisce una capacità sensoriale generale al personaggio. Preparazione del tiro e requisiti dell’ottica continuano ad applicarsi. Accessori e moduli hanno Integrità propria; a 0 PI perdono la funzione. Una batteria scarica interrompe la funzione alimentata; arma e mirino ancora integri conservano il proprio funzionamento ordinario. Gli accessori elettronici ordinari usano NEC Verdi e non richiedono conteggi di ore, cariche o consumi giornalieri.",
       "paragrafo": "§7.3.3",
-      "versione_manuale": "Armamenti 0.58",
+      "versione_manuale": "Armamenti 0.65",
       "pi": 3,
       "qualita": "Non comune",
       "ps_int": 12,
@@ -367,9 +366,8 @@
       "effetto_breve": "Si applica a un mirino compatibile e permette di osservare e sparare attraverso di esso ignorando, entro 80 Q, le penalità dovute alla scarsa illuminazione.",
       "alimentazione": {
         "nec": "nec:verde-standard",
-        "consumo_lxh": 10,
-        "autonomia_ore": 100,
-        "paragrafo": "§5.4.7"
+        "ordinaria": true,
+        "paragrafo": "§5.4.3"
       }
     },
     {
@@ -379,9 +377,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Illuminazione e visione",
       "nomi_alternativi": [],
-      "note_manuale": "Modulo di visione termica Permette di osservare e prendere di mira, entro 40 Q, bersagli con un contrasto termico sufficiente rispetto all’ambiente, anche nel buio naturale completo. Quando il bersaglio è distinguibile termicamente, ignora anche il −4 VA della Fumogena standard (§§7.14.7 e 7.20.3). Pareti e coperture solide impediscono l’osservazione. Un bersaglio privo di sufficiente contrasto termico non viene distinto grazie al modulo. Individuare una creatura nascosta richiede le normali Prove: Percezione e Furtività restano Prove uniche. La sagoma termica non identifica automaticamente persone, alleati o natura delle creature. Gli effetti soprannaturali seguono le condizioni indicate dalla loro fonte. Montaggio attivazione e cumulo Ogni mirino può montare un solo modulo di visione. La Torcia tattica può essere presente insieme al modulo. Montare o rimuovere un accessorio compatibile richiede 1 AzP, entrambe le mani e nessuna Prova. Accenderlo o spegnerlo richiede 1 AzP; una volta attivo, non richiede Azioni per mantenerlo acceso. L’osservazione attraverso il mirino riguarda la direzione inquadrata e non conferisce una capacità sensoriale generale al personaggio. Preparazione del tiro e requisiti dell’ottica continuano ad applicarsi. Accessori e moduli hanno Integrità propria; a 0 PI perdono la funzione. Una batteria scarica interrompe la funzione alimentata; arma e mirino ancora integri conservano il proprio funzionamento ordinario. Gli accessori elettronici usano NEC Verdi ricaricabili. Ogni accessorio autonomo impiega la propria cella; le funzioni integrate nell’elmetto condividono invece il NEC dell’elmetto. Le ore sono effettive e non si contano per Round. Alimentazione: NEC Verde standard 1.000 Lx, 10 Lx/h, 100 ore (§7.3.4).",
+      "note_manuale": "Modulo di visione termica Permette di osservare e prendere di mira, entro 40 Q, bersagli con un contrasto termico sufficiente rispetto all’ambiente, anche nel buio naturale completo. Quando il bersaglio è distinguibile termicamente, ignora anche il −4 VA della Fumogena standard (§§7.14.7 e 7.20.3). Pareti e coperture solide impediscono l’osservazione. Un bersaglio privo di sufficiente contrasto termico non viene distinto grazie al modulo. Individuare una creatura nascosta richiede le normali Prove: Percezione e Furtività restano Prove uniche. La sagoma termica non identifica automaticamente persone, alleati o natura delle creature. Gli effetti soprannaturali seguono le condizioni indicate dalla loro fonte. Montaggio attivazione e cumulo Ogni mirino può montare un solo modulo di visione. La Torcia tattica può essere presente insieme al modulo. Montare o rimuovere un accessorio compatibile richiede 1 AzP, entrambe le mani e nessuna Prova. Accenderlo o spegnerlo richiede 1 AzP; una volta attivo, non richiede Azioni per mantenerlo acceso. L’osservazione attraverso il mirino riguarda la direzione inquadrata e non conferisce una capacità sensoriale generale al personaggio. Preparazione del tiro e requisiti dell’ottica continuano ad applicarsi. Accessori e moduli hanno Integrità propria; a 0 PI perdono la funzione. Una batteria scarica interrompe la funzione alimentata; arma e mirino ancora integri conservano il proprio funzionamento ordinario. Gli accessori elettronici ordinari usano NEC Verdi e non richiedono conteggi di ore, cariche o consumi giornalieri.",
       "paragrafo": "§7.3.3",
-      "versione_manuale": "Armamenti 0.58",
+      "versione_manuale": "Armamenti 0.65",
       "pi": 3,
       "qualita": "Non comune",
       "ps_int": 12,
@@ -396,9 +394,8 @@
       "effetto_breve": "Permette di osservare e prendere di mira, entro 40 Q, bersagli con un contrasto termico sufficiente rispetto all’ambiente, anche nel buio naturale completo.",
       "alimentazione": {
         "nec": "nec:verde-standard",
-        "consumo_lxh": 10,
-        "autonomia_ore": 100,
-        "paragrafo": "§5.4.7"
+        "ordinaria": true,
+        "paragrafo": "§5.4.3"
       }
     },
     {

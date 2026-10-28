@@ -13,9 +13,10 @@
 // contatore dei Round della sessione («Nuovo Round»), l'ultima attivazione { id, round } per il limite
 // di una per Round, gli effetti attivi [{ id, dal, al }] con la loro durata (al = ultimo Round, null =
 // finché non si termina). «Nuova sessione» li riporta al Round 1, senza Tecniche attive.
-// nec: riserva attuale dei NEC (Equipaggiamento 0.5, §5.4; src/equipaggiamento.js → riserveNec): Lx di celle e
-// pacchi, ore o usi degli apparecchi che li comprendono; i nuovi partono carichi («I prezzi … comprendono la
-// prima carica», §5.4.4); «Nuova sessione» non li ricarica (serve caricatore e fonte, §5.4.6).
+// nec: riserva attuale dei NEC (Equipaggiamento 0.13, §5.4; src/equipaggiamento.js → riserveNec): UE di Moduli e
+// Banchi (chiave «uid#ue»), ore o usi degli apparecchi che li comprendono, Lx solo per le voci del lotto 2; i nuovi
+// partono carichi; «Nuova sessione» non li ricarica. L'elettronica ordinaria non si conta (§5.4.3): i valori salvati
+// prima restano nel file senza contatore, e una riserva salvata in Lx di un oggetto ora in UE è «da convertire» (A.193).
 // integrita: PI attuali degli oggetti con PI (Armamenti §7.2.1: «si annotano separatamente quelli
 // attuali»), entro 0 e i massimi del catalogo; gli oggetti nuovi partono integri (formato 7).
 // lanci: le ultime scelte del pannello «Lancia!» per ogni incantesimo (src/ui/lancio.js).
@@ -116,8 +117,10 @@ export function massimiSessione(scheda, creazione, dati) {
     integrita: dati.equipaggiamento && dati.regole.integrita ? piMassimi(creazione, dati) : null,
     // Tecniche Interiori apprese (id): solo queste possono essere attive (src/tecniche.js)
     tecniche: (scheda?.tecniche ?? []).map((t) => t.id),
-    // riserve dei NEC (chiave → massimo in Lx, ore o usi), Equipaggiamento §5.4
+    // riserve dei NEC (chiave → massimo in UE, ore o usi; Lx solo per il lotto 2), Equipaggiamento §5.4
     nec: dati.equipaggiamento && dati.regole.nec ? Object.fromEntries(riserveNec(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati).map((x) => [x.chiave, x.massimo])) : null,
+    // riserve in UE che nel file erano in Lx (chiave UE → chiave di prima): «da convertire», A.193
+    necDaConvertire: dati.equipaggiamento && dati.regole.nec ? Object.fromEntries(riserveNec(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati).filter((x) => x.chiaveLx).map((x) => [x.chiave, x.chiaveLx])) : null,
   };
 }
 
@@ -138,8 +141,18 @@ function allineaIntegrita(v, m) {
 /** Riserve dei NEC: i nuovi partono carichi, i valori restano entro 0 e il massimo, quelli tolti spariscono. */
 function allineaNec(v, m) {
   const src = isOggetto(v) ? v : {};
-  if (!m.nec) return Object.fromEntries(Object.entries(src).filter(([, n]) => Number.isInteger(n) && n >= 0));
-  return Object.fromEntries(Object.entries(m.nec).map(([k, max]) => [k, limita(intero(src[k], max), 0, max)]));
+  // Equipaggiamento 0.13 (28/10/2026): una riserva che non si conta più (elettronica ordinaria, §5.4.3) o salvata in Lx
+  // non si perde dal file: resta com'è, senza contatore (A.193)
+  const restano = Object.fromEntries(Object.entries(src).filter(([k, n]) => !(m.nec && k in m.nec) && Number.isInteger(n) && n >= 0));
+  if (!m.nec) return restano;
+  const conti = {};
+  for (const [k, max] of Object.entries(m.nec)) {
+    // riserva salvata in Lx di un oggetto che ora si conta in UE: «da convertire», nessun numero inventato (A.193)
+    const vecchia = m.necDaConvertire?.[k];
+    if (vecchia && !(k in src) && Number.isInteger(src[vecchia])) continue;
+    conti[k] = limita(intero(src[k], max), 0, max);
+  }
+  return { ...restano, ...conti };
 }
 
 /** Riserva di un NEC al tavolo: +/− manuali (ore, usi o Lx), entro 0 e il massimo (§5.4.2). */

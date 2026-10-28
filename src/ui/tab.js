@@ -37,7 +37,7 @@ import { statoIntegrita, oggettiRotti } from '../protezione.js';
 import { schermaQualcosa, statoContenitore, statoSchermatura } from '../schermatura.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
 import { testoDanno } from '../stampa.js';
-import { assegnaMani, legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto, catalogo, risolvi, infoArtefattoVoce, infusiDi, regoleSintonizzazione, rapportoConversione, riserveNec, tempiProtezione, cambioProtezione } from '../equipaggiamento.js';
+import { assegnaMani, infoNecSenzaConteggio, legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto, catalogo, risolvi, infoArtefattoVoce, infusiDi, regoleSintonizzazione, rapportoConversione, riserveNec, tempiProtezione, cambioProtezione } from '../equipaggiamento.js';
 import { dotazioneApplicata, crediti } from '../dotazioni.js';
 import { provenienzaCarico } from '../carico.js';
 import { talentiSituazionali } from '../talenti.js';
@@ -771,8 +771,11 @@ function tavoloRigaInventario(ctx, r) {
         prof?.granataCaricata ? ` · ${prof.granataCaricata.nome}` : ''),
       info ? h('small', { class: 'nota' }, info.scorte.length ? ` · compatibili: ${info.scorte.map((x) => `${x.nome} ×${disponibili(x, ctx.sessione.scorte)}`).join(', ')}` : ' · nessuna munizione compatibile nell’Inventario') : null));
   }
-  // NEC (Equipaggiamento 0.5, §5.4): riserva attuale come i PM dei contenitori, con − e + e la provenienza
+  // NEC (Equipaggiamento 0.13, §5.4): riserva attuale come i PM dei contenitori, con − e + e la provenienza; per
+  // l'elettronica ordinaria nessun contatore, solo il NEC compreso come informazione (§5.4.3)
   for (const x of riserveNec([r.voce], ctx.dati)) nodi.push(rigaNec(ctx, r, x));
+  const senzaConteggio = infoNecSenzaConteggio(r.voce, ctx.dati);
+  if (senzaConteggio) nodi.push(h('small', { class: 'nota nec-info' }, senzaConteggio.testo));
   // Magia §27.4: un Consumabile si vede anche fra i Consumabili dell'equipaggiamento, con lo stesso «Usa»
   const pergamena = r.tipo === 'artefatto' ? consumabiliScheda(ctx).find((x) => x.uid === r.uid) : null;
   if (pergamena) nodi.push(rigaConsumabile(ctx, pergamena));
@@ -789,18 +792,29 @@ function tavoloRigaInventario(ctx, r) {
  * Si segna a mano: «Nuova sessione» non ricarica (§5.4.6).
  */
 function rigaNec(ctx, r, x) {
-  const n = ctx.sessione.nec?.[x.chiave] ?? x.massimo;
   const parte = x.nome !== r.nome ? x.nome.slice(r.nome.length).trim() : '';
+  // A.193: la riserva nel file è in Lx e il manuale ora la conta in UE; nessun numero finché Davide non risponde
+  const vecchia = x.chiaveLx && !(x.chiave in (ctx.sessione.nec ?? {})) ? ctx.sessione.nec?.[x.chiaveLx] : undefined;
+  if (Number.isInteger(vecchia)) {
+    const D = ctx.dati.regole.nec?.da_convertire ?? {};
+    return h('div', { class: 'pi-voce riserva-nec da-convertire' },
+      parte ? h('span', {}, `${parte}: `) : null,
+      infoValore([h('em', {}, D.testo ?? 'riserva da convertire (A.193)')], {
+        titolo: `Riserva: ${x.nome}`,
+        sottotitolo: `${D.spiegazione ?? ''} Nel file: ${vecchia.toLocaleString('it-IT')} Lx su un massimo di ${x.massimo} ${x.unita}.`.trim(),
+      }, { classe: 'valore-nec' }));
+  }
+  const n = ctx.sessione.nec?.[x.chiave] ?? x.massimo;
   const b = (d) => h('button', {
     type: 'button', class: 'btn-tavolo btn-mini', disabled: d < 0 ? n <= 0 : n >= x.massimo,
     'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(d)} ${x.unita} a ${x.nome}`, onclick: () => ctx.azioni.nec(x.chiave, d),
   }, d > 0 ? `+${d}` : `−${-d}`);
   return h('div', { class: `pi-voce riserva-nec${n === 0 ? ' esaurita' : ''}` },
-    h('span', {}, `${x.unita === 'Lx' ? 'Riserva' : 'NEC'}${parte ? ` ${parte}` : ''} `),
+    h('span', {}, `${x.unita === 'Lx' || x.chiaveLx ? 'Riserva' : 'NEC'}${parte ? ` ${parte}` : ''} `),
     infoValore([h('strong', {}, n.toLocaleString('it-IT')), ` / ${x.massimo.toLocaleString('it-IT')} ${x.unita}`], {
       titolo: `Riserva: ${x.nome}`,
       // A.67 (E&L del 02/10): niente travaso di energia fra NEC (regole.json → nec.travaso)
-      sottotitolo: `Si segna a mano (Equipaggiamento §5.4): «Nuova sessione» non ricarica; la ricarica completa richiede caricatore e fonte, un’ora.${ctx.dati.regole.nec?.travaso?.ammesso === false ? ` ${ctx.dati.regole.nec.travaso.decisione}` : ''}`,
+      sottotitolo: `Si segna a mano (Equipaggiamento §5.4): «Nuova sessione» non ricarica.${ctx.dati.regole.nec?.travaso?.ammesso === false ? ` ${ctx.dati.regole.nec.travaso.decisione}` : ''}`,
       provenienza: x.provenienza,
     }, { classe: 'valore-nec' }),
     h('span', { class: 'pi-comandi' }, [...x.passi].reverse().map((p) => b(-p)), x.passi.map((p) => b(p))));

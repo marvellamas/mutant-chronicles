@@ -45,8 +45,8 @@ test('§7.20.6: i lanciafiamme usano pacchi NEC Blu (50 Lx a getto), si ricarica
 test('§7.3.4: accessori a NEC Verdi; i ricambi carichi (10 compatto, 100 standard) sono le celle del catalogo NEC', () => {
   assert.deepEqual([r('nec:verde-compatto').costo, r('nec:verde-standard').costo], [10, 100]);
   assert.ok(!r('accessori_armi:batteria-di-servizio') && !r('accessori_armi:nec-verde-standard-di-ricambio')); // niente doppioni
-  assert.deepEqual(r('accessori_armi:torcia-tattica').alimentazione, { nec: 'nec:verde-compatto', consumo_lxh: 2, autonomia_ore: 50, paragrafo: '§5.4.7' });
-  assert.ok(r('accessori_armi:torcia-tattica').note_manuale.includes('Verde compatto 100 Lx, 2 Lx/h, 50 ore'));
-  assert.ok(r('accessori_armi:modulo-di-visione-termica').note_manuale.includes('Verde standard 1.000 Lx, 10 Lx/h, 100 ore'));
+  // Armamenti 0.65, §7.3.4: elettronica ordinaria, nessun conteggio (prima 2 Lx/h, 50 ore)
+  assert.deepEqual(r('accessori_armi:torcia-tattica').alimentazione, { nec: 'nec:verde-compatto', ordinaria: true, paragrafo: '§5.4.3' });
+  for (const id of ['torcia-tattica', 'modulo-di-visione-termica']) assert.ok(r(`accessori_armi:${id}`).note_manuale.includes('Gli accessori elettronici ordinari usano NEC Verdi e non richiedono conteggi di ore, cariche o consumi giornalieri.'), id);
   assert.ok(!/batteria di servizio/.test(r('rinforzi:piastre-reattive-cs-r20').note_manuale));
 });

@@ -67,9 +67,9 @@ test('A.65 dotazione: Corredo agricolo Allevamento (2 kg, 200 cr) e strumento mu
   }
 });
 
-test('A.66 Corredo da cucina: 30 minuti, NEC Rosso, 10 preparazioni da 50 Lx', () => {
+test('A.66 Corredo da cucina: 30 minuti, NEC Rosso, 10 preparazioni (dall’Equipaggiamento 0.13 senza Lx)', () => {
   const c = r('esplorazione:corredo-da-cucina-da-campo');
-  assert.deepEqual([c.alimentazione.nec, c.alimentazione.usi, c.alimentazione.lx_per_uso], ['nec:rosso-standard', 10, 50]);
+  assert.deepEqual([c.alimentazione.nec, c.alimentazione.usi, c.alimentazione.unita_usi, c.alimentazione.lx_per_uso], ['nec:rosso-standard', 10, 'preparazioni', undefined]);
   assert.match(c.decisione, /30 minuti/);
   nessunTodo('esplorazione:corredo-da-cucina-da-campo', 'A.66');
 });
