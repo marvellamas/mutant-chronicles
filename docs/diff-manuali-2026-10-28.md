@@ -207,6 +207,8 @@ definita» → A.193.
 
 ## B. Proposta di lotti
 
+> **Rivista la sera del 28/10:** la tabella aggiornata è nella «Parte 2», sezione D (lotti 1 e 3 fatti; Bestiario 0.46 e modelli PNG aggiunti; lotto 2 sbloccato per metà dal registro NEC).
+
 In ordine di utilità al tavolo; un ambito per lotto. «Prima della partita» = da fare prima della prossima sessione.
 
 | # | Lotto | Ambito | Modello | Quando |
@@ -228,3 +230,146 @@ può aspettare le risposte o non serve subito: oggi l'app continua a funzionare 
 ## C. Domande per Davide
 
 Nel pacchetto `docs/pacchetto-per-davide-2026-10-28.md` (A.189–A.196), con il «nel frattempo» di ognuna.
+
+---
+
+# Parte 2 — i file Word di Davide e la Revisione NEC (sera del 28/10)
+
+Completamento della ricognizione. Nella parte 1 la ricerca su Drive si era fermata alla prima pagina dei risultati
+(5 file su 24) e cinque file Word non erano stati visti. Ora sono letti per intero; i testi sono in `docs/manuali-txt/`
+(`revisione-nec.md`, `mostri-word.md`, `direttore.md`, `neverlost-scheda-tecnologica.md`, `punisher-wachter.md`).
+
+## A. La ricerca su Drive, corretta
+
+Com'era: una ricerca per titolo o per tipo, senza seguire il `nextPageToken`. Com'è ora (scritto in
+`docs/manuali-drive.md`, «Come si cerca su Drive»): ricerca **per cartella** (`parentId` della cartella di Davide),
+`pageSize: 100`, **tutte le pagine** fino a risposta senza token, **tutti i formati** (Google Doc, .docx, .pdf, .html,
+.xlsx, .zip), poi ricerche per proprietario (Davide, Marcello) con `modifiedTime` recente e per `sharedWithMe`, e
+nel riepilogo si dice quante pagine e quanti file.
+
+Rifatta adesso: **24 file in 2 pagine**. Oltre ai cinque Word:
+
+- **Gestore PX v1.3** (html, xlsx con i PX di 50 partite, zip del pacchetto), del 20/10: **mai visto**. L'app ha la v1.2.
+  Differenze lette nell'html: il premio di fine Atto va a **tutti i PG, assenti compresi** (come già fatto il 25/10);
+  la seconda assegnazione dello stesso Atto è **bloccata** («non può essere duplicato»), mentre l'app **avvisa e non
+  blocca**; l'import accetta anche l'HTML. → domanda A.197.
+- Già noti: Prontuario Combattimento v1.3 (pdf), Talenti magici e mistici, Modifiche Layout APP, E&L, bozza del
+  Bestiario di Marcello, cartella «FILE PG».
+- Le altre cartelle condivise (CV, altri giochi) non sono di Davide né di Marcello: ignorate.
+
+## B. La Revisione NEC 1.6, punto per punto contro le domande A.189–A.196
+
+Il documento è il «registro unico delle decisioni approvate e degli aggiornamenti ai manuali» sull'energia, del
+28/10, di Davide. Dice che le regole generali stanno nell'Equipaggiamento §5.4 e che i volumi collegati sono allineati
+(Equipaggiamento 0.13, Armamenti 0.65 e Wächter 1.1, Veicoli 0.8 e Neverlost 1.5, Giocatore 0.50, Direttore 0.45,
+Magia 1.7, Mostri 0.46).
+
+| Domanda | Che cosa dice il registro | Esito |
+|---|---|---|
+| **A.189** Trasformatore e «niente travaso» (A.67) | «Le cariche degli effetti speciali si acquistano o si ripristinano con strumentazione industriale oppure con un trasformatore dedicato»; il trasformatore preleva una UE dalla fonte e la tiene nel tampone da 10 cariche; tabella del Wächter (3 cariche → 1 UEB, resto 7); tre apparecchi con prezzo, velocità (1 carica/ora, 1 ogni 10 minuti), peso, PI, Qualità, REP. Non cita la A.67. | **Già risposta.** Il trasformatore col tampone è approvato; la A.67 è superata nei limiti del trasformatore (un normale caricatore, i PM e la Matrice non bastano). Va fra le Risposte ricevute |
+| **A.190** Pacco del Gehemmapuker | Non nomina il Gehemmapuker. Dice solo che Armamenti 0.65 e Wächter 1.1 sono allineati («colori e cariche, prezzi e tempi, accessori»). | **Resta aperta**, ridotta a un punto: il pacco Rosso da 50 cariche sostituisce il Modulo Blu della decisione 76? |
+| **A.191** Ricarica del NEC Blu IAS | «La tariffa approvata di ricarica commerciale è 10 cr per carica ripristinata»: 3 → 30 cr, 5 → 50, 10 → 100, 20 → 200, 30 → 300; portatile 1 carica/ora, stazione 1 ogni 10 minuti (quindi 20 cariche = 20 ore o 3 h 20). | **Già risposta**: i 200 cr da vuota e i tempi dell'IAS sono la tariffa approvata. Fra le Risposte ricevute |
+| **A.192** Scout in UE | «Restano da fissare … autonomia di viaggio e sistemi aggiuntivi dello Scout … I valori assenti non equivalgono a uso gratuito.» | **Resta aperta**, ma è già nella lista di Davide: la riformulo come «hai già in lista questi valori; ecco la nostra proposta se ti serve un punto di partenza» |
+| **A.193** Riserve salvate in Lx | «Nei profili di gioco i Lx vengono sostituiti da cariche, riserve e autonomia direttamente utilizzabili»; il valore di una UE dello stesso colore è costante; i punti dichiarano le UE «senza conversione universale». Nessuna equivalenza Lx→UE. | **Resta aperta, corretta**: nella domanda avevamo scritto che «il Manuale dei Mostri dice che l'equivalenza UER/Lx non è definita». Era vero per la 0.23 (Dragomedusa); nella 0.46 la frase non c'è più e l'assorbimento è in UER/UEB/UEV. La domanda va riscritta senza quel riferimento |
+| **A.194** PX e GS del Dragomedusa | Non lo dice (è nei Mostri). | **Già risposta dal Mostri 0.46** (§7.12): giovane Mito 200 PX, adulto Semidio 400 PX, valori secondari del giovane completi. Fra le Risposte ricevute |
+| **A.195** Wächter: prezzo, REP, Taglia | «Restano da fissare: prezzo e Reperibilità del Wächter completo.» La Taglia «Medio o Grande» è ancora nel Wächter 1.1. | **Prezzo e REP: già in lista di Davide**, non sono una domanda. **Resta aperta la sola Taglia** |
+| **A.196** Neverlost nell'app | La scheda 1.5 è la «Parte I · Sistemi tecnologici»; i valori sono quelli del Veicoli 0.8. Niente sull'app. | **Resta aperta** |
+
+**Cosa contraddice le nostre domande:** (1) il riferimento ai Mostri in A.193, da togliere; (2) prezzo e REP del
+Wächter e i valori dello Scout non sono domande ma attese già dichiarate da Davide; (3) nessuna decisione approvata
+(A.64, A.67, A.101) è contraddetta dal registro in modo nuovo rispetto a ciò che avevamo già segnalato.
+
+**Altre indicazioni del registro che l'app deve seguire (lotto 2 e successivi):** Modulo commerciale 500 cr vuoto,
+600 carico, ricarica 100 cr; Banco 5.000/6.000, ricarica 1.000; Neverlost: 1 punto Rosso = 20 UER (un Banco Rosso =
+5 punti), punto Blu = 100 UEB = 1 Banco, 33.000 cr di pieno, campo attrezzato 1 UER + 1 UEV al giorno; ricariche
+mediche 100 cr a Modulo (set 200/300/400 cr, già nella 0.13).
+
+## C. Gli altri quattro file
+
+### Manuale dei Mostri 0.46 (Word) — il Bestiario di riferimento
+
+Il registro NEC dice che per il Bestiario vale il Word 0.46 e che il Google Doc 0.23 «non è allineato per timeout».
+**Cosa cambia rispetto alla 0.23 che l'app usa:**
+
+- **Catalogo: 285 creature e 10 modelli PNG** (la 0.23: 215). **Le 214 schede in comune hanno gli stessi GS e PX**;
+  nessuna scheda esistente è cambiata nei PX. Le dieci schede di umanoidi della 0.23 («Umanoide goblinoide •
+  gregario e incursore»…) diventano Goblin, Hobgoblin, Bugbear, Coboldo, Orco, Gnoll, Ogre, Ettin, Minotauro, Troll
+  con PX 11, 22, 33, 11, 22, 22, 33, 55, 55, 70.
+- **Nuove: circa 50 draghi** (cuccioli, giovani, adulti e antichi dei cinque cromatici e dei cinque metallici;
+  fatati; d'ombra; pseudodrago, mezzodrago, dracolich) con GS da Veterano a **Divinità** e PX 50–800, più una decina
+  di animali minori (Gatto, Donnola, Tasso gigante, Lucertola…).
+- **Nuova scala del GS oltre Leggenda:** Mito 200, Semidio 400, Divinità 800, Divinità Maggiore 1.600, Entità Suprema
+  3.200 (Direttore §9.3.1).
+- **Fauna di Iris, capitolo 7:** oltre alla Covata e al Lorath, nuove le schede 7.13 Piovra gigante (Eroe, 70 PX),
+  7.14 Granchio modificato, 7.15 Raptor di Fuoco, 7.16 Turk, 7.17 Vespe del Deserto, 7.18 Iene del deserto mutate e
+  7.19 Murene della Roccia (cucciolo, giovane, adulta, Madre, Bozzoli): **PX «provvisori»**.
+- **Dragomedusa (7.12) completo:** adulto 1.600 PV, AR 24, giovane 900 PV, AR 18; **GS Mito/Semidio e PX 200/400**;
+  assorbimento in UER 15/25, **UEB 1/2, UEV 3/5**, batteria mistica 3/5 PM e recupero 3/5 PM; Impulso Energetico della
+  Neverlost; confronto aritmetico coi colpi della nave. Risponde ad A.194.
+- **Regola nuova dell'Iniziativa delle creature (§4):** «si tira 1d10 e si aggiunge il bonus positivo indicato: una
+  Caratteristica bassa non produce un malus di base; INI 0 indica il solo d10». **L'app ha 66 nemici con Iniziativa
+  negativa** (−1…−4, soprattutto la Covata): vanno portati a 0. Movimento in Q Base «salvo scala esplicita»; coni con
+  larghezza finale pari a metà della lunghezza.
+- **10 modelli PNG generici** (Agente, Artigliere, Cacciatore, Assaltatore, Esploratore, Incursore, Lestofante,
+  Lottatore, Paramedico, Soldato; i quindici di Lavoratori, Studiosi e Taumaturghi «restano da compilare»): sei Gradi
+  ciascuno, matrice EQ 0–5, PX pronti 10–350.
+
+**Cosa tocca nell'app:** `esempi/nemici/mostri/` (225 file oggi), `data/formato_nemici.json` (GS: testo libero, regge
+già Mito…; l'Iniziativa va resa non negativa e validata), `data/bestiario.json` e «Crea nemico»/«Prepara scontro» (modelli
+PNG Classe/Grado/EQ del Direttore §9.6), la pagina del bestiario online (`tools/bestiario_pagina.mjs`, nello stesso
+commit). **Quanto lavoro:** grosso ma regolare. Le schede hanno lo stesso schema a tabelle della 0.23 (si leggono
+anche dal .docx, che le ha strutturate): con un importatore dal Word il lavoro è ~70 schede nuove, ~10 rinominate, 66
+Iniziative da correggere e i 60 profili PNG; a mano sarebbe come il primo import (26 generatori).
+
+### Manuale del Direttore 0.45 (Word)
+
+**Prima volta che lo leggiamo** (il registro lo aspettava come «regole di malattie e cure, A.119»: **non ci sono**;
+resta atteso). È il capitolo 9 soltanto: §9.1 rimandi, §9.2 disponibilità, **§9.3 PX degli incontri**, **§9.4 Titoli**,
+§9.5 da sviluppare, **§9.6 PNG generici Classe/Grado/EQ**, **§9.7 rifornimenti ed energia**.
+
+- §9.3 e §9.4 **coincidono già con l'app**: soglie e fattori dei Titoli, un principale al 100% e gli altri al 50%,
+  coefficiente dei PG presenti `max(0,5; 1 + 0,10 × (4 − N))`, arrotondamento una volta sola per incontro, dotazione già
+  compresa, nessun moltiplicatore del Titolo sui PX degli incontri (`data/px_partita.json`, `src/px-partita.js`).
+  Nulla da cambiare nel pannello PX. Nuove sono le fasce GS oltre Leggenda (200…3.200) e le regole d'incontro
+  (obiettivo dichiarato prima, premio una volta, caste non combattenti 0 PX, creature evocate separate).
+- §9.6 è nuovo: PX del PNG = PX base del Grado × (1 + 0,50 × EQ), con la matrice 10–350, e le modifiche EQ ai valori
+  (Iniziativa, VA offensivo, Parata/Schivata, AR, danno, Salvezze, cure). Tocca «Crea nemico» e i PNG del bestiario.
+- §9.7 energia: coerente con il lotto NEC; nessun dato nuovo per l'app (campo attrezzato 1 UER + 1 UEV al giorno).
+- Tavolo del Master, incontri e Atti: nessun cambiamento oltre ai PX.
+
+### Neverlost 1.5 e Punisher Wächter 1.1 (Word)
+
+- **Wächter 1.1:** **lo stesso testo** del Wächter negli Armamenti 0.65 (31 paragrafi, uno solo in più: il titolo).
+  Non aggiunge niente. **Non risponde ad A.195**: prezzo e REP «da definire», Taglia «Medio o Grande».
+- **Neverlost 1.5:** è la «Parte I · Sistemi tecnologici» e coincide col capitolo Neverlost del Manuale dei Veicoli 0.8,
+  senza il circuito tecnomistico (che resta nel Veicoli). Differenze di formulazione: «MAN tecnologica −1» (0.8: «MAN base
+  −1; Assetto armonico +1 → 0»), «Distacco da un aggancio esterno» (0.8: «da filamenti»), il tempo di ricarica
+  dell'impianto navale «non si trasferisce ai trasformatori per cariche personali», registro senza Circuito Bianco.
+  **Non risponde ad A.196**: non dice nulla sull'app.
+
+## D. Tabella dei lotti rivista
+
+Sostituisce quella della sezione B della parte 1.
+
+| # | Lotto | Modello | Stato e quando |
+|---|---|---|---|
+| 1 | NEC: elettronica ordinaria e UE | Opus | **Fatto (28/10, lotto 135)** |
+| 3 | A.174 «Ricarica e medita» | Sonnet | **Fatto (28/10, lotto 136)** |
+| 2 | **NEC armi: celle, pacchi, caricatori, trasformatori, IAS** | Opus | **Può partire ora**: A.189 e A.191 sono risposte dal registro NEC (tariffa 10 cr a carica, trasformatori e tampone, prezzi e tempi). Il Gehemmapuker (A.190) e il Wächter restano fuori fino alle risposte. **Prima della prossima partita solo se il gruppo usa armi al plasma o a energia**; altrimenti subito dopo |
+| 4 | **Bestiario 0.46, parte 1: regole, Iniziativa, GS oltre Leggenda, Dragomedusa** | Sonnet | **Prima della prossima partita**: 66 nemici con Iniziativa negativa agirebbero più tardi del dovuto; il Dragomedusa è già utilizzabile con GS/PX di Davide (A.194 risolta). Piccolo |
+| 5 | **Bestiario 0.46, parte 2: importatore dal Word e schede nuove (≈ 50 draghi, animali minori, fauna di Iris 7.13–7.19, dieci umanoidi rinominati)** | Opus (importatore e prove di non regressione sulle 214 schede invariate); poi Sonnet per le revisioni | Dopo la partita; i PX «provvisori» della fauna di Iris si marcano come tali. Rigenerare la pagina del bestiario online nello stesso commit |
+| 6 | **Modelli PNG Classe/Grado/EQ (10 Classi × 6 Gradi, §9.6 del Direttore) in «Crea nemico»** | Opus | Dopo. Tocca il formato dei nemici, la creazione e il calcolo dei PX del pannello |
+| 7 | Veicoli in UE e chilometri (A.192, A.193) | Opus | Dopo le risposte |
+| 8 | A.176 incantesimi aggiunti a mano come conosciuti | Opus | Può aspettare |
+| 9 | Punisher Wächter | Sonnet | Dopo A.195 (la sola Taglia; prezzo e REP li fissa Davide) |
+| 10 | Neverlost | Opus | Dopo A.196 |
+
+**Prima della prossima partita:** il lotto 4 (Bestiario, regole e Iniziativa, piccolo) e, se serve, la parte «colpi e
+ricariche delle armi comuni» del lotto 2. Tutto il resto può aspettare.
+
+## E. Domande: cosa cambia rispetto alla parte 1
+
+Pacchetto `docs/pacchetto-per-davide-2026-10-28-word.md`. **Già risposte dal registro/dai manuali:** A.189 (registro NEC),
+A.191 (registro NEC), A.194 (Mostri 0.46). **Corrette:** A.193 (via il riferimento ai Mostri), A.195 (solo la
+Taglia), A.192 (già in lista di Davide). **Aperte:** A.190, A.192, A.193, A.195 (Taglia), A.196. **Nuova:** A.197
+(premio di fine Atto: bloccare o avvisare quando è già stato dato).
