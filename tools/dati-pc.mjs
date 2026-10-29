@@ -12,7 +12,8 @@
 //
 // `cartella` è la cartella che CONTIENE personaggi\, px\, tavolo\, salvataggi\… (di solito la cartella «mutant»).
 import { readFileSync, writeFileSync, mkdirSync, renameSync, existsSync, readdirSync, statSync } from 'node:fs';
-import { join, resolve, dirname } from 'node:path';
+import { join, resolve, dirname, relative, isAbsolute } from 'node:path';
+import { tmpdir } from 'node:os';
 import { cartellaProfilo } from './config-avvisi.mjs';
 
 /** Le cartelle e i file di dati che stanno nella cartella dei dati (gli stessi di tools/file-locali.json). */
@@ -46,6 +47,17 @@ export function scriviImpostazione(cartella, { perche = '', adesso = new Date(),
   return o;
 }
 
+const dentro = (figlia, madre) => { const r = relative(resolve(madre).toLowerCase(), resolve(figlia).toLowerCase()); return r === '' || (!r.startsWith('..') && !isAbsolute(r)); };
+
+/**
+ * 29/10/2026 (lotto 138): una cartella dei dati dentro la cartella temporanea di Windows non è una cartella vera —
+ * ci finisce quando una prova scrive nel profilo. Non vale se anche l'app sta nella cartella temporanea (una prova).
+ */
+export function cartellaTemporanea(cartella, radiceApp, opz = {}) {
+  const tmp = opz.tmp ?? tmpdir();
+  return dentro(cartella, tmp) && !dentro(radiceApp, tmp);
+}
+
 /**
  * La cartella dei dati per una copia dell'app che sta in `radiceApp`.
  * @returns {{ cartella, fonte: 'profilo'|'app', impostata: string|null, problema: string|null }}
@@ -55,6 +67,7 @@ export function scriviImpostazione(cartella, { perche = '', adesso = new Date(),
 export function cartellaDati(radiceApp, opz = {}) {
   const imp = leggiImpostazione(opz);
   if (imp) {
+    if (cartellaTemporanea(imp.cartella, radiceApp, opz)) return { cartella: resolve(radiceApp), fonte: 'app', impostata: imp.cartella, problema: 'La cartella dei personaggi impostata è una cartella temporanea: la ignoro' };
     if (existsSync(join(imp.cartella, 'personaggi'))) return { cartella: resolve(imp.cartella), fonte: 'profilo', impostata: imp.cartella, problema: null };
     return { cartella: resolve(radiceApp), fonte: 'app', impostata: imp.cartella, problema: `la cartella dei dati impostata su questo PC non c'è più: ${imp.cartella}` };
   }

@@ -88,7 +88,7 @@ test('B: il server di una copia nuova trova i personaggi della cartella impostat
   scriviImpostazione(vecchia);
   const porta = 3200 + Math.floor(Math.random() * 500);
   // il server.mjs del repository è «la copia nuova»: senza --cartella, deve leggere i personaggi dal profilo
-  const p = spawn(process.execPath, [join(REPO, 'server.mjs'), `--porta=${porta}`, '--solo-locale', '--senza-avvisi'], { env: process.env, stdio: 'ignore' });
+  const p = spawn(process.execPath, [join(REPO, 'server.mjs'), `--porta=${porta}`, '--solo-locale', '--senza-avvisi'], { env: { ...process.env, TEMP: join(r, 'altro-temp'), TMP: join(r, 'altro-temp') }, stdio: 'ignore' }); // il «Temp» del server è un'altra cartella: la copia vecchia non è temporanea (lotto 138)
   try {
     let lista = null;
     for (let i = 0; i < 60 && !lista; i++) {
@@ -285,4 +285,29 @@ test('E: la voce "Controlla lo stato" elenca le altre copie di Mutant trovate su
   assert.ok(e.installazioni.some((p) => p === oneDrive));
   assert.ok(e.righe.some((r2) => /altre? copi/i.test(r2)), e.righe.join('\n'));
   assert.ok(e.righe.some((r2) => r2.includes(oneDrive)), e.righe.join('\n'));
+});
+
+test('B (lotto 138): un dati.json che punta alla cartella temporanea di Windows si ignora, lo si dice e si cerca l\'installazione vera', async () => {
+  const { controllaSeSbagliata } = await import('../tools/ripara-installazione.mjs');
+  const r = tmp();
+  const home = join(r, 'utente');
+  const tempFinta = join(r, 'Temp');
+  const vera = copiaConDati(join(home, 'Desktop'), 'mutant');
+  scrivi(join(vera, 'Mutant.bat'), '@echo off\r\n');
+  const temporanea = copiaConDati(tempFinta, 'mutant-prova');
+  const app = copiaVuota(r, 'app-nuova');
+  scriviImpostazione(temporanea);
+  const d = cartellaDati(app, { tmp: tempFinta });
+  assert.equal(d.fonte, 'app');
+  assert.equal(d.cartella, app, 'la cartella temporanea non si usa, anche se ha dei personaggi');
+  assert.equal(d.problema, 'La cartella dei personaggi impostata è una cartella temporanea: la ignoro');
+  // l'app è vuota: il controllo automatico (lotto 128) trova l'installazione con i personaggi e la propone
+  const c = controllaSeSbagliata(app, { home, radici: [[home, 5]], tmp: tempFinta });
+  assert.equal(c.tipo, 'installazione');
+  assert.equal(c.cartella.toLowerCase(), vera.toLowerCase());
+  // una prova con l'app dentro la cartella temporanea (come tutti gli altri test) non è toccata dal controllo
+  assert.equal(cartellaDati(app, { tmp: r }).problema, null);
+  // una cartella impostata che non esiste più resta com'era
+  scriviImpostazione(join(r, 'fuori', 'non-ce-piu'));
+  assert.match(cartellaDati(app, { tmp: tempFinta }).problema, /non c'è più/);
 });
