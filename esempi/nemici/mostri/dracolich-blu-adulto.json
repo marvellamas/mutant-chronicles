@@ -107,7 +107,7 @@
     },
     {
       "nome": "Dracolich modello comune",
-      "effetto": "Scegliere una scheda completa di drago vero adulto o antico, cromatico o metallico, e applicare questo modello. Conserva Caratteristiche, PV, PM, AR, Azioni, movimento, dimensioni, attacchi fisici, Presenza terrificante e capacità compatibili con la trasformazione. Mantiene immunità elementale e soffi del colore, con danni, costi e frequenza della propria età. Fonte di riferimento: Manuale dei Mostri fornito, pp. 83–84."
+      "effetto": "Scegliere una scheda completa di drago vero adulto o antico, cromatico o metallico, e applicare questo modello. Conserva Caratteristiche, PV, PM, AR, Azioni, movimento, dimensioni, attacchi fisici, Presenza terrificante e capacità compatibili con la trasformazione. Mantiene immunità elementale e soffi del colore, con danni, costi e frequenza della propria età. Fonte di riferimento: Manuale dei Mostri fornito, pp. 83–84. Tabella (celle in ordine di lettura): Trasformazione dei draghi adulti e antichi di ogni colore | Colore | Soffio conservato | Alternativo | Bianco | Gelo; cono | — | Nero | Corrosivo; linea | — | Verde | Veleno; cono | — | Blu | Elettricità; linea | — | Rosso | Fuoco; cono | — | Ottone | Fuoco; linea | Sonno; cono | Rame | Corrosivo; linea | Rallentamento; cono | Bronzo | Elettricità; linea | Repulsione; cono | Argento | Gelo; cono | Paralisi; cono | Oro | Fuoco; cono | Indebolimento; cono."
     },
     {
       "nome": "Tratti comuni da non morto",
@@ -119,7 +119,7 @@
     },
     {
       "nome": "GS e PX per quattro PG",
-      "effetto": "La configurazione Dracolich occupa una fascia superiore al drago corrispondente. I valori comprendono tratti comuni e vincolo del filatterio; servitori, dotazioni aggiuntive e moduli della tana restano separati. Questa tabella classifica il profilo; il calcolo del premio dell’incontro rimane nel Manuale del Direttore §9.3. Il blu adulto seguente è un esempio completo. Per un altro colore si parte dalla sua scheda adulta o antica e si applicano le stesse modifiche, conservandone i soffi."
+      "effetto": "La configurazione Dracolich occupa una fascia superiore al drago corrispondente. I valori comprendono tratti comuni e vincolo del filatterio; servitori, dotazioni aggiuntive e moduli della tana restano separati. Questa tabella classifica il profilo; il calcolo del premio dell’incontro rimane nel Manuale del Direttore §9.3. Il blu adulto seguente è un esempio completo. Per un altro colore si parte dalla sua scheda adulta o antica e si applicano le stesse modifiche, conservandone i soffi. Tabella (celle in ordine di lettura): Drago originario | Configurazione Dracolich | Mito • 200 PX | Semidio • 400 PX | Semidio • 400 PX | Divinità • 800 PX | Divinità • 800 PX | Divinità Maggiore • 1.600 PX."
     }
   ],
   "note": "Esempio compilato del modello comune • Natura Comune. Sensi e linguaggi: Scurovisione 24 Q Base • Draconico e una lingua di contatto. Il danno «NdM × k» è il risultato dei dadi moltiplicato per k; il dado non si tira da solo (A.199)."

@@ -607,7 +607,10 @@ export function importa(testo) {
         for (const s of sezioni) {
           if (SEZIONI_NON_REGOLE.test(s.nome)) continue;
           const prosa = s.corpo.filter((x) => x.length > 60 || /[.:;]$/.test(x)).join(' ');
-          if (prosa) out.push({ nome: s.nome, effetto: prosa });
+          const celle = s.corpo.filter((x) => !(x.length > 60 || /[.:;]$/.test(x)));
+          // le colonne non si ricostruiscono: le celle restano come testo, in ordine di lettura (forme umanoidi, movimento…)
+          const testoSez = [prosa, celle.length ? `Tabella (celle in ordine di lettura): ${celle.join(' | ')}.` : ''].filter(Boolean).join(' ');
+          if (testoSez) out.push({ nome: s.nome, effetto: testoSez });
         }
       }
     }
