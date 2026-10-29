@@ -18,7 +18,7 @@ test('i dieci profili ci sono, sono validi e vengono dal cap. 8', () => {
   for (const id of COSTRUTTI) {
     const n = leggi(id);
     assert.deepEqual(validaNemico(n, dati, id), [], `${id} valido`);
-    assert.match(n.fonte, /Manuale dei Mostri v0\.16.*Costrutti e creature elementali/);
+    assert.match(n.fonte, /Manuale dei Mostri v0.(16|46).*Costrutti e creature elementali/);
   }
 });
 

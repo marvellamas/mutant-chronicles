@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "golem-di-carne",
   "nome": "Golem di carne",
-  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e Modron",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e Modron",
   "caratteristiche": {
     "FOR": 9,
     "DES": 4,
@@ -19,7 +19,7 @@
     "magica": 0
   },
   "difese": 7,
-  "iniziativa": -2,
+  "iniziativa": 0,
   "movimento": {
     "passo": 6,
     "corsa": 12,

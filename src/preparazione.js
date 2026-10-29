@@ -4,6 +4,7 @@
 // accanto agli scontri: gli scontri aperti la ignorano (src/ui/scontro.js → leggiScontroAperto). «Inizia» la
 // trasforma in uno scontro vero con src/scontro.js: Iniziativa tirata dall'app per tutti e Round 1.
 // La difficoltà per 7 PG (src/crea-nemico.js → difficolta) è solo informativa.
+import { iniziativaCreatura } from './iniziativa-creature.js';
 import { FORMATO_SCONTRO, VERSIONE_SCONTRO, nuovoScontro, aggiungiNemici, registraRiga } from './scontro.js';
 
 export const STATO_BOZZA = 'bozza';
@@ -124,7 +125,7 @@ export function iniziaBozza(b, { id, pg, adesso = new Date() }) {
 /** Riga breve di una voce: «Eretico — Élite ×3 (avversario) · PV 33 · AR 2 · Difese 13». */
 export function testoVoce(v) {
   const n = v.nemico;
-  return `${n.nome} ×${v.quanti} (${v.lato}) · PV ${n.pv} · AR ${n.ar?.totale ?? 0} · Difese ${n.difese ?? '—'} · Iniziativa ${n.iniziativa}`;
+  return `${n.nome} ×${v.quanti} (${v.lato}) · PV ${n.pv} · AR ${n.ar?.totale ?? 0} · Difese ${n.difese ?? '—'} · Iniziativa ${iniziativaCreatura(n.iniziativa)}`;
 }
 
 /** Immagine del token di un tipo di nemico (A.131) in tutte le voci della bozza che lo usano; null la toglie. */

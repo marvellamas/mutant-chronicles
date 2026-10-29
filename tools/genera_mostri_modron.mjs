@@ -72,7 +72,7 @@ const CREATURE = [
   {
     id: 'golem-di-carne', nome: 'Golem di carne',
     caratteristiche: { FOR: 9, DES: 4, COS: 8, INT: 3, SAG: 5, CAR: 3 },
-    pv: 60, pm: 8, ar: { totale: 2, magica: 0 }, difese: 7, iniziativa: -2,
+    pv: 60, pm: 8, ar: { totale: 2, magica: 0 }, difese: 7, iniziativa: 0,
     movimento: { passo: 6, corsa: 12, scatto: 18 }, spazio: '1 Q',
     azioni: { principali: 2, movimento: 1 }, salvezze: { tempra: 13, riflessi: 8, volonta: 7, magia: 11 },
     immunita: ['avvelenato', 'sanguinamento', 'terrorizzato'],
@@ -91,7 +91,7 @@ const CREATURE = [
   {
     id: 'golem-di-argilla', nome: 'Golem di argilla', senzaSalvezza: ['volonta'],
     caratteristiche: { FOR: 10, DES: 4, COS: 9, INT: 1, SAG: 4, CAR: 1 },
-    pv: 84, ar: { totale: 4, magica: 0 }, difese: 7, iniziativa: -2,
+    pv: 84, ar: { totale: 4, magica: 0 }, difese: 7, iniziativa: 0,
     movimento: { passo: 4, corsa: 8, scatto: 12 }, spazio: '2 × 2 Q',
     azioni: { principali: 2, movimento: 1 }, salvezze: { tempra: 14, riflessi: 8, magia: 12 },
     immunita: ['avvelenato', 'sanguinamento'],
@@ -111,7 +111,7 @@ const CREATURE = [
   {
     id: 'guardiano-protettore', nome: 'Guardiano protettore', senzaSalvezza: ['volonta'],
     caratteristiche: { FOR: 9, DES: 4, COS: 8, INT: 1, SAG: 5, CAR: 1 },
-    pv: 78, ar: { totale: 4, magica: 0 }, difese: 8, iniziativa: -2,
+    pv: 78, ar: { totale: 4, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 6, corsa: 12, scatto: 18 }, spazio: '2 × 2 Q',
     azioni: { principali: 2, movimento: 1 }, salvezze: { tempra: 13, riflessi: 8, magia: 11 },
     immunita: ['avvelenato', 'sanguinamento'],

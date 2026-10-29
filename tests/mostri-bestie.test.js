@@ -18,7 +18,7 @@ test('le dieci Bestie ci sono, sono valide e vengono dal cap. 8', () => {
   for (const id of BESTIE) {
     const n = leggi(id);
     assert.deepEqual(validaNemico(n, dati, id), [], `${id} valido`);
-    assert.match(n.fonte, /Manuale dei Mostri v0\.13.*Bestie e predatori/);
+    assert.match(n.fonte, /Manuale dei Mostri v0.(13|46).*Bestie e predatori/);
   }
 });
 

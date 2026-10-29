@@ -38,7 +38,7 @@ const CREATURE = [
   {
     id: 'tasso', nome: 'Tasso',
     caratteristiche: { FOR: 2, DES: 5, COS: 6, INT: 2, SAG: 6, CAR: 3 },
-    pv: 6, pm: 3, ar: { totale: 0, magica: 0 }, difese: 8, iniziativa: -1,
+    pv: 6, pm: 3, ar: { totale: 0, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 4, corsa: 8, scatto: 12 }, spazio: '1 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 10, riflessi: 9, volonta: 7, magia: 7 },
     attacchi: [r('Morso', 7, '1', 1, { proprieta: ['Perforazione'] })],
@@ -71,7 +71,7 @@ const CREATURE = [
   {
     id: 'cinghiale', nome: 'Cinghiale',
     caratteristiche: { FOR: 5, DES: 5, COS: 6, INT: 2, SAG: 4, CAR: 3 },
-    pv: 18, pm: 4, ar: { totale: 1, magica: 0 }, difese: 8, iniziativa: -1,
+    pv: 18, pm: 4, ar: { totale: 1, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '1 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 10, riflessi: 9, volonta: 8, magia: 7 },
     attacchi: [r('Zanne', 10, '1d6+1', 1, { proprieta: ['Taglio'] })],
@@ -151,7 +151,7 @@ const CREATURE = [
   {
     id: 'avvoltoio', nome: 'Avvoltoio',
     caratteristiche: { FOR: 3, DES: 5, COS: 6, INT: 2, SAG: 6, CAR: 2 },
-    pv: 8, pm: 3, ar: { totale: 0, magica: 0 }, difese: 8, iniziativa: -1,
+    pv: 8, pm: 3, ar: { totale: 0, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 2, corsa: 4, scatto: 6, volo: 10 }, spazio: '1 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 10, riflessi: 9, volonta: 6, magia: 7 },
     attacchi: [r('Becco', 8, '1d4', 1, { proprieta: ['Perforazione'] })],

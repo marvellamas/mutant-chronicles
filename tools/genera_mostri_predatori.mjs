@@ -77,7 +77,7 @@ const CREATURE = [
   {
     id: 'orso-polare', nome: 'Orso polare',
     caratteristiche: { FOR: 9, DES: 5, COS: 7, INT: 2, SAG: 6, CAR: 3 },
-    pv: 42, pm: 6, ar: { totale: 2, magica: 0 }, difese: 9, iniziativa: -1,
+    pv: 42, pm: 6, ar: { totale: 2, magica: 0 }, difese: 9, iniziativa: 0,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '2 × 2 Q',
     azioni: { principali: 2, movimento: 1 }, salvezze: { tempra: 12, riflessi: 9, volonta: 8, magia: 9 },
     attacchi: [r('Morso', 12, '1d8+2', 1, { proprieta: ['Perforazione'] }), r('Artigli', 13, '1d8+2', 1, { proprieta: ['Taglio'] })],
@@ -94,7 +94,7 @@ const CREATURE = [
   {
     id: 'rinoceronte', nome: 'Rinoceronte',
     caratteristiche: { FOR: 9, DES: 4, COS: 7, INT: 2, SAG: 5, CAR: 3 },
-    pv: 40, pm: 5, ar: { totale: 3, magica: 0 }, difese: 8, iniziativa: -1,
+    pv: 40, pm: 5, ar: { totale: 3, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '2 × 2 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 12, riflessi: 8, volonta: 7, magia: 8 },
     attacchi: [
@@ -113,7 +113,7 @@ const CREATURE = [
   {
     id: 'elefante', nome: 'Elefante',
     caratteristiche: { FOR: 10, DES: 4, COS: 8, INT: 3, SAG: 5, CAR: 4 },
-    pv: 60, pm: 7, ar: { totale: 3, magica: 0 }, difese: 8, iniziativa: -1,
+    pv: 60, pm: 7, ar: { totale: 3, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '3 × 3 Q',
     azioni: { principali: 2, movimento: 1 }, salvezze: { tempra: 13, riflessi: 8, volonta: 9, magia: 9 },
     attacchi: [
@@ -133,7 +133,7 @@ const CREATURE = [
   {
     id: 'mammut', nome: 'Mammut',
     caratteristiche: { FOR: 10, DES: 4, COS: 10, INT: 3, SAG: 5, CAR: 4 },
-    pv: 84, pm: 8, ar: { totale: 4, magica: 0 }, difese: 8, iniziativa: -1,
+    pv: 84, pm: 8, ar: { totale: 4, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '3 × 3 Q',
     azioni: { principali: 2, movimento: 1 }, salvezze: { tempra: 15, riflessi: 8, volonta: 9, magia: 10 },
     attacchi: [

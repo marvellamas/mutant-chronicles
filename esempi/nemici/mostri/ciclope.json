@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "ciclope",
   "nome": "Ciclope",
-  "fonte": "dal Manuale dei Mostri v0.16 (16/10/2026), cap. 8 «Catalogo delle creature» — Giganti e abitanti delle montagne",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Giganti e abitanti delle montagne",
   "caratteristiche": {
     "FOR": 10,
     "DES": 4,
@@ -19,7 +19,7 @@
     "magica": 0
   },
   "difese": 9,
-  "iniziativa": -1,
+  "iniziativa": 0,
   "movimento": {
     "passo": 6,
     "corsa": 12,

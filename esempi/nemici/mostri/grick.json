@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "grick",
   "nome": "Grick",
-  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — prime quindici schede",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — prime quindici schede",
   "caratteristiche": {
     "FOR": 6,
     "DES": 6,
@@ -19,7 +19,7 @@
     "magica": 0
   },
   "difese": 10,
-  "iniziativa": -2,
+  "iniziativa": 0,
   "movimento": {
     "passo": 6,
     "corsa": 12,

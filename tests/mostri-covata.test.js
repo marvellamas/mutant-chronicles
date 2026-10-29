@@ -23,7 +23,7 @@ test('le dieci caste/Lorath ci sono e sono valide per il formato', () => {
   for (const base of CASTE) {
     const n = leggi(`${base}.json`);
     assert.deepEqual(validaNemico(n, dati, base), [], `${base} valido`);
-    assert.match(n.fonte, /Manuale dei Mostri v0\.1\d.*cap\. 7/);
+    assert.match(n.fonte, /Manuale dei Mostri v0\.(1\d|46).*cap\. 7/);
   }
 });
 

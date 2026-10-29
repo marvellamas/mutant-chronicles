@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "cubo-gelatinoso",
   "nome": "Cubo gelatinoso",
-  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Melme funghi e imitatori",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Melme funghi e imitatori",
   "caratteristiche": {
     "FOR": 7,
     "DES": 2,
@@ -18,7 +18,7 @@
     "magica": 0
   },
   "difese": 5,
-  "iniziativa": -4,
+  "iniziativa": 0,
   "movimento": {
     "passo": 3,
     "corsa": 6,

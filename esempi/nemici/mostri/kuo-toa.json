@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "kuo-toa",
   "nome": "Kuo-toa",
-  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Creature delle acque e popoli sommersi",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Creature delle acque e popoli sommersi",
   "caratteristiche": {
     "FOR": 5,
     "DES": 5,
@@ -19,7 +19,7 @@
     "magica": 0
   },
   "difese": 9,
-  "iniziativa": -1,
+  "iniziativa": 0,
   "movimento": {
     "passo": 6,
     "corsa": 12,

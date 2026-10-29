@@ -1,0 +1,139 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "dragomedusa-adulto",
+  "nome": "Dragomedusa adulto",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), §7.12 «Dragomedusa giovane e adulto» — Fauna di Iris",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 8,
+    "COS": 10,
+    "INT": 3,
+    "SAG": 8,
+    "CAR": 5
+  },
+  "pv": 1600,
+  "pm": 120,
+  "ar": {
+    "totale": 24,
+    "magica": 6
+  },
+  "difese": 13,
+  "iniziativa": 2,
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12,
+    "volo": 140
+  },
+  "taglia": "grande",
+  "gs_px": {
+    "gs": "Semidio",
+    "px": 400,
+    "per_pg": 4
+  },
+  "salvezze": {
+    "tempra": 16,
+    "riflessi": 14,
+    "volonta": 11,
+    "magia": 13
+  },
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "6d10×5",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
+      "proprieta": [
+        "Taglio"
+      ]
+    },
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "8d10×5",
+      "natura": "Naturale",
+      "portata_q": 3,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 16
+    },
+    {
+      "nome": "Atletica",
+      "va": 16
+    },
+    {
+      "nome": "Percezione",
+      "va": 15
+    },
+    {
+      "nome": "Furtività",
+      "va": 6
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 12
+    }
+  ],
+  "contromisure": [
+    {
+      "nome": "Isolante",
+      "valore": 8
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Azioni e Difese",
+      "effetto": "Le tre AzP e l’unica AzM valgono per tutto il Round e non si rinnovano alla propria Iniziativa: può conservarle per difendersi. Nessuna Parata naturale; Schivata costa 1 AzP e 1 AzM. Più filamenti non concedono Azioni aggiuntive. Cattura e Assorbimento si attivano solo alla propria Iniziativa, una volta ciascuno per Round."
+    },
+    {
+      "nome": "Cattura con filamenti",
+      "effetto": "1 AzP alla propria Iniziativa, una volta per Round, con filamenti liberi e bersaglio raggiungibile. Portata dal bordo del corpo 4 Q Tattici (60 m). Corpo a corpo di Cattura VA 18 contrapposto a Pilotare del conducente (MAN, andatura e modificatori) o, per una creatura, a Immobilizzare: la vittima oppone Corpo a corpo o Atletica. Una sola preda mantenuta per esemplare. Nessun danno. Il veicolo continua a muoversi e può sparare rispettando i settori; i filamenti non attraversano solidi e non sollevano automaticamente veicoli. Distacco del pilota: AzM di conduzione + 1 AzP e 1 UER, Pilotare −2, contrapposto a Corpo a corpo VA 18. Rilascio gratuito alla propria Iniziativa; Svenuto, morte o perdita funzionale dei filamenti sciolgono la presa. Sostegno di una creatura: fino a 3 × 3 Q Base e 1.000 kg; vola al proprio Passo, limite specifico di Passo 24 Q Base, senza Corsa o Scatto.",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Assorbimento",
+      "effetto": "Dopo un aggancio riuscito, 1 AzP alla propria Iniziativa, al massimo una volta per Round; contatto continuo e una fonte realmente raggiunta. Ogni azione sceglie UNA SOLA fonte, le quantità sono alternative e non si sommano; il prelievo è limitato alla carica disponibile. Un banco Rosso: fino a 25 UER. Un banco Blu: fino a 2 UEB. Un banco Verde: fino a 5 UEV. Una batteria mistica: fino a 5 PM. Un prelievo tecnologico completo (l'intera quantità dello stadio e del colore scelto) recupera 5 PM personali; uno parziale nutre senza recuperare PM. Da una batteria mistica recupera soltanto i PM effettivamente sottratti. Il recupero è una capacità biologica, non una conversione utilizzabile da personaggi o dispositivi: UER, UEB, UEV e PM restano riserve distinte. Il prelievo non distrugge il banco, non infligge danni strutturali e non genera esplosioni. Il circuito raggiunto va dichiarato; non drena PM personali dagli esseri viventi.",
+      "azioni": {
+        "principali": 1
+      }
+    },
+    {
+      "nome": "Soffio di Fulmine",
+      "effetto": "2 AzP e 20 PM, pagati prima della risoluzione. Magico, Elettricità, 12d10 × 5 Magici, linea 18 × 2 Q Tattici (270 × 30 m) dalle fauci, anche in verticale; il danno resta costante lungo la linea. Capacità innata senza Potere, Focus, Gesto, Invocazione o Concentrazione; una emissione nel Round; se usato nel Round R torna disponibile in R + 3. Non si usa come Opportunità e non drena energia. Contro creature: Elusione gratuita con Riflessi 0, quando possibile, dimezza per eccesso prima di resistenze e AR; nessun tiro per colpire, Magistrale o seconda Difesa. Contro veicoli: una sola applicazione, localizzazione, scudo pertinente, AR, 1 PI ogni 5 danni residui o frazione, una PS Integrità e Corazzato.",
+      "azioni": {
+        "principali": 2
+      }
+    },
+    {
+      "nome": "Fluttuazione e sopravvivenza",
+      "effetto": "Fluttuazione corporea innata, senza costo in Azioni o PM, anche nel sonno finché è vivo; l’incoscienza impedisce movimento attivo, attacchi e prese; morte o perdita del sostegno provocano Caduta. Sopravvive al vuoto e alla mancanza d’aria. Le normali tempeste chromatiche del proprio habitat non lo danneggiano. Contro Elettricità dimezza per eccesso dopo Difese o Salvezze e prima dell’AR; Isolante 8. Un minuto di nutrimento in una tempesta chromatica ordinaria recupera 5 PM, senza cure a PV o Ferite."
+    },
+    {
+      "nome": "Percezione chromatica",
+      "effetto": "Entro 120 Q Base avverte fonti al Chroma alimentate e non schermate; distinguere sorgenti e interferenze richiede Percezione 15. Per agganciarsi serve una localizzazione concreta."
+    },
+    {
+      "nome": "Dimensioni e scale",
+      "effetto": "Lunghezza indicativa 15–20 m; pedina rappresentativa 2 × 1 Q Tattici (convenzionale); conserva l’ingombro corporeo personale di 14 × 10 Q Base. Nei passaggi stretti contano le dimensioni effettive e lo spazio dei filamenti. Volo 14 / 28 / 42 Q Tattici per Round (Passo in volo 140 Q Base). Terra 4 / 8 / 12 Q Base."
+    }
+  ],
+  "note": "Predatore energetico delle nubi di Iris, potenziato rispetto ai draghi di riferimento: predano veicoli aerei e spaziali leggeri e medi, possono mettere in difficoltà mezzi medi e pesanti modificati; le navi pesanti e da guerra richiedono normalmente più esemplari. Natura Comune, nessun incantesimo appreso, nessuna comprensione dei linguaggi; non appartiene alla Covata. Artigli: portata 2 Q Base; Morso: 3 Q Base; un attacco di ciascun tipo al massimo per Round. Il danno «NdM × 5» è il risultato dei dadi moltiplicato per 5. GS e PX per quattro PG, per un singolo esemplare senza dotazione; i valori restano da verificare al tavolo (Mostri 0.46 §7.12; A.194). Riferimento di pericolosità: preda facilmente sopraffatta un veicolo leggero; nettamente favorito contro un medio ordinario; pericoloso soprattutto dopo l’aggancio contro la Neverlost. Un adulto che preleva 25 UER dal banco Rosso della Neverlost recupera 5 PM propri; il banco da 100 UER si esaurisce in quattro prelievi dell’adulto o sette del giovane."
+}

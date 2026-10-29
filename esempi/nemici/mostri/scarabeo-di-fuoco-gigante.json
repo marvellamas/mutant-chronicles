@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "scarabeo-di-fuoco-gigante",
   "nome": "Scarabeo di fuoco gigante",
-  "fonte": "dal Manuale dei Mostri v0.23 (17/10/2026), cap. 8 «Catalogo delle creature» — Creature alate e piccoli predatori",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Creature alate e piccoli predatori",
   "caratteristiche": {
     "FOR": 3,
     "DES": 5,
@@ -19,7 +19,7 @@
     "magica": 0
   },
   "difese": 8,
-  "iniziativa": -1,
+  "iniziativa": 0,
   "movimento": {
     "passo": 6,
     "corsa": 12,

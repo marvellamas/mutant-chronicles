@@ -41,7 +41,7 @@ const CREATURE = [
   {
     id: 'anchilosauro', nome: 'Anchilosauro',
     caratteristiche: { FOR: 9, DES: 5, COS: 7, INT: 1, SAG: 6, CAR: 3 },
-    pv: 46, pm: 5, ar: { totale: 4, magica: 0 }, difese: 8, iniziativa: -1,
+    pv: 46, pm: 5, ar: { totale: 4, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 6, corsa: 12, scatto: 18 }, spazio: '3 × 3 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 12, riflessi: 8, volonta: 8, magia: 8 },
     attacchi: [r('Coda a mazza', 12, '2d6+2', 2, { proprieta: ['Contundente'] })],
@@ -89,7 +89,7 @@ const CREATURE = [
   {
     id: 'triceratopo', nome: 'Triceratopo',
     caratteristiche: { FOR: 10, DES: 4, COS: 8, INT: 1, SAG: 5, CAR: 3 },
-    pv: 58, pm: 6, ar: { totale: 3, magica: 0 }, difese: 8, iniziativa: -1,
+    pv: 58, pm: 6, ar: { totale: 3, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 10, corsa: 20, scatto: 30 }, spazio: '3 × 3 Q',
     azioni: { principali: 2, movimento: 1 }, salvezze: { tempra: 13, riflessi: 7, volonta: 8, magia: 9 },
     attacchi: [

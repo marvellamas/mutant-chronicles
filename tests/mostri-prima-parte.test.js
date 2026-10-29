@@ -18,7 +18,7 @@ test('le quindici schede ci sono, sono valide e vengono dal cap. 8', () => {
   for (const id of PRIMA) {
     const n = leggi(id);
     assert.deepEqual(validaNemico(n, dati, id), [], `${id} valido`);
-    assert.match(n.fonte, /Manuale dei Mostri v0\.18.*prime quindici schede/);
+    assert.match(n.fonte, /Manuale dei Mostri v0.(18|46).*prime quindici schede/);
   }
 });
 

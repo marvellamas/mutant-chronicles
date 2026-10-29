@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "melma-grigia",
   "nome": "Melma grigia",
-  "fonte": "dal Manuale dei Mostri v0.18 (16/10/2026), cap. 8 «Catalogo delle creature» — Melme funghi e imitatori",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Melme funghi e imitatori",
   "caratteristiche": {
     "FOR": 6,
     "DES": 3,
@@ -18,7 +18,7 @@
     "magica": 0
   },
   "difese": 6,
-  "iniziativa": -3,
+  "iniziativa": 0,
   "movimento": {
     "passo": 2,
     "corsa": 4,

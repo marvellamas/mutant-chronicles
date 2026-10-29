@@ -17,7 +17,7 @@ test('i dieci profili ci sono, sono validi e vengono dal cap. 8', () => {
   for (const id of NONMORTI) {
     const n = leggi(id);
     assert.deepEqual(validaNemico(n, dati, id), [], `${id} valido`);
-    assert.match(n.fonte, /Manuale dei Mostri v0\.16.*Non morti/);
+    assert.match(n.fonte, /Manuale dei Mostri v0.(16|46).*Non morti/);
   }
 });
 

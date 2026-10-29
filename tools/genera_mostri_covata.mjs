@@ -24,7 +24,7 @@ const CREATURE = [
   {
     id: 'covata-rasente', nome: 'Rasente',
     caratteristiche: { FOR: 5, DES: 7, COS: 5, INT: 2, SAG: 5, CAR: 1 },
-    pv: 20, pm: 5, ar: { totale: 2, magica: 0 }, difese: 10, iniziativa: -1,
+    pv: 20, pm: 5, ar: { totale: 2, magica: 0 }, difese: 10, iniziativa: 0,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '1 Q',
     azioni: { principali: 1, movimento: 1 },
     salvezze: { tempra: 10, riflessi: 12, volonta: 8, magia: 9 },
@@ -43,7 +43,7 @@ const CREATURE = [
   {
     id: 'covata-raccoglitore', nome: 'Raccoglitore',
     caratteristiche: { FOR: 4, DES: 4, COS: 6, INT: 2, SAG: 5, CAR: 1 },
-    pv: 16, pm: 4, ar: { totale: 1, magica: 0 }, difese: 8, iniziativa: -4,
+    pv: 16, pm: 4, ar: { totale: 1, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 4, corsa: 8, scatto: 12 }, spazio: '1 Q',
     azioni: { principali: 1, movimento: 1 },
     salvezze: { tempra: 11, riflessi: 9, volonta: 7, magia: 8 },
@@ -58,7 +58,7 @@ const CREATURE = [
   {
     id: 'covata-trasportatore', nome: 'Trasportatore',
     caratteristiche: { FOR: 6, DES: 4, COS: 6, INT: 2, SAG: 5, CAR: 1 },
-    pv: 18, pm: 4, ar: { totale: 2, magica: 0 }, difese: 8, iniziativa: -4,
+    pv: 18, pm: 4, ar: { totale: 2, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 4, corsa: 8, scatto: 12 }, spazio: '1 Q',
     azioni: { principali: 1, movimento: 1 },
     salvezze: { tempra: 11, riflessi: 9, volonta: 7, magia: 8 },
@@ -93,7 +93,7 @@ const CREATURE = [
     id: 'covata-corazzato', nome: 'Corazzato',
     spazio: '1 × 2 Q',
     caratteristiche: { FOR: 8, DES: 4, COS: 8, INT: 2, SAG: 5, CAR: 1 },
-    pv: 40, pm: 6, ar: { totale: 5, magica: 0 }, difese: 8, iniziativa: -4,
+    pv: 40, pm: 6, ar: { totale: 5, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 5, corsa: 10, scatto: 15 }, // spazio 1 × 2 Q
     azioni: { principali: 1, movimento: 1 },
     salvezze: { tempra: 14, riflessi: 8, volonta: 9, magia: 10 },
@@ -153,7 +153,7 @@ const CREATURE = [
     id: 'covata-regina-incubatrice', nome: 'Regina Incubatrice', taglia: 'grande',
     spazio: '3 × 5 Q',
     caratteristiche: { FOR: 8, DES: 2, COS: 10, INT: 4, SAG: 6, CAR: 3 },
-    pv: 100, pm: 12, ar: { totale: 3, magica: 0 }, difese: 6, iniziativa: -4,
+    pv: 100, pm: 12, ar: { totale: 3, magica: 0 }, difese: 6, iniziativa: 0,
     movimento: { passo: 1, corsa: 'non_consentito', scatto: 'non_consentito' }, // spazio 3 × 5 Q
     azioni: { principali: 1, movimento: 1 },
     salvezze: { tempra: 15, riflessi: 6, volonta: 11, magia: 11 },
@@ -170,7 +170,7 @@ const CREATURE = [
     id: 'covata-regina-madre', nome: 'Regina Madre', taglia: 'grande',
     spazio: '3 × 10 Q',
     caratteristiche: { FOR: 10, DES: 1, COS: 10, INT: 7, SAG: 8, CAR: 8 },
-    pv: 150, pm: 24, ar: { totale: 4, magica: 0 }, difese: 5, iniziativa: -2,
+    pv: 150, pm: 24, ar: { totale: 4, magica: 0 }, difese: 5, iniziativa: 0,
     movimento: { passo: 1, corsa: 'non_consentito', scatto: 'non_consentito' }, // spazio 3 × 10 Q
     azioni: { principali: 1, movimento: 1 },
     salvezze: { tempra: 16, riflessi: 5, volonta: 15, magia: 14 },
@@ -186,7 +186,7 @@ const CREATURE = [
   {
     id: 'lorath', nome: 'Lorath',
     caratteristiche: { FOR: 7, DES: 5, COS: 7, INT: 2, SAG: 5, CAR: 1 },
-    pv: 32, pm: 5, ar: { totale: 3, magica: 0 }, difese: 9, iniziativa: -3,
+    pv: 32, pm: 5, ar: { totale: 3, magica: 0 }, difese: 9, iniziativa: 0,
     movimento: { passo: 6, corsa: 12, scatto: 18 }, spazio: '2 × 2 Q',
     azioni: { principali: 1, movimento: 1 },
     salvezze: { tempra: 12, riflessi: 9, volonta: 7, magia: 10 },

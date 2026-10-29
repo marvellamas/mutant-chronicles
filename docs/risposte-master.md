@@ -2176,3 +2176,22 @@ Dettaglio in `docs/diagnosi-a187-a188-2026-10-28.md`.
   forza con conferma e registrazione, il server rifiuta da un tablet un incantesimo fuori regola). Gli incantesimi aggiunti a mano e
   quelli degli artefatti restano fuori dalle quote; A.176 non è toccata. App: `src/incantesimi-regole.js`,
   `src/avanzamento.js`, `src/talenti-tablet.js`, `src/ui/tab.js`, `src/ui/sali.js`.
+
+## 29 ottobre 2026 — Bestiario 0.46, parte 1 (lotto 4 della ricognizione del 28/10)
+
+Fonte: Manuale dei Mostri 0.46 (Word, `docs/manuali-txt/mostri-word.md`), che per il Bestiario vale al posto del Google Doc 0.23
+(registro NEC 1.6). Dettaglio in `docs/diff-bestiario-046-lotto4-2026-10-29.md`. Nessuna decisione approvata cambiata.
+
+- **A.194 — RISOLTA** *(risposta nel Manuale dei Mostri 0.46 §7.12)*. Dragomedusa **giovane: GS Mito, 200 PX; adulto: GS Semidio,
+  400 PX**, per un esemplare senza dotazione e quattro PG; valori secondari del giovane completi (Caratteristiche, Difese, Salvezze,
+  Abilità); assorbimento anche dai banchi Blu (1/2 UEB) e Verdi (3/5 UEV), oltre al Rosso (15/25 UER) e alla batteria mistica (3/5 PM).
+  Nel Bestiario come `dragomedusa-giovane` e `dragomedusa-adulto` (`tools/genera_mostri_dragomedusa.mjs`).
+- **Iniziativa delle creature mai negativa** (Mostri 0.46 §4: «si tira 1d10 e si aggiunge il bonus positivo indicato; INI 0 indica il
+  solo d10»). È un calcolo, non un dato: `src/iniziativa-creature.js` (minimo 0) vale all'ingresso in uno scontro, nella lettura del
+  bestiario della campagna, in «Crea nemico» e «PG → nemico»; il formato dei nemici ha `iniziativa.min = 0`. Restano le penalità di
+  Ferite e condizioni in combattimento.
+- **Scala del GS fino a Entità Suprema** (Direttore §9.3.1): `data/formato_nemici.json` → `gs_scala` (Principiante 10, Inesperto 20,
+  Esperto 30, Veterano 50, Eroe 70, Leggenda 100, Mito 200, Semidio 400, Divinità 800, Divinità Maggiore 1.600, Entità Suprema 3.200).
+- **Altre regole comuni cambiate fra 0.23 e 0.46:** «Passo in Q Base salvo scala esplicita» (già così nell'app); **«nei coni la
+  larghezza finale è metà della lunghezza, anche con mezzi Q»**: *non applicata*, perché la A.138 (decisione 142) lascia al master la
+  scelta dell'ampiezza finale del cono sulla mappa; segnalata a Marcello. Il resto del capitolo 1–6 è lo stesso (solo grassetti).

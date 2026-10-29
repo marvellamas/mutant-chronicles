@@ -7,6 +7,7 @@
 // - aCaso / ritiraPasso: la procedura in 5 passi del §6.6 con un seme, ripetibile, con un passo ritirabile;
 // - frazioneScontro / difficolta: stima sperimentale della difficoltà contro 7 PG (§2.3), da verificare al tavolo.
 // TODO(Davide): il Bestiario è una proposta in attesa di Davide (data/bestiario.json → «TODO(Davide)»).
+import { iniziativaCreatura } from './iniziativa-creature.js';
 import { aggiungiDanno, catalogo } from './equipaggiamento.js';
 
 const riga = (fonte, valore, nota) => ({ fonte, valore, ...(nota ? { nota } : {}) });
@@ -94,7 +95,7 @@ export function profiloNemico(scelte, dati, { umani = {} } = {}) {
     n = {
       formato: 'mutant-nemico', versione: 1, id: 'x', nome: 'x',
       caratteristiche: clona(c.caratteristiche),
-      pv: c.pv, ar: { totale: c.ar, magica: 0 }, difese: c.difese, iniziativa: c.iniziativa,
+      pv: c.pv, ar: { totale: c.ar, magica: 0 }, difese: c.difese, iniziativa: iniziativaCreatura(c.iniziativa),
       movimento: { passo: c.passo, corsa: c.passo * 2, scatto: c.passo * 3, ...(c.volo ? { volo: c.volo } : {}) },
       // §3.1.1 del Bestiario: taglia Grande (proposta), nel formato dei nemici
       ...(c.taglia && c.taglia !== 'normale' ? { taglia: c.taglia } : {}),

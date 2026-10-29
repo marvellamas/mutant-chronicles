@@ -122,7 +122,7 @@ const CREATURE = [
   {
     id: 'ogre', nome: 'Ogre',
     caratteristiche: { FOR: 9, DES: 4, COS: 8, INT: 3, SAG: 4, CAR: 3 },
-    pv: 46, pm: 6, ar: { totale: 1, magica: 0 }, difese: 8, iniziativa: -1,
+    pv: 46, pm: 6, ar: { totale: 1, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '2 × 2 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 13, riflessi: 7, volonta: 8, magia: 9 },
     attacchi: [r('Maglio a due mani', 12, '2d6+2', 1), r('Giavellotto a mano', 12, '1d6+2', 1), d('Giavellotto scagliato', 9, '1d6', 27, ['S'])],

@@ -29,7 +29,7 @@ const CREATURE = [
   {
     id: 'armatura-animata', nome: 'Armatura animata',
     caratteristiche: { FOR: 6, DES: 4, COS: 7, INT: 1, SAG: 3, CAR: 1 },
-    pv: 24, ar: { totale: 4, magica: 0 }, difese: 8, iniziativa: -2,
+    pv: 24, ar: { totale: 4, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 5, corsa: 10, scatto: 15 }, spazio: '1 Q',
     azioni: { principali: 2, movimento: 1 }, salvezze: { tempra: 11, riflessi: 7, volonta: 7, magia: 9 },
     attacchi: [r('Schianto', 11, '1d6+1', 'Naturale', 1)],

@@ -121,7 +121,7 @@ export function vociPagina(d, { esempi = {}, umani = {}, mostri = {} } = {}) {
   // 4. creature del Manuale dei Mostri (esempi/nemici/mostri/): categoria dalla famiglia della scheda
   for (const [id, n] of Object.entries(mostri)) {
     aggiungi({ chiave: `mostro:${id}`, gruppo: 'Manuale dei Mostri', categoria: n.famiglia ? maiuscola(n.famiglia) : 'Manuale dei Mostri',
-      titolo: n.nome ?? id, grado: null, gradoNome: n.gs_px?.gs ? `GS ${n.gs_px.gs}` : null, boss: false,
+      titolo: n.nome ?? id, grado: null, gradoNome: n.gs_px?.gs ? `GS ${n.gs_px.gs}` : null, gs: n.gs_px?.gs ?? null, boss: false,
       riferimento: n.fonte ?? null, nemico: n });
   }
 
@@ -290,7 +290,7 @@ const JS = `(function(){
 
   var cerca=document.getElementById('cerca'),conteggio=document.getElementById('conteggio');
   var schede=[].slice.call(document.querySelectorAll('.scheda'));
-  var filtri={categoria:'',grado:''};
+  var filtri={categoria:'',grado:'',gs:''};
   function senzaAccenti(t){return t.normalize('NFD').replace(/[\\u0300-\\u036f]/g,'')
     .replace(/[\\u2018\\u2019\\u201b\\u02bc]/g,"'").replace(/[\\u2010-\\u2015]/g,'-').toLowerCase()}
   function applica(){
@@ -298,7 +298,8 @@ const JS = `(function(){
     schede.forEach(function(s){
       var ok=(!q||s.dataset.cerca.indexOf(q)>=0)
         &&(!filtri.categoria||s.dataset.categoria===filtri.categoria)
-        &&(!filtri.grado||s.dataset.grado===filtri.grado);
+        &&(!filtri.grado||s.dataset.grado===filtri.grado)
+        &&(!filtri.gs||s.dataset.gs===filtri.gs);
       s.hidden=!ok; if(ok)visibili++;
     });
     document.getElementById('vuoto').hidden=visibili>0;
@@ -352,7 +353,7 @@ function scheda(v, d) {
     (n.attacchi ?? []).map((a) => a.nome).join(' ')].filter(Boolean).join(' '));
 
   const meta = [v.gruppo, v.riferimento].filter(Boolean).join(' · ');
-  return `<article class="scheda" data-categoria="${esc(v.categoria)}" data-grado="${esc(v.grado ?? '')}" data-cerca="${esc(cercabile)}">
+  return `<article class="scheda" data-categoria="${esc(v.categoria)}" data-grado="${esc(v.grado ?? '')}" data-gs="${esc(v.gs ?? '')}" data-cerca="${esc(cercabile)}">
 <h2>${esc(v.titolo)}${v.gradoNome ? ` <span class="grado">${esc(v.gradoNome)}</span>` : ''}</h2>
 <p class="meta">${esc(meta)}</p>
 ${bandiere.length ? `<p class="bandiere">${bandiere.join('')}</p>` : ''}
@@ -400,6 +401,8 @@ export function paginaHtml(voci, d, md = '') {
   for (const v of voci) if (!categorie.includes(v.categoria)) categorie.push(v.categoria);
   const gradi = d.bestiario.gradi.filter((g) => voci.some((v) => v.grado === g.id));
   const chip = (filtro, valore, testo) => `<button type="button" data-filtro="${esc(filtro)}" data-valore="${esc(valore)}" aria-pressed="false">${esc(testo)}</button>`;
+  // 29/10: la scala del GS fino a Entità Suprema (Direttore §9.3.1, data/formato_nemici.json → gs_scala), solo i GS che ci sono
+  const gsPresenti = (d.formato_nemici?.gs_scala ?? []).filter((x) => voci.some((v) => v.gs === x.nome));
   const proposte = voci.filter((v) => v.proposta).length;
 
   return `<!doctype html>
@@ -426,6 +429,7 @@ export function paginaHtml(voci, d, md = '') {
 <input type="search" id="cerca" placeholder="Cerca un nome…" aria-label="Cerca una creatura per nome" autocomplete="off">
 <div class="filtri" role="group" aria-label="Categoria">${categorie.map((c) => chip('categoria', c, c)).join('')}</div>
 <div class="filtri" role="group" aria-label="Grado">${gradi.map((g) => chip('grado', g.id, g.nome)).join('')}</div>
+${gsPresenti.length ? `<div class="filtri" role="group" aria-label="Grado di Sfida">${gsPresenti.map((x) => chip('gs', x.nome, `GS ${x.nome}`)).join('')}</div>` : ''}
 <p class="conteggio" id="conteggio" aria-live="polite">${esc(voci.length)} schede</p>
 </form>
 <main id="schede">

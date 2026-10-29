@@ -19,7 +19,7 @@
     "magica": 0
   },
   "difese": 14,
-  "iniziativa": -1,
+  "iniziativa": 0,
   "movimento": {
     "passo": 6,
     "corsa": 12,

@@ -76,7 +76,7 @@ const CREATURE = [
   {
     id: 'ankheg', nome: 'Ankheg',
     caratteristiche: { FOR: 8, DES: 5, COS: 7, INT: 1, SAG: 6, CAR: 3 },
-    pv: 32, pm: 6, ar: { totale: 3, magica: 0 }, difese: 9, iniziativa: -4,
+    pv: 32, pm: 6, ar: { totale: 3, magica: 0 }, difese: 9, iniziativa: 0,
     movimento: { passo: 6, corsa: 12, scatto: 18 }, spazio: '2 × 2 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 12, riflessi: 10, volonta: 8, magia: 9 },
     attacchi: [r('Morso', 12, '1d8+2', 1, { proprieta: ['Corrosivo'] })],
@@ -112,7 +112,7 @@ const CREATURE = [
     id: 'basilisco', nome: 'Basilisco',
     spazio: '2 × 1 Q',
     caratteristiche: { FOR: 7, DES: 4, COS: 7, INT: 1, SAG: 4, CAR: 3 },
-    pv: 32, pm: 8, ar: { totale: 3, magica: 0 }, difese: 8, iniziativa: -5,
+    pv: 32, pm: 8, ar: { totale: 3, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 4, corsa: 8, scatto: 12 },
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 12, riflessi: 8, volonta: 8, magia: 10 },
     attacchi: [r('Morso', 12, '1d8+2', 1)],
@@ -146,7 +146,7 @@ const CREATURE = [
   {
     id: 'bulette', nome: 'Bulette',
     caratteristiche: { FOR: 10, DES: 5, COS: 9, INT: 2, SAG: 5, CAR: 2 },
-    pv: 52, pm: 6, ar: { totale: 4, magica: 0 }, difese: 9, iniziativa: -3,
+    pv: 52, pm: 6, ar: { totale: 4, magica: 0 }, difese: 9, iniziativa: 0,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '2 × 2 Q',
     azioni: { principali: 2, movimento: 1 }, salvezze: { tempra: 14, riflessi: 9, volonta: 8, magia: 9 },
     attacchi: [r('Morso', 13, '1d10+3', 1)],
@@ -165,7 +165,7 @@ const CREATURE = [
   {
     id: 'chimera', nome: 'Chimera',
     caratteristiche: { FOR: 9, DES: 5, COS: 8, INT: 2, SAG: 7, CAR: 5 },
-    pv: 60, pm: 8, ar: { totale: 3, magica: 0 }, difese: 9, iniziativa: -3,
+    pv: 60, pm: 8, ar: { totale: 3, magica: 0 }, difese: 9, iniziativa: 0,
     movimento: { passo: 6, corsa: 12, scatto: 18, volo: 12 }, spazio: '2 × 2 Q',
     azioni: { principali: 3, movimento: 1 }, salvezze: { tempra: 13, riflessi: 9, volonta: 10, magia: 10 },
     attacchi: [r('Morso', 13, '1d8+3', 1), r('Corna', 12, '1d8+3', 1), r('Artigli', 13, '1d6+3', 1)],
@@ -183,7 +183,7 @@ const CREATURE = [
   {
     id: 'cockatrice', nome: 'Cockatrice',
     caratteristiche: { FOR: 3, DES: 6, COS: 5, INT: 1, SAG: 6, CAR: 2 },
-    pv: 14, pm: 6, ar: { totale: 0, magica: 0 }, difese: 10, iniziativa: -3,
+    pv: 14, pm: 6, ar: { totale: 0, magica: 0 }, difese: 10, iniziativa: 0,
     movimento: { passo: 4, corsa: 8, scatto: 12, volo: 8 }, spazio: '1 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 9, riflessi: 11, volonta: 8, magia: 10 },
     attacchi: [r('Beccata', 10, '1d4', 1)],
@@ -219,7 +219,7 @@ const CREATURE = [
     id: 'grick', nome: 'Grick',
     spazio: '1 × 2 Q',
     caratteristiche: { FOR: 6, DES: 6, COS: 5, INT: 2, SAG: 6, CAR: 2 },
-    pv: 24, pm: 5, ar: { totale: 1, magica: 0 }, difese: 10, iniziativa: -2,
+    pv: 24, pm: 5, ar: { totale: 1, magica: 0 }, difese: 10, iniziativa: 0,
     movimento: { passo: 6, corsa: 12, scatto: 18 },
     azioni: { principali: 2, movimento: 1 }, salvezze: { tempra: 10, riflessi: 10, volonta: 8, magia: 9 },
     attacchi: [r('Tentacoli', 12, '1d8+1', 1), r('Becco', 11, '1d6+1', 1)],
@@ -236,7 +236,7 @@ const CREATURE = [
   {
     id: 'grifone', nome: 'Grifone',
     caratteristiche: { FOR: 8, DES: 7, COS: 7, INT: 2, SAG: 6, CAR: 3 },
-    pv: 36, pm: 6, ar: { totale: 1, magica: 0 }, difese: 11, iniziativa: -1,
+    pv: 36, pm: 6, ar: { totale: 1, magica: 0 }, difese: 11, iniziativa: 0,
     movimento: { passo: 6, corsa: 12, scatto: 18, volo: 16 }, spazio: '2 × 2 Q',
     azioni: { principali: 2, movimento: 1 }, salvezze: { tempra: 12, riflessi: 12, volonta: 8, magia: 9 },
     attacchi: [r('Becco', 12, '1d6+2', 1), r('Artigli', 13, '1d8+2', 1)],
@@ -252,7 +252,7 @@ const CREATURE = [
   {
     id: 'ippogrifo', nome: 'Ippogrifo',
     caratteristiche: { FOR: 7, DES: 6, COS: 6, INT: 2, SAG: 6, CAR: 3 },
-    pv: 24, pm: 6, ar: { totale: 0, magica: 0 }, difese: 10, iniziativa: -2,
+    pv: 24, pm: 6, ar: { totale: 0, magica: 0 }, difese: 10, iniziativa: 0,
     movimento: { passo: 8, corsa: 16, scatto: 24, volo: 12 }, spazio: '2 × 2 Q',
     azioni: { principali: 2, movimento: 1 }, salvezze: { tempra: 10, riflessi: 11, volonta: 8, magia: 9 },
     attacchi: [r('Becco', 11, '1d6+2', 1), r('Artigli', 11, '1d6+2', 1)],
@@ -284,7 +284,7 @@ const CREATURE = [
   {
     id: 'orsogufo', nome: 'Orsogufo',
     caratteristiche: { FOR: 10, DES: 6, COS: 8, INT: 2, SAG: 6, CAR: 3 },
-    pv: 42, pm: 6, ar: { totale: 2, magica: 0 }, difese: 10, iniziativa: -2,
+    pv: 42, pm: 6, ar: { totale: 2, magica: 0 }, difese: 10, iniziativa: 0,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '2 × 2 Q',
     azioni: { principali: 2, movimento: 1 }, salvezze: { tempra: 13, riflessi: 10, volonta: 8, magia: 10 },
     attacchi: [r('Becco', 13, '1d6+3', 1), r('Artigli', 13, '1d8+3', 1)],

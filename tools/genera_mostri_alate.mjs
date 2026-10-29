@@ -59,7 +59,7 @@ const CREATURE = [
   {
     id: 'avvoltoio-gigante', nome: 'Avvoltoio gigante',
     caratteristiche: { FOR: 7, DES: 5, COS: 6, INT: 3, SAG: 6, CAR: 4 },
-    pv: 28, pm: 6, ar: { totale: 1, magica: 0 }, difese: 9, iniziativa: -1,
+    pv: 28, pm: 6, ar: { totale: 1, magica: 0 }, difese: 9, iniziativa: 0,
     movimento: { passo: 2, corsa: 4, scatto: 6, volo: 12 }, spazio: '2 × 2 Q',
     azioni: { principali: 2, movimento: 1 }, salvezze: { tempra: 10, riflessi: 9, volonta: 8, magia: 9 },
     attacchi: [r('Becco', 11, '1d6+2', 1, { proprieta: ['Perforazione'] }), r('Artigli', 11, '1d8+1', 1, { proprieta: ['Taglio'] })],
@@ -109,7 +109,7 @@ const CREATURE = [
   {
     id: 'scarabeo-di-fuoco-gigante', nome: 'Scarabeo di fuoco gigante',
     caratteristiche: { FOR: 3, DES: 5, COS: 4, INT: 1, SAG: 3, CAR: 2 },
-    pv: 8, pm: 3, ar: { totale: 2, magica: 0 }, difese: 8, iniziativa: -1,
+    pv: 8, pm: 3, ar: { totale: 2, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 6, corsa: 12, scatto: 18 }, spazio: '1 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 8, riflessi: 9, volonta: 6, magia: 7 },
     attacchi: [r('Morso', 7, '1d4', 1, { proprieta: ['Taglio'] })],

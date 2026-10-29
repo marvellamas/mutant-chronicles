@@ -27,6 +27,53 @@
     "Riflettente"
   ],
   "_nota_contromisure": "Contromisure del Giocatore §5.24: Ignifugo contro Fuoco, Termico contro Gelo, Isolante contro Elettricità, Dissipante contro Plasma, Imbottita contro Concussivo, Anticorrosivo contro Corrosivo; Riflettente (contro Laser) non è numerica.",
+  "gs_scala": [
+    {
+      "nome": "Principiante",
+      "px": 10
+    },
+    {
+      "nome": "Inesperto",
+      "px": 20
+    },
+    {
+      "nome": "Esperto",
+      "px": 30
+    },
+    {
+      "nome": "Veterano",
+      "px": 50
+    },
+    {
+      "nome": "Eroe",
+      "px": 70
+    },
+    {
+      "nome": "Leggenda",
+      "px": 100
+    },
+    {
+      "nome": "Mito",
+      "px": 200
+    },
+    {
+      "nome": "Semidio",
+      "px": 400
+    },
+    {
+      "nome": "Divinità",
+      "px": 800
+    },
+    {
+      "nome": "Divinità Maggiore",
+      "px": 1600
+    },
+    {
+      "nome": "Entità Suprema",
+      "px": 3200
+    }
+  ],
+  "_nota_gs_scala": "Scala del Grado di Sfida con i PX base di riferimento (Manuale del Direttore 0.45 §9.3.1, Manuale dei Mostri 0.46): oltre Leggenda ogni fascia raddoppia i PX base. Mito, Semidio, Divinità, Divinità Maggiore ed Entità Suprema descrivono la pericolosità complessiva: non attribuiscono origine divina, immunità o capacità automatiche, e non sono i Titoli dei personaggi (§9.4). La scheda di una creatura può avere PX propri (per 4 PG); i PX della scala sono il riferimento, mostrato quando la scheda non ne ha.",
   "tavolo": {
     "tiene": [
       "pv_attuali",
@@ -122,7 +169,8 @@
     "iniziativa": {
       "tipo": "intero",
       "obbligatorio": true,
-      "descrizione": "Valore di Iniziativa senza il dado; in combattimento si aggiunge 1d10 (§2.14)."
+      "descrizione": "Valore di Iniziativa senza il dado; in combattimento si aggiunge 1d10 (§2.14). Per le creature non è mai negativa (Manuale dei Mostri 0.46 §4: «si tira 1d10 e si aggiunge il bonus positivo indicato; INI 0 indica il solo d10»): il minimo è 0, applicato anche ai file di prima (src/iniziativa-creature.js).",
+      "min": 0
     },
     "movimento": {
       "tipo": "oggetto",
@@ -185,7 +233,7 @@
         "gs": {
           "tipo": "testo",
           "obbligatorio": true,
-          "descrizione": "Grado di Sfida come lo scrive il manuale (Principiante, Inesperto, Esperto, Veterano, Eroe, Leggenda)."
+          "descrizione": "Grado di Sfida come lo scrive il manuale: Principiante, Inesperto, Esperto, Veterano, Eroe, Leggenda, Mito, Semidio, Divinità, Divinità Maggiore, Entità Suprema (scala in gs_scala)."
         },
         "px": {
           "tipo": "intero",

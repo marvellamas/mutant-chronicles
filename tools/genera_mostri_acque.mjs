@@ -93,7 +93,7 @@ const CREATURE = [
   {
     id: 'squalo-gigante', nome: 'Squalo gigante',
     caratteristiche: { FOR: 10, DES: 5, COS: 9, INT: 1, SAG: 5, CAR: 4 },
-    pv: 64, pm: 6, ar: { totale: 3, magica: 0 }, difese: 8, iniziativa: -1,
+    pv: 64, pm: 6, ar: { totale: 3, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 0, corsa: 'non_consentito', scatto: 'non_consentito' }, spazio: '3 × 3 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 14, riflessi: 9, volonta: 8, magia: 9 },
     attacchi: [r('Morso', 14, '2d8+3', 2, { proprieta: ['Perforazione'] })],
@@ -128,7 +128,7 @@ const CREATURE = [
   {
     id: 'merrow', nome: 'Merrow',
     caratteristiche: { FOR: 9, DES: 5, COS: 7, INT: 4, SAG: 5, CAR: 4 },
-    pv: 40, pm: 6, ar: { totale: 2, magica: 0 }, difese: 8, iniziativa: -1,
+    pv: 40, pm: 6, ar: { totale: 2, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 2, corsa: 4, scatto: 6 }, spazio: '2 × 2 Q',
     azioni: { principali: 2, movimento: 1 }, salvezze: { tempra: 12, riflessi: 9, volonta: 8, magia: 9 },
     attacchi: [
@@ -151,7 +151,7 @@ const CREATURE = [
   {
     id: 'sahuagin', nome: 'Sahuagin',
     caratteristiche: { FOR: 6, DES: 5, COS: 6, INT: 6, SAG: 6, CAR: 4 },
-    pv: 26, pm: 8, ar: { totale: 1, magica: 0 }, difese: 8, iniziativa: -1,
+    pv: 26, pm: 8, ar: { totale: 1, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 6, corsa: 12, scatto: 18 }, spazio: '1 Q',
     azioni: { principali: 2, movimento: 1 }, salvezze: { tempra: 10, riflessi: 9, volonta: 8, magia: 10 },
     attacchi: [
@@ -174,7 +174,7 @@ const CREATURE = [
   {
     id: 'kuo-toa', nome: 'Kuo-toa',
     caratteristiche: { FOR: 5, DES: 5, COS: 5, INT: 5, SAG: 5, CAR: 4 },
-    pv: 22, pm: 6, ar: { totale: 3, magica: 0 }, difese: 9, iniziativa: -1,
+    pv: 22, pm: 6, ar: { totale: 3, magica: 0 }, difese: 9, iniziativa: 0,
     movimento: { passo: 6, corsa: 12, scatto: 18 }, spazio: '1 Q',
     azioni: { principali: 2, movimento: 1 }, salvezze: { tempra: 9, riflessi: 9, volonta: 8, magia: 9 },
     attacchi: [
@@ -198,7 +198,7 @@ const CREATURE = [
   {
     id: 'chuul', nome: 'Chuul',
     caratteristiche: { FOR: 9, DES: 5, COS: 8, INT: 3, SAG: 6, CAR: 3 },
-    pv: 56, pm: 8, ar: { totale: 4, magica: 0 }, difese: 8, iniziativa: -1,
+    pv: 56, pm: 8, ar: { totale: 4, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 6, corsa: 12, scatto: 18 }, spazio: '2 × 2 Q',
     azioni: { principali: 2, movimento: 1 }, salvezze: { tempra: 13, riflessi: 9, volonta: 8, magia: 10 },
     attacchi: [r('Chela', 14, '1d8+2', 2, { proprieta: ['Contusione'] })],

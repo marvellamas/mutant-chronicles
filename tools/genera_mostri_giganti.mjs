@@ -24,7 +24,7 @@ const CREATURE = [
   {
     id: 'ciclope', nome: 'Ciclope',
     caratteristiche: { FOR: 10, DES: 4, COS: 9, INT: 4, SAG: 3, CAR: 4 },
-    pv: 64, pm: 8, ar: { totale: 2, magica: 0 }, difese: 9, iniziativa: -1,
+    pv: 64, pm: 8, ar: { totale: 2, magica: 0 }, difese: 9, iniziativa: 0,
     movimento: { passo: 6, corsa: 12, scatto: 18 }, spazio: '3 × 3 Q',
     azioni: { principali: 2, movimento: 1 }, salvezze: { tempra: 14, riflessi: 8, volonta: 8, magia: 10 },
     attacchi: [r('Maglio rustico', 13, '2d6+5', 'Naturale', 2), masso(10, '2d6+3')],
@@ -39,7 +39,7 @@ const CREATURE = [
   {
     id: 'gigante-delle-colline', nome: 'Gigante delle colline',
     caratteristiche: { FOR: 10, DES: 4, COS: 9, INT: 3, SAG: 4, CAR: 3 },
-    pv: 60, pm: 8, ar: { totale: 2, magica: 0 }, difese: 9, iniziativa: -1,
+    pv: 60, pm: 8, ar: { totale: 2, magica: 0 }, difese: 9, iniziativa: 0,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '3 × 3 Q',
     azioni: { principali: 2, movimento: 1 }, salvezze: { tempra: 14, riflessi: 8, volonta: 8, magia: 9 },
     attacchi: [r('Maglio rustico', 13, '2d6+4', 'Naturale', 2), masso(10, '2d6+2')],

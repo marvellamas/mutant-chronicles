@@ -26,7 +26,7 @@ const CREATURE = [
   {
     id: 'cammello', nome: 'Cammello',
     caratteristiche: { FOR: 8, DES: 4, COS: 6, INT: 2, SAG: 4, CAR: 3 },
-    pv: 24, pm: 5, ar: { totale: 0, magica: 0 }, difese: 8, iniziativa: -2,
+    pv: 24, pm: 5, ar: { totale: 0, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 10, corsa: 20, scatto: 30 }, spazio: '2 × 2 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 10, riflessi: 8, volonta: 7, magia: 8 },
     attacchi: [r('Morso', 8, '1d4+1', 1, { proprieta: ['Contusione'] })],
@@ -39,7 +39,7 @@ const CREATURE = [
   {
     id: 'cavallo-da-tiro', nome: 'Cavallo da tiro',
     caratteristiche: { FOR: 9, DES: 5, COS: 6, INT: 2, SAG: 5, CAR: 4 },
-    pv: 28, pm: 6, ar: { totale: 0, magica: 0 }, difese: 8, iniziativa: -1,
+    pv: 28, pm: 6, ar: { totale: 0, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '2 × 2 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 10, riflessi: 9, volonta: 8, magia: 8 },
     attacchi: [r('Zoccoli', 10, '1d8+2', 1, { proprieta: ['Contusione'] })],
@@ -79,7 +79,7 @@ const CREATURE = [
   {
     id: 'mulo', nome: 'Mulo',
     caratteristiche: { FOR: 6, DES: 5, COS: 6, INT: 2, SAG: 5, CAR: 3 },
-    pv: 18, pm: 5, ar: { totale: 0, magica: 0 }, difese: 8, iniziativa: -1,
+    pv: 18, pm: 5, ar: { totale: 0, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '1 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 10, riflessi: 9, volonta: 7, magia: 8 },
     attacchi: [r('Zoccoli', 8, '1d4+1', 1, { proprieta: ['Contusione'] })],
@@ -91,7 +91,7 @@ const CREATURE = [
   {
     id: 'pony', nome: 'Pony',
     caratteristiche: { FOR: 6, DES: 5, COS: 5, INT: 2, SAG: 5, CAR: 4 },
-    pv: 16, pm: 5, ar: { totale: 0, magica: 0 }, difese: 8, iniziativa: -1,
+    pv: 16, pm: 5, ar: { totale: 0, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '1 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 9, riflessi: 9, volonta: 8, magia: 8 },
     attacchi: [r('Zoccoli', 9, '1d6+1', 1, { proprieta: ['Contusione'] })],
@@ -118,7 +118,7 @@ const CREATURE = [
   {
     id: 'capra', nome: 'Capra',
     caratteristiche: { FOR: 4, DES: 5, COS: 5, INT: 2, SAG: 5, CAR: 3 },
-    pv: 8, pm: 4, ar: { totale: 0, magica: 0 }, difese: 8, iniziativa: -1,
+    pv: 8, pm: 4, ar: { totale: 0, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '1 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 9, riflessi: 9, volonta: 7, magia: 7 },
     attacchi: [r('Cornata', 8, '1d4+1', 1, { proprieta: ['Contusione'] }), r('Cornata in Impeto', 8, '2d4+1', 1, { proprieta: ['Contusione'], note: 'Dopo 4 Q di Passo rettilineo; sostituisce la Cornata normale: vedi la capacità «Impeto».' })],
@@ -131,7 +131,7 @@ const CREATURE = [
   {
     id: 'capra-gigante', nome: 'Capra gigante',
     caratteristiche: { FOR: 8, DES: 5, COS: 6, INT: 2, SAG: 6, CAR: 3 },
-    pv: 28, pm: 6, ar: { totale: 1, magica: 0 }, difese: 9, iniziativa: -1,
+    pv: 28, pm: 6, ar: { totale: 1, magica: 0 }, difese: 9, iniziativa: 0,
     movimento: { passo: 8, corsa: 16, scatto: 24 }, spazio: '2 × 2 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 10, riflessi: 9, volonta: 7, magia: 8 },
     attacchi: [r('Cornata', 10, '1d6+2', 1, { proprieta: ['Contusione'] }), r('Cornata in Impeto', 10, '2d6+2', 1, { proprieta: ['Contusione'], note: 'Dopo 4 Q di Passo rettilineo; sostituisce la Cornata normale: vedi la capacità «Impeto».' })],
@@ -144,7 +144,7 @@ const CREATURE = [
   {
     id: 'alce', nome: 'Alce',
     caratteristiche: { FOR: 8, DES: 5, COS: 5, INT: 2, SAG: 5, CAR: 3 },
-    pv: 22, pm: 5, ar: { totale: 0, magica: 0 }, difese: 9, iniziativa: -1,
+    pv: 22, pm: 5, ar: { totale: 0, magica: 0 }, difese: 9, iniziativa: 0,
     movimento: { passo: 10, corsa: 20, scatto: 30 }, spazio: '2 × 2 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 9, riflessi: 9, volonta: 7, magia: 8 },
     attacchi: [

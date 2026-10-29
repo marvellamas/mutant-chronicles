@@ -31,7 +31,7 @@ const CREATURE = [
   {
     id: 'arbusto-risvegliato', nome: 'Arbusto risvegliato',
     caratteristiche: { FOR: 2, DES: 4, COS: 5, INT: 5, SAG: 5, CAR: 3 },
-    pv: 12, pm: 6, ar: { totale: 0, magica: 0 }, difese: 7, iniziativa: -1,
+    pv: 12, pm: 6, ar: { totale: 0, magica: 0 }, difese: 7, iniziativa: 0,
     movimento: { passo: 4, corsa: 8, scatto: 12 }, spazio: '1 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 9, riflessi: 8, volonta: 8, magia: 8 },
     attacchi: [r('Rami graffianti', 7, '1d4', 1, { proprieta: ['Taglio'] })],
@@ -47,7 +47,7 @@ const CREATURE = [
   {
     id: 'albero-risvegliato', nome: 'Albero risvegliato',
     caratteristiche: { FOR: 9, DES: 3, COS: 7, INT: 5, SAG: 5, CAR: 3 },
-    pv: 40, pm: 8, ar: { totale: 3, magica: 0 }, difese: 6, iniziativa: -2,
+    pv: 40, pm: 8, ar: { totale: 3, magica: 0 }, difese: 6, iniziativa: 0,
     movimento: { passo: 4, corsa: 8, scatto: 12 }, spazio: '3 × 3 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 12, riflessi: 6, volonta: 9, magia: 9 },
     attacchi: [r('Schianto di ramo', 12, '2d6+2', 2, { proprieta: ['Contundente'] })],
@@ -96,7 +96,7 @@ const CREATURE = [
   {
     id: 'avvizzito-rampicante', nome: 'Avvizzito rampicante',
     caratteristiche: { FOR: 7, DES: 4, COS: 7, INT: 3, SAG: 5, CAR: 2 },
-    pv: 26, pm: 9, ar: { totale: 1, magica: 0 }, difese: 7, iniziativa: -1,
+    pv: 26, pm: 9, ar: { totale: 1, magica: 0 }, difese: 7, iniziativa: 0,
     movimento: { passo: 2, corsa: 4, scatto: 6 }, spazio: '1 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 11, riflessi: 7, volonta: 8, magia: 9 },
     attacchi: [r('Sferzata di liana', 11, '1d6+1', 2)],
@@ -140,7 +140,7 @@ const CREATURE = [
   {
     id: 'cumulo-strisciante', nome: 'Cumulo strisciante',
     caratteristiche: { FOR: 9, DES: 4, COS: 8, INT: 3, SAG: 5, CAR: 3 },
-    pv: 60, pm: 8, ar: { totale: 3, magica: 0 }, difese: 7, iniziativa: -1,
+    pv: 60, pm: 8, ar: { totale: 3, magica: 0 }, difese: 7, iniziativa: 0,
     movimento: { passo: 4, corsa: 8, scatto: 12 }, spazio: '2 × 2 Q',
     azioni: { principali: 2, movimento: 1 }, salvezze: { tempra: 13, riflessi: 7, volonta: 8, magia: 10 },
     attacchi: [r('Schianto', 13, '1d8+2', 1, { proprieta: ['Contundente'] })],
@@ -160,7 +160,7 @@ const CREATURE = [
   {
     id: 'treant', nome: 'Treant',
     caratteristiche: { FOR: 10, DES: 4, COS: 10, INT: 6, SAG: 8, CAR: 6 },
-    pv: 76, pm: 16, ar: { totale: 4, magica: 0 }, difese: 8, iniziativa: -1,
+    pv: 76, pm: 16, ar: { totale: 4, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 6, corsa: 12, scatto: 18 }, spazio: '3 × 3 Q',
     azioni: { principali: 2, movimento: 1 }, salvezze: { tempra: 15, riflessi: 7, volonta: 12, magia: 12 },
     attacchi: [r('Schianto', 15, '2d6+3', 2, { proprieta: ['Contundente'] }), d('Roccia', 13, '3d6+3', 36, { proprieta: ['Contundente'], note: 'Una per Round. Richiede un masso libero di circa 30 kg già impugnato (raccoglierlo costa 1 AzP).' })],

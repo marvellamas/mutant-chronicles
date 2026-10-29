@@ -17,7 +17,7 @@ test('i dieci animali ci sono, sono validi e vengono dal cap. 8; tutti 1 × 1 Q,
   for (const id of FAUNA) {
     const n = leggi(id);
     assert.deepEqual(validaNemico(n, dati, id), [], `${id} valido`);
-    assert.match(n.fonte, /Manuale dei Mostri v0\.23.*Fauna delle terre aperte/);
+    assert.match(n.fonte, /Manuale dei Mostri v0.(23|46).*Fauna delle terre aperte/);
     assert.ok(Number.isInteger(n.salvezze.volonta) && Number.isInteger(n.pm), `${id} Volontà e PM`);
     assert.equal(n.spazio, '1 Q', id);
     assert.equal(n.taglia, undefined, id);

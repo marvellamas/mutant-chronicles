@@ -39,7 +39,7 @@ const CREATURE = [
   {
     id: 'perforatore', nome: 'Perforatore',
     caratteristiche: { FOR: 5, DES: 5, COS: 7, INT: 1, SAG: 4, CAR: 2 },
-    pv: 18, pm: 4, ar: { totale: 3, magica: 0 }, difese: 8, iniziativa: -3,
+    pv: 18, pm: 4, ar: { totale: 3, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 1, corsa: 2, scatto: 3 }, spazio: '1 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 12, riflessi: 8, volonta: 7, magia: 8 },
     attacchi: [],
@@ -54,7 +54,7 @@ const CREATURE = [
   {
     id: 'roper', nome: 'Roper',
     caratteristiche: { FOR: 9, DES: 4, COS: 8, INT: 4, SAG: 8, CAR: 3 },
-    pv: 55, pm: 8, ar: { totale: 4, magica: 0 }, difese: 9, iniziativa: -1,
+    pv: 55, pm: 8, ar: { totale: 4, magica: 0 }, difese: 9, iniziativa: 0,
     movimento: { passo: 2, corsa: 4, scatto: 6 }, spazio: '2 × 2 Q',
     azioni: { principali: 3, movimento: 1 }, salvezze: { tempra: 14, riflessi: 8, volonta: 11, magia: 11 },
     attacchi: [r('Morso', 14, '2d6+2', 1)],

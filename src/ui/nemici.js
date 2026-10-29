@@ -6,7 +6,7 @@ import { campoImmagine, urlImmagine } from './immagine-nemico.js';
 import { h } from './dom.js';
 import { riempimento } from '../interfaccia.js';
 import { validaNemico, formattaErrore, sorgentiNemico } from '../validate.js';
-import { nemicoVuoto, voceVuota, pulisciNemico, idDaNome, testoMovimento } from '../nemici.js';
+import { nemicoVuoto, voceVuota, pulisciNemico, idDaNome, testoMovimento, pxDiRiferimentoGs } from '../nemici.js';
 import { variaPvNemico, variaPmNemico, cambiaStatoNemico, cambiaIntensitaNemico, usaCapacitaNemico, stabilizzaNemico, scalaMorenteNemico, cosNemico } from '../scontro.js';
 import { infoValore } from './tooltip.js';
 import { statoMorenteNemico } from '../morente.js';
@@ -345,7 +345,14 @@ export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false,
       (() => { const sp = spazioEffettivo(n, dati); return [' ', h('span', { class: 'etichetta tratto-nemico', title: dati.formato_nemici.campi.spazio?.descrizione ?? null },
         `Spazio ${sp.testo}${sp.dalProfilo ? '' : ' (dalla Taglia)'}${sp.ripiego ? ` · pedina ${sp.lato} × ${sp.lato}` : ''}`)]; })(),
       // A.161 (16/10/2026): GS e PX del Manuale dei Mostri, valore informativo (nessun calcolo)
-      n.gs_px?.gs ? [' ', h('span', { class: 'etichetta tratto-nemico tratto-gspx', title: dati.formato_nemici.campi.gs_px?.descrizione ?? null }, `GS ${n.gs_px.gs}`, Number.isInteger(n.gs_px.px) ? ` · ${n.gs_px.px} PX${n.gs_px.per_pg ? ` per ${n.gs_px.per_pg} PG` : ''}` : '')] : null),
+      // 29/10: la scala arriva a Entità Suprema; i PX di riferimento del GS (Direttore §9.3.1) stanno nel suggerimento e, senza PX propri, accanto al GS
+      (() => {
+        if (!n.gs_px?.gs) return null;
+        const rif = pxDiRiferimentoGs(n.gs_px.gs, dati);
+        const titolo = `${dati.formato_nemici.campi.gs_px?.descrizione ?? ''}${rif ? ` PX di riferimento del GS ${n.gs_px.gs}: ${rif}.` : ''}`.trim();
+        const px = Number.isInteger(n.gs_px.px) ? ` · ${n.gs_px.px} PX${n.gs_px.per_pg ? ` per ${n.gs_px.per_pg} PG` : ''}` : rif ? ` · riferimento ${rif} PX` : '';
+        return [' ', h('span', { class: 'etichetta tratto-nemico tratto-gspx', title: titolo || null }, `GS ${n.gs_px.gs}`, px)];
+      })()),
     // A.164 (16/10/2026): Morente del nemico, con lo stesso riquadro dei PG (src/morente.js)
     (() => {
       const mo = statoMorenteNemico(p, scontro, dati);

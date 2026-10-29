@@ -2,6 +2,7 @@
 // di nemici/ (un tipo per file) e sulla bozza dell'editor della plancia. Il formato dei campi è in
 // data/formato_nemici.json (per-davide A.73); la validazione è src/validate.js → validaNemico.
 import { validaNemico, formattaErrore } from './validate.js';
+import { conIniziativaCreatura } from './iniziativa-creature.js';
 
 /**
  * Voci del bestiario dall'elenco del server (GET /api/nemici): ogni file validato. Un file non valido
@@ -12,9 +13,11 @@ import { validaNemico, formattaErrore } from './validate.js';
 export function vociBestiario(lista, dati) {
   return (lista ?? []).map((x) => {
     if (x.errore) return { file: x.file, id: null, nome: x.file, nemico: null, errori: [x.errore] };
-    const errori = validaNemico(x.nemico, dati, `nemici/${x.file}`).map(formattaErrore);
+    // l'Iniziativa non è mai negativa (Mostri 0.46 §4): un file salvato prima si legge già a 0, senza riscriverlo
+    const nemico = conIniziativaCreatura(x.nemico);
+    const errori = validaNemico(nemico, dati, `nemici/${x.file}`).map(formattaErrore);
     if (x.nemico?.id && `${x.nemico.id}.json` !== x.file) errori.push(`nemici/${x.file} › id: «${x.nemico.id}» non corrisponde al nome del file`);
-    return { file: x.file, id: x.nemico?.id ?? null, nome: typeof x.nemico?.nome === 'string' ? x.nemico.nome : x.file, nemico: errori.length ? null : x.nemico, errori };
+    return { file: x.file, id: x.nemico?.id ?? null, nome: typeof x.nemico?.nome === 'string' ? x.nemico.nome : x.file, nemico: errori.length ? null : nemico, errori };
   }).sort((a, b) => a.nome.localeCompare(b.nome, 'it'));
 }
 
@@ -102,4 +105,9 @@ export function testoMovimento(n, dati) {
   const volo = n?.movimento?.volo;
   const M = dati.formato_nemici.campi.movimento.moltiplicatori;
   return volo ? `${terra} · Volo ${volo} Q (Corsa ${volo * M.corsa} Q, Scatto ${volo * M.scatto} Q)` : terra;
+}
+
+/** I PX di riferimento di un Grado di Sfida (scala di data/formato_nemici.json → gs_scala), o null se il GS non è nella scala. */
+export function pxDiRiferimentoGs(gs, dati) {
+  return (dati?.formato_nemici?.gs_scala ?? []).find((x) => x.nome === gs)?.px ?? null;
 }

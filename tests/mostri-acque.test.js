@@ -18,7 +18,7 @@ test('i dieci profili ci sono, sono validi e vengono dal cap. 8', () => {
   for (const id of ACQUE) {
     const n = leggi(id);
     assert.deepEqual(validaNemico(n, dati, id), [], `${id} valido`);
-    assert.match(n.fonte, /Manuale dei Mostri v0\.23.*Creature delle acque e popoli sommersi/);
+    assert.match(n.fonte, /Manuale dei Mostri v0.(23|46).*Creature delle acque e popoli sommersi/);
     assert.ok(n.capacita.some((c) => c.nome === 'Nuoto'), `${id} ha il Nuoto fra le capacità`);
   }
 });

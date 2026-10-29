@@ -122,7 +122,7 @@ const CREATURE = [
   }),
   mephit('mephit-del-vapore', 'Mephit del vapore', 'Steam Mephit, p. 217', {
     caratteristiche: { FOR: 3, DES: 5, COS: 5, INT: 6, SAG: 5, CAR: 6 },
-    pv: 20, pm: 9, ar: { totale: 0, magica: 0 }, difese: 8, iniziativa: -1,
+    pv: 20, pm: 9, ar: { totale: 0, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 6, corsa: 12, scatto: 18, volo: 6 },
     salvezze: { tempra: 9, riflessi: 9, volonta: 10, magia: 9 },
     immunita: [...IMM_MEPHIT, 'incendiato'],
@@ -204,7 +204,7 @@ const CREATURE = [
   {
     id: 'xorn', nome: 'Xorn',
     caratteristiche: { FOR: 8, DES: 5, COS: 10, INT: 6, SAG: 5, CAR: 6 },
-    pv: 50, pm: 10, ar: { totale: 4, magica: 0 }, difese: 10, iniziativa: -1,
+    pv: 50, pm: 10, ar: { totale: 4, magica: 0 }, difese: 10, iniziativa: 0,
     movimento: { passo: 4, corsa: 8, scatto: 12 }, spazio: '1 Q',
     azioni: { principali: 2, movimento: 1 }, salvezze: { tempra: 14, riflessi: 9, volonta: 10, magia: 11 },
     attacchi: [r('Artigli', 13, '1d6+2', 1, { proprieta: ['Taglio'] }), r('Morso', 13, '2d6+2', 1, { proprieta: ['Perforazione'] })],

@@ -71,7 +71,7 @@ const CREATURE = [
   {
     id: 'ratto', nome: 'Ratto',
     caratteristiche: { FOR: 1, DES: 5, COS: 4, INT: 2, SAG: 5, CAR: 3 },
-    pv: 3, pm: 3, ar: { totale: 0, magica: 0 }, difese: 8, iniziativa: -1,
+    pv: 3, pm: 3, ar: { totale: 0, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 4, corsa: 8, scatto: 12 }, spazio: '1 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 8, riflessi: 9, volonta: 7, magia: 7 },
     attacchi: [r('Morso', 6, '1', 1, { proprieta: ['Perforazione'] })],
@@ -136,7 +136,7 @@ const CREATURE = [
   }),
   sciame('sciame-di-ratti', 'Sciame di ratti', 'Swarm of Rats, p. 339', {
     caratteristiche: { FOR: 4, DES: 5, COS: 5, INT: 2, SAG: 5, CAR: 3 },
-    pv: 24, pm: 5, ar: { totale: 0, magica: 0 }, difese: 8, iniziativa: -1,
+    pv: 24, pm: 5, ar: { totale: 0, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 6, corsa: 12, scatto: 18 },
     salvezze: { tempra: 9, riflessi: 9, volonta: 7, magia: 7 },
     attacchi: [r('Morsi (PV 13–24)', 9, '1d6+1', 0, { proprieta: ['Perforazione'] }), r('Morsi (PV 0–12)', 9, '1d3+1', 0, { proprieta: ['Perforazione'] })],

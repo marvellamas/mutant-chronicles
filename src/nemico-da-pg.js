@@ -8,6 +8,7 @@
 // Lotto 8 (per-davide A.73, decisioni 5–8): anche le sei Caratteristiche, le Azioni per Round, le Contromisure
 // delle protezioni in uso, le Abilità rilevanti con il VA, i Talenti come capacità speciali e gli incantesimi
 // con livello, VA di lancio e costo della versione più alta accessibile, calcolati da «Lancia!» (src/lancio.js).
+import { iniziativaCreatura } from './iniziativa-creature.js';
 import { deserializzaPersonaggio, normalizza } from './character.js';
 import { calcolaScheda } from './calc.js';
 import { massimiSessione, inizializzaSessione } from './sessione.js';
@@ -208,7 +209,7 @@ export function nemicoDaPg(file, dati, { nome = null, id = null, nota = null } =
     ...(massimi.pm ? { pm: massimi.pm } : {}),
     ar: { totale: ar.totale ?? 0, magica: ar.magica ?? 0 },
     difese: difese ? (difese.effettivo ?? difese.totale) : 0,
-    iniziativa: t.iniziativa?.effettivo ?? scheda.iniziativa ?? 0,
+    iniziativa: iniziativaCreatura(t.iniziativa?.effettivo ?? scheda.iniziativa ?? 0),
     movimento: { passo: mov('passo'), corsa: mov('corsa'), scatto: mov('scatto') },
     salvezze: Object.fromEntries(dati.caratteristiche.salvezze.map((s) => [s.id, scheda.salvezze[s.id].effettivo ?? scheda.salvezze[s.id].totale])),
     azioni: { principali: t.azioni?.principali?.effettivo ?? scheda.azioni.principali, movimento: t.azioni?.movimento?.effettivo ?? scheda.azioni.movimento },

@@ -17,7 +17,7 @@ test('i dieci profili ci sono, sono validi e vengono dal cap. 8', () => {
   for (const id of RETTILI) {
     const n = leggi(id);
     assert.deepEqual(validaNemico(n, dati, id), [], `${id} valido`);
-    assert.match(n.fonte, /Manuale dei Mostri v0\.23.*Grandi rettili e predatori mostruosi/);
+    assert.match(n.fonte, /Manuale dei Mostri v0.(23|46).*Grandi rettili e predatori mostruosi/);
     assert.ok(Number.isInteger(n.salvezze.volonta) && Number.isInteger(n.pm), `${id} Volontà e PM`);
   }
 });

@@ -40,7 +40,7 @@ const CREATURE = [
   {
     id: 'zombie', nome: 'Zombie',
     caratteristiche: { FOR: 6, DES: 2, COS: 7, INT: 2, SAG: 3, CAR: 1 },
-    pv: 24, pm: 4, ar: { totale: 1, magica: 0 }, difese: 6, iniziativa: -3,
+    pv: 24, pm: 4, ar: { totale: 1, magica: 0 }, difese: 6, iniziativa: 0,
     movimento: { passo: 4, corsa: 8, scatto: 12 }, spazio: '1 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 11, riflessi: 6, volonta: 7, magia: 8 },
     attacchi: [r('Percossa', 9, '1d6+1', 'Naturale', 1)],
@@ -159,7 +159,7 @@ const CREATURE = [
   {
     id: 'mummia', nome: 'Mummia',
     caratteristiche: { FOR: 7, DES: 3, COS: 7, INT: 4, SAG: 5, CAR: 6 },
-    pv: 44, pm: 12, ar: { totale: 4, magica: 0 }, difese: 8, iniziativa: -2,
+    pv: 44, pm: 12, ar: { totale: 4, magica: 0 }, difese: 8, iniziativa: 0,
     movimento: { passo: 4, corsa: 8, scatto: 12 }, spazio: '1 Q',
     azioni: { principali: 2, movimento: 1 }, salvezze: { tempra: 12, riflessi: 7, volonta: 12, magia: 12 },
     attacchi: [r('Pugno funerario', 13, '1d8+2', 'Magico', 1)],

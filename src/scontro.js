@@ -18,6 +18,7 @@
 // ha una fotografia del tipo, i propri PV attuali, Ferite, Menomazioni, PM e Stati (A.73, decisioni 7–8);
 // l'Iniziativa è quella del tipo più il dado, con le stesse regole di parità (DES e INT dalle Caratteristiche
 // del tipo; se una manca, spareggio con 1d10: A.73, decisione 6).
+import { iniziativaCreatura } from './iniziativa-creature.js';
 import { specTiro, motivoFuoriIntervallo } from './tiri.js';
 import { fineDurata } from './tecniche.js';
 import { segnaUso, azzeraPerRound, vistaCapacita } from './capacita-nemico.js';
@@ -82,11 +83,14 @@ export function aggiungiNemici(s, nemico, quante = 1, { lato = 'avversario' } = 
   const gia = s.partecipanti.filter((p) => p.tipo === 'nemico' && p.nemico === nemico.id).map((p) => p.numero);
   const primo = Math.max(0, ...gia, s.numerazione?.[nemico.id] ?? 0) + 1;
   const scheda = structuredClone(nemico);
+  // Mostri 0.46 §4: l'Iniziativa delle creature non è mai negativa (anche per i file salvati prima)
+  const ini = iniziativaCreatura(nemico.iniziativa);
+  scheda.iniziativa = ini;
   const nuovi = Array.from({ length: quante }, (_, i) => {
     const numero = primo + i;
     return {
       id: `nem:${nemico.id}:${numero}`, tipo: 'nemico', nemico: nemico.id, numero, nome: `${nemico.nome} ${numero}`,
-      lato: lato === 'alleato' ? 'alleato' : 'avversario', base: nemico.iniziativa,
+      lato: lato === 'alleato' ? 'alleato' : 'avversario', base: ini,
       des: nemico.caratteristiche?.DES ?? null, int: nemico.caratteristiche?.INT ?? null, d10: null, spareggio: null,
       // A.73, decisione 7: PV attuali e massimi, Stato di Ferita e Menomazioni come i PG; PM per «Lancia!» (decisione 8)
       pv: { attuali: nemico.pv, massimo: nemico.pv }, ferite: 0, menomazioni: [], stati: [...(nemico.stati ?? [])], scheda,
@@ -95,7 +99,7 @@ export function aggiungiNemici(s, nemico, quante = 1, { lato = 'avversario' } = 
   });
   const etichette = nuovi.length > 1 ? `${nuovi[0].nome} … ${nuovi.at(-1).nome}` : nuovi[0].nome;
   return conRiga({ ...s, partecipanti: [...s.partecipanti, ...nuovi], numerazione: { ...s.numerazione, [nemico.id]: primo + quante - 1 } },
-    `Entra${quante > 1 ? 'no' : ''} ${etichette} (${nemico.nome}, ${quante > 1 ? `${quante} copie, ` : ''}${nuovi[0].lato}, Iniziativa ${nemico.iniziativa}, PV ${nemico.pv}).`, adesso);
+    `Entra${quante > 1 ? 'no' : ''} ${etichette} (${nemico.nome}, ${quante > 1 ? `${quante} copie, ` : ''}${nuovi[0].lato}, Iniziativa ${ini}, PV ${nemico.pv}).`, adesso);
 }
 
 /**

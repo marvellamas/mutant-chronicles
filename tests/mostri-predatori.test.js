@@ -18,7 +18,7 @@ test('i dieci profili ci sono, sono validi e vengono dal cap. 8', () => {
   for (const id of PREDATORI) {
     const n = leggi(id);
     assert.deepEqual(validaNemico(n, dati, id), [], `${id} valido`);
-    assert.match(n.fonte, /Manuale dei Mostri v0\.23.*Predatori e grandi erbivori/);
+    assert.match(n.fonte, /Manuale dei Mostri v0.(23|46).*Predatori e grandi erbivori/);
     assert.ok(n.capacita.some((c) => c.nome === 'Bestia selvaggia'), `${id} regole comuni`);
   }
 });

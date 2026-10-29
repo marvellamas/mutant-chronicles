@@ -34,7 +34,7 @@ const CREATURE = [
   {
     id: 'melma-grigia', nome: 'Melma grigia', senzaSalvezza: ['volonta'],
     caratteristiche: { FOR: 6, DES: 3, COS: 7, INT: 1, SAG: 4, CAR: 1 },
-    pv: 24, ar: { totale: 1, magica: 0 }, difese: 6, iniziativa: -3,
+    pv: 24, ar: { totale: 1, magica: 0 }, difese: 6, iniziativa: 0,
     movimento: { passo: 2, corsa: 4, scatto: 6 }, spazio: '1 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 12, riflessi: 6, magia: 9 },
     attacchi: [r('Pseudopodo', 10, '1d6+2', 1, { proprieta: ['Corrosivo'], note: 'Danno da acido.' })],
@@ -52,7 +52,7 @@ const CREATURE = [
   {
     id: 'gelatina-ocra', nome: 'Gelatina ocra', senzaSalvezza: ['volonta'],
     caratteristiche: { FOR: 7, DES: 3, COS: 6, INT: 2, SAG: 4, CAR: 1 },
-    pv: 36, ar: { totale: 1, magica: 0 }, difese: 6, iniziativa: -3,
+    pv: 36, ar: { totale: 1, magica: 0 }, difese: 6, iniziativa: 0,
     movimento: { passo: 2, corsa: 4, scatto: 6 }, spazio: '2 × 2 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 11, riflessi: 6, magia: 9 },
     attacchi: [
@@ -74,7 +74,7 @@ const CREATURE = [
   {
     id: 'budino-nero', nome: 'Budino nero', senzaSalvezza: ['volonta'],
     caratteristiche: { FOR: 8, DES: 3, COS: 8, INT: 1, SAG: 4, CAR: 1 },
-    pv: 52, ar: { totale: 2, magica: 0 }, difese: 6, iniziativa: -3,
+    pv: 52, ar: { totale: 2, magica: 0 }, difese: 6, iniziativa: 0,
     movimento: { passo: 4, corsa: 8, scatto: 12 }, spazio: '2 × 2 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 13, riflessi: 6, magia: 10 },
     attacchi: [
@@ -98,7 +98,7 @@ const CREATURE = [
   {
     id: 'cubo-gelatinoso', nome: 'Cubo gelatinoso', senzaSalvezza: ['volonta'],
     caratteristiche: { FOR: 7, DES: 2, COS: 9, INT: 1, SAG: 4, CAR: 1 },
-    pv: 44, ar: { totale: 1, magica: 0 }, difese: 5, iniziativa: -4,
+    pv: 44, ar: { totale: 1, magica: 0 }, difese: 5, iniziativa: 0,
     movimento: { passo: 3, corsa: 6, scatto: 9 }, spazio: '2 × 2 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 14, riflessi: 5, magia: 9 },
     attacchi: [r('Pseudopodo', 11, '1d8+1', 1, { note: 'Danno da acido (non Corrosivo).' })],
@@ -118,7 +118,7 @@ const CREATURE = [
   {
     id: 'fungo-stridente', nome: 'Fungo stridente', senzaSalvezza: ['volonta'],
     caratteristiche: { FOR: 1, DES: 1, COS: 5, INT: 1, SAG: 2, CAR: 1 },
-    pv: 12, ar: { totale: 0, magica: 0 }, difese: 1, iniziativa: -4,
+    pv: 12, ar: { totale: 0, magica: 0 }, difese: 1, iniziativa: 0,
     movimento: { passo: 0, corsa: 'non_consentito', scatto: 'non_consentito' }, spazio: '1 Q',
     azioni: { principali: 1, movimento: 0, eccezioni: 'AzM inutilizzabile' }, salvezze: { tempra: 9, riflessi: 1, magia: 8 },
     attacchi: [],
@@ -134,7 +134,7 @@ const CREATURE = [
   {
     id: 'fungo-violetto', nome: 'Fungo violetto', senzaSalvezza: ['volonta'],
     caratteristiche: { FOR: 2, DES: 1, COS: 5, INT: 1, SAG: 2, CAR: 1 },
-    pv: 18, ar: { totale: 0, magica: 0 }, difese: 2, iniziativa: -4,
+    pv: 18, ar: { totale: 0, magica: 0 }, difese: 2, iniziativa: 0,
     movimento: { passo: 1, corsa: 2, scatto: 3 }, spazio: '1 Q',
     azioni: { principali: 2, movimento: 1 }, salvezze: { tempra: 9, riflessi: 2, magia: 8 },
     attacchi: [r('Tocco degradante', 9, '1d6', 2, { note: 'Degradazione biologica: colpisce solo organismi biologici, AR normale; non è Etereo e non applica veleno, malattia o Corrosivo.' })],
@@ -151,7 +151,7 @@ const CREATURE = [
   {
     id: 'spora-gassosa', nome: 'Spora gassosa', senzaSalvezza: ['volonta'],
     caratteristiche: { FOR: 3, DES: 1, COS: 2, INT: 1, SAG: 1, CAR: 1 },
-    pv: 4, ar: { totale: 0, magica: 0 }, difese: 2, iniziativa: -4,
+    pv: 4, ar: { totale: 0, magica: 0 }, difese: 2, iniziativa: 0,
     movimento: { passo: 0, corsa: 'non_consentito', scatto: 'non_consentito', volo: 2 }, spazio: '2 × 2 Q',
     azioni: { principali: 1, movimento: 1 }, salvezze: { tempra: 6, riflessi: 2, magia: 8 },
     attacchi: [r('Tocco infettivo', 6, '1', 1, { note: 'Poi Tempra senza modificatore: vedi «Tocco infettivo».' })],

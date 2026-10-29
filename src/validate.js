@@ -1195,7 +1195,8 @@ function validaClassi(c, nomiAddestramenti, nomiAbilita, macrofamiglie, regole, 
 // Equipaggiamento (data/equipaggiamento/, Manuale degli Armamenti)
 
 // formule di danno: «1d6+1», «2», anche somme di dadi come «1d6+1d4» (lama delle Guardie Sacre)
-const DADI = /^(\d+d\d+(\+\d+d\d+)*([+-]\d+)?|\d+)$/;
+// «4d10×5»: un moltiplicatore finale (Mostri 0.46 §7.12, danni del Dragomedusa) è ammesso; l’app lo mostra, non lo tira da sola
+const DADI = /^(\d+d\d+(\+\d+d\d+)*([+-]\d+)?(×\d+)?|\d+)$/;
 // effetti strutturati delle proprietà: parata_va (Difensiva X, §7.1.3), va (Precisa X, §7.1.3: VA per colpire)
 // penalita (armature, §7.11.4): { annulla: [campi], riduce: { campo: n } }
 const EFFETTI_PROPRIETA = ['parata_va', 'va', 'penalita'];
@@ -2591,6 +2592,17 @@ function validaFormatoNemici(dati, err) {
   else {
     if (!(Array.isArray(T.parita_iniziativa) && T.parita_iniziativa.every((x) => sigle.includes(x)))) err(F, 'tavolo.parita_iniziativa', 'sigle di Caratteristiche');
     if (!(typeof T.spareggio === 'string' && DADI.test(T.spareggio))) err(F, 'tavolo.spareggio', 'dado dello spareggio, es. «1d10»');
+  }
+  // scala del GS (Direttore §9.3.1): nomi unici, PX interi crescenti
+  if (!Array.isArray(f.gs_scala) || !f.gs_scala.length) err(F, 'gs_scala', 'lista della scala del GS mancante');
+  else {
+    const visti = new Set();
+    f.gs_scala.forEach((x, i) => {
+      if (!isTesto(x?.nome) || visti.has(x.nome)) err(F, `gs_scala[${i}].nome`, 'nome mancante o ripetuto');
+      visti.add(x?.nome);
+      if (!isIntero(x?.px) || x.px <= 0) err(F, `gs_scala[${i}].px`, 'PX interi positivi');
+      else if (i > 0 && x.px <= f.gs_scala[i - 1].px) err(F, `gs_scala[${i}].px`, 'i PX crescono lungo la scala');
+    });
   }
   if (!isOggetto(f.campi)) { err(F, 'campi', 'mancante'); return; }
   validaSchemaNemico(F, '(nemico)', { tipo: 'oggetto', campi: f.campi }, sorgentiNemico(dati), err);
