@@ -2195,3 +2195,18 @@ Fonte: Manuale dei Mostri 0.46 (Word, `docs/manuali-txt/mostri-word.md`), che pe
 - **Altre regole comuni cambiate fra 0.23 e 0.46:** «Passo in Q Base salvo scala esplicita» (già così nell'app); **«nei coni la
   larghezza finale è metà della lunghezza, anche con mezzi Q»**: *non applicata*, perché la A.138 (decisione 142) lascia al master la
   scelta dell'ampiezza finale del cono sulla mappa; segnalata a Marcello. Il resto del capitolo 1–6 è lo stesso (solo grassetti).
+
+## 29 ottobre 2026 — Bestiario 0.46, parte 2 (lotto 141: importatore e schede nuove)
+
+Fonte: Manuale dei Mostri 0.46 (Word, `docs/manuali-txt/mostri-word.md`). Dettaglio, appendice del «non capito» e prove in
+`docs/diff-bestiario-046-lotto141-2026-10-29.md`. Nessuna decisione approvata cambiata.
+
+- **Importatore** `tools/importa-mostri.mjs`: legge il Word e produce le schede; senza `--scrivi` dice cosa cambierebbe; un dato assente resta assente;
+  una scheda senza un campo obbligatorio non si scrive; il «non capito» è scheda per scheda. Rilanciabile a ogni versione nuova.
+- **82 creature nuove** (50 draghi, 20 animali minori, 12 della fauna di Iris 7.13–7.19) e il **Lorath della 0.46** al posto di quello della 0.13 (profilo diverso). Il catalogo del cap. 8 torna
+  a 285 creature, come dichiara il manuale. Esclusi i «Bozzoli di cristallo» (7.19.5): non sono una creatura.
+- **PX provvisori da confermare** (`gs_px.provvisorio`, «(provvisori)» in mini-scheda): Lorath 50, Piovra gigante 70, Granchio modificato 20, Raptor di Fuoco giovane 20 e adulto 50,
+  Turk 20, Vespe del Deserto 10 per gruppo, Iena mutata 30 e Capobranco 50, Murene della Roccia 20 / 20 / 30 / 70 (Madre).
+- **A.198 e A.199 ancora aperte** (non decise): i dieci draghi antichi (16 × 10 Q Base) sono fuori dal campo Spazio, come il Dragomedusa; 38 schede hanno un danno con moltiplicatore (`6d10×5`, mostrato e non tirato).
+- **Nuove domande:** A.201 (nome dei draghi metallici: «di ottone» o «d'ottone»), A.202 (movimento a terra della Murena cucciolo), A.203 (ingombro della Madre delle Murene: 2 × 2 o 6 × 2 Q),
+  A.204 (ordine dei due numeri dell'ingombro dei draghi: «6 × 4 Q Base»). Provvisorio nell'app: il manuale così com'è.
