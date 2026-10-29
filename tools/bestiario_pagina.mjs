@@ -14,7 +14,7 @@
 // tests/bestiario-pagina.test.js può accorgersi quando i dati cambiano e la pagina no (CLAUDE.md,
 // «Regole permanenti di lavoro»).
 import { readFile, readdir, writeFile } from 'node:fs/promises';
-import { gzipSync, gunzipSync } from 'node:zlib';
+import { deflateRawSync, inflateRawSync } from 'node:zlib';
 import { caricaDati } from '../src/rules.js';
 import { testoMovimento } from '../src/nemici.js';
 import { profiloNemico, scelteCreatura, SUFFISSO_UMANO } from '../src/crea-nemico.js';
@@ -263,17 +263,51 @@ main{grid-template-columns:1fr;gap:12px}.scheda{padding:12px 13px}
 .conteggio{margin-top:6px}}
 @media print{.barra{display:none}main{display:block}.scheda{break-inside:avoid;margin-bottom:10px}}`;
 
+/**
+ * Decompressione deflate e lettura UTF-8 scritte in ES5, dentro la pagina (lotto 145): le schede sono compresse e
+ * devono aprirsi anche sui tablet con browser vecchi, che non hanno DecompressionStream. È l'algoritmo di puff (zlib,
+ * Mark Adler) in poche righe: codici di Huffman canonici letti un bit alla volta. Niente backslash né apici inversi
+ * qui dentro: finisce in una stringa della pagina. tests/bestiario-pagina.test.js la prova contro zlib di Node.
+ */
+export const INFLATE_JS = [
+  "function inflar(src,n){",
+  "var out=new Uint8Array(n),si=0,di=0,bb=0,bc=0;",
+  "function bit(k){var v=bb;while(bc<k){if(si>=src.length)throw new Error('dati troncati');v|=src[si++]<<bc;bc+=8}bb=v>>k;bc-=k;return v&((1<<k)-1)}",
+  "function tab(l,m){var h={c:new Uint16Array(16),s:new Uint16Array(m)},o=new Uint16Array(16),i;for(i=0;i<m;i++)h.c[l[i]]++;h.c[0]=0;for(i=1;i<15;i++)o[i+1]=o[i]+h.c[i];for(i=0;i<m;i++)if(l[i])h.s[o[l[i]]++]=i;return h}",
+  "function dec(h){var code=0,first=0,idx=0,len,c;for(len=1;len<=15;len++){code|=bit(1);c=h.c[len];if(code-c<first)return h.s[idx+(code-first)];idx+=c;first+=c;first<<=1;code<<=1}throw new Error('codice non valido')}",
+  "var LB=[3,4,5,6,7,8,9,10,11,13,15,17,19,23,27,31,35,43,51,59,67,83,99,115,131,163,195,227,258],",
+  "LE=[0,0,0,0,0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,0],",
+  "DB=[1,2,3,4,5,7,9,13,17,25,33,49,65,97,129,193,257,385,513,769,1025,1537,2049,3073,4097,6145,8193,12289,16385,24577],",
+  "DE=[0,0,0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13],",
+  "OR=[16,17,18,0,8,7,9,6,10,5,11,4,12,3,13,2,14,1,15];",
+  "function blocco(lc,dc){for(;;){var sym=dec(lc),len,d,k;if(sym<256){out[di++]=sym}else if(sym===256){return}else{sym-=257;if(sym>=29)throw new Error('lunghezza non valida');len=LB[sym]+bit(LE[sym]);k=dec(dc);d=DB[k]+bit(DE[k]);if(d>di)throw new Error('distanza non valida');while(len--){out[di]=out[di-d];di++}}}}",
+  "var last,type,i,l,lc,dc;",
+  "do{last=bit(1);type=bit(2);",
+  "if(type===0){bb=0;bc=0;l=src[si]|(src[si+1]<<8);si+=4;while(l--)out[di++]=src[si++]}",
+  "else if(type===1){l=new Uint8Array(288);for(i=0;i<144;i++)l[i]=8;for(;i<256;i++)l[i]=9;for(;i<280;i++)l[i]=7;for(;i<288;i++)l[i]=8;lc=tab(l,288);l=new Uint8Array(30);for(i=0;i<30;i++)l[i]=5;dc=tab(l,30);blocco(lc,dc)}",
+  "else if(type===2){var nl=bit(5)+257,nd=bit(5)+1,nc=bit(4)+4,lg=new Uint8Array(320),sym,r,p;",
+  "for(i=0;i<nc;i++)lg[OR[i]]=bit(3);var cc=tab(lg.subarray(0,19),19);lg=new Uint8Array(320);",
+  "for(i=0;i<nl+nd;){sym=dec(cc);if(sym<16){lg[i++]=sym}else{p=0;if(sym===16){if(!i)throw new Error('ripetizione non valida');p=lg[i-1];r=3+bit(2)}else if(sym===17){r=3+bit(3)}else{r=11+bit(7)}while(r--)lg[i++]=p}}",
+  "lc=tab(lg.subarray(0,nl),nl);dc=tab(lg.subarray(nl,nl+nd),nd);blocco(lc,dc)}",
+  "else throw new Error('blocco non valido')}while(!last);",
+  "if(di!==n)throw new Error('lunghezza inattesa');return out}",
+  "function daByte(u){if(window.TextDecoder)return new TextDecoder('utf-8').decode(u);var s='',i,n=u.length;for(i=0;i<n;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,Math.min(n,i+8192)));return decodeURIComponent(escape(s))}",
+].join('\n');
+
 const JS = `(function(){
+${INFLATE_JS}
+  // NodeList.forEach non c'è nei browser vecchi: si usa quello degli array
+  function each(l,f){Array.prototype.forEach.call(l,f)}
   // due viste: lo schedario delle creature e il testo del manuale. Senza JS si vedono tutte e due.
   var viste={creature:[document.getElementById('barra'),document.getElementById('schede')],
              manuale:[document.getElementById('manuale')]};
   function mostra(quale){
     Object.keys(viste).forEach(function(k){viste[k].forEach(function(e){if(e)e.hidden=k!==quale})});
-    document.querySelectorAll('.viste button').forEach(function(b){
+    each(document.querySelectorAll('.viste button'),function(b){
       b.setAttribute('aria-pressed',String(b.dataset.vista===quale));
     });
   }
-  document.querySelectorAll('.viste button').forEach(function(b){
+  each(document.querySelectorAll('.viste button'),function(b){
     b.addEventListener('click',function(){mostra(b.dataset.vista);
       if(b.dataset.vista==='manuale')window.scrollTo(0,0);});
   });
@@ -291,10 +325,10 @@ const JS = `(function(){
     if(e)e.scrollIntoView();
   });
 
-  // le schede arrivano compresse (gzip, base64) in #dati-schede: si aprono all'avvio e poi parte tutto il resto
+  // le schede arrivano compresse (deflate, base64) in #dati-schede: si aprono all'avvio e poi parte tutto il resto
   function avvia(){
   // testi comuni: ogni rimando si apre sotto la scheda; il testo è scritto una volta sola in fondo alla pagina
-  document.querySelectorAll('a.comune').forEach(function(a){
+  each(document.querySelectorAll('a.comune'),function(a){
     var t=document.getElementById('comune-'+a.dataset.comune);
     if(!t)return;
     var s=document.createElement('span');s.className='testo-comune';s.innerHTML=t.innerHTML;
@@ -305,7 +339,7 @@ const JS = `(function(){
   var cerca=document.getElementById('cerca'),conteggio=document.getElementById('conteggio');
   var schede=[].slice.call(document.querySelectorAll('.scheda'));
   var filtri={categoria:'',grado:'',gs:''};
-  function senzaAccenti(t){return t.normalize('NFD').replace(/[\\u0300-\\u036f]/g,'')
+  function senzaAccenti(t){return (t.normalize?t.normalize('NFD'):t).replace(/[\\u0300-\\u036f]/g,'')
     .replace(/[\\u2018\\u2019\\u201b\\u02bc]/g,"'").replace(/[\\u2010-\\u2015]/g,'-').toLowerCase()}
   function applica(){
     var q=senzaAccenti(cerca.value.trim()),visibili=0;
@@ -319,11 +353,11 @@ const JS = `(function(){
     document.getElementById('vuoto').hidden=visibili>0;
     conteggio.textContent=visibili===1?'1 scheda':visibili+' schede';
   }
-  document.querySelectorAll('.filtri button').forEach(function(b){
+  each(document.querySelectorAll('.filtri button'),function(b){
     b.addEventListener('click',function(){
       var gruppo=b.dataset.filtro,valore=b.dataset.valore||'';
       filtri[gruppo]=filtri[gruppo]===valore?'':valore;
-      document.querySelectorAll('.filtri button[data-filtro="'+gruppo+'"]').forEach(function(x){
+      each(document.querySelectorAll('.filtri button[data-filtro="'+gruppo+'"]'),function(x){
         x.setAttribute('aria-pressed',String(x.dataset.valore===filtri[gruppo]&&filtri[gruppo]!==''));
       });
       applica();
@@ -337,18 +371,20 @@ const JS = `(function(){
   var dati=document.getElementById('dati-schede');
   if(!dati){avvia();return}
   var caricamento=document.getElementById('caricamento');
-  if(!window.DecompressionStream){
-    caricamento.textContent='Questo browser non apre le schede compresse: serve una versione recente di Chrome, Safari o Firefox.';
+  caricamento.textContent='Carico le schede…';
+  // le schede sono compresse (deflate, base64) e si aprono con inflar(), scritta qui sotto: funziona in qualunque
+  // browser che esegue JavaScript, senza chiedere funzioni recenti del browser
+  try{
+    var b=atob(dati.textContent.replace(/[^A-Za-z0-9+/=]/g,'')),byte=new Uint8Array(b.length);
+    for(var i=0;i<b.length;i++)byte[i]=b.charCodeAt(i);
+    var html=daByte(inflar(byte,Number(dati.getAttribute('data-lunghezza'))));
+    caricamento.parentNode.removeChild(caricamento);
+    document.getElementById('schede').insertAdjacentHTML('afterbegin',html);
+  }catch(e){
+    caricamento.textContent='Non riesco ad aprire le schede su questo browser ('+(e&&e.message?e.message:e)+'). Prova con una versione più recente di Chrome, Safari o Firefox, oppure con un altro dispositivo.';
     return;
   }
-  var b=atob(dati.textContent.trim()),byte=new Uint8Array(b.length);
-  for(var i=0;i<b.length;i++)byte[i]=b.charCodeAt(i);
-  new Response(new Blob([byte]).stream().pipeThrough(new DecompressionStream('gzip'))).text().then(function(html){
-    var main=document.getElementById('schede');
-    caricamento.remove();
-    main.insertAdjacentHTML('afterbegin',html);
-    avvia();
-  });
+  avvia();
 })();`;
 
 /** Una scheda. */
@@ -494,10 +530,10 @@ ${gsPresenti.length ? `<div class="filtri" role="group" aria-label="Grado di Sfi
 <p class="conteggio" id="conteggio" aria-live="polite">${esc(voci.length)} schede</p>
 </form>
 <main id="schede">
-${compressa ? '<p id="caricamento" class="vuoto">Carico le schede…</p>' : corpoSchede}
+${compressa ? '<p id="caricamento" class="vuoto">Le schede si aprono con JavaScript: se questo messaggio resta, il browser non lo esegue o è troppo vecchio. Il testo del manuale (pulsante «Manuale») si legge lo stesso.</p>' : corpoSchede}
 <p class="vuoto" id="vuoto" hidden>Nessuna scheda con questi filtri.</p>
 </main>
-${compressa ? `<script type="application/octet-stream" id="dati-schede">${gzipSync(Buffer.from(corpoSchede), { level: 9 }).toString('base64')}</script>` : ''}
+${compressa ? datiCompressi(corpoSchede) : ''}
 <article id="manuale">
 ${md ? manualeHtml(md) : '<p>Il testo del manuale non è compreso in questa copia.</p>'}
 </article>
@@ -519,8 +555,14 @@ export async function genera(radice = RADICE) {
 }
 
 /** La pagina con il blocco compresso aperto: il gzip può cambiare da una versione di Node all'altra, il contenuto no. */
-export const aperta = (html) => html.replace(/(<script type="application\/octet-stream" id="dati-schede">)([^<]*)(<\/script>)/,
-  (_, a, b64, c) => `${a}${gunzipSync(Buffer.from(b64, 'base64')).toString()}${c}`);
+export const aperta = (html) => html.replace(/(<script type="application\/octet-stream" id="dati-schede"[^>]*>)([^<]*)(<\/script>)/,
+  (_, a, b64, c) => `${a.replace(/ data-lunghezza="\d+"/, '')}${inflateRawSync(Buffer.from(b64, 'base64')).toString()}${c}`);
+
+/** Il blocco compresso: deflate grezzo in base64, con la lunghezza da ottenere (la legge inflar() della pagina). */
+export function datiCompressi(testo) {
+  const byte = Buffer.from(testo);
+  return `<script type="application/octet-stream" id="dati-schede" data-lunghezza="${byte.length}">${deflateRawSync(byte, { level: 9 }).toString('base64')}</script>`;
+}
 
 /** Come tools/versione.mjs --controlla: la pagina sul disco corrisponde ai dati? */
 export async function stato(radice = RADICE) {

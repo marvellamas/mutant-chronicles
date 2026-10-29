@@ -3,7 +3,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
-import { gunzipSync } from 'node:zlib';
+import { inflateRawSync, deflateRawSync } from 'node:zlib';
 import { datiReali } from './helpers.js';
 import {
   CARTELLE_VIETATE, FILE_PAGINA, aperta, condividiTesti, esempiNemici, vociPagina, paginaHtml, manualeHtml, stato,
@@ -275,8 +275,9 @@ test('pagina compressa: lo script apre le schede, poi ricerca, filtri e testi co
   const { esempi, umani, mostri } = await esempiNemici(RADICE);
   const voci = vociPagina(dati, { esempi, umani, mostri });
   const html = paginaHtml(voci, dati, '', { compressa: true });
-  const m = html.match(/id="dati-schede">([^<]*)</);
-  const corpo = gunzipSync(Buffer.from(m[1], 'base64')).toString();
+  const m = html.match(/id="dati-schede" data-lunghezza="(\d+)">([^<]*)</);
+  const corpo = inflateRawSync(Buffer.from(m[2], 'base64')).toString();
+  assert.equal(Buffer.byteLength(corpo), Number(m[1]), 'la lunghezza dichiarata è quella vera');
   assert.equal((corpo.match(/<article class="scheda"/g) ?? []).length, voci.length);
   assert.equal((corpo.match(/<section id="comuni"/g) ?? []).length, 1);
   // ogni rimando punta a un testo che c'è, e ogni testo comune compare una volta sola
@@ -285,5 +286,56 @@ test('pagina compressa: lo script apre le schede, poi ricerca, filtri e testi co
   assert.ok(rimandi.size > 0, 'nessun testo comune trovato');
   // il filtro del grado e il «Manuale dei Mostri» restano nella parte non compressa
   assert.match(html, /data-filtro="categoria"/);
-  assert.match(html, /DecompressionStream/);
+  // niente funzioni recenti: la pagina non usa DecompressionStream, apre le schede con la sua inflar()
+  assert.doesNotMatch(html, /DecompressionStream/);
+  assert.match(html, /function inflar\(src,n\)/);
+});
+
+// --- lotto 145: la pagina si apre anche sui browser vecchi ---------------------------------------------------------
+
+import { INFLATE_JS } from '../tools/bestiario_pagina.mjs';
+const motore = (finestra = {}) => new Function('window', 'escape', `${INFLATE_JS}; return { inflar: inflar, daByte: daByte };`)(finestra, escape);
+
+test('browser vecchi: inflar() della pagina dà gli stessi byte di zlib su ogni tipo di blocco (vuoto, fisso, dinamico, non compresso, ripetizioni lunghe)', () => {
+  const { inflar } = motore();
+  const casi = [
+    ['vuoto', Buffer.alloc(0), 6],
+    ['breve (Huffman fisso)', Buffer.from('ciao ciao ciao'), 6],
+    ['non compresso (livello 0)', Buffer.from('testo senza compressione '.repeat(40)), 0],
+    ['ripetizione lunga (258)', Buffer.alloc(5000, 97), 9],
+    ['dinamico, testo italiano con accenti', Buffer.from('Perché l’Iniziativa è già così: «più è meglio» — àèéìòù '.repeat(300)), 9],
+    ['casuale (blocchi non compressi misti)', Buffer.from(Array.from({ length: 70000 }, (_, i) => (i * 2654435761 >>> 24) & 255)), 1],
+  ];
+  for (const [nome, byte, livello] of casi) {
+    const compresso = deflateRawSync(byte, { level: livello });
+    assert.deepEqual(Buffer.from(inflar(new Uint8Array(compresso), byte.length)), byte, nome);
+  }
+});
+
+test('browser vecchi: inflar() apre il blocco vero della pagina pubblicata, uguale a zlib, e dice che cosa non va se i dati sono rotti', () => {
+  const { inflar, daByte } = motore();
+  const grezzo = readFileSync(new URL(FILE_PAGINA, RADICE), 'utf8');
+  const m = grezzo.match(/id="dati-schede" data-lunghezza="(\d+)">([^<]*)</);
+  const compresso = Buffer.from(m[2], 'base64');
+  const fuori = inflar(new Uint8Array(compresso), Number(m[1]));
+  assert.equal(Buffer.compare(Buffer.from(fuori), inflateRawSync(compresso)), 0);
+  // lettura UTF-8 con TextDecoder e senza (il ripiego dei browser che non lo hanno)
+  const testo = inflateRawSync(compresso).toString();
+  assert.equal(motore({ TextDecoder }).daByte(fuori), testo);
+  assert.equal(motore({}).daByte(fuori), testo, 'senza TextDecoder');
+  assert.match(testo, /Scavafosse/);
+  // dati troncati, lunghezza sbagliata: un errore con il motivo, mai una pagina muta
+  assert.throws(() => inflar(new Uint8Array(compresso.subarray(0, 100)), Number(m[1])), /troncati|non valid/);
+  assert.throws(() => inflar(new Uint8Array(compresso), Number(m[1]) + 5), /lunghezza inattesa/);
+  void daByte;
+});
+
+test('browser vecchi: il codice della pagina è ES5 (niente frecce, let/const, classi, template, async), con ripiego per ciò che manca', () => {
+  const grezzo = readFileSync(new URL(FILE_PAGINA, RADICE), 'utf8');
+  const script = grezzo.slice(grezzo.lastIndexOf('<script>'), grezzo.lastIndexOf('</script>'));
+  assert.doesNotMatch(script, /=>|\blet |\bconst |\bclass |\basync |\bawait |\.\.\.|`/, 'sintassi recente nello script della pagina');
+  assert.doesNotMatch(script, /querySelectorAll\([^)]*\)\.forEach/, 'NodeList.forEach non c’è nei browser vecchi');
+  assert.match(script, /t\.normalize\?/, 'ripiego senza String.normalize');
+  assert.match(grezzo, /Non riesco ad aprire le schede su questo browser/, 'messaggio se le schede non si aprono');
+  assert.match(grezzo, /id="caricamento"/);
 });
