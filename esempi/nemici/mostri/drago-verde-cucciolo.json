@@ -57,6 +57,14 @@
     {
       "nome": "Furtività",
       "va": 12
+    },
+    {
+      "nome": "Oratoria",
+      "va": 11
+    },
+    {
+      "nome": "Raggirare",
+      "va": 11
     }
   ],
   "gs_px": {
@@ -111,7 +119,7 @@
     },
     {
       "nome": "Abilità particolari",
-      "effetto": "con coperture ambientali adatte 14; Oratoria e Raggirare 11"
+      "effetto": "con coperture ambientali adatte 14"
     }
   ],
   "note": "Predatore draconico • cucciolo • Natura Comune. Sensi e linguaggi: Scurovisione 12 Q Base; Draconico."

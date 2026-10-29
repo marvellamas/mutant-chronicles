@@ -224,7 +224,9 @@ function parteAbilita(testo, nonCapito, grezze) {
   const pulito = testo.replace(/(\d)([A-ZÀ-Ù])/g, '$1 • $2');
   for (const seg of pulito.split(/\s[•·]\s|;\s/)) {
     const m = seg.trim().match(/^(.+?)\s+(\d+)$/);
-    if (m) ab.push({ nome: ALIAS_ABILITA[m[1].trim()] ?? m[1].trim(), va: +m[2] });
+    const due = m && m[1].trim().match(/^(.+?) e (.+)$/); // «Oratoria e Raggirare 14» = le due Abilità a 14
+    if (due && ABILITA.has(due[1]) && ABILITA.has(due[2])) ab.push({ nome: due[1], va: +m[2] }, { nome: due[2], va: +m[2] });
+    else if (m) ab.push({ nome: ALIAS_ABILITA[m[1].trim()] ?? m[1].trim(), va: +m[2] });
     else if (seg.trim()) { grezze.push(seg.trim()); nonCapito.push('Abilità con condizione o forma non letta, tenuta come testo nelle capacità: «' + seg.trim() + '»'); }
   }
   return ab;

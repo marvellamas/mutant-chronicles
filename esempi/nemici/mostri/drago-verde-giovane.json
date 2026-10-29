@@ -58,6 +58,14 @@
     {
       "nome": "Furtività",
       "va": 10
+    },
+    {
+      "nome": "Oratoria",
+      "va": 14
+    },
+    {
+      "nome": "Raggirare",
+      "va": 14
     }
   ],
   "gs_px": {
@@ -137,7 +145,7 @@
     },
     {
       "nome": "Abilità particolari",
-      "effetto": "nel proprio ambiente con coperture adatte 13; Oratoria e Raggirare 14"
+      "effetto": "nel proprio ambiente con coperture adatte 13"
     }
   ],
   "note": "Grande predatore draconico • giovane • Natura Comune. Sensi e linguaggi: Scurovisione 24 Q Base • Draconico e una lingua di contatto. Il danno «NdM × k» è il risultato dei dadi moltiplicato per k; il dado non si tira da solo (A.199)."
