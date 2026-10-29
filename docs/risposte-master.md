@@ -2224,3 +2224,17 @@ Dettaglio in `docs/diff-lotto143-2026-10-29.md`. Nessuna decisione approvata cam
 - **Test intermittente** (`calendario.test.js`, lotto 141): causa non trovata; `npm run test:ripeti` per catturarlo.
 - **Nuove domande:** A.205 (Diplomazia o Oratoria), A.206 (Parata «—» del Lottatore di I Grado), A.207 (natura e AC delle armi di umani e umanoidi), A.208 (Iniziativa degli Elementali maggiori),
   A.209 (Parata o Schivata come Difese dei modelli PNG), A.210 (GS e PX dei modelli PNG). Provvisorio nell'app: quanto descritto nel diff.
+
+## 29 ottobre 2026 — Lotto 144: A.176 (incantesimi aggiunti a mano: appresi o solo annotati), bestiario online alleggerito
+
+- **A.176 — RISOLTA** (risposta di Davide del 23/10/2026, sezione 3 del Doc; applicata il 29/10, `docs/diff-lotto144-2026-10-29.md`). Un incantesimo aggiunto a mano è **appreso** (conta come conosciuto a ogni effetto:
+  prerequisiti, creazione di Consumabili, insegnamento; restano necessari gli altri requisiti, conoscerlo da solo non basta) oppure **solo annotato** (pergamena, testo, Artefatto: non è appreso, non concede accesso
+  alla magia, Abilità o PM, e non si lancia). Senza accesso alla magia anche l'appreso resta annotato e non lanciabile. Una **concessione speciale** del Direttore deve dire espressamente come si lancia, con quale
+  Abilità, con quali PM e con quali limiti (testo libero, `concessione`, e rende lanciabile l'incantesimo). Resta com'era: gli aggiunti a mano non entrano nelle quote di Classe né nei liberi.
+  - Dato: `scelte.incantesimiAMano[].tipo` (`appreso` | `annotato`; assente = «da classificare») e `concessione`; testi in `regole.json` → `incantesimi_a_mano` (`tipi`, `da_classificare`, `concessione_max`).
+  - L'app chiede sempre quale dei due è (nessun valore di partenza). Le righe salvate prima restano **«da classificare»**: nessuno decide al posto del Direttore; si comportano come prima (si lanciano con le regole
+    normali) ma non contano come conosciute per i nuovi controlli; il Direttore (modalità master) le classifica con un tocco dalla scheda dell'incantesimo.
+  - Punti che chiedono «lo conosce?»: creazione di Consumabili (`versioniCreabili` e `pianoCreazione`: prima solo la prima contava gli aggiunti, ora entrambe contano gli appresi), «Lancia!» (pulsante e pannello),
+    scelta degli incantesimi al passaggio di livello (nota «già appreso a mano»), conversione PG → nemico (gli appresi con accesso), ricerca nella scheda, stampa (foglio Poteri).
+  - Provvisorio, in attesa di Davide: A.211 (chi può segnare «appreso»), A.212 (concessione solo scritta), A.213 («da classificare» e nuovi controlli).
+- **Bestiario online**: schede compresse e testi comuni scritti una volta sola; da 2,0 MB a 0,5 MB (`tools/bestiario_pagina.mjs`). Nessuna regola in gioco.
