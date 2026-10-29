@@ -18,6 +18,7 @@ import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { statoServer, spegniServer } from './ripristina.mjs';
 import { registraErrore } from './avvisi.mjs';
+import { fermaSeSconosciuti, ARGOMENTI } from './argomenti.mjs';
 
 const RADICE = fileURLToPath(new URL('..', import.meta.url));
 
@@ -141,6 +142,7 @@ export async function riavviaDopoAggiornamento({ radice = RADICE, porta = 3000, 
 
 const arg = (k) => process.argv.find((x) => x.startsWith(`--${k}=`))?.slice(k.length + 3);
 const eseguito = process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1];
+if (eseguito) fermaSeSconosciuti(process.argv.slice(2), ARGOMENTI['riavvia.mjs'], 'riavvia.mjs');
 if (eseguito) {
   const radice = arg('radice') || RADICE;
   // la porta la dicono l'argomento o l'ambiente (Mutant.bat → MUTANT_PORTA, avvia-server.bat → PORTA); di norma 3000

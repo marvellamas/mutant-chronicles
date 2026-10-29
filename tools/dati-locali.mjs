@@ -16,6 +16,7 @@ import { existsSync, readdirSync, statSync, readFileSync, writeFileSync, mkdirSy
 import { join, dirname, normalize, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { creaZip, leggiZip, dimensione } from './salva-sessione.mjs';
+import { fermaSeSconosciuti, ARGOMENTI } from './argomenti.mjs';
 
 const RADICE = fileURLToPath(new URL('..', import.meta.url));
 const due = (n) => String(n).padStart(2, '0');
@@ -182,6 +183,7 @@ export function leggiStatoPrima(radice = RADICE, elenco = elencoLocali(radice)) 
 
 const arg = (k) => process.argv.find((x) => x.startsWith(`--${k}=`))?.slice(k.length + 3);
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+  fermaSeSconosciuti(process.argv.slice(2), ARGOMENTI['dati-locali.mjs'], 'dati-locali.mjs');
   const radice = arg('radice') || RADICE;
   const comando = process.argv[2];
   const elenco = elencoLocali(radice);

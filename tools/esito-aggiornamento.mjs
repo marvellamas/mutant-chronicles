@@ -15,6 +15,7 @@ import { cartellaDati } from './dati-pc.mjs';
 import { statoDaDisco, statoDalServer } from './stato-personaggi.mjs';
 import { serverPerScrivere } from './migra-talenti.mjs';
 import { ascii } from './menu.mjs';
+import { fermaSeSconosciuti, ARGOMENTI } from './argomenti.mjs';
 
 const RADICE = fileURLToPath(new URL('..', import.meta.url));
 const FILE = join('backup-prima-aggiornamento', '.versione-prima.json');
@@ -138,6 +139,7 @@ function primaAnnotata(radice) {
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+  fermaSeSconosciuti(process.argv.slice(2), ARGOMENTI['esito-aggiornamento.mjs'], 'esito-aggiornamento.mjs');
   const radice = process.argv.find((x) => x.startsWith('--radice='))?.slice(9) || RADICE;
   const comando = process.argv[2];
   if (comando === 'prima') {

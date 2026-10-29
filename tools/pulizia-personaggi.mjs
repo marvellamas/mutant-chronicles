@@ -23,6 +23,7 @@ import { fileURLToPath } from 'node:url';
 import { NOME_FILE, chiaveDaFile } from '../src/cartella.js';
 import { idPersonaggio, cartellaStorico, CARTELLA_STORICO } from '../src/storico-personaggi.js';
 import { segniDi, rigaSegni, proponiOriginale } from '../src/confronto-personaggi.js';
+import { fermaSeSconosciuti, ARGOMENTI } from './argomenti.mjs';
 
 const RADICE = dirname(dirname(fileURLToPath(import.meta.url)));
 const quando = (ms) => new Date(ms).toLocaleString('it-IT', { dateStyle: 'short', timeStyle: 'short' });
@@ -119,6 +120,7 @@ export async function sposta(cartella, r) {
 const arg = (nome) => { const i = process.argv.indexOf(nome); return i > 0 ? process.argv[i + 1] : null; };
 
 if (process.argv[1]?.endsWith('pulizia-personaggi.mjs')) {
+  fermaSeSconosciuti(process.argv.slice(2), ARGOMENTI['pulizia-personaggi.mjs'], 'pulizia-personaggi.mjs');
   const cartella = arg('--cartella') ?? join(cartellaDati(RADICE).cartella, 'personaggi'); // 26/10: tools/dati-pc.mjs
   const r = await rapporto(cartella);
   const fare = process.argv.includes('--sposta');

@@ -168,6 +168,8 @@ import { validaDiretta, direttaPerGiocatori, visibileAiGiocatori } from './src/m
 import { avversariZoc } from './src/mappa/zoc.js';
 import { dimensioniImmagine } from './src/mappa/immagine.js';
 import { pezziDellaScena } from './src/mappa/partecipanti.js';
+import { fermaSeSconosciuti, ARGOMENTI } from './tools/argomenti.mjs';
+import { controllaAvvioDiProva, cartelleReali, installaGuardiaScrittura } from './tools/protezione-reali.mjs';
 import { vistaPlancia } from './src/tavolo.js';
 import { INTESTAZIONE as INTESTAZIONE_AIUTO, rifiutoAiuto, assegnaAiuto, ruoloValido, ruoloDopoScontro, eAiuto, pgDaMuovere, ruoloPubblico } from './src/mappa/aiuto-master.js';
 import { pgDellaScena, pezzoDelPg, areaPerTablet, provaMovimento, eseguiMovimentoGiocatore, impostazioniTablet, miniScheda, fondiMovimentiTablet, lineaPerTablet } from './src/mappa/tablet.js';
@@ -2070,6 +2072,8 @@ export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA),
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+  // 29/10/2026 (lotto 145): un flag che non esiste ferma il server (un «--personaggi=» ignorato aprì la cartella vera)
+  fermaSeSconosciuti(process.argv.slice(2), ARGOMENTI['server.mjs'], 'server.mjs');
   const daArg = process.argv.find((x) => x.startsWith('--porta='))?.slice(8);
   const porta = Number(daArg ?? process.env.PORTA ?? 3000);
   // tutte le interfacce, così i telefoni e i PC della stessa rete Wi-Fi lo raggiungono (richiesta del 03/10/2026);
@@ -2086,15 +2090,17 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const DATI = dati.cartella;
   if (dati.problema) console.log(`Attenzione: ${dati.problema}. Uso la cartella dell'app: ${RADICE}. Per ritrovare i personaggi: Mutant.bat, voce P «Cerca i personaggi».`);
   const cartella = arg('cartella') ? normalize(arg('cartella')) : join(DATI, CARTELLA);
-  const tavolo = arg('tavolo') ? normalize(arg('tavolo')) : join(DATI, TAVOLO);
-  const scontri = arg('scontri') ? normalize(arg('scontri')) : join(DATI, SCONTRI);
-  const nemici = arg('nemici') ? normalize(arg('nemici')) : join(DATI, NEMICI);
-  const veicoli = arg('veicoli') ? normalize(arg('veicoli')) : join(DATI, VEICOLI);
-  const scene = arg('scene') ? normalize(arg('scene')) : join(DATI, SCENE);
-  const mappe = arg('mappe') ? normalize(arg('mappe')) : join(DATI, MAPPE);
-  const musica = arg('musica') ? normalize(arg('musica')) : join(DATI, MUSICA);
-  const galleria = arg('galleria') ? normalize(arg('galleria')) : join(DATI, GALLERIA);
-  const px = arg('px') ? normalize(arg('px')) : join(DATI, PX);
+  // con --cartella=… (una prova) le cartelle non indicate stanno accanto a quella di prova, mai in quelle dell'app
+  const BASE = arg('cartella') ? dirname(normalize(arg('cartella'))) : DATI;
+  const tavolo = arg('tavolo') ? normalize(arg('tavolo')) : join(BASE, TAVOLO);
+  const scontri = arg('scontri') ? normalize(arg('scontri')) : join(BASE, SCONTRI);
+  const nemici = arg('nemici') ? normalize(arg('nemici')) : join(BASE, NEMICI);
+  const veicoli = arg('veicoli') ? normalize(arg('veicoli')) : join(BASE, VEICOLI);
+  const scene = arg('scene') ? normalize(arg('scene')) : join(BASE, SCENE);
+  const mappe = arg('mappe') ? normalize(arg('mappe')) : join(BASE, MAPPE);
+  const musica = arg('musica') ? normalize(arg('musica')) : join(BASE, MUSICA);
+  const galleria = arg('galleria') ? normalize(arg('galleria')) : join(BASE, GALLERIA);
+  const px = arg('px') ? normalize(arg('px')) : join(BASE, PX);
   // avvisi a Marcello (tools/avvisi.mjs, avvisi/LEGGIMI.txt): solo dal server avviato da qui, mai nei test né con cartelle
   // di prova (--cartella=…) o con --senza-avvisi; in silenzio
   const senzaAvvisi = process.argv.includes('--senza-avvisi') || !!arg('cartella');
@@ -2106,6 +2112,12 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const dirSalvataggi = arg('salvataggi') ? normalize(arg('salvataggi')) : join(baseSalvataggi, 'salvataggi');
   const dirAutosave = arg('autosave') ? normalize(arg('autosave')) : join(baseSalvataggi, 'autosave');
   const fileConfig = arg('config-salvataggi') ? normalize(arg('config-salvataggi')) : join(baseSalvataggi, 'config-salvataggi.json');
+  // 29/10/2026 (lotto 145): una prova (altra porta o cartelle indicate) non apre le cartelle vere e non ci scrive
+  {
+    const controllo = controllaAvvioDiProva({ porta, argv: process.argv.slice(2), radice: RADICE, cartelle: { personaggi: cartella, tavolo, scontri, nemici, veicoli, scene, mappe, musica, galleria, px, salvataggi: dirSalvataggi, autosave: dirAutosave, 'config-salvataggi': fileConfig } });
+    if (!controllo.ok) { console.error(['', 'Mutant non parte.', ...controllo.errori, ''].join('\n')); process.exit(2); }
+    if (controllo.prova && !process.argv.includes('--dati-reali')) installaGuardiaScrittura(cartelleReali(RADICE));
+  }
   // l'argomento ntfy degli avvisi a Marcello (avvisi/avvisi.json); con cartelle di prova solo quello del file di prova
   const gestore = creaGestore({
     cartelle: { personaggi: cartella, veicoli, scontri, nemici, tavolo, scene, mappe, galleria },

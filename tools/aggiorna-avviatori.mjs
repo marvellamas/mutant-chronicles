@@ -19,6 +19,7 @@
 import { readFileSync, writeFileSync, existsSync, copyFileSync, statSync, unlinkSync } from 'node:fs';
 import { join, dirname, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { fermaSeSconosciuti, ARGOMENTI } from './argomenti.mjs';
 
 const RADICE = fileURLToPath(new URL('..', import.meta.url));
 
@@ -111,6 +112,7 @@ export function testoEsito({ aggiornati, saltati, errori, tolti = [] }) {
 
 const arg = (k) => process.argv.find((x) => x.startsWith(`--${k}=`))?.slice(k.length + 3);
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+  fermaSeSconosciuti(process.argv.slice(2), ARGOMENTI['aggiorna-avviatori.mjs'], 'aggiorna-avviatori.mjs');
   const radice = arg('radice') || RADICE;
   const fuori = arg('fuori') || dirname(radice);
   const salta = (arg('salta') || '').split(',').map((s) => s.trim()).filter(Boolean);

@@ -19,6 +19,7 @@ import { creaZip, leggiZip } from './salva-sessione.mjs';
 import { cartellaDati } from './dati-pc.mjs';
 import { elencoDaDisco, perPersonaggio, rigaDi, statoDalServer, esitoControllo } from './stato-personaggi.mjs';
 import { idStabileDiFile } from '../src/cartella.js';
+import { fermaSeSconosciuti, ARGOMENTI } from './argomenti.mjs';
 
 const RADICE = dirname(dirname(fileURLToPath(import.meta.url)));
 const PREFISSO = 'prima-dei-talenti-nuovi_';
@@ -208,6 +209,7 @@ export function ripristina({ cartella, salvataggi, zip = null, quando = new Date
 // --- riga di comando -------------------------------------------------------------------------------------------
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const a = process.argv.slice(2);
+  fermaSeSconosciuti(process.argv.slice(2), ARGOMENTI['migra-talenti.mjs'], 'migra-talenti.mjs');
   const valore = (k, d) => { const i = a.indexOf(k); return i >= 0 && a[i + 1] && !a[i + 1].startsWith('--') ? a[i + 1] : d; };
   const DATI = cartellaDati(RADICE).cartella; // 26/10: la cartella dei dati di questo PC (tools/dati-pc.mjs)
   const cartella = valore('--cartella', join(DATI, 'personaggi'));

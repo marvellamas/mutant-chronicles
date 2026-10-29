@@ -30,6 +30,7 @@ import { createHash } from 'node:crypto';
 import { deflateRawSync, inflateRawSync, crc32 } from 'node:zlib';
 import { execFile } from 'node:child_process';
 import { configurazione as confAvvisi, dataOra, registraErrore } from './avvisi.mjs';
+import { fermaSeSconosciuti, ARGOMENTI } from './argomenti.mjs';
 
 export const CARTELLE = ['personaggi', 'veicoli', 'scontri', 'nemici', 'tavolo', 'scene', 'mappe', 'galleria', 'px'];
 /** Lo zip «dati» per la rete: tutto tranne le immagini delle mappe e della galleria (pochi KB). */
@@ -416,6 +417,7 @@ export function impostazioniDi(radice, { config: fileConfig = join(radice, 'conf
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+  fermaSeSconosciuti(process.argv.slice(2), ARGOMENTI['salva-sessione.mjs'], 'salva-sessione.mjs');
   const arg = (k) => process.argv.find((x) => x.startsWith(`--${k}=`))?.slice(k.length + 3);
   // 26/10: la cartella dei dati di questo PC (tools/dati-pc.mjs), non per forza quella dell'app
   const radice = arg('radice') ?? cartellaDati(RADICE).cartella;

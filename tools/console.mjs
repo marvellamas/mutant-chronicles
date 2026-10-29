@@ -37,6 +37,7 @@ import { confrontoLivelloPx } from '../src/px-partita.js';
 import { leggiVersione, leggiNovita, versioneInParole } from '../src/versione.js';
 import { rapporto as rapportoTalenti, applica as applicaTalenti, ripristina as ripristinaTalenti, zipDelPassaggio, zipDaRipristinare, controllaSulServer, statoPassaggio, quandoDelloZip, pianoNota, righeNota, applicaNota } from './migra-talenti.mjs';
 import { rapporto as rapportoPulizia, testoRapporto as testoPulizia, sposta as spostaPulizia } from './pulizia-personaggi.mjs';
+import { fermaSeSconosciuti, ARGOMENTI } from './argomenti.mjs';
 
 const RADICE = fileURLToPath(new URL('..', import.meta.url));
 const arg = (k) => process.argv.find((x) => x.startsWith(`--${k}=`))?.slice(k.length + 3);
@@ -711,6 +712,7 @@ async function voceAvvio() {
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+  fermaSeSconosciuti(process.argv.slice(2), ARGOMENTI['console.mjs'], 'console.mjs');
   const comando = process.argv[2];
   if (comando === 'intestazione') {
     const s = await statoServer(porta);
