@@ -1298,6 +1298,12 @@ function validaSchedaDigitale(dati, err) {
   // 20/10/2026: incantesimi liberi aggiunti a mano (src/incantesimi-a-mano.js)
   const iam = dati.regole.incantesimi_a_mano;
   if (!isOggetto(iam) || !Array.isArray(iam.origini) || iam.origini.length < 2 || !iam.origini.every((o) => isOggetto(o) && isTesto(o.id) && isTesto(o.nome)) || !['a_mano', 'direttore'].every((id) => iam.origini.some((o) => o.id === id))) err(F, 'incantesimi_a_mano', 'servono le origini a_mano e direttore, ciascuna con id e nome');
+  // A.176: appreso e solo annotato, con il testo che li spiega; la concessione speciale ha un tetto di lunghezza
+  else {
+    if (!Array.isArray(iam.tipi) || !['appreso', 'annotato'].every((id) => iam.tipi.some((t) => isOggetto(t) && t.id === id && isTesto(t.nome) && isTesto(t.etichetta) && isTesto(t.frase)))) err(F, 'incantesimi_a_mano.tipi', 'servono i tipi appreso e annotato, ciascuno con nome, etichetta e frase');
+    if (!isOggetto(iam.da_classificare) || !isTesto(iam.da_classificare.etichetta) || !isTesto(iam.da_classificare.frase)) err(F, 'incantesimi_a_mano.da_classificare', 'servono etichetta e frase di «da classificare»');
+    if (!Number.isInteger(iam.concessione_max) || iam.concessione_max < 50) err(F, 'incantesimi_a_mano.concessione_max', 'serve la lunghezza massima della concessione speciale (intero, almeno 50)');
+  }
   // 19/10/2026: pulsante «torna in cima» (src/ui/scorrimento.js)
   const ts = dati.regole.interfaccia?.torna_sopra;
   if (!isOggetto(ts) || !isIntero(ts.soglia_px) || ts.soglia_px < 100 || !isTesto(ts.etichetta)) err(F, 'interfaccia.torna_sopra', 'servono soglia_px (intero ≥ 100) e etichetta');

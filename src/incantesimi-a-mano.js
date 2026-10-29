@@ -8,8 +8,15 @@
 //   li conosce) e l'avanzamento non li tocca: le scelte della creazione e gli eventi dei livelli sono un'altra cosa.
 // - Un incantesimo di livello base superiore al livello massimo del personaggio (Magia sez. 1) si può aggiungere lo
 //   stesso: è un avviso, non un blocco.
-// - L'incantesimo aggiunto a mano si lancia come un conosciuto («Lancia!» della tab Poteri); non cambia i conteggi
-//   «conosciuti / quota» né il foglio di stampa (src/stampa.js non lo elenca).
+// - A.176 (risposta di Davide del 23/10/2026): ogni incantesimo aggiunto a mano è APPRESO (conta come conosciuto a ogni
+//   effetto, fermi restando gli altri requisiti: prerequisiti, creazione di Consumabili, insegnamento) oppure SOLO
+//   ANNOTATO (una pergamena trovata, un testo, un Artefatto: non è appreso, non concede accesso alla magia, né Abilità,
+//   né PM, e non si lancia). Un appreso senza accesso alla magia resta annotato e non lanciabile. Una concessione
+//   speciale del Direttore (campo `concessione`) dice espressamente come si lancia, con quale Abilità, con quali PM e
+//   con quali limiti, e rende lanciabile l'incantesimo. Le righe salvate prima della distinzione non hanno `tipo`: sono
+//   «da classificare» e restano com'erano (nessuno decide al posto del Direttore).
+// - L'incantesimo aggiunto a mano non cambia i conteggi «conosciuti / quota»; sta nell'elenco della tab Poteri e della SS
+//   con la sua etichetta.
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const DATA = /^\d{4}-\d{2}-\d{2}$/;
@@ -17,6 +24,58 @@ const DATA = /^\d{4}-\d{2}-\d{2}$/;
 /** Le origini ammesse e i loro nomi (regole.json → incantesimi_a_mano.origini). */
 export const origini = (dati) => dati?.regole?.incantesimi_a_mano?.origini ?? [];
 export const nomeOrigine = (id, dati) => origini(dati).find((o) => o.id === id)?.nome ?? id;
+
+/** I tipi ammessi (regole.json → incantesimi_a_mano.tipi): appreso e annotato. «Da classificare» è l'assenza del tipo. */
+export const tipi = (dati) => dati?.regole?.incantesimi_a_mano?.tipi ?? [];
+const TIPI_VALIDI = ['appreso', 'annotato'];
+
+/** 'appreso' | 'annotato' | 'da_classificare' (senza tipo: le righe salvate prima di A.176). */
+export const tipoDi = (x) => (TIPI_VALIDI.includes(x?.tipo) ? x.tipo : 'da_classificare');
+
+/** Conta come conosciuto a ogni effetto (A.176): solo l'appreso. Il «da classificare» non decide: non conta. */
+export const contaComeConosciuto = (x) => tipoDi(x) === 'appreso';
+
+/** «Appreso a mano», «Solo annotato», «Aggiunto, da classificare» (regole.json). */
+export function etichettaTipo(x, dati) {
+  const t = tipoDi(x);
+  return t === 'da_classificare' ? dati?.regole?.incantesimi_a_mano?.da_classificare?.etichetta ?? 'Aggiunto, da classificare'
+    : tipi(dati).find((y) => y.id === t)?.etichetta ?? t;
+}
+
+/** La frase che spiega che cosa significa il tipo (regole.json). */
+export function fraseTipo(x, dati) {
+  const t = tipoDi(x);
+  return t === 'da_classificare' ? dati?.regole?.incantesimi_a_mano?.da_classificare?.frase ?? ''
+    : tipi(dati).find((y) => y.id === t)?.frase ?? '';
+}
+
+/** Il segno corto dell'elenco: «(Appreso)», «(Annotato)», «(Aggiunto)» (da classificare). */
+export const segnoTipo = (x) => ({ appreso: '(Appreso)', annotato: '(Annotato)', da_classificare: '(Aggiunto)' })[tipoDi(x)];
+
+/**
+ * Si può lanciare? (A.176) Annotato: no, salvo concessione speciale del Direttore. Appreso: con le normali regole
+ * dell'accesso alla magia; senza accesso resta annotato e non lanciabile, salvo concessione. Da classificare: come
+ * prima (il pulsante c'è, con gli avvisi di sempre) finché il Direttore non lo classifica.
+ * @returns {{ lanciabile: boolean, motivo: string|null, concessione: string|null }}
+ */
+export function statoLancioAMano(x, { accesso = false } = {}) {
+  const concessione = typeof x?.concessione === 'string' && x.concessione.trim() ? x.concessione.trim() : null;
+  const t = tipoDi(x);
+  if (concessione) return { lanciabile: true, motivo: null, concessione };
+  if (t === 'annotato') return { lanciabile: false, concessione: null, motivo: 'È solo annotato: non è appreso e non concede accesso alla magia, Abilità o PM, quindi non si lancia. Lo può rendere lanciabile il Direttore, indicando come si lancia, con quale Abilità, con quali PM e con quali limiti (A.176).' };
+  if (t === 'appreso' && !accesso) return { lanciabile: false, concessione: null, motivo: 'Il personaggio non ha accesso alla magia: l’incantesimo resta annotato e non lanciabile. L’aggiunta non concede accesso, Abilità o PM (A.176).' };
+  return { lanciabile: true, motivo: null, concessione: null };
+}
+
+/**
+ * I nomi degli incantesimi che il personaggio CONOSCE a ogni effetto (A.176): i conosciuti di Classe e dei livelli e gli
+ * aggiunti a mano appresi. Gli annotati e quelli da classificare non ci sono. Da usare in ogni punto che chiede
+ * «il personaggio conosce questo incantesimo?» (prerequisiti, creazione di Consumabili, insegnamento).
+ * @param incantesimi la parte `scheda.incantesimi` ({ conosciuti, aMano })
+ */
+export function nomiConosciuti(incantesimi) {
+  return new Set([...(incantesimi?.conosciuti ?? []), ...(incantesimi?.aMano ?? []).filter(contaComeConosciuto)].map((i) => i.nome ?? i));
+}
 
 const oggi = () => new Date().toISOString().slice(0, 10);
 
@@ -46,6 +105,9 @@ export function normalizzaIncantesimiAMano(lista, dati, avvisi = []) {
       origine: ammesse.size ? (ammesse.has(x.origine) ? x.origine : 'a_mano') : x.origine ?? 'a_mano',
       quando: DATA.test(String(x.quando ?? '')) ? x.quando : oggi(),
       ...(typeof x.nota === 'string' && x.nota.trim() ? { nota: x.nota.trim().slice(0, 160) } : {}),
+      // A.176: senza tipo (o con un tipo sconosciuto) resta «da classificare»: non si decide al posto del Direttore
+      ...(TIPI_VALIDI.includes(x.tipo) ? { tipo: x.tipo } : {}),
+      ...(typeof x.concessione === 'string' && x.concessione.trim() ? { concessione: x.concessione.trim().slice(0, dati?.regole?.incantesimi_a_mano?.concessione_max ?? 300) } : {}),
     });
   }
   return out;
@@ -77,7 +139,7 @@ export function cercaIncantesimi(testo, dati, { max = 12 } = {}) {
 /**
  * Aggiunge un incantesimo del catalogo, scelto per IDENTIFICATIVO (non per nome). null se non esiste o c'è già fra
  * quelli aggiunti a mano.
- * @param extra { origine, quando?, nota? }
+ * @param extra { origine, tipo?, quando?, nota?, concessione? }
  */
 export function aggiungiIncantesimoAMano(lista, id, extra, dati) {
   const inc = incantesimoPerId(id, dati);
@@ -85,8 +147,24 @@ export function aggiungiIncantesimoAMano(lista, id, extra, dati) {
   const nome = inc.nome;
   const attuale = Array.isArray(lista) ? lista : [];
   if (attuale.some((x) => x.nome === nome)) return null;
-  const [r] = normalizzaIncantesimiAMano([{ nome, origine: extra?.origine, quando: extra?.quando ?? oggi(), nota: extra?.nota }], dati);
+  const [r] = normalizzaIncantesimiAMano([{ nome, origine: extra?.origine, quando: extra?.quando ?? oggi(), nota: extra?.nota, tipo: extra?.tipo, concessione: extra?.concessione }], dati);
   return r ? [...attuale, r] : null;
+}
+
+/**
+ * Il Direttore classifica un incantesimo aggiunto a mano: appreso o solo annotato, con l'eventuale concessione speciale
+ * (A.176). null se non c'è o il tipo non è valido. Senza `concessione` quella che c'è resta; con una stringa vuota si toglie.
+ */
+export function classificaIncantesimoAMano(lista, nome, tipo, { concessione } = {}, dati = null) {
+  if (!TIPI_VALIDI.includes(tipo)) return null;
+  const attuale = Array.isArray(lista) ? lista : [];
+  if (!attuale.some((x) => x.nome === nome)) return null;
+  return normalizzaIncantesimiAMano(attuale.map((x) => {
+    if (x.nome !== nome) return x;
+    const { concessione: vecchia, ...resto } = x;
+    const nuova = concessione === undefined ? vecchia : concessione;
+    return { ...resto, tipo, ...(nuova ? { concessione: nuova } : {}) };
+  }), dati);
 }
 
 /** Toglie un incantesimo aggiunto a mano (null se non c'è). */
@@ -121,11 +199,17 @@ export function risolviIncantesimiAMano(lista, { livelloMassimo = 0, accesso = f
       nome: x.nome, origine: x.origine, nomeOrigine: nomeOrigine(x.origine, dati), quando: x.quando, ...(x.nota ? { nota: x.nota } : {}),
       macrofamiglia: i.macrofamiglia, specializzazione: i.specializzazione, livello_base: i.livello_base, scheda: i.scheda,
       avviso: avvisoLivelloAMano(i, { livelloMassimo, accesso }),
+      // A.176: tipo, etichetta, frase che lo spiega e se si lancia (con il motivo se no)
+      tipo: tipoDi(x), etichetta: etichettaTipo(x, dati), segno: segnoTipo(x), frase: fraseTipo(x, dati),
+      ...(x.concessione ? { concessione: x.concessione } : {}),
+      lancio: statoLancioAMano(x, { accesso }),
     }] : [];
   });
 }
 
 /** Riga per il registro del personaggio (storico) quando si aggiunge o si toglie, con la data. */
 export const rigaRegistro = (azione, x, dati) => (azione === 'aggiunto'
-  ? `Incantesimo ${x.nome}: ${nomeOrigine(x.origine, dati)} il ${dataLeggibile(x.quando)}${x.nota ? ` (${x.nota})` : ''}.`
-  : `Incantesimo ${x.nome}: tolto (era ${nomeOrigine(x.origine, dati).toLowerCase()} il ${dataLeggibile(x.quando)}).`);
+  ? `Incantesimo ${x.nome}: ${nomeOrigine(x.origine, dati)} il ${dataLeggibile(x.quando)}, ${etichettaTipo(x, dati).toLowerCase()}${x.nota ? ` (${x.nota})` : ''}.`
+  : azione === 'classificato'
+    ? `Incantesimo ${x.nome}: classificato come ${etichettaTipo(x, dati).toLowerCase()}${x.concessione ? ` (concessione speciale: ${x.concessione})` : ''}.`
+    : `Incantesimo ${x.nome}: tolto (era ${nomeOrigine(x.origine, dati).toLowerCase()} il ${dataLeggibile(x.quando)}).`);

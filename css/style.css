@@ -3109,3 +3109,9 @@ p.da-applicare { margin: 0.2rem 0 0.5rem; }
 .risultato-incantesimo.scelto { border-color: var(--accento); background: var(--accento-tenue); }
 .scelta-incantesimo { font-size: 1rem; }
 .esito-aggiunta { color: var(--ok); }
+/* A.176: incantesimi aggiunti a mano, appresi o solo annotati; «da classificare» si nota, ma senza gridare */
+.etichetta-da-classificare { color: var(--attenzione); font-weight: 600; font-size: 0.8rem; }
+.etichetta-origine.tipo-annotato { color: var(--tenue); font-style: italic; }
+.etichetta-origine.tipo-da_classificare { color: var(--attenzione); }
+.classifica-master { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.4rem 0; }
+.concessione-speciale { border-left: 3px solid var(--accento); padding-left: 0.5rem; }

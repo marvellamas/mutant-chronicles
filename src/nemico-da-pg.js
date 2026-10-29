@@ -141,7 +141,9 @@ const primaFrase = (t) => String(t ?? '').replace(/\s+/g, ' ').trim().split(/(?<
  * lancia così (Rituale) resta un promemoria.
  */
 function incantesimiDa(scelte, scheda, sessione, dati) {
-  return (scelte.incantesimi ?? []).map((nome) => {
+  // A.176: anche gli aggiunti a mano appresi (conosciuti a ogni effetto), se il PG ha accesso alla magia; gli annotati no
+  const appresi = scheda.incantesimi?.scalaPotere ? (scheda.incantesimi?.aMano ?? []).filter((x) => x.tipo === 'appreso' && x.lancio?.lanciabile).map((x) => x.nome) : [];
+  return [...(scelte.incantesimi ?? []), ...appresi.filter((n) => !(scelte.incantesimi ?? []).includes(n))].map((nome) => {
     const inc = dati.incantesimi.incantesimi.find((i) => i.nome === nome);
     const v = inc ? versioniLancio(inc, scheda).filter((x) => !x.motivo).at(-1) : null;
     if (!inc || !v || inc.meccanica?.procedura_rituale?.stato) return { nome, note: 'promemoria: si lancia al tavolo' };

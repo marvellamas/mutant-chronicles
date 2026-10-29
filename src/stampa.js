@@ -433,7 +433,9 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
           };
           return {
             nome: i.nome,
-            ...(i.__aggiunto ? { aggiunto: { origine: i.__aggiunto.nomeOrigine, quando: i.__aggiunto.quando, ...(i.__aggiunto.nota ? { nota: i.__aggiunto.nota } : {}), avviso: i.__aggiunto.avviso ?? null } } : {}),
+            ...(i.__aggiunto ? { aggiunto: { origine: i.__aggiunto.nomeOrigine, quando: i.__aggiunto.quando, ...(i.__aggiunto.nota ? { nota: i.__aggiunto.nota } : {}), avviso: i.__aggiunto.avviso ?? null,
+              // A.176: appreso, solo annotato o da classificare, con la concessione speciale e se si lancia
+              tipo: i.__aggiunto.tipo, etichetta: i.__aggiunto.etichetta, segno: i.__aggiunto.segno, frase: i.__aggiunto.frase, lancio: i.__aggiunto.lancio, ...(i.__aggiunto.concessione ? { concessione: i.__aggiunto.concessione } : {}) } } : {}),
             livelloBase: i.livello_base,
             macrofamiglia: i.macrofamiglia,
             // SS, foglio 4: indice per il tavolo e scheda completa (descrizione e regole)
@@ -888,7 +890,7 @@ export function righeElencoIncantesimi(macrofamiglie) {
     return [
       { tipo: 'macro', nome: m.nome, tinta, numero: incantesimi.length },
       ...incantesimi.map((i) => ({
-        tipo: 'incantesimo', nome: i.aggiunto ? `${i.nome} (Aggiunto)` : i.nome, livello: i.livelloBase, pm: i.indice.pm, gittata: i.indice.gittata, durata: i.indice.durata,
+        tipo: 'incantesimo', nome: i.aggiunto ? `${i.nome} ${i.aggiunto.segno ?? '(Aggiunto)'}` : i.nome, livello: i.livelloBase, pm: i.indice.pm, gittata: i.indice.gittata, durata: i.indice.durata,
         scheda: i.scheda ?? '—', macrofamiglia: i.macrofamiglia ?? m.nome, tinta: COLORI_MACROFAMIGLIE[i.macrofamiglia ?? m.nome] ?? tinta,
       })),
     ];

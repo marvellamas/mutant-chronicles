@@ -4,6 +4,7 @@
 // validaLivello() e prossimoLivello() del motore.
 import { h, segno, dadi } from './dom.js';
 import { avvisoIncantesimo, contoDaScheda } from '../quote-incantesimi.js';
+import { contaComeConosciuto } from '../incantesimi-a-mano.js';
 import { calcolaScheda, validaLivello, modOrdinario } from '../calc.js';
 import { prossimoLivello, applicaLivello } from '../character.js';
 import { passiDelLivello, descriviVoce } from '../avanzamento.js';
@@ -361,6 +362,8 @@ function passoIncantesimi(c) {
   const { dati, voce, prima, dopo } = c;
   const q = dopo.incantesimi;
   const noti = new Set(prima.incantesimi.conosciuti.map((i) => i.nome));
+  // A.176: un aggiunto a mano APPRESO conta come conosciuto (resta fuori dalle quote): lo si dice, senza bloccare la scelta
+  const apprendiAMano = new Set((prima.incantesimi.aMano ?? []).filter(contaComeConosciuto).map((i) => i.nome));
   const nuovi = voce.incantesimi ?? [];
   const conto = contoDaScheda(q);
   const catalogo = dati.incantesimi.incantesimi;
@@ -383,7 +386,7 @@ function passoIncantesimi(c) {
           const motivo = preso ? null : avvisoIncantesimo(i, conto);
           return h('label', { class: `incantesimo ${classeMacrofamiglia(m.nome)}${motivo ? ' bloccato' : ''}` },
             h('input', { type: 'checkbox', checked: preso, disabled: giaNoto || (!!motivo && !c.master), onchange: (e) => cambia(i.nome, e.target.checked) }),
-            h('span', {}, h('strong', {}, info('incantesimo', i.nome)), ' ', pallini(i.livello_base), ' ', etichettaMacro(m.nome), h('small', {}, ` liv. base ${i.livello_base}${giaNoto ? ' · già conosciuto' : ''}`),
+            h('span', {}, h('strong', {}, info('incantesimo', i.nome)), ' ', pallini(i.livello_base), ' ', etichettaMacro(m.nome), h('small', {}, ` liv. base ${i.livello_base}${giaNoto ? ' · già conosciuto' : apprendiAMano.has(i.nome) ? ' · già appreso a mano' : ''}`),
               motivo ? h('small', { class: 'motivo' }, ` ${motivo}.`) : null));
         }))))),
   ];

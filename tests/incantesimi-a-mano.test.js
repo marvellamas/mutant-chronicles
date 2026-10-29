@@ -106,7 +106,8 @@ test('registro: la riga dice cosa è successo, da dove viene e la data', () => {
   const x = { nome: 'Scudo', origine: 'direttore', quando: '2026-10-20', nota: 'dal maestro' };
   assert.equal(nomeOrigine('direttore', dati), 'Concesso dal Direttore');
   assert.equal(dataLeggibile('2026-10-20'), '20 ottobre 2026');
-  assert.equal(rigaRegistro('aggiunto', x, dati), 'Incantesimo Scudo: Concesso dal Direttore il 20 ottobre 2026 (dal maestro).');
+  assert.equal(rigaRegistro('aggiunto', x, dati), 'Incantesimo Scudo: Concesso dal Direttore il 20 ottobre 2026, aggiunto, da classificare (dal maestro).');
+  assert.equal(rigaRegistro('aggiunto', { ...x, tipo: 'appreso' }, dati), 'Incantesimo Scudo: Concesso dal Direttore il 20 ottobre 2026, appreso a mano (dal maestro).');
   assert.match(rigaRegistro('tolto', x, dati), /^Incantesimo Scudo: tolto \(era concesso dal direttore il 20 ottobre 2026\)\.$/);
 });
 
@@ -123,8 +124,10 @@ test('Poteri: il modulo per aggiungere c’è, chiuso; origine proposta «Aggiun
   assert.ok(!s.open, 'chiuso: non è una sezione in più da guardare');
   assert.ok(s.tutti().some((n) => n.tagName === 'INPUT' && n.getAttribute('type') === 'search'), 'campo di ricerca');
   const scelta = s.tutti().filter((n) => n.tagName === 'BUTTON' && /scelta-btn/.test(n.className));
-  assert.deepEqual(scelta.map((b) => b.textContent), ['Aggiunto a mano', 'Concesso dal Direttore']);
+  // origine (da dove viene) e tipo (A.176: appreso o solo annotato, nessuno dei due preselezionato)
+  assert.deepEqual(scelta.map((b) => b.textContent), ['Aggiunto a mano', 'Concesso dal Direttore', 'Appreso', 'Solo annotato']);
   assert.match(scelta[0].className, /scelta(?!-)/);
+  assert.ok(scelta.slice(2).every((b) => !/scelta(?!-)/.test(b.className)), 'il tipo non ha un valore di partenza: l’app chiede');
   assert.equal(c.ui.incantesimoAMano.origine, 'a_mano');
   const cm = ctxPoteri({}, (x) => x);
   cm.master = true;
@@ -156,6 +159,7 @@ test('Poteri: cerca → tocca l’incantesimo → vedi quale hai scelto → conf
   assert.equal(c.ui.incantesimoAMano.id, alto.id);
   c.ui.incantesimoAMano.origine = 'direttore';
   c.ui.incantesimoAMano.nota = 'prova';
+  c.ui.incantesimoAMano.tipo = 'appreso';
   s = sezioneDi(resa(c));
   assert.match(s.textContent, new RegExp(`Hai scelto: ${alto.nome}`));
   assert.match(s.textContent, /Avviso: Livello base [0-9]+: oltre il livello massimo/);
@@ -168,8 +172,9 @@ test('Poteri: cerca → tocca l’incantesimo → vedi quale hai scelto → conf
   assert.match(lista[0].quando, /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/);
   assert.match(riga, /Concesso dal Direttore il .* \(prova\)\.$/);
   assert.ok(riga.startsWith(`Incantesimo ${alto.nome}: `));
-  assert.equal(c.ui.incantesimoAMano.esito, `Aggiunto: ${alto.nome}`, 'dopo la conferma l’app dice quale ha aggiunto');
-  assert.match(sezioneDi(resa(c)).textContent, new RegExp(`Aggiunto: ${alto.nome}`));
+  assert.equal(c.ui.incantesimoAMano.esito, `Aggiunto come appreso: ${alto.nome}`, 'dopo la conferma l’app dice quale ha aggiunto');
+  assert.match(sezioneDi(resa(c)).textContent, new RegExp(`Aggiunto come appreso: ${alto.nome}`));
+  assert.equal(lista[0].tipo, 'appreso');
 });
 
 test('lotto 131, caso A: Esorcizzare Oscurità si aggiunge davvero, e Esorcizzare Corruzione (dell’artefatto) non si tocca', () => {
@@ -186,7 +191,8 @@ test('lotto 131, caso A: Esorcizzare Oscurità si aggiunge davvero, e Esorcizzar
   s = sezioneDi(resa(c));
   assert.match(s.textContent, /Hai scelto: Esorcizzare Oscurità/);
   assert.doesNotMatch(s.textContent, /Hai scelto: Esorcizzare Corruzione/);
-  clic(pulsanteAggiungi(s));
+  c.ui.incantesimoAMano.tipo = 'annotato';
+  clic(pulsanteAggiungi(resa(c) && sezioneDi(resa(c))));
   const [, lista] = c.chiamate.filter(([a]) => a === 'incantesimiAMano').at(-1);
   assert.deepEqual(lista.map((x) => x.nome), ['Esorcizzare Oscurità']);
 });
@@ -201,6 +207,7 @@ test('lotto 131, caso B: per OGNI incantesimo del catalogo, cercato per nome e s
     // il nome esatto è sempre il primo risultato: «Scudo» non diventa «Scudo Spirituale»
     assert.equal(risultati(s)[0].getAttribute('data-id'), inc.id, `${inc.nome}: non è il primo risultato`);
     clic(r);
+    c.ui.incantesimoAMano.tipo = 'appreso';
     s = sezioneDi(resa(c));
     clic(pulsanteAggiungi(s));
     const [, lista] = c.chiamate.filter(([a]) => a === 'incantesimiAMano').at(-1);
@@ -234,11 +241,11 @@ test('Poteri: gli aggiunti a mano stanno nell’elenco con «(Aggiunto)»; origi
   assert.ok(tutte.length > schede.length, 'sono mescolati ai conosciuti, nello stesso elenco');
   // l'etichetta «(Aggiunto)» accanto al nome, con il suggerimento che dice origine, data e nota
   for (const s of schede) {
-    const et = s.tutti().find((n) => n.className === 'etichetta-origine');
+    const et = s.tutti().find((n) => n.className.startsWith('etichetta-origine'));
     assert.equal(et.textContent.trim(), '(Aggiunto)');
   }
   const cura = schede.find((s) => s.textContent.includes('Cura Ferite'));
-  assert.match(cura.tutti().find((n) => n.className === 'etichetta-origine').getAttribute('title'), /Concesso dal Direttore il 19 ottobre 2026 · dal maestro/);
+  assert.match(cura.tutti().find((n) => n.className.startsWith('etichetta-origine')).getAttribute('title'), /Concesso dal Direttore il 19 ottobre 2026 · dal maestro/);
   for (const pezzo of ['Concesso dal Direttore', 'il 19 ottobre 2026', 'dal maestro', 'fuori dalle quote di Classe']) assert.ok(cura.textContent.includes(pezzo), pezzo);
   const scudo = schede.find((s) => s.textContent.includes('Scudo'));
   for (const pezzo of ['Aggiunto a mano', 'il 20 ottobre 2026']) assert.ok(scudo.textContent.includes(pezzo), pezzo);
@@ -249,7 +256,7 @@ test('Poteri: gli aggiunti a mano stanno nell’elenco con «(Aggiunto)»; origi
   assert.deepEqual([c.ui.lancio.nome, c.ui.lancio.da], ['Scudo', undefined]);
   // i conosciuti normali non hanno l'etichetta
   const normali = tutte.filter((n) => !n.className.includes('incantesimo-a-mano'));
-  assert.ok(normali.every((n) => !n.tutti().some((x) => x.className === 'etichetta-origine')));
+  assert.ok(normali.every((n) => !n.tutti().some((x) => x.className.startsWith('etichetta-origine'))));
   // il contatore «conosciuti / quota» è quello di prima
   const riposo = ctxPoteri();
   assert.equal(c.tab.scheda.incantesimi.conosciuti.length, riposo.tab.scheda.incantesimi.conosciuti.length);

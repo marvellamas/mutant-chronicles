@@ -4364,6 +4364,26 @@
         "nome": "Concesso dal Direttore"
       }
     ],
+    "tipi": [
+      {
+        "id": "appreso",
+        "nome": "Appreso",
+        "etichetta": "Appreso a mano",
+        "frase": "Conta come conosciuto a ogni effetto (prerequisiti, creazione di Consumabili, insegnamento), ferme restando le altre condizioni; resta fuori dalle quote di Classe. Si lancia con le normali regole dell'accesso alla magia del personaggio."
+      },
+      {
+        "id": "annotato",
+        "nome": "Solo annotato",
+        "etichetta": "Solo annotato",
+        "frase": "Non è appreso: una pergamena trovata, un testo, un Artefatto. Non conta come conosciuto, non concede accesso alla magia, né Abilità, né PM, e non si lancia, salvo una concessione speciale del Direttore."
+      }
+    ],
+    "da_classificare": {
+      "etichetta": "Aggiunto, da classificare",
+      "frase": "Aggiunto prima della distinzione fra appreso e solo annotato: il Direttore deve dire quale dei due è. Finché non lo dice resta com'era (si lancia con le regole normali) ma non conta come conosciuto per i nuovi controlli."
+    },
+    "concessione_max": 300,
+    "_nota_a176": "A.176 (risposta di Davide del 23/10/2026): un incantesimo che il Direttore aggiunge come realmente appreso conta come conosciuto a ogni effetto, fermi restando gli altri requisiti; uno solo annotato (pergamena, testo, Artefatto) non è appreso e non concede accesso alla magia, Abilità o PM: senza accesso alla magia resta annotato e non lanciabile. Una concessione speciale del Direttore deve dire espressamente come si lancia, con quale Abilità, con quali PM e con quali limiti (campo `concessione`).",
     "_nota": "Incantesimi liberi aggiunti e tolti a mano dalla tab Poteri (src/incantesimi-a-mano.js, scelte.incantesimiAMano): un maestro, un ritrovamento, una concessione del Direttore. Non contano nelle quote di Classe né nei liberi dell'avanzamento; l'app avvisa se il livello base supera il livello massimo, senza bloccare. 20/10/2026."
   },
   "recupero_pm": {

@@ -12,6 +12,7 @@
 //   (per eccesso) PM di lavoro e reagenti.
 import { catalogo, risolvi, normalizzaEquipaggiamento, infoArtefattoVoce, statoIniziale } from './equipaggiamento.js';
 import { variaSessione } from './sessione.js';
+import { nomiConosciuti } from './incantesimi-a-mano.js';
 
 const NUMERI_ROMANI = ['I', 'II', 'III', 'IV', 'V', 'VI'];
 
@@ -150,8 +151,8 @@ export function pmVersione(inc, livello) {
  */
 export function versioniCreabili(scheda, dati, { conosciutaDaAltri = false } = {}) {
   const max = scheda?.incantesimi?.livelloMassimo ?? 0;
-  // anche gli incantesimi aggiunti a mano (src/incantesimi-a-mano.js) sono imparati: si possono infondere
-  const noti = new Set([...(scheda?.incantesimi?.conosciuti ?? []), ...(scheda?.incantesimi?.aMano ?? [])].map((i) => i.nome ?? i));
+  // A.176: conta come conosciuto anche l'aggiunto a mano APPRESO; l'annotato e il «da classificare» no (src/incantesimi-a-mano.js)
+  const noti = nomiConosciuti(scheda?.incantesimi);
   return (dati?.incantesimi?.incantesimi ?? []).filter((i) => conosciutaDaAltri || noti.has(i.nome)).map((inc) => ({
     incantesimo: inc.nome, macrofamiglia: inc.macrofamiglia, ritualeNonConsentito: /Rituale: non consentito/.test(inc.intestazione ?? ''),
     versioni: (inc.versioni ?? []).map(livelloRiga).filter((l) => Number.isInteger(l) && gradoVersione(l, dati)).map((livello) => {
@@ -191,9 +192,11 @@ export function pianoCreazione(scelta, { scheda = null, crediti = Infinity, pmAt
   // §24.1: Officiante con il Talento del Grado; versione conosciuta da chi è presente
   const acc = accessoOfficiante(n, scheda, dati);
   if (acc) irregolari.push(acc);
-  const noti = new Set((scheda?.incantesimi?.conosciuti ?? []).map((i) => i.nome ?? i));
+  // A.176: come in versioniCreabili; conoscerlo da solo non basta, restano gli altri requisiti (Officiante, livello, accesso)
+  const noti = nomiConosciuti(scheda?.incantesimi);
   if (!scelta.conosciutaDaAltri && !(noti.has(inc.nome) && livello <= (scheda?.incantesimi?.livelloMassimo ?? 0))) {
-    irregolari.push(`non conosci ${inc.nome} ${livello}: all’infusione deve essere presente chi la conosce e può usarla (Magia §24.1)`);
+    const annotato = (scheda?.incantesimi?.aMano ?? []).find((x) => x.nome === inc.nome);
+    irregolari.push(`non conosci ${inc.nome} ${livello}${annotato ? ` (${annotato.etichetta?.toLowerCase() ?? 'solo annotato'}: non conta come appreso, A.176)` : ''}: all’infusione deve essere presente chi la conosce e può usarla (Magia §24.1)`);
   }
   // A.157 (10/10/2026): l'infusione è permessa; non è più un dubbio, è una nota che spiega la risposta
   if (/Rituale: non consentito/.test(inc.intestazione ?? '')) note.push(C.rituale_non_consentito?.nota

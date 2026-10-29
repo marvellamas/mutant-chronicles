@@ -36,6 +36,15 @@ export function pannelloLancio(ctx, incantesimo) {
     return null;
   }
   const chiudi = () => { ctx.ui.lancio = null; ctx.azioni.ridisegna(); };
+  // A.176: un incantesimo solo annotato (o appreso senza accesso alla magia) non si lancia: il pannello lo dice e non offre i passi
+  const agg = (ctx.tab.scheda.incantesimi?.aMano ?? []).find((x) => x.nome === incantesimo.nome);
+  const eConosciuto = (ctx.tab.scheda.incantesimi?.conosciuti ?? []).some((x) => x.nome === incantesimo.nome);
+  if (agg && !eConosciuto && agg.lancio && !agg.lancio.lanciabile && !ctx.calcola) {
+    return h('section', { class: `riquadro ${classeMacrofamiglia(incantesimo.macrofamiglia)}`, role: 'region', 'aria-label': `Lancio di ${incantesimo.nome}` },
+      h('h2', {}, `Lancia! · ${incantesimo.nome}`),
+      h('p', { class: 'nota motivo', role: 'status' }, `Non si può lanciare: ${agg.lancio.motivo}`),
+      h('button', { type: 'button', class: 'btn', onclick: chiudi }, 'Chiudi'));
+  }
   return corpo(ctx, incantesimo, {
     etichetta: `Lancio di ${incantesimo.nome}`, titolo: `Lancia! · ${incantesimo.nome}`, chiudi, etichettaNav: 'Passi del lancio',
     classe: `lancio-pannello ${classeMacrofamiglia(incantesimo.macrofamiglia)}`,

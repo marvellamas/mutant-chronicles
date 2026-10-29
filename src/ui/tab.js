@@ -7,12 +7,12 @@
 // includono (le regole del cap. 5 sono situazionali).
 import { allineaStorico } from '../storico.js';
 import { datiTestata, statiAttiviVista, contoVa, modificatoriAttivi, sintesiMani, sintesiProtezioni, sintesiSintonizzazione, inColonne, variazioneDaTesto } from '../scheda-vista.js';
-import { informa, chiedi } from './finestrella.js';
+import { informa, chiedi, chiediTesto } from './finestrella.js';
 import { registraVivo, azzeraVivi, regioneVivaSe } from './vivi.js';
 import { tabellaRecuperoPm, tabellaRecuperoPv } from './tabelle.js';
 import { incantesimiDaOggetti, incantesimoDiOggetto, attivazioneOggetto } from '../incantesimi-artefatti.js';
 import { pannelloMedita, pulsanteMedita } from './medita.js';
-import { aggiungiIncantesimoAMano, incantesimoPerId, cercaIncantesimi, togliIncantesimoAMano, avvisoLivelloAMano, origini, dataLeggibile, rigaRegistro as rigaRegistroAMano } from '../incantesimi-a-mano.js';
+import { aggiungiIncantesimoAMano, incantesimoPerId, cercaIncantesimi, togliIncantesimoAMano, avvisoLivelloAMano, origini, tipi as tipiAMano, tipoDi as tipoAMano, fraseTipo, classificaIncantesimoAMano, dataLeggibile, rigaRegistro as rigaRegistroAMano } from '../incantesimi-a-mano.js';
 import { fasciaMaster, toccoMaster, notaCorrezione, sezioneRegistro, conMotivoMaster, bloccoLivelloMaster } from './master.js';
 import { apriTiro, sezioneTiri } from './tira-valore.js';
 import { circostanzeMasterAttive } from '../correzioni-master.js';
@@ -2685,7 +2685,8 @@ function sezioneIncantesimiAMano(ctx) {
   const lista = sc?.aMano ?? [];
   // 27/10 (lotto 131): la scelta è un id, non un testo. Si cerca → si tocca l'incantesimo → si vede quale è → si conferma.
   // Il campo di ricerca NON ridisegna la scheda (perdeva il clic su «Aggiungi»): aggiorna solo l'elenco dei risultati.
-  const u = (ctx.ui.incantesimoAMano ??= { cerca: '', id: null, origine: ctx.master ? 'direttore' : 'a_mano', nota: '', aperto: false, errore: null, esito: null, sostituisce: null });
+  const u = (ctx.ui.incantesimoAMano ??= { cerca: '', id: null, origine: ctx.master ? 'direttore' : 'a_mano', tipo: null, concessione: '', nota: '', aperto: false, errore: null, esito: null, sostituisce: null });
+  const daClassificare = lista.filter((x) => x.tipo === 'da_classificare');
   const contesto = { livelloMassimo: sc?.livelloMassimo ?? 0, accesso: !!sc?.scalaPotere };
   const scelto = incantesimoPerId(u.id, ctx.dati);
   const avvisoScelto = scelto ? avvisoLivelloAMano(scelto, contesto) : null;
@@ -2701,15 +2702,17 @@ function sezioneIncantesimiAMano(ctx) {
   };
   const aggiungi = () => {
     if (!scelto) { u.errore = 'Prima cerca e tocca l’incantesimo che vuoi.'; ctx.azioni.ridisegna(); return; }
+    // A.176: l'app chiede sempre quale dei due è (appreso o solo annotato); la sostituzione di un incantesimo di un livello non lo chiede
+    if (!sost && !u.tipo) { u.errore = 'Dì se l’incantesimo è appreso o solo annotato.'; ctx.azioni.ridisegna(); return; }
     if (sost) {
       if (!fuoriRegole) return sostituisci(false);
       if (!ctx.master) { u.errore = `Le regole non ammettono questa sostituzione: ${verifica.motivo}. La può forzare il Direttore.`; ctx.azioni.ridisegna(); return; }
       return conMotivoMaster(ctx, { titolo: `Forzare la sostituzione di ${sost.nome}?`, testo: `Le regole non la ammettono: ${verifica.motivo}. L’app avvisa e non blocca: se la vuoi lo stesso, resta nel registro del master e nello storico come forzata.`, conferma: 'Forza la sostituzione' }, () => sostituisci(true));
     }
-    const nuova = aggiungiIncantesimoAMano(attuali, scelto.id, { origine: u.origine, nota: u.nota }, ctx.dati);
+    const nuova = aggiungiIncantesimoAMano(attuali, scelto.id, { origine: u.origine, nota: u.nota, tipo: u.tipo, ...(ctx.master && u.concessione.trim() ? { concessione: u.concessione } : {}) }, ctx.dati);
     if (!nuova) { u.errore = `${scelto.nome} è già fra quelli aggiunti a mano.`; ctx.azioni.ridisegna(); return; }
     const x = nuova.find((y) => y.nome === scelto.nome);
-    Object.assign(u, { cerca: '', id: null, nota: '', errore: null, esito: `Aggiunto: ${scelto.nome}` });
+    Object.assign(u, { cerca: '', id: null, nota: '', concessione: '', tipo: null, errore: null, esito: `Aggiunto come ${u.tipo === 'appreso' ? 'appreso' : 'solo annotato'}: ${scelto.nome}` });
     ctx.azioni.incantesimiAMano(nuova, rigaRegistroAMano('aggiunto', x, ctx.dati));
   };
   const rigaRisultato = (i) => h('button', {
@@ -2726,9 +2729,11 @@ function sezioneIncantesimiAMano(ctx) {
     class: 'sezione-tab incantesimi-a-mano', open: u.aperto || undefined,
     ontoggle: (e) => { u.aperto = e.target.open; },
   },
-  h('summary', {}, h('h2', {}, 'Aggiungi un incantesimo a mano'), lista.length ? h('span', { class: 'sigla' }, ` · ${lista.length} già aggiunt${lista.length === 1 ? 'o' : 'i'}, nell’elenco con «(Aggiunto)»`) : null),
+  h('summary', {}, h('h2', {}, 'Aggiungi un incantesimo a mano'), lista.length ? h('span', { class: 'sigla' }, ` · ${lista.length} già aggiunt${lista.length === 1 ? 'o' : 'i'}, nell’elenco con la loro etichetta`) : null,
+    daClassificare.length ? h('span', { class: 'etichetta-da-classificare' }, ` · ${daClassificare.length} da classificare`) : null),
   h('div', { class: 'corpo-consulta' },
-    h('p', { class: 'nota' }, 'Un incantesimo imparato fuori dall’avanzamento (un maestro, un ritrovamento, una concessione del Direttore). Va nell’elenco degli incantesimi con «(Aggiunto)»; «Togli» è nella sua scheda. Non conta nelle quote né nei liberi e il passaggio di livello non lo toglie. L’app avvisa se il livello è alto, ma non blocca.'),
+    h('p', { class: 'nota' }, 'Un incantesimo fuori dall’avanzamento (un maestro, un ritrovamento, una concessione del Direttore). Va detto se è APPRESO (conta come conosciuto) o SOLO ANNOTATO (una pergamena, un testo, un Artefatto: non è appreso e non si lancia). Va nell’elenco con la sua etichetta; «Togli» è nella sua scheda. Non conta nelle quote né nei liberi e il passaggio di livello non lo toglie. L’app avvisa se il livello è alto, ma non blocca.'),
+    daClassificare.length ? h('p', { class: 'nota motivo', role: 'status' }, `${daClassificare.length} incantesimi aggiunti prima della distinzione sono «da classificare»: ${ctx.master ? 'scegli per ciascuno, nella sua scheda, «Segna come appreso» o «Segna come solo annotato».' : 'lo dice il Direttore dalla sua scheda; nel frattempo restano com’erano e non contano come conosciuti.'}`) : null,
     u.esito ? h('p', { class: 'nota esito-aggiunta', role: 'status' }, h('strong', {}, u.esito)) : null,
     sost ? h('p', { class: 'nota motivo' }, `Stai sostituendo ${sost.nome} (${sost.livello}° livello). `, h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { u.sostituisce = null; ctx.azioni.ridisegna(); } }, 'Lascia stare')) : null,
     h('div', { class: 'aggiungi-a-mano' },
@@ -2742,10 +2747,18 @@ function sezioneIncantesimiAMano(ctx) {
       sost ? null : h('div', { class: 'scelta-pulsanti', role: 'group', 'aria-label': 'Come l’ha avuto' }, origini(ctx.dati).map((o) => h('button', {
         type: 'button', class: `btn scelta-btn${u.origine === o.id ? ' scelta' : ''}`, 'aria-pressed': String(u.origine === o.id), onclick: () => { u.origine = o.id; ctx.azioni.ridisegna(); },
       }, o.nome))),
+      // A.176: il tipo è obbligatorio e non ha un valore di partenza: l'app chiede, non decide
+      sost ? null : h('div', { class: 'scelta-pulsanti', role: 'group', 'aria-label': 'Appreso o solo annotato' }, tipiAMano(ctx.dati).map((t) => h('button', {
+        type: 'button', class: `btn scelta-btn${u.tipo === t.id ? ' scelta' : ''}`, 'aria-pressed': String(u.tipo === t.id), title: t.frase, onclick: () => { u.tipo = t.id; u.errore = null; ctx.azioni.ridisegna(); },
+      }, t.nome))),
+      sost ? null : h('p', { class: 'nota' }, u.tipo ? fraseTipo({ tipo: u.tipo }, ctx.dati) : 'Scegli: appreso o solo annotato.'),
+      !sost && ctx.master ? h('label', { class: 'campo' }, h('span', {}, 'Concessione speciale (solo il Direttore; facoltativa): come si lancia, con quale Abilità, con quali PM, con quali limiti'),
+        h('input', { type: 'text', maxlength: ctx.dati.regole.incantesimi_a_mano.concessione_max, value: u.concessione, placeholder: 'es. con Artefatti VA, 2 PM della Pietra, una volta al giorno', oninput: (e) => { u.concessione = e.target.value; } })) : null,
       sost ? null : h('label', { class: 'campo' }, h('span', {}, 'Nota (facoltativa)'),
         h('input', { type: 'text', maxlength: 160, value: u.nota, placeholder: 'es. insegnato dal maestro Oshi', oninput: (e) => { u.nota = e.target.value; } })),
       fuoriRegole ? h('p', { class: 'nota motivo', role: 'status' }, `Non ammessa dalle regole: ${verifica.motivo}.${ctx.master ? ' Come Direttore puoi forzarla.' : ''}`) : null,
       !sost && avvisoScelto ? h('p', { class: 'nota motivo' }, `Avviso: ${avvisoScelto}`) : null,
+      !sost && u.tipo === 'appreso' && !contesto.accesso && !(ctx.master && u.concessione.trim()) ? h('p', { class: 'nota motivo' }, 'Avviso: il personaggio non ha accesso alla magia: l’incantesimo conta come conosciuto ma resta annotato e non lanciabile (A.176).') : null,
       u.errore ? h('p', { class: 'nota motivo', role: 'alert' }, u.errore) : null,
       h('button', { type: 'button', class: `btn primario${avvisoScelto || fuoriRegole ? ' con-avviso' : ''}`, onclick: aggiungi, disabled: !scelto || (fuoriRegole && !ctx.master), title: fuoriRegole ? verifica.motivo : avvisoScelto ?? (scelto ? `Aggiunge ${scelto.nome}` : 'Prima scegli un incantesimo') },
         scelto ? `${sost ? (fuoriRegole ? (ctx.master ? 'Forza la sostituzione con' : 'Non ammessa:') : 'Sostituisci con') : avvisoScelto ? 'Aggiungi comunque' : 'Aggiungi'} ${scelto.nome}` : 'Aggiungi'))));
@@ -2813,6 +2826,31 @@ async function chiediTogliIncantesimoScelto(ctx, nome) {
   if (ok) ctx.azioni.togliIncantesimoScelto(nome);
 }
 
+/**
+ * A.176: i pulsanti del Direttore sulla scheda di un incantesimo aggiunto a mano — appreso o solo annotato (anche per
+ * quelli «da classificare») e la concessione speciale, con la riga nello storico e nel registro del master.
+ */
+function classificaDalMaster(ctx, nome, agg) {
+  const attuali = ctx.scelte.incantesimiAMano ?? [];
+  const cambia = (tipo, extra = {}) => {
+    const nuova = classificaIncantesimoAMano(attuali, nome, tipo, extra, ctx.dati);
+    if (!nuova) return;
+    ctx.azioni.incantesimiAMano(nuova, rigaRegistroAMano('classificato', nuova.find((y) => y.nome === nome), ctx.dati));
+  };
+  const concedi = async () => {
+    const testo = await chiediTesto({ titolo: `Concessione speciale: ${nome}`, etichetta: 'Come si lancia, con quale Abilità, con quali PM, con quali limiti', valore: agg.concessione ?? '', conferma: 'Concedi', massimo: ctx.dati.regole.incantesimi_a_mano.concessione_max });
+    if (testo) cambia(tipoAMano(agg), { concessione: testo });
+  };
+  const btn = (testo, onclick, titolo, attivo = false) => h('button', { type: 'button', class: `btn btn-piccolo${attivo ? ' scelta' : ''}`, 'aria-pressed': attivo ? 'true' : undefined, title: titolo, onclick }, testo);
+  const t = tipoAMano(agg);
+  return h('div', { class: 'riga-azioni classifica-master', role: 'group', 'aria-label': `Classifica ${nome} (Direttore)` },
+    btn('Segna come appreso', () => cambia('appreso'), fraseTipo({ tipo: 'appreso' }, ctx.dati), t === 'appreso'),
+    btn('Segna come solo annotato', () => cambia('annotato'), fraseTipo({ tipo: 'annotato' }, ctx.dati), t === 'annotato'),
+    // la concessione si dà dopo aver classificato l'incantesimo: il Direttore sceglie prima appreso o annotato
+    t === 'da_classificare' ? null : btn(agg.concessione ? 'Cambia la concessione speciale' : 'Concessione speciale…', concedi, 'Il Direttore dice espressamente come si lancia, con quale Abilità, con quali PM e con quali limiti'),
+    agg.concessione ? btn('Togli la concessione', () => cambia(t, { concessione: '' }), 'Torna alle regole normali') : null);
+}
+
 /** La scheda di un incantesimo nell'elenco: conosciuto, oppure aggiunto a mano (`i.aggiunto`: origine, data, nota, avviso). */
 function articoloIncantesimo(ctx, i, nomeMacro) {
   const agg = i.aggiunto ?? null;
@@ -2820,14 +2858,16 @@ function articoloIncantesimo(ctx, i, nomeMacro) {
   return h('article', { class: `incantesimo-scheda ${classeMacrofamiglia(nomeMacro)}${agg ? ' incantesimo-a-mano' : ''}` },
     h('div', { class: 'arma-testa' },
       h('h4', {}, info('incantesimo', i.nome),
-        agg ? h('small', { class: 'etichetta-origine', title: `${agg.origine} il ${dataLeggibile(agg.quando)}${agg.nota ? ` · ${agg.nota}` : ''} · fuori dalle quote di Classe` }, ' (Aggiunto)') : null,
+        agg ? h('small', { class: `etichetta-origine tipo-${agg.tipo ?? 'da_classificare'}`, title: `${agg.etichetta ?? 'Aggiunto'} · ${agg.origine} il ${dataLeggibile(agg.quando)}${agg.nota ? ` · ${agg.nota}` : ''} · fuori dalle quote di Classe` }, ` ${agg.segno ?? '(Aggiunto)'}`) : null,
         ' ', pallini(i.livelloBase), ' ', etichettaMacro(nomeMacro), h('span', { class: 'sigla' }, ` · livello base ${i.livelloBase} · scheda ${i.scheda}`)),
       (() => {
         // senza versioni accessibili il pulsante resta, disabilitato con il motivo (mai un pulsante muto)
         const inc = ctx.dati.incantesimi.incantesimi.find((x) => x.nome === i.nome);
         const st = inc ? statoPulsanteLancio(inc, ctx.tab.scheda, ctx.dati) : { disabilitato: true, motivo: 'incantesimo non più nel catalogo' };
+        // A.176: un incantesimo solo annotato (o appreso senza accesso alla magia) non si lancia: il pulsante resta, spento, con il motivo
+        const nonLanciabile = agg && agg.lancio && !agg.lancio.lanciabile;
         // N2: senza versioni accessibili (livello, Ritualista) il pannello si apre lo stesso, con l'avviso; fermo solo senza dati
-        return h('button', { type: 'button', class: `btn primario btn-attacca${st.disabilitato ? ' con-avviso' : ''}`, disabled: !inc || !(inc.versioni ?? []).length, title: st.motivo,
+        return h('button', { type: 'button', class: `btn primario btn-attacca${st.disabilitato || nonLanciabile ? ' con-avviso' : ''}`, disabled: !inc || !(inc.versioni ?? []).length || nonLanciabile, title: nonLanciabile ? agg.lancio.motivo : st.motivo,
           onclick: () => { ctx.ui.lancio = { nome: i.nome, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Lancia!');
       })(),
       agg
@@ -2835,7 +2875,11 @@ function articoloIncantesimo(ctx, i, nomeMacro) {
         : [dalLivello ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Lo sostituisce con un altro incantesimo', onclick: () => { Object.assign(ctx.ui.incantesimoAMano ??= {}, { sostituisce: { nome: i.nome, livello: dalLivello.livello }, aperto: true, cerca: '', id: null, esito: null, errore: null }); ctx.azioni.ridisegna(); } }, 'Sostituisci') : null,
           h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Toglie l’incantesimo dal personaggio', onclick: () => chiediTogliIncantesimoScelto(ctx, i.nome) }, 'Togli')]),
     dalLivello ? h('p', { class: 'piccolo origine-aggiunto' }, h('strong', {}, dalLivello.da ? `Da ${dalLivello.da}` : 'Imparato'), ` al ${dalLivello.livello}° livello.`) : null,
-    agg ? h('p', { class: 'piccolo origine-aggiunto' }, h('strong', {}, agg.origine), ` il ${dataLeggibile(agg.quando)}`, agg.nota ? ` · ${agg.nota}` : '', ' · fuori dalle quote di Classe.') : null,
+    agg ? h('p', { class: 'piccolo origine-aggiunto' }, h('strong', {}, agg.etichetta ?? agg.origine), ` · ${agg.origine} il ${dataLeggibile(agg.quando)}`, agg.nota ? ` · ${agg.nota}` : '', ' · fuori dalle quote di Classe.') : null,
+    agg?.frase ? h('p', { class: 'piccolo' }, agg.frase) : null,
+    agg?.concessione ? h('p', { class: 'piccolo concessione-speciale' }, h('strong', {}, 'Concessione speciale del Direttore: '), agg.concessione) : null,
+    agg && agg.lancio && !agg.lancio.lanciabile ? h('p', { class: 'nota motivo', role: 'status' }, `Non si lancia: ${agg.lancio.motivo}`) : null,
+    agg && ctx.master ? classificaDalMaster(ctx, i.nome, agg) : null,
     agg?.avviso ? h('p', { class: 'nota motivo' }, `Avviso: ${agg.avviso}`) : null,
     i.intestazione ? h('p', { class: 'piccolo' }, i.intestazione) : null,
     i.lancio ? h('p', { class: 'piccolo' }, i.lancio) : null,
