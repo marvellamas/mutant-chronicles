@@ -1810,6 +1810,7 @@ body.con-sfondo::before {
 /* Round collegato allo scontro (src/round-scontro.js): scheda e carta del PG nella plancia */
 .round-scontro { font-size: 0.85rem; font-weight: 600; color: var(--accento); }
 .round-scontro-testa { margin-left: 0; font-size: 0.8rem; align-self: center; }
+.round-scontro-testa::before { content: "⚔"; margin-right: 0.25rem; } /* 29/10 (lotto 140): «Round N» corto, «dallo scontro» nel suggerimento */
 .plancia-durate { margin: 0.2rem 0; font-size: 0.9rem; }
 .durata-plancia { margin-left: 0; cursor: help; }
 .barra-durate { margin: 0.4rem 0; }
@@ -1916,6 +1917,7 @@ body.con-sfondo::before {
 /* «Salvato sul PC del master alle hh:mm» (verifica del 06/10/2026) */
 .indicatore-salvataggio { align-self: center; font-size: 0.8rem; padding: 0.1rem 0.55rem; border-radius: 999px; border: 1px solid var(--bordo); }
 .indicatore-salvataggio.salvato { color: var(--ok); border-color: var(--ok); background: var(--ok-tenue); }
+.indicatore-salvataggio { white-space: nowrap; } /* 29/10 (lotto 140): in barra solo «✓» o una parola; il testo intero è nel suggerimento */
 .indicatore-salvataggio.da_salvare { color: var(--errore); border-color: var(--errore); background: var(--errore-tenue); }
 .indicatore-salvataggio.senza_nome { color: var(--tenue); }
 

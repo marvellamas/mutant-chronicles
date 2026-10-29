@@ -36,3 +36,31 @@ export function provaSostituzione(personaggio, livello, vecchio, nuovo, dati) {
   const nuove = erroriScelteSuccessive(dopo, dati).filter((e) => e.tipo === 'violazione' && e.campo === `livelli[${i}].incantesimi` && !prima.has(chiave(e)));
   return nuove.length ? { ok: false, motivo: nuove[0].problema } : { ok: true, motivo: null };
 }
+
+/** Gli incantesimi di Classe di un personaggio `{ creazione, livelli }` (creazione e voci dei livelli), senza ripetizioni. */
+export function incantesimiDiClasse(p) {
+  const tutti = [...(p?.creazione?.incantesimi ?? []), ...(p?.livelli ?? []).flatMap((v) => (Array.isArray(v?.incantesimi) ? v.incantesimi : []))];
+  return [...new Set(tutti)];
+}
+
+/** Che cosa è cambiato fra due personaggi `{ creazione, livelli }`: `{ aggiunti, tolti }` (nomi). */
+export function confrontaIncantesimi(prima, dopo) {
+  const a = incantesimiDiClasse(prima);
+  const b = incantesimiDiClasse(dopo);
+  return { aggiunti: b.filter((n) => !a.includes(n)), tolti: a.filter((n) => !b.includes(n)) };
+}
+
+/**
+ * Il testo per lo storico di ciò che è cambiato, «Aggiunti A, B (4° livello); tolto C», o null se non è cambiato niente.
+ * `dove` si aggiunge fra parentesi (il livello, la causa). `escludi`: nomi già scritti in una riga propria.
+ */
+export function testoVariazioneIncantesimi({ aggiunti, tolti }, dove = '', escludi = []) {
+  const a = aggiunti.filter((n) => !escludi.includes(n));
+  const t = tolti.filter((n) => !escludi.includes(n));
+  const parte = (v, uno, molti) => (v.length ? `${v.length === 1 ? uno : molti} ${v.join(', ')}` : null);
+  const testo = [parte(a, 'Aggiunto', 'Aggiunti'), parte(t, 'Tolto', 'Tolti')].filter(Boolean).join('; ');
+  return testo ? `${testo}${dove ? ` (${dove})` : ''}` : null;
+}
+
+/** Fra i nomi dati, quelli già nominati in una delle righe dello storico (per non scriverli due volte). */
+export const nomiNelloStorico = (righe, nomi) => nomi.filter((n) => righe.some((r) => String(r?.testo ?? r).includes(n)));

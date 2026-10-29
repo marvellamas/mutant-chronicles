@@ -135,6 +135,9 @@ function riquadroScontro(ctx) {
       onclick: () => ctx.azioni.muoviSullaMappa() }, '🗺 Muovi il PG sulla mappa'));
 }
 
+/** Il suggerimento dell'indicatore di salvataggio: il testo intero e, se c'è, il file. */
+export const titoloSalvataggio = (s) => [s.testo, s.file ? `File: personaggi/${s.file}` : null].filter(Boolean).join(' · ');
+
 export function renderTab(ctx) {
   azzeraVivi(); // i nodi della scheda sono nuovi: i valori vivi si registrano di nuovo (src/ui/vivi.js)
   const { tab, attiva, azioni } = ctx;
@@ -167,12 +170,13 @@ export function renderTab(ctx) {
       ctx.tornaAllaMappa ? h('button', { type: 'button', class: 'btn primario btn-torna-mappa', onclick: ctx.tornaAllaMappa, title: 'Torna alla mappa: stessa scena, stesso zoom e stessa posizione' }, '← Torna alla mappa') : null,
       // Tavolo del Master, pezzo 6: solo con il server di Mutant
       // verifica del 06/10/2026: «Salvato sul PC del master alle hh:mm» (solo con il server)
-      ctx.salvataggioMaster ? h('span', { class: `indicatore-salvataggio ${ctx.salvataggioMaster.stato}`, role: 'status', title: ctx.salvataggioMaster.file ? `File: personaggi/${ctx.salvataggioMaster.file}` : '' }, ctx.salvataggioMaster.testo) : null,
+      // 29/10 (lotto 140): in barra solo il testo breve (✓, «Non salvato»); quello intero è nel suggerimento e per gli screen reader
+      ctx.salvataggioMaster ? h('span', { class: `indicatore-salvataggio ${ctx.salvataggioMaster.stato}`, role: 'status', 'aria-label': ctx.salvataggioMaster.testo, title: titoloSalvataggio(ctx.salvataggioMaster) }, ctx.salvataggioMaster.breve ?? ctx.salvataggioMaster.testo) : null,
       ctx.collegamento ? h('span', { class: `indicatore-collegamento ${ctx.collegamento.stato}`, role: 'status', title: ctx.collegamento.titolo },
         ctx.collegamento.testo) : null,
       // Round collegato allo scontro (src/round-scontro.js): in ogni tab
-      ctx.roundScontro ? h('span', { class: 'etichetta round-scontro-testa', role: 'status', title: `Scontro «${ctx.roundScontro.nome}»: il Round lo fa avanzare il master dalla plancia; le durate di Tecniche e Stati scadono con quel Round.` },
-        `Round ${ctx.roundScontro.round} · dallo scontro`) : null,
+      ctx.roundScontro ? h('span', { class: 'etichetta round-scontro-testa', role: 'status', title: `Round ${ctx.roundScontro.round} dallo scontro «${ctx.roundScontro.nome}»: il Round lo fa avanzare il master dalla plancia; le durate di Tecniche e Stati scadono con quel Round.` },
+        `Round ${ctx.roundScontro.round}`) : null,
       (() => {
         // sempre nel DOM e nascosto se non c'è niente da annullare: una modifica di valore non deve ridisegnare la scheda
         const annulla = h('button', { type: 'button', class: 'btn', hidden: !ctx.puoAnnullareSessione || undefined, onclick: azioni.annullaSessione, title: 'Annulla l’ultima modifica ai valori di sessione o al calendario' }, '↶ Annulla');

@@ -127,11 +127,11 @@ export function indicatoreCollegamento(server, ultimoControlloRiuscito = true) {
 export function statoSalvataggioMaster({ server, haNome, cartella, improntaLocale }, dati) {
   if (!server) return null;
   const T = dati.regole.interfaccia.salvataggio;
-  if (!haNome) return { stato: 'senza_nome', testo: T.indicatore_senza_nome };
+  if (!haNome) return { stato: 'senza_nome', testo: T.indicatore_senza_nome, breve: T.indicatore_breve_senza_nome };
   if (cartella?.impronta && cartella.impronta === improntaLocale && Number.isFinite(cartella.mtime)) {
     const d = new Date(cartella.mtime);
     const ora = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
-    return { stato: 'salvato', testo: T.indicatore_salvato.replace('{ora}', ora), file: cartella.file };
+    return { stato: 'salvato', testo: T.indicatore_salvato.replace('{ora}', ora), breve: T.indicatore_breve_salvato, file: cartella.file };
   }
-  return { stato: 'da_salvare', testo: T.indicatore_da_salvare };
+  return { stato: 'da_salvare', testo: T.indicatore_da_salvare, breve: T.indicatore_breve_da_salvare };
 }

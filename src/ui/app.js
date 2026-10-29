@@ -19,7 +19,7 @@ import { h, svuota, scaricaFile } from './dom.js';
 import * as archivio from './storage.js';
 import { elencoVeicoli, migraNelRegistro } from './veicoli-registro.js';
 import { eRiferimento } from '../veicoli-registro.js';
-import { provaSostituzione, rigaIncantesimi, sorgenteModifica } from '../incantesimi-regole.js';
+import { provaSostituzione, rigaIncantesimi, sorgenteModifica, confrontaIncantesimi, testoVariazioneIncantesimi, nomiNelloStorico } from '../incantesimi-regole.js';
 import { permessoSalita, sfasamento, scelteDelLivello, TIPO_CONCESSIONE, CHIAVE_CONCESSIONE } from '../livello-px.js';
 import { attoCampagna, serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, contestoMasterQui, pingMasterQui, salvaBackupMaster, leggiBackupMaster } from './cartella.js';
 import { modalitaMaster, mostraMarchio, statoContestoMaster, registro as registroMaster, nuovaCorrezione, aggiungiCorrezione, annullaCorrezione, avvisoAnnulla, registraDiretta, differenzeDirette, differenzeOggetti, ripristinoDiretta, descriviScelte, soloScelte, ripristinaScelte, masterDiverso, normalizzaCircostanzeMaster } from '../correzioni-master.js';
@@ -51,7 +51,7 @@ import { urlMuovi, alRound, collegamentoScontro, tecnicheScadute, statiScaduti, 
 import { bloccoControNemico } from './attacco-pg.js';
 import { registraIncantesimo, terminaIncantesimo, concentrazioniInterrotte } from '../durate-incantesimi.js';
 import { usaConsumabile, consumabiliMistici, applicaCreazione } from '../consumabili-mistici.js';
-import { rigaStorico, testoProcedi } from '../storico.js';
+import { rigaStorico, testoProcedi, allineaStorico } from '../storico.js';
 import { applicaMedita } from '../medita.js';
 import { aggiungiTiro } from '../tiri-scheda.js';
 import { conAvviso } from './procedi.js';
@@ -68,7 +68,7 @@ import { barraPassi, barraFondoSeServe } from './navigazione.js';
 import { cercaSfondi, applicaSfondo } from './sfondi.js';
 import { caricaImmagini, iconaPagina } from './immagini.js';
 import { preparaStampa, preparaTab, normalizzaOpzioniStampa, versioniCompatte } from '../stampa.js';
-import { renderTab, tabFissi, ALIAS_TAB } from './tab.js';
+import { renderTab, tabFissi, ALIAS_TAB, titoloSalvataggio } from './tab.js';
 import {
   massimiSessione, allineaSessione, variaSessione, modificaSessione, stabilizzaMorente, scalaMorente, attivaArmaSessione, terminaArmaSessione, commutaContenitoreSessione, commutaStato, commutaCondizioneOggetto, commutaTalento, commutaBonusTalenti, impostaCondizioneArma, riparaOggetto, spendiPmLancio, ricaricaMatrice, attivaArtefatto, attivaTecnicaSessione, nuovoRoundSessione, terminaTecnicaSessione, usaUnaVoltaSessione, azzeraUsoSessione, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
   penalitaSessione, variaMunizioni, consumaColpi, scegliGranata, granateDiPartenza, ricaricaArma, caricaDaCarichino, preparaCarichino, variaChroma, variaIntegrita, variaNec,
@@ -724,8 +724,9 @@ function aggiornaIndicatoreSalvataggio() {
   const i = indicatoreSalvataggio(stato.id);
   if (!el || !i) return;
   el.className = `indicatore-salvataggio ${i.stato}`;
-  el.textContent = i.testo;
-  el.title = i.file ? `File: personaggi/${i.file}` : '';
+  el.textContent = i.breve ?? i.testo;
+  el.setAttribute('aria-label', i.testo);
+  el.title = titoloSalvataggio(i);
 }
 
 /** Registra la sincronizzazione con il file `file` alla revisione `mtime`, con l'impronta del contenuto attuale. */
@@ -1147,6 +1148,8 @@ function aggiorna(modifica, { ridisegna = true } = {}) {
   const prima = stato.scelte;
   const { scelte, avvisi } = applicaModifica(prima, modifica, stato.dati);
   stato.scelte = scelte;
+  // un personaggio già in gioco (con la scheda aperta almeno una volta) che cambia gli incantesimi della creazione: nello storico
+  if (stato.sessione) storicoVariazione({ creazione: prima, livelli: stato.livelli }, personaggio(), 'creazione');
   if (avvisi.length) {
     stato.avvisi = avvisi;
     stato.precedente = prima;
@@ -1306,6 +1309,11 @@ function infoLivelloPx() {
 const sorgenteIncantesimi = () => sorgenteModifica({ server: stato.cartella, daQuestoPc: stato.master, master: modalitaMaster({ server: stato.cartella, daQuestoPc: stato.master, aperta: modalitaMasterDi(sessionStorage), id: stato.id }) });
 /** Scrive nello storico del personaggio la riga di una modifica agli incantesimi, con data, ora e provenienza. */
 const storicoIncantesimi = (testo) => { stato.sessione = rigaStorico(stato.sessione, rigaIncantesimi(testo, sorgenteIncantesimi())); };
+/** Lotto 140 (A.188): una riga nello storico per ciò che è cambiato fra due personaggi (livello salito, annullato, corretto, Talento tolto…). */
+function storicoVariazione(prima, dopo, dove, escludi = []) {
+  const t = testoVariazioneIncantesimi(confrontaIncantesimi(prima, dopo), dove, escludi);
+  if (t) storicoIncantesimi(t);
+}
 
 /** Massimi di sessione del personaggio attuale (null se la scheda non si calcola). */
 function massimiAttuali() {
@@ -1324,7 +1332,9 @@ function cambiaLivelli(livelli) {
 function annullaLivello({ conferma = true } = {}) {
   const n = 1 + stato.livelli.length;
   if (!stato.livelli.length || (conferma && !confirm(`Annullare ${conOrdinale('il', n)} livello? Le sue scelte andranno perse (si torna ${conOrdinale('al', n - 1)} livello).`))) return;
+  const prima = personaggio();
   cambiaLivelli(annullaUltimoLivello(personaggio()).livelli);
+  storicoVariazione(prima, personaggio(), `annullato il ${n}° livello`);
   persisti();
   stato.messaggioScheda = { tipo: 'ok', testo: `${n}° livello annullato.` };
   renderScheda();
@@ -1480,7 +1490,9 @@ function renderSaliPagina() {
           registraStorico(testoProcedi(`correzione del ${L}° livello`, err.map((e) => e.problema).join('; ')));
         }
         const dopo = conseguenzeCorrezione(personaggio(), L, bozza.voce, dati);
+        const primaCorrezione = personaggio();
         cambiaLivelli(applicaCorrezione(personaggio(), L, bozza.voce).livelli);
+        storicoVariazione(primaCorrezione, personaggio(), `correzione del ${L}° livello`);
         stato.sali = null;
         persisti();
         const n = dopo.reduce((s, c) => s + Object.values(c.abilita).reduce((t, v) => t + v, 0), 0);
@@ -1494,7 +1506,10 @@ function renderSaliPagina() {
       const forzati = inMaster ? errLivello.filter((e) => e.campo === 'incantesimi' && e.tipo === 'violazione') : [];
       if (errLivello.length > forzati.length) return renderSaliPagina();
       if (forzati.length) storicoIncantesimi(`Aggiunti ${(bozza.voce.incantesimi ?? []).join(', ')} (${2 + stato.livelli.length}° livello), forzato dal Direttore: ${forzati[0].problema}`);
+      const primaSalita = personaggio();
       cambiaLivelli(applicaLivello(personaggio(), bozza.voce).livelli);
+      // gli incantesimi forzati hanno già la loro riga (sopra); gli altri, scelti nelle regole, una riga qui
+      if (!forzati.length) storicoVariazione(primaSalita, personaggio(), `${1 + stato.livelli.length}° livello`);
       stato.sali = null;
       stato.passo = PASSO_SCHEDA;
       persisti();
@@ -1611,6 +1626,12 @@ function registraModificheMaster() {
   const scelteOra = JSON.stringify(soloSenzaOggetti());
   const scelteCambiate = scelteOra !== prima.scelte;
   if (!dirette.length && !scelteCambiate) return;
+  // gli incantesimi cambiati dal Direttore vanno anche nello storico, se la loro azione non l'ha già scritto
+  {
+    const v = confrontaIncantesimi(prima.personaggio, personaggio());
+    const righeNuove = allineaStorico(stato.sessione?.storico).slice((prima.sessione?.storico ?? []).length);
+    storicoVariazione(prima.personaggio, personaggio(), 'modifica del Direttore', nomiNelloStorico(righeNuove, [...v.aggiunti, ...v.tolti]));
+  }
   let lista = correzioniAttuali();
   for (const d of dirette) lista = registraDiretta(lista, d, { motivo: motivoOra });
   stato.masterMotivo = null;
@@ -1724,6 +1745,7 @@ function contestoTalenti(inMaster) {
         ridisegna();
       },
       svuota: (posto) => {
+        const primaSvuota = personaggio();
         applica(posto, null);
         // gli Incantesimi e le Tecniche che quel Talento dava e che le quote non ammettono più si tolgono, e lo si dice
         let tolti = [];
@@ -1731,6 +1753,7 @@ function contestoTalenti(inMaster) {
           const a = adattaScelteSuccessive(personaggio(), posto.livello, stato.dati);
           if (a.tolti.length) { cambiaLivelli(a.personaggio.livelli); tolti = a.tolti; }
         }
+        storicoVariazione(primaSvuota, personaggio(), `li dava il Talento tolto al ${posto.livello}° livello`);
         if (tolti.length) stato.messaggioScheda = { tipo: 'attenzione', testo: `Tolti anche ${tolti.join(', ')}: li dava il Talento che hai tolto.` };
         stato.uiTalenti.posto = `${posto.categoria}:${posto.livello}`;
         stato.uiTalenti.aperto = true;
@@ -1874,9 +1897,12 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
   const massimi = massimiSessione(tab.scheda, stato.scelte, dati);
   // Se i massimi sono cambiati (nuovo livello, tabella modificata) i valori attuali si limitano,
   // senza riazzerarli; alla prima apertura la sessione si inizializza ai massimi.
+  const primaApertura = !stato.sessione;
   const allineata = allineaSessione(stato.sessione, massimi);
   if (JSON.stringify(allineata) !== JSON.stringify(stato.sessione)) {
     stato.sessione = allineata;
+    // la creazione appena finita (scheda aperta la prima volta, al 1° livello): gli incantesimi scelti vanno nello storico
+    if (primaApertura && !stato.livelli.length) storicoVariazione({ creazione: { incantesimi: [] }, livelli: [] }, personaggio(), 'creazione');
     persisti();
   }
   // «Modifica master» (12/10/2026): la scheda aperta dal Tavolo con «Modifica master», sul PC del server
