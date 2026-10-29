@@ -74,7 +74,8 @@
       "proprieta": [
         "Perforazione"
       ],
-      "portata_q": 1
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "capacita": [

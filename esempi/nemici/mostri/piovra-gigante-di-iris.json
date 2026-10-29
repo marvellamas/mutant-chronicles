@@ -65,7 +65,8 @@
       "proprieta": [
         "Contusione"
       ],
-      "portata_q": 3
+      "portata_q": 3,
+      "ac": 1
     }
   ],
   "capacita": [

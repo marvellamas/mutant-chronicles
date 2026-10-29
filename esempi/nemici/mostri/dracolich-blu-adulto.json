@@ -72,7 +72,8 @@
       "va": 17,
       "danno": "7d10×5",
       "natura": "Naturale",
-      "portata_q": 3
+      "portata_q": 3,
+      "ac": 1
     },
     {
       "nome": "Artiglio",
@@ -80,7 +81,8 @@
       "va": 17,
       "danno": "5d10×5",
       "natura": "Naturale",
-      "portata_q": 2
+      "portata_q": 2,
+      "ac": 1
     },
     {
       "nome": "Coda",
@@ -88,7 +90,8 @@
       "va": 17,
       "danno": "6d10×5",
       "natura": "Naturale",
-      "portata_q": 4
+      "portata_q": 4,
+      "ac": 1
     }
   ],
   "capacita": [

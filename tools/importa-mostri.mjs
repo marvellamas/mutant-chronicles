@@ -178,6 +178,13 @@ function leggiMovimento(testo) {
     } else if (m3 && /^Terra e (nuoto|scavo)$/i.test(etichetta) && out.passo === undefined) {
       out.passo = inQ(+m3[2], m3[5]); out.corsa = inQ(+m3[3], m3[5]); out.scatto = inQ(+m3[4], m3[5]);
       out.extra.push(`${etichetta} ${m3[2]} / ${m3[3]} / ${m3[4]}: la stessa andatura vale anche per ${etichetta.replace(/^Terra e /i, '')}`);
+    } else if (m3 && /^(?:Forma umanoide:\s*)?terra(?: volo)?(?: e (?:arrampicata|aderenza|volo|nuoto nativo))?(?: e nuoto)?$/i.test(etichetta) && out.passo === undefined) {
+      // Terra e arrampicata / aderenza / volo / Nuoto nativo: la stessa andatura a terra; per il volo il Passo di volo vale quanto il Passo
+      out.passo = inQ(+m3[2], m3[5]); out.corsa = inQ(+m3[3], m3[5]); out.scatto = inQ(+m3[4], m3[5]);
+      if (/volo/i.test(etichetta)) out.volo = out.passo;
+      out.extra.push(etichetta + ' ' + m3[2] + ' / ' + m3[3] + ' / ' + m3[4] + ': la stessa andatura vale anche per ' + etichetta.replace(/^.*?terra e /i, '').replace(/^terra\s*/i, ''));
+    } else if (/^(terra\s+(0|—)(\s*Q)?|immobile)$/i.test(s)) {
+      out.zero = true;
     } else if (m3 && /^volo/i.test(etichetta)) {
       out.volo = inQ(+m3[2], m3[5]); // Passo di volo in Q Base (Dragomedusa: 12 Q Tattici → 120)
     } else {
@@ -194,9 +201,12 @@ function leggiMovimentoRighe(righe) {
     if (/^Movimento( terrestre| e spazio| sul terreno| comune)?$/.test(e)) {
       const pre = v.match(/Passo\s+(\d+)\s*(?:Q)?[\s•·,]+Corsa\s+(\d+)\s*(?:Q)?[\s•·,]+Scatto\s+(\d+)\s*Q/i);
       const pf = v.match(/Passo \/ Corsa \/ Scatto:\s*(\d+)\s*\/\s*(\d+)\s*\/\s*(\d+)\s*Q/i);
+      const pn = v.match(/Passo\s+(\d+)\s*Q?[\s•·,]+Corsa e Scatto non consentit[io]/i);
+      if (pn && out.passo === undefined) { out.passo = +pn[1]; out.corsa = 'non_consentito'; out.scatto = 'non_consentito'; continue; }
       if ((pre || pf) && out.passo === undefined) { const m = pre || pf; out.passo = +m[1]; out.corsa = +m[2]; out.scatto = +m[3]; continue; }
       const r = leggiMovimento(v);
       for (const k of ['passo', 'corsa', 'scatto', 'volo']) if (r[k] !== undefined && out[k] === undefined) out[k] = r[k];
+      if (r.zero) out.zero = true;
       out.extra.push(...r.extra);
     } else if (/^Movimento etereo$/.test(e)) {
       const pf = v.match(/(\d+)\s*\/\s*(\d+)\s*\/\s*(\d+)\s*Q/);
@@ -412,7 +422,19 @@ function classifica(coppie) {
 }
 
 // Legge una scheda (o una colonna di una scheda a due colonne) e produce { id, nome, json, nonCapito, ... }
-export function leggiScheda(sch, comuni = [], colonna = null) {
+// AC dichiarata da una pagina di blocco («Gli attacchi producono AC 1»): vale per le schede che la seguono, finché un'altra pagina non la riscrive (lotto 143)
+const RE_AC_ATTACCHI = /(?<!\b(?:[Ii]l|[Ll]a|[Ll]o|[Ll]’)\s?\w+\s)produc\w+(?:\s+\w+)?\s+AC\s*(\d+)|ciascun\w* (?:costa|attacco)[^.]*AC\s*(\d+)|hanno AC\s*(\d+)|\b(?:morsi|attacchi|colpi|attacco)\s+rest\w+\s+AC\s*(\d+)|\brest\w+\s+AC\s*(\d+)/i;
+export function acDelBlocco(pagine, riga) {
+  let out = null;
+  for (const p of pagine) {
+    if (p.riga >= riga) continue;
+    const m = p.righe.map((x) => x.t).join(' ').match(RE_AC_ATTACCHI);
+    if (m && (out === null || p.riga > out.riga)) out = { riga: p.riga, titolo: p.titolo, ac: m.slice(1).find((x) => x !== undefined) };
+  }
+  return out;
+}
+
+export function leggiScheda(sch, comuni = [], colonna = null, blocco = null) {
   const R = sch.righe;
   const nonCapito = [];
   const baseNome = titolo(R[0].t);
@@ -450,11 +472,22 @@ export function leggiScheda(sch, comuni = [], colonna = null) {
   else if ((ar = valori.match(/AR\s+(\d+)\s+biologic[ao]\s*;\s*AR magica\s+(\d+)/))) o.ar = { totale: +ar[1] + +ar[2], magica: +ar[2] };
   else if ((ar = valori.match(/AR\s+(\d+)\s*[,;]\s*componente magica\s+(\d+)/))) o.ar = { totale: +ar[1], magica: +ar[2] };
   else if ((ar = valori.match(/\bAR\s+0\b(?!\s*,?\s*\d)/))) o.ar = { totale: 0, magica: 0 }; // totale 0: la parte magica non può essere altro
-  else mancano.push('AR (totale e componente magica)');
+  else if ((ar = valori.match(/\bAR\s+(\d+)(?![\d/])/)) && (valori.match(/magica\s+(\d+)/) || valori.match(/di cui\s+(\d+)\s*magic/) || valori.match(/(\d+)\s*magic[ao]/))) {
+    // forme con varianti d'equipaggiamento («AR 2 con scudo, 1 senza», «AR 3 da Armatura media»): vale il primo numero, cioè la scheda col suo equipaggiamento
+    const mg = valori.match(/magica\s+(\d+)/) || valori.match(/di cui\s+(\d+)\s*magic/) || valori.match(/(\d+)\s*magic[ao]/);
+    o.ar = { totale: +ar[1], magica: +mg[1] };
+    const somma = valori.match(/\bAR\s+\d+[^|•]*?=\s*(\d+)/); // «AR 1 biologica + 2 scudo = 3»: vale il totale scritto
+    if (somma) o.ar.totale = +somma[1];
+    const riga = valori.match(/\bAR\s+\d+[^|]*/)?.[0] ?? '';
+    if (/\bsenza\b|\bcontro\b|\boppure\b|\ba riposo\b|\bda\s+armatura/i.test(riga)) nonCapito.push('AR con varianti o origine scritte («' + riga.trim().slice(0, 90) + '»): letto il primo valore come AR della scheda; da controllare');
+  } else mancano.push('AR (totale e componente magica)');
 
   // Difese e Salvezze
   const dif = valori.match(/\bDifese\s+(\d+)/);
-  if (dif) o.difese = +dif[1]; else mancano.push('Difese');
+  const par = !dif && valori.match(/\bParata\s+(\d+)\s*•\s*Schivata[^0-9]*(\d+)/);
+  if (dif) o.difese = +dif[1];
+  else if (par) { o.difese = +par[1]; nonCapito.push('Due Difese scritte (Parata ' + par[1] + ', Schivata/Elusione ' + par[2] + '): il formato ha un solo valore, letto la Parata; da controllare'); }
+  else mancano.push('Difese');
   const salv = {}; const senza = [];
   for (const [chiave, nomeS] of [['tempra', 'Tempra'], ['riflessi', 'Riflessi'], ['volonta', 'Volontà'], ['magia', 'Magia']]) {
     const m = valori.match(new RegExp(`${nomeS}\\s+(\\d+|—)`));
@@ -478,7 +511,14 @@ export function leggiScheda(sch, comuni = [], colonna = null) {
 
   // Movimento
   const mov = leggiMovimentoRighe(k.mov);
-  if (mov.passo === undefined && mov.extra.some((x) => /^Nuoto/i.test(x)) && !mov.extra.some((x) => /^(Terra|Movimento terrestre)/i.test(x))) {
+  if (mov.passo === undefined && mov.zero) {
+    o.movimento = { passo: 0, corsa: 'non_consentito', scatto: 'non_consentito' };
+    if (mov.volo !== undefined) o.movimento.volo = mov.volo;
+    nonCapito.push('Terra 0 o «Immobile» scritto: Passo 0, Corsa e Scatto «non consentito», come nei blocchi già importati');
+  } else if (mov.passo === undefined && mov.volo !== undefined) {
+    o.movimento = { passo: 0, corsa: 'non_consentito', scatto: 'non_consentito', volo: mov.volo };
+    nonCapito.push('Solo movimento di volo scritto: Passo a terra 0, Corsa e Scatto «non consentito», volo come scritto');
+  } else if (mov.passo === undefined && mov.extra.some((x) => /^Nuoto/i.test(x)) && !mov.extra.some((x) => /^(Terra|Movimento terrestre)/i.test(x))) {
     o.movimento = { passo: 0, corsa: 'non_consentito', scatto: 'non_consentito' };
     nonCapito.push('Solo movimento acquatico scritto (Nuoto): Passo 0, Corsa e Scatto «non consentito» a terra, come nei blocchi già importati');
   } else if (mov.passo === undefined) mancano.push('Passo (movimento a terra)');
@@ -523,8 +563,9 @@ export function leggiScheda(sch, comuni = [], colonna = null) {
   let moltiplicatore = false;
   const testoTutto = R.map((x) => x.t).join(' ');
   const testoConComuni = `${testoTutto} ${comuni.map((c) => c.effetto).join(' ')}`;
-  const mAc = testoConComuni.match(/produc\w+ AC\s*(\d+)|ciascun\w* (?:costa|attacco)[^.]*AC\s*(\d+)|hanno AC\s*(\d+)/);
-  const acComune = mAc ? (mAc[1] ?? mAc[2] ?? mAc[3]) : undefined;
+  const mAc = testoConComuni.match(RE_AC_ATTACCHI);
+  let acComune = mAc ? mAc.slice(1).find((x) => x !== undefined) : undefined;
+  if (acComune === undefined && blocco) { acComune = blocco.ac; nonCapito.push('AC ' + blocco.ac + ' degli attacchi presa dalla pagina del blocco «' + blocco.titolo + '» (non dalla scheda)'); }
   if (att.attacchi) {
     for (const riga of att.attacchi.righe) {
       const r = leggiAttacco(att.attacchi.intest, riga, nonCapito, acComune);
@@ -626,7 +667,7 @@ export function importa(testo) {
     for (const c of colonne) {
       const nomeFinale = c === null ? base : nomeColonna(base, tab.colonne[c]);
       const comuni = comuniPer(nomeFinale);
-      const r = leggiScheda(s, comuni, c);
+      const r = leggiScheda(s, comuni, c, acDelBlocco(pagine, s.riga));
       if (comuni.length) r.nonCapito.push(`Pagine comuni del blocco: ${comuni.length} sezioni aggiunte alle capacità; le tabelle delle pagine comuni non sono importate (i valori per creatura sono nella scheda)`);
       risultati.push(r);
     }
@@ -656,17 +697,54 @@ export function differenze(nuovo, vecchio) {
   for (const k of ['passo', 'corsa', 'scatto', 'volo']) if (nuovo.movimento?.[k] !== vecchio.movimento?.[k]) d.push(`movimento ${k}: ${vecchio.movimento?.[k]} → ${nuovo.movimento?.[k]}`);
   if ((nuovo.gs_px?.gs) !== (vecchio.gs_px?.gs) || nuovo.gs_px?.px !== vecchio.gs_px?.px) d.push(`GS/PX: ${vecchio.gs_px?.gs} ${vecchio.gs_px?.px} → ${nuovo.gs_px?.gs} ${nuovo.gs_px?.px}`);
   if ((nuovo.spazio ?? null) !== (vecchio.spazio ?? null)) d.push(`spazio: ${vecchio.spazio ?? '—'} → ${nuovo.spazio ?? '—'}`);
-  const aV = (n) => (n.attacchi ?? []).map((a) => `${a.nome}:${a.va}:${a.danno}`).join(',');
-  if (aV(nuovo) !== aV(vecchio)) d.push(`attacchi: ${aV(vecchio)} → ${aV(nuovo)}`);
+  const aV = (n) => (n.attacchi ?? []).map((a) => `${a.nome}:${a.va}:${a.danno}:${a.natura ?? '-'}:AC${a.ac ?? '-'}:${a.portata_q ?? a.gittata_q ?? '-'}`).join(',');
+  // l'AC che il manuale non scrive per la scheda non è una differenza: l'app tratta l'assenza come AC 1 (src/attacco.js, crea-nemico.js)
+  const nuovoAc = { ...nuovo, attacchi: (nuovo.attacchi ?? []).map((a, i) => (a.ac === undefined && vecchio.attacchi?.[i]?.nome === a.nome ? { ...a, ac: vecchio.attacchi[i].ac } : a)) };
+  if (aV(nuovoAc) !== aV(vecchio)) d.push(`attacchi: ${aV(vecchio)} → ${aV(nuovo)}`);
   const ab = (n) => (n.abilita ?? []).map((a) => `${a.nome} ${a.va}`).sort().join(',');
   if (ab(nuovo) !== ab(vecchio)) d.push(`abilità: ${ab(vecchio)} → ${ab(nuovo)}`);
   return d;
+}
+
+// Controllo incrociato (lotto 143): per ciò che il parser non sa leggere (attacchi d'arma senza natura, Abilità con condizione)
+// si cerca nel testo della scheda il VA e il danno di ogni attacco e il VA di ogni Abilità della scheda già presente.
+// Non legge il significato: dice soltanto se il numero scritto nella scheda esiste nel manuale accanto al nome.
+export function controlloIncrociato(testo, esistenti) {
+  const R = leggiRighe(testo);
+  const { schede } = dividi(R);
+  const problemi = [];
+  const senzaSpazi = (x) => x.replace(/\s+/g, '').replace(/−/g, '-');
+  for (const sch of schede) {
+    const base = titolo(sch.righe[0].t);
+    const e = esistenti.get(norm(base));
+    if (!e) continue;
+    const t = sch.righe.map((r) => r.t);
+    const n = e.nemico;
+    for (const a of n.attacchi ?? []) {
+      const primo = norm(a.nome.split(/\s\(|\scon PV/)[0]).split(' ')[0];
+      let ok = false;
+      for (let i = 0; i < t.length && !ok; i += 1) {
+        if (!norm(t[i]).startsWith(primo)) continue;
+        const vicino = t.slice(i, i + 4);
+        if (vicino.slice(1).some((x) => x === String(a.va) || new RegExp('(^|\\D)' + a.va + '(\\D|$)').test(x)) && senzaSpazi(vicino.join('|')).includes(senzaSpazi(a.danno))) ok = true;
+      }
+      if (!ok) problemi.push({ id: n.id, campo: 'attacco ' + a.nome, detto: 'VA ' + a.va + ', ' + a.danno, perche: 'VA e danno non si trovano accanto al nome nel manuale' });
+    }
+    const abTesto = t.join(' | ');
+    for (const ab of n.abilita ?? []) {
+      const nomi = [ab.nome, ...Object.entries(ALIAS_ABILITA).filter(([, v]) => v === ab.nome).map(([k]) => k)];
+      const ok = nomi.some((nm) => new RegExp(nm + '[^•|]*?(^|\\D)' + ab.va + '(\\D|$)').test(abTesto));
+      if (!ok) problemi.push({ id: n.id, campo: 'abilità ' + ab.nome, detto: String(ab.va), perche: 'il valore non compare accanto al nome nel manuale' });
+    }
+  }
+  return problemi;
 }
 
 function argomenti(argv) {
   const a = { scrivi: false };
   for (const x of argv) {
     if (x === '--scrivi') a.scrivi = true;
+    else if (x === '--verifica') a.verifica = true;
     else if (x.startsWith('--testo=')) a.testo = x.slice(8);
     else if (x.startsWith('--dest=')) a.dest = x.slice(7);
     else if (x.startsWith('--aggiorna=')) a.aggiorna = x.slice(11).split(',');
@@ -681,6 +759,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const dest = a.dest ?? DEST_PREDEFINITA;
   const { risultati } = importa(testo);
   const esist = leggiEsistenti();
+  if (a.verifica) { const p = controlloIncrociato(testo, esist); console.log(p.length ? p.map((x) => x.id + ' — ' + x.campo + ' (' + x.detto + '): ' + x.perche).join(String.fromCharCode(10)) : 'Controllo incrociato: nessuna discordanza.'); process.exit(0); }
   const nuovi = []; const presenti = []; const cambiate = []; const escluse = [];
   for (const r of risultati) {
     const e = esist.get(norm(r.nome));
