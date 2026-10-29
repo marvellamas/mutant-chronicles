@@ -369,7 +369,13 @@ function paragrafiESezioni(R, da, nonCapito) {
     let j = i;
     const celle = [];
     while (j < R.length && !/^#/.test(R[j].t) && R[j].t.length <= 60 && !/\.$/.test(R[j].t)) { celle.push(R[j].t); j += 1; }
-    nonCapito.push(`Tabella secondaria non importata (${celle.length} celle: ${celle.slice(0, 5).join(' | ')}…)`);
+    if (celle.includes('Attacco') && celle.length >= 6 && /^(VA|Giovane|Adulto)/.test(celle.slice(1).join('|')) === false && celle.some((x) => /^VA \d+ •/.test(x))) {
+      nonCapito.push(`Tabella degli attacchi a colonne per variante (${celle.length} celle): letta come attacchi, non ripetuta fra le capacità`);
+    } else {
+      // le colonne non si ricostruiscono: le celle restano come testo, in ordine di lettura, sotto il titolo della tabella
+      cap.push({ nome: celle[0], effetto: `Tabella (celle in ordine di lettura): ${celle.slice(1).join(' | ')}.` });
+      nonCapito.push(`Tabella «${celle[0]}» (${celle.length} celle) tenuta come testo nelle capacità, in ordine di lettura: le colonne non si ricostruiscono`);
+    }
     i = j > i ? j : i + 1;
   }
   return { cap, notaDescr };

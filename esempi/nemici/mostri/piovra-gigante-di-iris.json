@@ -82,6 +82,10 @@
       "effetto": "Le 2 AzP appartengono all’intera creatura, non a ciascun tentacolo, e non si rinnovano all’arrivo dell’Iniziativa. Può conservarle per Schivare, al costo ordinario di 1 AzP e 1 AzM; nessuna Parata naturale. I tentacoli occupati in una presa non attaccano altri bersagli."
     },
     {
+      "nome": "Danni localizzati e liberazione dei bersagli",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
       "nome": "Riserve separate",
       "effetto": "Il corpo ha 60 PV e ogni tentacolo 30 PV, tutti con AR 5. Il bersaglio del colpo deve essere dichiarato e realmente raggiungibile. Il danno a un tentacolo riduce soltanto la sua riserva, senza sottrarlo anche al corpo. L’immersione e la copertura del corpo si risolvono normalmente."
     },

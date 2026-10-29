@@ -132,6 +132,10 @@
       "effetto": "Applicato nel Round R, termina a fine R + 1. Nuove esposizioni mantengono la scadenza più lontana senza sommare durate. Sono ammessi i movimenti necessari alla Difesa, senza spostamento tattico in altri Q; cadute e movimenti forzati restano possibili. Il terreno già attivato conserva la propria durata."
     },
     {
+      "nome": "Capacità difensiva e ritirata",
+      "effetto": "Tabella (celle in ordine di lettura): Effetto | Giovane | Adulto | Raggio dal corpo | 1 Q | 2 Q | Danno immediato | 2d6 | 4d6 | Danno del terreno attivato | 1d4+1 | 1d6+2 | Durata del terreno | 5 Round | 5 Round | Costo dell’emissione | 1 AzP e 4 PM | 1 AzP e 6 PM | Soglia orientativa di ritirata | 8 PV o meno | 16 PV o meno."
+    },
+    {
       "nome": "Emissione",
       "effetto": "Alla propria Iniziativa spende le Azioni e i PM richiesti prima della risoluzione, una volta per incontro. È una capacità innata e non richiede una Prova di lancio. Tende a usarla quando è in pericolo di vita: alle soglie indicate oppure dopo una Ferita Profonda. Allontanarsi e rientrare nello stesso scontro non ripristina il limite d’uso."
     },
