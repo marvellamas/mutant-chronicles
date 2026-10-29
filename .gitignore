@@ -108,3 +108,4 @@ rapporto-personaggi.txt
 stato-mutant.txt
 # copia delle regole fatta da 1_scarica_o_aggiorna_app.bat per la copia da zip di prova in distribuzione/mutant
 distribuzione/backup_dati/
+test-ripetuto/
