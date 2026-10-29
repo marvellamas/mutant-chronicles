@@ -3,9 +3,10 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
+import { gunzipSync } from 'node:zlib';
 import { datiReali } from './helpers.js';
 import {
-  CARTELLE_VIETATE, FILE_PAGINA, esempiNemici, vociPagina, paginaHtml, manualeHtml, stato,
+  CARTELLE_VIETATE, FILE_PAGINA, aperta, condividiTesti, esempiNemici, vociPagina, paginaHtml, manualeHtml, stato,
   testoAzioni, testoAttacco, testoIncantesimo,
 } from '../tools/bestiario_pagina.mjs';
 
@@ -203,7 +204,7 @@ test('nessun dato privato: lo strumento legge solo data/ ed esempi/nemici/', asy
   const letture = [...sorgente.matchAll(/new URL\(`([^`$]*)/g)].map((m) => m[1]).filter(Boolean);
   for (const p of letture) assert.ok(/^(data\/|esempi\/nemici\/)/.test(p), `radice di lettura inattesa: ${p}`);
 
-  const html = readFileSync(new URL(FILE_PAGINA, RADICE), 'utf8');
+  const html = aperta(readFileSync(new URL(FILE_PAGINA, RADICE), 'utf8'));
   for (const c of CARTELLE_VIETATE) {
     // «esempi/nemici/» è lecito: è la cartella tracciata in git
     const senzaEsempi = html.replaceAll('esempi/nemici/', '');
@@ -221,7 +222,7 @@ test('la pagina sul disco corrisponde ai dati (node tools/bestiario_pagina.mjs -
 });
 
 test('la pagina è un file solo: nessuna risorsa esterna e nessuna data di generazione', () => {
-  const html = readFileSync(new URL(FILE_PAGINA, RADICE), 'utf8');
+  const html = aperta(readFileSync(new URL(FILE_PAGINA, RADICE), 'utf8'));
   assert.doesNotMatch(html, /<(script|link|img|iframe)[^>]+(src|href)=/i, 'la pagina deve essere autosufficiente');
   // dagli stessi dati esce sempre lo stesso file: niente date dentro
   assert.doesNotMatch(html, /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/);
@@ -231,7 +232,7 @@ test('la pagina è un file solo: nessuna risorsa esterna e nessuna data di gener
 });
 
 test('la pagina porta anche il testo del manuale proposto, con i suoi capitoli', () => {
-  const html = readFileSync(new URL(FILE_PAGINA, RADICE), 'utf8');
+  const html = aperta(readFileSync(new URL(FILE_PAGINA, RADICE), 'utf8'));
   const md = readFileSync(new URL('docs/bestiario/bestiario.md', RADICE), 'utf8');
   const capitoli = md.split(/\r?\n/).filter((r) => /^# /.test(r)).length - 1; // meno il titolo
   const manuale = html.slice(html.indexOf('<article id="manuale">'));
@@ -239,4 +240,50 @@ test('la pagina porta anche il testo del manuale proposto, con i suoi capitoli',
   assert.match(manuale, /<h1 id="capitolo-1-come-si-usa-il-bestiario">/);
   assert.match(manuale, /<h1 id="appendice-a-taratura">/);
   assert.equal((manuale.match(/<nav class="indice">/g) ?? []).length, 1);
+});
+
+// --- lotto 144: peso della pagina e testi comuni scritti una volta sola ---------------------------------------
+
+test('peso: la pagina pubblicata sta sotto 1 MB (le schede viaggiano compresse) ed è completa una volta aperta', () => {
+  const grezzo = readFileSync(new URL(FILE_PAGINA, RADICE), 'utf8');
+  assert.ok(Buffer.byteLength(grezzo) < 1024 * 1024, `la pagina pesa ${Math.round(Buffer.byteLength(grezzo) / 1024)} KB`);
+  assert.match(grezzo, /id="dati-schede"/);
+  assert.match(grezzo, /id="caricamento"/);
+  const aperto = aperta(grezzo);
+  assert.ok((aperto.match(/<article class="scheda"/g) ?? []).length >= 451);
+  // il testo di ogni scheda e il «(provvisori)» dei PX sono nella pagina aperta
+  assert.match(aperto, /PX provvisori nel manuale: da verificare al tavolo/);
+});
+
+test('testi comuni: un testo lungo ripetuto sta una sola volta; la scheda lo richiama e mantiene il nome', () => {
+  const lungo = 'Natura Comune, mente e PM personali; respira, mangia, beve e riposa; ' + 'x'.repeat(120);
+  const a = `<article><ul><li><b>Corpo</b> — ${lungo}</li><li><b>Morso</b> — breve</li></ul></article>`;
+  const b = `<article><ul><li><b>Corpo</b> — ${lungo}</li></ul><p class="nota">nota breve</p></article>`;
+  const { schede, comuni } = condividiTesti([a, b]);
+  assert.deepEqual(comuni, [lungo]);
+  assert.ok(schede.every((s) => !s.includes(lungo)));
+  assert.match(schede[0], /<li><b>Corpo<\/b> — <a class="comune" href="#comune-1" data-comune="1">testo comune<\/a><\/li>/);
+  assert.match(schede[0], /<li><b>Morso<\/b> — breve<\/li>/); // il corto non si tocca
+  assert.match(schede[1], /nota breve/);
+  // un testo lungo ma unico resta nella scheda
+  const solo = condividiTesti([`<li><b>A</b> — ${lungo}</li>`, '<li><b>B</b> — altro</li>']);
+  assert.deepEqual(solo.comuni, []);
+});
+
+test('pagina compressa: lo script apre le schede, poi ricerca, filtri e testi comuni funzionano (simulazione senza browser)', async () => {
+  const { dati } = await datiReali();
+  const { esempi, umani, mostri } = await esempiNemici(RADICE);
+  const voci = vociPagina(dati, { esempi, umani, mostri });
+  const html = paginaHtml(voci, dati, '', { compressa: true });
+  const m = html.match(/id="dati-schede">([^<]*)</);
+  const corpo = gunzipSync(Buffer.from(m[1], 'base64')).toString();
+  assert.equal((corpo.match(/<article class="scheda"/g) ?? []).length, voci.length);
+  assert.equal((corpo.match(/<section id="comuni"/g) ?? []).length, 1);
+  // ogni rimando punta a un testo che c'è, e ogni testo comune compare una volta sola
+  const rimandi = new Set([...corpo.matchAll(/data-comune="(\d+)"/g)].map((x) => x[1]));
+  for (const n of rimandi) assert.equal((corpo.match(new RegExp(`id="comune-${n}"`, 'g')) ?? []).length, 1, `testo comune ${n}`);
+  assert.ok(rimandi.size > 0, 'nessun testo comune trovato');
+  // il filtro del grado e il «Manuale dei Mostri» restano nella parte non compressa
+  assert.match(html, /data-filtro="categoria"/);
+  assert.match(html, /DecompressionStream/);
 });

@@ -14,6 +14,7 @@
 // tests/bestiario-pagina.test.js può accorgersi quando i dati cambiano e la pagina no (CLAUDE.md,
 // «Regole permanenti di lavoro»).
 import { readFile, readdir, writeFile } from 'node:fs/promises';
+import { gzipSync, gunzipSync } from 'node:zlib';
 import { caricaDati } from '../src/rules.js';
 import { testoMovimento } from '../src/nemici.js';
 import { profiloNemico, scelteCreatura, SUFFISSO_UMANO } from '../src/crea-nemico.js';
@@ -227,6 +228,8 @@ border-top:1px solid var(--linea);padding-top:.6em}
 .scheda dd{margin:0}
 .scheda dd ul{margin:0;padding-left:1.1em}
 .scheda dd li{margin:.1em 0}
+.comune{font-size:.8rem;color:var(--tenue)}
+#comuni{max-width:46rem;margin:0 auto;font-size:.86rem}
 .nota{margin:.8em 0 0;padding-top:.6em;border-top:1px solid var(--linea);color:var(--tenue);font-size:.78rem}
 .viste{display:flex;gap:6px;margin:12px 0 0}
 .viste button{font:inherit;font-size:.9rem;padding:.35em .9em;border:1px solid var(--linea);border-radius:6px;
@@ -288,6 +291,17 @@ const JS = `(function(){
     if(e)e.scrollIntoView();
   });
 
+  // le schede arrivano compresse (gzip, base64) in #dati-schede: si aprono all'avvio e poi parte tutto il resto
+  function avvia(){
+  // testi comuni: ogni rimando si apre sotto la scheda; il testo è scritto una volta sola in fondo alla pagina
+  document.querySelectorAll('a.comune').forEach(function(a){
+    var t=document.getElementById('comune-'+a.dataset.comune);
+    if(!t)return;
+    var s=document.createElement('span');s.className='testo-comune';s.innerHTML=t.innerHTML;
+    a.parentNode.replaceChild(s,a);
+  });
+  var com=document.getElementById('comuni');if(com)com.hidden=true;
+
   var cerca=document.getElementById('cerca'),conteggio=document.getElementById('conteggio');
   var schede=[].slice.call(document.querySelectorAll('.scheda'));
   var filtri={categoria:'',grado:'',gs:''};
@@ -317,6 +331,24 @@ const JS = `(function(){
   });
   cerca.addEventListener('input',applica);
   applica();
+  var h=location.hash.slice(1),e=h&&document.getElementById(h);
+  if(e&&!document.getElementById('manuale').contains(e))e.scrollIntoView();
+  }
+  var dati=document.getElementById('dati-schede');
+  if(!dati){avvia();return}
+  var caricamento=document.getElementById('caricamento');
+  if(typeof DecompressionStream==='undefined'){
+    caricamento.textContent='Questo browser non apre le schede compresse: serve una versione recente di Chrome, Safari o Firefox.';
+    return;
+  }
+  var b=atob(dati.textContent.trim()),byte=new Uint8Array(b.length);
+  for(var i=0;i<b.length;i++)byte[i]=b.charCodeAt(i);
+  new Response(new Blob([byte]).stream().pipeThrough(new DecompressionStream('gzip'))).text().then(function(html){
+    var main=document.getElementById('schede');
+    caricamento.remove();
+    main.insertAdjacentHTML('afterbegin',html);
+    avvia();
+  });
 })();`;
 
 /** Una scheda. */
@@ -364,6 +396,29 @@ ${n.note ? `<p class="nota">${esc(n.note)}</p>` : ''}
 </article>`;
 }
 
+// --- testi comuni -----------------------------------------------------------------------------------------
+// I draghi, gli animali e gli elementali ripetono lo stesso testo di capacità e di nota (le pagine comuni del
+// manuale): scritto in ogni scheda pesava 715 KB su 2 MB. Ogni testo lungo ripetuto sta una volta sola in
+// «Testi comuni» in fondo alla pagina; la scheda lo richiama e il piccolo script lo apre sotto la scheda, così
+// la scheda si legge da sola. Senza script resta il rimando «testo comune», un collegamento alla sezione.
+const MIN_COMUNE = 150;
+const RE_COMUNE = /(<li>)(<b>[^<]*<\/b> — )(.*?)(<\/li>)|(<p class="nota">)(.*?)(<\/p>)/gs;
+
+/** Estrae dai testi delle schede quelli lunghi e ripetuti: restituisce le schede alleggerite e la tabella dei testi. */
+export function condividiTesti(schedeHtml) {
+  const conta = new Map();
+  for (const h of schedeHtml) for (const m of h.matchAll(RE_COMUNE)) { const t = m[3] ?? m[6]; if (t.length >= MIN_COMUNE) conta.set(t, (conta.get(t) ?? 0) + 1); }
+  const comuni = [...conta].filter(([, c]) => c > 1).map(([t]) => t);
+  const indice = new Map(comuni.map((t, i) => [t, i + 1]));
+  const schede = schedeHtml.map((h) => h.replace(RE_COMUNE, (tutto, a, nome, t1, chiusa, b, t2, chiusa2) => {
+    const n = indice.get(t1 ?? t2);
+    if (!n) return tutto;
+    const rimando = `<a class="comune" href="#comune-${n}" data-comune="${n}">testo comune</a>`;
+    return a ? `${a}${nome}${rimando}${chiusa}` : `${b}${rimando}${chiusa2}`;
+  }));
+  return { schede, comuni };
+}
+
 /** Slug per gli id dei titoli del manuale: «Capitolo 2 — Scala di potenza» → «capitolo-2-scala-di-potenza». */
 const slug = (t) => senzaAccenti(t).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60);
 
@@ -396,7 +451,7 @@ export function manualeHtml(md) {
 }
 
 /** La pagina completa. Nessuna data di generazione: dagli stessi dati esce sempre lo stesso file. */
-export function paginaHtml(voci, d, md = '') {
+export function paginaHtml(voci, d, md = '', { compressa = false } = {}) {
   const categorie = [];
   for (const v of voci) if (!categorie.includes(v.categoria)) categorie.push(v.categoria);
   const gradi = d.bestiario.gradi.filter((g) => voci.some((v) => v.grado === g.id));
@@ -404,6 +459,12 @@ export function paginaHtml(voci, d, md = '') {
   // 29/10: la scala del GS fino a Entità Suprema (Direttore §9.3.1, data/formato_nemici.json → gs_scala), solo i GS che ci sono
   const gsPresenti = (d.formato_nemici?.gs_scala ?? []).filter((x) => voci.some((v) => v.gs === x.nome));
   const proposte = voci.filter((v) => v.proposta).length;
+  const { schede, comuni } = condividiTesti(voci.map((v) => scheda(v, d)));
+  // le schede e i testi comuni; con «compressa» viaggiano in gzip e la pagina li apre all'avvio
+  const corpoSchede = `${schede.join('\n')}
+<section id="comuni" aria-label="Testi comuni">
+${comuni.length ? `<h2>Testi comuni a più schede</h2>\n${comuni.map((t, i) => `<p id="comune-${i + 1}">${t}</p>`).join('\n')}` : ''}
+</section>`;
 
   return `<!doctype html>
 <html lang="it">
@@ -433,9 +494,10 @@ ${gsPresenti.length ? `<div class="filtri" role="group" aria-label="Grado di Sfi
 <p class="conteggio" id="conteggio" aria-live="polite">${esc(voci.length)} schede</p>
 </form>
 <main id="schede">
-${voci.map((v) => scheda(v, d)).join('\n')}
+${compressa ? '<p id="caricamento" class="vuoto">Carico le schede…</p>' : corpoSchede}
 <p class="vuoto" id="vuoto" hidden>Nessuna scheda con questi filtri.</p>
 </main>
+${compressa ? `<script type="application/octet-stream" id="dati-schede">${gzipSync(Buffer.from(corpoSchede), { level: 9 }).toString('base64')}</script>` : ''}
 <article id="manuale">
 ${md ? manualeHtml(md) : '<p>Il testo del manuale non è compreso in questa copia.</p>'}
 </article>
@@ -453,15 +515,19 @@ ${md ? manualeHtml(md) : '<p>Il testo del manuale non è compreso in questa copi
 export async function genera(radice = RADICE) {
   const d = await dati(radice);
   const { esempi, umani, mostri } = await esempiNemici(radice);
-  return paginaHtml(vociPagina(d, { esempi, umani, mostri }), d, await testoManuale(radice));
+  return paginaHtml(vociPagina(d, { esempi, umani, mostri }), d, await testoManuale(radice), { compressa: true });
 }
+
+/** La pagina con il blocco compresso aperto: il gzip può cambiare da una versione di Node all'altra, il contenuto no. */
+export const aperta = (html) => html.replace(/(<script type="application\/octet-stream" id="dati-schede">)([^<]*)(<\/script>)/,
+  (_, a, b64, c) => `${a}${gunzipSync(Buffer.from(b64, 'base64')).toString()}${c}`);
 
 /** Come tools/versione.mjs --controlla: la pagina sul disco corrisponde ai dati? */
 export async function stato(radice = RADICE) {
   const html = await genera(radice);
   let attuale = null;
   try { attuale = await readFile(new URL(FILE_PAGINA, radice), 'utf8'); } catch { /* non c'è ancora */ }
-  return { aggiornato: attuale === html, html, attuale };
+  return { aggiornato: attuale !== null && aperta(attuale) === aperta(html), html, attuale };
 }
 
 if (import.meta.url === `file://${process.argv[1]}` || process.argv[1]?.endsWith('bestiario_pagina.mjs')) {
@@ -471,5 +537,5 @@ if (import.meta.url === `file://${process.argv[1]}` || process.argv[1]?.endsWith
     process.exit(s.aggiornato ? 0 : 1);
   }
   await writeFile(new URL(FILE_PAGINA, RADICE), s.html);
-  console.log(`${FILE_PAGINA}: ${(s.html.match(/<article class="scheda"/g) ?? []).length} schede, ${Math.round(s.html.length / 1024)} KB${s.aggiornato ? ' (invariata)' : ''}`);
+  console.log(`${FILE_PAGINA}: ${(aperta(s.html).match(/<article class="scheda"/g) ?? []).length} schede, ${Math.round(s.html.length / 1024)} KB${s.aggiornato ? ' (invariata)' : ''}`);
 }
