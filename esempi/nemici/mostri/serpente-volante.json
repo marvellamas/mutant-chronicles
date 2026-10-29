@@ -1,0 +1,100 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "serpente-volante",
+  "nome": "Serpente volante",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Serpente volante",
+  "caratteristiche": {
+    "FOR": 2,
+    "DES": 9,
+    "COS": 4,
+    "INT": 1,
+    "SAG": 6,
+    "CAR": 2
+  },
+  "pv": 8,
+  "pm": 4,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 13,
+  "salvezze": {
+    "tempra": 8,
+    "riflessi": 13,
+    "volonta": 8,
+    "magia": 8
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18,
+    "volo": 12
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 8
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 13
+    }
+  ],
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d4",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Adattamenti e condotta",
+      "effetto": "Passaggio in volo: come il Gufo gigante, non provoca Opportunità quando abbandona una portata mediante il proprio Volo. Può dividere il Passo prima e dopo il Morso entro il movimento complessivo disponibile, senza una seconda AzM. Tossina: dopo almeno 1 danno finale del Morso, Pericolosità II, Tempra 0. Fallimento: −2 alle Prove fisiche per 3 Round; nuova Tempra a fine della propria Iniziativa termina l’effetto. Le riapplicazioni aggiornano la durata senza sommare la penalità. Valgono protezioni e immunità pertinenti."
+    },
+    {
+      "nome": "Azioni e movimento",
+      "effetto": "Tutti dispongono di 1 AzP e 1 AzM per Round. Massimo un attacco per Round, Opportunità compresa; nessuna Parata naturale. Schivata con costi e requisiti ordinari. Ogni attacco costa 1 AzP, produce AC 1 e ha portata di contatto entro 1 Q, quando il bersaglio è realmente raggiungibile. I danni Naturali sono completi, senza aggiungere nuovamente i bonus ordinari. Movimento nell’ordine Passo / Corsa / Scatto. Le modalità indicate condividono l’unica AzM e seguono Prove, percorsi misti e limiti delle andature. Le ali richiedono spazio. Passaggio in volo è un’eccezione del Serpente volante, non una proprietà di tutti i volatori. Il Cavalluccio marino ordinario non possiede attacchi efficaci."
+    },
+    {
+      "nome": "Dimensioni e sensi",
+      "effetto": "Becco d’ascia, Coccodrillo e Cavalluccio marino gigante occupano 1 × 2 Q. Gli altri usano una pedina di gestione da 1 Q conservando le dimensioni reali per passaggi, coperture e prese. Gli animali non comprendono linguaggi. Le percezioni speciali restano limitate al mezzo, alla distanza e alle condizioni della singola scheda."
+    },
+    {
+      "nome": "Branco e risorse",
+      "effetto": "Falco sanguinario e Ratto gigante possiedono Branco: +2 al VA dell’attacco quando un alleato vigile e capace di minacciare realmente la vittima è entro 1 Q da essa. Più compagni non aumentano il bonus, che non è incluso nel VA base e non concede Azioni. Le circostanze devono essere concretamente soddisfatte. PV, PM personali, Ferite, Menomazioni, respiro e soffocamento seguono le regole comuni. Tossine, prese e inchiostro funzionano soltanto con i requisiti scritti; i normali animali non ricevono protezioni ambientali della fauna modificata di Iris."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Terra e nuoto 6 / 12 / 18: la stessa andatura vale anche per nuoto"
+    }
+  ],
+  "note": "Fauna ordinaria • Natura Comune. Sensi e linguaggi: Nessuno speciale; nessun linguaggio."
+}

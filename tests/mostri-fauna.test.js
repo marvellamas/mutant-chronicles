@@ -55,12 +55,12 @@ test('volo di Aquila (12), Falco (12) e Avvoltoio (10); scavo del Tasso; arrampi
   assert.match(cap('aquila', 'Vista acuta').effetto, /VA 14/);
 });
 
-test('GS/PX informativo: tutti Principiante 10 tranne Orso nero e Cinghiale (Inesperto 20); catalogo completo a 215 creature', () => {
+test('GS/PX informativo: tutti Principiante 10 tranne Orso nero e Cinghiale (Inesperto 20); catalogo completo a 285 creature', () => {
   for (const id of FAUNA) {
     const atteso = ['orso-nero', 'cinghiale'].includes(id) ? { gs: 'Inesperto', px: 20, per_pg: 4 } : { gs: 'Principiante', px: 10, per_pg: 4 };
     assert.deepEqual(leggi(id).gs_px, atteso, id);
   }
   const catalogo = readdirSync(dir).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(readFileSync(new URL(f, dir), 'utf8')))
     .filter((n) => /cap. 8/.test(n.fonte ?? ''));
-  assert.equal(catalogo.length, 215, 'le 215 creature del cap. 8 del Manuale dei Mostri 0.23 (il cap. 7, Covata e Lorath, è a parte)');
+  assert.equal(catalogo.length, 285, 'le 285 creature del cap. 8 del Manuale dei Mostri 0.46 (il cap. 7, Covata e fauna di Iris, è a parte)');
 });

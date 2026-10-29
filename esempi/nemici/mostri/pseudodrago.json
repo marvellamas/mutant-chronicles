@@ -1,0 +1,94 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "pseudodrago",
+  "nome": "Pseudodrago",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Pseudodrago",
+  "caratteristiche": {
+    "FOR": 2,
+    "DES": 7,
+    "COS": 5,
+    "INT": 5,
+    "SAG": 6,
+    "CAR": 5
+  },
+  "pv": 12,
+  "pm": 10,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 12,
+    "volonta": 10,
+    "magia": 13
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 3,
+    "corsa": 6,
+    "scatto": 9,
+    "volo": 12
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 8
+    }
+  ],
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione"
+      ],
+      "portata_q": 1
+    },
+    {
+      "nome": "Pungiglione",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d4",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione"
+      ],
+      "portata_q": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Tossina e sensi",
+      "effetto": "Dopo almeno 1 danno finale del Pungiglione, tossina di Pericolosità II: Tempra 0. Fallimento: −2 alle Prove fisiche per 3 Round, con nuova Tempra a fine della propria Iniziativa per terminare l’effetto. Maldestro iniziale: anche Svenuto per 1d3+1 Round, interrotto da almeno 1 danno o da un alleato adiacente che spende 1 AzP per svegliarlo. Valgono protezioni e immunità pertinenti; le riapplicazioni non sommano la penalità. Percezione +2 se vista, udito o olfatto sono determinanti. Telepatia entro 20 Q Base: immagini, emozioni e idee semplici con una creatura che comprende almeno una lingua; non legge pensieri. Nessuna Parata naturale. Evita lo scontro e cerca una via di fuga."
+    }
+  ],
+  "note": "Piccolo draconico intelligente • Natura Comune. Sensi e linguaggi: Scurovisione 12 Q Base; comprende Comune e Draconico, senza parlarli."
+}

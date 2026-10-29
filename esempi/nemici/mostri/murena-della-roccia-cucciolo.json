@@ -1,0 +1,71 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "murena-della-roccia-cucciolo",
+  "nome": "Murena della Roccia cucciolo",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 7 «Fauna di Iris» — Murena della Roccia cucciolo",
+  "caratteristiche": {
+    "FOR": 1,
+    "DES": 8,
+    "COS": 3,
+    "INT": 1,
+    "SAG": 6,
+    "CAR": 2
+  },
+  "pv": 4,
+  "pm": 4,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 7,
+    "riflessi": 12,
+    "volonta": 7,
+    "magia": 9
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    }
+  ],
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4,
+    "provvisorio": true
+  },
+  "attacchi": [],
+  "capacita": [
+    {
+      "nome": "Attraversamento predatorio",
+      "effetto": "1 AzP • VA 11, Corpo a corpo. Il cucciolo raggiunge il bersaglio e ne attraversa il corpo usando il proprio movimento. Non infligge danni ai PV e ignora l’AR fisica. Il bersaglio può Schivare; una Parata con arma ordinaria non può intercettarlo. Restano applicabili eventuali protezioni specifiche contro il risucchio. Dopo un attacco riuscito, il bersaglio effettua una prova di Magia 0. La quantità effettivamente assorbita determina l’eventuale overdose. Tabella (celle in ordine di lettura): Esito di Magia | PM assorbiti | Maldestro | 1d4 raddoppiato, massimo 4 PM | Fallimento | 1d4 PM | Successo | 1 PM, indipendentemente dal dado | Magistrale | 0 PM."
+    },
+    {
+      "nome": "Overdose e ritorno alla forma eterea",
+      "effetto": "Con 0–2 PM effettivamente assorbiti in un singolo attacco, il cucciolo rimane etereo e può rientrare nella roccia con il movimento residuo. Con 3–4 PM diventa immediatamente corporeo e cade, contorcendosi come un pesce fuori dall’acqua: il movimento si interrompe e qualsiasi arma può colpirlo, con AR 0. L’overdose dura fino alla fine del Round successivo a quello dell’assorbimento (R+1). Il cucciolo non può attaccare, muoversi volontariamente, attraversare la roccia o Schivare; conserva le prove salvezza applicabili. Al termine torna etereo. L’assorbimento lento nei bozzoli segue una procedura distinta e non provoca overdose."
+    }
+  ],
+  "note": "Dimensioni e spazio: Circa 60 cm; ingombro tattico 1 × 1 Q. Occhi: Due; capacità 1 PM ciascuno, vuoti alla morte. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà)."
+}

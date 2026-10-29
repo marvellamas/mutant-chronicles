@@ -1,0 +1,79 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "murena-della-roccia-giovane",
+  "nome": "Murena della Roccia giovane",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 7 «Fauna di Iris» — Murena della Roccia giovane",
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 7,
+    "COS": 5,
+    "INT": 2,
+    "SAG": 6,
+    "CAR": 2
+  },
+  "pv": 15,
+  "pm": 8,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 11,
+    "volonta": 8,
+    "magia": 10
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    }
+  ],
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4,
+    "provvisorio": true
+  },
+  "attacchi": [],
+  "capacita": [
+    {
+      "nome": "Morso e risucchio",
+      "effetto": "VA 12 • 1d6+2 • danno naturale da perforazione • portata 1 Q • AC 1 • 1 AzP. Se il morso infligge almeno 1 danno dopo l’AR, il bersaglio effettua una prova di Magia 0 per il risucchio. La prova modifica soltanto i PM sottratti, non il danno del morso. Tabella (celle in ordine di lettura): Esito di Magia | PM assorbiti | Maldestro | 1d4 raddoppiato, massimo 4 PM | Fallimento | 1d4 PM | Successo | 1 PM | Magistrale | 0 PM."
+    },
+    {
+      "nome": "Comportamento e movimento",
+      "effetto": "È una creatura corporea: le normali armi possono ferirla e il risucchio non causa overdose. Attraversa la roccia senza scavare, ma deve emergere per mordere. Il rientro richiede movimento disponibile, segue le normali regole degli attacchi di opportunità e non concede un’AzM aggiuntiva. Non percepisce automaticamente le prede oltre le pareti. Può proteggere i cuccioli, ma non possiede aura di terrore né soffio. Tende a ritirarsi sotto 5 PV o dopo una Ferita Profonda."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Movimento nella roccia: Passo / Corsa / Scatto: 6 / 12 / 18 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "Furtività 12, oppure 14 tra le rocce"
+    }
+  ],
+  "note": "Dimensioni e spazio: Lunghezza 1,2 m • 1 × 1 Q. Occhi: Due; capacità 5 PM ciascuno, vuoti alla morte. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà)."
+}

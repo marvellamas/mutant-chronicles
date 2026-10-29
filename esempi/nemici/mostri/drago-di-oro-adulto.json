@@ -1,0 +1,172 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "drago-di-oro-adulto",
+  "nome": "Drago di oro adulto",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Drago di oro adulto",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 7,
+    "COS": 10,
+    "INT": 9,
+    "SAG": 8,
+    "CAR": 10
+  },
+  "pv": 1400,
+  "pm": 140,
+  "ar": {
+    "totale": 26,
+    "magica": 8
+  },
+  "difese": 13,
+  "salvezze": {
+    "tempra": 18,
+    "riflessi": 13,
+    "volonta": 18,
+    "magia": 19
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 4,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24,
+    "volo": 100
+  },
+  "spazio": "10 × 6 Q",
+  "taglia": "grande",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 18
+    },
+    {
+      "nome": "Atletica",
+      "va": 18
+    },
+    {
+      "nome": "Percezione",
+      "va": 16
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 15
+    },
+    {
+      "nome": "Furtività",
+      "va": 8
+    },
+    {
+      "nome": "Oratoria",
+      "va": 16
+    }
+  ],
+  "gs_px": {
+    "gs": "Semidio",
+    "px": 400,
+    "per_pg": 4
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 18,
+      "danno": "8d10×5",
+      "natura": "Naturale",
+      "portata_q": 3,
+      "ac": 1
+    },
+    {
+      "nome": "Artiglio",
+      "tipo": "ravvicinato",
+      "va": 18,
+      "danno": "6d10×5",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Coda",
+      "tipo": "ravvicinato",
+      "va": 18,
+      "danno": "7d10×5",
+      "natura": "Naturale",
+      "portata_q": 4,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Soffi alternativi",
+      "effetto": "Danno: 12d10 × 5 Magico; Fuoco. Cono lungo 8 Q Tattici e largo 4 all’estremità. Riflessi −3; successo dimezza per eccesso prima delle protezioni. Indebolimento: cono lungo 8 Q Tattici e largo 4 all’estremità; Tempra −2, fallimento: −4 ai VA basati sulla forza per 5 Round; nuova Tempra a fine Iniziativa. Nessun danno. Entrambi i soffi: 2 AzP e 16 PM; usato uno, entrambi disponibili da R+3."
+    },
+    {
+      "nome": "Protezioni e condotta",
+      "effetto": "Immune ai danni da Fuoco e a Incendiato causato dal fuoco. Anfibio: respira aria e acqua; nuoto 8 / 16 / 24 Q Base. Unisce forza, trattativa e indebolimento dei combattenti più pericolosi. Presenza terrificante: 1 AzP, una volta per incontro, 12 Q Base; Volontà −2. Cambio di forma umanoide: 1 AzP e 5 PM; ritorno 1 AzP. Procedure nella pagina comune."
+    },
+    {
+      "nome": "Azioni per Round",
+      "effetto": "Giovane: 3 AzP e 1 AzM. Adulto: 4 AzP e 1 AzM. Le Azioni valgono per l’intero Round e non si rinnovano alla propria Iniziativa. Iniziativa 1d10 + 2 naturale per il giovane e 1d10 + 3 naturale per l’adulto. Al massimo un Morso e due Artigli per Round. L’adulto può sostituire un Artiglio con una Codata. Gli attacchi di Opportunità mantengono il costo ordinario e rientrano in questi limiti. Ogni attacco costa 1 AzP, produce AC 1 e usa il VA di Corpo a corpo. Nessuna Parata naturale; Schivata segue requisiti e costi comuni. Morso: danni Naturali da Perforazione; Artigli: Taglio; Coda: Contusione. Portata giovane: Morso 2 Q Base e Artiglio 1; adulto: Morso 3, Artiglio 2 e Coda 4 Q Base. Dadi e moltiplicatori comprendono i bonus ordinari: non aggiungerli di nuovo."
+    },
+    {
+      "nome": "Scala e movimento",
+      "effetto": "Un Q Base vale 1,5 m; un Q Tattico vale 15 m. Terra: 8 / 16 / 24 Q Base per entrambe le età. Volo giovane: 8 / 16 / 24 Q Tattici; adulto: 10 / 20 / 30. I soffi di entrambe queste età usano Q Tattici. Non mescolare le due scale. Ingombro giovane 6 × 4 Q Base, adulto 10 × 6; pedina navale rispettivamente 1 × 1 e 2 × 1 Q Tattici. Le ali richiedono spazio aggiuntivo e devono funzionare; la pedina non sostituisce le dimensioni reali nei passaggi. Nessuna sopravvivenza nel vuoto. Percorsi misti condividono l’unica AzM e rispettano Prove e andature. Nuoto, scavo e arrampicata sono nelle singole schede."
+    },
+    {
+      "nome": "Competenze e sensi",
+      "effetto": "Giovane/adulto: Atletica 15/18, Percezione 14/16, Sopravvivenza 13/15, Furtività 10/8. Ottone, bronzo, argento e oro possiedono Oratoria 14/16; rame Raggirare 14/16. Scurovisione 24 Q Base; Draconico e una lingua di contatto. Nessuna percezione automatica attraverso gli ostacoli."
+    },
+    {
+      "nome": "Attivazione e attesa condivisa",
+      "effetto": "Ogni soffio costa 2 AzP e i PM della scheda, pagati prima della risoluzione, soltanto alla propria Iniziativa. È una capacità innata senza Potere, Focus, componenti o Concentrazione; non si usa come Opportunità. Usato uno dei due soffi nel Round R, entrambi tornano disponibili da R+3. Esaurire i PM causa Svenuto dopo la risoluzione dell’azione."
+    },
+    {
+      "nome": "Area e danno",
+      "effetto": "Origine dalle fauci e direzione dichiarata. Una sola applicazione per bersaglio esposto anche se occupa più Q; un tiro di danno per tutta l’area, AC 1 per bersaglio. Gli alleati sono coinvolti, gli ostacoli schermano le parti coperte. Una linea mantiene la larghezza scritta; il cono raggiunge all’estremità la larghezza indicata. Nessun tiro per colpire, Magistrale d’attacco o seconda Difesa contro la stessa area. Elusione con Riflessi al modificatore della scheda: successo dimezza per eccesso prima delle protezioni. Se Elusione non è concretamente possibile si applica il danno completo."
+    },
+    {
+      "nome": "Proprietà del danno",
+      "effetto": "Fuoco, Gelo ed Elettricità seguono il Giocatore §5.24: gli effetti aggiuntivi richiedono le normali condizioni e Salvezze. La Salvezza secondaria è a 0 contro il giovane e −2 contro l’adulto. Fuoco può causare Incendiato, Gelo Rallentato, Elettricità impedire Azioni fuori dalla propria Iniziativa. Non aggiungere paralisi o stordimento automatici. Corrosivo segue invece la Prova di Integrità della protezione, una volta per protezione, bersaglio e attacco quando ne ricorrono i requisiti; non riduce direttamente l’AR e non crea danno periodico automatico. Le immunità scritte nelle schede valgono per l’elemento e gli effetti indicati."
+    },
+    {
+      "nome": "Veicoli",
+      "effetto": "Contro un mezzo esposto si applicano localizzazione, scudo pertinente, AR, PI, Integrità e Corazzato secondo il Manuale dei Veicoli, una sola applicazione per mezzo. Il soffio non colpisce automaticamente motori, celle energetiche o passeggeri protetti dallo scafo."
+    },
+    {
+      "nome": "Draghi metallici soffi alternativi",
+      "effetto": "Tutti costano 2 AzP e gli stessi PM del soffio che infligge danni della propria età; condividono l’attesa fino a R+3. Nessuno infligge danno. Il bersaglio esposto effettua soltanto Tempra 0 contro un giovane o −2 contro un adulto: successo evita interamente l’effetto, senza una seconda Elusione."
+    },
+    {
+      "nome": "Ottone sonno",
+      "effetto": "Cono lungo 4 Q Tattici e largo 2 all’estremità per il giovane; lungo 8 e largo 4 per l’adulto. Fallimento: Svenuto per 3/5 Round. Il sonno termina se il bersaglio subisce almeno 1 danno oppure se un alleato adiacente spende 1 AzP per svegliarlo. Si applicano gli effetti ordinari di Svenuto."
+    },
+    {
+      "nome": "Rame rallentamento",
+      "effetto": "Cono lungo 4/8 Q Tattici e largo 2/4 all’estremità. Fallimento: Rallentato per 3/5 Round secondo lo stato comune. Nuova Tempra alla fine della propria Iniziativa termina l’effetto in caso di successo."
+    },
+    {
+      "nome": "Bronzo repulsione",
+      "effetto": "Cono lungo 2/4 Q Tattici e largo 1/2 all’estremità. Fallimento: spinta di 3/6 Q Base direttamente lontano dal drago. Gli ostacoli arrestano lo spostamento; nessun Atterra o danno d’urto automatico. Le cadute reali seguono le regole comuni. La repulsione non sposta automaticamente veicoli e strutture e non richiede inalazione."
+    },
+    {
+      "nome": "Argento paralisi",
+      "effetto": "Cono lungo 4/8 Q Tattici e largo 2/4 all’estremità. Fallimento: paralisi completa per 1d3+1 Round per entrambe le età. Il bersaglio resta cosciente ma non può compiere azioni fisiche, muoversi o usare Difese attive; mantiene le Prove Salvezza. Nuova Tempra alla fine della propria Iniziativa termina l’effetto in caso di successo."
+    },
+    {
+      "nome": "Oro indebolimento",
+      "effetto": "Cono lungo 4/8 Q Tattici e largo 2/4 all’estremità. Fallimento: per 3/5 Round, −2/−4 al VA degli attacchi basati su FOR e delle Prove in cui la forza è determinante. FOR e danni non cambiano. Nuova Tempra alla fine della propria Iniziativa termina l’effetto in caso di successo. Sonno, rallentamento, paralisi e indebolimento richiedono un essere vivente che respira e una reale esposizione al gas; protezioni respiratorie adeguate possono impedirla. Valgono le immunità allo specifico effetto. Non si aggiunge Avvelenato. Riapplicare lo stesso effetto non somma le penalità: si mantiene la scadenza più lontana."
+    },
+    {
+      "nome": "Presenza terrificante degli adulti",
+      "effetto": "1 AzP alla propria Iniziativa, una volta per incontro, contro nemici entro 12 Q Base che percepiscono direttamente il drago. Volontà −1 per ottone e rame, −2 per bronzo, argento e oro. Fallimento: Terrorizzato per 1+1d3 Round, con effetti, scadenze e rimozione comuni. Una sola prova iniziale per creatura contro la Presenza dello stesso drago nell’incontro. I giovani non possiedono questa capacità."
+    },
+    {
+      "nome": "Forma umanoide di bronzo argento e oro adulti",
+      "effetto": "1 AzP e 5 PM per assumere una forma umanoide di dimensioni umane, mantenuta fino alla rinuncia volontaria. Ottone, rame e i giovani non possiedono questa capacità in questi profili. Caratteristiche mentali, memoria, lingue, PV e PM attuali, Ferite e condizioni Il cambio di forma non cura e non rigenera risorse. Restano le immunità elementali personali. In forma umanoide non usa Soffio, Presenza terrificante, ali, Coda o attacchi draconici. Non acquisisce equipaggiamento, incantesimi o competenze della persona imitata. Ritorno alla forma draconica: 1 AzP senza costo in PM, con spazio sufficiente. Il cambio di forma non rinnova Azioni spese nello stesso Round. Gli attacchi ordinari nella forma umanoide seguono le regole comuni per ciò che usa effettivamente."
+    }
+  ],
+  "note": "Drago metallico • adulto • Natura Comune. Sensi e linguaggi: Scurovisione 24 Q Base; Draconico e una lingua di contatto. Il danno «NdM × k» è il risultato dei dadi moltiplicato per k; il dado non si tira da solo (A.199)."
+}

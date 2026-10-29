@@ -1,0 +1,132 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "drago-bianco-di-ombra-giovane",
+  "nome": "Drago bianco d’ombra giovane",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Drago bianco d’ombra giovane",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 5,
+    "COS": 8,
+    "INT": 3,
+    "SAG": 6,
+    "CAR": 5
+  },
+  "pv": 400,
+  "pm": 40,
+  "ar": {
+    "totale": 14,
+    "magica": 2
+  },
+  "difese": 10,
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 10,
+    "volonta": 10,
+    "magia": 11
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24,
+    "volo": 80
+  },
+  "spazio": "6 × 4 Q",
+  "taglia": "grande",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 15
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "gs_px": {
+    "gs": "Mito",
+    "px": 200,
+    "per_pg": 4
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "4d10×3",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Artiglio",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "3d10×3",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Soffio d’ombra",
+      "effetto": "6d10 × 3 Etereo. Cono lungo 4 Q Tattici e largo 2 all’estremità. Costo 2 AzP e 8 PM; ogni 3 Round. Riflessi 0: successo dimezza per eccesso prima della sola AR magica pertinente. Il soffio non applica proprietà elementali né risucchio automatico di PM.",
+      "azioni": {
+        "principali": 2
+      },
+      "risorsa": "8 PM",
+      "limiti": "ogni 3 Round"
+    },
+    {
+      "nome": "Protezioni e capacità",
+      "effetto": "Immune a freddo e Gelo. Nuoto 8 / 16 / 24 Q Base; scavo in neve e ghiaccio 4 / 8 / 12. Si muove e scala sul ghiaccio senza le normali difficoltà del fondo. In penombra o buio dimezza i danni Naturali; dimezza i danni Eterei anche fuori dalle ombre, prima delle protezioni applicabili. Sole diretto: −2 ai VA d’attacco e a Percezione visiva, nei casi della pagina comune. Generare un’Ombra: 1 AzP e 6 PM, solo su un cadavere idoneo; massimo due servitori. Non possiede Presenza terrificante."
+    },
+    {
+      "nome": "Draghi d’ombra modello dei giovani cromatici",
+      "effetto": "Le cinque schede seguenti conservano Caratteristiche, risorse, Difese, attacchi fisici, movimento, dimensioni e immunità del giovane cromatico di origine. Sono draghi corporei viventi di Natura Comune. Il modello sostituisce il soffio e aggiunge soltanto le capacità descritte qui. Fonte di riferimento: Manuale dei Mostri fornito, pp. 84–85."
+    },
+    {
+      "nome": "Protezioni e ombre",
+      "effetto": "Ombra vivente: in penombra o buio dimezza per eccesso i danni Naturali prima dell’AR. Resistenza eterea: dimezza per eccesso i danni Eterei prima della componente di AR applicabile. Le due capacità riguardano componenti di danno differenti: non dimezzano due volte la stessa componente. Nessuna capacità permette di attraversare muri o diventare incorporei. Furtività in penombra o buio 14. Una volta per Round, al termine del proprio Passo, può tentare di nascondersi senza AzP, se coperture e condizioni reali sono sufficienti per tutto il corpo. Non diventa invisibile. Sensibilità solare: −2 ai VA d’attacco e a Percezione visiva se il drago o il bersaglio osservato sono al sole diretto; le due esposizioni non raddoppiano la penalità."
+    },
+    {
+      "nome": "Attacchi e soffio",
+      "effetto": "3 AzP e 1 AzM per Round; massimo un Morso e due Artigli, comprese le Opportunità. Ogni attacco fisico costa 1 AzP e produce AC 1. Morso Naturale da Perforazione, Artigli da Taglio; nessuna Parata naturale. Terra 8 / 16 / 24 Q Base, volo 8 / 16 / 24 Q Tattici. Corpo 6 × 4 Q Base, con spazio aggiuntivo per le ali; pedina navale 1 × 1 Q Tattici. Nessuna sopravvivenza nel vuoto. Soffio Etereo: 2 AzP e i PM della scheda, alla propria Iniziativa; usato in R, disponibile da R+3. Origine dalle fauci, direzione dichiarata, una sola applicazione per bersaglio, anche se occupa più Q. Alleati coinvolti, solidi schermanti. Elusione con Riflessi indicato: successo dimezza per eccesso prima delle protezioni. Nessun tiro per colpire o seconda Difesa. Si applica la sola componente magica dell’AR; non aggiunge le proprietà elementali originarie. Il verde d’ombra non richiede inalazione."
+    },
+    {
+      "nome": "Generare un’Ombra",
+      "effetto": "1 AzP e 6 PM, entro 2 Q Base da un umanoide realmente morto per i danni del soffio da non più di un minuto. Il cadavere deve essere percepito direttamente, senza ostacoli, e non essere già stato usato per creare un non morto. Occorre uno spazio libero entro 1 Q dal cadavere. PV 0 e Morente seguono le normali regole e non bastano a creare il servitore. L’attivazione crea un’Ombra della scheda del catalogo, a PV e PM pieni. Massimo due Ombre vincolate contemporaneamente. La nuova Ombra non agisce nel Round di creazione, non effettua Opportunità e mantiene le Salvezze passive. Dal Round successivo agisce subito dopo il drago con proprie Azioni, senza Azioni arretrate."
+    },
+    {
+      "nome": "Ordini e vincolo",
+      "effetto": "Si applica la procedura adottata per i servitori del Wraith. Alla propria Iniziativa il drago impartisce gratuitamente ordini semplici, udibili e comprensibili entro 12 Q Base. Gli ordini non concedono Azioni aggiuntive, telepatia o sensi condivisi. In assenza di nuovi ordini i servitori continuano l’ultimo concretamente eseguibile. Ogni legame di comando è un effetto mistico persistente di potenza 6, separato dal servitore. Negare Potere segue il confronto ordinario: potenza maggiore rimuove; uguale richiede Volontà di chi nega; inferiore non rimuove. Spezzare il legame o distruggere il drago libera l’Ombra senza distruggerla o ripristinarne le Azioni."
+    },
+    {
+      "nome": "PX e impiego",
+      "effetto": "Il drago parte senza servitori. Ogni Ombra coinvolta conserva il proprio valore di 20 PX, da usare nel procedimento degli incontri del Direttore. Non si sommano i PX del giovane cromatico ordinario a quelli della variante d’ombra. Il modello d’ombra e quello Dracolich sono configurazioni distinte."
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "in penombra o buio Furtività 14"
+    }
+  ],
+  "note": "Drago corporeo vivente • variante d’ombra • Natura Comune. Sensi e linguaggi: Scurovisione 24 Q Base • Draconico e una lingua di contatto. Il danno «NdM × k» è il risultato dei dadi moltiplicato per k; il dado non si tira da solo (A.199)."
+}

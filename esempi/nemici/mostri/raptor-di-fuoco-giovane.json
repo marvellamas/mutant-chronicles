@@ -1,0 +1,168 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "raptor-di-fuoco-giovane",
+  "nome": "Raptor di Fuoco giovane",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 7 «Fauna di Iris» — Raptor di Fuoco giovane",
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 8,
+    "COS": 6,
+    "INT": 3,
+    "SAG": 6,
+    "CAR": 2
+  },
+  "pv": 24,
+  "pm": 6,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 13,
+    "volonta": 8,
+    "magia": 9
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 10,
+    "corsa": 20,
+    "scatto": 30
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 13
+    }
+  ],
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4,
+    "provvisorio": true
+  },
+  "attacchi": [
+    {
+      "nome": "Testata",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d4+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Contusione"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Codata",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Contusione"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Risorse e valutazione",
+      "effetto": "Entrambi sono viventi e possiedono PM personali; non conoscono incantesimi. A 0 PV seguono Tempra, Ferite e Menomazioni ordinarie, senza morte o svenimento automatico. A 0 PM si applica Svenuto secondo le regole comuni. I PX sono riferiti a un esemplare e quattro PG; GS e PX restano da verificare al tavolo, soprattutto nella caccia familiare."
+    },
+    {
+      "nome": "Azioni e Difese",
+      "effetto": "Gli attacchi sono di Natura Naturale, costano ciascuno 1 AzP e producono AC 1; i danni comprendono già i bonus ordinari. Le Azioni sono un totale per Round. Può Schivare con i normali costi di 1 AzP e 1 AzM; nessuna Parata naturale. La normale Opportunità gratuita resta limitata a una per Round, con un attacco ravvicinato ordinario."
+    },
+    {
+      "nome": "Assalto con testata",
+      "effetto": "Richiede almeno 4 Q di Passo rettilineo verso la vittima nella stessa Iniziativa e costa 1 AzM e 1 AzP. Si dichiara prima del tiro: la Testata infligge 1d6 aggiuntivo, per un totale di 1d4+1d6+2 nel giovane o 2d6+3 nell’adulto. È un solo colpo. Non si cumula con Carica, Corsa, Scatto o altre manovre offensive; scegliendo la Carica ordinaria si rinuncia ai benefici specifici dell’Assalto."
+    },
+    {
+      "nome": "Atterramento",
+      "effetto": "Dopo almeno 1 danno finale oltre AR, la vittima effettua Tempra 0 contro il giovane o Tempra −2 contro l’adulto. Il fallimento applica A Terra. Occorrono un appoggio e un bersaglio non maggiore di 1 × 1 Q per il giovane o 2 × 2 Q per l’adulto. L’adulto può spendere l’altra AzP disponibile per mordere; non riceve attacchi aggiuntivi gratuiti. Rialzarsi e gli effetti di A Terra seguono le regole comuni."
+    },
+    {
+      "nome": "Mimetismo e caccia",
+      "effetto": "Fra rocce, lava e cenere può tentare l’occultamento anche quando la sagoma non è interamente coperta. Il beneficio ambientale è +4 a Furtività, già compreso nei VA 17 e 18. Individuazione, avvicinamento e sorpresa si risolvono normalmente. Il gruppo distrae con movimenti e attacchi reali mentre gli altri aggirano le scorte: la coordinazione non concede Azioni aggiuntive né sorpresa automatica."
+    },
+    {
+      "nome": "Resistenza al Fuoco",
+      "effetto": "Tollera il normale calore ambientale delle Terre del Fuoco. Dimezza per eccesso la componente Fuoco dopo Difese e Salvezze e prima dell’AR, anche per Fuoco Magico, Etereo o Incendiato. La Natura del danno determina quale AR si applica. Il tratto riguarda il Fuoco e non conferisce una resistenza generale a tutte le forme di energia."
+    },
+    {
+      "nome": "Sensibilità al freddo",
+      "effetto": "Un effetto di freddo che lo raggiunge lo disorienta per 1 Round, anche se l’AR assorbe tutto il danno. Non può spostarsi o attaccare, compresa l’Ondata difensiva, ma può difendersi pagando le normali Azioni. Un colpo completamente evitato non attiva il tratto. Danni ed effetti ordinari del Gelo si risolvono separatamente; non occorre una PS aggiuntiva per il disorientamento."
+    },
+    {
+      "nome": "Durata del disorientamento",
+      "effetto": "Applicato nel Round R, termina a fine R + 1. Nuove esposizioni mantengono la scadenza più lontana senza sommare durate. Sono ammessi i movimenti necessari alla Difesa, senza spostamento tattico in altri Q; cadute e movimenti forzati restano possibili. Il terreno già attivato conserva la propria durata."
+    },
+    {
+      "nome": "Emissione",
+      "effetto": "Alla propria Iniziativa spende le Azioni e i PM richiesti prima della risoluzione, una volta per incontro. È una capacità innata e non richiede una Prova di lancio. Tende a usarla quando è in pericolo di vita: alle soglie indicate oppure dopo una Ferita Profonda. Allontanarsi e rientrare nello stesso scontro non ripristina il limite d’uso."
+    },
+    {
+      "nome": "Fuoco e plasma",
+      "effetto": "L’emissione biologica produce un unico danno Naturale con proprietà Fuoco, che rappresenta insieme le fiamme e il plasma. Non si aggiunge una seconda componente di danno o un effetto tecnico separato. Ogni bersaglio esposto riceve una sola applicazione, anche se occupa più Q."
+    },
+    {
+      "nome": "Area e Difesa",
+      "effetto": "L’ondata si propaga attorno al corpo fino al raggio indicato e coinvolge tutti i bersagli esposti, compresi eventuali compagni, escluso l’emittente. Gli ostacoli solidi schermano le parti coperte. Non richiede tiro per colpire. Quando l’effetto è evitabile, Elusione con Riflessi 0 dimezza il danno per eccesso; seguono resistenze, AR e conseguenze ordinarie del Fuoco. Non si aggiunge una seconda Difesa contro la stessa Area."
+    },
+    {
+      "nome": "Ritirata",
+      "effetto": "Dopo l’emissione il Raptor cerca di allontanarsi usando l’AzM ancora disponibile e rispettando le normali Opportunità. Il costo della capacità non include un movimento gratuito. L’area attivata rimane nel luogo investito e non segue il corpo."
+    },
+    {
+      "nome": "Terreno attivato",
+      "effetto": "Il suolo raggiunto dall’ondata diventa terreno difficile e infligge il danno residuo indicato a chi vi si trova a contatto. I Raptor ignorano la difficoltà di movimento di questo terreno; contro il calore si applicano le loro normali protezioni. L’area resta attiva fino alla fine del Round R + 5, contando R come Round dell’emissione, senza bisogno di mantenimento."
+    },
+    {
+      "nome": "Esposizione",
+      "effetto": "Il danno ambientale si applica una sola volta per bersaglio per Round, al primo ingresso nell’area oppure all’inizio della propria Iniziativa se è già al suo interno. Chi subisce l’ondata iniziale non riceve anche il danno persistente nello stesso Round. Si applicano resistenze e AR pertinenti; il terreno difficile vale anche quando il danno viene interamente assorbito."
+    },
+    {
+      "nome": "Sovrapposizioni",
+      "effetto": "Se più aree coinvolgono contemporaneamente un bersaglio, si applica soltanto il danno ambientale più alto. Attraversare più aree non moltiplica le applicazioni nello stesso Round; ogni area conserva la propria scadenza. Al termine dei cinque Round cessano il danno e la difficoltà introdotti dalla capacità, restando le condizioni naturali del luogo."
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "Furtività nelle Terre del Fuoco 17"
+    }
+  ],
+  "note": "Fauna di Iris • predatore delle Terre del Fuoco • Natura Comune. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà)."
+}

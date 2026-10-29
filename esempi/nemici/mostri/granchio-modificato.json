@@ -1,0 +1,107 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "granchio-modificato",
+  "nome": "Granchio modificato",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 7 «Fauna di Iris» — Granchio modificato",
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 6,
+    "COS": 6,
+    "INT": 1,
+    "SAG": 4,
+    "CAR": 2
+  },
+  "pv": 20,
+  "pm": 3,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 10,
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 10,
+    "volonta": 6,
+    "magia": 7
+  },
+  "iniziativa": 0,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4,
+    "provvisorio": true
+  },
+  "attacchi": [
+    {
+      "nome": "Chela",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Aculeo",
+      "tipo": "distanza",
+      "va": 11,
+      "danno": "1d4+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "veleno"
+      ],
+      "gittata_q": 4,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Azioni",
+      "effetto": "Ogni attacco produce AC 1; con l’unica AzP sceglie Chela oppure Aculeo. Gittata, Difese e opportunità seguono le regole comuni. Nessuna Parata naturale; Schivata costa 1 AzP e 1 AzM. Arrampicarsi sui tentacoli usa il Movimento disponibile, con Atletica quando le condizioni lo richiedono."
+    },
+    {
+      "nome": "Aculei paralizzanti",
+      "effetto": "Inoculazione. Occorre almeno 1 danno finale oltre AR. La vittima effettua Tempra 0: il successo evita completamente la paralisi; il fallimento causa paralisi completa per 1d3+1 Round. Questa Salvezza è un’eccezione specifica alla durata ridotta dei veleni ordinari. Un colpo ordinario contro AR 5 inocula solo con 4 sul d4, lasciando 1 danno residuo. Paralisi completa. La vittima resta cosciente ma non può muoversi volontariamente, attaccare, compiere altre azioni fisiche o effettuare Difese attive. Conserva le PS passive applicabili. Non è Svenuto e non si applica soltanto Immobilizzato. Non ripete la Salvezza ogni Round. Durata e cura. Applicata nel Round R per N Round, termina a fine R + N. Nuove inoculazioni mantengono la scadenza più lontana, senza sommare le durate. Un antidoto appropriato termina l’effetto; Medicina non lo annulla automaticamente. La chela non inocula questo veleno."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Nuoto: 6 / 12 / 18 QValori nell’ordine Passo / Corsa / Scatto"
+    }
+  ],
+  "note": "Fauna di Iris • assalitore associato alla Piovra • Natura Comune. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà)."
+}

@@ -1,0 +1,153 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "drago-di-oro-cucciolo",
+  "nome": "Drago d’oro cucciolo",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Drago d’oro cucciolo",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 7,
+    "COS": 7,
+    "INT": 7,
+    "SAG": 6,
+    "CAR": 8
+  },
+  "pv": 180,
+  "pm": 45,
+  "ar": {
+    "totale": 10,
+    "magica": 2
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 11,
+    "volonta": 12,
+    "magia": 13
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18,
+    "volo": 60
+  },
+  "spazio": "2 × 1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    },
+    {
+      "nome": "Oratoria",
+      "va": 11
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "2d10+4",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Soffi alternativi",
+      "effetto": "Danno: 4d10 × 2 Magico; Fuoco. Cono lungo 6 Q Base e largo 3 all’estremità. Riflessi 0; successo dimezza per eccesso prima delle protezioni. Indebolimento: cono lungo 3 Q Base e largo 1,5 all’estremità; Tempra +2, fallimento: −2 ai VA basati sulla forza per 2 Round; nuova Tempra a fine Iniziativa. Nessun danno. Entrambi: 2 AzP e 6 PM; usato uno, entrambi disponibili da R+3."
+    },
+    {
+      "nome": "Protezioni e condotta",
+      "effetto": "Immune a Fuoco e a Incendiato causato dal fuoco. Anfibio; nuoto 6 / 12 / 18 Q Base. Combina forza, trattativa e indebolimento."
+    },
+    {
+      "nome": "Azioni e attacchi",
+      "effetto": "Cucciolo: Iniziativa 1d10 + 1 naturale; 2 AzP e 1 AzM per Round; un solo Morso al massimo per Round. Antico: Iniziativa 1d10 + 4 naturale; 5 AzP e 1 AzM; un Morso e fino a due Artigli per Round, con possibilità di sostituire un Artiglio con una Codata. Le Opportunità mantengono il costo ordinario e rientrano nei limiti offensivi. Le Azioni non si rinnovano alla propria Iniziativa. Ogni attacco fisico costa 1 AzP, produce AC 1 e usa Corpo a corpo. Morso: danni Naturali da Perforazione; Artigli: Taglio; Coda: Contusione. Portata del Morso cucciolo 1 Q Base; antico: Morso 4, Artiglio 3 e Coda 6 Q Base. Dadi e moltiplicatori sono completi. Nessuna Parata naturale; Schivata segue requisiti e costi comuni."
+    },
+    {
+      "nome": "Movimento e scala",
+      "effetto": "Un Q Base vale 1,5 m; un Q Tattico vale 15 m. Terra cucciolo 6 / 12 / 18 Q Base, antico 10 / 20 / 30. Volo cucciolo 6 / 12 / 18 Q Tattici, antico 12 / 24 / 36. Ingombro del corpo 2 × 1 / 16 × 10 Q Base; pedina navale 1 × 1 / 2 × 2 Q Tattici. Le ali richiedono spazio aggiuntivo e devono funzionare. Nessuna sopravvivenza nel vuoto. La pedina navale non sostituisce le dimensioni reali nei passaggi. Percorsi misti condividono l’unica AzM e rispettano Prove e limiti delle andature. Le modalità di movimento aggiuntive sono nelle singole schede."
+    },
+    {
+      "nome": "Competenze e sensi",
+      "effetto": "Cucciolo/antico: Atletica 12/20, Percezione 12/18, Sopravvivenza 11/18, Furtività 12/6. Oratoria 11/18 per ottone, bronzo, argento e oro; Raggirare 11/18 per il rame. Scurovisione 12/24 Q Base. Draconico per i cuccioli, con due lingue di contatto aggiuntive per gli antichi. Nessuna percezione automatica oltre gli ostacoli."
+    },
+    {
+      "nome": "Attivazione e attesa condivisa",
+      "effetto": "2 AzP e i PM della scheda, pagati prima della risoluzione, soltanto alla propria Iniziativa. Capacità innata senza Potere, Focus, componenti o Concentrazione; non si usa come Opportunità. Usato uno dei due soffi nel Round R, entrambi tornano disponibili da R+3. I PM si consumano anche senza effetti; esaurirli causa Svenuto dopo la risoluzione dell’azione."
+    },
+    {
+      "nome": "Area e risoluzione",
+      "effetto": "I soffi dei cuccioli usano Q Base; quelli degli antichi Q Tattici. Origine dalle fauci e direzione dichiarata. Una sola applicazione per bersaglio esposto anche se occupa più Q; un tiro di danno per tutta l’area, AC 1 per bersaglio. Gli alleati sono coinvolti e gli ostacoli schermano le parti coperte. Una linea mantiene la larghezza scritta; il cono raggiunge all’estremità la larghezza indicata. Nessun tiro per colpire, Magistrale d’attacco o seconda Difesa contro la stessa area. Elusione con Riflessi al modificatore della scheda: successo dimezza per eccesso prima delle protezioni. Se Elusione non è concretamente possibile si applica il danno completo."
+    },
+    {
+      "nome": "Proprietà e protezioni",
+      "effetto": "Fuoco, Gelo ed Elettricità seguono condizioni e contromisure del Giocatore §5.24. Le eventuali Salvezze secondarie sono a +2 contro i cuccioli e −4 contro gli antichi. Fuoco può causare Incendiato, Gelo Rallentato, Elettricità impedire Azioni fuori dalla propria Iniziativa; nessuna paralisi o stordimento automatici. Corrosivo segue la Prova di Integrità della protezione quando ne ricorrono i requisiti, una volta per protezione, bersaglio e attacco. Non riduce direttamente l’AR e non crea danni periodici automatici. Le immunità di specie non assegnano vulnerabilità automatiche all’elemento opposto."
+    },
+    {
+      "nome": "Veicoli",
+      "effetto": "Contro un mezzo esposto si applicano localizzazione, scudo pertinente, AR, PI, Integrità e Corazzato del Manuale dei Veicoli, una sola applicazione per mezzo. Nessun colpo automatico a motori, celle energetiche o occupanti protetti dallo scafo."
+    },
+    {
+      "nome": "Metallici cuccioli e antichi soffi alternativi",
+      "effetto": "Tutti costano 2 AzP e gli stessi PM del soffio dannoso della creatura; condividono l’attesa fino a R+3. Nessuno infligge danni. Il bersaglio esposto effettua soltanto Tempra +2 contro un cucciolo o −4 contro un antico: successo evita interamente l’effetto, senza una seconda Elusione."
+    },
+    {
+      "nome": "Ottone sonno",
+      "effetto": "Cono lungo 3 Q Base e largo 1,5 per il cucciolo; lungo 12 Q Tattici e largo 6 per l’antico. Fallimento: Svenuto per 2/7 Round. Termina subendo almeno 1 danno oppure se un alleato adiacente spende 1 AzP per svegliare il bersaglio. Valgono gli effetti ordinari di Svenuto."
+    },
+    {
+      "nome": "Rame rallentamento",
+      "effetto": "Cono lungo 3 Q Base e largo 1,5 per il cucciolo; lungo 12 Q Tattici e largo 6 per l’antico. Fallimento: Rallentato per 2/7 Round secondo lo stato comune. Una nuova Tempra alla fine della propria Iniziativa termina l’effetto in caso di successo."
+    },
+    {
+      "nome": "Bronzo repulsione",
+      "effetto": "Cono lungo 2 Q Base e largo 1 per il cucciolo; lungo 6 Q Tattici e largo 3 per l’antico. Fallimento: spinta di 1/10 Q Base direttamente lontano dal drago. Gli ostacoli arrestano il movimento. Nessun Atterra o danno d’urto automatico; le cadute reali seguono le regole comuni. Nessuno spostamento automatico di mezzi o strutture. Non richiede inalazione."
+    },
+    {
+      "nome": "Argento paralisi",
+      "effetto": "Cono lungo 3 Q Base e largo 1,5 per il cucciolo; lungo 12 Q Tattici e largo 6 per l’antico. Fallimento: paralisi completa per 1d3+1 Round per entrambe le età. Il bersaglio resta cosciente, senza movimento, azioni fisiche o Difese attive; mantiene le Salvezze. Una nuova Tempra alla fine della propria Iniziativa termina l’effetto in caso di successo."
+    },
+    {
+      "nome": "Oro indebolimento",
+      "effetto": "Cono lungo 3 Q Base e largo 1,5 per il cucciolo; lungo 12 Q Tattici e largo 6 per l’antico. Fallimento: per 2/7 Round, −2/−6 ai VA degli attacchi basati su FOR e delle Prove in cui la forza è determinante. Caratteristiche e danni non cambiano. Una nuova Tempra alla fine della propria Iniziativa termina l’effetto in caso di successo. I gas richiedono respirazione ed esposizione effettiva di un essere vivente; valgono protezioni respiratorie e immunità pertinenti. Non si aggiunge Avvelenato. Riapplicare lo stesso effetto non somma le penalità: si mantiene la scadenza più lontana."
+    },
+    {
+      "nome": "Presenza terrificante",
+      "effetto": "Solo antichi: 1 AzP alla propria Iniziativa, una volta per incontro, entro 24 Q Base contro nemici che percepiscono direttamente il drago. Volontà −3 per ottone e rame, −4 per bronzo, argento e oro. Fallimento: Terrorizzato per 1+1d3 Round, con effetti, scadenze e possibilità di rimozione comuni. Una sola prova iniziale per creatura contro la Presenza dello stesso drago nell’incontro. I cuccioli non possiedono questa capacità."
+    },
+    {
+      "nome": "Forma umanoide di tutte e cinque le specie antiche",
+      "effetto": "1 AzP e 5 PM per assumere una forma umanoide di dimensioni umane, mantenuta fino alla rinuncia volontaria. Anche ottone e rame antichi possiedono questa capacità. I cuccioli non la possiedono. Caratteristiche mentali, memoria, lingue, PV e PM attuali, Ferite e condizioni Il cambio non cura e non rigenera risorse. Restano le immunità elementali personali. In forma umanoide non usa Soffio, Presenza terrificante, ali, Coda o attacchi draconici. Non acquisisce equipaggiamento, incantesimi o competenze della persona imitata. Ritorno alla forma draconica: 1 AzP senza costo in PM, con spazio sufficiente. Il cambio non rinnova Azioni spese nello stesso Round. Gli attacchi ordinari nella forma umanoide seguono le regole comuni per ciò che usa effettivamente."
+    }
+  ],
+  "note": "Drago metallico • cucciolo • Natura Comune. Sensi e linguaggi: Scurovisione 12 Q Base; Draconico."
+}

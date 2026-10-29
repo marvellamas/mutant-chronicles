@@ -1,0 +1,95 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "becco-di-ascia",
+  "nome": "Becco d’ascia",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Becco d’ascia",
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 6,
+    "COS": 6,
+    "INT": 1,
+    "SAG": 5,
+    "CAR": 2
+  },
+  "pv": 24,
+  "pm": 5,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 9,
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 10,
+    "volonta": 8,
+    "magia": 8
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 10,
+    "corsa": 20,
+    "scatto": 30
+  },
+  "spazio": "1 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 8
+    }
+  ],
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "attacchi": [
+    {
+      "nome": "Becco",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Adattamenti e condotta",
+      "effetto": "Può usare la Carica ordinaria pagando Azioni, Prove e penalità previste dal sistema. Il profilo non aggiunge un abbattimento automatico al colpo."
+    },
+    {
+      "nome": "Azioni e movimento",
+      "effetto": "Tutti dispongono di 1 AzP e 1 AzM per Round. Massimo un attacco per Round, Opportunità compresa; nessuna Parata naturale. Schivata con costi e requisiti ordinari. Ogni attacco costa 1 AzP, produce AC 1 e ha portata di contatto entro 1 Q, quando il bersaglio è realmente raggiungibile. I danni Naturali sono completi, senza aggiungere nuovamente i bonus ordinari. Movimento nell’ordine Passo / Corsa / Scatto. Le modalità indicate condividono l’unica AzM e seguono Prove, percorsi misti e limiti delle andature. Le ali richiedono spazio. Passaggio in volo è un’eccezione del Serpente volante, non una proprietà di tutti i volatori. Il Cavalluccio marino ordinario non possiede attacchi efficaci."
+    },
+    {
+      "nome": "Dimensioni e sensi",
+      "effetto": "Becco d’ascia, Coccodrillo e Cavalluccio marino gigante occupano 1 × 2 Q. Gli altri usano una pedina di gestione da 1 Q conservando le dimensioni reali per passaggi, coperture e prese. Gli animali non comprendono linguaggi. Le percezioni speciali restano limitate al mezzo, alla distanza e alle condizioni della singola scheda."
+    },
+    {
+      "nome": "Branco e risorse",
+      "effetto": "Falco sanguinario e Ratto gigante possiedono Branco: +2 al VA dell’attacco quando un alleato vigile e capace di minacciare realmente la vittima è entro 1 Q da essa. Più compagni non aumentano il bonus, che non è incluso nel VA base e non concede Azioni. Le circostanze devono essere concretamente soddisfatte. PV, PM personali, Ferite, Menomazioni, respiro e soffocamento seguono le regole comuni. Tossine, prese e inchiostro funzionano soltanto con i requisiti scritti; i normali animali non ricevono protezioni ambientali della fauna modificata di Iris."
+    }
+  ],
+  "note": "Fauna ordinaria • Natura Comune. Sensi e linguaggi: Nessuno speciale; nessun linguaggio."
+}

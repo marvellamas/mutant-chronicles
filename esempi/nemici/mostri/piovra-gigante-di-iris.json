@@ -1,0 +1,114 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "piovra-gigante-di-iris",
+  "nome": "Piovra gigante di Iris",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 7 «Fauna di Iris» — Piovra gigante di Iris",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 6,
+    "COS": 8,
+    "INT": 2,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "pv": 60,
+  "pm": 5,
+  "ar": {
+    "totale": 5,
+    "magica": 0
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 10,
+    "volonta": 8,
+    "magia": 9
+  },
+  "iniziativa": 0,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 2,
+    "corsa": 4,
+    "scatto": 6
+  },
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 15
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4,
+    "provvisorio": true
+  },
+  "attacchi": [
+    {
+      "nome": "Tentacolo",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Contusione"
+      ],
+      "portata_q": 3
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Stringere una creatura",
+      "effetto": "VA 14¹. Danno: 2d6+2 Naturale; Contusione. Portata/costo: Vittima già in presa; 1 AzP; "
+    },
+    {
+      "nome": "Stritolare il mezzo",
+      "effetto": "VA —. Danno: 1d6 Naturale per ogni tentacolo agganciato. Portata/costo: Scafo a contatto; 1 AzP totale; "
+    },
+    {
+      "nome": "Azioni e Difese",
+      "effetto": "Le 2 AzP appartengono all’intera creatura, non a ciascun tentacolo, e non si rinnovano all’arrivo dell’Iniziativa. Può conservarle per Schivare, al costo ordinario di 1 AzP e 1 AzM; nessuna Parata naturale. I tentacoli occupati in una presa non attaccano altri bersagli."
+    },
+    {
+      "nome": "Riserve separate",
+      "effetto": "Il corpo ha 60 PV e ogni tentacolo 30 PV, tutti con AR 5. Il bersaglio del colpo deve essere dichiarato e realmente raggiungibile. Il danno a un tentacolo riduce soltanto la sua riserva, senza sottrarlo anche al corpo. L’immersione e la copertura del corpo si risolvono normalmente."
+    },
+    {
+      "nome": "Tentacolo a 0 PV",
+      "effetto": "Come eccezione specifica, lascia immediatamente il bersaglio ed è inutilizzabile per il resto dell’incontro. Non richiede ulteriori danni o Prove di Tempra per cessare la presa. Non rigenera durante la scena e non viene sostituito da un nuovo tentacolo."
+    },
+    {
+      "nome": "Corpo a 0 PV",
+      "effetto": "Seguono le normali regole: non diventa automaticamente morto o Svenuto. Un nuovo danno finale positivo mentre il corpo è già a 0 PV richiede Tempra e applica le Ferite ordinarie. Anche PM, Stati e Menomazioni seguono le regole comuni."
+    },
+    {
+      "nome": "Catturare una creatura",
+      "effetto": "Un tentacolo libero e funzionante può colpire un bersaglio entro 3 Q. Dopo almeno 1 danno oltre AR, la vittima effettua Riflessi 0: il fallimento applica Immobilizzato. Ogni tentacolo può trattenere una sola vittima; mentre la trattiene non contribuisce allo stritolamento dello scafo e non può colpire un altro bersaglio. Stringere. Costa 1 AzP e richiede Corpo a corpo 14 contrapposto a Corpo a corpo o Atletica della vittima, applicando il −4 fisico di Immobilizzato. Se la Piovra prevale, infligge 2d6+2 Naturale, Contusione, ridotto normalmente dall’AR. Non si aggiunge una seconda Difesa alla stessa opposizione. Trattenere da solo non infligge danni gratuiti. Liberarsi. La vittima spende 1 AzP e oppone Corpo a corpo o Atletica a Corpo a corpo 14, con le penalità dello Stato. Il pareggio conserva la presa. Un alleato a contatto può spendere 1 AzP e usare la medesima opposizione per liberarla, secondo le normali regole di aiuto."
+    },
+    {
+      "nome": "Trattenere un’imbarcazione",
+      "effetto": "L’aggancio iniziale si risolve come indicato nella pagina dell’incontro. Una volta in presa, Stritolare il mezzo costa 1 AzP per tutti i tentacoli agganciati e si attiva una sola volta nel Round. Ogni tentacolo infligge 1d6, risolto separatamente. Non richiede tiro per colpire e non genera Magistrali. Se la Piovra non può agire, non applica automaticamente questo danno. Manovra di distacco. Il conducente spende 1 AzP e l’AzM di conduzione, poi oppone Pilotare a Corpo a corpo 14. Applica MAN, andatura e gli altri modificatori pertinenti. Se riesce, libera un tentacolo; pareggio o fallimento conservano la presa. L’equipaggio può anche liberare il mezzo portando i tentacoli a 0 PV. Rilascio. È gratuito alla propria Iniziativa. Svenuto, morte, una Menomazione che impedisce la presa o una separazione fisica effettiva la interrompono. Trattenere lo scafo non immobilizza gli occupanti, non consente movimento indipendente incompatibile con la portata e non infligge loro il danno strutturale."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Nuoto: Passo 12 Q • Corsa 24 Q • Scatto 36 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "Furtività immersa 13"
+    }
+  ],
+  "note": "Esemplare modificato • predatore acquatico • Natura Comune. Impiego e PX. Il valore di 70 PX comprende corpo e appendici; i tentacoli non assegnano PX separati. GS e PX restano provvisori, da verificare al tavolo. Il Polpo gigante del catalogo conserva il proprio profilo standard. ¹ Prova contrapposta di Corpo a corpo. Gli attacchi contro creature producono ciascuno AC 1. Stritolare il mezzo si usa al massimo una volta per Round, alla propria Iniziativa: ogni tentacolo applica separatamente il proprio danno allo scafo. Risorse nel manuale: Corpo: 60 PV • ogni tentacolo: 30 PV. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà)."
+}

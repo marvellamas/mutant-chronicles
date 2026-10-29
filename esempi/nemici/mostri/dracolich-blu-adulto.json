@@ -1,0 +1,126 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "dracolich-blu-adulto",
+  "nome": "Dracolich blu adulto",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Dracolich blu adulto",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 5,
+    "COS": 10,
+    "INT": 8,
+    "SAG": 8,
+    "CAR": 9
+  },
+  "pv": 1200,
+  "pm": 100,
+  "ar": {
+    "totale": 24,
+    "magica": 6
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 18,
+    "riflessi": 11,
+    "volonta": 16,
+    "magia": 19
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 4,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24,
+    "volo": 100
+  },
+  "spazio": "10 × 6 Q",
+  "taglia": "grande",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 17
+    },
+    {
+      "nome": "Atletica",
+      "va": 18
+    },
+    {
+      "nome": "Percezione",
+      "va": 16
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 15
+    },
+    {
+      "nome": "Furtività",
+      "va": 8
+    }
+  ],
+  "gs_px": {
+    "gs": "Divinità",
+    "px": 800,
+    "per_pg": 4
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 17,
+      "danno": "7d10×5",
+      "natura": "Naturale",
+      "portata_q": 3
+    },
+    {
+      "nome": "Artiglio",
+      "tipo": "ravvicinato",
+      "va": 17,
+      "danno": "5d10×5",
+      "natura": "Naturale",
+      "portata_q": 2
+    },
+    {
+      "nome": "Coda",
+      "tipo": "ravvicinato",
+      "va": 17,
+      "danno": "6d10×5",
+      "natura": "Naturale",
+      "portata_q": 4
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Soffio e presenza",
+      "effetto": "Soffio: 10d10 × 5 Magico, Elettricità; linea 16 × 1 Q Tattici. Costo 2 AzP e 16 PM; ogni 3 Round. Riflessi −3 dimezza per eccesso prima delle protezioni; effetti secondari con Tempra −2. Presenza terrificante: 1 AzP, una volta per incontro entro 12 Q Base; Volontà −2, fallimento Terrorizzato per 1+1d3 Round, con rimozioni comuni.",
+      "azioni": {
+        "principali": 2
+      },
+      "risorsa": "16 PM",
+      "limiti": "ogni 3 Round"
+    },
+    {
+      "nome": "Protezioni e condotta",
+      "effetto": "Immune all’Elettricità e agli effetti aggiuntivi pertinenti; acquisisce immunità e resistenza eterea del modello comune. Il +2 mistico è già incluso in Magia 19; si applica alle altre Salvezze quando l’origine è magica. Scavo in sabbia e terreno friabile 6 / 12 / 18 Q Base. Massimo un Morso e due Artigli per Round, sostituendo un Artiglio con Coda, comprese le Opportunità. Nessuna Parata naturale."
+    },
+    {
+      "nome": "Dracolich modello comune",
+      "effetto": "Scegliere una scheda completa di drago vero adulto o antico, cromatico o metallico, e applicare questo modello. Conserva Caratteristiche, PV, PM, AR, Azioni, movimento, dimensioni, attacchi fisici, Presenza terrificante e capacità compatibili con la trasformazione. Mantiene immunità elementale e soffi del colore, con danni, costi e frequenza della propria età. Fonte di riferimento: Manuale dei Mostri fornito, pp. 83–84."
+    },
+    {
+      "nome": "Tratti comuni da non morto",
+      "effetto": "Corpo non morto: non necessita di respirare, mangiare, bere o dormire. Acquisisce immunità a veleno, Avvelenato, paralisi, fascinazione, Terrorizzato e Affaticamento. Dimezza per eccesso i danni Eterei prima della componente di AR applicabile. Restano le normali procedure di danno e Ferite, adattate alle parti funzionali del corpo. Resistenza mistica: +2 alle Prove Salvezza contro effetti magici, una sola volta per Prova. Se incluso nel valore stampato di Magia non si aggiunge di nuovo. Nessuna nuova AR o Azione deriva dal modello. Le capacità legate soltanto a una necessità biologica cessata non creano nuovi benefici; le capacità innate del colore restano quelle espresse nella scheda scelta."
+    },
+    {
+      "nome": "Gemma filatterio",
+      "effetto": "Gemma vincolata al dracolich: PI 4, AR 4 di cui 2 magica, Integrità 14. Danni e deterioramento seguono le procedure comuni degli oggetti. Quando il corpo viene effettivamente distrutto, lo spirito torna alla gemma se è integra e sullo stesso piano. PV 0 o Morente da soli non attivano questo ritorno. Nella gemma lo spirito non agisce. Il contatto della gemma con un cadavere sostanzialmente integro di drago adulto o antico consente la ricostituzione dopo 24 ore, usando il profilo del dracolich. Distruggere la gemma impedisce ulteriori ritorni; il corpo ancora attivo continua a usare le proprie risorse correnti. Il filatterio non concede una guarigione istantanea durante lo scontro."
+    },
+    {
+      "nome": "GS e PX per quattro PG",
+      "effetto": "La configurazione Dracolich occupa una fascia superiore al drago corrispondente. I valori comprendono tratti comuni e vincolo del filatterio; servitori, dotazioni aggiuntive e moduli della tana restano separati. Questa tabella classifica il profilo; il calcolo del premio dell’incontro rimane nel Manuale del Direttore §9.3. Il blu adulto seguente è un esempio completo. Per un altro colore si parte dalla sua scheda adulta o antica e si applicano le stesse modifiche, conservandone i soffi."
+    }
+  ],
+  "note": "Esempio compilato del modello comune • Natura Comune. Sensi e linguaggi: Scurovisione 24 Q Base • Draconico e una lingua di contatto. Il danno «NdM × k» è il risultato dei dadi moltiplicato per k; il dado non si tira da solo (A.199)."
+}

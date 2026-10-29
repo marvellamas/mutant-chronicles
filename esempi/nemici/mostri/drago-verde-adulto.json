@@ -1,0 +1,153 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "drago-verde-adulto",
+  "nome": "Drago verde adulto",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Drago verde adulto",
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 6,
+    "COS": 9,
+    "INT": 9,
+    "SAG": 8,
+    "CAR": 8
+  },
+  "pv": 1000,
+  "pm": 90,
+  "ar": {
+    "totale": 22,
+    "magica": 5
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 16,
+    "riflessi": 12,
+    "volonta": 16,
+    "magia": 17
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 4,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24,
+    "volo": 100
+  },
+  "spazio": "10 × 6 Q",
+  "taglia": "grande",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 16
+    },
+    {
+      "nome": "Atletica",
+      "va": 18
+    },
+    {
+      "nome": "Percezione",
+      "va": 16
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 15
+    },
+    {
+      "nome": "Furtività",
+      "va": 8
+    }
+  ],
+  "gs_px": {
+    "gs": "Mito",
+    "px": 200,
+    "per_pg": 4
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "6d10×5",
+      "natura": "Naturale",
+      "portata_q": 3,
+      "ac": 1
+    },
+    {
+      "nome": "Artiglio",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "4d10×5",
+      "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Coda",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "5d10×5",
+      "natura": "Naturale",
+      "portata_q": 4,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Soffio",
+      "effetto": "8d10 × 5 Naturale; veleno inalato • Cono lungo 8 Q Tattici e largo 4 all’estremità • 2 AzP e 12 PM • ogni 3 Round. Tempra −2. La prova dimezza il danno; applicare le regole del veleno inalato della pagina comune.",
+      "azioni": {
+        "principali": 2
+      },
+      "risorsa": "12 PM",
+      "limiti": "ogni 3 Round"
+    },
+    {
+      "nome": "Protezioni e condotta",
+      "effetto": "Immune ai danni da veleno e ad Avvelenato. Anfibio: respira aria e acqua. Nuoto 8 / 16 / 24 Q Base. Usa vegetazione, inganno e trattative; il gas minaccia soprattutto creature esposte e non danneggia uno scafo chiuso per raggiungerne gli occupanti. Presenza terrificante: 1 AzP, una volta per incontro, 12 Q Base; Volontà −1. Procedura nella pagina comune."
+    },
+    {
+      "nome": "Azioni e sequenza offensiva",
+      "effetto": "Giovane: 3 AzP e 1 AzM per Round. Adulto: 4 AzP e 1 AzM. Le Azioni sono disponibili nell’intero Round e non si rinnovano alla propria Iniziativa. Ogni attacco fisico costa 1 AzP e produce AC 1. Per Round: un Morso e fino a due Artigli; l’adulto può sostituire un Artiglio con una Codata. Le Opportunità rientrano in questi limiti, conservando il normale costo del sistema. La quarta AzP dell’adulto può servire a difendersi, usare Presenza terrificante o svolgere un’altra azione consentita. I danni sono completi: si tirano i dadi e si moltiplica il totale per il fattore scritto, senza aggiungere nuovamente bonus ordinari. Morso infligge danni Naturali da Perforazione, Artiglio da Taglio, Coda da Contusione. Questi attacchi non aggiungono automaticamente il danno elementale del soffio. Nessuna Parata naturale con ali, artigli o scaglie; Schivata segue requisiti e costi comuni."
+    },
+    {
+      "nome": "Movimento e ingombro",
+      "effetto": "Un Q Base vale 1,5 m; un Q Tattico vale 15 m. Ali distese e passaggi stretti richiedono spazio effettivo oltre la pedina convenzionale. Il volo richiede ali funzionanti; respirano normalmente e non hanno la sopravvivenza nel vuoto del Dragomedusa. Percorsi misti condividono l’unica AzM, con le proporzioni delle modalità utilizzate e le normali Prove e penalità. Le modalità aggiuntive sono nelle singole schede."
+    },
+    {
+      "nome": "Sensi e comunicazione",
+      "effetto": "Scurovisione 24 Q Base. Parlano Draconico e una lingua di contatto assegnata all’ambiente. Non ricevono percezione attraverso ostacoli. Il verde usa anche Oratoria e Raggirare 14 giovane e 16 adulto. Il modificatore di Iniziativa è naturale: +2 giovane, +3 adulto."
+    },
+    {
+      "nome": "Presenza terrificante degli adulti",
+      "effetto": "Una volta per incontro, alla propria Iniziativa, 1 AzP. I nemici entro 12 Q Base che percepiscono direttamente il drago effettuano Volontà: 0 per il bianco, −1 per nero e verde, −2 per blu e rosso. Fallimento applica Terrorizzato per 1+1d3 Round, con effetti, scadenze e rimozione del Giocatore. Una sola prova contro questa capacità dello stesso drago nell’incontro. I giovani non possiedono questa capacità."
+    },
+    {
+      "nome": "Attivazione e riutilizzo",
+      "effetto": "Ogni soffio costa 2 AzP e i PM scritti nella scheda, pagati prima della risoluzione. Si usa soltanto alla propria Iniziativa, senza Prova di Potere, Focus, componenti o Concentrazione. Non è un’Opportunità. Un uso nel Round R torna disponibile da R+3. Consuma PM anche se nessuno subisce danni; spendere gli ultimi PM causa il normale esaurimento della riserva personale dopo la risoluzione dell’azione."
+    },
+    {
+      "nome": "Area e bersagli",
+      "effetto": "Origine dalle fauci, nella direzione dichiarata, anche verticale. Un cono si allarga fino alla larghezza scritta all’estremità; una linea mantiene la propria larghezza. Si colpiscono tutti i bersagli esposti, compresi alleati, una sola volta ciascuno anche se occupano più Q. Un solo tiro di danno vale per l’area, AC 1 per bersaglio. Ostacoli solidi schermanti fermano le parti coperte. Nessun tiro per colpire o Magistrale d’attacco e nessuna seconda Parata o Schivata contro la stessa area."
+    },
+    {
+      "nome": "Bianco nero blu e rosso",
+      "effetto": "Elusione con Riflessi al modificatore indicato, se concretamente possibile. Successo dimezza per eccesso prima delle protezioni; fallimento o impossibilità di eludere applica il danno completo. Gli effetti aggiuntivi seguono il Giocatore §5.24: Gelo, Corrosivo, Elettricità e Fuoco. Quando è prevista una Salvezza secondaria, si applica 0 per il giovane e −2 per l’adulto. Corrosivo usa la procedura di Integrità della protezione, senza riduzione arbitraria dell’AR o danno periodico aggiuntivo."
+    },
+    {
+      "nome": "Soffio verde",
+      "effetto": "Veleno Naturale inalato: richiede respirazione ed esposizione effettiva al gas. Una prova di Tempra 0 giovane o −2 adulto dimezza per eccesso il danno al successo; fallimento infligge il danno completo. L’AR fisica generica non protegge dall’inalazione: valgono protezioni respiratorie, immunità e difese pertinenti. Questa prova sostituisce l’Elusione del soffio, senza una seconda riduzione. Il gas si disperde dopo l’attacco e non aggiunge automaticamente Avvelenato. Uno scafo chiuso non viene danneggiato dal veleno per raggiungerne gli occupanti."
+    },
+    {
+      "nome": "Interazione con i veicoli",
+      "effetto": "I soffi bianco, nero, blu e rosso possono colpire un mezzo effettivamente esposto: una sola applicazione, localizzazione, scudo pertinente, AR, conversione in PI, PS Integrità e Corazzato secondo il Manuale dei Veicoli. Nessun danno automatico agli occupanti dietro lo scafo. L’eventuale effetto su una persona richiede che sia realmente esposta. Immunità e protezioni delle singole specie non si estendono ad altri tipi di danno o controllo."
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "nel proprio ambiente con coperture adatte 11; Oratoria e Raggirare 16"
+    }
+  ],
+  "note": "Grande predatore draconico • adulto • Natura Comune. Sensi e linguaggi: Scurovisione 24 Q Base • Draconico e una lingua di contatto. Il danno «NdM × k» è il risultato dei dadi moltiplicato per k; il dado non si tira da solo (A.199)."
+}

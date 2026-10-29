@@ -1,0 +1,79 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "murena-della-roccia-adulta",
+  "nome": "Murena della Roccia adulta",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 7 «Fauna di Iris» — Murena della Roccia adulta",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 6,
+    "COS": 7,
+    "INT": 2,
+    "SAG": 7,
+    "CAR": 3
+  },
+  "pv": 30,
+  "pm": 12,
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 10,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 10,
+    "volonta": 9,
+    "magia": 12
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 5,
+    "corsa": 10,
+    "scatto": 15
+  },
+  "spazio": "1 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    }
+  ],
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4,
+    "provvisorio": true
+  },
+  "attacchi": [],
+  "capacita": [
+    {
+      "nome": "Morso e risucchio",
+      "effetto": "VA 14 • 2d6+2 • danno naturale da perforazione • portata 1 Q • AC 1 • 1 AzP. Se il morso infligge almeno 1 danno dopo l’AR, il bersaglio effettua una prova di Magia 0 per il risucchio. La prova modifica soltanto i PM sottratti, non il danno del morso. Tabella (celle in ordine di lettura): Esito di Magia | PM assorbiti | Maldestro | 1d6 raddoppiato, massimo 6 PM | Fallimento | 1d6 PM | Successo | 1 PM | Magistrale | 0 PM."
+    },
+    {
+      "nome": "Comportamento e movimento",
+      "effetto": "È una creatura corporea: le normali armi possono ferirla e il risucchio non causa overdose. Attraversa la roccia senza scavare, ma deve emergere per mordere. Il rientro richiede movimento disponibile, segue le normali regole degli attacchi di opportunità e non concede un’AzM aggiuntiva. Non percepisce automaticamente le prede oltre le pareti. Difende la zona dei bozzoli e cerca altre fonti di nutrimento quando una preda non ha più PM. Tende a ritirarsi sotto 10 PV o dopo una Ferita Profonda, salvo la necessità immediata di proteggere i cuccioli."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Movimento nella roccia: Passo / Corsa / Scatto: 8 / 16 / 24 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "Furtività 11, oppure 13 tra le rocce"
+    }
+  ],
+  "note": "Dimensioni e spazio: Lunghezza 3 m • 1 × 2 Q. Occhi: Due; capacità 10 PM ciascuno, vuoti alla morte. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà)."
+}

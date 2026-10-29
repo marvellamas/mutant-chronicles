@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "lorath",
   "nome": "Lorath",
-  "fonte": "dal Manuale dei Mostri v0.13 (16/10/2026), cap. 7 «Fauna di Iris»",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 7 «Fauna di Iris» — Lorath",
   "caratteristiche": {
     "FOR": 7,
     "DES": 5,
@@ -12,60 +12,38 @@
     "SAG": 5,
     "CAR": 1
   },
-  "pv": 32,
+  "pv": 40,
   "pm": 5,
   "ar": {
-    "totale": 3,
+    "totale": 4,
     "magica": 0
   },
   "difese": 9,
-  "iniziativa": 0,
-  "movimento": {
-    "passo": 6,
-    "corsa": 12,
-    "scatto": 18
-  },
-  "spazio": "2 × 2 Q",
   "salvezze": {
     "tempra": 12,
     "riflessi": 9,
     "volonta": 7,
     "magia": 10
   },
+  "iniziativa": 2,
   "azioni": {
-    "principali": 1,
+    "principali": 2,
     "movimento": 1
   },
-  "attacchi": [
-    {
-      "nome": "Chela",
-      "tipo": "ravvicinato",
-      "va": 12,
-      "danno": "1d8+2",
-      "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1
-    },
-    {
-      "nome": "Getto acido",
-      "tipo": "distanza",
-      "va": 11,
-      "danno": "1d6+2",
-      "natura": "Naturale",
-      "proprieta": [
-        "Corrosivo"
-      ],
-      "gittata_q": 6,
-      "modalita": [
-        "S"
-      ],
-      "ac": 1
-    }
-  ],
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 × 2 Q",
   "abilita": [
     {
       "nome": "Corpo a corpo",
       "va": 12
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 11
     },
     {
       "nome": "Atletica",
@@ -80,16 +58,72 @@
       "va": 11
     }
   ],
-  "capacita": [
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4,
+    "provvisorio": true
+  },
+  "attacchi": [
     {
-      "nome": "Getto acido",
-      "effetto": "Attacco a un solo bersaglio visibile, senza area; niente raffiche, Tiro Rapido o bonus del Tiro Ravvicinato. Non ripetibile nel Round immediatamente successivo. Dopo danno residuo e Contromisure si applica Corrosivo (§5.24); non infligge Avvelenato, danni periodici o perdita automatica di AR.",
-      "limiti": "non due Round di fila"
+      "nome": "Chela",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
     },
     {
-      "nome": "Presa delle chele",
-      "effetto": "Usa Immobilizzare con Corpo a corpo 12; non infligge insieme il danno della Chela e mentre mantiene la presa non usa il Getto acido. Restano Prove e liberazioni della manovra."
+      "nome": "Spina paralizzante",
+      "tipo": "distanza",
+      "va": 11,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforante",
+        "veleno"
+      ],
+      "gittata_q": 6,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1
     }
   ],
-  "note": "Profilo sperimentale; potenza orientativa: Semplice (nessun GS/PX nella scheda). Aracnoide, Natura Comune; nessun incantesimo. Le chele non concedono Parata naturale. Nessuna immunità o Contromisura particolare."
+  "capacita": [
+    {
+      "nome": "Getto di ragnatela",
+      "effetto": "VA 11. Danno: Immobilizzato; nessun danno. Portata/costo: Max 6 Q; 1 AzP"
+    },
+    {
+      "nome": "Azioni e Difese",
+      "effetto": "Ogni attacco produce AC 1; i danni comprendono già i bonus ordinari. Le due chele consentono due attacchi distinti spendendo entrambe le AzP, senza colpi gratuiti. Può combinare attacchi diversi rispettandone i limiti. Le capacità biologiche non consumano PM. Le chele non concedono Parata naturale; Schivata ed Elusione seguono requisiti e costi ordinari."
+    },
+    {
+      "nome": "Riflessi istintivi",
+      "effetto": "Reagisce rapidamente agli stimoli e ai movimenti delle prede: il +2 naturale all’Iniziativa è indipendente da INT e sostituisce il bonus da Caratteristica."
+    },
+    {
+      "nome": "Tattica",
+      "effetto": "Usa la tela per fermare una preda mobile, le spine per paralizzarla e le chele quando la raggiunge. La combinazione di più Lorath può sottrarre Azioni a diversi avversari: GS e PX restano da verificare al tavolo."
+    },
+    {
+      "nome": "Spine paralizzanti",
+      "effetto": "Scaglia una sola spina per Round contro un bersaglio visibile, entro 6 Q. Copertura, linea di tiro, movimento e Difese seguono le regole ordinarie degli attacchi a distanza. La spina può inoculare il veleno soltanto se infligge almeno 1 danno dopo l’AR; le chele non lo trasmettono. Resistenza ed effetto. Tempra 0 riuscita evita completamente la paralisi. Con fallimento, la vittima rimane cosciente ma completamente paralizzata per 1d3+1 Round: non può muoversi volontariamente, compiere azioni fisiche o usare Difese attive. Rimangono possibili le Salvezze consentite. Non diventa automaticamente Svenuta e non si tratta della sola condizione Immobilizzato. Durata e rimozione. Non si ripete la Salvezza ogni Round. Applicata nel Round R per N Round, termina a fine R + N. Nuove applicazioni mantengono la scadenza più lontana senza sommare durate. Un antidoto appropriato può interromperla; una normale Prova di Medicina non costituisce da sola una cura automatica."
+    },
+    {
+      "nome": "Getto di ragnatela",
+      "effetto": "1 AzP, Armi da lancio 11, bersaglio visibile fino a 2 × 2 Q entro 6 Q. Si applicano copertura e linea di tiro. Il bersaglio può Schivare pagando i costi ordinari; la Parata ordinaria non ferma il getto avvolgente. Non infligge danno e l’AR non impedisce l’avvolgimento. Un attacco riuscito e non evitato lega braccia e gambe e applica Immobilizzato: movimento impedito, −4 alle Prove fisiche e limitazioni degli arti bloccati. Dopo il getto devono trascorrere tre Round successivi senza usarlo: impiegato nel Round 1, torna disponibile nel Round 5. La tela persiste finché viene rimossa, anche se il Lorath perde coscienza o muore; ulteriori getti non sommano penalità o strati. Liberarsi. La vittima spende 1 AzP ed effettua Atletica con il normale −4 di Immobilizzato: un successo spezza i legami. Il tentativo è consentito anche con gli arti legati. Aiuto. Un alleato adiacente con una lama adatta e utilizzabile spende 1 AzP per tagliare i legami raggiungibili, senza tiro e senza danneggiare il prigioniero. Fuoco. Almeno 1 danno da Fuoco che raggiunga la tela la distrugge. L’attacco conserva i propri bersagli: un’area coinvolge normalmente anche la vittima. La tela è materia biologica, non un effetto magico attivo."
+    },
+    {
+      "nome": "Anatomia e risorse",
+      "effetto": "Sensi e Menomazioni. Vista ordinaria e Percezione 11, senza rilevamento attraverso pareti o terreno. Braccia corrispondono alle chele, Gambe ai gruppi locomotori dei rispettivi lati, Torace al corpo e Testa al capo. La coda non aggiunge una localizzazione gratuita alla tabella ordinaria. Sacca della tossina. Ingrediente del medicinale dei mutanti che sopprime i sintomi del Morbo. La secrezione grezza richiede lavorazione; dosi ottenibili, preparazione e durata del medicinale devono essere definite separatamente."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 2 Q"
+    }
+  ],
+  "note": "Aracnoide modificato dai cristalli • Natura Comune • controllore e tiratore Protezioni speciali: Nessuna immunità o Contromisura specifica. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà)."
 }

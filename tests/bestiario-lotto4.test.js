@@ -69,7 +69,7 @@ test('la scala del GS arriva a Entità Suprema con i PX di riferimento del Diret
   assert.equal(pxDiRiferimentoGs('Inventato', dati), null);
   // ogni GS dei profili è nella scala; due eccezioni del manuale: «—» (nessun GS, 0 PX: Covata minore, funghi) ed «Elite»
   // (il Signore della guerra hobgoblin, con PX calcolati)
-  const nomi = new Set([...scala.map((x) => x.nome), '—', 'Elite']);
+  const nomi = new Set([...scala.map((x) => x.nome), '—', 'Elite', 'Fauna ambientale']);
   assert.deepEqual(tutti.filter(([, n]) => n.gs_px && !nomi.has(n.gs_px.gs)).map(([f]) => f), []);
 });
 

@@ -1,0 +1,111 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "tasso-gigante",
+  "nome": "Tasso gigante",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Tasso gigante",
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 5,
+    "COS": 6,
+    "INT": 2,
+    "SAG": 6,
+    "CAR": 2
+  },
+  "pv": 22,
+  "pm": 5,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 9,
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 9,
+    "volonta": 8,
+    "magia": 8
+  },
+  "iniziativa": 0,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 9
+    }
+  ],
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Adattamenti e condotta",
+      "effetto": "+2 a Percezione quando l’olfatto è determinante. Scava terra tenera lasciando un cunicolo adatto al proprio corpo; niente Corsa o Scatto nello scavo. Roccia, metallo e cemento non sono attraversabili. Può effettuare al massimo un Morso e un attacco di Artigli per Round, Opportunità compresa."
+    },
+    {
+      "nome": "Azioni e attacchi",
+      "effetto": "Tutti hanno 1 AzM per Round. Le AzP sono espresse nelle schede; non si rinnovano alla propria Iniziativa. Massimo un attacco per Round, Opportunità compresa. Eccezione: il Tasso gigante può effettuare un Morso e un attacco di Artigli, ciascuno pagato separatamente. La Rana non ha attacchi efficaci. Ogni attacco costa 1 AzP, produce AC 1 e usa Corpo a corpo. Danni Naturali completi, senza aggiungere nuovamente bonus ordinari. Portata di contatto, entro 1 Q soltanto se il bersaglio è realmente raggiungibile. Nessuna Parata naturale; Schivata con requisiti e costi comuni. Costrizione, Presa e Inghiottire usano le procedure specifiche scritte di seguito."
+    },
+    {
+      "nome": "Movimento e spazio",
+      "effetto": "Movimento nell’ordine Passo / Corsa / Scatto, con le Prove, i percorsi misti e i limiti ordinari. Arrampicata e Scavo sono indicati al solo Passo. Il salto da fermo degli anfibi consuma il movimento disponibile, senza aggiungere AzM o attacchi. Gli appigli e i materiali attraversabili restano necessari. Lucertola gigante, Rospo gigante e Serpente costrittore occupano 1 × 2 Q. Tasso gigante, Donnola gigante e Rana gigante 1 × 1 Q. Gli animali piccoli usano una pedina di gestione da 1 Q, conservando le dimensioni reali per fessure, passaggi e coperture. La stessa pedina non rende un cunicolo adatto a un umanoide."
+    },
+    {
+      "nome": "Risorse e sensi",
+      "effetto": "PM personali anche senza incantesimi; a 0 PM valgono le conseguenze comuni. PV, Ferite, Menomazioni, respiro e soffocamento seguono il Giocatore. I sensi speciali indicati non rivelano automaticamente identità, dettagli o presenze oltre i propri limiti. Nessun animale del blocco possiede linguaggi."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Scavo 2 Q Base al Passo"
+    }
+  ],
+  "note": "Fauna ordinaria • Natura Comune. Sensi e linguaggi: Scurovisione 6 Q Base; nessun linguaggio."
+}

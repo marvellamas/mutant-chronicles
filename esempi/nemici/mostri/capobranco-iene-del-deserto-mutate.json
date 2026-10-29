@@ -1,0 +1,103 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "capobranco-iene-del-deserto-mutate",
+  "nome": "Capobranco (Iene del deserto mutate)",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 7 «Fauna di Iris» — Capobranco (Iene del deserto mutate)",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 6,
+    "COS": 8,
+    "INT": 2,
+    "SAG": 7,
+    "CAR": 5
+  },
+  "pv": 60,
+  "pm": 8,
+  "ar": {
+    "totale": 5,
+    "magica": 0
+  },
+  "difese": 10,
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 11,
+    "volonta": 10,
+    "magia": 11
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "1 × 2 Q",
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4,
+    "provvisorio": true
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "2d6+3",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "proprieta": [
+        "Perforazione"
+      ],
+      "ac": 1
+    },
+    {
+      "nome": "Vomito acido",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "2d6+3",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Balzo travolgente",
+      "effetto": "VA 14. Danno: 1d8+3 Naturale. Portata non scritta nel manuale per questo attacco."
+    },
+    {
+      "nome": "Istinto e risorse",
+      "effetto": "Il bonus naturale d’Iniziativa deriva dai riflessi predatori e dall’istinto, sostituisce il bonus di Caratteristica e non si somma a esso. I PM non conferiscono incantesimi. Le due varianti usano le regole ordinarie di PV, Ferite e Menomazioni."
+    },
+    {
+      "nome": "Attacchi",
+      "effetto": "Tutti infliggono danni Naturali completi, con bonus ordinari già inclusi, e hanno AC 1 contro un solo bersaglio. Il Morso ha Perforazione, portata 1 Q e costo 1 AzP. Il Vomito acido ha portata 1 Q e costo 1 AzP. Il Balzo costa 1 AzP e 1 AzM e infligge Contusione."
+    },
+    {
+      "nome": "Balzo travolgente",
+      "effetto": "Dopo almeno 2 Q di rincorsa la iena salta addosso alla vittima. Rincorsa e salto rientrano nel Passo disponibile e richiedono un percorso praticabile. Si effettua il normale attacco; se supera l’AR causando almeno 1 danno, la vittima effettua Tempra 0 contro la iena comune oppure Tempra −2 contro il capobranco. Se fallisce cade A Terra. La iena comune può atterrare bersagli fino a 1 × 1 Q, il capobranco fino a 2 × 2 Q. Il Balzo non cumula il raddoppio della Carica. Il capobranco può spendere la seconda AzP per mordere o vomitare sulla vittima appena atterrata."
+    },
+    {
+      "nome": "Vomito acido",
+      "effetto": "Getto ravvicinato utilizzabile una volta per Round, soprattutto contro una preda a terra. Si risolve con il VA indicato e applica la normale AR e la proprietà Corrosivo. Il bersaglio può Schivare; una normale Parata non arresta il getto. La corrosione segue le regole dell’Integrità delle protezioni del Giocatore §5.24: non sottrae automaticamente punti AR. Una sola applicazione, senza danni periodici o pozze persistenti."
+    },
+    {
+      "nome": "Branco",
+      "effetto": "Le iene cercano di isolare una preda: una tenta di atterrarla, le altre sfruttano l’apertura con morsi e acido. Il capobranco interviene contro chi ostacola l’accerchiamento. Il vantaggio del gruppo nasce dalle posizioni e dalle Azioni disponibili, senza ulteriori bonus automatici. Ogni esemplare conserva il proprio budget di Azioni."
+    },
+    {
+      "nome": "Difese e anatomia",
+      "effetto": "Nessuna Parata naturale. Schivata ed Elusione seguono costi e condizioni ordinarie. Testa corrisponde al capo, Torace al tronco, Braccia alle zampe anteriori e Gambe alle posteriori. I cristalli della pelle sono già compresi nell’AR biologica indicata."
+    },
+    {
+      "nome": "Ritirata",
+      "effetto": "Gli esemplari comuni cercano di ritirarsi sotto 7 PV o a Ferita Profonda; il capobranco sotto 15 PV o a Ferita Profonda. Sono soglie di comportamento, non effetti automatici. La caduta del capobranco può indurre il branco a disperdersi, secondo la situazione."
+    }
+  ],
+  "note": "Predatori quadrupedi • pelle cristallina e acido • Natura Comune. Spazio: 1 × 2 Q. Corpo a corpo: 14. Atletica: 15. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà)."
+}

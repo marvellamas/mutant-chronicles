@@ -1,0 +1,86 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "rana",
+  "nome": "Rana",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Rana",
+  "caratteristiche": {
+    "FOR": 1,
+    "DES": 6,
+    "COS": 3,
+    "INT": 1,
+    "SAG": 4,
+    "CAR": 1
+  },
+  "pv": 2,
+  "pm": 3,
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 10,
+  "salvezze": {
+    "tempra": 6,
+    "riflessi": 10,
+    "volonta": 6,
+    "magia": 6
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Atletica",
+      "va": 8
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    }
+  ],
+  "gs_px": {
+    "gs": "Fauna ambientale",
+    "px": 0,
+    "per_pg": 4
+  },
+  "attacchi": [],
+  "capacita": [
+    {
+      "nome": "Attacchi efficaci",
+      "effetto": "nessuno. Conserva le proprie Azioni per movimento, difese praticabili e altre attività compatibili."
+    },
+    {
+      "nome": "Adattamenti e condotta",
+      "effetto": "Anfibia: respira aria e acqua. Salto da ferma fino a 2 Q in lungo oppure 1 Q in alto, entro il movimento disponibile. Non possiede attacchi efficaci; la scheda ambientale non assegna PX di combattimento."
+    },
+    {
+      "nome": "Azioni e attacchi",
+      "effetto": "Tutti hanno 1 AzM per Round. Le AzP sono espresse nelle schede; non si rinnovano alla propria Iniziativa. Massimo un attacco per Round, Opportunità compresa. Eccezione: il Tasso gigante può effettuare un Morso e un attacco di Artigli, ciascuno pagato separatamente. La Rana non ha attacchi efficaci. Ogni attacco costa 1 AzP, produce AC 1 e usa Corpo a corpo. Danni Naturali completi, senza aggiungere nuovamente bonus ordinari. Portata di contatto, entro 1 Q soltanto se il bersaglio è realmente raggiungibile. Nessuna Parata naturale; Schivata con requisiti e costi comuni. Costrizione, Presa e Inghiottire usano le procedure specifiche scritte di seguito."
+    },
+    {
+      "nome": "Movimento e spazio",
+      "effetto": "Movimento nell’ordine Passo / Corsa / Scatto, con le Prove, i percorsi misti e i limiti ordinari. Arrampicata e Scavo sono indicati al solo Passo. Il salto da fermo degli anfibi consuma il movimento disponibile, senza aggiungere AzM o attacchi. Gli appigli e i materiali attraversabili restano necessari. Lucertola gigante, Rospo gigante e Serpente costrittore occupano 1 × 2 Q. Tasso gigante, Donnola gigante e Rana gigante 1 × 1 Q. Gli animali piccoli usano una pedina di gestione da 1 Q, conservando le dimensioni reali per fessure, passaggi e coperture. La stessa pedina non rende un cunicolo adatto a un umanoide."
+    },
+    {
+      "nome": "Risorse e sensi",
+      "effetto": "PM personali anche senza incantesimi; a 0 PM valgono le conseguenze comuni. PV, Ferite, Menomazioni, respiro e soffocamento seguono il Giocatore. I sensi speciali indicati non rivelano automaticamente identità, dettagli o presenze oltre i propri limiti. Nessun animale del blocco possiede linguaggi."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Nuoto 4 / 8 / 12 Q Base"
+    }
+  ],
+  "note": "Fauna ordinaria • Natura Comune. Sensi e linguaggi: Scurovisione 6 Q Base; nessun linguaggio."
+}

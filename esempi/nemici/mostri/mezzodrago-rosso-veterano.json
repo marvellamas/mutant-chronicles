@@ -1,0 +1,94 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "mezzodrago-rosso-veterano",
+  "nome": "Mezzodrago rosso veterano",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Mezzodrago rosso veterano",
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 6,
+    "COS": 7,
+    "INT": 5,
+    "SAG": 6,
+    "CAR": 6
+  },
+  "pv": 65,
+  "pm": 20,
+  "ar": {
+    "totale": 5,
+    "magica": 0
+  },
+  "difese": 10,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 11,
+    "volonta": 11,
+    "magia": 11
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 5,
+    "corsa": 11,
+    "scatto": 17
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 14
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Oratoria",
+      "va": 11
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 77,
+    "per_pg": 4
+  },
+  "attacchi": [
+    {
+      "nome": "Spada lunga",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio"
+      ],
+      "portata_q": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Dotazione e difese",
+      "effetto": "AR 2 biologica + 3 da Armatura media. Dotazione Comune: Spada lunga FOR 4, PI 5; Armatura media FOR 5, PI 8; Integrità 10. Parata con la Spada 13, al costo ordinario. Massimo due attacchi per Round, comprese le Opportunità. I valori fisici includono la penalità della Media; rimossa, recupera +1 ai VA penalizzati e il movimento torna 6 / 12 / 18."
+    },
+    {
+      "nome": "Soffio e resistenza",
+      "effetto": "Cono lungo 6 Q Base e largo 3 all’estremità; 4d10 × 2 Magico, Fuoco. Costo 2 AzP e 6 PM; usato in R, disponibile da R+3. Riflessi 0 dimezza per eccesso prima delle protezioni. Una sola applicazione per bersaglio, alleati coinvolti e solidi schermanti; nessun tiro per colpire o seconda Difesa. Effetti aggiuntivi di Fuoco secondo le regole comuni, con Salvezza secondaria 0. Dimezza per eccesso i danni da Fuoco prima dell’AR. La resistenza non assegna immunità a Incendiato. Usa armi e coperture per conservare Azioni difensive.",
+      "azioni": {
+        "principali": 2
+      },
+      "risorsa": "6 PM"
+    }
+  ],
+  "note": "Combattente umanoide con tratti draconici • Natura Comune. Sensi e linguaggi: Scurovisione 12 Q Base; Comune e Draconico."
+}

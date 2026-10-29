@@ -1,0 +1,118 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "vespe-del-deserto",
+  "nome": "Vespe del Deserto",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 7 «Fauna di Iris» — Vespe del Deserto",
+  "caratteristiche": {
+    "FOR": 2,
+    "DES": 8,
+    "COS": 3,
+    "INT": 1,
+    "SAG": 6,
+    "CAR": 1
+  },
+  "pv": 4,
+  "pm": 3,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 13,
+  "salvezze": {
+    "tempra": 7,
+    "riflessi": 13,
+    "volonta": 6,
+    "magia": 7
+  },
+  "iniziativa": 3,
+  "movimento": {
+    "passo": 2,
+    "corsa": 4,
+    "scatto": 6,
+    "volo": 8
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 7
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    }
+  ],
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4,
+    "provvisorio": true
+  },
+  "attacchi": [
+    {
+      "nome": "Puntura",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d4+2",
+      "natura": "Naturale",
+      "portata_q": 0,
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ],
+      "note": "Dall’Iniziativa del gruppo successiva all’aggancio: Corpo a corpo 11, 1d4+2 Naturale con Perforazione, AC 1, costo 1 AzP, soltanto contro la vittima a cui la vespa è fissata. Ogni puntura si risolve separatamente, comprese Difese e AR; non si sommano i danni prima della protezione. Almeno 1 danno finale inocula il veleno."
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Gruppo di attacco",
+      "effetto": "Tutte le vespe si muovono insieme verso lo stesso bersaglio. Il gruppo ha un solo tiro di Iniziativa, con bonus naturale +3, e un solo movimento comune. Ogni vespa conserva 1 AzP; al massimo quattro possono attaccare nel Round, oppure tutte le superstiti se sono meno di quattro. Il gruppo compie al massimo quattro azioni offensive complessive per Round, inclusi agganci, punture e Attacchi di Opportunità. Una riserva può sostituire un’attaccante perduta soltanto dal Round successivo, senza generare un quinto attacco. Le riserve non attaccano autonomamente altri bersagli."
+    },
+    {
+      "nome": "Piccoli e veloci",
+      "effetto": "Un attacco diretto contro una singola vespa in volo libero subisce −4 al VA. La penalità non si applica alle aree o a una vespa agganciata. Gli attacchi diretti usano PV, AR, Difese e Ferite individuali: il gruppo non ha un unico totale di 40 PV."
+    },
+    {
+      "nome": "Aggancio",
+      "effetto": "Corpo a corpo 11, contatto, costo 1 AzP, senza danno, contro le normali Difese. Il successo fissa la vespa anche all’esterno dell’armatura; l’AR non impedisce la presa. Massimo quattro vespe complessive possono essere agganciate a un PG di 1 × 1 Q, anche se arrivano più gruppi. La vittima conserva Azioni e movimento. Le altre vespe restano intorno alla vittima o il loro gruppo cerca un altro bersaglio."
+    },
+    {
+      "nome": "Veleno II",
+      "effetto": "Veleno naturale di Pericolosità II: Tempra 0; successo evita l’effetto, fallimento applica Avvelenato con −2 alle Prove fisiche per 3 Round, senza danno aggiuntivo da veleno. Una nuova Tempra 0 al termine della propria Iniziativa può interromperlo. Applicato nel Round R, termina alla fine di R+3. Ulteriori inoculazioni consentono la normale Tempra e, se fallita, rinnovano la scadenza senza cumulare la penalità. Antidoto idoneo o Cura Avvelenamenti di livello almeno 2 possono neutralizzarlo."
+    },
+    {
+      "nome": "Rimozione e presa",
+      "effetto": "La vittima o un alleato adiacente con una mano utilizzabile spende 1 AzP per staccare automaticamente una vespa raggiungibile, senza danni aggiuntivi. Non riceve una nuova Azione e deve ripetere l’aggancio prima di poter pungere di nuovo. Una vespa fissata segue la vittima e non può Schivare restando agganciata. Non ha Parata naturale. Incoscienza, morte o impossibilità di tenere la presa causano il distacco; 0 PV da soli non bastano. Colpirla non trasferisce automaticamente il danno alla vittima."
+    },
+    {
+      "nome": "Danni ad area",
+      "effetto": "Per ogni gruppo nel Q effettivamente colpito si tira separatamente 1d6+1: quel numero di vespe viene messo fuori combattimento, al massimo quante ne restano. Si applica soltanto se l’area dannosa supera la loro protezione, dopo le normali Salvezze o altre contromisure previste dalla fonte. Il tiro sostituisce la gestione individuale dei PV e delle Ferite per quell’attacco. Nessun moltiplicatore AC, nessun danno individuale aggiuntivo e nessun trasferimento delle perdite eccedenti a un altro gruppo."
+    },
+    {
+      "nome": "Freddo",
+      "effetto": "Le vespe raggiunte sono disorientate per 1 Round anche se l’AR assorbe tutto il danno: non possono spostarsi, agganciarsi o attaccare, ma possono difendersi senza spostamento tattico. Un effetto completamente evitato non attiva il tratto. Il freddo ad area disorienta le vespe effettivamente esposte dei gruppi coinvolti; se non infligge danni, non elimina esemplari. Se danneggia, si applica anche la regola delle perdite ad area. Gli altri effetti del Gelo seguono le regole ordinarie."
+    },
+    {
+      "nome": "Volo e durata",
+      "effetto": "Il disorientamento consente di mantenersi in quota battendo le ali e di conservare una presa già stabilita, senza poter pungere. Le vespe restano rimovibili con 1 AzP; quelle agganciate conservano i propri limiti alle Difese. Applicato nel Round R, termina alla fine di R+1. Nuove esposizioni rinnovano la scadenza senza sommare le durate."
+    },
+    {
+      "nome": "Fumo",
+      "effetto": "Evitano il fumo denso. Alla propria Iniziativa le vespe raggiunte si staccano, se necessario, e usano il movimento disponibile per allontanarsi. Il fumo non elimina esemplari automaticamente; può sgomberare l’accesso alla Valvola."
+    },
+    {
+      "nome": "Nido del Cimitero",
+      "effetto": "Cento vespe formano dieci gruppi da dieci, distribuiti uniformemente nel vano della Valvola, una pedina per Q occupato. I gruppi possono muoversi separatamente dal resto dell’infestazione; ogni gruppo mantiene coesione e un solo bersaglio. Si annotano superstiti e agganci senza aggiungere pedine per le riserve. I PX della tabella comprendono tutte le vespe del gruppo: non si aggiungono premi individuali. Il calcolo del premio dell’incontro segue il Direttore §9.3."
+    }
+  ],
+  "note": "Insetti volanti velenosi • gruppi di attacco • Natura Comune. Gruppo e spazio: 10 vespe iniziali • una pedina di 1 Q • un solo bersaglio. Tratti speciali: Piccoli e veloci • sensibili al freddo • respinti dal fumo. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà)."
+}

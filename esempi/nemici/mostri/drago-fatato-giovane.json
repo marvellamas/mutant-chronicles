@@ -1,0 +1,99 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "drago-fatato-giovane",
+  "nome": "Drago fatato giovane",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Drago fatato giovane",
+  "caratteristiche": {
+    "FOR": 1,
+    "DES": 10,
+    "COS": 5,
+    "INT": 7,
+    "SAG": 6,
+    "CAR": 8
+  },
+  "pv": 20,
+  "pm": 20,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 14,
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 14,
+    "volonta": 12,
+    "magia": 15
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 2,
+    "corsa": 4,
+    "scatto": 6,
+    "volo": 12
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 15
+    },
+    {
+      "nome": "Occultismo",
+      "va": 14
+    },
+    {
+      "nome": "Raggirare",
+      "va": 13
+    }
+  ],
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione"
+      ],
+      "portata_q": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Capacità innate",
+      "effetto": "Invisibilità: 1 AzP e 3 PM, poi 1 PM per Round mantenuto; Concentrazione. Termina attaccando o usando il soffio. Non concede Difese automatiche né passaggio attraverso gli ostacoli. Illusione: 1 AzP e 2 PM, entro 6 Q Base, un’immagine semplice in 1 Q per 3 Round; potenza 4. Concentrazione e procedura nella pagina comune. Soffio euforizzante: 1 AzP e 4 PM, un vivente che respira entro 1 Q Base; Volontà 0, durata 3 Round. Usato in R, disponibile da R+3. Nessun danno; comportamento e nuove Salvezze nella pagina comune. Telepatia con altri draghi fatati entro 12 Q Base. Nessuna Parata naturale; dotazione nessuna."
+    },
+    {
+      "nome": "Invisibilità",
+      "effetto": "Alla propria Iniziativa: 1 AzP e 3 PM, poi 1 PM all’inizio di ogni propria Iniziativa successiva in cui la mantiene. Richiede Concentrazione e termina volontariamente, perdendo Concentrazione, attaccando o usando il Soffio. Potenza 4 per il giovane, 6 per il maturo. Segue i normali limiti sensoriali e le procedure per individuare e colpire un invisibile. Il mantenimento non restituisce Azioni e la riserva personale esaurita applica Svenuto secondo le regole comuni."
+    },
+    {
+      "nome": "Illusione",
+      "effetto": "1 AzP e 2/4 PM, entro 6/12 Q Base; richiede Concentrazione. Giovane: immagine semplice contenuta in 1 Q, durata 3 Round e potenza 4. Maturo: immagini e suoni contenuti in 3 × 3 Q, durata 5 Round e potenza 6. Sono capacità innate, senza tiro di Potere o componenti. Nessuna materia, ostacolo reale o danno. Si applicano i limiti comuni alla Concentrazione fra poteri simultanei. Un esame deliberato costa 1 AzP e consente Magia 0 contro l’illusione giovane o −2 contro quella matura. Successo: l’osservatore la riconosce. Un’interazione che ne dimostra l’inconsistenza la rivela. Negare Potere segue la potenza indicata e la procedura comune, anche per Invisibilità."
+    },
+    {
+      "nome": "Soffio euforizzante",
+      "effetto": "1 AzP e 4 PM, una creatura vivente che respira entro 1 Q Base, con esposizione reale al gas. Usato in R, disponibile da R+3. Volontà 0/−2: successo evita l’effetto, fallimento lo applica per 3/5 Round. Non infligge danni. Valgono protezioni respiratorie e immunità pertinenti. Non spende AzP; usa il Passo in una direzione casuale percorribile, evitando pericoli immediatamente evidenti. Rimane fermo e non spende AzP. Mantiene le Salvezze e ripete Volontà a fine della propria Iniziativa per terminare l’effetto. Durata e penalità della stessa capacità non si sommano; si conserva la scadenza più lontana."
+    }
+  ],
+  "note": "Piccolo drago dalle ali di farfalla • Natura Comune. Sensi e linguaggi: Scurovisione 12 Q Base; Draconico e Silvano."
+}

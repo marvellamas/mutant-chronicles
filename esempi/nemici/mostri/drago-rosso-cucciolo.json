@@ -1,0 +1,114 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "drago-rosso-cucciolo",
+  "nome": "Drago rosso cucciolo",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Drago rosso cucciolo",
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 5,
+    "COS": 7,
+    "INT": 6,
+    "SAG": 5,
+    "CAR": 7
+  },
+  "pv": 180,
+  "pm": 36,
+  "ar": {
+    "totale": 10,
+    "magica": 2
+  },
+  "difese": 10,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 9,
+    "volonta": 11,
+    "magia": 11
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18,
+    "volo": 60
+  },
+  "spazio": "2 × 1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "2d10+4",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Soffio",
+      "effetto": "4d10 × 2 Magico; Fuoco • Cono lungo 6 Q Base e largo 3 all’estremità • 2 AzP e 6 PM • ogni 3 Round. Elusione con Riflessi 0. Successo dimezza per eccesso; applicare protezioni e procedura della pagina comune.",
+      "azioni": {
+        "principali": 2
+      },
+      "risorsa": "6 PM",
+      "limiti": "ogni 3 Round"
+    },
+    {
+      "nome": "Protezioni e condotta",
+      "effetto": "Immune ai danni da Fuoco e a Incendiato causato dal fuoco. Arrampicata 6 Q Base al Passo su appigli adatti. Usa altura e forza per difendere territorio e ricchezze; non aderisce a superfici prive di appigli."
+    },
+    {
+      "nome": "Azioni e attacchi",
+      "effetto": "Cucciolo: 2 AzP e 1 AzM per Round; un solo Morso al massimo per Round. Può mordere e conservare una difesa, oppure spendere entrambe le AzP per il Soffio. Antico: 5 AzP e 1 AzM; un Morso e fino a due Artigli per Round, con possibilità di sostituire un Artiglio con una Codata. Può usare Soffio e tre attacchi fisici spendendo tutte le cinque AzP, senza conservarne per difendersi. Le Opportunità rientrano nei limiti offensivi e mantengono il normale costo del sistema. Ogni attacco fisico costa 1 AzP, produce AC 1 e usa Corpo a corpo. Morso: danni Naturali da Perforazione; Artigli: Taglio; Coda: Contusione. I dadi e i moltiplicatori sono completi, senza nuovi bonus ordinari né danni elementali aggiunti automaticamente. Nessuna Parata naturale; Schivata segue requisiti e costi comuni. Le Azioni non si rinnovano alla propria Iniziativa. Un Q Base vale 1,5 m e un Q Tattico 15 m. I soffi dei cuccioli usano Q Base, quelli degli antichi Q Tattici. Le ali richiedono spazio aggiuntivo e devono funzionare. La pedina navale è rappresentativa: contano le dimensioni reali nei passaggi. Nessuna sopravvivenza nel vuoto. Percorsi misti condividono l’unica AzM e rispettano Prove e limiti delle andature. Le altre modalità sono nelle singole schede."
+    },
+    {
+      "nome": "Competenze e linguaggi",
+      "effetto": "Cucciolo: Atletica 12, Percezione 12, Sopravvivenza 11, Furtività 12. Antico: Atletica 20, Percezione 18, Sopravvivenza 18, Furtività 6. Nero e verde con coperture ambientali adatte usano Furtività 14/9. Il verde possiede Oratoria e Raggirare 11/18. Scurovisione 12/24 Q Base. I cuccioli parlano Draconico, gli antichi anche due lingue di contatto assegnate alla loro storia. Nessuna percezione automatica oltre gli ostacoli."
+    },
+    {
+      "nome": "Attivazione dei soffi",
+      "effetto": "2 AzP e i PM della scheda, pagati prima della risoluzione, soltanto alla propria Iniziativa. Capacità innata senza Potere, Focus, componenti o Concentrazione. Non si usa come Opportunità. Usato in R, torna disponibile da R+3. I PM si consumano anche se nessuno subisce danno; esaurire la riserva causa le normali conseguenze dopo la risoluzione dell’azione. Origine dalle fauci, direzione dichiarata, una sola applicazione per bersaglio esposto anche se occupa più Q. Si tira una volta il danno dell’area, AC 1 per bersaglio; gli alleati sono coinvolti. Gli ostacoli schermano le parti coperte. Nessun tiro per colpire, Magistrale d’attacco o seconda Difesa contro la stessa area. Un cono raggiunge all’estremità la larghezza scritta; una linea mantiene la propria larghezza. Un successo dimezza per eccesso prima delle protezioni. Quando Elusione non è concretamente possibile si applica il danno completo. Gli effetti aggiuntivi seguono il Giocatore §5.24, con Salvezza secondaria +2 contro cuccioli e −4 contro antichi, quando prevista. Corrosivo usa invece l’Integrità della protezione. Le immunità del colore non si estendono ad altri effetti."
+    },
+    {
+      "nome": "Veleno verde e veicoli",
+      "effetto": "Il verde richiede respirazione ed esposizione al gas: Tempra sostituisce Elusione e non concede una seconda riduzione. L’AR fisica generica non protegge dall’inalazione; valgono protezioni respiratorie e difese pertinenti. Il gas si disperde dopo l’attacco e non aggiunge Avvelenato automaticamente. Non danneggia uno scafo chiuso per raggiungerne gli occupanti. Gli altri soffi seguono contro mezzi esposti localizzazione, scudo pertinente, AR, PI, Integrità e Corazzato del Manuale dei Veicoli, una sola applicazione per mezzo."
+    },
+    {
+      "nome": "Presenza terrificante degli antichi",
+      "effetto": "1 AzP alla propria Iniziativa, una volta per incontro, contro nemici entro 24 Q Base che percepiscono direttamente il drago. Volontà −2 per il bianco, −3 per nero e verde, −4 per blu e rosso. Fallimento: Terrorizzato per 1+1d3 Round, con effetti, scadenze e rimozione comuni. Una sola prova contro la Presenza dello stesso drago nell’incontro. I cuccioli non possiedono questa capacità."
+    }
+  ],
+  "note": "Predatore draconico • cucciolo • Natura Comune. Sensi e linguaggi: Scurovisione 12 Q Base; Draconico."
+}

@@ -43,8 +43,9 @@ test('Spazio e portata dai dati, GS/PX informativo', () => {
   assert.equal(madre.spazio, '3 × 10 Q');
   assert.equal(leggi('covata-regina-incubatrice.json').spazio, '3 × 5 Q');
   assert.equal(leggi('covata-corazzato.json').spazio, '1 × 2 Q');
-  // il Lorath occupa 2 × 2 Q (ammesso)
-  assert.equal(leggi('lorath.json').spazio, '2 × 2 Q');
+  // il Lorath della 0.46 (§7.11) occupa 1 × 2 Q e ha GS Veterano, 50 PX provvisori (lotto 141)
+  assert.equal(leggi('lorath.json').spazio, '1 × 2 Q');
+  assert.deepEqual(leggi('lorath.json').gs_px, { gs: 'Veterano', px: 50, per_pg: 4, provvisorio: true });
 });
 
 test('capacità con i parametri che il manuale dà (A.115)', () => {
